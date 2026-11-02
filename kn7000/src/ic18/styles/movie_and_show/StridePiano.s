@@ -9,7 +9,7 @@
 # Style 88: "Stride Piano", MOVIE & SHOW 11 of 20, style-ID 0x51e
 Style_StridePiano:
 	.ascii	"Stride Piano "
-	style_units	0x44, 0x00, 0x44, 0x00
+	style_units	0x44, 0x00, 0x44, 0x00	# EFF4 "Limiter1", EFF5 "Limiter1"
 	style_part	0x00, 127, 0x28, 0x00, 0x26, 64, 47, 0, 64, 12, 28, 64, 108, 64, 0	# Drum
 	style_part	0x08, 124, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 68, 64, 108, 64, 0	# Bass
 	style_part	0x09, 124, 0x00, 0x00, 0x20, 64, 47, 0, 64, 12, 68, 61, 108, 63, 0	# Acc1
@@ -18,64 +18,64 @@ Style_StridePiano:
 	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
 	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
 	style_part	0x00, 127, 0x28, 0x00, 0x26, 64, 36, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
-	.byte	1			# TODO: 1 in every style; no reader found
+	.byte	1			# +0x89: unread (1 in every style; no reader in 941, notes/ic18-rhythm-rom.md)
 	style_slots	Style_StridePiano
-Style_StridePiano_Intro1A:	# 4 bars of 4 beats
-	var_head	Style_StridePiano_Intro1A, 4, 4, 0xff, 0xff
-	mode 1,11
-	mode 2,8
+Style_StridePiano_Intro1Major:	# 4 bars of 4 beats
+	var_head	Style_StridePiano_Intro1Major, 4, 4, 0xff, 0xff
+	fold_root 1,11
+	fold_root 2,8
 	rev 4,47
 	rev 5,47
 	rev 6,47
-	var_events	Style_StridePiano_Intro1A
+	var_events	Style_StridePiano_Intro1Major
 	beat
-	@n 1,2,69,51,67,1,1
-	@n 2,2,60,51,66,1,1
-	n 2,64,51,66,1,1
-	n 3,81,65,32,0,1
-	@n 66,3,79,51,14,0,1
-	@n 94,3,83,78,48,0,1
+	@n 1,2,69,51,195,NcrRootShiftOnly
+	@n 2,2,60,51,194,NcrRootShiftOnly
+	n 2,64,51,194,NcrRootShiftOnly
+	n 3,81,65,32,NcrRootShiftOnly
+	@n 66,3,79,51,14,NcrRootShiftOnly
+	@n 94,3,83,78,48,NcrRootShiftOnly
 	beat
-	@n 53,3,79,53,6,0,1
-	@n 71,3,83,69,16,0,1
-	@n 95,3,81,57,48,0,1
+	@n 53,3,79,53,6,NcrRootShiftOnly
+	@n 71,3,83,69,16,NcrRootShiftOnly
+	@n 95,3,81,57,48,NcrRootShiftOnly
 	beat
-	@n 1,2,60,39,33,1,1
-	n 2,64,39,25,1,1
-	@n 2,2,67,39,33,1,1
-	@n 55,3,79,39,103,0,1
+	@n 1,2,60,39,161,NcrRootShiftOnly
+	n 2,64,39,153,NcrRootShiftOnly
+	@n 2,2,67,39,161,NcrRootShiftOnly
+	@n 55,3,79,39,103,NcrRootShiftOnly
 	beat
-	@n 64,0,RIDE2,22,21,0,0
-	@n 92,2,63,65,114,1,1
-	@n 93,2,59,65,116,1,1
-	@n 94,2,67,65,118,1,1
+	@n 64,0,KitRideCymbal2,22,21,NcrNone
+	@n 92,2,63,65,242,NcrRootShiftOnly
+	@n 93,2,59,65,244,NcrRootShiftOnly
+	@n 94,2,67,65,246,NcrRootShiftOnly
 	beat
-	n 0,RIDE2,39,55,1,0
-	@n 1,3,81,55,19,0,1
-	@n 64,3,79,53,18,0,1
-	@n 95,3,88,86,22,0,1
+	n 0,KitRideCymbal2,39,183,NcrNone
+	@n 1,3,81,55,19,NcrRootShiftOnly
+	@n 64,3,79,53,18,NcrRootShiftOnly
+	@n 95,3,88,86,22,NcrRootShiftOnly
 	beat
-	@n 27,3,79,57,26,0,1
-	@n 60,3,81,70,59,0,1
+	@n 27,3,79,57,26,NcrRootShiftOnly
+	@n 60,3,81,70,59,NcrRootShiftOnly
 	beat
-	@n 48,3,79,74,27,0,1
-	@n 72,3,75,53,20,0,1
-	@n 95,0,CHINA,49,61,0,0
+	@n 48,3,79,74,27,NcrRootShiftOnly
+	@n 72,3,75,53,20,NcrRootShiftOnly
+	@n 95,0,KitChinaCymbal,49,61,NcrNone
 	beat
-	n 3,71,84,32,0,1
-	@n 32,3,70,65,32,0,1
-	@n 56,1,35,52,32,0,1
-	@n 63,3,69,55,32,0,1
-	@n 64,0,BD1,25,19,0,0
-	@n 71,2,41,35,32,0,1
-	@n 92,2,40,61,51,0,1
-	@n 94,2,55,53,85,0,1
-	@n 95,1,40,55,36,1,1
+	n 3,71,84,32,NcrRootShiftOnly
+	@n 32,3,70,65,32,NcrRootShiftOnly
+	@n 56,1,35,52,32,NcrRootShiftOnly
+	@n 63,3,69,55,32,NcrRootShiftOnly
+	@n 64,0,KitBassDrum1,25,19,NcrNone
+	@n 71,2,41,35,32,NcrRootShiftOnly
+	@n 92,2,40,61,51,NcrRootShiftOnly
+	@n 94,2,55,53,85,NcrRootShiftOnly
+	@n 95,1,40,55,164,NcrRootShiftOnly
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,127
-	@n 1,3,67,65,90,0,1
-	@n 2,7,SD2,59,12,0,0
+	@n 1,3,67,65,90,NcrRootShiftOnly
+	@n 2,7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,109
 	@expr 17,7,105
 	@expr 21,7,101
@@ -92,35 +92,35 @@ Style_StridePiano_Intro1A:	# 4 bars of 4 beats
 	@expr 71,7,54
 	@expr 75,7,50
 	@expr 80,7,48
-	@n 94,3,64,49,23,0,1
+	@n 94,3,64,49,23,NcrRootShiftOnly
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	@n 1,2,59,67,13,0,1
-	@n 2,2,52,51,15,0,1
-	@n 3,2,55,63,12,0,1
-	@n 4,0,HHP,38,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	@n 1,2,59,67,13,NcrRootShiftOnly
+	@n 2,2,52,51,15,NcrRootShiftOnly
+	@n 3,2,55,63,12,NcrRootShiftOnly
+	@n 4,0,KitHiHatPedal,38,12,NcrNone
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
 	@expr 21,7,48
 	@expr 26,7,42
-	@n 28,3,67,57,18,0,1
+	@n 28,3,67,57,18,NcrRootShiftOnly
 	@expr 30,7,33
 	@expr 35,7,16
 	@expr 40,7,1
-	@n 55,3,71,65,16,0,1
+	@n 55,3,71,65,16,NcrRootShiftOnly
 	@expr 57,7,64
-	@n 67,2,52,43,30,0,1
-	@n 78,3,74,65,22,0,1
+	@n 67,2,52,43,30,NcrRootShiftOnly
+	@n 78,3,74,65,22,NcrRootShiftOnly
 	@expr 94,7,122
-	@n 95,1,33,61,21,1,1
-	n 2,45,69,61,0,1
+	@n 95,1,33,61,149,NcrRootShiftOnly
+	n 2,45,69,61,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	@n 2,2,61,61,71,0,1
-	@n 11,3,73,61,39,0,1
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 2,2,61,61,71,NcrRootShiftOnly
+	@n 11,3,73,61,39,NcrRootShiftOnly
 	@expr 14,7,105
 	@expr 19,7,101
 	@expr 23,7,97
@@ -133,18 +133,18 @@ Style_StridePiano_Intro1A:	# 4 bars of 4 beats
 	@expr 55,7,67
 	@expr 59,7,63
 	@expr 63,7,59
-	@n 64,3,76,69,21,0,1
+	@n 64,3,76,69,21,NcrRootShiftOnly
 	@expr 68,7,54
 	@expr 73,7,50
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	@n 1,2,61,61,12,0,1
-	n 2,55,61,17,0,1
-	n 2,57,61,13,0,1
-	n 2,64,61,17,0,1
-	@n 2,3,79,82,49,0,1
-	@n 4,0,HHP,36,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	@n 1,2,61,61,12,NcrRootShiftOnly
+	n 2,55,61,17,NcrRootShiftOnly
+	n 2,57,61,13,NcrRootShiftOnly
+	n 2,64,61,17,NcrRootShiftOnly
+	@n 2,3,79,82,49,NcrRootShiftOnly
+	@n 4,0,KitHiHatPedal,36,12,NcrNone
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -154,30 +154,30 @@ Style_StridePiano_Intro1A:	# 4 bars of 4 beats
 	@expr 34,7,16
 	@expr 39,7,1
 	@expr 54,7,64
-	@n 65,2,45,43,23,0,1
-	n 3,82,65,24,0,1
+	@n 65,2,45,43,23,NcrRootShiftOnly
+	n 3,82,65,24,NcrRootShiftOnly
 	@expr 95,7,127
-	n 1,38,52,32,1,1
+	n 1,38,52,160,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	@n 1,2,38,65,60,0,1
-	n 2,53,63,79,0,1
-	@n 5,3,81,57,10,0,1
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 1,2,38,65,60,NcrRootShiftOnly
+	n 2,53,63,79,NcrRootShiftOnly
+	@n 5,3,81,57,10,NcrRootShiftOnly
 	@expr 14,7,105
 	@expr 16,7,101
-	@n 17,3,82,77,12,0,1
+	@n 17,3,82,77,12,NcrRootShiftOnly
 	@expr 20,7,97
 	@expr 25,7,93
 	@expr 30,7,89
-	n 3,81,46,13,0,1
+	n 3,81,46,13,NcrRootShiftOnly
 	@expr 34,7,85
 	@expr 39,7,81
 	@expr 43,7,77
 	@expr 48,7,73
 	@expr 52,7,69
 	@expr 57,7,65
-	@n 60,3,77,69,28,0,1
+	@n 60,3,77,69,28,NcrRootShiftOnly
 	@expr 61,7,61
 	@expr 66,7,58
 	@expr 69,7,54
@@ -185,12 +185,12 @@ Style_StridePiano_Intro1A:	# 4 bars of 4 beats
 	@expr 78,7,49
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	@n 1,2,57,69,14,0,1
-	n 2,50,69,17,0,1
-	n 2,53,69,14,0,1
-	@n 4,0,HHP,38,12,0,0
-	n 3,74,79,52,0,1
+	n 7,KitSnareDrum2,109,12,NcrNone
+	@n 1,2,57,69,14,NcrRootShiftOnly
+	n 2,50,69,17,NcrRootShiftOnly
+	n 2,53,69,14,NcrRootShiftOnly
+	@n 4,0,KitHiHatPedal,38,12,NcrNone
+	n 3,74,79,52,NcrRootShiftOnly
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -200,16 +200,16 @@ Style_StridePiano_Intro1A:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,65
-	@n 64,3,70,57,29,0,1
-	@n 70,2,50,74,25,0,1
-	@n 93,1,31,54,118,0,1
+	@n 64,3,70,57,29,NcrRootShiftOnly
+	@n 70,2,50,74,25,NcrRootShiftOnly
+	@n 93,1,31,54,118,NcrRootShiftOnly
 	@expr 95,7,127
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	@n 2,2,43,59,51,0,1
-	@n 4,2,59,80,89,0,1
-	@n 6,3,71,61,62,0,1
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 2,2,43,59,51,NcrRootShiftOnly
+	@n 4,2,59,80,89,NcrRootShiftOnly
+	@n 6,3,71,61,62,NcrRootShiftOnly
 	@expr 13,7,108
 	@expr 17,7,102
 	@expr 22,7,97
@@ -219,15 +219,15 @@ Style_StridePiano_Intro1A:	# 4 bars of 4 beats
 	@expr 40,7,76
 	@expr 44,7,70
 	@expr 49,7,65
-	@n 70,3,65,70,119,0,1
-	n 3,71,70,120,0,1
-	@n 71,3,76,69,119,0,1
-	n 3,68,69,117,0,1
+	@n 70,3,65,70,119,NcrRootShiftOnly
+	n 3,71,70,120,NcrRootShiftOnly
+	@n 71,3,76,69,119,NcrRootShiftOnly
+	n 3,68,69,117,NcrRootShiftOnly
 	@expr 94,7,127
 	beat
-	n 7,SD2,88,12,0,0
+	n 7,KitSnareDrum2,88,12,NcrNone
 	@expr 2,7,103
-	@n 4,0,HHP,34,12,0,0
+	@n 4,0,KitHiHatPedal,34,12,NcrNone
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -235,182 +235,182 @@ Style_StridePiano_Intro1A:	# 4 bars of 4 beats
 	@expr 25,7,42
 	@expr 29,7,33
 	@expr 64,7,127
-	@n 65,7,SD2,88,12,0,0
+	@n 65,7,KitSnareDrum2,88,12,NcrNone
 	@expr 71,7,86
 	@expr 76,7,68
 	@expr 81,7,55
 	@expr 95,7,122
 	expr 7,127
 	end
-	var_end	Style_StridePiano_Intro1A
-Style_StridePiano_Intro1B:	# 4 bars of 4 beats
-	var_head	Style_StridePiano_Intro1B, 4, 4, 0xff, 0xff
-	mode 1,11
-	mode 2,8
+	var_end	Style_StridePiano_Intro1Major
+Style_StridePiano_Intro1Minor:	# 4 bars of 4 beats
+	var_head	Style_StridePiano_Intro1Minor, 4, 4, 0xff, 0xff
+	fold_root 1,11
+	fold_root 2,8
 	rev 4,47
 	rev 5,47
 	rev 6,47
-	var_events	Style_StridePiano_Intro1B
+	var_events	Style_StridePiano_Intro1Minor
 	beat
 	expr 7,127
-	@n 2,2,48,86,51,0,1
-	n 3,72,86,52,0,1
-	@n 64,2,51,69,27,0,1
-	n 3,75,86,28,0,1
+	@n 2,2,48,86,51,NcrRootShiftOnly
+	n 3,72,86,52,NcrRootShiftOnly
+	@n 64,2,51,69,27,NcrRootShiftOnly
+	n 3,75,86,28,NcrRootShiftOnly
 	beat
-	@n 4,2,55,80,50,0,1
-	n 3,79,94,46,0,1
-	@n 65,3,84,81,29,0,1
-	@n 66,2,60,85,29,0,1
+	@n 4,2,55,80,50,NcrRootShiftOnly
+	n 3,79,94,46,NcrRootShiftOnly
+	@n 65,3,84,81,29,NcrRootShiftOnly
+	@n 66,2,60,85,29,NcrRootShiftOnly
 	beat
-	@n 4,2,59,93,30,0,1
-	@n 5,3,83,99,29,0,1
+	@n 4,2,59,93,30,NcrRootShiftOnly
+	@n 5,3,83,99,29,NcrRootShiftOnly
 	beat
-	@n 3,2,55,71,39,0,1
-	@n 4,3,79,86,34,0,1
+	@n 3,2,55,71,39,NcrRootShiftOnly
+	@n 4,3,79,86,34,NcrRootShiftOnly
 	beat
-	@n 2,2,58,80,31,0,1
-	n 3,82,94,31,0,1
-	@n 41,2,60,63,17,0,1
-	@n 42,3,84,47,16,0,1
-	@n 56,2,58,45,17,0,1
-	@n 57,3,82,65,13,0,1
-	@n 68,3,79,77,23,0,1
-	@n 74,2,55,78,27,0,1
+	@n 2,2,58,80,31,NcrRootShiftOnly
+	n 3,82,94,31,NcrRootShiftOnly
+	@n 41,2,60,63,17,NcrRootShiftOnly
+	@n 42,3,84,47,16,NcrRootShiftOnly
+	@n 56,2,58,45,17,NcrRootShiftOnly
+	@n 57,3,82,65,13,NcrRootShiftOnly
+	@n 68,3,79,77,23,NcrRootShiftOnly
+	@n 74,2,55,78,27,NcrRootShiftOnly
 	beat
-	@n 2,3,80,97,47,0,1
-	@n 7,2,56,87,42,0,1
-	@n 60,2,57,86,85,0,1
-	@n 62,3,81,89,31,0,1
+	@n 2,3,80,97,47,NcrRootShiftOnly
+	@n 7,2,56,87,42,NcrRootShiftOnly
+	@n 60,2,57,86,85,NcrRootShiftOnly
+	@n 62,3,81,89,31,NcrRootShiftOnly
 	beat
-	@n 46,3,77,63,7,0,1
-	@n 53,3,79,67,15,0,1
-	@n 64,0,RIDE2,87,19,0,0
-	n 3,77,66,18,0,1
-	@n 80,3,75,101,19,0,1
-	@n 95,0,RIDE2,72,44,0,0
+	@n 46,3,77,63,7,NcrRootShiftOnly
+	@n 53,3,79,67,15,NcrRootShiftOnly
+	@n 64,0,KitRideCymbal2,87,19,NcrNone
+	n 3,77,66,18,NcrRootShiftOnly
+	@n 80,3,75,101,19,NcrRootShiftOnly
+	@n 95,0,KitRideCymbal2,72,44,NcrNone
 	beat
-	n 0,HHP,34,12,0,0
-	n 7,SD1,108,12,0,0
-	@n 7,3,72,74,21,0,1
-	@n 33,3,71,85,24,0,1
-	@n 59,3,70,69,19,0,1
-	@n 63,1,42,93,27,0,1
-	n 2,42,112,33,0,1
-	@n 64,0,RIDE2,79,14,0,0
-	@n 80,3,69,77,19,0,1
+	n 0,KitHiHatPedal,34,12,NcrNone
+	n 7,KitSnareDrum1,108,12,NcrNone
+	@n 7,3,72,74,21,NcrRootShiftOnly
+	@n 33,3,71,85,24,NcrRootShiftOnly
+	@n 59,3,70,69,19,NcrRootShiftOnly
+	@n 63,1,42,93,27,NcrRootShiftOnly
+	n 2,42,112,33,NcrRootShiftOnly
+	@n 64,0,KitRideCymbal2,79,14,NcrNone
+	@n 80,3,69,77,19,NcrRootShiftOnly
 	beat
-	n 0,BD1,70,12,0,0
-	n 7,SD1,34,12,0,0
-	n 2,41,74,44,0,1
-	@n 1,2,56,72,51,0,1
-	@n 2,1,41,80,50,1,1
-	@n 6,3,68,83,56,0,1
+	n 0,KitBassDrum1,70,12,NcrNone
+	n 7,KitSnareDrum1,34,12,NcrNone
+	n 2,41,74,44,NcrRootShiftOnly
+	@n 1,2,56,72,51,NcrRootShiftOnly
+	@n 2,1,41,80,178,NcrRootShiftOnly
+	@n 6,3,68,83,56,NcrRootShiftOnly
 	@sus 56,2,127
-	@n 66,3,72,84,28,0,1
-	@n 88,7,CLAP,16,6,0,0
-	@n 95,0,RIDE1,94,27,0,0
+	@n 66,3,72,84,28,NcrRootShiftOnly
+	@n 88,7,KitHandClaps,16,6,NcrNone
+	@n 95,0,KitRideCymbal1,94,27,NcrNone
 	beat
-	n 0,HHP,38,12,0,0
-	n 7,SD1,103,12,0,0
-	@n 1,2,56,53,30,0,1
-	n 2,60,65,29,0,1
-	n 2,53,72,30,0,1
-	@n 2,2,62,84,28,0,1
-	n 3,74,78,55,0,1
+	n 0,KitHiHatPedal,38,12,NcrNone
+	n 7,KitSnareDrum1,103,12,NcrNone
+	@n 1,2,56,53,30,NcrRootShiftOnly
+	n 2,60,65,29,NcrRootShiftOnly
+	n 2,53,72,30,NcrRootShiftOnly
+	@n 2,2,62,84,28,NcrRootShiftOnly
+	n 3,74,78,55,NcrRootShiftOnly
 	@sus 10,2,0
-	@n 61,3,79,89,29,0,1
-	@n 64,0,RIDE1,83,13,0,0
-	n 7,CLAP,11,6,0,0
-	n 2,50,72,30,0,1
-	@n 95,2,43,67,65,0,1
-	n 2,59,51,81,0,1
-	n 3,77,94,43,0,1
+	@n 61,3,79,89,29,NcrRootShiftOnly
+	@n 64,0,KitRideCymbal1,83,13,NcrNone
+	n 7,KitHandClaps,11,6,NcrNone
+	n 2,50,72,30,NcrRootShiftOnly
+	@n 95,2,43,67,65,NcrRootShiftOnly
+	n 2,59,51,81,NcrRootShiftOnly
+	n 3,77,94,43,NcrRootShiftOnly
 	beat
-	n 0,BD1,76,12,0,0
-	n 0,RIDE1,81,62,0,0
-	n 7,SD1,40,12,0,0
-	@n 4,1,43,95,24,1,1
-	@n 57,7,CLAP,9,6,0,0
-	@n 73,7,CLAP,18,6,0,0
-	@n 86,7,CLAP,18,6,0,0
-	@n 95,0,RIDE1,93,51,0,0
-	n 7,SD1,101,12,0,0
-	n 2,62,68,80,0,1
-	n 2,59,58,66,0,1
-	n 3,74,95,60,0,1
+	n 0,KitBassDrum1,76,12,NcrNone
+	n 0,KitRideCymbal1,81,62,NcrNone
+	n 7,KitSnareDrum1,40,12,NcrNone
+	@n 4,1,43,95,152,NcrRootShiftOnly
+	@n 57,7,KitHandClaps,9,6,NcrNone
+	@n 73,7,KitHandClaps,18,6,NcrNone
+	@n 86,7,KitHandClaps,18,6,NcrNone
+	@n 95,0,KitRideCymbal1,93,51,NcrNone
+	n 7,KitSnareDrum1,101,12,NcrNone
+	n 2,62,68,80,NcrRootShiftOnly
+	n 2,59,58,66,NcrRootShiftOnly
+	n 3,74,95,60,NcrRootShiftOnly
 	beat
-	n 0,HHP,36,12,0,0
-	n 2,56,68,65,0,1
-	n 2,53,68,66,0,1
-	@n 3,3,86,64,60,0,1
-	@n 62,0,RIDE1,105,12,0,0
-	@n 64,2,48,101,77,0,1
-	n 2,63,90,61,0,1
-	@n 67,1,48,105,60,0,1
-	n 3,75,89,59,0,1
-	@n 70,3,87,58,56,0,1
+	n 0,KitHiHatPedal,36,12,NcrNone
+	n 2,56,68,65,NcrRootShiftOnly
+	n 2,53,68,66,NcrRootShiftOnly
+	@n 3,3,86,64,60,NcrRootShiftOnly
+	@n 62,0,KitRideCymbal1,105,12,NcrNone
+	@n 64,2,48,101,77,NcrRootShiftOnly
+	n 2,63,90,61,NcrRootShiftOnly
+	@n 67,1,48,105,60,NcrRootShiftOnly
+	n 3,75,89,59,NcrRootShiftOnly
+	@n 70,3,87,58,56,NcrRootShiftOnly
 	beat
-	n 0,BD1,76,12,0,0
-	n 7,SD1,43,12,0,0
-	@n 64,0,SPLASH,104,50,1,0
-	@n 65,3,66,86,14,0,1
-	@n 66,3,67,93,65,2,1
+	n 0,KitBassDrum1,76,12,NcrNone
+	n 7,KitSnareDrum1,43,12,NcrNone
+	@n 64,0,KitSplashCymbal,104,178,NcrNone
+	@n 65,3,66,86,14,NcrRootShiftOnly
+	@n 66,3,67,93,321,NcrRootShiftOnly
 	beat
 	beat
-	@n 65,2,54,74,48,0,1
-	@n 66,2,55,85,1,1,1
-	@n 68,1,43,107,33,1,1
+	@n 65,2,54,74,48,NcrRootShiftOnly
+	@n 66,2,55,85,129,NcrRootShiftOnly
+	@n 68,1,43,107,161,NcrRootShiftOnly
 	beat
-	@n 80,7,CLAP,103,6,0,0
+	@n 80,7,KitHandClaps,103,6,NcrNone
 	end
-	var_end	Style_StridePiano_Intro1B
-Style_StridePiano_Ending1A:	# 4 bars of 4 beats
-	var_head	Style_StridePiano_Ending1A, 4, 4, 0xff, 0xff
-	mode 1,11
-	mode 2,8
-	mode 3,0
+	var_end	Style_StridePiano_Intro1Minor
+Style_StridePiano_Intro2Major:	# 4 bars of 4 beats
+	var_head	Style_StridePiano_Intro2Major, 4, 4, 0xff, 0xff
+	fold_root 1,11
+	fold_root 2,8
+	fold_root 3,0
 	rev 4,47
 	rev 5,47
 	rev 6,47
-	var_events	Style_StridePiano_Ending1A
+	var_events	Style_StridePiano_Intro2Major
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,122
-	n 7,SD2,59,12,0,0
-	@n 1,3,91,86,21,0,1
-	@n 3,2,52,80,96,0,1
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 1,3,91,86,21,NcrRootShiftOnly
+	@n 3,2,52,80,96,NcrRootShiftOnly
 	@expr 6,7,125
 	@expr 10,7,122
 	@expr 14,7,120
 	@expr 18,7,116
 	@expr 24,7,114
 	@expr 28,7,112
-	n 3,93,107,12,0,1
+	n 3,93,107,12,NcrRootShiftOnly
 	@expr 32,7,109
 	@expr 36,7,106
 	@expr 42,7,102
-	@n 43,3,91,97,14,0,1
+	@n 43,3,91,97,14,NcrRootShiftOnly
 	@expr 46,7,97
 	@expr 50,7,93
 	@expr 54,7,86
 	@expr 60,7,81
 	@expr 64,7,76
-	@n 65,3,88,76,18,0,1
+	@n 65,3,88,76,18,NcrRootShiftOnly
 	@expr 68,7,72
 	@expr 72,7,65
 	@expr 78,7,60
 	@expr 82,7,55
 	@expr 86,7,50
 	beat
-	n 0,HHC,61,21,0,0
-	n 0,BD1,21,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitHiHatClosed,61,21,NcrNone
+	n 0,KitBassDrum1,21,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 1,2,64,72,31,0,1
-	n 2,60,72,29,0,1
-	@n 2,2,67,72,29,0,1
-	n 3,89,97,57,0,1
+	@n 1,2,64,72,31,NcrRootShiftOnly
+	n 2,60,72,29,NcrRootShiftOnly
+	@n 2,2,67,72,29,NcrRootShiftOnly
+	n 3,89,97,57,NcrRootShiftOnly
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -420,34 +420,34 @@ Style_StridePiano_Ending1A:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,63
-	@n 64,7,SD2,82,12,0,0
-	n 1,52,96,26,0,1
-	@n 69,3,91,107,23,0,1
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	n 1,52,96,26,NcrRootShiftOnly
+	@n 69,3,91,107,23,NcrRootShiftOnly
 	@expr 94,7,122
-	@n 95,1,50,83,123,0,1
-	n 2,50,84,5,1,1
+	@n 95,1,50,83,123,NcrRootShiftOnly
+	n 2,50,84,133,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	@n 3,3,89,66,18,0,1
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 3,3,89,66,18,NcrRootShiftOnly
 	@expr 4,7,126
 	@expr 6,7,123
 	@expr 12,7,121
 	@expr 16,7,119
 	@expr 20,7,117
 	@expr 24,7,114
-	@n 25,3,91,91,13,0,1
+	@n 25,3,91,91,13,NcrRootShiftOnly
 	@expr 30,7,112
 	@expr 34,7,110
 	@expr 38,7,108
-	@n 40,3,89,72,16,0,1
+	@n 40,3,89,72,16,NcrRootShiftOnly
 	@expr 42,7,106
 	@expr 48,7,104
 	@expr 54,7,102
 	@expr 56,7,96
 	@expr 60,7,87
-	@n 63,2,59,64,67,0,1
-	@n 65,3,86,62,15,0,1
+	@n 63,2,59,64,67,NcrRootShiftOnly
+	@n 65,3,86,62,15,NcrRootShiftOnly
 	@expr 66,7,82
 	@expr 70,7,76
 	@expr 74,7,70
@@ -455,14 +455,14 @@ Style_StridePiano_Ending1A:	# 4 bars of 4 beats
 	@expr 84,7,56
 	@expr 88,7,50
 	@expr 92,7,48
-	@n 95,0,HHC,47,22,0,0
-	n 2,65,85,34,0,1
-	n 2,62,85,33,0,1
+	@n 95,0,KitHiHatClosed,47,22,NcrNone
+	n 2,65,85,34,NcrRootShiftOnly
+	n 2,62,85,33,NcrRootShiftOnly
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	n 3,88,89,60,0,1
+	n 3,88,89,60,NcrRootShiftOnly
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -472,22 +472,22 @@ Style_StridePiano_Ending1A:	# 4 bars of 4 beats
 	@expr 34,7,16
 	@expr 39,7,1
 	@expr 54,7,64
-	@n 64,7,SD2,82,12,0,0
-	n 1,50,95,20,0,1
-	@n 70,3,89,68,16,0,1
-	@n 95,2,48,76,99,0,1
-	n 3,88,80,14,0,1
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	n 1,50,95,20,NcrRootShiftOnly
+	@n 70,3,89,68,16,NcrRootShiftOnly
+	@n 95,2,48,76,99,NcrRootShiftOnly
+	n 3,88,80,14,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
-	n 1,48,78,113,0,1
+	n 1,48,78,113,NcrRootShiftOnly
 	@expr 10,7,123
 	@expr 12,7,122
 	@expr 14,7,121
 	@expr 16,7,119
 	@expr 18,7,118
-	@n 19,3,89,101,13,0,1
+	@n 19,3,89,101,13,NcrRootShiftOnly
 	@expr 20,7,117
 	@expr 22,7,116
 	@expr 24,7,114
@@ -496,7 +496,7 @@ Style_StridePiano_Ending1A:	# 4 bars of 4 beats
 	@expr 30,7,111
 	@expr 32,7,109
 	@expr 34,7,108
-	n 3,88,80,23,0,1
+	n 3,88,80,23,NcrRootShiftOnly
 	@expr 36,7,107
 	@expr 38,7,106
 	@expr 40,7,104
@@ -509,19 +509,19 @@ Style_StridePiano_Ending1A:	# 4 bars of 4 beats
 	@expr 54,7,98
 	@expr 56,7,95
 	@expr 62,7,86
-	@n 63,3,84,68,21,0,1
+	@n 63,3,84,68,21,NcrRootShiftOnly
 	@expr 67,7,78
 	@expr 71,7,71
 	@expr 76,7,63
-	@n 95,0,HHC,49,27,0,0
+	@n 95,0,KitHiHatClosed,49,27,NcrNone
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	n 2,57,81,32,0,1
-	n 2,60,81,31,0,1
-	n 2,64,81,32,0,1
-	@n 7,3,86,84,34,0,1
+	n 2,57,81,32,NcrRootShiftOnly
+	n 2,60,81,31,NcrRootShiftOnly
+	n 2,64,81,32,NcrRootShiftOnly
+	@n 7,3,86,84,34,NcrRootShiftOnly
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -530,71 +530,71 @@ Style_StridePiano_Ending1A:	# 4 bars of 4 beats
 	@expr 30,7,33
 	@expr 35,7,16
 	@expr 40,7,1
-	@n 41,3,87,93,16,0,1
+	@n 41,3,87,93,16,NcrRootShiftOnly
 	@expr 57,7,65
-	@n 63,2,47,88,34,0,1
-	@n 64,7,SD2,82,12,0,0
-	n 1,48,90,18,0,1
-	@n 66,3,88,80,23,0,1
-	@n 95,1,47,83,48,0,1
-	n 2,59,94,84,0,1
-	n 2,56,94,82,0,1
+	@n 63,2,47,88,34,NcrRootShiftOnly
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	n 1,48,90,18,NcrRootShiftOnly
+	@n 66,3,88,80,23,NcrRootShiftOnly
+	@n 95,1,47,83,48,NcrRootShiftOnly
+	n 2,59,94,84,NcrRootShiftOnly
+	n 2,56,94,82,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
-	n 2,62,94,88,0,1
-	@n 4,3,86,78,15,0,1
+	n 2,62,94,88,NcrRootShiftOnly
+	@n 4,3,86,78,15,NcrRootShiftOnly
 	@expr 13,7,111
 	@expr 14,7,106
 	@expr 18,7,101
-	n 3,88,91,19,0,1
+	n 3,88,91,19,NcrRootShiftOnly
 	@expr 23,7,95
 	@expr 28,7,90
 	@expr 32,7,85
-	@n 34,3,86,87,19,0,1
+	@n 34,3,86,87,19,NcrRootShiftOnly
 	@expr 36,7,79
 	@expr 41,7,74
 	@expr 45,7,69
 	@expr 50,7,65
-	@n 52,3,83,80,28,0,1
-	@n 62,2,40,63,106,0,1
+	@n 52,3,83,80,28,NcrRootShiftOnly
+	@n 62,2,40,63,106,NcrRootShiftOnly
 	@expr 64,7,127
-	n 1,44,82,19,0,1
-	@n 80,3,80,78,30,0,1
-	@n 95,2,47,91,106,0,1
+	n 1,44,82,19,NcrRootShiftOnly
+	@n 80,3,80,78,30,NcrRootShiftOnly
+	@n 95,2,47,91,106,NcrRootShiftOnly
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,88,12,0,0
-	n 1,40,85,54,0,1
-	@n 1,0,HHC,55,21,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,88,12,NcrNone
+	n 1,40,85,54,NcrRootShiftOnly
+	@n 1,0,KitHiHatClosed,55,21,NcrNone
 	@expr 2,7,103
-	n 2,56,94,100,0,1
+	n 2,56,94,100,NcrRootShiftOnly
 	@expr 7,7,86
 	@expr 11,7,68
-	@n 14,3,76,76,27,0,1
+	@n 14,3,76,76,27,NcrRootShiftOnly
 	@expr 16,7,55
 	@expr 20,7,48
 	@expr 25,7,42
 	@expr 29,7,33
-	@n 41,3,75,70,25,0,1
-	@n 64,7,SD2,88,12,0,0
+	@n 41,3,75,70,25,NcrRootShiftOnly
+	@n 64,7,KitSnareDrum2,88,12,NcrNone
 	expr 7,127
-	n 1,44,93,21,0,1
-	n 2,59,80,36,0,1
-	@n 65,2,62,91,38,0,1
-	@n 66,3,74,68,20,0,1
+	n 1,44,93,21,NcrRootShiftOnly
+	n 2,59,80,36,NcrRootShiftOnly
+	@n 65,2,62,91,38,NcrRootShiftOnly
+	@n 66,3,74,68,20,NcrRootShiftOnly
 	@expr 71,7,86
 	@expr 76,7,68
 	@expr 81,7,55
-	@n 86,3,73,54,12,0,1
+	@n 86,3,73,54,12,NcrRootShiftOnly
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,122
-	n 7,SD2,59,12,0,0
-	@n 1,1,45,89,79,0,1
-	n 3,76,87,68,0,1
-	@n 2,2,45,89,84,0,1
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 1,1,45,89,79,NcrRootShiftOnly
+	n 3,76,87,68,NcrRootShiftOnly
+	@n 2,2,45,89,84,NcrRootShiftOnly
 	@expr 6,7,123
 	@expr 12,7,121
 	@expr 16,7,119
@@ -608,21 +608,21 @@ Style_StridePiano_Ending1A:	# 4 bars of 4 beats
 	@expr 52,7,90
 	@expr 56,7,86
 	@expr 60,7,79
-	@n 64,2,60,86,45,0,1
+	@n 64,2,60,86,45,NcrRootShiftOnly
 	@expr 66,7,74
 	@expr 70,7,69
 	@expr 74,7,65
 	@expr 78,7,58
 	@expr 84,7,53
 	@expr 88,7,50
-	@n 95,0,HHC,52,20,0,0
+	@n 95,0,KitHiHatClosed,52,20,NcrNone
 	beat
-	n 0,BD1,21,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,21,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	n 1,47,108,79,0,1
-	n 3,77,89,71,0,1
-	@n 3,2,47,90,81,0,1
+	n 1,47,108,79,NcrRootShiftOnly
+	n 3,77,89,71,NcrRootShiftOnly
+	@n 3,2,47,90,81,NcrRootShiftOnly
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -632,15 +632,15 @@ Style_StridePiano_Ending1A:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,63
-	@n 64,7,SD2,82,12,0,0
-	@n 65,2,62,94,42,0,1
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	@n 65,2,62,94,42,NcrRootShiftOnly
 	@expr 94,7,122
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	@n 1,1,48,100,4,1,1
-	@n 2,2,48,68,104,0,1
-	n 3,79,93,90,0,1
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 1,1,48,100,132,NcrRootShiftOnly
+	@n 2,2,48,68,104,NcrRootShiftOnly
+	n 3,79,93,90,NcrRootShiftOnly
 	@expr 4,7,125
 	@expr 8,7,123
 	@expr 12,7,120
@@ -648,7 +648,7 @@ Style_StridePiano_Ending1A:	# 4 bars of 4 beats
 	@expr 22,7,116
 	@expr 26,7,114
 	@expr 30,7,111
-	@n 34,0,CHINA,72,41,0,0
+	@n 34,0,KitChinaCymbal,72,41,NcrNone
 	@expr 36,7,109
 	@expr 40,7,107
 	@expr 46,7,106
@@ -656,44 +656,44 @@ Style_StridePiano_Ending1A:	# 4 bars of 4 beats
 	@expr 54,7,99
 	@expr 58,7,93
 	@expr 62,7,87
-	@n 63,2,64,98,33,0,1
+	@n 63,2,64,98,33,NcrRootShiftOnly
 	@expr 66,7,79
 	@expr 72,7,73
 	@expr 76,7,67
 	@expr 80,7,62
 	@expr 84,7,53
 	@expr 90,7,48
-	@n 95,0,HHC,49,18,0,0
+	@n 95,0,KitHiHatClosed,49,18,NcrNone
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	n 3,70,101,45,0,1
-	@n 2,2,58,102,87,0,1
-	@n 5,0,CHINA,98,35,0,0
+	n 3,70,101,45,NcrRootShiftOnly
+	@n 2,2,58,102,87,NcrRootShiftOnly
+	@n 5,0,KitChinaCymbal,98,35,NcrNone
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
 	@expr 20,7,48
 	@expr 25,7,42
 	@expr 29,7,33
-	@n 33,3,67,74,34,0,1
+	@n 33,3,67,74,34,NcrRootShiftOnly
 	@expr 34,7,16
 	@expr 39,7,1
 	@expr 54,7,64
-	@n 63,2,48,74,30,0,1
-	@n 64,7,SD2,82,12,0,0
-	@n 65,3,68,85,29,0,1
-	@n 66,0,SPLASH,99,99,0,0
-	n 0,CHINA,110,15,0,0
-	@n 95,2,41,75,93,0,1
-	n 2,57,78,91,0,1
+	@n 63,2,48,74,30,NcrRootShiftOnly
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	@n 65,3,68,85,29,NcrRootShiftOnly
+	@n 66,0,KitSplashCymbal,99,99,NcrNone
+	n 0,KitChinaCymbal,110,15,NcrNone
+	@n 95,2,41,75,93,NcrRootShiftOnly
+	n 2,57,78,91,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
-	n 1,41,104,40,1,1
-	n 3,69,95,63,0,1
+	n 1,41,104,168,NcrRootShiftOnly
+	n 3,69,95,63,NcrRootShiftOnly
 	@expr 12,7,126
 	@expr 14,7,124
 	@expr 16,7,123
@@ -722,7 +722,7 @@ Style_StridePiano_Ending1A:	# 4 bars of 4 beats
 	@expr 62,7,87
 	@expr 64,7,84
 	@expr 66,7,81
-	@n 67,3,77,85,78,0,1
+	@n 67,3,77,85,78,NcrRootShiftOnly
 	@expr 68,7,78
 	@expr 70,7,75
 	@expr 72,7,71
@@ -733,17 +733,17 @@ Style_StridePiano_Ending1A:	# 4 bars of 4 beats
 	@expr 82,7,56
 	@expr 84,7,53
 	@expr 86,7,50
-	@n 95,2,48,67,23,0,1
-	n 2,57,46,21,0,1
-	n 2,65,75,19,0,1
+	@n 95,2,48,67,23,NcrRootShiftOnly
+	n 2,57,46,21,NcrRootShiftOnly
+	n 2,65,75,19,NcrRootShiftOnly
 	beat
-	n 0,BD1,27,12,0,0
-	n 0,HHC,50,23,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 0,KitHiHatClosed,50,23,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	n 2,60,67,17,0,1
-	n 2,62,62,17,0,1
-	@n 1,3,69,74,49,0,1
+	n 2,60,67,17,NcrRootShiftOnly
+	n 2,62,62,17,NcrRootShiftOnly
+	@n 1,3,69,74,49,NcrRootShiftOnly
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -753,18 +753,18 @@ Style_StridePiano_Ending1A:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,65
-	@n 62,2,48,65,35,0,1
-	@n 64,7,SD2,82,12,0,0
-	n 3,70,83,29,0,1
-	@n 95,2,50,58,72,0,1
-	n 2,43,67,69,0,1
+	@n 62,2,48,65,35,NcrRootShiftOnly
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	n 3,70,83,29,NcrRootShiftOnly
+	@n 95,2,50,58,72,NcrRootShiftOnly
+	n 2,43,67,69,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
-	n 1,43,101,34,1,1
-	n 2,59,58,62,0,1
-	@n 3,3,71,95,53,0,1
+	n 1,43,101,162,NcrRootShiftOnly
+	n 2,59,58,62,NcrRootShiftOnly
+	@n 3,3,71,95,53,NcrRootShiftOnly
 	@expr 13,7,110
 	@expr 15,7,104
 	@expr 20,7,99
@@ -775,18 +775,18 @@ Style_StridePiano_Ending1A:	# 4 bars of 4 beats
 	@expr 42,7,72
 	@expr 47,7,67
 	@expr 51,7,65
-	@n 64,0,HHO,26,82,0,0
+	@n 64,0,KitHiHatOpen,26,82,NcrNone
 	expr 7,127
-	n 2,59,65,1,1,1
-	n 2,53,65,1,1,1
-	@n 65,2,56,48,0,1,1
-	n 2,64,80,0,1,1
-	n 3,71,78,114,0,1
-	@n 68,3,68,79,109,0,1
-	@n 69,3,76,82,109,0,1
+	n 2,59,65,129,NcrRootShiftOnly
+	n 2,53,65,129,NcrRootShiftOnly
+	@n 65,2,56,48,128,NcrRootShiftOnly
+	n 2,64,80,128,NcrRootShiftOnly
+	n 3,71,78,114,NcrRootShiftOnly
+	@n 68,3,68,79,109,NcrRootShiftOnly
+	@n 69,3,76,82,109,NcrRootShiftOnly
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,88,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,88,12,NcrNone
 	@expr 2,7,103
 	@expr 7,7,86
 	@expr 11,7,68
@@ -794,30 +794,30 @@ Style_StridePiano_Ending1A:	# 4 bars of 4 beats
 	@expr 20,7,48
 	@expr 25,7,42
 	@expr 29,7,33
-	@n 64,0,HHC,40,14,0,0
-	n 7,SD2,88,12,0,0
+	@n 64,0,KitHiHatClosed,40,14,NcrNone
+	n 7,KitSnareDrum2,88,12,NcrNone
 	expr 7,127
 	@expr 71,7,86
 	@expr 76,7,68
 	@expr 95,7,0
 	end
-	var_end	Style_StridePiano_Ending1A
-Style_StridePiano_Ending1B:	# 4 bars of 4 beats
-	var_head	Style_StridePiano_Ending1B, 4, 4, 0xff, 0xff
-	mode 1,11
-	mode 2,8
+	var_end	Style_StridePiano_Intro2Major
+Style_StridePiano_Intro2Minor:	# 4 bars of 4 beats
+	var_head	Style_StridePiano_Intro2Minor, 4, 4, 0xff, 0xff
+	fold_root 1,11
+	fold_root 2,8
 	rev 4,47
 	rev 5,47
 	rev 6,47
-	var_events	Style_StridePiano_Ending1B
+	var_events	Style_StridePiano_Intro2Minor
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,122
-	n 7,SD2,59,12,0,0
-	n 2,51,69,96,0,1
-	@n 2,2,43,57,97,0,1
-	@n 3,2,36,58,96,0,1
-	n 3,84,73,65,0,1
+	n 7,KitSnareDrum2,59,12,NcrNone
+	n 2,51,69,96,NcrRootShiftOnly
+	@n 2,2,43,57,97,NcrRootShiftOnly
+	@n 3,2,36,58,96,NcrRootShiftOnly
+	n 3,84,73,65,NcrRootShiftOnly
 	@expr 6,7,125
 	@expr 10,7,122
 	@expr 14,7,120
@@ -833,19 +833,19 @@ Style_StridePiano_Ending1B:	# 4 bars of 4 beats
 	@expr 60,7,81
 	@expr 64,7,76
 	@expr 68,7,72
-	n 3,77,84,66,0,1
-	n 3,78,83,64,0,1
+	n 3,77,84,66,NcrRootShiftOnly
+	n 3,78,83,64,NcrRootShiftOnly
 	@expr 72,7,65
 	@expr 78,7,60
 	@expr 82,7,55
 	@expr 86,7,50
-	@n 93,2,63,76,30,0,1
-	@n 94,2,60,83,27,0,1
-	@n 95,2,55,76,25,0,1
+	@n 93,2,63,76,30,NcrRootShiftOnly
+	@n 94,2,60,83,27,NcrRootShiftOnly
+	@n 95,2,55,76,25,NcrRootShiftOnly
 	beat
-	n 0,HHC,61,21,0,0
-	n 0,BD1,21,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitHiHatClosed,61,21,NcrNone
+	n 0,KitBassDrum1,21,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
 	@expr 8,7,86
 	@expr 12,7,68
@@ -856,14 +856,14 @@ Style_StridePiano_Ending1B:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,63
-	@n 59,2,43,80,30,0,1
-	@n 64,7,SD2,82,12,0,0
-	@n 90,2,44,55,83,0,1
+	@n 59,2,43,80,30,NcrRootShiftOnly
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	@n 90,2,44,55,83,NcrRootShiftOnly
 	@expr 94,7,122
-	@n 95,1,44,50,126,0,1
+	@n 95,1,44,50,126,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	@expr 4,7,126
 	@expr 6,7,123
 	@expr 12,7,121
@@ -885,14 +885,14 @@ Style_StridePiano_Ending1B:	# 4 bars of 4 beats
 	@expr 84,7,56
 	@expr 88,7,50
 	@expr 92,7,48
-	@n 95,0,HHC,47,22,0,0
+	@n 95,0,KitHiHatClosed,47,22,NcrNone
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	n 2,56,84,28,0,1
-	@n 1,2,63,82,31,0,1
-	@n 2,2,60,89,30,0,1
+	n 2,56,84,28,NcrRootShiftOnly
+	@n 1,2,63,82,31,NcrRootShiftOnly
+	@n 2,2,60,89,30,NcrRootShiftOnly
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -902,13 +902,13 @@ Style_StridePiano_Ending1B:	# 4 bars of 4 beats
 	@expr 34,7,16
 	@expr 39,7,1
 	@expr 54,7,64
-	@n 64,7,SD2,82,12,0,0
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
-	@n 2,2,45,77,100,0,1
-	@n 5,1,45,73,126,0,1
+	@n 2,2,45,77,100,NcrRootShiftOnly
+	@n 5,1,45,73,126,NcrRootShiftOnly
 	@expr 10,7,123
 	@expr 12,7,122
 	@expr 14,7,121
@@ -934,19 +934,19 @@ Style_StridePiano_Ending1B:	# 4 bars of 4 beats
 	@expr 54,7,98
 	@expr 56,7,95
 	@expr 62,7,86
-	@n 65,3,78,80,33,0,1
-	@n 66,3,77,77,27,0,1
+	@n 65,3,78,80,33,NcrRootShiftOnly
+	@n 66,3,77,77,27,NcrRootShiftOnly
 	@expr 67,7,78
 	@expr 71,7,71
 	@expr 76,7,63
-	@n 95,0,HHC,49,27,0,0
+	@n 95,0,KitHiHatClosed,49,27,NcrNone
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 1,2,63,68,99,0,1
-	@n 2,2,60,81,94,0,1
-	n 2,57,78,93,0,1
+	@n 1,2,63,68,99,NcrRootShiftOnly
+	@n 2,2,60,81,94,NcrRootShiftOnly
+	n 2,57,78,93,NcrRootShiftOnly
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -956,15 +956,15 @@ Style_StridePiano_Ending1B:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,65
-	@n 64,7,SD2,82,12,0,0
-	@n 65,3,78,78,55,0,1
-	@n 67,3,77,85,95,0,1
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	@n 65,3,78,78,55,NcrRootShiftOnly
+	@n 67,3,77,85,95,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
-	@n 1,1,44,58,2,1,1
-	@n 2,2,44,71,92,0,1
+	@n 1,1,44,58,130,NcrRootShiftOnly
+	@n 2,2,44,71,92,NcrRootShiftOnly
 	@expr 13,7,111
 	@expr 14,7,106
 	@expr 18,7,101
@@ -976,36 +976,36 @@ Style_StridePiano_Ending1B:	# 4 bars of 4 beats
 	@expr 45,7,69
 	@expr 50,7,65
 	@expr 64,7,127
-	@n 68,3,75,59,29,0,1
-	@n 95,2,56,65,79,0,1
-	n 2,63,68,80,0,1
+	@n 68,3,75,59,29,NcrRootShiftOnly
+	@n 95,2,56,65,79,NcrRootShiftOnly
+	n 2,63,68,80,NcrRootShiftOnly
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,88,12,0,0
-	@n 1,0,HHC,55,21,0,0
-	n 2,60,81,77,0,1
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,88,12,NcrNone
+	@n 1,0,KitHiHatClosed,55,21,NcrNone
+	n 2,60,81,77,NcrRootShiftOnly
 	@expr 2,7,103
 	@expr 7,7,86
-	@n 10,3,72,65,81,0,1
+	@n 10,3,72,65,81,NcrRootShiftOnly
 	@expr 11,7,68
 	@expr 16,7,55
 	@expr 20,7,48
 	@expr 25,7,42
 	@expr 29,7,33
-	@n 53,2,36,90,9,1,1
-	@n 64,7,SD2,88,12,0,0
+	@n 53,2,36,90,137,NcrRootShiftOnly
+	@n 64,7,KitSnareDrum2,88,12,NcrNone
 	expr 7,127
 	@expr 71,7,86
 	@expr 76,7,68
-	n 2,43,69,111,0,1
+	n 2,43,69,111,NcrRootShiftOnly
 	@expr 81,7,55
-	@n 95,1,36,73,0,1,1
+	@n 95,1,36,73,128,NcrRootShiftOnly
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,122
-	n 7,SD2,59,12,0,0
-	@n 2,2,51,87,77,0,1
-	@n 5,3,84,85,50,0,1
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 2,2,51,87,77,NcrRootShiftOnly
+	@n 5,3,84,85,50,NcrRootShiftOnly
 	@expr 6,7,123
 	@expr 12,7,121
 	@expr 16,7,119
@@ -1019,22 +1019,22 @@ Style_StridePiano_Ending1B:	# 4 bars of 4 beats
 	@expr 52,7,90
 	@expr 56,7,86
 	@expr 60,7,79
-	@n 64,3,77,78,78,0,1
+	@n 64,3,77,78,78,NcrRootShiftOnly
 	@expr 66,7,74
-	@n 67,3,78,67,75,0,1
+	@n 67,3,78,67,75,NcrRootShiftOnly
 	@expr 70,7,69
 	@expr 74,7,65
 	@expr 78,7,58
 	@expr 84,7,53
 	@expr 88,7,50
-	@n 95,0,HHC,52,20,0,0
+	@n 95,0,KitHiHatClosed,52,20,NcrNone
 	beat
-	n 0,BD1,21,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,21,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	n 2,63,94,28,0,1
-	n 2,55,93,26,0,1
-	n 2,60,90,24,0,1
+	n 2,63,94,28,NcrRootShiftOnly
+	n 2,55,93,26,NcrRootShiftOnly
+	n 2,60,90,24,NcrRootShiftOnly
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -1044,14 +1044,14 @@ Style_StridePiano_Ending1B:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,63
-	@n 64,7,SD2,82,12,0,0
-	n 2,43,73,32,0,1
-	@n 92,1,44,62,31,1,1
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	n 2,43,73,32,NcrRootShiftOnly
+	@n 92,1,44,62,159,NcrRootShiftOnly
 	@expr 94,7,122
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	@n 1,2,44,72,94,0,1
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 1,2,44,72,94,NcrRootShiftOnly
 	@expr 4,7,125
 	@expr 8,7,123
 	@expr 12,7,120
@@ -1072,14 +1072,14 @@ Style_StridePiano_Ending1B:	# 4 bars of 4 beats
 	@expr 80,7,62
 	@expr 84,7,53
 	@expr 90,7,48
-	@n 95,0,HHC,49,18,0,0
+	@n 95,0,KitHiHatClosed,49,18,NcrNone
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 2,2,56,71,34,0,1
-	@n 3,2,63,77,32,0,1
-	n 2,60,91,34,0,1
+	@n 2,2,56,71,34,NcrRootShiftOnly
+	@n 3,2,63,77,32,NcrRootShiftOnly
+	n 2,60,91,34,NcrRootShiftOnly
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -1089,13 +1089,13 @@ Style_StridePiano_Ending1B:	# 4 bars of 4 beats
 	@expr 34,7,16
 	@expr 39,7,1
 	@expr 54,7,64
-	@n 64,7,SD2,82,12,0,0
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
-	n 3,75,93,46,0,1
-	@n 3,2,45,81,100,0,1
+	n 3,75,93,46,NcrRootShiftOnly
+	@n 3,2,45,81,100,NcrRootShiftOnly
 	@expr 12,7,126
 	@expr 14,7,124
 	@expr 16,7,123
@@ -1123,7 +1123,7 @@ Style_StridePiano_Ending1B:	# 4 bars of 4 beats
 	@expr 60,7,90
 	@expr 62,7,87
 	@expr 64,7,84
-	n 3,77,72,8,0,1
+	n 3,77,72,8,NcrRootShiftOnly
 	@expr 66,7,81
 	@expr 68,7,78
 	@expr 70,7,75
@@ -1132,19 +1132,19 @@ Style_StridePiano_Ending1B:	# 4 bars of 4 beats
 	@expr 76,7,65
 	@expr 78,7,62
 	@expr 80,7,59
-	n 3,75,65,17,0,1
+	n 3,75,65,17,NcrRootShiftOnly
 	@expr 82,7,56
 	@expr 84,7,53
 	@expr 86,7,50
-	@n 95,2,63,82,7,2,1
-	n 3,72,83,53,0,1
+	@n 95,2,63,82,263,NcrRootShiftOnly
+	n 3,72,83,53,NcrRootShiftOnly
 	beat
-	n 0,BD1,27,12,0,0
-	n 0,HHC,50,23,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 0,KitHiHatClosed,50,23,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 1,2,57,66,59,0,1
-	n 2,60,73,59,0,1
+	@n 1,2,57,66,59,NcrRootShiftOnly
+	n 2,60,73,59,NcrRootShiftOnly
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -1154,15 +1154,15 @@ Style_StridePiano_Ending1B:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,65
-	@n 58,1,43,81,61,1,1
-	@n 64,7,SD2,82,12,0,0
-	@n 65,2,43,74,64,1,1
-	n 3,74,91,111,0,1
-	@n 71,2,59,94,63,1,1
-	@n 72,2,55,93,62,1,1
+	@n 58,1,43,81,189,NcrRootShiftOnly
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	@n 65,2,43,74,192,NcrRootShiftOnly
+	n 3,74,91,111,NcrRootShiftOnly
+	@n 71,2,59,94,191,NcrRootShiftOnly
+	@n 72,2,55,93,190,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
 	@expr 13,7,110
 	@expr 15,7,104
@@ -1174,11 +1174,11 @@ Style_StridePiano_Ending1B:	# 4 bars of 4 beats
 	@expr 42,7,72
 	@expr 47,7,67
 	@expr 51,7,65
-	@n 64,0,HHO,26,82,0,0
+	@n 64,0,KitHiHatOpen,26,82,NcrNone
 	expr 7,127
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,88,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,88,12,NcrNone
 	@expr 2,7,103
 	@expr 7,7,86
 	@expr 11,7,68
@@ -1186,14 +1186,14 @@ Style_StridePiano_Ending1B:	# 4 bars of 4 beats
 	@expr 20,7,48
 	@expr 25,7,42
 	@expr 29,7,33
-	@n 64,0,HHC,40,14,0,0
-	n 7,SD2,88,12,0,0
+	@n 64,0,KitHiHatClosed,40,14,NcrNone
+	n 7,KitSnareDrum2,88,12,NcrNone
 	expr 7,127
 	@expr 71,7,86
 	@expr 76,7,68
 	@expr 95,7,0
 	end
-	var_end	Style_StridePiano_Ending1B
+	var_end	Style_StridePiano_Intro2Minor
 Style_StridePiano_Var1:	# 4 bars of 4 beats
 	var_head	Style_StridePiano_Var1, 4, 4, 0xff, 0xff
 	rev 4,47
@@ -1201,11 +1201,11 @@ Style_StridePiano_Var1:	# 4 bars of 4 beats
 	rev 6,47
 	var_events	Style_StridePiano_Var1
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,127
-	n 1,36,49,71,0,16
-	n 2,36,63,36,0,16
-	@n 2,7,SD2,59,12,0,0
+	n 1,36,49,71,NcrMelodyBasic
+	n 2,36,63,36,NcrMelodyBasic
+	@n 2,7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,109
 	@expr 17,7,105
 	@expr 21,7,101
@@ -1224,11 +1224,11 @@ Style_StridePiano_Var1:	# 4 bars of 4 beats
 	@expr 80,7,48
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	@n 1,3,55,38,21,0,80
-	n 3,64,60,22,0,80
-	n 3,60,53,20,0,80
-	@n 4,0,HHP,38,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	@n 1,3,55,38,21,NcrBasicChord100
+	n 3,64,60,22,NcrBasicChord100
+	n 3,60,53,20,NcrBasicChord100
+	@n 4,0,KitHiHatPedal,38,12,NcrNone
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -1236,11 +1236,11 @@ Style_StridePiano_Var1:	# 4 bars of 4 beats
 	@expr 26,7,42
 	@expr 30,7,30
 	@expr 95,7,122
-	n 1,43,49,75,0,16
+	n 1,43,49,75,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	n 2,43,57,62,0,16
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	n 2,43,57,62,NcrMelodyBasic
 	@expr 14,7,105
 	@expr 19,7,101
 	@expr 23,7,97
@@ -1257,11 +1257,11 @@ Style_StridePiano_Var1:	# 4 bars of 4 beats
 	@expr 73,7,50
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	n 3,55,55,22,0,80
-	n 3,60,59,21,0,80
-	@n 1,3,64,48,24,0,80
-	@n 4,0,HHP,36,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,55,55,22,NcrBasicChord100
+	n 3,60,59,21,NcrBasicChord100
+	@n 1,3,64,48,24,NcrBasicChord100
+	@n 4,0,KitHiHatPedal,36,12,NcrNone
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -1270,10 +1270,10 @@ Style_StridePiano_Var1:	# 4 bars of 4 beats
 	@expr 29,7,40
 	@expr 95,7,127
 	beat
-	n 0,BD1,50,12,0,0
-	n 1,36,47,81,0,16
-	n 2,36,64,52,0,16
-	@n 2,7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 1,36,47,81,NcrMelodyBasic
+	n 2,36,64,52,NcrMelodyBasic
+	@n 2,7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,109
 	@expr 17,7,105
 	@expr 21,7,101
@@ -1291,23 +1291,23 @@ Style_StridePiano_Var1:	# 4 bars of 4 beats
 	@expr 75,7,50
 	@expr 80,7,48
 	@expr 95,7,127
-	n 3,55,61,32,0,80
+	n 3,55,61,32,NcrBasicChord100
 	beat
-	n 7,SD2,109,12,0,0
-	@n 1,3,60,61,21,0,80
-	n 3,64,59,17,0,80
-	@n 4,0,HHP,38,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	@n 1,3,60,61,21,NcrBasicChord100
+	n 3,64,59,17,NcrBasicChord100
+	@n 4,0,KitHiHatPedal,38,12,NcrNone
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
 	@expr 21,7,46
 	@expr 26,7,35
 	@expr 95,7,122
-	n 1,43,45,92,0,16
+	n 1,43,45,92,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	n 2,43,60,62,0,16
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	n 2,43,60,62,NcrMelodyBasic
 	@expr 14,7,105
 	@expr 19,7,101
 	@expr 23,7,97
@@ -1324,11 +1324,11 @@ Style_StridePiano_Var1:	# 4 bars of 4 beats
 	@expr 73,7,50
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	@n 1,3,60,47,22,0,80
-	n 3,64,56,23,0,80
-	n 3,55,52,19,0,80
-	@n 4,0,HHP,34,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	@n 1,3,60,47,22,NcrBasicChord100
+	n 3,64,56,23,NcrBasicChord100
+	n 3,55,52,19,NcrBasicChord100
+	@n 4,0,KitHiHatPedal,34,12,NcrNone
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -1336,11 +1336,11 @@ Style_StridePiano_Var1:	# 4 bars of 4 beats
 	@expr 25,7,42
 	@expr 29,7,40
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,127
-	n 1,36,49,71,0,16
-	n 2,36,58,40,0,16
-	@n 1,7,SD2,59,12,0,0
+	n 1,36,49,71,NcrMelodyBasic
+	n 2,36,58,40,NcrMelodyBasic
+	@n 1,7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,109
 	@expr 17,7,105
 	@expr 21,7,101
@@ -1358,23 +1358,23 @@ Style_StridePiano_Var1:	# 4 bars of 4 beats
 	@expr 75,7,50
 	@expr 80,7,48
 	@expr 95,7,127
-	n 3,64,54,22,0,80
-	n 3,55,55,18,0,80
-	n 3,60,60,18,0,80
+	n 3,64,54,22,NcrBasicChord100
+	n 3,55,55,18,NcrBasicChord100
+	n 3,60,60,18,NcrBasicChord100
 	beat
-	n 7,SD2,109,12,0,0
-	@n 4,0,HHP,38,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	@n 4,0,KitHiHatPedal,38,12,NcrNone
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
 	@expr 21,7,48
 	@expr 26,7,35
 	@expr 95,7,122
-	n 1,43,49,75,0,16
+	n 1,43,49,75,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	n 2,43,63,64,0,16
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	n 2,43,63,64,NcrMelodyBasic
 	@expr 14,7,105
 	@expr 19,7,101
 	@expr 23,7,97
@@ -1390,12 +1390,12 @@ Style_StridePiano_Var1:	# 4 bars of 4 beats
 	@expr 68,7,54
 	@expr 73,7,50
 	@expr 95,7,127
-	n 3,64,69,21,0,80
-	n 3,55,58,18,0,80
-	n 3,60,55,16,0,80
+	n 3,64,69,21,NcrBasicChord100
+	n 3,55,58,18,NcrBasicChord100
+	n 3,60,55,16,NcrBasicChord100
 	beat
-	n 7,SD2,109,12,0,0
-	@n 4,0,HHP,36,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	@n 4,0,KitHiHatPedal,36,12,NcrNone
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -1404,11 +1404,11 @@ Style_StridePiano_Var1:	# 4 bars of 4 beats
 	@expr 29,7,33
 	@expr 34,7,35
 	@expr 95,7,127
-	n 2,36,58,44,0,16
+	n 2,36,58,44,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 1,36,47,81,0,16
-	@n 2,7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 1,36,47,81,NcrMelodyBasic
+	@n 2,7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,109
 	@expr 17,7,105
 	@expr 21,7,101
@@ -1425,13 +1425,13 @@ Style_StridePiano_Var1:	# 4 bars of 4 beats
 	@expr 71,7,54
 	@expr 75,7,50
 	@expr 80,7,48
-	@n 94,3,64,63,19,0,80
+	@n 94,3,64,63,19,NcrBasicChord100
 	@expr 95,7,127
-	n 3,60,61,19,0,80
+	n 3,60,61,19,NcrBasicChord100
 	beat
-	n 7,SD2,109,12,0,0
-	n 3,55,31,17,0,80
-	@n 4,0,HHP,38,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,55,31,17,NcrBasicChord100
+	@n 4,0,KitHiHatPedal,38,12,NcrNone
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -1439,11 +1439,11 @@ Style_StridePiano_Var1:	# 4 bars of 4 beats
 	@expr 26,7,42
 	@expr 30,7,35
 	@expr 95,7,122
-	n 1,43,45,92,0,16
-	n 2,43,55,60,0,16
+	n 1,43,45,92,NcrMelodyBasic
+	n 2,43,55,60,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,105
 	@expr 19,7,101
 	@expr 23,7,97
@@ -1460,18 +1460,18 @@ Style_StridePiano_Var1:	# 4 bars of 4 beats
 	@expr 73,7,50
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	n 3,55,59,23,0,80
-	n 3,60,59,21,0,80
-	n 3,64,59,23,0,80
-	@n 4,0,HHP,34,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,55,59,23,NcrBasicChord100
+	n 3,60,59,21,NcrBasicChord100
+	n 3,64,59,23,NcrBasicChord100
+	@n 4,0,KitHiHatPedal,34,12,NcrNone
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
 	@expr 20,7,48
 	@expr 25,7,42
 	@expr 29,7,43
-	@n 64,2,43,61,14,0,16
+	@n 64,2,43,61,14,NcrMelodyBasic
 	@expr 95,7,0
 	end
 	var_end	Style_StridePiano_Var1
@@ -1482,11 +1482,11 @@ Style_StridePiano_Var1Fill1:	# 1 bars of 4 beats
 	rev 6,47
 	var_events	Style_StridePiano_Var1Fill1
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,127
-	n 1,43,49,71,0,16
-	@n 1,7,SD2,48,12,0,0
-	@n 2,2,43,63,64,0,16
+	n 1,43,49,71,NcrMelodyBasic
+	@n 1,7,KitSnareDrum2,48,12,NcrNone
+	@n 2,2,43,63,64,NcrMelodyBasic
 	@expr 15,7,108
 	@expr 19,7,102
 	@expr 23,7,95
@@ -1509,12 +1509,12 @@ Style_StridePiano_Var1Fill1:	# 1 bars of 4 beats
 	@expr 89,7,43
 	@expr 93,7,126
 	beat
-	n 0,CHINA,18,115,0,0
-	n 0,HHP,38,12,0,0
-	n 7,SD2,78,12,0,0
+	n 0,KitChinaCymbal,18,115,NcrNone
+	n 0,KitHiHatPedal,38,12,NcrNone
+	n 7,KitSnareDrum2,78,12,NcrNone
 	@expr 2,7,109
-	n 3,64,58,49,0,18
-	n 3,60,59,49,0,18
+	n 3,64,58,49,NcrMelodyIn7thCToBb
+	n 3,60,59,49,NcrMelodyIn7thCToBb
 	@expr 6,7,91
 	@expr 11,7,74
 	@expr 15,7,57
@@ -1525,14 +1525,14 @@ Style_StridePiano_Var1Fill1:	# 1 bars of 4 beats
 	@expr 38,7,2
 	@expr 43,7,0
 	@expr 64,7,35
-	@n 65,7,SD1,41,12,0,0
+	@n 65,7,KitSnareDrum1,41,12,NcrNone
 	@expr 87,7,40
 	@expr 95,7,127
-	n 1,43,49,75,0,16
+	n 1,43,49,75,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,49,12,0,0
-	n 2,43,63,64,0,16
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,49,12,NcrNone
+	n 2,43,63,64,NcrMelodyBasic
 	@expr 11,7,111
 	@expr 15,7,105
 	@expr 19,7,99
@@ -1546,10 +1546,10 @@ Style_StridePiano_Var1Fill1:	# 1 bars of 4 beats
 	@expr 54,7,46
 	@expr 59,7,38
 	@expr 63,7,32
-	@n 64,0,CHINA,57,110,0,0
+	@n 64,0,KitChinaCymbal,57,110,NcrNone
 	expr 7,31
-	n 3,60,71,60,0,18
-	n 3,64,71,59,0,18
+	n 3,60,71,60,NcrMelodyIn7thCToBb
+	n 3,64,71,59,NcrMelodyIn7thCToBb
 	@expr 68,7,25
 	@expr 72,7,19
 	@expr 77,7,12
@@ -1557,8 +1557,8 @@ Style_StridePiano_Var1Fill1:	# 1 bars of 4 beats
 	@expr 86,7,46
 	@expr 90,7,127
 	beat
-	n 0,HHP,36,12,0,0
-	n 7,SD2,78,12,0,0
+	n 0,KitHiHatPedal,36,12,NcrNone
+	n 7,KitSnareDrum2,78,12,NcrNone
 	@expr 1,7,120
 	@expr 3,7,103
 	@expr 8,7,86
@@ -1571,7 +1571,7 @@ Style_StridePiano_Var1Fill1:	# 1 bars of 4 beats
 	@expr 40,7,1
 	@expr 45,7,0
 	@expr 64,7,36
-	n 7,SD2,78,12,0,0
+	n 7,KitSnareDrum2,78,12,NcrNone
 	@expr 85,7,127
 	end
 	var_end	Style_StridePiano_Var1Fill1
@@ -1582,12 +1582,12 @@ Style_StridePiano_Var1Fill2:	# 1 bars of 4 beats
 	rev 6,47
 	var_events	Style_StridePiano_Var1Fill2
 	beat
-	n 0,BD1,50,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
 	expr 7,127
-	n 1,43,47,81,0,16
-	n 2,52,52,120,0,16
-	n 2,43,52,116,0,16
-	@n 1,7,SD2,48,12,0,0
+	n 1,43,47,81,NcrMelodyBasic
+	n 2,52,52,120,NcrMelodyBasic
+	n 2,43,52,116,NcrMelodyBasic
+	@n 1,7,KitSnareDrum2,48,12,NcrNone
 	@expr 15,7,108
 	@expr 19,7,102
 	@expr 23,7,96
@@ -1607,13 +1607,13 @@ Style_StridePiano_Var1Fill2:	# 1 bars of 4 beats
 	@expr 85,7,1
 	@expr 89,7,43
 	@expr 93,7,127
-	@n 94,3,64,63,19,0,80
-	@n 95,3,60,61,19,0,80
+	@n 94,3,64,63,19,NcrBasicChord100
+	@n 95,3,60,61,19,NcrBasicChord100
 	beat
-	n 7,SD2,78,12,0,0
-	n 3,55,31,17,0,80
+	n 7,KitSnareDrum2,78,12,NcrNone
+	n 3,55,31,17,NcrBasicChord100
 	@expr 2,7,109
-	@n 4,0,HHP,38,12,0,0
+	@n 4,0,KitHiHatPedal,38,12,NcrNone
 	@expr 6,7,91
 	@expr 11,7,74
 	@expr 15,7,57
@@ -1623,50 +1623,50 @@ Style_StridePiano_Var1Fill2:	# 1 bars of 4 beats
 	@expr 33,7,23
 	@expr 38,7,2
 	@expr 43,7,0
-	@n 61,2,43,75,25,1,16
+	@n 61,2,43,75,153,NcrMelodyBasic
 	@expr 64,7,31
-	n 7,CLAP,78,12,0,0
+	n 7,KitHandClaps,78,12,NcrNone
 	@expr 87,7,40
-	@n 94,2,52,54,119,0,16
+	@n 94,2,52,54,119,NcrMelodyBasic
 	@expr 95,7,127
-	n 1,43,45,92,0,16
+	n 1,43,45,92,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,49,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,49,12,NcrNone
 	@expr 11,7,118
 	@expr 15,7,112
 	@expr 19,7,107
 	@expr 23,7,102
 	@expr 29,7,94
-	@n 32,0,SD1,37,33,0,0
+	@n 32,0,KitSnareDrum1,37,33,NcrNone
 	expr 7,89
 	@expr 37,7,82
 	@expr 41,7,76
 	@expr 45,7,71
-	@n 48,0,CLAP,16,6,0,0
+	@n 48,0,KitHandClaps,16,6,NcrNone
 	@expr 50,7,64
 	@expr 54,7,58
 	@expr 59,7,52
 	@expr 63,7,46
-	@n 64,0,CLAP,13,6,0,0
+	@n 64,0,KitHandClaps,13,6,NcrNone
 	@expr 68,7,40
 	@expr 72,7,34
 	@expr 77,7,27
-	@n 80,0,CLAP,10,6,0,0
+	@n 80,0,KitHandClaps,10,6,NcrNone
 	@expr 81,7,21
 	@expr 86,7,15
 	@expr 90,7,9
-	@n 95,0,SD1,52,6,0,0
+	@n 95,0,KitSnareDrum1,52,6,NcrNone
 	beat
-	n 3,55,59,23,0,80
-	n 3,60,59,21,0,80
-	n 3,64,59,23,0,80
-	@n 1,0,HHP,34,12,0,0
+	n 3,55,59,23,NcrBasicChord100
+	n 3,60,59,21,NcrBasicChord100
+	n 3,64,59,23,NcrBasicChord100
+	@n 1,0,KitHiHatPedal,34,12,NcrNone
 	expr 7,0
-	@n 16,0,CLAP,10,6,0,0
-	@n 29,0,CLAP,11,6,0,0
-	@n 39,0,CLAP,15,6,0,0
-	@n 62,0,SD1,43,32,0,0
+	@n 16,0,KitHandClaps,10,6,NcrNone
+	@n 29,0,KitHandClaps,11,6,NcrNone
+	@n 39,0,KitHandClaps,15,6,NcrNone
+	@n 62,0,KitSnareDrum1,43,32,NcrNone
 	end
 	var_end	Style_StridePiano_Var1Fill2
 Style_StridePiano_Var2:	# 4 bars of 4 beats
@@ -1676,12 +1676,12 @@ Style_StridePiano_Var2:	# 4 bars of 4 beats
 	rev 6,47
 	var_events	Style_StridePiano_Var2
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,127
-	n 1,36,49,71,0,16
-	@n 2,7,SD2,59,12,0,0
-	n 2,52,35,71,0,16
-	@n 4,2,36,56,47,0,16
+	n 1,36,49,71,NcrMelodyBasic
+	@n 2,7,KitSnareDrum2,59,12,NcrNone
+	n 2,52,35,71,NcrMelodyBasic
+	@n 4,2,36,56,47,NcrMelodyBasic
 	@expr 14,7,109
 	@expr 17,7,105
 	@expr 21,7,101
@@ -1700,11 +1700,11 @@ Style_StridePiano_Var2:	# 4 bars of 4 beats
 	@expr 80,7,48
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	n 3,60,61,16,0,80
-	n 3,52,53,16,0,80
-	n 3,55,48,16,0,80
-	@n 4,0,HHP,38,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,60,61,16,NcrBasicChord100
+	n 3,52,53,16,NcrBasicChord100
+	n 3,55,48,16,NcrBasicChord100
+	@n 4,0,KitHiHatPedal,38,12,NcrNone
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -1712,11 +1712,11 @@ Style_StridePiano_Var2:	# 4 bars of 4 beats
 	@expr 26,7,42
 	@expr 30,7,30
 	@expr 95,7,122
-	n 1,43,49,75,0,16
+	n 1,43,49,75,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	@n 1,2,43,49,26,0,16
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 1,2,43,49,26,NcrMelodyBasic
 	@expr 14,7,105
 	@expr 19,7,101
 	@expr 23,7,97
@@ -1732,12 +1732,12 @@ Style_StridePiano_Var2:	# 4 bars of 4 beats
 	@expr 68,7,54
 	@expr 73,7,50
 	@expr 95,7,127
-	n 3,52,51,16,0,80
-	n 3,60,59,16,0,80
+	n 3,52,51,16,NcrBasicChord100
+	n 3,60,59,16,NcrBasicChord100
 	beat
-	n 7,SD2,109,12,0,0
-	n 3,55,46,16,0,80
-	@n 4,0,HHP,36,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,55,46,16,NcrBasicChord100
+	@n 4,0,KitHiHatPedal,36,12,NcrNone
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -1746,11 +1746,11 @@ Style_StridePiano_Var2:	# 4 bars of 4 beats
 	@expr 29,7,40
 	@expr 95,7,127
 	beat
-	n 0,BD1,50,12,0,0
-	n 1,36,47,81,0,16
-	n 2,52,36,55,0,16
-	n 2,36,54,42,0,16
-	@n 2,7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 1,36,47,81,NcrMelodyBasic
+	n 2,52,36,55,NcrMelodyBasic
+	n 2,36,54,42,NcrMelodyBasic
+	@n 2,7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,109
 	@expr 17,7,105
 	@expr 21,7,101
@@ -1768,23 +1768,23 @@ Style_StridePiano_Var2:	# 4 bars of 4 beats
 	@expr 75,7,50
 	@expr 80,7,48
 	@expr 95,7,127
-	n 3,52,54,16,0,80
-	n 3,55,49,16,0,80
-	n 3,60,62,16,0,80
+	n 3,52,54,16,NcrBasicChord100
+	n 3,55,49,16,NcrBasicChord100
+	n 3,60,62,16,NcrBasicChord100
 	beat
-	n 7,SD2,109,12,0,0
-	@n 4,0,HHP,38,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	@n 4,0,KitHiHatPedal,38,12,NcrNone
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
 	@expr 21,7,46
 	@expr 26,7,35
 	@expr 95,7,122
-	n 1,43,45,92,0,16
+	n 1,43,45,92,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	@n 2,2,43,49,32,0,16
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 2,2,43,49,32,NcrMelodyBasic
 	@expr 14,7,105
 	@expr 19,7,101
 	@expr 23,7,97
@@ -1801,11 +1801,11 @@ Style_StridePiano_Var2:	# 4 bars of 4 beats
 	@expr 73,7,50
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	n 3,60,60,16,0,80
-	n 3,52,52,16,0,80
-	n 3,55,47,16,0,80
-	@n 4,0,HHP,34,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,60,60,16,NcrBasicChord100
+	n 3,52,52,16,NcrBasicChord100
+	n 3,55,47,16,NcrBasicChord100
+	@n 4,0,KitHiHatPedal,34,12,NcrNone
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -1815,14 +1815,14 @@ Style_StridePiano_Var2:	# 4 bars of 4 beats
 	@expr 34,7,16
 	@expr 39,7,1
 	@expr 63,7,51
-	@n 64,7,SD2,109,12,0,0
+	@n 64,7,KitSnareDrum2,109,12,NcrNone
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,127
-	n 1,36,49,71,0,16
-	@n 1,7,SD2,59,12,0,0
-	n 2,36,57,38,0,16
-	@n 6,2,52,37,39,0,16
+	n 1,36,49,71,NcrMelodyBasic
+	@n 1,7,KitSnareDrum2,59,12,NcrNone
+	n 2,36,57,38,NcrMelodyBasic
+	@n 6,2,52,37,39,NcrMelodyBasic
 	@expr 14,7,109
 	@expr 17,7,105
 	@expr 21,7,101
@@ -1841,22 +1841,22 @@ Style_StridePiano_Var2:	# 4 bars of 4 beats
 	@expr 80,7,48
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	n 3,60,55,16,0,80
-	n 3,52,55,16,0,80
-	n 3,55,55,16,0,80
-	@n 4,0,HHP,38,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,60,55,16,NcrBasicChord100
+	n 3,52,55,16,NcrBasicChord100
+	n 3,55,55,16,NcrBasicChord100
+	@n 4,0,KitHiHatPedal,38,12,NcrNone
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
 	@expr 21,7,48
 	@expr 26,7,35
 	@expr 95,7,122
-	n 1,43,49,75,0,16
+	n 1,43,49,75,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	@n 3,2,43,45,28,0,16
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 3,2,43,45,28,NcrMelodyBasic
 	@expr 14,7,105
 	@expr 19,7,101
 	@expr 23,7,97
@@ -1873,11 +1873,11 @@ Style_StridePiano_Var2:	# 4 bars of 4 beats
 	@expr 73,7,50
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	n 3,60,56,16,0,80
-	n 3,52,56,16,0,80
-	n 3,55,56,16,0,80
-	@n 4,0,HHP,36,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,60,56,16,NcrBasicChord100
+	n 3,52,56,16,NcrBasicChord100
+	n 3,55,56,16,NcrBasicChord100
+	@n 4,0,KitHiHatPedal,36,12,NcrNone
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -1887,11 +1887,11 @@ Style_StridePiano_Var2:	# 4 bars of 4 beats
 	@expr 34,7,35
 	@expr 95,7,127
 	beat
-	n 0,BD1,50,12,0,0
-	n 1,36,47,81,0,16
-	n 2,52,36,47,0,16
-	@n 2,7,SD2,59,12,0,0
-	@n 3,2,36,51,37,0,16
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 1,36,47,81,NcrMelodyBasic
+	n 2,52,36,47,NcrMelodyBasic
+	@n 2,7,KitSnareDrum2,59,12,NcrNone
+	@n 3,2,36,51,37,NcrMelodyBasic
 	@expr 14,7,109
 	@expr 17,7,105
 	@expr 21,7,101
@@ -1910,24 +1910,24 @@ Style_StridePiano_Var2:	# 4 bars of 4 beats
 	@expr 80,7,48
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	n 3,60,57,16,0,80
-	n 3,52,57,16,0,80
-	n 3,55,57,16,0,80
-	@n 4,0,HHP,38,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,60,57,16,NcrBasicChord100
+	n 3,52,57,16,NcrBasicChord100
+	n 3,55,57,16,NcrBasicChord100
+	@n 4,0,KitHiHatPedal,38,12,NcrNone
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
 	@expr 21,7,48
 	@expr 26,7,42
 	@expr 30,7,35
-	@n 64,2,52,40,34,0,16
+	@n 64,2,52,40,34,NcrMelodyBasic
 	@expr 95,7,122
-	n 1,43,45,92,0,16
+	n 1,43,45,92,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	@n 1,2,43,43,98,0,16
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 1,2,43,43,98,NcrMelodyBasic
 	@expr 14,7,105
 	@expr 19,7,101
 	@expr 23,7,97
@@ -1944,11 +1944,11 @@ Style_StridePiano_Var2:	# 4 bars of 4 beats
 	@expr 73,7,50
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	n 3,60,57,16,0,80
-	n 3,52,57,16,0,80
-	n 3,55,57,16,0,80
-	@n 4,0,HHP,34,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,60,57,16,NcrBasicChord100
+	n 3,52,57,16,NcrBasicChord100
+	n 3,55,57,16,NcrBasicChord100
+	@n 4,0,KitHiHatPedal,34,12,NcrNone
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -1965,11 +1965,11 @@ Style_StridePiano_Var2Fill1:	# 1 bars of 4 beats
 	rev 6,47
 	var_events	Style_StridePiano_Var2Fill1
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,127
-	n 1,36,49,71,0,16
-	@n 1,7,SD2,48,12,0,0
-	n 2,36,57,38,0,16
+	n 1,36,49,71,NcrMelodyBasic
+	@n 1,7,KitSnareDrum2,48,12,NcrNone
+	n 2,36,57,38,NcrMelodyBasic
 	@expr 15,7,108
 	@expr 19,7,102
 	@expr 23,7,95
@@ -1992,11 +1992,11 @@ Style_StridePiano_Var2Fill1:	# 1 bars of 4 beats
 	@expr 89,7,43
 	@expr 93,7,126
 	beat
-	n 0,HHP,38,12,0,0
-	n 7,SD2,78,12,0,0
-	n 3,60,55,16,0,80
-	n 3,52,55,16,0,80
-	n 3,55,55,16,0,80
+	n 0,KitHiHatPedal,38,12,NcrNone
+	n 7,KitSnareDrum2,78,12,NcrNone
+	n 3,60,55,16,NcrBasicChord100
+	n 3,52,55,16,NcrBasicChord100
+	n 3,55,55,16,NcrBasicChord100
 	@expr 2,7,109
 	@expr 6,7,91
 	@expr 11,7,74
@@ -2008,13 +2008,13 @@ Style_StridePiano_Var2Fill1:	# 1 bars of 4 beats
 	@expr 38,7,2
 	@expr 43,7,0
 	@expr 64,7,35
-	@n 65,7,SD1,41,12,0,0
+	@n 65,7,KitSnareDrum1,41,12,NcrNone
 	@expr 87,7,40
 	@expr 95,7,127
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,49,12,0,0
-	@n 3,2,43,63,72,0,16
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,49,12,NcrNone
+	@n 3,2,43,63,72,NcrMelodyBasic
 	@expr 11,7,111
 	@expr 15,7,105
 	@expr 19,7,99
@@ -2027,20 +2027,20 @@ Style_StridePiano_Var2Fill1:	# 1 bars of 4 beats
 	@expr 50,7,52
 	@expr 54,7,46
 	@expr 59,7,38
-	@n 61,2,55,54,38,0,16
+	@n 61,2,55,54,38,NcrMelodyBasic
 	@expr 63,7,32
-	@n 64,0,CHINA,51,5,1,0
+	@n 64,0,KitChinaCymbal,51,133,NcrNone
 	expr 7,31
 	@expr 68,7,25
 	@expr 72,7,19
 	@expr 77,7,12
 	@expr 81,7,5
 	@expr 86,7,46
-	@n 89,2,40,55,84,0,16
+	@n 89,2,40,55,84,NcrMelodyBasic
 	@expr 90,7,127
 	beat
-	n 0,HHP,36,12,0,0
-	n 7,SD2,78,12,0,0
+	n 0,KitHiHatPedal,36,12,NcrNone
+	n 7,KitSnareDrum2,78,12,NcrNone
 	@expr 1,7,120
 	@expr 3,7,103
 	@expr 8,7,86
@@ -2052,9 +2052,9 @@ Style_StridePiano_Var2Fill1:	# 1 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 45,7,0
-	@n 60,2,52,67,34,0,16
+	@n 60,2,52,67,34,NcrMelodyBasic
 	@expr 64,7,36
-	n 7,SD2,78,12,0,0
+	n 7,KitSnareDrum2,78,12,NcrNone
 	@expr 95,7,127
 	end
 	var_end	Style_StridePiano_Var2Fill1
@@ -2065,10 +2065,10 @@ Style_StridePiano_Var2Fill2:	# 1 bars of 4 beats
 	rev 6,47
 	var_events	Style_StridePiano_Var2Fill2
 	beat
-	n 0,BD1,50,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
 	expr 7,127
-	n 2,48,58,76,0,16
-	@n 1,7,SD2,62,12,0,0
+	n 2,48,58,76,NcrMelodyBasic
+	@n 1,7,KitSnareDrum2,62,12,NcrNone
 	@expr 11,7,114
 	@expr 15,7,108
 	@expr 19,7,102
@@ -2082,7 +2082,7 @@ Style_StridePiano_Var2Fill2:	# 1 bars of 4 beats
 	@expr 53,7,50
 	@expr 57,7,43
 	@expr 62,7,35
-	@n 64,2,60,84,28,0,16
+	@n 64,2,60,84,28,NcrMelodyBasic
 	@expr 66,7,29
 	@expr 71,7,22
 	@expr 76,7,15
@@ -2090,10 +2090,10 @@ Style_StridePiano_Var2Fill2:	# 1 bars of 4 beats
 	@expr 85,7,1
 	@expr 89,7,43
 	@expr 93,7,127
-	@n 95,2,45,66,79,0,20
+	@n 95,2,45,66,79,NcrMajInclAForWalkingBass
 	beat
-	n 7,SD2,78,12,0,0
-	@n 1,0,HHP,38,12,0,0
+	n 7,KitSnareDrum2,78,12,NcrNone
+	@n 1,0,KitHiHatPedal,38,12,NcrNone
 	@expr 2,7,109
 	@expr 6,7,91
 	@expr 11,7,74
@@ -2105,15 +2105,15 @@ Style_StridePiano_Var2Fill2:	# 1 bars of 4 beats
 	@expr 38,7,2
 	@expr 43,7,0
 	@expr 62,7,31
-	@n 64,7,CLAP,105,12,0,0
-	n 2,57,69,23,0,20
+	@n 64,7,KitHandClaps,105,12,NcrNone
+	n 2,57,69,23,NcrMajInclAForWalkingBass
 	@expr 87,7,40
-	@n 95,1,43,37,92,0,19
-	n 2,43,76,94,0,20
+	@n 95,1,43,37,92,NcrMajInclFForGospelEtc
+	n 2,43,76,94,NcrMajInclAForWalkingBass
 	beat
-	n 0,BD1,50,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
 	expr 7,127
-	@n 1,7,SD2,79,12,0,0
+	@n 1,7,KitSnareDrum2,79,12,NcrNone
 	@expr 11,7,115
 	@expr 15,7,111
 	@expr 19,7,106
@@ -2127,9 +2127,9 @@ Style_StridePiano_Var2Fill2:	# 1 bars of 4 beats
 	@expr 54,7,66
 	@expr 59,7,61
 	@expr 63,7,60
-	n 7,CLAP,112,12,0,0
-	@n 64,0,CHINA,62,94,0,0
-	n 2,55,73,39,0,20
+	n 7,KitHandClaps,112,12,NcrNone
+	@n 64,0,KitChinaCymbal,62,94,NcrNone
+	n 2,55,73,39,NcrMajInclAForWalkingBass
 	@expr 68,7,61
 	@expr 72,7,49
 	@expr 77,7,49
@@ -2137,10 +2137,10 @@ Style_StridePiano_Var2Fill2:	# 1 bars of 4 beats
 	@expr 86,7,49
 	@expr 90,7,127
 	beat
-	n 0,HHP,34,12,0,0
-	n 7,SD2,78,12,0,0
-	n 1,40,58,92,0,19
-	n 2,40,62,79,0,20
+	n 0,KitHiHatPedal,34,12,NcrNone
+	n 7,KitSnareDrum2,78,12,NcrNone
+	n 1,40,58,92,NcrMajInclFForGospelEtc
+	n 2,40,62,79,NcrMajInclAForWalkingBass
 	@expr 1,7,120
 	@expr 3,7,103
 	@expr 8,7,86
@@ -2152,29 +2152,29 @@ Style_StridePiano_Var2Fill2:	# 1 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 45,7,0
-	@n 63,2,52,59,25,0,20
-	@n 64,0,CHINA,80,60,0,0
-	n 0,HBONGO,58,14,0,0
+	@n 63,2,52,59,25,NcrMajInclAForWalkingBass
+	@n 64,0,KitChinaCymbal,80,60,NcrNone
+	n 0,KitBongoHigh,58,14,NcrNone
 	expr 7,42
-	n 7,CLAP,55,12,0,0
+	n 7,KitHandClaps,55,12,NcrNone
 	@expr 87,7,38
 	@expr 88,7,0
 	end
 	var_end	Style_StridePiano_Var2Fill2
 Style_StridePiano_Var3:	# 4 bars of 4 beats
 	var_head	Style_StridePiano_Var3, 4, 4, 0xff, 0xff
-	mode 2,11
+	fold_root 2,11
 	rev 4,47
 	rev 5,47
 	rev 6,47
 	var_events	Style_StridePiano_Var3
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,127
-	n 1,36,49,71,0,16
-	n 2,36,58,78,0,16
-	n 2,52,64,75,0,16
-	@n 2,7,SD2,59,12,0,0
+	n 1,36,49,71,NcrMelodyBasic
+	n 2,36,58,78,NcrMelodyBasic
+	n 2,52,64,75,NcrMelodyBasic
+	@n 2,7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,109
 	@expr 17,7,105
 	@expr 21,7,101
@@ -2192,14 +2192,14 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	@expr 75,7,50
 	@expr 80,7,48
 	@expr 95,7,127
-	n 3,60,78,19,0,100
+	n 3,60,78,19,NcrChordCEGA
 	beat
-	n 0,HHC,61,21,0,0
-	n 0,BD1,21,12,0,0
-	n 7,SD2,109,12,0,0
-	n 3,64,62,18,0,100
-	n 3,55,67,17,0,100
-	n 3,57,62,16,0,100
+	n 0,KitHiHatClosed,61,21,NcrNone
+	n 0,KitBassDrum1,21,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,64,62,18,NcrChordCEGA
+	n 3,55,67,17,NcrChordCEGA
+	n 3,57,62,16,NcrChordCEGA
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -2210,12 +2210,12 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	@expr 40,7,1
 	@expr 55,7,70
 	@expr 95,7,122
-	n 1,43,49,75,0,16
+	n 1,43,49,75,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	@n 2,2,43,60,81,0,16
-	n 2,52,60,79,0,16
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 2,2,43,60,81,NcrMelodyBasic
+	n 2,52,60,79,NcrMelodyBasic
 	@expr 14,7,105
 	@expr 19,7,101
 	@expr 23,7,97
@@ -2230,15 +2230,15 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	@expr 63,7,59
 	@expr 68,7,54
 	@expr 73,7,50
-	@n 95,0,HHC,47,22,0,0
+	@n 95,0,KitHiHatClosed,47,22,NcrNone
 	expr 7,127
-	n 3,64,73,17,0,100
-	n 3,60,79,15,0,100
+	n 3,64,73,17,NcrChordCEGA
+	n 3,60,79,15,NcrChordCEGA
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,109,12,0,0
-	n 3,55,68,13,0,100
-	n 3,57,64,10,0,100
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,55,68,13,NcrChordCEGA
+	n 3,57,64,10,NcrChordCEGA
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -2250,11 +2250,11 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	@expr 54,7,64
 	@expr 95,7,127
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	n 1,36,47,81,0,16
-	@n 3,2,36,58,79,0,16
-	n 2,52,70,79,0,16
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	n 1,36,47,81,NcrMelodyBasic
+	@n 3,2,36,58,79,NcrMelodyBasic
+	n 2,52,70,79,NcrMelodyBasic
 	@expr 14,7,105
 	@expr 16,7,101
 	@expr 20,7,97
@@ -2271,15 +2271,15 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	@expr 69,7,54
 	@expr 74,7,50
 	@expr 78,7,49
-	@n 95,0,HHC,49,27,0,0
+	@n 95,0,KitHiHatClosed,49,27,NcrNone
 	expr 7,127
-	n 3,64,64,21,0,100
-	n 3,55,58,18,0,100
-	n 3,57,57,20,0,100
-	n 3,60,68,21,0,100
+	n 3,64,64,21,NcrChordCEGA
+	n 3,55,58,18,NcrChordCEGA
+	n 3,57,57,20,NcrChordCEGA
+	n 3,60,68,21,NcrChordCEGA
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -2289,13 +2289,13 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,65
-	@n 64,2,43,62,120,0,16
+	@n 64,2,43,62,120,NcrMelodyBasic
 	@expr 95,7,127
-	n 1,43,45,92,0,16
-	n 2,52,80,91,0,16
+	n 1,43,45,92,NcrMelodyBasic
+	n 2,52,80,91,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	@expr 13,7,108
 	@expr 17,7,102
 	@expr 22,7,97
@@ -2306,14 +2306,14 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	@expr 44,7,70
 	@expr 49,7,65
 	@expr 94,7,127
-	@n 95,3,60,63,22,0,100
+	@n 95,3,60,63,22,NcrChordCEGA
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,88,12,0,0
-	n 3,64,67,22,0,100
-	n 3,55,64,19,0,100
-	n 3,57,60,18,0,100
-	@n 1,0,HHC,55,21,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,88,12,NcrNone
+	n 3,64,67,22,NcrChordCEGA
+	n 3,55,64,19,NcrChordCEGA
+	n 3,57,60,18,NcrChordCEGA
+	@n 1,0,KitHiHatClosed,55,21,NcrNone
 	@expr 2,7,103
 	@expr 7,7,86
 	@expr 11,7,68
@@ -2321,20 +2321,20 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	@expr 20,7,48
 	@expr 25,7,42
 	@expr 29,7,33
-	@n 63,2,43,64,32,0,16
+	@n 63,2,43,64,32,NcrMelodyBasic
 	@expr 64,7,127
-	@n 65,7,SD2,88,12,0,0
+	@n 65,7,KitSnareDrum2,88,12,NcrNone
 	@expr 71,7,86
 	@expr 76,7,68
 	@expr 81,7,55
 	@expr 95,7,122
 	expr 7,127
 	beat
-	n 0,BD1,44,12,0,0
-	n 1,36,49,71,0,16
-	n 2,36,66,87,0,16
-	n 2,52,74,87,0,16
-	@n 2,7,SD2,59,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
+	n 1,36,49,71,NcrMelodyBasic
+	n 2,36,66,87,NcrMelodyBasic
+	n 2,52,74,87,NcrMelodyBasic
+	@n 2,7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,109
 	@expr 17,7,105
 	@expr 21,7,101
@@ -2351,15 +2351,15 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	@expr 71,7,54
 	@expr 75,7,50
 	@expr 80,7,48
-	@n 95,0,HHC,52,20,0,0
+	@n 95,0,KitHiHatClosed,52,20,NcrNone
 	expr 7,127
 	beat
-	n 0,BD1,21,12,0,0
-	n 7,SD2,109,12,0,0
-	n 3,64,55,16,0,100
-	@n 1,3,55,62,12,0,100
-	n 3,57,58,12,0,100
-	n 3,60,77,17,0,100
+	n 0,KitBassDrum1,21,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,64,55,16,NcrChordCEGA
+	@n 1,3,55,62,12,NcrChordCEGA
+	n 3,57,58,12,NcrChordCEGA
+	n 3,60,77,17,NcrChordCEGA
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -2370,12 +2370,12 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	@expr 40,7,1
 	@expr 55,7,70
 	@expr 95,7,122
-	n 1,43,49,75,0,16
-	n 2,43,64,94,0,16
-	n 2,52,62,90,0,16
+	n 1,43,49,75,NcrMelodyBasic
+	n 2,43,64,94,NcrMelodyBasic
+	n 2,52,62,90,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,105
 	@expr 19,7,101
 	@expr 23,7,97
@@ -2390,15 +2390,15 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	@expr 63,7,59
 	@expr 68,7,54
 	@expr 73,7,50
-	@n 95,0,HHC,49,18,0,0
+	@n 95,0,KitHiHatClosed,49,18,NcrNone
 	expr 7,127
-	n 3,64,64,18,0,100
-	n 3,57,49,16,0,100
-	n 3,60,68,20,0,100
+	n 3,64,64,18,NcrChordCEGA
+	n 3,57,49,16,NcrChordCEGA
+	n 3,60,68,20,NcrChordCEGA
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,109,12,0,0
-	n 3,55,66,15,0,100
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,55,66,15,NcrChordCEGA
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -2409,12 +2409,12 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	@expr 39,7,1
 	@expr 54,7,64
 	@expr 95,7,127
-	n 2,52,55,118,0,16
-	n 2,36,66,86,0,16
+	n 2,52,55,118,NcrMelodyBasic
+	n 2,36,66,86,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	n 1,36,47,81,0,16
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	n 1,36,47,81,NcrMelodyBasic
 	@expr 14,7,105
 	@expr 16,7,101
 	@expr 20,7,97
@@ -2432,13 +2432,13 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	@expr 74,7,50
 	@expr 78,7,49
 	@expr 95,7,127
-	n 3,60,72,24,0,100
-	n 3,55,61,20,0,100
-	n 3,57,55,21,0,100
+	n 3,60,72,24,NcrChordCEGA
+	n 3,55,61,20,NcrChordCEGA
+	n 3,57,55,21,NcrChordCEGA
 	beat
-	n 0,BD1,27,12,0,0
-	n 0,HHC,50,23,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 0,KitHiHatClosed,50,23,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -2448,13 +2448,13 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,65
-	@n 63,2,43,64,4,1,16
+	@n 63,2,43,64,132,NcrMelodyBasic
 	@expr 95,7,127
-	n 1,43,45,92,0,16
-	n 2,52,82,94,0,16
+	n 1,43,45,92,NcrMelodyBasic
+	n 2,52,82,94,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	@expr 13,7,108
 	@expr 17,7,102
 	@expr 22,7,97
@@ -2464,15 +2464,15 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	@expr 40,7,76
 	@expr 44,7,70
 	@expr 49,7,65
-	@n 64,0,HHO,26,82,0,0
+	@n 64,0,KitHiHatOpen,26,82,NcrNone
 	@expr 94,7,127
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,88,12,0,0
-	n 3,64,54,16,0,100
-	n 3,55,67,14,0,100
-	n 3,57,66,14,0,100
-	n 3,60,72,17,0,100
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,88,12,NcrNone
+	n 3,64,54,16,NcrChordCEGA
+	n 3,55,67,14,NcrChordCEGA
+	n 3,57,66,14,NcrChordCEGA
+	n 3,60,72,17,NcrChordCEGA
 	@expr 2,7,103
 	@expr 7,7,86
 	@expr 11,7,68
@@ -2480,10 +2480,10 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	@expr 20,7,48
 	@expr 25,7,42
 	@expr 29,7,33
-	@n 64,0,HHC,40,14,0,0
+	@n 64,0,KitHiHatClosed,40,14,NcrNone
 	expr 7,127
-	n 2,43,58,32,0,16
-	@n 65,7,SD2,88,12,0,0
+	n 2,43,58,32,NcrMelodyBasic
+	@n 65,7,KitSnareDrum2,88,12,NcrNone
 	@expr 71,7,86
 	@expr 76,7,68
 	@expr 81,7,55
@@ -2492,19 +2492,19 @@ Style_StridePiano_Var3:	# 4 bars of 4 beats
 	var_end	Style_StridePiano_Var3
 Style_StridePiano_Var3Fill1:	# 1 bars of 4 beats
 	var_head	Style_StridePiano_Var3Fill1, 1, 4, 0xff, 0xff
-	mode 2,11
+	fold_root 2,11
 	rev 4,47
 	rev 5,47
 	rev 6,47
 	var_events	Style_StridePiano_Var3Fill1
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,122
-	n 1,36,49,71,0,16
-	@n 2,7,SD2,59,12,0,0
-	n 2,43,53,73,0,16
-	@n 3,2,52,54,80,0,16
-	@n 4,2,36,52,70,0,16
+	n 1,36,49,71,NcrMelodyBasic
+	@n 2,7,KitSnareDrum2,59,12,NcrNone
+	n 2,43,53,73,NcrMelodyBasic
+	@n 3,2,52,54,80,NcrMelodyBasic
+	@n 4,2,36,52,70,NcrMelodyBasic
 	@expr 14,7,111
 	@expr 15,7,110
 	@expr 16,7,109
@@ -2554,7 +2554,7 @@ Style_StridePiano_Var3Fill1:	# 1 bars of 4 beats
 	@expr 63,7,65
 	@expr 64,7,64
 	@expr 65,7,63
-	n 3,55,45,32,0,80
+	n 3,55,45,32,NcrBasicChord100
 	@expr 66,7,62
 	@expr 67,7,61
 	@expr 68,7,60
@@ -2571,15 +2571,15 @@ Style_StridePiano_Var3Fill1:	# 1 bars of 4 beats
 	@expr 80,7,49
 	@expr 81,7,48
 	@expr 86,7,49
-	@n 95,0,HHC,52,20,0,0
+	@n 95,0,KitHiHatClosed,52,20,NcrNone
 	beat
-	n 0,CHINA,59,108,0,0
-	n 0,BD1,21,12,0,0
+	n 0,KitChinaCymbal,59,108,NcrNone
+	n 0,KitBassDrum1,21,12,NcrNone
 	expr 7,127
-	n 7,SD2,109,12,0,0
-	@n 2,3,60,67,17,0,80
-	n 3,64,80,21,0,80
-	@n 3,3,55,25,16,0,80
+	n 7,KitSnareDrum2,109,12,NcrNone
+	@n 2,3,60,67,17,NcrBasicChord100
+	n 3,64,80,21,NcrBasicChord100
+	@n 3,3,55,25,16,NcrBasicChord100
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -2590,12 +2590,12 @@ Style_StridePiano_Var3Fill1:	# 1 bars of 4 beats
 	@expr 40,7,1
 	@expr 57,7,64
 	@expr 94,7,122
-	@n 95,1,43,49,75,0,16
+	@n 95,1,43,49,75,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	@n 3,2,43,72,106,0,16
-	@n 4,2,52,62,100,0,16
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 3,2,43,72,106,NcrMelodyBasic
+	@n 4,2,52,62,100,NcrMelodyBasic
 	@expr 14,7,109
 	expr 7,108
 	@expr 15,7,107
@@ -2643,7 +2643,7 @@ Style_StridePiano_Var3Fill1:	# 1 bars of 4 beats
 	@expr 60,7,65
 	@expr 61,7,64
 	@expr 62,7,63
-	@n 63,0,CHINA,47,76,0,0
+	@n 63,0,KitChinaCymbal,47,76,NcrNone
 	expr 7,62
 	@expr 64,7,61
 	@expr 65,7,60
@@ -2658,14 +2658,14 @@ Style_StridePiano_Var3Fill1:	# 1 bars of 4 beats
 	@expr 75,7,51
 	@expr 76,7,50
 	@expr 77,7,49
-	@n 95,0,HHC,49,18,0,0
+	@n 95,0,KitHiHatClosed,49,18,NcrNone
 	beat
-	n 0,BD1,27,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
 	expr 7,127
-	n 7,SD2,109,12,0,0
-	n 3,55,67,79,0,80
-	n 3,64,77,80,0,80
-	n 3,60,63,77,0,80
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,55,67,79,NcrBasicChord100
+	n 3,64,77,80,NcrBasicChord100
+	n 3,60,63,77,NcrBasicChord100
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -2675,24 +2675,24 @@ Style_StridePiano_Var3Fill1:	# 1 bars of 4 beats
 	@expr 34,7,16
 	@expr 39,7,1
 	@expr 54,7,64
-	@n 63,0,CHINA,49,28,0,0
-	@n 93,2,43,54,97,0,16
-	@n 94,2,52,43,97,0,16
-	n 2,36,58,92,0,16
+	@n 63,0,KitChinaCymbal,49,28,NcrNone
+	@n 93,2,43,54,97,NcrMelodyBasic
+	@n 94,2,52,43,97,NcrMelodyBasic
+	n 2,36,58,92,NcrMelodyBasic
 	end
 	var_end	Style_StridePiano_Var3Fill1
 Style_StridePiano_Var3Fill2:	# 1 bars of 4 beats
 	var_head	Style_StridePiano_Var3Fill2, 1, 4, 0xff, 0xff
-	mode 2,11
+	fold_root 2,11
 	rev 4,47
 	rev 5,47
 	rev 6,47
 	var_events	Style_StridePiano_Var3Fill2
 	beat
-	n 0,BD1,50,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
 	expr 7,127
-	n 1,36,47,81,0,16
-	@n 1,7,SD2,59,12,0,0
+	n 1,36,47,81,NcrMelodyBasic
+	@n 1,7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,106
 	@expr 15,7,105
 	@expr 16,7,104
@@ -2752,14 +2752,14 @@ Style_StridePiano_Var3Fill2:	# 1 bars of 4 beats
 	@expr 77,7,50
 	@expr 78,7,49
 	beat
-	n 0,CHINA,63,59,0,0
-	n 0,BD1,27,12,0,0
-	n 0,HHC,50,23,0,0
+	n 0,KitChinaCymbal,63,59,NcrNone
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 0,KitHiHatClosed,50,23,NcrNone
 	expr 7,127
-	n 7,SD2,109,12,0,0
-	n 3,60,61,39,0,16
-	n 3,64,70,44,0,16
-	n 3,55,67,31,0,16
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,60,61,39,NcrMelodyBasic
+	n 3,64,70,44,NcrMelodyBasic
+	n 3,55,67,31,NcrMelodyBasic
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -2769,14 +2769,14 @@ Style_StridePiano_Var3Fill2:	# 1 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,65
-	@n 64,0,CHINA,63,17,0,0
-	n 2,52,77,0,1,16
+	@n 64,0,KitChinaCymbal,63,17,NcrNone
+	n 2,52,77,128,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
 	expr 7,127
-	n 7,SD2,59,12,0,0
-	@n 1,1,43,45,92,0,16
-	@n 2,2,43,69,94,0,16
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 1,1,43,45,92,NcrMelodyBasic
+	@n 2,2,43,69,94,NcrMelodyBasic
 	@expr 13,7,112
 	expr 7,111
 	@expr 14,7,110
@@ -2825,15 +2825,15 @@ Style_StridePiano_Var3Fill2:	# 1 bars of 4 beats
 	expr 7,67
 	@expr 51,7,66
 	@expr 52,7,65
-	@n 64,0,HHO,26,82,0,0
+	@n 64,0,KitHiHatOpen,26,82,NcrNone
 	expr 7,127
-	@n 95,0,CHINA,61,53,0,0
+	@n 95,0,KitChinaCymbal,61,53,NcrNone
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,88,12,0,0
-	n 3,60,74,65,0,16
-	@n 1,3,55,66,66,0,16
-	n 3,64,74,65,0,16
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,88,12,NcrNone
+	n 3,60,74,65,NcrMelodyBasic
+	@n 1,3,55,66,66,NcrMelodyBasic
+	n 3,64,74,65,NcrMelodyBasic
 	@expr 2,7,103
 	@expr 7,7,86
 	@expr 11,7,68
@@ -2841,10 +2841,10 @@ Style_StridePiano_Var3Fill2:	# 1 bars of 4 beats
 	@expr 20,7,48
 	@expr 25,7,42
 	@expr 29,7,33
-	@n 64,0,HHC,40,14,0,0
-	n 0,CHINA,59,8,0,0
+	@n 64,0,KitHiHatClosed,40,14,NcrNone
+	n 0,KitChinaCymbal,59,8,NcrNone
 	expr 7,127
-	@n 65,7,SD2,88,12,0,0
+	@n 65,7,KitSnareDrum2,88,12,NcrNone
 	@expr 71,7,86
 	@expr 76,7,68
 	@expr 81,7,34
@@ -2853,20 +2853,20 @@ Style_StridePiano_Var3Fill2:	# 1 bars of 4 beats
 	var_end	Style_StridePiano_Var3Fill2
 Style_StridePiano_Var4:	# 4 bars of 4 beats
 	var_head	Style_StridePiano_Var4, 4, 4, 0xff, 0xff
-	mode 2,11
-	mode 3,11
+	fold_root 2,11
+	fold_root 3,11
 	rev 4,47
 	rev 5,47
 	rev 6,47
 	var_events	Style_StridePiano_Var4
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,122
-	n 7,SD2,59,12,0,0
-	n 1,36,49,71,0,16
-	n 2,52,50,31,0,16
-	n 2,43,37,27,0,16
-	@n 1,2,36,63,27,0,16
+	n 7,KitSnareDrum2,59,12,NcrNone
+	n 1,36,49,71,NcrMelodyBasic
+	n 2,52,50,31,NcrMelodyBasic
+	n 2,43,37,27,NcrMelodyBasic
+	@n 1,2,36,63,27,NcrMelodyBasic
 	@expr 6,7,125
 	@expr 10,7,122
 	@expr 14,7,120
@@ -2887,13 +2887,13 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 82,7,55
 	@expr 86,7,50
 	beat
-	n 0,HHC,61,21,0,0
-	n 0,BD1,21,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitHiHatClosed,61,21,NcrNone
+	n 0,KitBassDrum1,21,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	n 3,60,68,29,0,80
-	n 3,64,75,31,0,80
-	@n 1,3,55,68,29,0,80
+	n 3,60,68,29,NcrBasicChord100
+	n 3,64,75,31,NcrBasicChord100
+	@n 1,3,55,68,29,NcrBasicChord100
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -2903,13 +2903,13 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,63
-	@n 64,7,SD2,82,12,0,0
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
 	@expr 94,7,122
-	n 2,43,59,35,0,16
-	@n 95,1,43,49,75,0,16
+	n 2,43,59,35,NcrMelodyBasic
+	@n 95,1,43,49,75,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	@expr 4,7,126
 	@expr 6,7,123
 	@expr 12,7,121
@@ -2931,14 +2931,14 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 84,7,56
 	@expr 88,7,50
 	@expr 92,7,48
-	@n 95,0,HHC,47,22,0,0
+	@n 95,0,KitHiHatClosed,47,22,NcrNone
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	n 3,55,67,67,0,80
-	n 3,64,74,66,0,80
-	@n 1,3,60,58,65,0,80
+	n 3,55,67,67,NcrBasicChord100
+	n 3,64,74,66,NcrBasicChord100
+	@n 1,3,60,58,65,NcrBasicChord100
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -2948,14 +2948,14 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 34,7,16
 	@expr 39,7,1
 	@expr 54,7,64
-	@n 62,2,36,78,33,0,16
-	@n 64,7,SD2,82,12,0,0
+	@n 62,2,36,78,33,NcrMelodyBasic
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
-	n 1,36,47,81,0,16
-	@n 1,2,36,51,92,0,16
+	n 1,36,47,81,NcrMelodyBasic
+	@n 1,2,36,51,92,NcrMelodyBasic
 	@expr 10,7,123
 	@expr 12,7,122
 	@expr 14,7,121
@@ -2981,18 +2981,18 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 54,7,98
 	@expr 56,7,95
 	@expr 62,7,86
-	n 2,43,37,27,0,16
-	n 3,55,61,59,0,80
+	n 2,43,37,27,NcrMelodyBasic
+	n 3,55,61,59,NcrBasicChord100
 	@expr 67,7,78
 	@expr 71,7,71
 	@expr 76,7,63
-	@n 95,0,HHC,49,27,0,0
-	n 3,60,77,23,0,80
+	@n 95,0,KitHiHatClosed,49,27,NcrNone
+	n 3,60,77,23,NcrBasicChord100
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	n 3,64,76,24,0,80
+	n 3,64,76,24,NcrBasicChord100
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -3002,13 +3002,13 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,65
-	@n 64,7,SD2,82,12,0,0
-	@n 95,1,43,45,92,0,16
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	@n 95,1,43,45,92,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
-	n 2,43,57,41,0,16
+	n 2,43,57,41,NcrMelodyBasic
 	@expr 13,7,111
 	@expr 14,7,106
 	@expr 18,7,101
@@ -3021,12 +3021,12 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 50,7,65
 	@expr 64,7,127
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,88,12,0,0
-	@n 1,0,HHC,55,21,0,0
-	n 3,64,60,71,0,80
-	n 3,55,57,71,0,80
-	n 3,60,64,69,0,80
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,88,12,NcrNone
+	@n 1,0,KitHiHatClosed,55,21,NcrNone
+	n 3,64,60,71,NcrBasicChord100
+	n 3,55,57,71,NcrBasicChord100
+	n 3,60,64,69,NcrBasicChord100
 	@expr 2,7,103
 	@expr 7,7,86
 	@expr 11,7,68
@@ -3034,22 +3034,22 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 20,7,48
 	@expr 25,7,42
 	@expr 29,7,33
-	@n 61,2,43,35,31,0,16
-	@n 64,7,SD2,88,12,0,0
+	@n 61,2,43,35,31,NcrMelodyBasic
+	@n 64,7,KitSnareDrum2,88,12,NcrNone
 	expr 7,127
 	@expr 71,7,86
 	@expr 76,7,68
 	@expr 81,7,55
-	@n 94,2,43,28,29,0,16
-	@n 95,2,36,59,29,0,16
+	@n 94,2,43,28,29,NcrMelodyBasic
+	@n 95,2,36,59,29,NcrMelodyBasic
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,122
-	n 7,SD2,59,12,0,0
-	n 1,36,49,71,0,16
-	n 2,52,50,31,0,16
-	n 2,43,37,44,0,16
-	@n 1,2,36,63,44,0,16
+	n 7,KitSnareDrum2,59,12,NcrNone
+	n 1,36,49,71,NcrMelodyBasic
+	n 2,52,50,31,NcrMelodyBasic
+	n 2,43,37,44,NcrMelodyBasic
+	@n 1,2,36,63,44,NcrMelodyBasic
 	@expr 6,7,123
 	@expr 12,7,121
 	@expr 16,7,119
@@ -3069,14 +3069,14 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 78,7,58
 	@expr 84,7,53
 	@expr 88,7,50
-	@n 95,0,HHC,52,20,0,0
+	@n 95,0,KitHiHatClosed,52,20,NcrNone
 	beat
-	n 0,BD1,21,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,21,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	n 3,60,68,29,0,80
-	n 3,64,75,31,0,80
-	@n 1,3,55,68,29,0,80
+	n 3,60,68,29,NcrBasicChord100
+	n 3,64,75,31,NcrBasicChord100
+	@n 1,3,55,68,29,NcrBasicChord100
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -3086,13 +3086,13 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,63
-	@n 64,7,SD2,82,12,0,0
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
 	@expr 94,7,122
-	n 2,43,59,35,0,16
-	@n 95,1,43,49,75,0,16
+	n 2,43,59,35,NcrMelodyBasic
+	@n 95,1,43,49,75,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	@expr 4,7,125
 	@expr 8,7,123
 	@expr 12,7,120
@@ -3113,14 +3113,14 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 80,7,62
 	@expr 84,7,53
 	@expr 90,7,48
-	@n 95,0,HHC,49,18,0,0
+	@n 95,0,KitHiHatClosed,49,18,NcrNone
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	n 3,55,67,67,0,80
-	n 3,64,74,66,0,80
-	@n 1,3,60,58,65,0,80
+	n 3,55,67,67,NcrBasicChord100
+	n 3,64,74,66,NcrBasicChord100
+	@n 1,3,60,58,65,NcrBasicChord100
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -3130,14 +3130,14 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 34,7,16
 	@expr 39,7,1
 	@expr 54,7,64
-	@n 62,2,36,78,33,0,16
-	@n 64,7,SD2,82,12,0,0
+	@n 62,2,36,78,33,NcrMelodyBasic
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
-	n 1,36,47,81,0,16
-	@n 1,2,36,51,92,0,16
+	n 1,36,47,81,NcrMelodyBasic
+	@n 1,2,36,51,92,NcrMelodyBasic
 	@expr 12,7,126
 	@expr 14,7,124
 	@expr 16,7,123
@@ -3164,8 +3164,8 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 58,7,93
 	@expr 60,7,90
 	@expr 62,7,87
-	n 2,43,37,27,0,16
-	n 3,55,61,59,0,80
+	n 2,43,37,27,NcrMelodyBasic
+	n 3,55,61,59,NcrBasicChord100
 	@expr 64,7,84
 	@expr 66,7,81
 	@expr 68,7,78
@@ -3178,13 +3178,13 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 82,7,56
 	@expr 84,7,53
 	@expr 86,7,50
-	@n 95,3,60,77,23,0,80
+	@n 95,3,60,77,23,NcrBasicChord100
 	beat
-	n 0,BD1,27,12,0,0
-	n 0,HHC,50,23,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 0,KitHiHatClosed,50,23,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	n 3,64,76,24,0,80
+	n 3,64,76,24,NcrBasicChord100
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -3194,13 +3194,13 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,65
-	@n 64,7,SD2,82,12,0,0
-	@n 95,1,43,45,92,0,16
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	@n 95,1,43,45,92,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
-	n 2,43,57,41,0,16
+	n 2,43,57,41,NcrMelodyBasic
 	@expr 13,7,110
 	@expr 15,7,104
 	@expr 20,7,99
@@ -3211,14 +3211,14 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 42,7,72
 	@expr 47,7,67
 	@expr 51,7,65
-	@n 64,0,HHO,26,82,0,0
+	@n 64,0,KitHiHatOpen,26,82,NcrNone
 	expr 7,127
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,88,12,0,0
-	@n 1,3,64,60,71,0,80
-	n 3,55,57,71,0,80
-	n 3,60,64,69,0,80
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,88,12,NcrNone
+	@n 1,3,64,60,71,NcrBasicChord100
+	n 3,55,57,71,NcrBasicChord100
+	n 3,60,64,69,NcrBasicChord100
 	@expr 2,7,103
 	@expr 7,7,86
 	@expr 11,7,68
@@ -3226,9 +3226,9 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	@expr 20,7,48
 	@expr 25,7,42
 	@expr 29,7,33
-	@n 61,2,43,35,31,0,16
-	@n 64,0,HHC,40,14,0,0
-	n 7,SD2,88,12,0,0
+	@n 61,2,43,35,31,NcrMelodyBasic
+	@n 64,0,KitHiHatClosed,40,14,NcrNone
+	n 7,KitSnareDrum2,88,12,NcrNone
 	expr 7,127
 	@expr 71,7,86
 	@expr 76,7,68
@@ -3237,20 +3237,20 @@ Style_StridePiano_Var4:	# 4 bars of 4 beats
 	var_end	Style_StridePiano_Var4
 Style_StridePiano_Var4Fill1:	# 1 bars of 4 beats
 	var_head	Style_StridePiano_Var4Fill1, 1, 4, 0xff, 0xff
-	mode 2,11
-	mode 3,11
+	fold_root 2,11
+	fold_root 3,11
 	rev 4,47
 	rev 5,47
 	rev 6,47
 	var_events	Style_StridePiano_Var4Fill1
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,127
-	n 1,36,71,111,0,16
-	n 2,36,58,36,0,16
-	n 2,43,45,38,0,16
-	n 2,52,41,46,0,16
-	@n 1,7,SD2,59,12,0,0
+	n 1,36,71,111,NcrMelodyBasic
+	n 2,36,58,36,NcrMelodyBasic
+	n 2,43,45,38,NcrMelodyBasic
+	n 2,52,41,46,NcrMelodyBasic
+	@n 1,7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,111
 	@expr 15,7,110
 	@expr 16,7,109
@@ -3316,14 +3316,14 @@ Style_StridePiano_Var4Fill1:	# 1 bars of 4 beats
 	@expr 80,7,49
 	@expr 81,7,48
 	@expr 86,7,49
-	@n 95,0,HHC,52,20,0,0
-	n 3,60,61,13,0,80
+	@n 95,0,KitHiHatClosed,52,20,NcrNone
+	n 3,60,61,13,NcrBasicChord100
 	beat
-	n 0,BD1,21,12,0,0
+	n 0,KitBassDrum1,21,12,NcrNone
 	expr 7,127
-	n 7,SD2,109,12,0,0
-	n 3,64,59,12,0,80
-	n 3,55,59,15,0,80
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,64,59,12,NcrBasicChord100
+	n 3,55,59,15,NcrBasicChord100
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -3333,14 +3333,14 @@ Style_StridePiano_Var4Fill1:	# 1 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,64
-	@n 64,2,43,79,30,0,16
+	@n 64,2,43,79,30,NcrMelodyBasic
 	@expr 94,7,122
-	@n 95,2,36,51,36,0,16
+	@n 95,2,36,51,36,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	n 1,36,70,110,0,16
-	n 2,52,65,39,0,16
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	n 1,36,70,110,NcrMelodyBasic
+	n 2,52,65,39,NcrMelodyBasic
 	@expr 14,7,109
 	expr 7,108
 	@expr 15,7,107
@@ -3388,7 +3388,7 @@ Style_StridePiano_Var4Fill1:	# 1 bars of 4 beats
 	@expr 60,7,65
 	@expr 61,7,64
 	@expr 62,7,63
-	@n 63,0,SD1,48,35,0,0
+	@n 63,0,KitSnareDrum1,48,35,NcrNone
 	expr 7,62
 	@expr 64,7,61
 	@expr 65,7,60
@@ -3402,33 +3402,33 @@ Style_StridePiano_Var4Fill1:	# 1 bars of 4 beats
 	@expr 74,7,52
 	@expr 75,7,51
 	@expr 76,7,50
-	@n 95,0,HHC,49,18,0,0
-	n 3,55,61,38,0,80
-	n 3,60,52,30,0,80
-	n 3,64,63,34,0,80
+	@n 95,0,KitHiHatClosed,49,18,NcrNone
+	n 3,55,61,38,NcrBasicChord100
+	n 3,60,52,30,NcrBasicChord100
+	n 3,64,63,34,NcrBasicChord100
 	beat
-	n 0,BD1,27,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
 	expr 7,93
 	@expr 32,7,115
 	@expr 64,7,127
-	n 3,55,82,32,0,80
+	n 3,55,82,32,NcrBasicChord100
 	end
 	var_end	Style_StridePiano_Var4Fill1
 Style_StridePiano_Var4Fill2:	# 1 bars of 4 beats
 	var_head	Style_StridePiano_Var4Fill2, 1, 4, 0xff, 0xff
-	mode 2,11
-	mode 3,11
+	fold_root 2,11
+	fold_root 3,11
 	rev 4,47
 	rev 5,47
 	rev 6,47
 	var_events	Style_StridePiano_Var4Fill2
 	beat
-	n 0,BD1,50,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
 	expr 7,127
-	n 1,36,72,81,0,16
-	n 2,36,70,57,0,16
-	n 2,52,77,54,0,16
-	@n 2,7,SD2,59,12,0,0
+	n 1,36,72,81,NcrMelodyBasic
+	n 2,36,70,57,NcrMelodyBasic
+	n 2,52,77,54,NcrMelodyBasic
+	@n 2,7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,106
 	@expr 15,7,105
 	@expr 16,7,104
@@ -3474,7 +3474,7 @@ Style_StridePiano_Var4Fill2:	# 1 bars of 4 beats
 	@expr 61,7,64
 	@expr 62,7,63
 	@expr 63,7,62
-	n 2,48,61,37,0,16
+	n 2,48,61,37,NcrMelodyBasic
 	@expr 64,7,61
 	@expr 66,7,60
 	@expr 67,7,59
@@ -3488,12 +3488,12 @@ Style_StridePiano_Var4Fill2:	# 1 bars of 4 beats
 	@expr 76,7,51
 	@expr 77,7,50
 	@expr 78,7,49
-	@n 95,2,40,83,54,0,16
+	@n 95,2,40,83,54,NcrMelodyBasic
 	beat
-	n 0,BD1,27,12,0,0
-	n 0,HHC,50,23,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 0,KitHiHatClosed,50,23,NcrNone
 	expr 7,127
-	n 7,SD2,109,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -3503,12 +3503,12 @@ Style_StridePiano_Var4Fill2:	# 1 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,65
-	@n 63,2,41,70,34,0,16
-	@n 95,2,42,64,53,0,16
+	@n 63,2,41,70,34,NcrMelodyBasic
+	@n 95,2,42,64,53,NcrMelodyBasic
 	beat
-	n 0,BD1,50,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
 	expr 7,127
-	n 7,SD2,59,12,0,0
+	n 7,KitSnareDrum2,59,12,NcrNone
 	@expr 13,7,112
 	expr 7,111
 	@expr 14,7,110
@@ -3533,7 +3533,7 @@ Style_StridePiano_Var4Fill2:	# 1 bars of 4 beats
 	@expr 30,7,91
 	@expr 31,7,90
 	@expr 32,7,89
-	@n 33,0,CHINA,46,39,0,0
+	@n 33,0,KitChinaCymbal,46,39,NcrNone
 	expr 7,88
 	@expr 34,7,87
 	expr 7,86
@@ -3558,14 +3558,14 @@ Style_StridePiano_Var4Fill2:	# 1 bars of 4 beats
 	expr 7,67
 	@expr 51,7,66
 	@expr 52,7,65
-	@n 63,2,43,85,35,0,16
+	@n 63,2,43,85,35,NcrMelodyBasic
 	@expr 64,7,127
-	@n 95,2,31,84,55,0,16
+	@n 95,2,31,84,55,NcrMelodyBasic
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,88,12,0,0
-	n 1,43,69,83,0,16
-	@n 2,0,CHINA,64,26,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,88,12,NcrNone
+	n 1,43,69,83,NcrMelodyBasic
+	@n 2,0,KitChinaCymbal,64,26,NcrNone
 	expr 7,103
 	@expr 7,7,86
 	@expr 11,7,68
@@ -3573,34 +3573,34 @@ Style_StridePiano_Var4Fill2:	# 1 bars of 4 beats
 	@expr 20,7,48
 	@expr 25,7,42
 	@expr 29,7,33
-	@n 64,0,HHC,40,14,0,0
+	@n 64,0,KitHiHatClosed,40,14,NcrNone
 	expr 7,127
-	n 2,43,77,32,0,16
-	@n 65,0,CHINA,110,11,0,0
-	n 7,SD2,88,12,0,0
+	n 2,43,77,32,NcrMelodyBasic
+	@n 65,0,KitChinaCymbal,110,11,NcrNone
+	n 7,KitSnareDrum2,88,12,NcrNone
 	@expr 71,7,86
 	@expr 76,7,68
 	@expr 81,7,38
 	@expr 95,7,0
 	end
 	var_end	Style_StridePiano_Var4Fill2
-Style_StridePiano_Intro2A:	# 4 bars of 4 beats
-	var_head	Style_StridePiano_Intro2A, 4, 4, 0xff, 0xff
-	mode 1,11
-	mode 2,8
+Style_StridePiano_Ending1Major:	# 4 bars of 4 beats
+	var_head	Style_StridePiano_Ending1Major, 4, 4, 0xff, 0xff
+	fold_root 1,11
+	fold_root 2,8
 	rev 4,47
 	rev 5,47
 	rev 6,47
-	var_events	Style_StridePiano_Intro2A
+	var_events	Style_StridePiano_Ending1Major
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,127
-	n 1,36,73,126,0,1
+	n 1,36,73,126,NcrRootShiftOnly
 	sus 2,127
-	n 2,36,64,13,0,1
-	n 2,43,54,14,0,1
-	n 2,52,56,19,0,1
-	@n 2,7,SD2,59,12,0,0
+	n 2,36,64,13,NcrRootShiftOnly
+	n 2,43,54,14,NcrRootShiftOnly
+	n 2,52,56,19,NcrRootShiftOnly
+	@n 2,7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,109
 	@expr 17,7,105
 	@expr 21,7,101
@@ -3614,49 +3614,49 @@ Style_StridePiano_Intro2A:	# 4 bars of 4 beats
 	@expr 57,7,67
 	@expr 62,7,62
 	@expr 67,7,58
-	n 3,72,66,9,0,1
+	n 3,72,66,9,NcrRootShiftOnly
 	@expr 71,7,54
 	@expr 75,7,50
 	@expr 80,7,48
 	@sus 92,2,0
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	n 2,52,54,17,0,1
-	@n 1,2,60,68,14,0,1
-	n 2,57,65,13,0,1
-	@n 2,2,55,61,12,0,1
-	@n 4,0,HHP,38,12,0,0
-	n 3,84,80,20,0,1
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 2,52,54,17,NcrRootShiftOnly
+	@n 1,2,60,68,14,NcrRootShiftOnly
+	n 2,57,65,13,NcrRootShiftOnly
+	@n 2,2,55,61,12,NcrRootShiftOnly
+	@n 4,0,KitHiHatPedal,38,12,NcrNone
+	n 3,84,80,20,NcrRootShiftOnly
 	@sus 7,3,127
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
 	@sus 19,2,127
 	@expr 21,7,48
-	@n 25,3,81,75,22,0,1
+	@n 25,3,81,75,22,NcrRootShiftOnly
 	@expr 26,7,42
 	@expr 30,7,30
-	@n 44,3,79,71,14,0,1
+	@n 44,3,79,71,14,NcrRootShiftOnly
 	@sus 47,2,0
-	@n 58,1,36,68,19,0,1
-	@n 61,3,76,69,10,0,1
-	@n 62,2,44,75,9,0,1
+	@n 58,1,36,68,19,NcrRootShiftOnly
+	@n 61,3,76,69,10,NcrRootShiftOnly
+	@n 62,2,44,75,9,NcrRootShiftOnly
 	@sus 68,2,127
-	@n 78,3,72,68,15,0,1
-	@n 93,3,71,68,11,0,1
+	@n 78,3,72,68,15,NcrRootShiftOnly
+	@n 93,3,71,68,11,NcrRootShiftOnly
 	@expr 95,7,122
-	n 1,43,88,127,0,1
+	n 1,43,88,127,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	sus 2,0
-	@n 1,2,50,53,41,0,1
+	@n 1,2,50,53,41,NcrRootShiftOnly
 	sus 3,0
-	@n 3,2,43,76,40,0,1
-	@n 5,2,58,65,46,0,1
+	@n 3,2,43,76,40,NcrRootShiftOnly
+	@n 5,2,58,65,46,NcrRootShiftOnly
 	@expr 14,7,105
-	@n 16,3,70,71,37,0,1
+	@n 16,3,70,71,37,NcrRootShiftOnly
 	@expr 19,7,101
 	@expr 23,7,97
 	@expr 27,7,92
@@ -3675,16 +3675,16 @@ Style_StridePiano_Intro2A:	# 4 bars of 4 beats
 	@sus 92,2,0
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	@n 4,0,HHP,36,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	@n 4,0,KitHiHatPedal,36,12,NcrNone
 	sus 3,0
-	n 3,81,68,43,0,1
-	@n 5,2,64,78,28,0,1
-	n 3,73,56,44,0,1
-	@n 6,3,70,53,46,0,1
-	n 3,76,67,45,0,1
+	n 3,81,68,43,NcrRootShiftOnly
+	@n 5,2,64,78,28,NcrRootShiftOnly
+	n 3,73,56,44,NcrRootShiftOnly
+	@n 6,3,70,53,46,NcrRootShiftOnly
+	n 3,76,67,45,NcrRootShiftOnly
 	@expr 7,7,86
-	n 2,58,84,21,0,1
+	n 2,58,84,21,NcrRootShiftOnly
 	@expr 11,7,68
 	@expr 16,7,55
 	@expr 20,7,48
@@ -3692,21 +3692,21 @@ Style_StridePiano_Intro2A:	# 4 bars of 4 beats
 	@sus 26,2,127
 	@expr 29,7,40
 	@sus 34,3,127
-	@n 64,1,43,78,17,0,1
+	@n 64,1,43,78,17,NcrRootShiftOnly
 	@sus 94,2,0
 	@expr 95,7,127
 	beat
-	n 0,BD1,50,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
 	sus 3,0
-	@n 2,7,SD2,59,12,0,0
-	@n 3,2,57,64,40,0,1
-	n 2,41,40,30,0,1
-	@n 4,2,48,50,33,0,1
-	n 3,72,41,77,0,1
-	@n 5,1,41,71,18,1,1
-	n 3,76,55,73,0,1
-	@n 6,3,69,43,69,0,1
-	n 3,79,65,73,0,1
+	@n 2,7,KitSnareDrum2,59,12,NcrNone
+	@n 3,2,57,64,40,NcrRootShiftOnly
+	n 2,41,40,30,NcrRootShiftOnly
+	@n 4,2,48,50,33,NcrRootShiftOnly
+	n 3,72,41,77,NcrRootShiftOnly
+	@n 5,1,41,71,146,NcrRootShiftOnly
+	n 3,76,55,73,NcrRootShiftOnly
+	@n 6,3,69,43,69,NcrRootShiftOnly
+	n 3,79,65,73,NcrRootShiftOnly
 	@expr 14,7,109
 	@expr 17,7,105
 	@expr 21,7,101
@@ -3722,23 +3722,23 @@ Style_StridePiano_Intro2A:	# 4 bars of 4 beats
 	@sus 60,3,127
 	@expr 62,7,62
 	@expr 67,7,58
-	@n 69,0,CHINA,87,112,0,0
+	@n 69,0,KitChinaCymbal,87,112,NcrNone
 	@expr 71,7,54
 	@expr 75,7,50
 	@expr 80,7,48
 	@sus 91,2,0
 	@expr 95,7,127
-	n 2,60,56,27,0,1
-	n 2,53,47,26,0,1
-	n 2,62,57,28,0,1
+	n 2,60,56,27,NcrRootShiftOnly
+	n 2,53,47,26,NcrRootShiftOnly
+	n 2,62,57,28,NcrRootShiftOnly
 	beat
-	n 7,SD2,109,12,0,0
-	n 2,57,63,24,0,1
-	@n 4,0,HHP,38,12,0,0
-	n 3,74,54,44,0,1
-	@n 5,3,69,55,43,0,1
-	n 3,72,47,43,0,1
-	n 3,77,53,38,0,1
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 2,57,63,24,NcrRootShiftOnly
+	@n 4,0,KitHiHatPedal,38,12,NcrNone
+	n 3,74,54,44,NcrRootShiftOnly
+	@n 5,3,69,55,43,NcrRootShiftOnly
+	n 3,72,47,43,NcrRootShiftOnly
+	n 3,77,53,38,NcrRootShiftOnly
 	@sus 7,3,0
 	@expr 8,7,86
 	@expr 12,7,68
@@ -3747,21 +3747,21 @@ Style_StridePiano_Intro2A:	# 4 bars of 4 beats
 	@sus 23,2,127
 	@expr 26,7,35
 	@sus 44,3,127
-	@n 67,2,56,56,126,0,1
-	@n 69,2,60,64,106,0,1
-	n 2,67,63,82,0,1
-	n 2,62,69,102,0,1
-	n 3,68,52,7,1,1
-	@n 70,3,79,54,91,0,1
-	@n 72,3,74,53,94,0,1
-	n 3,72,58,126,0,1
-	@n 77,1,41,84,45,1,1
+	@n 67,2,56,56,126,NcrRootShiftOnly
+	@n 69,2,60,64,106,NcrRootShiftOnly
+	n 2,67,63,82,NcrRootShiftOnly
+	n 2,62,69,102,NcrRootShiftOnly
+	n 3,68,52,135,NcrRootShiftOnly
+	@n 70,3,79,54,91,NcrRootShiftOnly
+	@n 72,3,74,53,94,NcrRootShiftOnly
+	n 3,72,58,126,NcrRootShiftOnly
+	@n 77,1,41,84,173,NcrRootShiftOnly
 	@sus 85,2,0
 	@sus 93,3,0
 	@expr 95,7,122
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,105
 	@expr 19,7,101
 	@expr 23,7,97
@@ -3775,14 +3775,14 @@ Style_StridePiano_Intro2A:	# 4 bars of 4 beats
 	@expr 55,7,67
 	@expr 59,7,63
 	@expr 63,7,59
-	@n 66,0,SD1,58,53,0,0
+	@n 66,0,KitSnareDrum1,58,53,NcrNone
 	@expr 68,7,54
 	@expr 73,7,50
 	@sus 80,3,127
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	@n 4,0,HHP,34,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
+	@n 4,0,KitHiHatPedal,34,12,NcrNone
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -3791,28 +3791,28 @@ Style_StridePiano_Intro2A:	# 4 bars of 4 beats
 	@expr 29,7,33
 	@expr 34,7,16
 	@expr 39,7,1
-	@n 55,3,68,46,43,0,1
-	@n 58,3,43,37,42,0,1
-	n 3,77,46,42,0,1
-	n 3,74,38,41,0,1
-	@n 60,3,71,52,38,0,1
-	@n 62,1,41,73,25,0,1
+	@n 55,3,68,46,43,NcrRootShiftOnly
+	@n 58,3,43,37,42,NcrRootShiftOnly
+	n 3,77,46,42,NcrRootShiftOnly
+	n 3,74,38,41,NcrRootShiftOnly
+	@n 60,3,71,52,38,NcrRootShiftOnly
+	@n 62,1,41,73,25,NcrRootShiftOnly
 	@expr 63,7,51
-	@n 64,7,SD2,109,12,0,0
-	@n 65,0,SD1,40,19,0,0
+	@n 64,7,KitSnareDrum2,109,12,NcrNone
+	@n 65,0,KitSnareDrum1,40,19,NcrNone
 	@sus 83,3,0
 	@sus 90,2,0
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,127
-	n 1,40,80,84,0,1
-	@n 1,7,SD2,59,12,0,0
-	@n 3,3,71,52,51,0,1
-	n 3,76,61,55,0,1
-	n 3,67,47,51,0,1
-	@n 4,2,47,47,20,0,1
-	@n 5,2,40,51,18,0,1
-	n 2,55,48,26,0,1
+	n 1,40,80,84,NcrRootShiftOnly
+	@n 1,7,KitSnareDrum2,59,12,NcrNone
+	@n 3,3,71,52,51,NcrRootShiftOnly
+	n 3,76,61,55,NcrRootShiftOnly
+	n 3,67,47,51,NcrRootShiftOnly
+	@n 4,2,47,47,20,NcrRootShiftOnly
+	@n 5,2,40,51,18,NcrRootShiftOnly
+	n 2,55,48,26,NcrRootShiftOnly
 	@sus 11,2,127
 	@expr 14,7,109
 	@expr 17,7,105
@@ -3833,19 +3833,19 @@ Style_StridePiano_Intro2A:	# 4 bars of 4 beats
 	@sus 78,2,0
 	@expr 80,7,48
 	@sus 89,3,0
-	@n 93,2,52,40,24,0,1
-	n 2,60,56,21,0,1
-	@n 94,2,57,59,20,0,1
-	n 2,55,55,21,0,1
+	@n 93,2,52,40,24,NcrRootShiftOnly
+	n 2,60,56,21,NcrRootShiftOnly
+	@n 94,2,57,59,20,NcrRootShiftOnly
+	n 2,55,55,21,NcrRootShiftOnly
 	@expr 95,7,127
-	n 3,72,26,51,0,1
+	n 3,72,26,51,NcrRootShiftOnly
 	beat
-	n 7,SD2,109,12,0,0
-	n 3,76,44,52,0,1
-	n 3,79,57,54,0,1
-	@n 1,3,69,26,47,0,1
-	@n 4,0,HHP,38,12,0,0
-	@n 6,1,45,81,77,0,1
+	n 7,KitSnareDrum2,109,12,NcrNone
+	n 3,76,44,52,NcrRootShiftOnly
+	n 3,79,57,54,NcrRootShiftOnly
+	@n 1,3,69,26,47,NcrRootShiftOnly
+	@n 4,0,KitHiHatPedal,38,12,NcrNone
+	@n 6,1,45,81,77,NcrRootShiftOnly
 	@expr 8,7,86
 	@expr 12,7,68
 	sus 2,127
@@ -3855,23 +3855,23 @@ Style_StridePiano_Intro2A:	# 4 bars of 4 beats
 	@sus 29,3,127
 	@sus 81,2,0
 	@sus 89,3,0
-	@n 92,2,53,51,46,0,1
-	@n 93,2,38,57,26,0,1
+	@n 92,2,53,51,46,NcrRootShiftOnly
+	@n 93,2,38,57,26,NcrRootShiftOnly
 	@expr 95,7,122
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	@n 1,3,77,33,59,0,1
-	@n 3,3,81,41,60,0,1
-	@n 4,3,74,42,53,0,1
-	n 3,84,47,59,0,1
-	@n 6,1,38,85,88,0,1
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 1,3,77,33,59,NcrRootShiftOnly
+	@n 3,3,81,41,60,NcrRootShiftOnly
+	@n 4,3,74,42,53,NcrRootShiftOnly
+	n 3,84,47,59,NcrRootShiftOnly
+	@n 6,1,38,85,88,NcrRootShiftOnly
 	@expr 14,7,105
 	@sus 18,2,127
 	@expr 19,7,101
 	@expr 23,7,97
 	@expr 27,7,92
-	@n 30,0,CHINA,58,26,0,0
+	@n 30,0,KitChinaCymbal,58,26,NcrNone
 	@expr 32,7,88
 	@expr 37,7,84
 	@expr 41,7,80
@@ -3887,17 +3887,17 @@ Style_StridePiano_Intro2A:	# 4 bars of 4 beats
 	@sus 91,2,0
 	@expr 95,7,127
 	beat
-	n 7,SD2,109,12,0,0
-	@n 1,0,CHINA,63,43,0,0
-	@n 3,2,53,57,30,0,1
-	n 2,59,70,30,0,1
-	n 3,80,31,57,0,1
-	n 3,77,34,54,0,1
-	@n 4,0,HHP,36,12,0,0
-	n 3,83,37,50,0,1
+	n 7,KitSnareDrum2,109,12,NcrNone
+	@n 1,0,KitChinaCymbal,63,43,NcrNone
+	@n 3,2,53,57,30,NcrRootShiftOnly
+	n 2,59,70,30,NcrRootShiftOnly
+	n 3,80,31,57,NcrRootShiftOnly
+	n 3,77,34,54,NcrRootShiftOnly
+	@n 4,0,KitHiHatPedal,36,12,NcrNone
+	n 3,83,37,50,NcrRootShiftOnly
 	@expr 7,7,86
-	n 3,86,40,47,0,1
-	@n 8,1,43,83,58,0,1
+	n 3,86,40,47,NcrRootShiftOnly
+	@n 8,1,43,83,58,NcrRootShiftOnly
 	@expr 11,7,68
 	@expr 16,7,55
 	@expr 20,7,48
@@ -3906,20 +3906,20 @@ Style_StridePiano_Intro2A:	# 4 bars of 4 beats
 	@sus 26,3,127
 	@expr 29,7,33
 	@expr 34,7,35
-	@n 69,0,CHINA,95,17,0,0
-	@n 71,2,48,61,31,0,1
-	n 2,60,67,33,0,1
-	@n 72,1,48,91,33,0,1
-	n 3,76,57,21,0,1
-	@n 73,3,81,44,23,0,1
-	n 3,84,48,28,0,1
-	@n 74,3,79,51,19,0,1
+	@n 69,0,KitChinaCymbal,95,17,NcrNone
+	@n 71,2,48,61,31,NcrRootShiftOnly
+	n 2,60,67,33,NcrRootShiftOnly
+	@n 72,1,48,91,33,NcrRootShiftOnly
+	n 3,76,57,21,NcrRootShiftOnly
+	@n 73,3,81,44,23,NcrRootShiftOnly
+	n 3,84,48,28,NcrRootShiftOnly
+	@n 74,3,79,51,19,NcrRootShiftOnly
 	@sus 83,2,0
 	@sus 84,3,0
 	@expr 95,7,127
 	beat
-	n 0,BD1,50,12,0,0
-	@n 2,7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	@n 2,7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,109
 	@expr 17,7,105
 	@expr 21,7,101
@@ -3932,35 +3932,35 @@ Style_StridePiano_Intro2A:	# 4 bars of 4 beats
 	@expr 53,7,71
 	@expr 57,7,67
 	@expr 62,7,62
-	@n 64,0,HHO,78,26,0,0
+	@n 64,0,KitHiHatOpen,78,26,NcrNone
 	@expr 67,7,58
 	@expr 71,7,54
 	@expr 75,7,50
 	@expr 80,7,48
-	@n 91,2,42,52,13,0,1
-	@n 94,3,89,32,8,0,1
+	@n 91,2,42,52,13,NcrRootShiftOnly
+	@n 94,3,89,32,8,NcrRootShiftOnly
 	@expr 95,7,127
 	beat
-	n 0,HHP,23,38,0,0
-	n 7,SD2,109,12,0,0
-	@n 1,1,43,93,62,0,1
-	@n 3,3,90,53,10,0,1
-	@n 5,2,43,80,71,0,1
+	n 0,KitHiHatPedal,23,38,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
+	@n 1,1,43,93,62,NcrRootShiftOnly
+	@n 3,3,90,53,10,NcrRootShiftOnly
+	@n 5,2,43,80,71,NcrRootShiftOnly
 	@expr 8,7,86
 	@expr 12,7,68
-	@n 14,3,91,51,64,0,1
+	@n 14,3,91,51,64,NcrRootShiftOnly
 	@expr 17,7,55
 	@expr 21,7,48
 	@expr 26,7,42
 	@expr 30,7,35
-	@n 64,0,HHC,68,99,0,0
-	n 0,BD1,50,12,0,0
-	@n 67,1,36,88,58,0,1
-	@n 77,2,36,87,43,0,1
-	@n 78,3,96,83,46,0,1
+	@n 64,0,KitHiHatClosed,68,99,NcrNone
+	n 0,KitBassDrum1,50,12,NcrNone
+	@n 67,1,36,88,58,NcrRootShiftOnly
+	@n 77,2,36,87,43,NcrRootShiftOnly
+	@n 78,3,96,83,46,NcrRootShiftOnly
 	@expr 95,7,122
 	beat
-	n 7,SD2,59,12,0,0
+	n 7,KitSnareDrum2,59,12,NcrNone
 	@expr 14,7,105
 	@expr 19,7,101
 	@expr 23,7,97
@@ -3976,22 +3976,22 @@ Style_StridePiano_Intro2A:	# 4 bars of 4 beats
 	@expr 68,7,54
 	beat
 	end
-	var_end	Style_StridePiano_Intro2A
-Style_StridePiano_Intro2B:	# 4 bars of 4 beats
-	var_head	Style_StridePiano_Intro2B, 4, 4, 0xff, 0xff
-	mode 1,11
-	mode 2,8
+	var_end	Style_StridePiano_Ending1Major
+Style_StridePiano_Ending1Minor:	# 4 bars of 4 beats
+	var_head	Style_StridePiano_Ending1Minor, 4, 4, 0xff, 0xff
+	fold_root 1,11
+	fold_root 2,8
 	rev 4,47
 	rev 5,47
 	rev 6,47
-	var_events	Style_StridePiano_Intro2B
+	var_events	Style_StridePiano_Ending1Minor
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,122
-	n 7,SD2,59,12,0,0
-	@n 2,2,48,86,51,0,1
-	n 3,72,86,52,0,1
-	@n 4,1,48,103,67,0,1
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 2,2,48,86,51,NcrRootShiftOnly
+	n 3,72,86,52,NcrRootShiftOnly
+	@n 4,1,48,103,67,NcrRootShiftOnly
 	@expr 6,7,125
 	@expr 10,7,122
 	@expr 14,7,120
@@ -4006,21 +4006,21 @@ Style_StridePiano_Intro2B:	# 4 bars of 4 beats
 	@expr 54,7,86
 	@expr 60,7,81
 	@expr 64,7,76
-	n 2,51,69,27,0,1
-	n 3,75,86,28,0,1
+	n 2,51,69,27,NcrRootShiftOnly
+	n 3,75,86,28,NcrRootShiftOnly
 	@expr 68,7,72
 	@expr 72,7,65
 	@expr 78,7,60
 	@expr 82,7,55
 	@expr 86,7,50
 	beat
-	n 0,HHC,61,21,0,0
-	n 0,BD1,21,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitHiHatClosed,61,21,NcrNone
+	n 0,KitBassDrum1,21,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 4,1,48,101,67,0,1
-	n 2,55,80,50,0,1
-	n 3,79,94,46,0,1
+	@n 4,1,48,101,67,NcrRootShiftOnly
+	n 2,55,80,50,NcrRootShiftOnly
+	n 3,79,94,46,NcrRootShiftOnly
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -4030,17 +4030,17 @@ Style_StridePiano_Intro2B:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,63
-	@n 64,7,SD2,82,12,0,0
-	@n 65,3,84,81,29,0,1
-	@n 66,2,60,85,29,0,1
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	@n 65,3,84,81,29,NcrRootShiftOnly
+	@n 66,2,60,85,29,NcrRootShiftOnly
 	@expr 94,7,122
-	n 1,47,102,75,0,1
+	n 1,47,102,75,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	@expr 4,7,126
-	n 2,59,93,30,0,1
-	@n 5,3,83,99,29,0,1
+	n 2,59,93,30,NcrRootShiftOnly
+	@n 5,3,83,99,29,NcrRootShiftOnly
 	@expr 6,7,123
 	@expr 12,7,121
 	@expr 16,7,119
@@ -4061,14 +4061,14 @@ Style_StridePiano_Intro2B:	# 4 bars of 4 beats
 	@expr 84,7,56
 	@expr 88,7,50
 	@expr 92,7,48
-	@n 95,0,HHC,47,22,0,0
+	@n 95,0,KitHiHatClosed,47,22,NcrNone
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 1,1,47,90,73,0,1
-	@n 3,2,55,71,39,0,1
-	@n 4,3,79,86,34,0,1
+	@n 1,1,47,90,73,NcrRootShiftOnly
+	@n 3,2,55,71,39,NcrRootShiftOnly
+	@n 4,3,79,86,34,NcrRootShiftOnly
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -4078,14 +4078,14 @@ Style_StridePiano_Intro2B:	# 4 bars of 4 beats
 	@expr 34,7,16
 	@expr 39,7,1
 	@expr 54,7,64
-	@n 64,7,SD2,82,12,0,0
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
-	n 1,46,104,77,0,1
-	@n 2,2,58,80,31,0,1
-	n 3,82,94,31,0,1
+	n 1,46,104,77,NcrRootShiftOnly
+	@n 2,2,58,80,31,NcrRootShiftOnly
+	n 3,82,94,31,NcrRootShiftOnly
 	@expr 10,7,123
 	@expr 12,7,122
 	@expr 14,7,121
@@ -4102,9 +4102,9 @@ Style_StridePiano_Intro2B:	# 4 bars of 4 beats
 	@expr 36,7,107
 	@expr 38,7,106
 	@expr 40,7,104
-	@n 41,2,60,63,17,0,1
+	@n 41,2,60,63,17,NcrRootShiftOnly
 	@expr 42,7,103
-	n 3,84,47,16,0,1
+	n 3,84,47,16,NcrRootShiftOnly
 	@expr 44,7,102
 	@expr 46,7,100
 	@expr 48,7,99
@@ -4112,22 +4112,22 @@ Style_StridePiano_Intro2B:	# 4 bars of 4 beats
 	@expr 52,7,102
 	@expr 54,7,98
 	@expr 56,7,95
-	n 2,58,45,17,0,1
-	@n 57,3,82,65,13,0,1
+	n 2,58,45,17,NcrRootShiftOnly
+	@n 57,3,82,65,13,NcrRootShiftOnly
 	@expr 62,7,86
 	@expr 67,7,78
-	@n 68,3,79,77,23,0,1
+	@n 68,3,79,77,23,NcrRootShiftOnly
 	@expr 71,7,71
-	@n 74,2,55,78,27,0,1
+	@n 74,2,55,78,27,NcrRootShiftOnly
 	@expr 76,7,63
-	@n 95,0,HHC,49,27,0,0
+	@n 95,0,KitHiHatClosed,49,27,NcrNone
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 2,3,80,97,47,0,1
-	@n 3,1,46,100,59,0,1
-	@n 7,2,56,87,42,0,1
+	@n 2,3,80,97,47,NcrRootShiftOnly
+	@n 3,1,46,100,59,NcrRootShiftOnly
+	@n 7,2,56,87,42,NcrRootShiftOnly
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -4137,63 +4137,63 @@ Style_StridePiano_Intro2B:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,65
-	@n 60,2,57,86,85,0,1
-	@n 62,3,81,89,31,0,1
-	@n 64,7,SD2,82,12,0,0
-	@n 74,1,45,107,41,1,1
+	@n 60,2,57,86,85,NcrRootShiftOnly
+	@n 62,3,81,89,31,NcrRootShiftOnly
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	@n 74,1,45,107,169,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
 	@expr 13,7,111
 	@expr 14,7,106
 	@expr 18,7,101
 	@expr 23,7,95
 	@expr 28,7,90
-	@n 31,0,HHO,52,18,0,0
+	@n 31,0,KitHiHatOpen,52,18,NcrNone
 	@expr 32,7,85
 	@expr 36,7,79
 	@expr 41,7,74
 	@expr 45,7,69
-	@n 46,3,77,63,7,0,1
+	@n 46,3,77,63,7,NcrRootShiftOnly
 	@expr 50,7,65
-	@n 53,3,79,67,15,0,1
+	@n 53,3,79,67,15,NcrRootShiftOnly
 	@expr 64,7,127
-	n 3,77,66,18,0,1
-	@n 80,3,75,101,19,0,1
-	@n 94,0,HHO,64,38,0,0
+	n 3,77,66,18,NcrRootShiftOnly
+	@n 80,3,75,101,19,NcrRootShiftOnly
+	@n 94,0,KitHiHatOpen,64,38,NcrNone
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,88,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,88,12,NcrNone
 	@expr 2,7,103
 	@expr 7,7,86
-	n 3,72,74,21,0,1
+	n 3,72,74,21,NcrRootShiftOnly
 	@expr 11,7,68
 	@expr 16,7,55
 	@expr 20,7,48
 	@expr 25,7,42
 	@expr 29,7,33
-	@n 33,3,71,85,24,0,1
-	@n 57,1,45,68,7,0,1
-	@n 59,3,70,69,19,0,1
-	@n 63,1,42,93,27,0,1
-	n 2,42,112,33,0,1
-	@n 64,7,SD2,88,12,0,0
+	@n 33,3,71,85,24,NcrRootShiftOnly
+	@n 57,1,45,68,7,NcrRootShiftOnly
+	@n 59,3,70,69,19,NcrRootShiftOnly
+	@n 63,1,42,93,27,NcrRootShiftOnly
+	n 2,42,112,33,NcrRootShiftOnly
+	@n 64,7,KitSnareDrum2,88,12,NcrNone
 	expr 7,127
-	@n 68,0,HHC,55,21,0,0
+	@n 68,0,KitHiHatClosed,55,21,NcrNone
 	@expr 71,7,86
 	@expr 76,7,68
-	@n 80,3,69,77,19,0,1
+	@n 80,3,69,77,19,NcrRootShiftOnly
 	@expr 81,7,55
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,122
-	n 7,SD2,59,12,0,0
-	n 2,41,74,44,0,1
-	@n 1,2,56,72,51,0,1
-	@n 2,1,41,80,50,1,1
+	n 7,KitSnareDrum2,59,12,NcrNone
+	n 2,41,74,44,NcrRootShiftOnly
+	@n 1,2,56,72,51,NcrRootShiftOnly
+	@n 2,1,41,80,178,NcrRootShiftOnly
 	@expr 6,7,123
-	n 3,68,83,56,0,1
+	n 3,68,83,56,NcrRootShiftOnly
 	@expr 12,7,121
 	@expr 16,7,119
 	@expr 20,7,116
@@ -4208,22 +4208,22 @@ Style_StridePiano_Intro2B:	# 4 bars of 4 beats
 	sus 2,127
 	@expr 60,7,79
 	@expr 66,7,74
-	n 3,72,84,28,0,1
+	n 3,72,84,28,NcrRootShiftOnly
 	@expr 70,7,69
 	@expr 74,7,65
 	@expr 78,7,58
 	@expr 84,7,53
 	@expr 88,7,50
-	@n 95,0,HHC,52,20,0,0
+	@n 95,0,KitHiHatClosed,52,20,NcrNone
 	beat
-	n 0,BD1,21,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,21,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 1,2,53,72,30,0,1
-	n 2,56,53,30,0,1
-	n 2,60,65,29,0,1
-	@n 2,2,62,84,28,0,1
-	n 3,74,78,55,0,1
+	@n 1,2,53,72,30,NcrRootShiftOnly
+	n 2,56,53,30,NcrRootShiftOnly
+	n 2,60,65,29,NcrRootShiftOnly
+	@n 2,2,62,84,28,NcrRootShiftOnly
+	n 3,74,78,55,NcrRootShiftOnly
 	@expr 8,7,86
 	@sus 10,2,0
 	@expr 12,7,68
@@ -4234,18 +4234,18 @@ Style_StridePiano_Intro2B:	# 4 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,63
-	@n 61,3,79,89,29,0,1
-	@n 64,7,SD2,82,12,0,0
-	n 2,50,72,30,0,1
+	@n 61,3,79,89,29,NcrRootShiftOnly
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	n 2,50,72,30,NcrRootShiftOnly
 	@expr 94,7,122
-	@n 95,2,43,67,65,0,1
-	n 2,59,51,81,0,1
-	n 3,77,94,43,0,1
+	@n 95,2,43,67,65,NcrRootShiftOnly
+	n 2,59,51,81,NcrRootShiftOnly
+	n 3,77,94,43,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	@expr 4,7,125
-	n 1,43,95,24,1,1
+	n 1,43,95,152,NcrRootShiftOnly
 	@expr 8,7,123
 	@expr 12,7,120
 	@expr 18,7,118
@@ -4265,17 +4265,17 @@ Style_StridePiano_Intro2B:	# 4 bars of 4 beats
 	@expr 80,7,62
 	@expr 84,7,53
 	@expr 90,7,48
-	@n 95,0,HHC,49,18,0,0
-	n 2,59,58,66,0,1
-	n 2,62,68,80,0,1
-	n 3,74,95,60,0,1
+	@n 95,0,KitHiHatClosed,49,18,NcrNone
+	n 2,59,58,66,NcrRootShiftOnly
+	n 2,62,68,80,NcrRootShiftOnly
+	n 3,74,95,60,NcrRootShiftOnly
 	beat
-	n 0,BD1,27,12,0,0
-	n 7,SD2,109,12,0,0
+	n 0,KitBassDrum1,27,12,NcrNone
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	n 2,53,68,66,0,1
-	n 2,56,68,65,0,1
-	@n 3,3,86,64,60,0,1
+	n 2,53,68,66,NcrRootShiftOnly
+	n 2,56,68,65,NcrRootShiftOnly
+	@n 3,3,86,64,60,NcrRootShiftOnly
 	@expr 6,7,127
 	@expr 10,7,126
 	@expr 12,7,125
@@ -4304,16 +4304,16 @@ Style_StridePiano_Intro2B:	# 4 bars of 4 beats
 	@expr 58,7,102
 	@expr 60,7,101
 	@expr 62,7,100
-	@n 63,1,36,105,60,0,1
+	@n 63,1,36,105,60,NcrRootShiftOnly
 	@expr 64,7,99
-	n 7,SD2,82,12,0,0
-	n 2,48,90,65,0,1
-	n 2,63,90,61,0,1
+	n 7,KitSnareDrum2,82,12,NcrNone
+	n 2,48,90,65,NcrRootShiftOnly
+	n 2,63,90,61,NcrRootShiftOnly
 	@expr 66,7,98
-	@n 67,3,72,89,36,0,1
+	@n 67,3,72,89,36,NcrRootShiftOnly
 	@expr 68,7,97
 	@expr 70,7,96
-	n 3,84,58,36,0,1
+	n 3,84,58,36,NcrRootShiftOnly
 	@expr 72,7,95
 	@expr 74,7,94
 	@expr 76,7,93
@@ -4369,41 +4369,41 @@ Style_StridePiano_Intro2B:	# 4 bars of 4 beats
 	@expr 80,7,3
 	@expr 82,7,1
 	beat
-	@n 64,0,SPLASH,104,51,0,0
-	@n 65,2,72,72,74,0,1
-	@n 66,2,75,76,76,0,1
-	n 2,84,87,73,0,1
-	@n 67,2,79,84,74,0,1
-	@n 68,1,36,105,68,0,1
-	n 2,48,92,71,0,1
-	n 2,81,87,74,0,1
-	@n 70,2,36,77,73,0,1
+	@n 64,0,KitSplashCymbal,104,51,NcrNone
+	@n 65,2,72,72,74,NcrRootShiftOnly
+	@n 66,2,75,76,76,NcrRootShiftOnly
+	n 2,84,87,73,NcrRootShiftOnly
+	@n 67,2,79,84,74,NcrRootShiftOnly
+	@n 68,1,36,105,68,NcrRootShiftOnly
+	n 2,48,92,71,NcrRootShiftOnly
+	n 2,81,87,74,NcrRootShiftOnly
+	@n 70,2,36,77,73,NcrRootShiftOnly
 	beat
 	beat
 	end
-	var_end	Style_StridePiano_Intro2B
-Style_StridePiano_Ending2A:	# 6 bars of 4 beats
-	var_head	Style_StridePiano_Ending2A, 6, 4, 0xff, 0xff
-	mode 1,11
-	mode 2,8
+	var_end	Style_StridePiano_Ending1Minor
+Style_StridePiano_Ending2Major:	# 6 bars of 4 beats
+	var_head	Style_StridePiano_Ending2Major, 6, 4, 0xff, 0xff
+	fold_root 1,11
+	fold_root 2,8
 	rev 4,47
 	rev 5,47
 	rev 6,47
-	var_events	Style_StridePiano_Ending2A
+	var_events	Style_StridePiano_Ending2Major
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,122
-	n 7,SD2,59,12,0,0
-	n 2,41,73,40,0,1
-	n 2,48,73,41,0,1
-	n 2,57,73,45,0,1
-	n 3,65,61,19,1,1
-	n 3,69,59,59,0,1
-	n 3,74,78,53,0,1
+	n 7,KitSnareDrum2,59,12,NcrNone
+	n 2,41,73,40,NcrRootShiftOnly
+	n 2,48,73,41,NcrRootShiftOnly
+	n 2,57,73,45,NcrRootShiftOnly
+	n 3,65,61,147,NcrRootShiftOnly
+	n 3,69,59,59,NcrRootShiftOnly
+	n 3,74,78,53,NcrRootShiftOnly
 	@expr 6,7,125
 	@sus 8,3,127
 	@expr 10,7,122
-	n 1,41,84,104,0,1
+	n 1,41,84,104,NcrRootShiftOnly
 	@expr 14,7,120
 	@expr 18,7,116
 	@expr 24,7,114
@@ -4415,7 +4415,7 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	@expr 46,7,97
 	@expr 50,7,93
 	@expr 54,7,86
-	@n 56,3,72,78,34,0,1
+	@n 56,3,72,78,34,NcrRootShiftOnly
 	@expr 60,7,81
 	@expr 64,7,76
 	@expr 68,7,72
@@ -4424,15 +4424,15 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	@expr 82,7,55
 	@expr 86,7,50
 	@sus 88,2,0
-	@n 90,2,60,80,30,0,1
-	@n 91,2,62,79,30,0,1
-	n 2,57,77,35,0,1
-	n 2,53,66,36,0,1
-	@n 93,3,74,93,40,0,1
+	@n 90,2,60,80,30,NcrRootShiftOnly
+	@n 91,2,62,79,30,NcrRootShiftOnly
+	n 2,57,77,35,NcrRootShiftOnly
+	n 2,53,66,36,NcrRootShiftOnly
+	@n 93,3,74,93,40,NcrRootShiftOnly
 	beat
-	n 7,SD2,109,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 1,0,HHP,38,12,0,0
+	@n 1,0,KitHiHatPedal,38,12,NcrNone
 	@expr 8,7,86
 	@sus 11,2,127
 	@expr 12,7,68
@@ -4442,26 +4442,26 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	@expr 30,7,33
 	@expr 35,7,16
 	@expr 40,7,1
-	@n 46,2,60,91,21,0,1
-	@n 52,3,72,88,9,0,1
+	@n 46,2,60,91,21,NcrRootShiftOnly
+	@n 52,3,72,88,9,NcrRootShiftOnly
 	@expr 57,7,63
-	@n 58,1,41,85,23,0,1
-	@n 60,2,59,73,10,0,1
-	@n 64,7,SD2,82,12,0,0
-	@n 67,2,58,63,10,0,1
-	@n 76,2,57,55,11,0,1
+	@n 58,1,41,85,23,NcrRootShiftOnly
+	@n 60,2,59,73,10,NcrRootShiftOnly
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	@n 67,2,58,63,10,NcrRootShiftOnly
+	@n 76,2,57,55,11,NcrRootShiftOnly
 	@sus 80,2,0
-	@n 85,3,68,67,37,1,1
-	@n 88,1,41,94,2,1,1
-	@n 90,2,48,79,36,0,1
-	n 2,56,97,37,0,1
+	@n 85,3,68,67,165,NcrRootShiftOnly
+	@n 88,1,41,94,130,NcrRootShiftOnly
+	@n 90,2,48,79,36,NcrRootShiftOnly
+	n 2,56,97,37,NcrRootShiftOnly
 	@sus 92,3,0
-	@n 93,2,41,84,31,0,1
+	@n 93,2,41,84,31,NcrRootShiftOnly
 	@expr 94,7,122
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	@n 3,3,79,90,26,0,1
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 3,3,79,90,26,NcrRootShiftOnly
 	@expr 4,7,126
 	@expr 6,7,123
 	@expr 12,7,121
@@ -4470,12 +4470,12 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	@expr 24,7,114
 	sus 2,127
 	@expr 30,7,112
-	n 3,77,64,22,0,1
+	n 3,77,64,22,NcrRootShiftOnly
 	@expr 34,7,110
 	@expr 38,7,108
 	@expr 42,7,106
 	@expr 48,7,104
-	@n 52,3,79,86,82,0,1
+	@n 52,3,79,86,82,NcrRootShiftOnly
 	@expr 54,7,102
 	@expr 56,7,96
 	@expr 60,7,87
@@ -4485,17 +4485,17 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	@expr 78,7,62
 	@sus 83,2,0
 	@expr 84,7,56
-	@n 85,2,56,43,32,0,1
-	n 2,60,73,29,0,1
-	@n 86,2,53,79,33,0,1
-	@n 87,2,62,88,28,0,1
+	@n 85,2,56,43,32,NcrRootShiftOnly
+	n 2,60,73,29,NcrRootShiftOnly
+	@n 86,2,53,79,33,NcrRootShiftOnly
+	@n 87,2,62,88,28,NcrRootShiftOnly
 	@expr 88,7,50
 	@expr 92,7,48
 	@sus 93,3,127
 	beat
-	n 7,SD2,109,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 1,0,HHP,36,12,0,0
+	@n 1,0,KitHiHatPedal,36,12,NcrNone
 	@expr 7,7,86
 	sus 2,127
 	@expr 11,7,68
@@ -4505,21 +4505,21 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	@expr 29,7,33
 	@expr 34,7,16
 	@expr 39,7,1
-	@n 49,1,41,76,23,0,1
+	@n 49,1,41,76,23,NcrRootShiftOnly
 	@expr 54,7,64
-	n 3,77,80,36,0,1
-	@n 64,7,SD2,82,12,0,0
+	n 3,77,80,36,NcrRootShiftOnly
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
 	@sus 77,2,0
 	@sus 81,3,0
-	@n 84,1,36,99,94,0,1
-	@n 89,2,36,81,18,0,1
-	@n 91,2,52,92,24,0,1
-	n 3,67,60,67,0,1
-	n 3,72,63,63,0,1
-	@n 92,3,76,70,66,0,1
+	@n 84,1,36,99,94,NcrRootShiftOnly
+	@n 89,2,36,81,18,NcrRootShiftOnly
+	@n 91,2,52,92,24,NcrRootShiftOnly
+	n 3,67,60,67,NcrRootShiftOnly
+	n 3,72,63,63,NcrRootShiftOnly
+	@n 92,3,76,70,66,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
 	@sus 5,2,127
 	@expr 10,7,123
@@ -4547,20 +4547,20 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	@sus 53,3,127
 	@expr 54,7,98
 	@expr 56,7,95
-	@n 60,3,79,88,27,0,1
+	@n 60,3,79,88,27,NcrRootShiftOnly
 	@expr 62,7,86
 	@expr 67,7,78
 	@expr 71,7,71
 	@expr 76,7,63
 	@sus 78,2,0
-	@n 85,2,46,73,29,0,1
-	@n 88,2,62,99,20,0,1
-	@n 92,3,81,93,9,0,1
-	@n 95,1,34,91,79,0,1
+	@n 85,2,46,73,29,NcrRootShiftOnly
+	@n 88,2,62,99,20,NcrRootShiftOnly
+	@n 92,3,81,93,9,NcrRootShiftOnly
+	@n 95,1,34,91,79,NcrRootShiftOnly
 	beat
-	n 7,SD2,109,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 1,0,HHP,38,12,0,0
+	@n 1,0,KitHiHatPedal,38,12,NcrNone
 	@sus 2,2,127
 	@expr 8,7,86
 	@expr 12,7,68
@@ -4571,18 +4571,18 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@sus 52,3,0
-	@n 55,3,83,73,3,1,1
-	@n 56,3,76,80,4,1,1
-	n 3,73,59,4,1,1
+	@n 55,3,83,73,131,NcrRootShiftOnly
+	@n 56,3,76,80,132,NcrRootShiftOnly
+	n 3,73,59,132,NcrRootShiftOnly
 	@expr 57,7,65
-	@n 64,7,SD2,82,12,0,0
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
 	@sus 79,2,0
-	@n 87,2,45,72,61,0,1
-	@n 88,2,61,73,59,0,1
-	@n 92,1,33,87,43,1,1
+	@n 87,2,45,72,61,NcrRootShiftOnly
+	@n 88,2,61,73,59,NcrRootShiftOnly
+	@n 92,1,33,87,171,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
 	@sus 7,3,127
 	@expr 13,7,111
@@ -4592,46 +4592,46 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	@expr 28,7,90
 	@expr 32,7,85
 	@expr 36,7,79
-	n 3,88,67,27,0,1
+	n 3,88,67,27,NcrRootShiftOnly
 	@expr 41,7,74
 	@expr 45,7,69
 	@expr 50,7,65
-	@n 52,2,47,82,36,0,1
-	@n 53,2,62,83,35,0,1
-	@n 58,3,85,64,20,0,1
+	@n 52,2,47,82,36,NcrRootShiftOnly
+	@n 53,2,62,83,35,NcrRootShiftOnly
+	@n 58,3,85,64,20,NcrRootShiftOnly
 	@expr 64,7,127
-	@n 75,3,83,37,20,0,1
-	@n 87,2,48,88,57,0,1
-	@n 89,2,63,89,55,0,1
-	@n 91,3,79,70,10,0,1
+	@n 75,3,83,37,20,NcrRootShiftOnly
+	@n 87,2,48,88,57,NcrRootShiftOnly
+	@n 89,2,63,89,55,NcrRootShiftOnly
+	@n 91,3,79,70,10,NcrRootShiftOnly
 	beat
-	n 7,SD2,88,12,0,0
-	@n 1,0,HHP,34,12,0,0
+	n 7,KitSnareDrum2,88,12,NcrNone
+	@n 1,0,KitHiHatPedal,34,12,NcrNone
 	@expr 2,7,103
 	@expr 7,7,86
 	@expr 11,7,68
-	@n 15,3,76,32,12,0,1
+	@n 15,3,76,32,12,NcrRootShiftOnly
 	@expr 16,7,55
 	@expr 20,7,48
 	@expr 25,7,42
 	@expr 29,7,33
-	@n 48,2,49,94,36,0,1
-	@n 51,2,64,94,35,0,1
+	@n 48,2,49,94,36,NcrRootShiftOnly
+	@n 51,2,64,94,35,NcrRootShiftOnly
 	@sus 56,3,0
-	@n 58,3,82,90,26,0,1
-	@n 64,7,SD2,88,12,0,0
+	@n 58,3,82,90,26,NcrRootShiftOnly
+	@n 64,7,KitSnareDrum2,88,12,NcrNone
 	expr 7,127
 	@expr 71,7,86
 	@expr 76,7,68
 	@expr 81,7,55
-	@n 86,2,50,101,44,0,1
-	@n 88,2,65,102,49,0,1
-	@n 92,3,81,93,55,0,1
-	@n 95,1,38,104,35,1,1
+	@n 86,2,50,101,44,NcrRootShiftOnly
+	@n 88,2,65,102,49,NcrRootShiftOnly
+	@n 92,3,81,93,55,NcrRootShiftOnly
+	@n 95,1,38,104,163,NcrRootShiftOnly
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,122
-	n 7,SD2,59,12,0,0
+	n 7,KitSnareDrum2,59,12,NcrNone
 	@expr 6,7,123
 	@expr 12,7,121
 	@expr 16,7,119
@@ -4644,7 +4644,7 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	@expr 42,7,100
 	@expr 48,7,95
 	@expr 52,7,90
-	@n 55,3,84,85,28,0,1
+	@n 55,3,84,85,28,NcrRootShiftOnly
 	@expr 56,7,86
 	@expr 60,7,79
 	@expr 66,7,74
@@ -4653,14 +4653,14 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	@expr 78,7,58
 	@expr 84,7,53
 	@expr 88,7,50
-	@n 90,3,81,73,57,0,1
-	@n 95,2,65,73,18,0,1
+	@n 90,3,81,73,57,NcrRootShiftOnly
+	@n 95,2,65,73,18,NcrRootShiftOnly
 	beat
-	n 7,SD2,109,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	n 2,57,59,10,0,1
-	n 2,62,79,13,0,1
-	@n 1,0,HHP,38,12,0,0
+	n 2,57,59,10,NcrRootShiftOnly
+	n 2,62,79,13,NcrRootShiftOnly
+	@n 1,0,KitHiHatPedal,38,12,NcrNone
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -4669,19 +4669,19 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	@expr 30,7,33
 	@expr 35,7,16
 	@expr 40,7,1
-	@n 56,3,77,83,35,0,1
+	@n 56,3,77,83,35,NcrRootShiftOnly
 	@expr 57,7,63
-	@n 64,7,SD2,82,12,0,0
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
 	@sus 78,2,0
-	@n 90,2,43,55,29,0,1
-	@n 92,2,50,97,27,0,1
-	@n 93,2,59,95,35,0,1
+	@n 90,2,43,55,29,NcrRootShiftOnly
+	@n 92,2,50,97,27,NcrRootShiftOnly
+	@n 93,2,59,95,35,NcrRootShiftOnly
 	@expr 94,7,122
-	n 1,43,96,102,0,1
-	@n 95,3,76,87,75,0,1
+	n 1,43,96,102,NcrRootShiftOnly
+	@n 95,3,76,87,75,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	@expr 4,7,125
 	@expr 8,7,123
 	@expr 12,7,120
@@ -4698,25 +4698,25 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	@expr 58,7,93
 	@expr 62,7,87
 	@expr 66,7,79
-	@n 71,3,77,60,10,0,1
+	@n 71,3,77,60,10,NcrRootShiftOnly
 	@expr 72,7,73
 	@expr 76,7,67
-	@n 77,3,78,50,12,0,1
+	@n 77,3,78,50,12,NcrRootShiftOnly
 	@expr 80,7,62
 	@expr 84,7,53
 	@sus 87,2,0
-	@n 88,3,79,73,79,0,1
+	@n 88,3,79,73,79,NcrRootShiftOnly
 	@expr 90,7,48
-	@n 92,2,62,80,39,0,1
-	@n 93,2,53,57,38,0,1
-	n 2,56,59,37,0,1
-	@n 94,2,59,61,35,0,1
+	@n 92,2,62,80,39,NcrRootShiftOnly
+	@n 93,2,53,57,38,NcrRootShiftOnly
+	n 2,56,59,37,NcrRootShiftOnly
+	@n 94,2,59,61,35,NcrRootShiftOnly
 	beat
-	n 7,SD2,109,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 1,0,HHP,36,12,0,0
+	@n 1,0,KitHiHatPedal,36,12,NcrNone
 	@expr 7,7,86
-	n 1,31,90,49,0,1
+	n 1,31,90,49,NcrRootShiftOnly
 	@sus 9,2,127
 	@expr 11,7,68
 	@expr 16,7,55
@@ -4726,13 +4726,13 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	@expr 34,7,16
 	@expr 39,7,1
 	@expr 54,7,64
-	@n 64,0,BD1,50,12,0,0
-	n 7,SD2,82,12,0,0
-	n 1,36,110,44,0,1
-	n 2,64,112,22,0,1
-	n 2,48,90,22,0,1
-	n 2,55,90,22,0,1
-	n 3,84,67,21,0,1
+	@n 64,0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,82,12,NcrNone
+	n 1,36,110,44,NcrRootShiftOnly
+	n 2,64,112,22,NcrRootShiftOnly
+	n 2,48,90,22,NcrRootShiftOnly
+	n 2,55,90,22,NcrRootShiftOnly
+	n 3,84,67,21,NcrRootShiftOnly
 	@sus 74,2,0
 	beat
 	expr 7,127
@@ -4756,14 +4756,14 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	@expr 46,7,104
 	@expr 48,7,103
 	@expr 50,7,102
-	@n 51,3,64,83,14,1,1
+	@n 51,3,64,83,142,NcrRootShiftOnly
 	@expr 52,7,100
-	@n 53,3,69,81,8,0,1
+	@n 53,3,69,81,8,NcrRootShiftOnly
 	@expr 54,7,99
 	@expr 56,7,96
 	@expr 58,7,93
-	n 3,70,76,3,1,1
-	@n 59,0,HHO,70,28,0,0
+	n 3,70,76,131,NcrRootShiftOnly
+	@n 59,0,KitHiHatOpen,70,28,NcrNone
 	@expr 60,7,90
 	@expr 62,7,87
 	@expr 64,7,84
@@ -4779,31 +4779,31 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	@expr 84,7,53
 	@expr 86,7,50
 	beat
-	@n 3,0,20,23,39,0,0
-	@n 94,0,HHO,65,62,0,0
+	@n 3,0,KitHiHatAccent,23,39,NcrNone
+	@n 94,0,KitHiHatOpen,65,62,NcrNone
 	beat
-	n 3,63,47,28,0,1
-	@n 3,3,69,51,30,0,1
-	@n 60,0,21,35,20,0,0
-	@n 81,0,19,13,17,0,0
-	@n 95,3,68,45,32,0,1
+	n 3,63,47,28,NcrRootShiftOnly
+	@n 3,3,69,51,30,NcrRootShiftOnly
+	@n 60,0,KitHHHalfOpen,35,20,NcrNone
+	@n 81,0,KitHHOffBeat,13,17,NcrNone
+	@n 95,3,68,45,32,NcrRootShiftOnly
 	beat
-	@n 1,0,18,27,17,0,0
-	n 3,65,31,33,0,1
-	@n 64,3,64,24,40,0,1
-	@n 65,3,67,39,39,0,1
-	@n 66,0,HHO,47,48,0,0
+	@n 1,0,KitHHOnBeat,27,17,NcrNone
+	n 3,65,31,33,NcrRootShiftOnly
+	@n 64,3,64,24,40,NcrRootShiftOnly
+	@n 65,3,67,39,39,NcrRootShiftOnly
+	@n 66,0,KitHiHatOpen,47,48,NcrNone
 	beat
-	@n 1,0,18,6,19,0,0
+	@n 1,0,KitHHOnBeat,6,19,NcrNone
 	beat
-	@n 61,2,52,66,91,3,1
-	@n 63,2,57,55,88,3,1
-	n 2,48,62,86,3,1
-	n 2,55,53,88,3,1
-	n 2,62,81,88,3,1
-	@n 64,2,36,69,87,3,1
-	@n 70,0,CHINA,59,22,4,0
-	@n 73,1,36,84,3,4,1
+	@n 61,2,52,66,475,NcrRootShiftOnly
+	@n 63,2,57,55,472,NcrRootShiftOnly
+	n 2,48,62,470,NcrRootShiftOnly
+	n 2,55,53,472,NcrRootShiftOnly
+	n 2,62,81,472,NcrRootShiftOnly
+	@n 64,2,36,69,471,NcrRootShiftOnly
+	@n 70,0,KitChinaCymbal,59,534,NcrNone
+	@n 73,1,36,84,515,NcrRootShiftOnly
 	beat
 	beat
 	beat
@@ -4811,23 +4811,23 @@ Style_StridePiano_Ending2A:	# 6 bars of 4 beats
 	beat
 	beat
 	end
-	var_end	Style_StridePiano_Ending2A
-Style_StridePiano_Ending2B:	# 6 bars of 4 beats
-	var_head	Style_StridePiano_Ending2B, 6, 4, 0xff, 0xff
-	mode 1,11
-	mode 2,8
+	var_end	Style_StridePiano_Ending2Major
+Style_StridePiano_Ending2Minor:	# 6 bars of 4 beats
+	var_head	Style_StridePiano_Ending2Minor, 6, 4, 0xff, 0xff
+	fold_root 1,11
+	fold_root 2,8
 	rev 4,47
 	rev 5,47
 	rev 6,47
-	var_events	Style_StridePiano_Ending2B
+	var_events	Style_StridePiano_Ending2Minor
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,122
-	n 7,SD2,59,12,0,0
-	n 2,43,57,93,0,1
-	n 2,51,47,93,0,1
-	@n 1,2,36,61,91,0,1
-	@n 2,1,36,95,124,0,1
+	n 7,KitSnareDrum2,59,12,NcrNone
+	n 2,43,57,93,NcrRootShiftOnly
+	n 2,51,47,93,NcrRootShiftOnly
+	@n 1,2,36,61,91,NcrRootShiftOnly
+	@n 2,1,36,95,124,NcrRootShiftOnly
 	@expr 6,7,125
 	@expr 10,7,122
 	@expr 14,7,120
@@ -4843,20 +4843,20 @@ Style_StridePiano_Ending2B:	# 6 bars of 4 beats
 	@expr 60,7,81
 	@expr 64,7,76
 	@expr 68,7,72
-	@n 71,3,78,65,61,2,1
+	@n 71,3,78,65,317,NcrRootShiftOnly
 	@expr 72,7,65
-	n 3,84,79,63,2,1
-	@n 73,3,77,72,58,2,1
+	n 3,84,79,319,NcrRootShiftOnly
+	@n 73,3,77,72,314,NcrRootShiftOnly
 	@expr 78,7,60
 	@expr 82,7,55
 	@expr 86,7,50
 	beat
-	n 7,SD2,109,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 1,0,HHP,38,12,0,0
-	n 2,63,65,27,0,1
-	n 2,55,69,25,0,1
-	n 2,60,74,24,0,1
+	@n 1,0,KitHiHatPedal,38,12,NcrNone
+	n 2,63,65,27,NcrRootShiftOnly
+	n 2,55,69,25,NcrRootShiftOnly
+	n 2,60,74,24,NcrRootShiftOnly
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -4866,16 +4866,16 @@ Style_StridePiano_Ending2B:	# 6 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,63
-	@n 64,7,SD2,82,12,0,0
-	@n 65,1,36,74,28,0,1
-	n 2,48,79,38,0,1
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	@n 65,1,36,74,28,NcrRootShiftOnly
+	n 2,48,79,38,NcrRootShiftOnly
 	@expr 94,7,122
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	@n 1,2,44,63,93,0,1
-	@n 2,1,44,75,0,1,1
-	n 2,60,79,88,0,1
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 1,2,44,63,93,NcrRootShiftOnly
+	@n 2,1,44,75,128,NcrRootShiftOnly
+	n 2,60,79,88,NcrRootShiftOnly
 	@expr 4,7,126
 	@expr 6,7,123
 	@expr 12,7,121
@@ -4898,12 +4898,12 @@ Style_StridePiano_Ending2B:	# 6 bars of 4 beats
 	@expr 88,7,50
 	@expr 92,7,48
 	beat
-	n 7,SD2,109,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 1,0,HHP,36,12,0,0
-	@n 2,2,63,62,28,0,1
-	n 2,56,62,24,0,1
-	n 2,60,81,27,0,1
+	@n 1,0,KitHiHatPedal,36,12,NcrNone
+	@n 2,2,63,62,28,NcrRootShiftOnly
+	n 2,56,62,24,NcrRootShiftOnly
+	n 2,60,81,27,NcrRootShiftOnly
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -4913,16 +4913,16 @@ Style_StridePiano_Ending2B:	# 6 bars of 4 beats
 	@expr 34,7,16
 	@expr 39,7,1
 	@expr 54,7,64
-	@n 62,1,44,76,35,0,1
-	@n 64,7,SD2,82,12,0,0
-	@n 66,2,44,69,42,0,1
+	@n 62,1,44,76,35,NcrRootShiftOnly
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	@n 66,2,44,69,42,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
-	@n 4,2,38,79,78,0,1
-	n 2,53,79,74,0,1
-	@n 8,1,38,75,122,0,1
+	@n 4,2,38,79,78,NcrRootShiftOnly
+	n 2,53,79,74,NcrRootShiftOnly
+	@n 8,1,38,75,122,NcrRootShiftOnly
 	@expr 10,7,123
 	@expr 12,7,122
 	@expr 14,7,121
@@ -4952,12 +4952,12 @@ Style_StridePiano_Ending2B:	# 6 bars of 4 beats
 	@expr 71,7,71
 	@expr 76,7,63
 	beat
-	n 7,SD2,109,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 1,0,HHP,38,12,0,0
-	n 2,56,56,35,0,1
-	n 2,53,66,34,0,1
-	n 2,60,74,35,0,1
+	@n 1,0,KitHiHatPedal,38,12,NcrNone
+	n 2,56,56,35,NcrRootShiftOnly
+	n 2,53,66,34,NcrRootShiftOnly
+	n 2,60,74,35,NcrRootShiftOnly
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -4967,60 +4967,60 @@ Style_StridePiano_Ending2B:	# 6 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,65
-	@n 64,7,SD2,82,12,0,0
-	@n 65,2,38,61,39,0,1
-	@n 68,1,38,80,18,0,1
-	@n 70,3,90,96,30,0,1
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	@n 65,2,38,61,39,NcrRootShiftOnly
+	@n 68,1,38,80,18,NcrRootShiftOnly
+	@n 70,3,90,96,30,NcrRootShiftOnly
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
-	@n 1,2,43,69,89,0,1
-	@n 2,2,59,72,85,0,1
-	@n 6,1,43,80,62,1,1
-	@n 11,3,89,69,58,0,1
+	@n 1,2,43,69,89,NcrRootShiftOnly
+	@n 2,2,59,72,85,NcrRootShiftOnly
+	@n 6,1,43,80,190,NcrRootShiftOnly
+	@n 11,3,89,69,58,NcrRootShiftOnly
 	@expr 13,7,111
 	@expr 14,7,106
 	@expr 18,7,101
 	@expr 23,7,95
 	@expr 28,7,90
 	@expr 32,7,85
-	@n 36,0,CHINA,63,27,0,0
+	@n 36,0,KitChinaCymbal,63,27,NcrNone
 	expr 7,79
 	@expr 41,7,74
 	@expr 45,7,69
 	@expr 50,7,65
 	@expr 64,7,127
 	beat
-	n 7,SD2,88,12,0,0
-	@n 1,0,HHP,34,12,0,0
-	n 2,59,69,41,0,1
-	n 2,63,77,42,0,1
-	n 2,53,70,38,0,1
+	n 7,KitSnareDrum2,88,12,NcrNone
+	@n 1,0,KitHiHatPedal,34,12,NcrNone
+	n 2,59,69,41,NcrRootShiftOnly
+	n 2,63,77,42,NcrRootShiftOnly
+	n 2,53,70,38,NcrRootShiftOnly
 	@expr 2,7,103
 	@expr 7,7,86
-	@n 10,3,83,61,51,0,1
-	@n 11,0,CHINA,72,23,0,0
+	@n 10,3,83,61,51,NcrRootShiftOnly
+	@n 11,0,KitChinaCymbal,72,23,NcrNone
 	expr 7,68
 	@expr 16,7,55
 	@expr 20,7,48
 	@expr 25,7,42
 	@expr 29,7,33
-	@n 64,7,SD2,88,12,0,0
+	@n 64,7,KitSnareDrum2,88,12,NcrNone
 	expr 7,127
-	@n 66,2,51,69,93,0,1
+	@n 66,2,51,69,93,NcrRootShiftOnly
 	@expr 71,7,86
 	@expr 76,7,68
-	n 3,86,72,19,0,1
+	n 3,86,72,19,NcrRootShiftOnly
 	@expr 81,7,55
 	beat
-	n 0,BD1,44,12,0,0
+	n 0,KitBassDrum1,44,12,NcrNone
 	expr 7,122
-	n 7,SD2,59,12,0,0
-	n 2,43,57,93,0,1
-	@n 1,2,36,61,91,0,1
+	n 7,KitSnareDrum2,59,12,NcrNone
+	n 2,43,57,93,NcrRootShiftOnly
+	@n 1,2,36,61,91,NcrRootShiftOnly
 	@expr 6,7,123
-	@n 11,1,36,88,1,1,1
+	@n 11,1,36,88,129,NcrRootShiftOnly
 	@expr 12,7,121
 	@expr 16,7,119
 	@expr 20,7,116
@@ -5034,21 +5034,21 @@ Style_StridePiano_Ending2B:	# 6 bars of 4 beats
 	@expr 56,7,86
 	@expr 60,7,79
 	@expr 66,7,74
-	@n 68,3,77,76,115,2,1
-	@n 69,3,84,86,116,2,1
+	@n 68,3,77,76,371,NcrRootShiftOnly
+	@n 69,3,84,86,372,NcrRootShiftOnly
 	@expr 70,7,69
-	@n 71,3,78,59,111,2,1
+	@n 71,3,78,59,367,NcrRootShiftOnly
 	@expr 74,7,65
 	@expr 78,7,58
 	@expr 84,7,53
 	@expr 88,7,50
 	beat
-	n 7,SD2,109,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 1,0,HHP,38,12,0,0
-	n 2,63,65,27,0,1
-	n 2,55,69,25,0,1
-	n 2,60,74,24,0,1
+	@n 1,0,KitHiHatPedal,38,12,NcrNone
+	n 2,63,65,27,NcrRootShiftOnly
+	n 2,55,69,25,NcrRootShiftOnly
+	n 2,60,74,24,NcrRootShiftOnly
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -5058,17 +5058,17 @@ Style_StridePiano_Ending2B:	# 6 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,63
-	@n 64,7,SD2,82,12,0,0
-	@n 65,2,48,79,38,0,1
-	@n 70,1,36,73,23,0,1
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	@n 65,2,48,79,38,NcrRootShiftOnly
+	@n 70,1,36,73,23,NcrRootShiftOnly
 	@expr 94,7,122
 	beat
-	n 0,BD1,50,12,0,0
-	n 7,SD2,59,12,0,0
-	@n 1,2,44,63,93,0,1
-	@n 2,2,60,79,88,0,1
+	n 0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,59,12,NcrNone
+	@n 1,2,44,63,93,NcrRootShiftOnly
+	@n 2,2,60,79,88,NcrRootShiftOnly
 	@expr 4,7,125
-	@n 7,1,44,85,120,0,1
+	@n 7,1,44,85,120,NcrRootShiftOnly
 	@expr 8,7,123
 	@expr 12,7,120
 	@expr 18,7,118
@@ -5089,12 +5089,12 @@ Style_StridePiano_Ending2B:	# 6 bars of 4 beats
 	@expr 84,7,53
 	@expr 90,7,48
 	beat
-	n 7,SD2,109,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 1,0,HHP,36,12,0,0
-	@n 2,2,63,62,28,0,1
-	n 2,56,62,24,0,1
-	n 2,60,81,27,0,1
+	@n 1,0,KitHiHatPedal,36,12,NcrNone
+	@n 2,2,63,62,28,NcrRootShiftOnly
+	n 2,56,62,24,NcrRootShiftOnly
+	n 2,60,81,27,NcrRootShiftOnly
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
@@ -5104,16 +5104,16 @@ Style_StridePiano_Ending2B:	# 6 bars of 4 beats
 	@expr 34,7,16
 	@expr 39,7,1
 	@expr 54,7,64
-	@n 64,0,BD1,50,12,0,0
-	n 7,SD2,82,12,0,0
-	@n 65,1,44,85,24,0,1
-	@n 66,2,44,69,42,0,1
+	@n 64,0,KitBassDrum1,50,12,NcrNone
+	n 7,KitSnareDrum2,82,12,NcrNone
+	@n 65,1,44,85,24,NcrRootShiftOnly
+	@n 66,2,44,69,42,NcrRootShiftOnly
 	beat
-	n 7,SD2,59,12,0,0
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
-	@n 4,2,38,79,78,0,1
-	n 2,53,79,74,0,1
-	@n 6,1,38,73,2,1,1
+	@n 4,2,38,79,78,NcrRootShiftOnly
+	n 2,53,79,74,NcrRootShiftOnly
+	@n 6,1,38,73,130,NcrRootShiftOnly
 	@expr 12,7,126
 	@expr 14,7,124
 	@expr 16,7,123
@@ -5138,7 +5138,7 @@ Style_StridePiano_Ending2B:	# 6 bars of 4 beats
 	@expr 54,7,99
 	@expr 56,7,96
 	@expr 58,7,93
-	@n 59,0,HHO,70,28,0,0
+	@n 59,0,KitHiHatOpen,70,28,NcrNone
 	@expr 60,7,90
 	@expr 62,7,87
 	@expr 64,7,84
@@ -5154,12 +5154,12 @@ Style_StridePiano_Ending2B:	# 6 bars of 4 beats
 	@expr 84,7,53
 	@expr 86,7,50
 	beat
-	n 7,SD2,109,12,0,0
+	n 7,KitSnareDrum2,109,12,NcrNone
 	expr 7,127
-	@n 1,2,56,56,35,0,1
-	n 2,53,66,34,0,1
-	n 2,60,74,35,0,1
-	@n 3,0,20,23,39,0,0
+	@n 1,2,56,56,35,NcrRootShiftOnly
+	n 2,53,66,34,NcrRootShiftOnly
+	n 2,60,74,35,NcrRootShiftOnly
+	@n 3,0,KitHiHatAccent,23,39,NcrNone
 	@expr 8,7,86
 	@expr 12,7,68
 	@expr 17,7,55
@@ -5169,19 +5169,19 @@ Style_StridePiano_Ending2B:	# 6 bars of 4 beats
 	@expr 35,7,16
 	@expr 40,7,1
 	@expr 57,7,65
-	@n 64,7,SD2,82,12,0,0
-	n 2,59,69,41,0,1
-	n 2,63,77,42,0,1
-	n 2,53,70,38,0,1
-	@n 68,1,38,84,16,0,1
-	@n 70,3,90,95,35,0,1
-	@n 94,0,HHO,65,62,0,0
+	@n 64,7,KitSnareDrum2,82,12,NcrNone
+	n 2,59,69,41,NcrRootShiftOnly
+	n 2,63,77,42,NcrRootShiftOnly
+	n 2,53,70,38,NcrRootShiftOnly
+	@n 68,1,38,84,16,NcrRootShiftOnly
+	@n 70,3,90,95,35,NcrRootShiftOnly
+	@n 94,0,KitHiHatOpen,65,62,NcrNone
 	beat
-	n 7,SD2,59,12,0,0
+	n 7,KitSnareDrum2,59,12,NcrNone
 	expr 7,127
-	@n 6,1,43,92,119,0,1
+	@n 6,1,43,92,119,NcrRootShiftOnly
 	@expr 13,7,110
-	@n 14,3,89,58,65,0,1
+	@n 14,3,89,58,65,NcrRootShiftOnly
 	@expr 15,7,104
 	@expr 20,7,99
 	@expr 24,7,94
@@ -5191,55 +5191,55 @@ Style_StridePiano_Ending2B:	# 6 bars of 4 beats
 	@expr 42,7,72
 	@expr 47,7,67
 	@expr 51,7,65
-	@n 53,2,31,88,112,0,1
-	@n 55,2,43,88,101,0,1
-	@n 60,0,21,35,20,0,0
+	@n 53,2,31,88,112,NcrRootShiftOnly
+	@n 55,2,43,88,101,NcrRootShiftOnly
+	@n 60,0,KitHHHalfOpen,35,20,NcrNone
 	@expr 64,7,127
-	@n 81,0,19,13,17,0,0
+	@n 81,0,KitHHOffBeat,13,17,NcrNone
 	beat
-	n 7,SD2,88,12,0,0
-	@n 1,0,18,27,17,0,0
+	n 7,KitSnareDrum2,88,12,NcrNone
+	@n 1,0,KitHHOnBeat,27,17,NcrNone
 	@expr 2,7,103
-	@n 5,3,83,61,89,0,1
+	@n 5,3,83,61,89,NcrRootShiftOnly
 	@expr 7,7,86
 	@expr 11,7,68
 	@expr 16,7,55
 	@expr 20,7,48
 	@expr 25,7,42
 	@expr 29,7,33
-	@n 64,0,SPLASH,61,2,2,0
-	n 7,SD2,88,12,0,0
+	@n 64,0,KitSplashCymbal,61,258,NcrNone
+	n 7,KitSnareDrum2,88,12,NcrNone
 	expr 7,127
 	@expr 71,7,86
 	@expr 76,7,68
 	@expr 84,7,0
 	beat
-	@n 68,3,78,82,41,0,1
-	n 3,77,78,41,0,1
+	@n 68,3,78,82,41,NcrRootShiftOnly
+	n 3,77,78,41,NcrRootShiftOnly
 	beat
-	@n 16,3,65,66,36,0,1
-	@n 31,3,66,11,19,0,1
+	@n 16,3,65,66,36,NcrRootShiftOnly
+	@n 31,3,66,11,19,NcrRootShiftOnly
 	beat
-	@n 8,3,78,61,45,0,1
-	@n 11,3,77,71,46,0,1
-	@n 69,3,66,30,44,0,1
-	@n 71,3,65,51,41,0,1
+	@n 8,3,78,61,45,NcrRootShiftOnly
+	@n 11,3,77,71,46,NcrRootShiftOnly
+	@n 69,3,66,30,44,NcrRootShiftOnly
+	@n 71,3,65,51,41,NcrRootShiftOnly
 	beat
-	@n 63,3,78,68,43,0,1
-	@n 65,3,77,71,42,0,1
+	@n 63,3,78,68,43,NcrRootShiftOnly
+	@n 65,3,77,71,42,NcrRootShiftOnly
 	beat
-	@n 5,3,66,29,40,0,1
-	@n 7,3,65,48,40,0,1
+	@n 5,3,66,29,40,NcrRootShiftOnly
+	@n 7,3,65,48,40,NcrRootShiftOnly
 	beat
-	@n 3,3,65,87,51,0,1
-	@n 7,3,71,80,53,0,1
-	@n 59,3,63,79,40,0,1
-	@n 65,3,72,89,37,0,1
+	@n 3,3,65,87,51,NcrRootShiftOnly
+	@n 7,3,71,80,53,NcrRootShiftOnly
+	@n 59,3,63,79,40,NcrRootShiftOnly
+	@n 65,3,72,89,37,NcrRootShiftOnly
 	beat
-	@n 92,1,36,93,69,0,1
-	n 2,48,79,85,0,1
-	@n 94,2,36,85,78,0,1
+	@n 92,1,36,93,69,NcrRootShiftOnly
+	n 2,48,79,85,NcrRootShiftOnly
+	@n 94,2,36,85,78,NcrRootShiftOnly
 	beat
-	n 0,SPLASH,70,11,0,0
+	n 0,KitSplashCymbal,70,11,NcrNone
 	end
-	var_end	Style_StridePiano_Ending2B
+	var_end	Style_StridePiano_Ending2Minor

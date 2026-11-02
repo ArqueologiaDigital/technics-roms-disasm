@@ -9,7 +9,7 @@
 # Style 72: "Jive", BALLROOM 11 of 16, style-ID 0x81d
 Style_Jive:
 	.ascii	"    Jive     "
-	style_units	0x44, 0x00, 0x44, 0x00
+	style_units	0x44, 0x00, 0x44, 0x00	# EFF4 "Limiter1", EFF5 "Limiter1"
 	style_part	0x00, 105, 0x01, 0x04, 0x26, 64, 35, 0, 64, 12, 52, 64, 88, 64, 0	# Drum
 	style_part	0x08, 105, 0x21, 0x20, 0x20, 64, 0, 0, 64, 12, 52, 64, 88, 64, 0	# Bass
 	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 35, 0, 64, 12, 52, 64, 88, 63, 0	# Acc1
@@ -18,92 +18,92 @@ Style_Jive:
 	style_part	0x08, 84, 0x3b, 0x20, 0x20, 64, 44, 0, 51, 12, 52, 64, 88, 64, 0	# Acc4
 	style_part	0x08, 64, 0x00, 0x00, 0x20, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
-	.byte	1			# TODO: 1 in every style; no reader found
+	.byte	1			# +0x89: unread (1 in every style; no reader in 941, notes/ic18-rhythm-rom.md)
 	style_slots	Style_Jive
-Style_Jive_Intro1A:	# 4 bars of 4 beats
-	var_head	Style_Jive_Intro1A, 4, 4, 0xff, 0xff
-	mode 1,11
+Style_Jive_Intro1Major:	# 4 bars of 4 beats
+	var_head	Style_Jive_Intro1Major, 4, 4, 0xff, 0xff
+	fold_root 1,11
 	vol 3,100
 	pan 3,90
-	cc 3,81,64
-	cc 3,92,41
-	cc 4,92,21
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
-	var_events	Style_Jive_Intro1A
+	eq_hi_gain 3,64
+	multi 3,41
+	multi 4,21
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
+	var_events	Style_Jive_Intro1Major
 	beat
-	n 0,HHO,104,42,0,0
-	n 0,SPLASH,115,24,0,0
-	n 1,36,108,43,1,1
+	n 0,KitHiHatOpen,104,42,NcrNone
+	n 0,KitSplashCymbal,115,24,NcrNone
+	n 1,36,108,171,NcrRootShiftOnly
 	bend 5,0,60
-	n 5,64,111,82,1,1
+	n 5,64,111,210,NcrRootShiftOnly
 	bend 5,0,59
-	@n 1,0,BD1,117,23,0,0
-	@n 5,2,48,103,45,1,1
+	@n 1,0,KitBassDrum1,117,23,NcrNone
+	@n 5,2,48,103,173,NcrRootShiftOnly
 	@bend 7,5,0,58
 	@bend 19,5,0,59
 	@bend 29,5,0,60
 	bend 5,0,61
 	@bend 38,5,0,62
-	@n 66,2,55,101,33,0,1
-	n 4,72,115,27,0,1
-	@n 67,4,76,80,25,0,1
-	n 4,67,98,24,0,1
+	@n 66,2,55,101,33,NcrRootShiftOnly
+	n 4,72,115,27,NcrRootShiftOnly
+	@n 67,4,76,80,25,NcrRootShiftOnly
+	n 4,67,98,24,NcrRootShiftOnly
 	@bend 72,5,0,63
-	@n 95,2,60,73,43,0,1
+	@n 95,2,60,73,43,NcrRootShiftOnly
 	beat
-	n 0,SSTICK,120,22,0,0
-	n 0,TAMB,86,17,0,0
-	@n 1,0,HHC,54,21,0,0
-	@n 4,3,60,107,85,0,1
+	n 0,KitRimShot,120,22,NcrNone
+	n 0,KitTambourine,86,17,NcrNone
+	@n 1,0,KitHiHatClosed,54,21,NcrNone
+	@n 4,3,60,107,85,NcrRootShiftOnly
 	@bend 6,5,0,64
-	@n 61,2,64,72,21,0,1
-	@n 65,0,HHC,51,19,0,0
-	@n 93,3,55,71,75,0,1
-	@n 95,2,67,81,39,0,1
+	@n 61,2,64,72,21,NcrRootShiftOnly
+	@n 65,0,KitHiHatClosed,51,19,NcrNone
+	@n 93,3,55,71,75,NcrRootShiftOnly
+	@n 95,2,67,81,39,NcrRootShiftOnly
 	beat
-	@n 1,0,HHO,100,29,0,0
-	n 2,60,77,36,0,1
-	n 2,55,62,35,0,1
-	n 2,46,75,38,1,1
-	@n 2,0,BD1,112,21,0,0
-	@n 4,1,34,111,35,1,1
-	n 4,70,116,24,0,1
-	n 4,67,95,24,0,1
-	@n 5,4,76,79,24,0,1
-	@n 9,5,62,101,50,1,1
-	@n 65,2,64,73,29,0,1
-	@n 67,3,57,72,33,0,1
-	@n 88,3,58,65,93,0,1
+	@n 1,0,KitHiHatOpen,100,29,NcrNone
+	n 2,60,77,36,NcrRootShiftOnly
+	n 2,55,62,35,NcrRootShiftOnly
+	n 2,46,75,166,NcrRootShiftOnly
+	@n 2,0,KitBassDrum1,112,21,NcrNone
+	@n 4,1,34,111,163,NcrRootShiftOnly
+	n 4,70,116,24,NcrRootShiftOnly
+	n 4,67,95,24,NcrRootShiftOnly
+	@n 5,4,76,79,24,NcrRootShiftOnly
+	@n 9,5,62,101,178,NcrRootShiftOnly
+	@n 65,2,64,73,29,NcrRootShiftOnly
+	@n 67,3,57,72,33,NcrRootShiftOnly
+	@n 88,3,58,65,93,NcrRootShiftOnly
 	beat
-	n 0,HHC,80,24,0,0
-	n 0,SSTICK,109,21,0,0
-	n 0,TAMB,100,18,0,0
-	@n 1,2,62,65,36,0,1
+	n 0,KitHiHatClosed,80,24,NcrNone
+	n 0,KitRimShot,109,21,NcrNone
+	n 0,KitTambourine,100,18,NcrNone
+	@n 1,2,62,65,36,NcrRootShiftOnly
 	@bend 24,5,0,63
 	@bend 58,5,0,64
-	@n 62,2,44,42,28,0,1
-	@n 64,0,HHC,53,16,0,0
-	@n 87,3,57,94,28,2,1
-	@n 89,5,61,89,108,2,1
-	@n 95,0,HHO,100,31,0,0
-	n 2,61,64,1,1,1
+	@n 62,2,44,42,28,NcrRootShiftOnly
+	@n 64,0,KitHiHatClosed,53,16,NcrNone
+	@n 87,3,57,94,284,NcrRootShiftOnly
+	@n 89,5,61,89,364,NcrRootShiftOnly
+	@n 95,0,KitHiHatOpen,100,31,NcrNone
+	n 2,61,64,129,NcrRootShiftOnly
 	beat
-	@n 1,0,BD1,118,23,0,0
-	n 4,76,78,25,0,1
-	n 4,73,114,19,0,1
-	n 4,67,89,24,0,1
-	@n 2,2,55,60,126,0,1
-	n 2,45,79,14,1,1
-	@n 4,1,33,104,120,0,1
-	@n 63,0,HHO,39,21,0,0
+	@n 1,0,KitBassDrum1,118,23,NcrNone
+	n 4,76,78,25,NcrRootShiftOnly
+	n 4,73,114,19,NcrRootShiftOnly
+	n 4,67,89,24,NcrRootShiftOnly
+	@n 2,2,55,60,126,NcrRootShiftOnly
+	n 2,45,79,142,NcrRootShiftOnly
+	@n 4,1,33,104,120,NcrRootShiftOnly
+	@n 63,0,KitHiHatOpen,39,21,NcrNone
 	@mod 93,5,2
 	beat
-	n 0,SSTICK,114,24,0,0
-	n 0,TAMB,96,20,0,0
-	@n 3,0,HHC,71,25,0,0
+	n 0,KitRimShot,114,24,NcrNone
+	n 0,KitTambourine,96,20,NcrNone
+	@n 3,0,KitHiHatClosed,71,25,NcrNone
 	mod 5,5
 	mod 5,7
 	@mod 8,5,9
@@ -124,16 +124,16 @@ Style_Jive_Intro1A:	# 4 bars of 4 beats
 	mod 5,34
 	@mod 56,5,35
 	@mod 60,5,36
-	@n 61,2,61,63,23,0,1
+	@n 61,2,61,63,23,NcrRootShiftOnly
 	mod 5,38
-	@n 62,4,76,87,31,0,1
-	n 4,73,126,24,0,1
-	@n 63,2,64,70,25,0,1
-	n 2,55,50,20,0,1
-	n 2,40,81,123,0,1
-	@n 64,0,HHO,100,30,0,0
-	n 4,67,93,21,0,1
-	@n 65,1,28,107,111,0,1
+	@n 62,4,76,87,31,NcrRootShiftOnly
+	n 4,73,126,24,NcrRootShiftOnly
+	@n 63,2,64,70,25,NcrRootShiftOnly
+	n 2,55,50,20,NcrRootShiftOnly
+	n 2,40,81,123,NcrRootShiftOnly
+	@n 64,0,KitHiHatOpen,100,30,NcrNone
+	n 4,67,93,21,NcrRootShiftOnly
+	@n 65,1,28,107,111,NcrRootShiftOnly
 	@mod 70,5,41
 	@mod 79,5,44
 	@mod 83,5,45
@@ -141,8 +141,8 @@ Style_Jive_Intro1A:	# 4 bars of 4 beats
 	@mod 89,5,47
 	@mod 90,5,48
 	beat
-	@n 3,0,BD1,111,24,0,0
-	@n 5,0,HHC,31,22,0,0
+	@n 3,0,KitBassDrum1,111,24,NcrNone
+	@n 5,0,KitHiHatClosed,31,22,NcrNone
 	@mod 7,5,50
 	@mod 11,5,51
 	mod 5,52
@@ -152,18 +152,18 @@ Style_Jive_Intro1A:	# 4 bars of 4 beats
 	@mod 31,5,56
 	@mod 44,5,57
 	@mod 63,5,59
-	@n 64,0,HHO,108,31,0,0
+	@n 64,0,KitHiHatOpen,108,31,NcrNone
 	@mod 87,5,56
-	@n 90,3,55,98,91,0,1
+	@n 90,3,55,98,91,NcrRootShiftOnly
 	@mod 93,5,54
 	beat
-	n 0,SSTICK,120,24,0,0
-	n 0,TAMB,95,19,0,0
+	n 0,KitRimShot,120,24,NcrNone
+	n 0,KitTambourine,95,19,NcrNone
 	@mod 1,5,52
 	mod 5,48
-	@n 3,1,27,109,78,0,1
-	@n 5,0,HHC,67,26,0,0
-	@n 6,2,39,75,76,0,1
+	@n 3,1,27,109,78,NcrRootShiftOnly
+	@n 5,0,KitHiHatClosed,67,26,NcrNone
+	@n 6,2,39,75,76,NcrRootShiftOnly
 	@mod 7,5,44
 	mod 5,38
 	@mod 12,5,31
@@ -171,45 +171,45 @@ Style_Jive_Intro1A:	# 4 bars of 4 beats
 	mod 5,14
 	@mod 20,5,3
 	@mod 24,5,0
-	@n 70,0,HHC,71,22,0,0
-	@n 84,5,60,76,73,2,1
-	@n 91,3,54,76,59,1,1
+	@n 70,0,KitHiHatClosed,71,22,NcrNone
+	@n 84,5,60,76,329,NcrRootShiftOnly
+	@n 91,3,54,76,187,NcrRootShiftOnly
 	beat
-	@n 1,2,38,71,48,1,1
-	@n 2,0,BD1,111,24,0,0
-	@n 3,4,72,117,26,0,1
-	n 4,66,95,23,0,1
-	@n 4,0,HHO,106,29,0,0
-	n 1,26,110,45,1,1
-	@n 5,4,76,62,10,0,1
-	@n 65,2,54,86,34,0,1
+	@n 1,2,38,71,176,NcrRootShiftOnly
+	@n 2,0,KitBassDrum1,111,24,NcrNone
+	@n 3,4,72,117,26,NcrRootShiftOnly
+	n 4,66,95,23,NcrRootShiftOnly
+	@n 4,0,KitHiHatOpen,106,29,NcrNone
+	n 1,26,110,173,NcrRootShiftOnly
+	@n 5,4,76,62,10,NcrRootShiftOnly
+	@n 65,2,54,86,34,NcrRootShiftOnly
 	beat
-	n 0,SSTICK,113,23,0,0
-	n 0,TAMB,95,14,0,0
-	@n 5,0,HHC,74,27,0,0
-	@n 6,2,60,78,28,0,1
-	@n 63,4,72,123,24,0,1
-	n 4,66,95,26,0,1
-	@n 66,2,62,66,31,0,1
-	@n 70,2,33,75,110,0,1
-	@n 71,0,HHC,63,21,0,0
+	n 0,KitRimShot,113,23,NcrNone
+	n 0,KitTambourine,95,14,NcrNone
+	@n 5,0,KitHiHatClosed,74,27,NcrNone
+	@n 6,2,60,78,28,NcrRootShiftOnly
+	@n 63,4,72,123,24,NcrRootShiftOnly
+	n 4,66,95,26,NcrRootShiftOnly
+	@n 66,2,62,66,31,NcrRootShiftOnly
+	@n 70,2,33,75,110,NcrRootShiftOnly
+	@n 71,0,KitHiHatClosed,63,21,NcrNone
 	@mod 74,5,2
 	@mod 78,5,4
 	@mod 84,5,7
 	mod 5,9
 	@mod 89,5,12
 	mod 5,16
-	@n 91,3,60,87,96,0,1
+	@n 91,3,60,87,96,NcrRootShiftOnly
 	@mod 93,5,19
 	beat
-	n 0,BD1,111,24,0,0
+	n 0,KitBassDrum1,111,24,NcrNone
 	@mod 1,5,22
 	mod 5,24
-	@n 4,1,33,116,79,0,1
-	n 2,54,79,36,0,1
-	@n 5,0,HHO,101,25,0,0
-	n 2,64,72,49,0,1
-	n 2,60,78,30,0,1
+	@n 4,1,33,116,79,NcrRootShiftOnly
+	n 2,54,79,36,NcrRootShiftOnly
+	@n 5,0,KitHiHatOpen,101,25,NcrNone
+	n 2,64,72,49,NcrRootShiftOnly
+	n 2,60,78,30,NcrRootShiftOnly
 	@mod 7,5,27
 	mod 5,28
 	@mod 12,5,30
@@ -218,166 +218,166 @@ Style_Jive_Intro1A:	# 4 bars of 4 beats
 	@mod 21,5,35
 	@mod 29,5,38
 	@mod 40,5,39
-	@n 69,2,62,64,27,0,1
+	@n 69,2,62,64,27,NcrRootShiftOnly
 	@mod 77,5,38
 	mod 5,36
 	@mod 82,5,34
 	@mod 88,5,30
 	mod 5,26
 	@mod 92,5,21
-	@n 93,3,57,65,90,0,1
+	@n 93,3,57,65,90,NcrRootShiftOnly
 	beat
-	n 0,SSTICK,114,24,0,0
-	n 0,TAMB,90,16,0,0
-	@n 1,0,HHC,90,27,0,0
-	@n 2,1,32,86,80,0,1
-	n 2,32,74,99,0,1
+	n 0,KitRimShot,114,24,NcrNone
+	n 0,KitTambourine,90,16,NcrNone
+	@n 1,0,KitHiHatClosed,90,27,NcrNone
+	@n 2,1,32,86,80,NcrRootShiftOnly
+	n 2,32,74,99,NcrRootShiftOnly
 	mod 5,15
 	mod 5,8
-	@n 3,2,60,80,39,0,1
+	@n 3,2,60,80,39,NcrRootShiftOnly
 	@mod 8,5,0
-	@n 66,0,HHC,55,20,0,0
-	@n 91,3,59,100,62,0,1
-	@n 95,4,71,103,68,0,1
-	n 4,67,93,36,0,1
-	n 5,62,111,60,0,1
+	@n 66,0,KitHiHatClosed,55,20,NcrNone
+	@n 91,3,59,100,62,NcrRootShiftOnly
+	@n 95,4,71,103,68,NcrRootShiftOnly
+	n 4,67,93,36,NcrRootShiftOnly
+	n 5,62,111,60,NcrRootShiftOnly
 	beat
-	@n 1,1,31,99,5,1,1
-	@n 2,0,HHO,93,24,0,0
-	n 2,31,78,100,0,1
-	@n 3,0,BD1,119,21,0,0
-	@n 6,2,59,83,118,0,1
-	@n 8,2,53,75,113,0,1
-	@n 61,3,55,76,36,0,1
-	@n 63,5,59,56,35,0,1
-	@n 64,0,HHO,56,27,0,0
-	@n 67,4,67,87,28,0,1
-	@n 93,3,57,89,56,0,1
-	@n 94,4,69,96,59,0,1
+	@n 1,1,31,99,133,NcrRootShiftOnly
+	@n 2,0,KitHiHatOpen,93,24,NcrNone
+	n 2,31,78,100,NcrRootShiftOnly
+	@n 3,0,KitBassDrum1,119,21,NcrNone
+	@n 6,2,59,83,118,NcrRootShiftOnly
+	@n 8,2,53,75,113,NcrRootShiftOnly
+	@n 61,3,55,76,36,NcrRootShiftOnly
+	@n 63,5,59,56,35,NcrRootShiftOnly
+	@n 64,0,KitHiHatOpen,56,27,NcrNone
+	@n 67,4,67,87,28,NcrRootShiftOnly
+	@n 93,3,57,89,56,NcrRootShiftOnly
+	@n 94,4,69,96,59,NcrRootShiftOnly
 	beat
-	n 0,SSTICK,113,20,0,0
-	n 0,TAMB,91,15,0,0
-	n 5,60,88,52,0,1
-	@n 4,2,38,74,50,0,1
-	@n 5,0,HHC,72,24,0,0
-	@n 59,3,59,105,33,0,1
-	@n 60,5,62,104,33,0,1
-	@n 65,0,HHO,116,31,0,0
-	n 0,BD1,112,27,0,0
-	n 2,53,91,28,0,1
-	n 2,67,80,37,0,1
-	n 2,59,93,36,0,1
-	@n 66,4,71,102,27,0,1
-	n 4,67,100,27,0,1
-	@n 67,1,31,119,29,0,1
-	n 2,43,96,40,0,1
-	@n 69,0,SD1,121,25,0,0
+	n 0,KitRimShot,113,20,NcrNone
+	n 0,KitTambourine,91,15,NcrNone
+	n 5,60,88,52,NcrRootShiftOnly
+	@n 4,2,38,74,50,NcrRootShiftOnly
+	@n 5,0,KitHiHatClosed,72,24,NcrNone
+	@n 59,3,59,105,33,NcrRootShiftOnly
+	@n 60,5,62,104,33,NcrRootShiftOnly
+	@n 65,0,KitHiHatOpen,116,31,NcrNone
+	n 0,KitBassDrum1,112,27,NcrNone
+	n 2,53,91,28,NcrRootShiftOnly
+	n 2,67,80,37,NcrRootShiftOnly
+	n 2,59,93,36,NcrRootShiftOnly
+	@n 66,4,71,102,27,NcrRootShiftOnly
+	n 4,67,100,27,NcrRootShiftOnly
+	@n 67,1,31,119,29,NcrRootShiftOnly
+	n 2,43,96,40,NcrRootShiftOnly
+	@n 69,0,KitSnareDrum1,121,25,NcrNone
 	beat
-	@n 2,0,HHC,81,23,0,0
-	@n 75,0,SD1,57,16,0,0
+	@n 2,0,KitHiHatClosed,81,23,NcrNone
+	@n 75,0,KitSnareDrum1,57,16,NcrNone
 	beat
-	@n 10,0,SD1,115,31,0,0
+	@n 10,0,KitSnareDrum1,115,31,NcrNone
 	end
-	var_end	Style_Jive_Intro1A
-Style_Jive_Intro1B:	# 4 bars of 4 beats
-	var_head	Style_Jive_Intro1B, 4, 4, 0xff, 0xff
-	mode 1,11
+	var_end	Style_Jive_Intro1Major
+Style_Jive_Intro1Minor:	# 4 bars of 4 beats
+	var_head	Style_Jive_Intro1Minor, 4, 4, 0xff, 0xff
+	fold_root 1,11
 	pan 3,90
-	cc 3,81,64
-	cc 3,92,41
-	cc 4,92,21
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
-	var_events	Style_Jive_Intro1B
+	eq_hi_gain 3,64
+	multi 3,41
+	multi 4,21
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
+	var_events	Style_Jive_Intro1Minor
 	beat
-	n 0,HHO,104,42,0,0
-	n 0,SPLASH,115,24,0,0
-	@n 1,0,BD1,117,23,0,0
-	@n 3,1,36,109,36,1,1
-	@n 7,2,48,112,48,1,1
-	@n 69,2,55,111,28,0,1
-	@n 91,3,67,111,45,1,1
+	n 0,KitHiHatOpen,104,42,NcrNone
+	n 0,KitSplashCymbal,115,24,NcrNone
+	@n 1,0,KitBassDrum1,117,23,NcrNone
+	@n 3,1,36,109,164,NcrRootShiftOnly
+	@n 7,2,48,112,176,NcrRootShiftOnly
+	@n 69,2,55,111,28,NcrRootShiftOnly
+	@n 91,3,67,111,173,NcrRootShiftOnly
 	beat
-	n 0,SSTICK,120,22,0,0
-	n 0,TAMB,86,17,0,0
-	n 4,67,95,25,0,1
-	n 4,72,110,23,0,1
-	n 4,75,104,23,0,1
-	@n 1,0,HHC,54,21,0,0
-	@n 5,2,60,74,32,0,1
+	n 0,KitRimShot,120,22,NcrNone
+	n 0,KitTambourine,86,17,NcrNone
+	n 4,67,95,25,NcrRootShiftOnly
+	n 4,72,110,23,NcrRootShiftOnly
+	n 4,75,104,23,NcrRootShiftOnly
+	@n 1,0,KitHiHatClosed,54,21,NcrNone
+	@n 5,2,60,74,32,NcrRootShiftOnly
 	@bend 60,3,0,63
-	@n 62,2,62,85,21,0,1
-	@n 65,0,HHC,51,19,0,0
+	@n 62,2,62,85,21,NcrRootShiftOnly
+	@n 65,0,KitHiHatClosed,51,19,NcrNone
 	beat
-	n 1,35,98,42,1,1
-	@n 1,0,HHO,100,29,0,0
-	@n 2,0,BD1,112,21,0,0
-	n 2,63,111,53,0,1
-	n 2,47,92,57,1,1
-	n 2,55,75,36,0,1
-	@n 3,2,60,67,22,0,1
+	n 1,35,98,170,NcrRootShiftOnly
+	@n 1,0,KitHiHatOpen,100,29,NcrNone
+	@n 2,0,KitBassDrum1,112,21,NcrNone
+	n 2,63,111,53,NcrRootShiftOnly
+	n 2,47,92,185,NcrRootShiftOnly
+	n 2,55,75,36,NcrRootShiftOnly
+	@n 3,2,60,67,22,NcrRootShiftOnly
 	@bend 12,3,0,64
-	@n 63,4,67,86,24,0,1
-	n 4,72,100,21,0,1
-	n 4,75,95,24,0,1
-	@n 65,2,62,96,28,0,1
-	@n 83,3,63,116,45,0,1
+	@n 63,4,67,86,24,NcrRootShiftOnly
+	n 4,72,100,21,NcrRootShiftOnly
+	n 4,75,95,24,NcrRootShiftOnly
+	@n 65,2,62,96,28,NcrRootShiftOnly
+	@n 83,3,63,116,45,NcrRootShiftOnly
 	beat
-	n 0,HHC,80,24,0,0
-	n 0,SSTICK,109,21,0,0
-	n 0,TAMB,100,18,0,0
-	@n 1,2,60,85,28,0,1
-	@n 64,0,HHC,53,16,0,0
+	n 0,KitHiHatClosed,80,24,NcrNone
+	n 0,KitRimShot,109,21,NcrNone
+	n 0,KitTambourine,100,18,NcrNone
+	@n 1,2,60,85,28,NcrRootShiftOnly
+	@n 64,0,KitHiHatClosed,53,16,NcrNone
 	@bend 77,3,0,63
 	@bend 87,3,0,62
-	@n 93,3,66,114,23,1,1
-	@n 95,0,HHO,100,31,0,0
+	@n 93,3,66,114,151,NcrRootShiftOnly
+	@n 95,0,KitHiHatOpen,100,31,NcrNone
 	beat
 	bend 3,0,61
-	@n 1,0,BD1,118,23,0,0
-	n 4,67,93,21,0,1
-	n 4,70,103,21,0,1
-	n 4,75,96,24,0,1
-	@n 2,1,34,109,124,0,1
-	n 2,55,76,120,0,1
-	n 2,63,101,123,0,1
-	n 2,58,95,123,0,1
-	n 2,46,82,42,1,1
-	@n 3,2,67,92,114,0,1
+	@n 1,0,KitBassDrum1,118,23,NcrNone
+	n 4,67,93,21,NcrRootShiftOnly
+	n 4,70,103,21,NcrRootShiftOnly
+	n 4,75,96,24,NcrRootShiftOnly
+	@n 2,1,34,109,124,NcrRootShiftOnly
+	n 2,55,76,120,NcrRootShiftOnly
+	n 2,63,101,123,NcrRootShiftOnly
+	n 2,58,95,123,NcrRootShiftOnly
+	n 2,46,82,170,NcrRootShiftOnly
+	@n 3,2,67,92,114,NcrRootShiftOnly
 	@bend 9,3,0,60
 	@bend 24,3,0,61
 	@bend 28,3,0,62
 	@bend 33,3,0,63
 	@bend 41,3,0,64
-	@n 63,0,HHO,39,21,0,0
+	@n 63,0,KitHiHatOpen,39,21,NcrNone
 	@bend 94,3,0,63
 	beat
-	n 0,SSTICK,114,24,0,0
-	n 0,TAMB,96,20,0,0
-	@n 3,0,HHC,71,25,0,0
+	n 0,KitRimShot,114,24,NcrNone
+	n 0,KitTambourine,96,20,NcrNone
+	@n 3,0,KitHiHatClosed,71,25,NcrNone
 	@bend 8,3,0,62
 	@bend 33,3,0,63
 	bend 3,0,64
-	@n 59,3,67,111,2,1,1
-	n 4,67,96,20,0,1
-	n 4,70,113,20,0,1
-	n 4,75,88,20,0,1
-	@n 61,2,58,100,27,0,1
-	n 2,63,104,23,0,1
-	@n 63,2,67,87,24,0,1
-	n 2,55,85,24,0,1
-	@n 64,0,HHO,100,30,0,0
-	@n 65,1,34,103,114,0,1
+	@n 59,3,67,111,130,NcrRootShiftOnly
+	n 4,67,96,20,NcrRootShiftOnly
+	n 4,70,113,20,NcrRootShiftOnly
+	n 4,75,88,20,NcrRootShiftOnly
+	@n 61,2,58,100,27,NcrRootShiftOnly
+	n 2,63,104,23,NcrRootShiftOnly
+	@n 63,2,67,87,24,NcrRootShiftOnly
+	n 2,55,85,24,NcrRootShiftOnly
+	@n 64,0,KitHiHatOpen,100,30,NcrNone
+	@n 65,1,34,103,114,NcrRootShiftOnly
 	@bend 85,5,0,60
 	@mod 90,5,48
-	n 5,58,120,59,1,1
+	n 5,58,120,187,NcrRootShiftOnly
 	@bend 91,5,0,60
 	beat
-	@n 3,0,BD1,111,24,0,0
+	@n 3,0,KitBassDrum1,111,24,NcrNone
 	bend 5,0,59
-	@n 5,0,HHC,31,22,0,0
+	@n 5,0,KitHiHatClosed,31,22,NcrNone
 	@mod 7,5,50
 	@mod 11,5,51
 	mod 5,52
@@ -390,49 +390,49 @@ Style_Jive_Intro1B:	# 4 bars of 4 beats
 	@bend 36,5,0,62
 	@bend 49,3,0,63
 	@bend 51,5,0,63
-	@n 64,0,HHO,108,31,0,0
+	@n 64,0,KitHiHatOpen,108,31,NcrNone
 	@bend 69,3,0,64
 	@bend 79,5,0,64
 	@mod 87,5,56
 	@mod 93,5,54
-	@n 94,2,46,114,85,0,1
+	@n 94,2,46,114,85,NcrRootShiftOnly
 	beat
-	n 0,SSTICK,120,24,0,0
-	n 0,TAMB,95,19,0,0
-	@n 1,1,34,65,79,0,1
+	n 0,KitRimShot,120,24,NcrNone
+	n 0,KitTambourine,95,19,NcrNone
+	@n 1,1,34,65,79,NcrRootShiftOnly
 	mod 5,52
 	mod 5,48
-	@n 5,0,HHC,67,26,0,0
+	@n 5,0,KitHiHatClosed,67,26,NcrNone
 	@mod 7,5,44
 	mod 5,38
-	@n 8,3,63,97,16,0,1
+	@n 8,3,63,97,16,NcrRootShiftOnly
 	@mod 12,5,31
 	@mod 16,5,24
 	mod 5,14
 	@mod 20,5,3
 	@mod 24,5,0
-	@n 70,0,HHC,71,22,0,0
-	@n 92,2,45,95,48,1,1
-	@n 94,5,57,81,113,2,1
-	@n 95,1,33,83,36,1,1
+	@n 70,0,KitHiHatClosed,71,22,NcrNone
+	@n 92,2,45,95,176,NcrRootShiftOnly
+	@n 94,5,57,81,369,NcrRootShiftOnly
+	@n 95,1,33,83,164,NcrRootShiftOnly
 	beat
-	@n 2,0,BD1,111,24,0,0
-	@n 4,0,HHO,106,29,0,0
-	@n 63,2,57,112,32,0,1
-	@n 91,3,63,111,105,0,1
-	@n 95,4,69,108,36,0,1
-	n 4,72,106,36,0,1
-	n 4,75,103,36,0,1
+	@n 2,0,KitBassDrum1,111,24,NcrNone
+	@n 4,0,KitHiHatOpen,106,29,NcrNone
+	@n 63,2,57,112,32,NcrRootShiftOnly
+	@n 91,3,63,111,105,NcrRootShiftOnly
+	@n 95,4,69,108,36,NcrRootShiftOnly
+	n 4,72,106,36,NcrRootShiftOnly
+	n 4,75,103,36,NcrRootShiftOnly
 	beat
-	n 0,SSTICK,113,23,0,0
-	n 0,TAMB,95,14,0,0
-	@n 3,2,60,60,28,0,1
-	@n 5,0,HHC,74,27,0,0
-	@n 54,4,75,75,34,0,1
-	@n 57,4,69,80,25,0,1
-	n 4,72,80,31,0,1
-	@n 63,2,62,91,18,0,1
-	@n 71,0,HHC,63,21,0,0
+	n 0,KitRimShot,113,23,NcrNone
+	n 0,KitTambourine,95,14,NcrNone
+	@n 3,2,60,60,28,NcrRootShiftOnly
+	@n 5,0,KitHiHatClosed,74,27,NcrNone
+	@n 54,4,75,75,34,NcrRootShiftOnly
+	@n 57,4,69,80,25,NcrRootShiftOnly
+	n 4,72,80,31,NcrRootShiftOnly
+	@n 63,2,62,91,18,NcrRootShiftOnly
+	@n 71,0,KitHiHatClosed,63,21,NcrNone
 	@mod 74,5,2
 	@mod 78,5,4
 	@bend 84,3,0,63
@@ -442,18 +442,18 @@ Style_Jive_Intro1B:	# 4 bars of 4 beats
 	@mod 89,5,12
 	mod 5,16
 	@mod 93,5,19
-	@n 94,3,57,56,101,0,1
+	@n 94,3,57,56,101,NcrRootShiftOnly
 	beat
-	n 0,BD1,111,24,0,0
+	n 0,KitBassDrum1,111,24,NcrNone
 	@mod 1,5,22
 	mod 5,24
-	@n 2,1,33,111,15,1,1
-	n 2,63,104,46,0,1
-	n 2,60,99,40,0,1
-	n 2,57,74,34,0,1
-	n 2,45,85,112,0,1
+	@n 2,1,33,111,143,NcrRootShiftOnly
+	n 2,63,104,46,NcrRootShiftOnly
+	n 2,60,99,40,NcrRootShiftOnly
+	n 2,57,74,34,NcrRootShiftOnly
+	n 2,45,85,112,NcrRootShiftOnly
 	bend 3,0,62
-	@n 5,0,HHO,101,25,0,0
+	@n 5,0,KitHiHatOpen,101,25,NcrNone
 	@bend 7,3,0,63
 	mod 5,27
 	mod 5,28
@@ -479,11 +479,11 @@ Style_Jive_Intro1B:	# 4 bars of 4 beats
 	@mod 52,5,47
 	@mod 56,5,50
 	mod 5,53
-	@n 60,4,69,113,19,0,1
-	n 4,72,113,19,0,1
-	n 4,75,111,23,0,1
+	@n 60,4,69,113,19,NcrRootShiftOnly
+	n 4,72,113,19,NcrRootShiftOnly
+	n 4,75,111,23,NcrRootShiftOnly
 	mod 5,56
-	@n 64,2,62,95,34,0,1
+	@n 64,2,62,95,34,NcrRootShiftOnly
 	@mod 66,5,58
 	mod 5,60
 	@mod 69,5,61
@@ -494,18 +494,18 @@ Style_Jive_Intro1B:	# 4 bars of 4 beats
 	@mod 84,5,64
 	@mod 88,5,30
 	mod 5,26
-	@n 92,3,60,76,76,0,1
+	@n 92,3,60,76,76,NcrRootShiftOnly
 	mod 5,21
-	@n 95,2,60,94,25,0,1
+	@n 95,2,60,94,25,NcrRootShiftOnly
 	beat
-	n 0,SSTICK,114,24,0,0
-	n 0,TAMB,90,16,0,0
-	@n 1,0,HHC,90,27,0,0
-	n 4,75,65,29,0,1
+	n 0,KitRimShot,114,24,NcrNone
+	n 0,KitTambourine,90,16,NcrNone
+	@n 1,0,KitHiHatClosed,90,27,NcrNone
+	n 4,75,65,29,NcrRootShiftOnly
 	@mod 2,5,15
 	mod 5,8
-	@n 4,4,69,89,28,0,1
-	n 4,72,92,28,0,1
+	@n 4,4,69,89,28,NcrRootShiftOnly
+	n 4,72,92,28,NcrRootShiftOnly
 	@mod 8,5,0
 	@mod 9,5,57
 	@mod 11,5,49
@@ -513,1474 +513,1474 @@ Style_Jive_Intro1B:	# 4 bars of 4 beats
 	mod 5,29
 	@mod 22,5,15
 	mod 5,0
-	@n 66,0,HHC,55,20,0,0
+	@n 66,0,KitHiHatClosed,55,20,NcrNone
 	@bend 81,3,0,63
 	@bend 92,3,0,62
-	n 3,63,106,21,1,1
-	@n 94,4,66,97,2,1,1
-	n 4,72,108,4,1,1
+	n 3,63,106,149,NcrRootShiftOnly
+	@n 94,4,66,97,130,NcrRootShiftOnly
+	n 4,72,108,132,NcrRootShiftOnly
 	@bend 95,3,0,62
 	beat
-	n 2,44,95,76,0,1
-	n 5,56,108,24,1,1
-	@n 1,2,60,95,6,1,1
-	n 2,54,89,3,1,1
-	n 2,58,77,121,0,1
-	n 2,63,73,5,1,1
-	@n 2,0,HHO,93,24,0,0
-	n 1,32,106,8,1,1
-	@n 3,0,BD1,119,21,0,0
+	n 2,44,95,76,NcrRootShiftOnly
+	n 5,56,108,152,NcrRootShiftOnly
+	@n 1,2,60,95,134,NcrRootShiftOnly
+	n 2,54,89,131,NcrRootShiftOnly
+	n 2,58,77,121,NcrRootShiftOnly
+	n 2,63,73,133,NcrRootShiftOnly
+	@n 2,0,KitHiHatOpen,93,24,NcrNone
+	n 1,32,106,136,NcrRootShiftOnly
+	@n 3,0,KitBassDrum1,119,21,NcrNone
 	@bend 5,3,0,61
 	@bend 32,3,0,62
 	@bend 39,3,0,63
 	@bend 50,3,0,64
-	@n 64,0,HHO,56,27,0,0
+	@n 64,0,KitHiHatOpen,56,27,NcrNone
 	@bend 70,3,0,63
 	@bend 85,3,0,62
 	@bend 92,5,0,63
 	beat
-	n 0,SSTICK,113,20,0,0
-	n 0,TAMB,91,15,0,0
-	@n 2,2,44,74,44,0,1
+	n 0,KitRimShot,113,20,NcrNone
+	n 0,KitTambourine,91,15,NcrNone
+	@n 2,2,44,74,44,NcrRootShiftOnly
 	@bend 3,3,0,63
 	bend 3,0,64
-	@n 5,0,HHC,72,24,0,0
+	@n 5,0,KitHiHatClosed,72,24,NcrNone
 	bend 5,0,62
 	@bend 11,5,0,61
 	@bend 18,5,0,64
-	@n 59,4,65,101,25,0,1
-	n 4,71,100,30,0,1
-	@n 60,3,62,106,28,0,1
-	@n 64,1,31,116,36,0,1
-	n 5,55,86,40,0,1
-	@n 65,0,HHO,116,31,0,0
-	n 0,BD1,112,27,0,0
-	@n 66,2,43,105,43,0,1
-	@n 67,2,63,116,32,0,1
-	n 2,59,113,29,0,1
-	n 2,53,108,25,0,1
-	@n 69,0,SD1,121,25,0,0
+	@n 59,4,65,101,25,NcrRootShiftOnly
+	n 4,71,100,30,NcrRootShiftOnly
+	@n 60,3,62,106,28,NcrRootShiftOnly
+	@n 64,1,31,116,36,NcrRootShiftOnly
+	n 5,55,86,40,NcrRootShiftOnly
+	@n 65,0,KitHiHatOpen,116,31,NcrNone
+	n 0,KitBassDrum1,112,27,NcrNone
+	@n 66,2,43,105,43,NcrRootShiftOnly
+	@n 67,2,63,116,32,NcrRootShiftOnly
+	n 2,59,113,29,NcrRootShiftOnly
+	n 2,53,108,25,NcrRootShiftOnly
+	@n 69,0,KitSnareDrum1,121,25,NcrNone
 	beat
-	@n 2,0,HHC,81,23,0,0
-	@n 75,0,SD1,57,16,0,0
+	@n 2,0,KitHiHatClosed,81,23,NcrNone
+	@n 75,0,KitSnareDrum1,57,16,NcrNone
 	beat
-	@n 10,0,SD1,115,31,0,0
+	@n 10,0,KitSnareDrum1,115,31,NcrNone
 	end
-	var_end	Style_Jive_Intro1B
-Style_Jive_Ending1A:	# 4 bars of 4 beats
-	var_head	Style_Jive_Ending1A, 4, 4, 0xff, 0xff
-	mode 1,11
+	var_end	Style_Jive_Intro1Minor
+Style_Jive_Intro2Major:	# 4 bars of 4 beats
+	var_head	Style_Jive_Intro2Major, 4, 4, 0xff, 0xff
+	fold_root 1,11
 	pan 3,88
-	cc 3,81,64
-	cc 3,92,41
+	eq_hi_gain 3,64
+	multi 3,41
 	pc 3,0x43,0x58,0x20
-	cc 4,92,21
+	multi 4,21
 	pc 4,0x38,0x50,0x20
 	vol 5,88
 	pan 5,17
 	pc 5,0x48,0x00,0x20
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
-	var_events	Style_Jive_Ending1A
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
+	var_events	Style_Jive_Intro2Major
 	beat
-	n 0,HHO,101,27,0,0
-	@n 3,1,43,106,17,1,1
-	@n 4,2,31,102,126,0,1
+	n 0,KitHiHatOpen,101,27,NcrNone
+	@n 3,1,43,106,145,NcrRootShiftOnly
+	@n 4,2,31,102,126,NcrRootShiftOnly
 	beat
-	n 0,HHO,39,35,0,0
-	@n 6,2,43,46,106,0,1
-	@n 53,2,31,87,40,4,1
-	@n 66,1,43,100,7,1,1
-	@n 95,3,55,94,61,1,1
+	n 0,KitHiHatOpen,39,35,NcrNone
+	@n 6,2,43,46,106,NcrRootShiftOnly
+	@n 53,2,31,87,552,NcrRootShiftOnly
+	@n 66,1,43,100,135,NcrRootShiftOnly
+	@n 95,3,55,94,189,NcrRootShiftOnly
 	beat
-	n 0,HHO,79,24,0,0
-	@n 70,2,43,92,58,0,1
-	@n 72,0,SD1,127,28,0,0
+	n 0,KitHiHatOpen,79,24,NcrNone
+	@n 70,2,43,92,58,NcrRootShiftOnly
+	@n 72,0,KitSnareDrum1,127,28,NcrNone
 	beat
-	n 0,HHO,78,24,0,0
-	n 0,BD1,73,28,0,0
-	@n 25,1,43,73,88,0,1
-	@n 72,0,BD1,83,16,0,0
-	@n 94,2,43,79,126,0,1
+	n 0,KitHiHatOpen,78,24,NcrNone
+	n 0,KitBassDrum1,73,28,NcrNone
+	@n 25,1,43,73,88,NcrRootShiftOnly
+	@n 72,0,KitBassDrum1,83,16,NcrNone
+	@n 94,2,43,79,126,NcrRootShiftOnly
 	beat
-	n 0,SD1,127,22,0,0
-	n 0,HHO,104,35,0,0
-	@n 2,3,55,107,126,2,1
-	@n 7,1,31,99,9,1,1
-	@n 48,0,BD2,86,28,0,0
-	@n 72,0,BD1,105,20,0,0
+	n 0,KitSnareDrum1,127,22,NcrNone
+	n 0,KitHiHatOpen,104,35,NcrNone
+	@n 2,3,55,107,382,NcrRootShiftOnly
+	@n 7,1,31,99,137,NcrRootShiftOnly
+	@n 48,0,KitBassDrum2,86,28,NcrNone
+	@n 72,0,KitBassDrum1,105,20,NcrNone
 	beat
-	n 0,HHO,100,24,0,0
-	n 0,SD2,127,27,0,0
-	@n 53,2,43,94,86,0,1
-	@n 61,3,67,113,81,1,1
-	@n 65,1,31,86,111,0,1
-	@n 72,0,HHO,96,21,0,0
-	n 0,SD1,115,21,0,0
+	n 0,KitHiHatOpen,100,24,NcrNone
+	n 0,KitSnareDrum2,127,27,NcrNone
+	@n 53,2,43,94,86,NcrRootShiftOnly
+	@n 61,3,67,113,209,NcrRootShiftOnly
+	@n 65,1,31,86,111,NcrRootShiftOnly
+	@n 72,0,KitHiHatOpen,96,21,NcrNone
+	n 0,KitSnareDrum1,115,21,NcrNone
 	beat
-	n 0,HHC,57,24,0,0
-	n 0,25,86,19,0,0
-	@n 48,0,HHO,122,36,0,0
-	n 0,SD2,127,31,0,0
-	@n 64,5,88,104,35,0,1
-	@n 68,2,43,75,113,0,1
-	n 2,50,87,24,0,1
-	n 2,74,118,31,0,1
-	@n 72,0,25,125,106,0,0
-	@n 89,5,89,93,70,0,1
-	@n 94,2,53,106,40,0,1
+	n 0,KitHiHatClosed,57,24,NcrNone
+	n 0,KitSnareRoll,86,19,NcrNone
+	@n 48,0,KitHiHatOpen,122,36,NcrNone
+	n 0,KitSnareDrum2,127,31,NcrNone
+	@n 64,5,88,104,35,NcrRootShiftOnly
+	@n 68,2,43,75,113,NcrRootShiftOnly
+	n 2,50,87,24,NcrRootShiftOnly
+	n 2,74,118,31,NcrRootShiftOnly
+	@n 72,0,KitSnareRoll,125,106,NcrNone
+	@n 89,5,89,93,70,NcrRootShiftOnly
+	@n 94,2,53,106,40,NcrRootShiftOnly
 	beat
-	n 0,HHC,43,24,0,0
-	n 1,31,83,90,0,1
-	@n 4,2,77,83,33,0,1
-	@n 48,0,HHC,39,16,0,0
-	@n 62,5,90,80,26,0,1
-	@n 66,2,54,89,21,0,1
-	@n 67,2,78,97,12,0,1
-	@n 73,2,31,89,22,0,1
-	@n 86,5,91,98,33,0,1
-	@n 95,3,65,111,25,0,1
-	n 3,67,91,25,0,1
-	n 3,71,101,27,0,1
-	n 4,71,117,24,0,1
-	n 4,65,100,24,0,1
-	n 4,74,92,23,0,1
+	n 0,KitHiHatClosed,43,24,NcrNone
+	n 1,31,83,90,NcrRootShiftOnly
+	@n 4,2,77,83,33,NcrRootShiftOnly
+	@n 48,0,KitHiHatClosed,39,16,NcrNone
+	@n 62,5,90,80,26,NcrRootShiftOnly
+	@n 66,2,54,89,21,NcrRootShiftOnly
+	@n 67,2,78,97,12,NcrRootShiftOnly
+	@n 73,2,31,89,22,NcrRootShiftOnly
+	@n 86,5,91,98,33,NcrRootShiftOnly
+	@n 95,3,65,111,25,NcrRootShiftOnly
+	n 3,67,91,25,NcrRootShiftOnly
+	n 3,71,101,27,NcrRootShiftOnly
+	n 4,71,117,24,NcrRootShiftOnly
+	n 4,65,100,24,NcrRootShiftOnly
+	n 4,74,92,23,NcrRootShiftOnly
 	beat
-	n 0,SD1,127,25,0,0
-	n 0,HHO,120,34,0,0
-	n 2,79,87,56,0,1
-	n 2,55,98,77,0,1
-	@n 2,1,43,99,60,0,1
-	n 2,67,79,44,0,1
-	@n 24,0,HHC,42,24,0,0
+	n 0,KitSnareDrum1,127,25,NcrNone
+	n 0,KitHiHatOpen,120,34,NcrNone
+	n 2,79,87,56,NcrRootShiftOnly
+	n 2,55,98,77,NcrRootShiftOnly
+	@n 2,1,43,99,60,NcrRootShiftOnly
+	n 2,67,79,44,NcrRootShiftOnly
+	@n 24,0,KitHiHatClosed,42,24,NcrNone
 	@sus 25,2,127
 	beat
-	n 0,HHP,82,24,0,0
-	@n 1,2,77,105,24,0,1
-	n 2,65,105,18,0,1
-	@n 95,5,91,112,25,0,1
+	n 0,KitHiHatPedal,82,24,NcrNone
+	@n 1,2,77,105,24,NcrRootShiftOnly
+	n 2,65,105,18,NcrRootShiftOnly
+	@n 95,5,91,112,25,NcrRootShiftOnly
 	beat
-	n 0,HHO,124,28,0,0
-	n 0,SD2,127,26,0,0
-	n 1,31,109,52,0,1
-	@n 1,3,65,103,23,0,1
-	n 3,71,96,25,0,1
-	n 3,67,104,25,0,1
-	@n 2,2,62,95,18,0,1
-	n 4,71,121,24,0,1
-	n 4,65,101,22,0,1
-	n 4,74,96,22,0,1
-	@n 3,2,74,95,16,0,1
-	@n 48,0,HHC,55,29,0,0
+	n 0,KitHiHatOpen,124,28,NcrNone
+	n 0,KitSnareDrum2,127,26,NcrNone
+	n 1,31,109,52,NcrRootShiftOnly
+	@n 1,3,65,103,23,NcrRootShiftOnly
+	n 3,71,96,25,NcrRootShiftOnly
+	n 3,67,104,25,NcrRootShiftOnly
+	@n 2,2,62,95,18,NcrRootShiftOnly
+	n 4,71,121,24,NcrRootShiftOnly
+	n 4,65,101,22,NcrRootShiftOnly
+	n 4,74,96,22,NcrRootShiftOnly
+	@n 3,2,74,95,16,NcrRootShiftOnly
+	@n 48,0,KitHiHatClosed,55,29,NcrNone
 	beat
-	n 0,HHP,93,21,0,0
-	@n 2,2,71,92,17,0,1
-	n 2,59,93,17,0,1
+	n 0,KitHiHatPedal,93,21,NcrNone
+	@n 2,2,71,92,17,NcrRootShiftOnly
+	n 2,59,93,17,NcrRootShiftOnly
 	beat
 	sus 2,0
-	@n 2,2,55,94,19,0,1
-	n 2,67,105,21,0,1
-	@n 62,4,55,74,24,0,1
-	@n 63,3,55,123,28,0,1
-	@n 65,5,95,121,30,0,1
-	@n 67,1,43,93,31,0,1
-	n 2,55,123,24,0,1
-	n 2,43,94,27,0,1
-	@n 91,4,53,70,31,0,1
-	@n 93,3,53,113,32,0,1
-	@n 95,5,93,96,36,0,1
+	@n 2,2,55,94,19,NcrRootShiftOnly
+	n 2,67,105,21,NcrRootShiftOnly
+	@n 62,4,55,74,24,NcrRootShiftOnly
+	@n 63,3,55,123,28,NcrRootShiftOnly
+	@n 65,5,95,121,30,NcrRootShiftOnly
+	@n 67,1,43,93,31,NcrRootShiftOnly
+	n 2,55,123,24,NcrRootShiftOnly
+	n 2,43,94,27,NcrRootShiftOnly
+	@n 91,4,53,70,31,NcrRootShiftOnly
+	@n 93,3,53,113,32,NcrRootShiftOnly
+	@n 95,5,93,96,36,NcrRootShiftOnly
 	beat
-	n 0,HHP,101,22,0,0
-	@n 2,2,41,82,30,0,1
-	@n 3,1,41,61,73,0,1
-	n 2,53,94,34,0,1
-	@n 92,4,52,94,28,0,1
-	@n 95,3,52,108,31,0,1
-	n 5,91,99,31,0,1
+	n 0,KitHiHatPedal,101,22,NcrNone
+	@n 2,2,41,82,30,NcrRootShiftOnly
+	@n 3,1,41,61,73,NcrRootShiftOnly
+	n 2,53,94,34,NcrRootShiftOnly
+	@n 92,4,52,94,28,NcrRootShiftOnly
+	@n 95,3,52,108,31,NcrRootShiftOnly
+	n 5,91,99,31,NcrRootShiftOnly
 	beat
-	n 1,40,91,62,0,1
-	@n 2,2,40,89,31,0,1
-	@n 4,2,52,113,31,0,1
-	@n 95,4,50,94,28,0,1
+	n 1,40,91,62,NcrRootShiftOnly
+	@n 2,2,40,89,31,NcrRootShiftOnly
+	@n 4,2,52,113,31,NcrRootShiftOnly
+	@n 95,4,50,94,28,NcrRootShiftOnly
 	beat
-	n 0,HHP,94,21,0,0
-	@n 1,1,38,100,63,0,1
-	n 3,50,121,30,0,1
-	@n 2,5,89,98,30,0,1
-	@n 3,2,50,110,33,0,1
-	n 2,38,100,36,0,1
+	n 0,KitHiHatPedal,94,21,NcrNone
+	@n 1,1,38,100,63,NcrRootShiftOnly
+	n 3,50,121,30,NcrRootShiftOnly
+	@n 2,5,89,98,30,NcrRootShiftOnly
+	@n 3,2,50,110,33,NcrRootShiftOnly
+	n 2,38,100,36,NcrRootShiftOnly
 	end
-	var_end	Style_Jive_Ending1A
-Style_Jive_Ending1B:	# 4 bars of 4 beats
-	var_head	Style_Jive_Ending1B, 4, 4, 0xff, 0xff
-	mode 1,11
+	var_end	Style_Jive_Intro2Major
+Style_Jive_Intro2Minor:	# 4 bars of 4 beats
+	var_head	Style_Jive_Intro2Minor, 4, 4, 0xff, 0xff
+	fold_root 1,11
 	pan 3,88
-	cc 3,81,64
-	cc 3,92,41
+	eq_hi_gain 3,64
+	multi 3,41
 	pc 3,0x43,0x58,0x20
-	cc 4,92,21
+	multi 4,21
 	pc 4,0x38,0x50,0x20
 	vol 5,88
 	pan 5,17
 	pc 5,0x48,0x00,0x20
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
-	var_events	Style_Jive_Ending1B
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
+	var_events	Style_Jive_Intro2Minor
 	beat
-	n 0,HHO,101,27,0,0
-	@n 3,1,43,106,17,1,1
-	@n 8,2,31,102,126,0,1
+	n 0,KitHiHatOpen,101,27,NcrNone
+	@n 3,1,43,106,145,NcrRootShiftOnly
+	@n 8,2,31,102,126,NcrRootShiftOnly
 	beat
-	n 0,HHO,39,35,0,0
-	@n 11,2,43,46,106,0,1
-	@n 58,2,31,87,40,4,1
-	@n 66,1,43,100,7,1,1
-	@n 95,3,55,94,61,1,1
+	n 0,KitHiHatOpen,39,35,NcrNone
+	@n 11,2,43,46,106,NcrRootShiftOnly
+	@n 58,2,31,87,552,NcrRootShiftOnly
+	@n 66,1,43,100,135,NcrRootShiftOnly
+	@n 95,3,55,94,189,NcrRootShiftOnly
 	beat
-	n 0,HHO,79,24,0,0
-	@n 68,2,43,92,58,0,1
-	@n 72,0,SD1,127,28,0,0
+	n 0,KitHiHatOpen,79,24,NcrNone
+	@n 68,2,43,92,58,NcrRootShiftOnly
+	@n 72,0,KitSnareDrum1,127,28,NcrNone
 	beat
-	n 0,HHO,78,24,0,0
-	n 0,BD1,73,28,0,0
-	@n 25,1,43,73,88,0,1
-	@n 72,0,BD1,83,16,0,0
-	@n 91,2,43,79,126,0,1
+	n 0,KitHiHatOpen,78,24,NcrNone
+	n 0,KitBassDrum1,73,28,NcrNone
+	@n 25,1,43,73,88,NcrRootShiftOnly
+	@n 72,0,KitBassDrum1,83,16,NcrNone
+	@n 91,2,43,79,126,NcrRootShiftOnly
 	beat
-	n 0,SD1,127,22,0,0
-	n 0,HHO,104,35,0,0
-	@n 2,3,55,107,126,2,1
-	@n 7,1,31,99,9,1,1
-	@n 48,0,BD2,86,28,0,0
-	@n 72,0,BD1,105,20,0,0
+	n 0,KitSnareDrum1,127,22,NcrNone
+	n 0,KitHiHatOpen,104,35,NcrNone
+	@n 2,3,55,107,382,NcrRootShiftOnly
+	@n 7,1,31,99,137,NcrRootShiftOnly
+	@n 48,0,KitBassDrum2,86,28,NcrNone
+	@n 72,0,KitBassDrum1,105,20,NcrNone
 	beat
-	n 0,HHO,100,24,0,0
-	n 0,SD2,127,27,0,0
-	@n 58,2,43,94,86,0,1
-	@n 61,3,67,113,81,1,1
-	@n 65,1,31,86,111,0,1
-	@n 72,0,HHO,96,21,0,0
-	n 0,SD1,115,21,0,0
+	n 0,KitHiHatOpen,100,24,NcrNone
+	n 0,KitSnareDrum2,127,27,NcrNone
+	@n 58,2,43,94,86,NcrRootShiftOnly
+	@n 61,3,67,113,209,NcrRootShiftOnly
+	@n 65,1,31,86,111,NcrRootShiftOnly
+	@n 72,0,KitHiHatOpen,96,21,NcrNone
+	n 0,KitSnareDrum1,115,21,NcrNone
 	beat
-	n 0,HHC,57,24,0,0
-	n 0,25,86,19,0,0
-	@n 48,0,HHO,122,36,0,0
-	n 0,SD2,127,31,0,0
-	@n 63,2,51,87,24,0,1
-	n 2,43,75,113,0,1
-	@n 64,5,87,104,35,0,1
-	@n 65,2,75,118,31,0,1
-	@n 72,0,25,125,106,0,0
-	@n 89,5,89,93,70,0,1
-	@n 92,2,53,106,40,0,1
+	n 0,KitHiHatClosed,57,24,NcrNone
+	n 0,KitSnareRoll,86,19,NcrNone
+	@n 48,0,KitHiHatOpen,122,36,NcrNone
+	n 0,KitSnareDrum2,127,31,NcrNone
+	@n 63,2,51,87,24,NcrRootShiftOnly
+	n 2,43,75,113,NcrRootShiftOnly
+	@n 64,5,87,104,35,NcrRootShiftOnly
+	@n 65,2,75,118,31,NcrRootShiftOnly
+	@n 72,0,KitSnareRoll,125,106,NcrNone
+	@n 89,5,89,93,70,NcrRootShiftOnly
+	@n 92,2,53,106,40,NcrRootShiftOnly
 	beat
-	n 0,HHC,43,24,0,0
-	n 1,31,83,90,0,1
-	@n 7,2,77,83,33,0,1
-	@n 48,0,HHC,39,16,0,0
-	@n 61,2,54,89,21,0,1
-	@n 62,2,78,97,12,0,1
-	n 5,90,80,26,0,1
-	@n 74,2,31,89,22,0,1
-	@n 86,5,91,98,33,0,1
-	@n 95,3,65,111,25,0,1
-	n 3,67,91,25,0,1
-	n 3,71,101,27,0,1
-	n 4,71,117,24,0,1
-	n 4,65,100,24,0,1
-	n 4,74,92,23,0,1
+	n 0,KitHiHatClosed,43,24,NcrNone
+	n 1,31,83,90,NcrRootShiftOnly
+	@n 7,2,77,83,33,NcrRootShiftOnly
+	@n 48,0,KitHiHatClosed,39,16,NcrNone
+	@n 61,2,54,89,21,NcrRootShiftOnly
+	@n 62,2,78,97,12,NcrRootShiftOnly
+	n 5,90,80,26,NcrRootShiftOnly
+	@n 74,2,31,89,22,NcrRootShiftOnly
+	@n 86,5,91,98,33,NcrRootShiftOnly
+	@n 95,3,65,111,25,NcrRootShiftOnly
+	n 3,67,91,25,NcrRootShiftOnly
+	n 3,71,101,27,NcrRootShiftOnly
+	n 4,71,117,24,NcrRootShiftOnly
+	n 4,65,100,24,NcrRootShiftOnly
+	n 4,74,92,23,NcrRootShiftOnly
 	beat
-	n 0,SD1,127,25,0,0
-	n 0,HHO,120,34,0,0
-	n 2,55,98,77,0,1
-	n 2,79,87,56,0,1
-	@n 2,1,43,99,60,0,1
-	@n 4,2,67,79,44,0,1
-	@n 24,0,HHC,42,24,0,0
+	n 0,KitSnareDrum1,127,25,NcrNone
+	n 0,KitHiHatOpen,120,34,NcrNone
+	n 2,55,98,77,NcrRootShiftOnly
+	n 2,79,87,56,NcrRootShiftOnly
+	@n 2,1,43,99,60,NcrRootShiftOnly
+	@n 4,2,67,79,44,NcrRootShiftOnly
+	@n 24,0,KitHiHatClosed,42,24,NcrNone
 	@sus 25,2,127
-	@n 92,2,63,87,21,0,1
-	n 2,75,105,25,0,1
+	@n 92,2,63,87,21,NcrRootShiftOnly
+	n 2,75,105,25,NcrRootShiftOnly
 	beat
-	n 0,HHP,82,24,0,0
-	@n 88,2,71,93,27,0,1
-	@n 91,2,59,93,21,0,1
-	@n 95,5,91,112,25,0,1
+	n 0,KitHiHatPedal,82,24,NcrNone
+	@n 88,2,71,93,27,NcrRootShiftOnly
+	@n 91,2,59,93,21,NcrRootShiftOnly
+	@n 95,5,91,112,25,NcrRootShiftOnly
 	beat
-	n 0,HHO,124,28,0,0
-	n 0,SD2,127,26,0,0
-	n 1,31,109,52,0,1
-	@n 1,3,65,103,23,0,1
-	n 3,71,96,25,0,1
-	n 3,67,104,25,0,1
-	@n 2,4,71,121,24,0,1
-	n 4,65,101,22,0,1
-	n 4,74,96,22,0,1
-	@n 48,0,HHC,55,29,0,0
-	@n 94,2,67,121,19,0,1
+	n 0,KitHiHatOpen,124,28,NcrNone
+	n 0,KitSnareDrum2,127,26,NcrNone
+	n 1,31,109,52,NcrRootShiftOnly
+	@n 1,3,65,103,23,NcrRootShiftOnly
+	n 3,71,96,25,NcrRootShiftOnly
+	n 3,67,104,25,NcrRootShiftOnly
+	@n 2,4,71,121,24,NcrRootShiftOnly
+	n 4,65,101,22,NcrRootShiftOnly
+	n 4,74,96,22,NcrRootShiftOnly
+	@n 48,0,KitHiHatClosed,55,29,NcrNone
+	@n 94,2,67,121,19,NcrRootShiftOnly
 	beat
-	n 0,HHP,93,21,0,0
-	@n 1,2,55,93,24,0,1
-	@n 95,2,43,111,25,0,1
+	n 0,KitHiHatPedal,93,21,NcrNone
+	@n 1,2,55,93,24,NcrRootShiftOnly
+	@n 95,2,43,111,25,NcrRootShiftOnly
 	beat
 	sus 2,0
-	@n 4,2,55,124,16,0,1
-	@n 62,4,55,74,24,0,1
-	n 5,91,95,36,0,1
-	@n 63,2,43,94,36,0,1
-	n 3,55,123,28,0,1
-	@n 64,1,43,105,31,0,1
-	@n 65,2,55,112,25,0,1
-	@n 91,4,53,70,31,0,1
-	@n 92,5,89,100,31,0,1
-	@n 93,3,53,113,32,0,1
-	@n 95,1,41,89,27,0,1
+	@n 4,2,55,124,16,NcrRootShiftOnly
+	@n 62,4,55,74,24,NcrRootShiftOnly
+	n 5,91,95,36,NcrRootShiftOnly
+	@n 63,2,43,94,36,NcrRootShiftOnly
+	n 3,55,123,28,NcrRootShiftOnly
+	@n 64,1,43,105,31,NcrRootShiftOnly
+	@n 65,2,55,112,25,NcrRootShiftOnly
+	@n 91,4,53,70,31,NcrRootShiftOnly
+	@n 92,5,89,100,31,NcrRootShiftOnly
+	@n 93,3,53,113,32,NcrRootShiftOnly
+	@n 95,1,41,89,27,NcrRootShiftOnly
 	beat
-	n 0,HHP,101,22,0,0
-	@n 1,2,53,96,31,0,1
-	@n 2,2,41,92,25,0,1
-	@n 92,4,51,94,28,0,1
-	@n 95,3,51,108,31,0,1
-	n 5,87,104,27,0,1
+	n 0,KitHiHatPedal,101,22,NcrNone
+	@n 1,2,53,96,31,NcrRootShiftOnly
+	@n 2,2,41,92,25,NcrRootShiftOnly
+	@n 92,4,51,94,28,NcrRootShiftOnly
+	@n 95,3,51,108,31,NcrRootShiftOnly
+	n 5,87,104,27,NcrRootShiftOnly
 	beat
-	@n 1,1,39,108,30,0,1
-	@n 4,2,39,91,33,0,1
-	@n 5,2,51,103,30,0,1
-	@n 95,4,50,94,28,0,1
+	@n 1,1,39,108,30,NcrRootShiftOnly
+	@n 4,2,39,91,33,NcrRootShiftOnly
+	@n 5,2,51,103,30,NcrRootShiftOnly
+	@n 95,4,50,94,28,NcrRootShiftOnly
 	beat
-	n 0,HHP,94,21,0,0
-	@n 1,3,50,121,30,0,1
-	@n 3,5,86,88,30,0,1
-	@n 5,1,38,118,32,0,1
-	n 2,50,104,29,0,1
-	n 2,38,107,34,0,1
+	n 0,KitHiHatPedal,94,21,NcrNone
+	@n 1,3,50,121,30,NcrRootShiftOnly
+	@n 3,5,86,88,30,NcrRootShiftOnly
+	@n 5,1,38,118,32,NcrRootShiftOnly
+	n 2,50,104,29,NcrRootShiftOnly
+	n 2,38,107,34,NcrRootShiftOnly
 	end
-	var_end	Style_Jive_Ending1B
+	var_end	Style_Jive_Intro2Minor
 Style_Jive_Var1:	# 4 bars of 4 beats
 	var_head	Style_Jive_Var1, 4, 4, 0xff, 0xff
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
 	var_events	Style_Jive_Var1
 	beat
-	n 0,BD1,111,21,0,0
-	n 0,CRASH2,88,18,0,0
-	@n 1,1,36,98,38,1,16
-	n 2,48,96,95,0,16
-	@n 2,0,HHO,105,18,0,0
-	n 3,52,75,19,5,80
+	n 0,KitBassDrum1,111,21,NcrNone
+	n 0,KitCrashCymbal2,88,18,NcrNone
+	@n 1,1,36,98,166,NcrMelodyBasic
+	n 2,48,96,95,NcrMelodyBasic
+	@n 2,0,KitHiHatOpen,105,18,NcrNone
+	n 3,52,75,659,NcrBasicChord100
 	beat
-	n 0,SSTICK,113,24,0,0
-	n 0,TAMB,95,18,0,0
-	@n 2,0,HHC,78,24,0,0
-	@n 5,2,60,86,18,0,80
-	n 2,55,77,21,0,80
-	@n 6,2,64,70,16,0,80
-	@n 66,0,HHC,60,17,0,0
+	n 0,KitRimShot,113,24,NcrNone
+	n 0,KitTambourine,95,18,NcrNone
+	@n 2,0,KitHiHatClosed,78,24,NcrNone
+	@n 5,2,60,86,18,NcrBasicChord100
+	n 2,55,77,21,NcrBasicChord100
+	@n 6,2,64,70,16,NcrBasicChord100
+	@n 66,0,KitHiHatClosed,60,17,NcrNone
 	beat
-	@n 1,0,HHO,101,24,0,0
-	@n 2,1,31,91,30,1,16
+	@n 1,0,KitHiHatOpen,101,24,NcrNone
+	@n 2,1,31,91,158,NcrMelodyBasic
 	beat
-	n 0,TAMB,97,23,0,0
-	@n 1,2,64,75,18,0,80
-	n 2,60,86,18,0,80
-	n 2,55,77,18,0,80
-	@n 3,0,HHC,89,21,0,0
-	@n 95,2,48,94,90,0,16
+	n 0,KitTambourine,97,23,NcrNone
+	@n 1,2,64,75,18,NcrBasicChord100
+	n 2,60,86,18,NcrBasicChord100
+	n 2,55,77,18,NcrBasicChord100
+	@n 3,0,KitHiHatClosed,89,21,NcrNone
+	@n 95,2,48,94,90,NcrMelodyBasic
 	beat
-	n 0,BD1,112,23,0,0
-	@n 2,1,36,94,30,1,16
-	@n 3,0,HHO,100,26,0,0
-	@n 94,0,HHC,66,21,0,0
+	n 0,KitBassDrum1,112,23,NcrNone
+	@n 2,1,36,94,158,NcrMelodyBasic
+	@n 3,0,KitHiHatOpen,100,26,NcrNone
+	@n 94,0,KitHiHatClosed,66,21,NcrNone
 	beat
-	n 0,SSTICK,120,21,0,0
-	n 0,TAMB,97,21,0,0
-	@n 3,2,64,78,19,0,80
-	n 2,60,91,16,0,80
-	n 2,55,82,22,0,80
-	@n 62,0,HHC,60,21,0,0
-	@n 92,0,HHO,96,27,0,0
+	n 0,KitRimShot,120,21,NcrNone
+	n 0,KitTambourine,97,21,NcrNone
+	@n 3,2,64,78,19,NcrBasicChord100
+	n 2,60,91,16,NcrBasicChord100
+	n 2,55,82,22,NcrBasicChord100
+	@n 62,0,KitHiHatClosed,60,21,NcrNone
+	@n 92,0,KitHiHatOpen,96,27,NcrNone
 	beat
-	@n 4,1,43,104,11,1,16
-	@n 95,3,55,70,98,0,80
+	@n 4,1,43,104,139,NcrMelodyBasic
+	@n 95,3,55,70,98,NcrBasicChord100
 	beat
-	n 0,TAMB,89,22,0,0
-	@n 1,0,HHC,86,19,0,0
-	@n 2,2,55,82,20,0,80
-	n 2,64,80,20,0,80
-	n 2,60,92,17,0,80
-	@n 95,0,HHO,103,20,0,0
-	n 2,48,98,97,0,16
+	n 0,KitTambourine,89,22,NcrNone
+	@n 1,0,KitHiHatClosed,86,19,NcrNone
+	@n 2,2,55,82,20,NcrBasicChord100
+	n 2,64,80,20,NcrBasicChord100
+	n 2,60,92,17,NcrBasicChord100
+	@n 95,0,KitHiHatOpen,103,20,NcrNone
+	n 2,48,98,97,NcrMelodyBasic
 	beat
-	n 0,BD1,109,23,0,0
-	@n 2,1,36,99,26,1,16
-	n 3,52,76,19,3,80
-	@n 94,0,HHC,82,19,0,0
+	n 0,KitBassDrum1,109,23,NcrNone
+	@n 2,1,36,99,154,NcrMelodyBasic
+	n 3,52,76,403,NcrBasicChord100
+	@n 94,0,KitHiHatClosed,82,19,NcrNone
 	beat
-	n 0,SSTICK,113,17,0,0
-	n 0,TAMB,86,24,0,0
-	@n 2,2,64,88,21,0,80
-	n 2,60,94,16,0,80
-	n 2,55,86,21,0,80
-	@n 62,0,HHC,83,19,0,0
-	@n 93,0,HHO,100,24,0,0
-	@n 95,1,31,102,45,1,16
+	n 0,KitRimShot,113,17,NcrNone
+	n 0,KitTambourine,86,24,NcrNone
+	@n 2,2,64,88,21,NcrBasicChord100
+	n 2,60,94,16,NcrBasicChord100
+	n 2,55,86,21,NcrBasicChord100
+	@n 62,0,KitHiHatClosed,83,19,NcrNone
+	@n 93,0,KitHiHatOpen,100,24,NcrNone
+	@n 95,1,31,102,173,NcrMelodyBasic
 	beat
-	@n 95,0,HHC,100,21,0,0
+	@n 95,0,KitHiHatClosed,100,21,NcrNone
 	beat
-	n 0,TAMB,99,21,0,0
-	@n 1,2,55,95,21,0,80
-	n 2,64,91,21,0,80
-	n 2,60,106,19,0,80
-	@n 95,2,48,85,104,0,16
+	n 0,KitTambourine,99,21,NcrNone
+	@n 1,2,55,95,21,NcrBasicChord100
+	n 2,64,91,21,NcrBasicChord100
+	n 2,60,106,19,NcrBasicChord100
+	@n 95,2,48,85,104,NcrMelodyBasic
 	beat
-	n 0,BD1,112,19,0,0
-	@n 1,0,HHO,105,21,0,0
-	@n 2,1,36,106,122,0,16
+	n 0,KitBassDrum1,112,19,NcrNone
+	@n 1,0,KitHiHatOpen,105,21,NcrNone
+	@n 2,1,36,106,122,NcrMelodyBasic
 	beat
-	n 0,SSTICK,120,21,0,0
-	n 0,TAMB,104,24,0,0
-	@n 1,2,60,105,21,0,80
-	n 2,55,93,19,0,80
-	n 2,64,92,19,0,80
-	@n 4,0,HHC,100,24,0,0
-	@n 64,1,36,86,15,0,16
-	@n 66,0,HHC,65,17,0,0
+	n 0,KitRimShot,120,21,NcrNone
+	n 0,KitTambourine,104,24,NcrNone
+	@n 1,2,60,105,21,NcrBasicChord100
+	n 2,55,93,19,NcrBasicChord100
+	n 2,64,92,19,NcrBasicChord100
+	@n 4,0,KitHiHatClosed,100,24,NcrNone
+	@n 64,1,36,86,15,NcrMelodyBasic
+	@n 66,0,KitHiHatClosed,65,17,NcrNone
 	beat
-	n 1,43,97,83,0,16
-	@n 2,0,HHO,111,24,0,0
-	@n 68,0,HHO,89,22,0,0
+	n 1,43,97,83,NcrMelodyBasic
+	@n 2,0,KitHiHatOpen,111,24,NcrNone
+	@n 68,0,KitHiHatOpen,89,22,NcrNone
 	beat
-	n 0,TAMB,108,18,0,0
-	@n 1,2,55,94,18,0,80
-	n 2,60,96,18,0,80
-	n 2,64,85,17,0,80
-	@n 2,1,31,88,70,0,16
-	@n 3,0,HHC,91,21,0,0
-	@n 66,0,HHC,79,16,0,0
+	n 0,KitTambourine,108,18,NcrNone
+	@n 1,2,55,94,18,NcrBasicChord100
+	n 2,60,96,18,NcrBasicChord100
+	n 2,64,85,17,NcrBasicChord100
+	@n 2,1,31,88,70,NcrMelodyBasic
+	@n 3,0,KitHiHatClosed,91,21,NcrNone
+	@n 66,0,KitHiHatClosed,79,16,NcrNone
 	end
 	var_end	Style_Jive_Var1
 Style_Jive_Var1Fill1:	# 1 bars of 4 beats
 	var_head	Style_Jive_Var1Fill1, 1, 4, 0xff, 0xff
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
 	var_events	Style_Jive_Var1Fill1
 	beat
-	n 0,BD1,111,21,0,0
-	@n 1,0,HHO,89,21,0,0
-	n 1,36,98,38,1,16
-	@n 5,2,48,99,126,0,16
+	n 0,KitBassDrum1,111,21,NcrNone
+	@n 1,0,KitHiHatOpen,89,21,NcrNone
+	n 1,36,98,166,NcrMelodyBasic
+	@n 5,2,48,99,126,NcrMelodyBasic
 	beat
-	n 0,SSTICK,113,24,0,0
-	n 0,TAMB,95,18,0,0
-	@n 2,2,55,78,33,0,80
-	n 2,64,81,38,0,80
-	n 2,60,92,36,0,80
-	@n 3,0,HHO,91,24,0,0
-	@n 63,2,60,76,24,0,80
-	n 2,55,61,24,0,80
-	@n 64,2,64,77,22,0,80
+	n 0,KitRimShot,113,24,NcrNone
+	n 0,KitTambourine,95,18,NcrNone
+	@n 2,2,55,78,33,NcrBasicChord100
+	n 2,64,81,38,NcrBasicChord100
+	n 2,60,92,36,NcrBasicChord100
+	@n 3,0,KitHiHatOpen,91,24,NcrNone
+	@n 63,2,60,76,24,NcrBasicChord100
+	n 2,55,61,24,NcrBasicChord100
+	@n 64,2,64,77,22,NcrBasicChord100
 	beat
-	@n 1,0,HHO,101,36,0,0
-	@n 2,1,31,91,30,1,16
-	@n 63,2,55,83,18,0,80
-	@n 64,2,64,96,17,0,80
-	n 2,60,103,17,0,80
-	@n 66,0,SD1,73,24,0,0
-	@n 70,0,HHC,20,15,0,0
+	@n 1,0,KitHiHatOpen,101,36,NcrNone
+	@n 2,1,31,91,158,NcrMelodyBasic
+	@n 63,2,55,83,18,NcrBasicChord100
+	@n 64,2,64,96,17,NcrBasicChord100
+	n 2,60,103,17,NcrBasicChord100
+	@n 66,0,KitSnareDrum1,73,24,NcrNone
+	@n 70,0,KitHiHatClosed,20,15,NcrNone
 	beat
-	n 0,TAMB,97,23,0,0
-	@n 3,0,HHO,99,44,0,0
-	@n 4,0,SD1,122,28,0,0
-	n 2,64,88,28,0,80
-	n 2,60,93,25,0,80
-	n 2,55,79,22,0,80
-	@n 66,0,SD1,94,19,0,0
-	@n 69,0,HHC,38,12,0,0
+	n 0,KitTambourine,97,23,NcrNone
+	@n 3,0,KitHiHatOpen,99,44,NcrNone
+	@n 4,0,KitSnareDrum1,122,28,NcrNone
+	n 2,64,88,28,NcrBasicChord100
+	n 2,60,93,25,NcrBasicChord100
+	n 2,55,79,22,NcrBasicChord100
+	@n 66,0,KitSnareDrum1,94,19,NcrNone
+	@n 69,0,KitHiHatClosed,38,12,NcrNone
 	end
 	var_end	Style_Jive_Var1Fill1
 Style_Jive_Var1Fill2:	# 1 bars of 4 beats
 	var_head	Style_Jive_Var1Fill2, 1, 4, 0xff, 0xff
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
 	var_events	Style_Jive_Var1Fill2
 	beat
-	n 0,BD1,112,23,0,0
-	n 0,HHO,88,21,0,0
-	n 1,36,94,105,0,16
-	@n 2,2,48,99,96,0,16
-	@n 62,0,SD1,105,27,0,0
+	n 0,KitBassDrum1,112,23,NcrNone
+	n 0,KitHiHatOpen,88,21,NcrNone
+	n 1,36,94,105,NcrMelodyBasic
+	@n 2,2,48,99,96,NcrMelodyBasic
+	@n 62,0,KitSnareDrum1,105,27,NcrNone
 	beat
-	n 0,SSTICK,120,21,0,0
-	n 0,TAMB,97,21,0,0
-	n 0,HHO,56,26,0,0
-	@n 1,2,64,92,21,0,80
-	n 2,60,93,18,0,80
-	@n 2,1,48,99,54,1,16
-	n 2,55,72,19,0,80
+	n 0,KitRimShot,120,21,NcrNone
+	n 0,KitTambourine,97,21,NcrNone
+	n 0,KitHiHatOpen,56,26,NcrNone
+	@n 1,2,64,92,21,NcrBasicChord100
+	n 2,60,93,18,NcrBasicChord100
+	@n 2,1,48,99,182,NcrMelodyBasic
+	n 2,55,72,19,NcrBasicChord100
 	@bend 48,3,0,60
-	@n 51,3,52,117,104,0,16
+	@n 51,3,52,117,104,NcrMelodyBasic
 	@bend 54,3,0,59
 	@bend 58,3,0,58
-	@n 64,0,HHO,71,18,0,0
+	@n 64,0,KitHiHatOpen,71,18,NcrNone
 	@bend 73,3,0,59
 	@bend 77,3,0,60
 	@bend 81,3,0,61
 	@bend 86,3,0,62
 	beat
-	n 0,HHO,64,27,0,0
+	n 0,KitHiHatOpen,64,27,NcrNone
 	@bend 1,3,0,63
-	@n 2,0,SD1,109,106,0,0
-	@n 3,2,60,103,112,0,80
-	n 2,55,88,111,0,80
-	n 2,64,98,114,0,80
+	@n 2,0,KitSnareDrum1,109,106,NcrNone
+	@n 3,2,60,103,112,NcrBasicChord100
+	n 2,55,88,111,NcrBasicChord100
+	n 2,64,98,114,NcrBasicChord100
 	@bend 10,3,0,64
-	@n 64,0,HHC,48,21,0,0
-	@n 66,3,55,94,24,0,16
-	@n 92,3,57,91,60,0,16
+	@n 64,0,KitHiHatClosed,48,21,NcrNone
+	@n 66,3,55,94,24,NcrMelodyBasic
+	@n 92,3,57,91,60,NcrMelodyBasic
 	beat
-	n 0,TAMB,89,22,0,0
-	n 0,HHO,99,22,0,0
-	@n 3,1,43,88,80,0,16
-	@n 59,2,60,74,19,0,80
-	@n 60,2,55,55,18,0,80
-	n 2,64,69,18,0,80
-	@n 63,0,SD1,80,16,0,0
-	@n 64,0,HHC,30,13,0,0
+	n 0,KitTambourine,89,22,NcrNone
+	n 0,KitHiHatOpen,99,22,NcrNone
+	@n 3,1,43,88,80,NcrMelodyBasic
+	@n 59,2,60,74,19,NcrBasicChord100
+	@n 60,2,55,55,18,NcrBasicChord100
+	n 2,64,69,18,NcrBasicChord100
+	@n 63,0,KitSnareDrum1,80,16,NcrNone
+	@n 64,0,KitHiHatClosed,30,13,NcrNone
 	end
 	var_end	Style_Jive_Var1Fill2
 Style_Jive_Var2:	# 4 bars of 4 beats
 	var_head	Style_Jive_Var2, 4, 4, 0xff, 0xff
 	pan 3,90
-	cc 3,81,64
-	cc 3,92,41
-	cc 4,92,21
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
+	eq_hi_gain 3,64
+	multi 3,41
+	multi 4,21
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
 	var_events	Style_Jive_Var2
 	beat
-	n 0,BD1,111,21,0,0
-	n 0,CRASH2,88,18,0,0
-	n 2,48,104,114,0,16
-	@n 1,0,HHO,105,25,0,0
-	n 1,36,98,38,1,16
-	@n 2,3,64,40,62,5,100
-	n 3,60,58,66,5,100
-	n 3,57,47,62,5,100
-	n 3,55,31,61,5,100
-	@n 95,2,60,98,21,0,80
-	n 2,55,87,24,0,80
+	n 0,KitBassDrum1,111,21,NcrNone
+	n 0,KitCrashCymbal2,88,18,NcrNone
+	n 2,48,104,114,NcrMelodyBasic
+	@n 1,0,KitHiHatOpen,105,25,NcrNone
+	n 1,36,98,166,NcrMelodyBasic
+	@n 2,3,64,40,702,NcrChordCEGA
+	n 3,60,58,706,NcrChordCEGA
+	n 3,57,47,702,NcrChordCEGA
+	n 3,55,31,701,NcrChordCEGA
+	@n 95,2,60,98,21,NcrBasicChord100
+	n 2,55,87,24,NcrBasicChord100
 	beat
-	n 0,TAMB,95,18,0,0
-	n 0,SSTICK,116,21,0,0
-	n 0,HHC,58,19,0,0
-	@n 1,2,64,78,22,0,80
-	@n 65,0,HHC,50,16,0,0
-	@n 95,0,HHO,100,25,0,0
+	n 0,KitTambourine,95,18,NcrNone
+	n 0,KitRimShot,116,21,NcrNone
+	n 0,KitHiHatClosed,58,19,NcrNone
+	@n 1,2,64,78,22,NcrBasicChord100
+	@n 65,0,KitHiHatClosed,50,16,NcrNone
+	@n 95,0,KitHiHatOpen,100,25,NcrNone
 	beat
-	n 0,BD1,110,23,0,0
-	@n 1,2,43,83,99,0,16
-	@n 2,1,31,91,30,1,16
-	@n 94,2,60,93,21,0,80
-	@n 95,2,55,87,21,0,80
-	n 2,64,75,21,0,80
+	n 0,KitBassDrum1,110,23,NcrNone
+	@n 1,2,43,83,99,NcrMelodyBasic
+	@n 2,1,31,91,158,NcrMelodyBasic
+	@n 94,2,60,93,21,NcrBasicChord100
+	@n 95,2,55,87,21,NcrBasicChord100
+	n 2,64,75,21,NcrBasicChord100
 	beat
-	n 0,TAMB,97,23,0,0
-	n 0,SSTICK,106,21,0,0
-	@n 2,0,HHC,44,16,0,0
-	@n 95,0,HHO,99,31,0,0
-	n 2,48,95,113,0,16
+	n 0,KitTambourine,97,23,NcrNone
+	n 0,KitRimShot,106,21,NcrNone
+	@n 2,0,KitHiHatClosed,44,16,NcrNone
+	@n 95,0,KitHiHatOpen,99,31,NcrNone
+	n 2,48,95,113,NcrMelodyBasic
 	beat
-	n 0,BD1,112,23,0,0
-	@n 2,1,36,94,30,1,16
-	@n 95,2,60,92,19,0,80
+	n 0,KitBassDrum1,112,23,NcrNone
+	@n 2,1,36,94,158,NcrMelodyBasic
+	@n 95,2,60,92,19,NcrBasicChord100
 	beat
-	n 0,TAMB,97,21,0,0
-	n 0,SSTICK,104,22,0,0
-	@n 1,0,HHC,51,20,0,0
-	n 2,64,77,19,0,80
-	n 2,55,66,19,0,80
-	@n 62,2,64,81,24,0,80
-	n 2,60,94,19,0,80
-	n 2,55,76,21,0,80
-	@n 63,0,HHO,95,31,0,0
+	n 0,KitTambourine,97,21,NcrNone
+	n 0,KitRimShot,104,22,NcrNone
+	@n 1,0,KitHiHatClosed,51,20,NcrNone
+	n 2,64,77,19,NcrBasicChord100
+	n 2,55,66,19,NcrBasicChord100
+	@n 62,2,64,81,24,NcrBasicChord100
+	n 2,60,94,19,NcrBasicChord100
+	n 2,55,76,21,NcrBasicChord100
+	@n 63,0,KitHiHatOpen,95,31,NcrNone
 	beat
-	n 0,BD1,111,24,0,0
-	@n 1,2,43,81,98,0,16
-	@n 4,1,43,104,11,1,16
-	@n 64,0,HHO,90,24,0,0
-	@n 95,0,HHC,66,23,0,0
-	n 2,60,104,21,0,80
+	n 0,KitBassDrum1,111,24,NcrNone
+	@n 1,2,43,81,98,NcrMelodyBasic
+	@n 4,1,43,104,139,NcrMelodyBasic
+	@n 64,0,KitHiHatOpen,90,24,NcrNone
+	@n 95,0,KitHiHatClosed,66,23,NcrNone
+	n 2,60,104,21,NcrBasicChord100
 	beat
-	n 0,TAMB,89,22,0,0
-	n 0,SSTICK,104,16,0,0
-	@n 1,2,64,81,21,0,80
-	n 2,55,88,21,0,80
-	@n 66,0,HHC,38,14,0,0
-	@n 93,2,48,91,114,0,16
+	n 0,KitTambourine,89,22,NcrNone
+	n 0,KitRimShot,104,16,NcrNone
+	@n 1,2,64,81,21,NcrBasicChord100
+	n 2,55,88,21,NcrBasicChord100
+	@n 66,0,KitHiHatClosed,38,14,NcrNone
+	@n 93,2,48,91,114,NcrMelodyBasic
 	beat
-	n 0,BD1,109,23,0,0
-	@n 1,0,HHO,89,28,0,0
-	@n 2,1,36,99,26,1,16
-	n 3,64,79,22,0,100
-	n 3,60,96,29,0,100
-	n 3,57,110,25,0,100
-	n 3,55,83,27,0,100
+	n 0,KitBassDrum1,109,23,NcrNone
+	@n 1,0,KitHiHatOpen,89,28,NcrNone
+	@n 2,1,36,99,154,NcrMelodyBasic
+	n 3,64,79,22,NcrChordCEGA
+	n 3,60,96,29,NcrChordCEGA
+	n 3,57,110,25,NcrChordCEGA
+	n 3,55,83,27,NcrChordCEGA
 	beat
-	n 0,TAMB,86,24,0,0
-	n 0,SSTICK,109,19,0,0
-	@n 2,0,HHC,61,18,0,0
-	n 2,64,78,24,0,80
-	n 2,60,100,18,0,80
-	n 2,55,88,21,0,80
-	@n 61,3,60,89,33,0,100
-	@n 63,3,64,73,22,0,100
-	n 3,57,101,25,0,100
-	n 3,55,80,25,0,100
-	@n 65,0,HHC,51,19,0,0
-	@n 95,1,31,102,45,1,16
+	n 0,KitTambourine,86,24,NcrNone
+	n 0,KitRimShot,109,19,NcrNone
+	@n 2,0,KitHiHatClosed,61,18,NcrNone
+	n 2,64,78,24,NcrBasicChord100
+	n 2,60,100,18,NcrBasicChord100
+	n 2,55,88,21,NcrBasicChord100
+	@n 61,3,60,89,33,NcrChordCEGA
+	@n 63,3,64,73,22,NcrChordCEGA
+	n 3,57,101,25,NcrChordCEGA
+	n 3,55,80,25,NcrChordCEGA
+	@n 65,0,KitHiHatClosed,51,19,NcrNone
+	@n 95,1,31,102,173,NcrMelodyBasic
 	beat
-	n 0,BD1,111,22,0,0
-	@n 1,0,HHO,93,21,0,0
-	@n 5,2,43,81,104,0,16
-	@n 95,0,HHC,74,22,0,0
+	n 0,KitBassDrum1,111,22,NcrNone
+	@n 1,0,KitHiHatOpen,93,21,NcrNone
+	@n 5,2,43,81,104,NcrMelodyBasic
+	@n 95,0,KitHiHatClosed,74,22,NcrNone
 	beat
-	n 0,TAMB,99,21,0,0
-	n 0,SSTICK,106,17,0,0
-	@n 2,2,64,76,18,0,80
-	n 2,60,100,18,0,80
-	n 2,55,86,21,0,80
-	@n 63,0,HHC,46,23,0,0
-	@n 94,2,48,91,119,0,16
-	@n 95,0,HHO,97,22,0,0
+	n 0,KitTambourine,99,21,NcrNone
+	n 0,KitRimShot,106,17,NcrNone
+	@n 2,2,64,76,18,NcrBasicChord100
+	n 2,60,100,18,NcrBasicChord100
+	n 2,55,86,21,NcrBasicChord100
+	@n 63,0,KitHiHatClosed,46,23,NcrNone
+	@n 94,2,48,91,119,NcrMelodyBasic
+	@n 95,0,KitHiHatOpen,97,22,NcrNone
 	beat
-	n 0,BD1,112,19,0,0
-	@n 2,1,36,106,122,0,16
-	n 3,48,125,36,0,16
-	@n 64,0,HHO,67,20,0,0
-	@n 95,2,64,80,21,0,80
-	n 2,60,109,21,0,80
-	n 2,55,88,24,0,80
+	n 0,KitBassDrum1,112,19,NcrNone
+	@n 2,1,36,106,122,NcrMelodyBasic
+	n 3,48,125,36,NcrMelodyBasic
+	@n 64,0,KitHiHatOpen,67,20,NcrNone
+	@n 95,2,64,80,21,NcrBasicChord100
+	n 2,60,109,21,NcrBasicChord100
+	n 2,55,88,24,NcrBasicChord100
 	beat
-	n 0,TAMB,104,24,0,0
-	n 0,SSTICK,111,20,0,0
-	@n 1,0,HHC,44,22,0,0
-	@n 63,0,HHO,99,33,0,0
-	n 2,64,76,22,0,80
-	n 2,60,96,22,0,80
-	n 2,55,77,22,0,80
-	@n 64,1,36,86,15,0,16
-	@n 65,3,48,127,31,0,16
+	n 0,KitTambourine,104,24,NcrNone
+	n 0,KitRimShot,111,20,NcrNone
+	@n 1,0,KitHiHatClosed,44,22,NcrNone
+	@n 63,0,KitHiHatOpen,99,33,NcrNone
+	n 2,64,76,22,NcrBasicChord100
+	n 2,60,96,22,NcrBasicChord100
+	n 2,55,77,22,NcrBasicChord100
+	@n 64,1,36,86,15,NcrMelodyBasic
+	@n 65,3,48,127,31,NcrMelodyBasic
 	beat
-	n 0,BD1,112,25,0,0
-	n 1,43,97,83,0,16
-	@n 1,2,43,77,100,0,16
-	@n 63,0,HHO,89,22,0,0
-	@n 95,0,HHC,61,23,0,0
-	n 2,60,100,21,0,80
+	n 0,KitBassDrum1,112,25,NcrNone
+	n 1,43,97,83,NcrMelodyBasic
+	@n 1,2,43,77,100,NcrMelodyBasic
+	@n 63,0,KitHiHatOpen,89,22,NcrNone
+	@n 95,0,KitHiHatClosed,61,23,NcrNone
+	n 2,60,100,21,NcrBasicChord100
 	beat
-	n 0,TAMB,108,18,0,0
-	n 0,SSTICK,120,24,0,0
-	@n 1,2,64,78,21,0,80
-	n 2,55,86,21,0,80
-	@n 2,1,31,88,70,0,16
-	@n 64,0,HHC,48,19,0,0
-	@n 65,2,55,72,21,0,80
-	n 2,64,76,21,0,80
-	n 2,60,87,18,0,80
+	n 0,KitTambourine,108,18,NcrNone
+	n 0,KitRimShot,120,24,NcrNone
+	@n 1,2,64,78,21,NcrBasicChord100
+	n 2,55,86,21,NcrBasicChord100
+	@n 2,1,31,88,70,NcrMelodyBasic
+	@n 64,0,KitHiHatClosed,48,19,NcrNone
+	@n 65,2,55,72,21,NcrBasicChord100
+	n 2,64,76,21,NcrBasicChord100
+	n 2,60,87,18,NcrBasicChord100
 	end
 	var_end	Style_Jive_Var2
 Style_Jive_Var2Fill1:	# 1 bars of 4 beats
 	var_head	Style_Jive_Var2Fill1, 1, 4, 0xff, 0xff
 	pan 3,90
-	cc 3,81,64
-	cc 3,92,41
-	cc 4,92,21
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
+	eq_hi_gain 3,64
+	multi 3,41
+	multi 4,21
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
 	var_events	Style_Jive_Var2Fill1
 	beat
-	n 0,BD1,111,21,0,0
-	n 0,HHO,108,25,0,0
-	n 1,36,96,97,0,16
-	@n 1,2,48,105,61,0,16
-	@n 59,3,64,107,22,0,100
-	n 3,60,105,22,0,100
-	@n 61,3,57,75,19,0,100
-	n 3,55,76,19,0,100
-	@n 66,2,72,115,36,0,80
+	n 0,KitBassDrum1,111,21,NcrNone
+	n 0,KitHiHatOpen,108,25,NcrNone
+	n 1,36,96,97,NcrMelodyBasic
+	@n 1,2,48,105,61,NcrMelodyBasic
+	@n 59,3,64,107,22,NcrChordCEGA
+	n 3,60,105,22,NcrChordCEGA
+	@n 61,3,57,75,19,NcrChordCEGA
+	n 3,55,76,19,NcrChordCEGA
+	@n 66,2,72,115,36,NcrBasicChord100
 	beat
-	n 0,TAMB,95,18,0,0
-	n 0,HHO,88,24,0,0
-	n 1,45,93,74,0,16
-	@n 1,2,64,85,42,0,80
-	@n 3,0,SD1,100,21,0,0
-	@n 64,0,HHO,82,19,0,0
-	n 2,67,83,22,0,80
+	n 0,KitTambourine,95,18,NcrNone
+	n 0,KitHiHatOpen,88,24,NcrNone
+	n 1,45,93,74,NcrMelodyBasic
+	@n 1,2,64,85,42,NcrBasicChord100
+	@n 3,0,KitSnareDrum1,100,21,NcrNone
+	@n 64,0,KitHiHatOpen,82,19,NcrNone
+	n 2,67,83,22,NcrBasicChord100
 	beat
-	n 0,BD1,110,23,0,0
-	n 0,HHO,91,58,0,0
-	n 1,43,79,78,0,16
-	n 3,64,109,23,0,100
-	n 3,60,108,23,0,100
-	@n 1,0,SD1,98,24,0,0
-	n 2,72,91,47,0,80
-	n 2,60,96,48,0,80
-	@n 2,3,57,82,20,0,100
-	n 3,55,91,20,0,100
-	@n 65,2,72,92,27,0,80
-	n 2,60,96,21,0,80
-	@n 94,0,SD1,100,27,0,0
+	n 0,KitBassDrum1,110,23,NcrNone
+	n 0,KitHiHatOpen,91,58,NcrNone
+	n 1,43,79,78,NcrMelodyBasic
+	n 3,64,109,23,NcrChordCEGA
+	n 3,60,108,23,NcrChordCEGA
+	@n 1,0,KitSnareDrum1,98,24,NcrNone
+	n 2,72,91,47,NcrBasicChord100
+	n 2,60,96,48,NcrBasicChord100
+	@n 2,3,57,82,20,NcrChordCEGA
+	n 3,55,91,20,NcrChordCEGA
+	@n 65,2,72,92,27,NcrBasicChord100
+	n 2,60,96,21,NcrBasicChord100
+	@n 94,0,KitSnareDrum1,100,27,NcrNone
 	beat
-	n 0,TAMB,97,23,0,0
-	n 0,HHO,85,33,0,0
-	n 1,40,93,74,0,16
-	@n 64,0,HHO,83,20,0,0
-	@n 66,0,SD1,110,24,0,0
+	n 0,KitTambourine,97,23,NcrNone
+	n 0,KitHiHatOpen,85,33,NcrNone
+	n 1,40,93,74,NcrMelodyBasic
+	@n 64,0,KitHiHatOpen,83,20,NcrNone
+	@n 66,0,KitSnareDrum1,110,24,NcrNone
 	end
 	var_end	Style_Jive_Var2Fill1
 Style_Jive_Var2Fill2:	# 1 bars of 4 beats
 	var_head	Style_Jive_Var2Fill2, 1, 4, 0xff, 0xff
 	pan 3,90
-	cc 3,81,64
-	cc 3,92,41
-	cc 4,92,21
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
+	eq_hi_gain 3,64
+	multi 3,41
+	multi 4,21
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
 	var_events	Style_Jive_Var2Fill2
 	beat
-	n 0,BD1,112,23,0,0
-	n 2,36,102,32,2,16
-	@n 1,0,HHP,101,24,0,0
-	@n 2,1,36,94,30,1,16
+	n 0,KitBassDrum1,112,23,NcrNone
+	n 2,36,102,288,NcrMelodyBasic
+	@n 1,0,KitHiHatPedal,101,24,NcrNone
+	@n 2,1,36,94,158,NcrMelodyBasic
 	beat
-	n 0,TAMB,97,21,0,0
-	n 0,SD1,118,29,0,0
-	n 0,SPLASH,112,24,0,0
-	@n 1,0,HHP,80,24,0,0
-	n 2,64,95,7,1,100
-	n 2,60,96,3,1,100
-	n 3,60,65,0,2,16
-	n 3,64,69,0,2,16
-	@n 2,2,55,79,126,0,100
-	n 2,57,80,126,0,100
-	@n 3,2,67,72,2,1,100
+	n 0,KitTambourine,97,21,NcrNone
+	n 0,KitSnareDrum1,118,29,NcrNone
+	n 0,KitSplashCymbal,112,24,NcrNone
+	@n 1,0,KitHiHatPedal,80,24,NcrNone
+	n 2,64,95,135,NcrChordCEGA
+	n 2,60,96,131,NcrChordCEGA
+	n 3,60,65,256,NcrMelodyBasic
+	n 3,64,69,256,NcrMelodyBasic
+	@n 2,2,55,79,126,NcrChordCEGA
+	n 2,57,80,126,NcrChordCEGA
+	@n 3,2,67,72,130,NcrChordCEGA
 	beat
-	@n 1,0,HHP,76,9,0,0
-	@n 4,1,43,104,11,1,16
-	@n 60,0,SD1,111,43,0,0
-	@n 62,2,60,88,20,0,100
-	@n 63,0,HHO,96,43,0,0
-	@n 64,2,67,79,21,0,100
-	n 2,64,82,20,0,100
-	n 2,57,86,16,0,100
-	n 2,55,82,16,0,100
+	@n 1,0,KitHiHatPedal,76,9,NcrNone
+	@n 4,1,43,104,139,NcrMelodyBasic
+	@n 60,0,KitSnareDrum1,111,43,NcrNone
+	@n 62,2,60,88,20,NcrChordCEGA
+	@n 63,0,KitHiHatOpen,96,43,NcrNone
+	@n 64,2,67,79,21,NcrChordCEGA
+	n 2,64,82,20,NcrChordCEGA
+	n 2,57,86,16,NcrChordCEGA
+	n 2,55,82,16,NcrChordCEGA
 	beat
-	n 0,TAMB,89,22,0,0
-	n 0,HHC,70,16,0,0
-	@n 62,0,SD1,89,20,0,0
-	@n 65,0,HHC,89,16,0,0
+	n 0,KitTambourine,89,22,NcrNone
+	n 0,KitHiHatClosed,70,16,NcrNone
+	@n 62,0,KitSnareDrum1,89,20,NcrNone
+	@n 65,0,KitHiHatClosed,89,16,NcrNone
 	end
 	var_end	Style_Jive_Var2Fill2
 Style_Jive_Var3:	# 4 bars of 4 beats
 	var_head	Style_Jive_Var3, 4, 4, 0xff, 0xff
 	pan 3,88
-	cc 3,81,64
-	cc 3,92,41
-	cc 4,92,21
+	eq_hi_gain 3,64
+	multi 3,41
+	multi 4,21
 	pc 4,0x38,0x50,0x20
 	vol 5,88
 	pan 5,17
 	pc 5,0x48,0x00,0x20
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
 	var_events	Style_Jive_Var3
 	beat
-	n 0,BD1,111,21,0,0
-	n 0,CRASH2,88,18,0,0
-	n 0,HHO,88,31,0,0
-	@n 1,1,36,98,38,1,16
-	n 2,48,105,119,0,16
+	n 0,KitBassDrum1,111,21,NcrNone
+	n 0,KitCrashCymbal2,88,18,NcrNone
+	n 0,KitHiHatOpen,88,31,NcrNone
+	@n 1,1,36,98,166,NcrMelodyBasic
+	n 2,48,105,119,NcrMelodyBasic
 	beat
-	n 0,TAMB,95,18,0,0
-	@n 1,0,HHO,74,21,0,0
-	@n 2,0,SD1,100,20,0,0
-	n 2,64,89,98,0,80
-	n 2,60,95,98,0,80
-	n 2,55,76,98,0,80
-	@n 5,4,48,98,3,2,16
-	@n 93,0,HHO,91,23,0,0
+	n 0,KitTambourine,95,18,NcrNone
+	@n 1,0,KitHiHatOpen,74,21,NcrNone
+	@n 2,0,KitSnareDrum1,100,20,NcrNone
+	n 2,64,89,98,NcrBasicChord100
+	n 2,60,95,98,NcrBasicChord100
+	n 2,55,76,98,NcrBasicChord100
+	@n 5,4,48,98,259,NcrMelodyBasic
+	@n 93,0,KitHiHatOpen,91,23,NcrNone
 	beat
-	n 0,BD1,110,23,0,0
-	@n 2,1,31,91,30,1,16
-	@n 3,2,43,70,72,0,16
-	@n 63,2,60,99,19,0,80
-	@n 64,2,64,83,21,0,80
-	n 2,55,89,21,0,80
-	@n 93,0,HHO,84,28,0,0
+	n 0,KitBassDrum1,110,23,NcrNone
+	@n 2,1,31,91,158,NcrMelodyBasic
+	@n 3,2,43,70,72,NcrMelodyBasic
+	@n 63,2,60,99,19,NcrBasicChord100
+	@n 64,2,64,83,21,NcrBasicChord100
+	n 2,55,89,21,NcrBasicChord100
+	@n 93,0,KitHiHatOpen,84,28,NcrNone
 	beat
-	n 0,TAMB,97,23,0,0
-	@n 1,0,SD1,97,16,0,0
-	@n 60,0,HHO,66,21,0,0
-	@n 91,3,55,94,24,0,100
-	n 3,57,110,24,0,100
-	n 3,60,108,25,0,100
-	n 3,64,92,29,0,100
-	@n 93,0,HHO,88,31,0,0
-	@n 95,2,55,87,23,0,80
-	n 2,60,96,21,0,80
-	n 2,64,81,21,0,80
+	n 0,KitTambourine,97,23,NcrNone
+	@n 1,0,KitSnareDrum1,97,16,NcrNone
+	@n 60,0,KitHiHatOpen,66,21,NcrNone
+	@n 91,3,55,94,24,NcrChordCEGA
+	n 3,57,110,24,NcrChordCEGA
+	n 3,60,108,25,NcrChordCEGA
+	n 3,64,92,29,NcrChordCEGA
+	@n 93,0,KitHiHatOpen,88,31,NcrNone
+	@n 95,2,55,87,23,NcrBasicChord100
+	n 2,60,96,21,NcrBasicChord100
+	n 2,64,81,21,NcrBasicChord100
 	beat
-	n 0,BD1,112,23,0,0
-	@n 1,2,48,86,88,0,16
-	@n 2,1,36,94,30,1,16
-	@n 94,0,HHO,88,30,0,0
+	n 0,KitBassDrum1,112,23,NcrNone
+	@n 1,2,48,86,88,NcrMelodyBasic
+	@n 2,1,36,94,158,NcrMelodyBasic
+	@n 94,0,KitHiHatOpen,88,30,NcrNone
 	beat
-	n 0,TAMB,97,21,0,0
-	n 0,SD1,107,16,0,0
-	@n 61,3,55,88,24,0,100
-	n 3,57,105,24,0,100
-	n 3,60,105,28,0,100
-	n 3,64,86,32,0,100
-	@n 62,2,60,102,18,0,80
-	n 2,55,93,20,0,80
-	@n 63,2,64,80,19,0,80
-	@n 94,0,HHO,90,31,0,0
-	@n 95,2,43,75,108,0,16
+	n 0,KitTambourine,97,21,NcrNone
+	n 0,KitSnareDrum1,107,16,NcrNone
+	@n 61,3,55,88,24,NcrChordCEGA
+	n 3,57,105,24,NcrChordCEGA
+	n 3,60,105,28,NcrChordCEGA
+	n 3,64,86,32,NcrChordCEGA
+	@n 62,2,60,102,18,NcrBasicChord100
+	n 2,55,93,20,NcrBasicChord100
+	@n 63,2,64,80,19,NcrBasicChord100
+	@n 94,0,KitHiHatOpen,90,31,NcrNone
+	@n 95,2,43,75,108,NcrMelodyBasic
 	beat
-	n 0,BD1,111,24,0,0
-	@n 4,1,43,104,11,1,16
-	@n 94,0,HHO,71,28,0,0
-	@n 95,0,SD1,97,13,0,0
+	n 0,KitBassDrum1,111,24,NcrNone
+	@n 4,1,43,104,139,NcrMelodyBasic
+	@n 94,0,KitHiHatOpen,71,28,NcrNone
+	@n 95,0,KitSnareDrum1,97,13,NcrNone
 	beat
-	n 0,TAMB,89,22,0,0
-	@n 4,2,64,83,40,0,80
-	n 2,60,105,36,0,80
-	n 2,55,93,36,0,80
-	@n 65,0,HHO,72,23,0,0
-	@n 67,2,64,76,21,0,80
-	n 2,60,79,19,0,80
-	n 2,55,66,21,0,80
-	@n 95,0,HHO,96,27,0,0
+	n 0,KitTambourine,89,22,NcrNone
+	@n 4,2,64,83,40,NcrBasicChord100
+	n 2,60,105,36,NcrBasicChord100
+	n 2,55,93,36,NcrBasicChord100
+	@n 65,0,KitHiHatOpen,72,23,NcrNone
+	@n 67,2,64,76,21,NcrBasicChord100
+	n 2,60,79,19,NcrBasicChord100
+	n 2,55,66,21,NcrBasicChord100
+	@n 95,0,KitHiHatOpen,96,27,NcrNone
 	beat
-	n 0,BD1,109,23,0,0
-	@n 2,1,36,99,26,1,16
-	n 2,48,85,123,0,16
-	@n 94,3,48,111,119,1,16
-	@n 95,0,SD1,99,14,0,0
+	n 0,KitBassDrum1,109,23,NcrNone
+	@n 2,1,36,99,154,NcrMelodyBasic
+	n 2,48,85,123,NcrMelodyBasic
+	@n 94,3,48,111,247,NcrMelodyBasic
+	@n 95,0,KitSnareDrum1,99,14,NcrNone
 	beat
-	n 0,TAMB,86,24,0,0
-	n 0,HHO,70,36,0,0
-	@n 2,2,64,92,88,0,80
-	n 2,60,104,85,0,80
-	n 2,55,94,85,0,80
-	@n 66,0,HHO,71,23,0,0
-	@n 95,1,31,102,45,1,16
+	n 0,KitTambourine,86,24,NcrNone
+	n 0,KitHiHatOpen,70,36,NcrNone
+	@n 2,2,64,92,88,NcrBasicChord100
+	n 2,60,104,85,NcrBasicChord100
+	n 2,55,94,85,NcrBasicChord100
+	@n 66,0,KitHiHatOpen,71,23,NcrNone
+	@n 95,1,31,102,173,NcrMelodyBasic
 	beat
-	n 0,BD1,111,22,0,0
-	@n 1,0,HHO,90,23,0,0
-	n 2,43,77,92,0,16
-	@n 61,2,55,100,21,0,80
-	@n 62,2,64,96,20,0,80
-	n 2,60,106,16,0,80
+	n 0,KitBassDrum1,111,22,NcrNone
+	@n 1,0,KitHiHatOpen,90,23,NcrNone
+	n 2,43,77,92,NcrMelodyBasic
+	@n 61,2,55,100,21,NcrBasicChord100
+	@n 62,2,64,96,20,NcrBasicChord100
+	n 2,60,106,16,NcrBasicChord100
 	beat
-	n 0,TAMB,99,21,0,0
-	n 0,SD1,101,16,0,0
-	@n 1,0,HHO,86,28,0,0
-	@n 90,3,48,127,35,0,16
-	@n 95,2,64,92,21,0,80
-	n 2,60,107,18,0,80
-	n 2,55,89,21,0,80
+	n 0,KitTambourine,99,21,NcrNone
+	n 0,KitSnareDrum1,101,16,NcrNone
+	@n 1,0,KitHiHatOpen,86,28,NcrNone
+	@n 90,3,48,127,35,NcrMelodyBasic
+	@n 95,2,64,92,21,NcrBasicChord100
+	n 2,60,107,18,NcrBasicChord100
+	n 2,55,89,21,NcrBasicChord100
 	beat
-	n 0,BD1,112,19,0,0
-	n 2,48,94,121,0,16
-	n 4,60,113,27,0,16
-	@n 1,0,HHO,94,23,0,0
-	@n 2,1,36,106,122,0,16
+	n 0,KitBassDrum1,112,19,NcrNone
+	n 2,48,94,121,NcrMelodyBasic
+	n 4,60,113,27,NcrMelodyBasic
+	@n 1,0,KitHiHatOpen,94,23,NcrNone
+	@n 2,1,36,106,122,NcrMelodyBasic
 	beat
-	n 0,TAMB,104,24,0,0
-	@n 1,0,HHO,84,24,0,0
-	n 0,SD1,102,17,0,0
-	@n 59,3,48,127,31,0,16
-	@n 64,1,36,86,15,0,16
-	n 2,64,93,18,0,80
-	n 2,60,105,13,0,80
-	n 2,55,100,18,0,80
-	@n 65,0,HHO,69,22,0,0
-	n 4,60,111,26,0,16
+	n 0,KitTambourine,104,24,NcrNone
+	@n 1,0,KitHiHatOpen,84,24,NcrNone
+	n 0,KitSnareDrum1,102,17,NcrNone
+	@n 59,3,48,127,31,NcrMelodyBasic
+	@n 64,1,36,86,15,NcrMelodyBasic
+	n 2,64,93,18,NcrBasicChord100
+	n 2,60,105,13,NcrBasicChord100
+	n 2,55,100,18,NcrBasicChord100
+	@n 65,0,KitHiHatOpen,69,22,NcrNone
+	n 4,60,111,26,NcrMelodyBasic
 	beat
-	n 0,BD1,112,25,0,0
-	n 1,43,97,83,0,16
-	@n 2,0,HHO,97,24,0,0
-	n 2,43,78,99,0,16
-	@n 66,0,SD1,88,13,0,0
+	n 0,KitBassDrum1,112,25,NcrNone
+	n 1,43,97,83,NcrMelodyBasic
+	@n 2,0,KitHiHatOpen,97,24,NcrNone
+	n 2,43,78,99,NcrMelodyBasic
+	@n 66,0,KitSnareDrum1,88,13,NcrNone
 	beat
-	n 0,TAMB,108,18,0,0
-	@n 1,0,SD1,115,35,0,0
-	@n 2,0,HHO,100,21,0,0
-	n 1,31,88,70,0,16
-	@n 3,2,64,95,41,0,80
-	n 2,60,107,38,0,80
-	n 2,55,100,37,0,80
-	@n 65,0,HHO,76,24,0,0
-	@n 67,2,64,74,21,0,80
-	n 2,60,78,18,0,80
-	n 2,55,64,21,0,80
+	n 0,KitTambourine,108,18,NcrNone
+	@n 1,0,KitSnareDrum1,115,35,NcrNone
+	@n 2,0,KitHiHatOpen,100,21,NcrNone
+	n 1,31,88,70,NcrMelodyBasic
+	@n 3,2,64,95,41,NcrBasicChord100
+	n 2,60,107,38,NcrBasicChord100
+	n 2,55,100,37,NcrBasicChord100
+	@n 65,0,KitHiHatOpen,76,24,NcrNone
+	@n 67,2,64,74,21,NcrBasicChord100
+	n 2,60,78,18,NcrBasicChord100
+	n 2,55,64,21,NcrBasicChord100
 	end
 	var_end	Style_Jive_Var3
 Style_Jive_Var3Fill1:	# 1 bars of 4 beats
 	var_head	Style_Jive_Var3Fill1, 1, 4, 0xff, 0xff
 	pan 3,88
-	cc 3,81,64
-	cc 3,92,41
-	cc 4,92,21
+	eq_hi_gain 3,64
+	multi 3,41
+	multi 4,21
 	pc 4,0x38,0x50,0x20
 	vol 5,88
 	pan 5,17
 	pc 5,0x48,0x00,0x20
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
 	var_events	Style_Jive_Var3Fill1
 	beat
-	n 0,BD1,111,21,0,0
-	n 0,CRASH2,88,18,0,0
-	n 0,HHO,88,31,0,0
-	n 1,36,94,95,0,16
-	n 3,60,87,46,0,16
-	n 3,48,101,45,0,16
-	@n 3,2,48,106,73,0,16
-	@n 62,4,72,104,25,0,16
-	n 4,60,99,24,0,16
-	@n 66,2,72,89,21,0,80
-	n 2,67,88,18,0,80
-	n 2,64,76,19,0,80
-	@n 67,0,SD1,127,70,0,0
-	@n 68,2,76,40,14,0,80
-	@n 93,2,45,94,79,0,16
+	n 0,KitBassDrum1,111,21,NcrNone
+	n 0,KitCrashCymbal2,88,18,NcrNone
+	n 0,KitHiHatOpen,88,31,NcrNone
+	n 1,36,94,95,NcrMelodyBasic
+	n 3,60,87,46,NcrMelodyBasic
+	n 3,48,101,45,NcrMelodyBasic
+	@n 3,2,48,106,73,NcrMelodyBasic
+	@n 62,4,72,104,25,NcrMelodyBasic
+	n 4,60,99,24,NcrMelodyBasic
+	@n 66,2,72,89,21,NcrBasicChord100
+	n 2,67,88,18,NcrBasicChord100
+	n 2,64,76,19,NcrBasicChord100
+	@n 67,0,KitSnareDrum1,127,70,NcrNone
+	@n 68,2,76,40,14,NcrBasicChord100
+	@n 93,2,45,94,79,NcrMelodyBasic
 	beat
-	n 0,TAMB,95,18,0,0
-	n 1,45,91,74,0,16
-	@n 1,0,HHO,74,21,0,0
-	@n 61,2,67,97,17,0,80
-	n 2,72,105,22,0,80
-	@n 62,3,60,99,80,1,16
-	n 3,48,115,79,1,16
-	@n 63,2,64,78,17,0,80
-	@n 64,2,76,64,14,0,80
-	@n 66,0,SD1,83,20,0,0
-	@n 93,0,HHO,91,23,0,0
-	@n 95,2,43,97,74,0,16
+	n 0,KitTambourine,95,18,NcrNone
+	n 1,45,91,74,NcrMelodyBasic
+	@n 1,0,KitHiHatOpen,74,21,NcrNone
+	@n 61,2,67,97,17,NcrBasicChord100
+	n 2,72,105,22,NcrBasicChord100
+	@n 62,3,60,99,208,NcrMelodyBasic
+	n 3,48,115,207,NcrMelodyBasic
+	@n 63,2,64,78,17,NcrBasicChord100
+	@n 64,2,76,64,14,NcrBasicChord100
+	@n 66,0,KitSnareDrum1,83,20,NcrNone
+	@n 93,0,KitHiHatOpen,91,23,NcrNone
+	@n 95,2,43,97,74,NcrMelodyBasic
 	beat
-	n 0,BD1,110,23,0,0
-	n 1,43,88,76,0,16
-	@n 4,0,SD1,121,18,0,0
-	n 4,60,110,24,0,16
-	n 4,72,109,27,0,16
-	@n 36,0,SD1,77,16,0,0
-	@n 62,2,67,100,17,0,80
-	n 2,72,104,16,0,80
-	@n 63,2,64,80,14,0,80
-	@n 64,2,76,61,12,0,80
-	@n 65,0,SD1,93,18,0,0
-	@n 93,0,HHO,84,28,0,0
-	@n 94,2,40,91,59,0,16
+	n 0,KitBassDrum1,110,23,NcrNone
+	n 1,43,88,76,NcrMelodyBasic
+	@n 4,0,KitSnareDrum1,121,18,NcrNone
+	n 4,60,110,24,NcrMelodyBasic
+	n 4,72,109,27,NcrMelodyBasic
+	@n 36,0,KitSnareDrum1,77,16,NcrNone
+	@n 62,2,67,100,17,NcrBasicChord100
+	n 2,72,104,16,NcrBasicChord100
+	@n 63,2,64,80,14,NcrBasicChord100
+	@n 64,2,76,61,12,NcrBasicChord100
+	@n 65,0,KitSnareDrum1,93,18,NcrNone
+	@n 93,0,KitHiHatOpen,84,28,NcrNone
+	@n 94,2,40,91,59,NcrMelodyBasic
 	beat
-	n 0,TAMB,97,23,0,0
-	n 1,40,96,81,0,16
-	@n 1,0,SD1,127,16,0,0
-	@n 34,0,SD1,96,12,0,0
-	@n 60,0,HHO,66,21,0,0
-	@n 61,0,SD1,103,17,0,0
-	@n 68,2,43,75,12,0,16
+	n 0,KitTambourine,97,23,NcrNone
+	n 1,40,96,81,NcrMelodyBasic
+	@n 1,0,KitSnareDrum1,127,16,NcrNone
+	@n 34,0,KitSnareDrum1,96,12,NcrNone
+	@n 60,0,KitHiHatOpen,66,21,NcrNone
+	@n 61,0,KitSnareDrum1,103,17,NcrNone
+	@n 68,2,43,75,12,NcrMelodyBasic
 	end
 	var_end	Style_Jive_Var3Fill1
 Style_Jive_Var3Fill2:	# 1 bars of 4 beats
 	var_head	Style_Jive_Var3Fill2, 1, 4, 0xff, 0xff
 	pan 3,88
-	cc 3,81,64
-	cc 3,92,41
-	cc 4,92,21
+	eq_hi_gain 3,64
+	multi 3,41
+	multi 4,21
 	pc 4,0x38,0x50,0x20
 	vol 5,88
 	pan 5,17
 	pc 5,0x48,0x00,0x20
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
 	var_events	Style_Jive_Var3Fill2
 	beat
-	n 0,BD1,112,23,0,0
-	n 0,SPLASH,115,27,0,0
-	n 0,CRASH1,127,27,0,0
-	n 4,60,89,66,2,16
-	@n 1,2,36,109,121,1,16
-	@n 4,1,36,126,96,1,16
-	n 3,48,111,72,2,16
-	@n 6,2,64,118,116,1,80
-	n 2,60,116,116,1,80
-	n 2,55,100,94,1,80
-	@n 8,2,67,101,112,1,80
-	@n 66,0,MTOM2,127,74,0,0
+	n 0,KitBassDrum1,112,23,NcrNone
+	n 0,KitSplashCymbal,115,27,NcrNone
+	n 0,KitCrashCymbal1,127,27,NcrNone
+	n 4,60,89,322,NcrMelodyBasic
+	@n 1,2,36,109,249,NcrMelodyBasic
+	@n 4,1,36,126,224,NcrMelodyBasic
+	n 3,48,111,328,NcrMelodyBasic
+	@n 6,2,64,118,244,NcrBasicChord100
+	n 2,60,116,244,NcrBasicChord100
+	n 2,55,100,222,NcrBasicChord100
+	@n 8,2,67,101,240,NcrBasicChord100
+	@n 66,0,KitLowTom,127,74,NcrNone
 	beat
-	n 0,HHP,116,20,0,0
-	@n 66,0,LTOM1,83,22,0,0
-	@n 89,2,50,95,15,0,22
+	n 0,KitHiHatPedal,116,20,NcrNone
+	@n 66,0,KitBassTomH,83,22,NcrNone
+	@n 89,2,50,95,15,NcrNaturalIsMelodicDown
 	beat
-	@n 4,0,LTOM1,127,52,0,0
-	n 2,52,67,13,0,22
-	@n 16,2,53,76,12,0,22
-	@n 22,2,55,95,36,0,22
-	@n 32,2,57,105,12,0,22
-	@n 44,2,59,82,12,0,22
-	@n 53,2,60,86,15,0,22
-	@n 64,2,62,98,16,0,22
-	@n 65,0,LTOM2,89,22,0,0
-	@n 75,2,64,93,16,0,22
-	@n 87,2,65,95,16,0,22
-	@n 94,1,43,113,83,0,16
+	@n 4,0,KitBassTomH,127,52,NcrNone
+	n 2,52,67,13,NcrNaturalIsMelodicDown
+	@n 16,2,53,76,12,NcrNaturalIsMelodicDown
+	@n 22,2,55,95,36,NcrNaturalIsMelodicDown
+	@n 32,2,57,105,12,NcrNaturalIsMelodicDown
+	@n 44,2,59,82,12,NcrNaturalIsMelodicDown
+	@n 53,2,60,86,15,NcrNaturalIsMelodicDown
+	@n 64,2,62,98,16,NcrNaturalIsMelodicDown
+	@n 65,0,KitBassTomL,89,22,NcrNone
+	@n 75,2,64,93,16,NcrNaturalIsMelodicDown
+	@n 87,2,65,95,16,NcrNaturalIsMelodicDown
+	@n 94,1,43,113,83,NcrMelodyBasic
 	beat
-	n 0,HHP,111,21,0,0
-	n 0,LTOM2,126,40,0,0
-	@n 3,2,67,91,16,0,22
-	@n 14,2,69,94,16,0,22
-	@n 26,2,71,87,16,0,22
-	@n 38,2,72,86,17,0,22
-	@n 51,2,74,85,18,0,22
-	@n 63,0,LTOM2,86,17,0,0
-	n 2,76,76,15,0,22
-	@n 65,0,SD1,121,20,0,0
+	n 0,KitHiHatPedal,111,21,NcrNone
+	n 0,KitBassTomL,126,40,NcrNone
+	@n 3,2,67,91,16,NcrNaturalIsMelodicDown
+	@n 14,2,69,94,16,NcrNaturalIsMelodicDown
+	@n 26,2,71,87,16,NcrNaturalIsMelodicDown
+	@n 38,2,72,86,17,NcrNaturalIsMelodicDown
+	@n 51,2,74,85,18,NcrNaturalIsMelodicDown
+	@n 63,0,KitBassTomL,86,17,NcrNone
+	n 2,76,76,15,NcrNaturalIsMelodicDown
+	@n 65,0,KitSnareDrum1,121,20,NcrNone
 	end
 	var_end	Style_Jive_Var3Fill2
 Style_Jive_Var4:	# 4 bars of 4 beats
 	var_head	Style_Jive_Var4, 4, 4, 0xff, 0xff
 	pan 3,88
-	cc 3,81,64
-	cc 3,92,41
-	cc 4,92,21
+	eq_hi_gain 3,64
+	multi 3,41
+	multi 4,21
 	pc 4,0x38,0x50,0x20
 	vol 5,88
 	pan 5,17
 	pc 5,0x48,0x00,0x20
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
 	var_events	Style_Jive_Var4
 	beat
-	n 0,BD1,111,21,0,0
-	n 0,CRASH2,88,18,0,0
-	@n 1,0,TAMB,89,33,0,0
-	n 1,36,100,81,0,16
-	@n 5,2,36,86,79,0,16
-	@n 64,3,64,122,24,0,100
-	n 3,67,122,24,0,100
-	n 3,69,115,24,0,100
-	@n 65,0,TAMB,57,24,0,0
-	@n 67,2,60,97,21,0,80
-	@n 69,2,64,79,18,0,80
-	n 2,55,85,18,0,80
+	n 0,KitBassDrum1,111,21,NcrNone
+	n 0,KitCrashCymbal2,88,18,NcrNone
+	@n 1,0,KitTambourine,89,33,NcrNone
+	n 1,36,100,81,NcrMelodyBasic
+	@n 5,2,36,86,79,NcrMelodyBasic
+	@n 64,3,64,122,24,NcrChordCEGA
+	n 3,67,122,24,NcrChordCEGA
+	n 3,69,115,24,NcrChordCEGA
+	@n 65,0,KitTambourine,57,24,NcrNone
+	@n 67,2,60,97,21,NcrBasicChord100
+	@n 69,2,64,79,18,NcrBasicChord100
+	n 2,55,85,18,NcrBasicChord100
 	beat
-	n 0,HHP,106,25,0,0
-	n 1,40,101,88,0,16
-	@n 2,0,SD1,100,20,0,0
-	n 0,TAMB,89,31,0,0
-	n 0,RBELL,92,23,0,0
-	@n 3,2,40,70,83,0,16
-	@n 63,0,TAMB,59,23,0,0
+	n 0,KitHiHatPedal,106,25,NcrNone
+	n 1,40,101,88,NcrMelodyBasic
+	@n 2,0,KitSnareDrum1,100,20,NcrNone
+	n 0,KitTambourine,89,31,NcrNone
+	n 0,KitRideBell,92,23,NcrNone
+	@n 3,2,40,70,83,NcrMelodyBasic
+	@n 63,0,KitTambourine,59,23,NcrNone
 	beat
-	n 0,BD1,110,23,0,0
-	n 2,60,101,21,0,80
-	n 2,55,87,19,0,80
-	@n 1,0,TAMB,89,31,0,0
-	@n 2,0,RBELL,72,24,0,0
-	n 2,64,82,16,0,80
-	@n 3,1,43,99,83,0,16
-	@n 5,2,43,74,78,0,16
-	n 3,67,122,22,0,100
-	n 3,64,116,22,0,100
-	n 3,69,115,22,0,100
-	@n 65,0,TAMB,45,24,0,0
+	n 0,KitBassDrum1,110,23,NcrNone
+	n 2,60,101,21,NcrBasicChord100
+	n 2,55,87,19,NcrBasicChord100
+	@n 1,0,KitTambourine,89,31,NcrNone
+	@n 2,0,KitRideBell,72,24,NcrNone
+	n 2,64,82,16,NcrBasicChord100
+	@n 3,1,43,99,83,NcrMelodyBasic
+	@n 5,2,43,74,78,NcrMelodyBasic
+	n 3,67,122,22,NcrChordCEGA
+	n 3,64,116,22,NcrChordCEGA
+	n 3,69,115,22,NcrChordCEGA
+	@n 65,0,KitTambourine,45,24,NcrNone
 	beat
-	n 0,HHP,114,24,0,0
-	@n 1,0,SD1,97,16,0,0
-	n 0,TAMB,90,35,0,0
-	@n 2,0,RBELL,79,24,0,0
-	n 1,45,89,80,0,20
-	n 2,45,61,101,0,20
-	@n 63,0,TAMB,52,24,0,0
-	@n 95,0,TAMB,87,34,0,0
+	n 0,KitHiHatPedal,114,24,NcrNone
+	@n 1,0,KitSnareDrum1,97,16,NcrNone
+	n 0,KitTambourine,90,35,NcrNone
+	@n 2,0,KitRideBell,79,24,NcrNone
+	n 1,45,89,80,NcrMajInclAForWalkingBass
+	n 2,45,61,101,NcrMajInclAForWalkingBass
+	@n 63,0,KitTambourine,52,24,NcrNone
+	@n 95,0,KitTambourine,87,34,NcrNone
 	beat
-	n 0,BD1,112,23,0,0
-	@n 1,1,48,96,90,0,18
-	@n 2,4,48,117,33,0,16
-	@n 3,2,48,81,92,0,18
-	@n 4,0,RBELL,93,33,0,0
-	n 2,64,85,21,0,80
-	n 2,60,105,21,0,80
-	n 2,55,89,20,0,80
-	n 3,64,120,25,0,100
-	@n 5,3,67,122,20,0,100
-	@n 6,3,69,118,19,0,100
-	@n 64,0,TAMB,52,24,0,0
-	@n 95,0,TAMB,97,39,0,0
+	n 0,KitBassDrum1,112,23,NcrNone
+	@n 1,1,48,96,90,NcrMelodyIn7thCToBb
+	@n 2,4,48,117,33,NcrMelodyBasic
+	@n 3,2,48,81,92,NcrMelodyIn7thCToBb
+	@n 4,0,KitRideBell,93,33,NcrNone
+	n 2,64,85,21,NcrBasicChord100
+	n 2,60,105,21,NcrBasicChord100
+	n 2,55,89,20,NcrBasicChord100
+	n 3,64,120,25,NcrChordCEGA
+	@n 5,3,67,122,20,NcrChordCEGA
+	@n 6,3,69,118,19,NcrChordCEGA
+	@n 64,0,KitTambourine,52,24,NcrNone
+	@n 95,0,KitTambourine,97,39,NcrNone
 	beat
-	n 0,HHP,108,17,0,0
-	n 0,SD1,107,16,0,0
-	@n 2,1,45,88,79,0,20
-	@n 3,0,RBELL,88,38,0,0
-	@n 6,2,45,72,83,0,20
-	@n 63,4,48,122,28,0,16
-	@n 64,0,TAMB,57,24,0,0
-	@n 66,3,64,118,23,0,100
-	@n 67,2,64,88,18,0,80
-	n 2,60,109,18,0,80
-	n 2,55,97,18,0,80
-	n 3,67,122,22,0,100
-	n 3,69,120,22,0,100
-	@n 69,0,RBELL,57,20,0,0
+	n 0,KitHiHatPedal,108,17,NcrNone
+	n 0,KitSnareDrum1,107,16,NcrNone
+	@n 2,1,45,88,79,NcrMajInclAForWalkingBass
+	@n 3,0,KitRideBell,88,38,NcrNone
+	@n 6,2,45,72,83,NcrMajInclAForWalkingBass
+	@n 63,4,48,122,28,NcrMelodyBasic
+	@n 64,0,KitTambourine,57,24,NcrNone
+	@n 66,3,64,118,23,NcrChordCEGA
+	@n 67,2,64,88,18,NcrBasicChord100
+	n 2,60,109,18,NcrBasicChord100
+	n 2,55,97,18,NcrBasicChord100
+	n 3,67,122,22,NcrChordCEGA
+	n 3,69,120,22,NcrChordCEGA
+	@n 69,0,KitRideBell,57,20,NcrNone
 	beat
-	n 0,BD1,111,24,0,0
-	@n 1,0,TAMB,74,30,0,0
-	@n 2,1,43,105,87,0,16
-	@n 3,0,RBELL,91,39,0,0
-	@n 4,2,43,74,78,0,16
-	@n 63,0,TAMB,54,21,0,0
-	@n 95,0,SD1,97,13,0,0
-	n 0,TAMB,108,36,0,0
-	n 2,40,78,79,0,16
+	n 0,KitBassDrum1,111,24,NcrNone
+	@n 1,0,KitTambourine,74,30,NcrNone
+	@n 2,1,43,105,87,NcrMelodyBasic
+	@n 3,0,KitRideBell,91,39,NcrNone
+	@n 4,2,43,74,78,NcrMelodyBasic
+	@n 63,0,KitTambourine,54,21,NcrNone
+	@n 95,0,KitSnareDrum1,97,13,NcrNone
+	n 0,KitTambourine,108,36,NcrNone
+	n 2,40,78,79,NcrMelodyBasic
 	beat
-	n 0,HHP,109,18,0,0
-	n 3,48,127,107,4,16
-	@n 2,0,RBELL,81,40,0,0
-	@n 3,1,40,104,79,0,16
-	@n 63,0,TAMB,42,26,0,0
+	n 0,KitHiHatPedal,109,18,NcrNone
+	n 3,48,127,619,NcrMelodyBasic
+	@n 2,0,KitRideBell,81,40,NcrNone
+	@n 3,1,40,104,79,NcrMelodyBasic
+	@n 63,0,KitTambourine,42,26,NcrNone
 	beat
-	n 0,BD1,109,23,0,0
-	n 1,36,87,88,0,16
-	n 2,36,74,83,0,16
-	@n 1,0,TAMB,76,34,0,0
-	@n 3,0,RBELL,89,43,0,0
-	@n 61,3,64,110,22,0,100
-	n 3,67,122,21,0,100
-	n 3,69,112,21,0,100
-	@n 63,2,60,95,21,0,80
-	n 2,55,85,21,0,80
-	@n 64,2,64,76,18,0,80
-	@n 65,0,TAMB,60,24,0,0
-	@n 95,0,SD1,99,14,0,0
-	n 1,40,98,87,0,16
-	n 2,40,71,99,0,16
+	n 0,KitBassDrum1,109,23,NcrNone
+	n 1,36,87,88,NcrMelodyBasic
+	n 2,36,74,83,NcrMelodyBasic
+	@n 1,0,KitTambourine,76,34,NcrNone
+	@n 3,0,KitRideBell,89,43,NcrNone
+	@n 61,3,64,110,22,NcrChordCEGA
+	n 3,67,122,21,NcrChordCEGA
+	n 3,69,112,21,NcrChordCEGA
+	@n 63,2,60,95,21,NcrBasicChord100
+	n 2,55,85,21,NcrBasicChord100
+	@n 64,2,64,76,18,NcrBasicChord100
+	@n 65,0,KitTambourine,60,24,NcrNone
+	@n 95,0,KitSnareDrum1,99,14,NcrNone
+	n 1,40,98,87,NcrMelodyBasic
+	n 2,40,71,99,NcrMelodyBasic
 	beat
-	n 0,HHP,113,18,0,0
-	@n 1,0,TAMB,104,32,0,0
-	@n 3,0,RBELL,81,36,0,0
-	@n 65,0,TAMB,58,27,0,0
-	@n 66,0,RBELL,53,16,0,0
-	@n 93,2,60,96,25,0,80
-	@n 95,2,55,87,23,0,80
+	n 0,KitHiHatPedal,113,18,NcrNone
+	@n 1,0,KitTambourine,104,32,NcrNone
+	@n 3,0,KitRideBell,81,36,NcrNone
+	@n 65,0,KitTambourine,58,27,NcrNone
+	@n 66,0,KitRideBell,53,16,NcrNone
+	@n 93,2,60,96,25,NcrBasicChord100
+	@n 95,2,55,87,23,NcrBasicChord100
 	beat
-	n 0,BD1,111,22,0,0
-	@n 1,0,TAMB,72,31,0,0
-	n 0,RBELL,86,42,0,0
-	n 1,43,102,86,0,16
-	n 2,64,62,13,0,80
-	n 2,43,75,89,0,16
-	@n 6,3,64,120,21,0,100
-	@n 7,3,67,122,21,0,100
-	n 3,69,115,15,0,100
-	@n 63,0,TAMB,40,28,0,0
+	n 0,KitBassDrum1,111,22,NcrNone
+	@n 1,0,KitTambourine,72,31,NcrNone
+	n 0,KitRideBell,86,42,NcrNone
+	n 1,43,102,86,NcrMelodyBasic
+	n 2,64,62,13,NcrBasicChord100
+	n 2,43,75,89,NcrMelodyBasic
+	@n 6,3,64,120,21,NcrChordCEGA
+	@n 7,3,67,122,21,NcrChordCEGA
+	n 3,69,115,15,NcrChordCEGA
+	@n 63,0,KitTambourine,40,28,NcrNone
 	beat
-	n 0,HHP,114,21,0,0
-	n 0,SD1,101,16,0,0
-	@n 1,0,TAMB,95,36,0,0
-	@n 2,0,RBELL,76,43,0,0
-	n 1,45,89,88,0,20
-	n 2,45,64,82,0,20
-	@n 65,0,TAMB,55,21,0,0
-	@n 69,0,RBELL,52,15,0,0
-	@n 95,4,48,123,31,0,16
+	n 0,KitHiHatPedal,114,21,NcrNone
+	n 0,KitSnareDrum1,101,16,NcrNone
+	@n 1,0,KitTambourine,95,36,NcrNone
+	@n 2,0,KitRideBell,76,43,NcrNone
+	n 1,45,89,88,NcrMajInclAForWalkingBass
+	n 2,45,64,82,NcrMajInclAForWalkingBass
+	@n 65,0,KitTambourine,55,21,NcrNone
+	@n 69,0,KitRideBell,52,15,NcrNone
+	@n 95,4,48,123,31,NcrMelodyBasic
 	beat
-	n 0,BD1,112,19,0,0
-	n 2,48,80,80,0,18
-	@n 1,0,TAMB,89,27,0,0
-	n 1,48,97,95,0,18
-	n 2,60,104,21,0,80
-	n 2,55,91,21,0,80
-	n 2,64,75,20,0,80
-	n 3,64,121,26,0,100
-	n 3,67,122,23,0,100
-	n 3,69,120,24,0,100
-	@n 3,0,RBELL,86,38,0,0
-	@n 65,0,TAMB,61,21,0,0
+	n 0,KitBassDrum1,112,19,NcrNone
+	n 2,48,80,80,NcrMelodyIn7thCToBb
+	@n 1,0,KitTambourine,89,27,NcrNone
+	n 1,48,97,95,NcrMelodyIn7thCToBb
+	n 2,60,104,21,NcrBasicChord100
+	n 2,55,91,21,NcrBasicChord100
+	n 2,64,75,20,NcrBasicChord100
+	n 3,64,121,26,NcrChordCEGA
+	n 3,67,122,23,NcrChordCEGA
+	n 3,69,120,24,NcrChordCEGA
+	@n 3,0,KitRideBell,86,38,NcrNone
+	@n 65,0,KitTambourine,61,21,NcrNone
 	beat
-	n 0,HHP,109,21,0,0
-	@n 1,0,TAMB,99,36,0,0
-	n 0,SD1,102,17,0,0
-	@n 2,2,45,62,95,0,20
-	@n 4,0,RBELL,82,36,0,0
-	@n 5,1,45,92,79,0,20
-	@n 63,0,TAMB,52,22,0,0
-	@n 65,4,48,125,24,0,16
-	@n 66,2,60,111,19,0,80
-	n 2,55,99,20,0,80
-	n 3,64,120,25,0,100
-	n 3,67,122,25,0,100
-	n 3,69,120,28,0,100
-	@n 68,2,64,86,16,0,80
+	n 0,KitHiHatPedal,109,21,NcrNone
+	@n 1,0,KitTambourine,99,36,NcrNone
+	n 0,KitSnareDrum1,102,17,NcrNone
+	@n 2,2,45,62,95,NcrMajInclAForWalkingBass
+	@n 4,0,KitRideBell,82,36,NcrNone
+	@n 5,1,45,92,79,NcrMajInclAForWalkingBass
+	@n 63,0,KitTambourine,52,22,NcrNone
+	@n 65,4,48,125,24,NcrMelodyBasic
+	@n 66,2,60,111,19,NcrBasicChord100
+	n 2,55,99,20,NcrBasicChord100
+	n 3,64,120,25,NcrChordCEGA
+	n 3,67,122,25,NcrChordCEGA
+	n 3,69,120,28,NcrChordCEGA
+	@n 68,2,64,86,16,NcrBasicChord100
 	beat
-	n 0,BD1,112,25,0,0
-	n 0,TAMB,78,29,0,0
-	@n 2,0,RBELL,88,30,0,0
-	n 1,43,98,86,0,16
-	n 2,43,60,77,0,16
-	@n 62,0,TAMB,59,21,0,0
-	@n 66,0,SD1,88,13,0,0
-	@n 95,2,40,80,45,0,16
+	n 0,KitBassDrum1,112,25,NcrNone
+	n 0,KitTambourine,78,29,NcrNone
+	@n 2,0,KitRideBell,88,30,NcrNone
+	n 1,43,98,86,NcrMelodyBasic
+	n 2,43,60,77,NcrMelodyBasic
+	@n 62,0,KitTambourine,59,21,NcrNone
+	@n 66,0,KitSnareDrum1,88,13,NcrNone
+	@n 95,2,40,80,45,NcrMelodyBasic
 	beat
-	n 0,HHP,120,23,0,0
-	n 0,TAMB,104,30,0,0
-	@n 1,0,SD1,115,35,0,0
-	n 1,40,103,57,0,16
-	@n 2,0,RBELL,95,25,0,0
-	@n 62,0,TAMB,64,21,0,0
-	@n 65,1,38,88,28,0,16
-	@n 66,0,RBELL,88,21,0,0
+	n 0,KitHiHatPedal,120,23,NcrNone
+	n 0,KitTambourine,104,30,NcrNone
+	@n 1,0,KitSnareDrum1,115,35,NcrNone
+	n 1,40,103,57,NcrMelodyBasic
+	@n 2,0,KitRideBell,95,25,NcrNone
+	@n 62,0,KitTambourine,64,21,NcrNone
+	@n 65,1,38,88,28,NcrMelodyBasic
+	@n 66,0,KitRideBell,88,21,NcrNone
 	end
 	var_end	Style_Jive_Var4
 Style_Jive_Var4Fill1:	# 1 bars of 4 beats
 	var_head	Style_Jive_Var4Fill1, 1, 4, 0xff, 0xff
 	pan 3,88
-	cc 3,81,64
-	cc 3,92,41
-	cc 4,92,21
+	eq_hi_gain 3,64
+	multi 3,41
+	multi 4,21
 	pc 4,0x38,0x50,0x20
 	vol 5,88
 	pan 5,17
 	pc 5,0x48,0x00,0x20
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
 	var_events	Style_Jive_Var4Fill1
 	beat
-	n 0,BD1,111,21,0,0
-	n 0,CRASH2,88,18,0,0
-	n 3,48,119,111,2,16
-	n 4,48,86,110,2,16
-	@n 1,0,TAMB,89,33,0,0
-	@n 2,1,36,103,86,0,16
-	@n 63,4,60,103,21,0,16
-	@n 64,0,SD1,127,68,0,0
-	n 0,SPLASH,121,29,0,0
-	n 3,72,113,29,0,101
-	@n 65,0,TAMB,57,24,0,0
-	@n 67,3,62,95,21,0,101
-	n 3,67,118,21,0,101
-	@n 68,2,69,102,26,0,100
-	n 2,67,108,26,0,100
-	@n 69,2,72,65,27,0,100
-	n 2,64,106,24,0,100
+	n 0,KitBassDrum1,111,21,NcrNone
+	n 0,KitCrashCymbal2,88,18,NcrNone
+	n 3,48,119,367,NcrMelodyBasic
+	n 4,48,86,366,NcrMelodyBasic
+	@n 1,0,KitTambourine,89,33,NcrNone
+	@n 2,1,36,103,86,NcrMelodyBasic
+	@n 63,4,60,103,21,NcrMelodyBasic
+	@n 64,0,KitSnareDrum1,127,68,NcrNone
+	n 0,KitSplashCymbal,121,29,NcrNone
+	n 3,72,113,29,NcrChordADGC
+	@n 65,0,KitTambourine,57,24,NcrNone
+	@n 67,3,62,95,21,NcrChordADGC
+	n 3,67,118,21,NcrChordADGC
+	@n 68,2,69,102,26,NcrChordCEGA
+	n 2,67,108,26,NcrChordCEGA
+	@n 69,2,72,65,27,NcrChordCEGA
+	n 2,64,106,24,NcrChordCEGA
 	beat
-	n 0,HHP,106,25,0,0
-	@n 2,0,TAMB,89,31,0,0
-	n 0,RBELL,92,23,0,0
-	@n 3,1,45,113,77,0,16
-	@n 63,0,TAMB,59,23,0,0
-	@n 95,3,72,122,29,0,101
+	n 0,KitHiHatPedal,106,25,NcrNone
+	@n 2,0,KitTambourine,89,31,NcrNone
+	n 0,KitRideBell,92,23,NcrNone
+	@n 3,1,45,113,77,NcrMelodyBasic
+	@n 63,0,KitTambourine,59,23,NcrNone
+	@n 95,3,72,122,29,NcrChordADGC
 	beat
-	n 0,BD1,110,23,0,0
-	@n 1,0,TAMB,89,31,0,0
-	@n 2,0,RBELL,72,24,0,0
-	n 0,SD1,122,76,0,0
-	n 1,43,99,83,0,16
-	@n 3,2,64,111,23,0,100
-	n 2,72,79,26,0,100
-	n 2,69,105,22,0,100
-	n 2,67,112,22,0,100
-	n 3,67,123,24,0,101
-	n 3,62,105,23,0,101
-	@n 10,4,60,109,24,0,16
-	@n 65,0,TAMB,45,24,0,0
+	n 0,KitBassDrum1,110,23,NcrNone
+	@n 1,0,KitTambourine,89,31,NcrNone
+	@n 2,0,KitRideBell,72,24,NcrNone
+	n 0,KitSnareDrum1,122,76,NcrNone
+	n 1,43,99,83,NcrMelodyBasic
+	@n 3,2,64,111,23,NcrChordCEGA
+	n 2,72,79,26,NcrChordCEGA
+	n 2,69,105,22,NcrChordCEGA
+	n 2,67,112,22,NcrChordCEGA
+	n 3,67,123,24,NcrChordADGC
+	n 3,62,105,23,NcrChordADGC
+	@n 10,4,60,109,24,NcrMelodyBasic
+	@n 65,0,KitTambourine,45,24,NcrNone
 	beat
-	n 0,HHP,114,24,0,0
-	n 0,BD1,93,27,0,0
-	@n 1,0,TAMB,90,35,0,0
-	@n 2,0,RBELL,79,24,0,0
-	n 0,SD1,86,26,0,0
-	@n 4,1,40,65,59,0,16
-	@n 61,2,69,82,16,0,100
-	n 2,67,92,16,0,100
-	n 2,64,82,17,0,100
-	@n 63,0,TAMB,52,24,0,0
-	n 2,72,30,12,0,100
-	@n 68,0,SD1,127,26,0,0
-	@n 70,1,38,86,23,0,16
+	n 0,KitHiHatPedal,114,24,NcrNone
+	n 0,KitBassDrum1,93,27,NcrNone
+	@n 1,0,KitTambourine,90,35,NcrNone
+	@n 2,0,KitRideBell,79,24,NcrNone
+	n 0,KitSnareDrum1,86,26,NcrNone
+	@n 4,1,40,65,59,NcrMelodyBasic
+	@n 61,2,69,82,16,NcrChordCEGA
+	n 2,67,92,16,NcrChordCEGA
+	n 2,64,82,17,NcrChordCEGA
+	@n 63,0,KitTambourine,52,24,NcrNone
+	n 2,72,30,12,NcrChordCEGA
+	@n 68,0,KitSnareDrum1,127,26,NcrNone
+	@n 70,1,38,86,23,NcrMelodyBasic
 	end
 	var_end	Style_Jive_Var4Fill1
 Style_Jive_Var4Fill2:	# 1 bars of 4 beats
 	var_head	Style_Jive_Var4Fill2, 1, 4, 0xff, 0xff
 	pan 3,88
-	cc 3,81,64
-	cc 3,92,41
-	cc 4,92,21
+	eq_hi_gain 3,64
+	multi 3,41
+	multi 4,21
 	pc 4,0x38,0x50,0x20
 	vol 5,88
 	pan 5,17
 	pc 5,0x48,0x00,0x20
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
 	var_events	Style_Jive_Var4Fill2
 	beat
-	n 0,BD1,112,23,0,0
-	n 0,SD1,109,34,0,0
-	n 3,64,92,44,0,100
-	n 3,60,112,44,0,100
-	n 3,57,118,39,0,100
-	n 3,55,102,42,0,100
-	n 4,48,104,49,0,16
-	@n 3,2,36,111,3,1,16
-	@n 4,1,36,113,80,0,16
-	@n 18,0,HHP,105,28,0,0
-	@n 34,0,SD1,79,16,0,0
-	@n 67,0,SD1,104,16,0,0
-	n 2,72,97,37,0,16
-	n 2,60,104,28,0,16
-	@n 70,0,TAMB,52,24,0,0
-	@n 95,0,TAMB,97,39,0,0
-	n 2,48,107,7,1,16
+	n 0,KitBassDrum1,112,23,NcrNone
+	n 0,KitSnareDrum1,109,34,NcrNone
+	n 3,64,92,44,NcrChordCEGA
+	n 3,60,112,44,NcrChordCEGA
+	n 3,57,118,39,NcrChordCEGA
+	n 3,55,102,42,NcrChordCEGA
+	n 4,48,104,49,NcrMelodyBasic
+	@n 3,2,36,111,131,NcrMelodyBasic
+	@n 4,1,36,113,80,NcrMelodyBasic
+	@n 18,0,KitHiHatPedal,105,28,NcrNone
+	@n 34,0,KitSnareDrum1,79,16,NcrNone
+	@n 67,0,KitSnareDrum1,104,16,NcrNone
+	n 2,72,97,37,NcrMelodyBasic
+	n 2,60,104,28,NcrMelodyBasic
+	@n 70,0,KitTambourine,52,24,NcrNone
+	@n 95,0,KitTambourine,97,39,NcrNone
+	n 2,48,107,135,NcrMelodyBasic
 	beat
-	n 0,HHP,101,30,0,0
-	@n 2,0,SD1,76,20,0,0
-	@n 4,1,36,104,74,0,16
-	@n 8,0,BD1,75,20,0,0
-	@n 33,0,SD1,82,12,0,0
-	@n 59,3,64,88,62,1,100
-	n 3,60,105,59,1,100
-	n 3,57,110,57,1,100
-	n 3,55,87,57,1,100
-	@n 63,0,SD1,85,22,0,0
-	n 2,36,92,17,1,16
-	@n 64,4,48,103,51,1,16
-	@n 70,0,TAMB,57,24,0,0
-	@n 94,1,36,104,58,0,16
-	@n 95,0,HHP,106,25,0,0
+	n 0,KitHiHatPedal,101,30,NcrNone
+	@n 2,0,KitSnareDrum1,76,20,NcrNone
+	@n 4,1,36,104,74,NcrMelodyBasic
+	@n 8,0,KitBassDrum1,75,20,NcrNone
+	@n 33,0,KitSnareDrum1,82,12,NcrNone
+	@n 59,3,64,88,190,NcrChordCEGA
+	n 3,60,105,187,NcrChordCEGA
+	n 3,57,110,185,NcrChordCEGA
+	n 3,55,87,185,NcrChordCEGA
+	@n 63,0,KitSnareDrum1,85,22,NcrNone
+	n 2,36,92,145,NcrMelodyBasic
+	@n 64,4,48,103,179,NcrMelodyBasic
+	@n 70,0,KitTambourine,57,24,NcrNone
+	@n 94,1,36,104,58,NcrMelodyBasic
+	@n 95,0,KitHiHatPedal,106,25,NcrNone
 	beat
-	n 0,BD1,111,24,0,0
-	n 0,TAMB,74,30,0,0
-	@n 1,2,60,110,126,0,16
-	n 2,72,103,5,1,16
-	@n 2,0,SD1,120,22,0,0
-	@n 36,0,SD1,86,19,0,0
-	@n 63,1,48,113,28,0,16
-	@n 67,0,SD1,105,18,0,0
-	n 2,48,95,11,1,16
-	@n 70,0,TAMB,54,21,0,0
-	@n 93,1,36,122,86,0,16
-	@n 95,0,TAMB,108,36,0,0
+	n 0,KitBassDrum1,111,24,NcrNone
+	n 0,KitTambourine,74,30,NcrNone
+	@n 1,2,60,110,126,NcrMelodyBasic
+	n 2,72,103,133,NcrMelodyBasic
+	@n 2,0,KitSnareDrum1,120,22,NcrNone
+	@n 36,0,KitSnareDrum1,86,19,NcrNone
+	@n 63,1,48,113,28,NcrMelodyBasic
+	@n 67,0,KitSnareDrum1,105,18,NcrNone
+	n 2,48,95,139,NcrMelodyBasic
+	@n 70,0,KitTambourine,54,21,NcrNone
+	@n 93,1,36,122,86,NcrMelodyBasic
+	@n 95,0,KitTambourine,108,36,NcrNone
 	beat
-	@n 2,0,HHP,111,25,0,0
-	@n 3,0,BD1,95,23,0,0
-	@n 4,0,SD1,85,16,0,0
-	@n 29,2,36,79,83,0,16
-	@n 32,0,SD1,109,18,0,0
-	@n 63,0,SD1,105,19,0,0
-	n 2,72,91,45,0,16
-	n 2,60,88,38,0,16
-	@n 70,0,TAMB,42,26,0,0
+	@n 2,0,KitHiHatPedal,111,25,NcrNone
+	@n 3,0,KitBassDrum1,95,23,NcrNone
+	@n 4,0,KitSnareDrum1,85,16,NcrNone
+	@n 29,2,36,79,83,NcrMelodyBasic
+	@n 32,0,KitSnareDrum1,109,18,NcrNone
+	@n 63,0,KitSnareDrum1,105,19,NcrNone
+	n 2,72,91,45,NcrMelodyBasic
+	n 2,60,88,38,NcrMelodyBasic
+	@n 70,0,KitTambourine,42,26,NcrNone
 	end
 	var_end	Style_Jive_Var4Fill2
-Style_Jive_Intro2A:	# 4 bars of 4 beats
-	var_head	Style_Jive_Intro2A, 4, 4, 0xff, 0xff
-	mode 1,11
+Style_Jive_Ending1Major:	# 4 bars of 4 beats
+	var_head	Style_Jive_Ending1Major, 4, 4, 0xff, 0xff
+	fold_root 1,11
 	pan 3,90
-	cc 3,81,64
-	cc 3,92,41
-	cc 4,92,21
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
-	var_events	Style_Jive_Intro2A
+	eq_hi_gain 3,64
+	multi 3,41
+	multi 4,21
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
+	var_events	Style_Jive_Ending1Major
 	beat
-	n 0,CRASH2,88,18,0,0
-	n 0,HHO,105,25,0,0
-	n 2,48,103,40,1,1
-	@n 3,0,BD1,122,30,0,0
-	@n 6,1,48,112,41,1,1
-	@n 60,2,55,100,50,0,1
-	@n 94,2,60,97,53,0,1
-	@n 95,3,64,112,52,1,1
+	n 0,KitCrashCymbal2,88,18,NcrNone
+	n 0,KitHiHatOpen,105,25,NcrNone
+	n 2,48,103,168,NcrRootShiftOnly
+	@n 3,0,KitBassDrum1,122,30,NcrNone
+	@n 6,1,48,112,169,NcrRootShiftOnly
+	@n 60,2,55,100,50,NcrRootShiftOnly
+	@n 94,2,60,97,53,NcrRootShiftOnly
+	@n 95,3,64,112,180,NcrRootShiftOnly
 	beat
-	n 0,TAMB,95,18,0,0
-	n 0,HHC,58,19,0,0
-	@n 3,0,SSTICK,111,20,0,0
-	@n 64,2,62,79,33,0,1
-	@n 68,0,HHC,50,16,0,0
-	@n 94,2,46,89,42,1,1
-	n 2,64,104,61,0,1
-	@n 95,0,HHO,100,25,0,0
+	n 0,KitTambourine,95,18,NcrNone
+	n 0,KitHiHatClosed,58,19,NcrNone
+	@n 3,0,KitRimShot,111,20,NcrNone
+	@n 64,2,62,79,33,NcrRootShiftOnly
+	@n 68,0,KitHiHatClosed,50,16,NcrNone
+	@n 94,2,46,89,170,NcrRootShiftOnly
+	n 2,64,104,61,NcrRootShiftOnly
+	@n 95,0,KitHiHatOpen,100,25,NcrNone
 	beat
-	@n 3,0,BD1,118,28,0,0
-	@n 5,1,46,105,29,1,1
-	@n 62,2,55,80,37,0,1
-	@n 92,2,62,102,74,0,1
-	@n 93,3,65,106,90,0,1
+	@n 3,0,KitBassDrum1,118,28,NcrNone
+	@n 5,1,46,105,157,NcrRootShiftOnly
+	@n 62,2,55,80,37,NcrRootShiftOnly
+	@n 92,2,62,102,74,NcrRootShiftOnly
+	@n 93,3,65,106,90,NcrRootShiftOnly
 	beat
-	n 0,TAMB,97,23,0,0
-	@n 1,0,HHC,44,16,0,0
-	@n 4,0,SSTICK,124,24,0,0
-	@n 57,2,44,55,28,0,1
-	@n 91,2,55,68,1,1,1
-	n 2,45,86,65,1,1
-	@n 92,2,61,120,0,1,1
-	n 4,67,111,24,0,1
-	n 4,69,119,24,0,1
-	n 4,73,106,24,0,1
-	@n 94,3,67,94,7,1,1
-	@n 95,0,HHO,99,31,0,0
-	n 1,45,96,2,1,1
+	n 0,KitTambourine,97,23,NcrNone
+	@n 1,0,KitHiHatClosed,44,16,NcrNone
+	@n 4,0,KitRimShot,124,24,NcrNone
+	@n 57,2,44,55,28,NcrRootShiftOnly
+	@n 91,2,55,68,129,NcrRootShiftOnly
+	n 2,45,86,193,NcrRootShiftOnly
+	@n 92,2,61,120,128,NcrRootShiftOnly
+	n 4,67,111,24,NcrRootShiftOnly
+	n 4,69,119,24,NcrRootShiftOnly
+	n 4,73,106,24,NcrRootShiftOnly
+	@n 94,3,67,94,135,NcrRootShiftOnly
+	@n 95,0,KitHiHatOpen,99,31,NcrNone
+	n 1,45,96,130,NcrRootShiftOnly
 	beat
-	@n 4,0,BD1,112,28,0,0
+	@n 4,0,KitBassDrum1,112,28,NcrNone
 	beat
-	n 0,TAMB,97,21,0,0
-	@n 1,0,HHC,51,20,0,0
-	n 0,SSTICK,126,27,0,0
-	@n 56,4,67,118,22,0,1
-	n 4,69,127,22,0,1
-	@n 57,3,67,115,2,1,1
-	n 4,73,113,22,0,1
-	@n 62,1,40,93,114,0,1
-	n 2,61,122,50,0,1
-	@n 63,2,64,100,49,0,1
-	n 2,55,94,33,0,1
-	@n 68,0,HHO,95,31,0,0
+	n 0,KitTambourine,97,21,NcrNone
+	@n 1,0,KitHiHatClosed,51,20,NcrNone
+	n 0,KitRimShot,126,27,NcrNone
+	@n 56,4,67,118,22,NcrRootShiftOnly
+	n 4,69,127,22,NcrRootShiftOnly
+	@n 57,3,67,115,130,NcrRootShiftOnly
+	n 4,73,113,22,NcrRootShiftOnly
+	@n 62,1,40,93,114,NcrRootShiftOnly
+	n 2,61,122,50,NcrRootShiftOnly
+	@n 63,2,64,100,49,NcrRootShiftOnly
+	n 2,55,94,33,NcrRootShiftOnly
+	@n 68,0,KitHiHatOpen,95,31,NcrNone
 	@bend 84,5,0,60
-	@n 86,5,69,127,113,0,1
+	@n 86,5,69,127,113,NcrRootShiftOnly
 	@bend 89,5,0,60
 	bend 5,0,59
-	@n 91,2,40,79,87,0,1
-	@n 95,0,BD1,112,49,0,0
+	@n 91,2,40,79,87,NcrRootShiftOnly
+	@n 95,0,KitBassDrum1,112,49,NcrNone
 	beat
 	@bend 2,5,0,58
 	@bend 8,5,0,57
@@ -1991,41 +1991,41 @@ Style_Jive_Intro2A:	# 4 bars of 4 beats
 	@bend 44,5,0,62
 	@bend 53,5,0,63
 	@bend 63,5,0,64
-	@n 65,2,55,88,19,0,1
-	@n 68,0,SD1,82,23,0,0
-	n 0,HHO,90,24,0,0
-	@n 95,0,HHC,66,23,0,0
-	n 2,39,83,88,0,1
-	n 3,65,109,33,0,1
+	@n 65,2,55,88,19,NcrRootShiftOnly
+	@n 68,0,KitSnareDrum1,82,23,NcrNone
+	n 0,KitHiHatOpen,90,24,NcrNone
+	@n 95,0,KitHiHatClosed,66,23,NcrNone
+	n 2,39,83,88,NcrRootShiftOnly
+	n 3,65,109,33,NcrRootShiftOnly
 	beat
-	n 0,TAMB,89,22,0,0
-	n 2,61,81,30,0,1
-	@n 3,1,39,89,71,0,1
-	@n 4,5,67,108,88,0,1
-	@n 7,0,SD1,127,32,0,0
-	@n 69,0,HHC,38,14,0,0
-	@n 70,0,SD1,89,20,0,0
-	@n 95,3,64,103,2,1,1
+	n 0,KitTambourine,89,22,NcrNone
+	n 2,61,81,30,NcrRootShiftOnly
+	@n 3,1,39,89,71,NcrRootShiftOnly
+	@n 4,5,67,108,88,NcrRootShiftOnly
+	@n 7,0,KitSnareDrum1,127,32,NcrNone
+	@n 69,0,KitHiHatClosed,38,14,NcrNone
+	@n 70,0,KitSnareDrum1,89,20,NcrNone
+	@n 95,3,64,103,130,NcrRootShiftOnly
 	beat
-	n 0,HHO,89,28,0,0
-	@n 1,2,38,89,24,1,1
-	@n 2,0,BD1,117,55,0,0
-	n 2,54,100,33,0,1
-	n 2,64,77,56,0,1
-	@n 3,1,38,104,27,1,1
-	@n 4,2,60,95,52,0,1
-	@n 5,4,66,124,24,0,1
-	n 4,69,125,26,0,1
-	n 4,72,95,31,0,1
-	@n 6,5,66,104,70,1,1
-	@n 66,2,54,89,39,0,1
+	n 0,KitHiHatOpen,89,28,NcrNone
+	@n 1,2,38,89,152,NcrRootShiftOnly
+	@n 2,0,KitBassDrum1,117,55,NcrNone
+	n 2,54,100,33,NcrRootShiftOnly
+	n 2,64,77,56,NcrRootShiftOnly
+	@n 3,1,38,104,155,NcrRootShiftOnly
+	@n 4,2,60,95,52,NcrRootShiftOnly
+	@n 5,4,66,124,24,NcrRootShiftOnly
+	n 4,69,125,26,NcrRootShiftOnly
+	n 4,72,95,31,NcrRootShiftOnly
+	@n 6,5,66,104,198,NcrRootShiftOnly
+	@n 66,2,54,89,39,NcrRootShiftOnly
 	@mod 94,5,5
 	mod 5,8
-	@n 95,2,60,92,38,0,1
+	@n 95,2,60,92,38,NcrRootShiftOnly
 	beat
-	n 0,TAMB,86,24,0,0
-	@n 1,0,HHC,61,18,0,0
-	@n 2,0,SD1,123,27,0,0
+	n 0,KitTambourine,86,24,NcrNone
+	@n 1,0,KitHiHatClosed,61,18,NcrNone
+	@n 2,0,KitSnareDrum1,123,27,NcrNone
 	@mod 3,5,12
 	@mod 8,5,15
 	mod 5,19
@@ -2046,50 +2046,50 @@ Style_Jive_Intro2A:	# 4 bars of 4 beats
 	@mod 55,5,64
 	mod 5,66
 	@mod 59,5,67
-	@n 60,3,64,105,96,0,1
-	@n 61,2,42,47,27,0,1
-	n 4,65,123,21,0,1
-	n 4,67,119,23,0,1
-	n 4,71,99,24,0,1
+	@n 60,3,64,105,96,NcrRootShiftOnly
+	@n 61,2,42,47,27,NcrRootShiftOnly
+	n 4,65,123,21,NcrRootShiftOnly
+	n 4,67,119,23,NcrRootShiftOnly
+	n 4,71,99,24,NcrRootShiftOnly
 	@mod 65,5,69
-	@n 68,0,HHC,51,19,0,0
+	@n 68,0,KitHiHatClosed,51,19,NcrNone
 	@mod 83,5,63
 	@mod 89,5,59
 	@mod 92,5,53
 	mod 5,45
 	beat
 	mod 5,37
-	@n 1,0,HHO,93,21,0,0
-	n 2,59,96,50,0,1
-	n 2,43,81,127,0,1
-	@n 2,1,43,109,32,1,1
-	n 2,53,99,39,0,1
-	n 2,64,89,52,0,1
-	@n 3,0,BD1,121,39,0,0
+	@n 1,0,KitHiHatOpen,93,21,NcrNone
+	n 2,59,96,50,NcrRootShiftOnly
+	n 2,43,81,127,NcrRootShiftOnly
+	@n 2,1,43,109,160,NcrRootShiftOnly
+	n 2,53,99,39,NcrRootShiftOnly
+	n 2,64,89,52,NcrRootShiftOnly
+	@n 3,0,KitBassDrum1,121,39,NcrNone
 	@mod 8,5,27
 	mod 5,15
 	@mod 11,5,2
 	mod 5,0
-	@n 15,5,65,93,46,1,1
-	@n 64,2,63,67,44,0,1
-	n 2,59,41,83,0,1
-	n 2,53,66,24,0,1
-	n 3,63,88,16,0,1
+	@n 15,5,65,93,174,NcrRootShiftOnly
+	@n 64,2,63,67,44,NcrRootShiftOnly
+	n 2,59,41,83,NcrRootShiftOnly
+	n 2,53,66,24,NcrRootShiftOnly
+	n 3,63,88,16,NcrRootShiftOnly
 	@mod 78,5,3
 	mod 5,6
 	@mod 82,5,10
 	mod 5,13
 	@mod 87,5,17
 	@mod 92,5,21
-	@n 93,3,64,105,31,0,1
+	@n 93,3,64,105,31,NcrRootShiftOnly
 	mod 5,24
-	@n 95,0,HHC,74,22,0,0
+	@n 95,0,KitHiHatClosed,74,22,NcrNone
 	beat
-	n 0,TAMB,99,21,0,0
-	n 2,64,93,45,0,1
-	n 2,53,65,48,0,1
+	n 0,KitTambourine,99,21,NcrNone
+	n 2,64,93,45,NcrRootShiftOnly
+	n 2,53,65,48,NcrRootShiftOnly
 	@mod 1,5,28
-	@n 2,0,SD1,126,27,0,0
+	@n 2,0,KitSnareDrum1,126,27,NcrNone
 	@mod 7,5,32
 	mod 5,36
 	@mod 10,5,40
@@ -2108,22 +2108,22 @@ Style_Jive_Intro2A:	# 4 bars of 4 beats
 	@mod 57,5,29
 	mod 5,17
 	@mod 61,5,3
-	@n 66,2,43,68,18,0,1
+	@n 66,2,43,68,18,NcrRootShiftOnly
 	mod 5,0
-	@n 67,0,HHC,46,23,0,0
-	@n 94,5,64,48,20,1,1
-	@n 95,0,HHO,97,22,0,0
+	@n 67,0,KitHiHatClosed,46,23,NcrNone
+	@n 94,5,64,48,148,NcrRootShiftOnly
+	@n 95,0,KitHiHatOpen,97,22,NcrNone
 	beat
-	n 3,60,108,3,1,1
-	@n 1,1,36,111,4,1,1
-	n 2,60,92,104,0,1
-	n 2,55,106,95,0,1
-	n 2,52,93,89,0,1
-	@n 3,0,SD1,127,49,0,0
-	n 2,36,72,83,0,1
-	@n 7,4,64,111,22,0,1
-	@n 8,4,67,125,21,0,1
-	n 4,72,102,25,0,1
+	n 3,60,108,131,NcrRootShiftOnly
+	@n 1,1,36,111,132,NcrRootShiftOnly
+	n 2,60,92,104,NcrRootShiftOnly
+	n 2,55,106,95,NcrRootShiftOnly
+	n 2,52,93,89,NcrRootShiftOnly
+	@n 3,0,KitSnareDrum1,127,49,NcrNone
+	n 2,36,72,83,NcrRootShiftOnly
+	@n 7,4,64,111,22,NcrRootShiftOnly
+	@n 8,4,67,125,21,NcrRootShiftOnly
+	n 4,72,102,25,NcrRootShiftOnly
 	@mod 32,5,7
 	mod 5,12
 	@mod 36,5,19
@@ -2137,595 +2137,595 @@ Style_Jive_Intro2A:	# 4 bars of 4 beats
 	@mod 60,5,55
 	@mod 66,5,57
 	mod 5,60
-	@n 69,0,BD2,82,26,0,0
+	@n 69,0,KitBassDrum2,82,26,NcrNone
 	@mod 71,5,61
 	mod 5,62
 	@mod 88,5,57
 	@mod 94,5,53
 	mod 5,47
 	beat
-	n 2,43,83,49,0,1
-	@n 2,0,BD1,100,40,0,0
+	n 2,43,83,49,NcrRootShiftOnly
+	@n 2,0,KitBassDrum1,100,40,NcrNone
 	@mod 4,5,40
 	@mod 8,5,31
 	mod 5,21
 	@mod 12,5,10
 	@mod 16,5,0
-	@n 62,2,36,94,44,0,1
-	n 2,72,112,28,0,1
-	n 2,67,126,24,0,1
-	n 2,64,115,23,0,1
-	@n 66,0,HHO,127,36,0,0
-	n 4,67,127,21,0,1
-	n 4,72,112,25,0,1
-	n 4,64,115,20,0,1
-	n 5,64,117,28,0,1
-	@n 67,1,36,113,31,0,1
-	n 3,72,105,29,0,1
-	@n 68,0,SD1,127,39,0,0
-	n 3,60,93,24,0,1
-	@n 75,4,70,67,1,0,1
+	@n 62,2,36,94,44,NcrRootShiftOnly
+	n 2,72,112,28,NcrRootShiftOnly
+	n 2,67,126,24,NcrRootShiftOnly
+	n 2,64,115,23,NcrRootShiftOnly
+	@n 66,0,KitHiHatOpen,127,36,NcrNone
+	n 4,67,127,21,NcrRootShiftOnly
+	n 4,72,112,25,NcrRootShiftOnly
+	n 4,64,115,20,NcrRootShiftOnly
+	n 5,64,117,28,NcrRootShiftOnly
+	@n 67,1,36,113,31,NcrRootShiftOnly
+	n 3,72,105,29,NcrRootShiftOnly
+	@n 68,0,KitSnareDrum1,127,39,NcrNone
+	n 3,60,93,24,NcrRootShiftOnly
+	@n 75,4,70,67,1,NcrRootShiftOnly
 	beat
-	@n 5,0,HHC,86,32,0,0
+	@n 5,0,KitHiHatClosed,86,32,NcrNone
 	beat
 	end
-	var_end	Style_Jive_Intro2A
-Style_Jive_Intro2B:	# 4 bars of 4 beats
-	var_head	Style_Jive_Intro2B, 4, 4, 0xff, 0xff
-	mode 1,11
+	var_end	Style_Jive_Ending1Major
+Style_Jive_Ending1Minor:	# 4 bars of 4 beats
+	var_head	Style_Jive_Ending1Minor, 4, 4, 0xff, 0xff
+	fold_root 1,11
 	pan 3,90
-	cc 3,81,64
-	cc 3,92,41
-	cc 4,92,21
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
-	var_events	Style_Jive_Intro2B
+	eq_hi_gain 3,64
+	multi 3,41
+	multi 4,21
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
+	var_events	Style_Jive_Ending1Minor
 	beat
-	n 0,CRASH2,88,18,0,0
-	n 0,HHO,105,25,0,0
-	@n 2,2,48,102,58,1,1
-	@n 3,0,BD1,122,30,0,0
-	n 1,48,107,34,1,1
-	@n 68,2,55,111,19,0,1
+	n 0,KitCrashCymbal2,88,18,NcrNone
+	n 0,KitHiHatOpen,105,25,NcrNone
+	@n 2,2,48,102,186,NcrRootShiftOnly
+	@n 3,0,KitBassDrum1,122,30,NcrNone
+	n 1,48,107,162,NcrRootShiftOnly
+	@n 68,2,55,111,19,NcrRootShiftOnly
 	beat
-	n 0,TAMB,95,18,0,0
-	n 0,HHC,58,19,0,0
-	@n 2,2,60,100,42,0,1
-	@n 3,0,SSTICK,111,20,0,0
-	@n 4,3,63,81,52,1,1
-	@n 68,0,HHC,50,16,0,0
-	n 2,62,118,17,0,1
-	@n 95,0,HHO,100,25,0,0
+	n 0,KitTambourine,95,18,NcrNone
+	n 0,KitHiHatClosed,58,19,NcrNone
+	@n 2,2,60,100,42,NcrRootShiftOnly
+	@n 3,0,KitRimShot,111,20,NcrNone
+	@n 4,3,63,81,180,NcrRootShiftOnly
+	@n 68,0,KitHiHatClosed,50,16,NcrNone
+	n 2,62,118,17,NcrRootShiftOnly
+	@n 95,0,KitHiHatOpen,100,25,NcrNone
 	beat
-	@n 2,1,47,109,22,1,1
-	n 2,47,70,35,1,1
-	@n 3,0,BD1,118,28,0,0
-	@n 4,2,63,114,50,0,1
-	@n 69,2,62,101,18,0,1
-	@n 93,3,65,101,74,0,1
+	@n 2,1,47,109,150,NcrRootShiftOnly
+	n 2,47,70,163,NcrRootShiftOnly
+	@n 3,0,KitBassDrum1,118,28,NcrNone
+	@n 4,2,63,114,50,NcrRootShiftOnly
+	@n 69,2,62,101,18,NcrRootShiftOnly
+	@n 93,3,65,101,74,NcrRootShiftOnly
 	beat
-	n 0,TAMB,97,23,0,0
-	@n 1,0,HHC,44,16,0,0
-	@n 4,0,SSTICK,124,24,0,0
-	n 2,60,111,33,0,1
+	n 0,KitTambourine,97,23,NcrNone
+	@n 1,0,KitHiHatClosed,44,16,NcrNone
+	@n 4,0,KitRimShot,124,24,NcrNone
+	n 2,60,111,33,NcrRootShiftOnly
 	@bend 87,3,0,63
-	@n 95,0,HHO,99,31,0,0
+	@n 95,0,KitHiHatOpen,99,31,NcrNone
 	beat
-	n 1,46,111,3,1,1
-	n 3,67,96,22,2,1
-	@n 1,2,63,116,125,0,1
-	n 2,67,95,125,0,1
+	n 1,46,111,131,NcrRootShiftOnly
+	n 3,67,96,278,NcrRootShiftOnly
+	@n 1,2,63,116,125,NcrRootShiftOnly
+	n 2,67,95,125,NcrRootShiftOnly
 	bend 3,0,62
-	@n 2,2,46,99,6,1,1
-	n 2,58,101,124,0,1
-	@n 4,0,BD1,112,28,0,0
-	@n 5,4,70,108,22,0,1
-	n 4,72,112,22,0,1
-	n 4,75,116,25,0,1
+	@n 2,2,46,99,134,NcrRootShiftOnly
+	n 2,58,101,124,NcrRootShiftOnly
+	@n 4,0,KitBassDrum1,112,28,NcrNone
+	@n 5,4,70,108,22,NcrRootShiftOnly
+	n 4,72,112,22,NcrRootShiftOnly
+	n 4,75,116,25,NcrRootShiftOnly
 	@bend 13,3,0,61
 	@bend 46,3,0,62
 	@bend 61,3,0,63
 	@bend 74,3,0,64
 	@bend 89,5,0,61
-	@n 95,5,63,111,64,1,1
+	@n 95,5,63,111,192,NcrRootShiftOnly
 	bend 5,0,61
 	beat
-	n 0,TAMB,97,21,0,0
-	@n 1,0,HHC,51,20,0,0
-	n 0,SSTICK,126,27,0,0
+	n 0,KitTambourine,97,21,NcrNone
+	@n 1,0,KitHiHatClosed,51,20,NcrNone
+	n 0,KitRimShot,126,27,NcrNone
 	@bend 30,3,0,63
 	@bend 31,5,0,62
 	@bend 34,3,0,64
 	@bend 51,5,0,63
-	@n 63,1,45,92,108,0,1
-	@n 67,4,70,113,21,0,1
-	n 4,72,115,21,0,1
-	n 4,75,111,21,0,1
-	@n 68,0,HHO,95,31,0,0
-	n 2,45,99,42,0,1
-	n 2,63,127,25,0,1
-	n 2,67,108,31,0,1
-	@n 70,2,57,107,23,0,1
+	@n 63,1,45,92,108,NcrRootShiftOnly
+	@n 67,4,70,113,21,NcrRootShiftOnly
+	n 4,72,115,21,NcrRootShiftOnly
+	n 4,75,111,21,NcrRootShiftOnly
+	@n 68,0,KitHiHatOpen,95,31,NcrNone
+	n 2,45,99,42,NcrRootShiftOnly
+	n 2,63,127,25,NcrRootShiftOnly
+	n 2,67,108,31,NcrRootShiftOnly
+	@n 70,2,57,107,23,NcrRootShiftOnly
 	@bend 79,5,0,64
-	@n 95,0,BD1,112,49,0,0
+	@n 95,0,KitBassDrum1,112,49,NcrNone
 	beat
 	@bend 53,5,0,63
 	@bend 62,5,0,64
-	@n 66,1,40,71,13,0,1
-	@n 68,0,SD1,82,23,0,0
-	n 0,HHO,90,24,0,0
-	@n 94,1,33,82,84,0,1
-	@n 95,0,HHC,66,23,0,0
-	n 3,63,90,43,0,1
-	n 5,60,89,81,0,1
+	@n 66,1,40,71,13,NcrRootShiftOnly
+	@n 68,0,KitSnareDrum1,82,23,NcrNone
+	n 0,KitHiHatOpen,90,24,NcrNone
+	@n 94,1,33,82,84,NcrRootShiftOnly
+	@n 95,0,KitHiHatClosed,66,23,NcrNone
+	n 3,63,90,43,NcrRootShiftOnly
+	n 5,60,89,81,NcrRootShiftOnly
 	beat
-	n 0,TAMB,89,22,0,0
-	@n 7,0,SD1,127,32,0,0
-	@n 66,2,44,83,69,1,1
-	@n 68,2,54,90,58,1,1
-	n 2,66,122,89,0,1
-	n 2,63,122,83,0,1
-	@n 69,0,HHC,38,14,0,0
-	@n 70,0,SD1,89,20,0,0
+	n 0,KitTambourine,89,22,NcrNone
+	@n 7,0,KitSnareDrum1,127,32,NcrNone
+	@n 66,2,44,83,197,NcrRootShiftOnly
+	@n 68,2,54,90,186,NcrRootShiftOnly
+	n 2,66,122,89,NcrRootShiftOnly
+	n 2,63,122,83,NcrRootShiftOnly
+	@n 69,0,KitHiHatClosed,38,14,NcrNone
+	@n 70,0,KitSnareDrum1,89,20,NcrNone
 	beat
-	n 0,HHO,89,28,0,0
-	@n 1,1,32,99,69,0,1
-	@n 2,0,BD1,117,55,0,0
+	n 0,KitHiHatOpen,89,28,NcrNone
+	@n 1,1,32,99,69,NcrRootShiftOnly
+	@n 2,0,KitBassDrum1,117,55,NcrNone
 	@bend 4,3,0,61
-	n 5,60,103,59,1,1
-	@n 5,3,66,120,2,1,1
-	@n 7,4,69,104,22,0,1
-	n 4,72,104,25,0,1
-	n 4,75,95,24,0,1
+	n 5,60,103,187,NcrRootShiftOnly
+	@n 5,3,66,120,130,NcrRootShiftOnly
+	@n 7,4,69,104,22,NcrRootShiftOnly
+	n 4,72,104,25,NcrRootShiftOnly
+	n 4,75,95,24,NcrRootShiftOnly
 	@bend 8,3,0,61
 	@bend 41,3,0,62
 	@bend 51,3,0,63
-	@n 72,2,60,99,18,0,1
+	@n 72,2,60,99,18,NcrRootShiftOnly
 	@bend 75,3,0,64
 	beat
-	n 0,TAMB,86,24,0,0
-	@n 1,0,HHC,61,18,0,0
-	@n 2,0,SD1,123,27,0,0
-	n 1,32,99,72,0,1
-	@n 7,2,63,122,36,0,1
+	n 0,KitTambourine,86,24,NcrNone
+	@n 1,0,KitHiHatClosed,61,18,NcrNone
+	@n 2,0,KitSnareDrum1,123,27,NcrNone
+	n 1,32,99,72,NcrRootShiftOnly
+	@n 7,2,63,122,36,NcrRootShiftOnly
 	@bend 16,3,0,63
 	@bend 20,3,0,62
 	@bend 35,3,0,64
-	@n 66,3,65,111,119,0,1
-	@n 68,0,HHC,51,19,0,0
-	n 2,66,116,23,0,1
-	@n 95,2,43,81,6,1,1
+	@n 66,3,65,111,119,NcrRootShiftOnly
+	@n 68,0,KitHiHatClosed,51,19,NcrNone
+	n 2,66,116,23,NcrRootShiftOnly
+	@n 95,2,43,81,134,NcrRootShiftOnly
 	beat
-	@n 1,0,HHO,93,21,0,0
-	n 2,53,53,26,1,1
-	@n 2,1,31,86,75,0,1
-	@n 3,0,BD1,121,39,0,0
-	@n 4,5,59,115,50,1,1
-	@n 6,4,67,101,24,0,1
-	n 4,71,108,24,0,1
-	n 4,75,106,24,0,1
-	@n 8,2,65,113,25,0,1
-	@n 32,2,66,83,23,0,1
+	@n 1,0,KitHiHatOpen,93,21,NcrNone
+	n 2,53,53,154,NcrRootShiftOnly
+	@n 2,1,31,86,75,NcrRootShiftOnly
+	@n 3,0,KitBassDrum1,121,39,NcrNone
+	@n 4,5,59,115,178,NcrRootShiftOnly
+	@n 6,4,67,101,24,NcrRootShiftOnly
+	n 4,71,108,24,NcrRootShiftOnly
+	n 4,75,106,24,NcrRootShiftOnly
+	@n 8,2,65,113,25,NcrRootShiftOnly
+	@n 32,2,66,83,23,NcrRootShiftOnly
 	@bend 59,3,0,63
-	@n 61,2,65,96,23,0,1
+	@n 61,2,65,96,23,NcrRootShiftOnly
 	@bend 68,3,0,62
 	@bend 77,3,0,64
-	@n 95,0,HHC,74,22,0,0
+	@n 95,0,KitHiHatClosed,74,22,NcrNone
 	beat
-	n 0,TAMB,99,21,0,0
-	@n 2,0,SD1,126,27,0,0
-	n 1,35,89,68,0,1
-	@n 4,2,63,120,38,0,1
-	n 3,63,97,42,0,1
-	@n 67,0,HHC,46,23,0,0
-	@n 72,2,43,59,13,0,1
-	@n 95,0,HHO,97,22,0,0
-	n 5,60,111,126,0,1
+	n 0,KitTambourine,99,21,NcrNone
+	@n 2,0,KitSnareDrum1,126,27,NcrNone
+	n 1,35,89,68,NcrRootShiftOnly
+	@n 4,2,63,120,38,NcrRootShiftOnly
+	n 3,63,97,42,NcrRootShiftOnly
+	@n 67,0,KitHiHatClosed,46,23,NcrNone
+	@n 72,2,43,59,13,NcrRootShiftOnly
+	@n 95,0,KitHiHatOpen,97,22,NcrNone
+	n 5,60,111,126,NcrRootShiftOnly
 	beat
-	@n 1,1,36,98,58,0,1
-	n 2,60,116,121,0,1
-	@n 3,0,SD1,127,49,0,0
-	@n 4,3,60,92,98,0,1
-	n 4,70,111,27,0,1
-	n 4,72,110,27,0,1
-	n 4,75,101,27,0,1
-	@n 5,2,48,102,53,0,1
-	@n 62,2,43,79,29,0,1
-	@n 65,1,31,73,19,0,1
-	@n 69,0,BD2,82,26,0,0
-	@n 95,2,47,110,54,0,1
+	@n 1,1,36,98,58,NcrRootShiftOnly
+	n 2,60,116,121,NcrRootShiftOnly
+	@n 3,0,KitSnareDrum1,127,49,NcrNone
+	@n 4,3,60,92,98,NcrRootShiftOnly
+	n 4,70,111,27,NcrRootShiftOnly
+	n 4,72,110,27,NcrRootShiftOnly
+	n 4,75,101,27,NcrRootShiftOnly
+	@n 5,2,48,102,53,NcrRootShiftOnly
+	@n 62,2,43,79,29,NcrRootShiftOnly
+	@n 65,1,31,73,19,NcrRootShiftOnly
+	@n 69,0,KitBassDrum2,82,26,NcrNone
+	@n 95,2,47,110,54,NcrRootShiftOnly
 	beat
-	@n 2,0,BD1,100,40,0,0
-	n 1,35,74,48,0,1
-	@n 61,3,60,113,36,0,1
-	@n 64,5,60,127,33,0,1
-	@n 65,1,36,115,32,0,1
-	@n 66,0,HHO,127,36,0,0
-	@n 67,2,48,119,34,0,1
-	n 2,72,107,40,0,1
-	n 4,70,120,28,0,1
-	n 4,72,121,29,0,1
-	n 4,75,118,26,0,1
-	@n 68,0,SD1,127,39,0,0
-	n 2,60,115,29,0,1
+	@n 2,0,KitBassDrum1,100,40,NcrNone
+	n 1,35,74,48,NcrRootShiftOnly
+	@n 61,3,60,113,36,NcrRootShiftOnly
+	@n 64,5,60,127,33,NcrRootShiftOnly
+	@n 65,1,36,115,32,NcrRootShiftOnly
+	@n 66,0,KitHiHatOpen,127,36,NcrNone
+	@n 67,2,48,119,34,NcrRootShiftOnly
+	n 2,72,107,40,NcrRootShiftOnly
+	n 4,70,120,28,NcrRootShiftOnly
+	n 4,72,121,29,NcrRootShiftOnly
+	n 4,75,118,26,NcrRootShiftOnly
+	@n 68,0,KitSnareDrum1,127,39,NcrNone
+	n 2,60,115,29,NcrRootShiftOnly
 	beat
-	@n 5,0,HHC,86,32,0,0
+	@n 5,0,KitHiHatClosed,86,32,NcrNone
 	beat
 	end
-	var_end	Style_Jive_Intro2B
-Style_Jive_Ending2A:	# 4 bars of 4 beats
-	var_head	Style_Jive_Ending2A, 4, 4, 0xff, 0xff
-	mode 1,11
+	var_end	Style_Jive_Ending1Minor
+Style_Jive_Ending2Major:	# 4 bars of 4 beats
+	var_head	Style_Jive_Ending2Major, 4, 4, 0xff, 0xff
+	fold_root 1,11
 	pan 3,88
-	cc 3,81,64
-	cc 3,92,41
+	eq_hi_gain 3,64
+	multi 3,41
 	pc 3,0x43,0x58,0x20
-	cc 4,92,21
+	multi 4,21
 	pc 4,0x38,0x50,0x20
 	vol 5,88
 	pan 5,17
 	pc 5,0x3b,0x00,0x20
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
-	var_events	Style_Jive_Ending2A
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
+	var_events	Style_Jive_Ending2Major
 	beat
-	n 0,CRASH2,88,18,0,0
-	n 0,BD1,111,21,0,0
-	n 0,TAMB,89,33,0,0
-	n 1,38,108,66,0,1
-	@n 2,2,38,116,80,0,1
-	@n 4,2,50,117,83,0,1
-	@n 65,2,60,89,21,0,1
-	n 2,62,111,21,0,1
-	n 2,65,113,21,0,1
-	@n 66,2,69,86,24,0,1
-	@n 72,0,TAMB,57,24,0,0
-	@n 95,2,40,93,88,0,1
+	n 0,KitCrashCymbal2,88,18,NcrNone
+	n 0,KitBassDrum1,111,21,NcrNone
+	n 0,KitTambourine,89,33,NcrNone
+	n 1,38,108,66,NcrRootShiftOnly
+	@n 2,2,38,116,80,NcrRootShiftOnly
+	@n 4,2,50,117,83,NcrRootShiftOnly
+	@n 65,2,60,89,21,NcrRootShiftOnly
+	n 2,62,111,21,NcrRootShiftOnly
+	n 2,65,113,21,NcrRootShiftOnly
+	@n 66,2,69,86,24,NcrRootShiftOnly
+	@n 72,0,KitTambourine,57,24,NcrNone
+	@n 95,2,40,93,88,NcrRootShiftOnly
 	beat
-	n 0,TAMB,89,31,0,0
-	n 0,SD1,116,22,0,0
-	n 0,RBELL,92,23,0,0
-	n 0,HHP,106,25,0,0
-	n 1,40,86,78,0,1
-	@n 5,2,52,93,77,0,1
-	@n 72,0,TAMB,59,23,0,0
-	@n 95,2,60,98,27,0,1
+	n 0,KitTambourine,89,31,NcrNone
+	n 0,KitSnareDrum1,116,22,NcrNone
+	n 0,KitRideBell,92,23,NcrNone
+	n 0,KitHiHatPedal,106,25,NcrNone
+	n 1,40,86,78,NcrRootShiftOnly
+	@n 5,2,52,93,77,NcrRootShiftOnly
+	@n 72,0,KitTambourine,59,23,NcrNone
+	@n 95,2,60,98,27,NcrRootShiftOnly
 	beat
-	n 0,TAMB,89,31,0,0
-	n 0,RBELL,72,24,0,0
-	n 0,BD1,110,23,0,0
-	n 1,41,88,74,0,1
-	@n 1,2,69,95,32,0,1
-	n 2,65,118,28,0,1
-	n 2,62,112,28,0,1
-	n 2,53,95,82,0,1
-	@n 3,2,41,99,82,0,1
-	@n 7,3,72,105,20,0,1
-	n 3,77,107,21,0,1
-	@n 48,0,TAMB,45,24,0,0
-	n 0,SD1,64,19,0,0
+	n 0,KitTambourine,89,31,NcrNone
+	n 0,KitRideBell,72,24,NcrNone
+	n 0,KitBassDrum1,110,23,NcrNone
+	n 1,41,88,74,NcrRootShiftOnly
+	@n 1,2,69,95,32,NcrRootShiftOnly
+	n 2,65,118,28,NcrRootShiftOnly
+	n 2,62,112,28,NcrRootShiftOnly
+	n 2,53,95,82,NcrRootShiftOnly
+	@n 3,2,41,99,82,NcrRootShiftOnly
+	@n 7,3,72,105,20,NcrRootShiftOnly
+	n 3,77,107,21,NcrRootShiftOnly
+	@n 48,0,KitTambourine,45,24,NcrNone
+	n 0,KitSnareDrum1,64,19,NcrNone
 	beat
-	n 0,RBELL,79,24,0,0
-	n 0,TAMB,90,35,0,0
-	n 0,SD1,123,37,0,0
-	n 0,HHP,114,24,0,0
-	n 1,42,114,74,0,1
-	@n 1,2,54,93,82,0,1
-	@n 2,2,42,91,83,0,1
-	@n 48,0,TAMB,52,24,0,0
+	n 0,KitRideBell,79,24,NcrNone
+	n 0,KitTambourine,90,35,NcrNone
+	n 0,KitSnareDrum1,123,37,NcrNone
+	n 0,KitHiHatPedal,114,24,NcrNone
+	n 1,42,114,74,NcrRootShiftOnly
+	@n 1,2,54,93,82,NcrRootShiftOnly
+	@n 2,2,42,91,83,NcrRootShiftOnly
+	@n 48,0,KitTambourine,52,24,NcrNone
 	beat
-	n 0,BD1,112,23,0,0
-	n 0,RBELL,93,33,0,0
-	n 0,TAMB,87,34,0,0
-	n 1,43,106,71,0,1
-	@n 1,2,55,92,77,0,1
-	@n 2,2,64,113,36,0,1
-	@n 3,2,43,101,80,0,1
-	n 2,67,100,30,0,1
-	n 2,59,111,25,0,1
-	n 2,53,105,22,0,1
-	@n 5,3,71,91,27,0,1
-	@n 6,3,77,111,28,0,1
-	@n 72,0,TAMB,52,24,0,0
+	n 0,KitBassDrum1,112,23,NcrNone
+	n 0,KitRideBell,93,33,NcrNone
+	n 0,KitTambourine,87,34,NcrNone
+	n 1,43,106,71,NcrRootShiftOnly
+	@n 1,2,55,92,77,NcrRootShiftOnly
+	@n 2,2,64,113,36,NcrRootShiftOnly
+	@n 3,2,43,101,80,NcrRootShiftOnly
+	n 2,67,100,30,NcrRootShiftOnly
+	n 2,59,111,25,NcrRootShiftOnly
+	n 2,53,105,22,NcrRootShiftOnly
+	@n 5,3,71,91,27,NcrRootShiftOnly
+	@n 6,3,77,111,28,NcrRootShiftOnly
+	@n 72,0,KitTambourine,52,24,NcrNone
 	beat
-	n 0,RBELL,88,38,0,0
-	n 0,SD1,121,28,0,0
-	n 0,HHP,108,17,0,0
-	n 0,TAMB,97,39,0,0
-	n 1,41,109,76,0,1
-	@n 1,2,53,70,79,0,1
-	@n 3,2,41,88,69,0,1
-	@n 63,3,71,94,34,0,1
-	n 3,77,115,23,0,1
-	@n 65,2,59,115,25,1,1
-	n 2,64,121,26,1,1
-	@n 66,2,53,107,22,1,1
-	n 2,67,100,19,1,1
-	@n 72,0,RBELL,57,20,0,0
-	n 0,TAMB,57,24,0,0
-	@n 93,2,40,83,86,0,1
+	n 0,KitRideBell,88,38,NcrNone
+	n 0,KitSnareDrum1,121,28,NcrNone
+	n 0,KitHiHatPedal,108,17,NcrNone
+	n 0,KitTambourine,97,39,NcrNone
+	n 1,41,109,76,NcrRootShiftOnly
+	@n 1,2,53,70,79,NcrRootShiftOnly
+	@n 3,2,41,88,69,NcrRootShiftOnly
+	@n 63,3,71,94,34,NcrRootShiftOnly
+	n 3,77,115,23,NcrRootShiftOnly
+	@n 65,2,59,115,153,NcrRootShiftOnly
+	n 2,64,121,154,NcrRootShiftOnly
+	@n 66,2,53,107,150,NcrRootShiftOnly
+	n 2,67,100,147,NcrRootShiftOnly
+	@n 72,0,KitRideBell,57,20,NcrNone
+	n 0,KitTambourine,57,24,NcrNone
+	@n 93,2,40,83,86,NcrRootShiftOnly
 	beat
-	n 0,RBELL,91,39,0,0
-	n 0,TAMB,74,30,0,0
-	n 0,BD1,111,24,0,0
-	n 1,40,88,79,0,1
-	n 2,52,66,94,0,1
-	@n 48,0,TAMB,54,21,0,0
-	@n 72,0,SD1,79,17,0,0
-	@n 93,2,38,101,52,0,1
+	n 0,KitRideBell,91,39,NcrNone
+	n 0,KitTambourine,74,30,NcrNone
+	n 0,KitBassDrum1,111,24,NcrNone
+	n 1,40,88,79,NcrRootShiftOnly
+	n 2,52,66,94,NcrRootShiftOnly
+	@n 48,0,KitTambourine,54,21,NcrNone
+	@n 72,0,KitSnareDrum1,79,17,NcrNone
+	@n 93,2,38,101,52,NcrRootShiftOnly
 	beat
-	n 0,RBELL,81,40,0,0
-	n 0,SD1,123,36,0,0
-	n 0,HHP,109,18,0,0
-	n 0,TAMB,108,36,0,0
-	n 1,38,101,76,0,1
-	@n 48,0,SD1,66,19,0,0
-	n 0,TAMB,42,26,0,0
-	@n 74,2,48,61,15,0,1
+	n 0,KitRideBell,81,40,NcrNone
+	n 0,KitSnareDrum1,123,36,NcrNone
+	n 0,KitHiHatPedal,109,18,NcrNone
+	n 0,KitTambourine,108,36,NcrNone
+	n 1,38,101,76,NcrRootShiftOnly
+	@n 48,0,KitSnareDrum1,66,19,NcrNone
+	n 0,KitTambourine,42,26,NcrNone
+	@n 74,2,48,61,15,NcrRootShiftOnly
 	beat
-	n 0,BD1,109,23,0,0
-	n 0,SPLASH,100,25,0,0
-	n 0,TAMB,76,34,0,0
-	n 1,36,93,78,0,1
-	@n 1,5,76,101,70,0,1
-	@n 2,2,60,106,58,0,1
-	@n 5,2,64,117,64,0,1
-	@n 9,3,72,127,75,0,1
-	@n 68,2,48,77,19,0,1
-	@n 93,3,71,95,58,0,1
-	@n 94,5,75,104,47,0,1
+	n 0,KitBassDrum1,109,23,NcrNone
+	n 0,KitSplashCymbal,100,25,NcrNone
+	n 0,KitTambourine,76,34,NcrNone
+	n 1,36,93,78,NcrRootShiftOnly
+	@n 1,5,76,101,70,NcrRootShiftOnly
+	@n 2,2,60,106,58,NcrRootShiftOnly
+	@n 5,2,64,117,64,NcrRootShiftOnly
+	@n 9,3,72,127,75,NcrRootShiftOnly
+	@n 68,2,48,77,19,NcrRootShiftOnly
+	@n 93,3,71,95,58,NcrRootShiftOnly
+	@n 94,5,75,104,47,NcrRootShiftOnly
 	beat
-	n 0,HHP,103,21,0,0
-	n 2,59,85,51,0,1
-	n 2,63,122,46,0,1
-	@n 61,3,72,88,34,0,1
-	@n 63,2,64,95,33,0,1
-	n 5,76,99,39,0,1
-	@n 95,2,60,86,40,0,1
+	n 0,KitHiHatPedal,103,21,NcrNone
+	n 2,59,85,51,NcrRootShiftOnly
+	n 2,63,122,46,NcrRootShiftOnly
+	@n 61,3,72,88,34,NcrRootShiftOnly
+	@n 63,2,64,95,33,NcrRootShiftOnly
+	n 5,76,99,39,NcrRootShiftOnly
+	@n 95,2,60,86,40,NcrRootShiftOnly
 	beat
-	@n 2,5,72,83,47,0,1
-	@n 3,3,67,91,45,0,1
-	@n 55,3,64,95,24,0,1
-	@n 57,2,57,91,25,0,1
-	@n 64,5,67,72,28,0,1
-	@n 89,2,55,94,66,0,1
-	@n 93,3,60,88,48,0,1
-	@n 95,5,64,72,52,0,1
+	@n 2,5,72,83,47,NcrRootShiftOnly
+	@n 3,3,67,91,45,NcrRootShiftOnly
+	@n 55,3,64,95,24,NcrRootShiftOnly
+	@n 57,2,57,91,25,NcrRootShiftOnly
+	@n 64,5,67,72,28,NcrRootShiftOnly
+	@n 89,2,55,94,66,NcrRootShiftOnly
+	@n 93,3,60,88,48,NcrRootShiftOnly
+	@n 95,5,64,72,52,NcrRootShiftOnly
 	beat
-	n 0,HHP,96,19,0,0
-	@n 61,2,48,70,18,0,1
-	@n 64,5,67,76,19,0,1
-	@n 95,2,76,89,74,0,1
-	n 2,79,81,58,0,1
+	n 0,KitHiHatPedal,96,19,NcrNone
+	@n 61,2,48,70,18,NcrRootShiftOnly
+	@n 64,5,67,76,19,NcrRootShiftOnly
+	@n 95,2,76,89,74,NcrRootShiftOnly
+	n 2,79,81,58,NcrRootShiftOnly
 	beat
-	@n 2,2,60,113,53,0,1
-	n 2,64,121,73,0,1
-	n 5,76,94,50,0,1
-	@n 4,3,72,111,52,0,1
-	@n 67,2,48,85,15,0,1
-	@n 69,3,60,56,16,0,1
-	@n 95,2,59,89,53,0,1
-	n 3,71,110,50,0,1
+	@n 2,2,60,113,53,NcrRootShiftOnly
+	n 2,64,121,73,NcrRootShiftOnly
+	n 5,76,94,50,NcrRootShiftOnly
+	@n 4,3,72,111,52,NcrRootShiftOnly
+	@n 67,2,48,85,15,NcrRootShiftOnly
+	@n 69,3,60,56,16,NcrRootShiftOnly
+	@n 95,2,59,89,53,NcrRootShiftOnly
+	n 3,71,110,50,NcrRootShiftOnly
 	beat
-	n 0,HHP,114,21,0,0
-	@n 1,2,78,58,46,0,1
-	n 2,75,74,54,0,1
-	n 5,75,104,47,0,1
-	@n 3,2,63,120,45,0,1
-	@n 61,3,72,122,28,0,1
-	@n 62,5,76,118,35,0,1
-	@n 66,2,79,76,33,0,1
-	n 2,76,94,35,0,1
-	@n 67,2,60,107,22,0,1
-	n 2,64,111,23,0,1
+	n 0,KitHiHatPedal,114,21,NcrNone
+	@n 1,2,78,58,46,NcrRootShiftOnly
+	n 2,75,74,54,NcrRootShiftOnly
+	n 5,75,104,47,NcrRootShiftOnly
+	@n 3,2,63,120,45,NcrRootShiftOnly
+	@n 61,3,72,122,28,NcrRootShiftOnly
+	@n 62,5,76,118,35,NcrRootShiftOnly
+	@n 66,2,79,76,33,NcrRootShiftOnly
+	n 2,76,94,35,NcrRootShiftOnly
+	@n 67,2,60,107,22,NcrRootShiftOnly
+	n 2,64,111,23,NcrRootShiftOnly
 	beat
-	@n 32,2,62,74,15,0,1
-	@n 39,2,64,59,20,0,1
-	@n 44,0,25,66,43,0,0
-	@n 55,2,65,72,19,0,1
-	@n 70,2,67,69,18,0,1
-	@n 82,2,69,87,18,0,1
-	@n 95,2,71,75,15,0,1
+	@n 32,2,62,74,15,NcrRootShiftOnly
+	@n 39,2,64,59,20,NcrRootShiftOnly
+	@n 44,0,KitSnareRoll,66,43,NcrNone
+	@n 55,2,65,72,19,NcrRootShiftOnly
+	@n 70,2,67,69,18,NcrRootShiftOnly
+	@n 82,2,69,87,18,NcrRootShiftOnly
+	@n 95,2,71,75,15,NcrRootShiftOnly
 	beat
-	n 0,BD1,95,24,0,0
-	n 0,SD2,127,28,0,0
-	n 0,SPLASH,127,30,0,0
-	n 0,TAMB,104,30,0,0
-	n 1,36,126,47,0,1
-	@n 3,2,24,119,55,0,1
-	@n 4,4,72,106,52,0,1
-	n 4,60,109,52,0,1
-	n 4,84,106,52,0,1
-	@n 6,2,36,118,55,0,1
-	n 3,48,117,39,0,1
-	@n 9,2,60,123,44,0,1
-	n 2,72,117,49,0,1
-	n 3,60,109,32,0,1
-	n 3,72,108,41,0,1
-	@n 48,0,TAMB,64,21,0,0
+	n 0,KitBassDrum1,95,24,NcrNone
+	n 0,KitSnareDrum2,127,28,NcrNone
+	n 0,KitSplashCymbal,127,30,NcrNone
+	n 0,KitTambourine,104,30,NcrNone
+	n 1,36,126,47,NcrRootShiftOnly
+	@n 3,2,24,119,55,NcrRootShiftOnly
+	@n 4,4,72,106,52,NcrRootShiftOnly
+	n 4,60,109,52,NcrRootShiftOnly
+	n 4,84,106,52,NcrRootShiftOnly
+	@n 6,2,36,118,55,NcrRootShiftOnly
+	n 3,48,117,39,NcrRootShiftOnly
+	@n 9,2,60,123,44,NcrRootShiftOnly
+	n 2,72,117,49,NcrRootShiftOnly
+	n 3,60,109,32,NcrRootShiftOnly
+	n 3,72,108,41,NcrRootShiftOnly
+	@n 48,0,KitTambourine,64,21,NcrNone
 	end
-	var_end	Style_Jive_Ending2A
-Style_Jive_Ending2B:	# 4 bars of 4 beats
-	var_head	Style_Jive_Ending2B, 4, 4, 0xff, 0xff
-	mode 1,11
+	var_end	Style_Jive_Ending2Major
+Style_Jive_Ending2Minor:	# 4 bars of 4 beats
+	var_head	Style_Jive_Ending2Minor, 4, 4, 0xff, 0xff
+	fold_root 1,11
 	pan 3,88
-	cc 3,81,64
-	cc 3,92,41
+	eq_hi_gain 3,64
+	multi 3,41
 	pc 3,0x43,0x58,0x20
-	cc 4,92,21
+	multi 4,21
 	pc 4,0x38,0x50,0x20
 	vol 5,88
 	pan 5,17
 	pc 5,0x3b,0x00,0x20
-	cc 6,82,52
-	cc 6,80,88
-	cc 7,82,52
-	cc 7,80,88
-	var_events	Style_Jive_Ending2B
+	eq_lo_fc 6,52
+	eq_hi_fc 6,88
+	eq_lo_fc 7,52
+	eq_hi_fc 7,88
+	var_events	Style_Jive_Ending2Minor
 	beat
-	n 0,CRASH2,88,18,0,0
-	n 0,BD1,111,21,0,0
-	n 0,TAMB,89,33,0,0
-	@n 3,1,41,108,93,0,1
-	@n 4,2,41,115,89,0,1
-	@n 66,3,65,121,21,0,1
-	n 3,60,111,21,0,1
-	@n 67,2,56,90,17,0,1
-	@n 68,2,65,86,20,0,1
-	n 2,63,64,16,0,1
-	n 2,60,64,16,0,1
-	@n 72,0,TAMB,57,24,0,0
+	n 0,KitCrashCymbal2,88,18,NcrNone
+	n 0,KitBassDrum1,111,21,NcrNone
+	n 0,KitTambourine,89,33,NcrNone
+	@n 3,1,41,108,93,NcrRootShiftOnly
+	@n 4,2,41,115,89,NcrRootShiftOnly
+	@n 66,3,65,121,21,NcrRootShiftOnly
+	n 3,60,111,21,NcrRootShiftOnly
+	@n 67,2,56,90,17,NcrRootShiftOnly
+	@n 68,2,65,86,20,NcrRootShiftOnly
+	n 2,63,64,16,NcrRootShiftOnly
+	n 2,60,64,16,NcrRootShiftOnly
+	@n 72,0,KitTambourine,57,24,NcrNone
 	beat
-	n 0,TAMB,89,31,0,0
-	n 0,SD1,116,22,0,0
-	n 0,RBELL,92,23,0,0
-	n 0,HHP,106,25,0,0
-	@n 2,1,43,97,84,0,1
-	@n 3,2,43,105,85,0,1
-	@n 72,0,TAMB,59,23,0,0
-	@n 95,3,60,113,24,0,1
+	n 0,KitTambourine,89,31,NcrNone
+	n 0,KitSnareDrum1,116,22,NcrNone
+	n 0,KitRideBell,92,23,NcrNone
+	n 0,KitHiHatPedal,106,25,NcrNone
+	@n 2,1,43,97,84,NcrRootShiftOnly
+	@n 3,2,43,105,85,NcrRootShiftOnly
+	@n 72,0,KitTambourine,59,23,NcrNone
+	@n 95,3,60,113,24,NcrRootShiftOnly
 	beat
-	n 0,TAMB,89,31,0,0
-	n 0,RBELL,72,24,0,0
-	n 0,BD1,110,23,0,0
-	n 3,65,126,24,0,1
-	@n 1,1,44,71,98,0,1
-	n 2,63,105,27,0,1
-	n 2,60,101,27,0,1
-	@n 3,2,65,101,25,0,1
-	n 2,56,86,19,0,1
-	@n 4,2,44,103,72,0,1
-	@n 48,0,TAMB,45,24,0,0
-	n 0,SD1,64,19,0,0
+	n 0,KitTambourine,89,31,NcrNone
+	n 0,KitRideBell,72,24,NcrNone
+	n 0,KitBassDrum1,110,23,NcrNone
+	n 3,65,126,24,NcrRootShiftOnly
+	@n 1,1,44,71,98,NcrRootShiftOnly
+	n 2,63,105,27,NcrRootShiftOnly
+	n 2,60,101,27,NcrRootShiftOnly
+	@n 3,2,65,101,25,NcrRootShiftOnly
+	n 2,56,86,19,NcrRootShiftOnly
+	@n 4,2,44,103,72,NcrRootShiftOnly
+	@n 48,0,KitTambourine,45,24,NcrNone
+	n 0,KitSnareDrum1,64,19,NcrNone
 	beat
-	n 0,RBELL,79,24,0,0
-	n 0,TAMB,90,35,0,0
-	n 0,SD1,123,37,0,0
-	n 0,HHP,114,24,0,0
-	n 2,48,109,86,0,1
-	@n 1,1,36,77,89,0,1
-	@n 48,0,TAMB,52,24,0,0
-	@n 95,2,35,82,90,0,1
+	n 0,KitRideBell,79,24,NcrNone
+	n 0,KitTambourine,90,35,NcrNone
+	n 0,KitSnareDrum1,123,37,NcrNone
+	n 0,KitHiHatPedal,114,24,NcrNone
+	n 2,48,109,86,NcrRootShiftOnly
+	@n 1,1,36,77,89,NcrRootShiftOnly
+	@n 48,0,KitTambourine,52,24,NcrNone
+	@n 95,2,35,82,90,NcrRootShiftOnly
 	beat
-	n 0,BD1,112,23,0,0
-	n 0,RBELL,93,33,0,0
-	n 0,TAMB,87,34,0,0
-	n 2,59,89,33,0,1
-	n 2,65,89,35,0,1
-	n 2,62,89,33,0,1
-	@n 1,1,35,81,91,0,1
-	n 2,47,105,80,0,1
-	@n 3,3,67,122,24,0,1
-	n 3,62,115,24,0,1
-	@n 72,0,TAMB,52,24,0,0
-	@n 95,1,36,87,86,0,1
+	n 0,KitBassDrum1,112,23,NcrNone
+	n 0,KitRideBell,93,33,NcrNone
+	n 0,KitTambourine,87,34,NcrNone
+	n 2,59,89,33,NcrRootShiftOnly
+	n 2,65,89,35,NcrRootShiftOnly
+	n 2,62,89,33,NcrRootShiftOnly
+	@n 1,1,35,81,91,NcrRootShiftOnly
+	n 2,47,105,80,NcrRootShiftOnly
+	@n 3,3,67,122,24,NcrRootShiftOnly
+	n 3,62,115,24,NcrRootShiftOnly
+	@n 72,0,KitTambourine,52,24,NcrNone
+	@n 95,1,36,87,86,NcrRootShiftOnly
 	beat
-	n 0,RBELL,88,38,0,0
-	n 0,SD1,121,28,0,0
-	n 0,HHP,108,17,0,0
-	n 0,TAMB,97,39,0,0
-	n 2,48,94,83,0,1
-	n 2,36,74,97,0,1
-	@n 61,3,62,123,27,0,1
-	n 3,67,127,28,0,1
-	@n 62,2,65,119,32,0,1
-	n 2,62,122,25,0,1
-	n 2,59,115,28,0,1
-	@n 72,0,RBELL,57,20,0,0
-	n 0,TAMB,57,24,0,0
-	@n 95,2,50,103,86,0,1
-	n 2,38,70,90,0,1
+	n 0,KitRideBell,88,38,NcrNone
+	n 0,KitSnareDrum1,121,28,NcrNone
+	n 0,KitHiHatPedal,108,17,NcrNone
+	n 0,KitTambourine,97,39,NcrNone
+	n 2,48,94,83,NcrRootShiftOnly
+	n 2,36,74,97,NcrRootShiftOnly
+	@n 61,3,62,123,27,NcrRootShiftOnly
+	n 3,67,127,28,NcrRootShiftOnly
+	@n 62,2,65,119,32,NcrRootShiftOnly
+	n 2,62,122,25,NcrRootShiftOnly
+	n 2,59,115,28,NcrRootShiftOnly
+	@n 72,0,KitRideBell,57,20,NcrNone
+	n 0,KitTambourine,57,24,NcrNone
+	@n 95,2,50,103,86,NcrRootShiftOnly
+	n 2,38,70,90,NcrRootShiftOnly
 	beat
-	n 0,RBELL,91,39,0,0
-	n 0,TAMB,74,30,0,0
-	n 0,BD1,111,24,0,0
-	n 1,38,94,103,0,1
-	@n 48,0,TAMB,54,21,0,0
-	@n 72,0,SD1,79,17,0,0
-	@n 93,2,35,62,74,0,1
-	@n 95,2,47,108,75,0,1
+	n 0,KitRideBell,91,39,NcrNone
+	n 0,KitTambourine,74,30,NcrNone
+	n 0,KitBassDrum1,111,24,NcrNone
+	n 1,38,94,103,NcrRootShiftOnly
+	@n 48,0,KitTambourine,54,21,NcrNone
+	@n 72,0,KitSnareDrum1,79,17,NcrNone
+	@n 93,2,35,62,74,NcrRootShiftOnly
+	@n 95,2,47,108,75,NcrRootShiftOnly
 	beat
-	n 0,RBELL,81,40,0,0
-	n 0,SD1,123,36,0,0
-	n 0,HHP,109,18,0,0
-	n 0,TAMB,108,36,0,0
-	@n 2,1,35,87,84,0,1
-	@n 48,0,SD1,66,19,0,0
-	n 0,TAMB,42,26,0,0
+	n 0,KitRideBell,81,40,NcrNone
+	n 0,KitSnareDrum1,123,36,NcrNone
+	n 0,KitHiHatPedal,109,18,NcrNone
+	n 0,KitTambourine,108,36,NcrNone
+	@n 2,1,35,87,84,NcrRootShiftOnly
+	@n 48,0,KitSnareDrum1,66,19,NcrNone
+	n 0,KitTambourine,42,26,NcrNone
 	beat
-	n 0,BD1,109,23,0,0
-	n 0,SPLASH,100,25,0,0
-	n 0,TAMB,76,34,0,0
-	n 3,72,127,83,0,1
-	@n 2,1,36,105,69,0,1
-	n 2,63,108,79,0,1
-	@n 3,2,60,97,70,0,1
-	@n 4,5,75,126,82,0,1
-	@n 93,5,74,103,64,0,1
-	@n 95,2,62,89,52,0,1
-	n 3,71,115,52,0,1
+	n 0,KitBassDrum1,109,23,NcrNone
+	n 0,KitSplashCymbal,100,25,NcrNone
+	n 0,KitTambourine,76,34,NcrNone
+	n 3,72,127,83,NcrRootShiftOnly
+	@n 2,1,36,105,69,NcrRootShiftOnly
+	n 2,63,108,79,NcrRootShiftOnly
+	@n 3,2,60,97,70,NcrRootShiftOnly
+	@n 4,5,75,126,82,NcrRootShiftOnly
+	@n 93,5,74,103,64,NcrRootShiftOnly
+	@n 95,2,62,89,52,NcrRootShiftOnly
+	n 3,71,115,52,NcrRootShiftOnly
 	beat
-	n 0,HHP,103,21,0,0
-	@n 63,2,63,64,27,0,1
-	@n 65,3,72,94,31,0,1
-	@n 68,5,75,101,33,0,1
+	n 0,KitHiHatPedal,103,21,NcrNone
+	@n 63,2,63,64,27,NcrRootShiftOnly
+	@n 65,3,72,94,31,NcrRootShiftOnly
+	@n 68,5,75,101,33,NcrRootShiftOnly
 	beat
-	@n 1,2,60,77,58,0,1
-	@n 2,3,67,99,53,0,1
-	@n 7,5,72,100,52,0,1
-	@n 66,3,63,114,42,0,1
-	@n 68,2,55,91,24,0,1
-	n 5,67,93,24,0,1
+	@n 1,2,60,77,58,NcrRootShiftOnly
+	@n 2,3,67,99,53,NcrRootShiftOnly
+	@n 7,5,72,100,52,NcrRootShiftOnly
+	@n 66,3,63,114,42,NcrRootShiftOnly
+	@n 68,2,55,91,24,NcrRootShiftOnly
+	n 5,67,93,24,NcrRootShiftOnly
 	beat
-	n 0,HHP,96,19,0,0
-	n 5,63,61,46,0,1
-	@n 2,2,51,93,58,0,1
-	@n 7,3,60,76,49,0,1
-	@n 65,2,48,73,23,0,1
-	@n 90,3,63,84,6,0,1
+	n 0,KitHiHatPedal,96,19,NcrNone
+	n 5,63,61,46,NcrRootShiftOnly
+	@n 2,2,51,93,58,NcrRootShiftOnly
+	@n 7,3,60,76,49,NcrRootShiftOnly
+	@n 65,2,48,73,23,NcrRootShiftOnly
+	@n 90,3,63,84,6,NcrRootShiftOnly
 	beat
-	@n 3,2,63,99,77,0,1
-	n 3,72,121,58,0,1
-	@n 4,2,60,94,64,0,1
-	@n 5,5,75,122,64,0,1
-	@n 69,2,48,86,15,0,1
-	n 3,63,76,5,0,1
+	@n 3,2,63,99,77,NcrRootShiftOnly
+	n 3,72,121,58,NcrRootShiftOnly
+	@n 4,2,60,94,64,NcrRootShiftOnly
+	@n 5,5,75,122,64,NcrRootShiftOnly
+	@n 69,2,48,86,15,NcrRootShiftOnly
+	n 3,63,76,5,NcrRootShiftOnly
 	beat
-	n 0,HHP,114,21,0,0
-	n 3,71,121,50,0,1
-	@n 1,2,59,82,48,0,1
-	@n 2,2,62,96,49,0,1
-	@n 3,5,74,116,55,0,1
-	@n 63,3,72,115,28,0,1
-	@n 65,2,63,99,27,0,1
-	n 2,60,86,27,0,1
-	@n 67,5,75,122,31,0,1
+	n 0,KitHiHatPedal,114,21,NcrNone
+	n 3,71,121,50,NcrRootShiftOnly
+	@n 1,2,59,82,48,NcrRootShiftOnly
+	@n 2,2,62,96,49,NcrRootShiftOnly
+	@n 3,5,74,116,55,NcrRootShiftOnly
+	@n 63,3,72,115,28,NcrRootShiftOnly
+	@n 65,2,63,99,27,NcrRootShiftOnly
+	n 2,60,86,27,NcrRootShiftOnly
+	@n 67,5,75,122,31,NcrRootShiftOnly
 	beat
-	@n 44,0,25,66,43,0,0
-	n 2,69,49,14,0,1
-	@n 53,2,71,56,15,0,1
-	@n 64,2,72,72,13,0,1
-	@n 73,2,74,87,12,0,1
-	@n 82,2,76,92,12,0,1
-	@n 92,2,77,82,12,0,1
+	@n 44,0,KitSnareRoll,66,43,NcrNone
+	n 2,69,49,14,NcrRootShiftOnly
+	@n 53,2,71,56,15,NcrRootShiftOnly
+	@n 64,2,72,72,13,NcrRootShiftOnly
+	@n 73,2,74,87,12,NcrRootShiftOnly
+	@n 82,2,76,92,12,NcrRootShiftOnly
+	@n 92,2,77,82,12,NcrRootShiftOnly
 	beat
-	n 0,BD1,95,24,0,0
-	n 0,SD2,127,28,0,0
-	n 0,SPLASH,127,30,0,0
-	n 0,TAMB,104,30,0,0
-	n 1,36,126,47,0,1
-	n 2,84,112,46,0,1
-	n 2,72,121,30,0,1
-	n 2,48,112,37,0,1
-	n 2,36,117,38,0,1
-	@n 4,4,72,106,52,0,1
-	n 4,60,109,52,0,1
-	n 4,84,106,52,0,1
-	@n 9,5,72,127,38,0,1
-	@n 48,0,TAMB,64,21,0,0
+	n 0,KitBassDrum1,95,24,NcrNone
+	n 0,KitSnareDrum2,127,28,NcrNone
+	n 0,KitSplashCymbal,127,30,NcrNone
+	n 0,KitTambourine,104,30,NcrNone
+	n 1,36,126,47,NcrRootShiftOnly
+	n 2,84,112,46,NcrRootShiftOnly
+	n 2,72,121,30,NcrRootShiftOnly
+	n 2,48,112,37,NcrRootShiftOnly
+	n 2,36,117,38,NcrRootShiftOnly
+	@n 4,4,72,106,52,NcrRootShiftOnly
+	n 4,60,109,52,NcrRootShiftOnly
+	n 4,84,106,52,NcrRootShiftOnly
+	@n 9,5,72,127,38,NcrRootShiftOnly
+	@n 48,0,KitTambourine,64,21,NcrNone
 	end
-	var_end	Style_Jive_Ending2B
+	var_end	Style_Jive_Ending2Minor
