@@ -158,7 +158,7 @@ extern const char SupportClass_ScharValueNames;
 extern const char SupportClass_ScreenIDValueNames;
 extern const char SupportClass_UwordValueNames;
 
-#define BASE  0x00EB71BEu
+#define BASE  0x00EB70AAu
 
 /* One entry of StyleSong_MasterTable (6 bytes): a title and its id.
  * Readers (ui/ui_mode_handlers.s): the MasterSetup dial handlers index the

@@ -49,6 +49,13 @@ never edited by hand.  Regenerate v6 first (its README), then:
     python3 scripts/tools/port_fix_label_shifts.py --tree v5
     python3 scripts/tools/port_symbolize_pointers.py relink --tree v5
     python3 notes/kn5000-ports-probes/ported_label_probe.py --tree v5        # must print MISMATCH rows: 0
+    make all                                 # builds v5 with the json written so far
+    python3 scripts/converters/ported_c_rebase.py --tree v5 --need $TMPDIR/need-v5
+    python3 scripts/converters/ported_c_rebase.py --tree v5 --set-base --need-dir $TMPDIR/need-v5
+    python3 scripts/generators/gen_naka_gui_headers.py
+    python3 scripts/converters/ported_c_rebase.py --tree v5 --regen $TMPDIR/need-v5
+    python3 scripts/converters/ported_c_rebase.py --tree v5 --name-pointers $TMPDIR/need-v5
+    python3 scripts/converters/ported_c_rebase.py --tree v5 --regen $TMPDIR/need-v5
 
 v5 inherits v6's hand edits through the port (`FIRMWARE_VERSION` is `.byte FW_VERSION_BYTE`,
 the porter moves its default to 0x05; `AccTone_JumpTableData` is already code), so
@@ -74,6 +81,14 @@ The sed step (2026-10-31; once, before `relink`) moves the Yoko ApFunction langu
 labels back one procedure: the port had put each of v6's names (PartSelLangCheck ...
 GmOffSureLangCheck) on the procedure after its own, and left entry 0 unlabelled.  Evidence in the
 script's header: v5's ApFunction table and its name table.  It is not idempotent.
+
+`ported_c_rebase.py` (2026-11-02, lane open6/kn5000-c; `notes/kn5000-c-2026-11-02/README.md`) makes this
+tree's C compile to its own bytes instead of patching them: each NAKA blob's `#define BASE` is its v5
+address (a `PORT_BASE(off)` chain where the port moved parts of a blob), `naka_ram_cells.h` carries v5's
+work-RAM cell addresses (`gen_naka_gui_headers.py`), and the re-ordered function-name pointer tables
+name their strings.  Those were most of the json's raw bytes: they were pointers at unaligned offsets,
+which a relocation cannot express.  `--need` must run before the C changes, on the tree built with the
+json of the steps before; the tool reads no ROM bytes.
 
 ## Build
 

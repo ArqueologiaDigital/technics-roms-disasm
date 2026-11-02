@@ -215,6 +215,10 @@ these items of its list were not worked; nothing in this branch changes them:
 | N-e40b7174             | the per-title RAM address tables (AppEvtHandler_Branch_002_RamPtrs / AppEvent_SubDispatch_RamPtrs in naka_widget_descriptors.c) hold 0xF1F1, 0x261C ...: they need the SQEDT_* names in a C header (gen_naka_gui_headers.py does not export RAM names yet); 0x2640 / 0x2642 / 0x263a (SeqPart_VelZoneLookup, SeqPart_VelExprClamp) are the only numeric .s uses left |
 | N-52dcf02a, N-d352b868 | IC307 sequence words / unselected entries; owned in effect by kn5000-b (tracker kn5000-d38)                                                                                                                                                                                                                                                                          |
 
+(2026-11-02: lane kn5000-c took the nine rows above the last one; `notes/kn5000-c-2026-11-02/README.md` says what it
+did and what remains: v6 / v5 debt 13,756 / 15,910 B -> 3,615 / 4,504 B, numeric ROM addresses 73 -> 9, the string runs
+split, the sequencer RAM tables named.)
+
 ## Merge of main 37ecc2a2b (kn5000-b, kn5000-style, misc, wsa1)
 
 Lane kn5000-b's cpanel sub-lane had renamed the same encoder / panel-action labels as this lane's c2 batch, so 77

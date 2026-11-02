@@ -24,7 +24,7 @@ extern const char SeqByteBlock_EffectsSeqEntry;
 extern const char SeqByteBlock_TechnichordCfgA;
 extern const char WidgetCharMap_DataEntry1;
 
-#define BASE  0x00ED3EE6u
+#define BASE  0x00ED3DD2u
 
 typedef struct __attribute__((packed)) {
     /* element 0 of Viewable slot 0x41 "ControlIni": TtlScreen (class id 0x01600034) */

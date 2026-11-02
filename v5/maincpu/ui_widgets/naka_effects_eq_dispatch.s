@@ -10,16 +10,13 @@
 ; (32-bit pointers at 0xE2718C..0xE271D4).  The first two bytes end "^^j", which
 ; starts at 0xE27556 in the previous file.
 	.byte 0x6a, 0x00
-	.asciz	"SqedtVal2"
-NakaInst_SqedtVal:
-	aligned_string "^^jC"
-	aligned_string "SqedtVal"
-NakaInst_SqedtVal_B:
-	aligned_string "jC"
-	aligned_string "EqualizerBox"
-NakaInst_EqualizerBox:
-	aligned_string "jBBC"
-	aligned_string "EffectBox"
+ClassName_SqedtVal2:	.asciz	"SqedtVal2"
+ClassPropdata_SqedtVal:		aligned_string "^^jC"
+ClassName_SqedtVal:		aligned_string "SqedtVal"
+ClassPropdata_EqualizerBox:	aligned_string "jC"
+ClassName_EqualizerBox:		aligned_string "EqualizerBox"
+ClassPropdata_EffectBox:	aligned_string "jBBC"
+ClassName_EffectBox:		aligned_string "EffectBox"
 ; Registered in v10 by InitializeKubo (sequencer/sequencer_ui.s:4298): `RegObjTable 0x1600004, 0xfa44e2, 0xe27596, 0xe27180, 0x168`
 ; = u16 26, the entry count of that class 0x1600004 (ClassProc) table, read with `ldw_da`.
 ; v7 names this address as a 24-bit operand at 0xF2D2AF.

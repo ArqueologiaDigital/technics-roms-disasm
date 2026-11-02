@@ -156,7 +156,7 @@ extern const char ClassPropdata_PsMixerControl;
 extern const char ClassPropdata_PsVariBox;
 extern const char ClassPropdata_VwUserBitmapSp;
 
-#define BASE  0x00E5A39Eu
+#define BASE  0x00E5A3A4u
 
 typedef struct __attribute__((packed)) {
     /* ---------------------------------------------------------------------
@@ -347,7 +347,28 @@ typedef struct __attribute__((packed)) {
      * East_ResNames_3EC; that code DOES reach (readers: the .s header, which also labels each
      * string)
      * --------------------------------------------------------------------- */
-    char East_ResNames_3EC_Strings[252];
+    char East_ResNames_3EC_Strings[8];
+    char InitializeEast_Str_TT_REVEQMENU[14];
+    char InitializeEast_Str_TT_SDOCT[10];
+    char InitializeEast_Str_TT_REVPRESET[14];
+    char InitializeEast_Str_TT_EQPRESET[12];
+    char InitializeEast_Str_TT_REVEQPRESET[16];
+    char InitializeEast_Str_TT_MDMENU[10];
+    char InitializeEast_Str_TT_MDPART[10];
+    char InitializeEast_Str_TT_MDCTRL[10];
+    char InitializeEast_Str_TT_MDREAL[10];
+    char InitializeEast_Str_TT_MDCOM[10];
+    char InitializeEast_Str_TT_MDINOUT[12];
+    char InitializeEast_Str_TT_MDPRESET[12];
+    char InitializeEast_Str_TT_MDEXC[10];
+    char InitializeEast_Str_TT_MDGMMODE[12];
+    char InitializeEast_Str_TT_MDTXPCG[12];
+    char InitializeEast_Str_TT_MDCOMP[10];
+    char InitializeEast_Str_TT_MDPMLCTL[12];
+    char InitializeEast_Str_TT_MDSETUP[12];
+    char InitializeEast_Str_TT_ETVOCAL[12];
+    char InitializeEast_Str_TT_ETFADEIN[12];
+    char InitializeEast_Str_TT_SPLITSEL[12];
     /* ---------------------------------------------------------------------
      * East_MainFuncTable_143 -- object table: InitializeEast (v10/v9
      * 0xF72BAC, v7 0xF727A8) (sequencer/seq_event_playback.s:2628) registers
@@ -903,7 +924,8 @@ typedef struct __attribute__((packed)) {
      * AcCtlMsgGrid_Show_Strings -- the 2 strings AcCtlMsgGrid_Show_PtrTable
      * points at (NUL-terminated, 0xFF pad to even length), 20 bytes.
      * --------------------------------------------------------------------- */
-    char AcCtlMsgGrid_Show_Strings[20];
+    char AcCtlMsgGrid_Show_Strings[10];
+    char MidiPart_PageStr_1of2[10];
     /* ---------------------------------------------------------------------
      * MidiSetup_TtlCase4_PtrTable -- 3 u32 addresses, read by
      * MidiSetup_TtlCase4 (v10/v9 0xF7A2F0, v7 0xF79EEC) (`lda xbc,
@@ -915,7 +937,8 @@ typedef struct __attribute__((packed)) {
      * MidiSetup_TtlCase4_PtrTable points at (NUL-terminated, 0xFF pad to
      * even length), 30 bytes.
      * --------------------------------------------------------------------- */
-    char MidiSetup_TtlCase4_Strings[30];
+    char MidiSetup_TtlCase4_Strings[20];
+    char MidiPart_PageStr_1of3[10];
     /* ---------------------------------------------------------------------
      * ComSetGridCheck_LocalInit -- initializer of a local array:
      * ComSetGridCheck (v10/v9 0xF77F6C, v7 0xF77B68) (`ld xiy,
@@ -993,7 +1016,8 @@ typedef struct __attribute__((packed)) {
      * MidiPart_OctaveTable_Strings -- the 11 strings MidiPart_OctaveTable
      * points at (NUL-terminated, 0xFF pad to even length), 44 bytes.
      * --------------------------------------------------------------------- */
-    char MidiPart_OctaveTable_Strings[44];
+    char MidiPart_OctaveTable_Strings[40];
+    char MidiPart_OctaveStr_m2[4];
     /* ---------------------------------------------------------------------
      * VocalistGridCheck_Table -- read by VocalistGridCheck (v10/v9 0xF738D2,
      * v7 0xF734CE) (`lda xwa, (VocalistGridCheck_Table:24)`),
@@ -1049,7 +1073,9 @@ typedef struct __attribute__((packed)) {
      * used by VocalistGrid_DispatchData (v10/v9 0xF73938, v7 0xF73534) (`ld
      * xwa, VocalistGrid_DispatchData_Str_7`).
      * --------------------------------------------------------------------- */
-    char VocalistGrid_DispatchData_Str_7[32];
+    char VocalistGrid_DispatchData_Str_7[12];
+    char VocalistGrid_DispatchData_Str_CC_Fmt3d[12];
+    char VocalistGrid_DispatchData_Str_Fmts_Fmts_Fmts[8];
     /* ---------------------------------------------------------------------
      * VocalistGrid_DispatchData_Str_8 -- NUL-terminated string(s), 6 bytes,
      * used by VocalistGrid_DispatchData (v10/v9 0xF73938, v7 0xF73534) (`ld
@@ -1073,7 +1099,11 @@ typedef struct __attribute__((packed)) {
      * bytes, used by VocalistGrid_DispatchData (v10/v9 0xF73938, v7
      * 0xF73534) (`ld xwa, VocalistGrid_DispatchData_Str_11`).
      * --------------------------------------------------------------------- */
-    char VocalistGrid_DispatchData_Str_11[60];
+    char VocalistGrid_DispatchData_Str_11[12];
+    char VocalistGrid_CheckDispData_Str_Fmt2d[12];
+    char VocalistGrid_CheckDispData_Str_Fmt3d[12];
+    char VocalistGrid_CheckDispData_Str_Fmtd[12];
+    char VocalistGrid_CheckDispData_Str_Fmts[12];
     /* ---------------------------------------------------------------------
      * VocalistGrid_DispatchData_Str_12 -- NUL-terminated string(s), 12
      * bytes, used by VocalistGrid_DispatchData (v10/v9 0xF73938, v7
@@ -1109,7 +1139,10 @@ typedef struct __attribute__((packed)) {
      * VocalistGrid_DispatchData (v10/v9 0xF73938, v7 0xF73534) (`.long
      * MidiPart_AfterStr`).
      * --------------------------------------------------------------------- */
-    char MidiPart_AfterStr[40];
+    char MidiPart_AfterStr[12];
+    char VocalistGridCheck_Entry2_Str_CC_Fmt3d[12];
+    char VocalistGridCheck_Entry2_Str_Fmts_Fmts_Fmts[8];
+    char VocalistGridCheck_Entry2_Str_Fmts_Fmts_Fmts_2[8];
     /* ---------------------------------------------------------------------
      * VocalistGrid_DispatchData_Str_16 -- NUL-terminated string(s), 6 bytes,
      * used by VocalistGrid_DispatchData (v10/v9 0xF73938, v7 0xF73534) (`ld
@@ -1209,7 +1242,8 @@ typedef struct __attribute__((packed)) {
      * GMMode_AttentionTable_Strings -- the 6 strings GMMode_AttentionTable
      * points at (NUL-terminated, 0xFF pad to even length), 70 bytes.
      * --------------------------------------------------------------------- */
-    char GMMode_AttentionTable_Strings[70];
+    char GMMode_AttentionTable_Strings[58];
+    char GMMode_Attention_English2[12];
     /* ---------------------------------------------------------------------
      * StsGMOnCheck_Strings -- the 5 strings StsGMOnCheck_PtrTable points at
      * (NUL-terminated, 0xFF pad to even length), 504 bytes.
@@ -1266,7 +1300,8 @@ typedef struct __attribute__((packed)) {
      * SplitPoint_NoteNameTable points at (NUL-terminated, 0xFF pad to even
      * length), 58 bytes.
      * --------------------------------------------------------------------- */
-    char SplitPoint_NoteNameTable_Strings[58];
+    char SplitPoint_NoteNameTable_Strings[54];
+    char SplitPoint_NoteEntry_C_Code[4];
     /* ---------------------------------------------------------------------
      * SplitPoint_BitmapTable -- the 13 keyboard-octave bitmaps of the
      * split-point display: entry 0 = Bitmap_SplitPoint_no_split, entries
@@ -1336,7 +1371,10 @@ typedef struct __attribute__((packed)) {
      * strings after MdCmptCnctFunc_LocalInit; that code DOES reach (readers: the .s header, which
      * also labels each string)
      * --------------------------------------------------------------------- */
-    char MdCmptCnctFunc_LocalInit_Strings[104];
+    char MdCmptCnctFunc_LocalInit_Strings[26];
+    char CmptCnct_DrawDiagram1_Str_KN_as_master[26];
+    char CmptCnct_DrawDiagram2_Str_KN_as_slave[26];
+    char CmptCnct_DrawDiagramDefault_Str_Error[26];
     /* ---------------------------------------------------------------------
      * PcgModeGridEventStart_Str -- NUL-terminated string(s), 10 bytes, used
      * by PcgModeGridEventStart (v10/v9 0xF74C4E, v7 0xF7484A) (`ld xwa,
@@ -1348,7 +1386,8 @@ typedef struct __attribute__((packed)) {
      * used by PcgModeDisplayString_Bank1 (v10/v9 0xF74C6A, v7 0xF74866) (`ld
      * xwa, PcgModeDisplayString_Bank1_Str`).
      * --------------------------------------------------------------------- */
-    char PcgModeDisplayString_Bank1_Str[20];
+    char PcgModeDisplayString_Bank1_Str[10];
+    char PcgMode_CopyStrCustom_Str_GM[10];
     /* ---------------------------------------------------------------------
      * PcgModeDefaultCase_Str -- NUL-terminated string(s), 10 bytes, used by
      * PcgModeDefaultCase (v10/v9 0xF74C7C, v7 0xF74878) (`ld xwa,
@@ -1366,7 +1405,8 @@ typedef struct __attribute__((packed)) {
      * by DrumType_CopyStrBank1 (v10/v9 0xF74CE3, v7 0xF748DF) (`ld xwa,
      * DrumType_CopyStrBank1_Str`).
      * --------------------------------------------------------------------- */
-    char DrumType_CopyStrBank1_Str[20];
+    char DrumType_CopyStrBank1_Str[10];
+    char DrumType_CopyStrCustom_Str_GM[10];
     /* ---------------------------------------------------------------------
      * DrumType_CopyStrDefault_Str -- NUL-terminated string(s), 10 bytes,
      * used by DrumType_CopyStrDefault (v10/v9 0xF74CF5, v7 0xF748F1) (`ld
@@ -1383,7 +1423,10 @@ typedef struct __attribute__((packed)) {
      * DisplayMode_OnOff_Table points at (NUL-terminated, 0xFF pad to even
      * length), 24 bytes.
      * --------------------------------------------------------------------- */
-    char DisplayMode_OnOff_Table_Strings[24];
+    char DisplayMode_OnOff_Table_Strings[6];
+    char NakaInst_OFF_WidgetTbl2[6];
+    char DisplayMode_FormatStr1[6];
+    char DisplayMode_FormatStr2[6];
     /* ---------------------------------------------------------------------
      * MdSetupLoadFunc_CaseTable -- jump table of a compiled `switch` in
      * MdSetupLoadFunc (v10/v9 0xF74D11, v7 0xF7490D) (`add xhl,
@@ -1396,7 +1439,8 @@ typedef struct __attribute__((packed)) {
      * strings after MdSetupLoadFunc_CaseTable; that code DOES reach (readers: the .s header, which
      * also labels each string)
      * --------------------------------------------------------------------- */
-    char MdSetupLoadFunc_CaseTable_Strings[12];
+    char MdSetupLoadFunc_CaseTable_Strings[6];
+    char AcLswEdit_PushDefaultStr_Str_Error[6];
     /* ---------------------------------------------------------------------
      * VoiceParam_ListHandler_Table -- read by VoiceParam_ListHandler (v10/v9
      * 0xF7528A, v7 0xF74E86) (`lda xbc, (VoiceParam_ListHandler_Table:24)`).
@@ -1440,13 +1484,15 @@ typedef struct __attribute__((packed)) {
      * reference reaches them (searched: RegObjTabl tables, slice and
      * positional labels). Which code uses them is not established.
      * --------------------------------------------------------------------- */
-    char FadeSetGridCheck_LocalInit_Strings[20];
+    char FadeSetGridCheck_LocalInit_Strings[14];
+    char Data_AcGridParamTable[6];
     /* ---------------------------------------------------------------------
      * Data_FadeSetGridDispatch_Str -- NUL-terminated string(s), 20 bytes,
      * used by Data_FadeSetGridDispatch (v10/v9 0xF75517, v7 0xF75113) (`ld
      * xwa, Data_FadeSetGridDispatch_Str`).
      * --------------------------------------------------------------------- */
-    char Data_FadeSetGridDispatch_Str[20];
+    char Data_FadeSetGridDispatch_Str[6];
+    char SndParam_LookupAndSendCmd_Str_Fmt2d_measure[14];
     /* ---------------------------------------------------------------------
      * SndParam_FormatAndDisplay_Str -- NUL-terminated string(s), 6 bytes,
      * used by SndParam_FormatAndDisplay (v10/v9 0xF756E6, v7 0xF752E2) (`ld
@@ -1531,7 +1577,8 @@ typedef struct __attribute__((packed)) {
      * Data_InOutGridDispatch_PtrTable points at (NUL-terminated, 0xFF pad to
      * even length), 12 bytes.
      * --------------------------------------------------------------------- */
-    char Data_InOutGridDispatch_Strings[12];
+    char Data_InOutGridDispatch_Strings[6];
+    char NakaInst_OFF_E7FCA2[6];
     /* ---------------------------------------------------------------------
      * Data_InOutGridDispatch_PtrTable_2 -- 2 u32 addresses, read by
      * Data_InOutGridDispatch (v10/v9 0xF75ADE, v7 0xF756DA) (`lda xbc,
@@ -1544,7 +1591,8 @@ typedef struct __attribute__((packed)) {
      * Data_InOutGridDispatch_PtrTable_2 points at (NUL-terminated, 0xFF pad
      * to even length), 20 bytes.
      * --------------------------------------------------------------------- */
-    char Data_InOutGridDispatch_Strings_2[20];
+    char Data_InOutGridDispatch_Strings_2[10];
+    char ControlMode_Option_Table[10];
     /* ---------------------------------------------------------------------
      * Data_InOutGridDispatch_PtrTable_3 -- 3 u32 addresses, read by
      * Data_InOutGridDispatch (v10/v9 0xF75ADE, v7 0xF756DA) (`lda xhl,
@@ -1557,7 +1605,8 @@ typedef struct __attribute__((packed)) {
      * Data_InOutGridDispatch_PtrTable_3 points at (NUL-terminated, 0xFF pad
      * to even length), 30 bytes.
      * --------------------------------------------------------------------- */
-    char Data_InOutGridDispatch_Strings_3[30];
+    char Data_InOutGridDispatch_Strings_3[20];
+    char NakaInst_DIRECT[10];
     /* ---------------------------------------------------------------------
      * InOutGridCheck_LocalInit -- initializer of a local array:
      * InOutGridCheck (v10/v9 0xF75A83, v7 0xF7567F) (`ld xiy,
@@ -1569,7 +1618,16 @@ typedef struct __attribute__((packed)) {
      * after InOutGridCheck_LocalInit; that code DOES reach (readers: the .s header, which also
      * labels each string)
      * --------------------------------------------------------------------- */
-    char InOutGridCheck_LocalInit_Strings[60];
+    char InOutGridCheck_LocalInit_Strings[6];
+    char Data_InOutGridDispatch_Str_Blank5[6];
+    char Data_InOutGridDispatch_Str_Fmt3d[6];
+    char Data_InOutGridDispatch_Str_Blank5_2[6];
+    char Data_ParaLoadOptDispatch_Str_Blank5[6];
+    char Data_ParaLoadOptDispatch_Str_Fmt3d[6];
+    char Data_ParaLoadOptDispatch_Str_Fmt3d_2[6];
+    char Data_ParaLoadOptDispatch_Str_Blank5_2[6];
+    char Data_ParaLoadOptDispatch_Str_Fmt3d_3[6];
+    char Data_ParaLoadOptDispatch_Str_Fmt3d_4[6];
     /* ---------------------------------------------------------------------
      * Data_InOutGridDispatch_CaseTable -- jump table of a compiled `switch`
      * in Data_InOutGridDispatch (v10/v9 0xF75ADE, v7 0xF756DA) (`lda xix,
@@ -1634,7 +1692,8 @@ typedef struct __attribute__((packed)) {
      * FileTransfer_Status_Table points at (NUL-terminated, 0xFF pad to even
      * length), 40 bytes.
      * --------------------------------------------------------------------- */
-    char FileTransfer_Status_Table_Strings[40];
+    char FileTransfer_Status_Table_Strings[30];
+    char FileTransfer_BlankStatus[10];
     /* ---------------------------------------------------------------------
      * ExcPmemFunc_CaseTable -- jump table of a compiled `switch` in
      * ExcPmemFunc (v10/v9 0xF766D9, v7 0xF762D5) (`add xbc,
@@ -1736,7 +1795,8 @@ typedef struct __attribute__((packed)) {
      * UserMemory_Config_Table points at (NUL-terminated, 0xFF pad to even
      * length), 40 bytes.
      * --------------------------------------------------------------------- */
-    char UserMemory_Config_Table_Strings[40];
+    char UserMemory_Config_Table_Strings[30];
+    char NakaInst_INITIAL[10];
     /* ---------------------------------------------------------------------
      * ParaLoadOptGridCheck_LocalInit -- initializer of a local array:
      * ParaLoadOptGridCheck (v10/v9 0xF76F62, v7 0xF76B5E) (`ld xiy,
@@ -1773,7 +1833,30 @@ typedef struct __attribute__((packed)) {
      * strings after PcgOutGridCheck_LocalInit; that code DOES reach (readers: the .s header, which
      * also labels each string)
      * --------------------------------------------------------------------- */
-    char PcgOutGridCheck_LocalInit_Strings[160];
+    char PcgOutGridCheck_LocalInit_Strings[6];
+    char PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d[6];
+    char PcgOutGridCheckJumpTable_Entry2_Str_Dash_Dash_Dash[6];
+    char PcgOutGridCheckJumpTable_Entry2_Str_OFF[8];
+    char PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_2[6];
+    char PcgOutGridCheckJumpTable_Entry2_Str_Fmt5d[8];
+    char PcgOutGridCheckJumpTable_Entry2_Str_Dash_Dash_Dash_2[6];
+    char PcgOutGridCheckJumpTable_Entry2_Str_OFF_2[6];
+    char PcgOutGridCheckJumpTable_Entry2_Str_OFF_3[8];
+    char PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_3[6];
+    char PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_4[6];
+    char PcgOutGridCheckJumpTable_Entry2_Str_Fmt5d_2[8];
+    char PcgOutCheckGridDataStructure_Str_Fmt3d[6];
+    char PcgOutCheck_SendPreset1_Str_Fmt3d[6];
+    char PcgOutCheck_SendPreset2_Str_Dash_Dash_Dash[6];
+    char PcgOutCheck_SendPreset2_Str_OFF[8];
+    char PcgOutCheck_SendPreset2Named_Str_Fmt3d[6];
+    char PcgOutCheck_SendPreset2Named_Str_Fmt5d[8];
+    char PcgOutCheck_SendPreset3_Str_Dash_Dash_Dash[6];
+    char PcgOutCheck_SendPreset3_Str_OFF[6];
+    char PcgOutCheck_SendPreset3_Str_OFF_2[8];
+    char PcgOutCheck_SendPreset3Named_Str_Fmt3d[6];
+    char PcgOutCheck_SendPreset3Named_Str_Fmt3d_2[6];
+    char PcgOutCheck_SendPreset3Named_Str_Fmt5d[8];
     /* ---------------------------------------------------------------------
      * PcgOutGridCheck_CaseTable -- jump table of a compiled `switch` in
      * PcgOutGridCheck (v10/v9 0xF77653, v7 0xF7724F) (`add xwa,
@@ -2032,7 +2115,26 @@ typedef struct __attribute__((packed)) {
      * strings after PmemOutRGridCheck_LocalInit; that code DOES reach (readers: the .s header,
      * which also labels each string)
      * --------------------------------------------------------------------- */
-    char PmemOutRGridCheck_LocalInit_Strings[120];
+    char PmemOutRGridCheck_LocalInit_Strings[6];
+    char PmemOutRGridCheck_OnRamData_Str_Fmt3d[6];
+    char PmemOutRGridCheck_OnRamData_Str_Fmt3d_2[6];
+    char PmemOutRGridCheck_OnRamData_Str_OFF[6];
+    char PmemOutRGridCheck_OnRamData_Str_Fmt3d_3[6];
+    char PmemOutRGridCheck_OnRamData_Str_OFF_2[6];
+    char PmemOutRGridCheck_OnRamData_Str_Fmt3d_4[6];
+    char PmemOutRGridCheck_OnRamData_Str_Fmt3d_5[6];
+    char PmemOutRGridCheck_OnRamData_Str_OFF_3[6];
+    char PmemOutRGridCheck_OnRamData_Str_Fmt3d_6[6];
+    char PmemOutRGridCheck_OnRamData_Str_OFF_4[6];
+    char PmemOutRGridCheck_OnRamData_Str_Fmt3d_7[6];
+    char PmemOutRGridCheck_OnRamData_Str_Fmt3d_8[6];
+    char PmemOutRGridCheck_OnRamData_Str_OFF_5[6];
+    char PmemOutRGridCheck_OnRamData_Str_Fmt3d_9[6];
+    char CtlMsgGrid_EventHandler_Str_OFF[6];
+    char CtlMsg_SendAudioCommand_Str_Fmt3d[6];
+    char CtlMsg_ReadOffsetAndSend_Str_Fmt3d[6];
+    char CtlMsg_ComputeAndCheck_Str_OFF[6];
+    char CtlMsg_SendParamValue_Str_Fmt3d[6];
     /* ---------------------------------------------------------------------
      * PmemOutRGridCheck_CaseTable -- jump table of a compiled `switch` in
      * PmemOutRGridCheck (v10/v9 0xF791E4, v7 0xF78DE0) (`add xhl,
@@ -2217,7 +2319,12 @@ typedef struct __attribute__((packed)) {
      * Transpose_ValueDisplay_Table points at (NUL-terminated, 0xFF pad to
      * even length), 48 bytes.
      * --------------------------------------------------------------------- */
-    char Transpose_ValueDisplay_Table_Strings[48];
+    char Transpose_ValueDisplay_Table_Strings[12];
+    char Transpose_String_Minus3[6];
+    char Transpose_String_Error[12];
+    char Transpose_String_Plus2[6];
+    char Transpose_String_Plus1[6];
+    char Transpose_String_Zero[6];
     /* ---------------------------------------------------------------------
      * MidiPartGridCheck_LocalInit -- initializer of a local array:
      * MidiPartGridCheck (v10/v9 0xF7A869, v7 0xF7A465) (`ld xiy,
@@ -2229,7 +2336,14 @@ typedef struct __attribute__((packed)) {
      * strings after MidiPartGridCheck_LocalInit; that code DOES reach (readers: the .s header,
      * which also labels each string)
      * --------------------------------------------------------------------- */
-    char MidiPartGridCheck_LocalInit_Strings[54];
+    char MidiPartGridCheck_LocalInit_Strings[6];
+    char MidiPartGridCheck_OnLswData_Str_Fmt2d[8];
+    char MidiPartGridCheck_OnLswData_Str_OFF[6];
+    char MidiPartGridCheck_OnLswData_Str_Fmt2d_2[8];
+    char MidiPartGridCheck_OnLswData_Str_ON[6];
+    char MidiPartGridCheck_OnLswData_Str_OFF_2[6];
+    char MidiSetup_EventHandler_Str_OFF[6];
+    char MidiPart_AudioCmdDisplay_Str_Fmt2d[8];
     /* ---------------------------------------------------------------------
      * MidiPart_LookupFromTable_Str -- NUL-terminated string(s), 6 bytes,
      * used by MidiPart_LookupFromTable (v10/v9 0xF7ACFB, v7 0xF7A8F7) (`ld
@@ -2588,8 +2702,10 @@ typedef struct __attribute__((packed)) {
     uint32_t Murai_ClassTable_161_Desc31Head[1];
 } naka_widget_tables_2_t;
 
+/* PORT_BASE: v6 moved parts of this blob; from each offset on, its ROM address is that base + offset (scripts/converters/ported_c_rebase.py) */
+#define PORT_BASE(off) ((off) >= 0x2691Eu ? 0x00E5A3A4u : (off) >= 0x2690Cu ? 0x00E5A39Eu : (off) >= 0x268BAu ? 0x00E5A3A4u : (off) >= 0x267F6u ? 0x00E5A39Eu : BASE)
 #define SELF(field) \
-    ((uint32_t)(BASE + __builtin_offsetof(naka_widget_tables_2_t, field)))
+    ((uint32_t)(PORT_BASE(__builtin_offsetof(naka_widget_tables_2_t, field)) + __builtin_offsetof(naka_widget_tables_2_t, field)))
 
 _Static_assert(sizeof(naka_widget_tables_2_t) == 158788,
     "naka_widget_tables_2 must be exactly 158788 bytes");
@@ -3111,28 +3227,49 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
         "\0\xFF"
         "SplitSetting\0\xFF",
 
-    .East_ResNames_3EC_Strings = "MD_MIDI\0"
-        "TT_REVEQMENU\0\xFF"
-        "TT_SDOCT\0\xFF"
-        "TT_REVPRESET\0\xFF"
-        "TT_EQPRESET\0"
-        "TT_REVEQPRESET\0\xFF"
-        "TT_MDMENU\0"
-        "TT_MDPART\0"
-        "TT_MDCTRL\0"
-        "TT_MDREAL\0"
-        "TT_MDCOM\0\xFF"
-        "TT_MDINOUT\0\xFF"
-        "TT_MDPRESET\0"
-        "TT_MDEXC\0\xFF"
-        "TT_MDGMMODE\0"
-        "TT_MDTXPCG\0\xFF"
-        "TT_MDCOMP\0"
-        "TT_MDPMLCTL\0"
-        "TT_MDSETUP\0\xFF"
-        "TT_ETVOCAL\0\xFF"
-        "TT_ETFADEIN\0"
-        "TT_SPLITSEL",
+    .East_ResNames_3EC_Strings = "MD_MIDI",
+
+    .InitializeEast_Str_TT_REVEQMENU = "TT_REVEQMENU\x00\xFF",
+
+    .InitializeEast_Str_TT_SDOCT = "TT_SDOCT\x00\xFF",
+
+    .InitializeEast_Str_TT_REVPRESET = "TT_REVPRESET\x00\xFF",
+
+    .InitializeEast_Str_TT_EQPRESET = "TT_EQPRESET",
+
+    .InitializeEast_Str_TT_REVEQPRESET = "TT_REVEQPRESET\x00\xFF",
+
+    .InitializeEast_Str_TT_MDMENU = "TT_MDMENU",
+
+    .InitializeEast_Str_TT_MDPART = "TT_MDPART",
+
+    .InitializeEast_Str_TT_MDCTRL = "TT_MDCTRL",
+
+    .InitializeEast_Str_TT_MDREAL = "TT_MDREAL",
+
+    .InitializeEast_Str_TT_MDCOM = "TT_MDCOM\x00\xFF",
+
+    .InitializeEast_Str_TT_MDINOUT = "TT_MDINOUT\x00\xFF",
+
+    .InitializeEast_Str_TT_MDPRESET = "TT_MDPRESET",
+
+    .InitializeEast_Str_TT_MDEXC = "TT_MDEXC\x00\xFF",
+
+    .InitializeEast_Str_TT_MDGMMODE = "TT_MDGMMODE",
+
+    .InitializeEast_Str_TT_MDTXPCG = "TT_MDTXPCG\x00\xFF",
+
+    .InitializeEast_Str_TT_MDCOMP = "TT_MDCOMP",
+
+    .InitializeEast_Str_TT_MDPMLCTL = "TT_MDPMLCTL",
+
+    .InitializeEast_Str_TT_MDSETUP = "TT_MDSETUP\x00\xFF",
+
+    .InitializeEast_Str_TT_ETVOCAL = "TT_ETVOCAL\x00\xFF",
+
+    .InitializeEast_Str_TT_ETFADEIN = "TT_ETFADEIN",
+
+    .InitializeEast_Str_TT_SPLITSEL = "TT_SPLITSEL",
 
     .East_MainFuncTable_143 = {
         NAKA_ADDR(MainPcgOutSend),
@@ -3238,22 +3375,23 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
     .AcCtlMsgGrid_Show_Table = { 0x18, 0x01, 0x0F, 0x00 },
 
     .AcCtlMsgGrid_Show_PtrTable = {
-        SELF(AcCtlMsgGrid_Show_Strings[10]),
+        SELF(MidiPart_PageStr_1of2),
         SELF(AcCtlMsgGrid_Show_Strings),
     },
 
-    .AcCtlMsgGrid_Show_Strings = "PAGE 2/2\0\xFF"
-        "PAGE 1/2\0\xFF",
+    .AcCtlMsgGrid_Show_Strings = "PAGE 2/2\x00\xFF",
+
+    .MidiPart_PageStr_1of2 = "PAGE 1/2\x00\xFF",
 
     .MidiSetup_TtlCase4_PtrTable = {
-        SELF(MidiSetup_TtlCase4_Strings[20]),
+        SELF(MidiPart_PageStr_1of3),
         SELF(MidiSetup_TtlCase4_Strings[10]),
         SELF(MidiSetup_TtlCase4_Strings),
     },
 
-    .MidiSetup_TtlCase4_Strings = "PAGE 3/3\0\xFF"
-        "PAGE 2/3\0\xFF"
-        "PAGE 1/3\0\xFF",
+    .MidiSetup_TtlCase4_Strings = "PAGE 3/3\x00\xFFPAGE 2/3\x00\xFF",
+
+    .MidiPart_PageStr_1of3 = "PAGE 1/3\x00\xFF",
 
     .ComSetGridCheck_LocalInit = { 0x0000, 0x0000, 0x0000, 0x0000 },
 
@@ -3306,7 +3444,7 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
         "C \0\xFF",
 
     .MidiPart_OctaveTable = {
-        SELF(MidiPart_OctaveTable_Strings[40]),
+        SELF(MidiPart_OctaveStr_m2),
         SELF(MidiPart_OctaveTable_Strings[36]),
         SELF(MidiPart_OctaveTable_Strings[32]),
         SELF(MidiPart_OctaveTable_Strings[28]),
@@ -3319,17 +3457,9 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
         SELF(MidiPart_OctaveTable_Strings),
     },
 
-    .MidiPart_OctaveTable_Strings = " 8\0\xFF"
-        " 7\0\xFF"
-        " 6\0\xFF"
-        " 5\0\xFF"
-        " 4\0\xFF"
-        " 3\0\xFF"
-        " 2\0\xFF"
-        " 1\0\xFF"
-        " 0\0\xFF"
-        "-1\0\xFF"
-        "-2\0\xFF",
+    .MidiPart_OctaveTable_Strings = " 8\x00\xFF 7\x00\xFF 6\x00\xFF 5\x00\xFF 4\x00\xFF 3\x00\xFF 2\x00\xFF 1\x00\xFF 0\x00\xFF-1\x00\xFF",
+
+    .MidiPart_OctaveStr_m2 = "-2\x00\xFF",
 
     .VocalistGridCheck_Table = {
         0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
@@ -3362,9 +3492,11 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
 
     .VocalistGrid_DispatchData_Str_6 = "   NONE   \0\xFF",
 
-    .VocalistGrid_DispatchData_Str_7 = "  AFTER   \0\xFF"
-        "  CC%3d   \0\xFF"
-        "%s %s%s",
+    .VocalistGrid_DispatchData_Str_7 = "  AFTER   \x00\xFF",
+
+    .VocalistGrid_DispatchData_Str_CC_Fmt3d = "  CC%3d   \x00\xFF",
+
+    .VocalistGrid_DispatchData_Str_Fmts_Fmts_Fmts = "%s %s%s",
 
     .VocalistGrid_DispatchData_Str_8 = " ON  ",
 
@@ -3372,11 +3504,15 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
 
     .VocalistGrid_DispatchData_Str_10 = "   OFF    \0\xFF",
 
-    .VocalistGrid_DispatchData_Str_11 = "   OMNI   \0\xFF"
-        "    %2d    \0"
-        "   %3d    \0\xFF"
-        "     %d    \0"
-        "     %s   \0\xFF",
+    .VocalistGrid_DispatchData_Str_11 = "   OMNI   \x00\xFF",
+
+    .VocalistGrid_CheckDispData_Str_Fmt2d = "    %2d    ",
+
+    .VocalistGrid_CheckDispData_Str_Fmt3d = "   %3d    \x00\xFF",
+
+    .VocalistGrid_CheckDispData_Str_Fmtd = "     %d    ",
+
+    .VocalistGrid_CheckDispData_Str_Fmts = "     %s   \x00\xFF",
 
     .VocalistGrid_DispatchData_Str_12 = "   OFF    \0\xFF",
 
@@ -3388,10 +3524,13 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
 
     .VocalistGrid_DispatchData_Str_15 = "   NONE   \0\xFF",
 
-    .MidiPart_AfterStr = "  AFTER   \0\xFF"
-        "  CC%3d   \0\xFF"
-        "%s %s%s\0"
-        "%s %s%s",
+    .MidiPart_AfterStr = "  AFTER   \x00\xFF",
+
+    .VocalistGridCheck_Entry2_Str_CC_Fmt3d = "  CC%3d   \x00\xFF",
+
+    .VocalistGridCheck_Entry2_Str_Fmts_Fmts_Fmts = "%s %s%s",
+
+    .VocalistGridCheck_Entry2_Str_Fmts_Fmts_Fmts_2 = "%s %s%s",
 
     .VocalistGrid_DispatchData_Str_16 = " ON  ",
 
@@ -3435,7 +3574,7 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
     .RevEqSel_HandleConfirm_Str = "CcEv\0\xFF",
 
     .GMMode_AttentionTable = {
-        SELF(GMMode_AttentionTable_Strings[58]),
+        SELF(GMMode_Attention_English2),
         SELF(GMMode_AttentionTable_Strings[48]),
         SELF(GMMode_AttentionTable_Strings[36]),
         SELF(GMMode_AttentionTable_Strings[24]),
@@ -3443,12 +3582,9 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
         SELF(GMMode_AttentionTable_Strings),
     },
 
-    .GMMode_AttentionTable_Strings = "Perhatian !\0"
-        "ATTENTION!\0\xFF"
-        "\xA1" "ATENCI\xD3N!\0\xFF"
-        "ATTENTION!\0\xFF"
-        "ACHTUNG !\0"
-        "ATTENTION!\0\xFF",
+    .GMMode_AttentionTable_Strings = "Perhatian !\x00" "ATTENTION!\x00\xFF\xA1" "ATENCI\xD3N!\x00\xFF" "ATTENTION!\x00\xFF" "ACHTUNG !",
+
+    .GMMode_Attention_English2 = "ATTENTION!\x00\xFF",
 
     .StsGMOnCheck_Strings = "Turning on GENERAL MIDI MODE will replace your current settings with GENERAL MIDI settings!\0"
         "Durch das Einschalten des GENERAL MIDI MODE werden alle Einstellungen zu GENERAL MIDI Einstellungen ge\xE4ndert!\0"
@@ -3513,7 +3649,7 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
         "Press a key to select the split point.\0\xFF",
 
     .SplitPoint_NoteNameTable = {
-        SELF(SplitPoint_NoteNameTable_Strings[54]),
+        SELF(SplitPoint_NoteEntry_C_Code),
         SELF(SplitPoint_NoteNameTable_Strings[48]),
         SELF(SplitPoint_NoteNameTable_Strings[44]),
         SELF(SplitPoint_NoteNameTable_Strings[38]),
@@ -3527,18 +3663,9 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
         SELF(SplitPoint_NoteNameTable_Strings),
     },
 
-    .SplitPoint_NoteNameTable_Strings = "B \0\xFF"
-        "B~a0\0\xFF"
-        "A \0\xFF"
-        "A~a0\0\xFF"
-        "G \0\xFF"
-        "F~9e\0\xFF"
-        "F \0\xFF"
-        "E \0\xFF"
-        "E~a0\0\xFF"
-        "D \0\xFF"
-        "D~a0\0\xFF"
-        "C \0\xFF",
+    .SplitPoint_NoteNameTable_Strings = "B \x00\xFF" "B~a0\x00\xFF" "A \x00\xFF" "A~a0\x00\xFFG \x00\xFF" "F~9e\x00\xFF" "F \x00\xFF" "E \x00\xFF" "E~a0\x00\xFF" "D \x00\xFF" "D~a0\x00\xFF",
+
+    .SplitPoint_NoteEntry_C_Code = "C \x00\xFF",
 
     .SplitPoint_BitmapTable = {
         SELF(Bitmap_SplitPoint_no_split),
@@ -3574,44 +3701,53 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
 
     .MdCmptCnctFunc_LocalInit = { 0x000A, 0x0052 },
 
-    .MdCmptCnctFunc_LocalInit_Strings = "         NORMAL         \0\xFF"
-        "      KN as master      \0\xFF"
-        "      KN as slave       \0\xFF"
-        "         Error!         \0\xFF",
+    .MdCmptCnctFunc_LocalInit_Strings = "         NORMAL         \x00\xFF",
+
+    .CmptCnct_DrawDiagram1_Str_KN_as_master = "      KN as master      \x00\xFF",
+
+    .CmptCnct_DrawDiagram2_Str_KN_as_slave = "      KN as slave       \x00\xFF",
+
+    .CmptCnct_DrawDiagramDefault_Str_Error = "         Error!         \x00\xFF",
 
     .PcgModeGridEventStart_Str = " NORMAL \0\xFF",
 
-    .PcgModeDisplayString_Bank1_Str = "  TECH  \0\xFF"
-        "   GM   \0\xFF",
+    .PcgModeDisplayString_Bank1_Str = "  TECH  \x00\xFF",
+
+    .PcgMode_CopyStrCustom_Str_GM = "   GM   \x00\xFF",
 
     .PcgModeDefaultCase_Str = " Error! \0\xFF",
 
     .DrumType_GridEvent_Str = " NORMAL \0\xFF",
 
-    .DrumType_CopyStrBank1_Str = "  TECH  \0\xFF"
-        "   GM   \0\xFF",
+    .DrumType_CopyStrBank1_Str = "  TECH  \x00\xFF",
+
+    .DrumType_CopyStrCustom_Str_GM = "   GM   \x00\xFF",
 
     .DrumType_CopyStrDefault_Str = " Error! \0\xFF",
 
     .DisplayMode_OnOff_Table = {
-        SELF(DisplayMode_OnOff_Table_Strings[18]),
-        SELF(DisplayMode_OnOff_Table_Strings[12]),
-        SELF(DisplayMode_OnOff_Table_Strings[6]),
+        SELF(DisplayMode_FormatStr2),
+        SELF(DisplayMode_FormatStr1),
+        SELF(NakaInst_OFF_WidgetTbl2),
         SELF(DisplayMode_OnOff_Table_Strings),
     },
 
-    .DisplayMode_OnOff_Table_Strings = " ON  \0"
-        " ON  \0"
-        " OFF \0"
-        " OFF ",
+    .DisplayMode_OnOff_Table_Strings = " ON  ",
+
+    .NakaInst_OFF_WidgetTbl2 = " ON  ",
+
+    .DisplayMode_FormatStr1 = " OFF ",
+
+    .DisplayMode_FormatStr2 = " OFF ",
 
     .MdSetupLoadFunc_CaseTable = {
         0x0022, 0x0022, 0x002A, 0x002A, 0x002A, 0x0026, 0x002A, 0x002E,
         0x0035, 0x0000,
     },
 
-    .MdSetupLoadFunc_CaseTable_Strings = "Error\0"
-        "Error",
+    .MdSetupLoadFunc_CaseTable_Strings = "Error",
+
+    .AcLswEdit_PushDefaultStr_Str_Error = "Error",
 
     .VoiceParam_ListHandler_Table = { 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x02, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00 },
 
@@ -3626,11 +3762,13 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
 
     .FadeSetGridCheck_LocalInit = { 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
 
-    .FadeSetGridCheck_LocalInit_Strings = " %2d measure \0"
-        " ON  ",
+    .FadeSetGridCheck_LocalInit_Strings = " %2d measure ",
 
-    .Data_FadeSetGridDispatch_Str = " OFF \0"
-        " %2d measure ",
+    .Data_AcGridParamTable = " ON  ",
+
+    .Data_FadeSetGridDispatch_Str = " OFF ",
+
+    .SndParam_LookupAndSendCmd_Str_Fmt2d_measure = " %2d measure ",
 
     .SndParam_FormatAndDisplay_Str = " ON  ",
 
@@ -3667,43 +3805,54 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
     .AcInOutGridBoxProc_CaseTable = { 0x006C, 0x015B, 0x006C, 0x015B, 0x02B5, 0x028B, 0x028B },
 
     .Data_InOutGridDispatch_PtrTable = {
-        SELF(Data_InOutGridDispatch_Strings[6]),
+        SELF(NakaInst_OFF_E7FCA2),
         SELF(Data_InOutGridDispatch_Strings),
     },
 
-    .Data_InOutGridDispatch_Strings = " ON  \0"
-        " OFF ",
+    .Data_InOutGridDispatch_Strings = " ON  ",
+
+    .NakaInst_OFF_E7FCA2 = " OFF ",
 
     .Data_InOutGridDispatch_PtrTable_2 = {
-        SELF(Data_InOutGridDispatch_Strings_2[10]),
+        SELF(ControlMode_Option_Table),
         SELF(Data_InOutGridDispatch_Strings_2),
     },
 
-    .Data_InOutGridDispatch_Strings_2 = " DIRECT  \0"
-        "CONDUCTOR",
+    .Data_InOutGridDispatch_Strings_2 = " DIRECT  ",
+
+    .ControlMode_Option_Table = "CONDUCTOR",
 
     .Data_InOutGridDispatch_PtrTable_3 = {
-        SELF(Data_InOutGridDispatch_Strings_3[20]),
+        SELF(NakaInst_DIRECT),
         SELF(Data_InOutGridDispatch_Strings_3[10]),
         SELF(Data_InOutGridDispatch_Strings_3),
     },
 
-    .Data_InOutGridDispatch_Strings_3 = "  FIX   \0\xFF"
-        " OFFSET \0\xFF"
-        " DIRECT \0\xFF",
+    .Data_InOutGridDispatch_Strings_3 = "  FIX   \x00\xFF OFFSET \x00\xFF",
+
+    .NakaInst_DIRECT = " DIRECT \x00\xFF",
 
     .InOutGridCheck_LocalInit = { 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
 
-    .InOutGridCheck_LocalInit_Strings = " %3d \0"
-        "     \0"
-        " %3d \0"
-        "     \0"
-        "     \0"
-        " %3d \0"
-        " %3d \0"
-        "     \0"
-        " %3d \0"
-        " %3d ",
+    .InOutGridCheck_LocalInit_Strings = " %3d ",
+
+    .Data_InOutGridDispatch_Str_Blank5 = "     ",
+
+    .Data_InOutGridDispatch_Str_Fmt3d = " %3d ",
+
+    .Data_InOutGridDispatch_Str_Blank5_2 = "     ",
+
+    .Data_ParaLoadOptDispatch_Str_Blank5 = "     ",
+
+    .Data_ParaLoadOptDispatch_Str_Fmt3d = " %3d ",
+
+    .Data_ParaLoadOptDispatch_Str_Fmt3d_2 = " %3d ",
+
+    .Data_ParaLoadOptDispatch_Str_Blank5_2 = "     ",
+
+    .Data_ParaLoadOptDispatch_Str_Fmt3d_3 = " %3d ",
+
+    .Data_ParaLoadOptDispatch_Str_Fmt3d_4 = " %3d ",
 
     .Data_InOutGridDispatch_CaseTable = {
         0x0000, 0x0032, 0x0064, 0x0138, 0x0290, 0x01C9, 0x01FB, 0x022C,
@@ -3732,16 +3881,15 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
     },
 
     .FileTransfer_Status_Table = {
-        SELF(FileTransfer_Status_Table_Strings[30]),
+        SELF(FileTransfer_BlankStatus),
         SELF(FileTransfer_Status_Table_Strings[20]),
         SELF(FileTransfer_Status_Table_Strings[10]),
         SELF(FileTransfer_Status_Table_Strings),
     },
 
-    .FileTransfer_Status_Table_Strings = "COMPLETED\0"
-        "RECIEVING\0"
-        " SENDING \0"
-        "         ",
+    .FileTransfer_Status_Table_Strings = "COMPLETED\x00RECIEVING\x00 SENDING ",
+
+    .FileTransfer_BlankStatus = "         ",
 
     .ExcPmemFunc_CaseTable = {
         0x001E, 0x001E, 0x0026, 0x0026, 0x0026, 0x0022, 0x0026, 0x002A,
@@ -3804,16 +3952,15 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
         " NO  ",
 
     .UserMemory_Config_Table = {
-        SELF(UserMemory_Config_Table_Strings[30]),
+        SELF(NakaInst_INITIAL),
         SELF(UserMemory_Config_Table_Strings[20]),
         SELF(UserMemory_Config_Table_Strings[10]),
         SELF(UserMemory_Config_Table_Strings),
     },
 
-    .UserMemory_Config_Table_Strings = "  USER3  \0"
-        "  USER2  \0"
-        "  USER1  \0"
-        " INITIAL ",
+    .UserMemory_Config_Table_Strings = "  USER3  \x00  USER2  \x00  USER1  ",
+
+    .NakaInst_INITIAL = " INITIAL ",
 
     .ParaLoadOptGridCheck_LocalInit = { 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
 
@@ -3828,30 +3975,53 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
 
     .PcgOutGridCheck_LocalInit = { 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
 
-    .PcgOutGridCheck_LocalInit_Strings = " %3d \0"
-        " %3d \0"
-        " --- \0"
-        "  OFF  \0"
-        " %3d \0"
-        " %5d )\0\xFF"
-        " --- \0"
-        " OFF \0"
-        "  OFF  \0"
-        " %3d \0"
-        " %3d \0"
-        " %5d )\0\xFF"
-        " %3d \0"
-        " %3d \0"
-        " --- \0"
-        "  OFF  \0"
-        " %3d \0"
-        " %5d )\0\xFF"
-        " --- \0"
-        " OFF \0"
-        "  OFF  \0"
-        " %3d \0"
-        " %3d \0"
-        " %5d )\0\xFF",
+    .PcgOutGridCheck_LocalInit_Strings = " %3d ",
+
+    .PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d = " %3d ",
+
+    .PcgOutGridCheckJumpTable_Entry2_Str_Dash_Dash_Dash = " --- ",
+
+    .PcgOutGridCheckJumpTable_Entry2_Str_OFF = "  OFF  ",
+
+    .PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_2 = " %3d ",
+
+    .PcgOutGridCheckJumpTable_Entry2_Str_Fmt5d = " %5d )\x00\xFF",
+
+    .PcgOutGridCheckJumpTable_Entry2_Str_Dash_Dash_Dash_2 = " --- ",
+
+    .PcgOutGridCheckJumpTable_Entry2_Str_OFF_2 = " OFF ",
+
+    .PcgOutGridCheckJumpTable_Entry2_Str_OFF_3 = "  OFF  ",
+
+    .PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_3 = " %3d ",
+
+    .PcgOutGridCheckJumpTable_Entry2_Str_Fmt3d_4 = " %3d ",
+
+    .PcgOutGridCheckJumpTable_Entry2_Str_Fmt5d_2 = " %5d )\x00\xFF",
+
+    .PcgOutCheckGridDataStructure_Str_Fmt3d = " %3d ",
+
+    .PcgOutCheck_SendPreset1_Str_Fmt3d = " %3d ",
+
+    .PcgOutCheck_SendPreset2_Str_Dash_Dash_Dash = " --- ",
+
+    .PcgOutCheck_SendPreset2_Str_OFF = "  OFF  ",
+
+    .PcgOutCheck_SendPreset2Named_Str_Fmt3d = " %3d ",
+
+    .PcgOutCheck_SendPreset2Named_Str_Fmt5d = " %5d )\x00\xFF",
+
+    .PcgOutCheck_SendPreset3_Str_Dash_Dash_Dash = " --- ",
+
+    .PcgOutCheck_SendPreset3_Str_OFF = " OFF ",
+
+    .PcgOutCheck_SendPreset3_Str_OFF_2 = "  OFF  ",
+
+    .PcgOutCheck_SendPreset3Named_Str_Fmt3d = " %3d ",
+
+    .PcgOutCheck_SendPreset3Named_Str_Fmt3d_2 = " %3d ",
+
+    .PcgOutCheck_SendPreset3Named_Str_Fmt5d = " %5d )\x00\xFF",
 
     .PcgOutGridCheck_CaseTable = { 0x0000, 0x010E, 0x0000, 0x010E, 0x06C6, 0x06C6, 0x0258 },
 
@@ -3971,26 +4141,45 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
 
     .PmemOutRGridCheck_LocalInit = { 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
 
-    .PmemOutRGridCheck_LocalInit_Strings = " OFF \0"
-        " %3d \0"
-        " %3d \0"
-        " OFF \0"
-        " %3d \0"
-        " OFF \0"
-        " %3d \0"
-        " %3d \0"
-        " OFF \0"
-        " %3d \0"
-        " OFF \0"
-        " %3d \0"
-        " %3d \0"
-        " OFF \0"
-        " %3d \0"
-        " OFF \0"
-        " %3d \0"
-        " %3d \0"
-        " OFF \0"
-        " %3d ",
+    .PmemOutRGridCheck_LocalInit_Strings = " OFF ",
+
+    .PmemOutRGridCheck_OnRamData_Str_Fmt3d = " %3d ",
+
+    .PmemOutRGridCheck_OnRamData_Str_Fmt3d_2 = " %3d ",
+
+    .PmemOutRGridCheck_OnRamData_Str_OFF = " OFF ",
+
+    .PmemOutRGridCheck_OnRamData_Str_Fmt3d_3 = " %3d ",
+
+    .PmemOutRGridCheck_OnRamData_Str_OFF_2 = " OFF ",
+
+    .PmemOutRGridCheck_OnRamData_Str_Fmt3d_4 = " %3d ",
+
+    .PmemOutRGridCheck_OnRamData_Str_Fmt3d_5 = " %3d ",
+
+    .PmemOutRGridCheck_OnRamData_Str_OFF_3 = " OFF ",
+
+    .PmemOutRGridCheck_OnRamData_Str_Fmt3d_6 = " %3d ",
+
+    .PmemOutRGridCheck_OnRamData_Str_OFF_4 = " OFF ",
+
+    .PmemOutRGridCheck_OnRamData_Str_Fmt3d_7 = " %3d ",
+
+    .PmemOutRGridCheck_OnRamData_Str_Fmt3d_8 = " %3d ",
+
+    .PmemOutRGridCheck_OnRamData_Str_OFF_5 = " OFF ",
+
+    .PmemOutRGridCheck_OnRamData_Str_Fmt3d_9 = " %3d ",
+
+    .CtlMsgGrid_EventHandler_Str_OFF = " OFF ",
+
+    .CtlMsg_SendAudioCommand_Str_Fmt3d = " %3d ",
+
+    .CtlMsg_ReadOffsetAndSend_Str_Fmt3d = " %3d ",
+
+    .CtlMsg_ComputeAndCheck_Str_OFF = " OFF ",
+
+    .CtlMsg_SendParamValue_Str_Fmt3d = " %3d ",
 
     .PmemOutRGridCheck_CaseTable = { 0x0000, 0x0169, 0x0000, 0x0169, 0x0831, 0x0831, 0x0302 },
 
@@ -4080,35 +4269,45 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
     },
 
     .Transpose_ValueDisplay_Table = {
-        SELF(Transpose_ValueDisplay_Table_Strings[42]),
-        SELF(Transpose_ValueDisplay_Table_Strings[36]),
-        SELF(Transpose_ValueDisplay_Table_Strings[30]),
-        SELF(Transpose_ValueDisplay_Table_Strings[24]),
-        SELF(Transpose_ValueDisplay_Table_Strings[18]),
-        SELF(Transpose_ValueDisplay_Table_Strings[12]),
+        SELF(Transpose_String_Zero),
+        SELF(Transpose_String_Plus1),
+        SELF(Transpose_String_Plus2),
+        SELF(Transpose_String_Error[6]),
+        SELF(Transpose_String_Error),
+        SELF(Transpose_String_Minus3),
         SELF(Transpose_ValueDisplay_Table_Strings[6]),
         SELF(Transpose_ValueDisplay_Table_Strings),
     },
 
-    .Transpose_ValueDisplay_Table_Strings = " -1  \0"
-        " -2  \0"
-        " -3  \0"
-        "Error\0"
-        "  3  \0"
-        "  2  \0"
-        "  1  \0"
-        "  0  ",
+    .Transpose_ValueDisplay_Table_Strings = " -1  \x00 -2  ",
+
+    .Transpose_String_Minus3 = " -3  ",
+
+    .Transpose_String_Error = "Error\x00  3  ",
+
+    .Transpose_String_Plus2 = "  2  ",
+
+    .Transpose_String_Plus1 = "  1  ",
+
+    .Transpose_String_Zero = "  0  ",
 
     .MidiPartGridCheck_LocalInit = { 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
 
-    .MidiPartGridCheck_LocalInit_Strings = " OFF \0"
-        " %2d  \0\xFF"
-        " OFF \0"
-        " %2d  \0\xFF"
-        " ON  \0"
-        " OFF \0"
-        " OFF \0"
-        " %2d  \0\xFF",
+    .MidiPartGridCheck_LocalInit_Strings = " OFF ",
+
+    .MidiPartGridCheck_OnLswData_Str_Fmt2d = " %2d  \x00\xFF",
+
+    .MidiPartGridCheck_OnLswData_Str_OFF = " OFF ",
+
+    .MidiPartGridCheck_OnLswData_Str_Fmt2d_2 = " %2d  \x00\xFF",
+
+    .MidiPartGridCheck_OnLswData_Str_ON = " ON  ",
+
+    .MidiPartGridCheck_OnLswData_Str_OFF_2 = " OFF ",
+
+    .MidiSetup_EventHandler_Str_OFF = " OFF ",
+
+    .MidiPart_AudioCmdDisplay_Str_Fmt2d = " %2d  \x00\xFF",
 
     .MidiPart_LookupFromTable_Str = " ON  ",
 
@@ -4581,4 +4780,5 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
 };
 
 #undef SELF
+#undef PORT_BASE
 #undef BASE

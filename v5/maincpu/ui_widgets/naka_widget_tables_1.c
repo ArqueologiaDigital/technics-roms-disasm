@@ -73,18 +73,18 @@ extern const char MetroOnOffFunc;
 extern const char MiddleFuncCall;
 extern const char MimeOnOffFunc;
 extern const char MsgToTtlProc;
-extern const char NakaInst_AcEntertainerGridBox;
-extern const char NakaInst_AccIll;
-extern const char NakaInst_EqualizerBox;
-extern const char NakaInst_IvSongCopyExit;
-extern const char NakaInst_SngSel;
-extern const char NakaInst_SngSel2;
-extern const char NakaInst_SqedtFix;
-extern const char NakaInst_SqedtVal;
-extern const char NakaInst_SqedtVal2_End;
-extern const char NakaInst_SqedtVal3;
-extern const char NakaInst_SqedtVal_B;
-extern const char NakaInst_SqplyVal;
+extern const char ClassPropdata_AcEntertainerGridBox;
+extern const char ClassPropdata_AccIll;
+extern const char ClassPropdata_EffectBox;
+extern const char ClassPropdata_IvSongCopyExit;
+extern const char ClassPropdata_SngSel;
+extern const char ClassPropdata_SngSel2;
+extern const char ClassPropdata_SqedtFix;
+extern const char ClassPropdata_SqedtVal;
+extern const char ClassPropdata_SqedtVal2;
+extern const char ClassPropdata_SqedtVal3;
+extern const char ClassPropdata_EqualizerBox;
+extern const char ClassPropdata_SqplyVal;
 extern const char NakaWidget_AftTouchChSel;
 extern const char NakaWidget_AftTouchDuration;
 extern const char NakaWidget_AftTouchList;
@@ -414,8 +414,12 @@ extern const char ClassName_SngSel2;
 extern const char ClassName_SqedtFix;
 extern const char ClassName_SqedtVal3;
 extern const char ClassName_SqplyVal;
+extern const char ClassName_EffectBox;
+extern const char ClassName_EqualizerBox;
+extern const char ClassName_SqedtVal;
+extern const char ClassName_SqedtVal2;
 
-#define BASE  0x00E24056u
+#define BASE  0x00E2403Eu
 
 typedef struct __attribute__((packed)) {
     /* ---------------------------------------------------------------------
@@ -934,7 +938,31 @@ typedef struct __attribute__((packed)) {
      * Yoko_ResNames_3E3; that code DOES reach (readers: the .s header, which also labels each
      * string)
      * --------------------------------------------------------------------- */
-    char Yoko_ResNames_3E3_Strings[306];
+    char Yoko_ResNames_3E3_Strings[12];
+    char InitializeYoko_Str_MD_DEMO[8];
+    char InitializeYoko_Str_TT_DPSMF[10];
+    char InitializeYoko_Str_TT_DPDOC[10];
+    char InitializeYoko_Str_TT_DPPD[8];
+    char InitializeYoko_Str_TT_DPSMFLYR[12];
+    char InitializeYoko_Str_TT_DPMDLYSMF[14];
+    char InitializeYoko_Str_TT_DPMDLYDOC[14];
+    char InitializeYoko_Str_TT_DPMDLYPD[12];
+    char InitializeYoko_Str_TT_DPMDLYSMFLYR[16];
+    char InitializeYoko_Str_TT_DKMDLYPLY[14];
+    char InitializeYoko_Str_TT_SQMDLYPLY[14];
+    char InitializeYoko_Str_TT_SQTRSEL[12];
+    char InitializeYoko_Str_TT_SQSTEP[10];
+    char InitializeYoko_Str_TT_SQTRAS[10];
+    char InitializeYoko_Str_TT_SQTRASPS[12];
+    char InitializeYoko_Str_TT_SQSNGSEL[12];
+    char InitializeYoko_Str_TT_SQSNGNAME[14];
+    char InitializeYoko_Str_TT_SQAFTSET[12];
+    char InitializeYoko_Str_TT_SQEASYNAME[14];
+    char InitializeYoko_Str_TT_SQSTEPBAL[14];
+    char InitializeYoko_Str_TT_DEMOMENU[12];
+    char InitializeYoko_Str_TT_DEMOSTYLE[14];
+    char InitializeYoko_Str_TT_DEMOSOUND[14];
+    char InitializeYoko_Str_TT_DEMORHY[12];
     /* ---------------------------------------------------------------------
      * Yoko_MainFuncTable_147 -- object table: InitializeYoko (v10/v9
      * 0xF29E6D, v7 0xF29E43) (sequencer/sequencer_ui.s:19) registers it with
@@ -1064,7 +1092,16 @@ typedef struct __attribute__((packed)) {
      * string block before it; that code DOES reach (readers: the .s header, which also labels each
      * string)
      * --------------------------------------------------------------------- */
-    char NakaT1_Str021A4[208];
+    char NakaT1_Str021A4[6];
+    char MeasureBoxFunc_DrawMeasure_Str_MEASURE_Fmt3d[14];
+    char AcDiskFileName_HandleEventF_Str_Blank25[26];
+    char AcSmfFileName_HandleEventF_Str_Blank25[26];
+    char AcSmfSongName_HandleEventF_Str_Blank25[26];
+    char AcDocSongName_HandleEventF_Str_Blank25[26];
+    char AcDocFileNo_HandleEventF_Str_Blank25[26];
+    char AcPDSongName_HandleEventF_Str_Blank25[26];
+    char AcPDFileNo_HandleEventF_Str_Blank25[26];
+    char IvNamingExit_CopyString_Str_ExMD[6];
     /* ---------------------------------------------------------------------
      * TrAsGridChk_Part1_SendAudio_PtrTable -- 20 u32 addresses, read by
      * TrAsGridChk_Part1_SendAudio (v10/v9 0xF2C798, v7 0xF2C76E) (`ld xbc,
@@ -2780,31 +2817,55 @@ const naka_widget_tables_1_t naka_widget_tables_1_data
         "DemoSong12\0\xFF"
         "DemoRhy",
 
-    .Yoko_ResNames_3E3_Strings = "MD_SEQ_STEP\0"
-        "MD_DEMO\0"
-        "TT_DPSMF\0\xFF"
-        "TT_DPDOC\0\xFF"
-        "TT_DPPD\0"
-        "TT_DPSMFLYR\0"
-        "TT_DPMDLYSMF\0\xFF"
-        "TT_DPMDLYDOC\0\xFF"
-        "TT_DPMDLYPD\0"
-        "TT_DPMDLYSMFLYR\0"
-        "TT_DKMDLYPLY\0\xFF"
-        "TT_SQMDLYPLY\0\xFF"
-        "TT_SQTRSEL\0\xFF"
-        "TT_SQSTEP\0"
-        "TT_SQTRAS\0"
-        "TT_SQTRASPS\0"
-        "TT_SQSNGSEL\0"
-        "TT_SQSNGNAME\0\xFF"
-        "TT_SQAFTSET\0"
-        "TT_SQEASYNAME\0"
-        "TT_SQSTEPBAL\0\xFF"
-        "TT_DEMOMENU\0"
-        "TT_DEMOSTYLE\0\xFF"
-        "TT_DEMOSOUND\0\xFF"
-        "TT_DEMORHY\0\xFF",
+    .Yoko_ResNames_3E3_Strings = "MD_SEQ_STEP",
+
+    .InitializeYoko_Str_MD_DEMO = "MD_DEMO",
+
+    .InitializeYoko_Str_TT_DPSMF = "TT_DPSMF\x00\xFF",
+
+    .InitializeYoko_Str_TT_DPDOC = "TT_DPDOC\x00\xFF",
+
+    .InitializeYoko_Str_TT_DPPD = "TT_DPPD",
+
+    .InitializeYoko_Str_TT_DPSMFLYR = "TT_DPSMFLYR",
+
+    .InitializeYoko_Str_TT_DPMDLYSMF = "TT_DPMDLYSMF\x00\xFF",
+
+    .InitializeYoko_Str_TT_DPMDLYDOC = "TT_DPMDLYDOC\x00\xFF",
+
+    .InitializeYoko_Str_TT_DPMDLYPD = "TT_DPMDLYPD",
+
+    .InitializeYoko_Str_TT_DPMDLYSMFLYR = "TT_DPMDLYSMFLYR",
+
+    .InitializeYoko_Str_TT_DKMDLYPLY = "TT_DKMDLYPLY\x00\xFF",
+
+    .InitializeYoko_Str_TT_SQMDLYPLY = "TT_SQMDLYPLY\x00\xFF",
+
+    .InitializeYoko_Str_TT_SQTRSEL = "TT_SQTRSEL\x00\xFF",
+
+    .InitializeYoko_Str_TT_SQSTEP = "TT_SQSTEP",
+
+    .InitializeYoko_Str_TT_SQTRAS = "TT_SQTRAS",
+
+    .InitializeYoko_Str_TT_SQTRASPS = "TT_SQTRASPS",
+
+    .InitializeYoko_Str_TT_SQSNGSEL = "TT_SQSNGSEL",
+
+    .InitializeYoko_Str_TT_SQSNGNAME = "TT_SQSNGNAME\x00\xFF",
+
+    .InitializeYoko_Str_TT_SQAFTSET = "TT_SQAFTSET",
+
+    .InitializeYoko_Str_TT_SQEASYNAME = "TT_SQEASYNAME",
+
+    .InitializeYoko_Str_TT_SQSTEPBAL = "TT_SQSTEPBAL\x00\xFF",
+
+    .InitializeYoko_Str_TT_DEMOMENU = "TT_DEMOMENU",
+
+    .InitializeYoko_Str_TT_DEMOSTYLE = "TT_DEMOSTYLE\x00\xFF",
+
+    .InitializeYoko_Str_TT_DEMOSOUND = "TT_DEMOSOUND\x00\xFF",
+
+    .InitializeYoko_Str_TT_DEMORHY = "TT_DEMORHY\x00\xFF",
 
     .Yoko_MainFuncTable_147 = {
         NAKA_ADDR(SeqSongNameFunc),
@@ -3081,16 +3142,25 @@ const naka_widget_tables_1_t naka_widget_tables_1_data
         "LEFT\0\xFF"
         "RIGHT1\0\xFF",
 
-    .NakaT1_Str021A4 = "Lyrc\0\xFF"
-        "MEASURE = %3d\0"
-        "                         \0"
-        "                         \0"
-        "                         \0"
-        "                         \0"
-        "                         \0"
-        "                         \0"
-        "                         \0"
-        "ExMD\0\xFF",
+    .NakaT1_Str021A4 = "Lyrc\x00\xFF",
+
+    .MeasureBoxFunc_DrawMeasure_Str_MEASURE_Fmt3d = "MEASURE = %3d",
+
+    .AcDiskFileName_HandleEventF_Str_Blank25 = "                         ",
+
+    .AcSmfFileName_HandleEventF_Str_Blank25 = "                         ",
+
+    .AcSmfSongName_HandleEventF_Str_Blank25 = "                         ",
+
+    .AcDocSongName_HandleEventF_Str_Blank25 = "                         ",
+
+    .AcDocFileNo_HandleEventF_Str_Blank25 = "                         ",
+
+    .AcPDSongName_HandleEventF_Str_Blank25 = "                         ",
+
+    .AcPDFileNo_HandleEventF_Str_Blank25 = "                         ",
+
+    .IvNamingExit_CopyString_Str_ExMD = "ExMD\x00\xFF",
 
     .TrAsGridChk_Part1_SendAudio_PtrTable = {
         SELF(TrAsGridChk_Part1_SendAudio_Strings[190]),
@@ -3842,18 +3912,18 @@ const naka_widget_tables_1_t naka_widget_tables_1_data
     .ClassProps_IvRealRecExit_Names = "\0\xFF",
 
     .Kubo_ClassTable_168 = {
-        { NAKA_ADDR(EffectBoxProc), NAKA_CLASS(VwBox), 38, 10, 0x00E2758C, NAKA_ADDR(NakaInst_EqualizerBox), SELF(ClassProps_EffectBox) },
-        { NAKA_ADDR(EqualizerBoxProc), NAKA_CLASS(VwBox), 34, 6, 0x00E27578, NAKA_ADDR(NakaInst_SqedtVal_B), SELF(ClassProps_EqualizerBox) },
-        { NAKA_ADDR(SqedtValProc), NAKA_CLASS(Viewable), 32, 10, 0x00E2756A, NAKA_ADDR(NakaInst_SqedtVal), SELF(ClassProps_SqedtVal) },
-        { NAKA_ADDR(SqedtVal2Proc), NAKA_CLASS(Viewable), 30, 8, 0x00E2755A, NAKA_ADDR(NakaInst_SqedtVal2_End), SELF(ClassProps_SqedtVal2) },
-        { NAKA_ADDR(SqedtFixProc), NAKA_CLASS(Viewable), 28, 6, NAKA_ADDR(ClassName_SqedtFix), NAKA_ADDR(NakaInst_SqedtFix), SELF(ClassProps_SqedtFix) },
-        { NAKA_ADDR(IvSongCopyExitProc), NAKA_CLASS(IvExit), 22, 0, NAKA_ADDR(ClassName_IvSongCopyExit), NAKA_ADDR(NakaInst_IvSongCopyExit), SELF(ClassProps_IvSongCopyExit) },
-        { NAKA_ADDR(SqplyValProc), NAKA_CLASS(Viewable), 32, 10, NAKA_ADDR(ClassName_SqplyVal), NAKA_ADDR(NakaInst_SqplyVal), SELF(ClassProps_SqplyVal) },
-        { NAKA_ADDR(SqedtVal3Proc), NAKA_CLASS(Viewable), 30, 8, NAKA_ADDR(ClassName_SqedtVal3), NAKA_ADDR(NakaInst_SqedtVal3), SELF(ClassProps_SqedtVal3) },
-        { NAKA_ADDR(AccIllProc), NAKA_CLASS(Viewable), 32, 10, NAKA_ADDR(ClassName_AccIll), NAKA_ADDR(NakaInst_AccIll), SELF(ClassProps_AccIll) },
-        { NAKA_ADDR(AcEntertainerGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, NAKA_ADDR(ClassName_AcEntertainerGridBox), NAKA_ADDR(NakaInst_AcEntertainerGridBox), SELF(ClassProps_AcEntertainerGridBox) },
-        { NAKA_ADDR(SngSelProc), NAKA_CLASS(Viewable), 36, 14, NAKA_ADDR(ClassName_SngSel), NAKA_ADDR(NakaInst_SngSel), SELF(ClassProps_SngSel) },
-        { NAKA_ADDR(SngSel2Proc), NAKA_CLASS(Viewable), 22, 0, NAKA_ADDR(ClassName_SngSel2), NAKA_ADDR(NakaInst_SngSel2), SELF(ClassProps_SngSel2) },
+        { NAKA_ADDR(EffectBoxProc), NAKA_CLASS(VwBox), 38, 10, NAKA_ADDR(ClassName_EffectBox), NAKA_ADDR(ClassPropdata_EffectBox), SELF(ClassProps_EffectBox) },
+        { NAKA_ADDR(EqualizerBoxProc), NAKA_CLASS(VwBox), 34, 6, NAKA_ADDR(ClassName_EqualizerBox), NAKA_ADDR(ClassPropdata_EqualizerBox), SELF(ClassProps_EqualizerBox) },
+        { NAKA_ADDR(SqedtValProc), NAKA_CLASS(Viewable), 32, 10, NAKA_ADDR(ClassName_SqedtVal), NAKA_ADDR(ClassPropdata_SqedtVal), SELF(ClassProps_SqedtVal) },
+        { NAKA_ADDR(SqedtVal2Proc), NAKA_CLASS(Viewable), 30, 8, NAKA_ADDR(ClassName_SqedtVal2), NAKA_ADDR(ClassPropdata_SqedtVal2), SELF(ClassProps_SqedtVal2) },
+        { NAKA_ADDR(SqedtFixProc), NAKA_CLASS(Viewable), 28, 6, NAKA_ADDR(ClassName_SqedtFix), NAKA_ADDR(ClassPropdata_SqedtFix), SELF(ClassProps_SqedtFix) },
+        { NAKA_ADDR(IvSongCopyExitProc), NAKA_CLASS(IvExit), 22, 0, NAKA_ADDR(ClassName_IvSongCopyExit), NAKA_ADDR(ClassPropdata_IvSongCopyExit), SELF(ClassProps_IvSongCopyExit) },
+        { NAKA_ADDR(SqplyValProc), NAKA_CLASS(Viewable), 32, 10, NAKA_ADDR(ClassName_SqplyVal), NAKA_ADDR(ClassPropdata_SqplyVal), SELF(ClassProps_SqplyVal) },
+        { NAKA_ADDR(SqedtVal3Proc), NAKA_CLASS(Viewable), 30, 8, NAKA_ADDR(ClassName_SqedtVal3), NAKA_ADDR(ClassPropdata_SqedtVal3), SELF(ClassProps_SqedtVal3) },
+        { NAKA_ADDR(AccIllProc), NAKA_CLASS(Viewable), 32, 10, NAKA_ADDR(ClassName_AccIll), NAKA_ADDR(ClassPropdata_AccIll), SELF(ClassProps_AccIll) },
+        { NAKA_ADDR(AcEntertainerGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, NAKA_ADDR(ClassName_AcEntertainerGridBox), NAKA_ADDR(ClassPropdata_AcEntertainerGridBox), SELF(ClassProps_AcEntertainerGridBox) },
+        { NAKA_ADDR(SngSelProc), NAKA_CLASS(Viewable), 36, 14, NAKA_ADDR(ClassName_SngSel), NAKA_ADDR(ClassPropdata_SngSel), SELF(ClassProps_SngSel) },
+        { NAKA_ADDR(SngSel2Proc), NAKA_CLASS(Viewable), 22, 0, NAKA_ADDR(ClassName_SngSel2), NAKA_ADDR(ClassPropdata_SngSel2), SELF(ClassProps_SngSel2) },
     },
 
     .Kubo_ClassTable_168_Desc12Head = {

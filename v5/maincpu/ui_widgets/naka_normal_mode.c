@@ -13,7 +13,7 @@
 extern const char CRTC_LINE_COMPARE;
 extern const char Naka_PresentationRootState;
 
-#define BASE  0x00ED333Cu
+#define BASE  0x00ED3228u
 
 /* NakaWidget_N1's element (scripts/converters/nakarest_reviewed_slices.py). */
 typedef struct __attribute__((packed)) {

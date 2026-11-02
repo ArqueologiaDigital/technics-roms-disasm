@@ -139,7 +139,10 @@ them with `grep -c '^\s*\.equ'` on each file. `make gate` reported every image I
    `notes/misc-2026-10-31/probes/ram_block_delta_review.out.txt`.
 5. The sequencer edit titles' parameters (0x25FA-0x2662, `EVT_GET_RAM_ADDRESS` per title in
    `SqedtFunc_StateChainB_On*`) form one table per title, and could be named record by record from those
-   switch tables.
+   switch tables.  (2026-11-02, lane kn5000-c: the C RAM tables are SQEDT_*_TRACK by name (naka_ram_cells.h now
+   carries the RAM names the NAKA C uses), and SQEDT_QTZ_STRENGTH / SQEDT_QTZ_WINDOW / SEQ_QTZ_TICK /
+   SEQ_QTZ_ZONE_EDGE_A / _B are named in v10 / v9 / v7; 0x263a / 0x263c / 0x263e stay numbers:
+   `notes/kn5000-c-2026-11-02/README.md`.)
 6. `NMI_StorePayloadChecksums`'s routine header (`boot/system_handlers.s`) still describes RAM 0x0400 as
    "the NMI guard" by number. A header lane could name `BOOT_STAGE` there.  (Done 2026-10-31, lane kn5000-a:
    the header now says BOOT_STAGE must be 0x80 and names its writers, in v10/v9/v7/v6/v5.)
