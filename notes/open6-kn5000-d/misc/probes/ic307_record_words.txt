@@ -1,0 +1,102 @@
+PAIRING
+  IC307 entries                                     1495
+  head-only IC307 record (no words to compare)       965
+  record == the twin's p1, p3, p5, ... (exact)       456
+  no KN7000 recording starts with this wave           65
+  twin found, records differ                           9
+
+A. IC307 word kind vs KN7000 meaning of the same word (exact pairs)
+  IC307  KN7000   b7   b6     words
+  seq    segment  -    -       5215
+  split  split    -    -        423
+  seq    segment  end  -        116
+  seq    segment  -    mark      84
+  split  zero     end  mark      64
+  split  split    end  mark      53
+  split  segment  -    -         37
+  seq    zero     end  mark      22
+  seq    split    -    -          3
+  0x4000 alone (LOOP_START)                   197
+  0x8000 on the record's last word           1421
+  0xC000 (REC_END)                           1219
+
+B1. segment words of the exact pairs: code field vs the twin recording's format (P bit 3)
+  16-bit  code == 0      96
+  8-bit   code != 0    5262
+  8-bit   code == 0      94
+  all IC307 segment words, by the twin's format:
+    16-bit    code == 0      96
+    8-bit     code != 0    5262
+    8-bit     code == 0      94
+    unpaired  code != 0    1053
+    unpaired  code == 0      41
+
+B2. KN7000 records (both halves): what the 3-bit field a is
+  16-bit LOOP_END segment: a == b(first segment of the loop)     582 of    582  (100.0 %)
+  16-bit a(next) == b(this)  (control)                          1579 of   1579  (100.0 %)
+  16-bit a(this) == b(next segment)                             1579 of   1579  (100.0 %)
+  16-bit a(this) == b(this)  (control)                          1579 of   1579  (100.0 %)
+  16-bit last segment, no loop: a == b(itself)                  1384 of   1384  (100.0 %)
+  8-bit  LOOP_END segment: a == b(first segment of the loop)     372 of    372  (100.0 %)
+  8-bit  a(next) == b(this)  (control)                         34519 of  46497  (74.2 %)
+  8-bit  a(this) == b(next segment)                            46497 of  46497  (100.0 %)
+  8-bit  a(this) == b(this)  (control)                          1318 of  46497  (2.8 %)
+  8-bit  last segment, no loop: a == b(itself)                   574 of    580  (99.0 %)
+
+B3. KN7000 8-bit recordings: the stored level across 46265 segment boundaries
+    (log2 of RMS(8 bytes before) / RMS(8 bytes after); boundaries with RMS <= 2 on a side skipped)
+  least squares: jump = 0.750 x (b_prev - b) + 0.011 x (a_prev - a)
+  b 0 -> 1:  5480 boundaries, median jump -0.767
+  b 1 -> 2:  4215 boundaries, median jump -0.776
+  b 2 -> 3:  4167 boundaries, median jump -0.767
+  b 3 -> 4:  4324 boundaries, median jump -0.762
+  b 4 -> 5:  3120 boundaries, median jump -0.712
+  b 1 -> 0:  5368 boundaries, median jump +0.804
+  b 2 -> 1:  4032 boundaries, median jump +0.767
+  b 3 -> 2:  3919 boundaries, median jump +0.789
+  b 4 -> 3:  4080 boundaries, median jump +0.772
+  b 5 -> 4:  2891 boundaries, median jump +0.723
+  decoded = raw x 2^(-0.50 b): median |jump| 0.538   (raw: 0.837)
+  decoded = raw x 2^(-0.75 b): median |jump| 0.499   (raw: 0.837)
+  decoded = raw x 2^(-1.00 b): median |jump| 0.541   (raw: 0.837)
+  control: the same 8-byte jump measured mid-segment (no boundary), raw: median 0.490 over 47252 segments
+  does a change the stored level inside a segment?  median log2 ratio by (a - b), 47430 segments:
+    even / odd bytes       a-b=-1: -0.001  a-b=+0: +0.000  a-b=+1: +0.000
+    Y-chip / X-chip words  a-b=-1: -0.004  a-b=+0: +0.000  a-b=+1: +0.001
+    first / last quarter   a-b=-1: -0.048  a-b=+0: +0.044  a-b=+1: +0.055
+
+C. an IC307 entry j whose record is entry i's minus its first m visible words (both with twins)
+  page 0:  158 inside  157: starts   44 units in; i's segment 2m ends at 50; j's first segment 6
+  page 0:  159 inside  157: starts  296 units in; i's segment 2m ends at 298; j's first segment 2
+  page 0:  174 inside  173: starts  400 units in; i's segment 2m ends at 404; j's first segment 4
+  page 0:  176 inside  175: starts  479 units in; i's segment 2m ends at 480; j's first segment 1
+  page 2:   42 inside   40: starts   18 units in; i's segment 2m ends at 22; j's first segment 4
+  page 2:   43 inside   40: starts   18 units in; i's segment 2m ends at 22; j's first segment 4
+  page 2:   44 inside   40: starts   30 units in; i's segment 2m ends at 38; j's first segment 8
+  page 2:   45 inside   40: starts   30 units in; i's segment 2m ends at 38; j's first segment 8
+  page 2:   46 inside   40: starts   36 units in; i's segment 2m ends at 38; j's first segment 2
+  page 2:   54 inside   51: starts    8 units in; i's segment 2m ends at 10; j's first segment 2
+  page 2:   55 inside   51: starts    8 units in; i's segment 2m ends at 10; j's first segment 2
+  page 2:   62 inside   56: starts   16 units in; i's segment 2m ends at 18; j's first segment 2
+  page 2:   63 inside   56: starts   16 units in; i's segment 2m ends at 18; j's first segment 2
+  page 2:   67 inside   65: starts    8 units in; i's segment 2m ends at 14; j's first segment 6
+  page 2:   68 inside   65: starts    8 units in; i's segment 2m ends at 14; j's first segment 6
+  page 2:   69 inside   65: starts   12 units in; i's segment 2m ends at 14; j's first segment 2
+  page 2:   70 inside   65: starts   12 units in; i's segment 2m ends at 14; j's first segment 2
+  page 2:   71 inside   65: starts   12 units in; i's segment 2m ends at 14; j's first segment 2
+  page 2:   84 inside   80: starts    8 units in; i's segment 2m ends at 12; j's first segment 4
+  page 2:   85 inside   80: starts   10 units in; i's segment 2m ends at 12; j's first segment 2
+  page 2:   86 inside   80: starts   10 units in; i's segment 2m ends at 12; j's first segment 2
+  page 2:   87 inside   80: starts   10 units in; i's segment 2m ends at 12; j's first segment 2
+  page 2:   94 inside   89: starts   12 units in; i's segment 2m ends at 14; j's first segment 2
+  page 2:   95 inside   89: starts   12 units in; i's segment 2m ends at 14; j's first segment 2
+  page 2:  100 inside   97: starts    6 units in; i's segment 2m ends at 8; j's first segment 2
+  page 2:  101 inside   97: starts    6 units in; i's segment 2m ends at 8; j's first segment 2
+  page 2:  102 inside   97: starts   12 units in; i's segment 2m ends at 14; j's first segment 2
+  page 2:  103 inside   97: starts   12 units in; i's segment 2m ends at 14; j's first segment 2
+  page 2:  110 inside  104: starts   12 units in; i's segment 2m ends at 16; j's first segment 4
+  page 2:  111 inside  104: starts   14 units in; i's segment 2m ends at 16; j's first segment 2
+  j's audio is not inside i's (a coincidental record match)      26
+  start + j's first (X) segment == end of i's segment 2m         30
+  j's twin record == i's twin record from word 2m+1 on           30
+  checked                                                        30
