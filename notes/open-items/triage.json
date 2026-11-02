@@ -1,4 +1,66 @@
 {
+ "L-mn10300-names-b935-initial-sp": {
+  "status": "ACTIONABLE",
+  "plan": "port the memory-map constants a build's reset code loads (INITIAL_SP) from that code, not by port_symbols.py's majority vote: src/b935/symbols.inc sets 941's 0x50021CF8, 935's reset loads 0x50021CCC (ramgui_reset_layout.py), the note's next step",
+  "size": "S",
+  "area": "KN7000",
+  "source": "kn7000/notes/mn10300-names/README.md:213",
+  "title": "KN7000 935: INITIAL_SP ported by vote (0x50021CF8), the reset loads 0x50021CCC"
+ },
+ "L-mn10300-names-bitcount-inference": {
+  "status": "ACTIONABLE",
+  "plan": "gen_data_s.py, near the bitmap bit-count comment: drop the [INFERENCE] (N-c62a74fa is settled); left for lane mn10300-data, still there at de0ad164e",
+  "size": "S",
+  "area": "KN7000",
+  "source": "kn7000/notes/mn10300-names/README.md:157",
+  "title": "gen_data_s.py: the bitmap bit-count comment still says [INFERENCE]"
+ },
+ "L-mn10300-names-data-own-syms": {
+  "status": "ACTIONABLE",
+  "plan": "gen_data_s.py PROFILES['b935' / 'b893']['syms']: append kn7000_b935_own.sym / kn7000_b893_own.sym so the data labels use those builds' own names (RAM rows, LibLoadDescriptorTail); left for lane mn10300-data, not in gen_data_s.py at de0ad164e",
+  "size": "S",
+  "area": "KN7000",
+  "source": "kn7000/notes/mn10300-names/README.md:151",
+  "title": "gen_data_s.py: 935 / 893 data labels do not use the builds' own .sym files"
+ },
+ "L-mn10300-names-kn2400-titles": {
+  "status": "ACTIONABLE",
+  "plan": "gen_data_s.py: name the KN2400's unregistered titles from TitleNameTable (the research agent's diff, title_names=(0x48414BD8, 0x140), not applied); type InitModeTitleTable's 28-byte default record (now one word + 24 opaque bytes); left for lane mn10300-data",
+  "size": "S",
+  "area": "MN10300 siblings",
+  "source": "kn7000/notes/mn10300-names/README.md:154",
+  "title": "KN2400: unregistered titles from TitleNameTable; InitModeTitleTable's default record"
+ },
+ "L-mn10300-names-ncr-names": {
+  "status": "BLOCKED",
+  "blocker": "owner decision: the IC18 rhythm source grew 14.4 -> 21.1 MB when every note began to spell its conversion rule and every drum note its kit key; emptying NCR_NAMES in tools/gen_ic18_rhythm_s.py would save about 5.6 MB. Keep the names or empty NCR_NAMES? (lane mn10300-names, 2026-11-02: \"an owner's choice; not done\")",
+  "area": "KN7000",
+  "source": "kn7000/notes/mn10300-names/README.md:227",
+  "title": "IC18 rhythm source 21.1 MB: keep the conversion-rule names or empty NCR_NAMES (-5.6 MB)?"
+ },
+ "L-mn10300-names-port-entry": {
+  "status": "ACTIONABLE",
+  "plan": "tools/port_names_by_code.py: compare a 941 '_entry' name (the call entry 3 bytes after the prologue) with the entry of B's prologue routines, the note's next step",
+  "size": "S",
+  "area": "KN7000",
+  "source": "kn7000/notes/mn10300-names/README.md:219",
+  "title": "port_names_by_code.py misses names 941 gives the call entry, not the prologue"
+ },
+ "L-mn10300-names-sd-frame-labels": {
+  "status": "ACTIONABLE",
+  "plan": "941's data labels SdReadBlockCmd_Var_2 / SdReadBlockCmd_Table are the mode-2 SD frames at 0x50007E94.. (IC18 SdFrameR2Cmd*'s twin) and func_484ABA68_Var.. are TickHookArg0..3: rename them; left for lane mn10300-data",
+  "size": "S",
+  "area": "KN7000",
+  "source": "kn7000/notes/mn10300-names/README.md:159",
+  "title": "KN7000 941: SdReadBlockCmd_* / func_484ABA68_Var* data labels to rename"
+ },
+ "L-mn10300-names-wav-merge": {
+  "status": "BLOCKED",
+  "blocker": "owner decision: merge the WAV files into one per recording (alternate starts as cue points) and trim the run-outs? It would change about 100 and 850 WAV files (lane mn10300-names, 2026-11-02: \"an owner decision, not done\")",
+  "area": "KN7000",
+  "source": "kn7000/notes/wave-roms-2026-10-29.md:374",
+  "title": "KN7000 wave WAVs: one per recording with cue points, run-outs trimmed?"
+ },
  "L-mn10300-rest-fxdesc-pnum": {
   "status": "RESOLVED",
   "size": "S",
@@ -32,22 +94,35 @@
    "N-006a2ebe"
   ]
  },
- "N-01128b1c": {
-  "status": "RESOLVED",
-  "title": "Which image's SD-card reflection table is mispaired (KN2400 or KN7000)",
-  "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): 4fd8eff85, c7a16f911"
- },
  "N-01378e58": {
   "status": "RESOLVED",
   "title": "Fonts: 0xF25590's cell count and the 0x0E run after it",
   "evidence": "00c2226f1: 128 cells; FINDINGS-prom_b-fonts-and-dsp-value-lists.md section 1, notes/gen_prom_b_fonts.py --selftest (the note marks it CLOSED 2026-08-25)"
  },
+ "N-018a8d11": {
+  "status": "RESOLVED",
+  "title": "Sound-unit keys 0x0044 / 0x1111 / 0x0B12 in units 0xB040 / 0xB050",
+  "size": "M",
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c, acd3400ce",
+  "was": [
+   "N-f5cfab22"
+  ]
+ },
+ "N-02383279": {
+  "status": "ACTIONABLE",
+  "title": "KN6000: 10,098 entries still func_<ADDR> (sibling-to-sibling porting done)",
+  "size": "L",
+  "was_status": "RESOLVED",
+  "plan": "per-subsystem naming of the remaining 10,098 func_ entries (callers, strings, MILK messages), as kn6000/README.md says; the porting half was closed by lane mn10300-names (2026-11-02): 019e7a8a1, 3d870c7b5, 397b30e0d",
+  "was": [
+   "N-f3294592"
+  ]
+ },
  "N-027de254": {
   "status": "ACTIONABLE",
   "title": "Records whose pointer fields point into their own tail (switch descriptors)",
   "size": "M",
-  "plan": "MILK support-class value descriptors; next: read the support-class procs, then a record macro (lane mn10300-data, 2026-10-31)"
+  "plan": "MILK support-class value descriptors; next: read the support-class procs, then a record macro (lane mn10300-data, 2026-11-02)"
  },
  "N-028ee2be": {
   "status": "RESOLVED",
@@ -88,7 +163,7 @@
   "status": "ACTIONABLE",
   "title": "Blocks handed only to memcpy / strcpy / LibStrlen stay rows",
   "size": "M",
-  "plan": "left: memcpy-only blocks (941 FAT BPB template, KN6000/6500 memcpy-loop records, KN2400 data_4841E3E4); next: memcpy-loop rule + BPB record type (lane mn10300-data, 2026-10-31)"
+  "plan": "left: memcpy-only blocks (941 FAT BPB template, KN6000/6500 memcpy-loop records, KN2400 data_4841E3E4); next: memcpy-loop rule + BPB record type (lane mn10300-data, 2026-11-02)"
  },
  "N-045aedde": {
   "status": "RESOLVED",
@@ -101,17 +176,20 @@
   "title": "Gap D: tie prom_d to an instruction (re-asked three ways)",
   "evidence": "FINDINGS-prom_a-boot-and-version-screen.md sec.1 (22025efc4); re-asks answered in prom_a fb2000 sysex module (SysExDump_SendSound, 0xEC0000 combinations, 0xFB248A orphan)"
  },
+ "N-04a16ace": {
+  "status": "RESOLVED",
+  "title": "'ZZZJ': what the 220 records and their eight entries select",
+  "size": "M",
+  "evidence": "lane mn10300-names (2026-11-02): bc9e1eb0c (SOUND ARRANGER factory settings)",
+  "was": [
+   "N-3d2fa559"
+  ]
+ },
  "N-054f83bd": {
   "status": "BLOCKED",
   "area": "MAME/emulation",
   "title": "SX-KN1500 IC15 program dump is half blank (its whole boot blocker)",
   "blocker": "undumped: a good re-dump of the SX-KN1500 IC15 program ROM (four 256 KiB blocks of the current one have 0xFF in every odd byte)"
- },
- "N-05cd19fe": {
-  "status": "ACTIONABLE",
-  "title": "KN6500: part of the data region is still .incbin_range",
-  "size": "L",
-  "plan": "KN6500 opaque 44,212 -> 27,134 B; next steps per group in kn7000/notes/mn10300-data/README.md s.4 (lane mn10300-data, 2026-10-31)"
  },
  "N-07101156": {
   "status": "RESOLVED",
@@ -139,13 +217,7 @@
   "status": "RESOLVED",
   "title": "KN6000: bitmap pixel order inferred; TABLE-tone/voice-record names not re-traced",
   "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): a19176de0"
- },
- "N-0b145a01": {
-  "status": "RESOLVED",
-  "size": "M",
-  "title": "KN5000 panel: 125 bytes keep f<offset> names",
-  "evidence": "lane kn5000-d (2026-10-31): notes/open6-kn5000-d/panel/README.md s1 (byte 0x80 +4 needs a MIDI capture from hardware)"
+  "evidence": "lane mn10300-names (2026-11-02): a19176de0"
  },
  "N-0baa594e": {
   "status": "RESOLVED",
@@ -188,11 +260,10 @@
   "title": "DSP: why an effect-change reload writes no I-RAM",
   "evidence": "8925a1bc7: raw-bus capture shows the field+12 body never reaches the bus (FINDINGS-dsp-runtime-effect-uploads.md, raw-bus section); refined by FINDINGS-dsp-group-selector-upload-path.md (b2d6fdc7e)"
  },
- "N-10dad9c5": {
+ "N-10df24d2": {
   "status": "RESOLVED",
-  "size": "M",
-  "title": "Sound record: envelope pair order, LFO captions, controller groups (pointer to N-b64487fc)",
-  "evidence": "lane kn5000-d (2026-10-31): notes/open6-kn5000-d/panel/README.md s3 + probes/se_page_names.py"
+  "evidence": "lane kn5000-c (2026-11-02): 1becec8c9, 0c9eb932d, 3f4df7a2e, c896c0532 (scripts/converters/ported_c_rebase.py; the v6 / v5 port debt 13,756 -> 3,615 B and 15,910 -> 4,504 B)",
+  "title": "KN5000 v6 / v5 C port-debt table row: bytes of a bin that no .incbin places (the port spells those tables as ."
  },
  "N-10ecf076": {
   "status": "RESOLVED",
@@ -238,7 +309,16 @@
   "status": "RESOLVED",
   "title": "IvSDPlayTimer / IvSDFwdRewTimer field D may be 1 byte, not 2",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): 5db8a341c"
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c"
+ },
+ "N-171a1564": {
+  "status": "RESOLVED",
+  "title": "2 KB after PICTURE_PLANE2 (0x5011F080..0x5011F880) unreferenced",
+  "size": "S",
+  "evidence": "lane mn10300-names (2026-11-02): 9acdca7ee, acd3400ce",
+  "was": [
+   "N-68397a99"
+  ]
  },
  "N-1837e44c": {
   "status": "RESOLVED",
@@ -273,31 +353,70 @@
   "status": "RESOLVED",
   "title": "Name 935's and 893's own DSP host-port routines (0x48404D10..0x48407CA8)",
   "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): 5db8a341c, acd3400ce"
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c, acd3400ce"
  },
  "N-1adf5657": {
   "status": "BLOCKED",
   "title": "KN2400/KN2600: the 4 MiB half of the IC12/IC13 program-flash pair at 0x48000000",
   "blocker": "a dump of the 0x48000000 half of the IC12/IC13 flash pair from a KN2400/KN2600 unit (not in the update installers or the romset; technics-docs/kn2400-kn2600.md, Memory layout)"
  },
- "N-1af8fb95": {
+ "N-1d60b9ee": {
+  "status": "RESOLVED",
+  "size": "M",
+  "title": "KN5000 panel: 125 bytes keep f<offset> names",
+  "evidence": "lane kn5000-d (2026-11-02): notes/open6-kn5000-d/panel/README.md s1 (byte 0x80 +4 needs a MIDI capture from hardware)",
+  "was": [
+   "N-0b145a01"
+  ]
+ },
+ "N-1d99fc9b": {
+  "status": "ACTIONABLE",
+  "plan": "the note gives only the question: trace the caller (composer / accompaniment sequencer) of Rhythm_TransposeWithMod (0xF55AD0, through AccompSeq_CheckVelFlags*)",
+  "size": "M",
+  "title": "Accompaniment: Rhythm_TransposeWithMod, a second converter; its caller"
+ },
+ "N-1e4a337c": {
+  "status": "ACTIONABLE",
+  "plan": "the note gives only the question: what screen 0x52 and (0x21E8) bit 2 are, behind sub_FF657B's eight-press counter",
+  "size": "S",
+  "area": "WSA1R",
+  "title": "WSA1R: screen 0x52 and (0x21E8) bit 2 behind sub_FF657B's eight-press counter"
+ },
+ "N-1ec5be74": {
   "status": "RESOLVED",
   "title": "StyleVariationNameGet misnamed: returns a count-in pattern record",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): acd3400ce (StyleCountInRecordGet / StyleCountInBoundGet)"
+  "evidence": "lane mn10300-names (2026-11-02): acd3400ce (StyleCountInRecordGet / StyleCountInBoundGet)",
+  "was": [
+   "N-1af8fb95"
+  ]
+ },
+ "N-1ef707b2": {
+  "status": "RESOLVED",
+  "title": "CC97 / CC94 / CC96 / CC80-83 effect on the sound not traced into the TG",
+  "size": "M",
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c, acd3400ce",
+  "was": [
+   "N-71feb370"
+  ]
+ },
+ "N-1efad974": {
+  "status": "RESOLVED",
+  "evidence": "lane kn5000-c (2026-11-02): 1becec8c9, 0c9eb932d, 3f4df7a2e, c896c0532 (scripts/converters/ported_c_rebase.py; the v6 / v5 port debt 13,756 -> 3,615 B and 15,910 -> 4,504 B)",
+  "title": "KN5000 v6 / v5 C port-debt table row: own BASE (1becec8c9) | 3,403 | 2,528 | 5,931 | 4,284 | 2,704 | 6,988"
  },
  "N-1f66216a": {
   "status": "RESOLVED",
   "area": "MN10300 siblings",
   "title": "Siblings' reader walk lacks the KN7000 ext rules (field returns, loop slots, bounds)",
   "size": "M",
-  "evidence": "lane mn10300-data (2026-10-31): sib_rules ported (kn7000/notes/mn10300-data/README.md s.2)"
+  "evidence": "lane mn10300-data (2026-11-02): sib_rules ported (kn7000/notes/mn10300-data/README.md s.2)"
  },
  "N-1fe9a5df": {
   "status": "RESOLVED",
   "title": "Scoop unknowns: Str_TuningEq 2nd scheme, Unref_* tables, ClockConfig_Select_Table, 0x09s",
   "size": "M",
-  "evidence": "lane kn5000-d (2026-10-31): notes/open6-kn5000-d/misc/README.md s2 (0x09 draws as a blank)"
+  "evidence": "lane kn5000-d (2026-11-02): notes/open6-kn5000-d/misc/README.md s2 (0x09 draws as a blank)"
  },
  "N-1ffc1583": {
   "status": "RESOLVED",
@@ -310,6 +429,15 @@
   "title": "prom_c 0x0010C000 registers 0x840/0x880/0x8C0: check the low byte against the rate table",
   "size": "S",
   "evidence": "lane wsa1 (2026-10-31): 0b6dcdb09"
+ },
+ "N-21a2aa37": {
+  "status": "RESOLVED",
+  "size": "M",
+  "title": "KN5000 DSP slot packing for 16 effects",
+  "evidence": "lane kn5000-d (2026-11-02): notes/open6-kn5000-d/panel/README.md s2 + probes/dsp_slot_packing.py",
+  "was": [
+   "N-583fb77c"
+  ]
  },
  "N-2204baa8": {
   "status": "RESOLVED",
@@ -354,7 +482,7 @@
   "was": [
    "N-3912088e"
   ],
-  "plan": "941 256->255, KN2400 208->200; next: hand names in data_struct_names.py (lane mn10300-data, 2026-10-31)"
+  "plan": "941 256->255, KN2400 208->200; next: hand names in data_struct_names.py (lane mn10300-data, 2026-11-02)"
  },
  "N-24a40225": {
   "status": "RESOLVED",
@@ -383,12 +511,6 @@
   "area": "MAME/emulation",
   "title": "Timer A/B row: INTTR5/6/7 must stay undispatched",
   "evidence": "measurement row of appendix item 2 (timer A/B, kn7000_mame 68543bf), not an open item; the upstreaming is tracked as N-ee58a28c"
- },
- "N-271d0bab": {
-  "status": "RESOLVED",
-  "title": "A rhythm note's last three bytes: length and class",
-  "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): 5db8a341c, 9fdc935e8"
  },
  "N-27f09ff3": {
   "status": "RESOLVED",
@@ -430,11 +552,11 @@
   "evidence": "lane kn5000-b (2026-10-31): aac3a298b (kn5000-44c: the filesystem's three open questions answered from the code)",
   "title": "HD-AE5000 filesystem (kn5000-44c) answer row: every HDAE5000_SaveSong_<part> writes the new chain's first clus"
  },
- "N-29e0f8b4": {
-  "status": "RESOLVED",
-  "size": "S",
-  "title": "KN5000 audio: the EQUALIZING sections' responses",
-  "evidence": "lane kn5000-d (2026-10-31): notes/open6-kn5000-d/misc/README.md s1 + probes/faj_eq_response.py"
+ "N-2a3d2074": {
+  "status": "ACTIONABLE",
+  "plan": "212 / 220 json raw bytes: type naka_sequencer_channels' 32-bit RAM pointers (offsets 0x1624-0x1720, now two uint16_t field_XXXX each) as RAM_ cells; most of the rest (naka_widget_descriptors' SQEDT RamPtrs, gui_display_struct_data, tonegen_param_table, se_name_editor) needs v6 / v5 RAM names first (no ram_variables_by_use.s there)",
+  "size": "M",
+  "title": "KN5000 v6 / v5: 212 / 220 raw bytes in the C divergence json"
  },
  "N-2a8e12a9": {
   "status": "RESOLVED",
@@ -461,6 +583,11 @@
    "N-94797258"
   ]
  },
+ "N-2c6bbaab": {
+  "status": "RESOLVED",
+  "evidence": "lane kn5000-c (2026-11-02): 1becec8c9, 0c9eb932d, 3f4df7a2e, c896c0532 (scripts/converters/ported_c_rebase.py; the v6 / v5 port debt 13,756 -> 3,615 B and 15,910 -> 4,504 B)",
+  "title": "KN5000 v6 / v5 C port-debt table row: PORT_BASE, own RAM cells, placed bytes only (0c9eb932d) | 3,403 | 804 | "
+ },
  "N-2d252457": {
   "status": "RESOLVED",
   "title": "Adopt style_bank_extra.json's readings in both lanes",
@@ -470,6 +597,15 @@
   "status": "RESOLVED",
   "evidence": "lane kn5000-b (2026-10-31): aac3a298b (kn5000-44c: the filesystem's three open questions answered from the code)",
   "title": "HD-AE5000 filesystem (kn5000-44c) answer row: +16 | 32 × 1 | directory + 1 (0 = empty item)"
+ },
+ "N-2d559fd2": {
+  "status": "RESOLVED",
+  "title": "IC18 count-block bytes after the 220 and style byte +0x89 have no reader",
+  "size": "M",
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c",
+  "was": [
+   "N-a883f3f0"
+  ]
  },
  "N-2e8a536d": {
   "status": "RESOLVED",
@@ -487,7 +623,7 @@
   "status": "ACTIONABLE",
   "title": "65 NAKA Viewable elements have no typed record (straddling members, DRAM, string blocks)",
   "size": "M",
-  "plan": "next: retype the straddling naka_dispatch_t / EditSw overlays as naka_cls_<Class>_t (lane kn5000-c, 2026-10-31)"
+  "plan": "next: retype the straddling naka_dispatch_t / EditSw overlays as naka_cls_<Class>_t (lane kn5000-c, 2026-11-02)"
  },
  "N-31aaf45b": {
   "status": "RESOLVED",
@@ -531,18 +667,17 @@
   "status": "RESOLVED",
   "title": "KN2400: what func_4870587E does with the three words of each RamCodeTrailer record",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): a19176de0 (RamSectionsCopy)"
+  "evidence": "lane mn10300-names (2026-11-02): a19176de0 (RamSectionsCopy)"
  },
  "N-346fd01b": {
   "status": "RESOLVED",
   "evidence": "lane open4/wsa1-d (2026-10-31): 978ae319d (WorkspaceDefaults partitioned into eleven copied runs and an unread tail; workspace_defaults_partition.py --selftest)",
   "title": "prom_b WorkspaceDefaults partition row: WorkspaceDefaults_SongName | +0x71 | 6 | 3 words | BStore_SongName | B"
  },
- "N-34fa7d2c": {
-  "status": "ACTIONABLE",
-  "title": "Pad +0x12..+0x15, TPAD +0x10..+0x15, TCMP variation head bytes: no reader",
-  "size": "M",
-  "plan": "next: a MAME write-watch on pad +0x13..15, TPAD +0x14/15, TCMP bytes (lane mn10300-names, 2026-10-31)"
+ "N-34d2ff78": {
+  "status": "BLOCKED",
+  "blocker": "hardware access: on a KN5000, whether the fast path's type-7 row (Rhythm_VelocityTable_A row 0 where the full path has 9) is audible, i.e. a firmware bug (notes/open6-kn5000-d/accomp/README.md A8)",
+  "title": "Accompaniment: fast-path type-7 velocity row differs; firmware bug?"
  },
  "N-35763611": {
   "status": "RESOLVED",
@@ -574,7 +709,16 @@
   "size": "S",
   "area": "floppies",
   "title": "WSA1R floppy: block 838's 0xDF 0xF7 run",
-  "evidence": "lane misc2 (2026-10-31): c549279d2 (probes/wsa1_f7df_runs.py; block 838 = DF F7 x125 as .rept)"
+  "evidence": "lane misc2 (2026-11-02): c549279d2 (probes/wsa1_f7df_runs.py; block 838 = DF F7 x125 as .rept)"
+ },
+ "N-391deec6": {
+  "status": "ACTIONABLE",
+  "title": "KN2400: 11,678 entries still func_<ADDR>",
+  "size": "L",
+  "plan": "next: per-subsystem naming of the remaining 11,678 func_ entries (lane mn10300-names, 2026-11-02)",
+  "was": [
+   "N-be2b9da5"
+  ]
  },
  "N-395531b4": {
   "status": "RESOLVED",
@@ -585,18 +729,23 @@
    "N-8b6a4882"
   ]
  },
- "N-3a365d90": {
+ "N-3a855294": {
   "status": "RESOLVED",
-  "size": "S",
-  "area": "documentation",
-  "title": "CLAUDE.md v6 / v5 verbatim figures and the Mines LLVM-workarounds section are stale",
-  "evidence": "lane misc2 (2026-10-31): Mines 301557d; CLAUDE.md rows (50ce7e5f2, e90bafdef)"
- },
- "N-3d2fa559": {
-  "status": "RESOLVED",
-  "title": "'ZZZJ': what the 220 records and their eight entries select",
   "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): bc9e1eb0c (SOUND ARRANGER factory settings)"
+  "title": "Sound record: envelope pair order, LFO captions, controller groups (pointer to N-b64487fc)",
+  "evidence": "lane kn5000-d (2026-11-02): notes/open6-kn5000-d/panel/README.md s3 + probes/se_page_names.py",
+  "was": [
+   "N-10dad9c5"
+  ]
+ },
+ "N-3b0bb103": {
+  "status": "RESOLVED",
+  "title": "KN2400: reflection-table procedures in the RAM-linked range (no table names one)",
+  "size": "M",
+  "evidence": "lane mn10300-names (2026-11-02): 5f4195da9",
+  "was": [
+   "N-e7ed1928"
+  ]
  },
  "N-403f59ed": {
   "status": "RESOLVED",
@@ -618,6 +767,15 @@
   "title": "Which firmware wrote the 43-record panel blocks",
   "blocker": "KN5000 v1-v4 program dumps (not dumped) (lane kn5000-style, 2026-10-31)"
  },
+ "N-42bc8729": {
+  "status": "ACTIONABLE",
+  "title": "BASEEXT.XAP: 24 of 1,340 indirect calls the static evaluator cannot resolve",
+  "size": "L",
+  "plan": "1,316 of 1,340 resolved; next: the 24 listed in sp7001-build-diff.md (lane mn10300-names, 2026-11-02)",
+  "was": [
+   "N-d753af29"
+  ]
+ },
  "N-42c40102": {
   "status": "RESOLVED",
   "area": "HD-AE5000",
@@ -634,7 +792,7 @@
   "status": "RESOLVED",
   "title": "KN6000: four of the 13 bitmap procedures are func_<ADDR>",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): a19176de0"
+  "evidence": "lane mn10300-names (2026-11-02): a19176de0"
  },
  "N-44155f00": {
   "status": "RESOLVED",
@@ -646,23 +804,17 @@
   "title": "Gap L: CPU 1's P5 bit 4 (the service checking-device switch)",
   "evidence": "marked CLOSED 2026-08-25 in WSA1-EMULATION-DISASM-GAPS.md gap L (service manual OCR lines 793-801)"
  },
- "N-44a0a9c3": {
-  "status": "RESOLVED",
-  "title": "Odd wave entry Main_P00_E0AF (P bit 9 set)",
-  "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): f65aad77a, 6cd18610c"
- },
  "N-44e56012": {
   "status": "ACTIONABLE",
   "title": "What keeps the keyboard silent during the whole PICTURE LOAD screen",
   "size": "M",
-  "plan": "next: trace the key-event path into TgcBufWrite / TgPartKeyEvent for the PICTURE LOAD gate (lane mn10300-names, 2026-10-31)"
+  "plan": "next: trace the key-event path into TgcBufWrite / TgPartKeyEvent for the PICTURE LOAD gate (lane mn10300-names, 2026-11-02)"
  },
  "N-44fb32d4": {
   "status": "RESOLVED",
   "title": "KN6000: tables reached by computed offsets may still be split in two",
   "size": "M",
-  "evidence": "lane mn10300-data (2026-10-31): tables extend to their index bound; split_tables.py lists the rest"
+  "evidence": "lane mn10300-data (2026-11-02): tables extend to their index bound; split_tables.py lists the rest"
  },
  "N-4511a944": {
   "status": "RESOLVED",
@@ -690,9 +842,9 @@
  },
  "N-45db7885": {
   "status": "ACTIONABLE",
-  "title": "73 numeric ROM addresses in the NAKA C (75 in v6/v5)",
+  "title": "9 numeric ROM addresses left in the NAKA C (11 in v6/v5; was 73 / 75)",
   "size": "M",
-  "plan": "73 -> 9 (v6/v5 75 -> 11); next: retype the records with the wrong layout by class (N-2f640c1d) (lane kn5000-c, 2026-10-31)"
+  "plan": "73 -> 9 (v6/v5 75 -> 11); next: retype the records with the wrong layout by class (N-2f640c1d) (lane kn5000-c, 2026-11-02)"
  },
  "N-46580c3b": {
   "status": "BLOCKED",
@@ -701,6 +853,15 @@
   "blocker": "no image says: the origin is closed (dde958068: the KN5000 MUSIC DATABASE title Metalic Dance, retyped); who typed the respellings, and with what tool, is in no dumped image or file (kn7000/notes/ic21-own/README.md)",
   "was": [
    "N-beb667de"
+  ]
+ },
+ "N-4666109a": {
+  "status": "ACTIONABLE",
+  "title": "Pad +0x13..+0x15, TPAD +0x14/+0x15, TCMP variation head bytes: no reader",
+  "size": "M",
+  "plan": "next: a MAME write-watch on pad +0x13..15, TPAD +0x14/15, TCMP bytes (lane mn10300-names, 2026-11-02)",
+  "was": [
+   "N-34fa7d2c"
   ]
  },
  "N-46e679bb": {
@@ -728,11 +889,23 @@
   "evidence": "lane kn5000-a (2026-10-31): 81875bdd9 (service manual p. 32: PD0 = FDCRST; FDC_PulseResetLine in table_data and v10..v5)",
   "title": "Port D bit 0 is FDCRST (the 10-tick pulse resets the FDC)"
  },
- "N-4a4e97bc": {
-  "status": "ACTIONABLE",
-  "title": "KN6000: RAM and I/O addresses are numbers in the source",
-  "size": "L",
-  "plan": "I/O named (3d870c7b5); next: name KN7000 RAM variables per subsystem, carry along matched routines (lane mn10300-names, 2026-10-31)"
+ "N-4a1e0fc5": {
+  "status": "BLOCKED",
+  "area": "MAME/emulation",
+  "title": "Record a CONTROL-track session in MAME, save, census, replay",
+  "blocker": "kn7000_mame repo: a KN7000 MAME session (the driver lives outside this repo)",
+  "was": [
+   "N-c1322a24"
+  ]
+ },
+ "N-4a4cc887": {
+  "status": "BLOCKED",
+  "title": "Wave directory's split list: what it is answered; what the value does",
+  "size": "M",
+  "blocker": "the TG datasheet or a line-out recording (two keys an octave apart) (lane mn10300-names, 2026-11-02)",
+  "was": [
+   "N-a0f81837"
+  ]
  },
  "N-4aa9f799": {
   "status": "RESOLVED",
@@ -752,6 +925,24 @@
   "evidence": "lane kn5000-style (2026-10-31): 59f6bb256 (data_ba0 -> style_chord_map / style_measure_starts)",
   "was": [
    "N-29c40f9e"
+  ]
+ },
+ "N-4b2b7116": {
+  "status": "RESOLVED",
+  "title": "Trace the 0x80 panel-memory recall set handler and the SysEx source tag",
+  "size": "M",
+  "evidence": "lane mn10300-names (2026-11-02): bc9e1eb0c",
+  "was": [
+   "N-b562cfc1"
+  ]
+ },
+ "N-4b34dd8b": {
+  "status": "ACTIONABLE",
+  "title": "Sibling one-touch records: the bytes the PM_* macros keep as hex (mostly named)",
+  "size": "M",
+  "plan": "next: PM_SET88's m008008, from latched panel control 0xC6 (lane mn10300-names, 2026-11-02)",
+  "was": [
+   "N-b318c54c"
   ]
  },
  "N-4ba3421b": {
@@ -776,18 +967,26 @@
   "title": "Regression row: kn5000 unchanged on the shared tlcs900 core",
   "evidence": "measurement row of the per-machine regression table of appendix item 2 (kn7000_mame 68543bf); not an open item"
  },
- "N-4c66be6c": {
-  "status": "BLOCKED",
+ "N-4cfa1084": {
+  "status": "RESOLVED",
+  "title": "Meaning of the A/B halves of intros and endings",
   "size": "M",
-  "area": "floppies",
-  "title": "KN6000: which path changes a sound without recomputing the .TM checksum",
-  "blocker": "stale words proven carried over (e0dc96843); needs an older KN6000 program or the KN6000 table flash (lane misc2, 2026-10-31)"
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c",
+  "was": [
+   "N-a504af0f"
+  ]
  },
  "N-4d502d59": {
   "status": "RESOLVED",
   "area": "MAME/emulation",
   "title": "Caution: do not fold the KN5000 IC310 MN19413 into a WSA1R DSP device",
   "evidence": "by design: a standing caution in wsa1/notes/DRIVER-IMPROVEMENTS-2026-09-05.md W2, not an open item"
+ },
+ "N-4d5d5317": {
+  "status": "ACTIONABLE",
+  "plan": "the note gives only the question: check the layout of the drum parts' sounding-note tables (0x3094, 0x30C4) beyond bit 7 of byte 0",
+  "size": "S",
+  "title": "Accompaniment: drum parts' sounding-note tables 0x3094 / 0x30C4, layout"
  },
  "N-4d6091c0": {
   "status": "RESOLVED",
@@ -815,11 +1014,6 @@
    "N-0e41714b"
   ]
  },
- "N-50c6f331": {
-  "status": "RESOLVED",
-  "title": "Static cross-check of tone-zone descriptors against wave entries",
-  "evidence": "7bc81c9c7 / dd05c95d3: kn7000/notes/table-semantics-2026-10-29.md \"Static cross-check\": all 3,753 + 1,462 zones name an existing wave entry (wave-roms note not edited: sound lane owns it)"
- },
  "N-5111386a": {
   "status": "RESOLVED",
   "evidence": "lane kn5000-b (2026-10-31): aac3a298b (kn5000-44c: the filesystem's three open questions answered from the code)",
@@ -829,13 +1023,13 @@
   "status": "ACTIONABLE",
   "title": "Flag bytes with most numeric uses (audio config, seq play state, accompaniment, SE flags)",
   "size": "L",
-  "plan": "next: per-bit analysis with kn5000_ram_bit_usage.py of the listed flag bytes (lane kn5000-c, 2026-10-31)"
+  "plan": "next: per-bit analysis with kn5000_ram_bit_usage.py of the listed flag bytes (lane kn5000-c, 2026-11-02)"
  },
  "N-52dcf02a": {
   "status": "RESOLVED",
   "title": "What IC307 sequence words encode",
   "size": "M",
-  "evidence": "lane kn5000-d (2026-10-31): notes/open6-kn5000-d/misc/README.md s3 (remainder blocked on IC306)"
+  "evidence": "lane kn5000-d (2026-11-02): notes/open6-kn5000-d/misc/README.md s3 (remainder blocked on IC306)"
  },
  "N-52fafd16": {
   "status": "RESOLVED",
@@ -843,28 +1037,30 @@
   "title": "Capture-use row: software capture writes",
   "evidence": "measurement row of appendix item 7, whose capture path is documented rather than implemented by design (WSA1-EMULATION-DISASM-GAPS.md appendix item 7); not an open item"
  },
+ "N-5305a804": {
+  "status": "RESOLVED",
+  "evidence": "lane kn5000-c (2026-11-02): 1becec8c9, 0c9eb932d, 3f4df7a2e, c896c0532 (scripts/converters/ported_c_rebase.py; the v6 / v5 port debt 13,756 -> 3,615 B and 15,910 -> 4,504 B)",
+  "title": "KN5000 v6 / v5 C port-debt table row: before (c240d1c0b) | 3,403 | 10,353 | 13,756 | 4,284 | 11,626 | 15,910"
+ },
+ "N-539c2f6f": {
+  "status": "RESOLVED",
+  "title": "Rename SndCmdStreamWrite to the firmware's TgcBufWrite",
+  "size": "S",
+  "evidence": "lane mn10300-names (2026-11-02): 3afef7636 (TgcBufWrite)",
+  "was": [
+   "N-ccdc980d"
+  ]
+ },
  "N-540fcf33": {
   "status": "BLOCKED",
   "area": "MAME/emulation",
   "title": "tmp95c061 defect 2: 16-bit up-counters never counted, INTTR4-7 never raised",
   "blocker": "MAME upstream (mamedev/mame): the fix lives only in the kn7000_mame overlay tmp95c061.cpp; upstream keeps taps 7/9/11/15 (#16255) and never counts the 16-bit timers; pending as kn7000_mame notes/overlay-upstream-sync/UNSUBMITTED-2026-10-18.md A1.7 (board #5), A1.8, A1.9"
  },
- "N-564dcd72": {
-  "status": "RESOLVED",
-  "title": "KN7000 wave ROM page order: permutation of whole pages not excluded",
-  "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): f65aad77a"
- },
  "N-575b5b39": {
   "status": "BLOCKED",
   "title": "L7A1429: what Curve_Muting_Cutoff_Q13_128 is (role of the Q13 companion)",
   "blocker": "the L7A1429 has no datasheet; its filter structure needs hardware access: an SX-WSA1R (in storage abroad, no date) to be measured (the ROM gives only the closed form)"
- },
- "N-583fb77c": {
-  "status": "RESOLVED",
-  "size": "M",
-  "title": "KN5000 DSP slot packing for 16 effects",
-  "evidence": "lane kn5000-d (2026-10-31): notes/open6-kn5000-d/panel/README.md s2 + probes/dsp_slot_packing.py"
  },
  "N-585d3509": {
   "status": "RESOLVED",
@@ -913,12 +1109,6 @@
   "title": "tmp95c061 defect 4: the two 16-bit comparators chained with else-if",
   "blocker": "MAME upstream (mamedev/mame): the fix lives only in the kn7000_mame overlay tmp95c061.cpp; upstream keeps taps 7/9/11/15 (#16255) and never counts the 16-bit timers; pending as kn7000_mame notes/overlay-upstream-sync/UNSUBMITTED-2026-10-18.md A1.7 (board #5), A1.8, A1.9"
  },
- "N-5cad02df": {
-  "status": "ACTIONABLE",
-  "title": "KN2400: RAM and I/O addresses outside the RAM image are numbers in the code",
-  "size": "L",
-  "plan": "same as N-4a4e97bc (KN2400) (lane mn10300-names, 2026-10-31)"
- },
  "N-5d0f1057": {
   "status": "RESOLVED",
   "evidence": "lane open4/wsa1-d (2026-10-31): 978ae319d (WorkspaceDefaults partitioned into eleven copied runs and an unread tail; workspace_defaults_partition.py --selftest)",
@@ -932,6 +1122,17 @@
   "was": [
    "N-37157ced"
   ]
+ },
+ "N-5ee75c27": {
+  "status": "RESOLVED",
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c, acd3400ce (941's four DSP host-port names at their 935 / 893 call entries; oldbuilds_dsp_hostport_match.py)",
+  "title": "935 / 893 DSP host-port name row: DspWritePMWord | 0x484050B8 | 0x4840B1D0"
+ },
+ "N-5f302102": {
+  "status": "ACTIONABLE",
+  "plan": "the note gives only the question: trace 0x3283 bits 0 and 1 (the deferral condition) and 0x3328's other writers",
+  "size": "S",
+  "title": "Accompaniment: 0x3283 bits 0/1 and 0x3328's other writers"
  },
  "N-5fac0d1d": {
   "status": "RESOLVED",
@@ -954,6 +1155,16 @@
   "title": "Object, title and class ids in KN7000 code still numbers",
   "evidence": "7643e9385 (gen_program_s.py names title / mode / class / function / object ids from gui_code_ids.inc)"
  },
+ "N-611dc399": {
+  "status": "BLOCKED",
+  "size": "M",
+  "area": "floppies",
+  "title": "KN6000: which path changes a sound without recomputing the .TM checksum",
+  "blocker": "stale words proven carried over (e0dc96843); needs an older KN6000 program or the KN6000 table flash (lane misc2, 2026-11-02)",
+  "was": [
+   "N-4c66be6c"
+  ]
+ },
  "N-612f98d6": {
   "status": "BLOCKED",
   "title": "IC307: the 74 items without a rate, the P/Q words and loops; classes 0-3",
@@ -968,7 +1179,7 @@
   "area": "MN10300 siblings",
   "title": "29 / 8 bytes per sibling moved from typed tables into reader rows by the new joins",
   "size": "S",
-  "plan": "callee walk loses KN6000 21 B / KN2400 4 B; next: indexed sentinel_lists for func_4C11B347 / func_4861CCC5 (lane mn10300-data, 2026-10-31)"
+  "plan": "callee walk loses KN6000 21 B / KN2400 4 B; next: indexed sentinel_lists for func_4C11B347 / func_4861CCC5 (lane mn10300-data, 2026-11-02)"
  },
  "N-62b1d1d8": {
   "status": "RESOLVED",
@@ -980,16 +1191,28 @@
   "evidence": "lane kn5000-b (2026-10-31): aac3a298b (kn5000-44c: the filesystem's three open questions answered from the code)",
   "title": "HD-AE5000 filesystem (kn5000-44c) answer row: the FLS lists (HDAE5000_FlsScreen_Refresh) draw a * in column 0x"
  },
+ "N-6341801f": {
+  "status": "RESOLVED",
+  "title": "Order of part_more's nine fields (nothing reads or writes them)",
+  "size": "S",
+  "evidence": "lane mn10300-names (2026-11-02): bc9e1eb0c",
+  "was": [
+   "N-8ef7dde2"
+  ]
+ },
  "N-643074f9": {
   "status": "RESOLVED",
   "evidence": "lane kn5000-b (2026-10-31): aac3a298b (kn5000-44c: the filesystem's three open questions answered from the code)",
   "title": "HD-AE5000 filesystem (kn5000-44c) answer row: the frame handler (HDAE5000_Frame_Handler_Status) watches bit 2 "
  },
- "N-652c2321": {
-  "status": "RESOLVED",
-  "title": "Tail 0x170 of the 0x3C00 PANEL MEMORY copy slot unreferenced",
+ "N-64da2b9e": {
+  "status": "BLOCKED",
+  "title": "P bit 12 (always set): meaning unknown",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): 9acdca7ee"
+  "blocker": "the tone-generator chip's datasheet (P bit 12 set in all 3,974 entries, read by no code) (lane mn10300-names, 2026-11-02)",
+  "was": [
+   "N-cc575880"
+  ]
  },
  "N-6558bfa7": {
   "status": "BLOCKED",
@@ -1014,11 +1237,23 @@
   "title": "Gap T: what CPU 1's PA bit 3 drives",
   "evidence": "the drive motor, active low, net FDMON: wsa1/notes/FINDINGS-prom_a-gap-T-pa3.md; kn7000_mame 8c1820e wsa1_sch_cpu_ports.sh"
  },
- "N-68397a99": {
+ "N-69389384": {
   "status": "RESOLVED",
-  "title": "2 KB after PICTURE_PLANE2 (0x5011F080..0x5011F880) unreferenced",
+  "title": "Tail 0x170 of the 0x3C00 PANEL MEMORY copy slot unreferenced",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): 9acdca7ee, acd3400ce"
+  "evidence": "lane mn10300-names (2026-11-02): 9acdca7ee",
+  "was": [
+   "N-652c2321"
+  ]
+ },
+ "N-6acf011c": {
+  "status": "ACTIONABLE",
+  "title": "KN6500: the data region's remaining opaque pieces (1,176 / 27,134 B)",
+  "size": "L",
+  "plan": "KN6500 opaque 44,212 -> 27,134 B; next steps per group in kn7000/notes/mn10300-data/README.md s.4 (lane mn10300-data, 2026-11-02)",
+  "was": [
+   "N-05cd19fe"
+  ]
  },
  "N-6c3137ef": {
   "status": "RESOLVED",
@@ -1042,13 +1277,6 @@
   "title": "HD-AE5000 GUI uses assembler macros, not C",
   "evidence": "by design: notes/data-gui-hdae5000-2026-10-29/README.md Open questions 5 (macros let the tree compute links from the nesting; C initialisers could not without a generator)"
  },
- "N-700df83b": {
-  "status": "RESOLVED",
-  "size": "M",
-  "area": "tooling",
-  "title": "compress_lzss.py: encode SLIDE4K with lzss_j.encode instead of replaying decisions",
-  "evidence": "lane misc2 (2026-10-31): e90bafdef + f6d95e661"
- },
  "N-7049e90b": {
   "status": "RESOLVED",
   "title": "Tone editor: name MODELING top slots 0, 1, 2, 12 (ON/OFF toggle, DRIVER selectors)",
@@ -1070,19 +1298,7 @@
   "status": "RESOLVED",
   "title": "GUI rect right / bottom inclusive is an inference",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): 9acdca7ee"
- },
- "N-719cf65f": {
-  "status": "RESOLVED",
-  "title": "Drum kits' own key names (keys outside GS/GM range)",
-  "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): 5db8a341c, 9fdc935e8"
- },
- "N-71feb370": {
-  "status": "RESOLVED",
-  "title": "CC97 / CC94 / CC96 / CC80-83 effect on the sound not traced into the TG",
-  "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): 5db8a341c, acd3400ce"
+  "evidence": "lane mn10300-names (2026-11-02): 9acdca7ee"
  },
  "N-730df2cf": {
   "status": "RESOLVED",
@@ -1158,11 +1374,23 @@
   "title": "prom_c 0x0010C000 register 0x0C0: coarse level + expression?",
   "evidence": "controller 91 (high byte) and 93 (low byte) of the part record: Voice_StageRegs_00C0_AB round 9 header, prom_c/voice/voice_parameters.s (e9387c6bd)"
  },
- "N-79b9c8d3": {
+ "N-793c6fd6": {
   "status": "RESOLVED",
-  "title": "Recording boundaries: run-out and pad sit inside the previous item",
+  "title": "Boot stack 0x500214F8..0x50021CF8: bottom inferred",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): f65aad77a, 6cd18610c"
+  "evidence": "lane mn10300-names (2026-11-02): 9acdca7ee",
+  "was": [
+   "N-c7bd31b3"
+  ]
+ },
+ "N-7a060ae8": {
+  "status": "RESOLVED",
+  "title": "End of .bss 0x501749E8..0x50180000 (0xB618) unreferenced",
+  "size": "S",
+  "evidence": "lane mn10300-names (2026-11-02): 9acdca7ee",
+  "was": [
+   "N-c94956b2"
+  ]
  },
  "N-7b0e72a1": {
   "status": "RESOLVED",
@@ -1204,7 +1432,7 @@
   "status": "ACTIONABLE",
   "title": "81 titles have no menu path (most TITLE_SE* pages)",
   "size": "M",
-  "plan": "next: trace the Scoop sound-editor openers of the TITLE_SE* pages (lane kn5000-c, 2026-10-31)"
+  "plan": "next: trace the Scoop sound-editor openers of the TITLE_SE* pages (lane kn5000-c, 2026-11-02)"
  },
  "N-7d7472a2": {
   "status": "RESOLVED",
@@ -1223,11 +1451,12 @@
   "title": "DSP: let the upd6383 execute (ISA not measured-decoded); audio output",
   "blocker": "uPD6383GF datasheet / instruction set (none exists) and device work in the kn7000_mame repo's upd6383 device"
  },
- "N-82a73a67": {
+ "N-813b5071": {
   "status": "ACTIONABLE",
-  "title": "KN6500: RAM and I/O addresses are numbers in the source",
-  "size": "L",
-  "plan": "same as N-4a4e97bc (KN6500) (lane mn10300-names, 2026-10-31)"
+  "plan": "the note gives only the question: what request 0x0201, posted by YES after a format, means",
+  "size": "S",
+  "area": "WSA1R",
+  "title": "WSA1R: the request 0x0201 that YES posts after a format"
  },
  "N-82fd6f86": {
   "status": "RESOLVED",
@@ -1239,6 +1468,12 @@
   "title": "RectX2Proc's internal labels are TabDraw_TopEdge*, borrowed from unrelated code",
   "size": "S",
   "evidence": "lane kn5000-a (2026-10-31): 4de15f9e4"
+ },
+ "N-83177c3d": {
+  "status": "ACTIONABLE",
+  "plan": "the note gives only the question: trace which tone ToneKeyFind falls back to for the ten kit sounds with no tone in the internal archive ({26, 4} ... {127, 0}, 3,386 notes; the probe counts them as not matching)",
+  "size": "M",
+  "title": "IC18 rhythm: ToneKeyFind's fallback tone for the ten kit sounds the archive lacks"
  },
  "N-837a3b5a": {
   "status": "RESOLVED",
@@ -1260,6 +1495,12 @@
   "area": "MAME/emulation",
   "title": "tmp95c061::execute_set_input() ignored INT6 and INT7",
   "evidence": "mamedev/mame master tmp95c061.cpp execute_set_input() handles TLCS900_INT6/INT7"
+ },
+ "N-870a801e": {
+  "status": "ACTIONABLE",
+  "plan": "trace the writers of 0x2306 (sequencer_engine.s BitMapOut_* / NoteDisplay_* callers), the note's next step",
+  "size": "S",
+  "title": "Accompaniment: what sets CHORD_FLAGS / 0x32D7 bit 0"
  },
  "N-878b8e86": {
   "status": "BLOCKED",
@@ -1289,6 +1530,22 @@
   "size": "S",
   "evidence": "lane wsa1 (2026-10-31): fdb7482ed"
  },
+ "N-89cedbdb": {
+  "status": "ACTIONABLE",
+  "plan": "the note gives no next step: the audit's one 'wrong' pick; both names come from reflection tables and the two bodies are equal (kn7000/notes/sibling-name-port/README.md, report.md); decide which image's name is right",
+  "size": "S",
+  "title": "KN2400 FilePriorityFunc = KN7000 SdcPanelSwAsFunc by body: which name is right",
+  "area": "MN10300 siblings"
+ },
+ "N-8a2502e4": {
+  "status": "RESOLVED",
+  "title": "A rhythm note's last three bytes: length and class",
+  "size": "M",
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c, 9fdc935e8",
+  "was": [
+   "N-271d0bab"
+  ]
+ },
  "N-8a3b1357": {
   "status": "RESOLVED",
   "title": "Gap S: does an SX-WSA1R carry the key-scan device at 0x108000",
@@ -1305,12 +1562,6 @@
   "size": "S",
   "evidence": "lane wsa1 (2026-10-31): 50e5e2e58"
  },
- "N-8af92404": {
-  "status": "ACTIONABLE",
-  "title": "Trace the type-4 Technics bulk SysEx handler 0x484C1B72",
-  "size": "M",
-  "plan": "next: trace func_484C34ED / 484C1B1A / 484C3A03 / 484C356A / 484C364E for the payload formats (lane mn10300-names, 2026-10-31)"
- },
  "N-8b278ebe": {
   "status": "RESOLVED",
   "area": "tooling",
@@ -1321,17 +1572,16 @@
    "N-a23b8d58"
   ]
  },
- "N-8b2b22bb": {
-  "status": "RESOLVED",
-  "title": "Why every demo song opens with tempo value 250",
-  "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): bc9e1eb0c (the why is [INFERENCE])"
- },
  "N-8b5bbc8a": {
   "status": "RESOLVED",
   "area": "floppies",
   "title": "Area between the directory and block 20 typed as one opaque run by the floppy lane",
   "evidence": "e266dd9f8: formats.py types data_ba0 and the fill-in cell at +0x13c0"
+ },
+ "N-8b97f299": {
+  "status": "RESOLVED",
+  "evidence": "lane kn5000-c (2026-11-02): 1becec8c9, 0c9eb932d, 3f4df7a2e, c896c0532 (scripts/converters/ported_c_rebase.py; the v6 / v5 port debt 13,756 -> 3,615 B and 15,910 -> 4,504 B)",
+  "title": "KN5000 v6 / v5 C port-debt table row: the function-name pointer tables of naka_widget_names_charmap point at s"
  },
  "N-8c52a3ed": {
   "status": "BLOCKED",
@@ -1354,12 +1604,6 @@
   "size": "S",
   "blocker": "the SX-WSA1 keyboard's channels need that model's service manual or the instrument (lane wsa1, 2026-10-31)"
  },
- "N-8ef7dde2": {
-  "status": "RESOLVED",
-  "title": "Order of part_more's nine fields in the part-field table",
-  "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): bc9e1eb0c"
- },
  "N-8efdf70c": {
   "status": "RESOLVED",
   "title": "prom_b: who calls sub_F00CA2/CE3/D24/D65",
@@ -1371,17 +1615,31 @@
   "size": "M",
   "evidence": "lane kn5000-a (2026-10-31): 53d18ccc6"
  },
- "N-90175c82": {
+ "N-8fce01b1": {
   "status": "ACTIONABLE",
-  "title": "893's func_ labels and its SD-card code (SdSnd* accessors) named only where 941 ports",
+  "title": "KN6000: 19,019 RAM operands over 2,944 addresses are numbers (I/O named)",
   "size": "L",
-  "plan": "next: 7 of 893's 40 own routines; name their 941 counterparts first (lane mn10300-names, 2026-10-31)"
+  "plan": "I/O named (3d870c7b5); next: name KN7000 RAM variables per subsystem, carry along matched routines (lane mn10300-names, 2026-11-02)",
+  "was": [
+   "N-4a4e97bc"
+  ]
+ },
+ "N-91fea94d": {
+  "status": "RESOLVED",
+  "evidence": "lane kn5000-c (2026-11-02): 1becec8c9, 0c9eb932d, 3f4df7a2e, c896c0532 (scripts/converters/ported_c_rebase.py; the v6 / v5 port debt 13,756 -> 3,615 B and 15,910 -> 4,504 B)",
+  "title": "KN5000 v6 / v5 C port-debt table row: name tables by label (3f4df7a2e) | 3,403 | 237 | 3,640 | 4,284 | 253 | 4"
  },
  "N-92b0bf4c": {
   "status": "RESOLVED",
   "title": "Array record counts are inferences where readers check no bound",
   "size": "M",
-  "evidence": "lane mn10300-data (2026-10-31): 5a7f0bd5b (index_bounds + count_notes; array_counts.py)"
+  "evidence": "lane mn10300-data (2026-11-02): 5a7f0bd5b (index_bounds + count_notes; array_counts.py)"
+ },
+ "N-92c1dcce": {
+  "status": "ACTIONABLE",
+  "plan": "type the 3,403 B (v6) / 4,284 B (v5) TODO(port) .byte rows per blob (records the newer tree lacks), or disassemble the code rows disassemble_port_todo.py did not reach (notes/kn5000-c-2026-11-02/README.md); the same bytes as T-kn5000-v6-todo-port / T-kn5000-v5-todo-port",
+  "size": "L",
+  "title": "KN5000 v6 / v5: the TODO(port) .byte rows, 3,403 / 4,284 B"
  },
  "N-92e40d58": {
   "status": "RESOLVED",
@@ -1443,11 +1701,21 @@
   "title": "Capture-use row: CAP3/CAP4 reads",
   "evidence": "measurement row of appendix item 7, whose capture path is documented rather than implemented by design (WSA1-EMULATION-DISASM-GAPS.md appendix item 7); not an open item"
  },
+ "N-96a40af4": {
+  "status": "RESOLVED",
+  "size": "M",
+  "area": "tooling",
+  "title": "compress_lzss.py: encode SLIDE4K with lzss_j.encode instead of replaying decisions",
+  "evidence": "lane misc2 (2026-11-02): e90bafdef + f6d95e661",
+  "was": [
+   "N-700df83b"
+  ]
+ },
  "N-986ec818": {
   "status": "RESOLVED",
   "title": "KN2400: title ids 0x000F000F / 0x000F0102 named by records but never registered",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): a19176de0"
+  "evidence": "lane mn10300-names (2026-11-02): a19176de0"
  },
  "N-9914d425": {
   "status": "RESOLVED",
@@ -1466,6 +1734,20 @@
   "evidence": "Premise refuted: the 64K + 64K + 0xFF00 transfers from XIZ+0x100 to Sub CPU 0xF000 / 0x1F000 / 0x2F000 carry the Sub CPU payload, not the preset (SubCPU_Send_Payload, v10/maincpu/kn5000_v10_program.s ~1506-1530); technics-docs lzss-compression.md 'Remaining Questions'. CLAUDE.md text to update: the 'Known Disputed Interpretations' row 'Preset Data Destination' (status, 'Claude's View' 'LZSS preset data (~33KB) goes to Sub CPU 0xF000+'; the block is 38,144 B decompressed) and the 'Still investigating for Preset Data Destination' checklist (three unchecked items)",
   "was": [
    "N-323ee937"
+  ]
+ },
+ "N-995254e6": {
+  "status": "RESOLVED",
+  "evidence": "lane kn5000-c (2026-11-02): 1becec8c9, 0c9eb932d, 3f4df7a2e, c896c0532 (scripts/converters/ported_c_rebase.py; the v6 / v5 port debt 13,756 -> 3,615 B and 15,910 -> 4,504 B)",
+  "title": "KN5000 v6 / v5 C port-debt table row: step (commit) | v6 rows | v6 raw | v6 debt | v5 rows | v5 raw | v5 debt"
+ },
+ "N-99771106": {
+  "status": "ACTIONABLE",
+  "title": "893's func_ labels and its SD-card code named only where 941 ports (split in four classes)",
+  "size": "L",
+  "plan": "next: 7 of 893's 40 own routines; name their 941 counterparts first (lane mn10300-names, 2026-11-02)",
+  "was": [
+   "N-90175c82"
   ]
  },
  "N-99d09c1a": {
@@ -1508,10 +1790,29 @@
   "title": "Whether user DRAM 0x50180000..0x50297FFF survives power-off ~80 min",
   "blocker": "hardware access: power-off retention test on a KN7000 (or the main board schematic's DRAM backup circuit)"
  },
+ "N-9d5d2d77": {
+  "status": "RESOLVED",
+  "size": "S",
+  "area": "documentation",
+  "title": "CLAUDE.md v6 / v5 verbatim figures and the Mines LLVM-workarounds section are stale",
+  "evidence": "lane misc2 (2026-11-02): Mines 301557d; CLAUDE.md rows (50ce7e5f2, e90bafdef)",
+  "was": [
+   "N-3a365d90"
+  ]
+ },
  "N-9dcb67dd": {
   "status": "RESOLVED",
   "title": "Pointer-walk bounds in the data typer",
   "evidence": "35433d79e (array_end); kn7000/notes/mn10300-typer/README.md item 2"
+ },
+ "N-9e3a9e41": {
+  "status": "RESOLVED",
+  "title": "Drum kits' own key names (keys outside GS/GM range)",
+  "size": "M",
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c, 9fdc935e8",
+  "was": [
+   "N-719cf65f"
+  ]
  },
  "N-9ec6fccd": {
   "status": "RESOLVED",
@@ -1520,18 +1821,6 @@
   "was": [
    "N-e5598adf"
   ]
- },
- "N-9eca4678": {
-  "status": "RESOLVED",
-  "title": "KN6500: 10,320 entries still func_<ADDR>; sibling-to-sibling name porting not done",
-  "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): 019e7a8a1, 3d870c7b5, 397b30e0d"
- },
- "N-a0f81837": {
-  "status": "BLOCKED",
-  "title": "Meaning of the wave directory's split list",
-  "size": "M",
-  "blocker": "the TG datasheet or a line-out recording (two keys an octave apart) (lane mn10300-names, 2026-10-31)"
  },
  "N-a0f87864": {
   "status": "RESOLVED",
@@ -1549,23 +1838,20 @@
   "title": "L7A1429: seventeen of nineteen registers' meanings unidentified",
   "evidence": "HLE-GUIDE-l7a1429.md 5.3 (1ccfc5fb2), FINDINGS-l7a1429-editor-pages.md 4 (478b87dca): fourteen blocks named, 2 constants, 2 negative by proof, 0x0000 named by fields"
  },
- "N-a39cce89": {
+ "N-a433b9f9": {
   "status": "RESOLVED",
-  "title": "Work-RAM 0x5000000C..0x50000010 (4 bytes after the jump stubs)",
+  "title": "Which image's SD-card reflection table is mispaired (KN2400 or KN7000)",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): 9acdca7ee"
+  "evidence": "lane mn10300-names (2026-11-02): 4fd8eff85, c7a16f911",
+  "was": [
+   "N-01128b1c"
+  ]
  },
  "N-a4f7e081": {
   "status": "RESOLVED",
   "area": "MAME/emulation",
   "title": "Capture-use row: T45CR non-zero",
   "evidence": "measurement row of appendix item 7, whose capture path is documented rather than implemented by design (WSA1-EMULATION-DISASM-GAPS.md appendix item 7); not an open item"
- },
- "N-a504af0f": {
-  "status": "RESOLVED",
-  "title": "Meaning of the A/B halves of intros and endings",
-  "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): 5db8a341c"
  },
  "N-a5ad2c86": {
   "status": "RESOLVED",
@@ -1584,6 +1870,16 @@
   "status": "RESOLVED",
   "title": "Gap J: the device at 0x7E0008 on CPU 1",
   "evidence": "an ATA hard disk on decode HDCS: wsa1/notes/DRIVER-INSIGHT-wsa1-2026-09-02.md TARGET 1a (prom_a_census_round8.py --ata)"
+ },
+ "N-a6b3dca1": {
+  "status": "ACTIONABLE",
+  "title": "KN6500: 10,153 entries still func_<ADDR> (sibling-to-sibling porting done)",
+  "size": "L",
+  "was_status": "RESOLVED",
+  "plan": "per-subsystem naming of the remaining 10,153 func_ entries (callers, strings, MILK messages), as kn6500/README.md says; the porting half was closed by lane mn10300-names (2026-11-02): 019e7a8a1, 3d870c7b5, 397b30e0d",
+  "was": [
+   "N-9eca4678"
+  ]
  },
  "N-a7966f7c": {
   "status": "RESOLVED",
@@ -1604,22 +1900,39 @@
   "evidence": "lane kn5000-b (2026-10-31): aac3a298b (kn5000-44c: the filesystem's three open questions answered from the code)",
   "title": "HD-AE5000 filesystem (kn5000-44c) answer row: loading an item (HDAE5000_FlsLoadScreen_OnHdaeSelectOk / _OnHdae"
  },
- "N-a883f3f0": {
+ "N-a871c4d7": {
   "status": "RESOLVED",
-  "title": "IC18 count-block bytes after the 220 and style byte +0x89 have no reader",
-  "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): 5db8a341c"
+  "evidence": "lane kn5000-c (2026-11-02): 1becec8c9, 0c9eb932d, 3f4df7a2e, c896c0532 (scripts/converters/ported_c_rebase.py; the v6 / v5 port debt 13,756 -> 3,615 B and 15,910 -> 4,504 B)",
+  "title": "KN5000 v6 / v5 C port-debt table row: new labels at each tree's own address (after the merge) | 3,403 | 212 | "
  },
  "N-a9375486": {
   "status": "BLOCKED",
   "title": "L7A1429: which rate Curve_Fitting_Exp2Decay_256 is applied at",
   "blocker": "hardware access: an SX-WSA1R (in storage abroad, no date): measure a FITTING decay on the output; the LSI's update rate is in the silicon, not the ROM (no datasheet)"
  },
+ "N-a9c2ed06": {
+  "status": "RESOLVED",
+  "title": "Work-RAM 0x5000000C..0x50000010 (4 bytes after the jump stubs)",
+  "size": "S",
+  "evidence": "lane mn10300-names (2026-11-02): 9acdca7ee",
+  "was": [
+   "N-a39cce89"
+  ]
+ },
  "N-aa8525ae": {
   "status": "RESOLVED",
   "title": "L7A1429: readers of p0, p1, p2, p12 (duplicate of the editor-pages item)",
   "size": "S",
   "evidence": "lane wsa1 (2026-10-31): 0b6dcdb09"
+ },
+ "N-aacd594b": {
+  "status": "RESOLVED",
+  "title": "KN7000 wave ROM page order: permutation of whole pages not excluded",
+  "size": "M",
+  "evidence": "lane mn10300-names (2026-11-02): f65aad77a",
+  "was": [
+   "N-564dcd72"
+  ]
  },
  "N-aad0ff7d": {
   "status": "RESOLVED",
@@ -1631,11 +1944,20 @@
   "title": "KN6000: the 24-byte sound-list records and their 144 KB; the chord tables; the palettes",
   "evidence": "0fea0e82d, kn6000/notes/siblings-data-final/README.md: StyleRecordTable (MusicStylistSetup) + StylePanel_* one-touch records, NoteConvRules' tables; the 00BBGGRR runs are Bitmap_*_Palette items (labels.sym)"
  },
+ "N-abdfdef8": {
+  "status": "ACTIONABLE",
+  "title": "Type-4 Technics SysEx 0x484C1B72: 47 descriptors; their payload formats",
+  "size": "M",
+  "plan": "next: trace func_484C34ED / 484C1B1A / 484C3A03 / 484C356A / 484C364E for the payload formats (lane mn10300-names, 2026-11-02)",
+  "was": [
+   "N-8af92404"
+  ]
+ },
  "N-ad82330c": {
   "status": "BLOCKED",
   "title": "Blocks whose pointer a routine stores (SetApTimer, PutM3Em, _tr_init) stay rows",
   "size": "L",
-  "blocker": "run-time dispatch through RAM table 0x5011FAAC filled at window registration; needs a run-time trace (KN7000 MAME driver, another repository) (lane mn10300-data, 2026-10-31)"
+  "blocker": "run-time dispatch through RAM table 0x5011FAAC filled at window registration; needs a run-time trace (KN7000 MAME driver, another repository) (lane mn10300-data, 2026-11-02)"
  },
  "N-ae3d1690": {
   "status": "RESOLVED",
@@ -1651,12 +1973,6 @@
   "was": [
    "N-bd65d4c1"
   ]
- },
- "N-afa3d40e": {
-  "status": "ACTIONABLE",
-  "title": "KN6000: part of the data region is still .incbin_range",
-  "size": "L",
-  "plan": "KN6000 opaque 39,985 -> 24,654 B; README s.4 (lane mn10300-data, 2026-10-31)"
  },
  "N-afd95026": {
   "status": "BLOCKED",
@@ -1689,12 +2005,6 @@
   "title": "L7A1429: the instruction carrying GROUP bits into register 0x0000 bits 6:4",
   "evidence": "d3f9ef977: FINDINGS-l7a1429-reso-scale.md section 5, eight hops ToneMsg_Dispatch arm 4 .. Pack104_DispatchByResoMode_ForPart -> P[+0x07] bits 6:4"
  },
- "N-b318c54c": {
-  "status": "ACTIONABLE",
-  "title": "Sibling one-touch records: the bytes the PM_* macros keep as hex",
-  "size": "M",
-  "plan": "next: PM_SET88's m008008, from latched panel control 0xC6 (lane mn10300-names, 2026-10-31)"
- },
  "N-b31e2531": {
   "status": "RESOLVED",
   "title": "Gap W: check that the write side of 0x7B0004 is the uPD765 DSR",
@@ -1702,6 +2012,15 @@
   "evidence": "lane wsa1 (2026-10-31): 1333bdc83",
   "was": [
    "N-4ae2b784"
+  ]
+ },
+ "N-b3924e48": {
+  "status": "ACTIONABLE",
+  "title": "KN2400: the data region's remaining opaque pieces (1,192 / 27,313 B)",
+  "size": "L",
+  "plan": "KN2400 opaque 61,226 -> 27,313 B; README s.4 (lane mn10300-data, 2026-11-02)",
+  "was": [
+   "N-cf9c7754"
   ]
  },
  "N-b4e82675": {
@@ -1725,12 +2044,6 @@
   "size": "M",
   "evidence": "lane kn5000-a (2026-10-31): ccc46cf31"
  },
- "N-b562cfc1": {
-  "status": "RESOLVED",
-  "title": "Trace the 0x80 panel-memory recall set handler and the SysEx source tag",
-  "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): bc9e1eb0c"
- },
  "N-b5f75e0a": {
   "status": "BLOCKED",
   "area": "MAME/emulation",
@@ -1741,13 +2054,13 @@
   "status": "RESOLVED",
   "title": "Sound record: envelope pair order, LFO byte captions, controller groups",
   "size": "M",
-  "evidence": "lane kn5000-d (2026-10-31): same as N-10dad9c5"
+  "evidence": "lane kn5000-d (2026-11-02): same as N-3a855294"
  },
  "N-b68f78f0": {
   "status": "RESOLVED",
   "title": "USER HP pictures' true box sizes (views behind GetBox)",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): 5db8a341c, 9acdca7ee"
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c, 9acdca7ee"
  },
  "N-b6c6521a": {
   "status": "RESOLVED",
@@ -1792,6 +2105,12 @@
   "size": "M",
   "blocker": "undumped chip IC306 (QSIGT3C32A01) holds IC307's loop marks (lane wave3-lanes, 2026-10-31)"
  },
+ "N-b796721c": {
+  "status": "BLOCKED",
+  "blocker": "owner decision: \"should caption-derived WSA1 names keep the ROM's 0-for-O spelling (MidiFileL0ad, L0adSingleS0und, DL_*F0rmat*), or be normalised tree-wide?\" The tree has kept the spelling until now (lane kn5000-d, 2026-11-02)",
+  "area": "WSA1R",
+  "title": "WSA1R: keep the ROM's 0-for-O caption spelling in label names (MidiFileL0ad_*)?"
+ },
  "N-b80b5580": {
   "status": "BLOCKED",
   "area": "MAME/emulation",
@@ -1824,7 +2143,7 @@
   "status": "ACTIONABLE",
   "title": "IC21 fields still to trace: m<id> panel fields, voice-record single fields + 0x27-byte header, TCMP/style +0x70/pad bytes, the 24-field part set-up reader",
   "size": "L",
-  "plan": "The note: 'Not closed by this lane (firmware tracing still to do; no blocker)'. Next steps, as the four merged rows gave them: trace the m<id> set handlers (trie type 1-6 records, lib func_4C025F02) per notes/data-semantics-2026-10-29/kn67-field-names.md and name them in panel_memory.inc; name the voice record's sub-record fields from the Tg* readers in voice_record.inc and type the 0x27-byte header; find readers in 941 for TCMP +1/+2/+0x18/+0x19, style +0x70 (style_units keys, shared with N-f5cfab22) and the pad setting bytes; find the reader of PART_SETUP (part-field table 0x485B77D4) to confirm the 24-field order (also settles N-8ef7dde2)",
+  "plan": "The note: 'Not closed by this lane (firmware tracing still to do; no blocker)'. Next steps, as the four merged rows gave them: trace the m<id> set handlers (trie type 1-6 records, lib func_4C025F02) per notes/data-semantics-2026-10-29/kn67-field-names.md and name them in panel_memory.inc; name the voice record's sub-record fields from the Tg* readers in voice_record.inc and type the 0x27-byte header; find readers in 941 for TCMP +1/+2/+0x18/+0x19, style +0x70 (style_units keys, shared with N-018a8d11) and the pad setting bytes; find the reader of PART_SETUP (part-field table 0x485B77D4) to confirm the 24-field order (also settles N-6341801f)",
   "was": [
    "N-e3880498",
    "N-398ba2d0",
@@ -1853,11 +2172,15 @@
   "size": "S",
   "evidence": "lane kn5000-a (2026-10-31): 347455a0f"
  },
- "N-be2b9da5": {
-  "status": "ACTIONABLE",
-  "title": "KN2400: 11,958 entries still func_<ADDR> (README says 11,993)",
-  "size": "L",
-  "plan": "next: per-subsystem naming of the remaining 11,678 func_ entries (lane mn10300-names, 2026-10-31)"
+ "N-bd1bc2f1": {
+  "status": "RESOLVED",
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c, acd3400ce (941's four DSP host-port names at their 935 / 893 call entries; oldbuilds_dsp_hostport_match.py)",
+  "title": "935 / 893 DSP host-port name row: DspRegWrite | 0x484052E0 | 0x4840B3F8"
+ },
+ "N-be5e1aea": {
+  "status": "RESOLVED",
+  "evidence": "lane kn5000-c (2026-11-02): 1becec8c9, 0c9eb932d, 3f4df7a2e, c896c0532 (scripts/converters/ported_c_rebase.py; the v6 / v5 port debt 13,756 -> 3,615 B and 15,910 -> 4,504 B)",
+  "title": "KN5000 v6 / v5 C port-debt table row: the port moved parts of eight blobs (their labelled slices imply several"
  },
  "N-bf59d697": {
   "status": "RESOLVED",
@@ -1876,16 +2199,25 @@
   "size": "S",
   "evidence": "lane kn5000-style (2026-10-31): 59f6bb256 (no reader of +0x20..+0x2b; values hard-coded, cited)"
  },
- "N-c1322a24": {
-  "status": "BLOCKED",
-  "area": "MAME/emulation",
-  "title": "Record a CONTROL-track session in MAME, save, census, replay",
-  "blocker": "kn7000_mame repo: a KN7000 MAME session (the driver lives outside this repo)"
+ "N-c052c027": {
+  "status": "ACTIONABLE",
+  "plan": "read func_48436229 and its NoteConvRules tables (0x48736104, 128 x 8 B) past the octave fold (the note read them only that far)",
+  "size": "M",
+  "title": "IC18 rhythm: what each NoteConvRules table does to a key"
  },
  "N-c175b64c": {
   "status": "RESOLVED",
   "title": "Recursive structures typed only one level deep",
   "evidence": "35433d79e (deep_records / chain_closure), regen d0adc5707; kn7000/notes/mn10300-typer/README.md 3d"
+ },
+ "N-c332f89d": {
+  "status": "RESOLVED",
+  "title": "Odd wave entry Main_P00_E0AF (P bit 9 set)",
+  "size": "S",
+  "evidence": "lane mn10300-names (2026-11-02): f65aad77a, 6cd18610c",
+  "was": [
+   "N-44a0a9c3"
+  ]
  },
  "N-c462f8dc": {
   "status": "RESOLVED",
@@ -1896,7 +2228,7 @@
   "status": "RESOLVED",
   "title": "C side types split string runs as one member (East_ResNames_3EC_Strings[252])",
   "size": "M",
-  "evidence": "lane kn5000-c (2026-10-31): ee860bd58 (split_c_string_runs.py: 49 members per tree)"
+  "evidence": "lane kn5000-c (2026-11-02): ee860bd58 (split_c_string_runs.py: 49 members per tree)"
  },
  "N-c49dcd57": {
   "status": "RESOLVED",
@@ -1923,18 +2255,29 @@
   "status": "RESOLVED",
   "title": "Bitmaps without MT_GetBitCount assumed 4 bpp only when pixels end at next label",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): 9acdca7ee"
+  "evidence": "lane mn10300-names (2026-11-02): 9acdca7ee"
+ },
+ "N-c6900716": {
+  "status": "ACTIONABLE",
+  "title": "Name the unknown song-record event ids (the ids with no firmware-named caller)",
+  "size": "M",
+  "plan": "next: the remaining ids' subscribing widgets (SetMmmFilter) or the MIDI implementation chart (lane mn10300-names, 2026-11-02)",
+  "was": [
+   "N-f839ba10"
+  ]
+ },
+ "N-c6caa08f": {
+  "status": "RESOLVED",
+  "title": "Static cross-check of tone-zone descriptors against wave entries",
+  "evidence": "7bc81c9c7 / dd05c95d3: kn7000/notes/table-semantics-2026-10-29.md \"Static cross-check\": all 3,753 + 1,462 zones name an existing wave entry (wave-roms note not edited: sound lane owns it)",
+  "was": [
+   "N-50c6f331"
+  ]
  },
  "N-c6d20145": {
   "status": "RESOLVED",
   "title": "Gap E: the far end of serial channel 1 on CPU 1 (the control panel)",
   "evidence": "marked CLOSED: control-panel HLE in kn7000_mame 1a96510; wsa1_panel_report_refutation.py"
- },
- "N-c7bd31b3": {
-  "status": "RESOLVED",
-  "title": "Boot stack 0x500214F8..0x50021CF8: bottom inferred",
-  "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): 9acdca7ee"
  },
  "N-c86a1522": {
   "status": "RESOLVED",
@@ -1961,12 +2304,6 @@
   "status": "RESOLVED",
   "title": "prom_c 0x0010C000 register 0x000: control / gate",
   "evidence": "the gate latch, 0x8100 GATE / 0x7E00 FREE: wsa1/notes/FINDINGS-prom_c-voice-readback.md; modelled in kn7000_mame 028ac91"
- },
- "N-c94956b2": {
-  "status": "RESOLVED",
-  "title": "End of .bss 0x501749E8..0x50180000 (0xB618) unreferenced",
-  "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): 9acdca7ee"
  },
  "N-c9524907": {
   "status": "RESOLVED",
@@ -1996,34 +2333,25 @@
   "evidence": "lane mn10300-rest (2026-10-31): 112141bd7 (fx_streams; section 1)",
   "title": "siblings-data-final: the KN2400 effect-program blocks"
  },
- "N-cbaf135a": {
-  "status": "RESOLVED",
-  "title": "What plays after a recording's loop (release segment?)",
-  "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): f65aad77a"
- },
- "N-cc575880": {
-  "status": "BLOCKED",
-  "title": "P bit 12 (always set): meaning unknown",
-  "size": "S",
-  "blocker": "the tone-generator chip's datasheet (P bit 12 set in all 3,974 entries, read by no code) (lane mn10300-names, 2026-10-31)"
- },
  "N-cc77e1d6": {
   "status": "RESOLVED",
   "title": "4 bytes past the slide-show pool end constant (0x50297FFC)",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): 9acdca7ee"
+  "evidence": "lane mn10300-names (2026-11-02): 9acdca7ee"
+ },
+ "N-cccf0416": {
+  "status": "ACTIONABLE",
+  "title": "KN6500: 19,055 RAM operands over 2,954 addresses are numbers (I/O named)",
+  "size": "L",
+  "plan": "same as N-8fce01b1 (KN6500) (lane mn10300-names, 2026-11-02)",
+  "was": [
+   "N-82a73a67"
+  ]
  },
  "N-ccd08682": {
   "status": "RESOLVED",
   "title": "Text typed as mid-instruction code pointers (P)",
   "evidence": "35433d79e (ptr_starts, tools/mn10300_insn_len.py), regen d0adc5707; kn7000/notes/mn10300-typer/README.md item 1 (P = 0 in every tree)"
- },
- "N-ccdc980d": {
-  "status": "RESOLVED",
-  "title": "Rename SndCmdStreamWrite to the firmware's TgcBufWrite",
-  "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): 3afef7636 (TgcBufWrite)"
  },
  "N-cd170f15": {
   "status": "RESOLVED",
@@ -2050,12 +2378,6 @@
   "title": "Capture-use row: external clock select",
   "evidence": "measurement row of appendix item 7, whose capture path is documented rather than implemented by design (WSA1-EMULATION-DISASM-GAPS.md appendix item 7); not an open item"
  },
- "N-cf9c7754": {
-  "status": "ACTIONABLE",
-  "title": "KN2400: the data region's remaining binary pieces",
-  "size": "L",
-  "plan": "KN2400 opaque 61,226 -> 27,313 B; README s.4 (lane mn10300-data, 2026-10-31)"
- },
  "N-cf9f67d2": {
   "status": "RESOLVED",
   "evidence": "lane open4/wsa1-d (2026-10-31): 978ae319d (WorkspaceDefaults partitioned into eleven copied runs and an unread tail; workspace_defaults_partition.py --selftest)",
@@ -2076,7 +2398,7 @@
   "status": "RESOLVED",
   "title": "IC307 entries with no selector (page 1, 0, 2 leftovers?)",
   "size": "M",
-  "evidence": "lane kn5000-d (2026-10-31): notes/open6-kn5000-d/misc/README.md s4"
+  "evidence": "lane kn5000-d (2026-11-02): notes/open6-kn5000-d/misc/README.md s4"
  },
  "N-d35c2767": {
   "status": "BLOCKED",
@@ -2130,12 +2452,6 @@
   "title": "tmp95c061 T45CR stored but not decoded",
   "evidence": "by design: WSA1-EMULATION-DISASM-GAPS.md appendix item 8, both Technics firmwares write 0x00 so ignoring it is exact"
  },
- "N-d753af29": {
-  "status": "ACTIONABLE",
-  "title": "701 of BASEEXT.XAP's indirect calls go through non-framework MILK objects",
-  "size": "L",
-  "plan": "1,316 of 1,340 resolved; next: the 24 listed in sp7001-build-diff.md (lane mn10300-names, 2026-10-31)"
- },
  "N-d78814d3": {
   "status": "RESOLVED",
   "title": "WSA1R audio path: wave ROM to DACs, and where the DSP host interface is",
@@ -2148,15 +2464,15 @@
  },
  "N-d8cf1242": {
   "status": "ACTIONABLE",
-  "title": "525 field_XX members in NAKA C (533 in v7/v6/v5)",
+  "title": "523 field_XX members in NAKA C (was 525; 291 in naka_sequencer_channels.c)",
   "size": "L",
-  "plan": "525 -> 523; next: trace the base-pointer readers of naka_sequencer_channels.c's 291 field_XX members (lane kn5000-c, 2026-10-31)"
+  "plan": "525 -> 523; next: trace the base-pointer readers of naka_sequencer_channels.c's 291 field_XX members (lane kn5000-c, 2026-11-02)"
  },
  "N-d8d7954f": {
   "status": "RESOLVED",
   "title": "{u32 key, code} dispatch tables named by shape; readers cited only where seen",
   "size": "M",
-  "evidence": "lane mn10300-data (2026-10-31): 4dfc4c32f, 64787c9eb, 4744f9350 (msg_readers)"
+  "evidence": "lane mn10300-data (2026-11-02): 4dfc4c32f, 64787c9eb, 4744f9350 (msg_readers)"
  },
  "N-d91e56e4": {
   "status": "RESOLVED",
@@ -2183,10 +2499,24 @@
   "blocker": "hardware access: a continuity check of the LINE OUT and AUX IN nets on a FAJ board",
   "title": "KN5000 audio: the LINE OUT and AUX IN nets are inference"
  },
+ "N-dadcb4d9": {
+  "status": "RESOLVED",
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c, acd3400ce (941's four DSP host-port names at their 935 / 893 call entries; oldbuilds_dsp_hostport_match.py)",
+  "title": "935 / 893 DSP host-port name row: DspWriteDMWord | 0x4840511A | 0x4840B232"
+ },
  "N-dbfb1624": {
   "status": "RESOLVED",
   "evidence": "lane sound (2026-10-31): bb414348d (WAV headers carry the TG's read rate at the root key, src/wave/root_rates.tsv, tools/wave_root_rates.py; notes/sound-2026-10-31/README.md section 1)",
   "title": "KN7000 wave ROMs: real sample rates"
+ },
+ "N-dc17693c": {
+  "status": "ACTIONABLE",
+  "title": "KN2400: 22,483 RAM operands over 3,521 addresses are numbers (I/O named)",
+  "size": "L",
+  "plan": "same as N-8fce01b1 (KN2400) (lane mn10300-names, 2026-11-02)",
+  "was": [
+   "N-5cad02df"
+  ]
  },
  "N-dcfbe4b5": {
   "status": "RESOLVED",
@@ -2224,6 +2554,15 @@
   "evidence": "lane kn5000-b (2026-10-31): aac3a298b (kn5000-44c: the filesystem's three open questions answered from the code)",
   "title": "HD-AE5000 filesystem (kn5000-44c) answer row: +36 | 10 × 4 | first-cluster slots: part *k* at +36 + 4*k*; 0xFF"
  },
+ "N-dff57eb2": {
+  "status": "ACTIONABLE",
+  "title": "KN6000: the data region's remaining opaque pieces (1,145 / 24,654 B)",
+  "size": "L",
+  "plan": "KN6000 opaque 39,985 -> 24,654 B; README s.4 (lane mn10300-data, 2026-11-02)",
+  "was": [
+   "N-afa3d40e"
+  ]
+ },
  "N-e0c4b660": {
   "status": "RESOLVED",
   "title": "607 numfar residue (far pointers spelled as numbers)",
@@ -2239,7 +2578,21 @@
   "size": "M",
   "area": "floppies",
   "title": "KN6000 / KN7000 .SQT: 1,768 + 5,270 stale bytes no event order explains",
-  "plan": "next: kn_sqt.stale_tokens restarts at 0x81 / 0x9n inside cut fragments, then the KN6000's 7 large runs (1,270 B) (lane misc2, 2026-10-31)"
+  "plan": "next: kn_sqt.stale_tokens restarts at 0x81 / 0x9n inside cut fragments, then the KN6000's 7 large runs (1,270 B) (lane misc2, 2026-11-02)"
+ },
+ "N-e25213f5": {
+  "status": "RESOLVED",
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c, acd3400ce (941's four DSP host-port names at their 935 / 893 call entries; oldbuilds_dsp_hostport_match.py)",
+  "title": "935 / 893 DSP host-port name row: DspFullReinit | 0x48404FF6 | 0x4840B10E"
+ },
+ "N-e2bb0569": {
+  "status": "RESOLVED",
+  "title": "Why every demo song opens with tempo value 250",
+  "size": "S",
+  "evidence": "lane mn10300-names (2026-11-02): bc9e1eb0c (the why is [INFERENCE])",
+  "was": [
+   "N-8b2b22bb"
+  ]
  },
  "N-e2c3f78e": {
   "status": "BLOCKED",
@@ -2275,7 +2628,7 @@
   "status": "RESOLVED",
   "title": "Sequencer edit titles' parameters 0x25FA-0x2662 per title",
   "size": "M",
-  "evidence": "lane kn5000-c (2026-10-31): 2bd7dcbfe (RamPtrs by SQEDT_* name; quantize cells named); quantize working values 0x263a/c/e split off"
+  "evidence": "lane kn5000-c (2026-11-02): 2bd7dcbfe (RamPtrs by SQEDT_* name; quantize cells named); quantize working values 0x263a/c/e split off"
  },
  "N-e40c8c93": {
   "status": "BLOCKED",
@@ -2286,6 +2639,15 @@
   "status": "BLOCKED",
   "title": "Gap A: what each 0x0010C000 tone-generator register does (synthesis)",
   "blocker": "hardware access + undumped chips: register meanings left (mode bits of 0x440/0x480/0x4C0, level vs attenuation, envelope stages) need a held-note sweep on an SX-WSA1R; synthesis needs the six undumped wave mask ROMs"
+ },
+ "N-e4c4a140": {
+  "status": "RESOLVED",
+  "title": "What plays after a recording's loop (release segment?)",
+  "size": "M",
+  "evidence": "lane mn10300-names (2026-11-02): f65aad77a",
+  "was": [
+   "N-cbaf135a"
+  ]
  },
  "N-e4cf98bf": {
   "status": "BLOCKED",
@@ -2312,16 +2674,21 @@
   "title": "L7A1429: ToneMsg80_SendParam byte 3 as a COUNT; PAGE2/2's three-way split",
   "evidence": "be68cf321: FINDINGS-l7a1429-field-editors.md 2c, four editors pin p16/p17/p18 one field each (PROVEN)"
  },
- "N-e7ed1928": {
-  "status": "RESOLVED",
-  "title": "KN2400: reflection-table procedures in the RAM-linked range are not paired",
+ "N-e779328f": {
+  "status": "ACTIONABLE",
+  "plan": "trace func_4C00807E's filter coefficients to the tone-generator register they reach, and func_48442164 (key 0xB048) for a variation's bytes +2/+3",
   "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): 5f4195da9"
+  "title": "IC18 rhythm: part-EQ coefficient register; a variation's bytes +2/+3"
  },
  "N-e8030be5": {
   "status": "RESOLVED",
   "title": "Shared recordings between KN5000 IC307 and KN7000 wave ROMs",
   "evidence": "64454d494; notes/media-files-probes/ic307_kn7000_match.py"
+ },
+ "N-e8ffbe59": {
+  "status": "RESOLVED",
+  "evidence": "lane kn5000-c (2026-11-02): 1becec8c9, 0c9eb932d, 3f4df7a2e, c896c0532 (scripts/converters/ported_c_rebase.py; the v6 / v5 port debt 13,756 -> 3,615 B and 15,910 -> 4,504 B)",
+  "title": "KN5000 v6 / v5 C port-debt table row: #define BASE is v7's blob address, so every SELF() pointer is off by the"
  },
  "N-ea2a12b2": {
   "status": "RESOLVED",
@@ -2348,12 +2715,6 @@
   "title": "L7A1429: is any Voice_ApplyParamChange_Dispatch call site inside an interrupt handler",
   "size": "S",
   "evidence": "lane wsa1 (2026-10-31): 0b6dcdb09"
- },
- "N-edb08959": {
-  "status": "RESOLVED",
-  "size": "S",
-  "title": "KN5000: the style-bank renames lane kn5000-style found but did not make",
-  "evidence": "lane kn5000-d (2026-10-31): 15c8ef88e"
  },
  "N-edecc6e4": {
   "status": "RESOLVED",
@@ -2382,6 +2743,15 @@
   "area": "MAME/emulation",
   "title": "tmp95c061 defect 1: prescaler taps fc/128.. instead of the databook 8/32/128/2048",
   "blocker": "MAME upstream (mamedev/mame): the fix lives only in the kn7000_mame overlay tmp95c061.cpp; upstream keeps taps 7/9/11/15 (#16255) and never counts the 16-bit timers; pending as kn7000_mame notes/overlay-upstream-sync/UNSUBMITTED-2026-10-18.md A1.7 (board #5), A1.8, A1.9"
+ },
+ "N-f06854cb": {
+  "status": "RESOLVED",
+  "title": "Recording boundaries: run-out and pad sit inside the previous item",
+  "size": "S",
+  "evidence": "lane mn10300-names (2026-11-02): f65aad77a, 6cd18610c",
+  "was": [
+   "N-79b9c8d3"
+  ]
  },
  "N-f10941e4": {
   "status": "RESOLVED",
@@ -2419,12 +2789,6 @@
   "title": "prom_b message line: which screen 0x207C == 0x0E is",
   "evidence": "screen 0x0E = STEP RECORD: notes/prom_ab_step_record_screen_names.py (2026-10-04), wsa1/docs/gui-menu-map.md"
  },
- "N-f3294592": {
-  "status": "RESOLVED",
-  "title": "KN6000: 10,288 entries still func_<ADDR>; sibling-to-sibling name porting not done",
-  "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): 019e7a8a1, 3d870c7b5, 397b30e0d"
- },
  "N-f3c6a3ea": {
   "status": "ACTIONABLE",
   "plan": "Pointer row: the factory banks' field-level questions are the custom-data-ic21.md 'Open questions' rows (N-b8f49b1e actionable; N-00e19224, N-74abdb18, N-74a16d86, N-6558bfa7, N-e40c8c93 blocked); nothing beyond them",
@@ -2461,12 +2825,6 @@
   "title": "Capture-use row: CAP1/CAP2 reads",
   "evidence": "measurement row of appendix item 7, whose capture path is documented rather than implemented by design (WSA1-EMULATION-DISASM-GAPS.md appendix item 7); not an open item"
  },
- "N-f5cfab22": {
-  "status": "RESOLVED",
-  "title": "Sound-unit keys 0x0044 / 0x1111 / 0x0B12 in units 0xB040 / 0xB050",
-  "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): 5db8a341c, acd3400ce"
- },
  "N-f6665fa4": {
   "status": "RESOLVED",
   "evidence": "lane open4/wsa1-d (2026-10-31): 978ae319d (WorkspaceDefaults partitioned into eleven copied runs and an unread tail; workspace_defaults_partition.py --selftest)",
@@ -2476,8 +2834,17 @@
   "status": "ACTIONABLE",
   "size": "M",
   "area": "tooling",
-  "title": "Move the shared callers to name-carrying macros (kn7asm and llvm-mc)",
-  "plan": "next: make gen_data_s.py emit SOUND_NAME_HEAD / VOICE_HEAD / PMR_NAME, regenerate, delete the old macros (lane misc2, 2026-10-31)"
+  "title": "Name-carrying macros: gen_data_s.py, the one caller left (kn7asm and llvm-mc)",
+  "plan": "next: make gen_data_s.py emit SOUND_NAME_HEAD / VOICE_HEAD / PMR_NAME, regenerate, delete the old macros (lane misc2, 2026-11-02)"
+ },
+ "N-f6835c16": {
+  "status": "RESOLVED",
+  "size": "S",
+  "title": "KN5000 audio: the EQUALIZING sections' responses",
+  "evidence": "lane kn5000-d (2026-11-02): notes/open6-kn5000-d/misc/README.md s1 + probes/faj_eq_response.py",
+  "was": [
+   "N-29e0f8b4"
+  ]
  },
  "N-f71bcf9e": {
   "status": "RESOLVED",
@@ -2490,16 +2857,15 @@
   "title": "Gap V: how a user reaches Fdc_Request",
   "evidence": "disk menu = screen 0x40: FINDINGS-prom_b-disk-and-file-menus.md sec.2, FINDINGS-prom_a-portb-and-blockdev-entry.md sec.2; MENU DISK opens it in kn7000_mame a060d4f"
  },
+ "N-f7f3738d": {
+  "status": "RESOLVED",
+  "evidence": "lane kn5000-c (2026-11-02): 1becec8c9, 0c9eb932d, 3f4df7a2e, c896c0532 (scripts/converters/ported_c_rebase.py; the v6 / v5 port debt 13,756 -> 3,615 B and 15,910 -> 4,504 B)",
+  "title": "KN5000 v6 / v5 C port-debt table row: the widget records point at work-RAM cells, and v6 / v5 place 652 of the"
+ },
  "N-f8384ef4": {
   "status": "RESOLVED",
   "title": "prom_d: the two 541-byte Drawbar tone records seemed 172 bytes short",
   "evidence": "159da0ed1: prom_d/tone_database_aux.s DRAWBAR TONE RECORDS header, 541 = 217 + 4*81 with the 81-byte element block; notes/prom_d_drawbar_chain.py"
- },
- "N-f839ba10": {
-  "status": "ACTIONABLE",
-  "title": "Name the unknown song-record event ids",
-  "size": "M",
-  "plan": "next: the remaining ids' subscribing widgets (SetMmmFilter) or the MIDI implementation chart (lane mn10300-names, 2026-10-31)"
  },
  "N-f9c64015": {
   "status": "BLOCKED",
@@ -2517,7 +2883,7 @@
   "status": "ACTIONABLE",
   "title": "Invented names of 6,309 GUI objects with empty ResName are unstable",
   "size": "S",
-  "plan": "design in kn7000/notes/gui-data-region/README.md; next: implement gui_object_names.tsv in gen_data_s.py obj_names() (lane mn10300-names, 2026-10-31)"
+  "plan": "design in kn7000/notes/gui-data-region/README.md; next: implement gui_object_names.tsv in gen_data_s.py obj_names() (lane mn10300-names, 2026-11-02)"
  },
  "N-fbac11ea": {
   "status": "RESOLVED",
@@ -2543,11 +2909,20 @@
   "size": "M",
   "evidence": "lane kn5000-a (2026-10-31): c9134b790 + 03a2f1719"
  },
+ "N-ff0d5d52": {
+  "status": "RESOLVED",
+  "size": "S",
+  "title": "KN5000: the style-bank renames lane kn5000-style found but did not make",
+  "evidence": "lane kn5000-d (2026-11-02): 15c8ef88e",
+  "was": [
+   "N-edb08959"
+  ]
+ },
  "N-ff12bec3": {
   "status": "RESOLVED",
   "title": "Bytes no longer typed after mn10300-typer (0xFFFFFFFF terminators, records, 935 map)",
   "size": "S",
-  "evidence": "lane mn10300-data (2026-10-31): 4744f9350 + kn7000/notes/mn10300-data/README.md s.3"
+  "evidence": "lane mn10300-data (2026-11-02): 4744f9350 + kn7000/notes/mn10300-data/README.md s.3"
  },
  "N-ff500190": {
   "status": "RESOLVED",
@@ -2588,91 +2963,91 @@
  "O-hdsx3-unknown-dump-1bf2b6": {
   "status": "ACTIONABLE",
   "title": "HD-SX3: 3 opaque pieces / 157 B, printable non-NUL text, program flash",
-  "plan": "Three pieces: fixed-width text fields; type them with the record or table they belong to",
+  "plan": "Three pieces: fixed-width text fields; type them with the record or table they belong to; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "S"
  },
  "O-hdsx3-unknown-dump-274483": {
   "status": "ACTIONABLE",
   "title": "HD-SX3: 19 opaque pieces / 102 B, binary, program flash",
-  "plan": "The 1,525-B JPEG library tables (+843 B beside them) and small table tails: type the JPEG tables by content; the rest by extending the tables before them",
+  "plan": "The 1,525-B JPEG library tables (+843 B beside them) and small table tails: type the JPEG tables by content; the rest by extending the tables before them; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "S"
  },
  "O-hdsx3-unknown-dump-71c25d": {
   "status": "ACTIONABLE",
   "title": "HD-SX3: 1 opaque pieces / 8 B, 7-bit values, program flash",
-  "plan": "One 8-byte piece: extend the item before it or type it by its pointer's reader",
+  "plan": "One 8-byte piece: extend the item before it or type it by its pointer's reader; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "S"
  },
  "O-hdsx3-unknown-dump-a08889": {
   "status": "ACTIONABLE",
-  "title": "HD-SX3: 20 opaque pieces / 68 B, 7-bit values, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width",
+  "title": "HD-SX3: 5 opaque pieces / 20 B, 7-bit values, initialised-RAM image",
+  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-hdsx3-unknown-dump-b7393d": {
   "status": "ACTIONABLE",
   "title": "HD-SX3: 2 opaque pieces / 55 B, address-like words, program flash",
-  "plan": "Table tails: words that point at a string start or into a string's tail (title-name tables end one entry early, FunctionNames/ResNames): let typed_refs extend tables over them",
+  "plan": "Table tails: words that point at a string start or into a string's tail (title-name tables end one entry early, FunctionNames/ResNames): let typed_refs extend tables over them; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "S"
  },
  "O-hdsx3-unknown-dump-bfbe48": {
   "status": "ACTIONABLE",
   "title": "HD-SX3: 3 opaque pieces / 16 B, address-like words, RAM image",
-  "plan": "Pointer initialisers of RAM variables: spell as .long Label (or 0) once the widget-variable pass types the RAM image's pointed variables",
+  "plan": "Pointer initialisers of RAM variables: spell as .long Label (or 0) once the widget-variable pass types the RAM image's pointed variables; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "S"
  },
  "O-hdsx3-unknown-dump-f491a3": {
   "status": "ACTIONABLE",
-  "title": "HD-SX3: 47 opaque pieces / 188 B, binary, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width",
+  "title": "HD-SX3: 7 opaque pieces / 28 B, binary, initialised-RAM image",
+  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn2400-unknown-dump-1bf2b6": {
   "status": "ACTIONABLE",
-  "title": "KN2400: 274 opaque pieces / 4,510 B, printable non-NUL text, program flash",
-  "plan": "Mostly 4-byte {u8,u8,op,u8} command lists at 0x485A0000..0x485BFFFF (~24 KB, misread as text): find their reader/format; then fixed-width names, name-list tails",
+  "title": "KN2400: 257 opaque pieces / 3,397 B, printable non-NUL text, program flash",
+  "plan": "Mostly 4-byte {u8,u8,op,u8} command lists at 0x485A0000..0x485BFFFF (~24 KB, misread as text): find their reader/format; then fixed-width names, name-list tails; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn2400-unknown-dump-274483": {
   "status": "ACTIONABLE",
-  "title": "KN2400: 1268 opaque pieces / 43,038 B, binary, program flash",
-  "plan": "38.5 KB are the 7c-aa effect-DSP streams (lane mn10300-rest); the rest: 0x48430000..0x48439000 effect area, table tails, bytes between strings, the 1,525-B JPEG tables",
+  "title": "KN2400: 736 opaque pieces / 19,532 B, binary, program flash",
+  "plan": "38.5 KB are the 7c-aa effect-DSP streams (lane mn10300-rest); the rest: 0x48430000..0x48439000 effect area, table tails, bytes between strings, the 1,525-B JPEG tables; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "L"
  },
  "O-kn2400-unknown-dump-337026": {
   "status": "ACTIONABLE",
-  "title": "KN2400: 4 opaque pieces / 212 B, printable non-NUL bytes, RAM image",
-  "plan": "Printable initial values of RAM variables: type them with the widget-variable pass (as text or bytes by the reading class field)",
+  "title": "KN2400: 4 opaque pieces / 208 B, printable non-NUL bytes, RAM image",
+  "plan": "Printable initial values of RAM variables: type them with the widget-variable pass (as text or bytes by the reading class field); what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "S"
  },
  "O-kn2400-unknown-dump-71c25d": {
   "status": "ACTIONABLE",
-  "title": "KN2400: 271 opaque pieces / 6,712 B, 7-bit values, program flash",
-  "plan": "Mostly 0x48430000..0x48439000 (beside the FX_DESC records) and record tails: extend fx_descriptors()/the records the walk reads past",
+  "title": "KN2400: 104 opaque pieces / 1,890 B, 7-bit values, program flash",
+  "plan": "Mostly 0x48430000..0x48439000 (beside the FX_DESC records) and record tails: extend fx_descriptors()/the records the walk reads past; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn2400-unknown-dump-a08889": {
   "status": "ACTIONABLE",
-  "title": "KN2400: 785 opaque pieces / 2,816 B, 7-bit values, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width",
+  "title": "KN2400: 1 opaque pieces / 4 B, 7-bit values, initialised-RAM image",
+  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn2400-unknown-dump-b7393d": {
   "status": "ACTIONABLE",
-  "title": "KN2400: 90 opaque pieces / 3,090 B, address-like words, program flash",
-  "plan": "Table tails: words that point at a string start or into a string's tail (title-name tables end one entry early, FunctionNames/ResNames): let typed_refs extend tables over them",
+  "title": "KN2400: 85 opaque pieces / 2,186 B, address-like words, program flash",
+  "plan": "Table tails: words that point at a string start or into a string's tail (title-name tables end one entry early, FunctionNames/ResNames): let typed_refs extend tables over them; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn2400-unknown-dump-bfbe48": {
   "status": "ACTIONABLE",
   "title": "KN2400: 3 opaque pieces / 88 B, address-like words, RAM image",
-  "plan": "Pointer initialisers of RAM variables: spell as .long Label (or 0) once the widget-variable pass types the RAM image's pointed variables",
+  "plan": "Pointer initialisers of RAM variables: spell as .long Label (or 0) once the widget-variable pass types the RAM image's pointed variables; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "S"
  },
  "O-kn2400-unknown-dump-f491a3": {
   "status": "ACTIONABLE",
-  "title": "KN2400: 190 opaque pieces / 760 B, binary, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width",
+  "title": "KN2400: 2 opaque pieces / 8 B, binary, initialised-RAM image",
+  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn5000-floppy-unknown-dump-94c0de": {
@@ -2696,7 +3071,7 @@
   "status": "ACTIONABLE",
   "size": "M",
   "title": "KN6000 .SQT: 126 x 1,768 B stale cell bytes neither event order explains",
-  "plan": "498 B cut event fragments + 1,270 B in 7 runs; next step as N-e140c8dc (lane misc2, 2026-10-31)"
+  "plan": "498 B cut event fragments + 1,270 B in 7 runs; next step as N-e140c8dc (lane misc2, 2026-11-02); what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4"
  },
  "O-kn6000-floppy-unknown-dump-b7f3db": {
   "status": "RESOLVED",
@@ -2706,170 +3081,170 @@
  },
  "O-kn6000-unknown-dump-1bf2b6": {
   "status": "ACTIONABLE",
-  "title": "KN6000: 246 opaque pieces / 3,668 B, printable non-NUL text, program flash",
-  "plan": "Fixed-width names without NUL (Str_i100.., icon/sound names), and MILK name lists' words read as text (FunctionNames' 2nd pointer): type as fixed .ascii / Label+N",
+  "title": "KN6000: 220 opaque pieces / 1,781 B, printable non-NUL text, program flash",
+  "plan": "Fixed-width names without NUL (Str_i100.., icon/sound names), and MILK name lists' words read as text (FunctionNames' 2nd pointer): type as fixed .ascii / Label+N; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn6000-unknown-dump-274483": {
   "status": "ACTIONABLE",
-  "title": "KN6000: 785 opaque pieces / 28,246 B, binary, program flash",
-  "plan": "Bytes between strings, table tails read past their extent, 0x4C39xxxx/0x4C3Dxxxx records, the 1,525-B JPEG tables (find by content, as zlib_tables.py did); per sub-kind",
+  "title": "KN6000: 644 opaque pieces / 18,994 B, binary, program flash",
+  "plan": "Bytes between strings, table tails read past their extent, 0x4C39xxxx/0x4C3Dxxxx records, the 1,525-B JPEG tables (find by content, as zlib_tables.py did); per sub-kind; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "L"
  },
  "O-kn6000-unknown-dump-71c25d": {
   "status": "ACTIONABLE",
-  "title": "KN6000: 81 opaque pieces / 1,749 B, 7-bit values, program flash",
-  "plan": "func_4C02CA6A_Records tails ({0, ptr} pairs into gaps) and small tables read past their extent: extend those records/tables",
+  "title": "KN6000: 57 opaque pieces / 1,459 B, 7-bit values, program flash",
+  "plan": "func_4C02CA6A_Records tails ({0, ptr} pairs into gaps) and small tables read past their extent: extend those records/tables; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn6000-unknown-dump-a08889": {
   "status": "ACTIONABLE",
-  "title": "KN6000: 668 opaque pieces / 2,242 B, 7-bit values, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width",
+  "title": "KN6000: 51 opaque pieces / 108 B, 7-bit values, initialised-RAM image",
+  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn6000-unknown-dump-b7393d": {
   "status": "ACTIONABLE",
-  "title": "KN6000: 162 opaque pieces / 3,016 B, address-like words, program flash",
-  "plan": "Table tails: words that point at a string start or into a string's tail (title-name tables end one entry early, FunctionNames/ResNames): let typed_refs extend tables over them",
+  "title": "KN6000: 158 opaque pieces / 2,120 B, address-like words, program flash",
+  "plan": "Table tails: words that point at a string start or into a string's tail (title-name tables end one entry early, FunctionNames/ResNames): let typed_refs extend tables over them; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn6000-unknown-dump-bfbe48": {
   "status": "ACTIONABLE",
   "title": "KN6000: 6 opaque pieces / 160 B, address-like words, RAM image",
-  "plan": "Pointer initialisers of RAM variables: spell as .long Label (or 0) once the widget-variable pass types the RAM image's pointed variables",
+  "plan": "Pointer initialisers of RAM variables: spell as .long Label (or 0) once the widget-variable pass types the RAM image's pointed variables; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "S"
  },
  "O-kn6000-unknown-dump-f491a3": {
   "status": "ACTIONABLE",
-  "title": "KN6000: 227 opaque pieces / 904 B, binary, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width",
+  "title": "KN6000: 9 opaque pieces / 32 B, binary, initialised-RAM image",
+  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn6500-unknown-dump-1bf2b6": {
   "status": "ACTIONABLE",
-  "title": "KN6500: 251 opaque pieces / 4,036 B, printable non-NUL text, program flash",
-  "plan": "Fixed-width names without NUL (Str_i100.., icon/sound names), and MILK name lists' words read as text (FunctionNames' 2nd pointer): type as fixed .ascii / Label+N",
+  "title": "KN6500: 233 opaque pieces / 1,754 B, printable non-NUL text, program flash",
+  "plan": "Fixed-width names without NUL (Str_i100.., icon/sound names), and MILK name lists' words read as text (FunctionNames' 2nd pointer): type as fixed .ascii / Label+N; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn6500-unknown-dump-274483": {
   "status": "ACTIONABLE",
-  "title": "KN6500: 812 opaque pieces / 31,840 B, binary, program flash",
-  "plan": "Bytes between strings, table tails read past their extent, record runs as on the KN6000, the 1,525-B JPEG tables (find by content, as zlib_tables.py); per sub-kind",
+  "title": "KN6500: 681 opaque pieces / 21,240 B, binary, program flash",
+  "plan": "Bytes between strings, table tails read past their extent, record runs as on the KN6000, the 1,525-B JPEG tables (find by content, as zlib_tables.py); per sub-kind; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "L"
  },
  "O-kn6500-unknown-dump-71c25d": {
   "status": "ACTIONABLE",
-  "title": "KN6500: 78 opaque pieces / 2,067 B, 7-bit values, program flash",
-  "plan": "func_4C02CBDA_Records tails ({0, ptr} pairs into gaps) and small tables read past their extent: extend those records/tables",
+  "title": "KN6500: 54 opaque pieces / 1,777 B, 7-bit values, program flash",
+  "plan": "func_4C02CBDA_Records tails ({0, ptr} pairs into gaps) and small tables read past their extent: extend those records/tables; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn6500-unknown-dump-a08889": {
   "status": "ACTIONABLE",
-  "title": "KN6500: 668 opaque pieces / 2,242 B, 7-bit values, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width",
+  "title": "KN6500: 51 opaque pieces / 108 B, 7-bit values, initialised-RAM image",
+  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn6500-unknown-dump-b7393d": {
   "status": "ACTIONABLE",
-  "title": "KN6500: 148 opaque pieces / 2,965 B, address-like words, program flash",
-  "plan": "Table tails: words that point at a string start or into a string's tail (title-name tables end one entry early, FunctionNames/ResNames): let typed_refs extend tables over them",
+  "title": "KN6500: 143 opaque pieces / 2,065 B, address-like words, program flash",
+  "plan": "Table tails: words that point at a string start or into a string's tail (title-name tables end one entry early, FunctionNames/ResNames): let typed_refs extend tables over them; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn6500-unknown-dump-bfbe48": {
   "status": "ACTIONABLE",
   "title": "KN6500: 6 opaque pieces / 160 B, address-like words, RAM image",
-  "plan": "Pointer initialisers of RAM variables: spell as .long Label (or 0) once the widget-variable pass types the RAM image's pointed variables",
+  "plan": "Pointer initialisers of RAM variables: spell as .long Label (or 0) once the widget-variable pass types the RAM image's pointed variables; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "S"
  },
  "O-kn6500-unknown-dump-f491a3": {
   "status": "ACTIONABLE",
-  "title": "KN6500: 226 opaque pieces / 902 B, binary, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width",
+  "title": "KN6500: 8 opaque pieces / 30 B, binary, initialised-RAM image",
+  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-b893-unknown-dump-1bf2b6": {
   "status": "ACTIONABLE",
-  "title": "Build 893: 252 opaque pieces / 3,453 B, printable non-NUL text, program flash",
-  "plan": "Fixed-width names without NUL (Str_i100.., icon/sound names), and MILK name lists' words read as text (FunctionNames' 2nd pointer): type as fixed .ascii / Label+N",
+  "title": "Build 893: 233 opaque pieces / 1,969 B, printable non-NUL text, program flash",
+  "plan": "Fixed-width names without NUL (Str_i100.., icon/sound names), and MILK name lists' words read as text (FunctionNames' 2nd pointer): type as fixed .ascii / Label+N; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-b893-unknown-dump-274483": {
   "status": "ACTIONABLE",
-  "title": "Build 893: 549 opaque pieces / 23,888 B, binary, program flash",
-  "plan": "893: ResourceIdTrie nodes (type the trie from its walker), table tails read past their extent, bytes between strings, the 1,525-B JPEG library tables",
+  "title": "Build 893: 400 opaque pieces / 11,724 B, binary, program flash",
+  "plan": "893: ResourceIdTrie nodes (type the trie from its walker), table tails read past their extent, bytes between strings, the 1,525-B JPEG library tables; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "L"
  },
  "O-kn7000-b893-unknown-dump-337026": {
   "status": "ACTIONABLE",
   "title": "Build 893: 1 opaque pieces / 4 B, printable non-NUL bytes, RAM image",
-  "plan": "Printable initial values of RAM variables: type them with the widget-variable pass (as text or bytes by the reading class field)",
+  "plan": "Printable initial values of RAM variables: type them with the widget-variable pass (as text or bytes by the reading class field); what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "S"
  },
  "O-kn7000-b893-unknown-dump-71c25d": {
   "status": "ACTIONABLE",
-  "title": "Build 893: 174 opaque pieces / 1,865 B, 7-bit values, program flash",
-  "plan": "Mostly ResourceIdTrie nodes the record typing splits: a trie pass from its walker types them all; the rest are table tails read past their extent",
+  "title": "Build 893: 154 opaque pieces / 1,623 B, 7-bit values, program flash",
+  "plan": "Mostly ResourceIdTrie nodes the record typing splits: a trie pass from its walker types them all; the rest are table tails read past their extent; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-b893-unknown-dump-a08889": {
   "status": "ACTIONABLE",
-  "title": "Build 893: 807 opaque pieces / 2,754 B, 7-bit values, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width",
+  "title": "Build 893: 52 opaque pieces / 108 B, 7-bit values, initialised-RAM image",
+  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-b893-unknown-dump-b7393d": {
   "status": "ACTIONABLE",
-  "title": "Build 893: 71 opaque pieces / 484 B, address-like words, program flash",
-  "plan": "Table tails: words that point at a string start or into a string's tail (title-name tables end one entry early, FunctionNames/ResNames): let typed_refs extend tables over them",
+  "title": "Build 893: 69 opaque pieces / 380 B, address-like words, program flash",
+  "plan": "Table tails: words that point at a string start or into a string's tail (title-name tables end one entry early, FunctionNames/ResNames): let typed_refs extend tables over them; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-b893-unknown-dump-f491a3": {
   "status": "ACTIONABLE",
-  "title": "Build 893: 222 opaque pieces / 891 B, binary, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width",
+  "title": "Build 893: 10 opaque pieces / 47 B, binary, initialised-RAM image",
+  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-b935-unknown-dump-1bf2b6": {
   "status": "ACTIONABLE",
-  "title": "Build 935: 241 opaque pieces / 3,317 B, printable non-NUL text, program flash",
-  "plan": "Fixed-width names without NUL (Str_i100.., icon/sound names), and MILK name lists' words read as text (FunctionNames' 2nd pointer): type as fixed .ascii / Label+N",
+  "title": "Build 935: 223 opaque pieces / 1,960 B, printable non-NUL text, program flash",
+  "plan": "Fixed-width names without NUL (Str_i100.., icon/sound names), and MILK name lists' words read as text (FunctionNames' 2nd pointer): type as fixed .ascii / Label+N; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-b935-unknown-dump-274483": {
   "status": "ACTIONABLE",
-  "title": "Build 935: 549 opaque pieces / 23,889 B, binary, program flash",
-  "plan": "935: ResourceIdTrie nodes (type the trie from its walker), table tails read past their extent, bytes between strings, the 1,525-B JPEG library tables",
+  "title": "Build 935: 400 opaque pieces / 11,725 B, binary, program flash",
+  "plan": "935: ResourceIdTrie nodes (type the trie from its walker), table tails read past their extent, bytes between strings, the 1,525-B JPEG library tables; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "L"
  },
  "O-kn7000-b935-unknown-dump-71c25d": {
   "status": "ACTIONABLE",
-  "title": "Build 935: 183 opaque pieces / 2,441 B, 7-bit values, program flash",
-  "plan": "Mostly ResourceIdTrie nodes the record typing splits: a trie pass from its walker types them all; the rest are table tails read past their extent",
+  "title": "Build 935: 162 opaque pieces / 2,066 B, 7-bit values, program flash",
+  "plan": "Mostly ResourceIdTrie nodes the record typing splits: a trie pass from its walker types them all; the rest are table tails read past their extent; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-b935-unknown-dump-a08889": {
   "status": "ACTIONABLE",
-  "title": "Build 935: 807 opaque pieces / 2,754 B, 7-bit values, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width",
+  "title": "Build 935: 52 opaque pieces / 108 B, 7-bit values, initialised-RAM image",
+  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-b935-unknown-dump-b7393d": {
   "status": "ACTIONABLE",
-  "title": "Build 935: 87 opaque pieces / 1,316 B, address-like words, program flash",
-  "plan": "Table tails: words that point at a string start or into a string's tail (title-name tables end one entry early, FunctionNames/ResNames): let typed_refs extend tables over them",
+  "title": "Build 935: 82 opaque pieces / 412 B, address-like words, program flash",
+  "plan": "Table tails: words that point at a string start or into a string's tail (title-name tables end one entry early, FunctionNames/ResNames): let typed_refs extend tables over them; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-b935-unknown-dump-bfbe48": {
   "status": "ACTIONABLE",
   "title": "Build 935: 1 opaque pieces / 4 B, address-like words, RAM image",
-  "plan": "Pointer initialisers of RAM variables: spell as .long Label (or 0) once the widget-variable pass types the RAM image's pointed variables",
+  "plan": "Pointer initialisers of RAM variables: spell as .long Label (or 0) once the widget-variable pass types the RAM image's pointed variables; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "S"
  },
  "O-kn7000-b935-unknown-dump-f491a3": {
   "status": "ACTIONABLE",
-  "title": "Build 935: 222 opaque pieces / 891 B, binary, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width",
+  "title": "Build 935: 10 opaque pieces / 47 B, binary, initialised-RAM image",
+  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-customdata-unknown-dump-25be5c": {
@@ -2887,7 +3262,7 @@
   "status": "RESOLVED",
   "size": "M",
   "title": "KN7000 .SQT: 96 x 5,270 B stale cell bytes (the demo cells' RAM noise, mostly)",
-  "evidence": "lane misc2 (2026-10-31): e0dc96843 (4,997 B RAM bit-bias, opaque is final)"
+  "evidence": "lane misc2 (2026-11-02): e0dc96843 (4,997 B RAM bit-bias, opaque is final)"
  },
  "O-kn7000-ic21own-unknown-dump-d531ff": {
   "status": "RESOLVED",
@@ -2897,86 +3272,86 @@
  },
  "O-kn7000-program-unknown-dump-1bf2b6": {
   "status": "ACTIONABLE",
-  "title": "Build 941: 244 opaque pieces / 3,034 B, printable non-NUL text, program flash",
-  "plan": "Fixed-width names without NUL (Str_i100.., icon/sound names), and MILK name lists' words read as text (FunctionNames' 2nd pointer): type as fixed .ascii / Label+N",
+  "title": "Build 941: 228 opaque pieces / 1,931 B, printable non-NUL text, program flash",
+  "plan": "Fixed-width names without NUL (Str_i100.., icon/sound names), and MILK name lists' words read as text (FunctionNames' 2nd pointer): type as fixed .ascii / Label+N; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-program-unknown-dump-274483": {
   "status": "ACTIONABLE",
-  "title": "Build 941: 551 opaque pieces / 24,067 B, binary, program flash",
-  "plan": "941: ResourceIdTrie nodes (type the trie from its walker), table tails read past their extent, record bytes between strings, the 1,525-B JPEG library tables",
+  "title": "Build 941: 402 opaque pieces / 11,903 B, binary, program flash",
+  "plan": "941: ResourceIdTrie nodes (type the trie from its walker), table tails read past their extent, record bytes between strings, the 1,525-B JPEG library tables; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "L"
  },
  "O-kn7000-program-unknown-dump-71c25d": {
   "status": "ACTIONABLE",
-  "title": "Build 941: 173 opaque pieces / 1,707 B, 7-bit values, program flash",
-  "plan": "Mostly ResourceIdTrie nodes the record typing splits: a trie pass from its walker types them all; the rest are table tails read past their extent",
+  "title": "Build 941: 150 opaque pieces / 1,421 B, 7-bit values, program flash",
+  "plan": "Mostly ResourceIdTrie nodes the record typing splits: a trie pass from its walker types them all; the rest are table tails read past their extent; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-program-unknown-dump-a08889": {
   "status": "ACTIONABLE",
-  "title": "Build 941: 807 opaque pieces / 2,754 B, 7-bit values, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width",
+  "title": "Build 941: 52 opaque pieces / 108 B, 7-bit values, initialised-RAM image",
+  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-program-unknown-dump-b7393d": {
   "status": "ACTIONABLE",
-  "title": "Build 941: 75 opaque pieces / 1,284 B, address-like words, program flash",
-  "plan": "Table tails: words that point at a string start or into a string's tail (title-name tables end one entry early, FunctionNames/ResNames): let typed_refs extend tables over them",
+  "title": "Build 941: 70 opaque pieces / 380 B, address-like words, program flash",
+  "plan": "Table tails: words that point at a string start or into a string's tail (title-name tables end one entry early, FunctionNames/ResNames): let typed_refs extend tables over them; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-program-unknown-dump-bfbe48": {
   "status": "ACTIONABLE",
   "title": "Build 941: 1 opaque pieces / 4 B, address-like words, RAM image",
-  "plan": "Pointer initialisers of RAM variables: spell as .long Label (or 0) once the widget-variable pass types the RAM image's pointed variables",
+  "plan": "Pointer initialisers of RAM variables: spell as .long Label (or 0) once the widget-variable pass types the RAM image's pointed variables; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "S"
  },
  "O-kn7000-program-unknown-dump-f491a3": {
   "status": "ACTIONABLE",
-  "title": "Build 941: 222 opaque pieces / 891 B, binary, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width",
+  "title": "Build 941: 9 opaque pieces / 35 B, binary, initialised-RAM image",
+  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-sp7001-unknown-dump-1bf2b6": {
   "status": "ACTIONABLE",
-  "title": "Build 942 (SP7001): 249 opaque pieces / 2,710 B, printable non-NUL text, program flash",
-  "plan": "Fixed-width names without NUL (Str_i100.., icon/sound names), and MILK name lists' words read as text (FunctionNames' 2nd pointer): type as fixed .ascii / Label+N",
+  "title": "Build 942 (SP7001): 225 opaque pieces / 1,915 B, printable non-NUL text, program flash",
+  "plan": "Fixed-width names without NUL (Str_i100.., icon/sound names), and MILK name lists' words read as text (FunctionNames' 2nd pointer): type as fixed .ascii / Label+N; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-sp7001-unknown-dump-274483": {
   "status": "ACTIONABLE",
-  "title": "Build 942 (SP7001): 564 opaque pieces / 22,564 B, binary, program flash",
-  "plan": "942: ResourceIdTrie nodes (type the trie from its walker), table tails read past their extent, bytes between strings, the 1,525-B JPEG library tables",
+  "title": "Build 942 (SP7001): 404 opaque pieces / 11,748 B, binary, program flash",
+  "plan": "942: ResourceIdTrie nodes (type the trie from its walker), table tails read past their extent, bytes between strings, the 1,525-B JPEG library tables; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "L"
  },
  "O-kn7000-sp7001-unknown-dump-71c25d": {
   "status": "ACTIONABLE",
-  "title": "Build 942 (SP7001): 175 opaque pieces / 1,735 B, 7-bit values, program flash",
-  "plan": "Mostly ResourceIdTrie nodes the record typing splits: a trie pass from its walker types them all; the rest are table tails read past their extent",
+  "title": "Build 942 (SP7001): 152 opaque pieces / 1,449 B, 7-bit values, program flash",
+  "plan": "Mostly ResourceIdTrie nodes the record typing splits: a trie pass from its walker types them all; the rest are table tails read past their extent; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-sp7001-unknown-dump-a08889": {
   "status": "ACTIONABLE",
-  "title": "Build 942 (SP7001): 807 opaque pieces / 2,754 B, 7-bit values, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width",
+  "title": "Build 942 (SP7001): 52 opaque pieces / 108 B, 7-bit values, initialised-RAM image",
+  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-sp7001-unknown-dump-b7393d": {
   "status": "ACTIONABLE",
-  "title": "Build 942 (SP7001): 76 opaque pieces / 500 B, address-like words, program flash",
-  "plan": "Table tails: words that point at a string start or into a string's tail (title-name tables end one entry early, FunctionNames/ResNames): let typed_refs extend tables over them",
+  "title": "Build 942 (SP7001): 74 opaque pieces / 396 B, address-like words, program flash",
+  "plan": "Table tails: words that point at a string start or into a string's tail (title-name tables end one entry early, FunctionNames/ResNames): let typed_refs extend tables over them; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-kn7000-sp7001-unknown-dump-bfbe48": {
   "status": "ACTIONABLE",
   "title": "Build 942 (SP7001): 1 opaque pieces / 4 B, address-like words, RAM image",
-  "plan": "Pointer initialisers of RAM variables: spell as .long Label (or 0) once the widget-variable pass types the RAM image's pointed variables",
+  "plan": "Pointer initialisers of RAM variables: spell as .long Label (or 0) once the widget-variable pass types the RAM image's pointed variables; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "S"
  },
  "O-kn7000-sp7001-unknown-dump-f491a3": {
   "status": "ACTIONABLE",
-  "title": "Build 942 (SP7001): 222 opaque pieces / 891 B, binary, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width",
+  "title": "Build 942 (SP7001): 9 opaque pieces / 35 B, binary, initialised-RAM image",
+  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
   "size": "M"
  },
  "O-wsa1-floppy-code-ceddbc": {
@@ -2995,7 +3370,7 @@
   "status": "RESOLVED",
   "size": "S",
   "title": "WSA1R .SEQ: 250 B of free-block bytes that are not song events",
-  "evidence": "lane misc2 (2026-10-31): c549279d2 (wsa1-floppy opaque 1/250 -> 0)"
+  "evidence": "lane misc2 (2026-11-02): c549279d2 (wsa1-floppy opaque 1/250 -> 0)"
  },
  "O-wsa1-floppy-unknown-dump-a4ac7f": {
   "status": "RESOLVED",
@@ -3131,7 +3506,7 @@
   "status": "RESOLVED",
   "title": "KN2400 built-in style: the byte at +0x89, 1 in every style, no reader found",
   "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): 5db8a341c"
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c"
  },
  "T-kn5000-tabledata-todo-identify-what": {
   "status": "RESOLVED",
@@ -3147,129 +3522,135 @@
  },
  "T-kn5000-v5-todo-port": {
   "status": "ACTIONABLE",
-  "title": "KN5000 v5: 137 TODO(port) .byte rows with no v6 line",
+  "title": "KN5000 v5: 130 TODO(port) markers, 4,284 B of .byte rows with no v6 line",
   "size": "L",
-  "plan": "15,910 -> 4,504 B (same commits); next: the 4,284 B TODO(port) rows and 220 json raw bytes (lane kn5000-c, 2026-10-31)"
+  "plan": "15,910 -> 4,504 B (same commits); next: the 4,284 B TODO(port) rows and 220 json raw bytes (lane kn5000-c, 2026-11-02)"
  },
  "T-kn5000-v6-todo-port": {
   "status": "ACTIONABLE",
-  "title": "KN5000 v6: 93 TODO(port) .byte rows with no v7 line",
+  "title": "KN5000 v6: 98 TODO(port) markers, 3,403 B of .byte rows with no v7 line",
   "size": "L",
-  "plan": "13,756 -> 3,615 B (1becec8c9, 0c9eb932d, 3f4df7a2e, c896c0532); next: the 3,403 B TODO(port) .byte rows and 212 json raw bytes (notes/kn5000-c-2026-11-02/README.md) (lane kn5000-c, 2026-10-31)"
+  "plan": "13,756 -> 3,615 B (1becec8c9, 0c9eb932d, 3f4df7a2e, c896c0532); next: the 3,403 B TODO(port) .byte rows and 212 json raw bytes (notes/kn5000-c-2026-11-02/README.md) (lane kn5000-c, 2026-11-02)"
  },
  "T-kn6000-todo": {
   "status": "RESOLVED",
   "title": "KN6000 built-in style: the byte at +0x89, 1 in every style, no reader found",
   "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): 5db8a341c"
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c"
  },
  "T-kn6500-todo": {
   "status": "RESOLVED",
   "title": "KN6500 built-in style: the byte at +0x89, 1 in every style, no reader found",
   "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): 5db8a341c"
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c"
  },
  "T-kn7000-todo": {
   "status": "RESOLVED",
   "title": "KN7000 styles: +0x89 byte (1 in every style, 173x); one IC18 SD R2 frame note",
   "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): 5db8a341c, cf427aa58"
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c, cf427aa58"
  },
  "T-kn7000-todo-after-the": {
   "status": "RESOLVED",
   "title": "KN7000 table: the 0x00 byte after the last pad, nothing reads it",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): bc9e1eb0c, e0d08ce16"
+  "evidence": "lane mn10300-names (2026-11-02): bc9e1eb0c, e0d08ce16"
+ },
+ "T-kn7000-todo-bus-controller": {
+  "status": "BLOCKED",
+  "title": "KN7000 IC18 boot: bus-controller register 0x32000010 not identified",
+  "size": "S",
+  "blocker": "the MN103002A LSI register manual (lane mn10300-names, 2026-11-02)",
+  "was": [
+   "T-kn7000-todo-memory"
+  ]
  },
  "T-kn7000-todo-its-unit": {
   "status": "RESOLVED",
   "title": "KN7000 IC18 boot: PanelAtnCountdown, the unit it counts in",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): cf427aa58"
- },
- "T-kn7000-todo-memory": {
-  "status": "BLOCKED",
-  "title": "KN7000 IC18 boot: bus-controller register 0x32000010 not identified",
-  "size": "S",
-  "blocker": "the MN103002A LSI register manual (lane mn10300-names, 2026-10-31)"
+  "evidence": "lane mn10300-names (2026-11-02): cf427aa58"
  },
  "T-kn7000-todo-not-read": {
   "status": "RESOLVED",
   "title": "KN7000 IC18 boot: values not read by the reset code (0x8001 font word ...)",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): cf427aa58"
+  "evidence": "lane mn10300-names (2026-11-02): cf427aa58"
  },
  "T-kn7000-todo-nothing-in": {
   "status": "RESOLVED",
   "title": "KN7000 IC18 boot: PanelLinkConst7D read by nothing, PanelIrqSlot0 set by nothing",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): cf427aa58"
- },
- "T-kn7000-todo-only-the": {
-  "status": "BLOCKED",
-  "title": "KN7000 IC18 boot: 0x34004002 only the older link writes it",
-  "size": "S",
-  "blocker": "the MN103002A LSI register manual (0x34004002) (lane mn10300-names, 2026-10-31)"
+  "evidence": "lane mn10300-names (2026-11-02): cf427aa58"
  },
  "T-kn7000-todo-purpose-unknown": {
   "status": "RESOLVED",
   "title": "KN7000 893: one byte after the library loader descriptor, before erased flash",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): 5db8a341c"
+  "evidence": "lane mn10300-names (2026-11-02): 5db8a341c"
  },
  "T-kn7000-todo-sdspiportsetup-writes": {
   "status": "RESOLVED",
   "title": "KN7000 IC18 boot: TGA_04 / TGA_10 tone-generator registers SdSpiPortSetup writes",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): cf427aa58"
+  "evidence": "lane mn10300-names (2026-11-02): cf427aa58"
  },
  "T-kn7000-todo-the-numbers": {
   "status": "RESOLVED",
   "title": "KN7000 IC18 boot: FatMountFailImage, nine words that describe no usable volume",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): cf427aa58"
+  "evidence": "lane mn10300-names (2026-11-02): cf427aa58"
+ },
+ "T-kn7000-todo-the-older": {
+  "status": "BLOCKED",
+  "title": "KN7000 IC18 boot: 0x34004002, written by the older link and by 941's ResetEntry",
+  "size": "S",
+  "blocker": "the MN103002A LSI register manual (0x34004002) (lane mn10300-names, 2026-11-02)",
+  "was": [
+   "T-kn7000-todo-only-the"
+  ]
  },
  "T-kn7000-todo-their-consumers": {
   "status": "RESOLVED",
   "title": "KN7000 IC18 boot: consumers of the TickJobs request bits",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): cf427aa58"
+  "evidence": "lane mn10300-names (2026-11-02): cf427aa58"
  },
  "T-kn7000-todo-their-roles": {
   "status": "RESOLVED",
   "title": "KN7000 IC18 boot: roles of PanelFrameDecode's frame bytes",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): cf427aa58"
+  "evidence": "lane mn10300-names (2026-11-02): cf427aa58"
  },
  "T-kn7000-todo-two-more": {
   "status": "RESOLVED",
   "title": "KN7000 IC18 boot: font header words beyond width and height",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): cf427aa58"
+  "evidence": "lane mn10300-names (2026-11-02): cf427aa58"
  },
  "T-kn7000-todo-what-the": {
   "status": "RESOLVED",
   "title": "KN7000 table: what the 220 ZZZJ SRAM default records configure",
   "size": "M",
-  "evidence": "lane mn10300-names (2026-10-31): bc9e1eb0c"
+  "evidence": "lane mn10300-names (2026-11-02): bc9e1eb0c"
  },
  "T-kn7000-todo-whether-the": {
   "status": "RESOLVED",
   "title": "KN7000 table: JPEG placeholders ('27\\n'): whether the Feature Demo asks for them",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): bc9e1eb0c"
+  "evidence": "lane mn10300-names (2026-11-02): bc9e1eb0c"
  },
  "T-kn7000-todo-which-device": {
   "status": "BLOCKED",
   "title": "KN7000 IC18 boot: which device the update status lamps are (StatusLedOff)",
   "size": "S",
-  "blocker": "hardware: the factory jig on CN106 or a trace of CN106 (lane mn10300-names, 2026-10-31)"
+  "blocker": "hardware: the factory jig on CN106 or a trace of CN106 (lane mn10300-names, 2026-11-02)"
  },
  "T-kn7000-todo-who-sets": {
   "status": "RESOLVED",
   "title": "KN7000 IC18 boot: who sets SdUpdateWaitFlag",
   "size": "S",
-  "evidence": "lane mn10300-names (2026-10-31): cf427aa58"
+  "evidence": "lane mn10300-names (2026-11-02): cf427aa58"
  },
  "T-mame_driver-todo-configuration-helpers": {
   "status": "BLOCKED",
@@ -3351,7 +3732,7 @@
   "status": "RESOLVED",
   "size": "S",
   "title": "Main-CPU sender of sub-CPU system sub-command 0x09 (voice allocation mode A/B)",
-  "evidence": "lane kn5000-d (2026-10-31): notes/open6-kn5000-d/subcmd/README.md (sub-command 0x09 = GM mode)"
+  "evidence": "lane kn5000-d (2026-11-02): notes/open6-kn5000-d/subcmd/README.md (sub-command 0x09 = GM mode)"
  },
  "kn5000-1iy": {
   "status": "RESOLVED",
@@ -3408,7 +3789,7 @@
   "status": "RESOLVED",
   "size": "L",
   "title": "Accompaniment: transposing rhythm-ROM pattern notes to the recognized chord",
-  "evidence": "lane kn5000-d (2026-10-31): notes/open6-kn5000-d/accomp/README.md section A + probes/pattern_transpose.py"
+  "evidence": "lane kn5000-d (2026-11-02): notes/open6-kn5000-d/accomp/README.md section A + probes/pattern_transpose.py"
  },
  "kn5000-3z6": {
   "status": "RESOLVED",
@@ -3552,7 +3933,7 @@
   "status": "RESOLVED",
   "size": "M",
   "title": "Song controller events 0xD0/0xD1/0xD3: which sub-CPU records they become",
-  "evidence": "lane kn5000-d (2026-10-31): notes/open6-kn5000-d/subcmd/README.md (D0 pressure, D1 mod, D2 bend, D3 expression)"
+  "evidence": "lane kn5000-d (2026-11-02): notes/open6-kn5000-d/subcmd/README.md (D0 pressure, D1 mod, D2 bend, D3 expression)"
  },
  "kn5000-a8s": {
   "status": "BLOCKED",
@@ -3579,7 +3960,7 @@
   "status": "BLOCKED",
   "size": "L",
   "title": "uPD6383 decode: the R1 cascade (bit-11 alternate lo12, f31 3..7, ACT 0x0B, classes 0/1/4)",
-  "blocker": "bit-11 needs another uPD6383 host's firmware dump or a chip PC trace; ACT 0x0B / f31 3..7 need an EFFECT OUT recording from a real KN5000 (dsp/analysis/bit11-xprod-2026-11-02.md) (lane kn5000-d, 2026-10-31)"
+  "blocker": "bit-11 needs another uPD6383 host's firmware dump or a chip PC trace; ACT 0x0B / f31 3..7 need an EFFECT OUT recording from a real KN5000 (dsp/analysis/bit11-xprod-2026-11-02.md) (lane kn5000-d, 2026-11-02)"
  },
  "kn5000-b0h": {
   "status": "BLOCKED",
@@ -3663,7 +4044,7 @@
   "status": "BLOCKED",
   "size": "M",
   "title": "Effects DSP: the reverb micro-topology",
-  "blocker": "needs an impulse response of a real KN5000 on ROOM REVERB 1 at EFFECT OUT (lane kn5000-d, 2026-10-31)"
+  "blocker": "needs an impulse response of a real KN5000 on ROOM REVERB 1 at EFFECT OUT (lane kn5000-d, 2026-11-02)"
  },
  "kn5000-izk": {
   "status": "RESOLVED",
@@ -3679,7 +4060,7 @@
   "status": "RESOLVED",
   "size": "M",
   "title": "KN5000: RhythmProc_ChannelMapTable spelled as code; MainSysCtrl case callees, HdaeRom_* misnamed",
-  "evidence": "lane kn5000-d (2026-10-31): c6f5dd2ad; notes/open6-kn5000-d/naming/README.md"
+  "evidence": "lane kn5000-d (2026-11-02): c6f5dd2ad; notes/open6-kn5000-d/naming/README.md"
  },
  "kn5000-jy9": {
   "status": "RESOLVED",
@@ -3795,7 +4176,7 @@
   "status": "RESOLVED",
   "size": "M",
   "title": "KN5000 generic-label batches g1/g3/g5: 100 records not reviewed",
-  "evidence": "lane kn5000-d (2026-10-31): 3439c8ba5; notes/open6-kn5000-d/naming/rld-verdicts.md"
+  "evidence": "lane kn5000-d (2026-11-02): 3439c8ba5; notes/open6-kn5000-d/naming/rld-verdicts.md"
  },
  "kn5000-rq0": {
   "status": "RESOLVED",
@@ -3807,7 +4188,7 @@
   "status": "RESOLVED",
   "size": "M",
   "title": "Accompaniment: SYNCHRO & BREAK while running, and synchro stop",
-  "evidence": "lane kn5000-d (2026-10-31): notes/open6-kn5000-d/accomp/README.md section B"
+  "evidence": "lane kn5000-d (2026-11-02): notes/open6-kn5000-d/accomp/README.md section B"
  },
  "kn5000-sf8": {
   "status": "RESOLVED",
@@ -3870,7 +4251,7 @@
   "size": "M",
   "title": "WSA1R naming leads of 2026-10-06/07 not yet checked",
   "area": "WSA1R",
-  "evidence": "lane kn5000-d (2026-10-31): e4917b178..a5fbd2ce3; notes/open6-kn5000-d/wsa1/README.md"
+  "evidence": "lane kn5000-d (2026-11-02): e4917b178..a5fbd2ce3; notes/open6-kn5000-d/wsa1/README.md"
  },
  "kn5000-x13": {
   "status": "RESOLVED",
@@ -3921,6 +4302,6 @@
   "status": "RESOLVED",
   "size": "M",
   "title": "Rename the VoiceSlot_* song-memory family (scoop_display.s)",
-  "evidence": "lane kn5000-d (2026-10-31): 8f576f2ea; notes/open6-kn5000-d/naming/README.md"
+  "evidence": "lane kn5000-d (2026-11-02): 8f576f2ea; notes/open6-kn5000-d/naming/README.md"
  }
 }
