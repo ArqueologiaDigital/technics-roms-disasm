@@ -57,13 +57,15 @@ Font 5 is proportional: its kern table, typed in the source, holds {u8 advance w
 offset of the glyph} per character from 0x20. The offsets are contiguous, and each glyph's column
 count is its offset step over the height. The PNG lists those column counts in its format string.
 
-The USER HP pictures are drawn in a box that `GetBox` takes from the item's view (the 12-byte rows of
-0x485F921C: view ID, item). The box sizes are in the view resources, which were not traced.
-`[INFERENCE]` The row lengths in `table_segments.PNG_GROUPS` were chosen as heights that are a
-multiple of the 13-pixel text line, with the row length whose rows repeat most. They were checked by
-eye: all 47 show coherent panels (bank lists, mixer strips, "PICTURE", tempo and chord boxes). Slot
-47 was set by hand to 40 bytes, because at 80 it shows two half-panels side by side. Any row length
-gives the same bytes back, so this only affects how the PNG looks.
+The USER HP pictures are half-size previews of the HOME PAGE parts. For part k, AcHpPreviewProc takes
+the view `TtNormal_Table[k].view` (0x485F921C); func_48493ECC does GetBox(view) and moves both corners
+together, func_484968E2 halves all four corners and adds the preview's client-box origin, and
+func_48496B28 draws item k with W = x2 - x1 + 1, H = y2 - y1 + 1 (DrawBitmapSPFast4, rows of (W + 3) / 4
+bytes). So a picture is ceil(W/2) x ceil(H/2) of its view (320 x 14 for a 640 x 28 title bar).
+`notes/mn10300-names-probes/ramgui_userhp_boxes.py` checks this against every item's size: 47 of 49 parts
+match exactly; parts 12 / 14 (HppVol7, 160 x 39) share one picture followed by 2 bytes `00 00`. The
+PNG_GROUPS row lengths (slot 47's 40 included) and every PNG size already equal these values; they are
+no longer an inference (lane mn10300-names, 2026-11-02).
 
 ## The style data: `tools/gen_table_styles.py`
 
@@ -348,7 +350,8 @@ from table 83's assembled image, so they carry table 83's remaining generic byte
 - ~~'ZZZJ': what the 220 records and their eight entries select.~~ The SOUND ARRANGER's factory
   settings, one record per preset rhythm and one entry per accompaniment part (section "'ZZZJ',
   segment 1", 2026-11-02).
-- The USER HP pictures' true box sizes (the view resources behind `GetBox`).
+- ~~The USER HP pictures' true box sizes (the view resources behind `GetBox`).~~ (Resolved 2026-11-02:
+  half the view's size; `notes/mn10300-names-probes/ramgui_userhp_boxes.py`.)
 - Pad bytes +0x12..+0x15, TPAD +0x10..+0x15, the TCMP variation head (2026-11-02, sections above):
   pad +0x12 is the flags byte (LOOP, SYNCHRO named; bits 2 / 3 `[INFERENCE]` chord pad / minor);
   TPAD +0x10/+0x11 the source pad's ID, +0x13 RECORD KEY/CHORD; TCMP +0x00..+0x03 the source pattern

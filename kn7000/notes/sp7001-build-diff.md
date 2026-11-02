@@ -278,6 +278,55 @@ creates (view instances, its own objects), reached by pointer chains the probe d
 So `BASEEXT.XAP` drives the instrument entirely through the firmware's MILK UI framework, and its
 firmware calls are now named, not opaque (`research-scratch/kn7000-sp7001-disasm/sp7001_q1q2.py`).
 
+**The other 701 (2026-11-02, lane mn10300-names).** Most of them go through two tables that the
+first probe did not follow:
+
+- **The "framework object" is program 942's MILK object-table registry.** `0x5011FABC` is where
+  `RegisterObjectTable` (`0x4842A719`) copies each table's 16-byte header `{class, proc, count,
+  table}`, at `0x5011FABC + 16 * slot` (`mov 0x5011fabc, a1` ... `mov (a0), d1; mov d1, (a1)` four
+  times). So `*(XapFrameworkObj + 16 * slot + 0xC)` is the table registered in that slot. `+0x1C` is
+  slot 1, `InitBlockTable` (the "static vtable" above). `+0x2E1C` is slot `0x2E1`, `PAPI_Functions`
+  (942 `0x487B1BBC`, 231 entries): the plug-in export table, whose names `kn7000_sp7001_exports.sym`
+  already gives (`sprintf`, `strcpy`, `SetExtMode`, `fopen_api`, `malloc_X`, ...).
+- **The loader's `a1` is the base plug-in's service table.** `KssPluginLoad` passes `a1 =
+  0x502992E4`, which `BASEEXT.XAP` keeps in `XapContext` (`0x502B4048`). It is a statically
+  initialised table of 78 words in the table-flash plug-in's RAM image
+  (`src/sp7001/plugin/data/data_00.s`, `ptr_502992E4`): code pointers into that plug-in and
+  pointers into its work RAM. Its slots are the plug-in's exception scheme (throw, throw-bug,
+  frame-exit trace, the unhandled-exception dialog), a log printf, a dialog box, chunked
+  `fread`/`fwrite`, a file copy, an SD-card check, string helpers, and the constructors of two small
+  C objects, `PtrStrList` and `StrList`. The table plug-in's class-name strings `'PtrStrList'` /
+  `'StrList'` sit beside their vtables `0x502990C0` / `0x502990F0`.
+
+`notes/mn10300-names-probes/oldbuilds_baseext_indirect_calls.py` decodes the `.XAP`. For each
+`calls (aN)` it evaluates the register backwards through its block and through the block's
+predecessors when they all agree. A call kills `d0`, `d1`, `a0` and `a1` there. Measured on the
+committed images:
+
+| where the 1,340 `calls (aN)` go                                         | calls | distinct targets |
+|-------------------------------------------------------------------------|-------|------------------|
+| registry slot 1, `InitBlockTable` (the MILK methods)                    | 643   | 30               |
+| registry slot `0x2E1`, `PAPI_Functions` (the export table)              | 324   | 62               |
+| the base plug-in's service table `0x502992E4` (`XapContext`)            | 329   | 23 slots         |
+| the vtable of a `PtrStrList` the `.XAP` built (10 objects in its RAM)   | 20    | 3 methods        |
+| a pointer read from a local structure on the stack                      | 11    | -                |
+| a table indexed by a register (`add d0, a1`)                            | 6     | -                |
+| a routine parameter (`a0` / `a1` on entry)                              | 5     | -                |
+| a pointer chain through service-table slot `+0x04` (`KssWorkRam+0x9EC`) | 1     | -                |
+| a routine's return value                                                | 1     | -                |
+
+So 1,316 of the 1,340 (98.2 %) now have a known target. All 967 registry calls are firmware names.
+The 23 service-table slots and the 3 `PtrStrList` methods are table-plug-in routines. Slot `+0xCC`
+is `KssPad16`, which already had a name. The lane gives `kn7000_sp7001_table_manual.sym` names
+for 17 more slots and the 3 methods, where the code is clear (`KssThrow`, `KssTraceForward`,
+`KssFread`, `PtrStrListCreate`, ...). Slots `+0x80`, `+0x90`, `+0xE8`, `+0x10C` and `+0x130` are
+described in the lane's findings but not named. [INFERENCE] `0x502992C4`, named
+`KssActivationStatus`, is the base plug-in's *pending-exception code*: `KssThrow` stores the
+thrown code there, `KssThrowBug` stores 1, `KssTraceForward` tests it for 1, and 72 instructions of
+`table.s` read or write it. `KssPasswordCheck`, as it is in `table.s`, does not write it. Q2 below
+still holds: the load comes first. But "activation status" is probably the wrong reading of that
+word.
+
 **Load before activation (Q2).** In `Ap_Ce_StartUp` (`0x483EA0A6`) the base-extension load case
 reads a latch `KssBaseExtLoadedLatch` (`0x50299070`); when it is 0 it calls `KssPluginLoad(d0=3)`
 to read `BASEEXT.XAP` to RAM `0x5029B000` and run it, then sets the latch to 1 (so it loads once).
@@ -295,9 +344,25 @@ earlier image on hand to match it against.
 
 ## Still open
 
-- Of `BASEEXT.XAP`'s 1,340 indirect calls, 701 go through MILK objects other than the framework
-  object (view instances it creates, its own objects); naming those would need their vtables
-  pinned (they are not simple static code arrays like `framework+0x1C`'s at `0x487280D0`).
+- ~~Of `BASEEXT.XAP`'s 1,340 indirect calls, 701 go through MILK objects other than the framework
+  object.~~ **Split 2026-11-02** (see "The other 701" above). 1,316 are resolved: 967 to firmware
+  names through the registry, and 349 to table-plug-in routines (the service table and the
+  `PtrStrList` vtable). That leaves **24** whose target the static evaluator cannot see:
+  - 11 read a function pointer out of a structure on the stack, at `0x5029D437`, `0x5029D44D`,
+    `0x502A1FFC`, `0x502A206E`, `0x502A2157`, `0x502A2184`, `0x502A29AE`, `0x502A53E1`,
+    `0x502A540D`, `0x502A5476` and `0x502A54CE`;
+  - 6 index a pointer table by a register, at `0x502A2BC1`, `0x502A88B2`, `0x502A88BB`,
+    `0x502A88DE`, `0x502A88E9` and `0x502AB12A`;
+  - 5 go through a parameter, at `0x502A6BF9`, `0x502AB0A4`, `0x502AB0B1`, `0x502AB104` and
+    `0x502AB145`;
+  - 1 goes through service-table slot `+0x04` (a pointer into `KssWorkRam`), at `0x502A1B78`;
+  - 1 calls a returned pointer, at `0x502A2E38`.
+
+  The next step for each is to trace the callers of its routine, or the store that fills the
+  local structure. `oldbuilds_baseext_indirect_calls.py -v` lists every site. Five service-table
+  slots are still unnamed: `+0x80` (a 12-way dispatch through `0x483F88C0`), `+0x90` (returns
+  `*(0x50299084)`), `+0xE8` (MILK UI calls with id `0x00E30047`), `+0x10C` (activation, through
+  `KssBuildParam1`) and `+0x130` (returns field `+0x18` of an object whose magic is `0x41DA4C8B`).
 - The v1.4 program update's **disk 1** (`kn7-14_1.exe` -> `JK1.SLD`, build 929) is the one lost disk
   in this family (only a Wayback "page not found" stub), which is why MAME's `v14` BIOS has
   `NO_DUMP` for the lower half.

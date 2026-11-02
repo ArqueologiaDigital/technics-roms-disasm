@@ -256,10 +256,38 @@ items; the bytes are what fell.
   list): the built-in style / rhythm data (big-endian records like IC18's, around 0x486D0000 and
   0x48729988), tables the code indexes with computed offsets (0x485BC3EC: a 69 KB run of code
   pointers and signed byte tables), and mostly-0xFF sparse tables. (Resolved: `../data-final/README.md`, `../mn10300-typer/README.md`, 941's opaque data is now 2,174 pieces / 45,394 bytes; open-items register 2026-10-31.)
-- [INFERENCE] the rect's right / bottom are inclusive (from the full-screen objects only).
-- `D` (IvSDPlayTimer / IvSDFwdRewTimer) may be 1 byte rather than 2.
+- ~~[INFERENCE] the rect's right / bottom are inclusive (from the full-screen objects only).~~
+  (Resolved 2026-11-02: inclusive, from the code.  The default MT_GetBox handler (ViewableProc key
+  0x100EF -> loc_4842D1B9) copies the record's four s16 at +0x0E unchanged and only adds the same
+  origin to both corners; DrawBox_Impl 0x48423095 draws nothing only when x1 > x2 or y1 > y2, clamps
+  x2 to 0x27F and y2 to 0xEF (the last column and row), fills x2 - x1 + 1 bytes a row (`sub d0, d1;
+  inc d1`) and loops while y1 <= y2; the USER HP drawer func_48496B28 takes W = x2 - x1 + 1 and
+  H = y2 - y1 + 1 from the same kind of box.)
+- ~~`D` (IvSDPlayTimer / IvSDFwdRewTimer) may be 1 byte rather than 2.~~ (Resolved 2026-11-02: `D` is
+  1 byte.  Every access to the field at +0x1C is a byte access with sign extension, `movbu (0x1c, a0)` +
+  `extb` / `movbu d0, (0x1c, a0)`: IvSDPlayTimerProc 0x48573B5F (start_stop: test == 1, set to 1) and
+  IvSDFwdRewTimerProc 0x48573C3F (skip_wait: bits 0x01..0x08 set and cleared).  A 2-byte field would
+  be read with `movhu`.  Build 893's IvSDFwdRewTimerProc (0x48572EB3, same class and fields) also
+  reads and clears on_off_flg as a byte at +0x1D (loc_48572FCE: `mov 0x1d, a2; add a3, a2; movbu (a2),
+  d0; extb d0; cmp 1, d0`; loc_4857311E: `movbu d0, (0x1d, a3)`); nothing reads +0x1E.  So
+  start_stop / skip_wait are signed chars at +0x1C and on_off_flg is at +0x1D, not +0x1E.  The class
+  sizes do not tell (8 own bytes either way) and all four records hold 0 there, so the bytes do not change; the fix is
+  `"D": 1` in `tools/milk_model.py` SIG_SIZE, owned by lane mn10300-data.)
 - The object names this source gives the 6,309 objects with an empty ResName are invented
   (parent + class + text); they are stable across regenerations only while the tree is.
+  Where (analysis 2026-11-02): `tools/gen_data_s.py` `obj_names()`, called by `gui_objects()` per
+  Viewable block; the name is `<nearest ancestor with a ResName, else the block name>_<class without
+  Vw/Ac/Ps/Iv>[_<first str/caption/title/stron/text string, sanitized to 20 characters>][<n>]`, `n`
+  the count so far of (ancestor, class, text) in pre-order (left out for the first object that has a
+  text), then prefixed by the block name if the name is
+  already taken and made unique by `uniq()` (`_2`, `_3`, ...).  It changes when a sibling of the same
+  class and text is added, removed or reordered, when a string is edited, when a block's first root
+  object's ResName changes, and when any other name source (sym files, labels used by the code) takes
+  the same name first.  Proposed fix (not implemented): a committed map per build,
+  `src/<build>/data/gui_object_names.tsv`, one row per unnamed object `{object id (slot << 16 | index),
+  class name, name}`, written once from the current labels so nothing is renamed; `obj_names()` uses
+  the row when id and class match and invents (and reports) only for objects not in the map.  941:
+  6,309 rows, about 291 KB.
 
 ## Website page draft
 

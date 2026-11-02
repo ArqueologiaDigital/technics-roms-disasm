@@ -79,8 +79,15 @@ the same slot order in all 169 styles: 12, 13, 16, 17, 0-11, 14, 15, 18, 19.
 The checksum recomputes equal. It covers only the middle 2 MB of the chip.
 
 **The count block** is 12 bytes: `00 00 | 00 DC | 00 60 | 0D 08 04 02 02 02`. Only the 220 at +2
-is read: it is the rhythm count, and it bounds the index's style and table-ROM entries. The rest is
-`[INFERENCE]`, and nothing reads it:
+is read: it is the rhythm count, and it bounds the index's style and table-ROM entries. No routine
+reads the other ten bytes. The block is reached only through the header's +0x18, and the one place
+that loads it, `StyleBuiltinNameTableInit`, reads `add 2, a0` / `call LoadU16BE` and keeps no pointer
+to the block. The KN2400, KN6000 and KN6500 programs do the same.
+[`rhythm_count_block_readers.py`](mn10300-names-probes/rhythm_count_block_readers.py) lists every u24BE
+load from +0x18 in the four images. `TechnicsPadsResourceParse` reads the "Technics Pads" resource,
+which has the same header, the same way. The table ROM copy's count, 221, is not read either: from
+that copy the firmware takes only the index (+0x1B). The readings of the unread bytes are
+`[INFERENCE]`:
 
 - `0x60` = 96 is the number of ticks a beat. The position byte that comes before an event is
   0-95 in every stream (below).
@@ -126,12 +133,34 @@ The style table holds 169 u24BE offsets, each spelled `.be24 Style_<name> - Tech
 Entry 0 is the fallback style.
 
 The count-in table holds 8 offsets. Pattern `k` is one bar of `k + 1` beats. It sets the drum part
-to program `00 00 26`. On every beat it plays a note 37 (side stick in GM numbering) at velocity
-64. `StyleRecordSlotSelect` (0x48433643) uses one of them for slot 20, through
-`StyleVariationNameGet` (0x484335BF). The low 3 bits of the bound variation's meter byte pick
-which. The firmware takes its own table 0x48736078 instead when resource 0xD00A answers.
-`StyleVariationNameGet` is therefore misnamed: it returns a count-in pattern record, not a name.
+to program `00 00 26`, Standard Kit 1. On every beat it plays key 37, `KitRimShot`, at velocity 64.
 The source types these 8 patterns like any variation.
+
+**Who plays them.** `StyleRecordSlotSelect` (0x48433643) binds a count-in for slot 20, the
+INTRO 1 handler's count-in case (`func_484437DA`, below). It gets the record from
+`StyleCountInRecordGet` (0x484335BF). Until 2026-11-02 that routine was called
+`StyleVariationNameGet`, and the name was wrong: it returns a count-in pattern record, not a name.
+Its code (`d0` = the main variation's slot, 0, 3, 6 or 9):
+
+    mov  0x50034bcc, a0 / mov (d0, a0), a0        the main variation's record
+    movbu (1, a0), d0 / and 7  (builtin)           its meter byte, beats - 1 (MEMORY/CUSTOM: +0x11)
+    mov  0x0000d00a, d0 / call GetM3EmVal_entry   parameter 0xD00A: COUNT INTRO (IntroToggleFunc,
+    cmp  1, d0                                    the CountIntro widget of the APC screen TApcSel)
+    ... (d0, 0x48736078), a2                       ON: the program's own pattern for this meter
+    ... LoadU24BE(*(0x50034B84) + 3 * meter)       else, or for 5-8 beats: IC18's count-in table
+    movbu 1, (0x50122dd0)                          a pattern was found
+
+The program's table 0x48736078 has four records, for 1 to 4 beats, at 0x485B8D68 / 0x485B8D7D /
+0x485B8D99 / 0x485B8DBC. Each sets the drum part to program `40 00 26`, Voice Kit, and plays keys
+74, 75, 76 and 77 at velocity 76, one key a beat. Voice Kit names those keys "Count 1" to
+"Count 4". So COUNT INTRO counts the bar in aloud, and IC18's patterns are the click count-in.
+When no pattern is found, `StyleRecordSlotSelect` falls back to INTRO 1. The flag 0x50122DD0
+(`StyleCountInBoundGet` 0x48433AB6, until 2026-11-02 `StyleVariationNameFlagGet`; read by
+`func_48441DEB` and `StyleRecordSelectBind`) makes
+the binders treat the count-in as a built-in record whatever the style's source is, and makes the
+set-up replay apply its program changes.
+[`rhythm_style_semantics.py`](mn10300-names-probes/rhythm_style_semantics.py) section 5 prints the
+four records.
 
 ## A style record (0xC6 bytes)
 
@@ -140,59 +169,163 @@ The source types these 8 patterns like any variation.
 | offset  | size   | field               | evidence                                                                           |
 |---------|--------|---------------------|------------------------------------------------------------------------------------|
 | `+0x00` | 13     | name, as displayed  | copied to the name buffer `0x50034B9C` and NUL-terminated there                    |
-| `+0x0D` | 4      | two sound-unit keys | `0x50034C20`; `func_484420EF` decodes them (below)                                 |
+| `+0x0D` | 4      | two DSP preset keys | `0x50034C20`; `func_484420EF` decodes them (below)                                 |
 | `+0x11` | 8 x 15 | eight part set-ups  | `0x50034BAC[i] = record + 0x11 + 15i`; `func_4844187A` copies them to `0x5003A37C` |
-| `+0x89` | 1      | 1 in every style    | TODO: no reader found                                                              |
+| `+0x89` | 1      | 1 in every style    | unread (below)                                                                     |
 | `+0x8A` | 20 x 3 | slot offsets        | u24BE, from the record; `0x50034BCC[slot]`                                         |
 
-**Sound-unit keys.** `func_484420C8` decodes each 2-byte pair as a 14-bit value, 7 bits a byte, low
-byte first. Bit 6 of the second byte adds 0x10000. `func_484420EF` stores the first pair to
-parameter key 0xB044 and the second to 0xB054. Bit 7 of the first pair's second byte goes to key
-0xB001. Keys 0xB040/0xB050 are the last two sound-unit groups (`SndUnitRefreshGroups56`
-0x48410D35). 88 styles have `44 00 44 00`; the source gives the four bytes as they are
-(`style_units`).
+**The byte at +0x89 is unread.** It is 1 in all 169 styles and in the program's fallback style. A
+record reaches code only as a pointer: `StyleBuiltinNameResolve` returns it, `StyleNameSourceSet`
+caches it in 0x50034B8C, and `StyleNameCommit` derives three things from it. Those are the units
+pointer 0x50034C20 (+0x0D), the part pointers 0x50034BAC (+0x11 + 15i) and the variation pointers
+0x50034BCC (from the offsets at +0x8A). Each reader of those, and each routine they hand the record
+to, uses one of these ranges:
+
+- the 13-byte name: `StyleNameCommit` and its MEMORY / CUSTOM twins, `func_48433C1E`, `func_4843A512`;
+- the 4 unit bytes: `func_484420EF` / `func_484420C8`, and `func_4843A47C` / `func_4843A512`, which
+  copy them into a MEMORY style;
+- 15 bytes from a part pointer: `func_4844187A` and `func_48441FB3`. `func_48441EB4` copies all
+  eight set-ups as one `memcpy` of 0x78 bytes from +0x11, which ends at +0x88;
+- the 3-byte slot offsets from +0x8A: `StyleNameCommit` and `func_48433D88`.
+
+No instruction in the program uses a displacement of 0x89 or an `add 0x89` on an address
+register, so part 7's set-up ends at +0x88 and the slot table starts at +0x8A. The KN2400, KN6000 and
+KN6500 programs have the same readers.
+[`rhythm_style_record_readers.py`](mn10300-names-probes/rhythm_style_record_readers.py) collects
+the readers of the four images, 44 to 50 routines each, and prints PASS for all four. The only
+other bytes that cover +0x89 are those of the checksum `StyleResourceVerify` sums (2 MB of the chip)
+and of the update path that rewrites the chip (`KN7KR1` / `KN7KR2`), and neither reads fields. The
+source writes it as `.byte 1` with the comment "unread".
+
+**DSP preset keys** (`style_units`). `func_484420C8` decodes each 2-byte pair as a 14-bit value,
+7 bits a byte, low byte first. Bit 6 of the second byte adds 0x10000. `func_484420EF` stores the
+first pair to parameter key 0xB044 and the second to 0xB054. Bit 7 of the first pair's second byte
+goes to key 0xB001. The groups 0xB010 to 0xB050 are the five DSP effect units, EFF1 to EFF5 on the
+EFFECT DEBUG screen. Its grid has the columns `UNIT | PART | OFF/ON | NUM | SUF | VARI`, and
+`SndCmdEmitUnitCc` selectors 2 to 6 read them. So a style sets the effects of units EFF4 and EFF5.
+Key 0xB001 is that screen's `EffApcModeBox`, "TOTAL MODE" (1) or "SOUND MODE" (0); 56 styles set it.
+
+The value is the key of a DSP preset record, the same key `SndUnitSettingApplyFull` (0x484105EA)
+resolves:
+
+- `func_48412BD8` takes the low byte as the record kind (below 0x70: a factory preset);
+- `func_48412187` indexes the table 0x48703558 with `(lo << 6) | (hi & 0x3F)`, 0x2010 entries;
+- the record's u16 at +0x12 is the effect type, which goes to `DspEffectTypeValid` / `DspEffectSelect`;
+- every record names itself: a 16-character name, and its own key at +0x1C.
+
+All 338 keys of the 169 styles are presets whose own key matches. 0x0044 is "Limiter1" (236 keys,
+88 styles have it for both units), 0x1111 "Shallow2" (22), 0x0B12 "Normal4" (6). Others are
+"Single Rotor", "Wah1", "Comp+Dst+Delay", "Bright Twin" and so on. The source's comment names the
+two presets: `style_units 0x11, 0x91, 0x44, 0x00 # EFF4 "Shallow2", EFF5 "Limiter1", TOTAL MODE`.
+[`rhythm_style_semantics.py`](mn10300-names-probes/rhythm_style_semantics.py) section 4 prints the
+list. The parts the units serve come from the bound variation's bytes +2/+3 (`func_48442164`: key
+0xB048 and the per-part switch 0x0020005F / 0x00B0005F); that was not traced further.
 
 **A part set-up** (15 bytes, `style_part`). Byte `k` is the value of field `k` of the firmware's
 part-field table 0x485B77D4. That table holds one (status, controller) pair per field.
 `StyleRecordToTemplate` (0x48441D1B) and `func_48441EB4` map an incoming controller to its field
-through 0x485B789C / 0x485B781C.
+through 0x485B789C / 0x485B781C. A field reaches the sound by two paths:
 
-| byte | controller | name in the source             | values over 169 x 8 parts                                                                |
-|------|------------|--------------------------------|------------------------------------------------------------------------------------------|
-| 0    | CC97       | `mode`                         | `0x00` on parts 0 and 7 of all 169 styles; `0x08` on the others but 8 parts              |
-| 1    | CC7        | `volume`                       | most often 105, 98, 127, 100                                                             |
-| 2-4  | program    | `prog`, `bank_lsb`, `bank_msb` | the program change's data bytes; `bank_msb` 0x26 on parts 0 and 7, else 0x20 but 4 parts |
-| 5    | CC94       | `cc94`                         | 64 in every part                                                                         |
-| 6    | CC91       | `reverb`                       |                                                                                          |
-| 7    | CC93       | `chorus`                       | 0 in 1221                                                                                |
-| 8    | CC10       | `pan`                          | 64 in 929                                                                                |
-| 9    | CC96       | `cc96`                         | 12 in every part                                                                         |
-| 10   | CC82       | `cc82`                         |                                                                                          |
-| 11   | CC83       | `cc83`                         |                                                                                          |
-| 12   | CC80       | `cc80`                         |                                                                                          |
-| 13   | CC81       | `cc81`                         |                                                                                          |
-| 14   | CC92       | `cc92`                         | 0 in 1259                                                                                |
+- `func_4844085D` / `func_48440662` send each changed field as a controller event to
+  `StyleIdArrayHandler` (0x48435DD0);
+- `func_48440533` turns the event into the part parameter `0xB000cc` (CC96: `0xB08000`), which
+  `StyleIdArrayStore` queues for the part.
+
+What each parameter is comes from the program's own parameter dump `func_48500C71`. Its records
+(0x48644F5C, keyed by parameter + 1: `inc d1` before the lookup) print "EQ LOW FC", "DIGITAL
+EFFECT" and so on. The GUI's formatters agree: `func_4848BC9A` prints an FC through the table
+0x485EC344, 20 Hz to 20 kHz in third octaves, at `value >> 2`. `func_4848BD21` prints a gain as
+`(value - 64) / 2` dB, clamped to +-12. The tone generator's own controller table (lib
+`func_4C02E85D`, records 0x48586860) has handlers for CC80-83, 91-94 and none for CC96 or CC97.
+
+| byte | controller | name in the source             | meaning (program 941)                                                                                                     | values over 169 x 8 parts                              |
+|------|------------|--------------------------------|---------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------|
+| 0    | CC97       | `fold_root`                    | never sent (field 0 is `B0 FF`, and `func_48440662` skips a controller above 127); the note-conversion octave fold, below | `0x00` on parts 0 and 7; `0x08` on the others but 8    |
+| 1    | CC7        | `volume`                       | volume, sent folded into CC11: `expression + volume - 127` (`func_48440662`)                                              | most often 105, 98, 127, 100                           |
+| 2-4  | program    | `prog`, `bank_lsb`, `bank_msb` | the part's sound {program, bank LSB, bank MSB} (`func_4844077C`; `VoiceBankClassify`'s key order)                         | `bank_msb` 0x26 (the kits) on parts 0 and 7, else 0x20 |
+| 5    | CC94       | `dsp_sw`                       | DIGITAL EFFECT: 0 off, 127 on, other = the sound's own setting (`func_48448D93`); TG lib 0x4C007724: part flag 0x1000     | 64 in every part                                       |
+| 6    | CC91       | `reverb`                       | REVERB                                                                                                                    |                                                        |
+| 7    | CC93       | `chorus`                       | CHORUS DEPTH                                                                                                              | 0 in 1221                                              |
+| 8    | CC10       | `pan`                          | pan                                                                                                                       | 64 in 929                                              |
+| 9    | CC96       | `bend_range`                   | parameter 0xB08000, RPN 0 "BEND SENS" in semitones                                                                        | 12 in every part                                       |
+| 10   | CC82       | `eq_lo_fc`                     | EQ LOW FC; TG lib 0x4C0082CA: part +0x21, at most 0x7C                                                                    | 28 (100 Hz) in most                                    |
+| 11   | CC83       | `eq_lo_gain`                   | EQ LOW GAIN; TG lib 0x4C0082F0: part +0x23 = value - 64, clamped to +-24                                                  | 64 (0 dB) in most                                      |
+| 12   | CC80       | `eq_hi_fc`                     | EQ HIGH FC; TG lib 0x4C00826B: part +0x22                                                                                 | 108 (10 kHz) in most                                   |
+| 13   | CC81       | `eq_hi_gain`                   | EQ HIGH GAIN; TG lib 0x4C008291: part +0x24                                                                               | 64 in most                                             |
+| 14   | CC92       | `multi`                        | MULTI EFFECT DEPTH                                                                                                        | 0 in 1259                                              |
+
+The four EQ fields are read together by the tone generator's `func_4C00807E`. It takes the two
+(FC, gain) pairs at part record +0x21/+0x23 and +0x22/+0x24, looks each FC up in 0x4C008071's table
+(132 exponential words) and computes the filter coefficients in double precision (`LibF64Div`,
+`LibF64Mul`). So they are a two-band part equaliser. Which register the coefficients reach was not
+traced.
+
+**`fold_root`.** `func_484419BB` reads field 0 of the part template 0x5003A2BC, and `func_4843D558`
+passes it to the key conversion `func_4843CEF3` -> `func_48436229`. There the note follows the
+chord root up by `root - 1` semitones. When `root - 1 > fold_root` it is moved by `root - 13`
+instead:
+
+    movbu (a0), d2 / add -1, d2           root - 1  (root 1..12 of the current chord)
+    movbu (1, a0), d0 / cmp d0, d1 / bgt  fold_root
+    mov -0xc, d2 / add d1, d2             one octave lower
+
+So with 8 the pattern moves up for roots C to G# and down for A, A# and B, which keeps an
+accompaniment part within a fifth of where it was written. The value does not matter on the drum
+parts, where every note's rule is `NcrNone`. This is read from that one branch of
+`func_48436229`; the routine's other branches were not followed.
 
 Fields 15-23 of the table (CC64, CC1, CC11, channel pressure, pitch bend, CC16, CC17, CC13) are not
 in a style's set-up. They start from the default template 0x485B7804.
 
-`[INFERENCE]` The eight parts are Drum, Bass, Acc1-Acc5 and Perc. Parts 0 and 7 have mode 0 and
-`bank_msb` 0x26 in every style. Every note on those two parts has a last byte of 0, unlike the notes of the other
-parts. Part 1's program is 0x21 in 84 of the 169 styles, which is GM's finger bass. The names of the two bank bytes
-are a guess from their order.
+`[INFERENCE]` The eight parts are Drum, Bass, Acc1-Acc5 and Perc. Parts 0 and 7 play kits
+(`bank_msb` 0x26) in every style, and every note on them has rule `NcrNone`. Part 1's program is
+0x21 in 84 of the 169 styles, which is GM's finger bass.
 
 ## The 20 slots
 
 | slots | name in the source                               | bars                      | evidence                                                                                                                           |
 |-------|--------------------------------------------------|---------------------------|------------------------------------------------------------------------------------------------------------------------------------|
 | 0-11  | `Var1`, `Var1Fill1`, `Var1Fill2` ... `Var4Fill2` | 4, 1, 1 in all 169 styles | only `slot % 3 == 0` carries a name in a MEMORY style (`MemStyleVarCopy` 0x4843B22E); `func_4844232B` treats `slot % 3 != 0` apart |
-| 12-15 | `Intro1A/B`, `Intro2A/B`                         | 1-9                       | `func_4844232B` treats `(slot - 12) % 4 < 2` (12, 13, 16, 17) apart from 14, 15, 18, 19                                            |
-| 16-19 | `Ending1A/B`, `Ending2A/B`                       | 2-10                      | the same; the odd slots are the B halves (`0x485B6D74`, the MEMORY pair bit)                                                       |
+| 12-13 | `Intro1Major`, `Intro1Minor`                     | 1-9                       | INTRO 1: slot `12 + 4k` for `k` = 0 (`func_484437DA`)                                                                              |
+| 14-15 | `Ending1Major`, `Ending1Minor`                   | 1-8                       | ENDING 1: slot `14 + 4k` for `k` = 0 (`func_484439EB`)                                                                             |
+| 16-17 | `Intro2Major`, `Intro2Minor`                     | 2-9                       | INTRO 2: `k` = 1                                                                                                                   |
+| 18-19 | `Ending2Major`, `Ending2Minor`                   | 2-10                      | ENDING 2: `k` = 1                                                                                                                  |
 
-The two halves of each pair have the same bar count in every style. `[INFERENCE]` The roles are
-main pattern, fill-in, intro and ending. They follow the panel's VARIATION 1-4, FILL IN 1/2 and
-INTRO & ENDING 1/2 buttons, the bar counts (slots 12-15 shorter, 16-19 longer) and the count block.
-What tells an A half from a B half is not known.
+**The intro and ending handlers** of program 941 (both called from the rhythm event dispatcher
+`func_48435ED4`, cases 0x48435FC8 / 0x48435FFD, and from `func_4843BC29`) compute the slot:
+
+    func_484437DA (INTRO, d0 = 1, 2, 3):  1 -> 2, 2 -> 0, 3 -> 1 (`add -2` / `mov 2`), >= 3 -> 0
+                                          asl2 d2 / add 0xc, d2         slot 12 + 4k: 20, 12, 16
+    func_484439EB (ENDING, d0 = 1, 2):    d2 = d0 - 1
+                                          add d2, d2 / inc d2 / add d2, d2 / add 0xc, d2   slot 14 + 4k
+
+So INTRO 1 is slot 12 and INTRO 2 slot 16, and the third intro case is slot 20, the count-in
+(above). ENDING 1 is slot 14 and ENDING 2 slot 18. `func_4844232B` and `func_48442F03` single out
+`(slot - 12) % 4 < 2`, the intros. The bar counts fit: INTRO/ENDING 1 are 1-9 bars, 2 is 2-10.
+The chip stores a style's slots as the intros, the twelve variation slots, then the endings (12,
+13, 16, 17, 0-11, 14, 15, 18, 19). The earlier reading of this note had 12-15 as the intros and
+16-19 as the endings. That was wrong; the source's labels follow the code since 2026-11-02.
+
+**The two halves are major and minor.** `StyleRecordSelectBind` (0x4843398F) is called with the
+slot (`0x5003A466`) and an extra byte (`0x5003A46A`). `StyleRecordSlotSelect` adds that byte to an
+intro or ending slot, `(0x2c, sp) + d1`. The byte is only ever written as 0 (reset, `func_484433C2`)
+or as `func_484361BC(chord type)`, in `func_48442FC7` when the chord changes. `func_484361BC` is a
+lookup in the 42-byte table 0x485B6EC8:
+
+    cmp 0x2a, d0 / bcs   -> movbu (d0, 0x485B6EC8), d0   1 when the entry is nonzero, else 0
+
+The entries that are 1 are the minor-family chord types of the chord-name table 0x485A0EA8: min,
+min7, dim, m7(b5), mM7, m6, m(b5), m7(9), m6(9), mM7(b5), madd9, and the two 7(#9) 13 types (31, 34).
+`func_48442FC7` re-binds the running intro or ending when the new chord changes the half
+(`StyleSlotRecordDiffers`). The music agrees: in the non-drum parts (1-6), pitch class 4 (E) is
+11-13 % of the A halves' notes and 1 % of the B halves'. Pitch class 3 (Eb) is 2-3 % of A and
+13-15 % of B. Pitch class 9 (A) goes from 8-10 % to 2 % and pitch class 8 (Ab) from 2 % to 6-8 %.
+That is the same pattern in C major and in C minor
+([`rhythm_style_semantics.py`](mn10300-names-probes/rhythm_style_semantics.py), sections 1-2). The
+two halves have the same bar count in every style.
+
+`[INFERENCE]` The roles of slots 0-11 are main pattern and fill-ins. They follow the panel's
+VARIATION 1-4 and FILL IN 1/2 buttons, the bar counts and the count block.
 
 ## A variation record
 
@@ -239,30 +372,96 @@ ends with 0xF5, and has bars x beats beat markers. Every data byte is below 0x80
 position bytes are all 0-95 and never fall within a beat. That is why they read as positions, not
 deltas, and why a beat is 96 ticks. An event with no position byte before it is at tick 0.
 
-`[INFERENCE]` A note's last three bytes: the first two are its length (low byte 8-16 typically,
-high byte mostly 0). The last is 0 on every note of parts 0 and 7 and takes a few values elsewhere
-(1, 16, 80, 100 ...), so it reads as the chord-adaptation class. The player that reads them was
-not traced.
+**A note's last three bytes** are its gate time and its note-conversion rule:
+
+- **gate**, bytes 3-4, 7 bits a byte, low byte first, in ticks. When a pattern starts in the middle
+  (`func_484425FE`, which walks the stream from `0x50122DC0` to the play position), a note whose
+  gate reaches past the position is started for the rest of it:
+
+      movbu (4, a1), d0 / movbu (3, a1), d1 / asl 7, d0 / add d1, d0   gate
+      cmp d3, d0 / ble -> skip / sub d3, d0 / call func_4843D558        start with gate - elapsed
+
+  `func_4843D558` starts such a note only when at least a beat is left (`cmp 0x60, d0`). The most
+  common gates are 12, 8, 11, 13 and 14 ticks; the longest is 15,715.
+- **rule**, byte 5, an entry of `NoteConvRules` (0x48736104, 128 x 8 bytes). `func_4843D558` reads
+  it (`movbu (5, a0)`), tests its flag bytes +2/+3 (`func_484361F3`, `func_4843620E`) and hands it
+  to the key conversion `func_4843CEF3`, which reads +1 (`func_484361D8`). Then `func_48436229`
+  converts the key through the table at +4. Each table starts with a pointer to its name, so the
+  rules name themselves:
+
+| rule                     | notes   | the rule's table (program 941)                      | source name                 |
+|--------------------------|---------|-----------------------------------------------------|-----------------------------|
+| 0                        | 205,435 | none: the key is not converted                      | `NcrNone`                   |
+| 1                        | 192,095 | "Root Shift Only"                                   | `NcrRootShiftOnly`          |
+| 16                       | 54,978  | "Melody Basic"                                      | `NcrMelodyBasic`            |
+| 17                       | 4,440   | "Melody In 7th G>Bb"                                | `NcrMelodyIn7thGToBb`       |
+| 18                       | 1,402   | "Melody In 7th C>Bb"                                | `NcrMelodyIn7thCToBb`       |
+| 19                       | 698     | "Maj incl. F for Gospel etc"                        | `NcrMajInclFForGospelEtc`   |
+| 20                       | 1,022   | "Maj incl. A for walking Bass"                      | `NcrMajInclAForWalkingBass` |
+| 21                       | 823     | "Maj incl.Bb for MAJ=7th"                           | `NcrMajInclBbForMajIs7th`   |
+| 22                       | 44      | "Natural=MelodicDown"                               | `NcrNaturalIsMelodicDown`   |
+| 23                       | 277     | "Harmonic Minor"                                    | `NcrHarmonicMinor`          |
+| 24                       | 7       | "Merodic Min Ascend" (sic)                          | `NcrMerodicMinAscend`       |
+| 80                       | 46,711  | "Basic Chord 100%"                                  | `NcrBasicChord100`          |
+| 82                       | 2,335   | "Keep near C"                                       | `NcrKeepNearC`              |
+| 83                       | 5,085   | "HardRock Chord"                                    | `NcrHardRockChord`          |
+| 96                       | 718     | "Chord CEGB"                                        | `NcrChordCEGB`              |
+| 97                       | 2,082   | "Chord CDEG"                                        | `NcrChordCDEG`              |
+| 98                       | 1,155   | "Chord DEGB"                                        | `NcrChordDEGB`              |
+| 100                      | 7,670   | "Chord CEGA"                                        | `NcrChordCEGA`              |
+| 101                      | 1,378   | "Chord ADGC"                                        | `NcrChordADGC`              |
+| 102                      | 356     | "Chord EGAD"                                        | `NcrChordEGAD`              |
+| 103                      | 199     | "Chord CEAD"                                        | `NcrChordCEAD`              |
+| 10, 32, 58, 81, 118, 122 | 716     | 10 none; the others repeat 17's, 15's or 80's table | the number                  |
+
+Every note on parts 0 and 7 has rule 0. Part 1, the bass, mostly has `NcrRootShiftOnly` and
+`NcrMelodyBasic`; the chord parts have the `Chord` rules. The 128 entries, their flags and their
+names are the same in the KN2400, KN6000 and KN6500 programs. Entries 25-79 and 84-127 repeat
+tables 17 and 80. [`rhythm_style_semantics.py`](mn10300-names-probes/rhythm_style_semantics.py)
+section 3 prints the counts. `[INFERENCE]` What each conversion table does to a key was not
+followed further than `func_48436229`.
 
 **In the source**, one event per line, one macro per kind (defined in `rhythm.s`):
 
-| macro                                                                 | bytes                          | used for                                                       |
-|-----------------------------------------------------------------------|--------------------------------|----------------------------------------------------------------|
-| `n part,key,vel,len_lo,len_hi,cls`                                    | `9n key vel len_lo len_hi cls` | a note; `len_lo`/`len_hi`/`cls` named by the inference above   |
-| `vol`, `pan`, `expr`, `mod`, `sus`, `rev`, `cho`, `mode` `part,value` | `Bn CC value`                  | CC7, 10, 11, 1, 64, 91, 93, 97                                 |
-| `cc part,ctl,value`                                                   | `Bn ctl value`                 | any other controller (CC80-83, 92, 94 in set-ups)              |
-| `pc part,prog,bank_lsb,bank_msb`                                      | `Cn prog bank_lsb bank_msb`    | program change (set-ups only)                                  |
-| `bend part,lsb,msb`, `pres part,value`                                | `En lsb msb`, `Dn value`       | pitch bend, channel pressure                                   |
-| `@<any of the above> tick,...`                                        | `tick` then the event          | the event with the position byte before it                     |
-| `beat`, `end`                                                         | `F4`, `F5`                     | beat marker, end of stream                                     |
-| `at tick`                                                             | `tick`                         | a position byte with no event after it; not needed in this ROM |
+| macro                                                         | bytes                               | used for                                                       |
+|---------------------------------------------------------------|-------------------------------------|----------------------------------------------------------------|
+| `n part,key,vel,gate,rule`                                    | `9n key vel gate&0x7F gate>>7 rule` | a note                                                         |
+| `vol`, `pan`, `expr`, `mod`, `sus`, `rev`, `cho` `part,value` | `Bn CC value`                       | CC7, 10, 11, 1, 64, 91, 93                                     |
+| `fold_root`, `dsp_sw`, `bend_range`, `eq_lo_fc` ... `multi`   | `Bn CC value`                       | CC97, 94, 96, 82, 83, 80, 81, 92 (set-ups; see `style_part`)   |
+| `cc part,ctl,value`                                           | `Bn ctl value`                      | any other controller (none in this ROM)                        |
+| `pc part,prog,bank_lsb,bank_msb`                              | `Cn prog bank_lsb bank_msb`         | program change (set-ups only)                                  |
+| `bend part,lsb,msb`, `pres part,value`                        | `En lsb msb`, `Dn value`            | pitch bend, channel pressure                                   |
+| `@<any of the above> tick,...`                                | `tick` then the event               | the event with the position byte before it                     |
+| `beat`, `end`                                                 | `F4`, `F5`                          | beat marker, end of stream                                     |
+| `at tick`                                                     | `tick`                              | a position byte with no event after it; not needed in this ROM |
 
-So `@n 48,0,BD1,64,16,0,0` is a bass drum on part 0 at tick 48 of the beat. On parts 0 and 7 a
-key from 27 to 87 is spelled by its GS/GM percussion name (`.equ BD1, 36` ...); other keys stay
-numbers. `[INFERENCE]` That the KN7000's kits follow that map rests on table 84's drum-voice
-records near file offset 0x1088D0, which list "Bass Drum 2", "Bass Drum 1", "Side Stick" and
-"Snare Drum 1" in the GM order of keys 35-38. The kits' own records were not decoded, so their
-names for the keys outside 27-87 (18 and 19 are frequent) are not used.
+So `@n 48,0,KitBassDrum1,64,16,NcrNone` is a bass drum on part 0 at tick 48 of the beat, 16 ticks
+long.
+
+**Drum keys.** On parts 0 and 7 a key is spelled by its name in table 84's Standard Kit 1
+(`.equ KitBassDrum1, 36` ...). Keys 0, 1 and 117-127 are "Silent" there and stay numbers. A kit
+(bank MSB 0x26) is a table tone, class 0x40. `TgNoteOnTableTone` (0x4C03600D) reads a
+{program, LSB, MSB} triple per note at `+0x27 + note * 3`.
+`TgPartVoiceRecFetchSel` -> `TgPartVoiceRecFetch` -> `VoiceRecFetchBanked` -> `VoiceBankClassify`
+turn that triple into a voice record, whose first 13 bytes are the name (`tone_note` and
+`Voice_*` in `src/table/voices/internal_archive.s`). Standard Kit 1 names every key from 2 to 116.
+Its layout is GS's for 27-87 but its own around it, for example 18 "H.H.On Beat", 19 "H.H.Off
+Beat", 20 "Hi-Hat Accent", 21 "H.H.Half Open", 24 "Piccolo Snare", 104 "Shaker OnBeat", 106
+"Maracas On" and 111-116 "Cowbell 1" to "Cowbell 6". It calls key 37 "Rim Shot" (GS: side stick).
+
+The styles play 40 kit sounds. 30 of them are tones of the internal archive: Live Standard Kit,
+Standard Kit 2, Standard Kit 1, Jazz Kit and so on. Voice Kit is the one COUNT INTRO uses. The other
+10 have no tone there: eight LSB-4 variants, {34, 0} and {127, 0}, 3,386 notes in all. Which tone
+`ToneKeyFind` falls back to for them was not traced, so the probe counts them as not matching. Of
+the 203,802 drum notes, 188,420 (92.5 %, a lower bound) play a voice that has Standard Kit 1's name
+for that key in the note's own kit. The rest are the kits' own sounds on
+the same keys: the brush kits put "Brush Tap", "Brush Slap" and "Brush Swirl" on 38-40, the
+orchestral kit "Orch.S.Drum 1" on 38, and the bongo / conga and voice kits have their own sets. So
+one layout holds, and its names are Standard Kit 1's.
+[`rhythm_drum_kit_keys.py`](mn10300-names-probes/rhythm_drum_kit_keys.py) prints each kit's notes,
+the names per key and Standard Kit 1's map. The KN6000's table (`IK2.bin`) has the same voices in
+the same order around Standard Kit 1's keys 18-37. The KN2400 and KN6500 tables were not checked,
+so the siblings' fallback styles use the KN7000's names `[INFERENCE]`.
 
 ## Past the last style
 
@@ -273,9 +472,9 @@ reaches:
 - `0x3FBB9A-0x3FF9B0`: ten whole variation records, 4,1,1, 4,1,1, 4,4, 6,6 bars of 4/4. None of
   their streams occurs anywhere else in the chip. `[INFERENCE]` In the slot order that
   every style here uses, these are slots 6-11, 14, 15, 18 and 19 of a style that is not in this
-  build. The fragment before them is the end of that style's slot 5. The source labels them
-  `OldBuildStyle_Var3` ... `OldBuildStyle_Ending2B` and types their headers like any other
-  variation's.
+  build: Var3 to Var4Fill2 and the four endings. The fragment before them is the end of that
+  style's slot 5. The source labels them `OldBuildStyle_Var3` ... `OldBuildStyle_Ending2Minor` and
+  types their headers like any other variation's.
 - `0x3FF9B0-0x3FFBE6`: a stream fragment that starts inside a note event.
 - `0x3FFBE6-0x3FFC6D`: the last 135 bytes of that fragment, again.
 
@@ -304,9 +503,11 @@ screen. The boot ROM can rewrite this data on units with an IC20 flash in this s
 | erased flash, the version string        | `.space ..., 0xff`, `.ascii`                                                  | 915       |
 
 The probe prints these byte counts ("bytes by representation"; they add up to the 4,128,768
-bytes from 0x10000). With `--source src/ic18` it measures the text: 171 files (169 style files), 760,109 lines,
-14,378,065 bytes of text for the 4,128,768 bytes from 0x10000, 3.48 times the binary size, and
-0 `.incbin` lines.
+bytes from 0x10000). With `--source src/ic18` it measures the text: 171 files (169 style files), 760,253 lines,
+21,118,597 bytes of text for the 4,128,768 bytes from 0x10000, 5.11 times the binary size, and
+0 `.incbin` lines. Until 2026-11-02 it was 14,378,065 bytes (3.48 times). The note rules and the
+drum keys are now spelled by name (`NcrRootShiftOnly`, `KitHiHatClosed`), and that adds the
+6.7 MB.
 
 `python3 scripts/analysis/data_incbin_census.py` gives the tree `kn7000-ic18` no binary include
 at all: 0 generic, 0 opaque.
@@ -322,27 +523,37 @@ the byte after them, 0, reads as a position but could as well be the event's las
 pastes a suffix; and caches that make 760,000 lines of macro invocations fast. A macro whose
 body is only data directives is compiled once, an invocation whose operands are numbers,
 operators and constant `.equ` names becomes its bytes once and is reused in every pass, and
-constant expressions are evaluated once. Assembling all of IC18 takes 18 s (13 s with the label
-seed of a previous build) on the development machine. No other image's bytes change;
-`make gate-kn7000` passes.
+constant expressions are evaluated once. Assembling all of IC18 took 18 s (13 s with the label
+seed of a previous build) on the development machine. With the named spelling, `rhythm.s` alone
+assembles in 30 s where the earlier text took 21 s, both measured on 2026-11-02 on the same loaded
+machine, and `make verify-ic18-full` took 33 s. No other image's bytes change.
 
 ## Open questions
 
-- The count block's bytes after the 220 and the style byte at +0x89 have no reader. Their
-  readings above are inferences.
-- CC97 (part `mode`), CC94, CC96 and CC80-CC83: the firmware routes these controllers into part
-  fields, but what each one does to the sound was not traced into the tone generator.
-- The two sound-unit keys: what values 0x0044 (and 0x1111, 0x0B12 ...) select in units
-  0xB040/0xB050.
-- The A/B halves of the intros and endings. A major/minor pair would fit, but nothing shows it.
-- A note's last three bytes: trace the pattern player that consumes `0x50122DC0` to fix the length
-  and the class.
-- The drum kits' own key names: table 84 has drum-voice records with names ("H.H.On Beat",
-  "Reverse Snare" ...); decoding which kit and key each belongs to would name the keys outside the
-  GS/GM range and confirm the map.
-- `StyleVariationNameGet` returns a count-in pattern record. Renaming it (and its slot-20 caller's
-  reading) is left to whoever next regenerates `src/program/`.
-- Which chip answers at the IC18/IC20 site of the owner's unit has not been checked (see the dump's
+Settled on 2026-11-02 (lane mn10300-names, agent `rhythm`; the probes are in
+[`mn10300-names-probes/`](mn10300-names-probes/), prefix `rhythm_`):
+
+- the count block's bytes after the 220 and the style byte at +0x89: no reader in program 941 or the
+  KN2400 / KN6000 / KN6500 programs; the source marks them unread;
+- the part set-up's CC97 / CC94 / CC96 / CC80-CC83 / CC92: octave fold, DIGITAL EFFECT, bend range,
+  the two-band part EQ, MULTI EFFECT depth (above);
+- the two sound-unit keys: the DSP presets of units EFF4 and EFF5;
+- the A/B halves of the intros and endings: major and minor, chosen by the chord type; and the slot
+  order, which had intros and endings wrong;
+- a note's last three bytes: the gate in ticks and the note-conversion rule;
+- the drum keys' names: Standard Kit 1's, one layout over the kits;
+- 0x484335BF returns a count-in pattern record: renamed `StyleCountInRecordGet` (was
+  `StyleVariationNameGet`).
+
+Still open:
+
+- which tone `ToneKeyFind` falls back to for the ten kit sounds the internal archive has no tone
+  for ({26, 4} ... {127, 0}, 3,386 notes);
+- what each NoteConvRules table does to a key: `func_48436229` and its tables were read only as far
+  as the octave fold;
+- which register the part EQ's coefficients (`func_4C00807E`) reach, and the role of a variation's
+  bytes +2/+3 (`func_48442164`, key 0xB048);
+- which chip answers at the IC18/IC20 site of the owner's unit has not been checked (see the dump's
   README).
 
 ## Website page draft
@@ -357,14 +568,20 @@ seed of a previous build) on the development machine. No other image's bytes cha
 >   block (220 rhythms), the style-ID index, the style table and the count-in table.
 > - **Style-ID index**: 2048 entries, one per folded style-ID. Of the 220 built-in rhythms, 169
 >   are in IC18 and 51 in the table ROM. The other 1828 IDs alias to one of these.
-> - **Styles**: 169 records. Each has a 13-character name, two sound-unit keys and eight part
->   set-ups (Drum, Bass, Acc1-5, Perc), each set-up being 15 controller values with volume, the
->   program, reverb, chorus and pan. Each record then has 20 slot offsets: four variations, each
->   with two fill-ins, then two intros and two endings, each as an A/B pair.
+> - **Styles**: 169 records. Each has a 13-character name, the DSP presets of effect units EFF4
+>   and EFF5, and eight part set-ups (Drum, Bass, Acc1-5, Perc). A set-up is 15 controller values:
+>   the sound, volume, reverb, chorus, pan, bend range, a two-band EQ, the digital-effect switch,
+>   the multi-effect depth and an octave fold point for chord transposition. Each record then has
+>   20 slot offsets: four variations, each with two fill-ins, then INTRO 1, ENDING 1, INTRO 2 and
+>   ENDING 2, each in a major and a minor version, which the firmware picks by the chord played.
 > - **Variations**: bars and meter, set-up events (controllers and program changes per part),
->   then an event stream. In the stream a position byte (0-95, 96 ticks a beat) precedes notes
->   (6 bytes), controllers, pitch bends, beat markers (0xF4) and the end (0xF5).
-> - **Count-ins**: eight one-bar side-stick patterns, of 1 to 8 beats.
+>   then an event stream. In the stream a position byte (0-95, 96 ticks a beat) precedes notes,
+>   controllers, pitch bends, beat markers (0xF4) and the end (0xF5). A note is 6 bytes: key,
+>   velocity, gate time in ticks, and one of the firmware's named note-conversion rules ("Root
+>   Shift Only", "Melody Basic", "Basic Chord 100%" ...). Drum keys follow the layout of the
+>   KN7000's Standard Kit 1.
+> - **Count-ins**: eight one-bar rim-shot patterns, of 1 to 8 beats. With COUNT INTRO on, the
+>   program plays its own spoken count ("Count 1" to "Count 4" of the Voice Kit) for 1 to 4 beats.
 > - The chip ends with leftovers of an older build and the version string `jkr_33.ssf` (RHYTHM 33).
 >
 > The disassembly rebuilds all 4 MB byte for byte (`make -C kn7000 verify-ic18-full`), with

@@ -49,3 +49,23 @@ a0=503BB810` after `RESET` and `ALLOC_IN d0=42B6`. `gap_write_tap.lua` and
 0x50298000..0x502B7FFF, and the main pool header word +0x0C reads 0x94E5C. The Lua
 scripts write their logs to a path set at their top (`OUT` / `$GW_LOG`); point it at a
 scratch directory before running.
+
+## Four-build checks (2026-11-02, lane mn10300-names, agent ramgui)
+
+These live in `../mn10300-names-probes/` and read the byte-exact sources and reference images of
+builds 941, 942 (with the SP7001 plug-in and BASEEXT.XAP), 935 and 893:
+
+| script                   | question it answers                                                                                    |
+|--------------------------|--------------------------------------------------------------------------------------------------------|
+| `ramgui_ramrefs.py`      | Does any build name an address in a RAM span (operand, symbol, decimal data word), and what bounds it? |
+| `ramgui_reset_layout.py` | Where does each build's reset code put INITIAL_SP, the .bss and RAM clears and the .data copy?         |
+
+    python3 -I notes/mn10300-names-probes/ramgui_reset_layout.py
+    python3 -I notes/mn10300-names-probes/ramgui_ramrefs.py 941 0x501749e8 0x50180000 942 0x501749f8 0x50180000 \
+        935 0x501749e8 0x50180000 893 0x501749c4 0x50180000
+
+The first prints `.data ... -> 0x50000010` and `.bss clear ... = 0x50180000` for all four builds.
+The second prints, for each build, `source references inside: 0` and `... 4-aligned in the
+program's data region ...: 0` for the unused .bss tail (about 30 s per build, most of it the raw
+word scan).  For 0x5000000C..0x50000010 it finds the four `0x9000000e` accesses of the RAM-init
+marker in every build.
