@@ -73,6 +73,8 @@
 	.equ SQEDT_VELOCNG_LAST,		0x25fa	; TT_SQVELOCNG: last measure (word)
 	.equ SQEDT_QTZ_LAST,			0x25fc	; TT_SQQTZ: last measure (word)
 	.equ SEQ_OP_QUANTIZE,			0x25fe	; the quantize value, SQEDT_QTZ_VALUE doubled (SeqPart_VelocityCurveCalc reads it)
+	.equ SQEDT_QTZ_STRENGTH,		0x2600	; TT_SQQTZ: quantize strength, 0..100 (SeqParams_InitDefaults stores 100; AppEvent_ChainDispatch1_IncQtzStrength / AppEvent_InlineHandler_DecQtzStrength step it within 0..100 and redraw item 8; SeqPart_VelocityCurveCalc's caller returns early at 100)
+	.equ SQEDT_QTZ_WINDOW,			0x2602	; TT_SQQTZ: quantize window, signed -100..+100 (SeqParams_InitDefaults stores 100; AppEvent_ChainDispatch1_IncQtzWindow / AppEvent_InlineHandler_DecQtzWindow step it between 0x9c = -100 and 100 and redraw item 9)
 	.equ SQEDT_ADVDLY_TRACK,		0x2604	; TT_SQADVDLY: track
 	.equ SQEDT_ADVDLY_FROM,			0x2606	; TT_SQADVDLY: first measure (word; also the default the FM string shows)
 	.equ SQEDT_ADVDLY_LAST,			0x2608	; TT_SQADVDLY: last measure (word)
@@ -89,6 +91,9 @@
 	.equ SQEDT_MINS_LAST,			0x262e	; TT_SQMINS: last measure of A (word)
 	.equ SQEDT_MINS_REPEAT,			0x2630	; TT_SQMINS: repeat count
 	.equ SEQ_OP_FROM,			0x2632	; word: first measure of the edit operation (MainExeCall_OnTitleSq*)
+	.equ SEQ_QTZ_TICK,			0x2638	; the tick within the beat of the event being quantized: the byte SeqData_ReadNextByte returns (SeqPart_VelExprClamp), which SeqPart_VelocityCurveCalc splits into grid zones (QtzGrid48: at 24 / 72)
+	.equ SEQ_QTZ_ZONE_EDGE_A,		0x2640	; first of the edge pair of the grid zone SEQ_QTZ_TICK falls in (SeqPart_VelocityCurveCalc: 48 for quantize value 0, else from SeqPart_VelCurveData_Table / SeqPart_VelZoneLookup_Table by zone)
+	.equ SEQ_QTZ_ZONE_EDGE_B,		0x2642	; second of that edge pair (SeqPart_VelZoneLookup_Table_2 by zone; 48 for quantize value 0)
 	.equ SEQ_OP_ERASE_CHOICE,		0x2650	; what a measure erase removes (SQEDT_MERS_CHOICE; SeqPart_FullLoad picks its mode by it)
 	.equ SEQ_OP_VELOCITY,			0x2654	; the velocity amount of a velocity change (SQEDT_VELOCNG_AMOUNT)
 	.equ SEQ_DATA_OFFSET,			0x2666	; word: byte offset of the song-data cursor in SEQ_DATA_BLOCK, 5..255 (5 = first byte after the block header); at 255 ToneGen_AdvancePosition moves on to a new linked block
@@ -159,7 +164,7 @@
 	.equ ACC_DEFER_ENDING_LANES,		0x3326	; lanes whose pending ending (or style change) waits for their bar line: AccSection_DeferToBarUnlessFirstBeat sets bits 0-5 unless the engine beat is 0; AccSection_SwitchAtBarLine clears it
 	.equ ACC_DEFER_SECTION_LANES,		0x3327	; lanes whose pending intro / fill-in waits for their bar line: AccSection_DeferToBarIfLastBeat sets bits 0-5 when the press comes on the last beat; AccSection_SwitchAtBarLine clears it
 	.equ ACC_CH_CC3,			0x332f	; [4 bytes] per rhythm channel D7 / D4 / D5 / D6: the last controller-3 value sent (0xdn 0x03 v, AccVoice_SendProgChange from ACC_CUR_CC3); Rhythm_SendVolume_Dn re-sends it, Rhythm_AllNotesOff_Dn sends 0 when it is set
-	.equ ACC_CUR_CC3,			0x3333	; the last 0xD3 (controller selector 3) value AccVoice_ScanInstruments / AccSeq_Scanner_D3Voice found in the working part's pattern, 0 when none
+	.equ ACC_CUR_CC3,			0x3333	; the last 0xd3 (controller selector 3) value AccVoice_ScanInstruments / AccSeq_Scanner_D3Voice found in the working part's pattern, 0 when none
 	.equ ACC_VARIATION_NEXT,		0x333a	; the variation index 0..3 to load: ACC_VARIATION_REQUEST & 3 (AccentVoice_DetectAndMarkChange), stepped -1 / +1 (clamped) by FILL IN 1 / 2 under the arranger (AccSection_SwitchNow)
 	.equ SNDARG_PART_SELECT,		0x338e	; the Sound Arranger part being edited, one-hot: 1 DRUM, 2 BASS, 4 / 8 / 16 ACCOMP1-3 (AcSndArgGridBoxProc sets it; cleared entering and leaving MD_SND_ARG); AccStyle_Process copies changed sounds while it is set
 	.equ SNDARG_LAST_SOUNDS,		0x3395	; [10 bytes] the sound (part record bytes +0, +1 & 0x7f) of DRUM, BASS, ACCOMP1-3 the Sound Arranger last saw (AccVoiceState_Snapshot); SndArg_Store*Sound compare with it

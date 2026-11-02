@@ -422,8 +422,36 @@ def ram_cells_h(tree='v10'):
             ' * propdata letter is a pointer type (m n o p q r s: pBool .. pUlong) and its value is the cell. */']
     for n, a in head:
         out.append('#define RAM_%-48s 0x%08Xu' % (n, f(a)))
+    used = ram_vars_used(tree)
+    if used:
+        out += ['',
+                '/* Main-CPU RAM variables that this tree\'s NAKA C names (sequencer edit parameters in the RAM',
+                ' * address tables of naka_widget_descriptors.c, ...): the .equ of %s/maincpu/shared/' % tree,
+                ' * ram_variables_by_use.s / ram_variables.s with that tree\'s value; their comments there say',
+                ' * what the code shows each one is. */']
+        for n, v in used:
+            out.append('#define %-52s 0x%08Xu' % (n, v))
     out += ['', '#endif /* NAKA_RAM_CELLS_H */']
     return '\n'.join(out) + '\n'
+
+
+def ram_vars_used(tree):
+    """[(name, value)] of the tree's RAM .equ names (shared/ram_variables_by_use.s, ram_variables.s) that a
+    word of its ui_widgets/*.c spells, sorted by value."""
+    d = os.path.join(ROOT, tree, 'maincpu')
+    equ = {}
+    for f in ('ram_variables_by_use.s', 'ram_variables.s'):
+        p = os.path.join(d, 'shared', f)
+        if os.path.exists(p):
+            for m in re.finditer(r'^\s*\.equ\s+(\w+),\s*0x([0-9A-Fa-f]+)', open(p, 'rb').read().decode('latin-1'), re.M):
+                equ.setdefault(m.group(1), int(m.group(2), 16))
+    words = set()
+    for c in sorted(os.listdir(os.path.join(d, 'ui_widgets'))):
+        if c.endswith('.c'):
+            t = open(os.path.join(d, 'ui_widgets', c), 'rb').read().decode('latin-1')
+            t = re.sub(r'/\*.*?\*/', ' ', t, flags=re.S)
+            words |= set(re.findall(r'\b[A-Z][A-Z0-9_]+\b', t))
+    return sorted(((n, v) for n, v in equ.items() if n in words), key=lambda x: (x[1], x[0]))
 
 
 def head_cells(known_addr, known_names):

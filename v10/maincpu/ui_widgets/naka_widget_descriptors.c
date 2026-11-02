@@ -2208,8 +2208,9 @@ typedef struct __attribute__((packed)) {
      * --------------------------------------------------------------------- */
     uint16_t AppEvtHandler_Branch_002_CaseTable[8];
     /* ---------------------------------------------------------------------
-     * AppEvtHandler_Branch_002_RamPtrs -- Nine u32 RAM addresses (0xF1F1,
-     * 0x261C, 0xF228, 0x260E, 0x2604, 0xF1DB, 0x2604, 0xF1D6, 0x2604).
+     * AppEvtHandler_Branch_002_RamPtrs -- Nine u32 RAM addresses: the track
+     * parameter of each sequencer edit title the switch cases serve (SQEDT_*_TRACK,
+     * shared/ram_variables_by_use.s; three cases share SQEDT_ADVDLY_TRACK).
      * AppEvtHandler_Branch_002 (v10/v9 0xF4417E, v7 0xF44170): `lda
      * xix,<this>; ld xwa,(xix+wa)` then `cp (xwa),0x11; incm8 1,(xwa)` -- a
      * byte counter at the selected address.
@@ -6093,9 +6094,15 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
     .AppEvtHandler_Branch_002_CaseTable = { 0x0032, 0x0014, 0x000A, 0x0000, 0x003C, 0x0028, 0x003C, 0x001E },
 
     .AppEvtHandler_Branch_002_RamPtrs = {
-        0x0000F1F1, 0x0000261C, 0x0000F228, 0x0000260E,
-        0x00002604, 0x0000F1DB, 0x00002604, 0x0000F1D6,
-        0x00002604,
+        SQEDT_QTZ_TRACK,
+        SQEDT_TRNS_TRACK,
+        SQEDT_VELOCNG_TRACK,
+        SQEDT_NOTECNG_TRACK,
+        SQEDT_ADVDLY_TRACK,
+        SQEDT_MERS_TRACK,
+        SQEDT_ADVDLY_TRACK,
+        SQEDT_MDEL_TRACK,
+        SQEDT_ADVDLY_TRACK,
     },
 
     .AppEvent_ChainDispatch1_CaseTable = {
@@ -6114,9 +6121,15 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
     .AppEvent_SubDispatch_Table_2 = { 0x32, 0x00, 0x14, 0x00, 0x0A, 0x00, 0x00, 0x00, 0x3C, 0x00, 0x28, 0x00, 0x3C, 0x00, 0x1E, 0x00 },
 
     .AppEvent_SubDispatch_RamPtrs = {
-        0x0000F1F1, 0x0000261C, 0x0000F228, 0x0000260E,
-        0x00002604, 0x0000F1DB, 0x00002604, 0x0000F1D6,
-        0x00002604,
+        SQEDT_QTZ_TRACK,
+        SQEDT_TRNS_TRACK,
+        SQEDT_VELOCNG_TRACK,
+        SQEDT_NOTECNG_TRACK,
+        SQEDT_ADVDLY_TRACK,
+        SQEDT_MERS_TRACK,
+        SQEDT_ADVDLY_TRACK,
+        SQEDT_MDEL_TRACK,
+        SQEDT_ADVDLY_TRACK,
     },
 
     .AppEvent_InlineHandler_CaseTable = {

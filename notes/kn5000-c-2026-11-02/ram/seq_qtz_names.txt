@@ -1,0 +1,5 @@
+0x2600 SQEDT_QTZ_STRENGTH ; TT_SQQTZ: quantize strength, 0..100 (SeqParams_InitDefaults stores 100; AppEvent_ChainDispatch1_IncQtzStrength / AppEvent_InlineHandler_DecQtzStrength step it within 0..100 and redraw item 8; SeqPart_VelocityCurveCalc's caller returns early at 100)
+0x2602 SQEDT_QTZ_WINDOW ; TT_SQQTZ: quantize window, signed -100..+100 (SeqParams_InitDefaults stores 100; AppEvent_ChainDispatch1_IncQtzWindow / AppEvent_InlineHandler_DecQtzWindow step it between 0x9c = -100 and 100 and redraw item 9)
+0x2638 SEQ_QTZ_TICK ; the tick within the beat of the event being quantized: the byte SeqData_ReadNextByte returns (SeqPart_VelExprClamp), which SeqPart_VelocityCurveCalc splits into grid zones (QtzGrid48: at 24 / 72)
+0x2640 SEQ_QTZ_ZONE_EDGE_A ; first of the edge pair of the grid zone SEQ_QTZ_TICK falls in (SeqPart_VelocityCurveCalc: 48 for quantize value 0, else from SeqPart_VelCurveData_Table / SeqPart_VelZoneLookup_Table by zone)
+0x2642 SEQ_QTZ_ZONE_EDGE_B ; second of that edge pair (SeqPart_VelZoneLookup_Table_2 by zone; 48 for quantize value 0)

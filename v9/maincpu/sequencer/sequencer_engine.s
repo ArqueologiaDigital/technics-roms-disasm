@@ -11951,8 +11951,8 @@ SeqParams_InitDefaults:
 	ldw (SQEDT_QTZ_LAST:16), 1
 	ld (SQEDT_QTZ_VALUE:16), 3
 	ld (9702:16), 0
-	ld (9728:16), 100
-	ld (9730:16), 100
+	ld (SQEDT_QTZ_STRENGTH:16), 100
+	ld (SQEDT_QTZ_WINDOW:16), 100
 	ld (SQEDT_NOTECNG_TRACK:16), 1
 	ldw (SQEDT_NOTECNG_FROM:16), 1
 	ldw (SQEDT_NOTECNG_LAST:16), 1
@@ -20631,21 +20631,21 @@ AppEvent_ChainDispatch1_IncQtzValue:
 	ld xde, 7:i3
 	jrl AppEvtHandler_Branch_033
 AppEvent_ChainDispatch1_IncQtzStrength:
-	ld a, (9728:16)
+	ld a, (SQEDT_QTZ_STRENGTH:16)
 	cp a, 0x64
 	jrl nc, AppEvent_Epilogue
 	inc 1, a
-	ld (9728:16), a
+	ld (SQEDT_QTZ_STRENGTH:16), a
 	ld xwa, (SEQ_SCREEN_OBJECT:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0x8
 	jrl AppEvtHandler_Branch_033
 AppEvent_ChainDispatch1_IncQtzWindow:
-	ld a, (9730:16)
+	ld a, (SQEDT_QTZ_WINDOW:16)
 	cp a, 0x64
 	jrl ge, AppEvent_Epilogue
 	inc 1, a
-	ld (9730:16), a
+	ld (SQEDT_QTZ_WINDOW:16), a
 	ld xwa, (SEQ_SCREEN_OBJECT:16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0x9
@@ -21270,21 +21270,21 @@ AppEvent_InlineHandler_DecQtzValue:
 	ld	xde, 7:i3
 	jrl	AppEvent_InlineHandler_Join8
 AppEvent_InlineHandler_DecQtzStrength:
-	ld	a, (9728:16)
+	ld	a, (SQEDT_QTZ_STRENGTH:16)
 	cp	a, 0:i3
 	jrl	z, SeqState_DispatchEntry
 	dec	1, a
-	ld	(9728:16), a
+	ld	(SQEDT_QTZ_STRENGTH:16), a
 	ld	xwa, (SEQ_SCREEN_OBJECT:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 8
 	jrl	AppEvent_InlineHandler_Join8
 AppEvent_InlineHandler_DecQtzWindow:
-	ld	a, (9730:16)
+	ld	a, (SQEDT_QTZ_WINDOW:16)
 	cp	a, 156
 	jrl	le, SeqState_DispatchEntry
 	dec	1, a
-	ld	(9730:16), a
+	ld	(SQEDT_QTZ_WINDOW:16), a
 	ld	xwa, (SEQ_SCREEN_OBJECT:16)
 	ld	xbc, EVT_PARA_DRAW
 	ld	xde, 9
@@ -33340,7 +33340,7 @@ SeqPart_VelEditReturn:
 
 SeqPart_VelocityCurveCalc:
 	ld a, (SEQ_OP_QUANTIZE:16)
-	ld c, (9784:16)
+	ld c, (SEQ_QTZ_TICK:16)
 	extz wa
 	cp wa, 0:i3
 	jrl mi, SeqPart_VelRangeToZone
@@ -33353,8 +33353,8 @@ SeqPart_VelocityCurveCalc:
 	jp	t, (xix+wa)
 
 SeqPart_VelCurveData:
-	ld	(9792:16), 48
-	ld	(9794:16), 48
+	ld	(SEQ_QTZ_ZONE_EDGE_A:16), 48
+	ld	(SEQ_QTZ_ZONE_EDGE_B:16), 48
 	jrl	SeqPart_VelocityCurveCalc_Join5
 ; SeqPart_VelocityCurveCalc_QtzGrid48: Quantize value 1 (9726 = 2 x 0xF1F6): splits position 9784 at 24/72 and stores
 ;   the zone's edge pair in 9792/9794; value 0 uses 48/48, odd values and 12 the 8-step SeqPart_VelRangeToZone path.
@@ -33369,9 +33369,9 @@ SeqPart_VelocityCurveCalc_QtzGrid48:
 SeqPart_VelocityCurveCalc_Skip6:
 	extz	de
 	lda	xbc, (SeqPart_VelCurveData_Table:24)
-	ld	(9792), (xbc+de)
+	ld	(SEQ_QTZ_ZONE_EDGE_A), (xbc+de)
 	ld	xbc, SeqPart_VelCurveData_Table_6
-	ld	(9794), (xbc+de)
+	ld	(SEQ_QTZ_ZONE_EDGE_B), (xbc+de)
 	jrl	SeqPart_VelocityCurveCalc_Join5
 SeqPart_VelocityCurveCalc_QtzGrid24:
 	ld	a, c
@@ -33397,9 +33397,9 @@ SeqPart_VelocityCurveCalc_Skip9:
 SeqPart_VelocityCurveCalc_Join3:
 	extz	de
 	lda	xbc, (SeqPart_VelCurveData_Table_2:24)
-	ld	(9792), (xbc+de)
+	ld	(SEQ_QTZ_ZONE_EDGE_A), (xbc+de)
 	ld	xbc, SeqPart_VelCurveData_Table_7
-	ld	(9794), (xbc+de)
+	ld	(SEQ_QTZ_ZONE_EDGE_B), (xbc+de)
 	jrl	SeqPart_VelocityCurveCalc_Join5
 SeqPart_VelocityCurveCalc_QtzGrid12:
 	ld	a, c
@@ -33445,9 +33445,9 @@ SeqPart_VelocityCurveCalc_Skip13:
 SeqPart_VelocityCurveCalc_Join:
 	extz	de
 	lda	xbc, (SeqPart_VelCurveData_Table_3:24)
-	ld	(9792), (xbc+de)
+	ld	(SEQ_QTZ_ZONE_EDGE_A), (xbc+de)
 	ld	xbc, SeqPart_QtzGrid12_ZoneStarts
-	ld	(9794), (xbc+de)
+	ld	(SEQ_QTZ_ZONE_EDGE_B), (xbc+de)
 	jrl	SeqPart_VelocityCurveCalc_Join5
 SeqPart_VelocityCurveCalc_QtzGrid32:
 	ld	a, c
@@ -33468,9 +33468,9 @@ SeqPart_VelocityCurveCalc_Skip15:
 SeqPart_VelocityCurveCalc_Join4:
 	extz	de
 	lda	xbc, (SeqPart_VelCurveData_Table_4:24)
-	ld	(9792), (xbc+de)
+	ld	(SEQ_QTZ_ZONE_EDGE_A), (xbc+de)
 	ld	xbc, SeqPart_QtzGrid32_ZoneStarts
-	ld	(9794), (xbc+de)
+	ld	(SEQ_QTZ_ZONE_EDGE_B), (xbc+de)
 	jrl	SeqPart_VelocityCurveCalc_Join5
 SeqPart_VelocityCurveCalc_QtzGrid16:
 	ld	a, c
@@ -33506,13 +33506,13 @@ SeqPart_VelocityCurveCalc_Skip18:
 SeqPart_VelocityCurveCalc_Join2:
 	extz	de
 	lda	xbc, (SeqPart_VelCurveData_Table_5:24)
-	ld	(9792), (xbc+de)
+	ld	(SEQ_QTZ_ZONE_EDGE_A), (xbc+de)
 	ld	xbc, SeqPart_QtzGrid16_ZoneStarts
-	ld	(9794), (xbc+de)
+	ld	(SEQ_QTZ_ZONE_EDGE_B), (xbc+de)
 	jrl	SeqPart_VelocityCurveCalc_Join5
 
 SeqPart_VelRangeToZone:
-	ld a, (9784:16)
+	ld a, (SEQ_QTZ_TICK:16)
 	cp a, 4:i3
 	jr nc, SeqPart_VelZone1
 	ld e, 0x0:opc
@@ -33587,11 +33587,11 @@ SeqPart_VelZone11:
 SeqPart_VelZoneLookup:
 	extz de
 	lda xbc, (SeqPart_VelZoneLookup_Table:24)
-	ld	(0x2640:16), (xbc+de)
+	ld	(SEQ_QTZ_ZONE_EDGE_A:16), (xbc+de)
 	ld xbc, SeqPart_VelZoneLookup_Table_2
-	ld	(0x2642:16), (xbc+de)
+	ld	(SEQ_QTZ_ZONE_EDGE_B:16), (xbc+de)
 SeqPart_VelocityCurveCalc_Join5:
-	ld l, (9792:16)
+	ld l, (SEQ_QTZ_ZONE_EDGE_A:16)
 	ld c, (9786:16)
 	ld e, c
 	cp c, 0x7f
@@ -33600,7 +33600,7 @@ SeqPart_VelocityCurveCalc_Join5:
 
 SeqPart_VelCalcSubtract:
 	sub l, e
-	ld a, (9730:16)
+	ld a, (SQEDT_QTZ_WINDOW:16)
 	ld e, a
 	cp a, 0:i3
 	jr ge, SeqPart_VelCalcMultiply
@@ -33643,9 +33643,9 @@ SeqPart_VelExprEdit:
 	lda xbc, (Display_FontPalette_Table:24)
 	ld	xwa, (xbc+hl)
 	ld (xsp + 4), xwa
-	cp (9728:16), 0
+	cp (SQEDT_QTZ_STRENGTH:16), 0
 	jrl z, SeqPart_VelExprFinalExit
-	cp (9730:16), 0
+	cp (SQEDT_QTZ_WINDOW:16), 0
 	jrl z, SeqPart_VelExprFinalExit
 	call SeqVoice_FindDrumPartIndex
 	ldmm16 0x287f, SEQ_OP_FROM
@@ -33725,25 +33725,25 @@ SeqPart_VelExprClamp:
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SeqPart_VelExprFinalExit
 	call SeqData_ReadNextByte
-	ld (9784:16), l
+	ld (SEQ_QTZ_TICK:16), l
 	extz hl
 	ld xwa, (xsp + 4)
 	ld	(0x263a:16), (xwa+hl)
-	ld a, (9730:16)
+	ld a, (SQEDT_QTZ_WINDOW:16)
 	cp a, 0x64
 	jr z, SeqPart_VelExprContinue
 	cp a, 0x9c
 	jr z, SeqPart_VelExprContinue
 	calr SeqPart_VelocityCurveCalc
-	ld e, (9730:16)
+	ld e, (SQEDT_QTZ_WINDOW:16)
 	ld a, (9786:16)
-	ld c, (9784:16)
+	ld c, (SEQ_QTZ_TICK:16)
 	bit 7, e
 	jrl nz, SeqPart_VelExprError
 	ld e, a
 	cp a, 0:i3
 	jr nz, SeqPart_VelExprWrite
-	ld a, (9784:16)
+	ld a, (SEQ_QTZ_TICK:16)
 	cp a, (9790:16)
 	jr ule, SeqPart_VelExprContinue
 	call SeqData_AdvancePosition
@@ -33754,7 +33754,7 @@ SeqPart_VelExprClamp:
 SeqPart_VelExprWrite:
 	cp e, 0x7f
 	jr nz, SeqPart_VelExprSkip
-	ld a, (9784:16)
+	ld a, (SEQ_QTZ_TICK:16)
 	cp a, (9788:16)
 	jr nc, SeqPart_VelExprContinue
 	call SeqData_AdvancePosition
@@ -33779,7 +33779,7 @@ SeqPart_VelExprContinue:
 	ld e, (9786:16)
 	ld b, e
 	ld l, e
-	ld c, (9728:16)
+	ld c, (SQEDT_QTZ_STRENGTH:16)
 	cp c, 0x64
 	jrl z, SeqPart_VelExprPopReturn
 	cp e, 0x7f
@@ -33787,7 +33787,7 @@ SeqPart_VelExprContinue:
 	ld b, 0x60:opc
 
 SeqPart_VelExprBoundary:
-	ld l, (9784:16)
+	ld l, (SEQ_QTZ_TICK:16)
 	cp l, b
 	jr nc, SeqPart_VelExprComplete
 	sub b, l
@@ -33798,7 +33798,7 @@ SeqPart_VelExprError:
 	ld e, a
 	cp a, 0:i3
 	jr nz, SeqPart_VelExprReturn
-	ld a, (9784:16)
+	ld a, (SEQ_QTZ_TICK:16)
 	cp a, (9790:16)
 	jr nc, SeqPart_VelExprContinue
 	call SeqData_AdvancePosition
@@ -33809,7 +33809,7 @@ SeqPart_VelExprError:
 SeqPart_VelExprReturn:
 	cp e, 0x7f
 	jr nz, SeqPart_VelExprFinish
-	ld a, (9784:16)
+	ld a, (SEQ_QTZ_TICK:16)
 	cp a, (9788:16)
 	jr ule, SeqPart_VelExprContinue
 	call SeqData_AdvancePosition
