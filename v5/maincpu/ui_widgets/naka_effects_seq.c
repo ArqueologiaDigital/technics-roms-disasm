@@ -577,10 +577,8 @@ typedef struct __attribute__((packed)) {
     naka_cls_SngSel_t PunchRecord_SngSel;
     /* element 13 of Viewable slot 0x87 "MetPunchSw": AcFuncToggle (class id 0x01600044) */
     naka_cls_AcFuncToggle_t MetPunchSw;
-    uint8_t field_1f54;
-    char a4OFF_str[6];
-    uint16_t field_1f5b;
-    char a4ON_str[5];
+    char MetPunchSw_StrOff[8];   /* MetPunchSw's stroff text; its '~' (0x7E) prefix is that of other widget texts too ("~98") */
+    char MetPunchSw_StrOn[6];    /* MetPunchSw's stron text */
     /* element 14 of Viewable slot 0x87 "PunchInOutSw": AcFuncToggle (class id 0x01600044) */
     naka_cls_AcFuncToggle_t PunchInOutSw;
     char PunchInOutSw_stroff[10];
@@ -6775,20 +6773,16 @@ const naka_effects_seq_t naka_effects_seq_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(271, 34, 41, 18),
         .font = idCHARA1,
-        .stron = 0x00E29F00,
-        .stroff = SELF(field_1f54),
+        .stron = SELF(MetPunchSw_StrOn),
+        .stroff = SELF(MetPunchSw_StrOff),
         .onoff = RAM_MetPunchSw_OnOff,
         .editsw = ES_Right1,
         .func = NAKA_APFUNC_MetroOnOffFunc,
     },
 
-    .field_1f54 = 0x7E,
+    .MetPunchSw_StrOff = "~a4OFF\0\xFF",
 
-    .a4OFF_str = "a4OFF",
-
-    .field_1f5b = 0x7EFF,
-
-    .a4ON_str = ALIGNED_STRING("a4ON"),
+    .MetPunchSw_StrOn = "~a4ON",
 
     .PunchInOutSw = {
         .class_ = NAKA_CLASS(AcFuncToggle),
