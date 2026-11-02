@@ -2,9 +2,10 @@
 
 Items (rows of `notes/open-items/REGISTER.md`):
 
-| id         | title                                            | outcome | section                                    |
-|------------|--------------------------------------------------|---------|--------------------------------------------|
-| N-29e0f8b4 | KN5000 audio: the EQUALIZING sections' responses | CLOSED  | [1](#1-n-29e0f8b4-the-equalizing-sections) |
+| id         | title                                            | outcome | section                                                                      |
+|------------|--------------------------------------------------|---------|------------------------------------------------------------------------------|
+| N-29e0f8b4 | KN5000 audio: the EQUALIZING sections' responses | CLOSED  | [1](#1-n-29e0f8b4-the-equalizing-sections)                                   |
+| N-1fe9a5df | Scoop unknowns: the glyph for the 0x09s          | CLOSED  | [2](#2-n-1fe9a5df-the-glyph-drawn-for-the-0x09-bytes-of-tbl_accomppartnames) |
 
 Probes: `probes/` (README there says per script what it answers and how to run it).
 
@@ -169,3 +170,79 @@ and add after the table:
 > measurement exists.  Computed by `notes/open6-kn5000-d/misc/probes/faj_eq_response.py` (technics-roms-disasm)
 > from service manual p. II-25.
 
+
+---
+
+## 2. N-1fe9a5df: the glyph drawn for the 0x09 bytes of Tbl_AccompPartNames
+
+The last of the six Scoop unknowns (`notes/scoop-lane-2026-09-25/README.md`, "What remains"; the other
+five were closed by lane kn5000-a on 2026-10-31).  Probe: `probes/accomp_part_popup_glyph.py`, output
+`probes/accomp_part_popup_glyph.txt` (reads the six program ROMs v5-v10 and the table-data ROM; nothing
+emulated).
+
+### The draw path
+
+1. `ParamPopup_AccompPart` (v10 0xEFFF88) clears the pop-up line (`DisplayStr_ClearRegion`: 27 spaces from
+   RAM 0x0ECD), copies 16 bytes from `Tbl_AccompPartNames + 16 * (A >> 5)` to 0x0ECF, writes `Str_OffAccomp`
+   ("OFF") to 0x0EDC when `(A & W) == 0`, and marks region 3 dirty.
+2. `Display_RedrawMainContent` draws `SqStep_PopupLineField` (v10 0xE0BD89) through
+   `Scoop_CurveUpdate_SegmentEnd`: the record's bytes are `02 0f 9b 11 00 00 06 ca 0e 00 00 1e 00 21 1c`, i.e.
+   style 6 (+6), buffer 0x00000ECA (+7), 30 characters (+11), cell 0x1C21 = x 8, y 180 (+13).
+3. `Scoop_CurveUpdate_SegmentEnd` copies the 30 bytes into its frame **through `Scoop_CharGlyphMap`**
+   (`lda xhl, (Scoop_CharGlyphMap:24) / ld a, (xhl+wa)`), terminates the copy with 0, and draws it with
+   the font `TextStyle_FontTable[6 & 0x3f]`.
+
+### The answer
+
+- `Scoop_CharGlyphMap[0x09]` = **0x20**: every code 0x01-0x0F maps to 0x20 (0x00 stays 0, the
+  terminator; 0x10-0x1F map to UI symbols).  So DrawString never sees 0x09.
+- `TextStyle_FontTable[6]` = **font 0** (8x16 fixed, glyph bank 0x945CB0 in the table-data ROM), and its
+  glyph 0x20 is 16 zero bytes, **a blank cell, the same glyph as the space**.
+- Identical in v5, v6, v7, v8, v9 and v10 (the probe checks each image; the table and map bytes are the same).
+
+So the 0x09 bytes draw as **spaces**.  Byte 0x09 is ASCII TAB; [INFERENCE] the strings were typed with tab
+characters (leading indentation of "ACCOMP PART1 ON" and "ACCOMP PART3 ON"), and the renderer's map turns
+every control code into a blank, so a tab costs exactly one blank cell.  Nothing in the code treats 0x09
+specially (no compare with 9 on this path).
+
+### What the pop-up actually shows
+
+The reader's 16-byte stride does not match the table: the three visible strings start at offsets 2, 18
+and 36, never at a multiple of 16, and the reader's "OFF" overwrite at +13 is placed for a chunk that
+starts with "ACCOMP PART" (as in its siblings: `ParamPopup_ApcMemory` writes "OFF" at +11 of
+"APC MEMORY ON ", `ParamPopup_DynamicAccomp` at +15 of "DYNAMIC ACCOMP ON").  The caller
+(`VoiceSlot_StatusRet`, sequencer control event `0x48` sub-code 3, on the step-record screen) calls it
+only when bits 7-5 of the flag byte are not all 0, so A >> 5 is 1..7.  The probe replays it:
+
+| A >> 5 | flag bits | parts on (`A & W` != 0) | parts off (`A & W` == 0) |
+|--------|-----------|-------------------------|--------------------------|
+| 1      | 00100000  | `N ACCOMP PART2 O`      | `N ACCOMP PARTOFF`       |
+| 2      | 01000000  | `N   ACCOMP PART3`      | `N   ACCOMP PAOFF`       |
+| 3      | 01100000  | ` ON OFF` + code bytes  | ` ON OFF` + code + `OFF` |
+| 4-7    | 1xx00000  | program-code bytes      | code bytes + `OFF`       |
+
+(The two blanks after "N" in A = 2 are the 0x09 0x09.)  [INFERENCE] This is a firmware bug, the same in
+every version v5-v10: no reachable A yields "ACCOMP PARTn ON/OFF".  The 0x09s are part of the misalignment
+(without them the strings would sit at 0, 16, 32, and A = 1, 2 would at least show PART2 and PART3 whole),
+but even then part 1 would need A = 0, which the caller excludes.  Which flag bit stands for which part is
+not settled here (the event's writer was not traced); the table above covers every value.  Seeing it on an
+instrument or in MAME needs a sequencer song with that control event, opened on the step-record screen.
+
+### Website page draft
+
+Target: `display-subsystem.md`, section "### Character Encoding", after the paragraph "**Character → glyph
+map:**".  Add:
+
+> Codes 0x01-0x0F map to 0x20, so every control character draws as a blank cell, and 0x00 stays 0 and ends
+> the string.  The step-record screen's own copy of the map (`Scoop_CharGlyphMap`, 0xE0CB1A in v10,
+> byte-identical) is applied by `Scoop_CurveUpdate_SegmentEnd` to its pop-up line (RAM 0x0ECA, 30 characters,
+> style 6 = font 0, at x 8, y 180).  That is why the two pairs of TAB bytes (0x09) in `Tbl_AccompPartNames`
+> draw as spaces.
+>
+> **A firmware bug in the ACCOMP PART pop-up.**  `ParamPopup_AccompPart` copies 16 bytes from
+> `Tbl_AccompPartNames + 16 × (flags >> 5)` and overwrites "ON " at +13 with "OFF", but the table's three
+> strings start at offsets 2, 18 and 36 (0x09 0x09 "ACCOMP PART1 ON ACCOMP PART2 ON " 0x09 0x09 "ACCOMP PART3 ON ").
+> No flag value the caller allows (1-7) lands on a string: the line reads `N ACCOMP PART2 O`,
+> `N ACCOMP PARTOFF`, `N   ACCOMP PART3` and so on, or bytes of program code past the table.  The same in
+> v5-v10.  *[INFERENCE]* from the code and the ROM bytes (probe `notes/open6-kn5000-d/misc/probes/accomp_part_popup_glyph.py`
+> in technics-roms-disasm); not yet seen on an instrument.
