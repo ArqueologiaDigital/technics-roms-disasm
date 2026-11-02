@@ -13,6 +13,8 @@
 PYTHON   ?= python3
 TOOLS    := ../kn7000/tools
 ASM      := $(PYTHON) $(TOOLS)/kn7asm.py
+# the MN103002A on-chip registers and board I/O latches, by name (shared by every MN10300 tree)
+SFR_INC  := ../kn7000/src/include/mn103002a_sfr.inc
 
 # The Technics/Panasonic customer-service mirror beside this tree (private, not in
 # git). sx6-113.zip holds the self-extracting floppy image of the board update.
@@ -120,11 +122,11 @@ symbols-check:
 	 [ $$ok -eq 1 ]
 
 # ---- regenerate src/program.s (needs unidasm) ------------------------------------
-program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym src/symbols.inc baserom/$(ROM)
+program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym src/symbols.inc $(SFR_INC) baserom/$(ROM)
 	$(PYTHON) $(TOOLS)/gen_image_s.py --rom baserom/$(ROM) --base $(BASE) $(CODE) $(TYPED) $(DATA) \
 	    --sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym $(FN_SYM) --inc src/symbols.inc \
 	    --labels-inc src/labels.inc \
-	    --out src/program.s --unidasm $(UNIDASM) --stats notes/conversion-stats.txt $(IDS) \
+	    --sfr-inc $(SFR_INC) --out src/program.s --unidasm $(UNIDASM) --stats notes/conversion-stats.txt $(IDS) \
 	    --title 'KN6000/KN6500 expansion-board XAPR plug-in (sx6-113 update, EXTAPR.SLD) - byte-exact.' \
 	    --title 'Panasonic MN10300, linked at 0x97800000. See README.md.'
 
