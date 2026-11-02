@@ -375,3 +375,275 @@ Each row's plan and size are in `REGISTER.md` ("Next wave" and the area tables).
 
 - S `N-3a365d90` CLAUDE.md v6 / v5 verbatim figures and the Mines LLVM-workarounds section are stale
 
+
+## 2026-11-02 wave 6 (lane open7/register-refresh2)
+
+The register brought up to date with what the wave-6 lanes (kn5000-c, kn5000-d, misc2, mn10300-data,
+mn10300-names) recorded in their notes; their outcome blocks were already applied (`outcomes-2026-11-02/`,
+de0ad164e).  No new research: every status below is what a lane note says.  The edit scripts and this section's
+generator are in `~/compartilhado/research-scratch`, `sessions/2026-11-02_tmp/`: `refresh_triage2.py` (moves,
+new rows, dates, hand-listed rows), `refresh_opaque_titles.py`, `retitle.py` and `readme_section2.py`.
+
+| status                | REGISTER.md as committed at de0ad164e | script at de0ad164e (full run) | after   |
+|-----------------------|---------------------------------------|--------------------------------|---------|
+| RESOLVED              | 405                                   | 486                            | 499     |
+| ACTIONABLE            | 178                                   | 75                             | 108     |
+| BLOCKED               | 75                                    | 78                             | 88      |
+| UNTRIAGED             | 0                                     | 81                             | 0       |
+| total                 | 658                                   | 720                            | 695     |
+| orphan rows, in error | -                                     | 108, 19                        | 64, 0   |
+
+The REGISTER.md committed at de0ad164e still carries a220b62f2's counts.  The brief's 81 untriaged / 107 orphans
+/ 19 in error were a `--no-census` run on the old opaque cache (62 groups, 15,929 declarations); the full run
+counts 61 groups and 7,482 declarations, and one more orphan, `O-wsa1-floppy-unknown-dump-66b9a5`, which lane
+misc2 typed (c549279d2).  What changed:
+
+- **52 rows moved** to the new id of their rewritten item (status and evidence kept; the old id is in the row's
+  `was`).  All 19 in-error rows were among them: the 13 ACTIONABLE and 6 BLOCKED rows whose items the lanes
+  reworded (for example N-be2b9da5 -> N-391deec6, N-c1322a24 -> N-4a1e0fc5, and the two IC18 boot.s TODO groups
+  `T-kn7000-todo-memory` -> `-bus-controller`, `-only-the` -> `-the-older`).  No row was a duplicate, so none
+  was dropped.  References to the old ids in other rows were rewritten.
+- **One status change on a move**: N-f3294592 -> N-02383279 (KN6000) and N-9eca4678 -> N-a6b3dca1 (KN6500) were
+  RESOLVED: lane mn10300-names closed their sibling-to-sibling porting half (019e7a8a1, 3d870c7b5, 397b30e0d).
+  The rewritten note items are the other half ("What is left is per-subsystem naming"), which the lane's own
+  outcome keeps ACTIONABLE for the KN2400's twin (N-be2b9da5 -> N-391deec6).  Both are ACTIONABLE L now, with
+  `was_status` RESOLVED and the commits in the plan.
+- **14 new rows** for new open items: the IC18 rhythm note's three "Still open" questions, the
+  FilePriorityFunc / SdcPanelSwAsFunc name, kn5000-c's two "What remains" items, kn5000-d's five accompaniment
+  and three WSA1R items.  **15 answer rows** RESOLVED with their lane's commits: the collector reads them as
+  items because their section heading names an open item (the four DSP host-port names table in
+  `kn7000/notes/older-program-builds.md`; eleven rows of the two tables of `notes/kn5000-c-2026-11-02/README.md`,
+  whose heading names `T-kn5000-v6-todo-port`).
+- **8 hand-listed rows** (L-): lane mn10300-names wrote open items under "Found on the way, not fixed here" and
+  "Left for lane mn10300-data (files this lane did not edit)" in `kn7000/notes/mn10300-names/README.md`, which
+  `OPEN_HEADING` does not match, and an owner decision inside the answered "Recording boundaries" item of
+  `kn7000/notes/wave-roms-2026-10-29.md`.  The four "left for lane mn10300-data" changes are not in
+  `kn7000/tools/gen_data_s.py` at de0ad164e, so they are ACTIONABLE.  Other lanes' notes were not searched for
+  such sections (no new research).
+- **Dates**: `apply_outcomes.py` writes "2026-10-31" into every row it fills; the 119 wave-6 rows now say
+  2026-11-02.  The script itself is not changed here (notes only).
+- **O- rows**: 45 titles quote the census's current piece and byte counts, and the 58 ACTIONABLE MN10300 opaque
+  groups' plans point at lane mn10300-data's account of what stays opaque
+  (`kn7000/notes/mn10300-data/README.md` section 4).  Five ACTIONABLE titles carry the lanes' new counts
+  (N-45db7885, N-d8cf1242, the two TODO(port) groups, N-f67b155c).
+- **The 53 orphan RESOLVED rows that stay** (64 orphans less the 11 L- rows) are the 35 of the previous refresh
+  plus 18 items that left their source once resolved: 17 TODO-marker groups whose markers lane mn10300-names
+  removed and the opaque group `O-wsa1-floppy-unknown-dump-66b9a5`.  `--check` exits 0.
+- **Owner decisions**: four now, all BLOCKED rows (listed below): the WSA1R shared kernel (N-8c52a3ed, unchanged),
+  the WSA1R 0-for-O label spelling (N-b796721c, lane kn5000-d), the IC18 rhythm source size and `NCR_NAMES`
+  (L-mn10300-names-ncr-names, lane mn10300-names) and, from the same lane's wave-ROM note, whether to merge the
+  KN7000 wave WAVs one per recording (L-mn10300-names-wav-merge).
+
+### BLOCKED, by blocker (88 items)
+
+**Undumped chips and images** (22)
+
+- KN5000 wave ROMs IC306 (QSIGT3C32A01), IC304, IC305:
+  - `N-2c574534` Format of the 71 IC307 waves with no KN7000 counterpart is inferred
+  - `N-612f98d6` IC307: the 74 items without a rate, the P/Q words and loops; classes 0-3
+  - `N-b77afdc6` Where IC307 loops are (likely the X chip)
+  - `kn5000-d38` Waveform ROM (IC304-IC307) documentation
+  - `kn5000-mrx` Waveform samples as WAV: done for IC307; sample rates, loops, root notes open
+- KN5000 sub-CPU boot ROM IC30, a redump (the image is BAD_DUMP):
+  - `kn5000-a9y` Which chip decodes the sub CPU's 0x130000 register block
+  - `kn5000-1oy` DSP effects algorithms: finish the uPD6383 decode and the reverb micro-topology
+  - `kn5000-b0h` Sub-CPU emulation accuracy: timing, DMA, interrupt, audio-sync requirements
+- KN5000 main program v1-v4:
+  - `N-424fcc19` Which firmware wrote the 43-record panel blocks
+  - `T-floppy-kn5000-todo-the-older` KN5000 .LSW: panel records of an older firmware revision (ptlv_raw)
+- SX-KN3000 program ROM:
+  - `O-kn5000-floppy-unknown-dump-bb12e1` KN5000 floppy ca5000r 03FOLKS2.TM: a KN3000 SOUND RAM image, not decoded
+- SX-KN7000 program builds older than 893 (v1.0-v1.2):
+  - `N-74abdb18` Writer of the 76 01ctmini settings without 941's part tails
+- SX-KN7000 v1.4 update disk 1 (a lost file):
+  - `N-94416e15` v1.4 program update disk 1 (kn7-14_1.exe -> JK1.SLD, build 929) lost
+- SX-KN7000 IC19 from a later production run:
+  - `N-b8c1448a` Whether IC19 (picture ROM) differs between production runs
+- SX-KN6000 program older than v7.1 (for N-611dc399, or the KN6000 table flash):
+  - `N-74a16d86` Writer of the KN6000 bank's settings with part 3 all 0xFF
+  - `N-611dc399` KN6000: which path changes a sound without recomputing the .TM checksum
+- SX-KN1500 IC15 program ROM, a good redump:
+  - `N-054f83bd` SX-KN1500 IC15 program dump is half blank (its whole boot blocker)
+- SX-KN2400/KN2600 IC12/IC13 program flash, the 0x48000000 half:
+  - `N-1adf5657` KN2400/KN2600: the 4 MiB half of the IC12/IC13 program-flash pair at 0x48000000
+- SX-WSA1R prom_b, a second build (SX-WSA1 keyboard or another WSA1R version):
+  - `N-0eab77c6` prom_b orphan run 3: the array's 3-slot tail (39 slots vs 0xFE2F8C)
+  - `N-2566c304` prom_b orphan tables: the vestigial-index reading needs a second build
+- SX-WSA1 domestic (Japanese) program ROMs or disk:
+  - `N-25f9f42b` Fonts: the Japanese text behind the private kanji encoding
+- SX-WSA1R panel MCU M37471M2196S mask ROM:
+  - `N-735e7eb4` Gap P: the panel's reply to the seven SC1 commands (commands mapped)
+
+**Hardware access, measurements and datasheets** (34)
+
+- a KN5000 (board continuity, line-out recordings, captures):
+  - `N-457cb583` Does the KN5000 board cross IC14 A19/A21, or is the dump wrong?
+  - `N-40b34f27` KN5000 audio: signal levels (line out, headphones)
+  - `N-dab5bb4e` KN5000 audio: the LINE OUT and AUX IN nets are inference
+  - `N-8cd6477f` 8-bit gain law fitted in emulation, not derived
+  - `N-13b60687` The 8-bit gain law (code field high bits, REC_END code)
+  - `kn5000-a8s` Establish emulation validation procedures with real-hardware baselines
+  - `N-34d2ff78` Accompaniment: fast-path type-7 velocity row differs; firmware bug?
+- a KN5000 at EFFECT OUT (an impulse response on ROOM REVERB 1, recordings); for kn5000-ax7's bit-11 words also another uPD6383 host's firmware dump or a chip PC trace:
+  - `kn5000-ax7` uPD6383 decode: the R1 cascade (bit-11 alternate lo12, f31 3..7, ACT 0x0B, classes 0/1/4)
+  - `kn5000-i2m` Effects DSP: the reverb micro-topology
+- an HD-AE5000 board or its service manual:
+  - `kn5000-mzz` HD-AE5000 interface cable (W3 / HSQ OPTION) pinout
+- a KN7000 (the owner's unit; for StatusLedOff the factory jig on CN106 or a trace of CN106):
+  - `N-9c325eeb` Which chip (IC18 ROM or IC20 flash) sits at the owner's KN7000 site
+  - `N-9d50b49c` Whether user DRAM 0x50180000..0x50297FFF survives power-off ~80 min
+  - `N-cf2facde` Which value TgStrapProbe returns on real hardware (slide-show pool size)
+  - `T-kn7000-todo-which-device` KN7000 IC18 boot: which device the update status lamps are (StatusLedOff)
+- the KN7000 tone generator's datasheet (for the split list, or a line-out recording of two keys an octave apart):
+  - `N-4a4cc887` Wave directory's split list: what it is answered; what the value does
+  - `N-64da2b9e` P bit 12 (always set): meaning unknown
+- the MN103002A LSI register manual:
+  - `T-kn7000-todo-bus-controller` KN7000 IC18 boot: bus-controller register 0x32000010 not identified
+  - `T-kn7000-todo-the-older` KN7000 IC18 boot: 0x34004002, written by the older link and by 941's ResetEntry
+- an SX-WSA1R (in storage abroad) or IC4 TC183C230002's datasheet:
+  - `N-50026418` Gap I: key-scan status value 2 (the reader of RAM 0x008517 is answered)
+  - `N-e4cf98bf` Gap H: what the 64 write pairs to the key-scan port 0x108000 configure
+  - `N-e4995227` Gap A: what each 0x0010C000 tone-generator register does (synthesis)
+  - `N-f1964717` prom_c 0x0010C000 registers 0x900..0xA40: second / third envelope, meaning unstated
+  - `N-878b8e86` Gap O: which panel button and LED is which bit
+  - `T-wsa1-todo-no-template` WSA1R key codes 0x1A/0x1C/0x1D/0x1F: no panel template emits them
+  - `T-wsa1-todo-nothing-on` WSA1R key code 0x0E: nothing on the panel raises it
+- an SX-WSA1R, for the L7A1429 (no datasheet):
+  - `N-29d37587` L7A1429: absolute scale of register chan+0x00C0 (POSITION)
+  - `N-456269f6` L7A1429: register 0x0800 (0x1100 once at power-on) global or block 0x20 ch 0, and its role
+  - `N-575b5b39` L7A1429: what Curve_Muting_Cutoff_Q13_128 is (role of the Q13 companion)
+  - `N-a9375486` L7A1429: which rate Curve_Fitting_Exp2Decay_256 is applied at
+  - `N-da75dd11` L7A1429: what RESO SCALE sounds like
+  - `N-ebc02f57` L7A1429: coupled-waveguide reading of Pack104_SolveCoupledDetune (STRONG, not PROVEN)
+  - `N-e2c3f78e` L7A1429: inputs of the six solver calls the ROM leaves undetermined (element 3)
+- the SX-WSA1 keyboard (its service manual or the instrument):
+  - `N-8e553797` What each of CPU 1's six analogue channels is, on the variant that reads them
+- the uPD6383GF instruction set (no datasheet exists):
+  - `N-805ef6f1` DSP: let the upd6383 execute (ISA not measured-decoded); audio output
+
+**Other repositories** (23)
+
+- MAME upstream (mamedev/mame) and the kn7000_mame overlay:
+  - `N-ef8127ae` tmp95c061 defect 1: prescaler taps fc/128.. instead of the databook 8/32/128/2048
+  - `N-540fcf33` tmp95c061 defect 2: 16-bit up-counters never counted, INTTR4-7 never raised
+  - `N-02ec6f12` tmp95c061 defect 3: T4MOD/T5MOD CLE bit ignored
+  - `N-5c311c03` tmp95c061 defect 4: the two 16-bit comparators chained with else-if
+  - `N-f9c64015` tmp95c061 defect 5: TRUN b4/b5 Stop & Clear cleared the wrong slots
+  - `N-afd95026` tmp95c061 defect 6: an 8-bit timer match did not set m_check_irqs
+  - `N-ee58a28c` tmp95c061 8-bit prescaler taps and 16-bit timers 4-7 (overlay fix, not upstream)
+  - `N-6007ef91` WSA1R driver: the three D6383GF DSPs (IC5, IC6, IC30) have no MAME device
+  - `N-88605105` WSA1R: a upd6383gf device would only make the DSP traffic inspectable (optional)
+  - `N-b80b5580` WSA1R: no uPD6383GF device, so the decoded CPU 2 DSP upload goes nowhere
+  - `N-b5f75e0a` MAME has no uPD72070 device; the WSA1R driver substitutes upd765a
+  - `N-d35c2767` upd6383 device reads I-RAM word 395 (>383) every sample; widen iram_map for captures
+  - `N-4a1e0fc5` Record a CONTROL-track session in MAME, save, census, replay
+  - `N-ad82330c` Blocks whose pointer a routine stores (SetApTimer, PutM3Em, _tr_init) stay rows
+  - `T-mame_driver-todo-configuration-helpers` mame_driver tmp96c141.h: upstream MAME's 'configuration helpers' TODO
+  - `kn5000-0eo` MAME: ghost panel events after boot (voice dialog, transpose B)
+  - `kn5000-0o6` MAME: emulate the audio path from the sub-CPU/tone-generator findings
+  - `kn5000-1vz` MAME input/control subsystem milestone (epic)
+  - `kn5000-a0k` MAME storage subsystem milestone (epic)
+  - `kn5000-qhm` MAME HLE device for the control panel: finish buttons/LEDs/encoders/analog
+  - `kn5000-y18` MAME audio subsystem milestone (epic)
+  - `kn5000-dbi` Phase 1 completion: all MAME blockers resolved (epic)
+- the LLVM TLCS-900 backend (../llvm-project):
+  - `N-33949aba` No LLVM spelling for ldcf/stcf A,RH3 (still .byte)
+
+**Owner decisions** (4)
+
+- WSA1R join/split phase A3: may the shared kernel carry per-CPU .if/.else and take over the KN5000 sub-CPU kernel's text? (wsa1/notes/HANDOFF-join-split-kernel.md):
+  - `N-8c52a3ed` Join/split plan: phases A3, A4 (KN5000 half) and B3 after the shared kernel
+- WSA1R label names that copy the ROM's 0-for-O caption spelling (MidiFileL0ad_*, L0adSingleS0und, DL_*F0rmat*): keep, or normalise tree-wide? (lane kn5000-d, notes/open6-kn5000-d/wsa1/README.md):
+  - `N-b796721c` WSA1R: keep the ROM's 0-for-O caption spelling in label names (MidiFileL0ad_*)?
+- IC18 rhythm source 14.4 -> 21.1 MB because every note spells its conversion-rule name: keep, or empty NCR_NAMES in tools/gen_ic18_rhythm_s.py (about -5.6 MB)? (lane mn10300-names, kn7000/notes/mn10300-names/README.md):
+  - `L-mn10300-names-ncr-names` IC18 rhythm source 21.1 MB: keep the conversion-rule names or empty NCR_NAMES (-5.6 MB)?
+- KN7000 wave WAVs: one WAV per recording (alternate starts as cue points) and run-outs trimmed, about 100 and 850 files? (lane mn10300-names, kn7000/notes/wave-roms-2026-10-29.md):
+  - `L-mn10300-names-wav-merge` KN7000 wave WAVs: one per recording with cue points, run-outs trimmed?
+
+**Material nobody holds (no image, file or record has it)** (5)
+
+- a CUSTOM bank saved with user effects or SOUND EDIT sounds:
+  - `N-00e19224` IC21 0x42-byte dependency records and 0x2C8 SOUND EDIT records: strides only
+- another factory custom-data set (the residue's source records):
+  - `N-e40c8c93` KN7000 factory CUSTOM banks: the 157 opaque residue bytes
+  - `O-kn7000-customdata-unknown-dump-25be5c` KN7000 factory CUSTOM banks: 157 B of residue splinters no record holds
+- Technics' factory authoring tool or records:
+  - `N-6558bfa7` Where the factory CUSTOM sets were made (one tool built them in sequence)
+- who typed the respelled one-touch names:
+  - `N-46580c3b` Who typed the respelled one-touch names (Metallic Dance ...) into the KN6000 file
+
+### ACTIONABLE, by area (108 items)
+
+Each row's plan and size are in `REGISTER.md` ("Next wave" and the area tables).  Sizes: S / M / L.
+
+**KN5000** (13)
+
+- S `N-4d5d5317` Accompaniment: drum parts' sounding-note tables 0x3094 / 0x30C4, layout
+- S `N-5f302102` Accompaniment: 0x3283 bits 0/1 and 0x3328's other writers
+- S `N-870a801e` Accompaniment: what sets CHORD_FLAGS / 0x32D7 bit 0
+- M `N-1d99fc9b` Accompaniment: Rhythm_TransposeWithMod, a second converter; its caller
+- M `N-2a3d2074` KN5000 v6 / v5: 212 / 220 raw bytes in the C divergence json
+- M `N-2f640c1d` 65 NAKA Viewable elements have no typed record (straddling members, DRAM, string blocks)
+- M `N-45db7885` 9 numeric ROM addresses left in the NAKA C (11 in v6/v5; was 73 / 75)
+- M `N-7c99f0f2` 81 titles have no menu path (most TITLE_SE* pages)
+- L `N-51b2e19c` Flag bytes with most numeric uses (audio config, seq play state, accompaniment, SE flags)
+- L `N-92c1dcce` KN5000 v6 / v5: the TODO(port) .byte rows, 3,403 / 4,284 B
+- L `N-d8cf1242` 523 field_XX members in NAKA C (was 525; 291 in naka_sequencer_channels.c)
+- L `T-kn5000-v5-todo-port` KN5000 v5: 130 TODO(port) markers, 4,284 B of .byte rows with no v6 line
+- L `T-kn5000-v6-todo-port` KN5000 v6: 98 TODO(port) markers, 3,403 B of .byte rows with no v7 line
+
+**WSA1R** (2)
+
+- S `N-1e4a337c` WSA1R: screen 0x52 and (0x21E8) bit 2 behind sub_FF657B's eight-press counter
+- S `N-813b5071` WSA1R: the request 0x0201 that YES posts after a format
+
+**KN7000** (48)
+
+- S `L-mn10300-names-b935-initial-sp` KN7000 935: INITIAL_SP ported by vote (0x50021CF8), the reset loads 0x50021CCC
+- S `L-mn10300-names-bitcount-inference` gen_data_s.py: the bitmap bit-count comment still says [INFERENCE]
+- S `L-mn10300-names-data-own-syms` gen_data_s.py: 935 / 893 data labels do not use the builds' own .sym files
+- S `L-mn10300-names-port-entry` port_names_by_code.py misses names 941 gives the call entry, not the prologue
+- S `L-mn10300-names-sd-frame-labels` KN7000 941: SdReadBlockCmd_* / func_484ABA68_Var* data labels to rename
+- S `N-fb88572c` Invented names of 6,309 GUI objects with empty ResName are unstable
+- M `N-027de254` Records whose pointer fields point into their own tail (switch descriptors)
+- M `N-044cdbc6` Blocks handed only to memcpy / strcpy / LibStrlen stay rows
+- M `N-44e56012` What keeps the keyboard silent during the whole PICTURE LOAD screen
+- M `N-4666109a` Pad +0x13..+0x15, TPAD +0x14/+0x15, TCMP variation head bytes: no reader
+- M `N-83177c3d` IC18 rhythm: ToneKeyFind's fallback tone for the ten kit sounds the archive lacks
+- M `N-abdfdef8` Type-4 Technics SysEx 0x484C1B72: 47 descriptors; their payload formats
+- M `N-c052c027` IC18 rhythm: what each NoteConvRules table does to a key
+- M `N-c6900716` Name the unknown song-record event ids (the ids with no firmware-named caller)
+- M `N-e779328f` IC18 rhythm: part-EQ coefficient register; a variation's bytes +2/+3
+- L `N-2468beef` Fields stay offset-named (f0, p8, x2)
+- L `N-42bc8729` BASEEXT.XAP: 24 of 1,340 indirect calls the static evaluator cannot resolve
+- L `N-99771106` 893's func_ labels and its SD-card code named only where 941 ports (split in four classes)
+- L `N-b8f49b1e` IC21 fields still to trace: m<id> panel fields, voice-record single fields + 0x27-byte header, TCMP/style +0x70/pad bytes, the 24-field part set-up reader
+- L `N-f3c6a3ea` IC21 factory banks: field-level questions (pointer to custom-data-ic21.md)
+- the opaque groups (28): kn7000-b893 7, kn7000-b935 7, kn7000-program 7, kn7000-sp7001 7.  What stays opaque and why, by kind: `kn7000/notes/mn10300-data/README.md` section 4
+
+**MN10300 siblings** (42)
+
+- S `L-mn10300-names-kn2400-titles` KN2400: unregistered titles from TitleNameTable; InitModeTitleTable's default record
+- S `N-61c32961` 29 / 8 bytes per sibling moved from typed tables into reader rows by the new joins
+- S `N-89cedbdb` KN2400 FilePriorityFunc = KN7000 SdcPanelSwAsFunc by body: which name is right
+- M `N-4b34dd8b` Sibling one-touch records: the bytes the PM_* macros keep as hex (mostly named)
+- L `N-02383279` KN6000: 10,098 entries still func_<ADDR> (sibling-to-sibling porting done)
+- L `N-391deec6` KN2400: 11,678 entries still func_<ADDR>
+- L `N-6acf011c` KN6500: the data region's remaining opaque pieces (1,176 / 27,134 B)
+- L `N-8fce01b1` KN6000: 19,019 RAM operands over 2,944 addresses are numbers (I/O named)
+- L `N-a6b3dca1` KN6500: 10,153 entries still func_<ADDR> (sibling-to-sibling porting done)
+- L `N-b3924e48` KN2400: the data region's remaining opaque pieces (1,192 / 27,313 B)
+- L `N-cccf0416` KN6500: 19,055 RAM operands over 2,954 addresses are numbers (I/O named)
+- L `N-dc17693c` KN2400: 22,483 RAM operands over 3,521 addresses are numbers (I/O named)
+- L `N-dff57eb2` KN6000: the data region's remaining opaque pieces (1,145 / 24,654 B)
+- the opaque groups (29): hdsx3 7, kn2400 8, kn6000 7, kn6500 7.  What stays opaque and why, by kind: `kn7000/notes/mn10300-data/README.md` section 4
+
+**floppies** (2)
+
+- M `N-e140c8dc` KN6000 / KN7000 .SQT: 1,768 + 5,270 stale bytes no event order explains
+- M `O-kn6000-floppy-unknown-dump-397763` KN6000 .SQT: 126 x 1,768 B stale cell bytes neither event order explains
+
+**tooling** (1)
+
+- M `N-f67b155c` Name-carrying macros: gen_data_s.py, the one caller left (kn7asm and llvm-mc)
+
