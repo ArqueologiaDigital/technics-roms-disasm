@@ -183,9 +183,14 @@ PROFILES["sp7001plugin"] = dict(rom="baserom/kn7000_table_sp7001.rom", src="src/
 for _m in ("941", "b935", "b893", "sp7001", "kn6000", "kn6500", "kn2400", "hdsx3"):
     PROFILES[_m]["reader_rows"] = True
 # lane mn10300-data: the single rules of the KN7000's `readers_ext` walk the siblings take (data_readers
-# Reader(sib_rules=); each measured alone on the KN6000 and the KN2400, kn7000/notes/mn10300-data/README.md)
-for _m in ("kn6000", "kn6500", "kn2400", "hdsx3"):
-    PROFILES[_m]["sib_rules"] = ("fieldret", "loopslots", "reloadbound", "setlb")
+# Reader(sib_rules=)), each measured alone on the KN6000 and the KN2400 (kn7000/notes/mn10300-data/README.md,
+# section 3): `fieldret` changes nothing in either; `reloadbound` types a little more in both; `loopslots`
+# changes nothing in the KN6000 and turns 4.5 KB of the KN2400's reader rows into records; `setlb` loses
+# 5,877 typed bytes of the KN6000 (func_4C03C193's results, func_4C037CBF's copies) and names two more
+# KN2400 fields.  So each profile takes the rules that lose nothing there.
+for _m in ("kn6000", "kn6500", "hdsx3"):
+    PROFILES[_m]["sib_rules"] = ("reloadbound",)
+PROFILES["kn2400"]["sib_rules"] = ("loopslots", "reloadbound", "setlb")
 # lane callee-walk: a block whose address is passed to a routine is a record of what the routine reads
 # through that argument (data_readers.Reader(callee=): register and stack arguments, arg_layout)
 for _m in ("941", "b935", "b893", "sp7001", "kn6000", "kn6500", "kn2400", "hdsx3"):
@@ -219,12 +224,16 @@ PROFILE = "941"
 #   fx_presets   the KN2400's DSP effect presets (profile `fx_presets`): name, descriptor, parameters, key
 #   table_terminators  the all-ones end word after a typed table whose reader compares with -1
 #   msg_readers  a {key, code} dispatch table is named after the routine that reads its keys
+#   count_notes  a struct array's macro header says where its count comes from when no loop or index check gives it
+#   doubles_text a run of "doubles" mostly of printable words is text: printable_runs() types such runs (>= 32
+#                bytes no instruction reads) as .ascii
+#   table_ptrs   a reader table whose every entry is 0 or a data address is a pointer table (its strings typed)
 #   maps128      the 128 x 64 maps of two-byte entries (`cmp 0x7f` row, `and 0x3f` column, `asl 7`)
 #   field_*      (tools/data_field_uses.py, read there) the field-use walk's new rules: field_pos,
 #                field_slots, field_bra, field_keyloop, field_merge, field_screen
 FEATURES = {k: True for k in ("ptr_starts", "array_end", "mem_ptrs", "loop_index", "step_arrays", "deep_records",
                               "top_tested", "fld_slots", "fx_streams", "pow10_table", "euc_text",
-                              "sibling_trie", "builtin_pads", "widget_vars", "maps128", "sentinel_lists", "chord_voicings", "index_bounds", "fx_presets", "table_terminators", "msg_readers")}
+                              "sibling_trie", "builtin_pads", "widget_vars", "maps128", "sentinel_lists", "chord_voicings", "index_bounds", "fx_presets", "table_terminators", "msg_readers", "count_notes", "doubles_text", "table_ptrs")}
 for _k in os.environ.get("GEN_DATA_S_OFF", "").split(","):
     if _k.strip():
         FEATURES[_k.strip()] = False
@@ -1355,6 +1364,30 @@ class Gen:
                     if re.match(r"\s+(mov|add|sub)\s+[^,]+,\s*%s$" % reg, lj):
                         break               # the register is set to something else
 
+    def ptr_strings(self, vals, strict=False):
+        """(table_ptrs, lane mn10300-data) The targets of a typed pointer table's entries: each a label, and a
+        short NUL-terminated text (at most 63 printable characters) there typed as that string, as
+        typed_refs() types a pointer table's strings.  strict: only when every target is such a text of at
+        most 15 characters and there are at least 4 (a table of names, not of records that begin with text)."""
+        def text_at(v):
+            if not (v and self.in_data(v) and self.m.inrom(v) and self.free(v, 1)):
+                return None
+            q = self.off(v)
+            z = self.rom.find(b"\0", q, q + 64)
+            return z - q if z >= q and all(0x20 <= c < 0x7F for c in self.rom[q:z]) and self.free(v, z - q + 1) else None
+        tv = [v for v in vals if v and self.in_data(v)]
+        fr = {v for v in tv if self.m.inrom(v) and self.free(v, 1)}       # (the others are typed already)
+        lens = [text_at(v) for v in fr]
+        if strict and (len(set(tv)) < 4 or any(x is None or x > 15 for x in lens) or sum(1 for x in lens if x == 0) > 1):
+            ok = False      # (strict: a name table, its one empty name at most the end marker)
+        else:
+            ok = FEATURES.get("table_ptrs", True)
+        for v in tv:
+            if ok and text_at(v) is not None:
+                q = self.off(v)
+                self.str_item(v, "Str_" + (sanitize(self.rom[q:q + text_at(v)].decode("latin-1")) or "text"), "string")
+            self.refs.add(v)
+
     def reader_tables(self):
         """A labelled gap that the code reads with a load of one width becomes a
         table of that width (u8 / s8 / u16 / s16 / u32), up to the next label or
@@ -1398,6 +1431,19 @@ class Gen:
             readers = sorted({(r[0], r[1], r[2]) for r in rd if r[3] == w}, key=lambda r: (r[1] or 0, r[0] or "", r[2]))
             fn = next((r[0] for r in sorted(rd, key=lambda r: r[1] or 0) if r[0]), None)
             base = (re.sub(r"_entry$", "", fn) + "_Table") if fn else f"tab_{a:08X}"
+            uv = [v & 0xFFFFFFFF for v in vals]
+            if w == 4 and FEATURES.get("table_ptrs", True) and any(uv) and \
+                    all(v == 0 or (self.in_data(v) and self.m.inrom(v)) for v in uv):
+                # (lane mn10300-data) every entry is 0 or a data address: a pointer table, its targets named, and
+                # a short NUL-terminated text at a target typed as that string (the KN2400's naming window's
+                # character table, AcNamingWindowProc: "!", "#", ...)
+                self.ptr_strings(uv, strict=True)
+                rd_s = "; ".join(f"{f or '?'} {('0x%08X' % c) if c else ''}: `{ins}`".replace("  ", " ")
+                                 for f, c, ins in readers[:2])
+                self.add(a, w * n, self.name_at(a, base), "pointer table",
+                         lambda g, it, uv=uv, rd_s=rd_s, note=note: [f"{it.label}:\t# {len(uv)} pointers; read by {rd_s}{note}"]
+                         + [f"\t.long\t{g.ref(v)}" for v in uv])
+                continue
             self.add(a, w * n, self.name_at(a, base), "reader table",
                      lambda g, it, vals=vals, kind=kind, readers=readers, w=w, note=note:
                      g.render_table(it, vals, kind, readers, w, note))
@@ -1600,8 +1646,10 @@ class Gen:
                     break
                 n += 1
             bounds = [x.bound for _o, x in g.accs if getattr(x, "bound", None) and x.inner != -1]
+            capped = False
             if bounds and n > max(bounds):
                 n = max(bounds)        # [INFERENCE] the index is checked (or is a byte) below this
+                capped = True
             ixb = self.index_bounds().get(a)
             ix_note = ""
             if ixb and ixb[1] == s and ixb[0] > n:
@@ -1623,6 +1671,13 @@ class Gen:
             if ix_note and not end_note:
                 end_note = ix_note
                 g.evidence = [ix_note[2:]]
+            if not getattr(g, "evidence", None) and FEATURES.get("count_notes", True):
+                # (lane mn10300-data, N-92b0bf4c) say where the count comes from when no loop or index check gives it
+                g.evidence = (["the count is capped by an index bound a reader checks (a `cmp` before the index, or a"
+                               " byte index) [INFERENCE: the table may end before it]"] if capped else
+                              ["[INFERENCE] the count: the records up to where they stop being free, a pointer field stops"
+                               " holding an address or another named address begins; no reader checks it"])
+                g.count_inferred = not capped
             g.count = n
             g.fields = DS.layout(g, self, o, n)
             nm = self.label_at.get(a) or self.fixed.get(a)
@@ -1648,6 +1703,8 @@ class Gen:
                 if f.kind == "ptr":
                     self.add(a, n * s, g.label, "pointer table",
                              lambda gen, it, vals=vals: [f"{it.label}:"] + [f"\t.long\t{gen.ref(v)}" for v in vals])
+                    if FEATURES.get("table_ptrs", True):
+                        self.ptr_strings([v & 0xFFFFFFFF for v in vals], strict=True)
                 else:
                     self.add(a, n * s, g.label, "reader table",
                              lambda gen, it, vals=vals, kind=kind, rd=rd, s=s, nt=end_note:
@@ -3465,6 +3522,10 @@ class Gen:
                         continue
                     m1 = re.fullmatch(r"mov \((d\d), (a\d)\), %s" % ar, t)
                     m2 = re.fullmatch(r"mov ([A-Za-z_]\w*), %s" % ar, t)
+                    m0 = re.fullmatch(r"mov (d\d), %s" % ar, t) if ar[0] == "a" else None
+                    if m0:
+                        ar = m0.group(1)       # (the cases set a data register, the join moves it: func_4C03CD2C)
+                        continue
                     if m2 and self.data_label_addr(m2.group(1)) is not None:
                         starts.add(self.data_label_addr(m2.group(1)))
                     elif m1:
@@ -3515,13 +3576,20 @@ class Gen:
                 size = full
             if not self.free(a, size):
                 continue
+            # the marker's fill up to a 4-byte boundary (0xFF or 0x00, unnamed, free) belongs to the list
+            pad = 0
+            while (o + size + pad) % 4 and o + size + pad < nxt and self.rom[o + size + pad] in (0, 0xFF) \
+                    and self.free(a + size + pad, 1):
+                pad += 1
             fn = re.sub(r"_entry$", "", x.func or "?")
             cite = f"{fn} 0x{x.cpu or 0:08X}: `{' '.join(x.insn.split())}` / `{cmp_i}`, `{step_i}`"
             lab = self.name_at(a, f"{fn}_List")
             unit = next((u for u in (4, 2) if S % u == 0 and (a % u == 0) and size % u == 0), 1)
 
-            def render(g, it, o=o, n=n, S=S, w=w, unit=unit, cite=cite, size=size, foff=foff):
+            def render(g, it, o=o, n=n, S=S, w=w, unit=unit, cite=cite, size=size, foff=foff, pad=pad):
                 d = {1: ".byte", 2: ".short", 4: ".long"}[unit]
+                padl = [f"\t.byte\t" + ", ".join(f"0x{c:02x}" for c in g.rom[o + size:o + size + pad])
+                        + "\t# the marker's fill to a 4-byte boundary"] if pad else []
 
                 def word(v):
                     if unit == 4 and v and (g.in_data(v) or (g.in_code(v) and g.code_ptr_ok(v))):
@@ -3530,7 +3598,7 @@ class Gen:
                 if S == w:
                     vals = [int.from_bytes(g.rom[q:q + w], "little") for q in range(o, o + size, w)]
                     return [f"# {n} entries of {8 * w} bits up to the end marker that {cite} stops at, then the marker",
-                            f"{it.label}:", f"\t{d}\t" + ", ".join(word(v) for v in vals)]
+                            f"{it.label}:", f"\t{d}\t" + ", ".join(word(v) for v in vals)] + padl
                 out = [f"# {n} records of {S} bytes up to the end marker (+{foff}, {8 * w} bits) that {cite} stops at"
                        + (", then the marker record" if size > n * S + foff + w else ", then the marker"), f"{it.label}:"]
                 for r_ in range(n + 1):
@@ -3543,8 +3611,8 @@ class Gen:
                     if tail:
                         line = (line + "\n" if line else "") + "\t.byte\t" + ", ".join(str(c) for c in tail)
                     out.append(line + (f"\t# end" if r_ == n else ""))
-                return out
-            self.add(a, size, lab, "sentinel list", render)
+                return out + padl
+            self.add(a, size + pad, lab, "sentinel list", render)
 
     def chord_voicings(self):
         """(FEATURES["chord_voicings"], lane mn10300-data) The chord voicings and their inversions.  A
@@ -3630,7 +3698,7 @@ class Gen:
     def index_bounds(self):
         """(FEATURES["index_bounds"], lane mn10300-data) {table CPU address: (entries, stride, citation)}:
         the tables a routine indexes with an index it has bounded just before, as the code shows it:
-        `and M, dI` with M = 2^k - 1 (M + 1 entries: KN7000 func_48466F2F's `and 0x1f, d1`, 32 hash
+        `and M, dI` with M = 2^k - 1, not 0xFF / 0xFFFF (M + 1 entries: KN7000 func_48466F2F's `and 0x1f, d1`, 32 hash
         slots), or `cmp N, dI` and a branch that goes on only below or at N (`ble` / `bls`: N + 1
         entries; `blt` / `bcs`: N; `bgt` / `bhi` / `bge` / `bcc` the same, as the exit), then within 8
         instructions the index scaled (`asl K`, `asl2`, `add dI, dI`: the stride) and added to the table's
@@ -3681,7 +3749,8 @@ class Gen:
                 mc = re.fullmatch(r"cmp %s, (d\d)" % self.NUM, ins)
                 if ma:
                     M = int(ma.group(1), 16)
-                    if M >= 3 and (M & (M + 1)) == 0:
+                    # (0xff / 0xffff truncate a value to a byte / halfword: no table's size)
+                    if M >= 3 and (M & (M + 1)) == 0 and M not in (0xFF, 0xFFFF):
                         cnt, dI = M + 1, ma.group(2)
                 elif mc and i + 1 < len(L):
                     N = int(mc.group(1), 0)
@@ -3873,8 +3942,8 @@ class Gen:
             d = {1: ".byte", 2: ".short", 4: ".long"}[w]
 
             def render(g, it2, w=w, d=d, cite=cite, tab=it.label):
-                return [f"\t{d}\t0x{(1 << 8 * w) - 1:x}\t# the end marker of {tab}: {cite} stops at it"]
-            self.add(e, w, None, "table end", render)
+                return [f"{it2.label}:\t{d}\t0x{(1 << 8 * w) - 1:x}\t# the end marker of {tab}: {cite} stops at it"]
+            self.add(e, w, self.name_at(e, f"{it.label}_End"), "table end", render)
 
     def field_deref(self, proc, off):
         """(widget_vars) How `proc` reads the variable a widget's field at +off points at: the field load
@@ -5021,6 +5090,12 @@ class Gen:
                     break
                 n += 1
             nz = sum(1 for k in range(n) if rom[o + 8 * k:o + 8 * k + 8] != bytes(8))
+            txt = sum(1 for k in range(n) if all(0x20 <= c < 0x7F for c in rom[o + 8 * k:o + 8 * k + 8]))
+            if n >= 4 and FEATURES.get("doubles_text", True) and 2 * txt >= nz:
+                # (lane mn10300-data) a run whose words are mostly eight printable bytes is text, not doubles
+                # (the KN6000's feature-demo script): printable_runs() types it
+                o += 8 * n
+                continue
             if n >= 4 and nz >= n // 2 + 1:
                 vals = [struct.unpack_from("<IId", rom, o + 8 * k) for k in range(n)]
                 a = self.addr_of(o)
@@ -5030,6 +5105,43 @@ class Gen:
                 o += 8 * n
             else:
                 o += 8
+
+    def printable_runs(self):
+        """(FEATURES["doubles_text"], lane mn10300-data) What is left of 32 or more printable bytes in a row
+        (0x20..0x7E, no NUL), in the program flash and no item's: text with no NUL, written as `.ascii`
+        rows [INFERENCE: text; no pass typed it -- the KN6000's feature-demo XML script, which the doubles
+        pass used to take for doubles]."""
+        if not FEATURES.get("doubles_text", True):
+            return
+        import bisect
+        rd = set()            # gap_note's reads (not its cache: refs still grow after this pass)
+        for x in getattr(self, "dr", None).accesses if getattr(self, "dr", None) else ():
+            k = x.key
+            if k[0] in ("abs", "base", "step") and self.in_data(k[1]):
+                rd.add(self.off(k[1]))
+            elif k[0] == "rec" and self.in_data(k[1]):
+                rd.add(self.off(k[1] + x.off))
+            elif k[0] == "ptr" and k[1][0] == "tgt":
+                rd.update(self.off(t + x.off) for t in k[1][1] if self.in_data(t + x.off))
+        rd = sorted(rd)
+        rom = self.rom
+        o = R1_END
+        while o < DATA_END:
+            if self.claimed[o] or not 0x20 <= rom[o] < 0x7F or RAMINIT_OFF <= o < RAMINIT_END:
+                o += 1
+                continue
+            e = o
+            while e < DATA_END and not self.claimed[e] and 0x20 <= rom[e] < 0x7F and not RAMINIT_OFF <= e < RAMINIT_END:
+                e += 1
+            i = bisect.bisect_left(rd, o)
+            if e - o >= 32 and not (i < len(rd) and rd[i] < e):
+                a = self.addr_of(o)
+
+                def rtext(g, it, o=o, e=e):
+                    return [f"{it.label}:\t# {e - o} printable bytes with no NUL; no instruction reads them [INFERENCE: text]"] + [
+                        f'\t.ascii\t"{c_escape(g.rom[q:min(q + 64, e)])}"' for q in range(o, e, 64)]
+                self.add(a, e - o, self.name_at(a, f"text_{a:08X}"), "text", rtext)
+            o = e
 
     def gaps(self):
         """Label every referenced address not inside a typed item; the bytes
@@ -5785,6 +5897,7 @@ class Gen:
         if P.get("structs"):
             self.widget_vars()
             self.table_terminators()
+            self.printable_runs()
         self.short_strings()
         self.zlib_kinds()
         if P.get("residue"):
