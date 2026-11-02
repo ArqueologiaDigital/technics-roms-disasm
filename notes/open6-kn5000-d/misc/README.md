@@ -374,8 +374,9 @@ factory selector: page 0 entries 0, 152, 159; page 1 entries 77, 80, 83, 85; pag
    `ToneGen_StagingBlock` banner maps to TG register +0x040, the **recording selector** (not a pitch).  So that
    path picks one of 8 consecutive directory entries at random.  Page 2's unselected entries 41-111 are exactly
    `s + 1 .. s + 7` for the nine used selectors `s` = 40, 48, ..., 104 (0x6028 .. 0x6068), all multiples of 8 and
-   all the **Organ Click** source (SET 62); each group of 8 is 8 start points into one click recording (entries
-   that share a wave or start inside the group's first audio, the "tail" records of section 3, C).
+   all the **Organ Click** source (SET 62); each group of 8 is a run of start points a few granules apart in one
+   stretch of click audio (entries that share a wave, or start inside the group's first entry's audio with a tail
+   of its record: 26 of the 30 entries checked in section 3, C are in these groups).
    `Voice_Init_Type1` runs only from `Voice_SetPitch` / `Voice_NoteOff`, whose guard `(patch record +0x10 & 0xC0)
    == 0x40` holds for exactly two of the 607 patch records: `<Jazz Drawbars>` (0x8706BD) and `<Rock Drawbars>`
    (0x870867), +0x10 = 0x60.  [INFERENCE] the drawbar organ's key-click layer (key-on through `Voice_SetPitch`,
