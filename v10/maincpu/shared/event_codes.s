@@ -533,7 +533,7 @@
 .equ EVT_CMP_CLR_NO, 0x1e40007	; Firmware method MT_CmpClrNo: composer clear cancelled (close the dialog)
 .equ EVT_PAN_DN, 0x1e40009	; Firmware method MT_PanDn: composer-set grid: decrement the pan byte (min 0) of part XDE, then MT_RequestGridDraw
 .equ EVT_RLMT_DN, 0x1e4000b	; Firmware method MT_RLmtDn: composer-set grid: decrement the range-limit byte (min 0) of part XDE
-.equ EVT_CMP_SET_P1_UP, 0x1e4000e	; Firmware method MT_CmpSetP1Up: composer-set page 1 value up ((0x3540) := value, DrumVoice_Select, then MT_RequestGridDraw to 0xB40007)
+.equ EVT_CMP_SET_P1_UP, 0x1e4000e	; Firmware method MT_CmpSetP1Up: composer-set page 1 value up ((0x3540) := value, CmpRecSet_DispatchCursorRow, then MT_RequestGridDraw to 0xB40007)
 .equ EVT_CMP_SET_P1_DN, 0x1e4000f	; Firmware method MT_CmpSetP1Dn: composer-set page 1 value down
 .equ EVT_S2C_TR_UP, 0x1e40010	; Firmware method MT_S2cTrUp: S2c grid: value up for row XDE ((0x3990) := row, Tempo_AdjustEffect(0)), then redraw the cell and refresh 0xB9001C/1F/18
 .equ EVT_S2C_TR_DN, 0x1e40011	; Firmware method MT_S2cTrDn: S2c grid: value down for row XDE (Tempo_AdjustEffect(1))

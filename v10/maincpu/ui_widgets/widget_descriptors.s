@@ -5156,7 +5156,7 @@ FDC_DetectSector_CheckPianoDisc_Str_N1_PianoDisc:	.incbin "includes/generated/na
 ; lo}. AccVoice_ComputeChannelIndex (v10/v9 0xf53d77, v7 0xf53973) shows
 ; the index: hl = (h & 7) * 512 + a * 4, then `ld wa,(xiy+hl)`, `add
 ; hl,2`, `ld iy,(xiy+hl)`; RhythmROM_PatternDispatcher (v10/v9 0xf634f3,
-; v7 0xf630ef) stores the two words at 0x355a/0x355c, DrumVoice_Handler7
+; v7 0xf630ef) stores the two words at 0x355a/0x355c, CmpRecSet_OnRhythmBank
 ; (v10/v9 0xf654b0, v7 0xf650ac) and VoiceAssign_ProcessRequest (v10/v9
 ; 0xf67128, v7 0xf66d24) read them the same way. Measured: every
 ; non-zero pair forms hi:lo = a multiple of 0x800 below 0x70000; zero

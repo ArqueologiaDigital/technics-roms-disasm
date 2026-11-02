@@ -15168,14 +15168,14 @@ AccPatch_RefreshSlotOffset_Wrap:
 	pop xiz
 	ret
 
-; Current patch slot (AccPatch_GetCurrentSlotAddr): word +16 = the AccPatch_VoiceStrideTable
+; Current patch slot (AccPatch_GetCurrentSlotAddr): word +16 = the AccPatch_DefaultStyleByTimeSig
 ; entry for its byte +12.
 AccPatch_RefreshSlotOffset:
 	calr AccPatch_GetCurrentSlotAddr
 	ld xhl, 0:i3
 	ld l, (xiy + 12)
 	sll l, 1
-	add xhl, AccPatch_VoiceStrideTable
+	add xhl, AccPatch_DefaultStyleByTimeSig
 	ld wa, (xhl)
 	ld (xiy + 16), wa
 	ret
@@ -15718,7 +15718,7 @@ AccPatch_ClearSlot13_IdxDone:
 	ret
 
 ; Current patch slot: byte +12 = (STYLE_SECTION_TIME_SIG), an empty pattern in every part
-; (AccPatch_InitAllSentinels), word +16 = the AccPatch_VoiceStrideTable entry for (STYLE_SECTION_TIME_SIG); then
+; (AccPatch_InitAllSentinels), word +16 = the AccPatch_DefaultStyleByTimeSig entry for (STYLE_SECTION_TIME_SIG); then
 ; AccPatch_CheckConfigType and bit 7 of 0x34cd set.
 AccPatch_SetVoiceAndInit:
 	calr AccPatch_GetCurrentSlotAddr
@@ -15731,19 +15731,38 @@ AccPatch_SetVoiceAndInit:
 	ld l, (STYLE_SECTION_TIME_SIG:16)
 	sll l, 1
 	xor h, h
-	add xhl, AccPatch_VoiceStrideTable
+	add xhl, AccPatch_DefaultStyleByTimeSig
 	ld wa, (xhl)
 	ld (xiy + 16), wa
 	calr AccPatch_CheckConfigType
 	or (0x34cd:16), 128
 	ret
 
-AccPatch_VoiceStrideTable:
-	.byte 0x00, 0x00, 0x58, 0x02, 0x08, 0x02, 0x18, 0x03
-	.byte 0x00, 0x00, 0x00, 0x00, 0x09, 0x01, 0x58, 0x02
-	.byte 0x00, 0x00, 0x08, 0x02, 0x00, 0x00, 0x18, 0x03
-	.byte 0x00, 0x00, 0x00, 0x00, 0x09, 0x01, 0x58, 0x02
-	.byte 0x00, 0x00, 0x08, 0x02, 0x00, 0x00, 0x18, 0x03
+; AccPatch_DefaultStyleByTimeSig: The PANEL_STYLE pair {style number, style group} a section record gets at
+;   +0x10 / +0x11 when it is set up for TIME SIGNATURE n (AccPatch_SetVoiceAndInit reads the word at
+;   2 * STYLE_SECTION_TIME_SIG; time signatures in the order of RamInit_TimeSigPtrs); {0, 0} = none.  The last
+;   four entries are beyond index 15.  Basis: readers + bytes (notes/kn5000-style-2026-10-31/README.md, rec +0x10).
+AccPatch_DefaultStyleByTimeSig:
+	.byte	0x00, 0x00	; 1/2
+	.byte	0x58, 0x02	; 2/2
+	.byte	0x08, 0x02	; 3/2
+	.byte	0x18, 0x03	; 4/2
+	.byte	0x00, 0x00	; 1/4
+	.byte	0x00, 0x00	; 2/4
+	.byte	0x09, 0x01	; 3/4
+	.byte	0x58, 0x02	; 4/4
+	.byte	0x00, 0x00	; 5/4
+	.byte	0x08, 0x02	; 6/4
+	.byte	0x00, 0x00	; 7/4
+	.byte	0x18, 0x03	; 8/4
+	.byte	0x00, 0x00	; 1/8
+	.byte	0x00, 0x00	; 2/8
+	.byte	0x09, 0x01	; 3/8
+	.byte	0x58, 0x02	; 4/8
+	.byte	0x00, 0x00	; (no time signature reaches it)
+	.byte	0x08, 0x02	; (no time signature reaches it)
+	.byte	0x00, 0x00	; (no time signature reaches it)
+	.byte	0x18, 0x03	; (no time signature reaches it)
 
 ; Calls RhythmConfig_ReturnStub, which returns at once, when 0x34d9 (beats per measure) is 3, 4,
 ; 6 or 8: no effect either way.
@@ -16640,21 +16659,21 @@ AccPatch_UpdateChain_Acc3:
 	pop xiy
 	ret
 
-; Runs AccPatch_SyncVoice_Rhythm, _Acc1, _Acc2, _Acc3 and _Bass on the current patch slot.
+; Runs AccPatch_SyncVoice_Bass, _Acc1, _Acc2, _Acc3 and _Drum on the current patch slot.
 AccPatch_SyncAllVoiceParams:
 	calr AccPatch_GetCurrentSlotAddr
-	calr AccPatch_SyncVoice_Rhythm
+	calr AccPatch_SyncVoice_Bass
 	calr AccPatch_SyncVoice_Acc1
 	calr AccPatch_SyncVoice_Acc2
 	calr AccPatch_SyncVoice_Acc3
-	calr AccPatch_SyncVoice_Bass
+	calr AccPatch_SyncVoice_Drum
 	ret
 
 ; Takes W = byte +0 and A = byte +1 (7 bits, bit 7 = bit 6 of byte +4) of the 26-byte record at
 ; 0xfba4.  When W:A differs from the copy in 0x34e1 / 0x34e2, writes them into the part record at
 ; XIY + 0x20 (+0 = W, +1 = A & 0x7f, +3 = bit 7 of A), updates the copy and loads that record into
 ; 0x3219 (AccPatch_LoadVoiceParams).  Preserves XIY.
-AccPatch_SyncVoice_Rhythm:
+AccPatch_SyncVoice_Bass:
 	push xiy
 	add xiy, 0x20
 	ld xix, PANEL_PART_BASS
@@ -16663,16 +16682,16 @@ AccPatch_SyncVoice_Rhythm:
 	ld a, (xix + 1)
 	and a, 0x7f
 	bitm 6, (xix + 4)
-	jr z, AccPatch_SyncRhythm_HasBank
+	jr z, AccPatch_SyncBass_HasBank
 	ld h, 0x40:opc
 	sll h, 1
 	or a, h
 
-AccPatch_SyncRhythm_HasBank:
+AccPatch_SyncBass_HasBank:
 	ld h, (0x34e1:16)
 	ld l, (0x34e2:16)
 	cp hl, wa
-	jr z, AccPatch_SyncRhythm_Done
+	jr z, AccPatch_SyncBass_Done
 	pushw wa
 	ld (xiy + 0:8), w
 	ld c, a
@@ -16687,13 +16706,13 @@ AccPatch_SyncRhythm_HasBank:
 	ld xix, 0x3219
 	calr AccPatch_LoadVoiceParams
 
-AccPatch_SyncRhythm_Done:
+AccPatch_SyncBass_Done:
 	pop xiy
 	ret
 
-; AccPatch_SyncVoice_Rhythm for the record at 0xfbbe (byte +0 masked to 0..15), the part record at
+; AccPatch_SyncVoice_Bass for the record at 0xfbbe (byte +0 masked to 0..15), the part record at
 ; XIY + 0x18, the copy 0x34df / 0x34e0 and the target 0x3214.  Preserves XIY.
-AccPatch_SyncVoice_Bass:
+AccPatch_SyncVoice_Drum:
 	push xiy
 	add xiy, 0x18
 	ld xix, PANEL_PART_DRUM
@@ -16703,16 +16722,16 @@ AccPatch_SyncVoice_Bass:
 	ld a, (xix + 1)
 	and a, 0x7f
 	bitm 6, (xix + 4)
-	jr z, AccPatch_SyncBass_HasBank
+	jr z, AccPatch_SyncDrum_HasBank
 	ld h, 0x40:opc
 	sll h, 1
 	or a, h
 
-AccPatch_SyncBass_HasBank:
+AccPatch_SyncDrum_HasBank:
 	ld h, (0x34df:16)
 	ld l, (0x34e0:16)
 	cp hl, wa
-	jr z, AccPatch_SyncBass_Done
+	jr z, AccPatch_SyncDrum_Done
 	pushw wa
 	ld (xiy + 0:8), w
 	ld c, a
@@ -16727,11 +16746,11 @@ AccPatch_SyncBass_HasBank:
 	ld xix, 0x3214
 	calr AccPatch_LoadVoiceParams
 
-AccPatch_SyncBass_Done:
+AccPatch_SyncDrum_Done:
 	pop xiy
 	ret
 
-; AccPatch_SyncVoice_Rhythm for the record at 0xfb56, the part record at XIY + 0x28, the copy
+; AccPatch_SyncVoice_Bass for the record at 0xfb56, the part record at XIY + 0x28, the copy
 ; 0x34e3 / 0x34e4 and the target 0x321e.  Preserves XIY.
 AccPatch_SyncVoice_Acc1:
 	push xiy
@@ -16770,7 +16789,7 @@ AccPatch_SyncAcc1_Done:
 	pop xiy
 	ret
 
-; AccPatch_SyncVoice_Rhythm for the record at 0xfb70, the part record at XIY + 0x30, the copy
+; AccPatch_SyncVoice_Bass for the record at 0xfb70, the part record at XIY + 0x30, the copy
 ; 0x34e5 / 0x34e6 and the target 0x3223.  Preserves XIY.
 AccPatch_SyncVoice_Acc2:
 	push xiy
@@ -16809,7 +16828,7 @@ AccPatch_SyncAcc2_Done:
 	pop xiy
 	ret
 
-; AccPatch_SyncVoice_Rhythm for the record at 0xfb8a, the part record at XIY + 0x38, the copy
+; AccPatch_SyncVoice_Bass for the record at 0xfb8a, the part record at XIY + 0x38, the copy
 ; 0x34e7 / 0x34e8 and the target 0x3228.  Preserves XIY.
 AccPatch_SyncVoice_Acc3:
 	push xiy
@@ -26926,218 +26945,222 @@ DrumTempo_Done:
 	pop xiz
 	ret
 
-; Calls DrumVoice_Dispatch with L = (0x3540) - 1 (at least 0), preserving XIZ.
+; Calls CmpRecSet_DispatchRow with L = (0x3540) - 1 (at least 0), preserving XIZ.
 ; Called from CmpSetTtl_DrumVoice0, CmpSetTtl_DrumVoice1, MainCmpSetFunc_Skip and
 ; MainCmpSetFunc_Skip2.
-DrumVoice_Select:
+CmpRecSet_DispatchCursorRow:
 	push xiz
 	xor hl, hl
 	ld l, (0x3540:16)
 	cp l, 1:i3
-	jr nc, DrumVoice_ClampMin
+	jr nc, CmpRecSet_DispatchCursorRow_Clamp
 	ld l, 0x1:opc
 
-DrumVoice_ClampMin:
+CmpRecSet_DispatchCursorRow_Clamp:
 	dec 1, l
-	calr DrumVoice_Dispatch
+	calr CmpRecSet_DispatchRow
 	pop xiz
 	ret
 
-DrumVoice_InlineStub:
+CmpRecSet_DispatchRow_Wrap:
 	push	xiz
-	call	DrumVoice_Dispatch
+	call	CmpRecSet_DispatchRow
 	pop	xiz
 	ret
 
-; Sets bit 0 of 0x8d88 and calls entry (L & 15) of DrumVoice_DispatchTable (handlers 0..7, the
-; rest DrumVoice_NullHandler).
-DrumVoice_Dispatch:
+; Sets bit 0 of 0x8d88 and calls entry (L & 15) of CmpRecSet_RowHandlers (handlers 0..7, the
+; rest CmpRecSet_NopRow).
+CmpRecSet_DispatchRow:
 	or (0x8d88:16), 1
 	pushw hl
 	ld xhl, 0:i3
 	popw hl
 	and l, 0xf
 	sll xhl, 2
-	add xhl, DrumVoice_DispatchTable
+	add xhl, CmpRecSet_RowHandlers
 	ld xhl, (xhl)
 	call (xhl)
 	ret
 
 
-DrumVoice_DispatchTable:
-	.long DrumVoice_Handler0
-	.long DrumVoice_Handler1
-	.long DrumVoice_Handler2
-	.long DrumVoice_Handler3
-	.long DrumVoice_Handler4
-	.long DrumVoice_Handler5
-	.long DrumVoice_Handler6
-	.long DrumVoice_Handler7
-	.long DrumVoice_NullHandler
-	.long DrumVoice_NullHandler
-	.long DrumVoice_NullHandler
-	.long DrumVoice_NullHandler
-	.long DrumVoice_NullHandler
-	.long DrumVoice_NullHandler
-	.long DrumVoice_NullHandler
-DrumVoice_NullHandler:
+; CmpRecSet_RowHandlers: 15 x u32: the RECORD SETTING page's row handlers, entry = cursor row - 1 (CmpRecSet_DispatchRow): MEASURE,
+;   TIME SIGNATURE, KEY, CHORD (minor bit), BASS TYPE (7th bit 6), ACCOMP TYPE (7th bit 5), the rhythm program and
+;   the rhythm bank; the rest CmpRecSet_NopRow.  Handlers 0-5 step their field up, or down when bit 7 of W is set.
+;   Basis: readers + bodies (record +0x0E/+0x0F fields, notes/kn5000-style-2026-10-31/README.md).
+CmpRecSet_RowHandlers:
+	.long CmpRecSet_OnMeasure
+	.long CmpRecSet_OnTimeSig
+	.long CmpRecSet_OnKey
+	.long CmpRecSet_OnChord
+	.long CmpRecSet_OnBassType
+	.long CmpRecSet_OnAccompType
+	.long CmpRecSet_OnRhythmProgram
+	.long CmpRecSet_OnRhythmBank
+	.long CmpRecSet_NopRow
+	.long CmpRecSet_NopRow
+	.long CmpRecSet_NopRow
+	.long CmpRecSet_NopRow
+	.long CmpRecSet_NopRow
+	.long CmpRecSet_NopRow
+	.long CmpRecSet_NopRow
+CmpRecSet_NopRow:
 	ret
-DrumVoice_Handler0:
+CmpRecSet_OnMeasure:
 	bit	7, (0x34ce:16)
-	jr	z, DrumVoice_Handler0_Skip
+	jr	z, CmpRecSet_OnMeasure_Skip
 	bit	7, w
-	jr	nz, DrumVoice_Handler0_Code_Skip
+	jr	nz, CmpRecSet_OnMeasure_Code_Skip
 	inc	1, (STYLE_SECTION_LAST_MEASURE:16)
 	cp	(STYLE_SECTION_LAST_MEASURE:16), 7
-	jr	ule, DrumVoice_Handler0_Join
+	jr	ule, CmpRecSet_OnMeasure_Join
 	ld	(STYLE_SECTION_LAST_MEASURE:16), 7
-	jr	DrumVoice_Handler0_Join
-DrumVoice_Handler0_Code_Skip:
+	jr	CmpRecSet_OnMeasure_Join
+CmpRecSet_OnMeasure_Code_Skip:
 	dec	1, (STYLE_SECTION_LAST_MEASURE:16)
 	cp	(STYLE_SECTION_LAST_MEASURE:16), 0
-	jr	ge, DrumVoice_Handler0_Join
+	jr	ge, CmpRecSet_OnMeasure_Join
 	ld	(STYLE_SECTION_LAST_MEASURE:16), 0
-DrumVoice_Handler0_Join:
+CmpRecSet_OnMeasure_Join:
 	or	(0x34ce:16), 1
-	jr	DrumVoice_Handler0_Code_Return
-DrumVoice_Handler0_Skip:
+	jr	CmpRecSet_OnMeasure_Code_Return
+CmpRecSet_OnMeasure_Skip:
 	ld	(GLOBAL_ERROR_CODE:16), 19
 	calr	DrumVoice_NotifyEE
-DrumVoice_Handler0_Code_Return:
+CmpRecSet_OnMeasure_Code_Return:
 	ret
-DrumVoice_Handler1:
+CmpRecSet_OnTimeSig:
 	bit	7, (0x34ce:16)
-	jr	z, DrumVoice_Handler1_Skip
+	jr	z, CmpRecSet_OnTimeSig_Skip
 	bit	7, w
-	jr	nz, DrumVoice_Handler1_Code_Skip
+	jr	nz, CmpRecSet_OnTimeSig_Code_Skip
 	inc	1, (STYLE_SECTION_TIME_SIG:16)
 	cp	(STYLE_SECTION_TIME_SIG:16), 11
-	jr	ule, DrumVoice_Handler1_Join
+	jr	ule, CmpRecSet_OnTimeSig_Join
 	ld	(STYLE_SECTION_TIME_SIG:16), 11
-	jr	DrumVoice_Handler1_Join
-DrumVoice_Handler1_Code_Skip:
+	jr	CmpRecSet_OnTimeSig_Join
+CmpRecSet_OnTimeSig_Code_Skip:
 	dec	1, (STYLE_SECTION_TIME_SIG:16)
 	cp	(STYLE_SECTION_TIME_SIG:16), 4
-	jr	ge, DrumVoice_Handler1_Join
+	jr	ge, CmpRecSet_OnTimeSig_Join
 	ld	(STYLE_SECTION_TIME_SIG:16), 4
-DrumVoice_Handler1_Join:
+CmpRecSet_OnTimeSig_Join:
 	or	(0x34ce:16), 2
-	jr	DrumVoice_Handler1_Return
-DrumVoice_Handler1_Skip:
+	jr	CmpRecSet_OnTimeSig_Return
+CmpRecSet_OnTimeSig_Skip:
 	ld	(GLOBAL_ERROR_CODE:16), 19
 	calr	DrumVoice_NotifyEE
-DrumVoice_Handler1_Return:
+CmpRecSet_OnTimeSig_Return:
 	ret
-DrumVoice_Handler2:
+CmpRecSet_OnKey:
 	or	(0xe3e2:16), 8
 	bit	7, w
-	jr	nz, DrumVoice_Handler2_Skip
+	jr	nz, CmpRecSet_OnKey_Skip
 	inc	1, (0x34e9:16)
 	cp	(0x34e9:16), 11
-	jr	ule, DrumVoice_Handler2_Join
+	jr	ule, CmpRecSet_OnKey_Join
 	ld	(0x34e9:16), 11
-	jr	DrumVoice_Handler2_Join
-DrumVoice_Handler2_Skip:
+	jr	CmpRecSet_OnKey_Join
+CmpRecSet_OnKey_Skip:
 	dec	1, (0x34e9:16)
 	cp	(0x34e9:16), 0
-	jr	ge, DrumVoice_Handler2_Join
+	jr	ge, CmpRecSet_OnKey_Join
 	ld	(0x34e9:16), 0
-DrumVoice_Handler2_Join:
+CmpRecSet_OnKey_Join:
 	or	(0x34d2:16), 1
 	ret
-DrumVoice_Handler3:
+CmpRecSet_OnChord:
 	or	(0xe3e2:16), 8
 	bit	7, w
-	jr	nz, DrumVoice_Handler3_Skip
+	jr	nz, CmpRecSet_OnChord_Skip
 	or	(0x34ea:16), 16
-	jr	DrumVoice_Handler3_Join
-DrumVoice_Handler3_Skip:
+	jr	CmpRecSet_OnChord_Join
+CmpRecSet_OnChord_Skip:
 	and	(0x34ea:16), 239
-DrumVoice_Handler3_Join:
+CmpRecSet_OnChord_Join:
 	or	(0x34d2:16), 2
 	ret
-DrumVoice_Handler5:
+CmpRecSet_OnAccompType:
 	and	(0xe3e2:16), 247
 	bit	7, w
-	jr	nz, DrumVoice_Handler5_Skip
+	jr	nz, CmpRecSet_OnAccompType_Skip
 	bit	5, (0x34ea:16)
-	jr	nz, DrumVoice_Handler5_Return
+	jr	nz, CmpRecSet_OnAccompType_Return
 	or	(0x34ea:16), 32
 	or	(0x34d2:16), 4
-	jr	DrumVoice_Handler5_Return
-DrumVoice_Handler5_Skip:
+	jr	CmpRecSet_OnAccompType_Return
+CmpRecSet_OnAccompType_Skip:
 	bit	5, (0x34ea:16)
-	jr	z, DrumVoice_Handler5_Return
+	jr	z, CmpRecSet_OnAccompType_Return
 	and	(0x34ea:16), 223
 	or	(0x34d2:16), 4
-DrumVoice_Handler5_Return:
+CmpRecSet_OnAccompType_Return:
 	ret
-DrumVoice_Handler4:
+CmpRecSet_OnBassType:
 	and	(0xe3e2:16), 247
 	bit	7, w
-	jr	nz, DrumVoice_Handler4_Skip
+	jr	nz, CmpRecSet_OnBassType_Skip
 	bit	6, (0x34ea:16)
-	jr	nz, DrumVoice_Handler4_Return
+	jr	nz, CmpRecSet_OnBassType_Return
 	or	(0x34ea:16), 64
 	or	(0x34d2:16), 4
-	jr	DrumVoice_Handler4_Return
-DrumVoice_Handler4_Skip:
+	jr	CmpRecSet_OnBassType_Return
+CmpRecSet_OnBassType_Skip:
 	bit	6, (0x34ea:16)
-	jr	z, DrumVoice_Handler4_Return
+	jr	z, CmpRecSet_OnBassType_Return
 	and	(0x34ea:16), 191
 	or	(0x34d2:16), 4
-DrumVoice_Handler4_Return:
+CmpRecSet_OnBassType_Return:
 	ret
 	or	(0xe3e2:16), 8
 	ld	a, (0x34ea:16)
 	and	a, 96
 	bit	7, w
-	jr	nz, DrumVoice_Handler4_Code_Skip4
+	jr	nz, CmpRecSet_OnBassType_Code_Skip4
 	cp	a, 0:i3
-	jr	nz, DrumVoice_Handler4_Code_Skip
+	jr	nz, CmpRecSet_OnBassType_Code_Skip
 	ld	a, 64:opc
-	jr	DrumVoice_Handler4_Code_Join
-DrumVoice_Handler4_Code_Skip:
+	jr	CmpRecSet_OnBassType_Code_Join
+CmpRecSet_OnBassType_Code_Skip:
 	cp	a, 64
-	jr	nz, DrumVoice_Handler4_Code_Skip2
+	jr	nz, CmpRecSet_OnBassType_Code_Skip2
 	ld	a, 32:opc
-	jr	DrumVoice_Handler4_Code_Join
-DrumVoice_Handler4_Code_Skip2:
+	jr	CmpRecSet_OnBassType_Code_Join
+CmpRecSet_OnBassType_Code_Skip2:
 	cp	a, 32
-	jr	nz, DrumVoice_Handler4_Code_Skip3
+	jr	nz, CmpRecSet_OnBassType_Code_Skip3
 	ld	a, 96:opc
-	jr	DrumVoice_Handler4_Code_Join
-DrumVoice_Handler4_Code_Skip3:
+	jr	CmpRecSet_OnBassType_Code_Join
+CmpRecSet_OnBassType_Code_Skip3:
 	cp	a, 96
-	jr	nz, DrumVoice_Handler4_Code_Join
+	jr	nz, CmpRecSet_OnBassType_Code_Join
 	ld	a, 96:opc
-DrumVoice_Handler4_Code_Join:
-	jr	DrumVoice_Handler4_Join
-DrumVoice_Handler4_Code_Skip4:
+CmpRecSet_OnBassType_Code_Join:
+	jr	CmpRecSet_OnBassType_Join
+CmpRecSet_OnBassType_Code_Skip4:
 	cp	a, 0:i3
-	jr	nz, DrumVoice_Handler4_Code_Skip5
+	jr	nz, CmpRecSet_OnBassType_Code_Skip5
 	ld	a, 0:opc
-	jr	DrumVoice_Handler4_Join
-DrumVoice_Handler4_Code_Skip5:
+	jr	CmpRecSet_OnBassType_Join
+CmpRecSet_OnBassType_Code_Skip5:
 	cp	a, 64
-	jr	nz, DrumVoice_Handler4_Code_Skip6
+	jr	nz, CmpRecSet_OnBassType_Code_Skip6
 	ld	a, 0:opc
-	jr	DrumVoice_Handler4_Join
-DrumVoice_Handler4_Code_Skip6:
+	jr	CmpRecSet_OnBassType_Join
+CmpRecSet_OnBassType_Code_Skip6:
 	cp	a, 32
-	jr	nz, DrumVoice_Handler4_Code_Skip7
+	jr	nz, CmpRecSet_OnBassType_Code_Skip7
 	ld	a, 64:opc
-	jr	DrumVoice_Handler4_Join
-DrumVoice_Handler4_Code_Skip7:
+	jr	CmpRecSet_OnBassType_Join
+CmpRecSet_OnBassType_Code_Skip7:
 	cp	a, 96
-	jr	nz, DrumVoice_Handler4_Join
+	jr	nz, CmpRecSet_OnBassType_Join
 	ld	a, 32:opc
-DrumVoice_Handler4_Join:
+CmpRecSet_OnBassType_Join:
 	and	(0x34ea:16), 159
 	or	(0x34ea:16), a
 	or	(0x34d2:16), 4
 	ret
-DrumVoice_Handler6:
+CmpRecSet_OnRhythmProgram:
 	or	(0xe3e2:16), 8
 	or	(0xe3e2:16), 1
 	ldw	(0xe3e4:16), 1927
@@ -27146,13 +27169,13 @@ DrumVoice_Handler6:
 	add	xiy, 16
 	ld	a, (xiy)
 	bit	0, a
-	jr	nz, DrumVoice_Handler6_Return
+	jr	nz, CmpRecSet_OnRhythmProgram_Return
 	calr	Rhythm_StepProgram
 	calr	DrumKit_PostMidiEvents
 	calr	Rhythm_LoadCurrentTimeSig
-DrumVoice_Handler6_Return:
+CmpRecSet_OnRhythmProgram_Return:
 	ret
-DrumVoice_Handler7:
+CmpRecSet_OnRhythmBank:
 	or	(0xe3e2:16), 8
 	or	(0xe3e2:16), 1
 	ldw	(0xe3e4:16), 1927
@@ -27160,36 +27183,36 @@ DrumVoice_Handler7:
 	add	xiy, 16
 	ld	a, (xiy)
 	bit	0, a
-	jr	nz, DrumVoice_Handler7_Return
+	jr	nz, CmpRecSet_OnRhythmBank_Return
 	calr	CmpSet_StepRhythmBank
 	calr	DrumKit_PostMidiEvents
 	calr	Rhythm_LoadCurrentTimeSig
-DrumVoice_Handler7_Return:
+CmpRecSet_OnRhythmBank_Return:
 	ret
 	push	xiz
 	bit	0, (0x34d3:16)
-	jr	nz, DrumVoice_Handler7_Epilogue
+	jr	nz, CmpRecSet_OnRhythmBank_Epilogue
 	cp	(STYLE_SECTION:16), 12
-	jr	nc, DrumVoice_Handler7_Epilogue
-	calr	DrumVoice_Handler7_Helper
-DrumVoice_Handler7_Epilogue:
+	jr	nc, CmpRecSet_OnRhythmBank_Epilogue
+	calr	CmpRecSet_OnRhythmBank_Helper
+CmpRecSet_OnRhythmBank_Epilogue:
 	pop	xiz
 	ret
 ; Sets bit 0 of 0x8d88 and clears bit 3 of 0xe3e2; when bit 0 of RHYTHM_PATTERN_BUF_A + 0x10 is
-; clear and the kit index 0x34d6 is below 12, DrumVoice_Handler7_Helper_Helper.  A run of
+; clear and the kit index 0x34d6 is below 12, CmpRecSet_OnRhythmBank_Helper_Helper.  A run of
 ; unreferenced rets follows.
-DrumVoice_Handler7_Helper:
+CmpRecSet_OnRhythmBank_Helper:
 	or	(0x8d88:16), 1
 	and	(0xe3e2:16), 247
 	ld	xiy, RHYTHM_PATTERN_BUF_A
 	add	xiy, 16
 	ld	a, (xiy)
 	bit	0, a
-	jr	nz, DrumVoice_Handler7_Code_Return
+	jr	nz, CmpRecSet_OnRhythmBank_Code_Return
 	cp	(STYLE_SECTION:16), 12
-	jr	nc, DrumVoice_Handler7_Code_Return
-	calr	DrumVoice_Handler7_Helper_Helper
-DrumVoice_Handler7_Code_Return:
+	jr	nc, CmpRecSet_OnRhythmBank_Code_Return
+	calr	CmpRecSet_OnRhythmBank_Helper_Helper
+CmpRecSet_OnRhythmBank_Code_Return:
 	ret
 	ret
 	ret
@@ -27202,46 +27225,46 @@ DrumVoice_Handler7_Code_Return:
 	ret
 	and	(0xe3e2:16), 254
 	ret
-; Calls DrumVoice_Handler7_Data with XIZ preserved.
+; Calls CmpRecSet_OnRhythmBank_Data with XIZ preserved.
 ; Called from CmpNcpTtl_Dispatch and CmpNcpTtlFunc_OnTitleActivate.
 CmpNcpTtl_Dispatch_Helper:
 	push	xiz
-	call	DrumVoice_Handler7_Data
+	call	CmpRecSet_OnRhythmBank_Data
 	pop	xiz
 	ret
-; Unless PREVIOUS_TITLE is 184 (TT_CMPNCP): DrumVoice_Handler7_Code_Helper2, the pair (RHYTHM_LOAD_PROGRAM) /
-; (RHYTHM_LOAD_BANK) made the panel kit (DrumVoice_Handler7_Data_Code_Helper) and posted
+; Unless PREVIOUS_TITLE is 184 (TT_CMPNCP): CmpRecSet_OnRhythmBank_Code_Helper2, the pair (RHYTHM_LOAD_PROGRAM) /
+; (RHYTHM_LOAD_BANK) made the panel kit (CmpRecSet_OnRhythmBank_Data_Code_Helper) and posted
 ; (DrumKit_PostMidiEvents), bit 6 of 0x34cd cleared.  Always: CmpNcp_LatchPanelRhythmAsSource,
-; DrumVoice_Handler7_Code_Helper, DrumVoice_Handler7_Code_Helper2.
-DrumVoice_Handler7_Data:
+; CmpRecSet_OnRhythmBank_Code_Helper, CmpRecSet_OnRhythmBank_Code_Helper2.
+CmpRecSet_OnRhythmBank_Data:
 	cp	(PREVIOUS_TITLE:16), 184	; TT_CMPNCP
-	jr	z, DrumVoice_Handler7_Data_Code_Skip
-	calr	DrumVoice_Handler7_Code_Helper2
+	jr	z, CmpRecSet_OnRhythmBank_Data_Code_Skip
+	calr	CmpRecSet_OnRhythmBank_Code_Helper2
 	ld	l, (RHYTHM_LOAD_PROGRAM:16)
 	ld	h, (RHYTHM_LOAD_BANK:16)
-	calr	DrumVoice_Handler7_Data_Code_Helper
+	calr	CmpRecSet_OnRhythmBank_Data_Code_Helper
 	calr	DrumKit_PostMidiEvents
 	and	(0x34cd:16), 191
-DrumVoice_Handler7_Data_Code_Skip:
+CmpRecSet_OnRhythmBank_Data_Code_Skip:
 	calr	CmpNcp_LatchPanelRhythmAsSource
-	calr	DrumVoice_Handler7_Code_Helper
-	calr	DrumVoice_Handler7_Code_Helper2
+	calr	CmpRecSet_OnRhythmBank_Code_Helper
+	calr	CmpRecSet_OnRhythmBank_Code_Helper2
 	ret
 ; When the panel kit program 0xfc5a is 0x80 or more but not 0x80, 0x84 or 0x88: replaces it by the
 ; first program of its group (CmpNcp_ProgramGroupBase[A & 0x7f]) in 0xfc5a and 0x34ed, with the
 ; low 7 bits in 0xffa1 and 0xffbf, and posts it (DrumKit_PostMidiEvents).  Values 0x8c and up
 ; index past the 12-byte table.
-DrumVoice_Handler7_Code_Helper:
+CmpRecSet_OnRhythmBank_Code_Helper:
 	ld	a, (PANEL_STYLE:16)
 	and	a, 255
 	cp	a, 128
-	jr	c, DrumVoice_Handler7_Code_Return2
+	jr	c, CmpRecSet_OnRhythmBank_Code_Return2
 	cp	a, 128
-	jr	z, DrumVoice_Handler7_Code_Return2
+	jr	z, CmpRecSet_OnRhythmBank_Code_Return2
 	cp	a, 132
-	jr	z, DrumVoice_Handler7_Code_Return2
+	jr	z, CmpRecSet_OnRhythmBank_Code_Return2
 	cp	a, 136
-	jr	z, DrumVoice_Handler7_Code_Return2
+	jr	z, CmpRecSet_OnRhythmBank_Code_Return2
 	and	a, 127
 	ld	xix, CmpNcp_ProgramGroupBase
 	ld	a, (xix+a)
@@ -27251,28 +27274,28 @@ DrumVoice_Handler7_Code_Helper:
 	ld	(PANEL_VARI_STYLE+15:16), a
 	ld	(0xffbf:16), a
 	calr	DrumKit_PostMidiEvents
-DrumVoice_Handler7_Code_Return2:
+CmpRecSet_OnRhythmBank_Code_Return2:
 	ret
 CmpNcp_ProgramGroupBase:
 	; (PANEL_STYLE) & 0x7F -> the first program of its group of four: 0x81..0x83 -> 0x80, 0x85..0x87 ->
-	; 0x84, 0x89..0x8B -> 0x88.  DrumVoice_Handler7_Code_Helper returns before the lookup for
+	; 0x84, 0x89..0x8B -> 0x88.  CmpRecSet_OnRhythmBank_Code_Helper returns before the lookup for
 	; values below 0x80 and for 0x80, 0x84 and 0x88 themselves.
 	.byte	0x80, 0x80, 0x80, 0x80, 0x84, 0x84, 0x84, 0x84, 0x88, 0x88, 0x88, 0x88
 ; CmpNcp_SendProgramChangeOnLeave: XIZ-preserving step run when the Composer copy title TT_CMPNCP (0xB8) is left:
-;   through DrumVoice_Handler7_Data_3, unless CURRENT_TITLE is still TT_CMPNCP, it calls DrumKit_SendProgramChange,
+;   through CmpRecSet_OnRhythmBank_Data_3, unless CURRENT_TITLE is still TT_CMPNCP, it calls DrumKit_SendProgramChange,
 ;   which sets the panel rhythm 0xFC5A to 0x80 + the composer pattern 0x34D6 and posts it. Basis: callers + body --
 ;   its only caller is CmpNcpTtlFunc_OnTitleOld (EVT_ACTIVATE_STATE phase 3, title left).
 CmpNcp_SendProgramChangeOnLeave:
 	push	xiz
-	call	DrumVoice_Handler7_Data_3
+	call	CmpRecSet_OnRhythmBank_Data_3
 	pop	xiz
 	ret
 ; Unless CURRENT_TITLE is 184 (TT_CMPNCP): DrumKit_SendProgramChange.
-DrumVoice_Handler7_Data_3:
+CmpRecSet_OnRhythmBank_Data_3:
 	cp	(CURRENT_TITLE:16), 184	; TT_CMPNCP
-	jr	z, DrumVoice_Handler7_Code_Return3
+	jr	z, CmpRecSet_OnRhythmBank_Code_Return3
 	calr	DrumKit_SendProgramChange
-DrumVoice_Handler7_Code_Return3:
+CmpRecSet_OnRhythmBank_Code_Return3:
 	ret
 ; CmpNcp_StepItemA_Wrap: XIZ-preserving wrapper of CmpNcp_StepItemA, which steps the Composer NCP
 ;   item-A selector (CMPNCP_FROM_ITEM) up (W bit 7 set) or down within 0..2. Basis: callers + body -- CmpNcpTtl_Dispatch2 calls
@@ -27290,18 +27313,18 @@ CmpNcp_StepItemA_Wrap:
 CmpNcp_StepItemA:
 	ld	a, (CMPNCP_FROM_ITEM:16)
 	bit	7, w
-	jr	z, DrumVoice_Handler7_Code_Skip
+	jr	z, CmpRecSet_OnRhythmBank_Code_Skip
 	cp	a, 2:i3
-	jr	z, DrumVoice_Handler7_Code_Return4
+	jr	z, CmpRecSet_OnRhythmBank_Code_Return4
 	inc	1, a
-	jr	DrumVoice_Handler7_Code_Join
-DrumVoice_Handler7_Code_Skip:
+	jr	CmpRecSet_OnRhythmBank_Code_Join
+CmpRecSet_OnRhythmBank_Code_Skip:
 	cp	a, 0:i3
-	jr	z, DrumVoice_Handler7_Code_Return4
+	jr	z, CmpRecSet_OnRhythmBank_Code_Return4
 	dec	1, a
-DrumVoice_Handler7_Code_Join:
+CmpRecSet_OnRhythmBank_Code_Join:
 	ld	(CMPNCP_FROM_ITEM:16), a
-DrumVoice_Handler7_Code_Return4:
+CmpRecSet_OnRhythmBank_Code_Return4:
 	ret
 ; CmpNcp_StepItemAValue_Wrap: XIZ-preserving wrapper: steps the value of the selected FROM item (selector 0x39A7,
 ;   0..2) in direction W (bit 7 set = down) by calling CmpNcp_ItemHandlerTable[CmpNcp_ItemA_HandlerIndex[(CMPNCP_FROM_ITEM)]]
@@ -27346,16 +27369,16 @@ CmpNcp_StepItemB:
 	bit	7, w
 	jr	z, CmpNcp_StepItemB_Skip
 	cp	a, 1:i3
-	jr	z, DrumVoice_Handler7_Code_Return5
+	jr	z, CmpRecSet_OnRhythmBank_Code_Return5
 	inc	1, a
-	jr	DrumVoice_Handler7_Code_Join2
+	jr	CmpRecSet_OnRhythmBank_Code_Join2
 CmpNcp_StepItemB_Skip:
 	cp	a, 0:i3
-	jr	z, DrumVoice_Handler7_Code_Return5
+	jr	z, CmpRecSet_OnRhythmBank_Code_Return5
 	dec	1, a
-DrumVoice_Handler7_Code_Join2:
+CmpRecSet_OnRhythmBank_Code_Join2:
 	ld	(CMPNCP_TO_ITEM:16), a
-DrumVoice_Handler7_Code_Return5:
+CmpRecSet_OnRhythmBank_Code_Return5:
 	ret
 ; CmpNcp_StepItemBValue_Wrap: XIZ-preserving wrapper: steps the value of the selected TO item (selector 0x39A8, 0..1)
 ;   in direction W (bit 7 set = down) by calling CmpNcp_ItemHandlerTable[CmpNcp_ItemB_HandlerIndex[(CMPNCP_TO_ITEM)]]
@@ -27388,7 +27411,7 @@ CmpNcp_ItemB_HandlerIndex:
 	pop	xiz
 	ret
 ; CmpNcp_CallItemHandler: Calls entry (HL & 7) of CmpNcp_ItemHandlerTable (0-4 = CmpNcp_ItemHandler0-4, 5/6 =
-;   DrumVoice_NullHandler), passing W (the step direction) through. Basis: callers + body --
+;   CmpRecSet_NopRow), passing W (the step direction) through. Basis: callers + body --
 ;   CmpNcp_StepItemAValue / _Helper4 load HL from CmpNcp_ItemA_HandlerIndex[(CMPNCP_FROM_ITEM)] /
 ;   CmpNcp_ItemB_HandlerIndex[(CMPNCP_TO_ITEM)] and call it; the CmpNcp title's case handlers reach those with W = 0 or 128.
 CmpNcp_CallItemHandler:
@@ -27404,7 +27427,7 @@ CmpNcp_CallItemHandler:
 CmpNcp_ItemHandlerTable:
 	; CmpNcp_CallItemHandler calls entry (HL & 7).  CmpNcp_StepItemAValue
 	; and _Helper4 pass 0..4 from the two tables above; the wrapper just before
-	; CmpNcp_CallItemHandler passes its caller's HL.  5 and 6 are DrumVoice_NullHandler;
+	; CmpNcp_CallItemHandler passes its caller's HL.  5 and 6 are CmpRecSet_NopRow;
 	; an index of 7 would read the first four bytes of CmpNcp_ItemHandler0.  Each handler sets bits
 	; of (0xE3E2) and stores its own word in (0xE3E4): 0x0080, 0x0181, 0x0282, 0x8505, 0x0686.
 	; This table and the five handlers were decoded as code (`jrl ule, ...`, `.byte 0xc1, 0xe2,
@@ -27414,8 +27437,8 @@ CmpNcp_ItemHandlerTable:
 	.long	CmpNcp_ItemHandler2
 	.long	CmpNcp_ItemHandler3
 	.long	CmpNcp_ItemHandler4
-	.long	DrumVoice_NullHandler
-	.long	DrumVoice_NullHandler
+	.long	CmpRecSet_NopRow
+	.long	CmpRecSet_NopRow
 CmpNcp_ItemHandler0:
 	or	(0xe3e2:16), 8
 	or	(0xe3e2:16), 1
@@ -27451,13 +27474,13 @@ CmpNcp_ItemHandler4:
 	calr	CmpNcp_ItemStep4
 	ret
 	push	xiz
-	call	DrumVoice_Handler7_Data_4
+	call	CmpRecSet_OnRhythmBank_Data_4
 	pop	xiz
 	ret
 ; Unless PREVIOUS_TITLE is 189 (TT_CMMODE): clears bit 6 of 0x34cd and copies bit 0 of
 ; RHYTHM_PATTERN_BUF_A + 0x10 into bit 0 of 0x34d3.  Always clears bits 0 and 5 of 0xe3e2.  An
-; XIZ-preserving wrapper of DrumVoice_Handler7_Code_Entry_Data follows two unreferenced rets.
-DrumVoice_Handler7_Data_4:
+; XIZ-preserving wrapper of CmpRecSet_OnRhythmBank_Code_Entry_Data follows two unreferenced rets.
+CmpRecSet_OnRhythmBank_Data_4:
 	cp	(PREVIOUS_TITLE:16), 189	; TT_CMMODE
 	jr	z, CmpNcp_ItemHandler4_Join
 	and	(0x34cd:16), 191
@@ -27474,19 +27497,19 @@ CmpNcp_ItemHandler4_Join:
 	ret
 	ret
 	push	xiz
-	call	DrumVoice_Handler7_Code_Entry_Data
+	call	CmpRecSet_OnRhythmBank_Code_Entry_Data
 	pop	xiz
 	ret
 ; Unless PREVIOUS_TITLE is 187 (TT_CMBEND), clears bit 6 of 0x34cd; always clears bit 0 of
 ; 0xe3e2.  The ACTIVE_TITLE_PREVIOUS test branches to the next line either way.
-DrumVoice_Handler7_Code_Entry_Data:
+CmpRecSet_OnRhythmBank_Code_Entry_Data:
 	cp	(PREVIOUS_TITLE:16), 187	; TT_CMBEND
 	jr	z, CmpNcp_ItemHandler4_Join2
 	and	(0x34cd:16), 191
 CmpNcp_ItemHandler4_Join2:
 	cp	(ACTIVE_TITLE_PREVIOUS:16), 187	; TT_CMBEND
-	jr	z, DrumVoice_Handler7_Code_Entry_Data_Join
-DrumVoice_Handler7_Code_Entry_Data_Join:
+	jr	z, CmpRecSet_OnRhythmBank_Code_Entry_Data_Join
+CmpRecSet_OnRhythmBank_Code_Entry_Data_Join:
 	and	(0xe3e2:16), 254
 	ret
 	or	(0xe3e2:16), 8
@@ -27494,26 +27517,26 @@ DrumVoice_Handler7_Code_Entry_Data_Join:
 	and	a, 15
 	ld	w, a
 	cp	hl, 0:i3
-	jr	nz, DrumVoice_Handler7_Code_Entry_Data_Code_Entry_Code_Skip
+	jr	nz, CmpRecSet_OnRhythmBank_Code_Entry_Data_Code_Entry_Code_Skip
 	inc	1, a
 	cp	a, 13
-	jr	c, DrumVoice_Handler7_Code_Entry_Data_Code_Entry_Code_Join
+	jr	c, CmpRecSet_OnRhythmBank_Code_Entry_Data_Code_Entry_Code_Join
 	ld	a, 12:opc
-	jr	DrumVoice_Handler7_Code_Entry_Data_Code_Entry_Code_Join
-DrumVoice_Handler7_Code_Entry_Data_Code_Entry_Code_Skip:
+	jr	CmpRecSet_OnRhythmBank_Code_Entry_Data_Code_Entry_Code_Join
+CmpRecSet_OnRhythmBank_Code_Entry_Data_Code_Entry_Code_Skip:
 	dec	1, a
 	cp	a, 255
-	jr	nz, DrumVoice_Handler7_Code_Entry_Data_Code_Entry_Code_Join
+	jr	nz, CmpRecSet_OnRhythmBank_Code_Entry_Data_Code_Entry_Code_Join
 	ld	a, 0:opc
-DrumVoice_Handler7_Code_Entry_Data_Code_Entry_Code_Join:
+CmpRecSet_OnRhythmBank_Code_Entry_Data_Code_Entry_Code_Join:
 	ld	(PANEL_TOUCH+4:16), a
 	cp	a, w
-	jr	z, DrumVoice_Handler7_Code_Return6
+	jr	z, CmpRecSet_OnRhythmBank_Code_Return6
 	ld	w, 15:opc
 	ld	e, 145:opc
 	ld	d, 4:opc
 	call	SwbtWr_QueuePostEvent
-DrumVoice_Handler7_Code_Return6:
+CmpRecSet_OnRhythmBank_Code_Return6:
 	ret
 	ret
 	ld	(STYLE_SECTION:16), 0
@@ -27523,8 +27546,8 @@ DrumVoice_Handler7_Code_Return6:
 ;   and takes the bank for the new program from the style part's companion bytes 0xFF92[program]: first
 ;   PartCtrl_WriteProgramChange with the current program / bank and (PROGRAM_CHANGE_PART) = 72 (part 0x48), then
 ;   SndParam_ApplyProgramChange_Safe with the new pair and (0x90F6) = 72, storing the resolved program and bank (&
-;   0x7F) back to 0xFC5A / 0xFC5B. Basis: callers + body -- DrumVoice_Handler6 (entry 6 of DrumVoice_DispatchTable,
-;   chosen by DrumVoice_Select from (0x3540)) calls it before DrumKit_PostMidiEvents and Rhythm_LoadCurrentTimeSig,
+;   0x7F) back to 0xFC5A / 0xFC5B. Basis: callers + body -- CmpRecSet_OnRhythmProgram (entry 6 of CmpRecSet_RowHandlers,
+;   chosen by CmpRecSet_DispatchCursorRow from (0x3540)) calls it before DrumKit_PostMidiEvents and Rhythm_LoadCurrentTimeSig,
 ;   whose header names 0xFC5A / 0xFC5B the rhythm program / bank.
 Rhythm_StepProgram:
 	push	w
@@ -27537,18 +27560,18 @@ Rhythm_StepProgram:
 	call	PartCtrl_WriteProgramChange
 	pop	w
 	bit	7, w
-	jr	nz, DrumVoice_Handler7_Code_Skip2
+	jr	nz, CmpRecSet_OnRhythmBank_Code_Skip2
 	inc	1, l
 	cp	l, 14
-	jr	c, DrumVoice_Handler7_Code_Join3
+	jr	c, CmpRecSet_OnRhythmBank_Code_Join3
 	ld	l, 13:opc
-	jr	DrumVoice_Handler7_Code_Join3
-DrumVoice_Handler7_Code_Skip2:
+	jr	CmpRecSet_OnRhythmBank_Code_Join3
+CmpRecSet_OnRhythmBank_Code_Skip2:
 	dec	1, l
 	cp	l, 255
-	jr	nz, DrumVoice_Handler7_Code_Join3
+	jr	nz, CmpRecSet_OnRhythmBank_Code_Join3
 	ld	l, 0:opc
-DrumVoice_Handler7_Code_Join3:
+CmpRecSet_OnRhythmBank_Code_Join3:
 	ld	xix, PANEL_VARI_STYLE
 	ld	h, (xix+l)
 	ld a, 72:opc
@@ -27562,7 +27585,7 @@ DrumVoice_Handler7_Code_Join3:
 ; Rhythm_LoadCurrentTimeSig: Locates the current rhythm's header in the Rhythm Data ROM
 ;   (RhythmROM_BankProgramLocators[bank 0xFC5B & 0x7F][program 0xFC5A], RHYTHM_DATA_ROM__BASE_ADDR + (hi & 0xff) << 16 + lo) and copies
 ;   its byte +976 (0x3D0), the time-signature index into TimeSig_DisplayStrings, to RAM 0x34F0. Basis: callers + body
-;   + ROM data -- every rhythm-selection path (DrumVoice_Handler6/7, RhythmVariation_Select_Entry_Data,
+;   + ROM data -- every rhythm-selection path (CmpRecSet_OnRhythmProgram/7, RhythmVariation_Select_Entry_Data,
 ;   AccPatch_CallParamLookup_Helper) calls it after the selection.
 Rhythm_LoadCurrentTimeSig:
 	ld	l, (PANEL_STYLE:16)
@@ -27582,8 +27605,8 @@ Rhythm_LoadCurrentTimeSig:
 	ld	xix, 0x400000
 	add	xix, xwa
 	add	xix, xde
-	jr	DrumVoice_Handler7_Code_Join4
-DrumVoice_Handler7_Code_Join4:
+	jr	CmpRecSet_OnRhythmBank_Code_Join4
+CmpRecSet_OnRhythmBank_Code_Join4:
 	ld	a, (xix+976)
 	ld	(0x34f0:16), a
 	ret
@@ -27591,8 +27614,8 @@ DrumVoice_Handler7_Code_Join4:
 ;   Rhythm_LoadCurrentTimeSig) up (W bit 7 clear) or down (set), clamped to 0..AccVoice_GetChannelCount(program) (kept
 ;   in 0x342D); remembers it as that program's bank in 0xFF92[program] (tag 0x49's payload), applies the pair with
 ;   SndParam_ApplyProgramChange_Safe and stores 0xFC5A/0xFC5B. It first passes the old pair to
-;   PartCtrl_WriteProgramChange (0x90F7 = 72). Basis: callers + body -- DrumVoice_Handler7, entry 7 of
-;   DrumVoice_DispatchTable (DrumVoice_Select from the composer-set page-1 Up/Dn events, W = 0 / 0x80), calls it
+;   PartCtrl_WriteProgramChange (0x90F7 = 72). Basis: callers + body -- CmpRecSet_OnRhythmBank, entry 7 of
+;   CmpRecSet_RowHandlers (CmpRecSet_DispatchCursorRow from the composer-set page-1 Up/Dn events, W = 0 / 0x80), calls it
 ;   before DrumKit_PostMidiEvents and Rhythm_LoadCurrentTimeSig; Rhythm_StepProgram steps the program and
 ;   recalls its bank from 0xFF92[program].
 CmpSet_StepRhythmBank:
@@ -27611,18 +27634,18 @@ CmpSet_StepRhythmBank:
 	popw	hl
 	pop	w
 	bit	7, w
-	jr	nz, DrumVoice_Handler7_Code_Skip3
+	jr	nz, CmpRecSet_OnRhythmBank_Code_Skip3
 	inc	1, a
 	cp a, (ACC_EVENT:16)
-	jr ule, DrumVoice_Handler7_Code_Join5
+	jr ule, CmpRecSet_OnRhythmBank_Code_Join5
 	ld a, (ACC_EVENT:16)
-	jr DrumVoice_Handler7_Code_Join5
-DrumVoice_Handler7_Code_Skip3:
+	jr CmpRecSet_OnRhythmBank_Code_Join5
+CmpRecSet_OnRhythmBank_Code_Skip3:
 	dec 1, a
 	cp a, 255
-	jr	nz, DrumVoice_Handler7_Code_Join5
+	jr	nz, CmpRecSet_OnRhythmBank_Code_Join5
 	ld	a, 0:opc
-DrumVoice_Handler7_Code_Join5:
+CmpRecSet_OnRhythmBank_Code_Join5:
 	ld	h, a
 	ld	xwa, 0xff92
 	ld	(xwa+l), h
@@ -27638,7 +27661,7 @@ DrumVoice_Handler7_Code_Join5:
 ; 31.  Equal: the current slot's kit pair (+16 / +17) = (PANEL_STYLE) / (0xfc5b) & 0x7f,
 ; GLOBAL_ERROR_CODE = 21 and DrumVoice_NotifyEE.  Different: GLOBAL_ERROR_CODE = 22,
 ; DrumVoice_NotifyEE and MIDI_SendSysExCmd with A = 8.
-DrumVoice_Handler7_Helper_Helper:
+CmpRecSet_OnRhythmBank_Helper_Helper:
 	ld	l, (0x34f0:16)
 	and	l, 31
 	xor	h, h
@@ -27654,7 +27677,7 @@ DrumVoice_Handler7_Helper_Helper:
 	add	xbc, 7
 	ld	a, (xbc+hl)
 	cp a, w
-	jr	nz, DrumVoice_Handler7_Code_Skip4
+	jr	nz, CmpRecSet_OnRhythmBank_Code_Skip4
 	call	AccPatch_GetCurrentSlotAddr
 	ld	a, (PANEL_STYLE:16)
 	and	a, 255
@@ -27664,13 +27687,13 @@ DrumVoice_Handler7_Helper_Helper:
 	ld	(xiy+17), a
 	ld	(GLOBAL_ERROR_CODE:16), 21
 	calr	DrumVoice_NotifyEE
-	jr	DrumVoice_Handler7_Code_Return7
-DrumVoice_Handler7_Code_Skip4:
+	jr	CmpRecSet_OnRhythmBank_Code_Return7
+CmpRecSet_OnRhythmBank_Code_Skip4:
 	ld	(GLOBAL_ERROR_CODE:16), 22
 	calr	DrumVoice_NotifyEE
 	ld	a, 8:opc
 	call	MIDI_SendSysExCmd
-DrumVoice_Handler7_Code_Return7:
+CmpRecSet_OnRhythmBank_Code_Return7:
 	ret
 
 ; Sends sound-controller command 0xee with argument 0 (UI_InterruptTitleByIndex), preserving all
@@ -27705,7 +27728,7 @@ TimeSig_DisplayStrings:
 ; the 20-record count are read off the bytes: 20 records end exactly where
 ; the code at +0xC8 (call ...) begins.  READER NOT ESTABLISHED for this
 ; stride: the only direct readers found (`ld xbc, TimeSig_DisplayStrings /
-; add xbc,7` after `sll hl,3`, in the code that follows DrumVoice_Handler7)
+; add xbc,7` after `sll hl,3`, in the code that follows CmpRecSet_OnRhythmBank)
 ; index it with stride 8 at +7, which does not fit 10-byte records; the
 ; positional labels TimeSig_DisplayStrings_Code.. point far past this table
 ; into the code and data that follow.
@@ -27750,8 +27773,8 @@ TimeSig_DisplayStrings:
 	.ascii "(16/8)+0 "
 	.byte 8
 ; Calls VoiceParam_ClampAndValidate_Tramp, then falls into TimeSig_DisplayStrings_Code_Sub2.
-; Called from DrumVoice_Handler7_Data.
-DrumVoice_Handler7_Data_Code_Helper:
+; Called from CmpRecSet_OnRhythmBank_Data.
+CmpRecSet_OnRhythmBank_Data_Code_Helper:
 	call	VoiceParam_ClampAndValidate_Tramp
 ; In: L = kit program, H = bank.  0xfc5a = L, bits 0-6 of 0xfc5b = H & 0x7f, 0x90f7 = 72;
 ; PartCtrl_WriteProgramChange; then H is stored at 0xff92 + L.
@@ -27904,15 +27927,15 @@ CmpNcp_LatchPanelRhythmAsSource:
 	ld	(RHYTHM_LOAD_PROGRAM:16), a
 	ld	(RHYTHM_LOAD_BANK:16), w
 	ret
-DrumVoice_Handler7_Code_Helper2:
+CmpRecSet_OnRhythmBank_Code_Helper2:
 	ld	l, (RHYTHM_LOAD_PROGRAM:16)
 	and	l, 255
 	cp	l, 240
-	jr	c, DrumVoice_Handler7_Code_Helper2_Skip5
+	jr	c, CmpRecSet_OnRhythmBank_Code_Helper2_Skip5
 	ld	l, 128:opc
 	ld	(RHYTHM_LOAD_PROGRAM:16), l
 	ld	(RHYTHM_LOAD_BANK:16), 0
-DrumVoice_Handler7_Code_Helper2_Skip5:
+CmpRecSet_OnRhythmBank_Code_Helper2_Skip5:
 	cp	l, 128
 	jr	c, TimeSig_DisplayStrings_Code_Skip6
 	ld	a, (RHYTHM_LOAD_BANK:16)
@@ -28103,20 +28126,20 @@ CmpNcp_ItemStep4_Skip:
 	calr	CmpNcp_StepSlotInGroup1
 	jr	CmpNcp_ItemStep4_Join
 CmpNcp_ItemStep4_Skip2:
-	calr	DrumVoice_Handler7_Code_Helper2_Helper
+	calr	CmpRecSet_OnRhythmBank_Code_Helper2_Helper
 CmpNcp_ItemStep4_Join:
 	ld	(STYLE_SECTION:16), a
 	ret
-DrumVoice_Handler7_Code_Helper2_Helper:
+CmpRecSet_OnRhythmBank_Code_Helper2_Helper:
 	bit	7, w
-	jr	nz, DrumVoice_Handler7_Code_Helper2_Skip4
+	jr	nz, CmpRecSet_OnRhythmBank_Code_Helper2_Skip4
 	inc	1, a
 	cp	a, 31
-	jr	nz, DrumVoice_Handler7_Code_Helper2_Skip3
+	jr	nz, CmpRecSet_OnRhythmBank_Code_Helper2_Skip3
 	calr	CmpNcp_ResetPatternToVari1
 	ld	a, 0:opc
 	jr	TimeSig_DisplayStrings_Code_Join4
-DrumVoice_Handler7_Code_Helper2_Skip3:
+CmpRecSet_OnRhythmBank_Code_Helper2_Skip3:
 	cp	a, 4:i3
 	jr	nz, TimeSig_DisplayStrings_Code_Skip16
 	ld	a, 12:opc
@@ -28128,7 +28151,7 @@ TimeSig_DisplayStrings_Code_Skip16:
 	jr	TimeSig_DisplayStrings_Code_Join4
 TimeSig_DisplayStrings_Code_Join4:
 	jr	TimeSig_DisplayStrings_Code_Return4
-DrumVoice_Handler7_Code_Helper2_Skip4:
+CmpRecSet_OnRhythmBank_Code_Helper2_Skip4:
 	dec	1, a
 	cp	a, 29
 	jr	nz, TimeSig_DisplayStrings_Code_Skip17
@@ -28271,7 +28294,7 @@ TimeSig_DisplayStrings_Code_Return7:
 	ld	a, (PANEL_STYLE:16)
 	and	a, 15
 	ld	(0x390a:16), a
-	call	TimeSig_DisplayStrings_Helper
+	call	ComposerChordMap_GetRecord
 	ld	(0x391e:16), xiy
 	add	xiy, 16
 	ld	(0x3922:16), xiy
@@ -28287,8 +28310,10 @@ CmpNcp_StepSlotInGroup2_Skip2:
 	ret
 	ret
 	ret
-; Out: XIY = RHYTHM_PATTERN_BUF_A + 0xba0 + 32 * (0x390a), a 32-byte record of the composer data.
-TimeSig_DisplayStrings_Helper:
+; ComposerChordMap_GetRecord: XIY = RHYTHM_PATTERN_BUF_A + 0xBA0 + 32 * (0x390A): the 32-byte COMPOSER CHORD MAP record selected by 0x390A
+;   (style image +0xBA0, chord_map[5]).  Basis: callers + body -- the chord-map step code stores PANEL_STYLE & 15
+;   in 0x390A, calls it and copies four bytes of the record to 0x390E.
+ComposerChordMap_GetRecord:
 	ld	xwa, 0:i3
 	ld	xbc, 0:i3
 	ld	a, 32:opc
@@ -28461,7 +28486,7 @@ TimeSig_SlotBitMask:
 TimeSig_DisplayStrings_Helper2:
 	ret
 	; No reference found.  Saves (0x390A)/(0x390B), runs (0x390A) = 0..4 through
-	; TimeSig_DisplayStrings_Helper, TimeSig_DisplayStrings_Code_Helper_Helper (XIX = XIY) and
+	; ComposerChordMap_GetRecord, TimeSig_DisplayStrings_Code_Helper_Helper (XIX = XIY) and
 	; TimeSig_DisplayStrings_Code_Helper3_Helper, restores both and clears (0x390D).
 	; Was `.byte 0xc1 / ldw (57:8), 0xc104 / pushw 1081`, i.e. `push (0x390a) / push (0x390b)`.
 TimeSig_RunSlots0to4:
@@ -28471,7 +28496,7 @@ TimeSig_RunSlots0to4:
 TimeSig_RunSlots0to4_Join:
 	cp	(0x390a:16), 5
 	jr	z, TimeSig_RunSlots0to4_Done
-	calr	TimeSig_DisplayStrings_Helper
+	calr	ComposerChordMap_GetRecord
 	ld	xix, xiy
 	push	xix
 	calr	TimeSig_DisplayStrings_Code_Helper_Helper
@@ -32393,7 +32418,7 @@ CmpSetTtl_DrumVoice0:
 	push xix
 	push xiz
 	ld w, 0x0:opc
-	call DrumVoice_Select
+	call CmpRecSet_DispatchCursorRow
 	pop xiz
 	pop xix
 	pop xhl
@@ -32407,7 +32432,7 @@ CmpSetTtl_DrumVoice1:
 	push xix
 	push xiz
 	ld w, 0x80:opc
-	call DrumVoice_Select
+	call CmpRecSet_DispatchCursorRow
 	pop xiz
 	pop xix
 	pop xhl
@@ -35101,7 +35126,7 @@ MainCmpSetFunc_Skip:
 	push	xix
 	push	xiz
 	ld	w, 0:opc
-	call	DrumVoice_Select
+	call	CmpRecSet_DispatchCursorRow
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -35126,7 +35151,7 @@ MainCmpSetFunc_Skip2:
 	push	xix
 	push	xiz
 	ld	w, 128:opc
-	call	DrumVoice_Select
+	call	CmpRecSet_DispatchCursorRow
 	pop	xiz
 	pop	xix
 	pop	xhl
