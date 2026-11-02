@@ -3475,7 +3475,7 @@ class EmitCtx:
             return self.func_labels[i][1]
         return re.sub(r"\{in:(0x[0-9A-Fa-f]+)\}", one, text)
 
-    def symbolise(self, mnem, ops):
+    def symbolise(self, mnem, ops, cpu=None):
         """Operand text with every address that has a name spelled by that name.
         A branch/call target always becomes a name: a target outside the
         converted code that nothing names gets a loc_<ADDR> equate."""
@@ -3488,7 +3488,9 @@ class EmitCtx:
                 nm = self.ext.setdefault(t, f"loc_{t:08X}")
             return re.sub(r"0x[0-9a-fA-F]+", nm, ops, count=1)
 
-        if mnem in ("mov", "cmp") and self.event_ids:
+        # (not in the library image, 0x4C000000..: its only id-valued immediates are tone-generator
+        # register classes passed to TgVoiceRegWrite, 0x00050000 / 0x00060000, which are not GUI events)
+        if mnem in ("mov", "cmp") and self.event_ids and not (cpu is not None and cpu >= 0x4C000000):
             # an event or method id (`cmp 0x50001, d3`, `mov 0x00060025, d1`) by its EV_ / MT_ name
             m = re.fullmatch(r"(0x[0-9a-fA-F]+), (d\d)", ops)
             if m and int(m.group(1), 16) in self.event_ids:
@@ -3602,7 +3604,7 @@ def emit_block(insns, name, lo, delta, ctx, annotated):
                     ctx.wide_udf += 1
                 else:
                     ctx.long_calls += 1
-            text = f"    {mnem:8s}{ctx.symbolise(mnem, good)}".rstrip()
+            text = f"    {mnem:8s}{ctx.symbolise(mnem, good, cpu)}".rstrip()
         else:
             ctx.escapes.append((cpu, mnem, ops))
             hexb = ", ".join(f"0x{x:02X}" for x in b)
