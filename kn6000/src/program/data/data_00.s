@@ -15788,7 +15788,7 @@ func_4C04EC9A_Table:	# 128 x u8, 0..29; read by func_4C04EC9A : `movbu	(d1, a0),
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 26, 26, 26, 26, 26, 26	# [96]
 	tab_u8	20, 21, 22, 23, 24, 25, 26, 27, 28, 26, 26, 26, 26, 26, 26, 26	# [112]
 
-MsgTable_4C19C2A0:	# 11 x {u32 key, code address}: a dispatch table; read by func_4C04ED36 0x4C04ED36 `call func_4C04EE11_entry, [d2,a2], 0x10`; func_4C04EE11 0x4C04EE11 `movhu (a2), d1` (+2)
+func_4C04EE11_MsgTable:	# 11 x {u32 key, code address}: a dispatch table; read by func_4C04ED36 0x4C04ED36 `call func_4C04EE11_entry, [d2,a2], 0x10`; func_4C04EE11 0x4C04EE11 `movhu (a2), d1` (+2)
 	.long	1, func_4C04EE3D
 	.long	2, loc_4C04F007
 	.long	4, loc_4C04EF90
@@ -15802,7 +15802,7 @@ MsgTable_4C19C2A0:	# 11 x {u32 key, code address}: a dispatch table; read by fun
 	.long	1024, loc_4C04F0AB
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x19C2F8, 0x19C300
-MsgTable_4C19C300:	# 9 x {u32 key, code address}: a dispatch table; read by func_4C04ED36_entry_L28 0x4C04ED61 `call func_4C04EE11_entry, [d2,a2], 0x10`; func_4C04EE11 0x4C04EE11 `movhu (a2), d1` (+2)
+func_4C04EE11_MsgTable_2:	# 9 x {u32 key, code address}: a dispatch table; read by func_4C04ED36_entry_L28 0x4C04ED61 `call func_4C04EE11_entry, [d2,a2], 0x10`; func_4C04EE11 0x4C04EE11 `movhu (a2), d1` (+2)
 	.long	1, loc_4C04F295
 	.long	2, loc_4C04F46D
 	.long	8, loc_4C04F514
@@ -15814,7 +15814,7 @@ MsgTable_4C19C300:	# 9 x {u32 key, code address}: a dispatch table; read by func
 	.long	512, loc_4C04F46D
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x19C348, 0x19C350
-MsgTable_4C19C350:	# 11 x {u32 key, code address}: a dispatch table; read by func_4C04ED36_entry_L50 0x4C04ED89 `call func_4C04EE11_entry, [d2,a2], 0x10`; func_4C04EE11 0x4C04EE11 `movhu (a2), d1` (+2)
+func_4C04EE11_MsgTable_3:	# 11 x {u32 key, code address}: a dispatch table; read by func_4C04ED36_entry_L50 0x4C04ED89 `call func_4C04EE11_entry, [d2,a2], 0x10`; func_4C04EE11 0x4C04EE11 `movhu (a2), d1` (+2)
 	.long	1, loc_4C04F66D
 	.long	8, loc_4C04F785
 	.long	16, loc_4C04F7B1
@@ -15828,7 +15828,7 @@ MsgTable_4C19C350:	# 11 x {u32 key, code address}: a dispatch table; read by fun
 	.long	32768, loc_4C04F9DA
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x19C3A8, 0x19C3B0
-MsgTable_4C19C3B0:	# 5 x {u32 key, code address}: a dispatch table; read by func_4C04ED36_entry_L78 0x4C04EDB1 `call func_4C04EE11_entry, [d2,a2], 0x10`; func_4C04EE11 0x4C04EE11 `movhu (a2), d1` (+2)
+func_4C04EE11_MsgTable_4:	# 5 x {u32 key, code address}: a dispatch table; read by func_4C04ED36_entry_L78 0x4C04EDB1 `call func_4C04EE11_entry, [d2,a2], 0x10`; func_4C04EE11 0x4C04EE11 `movhu (a2), d1` (+2)
 	.long	2, loc_4C04FA40
 	.long	8, loc_4C04FA43
 	.long	16, func_4C04FACA
@@ -15844,7 +15844,7 @@ func_4C04EE11_Table:	# REC_func_4C04EE11_ArgA0 (8 bytes): the layout func_4C04EE
 func_4C04EE11_entry_L18_List:
 	.long	0xffff, 0x0	# end
 
-MsgTable_4C19C3F0:	# 3 x {u32 key, code address}: a dispatch table; read by func_4C04EDDC_entry_L15 0x4C04EDF4 `call func_4C04EE11_entry, [d2,a2], 0x10`; func_4C04EE11 0x4C04EE11 `movhu (a2), d1` (+2)
+func_4C04EE11_MsgTable_5:	# 3 x {u32 key, code address}: a dispatch table; read by func_4C04EDDC_entry_L15 0x4C04EDF4 `call func_4C04EE11_entry, [d2,a2], 0x10`; func_4C04EE11 0x4C04EE11 `movhu (a2), d1` (+2)
 	.long	4, loc_4C04FCE2
 	.long	8192, loc_4C04FD0E
 	.long	16384, loc_4C04FD3A

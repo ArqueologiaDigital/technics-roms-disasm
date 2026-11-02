@@ -6460,7 +6460,7 @@ func_5015ADAF_Result_40:	# REC_func_5015ADAF_Result (8 bytes)
 func_5015ADAF_Result_41:	# REC_func_5015ADAF_Result (8 bytes)
 	REC_func_5015ADAF_Result	f0=0x702030, index=6, index_=5, x7="\x00"
 
-MsgTable_484092E8:	# 12 x {u32 key, code address}: a dispatch table; read by func_5015B736_entry_L1c 0x5015B755 `call func_5015B863_entry, [d2], 0x10`; func_5015B863_entry_L7 0x5015B86F `mov (a0), d2`
+func_5015B863_MsgTable:	# 12 x {u32 key, code address}: a dispatch table; read by func_5015B736_entry_L1c 0x5015B755 `call func_5015B863_entry, [d2], 0x10`; func_5015B863_entry_L7 0x5015B86F `mov (a0), d2`
 	.long	1, func_5015B895
 	.long	2, loc_5015BAC0
 	.long	4, loc_5015B993
@@ -6474,7 +6474,7 @@ MsgTable_484092E8:	# 12 x {u32 key, code address}: a dispatch table; read by fun
 	.long	1024, loc_5015BBE1
 	.long	2048, loc_5015BCF3
 	.space	8, 0x00
-MsgTable_48409350:	# 8 x {u32 key, code address}: a dispatch table; read by func_5015B736_entry_L51 0x5015B78A `call func_5015B863_entry, [d2], 0x10`; func_5015B863_entry_L7 0x5015B86F `mov (a0), d2`
+func_5015B863_MsgTable_2:	# 8 x {u32 key, code address}: a dispatch table; read by func_5015B736_entry_L51 0x5015B78A `call func_5015B863_entry, [d2], 0x10`; func_5015B863_entry_L7 0x5015B86F `mov (a0), d2`
 	.long	1, func_5015BCF6
 	.long	2, loc_5015BE15
 	.long	8, func_5015BEA5
@@ -6484,7 +6484,7 @@ MsgTable_48409350:	# 8 x {u32 key, code address}: a dispatch table; read by func
 	.long	128, func_5015C011
 	.long	256, func_5015C07C
 	.space	8, 0x00
-MsgTable_48409398:	# 9 x {u32 key, code address}: a dispatch table; read by func_5015B736_entry_L86 0x5015B7BF `call func_5015B863_entry, [d2], 0x10`; func_5015B863_entry_L7 0x5015B86F `mov (a0), d2`
+func_5015B863_MsgTable_3:	# 9 x {u32 key, code address}: a dispatch table; read by func_5015B736_entry_L86 0x5015B7BF `call func_5015B863_entry, [d2], 0x10`; func_5015B863_entry_L7 0x5015B86F `mov (a0), d2`
 	.long	1, func_5015C0C6
 	.long	8, func_5015C194
 	.long	16, func_5015C1DD
@@ -6504,7 +6504,7 @@ func_5015B863_ArgA0_0:	# REC_func_5015B863_ArgA0 (8 bytes): the layout func_5015
 func_5015B863_ArgA0_1:	# REC_func_5015B863_ArgA0 (8 bytes)
 	REC_func_5015B863_ArgA0	
 
-MsgTable_48409410:	# 3 x {u32 key, code address}: a dispatch table; read by func_5015B810_entry_L36 0x5015B849 `call func_5015B863_entry, [d2], 0x10`; func_5015B863_entry_L7 0x5015B86F `mov (a0), d2`
+func_5015B863_MsgTable_4:	# 3 x {u32 key, code address}: a dispatch table; read by func_5015B810_entry_L36 0x5015B849 `call func_5015B863_entry, [d2], 0x10`; func_5015B863_entry_L7 0x5015B86F `mov (a0), d2`
 	.long	4, func_5015C62A
 	.long	8192, func_5015C669
 	.long	16384, func_5015C6A8

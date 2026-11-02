@@ -62145,12 +62145,12 @@
 .equ func_4C04E666_entry_L2a_Records, 0x4c19c194
 .equ func_4C04EA50_entry_L7_Records, 0x4c19c214
 .equ func_4C04EC9A_Table, 0x4c19c220
-.equ MsgTable_4C19C2A0, 0x4c19c2a0
-.equ MsgTable_4C19C300, 0x4c19c300
-.equ MsgTable_4C19C350, 0x4c19c350
-.equ MsgTable_4C19C3B0, 0x4c19c3b0
+.equ func_4C04EE11_MsgTable, 0x4c19c2a0
+.equ func_4C04EE11_MsgTable_2, 0x4c19c300
+.equ func_4C04EE11_MsgTable_3, 0x4c19c350
+.equ func_4C04EE11_MsgTable_4, 0x4c19c3b0
 .equ func_4C04EE11_Table, 0x4c19c3e0
-.equ MsgTable_4C19C3F0, 0x4c19c3f0
+.equ func_4C04EE11_MsgTable_5, 0x4c19c3f0
 .equ func_4C04EE3D_entry_L14b_Table, 0x4c19c410
 .equ func_4C04FD66_L6_Table, 0x4c19c418
 .equ func_4C04FEDC_Table, 0x4c19c498

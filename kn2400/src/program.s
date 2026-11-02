@@ -664144,7 +664144,7 @@ func_5015B736_entry:
 	bne	func_5015B736_entry_L1c
 	bra	func_5015B736_entry_L35
 func_5015B736_entry_L1c:
-	mov	MsgTable_484092E8, d0
+	mov	func_5015B863_MsgTable, d0
 	mov	d0, (0x10, sp)
 	movhu	(0x14, sp), d0
 	mov	(0x10, sp), a0
@@ -664162,7 +664162,7 @@ func_5015B736_entry_L35:
 	bne	func_5015B736_entry_L51
 	bra	func_5015B736_entry_L6a
 func_5015B736_entry_L51:
-	mov	MsgTable_48409350, d0
+	mov	func_5015B863_MsgTable_2, d0
 	mov	d0, (0x10, sp)
 	movhu	(0x14, sp), d0
 	mov	(0x10, sp), a0
@@ -664180,7 +664180,7 @@ func_5015B736_entry_L6a:
 	bne	func_5015B736_entry_L86
 	bra	func_5015B736_entry_L9f
 func_5015B736_entry_L86:
-	mov	MsgTable_48409398, d0
+	mov	func_5015B863_MsgTable_3, d0
 	mov	d0, (0x10, sp)
 	movhu	(0x14, sp), d0
 	mov	(0x10, sp), a0
@@ -664232,7 +664232,7 @@ func_5015B810_entry_L24:
 	bne	func_5015B810_entry_L36
 	bra	func_5015B810_entry_L48
 func_5015B810_entry_L36:
-	mov	MsgTable_48409410, d0
+	mov	func_5015B863_MsgTable_4, d0
 	mov	d0, (0x10, sp)
 	movhu	(0x14, sp), d0
 	mov	(0x10, sp), a0

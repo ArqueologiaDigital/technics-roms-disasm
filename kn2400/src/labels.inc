@@ -286,12 +286,12 @@
 .equ func_5015ADAF_Result_39, 0x484092d0
 .equ func_5015ADAF_Result_40, 0x484092d8
 .equ func_5015ADAF_Result_41, 0x484092e0
-.equ MsgTable_484092E8, 0x484092e8
-.equ MsgTable_48409350, 0x48409350
-.equ MsgTable_48409398, 0x48409398
+.equ func_5015B863_MsgTable, 0x484092e8
+.equ func_5015B863_MsgTable_2, 0x48409350
+.equ func_5015B863_MsgTable_3, 0x48409398
 .equ func_5015B863_entry_L7_Table, 0x484093e8
 .equ func_5015B863_ArgA0_0, 0x48409400
-.equ MsgTable_48409410, 0x48409410
+.equ func_5015B863_MsgTable_4, 0x48409410
 .equ func_5015C6E7_Table, 0x48409430
 .equ func_5015C97B_Table, 0x484094b0
 .equ func_5015D214_Table, 0x484094c0

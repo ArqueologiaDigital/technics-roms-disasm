@@ -144179,7 +144179,7 @@ func_4C04ED36_entry:
 	exthu	d1
 	cmp	0, d1
 	beq	func_4C04ED36_entry_L28
-	mov	MsgTable_4C19C2A0, a0
+	mov	func_4C04EE11_MsgTable, a0
 	mov	d1, d0
 	call	func_4C04EE11_entry, [d2,a2], 0x10
 	clr	d0
@@ -144193,7 +144193,7 @@ func_4C04ED36_entry_L28:
 	exthu	d0
 	cmp	0, d0
 	beq	func_4C04ED36_entry_L50
-	mov	MsgTable_4C19C300, a0
+	mov	func_4C04EE11_MsgTable_2, a0
 	call	func_4C04EE11_entry, [d2,a2], 0x10
 	clr	d0
 	movhu	d0, (0x5002dcce)
@@ -144205,7 +144205,7 @@ func_4C04ED36_entry_L50:
 	exthu	d1
 	cmp	0, d1
 	beq	func_4C04ED36_entry_L78
-	mov	MsgTable_4C19C350, a0
+	mov	func_4C04EE11_MsgTable_3, a0
 	mov	d1, d0
 	call	func_4C04EE11_entry, [d2,a2], 0x10
 	clr	d0
@@ -144218,7 +144218,7 @@ func_4C04ED36_entry_L78:
 	exthu	d1
 	cmp	0, d1
 	beq	func_4C04ED36_entry_La0
-	mov	MsgTable_4C19C3B0, a0
+	mov	func_4C04EE11_MsgTable_4, a0
 	mov	d1, d0
 	call	func_4C04EE11_entry, [d2,a2], 0x10
 	clr	d0
@@ -144239,7 +144239,7 @@ func_4C04EDDC_entry_L15:
 	movhu	(0x5002dcd4), d0
 	cmp	0, d0
 	beq	func_4C04EDDC_entry_L2a
-	mov	MsgTable_4C19C3F0, a0
+	mov	func_4C04EE11_MsgTable_5, a0
 	call	func_4C04EE11_entry, [d2,a2], 0x10
 func_4C04EDDC_entry_L2a:
 	call	func_4C04FE9F_entry, [d2,d3,a2], 0x1c
