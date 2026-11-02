@@ -29,6 +29,16 @@
 ; 0x5006BE12, wrap 0x3C).
 0x484ABAB2  PanelModeFlagSet        ; write panel wiring-mode flag 0x5006BE94 (0 = mode A, else mode B; boot derives it from strap probe 0x484D7713==3)
 0x484ABABB  PanelModeFlagGet        ; read 0x5006BE94 (selects LED addr tables, norm tables, GPIO strobes)
+; (lane mn10300-names, 2026-11-02, from the IC18 boot ROM's twins: kn7000/notes/ic18-boot-rom.md "The tick.")
+0x484ABB16  PanelService            ; = IC18 PanelService 0x50002682: in a status-poll phase (0x5006BDA2 & 0xC0) re-initialise the event FIFO and empty the RX ring, else PanelRxDecodeQuiet; TickJobsTask calls it on TickJobs (0x50151C00) bit 0x08, every 6 ms
+0x484ABB19  PanelService_entry
+0x484ABB53  PanelPump               ; = IC18 PanelPump 0x500026BB: PanelTxPump, then PanelErrorRecovery; TickJobsTask calls it on TickJobs bits 0x80 and 0x20, every 48 ms; polling loops call it directly.  20 pump calls that find the link busy (0x5006BDAA) set the time-out bit 0x80 of 0x5006BDA4 (~0.96 s here)
+0x484ABB56  PanelPump_entry
+0x484ABA26  TickHookPass            ; = IC18 TickHookPass 0x500025C6: passes each of four ROM words (0x4874D11C..28, all 0x50151BFC, the time base's address) with its index 0..3 to TickHookStub; the first call of every pass of TickJobsTask [INFERENCE: a debug hook]
+0x484ABA29  TickHookPass_entry
+0x48431CC2  TickHookStub            ; does nothing (clears a local and returns); TickHookPass's callee
+0x48431CC5  TickHookStub_entry
+0x4C02BBCD  TickJobsTask            ; the periodic task loop: waits on event flag 0xC (set every 4 ms by the kernel tick), TickHookPass, then the jobs requested in TickJobs 0x50151C00/01 (0x08 PanelService + the panel poll + switch events; 0x02 0x48402703; 0x80/0x20 PanelPump; 0x80 also inverts IOLATCH_04 bit 5; 0x40/0x10 0x484AE78C), then a fixed service list
 0x484AC06A  PanelBusyWait3000       ; counted busy loop (0xBB8 iterations)
 0x484AC086  PanelBusyWait6000       ; counted busy loop (0x1770 iterations)
 0x484AC0A5  PanelTickWait2          ; wait ~2 ticks of counter 0x50151BFC (tick noted at 0x5006BDAC)
@@ -223,9 +233,9 @@
 0x484334DE  StyleNameCommitMem_entry
 0x48433527  StyleNameCommitCustom      ; CUSTOM-source twin: same shape, records resolved through 0x4843E10C against the custom-source handle *(0x50034B98)
 0x4843352C  StyleNameCommitCustom_entry
-0x4843357D  StyleVariationNameGet      ; (d0 = variation slot 0..19) -> a0 = the variation's NAME. Takes the low 3 bits of the record byte +1 (builtin) or +0x11 (MEM/CUSTOM) as a variation kind, asks the library resource dispatcher (GetM3Em_entry path, resource 0x0000D00A via lib 0x4C0149FA) and on success indexes the ROM pointer table 0x48736078; otherwise falls back to the 3-byte-offset variation sub-table *(0x50034B84) into the resource base *(0x50034B78). Sets the "name resolved" flag 0x50122DD0
-0x48433582  StyleVariationNameGet_entry
-0x48433601  StyleRecordSlotSelect      ; (d0 = group < 0x0C, d1 = slot <= 0x14, arg5 = index) selects one of the 20 cached style records 0x50034BCC[] as the CURRENT record *(0x50034C1C); slot 0x14 goes through StyleVariationNameGet first. The group index must be a multiple of 3. Returns the newly selected record, or 0 when unchanged
+0x4843357D  StyleCountInRecordGet      ; (d0 = the main variation's slot 0/3/6/9) -> a0 = the COUNT-IN pattern record for that variation's meter (byte +1 builtin / +0x11 MEM-CUSTOM, & 7 = beats - 1): COUNT INTRO on (param 0xD00A == 1, IntroToggleFunc) -> the program's Voice-Kit count from CountIntroRecordTable 0x48736078 (1-4 beats), else / NULL -> IC18's count-in table *(0x50034B84) + 3*meter into *(0x50034B78); NULL when neither. Sets 0x50122DD0. Was StyleVariationNameGet (notes/ic18-rhythm-rom.md)
+0x48433582  StyleCountInRecordGet_entry
+0x48433601  StyleRecordSlotSelect      ; (d0 = main variation's slot 0/3/6/9 [multiple of 3 below 0x0C], d1 = slot 0..0x14, arg3 = major/minor byte 0x5003A46A) -> CURRENT record *(0x50034C1C) from 0x50034BCC[]: d1 0 -> slot d0; 1..11 -> d1; 12..19 (INTRO 1 = 12, ENDING 1 = 14, INTRO 2 = 16, ENDING 2 = 18) -> d1 + arg3 (1 = minor-family chord, ChordTypeIsMinor); 0x14 -> StyleCountInRecordGet(d0), else INTRO 1 + arg3. Clears 0x50122DD0 first. Returns the new record or 0
 0x48433606  StyleRecordSlotSelect_entry
 0x48433699  StyleRecordBindBuiltin     ; publishes the current BUILT-IN style record *(0x50034C1C) into the pattern-player's runtime view: header bytes -> 0x50122DCE/CF, u16BE -> 0x50122DCC, event-stream start 0x50122DC8/C0, end 0x50122DC4, aux 0x50122DD4 (the stream is expected to end with the 0xF4 terminator)
 0x4843369E  StyleRecordBindBuiltin_entry
@@ -249,7 +259,7 @@
 0x48433A53  StyleBoundRecByteCfGet     ; -> the bound record's header byte 0x50122DCF -- retf leaf
 0x48433A5C  StyleBoundRecByteCeInc     ; -> the bound record's header byte 0x50122DCE + 1 -- retf leaf
 0x48433A67  StyleBoundRecByteCfLow3    ; -> 0x50122DCF & 7 (the variation kind) -- retf leaf
-0x48433A74  StyleVariationNameFlagGet  ; -> 0x50122DD0, the "variation name was resolved" flag set by StyleVariationNameGet -- retf leaf
+0x48433A74  StyleCountInBoundGet       ; -> 0x50122DD0, 1 while the selected record is a count-in; StyleRecordSelectBind / StyleNameAndRecordSelect then bind it as BUILT-IN, func_48441DEB applies its program changes -- retf leaf. Was StyleVariationNameFlagGet
 0x48433A7D  StyleBuiltinNameResolve    ; style-index -> name ptr in a0 (10 call sites): indexes name-table *(0x50034B7C) (table ROM 0x483E82BF, u16), count-gate *(0x50034B74), 0x8000-flag indirection, then 3-byte-offset sub-table *(0x50034B80) into the "Technics Rhythms" resource *(0x50034B78)+off; entries with 0xC000==0x4000 go through the secondary sub-table *(0x50034B90); fallback *(0x50034B88)=" 8 Beat 1"
 0x48433A82  StyleBuiltinNameResolve_entry
 
@@ -292,9 +302,9 @@
 ; here. Mapping: library address X  ==  program ROM 0x487B8FD1 + (X - 0x4C000000).
 0x487B8F6D  LibRomImageBase        ; = lib 0x4C000000: base of the self-loaded library/kernel ROM image
 0x487F6E82  LibLoadSentinel        ; InitializeBlock27 descriptor's last-record payload `retf 0, 0` (de 00 00): copied to 0x4C03FFF0, the end of the library window
-0x487F6E85  LibLoadDescriptor      ; InitializeBlock27's copy descriptor at the end of the image: 12-byte records {u16 flags, u16 len, u32 src, u32 dest}, flags bit15 = last; one record copies LibRomImageBase.. to 0x4C000000 (kn7000_mame notes/kn2400-boot.md)
+0x487F6E85  LibLoadDescriptor      ; LibImageLoad's copy descriptor (ResetEntry calls it; not InitializeBlock27's, corrected 2026-11-02) at the end of the image: 12-byte records {u16 flags, u16 len, u32 src, u32 dest}, flags bit15 = last; one record copies LibRomImageBase.. to 0x4C000000 (kn7000_mame notes/kn2400-boot.md)
 0x4C003051  strcpy_entry           ; the runtime address callers `call` (after strcpy's movm at 0x4C00304F, named by the 942 export table): strcpy(a0 = dst, a1 = src) -> a0 = dst
-0x4C03DDA0  LibIrqQuickDispatch    ; (flash copy 0x487F6D71) AM33 maskable-IRQ quick handler -- F6/udf context save, increments IRQ counter 0x50380D0C, reads IAGR 0x34000100 (used by high-priority device levels)
+0x4C03DDA0  LibIrqQuickDispatch    ; (flash copy 0x487F6D71) AM33 maskable-IRQ quick handler -- F6/udf context save, increments IRQ counter 0x50380D0C, reads 0x34000100 and 0x34000104 as 16-bit group numbers (G0ICR / G1ICR by the instruction manual's layout, IAGR is 0x34000200; why they hold group numbers here is not explained) (used by high-priority device levels)
 0x4C03DE26  LibIrqScheduler        ; (flash copy 0x487F6DF7) RTOS scheduler entry (level-6 system tick) -- saves the interrupted task's SP into its TCB *0x5038002C, switches to the scheduler stack *0x50380CBC, dispatches, reloads SP from the chosen TCB
 0x4C003024  memset_entry           ; (flash copy 0x487BBFF5) memset(dest=a0, val=d0, len=d1) -- hardware-loop (setlb)
 0x4C003039  memcpy_entry           ; the runtime address callers `call ..., [a2,a3], 8` (after memcpy's movm at 0x4C003037, named by the 942 export table): memcpy(a0 = dest, a1 = src, d0 = len) -> a0 = dest
@@ -430,7 +440,8 @@
 ; Command-frame struct {clockMode u16, respType u16 (2=R2,3=R1b,else R1),
 ; cmd[6]} -- clockMode doubles as the SdSpiClockSet arg (2=forced slow).
 ; RAM frames: 0x50007ec6 CMD0, 0x50007ed0 CMD59(good CRC), 0x50007eda CMD1,
-; 0x50007e8a park-CMD0, 0x50007e94 CMD9 (drive-ctrl '@'), 0x50007ee4 CMD17
+; 0x50007e8a park-CMD0, 0x50007e94 mode-2 frame 0x40 arg 0x00000F00 (drive-ctrl '@'; not an SD
+; command: its byte is 0x40 and it reads 15 bytes into the CSD record; IC18 SdFrameR2Cmd0), 0x50007ee4 CMD17
 ; read frame / 0x50007eee CMD24 write frame (byte address big-endian @+5..+8).
 ; ROM frames: 0x4867b9cc CMD10(CID), 0x4867b9d8 CMD9(CSD), 0x4867b9e4
 ; CMD16(0x200), 0x4867ba64 CMD59 arg=1 (deliberately WRONG CRC self-test).
@@ -462,7 +473,7 @@
 0x4854AF48  DiskCmdPostAsync_entry
 0x4854AFA7  SdWorkerCmdHandler      ; worker message TYPE 3 = SD media commands. msg: {+0 cmd u16, +4 sector u32, +8 count u32, +0xc buffer}. Gate: state==3 or cmd==0 else 0x40. In-use LED on. cmd 0 = init/mount ladder (state 2: park frame 0x50007e8a, power line+rail on, SdCardInitFull; state 0: rails off + SdSlotDrainWait -> probe flag 0x50160644; then power on + SdCardInitFull -> state 3, fail 0xFD); 3 = read (initflag else 0x30, range vs 0x50160664 else 2, per sector: byteaddr=sector*mult -> CMD17 frame 0x50007ee4, SdReadBlockCmd x4 retries); 4 = write (WP -> 0x2F, CMD24 frame 0x50007eee, SdWriteBlockCmd, err 3); 8 = last error 0x5016064e; 0xA = init check; 0xB = nop; 0xC = total bytes 0x5016065c LE -> buffer; else 7. Error -> 0x5016064e, LED off
 0x4854AFAC  SdWorkerCmdHandler_entry
-0x4854B2E9  DiskDriveCtrlHandler    ; worker message TYPE 2 = drive control, keyed by drive letter 0x40..0x4E via jump table 0x4867b9f0 (gate: state==2 or cmd 0x40 else 0x8003; probe flag else 0x8004; phase==3 -> 0x8002). '@' = attach: park frame, SdSlotDischarge, SdSlotDrainWait, probe flag:=1, read the CSD into record 0x5016066c (CMD9 frame 0x50007e94). Reply {2, cmd, 4 arg bytes}; class from DriveLetterClass
+0x4854B2E9  DiskDriveCtrlHandler    ; worker message TYPE 2 = drive control, keyed by drive letter 0x40..0x4E via jump table 0x4867b9f0 (gate: state==2 or cmd 0x40 else 0x8003; probe flag else 0x8004; phase==3 -> 0x8002). '@' = attach: park frame, SdSlotDischarge, SdSlotDrainWait, probe flag:=1, read 15 bytes into the CSD record 0x5016066c (mode-2 frame 0x50007e94: byte 0x40, argument 0x00000F00, not an SD CMD9; = IC18 SdFrameR2Cmd0, the only one of its five frames either image uses). Reply {2, cmd, 4 arg bytes}; class from DriveLetterClass
 0x4854B2EE  DiskDriveCtrlHandler_entry
 0x4854B4DD  SdMediaStateGet         ; read media state 0x50160646 (0..3, 3 = ready)
 0x4854B4E6  SdMediaStateSet         ; validate {0,1,2,3} -> 0x50160646 (else -1)
@@ -667,7 +678,40 @@
 0x48407D59  DspEffectAssign         ; validate(unit,type), store type+dirty into the 0x120-byte per-unit param struct
 0x4840885F  DspEffectTypeValid      ; (unit,type)->0/-1: index the per-unit whitelist byte table
 0x4840847C  DspManagerInit          ; create RTOS objects, zero the 10 per-unit state structs (0x500A04C4, stride 0x14AC)
-; UNPORTED (only a 1:1 run shorter than 16 bytes holds it): 0x48404FF6  DspFullReinit           ; full re-init: download kernel then every nonzero effect record
+; UNPORTED (only a 1:1 run shorter than 16 bytes holds it): 0x48404FF6  DspFullReinit           ; P04 (0x36008004) bit 7 pulsed (DSP reset: set, 10 ms, clear, 10 ms, set), DspReadyIrqModeSet, then up to 11 tries of writing 0x91919191 and 0x20 to index 0 byte-wide (DspIndexWriteBytes32Slow) and reading it back; 0x20 back clears DspHostPortError, else it is set to -1 (corrected 2026-11-02: it downloads no kernel or records)
+; (lane mn10300-names 2026-11-02: the DSP host-port block, matched routine for routine with 935 / 893; notes/mn10300-names-probes/oldbuilds_dsp_hostport_match.py)
+; UNPORTED (only a 1:1 run shorter than 16 bytes holds it): 0x48404D10  DspReadyWaitOn          ; DspReadyWaitEnabled := 1 (DspWaitReady then polls the DSP's ready request)
+; UNPORTED (only a 1:1 run shorter than 16 bytes holds it): 0x48404D1B  DspReadyWaitOff         ; DspReadyWaitEnabled := 0 (DspBootProbe: off after loading the resident kernel, on again after DspFullReinit)
+; UNPORTED (only a 1:1 run shorter than 16 bytes holds it): 0x48404D25  DspWaitReady            ; when DspReadyWaitEnabled: write 1 to GxICR 0x3400015C and poll its bit 4 (the request flag) up to 0x40000 times; on time-out DspHostPortError := -1
+; UNPORTED (only a 1:1 run shorter than 16 bytes holds it): 0x48404D71  DspReadyIrqModeSet      ; EXTMD 0x34000280 bits 1:0 := 2 (the ready line's detection mode); an unreachable `clr d0; ret` follows
+; UNPORTED (program bytes deleted in new build): 0x48404D8B  DspDebugPrint           ; empty: `ret` -- [INFERENCE] a debug print compiled out; DspDebugPrintHex16 is its only caller
+; UNPORTED (only a 1:1 run shorter than 16 bytes holds it): 0x48404D8E  DspHexDigit             ; (d0 nibble) -> '0'..'9', 'a'..'f'
+; UNPORTED (only a 1:1 run shorter than 16 bytes holds it): 0x48404DB4  DspDebugPrintHex16      ; (d0) four hex digits into a copy of a 5-byte template, then DspDebugPrint; nothing calls it
+; UNPORTED (program bytes deleted in new build): 0x48404E28  DspPortRead             ; (d0 = port id) 0x9C4: under loc_cpu, DspWaitReady, read the halfword at 0x9C000000; 0x9C0 / 0x9C2 -> 0; the bus control word 0x32000026 := 0x924 around the read (935 / 893 have no bus switch)
+; UNPORTED (program bytes deleted in new build): 0x48404E8A  DspPortWrite            ; (d0 = port id, d1 = value) 0x9C2: the index port 0x98000000; 0x9C4: under loc_cpu, DspWaitReady, the data port 0x9C000000 with 0x32000026 := 0x924 around it (not in 935 / 893)
+; UNPORTED (program bytes deleted in new build): 0x48404EF5  DspPortWriteChecked     ; DspPortWrite unless DspHostPortError is set
+; UNPORTED (program bytes deleted in new build): 0x48404F19  DspPortWriteSlow        ; DspPortWrite with the bus slowed: 0x32000026 bits 8..12 := 0x0F, 0x3200002E bit 1 clear, both restored after
+; UNPORTED (program bytes deleted in new build): 0x48404F78  DspPortReadChecked      ; -1 when DspHostPortError is set, else DspPortRead(0x9C4)
+; UNPORTED (program bytes deleted in new build): 0x48404F97  DspPortReadSlow         ; DspPortRead(0x9C4) with the bus slowed as in DspPortWriteSlow
+; UNPORTED (program bytes deleted in new build): 0x48405083  DspSetIndex             ; (d0) DspPortWriteChecked(0x9C2, d0): select the DSP address/register
+; UNPORTED (program bytes deleted in new build): 0x4840509C  DspSetIndexSlow         ; (d0) DspPortWriteSlow(0x9C2, d0)
+; UNPORTED (program bytes deleted in new build): 0x484050E2  DspIndexWritePMWord     ; (d0 = index, then the three halfwords) DspSetIndex + three data writes
+; UNPORTED (program bytes deleted in new build): 0x48405143  DspWriteDMWordSlow      ; the two halfwords through DspPortWriteSlow
+; UNPORTED (program bytes deleted in new build): 0x4840516F  DspIndexWriteBytes32    ; (d0 = index, d1 = low half, stack = high half) DspSetIndex + the 32-bit word as four byte writes; nothing calls it
+; UNPORTED (program bytes deleted in new build): 0x484051C5  DspIndexReadBytes32     ; (d0 = index) DspSetIndex + four byte reads into a 32-bit word; nothing calls it
+; UNPORTED (program bytes deleted in new build): 0x48405226  DspIndexReadBytes32Slow ; the same through DspSetIndexSlow / DspPortReadSlow (DspFullReinit's read-back)
+; UNPORTED (program bytes deleted in new build): 0x48405287  DspIndexWriteBytes32Slow ; the same as DspIndexWriteBytes32 through the slow writers (DspFullReinit, the boot handshake)
+; UNPORTED (program bytes deleted in new build): 0x484052FC  DspRegWriteSlow         ; DspSetIndexSlow + DspWriteDMWordSlow
+; UNPORTED (program bytes deleted in new build): 0x4840531B  DspRegRead              ; (d0 = index) -> (second halfword << 16) + first, through DspPortReadChecked
+; UNPORTED (program bytes deleted in new build): 0x4840534C  DspRegReadSlow          ; the same through the slow readers
+; UNPORTED (program bytes deleted in new build): 0x48405418  DspHostPortStatus       ; -> 0, or -1 when DspHostPortError is set (the device-wait screen and the DSP self-test, TEST6DSP_OK)
+; UNPORTED (program bytes deleted in new build): 0x4840542D  DspBootRunTestRecord    ; (a0 = pool record) func_48407DB4(0, 0), DspRecordInterpreter, func_48407DB4(0, 1), dly_tsk(100) -- DspBootProbe's four SDRAM self-test records
+; UNPORTED (program bytes deleted in new build): 0x4840545D  DspBootTestResult       ; -> DspRegRead(0x0B), 0 = the self-test passed
+; UNPORTED (only a 1:1 run shorter than 16 bytes holds it): 0x48405531  StrapReadDelay          ; empty: `ret`, called between StrapBit3Debounced's two reads
+; UNPORTED (program bytes deleted in new build): 0x48405534  StrapBit3Debounced      ; bit 3 (0x08) of the strap halfword 0x98070000 read twice; when both agree it is latched; returns the latch (s8)
+0x500066DC  DspHostPortError        ; RAM s8: 0 = the DSP host port answered; -1 after a DspWaitReady time-out or a failed DspFullReinit handshake (the Checked readers/writers then do nothing)
+; UNPORTED (RAM delta ambiguous (0x500066CC moved +16, 0x500066D0 moved -4)): 0x500066CD  DspReadyWaitEnabled     ; RAM u8: DspWaitReady polls the ready request only when 1 (DspReadyWaitOn / DspReadyWaitOff)
+0x5000003C  StrapBit3Latch          ; RAM s8: StrapBit3Debounced's last agreeing read of 0x98070000 bit 3
 0x48408768  DspDownloadAll          ; stream kernel record + loop 0..0x91 over the type->record table
 0x48409004  DspApplyUnits           ; per-unit apply: for each active unit, download its type's record
 0x4840A305  DspRecordInterpreter    ; parse+download one pool record (blocks id=0x2004, PM/DM, target,len)
@@ -1993,8 +2037,8 @@
 ;      Region-1 code PRODUCES those messages by building a length-prefixed
 ;      byte buffer and handing it to the stream writer 0x4C003A65.
 ;      Bit map of the parameters they reach: kn7000_mame/notes/effect-enable-bits.md
-0x4C003A60  SndCmdStreamWrite       ; (a0 = length-prefixed message buffer) append a sound-command message to the 0x200-byte stream ring 0x500AD3A0/0x500082A2; the 32 region-1 call sites are the message PRODUCERS
-0x4C003A65  SndCmdStreamWrite_entry
+0x4C003A60  TgcBufWrite             ; the firmware's name (942's plug-in export table IDNAME FN_TgcBufWrite; the KN6000 / KN6500 reflection tables; was SndCmdStreamWrite until 2026-11-02): (a0 = length-prefixed message buffer) append a sound-command message to the 0x200-byte stream ring 0x500AD3A0/0x500082A2; the 32 region-1 call sites are the message PRODUCERS
+0x4C003A65  TgcBufWrite_entry
 0x4C003A15  SndCmdStreamGetByte     ; (a0 = stream object) pop one byte: count at +4, read index at +2 masked 0x1FF, data at +6; returns -1 when empty
 0x4C003A17  SndCmdStreamGetByte_entry
 0x4C003A3D  SndCmdStreamSkipToStatus ; skip data bytes until the next status byte (bit7 set), then rewind the read index
@@ -2920,6 +2964,156 @@
 0x48448CD3  SoundNameGet            ; the sound's 16-character name (MSB 0x10 / 0x11 / 0x18 / 0x19 named apart), else "Sound Name Error"
 0x48448E3A  SoundIconFetch          ; SoundIconGet's icon, 0 when the sound is not found
 ;
+; ---- SOUND ARRANGER ('ZZZJ' records, battery SRAM 0x84030FE8 / records 0x84030FF8) -- lane mn10300-names, songtable 2026-11-02
+0x4843FA8B  StyleIdToPresetOrdinal ; (d0 = rhythm id) -> 0..219: the style counts (GenreStyleTable +0x11) of the genres before the rhythm's own plus its index (ResolveStyleId); -1 for ids with bits 0x700000 (CUSTOM, MEMORY, composer) or when func_484360F4 refuses. The SOUND ARRANGER record number
+0x4843FA90  StyleIdToPresetOrdinal_entry
+0x4843FB07  SndArgPartEntry        ; (d0 = M3 part 0x13..0x1A) -> the record entry, table 0x485B73A0 (Acc1-5 -> 3..7, Bass -> 2, Drum -> 0, Perc -> 1); else -1 -- retf leaf
+0x4843FC60  SndArgIsOn             ; (d0 = rhythm id) -> 1 when bit 7 of its record's first byte is set (the arranger is ON for that rhythm), 0 when clear, < 0 without a record
+0x4843FC63  SndArgIsOn_entry
+0x4843FCA4  SndArgOnSet            ; (d0 = rhythm id, d1 = on) set / clear bit 7 of the record's first byte
+0x4843FCA9  SndArgOnSet_entry
+0x4843FDF5  SndArgPartVoiceGet     ; (d0 = rhythm id, a0 = in/out word part<<24, a1 = out flag) word := part<<24 | msb<<16 | lsb<<8 | prog of the part's entry; flag := bit 7 (CC94 on) for entries 2..7, else 0
+0x4843FDFA  SndArgPartVoiceGet_entry
+0x4843FE6D  SndArgCurPartVoiceGet  ; SndArgPartVoiceGet for GetM3EmVal(0xC000), the current rhythm (TtSndArg)
+0x4843FE72  SndArgCurPartVoiceGet_entry
+0x4843FE8C  SndArgPartVoiceSet     ; (d0 = rhythm id, d1 = part<<24 | msb<<16 | lsb<<8 | prog, stack flag) store the entry: entry 0 keeps its ON bit, entry 1 clears bit 7, entries 2..7 take bit 7 from the flag; then func_48443C5A
+0x4843FE91  SndArgPartVoiceSet_entry
+0x4843FF41  SndArgCurPartVoiceSet  ; SndArgPartVoiceSet for the current rhythm (MainSNDARG_SetSndaParaCur, TtSndArg)
+0x4843FF46  SndArgCurPartVoiceSet_entry
+0x4843FF62  SndArgRecordIfOn       ; (d0 = rhythm id) -> its record number when the arranger is ON, else -1 (callers store it at 0x5003A472 for func_48441DEB)
+0x4843FF67  SndArgRecordIfOn_entry
+0x4843FF8E  SndArgTemplateApply    ; (d0 = record, d1 = style part 0..7, a0 = part template 0x5003A37C + part*0x18) template +2..+4 := the entry's prog & 0x7F, bank LSB, MSB (entry from table 0x485B7396); +5 (CC94) := 127 when bit 7 is set in entries 2..7, else 0
+0x4843FF93  SndArgTemplateApply_entry
+0x4843FFF8  SndArgImportZZZ        ; (a0 = a block starting 'ZZZ', count at +6 <= 0xDC, +7 == 0) convert its records (five 2-byte entries from +0x10, through func_484346E9) into the SRAM table, entries 0, 2, 3, 4, 5; the block is read by func_48437D57 at file offset 0x5800 / 0x640 / 0x6A0 [INFERENCE: another model's file]
+0x4843FFFD  SndArgImportZZZ_entry
+0x48440116  SndArgSramUpgrade      ; SRAM 0x84030FE8 holds 'ZZZJ',0,'K' + u16BE count (8 bytes) or 'ZZZI' (6): reload the factory records from that count to 219 (SramRecordsLoadFactory) and write the 0x485B7370 signature; else -1
+0x4844011B  SndArgSramUpgrade_entry
+; ---- style part template (0x5003A37C, 8 x 0x18 fields of the part-field table 0x485B77D4)
+0x48440617  StylePartTemplateDefault ; -> a0 = the 24-field default template 0x485B7804 (fields 15..23 = 0, 0, 127, 0, 0, 64, 64, 64, 64)
+0x4844081B  StylePartFieldEmit     ; (d0 = channel, d1 = field 0..23, a1 = part template, a0 = previous) send field k as table 0x485B77D4[k] says: B0 -> CC table.cc := a1[k]; C0 -> program a1[2..4]; D0 -> a1[k]; E0 -> bend a1[0x13], a1[0x14]
+0x48440820  StylePartFieldEmit_entry
+0x48441838  StyleTemplateLoadParts ; copy 15 bytes of each of the 8 part set-ups (pointers 0x50034BAC[], func_48433F13) into the part template 0x5003A37C; the MEMORY blocks' bytes 15..23 are never read
+0x4844183D  StyleTemplateLoadParts_entry
+0x48441DA9  StyleTemplateRebuild   ; (d0 = SOUND ARRANGER record or -1) StyleTemplateLoadParts, apply the stream's set-up events (B0/C0/...), then SndArgTemplateApply for the 8 parts when d0 >= 0 and StyleCountInBoundGet() is 0, then func_484418AC (emit fields 0..14)
+0x48441DAE  StyleTemplateRebuild_entry
+; ---- PERFORMANCE PAD flags (built-in pad +0x12, TPAD record +0x1A: bit 0 LOOP, bit 1 SYNCHRO, bit 2/3 [INFERENCE] fixed-chord pad / Min)
+0x48431CDF  PadCopyBuiltinToUser   ; (d0 = user pad, d1 = built-in pad id) name, the two 15-byte set-ups (to +0x28 / +0x40), +0x10/+0x11/+0x12 := id & 0x7F, id >> 7, 0, +0x18..+0x1A := the pad's bars, beats, flags, then the stream into the TPAD heap
+0x48431CE4  PadCopyBuiltinToUser_entry
+0x48432430  UserPadSynchroGet      ; current user pad (func_48431F13_Var): TPAD +0x1A & 2
+0x48432433  UserPadSynchroGet_entry
+0x48432449  UserPadSynchroSet      ; (d0) set / clear TPAD +0x1A bit 1 (MainPAD_SetUserPadSync)
+0x4843244C  UserPadSynchroSet_entry
+0x4843248C  UserPadLoopGet         ; TPAD +0x1A & 1
+0x4843248F  UserPadLoopGet_entry
+0x484324A5  UserPadLoopSet         ; (d0) set / clear TPAD +0x1A bit 0 (MainPAD_SetUserPadLoop)
+0x484324A8  UserPadLoopSet_entry
+0x4843255D  UserPadRecChordGet     ; TPAD +0x13, RECORD KEY/CHORD (bits 0-3 key, bit 4 Min; FE_PadRecSetKey / FE_PadRecSetChord)
+0x48432560  UserPadRecChordGet_entry
+0x48432572  UserPadRecChordSet     ; (d0) TPAD +0x13 := d0 (MainPAD_SetUserPadRecordChord)
+0x48432577  UserPadRecChordSet_entry
+0x48433FA6  PadSelectById          ; (d0 = pad id) folded index: built-in pad (func_4843443E) or a user / CUSTOM pad -> 0x50034C34, kind 0x50122DD8
+0x48433FAB  PadSelectById_entry
+0x48434054  PadBindBuiltin         ; bind the selected built-in pad: name, set-up pointers (+0x16, stride 15), 0x50122E04..06 := +0x10..+0x12 (bars, beats, flags), stream +0x37
+0x48434059  PadBindBuiltin_entry
+0x484340DF  PadBindUser            ; the TPAD twin: set-ups +0x28 stride 0x18, 0x50122E04..06 := +0x18..+0x1A
+0x484340E4  PadBindUser_entry
+0x484343C8  PadCurLoopGet          ; 0x50122E06 & 1 -- retf leaf
+0x484343D5  PadCurSynchroGet       ; 0x50122E06 & 2 -- retf leaf
+0x484343E2  PadCurFlag2Get         ; 0x50122E06 & 4 [INFERENCE: fixed-chord pad]; RhyNoteOnVoice, PadRecPtChdGrid, PadPartSetGrid1/2 -- retf leaf
+0x484341F7  PadFlagsById           ; (d0 = pad id) -> the flags byte: built-in +0x12, user / CUSTOM +0x1A
+0x484341FC  PadFlagsById_entry
+0x4843454F  PadNameGet             ; (d0 = pad id, a0 = buffer) copy the pad's name
+0x48434554  PadNameGet_entry
+0x484345CF  PadSynchroById         ; PadFlagsById & 2
+0x484345D2  PadSynchroById_entry
+0x484345DF  PadFlag2ById           ; PadFlagsById & 4
+0x484345E2  PadFlag2ById_entry
+; ---- MEMORY (TCMP) variation head
+0x4843C0AB  MemVarEffectPartGet    ; (d0 = 0/1) the current variation's +0x18 + d0, EFFECT PART 1/2 (CmpPartSetGrid2)
+0x4843C0B0  MemVarEffectPartGet_entry
+0x4843C0CB  MemVarEffectPartSet    ; (d0 = 0/1, d1 = part or 0xFF) store it, then func_4843CB41 (MainCMP_SetCmpEffectPart)
+0x4843C0D0  MemVarEffectPartSet_entry
+0x4843C107  MemVarRecChordGet      ; the current variation's +0x03, RECORD KEY/CHORD; in slots 12-19 bit 4 (Min) forced from the A/B parity
+0x4843C10C  MemVarRecChordGet_entry
+0x4843C144  MemVarRecChordSet      ; (d0) +0x03 := d0 (MainCMP_SetCmpRecordChord)
+0x4843C149  MemVarRecChordSet_entry
+; ---- M3 set path and source tags
+0x4C015E50  M3SetByKind            ; type-0 setter: jump through func_4C015E50_Table 0x4858C318 by the trie record's kind (+6, 0..0x24); 15-byte stubs from 0x4C015E76
+0x4C015E55  M3SetByKind_entry
+0x4C016C5C  M3SetPmemNumber        ; kind-9 setter (id 0x000080): store (func_4C016050, M3SendProcess), then PmemRecallOnSet unless the flag argument has bit 0 (PutM3Em passes 0)
+0x4C016C61  M3SetPmemNumber_entry
+0x4C021827  PmemRecallOnSet        ; (d0 = M3 word, d1 = n) n = 1..0x68: recall panel memory n (func_4C0234CF, func_4C021F33, ...); source 1 with GetM3EmVal(0x81) set takes func_4C0233BA / func_4C021EEE / func_4C023444 instead [INFERENCE: MEMORY SET store]
+0x4C02182C  PmemRecallOnSet_entry
+0x4C0216A3  M3SetSpecialDispatch   ; PutM3Em's first step: for class 0x00/0x20/0x60/0x70/0xB0/0xC0/0xD0/0xE0 walk the {mask, value, handler} triples at 0x48731E44.. and call each match; -1 when none (0x80 has none)
+0x4C0216A8  M3SetSpecialDispatch_entry
+0x484B9AEC  MidiChanSourceTag      ; channel-message result (contexts 0x50150AE4 / 0x50150D04): +0x1D bit 0 -> word += 0x20000000 (source 2), bit 1 -> += 0x60000000 (source 6)
+0x484B9AEE  MidiChanSourceTag_entry
+0x484BFBA8  SysexSourceTag         ; SysEx result (context 0x50151B90): +0x1F bit 0 -> word += 0x30000000 (source 3), bit 1 -> += 0x60000000; 72 SysEx handlers call it
+0x484BFBAD  SysexSourceTag_entry
+0x484C1B2D  SysexTechnicsType4     ; descriptor type 4 (F0 50 21..33 7E 31 1F .., F0 50 7E 01 00, F0 50 2C 20 31 1F 7F gg ss ..): needs context +0x1F bits 0x01 and 0x40, then by the descriptor's sub (+6): 2, 5, 8, 0xB, 0xC, 0xE..0x17 -> func_484C1D13 .. func_484C2E55; the others ignored
+0x484C1B30  SysexTechnicsType4_entry
+;
+; ---- lane mn10300-names 2026-11-02: style patterns, note conversion, part set-up, DSP preset keys (notes/ic18-rhythm-rom.md; probes notes/mn10300-names-probes/rhythm_*.py) ----
+0x48736014  CountIntroRecordTable      ; 8 x ptr by meter: 1-4 beats 0x485B8D68/7D/99/BC (Voice Kit keys 74-77 "Count 1".."Count 4"), 5-8 NULL (StyleCountInRecordGet)
+0x484425BC  StylePatternSeek           ; walk the bound stream (0x50122DC0) to the play position (0x5003A44A/4C/4E), replaying controllers and restarting notes whose gate (bytes 3-4, 7 bits each, low first) reaches past it
+0x484425C1  StylePatternSeek_entry
+0x4843D516  StylePatternNoteRestart    ; (a0 note, d0 remaining gate) only when >= 0x60 ticks remain and the rule's flags +2/+3 are not both set; the key through StyleNoteKeyConvert
+0x4843D51B  StylePatternNoteRestart_entry
+0x4843CEB1  StyleNoteKeyConvert        ; (d0 part, d1 key, stack rule, fold_root) -> the key for the current chord, via NoteConvApply
+0x4843CEB6  StyleNoteKeyConvert_entry
+0x484361E7  NoteConvApply              ; (a0 {rule, fold_root, flag, root, type}, d0 key) -> through table NoteConvRules[rule]+4; no table -> key unchanged; root-1 > fold_root -> an octave lower
+0x484361EC  NoteConvApply_entry
+0x48436196  NoteConvRuleByte1Get       ; -> NoteConvRules (0x48736104)[rule & 0x7F] +1 -- retf leaf
+0x484361B1  NoteConvRuleByte2Get       ; -> +2 -- retf leaf
+0x484361CC  NoteConvRuleByte3Get       ; -> +3 -- retf leaf
+0x4843617A  ChordTypeIsMinor           ; (d0 chord type) -> ChordTypeMinorTable[type]: 1 for the minor family (min, min7, dim, m7b5, mM7, m6, m(b5), m7(9), m6(9), mM7(b5), madd9, two 7(#9)13 types); picks an intro / ending's minor half
+0x485B6E88  ChordTypeMinorTable        ; u8 per chord type, 1 = minor family (ChordTypeIsMinor)
+0x48443798  RhythmIntroSelect          ; INTRO k: slot 12 + 4k (asl2 / add 0xC), slot 20 = the count-in
+0x4844379D  RhythmIntroSelect_entry
+0x484439A9  RhythmEndingSelect         ; ENDING k: slot 14 + 4k
+0x484439AE  RhythmEndingSelect_entry
+0x484404F1  PartEventToParam           ; a style part's CC -> part parameter 0xB000cc (CC 0x60 -> 0xB08000, BEND SENS)
+0x484404F6  PartEventToParam_entry
+0x48440620  PartFieldCcSend            ; one part-field-table entry as a controller; skips cc > 0x7F (the CC97 fold-root field is never sent)
+0x48440625  PartFieldCcSend_entry
+0x48441979  StylePartFoldRootGet       ; -> a style part's field 0 (CC97), the octave fold point of chord transposition (NoteConvApply)
+0x48500C2F  PartParamDumpLine          ; the parameter dump: names from records 0x48644F5C keyed by parameter + 1 (CC80 EQ HIGH FC ... CC94 DIGITAL EFFECT, 0xB08000 BEND SENS)
+0x48500C35  PartParamDumpLine_entry
+0x4848BC58  PartEqFcText               ; EQ corner frequency text: table 0x485EC344[v >> 2] (20 Hz .. 20 kHz; 28 = 100 Hz, 108 = 10 kHz)
+0x4848BCDF  PartEqGainText             ; EQ gain text: (v - 64) / 2 dB
+0x4C008269  TgPartEqHiFcSet            ; CC80: part +0x22 (FC clamped to <= 0x7C)
+0x4C00826B  TgPartEqHiFcSet_entry
+0x4C00828F  TgPartEqHiGainSet          ; CC81: part +0x24 (v - 64, within +-24)
+0x4C008291  TgPartEqHiGainSet_entry
+0x4C0082C8  TgPartEqLoFcSet            ; CC82: part +0x21
+0x4C0082CA  TgPartEqLoFcSet_entry
+0x4C0082EE  TgPartEqLoGainSet          ; CC83: part +0x23
+0x4C0082F0  TgPartEqLoGainSet_entry
+0x4C00807E  TgPartEqCoefCalc           ; both (FC, gain) pairs -> double-precision filter coefficients (table 0x4C008071); which TG register they reach is not traced
+0x4C008083  TgPartEqCoefCalc_entry
+0x4C007722  TgPartDspSwitchSet         ; CC94 (DIGITAL EFFECT): part flag 0x1000; 64 = the sound's own setting (looked up by func_48448D93)
+0x4C007724  TgPartDspSwitchSet_entry
+0x484420AD  StyleDspUnitsApply         ; a style's units cell: the two DSP preset keys -> params 0xB044 / 0xB054 (EFF4 / EFF5), bit 7 of +0x0E -> 0xB001 (TOTAL MODE)
+0x484420B2  StyleDspUnitsApply_entry
+0x48442086  StyleDspKeyDecode          ; a units cell's 2-byte DSP preset key
+0x48442088  StyleDspKeyDecode_entry
+0x48433EF6  StyleUnitsPtrGet           ; -> the current record's units cell
+0x48433ED1  StylePartSetupPtrGet       ; -> the current record's part set-up cell
+0x48412B96  DspPresetKeyKind           ; (key) -> 0 when its low byte is below 0x70 (a table preset)
+0x48412145  DspPresetEffectTypeGet     ; (key) -> DspPresetTable[(lo << 6) | (hi & 0x3F)] +0x12, the effect type SndUnitSettingApplyFull passes to DspEffectTypeValid / DspEffectSelect
+0x4841214A  DspPresetEffectTypeGet_entry
+; ---- lane mn10300-names 2026-11-02: power-on reset, RAM layout (notes/work-ram-map.md; probes notes/mn10300-names-probes/ramgui_*.py) ----
+0x484D7268  BootPanelResetCheck        ; TickJobsTask's first job: panel sign-on + PanelTypeDetect -> 0x5006CC82, PowerOnFactoryReset, then RamInitMarker := 0
+0x484D726B  BootPanelResetCheck_entry
+0x484D765F  PowerOnFactoryReset        ; (d0 = panel power-on code) unless RamInitMarker == 0x5AA5: codes 6 / 1 reprogram the custom-flash settings (func_4C023F80 / func_4C023F9B), wipe RAM 0x50000010.. and SRAM 0x84000010.., marker := 0x5AA5, restart at 0x4840FFF9
+0x484D7664  PowerOnFactoryReset_entry
+0x5000000E  RamInitMarker              ; RAM u16 (written through 0x9000000E): 0x5AA5 only across the factory-reset restart
+; UNPORTED (RAM delta ambiguous (0x500214F6 moved -44, 0x5002154C moved +0)): 0x500214F8  BootStack                  ; RAM 0x800-byte pre-kernel stack, top = INITIAL_SP 0x50021CF8 (the last library variable below ends exactly 0x800 under it in all four builds)
+0x50046B6C  PanelMemBank1Save          ; RAM 0x3C00 slot: PANEL MEMORY bank 1 (SRAM 0x84000824, 0x3A90 bytes) saved around a built-in demo; the last 0x170 bytes are slack
+0x5011F080  WPAL1                      ; RAM 0x400 after PICTURE_PLANE2 (942 exports GetWPAL1Addr); unreferenced in 941 / 935 / 893
+0x5011F480  WPAL2                      ; RAM 0x400 (942 GetWPAL2Addr)
+0x484D79F9  LibImageLoad               ; ResetEntry's last call before KernelStart: walks LibLoadDescriptor's 12-byte records {flags, len, src, dest}, stops after the one with flag bit 15 (notes/older-program-builds.md)
+;
 ; ==== BEGIN GENERATED by tools/port_sibling_names.py -- do not edit by hand ====
 ; Names carried from other MN10300 images where a routine is the same code, linked
 ; elsewhere (tools/port_sibling_names.py; the rules are in tools/fn_similarity.py,
@@ -2946,6 +3140,7 @@
 0x484D6C76  PsHarmOnOffBoxProc      ; = KN6000 0x4C0A0D8E, fuzzy, 178 insns; also KN6500 0x4C0A0B0F (fuzzy)
 0x484D6EED  MainVocalistOK          ; = KN6000 0x4C0A1005, fuzzy, 136 insns; also KN6500 0x4C0A0D86 (fuzzy)
 0x484D7490  IrqGroupsDisableAll     ; = IC18 0x5000917E, exact, 83 insns
+0x484D79F9  RamSectionsCopy         ; = KN2400 0x4870587E, exact, 166 insns
 0x48506D11  AcSndArgGridBoxProc     ; = KN6000 0x4C0B84F8, exact, 47 insns; also KN6500 0x4C0B8279 (exact)
 0x48507986  AcMultiIndexListProc    ; = KN2400 0x486AD107, fuzzy, 166 insns; also KN6000 0x4C0B9FB8 (fuzzy); also KN6500 0x4C0B9D5E (fuzzy)
 0x485166B0  RSpSelectProc           ; = KN2400 0x486677C6, exact, 53 insns
@@ -2973,4 +3168,8 @@
 0x4C002FE7  LibF64NegTo             ; = IC18 0x5000186E, exact, 15 insns
 0x4C00307A  fwrite                  ; = IC18 0x5000227F, exact, 39 insns
 0x4C0030C0  strtol                  ; = IC18 0x500022C5, exact, 17 insns
+0x4C01BB1A  ResourceIdFind          ; = KN2400 0x5014A95C, exact, 47 insns; also KN6000 0x4C02CA6A (exact); also KN6500 0x4C02CBDA (exact)
+0x4C021259  PartDspUnitFind         ; = KN6000 0x4C031EAD, exact, 22 insns
+0x4C0216A3  M3HookDispatch          ; = KN6000 0x4C03CC6E, exact, 70 insns; also KN6500 0x4C03CDDE (exact)
+0x4C03DB21  KernelDefInt            ; = KN6000 0x4C3F70A1, exact, 84 insns; also KN6500 0x4C380D01 (exact)
 ; ==== END GENERATED by tools/port_sibling_names.py ====
