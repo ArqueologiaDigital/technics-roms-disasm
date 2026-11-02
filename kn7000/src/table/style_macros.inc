@@ -29,8 +29,10 @@
 	.be24	\s_Var2 - \s, \s_Var2Fill1 - \s, \s_Var2Fill2 - \s
 	.be24	\s_Var3 - \s, \s_Var3Fill1 - \s, \s_Var3Fill2 - \s
 	.be24	\s_Var4 - \s, \s_Var4Fill1 - \s, \s_Var4Fill2 - \s
-	.be24	\s_Intro1A - \s, \s_Intro1B - \s, \s_Intro2A - \s, \s_Intro2B - \s
-	.be24	\s_Ending1A - \s, \s_Ending1B - \s, \s_Ending2A - \s, \s_Ending2B - \s
+	# slots 12..19: INTRO 1 = 12 + major / minor, ENDING 1 = 14, INTRO 2 = 16, ENDING 2 = 18
+	# (941 func_484437DA / func_484439EB; the half is ChordTypeIsMinor: notes/ic18-rhythm-rom.md)
+	.be24	\s_Intro1Major - \s, \s_Intro1Minor - \s, \s_Ending1Major - \s, \s_Ending1Minor - \s
+	.be24	\s_Intro2Major - \s, \s_Intro2Minor - \s, \s_Ending2Major - \s, \s_Ending2Minor - \s
 .endm
 # A variation record (StyleRecordBindBuiltin 0x484336DB): bars - 1 (-> 0x50122DCE), beats a
 # bar - 1 (-> 0x50122DCF), two part numbers for the sound units (0xFF = none; func_48442164,
