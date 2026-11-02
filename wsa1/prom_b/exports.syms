@@ -1006,6 +1006,7 @@ T_DiskApi_DeleteFile_Call
 T_DiskApi_ReadFileToWindow_Entry
 T_DiskApi_WriteFileFromWindow_Entry
 T_DiskFile_CheckSignature
+T_DiskFormat_Execute_Entry
 T_DiskLoadFile_Execute
 T_DiskLoadScreen_MountAndScanDirectory
 T_DiskLoad_SetContentTypeFromSelectedEntry
@@ -1256,7 +1257,6 @@ T_MidiFileL0ad_LcdKeyRow1
 T_MidiFilePlay_OnSongSelect
 T_MidiFilePlay_Tick
 T_MidiFileSave_Page3_LcdKeyRow3
-T_MidiFileSave_Page5_LcdKeyRow3
 T_MidiFileSave_WriteSeqBankSmf
 T_MidiFileStream_Close
 T_MidiFileStream_GetByte

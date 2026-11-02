@@ -1323,7 +1323,7 @@ PanelButton_BitMask32:
 ;          becomes 0x0303 when the code is in both sets.  The pool routes
 ;          different switches of one code to the two sets; the codes are A9
 ;          0x00-0x10 (the soft keys, LCD rows, -1/+1, EXIT, PAGE of
-;          Dispatch_FF3D39's legend).
+;          ScreenButtonHandlers_MidiFileSave's legend).
 ; The 17: PanelAction_PairPos0_HeldMaskAltCode/PanelAction_PairPos1_HeldMaskAltCode rewrite a press whose bit is ALREADY set
 ;          to code + 0x11 and record it at bit + 17 (`add (XIX-1),0x11 /
 ;          sla 16 / sla 1`).  So bits 17..24 are codes 0..7 pressed again

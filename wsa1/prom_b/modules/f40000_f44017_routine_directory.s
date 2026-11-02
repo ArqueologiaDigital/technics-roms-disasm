@@ -2654,7 +2654,7 @@ T_DiskLoadFile_Execute:	jp DiskLoadFile_Execute  ; F425C8 (was T_F425C8) -> prom
 ; Evidence: slot 0xF425CC is `jp 0xFE1C80`; prom_a 0xFE1C80 carries the label
 ;           DiskSaveFile_Execute_Entry (graded CONTENT).  DERIVATIVE name.
 T_DiskSaveFile_Execute_Entry:	jp DiskSaveFile_Execute_Entry  ; F425CC (was T_F425CC) -> prom_a 0x61C80   x3
-T_MidiFileSave_Page5_LcdKeyRow3:	jp MidiFileSave_Page5_LcdKeyRow3  ; -> prom_a 0x61C98   x1
+T_DiskFormat_Execute_Entry:	jp DiskFormat_Execute_Entry  ; -> prom_a 0x61C98   x1
 ; Evidence: slot 0xF425D4 is `jp 0xFE1C9F`; prom_a 0xFE1C9F carries the label
 ;           NameEdit_MoveCursor_Call (graded CONTENT).  DERIVATIVE name.
 T_NameEdit_MoveCursor_Call:	jp NameEdit_MoveCursor_Call  ; F425D4 (was T_F425D4) -> prom_a 0x61C9F   x2

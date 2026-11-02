@@ -1707,7 +1707,7 @@ ScreenButton_SineWaveCheckMode:
 	unlk XIZ                                             ; F958C6  ee 0d
 	ret                                                  ; F958C8  0e
 ; SoftKeyCol4_SineWaveCheckMode -- SOFT KEY column 4 on SINE WAVE CHECK MODE: set part record 0's byte +5 (0x76A7) to 0x7F (upper key) or 0 (lower)
-; Evidence: ScreenButtonHandlers_SineWaveCheckMode [0x03] and [0x14]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x03 = SOFT KEY column 4; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
+; Evidence: ScreenButtonHandlers_SineWaveCheckMode [0x03] and [0x14]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x03 = SOFT KEY column 4; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; (XIZ+0x08) != 0 (the lower key, bit 7 set) and (0x76A7) != 0 -> T_FixedEventList_AppendStackArgs(0, 5, 0x00, 0x7F); == 0 and (0x76A7) != 0x7F -> T_FixedEventList_AppendStackArgs(0, 5, 0x7F, 0x7F).
 ; (0x76A7) = 0x76A2 + 5, part record 0 (PartRecord_GetPtr's array).  What T_FixedEventList_AppendStackArgs (sub_F8BC00) does with it is not established.
 SoftKeyCol4_SineWaveCheckMode:   ; entry: screen button-handler table
@@ -1735,7 +1735,7 @@ SoftKeyCol4_SineWaveCheckMode:   ; entry: screen button-handler table
 	unlk XIZ                                             ; F958FE  ee 0d
 	ret                                                  ; F95900  0e
 ; SoftKeyCol5_SineWaveCheckMode -- SOFT KEY column 5 on SINE WAVE CHECK MODE: set part record 0's byte +6 (0x76A8) to 0x7F (upper key) or 0 (lower)
-; Evidence: ScreenButtonHandlers_SineWaveCheckMode [0x04] and [0x15]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x04 = SOFT KEY column 5; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
+; Evidence: ScreenButtonHandlers_SineWaveCheckMode [0x04] and [0x15]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x04 = SOFT KEY column 5; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; (XIZ+0x08) != 0 (the lower key, bit 7 set) and (0x76A8) != 0 -> T_FixedEventList_AppendStackArgs(0, 6, 0x00, 0x7F); == 0 and (0x76A8) != 0x7F -> T_FixedEventList_AppendStackArgs(0, 6, 0x7F, 0x7F).
 ; (0x76A8) = 0x76A2 + 6, part record 0 (PartRecord_GetPtr's array).  What T_FixedEventList_AppendStackArgs (sub_F8BC00) does with it is not established.
 SoftKeyCol5_SineWaveCheckMode:   ; entry: screen button-handler table
@@ -1763,7 +1763,7 @@ SoftKeyCol5_SineWaveCheckMode:   ; entry: screen button-handler table
 	unlk XIZ                                             ; F95936  ee 0d
 	ret                                                  ; F95938  0e
 ; SoftKeyCol6_SineWaveCheckMode -- SOFT KEY column 6 on SINE WAVE CHECK MODE: set part record 0's byte +7 (0x76A9) to 0x7F (upper key) or 0 (lower)
-; Evidence: ScreenButtonHandlers_SineWaveCheckMode [0x05] and [0x16]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x05 = SOFT KEY column 6; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
+; Evidence: ScreenButtonHandlers_SineWaveCheckMode [0x05] and [0x16]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x05 = SOFT KEY column 6; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; (XIZ+0x08) != 0 (the lower key, bit 7 set) and (0x76A9) != 0 -> T_FixedEventList_AppendStackArgs(0, 7, 0x00, 0x7F); == 0 and (0x76A9) != 0x7F -> T_FixedEventList_AppendStackArgs(0, 7, 0x7F, 0x7F).
 ; (0x76A9) = 0x76A2 + 7, part record 0 (PartRecord_GetPtr's array).  What T_FixedEventList_AppendStackArgs (sub_F8BC00) does with it is not established.
 SoftKeyCol6_SineWaveCheckMode:   ; entry: screen button-handler table
@@ -1791,7 +1791,7 @@ SoftKeyCol6_SineWaveCheckMode:   ; entry: screen button-handler table
 	unlk XIZ                                             ; F9596E  ee 0d
 	ret                                                  ; F95970  0e
 ; NumberPadKey_SineWaveCheckMode -- number-pad key 1..7 on SINE WAVE CHECK MODE: (0x2169) = key - 1 and redraw
-; Evidence: ScreenButtonHandlers_SineWaveCheckMode [0x1B] only; Dispatch_FF3D39's CONTROL LEGEND gives code 0x1B = the number pad.  H = (0x2267) & 0x0F; 1..7 -> (0x2169) = H-1, `set 4,(0x2095)`.
+; Evidence: ScreenButtonHandlers_SineWaveCheckMode [0x1B] only; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x1B = the number pad.  H = (0x2267) & 0x0F; 1..7 -> (0x2169) = H-1, `set 4,(0x2095)`.
 NumberPadKey_SineWaveCheckMode:   ; entry: screen button-handler table
 	pushw hl                                             ; F95971  2b
 	ld h, (0x2267:16)                                   ; F95972  c1 67 22 26
@@ -1974,7 +1974,7 @@ ScreenButton_DebugMonitor:
 	unlk XIZ                                             ; F95A17  ee 0d
 	ret                                                  ; F95A19  0e
 ; SoftKeyCol1_DebugMonitor -- SOFT KEY column 1 on the DEBUG MONITOR: step address digit (bits 23-20 of (0x2846)) down (lower key) or up (upper key)
-; Evidence: ScreenObjF40130_ButtonHandlers [0x00] and [0x11]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x00 = SOFT KEY column 1; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
+; Evidence: ScreenObjF40130_ButtonHandlers [0x00] and [0x11]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x00 = SOFT KEY column 1; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; H = 0x81 when (XIZ+0x08) != 0 (lower key) else 0x01; the digit and H go to 0x60A000/1, DebugMonitor_StepHexDigit (-1/+1 via SignedNibbleDelta_Table),
 ; the digit is merged back into (0x2846), `set 3,(0x2075)`, and DebugMonitor_PrintDumpPage redraws the dump.
 SoftKeyCol1_DebugMonitor:   ; entry: screen button-handler table
@@ -2013,7 +2013,7 @@ SoftKeyCol1_DebugMonitor:   ; entry: screen button-handler table
 	unlk XIZ                                             ; F95A77  ee 0d
 	ret                                                  ; F95A79  0e
 ; SoftKeyCol2_DebugMonitor -- SOFT KEY column 2 on the DEBUG MONITOR: step address digit (bits 19-16 of (0x2846)) down (lower key) or up (upper key)
-; Evidence: ScreenObjF40130_ButtonHandlers [0x01] and [0x12]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x01 = SOFT KEY column 2; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
+; Evidence: ScreenObjF40130_ButtonHandlers [0x01] and [0x12]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x01 = SOFT KEY column 2; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; H = 0x81 when (XIZ+0x08) != 0 (lower key) else 0x01; the digit and H go to 0x60A000/1, DebugMonitor_StepHexDigit (-1/+1 via SignedNibbleDelta_Table),
 ; the digit is merged back into (0x2846), `set 3,(0x2075)`, and DebugMonitor_PrintDumpPage redraws the dump.
 SoftKeyCol2_DebugMonitor:   ; entry: screen button-handler table
@@ -2050,7 +2050,7 @@ SoftKeyCol2_DebugMonitor:   ; entry: screen button-handler table
 	unlk XIZ                                             ; F95ACE  ee 0d
 	ret                                                  ; F95AD0  0e
 ; SoftKeyCol3_DebugMonitor -- SOFT KEY column 3 on the DEBUG MONITOR: step address digit (bits 15-12 of (0x2846)) down (lower key) or up (upper key)
-; Evidence: ScreenObjF40130_ButtonHandlers [0x02] and [0x13]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x02 = SOFT KEY column 3; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
+; Evidence: ScreenObjF40130_ButtonHandlers [0x02] and [0x13]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x02 = SOFT KEY column 3; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; H = 0x81 when (XIZ+0x08) != 0 (lower key) else 0x01; the digit and H go to 0x60A000/1, DebugMonitor_StepHexDigit (-1/+1 via SignedNibbleDelta_Table),
 ; the digit is merged back into (0x2846), `set 3,(0x2075)`, and DebugMonitor_PrintDumpPage redraws the dump.
 SoftKeyCol3_DebugMonitor:   ; entry: screen button-handler table
@@ -2085,7 +2085,7 @@ SoftKeyCol3_DebugMonitor:   ; entry: screen button-handler table
 	unlk XIZ                                             ; F95B21  ee 0d
 	ret                                                  ; F95B23  0e
 ; SoftKeyCol4_DebugMonitor -- SOFT KEY column 4 on the DEBUG MONITOR: step address digit (bits 11-8 of (0x2846)) down (lower key) or up (upper key)
-; Evidence: ScreenObjF40130_ButtonHandlers [0x03] and [0x14]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x03 = SOFT KEY column 4; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
+; Evidence: ScreenObjF40130_ButtonHandlers [0x03] and [0x14]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x03 = SOFT KEY column 4; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; H = 0x81 when (XIZ+0x08) != 0 (lower key) else 0x01; the digit and H go to 0x60A000/1, DebugMonitor_StepHexDigit (-1/+1 via SignedNibbleDelta_Table),
 ; the digit is merged back into (0x2846), `set 3,(0x2075)`, and DebugMonitor_PrintDumpPage redraws the dump.
 SoftKeyCol4_DebugMonitor:   ; entry: screen button-handler table
@@ -2120,7 +2120,7 @@ SoftKeyCol4_DebugMonitor:   ; entry: screen button-handler table
 	unlk XIZ                                             ; F95B74  ee 0d
 	ret                                                  ; F95B76  0e
 ; SoftKeyCol5_DebugMonitor -- SOFT KEY column 5 on the DEBUG MONITOR: step address digit (bits 7-4 of (0x2846)) down (lower key) or up (upper key)
-; Evidence: ScreenObjF40130_ButtonHandlers [0x04] and [0x15]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x04 = SOFT KEY column 5; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
+; Evidence: ScreenObjF40130_ButtonHandlers [0x04] and [0x15]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x04 = SOFT KEY column 5; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; H = 0x81 when (XIZ+0x08) != 0 (lower key) else 0x01; the digit and H go to 0x60A000/1, DebugMonitor_StepHexDigit (-1/+1 via SignedNibbleDelta_Table),
 ; the digit is merged back into (0x2846), `set 3,(0x2075)`, and DebugMonitor_PrintDumpPage redraws the dump.
 SoftKeyCol5_DebugMonitor:   ; entry: screen button-handler table
@@ -2155,7 +2155,7 @@ SoftKeyCol5_DebugMonitor:   ; entry: screen button-handler table
 	unlk XIZ                                             ; F95BC7  ee 0d
 	ret                                                  ; F95BC9  0e
 ; SoftKeyCol6_DebugMonitor -- SOFT KEY column 6 on the DEBUG MONITOR: step address digit (bits 3-0 of (0x2846)) down (lower key) or up (upper key)
-; Evidence: ScreenObjF40130_ButtonHandlers [0x05] and [0x16]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x05 = SOFT KEY column 6; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
+; Evidence: ScreenObjF40130_ButtonHandlers [0x05] and [0x16]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x05 = SOFT KEY column 6; [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; H = 0x81 when (XIZ+0x08) != 0 (lower key) else 0x01; the digit and H go to 0x60A000/1, DebugMonitor_StepHexDigit (-1/+1 via SignedNibbleDelta_Table),
 ; the digit is merged back into (0x2846), `set 3,(0x2075)`, and DebugMonitor_PrintDumpPage redraws the dump.
 SoftKeyCol6_DebugMonitor:   ; entry: screen button-handler table
@@ -2190,7 +2190,7 @@ SoftKeyCol6_DebugMonitor:   ; entry: screen button-handler table
 T_F4013C_Nop:
 	ret                                                  ; F95C14  0e
 ; ExitKey_SineWaveCheckModeAndDebugMonitor -- EXIT on SINE WAVE CHECK MODE and on the DEBUG MONITOR: leave through the auto-return timer
-; Evidence: entry [0x0F] of ScreenButtonHandlers_SineWaveCheckMode and of ScreenObjF40130_ButtonHandlers; Dispatch_FF3D39's CONTROL LEGEND gives code 0x0F = EXIT.  Acts when
+; Evidence: entry [0x0F] of ScreenButtonHandlers_SineWaveCheckMode and of ScreenObjF40130_ButtonHandlers; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x0F = EXIT.  Acts when
 ; (XIZ+0x08) == 0 (bit 7 clear, EXIT's only pair position): `and (0x2075),0x77`, (0x209A) = 1 (PanelState_TakePendingHoldTime preloads the timer).
 ExitKey_SineWaveCheckModeAndDebugMonitor:   ; entry: screen button-handler table
 	link XIZ,0x0000                                      ; F95C15  ee 0c 00 00
@@ -2255,7 +2255,7 @@ CheckingDevice_RamTestRecords:	.long	0x00000100, 0x00000100	; F95C83
 ;          BUTTON slot T_ScreenButton_SineWaveCheckMode): `cp (XIZ+8),0x001F / jr ugt` -- COUNT 32 --
 ;          then `ldw BC,4 / mul BC,(XIZ+8) / add XBC,<this> / ld XBC,(XBC)`
 ;          and a call with H = bit 7 of (XIZ+0x0A).  Codes as
-;          PanelButton_Route produces them (see Dispatch_FF3D39's legend).
+;          PanelButton_Route produces them (see ScreenButtonHandlers_MidiFileSave's legend).
 ;          24 slots are the default 0xF95C2C, a lone `ret`.
 ; (notes/proma-2026-09-25/gen_button_tables.py, checks K1-K5)
 ; ★ 2026-09-25 (lane proma): this span was PtrTables_F95C95; its header,

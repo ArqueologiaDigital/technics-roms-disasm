@@ -677,7 +677,7 @@ ScreenEnterPages_MidiFileSave:
 	.long ScreenEnter_MidiFileSave_Page2                                 ; FF3D31  [  2]
 	.long ScreenEnter_MidiFileSave_Page3                                 ; FF3D35  [  3]
 ; ---------------------------------------------------------------------
-; Dispatch_FF3D39 -- a 6 x 32 handler MATRIX with THREE readers
+; ScreenButtonHandlers_MidiFileSave -- a 6 x 32 handler MATRIX with THREE readers
 ;
 ; Read by: 0xFF5ED1 for rows 0-4 (`cp H,0x20` at 0xFF5ED9, `cp (0x2229),0x05 /
 ;          jr NC` at 0xFF5EDE), and by two readers that address a single row
@@ -689,7 +689,19 @@ ScreenEnterPages_MidiFileSave:
 ; ★ LAST-ENTRY TEST: 6 x 32 x 4 = 768 bytes ends at 0xFF4039, which is the base
 ;          the readers at 0xFF6789 and six other sites name for the next table.
 ; 159 of the 192 slots are the default.
-; Unknown:  why row 4 has both a matrix reader and a dedicated one.
+; WHOSE ROWS (2026-11-02, tracker kn5000-wxn; notes/open6-kn5000-d/wsa1/README.md):
+;          rows 0-3 are MIDI FILE SAVE's pages 0-3 (screen 0x4E, whose
+;          ScreenEnterPages_MidiFileSave has four entries); row 4 is
+;          floppy-format screen 0x50's own table
+;          (ScreenButtonHandlers_FloppyDiskFormatSelectType, read by
+;          PanelButtonDispatch_FloppyDiskFormatSelectType), row 5 screen 0x51's
+;          (ScreenButtonHandlers_FloppyDiskFormatAreYouSure, read by
+;          PanelButtonDispatch_FloppyDiskFormatAreYouSure).  The matrix reader's
+;          bound `cp (UI_ScreenPage),5` admits row 4 too, but no MIDI FILE SAVE
+;          handler sets page 4: the only stores of 4 / 5 into UI_ScreenPage are
+;          DISK SAVE's (DiskSaveFile_AskForPassword, LcdKeyRow1_DiskSaveFile_Page1).
+;          [INFERENCE] The two format screens were laid out as pages 4-5 of this
+;          table and given screens of their own; the loose bound is the trace.
 ; ---------------------------------------------------------------------
 ; ---------------------------------------------------------------------
 ; ★ CONTROL LEGEND, added 2026-08-31. The header above ends "⚠ Not one entry
@@ -724,7 +736,7 @@ ScreenEnterPages_MidiFileSave:
 ; Everything else is this module's do-nothing default.
 ; ⚠ A live index names the CONTROL, not the FUNCTION.
 ; ---------------------------------------------------------------------
-Dispatch_FF3D39:
+ScreenButtonHandlers_MidiFileSave:
 ; row 0 of 6
 	keymap_begin
 	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_MidiFileSave_Page0
@@ -865,7 +877,8 @@ Dispatch_FF3D39:
 	on_key	KEY_Compare,		DispatchMatrix_NoAction
 	on_key	KEY_Code1F,		DispatchMatrix_NoAction
 	keymap_end
-; row 4 of 6
+; row 4 of 6 -- screen 0x50, FLOPPY DISK FORMAT "Select the F0RMAT type": LCD row 3 = 2DD, row 4 = 2HD
+ScreenButtonHandlers_FloppyDiskFormatSelectType:
 	keymap_begin
 	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
@@ -877,12 +890,12 @@ Dispatch_FF3D39:
 	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
 	on_key	KEY_LcdRow1,		DispatchMatrix_NoAction
 	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
-	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileSave_Page4
-	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileSave_Page4
+	on_key	KEY_LcdRow3,		LcdKeyRow3_FloppyDiskFormatSelectType
+	on_key	KEY_LcdRow4,		LcdKeyRow4_FloppyDiskFormatSelectType
 	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
 	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
-	on_key	KEY_Exit,		ExitKey_MidiFileSave_Page4
+	on_key	KEY_Exit,		ExitKey_FloppyDiskFormatSelectType
 	on_key	KEY_Page,		DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
@@ -900,7 +913,8 @@ Dispatch_FF3D39:
 	on_key	KEY_Compare,		DispatchMatrix_NoAction
 	on_key	KEY_Code1F,		DispatchMatrix_NoAction
 	keymap_end
-; row 5 of 6
+; row 5 of 6 -- screen 0x51, FLOPPY DISK FORMAT "Are You Sure?": LCD row 3 = YES, row 4 = NO
+ScreenButtonHandlers_FloppyDiskFormatAreYouSure:
 	keymap_begin
 	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
@@ -912,12 +926,12 @@ Dispatch_FF3D39:
 	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
 	on_key	KEY_LcdRow1,		DispatchMatrix_NoAction
 	on_key	KEY_LcdRow2,		DispatchMatrix_NoAction
-	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileSave_Page5
-	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileSave_Page5
+	on_key	KEY_LcdRow3,		LcdKeyRow3_FloppyDiskFormatAreYouSure
+	on_key	KEY_LcdRow4,		LcdKeyRow4_FloppyDiskFormatAreYouSure
 	on_key	KEY_LcdRow5,		DispatchMatrix_NoAction
 	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
-	on_key	KEY_Exit,		ExitKey_MidiFileSave_Page5
+	on_key	KEY_Exit,		ExitKey_FloppyDiskFormatAreYouSure
 	on_key	KEY_Page,		DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
@@ -5619,7 +5633,7 @@ ScreenLeave_MidiFileSave:
 .LFF5ED0:
 	ret                                                  ; FF5ED0  0e
 ; ---------------------------------------------------------------------
-; PanelButtonDispatch_MidiFileSave -- run Dispatch_FF3D39's handler for one
+; PanelButtonDispatch_MidiFileSave -- run ScreenButtonHandlers_MidiFileSave's handler for one
 ;          PANEL CONTROL
 ;
 ; Inputs:   (XIZ+0x08) = the 5-bit panel control index; (XIZ+0x0A) =
@@ -5654,7 +5668,7 @@ PanelButtonDispatch_MidiFileSave:
 	add C,H                                              ; FF5EEF  ce 83
 	mul C,0x04                                           ; FF5EF1  cb 08 04
 	extz XBC                                             ; FF5EF4  e9 12
-	add XBC,Dispatch_FF3D39                              ; FF5EF6  e9 c8 39 3d ff 00
+	add XBC,ScreenButtonHandlers_MidiFileSave                              ; FF5EF6  e9 c8 39 3d ff 00
 	ld XBC,(XBC)                                         ; FF5EFC  a1 21
 	lda xiy, (.LFF5F06:24)                               ; FF5EFE  f2 06 5f ff 35
 	push XIY                                             ; FF5F03  3d
@@ -5665,14 +5679,14 @@ PanelButtonDispatch_MidiFileSave:
 	popw hl                                              ; FF5F07  4b
 	unlk XIZ                                             ; FF5F08  ee 0d
 	ret                                                  ; FF5F0A  0e
-; SoftKeyCol1_MidiFileSave_Page0: Dispatch_FF3D39+0[0] -- the SoftKeyCol1 handler of MidiFileSave_Page0; the table's other named entries sit at their own
+; SoftKeyCol1_MidiFileSave_Page0: ScreenButtonHandlers_MidiFileSave+0[0] -- the SoftKeyCol1 handler of MidiFileSave_Page0; the table's other named entries sit at their own
 ;   controls' slots and name the same screen (notes/prom_ab_button_table_siblings.py).
 SoftKeyCol1_MidiFileSave_Page0:   ; entry: named by 2 `.long` operands, first at 0xFF3D39
 	pushw 0x01                                           ; FF5F0B  0b 01 00
 	calr MidiFileSave_MoveNameCursor                                      ; FF5F0E  1e 0a 00
 	popw bc                                              ; FF5F11  49
 	ret                                                  ; FF5F12  0e
-; SoftKeyCol2_MidiFileSave_Page0: Dispatch_FF3D39+0[1] -- the SoftKeyCol2 handler of MidiFileSave_Page0; the table's other named entries sit at their own
+; SoftKeyCol2_MidiFileSave_Page0: ScreenButtonHandlers_MidiFileSave+0[1] -- the SoftKeyCol2 handler of MidiFileSave_Page0; the table's other named entries sit at their own
 ;   controls' slots and name the same screen (notes/prom_ab_button_table_siblings.py).
 SoftKeyCol2_MidiFileSave_Page0:   ; entry: named by 2 `.long` operands, first at 0xFF3D3D
 	pushw 0x00                                           ; FF5F13  0b 00 00
@@ -5730,14 +5744,14 @@ MidiFileSave_MoveNameCursor:
 	pop XIX                                              ; FF5F8C  5c
 	unlk XIZ                                             ; FF5F8D  ee 0d
 	ret                                                  ; FF5F8F  0e
-; SoftKeyCol4_MidiFileSave_Page0: Dispatch_FF3D39+0[3] -- the SoftKeyCol4 handler of MidiFileSave_Page0; the table's other named entries sit at their own
+; SoftKeyCol4_MidiFileSave_Page0: ScreenButtonHandlers_MidiFileSave+0[3] -- the SoftKeyCol4 handler of MidiFileSave_Page0; the table's other named entries sit at their own
 ;   controls' slots and name the same screen (notes/prom_ab_button_table_siblings.py).
 SoftKeyCol4_MidiFileSave_Page0:   ; entry: named by 2 `.long` operands, first at 0xFF3D45
 	pushw 0x81                                           ; FF5F90  0b 81 00
 	calr MidiFileSave_StepNameChar                                      ; FF5F93  1e 0a 00
 	popw bc                                              ; FF5F96  49
 	ret                                                  ; FF5F97  0e
-; SoftKeyCol5_MidiFileSave_Page0: Dispatch_FF3D39+0[4] -- the SoftKeyCol5 handler of MidiFileSave_Page0; the table's other named entries sit at their own
+; SoftKeyCol5_MidiFileSave_Page0: ScreenButtonHandlers_MidiFileSave+0[4] -- the SoftKeyCol5 handler of MidiFileSave_Page0; the table's other named entries sit at their own
 ;   controls' slots and name the same screen (notes/prom_ab_button_table_siblings.py).
 SoftKeyCol5_MidiFileSave_Page0:   ; entry: named by 2 `.long` operands, first at 0xFF3D49
 	pushw 0x01                                           ; FF5F98  0b 01 00
@@ -5778,7 +5792,7 @@ MidiFileSave_StepNameChar:
 	add XSP,0x00000014                                   ; FF5FF6  ef c8 14 00 00 00
 	unlk XIZ                                             ; FF5FFC  ee 0d
 	ret                                                  ; FF5FFE  0e
-; SoftKeyCol7_MidiFileSave_Page0: Dispatch_FF3D39+0[6] -- the SoftKeyCol7 handler of MidiFileSave_Page0; the table's other named entries sit at their own
+; SoftKeyCol7_MidiFileSave_Page0: ScreenButtonHandlers_MidiFileSave+0[6] -- the SoftKeyCol7 handler of MidiFileSave_Page0; the table's other named entries sit at their own
 ;   controls' slots and name the same screen (notes/prom_ab_button_table_siblings.py).
 SoftKeyCol7_MidiFileSave_Page0:   ; entry: named by 2 `.long` operands, first at 0xFF3D51
 	push XHL                                             ; FF5FFF  3b
@@ -5817,10 +5831,10 @@ SoftKeyCol7_MidiFileSave_Page0:   ; entry: named by 2 `.long` operands, first at
 	pop XHL                                              ; FF606C  5b
 	ret                                                  ; FF606D  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow1_MidiFileSave_Page0 -- what Dispatch_FF3D39 runs for panel
+; LcdKeyRow1_MidiFileSave_Page0 -- what ScreenButtonHandlers_MidiFileSave runs for panel
 ;          control 0x08
 ;
-; Reached from: Dispatch_FF3D39 entry [8] -- and from no other slot of any
+; Reached from: ScreenButtonHandlers_MidiFileSave entry [8] -- and from no other slot of any
 ;          32-entry control table in prom_a. A target reached at two
 ;          DIFFERENT indices is refused by the script that wrote this.
 ; Control:  index 0x08 is the LCD row 1 button pair -- the left-hand and
@@ -5861,10 +5875,10 @@ LcdKeyRow1_MidiFileSave_Page0:
 	unlk XIZ                                             ; FF60A6  ee 0d
 	ret                                                  ; FF60A8  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow4_MidiFileSave_Page0 -- what Dispatch_FF3D39 runs for panel
+; LcdKeyRow4_MidiFileSave_Page0 -- what ScreenButtonHandlers_MidiFileSave runs for panel
 ;          control 0x0B
 ;
-; Reached from: Dispatch_FF3D39 entry [11] -- and from no other slot of any
+; Reached from: ScreenButtonHandlers_MidiFileSave entry [11] -- and from no other slot of any
 ;          32-entry control table in prom_a. A target reached at two
 ;          DIFFERENT indices is refused by the script that wrote this.
 ; Control:  index 0x0B is the LCD row 4 button pair. The pair position --
@@ -5903,12 +5917,12 @@ LcdKeyRow4_MidiFileSave_Page0:
 	unlk XIZ                                             ; FF60DD  ee 0d
 	ret                                                  ; FF60DF  0e
 ; ---------------------------------------------------------------------
-; ExitKey_MidiFileSave_Pages0_1_2_3 -- what Dispatch_FF3D39 runs for panel
+; ExitKey_MidiFileSave_Pages0_1_2_3 -- what ScreenButtonHandlers_MidiFileSave runs for panel
 ;          control 0x0F
 ;
-; Reached from: Dispatch_FF3D39 entry [15], Dispatch_FF3D39 entry [47] (page
-;          1, control 0x0F), Dispatch_FF3D39 entry [79] (page 2, control
-;          0x0F), Dispatch_FF3D39 entry [111] (page 3, control 0x0F) -- and
+; Reached from: ScreenButtonHandlers_MidiFileSave entry [15], ScreenButtonHandlers_MidiFileSave entry [47] (page
+;          1, control 0x0F), ScreenButtonHandlers_MidiFileSave entry [79] (page 2, control
+;          0x0F), ScreenButtonHandlers_MidiFileSave entry [111] (page 3, control 0x0F) -- and
 ;          from no other slot of any 32-entry control table in prom_a. A
 ;          target reached at two DIFFERENT indices is refused by the script
 ;          that wrote this.
@@ -5939,10 +5953,10 @@ ExitKey_MidiFileSave_Pages0_1_2_3:
 	unlk XIZ                                             ; FF60F7  ee 0d
 	ret                                                  ; FF60F9  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow1_MidiFileSave_Page1 -- what Dispatch_FF3D39 runs for panel
+; LcdKeyRow1_MidiFileSave_Page1 -- what ScreenButtonHandlers_MidiFileSave runs for panel
 ;          control 0x08
 ;
-; Reached from: Dispatch_FF3D39 entry [40] (page 1, control 0x08) -- and from
+; Reached from: ScreenButtonHandlers_MidiFileSave entry [40] (page 1, control 0x08) -- and from
 ;          no other slot of any 32-entry control table in prom_a. A target
 ;          reached at two DIFFERENT indices is refused by the script that
 ;          wrote this.
@@ -6015,10 +6029,10 @@ LcdKeyRow1_MidiFileSave_Page1:
 	unlk XIZ                                             ; FF617F  ee 0d
 	ret                                                  ; FF6181  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow2_MidiFileSave_Page1 -- what Dispatch_FF3D39 runs for panel
+; LcdKeyRow2_MidiFileSave_Page1 -- what ScreenButtonHandlers_MidiFileSave runs for panel
 ;          control 0x09
 ;
-; Reached from: Dispatch_FF3D39 entry [41] (page 1, control 0x09) -- and from
+; Reached from: ScreenButtonHandlers_MidiFileSave entry [41] (page 1, control 0x09) -- and from
 ;          no other slot of any 32-entry control table in prom_a. A target
 ;          reached at two DIFFERENT indices is refused by the script that
 ;          wrote this.
@@ -6056,10 +6070,10 @@ LcdKeyRow2_MidiFileSave_Page1:
 	unlk XIZ                                             ; FF61AA  ee 0d
 	ret                                                  ; FF61AC  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow3_MidiFileSave_Page1 -- what Dispatch_FF3D39 runs for panel
+; LcdKeyRow3_MidiFileSave_Page1 -- what ScreenButtonHandlers_MidiFileSave runs for panel
 ;          control 0x0A
 ;
-; Reached from: Dispatch_FF3D39 entry [42] (page 1, control 0x0A) -- and from
+; Reached from: ScreenButtonHandlers_MidiFileSave entry [42] (page 1, control 0x0A) -- and from
 ;          no other slot of any 32-entry control table in prom_a. A target
 ;          reached at two DIFFERENT indices is refused by the script that
 ;          wrote this.
@@ -6097,10 +6111,10 @@ LcdKeyRow3_MidiFileSave_Page1:
 	unlk XIZ                                             ; FF61D5  ee 0d
 	ret                                                  ; FF61D7  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow4_MidiFileSave_Page1 -- what Dispatch_FF3D39 runs for panel
+; LcdKeyRow4_MidiFileSave_Page1 -- what ScreenButtonHandlers_MidiFileSave runs for panel
 ;          control 0x0B
 ;
-; Reached from: Dispatch_FF3D39 entry [43] (page 1, control 0x0B) -- and from
+; Reached from: ScreenButtonHandlers_MidiFileSave entry [43] (page 1, control 0x0B) -- and from
 ;          no other slot of any 32-entry control table in prom_a. A target
 ;          reached at two DIFFERENT indices is refused by the script that
 ;          wrote this.
@@ -6211,10 +6225,10 @@ LcdKeyRow4_MidiFileSave_Page1:
 	unlk XIZ                                             ; FF62AD  ee 0d
 	ret                                                  ; FF62AF  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow5_MidiFileSave_Page1 -- what Dispatch_FF3D39 runs for panel
+; LcdKeyRow5_MidiFileSave_Page1 -- what ScreenButtonHandlers_MidiFileSave runs for panel
 ;          control 0x0C
 ;
-; Reached from: Dispatch_FF3D39 entry [44] (page 1, control 0x0C) -- and from
+; Reached from: ScreenButtonHandlers_MidiFileSave entry [44] (page 1, control 0x0C) -- and from
 ;          no other slot of any 32-entry control table in prom_a. A target
 ;          reached at two DIFFERENT indices is refused by the script that
 ;          wrote this.
@@ -6421,10 +6435,10 @@ MidiFile_LcdKeyRow5:
 	unlk XIZ                                             ; FF644F  ee 0d
 	ret                                                  ; FF6451  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow3_MidiFileSave_Page2 -- what Dispatch_FF3D39 runs for panel
+; LcdKeyRow3_MidiFileSave_Page2 -- what ScreenButtonHandlers_MidiFileSave runs for panel
 ;          control 0x0A
 ;
-; Reached from: Dispatch_FF3D39 entry [74] (page 2, control 0x0A) -- and from
+; Reached from: ScreenButtonHandlers_MidiFileSave entry [74] (page 2, control 0x0A) -- and from
 ;          no other slot of any 32-entry control table in prom_a. A target
 ;          reached at two DIFFERENT indices is refused by the script that
 ;          wrote this.
@@ -6466,10 +6480,10 @@ LcdKeyRow3_MidiFileSave_Page2:
 	unlk XIZ                                             ; FF6482  ee 0d
 	ret                                                  ; FF6484  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow4_MidiFileSave_Page2 -- what Dispatch_FF3D39 runs for panel
+; LcdKeyRow4_MidiFileSave_Page2 -- what ScreenButtonHandlers_MidiFileSave runs for panel
 ;          control 0x0B
 ;
-; Reached from: Dispatch_FF3D39 entry [75] (page 2, control 0x0B) -- and from
+; Reached from: ScreenButtonHandlers_MidiFileSave entry [75] (page 2, control 0x0B) -- and from
 ;          no other slot of any 32-entry control table in prom_a. A target
 ;          reached at two DIFFERENT indices is refused by the script that
 ;          wrote this.
@@ -6501,10 +6515,10 @@ LcdKeyRow4_MidiFileSave_Page2:
 	unlk XIZ                                             ; FF649B  ee 0d
 	ret                                                  ; FF649D  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow3_MidiFileSave_Page3 -- what Dispatch_FF3D39 runs for panel
+; LcdKeyRow3_MidiFileSave_Page3 -- what ScreenButtonHandlers_MidiFileSave runs for panel
 ;          control 0x0A
 ;
-; Reached from: Dispatch_FF3D39 entry [106] (page 3, control 0x0A) -- and
+; Reached from: ScreenButtonHandlers_MidiFileSave entry [106] (page 3, control 0x0A) -- and
 ;          from no other slot of any 32-entry control table in prom_a. A
 ;          target reached at two DIFFERENT indices is refused by the script
 ;          that wrote this.
@@ -6559,10 +6573,10 @@ LcdKeyRow3_MidiFileSave_Page3:
 	unlk XIZ                                             ; FF64F5  ee 0d
 	ret                                                  ; FF64F7  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow4_MidiFileSave_Page3 -- what Dispatch_FF3D39 runs for panel
+; LcdKeyRow4_MidiFileSave_Page3 -- what ScreenButtonHandlers_MidiFileSave runs for panel
 ;          control 0x0B
 ;
-; Reached from: Dispatch_FF3D39 entry [107] (page 3, control 0x0B) -- and
+; Reached from: ScreenButtonHandlers_MidiFileSave entry [107] (page 3, control 0x0B) -- and
 ;          from no other slot of any 32-entry control table in prom_a. A
 ;          target reached at two DIFFERENT indices is refused by the script
 ;          that wrote this.
@@ -6670,7 +6684,7 @@ Paint_FloppyDiskFormatSelectType:
 ScreenLeave_FloppyDiskFormatSelectType:
 	ret                                                  ; FF654F  0e
 ; ---------------------------------------------------------------------
-; PanelButtonDispatch_FloppyDiskFormatSelectType -- run Dispatch_FF3F39's
+; PanelButtonDispatch_FloppyDiskFormatSelectType -- run ScreenButtonHandlers_FloppyDiskFormatSelectType's
 ;          handler for one PANEL CONTROL
 ;
 ; Inputs:   (XIZ+0x08) = the 5-bit panel control index; (XIZ+0x0A) =
@@ -6701,7 +6715,7 @@ PanelButtonDispatch_FloppyDiskFormatSelectType:
 	ld c, 0x04:opc                                          ; FF6560  23 04
 	mul bc, h                                          ; FF6562  ce 43
 	extz XBC                                             ; FF6564  e9 12
-	add XBC,Dispatch_FF3D39+0x200                        ; FF6566  e9 c8 39 3f ff 00
+	add XBC,ScreenButtonHandlers_FloppyDiskFormatSelectType                        ; FF6566  e9 c8 39 3f ff 00
 	ld XBC,(XBC)                                         ; FF656C  a1 21
 	lda xiy, (.LFF6576:24)                               ; FF656E  f2 76 65 ff 35
 	push XIY                                             ; FF6573  3d
@@ -6736,31 +6750,22 @@ sub_FF657B:   ; entry: named by 2 `.long` operands, first at 0xFF3F45
 	unlk XIZ                                             ; FF65AF  ee 0d
 	ret                                                  ; FF65B1  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow3_MidiFileSave_Page4 -- what Dispatch_FF3D39 runs for panel
-;          control 0x0A
+; LcdKeyRow3_FloppyDiskFormatSelectType -- LCD row 3 on FLOPPY DISK FORMAT: choose 2DD
+;          (720K) and go to the "Are You Sure?" screen
 ;
-; Reached from: Dispatch_FF3D39 entry [138] (page 4, control 0x0A) -- and
-;          from no other slot of any 32-entry control table in prom_a. A
-;          target reached at two DIFFERENT indices is refused by the script
-;          that wrote this.
-; Control:  index 0x0A is the LCD row 3 button pair. The pair position --
-;          which of the two keys -- reaches the handler in the argument the
-;          reader forwards; this pass did NOT establish that argument's bit
-;          layout.
-; Evidence: the code->control map is rounds 9-12's, re-derived from the ROM
-;          by notes/prom_a_panel_control_map.py, which agrees with prom_b's
-;          SLOT_CONTROL slot for slot; what is new here is only that THIS
-;          module's tables are tied to it. See
-;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   MidiFileSave -- the screen object at PanelScreen_VtableTable
-;          entry 0x6E, i.e. SCREEN ID 0x4E through
-;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
-;          method, and its page 0 draws the list at 0xF58A21, whose first
-;          record reads "MIDI FILE SAVE : FILE NAMING", and its page 1 the
-;          list at 0xF59222, "MIDI FILE SAVE : FILE SELECTI0N".
-; Unknown:  what this screen does with the button.
+; Reached from: ScreenButtonHandlers_FloppyDiskFormatSelectType [0x0A] (row 4 of the matrix
+;          ScreenButtonHandlers_MidiFileSave, entry [138]) -- the table
+;          PanelButtonDispatch_FloppyDiskFormatSelectType, the BUTTON method of
+;          screen 0x50 (PanelScreen_VtableTable entry 0x70), reads.
+; Body:     DiskScreen_RowOption := 0; on the key event with (XIZ+8) bit 7
+;          set: (0x21E8) bit 3 cleared, UI_Request := 0x8051 (screen 0x51).
+; Evidence: the screen's row 3 caption is "2DD:720K Byte format for 2DD
+;          disk." at y = 113 (DL_FloppyDiskFormatSelectTheF0rmatTypeForYo);
+;          Paint_FloppyDiskFormatAreYouSure titles screen 0x51 "(2DD)" when
+;          (0x21E8) bit 3 is clear and "(2HD)" when it is set.
+; Was LcdKeyRow3_MidiFileSave_Page4 (kn5000-wxn).
 ; ---------------------------------------------------------------------
-LcdKeyRow3_MidiFileSave_Page4:
+LcdKeyRow3_FloppyDiskFormatSelectType:
 	link XIZ,0x0000                                      ; FF65B2  ee 0c 00 00
 	ld (DiskScreen_RowOption:16), 0x00                                 ; FF65B6  f1 30 27 00 00
 	ld BC,(XIZ+0x08)                                     ; FF65BB  9e 08 21
@@ -6773,31 +6778,19 @@ LcdKeyRow3_MidiFileSave_Page4:
 	unlk XIZ                                             ; FF65D2  ee 0d
 	ret                                                  ; FF65D4  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow4_MidiFileSave_Page4 -- what Dispatch_FF3D39 runs for panel
-;          control 0x0B
+; LcdKeyRow4_FloppyDiskFormatSelectType -- LCD row 4 on FLOPPY DISK FORMAT: choose 2HD
+;          (1.44M) and go to the "Are You Sure?" screen
 ;
-; Reached from: Dispatch_FF3D39 entry [139] (page 4, control 0x0B) -- and
-;          from no other slot of any 32-entry control table in prom_a. A
-;          target reached at two DIFFERENT indices is refused by the script
-;          that wrote this.
-; Control:  index 0x0B is the LCD row 4 button pair. The pair position --
-;          which of the two keys -- reaches the handler in the argument the
-;          reader forwards; this pass did NOT establish that argument's bit
-;          layout.
-; Evidence: the code->control map is rounds 9-12's, re-derived from the ROM
-;          by notes/prom_a_panel_control_map.py, which agrees with prom_b's
-;          SLOT_CONTROL slot for slot; what is new here is only that THIS
-;          module's tables are tied to it. See
-;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   MidiFileSave -- the screen object at PanelScreen_VtableTable
-;          entry 0x6E, i.e. SCREEN ID 0x4E through
-;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
-;          method, and its page 0 draws the list at 0xF58A21, whose first
-;          record reads "MIDI FILE SAVE : FILE NAMING", and its page 1 the
-;          list at 0xF59222, "MIDI FILE SAVE : FILE SELECTI0N".
-; Unknown:  what this screen does with the button.
+; Reached from: ScreenButtonHandlers_FloppyDiskFormatSelectType [0x0B] (row 4 of the matrix
+;          ScreenButtonHandlers_MidiFileSave, entry [139]) -- the table
+;          PanelButtonDispatch_FloppyDiskFormatSelectType, the BUTTON method of
+;          screen 0x50 (PanelScreen_VtableTable entry 0x70), reads.
+; Body:     as LcdKeyRow3_FloppyDiskFormatSelectType but SETS (0x21E8) bit 3.
+; Evidence: the row 4 caption is "2HD:1.44M Byte format for 2HD disk." at
+;          y = 153; screen 0x51 then draws "(2HD)".
+; Was LcdKeyRow4_MidiFileSave_Page4 (kn5000-wxn).
 ; ---------------------------------------------------------------------
-LcdKeyRow4_MidiFileSave_Page4:
+LcdKeyRow4_FloppyDiskFormatSelectType:
 	link XIZ,0x0000                                      ; FF65D5  ee 0c 00 00
 	ld (DiskScreen_RowOption:16), 0x00                                 ; FF65D9  f1 30 27 00 00
 	ld BC,(XIZ+0x08)                                     ; FF65DE  9e 08 21
@@ -6810,30 +6803,17 @@ LcdKeyRow4_MidiFileSave_Page4:
 	unlk XIZ                                             ; FF65F5  ee 0d
 	ret                                                  ; FF65F7  0e
 ; ---------------------------------------------------------------------
-; ExitKey_MidiFileSave_Page4 -- what Dispatch_FF3D39 runs for panel control
-;          0x0F
+; ExitKey_FloppyDiskFormatSelectType -- EXIT on FLOPPY DISK FORMAT: back to the DISK menu
 ;
-; Reached from: Dispatch_FF3D39 entry [143] (page 4, control 0x0F) -- and
-;          from no other slot of any 32-entry control table in prom_a. A
-;          target reached at two DIFFERENT indices is refused by the script
-;          that wrote this.
-; Control:  index 0x0F is the EXIT key. The pair position -- which of the two
-;          keys -- reaches the handler in the argument the reader forwards;
-;          this pass did NOT establish that argument's bit layout.
-; Evidence: the code->control map is rounds 9-12's, re-derived from the ROM
-;          by notes/prom_a_panel_control_map.py, which agrees with prom_b's
-;          SLOT_CONTROL slot for slot; what is new here is only that THIS
-;          module's tables are tied to it. See
-;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   MidiFileSave -- the screen object at PanelScreen_VtableTable
-;          entry 0x6E, i.e. SCREEN ID 0x4E through
-;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
-;          method, and its page 0 draws the list at 0xF58A21, whose first
-;          record reads "MIDI FILE SAVE : FILE NAMING", and its page 1 the
-;          list at 0xF59222, "MIDI FILE SAVE : FILE SELECTI0N".
-; Unknown:  what this screen does with the button.
+; Reached from: ScreenButtonHandlers_FloppyDiskFormatSelectType [0x0F] (row 4 of the matrix
+;          ScreenButtonHandlers_MidiFileSave, entry [143]) -- the table
+;          PanelButtonDispatch_FloppyDiskFormatSelectType, the BUTTON method of
+;          screen 0x50 (PanelScreen_VtableTable entry 0x70), reads.
+; Body:     on the key event with (XIZ+8) bit 7 clear: UI_Request := 0x8040,
+;          screen 0x40, Paint_DiskMenu.
+; Was ExitKey_MidiFileSave_Page4 (kn5000-wxn).
 ; ---------------------------------------------------------------------
-ExitKey_MidiFileSave_Page4:
+ExitKey_FloppyDiskFormatSelectType:
 	link XIZ,0x0000                                      ; FF65F8  ee 0c 00 00
 	ld BC,(XIZ+0x08)                                     ; FF65FC  9e 08 21
 	and BC,0x0080                                        ; FF65FF  d9 cc 80 00
@@ -6965,7 +6945,7 @@ Paint_FloppyDiskFormatAreYouSure:
 ScreenLeave_FloppyDiskFormatAreYouSure:
 	ret                                                  ; FF66A9  0e
 ; ---------------------------------------------------------------------
-; PanelButtonDispatch_FloppyDiskFormatAreYouSure -- run Dispatch_FF3FB9's
+; PanelButtonDispatch_FloppyDiskFormatAreYouSure -- run ScreenButtonHandlers_FloppyDiskFormatAreYouSure's
 ;          handler for one PANEL CONTROL
 ;
 ; Inputs:   (XIZ+0x08) = the 5-bit panel control index; (XIZ+0x0A) =
@@ -6996,7 +6976,7 @@ PanelButtonDispatch_FloppyDiskFormatAreYouSure:
 	ld c, 0x04:opc                                          ; FF66BA  23 04
 	mul bc, h                                          ; FF66BC  ce 43
 	extz XBC                                             ; FF66BE  e9 12
-	add XBC,Dispatch_FF3D39+0x280                        ; FF66C0  e9 c8 b9 3f ff 00
+	add XBC,ScreenButtonHandlers_FloppyDiskFormatAreYouSure                        ; FF66C0  e9 c8 b9 3f ff 00
 	ld XBC,(XBC)                                         ; FF66C6  a1 21
 	lda xiy, (.LFF66D0:24)                               ; FF66C8  f2 d0 66 ff 35
 	push XIY                                             ; FF66CD  3d
@@ -7008,68 +6988,47 @@ PanelButtonDispatch_FloppyDiskFormatAreYouSure:
 	unlk XIZ                                             ; FF66D2  ee 0d
 	ret                                                  ; FF66D4  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow3_MidiFileSave_Page5 -- what Dispatch_FF3D39 runs for panel
-;          control 0x0A
+; LcdKeyRow3_FloppyDiskFormatAreYouSure -- YES on the FLOPPY DISK FORMAT confirmation:
+;          format the disk
 ;
-; Reached from: Dispatch_FF3D39 entry [170] (page 5, control 0x0A) -- and
-;          from no other slot of any 32-entry control table in prom_a. A
-;          target reached at two DIFFERENT indices is refused by the script
-;          that wrote this.
-; Control:  index 0x0A is the LCD row 3 button pair. The pair position --
-;          which of the two keys -- reaches the handler in the argument the
-;          reader forwards; this pass did NOT establish that argument's bit
-;          layout.
-; Evidence: the code->control map is rounds 9-12's, re-derived from the ROM
-;          by notes/prom_a_panel_control_map.py, which agrees with prom_b's
-;          SLOT_CONTROL slot for slot; what is new here is only that THIS
-;          module's tables are tied to it. See
-;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   MidiFileSave -- the screen object at PanelScreen_VtableTable
-;          entry 0x6E, i.e. SCREEN ID 0x4E through
-;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
-;          method, and its page 0 draws the list at 0xF58A21, whose first
-;          record reads "MIDI FILE SAVE : FILE NAMING", and its page 1 the
-;          list at 0xF59222, "MIDI FILE SAVE : FILE SELECTI0N".
-; Unknown:  what this screen does with the button.
+; Reached from: ScreenButtonHandlers_FloppyDiskFormatAreYouSure [0x0A] (row 5 of the matrix
+;          ScreenButtonHandlers_MidiFileSave, entry [170]) -- the table
+;          PanelButtonDispatch_FloppyDiskFormatAreYouSure, the BUTTON method of
+;          screen 0x51 (PanelScreen_VtableTable entry 0x71), reads.
+; Body:     on the key event with (XIZ+8) bit 7 clear: (0x21FA) := 0,
+;          T_DiskFormat_Execute_Entry (prom_b directory slot -> prom_a
+;          DiskFormat_Execute_Entry: DiskFormat_Execute, Ring_InitTenOfFourteen),
+;          then UI_Request := 0x0201.
+; Evidence: "YES" is drawn at y = 111, LCD row 3 (DL_F58162).
+; Unknown:  what request 0x0201 selects.
+; Was LcdKeyRow3_MidiFileSave_Page5 (kn5000-wxn).
 ; ---------------------------------------------------------------------
-LcdKeyRow3_MidiFileSave_Page5:
+LcdKeyRow3_FloppyDiskFormatAreYouSure:
 	link XIZ,0x0000                                      ; FF66D5  ee 0c 00 00
 	ld BC,(XIZ+0x08)                                     ; FF66D9  9e 08 21
 	and BC,0x0080                                        ; FF66DC  d9 cc 80 00
 	jr nz, .LFF66F5                                      ; FF66E0  6e 13
 	ld (0x21fa:16), 0x00                                 ; FF66E2  f1 fa 21 00 00
-	call T_MidiFileSave_Page5_LcdKeyRow3                                        ; FF66E7  1d d0 25 f4
+	call T_DiskFormat_Execute_Entry                                        ; FF66E7  1d d0 25 f4
 	ld (UI_Request:16), 0x01                                 ; FF66EB  f1 70 20 00 01
 	ld (UI_Request_Hi:16), 0x02                                 ; FF66F0  f1 71 20 00 02
 .LFF66F5:
 	unlk XIZ                                             ; FF66F5  ee 0d
 	ret                                                  ; FF66F7  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow4_MidiFileSave_Page5 -- what Dispatch_FF3D39 runs for panel
-;          control 0x0B
+; LcdKeyRow4_FloppyDiskFormatAreYouSure -- NO on the FLOPPY DISK FORMAT confirmation:
+;          back to the format-type screen
 ;
-; Reached from: Dispatch_FF3D39 entry [171] (page 5, control 0x0B) -- and
-;          from no other slot of any 32-entry control table in prom_a. A
-;          target reached at two DIFFERENT indices is refused by the script
-;          that wrote this.
-; Control:  index 0x0B is the LCD row 4 button pair. The pair position --
-;          which of the two keys -- reaches the handler in the argument the
-;          reader forwards; this pass did NOT establish that argument's bit
-;          layout.
-; Evidence: the code->control map is rounds 9-12's, re-derived from the ROM
-;          by notes/prom_a_panel_control_map.py, which agrees with prom_b's
-;          SLOT_CONTROL slot for slot; what is new here is only that THIS
-;          module's tables are tied to it. See
-;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   MidiFileSave -- the screen object at PanelScreen_VtableTable
-;          entry 0x6E, i.e. SCREEN ID 0x4E through
-;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
-;          method, and its page 0 draws the list at 0xF58A21, whose first
-;          record reads "MIDI FILE SAVE : FILE NAMING", and its page 1 the
-;          list at 0xF59222, "MIDI FILE SAVE : FILE SELECTI0N".
-; Unknown:  what this screen does with the button.
+; Reached from: ScreenButtonHandlers_FloppyDiskFormatAreYouSure [0x0B] (row 5 of the matrix
+;          ScreenButtonHandlers_MidiFileSave, entry [171]) -- the table
+;          PanelButtonDispatch_FloppyDiskFormatAreYouSure, the BUTTON method of
+;          screen 0x51 (PanelScreen_VtableTable entry 0x71), reads.
+; Body:     on the key event with (XIZ+8) bit 7 clear: UI_Request := 0x8050,
+;          screen 0x50.
+; Evidence: "NO" is drawn at y = 151, LCD row 4 (DL_F58162).
+; Was LcdKeyRow4_MidiFileSave_Page5 (kn5000-wxn).
 ; ---------------------------------------------------------------------
-LcdKeyRow4_MidiFileSave_Page5:
+LcdKeyRow4_FloppyDiskFormatAreYouSure:
 	link XIZ,0x0000                                      ; FF66F8  ee 0c 00 00
 	ld BC,(XIZ+0x08)                                     ; FF66FC  9e 08 21
 	and BC,0x0080                                        ; FF66FF  d9 cc 80 00
@@ -7080,30 +7039,18 @@ LcdKeyRow4_MidiFileSave_Page5:
 	unlk XIZ                                             ; FF670F  ee 0d
 	ret                                                  ; FF6711  0e
 ; ---------------------------------------------------------------------
-; ExitKey_MidiFileSave_Page5 -- what Dispatch_FF3D39 runs for panel control
-;          0x0F
+; ExitKey_FloppyDiskFormatAreYouSure -- EXIT on the FLOPPY DISK FORMAT confirmation: back to
+;          the DISK menu
 ;
-; Reached from: Dispatch_FF3D39 entry [175] (page 5, control 0x0F) -- and
-;          from no other slot of any 32-entry control table in prom_a. A
-;          target reached at two DIFFERENT indices is refused by the script
-;          that wrote this.
-; Control:  index 0x0F is the EXIT key. The pair position -- which of the two
-;          keys -- reaches the handler in the argument the reader forwards;
-;          this pass did NOT establish that argument's bit layout.
-; Evidence: the code->control map is rounds 9-12's, re-derived from the ROM
-;          by notes/prom_a_panel_control_map.py, which agrees with prom_b's
-;          SLOT_CONTROL slot for slot; what is new here is only that THIS
-;          module's tables are tied to it. See
-;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   MidiFileSave -- the screen object at PanelScreen_VtableTable
-;          entry 0x6E, i.e. SCREEN ID 0x4E through
-;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
-;          method, and its page 0 draws the list at 0xF58A21, whose first
-;          record reads "MIDI FILE SAVE : FILE NAMING", and its page 1 the
-;          list at 0xF59222, "MIDI FILE SAVE : FILE SELECTI0N".
-; Unknown:  what this screen does with the button.
+; Reached from: ScreenButtonHandlers_FloppyDiskFormatAreYouSure [0x0F] (row 5 of the matrix
+;          ScreenButtonHandlers_MidiFileSave, entry [175]) -- the table
+;          PanelButtonDispatch_FloppyDiskFormatAreYouSure, the BUTTON method of
+;          screen 0x51 (PanelScreen_VtableTable entry 0x71), reads.
+; Body:     on the key event with (XIZ+8) bit 7 clear: UI_Request := 0x8040,
+;          screen 0x40.
+; Was ExitKey_MidiFileSave_Page5 (kn5000-wxn).
 ; ---------------------------------------------------------------------
-ExitKey_MidiFileSave_Page5:
+ExitKey_FloppyDiskFormatAreYouSure:
 	link XIZ,0x0000                                      ; FF6712  ee 0c 00 00
 	ld BC,(XIZ+0x08)                                     ; FF6716  9e 08 21
 	and BC,0x0080                                        ; FF6719  d9 cc 80 00
