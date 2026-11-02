@@ -95,6 +95,8 @@ copies one quota row into the 18 pool records and binds the 27 parts:
 Both rows of pools 0..15 sum to 64.  [INFERENCE] mode A is the keyboard's own allocation (four pools for
 the panel's part groups), mode B a 16-part multi-timbral one; `Voice_SetPolyphonyMode`'s callers decide
 which (A = 1 -> mode B); the main-CPU sender of sub-command 0x09 was not traced.
+**Answered 2026-11-02 (kn5000-1gu, `notes/open6-kn5000-d/subcmd/README.md`):** mode B is General MIDI mode.
+GM ON/OFF (`PANEL_GM`+3 bit 2) sends `F0 7F 09 01` (on -> mode B) or `F0 7F 09 02` (off -> mode A).
 
 ### Release and reaping
 
@@ -215,6 +217,10 @@ player's case in `SeqNoteCh_DispatchEventType` (sequencer_engine.s) or the routi
 pedal (D3, 0/127).  The player forwards them unchanged to the sub-CPU batch (`SeqBuf_WriteMidiEvent` ->
 `Audio_ReinitAndProcessEvents`); the conversion that turns them into sub-CPU records is the remaining step,
 listed under "Proposed new issues".
+**Answered 2026-11-02 (kn5000-a1f, `notes/open6-kn5000-d/subcmd/README.md`):** 0xD0 = channel pressure, 0xD1 =
+modulation, 0xD2 = pitch bend, 0xD3 = expression (the expression pedal on a CONTROL track).  They reach the sub CPU
+as `D0 part 00 v`, `B0 part 01 v`, `E0 part lsb msb` and `B0 part 0B v`.  In 0xBn, the second "value" byte is the
+write mask.  The two value bytes of 0xCn are part-record bytes +0 (sound number) and +1 (variation bank).
 
 Renames (v10/v9/v7/v6/v5): `AccPedalConfig_ApplyTempo` -> `SeqEvt_ApplyTempoEvent`,
 `SeqNote_NoteOff_CheckActive` -> `SeqNoteCh_HandleTempoEvent`, `SeqNote_NoteOff_CheckActive2` ->
@@ -347,6 +353,8 @@ code too; renaming it is listed under "Proposed new issues".
   `ToneGen_PitchClassNoteFormTable` transpose Rhythm-ROM notes to the chord; the voicing source of chord
   types 31-39 and the chord mode that uses `NoteMask9_ClassTable`.
 - Song controller events 0xD0 / 0xD1 / 0xD3 (from kn5000-wgc): trace `Audio_ReinitAndProcessEvents` /
-  `VoiceMode_ParamDispatch` to the sub-CPU records they become.
+  `VoiceMode_ParamDispatch` to the sub-CPU records they become.  (kn5000-a1f; answered 2026-11-02,
+  notes/open6-kn5000-d/subcmd/.)
 - Rename the `VoiceSlot_*` song-memory family in `display/scoop_display.s` (from kn5000-nl6).
-- Main-CPU sender of sub-CPU system sub-command 0x09 (voice allocation mode A / B, from kn5000-rlb).
+- Main-CPU sender of sub-CPU system sub-command 0x09 (voice allocation mode A / B, from kn5000-rlb).  (kn5000-1gu;
+  answered 2026-11-02, notes/open6-kn5000-d/subcmd/.)
