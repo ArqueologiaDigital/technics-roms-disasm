@@ -6,15 +6,20 @@
 #
 # A page (0x100000 words = 2 MiB of stream) starts with a directory of 8-byte entries:
 #   A  the entry's record, in words from the page start (entry 0's A = 4 x the entry count)
-#   P  PFMT | E<<4 | [PCM8] | K
+#   P  PFMT | [PREV] | E<<4 | [PCM8] | K
 #   B  the recording's first sample, in units of 16 words (32 bytes) from the page start
 #   Q  a copy of the record's first parameter word
 # The record at A is B again, then parameter words [flags:2][code:6][value:8], up to the first word
 # with bit 15 set; records are 32-bit aligned, padded with 0.
 
 # ---- directory word P ----------------------------------------------------------------------------
-.equ PFMT,       0x1000   # bit 12: set in all 3,974 entries of both pairs (layout_probe.py); meaning unknown
-                          # bits 11:4 = E, the pitch exponent (13..19; Main_P00_E0AF also sets bit 9): a period of 2^(E-9) samples
+.equ PFMT,       0x1000   # bit 12: set in all 3,974 entries of both pairs (layout_probe.py); meaning unknown:
+                          #   no firmware reads P (wave_port_readers.py), so only the TG's datasheet can say
+                          # bits 11:10: clear in every entry
+.equ PREV,       0x0200   # bit 9: the entry plays a recording backwards; its B is the negated 16-word unit of
+                          #   that recording's last unit (one entry: Main_P00_E0AF, the Reverse Cymbal, plays
+                          #   Main_P00_W0AE, the ride cymbal; wave_reverse_entry.py; the meaning is an inference)
+                          # bits 8:4 = E, the pitch exponent (13..19): a period of 2^(E-9) samples
                           #   sounds at the note the firmware's pitch encodes (an inference from emulation:
                           #   kn7000_mame notes/g13-waves-2026-10-20, pitchcheck.py, 478 of 556 voices)
 .equ PCM8,       0x0008   # bit 3: two signed 8-bit samples per word, low byte first (format_probe.py)
@@ -31,12 +36,17 @@
 # ---- record parameter words --------------------------------------------------------------------
 # value (bits 7:0) >= 0x80: a segment of (256 - value) granules, written `256-n`; a run of these
 #   lays the recording out from its first sample.
-# value < 0x80: a descending list of multiples of 8, the "split list" (written in decimal).  Its
-#   meaning is not known (1/8-octave steps of the firmware's pitch, an inference: g13 README).
+# value < 0x80: ONE granule (wave_record_extent.py), so every word of a record is a run of granules and
+#   the record covers its recording to its end.  These form the "split list" (written in decimal),
+#   descending by 8 per granule: a value in steps of 1/8 octave of pitch, which entries playing the same
+#   recording at higher keys raise by 8 per octave (wave_split_list.py).  What the chip does with it is
+#   not known.
 # code (bits 13:8): only ever non-zero in the records of PCM8 entries (layout census in the notes);
 #   in emulation it scales an 8-bit segment by 2^(-(code & 7)/2) (fitted, g13 code8fit.py).  Written
 #   `0xNN<<8`.
 .equ LOOP_START, 0x4000   # bit 14 on a segment: the loop starts at the segment's end (loop_probe.py)
-.equ LOOP_END,   0x8000   # bit 15 on a segment: the loop ends at the segment's end; ends the record
+.equ LOOP_END,   0x8000   # bit 15 on a segment: the loop ends at the segment's end; ends the record.  The
+                          #   32 samples after it repeat the loop's first 32 (the run-out, `_RunOut` in the
+                          #   sources).  With no LOOP_START before it, the loop starts at the first sample
 .equ REC_END,    0xc000   # bits 15:14 both: ends a record that has no LOOP_END, on its own (value 0)
-                          #   or on the split list's last value
+                          #   or on the split list's last value; its word is one more granule
