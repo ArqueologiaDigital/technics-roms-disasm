@@ -19,6 +19,7 @@ kn7000_addr	name	class	image	image_addr	insns	skeleton_ratio	strict_ratio	agreei
 0x484D6CB8	PsHarmOnOffBoxProc	fuzzy	KN6000	0x4C0A0D8E	178	0.994	0.994	17	0.994	0.994	KN6500:0x4C0A0B0F:fuzzy
 0x484D6F2F	MainVocalistOK	fuzzy	KN6000	0x4C0A1005	136	0.926	0.926	12	0.926	0.926	KN6500:0x4C0A0D86:fuzzy
 0x484D74D2	IrqGroupsDisableAll	exact	IC18	0x5000917E	83	1.0	1.0	0	1.0	1.0	
+0x484D7A3B	RamSectionsCopy	exact	KN2400	0x4870587E	166	1.0	1.0	0	1.0	1.0	
 0x48506D53	AcSndArgGridBoxProc	exact	KN6000	0x4C0B84F8	47	1.0	1.0	5	1.0	1.0	KN6500:0x4C0B8279:exact
 0x485079C8	AcMultiIndexListProc	fuzzy	KN2400	0x486AD107	166	0.994	0.994	14	0.994	0.994	KN6000:0x4C0B9FB8:fuzzy,KN6500:0x4C0B9D5E:fuzzy
 0x485166F2	RSpSelectProc	exact	KN2400	0x486677C6	53	1.0	1.0	7	1.0	1.0	
@@ -46,3 +47,7 @@ kn7000_addr	name	class	image	image_addr	insns	skeleton_ratio	strict_ratio	agreei
 0x4C002FE7	LibF64NegTo	exact	IC18	0x5000186E	15	1.0	1.0	0	1.0	1.0	
 0x4C00307A	fwrite	exact	IC18	0x5000227F	39	1.0	1.0	0	1.0	1.0	
 0x4C0030C0	strtol	exact	IC18	0x500022C5	17	1.0	1.0	0	1.0	0.029	
+0x4C01BB1A	ResourceIdFind	exact	KN2400	0x5014A95C	47	1.0	1.0	0	1.0	1.0	KN6000:0x4C02CA6A:exact,KN6500:0x4C02CBDA:exact
+0x4C021259	PartDspUnitFind	exact	KN6000	0x4C031EAD	22	1.0	1.0	0	1.0	1.0	
+0x4C0216A3	M3HookDispatch	exact	KN6000	0x4C03CC6E	70	1.0	1.0	0	1.0	1.0	KN6500:0x4C03CDDE:exact
+0x4C03DB21	KernelDefInt	exact	KN6000	0x4C3F70A1	84	1.0	1.0	0	1.0	1.0	KN6500:0x4C380D01:exact

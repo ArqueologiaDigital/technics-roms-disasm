@@ -41,17 +41,26 @@ same result, because names the tool wrote earlier count as unnamed again.
 each such name, the rules are run on the other image's routine as if the name were new. A
 `right` pick is the routine the KN7000 gives that name; a `wrong` pick is a different routine.
 
-The `wrong` picks all come from KN2400, and all but one are in its SD-card screen table
-(`Sdc*`). The exception is `FilePriorityFunc`, which picks the KN7000's
-`SdcPanelSwAsFunc`. In every such case the two bodies are equal or near-equal, and each is
-the only routine with that body on its side. So the disagreement is between the two images'
-symbol files, not a weakness of the matcher.
+The run of 2026-11-02 (lane mn10300-names) leaves one `wrong` pick: KN2400's
+`FilePriorityFunc` picks the KN7000's `SdcPanelSwAsFunc`, the two bodies equal and each the
+only one of its kind on its side, so the two images' names disagree there (both come from
+reflection tables; not settled).
 
-One example: KN2400's `SdcSoundTtlJgFunc` (0x48718C9E) and KN7000's
-`SdcNewPlaylistInfoFunc` (0x4855BAC5) are the same 19 instructions, with every number of
-0x10000 or more masked. KN7000's own `SdcSoundTtlJgFunc` is a different, 8-instruction
-routine. One of the two images' SD-card reflection tables is therefore paired wrongly by
-`gen_symbols.py`. Which one is open (see Follow-ups).
+The 2026-10-24 run had 19 `wrong` picks, all from KN2400 and all but `FilePriorityFunc` in its
+SD-card screen table (`Sdc*`); for example KN2400's "`SdcSoundTtlJgFunc` (0x48718C9E)" was the
+KN7000's `SdcNewPlaylistInfoFunc`.  The KN2400's table was the one paired wrongly: its
+identifier run (90) is shorter than the 111 entries InitializeBlock33 registers, and the
+end-aligned pairing of the time named the last 90 code pointers.  `gen_symbols.py`'s start
+alignment (2026-10-29, 8037f3750) fixed it; 0x48718C9E is `SdcNewPlaylistInfoFunc` in
+`kn2400.sym` since.  That same change shifted three KN6000 / KN6500 tables the other way (3 of the KN6000's 21
+tables and 3 of the KN6500's 22, among them the Se table: 89 / 90 `wrong` picks per image in a
+run before the fix).  Their code runs are longer than their names because other tables' pointers
+lead them, and the firmware registers the code array at the run's start + 16 (KN6000
+0x4C37EEF0 for the Se table).  So `gen_symbols.py` now takes the code-array start the image's
+registering call loads a few bytes before the name array's address, and the start of the run
+only when nothing names one (`_registered_code_start`).  KN7000 941, 942's plug-in, KN2400 and
+HD-SX3 write the same symbol files with it; `kn6000.sym` / `kn6500.sym` change in those three
+tables.  `../mn10300-names-probes/names_reflection_table_dump.py` prints a table's pairing.
 
 **Not carried** counts each name of the other image that found no home, by the first rule it
 failed:
@@ -65,22 +74,17 @@ failed:
 - `best match in B is named or already carried`: the routine is listed in `differs.tsv`
   when its KN7000 name differs.
 
-## What `differs.tsv` says (2026-10-24)
+## What `differs.tsv` says
 
-- KN6000 and KN6500 call the KN7000's `SndCmdStreamWrite` (0x4C003A60, a hand name)
-  `TgcBufWrite`, which is the firmware's own name, from their reflection tables. The match
-  class is skeleton. The KN7000 name was not changed, because other notes and the generator
-  use it; it is a candidate for renaming.
-- KN2400's `SdcTechFolderCopyFunc` falls on the KN7000's `SdcFmmPrivateSmfFileNameFunc`, the
-  same SD-card table question as in the audit.
-- IC18's `BootKeyComboProbeShadow` is the KN7000's `PanelTypeProbeShadow`, and KN2400's
-  `crt0_start` is the KN7000's `ResetEntry`. Each is a hand name on both sides.
-- `TEST2FUNC` and the rest are the KN7000's `Test2Func` and the rest: the same reflection
-  names in another case.
+The 2026-10-24 rows that are settled: KN6000 / KN6500's `TgcBufWrite` is now the KN7000's
+name too (it was `SndCmdStreamWrite`, a hand name; renamed 2026-11-02), and KN2400's
+`SdcTechFolderCopyFunc` row went with its table's pairing.  IC18's `BootKeyComboProbeShadow` /
+the KN7000's `PanelTypeProbeShadow` and KN2400's `crt0_start` / the KN7000's `ResetEntry` are
+hand names on both sides; `TEST2FUNC` and the rest are the KN7000's `Test2Func` and the rest,
+the same reflection names in another case.  `differs.tsv` lists the current rows.
 
 ## Follow-ups
 
-- Decide which image's SD-card reflection table is mispaired (KN2400 or KN7000). Compare
-  each table's code-array order with its name-array order, and check the bodies against what
-  the names say: a `*TtlJg*` routine should answer the title-draw message.
-- Rename `SndCmdStreamWrite` to the firmware's `TgcBufWrite` once its users are updated.
+- (settled 2026-11-02) Which SD-card reflection table was mispaired: the KN2400's (above).
+- (done 2026-11-02) `SndCmdStreamWrite` renamed to the firmware's `TgcBufWrite`.
+- KN2400 `FilePriorityFunc` = KN7000 `SdcPanelSwAsFunc` by body: which image's name is right.
