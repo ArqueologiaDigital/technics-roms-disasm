@@ -116,7 +116,7 @@ extern const char SingleLoadSrc_PanelMemListProc;
 extern const char SingleLoadSrc_SequencerListProc;
 extern const char SingleLoadSrc_SoundMemListProc;
 
-#define BASE  0x00E85F4Eu
+#define BASE  0x00E85E46u
 
 /* One step of the welcome-screen animation script (12 bytes).
  * Walked by AcWelcomScreenProc (ui/drawbar_panel_ui.s): the current step

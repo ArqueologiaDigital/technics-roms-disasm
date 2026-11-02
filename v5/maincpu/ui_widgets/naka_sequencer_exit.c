@@ -154,7 +154,7 @@ typedef struct __attribute__((packed)) {
     char SqedtVal2_End_code[2];
 } naka_sequencer_exit_t;
 
-#define BASE  0x00E272A4u
+#define BASE  0x00E2728Cu
 #define SELF(field) \
     ((uint32_t)(BASE + __builtin_offsetof(naka_sequencer_exit_t, field)))
 

@@ -415,7 +415,7 @@ extern const char ClassName_SqedtFix;
 extern const char ClassName_SqedtVal3;
 extern const char ClassName_SqplyVal;
 
-#define BASE  0x00E24056u
+#define BASE  0x00E2403Eu
 
 typedef struct __attribute__((packed)) {
     /* ---------------------------------------------------------------------

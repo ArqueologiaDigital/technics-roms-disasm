@@ -263,7 +263,7 @@ extern const char NakaWidget_DiskMenu_1_AcTitleMenu;
 extern const char SeMenu_CompareAndApply_Data6;
 extern const char SendPartDataBlock_Data5;
 
-#define BASE  0x00EEE078u
+#define BASE  0x00EEDF7Cu
 
 /* FDTest_ScreenView's element (scripts/converters/nakarest_reviewed_slices.py). */
 /* FDTest_ResultCounters's element (scripts/converters/nakarest_reviewed_slices.py). */

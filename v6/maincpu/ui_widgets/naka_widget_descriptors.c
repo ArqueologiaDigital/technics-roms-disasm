@@ -127,7 +127,7 @@ extern const char CmpStepTitle_OnHide;
 extern const char CmpStepTitle_OnPaint;
 extern const char CmpStepTitle_OnSwitchIn;
 
-#define BASE  0x00E30E60u
+#define BASE  0x00E30E66u
 
 /* RhythmDrum_Entries' entry: four bytes the reader uses separately (see the member's header). */
 typedef struct __attribute__((packed)) {

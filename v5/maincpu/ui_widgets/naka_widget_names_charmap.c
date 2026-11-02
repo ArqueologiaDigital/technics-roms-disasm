@@ -364,7 +364,7 @@ extern const char ucharProc;
 extern const char ulongProc;
 extern const char uwordProc;
 
-#define BASE  0x00EAD470u
+#define BASE  0x00EAD35Cu
 
 typedef struct __attribute__((packed)) {
     char w0_code[2];

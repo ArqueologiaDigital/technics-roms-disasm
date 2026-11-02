@@ -97,7 +97,7 @@ extern const char NakaWidget_DiskSmfSave_17_PsFileNameBox;
 extern const char NakaWidget_DiskUtility_13_Label;
 extern const char NakaWidget_DiskUtility_40_Label;
 
-#define BASE  0x00EA13CCu
+#define BASE  0x00EA12D0u
 
 typedef struct __attribute__((packed)) {
     char IvWaitWinCtlProc_str[18];

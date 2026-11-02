@@ -33,7 +33,7 @@ extern const char WidgetName_PtrBlock_I2;
 extern const char WidgetName_PtrBlock_K;
 extern const char NakaWidget_Perf3RhythmSel_StrOff;
 
-#define BASE  0x00E2107Cu
+#define BASE  0x00E21064u
 
 /* NakaWidget_SmfMdly2MicWidget's element (scripts/converters/nakarest_reviewed_slices.py). */
 /* NakaWidget_SongMdlyMixer's element (scripts/converters/nakarest_reviewed_slices.py). */

@@ -62,7 +62,7 @@ extern const char NakaWidget_Demofeature;
 extern const char NakaWidget_Drawbar_8_Label;
 extern const char NakaWidget_Sdtecd;
 
-#define BASE  0x00E81CCEu
+#define BASE  0x00E81C6Eu
 
 typedef struct __attribute__((packed)) {
     char TechniChord_str[14];

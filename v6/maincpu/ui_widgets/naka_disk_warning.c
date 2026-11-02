@@ -157,7 +157,7 @@ extern const char ClassPropdata_Title;
 extern const char ClassPropdata_Viewable;
 extern const char ClassPropdata_VwBox;
 
-#define BASE  0x00EA8CACu
+#define BASE  0x00EA8BB0u
 
 /* A NAKA class definition (24 bytes).  Its field names are the firmware's
  * own: the root class "Class" (class id 0x01600004) names them in its

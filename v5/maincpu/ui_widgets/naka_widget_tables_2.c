@@ -156,7 +156,7 @@ extern const char ClassPropdata_PsMixerControl;
 extern const char ClassPropdata_PsVariBox;
 extern const char ClassPropdata_VwUserBitmapSp;
 
-#define BASE  0x00E5A39Eu
+#define BASE  0x00E5A38Cu
 
 typedef struct __attribute__((packed)) {
     /* ---------------------------------------------------------------------

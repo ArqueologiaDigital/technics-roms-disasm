@@ -83,7 +83,7 @@ extern const char WidgetName_PtrBlock_F1;
 extern const char WidgetName_PtrBlock_F2;
 extern const char WidgetName_PtrBlock_M1;
 
-#define BASE  0x00E27FA4u
+#define BASE  0x00E27F8Cu
 
 typedef struct __attribute__((packed)) {
     /* "" (NUL + 0xFF pad): end name of Kubo's empty Function name table (slot 0x408) */
