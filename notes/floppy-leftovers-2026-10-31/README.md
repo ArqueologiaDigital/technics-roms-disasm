@@ -45,6 +45,17 @@ random bytes. Macros: `k5_note`, `k5_run`, `k5_ev` in `floppy/tools/kn_song.inc`
 
 The KN6000 free cell (`ca6000s/03SMBMIX.SQT`, 251 B) is typed the same way.
 
+**What the still-opaque bytes are** (lane open6/misc2, 2026-11-02, `notes/misc2-2026-11-02/probes/sqt_residue_bits.py`):
+
+| part                            | declarations / bytes | what the probe shows                                                                                                                                                     |
+|---------------------------------|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| KN7000, declarations of >= 32 B | 36 / 4,997           | set bits by file offset mod 8: 3.23 3.27 3.57 3.62 4.74 4.76 4.46 4.58, against a flat 2.4-2.5 for the files' other bytes. [INFERENCE] power-on RAM contents, not events |
+| KN7000 < 32 B, KN6000 < 32 B    | 60 / 273, 119 / 498  | event fragments (0x90 note statuses, 0x81 beats), mostly followed by 0x81 / 0x80 / 0xFF: events cut where neither order resynchronises                                   |
+| KN6000, declarations of >= 32 B | 7 / 1,270            | no phase bias; mostly 0xFF with 0x80 / 0x40 / 0x90 runs: not explained                                                                                                   |
+
+So the KN7000's large residue is explained: RAM nothing wrote has no source, and opaque is its final spelling.
+What is left is the cut fragments (a tokenizer step) and the KN6000's seven large runs.
+
 **The high bit in 5 song events (N-79dbbec8).** Traced in KN7000 941: the per-track step `func_48459799`
 reads an event with `func_48459C93` (bytes copied unmasked). For a note, `func_48459B49` reads +4 and +3
 through `func_48459032` (seek, read, `extbu`: unsigned) and sets the note-off at the track's beat + byte +4,
@@ -65,7 +76,7 @@ every .TM load. The power-on check `func_4C07E1D4` compares RAM against it and r
 **no load reads a file's word**: the file holds RAM's value at save time. It matches in 12 of 50 files
 (`probes/tm_tail.py`, `tm_tail2.py`: no other range or sum matches more; the earlier "13" was a miscount);
 [INFERENCE] the other 38 were saved after sounds were changed by a path that does not recompute it. The describer
-(`kn_soundram.py`) says so per file.
+(`kn_soundram.py`) says so per file.  Their words are carried over from an earlier recompute (Open, below).
 
 ## N-8f18a2ad (panel-memory fields)
 
@@ -91,9 +102,23 @@ unsized).
 ## Open
 
 - KN6000 / KN7000: the 1,768 + 5,270 stale bytes no event order explains (declared opaque; not copies of
-  any cell, `probes/sqt_residue.py`).
+  any cell, `probes/sqt_residue.py`).  Since 2026-11-02 (table above): the KN7000's 4,997 B of large runs are
+  RAM nothing wrote [INFERENCE] and stay opaque.  Next step for the rest: let `kn_sqt.stale_tokens` restart
+  inside a fragment at a beat (0x81) or a note status (0x9n) and spell the cut events' bytes as `.byte` data
+  bytes, as it does for an event cut at a run's start; then look at the KN6000's seven large runs again.
 - ~~WSA1R: block 838's 0xDF 0xF7 run.~~ CLOSED 2026-11-02 (above).
 - Which firmware path changes a KN6000 sound without recomputing the checksum (the 38 stale words).
+  2026-11-02 (`notes/misc2-2026-11-02/probes/tm_stale_carryover.py`): the stale words are carried over.  Three
+  ca6001 files keep the true checksum of 03MARSH1, the file before them, and 0xB0C5 is shared by 24 files on
+  eight disks.  So the word is the last checksum RAM computed (after a .TM load, or at power-on), and the
+  sounds were changed after it.  In v7.1 every routine that names the sound block (0x8402F4E4 / 0x8402F4F4)
+  recomputes the checksum or is followed by `func_4C07DEC8` (`func_4C07D7E0`, `func_4C07DD55`, `func_4C07DDDE`
+  / `func_4C07DE82` through PostTmTransLoad and its siblings, `func_4C162473` through `func_4C07E006`).  The only
+  routine handing out a record pointer, `func_4C07E096`, has one caller, which reads a name.  **BLOCKED**: the
+  path is not in v7.1's static references (v7.1's installer is dated 2004-03-19 in `kn6-71.zip`; which version
+  made the disks is not known).  It needs an older KN6000 program
+  (none is in the mirror: `kn6-71.zip` only), or the KN6000 table flash to test whether 0xB0C5 is the default
+  set's checksum (the KN7000's 40 defaults give 0xFDC2).
 
 ## Website page draft (for the floppy formats page)
 

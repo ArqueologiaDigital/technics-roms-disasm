@@ -80,10 +80,13 @@ Two changes to `gen_customdata_s.py`; `src/customdata/` regenerates with no diff
 - "No user-typed names were found" needs a footnote. The text-run probe still prints 39 KN5000 and 17
   KN7000 names. Read from the records' structure, the bank has 340 name fields:
   - 208 are KN5000 program names (116 distinct) and 127 are KN7000 program or table names (18 distinct);
-  - 4 are KN5000 names respelled: `Jazz At 3.00am` (KN5000 `Jazz At 3:00am`), `3/4 Played By 4`,
-    `Disco - Techni` and `Sentimntal Solo`;
-  - `Metallic Dance` is the KN5000's `Metalic Dance` respelled (lane ic21-rest, "Where the names come
-    from" below).
+  - 1 is a KN5000 program name with ':' written '.': `Jazz At 3.00am` (KN5000 `Jazz At 3:00am`);
+  - 4 match no name of the programs, tables or factory sets: `3/4 Played By 4`, `Disco - Techni`,
+    `Metallic Dance` and `Sentimntal Solo` (208 + 127 + 1 + 4 = 340; `../ic21-own-probes/name_fields.py`).
+  - Compared with the KN5000 table data's MUSIC DATABASE titles instead (lane ic21-rest, "Where the names
+    come from" below, `name_origin.py`), five One Touch Setting names are spelled differently: those four, and
+    `Harry J.& Co`, which the KN5000 program writes so but the title ends `Co.`.  (Corrected 2026-11-02: this
+    list said "4 KN5000 names respelled" and put `Jazz At 3.00am` among them, which disagreed with that table.)
 - The home page's 53 bytes are not one contiguous run. They lie within `+0x08..+0x53`, and the probe
   merges runs across gaps of up to 8 equal bytes.
 
@@ -261,6 +264,11 @@ This unit's FAVORITES are the factory ones byte for byte: `03FAVINI.FAV`, and th
 
 ## HOME PAGE at `0x96811000` (0x4442 bytes = the `.HMP` file)
 
+The Initial Data Disk's `04HPGINI.HMP` record equals the ROM template (HpFlashWriteDefaults_Table, 941
+0x485F9584, 893 0x485F81EC) in 395 of its 396 bytes: only `+0x08`, the home-page type, differs (5 on the disk,
+0 in the ROM).  `../ic21-own-probes/templates.py` prints the 395 / 396; the byte was located on 2026-11-02 by
+comparing the two records (this is the evidence for the website draft's "differs in one byte").
+
 HmpBlobGet returns this pointer and size. The record comes first, 0x18C bytes, RAM `0x5006B5F8`:
 
 - `HP_HEADER`: `"JK "`, NUL, a u32 stamp `0xFF`, then the home-page type, a u32 at `+0x08`.
@@ -410,7 +418,7 @@ lane.
 > At boot the firmware checks the `JK` signature of the settings, FAVORITES and HOME PAGE records, and
 > rewrites a missing one from defaults in its ROM. The Initial Data Disk's USER MIDI SETTINGs, FAVORITES
 > and home-page picture are exactly those defaults; its home-page record differs from the ROM's in one
-> byte.
+> byte, the home-page type at +0x08 (5 on the disk, 0 in the ROM template).
 >
 > ### A KN6000 CUSTOM file in a KN7000
 >

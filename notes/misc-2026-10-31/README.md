@@ -180,7 +180,8 @@ string parameter on (checked: every `\p` use in a kn7asm macro body is `.byte` /
 UNIDASM).  The rewrite changes exactly the lines `macro_lines()` writes as `.ascii "\name"` now (not
 re-checked by a full regeneration in this lane).
 
-**Split off, not done here: moving the shared callers to name-carrying macros.**  With both assemblers stripping
+**Split off, not done here: moving the shared callers to name-carrying macros** (done 2026-11-02 for all
+but `gen_data_s.py`'s callers: `notes/misc2-2026-11-02/README.md`).  With both assemblers stripping
 quotes, `VOICE_HEAD name, ...` (already in `voice_record.inc`) works in both, and SOUND_HEAD and PMR_NAME_HEAD /
 _TAIL could take the name too.  Their callers are generated: `kn7000/tools/gen_data_s.py` (`SOUND_HEAD`,
 `VOICE_HEAD_TAIL`; four program builds), `gen_table_voices.py` (table 84 and the SP7001 archive),
@@ -203,7 +204,8 @@ include comments that said the two assemblers disagree (`voice_record.inc`, `pan
 ## Follow-ups this lane leaves (no blocker)
 
 - Move the shared callers to name-carrying macros (VOICE_HEAD, and SOUND_HEAD / PMR_NAME with a name
-  parameter): a regeneration of the trees listed under N-a23b8d58.
+  parameter): a regeneration of the trees listed under N-a23b8d58.  DONE 2026-11-02 (lane open6/misc2,
+  `notes/misc2-2026-11-02/README.md`) for every caller but `gen_data_s.py`'s, which stays the open rest.
 - DONE 2026-11-02 (lane open6/misc2, `notes/misc2-2026-11-02/README.md`): `scripts/build/compress_lzss.py`
   builds the SLIDE4K streams with `lzss_j.encode` (N = 4096, F = 18), no reference; the tails of presets 17
   and 18 are declared in the source.
