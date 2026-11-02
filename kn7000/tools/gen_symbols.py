@@ -202,6 +202,21 @@ def _ident_offsets(data):
 START_ALIGNED = True
 
 
+def _registered_code_start(data, name_off, cands):
+    """The candidate code-array offset whose address the image holds as a 32-bit value in
+    the 0x40 bytes before a reference to the name array (a registering call's two `mov
+    imm32` operands), or None when there is no such reference or it is ambiguous."""
+    import re
+    nv = struct.pack("<I", PROGRAM_BASE + name_off)
+    found = set()
+    for m in re.finditer(re.escape(nv), data):
+        window = data[max(0, m.start() - 0x40):m.start()]
+        for c in cands:
+            if struct.pack("<I", PROGRAM_BASE + c) in window:
+                found.add(c)
+    return found.pop() if len(found) == 1 else None
+
+
 def find_tables(data, ident_offsets):
     """Yield (code_array_off, name_array_off, n) for every MILK reflection table.
 
@@ -252,7 +267,17 @@ def find_tables(data, ident_offsets):
                 and not _is_empty_str_after_ident(data, ident_offsets, read_u32(data, k)):
             k -= 4
         if START_ALIGNED and (name_off - 8 - k) // 4 > n_names:
-            code_off = k + 4
+            # The code run is longer than the names: which end of it do they name?  The
+            # firmware's registering call answers it -- it loads the code array's address a
+            # few bytes before the name array's (KN7000 0x484D7C94 / 0x484D7CAE).  The KN2400
+            # SDFM MainFunctions registers the run's start (0x485CFA58, 111 entries); the
+            # KN6000 / KN6500 Se table registers start + 16 (0x4C37EEF0: 4 leading pointers
+            # that are not its own, 3 bytes apart), so its names are end-aligned (lane
+            # mn10300-names, 2026-11-02; with start alignment Ed1stOnSe..Ed4thOnSe fell on
+            # those 4 pointers and every name after them one routine early).  Without such a
+            # reference the start is kept.
+            reg = _registered_code_start(data, name_off, (k + 4, code_off))
+            code_off = reg if reg is not None else k + 4
         if code_off < 0:
             continue
         codes = [read_u32(data, code_off + 4 * k) for k in range(n_names)]
