@@ -994,7 +994,7 @@ VoiceSlot_AssignToChannel:
 	ld (4353:16), xiy
 	ld (SEQ_CURSOR_TRACK:16), a
 	ld c, w
-	call VoiceSlot_ComputeWordIndex
+	call SeqTrack_WordIndex
 	extz xiz
 	ld xix, 0xf1f8
 	xor b, b
@@ -1071,7 +1071,7 @@ VoiceSlot_CheckOccupied:
 	pop xbc
 	pop xhl
 	pop xwa
-	call VoiceSlot_InitAndProcess
+	call SeqTrack_WriteBytesAtCursor
 	xor w, w
 	popw bc
 	ret
@@ -1123,7 +1123,7 @@ VoiceSlot_Overflow:
 	pop xbc
 	pop xhl
 	pop xwa
-	call VoiceSlot_InitAndProcess
+	call SeqTrack_WriteBytesAtCursor
 	xor w, w
 	popw bc
 	ret

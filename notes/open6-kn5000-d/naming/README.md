@@ -121,3 +121,125 @@ and three v7 / v6 / v5 labels that still had the generic name v10 / v9 had alrea
 bytes).  One (`NakaToggle_OnOff_Data`, the empty text of `FDTest_Group_OnOff`) is in the NAKA files of lane
 kn5000-c and goes to the lead (`rename_naming.sed`), with three stale names quoted in NAKA C comments.  The verdict
 for every record is in `rld-verdicts.md` (table) and `rld-verdicts.json`.
+
+## kn5000-zc1: the VoiceSlot_* song-memory family
+
+The 212 `VoiceSlot_*` labels defined in v10 `display/scoop_display.s` (212 v9, 214 v7, 204 v6 / v5; 1,108
+references in v10) are the step sequencer's song-memory code, not voice-slot code.  The model, read from
+`SeqTrack_AdvanceCursor` / `SeqTrack_ReadByteAndAdvance` (named earlier) and the bodies below:
+
+- the **cursor** of track T = (SEQ_CURSOR_TRACK) is a block number (u16 at 0x0C9E + 2 * (T - 1)) and an offset 5..255
+  (u8 at 0x0CBE + T - 1);
+- **song blocks** are 256 bytes at (SEQ_BLOCK_POOL) + 256 * (block - 1) (`SeqBlock_Select` sets SEQ_BLOCK_PTR), with a
+  5-byte header: flags, previous link (+1), next link (+3, 0xFFFF = none);
+- **events** start with a status byte (`SeqEvent_CheckStatusByte`: 0x80..0x86 but 0x83, 0x90..0xD3 but 0xAn); 0x81 is
+  the wrap / beat marker counted in SQSTEP_WRAP_COUNT, 0x82 the end, 0x84 a section end;
+- eight **cursor snapshots** of 8 bytes at 0x0DFF (`SeqCursor_Save` / `_Restore`).
+
+`probes/voiceslot_family.py` sorts the labels into routines (reached by call / calr / a pointer / another file) and
+branch targets.  The routines were read one by one and named by hand (`ROUTINES` in
+`scripts/renaming/open6_zc1_voiceslot.py`, the comment beside each the one-line reason); the cursor primitives' arms
+too (`LOCALS`).  Every other label is a branch target and is renamed after the routine it sits in, keeping its
+suffix (`VoiceSlot_StatusRet_Skip39` -> `SqStep_ShowCursorEventPopup_Skip39`), so a label is never named after a
+routine it does not belong to (v7 `VoiceSlot_CheckCursorAtTrackStart_Loop2` sits in what is now
+`SeqTrack_CheckEventFollows` and becomes `SeqTrack_CheckEventFollows_Loop2`).  The script writes one sed file per tree
+(the trees differ: v6 / v5 call `SeqTrack_SkipWrapMarkers` `VoiceSlot_TableSetup_Helper`, v7 / v6 / v5 lack the two
+`FinalRetZ` helpers, v6 / v5 have `SqStep_ShowTempoPopup` and one more empty pop-up stub); routine names are the same
+in every tree.  Headers for 24 main routines: `open6_naming_patches.py --zc1` (they replace the "voice
+selection" wording of the old headers).  `VoiceSlot_*` labels outside scoop_display.s (note_voice_mapping.s,
+accompaniment_engine.s, demo_seq_bridge.s) are other families and were not touched.
+
+| old (v10 unless noted)                        | new                                       | from the body                             |
+|-----------------------------------------------|-------------------------------------------|-------------------------------------------|
+| `VoiceSlot_UpdateCurrentPointer`              | `SeqBlock_Select`                         | SEQ_BLOCK_PTR = pool + (IY - 1) * 256     |
+| `VoiceSlot_ComputeWordIndex`                  | `SeqTrack_WordIndex`                      | IZ = 2 * (SEQ_CURSOR_TRACK - 1)           |
+| `VoiceSlot_ComputeIndex`                      | `SeqTrack_TripleIndex`                    | IZ = 3 * (SEQ_CURSOR_TRACK - 1)           |
+| `VoiceSlot_ReadCurrentParams`                 | `SeqTrack_ReadCursorByte`                 | A = byte at the cursor                    |
+| `VoiceSlot_WriteCurrentParam`                 | `SeqTrack_WriteCursorByte`                | byte at the cursor = W                    |
+| `VoiceSlot_FlagCheck`                         | `SeqTrack_PeekNextByte`                   | SeqTrack_PeekAhead with 0x0DF5 = 1        |
+| `VoiceSlot_FlagCheckBody`                     | `SeqTrack_PeekSecondByte`                 | ... with 0x0DF5 = 2                       |
+| `VoiceSlot_FlagCheckDone`                     | `SeqTrack_PeekAhead`                      | byte (0x0DF5) past the cursor, next block |
+| `VoiceSlot_FinalRetZ_0x11`                    | `SeqTrack_PeekNextByte_SaveRegs`          | A = E; PeekNextByte, XIY XIZ XHL kept     |
+| `VoiceSlot_FinalRetZ_0x1E`                    | `SeqTrack_ReadCursorByteOfTrack`          | cursor byte of track E (1-based)          |
+| `VoiceSlot_StatusCheck`                       | `SeqEvent_CheckStatusByte`                | W = 0 when A starts an event              |
+| `VoiceSlot_CompareRet`                        | `SeqTrack_StepEvent`                      | W = 0 one event on, W = 1 one event back  |
+| `VoiceSlot_LoadAndDispatch`                   | `SeqTrack_NextEvent`                      |                                           |
+| `VoiceSlot_DispatchRet`                       | `SeqTrack_NextEventKeepWrapCount`         |                                           |
+| `VoiceSlot_CompareAndBranch`                  | `SeqTrack_PrevEvent`                      |                                           |
+| `VoiceSlot_StepCursorBack`                    | `SeqTrack_PrevEventKeepWrapCount`         |                                           |
+| `VoiceSlot_SubrRetZ`                          | `SeqTrack_DecWrapCount`                   | SQSTEP_WRAP_COUNT - 1, not below 0        |
+| `VoiceSlot_SkipByteAndRead`                   | `SeqTrack_SkipByteAndRead`                |                                           |
+| `VoiceSlot_SkipWrapMarkers`                   | `SeqTrack_SkipWrapMarkers`                |                                           |
+| `VoiceSlot_TableSetup_Helper`                 | `SeqTrack_SkipWrapMarkers`                | v6 / v5 spelling of the same routine      |
+| `VoiceSlot_CheckCursorAtTrackStart`           | `SeqTrack_CheckCursorAtStart`             |                                           |
+| `VoiceSlot_ReadParamsWithSaveRestore_Helper3` | `SeqTrack_CheckEventFollows`              |                                           |
+| `VoiceSlot_InitAndProcess`                    | `SeqTrack_WriteBytesAtCursor`             | BC bytes from (0x1101), cursor advanced   |
+| `VoiceSlot_RetZ`                              | `SeqTrack_DeleteBytesAtCursor`            | W bytes (SqStep_DeleteEventAtCursor)      |
+| `VoiceSlot_SaveState`                         | `SeqCursor_Save`                          |                                           |
+| `VoiceSlot_RestoreState`                      | `SeqCursor_Restore`                       |                                           |
+| `VoiceSlot_CompareSavedMarkerCount`           | `SeqCursor_CompareSavedWrapCount`         | step-edit screens built on them           |
+| `VoiceSlot_TableSetup`                        | `SqStep_RebuildGridRows`                  | bit 0 of 0x0DD3: rows around the cursor   |
+| `VoiceSlot_StatusRet`                         | `SqStep_ShowCursorEventPopup`             | the pop-up for the event at the cursor    |
+| `VoiceSlot_IndexDone`                         | `SqStep_ShowCursorMarkerPopup`            | 0x81 / 0x82 / 0x84 at the cursor          |
+| `VoiceSlot_ReadParamsWithSaveRestore`         | `SqStep_WritePopupValueToEvent`           |                                           |
+| `VoiceSlot_StatusRet_Helper`                  | `SqStep_AuditionCursorNotes`              | 0x90 at the cursor: notes to SeqBuf       |
+| `VoiceSlot_StatusRet_Helper4`                 | `ParamPopup_EmptyStub4`                   | lone `ret`s among the ParamPopup_*        |
+| `VoiceSlot_StatusRet_Helper5`                 | `ParamPopup_EmptyStub5`                   |                                           |
+| `VoiceSlot_StatusRet_Helper6`                 | `ParamPopup_EmptyStub6`                   |                                           |
+| `VoiceSlot_StatusRet_Helper7`                 | `ParamPopup_EmptyStub7`                   |                                           |
+| `VoiceSlot_StatusRet_Helper8`                 | `ParamPopup_EmptyStub8`                   |                                           |
+| `VoiceSlot_StatusRet_Helper10`                | `ParamPopup_EmptyStub10`                  | v6 / v5                                   |
+| `VoiceSlot_StatusRet_Helper11`                | `SqStep_ShowTempoPopup`                   | v6 / v5: "TEMPO=" line, Str_TempoEq       |
+| `VoiceSlot_StatusRet_Tbl2`                    | `SqStep_ShowCursorEventPopup_NoteCodeMap` | 12 x u8 -> 0x0D61, note-event case        |
+
+## What is left
+
+1. `SendPartDataBlock_*` (about 120 labels in audio/note_voice_mapping.s): most are sound-RAM record helpers, and
+   the `SendPartDataBlock_Return5_*` ones are branch targets inside the `SoundRam_Convert*` routines; rename them after
+   their owners with the zc1 method (`open6_zc1_voiceslot.py` generalises: owner = nearest routine label above).
+2. The unlabelled routine after `CmpRecSet_OnBassType` (cycles bits 5 / 6 of 0x34EA) and its
+   `CmpRecSet_OnBassType_Code_*` labels; `DrumVoice_NotifyEE` and `CmpSetTtl_DrumVoice0/1`.
+3. The flag bits behind `AccReplay_HandlePendingStop` (0x347A.1) and `AccSection_ApplyPendingChange` (0x341F.0):
+   read their setters and name the RAM bytes.
+4. The sub-CPU side of COMM(0xFF, 0xFF) (`SoundRam_InitPhase0_SendImage` / `_InitPhase2_ResetIfRamLost`).
+5. `MemConfig_Handler_1_Helper5` frees a block chain (it is `SeqTrack_DeleteBytesAtCursor`'s last step) and the
+   `SeqBlockChain_*` labels inside `SeqTrack_AdvanceCursor`: name them with the song-memory model above.
+6. The lead's `rename_naming.sed` (files outside this sub-lane: table data, HD-AE5000 event codes, floppy
+   formats, a generator, NAKA files).
+
+## Website page draft
+
+The technics-docs pages that quote renamed labels (found by searching the pages for every old name of the
+`rename_open6_*.sed` scripts; the docs lane applies them):
+
+| page                         | old                                                                                                                                | new                                                                                                                                           |
+|------------------------------|------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| audio-subsystem.md           | Part_InitFromPreset                                                                                                                | SeqSong_ResetAll                                                                                                                              |
+| boot-sequence.md             | AccDemo_InitDone, SendPartDataBlock_ClearByte4, SendPartDataBlock_Return4, SendPartDataBlock_DoGetError, SendPartDataBlock_Return5 | Composer_ResetStyleImage, SoundRam_InitPhase0_SendImage, SoundRam_InitPhase1_Nop, SoundRam_InitPhase2_ResetIfRamLost, SoundRam_InitPhase3_Nop |
+| firmware-v9-vs-v10.md        | SendPartDataBlock_DoGetError                                                                                                       | SoundRam_InitPhase2_ResetIfRamLost                                                                                                            |
+| floppy-disk-formats.md       | SetCurrentSlotIndex, GetCurrentSlotIndex, DrumVoice_Handler0 / 1                                                                   | Composer_SetPassword, Composer_GetPassword, CmpRecSet_OnMeasure / CmpRecSet_OnTimeSig                                                         |
+| panel-memory-factory-data.md | Display_CopyAndRenderBitmaps, VoiceData_InitAndCopyParams                                                                          | PanelMem_InitAllFromFactory, PanelMem_InitFromFactory                                                                                         |
+| questions.md                 | SendPartDataBlock_DoGetError                                                                                                       | SoundRam_InitPhase2_ResetIfRamLost                                                                                                            |
+| sequencer.md                 | Part_InitFromPreset                                                                                                                | SeqSong_ResetAll                                                                                                                              |
+| sns-nmi-emulation.md         | Voice_InitBankData                                                                                                                 | MspUser_InitFromFactory                                                                                                                       |
+| sound-parameter-protocol.md  | HdaeRom_ProcessBlock, SwbtB2_Code63_Listener                                                                                       | PanelTag61_ApplyDspSlot, PanelTag63_ApplyDspSlot (SwbtWr listeners of DSP slot records 0x61 / 0x63)                                           |
+
+No page quotes a `VoiceSlot_*` name of the zc1 family or a kn5000-rld record.  Suggested text for
+**sequencer.md** (a new short section, "Song memory: blocks and cursors"):
+
+> Song data lives in 256-byte blocks at (SEQ_BLOCK_POOL) + 256 * (n - 1), chained through a 5-byte header (flags,
+> previous block +1, next block +3, 0xFFFF = none).  Each track has a cursor -- a block number (word table 0x0C9E)
+> and an offset 5..255 (byte table 0x0CBE) -- that `SeqTrack_ReadCursorByte`, `SeqTrack_StepEvent`,
+> `SeqTrack_WriteBytesAtCursor` and `SeqTrack_DeleteBytesAtCursor` move and edit; events start with a status byte
+> (0x80..0x86 except 0x83, 0x90..0xD3 except 0xAn), 0x81 marks a beat, 0x82 the end.  The step-edit screens save the
+> cursor in eight 8-byte snapshots at 0x0DFF (`SeqCursor_Save` / `SeqCursor_Restore`).
+
+## Checks run
+
+- `make gate` (under the lane's build lock) after each item: exit 0 -- "PASS: every KN5000 image assembles with the
+  pinned toolchain", "PASS: every rebuilt ROM is byte-identical", "PASS: every reference file matches its build".
+- `python3 scripts/analysis/l2_symbol_reference.py --regen`, then `--check` (part of the gate): PASS.
+- `python3 scripts/analysis/check_ported_labels.py` after the last item: v7 -> v6 same 34711, changed 11925,
+  misplaced 112, only in v7 1326, only in v6 1163; v6 -> v5 same 44196, changed 3521, misplaced 16, only in v6 48,
+  only in v5 11 (no earlier run is recorded to compare with; the renames give the same name to the same thing in
+  every tree, so they can only turn "only in" pairs into "same").

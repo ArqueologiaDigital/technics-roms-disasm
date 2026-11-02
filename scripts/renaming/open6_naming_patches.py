@@ -290,7 +290,108 @@ def style():
         header(label, text)
 
 
-PHASES = {"--j8z": j8z, "--j8z-v142": j8z_v142, "--style": style}
+# ----------------------------------------------------------------------------------------------- kn5000-zc1
+# The song-data cursor: track = (SEQ_CURSOR_TRACK) 1-based; block number (u16) at 0x0C9E + 2 * (track - 1),
+# offset (u8, 5..255) at 0x0CBE + track - 1, into 256-byte blocks at (SEQ_BLOCK_POOL) + 256 * (block - 1)
+# (5-byte header: flags, previous link +1, next link +3, 0xFFFF = none).
+ZC1_HEADERS = [
+    ("SeqBlock_Select", """\
+SEQ_BLOCK_PTR = (SEQ_BLOCK_POOL) + 256 * (IY - 1): selects song block IY (1-based).  Out: XHL = 0.
+Basis: body; every song-data routine calls it before reading (SEQ_BLOCK_PTR)."""),
+    ("SeqTrack_WordIndex", """\
+IZ = 2 * ((SEQ_CURSOR_TRACK) - 1), the index of the cursor track's word in the cursor block table 0x0C9E
+(IZ / 2 indexes the offset table 0x0CBE).  Preserves WA.  Basis: body."""),
+    ("SeqTrack_TripleIndex", """\
+IZ = 3 * ((SEQ_CURSOR_TRACK) - 1), the index of the cursor track's 3-byte entry (track table 0xF250).
+Preserves WA.  Basis: body."""),
+    ("SeqTrack_ReadCursorByte", """\
+Reads the byte at the cursor track's song-data cursor: block (0x0C9E)[track] (SeqBlock_Select), offset
+(0x0CBE)[track].  Out: WA = the byte (W = 0), XHL = the block, IZ = SeqTrack_WordIndex.  Basis: body;
+SeqTrack_WriteCursorByte is its write twin."""),
+    ("SeqTrack_PeekAhead", """\
+Reads the byte (0x0DF5) bytes past the cursor without moving it: in the cursor block, or byte 5 of the next
+block (link +3) past offset 255.  Out: A = the byte, W = 0xFF when there is no next block.  Basis: body;
+SeqTrack_PeekNextByte / SeqTrack_PeekSecondByte set 0x0DF5 = 1 / 2."""),
+    ("SeqTrack_PeekNextByte_SaveRegs", """\
+A = E, then SeqTrack_PeekNextByte with XIY, XIZ and XHL preserved.  Basis: body."""),
+    ("SeqTrack_ReadCursorByteOfTrack", """\
+A = the byte at the song-data cursor of track E (1-based), without changing SEQ_CURSOR_TRACK; XHL and DE
+preserved.  Basis: body (SeqTrack_ReadCursorByte for an explicit track)."""),
+    ("SeqEvent_CheckStatusByte", """\
+W = 0 when A can start a stored event -- 0x80..0x86 except 0x83, or 0x90..0xD3 except 0xA0..0xAF -- else W =
+0xFF.  Basis: body; SeqTrack_StepEvent skips bytes while it returns 0xFF."""),
+    ("SeqTrack_StepEvent", """\
+Moves the song-data cursor to the next event (W = 0) or the previous one (W = 1): walks the bytes, following
+the block links (+3 forward, +1 back), until SeqEvent_CheckStatusByte accepts one; each 0x81 marker passed
+adjusts SQSTEP_WRAP_COUNT (+1 forward unless a peek finds the chain end or 0x82; SeqTrack_DecWrapCount back).
+Stores the new cursor and the number of bytes moved in 0x0DCC.  Out: W = 0 moved, 0xFF at the end / start of
+the track.  Basis: body."""),
+    ("SeqTrack_NextEvent", """\
+SeqTrack_StepEvent forward, unless the cursor is at the end: W = 0xFF when the next byte is past the block
+chain (SeqTrack_PeekNextByte) or is 0x82, or when the cursor byte is 0x84; otherwise W = 0 and the cursor
+moved.  Basis: body."""),
+    ("SeqTrack_NextEventKeepWrapCount", """\
+SeqTrack_NextEvent with SQSTEP_WRAP_COUNT (0x0D58) saved and restored around it.  Basis: body."""),
+    ("SeqTrack_PrevEvent", """\
+SeqTrack_StepEvent with W = 1: one event back.  Basis: body."""),
+    ("SeqTrack_PrevEventKeepWrapCount", """\
+SeqTrack_PrevEvent with SQSTEP_WRAP_COUNT (0x0D58) saved and restored; W = 255 at the start of the track.
+Backward twin of SeqTrack_NextEventKeepWrapCount.  Basis: callers + body -- ScoopDisp_SeekBackWrapMarkers
+walks back to the preceding 0x81 with it."""),
+    ("SeqTrack_DecWrapCount", """\
+SQSTEP_WRAP_COUNT - 1, not below 0; XIY preserved.  Basis: body (SeqTrack_StepEvent's backward 0x81 case)."""),
+    ("SeqTrack_WriteBytesAtCursor", """\
+Copies BC bytes from the pointer at 0x1101 to the song-data cursor and advances the cursor past them,
+continuing at byte 5 of the next block (link +3) when the block is full; BC = 0 does nothing.  Basis: callers +
+body -- the step-edit insert paths (and demo/demo_seq_bridge.s) call Scoop_EventHandler_Scroll first to open
+the gap."""),
+    ("SeqTrack_DeleteBytesAtCursor", """\
+Deletes W bytes at the song-data cursor: computes the span's end (0x28BA block, 0x28BC offset), moves the rest
+of the track down (Scoop_EventHandler_SpecialMode) [INFERENCE] and frees the blocks that become empty
+(MemConfig_Handler_1_Helper5).  Basis: callers + body -- SqStep_DeleteEventAtCursor passes the event length
+SeqTrack_StepEvent measured (0x0DCC)."""),
+    ("SeqCursor_Save", """\
+Saves the cursor track's song-data cursor into snapshot slot A (0..7; 8 bytes at 0x0DFF + 8 * A): block word,
+offset, SQSTEP_CLOCK, SQSTEP_WRAP_COUNT, SQSTEP_UNITS.  Registers preserved; SeqCursor_Restore writes them
+back.  Basis: body."""),
+    ("SeqCursor_Restore", """\
+Restores the song-data cursor from snapshot slot A (0..7) written by SeqCursor_Save (VoiceState_RestoreEntry,
+VoiceState_RestoreDone); WA, XHL, XIZ and XIY preserved.  Basis: body."""),
+    ("SeqTrack_CheckEventFollows", """\
+W = 255 when an event other than the end markers follows the cursor within 6 bytes (0x81 markers skipped), W
+= 0 when 0x82 / 0x84 or nothing comes first, and when the cursor byte itself is 0x84 (then BC = 2, at once).
+The cursor is restored from snapshot slot 7.  Basis: body; the step-edit field writers (SqStep_WritePopupValueToEvent
+and its siblings) only write when it returns non-zero."""),
+    ("SqStep_WritePopupValueToEvent", """\
+When SeqTrack_CheckEventFollows allows it: saves the cursor (slot 0), moves it (PERF_STEP_FIELD) bytes on,
+writes (POPUP_VALUE) there (SeqTrack_WriteCursorByte) and restores the cursor.  Basis: callers + body -- the
+VoiceParam_Case* pop-up handlers call it after storing the edited value."""),
+    ("SqStep_RebuildGridRows", """\
+When bit 0 of 0x0DD3 is set (clears it): rebuilds the step-edit grid around the cursor -- backs up to the
+start of the displayed row (SqStep_GetBeatInGridRow, SeqTrack_SkipWrapMarkers), finds its end, builds the row
+bitmap (SqStep_BuildCurrentRowBitmap) and the rows above and below (SqStep_SetupPrevGridRow /
+SqStep_SetupNextGridRow), and redraws regions 1, 2, 4 and 5; the cursor is restored.  Basis: callers + body."""),
+    ("SqStep_ShowCursorEventPopup", """\
+Shows the pop-up for the event at the song-data cursor, by its status byte: 0x9n note (SqStep_AuditionCursorNotes
+too), 0xBn control (ParamPopup_* per controller), 0xCn program, 0x8n markers, 0xDn; the 0x81 / clock cases go to
+SqStep_ShowCursorMarkerPopup.  Basis: body."""),
+    ("SqStep_ShowCursorMarkerPopup", """\
+Counts the 0x81 markers at the cursor (stepping over them, 0x0D62) and shows the beat count
+(DisplayStr_ShowBeatCount), or at a 0x82 / 0x84 marker the section name (SQSTEP_STYLE_SECTION = 8 / 9,
+DisplayStr_CopyStyleSectionName).  Basis: body."""),
+    ("SqStep_AuditionCursorNotes", """\
+When the cursor event is a note (0x90): saves the cursor (slot 1), flushes SeqBuf and sends note-offs, then
+writes the notes that start at the same clock into SeqBuf (status, note, velocity 64, track) so they sound;
+restores the cursor.  Basis: body."""),
+]
+
+
+def zc1():
+    for label, text in ZC1_HEADERS:
+        header(label, text)
+
+
+PHASES = {"--j8z": j8z, "--j8z-v142": j8z_v142, "--style": style, "--zc1": zc1}
 
 if __name__ == "__main__":
     if len(sys.argv) != 2 or sys.argv[1] not in PHASES:
