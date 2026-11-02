@@ -1955,6 +1955,9 @@ FDemoText_TextDispatch_Skip4:
 	pop	xiz
 	lda xsp, (xsp+222)
 	ret
+; FDemoText_Tag_ACT -- the handler of the feature-demo markup tag <ACT>: FDemoText_ProcessMarkup calls it through
+; FDemoText_MarkupTag_HandlerColumn (the {tag name, handler} records of FDemoText_MarkupTagTable).
+FDemoText_Tag_ACT:
 	lda xsp, (xsp-142)
 	push	xiz
 	ld	(xsp+138), de
@@ -2068,6 +2071,9 @@ FDemoText_TextDispatch_Join4:
 	pop xiz
 	lda xsp, (xsp+142)
 	ret
+; FDemoText_Tag_EndACT -- the handler of the feature-demo markup tag </ACT>: FDemoText_ProcessMarkup calls it through
+; FDemoText_MarkupTag_HandlerColumn (the {tag name, handler} records of FDemoText_MarkupTagTable).
+FDemoText_Tag_EndACT:
 	cp	de, 1:i3
 	jr	z, FDemoText_TextDispatch_Skip15
 	cp	de, 0:i3
@@ -2076,6 +2082,9 @@ FDemoText_TextDispatch_Join4:
 FDemoText_TextDispatch_Skip15:
 	ld	hl, 0:i3
 	ret
+; FDemoText_Tag_BR -- the handler of the feature-demo markup tag <BR>: FDemoText_ProcessMarkup calls it through
+; FDemoText_MarkupTag_HandlerColumn (the {tag name, handler} records of FDemoText_MarkupTagTable).
+FDemoText_Tag_BR:
 	cp	de, 1:i3
 	jr	z, FDemoText_TextDispatch_Skip16
 	cp	de, 0:i3
@@ -2083,6 +2092,9 @@ FDemoText_TextDispatch_Skip15:
 FDemoText_TextDispatch_Skip16:
 	ld	hl, 0:i3
 	ret
+; FDemoText_Tag_CENTER -- the handler of the feature-demo markup tag <CENTER>: FDemoText_ProcessMarkup calls it through
+; FDemoText_MarkupTag_HandlerColumn (the {tag name, handler} records of FDemoText_MarkupTagTable).
+FDemoText_Tag_CENTER:
 	cp	de, 1:i3
 	jr	z, FDemoText_TextDispatch_Skip17
 	cp	de, 0:i3
@@ -2100,6 +2112,9 @@ FDemoText_TextDispatch_Skip16:
 FDemoText_TextDispatch_Skip17:
 	ld	hl, 0:i3
 	ret
+; FDemoText_Tag_EndCENTER -- the handler of the feature-demo markup tag </CENTER>: FDemoText_ProcessMarkup calls it through
+; FDemoText_MarkupTag_HandlerColumn (the {tag name, handler} records of FDemoText_MarkupTagTable).
+FDemoText_Tag_EndCENTER:
 	cp	de, 1:i3
 	jr	z, FDemoText_TextDispatch_Skip19
 	cp	de, 0:i3
@@ -2118,6 +2133,9 @@ FDemoText_TextDispatch_Skip18:
 FDemoText_TextDispatch_Skip19:
 	ld	hl, 0:i3
 	ret
+; FDemoText_Tag_FONT -- the handler of the feature-demo markup tag <FONT>: FDemoText_ProcessMarkup calls it through
+; FDemoText_MarkupTag_HandlerColumn (the {tag name, handler} records of FDemoText_MarkupTagTable).
+FDemoText_Tag_FONT:
 	lda xsp, (xsp-146)
 	push	xiz
 	ld	(xsp+142), de
@@ -2219,6 +2237,9 @@ FDemoText_TextDispatch_Skip22:
 	pop	xiz
 	lda xsp, (xsp+146)
 	ret
+; FDemoText_Tag_EndFONT -- the handler of the feature-demo markup tag </FONT>: FDemoText_ProcessMarkup calls it through
+; FDemoText_MarkupTag_HandlerColumn (the {tag name, handler} records of FDemoText_MarkupTagTable).
+FDemoText_Tag_EndFONT:
 	cp	de, 1:i3
 	jr	z, FDemoText_TextDispatch_Skip9
 	cp	de, 0:i3
@@ -2244,6 +2265,9 @@ FDemoText_TextDispatch_Skip23:
 FDemoText_TextDispatch_Skip9:
 	ld	hl, 0:i3
 	ret
+; FDemoText_Tag_IMG -- the handler of the feature-demo markup tag <IMG>: FDemoText_ProcessMarkup calls it through
+; FDemoText_MarkupTag_HandlerColumn (the {tag name, handler} records of FDemoText_MarkupTagTable).
+FDemoText_Tag_IMG:
 	lda xsp, (xsp-272)
 	push	xiz
 	ld	(xsp+0x10c), de
@@ -2334,6 +2358,9 @@ FDemoText_TextDispatch_Join10:
 	pop	xiz
 	lda	xsp, (xsp+0x110)
 	ret
+; FDemoText_Tag_SHOW -- the handler of the feature-demo markup tag <SHOW>: FDemoText_ProcessMarkup calls it through
+; FDemoText_MarkupTag_HandlerColumn (the {tag name, handler} records of FDemoText_MarkupTagTable).
+FDemoText_Tag_SHOW:
 	lda xsp, (xsp-206)
 	push	xiz
 	ld (xsp+202), de

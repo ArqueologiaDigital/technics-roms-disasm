@@ -55,7 +55,7 @@ extern const char ClassProps_AcPleaseWait;
 extern const char ClassProps_AcSndEMenu;
 extern const char ClassProps_IvMPver;
 
-#define BASE  0x00E80FE2u
+#define BASE  0x00E80FCAu
 
 /* A NAKA class definition (24 bytes).  Its field names are the firmware's
  * own: the root class "Class" (class id 0x01600004) names them in its

@@ -24,7 +24,7 @@ extern const char WidgetCharMap_DataEntry1;
 extern const char WidgetCharMap_DataEntry2;
 extern const char NakaWidget_MdPresetUserWriteList;
 
-#define BASE  0x00E55E38u
+#define BASE  0x00E55E3Eu
 
 typedef struct __attribute__((packed)) {
     char AcMidiPartGridBoxProc_str[22];

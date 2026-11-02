@@ -62,7 +62,7 @@ extern const char NakaWidget_Demofeature;
 extern const char NakaWidget_Drawbar_8_Label;
 extern const char NakaWidget_Sdtecd;
 
-#define BASE  0x00E81CCEu
+#define BASE  0x00E81C6Eu
 
 typedef struct __attribute__((packed)) {
     char TechniChord_str[14];
@@ -1156,8 +1156,10 @@ typedef struct __attribute__((packed)) {
     char Sdmixer_name[8];
 } naka_technichord_part_t;
 
+/* PORT_BASE: v5 moved parts of this blob; from each offset on, its ROM address is that base + offset (scripts/converters/ported_c_rebase.py) */
+#define PORT_BASE(off) ((off) >= 0x3D0Au ? 0x00E81BEAu : (off) >= 0x364Cu ? 0x00E81BFAu : BASE)
 #define SELF(field) \
-    ((uint32_t)(BASE + __builtin_offsetof(naka_technichord_part_t, field)))
+    ((uint32_t)(PORT_BASE(__builtin_offsetof(naka_technichord_part_t, field)) + __builtin_offsetof(naka_technichord_part_t, field)))
 
 _Static_assert(sizeof(naka_technichord_part_t) == 17024,
     "naka_technichord_part must be exactly 17024 bytes");
@@ -8338,4 +8340,5 @@ const naka_technichord_part_t naka_technichord_part_data
 };
 
 #undef SELF
+#undef PORT_BASE
 #undef BASE

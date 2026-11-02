@@ -14559,7 +14559,7 @@ SqedtFunc_OnGetQtzValString:
 SqedtFunc_OnGetQtzStrString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
-	ld	a, (9728:16)
+	ld	a, (SQEDT_QTZ_STRENGTH:16)
 	extz	wa
 	pushw	wa
 	ld	xwa, Sqedt_ParamDispatch_Str_16
@@ -14567,7 +14567,7 @@ SqedtFunc_OnGetQtzStrString:
 SqedtFunc_OnGetQtzWinString:
 	ld	xwa, (xsp+8)
 	ld	(xsp+4), xwa
-	ld	e, (9730:16)
+	ld	e, (SQEDT_QTZ_WINDOW:16)
 	ld	a, e
 	exts	wa
 	cp	e, 0:i3
@@ -15380,11 +15380,11 @@ SeqFmt_Field_LoadQ:
 	jrl SqedtFunc_Epilogue
 
 SeqFmt_Field_LoadR:
-	lda xhl, (9728:16)
+	lda xhl, (SQEDT_QTZ_STRENGTH:16)
 	jrl SqedtFunc_Epilogue
 
 SeqFmt_Field_LoadS:
-	lda xhl, (9730:16)
+	lda xhl, (SQEDT_QTZ_WINDOW:16)
 	jrl SqedtFunc_ReturnPath
 
 SeqFmt_Field_LoadT:

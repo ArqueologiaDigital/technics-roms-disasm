@@ -373,7 +373,7 @@ extern const char Toshi_NORMAL_Elem60;
 extern const char Toshi_NORMAL_Elem61;
 extern const char Toshi_NORMAL_Elem62;
 
-#define BASE  0x00ED67CCu
+#define BASE  0x00ED66B8u
 
 /* PanelInput_PedalRecordDefaults's element (scripts/converters/nakarest_reviewed_slices.py). */
 typedef struct __attribute__((packed)) {

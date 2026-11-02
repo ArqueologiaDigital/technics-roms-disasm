@@ -157,7 +157,7 @@ extern const char ClassPropdata_Title;
 extern const char ClassPropdata_Viewable;
 extern const char ClassPropdata_VwBox;
 
-#define BASE  0x00EA8CACu
+#define BASE  0x00EA8B98u
 
 /* A NAKA class definition (24 bytes).  Its field names are the firmware's
  * own: the root class "Class" (class id 0x01600004) names them in its
@@ -1644,8 +1644,10 @@ typedef struct __attribute__((packed)) {
     uint32_t classdef_160_31_proc;
 } naka_disk_warning_t;
 
+/* PORT_BASE: v5 moved parts of this blob; from each offset on, its ROM address is that base + offset (scripts/converters/ported_c_rebase.py) */
+#define PORT_BASE(off) ((off) >= 0x3AB8u ? 0x00EA8B98u : (off) >= 0x39EEu ? 0x00EA8C54u : BASE)
 #define SELF(field) \
-    ((uint32_t)(BASE + __builtin_offsetof(naka_disk_warning_t, field)))
+    ((uint32_t)(PORT_BASE(__builtin_offsetof(naka_disk_warning_t, field)) + __builtin_offsetof(naka_disk_warning_t, field)))
 
 _Static_assert(sizeof(naka_disk_warning_t) == 16430,
     "naka_disk_warning must be exactly 16430 bytes");
@@ -4524,4 +4526,5 @@ const naka_disk_warning_t naka_disk_warning_data
 };
 
 #undef SELF
+#undef PORT_BASE
 #undef BASE

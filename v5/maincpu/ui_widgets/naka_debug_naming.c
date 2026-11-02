@@ -40,7 +40,7 @@ extern const char WidgetName_PtrBlock_I1;
 extern const char NakaInst_iduRoot;
 extern const char NakaWidget_PanelSimulator;
 
-#define BASE  0x00EB2AFEu
+#define BASE  0x00EB29EAu
 
 /* NakaInst_LineModeID_EnumTable's element (scripts/converters/nakarest_reviewed_slices.py). */
 /* NakaInst_FrameID_EnumTable's element (scripts/converters/nakarest_reviewed_slices.py). */

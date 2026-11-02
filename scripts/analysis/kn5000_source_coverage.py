@@ -317,16 +317,16 @@ def directive_bytes(kind, rest):
 # byte directive). Each entry is (bytes-per-call, invocation regex, exactness note).
 MACRO_INVOKE = {
     # naka_header \type -> `.byte \type, 0x00, 0x60, 0x01` = 4 bytes, exact.
-    "naka_header": (re.compile(r'^\s*naka_header\b'), lambda rest: 4),
+    "naka_header": (re.compile(r'^\s*(?:[A-Za-z_.$][\w.$]*\s*:\s*)?naka_header\b'), lambda rest: 4),
     # addr24 \sym -> `.reloc ., R_TLCS900_24, \sym` + `.space 3` = 3 bytes, exact.
-    "addr24": (re.compile(r'^\s*addr24\b'), lambda rest: 3),
+    "addr24": (re.compile(r'^\s*(?:[A-Za-z_.$][\w.$]*\s*:\s*)?addr24\b'), lambda rest: 3),
     # desc_entry w,h,pixels -> `.short w,h` + `.long pixels` = 2+2+4 = 8 bytes, exact.
-    "desc_entry": (re.compile(r'^\s*desc_entry\b'), lambda rest: 8),
+    "desc_entry": (re.compile(r'^\s*(?:[A-Za-z_.$][\w.$]*\s*:\s*)?desc_entry\b'), lambda rest: 8),
     # aligned_string "..." -> `.asciz str` (len+1) then `.p2align 1, 0xff`.
     # ⚠ APPROXIMATE: real padding depends on the absolute link address at that
     # point, which this static per-line scan cannot know. Assumed even before
     # the call (true almost everywhere in this tree), so padding = (len+1) & 1.
-    "aligned_string": (re.compile(r'^\s*aligned_string\b'), None),
+    "aligned_string": (re.compile(r'^\s*(?:[A-Za-z_.$][\w.$]*\s*:\s*)?aligned_string\b'), None),
 }
 
 

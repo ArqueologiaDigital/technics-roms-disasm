@@ -27,7 +27,7 @@ extern const char Naka_PresentationRootState;  /* 0x00EF013F */
 
 /* ── Base ROM address of this data block ─────────────────── */
 
-#define BASE  0x00ED3C96u
+#define BASE  0x00ED3B9Au
 
 /* ── Overall layout struct ───────────────────────────────── */
 

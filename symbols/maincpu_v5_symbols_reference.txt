@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 53,832
-#   semantic names ........... 53,509 (99.4%)
+#   symbols .................. 53,870
+#   semantic names ........... 53,547 (99.4%)
 #   positional names ......... 323
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -4331,26 +4331,30 @@ NakaInst_AcIndexWideToggle 00E2747A
 NakaInst_MsgToTtl 00E27490
 NakaInst_EqOnOffFuncToggle 00E2749C
 NakaInst_NoteEditBox 00E274B0
-NakaInst_SngSel2 00E274C0
+ClassPropdata_SngSel2 00E274C0
 ClassName_SngSel2 00E274C2
-NakaInst_SngSel 00E274CA
+ClassPropdata_SngSel 00E274CA
 ClassName_SngSel 00E274D0
-NakaInst_AcEntertainerGridBox 00E274D8
+ClassPropdata_AcEntertainerGridBox 00E274D8
 ClassName_AcEntertainerGridBox 00E274DC
-NakaInst_AccIll 00E274F2
+ClassPropdata_AccIll 00E274F2
 ClassName_AccIll 00E274F8
-NakaInst_SqedtVal3 00E27500
+ClassPropdata_SqedtVal3 00E27500
 ClassName_SqedtVal3 00E27504
-NakaInst_SqplyVal 00E2750E
+ClassPropdata_SqplyVal 00E2750E
 ClassName_SqplyVal 00E27514
-NakaInst_IvSongCopyExit 00E2751E
+ClassPropdata_IvSongCopyExit 00E2751E
 ClassName_IvSongCopyExit 00E27520
-NakaInst_SqedtFix 00E27530
+ClassPropdata_SqedtFix 00E27530
 ClassName_SqedtFix 00E27534
-NakaInst_SqedtVal2_End 00E2753E
-NakaInst_SqedtVal 00E2754C
-NakaInst_SqedtVal_B 00E2755C
-NakaInst_EqualizerBox 00E2756E
+ClassPropdata_SqedtVal2 00E2753E
+ClassName_SqedtVal2 00E27542
+ClassPropdata_SqedtVal 00E2754C
+ClassName_SqedtVal 00E27552
+ClassPropdata_EqualizerBox 00E2755C
+ClassName_EqualizerBox 00E27560
+ClassPropdata_EffectBox 00E2756E
+ClassName_EffectBox 00E27574
 Kubo_ClassCount_168 00E2757E
 EvtEffDraw_PtrTable 00E27580
 EvtName_GraphDraw 00E27598
@@ -6083,6 +6087,31 @@ East_ClassDesc14_Name 00E55B8E
 East_ClassDesc13_Sig 00E55B9E
 East_ClassDesc13_Name 00E55BA2
 East_ClassDesc12_Sig 00E55BB4
+ClassName_AcPmemOutLGridBox 00E55BB8
+ClassPropdata_AcPcgOutGridBox 00E55BCA
+ClassName_AcPcgOutGridBox 00E55BCE
+ClassPropdata_AcParaLoadOptGridBox 00E55BDE
+ClassName_AcParaLoadOptGridBox 00E55BE2
+ClassPropdata_AcInOutGridBox 00E55BF8
+ClassName_AcInOutGridBox 00E55BFC
+ClassPropdata_AcVocalGridBox 00E55C0C
+ClassName_AcVocalGridBox 00E55C10
+ClassPropdata_AcFadeSetGridBox 00E55C20
+ClassName_AcFadeSetGridBox 00E55C24
+ClassPropdata_AcLswFuncBox 00E55C36
+ClassName_AcLswFuncBox 00E55C3C
+ClassPropdata_AcLswFuncEditBox 00E55C4A
+ClassName_AcLswFuncEditBox 00E55C50
+ClassPropdata_AcGMOnOffBox 00E55C62
+ClassName_AcGMOnOffBox 00E55C64
+ClassPropdata_AcSendEditSw 00E55C72
+ClassName_AcSendEditSw 00E55C78
+ClassPropdata_IvMpstPageControl 00E55C86
+ClassName_IvMpstPageControl 00E55C8A
+ClassPropdata_AcVocalistListBox 00E55C9C
+ClassName_AcVocalistListBox 00E55C9E
+ClassPropdata_PsHarmOnOffBox 00E55CB0
+ClassName_PsHarmOnOffBox 00E55CB2
 MidiMenu_WidgetCount 00E55CC2
 MidiMenu_ResEventTable 00E55CC4
 MidiMenu_ResEventCount 00E55CC8
@@ -38849,6 +38878,7 @@ FDemoText_TextDispatch_Join 00F84FBA
 FDemoText_TextDispatch_Join2 00F84FBD
 FDemoText_TextDispatch_Skip3 00F84FDB
 FDemoText_TextDispatch_Skip4 00F850C6
+FDemoText_Tag_ACT 00F850CF
 FDemoText_TextDispatch_Loop6 00F850F3
 FDemoText_TextDispatch_Loop7 00F8510A
 FDemoText_TextDispatch_Skip5 00F85133
@@ -38859,11 +38889,16 @@ FDemoText_TextDispatch_Join7 00F85168
 FDemoText_TextDispatch_Skip13 00F8518B
 FDemoText_TextDispatch_Skip14 00F851EF
 FDemoText_TextDispatch_Join4 00F8520D
+FDemoText_Tag_EndACT 00F85216
 FDemoText_TextDispatch_Skip15 00F8521F
+FDemoText_Tag_BR 00F85222
 FDemoText_TextDispatch_Skip16 00F8522D
+FDemoText_Tag_CENTER 00F85230
 FDemoText_TextDispatch_Skip17 00F85258
+FDemoText_Tag_EndCENTER 00F8525B
 FDemoText_TextDispatch_Skip18 00F8527D
 FDemoText_TextDispatch_Skip19 00F8528D
+FDemoText_Tag_FONT 00F85290
 FDemoText_TextDispatch_Loop8 00F852DB
 FDemoText_TextDispatch_Loop9 00F852F1
 FDemoText_TextDispatch_Skip20 00F85332
@@ -38871,8 +38906,10 @@ FDemoText_TextDispatch_Skip8 00F85346
 FDemoText_TextDispatch_Join8 00F85349
 FDemoText_TextDispatch_Skip21 00F85368
 FDemoText_TextDispatch_Skip22 00F853BD
+FDemoText_Tag_EndFONT 00F853C6
 FDemoText_TextDispatch_Skip23 00F853F1
 FDemoText_TextDispatch_Skip9 00F85419
+FDemoText_Tag_IMG 00F8541C
 FDemoText_TextDispatch_Loop12 00F8545A
 FDemoText_TextDispatch_Loop13 00F85474
 FDemoText_TextDispatch_Skip26 00F854A2
@@ -38883,6 +38920,7 @@ FDemoText_TextDispatch_Join9 00F854B7
 FDemoText_TextDispatch_Skip25 00F854D5
 FDemoText_TextDispatch_Skip28 00F854F6
 FDemoText_TextDispatch_Join10 00F85500
+FDemoText_Tag_SHOW 00F85509
 FDemoText_TextDispatch_Loop10 00F85538
 FDemoText_TextDispatch_Loop11 00F85550
 FDemoText_TextDispatch_Skip10 00F85574

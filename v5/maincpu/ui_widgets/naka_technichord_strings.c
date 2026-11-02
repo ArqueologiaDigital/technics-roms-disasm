@@ -8,6 +8,10 @@
 
 #include "naka_types.h"
 
+/* Viewable table Murai_ViewableTable_0EE (registry slot 0xEE, InitializeMurai); its elements are the
+ * OBJ_* constants of naka_technichord_part.c, which holds the records. */
+#define Murai_ViewableTable_0EE_SLOT 0x0EEu
+
 /* ── External symbols (resolved by linker script) ── */
 
 extern const char AcFileSfxBoxProc;
@@ -115,8 +119,17 @@ extern const char SingleLoadSrc_ComposerListProc;
 extern const char SingleLoadSrc_PanelMemListProc;
 extern const char SingleLoadSrc_SequencerListProc;
 extern const char SingleLoadSrc_SoundMemListProc;
+extern const char FDemoText_Tag_ACT;
+extern const char FDemoText_Tag_BR;
+extern const char FDemoText_Tag_CENTER;
+extern const char FDemoText_Tag_EndACT;
+extern const char FDemoText_Tag_EndCENTER;
+extern const char FDemoText_Tag_EndFONT;
+extern const char FDemoText_Tag_FONT;
+extern const char FDemoText_Tag_IMG;
+extern const char FDemoText_Tag_SHOW;
 
-#define BASE  0x00E85F4Eu
+#define BASE  0x00E85E6Au
 
 /* One step of the welcome-screen animation script (12 bytes).
  * Walked by AcWelcomScreenProc (ui/drawbar_panel_ui.s): the current step
@@ -2752,8 +2765,10 @@ typedef struct __attribute__((packed)) {
     char Cheap_FuncNameTable_405_EndName[2];
 } naka_technichord_strings_t;
 
+/* PORT_BASE: v5 moved parts of this blob; from each offset on, its ROM address is that base + offset (scripts/converters/ported_c_rebase.py) */
+#define PORT_BASE(off) ((off) >= 0x17F12u ? 0x00E85E3Au : (off) >= 0x5C8u ? 0x00E85E46u : BASE)
 #define SELF(field) \
-    ((uint32_t)(BASE + __builtin_offsetof(naka_technichord_strings_t, field)))
+    ((uint32_t)(PORT_BASE(__builtin_offsetof(naka_technichord_strings_t, field)) + __builtin_offsetof(naka_technichord_strings_t, field)))
 
 _Static_assert(sizeof(naka_technichord_strings_t) == 111742,
     "naka_technichord_strings must be exactly 111742 bytes");
@@ -5078,7 +5093,14 @@ const naka_technichord_strings_t naka_technichord_strings_data
         /* 80 */ { 0, 0xFFFFFFFF, 0x00000000, 0x00000000 },
     },
 
-    .IvMesage_Windows = { 0x00EE0014, 0x00EE0002, 0x00EE0005, 0x00EE0009, 0x00EE000D, 0x00EE0016 },
+    .IvMesage_Windows = {
+        NAKA_VIEW_ID(Murai_ViewableTable_0EE, 20), /* OBJ_NoMessage (naka_technichord_part.c) */
+        NAKA_VIEW_ID(Murai_ViewableTable_0EE, 2),  /* OBJ_Completed (naka_technichord_part.c) */
+        NAKA_VIEW_ID(Murai_ViewableTable_0EE, 5),  /* OBJ_Reminder (naka_technichord_part.c) */
+        NAKA_VIEW_ID(Murai_ViewableTable_0EE, 9),  /* OBJ_Error (naka_technichord_part.c) */
+        NAKA_VIEW_ID(Murai_ViewableTable_0EE, 13), /* OBJ_Other (naka_technichord_part.c) */
+        NAKA_VIEW_ID(Murai_ViewableTable_0EE, 22), /* OBJ_PleaseWait (naka_technichord_part.c) */
+    },
 
     .Msg_str = "Msg",
 
@@ -6448,25 +6470,25 @@ const naka_technichord_strings_t naka_technichord_strings_data
     },
 
     .FDemoText_MarkupTag_HandlerColumn = {
-        0x00F85A28,
+        NAKA_ADDR(FDemoText_Tag_BR),
         SELF(CENTER_str),
-        0x00F85A36,
+        NAKA_ADDR(FDemoText_Tag_CENTER),
         SELF(Center_str),
-        0x00F85A61,
+        NAKA_ADDR(FDemoText_Tag_EndCENTER),
         SELF(FONT_str),
-        0x00F85A96,
+        NAKA_ADDR(FDemoText_Tag_FONT),
         SELF(Font_str),
-        0x00F85BCC,
+        NAKA_ADDR(FDemoText_Tag_EndFONT),
         SELF(IMG_str),
-        0x00F85C22,
+        NAKA_ADDR(FDemoText_Tag_IMG),
         SELF(SHOW_str),
-        0x00F85D0F,
+        NAKA_ADDR(FDemoText_Tag_SHOW),
         SELF(EXEC_str),
         NAKA_ADDR(FDemoText_ByteData_LayoutEngine),
         SELF(ACT_str),
-        0x00F858D5,
+        NAKA_ADDR(FDemoText_Tag_ACT),
         SELF(Act_str),
-        0x00F85A1C,
+        NAKA_ADDR(FDemoText_Tag_EndACT),
         SELF(PRESENTATION_str),
         0x00000000,
         SELF(Presentation_str),
@@ -8003,4 +8025,5 @@ const naka_technichord_strings_t naka_technichord_strings_data
 };
 
 #undef SELF
+#undef PORT_BASE
 #undef BASE
