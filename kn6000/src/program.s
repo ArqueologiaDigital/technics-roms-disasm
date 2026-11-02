@@ -142659,6 +142659,7 @@ func_4C04DF75:
 	call	func_4C04E1B4_entry, [d2,d3,a2], 0x1c
 func_4C04DF75_L1e:
 	ret	[a2], 0x14
+loc_4C04DF96:
 	add	-0x10, sp
 	clr	d0
 	call	func_4C04E1B4_entry, [d2,d3,a2], 0x1c
@@ -279791,7 +279792,7 @@ TgVoiceEgSegParamGet_entry:
 	add	d1, a0
 	movbu	(0x24, sp), d1
 	movbu	(d0, a0), d2
-	mov	TgVoiceEgSegParamGet_Table, a0
+	mov	func_4C098F2D_entry_L1ae_Table+24, a0
 	movbu	(d1, a0), d0
 	clr	d3
 	and	d0, d2
@@ -279878,7 +279879,7 @@ TgVoiceEgSegFlagTest_entry:
 	asl2	d1
 	add	d2, d1
 	movbu	(d1, a0), d1
-	mov	TgVoiceEgSegFlagTest_Table, a0
+	mov	func_4C098F2D_entry_L1ae_Table+28, a0
 	movbu	(d0, a0), d0
 	and	d0, d1
 	beq	TgVoiceEgSegFlagTest_entry_L4d
@@ -445986,7 +445987,7 @@ R12OctaveFunc_L1c:
 	jmp	R12OctaveFunc_L12d
 R12OctaveFunc_L3f:
 	add	8, a0
-	cmp	data_4C2354E4, a0
+	cmp	func_4C0FE8A1_Voicing, a0
 	bcs	R12OctaveFunc_L4a
 	mov	a1, a0
 R12OctaveFunc_L4a:
@@ -519073,6 +519074,7 @@ loc_4C129BCB:
 	add	d0, d1
 	mov	d1, d0
 	bra	func_4C129B80_entry_L6e
+loc_4C129BE7:
 	and	0xffff, d3
 	mov	d3, d0
 	bra	func_4C129B80_entry_L6e
@@ -519146,6 +519148,7 @@ loc_4C129C50:
 	or	d0, d1
 	mov	d1, (a2)
 	bra	func_4C129BF3_entry_L7b
+loc_4C129C69:
 	exth	d3
 	mov	d3, (a2)
 	bra	func_4C129BF3_entry_L7b
