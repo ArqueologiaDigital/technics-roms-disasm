@@ -45,7 +45,7 @@ FDTest_Group_OnOff:
 	.byte 0x07, 0x00, 0xff, 0xff
 	.byte 0xff, 0xff, 0xff, 0xff, 0x08, 0x00, 0x36, 0x00
 	.byte 0xde, 0x00
-	.long NakaToggle_OnOff_Data
+	.long FDTest_Group_OnOff_EmptyText
 	.zero 4
 FDTest_Label_RunningTest:
 	NAKA_REC_Label super=IDX_FDTest_ScreenView, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=IDX_FDTest_Panel_SubElements, flag=VF_Const, x=30, y=197, w=100, h=19, str=FDTest_String_RunningTest, font=idCHARA1, fontcolor=CL_White

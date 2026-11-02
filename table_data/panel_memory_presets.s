@@ -14,17 +14,17 @@
 ; CONSUMERS (v10 maincpu, audio/audio_control_engine.s; same code in v7/v9
 ; at shifted addresses).  NAMES UPDATED 2026-09-25: the LABEL_FC81EF /
 ; LABEL_FC7E82 / LABEL_FC7DD8 placeholders this header used no longer exist;
-; the routines at those addresses are now called Display_CopyAndRenderBitmaps,
-; VoiceData_ExtendedParamSetup and VoiceData_InitAndCopyParams -- names that
+; the routines at those addresses are now called PanelMem_InitAllFromFactory,
+; VoiceData_ExtendedParamSetup and PanelMem_InitFromFactory -- names that
 ; do not describe what they do here (a rename is for the lane owning that
 ; file):
-;   Display_CopyAndRenderBitmaps (0xFC81EF)  init-all: MEM_COPY(0x1ED350,
+;   PanelMem_InitAllFromFactory (0xFC81EF)  init-all: MEM_COPY(0x1ED350,
 ;                 0xEDBA1C, 16) [spare name slot, "HK " signature],
 ;                 MEM_COPY(0x1ED360, 0x99EC00, 160) [the 10 bank names],
-;                 then calls VoiceData_InitAndCopyParams for i=0..79
+;                 then calls PanelMem_InitFromFactory for i=0..79
 ;   VoiceData_ExtendedParamSetup (0xFC7E82)  copy bank name i (i<10) to
 ;                 RAM 0x1ED360+16*i
-;   VoiceData_InitAndCopyParams (0xFC7DD8)  build the 960-byte RAM record at
+;   PanelMem_InitFromFactory (0xFC7DD8)  build the 960-byte RAM record at
 ;                 0x1ED400+960*i (Memset first; ROM record = 0x99ECA0 +
 ;                 674*i, computed with Math_MultiplyAccumulate):
 ;                   memcpy(ram+0x000, rom_rec+0x00, 0x7c)   name + parts 0-3
@@ -73,7 +73,7 @@ PanelMemory_BankNames:
 
 ; ---------------- bank 0: "Tour Of The 5000" ----------------
 
-; record 0 at 0x99ECA0 = 0x99ECA0 + 674*0; VoiceData_InitAndCopyParams
+; record 0 at 0x99ECA0 = 0x99ECA0 + 674*0; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1ED400
 PanelMemory_Preset_00:	; bank 0 button 1
 	.byte	0x78, 18
@@ -114,7 +114,7 @@ PanelMemory_Preset_00:	; bank 0 button 1
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 1 at 0x99EF42 = 0x99ECA0 + 674*1; VoiceData_InitAndCopyParams
+; record 1 at 0x99EF42 = 0x99ECA0 + 674*1; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1ED7C0
 PanelMemory_Preset_01:	; bank 0 button 2
 	.byte	0x78, 18
@@ -155,7 +155,7 @@ PanelMemory_Preset_01:	; bank 0 button 2
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 2 at 0x99F1E4 = 0x99ECA0 + 674*2; VoiceData_InitAndCopyParams
+; record 2 at 0x99F1E4 = 0x99ECA0 + 674*2; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1EDB80
 PanelMemory_Preset_02:	; bank 0 button 3
 	.byte	0x78, 18
@@ -196,7 +196,7 @@ PanelMemory_Preset_02:	; bank 0 button 3
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 3 at 0x99F486 = 0x99ECA0 + 674*3; VoiceData_InitAndCopyParams
+; record 3 at 0x99F486 = 0x99ECA0 + 674*3; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1EDF40
 PanelMemory_Preset_03:	; bank 0 button 4
 	.byte	0x78, 18
@@ -237,7 +237,7 @@ PanelMemory_Preset_03:	; bank 0 button 4
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 4 at 0x99F728 = 0x99ECA0 + 674*4; VoiceData_InitAndCopyParams
+; record 4 at 0x99F728 = 0x99ECA0 + 674*4; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1EE300
 PanelMemory_Preset_04:	; bank 0 button 5
 	.byte	0x78, 18
@@ -278,7 +278,7 @@ PanelMemory_Preset_04:	; bank 0 button 5
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 5 at 0x99F9CA = 0x99ECA0 + 674*5; VoiceData_InitAndCopyParams
+; record 5 at 0x99F9CA = 0x99ECA0 + 674*5; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1EE6C0
 PanelMemory_Preset_05:	; bank 0 button 6
 	.byte	0x78, 18
@@ -319,7 +319,7 @@ PanelMemory_Preset_05:	; bank 0 button 6
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 6 at 0x99FC6C = 0x99ECA0 + 674*6; VoiceData_InitAndCopyParams
+; record 6 at 0x99FC6C = 0x99ECA0 + 674*6; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1EEA80
 PanelMemory_Preset_06:	; bank 0 button 7
 	.byte	0x78, 18
@@ -360,7 +360,7 @@ PanelMemory_Preset_06:	; bank 0 button 7
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 7 at 0x99FF0E = 0x99ECA0 + 674*7; VoiceData_InitAndCopyParams
+; record 7 at 0x99FF0E = 0x99ECA0 + 674*7; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1EEE40
 PanelMemory_Preset_07:	; bank 0 button 8
 	.byte	0x78, 18
@@ -403,7 +403,7 @@ PanelMemory_Preset_07:	; bank 0 button 8
 
 ; ---------------- bank 1: "   Accordion    " ----------------
 
-; record 8 at 0x9A01B0 = 0x99ECA0 + 674*8; VoiceData_InitAndCopyParams
+; record 8 at 0x9A01B0 = 0x99ECA0 + 674*8; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1EF200
 PanelMemory_Preset_08:	; bank 1 button 1
 	.byte	0x78, 18
@@ -444,7 +444,7 @@ PanelMemory_Preset_08:	; bank 1 button 1
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 9 at 0x9A0452 = 0x99ECA0 + 674*9; VoiceData_InitAndCopyParams
+; record 9 at 0x9A0452 = 0x99ECA0 + 674*9; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1EF5C0
 PanelMemory_Preset_09:	; bank 1 button 2
 	.byte	0x78, 18
@@ -485,7 +485,7 @@ PanelMemory_Preset_09:	; bank 1 button 2
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 10 at 0x9A06F4 = 0x99ECA0 + 674*10; VoiceData_InitAndCopyParams
+; record 10 at 0x9A06F4 = 0x99ECA0 + 674*10; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1EF980
 PanelMemory_Preset_10:	; bank 1 button 3
 	.byte	0x78, 18
@@ -526,7 +526,7 @@ PanelMemory_Preset_10:	; bank 1 button 3
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 11 at 0x9A0996 = 0x99ECA0 + 674*11; VoiceData_InitAndCopyParams
+; record 11 at 0x9A0996 = 0x99ECA0 + 674*11; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1EFD40
 PanelMemory_Preset_11:	; bank 1 button 4
 	.byte	0x78, 18
@@ -567,7 +567,7 @@ PanelMemory_Preset_11:	; bank 1 button 4
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 12 at 0x9A0C38 = 0x99ECA0 + 674*12; VoiceData_InitAndCopyParams
+; record 12 at 0x9A0C38 = 0x99ECA0 + 674*12; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F0100
 PanelMemory_Preset_12:	; bank 1 button 5
 	.byte	0x78, 18
@@ -608,7 +608,7 @@ PanelMemory_Preset_12:	; bank 1 button 5
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 13 at 0x9A0EDA = 0x99ECA0 + 674*13; VoiceData_InitAndCopyParams
+; record 13 at 0x9A0EDA = 0x99ECA0 + 674*13; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F04C0
 PanelMemory_Preset_13:	; bank 1 button 6
 	.byte	0x78, 18
@@ -649,7 +649,7 @@ PanelMemory_Preset_13:	; bank 1 button 6
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 14 at 0x9A117C = 0x99ECA0 + 674*14; VoiceData_InitAndCopyParams
+; record 14 at 0x9A117C = 0x99ECA0 + 674*14; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F0880
 PanelMemory_Preset_14:	; bank 1 button 7
 	.byte	0x78, 18
@@ -690,7 +690,7 @@ PanelMemory_Preset_14:	; bank 1 button 7
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 15 at 0x9A141E = 0x99ECA0 + 674*15; VoiceData_InitAndCopyParams
+; record 15 at 0x9A141E = 0x99ECA0 + 674*15; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F0C40
 PanelMemory_Preset_15:	; bank 1 button 8
 	.byte	0x78, 18
@@ -733,7 +733,7 @@ PanelMemory_Preset_15:	; bank 1 button 8
 
 ; ---------------- bank 2: "  Piano Styles  " ----------------
 
-; record 16 at 0x9A16C0 = 0x99ECA0 + 674*16; VoiceData_InitAndCopyParams
+; record 16 at 0x9A16C0 = 0x99ECA0 + 674*16; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F1000
 PanelMemory_Preset_16:	; bank 2 button 1
 	.byte	0x78, 18
@@ -774,7 +774,7 @@ PanelMemory_Preset_16:	; bank 2 button 1
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 17 at 0x9A1962 = 0x99ECA0 + 674*17; VoiceData_InitAndCopyParams
+; record 17 at 0x9A1962 = 0x99ECA0 + 674*17; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F13C0
 PanelMemory_Preset_17:	; bank 2 button 2
 	.byte	0x78, 18
@@ -815,7 +815,7 @@ PanelMemory_Preset_17:	; bank 2 button 2
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 18 at 0x9A1C04 = 0x99ECA0 + 674*18; VoiceData_InitAndCopyParams
+; record 18 at 0x9A1C04 = 0x99ECA0 + 674*18; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F1780
 PanelMemory_Preset_18:	; bank 2 button 3
 	.byte	0x78, 18
@@ -856,7 +856,7 @@ PanelMemory_Preset_18:	; bank 2 button 3
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 19 at 0x9A1EA6 = 0x99ECA0 + 674*19; VoiceData_InitAndCopyParams
+; record 19 at 0x9A1EA6 = 0x99ECA0 + 674*19; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F1B40
 PanelMemory_Preset_19:	; bank 2 button 4
 	.byte	0x78, 18
@@ -897,7 +897,7 @@ PanelMemory_Preset_19:	; bank 2 button 4
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 20 at 0x9A2148 = 0x99ECA0 + 674*20; VoiceData_InitAndCopyParams
+; record 20 at 0x9A2148 = 0x99ECA0 + 674*20; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F1F00
 PanelMemory_Preset_20:	; bank 2 button 5
 	.byte	0x78, 18
@@ -938,7 +938,7 @@ PanelMemory_Preset_20:	; bank 2 button 5
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 21 at 0x9A23EA = 0x99ECA0 + 674*21; VoiceData_InitAndCopyParams
+; record 21 at 0x9A23EA = 0x99ECA0 + 674*21; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F22C0
 PanelMemory_Preset_21:	; bank 2 button 6
 	.byte	0x78, 18
@@ -979,7 +979,7 @@ PanelMemory_Preset_21:	; bank 2 button 6
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 22 at 0x9A268C = 0x99ECA0 + 674*22; VoiceData_InitAndCopyParams
+; record 22 at 0x9A268C = 0x99ECA0 + 674*22; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F2680
 PanelMemory_Preset_22:	; bank 2 button 7
 	.byte	0x78, 18
@@ -1020,7 +1020,7 @@ PanelMemory_Preset_22:	; bank 2 button 7
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 23 at 0x9A292E = 0x99ECA0 + 674*23; VoiceData_InitAndCopyParams
+; record 23 at 0x9A292E = 0x99ECA0 + 674*23; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F2A40
 PanelMemory_Preset_23:	; bank 2 button 8
 	.byte	0x78, 18
@@ -1063,7 +1063,7 @@ PanelMemory_Preset_23:	; bank 2 button 8
 
 ; ---------------- bank 3: "Jazz&Rock Organ " ----------------
 
-; record 24 at 0x9A2BD0 = 0x99ECA0 + 674*24; VoiceData_InitAndCopyParams
+; record 24 at 0x9A2BD0 = 0x99ECA0 + 674*24; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F2E00
 PanelMemory_Preset_24:	; bank 3 button 1
 	.byte	0x78, 18
@@ -1104,7 +1104,7 @@ PanelMemory_Preset_24:	; bank 3 button 1
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 25 at 0x9A2E72 = 0x99ECA0 + 674*25; VoiceData_InitAndCopyParams
+; record 25 at 0x9A2E72 = 0x99ECA0 + 674*25; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F31C0
 PanelMemory_Preset_25:	; bank 3 button 2
 	.byte	0x78, 18
@@ -1145,7 +1145,7 @@ PanelMemory_Preset_25:	; bank 3 button 2
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 26 at 0x9A3114 = 0x99ECA0 + 674*26; VoiceData_InitAndCopyParams
+; record 26 at 0x9A3114 = 0x99ECA0 + 674*26; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F3580
 PanelMemory_Preset_26:	; bank 3 button 3
 	.byte	0x78, 18
@@ -1186,7 +1186,7 @@ PanelMemory_Preset_26:	; bank 3 button 3
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 27 at 0x9A33B6 = 0x99ECA0 + 674*27; VoiceData_InitAndCopyParams
+; record 27 at 0x9A33B6 = 0x99ECA0 + 674*27; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F3940
 PanelMemory_Preset_27:	; bank 3 button 4
 	.byte	0x78, 18
@@ -1227,7 +1227,7 @@ PanelMemory_Preset_27:	; bank 3 button 4
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 28 at 0x9A3658 = 0x99ECA0 + 674*28; VoiceData_InitAndCopyParams
+; record 28 at 0x9A3658 = 0x99ECA0 + 674*28; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F3D00
 PanelMemory_Preset_28:	; bank 3 button 5
 	.byte	0x78, 18
@@ -1268,7 +1268,7 @@ PanelMemory_Preset_28:	; bank 3 button 5
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 29 at 0x9A38FA = 0x99ECA0 + 674*29; VoiceData_InitAndCopyParams
+; record 29 at 0x9A38FA = 0x99ECA0 + 674*29; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F40C0
 PanelMemory_Preset_29:	; bank 3 button 6
 	.byte	0x78, 18
@@ -1309,7 +1309,7 @@ PanelMemory_Preset_29:	; bank 3 button 6
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 30 at 0x9A3B9C = 0x99ECA0 + 674*30; VoiceData_InitAndCopyParams
+; record 30 at 0x9A3B9C = 0x99ECA0 + 674*30; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F4480
 PanelMemory_Preset_30:	; bank 3 button 7
 	.byte	0x78, 18
@@ -1350,7 +1350,7 @@ PanelMemory_Preset_30:	; bank 3 button 7
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 31 at 0x9A3E3E = 0x99ECA0 + 674*31; VoiceData_InitAndCopyParams
+; record 31 at 0x9A3E3E = 0x99ECA0 + 674*31; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F4840
 PanelMemory_Preset_31:	; bank 3 button 8
 	.byte	0x78, 18
@@ -1393,7 +1393,7 @@ PanelMemory_Preset_31:	; bank 3 button 8
 
 ; ---------------- bank 4: "Church & Theatre" ----------------
 
-; record 32 at 0x9A40E0 = 0x99ECA0 + 674*32; VoiceData_InitAndCopyParams
+; record 32 at 0x9A40E0 = 0x99ECA0 + 674*32; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F4C00
 PanelMemory_Preset_32:	; bank 4 button 1
 	.byte	0x78, 18
@@ -1434,7 +1434,7 @@ PanelMemory_Preset_32:	; bank 4 button 1
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 33 at 0x9A4382 = 0x99ECA0 + 674*33; VoiceData_InitAndCopyParams
+; record 33 at 0x9A4382 = 0x99ECA0 + 674*33; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F4FC0
 PanelMemory_Preset_33:	; bank 4 button 2
 	.byte	0x78, 18
@@ -1475,7 +1475,7 @@ PanelMemory_Preset_33:	; bank 4 button 2
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 34 at 0x9A4624 = 0x99ECA0 + 674*34; VoiceData_InitAndCopyParams
+; record 34 at 0x9A4624 = 0x99ECA0 + 674*34; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F5380
 PanelMemory_Preset_34:	; bank 4 button 3
 	.byte	0x78, 18
@@ -1516,7 +1516,7 @@ PanelMemory_Preset_34:	; bank 4 button 3
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 35 at 0x9A48C6 = 0x99ECA0 + 674*35; VoiceData_InitAndCopyParams
+; record 35 at 0x9A48C6 = 0x99ECA0 + 674*35; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F5740
 PanelMemory_Preset_35:	; bank 4 button 4
 	.byte	0x78, 18
@@ -1557,7 +1557,7 @@ PanelMemory_Preset_35:	; bank 4 button 4
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 36 at 0x9A4B68 = 0x99ECA0 + 674*36; VoiceData_InitAndCopyParams
+; record 36 at 0x9A4B68 = 0x99ECA0 + 674*36; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F5B00
 PanelMemory_Preset_36:	; bank 4 button 5
 	.byte	0x78, 18
@@ -1598,7 +1598,7 @@ PanelMemory_Preset_36:	; bank 4 button 5
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 37 at 0x9A4E0A = 0x99ECA0 + 674*37; VoiceData_InitAndCopyParams
+; record 37 at 0x9A4E0A = 0x99ECA0 + 674*37; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F5EC0
 PanelMemory_Preset_37:	; bank 4 button 6
 	.byte	0x78, 18
@@ -1639,7 +1639,7 @@ PanelMemory_Preset_37:	; bank 4 button 6
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 38 at 0x9A50AC = 0x99ECA0 + 674*38; VoiceData_InitAndCopyParams
+; record 38 at 0x9A50AC = 0x99ECA0 + 674*38; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F6280
 PanelMemory_Preset_38:	; bank 4 button 7
 	.byte	0x78, 18
@@ -1680,7 +1680,7 @@ PanelMemory_Preset_38:	; bank 4 button 7
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 39 at 0x9A534E = 0x99ECA0 + 674*39; VoiceData_InitAndCopyParams
+; record 39 at 0x9A534E = 0x99ECA0 + 674*39; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F6640
 PanelMemory_Preset_39:	; bank 4 button 8
 	.byte	0x78, 18
@@ -1723,7 +1723,7 @@ PanelMemory_Preset_39:	; bank 4 button 8
 
 ; ---------------- bank 5: "Light Orchestra " ----------------
 
-; record 40 at 0x9A55F0 = 0x99ECA0 + 674*40; VoiceData_InitAndCopyParams
+; record 40 at 0x9A55F0 = 0x99ECA0 + 674*40; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F6A00
 PanelMemory_Preset_40:	; bank 5 button 1
 	.byte	0x78, 18
@@ -1764,7 +1764,7 @@ PanelMemory_Preset_40:	; bank 5 button 1
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 41 at 0x9A5892 = 0x99ECA0 + 674*41; VoiceData_InitAndCopyParams
+; record 41 at 0x9A5892 = 0x99ECA0 + 674*41; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F6DC0
 PanelMemory_Preset_41:	; bank 5 button 2
 	.byte	0x78, 18
@@ -1805,7 +1805,7 @@ PanelMemory_Preset_41:	; bank 5 button 2
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 42 at 0x9A5B34 = 0x99ECA0 + 674*42; VoiceData_InitAndCopyParams
+; record 42 at 0x9A5B34 = 0x99ECA0 + 674*42; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F7180
 PanelMemory_Preset_42:	; bank 5 button 3
 	.byte	0x78, 18
@@ -1846,7 +1846,7 @@ PanelMemory_Preset_42:	; bank 5 button 3
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 43 at 0x9A5DD6 = 0x99ECA0 + 674*43; VoiceData_InitAndCopyParams
+; record 43 at 0x9A5DD6 = 0x99ECA0 + 674*43; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F7540
 PanelMemory_Preset_43:	; bank 5 button 4
 	.byte	0x78, 18
@@ -1887,7 +1887,7 @@ PanelMemory_Preset_43:	; bank 5 button 4
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 44 at 0x9A6078 = 0x99ECA0 + 674*44; VoiceData_InitAndCopyParams
+; record 44 at 0x9A6078 = 0x99ECA0 + 674*44; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F7900
 PanelMemory_Preset_44:	; bank 5 button 5
 	.byte	0x78, 18
@@ -1928,7 +1928,7 @@ PanelMemory_Preset_44:	; bank 5 button 5
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 45 at 0x9A631A = 0x99ECA0 + 674*45; VoiceData_InitAndCopyParams
+; record 45 at 0x9A631A = 0x99ECA0 + 674*45; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F7CC0
 PanelMemory_Preset_45:	; bank 5 button 6
 	.byte	0x78, 18
@@ -1969,7 +1969,7 @@ PanelMemory_Preset_45:	; bank 5 button 6
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 46 at 0x9A65BC = 0x99ECA0 + 674*46; VoiceData_InitAndCopyParams
+; record 46 at 0x9A65BC = 0x99ECA0 + 674*46; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F8080
 PanelMemory_Preset_46:	; bank 5 button 7
 	.byte	0x78, 18
@@ -2010,7 +2010,7 @@ PanelMemory_Preset_46:	; bank 5 button 7
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 47 at 0x9A685E = 0x99ECA0 + 674*47; VoiceData_InitAndCopyParams
+; record 47 at 0x9A685E = 0x99ECA0 + 674*47; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F8440
 PanelMemory_Preset_47:	; bank 5 button 8
 	.byte	0x78, 18
@@ -2053,7 +2053,7 @@ PanelMemory_Preset_47:	; bank 5 button 8
 
 ; ---------------- bank 6: "  Split Sounds  " ----------------
 
-; record 48 at 0x9A6B00 = 0x99ECA0 + 674*48; VoiceData_InitAndCopyParams
+; record 48 at 0x9A6B00 = 0x99ECA0 + 674*48; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F8800
 PanelMemory_Preset_48:	; bank 6 button 1
 	.byte	0x78, 18
@@ -2094,7 +2094,7 @@ PanelMemory_Preset_48:	; bank 6 button 1
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 49 at 0x9A6DA2 = 0x99ECA0 + 674*49; VoiceData_InitAndCopyParams
+; record 49 at 0x9A6DA2 = 0x99ECA0 + 674*49; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F8BC0
 PanelMemory_Preset_49:	; bank 6 button 2
 	.byte	0x78, 18
@@ -2135,7 +2135,7 @@ PanelMemory_Preset_49:	; bank 6 button 2
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 50 at 0x9A7044 = 0x99ECA0 + 674*50; VoiceData_InitAndCopyParams
+; record 50 at 0x9A7044 = 0x99ECA0 + 674*50; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F8F80
 PanelMemory_Preset_50:	; bank 6 button 3
 	.byte	0x78, 18
@@ -2176,7 +2176,7 @@ PanelMemory_Preset_50:	; bank 6 button 3
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 51 at 0x9A72E6 = 0x99ECA0 + 674*51; VoiceData_InitAndCopyParams
+; record 51 at 0x9A72E6 = 0x99ECA0 + 674*51; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F9340
 PanelMemory_Preset_51:	; bank 6 button 4
 	.byte	0x78, 18
@@ -2217,7 +2217,7 @@ PanelMemory_Preset_51:	; bank 6 button 4
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 52 at 0x9A7588 = 0x99ECA0 + 674*52; VoiceData_InitAndCopyParams
+; record 52 at 0x9A7588 = 0x99ECA0 + 674*52; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F9700
 PanelMemory_Preset_52:	; bank 6 button 5
 	.byte	0x78, 18
@@ -2258,7 +2258,7 @@ PanelMemory_Preset_52:	; bank 6 button 5
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 53 at 0x9A782A = 0x99ECA0 + 674*53; VoiceData_InitAndCopyParams
+; record 53 at 0x9A782A = 0x99ECA0 + 674*53; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F9AC0
 PanelMemory_Preset_53:	; bank 6 button 6
 	.byte	0x78, 18
@@ -2299,7 +2299,7 @@ PanelMemory_Preset_53:	; bank 6 button 6
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 54 at 0x9A7ACC = 0x99ECA0 + 674*54; VoiceData_InitAndCopyParams
+; record 54 at 0x9A7ACC = 0x99ECA0 + 674*54; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1F9E80
 PanelMemory_Preset_54:	; bank 6 button 7
 	.byte	0x78, 18
@@ -2340,7 +2340,7 @@ PanelMemory_Preset_54:	; bank 6 button 7
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 55 at 0x9A7D6E = 0x99ECA0 + 674*55; VoiceData_InitAndCopyParams
+; record 55 at 0x9A7D6E = 0x99ECA0 + 674*55; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FA240
 PanelMemory_Preset_55:	; bank 6 button 8
 	.byte	0x78, 18
@@ -2383,7 +2383,7 @@ PanelMemory_Preset_55:	; bank 6 button 8
 
 ; ---------------- bank 7: "Layer Production" ----------------
 
-; record 56 at 0x9A8010 = 0x99ECA0 + 674*56; VoiceData_InitAndCopyParams
+; record 56 at 0x9A8010 = 0x99ECA0 + 674*56; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FA600
 PanelMemory_Preset_56:	; bank 7 button 1
 	.byte	0x78, 18
@@ -2424,7 +2424,7 @@ PanelMemory_Preset_56:	; bank 7 button 1
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 57 at 0x9A82B2 = 0x99ECA0 + 674*57; VoiceData_InitAndCopyParams
+; record 57 at 0x9A82B2 = 0x99ECA0 + 674*57; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FA9C0
 PanelMemory_Preset_57:	; bank 7 button 2
 	.byte	0x78, 18
@@ -2465,7 +2465,7 @@ PanelMemory_Preset_57:	; bank 7 button 2
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 58 at 0x9A8554 = 0x99ECA0 + 674*58; VoiceData_InitAndCopyParams
+; record 58 at 0x9A8554 = 0x99ECA0 + 674*58; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FAD80
 PanelMemory_Preset_58:	; bank 7 button 3
 	.byte	0x78, 18
@@ -2506,7 +2506,7 @@ PanelMemory_Preset_58:	; bank 7 button 3
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 59 at 0x9A87F6 = 0x99ECA0 + 674*59; VoiceData_InitAndCopyParams
+; record 59 at 0x9A87F6 = 0x99ECA0 + 674*59; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FB140
 PanelMemory_Preset_59:	; bank 7 button 4
 	.byte	0x78, 18
@@ -2547,7 +2547,7 @@ PanelMemory_Preset_59:	; bank 7 button 4
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 60 at 0x9A8A98 = 0x99ECA0 + 674*60; VoiceData_InitAndCopyParams
+; record 60 at 0x9A8A98 = 0x99ECA0 + 674*60; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FB500
 PanelMemory_Preset_60:	; bank 7 button 5
 	.byte	0x78, 18
@@ -2588,7 +2588,7 @@ PanelMemory_Preset_60:	; bank 7 button 5
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 61 at 0x9A8D3A = 0x99ECA0 + 674*61; VoiceData_InitAndCopyParams
+; record 61 at 0x9A8D3A = 0x99ECA0 + 674*61; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FB8C0
 PanelMemory_Preset_61:	; bank 7 button 6
 	.byte	0x78, 18
@@ -2629,7 +2629,7 @@ PanelMemory_Preset_61:	; bank 7 button 6
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 62 at 0x9A8FDC = 0x99ECA0 + 674*62; VoiceData_InitAndCopyParams
+; record 62 at 0x9A8FDC = 0x99ECA0 + 674*62; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FBC80
 PanelMemory_Preset_62:	; bank 7 button 7
 	.byte	0x78, 18
@@ -2670,7 +2670,7 @@ PanelMemory_Preset_62:	; bank 7 button 7
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 63 at 0x9A927E = 0x99ECA0 + 674*63; VoiceData_InitAndCopyParams
+; record 63 at 0x9A927E = 0x99ECA0 + 674*63; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FC040
 PanelMemory_Preset_63:	; bank 7 button 8
 	.byte	0x78, 18
@@ -2713,7 +2713,7 @@ PanelMemory_Preset_63:	; bank 7 button 8
 
 ; ---------------- bank 8: " Special DSP FX " ----------------
 
-; record 64 at 0x9A9520 = 0x99ECA0 + 674*64; VoiceData_InitAndCopyParams
+; record 64 at 0x9A9520 = 0x99ECA0 + 674*64; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FC400
 PanelMemory_Preset_64:	; bank 8 button 1
 	.byte	0x78, 18
@@ -2754,7 +2754,7 @@ PanelMemory_Preset_64:	; bank 8 button 1
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 65 at 0x9A97C2 = 0x99ECA0 + 674*65; VoiceData_InitAndCopyParams
+; record 65 at 0x9A97C2 = 0x99ECA0 + 674*65; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FC7C0
 PanelMemory_Preset_65:	; bank 8 button 2
 	.byte	0x78, 18
@@ -2795,7 +2795,7 @@ PanelMemory_Preset_65:	; bank 8 button 2
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 66 at 0x9A9A64 = 0x99ECA0 + 674*66; VoiceData_InitAndCopyParams
+; record 66 at 0x9A9A64 = 0x99ECA0 + 674*66; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FCB80
 PanelMemory_Preset_66:	; bank 8 button 3
 	.byte	0x78, 18
@@ -2836,7 +2836,7 @@ PanelMemory_Preset_66:	; bank 8 button 3
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 67 at 0x9A9D06 = 0x99ECA0 + 674*67; VoiceData_InitAndCopyParams
+; record 67 at 0x9A9D06 = 0x99ECA0 + 674*67; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FCF40
 PanelMemory_Preset_67:	; bank 8 button 4
 	.byte	0x78, 18
@@ -2877,7 +2877,7 @@ PanelMemory_Preset_67:	; bank 8 button 4
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 68 at 0x9A9FA8 = 0x99ECA0 + 674*68; VoiceData_InitAndCopyParams
+; record 68 at 0x9A9FA8 = 0x99ECA0 + 674*68; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FD300
 PanelMemory_Preset_68:	; bank 8 button 5
 	.byte	0x78, 18
@@ -2918,7 +2918,7 @@ PanelMemory_Preset_68:	; bank 8 button 5
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 69 at 0x9AA24A = 0x99ECA0 + 674*69; VoiceData_InitAndCopyParams
+; record 69 at 0x9AA24A = 0x99ECA0 + 674*69; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FD6C0
 PanelMemory_Preset_69:	; bank 8 button 6
 	.byte	0x78, 18
@@ -2959,7 +2959,7 @@ PanelMemory_Preset_69:	; bank 8 button 6
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 70 at 0x9AA4EC = 0x99ECA0 + 674*70; VoiceData_InitAndCopyParams
+; record 70 at 0x9AA4EC = 0x99ECA0 + 674*70; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FDA80
 PanelMemory_Preset_70:	; bank 8 button 7
 	.byte	0x78, 18
@@ -3000,7 +3000,7 @@ PanelMemory_Preset_70:	; bank 8 button 7
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 71 at 0x9AA78E = 0x99ECA0 + 674*71; VoiceData_InitAndCopyParams
+; record 71 at 0x9AA78E = 0x99ECA0 + 674*71; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FDE40
 PanelMemory_Preset_71:	; bank 8 button 8
 	.byte	0x78, 18
@@ -3043,7 +3043,7 @@ PanelMemory_Preset_71:	; bank 8 button 8
 
 ; ---------------- bank 9: "     World      " ----------------
 
-; record 72 at 0x9AAA30 = 0x99ECA0 + 674*72; VoiceData_InitAndCopyParams
+; record 72 at 0x9AAA30 = 0x99ECA0 + 674*72; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FE200
 PanelMemory_Preset_72:	; bank 9 button 1
 	.byte	0x78, 18
@@ -3084,7 +3084,7 @@ PanelMemory_Preset_72:	; bank 9 button 1
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 73 at 0x9AACD2 = 0x99ECA0 + 674*73; VoiceData_InitAndCopyParams
+; record 73 at 0x9AACD2 = 0x99ECA0 + 674*73; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FE5C0
 PanelMemory_Preset_73:	; bank 9 button 2
 	.byte	0x78, 18
@@ -3125,7 +3125,7 @@ PanelMemory_Preset_73:	; bank 9 button 2
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 74 at 0x9AAF74 = 0x99ECA0 + 674*74; VoiceData_InitAndCopyParams
+; record 74 at 0x9AAF74 = 0x99ECA0 + 674*74; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FE980
 PanelMemory_Preset_74:	; bank 9 button 3
 	.byte	0x78, 18
@@ -3166,7 +3166,7 @@ PanelMemory_Preset_74:	; bank 9 button 3
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 75 at 0x9AB216 = 0x99ECA0 + 674*75; VoiceData_InitAndCopyParams
+; record 75 at 0x9AB216 = 0x99ECA0 + 674*75; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FED40
 PanelMemory_Preset_75:	; bank 9 button 4
 	.byte	0x78, 18
@@ -3207,7 +3207,7 @@ PanelMemory_Preset_75:	; bank 9 button 4
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 76 at 0x9AB4B8 = 0x99ECA0 + 674*76; VoiceData_InitAndCopyParams
+; record 76 at 0x9AB4B8 = 0x99ECA0 + 674*76; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FF100
 PanelMemory_Preset_76:	; bank 9 button 5
 	.byte	0x78, 18
@@ -3248,7 +3248,7 @@ PanelMemory_Preset_76:	; bank 9 button 5
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 77 at 0x9AB75A = 0x99ECA0 + 674*77; VoiceData_InitAndCopyParams
+; record 77 at 0x9AB75A = 0x99ECA0 + 674*77; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FF4C0
 PanelMemory_Preset_77:	; bank 9 button 6
 	.byte	0x78, 18
@@ -3289,7 +3289,7 @@ PanelMemory_Preset_77:	; bank 9 button 6
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 78 at 0x9AB9FC = 0x99ECA0 + 674*78; VoiceData_InitAndCopyParams
+; record 78 at 0x9AB9FC = 0x99ECA0 + 674*78; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FF880
 PanelMemory_Preset_78:	; bank 9 button 7
 	.byte	0x78, 18
@@ -3330,7 +3330,7 @@ PanelMemory_Preset_78:	; bank 9 button 7
 	.byte	0x80, 14, 0x00, 0x0c, 0x04, 0x45, 0x00, 0x20, 0xfa, 0xdf, 0xbf, 0x01, 0x00, 0x00, 0x50, 0x00
 	.byte	0xff, 0xff
 
-; record 79 at 0x9ABC9E = 0x99ECA0 + 674*79; VoiceData_InitAndCopyParams
+; record 79 at 0x9ABC9E = 0x99ECA0 + 674*79; PanelMem_InitFromFactory
 ; (0xFC7DD8) expands it into the 960-byte RAM record at 0x1FFC40
 PanelMemory_Preset_79:	; bank 9 button 8
 	.byte	0x78, 18

@@ -41,21 +41,21 @@ F_05SWING_LSW_Block0:
 	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
 	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
-	ptlv_style_select	0x48, 128, 0, 0, 2, 1, 0xe, 0, 0, 0, 0, 0, 0, 0, 0, 0, 140
+	ptlv_style_select	0x48, 128, 0, 0, 2, 1, 0xe, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 140
 	ptlv_tag90	0x90, 3, 0, 0, 0x67, 0, 0, 0, 64, 0
 	ptlv_tag60	0x60, 0, 0, 0, 1, 0, 0, 0
-	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0	; CHORUS: p1 DEPTH, p2 LFO SPEED, p3 LFO WAVEFORM, p4 VOLUME, p5 REV SEND [byte packing not established for this effect: 1640 of 1680 saved records decode in range]
-	ptlv_dsp_slot	0x63, 18, 35, 0, 45, 12, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; PLATE REVERB 1: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 0 of 348 saved records decode in range]
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
-	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; STANDARD: p1 INTENSITY, p2 (no name)
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp1_chorus	0x61, 30, 6, 0, 84, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0
+	ptlv_dsp18_plate_reverb_1	0x63, 35, 45, 12, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_dsp79_geq	0x64, 7, 24, 14, 24, 20, 24, 23, 24, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp57_standard	0x65, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp88_room	0x66, 35, 14, 28, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag70	0x70, 1, 1, 0, 60, 5, 255, 0, 0, 2, 4, 1, 1, 1, 0
-	ptlv_tag72	0x72, 0, 0, 0, 0, 0x6b, 0, 0, 0, 0x40, 0, 0x1b, 0x1d, 0x12, 0, 0, 0, 0, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0x6b, 0, 0, 0, 0, 64, 0, 0x1b, 0, 0x1d, 0, 0x12, 0, 0, 0, 0, 0, 0
 	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
 	ptlv_tag99	0x99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 0x82, 0x01, 0x02, 0x81, 0, 0x10, 0x11, 0x12, 0x13, 0, 0, 0, 0, 0
-	ptlv_tag80	0x80, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0x20, 1, 0xf2, 1, 1, 1, 0, 1, 0x23, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 80, 0
+	ptlv_tag80	0x80, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0x20, 1, 0xf2, 1, 1, 1, 0, 1, 0x23, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 80, 0
 	panel_tlv	0xff, 0xff	; end of block
 F_05SWING_LSW_Block1:
 ; Block 1 (RAM 0xfd60): 30 records, the tag and length list of PanelTlv_Block1_Layout exactly.
@@ -63,30 +63,30 @@ F_05SWING_LSW_Block1:
 	ptlv_part	0x18, 0, 0, 0, 0x76, 0, 5, 0, 1, 0, 0, 0, 0, 0, 64, 0, 64, 128, 2, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; Piano
 	ptlv_tag98	0x98, 1, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0x6b, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag91	0x91, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tag93	0x93, 6, 0, 0, 127, 127, 2, 5, 0x14, 1, 0, 255, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x3f, 0x3f, 0xff, 0xff, 0xff, 0xff, 0, 0, 0
-	ptlv_tagc0	0xc0, 0x0b, 0, 0x15, 0, 0x04, 0x0b, 0x01, 0, 0x08, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagc1	0xc1, 0, 0x03, 0, 0x05, 0x01, 0x10, 0x01, 0, 0x0d, 0, 0x06, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagc2	0xc2, 0, 0, 0x09, 0, 0, 0, 0, 0, 0x05, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagc3	0xc3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x02, 0, 0, 0, 0, 0, 0
-	ptlv_tagc4	0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagc5	0xc5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagc6	0xc6, 0, 0, 0, 0, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagc7	0xc7, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagc8	0xc8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagc9	0xc9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagca	0xca, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagcb	0xcb, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagcc	0xcc, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagcd	0xcd, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagce	0xce, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagcf	0xcf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagd0	0xd0, 0x0a, 0x09, 0x0a, 0, 0, 0x05, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagd1	0xd1, 0, 0x0f, 0x14, 0, 0, 0x02, 0, 0, 0x01, 0, 0, 0, 0, 0, 0, 0, 0x09, 0
-	ptlv_tagd2	0xd2, 0x01, 0x02, 0, 0, 0, 0, 0, 0, 0x08, 0, 0, 0, 0, 0, 0, 0, 0x02, 0
-	ptlv_tagd3	0xd3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x0b, 0, 0, 0, 0, 0, 0
-	ptlv_tagd4	0xd4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	ptlv_tagd7	0xd7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x0e, 0, 0
-	ptlv_tag49	0x49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_tag93	0x93, 6, 0, 0, 127, 127, 2, 0, 5, 0x14, 1, 0, 255, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x3f, 0x3f, 0xff, 0xff, 0xff, 0xff, 0, 0, 0
+	ptlv_part_vari	0xc0, 11, 0, 21, 0, 4, 11, 1, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xc1, 0, 3, 0, 5, 1, 16, 1, 0, 13, 0, 6, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xc2, 0, 0, 9, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xc3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xc4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xc5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xc6, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xc7, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xc8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xc9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xca, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xcb, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xcc, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xcd, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xce, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xcf, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xd0, 10, 9, 10, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xd1, 0, 15, 20, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 9, 0
+	ptlv_part_vari	0xd2, 1, 2, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 2, 0
+	ptlv_part_vari	0xd3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xd4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_part_vari	0xd7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0
+	ptlv_style_vari	0x49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag9a	0x9a, 0, 0, 0, 0, 0x03, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	panel_tlv	0xff, 0xff	; end of block
 F_05SWING_LSW_SoundArranger:

@@ -94,7 +94,8 @@ Record shapes, with K for a key-split word and S for a sequence word:
   the zone tables, that is one unit = 1/8 octave (`../technics-docs/waveform-rom-format.md`). That relation was
   **not** re-derived here, and the macro comment says so. The rule above is a byte rule: in mixed records a word
   with bits 5..0 clear and a value that is not a multiple of 8 (for example `0x98`) is spelled `WaveSeq v, 0, 0`.
-- **Sequence words: new findings, not decoded.**
+- **Sequence words: new findings, not decoded.** (Decoded 2026-11-02: `../open6-kn5000-d/misc/README.md`
+  section 3; the list below is the 2026-10-29 reading, kept for its counts.)
   - The value is negative in 6,494 of 6,526 words; 5,957 of them are -1 to -8.
   - `a` and `b` never exceed 5, and |a - b| <= 1 in 6,128 of 6,526 words (a - b = -1: 2,829, 0: 337, +1: 2,962).
   - Sequences run up to 424 words (page 0 entry 173).
@@ -193,8 +194,17 @@ waves, 958 of the named ones `_Drawbar`.
 
 ## Open questions
 
-- What the sequence words encode: the value, the two 3-bit fields, the marker bit, and how a word maps to a stretch
-  of samples.
+- ~~What the sequence words encode: the value, the two 3-bit fields, the marker bit, and how a word maps to a stretch
+  of samples.~~ **Answered 2026-11-02** (lane open6 kn5000-d, sub-lane misc, `../open6-kn5000-d/misc/README.md`
+  section 3, probe `ic307_record_words.py` there): they are the odd words of KN7000-style records. `value` >= 0x80
+  is a segment of (256 - value) granules; bit 6 is LOOP_START, bit 7 LOOP_END (with bit 6: REC_END); `b` (bits
+  10:8) is the segment's gain exponent (0 on 16-bit recordings), `a` (bits 13:11) the exponent of the segment played
+  next (all 48,076 inner KN7000 segment words and all 954 LOOP_END words, where "next" is the loop's first), which is why |a - b| <= 1 so often. Visible word
+  m is segment 2m + 1, laid end to end from the first sample in granules of 2^(K+4) samples (30 of 30 entries that
+  start inside another's audio check out). The `0x0080` words spelled `WaveSplit 0x80` are 128-granule segments
+  (37 on the twinned entries). **BLOCKED on IC306** for the granule K, the even segments and the loops of the 65 + 9
+  entries without a KN7000 twin; the size of one gain step (about 4.5 dB from the data, 3 dB in the emulation fit)
+  needs a recording from an instrument.
 - Where loops are. No field is wide enough to hold a loop point, so loops may be implied by the sequence end, or
   be IC303's own business. Since 2026-10-30, the likelier answer: on the X chip. In the KN7000 the loop marks
   are in the records' odd words and the format flag in the directory's P word, which are X-chip words; IC307's
@@ -204,8 +214,14 @@ waves, 958 of the named ones `_Drawbar`.
   (service manual I-20 and II-15/16: two chip sets, one chip on each of IC303's address buses). 1,339 items carry
   a real rate (half the KN7000 counterpart's); the other 74, the P/Q words and the loops are **BLOCKED** on a dump
   of IC306, classes 0-3 on dumps of IC304 and IC305.
-- Why page 1 entries 77, 80, 83 and 85, page 0 entries 152 and 159, and 65 page-2 entries have no selector.
-  Possibly older-build leftovers, or users reached only through the RAM user-tone banks.
+- ~~Why page 1 entries 77, 80, 83 and 85, page 0 entries 152 and 159, and 65 page-2 entries have no selector.
+  Possibly older-build leftovers, or users reached only through the RAM user-tone banks.~~ **Answered 2026-11-02**
+  (`../open6-kn5000-d/misc/README.md` section 4, probe `ic307_unselected_entries.py` there): no SET (all 487),
+  drawbar record, RAM user tone or disk sound names any of them. 63 of page 2's (41-111) are `s + 1 .. s + 7` of
+  the nine Organ Click selectors s = 40, 48, ..., 104, which `Voice_Init_Type1` reaches by adding `(tick & 7)` to
+  the selector; only the `<Jazz Drawbars>` / `<Rock Drawbars>` parts take that path ([INFERENCE] a randomised key
+  click; the layer's binding to SET 62 not traced). The other nine (the two sines, page 0 152 and 159, page 1 77,
+  80, 83 (64 zero bytes each) and 85, page 2 24) are [INFERENCE] build leftovers.
 
 ## Website page draft (for `waveform-rom-format.md`)
 

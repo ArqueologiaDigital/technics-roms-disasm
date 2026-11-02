@@ -147,9 +147,12 @@ C37/C38 10 uF --> IC4A/IC4B "MIXING AMP" (M5218AL), inverting summers:
                   DAC via R82/R84 10k, a second input via R51/R83 15k,
                   feedback R85/R86 33k || C46/C45 220p (gain -3.3 for the DAC, pole 21.9 kHz)
       v
-IC7A/IC7B "LOW PASS FILTER" (C48/C47 0.068, C96/C97 0.068, R87/R88 150k, R38/R37 10k)
-      v
-IC8 / IC10 / IC11 / IC12 "EQUALIZING" (four filter sections per channel)
+C42/C41 0.047 -> IC7A/IC7B, labelled "LOW PASS FILTER" but drawn as a multiple-feedback HIGH-pass
+                  (R38/R37 10k, C48/C47 0.068, C96/C97 0.068, R87/R88 150k || C67/C68 22p):
+                  f0 60.4 Hz, Q 1.44, -0.69 in band (see "EQUALIZING sections" below)
+      v  R55/R56 3.3k
+IC8 / IC10 / IC11 / IC12 "EQUALIZING": four gyrator networks shunting the bus to ground
+                  (dips at 245 Hz, 790 Hz, 2.27 kHz; see "EQUALIZING sections" below)
       v
 IC14A/IC14B summers (R41/R42 82k in, R91/R92 150k || C98/C99 33p) -> R90/R89 100 ohm
       | LIN / RIN, MUTE (FAJ CN8 -> SWA CN1)
@@ -189,12 +192,39 @@ speakers: SP1, SP2 12 cm 4 ohm; SP3, SP4 6.5 cm 8 ohm (fed through TF-marked cap
 - **MIC** (JK9) -> C73 1 uF / R27 4.7 kOhm -> MICROPHONE AMPLIFIER IC13A/IC13B (M5218AL, Q9 2SC1815) ->
   `MICIN` (CN9 pin 9) -> main board -> IC310's analog input (see kn5000-xel).
 
+### EQUALIZING sections (computed 2026-11-02)
+
+Computed from the component values on the FAJ sheet (PDF page 39, printed II-25, grid 6-9 / A-C) by
+`notes/open6-kn5000-d/misc/probes/faj_eq_response.py` (exact nodal analysis, ideal op-amps); its output
+is `faj_eq_response.txt` beside it, the full reading in `notes/open6-kn5000-d/misc/README.md`.  Both
+channels carry the same values.  Topology: IC7's output drives the "equaliser bus" through R55 3.3k; each
+of the four sections is a one-port to ground on that bus, built round an M5218AL half wired as a
+voltage follower (a gyrator), and the bus feeds IC14's inverting input through R41 82k.  So each section
+can only cut, around the frequency where its impedance is lowest:
+
+| section  | parts (L / R)                                                       | shunt impedance               | effect on the bus (alone, re 20 kHz)  |
+|----------|---------------------------------------------------------------------|-------------------------------|---------------------------------------|
+| IC8A/B   | R28/R78 6.8k, C59/C61 4.7n, R60/R61 4.7k, C60/C62 10n, R57/R58 150k | zero pair 874 Hz, Q 2.6       | dip at 802 Hz (-6.7 dB), bass -3.2 dB |
+| IC10A/B  | R95/R96 6.8k, C4/C82 10n, R7/R10 4.7k, C57/C83 47n, R2/R3 150k      | zero pair 277 Hz, Q 2.1       | dip at 246 Hz (-5.9 dB), bass -3.2 dB |
+| IC11A/B  | C84/C86 15n, R13/R15 1k, C85/C87 2.2n, R11/R12 150k                 | series RLC, 2262 Hz, Q 4.1    | notch at 2262 Hz (-11.3 dB)           |
+| IC12A/B  | R18/R21 10k, C89/C91 15n, R16/R17 8.2k                              | 10k falling to 8.2k, ~1.2 kHz | flat within 0.45 dB                   |
+| all four |                                                                     |                               | dips 241 Hz, 789 Hz, 2272 Hz          |
+
+IC7 ("LOW PASS FILTER") is in fact a second-order high-pass, f0 60.4 Hz, Q 1.44 (a +0.5 dB bump at
+69 Hz).  From `LOUT` to `LIN` the whole path has +8.4 dB at 1 kHz; re 1 kHz it is -3 dB at about 50 Hz,
+has the three dips (-4.9 dB at 245 Hz, -4.2 dB at 790 Hz, -8.7 dB at 2.27 kHz), its highest point at
+1165 Hz (+1.7 dB) and -3.7 dB at 20 kHz.  [INFERENCE] the headphone amp (IC5/IC6) is fed ahead of IC7, so
+this shaping is the speakers' voicing only, and the dips correct the cabinet / driver response; nothing on
+the sheet says so.
+
 ### Left open, and why
 
 - Signal **levels** (line-out level, headphone power) are not printed on these sheets and need a
   measurement on an instrument.
 - The LINE OUT and AUX IN nets above are marked inference; a continuity check on a FAJ board settles them.
-- The EQUALIZING sections' individual responses were not computed (component values are on the sheet).
+- ~~The EQUALIZING sections' individual responses were not computed~~: computed 2026-11-02 (lane
+  open6 kn5000-d, sub-lane misc), see "EQUALIZING sections" below and
+  `notes/open6-kn5000-d/misc/README.md`.
 
 ### Website page draft
 
@@ -214,8 +244,8 @@ was published as the subsection "#### Audio Output Path" of `hardware-architectu
 > |-------------------|--------------------------------|------------------------------------------------------------------------|
 > | I/V converter     | IC314 M5218AFP (main board)    | 6.8 kOhm parallel 680 pF, roll-off 34.4 kHz                            |
 > | mixing amp        | IC4A/B M5218AL                 | DAC in at 10 kOhm (gain -3.3), second input at 15 kOhm                 |
-> | "low pass filter" | IC7A/B                         | per the manual's label                                                 |
-> | equaliser         | IC8, IC10, IC11, IC12          | four filter sections per channel                                       |
+> | "low pass filter" | IC7A/B                         | so labelled, but a high-pass: f0 60.4 Hz, Q 1.44                       |
+> | equaliser         | IC8, IC10, IC11, IC12          | four gyrator shunts: dips at 245 Hz, 790 Hz, 2.27 kHz                  |
 > | output summers    | IC14A/B                        | to the SWA board as LIN / RIN                                          |
 > | speaker amp       | SWA board                      | switching amplifier: integrator, comparator, gate drive, MOSFET bridge |
 > | headphone amp     | IC5, IC6 + Q5-Q8               | to the PHONES jack on the HB board                                     |

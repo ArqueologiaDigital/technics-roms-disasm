@@ -1,0 +1,7 @@
+Lane open6/kn5000-d, sub-lane dsp, 2026-11-02. Outcome: BLOCKED.
+
+Correction to the dependency: the reverb does not depend on the bit-11 encoding. ROOM REVERB 1 (algo 16, 133 words, 124 decoded tier 1) contains no bit-11 word; its nine undecoded words, each with one open axis (acc_blind.open_axes), are ACT 0x0B x4 (w0 880.1.30.00B; w15/w63/w105 880.1.20.64B), ACT 0x1A x3 (w11/w59/w101 880.1.60.2DA) and SRC 0x11 x2 (w116/w127 000.A.xx.452). So the item depends on kn5000-ax7 step 2 (ACT 0x0B) plus ACT 0x1A and SRC 0x11, all three blocked on an anchored reference.
+
+The topology itself (pipe-comb against series comb cascade, dsp/analysis/reverb-topology-round7.md sect. 12) is blocked on the delay-read latency land, which the decode-status page's R6 lists as unobtainable from either board's software, on BLOCK B's words and on the write-data source. The SX-WSA1R cannot stand in: its reverb is a different program (21 of 133 words align with the KN5000's, 40 delay consumers against 32 descriptor cells) and the WSA1R never executes its effect bodies. What would settle it: an impulse response of the real KN5000 on ROOM REVERB 1 recorded at EFFECT OUT, which waits on the KN5000 hardware (kn5000-hardware-inaccessible).
+
+Notes: dsp/analysis/bit11-xprod-2026-11-02.md items I and sect. 6; notes/open6-kn5000-d/dsp/README.md. Website page draft: same README section 5 (effects-dsp.md sect. 19 append). Related: kn5000-ax7, kn5000-1oy.

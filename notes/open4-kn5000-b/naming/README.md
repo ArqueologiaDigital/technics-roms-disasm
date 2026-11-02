@@ -89,17 +89,27 @@ waves did.
    DiskFormat_Execute); the MIXER page-frame painter at 0xFBE135 needs its own label; SmfOut_WriteFirstWindow
    (0xF77F9A) sits on an unreachable copy; 0x216E is the COMPARE LED flag; the historical
    `gen_prom_b_f5553f_module.py` spells Select36CE_%06X with a format string; the `MidiFileL0ad_` prefix (digit
-   zero) of four prom_a/prom_b labels.
+   zero) of four prom_a/prom_b labels.  **Checked 2026-11-02 (tracker kn5000-wxn,
+   `notes/open6-kn5000-d/wsa1/README.md`):** the first five were right and are applied; the `MidiFileL0ad_` prefix
+   is the ROM's own caption spelling ("MIDI FILE L0AD") and was kept.
 2. **The 100 generic-label records left "not reviewed (stopped early)"** in g3 (17) and g5 (79) and the four in g1
-   (`analysis/kn5000-naming/proposals-2026-10-07-generic-g*.json`).
+   (`analysis/kn5000-naming/proposals-2026-10-07-generic-g*.json`).  **Done 2026-11-02** (kn5000-rld): 90 had
+   been renamed by later lanes, 9 renamed, 1 proposed; verdict per record in
+   `notes/open6-kn5000-d/naming/rld-verdicts.md`.
 3. **More data spelled as code, found on the way** (KN5000 v10 family): `RhythmProc_ChannelMapTable`
-   (sequencer/accompaniment_engine.s) is a table decoded as `nop` / `max` / `ld (P2:8), 8:io` lines.
+   (sequencer/accompaniment_engine.s) is a table decoded as `nop` / `max` / `ld (P2:8), 8:io` lines.  **Done
+   2026-11-02** (kn5000-j8z): `StyleSection_GroupBaseTable`, typed `.byte` rows; it has no reader
+   (`notes/open6-kn5000-d/naming/README.md`).
 4. **Callee names under the renamed MainSysCtrl cases** (not checked): `Display_CopyAndRenderBitmaps` (PANEL
    MEMORY), `AccDemo_InitDone` (COMPOSER), `Part_InitFromPreset` (SEQUENCER), `Voice_InitBankDataSafe` (MSP USER),
    `SendPartDataBlock_DoGetError` (SOUND MEMORY) are probably the INITIAL SETTING resetters; and the rest of the
    `HdaeRom_*` family (`HdaeRom_ReadParam`, `_ProcessBlock`, `_TableEntry*`, `_AltCheckResult`, ...) is sound-RAM
    conversion code too, still under the HD-AE5000-looking prefix.  `Voice_PanReg_WriteDispatchB` (v142) emits the
-   second TVF word, by the same evidence as ToneGen_WriteVoice_TvfPair.
+   second TVF word, by the same evidence as ToneGen_WriteVoice_TvfPair.  **Done 2026-11-02** (kn5000-j8z): the five
+   callees are the resetters (PanelMem_InitAllFromFactory, Composer_ResetStyleImage, SeqSong_ResetAll,
+   MspUser_ResetToFactory, SoundRam_InitPhase2_ResetIfRamLost); the remaining `HdaeRom_*` turned out to be
+   panel-record listeners (PanelTag<NN>_*), not sound-RAM code; Voice_PanReg_WriteDispatchB is
+   TVF_Emit_Registers_Type2 (`notes/open6-kn5000-d/naming/README.md`, section kn5000-j8z).
 5. The c4 "GS chorus cases 1-7" lead (row 42) cannot be located in the proposal files; whoever wrote it would have
    to say which labels it meant.
 

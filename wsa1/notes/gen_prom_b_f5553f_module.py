@@ -101,6 +101,33 @@ RUN
   python3 notes/gen_prom_b_f5553f_module.py --names     # the naming census
   python3 notes/gen_prom_b_f5553f_module.py --selftest  # every number quoted above
   python3 notes/gen_prom_b_f5553f_module.py --splice    # write it into the .s
+  python3 notes/gen_prom_b_f5553f_module.py --names --historical-names
+                                    # the framed names this file gave in 2026-09
+  (unidasm: UNIDASM=/home/fsanches/compartilhado/mame-sony-video/unidasm if the
+   default path in scripts/analysis/llvm_roundtrip.py is missing; --names takes
+   about three minutes)
+
+★ THE COMMITTED SOURCE'S NAMES WIN (2026-11-02, tracker kn5000-wxn).  This file
+  names the routines it cannot explain by SHAPE, with a format string:
+  Nop_Ret_%06X, Fwd_%06X, CallSelectorTable_%06X, Write3602_ThenNotify_%06X,
+  Write3602_IfBit2088_%06X, Select36CE_%06X, DispatchState%04X_%06X.  Those were
+  placeholders, and later naming waves replaced most of them in the source --
+  e.g. wave 11 (notes/naming-pilot-2026-10-06/proposals_wave11_t11.json) made the
+  three Select36CE_* the CYCLE RECORD screen's field selectors
+  CycleRecordScreen_SelectCycleField / _SelectStartMeasureField /
+  _SelectEndMeasureField.  Re-running this file used to print, and --splice to
+  write back, the placeholders.  labels() now overlays, address by address, the
+  label the committed image source (prom_b, through asm_source.image_path) has at
+  that address, so the output keeps every later name; only an address the source
+  does not label still gets a shape name.  --historical-names turns the overlay
+  off, to reproduce the 2026-09 emission for archaeology.  Measured with --names
+  on 2026-11-02: 11 content / 95 framed / 96 sub_XXXXXX before the overlay, 162 /
+  36 / 4 after.  Of the 36 framed names left, 29 are the tree's own labels; the
+  other 7 are the seven 32-entry tables SelectorRoutines_F558AE..F55BAE, which the
+  tree now spells as `keymap_begin` blocks (ScreenButtons_RealtimeRecordScreen and
+  its siblings).  A keymap line carries no ROM address in its comment, so
+  tree_names() cannot place those labels and this file still prints the framed
+  names for them -- a --splice would have to be checked against them by hand.
 """
 import os
 import re
@@ -687,8 +714,43 @@ def labels():
             got[a] = FRAMED_NAMES.get(a, "Data_%06X" % a)
         else:
             got[a] = "sub_%06X" % a
+    if "--historical-names" not in sys.argv:
+        tree = tree_names()
+        for a in got:
+            if a in tree:
+                got[a] = tree[a]
     _cache["lab"] = got
     return got
+
+
+TREE_LABEL = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*):")
+TREE_ADDR = re.compile(r";\s*(F[0-9A-F]{5})\b")
+
+
+def tree_names():
+    """address -> the label the committed prom_b image source has there, for the span LO..HI.
+
+    A label's address is the ROM address in the comment of the first statement after it
+    (prom_b's lines carry `; F568AB  cp (0x3628),0x00`).  Only the first label at an address
+    is taken, which is the routine's own name, not a local after it."""
+    if "tree" in _cache:
+        return _cache["tree"]
+    L = open(SRCB, "rb").read().decode("latin-1").split("\n")
+    out = {}
+    for i, line in enumerate(L):
+        m = TREE_LABEL.match(line)
+        if not m:
+            continue
+        for j in range(i, min(i + 4, len(L))):
+            rest = L[j][m.end():] if j == i else L[j]
+            if not rest.strip() or rest.lstrip().startswith(";") or (j > i and TREE_LABEL.match(rest)):
+                continue                    # blank, comment, or a second label at the same place
+            mm = TREE_ADDR.search(rest)     # the first statement: its address or nothing
+            if mm and LO <= int(mm.group(1), 16) < HI:
+                out.setdefault(int(mm.group(1), 16), m.group(1))
+            break
+    _cache["tree"] = out
+    return out
 
 
 def obj_end(a):

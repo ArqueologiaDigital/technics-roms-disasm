@@ -1488,7 +1488,7 @@ SeMenu_SetFilterType_Join:
 	inc	6, xsp
 	ret
 
-SeMenu_TransferPartValues:
+SeLfo_GetEntryElement:
 	cp c, 0:i3
 	jr z, SeMenu_TransferPartValues_Loop
 	cp c, 4:i3
@@ -1558,7 +1558,7 @@ SeMenu_TransferPartValues_End2:
 	ldw hl, 0xffff
 	ret
 
-SeMenu_TransferPartValues_EndData:
+SeLfo_GetSelectedLfo:
 	cp	a, 1:i3
 	jr	nz, SeMenu_TransferPartValues_EndData_Skip3
 	ld	a, (1678:16)
@@ -1636,7 +1636,7 @@ SeMenu_TransferPartValues_EndData_Skip27:
 	ret	nz
 	ld	(xwa), 1
 	ret
-UpdSeSel_DetailedUpdate_SetDisplayState_Helper:
+SeCtr2_GetSelection:
 	ld	c, (1685:16)
 	cp	c, 1:i3
 	jr	c, SeMenu_TransferPartValues_EndData_Skip28
@@ -1650,11 +1650,11 @@ SeMenu_TransferPartValues_EndData_Skip29:
 ; SeCtr2_SetSelection: Stores A as the SeCtr2 page's remembered selection (RAM 0x695; the side rows store 1, 2, 5 or
 ;   6), which the page draw reads back (clamped to 1..6, default 1) into page param 0 and highlights. Basis: callers +
 ;   body -- SeCtr2_OnSideRow2 (choices 2/1) and SeCtr2_OnSideRow3 (6/5) store their choice here and send event 59;
-;   only UpdSeSel_DetailedUpdate_SetDisplayState_Helper reads 0x695.
+;   only SeCtr2_GetSelection reads 0x695.
 SeCtr2_SetSelection:
 	ld	(1685:16), a
 	ret
-UpdSeSel_DetailedUpdate_SetDisplayState_Helper2:
+SeCtr2_GetGroupBase:
 	cp	a, 6:i3
 	jr	z, SeMenu_TransferPartValues_EndData_Skip14
 	cp	a, 5:i3
@@ -1674,7 +1674,7 @@ SeMenu_TransferPartValues_EndData_Skip15:
 SeMenu_TransferPartValues_EndData_Join2:
 	ld	(xbc), a
 	ret
-UpdSeSel_DetailedUpdate_SetDisplayState_Helper3:
+SeCtr2_GetKitGroupBase:
 	cp	a, 6:i3
 	jr	z, SeMenu_TransferPartValues_EndData_Skip17
 	cp	a, 5:i3
@@ -1870,7 +1870,7 @@ SeMenu_CyclePartLfoState:
 	ld	a, (xsp+12)
 	extz	wa
 	lda	xbc, (xsp+4)
-	calr	SeMenu_TransferPartValues_EndData
+	calr	SeLfo_GetSelectedLfo
 	lda	xde, (xsp+6)
 	ld	c, (xde)
 	and	c, 63
@@ -2723,13 +2723,13 @@ SeMenu_ApplyPartEdit_AltStore_Join:
 	ld	a, (xsp+16)
 	extz	wa
 	lda	xbc, (xsp+14)
-	calr	SeMenu_TransferPartValues_EndData
+	calr	SeLfo_GetSelectedLfo
 	ld	a, (xsp+16)
 	extz	wa
 	ld	c, (xsp+14)
 	extz	bc
 	lda	xde, (xsp+12)
-	calr	SeMenu_TransferPartValues
+	calr	SeLfo_GetEntryElement
 	lda	xbc, (xsp)
 	ld	wa, 4:i3
 	calr	SeMenu_LoadPartParam
@@ -2772,13 +2772,13 @@ SeMenu_ApplyPartEdit_AltStore_Join2:
 	ld	a, (xsp+16)
 	extz	wa
 	lda	xbc, (xsp+14)
-	calr	SeMenu_TransferPartValues_EndData
+	calr	SeLfo_GetSelectedLfo
 	ld	a, (xsp+16)
 	extz	wa
 	ld	c, (xsp+14)
 	extz	bc
 	lda	xde, (xsp+12)
-	calr	SeMenu_TransferPartValues
+	calr	SeLfo_GetEntryElement
 	lda	xbc, (xsp)
 	ld	wa, 4:i3
 	calr	SeMenu_LoadPartParam
@@ -2821,13 +2821,13 @@ SeMenu_ApplyPartEdit_AltStore_Join3:
 	ld	a, (xsp+16)
 	extz	wa
 	lda	xbc, (xsp+14)
-	calr	SeMenu_TransferPartValues_EndData
+	calr	SeLfo_GetSelectedLfo
 	ld	a, (xsp+16)
 	extz	wa
 	ld	c, (xsp+14)
 	extz	bc
 	lda	xde, (xsp+12)
-	calr	SeMenu_TransferPartValues
+	calr	SeLfo_GetEntryElement
 	lda	xbc, (xsp)
 	ld	wa, 2:i3
 	calr	SeMenu_LoadPartParam
@@ -2870,13 +2870,13 @@ SeMenu_ApplyPartEdit_AltStore_Join4:
 	ld	a, (xsp+16)
 	extz	wa
 	lda	xbc, (xsp+14)
-	calr	SeMenu_TransferPartValues_EndData
+	calr	SeLfo_GetSelectedLfo
 	ld	a, (xsp+16)
 	extz	wa
 	ld	c, (xsp+14)
 	extz	bc
 	lda	xde, (xsp+12)
-	calr	SeMenu_TransferPartValues
+	calr	SeLfo_GetEntryElement
 	lda	xbc, (xsp)
 	ld	wa, 1:i3
 	calr	SeMenu_LoadPartParam
@@ -2918,13 +2918,13 @@ SeMenu_ApplyPartEdit_AltStore_Join5:
 	ld	a, (xsp+16)
 	extz	wa
 	lda	xbc, (xsp+14)
-	calr	SeMenu_TransferPartValues_EndData
+	calr	SeLfo_GetSelectedLfo
 	ld	a, (xsp+16)
 	extz	wa
 	ld	c, (xsp+14)
 	extz	bc
 	lda	xde, (xsp+12)
-	calr	SeMenu_TransferPartValues
+	calr	SeLfo_GetEntryElement
 	lda	xbc, (xsp)
 	ld	wa, 3:i3
 	calr	SeMenu_LoadPartParam
@@ -2958,13 +2958,13 @@ SeMenu_ApplyPartEdit_AltStore_Join6:
 	ld	a, (xsp+16)
 	extz	wa
 	lda	xbc, (xsp+14)
-	calr	SeMenu_TransferPartValues_EndData
+	calr	SeLfo_GetSelectedLfo
 	ld	a, (xsp+16)
 	extz	wa
 	ld	c, (xsp+14)
 	extz	bc
 	lda	xde, (xsp+12)
-	calr	SeMenu_TransferPartValues
+	calr	SeLfo_GetEntryElement
 	lda	xbc, (xsp)
 	ld	wa, 3:i3
 	calr	SeMenu_LoadPartParam
@@ -6555,7 +6555,7 @@ SeMenu_StoreEffectCoeff_Data_Join:
 	lda	xde, (xsp+38)
 	ld	wa, 0:i3
 	ld	bc, 1:i3
-	calr	SeMenu_TransferPartValues
+	calr	SeLfo_GetEntryElement
 	ld	(xsp), 0
 SeMenu_StoreEffectCoeff_Data_Loop3:
 	ld	e, (xsp)

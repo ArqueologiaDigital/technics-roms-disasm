@@ -46,8 +46,8 @@ An 18-byte array accessed as `block[index] = value` / `value = block[index]`:
 
 | role | routine | address (v9) |
 |---|---|---|
-| write | `MIDI_DistributeParamToChannels` | `0x00FC9CF9` |
-| read | `VoiceData_DistributeToChannels` | `0x00FC9D41` |
+| write | `PanelVari_SetGroupSlot` | `0x00FC9CF9` |
+| read | `PanelVari_GetGroupSlot` | `0x00FC9D41` |
 | bulk write at init | `PanelTlv_ResolvePartCompanions_Loop` | `0x00FC4CF6` |
 | index bound | `ApplyProgramChangeAs_DoLookupRe` | `0x00FEE770` |
 
@@ -130,7 +130,7 @@ validation (`PanelTlv_Rule_ZeroByte`); see the corrected grammar in `README-lsw-
 | `72` | `0xFD0A` (`0x0E`) | 4-bit value `+0` (0..15), level `+1`, pan-ish `+4`, `+5`, `+7`, then six `0x80` bit-flags `+8..+0D` | **[NAME]** `AccompSeq_MidiFilterCodeBlock` and `AccompSeq_HandleSpecialMode` read/write `+6` |
 | `80` | `0xFD4E` (`0x0E`) | **sequencer / MIDI-clock control** — `+0` is the busiest flag byte in the file (42 reads) | **[CODE]** `INTT1_CheckMidiSync`, `INTTR4_*`, `Transport_*`, `MidiCC_ChannelDispatch_*`; the flash "power-on defaults" blob at `0x00ED933A` writes `0xFD50..0xFD5C` with exactly the descriptor masks |
 | `90` | `0xFC64` (`0x06`) | small bit-field record; note `(e=0x90, d=0x10)` is a **notification past the end of the record**, posted by `AccStyle_IndexedLookup`, `AccStyle_InlinedBlock`, `AccPatch_PartChanges_MapLookup`, `AccPlay_SetupSoundParams` with values `0x14` / `0x17` — i.e. *part tags*. **[INFERENCE]** "the active part changed to <tag>" | **[CODE]** 4 of the 64 event sites |
-| `91` | `0xFDA8` (`0x0A`) | `+3` is a panel-control bit (12 R, 6 RMW) touched by `SetWall_*`, `SongBank_CheckAccompanimentMode`, `NMI_HANDLER`; `+4` is written by `DrumVoice_Handler7` | **[CODE]** |
+| `91` | `0xFDA8` (`0x0A`) | `+3` is a panel-control bit (12 R, 6 RMW) touched by `SetWall_*`, `SongBank_ApplySongGmFlag`, `NMI_HANDLER`; `+4` is written by `DrumVoice_Handler7` | **[CODE]** |
 | `92` | `0xFD1A` (`0x0E`) | ⚠ **corrected 2026-08-23: a 15-parameter UI record whose ids tile all FOURTEEN payload bytes** — was described as 13 consecutive bytes read one at a time by `SendEpilogue_Data` | **[CODE]** |
 | `93` | `0xFDB4` (`0x22`) | 9 scalar params (`+0` 0..9 def 6, `+2`/`+3` 0..127 def 127, `+4` 0..12 def 2, `+5` 0..10 def 5, `+6`/`+8` 1..127 def 1, `+7` 0..3) then **16 bytes each defaulting to `0x40`** — **[INFERENCE]** a 16-way pan/balance array | **[CODE]** descriptor list `0xED8F12` |
 | `98` | `0xFD94` (`0x12`) | mixed: `+1` 0..80, `+3` 16..48 def 32 (mask `0x70`), `+0A` 0..99 def 90, `+0E` 0..2 | **[NAME]** subscribers `UIStateEvt_PlayModeGuard_Data`, `MidiOut_RealtimeDispatch_Handler`, `DSPCfg_ProcessInput`; `AccDir_*` read `+3` |

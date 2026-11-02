@@ -200,7 +200,11 @@ and they belong to lane `sys` to delete.
   linear listing, and every 3-byte occurrence of their addresses in the ROM lies inside other instructions;
   `notes/kn5000-a-2026-10-31/probes/scoop_unknown_readers.py`.  The 0x09 bytes are copied verbatim into the
   region-0 text by ParamPopup_AccompPart (16-byte chunks at A * 16, A = bits 7-5 of the value); which glyph the
-  status font draws for code 9 is still open.)
+  status font draws for code 9 is still open.)  (Resolved 2026-11-02, lane open6 kn5000-d sub-lane misc: the
+  pop-up line is drawn through Scoop_CharGlyphMap, which maps every code 0x01-0x0F to 0x20, in font 0
+  (TextStyle_FontTable[6]); glyph 0x20 is blank, so each 0x09 (a TAB) draws as a space.  The same probe shows
+  the reader's 16-byte stride never lands on a string, so the pop-up is garbled in v5-v10, an [INFERENCE] firmware
+  bug; `notes/open6-kn5000-d/misc/README.md` section 2, `probes/accomp_part_popup_glyph.py`.)
 * `.long OscScope_DrawWaveform` (sequencer/smf_event_processor.s) and
   `.long OscScope_FinalizeRender` (ui/drawbar_panel_ui.s, ui/ui_mode_handlers.s)
   point into the middle of instructions (now `.set NAME, . + k` here): the
