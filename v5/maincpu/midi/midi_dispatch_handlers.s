@@ -11436,7 +11436,7 @@ MidiSysEx_ProcessBlock_Helper5:
 ;   RAM transfer (the abort path sends it too). What the receiver does with it is not identified; the callee's name
 ;   does not describe it. Basis: callers + body -- MidiSysEx_FinishSoundRamXfer calls it when the sound-RAM group (bit
 ;   6 of 0xBC7E) was received; the group's abort handler SeqChan_UnhandledCmd_Join2 sends the same packet after
-;   SendPartDataBlock_DoGetError.
+;   SoundRam_InitPhase2_ResetIfRamLost.
 MidiSysEx_SendSoundRamEndCmd:
 	push	xde
 	push	xhl
@@ -11580,7 +11580,7 @@ SeqChan_UnhandledCmd_Join2:
 	push	xhl
 	push	xix
 	push	xiz
-	call	SendPartDataBlock_DoGetError
+	call	SoundRam_InitPhase2_ResetIfRamLost
 	call	MIDI_SendAllVoicesPitchUpdate
 	pop	xiz
 	pop	xix
@@ -11604,7 +11604,7 @@ SeqChan_UnhandledCmd_Join3:
 	push	xhl
 	push	xix
 	push	xiz
-	call	AccDemo_InitDone
+	call	Composer_ResetStyleImage
 	res	0, (0x323b:16)
 	pop	xiz
 	pop	xix
@@ -11639,7 +11639,7 @@ SeqChan_UnhandledCmd_Join5:
 	push	xhl
 	push	xix
 	push	xiz
-	call	Voice_InitBankDataSafe
+	call	MspUser_ResetToFactory
 	pop	xiz
 	pop	xix
 	pop	xhl

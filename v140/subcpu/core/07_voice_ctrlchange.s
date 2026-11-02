@@ -3636,7 +3636,7 @@ Voice_NoteOn_Type2_Exit:
 ; IN : A = physical TG slot. XIZ := 0x04308E + A*0x47.
 ; Chain: WaveSel_StageB_Build_Reg040, Pitch_Apply_Zone_Trim,
 ; Voice_Pitch_WriteOutputReg_Secondary, TVF_BuildEmit_Short_Dispatch,
-; Voice_PanReg_WriteDispatchB, Voice_ComputePitchBend2, Voice_Build_GateCommand_NoPartial,
+; TVF_Emit_Registers_Type2, Voice_ComputePitchBend2, Voice_Build_GateCommand_NoPartial,
 ; Voice_Calc_LevelPair_FixedAtk, Voice_WriteChPanShift2 (BC = 0), Voice_Level_ClearAllOutputRegs,
 ; Voice_ComputePitch_Mono, Voice_ApplyPortamento2, then
 ; ToneGen_WriteVoiceParams(slot, 0x0451CC). Callers: Voice_SetVelocity_Type0_NopCont2 and
@@ -3659,7 +3659,7 @@ Voice_Init_Type2:
 	ld xwa, xiz
 	call TVF_BuildEmit_Short_Dispatch
 	ld xwa, xiz
-	call Voice_PanReg_WriteDispatchB
+	call TVF_Emit_Registers_Type2
 	ld xwa, xiz
 	call Voice_ComputePitchBend2
 	ld xwa, xiz
@@ -3985,7 +3985,7 @@ Voice_Init_Type1:
 	ld xwa, xiz
 	call TVF_BuildEmit_Short_Dispatch
 	ld xwa, xiz
-	call Voice_PanReg_WriteDispatchB
+	call TVF_Emit_Registers_Type2
 	ld xwa, xiz
 	call Voice_ComputePitchBend2
 	ld xwa, xiz

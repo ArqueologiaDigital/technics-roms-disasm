@@ -3945,7 +3945,7 @@ Audio_ResetAfterPayloadError:
 	pop	xde
 Audio_ReinitDisplay:
 	calr	Display_SetupAndPrepareRender
-	calr	Display_CopyAndRenderBitmaps
+	calr	PanelMem_InitAllFromFactory
 	call	MainTitle_SetBootFlag
 Audio_ReinitToneGen:
 	push	xde
@@ -4049,12 +4049,17 @@ Audio_CheckAndReinitReverb:
 	pop	xhl
 	pop	xde
 	ret
-VoiceData_InitAndCopyParams:
+; PanelMem_InitFromFactory: WA = panel memory 0..79: clears its 960-byte record at 0x1ED400 + 960 * WA and fills it from the factory
+;   image at table data 0x99ECA0 + 0x2A2 * WA: its first 0x7C bytes, then 0x11E bytes of SndParamRam_DefaultImage
+;   + 0x7C, then its remaining 0x226 bytes.  WA >= 80 does nothing.  Basis: callers + body --
+;   PanelMem_InitAllFromFactory loops it over 0..79, and a memory that fails PanelTlv_ValidatePanelMemory is
+;   rebuilt with it.
+PanelMem_InitFromFactory:
 	dec	2, xsp
 	push	xiz
 	ld	(xsp + 4), wa
 	cpw	(xsp + 4), 0x50
-	jrl	nc, VoiceData_InitDone
+	jrl	nc, PanelMem_InitFromFactory_Done
 	pushw	0x3c0
 	pushw	0x0
 	ld	wa, (xsp + 8)
@@ -4104,7 +4109,7 @@ VoiceData_InitAndCopyParams:
 	push	xwa
 	call	Mem_Copy
 	lda	xsp, (xsp + 10)
-VoiceData_InitDone:
+PanelMem_InitFromFactory_Done:
 	pop	xiz
 	inc	2, xsp
 	ret
@@ -4381,7 +4386,7 @@ VoiceData_ExtendedParamSetup_Loop2:
 	pop	xhl
 	pop	xde
 	calr	MidiMsg_ParseChannelStream
-	calr	Display_CopyAndRenderBitmaps
+	calr	PanelMem_InitAllFromFactory
 	jp	SeqTimer_UpdateTempoReg
 MidiMsg_ParseChannelStream:
 	push	xiz
@@ -4457,11 +4462,16 @@ Display_RegionDone:
 	ld	wa, 0:i3
 	call	BitMapOut_PrepareRender_CheckBit2
 	jrl	Audio_FillParamBuffer
-Display_CopyAndRenderBitmaps:
+; PanelMem_InitAllFromFactory: Resets PANEL MEMORY to the factory state: PanelMem_HeaderTemplate ("HK", record size 960, 80 records) to
+;   0x1ED350, the 0xA0 bytes at table data 0x99EC00 to 0x1ED360, every panel memory 0..79 rebuilt by
+;   PanelMem_InitFromFactory, then PanelMem_ApplyFixups.  Basis: callers + body -- MainSysControl's INITIAL
+;   SETTING case 4 PANEL MEMORY (MainSysCtrl_OnInitPanelMemory), Audio_ReinitDisplay and the full re-init after a
+;   panel transfer call it.
+PanelMem_InitAllFromFactory:
 	pushw	iz
 	pushw	0x10
-	pushw	Display_CopyAndRenderBitmaps_Str_HK@hi16
-	pushw	Display_CopyAndRenderBitmaps_Str_HK@lo16
+	pushw	PanelMem_HeaderTemplate@hi16
+	pushw	PanelMem_HeaderTemplate@lo16
 	pushw	0x1e
 	pushw	0xd350
 	call	Mem_Copy
@@ -4473,20 +4483,23 @@ Display_CopyAndRenderBitmaps:
 	call	Mem_Copy
 	lda	xsp, (xsp + 20)
 	ld	iz, 0:i3
-DisplayRender_Loop:
+PanelMem_InitAllFromFactory_Loop:
 	ld	wa, iz
-	calr	VoiceData_InitAndCopyParams
+	calr	PanelMem_InitFromFactory
 	inc	1, iz
 	cp	iz, 0x50
-	jr	c, DisplayRender_Loop
-	calr	Display_ProcessBitmapTable
+	jr	c, PanelMem_InitAllFromFactory_Loop
+	calr	PanelMem_ApplyFixups
 	popw	iz
 	ret
-Display_ProcessBitmapTable:
+; PanelMem_ApplyFixups: Applies PanelMem_FixupRecords (one 6-byte record: u16 memory, 0x50 = all 80; TLV tag; payload offset; OR
+;   value; AND-NOT mask) to the panel memories at 0x1ED400: payload[offset] = (payload[offset] & ~mask) | value
+;   in the tag's record (PanelTlv_PayloadOfTag).  Basis: body + PanelMem_FixupRecords.
+PanelMem_ApplyFixups:
 	dec	2, xsp
 	push	xiz
 	ldw	(xsp + 4), 0x0
-BitmapTable_ProcessEntry:
+PanelMem_ApplyFixups_Record:
 	ld	wa, (xsp + 4)
 	extz	xwa
 	ld	xbc, xwa
@@ -4512,14 +4525,14 @@ BitmapTable_ProcessEntry:
 	lda	xhl, (xwa + 4)
 	lda	xix, (xwa + 5)
 	cpw	(xwa), 0x50
-	jr	nz, BitmapTable_CheckOffset
+	jr	nz, PanelMem_ApplyFixups_One
 	ld	iy, 0:i3
 	ld	e, (xde)
 	ld	d, (xix)
 	ld	l, (xhl)
 	add	xbc, xiz
 	ld	xix, xbc
-BitmapTable_RenderLine:
+PanelMem_ApplyFixups_AllLoop:
 	ld	a, e
 	extz	wa
 	lda	xbc, (xix+wa)
@@ -4530,11 +4543,11 @@ BitmapTable_RenderLine:
 	inc	1, iy
 	add	xix, 0x3c0
 	cp	iy, 0x50
-	jr	c, BitmapTable_RenderLine
-	jr	BitmapTable_NextEntry
-BitmapTable_CheckOffset:
+	jr	c, PanelMem_ApplyFixups_AllLoop
+	jr	PanelMem_ApplyFixups_Next
+PanelMem_ApplyFixups_One:
 	cpw	(xwa), 0x50
-	jr	ge, BitmapTable_NextEntry
+	jr	ge, PanelMem_ApplyFixups_Next
 	ld	wa, (xwa)
 	exts	xwa
 	ld	xiy, xwa
@@ -4553,10 +4566,10 @@ BitmapTable_CheckOffset:
 	extz	bc
 	ld	a, (xhl)
 	or	(xiy+bc), a
-BitmapTable_NextEntry:
+PanelMem_ApplyFixups_Next:
 	incw	1, (xsp + 4)
 	cpw	(xsp + 4), 0x1
-	jrl	c, BitmapTable_ProcessEntry
+	jrl	c, PanelMem_ApplyFixups_Record
 	pop	xiz
 	inc	2, xsp
 	ret

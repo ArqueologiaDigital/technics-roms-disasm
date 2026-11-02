@@ -2046,12 +2046,12 @@ typedef struct __attribute__((packed)) {
      * --------------------------------------------------------------------- */
     uint32_t SeqInit_InitFuncTable[4];
     /* ---------------------------------------------------------------------
-     * Part_InitFromPreset_LocalInit -- initializer of a local array:
-     * Part_InitFromPreset (v10/v9 0xF42EA4, v7 0xF42E96) (`ld xiy,
-     * Part_InitFromPreset_LocalInit`); `lda xix, (xsp + 4); ldw bc,
+     * SeqSong_ResetAll_LocalInit -- initializer of a local array:
+     * SeqSong_ResetAll (v10/v9 0xF42EA4, v7 0xF42E96) (`ld xiy,
+     * SeqSong_ResetAll_LocalInit`); `lda xix, (xsp + 4); ldw bc,
      * 0x8; ldirw` copies 16 bytes into the routine's stack frame.
      * --------------------------------------------------------------------- */
-    uint16_t Part_InitFromPreset_LocalInit[8];
+    uint16_t SeqSong_ResetAll_LocalInit[8];
     /* ---------------------------------------------------------------------
      * SeqData_SendVoiceTableBlock_LocalInit -- initializer of a local array:
      * SeqData_SendVoiceTableBlock (v10/v9 0xF43A59, v7 0xF43A4B) (`ld xiy,
@@ -5937,7 +5937,7 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
         NAKA_ADDR(SeqInit_FullReset),
     },
 
-    .Part_InitFromPreset_LocalInit = { 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F },
+    .SeqSong_ResetAll_LocalInit = { 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F },
 
     .SeqData_SendVoiceTableBlock_LocalInit = { 0xF0, 0x50, 0xA3, 0x00, 0x00 },
 

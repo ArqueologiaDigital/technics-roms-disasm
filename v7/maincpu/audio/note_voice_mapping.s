@@ -16227,7 +16227,10 @@ UIState_ProcessKeyEvent_Skip2:
 SndParam_ProcessEntry_Epilogue:
 	inc	4, xsp
 	ret
-HdaeRom_Entry:
+; PanelTag60_ApplyEffectOnOff: SwbtWr listener of panel record 0x60: for payload +1 applies bits 7, 6 and 5 (DIGITAL
+;   REVERB, ACOUSTIC ILLUSION and EQUALIZER on/off) one at a time through SndParam_ApplyEventField. Basis: callers +
+;   body.
+PanelTag60_ApplyEffectOnOff:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16235,9 +16238,9 @@ HdaeRom_Entry:
 	ld	(xsp+0x3), (SWBTWR_PAYLOAD_3)
 	ld	a, (xsp+0x1)
 	cp	a, 1:i3
-	jr	nz, HdaeRom_Entry_Epilogue
+	jr	nz, PanelTag60_ApplyEffectOnOff_Epilogue
 	bitm	7, (xsp+0x3)
-	jr	z, HdaeRom_Entry_Skip
+	jr	z, PanelTag60_ApplyEffectOnOff_Skip
 	lda	xwa, (xsp)
 	ld	xde, xwa
 	ld	a, (xsp+0x3)
@@ -16246,9 +16249,9 @@ HdaeRom_Entry:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-HdaeRom_Entry_Skip:
+PanelTag60_ApplyEffectOnOff_Skip:
 	bitm	6, (xsp+0x3)
-	jr	z, HdaeRom_Entry_Skip2
+	jr	z, PanelTag60_ApplyEffectOnOff_Skip2
 	lda	xwa, (xsp)
 	ld	xde, xwa
 	ld	a, (xsp+0x3)
@@ -16257,9 +16260,9 @@ HdaeRom_Entry_Skip:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-HdaeRom_Entry_Skip2:
+PanelTag60_ApplyEffectOnOff_Skip2:
 	bitm	5, (xsp+0x3)
-	jr	z, HdaeRom_Entry_Epilogue
+	jr	z, PanelTag60_ApplyEffectOnOff_Epilogue
 	lda	xwa, (xsp)
 	ld	xde, xwa
 	ld	a, (xsp+0x3)
@@ -16268,10 +16271,14 @@ HdaeRom_Entry_Skip2:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-HdaeRom_Entry_Epilogue:
+PanelTag60_ApplyEffectOnOff_Epilogue:
 	inc	4, xsp
 	ret
-HdaeRom_ProcessBlock:
+; PanelTag61_ApplyDspSlot: SwbtWr listener of panel record 0x61 (DSP slot 0): a change of payload byte 0..24 (event +1) with a
+;   non-zero mask (+3) is applied as a change of byte 0 through SndParam_ApplyEventField [INFERENCE: so the whole
+;   slot is re-sent].  Basis: callers (SwbtB2_Code61_Listeners) + body; floppy/kn5000/panel_fields.py names
+;   records 0x61 / 0x63 / 0x65 / 0x66 / 0x64 the DSP slots 0..4.
+PanelTag61_ApplyDspSlot:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16279,12 +16286,12 @@ HdaeRom_ProcessBlock:
 	ld	(xsp+0x3), (SWBTWR_PAYLOAD_3)
 	ld	a, (xsp+0x1)
 	cp	a, 24
-	jr	ugt, HdaeRom_ProcessBlock_Epilogue
+	jr	ugt, PanelTag61_ApplyDspSlot_Epilogue
 	cp	a, 0:i3
-	jr	c, HdaeRom_ProcessBlock_Epilogue
+	jr	c, PanelTag61_ApplyDspSlot_Epilogue
 	ld	a, (xsp+0x3)
 	and	a, 255
-	jr	z, HdaeRom_ProcessBlock_Epilogue
+	jr	z, PanelTag61_ApplyDspSlot_Epilogue
 	ld	(xsp+0x1), 0
 	lda	xwa, (xsp)
 	ld	xde, xwa
@@ -16294,12 +16301,16 @@ HdaeRom_ProcessBlock:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-HdaeRom_ProcessBlock_Epilogue:
+PanelTag61_ApplyDspSlot_Epilogue:
 	inc	4, xsp
 	ret
-HdaeRom_ReadParam:
+SwbtB2_Code62_NopListener:
 	ret
-SwbtB2_Code63_Listener:
+; PanelTag63_ApplyDspSlot: SwbtWr listener of panel record 0x63 (DSP slot 1): a change of payload byte 0..24 (event +1) with a
+;   non-zero mask (+3) is applied as a change of byte 0 through SndParam_ApplyEventField [INFERENCE: so the whole
+;   slot is re-sent].  Basis: callers (SwbtB2_Code63_Listeners) + body; floppy/kn5000/panel_fields.py names
+;   records 0x61 / 0x63 / 0x65 / 0x66 / 0x64 the DSP slots 0..4.
+PanelTag63_ApplyDspSlot:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16307,12 +16318,12 @@ SwbtB2_Code63_Listener:
 	ld	(xsp+0x3), (SWBTWR_PAYLOAD_3)
 	ld	a, (xsp+0x1)
 	cp	a, 24
-	jr	ugt, HdaeRom_ReadParam_Epilogue
+	jr	ugt, PanelTag63_ApplyDspSlot_Epilogue
 	cp	a, 0:i3
-	jr	c, HdaeRom_ReadParam_Epilogue
+	jr	c, PanelTag63_ApplyDspSlot_Epilogue
 	ld	a, (xsp+0x3)
 	and	a, 255
-	jr	z, HdaeRom_ReadParam_Epilogue
+	jr	z, PanelTag63_ApplyDspSlot_Epilogue
 	ld	(xsp+0x1), 0
 	lda	xwa, (xsp)
 	ld	xde, xwa
@@ -16322,10 +16333,14 @@ SwbtB2_Code63_Listener:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-HdaeRom_ReadParam_Epilogue:
+PanelTag63_ApplyDspSlot_Epilogue:
 	inc	4, xsp
 	ret
-HdaeRom_WriteParam:
+; PanelTag64_ApplyDspSlot: SwbtWr listener of panel record 0x64 (DSP slot 4): a change of payload byte 0..24 (event +1) with a
+;   non-zero mask (+3) is applied as a change of byte 0 through SndParam_ApplyEventField [INFERENCE: so the whole
+;   slot is re-sent].  Basis: callers (SwbtB2_Code64_Listeners) + body; floppy/kn5000/panel_fields.py names
+;   records 0x61 / 0x63 / 0x65 / 0x66 / 0x64 the DSP slots 0..4.
+PanelTag64_ApplyDspSlot:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16333,12 +16348,12 @@ HdaeRom_WriteParam:
 	ld	(xsp+0x3), (SWBTWR_PAYLOAD_3)
 	ld	a, (xsp+0x1)
 	cp	a, 24
-	jr	ugt, HdaeRom_WriteParam_Epilogue
+	jr	ugt, PanelTag64_ApplyDspSlot_Epilogue
 	cp	a, 0:i3
-	jr	c, HdaeRom_WriteParam_Epilogue
+	jr	c, PanelTag64_ApplyDspSlot_Epilogue
 	ld	a, (xsp+0x3)
 	and	a, 255
-	jr	z, HdaeRom_WriteParam_Epilogue
+	jr	z, PanelTag64_ApplyDspSlot_Epilogue
 	ld	(xsp+0x1), 0
 	lda	xwa, (xsp)
 	ld	xde, xwa
@@ -16348,10 +16363,14 @@ HdaeRom_WriteParam:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-HdaeRom_WriteParam_Epilogue:
+PanelTag64_ApplyDspSlot_Epilogue:
 	inc	4, xsp
 	ret
-HdaeRom_CheckResult:
+; PanelTag65_ApplyDspSlot: SwbtWr listener of panel record 0x65 (DSP slot 2): a change of payload byte 0..24 (event +1) with a
+;   non-zero mask (+3) is applied as a change of byte 0 through SndParam_ApplyEventField [INFERENCE: so the whole
+;   slot is re-sent].  Basis: callers (SwbtB2_Code65_Listeners) + body; floppy/kn5000/panel_fields.py names
+;   records 0x61 / 0x63 / 0x65 / 0x66 / 0x64 the DSP slots 0..4.
+PanelTag65_ApplyDspSlot:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16359,12 +16378,12 @@ HdaeRom_CheckResult:
 	ld	(xsp+0x3), (SWBTWR_PAYLOAD_3)
 	ld	a, (xsp+0x1)
 	cp	a, 24
-	jr	ugt, HdaeRom_CheckResult_Epilogue
+	jr	ugt, PanelTag65_ApplyDspSlot_Epilogue
 	cp	a, 0:i3
-	jr	c, HdaeRom_CheckResult_Epilogue
+	jr	c, PanelTag65_ApplyDspSlot_Epilogue
 	ld	a, (xsp+0x3)
 	and	a, 255
-	jr	z, HdaeRom_CheckResult_Epilogue
+	jr	z, PanelTag65_ApplyDspSlot_Epilogue
 	ld	(xsp+0x1), 0
 	lda	xwa, (xsp)
 	ld	xde, xwa
@@ -16374,10 +16393,14 @@ HdaeRom_CheckResult:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-HdaeRom_CheckResult_Epilogue:
+PanelTag65_ApplyDspSlot_Epilogue:
 	inc	4, xsp
 	ret
-HdaeRom_FinishBlock:
+; PanelTag66_ApplyDspSlot: SwbtWr listener of panel record 0x66 (DSP slot 3): a change of payload byte 0..24 (event +1) with a
+;   non-zero mask (+3) is applied as a change of byte 0 through SndParam_ApplyEventField [INFERENCE: so the whole
+;   slot is re-sent].  Basis: callers (SwbtB2_Code66_Listeners) + body; floppy/kn5000/panel_fields.py names
+;   records 0x61 / 0x63 / 0x65 / 0x66 / 0x64 the DSP slots 0..4.
+PanelTag66_ApplyDspSlot:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16385,12 +16408,12 @@ HdaeRom_FinishBlock:
 	ld	(xsp+0x3), (SWBTWR_PAYLOAD_3)
 	ld	a, (xsp+0x1)
 	cp	a, 24
-	jr	ugt, HdaeRom_FinishBlock_Epilogue
+	jr	ugt, PanelTag66_ApplyDspSlot_Epilogue
 	cp	a, 0:i3
-	jr	c, HdaeRom_FinishBlock_Epilogue
+	jr	c, PanelTag66_ApplyDspSlot_Epilogue
 	ld	a, (xsp+0x3)
 	and	a, 255
-	jr	z, HdaeRom_FinishBlock_Epilogue
+	jr	z, PanelTag66_ApplyDspSlot_Epilogue
 	ld	(xsp+0x1), 0
 	lda	xwa, (xsp)
 	ld	xde, xwa
@@ -16400,18 +16423,20 @@ HdaeRom_FinishBlock:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-HdaeRom_FinishBlock_Epilogue:
+PanelTag66_ApplyDspSlot_Epilogue:
 	inc	4, xsp
 	ret
-HdaeRom_TableEntry0:
+SwbtB2_Code68_NopListener:
 	ret
 SwbtB2_Code69_NopListener:
 	ret
-HdaeRom_TableEntry1:
+SwbtB2_Code6A_NopListener:
 	ret
 SwbtB2_Code6B_NopListener:
 	ret
-HdaeRom_TableEntry2:
+; PanelTag72_ApplyPartMix: SwbtWr listener of panel record 0x72: +3 is sent to parts 0x17 and 0x18 as CC 7 (volume; 0
+;   when bit 7 is set), +7 as CC 91 (reverb send). Basis: callers + body; nothing to do with the HDAE ROM.
+PanelTag72_ApplyPartMix:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16424,7 +16449,7 @@ HdaeRom_TableEntry2:
 	cp	wa, 7:i3
 	jrl	gt, PanelTag72_ApplyPartMix_ReverbSend_Epilogue
 	add	wa, wa
-	lda	xix, (HdaeRomEntry2_SwitchOffsets:24)
+	lda	xix, (PanelTag72_ApplyPartMix_SwitchOffsets:24)
 	ld	wa, (xix+wa)
 	lda	xix, (PanelTag72_ApplyPartMix_Volume:24)
 	jp	t, (xix+wa)
@@ -16479,7 +16504,7 @@ PanelTag72_ApplyPartMix_ReverbSend_Epilogue:
 	inc	4, xsp
 	ret
 	ret
-HdaeRom_AltEntry:
+SwbtB2_Code80_NopListener:
 	ret
 UIStateEvt_ProcessHandler:
 	dec	4, xsp
@@ -16535,7 +16560,9 @@ UIStateEvt_ProcessHandler_Skip2:
 UIStateEvt_ProcessHandler_Epilogue:
 	inc	4, xsp
 	ret
-HdaeRom_AltProcessBlock:
+; PanelTag92_ApplyFields: SwbtWr listener of panel record 0x92: byte 0 (all bits), byte 1 bits 0-3 and bit 7 (two calls) and bytes
+;   2..13 (all bits) go to SndParam_ApplyEventField.  Basis: callers (SwbtB2_Code92_Listeners) + body.
+PanelTag92_ApplyFields:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16543,42 +16570,44 @@ HdaeRom_AltProcessBlock:
 	ld	(xsp+0x3), (SWBTWR_PAYLOAD_3)
 	ld	a, (xsp+0x1)
 	cp	a, 13
-	jr	ugt, HdaeRom_AltProcessBlock_Epilogue
+	jr	ugt, PanelTag92_ApplyFields_Epilogue
 	cp	a, 2:i3
-	jr	nc, HdaeRom_AltProcessBlock_Skip3
+	jr	nc, PanelTag92_ApplyFields_Skip3
 	cp	a, 0:i3
-	jr	z, HdaeRom_AltProcessBlock_Skip
+	jr	z, PanelTag92_ApplyFields_Skip
 	cp	a, 1:i3
-	jr	z, HdaeRom_AltProcessBlock_Skip2
-	jr	HdaeRom_AltProcessBlock_Epilogue
-HdaeRom_AltProcessBlock_Skip:
+	jr	z, PanelTag92_ApplyFields_Skip2
+	jr	PanelTag92_ApplyFields_Epilogue
+PanelTag92_ApplyFields_Skip:
 	lda	xwa, (xsp)
 	ldw	bc, 255
 	calr	SndParam_ApplyEventField
-	jr	HdaeRom_AltProcessBlock_Epilogue
-HdaeRom_AltProcessBlock_Skip2:
+	jr	PanelTag92_ApplyFields_Epilogue
+PanelTag92_ApplyFields_Skip2:
 	ld	a, (xsp+0x3)
 	and	a, 15
-	jr	z, HdaeRom_AltProcessBlock_Join
+	jr	z, PanelTag92_ApplyFields_Join
 	lda	xwa, (xsp)
 	ldw	bc, 15
 	calr	SndParam_ApplyEventField
-HdaeRom_AltProcessBlock_Join:
+PanelTag92_ApplyFields_Join:
 	bitm	7, (xsp+0x3)
-	jr	z, HdaeRom_AltProcessBlock_Epilogue
+	jr	z, PanelTag92_ApplyFields_Epilogue
 	lda	xwa, (xsp)
 	ldw	bc, 128
 	calr	SndParam_ApplyEventField
-	jr	HdaeRom_AltProcessBlock_Epilogue
-HdaeRom_AltProcessBlock_Skip3:
+	jr	PanelTag92_ApplyFields_Epilogue
+PanelTag92_ApplyFields_Skip3:
 	lda	xwa, (xsp)
 	ldw	bc, 255
 	calr	SndParam_ApplyEventField
-HdaeRom_AltProcessBlock_Epilogue:
+PanelTag92_ApplyFields_Epilogue:
 	inc	4, xsp
 	ret
 	ret
-HdaeRom_AltReadParam:
+; PanelTag70_ApplyFields: SwbtWr listener of panel record 0x70: payload byte 0 bit 2 and byte 2 (all bits) go to
+;   SndParam_ApplyEventField; bytes 1, 3 and 4 are ignored.  Basis: callers (SwbtB2_Code70_Listeners) + body.
+PanelTag70_ApplyFields:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16586,17 +16615,17 @@ HdaeRom_AltReadParam:
 	ld	(xsp+0x3), (SWBTWR_PAYLOAD_3)
 	ld	a, (xsp+0x1)
 	cp	a, 4:i3
-	jr	z, HdaeRom_AltReadParam_Epilogue
+	jr	z, PanelTag70_ApplyFields_Epilogue
 	cp	a, 3:i3
-	jr	z, HdaeRom_AltReadParam_Epilogue
+	jr	z, PanelTag70_ApplyFields_Epilogue
 	cp	a, 2:i3
-	jr	z, HdaeRom_AltReadParam_Skip
+	jr	z, PanelTag70_ApplyFields_Skip
 	cp	a, 1:i3
-	jr	z, HdaeRom_AltReadParam_Epilogue
+	jr	z, PanelTag70_ApplyFields_Epilogue
 	cp	a, 0:i3
-	jr	nz, HdaeRom_AltReadParam_Epilogue
+	jr	nz, PanelTag70_ApplyFields_Epilogue
 	bitm	2, (xsp+0x3)
-	jr	z, HdaeRom_AltReadParam_Epilogue
+	jr	z, PanelTag70_ApplyFields_Epilogue
 	lda	xwa, (xsp)
 	ld	xde, xwa
 	ld	a, (xsp+0x3)
@@ -16605,11 +16634,11 @@ HdaeRom_AltReadParam:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-	jr	HdaeRom_AltReadParam_Epilogue
-HdaeRom_AltReadParam_Skip:
+	jr	PanelTag70_ApplyFields_Epilogue
+PanelTag70_ApplyFields_Skip:
 	ld	a, (xsp+0x3)
 	and	a, 255
-	jr	z, HdaeRom_AltReadParam_Epilogue
+	jr	z, PanelTag70_ApplyFields_Epilogue
 	lda	xwa, (xsp)
 	ld	xde, xwa
 	ld	a, (xsp+0x3)
@@ -16618,10 +16647,13 @@ HdaeRom_AltReadParam_Skip:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-HdaeRom_AltReadParam_Epilogue:
+PanelTag70_ApplyFields_Epilogue:
 	inc	4, xsp
 	ret
-HdaeRom_AltCheckResult:
+; PanelTag98_ApplyFieldsAndVolume: SwbtWr listener of panel record 0x98: byte 2 bit 7 goes to SndParam_ApplyEventField; byte 4 is sent to part
+;   25 as CC 7 (volume; 0 when its bit 7 is set); bytes 1 and 3 are ignored.  Basis: callers
+;   (SwbtB2_Code98_Listeners) + body.
+PanelTag98_ApplyFieldsAndVolume:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16629,17 +16661,17 @@ HdaeRom_AltCheckResult:
 	ld	(xsp+0x3), (SWBTWR_PAYLOAD_3)
 	ld	a, (xsp+0x1)
 	cp	a, 4:i3
-	jr	z, HdaeRom_AltCheckResult_Skip3
+	jr	z, PanelTag98_ApplyFieldsAndVolume_Skip3
 	cp	a, 3:i3
-	jr	z, HdaeRom_AltCheckResult_Epilogue
+	jr	z, PanelTag98_ApplyFieldsAndVolume_Epilogue
 	cp	a, 2:i3
-	jr	z, HdaeRom_AltCheckResult_Skip2
+	jr	z, PanelTag98_ApplyFieldsAndVolume_Skip2
 	cp	a, 1:i3
-	jr	z, HdaeRom_AltCheckResult_Epilogue
-	jr	HdaeRom_AltCheckResult_Epilogue
-HdaeRom_AltCheckResult_Skip2:
+	jr	z, PanelTag98_ApplyFieldsAndVolume_Epilogue
+	jr	PanelTag98_ApplyFieldsAndVolume_Epilogue
+PanelTag98_ApplyFieldsAndVolume_Skip2:
 	bitm	7, (xsp+0x3)
-	jr	z, HdaeRom_AltCheckResult_Epilogue
+	jr	z, PanelTag98_ApplyFieldsAndVolume_Epilogue
 	lda	xwa, (xsp)
 	ld	xde, xwa
 	ld	a, (xsp+0x3)
@@ -16648,18 +16680,18 @@ HdaeRom_AltCheckResult_Skip2:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-	jr	HdaeRom_AltCheckResult_Epilogue
-HdaeRom_AltCheckResult_Skip3:
+	jr	PanelTag98_ApplyFieldsAndVolume_Epilogue
+PanelTag98_ApplyFieldsAndVolume_Skip3:
 	ld	a, (xsp+0x3)
 	and	a, 255
-	jr	z, HdaeRom_AltCheckResult_Epilogue
+	jr	z, PanelTag98_ApplyFieldsAndVolume_Epilogue
 	lda	xbc, (xsp+0x2)
 	ld	a, 0:opc
 	bitm	7, (xsp+0x2)
-	jr	nz, HdaeRom_AltCheckResult_Skip4
+	jr	nz, PanelTag98_ApplyFieldsAndVolume_Skip4
 	ld	a, (xsp+0x2)
 	res	7, a
-HdaeRom_AltCheckResult_Skip4:
+PanelTag98_ApplyFieldsAndVolume_Skip4:
 	ld	(xbc), a
 	ld	a, (xsp+0x2)
 	extz	wa
@@ -16667,7 +16699,7 @@ HdaeRom_AltCheckResult_Skip4:
 	ldw	wa, 25
 	ld	bc, 7:i3
 	calr	MIDI_SendControlChange
-HdaeRom_AltCheckResult_Epilogue:
+PanelTag98_ApplyFieldsAndVolume_Epilogue:
 	inc	4, xsp
 	ret
 SwbtB2_Code9A_Listener:
@@ -16711,7 +16743,10 @@ SwbtB2_Code9A_Listener_Skip:
 SwbtB2_Code9A_Listener_Epilogue2:
 	inc	4, xsp
 	ret
-HdaeRom_AltTableEntry0:
+; PanelTagAE_ApplyFields: SwbtWr listener of panel record 0xAE: every changed payload byte, bit 7 cleared, goes to
+;   SndParam_ApplyEventField.  PanelTagB1 / B2 / B4 / B5_ApplyFields do the same for 0xB1, 0xB2, 0xB4, 0xB5.
+;   Basis: callers (SwbtB2_CodeAE_Listeners ..) + body.
+PanelTagAE_ApplyFields:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16727,7 +16762,9 @@ HdaeRom_AltTableEntry0:
 	calr	SndParam_ApplyEventField
 	inc	4, xsp
 	ret
-HdaeRom_AltTableEntry1:
+; PanelTagB0_ApplyFields: SwbtWr listener of panel record 0xB0: bytes 0, 1 and 3 (all bits) go to SndParam_ApplyEventField.  Basis:
+;   callers (SwbtB2_CodeB0_Listeners) + body.
+PanelTagB0_ApplyFields:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16735,11 +16772,11 @@ HdaeRom_AltTableEntry1:
 	ld	(xsp+0x3), (SWBTWR_PAYLOAD_3)
 	ld	a, (xsp+0x1)
 	cp	a, 3:i3
-	jr	z, HdaeRom_AltTableEntry1_Skip2
+	jr	z, PanelTagB0_ApplyFields_Skip2
 	cp	a, 1:i3
-	jr	z, HdaeRom_AltTableEntry1_Skip
+	jr	z, PanelTagB0_ApplyFields_Skip
 	cp	a, 0:i3
-	jr	nz, HdaeRom_AltTableEntry1_Epilogue
+	jr	nz, PanelTagB0_ApplyFields_Epilogue
 	lda	xwa, (xsp)
 	ld	xde, xwa
 	ld	a, (xsp+0x3)
@@ -16747,8 +16784,8 @@ HdaeRom_AltTableEntry1:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-	jr	HdaeRom_AltTableEntry1_Epilogue
-HdaeRom_AltTableEntry1_Skip:
+	jr	PanelTagB0_ApplyFields_Epilogue
+PanelTagB0_ApplyFields_Skip:
 	lda	xwa, (xsp)
 	ld	xde, xwa
 	ld	a, (xsp+0x3)
@@ -16756,8 +16793,8 @@ HdaeRom_AltTableEntry1_Skip:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-	jr	HdaeRom_AltTableEntry1_Epilogue
-HdaeRom_AltTableEntry1_Skip2:
+	jr	PanelTagB0_ApplyFields_Epilogue
+PanelTagB0_ApplyFields_Skip2:
 	lda	xwa, (xsp)
 	ld	xde, xwa
 	ld	a, (xsp+0x3)
@@ -16765,10 +16802,10 @@ HdaeRom_AltTableEntry1_Skip2:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-HdaeRom_AltTableEntry1_Epilogue:
+PanelTagB0_ApplyFields_Epilogue:
 	inc	4, xsp
 	ret
-HdaeRom_AltTableEntry2:
+PanelTagB1_ApplyFields:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16784,7 +16821,7 @@ HdaeRom_AltTableEntry2:
 	calr	SndParam_ApplyEventField
 	inc	4, xsp
 	ret
-HdaeRom_AltTableEntry3:
+PanelTagB2_ApplyFields:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16800,17 +16837,19 @@ HdaeRom_AltTableEntry3:
 	calr	SndParam_ApplyEventField
 	inc	4, xsp
 	ret
-HdaeRom_AltTableEntry4:
+; PanelTagB3_ApplyFields: SwbtWr listener of panel record 0xB3: every changed payload byte except 16..20, bit 7 cleared, goes to
+;   SndParam_ApplyEventField.  Basis: callers (SwbtB2_CodeB3_Listeners) + body.
+PanelTagB3_ApplyFields:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
 	ld	(xsp+0x2), (SWBTWR_PAYLOAD_2)
 	ld	(xsp+0x3), (SWBTWR_PAYLOAD_3)
 	cp	(xsp+0x1), 16
-	jr	c, HdaeRom_AltTableEntry4_Skip
+	jr	c, PanelTagB3_ApplyFields_Skip
 	cp	(xsp+0x1), 20
-	jr	ule, HdaeRom_AltTableEntry4_Epilogue
-HdaeRom_AltTableEntry4_Skip:
+	jr	ule, PanelTagB3_ApplyFields_Epilogue
+PanelTagB3_ApplyFields_Skip:
 	lda	xwa, (xsp)
 	ld	xde, xwa
 	ld	a, (xsp+0x3)
@@ -16819,10 +16858,10 @@ HdaeRom_AltTableEntry4_Skip:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-HdaeRom_AltTableEntry4_Epilogue:
+PanelTagB3_ApplyFields_Epilogue:
 	inc	4, xsp
 	ret
-HdaeRom_AltTableEntry5:
+PanelTagB4_ApplyFields:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16838,7 +16877,7 @@ HdaeRom_AltTableEntry5:
 	calr	SndParam_ApplyEventField
 	inc	4, xsp
 	ret
-HdaeRom_AltTableEntry6:
+PanelTagB5_ApplyFields:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16854,11 +16893,13 @@ HdaeRom_AltTableEntry6:
 	calr	SndParam_ApplyEventField
 	inc	4, xsp
 	ret
-HdaeRom_AltTableEntry7:
+SwbtB2_CodeB6_NopListener:
 	ret
-HdaeRom_AltTableEntry8:
+SwbtB2_CodeB7_NopListener:
 	ret
-HdaeRom_AltTableEntry9:
+; PanelTag43_ApplyFields: SwbtWr listener of panel record 0x43: byte 0 bit 7, and byte 1 bits 0-6 and bit 7 (two calls), go to
+;   SndParam_ApplyEventField.  Basis: callers (SwbtB2_Code43_Listeners) + body.
+PanelTag43_ApplyFields:
 	dec	4, xsp
 	ld	(xsp+0:8), (SWBTWR_EVENT_TYPE)
 	ld	(xsp+0x1), (SWBTWR_PAYLOAD_1)
@@ -16866,11 +16907,11 @@ HdaeRom_AltTableEntry9:
 	ld	(xsp+0x3), (SWBTWR_PAYLOAD_3)
 	ld	a, (xsp+0x1)
 	cp	a, 1:i3
-	jr	z, HdaeRom_AltTableEntry9_Skip2
+	jr	z, PanelTag43_ApplyFields_Skip2
 	cp	a, 0:i3
-	jr	nz, HdaeRom_AltTableEntry9_Epilogue
+	jr	nz, PanelTag43_ApplyFields_Epilogue
 	bitm	7, (xsp+0x3)
-	jr	z, HdaeRom_AltTableEntry9_Epilogue
+	jr	z, PanelTag43_ApplyFields_Epilogue
 	lda	xwa, (xsp)
 	ld	xde, xwa
 	ld	a, (xsp+0x3)
@@ -16879,12 +16920,12 @@ HdaeRom_AltTableEntry9:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-	jr	HdaeRom_AltTableEntry9_Epilogue
-HdaeRom_AltTableEntry9_Skip2:
+	jr	PanelTag43_ApplyFields_Epilogue
+PanelTag43_ApplyFields_Skip2:
 	ld	a, (xsp+0x3)
 	res	7, a
 	cp	a, 0:i3
-	jr	z, HdaeRom_AltTableEntry9_Join
+	jr	z, PanelTag43_ApplyFields_Join
 	lda	xwa, (xsp)
 	ld	xde, xwa
 	ld	a, (xsp+0x3)
@@ -16893,9 +16934,9 @@ HdaeRom_AltTableEntry9_Skip2:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-HdaeRom_AltTableEntry9_Join:
+PanelTag43_ApplyFields_Join:
 	bitm	7, (xsp+0x3)
-	jr	z, HdaeRom_AltTableEntry9_Epilogue
+	jr	z, PanelTag43_ApplyFields_Epilogue
 	lda	xwa, (xsp)
 	ld	xde, xwa
 	ld	a, (xsp+0x3)
@@ -16904,7 +16945,7 @@ HdaeRom_AltTableEntry9_Join:
 	extz	bc
 	ld	xwa, xde
 	calr	SndParam_ApplyEventField
-HdaeRom_AltTableEntry9_Epilogue:
+PanelTag43_ApplyFields_Epilogue:
 	inc	4, xsp
 	ret
 ; SndParam_ApplyEventField: Applies the 4-byte event at XWA with its byte 3 temporarily set to C:
@@ -24648,50 +24689,62 @@ SendPartDataBlock_SetWord4:
 	ldw	hl, 0xffff
 SendPartDataBlock_Return3:
 	ret
-SendPartDataBlock_SetWord5:
+; SoundRam_ComputeChecksum: HL = the complemented 16-bit sum of the 0x24B8 words from 0x1E0010, the checksum SoundRam_WriteChecksum
+;   stores at 0x1E72A8.  Basis: body.
+SoundRam_ComputeChecksum:
 	ldw	bc, 0x24b8
 	lda	xwa, (0x1e0010:24)
 	ld	de, 0:i3
-SendPartDataBlock_Block10:
+SoundRam_ComputeChecksum_Loop:
 	add	DE, (xwa+)
-	djnz16	bc, SendPartDataBlock_Block10
+	djnz16	bc, SoundRam_ComputeChecksum_Loop
 	cpl	de
 	ld	hl, de
 	ret
-SendPartDataBlock_ClearByte4:
+; SoundRam_InitPhase0_SendImage: Init phase 0 of the sound-RAM subsystem (slot 0 of SoundRam_InitFuncTable): when the 16-byte id at 0x1E0000
+;   is SoundRam_Id_KN5000 and SoundRam_ComputeChecksum equals the word at 0x1E72A8, bulk-transfers the 0x72AA-byte
+;   image to sub-CPU 0x7800 (InterCPU_E1_Bulk_Transfer); otherwise sends COMM_BuildAndSendPacket(0xFF, 0xFF)
+;   [INFERENCE: "no user sound image"].  Basis: body.
+SoundRam_InitPhase0_SendImage:
 	ld	w, 0x0:opc
 	lda	xde, (0x1e0000:24)
 	lda	xhl, (SoundRam_Id_KN5000:24)
-SendPartDataBlock_LoadReg:
+SoundRam_InitPhase0_SendImage_IdLoop:
 	ld	c, w
 	extz	bc
 	ld	a, (xhl+bc)
 	cp	a, (xde+bc)
-	jr	nz, SendPartDataBlock_Compare
+	jr	nz, SoundRam_InitPhase0_SendImage_IdDone
 	inc	1, w
 	cp	w, 0x10
-	jr	c, SendPartDataBlock_LoadReg
-SendPartDataBlock_Compare:
+	jr	c, SoundRam_InitPhase0_SendImage_IdLoop
+SoundRam_InitPhase0_SendImage_IdDone:
 	cp	w, 0x10
-	jr	nz, SendPartDataBlock_SetWord6
-	calr	SendPartDataBlock_SetWord5
+	jr	nz, SoundRam_InitPhase0_SendImage_NoImage
+	calr	SoundRam_ComputeChecksum
 	lda	xwa, (0x1e0000:24)
 	cp	(xwa+29352), hl
-	jr	nz, SendPartDataBlock_SetWord6
+	jr	nz, SoundRam_InitPhase0_SendImage_NoImage
 	ldw	bc, 0x72aa
 	ld	xde, 0x7800
 	jp	InterCPU_E1_Bulk_Transfer
-SendPartDataBlock_SetWord6:
+SoundRam_InitPhase0_SendImage_NoImage:
 	ldw	wa, 0xff
 	ldw	bc, 0xff
 	jp	COMM_BuildAndSendPacket
-SendPartDataBlock_Return4:
+SoundRam_InitPhase1_Nop:
 	ret
-SendPartDataBlock_DoGetError:
+; SoundRam_InitPhase2_ResetIfRamLost: Init phase 2 (slot 2 of SoundRam_InitFuncTable): when the backup-RAM status byte 0x1E53E
+;   (SubCPU_Payload_GetErrorFlag) is 0xFF -- set by SubCPU_Payload_Verify when the RAM checksums fail, and by
+;   MainSysControl (SubCPU_PayloadErrorStore) before every INITIAL SETTING case -- sends
+;   COMM_BuildAndSendPacket(0xFF, 0xFF), the packet SoundRam_InitPhase0_SendImage sends when there is no valid
+;   image.  Basis: callers + body -- MainSysControl's case 8 SOUND MEMORY (MainSysCtrl_OnInitSoundMemory) and
+;   the MIDI transfer recovery of the sound-RAM groups call it directly.
+SoundRam_InitPhase2_ResetIfRamLost:
 	ldw	wa, 0xff
 	ldw	bc, 0xff
 	.byte 0x1b, 0x86, 0xec, 0xfe
-SendPartDataBlock_Return5:
+SoundRam_InitPhase3_Nop:
 	ret
 ; SoundRam_ConvertKn1500Record: Converts one KN1500 sound-RAM record (the 289-byte copy at XBC) into a 470-byte KN5000
 ;   record at XWA: fills it with defaults (SoundRam_DefaultRecord) and moves the fields to their KN5000 offsets.
@@ -24931,7 +24984,7 @@ SoundRam_ConvertSounds_Helper_Skip2:
 	ldfr_berp	c, 240
 	srl	c, 4
 	extz	bc
-	lda	xhl, (HdaeRom_DataByteMap:24)
+	lda	xhl, (SoundRam_ConvertNibbleMap:24)
 	ld	c, (xhl+bc)
 	ldfr_berp	c, 240
 	ldto_berp	d, 240

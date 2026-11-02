@@ -6477,7 +6477,7 @@ SwbtB2_Code42_Listeners:	.long 0xffffffff
 ; code 0x43: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code43_Listeners:
 	.long UIState_KeyScan_Dispatch
-	.long HdaeRom_AltTableEntry9
+	.long PanelTag43_ApplyFields
 	.long 0xffffffff
 ; code 0x44: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code44_Listeners:
@@ -6516,45 +6516,45 @@ SwbtB2_Code53_Listeners:	.long 0xffffffff
 SwbtB2_Code54_Listeners:	.long 0xffffffff
 ; code 0x60: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code60_Listeners:
-	.long HdaeRom_Entry
+	.long PanelTag60_ApplyEffectOnOff
 	.long UIState_ProcessSimpleMode
 	.long UIState_KeyScan_Dispatch
 	.long 0xffffffff
 ; code 0x61: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code61_Listeners:
-	.long HdaeRom_ProcessBlock
+	.long PanelTag61_ApplyDspSlot
 	.long UIState_KeyScan_Dispatch
 	.long EffEdit_DSPConfigBlock
 	.long 0xffffffff
 ; code 0x62: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code62_Listeners:
-	.long HdaeRom_ReadParam
+	.long SwbtB2_Code62_NopListener
 	.long UIState_KeyScan_Dispatch
 	.long 0xffffffff
 ; code 0x63: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code63_Listeners:
-	.long SwbtB2_Code63_Listener
+	.long PanelTag63_ApplyDspSlot
 	.long UIState_KeyScan_Dispatch
 	.long EffEdit_DSPConfigBlock
 	.long 0xffffffff
 ; code 0x64: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code64_Listeners:
 	.long EffEdit_DSPConfigBlock
-	.long HdaeRom_WriteParam
+	.long PanelTag64_ApplyDspSlot
 	.long 0xffffffff
 ; code 0x65: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code65_Listeners:
 	.long EffEdit_DSPConfigBlock
-	.long HdaeRom_CheckResult
+	.long PanelTag65_ApplyDspSlot
 	.long 0xffffffff
 ; code 0x66: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code66_Listeners:
 	.long EffEdit_DSPConfigBlock
-	.long HdaeRom_FinishBlock
+	.long PanelTag66_ApplyDspSlot
 	.long 0xffffffff
 ; code 0x68: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code68_Listeners:
-	.long HdaeRom_TableEntry0
+	.long SwbtB2_Code68_NopListener
 	.long UIState_KeyScan_Dispatch
 	.long 0xffffffff
 ; code 0x69: callbacks SwbtWr_DispatchLoop calls for it
@@ -6564,7 +6564,7 @@ SwbtB2_Code69_Listeners:
 	.long 0xffffffff
 ; code 0x6A: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code6A_Listeners:
-	.long HdaeRom_TableEntry1
+	.long SwbtB2_Code6A_NopListener
 	.long UIState_KeyScan_Dispatch
 	.long 0xffffffff
 ; code 0x6B: callbacks SwbtWr_DispatchLoop calls for it
@@ -6578,7 +6578,7 @@ SwbtB2_Code6E_Listeners:	.long 0xffffffff
 ; code 0x70: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code70_Listeners:
 	.long UIState_NullReturn
-	.long HdaeRom_AltReadParam
+	.long PanelTag70_ApplyFields
 	.long UIStateEvt_EffectSelect_Data
 	.long UIState_KeyScan_Dispatch
 	.long Fade_ParamListener
@@ -6590,7 +6590,7 @@ SwbtB2_Code71_Listeners:
 	.long 0xffffffff
 ; code 0x72: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code72_Listeners:
-	.long HdaeRom_TableEntry2
+	.long PanelTag72_ApplyPartMix
 	.long UIState_KeyScan_Dispatch
 	.long 0xffffffff
 SwbtB2_Code78_Listeners:	.long 0xffffffff
@@ -6598,7 +6598,7 @@ SwbtB2_Code79_Listeners:	.long 0xffffffff
 SwbtB2_Code7A_Listeners:	.long 0xffffffff
 ; code 0x80: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code80_Listeners:
-	.long HdaeRom_AltEntry
+	.long SwbtB2_Code80_NopListener
 	.long UIStateEvt_ChannelConfig_Data
 	.long UIWidget_MidiStreamControl
 	.long UIState_KeyScan_Dispatch
@@ -6624,7 +6624,7 @@ SwbtB2_Code91_Listeners:
 	.long 0xffffffff
 ; code 0x92: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code92_Listeners:
-	.long HdaeRom_AltProcessBlock
+	.long PanelTag92_ApplyFields
 	.long UIState_KeyScan_Dispatch
 	.long 0xffffffff
 ; code 0x93: callbacks SwbtWr_DispatchLoop calls for it
@@ -6639,7 +6639,7 @@ SwbtB2_Code98_Listeners:
 	.long UIState_ProcessAltMode
 	.long UIStateEvt_PlayModeGuard_Data
 	.long AccWrap_ReplayStopAlt
-	.long HdaeRom_AltCheckResult
+	.long PanelTag98_ApplyFieldsAndVolume
 	.long BitMapOut_ByteData_DisplayUpdate
 	.long MidiOut_RealtimeDispatch_Handler
 	.long UIState_KeyScan_Dispatch
@@ -6678,39 +6678,39 @@ SwbtB2_CodeAC_Listeners:	.long 0xffffffff
 SwbtB2_CodeAD_Listeners:	.long 0xffffffff
 ; code 0xAE: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_CodeAE_Listeners:
-	.long HdaeRom_AltTableEntry0
+	.long PanelTagAE_ApplyFields
 	.long 0xffffffff
 ; code 0xB0: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_CodeB0_Listeners:
-	.long HdaeRom_AltTableEntry1
+	.long PanelTagB0_ApplyFields
 	.long 0xffffffff
 ; code 0xB1: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_CodeB1_Listeners:
-	.long HdaeRom_AltTableEntry2
+	.long PanelTagB1_ApplyFields
 	.long 0xffffffff
 ; code 0xB2: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_CodeB2_Listeners:
-	.long HdaeRom_AltTableEntry3
+	.long PanelTagB2_ApplyFields
 	.long 0xffffffff
 ; code 0xB3: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_CodeB3_Listeners:
-	.long HdaeRom_AltTableEntry4
+	.long PanelTagB3_ApplyFields
 	.long 0xffffffff
 ; code 0xB4: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_CodeB4_Listeners:
-	.long HdaeRom_AltTableEntry5
+	.long PanelTagB4_ApplyFields
 	.long 0xffffffff
 ; code 0xB5: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_CodeB5_Listeners:
-	.long HdaeRom_AltTableEntry6
+	.long PanelTagB5_ApplyFields
 	.long 0xffffffff
 ; code 0xB6: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_CodeB6_Listeners:
-	.long HdaeRom_AltTableEntry7
+	.long SwbtB2_CodeB6_NopListener
 	.long 0xffffffff
 ; code 0xB7: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_CodeB7_Listeners:
-	.long HdaeRom_AltTableEntry8
+	.long SwbtB2_CodeB7_NopListener
 	.long 0xffffffff
 SwbtB2_CodeB8_Listeners:	.long 0xffffffff
 SwbtB2_CodeB9_Listeners:	.long 0xffffffff
@@ -7355,7 +7355,7 @@ AudioInit_ChannelMapB:
 	.byte 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
 ; 20 x u8 slot map (0,2,1,7,8,9,10,11,4,5,6,3,15,0x15,0x15,0xFF,0x15,12,13,14).
 ; Read with `ld a, (xix+wa)` at 18 sites: AudioInit_NoTypeE_CheckD + 26 (0xFDECF2),
-; AudioInit_CheckGroupA/B, AudioInit_GroupA/B_* and HdaeRom_AltCheckResult.
+; AudioInit_CheckGroupA/B, AudioInit_GroupA/B_* and PanelTag98_ApplyFieldsAndVolume.
 AudioInit_SlotOrderMap:
 	.byte 0x00, 0x02, 0x01, 0x07, 0x08, 0x09, 0x0a, 0x0b
 	.byte 0x04, 0x05, 0x06, 0x03, 0x0f, 0x15, 0x15, 0xff
@@ -8548,9 +8548,9 @@ KeyEvent_SwitchOffsets:
 	.short	UIState_ProcessKeyEvent_Case10 - UIState_ProcessKeyEvent_OnVoiceSelect
 	.short	UIState_ProcessKeyEvent_Case11 - UIState_ProcessKeyEvent_OnVoiceSelect
 	.short	UIState_ProcessKeyEvent_Case12 - UIState_ProcessKeyEvent_OnVoiceSelect
-; 8 x s16 switch offsets.  HdaeRom_TableEntry2 (0xFEA40A): `ld_rrw wa,xix,wa;
+; 8 x s16 switch offsets.  PanelTag72_ApplyPartMix (0xFEA40A): `ld_rrw wa,xix,wa;
 ; lda xix,(0xFEAC14); jp_rr 8,xix,wa` -- targets 0xFEAC14 + offset (no labels yet).
-HdaeRomEntry2_SwitchOffsets:
+PanelTag72_ApplyPartMix_SwitchOffsets:
 	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
 	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
 	.short	PanelTag72_ApplyPartMix_ReverbSend_Epilogue - PanelTag72_ApplyPartMix_Volume
@@ -9464,7 +9464,7 @@ SoundRam_Id_KN3000:
 ; loads it (`lda_24 xhl,(<this>)`) and compares/copies it byte by byte.
 SoundRam_Id_KN1500:
 	.asciz "KN1500 SOUND RAM"
-; Sound-RAM data identifier "KN5000 SOUND RAM": SendPartDataBlock_ClearByte4 (0xFEF181)
+; Sound-RAM data identifier "KN5000 SOUND RAM": SoundRam_InitPhase0_SendImage (0xFEF181)
 ; loads it (`lda_24 xhl,(<this>)`) and compares/copies it byte by byte.
 SoundRam_Id_KN5000:
 	.asciz "KN5000 SOUND RAM"
@@ -9472,15 +9472,16 @@ SoundRam_Id_KN5000:
 ; calls one entry of it with every subsystem's table).
 ; SoundRam_InitFuncTable: Init-phase handler table of this subsystem (4 x u32, slots = init phases 0-3). Basis:
 ;   readers + bytes -- entry 16 of Subsys_HandlerTableList, which ScreenGroup_Dispatch walks calling slot WA (init
-;   phase 0-3) of every table; slot 0 is SendPartDataBlock_ClearByte4.
+;   phase 0-3) of every table; slot 0 is SoundRam_InitPhase0_SendImage.
 SoundRam_InitFuncTable:
-	.long SendPartDataBlock_ClearByte4
-	.long SendPartDataBlock_Return4
-	.long SendPartDataBlock_DoGetError
-	.long SendPartDataBlock_Return5
-; 16 x u8.  SoundRam_ConvertSounds_Helper (0xFEF44E): `lda xhl,(<this>);
-; ld_rrb c,xhl,bc`.
-HdaeRom_DataByteMap:
+	.long SoundRam_InitPhase0_SendImage
+	.long SoundRam_InitPhase1_Nop
+	.long SoundRam_InitPhase2_ResetIfRamLost
+	.long SoundRam_InitPhase3_Nop
+; SoundRam_ConvertNibbleMap: 16 x u8: maps a 4-bit field of an older model's sound record to a 2-bit code (1 1 1 1 1 1 0 0 / 1 2 3 1 1
+;   1 1 1); SoundRam_ConvertSounds_Helper looks up the high nibbles of record bytes +18 and +19 and the low
+;   nibble of +19 in it and packs the three codes into byte +17.  Basis: reader + bytes.
+SoundRam_ConvertNibbleMap:
 	.byte 1, 1, 1, 1, 1, 1, 0, 0
 	.byte 1, 2, 3, 1, 1, 1, 1, 1
 ; 426-byte default record (213 words) beginning with the 16-character name

@@ -2254,7 +2254,7 @@ AccompSeq_InitBankIfNoError:
 	call SubCPU_Payload_GetErrorFlag
 	cp hl, 0xffff
 	jr nz, AccompSeq_InitBankDone
-	call Voice_InitBankData
+	call MspUser_InitFromFactory
 
 AccompSeq_InitBankDone:
 	ret

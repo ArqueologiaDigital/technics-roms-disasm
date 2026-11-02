@@ -12557,7 +12557,7 @@ MidiSysEx_ProcessBlock_Helper5:
 ;   RAM transfer (the abort path sends it too). What the receiver does with it is not identified; the callee's name
 ;   does not describe it. Basis: callers + body -- MidiSysEx_FinishSoundRamXfer calls it when the sound-RAM group (bit
 ;   6 of 0xBD1A) was received; the group's abort handler SeqChan_UnhandledCmd_Join2 sends the same packet after
-;   SendPartDataBlock_DoGetError.
+;   SoundRam_InitPhase2_ResetIfRamLost.
 MidiSysEx_SendSoundRamEndCmd:
 	push	xde
 	push	xhl
@@ -12677,9 +12677,9 @@ SeqChan_UnhandledCmd_0x12:
 ; MidiSysEx_RecoverAbortedXferGroup: After a failed or aborted MIDI data transfer, runs the recovery for the data
 ;   group that the spare message's state byte (+3, 0..21) belongs to, through MidiSysEx_BlockHandlers. States 1-3
 ;   (panel): Audio_ResetAfterPayloadError, MidiMsg_ParseChannelStream, SeqTimer_UpdateTempoReg. States 4-6 (sound
-;   RAM): SendPartDataBlock_DoGetError and MIDI_SendAllVoicesPitchUpdate. States 7-10 (style image): AccDemo_InitDone.
+;   RAM): SoundRam_InitPhase2_ResetIfRamLost and MIDI_SendAllVoicesPitchUpdate. States 7-10 (style image): Composer_ResetStyleImage.
 ;   States 11-14 (sequencer): MidiSysEx_ProcessBlock_PtrTable[0]. States 18-21 (accompaniment block area):
-;   Voice_InitBankDataSafe. Other states do nothing. Basis: callers + body -- MidiPkt_RecoverIfXferAborted calls it
+;   MspUser_ResetToFactory. Other states do nothing. Basis: callers + body -- MidiPkt_RecoverIfXferAborted calls it
 ;   when the transfer loop ends with a non-zero status (field 4), and SeqChan_UnhandledCmd_0x12 (command 5) sets
 ;   status 23 and jumps to it.
 MidiSysEx_RecoverAbortedXferGroup:
@@ -12728,7 +12728,7 @@ SeqChan_UnhandledCmd_Join2:
 	push	xhl
 	push	xix
 	push	xiz
-	call	SendPartDataBlock_DoGetError
+	call	SoundRam_InitPhase2_ResetIfRamLost
 	call	MIDI_SendAllVoicesPitchUpdate
 	pop	xiz
 	pop	xix
@@ -12757,7 +12757,7 @@ SeqChan_UnhandledCmd_Join3:
 	push	xhl
 	push	xix
 	push	xiz
-	call	AccDemo_InitDone
+	call	Composer_ResetStyleImage
 	res	0, (0x32f3:16)
 	pop	xiz
 	pop	xix
@@ -12797,7 +12797,7 @@ SeqChan_UnhandledCmd_Join5:
 	push	xhl
 	push	xix
 	push	xiz
-	call	Voice_InitBankDataSafe
+	call	MspUser_ResetToFactory
 	pop	xiz
 	pop	xix
 	pop	xhl

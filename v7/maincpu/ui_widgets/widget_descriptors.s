@@ -3921,16 +3921,16 @@ SeqEvt_ProcessBlock_LocalInit_2:	.incbin "includes/generated/naka_widget_descrip
 SeqInit_InitFuncTable:		.incbin "includes/generated/naka_widget_descriptors.bin", 0x137D6, 0x8
 MidiSysEx_ProcessBlock_PtrTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x137DE, 0x8	; 2 x 32-bit pointer
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] Part_InitFromPreset_LocalInit
-; Part_InitFromPreset_LocalInit -- initializer of a local array:
-; Part_InitFromPreset (v10/v9 0xf42ea4, v7 0xf42e96) (`ld xiy,
-; Part_InitFromPreset_LocalInit`); `lda xix, (xsp + 4); ldw bc,
+; [naka_s_headers] SeqSong_ResetAll_LocalInit
+; SeqSong_ResetAll_LocalInit -- initializer of a local array:
+; SeqSong_ResetAll (v10/v9 0xf42ea4, v7 0xf42e96) (`ld xiy,
+; SeqSong_ResetAll_LocalInit`); `lda xix, (xsp + 4); ldw bc,
 ; 0x8; ldirw` copies 16 bytes into the routine's stack frame.
 ;
 ; Typed in naka_widget_descriptors.c as uint16_t
-; Part_InitFromPreset_LocalInit[8].
+; SeqSong_ResetAll_LocalInit[8].
 ; -----------------------------------------------------------------------------
-Part_InitFromPreset_LocalInit:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x137E6, 0x10
+SeqSong_ResetAll_LocalInit:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x137E6, 0x10
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] SeqData_SendVoiceTableBlock_LocalInit
 ; SeqData_SendVoiceTableBlock_LocalInit -- initializer of a local array:

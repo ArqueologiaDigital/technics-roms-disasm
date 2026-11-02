@@ -208,7 +208,7 @@ MainPreControl_OnStartPresentation:
 MainPreControl_OnExitPresentation:
 	cpw	(0x251d8:24), 0
 	jr z, MainPreControl_Dispatch			; if zero, clear state
-	call Part_InitFromPreset			; process display state
+	call SeqSong_ResetAll			; process display state
 	jr MainPreControl_Dispatch
 MainPreControl_OnExistPresentation:
 	ld	hl, (0x251d8:24)

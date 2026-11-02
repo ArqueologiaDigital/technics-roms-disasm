@@ -1216,7 +1216,7 @@ AccVoice_AdvanceAndCheckEnd:
 	cp	(0x3235:16), 0x20
 	jr nz, AccVoice_AdvanceAndCheck_Return
 	call AccWrap_PlayModeDispatch
-	call AccDemo_InitDone
+	call Composer_ResetStyleImage
 	ld	(0x323d:16), 0xff
 	or	(0x323c:16), 0x21
 AccVoice_AdvanceAndCheck_Return:
@@ -4060,7 +4060,7 @@ AccSeq_Scanner_Unknown:
 	cp	(0x3236:16), 32
 	jr	c, AccSeq_Scanner_Skip1
 	call	AccWrap_PlayModeDispatch
-	call	AccDemo_InitDone
+	call	Composer_ResetStyleImage
 	ld	(0x323d:16), 255
 	or	(0x323c:16), 65
 AccSeq_Scanner_Skip1:
@@ -8706,7 +8706,7 @@ AccReplay_SavedExpr_Return:
 	ld	wa, (xwa)
 	cp	wa, 0:i3
 	jr	z, AccReplay_SavedExpression_Return
-	call	AccDemo_InitDone
+	call	Composer_ResetStyleImage
 AccReplay_SavedExpression_Return:
 	ret
 	nop
@@ -13803,7 +13803,7 @@ AccTone_LookupByProgramWrapped_Join:
 AccPatch_InitFuncTable:
 	.long	AccTone_StubReturn_B
 	.long	AccTone_StubReturn_A
-	.long	AccDemo_InitDone
+	.long	Composer_ResetStyleImage
 	.long	AccPatch_InitAndCountSlots
 AccTone_StubReturn_A:
 	ret
@@ -13825,7 +13825,12 @@ AccPatch_InitAndCountSlots:
 	call	VoiceSlot_Dispatch_Type81
 	ld	(14591:16), 10
 	ret
-AccDemo_InitDone:
+; Composer_ResetStyleImage: Resets the Composer's style image (RHYTHM_PATTERN_BUF_A, 0x94800) to the built-in empty style (AccDemo_Init)
+;   and recounts its free blocks (AccPatch_CountAvailableSlots); XIZ preserved.  Basis: callers + body --
+;   MainSysControl's INITIAL SETTING case 5 COMPOSER (MainSysCtrl_OnInitComposer), the MIDI transfer recovery
+;   of the style-image groups (MidiSysEx_RecoverAbortedXferGroup) and the style-image checks of the
+;   accompaniment engine and the floppy loader call it; entry 2 of AccPatch_InitFuncTable.
+Composer_ResetStyleImage:
 	push xiz
 	call AccDemo_Init_Wrap
 	calr AccPatch_CountAvailableSlots
@@ -13929,7 +13934,7 @@ Not_sure_maybe_SOFT_VERSION_related_Skip2:
 	and	(0x355e:16), 0xfe
 	cp	(0x351d:16), 0
 	jr	z, Not_sure_maybe_SOFT_VERSION_related_Skip4
-	calr	AccDemo_InitDone
+	calr	Composer_ResetStyleImage
 Not_sure_maybe_SOFT_VERSION_related_Skip4:
 	ret
 Not_sure_maybe_SOFT_VERSION_related_Skip3:
@@ -13943,7 +13948,7 @@ Not_sure_maybe_SOFT_VERSION_related_Skip3:
 	calr	Not_sure_maybe_SOFT_VERSION_related_Skip7
 	jr	Not_sure_maybe_SOFT_VERSION_related_Skip8
 Not_sure_maybe_SOFT_VERSION_related_Skip6:
-	calr	AccDemo_InitDone
+	calr	Composer_ResetStyleImage
 	or	(0x355e:16), 0x1
 Not_sure_maybe_SOFT_VERSION_related_Skip8:
 	bit	0, (0x355e:16)
@@ -14361,28 +14366,18 @@ RhythmProc_CopySlotData:
 
 
 
-RhythmProc_ChannelMapTable:
-	nop
-	nop
-	nop
-	nop
-	max
-	max
-	max
-	max
-	ld (P2:8), 8:io
-	ld (P0:8), 0:io
-	nop
-	nop
-	nop
-	nop
-	max
-	max
-	max
-	max
-	max
-	max
-	.fill 6, 1, 0x08
+; StyleSection_GroupBaseTable: 30 x u8, one per style section (STYLE_SECTION 0..29, in the record order of
+;   scripts/build/style_bank_layout.py SECTION_ROLE): the section index of the first VARIATION of the
+;   section's group -- 0 for group A, 4 for B, 8 for C.  No reader found: no 24- or 32-bit value and no
+;   LDAR in v5..v10 points into it (notes/open6-kn5000-d/naming/probes/table_reader_scan.py).  Until
+;   2026-11-02 the bytes were spelled as nop / max / ld (P2:8) instructions (RhythmProc_ChannelMapTable).
+StyleSection_GroupBaseTable:
+	.byte	0, 0, 0, 0		; A-VARIATION 1..4
+	.byte	4, 4, 4, 4		; B-VARIATION 1..4
+	.byte	8, 8, 8, 8		; C-VARIATION 1..4
+	.byte	0, 0, 0, 0, 0, 0	; A-INTRO 1, 2, A-FILL IN 1, 2, A-ENDING 1, 2
+	.byte	4, 4, 4, 4, 4, 4	; B-INTRO 1, 2 .. B-ENDING 1, 2
+	.byte	8, 8, 8, 8, 8, 8	; C-INTRO 1, 2 .. C-ENDING 1, 2
 
 ; ============================================================================
 ; AccPatch_GetCurrentSlotAddr - Get address of current accompaniment patch slot
@@ -36038,7 +36033,7 @@ MspLoadAuto_CheckAndInit:
 	jr MspLoadAuto_Return
 
 MspLoadAuto_NegativeCase:
-	call Voice_InitBankDataSafe
+	call MspUser_ResetToFactory
 
 MspLoadAuto_Return:
 	ret

@@ -3855,13 +3855,13 @@ BitMapOut_UpdateWidget_Finalize_Join:
 PanelMemory_PreSlotLoad:
 	ret
 ; PanelMemory_PostSlotLoad: Hook run after one panel memory was read: BC < 0 (read failed) restores memory WA from its
-;   ROM default (VoiceData_InitAndCopyParams), otherwise validates it (PanelTlv_ValidatePanelMemory). Basis: callers +
+;   ROM default (PanelMem_InitFromFactory), otherwise validates it (PanelTlv_ValidatePanelMemory). Basis: callers +
 ;   body -- SingleLoad_LoadPanelMemory passes WA = destination index and BC = the read result, in the place PostPmLoad
 ;   (which calls PanelTlv_ValidatePanelMemories) takes for a whole-file load.
 PanelMemory_PostSlotLoad:
 	extz	wa
 	cp	bc, 0:i3
-	jp	lt, (VoiceData_InitAndCopyParams:24)
+	jp	lt, (PanelMem_InitFromFactory:24)
 	jp	PanelTlv_ValidatePanelMemory
 ; PanelMemory_PreBankLoad: Empty hook (ret) run before one panel-memory bank (16-byte bank name + 8 memories) is read
 ;   from a .PMT file; WA = destination bank. Basis: callers + body -- FileIO_LoadRegion1_VRAM (bank 0 of a one-bank

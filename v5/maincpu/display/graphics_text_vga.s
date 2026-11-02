@@ -4938,19 +4938,19 @@ MainSysCtrl_DispatchTable:
 	call	ScreenGroup_Dispatch
 	jr	MainSysControl_PostDispatchFinalize
 MainSysCtrl_OnInitComposer:
-	call AccDemo_InitDone
+	call Composer_ResetStyleImage
 	jr t, MainSysControl_PostDispatchFinalize
 MainSysCtrl_OnInitSequencer:
-	call Part_InitFromPreset
+	call SeqSong_ResetAll
 	jr t, MainSysControl_PostDispatchFinalize
 MainSysCtrl_OnInitSoundMemory:
-	call	SendPartDataBlock_DoGetError
+	call	SoundRam_InitPhase2_ResetIfRamLost
 	jr	MainSysControl_PostDispatchFinalize
 MainSysCtrl_OnInitPanelMemory:
-	call Display_CopyAndRenderBitmaps
+	call PanelMem_InitAllFromFactory
 	jr t, MainSysControl_PostDispatchFinalize
 MainSysCtrl_OnInitMspUser:
-	call Voice_InitBankDataSafe
+	call MspUser_ResetToFactory
 	jr t, MainSysControl_PostDispatchFinalize
 ; MainSysCtrl_OnInitCurrentPanel: Case 1 of MainSysControl's EVT_SYS_INI switch = item 1 "CURRENT PANEL" of the
 ;   INITIAL SETTING list (widget 0x410002): calls MainSysCtrl_ResetCurrentPanel, which validates and re-resolves

@@ -18828,7 +18828,7 @@ SeqInit_SetBaseAddress:
 	ret
 
 SeqInit_JumpToPartInit:
-	jrl Part_InitFromPreset
+	jrl SeqSong_ResetAll
 
 SeqInit_FullReset:
 	pushw_erp 0xfa
@@ -18884,10 +18884,15 @@ SeqInit_InitVoiceSubBlocks:
 	popw_erp 0xfa
 	ret
 
-Part_InitFromPreset:
+; SeqSong_ResetAll: Re-initialises the sequencer's song memory: for every song slot 0..10 DataBuf_InitSlotFromPreset, then the
+;   slot's defaults (Part_InitVoiceDefaults, Part_WriteWord / Part_WriteByte from +0x1C to +0x112, the voice
+;   sub-blocks, VoiceChannels_InitPanFromPreset), then the panel indicator bit 0x4C.  Basis: callers + body --
+;   MainSysControl's INITIAL SETTING case 6 SEQUENCER (MainSysCtrl_OnInitSequencer),
+;   MainPreControl_OnExitPresentation, SeqInit_JumpToPartInit and SeqLoad_JumpInitFromPreset.
+SeqSong_ResetAll:
 	lda xsp, (xsp - 16)
 	push xiz
-	ld xiy, Part_InitFromPreset_LocalInit
+	ld xiy, SeqSong_ResetAll_LocalInit
 	lda xix, (xsp + 4)
 	ldw bc, 0x8
 	ldirw
@@ -26210,7 +26215,7 @@ SeqLoad_PostCheckAutoAccomp:
 	jp Seq_ResetAndRestartAccompaniment
 
 SeqLoad_JumpInitFromPreset:
-	jp Part_InitFromPreset
+	jp SeqSong_ResetAll
 
 SeqLoad_PostAltEntry:
 	cp wa, 0:i3
