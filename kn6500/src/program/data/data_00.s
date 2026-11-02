@@ -269,10 +269,10 @@ Str_BM_2:	.asciz "BM"
 # census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x176E3B, 0x176E44
 
-func_4C007A69_entry_L14_Table:	# 5 x u32, 45072..45136; read by func_4C007A69_entry_L14 0x4C007A82: `mov	(d1, a2), d0`; func_4C007A69_entry_L27 0x4C007A95: `mov	(d0, a2), d0`
+func_4C007A69_entry_L14_Table:	# 5 x u32, 45072..45136; read by PartHasDspUnit_entry_L14 0x4C007A82: `mov	(d1, a2), d0`; PartHasDspUnit_entry_L27 0x4C007A95: `mov	(d0, a2), d0`
 	tab_u32	45136, 45120, 45104, 45088, 45072
 
-func_4C007A69_entry_L14_Table_End:	.long	0xffffffff	# the end marker of func_4C007A69_entry_L14_Table: func_4C007A69_entry_L27 0x4C007A95: `mov (d0, a2), d0` / `cmp -1, d0` stops at it
+func_4C007A69_entry_L14_Table_End:	.long	0xffffffff	# the end marker of func_4C007A69_entry_L14_Table: PartHasDspUnit_entry_L27 0x4C007A95: `mov (d0, a2), d0` / `cmp -1, d0` stops at it
 
 MainGetEffName_L2d_Table:	# 5 x u32, 45072..45136; read by MainGetEffName_L2d 0x4C007BCB: `mov	(d0, a2), d0`; MainGetEffName_L44 0x4C007BE2: `mov	(d1, a2), d1`
 	tab_u32	45136, 45120, 45104, 45088, 45072
@@ -11554,7 +11554,7 @@ func_4C031E04_L9_Table:	# 105 x u32, 0..2214594478; read by func_4C031E04_L9 0x4
 	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [88]
 	tab_u32	2214594412, 2214594434, 2214594456, 0, 0, 0, 0, 0	# [96]
 	tab_u32	2214594478	# [104]
-func_4C03201D_Table:	# 8 x u8, 16..255; read by func_4C03201D_entry : `movbu	(d0, a0), d1`
+func_4C03201D_Table:	# 8 x u8, 16..255; read by PartDspUnitFind_entry : `movbu	(d0, a0), d1`
 	tab_u8	16, 17, 18, 19, 20, 255, 255, 255
 
 func_4C03089A_L36_Table:
@@ -17488,7 +17488,7 @@ func_4C0580B7_entry_L53_Records:	# 16 x REC_func_4C0580B7_entry_L53_Records (8 b
 	REC_func_4C0580B7_entry_L53_Records	key=44982, proc=loc_4C058277
 	REC_func_4C0580B7_entry_L53_Records	proc=func_4C0580B7_entry_L1fa
 
-func_4C0582E6_L8_Table:	# 44 x u8, 0..255; read by func_4C0582E6 : `movbu	(d0, a0), d0`; func_4C058353_entry : `movbu	(d0, a0), d0`
+func_4C0582E6_L8_Table:	# 44 x u8, 0..255; read by ChordTypeIsMinor : `movbu	(d0, a0), d0`; func_4C058353_entry : `movbu	(d0, a0), d0`
 	tab_u8	0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1	# [16]
 	tab_u8	0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 255, 255	# [32]
@@ -17575,13 +17575,13 @@ Str_ZZZI:	.asciz "ZZZI"
 # census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x1A3425, 0x1A3428
 
-func_4C061B4B_entry_L3e_Block:	# 24 bytes, copied whole by func_4C061B4B_entry_L3e 0x4C061B8E: memcpy(.., 24); func_4C061F86_entry_L5c 0x4C061FE7: memcpy(.., 24); func_4C0620A4_entry_L36 0x4C0620DF: memcpy(.., 24)
+func_4C061B4B_entry_L3e_Block:	# 24 bytes, copied whole by func_4C061B4B_entry_L3e 0x4C061B8E: memcpy(.., 24); SndArgImportZZZ_entry_L5c 0x4C061FE7: memcpy(.., 24); func_4C0620A4_entry_L36 0x4C0620DF: memcpy(.., 24)
 	tab_u8	0, 0, 38, 0, 0, 38, 33, 0, 32, 0, 0, 32, 48, 0, 32, 73	# [0]
 	tab_u8	0, 32, 88, 0, 32, 25, 0, 32	# [16]
 
-func_4C061F1C_Table:	# 8 x u8, 0..7; read by func_4C061F1C_entry : `movbu	(d1, a1), d0`; func_4C061F86_entry : `movbu	(d0, a0), d0`
+func_4C061F1C_Table:	# 8 x u8, 0..7; read by SndArgImportZZZ_entry : `movbu	(d0, a0), d0`; SndArgTemplateApply_entry : `movbu	(d1, a1), d0`
 	tab_u8	0, 2, 3, 4, 5, 6, 7, 1
-func_4C061B2F_Ld_Table:	# 19 x u32, 0..24772985; read by func_4C061B2F_Ld 0x4C061B3C: `mov	(-0x4c, a0), d0`
+func_4C061B2F_Ld_Table:	# 19 x u32, 0..24772985; read by SndArgPartEntry_Ld 0x4C061B3C: `mov	(-0x4c, a0), d0`
 	tab_u32	3, 4, 5, 6, 7, 2, 0, 1	# [0]
 	tab_u32	24183152, 24641906, 24772985, 22151505, 22348115, 22544720, 17039626, 17236229	# [8]
 	tab_u32	16908545, 17957137, 19071253	# [16]
@@ -17639,7 +17639,7 @@ func_4C06210D_Var:	# 16 x REC_func_4C06210D_Var (4 bytes each); read by func_4C0
 	REC_func_4C06210D_Var	key=123, key_=4, f2=122, index=2
 	REC_func_4C06210D_Var	key=125, key_=3, f2=126, index=10
 	.space	4, 0xFF
-func_4C0627F1_Table:	# 24 x REC_func_4C0627F1_Table (2 bytes each); read by func_4C0625F6 0x4C0625F6 `movbu (1, a0), d3`; func_4C0627F1 0x4C0627F1 `movbu (d0, a2), d1`; func_4C0625F6_entry_Lb0 0x4C0626AB `call func_4C07BC73_entry, [d2,a2], 0x1c` (+11)
+func_4C0627F1_Table:	# 24 x REC_func_4C0627F1_Table (2 bytes each); read by PartFieldCcSend 0x4C0625F6 `movbu (1, a0), d3`; StylePartFieldEmit 0x4C0627F1 `movbu (d0, a2), d1`; PartFieldCcSend_entry_Lb0 0x4C0626AB `call func_4C07BC73_entry, [d2,a2], 0x1c` (+11)
 	REC_func_4C0627F1_Table	kind=176, f1=255	# [0]
 	REC_func_4C0627F1_Table	kind=176, f1=7
 	REC_func_4C0627F1_Table	kind=192
@@ -17665,7 +17665,7 @@ func_4C0627F1_Table:	# 24 x REC_func_4C0627F1_Table (2 bytes each); read by func
 	REC_func_4C0627F1_Table	kind=176, f1=17
 	REC_func_4C0627F1_Table	kind=176, f1=13
 
-func_4C0627F1_entry_L48_Table:	# REC_func_4C0625ED_Result (21 bytes), then 131 x u8 the code indexes from +0 (read by func_4C0627F1_entry_L48 0x4C06283E `movbu (d3, a1), d3`; func_4C0627F1_entry_L5d 0x4C062853 `movbu (d3, a1), d2`)
+func_4C0627F1_entry_L48_Table:	# REC_func_4C0625ED_Result (21 bytes), then 131 x u8 the code indexes from +0 (read by StylePartFieldEmit_entry_L48 0x4C06283E `movbu (d3, a1), d3`; StylePartFieldEmit_entry_L5d 0x4C062853 `movbu (d3, a1), d2`)
 	REC_func_4C0625ED_Result	s0="\xFF\xFF", key=255, f3=255, f4=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", f20=64
 	tab_u8	64, 64, 64, 255, 16, 255, 255, 255, 255, 255, 1, 255, 255, 8, 17, 255	# [0]
 	tab_u8	23, 255, 255, 21, 22, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [16]
@@ -21773,10 +21773,10 @@ Bitmap_func_4C072041_3:	# 22 x 117, 8 bit(s) a pixel: func_4C072041 0x4C072041 d
 
 AcSndVariProc_L339_Table:	# 4 x s16, 21..255; read by AcSndVariProc_L339 0x4C0708CD: `movhu	(d0, a0), d2`; AcSpsMmmEditProc_L5e8 0x4C0742E8: `movhu	(d0, a0), d2` ...
 	tab_s16	255, 21, 22, 255
-func_4C06A742_entry_L1e_Table:	# 5 x u32, 45072..45136; read by func_4C06A742_entry_L1e 0x4C06A765: `mov	(d1, a2), d0`; func_4C06A742_entry_L32 0x4C06A779: `mov	(d0, a2), d0`
+func_4C06A742_entry_L1e_Table:	# 5 x u32, 45072..45136; read by PartHasDspUnitExceptAcc_entry_L1e 0x4C06A765: `mov	(d1, a2), d0`; PartHasDspUnitExceptAcc_entry_L32 0x4C06A779: `mov	(d0, a2), d0`
 	tab_u32	45136, 45120, 45104, 45088, 45072
 
-func_4C06A742_entry_L1e_Table_End:	.long	0xffffffff	# the end marker of func_4C06A742_entry_L1e_Table: func_4C06A742_entry_L32 0x4C06A779: `mov (d0, a2), d0` / `cmp d3, d0` stops at it
+func_4C06A742_entry_L1e_Table_End:	.long	0xffffffff	# the end marker of func_4C06A742_entry_L1e_Table: PartHasDspUnitExceptAcc_entry_L32 0x4C06A779: `mov (d0, a2), d0` / `cmp d3, d0` stops at it
 
 Str_OtPt:	.asciz "OtPt"
 	.align	4, 0xFF	# pad after Str_OtPt
@@ -21983,10 +21983,10 @@ func_4C06AB04_Records:	# 67 x REC_func_4C06AB04_Records (28 bytes each); read by
 	REC_func_4C06AB04_Records	proc=func_4C06ABBB, key=func_4C06AB04_Records_p4_24, p8=func_4C06AB04_Records_p4_p0_7, p12=data_4C1B5F8A, f16=0xB0005D, f20=0xFFFFFFFF
 	REC_func_4C06AB04_Records	proc=func_4C06ABBB, key=func_4C06AB04_Records_p4_25, p8=func_4C06AB04_Records_p4_p0_8, p12=data_4C1B5FAC, f16=0x20005C, f20=0xFFFFFFFF, index=ptrs_4C1B6390
 	REC_func_4C06AB04_Records	proc=func_4C06ABBB, key=func_4C06AB04_Records_p4_25, p8=func_4C06AB04_Records_p4_p0_8, p12=data_4C1B5FAC, f16=0xB0005C, f20=0xFFFFFFFF
-	REC_func_4C06AB04_Records	proc=func_4C06B702, key=func_4C06AB04_Records_p4_26, p8=func_4C06AB04_Records_p4_p0_9, p12=data_4C1B5FCE, f16=0xB00052, f20=0xFFFFFFFF	# [24]
-	REC_func_4C06AB04_Records	proc=func_4C06B789, key=func_4C06AB04_Records_p4_26, p8=func_4C06AB04_Records_p4_p0_9, p12=data_4C1B5FCE, f16=0xB00053, f20=0xFFFFFFFF
-	REC_func_4C06AB04_Records	proc=func_4C06B702, key=func_4C06AB04_Records_p4_26, p8=func_4C06AB04_Records_p4_p0_9, p12=data_4C1B5FCE, f16=0xB00050, f20=0xFFFFFFFF
-	REC_func_4C06AB04_Records	proc=func_4C06B789, key=func_4C06AB04_Records_p4_26, p8=func_4C06AB04_Records_p4_p0_9, p12=data_4C1B5FCE, f16=0xB00051, f20=0xFFFFFFFF
+	REC_func_4C06AB04_Records	proc=PartEqFcText, key=func_4C06AB04_Records_p4_26, p8=func_4C06AB04_Records_p4_p0_9, p12=data_4C1B5FCE, f16=0xB00052, f20=0xFFFFFFFF	# [24]
+	REC_func_4C06AB04_Records	proc=PartEqGainText, key=func_4C06AB04_Records_p4_26, p8=func_4C06AB04_Records_p4_p0_9, p12=data_4C1B5FCE, f16=0xB00053, f20=0xFFFFFFFF
+	REC_func_4C06AB04_Records	proc=PartEqFcText, key=func_4C06AB04_Records_p4_26, p8=func_4C06AB04_Records_p4_p0_9, p12=data_4C1B5FCE, f16=0xB00050, f20=0xFFFFFFFF
+	REC_func_4C06AB04_Records	proc=PartEqGainText, key=func_4C06AB04_Records_p4_26, p8=func_4C06AB04_Records_p4_p0_9, p12=data_4C1B5FCE, f16=0xB00051, f20=0xFFFFFFFF
 	REC_func_4C06AB04_Records	proc=func_4C06AD85, key=func_4C06AB04_Records_p4_9, p8=func_4C06AB04_Records_p4_p0_19, p12=func_4C06AB04_Records_p4_p0_19, f16=0xB0007E, f20=0xFFFFFFFF, index=ptrs_4C1B63A4
 	REC_func_4C06AB04_Records	proc=func_4C06AF7E, key=func_4C06AB04_Records_p4_10, p8=func_4C06AB04_Records_p4_p0_20, p12=func_4C06AB04_Records_p4_p0_20, f16=0xB00041, f20=0xFFFFFFFF, index=ptrs_4C1B6390
 	REC_func_4C06AB04_Records	proc=func_4C06ABBB, key=func_4C06AB04_Records_p4_10, p8=func_4C06AB04_Records_p4_p0_20, p12=func_4C06AB04_Records_p4_p0_20, f16=0xB00005, f20=0xFFFFFFFF
@@ -26067,7 +26067,7 @@ PsDrawEditProc_L1e_Records:	# 32 x REC_PsDrawEditProc_L1e_Records (8 bytes each)
 	REC_PsDrawEditProc_L1e_Records	key=0x20003D, proc=loc_4C071BA9
 	REC_PsDrawEditProc_L1e_Records	key=0x20003E, proc=loc_4C071D44
 	REC_PsDrawEditProc_L1e_Records	key=0x20003F, proc=loc_4C071D48
-FavSetText_L1d_Records:	# 16 x REC_FavSetText_L1d_Records (8 bytes each); read by FavSetText_L1d 0x4C072F0F `mov (a0), d0`; FavSetText_L4b 0x4C072F3D `mov (a0), d0`; FavSetText_L4e 0x4C072F40 `mov (4, a0), a0`
+FavSetText_L1d_Records:	# 16 x REC_FavSetText_L1d_Records (8 bytes each); read by MmmMtune_L1d 0x4C072F0F `mov (a0), d0`; MmmMtune_L4b 0x4C072F3D `mov (a0), d0`; MmmMtune_L4e 0x4C072F40 `mov (4, a0), a0`
 	REC_FavSetText_L1d_Records	key=128, proc=loc_4C072F45	# [0]
 	REC_FavSetText_L1d_Records	key=129, proc=loc_4C072F93
 	REC_FavSetText_L1d_Records	key=130, proc=loc_4C072F96
@@ -26075,13 +26075,13 @@ FavSetText_L1d_Records:	# 16 x REC_FavSetText_L1d_Records (8 bytes each); read b
 	REC_FavSetText_L1d_Records	key=1, proc=loc_4C072FB4
 	REC_FavSetText_L1d_Records	key=2, proc=loc_4C072FB8
 	REC_FavSetText_L1d_Records	key=111, proc=loc_4C072FC0
-	REC_FavSetText_L1d_Records	proc=FavSetText_Ld1
-	REC_FavSetText_L1d_Records	proc=FavSetText_Ld1	# [8]
-	REC_FavSetText_L1d_Records	proc=FavSetText_Ld1
-	REC_FavSetText_L1d_Records	proc=FavSetText_Ld1
-	REC_FavSetText_L1d_Records	proc=FavSetText_Ld1
-	REC_FavSetText_L1d_Records	proc=FavSetText_Ld1
-	REC_FavSetText_L1d_Records	proc=FavSetText_Ld1
+	REC_FavSetText_L1d_Records	proc=MmmMtune_Ld1
+	REC_FavSetText_L1d_Records	proc=MmmMtune_Ld1	# [8]
+	REC_FavSetText_L1d_Records	proc=MmmMtune_Ld1
+	REC_FavSetText_L1d_Records	proc=MmmMtune_Ld1
+	REC_FavSetText_L1d_Records	proc=MmmMtune_Ld1
+	REC_FavSetText_L1d_Records	proc=MmmMtune_Ld1
+	REC_FavSetText_L1d_Records	proc=MmmMtune_Ld1
 	REC_FavSetText_L1d_Records	key=110, proc=loc_4C072FBC
 	REC_FavSetText_L1d_Records	key=127, proc=loc_4C072F99
 AcTechniChordProc_L1d_Records:	# 16 x REC_AcTechniChordProc_L1d_Records (8 bytes each); read by AcTechniChordProc_L1d 0x4C073054 `mov (a0), d0`; AcTechniChordProc_L4b 0x4C073082 `mov (a0), d0`; AcTechniChordProc_L4e 0x4C073085 `mov (4, a0), a0`
@@ -26942,7 +26942,7 @@ func_4C0861F6_Table:	# 3 x u8, 0..255; read by func_4C0861F6 0x4C0861F6: `movbu 
 	tab_u8	0, 255, 255
 TgGlobalRampParamSet_entry_L17_Table:	# 8 x u16, 24704..27776; read by TgGlobalRampParamSet_entry_L17 0x4C0881E3: `movhu	(d0, a0), d2`
 	tab_u16	24704, 25216, 25728, 25984, 26496, 27008, 27520, 27776
-func_4C088B09_entry_L223_Table:	# 36 x u8, 0..255; read by func_4C088B09_entry : `movbu	(d0, a0), d1`
+func_4C088B09_entry_L223_Table:	# 36 x u8, 0..255; read by TgGlobalParamInit_entry : `movbu	(d0, a0), d1`
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
 	tab_u8	1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1, 1, 0	# [16]
 	tab_u8	0, 0, 255, 255	# [32]
@@ -33300,16 +33300,16 @@ Str_TT_VOCALIST:	.asciz "TT_VOCALIST"
 Str_TT_SNDCTLASS:	.asciz "TT_SNDCTLASS"
 	.align	4, 0xFF	# pad after Str_TT_SNDCTLASS
 
-Bitmap_4C09FD93_Pixels:	# 296 x 108, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_4C09FD93 answers MT_GetBitmapData with (src/program/data/media/Bitmap_4C09FD93_Pixels.png)
-	.incbin	"build/bitmaps/Bitmap_4C09FD93_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 296 108) from src/program/data/media/Bitmap_4C09FD93_Pixels.png
-Bitmap_4C09FDCE_Pixels:	# 17 x 19, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_4C09FDCE answers MT_GetBitmapData with (src/program/data/media/Bitmap_4C09FDCE_Pixels.png)
-	.incbin	"build/bitmaps/Bitmap_4C09FDCE_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 17 19) from src/program/data/media/Bitmap_4C09FDCE_Pixels.png
-Bitmap_4C09FE08_Pixels:	# 10 x 12, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_4C09FE08 answers MT_GetBitmapData with (src/program/data/media/Bitmap_4C09FE08_Pixels.png)
-	.incbin	"build/bitmaps/Bitmap_4C09FE08_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 10 12) from src/program/data/media/Bitmap_4C09FE08_Pixels.png
-Bitmap_4C09FE42_Pixels_2:	# 253 x 24, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_4C09FE42 answers MT_GetBitmapData with (src/program/data/media/Bitmap_4C09FE42_Pixels_2.png)
-	.incbin	"build/bitmaps/Bitmap_4C09FE42_Pixels_2.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 253 24) from src/program/data/media/Bitmap_4C09FE42_Pixels_2.png
+BitmapCompConnDiagram_Pixels:	# 296 x 108, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapCompConnDiagram answers MT_GetBitmapData with (src/program/data/media/BitmapCompConnDiagram_Pixels.png)
+	.incbin	"build/bitmaps/BitmapCompConnDiagram_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 296 108) from src/program/data/media/BitmapCompConnDiagram_Pixels.png
+BitmapCompConnMaster_Pixels:	# 17 x 19, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapCompConnMaster answers MT_GetBitmapData with (src/program/data/media/BitmapCompConnMaster_Pixels.png)
+	.incbin	"build/bitmaps/BitmapCompConnMaster_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 17 19) from src/program/data/media/BitmapCompConnMaster_Pixels.png
+BitmapCompConnSlaveArrow_Pixels:	# 10 x 12, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapCompConnSlaveArrow answers MT_GetBitmapData with (src/program/data/media/BitmapCompConnSlaveArrow_Pixels.png)
+	.incbin	"build/bitmaps/BitmapCompConnSlaveArrow_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 10 12) from src/program/data/media/BitmapCompConnSlaveArrow_Pixels.png
+BitmapCompConnSlaveWire_Pixels:	# 253 x 24, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapCompConnSlaveWire answers MT_GetBitmapData with (src/program/data/media/BitmapCompConnSlaveWire_Pixels.png)
+	.incbin	"build/bitmaps/BitmapCompConnSlaveWire_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 253 24) from src/program/data/media/BitmapCompConnSlaveWire_Pixels.png
 
-Bitmap_4C09FE42_Palette:	# 16 colours, 0x00BBGGRR (BitmapKn6000: MT_GetBitmapPalette)
+BitmapKn6000_Palette:	# 16 colours, 0x00BBGGRR (BitmapKn6000: MT_GetBitmapPalette)
 	.long	0x001A2931, 0x003F515D, 0x005C6C78, 0x0079808A, 0x008A959E, 0x00A2A5AC, 0x00B6C1CA, 0x00D4D9DD
 	.long	0x00E9E6DE, 0x00F3F3DA, 0x00F3F7DA, 0x00FCFCD6, 0x00E9E6E7, 0x00FBFBDE, 0x00ECEEF3, 0x00F8FBF4
 
@@ -33318,8 +33318,8 @@ BitmapKn6000_Pixels:	# 273 x 127, 4 bit(s) a pixel, rows padded to even bytes: t
 	.align	4, 0xFF	# pad after BitmapKn6000_Pixels
 BitmapNx_Pixels:	# 200 x 100, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapNx answers MT_GetBitmapData with (src/program/data/media/BitmapNx_Pixels.png)
 	.incbin	"build/bitmaps/BitmapNx_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 200 100) from src/program/data/media/BitmapNx_Pixels.png
-Bitmap_4C09FE42_Pixels:	# 200 x 100, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapGm2 answers MT_GetBitmapData with (src/program/data/media/Bitmap_4C09FE42_Pixels.png)
-	.incbin	"build/bitmaps/Bitmap_4C09FE42_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 200 100) from src/program/data/media/Bitmap_4C09FE42_Pixels.png
+BitmapGm2_Pixels:	# 200 x 100, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapGm2 answers MT_GetBitmapData with (src/program/data/media/BitmapGm2_Pixels.png)
+	.incbin	"build/bitmaps/BitmapGm2_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 200 100) from src/program/data/media/BitmapGm2_Pixels.png
 
 func_4C01900D_Table:	# s16, a constant; read / written by DrawString_entry_L34 0x4C0181B1: `movhu (a0), d0`; func_4C01824C_entry_L2f 0x4C01827D: `movhu (a0), d0` ...
 	.word	565

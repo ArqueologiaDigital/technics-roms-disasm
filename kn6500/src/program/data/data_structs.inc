@@ -872,8 +872,8 @@
 
 # REC_func_4C0627F1_Table: 2-byte records (func_4C0627F1_Table, 24 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   kind         u8             func_4C0627F1 0x4C0627F1 `movbu (d0, a2), d1`
-#   +1   f1           u8             func_4C0625F6 0x4C0625F6 `movbu (1, a0), d3`
+#   +0   kind         u8             StylePartFieldEmit 0x4C0627F1 `movbu (d0, a2), d1`
+#   +1   f1           u8             PartFieldCcSend 0x4C0625F6 `movbu (1, a0), d3`
 .macro REC_func_4C0627F1_Table kind=0, f1=0
 	.byte	\kind
 	.byte	\f1
@@ -998,10 +998,10 @@
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   key          s16            TtMessage_L39 0x4C078539 `movhu (d0, a0), d1`; IvMessageProc_L32 0x4C078594 `movhu (d0, a2), d0` (+5)
 #   +2   x2           u8[2]          no reader seen
-#   +4   sprintf_d0   s16            func_4C078A6C_L56 0x4C078AC2 `movhu (4, a0), d0`
+#   +4   sprintf_d0   s16            MessageHeader_L56 0x4C078AC2 `movhu (4, a0), d0`
 #   +6   x6           u8[2]          no reader seen
-#   +8   index        ptr            func_4C078A6C_L56 0x4C078AC2 `mov (8, a0), a0`; func_4C078A6C_L56 0x4C078AC2 `mov (8, a0), a1` (+1)
-#   +12  p12          ptr            CheckMessage_L79 0x4C078981 `mov (0x1c, a0), d1`; CheckMessage_L14c 0x4C078A54 `mov (0xc, a0), d0`
+#   +8   index        ptr            MessageHeader_L56 0x4C078AC2 `mov (8, a0), a0`; MessageHeader_L56 0x4C078AC2 `mov (8, a0), a1` (+1)
+#   +12  p12          ptr            CheckMessage_L79 0x4C078981 `mov (0x1c, a0), d1`; MessageText_L61 0x4C078A54 `mov (0xc, a0), d0`
 .macro REC_TtMessage_L39_Table key=0, x2, sprintf_d0=0, x6, index=0, p12=0
 	.word	\key
 	.ascii	"\x2"
@@ -1111,8 +1111,8 @@
 
 # REC_FavSetText_L1d_Records: 8-byte records (FavSetText_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            FavSetText_L1d 0x4C072F0F `mov (a0), d0`; FavSetText_L4b 0x4C072F3D `mov (a0), d0`
-#   +4   proc         ptr            FavSetText_L4e 0x4C072F40 `mov (4, a0), a0`
+#   +0   key          u32            MmmMtune_L1d 0x4C072F0F `mov (a0), d0`; MmmMtune_L4b 0x4C072F3D `mov (a0), d0`
+#   +4   proc         ptr            MmmMtune_L4e 0x4C072F40 `mov (4, a0), a0`
 .macro REC_FavSetText_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2765,8 +2765,8 @@
 
 # REC_DrumTsetGridSe_L1d_Records: 8-byte records (DrumTsetGridSe_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            DrumTsetGridSe_L1d 0x4C0E333B `mov (a0), d0`; DrumTsetGridSe_L4b 0x4C0E3369 `mov (a0), d0`
-#   +4   proc         ptr            DrumTsetGridSe_L4e 0x4C0E336C `mov (4, a0), a0`
+#   +0   key          u32            ToneSelGridSe_L1d 0x4C0E333B `mov (a0), d0`; ToneSelGridSe_L4b 0x4C0E3369 `mov (a0), d0`
+#   +4   proc         ptr            ToneSelGridSe_L4e 0x4C0E336C `mov (4, a0), a0`
 .macro REC_DrumTsetGridSe_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2774,8 +2774,8 @@
 
 # REC_MonoPolySe_L1d_Records: 8-byte records (MonoPolySe_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            MonoPolySe_L1d 0x4C0E3F05 `mov (a0), d0`; MonoPolySe_L4a 0x4C0E3F32 `mov (a0), d0`
-#   +4   proc         ptr            MonoPolySe_L4d 0x4C0E3F35 `mov (4, a0), a0`
+#   +0   key          u32            ToneGridSe1_L1d 0x4C0E3F05 `mov (a0), d0`; ToneGridSe1_L4a 0x4C0E3F32 `mov (a0), d0`
+#   +4   proc         ptr            ToneGridSe1_L4d 0x4C0E3F35 `mov (4, a0), a0`
 .macro REC_MonoPolySe_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2783,8 +2783,8 @@
 
 # REC_GraphKeyLay3Se_L1d_Records: 8-byte records (GraphKeyLay3Se_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            GraphKeyLay3Se_L1d 0x4C0E4488 `mov (a0), d0`; GraphKeyLay3Se_L4b 0x4C0E44B6 `mov (a0), d0`
-#   +4   proc         ptr            GraphKeyLay3Se_L4e 0x4C0E44B9 `mov (4, a0), a0`
+#   +0   key          u32            LayerGridSe1_L1d 0x4C0E4488 `mov (a0), d0`; LayerGridSe1_L4b 0x4C0E44B6 `mov (a0), d0`
+#   +4   proc         ptr            LayerGridSe1_L4e 0x4C0E44B9 `mov (4, a0), a0`
 .macro REC_GraphKeyLay3Se_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2792,8 +2792,8 @@
 
 # REC_GraphKeyLay4Se_L1d_Records: 8-byte records (GraphKeyLay4Se_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            GraphKeyLay4Se_L1d 0x4C0E4A56 `mov (a0), d0`; GraphKeyLay4Se_L4a 0x4C0E4A83 `mov (a0), d0`
-#   +4   proc         ptr            GraphKeyLay4Se_L4d 0x4C0E4A86 `mov (4, a0), a0`
+#   +0   key          u32            LayerGridSe2_L1d 0x4C0E4A56 `mov (a0), d0`; LayerGridSe2_L4a 0x4C0E4A83 `mov (a0), d0`
+#   +4   proc         ptr            LayerGridSe2_L4d 0x4C0E4A86 `mov (4, a0), a0`
 .macro REC_GraphKeyLay4Se_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2801,8 +2801,8 @@
 
 # REC_AmpGridSe2_L1d_Records: 8-byte records (AmpGridSe2_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            AmpGridSe2_L1d 0x4C0E5010 `mov (a0), d0`; AmpGridSe2_L4b 0x4C0E503E `mov (a0), d0`
-#   +4   proc         ptr            AmpGridSe2_L4e 0x4C0E5041 `mov (4, a0), a0`
+#   +0   key          u32            PitchGridSe_L1d 0x4C0E5010 `mov (a0), d0`; PitchGridSe_L4b 0x4C0E503E `mov (a0), d0`
+#   +4   proc         ptr            PitchGridSe_L4e 0x4C0E5041 `mov (4, a0), a0`
 .macro REC_AmpGridSe2_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2810,8 +2810,8 @@
 
 # REC_AmpGridSe3_L1d_Records: 8-byte records (AmpGridSe3_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            AmpGridSe3_L1d 0x4C0E5321 `mov (a0), d0`; AmpGridSe3_L4a 0x4C0E534E `mov (a0), d0`
-#   +4   proc         ptr            AmpGridSe3_L4d 0x4C0E5351 `mov (4, a0), a0`
+#   +0   key          u32            PitchGridSe2_L1d 0x4C0E5321 `mov (a0), d0`; PitchGridSe2_L4a 0x4C0E534E `mov (a0), d0`
+#   +4   proc         ptr            PitchGridSe2_L4d 0x4C0E5351 `mov (4, a0), a0`
 .macro REC_AmpGridSe3_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2819,8 +2819,8 @@
 
 # REC_FilterGridSe1_L1d_Records: 8-byte records (FilterGridSe1_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            FilterGridSe1_L1d 0x4C0E59F5 `mov (a0), d0`; FilterGridSe1_L4b 0x4C0E5A23 `mov (a0), d0`
-#   +4   proc         ptr            FilterGridSe1_L4e 0x4C0E5A26 `mov (4, a0), a0`
+#   +0   key          u32            PitchGridSe3_L1d 0x4C0E59F5 `mov (a0), d0`; PitchGridSe3_L4b 0x4C0E5A23 `mov (a0), d0`
+#   +4   proc         ptr            PitchGridSe3_L4e 0x4C0E5A26 `mov (4, a0), a0`
 .macro REC_FilterGridSe1_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2828,8 +2828,8 @@
 
 # REC_FilterGridSe2_L1d_Records: 8-byte records (FilterGridSe2_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            FilterGridSe2_L1d 0x4C0E5EFC `mov (a0), d0`; FilterGridSe2_L4b 0x4C0E5F2A `mov (a0), d0`
-#   +4   proc         ptr            FilterGridSe2_L4e 0x4C0E5F2D `mov (4, a0), a0`
+#   +0   key          u32            AmpGridSe1_L1d 0x4C0E5EFC `mov (a0), d0`; AmpGridSe1_L4b 0x4C0E5F2A `mov (a0), d0`
+#   +4   proc         ptr            AmpGridSe1_L4e 0x4C0E5F2D `mov (4, a0), a0`
 .macro REC_FilterGridSe2_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2837,8 +2837,8 @@
 
 # REC_FilterGridSe3_L1d_Records: 8-byte records (FilterGridSe3_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            FilterGridSe3_L1d 0x4C0E6553 `mov (a0), d0`; FilterGridSe3_L4a 0x4C0E6580 `mov (a0), d0`
-#   +4   proc         ptr            FilterGridSe3_L4d 0x4C0E6583 `mov (4, a0), a0`
+#   +0   key          u32            AmpGridSe2_L1d 0x4C0E6553 `mov (a0), d0`; AmpGridSe2_L4a 0x4C0E6580 `mov (a0), d0`
+#   +4   proc         ptr            AmpGridSe2_L4d 0x4C0E6583 `mov (4, a0), a0`
 .macro REC_FilterGridSe3_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2846,8 +2846,8 @@
 
 # REC_FilterGridSe4_L1d_Records: 8-byte records (FilterGridSe4_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            FilterGridSe4_L1d 0x4C0E6B1C `mov (a0), d0`; FilterGridSe4_L4a 0x4C0E6B49 `mov (a0), d0`
-#   +4   proc         ptr            FilterGridSe4_L4d 0x4C0E6B4C `mov (4, a0), a0`
+#   +0   key          u32            AmpGridSe3_L1d 0x4C0E6B1C `mov (a0), d0`; AmpGridSe3_L4a 0x4C0E6B49 `mov (a0), d0`
+#   +4   proc         ptr            AmpGridSe3_L4d 0x4C0E6B4C `mov (4, a0), a0`
 .macro REC_FilterGridSe4_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2855,8 +2855,8 @@
 
 # REC_LfoGridSe1_L1d_Records: 8-byte records (LfoGridSe1_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            LfoGridSe1_L1d 0x4C0E7150 `mov (a0), d0`; LfoGridSe1_L4a 0x4C0E717D `mov (a0), d0`
-#   +4   proc         ptr            LfoGridSe1_L4d 0x4C0E7180 `mov (4, a0), a0`
+#   +0   key          u32            FilterGridSe1_L1d 0x4C0E7150 `mov (a0), d0`; FilterGridSe1_L4a 0x4C0E717D `mov (a0), d0`
+#   +4   proc         ptr            FilterGridSe1_L4d 0x4C0E7180 `mov (4, a0), a0`
 .macro REC_LfoGridSe1_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2864,8 +2864,8 @@
 
 # REC_LfoGridSe2_L1d_Records: 8-byte records (LfoGridSe2_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            LfoGridSe2_L1d 0x4C0E7C3D `mov (a0), d0`; LfoGridSe2_L4a 0x4C0E7C6A `mov (a0), d0`
-#   +4   proc         ptr            LfoGridSe2_L4d 0x4C0E7C6D `mov (4, a0), a0`
+#   +0   key          u32            FilterGridSe2_L1d 0x4C0E7C3D `mov (a0), d0`; FilterGridSe2_L4a 0x4C0E7C6A `mov (a0), d0`
+#   +4   proc         ptr            FilterGridSe2_L4d 0x4C0E7C6D `mov (4, a0), a0`
 .macro REC_LfoGridSe2_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2873,8 +2873,8 @@
 
 # REC_LfoGridSe3_L1d_Records: 8-byte records (LfoGridSe3_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            LfoGridSe3_L1d 0x4C0E81EF `mov (a0), d0`; LfoGridSe3_L4a 0x4C0E821C `mov (a0), d0`
-#   +4   proc         ptr            LfoGridSe3_L4d 0x4C0E821F `mov (4, a0), a0`
+#   +0   key          u32            FilterGridSe3_L1d 0x4C0E81EF `mov (a0), d0`; FilterGridSe3_L4a 0x4C0E821C `mov (a0), d0`
+#   +4   proc         ptr            FilterGridSe3_L4d 0x4C0E821F `mov (4, a0), a0`
 .macro REC_LfoGridSe3_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2882,8 +2882,8 @@
 
 # REC_LfoGridSe4_L1d_Records: 8-byte records (LfoGridSe4_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            LfoGridSe4_L1d 0x4C0E88C3 `mov (a0), d0`; LfoGridSe4_L4b 0x4C0E88F1 `mov (a0), d0`
-#   +4   proc         ptr            LfoGridSe4_L4e 0x4C0E88F4 `mov (4, a0), a0`
+#   +0   key          u32            FilterGridSe4_L1d 0x4C0E88C3 `mov (a0), d0`; FilterGridSe4_L4b 0x4C0E88F1 `mov (a0), d0`
+#   +4   proc         ptr            FilterGridSe4_L4e 0x4C0E88F4 `mov (4, a0), a0`
 .macro REC_LfoGridSe4_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2891,8 +2891,8 @@
 
 # REC_DspOnSe_L1d_Records: 8-byte records (DspOnSe_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            DspOnSe_L1d 0x4C0E8DCA `mov (a0), d0`; DspOnSe_L4b 0x4C0E8DF8 `mov (a0), d0`
-#   +4   proc         ptr            DspOnSe_L4e 0x4C0E8DFB `mov (4, a0), a0`
+#   +0   key          u32            LfoGridSe1_L1d 0x4C0E8DCA `mov (a0), d0`; LfoGridSe1_L4b 0x4C0E8DF8 `mov (a0), d0`
+#   +4   proc         ptr            LfoGridSe1_L4e 0x4C0E8DFB `mov (4, a0), a0`
 .macro REC_DspOnSe_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2900,8 +2900,8 @@
 
 # REC_DspTenSe_L1d_Records: 8-byte records (DspTenSe_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            DspTenSe_L1d 0x4C0E98B5 `mov (a0), d0`; DspTenSe_L4b 0x4C0E98E3 `mov (a0), d0`
-#   +4   proc         ptr            DspTenSe_L4e 0x4C0E98E6 `mov (4, a0), a0`
+#   +0   key          u32            LfoGridSe2_L1d 0x4C0E98B5 `mov (a0), d0`; LfoGridSe2_L4b 0x4C0E98E3 `mov (a0), d0`
+#   +4   proc         ptr            LfoGridSe2_L4e 0x4C0E98E6 `mov (4, a0), a0`
 .macro REC_DspTenSe_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2909,8 +2909,8 @@
 
 # REC_DspSufSe_L1d_Records: 8-byte records (DspSufSe_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            DspSufSe_L1d 0x4C0EA3AC `mov (a0), d0`; DspSufSe_L4b 0x4C0EA3DA `mov (a0), d0`
-#   +4   proc         ptr            DspSufSe_L4e 0x4C0EA3DD `mov (4, a0), a0`
+#   +0   key          u32            LfoGridSe3_L1d 0x4C0EA3AC `mov (a0), d0`; LfoGridSe3_L4b 0x4C0EA3DA `mov (a0), d0`
+#   +4   proc         ptr            LfoGridSe3_L4e 0x4C0EA3DD `mov (4, a0), a0`
 .macro REC_DspSufSe_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2918,8 +2918,8 @@
 
 # REC_DspGroupSe_L1d_Records: 8-byte records (DspGroupSe_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            DspGroupSe_L1d 0x4C0EAEA3 `mov (a0), d0`; DspGroupSe_L4b 0x4C0EAED1 `mov (a0), d0`
-#   +4   proc         ptr            DspGroupSe_L4e 0x4C0EAED4 `mov (4, a0), a0`
+#   +0   key          u32            LfoGridSe4_L1d 0x4C0EAEA3 `mov (a0), d0`; LfoGridSe4_L4b 0x4C0EAED1 `mov (a0), d0`
+#   +4   proc         ptr            LfoGridSe4_L4e 0x4C0EAED4 `mov (4, a0), a0`
 .macro REC_DspGroupSe_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2936,8 +2936,8 @@
 
 # REC_PortamentOnSe_L1d_Records: 8-byte records (PortamentOnSe_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            PortamentOnSe_L1d 0x4C0EBD47 `mov (a0), d0`; PortamentOnSe_L4b 0x4C0EBD75 `mov (a0), d0`
-#   +4   proc         ptr            PortamentOnSe_L4e 0x4C0EBD78 `mov (4, a0), a0`
+#   +0   key          u32            ToneGridSe2_L1d 0x4C0EBD47 `mov (a0), d0`; ToneGridSe2_L4b 0x4C0EBD75 `mov (a0), d0`
+#   +4   proc         ptr            ToneGridSe2_L4e 0x4C0EBD78 `mov (4, a0), a0`
 .macro REC_PortamentOnSe_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2954,8 +2954,8 @@
 
 # REC_RightSplitSe_L1d_Records: 8-byte records (RightSplitSe_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            RightSplitSe_L1d 0x4C0ECA89 `mov (a0), d0`; RightSplitSe_L4a 0x4C0ECAB6 `mov (a0), d0`
-#   +4   proc         ptr            RightSplitSe_L4d 0x4C0ECAB9 `mov (4, a0), a0`
+#   +0   key          u32            CtrlGridSe1_L1d 0x4C0ECA89 `mov (a0), d0`; CtrlGridSe1_L4a 0x4C0ECAB6 `mov (a0), d0`
+#   +4   proc         ptr            CtrlGridSe1_L4d 0x4C0ECAB9 `mov (4, a0), a0`
 .macro REC_RightSplitSe_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2972,8 +2972,8 @@
 
 # REC_LeftSplitSe_L1d_Records: 8-byte records (LeftSplitSe_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            LeftSplitSe_L1d 0x4C0EE2F6 `mov (a0), d0`; LeftSplitSe_L4b 0x4C0EE324 `mov (a0), d0`
-#   +4   proc         ptr            LeftSplitSe_L4e 0x4C0EE327 `mov (4, a0), a0`
+#   +0   key          u32            DrumCtrlGridSe_L1d 0x4C0EE2F6 `mov (a0), d0`; DrumCtrlGridSe_L4b 0x4C0EE324 `mov (a0), d0`
+#   +4   proc         ptr            DrumCtrlGridSe_L4e 0x4C0EE327 `mov (4, a0), a0`
 .macro REC_LeftSplitSe_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2999,8 +2999,8 @@
 
 # REC_func_4C0F0954_L1d_Records: 8-byte records (func_4C0F0954_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            func_4C0F0954_L1d 0x4C0F0971 `mov (a0), d0`; func_4C0F0954_L4a 0x4C0F099E `mov (a0), d0`
-#   +4   proc         ptr            func_4C0F0954_L4d 0x4C0F09A1 `mov (4, a0), a0`
+#   +0   key          u32            LfoViewSe_L1d 0x4C0F0971 `mov (a0), d0`; LfoViewSe_L4a 0x4C0F099E `mov (a0), d0`
+#   +4   proc         ptr            LfoViewSe_L4d 0x4C0F09A1 `mov (4, a0), a0`
 .macro REC_func_4C0F0954_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -3017,8 +3017,8 @@
 
 # REC_DrumGDumpOnSe_L1d_Records: 8-byte records (DrumGDumpOnSe_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            DrumGDumpOnSe_L1d 0x4C0F82D8 `mov (a0), d0`; DrumGDumpOnSe_L4b 0x4C0F8306 `mov (a0), d0`
-#   +4   proc         ptr            DrumGDumpOnSe_L4e 0x4C0F8309 `mov (4, a0), a0`
+#   +0   key          u32            DrumMainGridSe_L1d 0x4C0F82D8 `mov (a0), d0`; DrumMainGridSe_L4b 0x4C0F8306 `mov (a0), d0`
+#   +4   proc         ptr            DrumMainGridSe_L4e 0x4C0F8309 `mov (4, a0), a0`
 .macro REC_DrumGDumpOnSe_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -3026,8 +3026,8 @@
 
 # REC_CopyToSe_L1d_Records: 8-byte records (CopyToSe_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            CopyToSe_L1d 0x4C0F910F `mov (a0), d0`; CopyToSe_L4a 0x4C0F913C `mov (a0), d0`
-#   +4   proc         ptr            CopyToSe_L4d 0x4C0F913F `mov (4, a0), a0`
+#   +0   key          u32            DrumFilterGridSe_L1d 0x4C0F910F `mov (a0), d0`; DrumFilterGridSe_L4a 0x4C0F913C `mov (a0), d0`
+#   +4   proc         ptr            DrumFilterGridSe_L4d 0x4C0F913F `mov (4, a0), a0`
 .macro REC_CopyToSe_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -3044,8 +3044,8 @@
 
 # REC_DrumGraphKeyOffXSe_L1d_Records: 8-byte records (DrumGraphKeyOffXSe_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            DrumGraphKeyOffXSe_L1d 0x4C0FA499 `mov (a0), d0`; DrumGraphKeyOffXSe_L4b 0x4C0FA4C7 `mov (a0), d0`
-#   +4   proc         ptr            DrumGraphKeyOffXSe_L4e 0x4C0FA4CA `mov (4, a0), a0`
+#   +0   key          u32            DrumAmpGridSe_L1d 0x4C0FA499 `mov (a0), d0`; DrumAmpGridSe_L4b 0x4C0FA4C7 `mov (a0), d0`
+#   +4   proc         ptr            DrumAmpGridSe_L4e 0x4C0FA4CA `mov (4, a0), a0`
 .macro REC_DrumGraphKeyOffXSe_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -3053,8 +3053,8 @@
 
 # REC_CopyFromSe_L1d_Records: 8-byte records (CopyFromSe_L1d_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            CopyFromSe_L1d 0x4C0FAC76 `mov (a0), d0`; CopyFromSe_L4b 0x4C0FACA4 `mov (a0), d0`
-#   +4   proc         ptr            CopyFromSe_L4e 0x4C0FACA7 `mov (4, a0), a0`
+#   +0   key          u32            DrumLfoGridSe_L1d 0x4C0FAC76 `mov (a0), d0`; DrumLfoGridSe_L4b 0x4C0FACA4 `mov (a0), d0`
+#   +4   proc         ptr            DrumLfoGridSe_L4e 0x4C0FACA7 `mov (4, a0), a0`
 .macro REC_CopyFromSe_L1d_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -3732,8 +3732,8 @@
 
 # REC_func_4C172A54_Table: 32-byte records (func_4C172A54_Table, 2 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u16            func_4C172A54 0x4C172A54 `movhu (d0, a0), d0`
-#   +2   key_         u16            func_4C172A54 0x4C172A54 `movhu (2, a2), d0`
+#   +0   key          u16            HddTestFlashIdCheck 0x4C172A54 `movhu (d0, a0), d0`
+#   +2   key_         u16            HddTestFlashIdCheck 0x4C172A54 `movhu (2, a2), d0`
 #   +4   x4           u8[4]          no reader seen
 #   +8   p8           ptr            no reader seen
 #   +12  x12          u8[20]         no reader seen
@@ -4015,9 +4015,9 @@
 # NoteConvRule: 8-byte records (NoteConvRules, 128 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   is_melody    u8             func_4C058353_entry_L12e 0x4C058486 `movbu (d0, a0), d0`
-#   +1   alt_chord    u8             func_4C058302_L9 0x4C05830B `movbu (1, a0), d0`
-#   +2   no_third_adj u8             func_4C05831D_L9 0x4C058326 `movbu (2, a0), d0`; func_4C058353_entry_L4d 0x4C0583A5 `movbu (2, a0), d0`
-#   +3   no_transpose u8             func_4C058338_L9 0x4C058341 `movbu (3, a0), d0`; func_4C058353_entry_L96 0x4C0583EE `movbu (3, a0), d0`
+#   +1   alt_chord    u8             NoteConvRuleByte1Get_L9 0x4C05830B `movbu (1, a0), d0`
+#   +2   no_third_adj u8             NoteConvRuleByte2Get_L9 0x4C058326 `movbu (2, a0), d0`; func_4C058353_entry_L4d 0x4C0583A5 `movbu (2, a0), d0`
+#   +3   no_transpose u8             NoteConvRuleByte3Get_L9 0x4C058341 `movbu (3, a0), d0`; func_4C058353_entry_L96 0x4C0583EE `movbu (3, a0), d0`
 #   +4   table        ptr            func_4C058353_entry_L13 0x4C05836B `mov (4, a0), d2`
 .macro NoteConvRule is_melody=0, alt_chord=0, no_third_adj=0, no_transpose=0, table=0
 	.byte	\is_melody
@@ -4365,12 +4365,12 @@
 
 # REC_func_4C0625ED_Result: 21-byte records (func_4C0625ED_Result, 1 records); fields, and what reads them:
 #   +0   s0           char[2]        func_4C063855_entry_L2 0x4C06385C `call memcpy_entry, [a2,a3], 8`; func_4C065BAE_entry_L2 0x4C065BB5 `call memcpy_entry, [a2,a3], 8`
-#   +2   key          u8             func_4C0627F1_entry_L2b 0x4C062821 `movbu (2, a1), d2`
-#   +3   f3           u8             func_4C0627F1_entry_L2b 0x4C062821 `movbu (3, a1), d0`
-#   +4   f4           u8             func_4C0627F1_entry_L2b 0x4C062821 `movbu (4, a1), d0`
+#   +2   key          u8             StylePartFieldEmit_entry_L2b 0x4C062821 `movbu (2, a1), d2`
+#   +3   f3           u8             StylePartFieldEmit_entry_L2b 0x4C062821 `movbu (3, a1), d0`
+#   +4   f4           u8             StylePartFieldEmit_entry_L2b 0x4C062821 `movbu (4, a1), d0`
 #   +5   x5           u8[14]         no reader seen
-#   +19  key_         u8             func_4C0627F1_entry_L71 0x4C062867 `movbu (0x13, a1), d2`
-#   +20  f20          u8             func_4C0627F1_entry_L71 0x4C062867 `movbu (0x14, a1), d0`
+#   +19  key_         u8             StylePartFieldEmit_entry_L71 0x4C062867 `movbu (0x13, a1), d2`
+#   +20  f20          u8             StylePartFieldEmit_entry_L71 0x4C062867 `movbu (0x14, a1), d0`
 .macro REC_func_4C0625ED_Result s0, key=0, f3=0, f4=0, x5, key_=0, f20=0
 	.ascii	"\s0"
 	.byte	\key
@@ -4567,7 +4567,7 @@
 
 # REC_SndRecTriFieldGet2_entry_L16_Table_2_p0: 32-byte records (SndRecTriFieldGet2_entry_L16_Table_2_p0, 601 records); fields, and what reads them:
 #   +0   x0           u8[18]         no reader seen
-#   +18  f18          u16            func_4C15EE05_entry_L16 0x4C15EE20 `movhu (0x12, a0), d0`; func_4C15EE05_entry_Lb6 0x4C15EEC0 `movhu (0x12, a0), d0`
+#   +18  f18          u16            DspPresetEffectTypeGet_entry_L16 0x4C15EE20 `movhu (0x12, a0), d0`; DspPresetEffectTypeGet_entry_Lb6 0x4C15EEC0 `movhu (0x12, a0), d0`
 #   +20  f20          u16            SndRecCountGet_entry_L16 0x4C15EB5B `movhu (0x14, a0), d0`; SndRecCountGet_entry_Lb6 0x4C15EBFB `movhu (0x14, a0), d0` (+2)
 #   +22  x22          u8[2]          no reader seen
 #   +24  index        ptr            func_4C15EF34_entry_L19 0x4C15EF52 `mov (0x18, a0), a0`; func_4C15EF34_entry_Lcf 0x4C15F008 `mov (0x18, a0), a1`
