@@ -5476,7 +5476,7 @@
 0x485B6D88  func_48435C04_Table  32
 0x485B6DA8  func_48435C29_Table  32
 0x485B6DC8  func_48435ED4_Records  256
-0x485B6EC8  func_484361BC_Table  44
+0x485B6EC8  ChordTypeMinorTable  44
 0x485B6EF4  func_48436442_Table  32
 0x485B6F14  func_48437754_Table  8
 0x485B6F1C  func_484378EF_Table  4
@@ -5541,7 +5541,7 @@
 0x485B85B4  func_4844AFF2_Table  36
 0x485B85D8  Str_House_Shot  17
 0x485B85EC  SndCmdStreamWrite_Var  1
-0x485B85ED  SndCmdStreamWrite_Table_2  3
+0x485B85ED  TgcBufWrite_Table  3
 0x485B85F0  func_4844B797_Table  428
 0x485B879C  func_4844C962_Records  128
 0x485B881C  func_4844D680_Table  44
@@ -43363,7 +43363,7 @@
 0x4873606E  ResolveStyleId_Var_2  2
 0x48736070  ResolveStyleId_Var_3  2
 0x48736072  func_4843612E_Table  6
-0x48736078  StyleVariationNameGet_Table  32
+0x48736078  CountIntroRecordTable  32
 0x48736098  func_48450667_Table  4
 0x4873609C  ptrs_4873609C  16
 0x487360AC  ptrs_487360AC  16
@@ -45107,7 +45107,7 @@
 0x50000031  func_48404BA1_Table  3
 0x50000034  func_48404C9B_Table  4
 0x50000038  DspBootDefaultEffects_Table  4
-0x5000003C  func_48405534_Table  4
+0x5000003C  StrapBit3Latch  4
 0x50000040  SndCmdStreamWrite_Table  14
 0x50000050  TgPartGlobalChanRefresh_Table  128
 0x500000D0  func_4C008071_Table  528
@@ -47295,11 +47295,11 @@
 0x50002D38  func_484A08DE_Var_2  4
 0x50002D3C  func_484A08DE_Var_3  4
 0x50002D40  SndCmdStreamWrite_Var_2  1
-0x50002D41  SndCmdStreamWrite_Var_3  1
+0x50002D41  TgcBufWrite_Var  1
 0x50002D42  func_484A349D_Var  1
 0x50002D43  func_484A34B1_Table  2
 0x50002D45  SndCmdStreamWrite_Var_4  1
-0x50002D46  SndCmdStreamWrite_Var_5  1
+0x50002D46  TgcBufWrite_Var_2  1
 0x50002D47  func_484A349D_Var_2  1
 0x50002D48  Str_a_3  2
 0x50002D4C  func_484A3AA7_Var  4
@@ -47308,9 +47308,9 @@
 0x50002D58  func_484A4047_Var  4
 0x50002D5C  func_484A4047_Var_2  4
 0x50002D60  SndCmdStreamWrite_Var_6  1
-0x50002D61  SndCmdStreamWrite_Table_3  4
+0x50002D61  TgcBufWrite_Table_2  4
 0x50002D65  SndCmdStreamWrite_Var_7  1
-0x50002D66  SndCmdStreamWrite_Table_4  6
+0x50002D66  TgcBufWrite_Table_3  6
 0x50002D6C  writeprt_window  4
 0x50002D70  writeprt_GridBox1_selrow  2
 0x50002D72  writeprt_GridBox1_selcol  2
@@ -50430,8 +50430,8 @@
 0x500066C0  fdemo_d16_window  4
 0x500066C4  func_48402563_Table  4
 0x500066C8  func_48402563_Var  4
-0x500066CC  func_48404D25_Var  1
-0x500066CD  func_48404D10_Table  3
+0x500066CC  DspHostPortError  1
+0x500066CD  DspReadyWaitEnabled  3
 0x500066D0  func_48405B55_Table  4
 0x500066D4  func_4840783A_Var  4
 0x500066D8  func_4840791C_Table  8

@@ -19,8 +19,8 @@ Style_Sirtaki:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_Sirtaki
 
-Style_Sirtaki_Intro1A:
-	var_head	Style_Sirtaki_Intro1A, 6, 4, 0xff, 0xff
+Style_Sirtaki_Intro1Major:
+	var_head	Style_Sirtaki_Intro1Major, 6, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	3, 0x19, 0x00, 0x20
 	ev_cc	4, 7, 127
@@ -28,8 +28,8 @@ Style_Sirtaki_Intro1A:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Sirtaki_Intro1A
-Style_Sirtaki_Intro1A_Events:		# 6 bars of 4 beats, 1434 bytes
+	var_events	Style_Sirtaki_Intro1Major
+Style_Sirtaki_Intro1Major_Events:		# 6 bars of 4 beats, 1434 bytes
 	ev_beat
 	ev_at	47
 	ev_note	2, 72, 79, 12, 0, 1
@@ -389,10 +389,10 @@ Style_Sirtaki_Intro1A_Events:		# 6 bars of 4 beats, 1434 bytes
 	ev_at	48
 	ev_note	0, 54, 61, 12, 0, 0
 	ev_end
-	var_end	Style_Sirtaki_Intro1A
+	var_end	Style_Sirtaki_Intro1Major
 
-Style_Sirtaki_Intro1B:
-	var_head	Style_Sirtaki_Intro1B, 6, 4, 0xff, 0xff
+Style_Sirtaki_Intro1Minor:
+	var_head	Style_Sirtaki_Intro1Minor, 6, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	3, 0x19, 0x00, 0x20
 	ev_cc	4, 7, 127
@@ -400,8 +400,8 @@ Style_Sirtaki_Intro1B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Sirtaki_Intro1B
-Style_Sirtaki_Intro1B_Events:		# 6 bars of 4 beats, 1434 bytes
+	var_events	Style_Sirtaki_Intro1Minor
+Style_Sirtaki_Intro1Minor_Events:		# 6 bars of 4 beats, 1434 bytes
 	ev_beat
 	ev_at	47
 	ev_note	2, 72, 79, 12, 0, 1
@@ -761,17 +761,17 @@ Style_Sirtaki_Intro1B_Events:		# 6 bars of 4 beats, 1434 bytes
 	ev_at	48
 	ev_note	0, 54, 61, 12, 0, 0
 	ev_end
-	var_end	Style_Sirtaki_Intro1B
+	var_end	Style_Sirtaki_Intro1Minor
 
-Style_Sirtaki_Ending1A:
-	var_head	Style_Sirtaki_Ending1A, 6, 4, 0xff, 0xff
+Style_Sirtaki_Intro2Major:
+	var_head	Style_Sirtaki_Intro2Major, 6, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	3, 0x19, 0x50, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Sirtaki_Ending1A
-Style_Sirtaki_Ending1A_Events:		# 6 bars of 4 beats, 1871 bytes
+	var_events	Style_Sirtaki_Intro2Major
+Style_Sirtaki_Intro2Major_Events:		# 6 bars of 4 beats, 1871 bytes
 	ev_beat
 	ev_at	49
 	ev_note	3, 79, 110, 10, 0, 1
@@ -1244,17 +1244,17 @@ Style_Sirtaki_Ending1A_Events:		# 6 bars of 4 beats, 1871 bytes
 	ev_note	2, 55, 62, 5, 0, 1
 	ev_note	2, 60, 56, 7, 0, 1
 	ev_end
-	var_end	Style_Sirtaki_Ending1A
+	var_end	Style_Sirtaki_Intro2Major
 
-Style_Sirtaki_Ending1B:
-	var_head	Style_Sirtaki_Ending1B, 6, 4, 0xff, 0xff
+Style_Sirtaki_Intro2Minor:
+	var_head	Style_Sirtaki_Intro2Minor, 6, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	3, 0x19, 0x50, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Sirtaki_Ending1B
-Style_Sirtaki_Ending1B_Events:		# 6 bars of 4 beats, 1871 bytes
+	var_events	Style_Sirtaki_Intro2Minor
+Style_Sirtaki_Intro2Minor_Events:		# 6 bars of 4 beats, 1871 bytes
 	ev_beat
 	ev_at	49
 	ev_note	3, 79, 110, 10, 0, 1
@@ -1727,7 +1727,7 @@ Style_Sirtaki_Ending1B_Events:		# 6 bars of 4 beats, 1871 bytes
 	ev_note	2, 55, 62, 5, 0, 1
 	ev_note	2, 60, 56, 7, 0, 1
 	ev_end
-	var_end	Style_Sirtaki_Ending1B
+	var_end	Style_Sirtaki_Intro2Minor
 
 Style_Sirtaki_Var1:
 	var_head	Style_Sirtaki_Var1, 4, 4, 0xff, 0xff
@@ -3609,8 +3609,8 @@ Style_Sirtaki_Var4Fill2_Events:		# 1 bars of 4 beats, 548 bytes
 	ev_end
 	var_end	Style_Sirtaki_Var4Fill2
 
-Style_Sirtaki_Intro2A:
-	var_head	Style_Sirtaki_Intro2A, 2, 4, 0xff, 0xff
+Style_Sirtaki_Ending1Major:
+	var_head	Style_Sirtaki_Ending1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	3, 0x19, 0x50, 0x20
 	ev_cc	4, 7, 127
@@ -3618,8 +3618,8 @@ Style_Sirtaki_Intro2A:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Sirtaki_Intro2A
-Style_Sirtaki_Intro2A_Events:		# 2 bars of 4 beats, 681 bytes
+	var_events	Style_Sirtaki_Ending1Major
+Style_Sirtaki_Ending1Major_Events:		# 2 bars of 4 beats, 681 bytes
 	ev_beat
 	ev_note	0, 19, 86, 12, 0, 0
 	ev_note	0, 55, 84, 10, 0, 0
@@ -3793,10 +3793,10 @@ Style_Sirtaki_Intro2A_Events:		# 2 bars of 4 beats, 681 bytes
 	ev_cc	2, 64, 0
 	ev_beat
 	ev_end
-	var_end	Style_Sirtaki_Intro2A
+	var_end	Style_Sirtaki_Ending1Major
 
-Style_Sirtaki_Intro2B:
-	var_head	Style_Sirtaki_Intro2B, 2, 4, 0xff, 0xff
+Style_Sirtaki_Ending1Minor:
+	var_head	Style_Sirtaki_Ending1Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	3, 0x19, 0x50, 0x20
 	ev_cc	4, 7, 127
@@ -3804,8 +3804,8 @@ Style_Sirtaki_Intro2B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Sirtaki_Intro2B
-Style_Sirtaki_Intro2B_Events:		# 2 bars of 4 beats, 681 bytes
+	var_events	Style_Sirtaki_Ending1Minor
+Style_Sirtaki_Ending1Minor_Events:		# 2 bars of 4 beats, 681 bytes
 	ev_beat
 	ev_note	0, 19, 86, 12, 0, 0
 	ev_note	0, 55, 84, 10, 0, 0
@@ -3979,17 +3979,17 @@ Style_Sirtaki_Intro2B_Events:		# 2 bars of 4 beats, 681 bytes
 	ev_cc	2, 64, 0
 	ev_beat
 	ev_end
-	var_end	Style_Sirtaki_Intro2B
+	var_end	Style_Sirtaki_Ending1Minor
 
-Style_Sirtaki_Ending2A:
-	var_head	Style_Sirtaki_Ending2A, 4, 4, 0xff, 0xff
+Style_Sirtaki_Ending2Major:
+	var_head	Style_Sirtaki_Ending2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	3, 0x19, 0x50, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Sirtaki_Ending2A
-Style_Sirtaki_Ending2A_Events:		# 4 bars of 4 beats, 1632 bytes
+	var_events	Style_Sirtaki_Ending2Major
+Style_Sirtaki_Ending2Major_Events:		# 4 bars of 4 beats, 1632 bytes
 	ev_beat
 	ev_note	0, 51, 81, 12, 0, 0
 	ev_note	0, 55, 102, 12, 0, 0
@@ -4379,17 +4379,17 @@ Style_Sirtaki_Ending2A_Events:		# 4 bars of 4 beats, 1632 bytes
 	ev_note	4, 72, 78, 22, 0, 1
 	ev_note	4, 79, 85, 21, 0, 1
 	ev_end
-	var_end	Style_Sirtaki_Ending2A
+	var_end	Style_Sirtaki_Ending2Major
 
-Style_Sirtaki_Ending2B:
-	var_head	Style_Sirtaki_Ending2B, 4, 4, 0xff, 0xff
+Style_Sirtaki_Ending2Minor:
+	var_head	Style_Sirtaki_Ending2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	3, 0x19, 0x50, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Sirtaki_Ending2B
-Style_Sirtaki_Ending2B_Events:		# 4 bars of 4 beats, 1632 bytes
+	var_events	Style_Sirtaki_Ending2Minor
+Style_Sirtaki_Ending2Minor_Events:		# 4 bars of 4 beats, 1632 bytes
 	ev_beat
 	ev_note	0, 51, 81, 12, 0, 0
 	ev_note	0, 55, 102, 12, 0, 0
@@ -4779,4 +4779,4 @@ Style_Sirtaki_Ending2B_Events:		# 4 bars of 4 beats, 1632 bytes
 	ev_note	4, 72, 78, 22, 0, 1
 	ev_note	4, 79, 85, 21, 0, 1
 	ev_end
-	var_end	Style_Sirtaki_Ending2B
+	var_end	Style_Sirtaki_Ending2Minor

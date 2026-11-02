@@ -19,15 +19,15 @@ Style_TangoArgent:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_TangoArgent
 
-Style_TangoArgent_Intro1A:
-	var_head	Style_TangoArgent_Intro1A, 5, 4, 0xff, 0xff
+Style_TangoArgent_Intro1Major:
+	var_head	Style_TangoArgent_Intro1Major, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	4, 10, 111
 	ev_pc	4, 0x28, 0x04, 0x20
 	ev_pc	5, 0x30, 0x08, 0x20
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_TangoArgent_Intro1A
-Style_TangoArgent_Intro1A_Events:		# 5 bars of 4 beats, 2733 bytes
+	var_events	Style_TangoArgent_Intro1Major
+Style_TangoArgent_Intro1Major_Events:		# 5 bars of 4 beats, 2733 bytes
 	ev_beat
 	ev_at	47
 	ev_note	2, 67, 80, 7, 0, 1
@@ -741,17 +741,17 @@ Style_TangoArgent_Intro1A_Events:		# 5 bars of 4 beats, 2733 bytes
 	ev_at	52
 	ev_note	1, 35, 71, 16, 0, 1
 	ev_end
-	var_end	Style_TangoArgent_Intro1A
+	var_end	Style_TangoArgent_Intro1Major
 
-Style_TangoArgent_Intro1B:
-	var_head	Style_TangoArgent_Intro1B, 5, 4, 0xff, 0xff
+Style_TangoArgent_Intro1Minor:
+	var_head	Style_TangoArgent_Intro1Minor, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	4, 10, 111
 	ev_pc	4, 0x28, 0x04, 0x20
 	ev_pc	5, 0x30, 0x08, 0x20
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_TangoArgent_Intro1B
-Style_TangoArgent_Intro1B_Events:		# 5 bars of 4 beats, 2734 bytes
+	var_events	Style_TangoArgent_Intro1Minor
+Style_TangoArgent_Intro1Minor_Events:		# 5 bars of 4 beats, 2734 bytes
 	ev_beat
 	ev_at	47
 	ev_note	2, 67, 80, 7, 0, 1
@@ -1466,10 +1466,10 @@ Style_TangoArgent_Intro1B_Events:		# 5 bars of 4 beats, 2734 bytes
 	ev_at	52
 	ev_note	1, 35, 71, 16, 0, 1
 	ev_end
-	var_end	Style_TangoArgent_Intro1B
+	var_end	Style_TangoArgent_Intro1Minor
 
-Style_TangoArgent_Ending1A:
-	var_head	Style_TangoArgent_Ending1A, 9, 4, 0xff, 0xff
+Style_TangoArgent_Intro2Major:
+	var_head	Style_TangoArgent_Intro2Major, 9, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 91
 	ev_cc	4, 7, 105
@@ -1479,8 +1479,8 @@ Style_TangoArgent_Ending1A:
 	ev_cc	6, 7, 50
 	ev_cc	6, 10, 39
 	ev_pc	6, 0x19, 0x3c, 0x20
-	var_events	Style_TangoArgent_Ending1A
-Style_TangoArgent_Ending1A_Events:		# 9 bars of 4 beats, 5185 bytes
+	var_events	Style_TangoArgent_Intro2Major
+Style_TangoArgent_Intro2Major_Events:		# 9 bars of 4 beats, 5185 bytes
 	ev_beat
 	ev_at	46
 	ev_note	4, 67, 116, 51, 0, 1
@@ -2876,10 +2876,10 @@ Style_TangoArgent_Ending1A_Events:		# 9 bars of 4 beats, 5185 bytes
 	ev_at	92
 	ev_note	0, 52, 82, 2, 0, 0
 	ev_end
-	var_end	Style_TangoArgent_Ending1A
+	var_end	Style_TangoArgent_Intro2Major
 
-Style_TangoArgent_Ending1B:
-	var_head	Style_TangoArgent_Ending1B, 9, 4, 0xff, 0xff
+Style_TangoArgent_Intro2Minor:
+	var_head	Style_TangoArgent_Intro2Minor, 9, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 91
 	ev_cc	4, 7, 105
@@ -2889,8 +2889,8 @@ Style_TangoArgent_Ending1B:
 	ev_cc	6, 7, 50
 	ev_cc	6, 10, 39
 	ev_pc	6, 0x19, 0x3c, 0x20
-	var_events	Style_TangoArgent_Ending1B
-Style_TangoArgent_Ending1B_Events:		# 9 bars of 4 beats, 5091 bytes
+	var_events	Style_TangoArgent_Intro2Minor
+Style_TangoArgent_Intro2Minor_Events:		# 9 bars of 4 beats, 5091 bytes
 	ev_beat
 	ev_at	46
 	ev_note	4, 67, 116, 51, 0, 1
@@ -4254,7 +4254,7 @@ Style_TangoArgent_Ending1B_Events:		# 9 bars of 4 beats, 5091 bytes
 	ev_at	92
 	ev_note	0, 52, 82, 2, 0, 0
 	ev_end
-	var_end	Style_TangoArgent_Ending1B
+	var_end	Style_TangoArgent_Intro2Minor
 
 Style_TangoArgent_Var1:
 	var_head	Style_TangoArgent_Var1, 4, 4, 0xff, 0xff
@@ -6773,15 +6773,15 @@ Style_TangoArgent_Var4Fill2_Events:		# 1 bars of 4 beats, 420 bytes
 	ev_end
 	var_end	Style_TangoArgent_Var4Fill2
 
-Style_TangoArgent_Intro2A:
-	var_head	Style_TangoArgent_Intro2A, 4, 4, 0xff, 0xff
+Style_TangoArgent_Ending1Major:
+	var_head	Style_TangoArgent_Ending1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	4, 10, 111
 	ev_pc	4, 0x28, 0x04, 0x20
 	ev_pc	5, 0x30, 0x08, 0x20
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_TangoArgent_Intro2A
-Style_TangoArgent_Intro2A_Events:		# 4 bars of 4 beats, 1905 bytes
+	var_events	Style_TangoArgent_Ending1Major
+Style_TangoArgent_Ending1Major_Events:		# 4 bars of 4 beats, 1905 bytes
 	ev_beat
 	ev_note	0, 36, 74, 14, 0, 0
 	ev_note	0, 38, 78, 12, 0, 0
@@ -7217,17 +7217,17 @@ Style_TangoArgent_Intro2A_Events:		# 4 bars of 4 beats, 1905 bytes
 	ev_at	12
 	ev_note	2, 36, 127, 14, 0, 1
 	ev_end
-	var_end	Style_TangoArgent_Intro2A
+	var_end	Style_TangoArgent_Ending1Major
 
-Style_TangoArgent_Intro2B:
-	var_head	Style_TangoArgent_Intro2B, 4, 4, 0xff, 0xff
+Style_TangoArgent_Ending1Minor:
+	var_head	Style_TangoArgent_Ending1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	4, 10, 111
 	ev_pc	4, 0x28, 0x04, 0x20
 	ev_pc	5, 0x30, 0x08, 0x20
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_TangoArgent_Intro2B
-Style_TangoArgent_Intro2B_Events:		# 4 bars of 4 beats, 1904 bytes
+	var_events	Style_TangoArgent_Ending1Minor
+Style_TangoArgent_Ending1Minor_Events:		# 4 bars of 4 beats, 1904 bytes
 	ev_beat
 	ev_note	0, 36, 74, 14, 0, 0
 	ev_note	0, 38, 78, 12, 0, 0
@@ -7662,10 +7662,10 @@ Style_TangoArgent_Intro2B_Events:		# 4 bars of 4 beats, 1904 bytes
 	ev_at	12
 	ev_note	2, 36, 127, 14, 0, 1
 	ev_end
-	var_end	Style_TangoArgent_Intro2B
+	var_end	Style_TangoArgent_Ending1Minor
 
-Style_TangoArgent_Ending2A:
-	var_head	Style_TangoArgent_Ending2A, 4, 4, 0xff, 0xff
+Style_TangoArgent_Ending2Major:
+	var_head	Style_TangoArgent_Ending2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 91
 	ev_cc	4, 7, 105
@@ -7675,8 +7675,8 @@ Style_TangoArgent_Ending2A:
 	ev_cc	6, 7, 50
 	ev_cc	6, 10, 39
 	ev_pc	6, 0x19, 0x3c, 0x20
-	var_events	Style_TangoArgent_Ending2A
-Style_TangoArgent_Ending2A_Events:		# 4 bars of 4 beats, 2478 bytes
+	var_events	Style_TangoArgent_Ending2Major
+Style_TangoArgent_Ending2Major_Events:		# 4 bars of 4 beats, 2478 bytes
 	ev_beat
 	ev_note	7, 46, 101, 17, 0, 0
 	ev_note	7, 54, 95, 17, 0, 0
@@ -8285,10 +8285,10 @@ Style_TangoArgent_Ending2A_Events:		# 4 bars of 4 beats, 2478 bytes
 	ev_at	1
 	ev_note	0, 38, 103, 8, 0, 0
 	ev_end
-	var_end	Style_TangoArgent_Ending2A
+	var_end	Style_TangoArgent_Ending2Major
 
-Style_TangoArgent_Ending2B:
-	var_head	Style_TangoArgent_Ending2B, 4, 4, 0xff, 0xff
+Style_TangoArgent_Ending2Minor:
+	var_head	Style_TangoArgent_Ending2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 91
 	ev_cc	4, 7, 105
@@ -8298,8 +8298,8 @@ Style_TangoArgent_Ending2B:
 	ev_cc	6, 7, 50
 	ev_cc	6, 10, 39
 	ev_pc	6, 0x19, 0x3c, 0x20
-	var_events	Style_TangoArgent_Ending2B
-Style_TangoArgent_Ending2B_Events:		# 4 bars of 4 beats, 2467 bytes
+	var_events	Style_TangoArgent_Ending2Minor
+Style_TangoArgent_Ending2Minor_Events:		# 4 bars of 4 beats, 2467 bytes
 	ev_beat
 	ev_note	7, 46, 101, 17, 0, 0
 	ev_note	7, 54, 95, 17, 0, 0
@@ -8907,4 +8907,4 @@ Style_TangoArgent_Ending2B_Events:		# 4 bars of 4 beats, 2467 bytes
 	ev_at	1
 	ev_note	0, 38, 103, 8, 0, 0
 	ev_end
-	var_end	Style_TangoArgent_Ending2B
+	var_end	Style_TangoArgent_Ending2Minor

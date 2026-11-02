@@ -19,8 +19,8 @@ Style_BavarianPolka:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_BavarianPolka
 
-Style_BavarianPolka_Intro1A:
-	var_head	Style_BavarianPolka_Intro1A, 4, 4, 0xff, 0xff
+Style_BavarianPolka_Intro1Major:
+	var_head	Style_BavarianPolka_Intro1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 61
 	ev_cc	2, 81, 75
@@ -33,8 +33,8 @@ Style_BavarianPolka_Intro1A:
 	ev_cc	6, 80, 96
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 96
-	var_events	Style_BavarianPolka_Intro1A
-Style_BavarianPolka_Intro1A_Events:		# 4 bars of 4 beats, 2392 bytes
+	var_events	Style_BavarianPolka_Intro1Major
+Style_BavarianPolka_Intro1Major_Events:		# 4 bars of 4 beats, 2392 bytes
 	ev_beat
 	ev_note	0, 55, 96, 8, 0, 0
 	ev_note	0, 36, 120, 8, 0, 0
@@ -607,10 +607,10 @@ Style_BavarianPolka_Intro1A_Events:		# 4 bars of 4 beats, 2392 bytes
 	ev_note	2, 79, 84, 11, 0, 1
 	ev_note	2, 67, 73, 11, 0, 1
 	ev_end
-	var_end	Style_BavarianPolka_Intro1A
+	var_end	Style_BavarianPolka_Intro1Major
 
-Style_BavarianPolka_Intro1B:
-	var_head	Style_BavarianPolka_Intro1B, 4, 4, 0xff, 0xff
+Style_BavarianPolka_Intro1Minor:
+	var_head	Style_BavarianPolka_Intro1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 61
 	ev_cc	2, 81, 76
@@ -624,8 +624,8 @@ Style_BavarianPolka_Intro1B:
 	ev_cc	6, 80, 96
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 96
-	var_events	Style_BavarianPolka_Intro1B
-Style_BavarianPolka_Intro1B_Events:		# 4 bars of 4 beats, 2392 bytes
+	var_events	Style_BavarianPolka_Intro1Minor
+Style_BavarianPolka_Intro1Minor_Events:		# 4 bars of 4 beats, 2392 bytes
 	ev_beat
 	ev_note	0, 55, 96, 8, 0, 0
 	ev_note	0, 36, 120, 8, 0, 0
@@ -1198,10 +1198,10 @@ Style_BavarianPolka_Intro1B_Events:		# 4 bars of 4 beats, 2392 bytes
 	ev_note	2, 79, 84, 11, 0, 1
 	ev_note	2, 67, 73, 11, 0, 1
 	ev_end
-	var_end	Style_BavarianPolka_Intro1B
+	var_end	Style_BavarianPolka_Intro1Minor
 
-Style_BavarianPolka_Ending1A:
-	var_head	Style_BavarianPolka_Ending1A, 8, 4, 0xff, 0xff
+Style_BavarianPolka_Intro2Major:
+	var_head	Style_BavarianPolka_Intro2Major, 8, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 61
 	ev_cc	2, 81, 76
@@ -1216,8 +1216,8 @@ Style_BavarianPolka_Ending1A:
 	ev_cc	6, 80, 96
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 96
-	var_events	Style_BavarianPolka_Ending1A
-Style_BavarianPolka_Ending1A_Events:		# 8 bars of 4 beats, 5091 bytes
+	var_events	Style_BavarianPolka_Intro2Major
+Style_BavarianPolka_Intro2Major_Events:		# 8 bars of 4 beats, 5091 bytes
 	ev_beat
 	ev_note	0, 36, 103, 8, 0, 0
 	ev_note	0, 19, 61, 8, 0, 0
@@ -2439,10 +2439,10 @@ Style_BavarianPolka_Ending1A_Events:		# 8 bars of 4 beats, 5091 bytes
 	ev_note	3, 59, 62, 10, 0, 1
 	ev_note	3, 62, 66, 12, 0, 1
 	ev_end
-	var_end	Style_BavarianPolka_Ending1A
+	var_end	Style_BavarianPolka_Intro2Major
 
-Style_BavarianPolka_Ending1B:
-	var_head	Style_BavarianPolka_Ending1B, 8, 4, 0xff, 0xff
+Style_BavarianPolka_Intro2Minor:
+	var_head	Style_BavarianPolka_Intro2Minor, 8, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 61
 	ev_cc	2, 81, 76
@@ -2457,8 +2457,8 @@ Style_BavarianPolka_Ending1B:
 	ev_cc	6, 80, 96
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 96
-	var_events	Style_BavarianPolka_Ending1B
-Style_BavarianPolka_Ending1B_Events:		# 8 bars of 4 beats, 5091 bytes
+	var_events	Style_BavarianPolka_Intro2Minor
+Style_BavarianPolka_Intro2Minor_Events:		# 8 bars of 4 beats, 5091 bytes
 	ev_beat
 	ev_note	0, 36, 103, 8, 0, 0
 	ev_note	0, 19, 61, 8, 0, 0
@@ -3680,7 +3680,7 @@ Style_BavarianPolka_Ending1B_Events:		# 8 bars of 4 beats, 5091 bytes
 	ev_note	3, 59, 62, 10, 0, 1
 	ev_note	3, 62, 66, 12, 0, 1
 	ev_end
-	var_end	Style_BavarianPolka_Ending1B
+	var_end	Style_BavarianPolka_Intro2Minor
 
 Style_BavarianPolka_Var1:
 	var_head	Style_BavarianPolka_Var1, 4, 4, 0xff, 0xff
@@ -6142,8 +6142,8 @@ Style_BavarianPolka_Var4Fill2_Events:		# 1 bars of 4 beats, 520 bytes
 	ev_end
 	var_end	Style_BavarianPolka_Var4Fill2
 
-Style_BavarianPolka_Intro2A:
-	var_head	Style_BavarianPolka_Intro2A, 4, 4, 0xff, 0xff
+Style_BavarianPolka_Ending1Major:
+	var_head	Style_BavarianPolka_Ending1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 82, 48
 	ev_cc	5, 80, 96
@@ -6151,8 +6151,8 @@ Style_BavarianPolka_Intro2A:
 	ev_cc	6, 80, 96
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 96
-	var_events	Style_BavarianPolka_Intro2A
-Style_BavarianPolka_Intro2A_Events:		# 4 bars of 4 beats, 1624 bytes
+	var_events	Style_BavarianPolka_Ending1Major
+Style_BavarianPolka_Ending1Major_Events:		# 4 bars of 4 beats, 1624 bytes
 	ev_beat
 	ev_note	0, 55, 103, 8, 0, 0
 	ev_note	0, 36, 111, 8, 0, 0
@@ -6552,10 +6552,10 @@ Style_BavarianPolka_Intro2A_Events:		# 4 bars of 4 beats, 1624 bytes
 	ev_note	0, 54, 110, 8, 0, 0
 	ev_note	1, 36, 117, 36, 0, 1
 	ev_end
-	var_end	Style_BavarianPolka_Intro2A
+	var_end	Style_BavarianPolka_Ending1Major
 
-Style_BavarianPolka_Intro2B:
-	var_head	Style_BavarianPolka_Intro2B, 4, 4, 0xff, 0xff
+Style_BavarianPolka_Ending1Minor:
+	var_head	Style_BavarianPolka_Ending1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	2, 0x15, 0x40, 0x20
 	ev_cc	5, 82, 48
@@ -6564,8 +6564,8 @@ Style_BavarianPolka_Intro2B:
 	ev_cc	6, 80, 96
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 96
-	var_events	Style_BavarianPolka_Intro2B
-Style_BavarianPolka_Intro2B_Events:		# 4 bars of 4 beats, 1624 bytes
+	var_events	Style_BavarianPolka_Ending1Minor
+Style_BavarianPolka_Ending1Minor_Events:		# 4 bars of 4 beats, 1624 bytes
 	ev_beat
 	ev_note	0, 55, 103, 8, 0, 0
 	ev_note	0, 36, 111, 8, 0, 0
@@ -6965,10 +6965,10 @@ Style_BavarianPolka_Intro2B_Events:		# 4 bars of 4 beats, 1624 bytes
 	ev_note	0, 54, 110, 8, 0, 0
 	ev_note	1, 36, 117, 36, 0, 1
 	ev_end
-	var_end	Style_BavarianPolka_Intro2B
+	var_end	Style_BavarianPolka_Ending1Minor
 
-Style_BavarianPolka_Ending2A:
-	var_head	Style_BavarianPolka_Ending2A, 8, 4, 0xff, 0xff
+Style_BavarianPolka_Ending2Major:
+	var_head	Style_BavarianPolka_Ending2Major, 8, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 61
 	ev_cc	2, 81, 76
@@ -6983,8 +6983,8 @@ Style_BavarianPolka_Ending2A:
 	ev_cc	6, 80, 96
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 96
-	var_events	Style_BavarianPolka_Ending2A
-Style_BavarianPolka_Ending2A_Events:		# 8 bars of 4 beats, 4989 bytes
+	var_events	Style_BavarianPolka_Ending2Major
+Style_BavarianPolka_Ending2Major_Events:		# 8 bars of 4 beats, 4989 bytes
 	ev_beat
 	ev_note	0, 36, 103, 8, 0, 0
 	ev_note	0, 19, 61, 8, 0, 0
@@ -8164,10 +8164,10 @@ Style_BavarianPolka_Ending2A_Events:		# 8 bars of 4 beats, 4989 bytes
 	ev_note	3, 65, 97, 26, 0, 1
 	ev_note	3, 57, 104, 18, 0, 1
 	ev_end
-	var_end	Style_BavarianPolka_Ending2A
+	var_end	Style_BavarianPolka_Ending2Major
 
-Style_BavarianPolka_Ending2B:
-	var_head	Style_BavarianPolka_Ending2B, 8, 4, 0xff, 0xff
+Style_BavarianPolka_Ending2Minor:
+	var_head	Style_BavarianPolka_Ending2Minor, 8, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 61
 	ev_cc	2, 81, 76
@@ -8182,8 +8182,8 @@ Style_BavarianPolka_Ending2B:
 	ev_cc	6, 80, 96
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 96
-	var_events	Style_BavarianPolka_Ending2B
-Style_BavarianPolka_Ending2B_Events:		# 8 bars of 4 beats, 4989 bytes
+	var_events	Style_BavarianPolka_Ending2Minor
+Style_BavarianPolka_Ending2Minor_Events:		# 8 bars of 4 beats, 4989 bytes
 	ev_beat
 	ev_note	0, 36, 103, 8, 0, 0
 	ev_note	0, 19, 61, 8, 0, 0
@@ -9363,4 +9363,4 @@ Style_BavarianPolka_Ending2B_Events:		# 8 bars of 4 beats, 4989 bytes
 	ev_note	3, 56, 104, 18, 0, 1
 	ev_note	3, 65, 97, 26, 0, 1
 	ev_end
-	var_end	Style_BavarianPolka_Ending2B
+	var_end	Style_BavarianPolka_Ending2Minor

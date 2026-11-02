@@ -19,8 +19,8 @@ Style_SwingyReggae:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_SwingyReggae
 
-Style_SwingyReggae_Intro1A:
-	var_head	Style_SwingyReggae_Intro1A, 4, 4, 0xff, 0x03
+Style_SwingyReggae_Intro1Major:
+	var_head	Style_SwingyReggae_Intro1Major, 4, 4, 0xff, 0x03
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 29
 	ev_pc	2, 0x1b, 0x21, 0x20
@@ -30,8 +30,8 @@ Style_SwingyReggae_Intro1A:
 	ev_cc	6, 91, 18
 	ev_cc	6, 93, 50
 	ev_pc	6, 0x3e, 0x10, 0x20
-	var_events	Style_SwingyReggae_Intro1A
-Style_SwingyReggae_Intro1A_Events:		# 4 bars of 4 beats, 1788 bytes
+	var_events	Style_SwingyReggae_Intro1Major
+Style_SwingyReggae_Intro1Major_Events:		# 4 bars of 4 beats, 1788 bytes
 	ev_beat
 	ev_note	0, 36, 110, 19, 0, 0
 	ev_note	0, 18, 89, 26, 0, 0
@@ -440,10 +440,10 @@ Style_SwingyReggae_Intro1A_Events:		# 4 bars of 4 beats, 1788 bytes
 	ev_note	4, 60, 127, 32, 0, 1
 	ev_note	4, 72, 127, 34, 0, 1
 	ev_end
-	var_end	Style_SwingyReggae_Intro1A
+	var_end	Style_SwingyReggae_Intro1Major
 
-Style_SwingyReggae_Intro1B:
-	var_head	Style_SwingyReggae_Intro1B, 4, 4, 0xff, 0x03
+Style_SwingyReggae_Intro1Minor:
+	var_head	Style_SwingyReggae_Intro1Minor, 4, 4, 0xff, 0x03
 	ev_cc	0, 91, 32
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 29
@@ -454,8 +454,8 @@ Style_SwingyReggae_Intro1B:
 	ev_cc	6, 91, 18
 	ev_cc	6, 93, 50
 	ev_pc	6, 0x3e, 0x10, 0x20
-	var_events	Style_SwingyReggae_Intro1B
-Style_SwingyReggae_Intro1B_Events:		# 4 bars of 4 beats, 1651 bytes
+	var_events	Style_SwingyReggae_Intro1Minor
+Style_SwingyReggae_Intro1Minor_Events:		# 4 bars of 4 beats, 1651 bytes
 	ev_beat
 	ev_note	0, 36, 110, 19, 0, 0
 	ev_note	0, 18, 89, 26, 0, 0
@@ -837,10 +837,10 @@ Style_SwingyReggae_Intro1B_Events:		# 4 bars of 4 beats, 1651 bytes
 	ev_note	4, 60, 121, 19, 0, 1
 	ev_note	4, 72, 126, 21, 0, 1
 	ev_end
-	var_end	Style_SwingyReggae_Intro1B
+	var_end	Style_SwingyReggae_Intro1Minor
 
-Style_SwingyReggae_Ending1A:
-	var_head	Style_SwingyReggae_Ending1A, 5, 4, 0xff, 0xff
+Style_SwingyReggae_Intro2Major:
+	var_head	Style_SwingyReggae_Intro2Major, 5, 4, 0xff, 0xff
 	ev_cc	0, 91, 32
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 29
@@ -853,8 +853,8 @@ Style_SwingyReggae_Ending1A:
 	ev_cc	5, 91, 29
 	ev_pc	6, 0x59, 0x00, 0x20
 	ev_cc	7, 91, 41
-	var_events	Style_SwingyReggae_Ending1A
-Style_SwingyReggae_Ending1A_Events:		# 5 bars of 4 beats, 2055 bytes
+	var_events	Style_SwingyReggae_Intro2Major
+Style_SwingyReggae_Intro2Major_Events:		# 5 bars of 4 beats, 2055 bytes
 	ev_beat
 	ev_beat
 	ev_at	62
@@ -1320,10 +1320,10 @@ Style_SwingyReggae_Ending1A_Events:		# 5 bars of 4 beats, 2055 bytes
 	ev_at	68
 	ev_note	1, 31, 38, 4, 0, 1
 	ev_end
-	var_end	Style_SwingyReggae_Ending1A
+	var_end	Style_SwingyReggae_Intro2Major
 
-Style_SwingyReggae_Ending1B:
-	var_head	Style_SwingyReggae_Ending1B, 5, 4, 0xff, 0x02
+Style_SwingyReggae_Intro2Minor:
+	var_head	Style_SwingyReggae_Intro2Minor, 5, 4, 0xff, 0x02
 	ev_cc	0, 91, 32
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 29
@@ -1338,8 +1338,8 @@ Style_SwingyReggae_Ending1B:
 	ev_cc	5, 92, 35
 	ev_pc	6, 0x59, 0x00, 0x20
 	ev_cc	7, 91, 41
-	var_events	Style_SwingyReggae_Ending1B
-Style_SwingyReggae_Ending1B_Events:		# 5 bars of 4 beats, 2029 bytes
+	var_events	Style_SwingyReggae_Intro2Minor
+Style_SwingyReggae_Intro2Minor_Events:		# 5 bars of 4 beats, 2029 bytes
 	ev_beat
 	ev_beat
 	ev_at	62
@@ -1804,7 +1804,7 @@ Style_SwingyReggae_Ending1B_Events:		# 5 bars of 4 beats, 2029 bytes
 	ev_at	68
 	ev_note	1, 34, 38, 4, 0, 1
 	ev_end
-	var_end	Style_SwingyReggae_Ending1B
+	var_end	Style_SwingyReggae_Intro2Minor
 
 Style_SwingyReggae_Var1:
 	var_head	Style_SwingyReggae_Var1, 4, 4, 0xff, 0x03
@@ -4192,8 +4192,8 @@ Style_SwingyReggae_Var4Fill2_Events:		# 1 bars of 4 beats, 538 bytes
 	ev_end
 	var_end	Style_SwingyReggae_Var4Fill2
 
-Style_SwingyReggae_Intro2A:
-	var_head	Style_SwingyReggae_Intro2A, 4, 4, 0xff, 0x03
+Style_SwingyReggae_Ending1Major:
+	var_head	Style_SwingyReggae_Ending1Major, 4, 4, 0xff, 0x03
 	ev_cc	0, 91, 32
 	ev_cc	0, 83, 65
 	ev_cc	1, 97, 11
@@ -4205,8 +4205,8 @@ Style_SwingyReggae_Intro2A:
 	ev_cc	6, 91, 18
 	ev_cc	6, 93, 50
 	ev_pc	6, 0x3e, 0x10, 0x20
-	var_events	Style_SwingyReggae_Intro2A
-Style_SwingyReggae_Intro2A_Events:		# 4 bars of 4 beats, 1655 bytes
+	var_events	Style_SwingyReggae_Ending1Major
+Style_SwingyReggae_Ending1Major_Events:		# 4 bars of 4 beats, 1655 bytes
 	ev_beat
 	ev_note	0, 36, 110, 19, 0, 0
 	ev_note	0, 18, 89, 26, 0, 0
@@ -4592,10 +4592,10 @@ Style_SwingyReggae_Intro2A_Events:		# 4 bars of 4 beats, 1655 bytes
 	ev_note	3, 52, 100, 16, 0, 1
 	ev_note	4, 72, 115, 33, 0, 1
 	ev_end
-	var_end	Style_SwingyReggae_Intro2A
+	var_end	Style_SwingyReggae_Ending1Major
 
-Style_SwingyReggae_Intro2B:
-	var_head	Style_SwingyReggae_Intro2B, 4, 4, 0xff, 0x03
+Style_SwingyReggae_Ending1Minor:
+	var_head	Style_SwingyReggae_Ending1Minor, 4, 4, 0xff, 0x03
 	ev_cc	0, 91, 32
 	ev_cc	0, 83, 65
 	ev_cc	1, 97, 11
@@ -4608,8 +4608,8 @@ Style_SwingyReggae_Intro2B:
 	ev_cc	6, 91, 18
 	ev_cc	6, 93, 50
 	ev_pc	6, 0x3e, 0x10, 0x20
-	var_events	Style_SwingyReggae_Intro2B
-Style_SwingyReggae_Intro2B_Events:		# 4 bars of 4 beats, 1484 bytes
+	var_events	Style_SwingyReggae_Ending1Minor
+Style_SwingyReggae_Ending1Minor_Events:		# 4 bars of 4 beats, 1484 bytes
 	ev_beat
 	ev_note	0, 36, 110, 19, 0, 0
 	ev_note	0, 18, 89, 26, 0, 0
@@ -4959,10 +4959,10 @@ Style_SwingyReggae_Intro2B_Events:		# 4 bars of 4 beats, 1484 bytes
 	ev_at	65
 	ev_note	3, 51, 100, 16, 0, 1
 	ev_end
-	var_end	Style_SwingyReggae_Intro2B
+	var_end	Style_SwingyReggae_Ending1Minor
 
-Style_SwingyReggae_Ending2A:
-	var_head	Style_SwingyReggae_Ending2A, 4, 4, 0xff, 0x02
+Style_SwingyReggae_Ending2Major:
+	var_head	Style_SwingyReggae_Ending2Major, 4, 4, 0xff, 0x02
 	ev_cc	0, 91, 32
 	ev_cc	0, 83, 65
 	ev_cc	1, 97, 11
@@ -4978,8 +4978,8 @@ Style_SwingyReggae_Ending2A:
 	ev_cc	6, 91, 18
 	ev_cc	6, 93, 26
 	ev_pc	6, 0x59, 0x00, 0x20
-	var_events	Style_SwingyReggae_Ending2A
-Style_SwingyReggae_Ending2A_Events:		# 4 bars of 4 beats, 2109 bytes
+	var_events	Style_SwingyReggae_Ending2Major
+Style_SwingyReggae_Ending2Major_Events:		# 4 bars of 4 beats, 2109 bytes
 	ev_beat
 	ev_note	0, 36, 91, 47, 0, 0
 	ev_note	0, 106, 79, 28, 0, 0
@@ -5464,10 +5464,10 @@ Style_SwingyReggae_Ending2A_Events:		# 4 bars of 4 beats, 2109 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_SwingyReggae_Ending2A
+	var_end	Style_SwingyReggae_Ending2Major
 
-Style_SwingyReggae_Ending2B:
-	var_head	Style_SwingyReggae_Ending2B, 4, 4, 0xff, 0x02
+Style_SwingyReggae_Ending2Minor:
+	var_head	Style_SwingyReggae_Ending2Minor, 4, 4, 0xff, 0x02
 	ev_cc	0, 91, 32
 	ev_cc	0, 83, 65
 	ev_cc	1, 97, 11
@@ -5483,8 +5483,8 @@ Style_SwingyReggae_Ending2B:
 	ev_cc	6, 91, 18
 	ev_cc	6, 93, 26
 	ev_pc	6, 0x59, 0x00, 0x20
-	var_events	Style_SwingyReggae_Ending2B
-Style_SwingyReggae_Ending2B_Events:		# 4 bars of 4 beats, 2062 bytes
+	var_events	Style_SwingyReggae_Ending2Minor
+Style_SwingyReggae_Ending2Minor_Events:		# 4 bars of 4 beats, 2062 bytes
 	ev_beat
 	ev_note	0, 36, 91, 47, 0, 0
 	ev_note	0, 106, 79, 28, 0, 0
@@ -5952,4 +5952,4 @@ Style_SwingyReggae_Ending2B_Events:		# 4 bars of 4 beats, 2062 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_SwingyReggae_Ending2B
+	var_end	Style_SwingyReggae_Ending2Minor

@@ -19,8 +19,8 @@ Style_Bossa22:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_Bossa22
 
-Style_Bossa22_Intro1A:
-	var_head	Style_Bossa22_Intro1A, 2, 4, 0xff, 0xff
+Style_Bossa22_Intro1Major:
+	var_head	Style_Bossa22_Intro1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 112
 	ev_cc	5, 7, 127
@@ -29,8 +29,8 @@ Style_Bossa22_Intro1A:
 	ev_cc	6, 7, 127
 	ev_cc	6, 10, 64
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_Bossa22_Intro1A
-Style_Bossa22_Intro1A_Events:		# 2 bars of 4 beats, 1074 bytes
+	var_events	Style_Bossa22_Intro1Major
+Style_Bossa22_Intro1Major_Events:		# 2 bars of 4 beats, 1074 bytes
 	ev_beat
 	ev_note	0, 38, 77, 12, 0, 0
 	ev_note	0, 36, 56, 12, 0, 0
@@ -315,10 +315,10 @@ Style_Bossa22_Intro1A_Events:		# 2 bars of 4 beats, 1074 bytes
 	ev_at	80
 	ev_note	3, 67, 78, 13, 0, 1
 	ev_end
-	var_end	Style_Bossa22_Intro1A
+	var_end	Style_Bossa22_Intro1Major
 
-Style_Bossa22_Intro1B:
-	var_head	Style_Bossa22_Intro1B, 2, 4, 0xff, 0xff
+Style_Bossa22_Intro1Minor:
+	var_head	Style_Bossa22_Intro1Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 7, 127
 	ev_cc	5, 10, 64
@@ -327,8 +327,8 @@ Style_Bossa22_Intro1B:
 	ev_cc	6, 10, 64
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_pc	7, 0x01, 0x4c, 0x24
-	var_events	Style_Bossa22_Intro1B
-Style_Bossa22_Intro1B_Events:		# 2 bars of 4 beats, 1482 bytes
+	var_events	Style_Bossa22_Intro1Minor
+Style_Bossa22_Intro1Minor_Events:		# 2 bars of 4 beats, 1482 bytes
 	ev_beat
 	ev_note	2, 48, 58, 55, 0, 1
 	ev_note	4, 84, 48, 32, 2, 1
@@ -864,14 +864,14 @@ Style_Bossa22_Intro1B_Events:		# 2 bars of 4 beats, 1482 bytes
 	ev_at	89
 	ev_cc	4, 11, 127
 	ev_end
-	var_end	Style_Bossa22_Intro1B
+	var_end	Style_Bossa22_Intro1Minor
 
-Style_Bossa22_Ending1A:
-	var_head	Style_Bossa22_Ending1A, 4, 4, 0xff, 0xff
+Style_Bossa22_Intro2Major:
+	var_head	Style_Bossa22_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	7, 7, 112
-	var_events	Style_Bossa22_Ending1A
-Style_Bossa22_Ending1A_Events:		# 4 bars of 4 beats, 1558 bytes
+	var_events	Style_Bossa22_Intro2Major
+Style_Bossa22_Intro2Major_Events:		# 4 bars of 4 beats, 1558 bytes
 	ev_beat
 	ev_note	0, 36, 56, 12, 0, 0
 	ev_note	1, 36, 76, 75, 0, 1
@@ -1290,18 +1290,18 @@ Style_Bossa22_Ending1A_Events:		# 4 bars of 4 beats, 1558 bytes
 	ev_at	89
 	ev_note	7, 80, 43, 12, 0, 0
 	ev_end
-	var_end	Style_Bossa22_Ending1A
+	var_end	Style_Bossa22_Intro2Major
 
-Style_Bossa22_Ending1B:
-	var_head	Style_Bossa22_Ending1B, 4, 4, 0xff, 0xff
+Style_Bossa22_Intro2Minor:
+	var_head	Style_Bossa22_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	6, 7, 127
 	ev_cc	6, 10, 64
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_cc	7, 7, 127
 	ev_pc	7, 0x00, 0x00, 0x26
-	var_events	Style_Bossa22_Ending1B
-Style_Bossa22_Ending1B_Events:		# 4 bars of 4 beats, 1630 bytes
+	var_events	Style_Bossa22_Intro2Minor
+Style_Bossa22_Intro2Minor_Events:		# 4 bars of 4 beats, 1630 bytes
 	ev_beat
 	ev_note	1, 48, 97, 72, 0, 1
 	ev_at	1
@@ -1861,7 +1861,7 @@ Style_Bossa22_Ending1B_Events:		# 4 bars of 4 beats, 1630 bytes
 	ev_at	72
 	ev_note	0, 20, 28, 12, 0, 0
 	ev_end
-	var_end	Style_Bossa22_Ending1B
+	var_end	Style_Bossa22_Intro2Minor
 
 Style_Bossa22_Var1:
 	var_head	Style_Bossa22_Var1, 4, 4, 0xff, 0xff
@@ -4649,8 +4649,8 @@ Style_Bossa22_Var4Fill2_Events:		# 1 bars of 4 beats, 348 bytes
 	ev_end
 	var_end	Style_Bossa22_Var4Fill2
 
-Style_Bossa22_Intro2A:
-	var_head	Style_Bossa22_Intro2A, 2, 4, 0xff, 0xff
+Style_Bossa22_Ending1Major:
+	var_head	Style_Bossa22_Ending1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 7, 127
 	ev_cc	5, 10, 64
@@ -4658,8 +4658,8 @@ Style_Bossa22_Intro2A:
 	ev_cc	6, 7, 127
 	ev_cc	6, 10, 64
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_Bossa22_Intro2A
-Style_Bossa22_Intro2A_Events:		# 2 bars of 4 beats, 1157 bytes
+	var_events	Style_Bossa22_Ending1Major
+Style_Bossa22_Ending1Major_Events:		# 2 bars of 4 beats, 1157 bytes
 	ev_beat
 	ev_note	0, 38, 77, 12, 0, 0
 	ev_note	0, 36, 56, 12, 0, 0
@@ -4952,10 +4952,10 @@ Style_Bossa22_Intro2A_Events:		# 2 bars of 4 beats, 1157 bytes
 	ev_at	16
 	ev_note	0, 44, 28, 12, 0, 0
 	ev_end
-	var_end	Style_Bossa22_Intro2A
+	var_end	Style_Bossa22_Ending1Major
 
-Style_Bossa22_Intro2B:
-	var_head	Style_Bossa22_Intro2B, 2, 4, 0xff, 0xff
+Style_Bossa22_Ending1Minor:
+	var_head	Style_Bossa22_Ending1Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 7, 127
 	ev_cc	5, 10, 64
@@ -4964,8 +4964,8 @@ Style_Bossa22_Intro2B:
 	ev_cc	6, 10, 64
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_pc	7, 0x01, 0x4c, 0x24
-	var_events	Style_Bossa22_Intro2B
-Style_Bossa22_Intro2B_Events:		# 2 bars of 4 beats, 1464 bytes
+	var_events	Style_Bossa22_Ending1Minor
+Style_Bossa22_Ending1Minor_Events:		# 2 bars of 4 beats, 1464 bytes
 	ev_beat
 	ev_note	0, 38, 77, 12, 0, 0
 	ev_note	0, 36, 56, 12, 0, 0
@@ -5493,14 +5493,14 @@ Style_Bossa22_Intro2B_Events:		# 2 bars of 4 beats, 1464 bytes
 	ev_at	89
 	ev_cc	4, 11, 127
 	ev_end
-	var_end	Style_Bossa22_Intro2B
+	var_end	Style_Bossa22_Ending1Minor
 
-Style_Bossa22_Ending2A:
-	var_head	Style_Bossa22_Ending2A, 4, 4, 0xff, 0xff
+Style_Bossa22_Ending2Major:
+	var_head	Style_Bossa22_Ending2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	7, 7, 112
-	var_events	Style_Bossa22_Ending2A
-Style_Bossa22_Ending2A_Events:		# 4 bars of 4 beats, 1498 bytes
+	var_events	Style_Bossa22_Ending2Major
+Style_Bossa22_Ending2Major_Events:		# 4 bars of 4 beats, 1498 bytes
 	ev_beat
 	ev_note	0, 36, 66, 12, 0, 0
 	ev_note	7, 37, 75, 12, 0, 0
@@ -5901,18 +5901,18 @@ Style_Bossa22_Ending2A_Events:		# 4 bars of 4 beats, 1498 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Bossa22_Ending2A
+	var_end	Style_Bossa22_Ending2Major
 
-Style_Bossa22_Ending2B:
-	var_head	Style_Bossa22_Ending2B, 4, 4, 0xff, 0xff
+Style_Bossa22_Ending2Minor:
+	var_head	Style_Bossa22_Ending2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	6, 7, 127
 	ev_cc	6, 10, 64
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_cc	7, 7, 127
 	ev_pc	7, 0x00, 0x00, 0x26
-	var_events	Style_Bossa22_Ending2B
-Style_Bossa22_Ending2B_Events:		# 4 bars of 4 beats, 1295 bytes
+	var_events	Style_Bossa22_Ending2Minor
+Style_Bossa22_Ending2Minor_Events:		# 4 bars of 4 beats, 1295 bytes
 	ev_beat
 	ev_note	0, 36, 66, 12, 0, 0
 	ev_note	1, 36, 95, 80, 0, 1
@@ -6270,4 +6270,4 @@ Style_Bossa22_Ending2B_Events:		# 4 bars of 4 beats, 1295 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Bossa22_Ending2B
+	var_end	Style_Bossa22_Ending2Minor

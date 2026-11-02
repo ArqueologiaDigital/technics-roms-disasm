@@ -9437,8 +9437,8 @@
 	.word	\X, \Y, \X + \W - 1, \Y + \H - 1
 	.space	2
 	.long	\int_time
-	.word	\start_stop
-	.space	2
+	.byte	\start_stop
+	.space	3
 .endm
 
 # IvSDFwdRewTimer: IvSDFwdRewTimer < PsInvisibleBox < Viewable; 32 bytes; own fields int_time:E skip_wait:D on_off_flg:D
@@ -9453,8 +9453,9 @@
 	.word	\X, \Y, \X + \W - 1, \Y + \H - 1
 	.space	2
 	.long	\int_time
-	.word	\skip_wait
-	.word	\on_off_flg
+	.byte	\skip_wait
+	.byte	\on_off_flg
+	.space	2
 .endm
 
 # AcSswScreen: AcSswScreen < Screen < GroupBox < VwBox < Viewable; 40 bytes

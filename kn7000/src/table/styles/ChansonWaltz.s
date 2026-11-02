@@ -19,13 +19,13 @@ Style_ChansonWaltz:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_ChansonWaltz
 
-Style_ChansonWaltz_Intro1A:
-	var_head	Style_ChansonWaltz_Intro1A, 8, 3, 0xff, 0xff
+Style_ChansonWaltz_Intro1Major:
+	var_head	Style_ChansonWaltz_Intro1Major, 8, 3, 0xff, 0xff
 	ev_cc	0, 7, 109
 	ev_cc	1, 97, 11
 	ev_cc	7, 91, 40
-	var_events	Style_ChansonWaltz_Intro1A
-Style_ChansonWaltz_Intro1A_Events:		# 8 bars of 3 beats, 1796 bytes
+	var_events	Style_ChansonWaltz_Intro1Major
+Style_ChansonWaltz_Intro1Major_Events:		# 8 bars of 3 beats, 1796 bytes
 	ev_beat
 	ev_note	2, 57, 94, 46, 0, 1
 	ev_note	3, 53, 83, 48, 0, 1
@@ -517,15 +517,15 @@ Style_ChansonWaltz_Intro1A_Events:		# 8 bars of 3 beats, 1796 bytes
 	ev_at	49
 	ev_note	0, 38, 31, 10, 0, 0
 	ev_end
-	var_end	Style_ChansonWaltz_Intro1A
+	var_end	Style_ChansonWaltz_Intro1Major
 
-Style_ChansonWaltz_Intro1B:
-	var_head	Style_ChansonWaltz_Intro1B, 8, 3, 0xff, 0xff
+Style_ChansonWaltz_Intro1Minor:
+	var_head	Style_ChansonWaltz_Intro1Minor, 8, 3, 0xff, 0xff
 	ev_cc	0, 7, 109
 	ev_cc	1, 97, 11
 	ev_cc	7, 91, 40
-	var_events	Style_ChansonWaltz_Intro1B
-Style_ChansonWaltz_Intro1B_Events:		# 8 bars of 3 beats, 1833 bytes
+	var_events	Style_ChansonWaltz_Intro1Minor
+Style_ChansonWaltz_Intro1Minor_Events:		# 8 bars of 3 beats, 1833 bytes
 	ev_beat
 	ev_note	6, 65, 93, 84, 0, 1
 	ev_note	1, 41, 108, 8, 2, 1
@@ -1024,15 +1024,15 @@ Style_ChansonWaltz_Intro1B_Events:		# 8 bars of 3 beats, 1833 bytes
 	ev_at	78
 	ev_note	6, 71, 95, 26, 0, 1
 	ev_end
-	var_end	Style_ChansonWaltz_Intro1B
+	var_end	Style_ChansonWaltz_Intro1Minor
 
-Style_ChansonWaltz_Ending1A:
-	var_head	Style_ChansonWaltz_Ending1A, 8, 3, 0xff, 0xff
+Style_ChansonWaltz_Intro2Major:
+	var_head	Style_ChansonWaltz_Intro2Major, 8, 3, 0xff, 0xff
 	ev_cc	0, 7, 109
 	ev_cc	1, 97, 11
 	ev_cc	7, 91, 40
-	var_events	Style_ChansonWaltz_Ending1A
-Style_ChansonWaltz_Ending1A_Events:		# 8 bars of 3 beats, 1347 bytes
+	var_events	Style_ChansonWaltz_Intro2Major
+Style_ChansonWaltz_Intro2Major_Events:		# 8 bars of 3 beats, 1347 bytes
 	ev_beat
 	ev_note	6, 67, 114, 13, 1, 1
 	ev_note	2, 76, 51, 32, 1, 1
@@ -1395,15 +1395,15 @@ Style_ChansonWaltz_Ending1A_Events:		# 8 bars of 3 beats, 1347 bytes
 	ev_at	6
 	ev_note	0, 51, 83, 38, 0, 0
 	ev_end
-	var_end	Style_ChansonWaltz_Ending1A
+	var_end	Style_ChansonWaltz_Intro2Major
 
-Style_ChansonWaltz_Ending1B:
-	var_head	Style_ChansonWaltz_Ending1B, 8, 3, 0xff, 0xff
+Style_ChansonWaltz_Intro2Minor:
+	var_head	Style_ChansonWaltz_Intro2Minor, 8, 3, 0xff, 0xff
 	ev_cc	0, 7, 109
 	ev_cc	1, 97, 11
 	ev_cc	7, 91, 40
-	var_events	Style_ChansonWaltz_Ending1B
-Style_ChansonWaltz_Ending1B_Events:		# 8 bars of 3 beats, 1494 bytes
+	var_events	Style_ChansonWaltz_Intro2Minor
+Style_ChansonWaltz_Intro2Minor_Events:		# 8 bars of 3 beats, 1494 bytes
 	ev_beat
 	ev_note	2, 55, 99, 24, 0, 1
 	ev_note	4, 67, 75, 98, 1, 1
@@ -1828,7 +1828,7 @@ Style_ChansonWaltz_Ending1B_Events:		# 8 bars of 3 beats, 1494 bytes
 	ev_at	6
 	ev_note	0, 51, 83, 38, 0, 0
 	ev_end
-	var_end	Style_ChansonWaltz_Ending1B
+	var_end	Style_ChansonWaltz_Intro2Minor
 
 Style_ChansonWaltz_Var1:
 	var_head	Style_ChansonWaltz_Var1, 4, 3, 0xff, 0xff
@@ -2982,14 +2982,14 @@ Style_ChansonWaltz_Var4Fill2_Events:		# 1 bars of 3 beats, 212 bytes
 	ev_end
 	var_end	Style_ChansonWaltz_Var4Fill2
 
-Style_ChansonWaltz_Intro2A:
-	var_head	Style_ChansonWaltz_Intro2A, 8, 3, 0xff, 0xff
+Style_ChansonWaltz_Ending1Major:
+	var_head	Style_ChansonWaltz_Ending1Major, 8, 3, 0xff, 0xff
 	ev_cc	0, 7, 109
 	ev_cc	1, 97, 11
 	ev_cc	5, 7, 71
 	ev_cc	7, 91, 40
-	var_events	Style_ChansonWaltz_Intro2A
-Style_ChansonWaltz_Intro2A_Events:		# 8 bars of 3 beats, 1570 bytes
+	var_events	Style_ChansonWaltz_Ending1Major
+Style_ChansonWaltz_Ending1Major_Events:		# 8 bars of 3 beats, 1570 bytes
 	ev_beat
 	ev_at	2
 	ev_note	0, 36, 85, 19, 0, 0
@@ -3405,15 +3405,15 @@ Style_ChansonWaltz_Intro2A_Events:		# 8 bars of 3 beats, 1570 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_ChansonWaltz_Intro2A
+	var_end	Style_ChansonWaltz_Ending1Major
 
-Style_ChansonWaltz_Intro2B:
-	var_head	Style_ChansonWaltz_Intro2B, 8, 3, 0xff, 0xff
+Style_ChansonWaltz_Ending1Minor:
+	var_head	Style_ChansonWaltz_Ending1Minor, 8, 3, 0xff, 0xff
 	ev_cc	0, 7, 109
 	ev_cc	1, 97, 11
 	ev_cc	7, 91, 40
-	var_events	Style_ChansonWaltz_Intro2B
-Style_ChansonWaltz_Intro2B_Events:		# 8 bars of 3 beats, 1567 bytes
+	var_events	Style_ChansonWaltz_Ending1Minor
+Style_ChansonWaltz_Ending1Minor_Events:		# 8 bars of 3 beats, 1567 bytes
 	ev_beat
 	ev_at	1
 	ev_note	1, 41, 103, 30, 2, 1
@@ -3826,15 +3826,15 @@ Style_ChansonWaltz_Intro2B_Events:		# 8 bars of 3 beats, 1567 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_ChansonWaltz_Intro2B
+	var_end	Style_ChansonWaltz_Ending1Minor
 
-Style_ChansonWaltz_Ending2A:
-	var_head	Style_ChansonWaltz_Ending2A, 8, 3, 0xff, 0xff
+Style_ChansonWaltz_Ending2Major:
+	var_head	Style_ChansonWaltz_Ending2Major, 8, 3, 0xff, 0xff
 	ev_cc	0, 7, 109
 	ev_cc	1, 97, 11
 	ev_cc	7, 91, 40
-	var_events	Style_ChansonWaltz_Ending2A
-Style_ChansonWaltz_Ending2A_Events:		# 8 bars of 3 beats, 1554 bytes
+	var_events	Style_ChansonWaltz_Ending2Major
+Style_ChansonWaltz_Ending2Major_Events:		# 8 bars of 3 beats, 1554 bytes
 	ev_beat
 	ev_at	1
 	ev_note	0, 36, 78, 22, 0, 0
@@ -4249,15 +4249,15 @@ Style_ChansonWaltz_Ending2A_Events:		# 8 bars of 3 beats, 1554 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_ChansonWaltz_Ending2A
+	var_end	Style_ChansonWaltz_Ending2Major
 
-Style_ChansonWaltz_Ending2B:
-	var_head	Style_ChansonWaltz_Ending2B, 8, 3, 0xff, 0xff
+Style_ChansonWaltz_Ending2Minor:
+	var_head	Style_ChansonWaltz_Ending2Minor, 8, 3, 0xff, 0xff
 	ev_cc	0, 7, 109
 	ev_cc	1, 97, 11
 	ev_cc	7, 91, 40
-	var_events	Style_ChansonWaltz_Ending2B
-Style_ChansonWaltz_Ending2B_Events:		# 8 bars of 3 beats, 1500 bytes
+	var_events	Style_ChansonWaltz_Ending2Minor
+Style_ChansonWaltz_Ending2Minor_Events:		# 8 bars of 3 beats, 1500 bytes
 	ev_beat
 	ev_at	1
 	ev_note	0, 36, 78, 22, 0, 0
@@ -4658,4 +4658,4 @@ Style_ChansonWaltz_Ending2B_Events:		# 8 bars of 3 beats, 1500 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_ChansonWaltz_Ending2B
+	var_end	Style_ChansonWaltz_Ending2Minor

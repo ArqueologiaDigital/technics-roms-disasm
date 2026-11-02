@@ -19,16 +19,16 @@ Style_IrishJig:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_IrishJig
 
-Style_IrishJig_Intro1A:
-	var_head	Style_IrishJig_Intro1A, 3, 4, 0xff, 0xff
+Style_IrishJig_Intro1Major:
+	var_head	Style_IrishJig_Intro1Major, 3, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 100
 	ev_pc	2, 0x4f, 0x20, 0x20
 	ev_pc	3, 0x6e, 0x00, 0x20
 	ev_cc	6, 7, 127
 	ev_cc	7, 91, 40
-	var_events	Style_IrishJig_Intro1A
-Style_IrishJig_Intro1A_Events:		# 3 bars of 4 beats, 1079 bytes
+	var_events	Style_IrishJig_Intro1Major
+Style_IrishJig_Intro1Major_Events:		# 3 bars of 4 beats, 1079 bytes
 	ev_beat
 	ev_beat
 	ev_beat
@@ -312,10 +312,10 @@ Style_IrishJig_Intro1A_Events:		# 3 bars of 4 beats, 1079 bytes
 	ev_at	88
 	ev_note	0, 37, 75, 8, 0, 0
 	ev_end
-	var_end	Style_IrishJig_Intro1A
+	var_end	Style_IrishJig_Intro1Major
 
-Style_IrishJig_Intro1B:
-	var_head	Style_IrishJig_Intro1B, 3, 4, 0xff, 0xff
+Style_IrishJig_Intro1Minor:
+	var_head	Style_IrishJig_Intro1Minor, 3, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 100
 	ev_pc	2, 0x4f, 0x20, 0x20
@@ -323,8 +323,8 @@ Style_IrishJig_Intro1B:
 	ev_cc	5, 7, 127
 	ev_cc	6, 7, 127
 	ev_cc	7, 91, 40
-	var_events	Style_IrishJig_Intro1B
-Style_IrishJig_Intro1B_Events:		# 3 bars of 4 beats, 1079 bytes
+	var_events	Style_IrishJig_Intro1Minor
+Style_IrishJig_Intro1Minor_Events:		# 3 bars of 4 beats, 1079 bytes
 	ev_beat
 	ev_beat
 	ev_beat
@@ -608,10 +608,10 @@ Style_IrishJig_Intro1B_Events:		# 3 bars of 4 beats, 1079 bytes
 	ev_at	88
 	ev_note	0, 37, 75, 8, 0, 0
 	ev_end
-	var_end	Style_IrishJig_Intro1B
+	var_end	Style_IrishJig_Intro1Minor
 
-Style_IrishJig_Ending1A:
-	var_head	Style_IrishJig_Ending1A, 3, 4, 0xff, 0xff
+Style_IrishJig_Intro2Major:
+	var_head	Style_IrishJig_Intro2Major, 3, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	2, 0x15, 0x40, 0x20
 	ev_pc	3, 0x6e, 0x00, 0x20
@@ -620,8 +620,8 @@ Style_IrishJig_Ending1A:
 	ev_cc	5, 10, 11
 	ev_pc	5, 0x15, 0x40, 0x20
 	ev_cc	7, 91, 40
-	var_events	Style_IrishJig_Ending1A
-Style_IrishJig_Ending1A_Events:		# 3 bars of 4 beats, 1258 bytes
+	var_events	Style_IrishJig_Intro2Major
+Style_IrishJig_Intro2Major_Events:		# 3 bars of 4 beats, 1258 bytes
 	ev_beat
 	ev_beat
 	ev_beat
@@ -920,10 +920,10 @@ Style_IrishJig_Ending1A_Events:		# 3 bars of 4 beats, 1258 bytes
 	ev_note	4, 47, 86, 18, 0, 1
 	ev_note	4, 59, 95, 11, 0, 1
 	ev_end
-	var_end	Style_IrishJig_Ending1A
+	var_end	Style_IrishJig_Intro2Major
 
-Style_IrishJig_Ending1B:
-	var_head	Style_IrishJig_Ending1B, 3, 4, 0xff, 0xff
+Style_IrishJig_Intro2Minor:
+	var_head	Style_IrishJig_Intro2Minor, 3, 4, 0xff, 0xff
 	ev_cc	0, 7, 124
 	ev_cc	1, 97, 11
 	ev_pc	2, 0x15, 0x40, 0x20
@@ -932,8 +932,8 @@ Style_IrishJig_Ending1B:
 	ev_cc	5, 7, 127
 	ev_cc	6, 7, 127
 	ev_cc	7, 91, 40
-	var_events	Style_IrishJig_Ending1B
-Style_IrishJig_Ending1B_Events:		# 3 bars of 4 beats, 1258 bytes
+	var_events	Style_IrishJig_Intro2Minor
+Style_IrishJig_Intro2Minor_Events:		# 3 bars of 4 beats, 1258 bytes
 	ev_beat
 	ev_beat
 	ev_beat
@@ -1232,7 +1232,7 @@ Style_IrishJig_Ending1B_Events:		# 3 bars of 4 beats, 1258 bytes
 	ev_note	4, 47, 86, 18, 0, 1
 	ev_note	4, 59, 95, 11, 0, 1
 	ev_end
-	var_end	Style_IrishJig_Ending1B
+	var_end	Style_IrishJig_Intro2Minor
 
 Style_IrishJig_Var1:
 	var_head	Style_IrishJig_Var1, 4, 4, 0xff, 0xff
@@ -4420,16 +4420,16 @@ Style_IrishJig_Var4Fill2_Events:		# 1 bars of 4 beats, 474 bytes
 	ev_end
 	var_end	Style_IrishJig_Var4Fill2
 
-Style_IrishJig_Intro2A:
-	var_head	Style_IrishJig_Intro2A, 4, 4, 0xff, 0xff
+Style_IrishJig_Ending1Major:
+	var_head	Style_IrishJig_Ending1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 98
 	ev_pc	2, 0x15, 0x00, 0x20
 	ev_pc	3, 0x4f, 0x20, 0x20
 	ev_cc	6, 7, 127
 	ev_cc	7, 91, 40
-	var_events	Style_IrishJig_Intro2A
-Style_IrishJig_Intro2A_Events:		# 4 bars of 4 beats, 1526 bytes
+	var_events	Style_IrishJig_Ending1Major
+Style_IrishJig_Ending1Major_Events:		# 4 bars of 4 beats, 1526 bytes
 	ev_beat
 	ev_note	0, 8, 95, 8, 0, 0
 	ev_note	0, 54, 89, 8, 0, 0
@@ -4804,10 +4804,10 @@ Style_IrishJig_Intro2A_Events:		# 4 bars of 4 beats, 1526 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_IrishJig_Intro2A
+	var_end	Style_IrishJig_Ending1Major
 
-Style_IrishJig_Intro2B:
-	var_head	Style_IrishJig_Intro2B, 4, 4, 0xff, 0xff
+Style_IrishJig_Ending1Minor:
+	var_head	Style_IrishJig_Ending1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 98
 	ev_pc	2, 0x15, 0x00, 0x20
@@ -4815,8 +4815,8 @@ Style_IrishJig_Intro2B:
 	ev_cc	5, 7, 127
 	ev_cc	6, 7, 127
 	ev_cc	7, 91, 40
-	var_events	Style_IrishJig_Intro2B
-Style_IrishJig_Intro2B_Events:		# 4 bars of 4 beats, 1526 bytes
+	var_events	Style_IrishJig_Ending1Minor
+Style_IrishJig_Ending1Minor_Events:		# 4 bars of 4 beats, 1526 bytes
 	ev_beat
 	ev_note	0, 8, 95, 8, 0, 0
 	ev_note	0, 54, 89, 8, 0, 0
@@ -5191,10 +5191,10 @@ Style_IrishJig_Intro2B_Events:		# 4 bars of 4 beats, 1526 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_IrishJig_Intro2B
+	var_end	Style_IrishJig_Ending1Minor
 
-Style_IrishJig_Ending2A:
-	var_head	Style_IrishJig_Ending2A, 4, 4, 0xff, 0xff
+Style_IrishJig_Ending2Major:
+	var_head	Style_IrishJig_Ending2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	2, 0x15, 0x40, 0x20
 	ev_pc	3, 0x6e, 0x00, 0x20
@@ -5203,8 +5203,8 @@ Style_IrishJig_Ending2A:
 	ev_cc	5, 10, 11
 	ev_pc	5, 0x15, 0x40, 0x20
 	ev_cc	7, 91, 40
-	var_events	Style_IrishJig_Ending2A
-Style_IrishJig_Ending2A_Events:		# 4 bars of 4 beats, 1378 bytes
+	var_events	Style_IrishJig_Ending2Major
+Style_IrishJig_Ending2Major_Events:		# 4 bars of 4 beats, 1378 bytes
 	ev_beat
 	ev_note	1, 45, 74, 86, 0, 1
 	ev_note	4, 57, 78, 20, 0, 1
@@ -5554,10 +5554,10 @@ Style_IrishJig_Ending2A_Events:		# 4 bars of 4 beats, 1378 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_IrishJig_Ending2A
+	var_end	Style_IrishJig_Ending2Major
 
-Style_IrishJig_Ending2B:
-	var_head	Style_IrishJig_Ending2B, 4, 4, 0xff, 0xff
+Style_IrishJig_Ending2Minor:
+	var_head	Style_IrishJig_Ending2Minor, 4, 4, 0xff, 0xff
 	ev_cc	0, 7, 124
 	ev_cc	1, 97, 11
 	ev_pc	2, 0x15, 0x40, 0x20
@@ -5566,8 +5566,8 @@ Style_IrishJig_Ending2B:
 	ev_cc	5, 7, 127
 	ev_cc	6, 7, 127
 	ev_cc	7, 91, 40
-	var_events	Style_IrishJig_Ending2B
-Style_IrishJig_Ending2B_Events:		# 4 bars of 4 beats, 1378 bytes
+	var_events	Style_IrishJig_Ending2Minor
+Style_IrishJig_Ending2Minor_Events:		# 4 bars of 4 beats, 1378 bytes
 	ev_beat
 	ev_note	1, 44, 74, 86, 0, 1
 	ev_note	4, 56, 78, 20, 0, 1
@@ -5917,4 +5917,4 @@ Style_IrishJig_Ending2B_Events:		# 4 bars of 4 beats, 1378 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_IrishJig_Ending2B
+	var_end	Style_IrishJig_Ending2Minor

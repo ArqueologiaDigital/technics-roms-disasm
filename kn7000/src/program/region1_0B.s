@@ -13879,7 +13879,7 @@ loc_4856A0C3:
     and     0xff000000, d0
     lsr     24, d0
     extbu   d0
-    call    func_4C021259_entry, [d2,d3], 8
+    call    PartDspUnitFind_entry, [d2,d3], 8
     mov     d0, d1
     exth    d1
     cmp     0, d1

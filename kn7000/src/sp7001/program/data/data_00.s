@@ -188,7 +188,7 @@ func_4C007B4C_Var:	# u8, a constant; read / written by func_4C007B4C 0x4C007B4C:
 
 func_4C007B4C_Table:	# 3 x u8, 0..255; read by func_4C007B4C 0x4C007B4C: `movbu (func_4C007B4C_Table), d3`
 	tab_u8	0, 255, 255
-func_4C007FB8_Table:	# 34 x u8, 0..2; read by func_4C007FB8_entry 0x4C006F2B: `movbu  (d0, a1), d1`
+func_4C007FB8_Table:	# 34 x u8, 0..2; read by func_4C007FB8_entry 0x4C00777C: `movbu  (d0, a1), d1`
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
 	tab_u8	1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1	# [16]
 	tab_u8	0, 0	# [32]
@@ -3687,21 +3687,21 @@ func_4C015874_Table:	# 8 x u16, 0..5; read by func_4C015874 0x4C015874: `movhu  
 	tab_u16	0, 0, 1, 2, 4, 4, 5, 3
 func_4C016640_Table:	# 6 x u16, 1..7; read by func_4C016640 0x4C016640: `movhu  (d0, a0), d0`
 	tab_u16	1, 2, 3, 7, 5, 6
-func_4C01922D_Table:	# 2 x u8, 2..3; read by func_4C01922D_entry 0x4C0155D1: `movbu  (d2, a0), d1`
+func_4C01922D_Table:	# 2 x u8, 2..3; read by func_4C01922D_entry 0x4C016CB6: `movbu  (d2, a0), d1`
 	tab_u8	2, 3
-func_4C01922D_Table_2:	# 2 x u8, 1..2; read by func_4C01922D_entry 0x4C0155D1: `movbu  (d2, a0), d0`
+func_4C01922D_Table_2:	# 2 x u8, 1..2; read by func_4C01922D_entry 0x4C016CB6: `movbu  (d2, a0), d0`
 	tab_u8	1, 2
-func_4C019397_Table:	# 2 x u8, 0..1; read by func_4C019397_entry 0x4C0155D1: `movbu  (d2, a0), d0`
+func_4C019397_Table:	# 2 x u8, 0..1; read by func_4C019397_entry 0x4C016CB6: `movbu  (d2, a0), d0`
 	tab_u8	0, 1
-func_4C019397_Table_2:	# 2 x u8, 1..2; read by func_4C019397_entry 0x4C0155D1: `movbu  (d2, a0), d0`
+func_4C019397_Table_2:	# 2 x u8, 1..2; read by func_4C019397_entry 0x4C016CB6: `movbu  (d2, a0), d0`
 	tab_u8	1, 2
-func_4C019694_Table:	# 2 x s8, -1..1; read by func_4C019694_entry 0x4C0155D1: `movbu  (d1, a0), d0`
+func_4C019694_Table:	# 2 x s8, -1..1; read by func_4C019694_entry 0x4C016CB6: `movbu  (d1, a0), d0`
 	tab_s8	-1, 1
-func_4C019694_Table_2:	# 2 x u8, 1..2; read by func_4C019694_entry 0x4C0155D1: `movbu  (d1, a0), d0`; func_4C019694_entry 0x4C0155D1: `movbu  (d1, a0), d2`
+func_4C019694_Table_2:	# 2 x u8, 1..2; read by func_4C019694_entry 0x4C016CB6: `movbu  (d1, a0), d0`; func_4C019694_entry 0x4C016CB6: `movbu  (d1, a0), d2`
 	tab_u8	1, 2
-func_4C0197D0_Table:	# 2 x s8, -12..12; read by func_4C0197D0_entry 0x4C0155D1: `movbu  (d1, a0), d0`
+func_4C0197D0_Table:	# 2 x s8, -12..12; read by func_4C0197D0_entry 0x4C016CB6: `movbu  (d1, a0), d0`
 	tab_s8	-12, 12
-func_4C0197D0_Table_2:	# 2 x u8, 1..2; read by func_4C0197D0_entry 0x4C0155D1: `movbu  (d1, a0), d0`; func_4C0197D0_entry 0x4C0155D1: `movbu  (d1, a0), d2`
+func_4C0197D0_Table_2:	# 2 x u8, 1..2; read by func_4C0197D0_entry 0x4C016CB6: `movbu  (d1, a0), d0`; func_4C0197D0_entry 0x4C016CB6: `movbu  (d1, a0), d2`
 	tab_u8	1, 2
 func_4C01C0D6_Table:	# 11 x u16, 0..40; read by func_4C01C0D6 0x4C01C0D6: `movhu  (d1, a1), d2`
 	tab_u16	0, 6, 8, 10, 13, 16, 19, 22, 25, 30, 40
@@ -3743,7 +3743,7 @@ func_4C01565C_Table:	# 37 x u32, 1275156099..1275156244; read by func_4C01565C 0
 func_4C015C9F_Table:	# 12 x u32, 1275157696..1275157760; read by func_4C015C9F 0x4C015C9F: `mov   (d1, a1), a1`
 	tab_u32	1275157696, 1275157696, 1275157696, 1275157707, 1275157718, 1275157696, 1275157729, 1275157729	# [0]
 	tab_u32	1275157740, 1275157751, 1275157760, 1275157696	# [8]
-func_4C015EAA_Table:	# 37 x u32, 1275158224..1275158695; read by func_4C015EAA 0x4C015EAA: `mov   (d1, a1), a1`
+func_4C015EAA_Table:	# 37 x u32, 1275158224..1275158695; read by M3SetByKind 0x4C015EAA: `mov   (d1, a1), a1`
 	tab_u32	1275158224, 1275158239, 1275158224, 1275158254, 1275158269, 1275158284, 1275158299, 1275158314	# [0]
 	tab_u32	1275158329, 1275158344, 1275158359, 1275158374, 1275158389, 1275158404, 1275158419, 1275158434	# [8]
 	tab_u32	1275158449, 1275158464, 1275158479, 1275158494, 1275158509, 1275158524, 1275158539, 1275158554	# [16]
@@ -3907,7 +3907,7 @@ func_4C01D278_Records:	# 16 x REC_func_4C01D278_Records (8 bytes each); read by 
 	REC_func_4C01D278_Records	x4="\x81\xD3\x01L"
 	REC_func_4C01D278_Records	x4="\x81\xD3\x01L"
 
-func_4C01EBC6_Table:	# 16 x u8, 3..18; read by func_4C01EBC6_entry 0x4C0155D1: `movbu  (d0, a0), d0`
+func_4C01EBC6_Table:	# 16 x u8, 3..18; read by func_4C01EBC6_entry 0x4C01BB74: `movbu  (d0, a0), d0`
 	tab_u8	16, 17, 18, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
 
 func_4C01E0A2_Records:	# 16 x REC_func_4C01E0A2_Records (8 bytes each); read by func_4C01E0A2 0x4C01E0A2 `mov (a0), d1`
@@ -3968,9 +3968,7 @@ Str_ZZ:	.asciz "ZZ"
 
 Str_empty_1246:
 # panel memory "": 43 records
-	PMR_NAME_HEAD
-	.ascii	"                "
-	PMR_NAME_TAIL	0, 0
+	PMR_NAME	"                ", 0, 0
 	PMR_PART	0x10, 0, 1, 32, 127, 53, 249, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	PMR_PART	0x11, 61, 0, 32, 127, 53, 249, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 80, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	PMR_PART	0x12, 5, 0, 32, 94, 101, 8, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 48, 64, 128, 2, 64, 0, 0, 0, 0, 0, 128, 96, 52, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 6, 0, 35, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -4017,17 +4015,17 @@ Str_empty_1246:
 # census: opaque -- unknown-dump: 160 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x18D810, 0x18D8B0
 
-func_4C01F8D8_Table:	# 76 x u8, 0..255; read by func_4C01F8D8_entry 0x4C0155D1: `movbu  (a1), d0`
+func_4C01F8D8_Table:	# 76 x u8, 0..255; read by func_4C01F8D8_entry 0x4C01BB74: `movbu  (a1), d0`
 	tab_u8	0, 72, 0, 0, 32, 127, 53, 203, 2, 0, 0, 0, 0, 0, 208, 208	# [0]
 	tab_u8	40, 128, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64	# [16]
 	tab_u8	128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128	# [32]
 	tab_u8	128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 255, 0, 0	# [48]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255	# [64]
-func_4C01FC86_Table:	# 8 x u8, 0..255; read by func_4C01FC86_entry 0x4C0155D1: `movbu  (a1), d0`
+func_4C01FC86_Table:	# 8 x u8, 0..255; read by func_4C01FC86_entry 0x4C01BB74: `movbu  (a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 255, 255
-func_4C01FDA7_Table:	# 4 x u8, 3..18; read by func_4C01FDA7_entry 0x4C0155D1: `movbu  (a2), d0`
+func_4C01FDA7_Table:	# 4 x u8, 3..18; read by func_4C01FDA7_entry 0x4C01BB74: `movbu  (a2), d0`
 	tab_u8	16, 17, 18, 3
-func_4C01FDA7_Table_2:	# 8 x u8, 0..255; read by func_4C01FDA7_entry 0x4C0155D1: `movbu  (a1), d0`
+func_4C01FDA7_Table_2:	# 8 x u8, 0..255; read by func_4C01FDA7_entry 0x4C01BB74: `movbu  (a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 255, 255
 
 func_4C020F10_Records:	# 6 x REC_func_4C020F10_Records (8 bytes each); read by func_4C020F10 0x4C020F10 `call memcpy_entry, [a2,a3], 8`
@@ -4053,7 +4051,7 @@ func_4C02109A_Table:	# 105 x u32, 0..2214594558; read by func_4C02109A 0x4C02109
 	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [88]
 	tab_u32	2214594486, 2214594510, 2214594534, 0, 0, 0, 0, 0	# [96]
 	tab_u32	2214594558	# [104]
-func_4C0212B3_Table:	# 8 x u8, 16..255; read by func_4C0212B3_entry 0x4C0155D1: `movbu  (d0, a0), d1`
+func_4C0212B3_Table:	# 8 x u8, 16..255; read by PartDspUnitFind_entry 0x4C0212B3: `movbu  (d0, a0), d1`
 	tab_u8	16, 17, 18, 19, 20, 255, 255, 255
 func_4C01F656_Table:	# 19 x u32, 1275197050..1275197077; read by func_4C01F656 0x4C01F656: `mov   (d0, a0), a0`
 	tab_u32	1275197077, 1275197077, 1275197077, 1275197077, 1275197077, 1275197077, 1275197077, 1275197077	# [0]
@@ -5116,11 +5114,11 @@ func_48413A30_Records:	# 128 x REC_func_48413A30_Records (2 bytes each); read by
 	REC_func_48413A30_Records	f0=111
 	REC_func_48413A30_Records	f0=111
 
-func_48413A30_Table:	# 16 x u8, 0..35; read by func_48413A30 0x4841202C: `movbu  (d0, a0), d1`
+func_48413A30_Table:	# 16 x u8, 0..35; read by func_48413A30 0x48412BD8: `movbu  (d0, a0), d1`
 	tab_u8	0, 1, 32, 33, 35, 9, 10, 4, 5, 0, 0, 0, 0, 0, 0, 0
-func_48413A30_Table_2:	# 16 x u8, 0..21; read by func_48413A30 0x4841202C: `movbu  (d0, a0), d1`
+func_48413A30_Table_2:	# 16 x u8, 0..21; read by func_48413A30 0x48412BD8: `movbu  (d0, a0), d1`
 	tab_u8	17, 17, 20, 21, 21, 21, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0
-func_48413C48_Table:	# 128 x u8, 0..99; read by func_48413C48 0x4841202C: `movbu  (d0, a0), d0`
+func_48413C48_Table:	# 128 x u8, 0..99; read by func_48413C48 0x48412BD8: `movbu  (d0, a0), d0`
 	tab_u8	0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11	# [0]
 	tab_u8	12, 13, 14, 14, 15, 16, 17, 17, 18, 19, 20, 20, 21, 22, 23, 23	# [16]
 	tab_u8	24, 25, 26, 26, 27, 28, 29, 29, 30, 31, 32, 32, 33, 34, 35, 35	# [32]
@@ -5129,7 +5127,7 @@ func_48413C48_Table:	# 128 x u8, 0..99; read by func_48413C48 0x4841202C: `movbu
 	tab_u8	62, 63, 64, 64, 65, 66, 67, 68, 69, 70, 71, 71, 72, 73, 74, 74	# [80]
 	tab_u8	75, 76, 77, 77, 78, 79, 80, 80, 81, 82, 83, 83, 84, 85, 86, 86	# [96]
 	tab_u8	87, 88, 89, 89, 90, 91, 92, 92, 93, 94, 95, 95, 96, 97, 98, 99	# [112]
-func_48413C5C_Table:	# 128 x u8, 0..99; read by func_48413C5C 0x4841202C: `movbu  (d0, a0), d0`
+func_48413C5C_Table:	# 128 x u8, 0..99; read by func_48413C5C 0x48412BD8: `movbu  (d0, a0), d0`
 	tab_u8	0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11	# [0]
 	tab_u8	12, 13, 14, 14, 15, 16, 17, 17, 18, 19, 20, 20, 21, 22, 23, 23	# [16]
 	tab_u8	24, 25, 26, 26, 27, 28, 29, 29, 30, 31, 32, 32, 33, 34, 35, 35	# [32]
@@ -5138,7 +5136,7 @@ func_48413C5C_Table:	# 128 x u8, 0..99; read by func_48413C5C 0x4841202C: `movbu
 	tab_u8	62, 63, 64, 64, 65, 66, 67, 68, 69, 70, 71, 71, 72, 73, 74, 74	# [80]
 	tab_u8	75, 76, 77, 77, 78, 79, 80, 80, 81, 82, 83, 83, 84, 85, 86, 86	# [96]
 	tab_u8	87, 88, 89, 89, 90, 91, 92, 92, 93, 94, 95, 95, 96, 97, 98, 99	# [112]
-func_48413C70_Table:	# 128 x u8, 0..99; read by func_48413C70 0x4841202C: `movbu  (d0, a0), d0`
+func_48413C70_Table:	# 128 x u8, 0..99; read by func_48413C70 0x48412BD8: `movbu  (d0, a0), d0`
 	tab_u8	0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11	# [0]
 	tab_u8	12, 13, 14, 14, 15, 16, 17, 17, 18, 19, 20, 20, 21, 22, 23, 23	# [16]
 	tab_u8	24, 25, 26, 26, 27, 28, 29, 29, 30, 31, 32, 32, 33, 34, 35, 35	# [32]
@@ -5147,7 +5145,7 @@ func_48413C70_Table:	# 128 x u8, 0..99; read by func_48413C70 0x4841202C: `movbu
 	tab_u8	62, 63, 64, 64, 65, 66, 67, 68, 69, 70, 71, 71, 72, 73, 74, 74	# [80]
 	tab_u8	75, 76, 77, 77, 78, 79, 80, 80, 81, 82, 83, 83, 84, 85, 86, 86	# [96]
 	tab_u8	87, 88, 89, 89, 90, 91, 92, 92, 93, 94, 95, 95, 96, 97, 98, 99	# [112]
-func_48413C84_Table:	# 128 x u8, 0..99; read by func_48413C84 0x4841202C: `movbu  (d0, a0), d0`
+func_48413C84_Table:	# 128 x u8, 0..99; read by func_48413C84 0x48412BD8: `movbu  (d0, a0), d0`
 	tab_u8	0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 9, 9	# [0]
 	tab_u8	9, 10, 10, 11, 11, 12, 13, 13, 14, 15, 15, 16, 16, 17, 18, 18	# [16]
 	tab_u8	19, 20, 20, 21, 21, 22, 23, 23, 24, 25, 27, 29, 31, 33, 35, 36	# [32]
@@ -5156,7 +5154,7 @@ func_48413C84_Table:	# 128 x u8, 0..99; read by func_48413C84 0x4841202C: `movbu
 	tab_u8	90, 90, 90, 90, 90, 90, 90, 90, 91, 91, 91, 91, 92, 92, 92, 92	# [80]
 	tab_u8	93, 93, 93, 93, 93, 93, 93, 93, 94, 94, 94, 94, 94, 95, 95, 95	# [96]
 	tab_u8	96, 96, 96, 96, 97, 97, 97, 97, 98, 98, 98, 98, 99, 99, 99, 99	# [112]
-func_48413C98_Table:	# 128 x u8, 0..99; read by func_48413C98 0x4841202C: `movbu  (d0, a0), d0`
+func_48413C98_Table:	# 128 x u8, 0..99; read by func_48413C98 0x48412BD8: `movbu  (d0, a0), d0`
 	tab_u8	0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 9, 9	# [0]
 	tab_u8	9, 10, 10, 11, 11, 12, 13, 13, 14, 15, 15, 16, 16, 17, 18, 18	# [16]
 	tab_u8	19, 20, 20, 21, 21, 22, 23, 23, 24, 25, 27, 29, 31, 33, 35, 36	# [32]
@@ -5165,7 +5163,7 @@ func_48413C98_Table:	# 128 x u8, 0..99; read by func_48413C98 0x4841202C: `movbu
 	tab_u8	90, 90, 90, 90, 90, 90, 90, 90, 91, 91, 91, 91, 92, 92, 92, 92	# [80]
 	tab_u8	93, 93, 93, 93, 93, 93, 93, 93, 94, 94, 94, 94, 94, 95, 95, 95	# [96]
 	tab_u8	96, 96, 96, 96, 97, 97, 97, 97, 98, 98, 98, 98, 99, 99, 99, 99	# [112]
-func_48413CAC_Table:	# 128 x u8, 0..99; read by func_48413CAC 0x4841202C: `movbu  (d0, a0), d0`
+func_48413CAC_Table:	# 128 x u8, 0..99; read by func_48413CAC 0x48412BD8: `movbu  (d0, a0), d0`
 	tab_u8	0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11	# [0]
 	tab_u8	12, 13, 14, 14, 15, 16, 17, 17, 18, 19, 20, 20, 21, 22, 23, 23	# [16]
 	tab_u8	24, 25, 26, 26, 27, 28, 29, 29, 30, 31, 32, 32, 33, 34, 35, 35	# [32]
@@ -5174,7 +5172,7 @@ func_48413CAC_Table:	# 128 x u8, 0..99; read by func_48413CAC 0x4841202C: `movbu
 	tab_u8	62, 63, 64, 64, 65, 66, 67, 68, 69, 70, 71, 71, 72, 73, 74, 74	# [80]
 	tab_u8	75, 76, 77, 77, 78, 79, 80, 80, 81, 82, 83, 83, 84, 85, 86, 86	# [96]
 	tab_u8	87, 88, 89, 89, 90, 91, 92, 92, 93, 94, 95, 95, 96, 97, 98, 99	# [112]
-func_48413CC0_Table:	# 128 x u8, 0..99; read by func_48413CC0 0x4841202C: `movbu  (d0, a0), d0`
+func_48413CC0_Table:	# 128 x u8, 0..99; read by func_48413CC0 0x48412BD8: `movbu  (d0, a0), d0`
 	tab_u8	0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11	# [0]
 	tab_u8	12, 13, 14, 14, 15, 16, 17, 17, 18, 19, 20, 20, 21, 22, 23, 23	# [16]
 	tab_u8	24, 25, 26, 26, 27, 28, 29, 29, 30, 31, 32, 32, 33, 34, 35, 35	# [32]
@@ -5183,7 +5181,7 @@ func_48413CC0_Table:	# 128 x u8, 0..99; read by func_48413CC0 0x4841202C: `movbu
 	tab_u8	62, 63, 64, 64, 65, 66, 67, 68, 69, 70, 71, 71, 72, 73, 74, 74	# [80]
 	tab_u8	75, 76, 77, 77, 78, 79, 80, 80, 81, 82, 83, 83, 84, 85, 86, 86	# [96]
 	tab_u8	87, 88, 89, 89, 90, 91, 92, 92, 93, 94, 95, 95, 96, 97, 98, 99	# [112]
-func_48413CD4_Table:	# 128 x u8, 0..99; read by func_48413CD4 0x4841202C: `movbu  (d0, a0), d0`
+func_48413CD4_Table:	# 128 x u8, 0..99; read by func_48413CD4 0x48412BD8: `movbu  (d0, a0), d0`
 	tab_u8	0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 8, 9, 10, 11, 11	# [0]
 	tab_u8	12, 13, 14, 14, 15, 16, 17, 17, 18, 19, 20, 20, 21, 22, 23, 23	# [16]
 	tab_u8	24, 25, 26, 26, 27, 28, 29, 29, 30, 31, 32, 32, 33, 34, 35, 35	# [32]
@@ -5192,7 +5190,7 @@ func_48413CD4_Table:	# 128 x u8, 0..99; read by func_48413CD4 0x4841202C: `movbu
 	tab_u8	62, 63, 64, 64, 65, 66, 67, 68, 69, 70, 71, 71, 72, 73, 74, 74	# [80]
 	tab_u8	75, 76, 77, 77, 78, 79, 80, 80, 81, 82, 83, 83, 84, 85, 86, 86	# [96]
 	tab_u8	87, 88, 89, 89, 90, 91, 92, 92, 93, 94, 95, 95, 96, 97, 98, 99	# [112]
-func_48413CE8_Table:	# 128 x u8, 0..127; read by func_48413CE8 0x4841202C: `movbu  (d0, a0), d0`
+func_48413CE8_Table:	# 128 x u8, 0..127; read by func_48413CE8 0x48412BD8: `movbu  (d0, a0), d0`
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [0]
 	tab_u8	16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31	# [16]
 	tab_u8	32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47	# [32]
@@ -5201,7 +5199,7 @@ func_48413CE8_Table:	# 128 x u8, 0..127; read by func_48413CE8 0x4841202C: `movb
 	tab_u8	80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95	# [80]
 	tab_u8	96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111	# [96]
 	tab_u8	112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127	# [112]
-func_48413CE8_Table_2:	# 128 x u8, 0..127; read by func_48413CE8 0x4841202C: `movbu  (d0, a0), d0`
+func_48413CE8_Table_2:	# 128 x u8, 0..127; read by func_48413CE8 0x48412BD8: `movbu  (d0, a0), d0`
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [0]
 	tab_u8	16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31	# [16]
 	tab_u8	32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47	# [32]
@@ -5210,7 +5208,7 @@ func_48413CE8_Table_2:	# 128 x u8, 0..127; read by func_48413CE8 0x4841202C: `mo
 	tab_u8	80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95	# [80]
 	tab_u8	96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111	# [96]
 	tab_u8	112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127	# [112]
-func_48413D10_Table:	# 128 x u8, 0..99; read by func_48413D10 0x4841202C: `movbu  (d0, a0), d0`
+func_48413D10_Table:	# 128 x u8, 0..99; read by func_48413D10 0x48412BD8: `movbu  (d0, a0), d0`
 	tab_u8	0, 1, 1, 2, 3, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 9	# [0]
 	tab_u8	10, 11, 11, 12, 13, 13, 14, 14, 15, 16, 16, 17, 17, 18, 19, 19	# [16]
 	tab_u8	20, 21, 21, 22, 22, 23, 24, 24, 25, 26, 26, 26, 27, 27, 27, 27	# [32]
@@ -5219,7 +5217,7 @@ func_48413D10_Table:	# 128 x u8, 0..99; read by func_48413D10 0x4841202C: `movbu
 	tab_u8	42, 42, 42, 43, 43, 43, 44, 44, 45, 45, 45, 46, 46, 47, 47, 47	# [80]
 	tab_u8	48, 48, 49, 49, 50, 52, 54, 56, 57, 59, 61, 64, 66, 67, 68, 69	# [96]
 	tab_u8	70, 71, 72, 73, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 95, 99	# [112]
-func_48413D24_Table:	# 128 x u8, 0..99; read by func_48413D24 0x4841202C: `movbu  (d0, a0), d0`
+func_48413D24_Table:	# 128 x u8, 0..99; read by func_48413D24 0x48412BD8: `movbu  (d0, a0), d0`
 	tab_u8	0, 1, 1, 2, 3, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 9	# [0]
 	tab_u8	10, 11, 11, 12, 13, 13, 14, 14, 15, 16, 16, 17, 17, 18, 19, 19	# [16]
 	tab_u8	20, 21, 21, 22, 22, 23, 24, 24, 25, 26, 26, 26, 27, 27, 27, 27	# [32]
@@ -18704,7 +18702,7 @@ func_48435EC3_Records:	# 32 x REC_func_48435EC3_Records (8 bytes each); read by 
 	REC_func_48435EC3_Records	key=57246, proc=loc_484360C7
 	REC_func_48435EC3_Records	key=57247, proc=loc_484360C7
 
-func_484361AB_Table:	# 44 x u8, 0..255; read by func_484361AB 0x48435E73: `movbu  (d0, a0), d0`; func_48436218_entry 0x48435E73: `movbu  (d0, a0), d0`
+ChordTypeMinorTable:	# 44 x u8, 0..255; read by ChordTypeIsMinor 0x484361AB: `movbu  (d0, a0), d0`; NoteConvApply_entry 0x48436218: `movbu  (d0, a0), d0`
 	tab_u8	0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1	# [16]
 	tab_u8	0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 255, 255	# [32]
@@ -18721,7 +18719,7 @@ func_48436431_Table:
 
 func_48437743_Table:	# 2 x u32, 0..1; read by func_48437743 0x48437743: `mov   (-0x74, a0), d2`
 	tab_u32	0, 1
-func_484378DE_Table:	# 4 x u8, 29..255; read by func_484378DE_entry 0x48435E73: `movbu  (d0, a0), d3`
+func_484378DE_Table:	# 4 x u8, 29..255; read by func_484378DE_entry 0x48436218: `movbu  (d0, a0), d3`
 	tab_u8	29, 30, 255, 255
 
 Str_SEQ_6:	.asciz "      SEQ       "
@@ -18795,13 +18793,13 @@ Str_ZZZJ:	.asciz "ZZZJ"
 Str_ZZZI:	.asciz "ZZZI"
 	.space	1, 0x4B
 
-SramRecordsLoadFactory_Block:	# 24 bytes, copied whole by SramRecordsLoadFactory 0x4843FB54: memcpy(.., 24); func_48440029 0x48440029: memcpy(.., 24)
+SramRecordsLoadFactory_Block:	# 24 bytes, copied whole by SramRecordsLoadFactory 0x4843FB54: memcpy(.., 24); SndArgImportZZZ 0x48440029: memcpy(.., 24)
 	tab_u8	0, 0, 38, 0, 0, 38, 33, 0, 32, 0, 0, 32, 48, 0, 32, 73	# [0]
 	tab_u8	0, 32, 88, 0, 32, 25, 0, 32	# [16]
 
-func_4843FFBF_Table:	# 10 x u8, 0..255; read by func_4843FFBF_entry 0x4843FB54: `movbu  (d1, a1), d0`; func_48440029_entry 0x4843FB54: `movbu  (d0, a0), d0`
+func_4843FFBF_Table:	# 10 x u8, 0..255; read by SndArgTemplateApply_entry 0x4843FFBF: `movbu  (d1, a1), d0`; SndArgImportZZZ_entry 0x48440029: `movbu  (d0, a0), d0`
 	tab_u8	0, 2, 3, 4, 5, 6, 7, 1, 255, 255
-func_4843FB38_Table:	# 19 x u32, 0..24772985; read by func_4843FB38 0x4843FB38: `mov   (-0x4c, a0), d0`
+func_4843FB38_Table:	# 19 x u32, 0..24772985; read by SndArgPartEntry 0x4843FB38: `mov   (-0x4c, a0), d0`
 	tab_u32	3, 4, 5, 6, 7, 2, 0, 1	# [0]
 	tab_u32	24183152, 24641906, 24772985, 22151505, 22348115, 22544720, 17039626, 17236229	# [8]
 	tab_u32	16908545, 17957137, 19071253	# [16]
@@ -18841,7 +18839,7 @@ func_484401AA_Records:	# 8 x REC_func_484401AA_Records (48 bytes each); read by 
 	REC_func_484401AA_Records	2097164, 2097164, 2097164, 2097164, 2097165, 2097165, 2097165, 2097165, 2097166, 2097166, 2097166, 2097166
 	REC_func_484401AA_Records	2097167, 2097167, 2097167, 2097167, 2097168, 2097168, 2097168, 2097168, 2097169, 2097169, 2097169, 2097169
 	REC_func_484401AA_Records	2097170, 2097170, 2097170, 2097170, 2097171, 2097171, 2097171, 2097171, 2097152, 2097152, 2097152, 2097152
-func_4844084C_Table:	# 24 x REC_func_4844084C_Table (2 bytes each); read by func_48440651 0x48440651 `call func_48448D82_entry, [d2,a2], 0x1c`; func_48440651 0x48440651 `movbu (1, a0), d3`; func_4844084C 0x4844084C `movbu (d0, a2), d1` (+11)
+func_4844084C_Table:	# 24 x REC_func_4844084C_Table (2 bytes each); read by PartFieldCcSend 0x48440651 `call func_48448D82_entry, [d2,a2], 0x1c`; PartFieldCcSend 0x48440651 `movbu (1, a0), d3`; StylePartFieldEmit 0x4844084C `movbu (d0, a2), d1` (+11)
 	REC_func_4844084C_Table	kind=176, f1=255	# [0]
 	REC_func_4844084C_Table	kind=176, f1=7
 	REC_func_4844084C_Table	kind=192
@@ -18867,8 +18865,8 @@ func_4844084C_Table:	# 24 x REC_func_4844084C_Table (2 bytes each); read by func
 	REC_func_4844084C_Table	kind=176, f1=17
 	REC_func_4844084C_Table	kind=176, f1=13
 
-func_48440648_Result_0:	# REC_func_48440648_Result (21 bytes), then 131 x u8 the code indexes from +0 (read by func_4844084C 0x4844084C `movbu (d3, a1), d2`; func_4844084C 0x4844084C `movbu (d3, a1), d3`)
-	REC_func_48440648_Result	s0="\xFF\xFF", key=255, f3=255, f4=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", f20=64
+func_48440648_Result_0:	# REC_StylePartTemplateDefault_Result (21 bytes), then 131 x u8 the code indexes from +0 (read by StylePartFieldEmit 0x4844084C `movbu (d3, a1), d2`; StylePartFieldEmit 0x4844084C `movbu (d3, a1), d3`)
+	REC_StylePartTemplateDefault_Result	s0="\xFF\xFF", key=255, f3=255, f4=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", f20=64
 	tab_u8	64, 64, 64, 255, 16, 255, 255, 255, 255, 255, 1, 255, 255, 8, 17, 255	# [0]
 	tab_u8	23, 255, 255, 21, 22, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [16]
 	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [32]
@@ -18879,7 +18877,7 @@ func_48440648_Result_0:	# REC_func_48440648_Result (21 bytes), then 131 x u8 the
 	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [112]
 	tab_u8	255, 255, 255	# [128]
 
-func_4844063C_Table:	# 128 x u8, a sparse map by index: 16 entries set, the rest 0xFF (none); read by func_4844063C 0x484403C4: `movbu  (d0, a0), d0`
+func_4844063C_Table:	# 128 x u8, a sparse map by index: 16 entries set, the rest 0xFF (none); read by func_4844063C 0x48440522: `movbu  (d0, a0), d0`
 	map_none8	1	# [0..0]
 	map8	1, 16
 	map_none8	8	# [2..9]
@@ -18967,7 +18965,7 @@ TempoSyncSetDispatch_Records:	# 16 x REC_TempoSyncSetDispatch_Records (8 bytes e
 	REC_TempoSyncSetDispatch_Records	key=4063, proc=loc_48447E3F
 
 func_4C03D4F7_Table_7:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D46B reads through its argument a0 (passed by func_484141DB 0x484141DB `call cre_tsk, 0, 0`, +7 more calls); the layout func_4C03D4F7 0x4C03D4F7 reads through its argument a0 (passed by cre_tsk 0x4C03D46B `call func_4C03D4F7_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C02BC27, itskpri=3, x14="\x00\x00", stksz=24576
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=TickJobsTask, itskpri=3, x14="\x00\x00", stksz=24576
 func_4C03CAD0_Var_20:	# REC_func_4C03CA44_ArgA0 (12 bytes): the layout func_4C03CA44 0x4C03CA44 reads through its argument a0 (passed by func_484141DB 0x484141DB `call func_4C03CA44, 0, 0`, +4 more calls); the layout func_4C03CAD0 0x4C03CAD0 reads through its argument a0 (passed by func_4C03CA44 0x4C03CA44 `call func_4C03CAD0_entry, [d2,a2,a3], 0xc`)
 	REC_func_4C03CA44_ArgA0	f4=8, x6="\x00\x00"
 
@@ -19327,10 +19325,10 @@ func_4844AFE1_Table:	# 36 x u8, 0..255; read by func_4844AFE1_entry 0x4844AF1B: 
 Str_House_Shot:	.asciz "   House Shot   "
 	.align	4, 0xFF	# pad after Str_House_Shot
 
-SndCmdStreamWrite_Var:	# u8, a constant; read / written by SndCmdStreamWrite 0x4C003ABA: `movbu (a2), d2`
+SndCmdStreamWrite_Var:	# u8, a constant; read / written by TgcBufWrite 0x4C003ABA: `movbu (a2), d2`
 	.byte	3
 
-SndCmdStreamWrite_Table_2:	# 3 x u8, 43..240; read by SndCmdStreamWrite 0x4C003ABA: `movbu (a2), d0`
+TgcBufWrite_Table:	# 3 x u8, 43..240; read by TgcBufWrite 0x4C003ABA: `movbu (a2), d0`
 	tab_u8	240, 43, 127
 func_4844B786_Table:	# 428 x u8, 0..255; read by func_4844B786_entry 0x4844B4D3: `movbu  (a2), d0`
 	tab_u8	32, 32, 32, 32, 73, 110, 105, 116, 105, 97, 108, 32, 32, 32, 32, 32	# [0]
@@ -33843,10 +33841,10 @@ func_4848B08B_Records:	# 68 x REC_func_4848B08B_Records (28 bytes each); read by
 	REC_func_4848B08B_Records	proc=func_4848B142, key=func_4848B08B_Records_p4_24, p8=func_4848B08B_Records_p4_p0_7, p12=data_485EBAEA, f16=0xB0005D, f20=0xFFFFFFFF
 	REC_func_4848B08B_Records	proc=func_4848B142, key=func_4848B08B_Records_p4_25, p8=func_4848B08B_Records_p4_p0_8, p12=data_485EBB0C, f16=0x20005C, f20=0xFFFFFFFF, index=ptrs_485EBEF0
 	REC_func_4848B08B_Records	proc=func_4848B142, key=func_4848B08B_Records_p4_25, p8=func_4848B08B_Records_p4_p0_8, p12=data_485EBB0C, f16=0xB0005C, f20=0xFFFFFFFF
-	REC_func_4848B08B_Records	proc=func_4848BC89, key=func_4848B08B_Records_p4_26, p8=func_4848B08B_Records_p4_p0_9, p12=data_485EBB2E, f16=0xB00052, f20=0xFFFFFFFF	# [24]
-	REC_func_4848B08B_Records	proc=func_4848BD10, key=func_4848B08B_Records_p4_26, p8=func_4848B08B_Records_p4_p0_9, p12=data_485EBB2E, f16=0xB00053, f20=0xFFFFFFFF
-	REC_func_4848B08B_Records	proc=func_4848BC89, key=func_4848B08B_Records_p4_26, p8=func_4848B08B_Records_p4_p0_9, p12=data_485EBB2E, f16=0xB00050, f20=0xFFFFFFFF
-	REC_func_4848B08B_Records	proc=func_4848BD10, key=func_4848B08B_Records_p4_26, p8=func_4848B08B_Records_p4_p0_9, p12=data_485EBB2E, f16=0xB00051, f20=0xFFFFFFFF
+	REC_func_4848B08B_Records	proc=PartEqFcText, key=func_4848B08B_Records_p4_26, p8=func_4848B08B_Records_p4_p0_9, p12=data_485EBB2E, f16=0xB00052, f20=0xFFFFFFFF	# [24]
+	REC_func_4848B08B_Records	proc=PartEqGainText, key=func_4848B08B_Records_p4_26, p8=func_4848B08B_Records_p4_p0_9, p12=data_485EBB2E, f16=0xB00053, f20=0xFFFFFFFF
+	REC_func_4848B08B_Records	proc=PartEqFcText, key=func_4848B08B_Records_p4_26, p8=func_4848B08B_Records_p4_p0_9, p12=data_485EBB2E, f16=0xB00050, f20=0xFFFFFFFF
+	REC_func_4848B08B_Records	proc=PartEqGainText, key=func_4848B08B_Records_p4_26, p8=func_4848B08B_Records_p4_p0_9, p12=data_485EBB2E, f16=0xB00051, f20=0xFFFFFFFF
 	REC_func_4848B08B_Records	proc=func_4848B30C, key=func_4848B08B_Records_p4_9, p8=func_4848B08B_Records_p4_p0_19, p12=func_4848B08B_Records_p4_p0_19, f16=0xB0007E, f20=0xFFFFFFFF, index=ptrs_485EBF04
 	REC_func_4848B08B_Records	proc=func_4848B505, key=func_4848B08B_Records_p4_10, p8=func_4848B08B_Records_p4_p0_20, p12=func_4848B08B_Records_p4_p0_20, f16=0xB00041, f20=0xFFFFFFFF, index=ptrs_485EBEF0
 	REC_func_4848B08B_Records	proc=func_4848B142, key=func_4848B08B_Records_p4_10, p8=func_4848B08B_Records_p4_p0_20, p12=func_4848B08B_Records_p4_p0_20, f16=0xB00005, f20=0xFFFFFFFF

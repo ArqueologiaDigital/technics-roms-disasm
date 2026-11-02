@@ -19,15 +19,15 @@ Style_Dangdut:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_Dangdut
 
-Style_Dangdut_Intro1A:
-	var_head	Style_Dangdut_Intro1A, 4, 4, 0xff, 0xff
+Style_Dangdut_Intro1Major:
+	var_head	Style_Dangdut_Intro1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x49, 0x00, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Dangdut_Intro1A
-Style_Dangdut_Intro1A_Events:		# 4 bars of 4 beats, 1063 bytes
+	var_events	Style_Dangdut_Intro1Major
+Style_Dangdut_Intro1Major_Events:		# 4 bars of 4 beats, 1063 bytes
 	ev_beat
 	ev_note	0, 36, 95, 12, 0, 0
 	ev_note	0, 104, 86, 12, 0, 0
@@ -266,17 +266,17 @@ Style_Dangdut_Intro1A_Events:		# 4 bars of 4 beats, 1063 bytes
 	ev_at	1
 	ev_note	0, 96, 117, 12, 0, 0
 	ev_end
-	var_end	Style_Dangdut_Intro1A
+	var_end	Style_Dangdut_Intro1Major
 
-Style_Dangdut_Intro1B:
-	var_head	Style_Dangdut_Intro1B, 4, 4, 0xff, 0xff
+Style_Dangdut_Intro1Minor:
+	var_head	Style_Dangdut_Intro1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x49, 0x00, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Dangdut_Intro1B
-Style_Dangdut_Intro1B_Events:		# 4 bars of 4 beats, 1063 bytes
+	var_events	Style_Dangdut_Intro1Minor
+Style_Dangdut_Intro1Minor_Events:		# 4 bars of 4 beats, 1063 bytes
 	ev_beat
 	ev_note	0, 36, 95, 12, 0, 0
 	ev_note	0, 104, 86, 12, 0, 0
@@ -515,17 +515,17 @@ Style_Dangdut_Intro1B_Events:		# 4 bars of 4 beats, 1063 bytes
 	ev_at	1
 	ev_note	0, 96, 117, 12, 0, 0
 	ev_end
-	var_end	Style_Dangdut_Intro1B
+	var_end	Style_Dangdut_Intro1Minor
 
-Style_Dangdut_Ending1A:
-	var_head	Style_Dangdut_Ending1A, 8, 4, 0xff, 0xff
+Style_Dangdut_Intro2Major:
+	var_head	Style_Dangdut_Intro2Major, 8, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x49, 0x00, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Dangdut_Ending1A
-Style_Dangdut_Ending1A_Events:		# 8 bars of 4 beats, 2342 bytes
+	var_events	Style_Dangdut_Intro2Major
+Style_Dangdut_Intro2Major_Events:		# 8 bars of 4 beats, 2342 bytes
 	ev_beat
 	ev_note	0, 36, 95, 12, 0, 0
 	ev_note	1, 36, 82, 94, 0, 1
@@ -1081,17 +1081,17 @@ Style_Dangdut_Ending1A_Events:		# 8 bars of 4 beats, 2342 bytes
 	ev_note	3, 67, 97, 9, 0, 1
 	ev_note	3, 72, 81, 11, 0, 1
 	ev_end
-	var_end	Style_Dangdut_Ending1A
+	var_end	Style_Dangdut_Intro2Major
 
-Style_Dangdut_Ending1B:
-	var_head	Style_Dangdut_Ending1B, 8, 4, 0xff, 0xff
+Style_Dangdut_Intro2Minor:
+	var_head	Style_Dangdut_Intro2Minor, 8, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x49, 0x00, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Dangdut_Ending1B
-Style_Dangdut_Ending1B_Events:		# 8 bars of 4 beats, 2342 bytes
+	var_events	Style_Dangdut_Intro2Minor
+Style_Dangdut_Intro2Minor_Events:		# 8 bars of 4 beats, 2342 bytes
 	ev_beat
 	ev_note	0, 36, 95, 12, 0, 0
 	ev_note	1, 36, 82, 94, 0, 1
@@ -1647,7 +1647,7 @@ Style_Dangdut_Ending1B_Events:		# 8 bars of 4 beats, 2342 bytes
 	ev_note	3, 67, 97, 9, 0, 1
 	ev_note	3, 72, 81, 11, 0, 1
 	ev_end
-	var_end	Style_Dangdut_Ending1B
+	var_end	Style_Dangdut_Intro2Minor
 
 Style_Dangdut_Var1:
 	var_head	Style_Dangdut_Var1, 4, 4, 0xff, 0xff
@@ -3380,15 +3380,15 @@ Style_Dangdut_Var4Fill2_Events:		# 1 bars of 4 beats, 211 bytes
 	ev_end
 	var_end	Style_Dangdut_Var4Fill2
 
-Style_Dangdut_Intro2A:
-	var_head	Style_Dangdut_Intro2A, 4, 4, 0xff, 0xff
+Style_Dangdut_Ending1Major:
+	var_head	Style_Dangdut_Ending1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x49, 0x00, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Dangdut_Intro2A
-Style_Dangdut_Intro2A_Events:		# 4 bars of 4 beats, 897 bytes
+	var_events	Style_Dangdut_Ending1Major
+Style_Dangdut_Ending1Major_Events:		# 4 bars of 4 beats, 897 bytes
 	ev_beat
 	ev_note	0, 54, 86, 12, 0, 0
 	ev_note	0, 36, 95, 12, 0, 0
@@ -3596,17 +3596,17 @@ Style_Dangdut_Intro2A_Events:		# 4 bars of 4 beats, 897 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Dangdut_Intro2A
+	var_end	Style_Dangdut_Ending1Major
 
-Style_Dangdut_Intro2B:
-	var_head	Style_Dangdut_Intro2B, 4, 4, 0xff, 0xff
+Style_Dangdut_Ending1Minor:
+	var_head	Style_Dangdut_Ending1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x49, 0x00, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Dangdut_Intro2B
-Style_Dangdut_Intro2B_Events:		# 4 bars of 4 beats, 897 bytes
+	var_events	Style_Dangdut_Ending1Minor
+Style_Dangdut_Ending1Minor_Events:		# 4 bars of 4 beats, 897 bytes
 	ev_beat
 	ev_note	0, 54, 86, 12, 0, 0
 	ev_note	0, 36, 95, 12, 0, 0
@@ -3814,17 +3814,17 @@ Style_Dangdut_Intro2B_Events:		# 4 bars of 4 beats, 897 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Dangdut_Intro2B
+	var_end	Style_Dangdut_Ending1Minor
 
-Style_Dangdut_Ending2A:
-	var_head	Style_Dangdut_Ending2A, 5, 4, 0xff, 0xff
+Style_Dangdut_Ending2Major:
+	var_head	Style_Dangdut_Ending2Major, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x49, 0x00, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Dangdut_Ending2A
-Style_Dangdut_Ending2A_Events:		# 5 bars of 4 beats, 1168 bytes
+	var_events	Style_Dangdut_Ending2Major
+Style_Dangdut_Ending2Major_Events:		# 5 bars of 4 beats, 1168 bytes
 	ev_beat
 	ev_note	0, 36, 98, 12, 0, 0
 	ev_note	0, 96, 121, 12, 0, 0
@@ -4110,17 +4110,17 @@ Style_Dangdut_Ending2A_Events:		# 5 bars of 4 beats, 1168 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Dangdut_Ending2A
+	var_end	Style_Dangdut_Ending2Major
 
-Style_Dangdut_Ending2B:
-	var_head	Style_Dangdut_Ending2B, 5, 4, 0xff, 0xff
+Style_Dangdut_Ending2Minor:
+	var_head	Style_Dangdut_Ending2Minor, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x49, 0x00, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Dangdut_Ending2B
-Style_Dangdut_Ending2B_Events:		# 5 bars of 4 beats, 1168 bytes
+	var_events	Style_Dangdut_Ending2Minor
+Style_Dangdut_Ending2Minor_Events:		# 5 bars of 4 beats, 1168 bytes
 	ev_beat
 	ev_note	0, 36, 98, 12, 0, 0
 	ev_note	0, 96, 121, 12, 0, 0
@@ -4406,4 +4406,4 @@ Style_Dangdut_Ending2B_Events:		# 5 bars of 4 beats, 1168 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Dangdut_Ending2B
+	var_end	Style_Dangdut_Ending2Minor

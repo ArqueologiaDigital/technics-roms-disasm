@@ -19,14 +19,14 @@ Style_Cumbia:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_Cumbia
 
-Style_Cumbia_Intro1A:
-	var_head	Style_Cumbia_Intro1A, 2, 4, 0xff, 0xff
+Style_Cumbia_Intro1Major:
+	var_head	Style_Cumbia_Intro1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 44
-	var_events	Style_Cumbia_Intro1A
-Style_Cumbia_Intro1A_Events:		# 2 bars of 4 beats, 580 bytes
+	var_events	Style_Cumbia_Intro1Major
+Style_Cumbia_Intro1Major_Events:		# 2 bars of 4 beats, 580 bytes
 	ev_beat
 	ev_note	0, 114, 121, 8, 0, 0
 	ev_note	1, 36, 115, 90, 0, 1
@@ -177,10 +177,10 @@ Style_Cumbia_Intro1A_Events:		# 2 bars of 4 beats, 580 bytes
 	ev_at	71
 	ev_note	1, 35, 78, 6, 0, 1
 	ev_end
-	var_end	Style_Cumbia_Intro1A
+	var_end	Style_Cumbia_Intro1Major
 
-Style_Cumbia_Intro1B:
-	var_head	Style_Cumbia_Intro1B, 2, 4, 0xff, 0xff
+Style_Cumbia_Intro1Minor:
+	var_head	Style_Cumbia_Intro1Minor, 2, 4, 0xff, 0xff
 	ev_cc	0, 91, 40
 	ev_cc	0, 83, 64
 	ev_cc	0, 81, 64
@@ -190,8 +190,8 @@ Style_Cumbia_Intro1B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Cumbia_Intro1B
-Style_Cumbia_Intro1B_Events:		# 2 bars of 4 beats, 580 bytes
+	var_events	Style_Cumbia_Intro1Minor
+Style_Cumbia_Intro1Minor_Events:		# 2 bars of 4 beats, 580 bytes
 	ev_beat
 	ev_note	0, 114, 121, 8, 0, 0
 	ev_note	1, 36, 115, 90, 0, 1
@@ -342,16 +342,16 @@ Style_Cumbia_Intro1B_Events:		# 2 bars of 4 beats, 580 bytes
 	ev_at	71
 	ev_note	1, 35, 78, 6, 0, 1
 	ev_end
-	var_end	Style_Cumbia_Intro1B
+	var_end	Style_Cumbia_Intro1Minor
 
-Style_Cumbia_Ending1A:
-	var_head	Style_Cumbia_Ending1A, 4, 4, 0xff, 0xff
+Style_Cumbia_Intro2Major:
+	var_head	Style_Cumbia_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 44
-	var_events	Style_Cumbia_Ending1A
-Style_Cumbia_Ending1A_Events:		# 4 bars of 4 beats, 2129 bytes
+	var_events	Style_Cumbia_Intro2Major
+Style_Cumbia_Intro2Major_Events:		# 4 bars of 4 beats, 2129 bytes
 	ev_beat
 	ev_note	0, 36, 100, 8, 0, 0
 	ev_note	0, 69, 114, 8, 0, 0
@@ -856,16 +856,16 @@ Style_Cumbia_Ending1A_Events:		# 4 bars of 4 beats, 2129 bytes
 	ev_at	73
 	ev_note	0, 57, 122, 8, 0, 0
 	ev_end
-	var_end	Style_Cumbia_Ending1A
+	var_end	Style_Cumbia_Intro2Major
 
-Style_Cumbia_Ending1B:
-	var_head	Style_Cumbia_Ending1B, 4, 4, 0xff, 0xff
+Style_Cumbia_Intro2Minor:
+	var_head	Style_Cumbia_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 44
-	var_events	Style_Cumbia_Ending1B
-Style_Cumbia_Ending1B_Events:		# 4 bars of 4 beats, 2129 bytes
+	var_events	Style_Cumbia_Intro2Minor
+Style_Cumbia_Intro2Minor_Events:		# 4 bars of 4 beats, 2129 bytes
 	ev_beat
 	ev_note	0, 36, 100, 8, 0, 0
 	ev_note	0, 69, 114, 8, 0, 0
@@ -1370,7 +1370,7 @@ Style_Cumbia_Ending1B_Events:		# 4 bars of 4 beats, 2129 bytes
 	ev_at	73
 	ev_note	0, 57, 122, 8, 0, 0
 	ev_end
-	var_end	Style_Cumbia_Ending1B
+	var_end	Style_Cumbia_Intro2Minor
 
 Style_Cumbia_Var1:
 	var_head	Style_Cumbia_Var1, 4, 4, 0xff, 0xff
@@ -3399,14 +3399,14 @@ Style_Cumbia_Var4Fill2_Events:		# 1 bars of 4 beats, 351 bytes
 	ev_end
 	var_end	Style_Cumbia_Var4Fill2
 
-Style_Cumbia_Intro2A:
-	var_head	Style_Cumbia_Intro2A, 1, 4, 0xff, 0xff
+Style_Cumbia_Ending1Major:
+	var_head	Style_Cumbia_Ending1Major, 1, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 44
-	var_events	Style_Cumbia_Intro2A
-Style_Cumbia_Intro2A_Events:		# 1 bars of 4 beats, 426 bytes
+	var_events	Style_Cumbia_Ending1Major
+Style_Cumbia_Ending1Major_Events:		# 1 bars of 4 beats, 426 bytes
 	ev_beat
 	ev_note	0, 65, 118, 8, 0, 0
 	ev_note	1, 36, 104, 16, 0, 1
@@ -3488,17 +3488,17 @@ Style_Cumbia_Intro2A_Events:		# 1 bars of 4 beats, 426 bytes
 	ev_note	4, 60, 112, 19, 0, 1
 	ev_note	4, 72, 106, 19, 0, 1
 	ev_end
-	var_end	Style_Cumbia_Intro2A
+	var_end	Style_Cumbia_Ending1Major
 
-Style_Cumbia_Intro2B:
-	var_head	Style_Cumbia_Intro2B, 1, 4, 0xff, 0xff
+Style_Cumbia_Ending1Minor:
+	var_head	Style_Cumbia_Ending1Minor, 1, 4, 0xff, 0xff
 	ev_cc	0, 7, 120
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 44
-	var_events	Style_Cumbia_Intro2B
-Style_Cumbia_Intro2B_Events:		# 1 bars of 4 beats, 426 bytes
+	var_events	Style_Cumbia_Ending1Minor
+Style_Cumbia_Ending1Minor_Events:		# 1 bars of 4 beats, 426 bytes
 	ev_beat
 	ev_note	0, 65, 118, 8, 0, 0
 	ev_note	1, 36, 104, 16, 0, 1
@@ -3580,16 +3580,16 @@ Style_Cumbia_Intro2B_Events:		# 1 bars of 4 beats, 426 bytes
 	ev_note	4, 60, 112, 19, 0, 1
 	ev_note	4, 72, 106, 19, 0, 1
 	ev_end
-	var_end	Style_Cumbia_Intro2B
+	var_end	Style_Cumbia_Ending1Minor
 
-Style_Cumbia_Ending2A:
-	var_head	Style_Cumbia_Ending2A, 2, 4, 0xff, 0xff
+Style_Cumbia_Ending2Major:
+	var_head	Style_Cumbia_Ending2Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 44
-	var_events	Style_Cumbia_Ending2A
-Style_Cumbia_Ending2A_Events:		# 2 bars of 4 beats, 900 bytes
+	var_events	Style_Cumbia_Ending2Major
+Style_Cumbia_Ending2Major_Events:		# 2 bars of 4 beats, 900 bytes
 	ev_beat
 	ev_note	0, 36, 100, 8, 0, 0
 	ev_note	1, 36, 85, 63, 0, 1
@@ -3765,16 +3765,16 @@ Style_Cumbia_Ending2A_Events:		# 2 bars of 4 beats, 900 bytes
 	ev_note	4, 60, 120, 8, 0, 1
 	ev_note	4, 72, 124, 12, 0, 1
 	ev_end
-	var_end	Style_Cumbia_Ending2A
+	var_end	Style_Cumbia_Ending2Major
 
-Style_Cumbia_Ending2B:
-	var_head	Style_Cumbia_Ending2B, 2, 4, 0xff, 0xff
+Style_Cumbia_Ending2Minor:
+	var_head	Style_Cumbia_Ending2Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 44
-	var_events	Style_Cumbia_Ending2B
-Style_Cumbia_Ending2B_Events:		# 2 bars of 4 beats, 900 bytes
+	var_events	Style_Cumbia_Ending2Minor
+Style_Cumbia_Ending2Minor_Events:		# 2 bars of 4 beats, 900 bytes
 	ev_beat
 	ev_note	0, 36, 100, 8, 0, 0
 	ev_note	1, 36, 85, 63, 0, 1
@@ -3950,4 +3950,4 @@ Style_Cumbia_Ending2B_Events:		# 2 bars of 4 beats, 900 bytes
 	ev_note	4, 60, 120, 8, 0, 1
 	ev_note	4, 72, 124, 12, 0, 1
 	ev_end
-	var_end	Style_Cumbia_Ending2B
+	var_end	Style_Cumbia_Ending2Minor

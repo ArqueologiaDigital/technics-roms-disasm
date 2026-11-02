@@ -19196,7 +19196,7 @@ SdMediaChangeService_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_4854B9DA
-    bset    0x40, (0x9cc00008)
+    bset    0x40, (LCDC_GPIO_CTRL0)
 loc_4854B9DA:
     mov     Str_C_3, a2
     mov     a2, a0
@@ -19249,7 +19249,7 @@ loc_4854BA67:
     extbu   d0
     cmp     4, d0
     beq     loc_4854BA7A
-    bset    0x40, (0x9cc00008)
+    bset    0x40, (LCDC_GPIO_CTRL0)
 loc_4854BA7A:
     mov     2, d0
     movhu   d0, (0x18, sp)
@@ -19295,7 +19295,7 @@ SdPowerDownNotify_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_4854BAF5
-    bclr    0x40, (0x9cc00008)
+    bclr    0x40, (LCDC_GPIO_CTRL0)
 loc_4854BAF5:
     mov     Str_F_2, a0
     call    DiskDriveCtrlHandler_entry, [d2,d3,a2], 0x40
@@ -19345,11 +19345,11 @@ SdSpiPortSetup_entry:
     cmp     4, d0
     bne     loc_4854BB59
     mov     0x0000ffff, d0
-    movhu   d0, (0x98050004)
+    movhu   d0, (TGA_KEY_FIFO)
 loc_4854BB59:
-    movhu   (0x34000280), d0
+    movhu   (EXTMD), d0
     or      0x0c00, d0
-    movhu   d0, (0x34000280)
+    movhu   d0, (EXTMD)
     mov     2, d0
     call    SdSpiClockSet_entry, [d2], 0x10
     ret     0, 0xc
@@ -19442,18 +19442,18 @@ loc_4854BC33:
     mov     (0x50151c0c), d0
     extbu   d1
     mov     d0, (8, sp)
-    movhu   (0x9805000e), d0
+    movhu   (SD_SPI_CLOCK), d0
     or      0x80, d1
     cmp     d1, d0
     beq     loc_4854BC65
     setlb
-    movhu   d1, (0x9805000e)
+    movhu   d1, (SD_SPI_CLOCK)
     mov     (8, sp), d2
     mov     (0x50151c0c), d0
     sub     d2, d0
     cmp     2, d0
     bhi     loc_4854BC65
-    movhu   (0x9805000e), d0
+    movhu   (SD_SPI_CLOCK), d0
     cmp     d1, d0
     lne
 loc_4854BC65:
@@ -19470,12 +19470,12 @@ SdCsAssertWrap_entry:
 # SdCsRelease  (CPU 0x4854bc74)
 #   CS high (inactive): bset bit1 (0x02) of GPIO 0x36008004
 SdCsRelease:
-    bset    0x02, (0x36008004)
+    bset    0x02, (P04)
     retf    0, 0
 # SdCsAssert  (CPU 0x4854bc7e)
 #   CS low (active): bclr bit1 of GPIO 0x36008004
 SdCsAssert:
-    bclr    0x02, (0x36008004)
+    bclr    0x02, (P04)
     retf    0, 0
 # SdDetectPortInit  (CPU 0x4854bc88)
 #   subtype!=4: bset 0x06 -> 0x9cc00005; SdSlotDischarge; power line +
@@ -19488,17 +19488,17 @@ SdDetectPortInit_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_4854BC9E
-    bset    0x06, (0x9cc00005)
+    bset    0x06, (LCDC_GPIO_CONFIG1)
 loc_4854BC9E:
     call    SdSlotDischarge_entry, [d2], 0x10
     call    SdPowerLineClear_entry, 0, 8
     call    SdPowerRailClear_entry, 0, 0xc
-    movhu   (0x34000280), d0
+    movhu   (EXTMD), d0
     and     0xfcff, d0
     or      0x0100, d0
-    movhu   d0, (0x34000280)
+    movhu   d0, (EXTMD)
     mov     1, d0
-    movhu   d0, (0x3400016c)
+    movhu   d0, (G27ICR)
     ret     0, 8
 # SdCardDetectRaw  (CPU 0x4854bccc)
 #   raw card-detect: subtype 4 -> always present (1); software override
@@ -19524,13 +19524,13 @@ loc_4854BCEF:
     nop
     nop
     mov     1, d0
-    movhu   d0, (0x3400016c)
-    movhu   (0x3400016c), d0
+    movhu   d0, (G27ICR)
+    movhu   (G27ICR), d0
     movhu   d0, (8, sp)
     or      0x0800, psw
     nop
     nop
-    movhu   (0x3400016c), d0
+    movhu   (G27ICR), d0
     btst    0x10, d0
     beq     loc_4854BD1A
     clr     d0
@@ -19593,7 +19593,7 @@ SdPowerLineSet_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_4854BD95
-    bset    0x04, (0x9cc00009)
+    bset    0x04, (LCDC_GPIO_CTRL1)
 loc_4854BD95:
     ret     0, 8
 # SdPowerLineClear  (CPU 0x4854bd98)
@@ -19605,7 +19605,7 @@ SdPowerLineClear_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_4854BDAE
-    bclr    0x04, (0x9cc00009)
+    bclr    0x04, (LCDC_GPIO_CTRL1)
 loc_4854BDAE:
     ret     0, 8
 # SdPowerRailSet  (CPU 0x4854bdb1)
@@ -19640,7 +19640,7 @@ SdSlotDrainWait_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_4854BDF0
-    bclr    0x02, (0x9cc00009)
+    bclr    0x02, (LCDC_GPIO_CTRL1)
 loc_4854BDF0:
     mov     -1, d0
     movhu   d0, (SdCardDetectRaw_Table)
@@ -19719,7 +19719,7 @@ SdSlotDischarge_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_4854BEAF
-    bset    0x02, (0x9cc00009)
+    bset    0x02, (LCDC_GPIO_CTRL1)
 loc_4854BEAF:
     mov     0xa, d0
     movbu   d0, (SdSlotDrainWait_Table)
@@ -19742,7 +19742,7 @@ SdSlotSenseGet_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_4854BEEA
-    movbu   (0x9cc00009), d0
+    movbu   (LCDC_GPIO_CTRL1), d0
     and     0x01, d0
     extbu   d0
     bra     loc_4854BEEB
@@ -19759,7 +19759,7 @@ SdWriteProtectGet_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_4854BF09
-    movbu   (0x9cc00009), d0
+    movbu   (LCDC_GPIO_CTRL1), d0
     and     0x10, d0
     extbu   d0
     bra     loc_4854BF0A
@@ -19779,7 +19779,7 @@ SdSlotRelease_entry:
     extbu   d0
     cmp     4, d0
     beq     loc_4854BF2D
-    bclr    0x02, (0x9cc00009)
+    bclr    0x02, (LCDC_GPIO_CTRL1)
 loc_4854BF2D:
     mov     -1, d0
     movhu   d0, (SdCardDetectRaw_Table)
@@ -19797,8 +19797,8 @@ SdSpiSendByte_entry:
     nop
     nop
     mov     1, d1
-    movhu   d1, (0x34000170)
-    movhu   (0x34000170), d1
+    movhu   d1, (G28ICR)
+    movhu   (G28ICR), d1
     movhu   d1, (4, sp)
     or      0x0800, psw
     nop
@@ -19806,7 +19806,7 @@ SdSpiSendByte_entry:
     mov     (SdSpiClockSet_Var_2), d1
     extbu   d0
     mov     d1, (0, sp)
-    movhu   d0, (0x9805000c)
+    movhu   d0, (SD_SPI_DATA)
     mov     (0, sp), d0
     mov     -1, d1
     add     d0, d1
@@ -19814,7 +19814,7 @@ SdSpiSendByte_entry:
     cmp     0, d0
     beq     loc_4854BF89
     setlb
-    movhu   (0x34000170), d0
+    movhu   (G28ICR), d0
     btst    0x10, d0
     bne     loc_4854BF89
     mov     (0, sp), d0
@@ -19850,8 +19850,8 @@ loc_4854BFA4:
     nop
     nop
     mov     1, d0
-    movhu   d0, (0x34000170)
-    movhu   (0x34000170), d0
+    movhu   d0, (G28ICR)
+    movhu   (G28ICR), d0
     movhu   d0, (8, sp)
     or      0x0800, psw
     nop
@@ -19861,14 +19861,14 @@ loc_4854BFA4:
     mov     d1, (4, sp)
     movbu   (d0, a0), d1
     mov     (4, sp), d0
-    movhu   d1, (0x9805000c)
+    movhu   d1, (SD_SPI_DATA)
     mov     -1, d1
     add     d0, d1
     mov     d1, (4, sp)
     cmp     0, d0
     beq     loc_4854BFF4
     setlb
-    movhu   (0x34000170), d1
+    movhu   (G28ICR), d1
     btst    0x10, d1
     bne     loc_4854BFF4
     mov     (4, sp), d0
@@ -19898,8 +19898,8 @@ SdSpiRecvByte_entry:
     nop
     nop
     mov     1, d0
-    movhu   d0, (0x34000170)
-    movhu   (0x34000170), d0
+    movhu   d0, (G28ICR)
+    movhu   (G28ICR), d0
     movhu   d0, (4, sp)
     or      0x0800, psw
     nop
@@ -19912,10 +19912,10 @@ SdSpiRecvByte_entry:
     mov     d1, (0, sp)
     cmp     0, d0
     mov     0xff, d0
-    movhu   d0, (0x9805000c)
+    movhu   d0, (SD_SPI_DATA)
     beq     loc_4854C054
     setlb
-    movhu   (0x34000170), d0
+    movhu   (G28ICR), d0
     btst    0x10, d0
     bne     loc_4854C054
     mov     (0, sp), d0
@@ -19925,7 +19925,7 @@ SdSpiRecvByte_entry:
     cmp     0, d0
     lne
 loc_4854C054:
-    movhu   (0x9805000c), d0
+    movhu   (SD_SPI_DATA), d0
     extbu   d0
     ret     0, 8
 # SdSpiRecvBuf  (CPU 0x4854c05e)
@@ -19953,8 +19953,8 @@ loc_4854C077:
     nop
     nop
     mov     1, d0
-    movhu   d0, (0x34000170)
-    movhu   (0x34000170), d0
+    movhu   d0, (G28ICR)
+    movhu   (G28ICR), d0
     movhu   d0, (8, sp)
     or      0x0800, psw
     nop
@@ -19962,7 +19962,7 @@ loc_4854C077:
     mov     (SdSpiClockSet_Var_2), d1
     mov     0xff, d0
     mov     d1, (4, sp)
-    movhu   d0, (0x9805000c)
+    movhu   d0, (SD_SPI_DATA)
     mov     (4, sp), d0
     mov     -1, d1
     add     d0, d1
@@ -19970,7 +19970,7 @@ loc_4854C077:
     cmp     0, d0
     beq     loc_4854C0C6
     setlb
-    movhu   (0x34000170), d1
+    movhu   (G28ICR), d1
     btst    0x10, d1
     bne     loc_4854C0C6
     mov     (4, sp), d0
@@ -19981,7 +19981,7 @@ loc_4854C077:
     lne
 loc_4854C0C6:
     mov     (0, sp), d0
-    movhu   (0x9805000c), d1
+    movhu   (SD_SPI_DATA), d1
     movbu   d1, (d0, a0)
     mov     (0, sp), d0
     inc     d0
@@ -21884,7 +21884,7 @@ SdPowerCtrlSet:
     or      d0, d1
     movbu   d1, (SdPowerCtrlSet_Table)
     movbu   (SdPowerCtrlSet_Table), d0
-    movbu   d0, (0x98060000)
+    movbu   d0, (SD_POWER_CTRL)
     or      0x0800, psw
     nop
     nop
@@ -21909,7 +21909,7 @@ SdPowerCtrlClear:
     and     d0, d1
     movbu   d1, (SdPowerCtrlSet_Table)
     movbu   (SdPowerCtrlSet_Table), d0
-    movbu   d0, (0x98060000)
+    movbu   d0, (SD_POWER_CTRL)
     or      0x0800, psw
     nop
     nop
@@ -21926,7 +21926,7 @@ SdPowerCtrlClear:
 #   direct byte -> shadow 0x5000521C + 0x98060000
 SdPowerCtrlWrite:
     movbu   d0, (SdPowerCtrlSet_Table)
-    movbu   d0, (0x98060000)
+    movbu   d0, (SD_POWER_CTRL)
     clr     d1
     setlb
     exthu   d0
@@ -21991,7 +21991,7 @@ SdPowerCtrlSetRaw:
     movbu   d1, (SdPowerCtrlSet_Table)
     movbu   (SdPowerCtrlSet_Table), d0
     clr     d1
-    movbu   d0, (0x98060000)
+    movbu   d0, (SD_POWER_CTRL)
     setlb
     exthu   d0
     inc     d0
@@ -22009,7 +22009,7 @@ SdPowerCtrlClearRaw:
     movbu   d1, (SdPowerCtrlSet_Table)
     movbu   (SdPowerCtrlSet_Table), d0
     clr     d1
-    movbu   d0, (0x98060000)
+    movbu   d0, (SD_POWER_CTRL)
     setlb
     exthu   d0
     inc     d0
@@ -22023,139 +22023,139 @@ ModeAPortDefaultsInit:
     movm    [a2], (sp)
     add     -0xc, sp
 ModeAPortDefaultsInit_entry:
-    mov     0x9ce00000, a2
+    mov     LCDC_VRAM, a2
     clr     d0
-    movbu   d0, (0x9cc00001)
-    movbu   d0, (0x9cc001fc)
+    movbu   d0, (LCDC_MISC)
+    movbu   d0, (LCDC_DISPLAY_MODE)
     mov     0xff, d0
-    movbu   d0, (0x9cc00004)
+    movbu   d0, (LCDC_GPIO_CONFIG0)
     mov     8, d0
-    movbu   d0, (0x9cc00005)
+    movbu   d0, (LCDC_GPIO_CONFIG1)
     clr     d0
-    movbu   d0, (0x9cc00008)
-    movbu   d0, (0x9cc00009)
+    movbu   d0, (LCDC_GPIO_CTRL0)
+    movbu   d0, (LCDC_GPIO_CTRL1)
     mov     2, d0
-    movbu   d0, (0x9cc00010)
+    movbu   d0, (LCDC_MEM_CLOCK_CONFIG)
     mov     0x21, d0
-    movbu   d0, (0x9cc00014)
+    movbu   d0, (LCDC_LCD_PCLK_CONFIG)
     mov     3, d0
-    movbu   d0, (0x9cc0001c)
+    movbu   d0, (LCDC_MEDIAPLUG_CLOCK_CONFIG)
     clr     d0
-    movbu   d0, (0x9cc0001e)
+    movbu   d0, (LCDC_CPU_MEM_WAIT)
     mov     0x80, d0
-    movbu   d0, (0x9cc00020)
+    movbu   d0, (LCDC_MEM_CONFIG)
     mov     3, d0
-    movbu   d0, (0x9cc00021)
+    movbu   d0, (LCDC_DRAM_REFRESH)
     clr     d0
-    movbu   d0, (0x9cc0002a)
+    movbu   d0, (LCDC_DRAM_TIMING0)
     mov     1, d0
-    movbu   d0, (0x9cc0002b)
+    movbu   d0, (LCDC_DRAM_TIMING1)
     mov     0x1c, d0
-    movbu   d0, (0x9cc00030)
+    movbu   d0, (LCDC_PANEL_TYPE)
     clr     d0
-    movbu   d0, (0x9cc00031)
+    movbu   d0, (LCDC_MOD_RATE)
     mov     0x4f, d0
-    movbu   d0, (0x9cc00032)
+    movbu   d0, (LCDC_LCD_HDISP)
     mov     3, d0
-    movbu   d0, (0x9cc00034)
+    movbu   d0, (LCDC_LCD_HNDP)
     clr     d0
-    movbu   d0, (0x9cc00035)
-    movbu   d0, (0x9cc00036)
+    movbu   d0, (LCDC_TFT_FPLINE_START)
+    movbu   d0, (LCDC_TFT_FPLINE_WIDTH)
     mov     0xef, d0
-    movbu   d0, (0x9cc00038)
+    movbu   d0, (LCDC_LCD_VDISP0)
     clr     d0
-    movbu   d0, (0x9cc00039)
-    movbu   d0, (0x9cc0003a)
-    movbu   d0, (0x9cc0003b)
-    movbu   d0, (0x9cc0003c)
+    movbu   d0, (LCDC_LCD_VDISP1)
+    movbu   d0, (LCDC_LCD_VNDP)
+    movbu   d0, (LCDC_TFT_FPFRAME_START)
+    movbu   d0, (LCDC_TFT_FPFRAME_WIDTH)
     mov     0x15, d0
-    movbu   d0, (0x9cc00040)
+    movbu   d0, (LCDC_LCD_DISPLAY_MODE)
     mov     2, d0
-    movbu   d0, (0x9cc00041)
+    movbu   d0, (LCDC_LCD_MISC)
     mov     0x7f, d0
-    movbu   d0, (0x9cc00042)
+    movbu   d0, (LCDC_LCD_START0)
     mov     0x5a, d0
-    movbu   d0, (0x9cc00043)
+    movbu   d0, (LCDC_LCD_START1)
     mov     2, d0
-    movbu   d0, (0x9cc00044)
+    movbu   d0, (LCDC_LCD_START2)
     mov     0x80, d0
-    movbu   d0, (0x9cc00046)
+    movbu   d0, (LCDC_LCD_OFFSET0)
     mov     2, d0
-    movbu   d0, (0x9cc00047)
+    movbu   d0, (LCDC_LCD_OFFSET1)
     clr     d0
-    movbu   d0, (0x9cc00048)
-    movbu   d0, (0x9cc0004a)
-    movbu   d0, (0x9cc0004b)
+    movbu   d0, (LCDC_LCD_PANNING)
+    movbu   d0, (LCDC_LCD_FIFO_HIGH)
+    movbu   d0, (LCDC_LCD_FIFO_LOW)
     call    func_4854D46E, 0, 0
     mov     5, d0
-    movbu   d0, (0x9cc00060)
+    movbu   d0, (LCDC_CRT_DISPLAY_MODE)
     clr     d0
-    movbu   d0, (0x9cc00062)
-    movbu   d0, (0x9cc00063)
-    movbu   d0, (0x9cc00064)
+    movbu   d0, (LCDC_CRT_START0)
+    movbu   d0, (LCDC_CRT_START1)
+    movbu   d0, (LCDC_CRT_START2)
     mov     0x80, d0
-    movbu   d0, (0x9cc00066)
+    movbu   d0, (LCDC_CRT_OFFSET0)
     mov     2, d0
-    movbu   d0, (0x9cc00067)
+    movbu   d0, (LCDC_CRT_OFFSET1)
     clr     d0
-    movbu   d0, (0x9cc00068)
+    movbu   d0, (LCDC_CRT_PANNING)
     mov     0x30, d0
-    movbu   d0, (0x9cc0006a)
-    movbu   d0, (0x9cc0006b)
+    movbu   d0, (LCDC_CRT_FIFO_HIGH)
+    movbu   d0, (LCDC_CRT_FIFO_LOW)
     clr     d0
-    movbu   d0, (0x9cc00070)
-    movbu   d0, (0x9cc00071)
-    movbu   d0, (0x9cc00072)
-    movbu   d0, (0x9cc00073)
-    movbu   d0, (0x9cc00074)
-    movbu   d0, (0x9cc00075)
-    movbu   d0, (0x9cc00076)
-    movbu   d0, (0x9cc00077)
-    movbu   d0, (0x9cc00078)
-    movbu   d0, (0x9cc0007a)
-    movbu   d0, (0x9cc0007b)
-    movbu   d0, (0x9cc0007c)
-    movbu   d0, (0x9cc0007e)
-    movbu   d0, (0x9cc00080)
-    movbu   d0, (0x9cc00081)
-    movbu   d0, (0x9cc00082)
-    movbu   d0, (0x9cc00083)
-    movbu   d0, (0x9cc00084)
-    movbu   d0, (0x9cc00085)
-    movbu   d0, (0x9cc00086)
-    movbu   d0, (0x9cc00087)
-    movbu   d0, (0x9cc00088)
-    movbu   d0, (0x9cc0008a)
-    movbu   d0, (0x9cc0008b)
-    movbu   d0, (0x9cc0008c)
-    movbu   d0, (0x9cc0008e)
-    movbu   d0, (0x9cc00100)
-    movbu   d0, (0x9cc00101)
-    movbu   d0, (0x9cc00102)
-    movbu   d0, (0x9cc00103)
-    movbu   d0, (0x9cc00104)
-    movbu   d0, (0x9cc00105)
-    movbu   d0, (0x9cc00106)
-    movbu   d0, (0x9cc00108)
-    movbu   d0, (0x9cc00109)
-    movbu   d0, (0x9cc0010a)
-    movbu   d0, (0x9cc0010c)
-    movbu   d0, (0x9cc0010d)
-    movbu   d0, (0x9cc00110)
-    movbu   d0, (0x9cc00111)
-    movbu   d0, (0x9cc00112)
-    movbu   d0, (0x9cc00113)
-    movbu   d0, (0x9cc00114)
-    movbu   d0, (0x9cc00115)
-    movbu   d0, (0x9cc00118)
-    movbu   d0, (0x9cc00119)
-    movbu   d0, (0x9cc001e0)
-    movbu   d0, (0x9cc001e2)
-    movbu   d0, (0x9cc001e4)
+    movbu   d0, (LCDC_LCD_CURSOR_CTRL)
+    movbu   d0, (LCDC_LCD_CURSOR_START)
+    movbu   d0, (LCDC_LCD_CURSOR_X0)
+    movbu   d0, (LCDC_LCD_CURSOR_X1)
+    movbu   d0, (LCDC_LCD_CURSOR_Y0)
+    movbu   d0, (LCDC_LCD_CURSOR_Y1)
+    movbu   d0, (LCDC_LCD_CURSOR_BLUE0)
+    movbu   d0, (LCDC_LCD_CURSOR_GREEN0)
+    movbu   d0, (LCDC_LCD_CURSOR_RED0)
+    movbu   d0, (LCDC_LCD_CURSOR_BLUE1)
+    movbu   d0, (LCDC_LCD_CURSOR_GREEN1)
+    movbu   d0, (LCDC_LCD_CURSOR_RED1)
+    movbu   d0, (LCDC_LCD_CURSOR_FIFO)
+    movbu   d0, (LCDC_CRT_CURSOR_CTRL)
+    movbu   d0, (LCDC_CRT_CURSOR_START)
+    movbu   d0, (LCDC_CRT_CURSOR_X0)
+    movbu   d0, (LCDC_CRT_CURSOR_X1)
+    movbu   d0, (LCDC_CRT_CURSOR_Y0)
+    movbu   d0, (LCDC_CRT_CURSOR_Y1)
+    movbu   d0, (LCDC_CRT_CURSOR_BLUE0)
+    movbu   d0, (LCDC_CRT_CURSOR_GREEN0)
+    movbu   d0, (LCDC_CRT_CURSOR_RED0)
+    movbu   d0, (LCDC_CRT_CURSOR_BLUE1)
+    movbu   d0, (LCDC_CRT_CURSOR_GREEN1)
+    movbu   d0, (LCDC_CRT_CURSOR_RED1)
+    movbu   d0, (LCDC_CRT_CURSOR_FIFO)
+    movbu   d0, (LCDC_BLT_CTRL0)
+    movbu   d0, (LCDC_BLT_CTRL1)
+    movbu   d0, (LCDC_BLT_ROP)
+    movbu   d0, (LCDC_BLT_OPERATION)
+    movbu   d0, (LCDC_BLT_SRC0)
+    movbu   d0, (LCDC_BLT_SRC1)
+    movbu   d0, (LCDC_BLT_SRC2)
+    movbu   d0, (LCDC_BLT_DST0)
+    movbu   d0, (LCDC_BLT_DST1)
+    movbu   d0, (LCDC_BLT_DST2)
+    movbu   d0, (LCDC_BLT_OFFSET0)
+    movbu   d0, (LCDC_BLT_OFFSET1)
+    movbu   d0, (LCDC_BLT_WIDTH0)
+    movbu   d0, (LCDC_BLT_WIDTH1)
+    movbu   d0, (LCDC_BLT_HEIGHT0)
+    movbu   d0, (LCDC_BLT_HEIGHT1)
+    movbu   d0, (LCDC_BLT_BG0)
+    movbu   d0, (LCDC_BLT_BG1)
+    movbu   d0, (LCDC_BLT_FG0)
+    movbu   d0, (LCDC_BLT_FG1)
+    movbu   d0, (LCDC_LUT_MODE)
+    movbu   d0, (LCDC_LUT_ADDR)
+    movbu   d0, (LCDC_LUT_DATA)
     mov     0x10, d0
-    movbu   d0, (0x9cc001f0)
+    movbu   d0, (LCDC_POWER_SAVE_CONFIG)
     clr     d0
-    movbu   d0, (0x9cc001f4)
+    movbu   d0, (LCDC_WATCHDOG)
     setlb
     clr     d1
     movhu   d1, (a2)
@@ -22164,9 +22164,9 @@ ModeAPortDefaultsInit_entry:
     cmp     0xa0000, d0
     lcs
     mov     7, d0
-    movbu   d0, (0x9cc001fc)
+    movbu   d0, (LCDC_DISPLAY_MODE)
     mov     8, d0
-    movbu   d0, (0x9cc00009)
+    movbu   d0, (LCDC_GPIO_CTRL1)
     ret     [a2], 0x10
 
 func_4854D453:
@@ -22174,11 +22174,11 @@ func_4854D453:
     cmp     0, d0
     beq     loc_4854D462
     mov     7, d0
-    movbu   d0, (0x9cc001fc)
+    movbu   d0, (LCDC_DISPLAY_MODE)
     bra     loc_4854D46B
 loc_4854D462:
     mov     0x80, d0
-    movbu   d0, (0x9cc001fc)
+    movbu   d0, (LCDC_DISPLAY_MODE)
 loc_4854D46B:
     retf    0, 0
 
@@ -22187,51 +22187,51 @@ func_4854D46E:
     cmp     1, d0
     bne     loc_4854D4CC
     mov     0x82, d0
-    movbu   d0, (0x9cc00018)
+    movbu   d0, (LCDC_CRT_PCLK_CONFIG)
     mov     0x4f, d0
-    movbu   d0, (0x9cc00050)
+    movbu   d0, (LCDC_CRT_HDISP)
     mov     0x3d, d0
-    movbu   d0, (0x9cc00052)
+    movbu   d0, (LCDC_CRT_HNDP)
     mov     0x15, d0
-    movbu   d0, (0x9cc00053)
+    movbu   d0, (LCDC_CRT_HRTC_START)
     clr     d0
-    movbu   d0, (0x9cc00054)
+    movbu   d0, (LCDC_CRT_HRTC_WIDTH)
     mov     0x72, d0
-    movbu   d0, (0x9cc00056)
+    movbu   d0, (LCDC_CRT_VDISP0)
     mov     1, d0
-    movbu   d0, (0x9cc00057)
+    movbu   d0, (LCDC_CRT_VDISP1)
     mov     0x7e, d0
-    movbu   d0, (0x9cc00058)
+    movbu   d0, (LCDC_CRT_VNDP)
     mov     0x17, d0
-    movbu   d0, (0x9cc00059)
+    movbu   d0, (LCDC_CRT_VRTC_START)
     clr     d0
-    movbu   d0, (0x9cc0005a)
+    movbu   d0, (LCDC_CRT_VRTC_WIDTH)
     mov     0x31, d0
-    movbu   d0, (0x9cc0005b)
+    movbu   d0, (LCDC_TV_OUTPUT_CTRL)
     bra     loc_4854D523
 loc_4854D4CC:
     mov     0x80, d0
-    movbu   d0, (0x9cc00018)
+    movbu   d0, (LCDC_CRT_PCLK_CONFIG)
     mov     0x4f, d0
-    movbu   d0, (0x9cc00050)
+    movbu   d0, (LCDC_CRT_HDISP)
     mov     0x21, d0
-    movbu   d0, (0x9cc00052)
+    movbu   d0, (LCDC_CRT_HNDP)
     mov     9, d0
-    movbu   d0, (0x9cc00053)
+    movbu   d0, (LCDC_CRT_HRTC_START)
     clr     d0
-    movbu   d0, (0x9cc00054)
+    movbu   d0, (LCDC_CRT_HRTC_WIDTH)
     mov     0xe, d0
-    movbu   d0, (0x9cc00056)
+    movbu   d0, (LCDC_CRT_VDISP0)
     mov     1, d0
-    movbu   d0, (0x9cc00057)
+    movbu   d0, (LCDC_CRT_VDISP1)
     mov     0x7e, d0
-    movbu   d0, (0x9cc00058)
+    movbu   d0, (LCDC_CRT_VNDP)
     mov     0x30, d0
-    movbu   d0, (0x9cc00059)
+    movbu   d0, (LCDC_CRT_VRTC_START)
     clr     d0
-    movbu   d0, (0x9cc0005a)
+    movbu   d0, (LCDC_CRT_VRTC_WIDTH)
     mov     0x30, d0
-    movbu   d0, (0x9cc0005b)
+    movbu   d0, (LCDC_TV_OUTPUT_CTRL)
 loc_4854D523:
     retf    0, 0
 
@@ -22240,43 +22240,43 @@ func_4854D526:
     add     -8, sp
 func_4854D526_entry:
     clr     d0
-    movbu   d0, (0x9cc0001b)
+    movbu   d0, (LCDC_CRT_PCLK_CONFIG+3)
     mov     8, d0
-    movbu   d0, (0x9cc0001a)
+    movbu   d0, (LCDC_CRT_PCLK_CONFIG+2)
     mov     0x30, d0
-    movbu   d0, (0x9cc00001)
+    movbu   d0, (LCDC_MISC)
     call    func_4854D767, 0, 0
     exthu   d0
     cmp     2, d0
     bne     loc_4854D555
     clr     d0
-    movbu   d0, (0x9cc00002)
+    movbu   d0, (LCDC_MISC+1)
     bra     loc_4854D55D
 loc_4854D555:
     mov     0x1c, d0
-    movbu   d0, (0x9cc00002)
+    movbu   d0, (LCDC_MISC+1)
 loc_4854D55D:
     clr     d0
-    movbu   d0, (0x9cc00003)
+    movbu   d0, (LCDC_MISC+2)
     mov     0x4f, d0
-    movbu   d0, (0x9cc00004)
+    movbu   d0, (LCDC_GPIO_CONFIG0)
     call    func_4854D767, 0, 0
     exthu   d0
     cmp     2, d0
     bne     loc_4854D580
     mov     8, d0
-    movbu   d0, (0x9cc00005)
+    movbu   d0, (LCDC_GPIO_CONFIG1)
     bra     loc_4854D588
 loc_4854D580:
     mov     0x16, d0
-    movbu   d0, (0x9cc00005)
+    movbu   d0, (LCDC_GPIO_CONFIG1)
 loc_4854D588:
     mov     0xef, d0
-    movbu   d0, (0x9cc00008)
+    movbu   d0, (LCDC_GPIO_CTRL0)
     clr     d0
-    movbu   d0, (0x9cc00009)
-    movbu   d0, (0x9cc0000a)
-    movbu   d0, (0x9cc0000c)
+    movbu   d0, (LCDC_GPIO_CTRL1)
+    movbu   d0, (LCDC_GPIO_CTRL1+1)
+    movbu   d0, (LCDC_GPIO_CTRL1+3)
     call    func_4854D767, 0, 0
     exthu   d0
     cmp     2, d0
@@ -22293,42 +22293,42 @@ loc_4854D5C0:
     mov     3, d0
     movbu   d0, (0x9cc0000f)
     clr     d0
-    movbu   d0, (0x9cc00010)
-    movbu   d0, (0x9cc00011)
-    movbu   d0, (0x9cc00012)
-    movbu   d0, (0x9cc00013)
-    movbu   d0, (0x9cc00014)
-    movbu   d0, (0x9cc00015)
+    movbu   d0, (LCDC_MEM_CLOCK_CONFIG)
+    movbu   d0, (LCDC_MEM_CLOCK_CONFIG+1)
+    movbu   d0, (LCDC_MEM_CLOCK_CONFIG+2)
+    movbu   d0, (LCDC_MEM_CLOCK_CONFIG+3)
+    movbu   d0, (LCDC_LCD_PCLK_CONFIG)
+    movbu   d0, (LCDC_LCD_PCLK_CONFIG+1)
     call    func_4854D767, 0, 0
     exthu   d0
     cmp     2, d0
     bne     loc_4854D611
     mov     0x50, d0
-    movbu   d0, (0x9cc00016)
+    movbu   d0, (LCDC_LCD_PCLK_CONFIG+2)
     clr     d0
-    movbu   d0, (0x9cc00017)
+    movbu   d0, (LCDC_LCD_PCLK_CONFIG+3)
     bra     loc_4854D622
 loc_4854D611:
     mov     0x80, d0
-    movbu   d0, (0x9cc00016)
+    movbu   d0, (LCDC_LCD_PCLK_CONFIG+2)
     mov     2, d0
-    movbu   d0, (0x9cc00017)
+    movbu   d0, (LCDC_LCD_PCLK_CONFIG+3)
 loc_4854D622:
     clr     d0
-    movbu   d0, (0x9cc00018)
+    movbu   d0, (LCDC_CRT_PCLK_CONFIG)
     mov     1, d0
-    movbu   d0, (0x9cc00019)
+    movbu   d0, (LCDC_CRT_PCLK_CONFIG+1)
     mov     0xff, d0
-    movbu   d0, (0x9cc0001e)
+    movbu   d0, (LCDC_CPU_MEM_WAIT)
     clr     d0
-    movbu   d0, (0x9cc0001f)
-    movbu   d0, (0x9cc00020)
+    movbu   d0, (LCDC_CPU_MEM_WAIT+1)
+    movbu   d0, (LCDC_MEM_CONFIG)
     call    func_4854D767, 0, 0
     exthu   d0
     cmp     2, d0
     bne     loc_4854D687
     clr     d0
-    movbu   d0, (0x9cc00024)
+    movbu   d0, (LCDC_DRAM_REFRESH+3)
     clr     d1
     clr     d2
     mov     func_4854D526_Table, a0
@@ -22349,9 +22349,9 @@ loc_4854D622:
     movbu   d0, (0x9cc00027)
 loc_4854D687:
     mov     0xa4, d0
-    movbu   d0, (0x9cc00022)
+    movbu   d0, (LCDC_DRAM_REFRESH+1)
     mov     0x10, d0
-    movbu   d0, (0x9cc00023)
+    movbu   d0, (LCDC_DRAM_REFRESH+2)
     call    func_4854D767, 0, 0
     exthu   d0
     cmp     2, d0
@@ -22369,7 +22369,7 @@ loc_4854D6B4:
     bne     loc_4854D6D1
     clr     d1
     setlb
-    mov     0x9ce00000, a0
+    mov     LCDC_VRAM, a0
     mov     d1, d0
     add     d0, d0
     clr     d2
@@ -22379,17 +22379,17 @@ loc_4854D6B4:
     lcs
 loc_4854D6D1:
     clr     d0
-    movbu   d0, (0x9cc0001a)
+    movbu   d0, (LCDC_CRT_PCLK_CONFIG+2)
     ret     [d2], 0xc
 
 func_4854D6DB:
     exthu   d0
     cmp     0, d0
     beq     loc_4854D6E9
-    bclr    0x80, (0x9cc00023)
+    bclr    0x80, (LCDC_DRAM_REFRESH+2)
     bra     loc_4854D6F0
 loc_4854D6E9:
-    bset    0x80, (0x9cc00023)
+    bset    0x80, (LCDC_DRAM_REFRESH+2)
 loc_4854D6F0:
     retf    0, 0
 
@@ -22399,11 +22399,11 @@ func_4854D6F3:
 func_4854D6F3_entry:
     clr     d0
     call    dis_int_entry, [d2], 4
-    movhu   (0x3200002e), d2
+    movhu   (MEMCTR7), d2
     clr     d0
-    movhu   d0, (0x3200002e)
-    movbu   d0, (0x9cc0001b)
-    movbu   (0x9cc00000), d0
+    movhu   d0, (MEMCTR7)
+    movbu   d0, (LCDC_CRT_PCLK_CONFIG+3)
+    movbu   (LCDC), d0
     cmp     0x1c, d0
     beq     loc_4854D723
     cmp     4, d0
@@ -22427,7 +22427,7 @@ loc_4854D74A:
     mov     0x0000ffff, d0
     movhu   d0, (func_4854D6F3_Table)
 loc_4854D756:
-    movhu   d2, (0x3200002e)
+    movhu   d2, (MEMCTR7)
     clr     d0
     call    ena_int_entry, [d2], 4
     ret     [d2], 0x10
@@ -22456,7 +22456,7 @@ loc_4854D78B:
     nop
     nop
     exthu   d3
-    mov     0x9cc00000, a0
+    mov     LCDC, a0
     movbu   (d3, a0), d0
     extbu   d2
     and     0x0f, d2
@@ -22493,7 +22493,7 @@ loc_4854D7CD:
     nop
     nop
     exthu   d3
-    mov     0x9cc00000, a0
+    mov     LCDC, a0
     movbu   (d3, a0), d0
     extbu   d1
     and     0x0f, d1
@@ -22575,7 +22575,7 @@ func_4854D85D_entry:
     cmp     2, d1
     beq     loc_4854D897
 loc_4854D875:
-    bclr    0x08, (0x9cc00009)
+    bclr    0x08, (LCDC_GPIO_CTRL1)
     clr     d0
     call    func_4854D453, 0, 0
     exthu   d2
@@ -22583,7 +22583,7 @@ loc_4854D875:
     call    func_4854D46E, 0, 0
     mov     1, d0
     call    func_4854D453, 0, 0
-    bset    0x08, (0x9cc00009)
+    bset    0x08, (LCDC_GPIO_CTRL1)
 loc_4854D897:
     ret     [d2], 0x10
 # InitializeBlock28  (CPU 0x4854d89a)

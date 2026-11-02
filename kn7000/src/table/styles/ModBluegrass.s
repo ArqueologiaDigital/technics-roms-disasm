@@ -19,8 +19,8 @@ Style_ModBluegrass:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_ModBluegrass
 
-Style_ModBluegrass_Intro1A:
-	var_head	Style_ModBluegrass_Intro1A, 4, 4, 0xff, 0x02
+Style_ModBluegrass_Intro1Major:
+	var_head	Style_ModBluegrass_Intro1Major, 4, 4, 0xff, 0x02
 	ev_cc	1, 97, 11
 	ev_pc	2, 0x1b, 0x41, 0x20
 	ev_pc	3, 0x1b, 0x11, 0x20
@@ -28,8 +28,8 @@ Style_ModBluegrass_Intro1A:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_ModBluegrass_Intro1A
-Style_ModBluegrass_Intro1A_Events:		# 4 bars of 4 beats, 622 bytes
+	var_events	Style_ModBluegrass_Intro1Major
+Style_ModBluegrass_Intro1Major_Events:		# 4 bars of 4 beats, 622 bytes
 	ev_beat
 	ev_note	0, 36, 90, 16, 0, 0
 	ev_note	0, 49, 90, 16, 0, 0
@@ -221,10 +221,10 @@ Style_ModBluegrass_Intro1A_Events:		# 4 bars of 4 beats, 622 bytes
 	ev_at	44
 	ev_note	0, 40, 84, 16, 0, 0
 	ev_end
-	var_end	Style_ModBluegrass_Intro1A
+	var_end	Style_ModBluegrass_Intro1Major
 
-Style_ModBluegrass_Intro1B:
-	var_head	Style_ModBluegrass_Intro1B, 4, 4, 0xff, 0x02
+Style_ModBluegrass_Intro1Minor:
+	var_head	Style_ModBluegrass_Intro1Minor, 4, 4, 0xff, 0x02
 	ev_cc	1, 97, 11
 	ev_pc	2, 0x1b, 0x41, 0x20
 	ev_cc	3, 10, 64
@@ -233,8 +233,8 @@ Style_ModBluegrass_Intro1B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_ModBluegrass_Intro1B
-Style_ModBluegrass_Intro1B_Events:		# 4 bars of 4 beats, 622 bytes
+	var_events	Style_ModBluegrass_Intro1Minor
+Style_ModBluegrass_Intro1Minor_Events:		# 4 bars of 4 beats, 622 bytes
 	ev_beat
 	ev_note	0, 36, 90, 16, 0, 0
 	ev_note	0, 49, 90, 16, 0, 0
@@ -426,10 +426,10 @@ Style_ModBluegrass_Intro1B_Events:		# 4 bars of 4 beats, 622 bytes
 	ev_at	44
 	ev_note	0, 40, 84, 16, 0, 0
 	ev_end
-	var_end	Style_ModBluegrass_Intro1B
+	var_end	Style_ModBluegrass_Intro1Minor
 
-Style_ModBluegrass_Ending1A:
-	var_head	Style_ModBluegrass_Ending1A, 8, 4, 0xff, 0x02
+Style_ModBluegrass_Intro2Major:
+	var_head	Style_ModBluegrass_Intro2Major, 8, 4, 0xff, 0x02
 	ev_cc	1, 97, 11
 	ev_cc	3, 10, 116
 	ev_pc	3, 0x1b, 0x11, 0x20
@@ -438,8 +438,8 @@ Style_ModBluegrass_Ending1A:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_ModBluegrass_Ending1A
-Style_ModBluegrass_Ending1A_Events:		# 8 bars of 4 beats, 976 bytes
+	var_events	Style_ModBluegrass_Intro2Major
+Style_ModBluegrass_Intro2Major_Events:		# 8 bars of 4 beats, 976 bytes
 	ev_beat
 	ev_note	0, 36, 97, 16, 0, 0
 	ev_note	0, 112, 100, 16, 0, 0
@@ -704,10 +704,10 @@ Style_ModBluegrass_Ending1A_Events:		# 8 bars of 4 beats, 976 bytes
 	ev_note	0, 43, 58, 16, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_ModBluegrass_Ending1A
+	var_end	Style_ModBluegrass_Intro2Major
 
-Style_ModBluegrass_Ending1B:
-	var_head	Style_ModBluegrass_Ending1B, 8, 4, 0xff, 0x02
+Style_ModBluegrass_Intro2Minor:
+	var_head	Style_ModBluegrass_Intro2Minor, 8, 4, 0xff, 0x02
 	ev_cc	0, 7, 106
 	ev_cc	1, 97, 11
 	ev_cc	3, 10, 116
@@ -717,8 +717,8 @@ Style_ModBluegrass_Ending1B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_ModBluegrass_Ending1B
-Style_ModBluegrass_Ending1B_Events:		# 8 bars of 4 beats, 976 bytes
+	var_events	Style_ModBluegrass_Intro2Minor
+Style_ModBluegrass_Intro2Minor_Events:		# 8 bars of 4 beats, 976 bytes
 	ev_beat
 	ev_note	0, 36, 97, 16, 0, 0
 	ev_note	0, 112, 100, 16, 0, 0
@@ -983,7 +983,7 @@ Style_ModBluegrass_Ending1B_Events:		# 8 bars of 4 beats, 976 bytes
 	ev_note	0, 43, 58, 16, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_ModBluegrass_Ending1B
+	var_end	Style_ModBluegrass_Intro2Minor
 
 Style_ModBluegrass_Var1:
 	var_head	Style_ModBluegrass_Var1, 4, 4, 0xff, 0x02
@@ -2401,8 +2401,8 @@ Style_ModBluegrass_Var4Fill2_Events:		# 1 bars of 4 beats, 306 bytes
 	ev_end
 	var_end	Style_ModBluegrass_Var4Fill2
 
-Style_ModBluegrass_Intro2A:
-	var_head	Style_ModBluegrass_Intro2A, 4, 4, 0xff, 0x02
+Style_ModBluegrass_Ending1Major:
+	var_head	Style_ModBluegrass_Ending1Major, 4, 4, 0xff, 0x02
 	ev_cc	1, 97, 11
 	ev_pc	2, 0x1b, 0x41, 0x20
 	ev_cc	3, 10, 98
@@ -2411,8 +2411,8 @@ Style_ModBluegrass_Intro2A:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_ModBluegrass_Intro2A
-Style_ModBluegrass_Intro2A_Events:		# 4 bars of 4 beats, 670 bytes
+	var_events	Style_ModBluegrass_Ending1Major
+Style_ModBluegrass_Ending1Major_Events:		# 4 bars of 4 beats, 670 bytes
 	ev_beat
 	ev_note	0, 36, 90, 16, 0, 0
 	ev_note	0, 49, 90, 16, 0, 0
@@ -2620,10 +2620,10 @@ Style_ModBluegrass_Intro2A_Events:		# 4 bars of 4 beats, 670 bytes
 	ev_at	89
 	ev_cc	4, 1, 38
 	ev_end
-	var_end	Style_ModBluegrass_Intro2A
+	var_end	Style_ModBluegrass_Ending1Major
 
-Style_ModBluegrass_Intro2B:
-	var_head	Style_ModBluegrass_Intro2B, 4, 4, 0xff, 0x02
+Style_ModBluegrass_Ending1Minor:
+	var_head	Style_ModBluegrass_Ending1Minor, 4, 4, 0xff, 0x02
 	ev_cc	1, 97, 11
 	ev_pc	2, 0x1b, 0x41, 0x20
 	ev_cc	3, 10, 64
@@ -2632,8 +2632,8 @@ Style_ModBluegrass_Intro2B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_ModBluegrass_Intro2B
-Style_ModBluegrass_Intro2B_Events:		# 4 bars of 4 beats, 670 bytes
+	var_events	Style_ModBluegrass_Ending1Minor
+Style_ModBluegrass_Ending1Minor_Events:		# 4 bars of 4 beats, 670 bytes
 	ev_beat
 	ev_note	0, 36, 90, 16, 0, 0
 	ev_note	0, 49, 90, 16, 0, 0
@@ -2841,10 +2841,10 @@ Style_ModBluegrass_Intro2B_Events:		# 4 bars of 4 beats, 670 bytes
 	ev_at	89
 	ev_cc	4, 1, 38
 	ev_end
-	var_end	Style_ModBluegrass_Intro2B
+	var_end	Style_ModBluegrass_Ending1Minor
 
-Style_ModBluegrass_Ending2A:
-	var_head	Style_ModBluegrass_Ending2A, 8, 4, 0xff, 0x02
+Style_ModBluegrass_Ending2Major:
+	var_head	Style_ModBluegrass_Ending2Major, 8, 4, 0xff, 0x02
 	ev_cc	1, 97, 11
 	ev_cc	3, 10, 96
 	ev_pc	3, 0x1b, 0x11, 0x20
@@ -2852,8 +2852,8 @@ Style_ModBluegrass_Ending2A:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_ModBluegrass_Ending2A
-Style_ModBluegrass_Ending2A_Events:		# 8 bars of 4 beats, 1184 bytes
+	var_events	Style_ModBluegrass_Ending2Major
+Style_ModBluegrass_Ending2Major_Events:		# 8 bars of 4 beats, 1184 bytes
 	ev_beat
 	ev_note	0, 36, 97, 16, 0, 0
 	ev_note	0, 112, 100, 16, 0, 0
@@ -3136,10 +3136,10 @@ Style_ModBluegrass_Ending2A_Events:		# 8 bars of 4 beats, 1184 bytes
 	ev_note	4, 64, 88, 60, 1, 1
 	ev_beat
 	ev_end
-	var_end	Style_ModBluegrass_Ending2A
+	var_end	Style_ModBluegrass_Ending2Major
 
-Style_ModBluegrass_Ending2B:
-	var_head	Style_ModBluegrass_Ending2B, 8, 4, 0xff, 0x02
+Style_ModBluegrass_Ending2Minor:
+	var_head	Style_ModBluegrass_Ending2Minor, 8, 4, 0xff, 0x02
 	ev_cc	0, 7, 106
 	ev_cc	1, 97, 11
 	ev_cc	3, 10, 116
@@ -3148,8 +3148,8 @@ Style_ModBluegrass_Ending2B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_ModBluegrass_Ending2B
-Style_ModBluegrass_Ending2B_Events:		# 8 bars of 4 beats, 1184 bytes
+	var_events	Style_ModBluegrass_Ending2Minor
+Style_ModBluegrass_Ending2Minor_Events:		# 8 bars of 4 beats, 1184 bytes
 	ev_beat
 	ev_note	0, 36, 97, 16, 0, 0
 	ev_note	0, 112, 100, 16, 0, 0
@@ -3432,4 +3432,4 @@ Style_ModBluegrass_Ending2B_Events:		# 8 bars of 4 beats, 1184 bytes
 	ev_note	4, 63, 88, 60, 1, 1
 	ev_beat
 	ev_end
-	var_end	Style_ModBluegrass_Ending2B
+	var_end	Style_ModBluegrass_Ending2Minor

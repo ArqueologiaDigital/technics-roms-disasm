@@ -19,8 +19,8 @@ Style_WaltzBallad:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_WaltzBallad
 
-Style_WaltzBallad_Intro1A:
-	var_head	Style_WaltzBallad_Intro1A, 8, 3, 0xff, 0xff
+Style_WaltzBallad_Intro1Major:
+	var_head	Style_WaltzBallad_Intro1Major, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 90
 	ev_cc	3, 10, 64
@@ -31,8 +31,8 @@ Style_WaltzBallad_Intro1A:
 	ev_pc	5, 0x30, 0x10, 0x20
 	ev_cc	6, 7, 127
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_WaltzBallad_Intro1A
-Style_WaltzBallad_Intro1A_Events:		# 8 bars of 3 beats, 2535 bytes
+	var_events	Style_WaltzBallad_Intro1Major
+Style_WaltzBallad_Intro1Major_Events:		# 8 bars of 3 beats, 2535 bytes
 	ev_beat
 	ev_cc	0, 11, 127
 	ev_note	0, 42, 64, 12, 0, 0
@@ -1020,10 +1020,10 @@ Style_WaltzBallad_Intro1A_Events:		# 8 bars of 3 beats, 2535 bytes
 	ev_at	88
 	ev_cc	2, 64, 0
 	ev_end
-	var_end	Style_WaltzBallad_Intro1A
+	var_end	Style_WaltzBallad_Intro1Major
 
-Style_WaltzBallad_Intro1B:
-	var_head	Style_WaltzBallad_Intro1B, 8, 3, 0xff, 0xff
+Style_WaltzBallad_Intro1Minor:
+	var_head	Style_WaltzBallad_Intro1Minor, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 80
 	ev_cc	3, 7, 120
@@ -1037,8 +1037,8 @@ Style_WaltzBallad_Intro1B:
 	ev_cc	6, 10, 109
 	ev_pc	6, 0x50, 0x48, 0x20
 	ev_pc	7, 0x03, 0x00, 0x26
-	var_events	Style_WaltzBallad_Intro1B
-Style_WaltzBallad_Intro1B_Events:		# 8 bars of 3 beats, 2214 bytes
+	var_events	Style_WaltzBallad_Intro1Minor
+Style_WaltzBallad_Intro1Minor_Events:		# 8 bars of 3 beats, 2214 bytes
 	ev_beat
 	ev_cc	0, 11, 127
 	ev_note	0, 42, 57, 12, 0, 0
@@ -1890,10 +1890,10 @@ Style_WaltzBallad_Intro1B_Events:		# 8 bars of 3 beats, 2214 bytes
 	ev_note	7, 43, 40, 12, 0, 0
 	ev_note	1, 31, 81, 32, 0, 1
 	ev_end
-	var_end	Style_WaltzBallad_Intro1B
+	var_end	Style_WaltzBallad_Intro1Minor
 
-Style_WaltzBallad_Ending1A:
-	var_head	Style_WaltzBallad_Ending1A, 8, 3, 0xff, 0xff
+Style_WaltzBallad_Intro2Major:
+	var_head	Style_WaltzBallad_Intro2Major, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 80
 	ev_pc	2, 0x05, 0x04, 0x20
@@ -1909,8 +1909,8 @@ Style_WaltzBallad_Ending1A:
 	ev_pc	6, 0x50, 0x48, 0x20
 	ev_cc	7, 7, 118
 	ev_pc	7, 0x01, 0x00, 0x26
-	var_events	Style_WaltzBallad_Ending1A
-Style_WaltzBallad_Ending1A_Events:		# 8 bars of 3 beats, 2179 bytes
+	var_events	Style_WaltzBallad_Intro2Major
+Style_WaltzBallad_Intro2Major_Events:		# 8 bars of 3 beats, 2179 bytes
 	ev_beat
 	ev_cc	0, 11, 127
 	ev_note	0, 42, 57, 12, 0, 0
@@ -2605,10 +2605,10 @@ Style_WaltzBallad_Ending1A_Events:		# 8 bars of 3 beats, 2179 bytes
 	ev_at	82
 	ev_bend	6, 0, 64
 	ev_end
-	var_end	Style_WaltzBallad_Ending1A
+	var_end	Style_WaltzBallad_Intro2Major
 
-Style_WaltzBallad_Ending1B:
-	var_head	Style_WaltzBallad_Ending1B, 8, 3, 0xff, 0xff
+Style_WaltzBallad_Intro2Minor:
+	var_head	Style_WaltzBallad_Intro2Minor, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 80
 	ev_cc	3, 7, 115
@@ -2624,8 +2624,8 @@ Style_WaltzBallad_Ending1B:
 	ev_cc	6, 10, 109
 	ev_pc	6, 0x50, 0x48, 0x20
 	ev_pc	7, 0x01, 0x00, 0x26
-	var_events	Style_WaltzBallad_Ending1B
-Style_WaltzBallad_Ending1B_Events:		# 8 bars of 3 beats, 1549 bytes
+	var_events	Style_WaltzBallad_Intro2Minor
+Style_WaltzBallad_Intro2Minor_Events:		# 8 bars of 3 beats, 1549 bytes
 	ev_beat
 	ev_cc	0, 11, 127
 	ev_note	0, 42, 57, 12, 0, 0
@@ -3016,7 +3016,7 @@ Style_WaltzBallad_Ending1B_Events:		# 8 bars of 3 beats, 1549 bytes
 	ev_at	67
 	ev_cc	5, 64, 0
 	ev_end
-	var_end	Style_WaltzBallad_Ending1B
+	var_end	Style_WaltzBallad_Intro2Minor
 
 Style_WaltzBallad_Var1:
 	var_head	Style_WaltzBallad_Var1, 4, 3, 0xff, 0xff
@@ -4606,8 +4606,8 @@ Style_WaltzBallad_Var4Fill2_Events:		# 1 bars of 3 beats, 1208 bytes
 	ev_end
 	var_end	Style_WaltzBallad_Var4Fill2
 
-Style_WaltzBallad_Intro2A:
-	var_head	Style_WaltzBallad_Intro2A, 8, 3, 0xff, 0xff
+Style_WaltzBallad_Ending1Major:
+	var_head	Style_WaltzBallad_Ending1Major, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 119
 	ev_cc	3, 7, 90
@@ -4619,8 +4619,8 @@ Style_WaltzBallad_Intro2A:
 	ev_pc	5, 0x30, 0x10, 0x20
 	ev_cc	6, 7, 127
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_WaltzBallad_Intro2A
-Style_WaltzBallad_Intro2A_Events:		# 8 bars of 3 beats, 1355 bytes
+	var_events	Style_WaltzBallad_Ending1Major
+Style_WaltzBallad_Ending1Major_Events:		# 8 bars of 3 beats, 1355 bytes
 	ev_beat
 	ev_cc	0, 11, 127
 	ev_note	0, 42, 59, 12, 0, 0
@@ -5153,10 +5153,10 @@ Style_WaltzBallad_Intro2A_Events:		# 8 bars of 3 beats, 1355 bytes
 	ev_at	83
 	ev_cc	5, 11, 48
 	ev_end
-	var_end	Style_WaltzBallad_Intro2A
+	var_end	Style_WaltzBallad_Ending1Major
 
-Style_WaltzBallad_Intro2B:
-	var_head	Style_WaltzBallad_Intro2B, 8, 3, 0xff, 0xff
+Style_WaltzBallad_Ending1Minor:
+	var_head	Style_WaltzBallad_Ending1Minor, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 80
 	ev_cc	3, 7, 120
@@ -5170,8 +5170,8 @@ Style_WaltzBallad_Intro2B:
 	ev_cc	6, 10, 109
 	ev_pc	6, 0x50, 0x48, 0x20
 	ev_pc	7, 0x03, 0x00, 0x26
-	var_events	Style_WaltzBallad_Intro2B
-Style_WaltzBallad_Intro2B_Events:		# 8 bars of 3 beats, 1591 bytes
+	var_events	Style_WaltzBallad_Ending1Minor
+Style_WaltzBallad_Ending1Minor_Events:		# 8 bars of 3 beats, 1591 bytes
 	ev_beat
 	ev_cc	0, 11, 127
 	ev_note	0, 42, 57, 12, 0, 0
@@ -5836,10 +5836,10 @@ Style_WaltzBallad_Intro2B_Events:		# 8 bars of 3 beats, 1591 bytes
 	ev_at	91
 	ev_cc	5, 11, 18
 	ev_end
-	var_end	Style_WaltzBallad_Intro2B
+	var_end	Style_WaltzBallad_Ending1Minor
 
-Style_WaltzBallad_Ending2A:
-	var_head	Style_WaltzBallad_Ending2A, 9, 3, 0xff, 0xff
+Style_WaltzBallad_Ending2Major:
+	var_head	Style_WaltzBallad_Ending2Major, 9, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 80
 	ev_pc	2, 0x05, 0x04, 0x20
@@ -5857,8 +5857,8 @@ Style_WaltzBallad_Ending2A:
 	ev_pc	6, 0x50, 0x48, 0x20
 	ev_cc	7, 7, 101
 	ev_pc	7, 0x01, 0x00, 0x26
-	var_events	Style_WaltzBallad_Ending2A
-Style_WaltzBallad_Ending2A_Events:		# 9 bars of 3 beats, 1447 bytes
+	var_events	Style_WaltzBallad_Ending2Major
+Style_WaltzBallad_Ending2Major_Events:		# 9 bars of 3 beats, 1447 bytes
 	ev_beat
 	ev_note	0, 42, 54, 22, 0, 0
 	ev_note	0, 36, 65, 45, 2, 0
@@ -6363,10 +6363,10 @@ Style_WaltzBallad_Ending2A_Events:		# 9 bars of 3 beats, 1447 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_WaltzBallad_Ending2A
+	var_end	Style_WaltzBallad_Ending2Major
 
-Style_WaltzBallad_Ending2B:
-	var_head	Style_WaltzBallad_Ending2B, 9, 3, 0xff, 0xff
+Style_WaltzBallad_Ending2Minor:
+	var_head	Style_WaltzBallad_Ending2Minor, 9, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 80
 	ev_pc	2, 0x05, 0x04, 0x20
@@ -6383,8 +6383,8 @@ Style_WaltzBallad_Ending2B:
 	ev_cc	6, 10, 109
 	ev_pc	6, 0x50, 0x48, 0x20
 	ev_pc	7, 0x01, 0x00, 0x26
-	var_events	Style_WaltzBallad_Ending2B
-Style_WaltzBallad_Ending2B_Events:		# 9 bars of 3 beats, 1770 bytes
+	var_events	Style_WaltzBallad_Ending2Minor
+Style_WaltzBallad_Ending2Minor_Events:		# 9 bars of 3 beats, 1770 bytes
 	ev_beat
 	ev_cc	0, 11, 127
 	ev_note	0, 42, 57, 12, 0, 0
@@ -6970,4 +6970,4 @@ Style_WaltzBallad_Ending2B_Events:		# 9 bars of 3 beats, 1770 bytes
 	ev_at	92
 	ev_cc	2, 64, 0
 	ev_end
-	var_end	Style_WaltzBallad_Ending2B
+	var_end	Style_WaltzBallad_Ending2Minor

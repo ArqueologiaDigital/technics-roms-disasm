@@ -4473,7 +4473,7 @@ TcmpVar11:		# MemStyleVarRecPtr 11: style 0 slot 11 (Var4Fill2)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar12:		# MemStyleVarRecPtr 12: style 0 slot 12 (Intro1A)
+TcmpVar12:		# MemStyleVarRecPtr 12: style 0 slot 12 (Intro1Major)
 	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -4499,7 +4499,7 @@ TcmpVar12:		# MemStyleVarRecPtr 12: style 0 slot 12 (Intro1A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar13:		# MemStyleVarRecPtr 13: style 0 slot 13 (Intro1B)
+TcmpVar13:		# MemStyleVarRecPtr 13: style 0 slot 13 (Intro1Minor)
 	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -4525,7 +4525,7 @@ TcmpVar13:		# MemStyleVarRecPtr 13: style 0 slot 13 (Intro1B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar14:		# MemStyleVarRecPtr 14: style 0 slot 14 (Intro2A)
+TcmpVar14:		# MemStyleVarRecPtr 14: style 0 slot 14 (Ending1Major)
 	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -4551,7 +4551,7 @@ TcmpVar14:		# MemStyleVarRecPtr 14: style 0 slot 14 (Intro2A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar15:		# MemStyleVarRecPtr 15: style 0 slot 15 (Intro2B)
+TcmpVar15:		# MemStyleVarRecPtr 15: style 0 slot 15 (Ending1Minor)
 	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -4577,7 +4577,7 @@ TcmpVar15:		# MemStyleVarRecPtr 15: style 0 slot 15 (Intro2B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar16:		# MemStyleVarRecPtr 16: style 0 slot 16 (Ending1A)
+TcmpVar16:		# MemStyleVarRecPtr 16: style 0 slot 16 (Intro2Major)
 	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -4603,7 +4603,7 @@ TcmpVar16:		# MemStyleVarRecPtr 16: style 0 slot 16 (Ending1A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar17:		# MemStyleVarRecPtr 17: style 0 slot 17 (Ending1B)
+TcmpVar17:		# MemStyleVarRecPtr 17: style 0 slot 17 (Intro2Minor)
 	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -4629,7 +4629,7 @@ TcmpVar17:		# MemStyleVarRecPtr 17: style 0 slot 17 (Ending1B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar18:		# MemStyleVarRecPtr 18: style 0 slot 18 (Ending2A)
+TcmpVar18:		# MemStyleVarRecPtr 18: style 0 slot 18 (Ending2Major)
 	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -4655,7 +4655,7 @@ TcmpVar18:		# MemStyleVarRecPtr 18: style 0 slot 18 (Ending2A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar19:		# MemStyleVarRecPtr 19: style 0 slot 19 (Ending2B)
+TcmpVar19:		# MemStyleVarRecPtr 19: style 0 slot 19 (Ending2Minor)
 	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -4993,7 +4993,7 @@ TcmpVar31:		# MemStyleVarRecPtr 31: style 1 slot 11 (Var4Fill2)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar32:		# MemStyleVarRecPtr 32: style 1 slot 12 (Intro1A)
+TcmpVar32:		# MemStyleVarRecPtr 32: style 1 slot 12 (Intro1Major)
 	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -5019,7 +5019,7 @@ TcmpVar32:		# MemStyleVarRecPtr 32: style 1 slot 12 (Intro1A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar33:		# MemStyleVarRecPtr 33: style 1 slot 13 (Intro1B)
+TcmpVar33:		# MemStyleVarRecPtr 33: style 1 slot 13 (Intro1Minor)
 	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -5045,7 +5045,7 @@ TcmpVar33:		# MemStyleVarRecPtr 33: style 1 slot 13 (Intro1B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar34:		# MemStyleVarRecPtr 34: style 1 slot 14 (Intro2A)
+TcmpVar34:		# MemStyleVarRecPtr 34: style 1 slot 14 (Ending1Major)
 	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -5071,7 +5071,7 @@ TcmpVar34:		# MemStyleVarRecPtr 34: style 1 slot 14 (Intro2A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar35:		# MemStyleVarRecPtr 35: style 1 slot 15 (Intro2B)
+TcmpVar35:		# MemStyleVarRecPtr 35: style 1 slot 15 (Ending1Minor)
 	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -5097,7 +5097,7 @@ TcmpVar35:		# MemStyleVarRecPtr 35: style 1 slot 15 (Intro2B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar36:		# MemStyleVarRecPtr 36: style 1 slot 16 (Ending1A)
+TcmpVar36:		# MemStyleVarRecPtr 36: style 1 slot 16 (Intro2Major)
 	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -5123,7 +5123,7 @@ TcmpVar36:		# MemStyleVarRecPtr 36: style 1 slot 16 (Ending1A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar37:		# MemStyleVarRecPtr 37: style 1 slot 17 (Ending1B)
+TcmpVar37:		# MemStyleVarRecPtr 37: style 1 slot 17 (Intro2Minor)
 	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -5149,7 +5149,7 @@ TcmpVar37:		# MemStyleVarRecPtr 37: style 1 slot 17 (Ending1B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar38:		# MemStyleVarRecPtr 38: style 1 slot 18 (Ending2A)
+TcmpVar38:		# MemStyleVarRecPtr 38: style 1 slot 18 (Ending2Major)
 	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -5175,7 +5175,7 @@ TcmpVar38:		# MemStyleVarRecPtr 38: style 1 slot 18 (Ending2A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar39:		# MemStyleVarRecPtr 39: style 1 slot 19 (Ending2B)
+TcmpVar39:		# MemStyleVarRecPtr 39: style 1 slot 19 (Ending2Minor)
 	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -5513,7 +5513,7 @@ TcmpVar51:		# MemStyleVarRecPtr 51: style 2 slot 11 (Var4Fill2)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar52:		# MemStyleVarRecPtr 52: style 2 slot 12 (Intro1A)
+TcmpVar52:		# MemStyleVarRecPtr 52: style 2 slot 12 (Intro1Major)
 	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -5539,7 +5539,7 @@ TcmpVar52:		# MemStyleVarRecPtr 52: style 2 slot 12 (Intro1A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar53:		# MemStyleVarRecPtr 53: style 2 slot 13 (Intro1B)
+TcmpVar53:		# MemStyleVarRecPtr 53: style 2 slot 13 (Intro1Minor)
 	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -5565,7 +5565,7 @@ TcmpVar53:		# MemStyleVarRecPtr 53: style 2 slot 13 (Intro1B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar54:		# MemStyleVarRecPtr 54: style 2 slot 14 (Intro2A)
+TcmpVar54:		# MemStyleVarRecPtr 54: style 2 slot 14 (Ending1Major)
 	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -5591,7 +5591,7 @@ TcmpVar54:		# MemStyleVarRecPtr 54: style 2 slot 14 (Intro2A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar55:		# MemStyleVarRecPtr 55: style 2 slot 15 (Intro2B)
+TcmpVar55:		# MemStyleVarRecPtr 55: style 2 slot 15 (Ending1Minor)
 	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -5617,7 +5617,7 @@ TcmpVar55:		# MemStyleVarRecPtr 55: style 2 slot 15 (Intro2B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar56:		# MemStyleVarRecPtr 56: style 2 slot 16 (Ending1A)
+TcmpVar56:		# MemStyleVarRecPtr 56: style 2 slot 16 (Intro2Major)
 	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -5643,7 +5643,7 @@ TcmpVar56:		# MemStyleVarRecPtr 56: style 2 slot 16 (Ending1A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar57:		# MemStyleVarRecPtr 57: style 2 slot 17 (Ending1B)
+TcmpVar57:		# MemStyleVarRecPtr 57: style 2 slot 17 (Intro2Minor)
 	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -5669,7 +5669,7 @@ TcmpVar57:		# MemStyleVarRecPtr 57: style 2 slot 17 (Ending1B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar58:		# MemStyleVarRecPtr 58: style 2 slot 18 (Ending2A)
+TcmpVar58:		# MemStyleVarRecPtr 58: style 2 slot 18 (Ending2Major)
 	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
@@ -5695,7 +5695,7 @@ TcmpVar58:		# MemStyleVarRecPtr 58: style 2 slot 18 (Ending2A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar59:		# MemStyleVarRecPtr 59: style 2 slot 19 (Ending2B)
+TcmpVar59:		# MemStyleVarRecPtr 59: style 2 slot 19 (Ending2Minor)
 	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
 	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)

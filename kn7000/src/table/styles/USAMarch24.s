@@ -19,14 +19,14 @@ Style_USAMarch24:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_USAMarch24
 
-Style_USAMarch24_Intro1A:
-	var_head	Style_USAMarch24_Intro1A, 2, 4, 0xff, 0xff
+Style_USAMarch24_Intro1Major:
+	var_head	Style_USAMarch24_Intro1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 100
 	ev_cc	5, 7, 92
 	ev_pc	5, 0x48, 0x00, 0x20
-	var_events	Style_USAMarch24_Intro1A
-Style_USAMarch24_Intro1A_Events:		# 2 bars of 4 beats, 1422 bytes
+	var_events	Style_USAMarch24_Intro1Major
+Style_USAMarch24_Intro1Major_Events:		# 2 bars of 4 beats, 1422 bytes
 	ev_beat
 	ev_note	0, 24, 103, 12, 0, 0
 	ev_note	0, 31, 103, 12, 0, 0
@@ -411,10 +411,10 @@ Style_USAMarch24_Intro1A_Events:		# 2 bars of 4 beats, 1422 bytes
 	ev_note	0, 57, 117, 12, 0, 0
 	ev_note	1, 31, 95, 93, 0, 1
 	ev_end
-	var_end	Style_USAMarch24_Intro1A
+	var_end	Style_USAMarch24_Intro1Major
 
-Style_USAMarch24_Intro1B:
-	var_head	Style_USAMarch24_Intro1B, 2, 4, 0xff, 0xff
+Style_USAMarch24_Intro1Minor:
+	var_head	Style_USAMarch24_Intro1Minor, 2, 4, 0xff, 0xff
 	ev_cc	0, 7, 102
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 100
@@ -424,8 +424,8 @@ Style_USAMarch24_Intro1B:
 	ev_cc	5, 7, 107
 	ev_pc	5, 0x48, 0x00, 0x20
 	ev_cc	6, 7, 100
-	var_events	Style_USAMarch24_Intro1B
-Style_USAMarch24_Intro1B_Events:		# 2 bars of 4 beats, 1552 bytes
+	var_events	Style_USAMarch24_Intro1Minor
+Style_USAMarch24_Intro1Minor_Events:		# 2 bars of 4 beats, 1552 bytes
 	ev_beat
 	ev_note	0, 24, 103, 12, 0, 0
 	ev_note	0, 31, 103, 12, 0, 0
@@ -793,10 +793,10 @@ Style_USAMarch24_Intro1B_Events:		# 2 bars of 4 beats, 1552 bytes
 	ev_at	55
 	ev_note	1, 38, 118, 15, 0, 1
 	ev_end
-	var_end	Style_USAMarch24_Intro1B
+	var_end	Style_USAMarch24_Intro1Minor
 
-Style_USAMarch24_Ending1A:
-	var_head	Style_USAMarch24_Ending1A, 4, 4, 0xff, 0xff
+Style_USAMarch24_Intro2Major:
+	var_head	Style_USAMarch24_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	0, 7, 102
 	ev_cc	0, 82, 64
 	ev_cc	0, 80, 108
@@ -825,8 +825,8 @@ Style_USAMarch24_Ending1A:
 	ev_pc	6, 0x47, 0x20, 0x20
 	ev_cc	7, 82, 64
 	ev_cc	7, 80, 108
-	var_events	Style_USAMarch24_Ending1A
-Style_USAMarch24_Ending1A_Events:		# 4 bars of 4 beats, 2672 bytes
+	var_events	Style_USAMarch24_Intro2Major
+Style_USAMarch24_Intro2Major_Events:		# 4 bars of 4 beats, 2672 bytes
 	ev_beat
 	ev_note	0, 38, 113, 12, 0, 0
 	ev_note	0, 40, 110, 12, 0, 0
@@ -1450,10 +1450,10 @@ Style_USAMarch24_Ending1A_Events:		# 4 bars of 4 beats, 2672 bytes
 	ev_at	47
 	ev_cc	5, 64, 0
 	ev_end
-	var_end	Style_USAMarch24_Ending1A
+	var_end	Style_USAMarch24_Intro2Major
 
-Style_USAMarch24_Ending1B:
-	var_head	Style_USAMarch24_Ending1B, 4, 4, 0xff, 0xff
+Style_USAMarch24_Intro2Minor:
+	var_head	Style_USAMarch24_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	0, 7, 102
 	ev_cc	0, 82, 64
 	ev_cc	0, 80, 108
@@ -1481,8 +1481,8 @@ Style_USAMarch24_Ending1B:
 	ev_pc	6, 0x47, 0x20, 0x20
 	ev_cc	7, 82, 64
 	ev_cc	7, 80, 108
-	var_events	Style_USAMarch24_Ending1B
-Style_USAMarch24_Ending1B_Events:		# 4 bars of 4 beats, 2092 bytes
+	var_events	Style_USAMarch24_Intro2Minor
+Style_USAMarch24_Intro2Minor_Events:		# 4 bars of 4 beats, 2092 bytes
 	ev_beat
 	ev_note	0, 38, 67, 12, 0, 0
 	ev_note	0, 40, 94, 12, 0, 0
@@ -1915,7 +1915,7 @@ Style_USAMarch24_Ending1B_Events:		# 4 bars of 4 beats, 2092 bytes
 	ev_note	0, 40, 127, 12, 0, 0
 	ev_note	1, 31, 106, 45, 0, 1
 	ev_end
-	var_end	Style_USAMarch24_Ending1B
+	var_end	Style_USAMarch24_Intro2Minor
 
 Style_USAMarch24_Var1:
 	var_head	Style_USAMarch24_Var1, 4, 4, 0xff, 0xff
@@ -4776,15 +4776,15 @@ Style_USAMarch24_Var4Fill2_Events:		# 1 bars of 4 beats, 609 bytes
 	ev_end
 	var_end	Style_USAMarch24_Var4Fill2
 
-Style_USAMarch24_Intro2A:
-	var_head	Style_USAMarch24_Intro2A, 2, 4, 0xff, 0xff
+Style_USAMarch24_Ending1Major:
+	var_head	Style_USAMarch24_Ending1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 100
 	ev_cc	5, 7, 92
 	ev_pc	5, 0x48, 0x00, 0x20
 	ev_pc	6, 0x09, 0x00, 0x20
-	var_events	Style_USAMarch24_Intro2A
-Style_USAMarch24_Intro2A_Events:		# 2 bars of 4 beats, 1531 bytes
+	var_events	Style_USAMarch24_Ending1Major
+Style_USAMarch24_Ending1Major_Events:		# 2 bars of 4 beats, 1531 bytes
 	ev_beat
 	ev_note	0, 24, 103, 12, 0, 0
 	ev_note	0, 31, 103, 12, 0, 0
@@ -5198,10 +5198,10 @@ Style_USAMarch24_Intro2A_Events:		# 2 bars of 4 beats, 1531 bytes
 	ev_note	3, 72, 121, 41, 0, 1
 	ev_note	5, 96, 105, 42, 0, 1
 	ev_end
-	var_end	Style_USAMarch24_Intro2A
+	var_end	Style_USAMarch24_Ending1Major
 
-Style_USAMarch24_Intro2B:
-	var_head	Style_USAMarch24_Intro2B, 2, 4, 0xff, 0xff
+Style_USAMarch24_Ending1Minor:
+	var_head	Style_USAMarch24_Ending1Minor, 2, 4, 0xff, 0xff
 	ev_cc	0, 7, 102
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 100
@@ -5213,8 +5213,8 @@ Style_USAMarch24_Intro2B:
 	ev_cc	5, 7, 107
 	ev_pc	5, 0x48, 0x00, 0x20
 	ev_cc	6, 7, 100
-	var_events	Style_USAMarch24_Intro2B
-Style_USAMarch24_Intro2B_Events:		# 2 bars of 4 beats, 1397 bytes
+	var_events	Style_USAMarch24_Ending1Minor
+Style_USAMarch24_Ending1Minor_Events:		# 2 bars of 4 beats, 1397 bytes
 	ev_beat
 	ev_note	0, 24, 103, 12, 0, 0
 	ev_note	0, 31, 103, 12, 0, 0
@@ -5532,10 +5532,10 @@ Style_USAMarch24_Intro2B_Events:		# 2 bars of 4 beats, 1397 bytes
 	ev_at	1
 	ev_note	6, 96, 127, 13, 0, 1
 	ev_end
-	var_end	Style_USAMarch24_Intro2B
+	var_end	Style_USAMarch24_Ending1Minor
 
-Style_USAMarch24_Ending2A:
-	var_head	Style_USAMarch24_Ending2A, 2, 4, 0xff, 0xff
+Style_USAMarch24_Ending2Major:
+	var_head	Style_USAMarch24_Ending2Major, 2, 4, 0xff, 0xff
 	ev_cc	0, 7, 102
 	ev_cc	0, 82, 64
 	ev_cc	0, 80, 108
@@ -5564,8 +5564,8 @@ Style_USAMarch24_Ending2A:
 	ev_pc	6, 0x47, 0x20, 0x20
 	ev_cc	7, 82, 64
 	ev_cc	7, 80, 108
-	var_events	Style_USAMarch24_Ending2A
-Style_USAMarch24_Ending2A_Events:		# 2 bars of 4 beats, 1399 bytes
+	var_events	Style_USAMarch24_Ending2Major
+Style_USAMarch24_Ending2Major_Events:		# 2 bars of 4 beats, 1399 bytes
 	ev_beat
 	ev_note	0, 24, 103, 12, 0, 0
 	ev_note	0, 31, 103, 12, 0, 0
@@ -5900,10 +5900,10 @@ Style_USAMarch24_Ending2A_Events:		# 2 bars of 4 beats, 1399 bytes
 	ev_at	4
 	ev_note	6, 72, 117, 35, 0, 1
 	ev_end
-	var_end	Style_USAMarch24_Ending2A
+	var_end	Style_USAMarch24_Ending2Major
 
-Style_USAMarch24_Ending2B:
-	var_head	Style_USAMarch24_Ending2B, 2, 4, 0xff, 0xff
+Style_USAMarch24_Ending2Minor:
+	var_head	Style_USAMarch24_Ending2Minor, 2, 4, 0xff, 0xff
 	ev_cc	0, 7, 102
 	ev_cc	0, 82, 64
 	ev_cc	0, 80, 108
@@ -5931,8 +5931,8 @@ Style_USAMarch24_Ending2B:
 	ev_pc	6, 0x47, 0x20, 0x20
 	ev_cc	7, 82, 64
 	ev_cc	7, 80, 108
-	var_events	Style_USAMarch24_Ending2B
-Style_USAMarch24_Ending2B_Events:		# 2 bars of 4 beats, 1431 bytes
+	var_events	Style_USAMarch24_Ending2Minor
+Style_USAMarch24_Ending2Minor_Events:		# 2 bars of 4 beats, 1431 bytes
 	ev_beat
 	ev_note	0, 24, 103, 12, 0, 0
 	ev_note	0, 31, 103, 12, 0, 0
@@ -6264,4 +6264,4 @@ Style_USAMarch24_Ending2B_Events:		# 2 bars of 4 beats, 1431 bytes
 	ev_note	0, 24, 120, 12, 0, 0
 	ev_note	7, 81, 127, 12, 0, 0
 	ev_end
-	var_end	Style_USAMarch24_Ending2B
+	var_end	Style_USAMarch24_Ending2Minor

@@ -5708,7 +5708,7 @@ AcFadeSetGridBoxProc_Records:	# 16 x REC_AcFadeSetGridBoxProc_Records (8 bytes e
 	REC_AcFadeSetGridBoxProc_Records	key=0x1007E, proc=loc_484AB6D1
 	REC_AcFadeSetGridBoxProc_Records	key=15, proc=loc_484AB53E
 
-func_484ABA98_Table:	# 104 x u8, 19..255; read by func_484ABA98_entry 0x484ABA12: `movbu  (d0, a0), d2`
+func_484ABA98_Table:	# 104 x u8, 19..255; read by func_484ABA98_entry 0x484ABA57: `movbu  (d0, a0), d2`
 	tab_u8	65, 65, 64, 64, 63, 63, 63, 62, 62, 61, 61, 61, 60, 60, 59, 59	# [0]
 	tab_u8	59, 58, 58, 57, 57, 57, 56, 56, 55, 55, 55, 54, 54, 53, 53, 53	# [16]
 	tab_u8	52, 52, 51, 51, 51, 50, 50, 49, 49, 49, 48, 48, 47, 47, 47, 46	# [32]
@@ -8710,17 +8710,17 @@ func_484BA14C_Table:	# 16 x u32, 0..16777215; read by func_484BA14C 0x484BA14C: 
 	tab_u32	0, 0, 0, 0, 512, 0, 0, 0	# [8]
 func_484BA162_Table:	# 8 x u32, 0..16777215; read by func_484BA162 0x484BA162: `mov   (a1), d0`
 	tab_u32	16777215, 0, 0, 0, 0, 0, 0, 0
-func_484BB179_Table:	# 16 x u8, 0..10; read by func_484BB179_entry 0x484B3A51: `movbu  (d0, a1), d0`
+func_484BB179_Table:	# 16 x u8, 0..10; read by func_484BB179_entry 0x484B9B1D: `movbu  (d0, a1), d0`
 	tab_u8	5, 6, 7, 8, 9, 10, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4
-func_484BB179_Table_2:	# 12 x u8, 0..255; read by func_484BB179_entry 0x484B3A51: `movbu  (d0, a0), d1`
+func_484BB179_Table_2:	# 12 x u8, 0..255; read by func_484BB179_entry 0x484B9B1D: `movbu  (d0, a0), d1`
 	tab_u8	11, 12, 13, 14, 15, 0, 1, 2, 3, 4, 5, 255
 func_484BCFA7_Table:	# 6 x u32, 2097760..2097765; read by func_484BCFA7 0x484BCFA7: `mov   (d0, a0), d1`
 	tab_u32	2097760, 2097761, 2097762, 2097763, 2097764, 2097765
 func_484BD09E_Table:	# 6 x u32, 2097760..2097765; read by func_484BD09E 0x484BD09E: `mov   (d0, a0), d1`
 	tab_u32	2097760, 2097761, 2097762, 2097763, 2097764, 2097765
-func_484BE136_Table:	# 16 x u8, 0..15; read by func_484BE136 0x484B3A51: `movbu  (d0, a0), d0`
+func_484BE136_Table:	# 16 x u8, 0..15; read by func_484BE136 0x484B9B1D: `movbu  (d0, a0), d0`
 	tab_u8	9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15
-func_484BEE1B_Table:	# 16 x u8, 0..15; read by func_484BEE1B 0x484B3A51: `movbu  (d0, a0), d0`
+func_484BEE1B_Table:	# 16 x u8, 0..15; read by func_484BEE1B 0x484B9B1D: `movbu  (d0, a0), d0`
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 10, 11, 12, 13, 14, 15
 
 Str_P_1_5:	.asciz "\xF0P( 1\x1F"
@@ -22570,7 +22570,7 @@ Str_08x_08x_2:	.asciz "   %08x, %08x                  "
 # census: opaque -- unknown-dump: 186 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x244BC8, 0x244C82
 
-func_48502747_Table:	# 126 x u8, 4..255; read by func_48502747_entry 0x48500B37: `movbu  (a1), d0`
+func_48502747_Table:	# 126 x u8, 4..255; read by func_48502747_entry 0x48500C60: `movbu  (a1), d0`
 	tab_u8	200, 75, 100, 72, 206, 75, 100, 72, 212, 75, 100, 72, 218, 75, 100, 72	# [0]
 	tab_u8	224, 75, 100, 72, 230, 75, 100, 72, 236, 75, 100, 72, 242, 75, 100, 72	# [16]
 	tab_u8	248, 75, 100, 72, 254, 75, 100, 72, 4, 76, 100, 72, 10, 76, 100, 72	# [32]
@@ -22796,7 +22796,7 @@ StepCommandCatch_Records:	# 16 x REC_StepCommandCatch_Records (8 bytes each); re
 	REC_StepCommandCatch_Records	key=16, proc=loc_484FFC2E
 	REC_StepCommandCatch_Records	proc=loc_484FFF3A
 	REC_StepCommandCatch_Records	key=15, proc=loc_484FFC2C
-func_48500C60_Records:	# 128 x REC_func_48500C60_Records (8 bytes each); read by func_48500C60 0x48500C60 `mov (a0), d0`
+func_48500C60_Records:	# 128 x REC_func_48500C60_Records (8 bytes each); read by PartParamDumpLine 0x48500C60 `mov (a0), d0`
 	REC_func_48500C60_Records	key=0x1000000, proc=loc_48502718	# [0]
 	REC_func_48500C60_Records	key=0xC00001, proc=loc_48500CC9
 	REC_func_48500C60_Records	key=0x200001, proc=loc_48500D45

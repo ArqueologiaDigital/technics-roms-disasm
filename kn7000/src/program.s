@@ -23,12 +23,15 @@
 .equ PROGRAM_ROM_BASE, 0x48400000
 .mnbase 0x48400000   # CPU address of output offset 0 (for PC-relative ops)
 .include "src/symbols.inc"
+.include "src/include/mn103002a_sfr.inc"   # MN103002A registers / board devices, by name
+.include "src/include/kn7000_board_io.inc"   # MN103002A registers / board devices, by name
 .include "src/program/data/gui_event_ids.inc"   # EV_ / MT_ ids, named in mov / cmp immediates
 .include "src/program/data/gui_code_ids.inc"   # TT_ / MD_ / CLASS_ / FN_ / object ids, likewise
 
-# 2 names converted code references outside itself (not in symbols.inc)
+# 3 names converted code references outside itself (not in symbols.inc)
 .equ TableRomDirectory, 0x48000000
 .equ LibRomImageBase, 0x487B8FD1
+.equ PanelMemBank1Save, 0x50046B6C
 
 # 11 data addresses named by annotations/*.ann
 .equ DrawIcons_PixelPairTable, 0x485A22B8   # 256 x u16: icon byte -> {left, right} palette index (nibble n -> n, or 0xF0+n if n >= 8)

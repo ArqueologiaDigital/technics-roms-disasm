@@ -19,13 +19,13 @@ Style_CountryBlues:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_CountryBlues
 
-Style_CountryBlues_Intro1A:
-	var_head	Style_CountryBlues_Intro1A, 6, 4, 0xff, 0xff
+Style_CountryBlues_Intro1Major:
+	var_head	Style_CountryBlues_Intro1Major, 6, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 93, 24
 	ev_cc	4, 93, 24
-	var_events	Style_CountryBlues_Intro1A
-Style_CountryBlues_Intro1A_Events:		# 6 bars of 4 beats, 2522 bytes
+	var_events	Style_CountryBlues_Intro1Major
+Style_CountryBlues_Intro1Major_Events:		# 6 bars of 4 beats, 2522 bytes
 	ev_beat
 	ev_note	7, 73, 99, 35, 0, 0
 	ev_at	15
@@ -613,17 +613,17 @@ Style_CountryBlues_Intro1A_Events:		# 6 bars of 4 beats, 2522 bytes
 	ev_at	67
 	ev_note	2, 79, 113, 18, 0, 1
 	ev_end
-	var_end	Style_CountryBlues_Intro1A
+	var_end	Style_CountryBlues_Intro1Major
 
-Style_CountryBlues_Intro1B:
-	var_head	Style_CountryBlues_Intro1B, 6, 4, 0xff, 0xff
+Style_CountryBlues_Intro1Minor:
+	var_head	Style_CountryBlues_Intro1Minor, 6, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 93, 24
 	ev_cc	4, 7, 98
 	ev_cc	4, 93, 24
 	ev_pc	6, 0x16, 0x08, 0x20
-	var_events	Style_CountryBlues_Intro1B
-Style_CountryBlues_Intro1B_Events:		# 6 bars of 4 beats, 2547 bytes
+	var_events	Style_CountryBlues_Intro1Minor
+Style_CountryBlues_Intro1Minor_Events:		# 6 bars of 4 beats, 2547 bytes
 	ev_beat
 	ev_note	7, 73, 99, 35, 0, 0
 	ev_at	21
@@ -1190,10 +1190,10 @@ Style_CountryBlues_Intro1B_Events:		# 6 bars of 4 beats, 2547 bytes
 	ev_note	3, 55, 116, 28, 0, 1
 	ev_note	5, 55, 121, 24, 0, 1
 	ev_end
-	var_end	Style_CountryBlues_Intro1B
+	var_end	Style_CountryBlues_Intro1Minor
 
-Style_CountryBlues_Ending1A:
-	var_head	Style_CountryBlues_Ending1A, 12, 4, 0xff, 0xff
+Style_CountryBlues_Intro2Major:
+	var_head	Style_CountryBlues_Intro2Major, 12, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 93, 24
 	ev_cc	4, 7, 98
@@ -1206,8 +1206,8 @@ Style_CountryBlues_Ending1A:
 	ev_cc	6, 10, 127
 	ev_pc	6, 0x1a, 0x20, 0x20
 	ev_pc	7, 0x38, 0x00, 0x26
-	var_events	Style_CountryBlues_Ending1A
-Style_CountryBlues_Ending1A_Events:		# 12 bars of 4 beats, 6800 bytes
+	var_events	Style_CountryBlues_Intro2Major
+Style_CountryBlues_Intro2Major_Events:		# 12 bars of 4 beats, 6800 bytes
 	ev_beat
 	ev_note	0, 46, 64, 11, 0, 0
 	ev_note	2, 43, 28, 61, 0, 1
@@ -2910,10 +2910,10 @@ Style_CountryBlues_Ending1A_Events:		# 12 bars of 4 beats, 6800 bytes
 	ev_note	0, 46, 116, 1, 0, 0
 	ev_note	1, 31, 121, 25, 0, 1
 	ev_end
-	var_end	Style_CountryBlues_Ending1A
+	var_end	Style_CountryBlues_Intro2Major
 
-Style_CountryBlues_Ending1B:
-	var_head	Style_CountryBlues_Ending1B, 12, 4, 0xff, 0xff
+Style_CountryBlues_Intro2Minor:
+	var_head	Style_CountryBlues_Intro2Minor, 12, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 93, 24
 	ev_cc	4, 7, 98
@@ -2926,8 +2926,8 @@ Style_CountryBlues_Ending1B:
 	ev_cc	6, 10, 127
 	ev_pc	6, 0x1a, 0x20, 0x20
 	ev_pc	7, 0x38, 0x00, 0x26
-	var_events	Style_CountryBlues_Ending1B
-Style_CountryBlues_Ending1B_Events:		# 12 bars of 4 beats, 6213 bytes
+	var_events	Style_CountryBlues_Intro2Minor
+Style_CountryBlues_Intro2Minor_Events:		# 12 bars of 4 beats, 6213 bytes
 	ev_beat
 	ev_note	0, 46, 64, 11, 0, 0
 	ev_note	2, 24, 67, 60, 0, 1
@@ -4518,7 +4518,7 @@ Style_CountryBlues_Ending1B_Events:		# 12 bars of 4 beats, 6213 bytes
 	ev_note	0, 46, 116, 1, 0, 0
 	ev_note	1, 31, 121, 25, 0, 1
 	ev_end
-	var_end	Style_CountryBlues_Ending1B
+	var_end	Style_CountryBlues_Intro2Minor
 
 Style_CountryBlues_Var1:
 	var_head	Style_CountryBlues_Var1, 4, 4, 0xff, 0xff
@@ -7005,8 +7005,8 @@ Style_CountryBlues_Var4Fill2_Events:		# 1 bars of 4 beats, 846 bytes
 	ev_end
 	var_end	Style_CountryBlues_Var4Fill2
 
-Style_CountryBlues_Intro2A:
-	var_head	Style_CountryBlues_Intro2A, 6, 4, 0xff, 0xff
+Style_CountryBlues_Ending1Major:
+	var_head	Style_CountryBlues_Ending1Major, 6, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 41
 	ev_cc	4, 7, 92
@@ -7016,8 +7016,8 @@ Style_CountryBlues_Intro2A:
 	ev_cc	5, 10, 26
 	ev_cc	5, 93, 21
 	ev_cc	6, 10, 109
-	var_events	Style_CountryBlues_Intro2A
-Style_CountryBlues_Intro2A_Events:		# 6 bars of 4 beats, 3330 bytes
+	var_events	Style_CountryBlues_Ending1Major
+Style_CountryBlues_Ending1Major_Events:		# 6 bars of 4 beats, 3330 bytes
 	ev_beat
 	ev_note	0, 53, 127, 8, 0, 0
 	ev_note	0, 36, 113, 33, 0, 0
@@ -7889,10 +7889,10 @@ Style_CountryBlues_Intro2A_Events:		# 6 bars of 4 beats, 3330 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_CountryBlues_Intro2A
+	var_end	Style_CountryBlues_Ending1Major
 
-Style_CountryBlues_Intro2B:
-	var_head	Style_CountryBlues_Intro2B, 6, 4, 0xff, 0xff
+Style_CountryBlues_Ending1Minor:
+	var_head	Style_CountryBlues_Ending1Minor, 6, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 41
 	ev_cc	4, 7, 98
@@ -7903,8 +7903,8 @@ Style_CountryBlues_Intro2B:
 	ev_cc	5, 93, 21
 	ev_cc	6, 10, 109
 	ev_pc	6, 0x16, 0x08, 0x20
-	var_events	Style_CountryBlues_Intro2B
-Style_CountryBlues_Intro2B_Events:		# 6 bars of 4 beats, 2732 bytes
+	var_events	Style_CountryBlues_Ending1Minor
+Style_CountryBlues_Ending1Minor_Events:		# 6 bars of 4 beats, 2732 bytes
 	ev_beat
 	ev_note	0, 53, 127, 8, 0, 0
 	ev_note	0, 36, 113, 33, 0, 0
@@ -8574,10 +8574,10 @@ Style_CountryBlues_Intro2B_Events:		# 6 bars of 4 beats, 2732 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_CountryBlues_Intro2B
+	var_end	Style_CountryBlues_Ending1Minor
 
-Style_CountryBlues_Ending2A:
-	var_head	Style_CountryBlues_Ending2A, 7, 4, 0xff, 0xff
+Style_CountryBlues_Ending2Major:
+	var_head	Style_CountryBlues_Ending2Major, 7, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 41
 	ev_cc	4, 7, 98
@@ -8593,8 +8593,8 @@ Style_CountryBlues_Ending2A:
 	ev_cc	6, 10, 127
 	ev_pc	6, 0x1a, 0x20, 0x20
 	ev_pc	7, 0x38, 0x00, 0x26
-	var_events	Style_CountryBlues_Ending2A
-Style_CountryBlues_Ending2A_Events:		# 7 bars of 4 beats, 2599 bytes
+	var_events	Style_CountryBlues_Ending2Major
+Style_CountryBlues_Ending2Major_Events:		# 7 bars of 4 beats, 2599 bytes
 	ev_beat
 	ev_note	0, 49, 126, 14, 0, 0
 	ev_note	0, 36, 85, 25, 0, 0
@@ -9345,10 +9345,10 @@ Style_CountryBlues_Ending2A_Events:		# 7 bars of 4 beats, 2599 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_CountryBlues_Ending2A
+	var_end	Style_CountryBlues_Ending2Major
 
-Style_CountryBlues_Ending2B:
-	var_head	Style_CountryBlues_Ending2B, 7, 4, 0xff, 0xff
+Style_CountryBlues_Ending2Minor:
+	var_head	Style_CountryBlues_Ending2Minor, 7, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 41
 	ev_cc	4, 7, 98
@@ -9364,8 +9364,8 @@ Style_CountryBlues_Ending2B:
 	ev_cc	6, 10, 127
 	ev_pc	6, 0x1a, 0x20, 0x20
 	ev_pc	7, 0x38, 0x00, 0x26
-	var_events	Style_CountryBlues_Ending2B
-Style_CountryBlues_Ending2B_Events:		# 7 bars of 4 beats, 2599 bytes
+	var_events	Style_CountryBlues_Ending2Minor
+Style_CountryBlues_Ending2Minor_Events:		# 7 bars of 4 beats, 2599 bytes
 	ev_beat
 	ev_note	0, 49, 126, 14, 0, 0
 	ev_note	0, 36, 85, 25, 0, 0
@@ -10116,4 +10116,4 @@ Style_CountryBlues_Ending2B_Events:		# 7 bars of 4 beats, 2599 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_CountryBlues_Ending2B
+	var_end	Style_CountryBlues_Ending2Minor

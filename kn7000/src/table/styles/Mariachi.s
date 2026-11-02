@@ -19,14 +19,14 @@ Style_Mariachi:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_Mariachi
 
-Style_Mariachi_Intro1A:
-	var_head	Style_Mariachi_Intro1A, 2, 4, 0xff, 0xff
+Style_Mariachi_Intro1Major:
+	var_head	Style_Mariachi_Intro1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Mariachi_Intro1A
-Style_Mariachi_Intro1A_Events:		# 2 bars of 4 beats, 1379 bytes
+	var_events	Style_Mariachi_Intro1Major
+Style_Mariachi_Intro1Major_Events:		# 2 bars of 4 beats, 1379 bytes
 	ev_beat
 	ev_note	0, 64, 104, 8, 0, 0
 	ev_note	0, 36, 108, 8, 0, 0
@@ -326,16 +326,16 @@ Style_Mariachi_Intro1A_Events:		# 2 bars of 4 beats, 1379 bytes
 	ev_note	0, 58, 127, 8, 0, 0
 	ev_note	0, 106, 60, 8, 0, 0
 	ev_end
-	var_end	Style_Mariachi_Intro1A
+	var_end	Style_Mariachi_Intro1Major
 
-Style_Mariachi_Intro1B:
-	var_head	Style_Mariachi_Intro1B, 2, 4, 0xff, 0xff
+Style_Mariachi_Intro1Minor:
+	var_head	Style_Mariachi_Intro1Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Mariachi_Intro1B
-Style_Mariachi_Intro1B_Events:		# 2 bars of 4 beats, 1379 bytes
+	var_events	Style_Mariachi_Intro1Minor
+Style_Mariachi_Intro1Minor_Events:		# 2 bars of 4 beats, 1379 bytes
 	ev_beat
 	ev_note	0, 64, 104, 8, 0, 0
 	ev_note	0, 36, 108, 8, 0, 0
@@ -635,17 +635,17 @@ Style_Mariachi_Intro1B_Events:		# 2 bars of 4 beats, 1379 bytes
 	ev_note	0, 58, 127, 8, 0, 0
 	ev_note	0, 106, 60, 8, 0, 0
 	ev_end
-	var_end	Style_Mariachi_Intro1B
+	var_end	Style_Mariachi_Intro1Minor
 
-Style_Mariachi_Ending1A:
-	var_head	Style_Mariachi_Ending1A, 4, 4, 0xff, 0xff
+Style_Mariachi_Intro2Major:
+	var_head	Style_Mariachi_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 92
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Mariachi_Ending1A
-Style_Mariachi_Ending1A_Events:		# 4 bars of 4 beats, 1568 bytes
+	var_events	Style_Mariachi_Intro2Major
+Style_Mariachi_Intro2Major_Events:		# 4 bars of 4 beats, 1568 bytes
 	ev_beat
 	ev_note	0, 106, 80, 8, 0, 0
 	ev_at	2
@@ -1063,17 +1063,17 @@ Style_Mariachi_Ending1A_Events:		# 4 bars of 4 beats, 1568 bytes
 	ev_at	76
 	ev_note	0, 63, 124, 11, 0, 0
 	ev_end
-	var_end	Style_Mariachi_Ending1A
+	var_end	Style_Mariachi_Intro2Major
 
-Style_Mariachi_Ending1B:
-	var_head	Style_Mariachi_Ending1B, 4, 4, 0xff, 0xff
+Style_Mariachi_Intro2Minor:
+	var_head	Style_Mariachi_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 92
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Mariachi_Ending1B
-Style_Mariachi_Ending1B_Events:		# 4 bars of 4 beats, 1568 bytes
+	var_events	Style_Mariachi_Intro2Minor
+Style_Mariachi_Intro2Minor_Events:		# 4 bars of 4 beats, 1568 bytes
 	ev_beat
 	ev_note	0, 106, 80, 8, 0, 0
 	ev_at	2
@@ -1491,7 +1491,7 @@ Style_Mariachi_Ending1B_Events:		# 4 bars of 4 beats, 1568 bytes
 	ev_at	76
 	ev_note	0, 63, 124, 11, 0, 0
 	ev_end
-	var_end	Style_Mariachi_Ending1B
+	var_end	Style_Mariachi_Intro2Minor
 
 Style_Mariachi_Var1:
 	var_head	Style_Mariachi_Var1, 4, 4, 0xff, 0xff
@@ -4477,14 +4477,14 @@ Style_Mariachi_Var4Fill2_Events:		# 1 bars of 4 beats, 444 bytes
 	ev_end
 	var_end	Style_Mariachi_Var4Fill2
 
-Style_Mariachi_Intro2A:
-	var_head	Style_Mariachi_Intro2A, 2, 4, 0xff, 0xff
+Style_Mariachi_Ending1Major:
+	var_head	Style_Mariachi_Ending1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Mariachi_Intro2A
-Style_Mariachi_Intro2A_Events:		# 2 bars of 4 beats, 1028 bytes
+	var_events	Style_Mariachi_Ending1Major
+Style_Mariachi_Ending1Major_Events:		# 2 bars of 4 beats, 1028 bytes
 	ev_beat
 	ev_note	0, 106, 115, 8, 0, 0
 	ev_note	0, 64, 114, 8, 0, 0
@@ -4688,16 +4688,16 @@ Style_Mariachi_Intro2A_Events:		# 2 bars of 4 beats, 1028 bytes
 	ev_note	4, 76, 127, 26, 0, 1
 	ev_note	4, 84, 127, 22, 0, 1
 	ev_end
-	var_end	Style_Mariachi_Intro2A
+	var_end	Style_Mariachi_Ending1Major
 
-Style_Mariachi_Intro2B:
-	var_head	Style_Mariachi_Intro2B, 2, 4, 0xff, 0xff
+Style_Mariachi_Ending1Minor:
+	var_head	Style_Mariachi_Ending1Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Mariachi_Intro2B
-Style_Mariachi_Intro2B_Events:		# 2 bars of 4 beats, 1028 bytes
+	var_events	Style_Mariachi_Ending1Minor
+Style_Mariachi_Ending1Minor_Events:		# 2 bars of 4 beats, 1028 bytes
 	ev_beat
 	ev_note	0, 106, 115, 8, 0, 0
 	ev_note	0, 64, 114, 8, 0, 0
@@ -4901,17 +4901,17 @@ Style_Mariachi_Intro2B_Events:		# 2 bars of 4 beats, 1028 bytes
 	ev_note	4, 75, 127, 26, 0, 1
 	ev_note	4, 84, 127, 22, 0, 1
 	ev_end
-	var_end	Style_Mariachi_Intro2B
+	var_end	Style_Mariachi_Ending1Minor
 
-Style_Mariachi_Ending2A:
-	var_head	Style_Mariachi_Ending2A, 4, 4, 0xff, 0xff
+Style_Mariachi_Ending2Major:
+	var_head	Style_Mariachi_Ending2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 92
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Mariachi_Ending2A
-Style_Mariachi_Ending2A_Events:		# 4 bars of 4 beats, 2095 bytes
+	var_events	Style_Mariachi_Ending2Major
+Style_Mariachi_Ending2Major_Events:		# 4 bars of 4 beats, 2095 bytes
 	ev_beat
 	ev_note	0, 101, 110, 12, 0, 0
 	ev_note	0, 106, 115, 8, 0, 0
@@ -5362,17 +5362,17 @@ Style_Mariachi_Ending2A_Events:		# 4 bars of 4 beats, 2095 bytes
 	ev_at	7
 	ev_note	2, 60, 127, 18, 0, 1
 	ev_end
-	var_end	Style_Mariachi_Ending2A
+	var_end	Style_Mariachi_Ending2Major
 
-Style_Mariachi_Ending2B:
-	var_head	Style_Mariachi_Ending2B, 4, 4, 0xff, 0xff
+Style_Mariachi_Ending2Minor:
+	var_head	Style_Mariachi_Ending2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 92
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Mariachi_Ending2B
-Style_Mariachi_Ending2B_Events:		# 4 bars of 4 beats, 2095 bytes
+	var_events	Style_Mariachi_Ending2Minor
+Style_Mariachi_Ending2Minor_Events:		# 4 bars of 4 beats, 2095 bytes
 	ev_beat
 	ev_note	0, 101, 110, 12, 0, 0
 	ev_note	0, 106, 115, 8, 0, 0
@@ -5823,4 +5823,4 @@ Style_Mariachi_Ending2B_Events:		# 4 bars of 4 beats, 2095 bytes
 	ev_at	7
 	ev_note	2, 60, 127, 18, 0, 1
 	ev_end
-	var_end	Style_Mariachi_Ending2B
+	var_end	Style_Mariachi_Ending2Minor

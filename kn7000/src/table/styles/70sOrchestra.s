@@ -19,14 +19,14 @@ Style_70sOrchestra:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_70sOrchestra
 
-Style_70sOrchestra_Intro1A:
-	var_head	Style_70sOrchestra_Intro1A, 4, 4, 0xff, 0xff
+Style_70sOrchestra_Intro1Major:
+	var_head	Style_70sOrchestra_Intro1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	7, 91, 50
 	ev_cc	7, 82, 52
 	ev_cc	7, 80, 92
-	var_events	Style_70sOrchestra_Intro1A
-Style_70sOrchestra_Intro1A_Events:		# 4 bars of 4 beats, 1704 bytes
+	var_events	Style_70sOrchestra_Intro1Major
+Style_70sOrchestra_Intro1Major_Events:		# 4 bars of 4 beats, 1704 bytes
 	ev_beat
 	ev_note	1, 36, 96, 30, 2, 1
 	ev_note	2, 67, 96, 41, 0, 1
@@ -479,18 +479,18 @@ Style_70sOrchestra_Intro1A_Events:		# 4 bars of 4 beats, 1704 bytes
 	ev_at	95
 	ev_note	0, 49, 97, 8, 0, 0
 	ev_end
-	var_end	Style_70sOrchestra_Intro1A
+	var_end	Style_70sOrchestra_Intro1Major
 
-Style_70sOrchestra_Intro1B:
-	var_head	Style_70sOrchestra_Intro1B, 4, 4, 0xff, 0xff
+Style_70sOrchestra_Intro1Minor:
+	var_head	Style_70sOrchestra_Intro1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	4, 7, 77
 	ev_pc	4, 0x3c, 0x40, 0x20
 	ev_cc	7, 91, 50
 	ev_cc	7, 82, 52
 	ev_cc	7, 80, 92
-	var_events	Style_70sOrchestra_Intro1B
-Style_70sOrchestra_Intro1B_Events:		# 4 bars of 4 beats, 2301 bytes
+	var_events	Style_70sOrchestra_Intro1Minor
+Style_70sOrchestra_Intro1Minor_Events:		# 4 bars of 4 beats, 2301 bytes
 	ev_beat
 	ev_note	0, 20, 89, 15, 0, 0
 	ev_note	0, 35, 127, 26, 0, 0
@@ -1138,16 +1138,16 @@ Style_70sOrchestra_Intro1B_Events:		# 4 bars of 4 beats, 2301 bytes
 	ev_at	95
 	ev_note	0, 49, 97, 11, 0, 0
 	ev_end
-	var_end	Style_70sOrchestra_Intro1B
+	var_end	Style_70sOrchestra_Intro1Minor
 
-Style_70sOrchestra_Ending1A:
-	var_head	Style_70sOrchestra_Ending1A, 4, 4, 0xff, 0xff
+Style_70sOrchestra_Intro2Major:
+	var_head	Style_70sOrchestra_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	7, 91, 50
 	ev_cc	7, 82, 52
 	ev_cc	7, 80, 92
-	var_events	Style_70sOrchestra_Ending1A
-Style_70sOrchestra_Ending1A_Events:		# 4 bars of 4 beats, 2931 bytes
+	var_events	Style_70sOrchestra_Intro2Major
+Style_70sOrchestra_Intro2Major_Events:		# 4 bars of 4 beats, 2931 bytes
 	ev_beat
 	ev_note	0, 21, 89, 15, 0, 0
 	ev_note	0, 54, 97, 13, 0, 0
@@ -1752,16 +1752,16 @@ Style_70sOrchestra_Ending1A_Events:		# 4 bars of 4 beats, 2931 bytes
 	ev_at	95
 	ev_note	0, 49, 89, 10, 0, 0
 	ev_end
-	var_end	Style_70sOrchestra_Ending1A
+	var_end	Style_70sOrchestra_Intro2Major
 
-Style_70sOrchestra_Ending1B:
-	var_head	Style_70sOrchestra_Ending1B, 4, 4, 0xff, 0xff
+Style_70sOrchestra_Intro2Minor:
+	var_head	Style_70sOrchestra_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	7, 91, 50
 	ev_cc	7, 82, 52
 	ev_cc	7, 80, 92
-	var_events	Style_70sOrchestra_Ending1B
-Style_70sOrchestra_Ending1B_Events:		# 4 bars of 4 beats, 1968 bytes
+	var_events	Style_70sOrchestra_Intro2Minor
+Style_70sOrchestra_Intro2Minor_Events:		# 4 bars of 4 beats, 1968 bytes
 	ev_beat
 	ev_note	0, 21, 89, 15, 0, 0
 	ev_note	0, 54, 97, 13, 0, 0
@@ -2168,7 +2168,7 @@ Style_70sOrchestra_Ending1B_Events:		# 4 bars of 4 beats, 1968 bytes
 	ev_at	95
 	ev_note	0, 49, 104, 10, 0, 0
 	ev_end
-	var_end	Style_70sOrchestra_Ending1B
+	var_end	Style_70sOrchestra_Intro2Minor
 
 Style_70sOrchestra_Var1:
 	var_head	Style_70sOrchestra_Var1, 4, 4, 0xff, 0xff
@@ -5006,16 +5006,16 @@ Style_70sOrchestra_Var4Fill2_Events:		# 1 bars of 4 beats, 738 bytes
 	ev_end
 	var_end	Style_70sOrchestra_Var4Fill2
 
-Style_70sOrchestra_Intro2A:
-	var_head	Style_70sOrchestra_Intro2A, 4, 4, 0xff, 0xff
+Style_70sOrchestra_Ending1Major:
+	var_head	Style_70sOrchestra_Ending1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	4, 7, 77
 	ev_pc	4, 0x3c, 0x40, 0x20
 	ev_cc	7, 91, 50
 	ev_cc	7, 82, 52
 	ev_cc	7, 80, 92
-	var_events	Style_70sOrchestra_Intro2A
-Style_70sOrchestra_Intro2A_Events:		# 4 bars of 4 beats, 2616 bytes
+	var_events	Style_70sOrchestra_Ending1Major
+Style_70sOrchestra_Ending1Major_Events:		# 4 bars of 4 beats, 2616 bytes
 	ev_beat
 	ev_note	0, 20, 89, 15, 0, 0
 	ev_note	0, 35, 127, 26, 0, 0
@@ -5832,18 +5832,18 @@ Style_70sOrchestra_Intro2A_Events:		# 4 bars of 4 beats, 2616 bytes
 	ev_at	85
 	ev_cc	5, 11, 32
 	ev_end
-	var_end	Style_70sOrchestra_Intro2A
+	var_end	Style_70sOrchestra_Ending1Major
 
-Style_70sOrchestra_Intro2B:
-	var_head	Style_70sOrchestra_Intro2B, 4, 4, 0xff, 0xff
+Style_70sOrchestra_Ending1Minor:
+	var_head	Style_70sOrchestra_Ending1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	4, 7, 77
 	ev_pc	4, 0x3c, 0x40, 0x20
 	ev_cc	7, 91, 50
 	ev_cc	7, 82, 52
 	ev_cc	7, 80, 92
-	var_events	Style_70sOrchestra_Intro2B
-Style_70sOrchestra_Intro2B_Events:		# 4 bars of 4 beats, 2286 bytes
+	var_events	Style_70sOrchestra_Ending1Minor
+Style_70sOrchestra_Ending1Minor_Events:		# 4 bars of 4 beats, 2286 bytes
 	ev_beat
 	ev_note	0, 20, 89, 15, 0, 0
 	ev_note	0, 35, 127, 26, 0, 0
@@ -6615,16 +6615,16 @@ Style_70sOrchestra_Intro2B_Events:		# 4 bars of 4 beats, 2286 bytes
 	ev_cc	5, 11, 126
 	ev_beat
 	ev_end
-	var_end	Style_70sOrchestra_Intro2B
+	var_end	Style_70sOrchestra_Ending1Minor
 
-Style_70sOrchestra_Ending2A:
-	var_head	Style_70sOrchestra_Ending2A, 5, 4, 0xff, 0xff
+Style_70sOrchestra_Ending2Major:
+	var_head	Style_70sOrchestra_Ending2Major, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	7, 91, 50
 	ev_cc	7, 82, 52
 	ev_cc	7, 80, 92
-	var_events	Style_70sOrchestra_Ending2A
-Style_70sOrchestra_Ending2A_Events:		# 5 bars of 4 beats, 2614 bytes
+	var_events	Style_70sOrchestra_Ending2Major
+Style_70sOrchestra_Ending2Major_Events:		# 5 bars of 4 beats, 2614 bytes
 	ev_beat
 	ev_note	0, 21, 89, 15, 0, 0
 	ev_note	0, 54, 97, 13, 0, 0
@@ -7173,16 +7173,16 @@ Style_70sOrchestra_Ending2A_Events:		# 5 bars of 4 beats, 2614 bytes
 	ev_cc	4, 64, 0
 	ev_beat
 	ev_end
-	var_end	Style_70sOrchestra_Ending2A
+	var_end	Style_70sOrchestra_Ending2Major
 
-Style_70sOrchestra_Ending2B:
-	var_head	Style_70sOrchestra_Ending2B, 5, 4, 0xff, 0xff
+Style_70sOrchestra_Ending2Minor:
+	var_head	Style_70sOrchestra_Ending2Minor, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	7, 91, 50
 	ev_cc	7, 82, 52
 	ev_cc	7, 80, 92
-	var_events	Style_70sOrchestra_Ending2B
-Style_70sOrchestra_Ending2B_Events:		# 5 bars of 4 beats, 1617 bytes
+	var_events	Style_70sOrchestra_Ending2Minor
+Style_70sOrchestra_Ending2Minor_Events:		# 5 bars of 4 beats, 1617 bytes
 	ev_beat
 	ev_note	0, 54, 92, 15, 0, 0
 	ev_note	0, 44, 102, 13, 0, 0
@@ -7554,4 +7554,4 @@ Style_70sOrchestra_Ending2B_Events:		# 5 bars of 4 beats, 1617 bytes
 	ev_at	94
 	ev_cc	5, 11, 127
 	ev_end
-	var_end	Style_70sOrchestra_Ending2B
+	var_end	Style_70sOrchestra_Ending2Minor

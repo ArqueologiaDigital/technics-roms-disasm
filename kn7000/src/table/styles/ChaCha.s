@@ -19,15 +19,15 @@ Style_ChaCha:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_ChaCha
 
-Style_ChaCha_Intro1A:
-	var_head	Style_ChaCha_Intro1A, 4, 4, 0xff, 0xff
+Style_ChaCha_Intro1Major:
+	var_head	Style_ChaCha_Intro1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 90
 	ev_pc	3, 0x38, 0x04, 0x20
 	ev_cc	5, 7, 76
 	ev_pc	6, 0x38, 0x33, 0x20
-	var_events	Style_ChaCha_Intro1A
-Style_ChaCha_Intro1A_Events:		# 4 bars of 4 beats, 1848 bytes
+	var_events	Style_ChaCha_Intro1Major
+Style_ChaCha_Intro1Major_Events:		# 4 bars of 4 beats, 1848 bytes
 	ev_beat
 	ev_note	0, 36, 83, 99, 0, 0
 	ev_note	0, 101, 86, 12, 0, 0
@@ -530,15 +530,15 @@ Style_ChaCha_Intro1A_Events:		# 4 bars of 4 beats, 1848 bytes
 	ev_at	72
 	ev_note	0, 101, 50, 6, 0, 0
 	ev_end
-	var_end	Style_ChaCha_Intro1A
+	var_end	Style_ChaCha_Intro1Major
 
-Style_ChaCha_Intro1B:
-	var_head	Style_ChaCha_Intro1B, 4, 4, 0xff, 0xff
+Style_ChaCha_Intro1Minor:
+	var_head	Style_ChaCha_Intro1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 7, 105
 	ev_pc	5, 0x39, 0x17, 0x20
-	var_events	Style_ChaCha_Intro1B
-Style_ChaCha_Intro1B_Events:		# 4 bars of 4 beats, 1737 bytes
+	var_events	Style_ChaCha_Intro1Minor
+Style_ChaCha_Intro1Minor_Events:		# 4 bars of 4 beats, 1737 bytes
 	ev_beat
 	ev_note	0, 36, 83, 99, 0, 0
 	ev_note	0, 101, 86, 12, 0, 0
@@ -1005,10 +1005,10 @@ Style_ChaCha_Intro1B_Events:		# 4 bars of 4 beats, 1737 bytes
 	ev_at	72
 	ev_note	0, 101, 50, 6, 0, 0
 	ev_end
-	var_end	Style_ChaCha_Intro1B
+	var_end	Style_ChaCha_Intro1Minor
 
-Style_ChaCha_Ending1A:
-	var_head	Style_ChaCha_Ending1A, 4, 4, 0xff, 0xff
+Style_ChaCha_Intro2Major:
+	var_head	Style_ChaCha_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 81
 	ev_cc	4, 91, 81
@@ -1017,8 +1017,8 @@ Style_ChaCha_Ending1A:
 	ev_pc	5, 0x39, 0x17, 0x20
 	ev_cc	6, 7, 102
 	ev_cc	6, 91, 50
-	var_events	Style_ChaCha_Ending1A
-Style_ChaCha_Ending1A_Events:		# 4 bars of 4 beats, 1443 bytes
+	var_events	Style_ChaCha_Intro2Major
+Style_ChaCha_Intro2Major_Events:		# 4 bars of 4 beats, 1443 bytes
 	ev_beat
 	ev_note	0, 74, 98, 67, 0, 0
 	ev_note	0, 19, 59, 19, 0, 0
@@ -1332,10 +1332,10 @@ Style_ChaCha_Ending1A_Events:		# 4 bars of 4 beats, 1443 bytes
 	ev_at	95
 	ev_note	0, 49, 99, 13, 0, 0
 	ev_end
-	var_end	Style_ChaCha_Ending1A
+	var_end	Style_ChaCha_Intro2Major
 
-Style_ChaCha_Ending1B:
-	var_head	Style_ChaCha_Ending1B, 4, 4, 0xff, 0xff
+Style_ChaCha_Intro2Minor:
+	var_head	Style_ChaCha_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 81
 	ev_cc	4, 91, 81
@@ -1344,8 +1344,8 @@ Style_ChaCha_Ending1B:
 	ev_pc	5, 0x39, 0x17, 0x20
 	ev_cc	6, 7, 102
 	ev_cc	6, 91, 50
-	var_events	Style_ChaCha_Ending1B
-Style_ChaCha_Ending1B_Events:		# 4 bars of 4 beats, 746 bytes
+	var_events	Style_ChaCha_Intro2Minor
+Style_ChaCha_Intro2Minor_Events:		# 4 bars of 4 beats, 746 bytes
 	ev_beat
 	ev_note	7, 60, 99, 24, 0, 0
 	ev_note	1, 36, 93, 50, 0, 1
@@ -1512,7 +1512,7 @@ Style_ChaCha_Ending1B_Events:		# 4 bars of 4 beats, 746 bytes
 	ev_note	7, 93, 120, 12, 0, 0
 	ev_note	7, 67, 94, 16, 0, 0
 	ev_end
-	var_end	Style_ChaCha_Ending1B
+	var_end	Style_ChaCha_Intro2Minor
 
 Style_ChaCha_Var1:
 	var_head	Style_ChaCha_Var1, 4, 4, 0xff, 0xff
@@ -4499,13 +4499,13 @@ Style_ChaCha_Var4Fill2_Events:		# 1 bars of 4 beats, 624 bytes
 	ev_end
 	var_end	Style_ChaCha_Var4Fill2
 
-Style_ChaCha_Intro2A:
-	var_head	Style_ChaCha_Intro2A, 4, 4, 0xff, 0xff
+Style_ChaCha_Ending1Major:
+	var_head	Style_ChaCha_Ending1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 7, 76
 	ev_pc	6, 0x38, 0x33, 0x20
-	var_events	Style_ChaCha_Intro2A
-Style_ChaCha_Intro2A_Events:		# 4 bars of 4 beats, 1368 bytes
+	var_events	Style_ChaCha_Ending1Major
+Style_ChaCha_Ending1Major_Events:		# 4 bars of 4 beats, 1368 bytes
 	ev_beat
 	ev_note	0, 113, 112, 16, 0, 0
 	ev_note	0, 19, 59, 19, 0, 0
@@ -4822,15 +4822,15 @@ Style_ChaCha_Intro2A_Events:		# 4 bars of 4 beats, 1368 bytes
 	ev_note	7, 81, 116, 20, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_ChaCha_Intro2A
+	var_end	Style_ChaCha_Ending1Major
 
-Style_ChaCha_Intro2B:
-	var_head	Style_ChaCha_Intro2B, 4, 4, 0xff, 0xff
+Style_ChaCha_Ending1Minor:
+	var_head	Style_ChaCha_Ending1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 7, 82
 	ev_pc	5, 0x39, 0x17, 0x20
-	var_events	Style_ChaCha_Intro2B
-Style_ChaCha_Intro2B_Events:		# 4 bars of 4 beats, 1743 bytes
+	var_events	Style_ChaCha_Ending1Minor
+Style_ChaCha_Ending1Minor_Events:		# 4 bars of 4 beats, 1743 bytes
 	ev_beat
 	ev_note	0, 36, 97, 99, 0, 0
 	ev_note	0, 101, 86, 12, 0, 0
@@ -5263,10 +5263,10 @@ Style_ChaCha_Intro2B_Events:		# 4 bars of 4 beats, 1743 bytes
 	ev_at	72
 	ev_note	0, 101, 50, 6, 0, 0
 	ev_end
-	var_end	Style_ChaCha_Intro2B
+	var_end	Style_ChaCha_Ending1Minor
 
-Style_ChaCha_Ending2A:
-	var_head	Style_ChaCha_Ending2A, 4, 4, 0xff, 0xff
+Style_ChaCha_Ending2Major:
+	var_head	Style_ChaCha_Ending2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 81
 	ev_cc	4, 7, 119
@@ -5278,8 +5278,8 @@ Style_ChaCha_Ending2A:
 	ev_pc	5, 0x39, 0x17, 0x20
 	ev_cc	6, 7, 102
 	ev_cc	6, 91, 50
-	var_events	Style_ChaCha_Ending2A
-Style_ChaCha_Ending2A_Events:		# 4 bars of 4 beats, 1281 bytes
+	var_events	Style_ChaCha_Ending2Major
+Style_ChaCha_Ending2Major_Events:		# 4 bars of 4 beats, 1281 bytes
 	ev_beat
 	ev_note	0, 36, 83, 99, 0, 0
 	ev_note	0, 74, 98, 67, 0, 0
@@ -5576,10 +5576,10 @@ Style_ChaCha_Ending2A_Events:		# 4 bars of 4 beats, 1281 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_ChaCha_Ending2A
+	var_end	Style_ChaCha_Ending2Major
 
-Style_ChaCha_Ending2B:
-	var_head	Style_ChaCha_Ending2B, 4, 4, 0xff, 0xff
+Style_ChaCha_Ending2Minor:
+	var_head	Style_ChaCha_Ending2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 76
 	ev_cc	3, 10, 64
@@ -5590,8 +5590,8 @@ Style_ChaCha_Ending2B:
 	ev_pc	5, 0x39, 0x17, 0x20
 	ev_cc	6, 7, 102
 	ev_cc	6, 91, 50
-	var_events	Style_ChaCha_Ending2B
-Style_ChaCha_Ending2B_Events:		# 4 bars of 4 beats, 1563 bytes
+	var_events	Style_ChaCha_Ending2Minor
+Style_ChaCha_Ending2Minor_Events:		# 4 bars of 4 beats, 1563 bytes
 	ev_beat
 	ev_note	0, 36, 83, 99, 0, 0
 	ev_note	0, 74, 98, 67, 0, 0
@@ -5910,4 +5910,4 @@ Style_ChaCha_Ending2B_Events:		# 4 bars of 4 beats, 1563 bytes
 	ev_note	0, 113, 113, 15, 0, 0
 	ev_note	0, 19, 54, 13, 0, 0
 	ev_end
-	var_end	Style_ChaCha_Ending2B
+	var_end	Style_ChaCha_Ending2Minor

@@ -19,13 +19,13 @@ Style_SwingyWaltz:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_SwingyWaltz
 
-Style_SwingyWaltz_Intro1A:
-	var_head	Style_SwingyWaltz_Intro1A, 8, 3, 0xff, 0x02
+Style_SwingyWaltz_Intro1Major:
+	var_head	Style_SwingyWaltz_Intro1Major, 8, 3, 0xff, 0x02
 	ev_cc	1, 97, 11
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_SwingyWaltz_Intro1A
-Style_SwingyWaltz_Intro1A_Events:		# 8 bars of 3 beats, 1736 bytes
+	var_events	Style_SwingyWaltz_Intro1Major
+Style_SwingyWaltz_Intro1Major_Events:		# 8 bars of 3 beats, 1736 bytes
 	ev_beat
 	ev_note	0, 36, 71, 12, 0, 0
 	ev_note	0, 11, 57, 12, 0, 0
@@ -382,15 +382,15 @@ Style_SwingyWaltz_Intro1A_Events:		# 8 bars of 3 beats, 1736 bytes
 	ev_note	0, 36, 78, 12, 0, 0
 	ev_note	1, 31, 110, 29, 0, 1
 	ev_end
-	var_end	Style_SwingyWaltz_Intro1A
+	var_end	Style_SwingyWaltz_Intro1Major
 
-Style_SwingyWaltz_Intro1B:
-	var_head	Style_SwingyWaltz_Intro1B, 8, 3, 0xff, 0x02
+Style_SwingyWaltz_Intro1Minor:
+	var_head	Style_SwingyWaltz_Intro1Minor, 8, 3, 0xff, 0x02
 	ev_cc	1, 97, 11
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_SwingyWaltz_Intro1B
-Style_SwingyWaltz_Intro1B_Events:		# 8 bars of 3 beats, 1775 bytes
+	var_events	Style_SwingyWaltz_Intro1Minor
+Style_SwingyWaltz_Intro1Minor_Events:		# 8 bars of 3 beats, 1775 bytes
 	ev_beat
 	ev_note	0, 36, 71, 12, 0, 0
 	ev_note	0, 11, 57, 12, 0, 0
@@ -821,10 +821,10 @@ Style_SwingyWaltz_Intro1B_Events:		# 8 bars of 3 beats, 1775 bytes
 	ev_note	0, 11, 101, 12, 0, 0
 	ev_note	0, 36, 78, 12, 0, 0
 	ev_end
-	var_end	Style_SwingyWaltz_Intro1B
+	var_end	Style_SwingyWaltz_Intro1Minor
 
-Style_SwingyWaltz_Ending1A:
-	var_head	Style_SwingyWaltz_Ending1A, 8, 3, 0xff, 0x02
+Style_SwingyWaltz_Intro2Major:
+	var_head	Style_SwingyWaltz_Intro2Major, 8, 3, 0xff, 0x02
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x10, 0x08, 0x20
 	ev_cc	5, 7, 100
@@ -832,8 +832,8 @@ Style_SwingyWaltz_Ending1A:
 	ev_pc	5, 0x42, 0x10, 0x20
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_SwingyWaltz_Ending1A
-Style_SwingyWaltz_Ending1A_Events:		# 8 bars of 3 beats, 1840 bytes
+	var_events	Style_SwingyWaltz_Intro2Major
+Style_SwingyWaltz_Intro2Major_Events:		# 8 bars of 3 beats, 1840 bytes
 	ev_beat
 	ev_note	0, 36, 72, 12, 0, 0
 	ev_note	0, 38, 37, 12, 0, 0
@@ -1236,10 +1236,10 @@ Style_SwingyWaltz_Ending1A_Events:		# 8 bars of 3 beats, 1840 bytes
 	ev_at	2
 	ev_note	0, 46, 78, 12, 0, 0
 	ev_end
-	var_end	Style_SwingyWaltz_Ending1A
+	var_end	Style_SwingyWaltz_Intro2Major
 
-Style_SwingyWaltz_Ending1B:
-	var_head	Style_SwingyWaltz_Ending1B, 8, 3, 0xff, 0x02
+Style_SwingyWaltz_Intro2Minor:
+	var_head	Style_SwingyWaltz_Intro2Minor, 8, 3, 0xff, 0x02
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x10, 0x08, 0x20
 	ev_cc	5, 7, 100
@@ -1247,8 +1247,8 @@ Style_SwingyWaltz_Ending1B:
 	ev_pc	5, 0x42, 0x10, 0x20
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_SwingyWaltz_Ending1B
-Style_SwingyWaltz_Ending1B_Events:		# 8 bars of 3 beats, 2158 bytes
+	var_events	Style_SwingyWaltz_Intro2Minor
+Style_SwingyWaltz_Intro2Minor_Events:		# 8 bars of 3 beats, 2158 bytes
 	ev_beat
 	ev_note	0, 38, 26, 12, 0, 0
 	ev_note	0, 51, 92, 12, 0, 0
@@ -1753,7 +1753,7 @@ Style_SwingyWaltz_Ending1B_Events:		# 8 bars of 3 beats, 2158 bytes
 	ev_at	68
 	ev_cc	5, 11, 127
 	ev_end
-	var_end	Style_SwingyWaltz_Ending1B
+	var_end	Style_SwingyWaltz_Intro2Minor
 
 Style_SwingyWaltz_Var1:
 	var_head	Style_SwingyWaltz_Var1, 4, 3, 0xff, 0x02
@@ -2956,13 +2956,13 @@ Style_SwingyWaltz_Var4Fill2_Events:		# 1 bars of 3 beats, 230 bytes
 	ev_end
 	var_end	Style_SwingyWaltz_Var4Fill2
 
-Style_SwingyWaltz_Intro2A:
-	var_head	Style_SwingyWaltz_Intro2A, 8, 3, 0xff, 0x02
+Style_SwingyWaltz_Ending1Major:
+	var_head	Style_SwingyWaltz_Ending1Major, 8, 3, 0xff, 0x02
 	ev_cc	1, 97, 11
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_SwingyWaltz_Intro2A
-Style_SwingyWaltz_Intro2A_Events:		# 8 bars of 3 beats, 1676 bytes
+	var_events	Style_SwingyWaltz_Ending1Major
+Style_SwingyWaltz_Ending1Major_Events:		# 8 bars of 3 beats, 1676 bytes
 	ev_beat
 	ev_note	0, 46, 94, 12, 0, 0
 	ev_note	0, 36, 62, 12, 0, 0
@@ -3369,15 +3369,15 @@ Style_SwingyWaltz_Intro2A_Events:		# 8 bars of 3 beats, 1676 bytes
 	ev_note	3, 60, 122, 30, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_SwingyWaltz_Intro2A
+	var_end	Style_SwingyWaltz_Ending1Major
 
-Style_SwingyWaltz_Intro2B:
-	var_head	Style_SwingyWaltz_Intro2B, 8, 3, 0xff, 0x02
+Style_SwingyWaltz_Ending1Minor:
+	var_head	Style_SwingyWaltz_Ending1Minor, 8, 3, 0xff, 0x02
 	ev_cc	1, 97, 11
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_SwingyWaltz_Intro2B
-Style_SwingyWaltz_Intro2B_Events:		# 8 bars of 3 beats, 1577 bytes
+	var_events	Style_SwingyWaltz_Ending1Minor
+Style_SwingyWaltz_Ending1Minor_Events:		# 8 bars of 3 beats, 1577 bytes
 	ev_beat
 	ev_note	0, 46, 99, 12, 0, 0
 	ev_note	0, 36, 67, 12, 0, 0
@@ -3765,10 +3765,10 @@ Style_SwingyWaltz_Intro2B_Events:		# 8 bars of 3 beats, 1577 bytes
 	ev_note	3, 60, 127, 30, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_SwingyWaltz_Intro2B
+	var_end	Style_SwingyWaltz_Ending1Minor
 
-Style_SwingyWaltz_Ending2A:
-	var_head	Style_SwingyWaltz_Ending2A, 8, 3, 0xff, 0x02
+Style_SwingyWaltz_Ending2Major:
+	var_head	Style_SwingyWaltz_Ending2Major, 8, 3, 0xff, 0x02
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x10, 0x00, 0x20
 	ev_cc	5, 7, 100
@@ -3776,8 +3776,8 @@ Style_SwingyWaltz_Ending2A:
 	ev_pc	5, 0x42, 0x10, 0x20
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_SwingyWaltz_Ending2A
-Style_SwingyWaltz_Ending2A_Events:		# 8 bars of 3 beats, 2114 bytes
+	var_events	Style_SwingyWaltz_Ending2Major
+Style_SwingyWaltz_Ending2Major_Events:		# 8 bars of 3 beats, 2114 bytes
 	ev_beat
 	ev_note	1, 36, 81, 16, 1, 1
 	ev_note	3, 64, 96, 33, 1, 1
@@ -4287,10 +4287,10 @@ Style_SwingyWaltz_Ending2A_Events:		# 8 bars of 3 beats, 2114 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_SwingyWaltz_Ending2A
+	var_end	Style_SwingyWaltz_Ending2Major
 
-Style_SwingyWaltz_Ending2B:
-	var_head	Style_SwingyWaltz_Ending2B, 8, 3, 0xff, 0x02
+Style_SwingyWaltz_Ending2Minor:
+	var_head	Style_SwingyWaltz_Ending2Minor, 8, 3, 0xff, 0x02
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x10, 0x00, 0x20
 	ev_cc	5, 7, 100
@@ -4298,8 +4298,8 @@ Style_SwingyWaltz_Ending2B:
 	ev_pc	5, 0x42, 0x10, 0x20
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_SwingyWaltz_Ending2B
-Style_SwingyWaltz_Ending2B_Events:		# 8 bars of 3 beats, 1894 bytes
+	var_events	Style_SwingyWaltz_Ending2Minor
+Style_SwingyWaltz_Ending2Minor_Events:		# 8 bars of 3 beats, 1894 bytes
 	ev_beat
 	ev_note	0, 52, 68, 12, 0, 0
 	ev_note	0, 51, 73, 12, 0, 0
@@ -4724,4 +4724,4 @@ Style_SwingyWaltz_Ending2B_Events:		# 8 bars of 3 beats, 1894 bytes
 	ev_note	4, 48, 66, 57, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_SwingyWaltz_Ending2B
+	var_end	Style_SwingyWaltz_Ending2Minor

@@ -19,13 +19,13 @@ Style_MusetteWaltz:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_MusetteWaltz
 
-Style_MusetteWaltz_Intro1A:
-	var_head	Style_MusetteWaltz_Intro1A, 8, 3, 0xff, 0xff
+Style_MusetteWaltz_Intro1Major:
+	var_head	Style_MusetteWaltz_Intro1Major, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_MusetteWaltz_Intro1A
-Style_MusetteWaltz_Intro1A_Events:		# 8 bars of 3 beats, 1255 bytes
+	var_events	Style_MusetteWaltz_Intro1Major
+Style_MusetteWaltz_Intro1Major_Events:		# 8 bars of 3 beats, 1255 bytes
 	ev_beat
 	ev_note	0, 51, 106, 8, 0, 0
 	ev_note	0, 10, 106, 8, 0, 0
@@ -301,16 +301,16 @@ Style_MusetteWaltz_Intro1A_Events:		# 8 bars of 3 beats, 1255 bytes
 	ev_at	48
 	ev_note	0, 11, 78, 8, 0, 0
 	ev_end
-	var_end	Style_MusetteWaltz_Intro1A
+	var_end	Style_MusetteWaltz_Intro1Major
 
-Style_MusetteWaltz_Intro1B:
-	var_head	Style_MusetteWaltz_Intro1B, 8, 3, 0xff, 0xff
+Style_MusetteWaltz_Intro1Minor:
+	var_head	Style_MusetteWaltz_Intro1Minor, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 109
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_MusetteWaltz_Intro1B
-Style_MusetteWaltz_Intro1B_Events:		# 8 bars of 3 beats, 1215 bytes
+	var_events	Style_MusetteWaltz_Intro1Minor
+Style_MusetteWaltz_Intro1Minor_Events:		# 8 bars of 3 beats, 1215 bytes
 	ev_beat
 	ev_note	0, 51, 106, 8, 0, 0
 	ev_note	0, 10, 106, 8, 0, 0
@@ -586,10 +586,10 @@ Style_MusetteWaltz_Intro1B_Events:		# 8 bars of 3 beats, 1215 bytes
 	ev_at	48
 	ev_note	0, 11, 78, 8, 0, 0
 	ev_end
-	var_end	Style_MusetteWaltz_Intro1B
+	var_end	Style_MusetteWaltz_Intro1Minor
 
-Style_MusetteWaltz_Ending1A:
-	var_head	Style_MusetteWaltz_Ending1A, 4, 3, 0xff, 0xff
+Style_MusetteWaltz_Intro2Major:
+	var_head	Style_MusetteWaltz_Intro2Major, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	1, 0x20, 0x00, 0x20
 	ev_pc	2, 0x1a, 0x08, 0x20
@@ -598,8 +598,8 @@ Style_MusetteWaltz_Ending1A:
 	ev_pc	5, 0x15, 0x00, 0x20
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_MusetteWaltz_Ending1A
-Style_MusetteWaltz_Ending1A_Events:		# 4 bars of 3 beats, 580 bytes
+	var_events	Style_MusetteWaltz_Intro2Major
+Style_MusetteWaltz_Intro2Major_Events:		# 4 bars of 3 beats, 580 bytes
 	ev_beat
 	ev_note	0, 36, 58, 8, 0, 0
 	ev_note	0, 10, 105, 8, 0, 0
@@ -750,10 +750,10 @@ Style_MusetteWaltz_Ending1A_Events:		# 4 bars of 3 beats, 580 bytes
 	ev_at	42
 	ev_note	3, 67, 81, 30, 0, 1
 	ev_end
-	var_end	Style_MusetteWaltz_Ending1A
+	var_end	Style_MusetteWaltz_Intro2Major
 
-Style_MusetteWaltz_Ending1B:
-	var_head	Style_MusetteWaltz_Ending1B, 4, 3, 0xff, 0xff
+Style_MusetteWaltz_Intro2Minor:
+	var_head	Style_MusetteWaltz_Intro2Minor, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	1, 0x20, 0x00, 0x20
 	ev_pc	2, 0x1a, 0x08, 0x20
@@ -762,8 +762,8 @@ Style_MusetteWaltz_Ending1B:
 	ev_pc	5, 0x15, 0x00, 0x20
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_MusetteWaltz_Ending1B
-Style_MusetteWaltz_Ending1B_Events:		# 4 bars of 3 beats, 601 bytes
+	var_events	Style_MusetteWaltz_Intro2Minor
+Style_MusetteWaltz_Intro2Minor_Events:		# 4 bars of 3 beats, 601 bytes
 	ev_beat
 	ev_note	0, 36, 58, 8, 0, 0
 	ev_note	0, 10, 105, 8, 0, 0
@@ -920,7 +920,7 @@ Style_MusetteWaltz_Ending1B_Events:		# 4 bars of 3 beats, 601 bytes
 	ev_at	52
 	ev_note	3, 65, 79, 18, 0, 1
 	ev_end
-	var_end	Style_MusetteWaltz_Ending1B
+	var_end	Style_MusetteWaltz_Intro2Minor
 
 Style_MusetteWaltz_Var1:
 	var_head	Style_MusetteWaltz_Var1, 4, 3, 0xff, 0xff
@@ -1802,13 +1802,13 @@ Style_MusetteWaltz_Var4Fill2_Events:		# 1 bars of 3 beats, 163 bytes
 	ev_end
 	var_end	Style_MusetteWaltz_Var4Fill2
 
-Style_MusetteWaltz_Intro2A:
-	var_head	Style_MusetteWaltz_Intro2A, 4, 3, 0xff, 0xff
+Style_MusetteWaltz_Ending1Major:
+	var_head	Style_MusetteWaltz_Ending1Major, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_MusetteWaltz_Intro2A
-Style_MusetteWaltz_Intro2A_Events:		# 4 bars of 3 beats, 849 bytes
+	var_events	Style_MusetteWaltz_Ending1Major
+Style_MusetteWaltz_Ending1Major_Events:		# 4 bars of 3 beats, 849 bytes
 	ev_beat
 	ev_note	0, 51, 110, 8, 0, 0
 	ev_note	0, 36, 88, 8, 0, 0
@@ -1993,16 +1993,16 @@ Style_MusetteWaltz_Intro2A_Events:		# 4 bars of 3 beats, 849 bytes
 	ev_note	0, 53, 113, 8, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_MusetteWaltz_Intro2A
+	var_end	Style_MusetteWaltz_Ending1Major
 
-Style_MusetteWaltz_Intro2B:
-	var_head	Style_MusetteWaltz_Intro2B, 4, 3, 0xff, 0xff
+Style_MusetteWaltz_Ending1Minor:
+	var_head	Style_MusetteWaltz_Ending1Minor, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 109
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_MusetteWaltz_Intro2B
-Style_MusetteWaltz_Intro2B_Events:		# 4 bars of 3 beats, 850 bytes
+	var_events	Style_MusetteWaltz_Ending1Minor
+Style_MusetteWaltz_Ending1Minor_Events:		# 4 bars of 3 beats, 850 bytes
 	ev_beat
 	ev_note	0, 51, 110, 8, 0, 0
 	ev_note	0, 36, 88, 8, 0, 0
@@ -2188,10 +2188,10 @@ Style_MusetteWaltz_Intro2B_Events:		# 4 bars of 3 beats, 850 bytes
 	ev_note	0, 53, 113, 8, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_MusetteWaltz_Intro2B
+	var_end	Style_MusetteWaltz_Ending1Minor
 
-Style_MusetteWaltz_Ending2A:
-	var_head	Style_MusetteWaltz_Ending2A, 8, 3, 0xff, 0xff
+Style_MusetteWaltz_Ending2Major:
+	var_head	Style_MusetteWaltz_Ending2Major, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	1, 0x20, 0x00, 0x20
 	ev_pc	2, 0x1a, 0x08, 0x20
@@ -2200,8 +2200,8 @@ Style_MusetteWaltz_Ending2A:
 	ev_pc	5, 0x15, 0x00, 0x20
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_MusetteWaltz_Ending2A
-Style_MusetteWaltz_Ending2A_Events:		# 8 bars of 3 beats, 1730 bytes
+	var_events	Style_MusetteWaltz_Ending2Major
+Style_MusetteWaltz_Ending2Major_Events:		# 8 bars of 3 beats, 1730 bytes
 	ev_beat
 	ev_note	0, 10, 87, 8, 0, 0
 	ev_note	0, 51, 91, 8, 0, 0
@@ -2632,10 +2632,10 @@ Style_MusetteWaltz_Ending2A_Events:		# 8 bars of 3 beats, 1730 bytes
 	ev_note	0, 51, 120, 8, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_MusetteWaltz_Ending2A
+	var_end	Style_MusetteWaltz_Ending2Major
 
-Style_MusetteWaltz_Ending2B:
-	var_head	Style_MusetteWaltz_Ending2B, 8, 3, 0xff, 0xff
+Style_MusetteWaltz_Ending2Minor:
+	var_head	Style_MusetteWaltz_Ending2Minor, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	1, 0x20, 0x00, 0x20
 	ev_pc	2, 0x1a, 0x08, 0x20
@@ -2644,8 +2644,8 @@ Style_MusetteWaltz_Ending2B:
 	ev_pc	5, 0x15, 0x00, 0x20
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_MusetteWaltz_Ending2B
-Style_MusetteWaltz_Ending2B_Events:		# 8 bars of 3 beats, 1702 bytes
+	var_events	Style_MusetteWaltz_Ending2Minor
+Style_MusetteWaltz_Ending2Minor_Events:		# 8 bars of 3 beats, 1702 bytes
 	ev_beat
 	ev_note	0, 10, 87, 8, 0, 0
 	ev_note	0, 51, 91, 8, 0, 0
@@ -3068,4 +3068,4 @@ Style_MusetteWaltz_Ending2B_Events:		# 8 bars of 3 beats, 1702 bytes
 	ev_note	0, 51, 120, 8, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_MusetteWaltz_Ending2B
+	var_end	Style_MusetteWaltz_Ending2Minor

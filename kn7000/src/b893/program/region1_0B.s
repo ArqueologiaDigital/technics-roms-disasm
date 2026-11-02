@@ -13616,7 +13616,7 @@ loc_4856933D:
     and     0xff000000, d0
     lsr     24, d0
     extbu   d0
-    call    func_4C021244_entry, [d2,d3], 8
+    call    PartDspUnitFind_entry, [d2,d3], 8
     mov     d0, d1
     exth    d1
     cmp     0, d1
@@ -29003,24 +29003,24 @@ InitializeBlock34_entry:
     mov     Str_TT_SDSNDLYRICS, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
-
-func_48572475:
+# SdAudSongIndexGet  (CPU 0x48572475)
+SdAudSongIndexGet:
     mov     (func_48572475_Var), d0
     retf    0, 0
-
-func_4857247E:
+# SdAudListIndexGet  (CPU 0x4857247e)
+SdAudListIndexGet:
     mov     (func_4857247E_Var), d0
     retf    0, 0
-# SdAudSongIndexGet  (CPU 0x48572487)
-SdAudSongIndexGet:
+# SdSndSongIndexGet  (CPU 0x48572487)
+SdSndSongIndexGet:
     mov     (SdAudSongIndexGet_Var), d0
     retf    0, 0
-# SdAudListIndexGet  (CPU 0x48572490)
-SdAudListIndexGet:
+# SdSndListIndexGet  (CPU 0x48572490)
+SdSndListIndexGet:
     mov     (SdAudListIndexGet_Var), d0
     retf    0, 0
-# SdSndSongIndexGet  (CPU 0x48572499)
-SdSndSongIndexGet:
+# SdSndPlayChIndexGet  (CPU 0x48572499)
+SdSndPlayChIndexGet:
     mov     (SdSndSongIndexGet_Var), d0
     retf    0, 0
 # SdAudSongIndexSet  (CPU 0x485724a2)
@@ -29038,11 +29038,11 @@ SdAudSongIndexSet_entry:
     mov     d2, (func_48572475_Var)
 loc_485724BF:
     ret     [d2], 0x10
-
-func_485724C2:
+# SdAudListIndexSetClamped  (CPU 0x485724c2)
+SdAudListIndexSetClamped:
     movm    [d2], (sp)
     add     -8, sp
-func_485724C2_entry:
+SdAudListIndexSetClamped_entry:
     mov     d0, d2
     cmp     0, d2
     blt     loc_485724DC
@@ -29066,11 +29066,11 @@ loc_485724E9:
     mov     d0, (func_4857247E_Var)
 loc_485724FE:
     ret     [d2], 0xc
-
-func_48572501:
+# SdSndSongIndexSet  (CPU 0x48572501)
+SdSndSongIndexSet:
     movm    [d2], (sp)
     add     -0xc, sp
-func_48572501_entry:
+SdSndSongIndexSet_entry:
     mov     d0, d2
     cmp     0, d2
     blt     loc_4857251E
@@ -29081,11 +29081,11 @@ func_48572501_entry:
     mov     d2, (SdAudSongIndexGet_Var)
 loc_4857251E:
     ret     [d2], 0x10
-# SdAudListIndexSetClamped  (CPU 0x48572521)
-SdAudListIndexSetClamped:
+# SdSndListIndexSetClamped  (CPU 0x48572521)
+SdSndListIndexSetClamped:
     movm    [d2], (sp)
     add     -8, sp
-SdAudListIndexSetClamped_entry:
+SdSndListIndexSetClamped_entry:
     mov     d0, d2
     cmp     0, d2
     blt     loc_4857253B
@@ -29122,20 +29122,20 @@ SdSndPlayChIndexSetClamped:
     mov     d0, (SdSndSongIndexGet_Var)
 loc_4857257B:
     retf    0, 0
-
-func_4857257E:
+# SdSndEditDefListIndexGet  (CPU 0x4857257e)
+SdSndEditDefListIndexGet:
     mov     (func_4857257E_Var), d0
     retf    0, 0
-
-func_48572587:
+# SdSndEditDefEntryIndexGet  (CPU 0x48572587)
+SdSndEditDefEntryIndexGet:
     mov     (func_48572587_Var), d0
     retf    0, 0
-# SdSndEditDefListIndexGet  (CPU 0x48572590)
-SdSndEditDefListIndexGet:
+# SdSndEditCurListIndexGet  (CPU 0x48572590)
+SdSndEditCurListIndexGet:
     mov     (SdSndEditDefListIndexGet_Var), d0
     retf    0, 0
-# SdSndEditDefEntryIndexGet  (CPU 0x48572599)
-SdSndEditDefEntryIndexGet:
+# SdSndEditCurEntryIndexGet  (CPU 0x48572599)
+SdSndEditCurEntryIndexGet:
     mov     (SdSndEditDefEntryIndexGet_Var), d0
     retf    0, 0
 # SdSndEditDefEntryIndexSet  (CPU 0x485725a2)
@@ -29146,7 +29146,7 @@ SdSndEditDefEntryIndexSet_entry:
     mov     d0, d2
     cmp     0, d2
     blt     loc_485725BF
-    call    func_4857257E, 0, 0
+    call    SdSndEditDefListIndexGet, 0, 0
     call    SdSndListEntryCountGet_entry, 0, 0xc
     cmp     d0, d2
     bge     loc_485725BF
@@ -29477,11 +29477,11 @@ func_4857280D:
 func_4857280D_entry:
     mov     d0, a2
     clr     d2
-    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndEditCurListIndexGet, 0, 0
     mov     d0, a3
     cmp     0xffffffff, a2
     bne     loc_48572845
-    call    func_4857257E, 0, 0
+    call    SdSndEditDefListIndexGet, 0, 0
     mov     d0, d1
     mov     a3, d0
     add     a2, d0
@@ -29502,7 +29502,7 @@ loc_48572838:
 loc_48572845:
     call    SdSndListCountGet_entry, 0, 8
     mov     d0, d3
-    call    func_4857257E, 0, 0
+    call    SdSndEditDefListIndexGet, 0, 0
     mov     d0, d1
     mov     a3, d0
     add     a2, d0
@@ -29524,7 +29524,7 @@ loc_4857286A:
     cmp     1, d2
     bne     loc_48572884
     call    SdSndEditCurListIndexSet_entry, [d2], 0xc
-    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndEditCurListIndexGet, 0, 0
     call    func_48572630_entry, [d2,d3,a2,a3], 0x24
     clr     d0
     call    SdSndEditCurEntryIndexSet_entry, [d2], 0xc
@@ -32298,7 +32298,7 @@ loc_48574315:
 GetSDAudSelListListFunc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x78, sp
-    call    func_4857247E, 0, 0
+    call    SdAudListIndexGet, 0, 0
     mov     0xa, d1
     mov     d0, d2
     ext     d2
@@ -32412,9 +32412,9 @@ loc_48574452:
 GetSDAudSelSongListFunc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x70, sp
-    call    func_4857247E, 0, 0
+    call    SdAudListIndexGet, 0, 0
     mov     d0, (0x30, sp)
-    call    func_48572475, 0, 0
+    call    SdAudSongIndexGet, 0, 0
     mov     0xa, d2
     mov     d0, d1
     ext     d1
@@ -32438,11 +32438,11 @@ GetSDAudSelSongListFunc:
     add     0xa, d0
     mov     d0, (0x24, sp)
 loc_485744A5:
-    call    func_4857247E, 0, 0
+    call    SdAudListIndexGet, 0, 0
     call    SdAudListEntryCountGet, 0, 0
     cmp     d0, d2
     bge     loc_48574501
-    call    func_4857247E, 0, 0
+    call    SdAudListIndexGet, 0, 0
     mov     d3, a0
     mov     0x11, d1
     mov     d1, (0x14, sp)
@@ -32823,7 +32823,7 @@ loc_4857484B:
     bcs     loc_48574816
     mov     0x50092afc, d0
     mov     d0, (0x50092af4)
-    call    SdSndSongIndexGet, 0, 0
+    call    SdSndPlayChIndexGet, 0, 0
     movhu   d0, (0x50092af8)
     mov     0xa, d0
     movhu   d0, (0x50092afa)
@@ -32993,7 +32993,7 @@ loc_48574A0D:
 GetSDSndSelListListFunc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x5c, sp
-    call    SdAudListIndexGet, 0, 0
+    call    SdSndListIndexGet, 0, 0
     mov     0xa, d1
     mov     d0, d2
     ext     d2
@@ -33088,7 +33088,7 @@ loc_48574B1C:
 GetSDSndSelSongListFunc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x4c, sp
-    call    SdAudSongIndexGet, 0, 0
+    call    SdSndSongIndexGet, 0, 0
     mov     0xa, d2
     mov     d0, d1
     ext     d1
@@ -33106,11 +33106,11 @@ GetSDSndSelSongListFunc:
     add     0xa, d0
     mov     d0, (0x1c, sp)
 loc_48574B5C:
-    call    SdAudListIndexGet, 0, 0
+    call    SdSndListIndexGet, 0, 0
     call    SdSndListEntryCountGet_entry, 0, 0xc
     cmp     d0, d2
     bge     loc_48574B9F
-    call    SdAudListIndexGet, 0, 0
+    call    SdSndListIndexGet, 0, 0
     mov     d3, a0
     mov     0x11, d1
     mov     d1, (0x14, sp)
@@ -33192,7 +33192,7 @@ GetSDSndEditListNameFunc:
 GetSDSndEditSrcListNameFunc:
     movm    [a2,a3], (sp)
     add     -0x28, sp
-    call    func_4857257E, 0, 0
+    call    SdSndEditDefListIndexGet, 0, 0
     mov     sp, a2
     add     0x14, a2
     mov     a2, a0
@@ -33223,9 +33223,9 @@ GetSDSndEditSrcListNameFunc:
 GetSDSndEditDefListFunc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x54, sp
-    call    func_4857257E, 0, 0
+    call    SdSndEditDefListIndexGet, 0, 0
     mov     d0, (0x18, sp)
-    call    func_48572587, 0, 0
+    call    SdSndEditDefEntryIndexGet, 0, 0
     mov     8, d1
     mov     d0, d2
     ext     d2
@@ -33310,7 +33310,7 @@ loc_48574D5D:
 GetSDSndEditCurListFunc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x50, sp
-    call    SdSndEditDefEntryIndexGet, 0, 0
+    call    SdSndEditCurEntryIndexGet, 0, 0
     mov     8, d1
     mov     d0, d2
     ext     d2
@@ -33691,7 +33691,7 @@ loc_4857515F:
     bra     loc_485751CA
 loc_4857516A:
     call    SdAudOpenListIndexGet, 0, 0
-    call    func_485724C2_entry, [d2], 0xc
+    call    SdAudListIndexSetClamped_entry, [d2], 0xc
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -33911,7 +33911,7 @@ loc_4857541C:
     jmp     loc_485754BD
 loc_48575428:
     call    SdSndSelListIndexGet, 0, 0
-    call    SdAudListIndexSetClamped_entry, [d2], 0xc
+    call    SdSndListIndexSetClamped_entry, [d2], 0xc
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -34060,9 +34060,9 @@ loc_485755E9:
     call    GetTitleOld_entry, 0, 0x10
     mov     d0, (0x20, a2)
 loc_48575601:
-    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndEditCurListIndexGet, 0, 0
     call    func_48572630_entry, [d2,d3,a2,a3], 0x24
-    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndEditCurListIndexGet, 0, 0
     call    func_485728D1_entry, [d2,d3], 0x1c
     clr     d0
     mov     d0, (0x10, sp)
@@ -35098,7 +35098,7 @@ MainSDAudListSel_ListSW:
     add     -0x14, sp
     mov     d0, d3
     mov     d1, a2
-    call    func_4857247E, 0, 0
+    call    SdAudListIndexGet, 0, 0
     mov     d0, d2
     cmp     0x50005, a2
     bne     loc_4857622B
@@ -35107,19 +35107,19 @@ MainSDAudListSel_ListSW:
     bne     loc_485761DF
     mov     -1, d0
     add     d2, d0
-    call    func_485724C2_entry, [d2], 0xc
+    call    SdAudListIndexSetClamped_entry, [d2], 0xc
     bra     loc_485761E6
 loc_485761DF:
     mov     d2, d0
     inc     d0
-    call    func_485724C2_entry, [d2], 0xc
+    call    SdAudListIndexSetClamped_entry, [d2], 0xc
 loc_485761E6:
-    call    func_4857247E, 0, 0
+    call    SdAudListIndexGet, 0, 0
     cmp     d0, d2
     beq     loc_4857622B
     clr     d0
     call    SdAudSongIndexSet_entry, [d2], 0x10
-    call    func_4857247E, 0, 0
+    call    SdAudListIndexGet, 0, 0
     exth    d0
     call    func_48578C24_entry, [d2], 0x10
     cmp     0, d0
@@ -35143,7 +35143,7 @@ MainSDAudListSel_PrevSW:
     add     -0x18, sp
     mov     d0, d3
     mov     d1, a2
-    call    func_4857247E, 0, 0
+    call    SdAudListIndexGet, 0, 0
     mov     d0, d2
     cmp     0x50005, a2
     bne     loc_485762A5
@@ -35159,14 +35159,14 @@ MainSDAudListSel_PrevSW:
     mov     mdr, d1
     mov     (0x14, sp), d3
     sub     d1, d0
-    call    func_485724C2_entry, [d2], 0xc
+    call    SdAudListIndexSetClamped_entry, [d2], 0xc
 loc_48576260:
-    call    func_4857247E, 0, 0
+    call    SdAudListIndexGet, 0, 0
     cmp     d0, d2
     beq     loc_485762A5
     clr     d0
     call    SdAudSongIndexSet_entry, [d2], 0x10
-    call    func_4857247E, 0, 0
+    call    SdAudListIndexGet, 0, 0
     exth    d0
     call    func_48578C24_entry, [d2], 0x10
     cmp     0, d0
@@ -35189,7 +35189,7 @@ MainSDAudListSel_NextSW:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
     mov     d1, a2
-    call    func_4857247E, 0, 0
+    call    SdAudListIndexGet, 0, 0
     mov     d0, a3
     cmp     0x50005, a2
     beq     loc_485762C2
@@ -35215,14 +35215,14 @@ loc_485762C2:
     mov     d2, d0
     add     a3, d0
     sub     d1, d0
-    call    func_485724C2_entry, [d2], 0xc
+    call    SdAudListIndexSetClamped_entry, [d2], 0xc
 loc_485762F7:
-    call    func_4857247E, 0, 0
+    call    SdAudListIndexGet, 0, 0
     cmp     d0, a3
     beq     loc_4857633D
     clr     d0
     call    SdAudSongIndexSet_entry, [d2], 0x10
-    call    func_4857247E, 0, 0
+    call    SdAudListIndexGet, 0, 0
     exth    d0
     call    func_48578C24_entry, [d2], 0x10
     cmp     0, d0
@@ -35245,7 +35245,7 @@ MainSDAudListSel_MoreSW:
     movm    [d2,a2], (sp)
     add     -0x14, sp
     mov     d1, a2
-    call    func_48572475, 0, 0
+    call    SdAudSongIndexGet, 0, 0
     mov     d0, d2
     cmp     0x50005, a2
     bne     loc_48576371
@@ -35263,7 +35263,7 @@ loc_48576368:
     add     0xa, d0
     call    SdAudSongIndexSet_entry, [d2], 0x10
 loc_48576371:
-    call    func_48572475, 0, 0
+    call    SdAudSongIndexGet, 0, 0
     extbu   d2
     cmp     d0, d2
     beq     loc_4857638D
@@ -35278,7 +35278,7 @@ loc_4857638D:
 # MainSDAudListSel_OkSW  (CPU 0x48576391)
 MainSDAudListSel_OkSW:
     add     -0x10, sp
-    call    func_4857247E, 0, 0
+    call    SdAudListIndexGet, 0, 0
     exth    d0
     call    func_48578C24_entry, [d2], 0x10
     cmp     0, d0
@@ -35474,7 +35474,7 @@ MainSDSndPlay_ChSelSW:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
-    call    SdSndSongIndexGet, 0, 0
+    call    SdSndPlayChIndexGet, 0, 0
     mov     (0x28, sp), d1
     btst    0x80, d1
     bne     loc_485765CA
@@ -35501,14 +35501,14 @@ MainSDSndPlay_MuteSelSW:
     mov     (0x2c, sp), d0
     btst    0x80, d0
     bne     loc_48576603
-    call    SdSndSongIndexGet, 0, 0
+    call    SdSndPlayChIndexGet, 0, 0
     mov     d0, d1
     extbu   d1
     mov     1, d0
     call    func_4857A71D_entry, [d2,d3], 0x34
     bra     loc_48576611
 loc_48576603:
-    call    SdSndSongIndexGet, 0, 0
+    call    SdSndPlayChIndexGet, 0, 0
     mov     d0, d1
     clr     d2
     extbu   d1
@@ -35525,26 +35525,26 @@ loc_48576611:
 MainSDSndListSel_ListSW:
     movm    [d2], (sp)
     add     -0x14, sp
-    call    SdAudListIndexGet, 0, 0
+    call    SdSndListIndexGet, 0, 0
     mov     d0, d2
     mov     (0x28, sp), d0
     btst    0x80, d0
     bne     loc_48576642
     mov     -1, d0
     add     d2, d0
-    call    SdAudListIndexSetClamped_entry, [d2], 0xc
+    call    SdSndListIndexSetClamped_entry, [d2], 0xc
     bra     loc_48576649
 loc_48576642:
     mov     d2, d0
     inc     d0
-    call    SdAudListIndexSetClamped_entry, [d2], 0xc
+    call    SdSndListIndexSetClamped_entry, [d2], 0xc
 loc_48576649:
-    call    SdAudListIndexGet, 0, 0
+    call    SdSndListIndexGet, 0, 0
     cmp     d0, d2
     beq     loc_4857668A
     clr     d0
-    call    func_48572501_entry, [d2], 0x10
-    call    SdAudListIndexGet, 0, 0
+    call    SdSndSongIndexSet_entry, [d2], 0x10
+    call    SdSndListIndexGet, 0, 0
     exth    d0
     call    func_4857A809_entry, [d2], 0x10
     clr     d0
@@ -35564,7 +35564,7 @@ loc_4857668A:
 MainSDSndListSel_PrevSW:
     movm    [d2,d3], (sp)
     add     -0x14, sp
-    call    SdAudListIndexGet, 0, 0
+    call    SdSndListIndexGet, 0, 0
     mov     d0, d2
     cmp     0xa, d2
     blt     loc_485766B0
@@ -35576,14 +35576,14 @@ MainSDSndListSel_PrevSW:
     div     d3, d1
     mov     mdr, d1
     sub     d1, d0
-    call    SdAudListIndexSetClamped_entry, [d2], 0xc
+    call    SdSndListIndexSetClamped_entry, [d2], 0xc
 loc_485766B0:
-    call    SdAudListIndexGet, 0, 0
+    call    SdSndListIndexGet, 0, 0
     cmp     d0, d2
     beq     loc_485766F1
     clr     d0
-    call    func_48572501_entry, [d2], 0x10
-    call    SdAudListIndexGet, 0, 0
+    call    SdSndSongIndexSet_entry, [d2], 0x10
+    call    SdSndListIndexGet, 0, 0
     exth    d0
     call    func_4857A809_entry, [d2], 0x10
     clr     d0
@@ -35603,7 +35603,7 @@ loc_485766F1:
 MainSDSndListSel_NextSW:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-    call    SdAudListIndexGet, 0, 0
+    call    SdSndListIndexGet, 0, 0
     mov     d0, a3
     call    SdSndListCountGet_entry, 0, 8
     mov     d0, a2
@@ -35625,14 +35625,14 @@ MainSDSndListSel_NextSW:
     mov     d3, d0
     add     a3, d0
     sub     d1, d0
-    call    SdAudListIndexSetClamped_entry, [d2], 0xc
+    call    SdSndListIndexSetClamped_entry, [d2], 0xc
 loc_48576736:
-    call    SdAudListIndexGet, 0, 0
+    call    SdSndListIndexGet, 0, 0
     cmp     d0, a3
     beq     loc_48576778
     clr     d0
-    call    func_48572501_entry, [d2], 0x10
-    call    SdAudListIndexGet, 0, 0
+    call    SdSndSongIndexSet_entry, [d2], 0x10
+    call    SdSndListIndexGet, 0, 0
     exth    d0
     call    func_4857A809_entry, [d2], 0x10
     clr     d0
@@ -35652,7 +35652,7 @@ loc_48576778:
 MainSDSndListSel_MoreSW:
     movm    [d2], (sp)
     add     -0x14, sp
-    call    SdAudSongIndexGet, 0, 0
+    call    SdSndSongIndexGet, 0, 0
     mov     (0x28, sp), d1
     mov     d0, d2
     btst    0x80, d1
@@ -35660,15 +35660,15 @@ MainSDSndListSel_MoreSW:
     extbu   d2
     mov     -0xa, d0
     add     d2, d0
-    call    func_48572501_entry, [d2], 0x10
+    call    SdSndSongIndexSet_entry, [d2], 0x10
     bra     loc_485767A2
 loc_48576799:
     extbu   d2
     mov     0xa, d0
     add     d2, d0
-    call    func_48572501_entry, [d2], 0x10
+    call    SdSndSongIndexSet_entry, [d2], 0x10
 loc_485767A2:
-    call    SdAudSongIndexGet, 0, 0
+    call    SdSndSongIndexGet, 0, 0
     cmp     d0, d2
     beq     loc_485767BD
     mov     1, d0
@@ -35682,7 +35682,7 @@ loc_485767BD:
 # MainSDSndListSel_OkSW  (CPU 0x485767c1)
 MainSDSndListSel_OkSW:
     add     -0x10, sp
-    call    SdAudListIndexGet, 0, 0
+    call    SdSndListIndexGet, 0, 0
     exth    d0
     call    func_4857A809_entry, [d2], 0x10
     cmp     0, d0
@@ -35697,7 +35697,7 @@ loc_485767DF:
 MainSDSndListEdit_PrevSW:
     movm    [d2], (sp)
     add     -0x14, sp
-    call    func_48572587, 0, 0
+    call    SdSndEditDefEntryIndexGet, 0, 0
     cmp     0, d0
     blt     loc_4857681A
     mov     8, d2
@@ -35722,7 +35722,7 @@ loc_4857681A:
 MainSDSndListEdit_NextSW:
     movm    [d2], (sp)
     add     -0x14, sp
-    call    func_48572587, 0, 0
+    call    SdSndEditDefEntryIndexGet, 0, 0
     mov     d0, d2
     cmp     0, d2
     blt     loc_4857685F
@@ -35733,7 +35733,7 @@ MainSDSndListEdit_NextSW:
     mov     mdr, d1
     sub     d1, d2
     add     d0, d2
-    call    func_4857257E, 0, 0
+    call    SdSndEditDefListIndexGet, 0, 0
     call    SdSndListEntryCountGet_entry, 0, 0xc
     cmp     d0, d2
     bge     loc_4857685F
@@ -35751,7 +35751,7 @@ loc_4857685F:
 MainSDSndListEdit_DefLsUpDownSW:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-    call    func_4857257E, 0, 0
+    call    SdSndEditDefListIndexGet, 0, 0
     mov     d0, a3
     mov     (0x34, sp), d0
     btst    0x80, d0
@@ -35767,7 +35767,7 @@ loc_4857687C:
 loc_48576885:
     mov     a3, d2
     add     a2, d2
-    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndEditCurListIndexGet, 0, 0
     cmp     d0, d2
     beq     loc_485768A2
     cmp     d3, d2
@@ -35797,9 +35797,9 @@ loc_485768B3:
 MainSDSndListEdit_DefUpDownSW:
     movm    [d2,d3], (sp)
     add     -0x14, sp
-    call    func_48572587, 0, 0
+    call    SdSndEditDefEntryIndexGet, 0, 0
     mov     d0, d3
-    call    func_4857257E, 0, 0
+    call    SdSndEditDefListIndexGet, 0, 0
     mov     (0x2c, sp), d1
     btst    0x80, d1
     bne     loc_485768E5
@@ -35829,13 +35829,13 @@ loc_485768F2:
 MainSDSndListEdit_StoreSW:
     movm    [d2,d3], (sp)
     add     -0x14, sp
-    call    SdSndEditDefEntryIndexGet, 0, 0
+    call    SdSndEditCurEntryIndexGet, 0, 0
     mov     d0, d3
     cmp     0, d0
     blt     loc_48576952
-    call    func_4857257E, 0, 0
+    call    SdSndEditDefListIndexGet, 0, 0
     mov     d0, d2
-    call    func_48572587, 0, 0
+    call    SdSndEditDefEntryIndexGet, 0, 0
     mov     d0, d1
     mov     d2, d0
     call    func_4857A06F_entry, 0, 0x10
@@ -35878,7 +35878,7 @@ loc_48576977:
     beq     loc_485769AD
     jmp     loc_48576A06
 loc_48576982:
-    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndEditCurListIndexGet, 0, 0
     cmp     1, d0
     bgt     loc_4857698E
     jmp     loc_48576A06
@@ -35893,7 +35893,7 @@ loc_4857698E:
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_48576A06
 loc_485769AD:
-    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndEditCurListIndexGet, 0, 0
     mov     d0, d3
     call    func_485727D0, 0, 0
     add     -1, d0
@@ -35913,7 +35913,7 @@ loc_485769DC:
     call    func_4857280D_entry, [d2,d3,a2,a3], 0x1c
     cmp     0, d0
     blt     loc_48576A06
-    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndEditCurListIndexGet, 0, 0
     call    func_485728D1_entry, [d2,d3], 0x1c
     cmp     0, d0
     blt     loc_48576A06
@@ -35929,7 +35929,7 @@ loc_48576A06:
 MainSDSndListEdit_CurUpDownSW:
     movm    [d2,d3], (sp)
     add     -0x14, sp
-    call    SdSndEditDefEntryIndexGet, 0, 0
+    call    SdSndEditCurEntryIndexGet, 0, 0
     mov     d0, d3
     mov     (0x2c, sp), d0
     btst    0x80, d0
@@ -35970,7 +35970,7 @@ MainSDSndListEdit_MoveUpDownSW:
     beq     loc_48576A65
     mov     1, d2
 loc_48576A65:
-    call    SdSndEditDefEntryIndexGet, 0, 0
+    call    SdSndEditCurEntryIndexGet, 0, 0
     mov     d0, d3
     cmp     0, d3
     blt     loc_48576AA0
@@ -35999,7 +35999,7 @@ loc_48576AA0:
 MainSDSndListEdit_DelSW:
     movm    [d2], (sp)
     add     -0x14, sp
-    call    SdSndEditDefEntryIndexGet, 0, 0
+    call    SdSndEditCurEntryIndexGet, 0, 0
     mov     d0, d2
     cmp     0, d0
     blt     loc_48576AE3
@@ -36012,7 +36012,7 @@ MainSDSndListEdit_DelSW:
     call    func_48572733_entry, [d2,a2], 0x14
     cmp     0, d0
     blt     loc_48576AE3
-    call    SdSndEditDefEntryIndexGet, 0, 0
+    call    SdSndEditCurEntryIndexGet, 0, 0
     mov     d0, d2
     call    func_485727D0, 0, 0
     cmp     d0, d2
@@ -36044,7 +36044,7 @@ MainSDSndListEdit_OkSW:
     extbu   d0
     cmp     1, d0
     bne     loc_48576B5B
-    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndEditCurListIndexGet, 0, 0
     mov     sp, a2
     add     0x14, a2
     mov     d0, (0x14, sp)
@@ -36116,9 +36116,9 @@ MainSDSndListEdit_NewSW:
 loc_48576C0D:
     call    SdSndListCountGet_entry, 0, 8
     call    SdSndEditCurListIndexSet_entry, [d2], 0xc
-    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndEditCurListIndexGet, 0, 0
     call    func_48572630_entry, [d2,d3,a2,a3], 0x24
-    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndEditCurListIndexGet, 0, 0
     call    func_485728D1_entry, [d2,d3], 0x1c
     clr     d0
     call    SdSndEditCurEntryIndexSet_entry, [d2], 0xc
@@ -36154,21 +36154,21 @@ MainSDSndListEdit_DelWinYesSW:
     mov     (SdSndEditDefListIndexGet_Var), d0
     extbu   d0
     call    func_4857A876_entry, [d2,d3], 0x14
-    call    func_4857257E, 0, 0
-    mov     d0, d2
     call    SdSndEditDefListIndexGet, 0, 0
+    mov     d0, d2
+    call    SdSndEditCurListIndexGet, 0, 0
     cmp     d0, d2
     blt     loc_48576CAE
-    call    func_4857257E, 0, 0
+    call    SdSndEditDefListIndexGet, 0, 0
     add     -1, d0
     call    SdSndEditDefListIndexSet_entry, [d2], 0xc
 loc_48576CAE:
     clr     d0
     call    SdSndEditDefEntryIndexSet_entry, [d2], 0x10
     call    SdSndSelListIndexGet, 0, 0
-    call    SdAudListIndexSetClamped_entry, [d2], 0xc
+    call    SdSndListIndexSetClamped_entry, [d2], 0xc
     clr     d0
-    call    func_48572501_entry, [d2], 0x10
+    call    SdSndSongIndexSet_entry, [d2], 0x10
     call    SdSndListCountGet_entry, 0, 8
     cmp     0, d0
     bgt     loc_48576CD6
@@ -36178,9 +36178,9 @@ loc_48576CAE:
 loc_48576CD6:
     call    SdSndEditCurListIndexSet_entry, [d2], 0xc
 loc_48576CDB:
-    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndEditCurListIndexGet, 0, 0
     call    func_48572630_entry, [d2,d3,a2,a3], 0x24
-    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndEditCurListIndexGet, 0, 0
     call    func_485728D1_entry, [d2,d3], 0x1c
     clr     d0
     call    SdSndEditCurEntryIndexSet_entry, [d2], 0xc
@@ -36213,9 +36213,9 @@ MainSDSndListEdit_SureWinYesSW:
     mov     d0, d2
     call    SdSndListCountGet_entry, 0, 8
     call    SdSndEditCurListIndexSet_entry, [d2], 0xc
-    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndEditCurListIndexGet, 0, 0
     call    func_48572630_entry, [d2,d3,a2,a3], 0x24
-    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndEditCurListIndexGet, 0, 0
     call    func_485728D1_entry, [d2,d3], 0x1c
     clr     d0
     call    SdSndEditCurEntryIndexSet_entry, [d2], 0xc
@@ -36241,7 +36241,7 @@ MainSDSndListEdit_SureWin2YesSW:
     call    func_4857280D_entry, [d2,d3,a2,a3], 0x1c
     cmp     0, d0
     blt     loc_48576DAD
-    call    SdSndEditDefListIndexGet, 0, 0
+    call    SdSndEditCurListIndexGet, 0, 0
     call    func_485728D1_entry, [d2,d3], 0x1c
 loc_48576DAD:
     clr     d0

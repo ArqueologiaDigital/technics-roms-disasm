@@ -19,8 +19,8 @@ Style_GermanWaltz:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_GermanWaltz
 
-Style_GermanWaltz_Intro1A:
-	var_head	Style_GermanWaltz_Intro1A, 4, 3, 0xff, 0xff
+Style_GermanWaltz_Intro1Major:
+	var_head	Style_GermanWaltz_Intro1Major, 4, 3, 0xff, 0xff
 	ev_cc	0, 91, 29
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 47
@@ -33,8 +33,8 @@ Style_GermanWaltz_Intro1A:
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 92
-	var_events	Style_GermanWaltz_Intro1A
-Style_GermanWaltz_Intro1A_Events:		# 4 bars of 3 beats, 552 bytes
+	var_events	Style_GermanWaltz_Intro1Major
+Style_GermanWaltz_Intro1Major_Events:		# 4 bars of 3 beats, 552 bytes
 	ev_beat
 	ev_note	0, 57, 53, 8, 0, 0
 	ev_note	0, 36, 79, 8, 0, 0
@@ -172,10 +172,10 @@ Style_GermanWaltz_Intro1A_Events:		# 4 bars of 3 beats, 552 bytes
 	ev_at	40
 	ev_note	2, 67, 83, 31, 0, 1
 	ev_end
-	var_end	Style_GermanWaltz_Intro1A
+	var_end	Style_GermanWaltz_Intro1Major
 
-Style_GermanWaltz_Intro1B:
-	var_head	Style_GermanWaltz_Intro1B, 4, 3, 0xff, 0xff
+Style_GermanWaltz_Intro1Minor:
+	var_head	Style_GermanWaltz_Intro1Minor, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 58
 	ev_cc	3, 91, 29
@@ -187,8 +187,8 @@ Style_GermanWaltz_Intro1B:
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 92
-	var_events	Style_GermanWaltz_Intro1B
-Style_GermanWaltz_Intro1B_Events:		# 4 bars of 3 beats, 552 bytes
+	var_events	Style_GermanWaltz_Intro1Minor
+Style_GermanWaltz_Intro1Minor_Events:		# 4 bars of 3 beats, 552 bytes
 	ev_beat
 	ev_note	0, 57, 53, 8, 0, 0
 	ev_note	0, 36, 79, 8, 0, 0
@@ -326,10 +326,10 @@ Style_GermanWaltz_Intro1B_Events:		# 4 bars of 3 beats, 552 bytes
 	ev_at	40
 	ev_note	2, 67, 83, 31, 0, 1
 	ev_end
-	var_end	Style_GermanWaltz_Intro1B
+	var_end	Style_GermanWaltz_Intro1Minor
 
-Style_GermanWaltz_Ending1A:
-	var_head	Style_GermanWaltz_Ending1A, 8, 3, 0xff, 0xff
+Style_GermanWaltz_Intro2Major:
+	var_head	Style_GermanWaltz_Intro2Major, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 10, 83
 	ev_cc	2, 91, 61
@@ -347,8 +347,8 @@ Style_GermanWaltz_Ending1A:
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 92
-	var_events	Style_GermanWaltz_Ending1A
-Style_GermanWaltz_Ending1A_Events:		# 8 bars of 3 beats, 1608 bytes
+	var_events	Style_GermanWaltz_Intro2Major
+Style_GermanWaltz_Intro2Major_Events:		# 8 bars of 3 beats, 1608 bytes
 	ev_beat
 	ev_note	0, 36, 96, 8, 0, 0
 	ev_note	0, 49, 72, 8, 0, 0
@@ -802,10 +802,10 @@ Style_GermanWaltz_Ending1A_Events:		# 8 bars of 3 beats, 1608 bytes
 	ev_note	1, 31, 65, 79, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_GermanWaltz_Ending1A
+	var_end	Style_GermanWaltz_Intro2Major
 
-Style_GermanWaltz_Ending1B:
-	var_head	Style_GermanWaltz_Ending1B, 8, 3, 0xff, 0xff
+Style_GermanWaltz_Intro2Minor:
+	var_head	Style_GermanWaltz_Intro2Minor, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 10, 83
 	ev_cc	2, 91, 61
@@ -822,8 +822,8 @@ Style_GermanWaltz_Ending1B:
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 92
-	var_events	Style_GermanWaltz_Ending1B
-Style_GermanWaltz_Ending1B_Events:		# 8 bars of 3 beats, 1608 bytes
+	var_events	Style_GermanWaltz_Intro2Minor
+Style_GermanWaltz_Intro2Minor_Events:		# 8 bars of 3 beats, 1608 bytes
 	ev_beat
 	ev_note	0, 36, 96, 8, 0, 0
 	ev_note	0, 49, 72, 8, 0, 0
@@ -1277,7 +1277,7 @@ Style_GermanWaltz_Ending1B_Events:		# 8 bars of 3 beats, 1608 bytes
 	ev_note	1, 31, 65, 79, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_GermanWaltz_Ending1B
+	var_end	Style_GermanWaltz_Intro2Minor
 
 Style_GermanWaltz_Var1:
 	var_head	Style_GermanWaltz_Var1, 4, 3, 0xff, 0xff
@@ -2792,8 +2792,8 @@ Style_GermanWaltz_Var4Fill2_Events:		# 1 bars of 3 beats, 425 bytes
 	ev_end
 	var_end	Style_GermanWaltz_Var4Fill2
 
-Style_GermanWaltz_Intro2A:
-	var_head	Style_GermanWaltz_Intro2A, 4, 3, 0xff, 0xff
+Style_GermanWaltz_Ending1Major:
+	var_head	Style_GermanWaltz_Ending1Major, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 82, 48
 	ev_cc	5, 80, 92
@@ -2801,8 +2801,8 @@ Style_GermanWaltz_Intro2A:
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 92
-	var_events	Style_GermanWaltz_Intro2A
-Style_GermanWaltz_Intro2A_Events:		# 4 bars of 3 beats, 729 bytes
+	var_events	Style_GermanWaltz_Ending1Major
+Style_GermanWaltz_Ending1Major_Events:		# 4 bars of 3 beats, 729 bytes
 	ev_beat
 	ev_note	0, 57, 53, 8, 0, 0
 	ev_note	0, 36, 79, 8, 0, 0
@@ -2997,10 +2997,10 @@ Style_GermanWaltz_Intro2A_Events:		# 4 bars of 3 beats, 729 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_GermanWaltz_Intro2A
+	var_end	Style_GermanWaltz_Ending1Major
 
-Style_GermanWaltz_Intro2B:
-	var_head	Style_GermanWaltz_Intro2B, 4, 3, 0xff, 0xff
+Style_GermanWaltz_Ending1Minor:
+	var_head	Style_GermanWaltz_Ending1Minor, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 82, 48
 	ev_cc	5, 80, 92
@@ -3008,8 +3008,8 @@ Style_GermanWaltz_Intro2B:
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 92
-	var_events	Style_GermanWaltz_Intro2B
-Style_GermanWaltz_Intro2B_Events:		# 4 bars of 3 beats, 729 bytes
+	var_events	Style_GermanWaltz_Ending1Minor
+Style_GermanWaltz_Ending1Minor_Events:		# 4 bars of 3 beats, 729 bytes
 	ev_beat
 	ev_note	0, 57, 53, 8, 0, 0
 	ev_note	0, 36, 79, 8, 0, 0
@@ -3204,10 +3204,10 @@ Style_GermanWaltz_Intro2B_Events:		# 4 bars of 3 beats, 729 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_GermanWaltz_Intro2B
+	var_end	Style_GermanWaltz_Ending1Minor
 
-Style_GermanWaltz_Ending2A:
-	var_head	Style_GermanWaltz_Ending2A, 8, 3, 0xff, 0xff
+Style_GermanWaltz_Ending2Major:
+	var_head	Style_GermanWaltz_Ending2Major, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 10, 83
 	ev_cc	2, 91, 61
@@ -3229,8 +3229,8 @@ Style_GermanWaltz_Ending2A:
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 92
-	var_events	Style_GermanWaltz_Ending2A
-Style_GermanWaltz_Ending2A_Events:		# 8 bars of 3 beats, 1566 bytes
+	var_events	Style_GermanWaltz_Ending2Major
+Style_GermanWaltz_Ending2Major_Events:		# 8 bars of 3 beats, 1566 bytes
 	ev_beat
 	ev_note	0, 55, 72, 8, 0, 0
 	ev_note	0, 36, 75, 8, 0, 0
@@ -3642,10 +3642,10 @@ Style_GermanWaltz_Ending2A_Events:		# 8 bars of 3 beats, 1566 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_GermanWaltz_Ending2A
+	var_end	Style_GermanWaltz_Ending2Major
 
-Style_GermanWaltz_Ending2B:
-	var_head	Style_GermanWaltz_Ending2B, 8, 3, 0xff, 0xff
+Style_GermanWaltz_Ending2Minor:
+	var_head	Style_GermanWaltz_Ending2Minor, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 10, 83
 	ev_cc	2, 91, 61
@@ -3667,8 +3667,8 @@ Style_GermanWaltz_Ending2B:
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 92
-	var_events	Style_GermanWaltz_Ending2B
-Style_GermanWaltz_Ending2B_Events:		# 8 bars of 3 beats, 1566 bytes
+	var_events	Style_GermanWaltz_Ending2Minor
+Style_GermanWaltz_Ending2Minor_Events:		# 8 bars of 3 beats, 1566 bytes
 	ev_beat
 	ev_note	0, 55, 72, 8, 0, 0
 	ev_note	0, 36, 75, 8, 0, 0
@@ -4080,4 +4080,4 @@ Style_GermanWaltz_Ending2B_Events:		# 8 bars of 3 beats, 1566 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_GermanWaltz_Ending2B
+	var_end	Style_GermanWaltz_Ending2Minor

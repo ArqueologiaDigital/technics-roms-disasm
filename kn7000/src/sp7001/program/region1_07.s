@@ -51615,7 +51615,7 @@ loc_484FE1FB:
     movbu   (0x50152354), d1
     extbu   d0
     call    func_4843751B_entry, [d2,d3], 0x14
-    call    func_48434610_entry, 0, 0xc
+    call    PadFlag2ById_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     mov     Str_SOLO_50, a2
@@ -54633,7 +54633,7 @@ loc_484FFEBD:
     llt
     bra     loc_484FFF37
 loc_484FFEC4:
-    call    func_48434413, 0, 0
+    call    PadCurFlag2Get, 0, 0
     extbu   d0
     cmp     0, d0
     bne     loc_484FFF37

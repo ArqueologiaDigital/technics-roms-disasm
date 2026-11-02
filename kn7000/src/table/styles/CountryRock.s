@@ -19,8 +19,8 @@ Style_CountryRock:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_CountryRock
 
-Style_CountryRock_Intro1A:
-	var_head	Style_CountryRock_Intro1A, 2, 4, 0xff, 0xff
+Style_CountryRock_Intro1Major:
+	var_head	Style_CountryRock_Intro1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	1, 83, 71
 	ev_cc	2, 7, 90
@@ -35,8 +35,8 @@ Style_CountryRock_Intro1A:
 	ev_cc	6, 7, 64
 	ev_cc	6, 10, 64
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_CountryRock_Intro1A
-Style_CountryRock_Intro1A_Events:		# 2 bars of 4 beats, 413 bytes
+	var_events	Style_CountryRock_Intro1Major
+Style_CountryRock_Intro1Major_Events:		# 2 bars of 4 beats, 413 bytes
 	ev_beat
 	ev_note	0, 50, 127, 6, 0, 0
 	ev_note	0, 57, 74, 12, 0, 0
@@ -120,10 +120,10 @@ Style_CountryRock_Intro1A_Events:		# 2 bars of 4 beats, 413 bytes
 	ev_note	2, 45, 115, 31, 0, 1
 	ev_note	3, 57, 121, 45, 0, 1
 	ev_end
-	var_end	Style_CountryRock_Intro1A
+	var_end	Style_CountryRock_Intro1Major
 
-Style_CountryRock_Intro1B:
-	var_head	Style_CountryRock_Intro1B, 2, 4, 0xff, 0xff
+Style_CountryRock_Intro1Minor:
+	var_head	Style_CountryRock_Intro1Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 7, 90
 	ev_cc	1, 97, 11
 	ev_cc	1, 83, 71
@@ -145,8 +145,8 @@ Style_CountryRock_Intro1B:
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_cc	7, 7, 127
 	ev_pc	7, 0x00, 0x00, 0x26
-	var_events	Style_CountryRock_Intro1B
-Style_CountryRock_Intro1B_Events:		# 2 bars of 4 beats, 500 bytes
+	var_events	Style_CountryRock_Intro1Minor
+Style_CountryRock_Intro1Minor_Events:		# 2 bars of 4 beats, 500 bytes
 	ev_beat
 	ev_note	0, 36, 101, 82, 0, 0
 	ev_note	0, 49, 97, 17, 0, 0
@@ -263,10 +263,10 @@ Style_CountryRock_Intro1B_Events:		# 2 bars of 4 beats, 500 bytes
 	ev_at	48
 	ev_note	0, 38, 98, 18, 0, 0
 	ev_end
-	var_end	Style_CountryRock_Intro1B
+	var_end	Style_CountryRock_Intro1Minor
 
-Style_CountryRock_Ending1A:
-	var_head	Style_CountryRock_Ending1A, 5, 4, 0xff, 0xff
+Style_CountryRock_Intro2Major:
+	var_head	Style_CountryRock_Intro2Major, 5, 4, 0xff, 0xff
 	ev_cc	1, 7, 88
 	ev_cc	1, 97, 11
 	ev_cc	1, 83, 71
@@ -287,8 +287,8 @@ Style_CountryRock_Ending1A:
 	ev_cc	5, 10, 71
 	ev_pc	5, 0x01, 0x20, 0x20
 	ev_cc	6, 7, 88
-	var_events	Style_CountryRock_Ending1A
-Style_CountryRock_Ending1A_Events:		# 5 bars of 4 beats, 2423 bytes
+	var_events	Style_CountryRock_Intro2Major
+Style_CountryRock_Intro2Major_Events:		# 5 bars of 4 beats, 2423 bytes
 	ev_beat
 	ev_note	0, 48, 124, 6, 0, 0
 	ev_beat
@@ -828,10 +828,10 @@ Style_CountryRock_Ending1A_Events:		# 5 bars of 4 beats, 2423 bytes
 	ev_note	5, 76, 98, 22, 0, 1
 	ev_note	5, 72, 85, 23, 0, 1
 	ev_end
-	var_end	Style_CountryRock_Ending1A
+	var_end	Style_CountryRock_Intro2Major
 
-Style_CountryRock_Ending1B:
-	var_head	Style_CountryRock_Ending1B, 5, 4, 0xff, 0xff
+Style_CountryRock_Intro2Minor:
+	var_head	Style_CountryRock_Intro2Minor, 5, 4, 0xff, 0xff
 	ev_cc	1, 7, 88
 	ev_cc	1, 97, 11
 	ev_cc	1, 83, 71
@@ -852,8 +852,8 @@ Style_CountryRock_Ending1B:
 	ev_cc	5, 10, 71
 	ev_pc	5, 0x01, 0x20, 0x20
 	ev_cc	6, 7, 88
-	var_events	Style_CountryRock_Ending1B
-Style_CountryRock_Ending1B_Events:		# 5 bars of 4 beats, 2045 bytes
+	var_events	Style_CountryRock_Intro2Minor
+Style_CountryRock_Intro2Minor_Events:		# 5 bars of 4 beats, 2045 bytes
 	ev_beat
 	ev_note	0, 48, 124, 6, 0, 0
 	ev_beat
@@ -1292,7 +1292,7 @@ Style_CountryRock_Ending1B_Events:		# 5 bars of 4 beats, 2045 bytes
 	ev_note	4, 55, 116, 37, 0, 1
 	ev_note	5, 67, 90, 28, 0, 1
 	ev_end
-	var_end	Style_CountryRock_Ending1B
+	var_end	Style_CountryRock_Intro2Minor
 
 Style_CountryRock_Var1:
 	var_head	Style_CountryRock_Var1, 4, 4, 0xff, 0xff
@@ -3194,8 +3194,8 @@ Style_CountryRock_Var4Fill2_Events:		# 1 bars of 4 beats, 155 bytes
 	ev_end
 	var_end	Style_CountryRock_Var4Fill2
 
-Style_CountryRock_Intro2A:
-	var_head	Style_CountryRock_Intro2A, 4, 4, 0xff, 0xff
+Style_CountryRock_Ending1Major:
+	var_head	Style_CountryRock_Ending1Major, 4, 4, 0xff, 0xff
 	ev_cc	0, 83, 74
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 90
@@ -3219,8 +3219,8 @@ Style_CountryRock_Intro2A:
 	ev_cc	6, 7, 64
 	ev_cc	6, 10, 64
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_CountryRock_Intro2A
-Style_CountryRock_Intro2A_Events:		# 4 bars of 4 beats, 1962 bytes
+	var_events	Style_CountryRock_Ending1Major
+Style_CountryRock_Ending1Major_Events:		# 4 bars of 4 beats, 1962 bytes
 	ev_beat
 	ev_note	0, 50, 127, 10, 0, 0
 	ev_note	0, 40, 127, 24, 0, 0
@@ -3856,10 +3856,10 @@ Style_CountryRock_Intro2A_Events:		# 4 bars of 4 beats, 1962 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_CountryRock_Intro2A
+	var_end	Style_CountryRock_Ending1Major
 
-Style_CountryRock_Intro2B:
-	var_head	Style_CountryRock_Intro2B, 4, 4, 0xff, 0xff
+Style_CountryRock_Ending1Minor:
+	var_head	Style_CountryRock_Ending1Minor, 4, 4, 0xff, 0xff
 	ev_cc	0, 83, 74
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 90
@@ -3885,8 +3885,8 @@ Style_CountryRock_Intro2B:
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_cc	7, 7, 127
 	ev_pc	7, 0x00, 0x00, 0x26
-	var_events	Style_CountryRock_Intro2B
-Style_CountryRock_Intro2B_Events:		# 4 bars of 4 beats, 1852 bytes
+	var_events	Style_CountryRock_Ending1Minor
+Style_CountryRock_Ending1Minor_Events:		# 4 bars of 4 beats, 1852 bytes
 	ev_beat
 	ev_note	0, 36, 116, 45, 0, 0
 	ev_note	0, 18, 111, 18, 0, 0
@@ -4494,10 +4494,10 @@ Style_CountryRock_Intro2B_Events:		# 4 bars of 4 beats, 1852 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_CountryRock_Intro2B
+	var_end	Style_CountryRock_Ending1Minor
 
-Style_CountryRock_Ending2A:
-	var_head	Style_CountryRock_Ending2A, 6, 4, 0xff, 0xff
+Style_CountryRock_Ending2Major:
+	var_head	Style_CountryRock_Ending2Major, 6, 4, 0xff, 0xff
 	ev_cc	0, 83, 74
 	ev_cc	1, 7, 90
 	ev_cc	1, 97, 11
@@ -4521,8 +4521,8 @@ Style_CountryRock_Ending2A:
 	ev_cc	5, 10, 75
 	ev_pc	5, 0x04, 0x40, 0x20
 	ev_cc	6, 7, 88
-	var_events	Style_CountryRock_Ending2A
-Style_CountryRock_Ending2A_Events:		# 6 bars of 4 beats, 3882 bytes
+	var_events	Style_CountryRock_Ending2Major
+Style_CountryRock_Ending2Major_Events:		# 6 bars of 4 beats, 3882 bytes
 	ev_beat
 	ev_note	0, 36, 116, 44, 0, 0
 	ev_note	0, 49, 127, 10, 0, 0
@@ -5684,10 +5684,10 @@ Style_CountryRock_Ending2A_Events:		# 6 bars of 4 beats, 3882 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_CountryRock_Ending2A
+	var_end	Style_CountryRock_Ending2Major
 
-Style_CountryRock_Ending2B:
-	var_head	Style_CountryRock_Ending2B, 6, 4, 0xff, 0xff
+Style_CountryRock_Ending2Minor:
+	var_head	Style_CountryRock_Ending2Minor, 6, 4, 0xff, 0xff
 	ev_cc	0, 83, 74
 	ev_cc	1, 7, 90
 	ev_cc	1, 97, 11
@@ -5711,8 +5711,8 @@ Style_CountryRock_Ending2B:
 	ev_cc	5, 10, 75
 	ev_pc	5, 0x04, 0x40, 0x20
 	ev_cc	6, 7, 88
-	var_events	Style_CountryRock_Ending2B
-Style_CountryRock_Ending2B_Events:		# 6 bars of 4 beats, 3501 bytes
+	var_events	Style_CountryRock_Ending2Minor
+Style_CountryRock_Ending2Minor_Events:		# 6 bars of 4 beats, 3501 bytes
 	ev_beat
 	ev_note	0, 36, 116, 44, 0, 0
 	ev_note	0, 49, 127, 10, 0, 0
@@ -6721,4 +6721,4 @@ Style_CountryRock_Ending2B_Events:		# 6 bars of 4 beats, 3501 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_CountryRock_Ending2B
+	var_end	Style_CountryRock_Ending2Minor

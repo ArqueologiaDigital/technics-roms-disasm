@@ -19,8 +19,8 @@ Style_Hawaiian:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_Hawaiian
 
-Style_Hawaiian_Intro1A:
-	var_head	Style_Hawaiian_Intro1A, 5, 4, 0xff, 0xff
+Style_Hawaiian_Intro1Major:
+	var_head	Style_Hawaiian_Intro1Major, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 97, 8
 	ev_cc	3, 10, 64
@@ -30,8 +30,8 @@ Style_Hawaiian_Intro1A:
 	ev_cc	6, 7, 127
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_pc	7, 0x00, 0x00, 0x26
-	var_events	Style_Hawaiian_Intro1A
-Style_Hawaiian_Intro1A_Events:		# 5 bars of 4 beats, 6382 bytes
+	var_events	Style_Hawaiian_Intro1Major
+Style_Hawaiian_Intro1Major_Events:		# 5 bars of 4 beats, 6382 bytes
 	ev_beat
 	ev_beat
 	ev_at	90
@@ -2364,10 +2364,10 @@ Style_Hawaiian_Intro1A_Events:		# 5 bars of 4 beats, 6382 bytes
 	ev_note	0, 39, 54, 12, 0, 0
 	ev_bend	5, 0, 64
 	ev_end
-	var_end	Style_Hawaiian_Intro1A
+	var_end	Style_Hawaiian_Intro1Major
 
-Style_Hawaiian_Intro1B:
-	var_head	Style_Hawaiian_Intro1B, 5, 4, 0xff, 0xff
+Style_Hawaiian_Intro1Minor:
+	var_head	Style_Hawaiian_Intro1Minor, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 97, 8
 	ev_cc	3, 10, 64
@@ -2377,8 +2377,8 @@ Style_Hawaiian_Intro1B:
 	ev_cc	6, 7, 127
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_pc	7, 0x00, 0x00, 0x26
-	var_events	Style_Hawaiian_Intro1B
-Style_Hawaiian_Intro1B_Events:		# 5 bars of 4 beats, 1441 bytes
+	var_events	Style_Hawaiian_Intro1Minor
+Style_Hawaiian_Intro1Minor_Events:		# 5 bars of 4 beats, 1441 bytes
 	ev_beat
 	ev_at	94
 	ev_note	3, 67, 71, 29, 2, 1
@@ -2843,18 +2843,18 @@ Style_Hawaiian_Intro1B_Events:		# 5 bars of 4 beats, 1441 bytes
 	ev_note	0, 40, 6, 12, 0, 0
 	ev_note	2, 63, 75, 88, 0, 1
 	ev_end
-	var_end	Style_Hawaiian_Intro1B
+	var_end	Style_Hawaiian_Intro1Minor
 
-Style_Hawaiian_Ending1A:
-	var_head	Style_Hawaiian_Ending1A, 5, 4, 0xff, 0xff
+Style_Hawaiian_Intro2Major:
+	var_head	Style_Hawaiian_Intro2Major, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 97, 8
 	ev_cc	3, 10, 64
 	ev_cc	3, 97, 8
 	ev_cc	4, 97, 8
 	ev_cc	5, 97, 8
-	var_events	Style_Hawaiian_Ending1A
-Style_Hawaiian_Ending1A_Events:		# 5 bars of 4 beats, 4280 bytes
+	var_events	Style_Hawaiian_Intro2Major
+Style_Hawaiian_Intro2Major_Events:		# 5 bars of 4 beats, 4280 bytes
 	ev_beat
 	ev_at	82
 	ev_bend	3, 63, 32
@@ -4370,10 +4370,10 @@ Style_Hawaiian_Ending1A_Events:		# 5 bars of 4 beats, 4280 bytes
 	ev_at	95
 	ev_note	0, 39, 54, 12, 0, 0
 	ev_end
-	var_end	Style_Hawaiian_Ending1A
+	var_end	Style_Hawaiian_Intro2Major
 
-Style_Hawaiian_Ending1B:
-	var_head	Style_Hawaiian_Ending1B, 5, 4, 0xff, 0xff
+Style_Hawaiian_Intro2Minor:
+	var_head	Style_Hawaiian_Intro2Minor, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 97, 8
 	ev_cc	3, 7, 119
@@ -4383,8 +4383,8 @@ Style_Hawaiian_Ending1B:
 	ev_cc	5, 97, 8
 	ev_cc	6, 7, 127
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_Hawaiian_Ending1B
-Style_Hawaiian_Ending1B_Events:		# 5 bars of 4 beats, 1497 bytes
+	var_events	Style_Hawaiian_Intro2Minor
+Style_Hawaiian_Intro2Minor_Events:		# 5 bars of 4 beats, 1497 bytes
 	ev_beat
 	ev_at	94
 	ev_bend	4, 0, 64
@@ -4849,7 +4849,7 @@ Style_Hawaiian_Ending1B_Events:		# 5 bars of 4 beats, 1497 bytes
 	ev_at	64
 	ev_note	0, 38, 38, 12, 0, 0
 	ev_end
-	var_end	Style_Hawaiian_Ending1B
+	var_end	Style_Hawaiian_Intro2Minor
 
 Style_Hawaiian_Var1:
 	var_head	Style_Hawaiian_Var1, 4, 4, 0xff, 0xff
@@ -7962,8 +7962,8 @@ Style_Hawaiian_Var4Fill2_Events:		# 1 bars of 4 beats, 361 bytes
 	ev_end
 	var_end	Style_Hawaiian_Var4Fill2
 
-Style_Hawaiian_Intro2A:
-	var_head	Style_Hawaiian_Intro2A, 5, 4, 0xff, 0xff
+Style_Hawaiian_Ending1Major:
+	var_head	Style_Hawaiian_Ending1Major, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 97, 8
 	ev_cc	3, 97, 8
@@ -7973,8 +7973,8 @@ Style_Hawaiian_Intro2A:
 	ev_cc	6, 7, 127
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_pc	7, 0x00, 0x00, 0x26
-	var_events	Style_Hawaiian_Intro2A
-Style_Hawaiian_Intro2A_Events:		# 5 bars of 4 beats, 2844 bytes
+	var_events	Style_Hawaiian_Ending1Major
+Style_Hawaiian_Ending1Major_Events:		# 5 bars of 4 beats, 2844 bytes
 	ev_beat
 	ev_note	0, 36, 38, 12, 0, 0
 	ev_at	1
@@ -8956,10 +8956,10 @@ Style_Hawaiian_Intro2A_Events:		# 5 bars of 4 beats, 2844 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Hawaiian_Intro2A
+	var_end	Style_Hawaiian_Ending1Major
 
-Style_Hawaiian_Intro2B:
-	var_head	Style_Hawaiian_Intro2B, 5, 4, 0xff, 0xff
+Style_Hawaiian_Ending1Minor:
+	var_head	Style_Hawaiian_Ending1Minor, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 97, 8
 	ev_cc	3, 10, 64
@@ -8969,8 +8969,8 @@ Style_Hawaiian_Intro2B:
 	ev_cc	6, 7, 127
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_pc	7, 0x00, 0x00, 0x26
-	var_events	Style_Hawaiian_Intro2B
-Style_Hawaiian_Intro2B_Events:		# 5 bars of 4 beats, 1579 bytes
+	var_events	Style_Hawaiian_Ending1Minor
+Style_Hawaiian_Ending1Minor_Events:		# 5 bars of 4 beats, 1579 bytes
 	ev_beat
 	ev_note	0, 36, 38, 12, 0, 0
 	ev_note	1, 48, 84, 81, 0, 1
@@ -9463,18 +9463,18 @@ Style_Hawaiian_Intro2B_Events:		# 5 bars of 4 beats, 1579 bytes
 	ev_note	2, 63, 75, 32, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_Hawaiian_Intro2B
+	var_end	Style_Hawaiian_Ending1Minor
 
-Style_Hawaiian_Ending2A:
-	var_head	Style_Hawaiian_Ending2A, 5, 4, 0xff, 0xff
+Style_Hawaiian_Ending2Major:
+	var_head	Style_Hawaiian_Ending2Major, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 97, 8
 	ev_cc	3, 10, 64
 	ev_cc	3, 97, 8
 	ev_cc	4, 97, 8
 	ev_cc	5, 97, 8
-	var_events	Style_Hawaiian_Ending2A
-Style_Hawaiian_Ending2A_Events:		# 5 bars of 4 beats, 4163 bytes
+	var_events	Style_Hawaiian_Ending2Major
+Style_Hawaiian_Ending2Major_Events:		# 5 bars of 4 beats, 4163 bytes
 	ev_beat
 	ev_note	0, 51, 44, 12, 0, 0
 	ev_note	1, 36, 76, 99, 0, 1
@@ -10912,10 +10912,10 @@ Style_Hawaiian_Ending2A_Events:		# 5 bars of 4 beats, 4163 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Hawaiian_Ending2A
+	var_end	Style_Hawaiian_Ending2Major
 
-Style_Hawaiian_Ending2B:
-	var_head	Style_Hawaiian_Ending2B, 5, 4, 0xff, 0xff
+Style_Hawaiian_Ending2Minor:
+	var_head	Style_Hawaiian_Ending2Minor, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 97, 8
 	ev_cc	3, 7, 119
@@ -10925,8 +10925,8 @@ Style_Hawaiian_Ending2B:
 	ev_cc	5, 97, 8
 	ev_cc	6, 7, 127
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_Hawaiian_Ending2B
-Style_Hawaiian_Ending2B_Events:		# 5 bars of 4 beats, 1845 bytes
+	var_events	Style_Hawaiian_Ending2Minor
+Style_Hawaiian_Ending2Minor_Events:		# 5 bars of 4 beats, 1845 bytes
 	ev_beat
 	ev_note	0, 21, 6, 12, 0, 0
 	ev_note	0, 36, 38, 12, 0, 0
@@ -11469,4 +11469,4 @@ Style_Hawaiian_Ending2B_Events:		# 5 bars of 4 beats, 1845 bytes
 	ev_note	2, 63, 76, 30, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_Hawaiian_Ending2B
+	var_end	Style_Hawaiian_Ending2Minor

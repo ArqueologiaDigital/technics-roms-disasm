@@ -9695,7 +9695,7 @@ putstr:
     .space  1, 0xFF                   # padding to the next routine
 # func_48585E90  (CPU 0x48585e90): no symbol file names this function
 
-# copied to the stack by the 5-iteration movbu loop of func_48404DB4
+# copied to the stack by the 5-iteration movbu loop of DspDebugPrintHex16
 rodata_48585E90:
     .byte   0x00, 0x00, 0x00, 0x00, 0x00
     .space  3, 0xFF                   # padding

@@ -19,8 +19,8 @@ Style_CountryPiano:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_CountryPiano
 
-Style_CountryPiano_Intro1A:
-	var_head	Style_CountryPiano_Intro1A, 4, 4, 0xff, 0xff
+Style_CountryPiano_Intro1Major:
+	var_head	Style_CountryPiano_Intro1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 77
 	ev_cc	2, 10, 56
@@ -28,8 +28,8 @@ Style_CountryPiano_Intro1A:
 	ev_cc	6, 7, 127
 	ev_cc	6, 10, 64
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_CountryPiano_Intro1A
-Style_CountryPiano_Intro1A_Events:		# 4 bars of 4 beats, 1990 bytes
+	var_events	Style_CountryPiano_Intro1Major
+Style_CountryPiano_Intro1Major_Events:		# 4 bars of 4 beats, 1990 bytes
 	ev_beat
 	ev_note	0, 46, 80, 21, 0, 0
 	ev_note	0, 36, 79, 106, 0, 0
@@ -590,10 +590,10 @@ Style_CountryPiano_Intro1A_Events:		# 4 bars of 4 beats, 1990 bytes
 	ev_at	65
 	ev_cc	2, 64, 0
 	ev_end
-	var_end	Style_CountryPiano_Intro1A
+	var_end	Style_CountryPiano_Intro1Major
 
-Style_CountryPiano_Intro1B:
-	var_head	Style_CountryPiano_Intro1B, 4, 4, 0xff, 0xff
+Style_CountryPiano_Intro1Minor:
+	var_head	Style_CountryPiano_Intro1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 77
 	ev_cc	2, 10, 56
@@ -601,8 +601,8 @@ Style_CountryPiano_Intro1B:
 	ev_cc	6, 7, 127
 	ev_cc	6, 10, 64
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_CountryPiano_Intro1B
-Style_CountryPiano_Intro1B_Events:		# 4 bars of 4 beats, 1788 bytes
+	var_events	Style_CountryPiano_Intro1Minor
+Style_CountryPiano_Intro1Minor_Events:		# 4 bars of 4 beats, 1788 bytes
 	ev_beat
 	ev_note	0, 46, 80, 21, 0, 0
 	ev_note	0, 36, 79, 106, 0, 0
@@ -1074,10 +1074,10 @@ Style_CountryPiano_Intro1B_Events:		# 4 bars of 4 beats, 1788 bytes
 	ev_at	65
 	ev_cc	2, 64, 0
 	ev_end
-	var_end	Style_CountryPiano_Intro1B
+	var_end	Style_CountryPiano_Intro1Minor
 
-Style_CountryPiano_Ending1A:
-	var_head	Style_CountryPiano_Ending1A, 4, 4, 0xff, 0xff
+Style_CountryPiano_Intro2Major:
+	var_head	Style_CountryPiano_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 66
 	ev_pc	2, 0x35, 0x00, 0x20
@@ -1085,8 +1085,8 @@ Style_CountryPiano_Ending1A:
 	ev_cc	4, 10, 56
 	ev_pc	4, 0x1a, 0x40, 0x20
 	ev_cc	5, 7, 94
-	var_events	Style_CountryPiano_Ending1A
-Style_CountryPiano_Ending1A_Events:		# 4 bars of 4 beats, 1588 bytes
+	var_events	Style_CountryPiano_Intro2Major
+Style_CountryPiano_Intro2Major_Events:		# 4 bars of 4 beats, 1588 bytes
 	ev_beat
 	ev_note	0, 51, 55, 117, 0, 0
 	ev_note	6, 91, 40, 72, 5, 1
@@ -1496,10 +1496,10 @@ Style_CountryPiano_Ending1A_Events:		# 4 bars of 4 beats, 1588 bytes
 	ev_note	0, 51, 39, 8, 0, 0
 	ev_note	1, 47, 81, 17, 0, 1
 	ev_end
-	var_end	Style_CountryPiano_Ending1A
+	var_end	Style_CountryPiano_Intro2Major
 
-Style_CountryPiano_Ending1B:
-	var_head	Style_CountryPiano_Ending1B, 4, 4, 0xff, 0xff
+Style_CountryPiano_Intro2Minor:
+	var_head	Style_CountryPiano_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 66
 	ev_pc	2, 0x35, 0x00, 0x20
@@ -1507,8 +1507,8 @@ Style_CountryPiano_Ending1B:
 	ev_cc	4, 10, 56
 	ev_pc	4, 0x1a, 0x40, 0x20
 	ev_cc	5, 7, 94
-	var_events	Style_CountryPiano_Ending1B
-Style_CountryPiano_Ending1B_Events:		# 4 bars of 4 beats, 1577 bytes
+	var_events	Style_CountryPiano_Intro2Minor
+Style_CountryPiano_Intro2Minor_Events:		# 4 bars of 4 beats, 1577 bytes
 	ev_beat
 	ev_note	0, 51, 55, 117, 0, 0
 	ev_note	6, 91, 40, 72, 5, 1
@@ -1917,7 +1917,7 @@ Style_CountryPiano_Ending1B_Events:		# 4 bars of 4 beats, 1577 bytes
 	ev_note	0, 51, 39, 8, 0, 0
 	ev_note	1, 47, 53, 17, 0, 1
 	ev_end
-	var_end	Style_CountryPiano_Ending1B
+	var_end	Style_CountryPiano_Intro2Minor
 
 Style_CountryPiano_Var1:
 	var_head	Style_CountryPiano_Var1, 4, 4, 0xff, 0xff
@@ -4587,8 +4587,8 @@ Style_CountryPiano_Var4Fill2_Events:		# 1 bars of 4 beats, 643 bytes
 	ev_end
 	var_end	Style_CountryPiano_Var4Fill2
 
-Style_CountryPiano_Intro2A:
-	var_head	Style_CountryPiano_Intro2A, 6, 4, 0xff, 0xff
+Style_CountryPiano_Ending1Major:
+	var_head	Style_CountryPiano_Ending1Major, 6, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 77
 	ev_cc	2, 10, 85
@@ -4598,8 +4598,8 @@ Style_CountryPiano_Intro2A:
 	ev_cc	6, 7, 127
 	ev_cc	6, 10, 64
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_CountryPiano_Intro2A
-Style_CountryPiano_Intro2A_Events:		# 6 bars of 4 beats, 2688 bytes
+	var_events	Style_CountryPiano_Ending1Major
+Style_CountryPiano_Ending1Major_Events:		# 6 bars of 4 beats, 2688 bytes
 	ev_beat
 	ev_note	0, 46, 71, 8, 0, 0
 	ev_note	5, 36, 73, 62, 1, 1
@@ -5311,10 +5311,10 @@ Style_CountryPiano_Intro2A_Events:		# 6 bars of 4 beats, 2688 bytes
 	ev_at	72
 	ev_cc	1, 64, 0
 	ev_end
-	var_end	Style_CountryPiano_Intro2A
+	var_end	Style_CountryPiano_Ending1Major
 
-Style_CountryPiano_Intro2B:
-	var_head	Style_CountryPiano_Intro2B, 6, 4, 0xff, 0xff
+Style_CountryPiano_Ending1Minor:
+	var_head	Style_CountryPiano_Ending1Minor, 6, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 77
 	ev_cc	2, 10, 85
@@ -5324,8 +5324,8 @@ Style_CountryPiano_Intro2B:
 	ev_cc	6, 7, 127
 	ev_cc	6, 10, 64
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_CountryPiano_Intro2B
-Style_CountryPiano_Intro2B_Events:		# 6 bars of 4 beats, 2601 bytes
+	var_events	Style_CountryPiano_Ending1Minor
+Style_CountryPiano_Ending1Minor_Events:		# 6 bars of 4 beats, 2601 bytes
 	ev_beat
 	ev_note	0, 46, 71, 8, 0, 0
 	ev_note	5, 36, 73, 62, 1, 1
@@ -5998,10 +5998,10 @@ Style_CountryPiano_Intro2B_Events:		# 6 bars of 4 beats, 2601 bytes
 	ev_at	72
 	ev_cc	1, 64, 0
 	ev_end
-	var_end	Style_CountryPiano_Intro2B
+	var_end	Style_CountryPiano_Ending1Minor
 
-Style_CountryPiano_Ending2A:
-	var_head	Style_CountryPiano_Ending2A, 8, 4, 0xff, 0xff
+Style_CountryPiano_Ending2Major:
+	var_head	Style_CountryPiano_Ending2Major, 8, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 66
 	ev_pc	2, 0x35, 0x00, 0x20
@@ -6009,8 +6009,8 @@ Style_CountryPiano_Ending2A:
 	ev_cc	4, 10, 56
 	ev_pc	4, 0x1a, 0x40, 0x20
 	ev_cc	5, 7, 94
-	var_events	Style_CountryPiano_Ending2A
-Style_CountryPiano_Ending2A_Events:		# 8 bars of 4 beats, 2489 bytes
+	var_events	Style_CountryPiano_Ending2Major
+Style_CountryPiano_Ending2Major_Events:		# 8 bars of 4 beats, 2489 bytes
 	ev_beat
 	ev_at	1
 	ev_note	0, 36, 84, 120, 0, 0
@@ -6688,10 +6688,10 @@ Style_CountryPiano_Ending2A_Events:		# 8 bars of 4 beats, 2489 bytes
 	ev_at	90
 	ev_cc	6, 64, 0
 	ev_end
-	var_end	Style_CountryPiano_Ending2A
+	var_end	Style_CountryPiano_Ending2Major
 
-Style_CountryPiano_Ending2B:
-	var_head	Style_CountryPiano_Ending2B, 8, 4, 0xff, 0xff
+Style_CountryPiano_Ending2Minor:
+	var_head	Style_CountryPiano_Ending2Minor, 8, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 66
 	ev_pc	2, 0x35, 0x00, 0x20
@@ -6699,8 +6699,8 @@ Style_CountryPiano_Ending2B:
 	ev_cc	4, 10, 56
 	ev_pc	4, 0x1a, 0x40, 0x20
 	ev_cc	5, 7, 94
-	var_events	Style_CountryPiano_Ending2B
-Style_CountryPiano_Ending2B_Events:		# 8 bars of 4 beats, 2308 bytes
+	var_events	Style_CountryPiano_Ending2Minor
+Style_CountryPiano_Ending2Minor_Events:		# 8 bars of 4 beats, 2308 bytes
 	ev_beat
 	ev_at	1
 	ev_note	0, 36, 84, 120, 0, 0
@@ -7347,4 +7347,4 @@ Style_CountryPiano_Ending2B_Events:		# 8 bars of 4 beats, 2308 bytes
 	ev_at	90
 	ev_cc	6, 64, 0
 	ev_end
-	var_end	Style_CountryPiano_Ending2B
+	var_end	Style_CountryPiano_Ending2Minor

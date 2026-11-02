@@ -9229,7 +9229,7 @@ loc_48585998:
 loc_48585999:
     retf    0, 0
 
-# copied to the stack by the 5-iteration movbu loop of func_48404DB4
+# copied to the stack by the 5-iteration movbu loop of DspDebugPrintHex16
 rodata_4858599C:
     .byte   0x00, 0x00, 0x00, 0x00, 0x00
     .space  3, 0xFF                   # padding

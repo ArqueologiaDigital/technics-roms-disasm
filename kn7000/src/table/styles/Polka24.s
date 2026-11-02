@@ -19,8 +19,8 @@ Style_Polka24:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_Polka24
 
-Style_Polka24_Intro1A:
-	var_head	Style_Polka24_Intro1A, 2, 4, 0xff, 0xff
+Style_Polka24_Intro1Major:
+	var_head	Style_Polka24_Intro1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 32
 	ev_cc	2, 92, 0
@@ -33,8 +33,8 @@ Style_Polka24_Intro1A:
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 92
-	var_events	Style_Polka24_Intro1A
-Style_Polka24_Intro1A_Events:		# 2 bars of 4 beats, 796 bytes
+	var_events	Style_Polka24_Intro1Major
+Style_Polka24_Intro1Major_Events:		# 2 bars of 4 beats, 796 bytes
 	ev_beat
 	ev_note	1, 31, 93, 33, 1, 1
 	ev_note	2, 67, 102, 14, 0, 1
@@ -221,10 +221,10 @@ Style_Polka24_Intro1A_Events:		# 2 bars of 4 beats, 796 bytes
 	ev_at	48
 	ev_note	0, 45, 109, 8, 0, 0
 	ev_end
-	var_end	Style_Polka24_Intro1A
+	var_end	Style_Polka24_Intro1Major
 
-Style_Polka24_Intro1B:
-	var_head	Style_Polka24_Intro1B, 2, 4, 0xff, 0xff
+Style_Polka24_Intro1Minor:
+	var_head	Style_Polka24_Intro1Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 32
 	ev_cc	2, 92, 0
@@ -239,8 +239,8 @@ Style_Polka24_Intro1B:
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 92
-	var_events	Style_Polka24_Intro1B
-Style_Polka24_Intro1B_Events:		# 2 bars of 4 beats, 782 bytes
+	var_events	Style_Polka24_Intro1Minor
+Style_Polka24_Intro1Minor_Events:		# 2 bars of 4 beats, 782 bytes
 	ev_beat
 	ev_note	1, 31, 93, 33, 1, 1
 	ev_note	2, 67, 102, 14, 0, 1
@@ -423,10 +423,10 @@ Style_Polka24_Intro1B_Events:		# 2 bars of 4 beats, 782 bytes
 	ev_at	48
 	ev_note	0, 45, 109, 8, 0, 0
 	ev_end
-	var_end	Style_Polka24_Intro1B
+	var_end	Style_Polka24_Intro1Minor
 
-Style_Polka24_Ending1A:
-	var_head	Style_Polka24_Ending1A, 4, 4, 0xff, 0xff
+Style_Polka24_Intro2Major:
+	var_head	Style_Polka24_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 32
 	ev_cc	2, 92, 26
@@ -439,8 +439,8 @@ Style_Polka24_Ending1A:
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 92
-	var_events	Style_Polka24_Ending1A
-Style_Polka24_Ending1A_Events:		# 4 bars of 4 beats, 2399 bytes
+	var_events	Style_Polka24_Intro2Major
+Style_Polka24_Intro2Major_Events:		# 4 bars of 4 beats, 2399 bytes
 	ev_beat
 	ev_note	0, 57, 86, 8, 0, 0
 	ev_note	0, 36, 93, 8, 0, 0
@@ -1015,10 +1015,10 @@ Style_Polka24_Ending1A_Events:		# 4 bars of 4 beats, 2399 bytes
 	ev_at	50
 	ev_note	3, 67, 91, 11, 0, 1
 	ev_end
-	var_end	Style_Polka24_Ending1A
+	var_end	Style_Polka24_Intro2Major
 
-Style_Polka24_Ending1B:
-	var_head	Style_Polka24_Ending1B, 4, 4, 0xff, 0xff
+Style_Polka24_Intro2Minor:
+	var_head	Style_Polka24_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 32
 	ev_cc	2, 92, 26
@@ -1031,8 +1031,8 @@ Style_Polka24_Ending1B:
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 92
-	var_events	Style_Polka24_Ending1B
-Style_Polka24_Ending1B_Events:		# 4 bars of 4 beats, 2399 bytes
+	var_events	Style_Polka24_Intro2Minor
+Style_Polka24_Intro2Minor_Events:		# 4 bars of 4 beats, 2399 bytes
 	ev_beat
 	ev_note	0, 57, 86, 8, 0, 0
 	ev_note	0, 36, 93, 8, 0, 0
@@ -1607,7 +1607,7 @@ Style_Polka24_Ending1B_Events:		# 4 bars of 4 beats, 2399 bytes
 	ev_at	50
 	ev_note	3, 67, 91, 11, 0, 1
 	ev_end
-	var_end	Style_Polka24_Ending1B
+	var_end	Style_Polka24_Intro2Minor
 
 Style_Polka24_Var1:
 	var_head	Style_Polka24_Var1, 4, 4, 0xff, 0xff
@@ -4288,8 +4288,8 @@ Style_Polka24_Var4Fill2_Events:		# 1 bars of 4 beats, 390 bytes
 	ev_end
 	var_end	Style_Polka24_Var4Fill2
 
-Style_Polka24_Intro2A:
-	var_head	Style_Polka24_Intro2A, 2, 4, 0xff, 0xff
+Style_Polka24_Ending1Major:
+	var_head	Style_Polka24_Ending1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 32
 	ev_cc	2, 92, 9
@@ -4302,8 +4302,8 @@ Style_Polka24_Intro2A:
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 92
-	var_events	Style_Polka24_Intro2A
-Style_Polka24_Intro2A_Events:		# 2 bars of 4 beats, 899 bytes
+	var_events	Style_Polka24_Ending1Major
+Style_Polka24_Ending1Major_Events:		# 2 bars of 4 beats, 899 bytes
 	ev_beat
 	ev_note	0, 55, 95, 8, 0, 0
 	ev_note	0, 36, 96, 8, 0, 0
@@ -4523,10 +4523,10 @@ Style_Polka24_Intro2A_Events:		# 2 bars of 4 beats, 899 bytes
 	ev_note	1, 36, 81, 44, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_Polka24_Intro2A
+	var_end	Style_Polka24_Ending1Major
 
-Style_Polka24_Intro2B:
-	var_head	Style_Polka24_Intro2B, 2, 4, 0xff, 0xff
+Style_Polka24_Ending1Minor:
+	var_head	Style_Polka24_Ending1Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 41
 	ev_cc	2, 92, 9
@@ -4539,8 +4539,8 @@ Style_Polka24_Intro2B:
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 92
-	var_events	Style_Polka24_Intro2B
-Style_Polka24_Intro2B_Events:		# 2 bars of 4 beats, 899 bytes
+	var_events	Style_Polka24_Ending1Minor
+Style_Polka24_Ending1Minor_Events:		# 2 bars of 4 beats, 899 bytes
 	ev_beat
 	ev_note	0, 55, 95, 8, 0, 0
 	ev_note	0, 36, 96, 8, 0, 0
@@ -4760,10 +4760,10 @@ Style_Polka24_Intro2B_Events:		# 2 bars of 4 beats, 899 bytes
 	ev_note	1, 36, 81, 44, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_Polka24_Intro2B
+	var_end	Style_Polka24_Ending1Minor
 
-Style_Polka24_Ending2A:
-	var_head	Style_Polka24_Ending2A, 4, 4, 0xff, 0xff
+Style_Polka24_Ending2Major:
+	var_head	Style_Polka24_Ending2Major, 4, 4, 0xff, 0xff
 	ev_cc	0, 91, 35
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 41
@@ -4778,8 +4778,8 @@ Style_Polka24_Ending2A:
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 92
-	var_events	Style_Polka24_Ending2A
-Style_Polka24_Ending2A_Events:		# 4 bars of 4 beats, 2416 bytes
+	var_events	Style_Polka24_Ending2Major
+Style_Polka24_Ending2Major_Events:		# 4 bars of 4 beats, 2416 bytes
 	ev_beat
 	ev_note	0, 57, 86, 8, 0, 0
 	ev_note	0, 36, 93, 8, 0, 0
@@ -5366,10 +5366,10 @@ Style_Polka24_Ending2A_Events:		# 4 bars of 4 beats, 2416 bytes
 	ev_note	1, 36, 93, 18, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_Polka24_Ending2A
+	var_end	Style_Polka24_Ending2Major
 
-Style_Polka24_Ending2B:
-	var_head	Style_Polka24_Ending2B, 4, 4, 0xff, 0xff
+Style_Polka24_Ending2Minor:
+	var_head	Style_Polka24_Ending2Minor, 4, 4, 0xff, 0xff
 	ev_cc	0, 91, 35
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 41
@@ -5384,8 +5384,8 @@ Style_Polka24_Ending2B:
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 92
-	var_events	Style_Polka24_Ending2B
-Style_Polka24_Ending2B_Events:		# 4 bars of 4 beats, 2416 bytes
+	var_events	Style_Polka24_Ending2Minor
+Style_Polka24_Ending2Minor_Events:		# 4 bars of 4 beats, 2416 bytes
 	ev_beat
 	ev_note	0, 57, 86, 8, 0, 0
 	ev_note	0, 36, 93, 8, 0, 0
@@ -5972,4 +5972,4 @@ Style_Polka24_Ending2B_Events:		# 4 bars of 4 beats, 2416 bytes
 	ev_note	1, 36, 93, 18, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_Polka24_Ending2B
+	var_end	Style_Polka24_Ending2Minor

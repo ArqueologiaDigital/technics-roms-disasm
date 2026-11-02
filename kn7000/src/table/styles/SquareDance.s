@@ -19,14 +19,14 @@ Style_SquareDance:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_SquareDance
 
-Style_SquareDance_Intro1A:
-	var_head	Style_SquareDance_Intro1A, 4, 4, 0xff, 0xff
+Style_SquareDance_Intro1Major:
+	var_head	Style_SquareDance_Intro1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_SquareDance_Intro1A
-Style_SquareDance_Intro1A_Events:		# 4 bars of 4 beats, 990 bytes
+	var_events	Style_SquareDance_Intro1Major
+Style_SquareDance_Intro1Major_Events:		# 4 bars of 4 beats, 990 bytes
 	ev_beat
 	ev_note	0, 46, 75, 8, 0, 0
 	ev_note	0, 36, 78, 8, 0, 0
@@ -305,16 +305,16 @@ Style_SquareDance_Intro1A_Events:		# 4 bars of 4 beats, 990 bytes
 	ev_note	0, 37, 63, 8, 0, 0
 	ev_note	2, 71, 78, 19, 0, 1
 	ev_end
-	var_end	Style_SquareDance_Intro1A
+	var_end	Style_SquareDance_Intro1Major
 
-Style_SquareDance_Intro1B:
-	var_head	Style_SquareDance_Intro1B, 4, 4, 0xff, 0xff
+Style_SquareDance_Intro1Minor:
+	var_head	Style_SquareDance_Intro1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_SquareDance_Intro1B
-Style_SquareDance_Intro1B_Events:		# 4 bars of 4 beats, 990 bytes
+	var_events	Style_SquareDance_Intro1Minor
+Style_SquareDance_Intro1Minor_Events:		# 4 bars of 4 beats, 990 bytes
 	ev_beat
 	ev_note	0, 46, 75, 8, 0, 0
 	ev_note	0, 36, 78, 8, 0, 0
@@ -593,17 +593,17 @@ Style_SquareDance_Intro1B_Events:		# 4 bars of 4 beats, 990 bytes
 	ev_note	0, 37, 63, 8, 0, 0
 	ev_note	2, 71, 78, 19, 0, 1
 	ev_end
-	var_end	Style_SquareDance_Intro1B
+	var_end	Style_SquareDance_Intro1Minor
 
-Style_SquareDance_Ending1A:
-	var_head	Style_SquareDance_Ending1A, 5, 4, 0xff, 0xff
+Style_SquareDance_Intro2Major:
+	var_head	Style_SquareDance_Intro2Major, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	3, 0x30, 0x08, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_SquareDance_Ending1A
-Style_SquareDance_Ending1A_Events:		# 5 bars of 4 beats, 1196 bytes
+	var_events	Style_SquareDance_Intro2Major
+Style_SquareDance_Intro2Major_Events:		# 5 bars of 4 beats, 1196 bytes
 	ev_beat
 	ev_beat
 	ev_beat
@@ -850,10 +850,10 @@ Style_SquareDance_Ending1A_Events:		# 5 bars of 4 beats, 1196 bytes
 	ev_at	49
 	ev_note	3, 74, 85, 18, 0, 1
 	ev_end
-	var_end	Style_SquareDance_Ending1A
+	var_end	Style_SquareDance_Intro2Major
 
-Style_SquareDance_Ending1B:
-	var_head	Style_SquareDance_Ending1B, 5, 4, 0xff, 0xff
+Style_SquareDance_Intro2Minor:
+	var_head	Style_SquareDance_Intro2Minor, 5, 4, 0xff, 0xff
 	ev_cc	0, 7, 124
 	ev_cc	1, 7, 100
 	ev_cc	1, 97, 11
@@ -861,8 +861,8 @@ Style_SquareDance_Ending1B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_SquareDance_Ending1B
-Style_SquareDance_Ending1B_Events:		# 5 bars of 4 beats, 1196 bytes
+	var_events	Style_SquareDance_Intro2Minor
+Style_SquareDance_Intro2Minor_Events:		# 5 bars of 4 beats, 1196 bytes
 	ev_beat
 	ev_beat
 	ev_beat
@@ -1109,7 +1109,7 @@ Style_SquareDance_Ending1B_Events:		# 5 bars of 4 beats, 1196 bytes
 	ev_at	49
 	ev_note	3, 74, 85, 18, 0, 1
 	ev_end
-	var_end	Style_SquareDance_Ending1B
+	var_end	Style_SquareDance_Intro2Minor
 
 Style_SquareDance_Var1:
 	var_head	Style_SquareDance_Var1, 4, 4, 0xff, 0xff
@@ -2807,14 +2807,14 @@ Style_SquareDance_Var4Fill2_Events:		# 1 bars of 4 beats, 287 bytes
 	ev_end
 	var_end	Style_SquareDance_Var4Fill2
 
-Style_SquareDance_Intro2A:
-	var_head	Style_SquareDance_Intro2A, 4, 4, 0xff, 0xff
+Style_SquareDance_Ending1Major:
+	var_head	Style_SquareDance_Ending1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_SquareDance_Intro2A
-Style_SquareDance_Intro2A_Events:		# 4 bars of 4 beats, 998 bytes
+	var_events	Style_SquareDance_Ending1Major
+Style_SquareDance_Ending1Major_Events:		# 4 bars of 4 beats, 998 bytes
 	ev_beat
 	ev_note	0, 46, 76, 8, 0, 0
 	ev_note	0, 36, 86, 8, 0, 0
@@ -3069,16 +3069,16 @@ Style_SquareDance_Intro2A_Events:		# 4 bars of 4 beats, 998 bytes
 	ev_at	8
 	ev_bend	3, 0, 64
 	ev_end
-	var_end	Style_SquareDance_Intro2A
+	var_end	Style_SquareDance_Ending1Major
 
-Style_SquareDance_Intro2B:
-	var_head	Style_SquareDance_Intro2B, 4, 4, 0xff, 0xff
+Style_SquareDance_Ending1Minor:
+	var_head	Style_SquareDance_Ending1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_SquareDance_Intro2B
-Style_SquareDance_Intro2B_Events:		# 4 bars of 4 beats, 998 bytes
+	var_events	Style_SquareDance_Ending1Minor
+Style_SquareDance_Ending1Minor_Events:		# 4 bars of 4 beats, 998 bytes
 	ev_beat
 	ev_note	0, 46, 76, 8, 0, 0
 	ev_note	0, 36, 86, 8, 0, 0
@@ -3333,17 +3333,17 @@ Style_SquareDance_Intro2B_Events:		# 4 bars of 4 beats, 998 bytes
 	ev_at	8
 	ev_bend	3, 0, 64
 	ev_end
-	var_end	Style_SquareDance_Intro2B
+	var_end	Style_SquareDance_Ending1Minor
 
-Style_SquareDance_Ending2A:
-	var_head	Style_SquareDance_Ending2A, 4, 4, 0xff, 0xff
+Style_SquareDance_Ending2Major:
+	var_head	Style_SquareDance_Ending2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	3, 0x30, 0x08, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_SquareDance_Ending2A
-Style_SquareDance_Ending2A_Events:		# 4 bars of 4 beats, 1259 bytes
+	var_events	Style_SquareDance_Ending2Major
+Style_SquareDance_Ending2Major_Events:		# 4 bars of 4 beats, 1259 bytes
 	ev_beat
 	ev_note	0, 57, 81, 8, 0, 0
 	ev_note	0, 46, 75, 8, 0, 0
@@ -3613,10 +3613,10 @@ Style_SquareDance_Ending2A_Events:		# 4 bars of 4 beats, 1259 bytes
 	ev_note	4, 72, 80, 20, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_SquareDance_Ending2A
+	var_end	Style_SquareDance_Ending2Major
 
-Style_SquareDance_Ending2B:
-	var_head	Style_SquareDance_Ending2B, 4, 4, 0xff, 0xff
+Style_SquareDance_Ending2Minor:
+	var_head	Style_SquareDance_Ending2Minor, 4, 4, 0xff, 0xff
 	ev_cc	0, 7, 124
 	ev_cc	1, 7, 100
 	ev_cc	1, 97, 11
@@ -3624,8 +3624,8 @@ Style_SquareDance_Ending2B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_SquareDance_Ending2B
-Style_SquareDance_Ending2B_Events:		# 4 bars of 4 beats, 1259 bytes
+	var_events	Style_SquareDance_Ending2Minor
+Style_SquareDance_Ending2Minor_Events:		# 4 bars of 4 beats, 1259 bytes
 	ev_beat
 	ev_note	0, 57, 81, 8, 0, 0
 	ev_note	0, 46, 75, 8, 0, 0
@@ -3895,4 +3895,4 @@ Style_SquareDance_Ending2B_Events:		# 4 bars of 4 beats, 1259 bytes
 	ev_note	4, 72, 80, 20, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_SquareDance_Ending2B
+	var_end	Style_SquareDance_Ending2Minor
