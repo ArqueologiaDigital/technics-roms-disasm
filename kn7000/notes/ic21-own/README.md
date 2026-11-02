@@ -312,7 +312,8 @@ inferences about moved blocks and a different 893 writer are replaced by what fo
   tails. Programs 893 and 941 have the same one-touch writer and tables; the writer was never used here.
   The source spells them `PM_KN6000_END` + `PM_CONVERT_TAIL`.
 - **The KN6000 records survive.** Free blocks 22 (Swing Orchestra), 24-25 (Modern Samba) and 26-27 (Hip
-  Hop) hold three complete records in the KN6000 layout, typed as `Stale22`, `Stale24`, `Stale26`. Two are
+  Hop) hold three complete records in the KN6000 layout (this bank's; the KN6000's own factory bank
+  `01ctmini.ic18` has none, `custom-data-ic21.md`), typed as `Stale22`, `Stale24`, `Stale26`. Two are
   the originals of slots 13 and 4, whose converted records still say block 22 and blocks 26-27 at
   `+0xA4` while the directory has them at 19 and 20-21. Modern Samba is in no slot. Block 23 is erased.
 - **Residue**, typed as in the factory banks: 46,927 bytes are copies of typed records, 1,625 the

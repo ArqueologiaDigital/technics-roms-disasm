@@ -85,9 +85,29 @@ Evidence per row:
 - The main-CPU path, `AnalogIn_PollCpuAdc` (was `MidiParam_ProcessDeltas`): `AnalogIn_ReadAdcHigh` reads the
   high byte of `ADREG04`/`ADREG15` (0x121/0x123).  `AnalogIn_DebounceChange` compares it with the last accepted
   value: |delta| <= 2 is ignored and resets the counters, 3..6 is accepted on the second consecutive such
-  reading, > 6 only on the fourth (a spike filter); acceptance sets bit 3 of `ADC_AN0_STATUS` /
+  reading, > 6 only on the fourth (a spike filter; see "AnalogIn_DebounceChange, step by step" below);
+  acceptance sets bit 3 of `ADC_AN0_STATUS` /
   `ADC_AN1_STATUS`; the poller then runs the handler and sets bit 7 of `ADC_AN0_OUTPUT+1` / `ADC_AN1_OUTPUT+1`,
   which `PanelInput_QueueCpuAdcChanges` turns into records `{26 or 27, value, 0x7F}`.
+
+**`AnalogIn_DebounceChange`, step by step** (re-read from `v10/maincpu/audio/audio_control_engine.s`
+2026-11-02, because control-panel-protocol.md's table disagrees for 3..6).  The status byte: bits 0-1 a
+counter, bit 2 "pending", bit 3 "accepted".
+
+| abs(delta) | branch                        | effect                                                                                                |
+|------------|-------------------------------|-------------------------------------------------------------------------------------------------------|
+| <= 2       | `AnalogIn_Debounce_TooSmall`  | counter = 0, pending cleared                                                                          |
+| 3..6       | `AnalogIn_Debounce_Medium`    | pending clear: set it (`_SetPending`); pending set: accept (`_Confirmed`). The counter is not touched |
+| > 6        | (fall-through)                | counter == 3: accept (`_Confirmed`); else counter + 1 and pending cleared (`_ClearPending`)           |
+| accept     | `AnalogIn_Debounce_Confirmed` | counter = 0, pending cleared, bit 3 set                                                               |
+
+So a 3..6 change is taken on the second consecutive 3..6 reading.  A > 6 change is taken on the fourth > 6
+reading since the counter was last cleared.  Only a <= 2 reading or an acceptance clears the counter, so a
+3..6 reading in between does not reset it.
+
+Website correction draft (control-panel-protocol.md, the `AnalogIn_DebounceChange` table, row "3-6"):
+
+    | 3-6 | **Two-reading confirm** -- the first such reading sets the pending bit; a second consecutive one accepts the change (sets bit 3, clears bits 0-2). The counter is not changed | Set bit 2, then bit 3 |
 
 [INFERENCE] The id = 24 + AD channel mapping of the CPL frames (AD1 -> 25, AD2 -> 26, AD3 -> 27) is read from the
 three rows above agreeing with the three wired inputs; the panel MCU's mask ROM is not dumped, so the firmware
@@ -275,7 +295,7 @@ the modulation wheel and the MAIN VOLUME slider (encoder IDs 25-27)".  Replace "
 `ADC_AN1_OUTPUT`, queued by `PanelInput_QueueCpuAdcChanges`)".  Rows 22-27 of the action-list table become:
 
 | index | segment | buttons (mask)                         | event id, arg  | handler                       |
-|------:|:--------|:---------------------------------------|:---------------|:------------------------------|
+|-------|---------|----------------------------------------|----------------|-------------------------------|
 | 22    | --      | pitch bend wheel (CPL `0xD1`) (`0xFF`) | `0xB1`, `0x00` | `PanelAction_PitchBend`       |
 | 23    | --      | modulation wheel (CPL `0xD2`) (`0x7F`) | `0xB2`, `0x00` | `PanelAction_Modulation`      |
 | 24    | --      | MAIN VOLUME (CPL `0xD3`) (`0x7F`)      | `0xB0`, `0x00` | `PanelEvent_Post`             |

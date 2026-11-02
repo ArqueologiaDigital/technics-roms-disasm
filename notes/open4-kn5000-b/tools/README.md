@@ -82,7 +82,7 @@ Writes `act01_ftdemo01.png` .. `act27_ftdemo25.png` (one per ACT; with `--all` a
 four ftdemo screens no ACT shows) and `index.txt` into OUTDIR, default `rebuilt_ROMs/ftdemo_slides/` (git-ignored).
 It reads only tracked files: the NAKA GUI records (through `naka_gui_model.py`), `Feature_Demo_XML`, the system
 palette `Palette_8bit_RGBA.bin`, the font sheets `table_data/images/fonts/`, the `FTBMP0n.png` and `Wallpaper_1.png`
-pictures, and the captions from the tracked v10 ROM image.  Run on 2026-10-31: 31 PNGs in about 6 s.
+pictures, and the captions from the tracked v10 ROM image.  Run on 2026-10-31 with `--all`: 31 PNGs (the 27 ACTs and the 4 screens; 27 without `--all`) in about 6 s.
 
 **What the firmware does, and the tool repeats** (each traced in v10):
 
@@ -179,7 +179,7 @@ disc and the firmware checks none; the SHA-1 table is the tool's own identificat
 
 | image (read-only)                                                                                    | result                                                                                                                                                                                                                                                                                                              |
 |------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `~/compartilhado/kn5000_project/kn5000_v10_disk.img` (SHA-1 a892bedc...)                             | type 7; TECHNICS.PRP / DUMMY.1 / DUMMY.2 / HKMSPRG.SLD at sectors 33-36; stream 1 2,097,152 B from 965,534 compressed = program v10, version byte 0x0A; stream 2 at 0xF03A9, 93,203 B = sub-CPU v1.42 compressed byte for byte, decompresses to sub-CPU v1.42; HKMSPRG.SLD (1,058,748 B) is exactly the two streams |
+| `~/compartilhado/kn5000_project/kn5000_v10_disk.img` (SHA-1 a892bedc...)                             | type 7; TECHNICS.PRP / DUMMY.1 / DUMMY.2 / HKMSPRG.SLD at sectors 33-36; stream 1 2,097,152 B from 965,534 compressed = program v10, version byte 0x0A; stream 2 at disc-image offset 0xF03A9 (file offset 0xEBBA9 = 965,545 in HKMSPRG.SLD, which starts at sector 36 = image offset 0x4800), 93,203 B = sub-CPU v1.42 compressed byte for byte, decompresses to sub-CPU v1.42; HKMSPRG.SLD (1,058,748 B) is exactly the two streams |
 | synthetic type-6 disc (`probes/make_synthetic_type6.py`)                                             | type 6; 1024 sectors from 0x24 = HD-AE5000 v2.06i, XAPR at +0                                                                                                                                                                                                                                                       |
 | `~/compartilhado/kn5000_project/test_floppy.img`, `technics-anotherworld/kn5000cnv/build/aw5000.img` | FAT listing; type 0xFF (not an update disc)                                                                                                                                                                                                                                                                         |
 | the 14 softlist floppies `floppy/build/kn5000/*.img` (built in main)                                 | all type 0xFF                                                                                                                                                                                                                                                                                                       |
@@ -204,8 +204,8 @@ candidate for the naming lane.
 > logical sector 36, and for a type-7 disc both SLIDE4K streams, the firmware version byte at 0xFFFFE8 and the
 > release each image matches (by SHA-1).  `--extract DIR` writes the files and the decompressed images.
 >
-> On the v10 disc it reports: type 7, program v10 (version byte 0x0A), and a second stream at file offset
-> 0xF03A9 that is the sub-CPU v1.42 update image byte for byte; `HKMSPRG.SLD` is exactly the two streams
+> On the v10 disc it reports: type 7, program v10 (version byte 0x0A), and a second stream at disc-image
+> offset 0xF03A9 (offset 0xEBBA9 in `HKMSPRG.SLD`, which starts at sector 36) that is the sub-CPU v1.42 update image byte for byte; `HKMSPRG.SLD` is exactly the two streams
 > (965,545 + 93,203 = 1,058,748 bytes).
 
 ---
@@ -251,7 +251,9 @@ starting was not determined (an AMD part ignores or rejects commands other than 
 window: datasheet, inference).
 
 **Callers.** Chip erase: `Flash_WaitUntilReady` for update types 5 (IC19) and 6 (HD-AE5000), the boot-time
-verify path (`HDAE5000_TableData_Write_Skip3`).  Sector erase: the type-7 handler, `Flash_EraseSectorAndWrite`
+verify path (`HDAE5000_TableData_Write_Skip3`).  The 32-bit Table Data pair's chip erase: update types 1, 3, 7 and
+8 each call `Flash_BurnWithProgress` (0xEF4702, `v10/maincpu/boot/system_handlers.s`), whose first call is
+`TableDataFlash_ChipErase` (added 2026-11-02: the draft below claimed chip erases for types 1/3/8 without this).  Sector erase: the type-7 handler, `Flash_EraseSectorAndWrite`
 (splash-screen save `Flash_SaveSplashScreen`), `FlashWrite` (custom-data saves from the file, tone-generator
 and MIDI code).
 

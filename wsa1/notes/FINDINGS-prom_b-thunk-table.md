@@ -11,11 +11,11 @@ on every build.
 4,102 four-byte slots. Each slot is exactly one of three things, decided by
 bytes alone:
 
-| slot bytes | meaning | count |
-|---|---|---:|
-| `1B lo mid hi` | `jp nnn` — a thunk naming a routine entry point | 1,976 |
-| `lo mid hi 00` | a 24-bit address in a 32-bit little-endian slot | 26 |
-| `0E` / `00` fill | unused slot; `0E` is the one-byte `ret` | 2,100 |
+| slot bytes       | meaning                                         | count |
+|------------------|-------------------------------------------------|------:|
+| `1B lo mid hi`   | `jp nnn` — a thunk naming a routine entry point | 1,976 |
+| `lo mid hi 00`   | a 24-bit address in a 32-bit little-endian slot |    26 |
+| `0E` / `00` fill | unused slot; `0E` is the one-byte `ret`         | 2,100 |
 
 `0x0E = RET` is cited, not assumed:
 `mame/src/devices/cpu/tlcs900/dasm900.cpp:1267` puts `M_RET` at opcode `0x0E`.
@@ -43,7 +43,8 @@ Spread over the 1 MiB image, by 64 KB bank:
 
 (No target in bank `0xF2`. ⚠ This used to add "that bank is display-list data";
 corrected 2026-08-24 — the census measures thunk TARGETS, and bank `0xF2` also
-holds **six of the ten character generators** the SWI7 text services load as
+holds **seven of the twelve character generators** (0xF203B0-0xF25590; this said "six of
+the ten" before FINDINGS-fonts.md counted twelve) the SWI7 text services load as
 data by an immediate address, which no thunk census can see. See
 `FINDINGS-ui-display-list.md` and `FINDINGS-fonts.md`.)
 
@@ -75,7 +76,7 @@ operand is a 4-aligned address inside the table. Because the scan is not at
 instruction boundaries, some hits are bytes inside another instruction or inside
 data. The numbers rank slots; they are not exact call counts.
 
-| slot                                   | x   | target            | what it is                                                                                                                                                                                                            |
+| slot                                   |   x | target            | what it is                                                                                                                                                                                                            |
 |----------------------------------------|----:|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `T_DisplayList_Run`                    | 392 | `0xF31A09`        | **`DisplayList_Run`** — the UI engine. Converted.                                                                                                                                                                     |
 | `T_DisplayListB_Run`                   | 269 | `0xF31AF0`        | `DisplayListB_Run`, the second interpreter. Converted.                                                                                                                                                                |
@@ -85,15 +86,15 @@ data. The numbers rank slots; they are not exact call counts.
 | `T_Dispatch_Code80`                    | 109 | `0xF5B9B8`        | **`Dispatch_Code80`** — indexes a 48-entry table of routine pointers with a 16-bit selector ≥ 0x80. Converted.                                                                                                        |
 | `T_DisplayListB_RunOne_Stack`          | 107 | `0xF3183D`        | `DisplayListB_RunOne_Stack`. Converted.                                                                                                                                                                               |
 | `T_DisplayListB_Run_Stack`             | 104 | `0xF31814`        | `DisplayListB_Run_Stack`. Converted.                                                                                                                                                                                  |
-| `T_Kernel_SemaSignal`                  | 98  | prom_a `0xF859AE` | `A` selects a 4-byte descriptor at `0x0338 + A*4` and a saturating byte counter at `0x035B + A`, under `ei 6`; an empty descriptor is self-referential. A kernel object operation — **which** one is not established. |
-| `T_Kernel_SemaSignal_StackArg`         | 98  | prom_a `0xF859AB` | the same routine entered 3 bytes earlier, which first does `ld A,(XSP+4)` — the stack-argument form                                                                                                                   |
-| `T_Blink_Stop`                         | 85  | `0xF0E82B`        | not identified                                                                                                                                                                                                        |
-| `T_EditValue_StepBitField`             | 77  | `0xF550A6`        | reads a bit-field through an 8-byte descriptor and range-checks it. Converted.                                                                                                                                        |
-| `T_F431B4`                             | 57  | `0xF7D006`        | the third slot of an eight-entry `jrl` long-branch veneer table at `0xF7D000`, into prom_a `0xF81C15`. Not converted.                                                                                                 |
-| `T_F431B0`                             | 53  | `0xF7D000`        | the first slot of that same veneer table, into prom_a `0xF81ACB`                                                                                                                                                      |
-| `T_IndexedTable_GetPtr`                | 45  | `0xF55321`        | **`IndexedTable_GetPtr`** — pointer *n* of the `0x60F018` table. Converted.                                                                                                                                           |
-| `T_Dispatch_Code80_Bracketed`          | 39  | `0xF5B8B6`        | **`Dispatch_Code80_Bracketed`** — the same 48-entry dispatch, with the call bracketed by `swi 7` functions `0x0C`/`0x10`. Converted.                                                                                  |
-| `T_DisplayList_Run_Stack`              | 85  | `0xF31800`        | `DisplayList_Run_Stack`. Converted.                                                                                                                                                                                   |
+| `T_Kernel_SemaSignal`                  |  98 | prom_a `0xF859AE` | `A` selects a 4-byte descriptor at `0x0338 + A*4` and a saturating byte counter at `0x035B + A`, under `ei 6`; an empty descriptor is self-referential. A kernel object operation — **which** one is not established. |
+| `T_Kernel_SemaSignal_StackArg`         |  98 | prom_a `0xF859AB` | the same routine entered 3 bytes earlier, which first does `ld A,(XSP+4)` — the stack-argument form                                                                                                                   |
+| `T_Blink_Stop`                         |  85 | `0xF0E82B`        | not identified                                                                                                                                                                                                        |
+| `T_EditValue_StepBitField`             |  77 | `0xF550A6`        | reads a bit-field through an 8-byte descriptor and range-checks it. Converted.                                                                                                                                        |
+| `T_F431B4`                             |  57 | `0xF7D006`        | the third slot of an eight-entry `jrl` long-branch veneer table at `0xF7D000`, into prom_a `0xF81C15`. Not converted.                                                                                                 |
+| `T_F431B0`                             |  53 | `0xF7D000`        | the first slot of that same veneer table, into prom_a `0xF81ACB`                                                                                                                                                      |
+| `T_IndexedTable_GetPtr`                |  45 | `0xF55321`        | **`IndexedTable_GetPtr`** — pointer *n* of the `0x60F018` table. Converted.                                                                                                                                           |
+| `T_Dispatch_Code80_Bracketed`          |  39 | `0xF5B8B6`        | **`Dispatch_Code80_Bracketed`** — the same 48-entry dispatch, with the call bracketed by `swi 7` functions `0x0C`/`0x10`. Converted.                                                                                  |
+| `T_DisplayList_Run_Stack`              |  85 | `0xF31800`        | `DisplayList_Run_Stack`. Converted.                                                                                                                                                                                   |
 
 ### One slot worth naming separately
 
@@ -159,13 +160,13 @@ lane earned on the target. It makes the directory readable; it is not 277 new fa
 ★★ **And the census that came with it is the more useful result: 1,672 of the 2,002 slots (83.5 %)
 point at something nobody has named.**
 
-| where the slot points | count |
-|---|---:|
-| a `sub_XXXXXX` routine | 1,438 |
+| where the slot points                               |   count |
+|-----------------------------------------------------|--------:|
+| a `sub_XXXXXX` routine                              |   1,438 |
 | an address the `.s` disassembles but never labelled | **115** |
-| into a span still `.incbin` | 119 |
-| a named target (these are the 277 renamed) | 277 |
-| alias pairs and other refusals | 53 |
+| into a span still `.incbin`                         |     119 |
+| a named target (these are the 277 renamed)          |     277 |
+| alias pairs and other refusals                      |      53 |
 
 So the directory is not 2,002 pieces of missing documentation — it is a faithful **index of 1,672
 pieces of missing documentation that live elsewhere**. The **115** are the actionable ones: entry

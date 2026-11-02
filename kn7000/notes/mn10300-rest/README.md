@@ -213,7 +213,8 @@ stepping, copies into RAM, the initialised RAM image (`opaque_groups.py`, `opaqu
 0x486D06DC, 942 0x486D1700, 935 0x486BCEFC, 893 0x486BB6A4, KN6000 0x4C326F54, KN6500 0x4C2B276C, KN2400
 0x485288D8, HD-SX3 0x978AFD98; PfDoubleToDecimal reads base +- 8 x the exponent), the EUC-JP strings of the
 language tables (AcLanguageTextProc `cmp 6, d0` / `mov (d0, a3), a0`), the siblings' parameter-id tries
-(`ResourceIdTrie`, the KN7000's design: KN6000 func_4C02CA6A, KN2400 func_5014A95C), the KN7000 builds' own
+(`ResourceIdTrie`, the KN7000's design, read by `ResourceIdFind`: KN6000 0x4C02CA6A, KN2400 0x5014A95C; these
+were `func_4C02CA6A` / `func_5014A95C` when this lane wrote it), the KN7000 builds' own
 "Technics Pads" copy, the KN2400's alphabetical sound lists (both strap sets).
 
 Opaque bytes per tree (main -> this branch, the table under "Measurements"): 941 45,394 -> 33,741, 942 43,654 ->
@@ -266,7 +267,8 @@ than the opaque bytes this lane typed (941: 11,653).
 
 **Bytes typed before and not after** (`rest_stats.py`'s "typed in the off run only"): 0 in the four KN7000
 builds and the HD-SX3. KN6000 962, KN2400 894 (KN6500 the same shape): the over-long struct arrays
-`func_4C02CA6A_Records` (244 x 8) / `func_5014A95C_Records` (229 x 8) that ran from the parameter-id trie's
+`func_4C02CA6A_Records` (244 x 8) / `func_5014A95C_Records` (229 x 8), named after the reader now called
+`ResourceIdFind` (the generated record labels keep the old stem, e.g. `func_4C02CA6A_Records_p0_86`), that ran from the parameter-id trie's
 root over what follows it (the root has 16 entries; ResourceIdFind never reads past them), one reader table at
 their end, and the KN2400's `func_50144C7D_Selected_1`, a "record" inside a leaf. They are what an over-long
 item held, as in lane mn10300-typer.

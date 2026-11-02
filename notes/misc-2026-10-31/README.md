@@ -102,9 +102,10 @@ handlers (`MidiCh_IterateVolume_Reverse`, `MidiCh_IterateVolume_Forward`, `MidiC
 `MIDI_CC_*` labels after it is tracker item kn5000-3c7 (not this lane's).  The EXP / AFT signal names are
 the register lane's reading of the service manual; this lane did not re-check the schematic.
 
-Tracker item kn5000-3ei (the website's verbatim figure) is closed with a comment (commit "issues: close
-kn5000-3ei").  The repo-root CLAUDE.md Architecture table still quotes v6 17,159 B and v5 19,978 B (2026-10-29);
-this lane leaves CLAUDE.md to the integrator.
+Tracker item kn5000-3ei (the website's verbatim figure): this lane commented on it and left it OPEN for the docs
+lane, as the Issue Closure Requirements ask, until the figures were published; it was closed after technics-docs
+b0505a1 published them.  (Corrected 2026-11-02: this paragraph used to say a commit here closed it.)  The
+repo-root CLAUDE.md Architecture table's v6 / v5 figures were corrected in 50ce7e5f2 (13,756 B / 15,910 B).
 
 ## The KN5000 tone generator's crystal
 

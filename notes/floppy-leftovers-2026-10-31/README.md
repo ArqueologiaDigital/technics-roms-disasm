@@ -94,7 +94,9 @@ unsized).
 > WSA1R moves files in kilobytes: a combination bank's last kilobyte repeats 0x100 bytes of the chunk before
 > (combination 112), an SMF's last window repeats the window before, and a song file ends with free blocks of
 > its block store. The KN6000 and KN7000 song cells keep, after a track's end, events of an earlier version of
-> the song, often in the KN5000's own event order: the factory songs were converted from KN5000 files. A note's
+> the song. On the KN6000 these are often in the KN5000's own event order (12,046 of 32,861 stale bytes; on the
+> KN7000 only 222 of 11,122), which suggests, as an inference, that the factory songs were converted from
+> KN5000 files. A note's
 > last byte is its duration in beats (0..255), so a few held notes have it above 127. The KN6000 sound file's
 > last word is the sound records' checksum as RAM held it; the instrument recomputes it after a load, so a stale
 > value does no harm. The WSA1R disks' PC boot sector is a small "not a bootable disk" stub.
