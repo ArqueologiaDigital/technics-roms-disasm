@@ -19,14 +19,14 @@ Style_Tarantella:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_Tarantella
 
-Style_Tarantella_Intro1A:
-	var_head	Style_Tarantella_Intro1A, 2, 4, 0xff, 0xff
+Style_Tarantella_Intro1Major:
+	var_head	Style_Tarantella_Intro1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Tarantella_Intro1A
-Style_Tarantella_Intro1A_Events:		# 2 bars of 4 beats, 919 bytes
+	var_events	Style_Tarantella_Intro1Major
+Style_Tarantella_Intro1Major_Events:		# 2 bars of 4 beats, 919 bytes
 	ev_beat
 	ev_note	4, 89, 97, 15, 0, 1
 	ev_at	1
@@ -261,16 +261,16 @@ Style_Tarantella_Intro1A_Events:		# 2 bars of 4 beats, 919 bytes
 	ev_at	67
 	ev_note	0, 54, 88, 8, 0, 0
 	ev_end
-	var_end	Style_Tarantella_Intro1A
+	var_end	Style_Tarantella_Intro1Major
 
-Style_Tarantella_Intro1B:
-	var_head	Style_Tarantella_Intro1B, 2, 4, 0xff, 0xff
+Style_Tarantella_Intro1Minor:
+	var_head	Style_Tarantella_Intro1Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Tarantella_Intro1B
-Style_Tarantella_Intro1B_Events:		# 2 bars of 4 beats, 919 bytes
+	var_events	Style_Tarantella_Intro1Minor
+Style_Tarantella_Intro1Minor_Events:		# 2 bars of 4 beats, 919 bytes
 	ev_beat
 	ev_note	4, 89, 97, 15, 0, 1
 	ev_at	1
@@ -505,17 +505,17 @@ Style_Tarantella_Intro1B_Events:		# 2 bars of 4 beats, 919 bytes
 	ev_at	67
 	ev_note	0, 54, 88, 8, 0, 0
 	ev_end
-	var_end	Style_Tarantella_Intro1B
+	var_end	Style_Tarantella_Intro1Minor
 
-Style_Tarantella_Ending1A:
-	var_head	Style_Tarantella_Ending1A, 5, 4, 0xff, 0xff
+Style_Tarantella_Intro2Major:
+	var_head	Style_Tarantella_Intro2Major, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	3, 0x3b, 0x50, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Tarantella_Ending1A
-Style_Tarantella_Ending1A_Events:		# 5 bars of 4 beats, 2087 bytes
+	var_events	Style_Tarantella_Intro2Major
+Style_Tarantella_Intro2Major_Events:		# 5 bars of 4 beats, 2087 bytes
 	ev_beat
 	ev_at	66
 	ev_note	3, 67, 96, 11, 0, 1
@@ -993,18 +993,18 @@ Style_Tarantella_Ending1A_Events:		# 5 bars of 4 beats, 2087 bytes
 	ev_note	0, 19, 59, 8, 0, 0
 	ev_note	1, 31, 67, 13, 0, 1
 	ev_end
-	var_end	Style_Tarantella_Ending1A
+	var_end	Style_Tarantella_Intro2Major
 
-Style_Tarantella_Ending1B:
-	var_head	Style_Tarantella_Ending1B, 5, 4, 0xff, 0xff
+Style_Tarantella_Intro2Minor:
+	var_head	Style_Tarantella_Intro2Minor, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	3, 0x3b, 0x50, 0x20
 	ev_cc	4, 7, 115
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Tarantella_Ending1B
-Style_Tarantella_Ending1B_Events:		# 5 bars of 4 beats, 2087 bytes
+	var_events	Style_Tarantella_Intro2Minor
+Style_Tarantella_Intro2Minor_Events:		# 5 bars of 4 beats, 2087 bytes
 	ev_beat
 	ev_at	66
 	ev_note	3, 63, 82, 7, 0, 1
@@ -1482,7 +1482,7 @@ Style_Tarantella_Ending1B_Events:		# 5 bars of 4 beats, 2087 bytes
 	ev_note	0, 19, 59, 8, 0, 0
 	ev_note	1, 31, 67, 13, 0, 1
 	ev_end
-	var_end	Style_Tarantella_Ending1B
+	var_end	Style_Tarantella_Intro2Minor
 
 Style_Tarantella_Var1:
 	var_head	Style_Tarantella_Var1, 4, 4, 0xff, 0xff
@@ -3516,14 +3516,14 @@ Style_Tarantella_Var4Fill2_Events:		# 1 bars of 4 beats, 466 bytes
 	ev_end
 	var_end	Style_Tarantella_Var4Fill2
 
-Style_Tarantella_Intro2A:
-	var_head	Style_Tarantella_Intro2A, 2, 4, 0xff, 0xff
+Style_Tarantella_Ending1Major:
+	var_head	Style_Tarantella_Ending1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Tarantella_Intro2A
-Style_Tarantella_Intro2A_Events:		# 2 bars of 4 beats, 687 bytes
+	var_events	Style_Tarantella_Ending1Major
+Style_Tarantella_Ending1Major_Events:		# 2 bars of 4 beats, 687 bytes
 	ev_beat
 	ev_note	0, 36, 114, 8, 0, 0
 	ev_note	0, 51, 114, 8, 0, 0
@@ -3691,16 +3691,16 @@ Style_Tarantella_Intro2A_Events:		# 2 bars of 4 beats, 687 bytes
 	ev_note	2, 55, 100, 38, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_Tarantella_Intro2A
+	var_end	Style_Tarantella_Ending1Major
 
-Style_Tarantella_Intro2B:
-	var_head	Style_Tarantella_Intro2B, 2, 4, 0xff, 0xff
+Style_Tarantella_Ending1Minor:
+	var_head	Style_Tarantella_Ending1Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Tarantella_Intro2B
-Style_Tarantella_Intro2B_Events:		# 2 bars of 4 beats, 687 bytes
+	var_events	Style_Tarantella_Ending1Minor
+Style_Tarantella_Ending1Minor_Events:		# 2 bars of 4 beats, 687 bytes
 	ev_beat
 	ev_note	0, 36, 114, 8, 0, 0
 	ev_note	0, 51, 114, 8, 0, 0
@@ -3868,16 +3868,16 @@ Style_Tarantella_Intro2B_Events:		# 2 bars of 4 beats, 687 bytes
 	ev_note	2, 55, 100, 38, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_Tarantella_Intro2B
+	var_end	Style_Tarantella_Ending1Minor
 
-Style_Tarantella_Ending2A:
-	var_head	Style_Tarantella_Ending2A, 4, 4, 0xff, 0xff
+Style_Tarantella_Ending2Major:
+	var_head	Style_Tarantella_Ending2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Tarantella_Ending2A
-Style_Tarantella_Ending2A_Events:		# 4 bars of 4 beats, 1853 bytes
+	var_events	Style_Tarantella_Ending2Major
+Style_Tarantella_Ending2Major_Events:		# 4 bars of 4 beats, 1853 bytes
 	ev_beat
 	ev_note	0, 55, 114, 8, 0, 0
 	ev_note	0, 19, 98, 8, 0, 0
@@ -4326,17 +4326,17 @@ Style_Tarantella_Ending2A_Events:		# 4 bars of 4 beats, 1853 bytes
 	ev_beat
 	ev_note	0, 19, 102, 8, 0, 0
 	ev_end
-	var_end	Style_Tarantella_Ending2A
+	var_end	Style_Tarantella_Ending2Major
 
-Style_Tarantella_Ending2B:
-	var_head	Style_Tarantella_Ending2B, 4, 4, 0xff, 0xff
+Style_Tarantella_Ending2Minor:
+	var_head	Style_Tarantella_Ending2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	4, 7, 115
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Tarantella_Ending2B
-Style_Tarantella_Ending2B_Events:		# 4 bars of 4 beats, 1853 bytes
+	var_events	Style_Tarantella_Ending2Minor
+Style_Tarantella_Ending2Minor_Events:		# 4 bars of 4 beats, 1853 bytes
 	ev_beat
 	ev_note	0, 55, 114, 8, 0, 0
 	ev_note	0, 19, 98, 8, 0, 0
@@ -4785,4 +4785,4 @@ Style_Tarantella_Ending2B_Events:		# 4 bars of 4 beats, 1853 bytes
 	ev_beat
 	ev_note	0, 19, 102, 8, 0, 0
 	ev_end
-	var_end	Style_Tarantella_Ending2B
+	var_end	Style_Tarantella_Ending2Minor

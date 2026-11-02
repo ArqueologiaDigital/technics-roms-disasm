@@ -19,8 +19,8 @@ Style_Country2Step:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_Country2Step
 
-Style_Country2Step_Intro1A:
-	var_head	Style_Country2Step_Intro1A, 2, 4, 0xff, 0xff
+Style_Country2Step_Intro1Major:
+	var_head	Style_Country2Step_Intro1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 30
 	ev_cc	3, 93, 18
@@ -31,8 +31,8 @@ Style_Country2Step_Intro1A:
 	ev_cc	5, 10, 64
 	ev_pc	5, 0x00, 0x00, 0x20
 	ev_cc	6, 91, 30
-	var_events	Style_Country2Step_Intro1A
-Style_Country2Step_Intro1A_Events:		# 2 bars of 4 beats, 859 bytes
+	var_events	Style_Country2Step_Intro1Major
+Style_Country2Step_Intro1Major_Events:		# 2 bars of 4 beats, 859 bytes
 	ev_beat
 	ev_note	0, 36, 105, 52, 0, 0
 	ev_note	1, 36, 100, 99, 0, 1
@@ -258,10 +258,10 @@ Style_Country2Step_Intro1A_Events:		# 2 bars of 4 beats, 859 bytes
 	ev_at	16
 	ev_bend	4, 0, 64
 	ev_end
-	var_end	Style_Country2Step_Intro1A
+	var_end	Style_Country2Step_Intro1Major
 
-Style_Country2Step_Intro1B:
-	var_head	Style_Country2Step_Intro1B, 2, 4, 0xff, 0xff
+Style_Country2Step_Intro1Minor:
+	var_head	Style_Country2Step_Intro1Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 91, 30
 	ev_cc	3, 93, 18
@@ -272,8 +272,8 @@ Style_Country2Step_Intro1B:
 	ev_cc	5, 10, 64
 	ev_pc	5, 0x00, 0x00, 0x20
 	ev_cc	6, 91, 30
-	var_events	Style_Country2Step_Intro1B
-Style_Country2Step_Intro1B_Events:		# 2 bars of 4 beats, 857 bytes
+	var_events	Style_Country2Step_Intro1Minor
+Style_Country2Step_Intro1Minor_Events:		# 2 bars of 4 beats, 857 bytes
 	ev_beat
 	ev_note	0, 36, 105, 52, 0, 0
 	ev_note	1, 36, 100, 99, 0, 1
@@ -502,10 +502,10 @@ Style_Country2Step_Intro1B_Events:		# 2 bars of 4 beats, 857 bytes
 	ev_note	4, 65, 90, 72, 0, 1
 	ev_note	4, 74, 96, 76, 0, 1
 	ev_end
-	var_end	Style_Country2Step_Intro1B
+	var_end	Style_Country2Step_Intro1Minor
 
-Style_Country2Step_Ending1A:
-	var_head	Style_Country2Step_Ending1A, 9, 4, 0xff, 0xff
+Style_Country2Step_Intro2Major:
+	var_head	Style_Country2Step_Intro2Major, 9, 4, 0xff, 0xff
 	ev_cc	1, 7, 102
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 92
@@ -516,8 +516,8 @@ Style_Country2Step_Ending1A:
 	ev_cc	4, 10, 64
 	ev_cc	4, 93, 26
 	ev_cc	6, 91, 30
-	var_events	Style_Country2Step_Ending1A
-Style_Country2Step_Ending1A_Events:		# 9 bars of 4 beats, 3415 bytes
+	var_events	Style_Country2Step_Intro2Major
+Style_Country2Step_Intro2Major_Events:		# 9 bars of 4 beats, 3415 bytes
 	ev_beat
 	ev_beat
 	ev_beat
@@ -1369,10 +1369,10 @@ Style_Country2Step_Ending1A_Events:		# 9 bars of 4 beats, 3415 bytes
 	ev_note	2, 47, 67, 23, 0, 1
 	ev_note	3, 47, 113, 14, 0, 1
 	ev_end
-	var_end	Style_Country2Step_Ending1A
+	var_end	Style_Country2Step_Intro2Major
 
-Style_Country2Step_Ending1B:
-	var_head	Style_Country2Step_Ending1B, 9, 4, 0xff, 0xff
+Style_Country2Step_Intro2Minor:
+	var_head	Style_Country2Step_Intro2Minor, 9, 4, 0xff, 0xff
 	ev_cc	1, 7, 102
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 92
@@ -1383,8 +1383,8 @@ Style_Country2Step_Ending1B:
 	ev_cc	4, 10, 64
 	ev_cc	4, 93, 26
 	ev_cc	6, 91, 30
-	var_events	Style_Country2Step_Ending1B
-Style_Country2Step_Ending1B_Events:		# 9 bars of 4 beats, 3342 bytes
+	var_events	Style_Country2Step_Intro2Minor
+Style_Country2Step_Intro2Minor_Events:		# 9 bars of 4 beats, 3342 bytes
 	ev_beat
 	ev_beat
 	ev_beat
@@ -2215,7 +2215,7 @@ Style_Country2Step_Ending1B_Events:		# 9 bars of 4 beats, 3342 bytes
 	ev_note	2, 59, 91, 17, 0, 1
 	ev_note	3, 47, 113, 14, 0, 1
 	ev_end
-	var_end	Style_Country2Step_Ending1B
+	var_end	Style_Country2Step_Intro2Minor
 
 Style_Country2Step_Var1:
 	var_head	Style_Country2Step_Var1, 4, 4, 0xff, 0xff
@@ -4103,8 +4103,8 @@ Style_Country2Step_Var4Fill2_Events:		# 1 bars of 4 beats, 322 bytes
 	ev_end
 	var_end	Style_Country2Step_Var4Fill2
 
-Style_Country2Step_Intro2A:
-	var_head	Style_Country2Step_Intro2A, 4, 4, 0xff, 0xff
+Style_Country2Step_Ending1Major:
+	var_head	Style_Country2Step_Ending1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 91, 26
 	ev_cc	3, 93, 38
@@ -4117,8 +4117,8 @@ Style_Country2Step_Intro2A:
 	ev_cc	5, 91, 41
 	ev_pc	5, 0x00, 0x00, 0x20
 	ev_cc	6, 91, 30
-	var_events	Style_Country2Step_Intro2A
-Style_Country2Step_Intro2A_Events:		# 4 bars of 4 beats, 1753 bytes
+	var_events	Style_Country2Step_Ending1Major
+Style_Country2Step_Ending1Major_Events:		# 4 bars of 4 beats, 1753 bytes
 	ev_beat
 	ev_note	0, 57, 109, 9, 0, 0
 	ev_note	0, 18, 84, 8, 0, 0
@@ -4567,10 +4567,10 @@ Style_Country2Step_Intro2A_Events:		# 4 bars of 4 beats, 1753 bytes
 	ev_at	3
 	ev_note	2, 36, 120, 54, 0, 1
 	ev_end
-	var_end	Style_Country2Step_Intro2A
+	var_end	Style_Country2Step_Ending1Major
 
-Style_Country2Step_Intro2B:
-	var_head	Style_Country2Step_Intro2B, 4, 4, 0xff, 0xff
+Style_Country2Step_Ending1Minor:
+	var_head	Style_Country2Step_Ending1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 91, 26
 	ev_cc	3, 93, 38
@@ -4583,8 +4583,8 @@ Style_Country2Step_Intro2B:
 	ev_cc	5, 91, 41
 	ev_pc	5, 0x00, 0x00, 0x20
 	ev_cc	6, 91, 30
-	var_events	Style_Country2Step_Intro2B
-Style_Country2Step_Intro2B_Events:		# 4 bars of 4 beats, 1678 bytes
+	var_events	Style_Country2Step_Ending1Minor
+Style_Country2Step_Ending1Minor_Events:		# 4 bars of 4 beats, 1678 bytes
 	ev_beat
 	ev_note	0, 57, 109, 9, 0, 0
 	ev_note	0, 18, 84, 8, 0, 0
@@ -5012,10 +5012,10 @@ Style_Country2Step_Intro2B_Events:		# 4 bars of 4 beats, 1678 bytes
 	ev_note	1, 24, 121, 68, 0, 1
 	ev_note	2, 36, 127, 61, 0, 1
 	ev_end
-	var_end	Style_Country2Step_Intro2B
+	var_end	Style_Country2Step_Ending1Minor
 
-Style_Country2Step_Ending2A:
-	var_head	Style_Country2Step_Ending2A, 8, 4, 0xff, 0xff
+Style_Country2Step_Ending2Major:
+	var_head	Style_Country2Step_Ending2Major, 8, 4, 0xff, 0xff
 	ev_cc	1, 7, 102
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 92
@@ -5028,8 +5028,8 @@ Style_Country2Step_Ending2A:
 	ev_cc	4, 92, 29
 	ev_cc	5, 91, 41
 	ev_cc	6, 91, 30
-	var_events	Style_Country2Step_Ending2A
-Style_Country2Step_Ending2A_Events:		# 8 bars of 4 beats, 3483 bytes
+	var_events	Style_Country2Step_Ending2Major
+Style_Country2Step_Ending2Major_Events:		# 8 bars of 4 beats, 3483 bytes
 	ev_beat
 	ev_note	0, 36, 116, 113, 0, 0
 	ev_note	0, 49, 119, 14, 0, 0
@@ -6051,10 +6051,10 @@ Style_Country2Step_Ending2A_Events:		# 8 bars of 4 beats, 3483 bytes
 	ev_at	7
 	ev_note	3, 48, 127, 31, 0, 1
 	ev_end
-	var_end	Style_Country2Step_Ending2A
+	var_end	Style_Country2Step_Ending2Major
 
-Style_Country2Step_Ending2B:
-	var_head	Style_Country2Step_Ending2B, 8, 4, 0xff, 0xff
+Style_Country2Step_Ending2Minor:
+	var_head	Style_Country2Step_Ending2Minor, 8, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 92
 	ev_cc	3, 91, 26
@@ -6067,8 +6067,8 @@ Style_Country2Step_Ending2B:
 	ev_cc	4, 92, 29
 	ev_cc	5, 91, 41
 	ev_cc	6, 91, 30
-	var_events	Style_Country2Step_Ending2B
-Style_Country2Step_Ending2B_Events:		# 8 bars of 4 beats, 3881 bytes
+	var_events	Style_Country2Step_Ending2Minor
+Style_Country2Step_Ending2Minor_Events:		# 8 bars of 4 beats, 3881 bytes
 	ev_beat
 	ev_note	0, 36, 116, 113, 0, 0
 	ev_note	0, 49, 119, 14, 0, 0
@@ -7111,4 +7111,4 @@ Style_Country2Step_Ending2B_Events:		# 8 bars of 4 beats, 3881 bytes
 	ev_note	2, 36, 116, 52, 0, 1
 	ev_note	3, 48, 127, 40, 0, 1
 	ev_end
-	var_end	Style_Country2Step_Ending2B
+	var_end	Style_Country2Step_Ending2Minor

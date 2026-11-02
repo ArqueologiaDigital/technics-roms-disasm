@@ -42,7 +42,7 @@ The reset code reads its own layout from the image, and the generator checks eve
 | `0x0400-0x0593` | `0x50010000` (run) | the initialised-data image, copied there by Reset                       |
 | `0x0594-0x0AFF` | `0x40000594`       | Reset and the NMI handler, run in place                                 |
 | `0x0B00-0xFA0B` | `0x50000010` (run) | the program image: code to `0xCF1C`, then its constant data             |
-| `0xFA0C-0xFA17` | `0x4000FA0C`       | `ImageCopyDescriptor`: count, source, destination of that copy          |
+| `0xFA0C-0xFA17` | `0x4000FA0C`       | `ImageCopyDescriptor`: 0x8001 (read by nothing), count, source, target  |
 | `0xFA18-0xFFFF` |                    | erased (`0xFF`)                                                         |
 
 63,148 of the 65,536 bytes are not `0xFF`; the last used byte is `0xFA17` (`ic18_layout.py`).
@@ -55,7 +55,17 @@ RAM: `0x50000000` to IrqDispatch and `0x50000006` to the NMI handler. With IVAR0
 in RAM, CHCTR bit 7 is what moves the interrupt entry from the ROM to work RAM (the same question
 kn7000_mame `notes/HARDWARE-QUESTIONS-PENDING-FELIPE.md` raises for the firmware's identical sequence).
 Port P04 bit 5 is strobed between almost every step of the boot code (TODO: by its pattern, a watchdog
-kick; not confirmed on the board).
+kick; not confirmed on the board). Program 941 does the same at run time: its tick task (`0x4C02BBCD`)
+inverts P04 bit 5 on every request bit 0x80 of its `TickJobs` (`0x50151C00`), once every 96 ms.
+
+**The tick.** `TickStart` runs timer 4 with base value `0xFA0`, twice program 941's `0x7D0`, which 941's
+measured 1 kHz kernel tick comes from (`KernelTickHandler`); so `TickCount` counts 2 ms ticks, as
+941's `TimeBase2msTick` (every second kernel tick) does. `TickIsr` is that routine without its two hooks.
+It also sets the request bits of `TickJobs` (0x08/0x04/0x02 every 3 ticks, `TickJobs2` 0x80/0x40 every 6,
+0x80/0x40/0x20/0x10 each every 48), but nothing in this ROM reads them: their consumer is 941's tick task,
+which this ROM does not have (`notes/ic18-boot-rom-probes/ic18boot_xref.py`). Everything here that pumps
+the panel link (`PanelWaitEvent`, `ScreenInit`, `PanelDiskLed`) polls it instead, so `PanelBusyPumpCount`'s
+time-out of 20 counts pump calls, not time; in 941 the tick task pumps every 48 ms.
 
 **BootMain** (tick on timer 4, every flash to read mode):
 
@@ -106,6 +116,17 @@ program 941's in order and many have the same code, but there is no worker task;
 the handler directly, and the board probes the firmware makes are stand-ins here (`PanelSubTypeGet` and
 `BoardClass` return 1).
 
+`SdUpdateVerify` (`.data`, 1) decides whether each written file is read back against the flash. Nothing
+sets it at run time: the strap path (`BootMain` calls `SdFlashUpdate` directly) keeps the 1 and verifies;
+the menu path (`SdUpdateStart`) clears it first and skips the verify pass. The command frames of the
+slow clock (mode 2) are not SD card commands: `SdFrameR2Cmd0` is `0x40` with argument `0x00000F00`, read
+back as 15 bytes into `SdCsdRecord` by the drive-control attach, after the slot was powered down, and in
+mode 2 `SdReadBlockCmd` waits for the sense line too. `[INFERENCE]` A device other than the card answers
+them. `SdFrameR2Cmd3/5/6/7` are read by nothing, here or in program 941. The six status lamps of
+`StatusLatchWrite` (a byte shifted out on the SPI lines with the card deselected, latched by the select
+line) are on none of the service manual's schematics. `[INFERENCE]` They are on the factory jig: CN106
+(MAIN 2/5) is the one connector that carries SDCS, SDSO, SDCLK and SDSI, beside a JIGU.ON line.
+
 ### What else is inside
 
 - The C library under `sprintf` (newlib-style `vsprintf_core`, `strtol`, `localeconv`, the double helpers;
@@ -115,7 +136,9 @@ the handler directly, and the board probes the firmware makes are stand-ins here
   request block of seven words, commands 0-0xB, media geometry for 720 KB, 1.2 MB (77 cylinders, 1024-byte
   sectors) and 1.44 MB disks, disk detection by index pulses.
 - A text console on the LCD controller at `0x9CC00000` (frame buffer `0x9CE00000`, 640 pixels a line) with
-  an 8x16 font for 0x20-0xFF, and four soft-key captions read through the panel.
+  an 8x16 font for 0x20-0xFF, and four soft-key captions read through the panel. `FontTable` has program
+  941's font descriptor without its last two pointers: width, height, descent (read by nothing here),
+  byte columns a glyph, the glyphs.
 
 ### The hardware registers
 
@@ -152,7 +175,15 @@ Every memory operand of the code that names a device register is an `.equ` (`HW`
 - **The SD card's SPI port**, inside tone generator A: `SD_SPI_DATA`, `SD_SPI_CLOCK`. The power
   controller is `SD_POWER_CTRL`. `SDRAM_CTRL`/`SDRAM_REFRESH` are `[INFERENCE]` names, from the reset's
   eight refresh pulses. `PROGRAM_FLASH_VERSION` is the firmware's release byte.
-- Still placeholders, with a TODO each: `UNKNOWN_32000010`, `UNKNOWN_34004002`, `TGA_04`, `TGA_10`.
+- **Tone generator A's other two ports**, which `SdSpiPortSetup` writes before it uses the SPI port:
+  `TGA_KEY_FIFO` (`0x98050004`), the key-event FIFO that program 941 drains as `{key, velocity}` words
+  (`0x484480A2`) and that its `TgChipResetSideA` writes 3 three times, and `TGA_INIT` (`0x98050010`,
+  `[INFERENCE]` a start-up strobe), which `TgChipResetSideA` writes 1 three times just before.
+- **The interrupt controller**: `IAGR` (`0x34000200`), the accepted group, and `G0ICR` (`0x34000100`),
+  by the MN10300 instruction manual's interrupt example. `IAGR` was called `INTC_GROUP_VECTOR` here.
+- Still placeholders, with a TODO each: `UNKNOWN_32000010` and `UNKNOWN_34004002`. Program 941 writes
+  them the same way (0x400 first in its bus set-up `0x484D710E`; 0 in `ResetEntry` right after MEMCTR0).
+  No manual held here has the MN103002A's register map.
 
 The base addresses that `FlashDeviceBase` returns stay numbers; its header comment lists them. The
 `notes/ic18-boot-rom-probes/leftovers.py` probe counts what is still numeric. On 2026-10-24 it found
@@ -173,8 +204,9 @@ under a named label, and most of those labels carry a comment. Open items:
 - The `.data` variables of one or two bytes (`FdcMotorState`, `SdPowerShadow`, `TickPhase2` ...): the
   bytes that pad them to a word are not zero. They look like leftovers in the linked image, and nothing
   reads them.
-- `FatMountFailImage` is typed by the variables it lands on. What its numbers were meant to be is still
-  a TODO (they describe 32-byte sectors and no FAT).
+- `FatMountFailImage` is typed by the variables it lands on. No code uses its numbers: every caller stops
+  on the failed mount, and a good mount rewrites every word. `[INFERENCE]` They are placeholders (the
+  volume name is "12345678"; they describe 32-byte sectors and no FAT).
 
 ### The older link
 

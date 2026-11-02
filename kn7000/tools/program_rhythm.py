@@ -15,6 +15,10 @@ fallback the firmware uses when IC18 does not answer.  The record and event
 syntax is IC18's: tools/gen_ic18_rhythm_s.py's helpers and the macro block of
 src/ic18/rhythm.s (copied by gen_data_s.py to <data dir>/rhythm_macros.inc).
 
+The style record's byte +0x89 (1 here as in every IC18 style) is written as an unread byte:
+no routine of program 941 or of the KN2400 / KN6000 / KN6500 programs reads it
+(kn7000/notes/mn10300-names-probes/rhythm_style_record_readers.py).
+
 Used by tools/gen_data_s.py: emit(rom, off, base_label) -> (lines, size).
 Checked as it is written: the checksum, every offset, every stream (beats,
 event lengths), the tiling of count-ins and styles.
@@ -139,7 +143,7 @@ def emit(d, base, lab):
             f = d[o + 0x11 + 15 * p:o + 0x11 + 15 * p + 15]
             vals = [R.hx(f[0]), str(f[1]), R.hx(f[2]), R.hx(f[3]), R.hx(f[4])] + [str(x) for x in f[5:]]
             w(f"\tstyle_part\t{', '.join(vals)}\t# {R.PART_NAMES[p]}")
-        w("\t.byte\t1\t\t\t# TODO: 1 in every style; no reader found")
+        w("\t.byte\t1\t\t\t# +0x89: unread, as in IC18's styles (kn7000/notes/ic18-rhythm-rom.md)")
         w(f"\tstyle_slots\t{sl}")
         pos = o + 0xC6
         for off in sorted(offs):

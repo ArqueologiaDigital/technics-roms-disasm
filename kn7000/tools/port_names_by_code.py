@@ -118,6 +118,71 @@ def load(paths):
     return GI.load_syms(paths) if paths else {}
 
 
+def carry_pass(A, a_names, B, b_named, b_entries, b_taken, min_kept, fuzzy):
+    """Carry A's names onto B's unnamed entries (b_entries {cpu: label}); b_named are the
+    names B already has (never overridden), b_taken the names B already uses (updated).
+    Returns {"rows": [(b_cpu, name, a_cpu, n)], "fz": fn_similarity rows, and the counts}."""
+    sa, weak = {}, 0
+    for cpu, nm in a_names.items():
+        s = signature(A, A.off(cpu))
+        if not s:
+            continue
+        if kept(s) < min_kept:
+            weak += 1
+            continue
+        sa.setdefault(s, []).append((cpu, nm))
+    # every routine start of A, named or not: a signature two of them share is
+    # ambiguous even when only one of the two is named
+    a_starts = all_entries(A) | {A.off(cpu) for cpu in a_names}
+    a_count = {}
+    for o in a_starts:
+        s = signature(A, o)
+        if s in sa:
+            a_count[s] = a_count.get(s, 0) + 1
+    sb = {}
+    for cpu in list(b_entries) + list(b_named):
+        o = B.off(cpu)
+        if o is None:
+            continue
+        s = signature(B, o)
+        if s and kept(s) >= min_kept:
+            sb.setdefault(s, []).append(cpu)
+
+    rows, skipped_taken, twins = [], 0, 0
+    for s, alist in sa.items():
+        if len(alist) != 1 or len(sb.get(s, ())) != 1:
+            continue
+        if a_count.get(s, 0) != 1:
+            twins += 1
+            continue
+        (acpu, nm), bcpu = alist[0], sb[s][0]
+        if bcpu not in b_entries:
+            continue                         # B already names it
+        if nm in b_taken:
+            skipped_taken += 1
+            continue
+        b_taken.add(nm)
+        rows.append((bcpu, nm, acpu, len(s)))
+    rows.sort()
+
+    fz, fz_rejected = [], {}
+    if fuzzy:
+        import fn_similarity as FS
+        carried = {bcpu: nm for bcpu, nm, _acpu, _n in rows}
+        b_names = {cpu: nm for cpu, nm in b_named.items()
+                   if not nm.endswith("_entry") and B.off(cpu) is not None}
+        b_names.update(carried)
+        SA = FS.Side(A, a_names, {})
+        SB = FS.Side(B, b_names, {cpu: nm for cpu, nm in b_entries.items() if cpu not in carried})
+        a_cands = {A.off(cpu): nm for cpu, nm in a_names.items() if nm not in carried.values()}
+        b_open = {B.off(cpu) for cpu in b_entries if cpu not in carried and B.off(cpu) is not None}
+        fz, fz_rejected, _differs = FS.carry(SA, SB, a_cands, b_open, b_taken)
+        fz.sort()
+
+    return {"rows": rows, "fz": fz, "fz_rejected": fz_rejected, "weak": weak, "twins": twins,
+            "skipped_taken": skipped_taken, "a_starts": len(a_starts)}
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -140,10 +205,15 @@ def main():
     ap.add_argument("--fuzzy", action="store_true",
                     help="then compare whole routine bodies (tools/fn_similarity.py)")
     ap.add_argument("--cache", help="keep unidasm's decodes in this directory between runs")
+    ap.add_argument("--also-a", nargs=5, action="append", metavar=("LABEL", "ROM", "BASE", "CODES", "SYMS"),
+                    help="a further image to carry names from, after A, into the entries still unnamed "
+                         "(repeatable, in order): CODES and SYMS comma-separated as --a-code / --a-sym; "
+                         "its rows say '= LABEL 0x...'")
     a = ap.parse_args()
 
+    if a.cache or a.fuzzy:
+        import fn_similarity as FS  # noqa: F401
     if a.cache:
-        import fn_similarity as FS
         A = FS.cached_image(a.a_rom, a.a_base, ranges(a.a_code, a.a_base), a.unidasm, a.cache)
         B = FS.cached_image(a.b_rom, a.b_base, ranges(a.b_code, a.b_base), a.unidasm, a.cache)
     else:
@@ -172,87 +242,66 @@ def main():
         if os.path.exists(a.out):
             b_entries.update(load([a.out]))
 
-    sa, weak = {}, 0
-    for cpu, nm in a_names.items():
-        s = signature(A, A.off(cpu))
-        if not s:
-            continue
-        if kept(s) < a.min:
-            weak += 1
-            continue
-        sa.setdefault(s, []).append((cpu, nm))
-    # every routine start of A, named or not: a signature two of them share is
-    # ambiguous even when only one of the two is named
-    a_starts = all_entries(A) | {A.off(cpu) for cpu in a_names}
-    a_count = {}
-    for o in a_starts:
-        s = signature(A, o)
-        if s in sa:
-            a_count[s] = a_count.get(s, 0) + 1
-    sb = {}
-    for cpu in list(b_entries) + list(b_named):
-        o = B.off(cpu)
-        if o is None:
-            continue
-        s = signature(B, o)
-        if s and kept(s) >= a.min:
-            sb.setdefault(s, []).append(cpu)
-
-    rows, skipped_taken, twins = [], 0, 0
-    for s, alist in sa.items():
-        if len(alist) != 1 or len(sb.get(s, ())) != 1:
-            continue
-        if a_count.get(s, 0) != 1:
-            twins += 1
-            continue
-        (acpu, nm), bcpu = alist[0], sb[s][0]
-        if bcpu not in b_entries:
-            continue                         # B already names it
-        if nm in b_taken:
-            skipped_taken += 1
-            continue
-        b_taken.add(nm)
-        rows.append((bcpu, nm, acpu, len(s)))
-    rows.sort()
-
-    fz, fz_rejected = [], {}
-    if a.fuzzy:
-        import fn_similarity as FS
-        carried = {bcpu: nm for bcpu, nm, _acpu, _n in rows}
-        b_names = {cpu: nm for cpu, nm in b_named.items()
-                   if not nm.endswith("_entry") and B.off(cpu) is not None}
-        b_names.update(carried)
-        SA = FS.Side(A, a_names, {})
-        SB = FS.Side(B, b_names, {cpu: nm for cpu, nm in b_entries.items() if cpu not in carried})
-        a_cands = {A.off(cpu): nm for cpu, nm in a_names.items() if nm not in carried.values()}
-        b_open = {B.off(cpu) for cpu in b_entries if cpu not in carried and B.off(cpu) is not None}
-        fz, fz_rejected, _differs = FS.carry(SA, SB, a_cands, b_open, b_taken)
-        fz.sort()
+    res = carry_pass(A, a_names, B, b_named, b_entries, b_taken, a.min, a.fuzzy)
+    rows, fz = res["rows"], res["fz"]
+    # --also-a: further images, each carrying into what the ones before it left unnamed
+    extra = []
+    named_so_far = dict(b_named)
+    for label, rom, base, codes, syms in a.also_a or []:
+        named_so_far.update({bcpu: nm for bcpu, nm, _ac, _n in rows})
+        named_so_far.update({r.b_cpu: r.name for r in fz})
+        for x in extra:
+            named_so_far.update({bcpu: nm for bcpu, nm, _ac, _n in x["rows"]})
+            named_so_far.update({r.b_cpu: r.name for r in x["fz"]})
+        left = {cpu: nm for cpu, nm in b_entries.items() if cpu not in named_so_far}
+        base = int(base, 0)
+        if a.cache:
+            AX = FS.cached_image(rom, base, ranges(codes.split(","), base), a.unidasm, a.cache)
+        else:
+            AX = GI.Image(rom, base, ranges(codes.split(","), base), a.unidasm)
+        ax_names = {cpu: nm for cpu, nm in load(syms.split(",")).items()
+                    if not nm.endswith("_entry") and AX.off(cpu) is not None}
+        x = carry_pass(AX, ax_names, B, named_so_far, left, b_taken, a.min, a.fuzzy)
+        x["label"], x["n_names"] = label, len(ax_names)
+        extra.append(x)
 
     with open(a.out, "w") as f:
         f.write(f"; {a.title}\n")
         f.write("; GENERATED by kn7000/tools/port_names_by_code.py -- do not edit; its header says\n")
         f.write("; how a name qualifies. Columns: B address, name, ; the A address it was carried\n")
         f.write("; from and the number of instructions that matched (entry to first return).\n;\n")
-        f.write(f"; {len(rows)} names carried ({len(a_names)} candidates in A, {len(a_starts)} "
+        f.write(f"; {len(rows)} names carried ({len(a_names)} candidates in A, {res['a_starts']} "
                 f"routine starts in A, {len(b_entries)} unnamed entries in B)\n")
-        f.write(f"; not carried: {weak} A signatures with fewer than {a.min} unmasked instructions; "
-                f"{twins} with a twin among A's routine starts;\n; {skipped_taken} whose name "
+        f.write(f"; not carried: {res['weak']} A signatures with fewer than {a.min} unmasked instructions; "
+                f"{res['twins']} with a twin among A's routine starts;\n; {res['skipped_taken']} whose name "
                 f"is taken in B\n")
         if a.fuzzy:
             by = {c: sum(1 for r in fz if r.cls == c) for c in ("exact", "skeleton", "fuzzy")}
             f.write(f"; --fuzzy, whole bodies (tools/fn_similarity.py): {len(fz)} more names carried "
                     f"({by['exact']} exact, {by['skeleton']} skeleton, {by['fuzzy']} fuzzy); not carried:\n")
-            for why, n in sorted(fz_rejected.items()):
+            for why, n in sorted(res["fz_rejected"].items()):
                 f.write(f";   {n:5d} {why}\n")
+        for x in extra:
+            xf = {c: sum(1 for r in x["fz"] if r.cls == c) for c in ("exact", "skeleton", "fuzzy")}
+            f.write(f"; then from {x['label']} (--also-a), into what is still unnamed: {len(x['rows'])} names "
+                    f"by signature, {len(x['fz'])} by whole body ({xf['exact']} exact, {xf['skeleton']} "
+                    f"skeleton, {xf['fuzzy']} fuzzy); {x['n_names']} candidates, {x['a_starts']} routine starts\n")
         out = [(bcpu, f"0x{bcpu:08X}  {nm}\t; = 0x{acpu:08X}, {n} insns\n") for bcpu, nm, acpu, n in rows]
         out += [(r.b_cpu, f"0x{r.b_cpu:08X}  {r.name}\t; = 0x{r.a_cpu:08X}, whole body {r.n} insns, "
                           f"{r.cls} (ratios {r.sk:.3f}/{r.st:.3f}, {r.agree} callees or strings agree)\n")
                 for r in fz]
+        for x in extra:
+            lb = x["label"]
+            out += [(bcpu, f"0x{bcpu:08X}  {nm}\t; = {lb} 0x{acpu:08X}, {n} insns\n")
+                    for bcpu, nm, acpu, n in x["rows"]]
+            out += [(r.b_cpu, f"0x{r.b_cpu:08X}  {r.name}\t; = {lb} 0x{r.a_cpu:08X}, whole body {r.n} insns, "
+                              f"{r.cls} (ratios {r.sk:.3f}/{r.st:.3f}, {r.agree} callees or strings agree)\n")
+                    for r in x["fz"]]
         for _bcpu, line in sorted(out):
             f.write(line)
     print(f"port_names_by_code: {len(rows) + len(fz)} names -> {a.out}"
-          + (f" ({len(fz)} by whole body)" if a.fuzzy else ""))
+          + (f" ({len(fz)} by whole body)" if a.fuzzy else "")
+          + "".join(f"; +{len(x['rows']) + len(x['fz'])} from {x['label']}" for x in extra))
 
 
 if __name__ == "__main__":

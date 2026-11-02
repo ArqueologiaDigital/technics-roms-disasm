@@ -19,8 +19,8 @@ Style_Samba:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_Samba
 
-Style_Samba_Intro1A:
-	var_head	Style_Samba_Intro1A, 2, 4, 0xff, 0xff
+Style_Samba_Intro1Major:
+	var_head	Style_Samba_Intro1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	1, 82, 32
 	ev_cc	2, 93, 0
@@ -34,8 +34,8 @@ Style_Samba_Intro1A:
 	ev_pc	5, 0x00, 0x00, 0x20
 	ev_cc	6, 82, 32
 	ev_cc	6, 80, 92
-	var_events	Style_Samba_Intro1A
-Style_Samba_Intro1A_Events:		# 2 bars of 4 beats, 992 bytes
+	var_events	Style_Samba_Intro1Major
+Style_Samba_Intro1Major_Events:		# 2 bars of 4 beats, 992 bytes
 	ev_beat
 	ev_note	7, 82, 54, 1, 0, 0
 	ev_note	3, 67, 99, 14, 0, 1
@@ -281,10 +281,10 @@ Style_Samba_Intro1A_Events:		# 2 bars of 4 beats, 992 bytes
 	ev_at	73
 	ev_note	7, 64, 120, 1, 0, 0
 	ev_end
-	var_end	Style_Samba_Intro1A
+	var_end	Style_Samba_Intro1Major
 
-Style_Samba_Intro1B:
-	var_head	Style_Samba_Intro1B, 2, 4, 0xff, 0xff
+Style_Samba_Intro1Minor:
+	var_head	Style_Samba_Intro1Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	1, 82, 32
 	ev_cc	2, 93, 0
@@ -302,8 +302,8 @@ Style_Samba_Intro1B:
 	ev_cc	6, 83, 40
 	ev_cc	6, 80, 92
 	ev_cc	6, 81, 40
-	var_events	Style_Samba_Intro1B
-Style_Samba_Intro1B_Events:		# 2 bars of 4 beats, 992 bytes
+	var_events	Style_Samba_Intro1Minor
+Style_Samba_Intro1Minor_Events:		# 2 bars of 4 beats, 992 bytes
 	ev_beat
 	ev_note	7, 82, 54, 1, 0, 0
 	ev_note	3, 63, 90, 17, 0, 1
@@ -549,10 +549,10 @@ Style_Samba_Intro1B_Events:		# 2 bars of 4 beats, 992 bytes
 	ev_at	73
 	ev_note	7, 64, 120, 1, 0, 0
 	ev_end
-	var_end	Style_Samba_Intro1B
+	var_end	Style_Samba_Intro1Minor
 
-Style_Samba_Ending1A:
-	var_head	Style_Samba_Ending1A, 4, 4, 0xff, 0xff
+Style_Samba_Intro2Major:
+	var_head	Style_Samba_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	1, 82, 32
 	ev_cc	2, 93, 0
@@ -566,8 +566,8 @@ Style_Samba_Ending1A:
 	ev_pc	4, 0x3d, 0x30, 0x20
 	ev_cc	6, 82, 32
 	ev_cc	6, 80, 92
-	var_events	Style_Samba_Ending1A
-Style_Samba_Ending1A_Events:		# 4 bars of 4 beats, 2579 bytes
+	var_events	Style_Samba_Intro2Major
+Style_Samba_Intro2Major_Events:		# 4 bars of 4 beats, 2579 bytes
 	ev_beat
 	ev_note	7, 82, 54, 1, 0, 0
 	ev_note	3, 48, 78, 86, 0, 1
@@ -1183,10 +1183,10 @@ Style_Samba_Ending1A_Events:		# 4 bars of 4 beats, 2579 bytes
 	ev_note	0, 36, 65, 1, 0, 0
 	ev_note	7, 64, 120, 1, 0, 0
 	ev_end
-	var_end	Style_Samba_Ending1A
+	var_end	Style_Samba_Intro2Major
 
-Style_Samba_Ending1B:
-	var_head	Style_Samba_Ending1B, 4, 4, 0xff, 0xff
+Style_Samba_Intro2Minor:
+	var_head	Style_Samba_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	1, 82, 32
 	ev_cc	2, 93, 0
@@ -1200,8 +1200,8 @@ Style_Samba_Ending1B:
 	ev_pc	4, 0x3d, 0x30, 0x20
 	ev_cc	6, 82, 32
 	ev_cc	6, 80, 92
-	var_events	Style_Samba_Ending1B
-Style_Samba_Ending1B_Events:		# 4 bars of 4 beats, 2061 bytes
+	var_events	Style_Samba_Intro2Minor
+Style_Samba_Intro2Minor_Events:		# 4 bars of 4 beats, 2061 bytes
 	ev_beat
 	ev_note	7, 82, 54, 1, 0, 0
 	ev_at	1
@@ -1723,7 +1723,7 @@ Style_Samba_Ending1B_Events:		# 4 bars of 4 beats, 2061 bytes
 	ev_note	0, 36, 65, 1, 0, 0
 	ev_note	7, 64, 120, 1, 0, 0
 	ev_end
-	var_end	Style_Samba_Ending1B
+	var_end	Style_Samba_Intro2Minor
 
 Style_Samba_Var1:
 	var_head	Style_Samba_Var1, 4, 4, 0xff, 0xff
@@ -5514,8 +5514,8 @@ Style_Samba_Var4Fill2_Events:		# 1 bars of 4 beats, 727 bytes
 	ev_end
 	var_end	Style_Samba_Var4Fill2
 
-Style_Samba_Intro2A:
-	var_head	Style_Samba_Intro2A, 2, 4, 0xff, 0xff
+Style_Samba_Ending1Major:
+	var_head	Style_Samba_Ending1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	1, 82, 32
 	ev_cc	2, 93, 0
@@ -5529,8 +5529,8 @@ Style_Samba_Intro2A:
 	ev_pc	5, 0x00, 0x00, 0x20
 	ev_cc	6, 82, 32
 	ev_cc	6, 80, 92
-	var_events	Style_Samba_Intro2A
-Style_Samba_Intro2A_Events:		# 2 bars of 4 beats, 798 bytes
+	var_events	Style_Samba_Ending1Major
+Style_Samba_Ending1Major_Events:		# 2 bars of 4 beats, 798 bytes
 	ev_beat
 	ev_note	7, 82, 54, 1, 0, 0
 	ev_at	1
@@ -5727,10 +5727,10 @@ Style_Samba_Intro2A_Events:		# 2 bars of 4 beats, 798 bytes
 	ev_note	3, 48, 118, 16, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_Samba_Intro2A
+	var_end	Style_Samba_Ending1Major
 
-Style_Samba_Intro2B:
-	var_head	Style_Samba_Intro2B, 2, 4, 0xff, 0xff
+Style_Samba_Ending1Minor:
+	var_head	Style_Samba_Ending1Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	1, 82, 32
 	ev_cc	2, 93, 0
@@ -5744,8 +5744,8 @@ Style_Samba_Intro2B:
 	ev_pc	5, 0x00, 0x00, 0x20
 	ev_cc	6, 82, 32
 	ev_cc	6, 80, 92
-	var_events	Style_Samba_Intro2B
-Style_Samba_Intro2B_Events:		# 2 bars of 4 beats, 798 bytes
+	var_events	Style_Samba_Ending1Minor
+Style_Samba_Ending1Minor_Events:		# 2 bars of 4 beats, 798 bytes
 	ev_beat
 	ev_note	7, 82, 54, 1, 0, 0
 	ev_at	1
@@ -5942,10 +5942,10 @@ Style_Samba_Intro2B_Events:		# 2 bars of 4 beats, 798 bytes
 	ev_note	3, 48, 118, 16, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_Samba_Intro2B
+	var_end	Style_Samba_Ending1Minor
 
-Style_Samba_Ending2A:
-	var_head	Style_Samba_Ending2A, 4, 4, 0xff, 0x03
+Style_Samba_Ending2Major:
+	var_head	Style_Samba_Ending2Major, 4, 4, 0xff, 0x03
 	ev_cc	0, 82, 40
 	ev_cc	1, 97, 11
 	ev_cc	1, 82, 40
@@ -5966,8 +5966,8 @@ Style_Samba_Ending2A:
 	ev_cc	6, 82, 40
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 40
-	var_events	Style_Samba_Ending2A
-Style_Samba_Ending2A_Events:		# 4 bars of 4 beats, 2944 bytes
+	var_events	Style_Samba_Ending2Major
+Style_Samba_Ending2Major_Events:		# 4 bars of 4 beats, 2944 bytes
 	ev_beat
 	ev_note	0, 55, 111, 1, 0, 0
 	ev_note	7, 82, 54, 1, 0, 0
@@ -6670,10 +6670,10 @@ Style_Samba_Ending2A_Events:		# 4 bars of 4 beats, 2944 bytes
 	ev_note	5, 48, 115, 17, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_Samba_Ending2A
+	var_end	Style_Samba_Ending2Major
 
-Style_Samba_Ending2B:
-	var_head	Style_Samba_Ending2B, 4, 4, 0xff, 0x03
+Style_Samba_Ending2Minor:
+	var_head	Style_Samba_Ending2Minor, 4, 4, 0xff, 0x03
 	ev_cc	0, 82, 40
 	ev_cc	1, 97, 11
 	ev_cc	1, 82, 40
@@ -6694,8 +6694,8 @@ Style_Samba_Ending2B:
 	ev_cc	6, 82, 40
 	ev_cc	6, 80, 92
 	ev_cc	7, 82, 40
-	var_events	Style_Samba_Ending2B
-Style_Samba_Ending2B_Events:		# 4 bars of 4 beats, 2637 bytes
+	var_events	Style_Samba_Ending2Minor
+Style_Samba_Ending2Minor_Events:		# 4 bars of 4 beats, 2637 bytes
 	ev_beat
 	ev_note	0, 55, 111, 1, 0, 0
 	ev_note	7, 82, 54, 1, 0, 0
@@ -7329,4 +7329,4 @@ Style_Samba_Ending2B_Events:		# 4 bars of 4 beats, 2637 bytes
 	ev_note	3, 72, 116, 16, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_Samba_Ending2B
+	var_end	Style_Samba_Ending2Minor

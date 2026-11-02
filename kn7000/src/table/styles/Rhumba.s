@@ -19,13 +19,13 @@ Style_Rhumba:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_Rhumba
 
-Style_Rhumba_Intro1A:
-	var_head	Style_Rhumba_Intro1A, 4, 4, 0xff, 0xff
+Style_Rhumba_Intro1Major:
+	var_head	Style_Rhumba_Intro1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 97, 8
 	ev_cc	4, 7, 110
-	var_events	Style_Rhumba_Intro1A
-Style_Rhumba_Intro1A_Events:		# 4 bars of 4 beats, 2967 bytes
+	var_events	Style_Rhumba_Intro1Major
+Style_Rhumba_Intro1Major_Events:		# 4 bars of 4 beats, 2967 bytes
 	ev_beat
 	ev_note	0, 36, 81, 12, 0, 0
 	ev_note	7, 44, 104, 12, 0, 0
@@ -975,10 +975,10 @@ Style_Rhumba_Intro1A_Events:		# 4 bars of 4 beats, 2967 bytes
 	ev_at	66
 	ev_cc	5, 11, 127
 	ev_end
-	var_end	Style_Rhumba_Intro1A
+	var_end	Style_Rhumba_Intro1Major
 
-Style_Rhumba_Intro1B:
-	var_head	Style_Rhumba_Intro1B, 4, 4, 0xff, 0xff
+Style_Rhumba_Intro1Minor:
+	var_head	Style_Rhumba_Intro1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 90
 	ev_cc	3, 97, 8
@@ -988,8 +988,8 @@ Style_Rhumba_Intro1B:
 	ev_cc	6, 7, 115
 	ev_cc	6, 10, 64
 	ev_pc	6, 0x39, 0x11, 0x20
-	var_events	Style_Rhumba_Intro1B
-Style_Rhumba_Intro1B_Events:		# 4 bars of 4 beats, 2621 bytes
+	var_events	Style_Rhumba_Intro1Minor
+Style_Rhumba_Intro1Minor_Events:		# 4 bars of 4 beats, 2621 bytes
 	ev_beat
 	ev_note	0, 36, 81, 12, 0, 0
 	ev_note	7, 44, 104, 12, 0, 0
@@ -1819,10 +1819,10 @@ Style_Rhumba_Intro1B_Events:		# 4 bars of 4 beats, 2621 bytes
 	ev_at	95
 	ev_cc	6, 11, 127
 	ev_end
-	var_end	Style_Rhumba_Intro1B
+	var_end	Style_Rhumba_Intro1Minor
 
-Style_Rhumba_Ending1A:
-	var_head	Style_Rhumba_Ending1A, 4, 4, 0xff, 0xff
+Style_Rhumba_Intro2Major:
+	var_head	Style_Rhumba_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 97, 8
 	ev_cc	4, 7, 100
@@ -1832,8 +1832,8 @@ Style_Rhumba_Ending1A:
 	ev_cc	6, 7, 106
 	ev_cc	6, 10, 109
 	ev_pc	6, 0x38, 0x04, 0x20
-	var_events	Style_Rhumba_Ending1A
-Style_Rhumba_Ending1A_Events:		# 4 bars of 4 beats, 2285 bytes
+	var_events	Style_Rhumba_Intro2Major
+Style_Rhumba_Intro2Major_Events:		# 4 bars of 4 beats, 2285 bytes
 	ev_beat
 	ev_note	0, 36, 81, 12, 0, 0
 	ev_note	7, 44, 104, 12, 0, 0
@@ -2497,10 +2497,10 @@ Style_Rhumba_Ending1A_Events:		# 4 bars of 4 beats, 2285 bytes
 	ev_note	0, 58, 84, 12, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_Rhumba_Ending1A
+	var_end	Style_Rhumba_Intro2Major
 
-Style_Rhumba_Ending1B:
-	var_head	Style_Rhumba_Ending1B, 4, 4, 0xff, 0xff
+Style_Rhumba_Intro2Minor:
+	var_head	Style_Rhumba_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 97, 8
 	ev_cc	4, 7, 115
@@ -2509,8 +2509,8 @@ Style_Rhumba_Ending1B:
 	ev_cc	6, 7, 127
 	ev_cc	6, 10, 64
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_Rhumba_Ending1B
-Style_Rhumba_Ending1B_Events:		# 4 bars of 4 beats, 2038 bytes
+	var_events	Style_Rhumba_Intro2Minor
+Style_Rhumba_Intro2Minor_Events:		# 4 bars of 4 beats, 2038 bytes
 	ev_beat
 	ev_note	7, 44, 104, 12, 0, 0
 	ev_note	7, 72, 103, 12, 0, 0
@@ -3212,7 +3212,7 @@ Style_Rhumba_Ending1B_Events:		# 4 bars of 4 beats, 2038 bytes
 	ev_at	85
 	ev_cc	2, 64, 0
 	ev_end
-	var_end	Style_Rhumba_Ending1B
+	var_end	Style_Rhumba_Intro2Minor
 
 Style_Rhumba_Var1:
 	var_head	Style_Rhumba_Var1, 4, 4, 0xff, 0xff
@@ -5833,13 +5833,13 @@ Style_Rhumba_Var4Fill2_Events:		# 1 bars of 4 beats, 492 bytes
 	ev_end
 	var_end	Style_Rhumba_Var4Fill2
 
-Style_Rhumba_Intro2A:
-	var_head	Style_Rhumba_Intro2A, 4, 4, 0xff, 0xff
+Style_Rhumba_Ending1Major:
+	var_head	Style_Rhumba_Ending1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 97, 8
 	ev_cc	4, 7, 110
-	var_events	Style_Rhumba_Intro2A
-Style_Rhumba_Intro2A_Events:		# 4 bars of 4 beats, 2831 bytes
+	var_events	Style_Rhumba_Ending1Major
+Style_Rhumba_Ending1Major_Events:		# 4 bars of 4 beats, 2831 bytes
 	ev_beat
 	ev_note	0, 36, 81, 12, 0, 0
 	ev_note	7, 44, 104, 12, 0, 0
@@ -6736,10 +6736,10 @@ Style_Rhumba_Intro2A_Events:		# 4 bars of 4 beats, 2831 bytes
 	ev_note	0, 39, 21, 12, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_Rhumba_Intro2A
+	var_end	Style_Rhumba_Ending1Major
 
-Style_Rhumba_Intro2B:
-	var_head	Style_Rhumba_Intro2B, 4, 4, 0xff, 0xff
+Style_Rhumba_Ending1Minor:
+	var_head	Style_Rhumba_Ending1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 90
 	ev_cc	3, 97, 8
@@ -6749,8 +6749,8 @@ Style_Rhumba_Intro2B:
 	ev_cc	6, 7, 115
 	ev_cc	6, 10, 64
 	ev_pc	6, 0x39, 0x11, 0x20
-	var_events	Style_Rhumba_Intro2B
-Style_Rhumba_Intro2B_Events:		# 4 bars of 4 beats, 4088 bytes
+	var_events	Style_Rhumba_Ending1Minor
+Style_Rhumba_Ending1Minor_Events:		# 4 bars of 4 beats, 4088 bytes
 	ev_beat
 	ev_note	0, 36, 81, 12, 0, 0
 	ev_note	7, 44, 104, 12, 0, 0
@@ -8133,10 +8133,10 @@ Style_Rhumba_Intro2B_Events:		# 4 bars of 4 beats, 4088 bytes
 	ev_at	29
 	ev_cc	2, 64, 0
 	ev_end
-	var_end	Style_Rhumba_Intro2B
+	var_end	Style_Rhumba_Ending1Minor
 
-Style_Rhumba_Ending2A:
-	var_head	Style_Rhumba_Ending2A, 4, 4, 0xff, 0xff
+Style_Rhumba_Ending2Major:
+	var_head	Style_Rhumba_Ending2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 97, 8
 	ev_cc	4, 7, 115
@@ -8145,8 +8145,8 @@ Style_Rhumba_Ending2A:
 	ev_cc	6, 7, 106
 	ev_cc	6, 10, 109
 	ev_pc	6, 0x38, 0x04, 0x20
-	var_events	Style_Rhumba_Ending2A
-Style_Rhumba_Ending2A_Events:		# 4 bars of 4 beats, 2906 bytes
+	var_events	Style_Rhumba_Ending2Major
+Style_Rhumba_Ending2Major_Events:		# 4 bars of 4 beats, 2906 bytes
 	ev_beat
 	ev_note	0, 36, 81, 12, 0, 0
 	ev_note	7, 44, 104, 12, 0, 0
@@ -9062,10 +9062,10 @@ Style_Rhumba_Ending2A_Events:		# 4 bars of 4 beats, 2906 bytes
 	ev_note	7, 77, 79, 12, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_Rhumba_Ending2A
+	var_end	Style_Rhumba_Ending2Major
 
-Style_Rhumba_Ending2B:
-	var_head	Style_Rhumba_Ending2B, 4, 4, 0xff, 0xff
+Style_Rhumba_Ending2Minor:
+	var_head	Style_Rhumba_Ending2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 97, 8
 	ev_cc	4, 7, 115
@@ -9074,8 +9074,8 @@ Style_Rhumba_Ending2B:
 	ev_cc	6, 7, 127
 	ev_cc	6, 10, 64
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_Rhumba_Ending2B
-Style_Rhumba_Ending2B_Events:		# 4 bars of 4 beats, 1610 bytes
+	var_events	Style_Rhumba_Ending2Minor
+Style_Rhumba_Ending2Minor_Events:		# 4 bars of 4 beats, 1610 bytes
 	ev_beat
 	ev_note	0, 36, 81, 12, 0, 0
 	ev_note	7, 44, 104, 12, 0, 0
@@ -9481,4 +9481,4 @@ Style_Rhumba_Ending2B_Events:		# 4 bars of 4 beats, 1610 bytes
 	ev_note	7, 77, 79, 12, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_Rhumba_Ending2B
+	var_end	Style_Rhumba_Ending2Minor

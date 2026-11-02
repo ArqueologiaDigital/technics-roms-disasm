@@ -19,8 +19,8 @@ Style_GermanMarch:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_GermanMarch
 
-Style_GermanMarch_Intro1A:
-	var_head	Style_GermanMarch_Intro1A, 2, 4, 0xff, 0xff
+Style_GermanMarch_Intro1Major:
+	var_head	Style_GermanMarch_Intro1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 92, 96
 	ev_cc	3, 7, 100
@@ -31,8 +31,8 @@ Style_GermanMarch_Intro1A:
 	ev_cc	6, 80, 96
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 96
-	var_events	Style_GermanMarch_Intro1A
-Style_GermanMarch_Intro1A_Events:		# 2 bars of 4 beats, 1126 bytes
+	var_events	Style_GermanMarch_Intro1Major
+Style_GermanMarch_Intro1Major_Events:		# 2 bars of 4 beats, 1126 bytes
 	ev_beat
 	ev_note	0, 57, 74, 8, 0, 0
 	ev_note	2, 62, 99, 27, 0, 1
@@ -324,10 +324,10 @@ Style_GermanMarch_Intro1A_Events:		# 2 bars of 4 beats, 1126 bytes
 	ev_at	72
 	ev_note	1, 35, 79, 6, 0, 1
 	ev_end
-	var_end	Style_GermanMarch_Intro1A
+	var_end	Style_GermanMarch_Intro1Major
 
-Style_GermanMarch_Intro1B:
-	var_head	Style_GermanMarch_Intro1B, 2, 4, 0xff, 0xff
+Style_GermanMarch_Intro1Minor:
+	var_head	Style_GermanMarch_Intro1Minor, 2, 4, 0xff, 0xff
 	ev_cc	0, 81, 67
 	ev_cc	1, 97, 11
 	ev_cc	2, 92, 96
@@ -339,8 +339,8 @@ Style_GermanMarch_Intro1B:
 	ev_cc	6, 80, 96
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 96
-	var_events	Style_GermanMarch_Intro1B
-Style_GermanMarch_Intro1B_Events:		# 2 bars of 4 beats, 1126 bytes
+	var_events	Style_GermanMarch_Intro1Minor
+Style_GermanMarch_Intro1Minor_Events:		# 2 bars of 4 beats, 1126 bytes
 	ev_beat
 	ev_note	0, 57, 74, 8, 0, 0
 	ev_note	2, 59, 94, 10, 0, 1
@@ -632,10 +632,10 @@ Style_GermanMarch_Intro1B_Events:		# 2 bars of 4 beats, 1126 bytes
 	ev_at	72
 	ev_note	1, 35, 79, 6, 0, 1
 	ev_end
-	var_end	Style_GermanMarch_Intro1B
+	var_end	Style_GermanMarch_Intro1Minor
 
-Style_GermanMarch_Ending1A:
-	var_head	Style_GermanMarch_Ending1A, 4, 4, 0xff, 0xff
+Style_GermanMarch_Intro2Major:
+	var_head	Style_GermanMarch_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	0, 81, 67
 	ev_cc	1, 97, 11
 	ev_cc	2, 92, 96
@@ -648,8 +648,8 @@ Style_GermanMarch_Ending1A:
 	ev_cc	6, 80, 96
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 96
-	var_events	Style_GermanMarch_Ending1A
-Style_GermanMarch_Ending1A_Events:		# 4 bars of 4 beats, 1770 bytes
+	var_events	Style_GermanMarch_Intro2Major
+Style_GermanMarch_Intro2Major_Events:		# 4 bars of 4 beats, 1770 bytes
 	ev_beat
 	ev_note	0, 36, 105, 8, 0, 0
 	ev_note	2, 60, 100, 27, 0, 1
@@ -1115,10 +1115,10 @@ Style_GermanMarch_Ending1A_Events:		# 4 bars of 4 beats, 1770 bytes
 	ev_note	0, 7, 127, 8, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_GermanMarch_Ending1A
+	var_end	Style_GermanMarch_Intro2Major
 
-Style_GermanMarch_Ending1B:
-	var_head	Style_GermanMarch_Ending1B, 4, 4, 0xff, 0xff
+Style_GermanMarch_Intro2Minor:
+	var_head	Style_GermanMarch_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	0, 81, 67
 	ev_cc	1, 97, 11
 	ev_cc	2, 92, 96
@@ -1131,8 +1131,8 @@ Style_GermanMarch_Ending1B:
 	ev_cc	6, 80, 96
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 96
-	var_events	Style_GermanMarch_Ending1B
-Style_GermanMarch_Ending1B_Events:		# 4 bars of 4 beats, 1770 bytes
+	var_events	Style_GermanMarch_Intro2Minor
+Style_GermanMarch_Intro2Minor_Events:		# 4 bars of 4 beats, 1770 bytes
 	ev_beat
 	ev_note	0, 36, 105, 8, 0, 0
 	ev_note	2, 60, 100, 27, 0, 1
@@ -1598,7 +1598,7 @@ Style_GermanMarch_Ending1B_Events:		# 4 bars of 4 beats, 1770 bytes
 	ev_note	0, 7, 127, 8, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_GermanMarch_Ending1B
+	var_end	Style_GermanMarch_Intro2Minor
 
 Style_GermanMarch_Var1:
 	var_head	Style_GermanMarch_Var1, 4, 4, 0xff, 0xff
@@ -4251,8 +4251,8 @@ Style_GermanMarch_Var4Fill2_Events:		# 1 bars of 4 beats, 468 bytes
 	ev_end
 	var_end	Style_GermanMarch_Var4Fill2
 
-Style_GermanMarch_Intro2A:
-	var_head	Style_GermanMarch_Intro2A, 2, 4, 0xff, 0xff
+Style_GermanMarch_Ending1Major:
+	var_head	Style_GermanMarch_Ending1Major, 2, 4, 0xff, 0xff
 	ev_cc	0, 81, 68
 	ev_cc	1, 97, 11
 	ev_cc	2, 92, 96
@@ -4264,8 +4264,8 @@ Style_GermanMarch_Intro2A:
 	ev_cc	6, 80, 96
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 96
-	var_events	Style_GermanMarch_Intro2A
-Style_GermanMarch_Intro2A_Events:		# 2 bars of 4 beats, 863 bytes
+	var_events	Style_GermanMarch_Ending1Major
+Style_GermanMarch_Ending1Major_Events:		# 2 bars of 4 beats, 863 bytes
 	ev_beat
 	ev_note	0, 55, 76, 8, 0, 0
 	ev_note	1, 36, 76, 84, 0, 1
@@ -4494,10 +4494,10 @@ Style_GermanMarch_Intro2A_Events:		# 2 bars of 4 beats, 863 bytes
 	ev_note	3, 84, 87, 20, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_GermanMarch_Intro2A
+	var_end	Style_GermanMarch_Ending1Major
 
-Style_GermanMarch_Intro2B:
-	var_head	Style_GermanMarch_Intro2B, 2, 4, 0xff, 0xff
+Style_GermanMarch_Ending1Minor:
+	var_head	Style_GermanMarch_Ending1Minor, 2, 4, 0xff, 0xff
 	ev_cc	0, 81, 68
 	ev_cc	1, 97, 11
 	ev_cc	2, 92, 96
@@ -4509,8 +4509,8 @@ Style_GermanMarch_Intro2B:
 	ev_cc	6, 80, 96
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 96
-	var_events	Style_GermanMarch_Intro2B
-Style_GermanMarch_Intro2B_Events:		# 2 bars of 4 beats, 863 bytes
+	var_events	Style_GermanMarch_Ending1Minor
+Style_GermanMarch_Ending1Minor_Events:		# 2 bars of 4 beats, 863 bytes
 	ev_beat
 	ev_note	0, 55, 76, 8, 0, 0
 	ev_note	1, 36, 76, 84, 0, 1
@@ -4739,10 +4739,10 @@ Style_GermanMarch_Intro2B_Events:		# 2 bars of 4 beats, 863 bytes
 	ev_note	3, 84, 87, 20, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_GermanMarch_Intro2B
+	var_end	Style_GermanMarch_Ending1Minor
 
-Style_GermanMarch_Ending2A:
-	var_head	Style_GermanMarch_Ending2A, 4, 4, 0xff, 0xff
+Style_GermanMarch_Ending2Major:
+	var_head	Style_GermanMarch_Ending2Major, 4, 4, 0xff, 0xff
 	ev_cc	0, 81, 68
 	ev_cc	1, 97, 11
 	ev_cc	2, 81, 82
@@ -4759,8 +4759,8 @@ Style_GermanMarch_Ending2A:
 	ev_cc	6, 80, 96
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 96
-	var_events	Style_GermanMarch_Ending2A
-Style_GermanMarch_Ending2A_Events:		# 4 bars of 4 beats, 1979 bytes
+	var_events	Style_GermanMarch_Ending2Major
+Style_GermanMarch_Ending2Major_Events:		# 4 bars of 4 beats, 1979 bytes
 	ev_beat
 	ev_note	0, 55, 82, 8, 0, 0
 	ev_note	0, 36, 99, 8, 0, 0
@@ -5265,10 +5265,10 @@ Style_GermanMarch_Ending2A_Events:		# 4 bars of 4 beats, 1979 bytes
 	ev_note	0, 7, 127, 8, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_GermanMarch_Ending2A
+	var_end	Style_GermanMarch_Ending2Major
 
-Style_GermanMarch_Ending2B:
-	var_head	Style_GermanMarch_Ending2B, 4, 4, 0xff, 0xff
+Style_GermanMarch_Ending2Minor:
+	var_head	Style_GermanMarch_Ending2Minor, 4, 4, 0xff, 0xff
 	ev_cc	0, 81, 68
 	ev_cc	1, 97, 11
 	ev_cc	2, 81, 82
@@ -5285,8 +5285,8 @@ Style_GermanMarch_Ending2B:
 	ev_cc	6, 80, 96
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 96
-	var_events	Style_GermanMarch_Ending2B
-Style_GermanMarch_Ending2B_Events:		# 4 bars of 4 beats, 1979 bytes
+	var_events	Style_GermanMarch_Ending2Minor
+Style_GermanMarch_Ending2Minor_Events:		# 4 bars of 4 beats, 1979 bytes
 	ev_beat
 	ev_note	0, 55, 82, 8, 0, 0
 	ev_note	0, 36, 99, 8, 0, 0
@@ -5791,4 +5791,4 @@ Style_GermanMarch_Ending2B_Events:		# 4 bars of 4 beats, 1979 bytes
 	ev_note	0, 7, 127, 8, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_GermanMarch_Ending2B
+	var_end	Style_GermanMarch_Ending2Minor

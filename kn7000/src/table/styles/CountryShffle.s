@@ -19,14 +19,14 @@ Style_CountryShffle:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_CountryShffle
 
-Style_CountryShffle_Intro1A:
-	var_head	Style_CountryShffle_Intro1A, 4, 4, 0xff, 0xff
+Style_CountryShffle_Intro1Major:
+	var_head	Style_CountryShffle_Intro1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 77
 	ev_cc	6, 7, 90
 	ev_pc	6, 0x28, 0x10, 0x20
-	var_events	Style_CountryShffle_Intro1A
-Style_CountryShffle_Intro1A_Events:		# 4 bars of 4 beats, 881 bytes
+	var_events	Style_CountryShffle_Intro1Major
+Style_CountryShffle_Intro1Major_Events:		# 4 bars of 4 beats, 881 bytes
 	ev_beat
 	ev_note	0, 2, 112, 27, 0, 0
 	ev_note	0, 35, 116, 45, 0, 0
@@ -267,17 +267,17 @@ Style_CountryShffle_Intro1A_Events:		# 4 bars of 4 beats, 881 bytes
 	ev_at	95
 	ev_note	0, 49, 111, 12, 0, 0
 	ev_end
-	var_end	Style_CountryShffle_Intro1A
+	var_end	Style_CountryShffle_Intro1Major
 
-Style_CountryShffle_Intro1B:
-	var_head	Style_CountryShffle_Intro1B, 4, 4, 0xff, 0xff
+Style_CountryShffle_Intro1Minor:
+	var_head	Style_CountryShffle_Intro1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 7, 102
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 84
 	ev_pc	2, 0x1c, 0x01, 0x20
 	ev_cc	3, 7, 96
-	var_events	Style_CountryShffle_Intro1B
-Style_CountryShffle_Intro1B_Events:		# 4 bars of 4 beats, 1171 bytes
+	var_events	Style_CountryShffle_Intro1Minor
+Style_CountryShffle_Intro1Minor_Events:		# 4 bars of 4 beats, 1171 bytes
 	ev_beat
 	ev_note	0, 35, 110, 5, 0, 0
 	ev_note	0, 19, 87, 16, 0, 0
@@ -654,10 +654,10 @@ Style_CountryShffle_Intro1B_Events:		# 4 bars of 4 beats, 1171 bytes
 	ev_at	95
 	ev_note	7, 49, 117, 14, 0, 0
 	ev_end
-	var_end	Style_CountryShffle_Intro1B
+	var_end	Style_CountryShffle_Intro1Minor
 
-Style_CountryShffle_Ending1A:
-	var_head	Style_CountryShffle_Ending1A, 4, 4, 0xff, 0xff
+Style_CountryShffle_Intro2Major:
+	var_head	Style_CountryShffle_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 7, 102
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 84
@@ -665,8 +665,8 @@ Style_CountryShffle_Ending1A:
 	ev_cc	4, 7, 79
 	ev_cc	5, 10, 64
 	ev_pc	6, 0x28, 0x10, 0x20
-	var_events	Style_CountryShffle_Ending1A
-Style_CountryShffle_Ending1A_Events:		# 4 bars of 4 beats, 1535 bytes
+	var_events	Style_CountryShffle_Intro2Major
+Style_CountryShffle_Intro2Major_Events:		# 4 bars of 4 beats, 1535 bytes
 	ev_beat
 	ev_note	0, 35, 113, 5, 0, 0
 	ev_note	7, 49, 102, 18, 0, 0
@@ -1098,10 +1098,10 @@ Style_CountryShffle_Ending1A_Events:		# 4 bars of 4 beats, 1535 bytes
 	ev_at	95
 	ev_note	7, 49, 114, 15, 0, 0
 	ev_end
-	var_end	Style_CountryShffle_Ending1A
+	var_end	Style_CountryShffle_Intro2Major
 
-Style_CountryShffle_Ending1B:
-	var_head	Style_CountryShffle_Ending1B, 4, 4, 0xff, 0xff
+Style_CountryShffle_Intro2Minor:
+	var_head	Style_CountryShffle_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 7, 102
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 84
@@ -1110,8 +1110,8 @@ Style_CountryShffle_Ending1B:
 	ev_cc	6, 7, 76
 	ev_cc	6, 10, 109
 	ev_pc	6, 0x60, 0x00, 0x20
-	var_events	Style_CountryShffle_Ending1B
-Style_CountryShffle_Ending1B_Events:		# 4 bars of 4 beats, 1467 bytes
+	var_events	Style_CountryShffle_Intro2Minor
+Style_CountryShffle_Intro2Minor_Events:		# 4 bars of 4 beats, 1467 bytes
 	ev_beat
 	ev_note	0, 35, 113, 5, 0, 0
 	ev_note	0, 51, 113, 8, 0, 0
@@ -1613,7 +1613,7 @@ Style_CountryShffle_Ending1B_Events:		# 4 bars of 4 beats, 1467 bytes
 	ev_at	74
 	ev_bend	4, 0, 64
 	ev_end
-	var_end	Style_CountryShffle_Ending1B
+	var_end	Style_CountryShffle_Intro2Minor
 
 Style_CountryShffle_Var1:
 	var_head	Style_CountryShffle_Var1, 4, 4, 0xff, 0xff
@@ -3821,13 +3821,13 @@ Style_CountryShffle_Var4Fill2_Events:		# 1 bars of 4 beats, 383 bytes
 	ev_end
 	var_end	Style_CountryShffle_Var4Fill2
 
-Style_CountryShffle_Intro2A:
-	var_head	Style_CountryShffle_Intro2A, 4, 4, 0xff, 0xff
+Style_CountryShffle_Ending1Major:
+	var_head	Style_CountryShffle_Ending1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 84
 	ev_pc	2, 0x1c, 0x01, 0x20
-	var_events	Style_CountryShffle_Intro2A
-Style_CountryShffle_Intro2A_Events:		# 4 bars of 4 beats, 1014 bytes
+	var_events	Style_CountryShffle_Ending1Major
+Style_CountryShffle_Ending1Major_Events:		# 4 bars of 4 beats, 1014 bytes
 	ev_beat
 	ev_note	7, 35, 96, 25, 0, 0
 	ev_note	7, 2, 104, 28, 0, 0
@@ -4103,17 +4103,17 @@ Style_CountryShffle_Intro2A_Events:		# 4 bars of 4 beats, 1014 bytes
 	ev_at	53
 	ev_bend	3, 0, 64
 	ev_end
-	var_end	Style_CountryShffle_Intro2A
+	var_end	Style_CountryShffle_Ending1Major
 
-Style_CountryShffle_Intro2B:
-	var_head	Style_CountryShffle_Intro2B, 4, 4, 0xff, 0xff
+Style_CountryShffle_Ending1Minor:
+	var_head	Style_CountryShffle_Ending1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 7, 102
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 84
 	ev_pc	2, 0x1c, 0x01, 0x20
 	ev_cc	3, 7, 96
-	var_events	Style_CountryShffle_Intro2B
-Style_CountryShffle_Intro2B_Events:		# 4 bars of 4 beats, 1816 bytes
+	var_events	Style_CountryShffle_Ending1Minor
+Style_CountryShffle_Ending1Minor_Events:		# 4 bars of 4 beats, 1816 bytes
 	ev_beat
 	ev_note	0, 35, 113, 5, 0, 0
 	ev_note	0, 20, 85, 21, 0, 0
@@ -4704,18 +4704,18 @@ Style_CountryShffle_Intro2B_Events:		# 4 bars of 4 beats, 1816 bytes
 	ev_note	0, 2, 117, 32, 0, 0
 	ev_note	0, 36, 127, 73, 0, 0
 	ev_end
-	var_end	Style_CountryShffle_Intro2B
+	var_end	Style_CountryShffle_Ending1Minor
 
-Style_CountryShffle_Ending2A:
-	var_head	Style_CountryShffle_Ending2A, 4, 4, 0xff, 0xff
+Style_CountryShffle_Ending2Major:
+	var_head	Style_CountryShffle_Ending2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 7, 102
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 92
 	ev_cc	4, 7, 76
 	ev_cc	5, 10, 64
 	ev_pc	6, 0x28, 0x10, 0x20
-	var_events	Style_CountryShffle_Ending2A
-Style_CountryShffle_Ending2A_Events:		# 4 bars of 4 beats, 715 bytes
+	var_events	Style_CountryShffle_Ending2Major
+Style_CountryShffle_Ending2Major_Events:		# 4 bars of 4 beats, 715 bytes
 	ev_beat
 	ev_note	0, 35, 111, 39, 0, 0
 	ev_note	7, 2, 119, 33, 0, 0
@@ -4925,10 +4925,10 @@ Style_CountryShffle_Ending2A_Events:		# 4 bars of 4 beats, 715 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_CountryShffle_Ending2A
+	var_end	Style_CountryShffle_Ending2Major
 
-Style_CountryShffle_Ending2B:
-	var_head	Style_CountryShffle_Ending2B, 4, 4, 0xff, 0xff
+Style_CountryShffle_Ending2Minor:
+	var_head	Style_CountryShffle_Ending2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 7, 102
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 84
@@ -4937,8 +4937,8 @@ Style_CountryShffle_Ending2B:
 	ev_cc	6, 7, 76
 	ev_cc	6, 10, 109
 	ev_pc	6, 0x60, 0x00, 0x20
-	var_events	Style_CountryShffle_Ending2B
-Style_CountryShffle_Ending2B_Events:		# 4 bars of 4 beats, 872 bytes
+	var_events	Style_CountryShffle_Ending2Minor
+Style_CountryShffle_Ending2Minor_Events:		# 4 bars of 4 beats, 872 bytes
 	ev_beat
 	ev_note	0, 35, 113, 5, 0, 0
 	ev_note	0, 51, 113, 8, 0, 0
@@ -5150,4 +5150,4 @@ Style_CountryShffle_Ending2B_Events:		# 4 bars of 4 beats, 872 bytes
 	ev_at	9
 	ev_note	7, 35, 126, 95, 0, 0
 	ev_end
-	var_end	Style_CountryShffle_Ending2B
+	var_end	Style_CountryShffle_Ending2Minor

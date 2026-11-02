@@ -1611,7 +1611,7 @@ func_484837DB_entry:
 loc_484837F0:
     mov     0x00008000, d0
     movhu   d0, (0x10, sp)
-    movhu   d0, (0x98050006)
+    movhu   d0, (TGA_KEY_FIFO+2)
     mov     1, d0
     call    dly_tsk_entry, [d2,a2], 0x18
     mov     0x00008000, d0
@@ -1624,7 +1624,7 @@ loc_4848381B:
     movhu   (0x10, sp), d1
     movhu   (0x14, sp), d0
     or      d0, d1
-    movhu   d1, (0x98050006)
+    movhu   d1, (TGA_KEY_FIFO+2)
     movbu   (0x30, sp), d0
     extbu   d0
     movhu   d0, (0x16, sp)
@@ -1668,7 +1668,7 @@ loc_48483878:
 loc_48483886:
     clr     d0
     movhu   d0, (0x10, sp)
-    movhu   d0, (0x98050006)
+    movhu   d0, (TGA_KEY_FIFO+2)
     mov     1, d0
     call    dly_tsk_entry, [d2,a2], 0x18
     jmp     loc_48483945
@@ -15670,8 +15670,8 @@ loc_4848BA7B:
 loc_4848BA89:
     mov     d2, d0
     ret     [d2,d3,a2,a3], 0x28
-
-func_4848BA8D:
+# PartEqFcText  (CPU 0x4848ba8d)
+PartEqFcText:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
     mov     (0x3c, sp), a0
@@ -15729,8 +15729,8 @@ loc_4848BAFE:
 loc_4848BB0F:
     mov     (0x18, sp), d0
     ret     [d2,d3,a2,a3], 0x2c
-
-func_4848BB14:
+# PartEqGainText  (CPU 0x4848bb14)
+PartEqGainText:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
     mov     (0x3c, sp), a0
@@ -29367,7 +29367,7 @@ loc_48494153:
     mov     5, a0
     add     a2, a0
     call    func_48434392_entry, 0, 0x10
-    call    func_484343C8, 0, 0
+    call    PadCurLoopGet, 0, 0
     clr     d2
     extbu   d0
     cmp     d2, d0
@@ -29377,7 +29377,7 @@ loc_48494153:
     call    strcat_entry, [a2], 4
     mov     1, d2
 loc_4849419D:
-    call    func_484343E2, 0, 0
+    call    PadCurFlag2Get, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_484941DB
@@ -29572,7 +29572,7 @@ loc_484943CF:
     extbu   d1
     call    func_484374EA_entry, [d2,d3], 0x14
     mov     a3, a0
-    call    func_4843454F_entry, [d2,a2,a3], 0x20
+    call    PadNameGet_entry, [d2,a2,a3], 0x20
     exth    d0
     cmp     0, d0
     bge     loc_484943F3
@@ -47912,12 +47912,12 @@ func_4849FE98:
 func_4849FE98_entry:
     clr     d2
     mov     d2, d0
-    movbu   d0, (0x9cc001fc)
+    movbu   d0, (LCDC_DISPLAY_MODE)
     mov     0x5a5a, a2
     mov     a2, d0
-    movhu   d0, (0x9ce00000)
+    movhu   d0, (LCDC_VRAM)
     call    func_484A4CD2_entry, [d2], 8
-    movhu   (0x9ce00000), d1
+    movhu   (LCDC_VRAM), d1
     mov     a2, d3
     cmp     d3, d1
     beq     loc_4849FEC2
@@ -47942,7 +47942,7 @@ loc_4849FEE5:
     or      0x02, d2
 loc_4849FEFF:
     mov     7, d0
-    movbu   d0, (0x9cc001fc)
+    movbu   d0, (LCDC_DISPLAY_MODE)
     mov     d2, d0
     extbu   d0
     ret     [d2,d3,a2], 0x14

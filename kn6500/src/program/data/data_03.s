@@ -12262,140 +12262,140 @@ func_4C0D84DE_entry_Lf_Table:	# 4 x u8, 255..255; read by func_4C0D84DE_entry : 
 	tab_u8	255, 255, 255, 255
 
 ptrs_4C30A6A8:
-	.long	Ed1stOnSe
-	.long	Ed2ndOnSe
-	.long	Ed3rdOnSe
-	.long	Ed4thOnSe
+	.long	loc_4C0D95EE
+	.long	loc_4C0D9603
+	.long	loc_4C0D9606
+	.long	loc_4C0D9609
 
 # 127 ApFunction procedures; a function id is (0x12e << 16) | its index (the names are the parallel table at slot 0x32e)
 User14_ApFunctions:
-	IDNAME	FN_Ed1stOnSe, EzBrillSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_Ed2ndOnSe, EzVibDepSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_Ed3rdOnSe, EzVibSpdSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_Ed4thOnSe, EzVibDlySe, User14_ApFunctions, 0x12e
-	IDNAME	FN_EzBrillSe, EzAtkSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_EzVibDepSe, EzRlsSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_EzVibSpdSe, EzDeffSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_EzVibDlySe, ToneSelGridSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_EzAtkSe, ToneGridSe1, User14_ApFunctions, 0x12e
-	IDNAME	FN_EzRlsSe, ToneGridSe2, User14_ApFunctions, 0x12e
-	IDNAME	FN_EzDeffSe, TsetGridSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_ToneSelGridSe, DrumTsetGridSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_ToneGridSe1, MonoPolySe, User14_ApFunctions, 0x12e
-	IDNAME	FN_ToneGridSe2, PortamentOnSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_TsetGridSe, PortamentTimeSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumTsetGridSe, LayerGridSe1, User14_ApFunctions, 0x12e
-	IDNAME	FN_MonoPolySe, LayerGridSe2, User14_ApFunctions, 0x12e
-	IDNAME	FN_PortamentOnSe, GraphKeyLay1Se, User14_ApFunctions, 0x12e
-	IDNAME	FN_PortamentTimeSe, GraphKeyLay2Se, User14_ApFunctions, 0x12e
-	IDNAME	FN_LayerGridSe1, GraphKeyLay3Se, User14_ApFunctions, 0x12e
-	IDNAME	FN_LayerGridSe2, GraphKeyLay4Se, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphKeyLay1Se, GraphVelLay1Se, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphKeyLay2Se, GraphVelLay2Se, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphKeyLay3Se, GraphVelLay3Se, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphKeyLay4Se, GraphVelLay4Se, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphVelLay1Se, PitchGridSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphVelLay2Se, PitchGridSe2, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphVelLay3Se, PitchGridSe3, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphVelLay4Se, AmpGridSe1, User14_ApFunctions, 0x12e
-	IDNAME	FN_PitchGridSe, AmpGridSe2, User14_ApFunctions, 0x12e
-	IDNAME	FN_PitchGridSe2, AmpGridSe3, User14_ApFunctions, 0x12e
-	IDNAME	FN_PitchGridSe3, FilterGridSe1, User14_ApFunctions, 0x12e
-	IDNAME	FN_AmpGridSe1, FilterGridSe2, User14_ApFunctions, 0x12e
-	IDNAME	FN_AmpGridSe2, FilterGridSe3, User14_ApFunctions, 0x12e
-	IDNAME	FN_AmpGridSe3, FilterGridSe4, User14_ApFunctions, 0x12e
-	IDNAME	FN_FilterGridSe1, LfoGridSe1, User14_ApFunctions, 0x12e
-	IDNAME	FN_FilterGridSe2, LfoGridSe2, User14_ApFunctions, 0x12e
-	IDNAME	FN_FilterGridSe3, LfoGridSe3, User14_ApFunctions, 0x12e
-	IDNAME	FN_FilterGridSe4, LfoGridSe4, User14_ApFunctions, 0x12e
-	IDNAME	FN_LfoGridSe1, DspOnSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_LfoGridSe2, DspTenSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_LfoGridSe3, DspSufSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_LfoGridSe4, DspGroupSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DspOnSe, DspVariSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DspTenSe, DspVOnSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DspSufSe, DspDptSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DspGroupSe, DrumDspOnSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DspVariSe, DrumDspGroupSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DspVOnSe, DrumDspVariSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DspDptSe, DrumDspVOnSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumDspOnSe, DrumDspDptSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumDspGroupSe, DeffOnSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumDspVariSe, DeffStereoSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumDspVOnSe, DeffTypeSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumDspDptSe, DeffVal0Se, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffOnSe, DeffVal0SwSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffStereoSe, DeffVal1Se, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffTypeSe, DeffVal1SwSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffVal0Se, DeffVal2Se, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffVal0SwSe, DeffVal2SwSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffVal1Se, DeffVal3Se, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffVal1SwSe, DeffVal3SwSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffVal2Se, DeffVal4Se, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffVal2SwSe, DeffVal4SwSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffVal3Se, DeffVal5Se, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffVal3SwSe, DeffVal5SwSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffVal4Se, DeffVal6Se, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffVal4SwSe, DeffVal6SwSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffVal5Se, DeffVal7Se, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffVal5SwSe, DeffVal7SwSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffVal6Se, ChoOnSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffVal6SwSe, ChoDptSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffVal7Se, RevAdjSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DeffVal7SwSe, CtrlGridSe1, User14_ApFunctions, 0x12e
-	IDNAME	FN_ChoOnSe, DrumCtrlGridSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_ChoDptSe, GlideEditSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_RevAdjSe, OctShiftSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_CtrlGridSe1, RightSplitSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumCtrlGridSe, LeftSplitSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_GlideEditSe, NamingSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_OctShiftSe, NamingFixSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_RightSplitSe, DrumNamingSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_LeftSplitSe, DrumNamingFixSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_NamingSe, MemoryBankSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_NamingFixSe, MemoryWriteSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumNamingSe, DrumMemoryWriteSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumNamingFixSe, BitmapKenbanSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_MemoryBankSe, GraphLvlKfSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_MemoryWriteSe, GraphLenvKfSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumMemoryWriteSe, GraphFltKfSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_BitmapKenbanSe, GraphPenvKfSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphLvlKfSe, GraphFenvKfSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphLenvKfSe, GraphAmpEnvSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphFltKfSe, DrumGraphAmpEnvSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphPenvKfSe, GraphPitEnvSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphFenvKfSe, GraphFltEnvSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphAmpEnvSe, GraphFltSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumGraphAmpEnvSe, GraphEqSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphPitEnvSe, DrumGraphFltSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphFltEnvSe, DrumGraphEqSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphFltSe, EnvKfGraphTitleSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_GraphEqSe, FltGraphTitleSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumGraphFltSe, EqGraphTitleSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumGraphEqSe, EqGraphXSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_EnvKfGraphTitleSe, DrumFltGraphTitleSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_FltGraphTitleSe, DrumEqGraphTitleSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_EqGraphTitleSe, DrumEqGraphXSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_EqGraphXSe, DrumMainGridSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumFltGraphTitleSe, DrumKeyNameSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumEqGraphTitleSe, DrumRevAdjSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumEqGraphXSe, DrumPrioritySe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumMainGridSe, DrumGDumpOnSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumKeyNameSe, DrumGDumpGroupSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumRevAdjSe, DrumAmpGridSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumPrioritySe, DrumLfoGridSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumGDumpOnSe, DrumFilterGridSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumGDumpGroupSe, DrumKeyOffSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumAmpGridSe, DrumGraphKeyOffXSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumLfoGridSe, CopyFromSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumFilterGridSe, CopyToSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumKeyOffSe, CopyOptSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_DrumGraphKeyOffXSe, CopyExeSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_CopyFromSe, LfoViewSe, User14_ApFunctions, 0x12e
-	IDNAME	FN_CopyToSe, func_4C0DF9CA, User14_ApFunctions, 0x12e
-	IDNAME	FN_CopyOptSe, loc_4C0DFAF0, User14_ApFunctions, 0x12e
-	IDNAME	FN_CopyExeSe, loc_4C0E2BC7, User14_ApFunctions, 0x12e
-	IDNAME	FN_LfoViewSe, func_4C0F0954, User14_ApFunctions, 0x12e
+	IDNAME	FN_Ed1stOnSe, Ed1stOnSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_Ed2ndOnSe, Ed2ndOnSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_Ed3rdOnSe, Ed3rdOnSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_Ed4thOnSe, Ed4thOnSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_EzBrillSe, EzBrillSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_EzVibDepSe, EzVibDepSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_EzVibSpdSe, EzVibSpdSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_EzVibDlySe, EzVibDlySe, User14_ApFunctions, 0x12e
+	IDNAME	FN_EzAtkSe, EzAtkSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_EzRlsSe, EzRlsSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_EzDeffSe, EzDeffSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_ToneSelGridSe, ToneSelGridSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_ToneGridSe1, ToneGridSe1, User14_ApFunctions, 0x12e
+	IDNAME	FN_ToneGridSe2, ToneGridSe2, User14_ApFunctions, 0x12e
+	IDNAME	FN_TsetGridSe, TsetGridSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumTsetGridSe, DrumTsetGridSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_MonoPolySe, MonoPolySe, User14_ApFunctions, 0x12e
+	IDNAME	FN_PortamentOnSe, PortamentOnSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_PortamentTimeSe, PortamentTimeSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_LayerGridSe1, LayerGridSe1, User14_ApFunctions, 0x12e
+	IDNAME	FN_LayerGridSe2, LayerGridSe2, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphKeyLay1Se, GraphKeyLay1Se, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphKeyLay2Se, GraphKeyLay2Se, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphKeyLay3Se, GraphKeyLay3Se, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphKeyLay4Se, GraphKeyLay4Se, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphVelLay1Se, GraphVelLay1Se, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphVelLay2Se, GraphVelLay2Se, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphVelLay3Se, GraphVelLay3Se, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphVelLay4Se, GraphVelLay4Se, User14_ApFunctions, 0x12e
+	IDNAME	FN_PitchGridSe, PitchGridSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_PitchGridSe2, PitchGridSe2, User14_ApFunctions, 0x12e
+	IDNAME	FN_PitchGridSe3, PitchGridSe3, User14_ApFunctions, 0x12e
+	IDNAME	FN_AmpGridSe1, AmpGridSe1, User14_ApFunctions, 0x12e
+	IDNAME	FN_AmpGridSe2, AmpGridSe2, User14_ApFunctions, 0x12e
+	IDNAME	FN_AmpGridSe3, AmpGridSe3, User14_ApFunctions, 0x12e
+	IDNAME	FN_FilterGridSe1, FilterGridSe1, User14_ApFunctions, 0x12e
+	IDNAME	FN_FilterGridSe2, FilterGridSe2, User14_ApFunctions, 0x12e
+	IDNAME	FN_FilterGridSe3, FilterGridSe3, User14_ApFunctions, 0x12e
+	IDNAME	FN_FilterGridSe4, FilterGridSe4, User14_ApFunctions, 0x12e
+	IDNAME	FN_LfoGridSe1, LfoGridSe1, User14_ApFunctions, 0x12e
+	IDNAME	FN_LfoGridSe2, LfoGridSe2, User14_ApFunctions, 0x12e
+	IDNAME	FN_LfoGridSe3, LfoGridSe3, User14_ApFunctions, 0x12e
+	IDNAME	FN_LfoGridSe4, LfoGridSe4, User14_ApFunctions, 0x12e
+	IDNAME	FN_DspOnSe, DspOnSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DspTenSe, DspTenSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DspSufSe, DspSufSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DspGroupSe, DspGroupSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DspVariSe, DspVariSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DspVOnSe, DspVOnSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DspDptSe, DspDptSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumDspOnSe, DrumDspOnSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumDspGroupSe, DrumDspGroupSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumDspVariSe, DrumDspVariSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumDspVOnSe, DrumDspVOnSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumDspDptSe, DrumDspDptSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffOnSe, DeffOnSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffStereoSe, DeffStereoSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffTypeSe, DeffTypeSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffVal0Se, DeffVal0Se, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffVal0SwSe, DeffVal0SwSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffVal1Se, DeffVal1Se, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffVal1SwSe, DeffVal1SwSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffVal2Se, DeffVal2Se, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffVal2SwSe, DeffVal2SwSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffVal3Se, DeffVal3Se, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffVal3SwSe, DeffVal3SwSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffVal4Se, DeffVal4Se, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffVal4SwSe, DeffVal4SwSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffVal5Se, DeffVal5Se, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffVal5SwSe, DeffVal5SwSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffVal6Se, DeffVal6Se, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffVal6SwSe, DeffVal6SwSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffVal7Se, DeffVal7Se, User14_ApFunctions, 0x12e
+	IDNAME	FN_DeffVal7SwSe, DeffVal7SwSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_ChoOnSe, ChoOnSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_ChoDptSe, ChoDptSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_RevAdjSe, RevAdjSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_CtrlGridSe1, CtrlGridSe1, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumCtrlGridSe, DrumCtrlGridSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_GlideEditSe, GlideEditSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_OctShiftSe, OctShiftSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_RightSplitSe, RightSplitSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_LeftSplitSe, LeftSplitSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_NamingSe, NamingSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_NamingFixSe, NamingFixSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumNamingSe, DrumNamingSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumNamingFixSe, DrumNamingFixSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_MemoryBankSe, MemoryBankSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_MemoryWriteSe, MemoryWriteSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumMemoryWriteSe, DrumMemoryWriteSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_BitmapKenbanSe, BitmapKenbanSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphLvlKfSe, GraphLvlKfSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphLenvKfSe, GraphLenvKfSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphFltKfSe, GraphFltKfSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphPenvKfSe, GraphPenvKfSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphFenvKfSe, GraphFenvKfSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphAmpEnvSe, GraphAmpEnvSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumGraphAmpEnvSe, DrumGraphAmpEnvSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphPitEnvSe, GraphPitEnvSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphFltEnvSe, GraphFltEnvSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphFltSe, GraphFltSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_GraphEqSe, GraphEqSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumGraphFltSe, DrumGraphFltSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumGraphEqSe, DrumGraphEqSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_EnvKfGraphTitleSe, EnvKfGraphTitleSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_FltGraphTitleSe, FltGraphTitleSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_EqGraphTitleSe, EqGraphTitleSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_EqGraphXSe, EqGraphXSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumFltGraphTitleSe, DrumFltGraphTitleSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumEqGraphTitleSe, DrumEqGraphTitleSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumEqGraphXSe, DrumEqGraphXSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumMainGridSe, DrumMainGridSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumKeyNameSe, DrumKeyNameSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumRevAdjSe, DrumRevAdjSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumPrioritySe, DrumPrioritySe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumGDumpOnSe, DrumGDumpOnSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumGDumpGroupSe, DrumGDumpGroupSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumAmpGridSe, DrumAmpGridSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumLfoGridSe, DrumLfoGridSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumFilterGridSe, DrumFilterGridSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumKeyOffSe, DrumKeyOffSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_DrumGraphKeyOffXSe, DrumGraphKeyOffXSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_CopyFromSe, CopyFromSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_CopyToSe, CopyToSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_CopyOptSe, CopyOptSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_CopyExeSe, CopyExeSe, User14_ApFunctions, 0x12e
+	IDNAME	FN_LfoViewSe, LfoViewSe, User14_ApFunctions, 0x12e
 	.space	4, 0x00
 
 User14_ApFunctionNames:
@@ -18559,7 +18559,7 @@ func_4C133252_entry_L9e_Block:	# 3 bytes, copied whole by func_4C133252_entry_L9
 	tab_u8	240, 255, 255	# [0]
 	.align	4, 0xFF	# pad after func_4C133252_entry_L9e_Block
 
-NoteConvRules:	# 128 x NoteConvRule (8 bytes each); read by func_4C058302_L9 0x4C05830B `movbu (1, a0), d0`; func_4C05831D_L9 0x4C058326 `movbu (2, a0), d0`; func_4C058338_L9 0x4C058341 `movbu (3, a0), d0` (+12)
+NoteConvRules:	# 128 x NoteConvRule (8 bytes each); read by NoteConvRuleByte1Get_L9 0x4C05830B `movbu (1, a0), d0`; NoteConvRuleByte2Get_L9 0x4C058326 `movbu (2, a0), d0`; NoteConvRuleByte3Get_L9 0x4C058341 `movbu (3, a0), d0` (+12)
 	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1	# [0]
 	NoteConvRule	is_melody=1, no_third_adj=1, table=NoteConvRules_p4_0
 	NoteConvRule	is_melody=1, alt_chord=1, no_third_adj=1, table=NoteConvRules_p4_0
@@ -18713,46 +18713,46 @@ func_4C05D924_entry_L2c_Var:	# u32, a constant; read / written by func_4C05D924_
 	.long	0x4c258fc8
 
 ptrs_4C310E00:
-	.long	InsertOptionText
-	.long	TypePriorityText
-	.long	JumpInsertFunc
-	.long	FilePriorityFunc
+	.long	loc_4C13A56F
+	.long	loc_4C13A5A8
+	.long	loc_4C13A5AB
+	.long	loc_4C13A5AE
 
 # 33 ApFunction procedures; a function id is (0x130 << 16) | its index (the names are the parallel table at slot 0x330)
 User16_ApFunctions:
-	IDNAME	FN_InsertOptionText, SetupOkFunc, User16_ApFunctions, 0x130
-	IDNAME	FN_TypePriorityText, SetupExitFunc, User16_ApFunctions, 0x130
-	IDNAME	FN_JumpInsertFunc, DiskAttention, User16_ApFunctions, 0x130
-	IDNAME	FN_FilePriorityFunc, DiskSure, User16_ApFunctions, 0x130
-	IDNAME	FN_SetupOkFunc, FormatText, User16_ApFunctions, 0x130
-	IDNAME	FN_SetupExitFunc, DeleteText, User16_ApFunctions, 0x130
-	IDNAME	FN_DiskAttention, DeleteYes, User16_ApFunctions, 0x130
-	IDNAME	FN_DiskSure, DeleteNo, User16_ApFunctions, 0x130
-	IDNAME	FN_FormatText, SaveText, User16_ApFunctions, 0x130
-	IDNAME	FN_DeleteText, SaveYes, User16_ApFunctions, 0x130
-	IDNAME	FN_DeleteYes, SaveNo, User16_ApFunctions, 0x130
-	IDNAME	FN_DeleteNo, WaitingFunc, User16_ApFunctions, 0x130
-	IDNAME	FN_SaveText, TechnicsFileNaming, User16_ApFunctions, 0x130
-	IDNAME	FN_SaveYes, TechFileNamingCustom, User16_ApFunctions, 0x130
-	IDNAME	FN_SaveNo, TechnicsFileRename, User16_ApFunctions, 0x130
-	IDNAME	FN_WaitingFunc, SmfFileNaming, User16_ApFunctions, 0x130
-	IDNAME	FN_TechnicsFileNaming, SmfFileRename, User16_ApFunctions, 0x130
-	IDNAME	FN_TechFileNamingCustom, CstFileRename, User16_ApFunctions, 0x130
-	IDNAME	FN_TechnicsFileRename, FormatDiskNaming, User16_ApFunctions, 0x130
-	IDNAME	FN_SmfFileNaming, DiskMedleyShowHideFunc, User16_ApFunctions, 0x130
-	IDNAME	FN_SmfFileRename, WakeUpPassword, User16_ApFunctions, 0x130
-	IDNAME	FN_CstFileRename, PasswordOk, User16_ApFunctions, 0x130
-	IDNAME	FN_FormatDiskNaming, PasswordNo, User16_ApFunctions, 0x130
-	IDNAME	FN_DiskMedleyShowHideFunc, PasswordText, User16_ApFunctions, 0x130
-	IDNAME	FN_WakeUpPassword, CheckPasswordText, User16_ApFunctions, 0x130
-	IDNAME	FN_PasswordOk, CheckPasswordOk, User16_ApFunctions, 0x130
-	IDNAME	FN_PasswordNo, CheckPasswordNo, User16_ApFunctions, 0x130
-	IDNAME	FN_PasswordText, DPlayCheckAndChangeTitle, User16_ApFunctions, 0x130
-	IDNAME	FN_CheckPasswordText, CmpOptWinCatch, User16_ApFunctions, 0x130
-	IDNAME	FN_CheckPasswordOk, func_4C1513C8, User16_ApFunctions, 0x130
-	IDNAME	FN_CheckPasswordNo, loc_4C15152E, User16_ApFunctions, 0x130
-	IDNAME	FN_DPlayCheckAndChangeTitle, func_4C151F35, User16_ApFunctions, 0x130
-	IDNAME	FN_CmpOptWinCatch, func_4C151FBD, User16_ApFunctions, 0x130
+	IDNAME	FN_InsertOptionText, InsertOptionText, User16_ApFunctions, 0x130
+	IDNAME	FN_TypePriorityText, TypePriorityText, User16_ApFunctions, 0x130
+	IDNAME	FN_JumpInsertFunc, JumpInsertFunc, User16_ApFunctions, 0x130
+	IDNAME	FN_FilePriorityFunc, FilePriorityFunc, User16_ApFunctions, 0x130
+	IDNAME	FN_SetupOkFunc, SetupOkFunc, User16_ApFunctions, 0x130
+	IDNAME	FN_SetupExitFunc, SetupExitFunc, User16_ApFunctions, 0x130
+	IDNAME	FN_DiskAttention, DiskAttention, User16_ApFunctions, 0x130
+	IDNAME	FN_DiskSure, DiskSure, User16_ApFunctions, 0x130
+	IDNAME	FN_FormatText, FormatText, User16_ApFunctions, 0x130
+	IDNAME	FN_DeleteText, DeleteText, User16_ApFunctions, 0x130
+	IDNAME	FN_DeleteYes, DeleteYes, User16_ApFunctions, 0x130
+	IDNAME	FN_DeleteNo, DeleteNo, User16_ApFunctions, 0x130
+	IDNAME	FN_SaveText, SaveText, User16_ApFunctions, 0x130
+	IDNAME	FN_SaveYes, SaveYes, User16_ApFunctions, 0x130
+	IDNAME	FN_SaveNo, SaveNo, User16_ApFunctions, 0x130
+	IDNAME	FN_WaitingFunc, WaitingFunc, User16_ApFunctions, 0x130
+	IDNAME	FN_TechnicsFileNaming, TechnicsFileNaming, User16_ApFunctions, 0x130
+	IDNAME	FN_TechFileNamingCustom, TechFileNamingCustom, User16_ApFunctions, 0x130
+	IDNAME	FN_TechnicsFileRename, TechnicsFileRename, User16_ApFunctions, 0x130
+	IDNAME	FN_SmfFileNaming, SmfFileNaming, User16_ApFunctions, 0x130
+	IDNAME	FN_SmfFileRename, SmfFileRename, User16_ApFunctions, 0x130
+	IDNAME	FN_CstFileRename, CstFileRename, User16_ApFunctions, 0x130
+	IDNAME	FN_FormatDiskNaming, FormatDiskNaming, User16_ApFunctions, 0x130
+	IDNAME	FN_DiskMedleyShowHideFunc, DiskMedleyShowHideFunc, User16_ApFunctions, 0x130
+	IDNAME	FN_WakeUpPassword, WakeUpPassword, User16_ApFunctions, 0x130
+	IDNAME	FN_PasswordOk, PasswordOk, User16_ApFunctions, 0x130
+	IDNAME	FN_PasswordNo, PasswordNo, User16_ApFunctions, 0x130
+	IDNAME	FN_PasswordText, PasswordText, User16_ApFunctions, 0x130
+	IDNAME	FN_CheckPasswordText, CheckPasswordText, User16_ApFunctions, 0x130
+	IDNAME	FN_CheckPasswordOk, CheckPasswordOk, User16_ApFunctions, 0x130
+	IDNAME	FN_CheckPasswordNo, CheckPasswordNo, User16_ApFunctions, 0x130
+	IDNAME	FN_DPlayCheckAndChangeTitle, DPlayCheckAndChangeTitle, User16_ApFunctions, 0x130
+	IDNAME	FN_CmpOptWinCatch, CmpOptWinCatch, User16_ApFunctions, 0x130
 	.space	4, 0x00
 
 User16_ApFunctionNames:

@@ -106,9 +106,18 @@ it: 551 names on the KN6000.  `gen_symbols.py` had found only 21 of these tables
 | JPEG / BMP files                | 3                                | whole files                                                      |
 
 The bitmap PNGs keep the pixel VALUES; their palette is the bitmap's own when it has one, grey
-levels otherwise.  [INFERENCE] the pixel order (MSB / high nibble leftmost) from the pictures
-(the KN6000 keyboard drawing of `BitmapKn6000` reads right).  The row pad to an even byte count is
-measured: every bitmap's room up to the next referenced address is exactly that.
+levels otherwise.  The pixel order is the drawing code's (traced 2026-11-02, lane mn10300-names; it was an
+[INFERENCE] from the pictures): `VwUserBitmapProc` (0x4C00AA38), the MT_GetBitmapData consumer, asks
+MT_GetBitCount and draws 1 bit with `DrawBitmapSP2`, 8 bits with `DrawBitmapSPFast256` / `DrawBitmapSPFast`, any
+other depth (4) with `DrawBitmapSPFast16`.  `DrawBitmapSP2_Impl` reads each row as 16-bit words, swaps the two
+bytes (`asr 8, d2 / and 0xff, d2 ... asl 8, d1 / add d1, d2`) and tests bit 15 - n for pixel n, so the leftmost
+pixel is bit 7 of the first byte, a set bit is the foreground colour; rows are whole 16-bit words.
+`DrawBitmapSPFast16_Impl` expands each byte through `DrawBitmapSPFast16_Impl_entry_L58_Table`, whose entry b is
+(0x20 + (b & 0xF)) << 8 | (0x20 + (b >> 4)), and stores the low byte first, so the high nibble is the left
+pixel, drawn as colour 0x20 + n; it loads palette entries 0x20..0x2F from the bitmap's 16 colours and skips a
+byte after an odd row byte count.  `DrawBitmapSPFast256_Impl` copies a row as is (`memcpy`) and steps
+(w + 1) / 2 * 2 bytes.  So every row pad is to an even byte count, as the room up to the next referenced
+address also shows.
 
 ## Code gaps
 
@@ -174,7 +183,27 @@ banks, at 0x4C2B7668, copied by func_4C03D5A1 as the KN6000's func_4C03D431 copi
   `../../kn7000/notes/mn10300-data/README.md` section 3.)
 - [INFERENCE] the bitmap pixel order; the TABLE-tone and voice-record field names are the
   KN7000's (`voice_record.inc`), not re-traced in the KN6000's code.
+  (Partly resolved 2026-11-02, lane mn10300-names.  The pixel order is traced, see "Other typed structures"
+  above.  The record layouts are the KN6000's own: its accessors use the KN7000's offsets -- `VoiceSubRecFetch`
+  0x4C07C472 (voice record +0x10 + n * 0x1C, n from +0x0D), `VoiceModRecFetch` 0x4C07C511 (+0x54 + unit * 0x7A,
+  remapped through +0x11), func_4C07D08C (a CUSTOM voice record +0x48 + k * 0x23, the elements), func_4C07CFA0 /
+  func_4C07D031 (a SOUND EDIT record +0x54 + n * 0x7A / +0x23C + k * 0x23), the 0x8E-byte voice stride at
+  +0x1A7 of the CUSTOM block (func_4C07CF55) -- and a TABLE tone's note entry at +0x27 + 3 * note is the
+  key of a voice record: func_4C07CF55 / func_4C07CFD6 / func_4C07D08C pass its bytes {+0, +1, +2} to
+  `VoiceRecFetchBanked` 0x4C07C3D4, which hands SoundBankIndexGet (+0 & 0x7F, +1, +2).  Of the field readers
+  `voice_record.inc` cites, 21 are in the KN6000 as the same code (carried by
+  `port_names_by_code.py` with every offset kept) and 2 more are named here; 33 are not ported, so the
+  per-field names those alone support (TgNoteOn's tone_class, the Tg*Calc EG and level fields, TgPartAuxHdr45..47)
+  are still the KN7000's.  Probe `../../kn7000/notes/mn10300-names-probes/siblings_kn6000_voice_readers.py`.
+  Next step: port the remaining 33 KN7000 library routines to the KN6000 (fn_similarity.py, whose callers are now
+  named) and compare their displacement operands.)
 - The 13 KN6000 bitmap procedures' names: four are `func_<ADDR>`.
+  (Resolved 2026-11-02, lane mn10300-names: all four belong to `ComputerConnection`'s screen.
+  `BitmapCompConnDiagram` 0x4C0A0012, 296 x 108, is the MIDI connection diagram drawn in all three modes;
+  `BitmapCompConnMaster` 0x4C0A004D, 17 x 19, is drawn over it for "KN as master"; `BitmapCompConnSlaveArrow`
+  0x4C0A0087, 10 x 12, and `BitmapCompConnSlaveWire` 0x4C0A00C1, 253 x 24, for "KN as slave".  KN6500 twins
+  0x4C09FD93 / 4C09FDCE / 4C09FE08 / 4C09FE42, the same pixel bytes.  `kn6000_manual.sym` / `kn6500_manual.sym`;
+  probe `../../kn7000/notes/mn10300-names-probes/siblings_kn6000_compconn_bitmaps.py`.)
 
 ## Website page draft
 

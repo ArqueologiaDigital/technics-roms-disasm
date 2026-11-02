@@ -29,8 +29,10 @@
 	.be24	\s_Var2 - \s, \s_Var2Fill1 - \s, \s_Var2Fill2 - \s
 	.be24	\s_Var3 - \s, \s_Var3Fill1 - \s, \s_Var3Fill2 - \s
 	.be24	\s_Var4 - \s, \s_Var4Fill1 - \s, \s_Var4Fill2 - \s
-	.be24	\s_Intro1A - \s, \s_Intro1B - \s, \s_Intro2A - \s, \s_Intro2B - \s
-	.be24	\s_Ending1A - \s, \s_Ending1B - \s, \s_Ending2A - \s, \s_Ending2B - \s
+	# slots 12..19: INTRO 1 = 12 + major / minor, ENDING 1 = 14, INTRO 2 = 16, ENDING 2 = 18
+	# (941 func_484437DA / func_484439EB; the half is ChordTypeIsMinor: notes/ic18-rhythm-rom.md)
+	.be24	\s_Intro1Major - \s, \s_Intro1Minor - \s, \s_Ending1Major - \s, \s_Ending1Minor - \s
+	.be24	\s_Intro2Major - \s, \s_Intro2Minor - \s, \s_Ending2Major - \s, \s_Ending2Minor - \s
 .endm
 # A variation record (StyleRecordBindBuiltin 0x484336DB): bars - 1 (-> 0x50122DCE), beats a
 # bar - 1 (-> 0x50122DCF), two part numbers for the sound units (0xFF = none; func_48442164,
@@ -92,9 +94,11 @@
 .endm
 # A "Technics Pads" pad record after its 16-byte name (TechnicsPadsResource): bars - 1 and
 # beats a bar - 1 as in a variation record (the stream holds bars x beats beat markers),
-# then four bytes with no reader traced: `kind` takes 0-14, b13 and b14 are 0 and b15 is
-# 0xFF in all 120 pads [INFERENCE: b15 an unused part number, as var_head's]. Two part
-# set-ups (style_part) and the event stream follow.
+# then `kind`, the pad's flags (func_48434096 -> 0x50122E06; the TPAD twin +0x1A): bit 0 LOOP,
+# bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync), bit 2 / bit 3 set on the
+# "Maj" / "Min" pads [INFERENCE: a fixed-chord pad / minor]; then b13-b15, which no routine
+# reads (0, 0, 0xFF in all 120 pads) [INFERENCE: b15 an unused part number, as var_head's].
+# Two part set-ups (style_part) and the event stream follow.
 .macro pad_head bars, beats, kind, b13, b14, b15
 	.byte	\bars - 1, \beats - 1, \kind, \b13, \b14, \b15
 .endm
@@ -102,19 +106,22 @@
 	.be24	\p_EventsEnd - \p_Events
 .endm
 # One of the eight 3-byte entries of a 'ZZZJ' record (SramRecordDefaultsZZZJ, table segment
-# 1; SramRecordsLoadFactory copies the 220 records to battery SRAM 0x84030FF8). Bit 7 of a
-# record's first byte is a flag that func_4843FCE6 sets or clears and func_4843FCA2 tests,
-# for the record func_4843FACD picks from GetM3EmVal(0xC000). [INFERENCE] Each entry is a
-# program change's data bytes {prog, bank_lsb, bank_msb}, as in style_part: bank_msb is 0x26
-# in entries 0 and 1 of every record (the drum bank of the style format) and 0x20 elsewhere
-# in 217 of 220; the role of the eight entries and of the 220 records (220 = the rhythm
-# count) is not traced.
+# 1; SramRecordsLoadFactory copies the 220 records to battery SRAM 0x84030FF8): the SOUND
+# ARRANGER's factory sound {prog, bank_lsb, bank_msb} for one accompaniment part of one preset
+# rhythm. Record n = preset rhythm n (StyleIdToPresetOrdinal 0x4843FACD); entries in the order
+# Drum, Perc, Bass, Acc1-Acc5 (0x485B73A0, 0x485B7396). Bit 7 of prog: in entry 0 the arranger
+# is ON for the rhythm (SndArgOnSet 0x4843FCE6, SndArgIsOn 0x4843FCA2); in entries 2..7 the
+# part's CC94 is 127 instead of 0 (SndArgTemplateApply 0x4843FFD0); in entry 1 always 0.
+# notes/table-semantics-2026-10-29.md, notes/mn10300-names-probes/songtable_zzzj.py.
 .macro zzzj_voice prog, bank_lsb, bank_msb
 	.byte	\prog, \bank_lsb, \bank_msb
 .endm
-# Fields 15-23 of the part-field table 0x485B77D4 that a MEMORY ('TCMP') variation record
-# keeps after a part's 15 style_part fields (a 0x18-byte part block). [INFERENCE] In the
-# table's order: CC64, CC1, CC11, channel pressure, pitch bend (two bytes), CC16, CC17, CC13.
+# The 9 bytes a MEMORY ('TCMP') variation record keeps after a part's 15 style_part fields
+# (a 0x18-byte part block). No firmware routine reads or writes them: func_4844187A copies 15
+# bytes of each block into the part template and func_48441EB4 writes 15; they are 0 in every
+# TCMP container (notes/mn10300-names-probes/songtable_part_more.py). [INFERENCE] The size
+# matches fields 15-23 of the part-field table 0x485B77D4, hence the names, in the table's
+# order: CC64, CC1, CC11, channel pressure, pitch bend (two bytes), CC16, CC17, CC13.
 .macro part_more cc64, cc1, cc11, pressure, bend_a, bend_b, cc16, cc17, cc13
 	.byte	\cc64, \cc1, \cc11, \pressure, \bend_a, \bend_b, \cc16, \cc17, \cc13
 .endm

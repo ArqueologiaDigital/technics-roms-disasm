@@ -12,8 +12,8 @@
 0x48705BDF  crt0_start      ; _reset's target: ports + memory controller (0x32000020..0x32000042), sp = 0x5006908C, clears 0x50006E88 (+0x189178) and 0x502B8000 (+0x148000), copies .data 0x485DD334 -> 0x50000010 (0x6E78 bytes), writes the jmp vectors at 0x90000000/0x90000006, then calls func_4870587E_entry and jumps to func_48728591
 ;
 ; ---- after the code linked for work RAM (file 0x3965b8..0x3965d3) --------------
-0x487965B8  RamCodeTrailer  ; 7 bytes, then 5 words: 0x487285BE (flash start of the RAM-linked code), 0x50120000 (its link address), 0x00038003, 0x487965B8 (this address: the flash end of that code), 0x5018FFF0; func_4870587E reads it byte by byte from +3 (movbu, each word assembled little-endian with asl 8 / 16 / 24) and steps 12 bytes a record (corrected 2026-10-30, lane generic-zero: the note said no code read it) [INFERENCE: a copy descriptor]
-0x487965BF  RamCodeTrailerWords  ; RamCodeTrailer+7: its five words (gen_image_s.py --long-table), which func_4870587E reads byte by byte
+0x487965B8  RamCodeTrailer  ; 7 bytes, then 5 words: 0x487285BE (flash start of the RAM-linked code), 0x50120000 (its link address), 0x00038003, 0x487965B8 (this address: the flash end of that code), 0x5018FFF0; RamSectionsCopy (func_4870587E) reads it byte by byte from +3 (movbu, each word assembled little-endian with asl 8 / 16 / 24) and steps 12 bytes a record (corrected 2026-10-30, lane generic-zero: the note said no code read it). Settled 2026-11-02 (lane mn10300-names): +0..+2 are the 3 bytes the second record copies to 0x5018FFF0 (de 00 00, `retf [], 0`; no word or branch of the image names 0x5018FFF0); +3 is RamSectionsCopy's table of two 12-byte records {u16 flags, u16 length, u32 source, u32 dest}: {0x0002, 0xDFFA, 0x487285BE, 0x50120000} (0x6DFFA bytes = the next source - this one) and {0x8003 (bit 15: last), 3, 0x487965B8, 0x5018FFF0}
+0x487965BF  RamCodeTrailerWords  ; RamCodeTrailer+7: its five words (gen_image_s.py --long-table), which RamSectionsCopy reads byte by byte: record 0's source and dest, record 1's flags + length (0x00038003), source and dest
 ;
 ; ---- data ----------------------------------------------------------------------
 0x4852BD9C  TechnicsRhythmsResource ; built-in rhythm style resource in IC18's format, one style (as the KN7000's at 0x48729988, typed by kn7000/tools/program_rhythm.py); its name string "Technics Rhythms" is also at 0x4852BC20
@@ -191,3 +191,10 @@
 0x5014A95C  ResourceIdFind             ; (d0 = 24-bit id) walks ResourceIdTrie by the id's nibbles (lsr / and 0x0f / asl 3; `mov (a1), d1`, `movbu (4, a1)`, `movbu (5, a1)`) and answers the leaf whose +0 is the id, else 0
 0x48541610  FxCurveKeep4               ; coefficient 0x8D = 4: an empty coefficient record (`fd 00 03 ff`), FxCurveKeep's twin (FxDspQueueFlush)
 0x48541614  FxCurveKeep5               ; coefficient 0x8D = 5: the same
+;
+; ---- the start-up's RAM copy and the title table (lane mn10300-names, 2026-11-02; probe
+;      kn7000/notes/mn10300-names-probes/siblings_kn2400_ram_copy_table.py; notes/data-region/README.md) ------
+0x4870587E  RamSectionsCopy            ; crt0_start's last call before KernelStart: walks the 12-byte records {u16 flags (bit 15 = last), u16 length (the last record's), u32 source, u32 dest} from RamCodeTrailer+3, reading each field byte by byte; length = the next record's source - source except for the last; a dest below 0x80000000 is written at dest + 0x40000000 (the uncached view); copies with setlb / movbu / lcs. Here: 0x487285BE -> 0x50120000, 0x6DFFA bytes (the RAM-linked code), and 0x487965B8 -> 0x5018FFF0, 3 bytes
+0x48414BD8  TitleNameTable             ; 320 pointers to the titles' own names ("_TT_PS" .. "_TT_13f"): InitModeTitleTable stores [i] at +0xC of title record i (0x50037260 + i * 0x1C) before any RegisterTitle call, so a title no call registers keeps it (0x0F "_TT_CTHOMEPAGE", 0x102 "_TT_VDOUT")
+0x48413C58  ModeNameTable              ; 32 pointers to the modes' own names ("_MD_PS" .. "_MD_1f"): InitModeTitleTable stores [i] at +0xC of mode record i (0x50037060 + i * 0x10)
+0x484151C0  TitleDefaultRecord         ; the 28-byte record InitModeTitleTable copies into all 320 title records (`mov -7, d1 / setlb / mov (a1), d0 / inc4 a1 / mov d0, (a0)`): function 0x00020000, screen -1, OT block -1, a name (overwritten from TitleNameTable), then zeros

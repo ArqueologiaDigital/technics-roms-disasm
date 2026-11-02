@@ -19,16 +19,16 @@ Style_GypsyDance:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_GypsyDance
 
-Style_GypsyDance_Intro1A:
-	var_head	Style_GypsyDance_Intro1A, 4, 4, 0xff, 0x03
+Style_GypsyDance_Intro1Major:
+	var_head	Style_GypsyDance_Intro1Major, 4, 4, 0xff, 0x03
 	ev_cc	1, 97, 11
 	ev_cc	4, 7, 127
 	ev_pc	4, 0x00, 0x00, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_GypsyDance_Intro1A
-Style_GypsyDance_Intro1A_Events:		# 4 bars of 4 beats, 1718 bytes
+	var_events	Style_GypsyDance_Intro1Major
+Style_GypsyDance_Intro1Major_Events:		# 4 bars of 4 beats, 1718 bytes
 	ev_beat
 	ev_note	0, 94, 87, 8, 0, 0
 	ev_note	2, 55, 79, 22, 0, 1
@@ -497,10 +497,10 @@ Style_GypsyDance_Intro1A_Events:		# 4 bars of 4 beats, 1718 bytes
 	ev_at	7
 	ev_note	0, 97, 123, 8, 0, 0
 	ev_end
-	var_end	Style_GypsyDance_Intro1A
+	var_end	Style_GypsyDance_Intro1Major
 
-Style_GypsyDance_Intro1B:
-	var_head	Style_GypsyDance_Intro1B, 4, 4, 0xff, 0x03
+Style_GypsyDance_Intro1Minor:
+	var_head	Style_GypsyDance_Intro1Minor, 4, 4, 0xff, 0x03
 	ev_cc	0, 7, 109
 	ev_cc	1, 97, 11
 	ev_cc	4, 7, 127
@@ -508,8 +508,8 @@ Style_GypsyDance_Intro1B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_GypsyDance_Intro1B
-Style_GypsyDance_Intro1B_Events:		# 4 bars of 4 beats, 1718 bytes
+	var_events	Style_GypsyDance_Intro1Minor
+Style_GypsyDance_Intro1Minor_Events:		# 4 bars of 4 beats, 1718 bytes
 	ev_beat
 	ev_note	0, 94, 87, 8, 0, 0
 	ev_note	2, 55, 79, 22, 0, 1
@@ -978,17 +978,17 @@ Style_GypsyDance_Intro1B_Events:		# 4 bars of 4 beats, 1718 bytes
 	ev_at	7
 	ev_note	0, 97, 123, 8, 0, 0
 	ev_end
-	var_end	Style_GypsyDance_Intro1B
+	var_end	Style_GypsyDance_Intro1Minor
 
-Style_GypsyDance_Ending1A:
-	var_head	Style_GypsyDance_Ending1A, 8, 4, 0xff, 0xff
+Style_GypsyDance_Intro2Major:
+	var_head	Style_GypsyDance_Intro2Major, 8, 4, 0xff, 0xff
 	ev_cc	0, 7, 109
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_GypsyDance_Ending1A
-Style_GypsyDance_Ending1A_Events:		# 8 bars of 4 beats, 3287 bytes
+	var_events	Style_GypsyDance_Intro2Major
+Style_GypsyDance_Intro2Major_Events:		# 8 bars of 4 beats, 3287 bytes
 	ev_beat
 	ev_at	3
 	ev_note	3, 48, 96, 91, 2, 1
@@ -1883,17 +1883,17 @@ Style_GypsyDance_Ending1A_Events:		# 8 bars of 4 beats, 3287 bytes
 	ev_beat
 	ev_note	0, 65, 118, 8, 0, 0
 	ev_end
-	var_end	Style_GypsyDance_Ending1A
+	var_end	Style_GypsyDance_Intro2Major
 
-Style_GypsyDance_Ending1B:
-	var_head	Style_GypsyDance_Ending1B, 8, 4, 0xff, 0xff
+Style_GypsyDance_Intro2Minor:
+	var_head	Style_GypsyDance_Intro2Minor, 8, 4, 0xff, 0xff
 	ev_cc	0, 7, 109
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_GypsyDance_Ending1B
-Style_GypsyDance_Ending1B_Events:		# 8 bars of 4 beats, 3287 bytes
+	var_events	Style_GypsyDance_Intro2Minor
+Style_GypsyDance_Intro2Minor_Events:		# 8 bars of 4 beats, 3287 bytes
 	ev_beat
 	ev_at	3
 	ev_note	3, 48, 96, 91, 2, 1
@@ -2788,7 +2788,7 @@ Style_GypsyDance_Ending1B_Events:		# 8 bars of 4 beats, 3287 bytes
 	ev_beat
 	ev_note	0, 65, 118, 8, 0, 0
 	ev_end
-	var_end	Style_GypsyDance_Ending1B
+	var_end	Style_GypsyDance_Intro2Minor
 
 Style_GypsyDance_Var1:
 	var_head	Style_GypsyDance_Var1, 4, 4, 0xff, 0xff
@@ -6530,16 +6530,16 @@ Style_GypsyDance_Var4Fill2_Events:		# 1 bars of 4 beats, 484 bytes
 	ev_end
 	var_end	Style_GypsyDance_Var4Fill2
 
-Style_GypsyDance_Intro2A:
-	var_head	Style_GypsyDance_Intro2A, 4, 4, 0xff, 0x03
+Style_GypsyDance_Ending1Major:
+	var_head	Style_GypsyDance_Ending1Major, 4, 4, 0xff, 0x03
 	ev_cc	1, 97, 11
 	ev_cc	4, 7, 127
 	ev_pc	4, 0x00, 0x00, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_GypsyDance_Intro2A
-Style_GypsyDance_Intro2A_Events:		# 4 bars of 4 beats, 2285 bytes
+	var_events	Style_GypsyDance_Ending1Major
+Style_GypsyDance_Ending1Major_Events:		# 4 bars of 4 beats, 2285 bytes
 	ev_beat
 	ev_note	0, 94, 87, 8, 0, 0
 	ev_note	0, 55, 103, 8, 0, 0
@@ -7145,10 +7145,10 @@ Style_GypsyDance_Intro2A_Events:		# 4 bars of 4 beats, 2285 bytes
 	ev_at	88
 	ev_cc	3, 64, 0
 	ev_end
-	var_end	Style_GypsyDance_Intro2A
+	var_end	Style_GypsyDance_Ending1Major
 
-Style_GypsyDance_Intro2B:
-	var_head	Style_GypsyDance_Intro2B, 4, 4, 0xff, 0x03
+Style_GypsyDance_Ending1Minor:
+	var_head	Style_GypsyDance_Ending1Minor, 4, 4, 0xff, 0x03
 	ev_cc	0, 7, 109
 	ev_cc	1, 97, 11
 	ev_cc	4, 7, 127
@@ -7156,8 +7156,8 @@ Style_GypsyDance_Intro2B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_GypsyDance_Intro2B
-Style_GypsyDance_Intro2B_Events:		# 4 bars of 4 beats, 2285 bytes
+	var_events	Style_GypsyDance_Ending1Minor
+Style_GypsyDance_Ending1Minor_Events:		# 4 bars of 4 beats, 2285 bytes
 	ev_beat
 	ev_note	0, 94, 87, 8, 0, 0
 	ev_note	0, 55, 103, 8, 0, 0
@@ -7763,17 +7763,17 @@ Style_GypsyDance_Intro2B_Events:		# 4 bars of 4 beats, 2285 bytes
 	ev_at	88
 	ev_cc	3, 64, 0
 	ev_end
-	var_end	Style_GypsyDance_Intro2B
+	var_end	Style_GypsyDance_Ending1Minor
 
-Style_GypsyDance_Ending2A:
-	var_head	Style_GypsyDance_Ending2A, 4, 4, 0xff, 0xff
+Style_GypsyDance_Ending2Major:
+	var_head	Style_GypsyDance_Ending2Major, 4, 4, 0xff, 0xff
 	ev_cc	0, 7, 109
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_GypsyDance_Ending2A
-Style_GypsyDance_Ending2A_Events:		# 4 bars of 4 beats, 3669 bytes
+	var_events	Style_GypsyDance_Ending2Major
+Style_GypsyDance_Ending2Major_Events:		# 4 bars of 4 beats, 3669 bytes
 	ev_beat
 	ev_note	0, 36, 103, 8, 0, 0
 	ev_note	0, 63, 70, 8, 0, 0
@@ -8674,17 +8674,17 @@ Style_GypsyDance_Ending2A_Events:		# 4 bars of 4 beats, 3669 bytes
 	ev_at	48
 	ev_cc	3, 64, 0
 	ev_end
-	var_end	Style_GypsyDance_Ending2A
+	var_end	Style_GypsyDance_Ending2Major
 
-Style_GypsyDance_Ending2B:
-	var_head	Style_GypsyDance_Ending2B, 4, 4, 0xff, 0xff
+Style_GypsyDance_Ending2Minor:
+	var_head	Style_GypsyDance_Ending2Minor, 4, 4, 0xff, 0xff
 	ev_cc	0, 7, 109
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_GypsyDance_Ending2B
-Style_GypsyDance_Ending2B_Events:		# 4 bars of 4 beats, 3669 bytes
+	var_events	Style_GypsyDance_Ending2Minor
+Style_GypsyDance_Ending2Minor_Events:		# 4 bars of 4 beats, 3669 bytes
 	ev_beat
 	ev_note	0, 36, 103, 8, 0, 0
 	ev_note	0, 63, 70, 8, 0, 0
@@ -9585,4 +9585,4 @@ Style_GypsyDance_Ending2B_Events:		# 4 bars of 4 beats, 3669 bytes
 	ev_at	48
 	ev_cc	3, 64, 0
 	ev_end
-	var_end	Style_GypsyDance_Ending2B
+	var_end	Style_GypsyDance_Ending2Minor

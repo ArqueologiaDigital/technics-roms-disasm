@@ -16144,11 +16144,11 @@ Str_TT_SEDNAME:	.asciz "TT_SEDNAME"
 Str_TT_SELFOVIEW:	.asciz "TT_SELFOVIEW"
 	.align	4, 0xFF	# pad after Str_TT_SELFOVIEW
 
-BitmapKenbanSe_Palette:	# 16 colours, 0x00BBGGRR (GraphPenvKfSe: MT_GetBitmapPalette)
+BitmapKenbanSe_Palette:	# 16 colours, 0x00BBGGRR (BitmapKenbanSe: MT_GetBitmapPalette)
 	.long	0x00000000, 0x00000080, 0x00008000, 0x00008080, 0x00800000, 0x00800080, 0x00808000, 0x00C0C0C0
 	.long	0x00808080, 0x000000FF, 0x0000FF00, 0x0000FFFF, 0x00FF0000, 0x00FF00FF, 0x00FFFF00, 0x00FFFFFF
 
-BitmapKenbanSe_Pixels:	# 209 x 16, 4 bit(s) a pixel, rows padded to even bytes: the bitmap GraphPenvKfSe answers MT_GetBitmapData with (src/program/data/media/BitmapKenbanSe_Pixels.png)
+BitmapKenbanSe_Pixels:	# 209 x 16, 4 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapKenbanSe answers MT_GetBitmapData with (src/program/data/media/BitmapKenbanSe_Pixels.png)
 	.incbin	"build/bitmaps/BitmapKenbanSe_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 4 209 16) from src/program/data/media/BitmapKenbanSe_Pixels.png
 
 Str_MD_SOUNDEDIT_4:	.asciz "MD_SOUNDEDIT"
@@ -17523,7 +17523,7 @@ DeffVal2Se_L1b3_Table:
 	.long	loc_4C0E0C19
 	.long	loc_4C0E0C46
 	.long	loc_4C0E0C73
-	.long	DeffVal2Se_L2f7
+	.long	DeffVal0Se_L2f7
 	.long	loc_4C0E0C9F
 	.long	loc_4C0E0C9F
 DeffVal2Se_Lf9_Table:
@@ -17537,7 +17537,7 @@ DeffVal2Se_Lf9_Table:
 	.long	loc_4C0E0AD8
 	.long	loc_4C0E0AD8
 	.long	loc_4C0E0AD8
-	.long	DeffVal2Se_L188
+	.long	DeffVal0Se_L188
 	.long	loc_4C0E0B01
 	.long	loc_4C0E0B01
 DeffVal2Se_Lb3_Table:
@@ -17551,7 +17551,7 @@ DeffVal2Se_Lb3_Table:
 	.long	loc_4C0E0AA0
 	.long	loc_4C0E0AA0
 	.long	loc_4C0E0AA0
-	.long	DeffVal2Se_Le1
+	.long	DeffVal0Se_Le1
 	.long	loc_4C0E0AA0
 	.long	loc_4C0E0AA0
 DeffVal2Se_L4d_Table:
@@ -17565,7 +17565,7 @@ DeffVal2Se_L4d_Table:
 	.long	loc_4C0E0A3A
 	.long	loc_4C0E0A3A
 	.long	loc_4C0E0A53
-	.long	DeffVal2Se_Laf
+	.long	DeffVal0Se_Laf
 	.long	loc_4C0E0A6C
 	.long	loc_4C0E0A6C
 DeffVal3Se_L1f6_Table:
@@ -17579,7 +17579,7 @@ DeffVal3Se_L1f6_Table:
 	.long	loc_4C0E0F85
 	.long	loc_4C0E0FB2
 	.long	loc_4C0E0FDF
-	.long	DeffVal3Se_L33a
+	.long	DeffVal1Se_L33a
 	.long	loc_4C0E100B
 	.long	loc_4C0E100B
 DeffVal3Se_L144_Table:
@@ -17593,7 +17593,7 @@ DeffVal3Se_L144_Table:
 	.long	loc_4C0E0E4C
 	.long	loc_4C0E0E75
 	.long	loc_4C0E0E9F
-	.long	DeffVal3Se_L1cb
+	.long	DeffVal1Se_L1cb
 	.long	loc_4C0E0E9F
 	.long	loc_4C0E0E9F
 DeffVal3Se_Lcd_Table:
@@ -17607,7 +17607,7 @@ DeffVal3Se_Lcd_Table:
 	.long	loc_4C0E0DE3
 	.long	loc_4C0E0DFA
 	.long	loc_4C0E0E14
-	.long	DeffVal3Se_L12c
+	.long	DeffVal1Se_L12c
 	.long	loc_4C0E0E14
 	.long	loc_4C0E0E14
 DeffVal3Se_L4d_Table:
@@ -17621,7 +17621,7 @@ DeffVal3Se_L4d_Table:
 	.long	loc_4C0E0D63
 	.long	loc_4C0E0D7C
 	.long	loc_4C0E0D96
-	.long	DeffVal3Se_Lc9
+	.long	DeffVal1Se_Lc9
 	.long	loc_4C0E0DAF
 	.long	loc_4C0E0DAF
 DeffVal4Se_L34a_Table:
@@ -17635,7 +17635,7 @@ DeffVal4Se_L34a_Table:
 	.long	loc_4C0E1445
 	.long	loc_4C0E1472
 	.long	loc_4C0E149F
-	.long	DeffVal4Se_L48e
+	.long	DeffVal2Se_L48e
 	.long	loc_4C0E14CB
 	.long	loc_4C0E14CB
 DeffVal4Se_L1b1_Table:
@@ -17649,7 +17649,7 @@ DeffVal4Se_L1b1_Table:
 	.long	loc_4C0E130C
 	.long	loc_4C0E1335
 	.long	loc_4C0E135F
-	.long	DeffVal4Se_L31f
+	.long	DeffVal2Se_L31f
 	.long	loc_4C0E135F
 	.long	loc_4C0E135F
 DeffVal4Se_L120_Table:
@@ -17663,7 +17663,7 @@ DeffVal4Se_L120_Table:
 	.long	loc_4C0E11BC
 	.long	loc_4C0E11D3
 	.long	loc_4C0E11ED
-	.long	DeffVal4Se_L199
+	.long	DeffVal2Se_L199
 	.long	loc_4C0E11ED
 	.long	loc_4C0E11ED
 DeffVal4Se_L61_Table:
@@ -17677,7 +17677,7 @@ DeffVal4Se_L61_Table:
 	.long	loc_4C0E1122
 	.long	loc_4C0E113B
 	.long	loc_4C0E1155
-	.long	DeffVal4Se_L11c
+	.long	DeffVal2Se_L11c
 	.long	loc_4C0E116E
 	.long	loc_4C0E116E
 DeffVal5Se_L19f_Table:
@@ -17691,7 +17691,7 @@ DeffVal5Se_L19f_Table:
 	.long	loc_4C0E175A
 	.long	loc_4C0E1787
 	.long	loc_4C0E17B4
-	.long	DeffVal5Se_L2e2
+	.long	DeffVal3Se_L2e2
 	.long	loc_4C0E17E0
 	.long	loc_4C0E17E0
 DeffVal5Se_L11d_Table:
@@ -17705,7 +17705,7 @@ DeffVal5Se_L11d_Table:
 	.long	loc_4C0E165F
 	.long	loc_4C0E165F
 	.long	loc_4C0E165F
-	.long	DeffVal5Se_L174
+	.long	DeffVal3Se_L174
 	.long	loc_4C0E1688
 	.long	loc_4C0E1688
 DeffVal5Se_Leb_Table:
@@ -17719,9 +17719,9 @@ DeffVal5Se_Leb_Table:
 	.long	loc_4C0E162D
 	.long	loc_4C0E162D
 	.long	loc_4C0E162D
-	.long	DeffVal5Se_L119
-	.long	DeffVal5Se_L119
-	.long	DeffVal5Se_L119
+	.long	DeffVal3Se_L119
+	.long	DeffVal3Se_L119
+	.long	DeffVal3Se_L119
 DeffVal5Se_L61_Table:
 	.long	loc_4C0E1595
 	.long	loc_4C0E1595
@@ -17733,9 +17733,9 @@ DeffVal5Se_L61_Table:
 	.long	loc_4C0E15C7
 	.long	loc_4C0E15E0
 	.long	loc_4C0E15F9
-	.long	DeffVal5Se_Le7
-	.long	DeffVal5Se_Le7
-	.long	DeffVal5Se_Le7
+	.long	DeffVal3Se_Le7
+	.long	DeffVal3Se_Le7
+	.long	DeffVal3Se_Le7
 DeffVal6Se_L190_Table:
 	.long	loc_4C0E19D8
 	.long	loc_4C0E19D8
@@ -17747,7 +17747,7 @@ DeffVal6Se_L190_Table:
 	.long	loc_4C0E1A31
 	.long	loc_4C0E1A31
 	.long	loc_4C0E1A31
-	.long	DeffVal6Se_L21f
+	.long	DeffVal4Se_L21f
 	.long	loc_4C0E1A31
 	.long	loc_4C0E1A31
 DeffVal6Se_Le4_Table:
@@ -17761,7 +17761,7 @@ DeffVal6Se_Le4_Table:
 	.long	loc_4C0E198D
 	.long	loc_4C0E198D
 	.long	loc_4C0E198D
-	.long	DeffVal6Se_L165
+	.long	DeffVal4Se_L165
 	.long	loc_4C0E198D
 	.long	loc_4C0E198D
 DeffVal6Se_L98_Table:
@@ -17771,13 +17771,13 @@ DeffVal6Se_L98_Table:
 	.long	loc_4C0E18EE
 	.long	loc_4C0E1905
 	.long	loc_4C0E1905
-	.long	DeffVal6Se_Le0
-	.long	DeffVal6Se_Le0
-	.long	DeffVal6Se_Le0
-	.long	DeffVal6Se_Le0
-	.long	DeffVal6Se_Le0
-	.long	DeffVal6Se_Le0
-	.long	DeffVal6Se_Le0
+	.long	DeffVal4Se_Le0
+	.long	DeffVal4Se_Le0
+	.long	DeffVal4Se_Le0
+	.long	DeffVal4Se_Le0
+	.long	DeffVal4Se_Le0
+	.long	DeffVal4Se_Le0
+	.long	DeffVal4Se_Le0
 DeffVal6Se_L4a_Table:
 	.long	loc_4C0E18A0
 	.long	loc_4C0E18A0
@@ -17785,13 +17785,13 @@ DeffVal6Se_L4a_Table:
 	.long	loc_4C0E18A0
 	.long	loc_4C0E18B9
 	.long	loc_4C0E18B9
-	.long	DeffVal6Se_L94
-	.long	DeffVal6Se_L94
-	.long	DeffVal6Se_L94
-	.long	DeffVal6Se_L94
-	.long	DeffVal6Se_L94
-	.long	DeffVal6Se_L94
-	.long	DeffVal6Se_L94
+	.long	DeffVal4Se_L94
+	.long	DeffVal4Se_L94
+	.long	DeffVal4Se_L94
+	.long	DeffVal4Se_L94
+	.long	DeffVal4Se_L94
+	.long	DeffVal4Se_L94
+	.long	DeffVal4Se_L94
 DeffVal7Se_L148_Table:
 	.long	loc_4C0E1BE1
 	.long	loc_4C0E1BE1
@@ -17803,7 +17803,7 @@ DeffVal7Se_L148_Table:
 	.long	loc_4C0E1C39
 	.long	loc_4C0E1C39
 	.long	loc_4C0E1C39
-	.long	DeffVal7Se_L1d6
+	.long	DeffVal5Se_L1d6
 	.long	loc_4C0E1C39
 	.long	loc_4C0E1C39
 DeffVal7Se_Lb1_Table:
@@ -17817,7 +17817,7 @@ DeffVal7Se_Lb1_Table:
 	.long	loc_4C0E1B96
 	.long	loc_4C0E1B96
 	.long	loc_4C0E1B96
-	.long	DeffVal7Se_L11d
+	.long	DeffVal5Se_L11d
 	.long	loc_4C0E1B96
 	.long	loc_4C0E1B96
 DeffVal7Se_L7d_Table:
@@ -17827,13 +17827,13 @@ DeffVal7Se_L7d_Table:
 	.long	loc_4C0E1B24
 	.long	loc_4C0E1B26
 	.long	loc_4C0E1B26
-	.long	DeffVal7Se_Lad
-	.long	DeffVal7Se_Lad
-	.long	DeffVal7Se_Lad
-	.long	DeffVal7Se_Lad
-	.long	DeffVal7Se_Lad
-	.long	DeffVal7Se_Lad
-	.long	DeffVal7Se_Lad
+	.long	DeffVal5Se_Lad
+	.long	DeffVal5Se_Lad
+	.long	DeffVal5Se_Lad
+	.long	DeffVal5Se_Lad
+	.long	DeffVal5Se_Lad
+	.long	DeffVal5Se_Lad
+	.long	DeffVal5Se_Lad
 DeffVal7Se_L47_Table:
 	.long	loc_4C0E1AEE
 	.long	loc_4C0E1AEE
@@ -17841,13 +17841,13 @@ DeffVal7Se_L47_Table:
 	.long	loc_4C0E1AEE
 	.long	loc_4C0E1AF0
 	.long	loc_4C0E1AF0
-	.long	DeffVal7Se_L79
-	.long	DeffVal7Se_L79
-	.long	DeffVal7Se_L79
-	.long	DeffVal7Se_L79
-	.long	DeffVal7Se_L79
-	.long	DeffVal7Se_L79
-	.long	DeffVal7Se_L79
+	.long	DeffVal5Se_L79
+	.long	DeffVal5Se_L79
+	.long	DeffVal5Se_L79
+	.long	DeffVal5Se_L79
+	.long	DeffVal5Se_L79
+	.long	DeffVal5Se_L79
+	.long	DeffVal5Se_L79
 ChoOnSe_L198_Table:
 	.long	loc_4C0E1E39
 	.long	loc_4C0E1E39
@@ -17971,7 +17971,7 @@ DeffVal2SwSe_L2d_Table:
 	.long	loc_4C0E226D
 	.long	loc_4C0E2282
 	.long	loc_4C0E2297
-	.long	DeffVal2SwSe_Lcc
+	.long	DeffVal0SwSe_Lcc
 	.long	loc_4C0E22AC
 	.long	loc_4C0E22AC
 DeffVal3SwSe_L2d_Table:
@@ -17985,7 +17985,7 @@ DeffVal3SwSe_L2d_Table:
 	.long	loc_4C0E2355
 	.long	loc_4C0E236A
 	.long	loc_4C0E237F
-	.long	DeffVal3SwSe_Lcc
+	.long	DeffVal1SwSe_Lcc
 	.long	loc_4C0E2394
 	.long	loc_4C0E2394
 DeffVal4SwSe_L2d_Table:
@@ -17999,7 +17999,7 @@ DeffVal4SwSe_L2d_Table:
 	.long	loc_4C0E243D
 	.long	loc_4C0E2452
 	.long	loc_4C0E2467
-	.long	DeffVal4SwSe_Lcc
+	.long	DeffVal2SwSe_Lcc
 	.long	loc_4C0E247C
 	.long	loc_4C0E247C
 DeffVal5SwSe_L2d_Table:
@@ -18013,7 +18013,7 @@ DeffVal5SwSe_L2d_Table:
 	.long	loc_4C0E2525
 	.long	loc_4C0E253A
 	.long	loc_4C0E254F
-	.long	DeffVal5SwSe_Lcc
+	.long	DeffVal3SwSe_Lcc
 	.long	loc_4C0E2564
 	.long	loc_4C0E2564
 DeffVal6SwSe_L18_Table:
@@ -18027,7 +18027,7 @@ DeffVal6SwSe_L18_Table:
 	.long	loc_4C0E25F0
 	.long	loc_4C0E25F0
 	.long	loc_4C0E25F0
-	.long	DeffVal6SwSe_L70
+	.long	DeffVal4SwSe_L70
 	.long	loc_4C0E25F0
 	.long	loc_4C0E25F0
 DeffVal7SwSe_L18_Table:
@@ -18041,7 +18041,7 @@ DeffVal7SwSe_L18_Table:
 	.long	loc_4C0E267C
 	.long	loc_4C0E267C
 	.long	loc_4C0E267C
-	.long	DeffVal7SwSe_L70
+	.long	DeffVal5SwSe_L70
 	.long	loc_4C0E267C
 	.long	loc_4C0E267C
 ChoDptSe_L18_Table:
@@ -18107,7 +18107,7 @@ DrumTsetGridSe_L478_Table:
 	.long	loc_4C0E39FF
 	.long	loc_4C0E3A0B
 	.long	loc_4C0E3B2F
-	.long	DrumTsetGridSe_L7f9
+	.long	ToneSelGridSe_L7f9
 	.long	loc_4C0E3C3F
 	.long	loc_4C0E3C61
 	.long	loc_4C0E3C86
@@ -18119,7 +18119,7 @@ DrumTsetGridSe_L95_Table:
 	.long	loc_4C0E361C
 	.long	loc_4C0E362A
 	.long	loc_4C0E3749
-	.long	DrumTsetGridSe_L41b
+	.long	ToneSelGridSe_L41b
 	.long	loc_4C0E3857
 	.long	loc_4C0E387E
 	.long	loc_4C0E38A3
@@ -18128,7 +18128,7 @@ DrumTsetGridSe_L95_Table:
 	.long	loc_4C0E3952
 	.long	loc_4C0E3988
 
-DrumTsetGridSe_L1d_Records:	# 16 x REC_DrumTsetGridSe_L1d_Records (8 bytes each); read by DrumTsetGridSe_L1d 0x4C0E3595 `mov (a0), d0`; DrumTsetGridSe_L4b 0x4C0E35C3 `mov (a0), d0`; DrumTsetGridSe_L4e 0x4C0E35C6 `mov (4, a0), a0`
+DrumTsetGridSe_L1d_Records:	# 16 x REC_DrumTsetGridSe_L1d_Records (8 bytes each); read by ToneSelGridSe_L1d 0x4C0E3595 `mov (a0), d0`; ToneSelGridSe_L4b 0x4C0E35C3 `mov (a0), d0`; ToneSelGridSe_L4e 0x4C0E35C6 `mov (4, a0), a0`
 	REC_DrumTsetGridSe_L1d_Records	key=16, proc=loc_4C0E35CB	# [0]
 	REC_DrumTsetGridSe_L1d_Records	key=17, proc=loc_4C0E39AF
 	REC_DrumTsetGridSe_L1d_Records	key=18, proc=loc_4C0E35CB
@@ -18139,12 +18139,12 @@ DrumTsetGridSe_L1d_Records:	# 16 x REC_DrumTsetGridSe_L1d_Records (8 bytes each)
 	REC_DrumTsetGridSe_L1d_Records	key=22, proc=loc_4C0E3DB3
 	REC_DrumTsetGridSe_L1d_Records	key=0x200084, proc=loc_4C0E3DB7	# [8]
 	REC_DrumTsetGridSe_L1d_Records	key=1, proc=loc_4C0E413B
-	REC_DrumTsetGridSe_L1d_Records	proc=DrumTsetGridSe_Lbc6
-	REC_DrumTsetGridSe_L1d_Records	proc=DrumTsetGridSe_Lbc6
-	REC_DrumTsetGridSe_L1d_Records	proc=DrumTsetGridSe_Lbc6
-	REC_DrumTsetGridSe_L1d_Records	proc=DrumTsetGridSe_Lbc6
-	REC_DrumTsetGridSe_L1d_Records	proc=DrumTsetGridSe_Lbc6
-	REC_DrumTsetGridSe_L1d_Records	proc=DrumTsetGridSe_Lbc6
+	REC_DrumTsetGridSe_L1d_Records	proc=ToneSelGridSe_Lbc6
+	REC_DrumTsetGridSe_L1d_Records	proc=ToneSelGridSe_Lbc6
+	REC_DrumTsetGridSe_L1d_Records	proc=ToneSelGridSe_Lbc6
+	REC_DrumTsetGridSe_L1d_Records	proc=ToneSelGridSe_Lbc6
+	REC_DrumTsetGridSe_L1d_Records	proc=ToneSelGridSe_Lbc6
+	REC_DrumTsetGridSe_L1d_Records	proc=ToneSelGridSe_Lbc6
 
 MonoPolySe_L3eb_Table:
 	.long	loc_4C0E453A
@@ -18177,7 +18177,7 @@ MonoPolySe_L84_Table:
 	.long	loc_4C0E42D4
 	.long	loc_4C0E42FA
 
-MonoPolySe_L1d_Records:	# 16 x REC_MonoPolySe_L1d_Records (8 bytes each); read by MonoPolySe_L1d 0x4C0E415F `mov (a0), d0`; MonoPolySe_L4a 0x4C0E418C `mov (a0), d0`; MonoPolySe_L4d 0x4C0E418F `mov (4, a0), a0`
+MonoPolySe_L1d_Records:	# 16 x REC_MonoPolySe_L1d_Records (8 bytes each); read by ToneGridSe1_L1d 0x4C0E415F `mov (a0), d0`; ToneGridSe1_L4a 0x4C0E418C `mov (a0), d0`; ToneGridSe1_L4d 0x4C0E418F `mov (4, a0), a0`
 	REC_MonoPolySe_L1d_Records	key=16, proc=loc_4C0E4194	# [0]
 	REC_MonoPolySe_L1d_Records	key=17, proc=loc_4C0E4336
 	REC_MonoPolySe_L1d_Records	key=18, proc=loc_4C0E4194
@@ -18188,13 +18188,13 @@ MonoPolySe_L1d_Records:	# 16 x REC_MonoPolySe_L1d_Records (8 bytes each); read b
 	REC_MonoPolySe_L1d_Records	key=22, proc=loc_4C0E44F6
 	REC_MonoPolySe_L1d_Records	key=0x200084, proc=loc_4C0E44FA	# [8]
 	REC_MonoPolySe_L1d_Records	key=1, proc=loc_4C0E46BE
-	REC_MonoPolySe_L1d_Records	proc=MonoPolySe_L57f
-	REC_MonoPolySe_L1d_Records	proc=MonoPolySe_L57f
-	REC_MonoPolySe_L1d_Records	proc=MonoPolySe_L57f
-	REC_MonoPolySe_L1d_Records	proc=MonoPolySe_L57f
-	REC_MonoPolySe_L1d_Records	proc=MonoPolySe_L57f
-	REC_MonoPolySe_L1d_Records	proc=MonoPolySe_L57f
-GraphKeyLay3Se_L1d_Records:	# 16 x REC_GraphKeyLay3Se_L1d_Records (8 bytes each); read by GraphKeyLay3Se_L1d 0x4C0E46E2 `mov (a0), d0`; GraphKeyLay3Se_L4b 0x4C0E4710 `mov (a0), d0`; GraphKeyLay3Se_L4e 0x4C0E4713 `mov (4, a0), a0`
+	REC_MonoPolySe_L1d_Records	proc=ToneGridSe1_L57f
+	REC_MonoPolySe_L1d_Records	proc=ToneGridSe1_L57f
+	REC_MonoPolySe_L1d_Records	proc=ToneGridSe1_L57f
+	REC_MonoPolySe_L1d_Records	proc=ToneGridSe1_L57f
+	REC_MonoPolySe_L1d_Records	proc=ToneGridSe1_L57f
+	REC_MonoPolySe_L1d_Records	proc=ToneGridSe1_L57f
+GraphKeyLay3Se_L1d_Records:	# 16 x REC_GraphKeyLay3Se_L1d_Records (8 bytes each); read by LayerGridSe1_L1d 0x4C0E46E2 `mov (a0), d0`; LayerGridSe1_L4b 0x4C0E4710 `mov (a0), d0`; LayerGridSe1_L4e 0x4C0E4713 `mov (4, a0), a0`
 	REC_GraphKeyLay3Se_L1d_Records	key=16, proc=loc_4C0E4718	# [0]
 	REC_GraphKeyLay3Se_L1d_Records	key=17, proc=loc_4C0E4855
 	REC_GraphKeyLay3Se_L1d_Records	key=18, proc=loc_4C0E4718
@@ -18205,13 +18205,13 @@ GraphKeyLay3Se_L1d_Records:	# 16 x REC_GraphKeyLay3Se_L1d_Records (8 bytes each)
 	REC_GraphKeyLay3Se_L1d_Records	key=22, proc=loc_4C0E49AD
 	REC_GraphKeyLay3Se_L1d_Records	key=0x200084, proc=loc_4C0E49B1	# [8]
 	REC_GraphKeyLay3Se_L1d_Records	key=1, proc=loc_4C0E4C8C
-	REC_GraphKeyLay3Se_L1d_Records	proc=GraphKeyLay3Se_L5ca
-	REC_GraphKeyLay3Se_L1d_Records	proc=GraphKeyLay3Se_L5ca
-	REC_GraphKeyLay3Se_L1d_Records	proc=GraphKeyLay3Se_L5ca
-	REC_GraphKeyLay3Se_L1d_Records	proc=GraphKeyLay3Se_L5ca
-	REC_GraphKeyLay3Se_L1d_Records	proc=GraphKeyLay3Se_L5ca
-	REC_GraphKeyLay3Se_L1d_Records	proc=GraphKeyLay3Se_L5ca
-GraphKeyLay4Se_L1d_Records:	# 16 x REC_GraphKeyLay4Se_L1d_Records (8 bytes each); read by GraphKeyLay4Se_L1d 0x4C0E4CB0 `mov (a0), d0`; GraphKeyLay4Se_L4a 0x4C0E4CDD `mov (a0), d0`; GraphKeyLay4Se_L4d 0x4C0E4CE0 `mov (4, a0), a0`
+	REC_GraphKeyLay3Se_L1d_Records	proc=LayerGridSe1_L5ca
+	REC_GraphKeyLay3Se_L1d_Records	proc=LayerGridSe1_L5ca
+	REC_GraphKeyLay3Se_L1d_Records	proc=LayerGridSe1_L5ca
+	REC_GraphKeyLay3Se_L1d_Records	proc=LayerGridSe1_L5ca
+	REC_GraphKeyLay3Se_L1d_Records	proc=LayerGridSe1_L5ca
+	REC_GraphKeyLay3Se_L1d_Records	proc=LayerGridSe1_L5ca
+GraphKeyLay4Se_L1d_Records:	# 16 x REC_GraphKeyLay4Se_L1d_Records (8 bytes each); read by LayerGridSe2_L1d 0x4C0E4CB0 `mov (a0), d0`; LayerGridSe2_L4a 0x4C0E4CDD `mov (a0), d0`; LayerGridSe2_L4d 0x4C0E4CE0 `mov (4, a0), a0`
 	REC_GraphKeyLay4Se_L1d_Records	key=16, proc=loc_4C0E4CE5	# [0]
 	REC_GraphKeyLay4Se_L1d_Records	key=17, proc=loc_4C0E4E1D
 	REC_GraphKeyLay4Se_L1d_Records	key=18, proc=loc_4C0E4CE5
@@ -18222,13 +18222,13 @@ GraphKeyLay4Se_L1d_Records:	# 16 x REC_GraphKeyLay4Se_L1d_Records (8 bytes each)
 	REC_GraphKeyLay4Se_L1d_Records	key=22, proc=loc_4C0E4F78
 	REC_GraphKeyLay4Se_L1d_Records	key=0x200084, proc=loc_4C0E4F7C	# [8]
 	REC_GraphKeyLay4Se_L1d_Records	key=1, proc=loc_4C0E5246
-	REC_GraphKeyLay4Se_L1d_Records	proc=GraphKeyLay4Se_L5b6
-	REC_GraphKeyLay4Se_L1d_Records	proc=GraphKeyLay4Se_L5b6
-	REC_GraphKeyLay4Se_L1d_Records	proc=GraphKeyLay4Se_L5b6
-	REC_GraphKeyLay4Se_L1d_Records	proc=GraphKeyLay4Se_L5b6
-	REC_GraphKeyLay4Se_L1d_Records	proc=GraphKeyLay4Se_L5b6
-	REC_GraphKeyLay4Se_L1d_Records	proc=GraphKeyLay4Se_L5b6
-AmpGridSe2_L1d_Records:	# 16 x REC_AmpGridSe2_L1d_Records (8 bytes each); read by AmpGridSe2_L1d 0x4C0E526A `mov (a0), d0`; AmpGridSe2_L4b 0x4C0E5298 `mov (a0), d0`; AmpGridSe2_L4e 0x4C0E529B `mov (4, a0), a0`
+	REC_GraphKeyLay4Se_L1d_Records	proc=LayerGridSe2_L5b6
+	REC_GraphKeyLay4Se_L1d_Records	proc=LayerGridSe2_L5b6
+	REC_GraphKeyLay4Se_L1d_Records	proc=LayerGridSe2_L5b6
+	REC_GraphKeyLay4Se_L1d_Records	proc=LayerGridSe2_L5b6
+	REC_GraphKeyLay4Se_L1d_Records	proc=LayerGridSe2_L5b6
+	REC_GraphKeyLay4Se_L1d_Records	proc=LayerGridSe2_L5b6
+AmpGridSe2_L1d_Records:	# 16 x REC_AmpGridSe2_L1d_Records (8 bytes each); read by PitchGridSe_L1d 0x4C0E526A `mov (a0), d0`; PitchGridSe_L4b 0x4C0E5298 `mov (a0), d0`; PitchGridSe_L4e 0x4C0E529B `mov (4, a0), a0`
 	REC_AmpGridSe2_L1d_Records	key=16, proc=loc_4C0E52A0	# [0]
 	REC_AmpGridSe2_L1d_Records	key=17, proc=loc_4C0E5381
 	REC_AmpGridSe2_L1d_Records	key=18, proc=loc_4C0E52A0
@@ -18239,12 +18239,12 @@ AmpGridSe2_L1d_Records:	# 16 x REC_AmpGridSe2_L1d_Records (8 bytes each); read b
 	REC_AmpGridSe2_L1d_Records	key=22, proc=loc_4C0E5485
 	REC_AmpGridSe2_L1d_Records	key=0x200084, proc=loc_4C0E5489	# [8]
 	REC_AmpGridSe2_L1d_Records	key=1, proc=loc_4C0E5557
-	REC_AmpGridSe2_L1d_Records	proc=AmpGridSe2_L30d
-	REC_AmpGridSe2_L1d_Records	proc=AmpGridSe2_L30d
-	REC_AmpGridSe2_L1d_Records	proc=AmpGridSe2_L30d
-	REC_AmpGridSe2_L1d_Records	proc=AmpGridSe2_L30d
-	REC_AmpGridSe2_L1d_Records	proc=AmpGridSe2_L30d
-	REC_AmpGridSe2_L1d_Records	proc=AmpGridSe2_L30d
+	REC_AmpGridSe2_L1d_Records	proc=PitchGridSe_L30d
+	REC_AmpGridSe2_L1d_Records	proc=PitchGridSe_L30d
+	REC_AmpGridSe2_L1d_Records	proc=PitchGridSe_L30d
+	REC_AmpGridSe2_L1d_Records	proc=PitchGridSe_L30d
+	REC_AmpGridSe2_L1d_Records	proc=PitchGridSe_L30d
+	REC_AmpGridSe2_L1d_Records	proc=PitchGridSe_L30d
 
 AmpGridSe3_L46d_Table:
 	.long	loc_4C0E59D8
@@ -18283,7 +18283,7 @@ AmpGridSe3_L84_Table:
 	.long	loc_4C0E572C
 	.long	loc_4C0E5754
 
-AmpGridSe3_L1d_Records:	# 16 x REC_AmpGridSe3_L1d_Records (8 bytes each); read by AmpGridSe3_L1d 0x4C0E557B `mov (a0), d0`; AmpGridSe3_L4a 0x4C0E55A8 `mov (a0), d0`; AmpGridSe3_L4d 0x4C0E55AB `mov (4, a0), a0`
+AmpGridSe3_L1d_Records:	# 16 x REC_AmpGridSe3_L1d_Records (8 bytes each); read by PitchGridSe2_L1d 0x4C0E557B `mov (a0), d0`; PitchGridSe2_L4a 0x4C0E55A8 `mov (a0), d0`; PitchGridSe2_L4d 0x4C0E55AB `mov (4, a0), a0`
 	REC_AmpGridSe3_L1d_Records	key=16, proc=loc_4C0E55B0	# [0]
 	REC_AmpGridSe3_L1d_Records	key=17, proc=loc_4C0E5794
 	REC_AmpGridSe3_L1d_Records	key=18, proc=loc_4C0E55B0
@@ -18294,13 +18294,13 @@ AmpGridSe3_L1d_Records:	# 16 x REC_AmpGridSe3_L1d_Records (8 bytes each); read b
 	REC_AmpGridSe3_L1d_Records	key=22, proc=loc_4C0E5996
 	REC_AmpGridSe3_L1d_Records	key=0x200084, proc=loc_4C0E599A	# [8]
 	REC_AmpGridSe3_L1d_Records	key=1, proc=loc_4C0E5C2B
-	REC_AmpGridSe3_L1d_Records	proc=AmpGridSe3_L6d0
-	REC_AmpGridSe3_L1d_Records	proc=AmpGridSe3_L6d0
-	REC_AmpGridSe3_L1d_Records	proc=AmpGridSe3_L6d0
-	REC_AmpGridSe3_L1d_Records	proc=AmpGridSe3_L6d0
-	REC_AmpGridSe3_L1d_Records	proc=AmpGridSe3_L6d0
-	REC_AmpGridSe3_L1d_Records	proc=AmpGridSe3_L6d0
-FilterGridSe1_L1d_Records:	# 16 x REC_FilterGridSe1_L1d_Records (8 bytes each); read by FilterGridSe1_L1d 0x4C0E5C4F `mov (a0), d0`; FilterGridSe1_L4b 0x4C0E5C7D `mov (a0), d0`; FilterGridSe1_L4e 0x4C0E5C80 `mov (4, a0), a0`
+	REC_AmpGridSe3_L1d_Records	proc=PitchGridSe2_L6d0
+	REC_AmpGridSe3_L1d_Records	proc=PitchGridSe2_L6d0
+	REC_AmpGridSe3_L1d_Records	proc=PitchGridSe2_L6d0
+	REC_AmpGridSe3_L1d_Records	proc=PitchGridSe2_L6d0
+	REC_AmpGridSe3_L1d_Records	proc=PitchGridSe2_L6d0
+	REC_AmpGridSe3_L1d_Records	proc=PitchGridSe2_L6d0
+FilterGridSe1_L1d_Records:	# 16 x REC_FilterGridSe1_L1d_Records (8 bytes each); read by PitchGridSe3_L1d 0x4C0E5C4F `mov (a0), d0`; PitchGridSe3_L4b 0x4C0E5C7D `mov (a0), d0`; PitchGridSe3_L4e 0x4C0E5C80 `mov (4, a0), a0`
 	REC_FilterGridSe1_L1d_Records	key=16, proc=loc_4C0E5C85	# [0]
 	REC_FilterGridSe1_L1d_Records	key=17, proc=loc_4C0E5DF8
 	REC_FilterGridSe1_L1d_Records	key=18, proc=loc_4C0E5C85
@@ -18311,13 +18311,13 @@ FilterGridSe1_L1d_Records:	# 16 x REC_FilterGridSe1_L1d_Records (8 bytes each); 
 	REC_FilterGridSe1_L1d_Records	key=22, proc=loc_4C0E5F8D
 	REC_FilterGridSe1_L1d_Records	key=0x200084, proc=loc_4C0E5F91	# [8]
 	REC_FilterGridSe1_L1d_Records	key=1, proc=loc_4C0E6132
-	REC_FilterGridSe1_L1d_Records	proc=FilterGridSe1_L503
-	REC_FilterGridSe1_L1d_Records	proc=FilterGridSe1_L503
-	REC_FilterGridSe1_L1d_Records	proc=FilterGridSe1_L503
-	REC_FilterGridSe1_L1d_Records	proc=FilterGridSe1_L503
-	REC_FilterGridSe1_L1d_Records	proc=FilterGridSe1_L503
-	REC_FilterGridSe1_L1d_Records	proc=FilterGridSe1_L503
-FilterGridSe2_L1d_Records:	# 16 x REC_FilterGridSe2_L1d_Records (8 bytes each); read by FilterGridSe2_L1d 0x4C0E6156 `mov (a0), d0`; FilterGridSe2_L4b 0x4C0E6184 `mov (a0), d0`; FilterGridSe2_L4e 0x4C0E6187 `mov (4, a0), a0`
+	REC_FilterGridSe1_L1d_Records	proc=PitchGridSe3_L503
+	REC_FilterGridSe1_L1d_Records	proc=PitchGridSe3_L503
+	REC_FilterGridSe1_L1d_Records	proc=PitchGridSe3_L503
+	REC_FilterGridSe1_L1d_Records	proc=PitchGridSe3_L503
+	REC_FilterGridSe1_L1d_Records	proc=PitchGridSe3_L503
+	REC_FilterGridSe1_L1d_Records	proc=PitchGridSe3_L503
+FilterGridSe2_L1d_Records:	# 16 x REC_FilterGridSe2_L1d_Records (8 bytes each); read by AmpGridSe1_L1d 0x4C0E6156 `mov (a0), d0`; AmpGridSe1_L4b 0x4C0E6184 `mov (a0), d0`; AmpGridSe1_L4e 0x4C0E6187 `mov (4, a0), a0`
 	REC_FilterGridSe2_L1d_Records	key=16, proc=loc_4C0E618C	# [0]
 	REC_FilterGridSe2_L1d_Records	key=17, proc=loc_4C0E6361
 	REC_FilterGridSe2_L1d_Records	key=18, proc=loc_4C0E618C
@@ -18328,12 +18328,12 @@ FilterGridSe2_L1d_Records:	# 16 x REC_FilterGridSe2_L1d_Records (8 bytes each); 
 	REC_FilterGridSe2_L1d_Records	key=22, proc=loc_4C0E654D
 	REC_FilterGridSe2_L1d_Records	key=0x200084, proc=loc_4C0E6551	# [8]
 	REC_FilterGridSe2_L1d_Records	key=1, proc=loc_4C0E6789
-	REC_FilterGridSe2_L1d_Records	proc=FilterGridSe2_L653
-	REC_FilterGridSe2_L1d_Records	proc=FilterGridSe2_L653
-	REC_FilterGridSe2_L1d_Records	proc=FilterGridSe2_L653
-	REC_FilterGridSe2_L1d_Records	proc=FilterGridSe2_L653
-	REC_FilterGridSe2_L1d_Records	proc=FilterGridSe2_L653
-	REC_FilterGridSe2_L1d_Records	proc=FilterGridSe2_L653
+	REC_FilterGridSe2_L1d_Records	proc=AmpGridSe1_L653
+	REC_FilterGridSe2_L1d_Records	proc=AmpGridSe1_L653
+	REC_FilterGridSe2_L1d_Records	proc=AmpGridSe1_L653
+	REC_FilterGridSe2_L1d_Records	proc=AmpGridSe1_L653
+	REC_FilterGridSe2_L1d_Records	proc=AmpGridSe1_L653
+	REC_FilterGridSe2_L1d_Records	proc=AmpGridSe1_L653
 
 FilterGridSe3_L3ba_Table:
 	.long	loc_4C0E6B57
@@ -18366,7 +18366,7 @@ FilterGridSe3_L84_Table:
 	.long	loc_4C0E6912
 	.long	loc_4C0E6934
 
-FilterGridSe3_L1d_Records:	# 16 x REC_FilterGridSe3_L1d_Records (8 bytes each); read by FilterGridSe3_L1d 0x4C0E67AD `mov (a0), d0`; FilterGridSe3_L4a 0x4C0E67DA `mov (a0), d0`; FilterGridSe3_L4d 0x4C0E67DD `mov (4, a0), a0`
+FilterGridSe3_L1d_Records:	# 16 x REC_FilterGridSe3_L1d_Records (8 bytes each); read by AmpGridSe2_L1d 0x4C0E67AD `mov (a0), d0`; AmpGridSe2_L4a 0x4C0E67DA `mov (a0), d0`; AmpGridSe2_L4d 0x4C0E67DD `mov (4, a0), a0`
 	REC_FilterGridSe3_L1d_Records	key=16, proc=loc_4C0E67E2	# [0]
 	REC_FilterGridSe3_L1d_Records	key=17, proc=loc_4C0E6973
 	REC_FilterGridSe3_L1d_Records	key=18, proc=loc_4C0E67E2
@@ -18377,12 +18377,12 @@ FilterGridSe3_L1d_Records:	# 16 x REC_FilterGridSe3_L1d_Records (8 bytes each); 
 	REC_FilterGridSe3_L1d_Records	key=22, proc=loc_4C0E6B13
 	REC_FilterGridSe3_L1d_Records	key=0x200084, proc=loc_4C0E6B17	# [8]
 	REC_FilterGridSe3_L1d_Records	key=1, proc=loc_4C0E6D52
-	REC_FilterGridSe3_L1d_Records	proc=FilterGridSe3_L5c5
-	REC_FilterGridSe3_L1d_Records	proc=FilterGridSe3_L5c5
-	REC_FilterGridSe3_L1d_Records	proc=FilterGridSe3_L5c5
-	REC_FilterGridSe3_L1d_Records	proc=FilterGridSe3_L5c5
-	REC_FilterGridSe3_L1d_Records	proc=FilterGridSe3_L5c5
-	REC_FilterGridSe3_L1d_Records	proc=FilterGridSe3_L5c5
+	REC_FilterGridSe3_L1d_Records	proc=AmpGridSe2_L5c5
+	REC_FilterGridSe3_L1d_Records	proc=AmpGridSe2_L5c5
+	REC_FilterGridSe3_L1d_Records	proc=AmpGridSe2_L5c5
+	REC_FilterGridSe3_L1d_Records	proc=AmpGridSe2_L5c5
+	REC_FilterGridSe3_L1d_Records	proc=AmpGridSe2_L5c5
+	REC_FilterGridSe3_L1d_Records	proc=AmpGridSe2_L5c5
 
 FilterGridSe4_L45c_Table:
 	.long	loc_4C0E71C2
@@ -18415,7 +18415,7 @@ FilterGridSe4_L84_Table:
 	.long	loc_4C0E6F0F
 	.long	loc_4C0E6F49
 
-FilterGridSe4_L1d_Records:	# 16 x REC_FilterGridSe4_L1d_Records (8 bytes each); read by FilterGridSe4_L1d 0x4C0E6D76 `mov (a0), d0`; FilterGridSe4_L4a 0x4C0E6DA3 `mov (a0), d0`; FilterGridSe4_L4d 0x4C0E6DA6 `mov (4, a0), a0`
+FilterGridSe4_L1d_Records:	# 16 x REC_FilterGridSe4_L1d_Records (8 bytes each); read by AmpGridSe3_L1d 0x4C0E6D76 `mov (a0), d0`; AmpGridSe3_L4a 0x4C0E6DA3 `mov (a0), d0`; AmpGridSe3_L4d 0x4C0E6DA6 `mov (4, a0), a0`
 	REC_FilterGridSe4_L1d_Records	key=16, proc=loc_4C0E6DAB	# [0]
 	REC_FilterGridSe4_L1d_Records	key=17, proc=loc_4C0E6F84
 	REC_FilterGridSe4_L1d_Records	key=18, proc=loc_4C0E6DAB
@@ -18426,13 +18426,13 @@ FilterGridSe4_L1d_Records:	# 16 x REC_FilterGridSe4_L1d_Records (8 bytes each); 
 	REC_FilterGridSe4_L1d_Records	key=22, proc=loc_4C0E717E
 	REC_FilterGridSe4_L1d_Records	key=0x200084, proc=loc_4C0E7182	# [8]
 	REC_FilterGridSe4_L1d_Records	key=1, proc=loc_4C0E7386
-	REC_FilterGridSe4_L1d_Records	proc=FilterGridSe4_L630
-	REC_FilterGridSe4_L1d_Records	proc=FilterGridSe4_L630
-	REC_FilterGridSe4_L1d_Records	proc=FilterGridSe4_L630
-	REC_FilterGridSe4_L1d_Records	proc=FilterGridSe4_L630
-	REC_FilterGridSe4_L1d_Records	proc=FilterGridSe4_L630
-	REC_FilterGridSe4_L1d_Records	proc=FilterGridSe4_L630
-LfoGridSe1_L1d_Records:	# 16 x REC_LfoGridSe1_L1d_Records (8 bytes each); read by LfoGridSe1_L1d 0x4C0E73AA `mov (a0), d0`; LfoGridSe1_L4a 0x4C0E73D7 `mov (a0), d0`; LfoGridSe1_L4d 0x4C0E73DA `mov (4, a0), a0`
+	REC_FilterGridSe4_L1d_Records	proc=AmpGridSe3_L630
+	REC_FilterGridSe4_L1d_Records	proc=AmpGridSe3_L630
+	REC_FilterGridSe4_L1d_Records	proc=AmpGridSe3_L630
+	REC_FilterGridSe4_L1d_Records	proc=AmpGridSe3_L630
+	REC_FilterGridSe4_L1d_Records	proc=AmpGridSe3_L630
+	REC_FilterGridSe4_L1d_Records	proc=AmpGridSe3_L630
+LfoGridSe1_L1d_Records:	# 16 x REC_LfoGridSe1_L1d_Records (8 bytes each); read by FilterGridSe1_L1d 0x4C0E73AA `mov (a0), d0`; FilterGridSe1_L4a 0x4C0E73D7 `mov (a0), d0`; FilterGridSe1_L4d 0x4C0E73DA `mov (4, a0), a0`
 	REC_LfoGridSe1_L1d_Records	key=16, proc=loc_4C0E73DF	# [0]
 	REC_LfoGridSe1_L1d_Records	key=17, proc=loc_4C0E76FC
 	REC_LfoGridSe1_L1d_Records	key=18, proc=loc_4C0E73DF
@@ -18443,13 +18443,13 @@ LfoGridSe1_L1d_Records:	# 16 x REC_LfoGridSe1_L1d_Records (8 bytes each); read b
 	REC_LfoGridSe1_L1d_Records	key=22, proc=loc_4C0E7A21
 	REC_LfoGridSe1_L1d_Records	key=0x200084, proc=loc_4C0E7A25	# [8]
 	REC_LfoGridSe1_L1d_Records	key=1, proc=loc_4C0E7E73
-	REC_LfoGridSe1_L1d_Records	proc=LfoGridSe1_Lae9
-	REC_LfoGridSe1_L1d_Records	proc=LfoGridSe1_Lae9
-	REC_LfoGridSe1_L1d_Records	proc=LfoGridSe1_Lae9
-	REC_LfoGridSe1_L1d_Records	proc=LfoGridSe1_Lae9
-	REC_LfoGridSe1_L1d_Records	proc=LfoGridSe1_Lae9
-	REC_LfoGridSe1_L1d_Records	proc=LfoGridSe1_Lae9
-LfoGridSe2_L1d_Records:	# 16 x REC_LfoGridSe2_L1d_Records (8 bytes each); read by LfoGridSe2_L1d 0x4C0E7E97 `mov (a0), d0`; LfoGridSe2_L4a 0x4C0E7EC4 `mov (a0), d0`; LfoGridSe2_L4d 0x4C0E7EC7 `mov (4, a0), a0`
+	REC_LfoGridSe1_L1d_Records	proc=FilterGridSe1_Lae9
+	REC_LfoGridSe1_L1d_Records	proc=FilterGridSe1_Lae9
+	REC_LfoGridSe1_L1d_Records	proc=FilterGridSe1_Lae9
+	REC_LfoGridSe1_L1d_Records	proc=FilterGridSe1_Lae9
+	REC_LfoGridSe1_L1d_Records	proc=FilterGridSe1_Lae9
+	REC_LfoGridSe1_L1d_Records	proc=FilterGridSe1_Lae9
+LfoGridSe2_L1d_Records:	# 16 x REC_LfoGridSe2_L1d_Records (8 bytes each); read by FilterGridSe2_L1d 0x4C0E7E97 `mov (a0), d0`; FilterGridSe2_L4a 0x4C0E7EC4 `mov (a0), d0`; FilterGridSe2_L4d 0x4C0E7EC7 `mov (4, a0), a0`
 	REC_LfoGridSe2_L1d_Records	key=16, proc=loc_4C0E7ECC	# [0]
 	REC_LfoGridSe2_L1d_Records	key=17, proc=loc_4C0E807C
 	REC_LfoGridSe2_L1d_Records	key=18, proc=loc_4C0E7ECC
@@ -18460,12 +18460,12 @@ LfoGridSe2_L1d_Records:	# 16 x REC_LfoGridSe2_L1d_Records (8 bytes each); read b
 	REC_LfoGridSe2_L1d_Records	key=22, proc=loc_4C0E8246
 	REC_LfoGridSe2_L1d_Records	key=0x200084, proc=loc_4C0E824A	# [8]
 	REC_LfoGridSe2_L1d_Records	key=1, proc=loc_4C0E8425
-	REC_LfoGridSe2_L1d_Records	proc=LfoGridSe2_L5ae
-	REC_LfoGridSe2_L1d_Records	proc=LfoGridSe2_L5ae
-	REC_LfoGridSe2_L1d_Records	proc=LfoGridSe2_L5ae
-	REC_LfoGridSe2_L1d_Records	proc=LfoGridSe2_L5ae
-	REC_LfoGridSe2_L1d_Records	proc=LfoGridSe2_L5ae
-	REC_LfoGridSe2_L1d_Records	proc=LfoGridSe2_L5ae
+	REC_LfoGridSe2_L1d_Records	proc=FilterGridSe2_L5ae
+	REC_LfoGridSe2_L1d_Records	proc=FilterGridSe2_L5ae
+	REC_LfoGridSe2_L1d_Records	proc=FilterGridSe2_L5ae
+	REC_LfoGridSe2_L1d_Records	proc=FilterGridSe2_L5ae
+	REC_LfoGridSe2_L1d_Records	proc=FilterGridSe2_L5ae
+	REC_LfoGridSe2_L1d_Records	proc=FilterGridSe2_L5ae
 
 LfoGridSe3_L46d_Table:
 	.long	loc_4C0E88A6
@@ -18504,7 +18504,7 @@ LfoGridSe3_L84_Table:
 	.long	loc_4C0E85FA
 	.long	loc_4C0E8622
 
-LfoGridSe3_L1d_Records:	# 16 x REC_LfoGridSe3_L1d_Records (8 bytes each); read by LfoGridSe3_L1d 0x4C0E8449 `mov (a0), d0`; LfoGridSe3_L4a 0x4C0E8476 `mov (a0), d0`; LfoGridSe3_L4d 0x4C0E8479 `mov (4, a0), a0`
+LfoGridSe3_L1d_Records:	# 16 x REC_LfoGridSe3_L1d_Records (8 bytes each); read by FilterGridSe3_L1d 0x4C0E8449 `mov (a0), d0`; FilterGridSe3_L4a 0x4C0E8476 `mov (a0), d0`; FilterGridSe3_L4d 0x4C0E8479 `mov (4, a0), a0`
 	REC_LfoGridSe3_L1d_Records	key=16, proc=loc_4C0E847E	# [0]
 	REC_LfoGridSe3_L1d_Records	key=17, proc=loc_4C0E8662
 	REC_LfoGridSe3_L1d_Records	key=18, proc=loc_4C0E847E
@@ -18515,13 +18515,13 @@ LfoGridSe3_L1d_Records:	# 16 x REC_LfoGridSe3_L1d_Records (8 bytes each); read b
 	REC_LfoGridSe3_L1d_Records	key=22, proc=loc_4C0E8864
 	REC_LfoGridSe3_L1d_Records	key=0x200084, proc=loc_4C0E8868	# [8]
 	REC_LfoGridSe3_L1d_Records	key=1, proc=loc_4C0E8AF9
-	REC_LfoGridSe3_L1d_Records	proc=LfoGridSe3_L6d0
-	REC_LfoGridSe3_L1d_Records	proc=LfoGridSe3_L6d0
-	REC_LfoGridSe3_L1d_Records	proc=LfoGridSe3_L6d0
-	REC_LfoGridSe3_L1d_Records	proc=LfoGridSe3_L6d0
-	REC_LfoGridSe3_L1d_Records	proc=LfoGridSe3_L6d0
-	REC_LfoGridSe3_L1d_Records	proc=LfoGridSe3_L6d0
-LfoGridSe4_L1d_Records:	# 16 x REC_LfoGridSe4_L1d_Records (8 bytes each); read by LfoGridSe4_L1d 0x4C0E8B1D `mov (a0), d0`; LfoGridSe4_L4b 0x4C0E8B4B `mov (a0), d0`; LfoGridSe4_L4e 0x4C0E8B4E `mov (4, a0), a0`
+	REC_LfoGridSe3_L1d_Records	proc=FilterGridSe3_L6d0
+	REC_LfoGridSe3_L1d_Records	proc=FilterGridSe3_L6d0
+	REC_LfoGridSe3_L1d_Records	proc=FilterGridSe3_L6d0
+	REC_LfoGridSe3_L1d_Records	proc=FilterGridSe3_L6d0
+	REC_LfoGridSe3_L1d_Records	proc=FilterGridSe3_L6d0
+	REC_LfoGridSe3_L1d_Records	proc=FilterGridSe3_L6d0
+LfoGridSe4_L1d_Records:	# 16 x REC_LfoGridSe4_L1d_Records (8 bytes each); read by FilterGridSe4_L1d 0x4C0E8B1D `mov (a0), d0`; FilterGridSe4_L4b 0x4C0E8B4B `mov (a0), d0`; FilterGridSe4_L4e 0x4C0E8B4E `mov (4, a0), a0`
 	REC_LfoGridSe4_L1d_Records	key=16, proc=loc_4C0E8B53	# [0]
 	REC_LfoGridSe4_L1d_Records	key=17, proc=loc_4C0E8CC6
 	REC_LfoGridSe4_L1d_Records	key=18, proc=loc_4C0E8B53
@@ -18532,12 +18532,12 @@ LfoGridSe4_L1d_Records:	# 16 x REC_LfoGridSe4_L1d_Records (8 bytes each); read b
 	REC_LfoGridSe4_L1d_Records	key=22, proc=loc_4C0E8E5B
 	REC_LfoGridSe4_L1d_Records	key=0x200084, proc=loc_4C0E8E5F	# [8]
 	REC_LfoGridSe4_L1d_Records	key=1, proc=loc_4C0E9000
-	REC_LfoGridSe4_L1d_Records	proc=LfoGridSe4_L503
-	REC_LfoGridSe4_L1d_Records	proc=LfoGridSe4_L503
-	REC_LfoGridSe4_L1d_Records	proc=LfoGridSe4_L503
-	REC_LfoGridSe4_L1d_Records	proc=LfoGridSe4_L503
-	REC_LfoGridSe4_L1d_Records	proc=LfoGridSe4_L503
-	REC_LfoGridSe4_L1d_Records	proc=LfoGridSe4_L503
+	REC_LfoGridSe4_L1d_Records	proc=FilterGridSe4_L503
+	REC_LfoGridSe4_L1d_Records	proc=FilterGridSe4_L503
+	REC_LfoGridSe4_L1d_Records	proc=FilterGridSe4_L503
+	REC_LfoGridSe4_L1d_Records	proc=FilterGridSe4_L503
+	REC_LfoGridSe4_L1d_Records	proc=FilterGridSe4_L503
+	REC_LfoGridSe4_L1d_Records	proc=FilterGridSe4_L503
 
 DspOnSe_L77d_Table:
 	.long	loc_4C0E9791
@@ -18576,7 +18576,7 @@ DspOnSe_L89_Table:
 	.long	loc_4C0E935E
 	.long	loc_4C0E9381
 
-DspOnSe_L1d_Records:	# 16 x REC_DspOnSe_L1d_Records (8 bytes each); read by DspOnSe_L1d 0x4C0E9024 `mov (a0), d0`; DspOnSe_L4b 0x4C0E9052 `mov (a0), d0`; DspOnSe_L4e 0x4C0E9055 `mov (4, a0), a0`
+DspOnSe_L1d_Records:	# 16 x REC_DspOnSe_L1d_Records (8 bytes each); read by LfoGridSe1_L1d 0x4C0E9024 `mov (a0), d0`; LfoGridSe1_L4b 0x4C0E9052 `mov (a0), d0`; LfoGridSe1_L4e 0x4C0E9055 `mov (4, a0), a0`
 	REC_DspOnSe_L1d_Records	key=16, proc=loc_4C0E905A	# [0]
 	REC_DspOnSe_L1d_Records	key=17, proc=loc_4C0E93BB
 	REC_DspOnSe_L1d_Records	key=18, proc=loc_4C0E905A
@@ -18587,12 +18587,12 @@ DspOnSe_L1d_Records:	# 16 x REC_DspOnSe_L1d_Records (8 bytes each); read by DspO
 	REC_DspOnSe_L1d_Records	key=22, proc=loc_4C0E9741
 	REC_DspOnSe_L1d_Records	key=0x200084, proc=loc_4C0E9745	# [8]
 	REC_DspOnSe_L1d_Records	key=1, proc=loc_4C0E9AEB
-	REC_DspOnSe_L1d_Records	proc=DspOnSe_Lae7
-	REC_DspOnSe_L1d_Records	proc=DspOnSe_Lae7
-	REC_DspOnSe_L1d_Records	proc=DspOnSe_Lae7
-	REC_DspOnSe_L1d_Records	proc=DspOnSe_Lae7
-	REC_DspOnSe_L1d_Records	proc=DspOnSe_Lae7
-	REC_DspOnSe_L1d_Records	proc=DspOnSe_Lae7
+	REC_DspOnSe_L1d_Records	proc=LfoGridSe1_Lae7
+	REC_DspOnSe_L1d_Records	proc=LfoGridSe1_Lae7
+	REC_DspOnSe_L1d_Records	proc=LfoGridSe1_Lae7
+	REC_DspOnSe_L1d_Records	proc=LfoGridSe1_Lae7
+	REC_DspOnSe_L1d_Records	proc=LfoGridSe1_Lae7
+	REC_DspOnSe_L1d_Records	proc=LfoGridSe1_Lae7
 
 DspTenSe_L785_Table:
 	.long	loc_4C0EA284
@@ -18631,7 +18631,7 @@ DspTenSe_L89_Table:
 	.long	loc_4C0E9E4D
 	.long	loc_4C0E9E70
 
-DspTenSe_L1d_Records:	# 16 x REC_DspTenSe_L1d_Records (8 bytes each); read by DspTenSe_L1d 0x4C0E9B0F `mov (a0), d0`; DspTenSe_L4b 0x4C0E9B3D `mov (a0), d0`; DspTenSe_L4e 0x4C0E9B40 `mov (4, a0), a0`
+DspTenSe_L1d_Records:	# 16 x REC_DspTenSe_L1d_Records (8 bytes each); read by LfoGridSe2_L1d 0x4C0E9B0F `mov (a0), d0`; LfoGridSe2_L4b 0x4C0E9B3D `mov (a0), d0`; LfoGridSe2_L4e 0x4C0E9B40 `mov (4, a0), a0`
 	REC_DspTenSe_L1d_Records	key=16, proc=loc_4C0E9B45	# [0]
 	REC_DspTenSe_L1d_Records	key=17, proc=loc_4C0E9EAA
 	REC_DspTenSe_L1d_Records	key=18, proc=loc_4C0E9B45
@@ -18642,12 +18642,12 @@ DspTenSe_L1d_Records:	# 16 x REC_DspTenSe_L1d_Records (8 bytes each); read by Ds
 	REC_DspTenSe_L1d_Records	key=22, proc=loc_4C0EA234
 	REC_DspTenSe_L1d_Records	key=0x200084, proc=loc_4C0EA238	# [8]
 	REC_DspTenSe_L1d_Records	key=1, proc=loc_4C0EA5E2
-	REC_DspTenSe_L1d_Records	proc=DspTenSe_Laf3
-	REC_DspTenSe_L1d_Records	proc=DspTenSe_Laf3
-	REC_DspTenSe_L1d_Records	proc=DspTenSe_Laf3
-	REC_DspTenSe_L1d_Records	proc=DspTenSe_Laf3
-	REC_DspTenSe_L1d_Records	proc=DspTenSe_Laf3
-	REC_DspTenSe_L1d_Records	proc=DspTenSe_Laf3
+	REC_DspTenSe_L1d_Records	proc=LfoGridSe2_Laf3
+	REC_DspTenSe_L1d_Records	proc=LfoGridSe2_Laf3
+	REC_DspTenSe_L1d_Records	proc=LfoGridSe2_Laf3
+	REC_DspTenSe_L1d_Records	proc=LfoGridSe2_Laf3
+	REC_DspTenSe_L1d_Records	proc=LfoGridSe2_Laf3
+	REC_DspTenSe_L1d_Records	proc=LfoGridSe2_Laf3
 
 DspSufSe_L785_Table:
 	.long	loc_4C0EAD7B
@@ -18686,7 +18686,7 @@ DspSufSe_L89_Table:
 	.long	loc_4C0EA944
 	.long	loc_4C0EA967
 
-DspSufSe_L1d_Records:	# 16 x REC_DspSufSe_L1d_Records (8 bytes each); read by DspSufSe_L1d 0x4C0EA606 `mov (a0), d0`; DspSufSe_L4b 0x4C0EA634 `mov (a0), d0`; DspSufSe_L4e 0x4C0EA637 `mov (4, a0), a0`
+DspSufSe_L1d_Records:	# 16 x REC_DspSufSe_L1d_Records (8 bytes each); read by LfoGridSe3_L1d 0x4C0EA606 `mov (a0), d0`; LfoGridSe3_L4b 0x4C0EA634 `mov (a0), d0`; LfoGridSe3_L4e 0x4C0EA637 `mov (4, a0), a0`
 	REC_DspSufSe_L1d_Records	key=16, proc=loc_4C0EA63C	# [0]
 	REC_DspSufSe_L1d_Records	key=17, proc=loc_4C0EA9A1
 	REC_DspSufSe_L1d_Records	key=18, proc=loc_4C0EA63C
@@ -18697,12 +18697,12 @@ DspSufSe_L1d_Records:	# 16 x REC_DspSufSe_L1d_Records (8 bytes each); read by Ds
 	REC_DspSufSe_L1d_Records	key=22, proc=loc_4C0EAD2B
 	REC_DspSufSe_L1d_Records	key=0x200084, proc=loc_4C0EAD2F	# [8]
 	REC_DspSufSe_L1d_Records	key=1, proc=loc_4C0EB0D9
-	REC_DspSufSe_L1d_Records	proc=DspSufSe_Laf3
-	REC_DspSufSe_L1d_Records	proc=DspSufSe_Laf3
-	REC_DspSufSe_L1d_Records	proc=DspSufSe_Laf3
-	REC_DspSufSe_L1d_Records	proc=DspSufSe_Laf3
-	REC_DspSufSe_L1d_Records	proc=DspSufSe_Laf3
-	REC_DspSufSe_L1d_Records	proc=DspSufSe_Laf3
+	REC_DspSufSe_L1d_Records	proc=LfoGridSe3_Laf3
+	REC_DspSufSe_L1d_Records	proc=LfoGridSe3_Laf3
+	REC_DspSufSe_L1d_Records	proc=LfoGridSe3_Laf3
+	REC_DspSufSe_L1d_Records	proc=LfoGridSe3_Laf3
+	REC_DspSufSe_L1d_Records	proc=LfoGridSe3_Laf3
+	REC_DspSufSe_L1d_Records	proc=LfoGridSe3_Laf3
 
 DspGroupSe_L785_Table:
 	.long	loc_4C0EB872
@@ -18741,7 +18741,7 @@ DspGroupSe_L89_Table:
 	.long	loc_4C0EB43B
 	.long	loc_4C0EB45E
 
-DspGroupSe_L1d_Records:	# 16 x REC_DspGroupSe_L1d_Records (8 bytes each); read by DspGroupSe_L1d 0x4C0EB0FD `mov (a0), d0`; DspGroupSe_L4b 0x4C0EB12B `mov (a0), d0`; DspGroupSe_L4e 0x4C0EB12E `mov (4, a0), a0`
+DspGroupSe_L1d_Records:	# 16 x REC_DspGroupSe_L1d_Records (8 bytes each); read by LfoGridSe4_L1d 0x4C0EB0FD `mov (a0), d0`; LfoGridSe4_L4b 0x4C0EB12B `mov (a0), d0`; LfoGridSe4_L4e 0x4C0EB12E `mov (4, a0), a0`
 	REC_DspGroupSe_L1d_Records	key=16, proc=loc_4C0EB133	# [0]
 	REC_DspGroupSe_L1d_Records	key=17, proc=loc_4C0EB498
 	REC_DspGroupSe_L1d_Records	key=18, proc=loc_4C0EB133
@@ -18752,12 +18752,12 @@ DspGroupSe_L1d_Records:	# 16 x REC_DspGroupSe_L1d_Records (8 bytes each); read b
 	REC_DspGroupSe_L1d_Records	key=22, proc=loc_4C0EB822
 	REC_DspGroupSe_L1d_Records	key=0x200084, proc=loc_4C0EB826	# [8]
 	REC_DspGroupSe_L1d_Records	key=1, proc=loc_4C0EBBD0
-	REC_DspGroupSe_L1d_Records	proc=DspGroupSe_Laf3
-	REC_DspGroupSe_L1d_Records	proc=DspGroupSe_Laf3
-	REC_DspGroupSe_L1d_Records	proc=DspGroupSe_Laf3
-	REC_DspGroupSe_L1d_Records	proc=DspGroupSe_Laf3
-	REC_DspGroupSe_L1d_Records	proc=DspGroupSe_Laf3
-	REC_DspGroupSe_L1d_Records	proc=DspGroupSe_Laf3
+	REC_DspGroupSe_L1d_Records	proc=LfoGridSe4_Laf3
+	REC_DspGroupSe_L1d_Records	proc=LfoGridSe4_Laf3
+	REC_DspGroupSe_L1d_Records	proc=LfoGridSe4_Laf3
+	REC_DspGroupSe_L1d_Records	proc=LfoGridSe4_Laf3
+	REC_DspGroupSe_L1d_Records	proc=LfoGridSe4_Laf3
+	REC_DspGroupSe_L1d_Records	proc=LfoGridSe4_Laf3
 AcGridBoxSe2Proc_L1d_Records:	# 16 x REC_AcGridBoxSe2Proc_L1d_Records (8 bytes each); read by AcGridBoxSe2Proc_L1d 0x4C0EBBF4 `mov (a0), d0`; AcGridBoxSe2Proc_L4c 0x4C0EBC23 `mov (a0), d0`; AcGridBoxSe2Proc_L4f 0x4C0EBC26 `mov (4, a0), a0`
 	REC_AcGridBoxSe2Proc_L1d_Records	key=0x2E0000, proc=loc_4C0EBCA4	# [0]
 	REC_AcGridBoxSe2Proc_L1d_Records	key=1, proc=loc_4C0EBC2B
@@ -18775,7 +18775,7 @@ AcGridBoxSe2Proc_L1d_Records:	# 16 x REC_AcGridBoxSe2Proc_L1d_Records (8 bytes e
 	REC_AcGridBoxSe2Proc_L1d_Records	proc=AcGridBoxSe2Proc_L39d
 	REC_AcGridBoxSe2Proc_L1d_Records	proc=AcGridBoxSe2Proc_L39d
 	REC_AcGridBoxSe2Proc_L1d_Records	key=15, proc=loc_4C0EBD08
-PortamentOnSe_L1d_Records:	# 16 x REC_PortamentOnSe_L1d_Records (8 bytes each); read by PortamentOnSe_L1d 0x4C0EBFA1 `mov (a0), d0`; PortamentOnSe_L4b 0x4C0EBFCF `mov (a0), d0`; PortamentOnSe_L4e 0x4C0EBFD2 `mov (4, a0), a0`
+PortamentOnSe_L1d_Records:	# 16 x REC_PortamentOnSe_L1d_Records (8 bytes each); read by ToneGridSe2_L1d 0x4C0EBFA1 `mov (a0), d0`; ToneGridSe2_L4b 0x4C0EBFCF `mov (a0), d0`; ToneGridSe2_L4e 0x4C0EBFD2 `mov (4, a0), a0`
 	REC_PortamentOnSe_L1d_Records	key=16, proc=loc_4C0EC092	# [0]
 	REC_PortamentOnSe_L1d_Records	key=0x2E0001, proc=loc_4C0EC06F
 	REC_PortamentOnSe_L1d_Records	key=2, proc=loc_4C0EBFD7
@@ -18786,12 +18786,12 @@ PortamentOnSe_L1d_Records:	# 16 x REC_PortamentOnSe_L1d_Records (8 bytes each); 
 	REC_PortamentOnSe_L1d_Records	key=22, proc=loc_4C0EC574
 	REC_PortamentOnSe_L1d_Records	key=0x200084, proc=loc_4C0EC578	# [8]
 	REC_PortamentOnSe_L1d_Records	key=1, proc=loc_4C0EC838
-	REC_PortamentOnSe_L1d_Records	proc=PortamentOnSe_L8b7
-	REC_PortamentOnSe_L1d_Records	proc=PortamentOnSe_L8b7
-	REC_PortamentOnSe_L1d_Records	proc=PortamentOnSe_L8b7
-	REC_PortamentOnSe_L1d_Records	proc=PortamentOnSe_L8b7
-	REC_PortamentOnSe_L1d_Records	proc=PortamentOnSe_L8b7
-	REC_PortamentOnSe_L1d_Records	proc=PortamentOnSe_L8b7
+	REC_PortamentOnSe_L1d_Records	proc=ToneGridSe2_L8b7
+	REC_PortamentOnSe_L1d_Records	proc=ToneGridSe2_L8b7
+	REC_PortamentOnSe_L1d_Records	proc=ToneGridSe2_L8b7
+	REC_PortamentOnSe_L1d_Records	proc=ToneGridSe2_L8b7
+	REC_PortamentOnSe_L1d_Records	proc=ToneGridSe2_L8b7
+	REC_PortamentOnSe_L1d_Records	proc=ToneGridSe2_L8b7
 AcCtrlGridBoxSeProc_L1d_Records:	# 16 x REC_AcCtrlGridBoxSeProc_L1d_Records (8 bytes each); read by AcCtrlGridBoxSeProc_L1d 0x4C0EC85C `mov (a0), d0`; AcCtrlGridBoxSeProc_L4c 0x4C0EC88B `mov (a0), d0`; AcCtrlGridBoxSeProc_L4f 0x4C0EC88E `mov (4, a0), a0`
 	REC_AcCtrlGridBoxSeProc_L1d_Records	key=16, proc=loc_4C0ECBD0	# [0]
 	REC_AcCtrlGridBoxSeProc_L1d_Records	key=1, proc=loc_4C0EC893
@@ -18809,7 +18809,7 @@ AcCtrlGridBoxSeProc_L1d_Records:	# 16 x REC_AcCtrlGridBoxSeProc_L1d_Records (8 b
 	REC_AcCtrlGridBoxSeProc_L1d_Records	proc=AcCtrlGridBoxSeProc_L477
 	REC_AcCtrlGridBoxSeProc_L1d_Records	proc=AcCtrlGridBoxSeProc_L477
 	REC_AcCtrlGridBoxSeProc_L1d_Records	key=15, proc=loc_4C0ECB5D
-RightSplitSe_L1d_Records:	# 16 x REC_RightSplitSe_L1d_Records (8 bytes each); read by RightSplitSe_L1d 0x4C0ECCE3 `mov (a0), d0`; RightSplitSe_L4a 0x4C0ECD10 `mov (a0), d0`; RightSplitSe_L4d 0x4C0ECD13 `mov (4, a0), a0`
+RightSplitSe_L1d_Records:	# 16 x REC_RightSplitSe_L1d_Records (8 bytes each); read by CtrlGridSe1_L1d 0x4C0ECCE3 `mov (a0), d0`; CtrlGridSe1_L4a 0x4C0ECD10 `mov (a0), d0`; CtrlGridSe1_L4d 0x4C0ECD13 `mov (4, a0), a0`
 	REC_RightSplitSe_L1d_Records	key=16, proc=loc_4C0ECD18	# [0]
 	REC_RightSplitSe_L1d_Records	key=17, proc=loc_4C0ED412
 	REC_RightSplitSe_L1d_Records	key=18, proc=loc_4C0ECD18
@@ -18820,12 +18820,12 @@ RightSplitSe_L1d_Records:	# 16 x REC_RightSplitSe_L1d_Records (8 bytes each); re
 	REC_RightSplitSe_L1d_Records	key=22, proc=loc_4C0EDB29
 	REC_RightSplitSe_L1d_Records	key=0x200084, proc=loc_4C0EDB2D	# [8]
 	REC_RightSplitSe_L1d_Records	key=1, proc=loc_4C0EE1B3
-	REC_RightSplitSe_L1d_Records	proc=RightSplitSe_L14f0
-	REC_RightSplitSe_L1d_Records	proc=RightSplitSe_L14f0
-	REC_RightSplitSe_L1d_Records	proc=RightSplitSe_L14f0
-	REC_RightSplitSe_L1d_Records	proc=RightSplitSe_L14f0
-	REC_RightSplitSe_L1d_Records	proc=RightSplitSe_L14f0
-	REC_RightSplitSe_L1d_Records	proc=RightSplitSe_L14f0
+	REC_RightSplitSe_L1d_Records	proc=CtrlGridSe1_L14f0
+	REC_RightSplitSe_L1d_Records	proc=CtrlGridSe1_L14f0
+	REC_RightSplitSe_L1d_Records	proc=CtrlGridSe1_L14f0
+	REC_RightSplitSe_L1d_Records	proc=CtrlGridSe1_L14f0
+	REC_RightSplitSe_L1d_Records	proc=CtrlGridSe1_L14f0
+	REC_RightSplitSe_L1d_Records	proc=CtrlGridSe1_L14f0
 DrumAcCtrlGridBoxSeProc_L1d_Records:	# 16 x REC_DrumAcCtrlGridBoxSeProc_L1d_Records (8 bytes each); read by DrumAcCtrlGridBoxSeProc_L1d 0x4C0EE1D7 `mov (a0), d0`; DrumAcCtrlGridBoxSeProc_L4c 0x4C0EE206 `mov (a0), d0`; DrumAcCtrlGridBoxSeProc_L4f 0x4C0EE209 `mov (4, a0), a0`
 	REC_DrumAcCtrlGridBoxSeProc_L1d_Records	key=16, proc=loc_4C0EE43D	# [0]
 	REC_DrumAcCtrlGridBoxSeProc_L1d_Records	key=1, proc=loc_4C0EE20E
@@ -18843,7 +18843,7 @@ DrumAcCtrlGridBoxSeProc_L1d_Records:	# 16 x REC_DrumAcCtrlGridBoxSeProc_L1d_Reco
 	REC_DrumAcCtrlGridBoxSeProc_L1d_Records	proc=DrumAcCtrlGridBoxSeProc_L369
 	REC_DrumAcCtrlGridBoxSeProc_L1d_Records	proc=DrumAcCtrlGridBoxSeProc_L369
 	REC_DrumAcCtrlGridBoxSeProc_L1d_Records	key=15, proc=loc_4C0EE3CA
-LeftSplitSe_L1d_Records:	# 16 x REC_LeftSplitSe_L1d_Records (8 bytes each); read by LeftSplitSe_L1d 0x4C0EE550 `mov (a0), d0`; LeftSplitSe_L4b 0x4C0EE57E `mov (a0), d0`; LeftSplitSe_L4e 0x4C0EE581 `mov (4, a0), a0`
+LeftSplitSe_L1d_Records:	# 16 x REC_LeftSplitSe_L1d_Records (8 bytes each); read by DrumCtrlGridSe_L1d 0x4C0EE550 `mov (a0), d0`; DrumCtrlGridSe_L4b 0x4C0EE57E `mov (a0), d0`; DrumCtrlGridSe_L4e 0x4C0EE581 `mov (4, a0), a0`
 	REC_LeftSplitSe_L1d_Records	key=16, proc=loc_4C0EE586	# [0]
 	REC_LeftSplitSe_L1d_Records	key=17, proc=loc_4C0EE76B
 	REC_LeftSplitSe_L1d_Records	key=18, proc=loc_4C0EE586
@@ -18854,12 +18854,12 @@ LeftSplitSe_L1d_Records:	# 16 x REC_LeftSplitSe_L1d_Records (8 bytes each); read
 	REC_LeftSplitSe_L1d_Records	key=22, proc=loc_4C0EE963
 	REC_LeftSplitSe_L1d_Records	key=0x200084, proc=loc_4C0EE967	# [8]
 	REC_LeftSplitSe_L1d_Records	key=1, proc=loc_4C0EEABC
-	REC_LeftSplitSe_L1d_Records	proc=LeftSplitSe_L58c
-	REC_LeftSplitSe_L1d_Records	proc=LeftSplitSe_L58c
-	REC_LeftSplitSe_L1d_Records	proc=LeftSplitSe_L58c
-	REC_LeftSplitSe_L1d_Records	proc=LeftSplitSe_L58c
-	REC_LeftSplitSe_L1d_Records	proc=LeftSplitSe_L58c
-	REC_LeftSplitSe_L1d_Records	proc=LeftSplitSe_L58c
+	REC_LeftSplitSe_L1d_Records	proc=DrumCtrlGridSe_L58c
+	REC_LeftSplitSe_L1d_Records	proc=DrumCtrlGridSe_L58c
+	REC_LeftSplitSe_L1d_Records	proc=DrumCtrlGridSe_L58c
+	REC_LeftSplitSe_L1d_Records	proc=DrumCtrlGridSe_L58c
+	REC_LeftSplitSe_L1d_Records	proc=DrumCtrlGridSe_L58c
+	REC_LeftSplitSe_L1d_Records	proc=DrumCtrlGridSe_L58c
 AcTsetGridBoxSeProc_L1d_Records:	# 16 x REC_AcTsetGridBoxSeProc_L1d_Records (8 bytes each); read by AcTsetGridBoxSeProc_L1d 0x4C0EEAE0 `mov (a0), d0`; AcTsetGridBoxSeProc_L4c 0x4C0EEB0F `mov (a0), d0`; AcTsetGridBoxSeProc_L4f 0x4C0EEB12 `mov (4, a0), a0`
 	REC_AcTsetGridBoxSeProc_L1d_Records	key=16, proc=loc_4C0EECE5	# [0]
 	REC_AcTsetGridBoxSeProc_L1d_Records	key=1, proc=loc_4C0EEB17
@@ -18917,7 +18917,7 @@ func_4C0F0BAE_L2ba_Table:
 	.long	loc_4C0F1933
 	.long	loc_4C0F199A
 
-func_4C0F0BAE_L1d_Records:	# 16 x REC_func_4C0F0BAE_L1d_Records (8 bytes each); read by func_4C0F0BAE_L1d 0x4C0F0BCB `mov (a0), d0`; func_4C0F0BAE_L4a 0x4C0F0BF8 `mov (a0), d0`; func_4C0F0BAE_L4d 0x4C0F0BFB `mov (4, a0), a0`
+func_4C0F0BAE_L1d_Records:	# 16 x REC_func_4C0F0BAE_L1d_Records (8 bytes each); read by LfoViewSe_L1d 0x4C0F0BCB `mov (a0), d0`; LfoViewSe_L4a 0x4C0F0BF8 `mov (a0), d0`; LfoViewSe_L4d 0x4C0F0BFB `mov (4, a0), a0`
 	REC_func_4C0F0BAE_L1d_Records	key=16, proc=loc_4C0F0C00	# [0]
 	REC_func_4C0F0BAE_L1d_Records	key=17, proc=loc_4C0F0CE5
 	REC_func_4C0F0BAE_L1d_Records	key=18, proc=loc_4C0F0C00
@@ -18927,13 +18927,13 @@ func_4C0F0BAE_L1d_Records:	# 16 x REC_func_4C0F0BAE_L1d_Records (8 bytes each); 
 	REC_func_4C0F0BAE_L1d_Records	key=22, proc=loc_4C0F0E0F
 	REC_func_4C0F0BAE_L1d_Records	key=0x200084, proc=loc_4C0F0E13
 	REC_func_4C0F0BAE_L1d_Records	key=1, proc=loc_4C0F1A19	# [8]
-	REC_func_4C0F0BAE_L1d_Records	proc=func_4C0F0BAE_Le6e
-	REC_func_4C0F0BAE_L1d_Records	proc=func_4C0F0BAE_Le6e
-	REC_func_4C0F0BAE_L1d_Records	proc=func_4C0F0BAE_Le6e
-	REC_func_4C0F0BAE_L1d_Records	proc=func_4C0F0BAE_Le6e
-	REC_func_4C0F0BAE_L1d_Records	proc=func_4C0F0BAE_Le6e
-	REC_func_4C0F0BAE_L1d_Records	proc=func_4C0F0BAE_Le6e
-	REC_func_4C0F0BAE_L1d_Records	proc=func_4C0F0BAE_Le6e
+	REC_func_4C0F0BAE_L1d_Records	proc=LfoViewSe_Le6e
+	REC_func_4C0F0BAE_L1d_Records	proc=LfoViewSe_Le6e
+	REC_func_4C0F0BAE_L1d_Records	proc=LfoViewSe_Le6e
+	REC_func_4C0F0BAE_L1d_Records	proc=LfoViewSe_Le6e
+	REC_func_4C0F0BAE_L1d_Records	proc=LfoViewSe_Le6e
+	REC_func_4C0F0BAE_L1d_Records	proc=LfoViewSe_Le6e
+	REC_func_4C0F0BAE_L1d_Records	proc=LfoViewSe_Le6e
 AcDrumGridBoxSeProc_L1d_Records:	# 16 x REC_AcDrumGridBoxSeProc_L1d_Records (8 bytes each); read by AcDrumGridBoxSeProc_L1d 0x4C0F8117 `mov (a0), d0`; AcDrumGridBoxSeProc_L4c 0x4C0F8146 `mov (a0), d0`; AcDrumGridBoxSeProc_L4f 0x4C0F8149 `mov (4, a0), a0`
 	REC_AcDrumGridBoxSeProc_L1d_Records	key=16, proc=loc_4C0F841F	# [0]
 	REC_AcDrumGridBoxSeProc_L1d_Records	key=1, proc=loc_4C0F814E
@@ -18967,7 +18967,7 @@ DrumGDumpOnSe_L4ed_Table:
 	.long	loc_4C0F8A11
 	.long	loc_4C0F8A1B
 	.long	loc_4C0F8B5B
-	.long	DrumGDumpOnSe_L8dc
+	.long	DrumMainGridSe_L8dc
 	.long	loc_4C0F8C85
 	.long	loc_4C0F8CBD
 	.long	loc_4C0F8CF9
@@ -18978,7 +18978,7 @@ DrumGDumpOnSe_L94_Table:
 	.long	loc_4C0F85B8
 	.long	loc_4C0F85C3
 	.long	loc_4C0F86F7
-	.long	DrumGDumpOnSe_L490
+	.long	DrumMainGridSe_L490
 	.long	loc_4C0F882F
 	.long	loc_4C0F8867
 	.long	loc_4C0F88A2
@@ -18986,7 +18986,7 @@ DrumGDumpOnSe_L94_Table:
 	.long	loc_4C0F8936
 	.long	loc_4C0F8972
 
-DrumGDumpOnSe_L1d_Records:	# 16 x REC_DrumGDumpOnSe_L1d_Records (8 bytes each); read by DrumGDumpOnSe_L1d 0x4C0F8532 `mov (a0), d0`; DrumGDumpOnSe_L4b 0x4C0F8560 `mov (a0), d0`; DrumGDumpOnSe_L4e 0x4C0F8563 `mov (4, a0), a0`
+DrumGDumpOnSe_L1d_Records:	# 16 x REC_DrumGDumpOnSe_L1d_Records (8 bytes each); read by DrumMainGridSe_L1d 0x4C0F8532 `mov (a0), d0`; DrumMainGridSe_L4b 0x4C0F8560 `mov (a0), d0`; DrumMainGridSe_L4e 0x4C0F8563 `mov (4, a0), a0`
 	REC_DrumGDumpOnSe_L1d_Records	key=16, proc=loc_4C0F8568	# [0]
 	REC_DrumGDumpOnSe_L1d_Records	key=17, proc=loc_4C0F89C1
 	REC_DrumGDumpOnSe_L1d_Records	key=18, proc=loc_4C0F8568
@@ -18997,12 +18997,12 @@ DrumGDumpOnSe_L1d_Records:	# 16 x REC_DrumGDumpOnSe_L1d_Records (8 bytes each); 
 	REC_DrumGDumpOnSe_L1d_Records	key=22, proc=loc_4C0F8E33
 	REC_DrumGDumpOnSe_L1d_Records	key=0x200084, proc=loc_4C0F8E37	# [8]
 	REC_DrumGDumpOnSe_L1d_Records	key=1, proc=loc_4C0F9345
-	REC_DrumGDumpOnSe_L1d_Records	proc=DrumGDumpOnSe_Le33
-	REC_DrumGDumpOnSe_L1d_Records	proc=DrumGDumpOnSe_Le33
-	REC_DrumGDumpOnSe_L1d_Records	proc=DrumGDumpOnSe_Le33
-	REC_DrumGDumpOnSe_L1d_Records	proc=DrumGDumpOnSe_Le33
-	REC_DrumGDumpOnSe_L1d_Records	proc=DrumGDumpOnSe_Le33
-	REC_DrumGDumpOnSe_L1d_Records	proc=DrumGDumpOnSe_Le33
+	REC_DrumGDumpOnSe_L1d_Records	proc=DrumMainGridSe_Le33
+	REC_DrumGDumpOnSe_L1d_Records	proc=DrumMainGridSe_Le33
+	REC_DrumGDumpOnSe_L1d_Records	proc=DrumMainGridSe_Le33
+	REC_DrumGDumpOnSe_L1d_Records	proc=DrumMainGridSe_Le33
+	REC_DrumGDumpOnSe_L1d_Records	proc=DrumMainGridSe_Le33
+	REC_DrumGDumpOnSe_L1d_Records	proc=DrumMainGridSe_Le33
 
 CopyToSe_L9ff_Table:
 	.long	loc_4C0F9D58
@@ -19038,7 +19038,7 @@ CopyToSe_L90_Table:
 	.long	loc_4C0F97AE
 	.long	loc_4C0F97FD
 
-CopyToSe_L1d_Records:	# 16 x REC_CopyToSe_L1d_Records (8 bytes each); read by CopyToSe_L1d 0x4C0F9369 `mov (a0), d0`; CopyToSe_L4a 0x4C0F9396 `mov (a0), d0`; CopyToSe_L4d 0x4C0F9399 `mov (4, a0), a0`
+CopyToSe_L1d_Records:	# 16 x REC_CopyToSe_L1d_Records (8 bytes each); read by DrumFilterGridSe_L1d 0x4C0F9369 `mov (a0), d0`; DrumFilterGridSe_L4a 0x4C0F9396 `mov (a0), d0`; DrumFilterGridSe_L4d 0x4C0F9399 `mov (4, a0), a0`
 	REC_CopyToSe_L1d_Records	key=16, proc=loc_4C0F939E	# [0]
 	REC_CopyToSe_L1d_Records	key=17, proc=loc_4C0F984E
 	REC_CopyToSe_L1d_Records	key=18, proc=loc_4C0F939E
@@ -19049,12 +19049,12 @@ CopyToSe_L1d_Records:	# 16 x REC_CopyToSe_L1d_Records (8 bytes each); read by Co
 	REC_CopyToSe_L1d_Records	key=22, proc=loc_4C0F9D13
 	REC_CopyToSe_L1d_Records	key=0x200084, proc=loc_4C0F9D17	# [8]
 	REC_CopyToSe_L1d_Records	key=1, proc=loc_4C0FA2B4
-	REC_CopyToSe_L1d_Records	proc=CopyToSe_Lf6b
-	REC_CopyToSe_L1d_Records	proc=CopyToSe_Lf6b
-	REC_CopyToSe_L1d_Records	proc=CopyToSe_Lf6b
-	REC_CopyToSe_L1d_Records	proc=CopyToSe_Lf6b
-	REC_CopyToSe_L1d_Records	proc=CopyToSe_Lf6b
-	REC_CopyToSe_L1d_Records	proc=CopyToSe_Lf6b
+	REC_CopyToSe_L1d_Records	proc=DrumFilterGridSe_Lf6b
+	REC_CopyToSe_L1d_Records	proc=DrumFilterGridSe_Lf6b
+	REC_CopyToSe_L1d_Records	proc=DrumFilterGridSe_Lf6b
+	REC_CopyToSe_L1d_Records	proc=DrumFilterGridSe_Lf6b
+	REC_CopyToSe_L1d_Records	proc=DrumFilterGridSe_Lf6b
+	REC_CopyToSe_L1d_Records	proc=DrumFilterGridSe_Lf6b
 AcDrumGridBoxSe2Proc_L1d_Records:	# 16 x REC_AcDrumGridBoxSe2Proc_L1d_Records (8 bytes each); read by AcDrumGridBoxSe2Proc_L1d 0x4C0FA2D8 `mov (a0), d0`; AcDrumGridBoxSe2Proc_L4c 0x4C0FA307 `mov (a0), d0`; AcDrumGridBoxSe2Proc_L4f 0x4C0FA30A `mov (4, a0), a0`
 	REC_AcDrumGridBoxSe2Proc_L1d_Records	key=16, proc=loc_4C0FA5E0	# [0]
 	REC_AcDrumGridBoxSe2Proc_L1d_Records	key=1, proc=loc_4C0FA30F
@@ -19072,7 +19072,7 @@ AcDrumGridBoxSe2Proc_L1d_Records:	# 16 x REC_AcDrumGridBoxSe2Proc_L1d_Records (8
 	REC_AcDrumGridBoxSe2Proc_L1d_Records	key=0x200083, proc=loc_4C0FA6AC
 	REC_AcDrumGridBoxSe2Proc_L1d_Records	proc=AcDrumGridBoxSe2Proc_L40b
 	REC_AcDrumGridBoxSe2Proc_L1d_Records	key=15, proc=loc_4C0FA56D
-DrumGraphKeyOffXSe_L1d_Records:	# 16 x REC_DrumGraphKeyOffXSe_L1d_Records (8 bytes each); read by DrumGraphKeyOffXSe_L1d 0x4C0FA6F3 `mov (a0), d0`; DrumGraphKeyOffXSe_L4b 0x4C0FA721 `mov (a0), d0`; DrumGraphKeyOffXSe_L4e 0x4C0FA724 `mov (4, a0), a0`
+DrumGraphKeyOffXSe_L1d_Records:	# 16 x REC_DrumGraphKeyOffXSe_L1d_Records (8 bytes each); read by DrumAmpGridSe_L1d 0x4C0FA6F3 `mov (a0), d0`; DrumAmpGridSe_L4b 0x4C0FA721 `mov (a0), d0`; DrumAmpGridSe_L4e 0x4C0FA724 `mov (4, a0), a0`
 	REC_DrumGraphKeyOffXSe_L1d_Records	key=16, proc=loc_4C0FA729	# [0]
 	REC_DrumGraphKeyOffXSe_L1d_Records	key=17, proc=loc_4C0FA971
 	REC_DrumGraphKeyOffXSe_L1d_Records	key=18, proc=loc_4C0FA729
@@ -19083,13 +19083,13 @@ DrumGraphKeyOffXSe_L1d_Records:	# 16 x REC_DrumGraphKeyOffXSe_L1d_Records (8 byt
 	REC_DrumGraphKeyOffXSe_L1d_Records	key=22, proc=loc_4C0FABD1
 	REC_DrumGraphKeyOffXSe_L1d_Records	key=0x200084, proc=loc_4C0FABD5	# [8]
 	REC_DrumGraphKeyOffXSe_L1d_Records	key=1, proc=loc_4C0FAEAC
-	REC_DrumGraphKeyOffXSe_L1d_Records	proc=DrumGraphKeyOffXSe_L7d9
-	REC_DrumGraphKeyOffXSe_L1d_Records	proc=DrumGraphKeyOffXSe_L7d9
-	REC_DrumGraphKeyOffXSe_L1d_Records	proc=DrumGraphKeyOffXSe_L7d9
-	REC_DrumGraphKeyOffXSe_L1d_Records	proc=DrumGraphKeyOffXSe_L7d9
-	REC_DrumGraphKeyOffXSe_L1d_Records	proc=DrumGraphKeyOffXSe_L7d9
-	REC_DrumGraphKeyOffXSe_L1d_Records	proc=DrumGraphKeyOffXSe_L7d9
-CopyFromSe_L1d_Records:	# 16 x REC_CopyFromSe_L1d_Records (8 bytes each); read by CopyFromSe_L1d 0x4C0FAED0 `mov (a0), d0`; CopyFromSe_L4b 0x4C0FAEFE `mov (a0), d0`; CopyFromSe_L4e 0x4C0FAF01 `mov (4, a0), a0`
+	REC_DrumGraphKeyOffXSe_L1d_Records	proc=DrumAmpGridSe_L7d9
+	REC_DrumGraphKeyOffXSe_L1d_Records	proc=DrumAmpGridSe_L7d9
+	REC_DrumGraphKeyOffXSe_L1d_Records	proc=DrumAmpGridSe_L7d9
+	REC_DrumGraphKeyOffXSe_L1d_Records	proc=DrumAmpGridSe_L7d9
+	REC_DrumGraphKeyOffXSe_L1d_Records	proc=DrumAmpGridSe_L7d9
+	REC_DrumGraphKeyOffXSe_L1d_Records	proc=DrumAmpGridSe_L7d9
+CopyFromSe_L1d_Records:	# 16 x REC_CopyFromSe_L1d_Records (8 bytes each); read by DrumLfoGridSe_L1d 0x4C0FAED0 `mov (a0), d0`; DrumLfoGridSe_L4b 0x4C0FAEFE `mov (a0), d0`; DrumLfoGridSe_L4e 0x4C0FAF01 `mov (4, a0), a0`
 	REC_CopyFromSe_L1d_Records	key=16, proc=loc_4C0FAF06	# [0]
 	REC_CopyFromSe_L1d_Records	key=17, proc=loc_4C0FB087
 	REC_CopyFromSe_L1d_Records	key=18, proc=loc_4C0FAF06
@@ -19100,12 +19100,12 @@ CopyFromSe_L1d_Records:	# 16 x REC_CopyFromSe_L1d_Records (8 bytes each); read b
 	REC_CopyFromSe_L1d_Records	key=22, proc=loc_4C0FB22A
 	REC_CopyFromSe_L1d_Records	key=0x200084, proc=loc_4C0FB22E	# [8]
 	REC_CopyFromSe_L1d_Records	key=1, proc=loc_4C0FB3FD
-	REC_CopyFromSe_L1d_Records	proc=CopyFromSe_L54d
-	REC_CopyFromSe_L1d_Records	proc=CopyFromSe_L54d
-	REC_CopyFromSe_L1d_Records	proc=CopyFromSe_L54d
-	REC_CopyFromSe_L1d_Records	proc=CopyFromSe_L54d
-	REC_CopyFromSe_L1d_Records	proc=CopyFromSe_L54d
-	REC_CopyFromSe_L1d_Records	proc=CopyFromSe_L54d
+	REC_CopyFromSe_L1d_Records	proc=DrumLfoGridSe_L54d
+	REC_CopyFromSe_L1d_Records	proc=DrumLfoGridSe_L54d
+	REC_CopyFromSe_L1d_Records	proc=DrumLfoGridSe_L54d
+	REC_CopyFromSe_L1d_Records	proc=DrumLfoGridSe_L54d
+	REC_CopyFromSe_L1d_Records	proc=DrumLfoGridSe_L54d
+	REC_CopyFromSe_L1d_Records	proc=DrumLfoGridSe_L54d
 
 func_4C0FC524_entry_Led_Table:
 	.long	loc_4C0FC620
@@ -38026,13 +38026,13 @@ func_4C15E849_entry_L16_Table:
 	.long	loc_4C15E86F
 	.long	loc_4C15E895
 	.long	loc_4C15E895
-	.long	func_4C15E849_entry_Ldd
+	.long	DspPresetEffectTypeGet_entry_Ldd
 	.long	loc_4C15E895
 	.long	loc_4C15E895
 	.long	loc_4C15E895
-	.long	func_4C15E849_entry_Ldd
+	.long	DspPresetEffectTypeGet_entry_Ldd
 	.long	loc_4C15E8B4
-	.long	func_4C15E849_entry_Ldd
+	.long	DspPresetEffectTypeGet_entry_Ldd
 	.long	loc_4C15E8B4
 	.long	loc_4C15E8B4
 	.long	loc_4C15E8B4
@@ -38250,21 +38250,21 @@ func_4C15F231_Table:
 	.long	loc_4C15F255
 func_4C15F29A_Lc_Table:
 	.long	loc_4C15F2C2
-	.long	func_4C15F29A_L48
+	.long	DspPresetKeyKind_L48
 	.long	loc_4C15F2C6
 	.long	loc_4C15F2CA
 	.long	loc_4C15F2CE
-	.long	func_4C15F29A_L48
-	.long	func_4C15F29A_L48
-	.long	func_4C15F29A_L48
+	.long	DspPresetKeyKind_L48
+	.long	DspPresetKeyKind_L48
+	.long	DspPresetKeyKind_L48
 	.long	loc_4C15F2D2
-	.long	func_4C15F29A_L48
+	.long	DspPresetKeyKind_L48
 	.long	loc_4C15F2D6
 	.long	loc_4C15F2DA
 	.long	loc_4C15F2DE
-	.long	func_4C15F29A_L48
-	.long	func_4C15F29A_L48
-	.long	func_4C15F29A_L48
+	.long	DspPresetKeyKind_L48
+	.long	DspPresetKeyKind_L48
+	.long	DspPresetKeyKind_L48
 	.long	loc_4C15F2BE
 func_4C15F2E7_Table:
 	.long	loc_4C15F2FD

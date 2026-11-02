@@ -481,8 +481,8 @@
 
 # REC_func_5017DCBF_Table: 2-byte records (func_5017DCBF_Table, 26 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   kind         u8             func_5017DCBF 0x5017DCBF `movbu (d0, a2), d1`
-#   +1   f1           u8             func_5017DAC4 0x5017DAC4 `movbu (1, a0), d3`
+#   +0   kind         u8             StylePartFieldEmit 0x5017DCBF `movbu (d0, a2), d1`
+#   +1   f1           u8             PartFieldCcSend 0x5017DAC4 `movbu (1, a0), d3`
 .macro REC_func_5017DCBF_Table kind=0, f1=0
 	.byte	\kind
 	.byte	\f1
@@ -3997,11 +3997,11 @@
 
 # NoteConvRule: 8-byte records (NoteConvRules, 128 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   is_melody    u8             func_50173F49_entry_L170 0x501740BE `movbu (d0, a0), d0`
-#   +1   alt_chord    u8             func_50173EF8_L9 0x50173F01 `movbu (1, a0), d0`
-#   +2   no_third_adj u8             func_50173F13_L9 0x50173F1C `movbu (2, a0), d0`; func_50173F49_entry_L9b 0x50173FE9 `movbu (2, a0), d0`
-#   +3   no_transpose u8             func_50173F2E_L9 0x50173F37 `movbu (3, a0), d0`; func_50173F49_entry_Lde 0x5017402C `movbu (3, a0), d0`
-#   +4   table        ptr            func_50173F49_entry_L13 0x50173F61 `mov (4, a0), d2`
+#   +0   is_melody    u8             NoteConvApply_entry_L170 0x501740BE `movbu (d0, a0), d0`
+#   +1   alt_chord    u8             NoteConvRuleByte1Get_L9 0x50173F01 `movbu (1, a0), d0`
+#   +2   no_third_adj u8             NoteConvRuleByte2Get_L9 0x50173F1C `movbu (2, a0), d0`; NoteConvApply_entry_L9b 0x50173FE9 `movbu (2, a0), d0`
+#   +3   no_transpose u8             NoteConvRuleByte3Get_L9 0x50173F37 `movbu (3, a0), d0`; NoteConvApply_entry_Lde 0x5017402C `movbu (3, a0), d0`
+#   +4   table        ptr            NoteConvApply_entry_L13 0x50173F61 `mov (4, a0), d2`
 .macro NoteConvRule is_melody=0, alt_chord=0, no_third_adj=0, no_transpose=0, table=0
 	.byte	\is_melody
 	.byte	\alt_chord
@@ -4437,12 +4437,12 @@
 
 # REC_func_5017DABB_Result: 21-byte records (func_5017DABB_Result, 1 records); fields, and what reads them:
 #   +0   s0           char[2]        func_5017E6B4_entry_L2 0x5017E6BB `call memcpy_entry, [a2,a3], 8`; func_50180A94_entry_L2 0x50180A9B `call memcpy_entry, [a2,a3], 8`
-#   +2   key          u8             func_5017DCBF_entry_L2b 0x5017DCEF `movbu (2, a1), d2`
-#   +3   f3           u8             func_5017DCBF_entry_L2b 0x5017DCEF `movbu (3, a1), d0`
-#   +4   f4           u8             func_5017DCBF_entry_L2b 0x5017DCEF `movbu (4, a1), d0`
+#   +2   key          u8             StylePartFieldEmit_entry_L2b 0x5017DCEF `movbu (2, a1), d2`
+#   +3   f3           u8             StylePartFieldEmit_entry_L2b 0x5017DCEF `movbu (3, a1), d0`
+#   +4   f4           u8             StylePartFieldEmit_entry_L2b 0x5017DCEF `movbu (4, a1), d0`
 #   +5   x5           u8[14]         no reader seen
-#   +19  key_         u8             func_5017DCBF_entry_L71 0x5017DD35 `movbu (0x13, a1), d2`
-#   +20  f20          u8             func_5017DCBF_entry_L71 0x5017DD35 `movbu (0x14, a1), d0`
+#   +19  key_         u8             StylePartFieldEmit_entry_L71 0x5017DD35 `movbu (0x13, a1), d2`
+#   +20  f20          u8             StylePartFieldEmit_entry_L71 0x5017DD35 `movbu (0x14, a1), d0`
 .macro REC_func_5017DABB_Result s0, key=0, f3=0, f4=0, x5, key_=0, f20=0
 	.ascii	"\s0"
 	.byte	\key
@@ -4739,11 +4739,11 @@
 	.ascii	"\x0"
 .endm
 
-# REC_func_50150244_entry_L8c_Selected: 12-byte records (func_50150244_entry_L8c_Selected, 8 records); fields, and what reads them:
-#   +0   key          u32            func_50150244_entry_L8c 0x501502D5 `mov (a1), d1`
-#   +4   key_         u32            func_50150244_entry_L8c 0x501502D5 `mov (a2), d3`
-#   +8   proc         ptr            func_50150244_entry_L8c 0x501502D5 `mov (a3), d0`
-.macro REC_func_50150244_entry_L8c_Selected key=0, key_=0, proc=0
+# REC_M3SetSpecialDispatch_entry_L8c_Selected: 12-byte records (M3SetSpecialDispatch_entry_L8c_Selected, 8 records); fields, and what reads them:
+#   +0   key          u32            M3SetSpecialDispatch_entry_L8c 0x501502D5 `mov (a1), d1`
+#   +4   key_         u32            M3SetSpecialDispatch_entry_L8c 0x501502D5 `mov (a2), d3`
+#   +8   proc         ptr            M3SetSpecialDispatch_entry_L8c 0x501502D5 `mov (a3), d0`
+.macro REC_M3SetSpecialDispatch_entry_L8c_Selected key=0, key_=0, proc=0
 	.long	\key
 	.long	\key_
 	.long	\proc

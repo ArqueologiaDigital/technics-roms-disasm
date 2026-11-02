@@ -156,7 +156,16 @@ its passes type most of the pieces listed here; that README lists what is still 
 - **Field names.**  `tools/data_struct_names.py` names 17 record kinds; the rest keep offset names
   (f / p / s / a / x + offset) with every field's readers in the header.
 - **Bitmaps without MT_GetBitCount** are taken as 4 bits a pixel only when their pixels end at the
-  next label ([INFERENCE]).
+  next label. (Resolved 2026-11-02: 4 bits a pixel is what the firmware does, not an inference.
+  VwUserBitmapProc 0x48418625 is the only code that asks MT_GetBitCount (`mov MT_GetBitCount, d1` at
+  region1_00.s, one site in each of 941 / 942 / 935 / 893); it draws 1 with DrawBitmapSP2, 8 with
+  DrawBitmapSPFast256 / DrawBitmapSPFast, and any other answer with DrawBitmapSPFast16 (4 bpp; the
+  proc's MT_GetBitmapPalette, or DrawBitmapSPFast16_Impl_Table when that is 0).  A bitmap proc returns
+  0 for a message it has no case for (`clr d0` before `retf`, e.g. UserBitmapCheck 0x48418764), so an
+  unanswered MT_GetBitCount is drawn at 4 bpp.  The other consumers of MT_GetBitmapData do not ask:
+  AcMonImageProc draws BitmapMonon / BitmapMonoff with DrawBitmapSPFast16 (4 bpp), ComputerConnection
+  draws its five procs with DrawBitmapSP2 (they answer 1), and VwBitmapFileProc / VwJpegFileProc /
+  PsUsrBmpToggleProc draw BMP / JPEG files.  The end-at-the-next-label test only guards the size.)
 - **Dispatch tables** (`{u32 key, code address}`) are named by their shape; their readers are cited
   only where the walk sees them.  (Resolved 2026-11-02, lane mn10300-data: named after the routine that reads
   their keys (`msg_readers`), the tables no instruction read were the slots past a 16-slot hash table's first

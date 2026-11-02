@@ -19,8 +19,8 @@ Style_Bossanova1:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_Bossanova1
 
-Style_Bossanova1_Intro1A:
-	var_head	Style_Bossanova1_Intro1A, 4, 4, 0xff, 0xff
+Style_Bossanova1_Intro1Major:
+	var_head	Style_Bossanova1_Intro1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x00, 0x00, 0x20
 	ev_cc	5, 7, 82
@@ -29,8 +29,8 @@ Style_Bossanova1_Intro1A:
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_cc	7, 7, 66
 	ev_pc	7, 0x0c, 0x00, 0x26
-	var_events	Style_Bossanova1_Intro1A
-Style_Bossanova1_Intro1A_Events:		# 4 bars of 4 beats, 1215 bytes
+	var_events	Style_Bossanova1_Intro1Major
+Style_Bossanova1_Intro1Major_Events:		# 4 bars of 4 beats, 1215 bytes
 	ev_beat
 	ev_note	7, 69, 28, 38, 0, 0
 	ev_note	1, 36, 72, 34, 1, 1
@@ -443,10 +443,10 @@ Style_Bossanova1_Intro1A_Events:		# 4 bars of 4 beats, 1215 bytes
 	ev_at	95
 	ev_note	7, 51, 83, 12, 0, 0
 	ev_end
-	var_end	Style_Bossanova1_Intro1A
+	var_end	Style_Bossanova1_Intro1Major
 
-Style_Bossanova1_Intro1B:
-	var_head	Style_Bossanova1_Intro1B, 4, 4, 0xff, 0xff
+Style_Bossanova1_Intro1Minor:
+	var_head	Style_Bossanova1_Intro1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x00, 0x00, 0x20
 	ev_cc	5, 7, 82
@@ -455,8 +455,8 @@ Style_Bossanova1_Intro1B:
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_cc	7, 7, 66
 	ev_pc	7, 0x0c, 0x00, 0x26
-	var_events	Style_Bossanova1_Intro1B
-Style_Bossanova1_Intro1B_Events:		# 4 bars of 4 beats, 1760 bytes
+	var_events	Style_Bossanova1_Intro1Minor
+Style_Bossanova1_Intro1Minor_Events:		# 4 bars of 4 beats, 1760 bytes
 	ev_beat
 	ev_note	0, 40, 74, 12, 0, 0
 	ev_note	7, 69, 28, 38, 0, 0
@@ -1035,10 +1035,10 @@ Style_Bossanova1_Intro1B_Events:		# 4 bars of 4 beats, 1760 bytes
 	ev_at	95
 	ev_note	7, 51, 109, 12, 0, 0
 	ev_end
-	var_end	Style_Bossanova1_Intro1B
+	var_end	Style_Bossanova1_Intro1Minor
 
-Style_Bossanova1_Ending1A:
-	var_head	Style_Bossanova1_Ending1A, 4, 4, 0xff, 0xff
+Style_Bossanova1_Intro2Major:
+	var_head	Style_Bossanova1_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 88
 	ev_pc	3, 0x0b, 0x10, 0x20
@@ -1047,8 +1047,8 @@ Style_Bossanova1_Ending1A:
 	ev_pc	5, 0x30, 0x30, 0x20
 	ev_cc	7, 7, 66
 	ev_pc	7, 0x0c, 0x00, 0x26
-	var_events	Style_Bossanova1_Ending1A
-Style_Bossanova1_Ending1A_Events:		# 4 bars of 4 beats, 2635 bytes
+	var_events	Style_Bossanova1_Intro2Major
+Style_Bossanova1_Intro2Major_Events:		# 4 bars of 4 beats, 2635 bytes
 	ev_beat
 	ev_note	0, 18, 84, 12, 0, 0
 	ev_cc	6, 11, 40
@@ -1754,10 +1754,10 @@ Style_Bossanova1_Ending1A_Events:		# 4 bars of 4 beats, 2635 bytes
 	ev_at	95
 	ev_note	7, 51, 109, 12, 0, 0
 	ev_end
-	var_end	Style_Bossanova1_Ending1A
+	var_end	Style_Bossanova1_Intro2Major
 
-Style_Bossanova1_Ending1B:
-	var_head	Style_Bossanova1_Ending1B, 4, 4, 0xff, 0xff
+Style_Bossanova1_Intro2Minor:
+	var_head	Style_Bossanova1_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 88
 	ev_pc	3, 0x0b, 0x10, 0x20
@@ -1768,8 +1768,8 @@ Style_Bossanova1_Ending1B:
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_cc	7, 7, 66
 	ev_pc	7, 0x0c, 0x00, 0x26
-	var_events	Style_Bossanova1_Ending1B
-Style_Bossanova1_Ending1B_Events:		# 4 bars of 4 beats, 1550 bytes
+	var_events	Style_Bossanova1_Intro2Minor
+Style_Bossanova1_Intro2Minor_Events:		# 4 bars of 4 beats, 1550 bytes
 	ev_beat
 	ev_note	0, 18, 84, 12, 0, 0
 	ev_note	7, 49, 85, 28, 0, 0
@@ -2184,7 +2184,7 @@ Style_Bossanova1_Ending1B_Events:		# 4 bars of 4 beats, 1550 bytes
 	ev_at	95
 	ev_note	7, 51, 109, 12, 0, 0
 	ev_end
-	var_end	Style_Bossanova1_Ending1B
+	var_end	Style_Bossanova1_Intro2Minor
 
 Style_Bossanova1_Var1:
 	var_head	Style_Bossanova1_Var1, 4, 4, 0xff, 0xff
@@ -3881,8 +3881,8 @@ Style_Bossanova1_Var4Fill2_Events:		# 1 bars of 4 beats, 314 bytes
 	ev_end
 	var_end	Style_Bossanova1_Var4Fill2
 
-Style_Bossanova1_Intro2A:
-	var_head	Style_Bossanova1_Intro2A, 7, 4, 0xff, 0xff
+Style_Bossanova1_Ending1Major:
+	var_head	Style_Bossanova1_Ending1Major, 7, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x00, 0x00, 0x20
 	ev_cc	5, 7, 82
@@ -3891,8 +3891,8 @@ Style_Bossanova1_Intro2A:
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_cc	7, 7, 66
 	ev_pc	7, 0x0c, 0x00, 0x26
-	var_events	Style_Bossanova1_Intro2A
-Style_Bossanova1_Intro2A_Events:		# 7 bars of 4 beats, 1997 bytes
+	var_events	Style_Bossanova1_Ending1Major
+Style_Bossanova1_Ending1Major_Events:		# 7 bars of 4 beats, 1997 bytes
 	ev_beat
 	ev_note	0, 40, 74, 12, 0, 0
 	ev_note	0, 36, 75, 12, 0, 0
@@ -4609,10 +4609,10 @@ Style_Bossanova1_Intro2A_Events:		# 7 bars of 4 beats, 1997 bytes
 	ev_at	72
 	ev_cc	3, 11, 14
 	ev_end
-	var_end	Style_Bossanova1_Intro2A
+	var_end	Style_Bossanova1_Ending1Major
 
-Style_Bossanova1_Intro2B:
-	var_head	Style_Bossanova1_Intro2B, 7, 4, 0xff, 0xff
+Style_Bossanova1_Ending1Minor:
+	var_head	Style_Bossanova1_Ending1Minor, 7, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x00, 0x00, 0x20
 	ev_cc	5, 7, 82
@@ -4621,8 +4621,8 @@ Style_Bossanova1_Intro2B:
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_cc	7, 7, 66
 	ev_pc	7, 0x0c, 0x00, 0x26
-	var_events	Style_Bossanova1_Intro2B
-Style_Bossanova1_Intro2B_Events:		# 7 bars of 4 beats, 2550 bytes
+	var_events	Style_Bossanova1_Ending1Minor
+Style_Bossanova1_Ending1Minor_Events:		# 7 bars of 4 beats, 2550 bytes
 	ev_beat
 	ev_note	0, 40, 74, 12, 0, 0
 	ev_note	0, 36, 75, 12, 0, 0
@@ -5470,10 +5470,10 @@ Style_Bossanova1_Intro2B_Events:		# 7 bars of 4 beats, 2550 bytes
 	ev_cc	3, 11, 22
 	ev_cc	5, 11, 29
 	ev_end
-	var_end	Style_Bossanova1_Intro2B
+	var_end	Style_Bossanova1_Ending1Minor
 
-Style_Bossanova1_Ending2A:
-	var_head	Style_Bossanova1_Ending2A, 6, 4, 0xff, 0xff
+Style_Bossanova1_Ending2Major:
+	var_head	Style_Bossanova1_Ending2Major, 6, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 79
 	ev_pc	3, 0x0b, 0x10, 0x20
@@ -5483,8 +5483,8 @@ Style_Bossanova1_Ending2A:
 	ev_pc	5, 0x30, 0x30, 0x20
 	ev_cc	7, 7, 66
 	ev_pc	7, 0x0c, 0x00, 0x26
-	var_events	Style_Bossanova1_Ending2A
-Style_Bossanova1_Ending2A_Events:		# 6 bars of 4 beats, 2193 bytes
+	var_events	Style_Bossanova1_Ending2Major
+Style_Bossanova1_Ending2Major_Events:		# 6 bars of 4 beats, 2193 bytes
 	ev_beat
 	ev_note	7, 38, 93, 23, 0, 0
 	ev_note	7, 51, 116, 24, 0, 0
@@ -6176,10 +6176,10 @@ Style_Bossanova1_Ending2A_Events:		# 6 bars of 4 beats, 2193 bytes
 	ev_at	72
 	ev_cc	5, 11, 17
 	ev_end
-	var_end	Style_Bossanova1_Ending2A
+	var_end	Style_Bossanova1_Ending2Major
 
-Style_Bossanova1_Ending2B:
-	var_head	Style_Bossanova1_Ending2B, 6, 4, 0xff, 0xff
+Style_Bossanova1_Ending2Minor:
+	var_head	Style_Bossanova1_Ending2Minor, 6, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 88
 	ev_pc	3, 0x0b, 0x10, 0x20
@@ -6190,8 +6190,8 @@ Style_Bossanova1_Ending2B:
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_cc	7, 7, 66
 	ev_pc	7, 0x0c, 0x00, 0x26
-	var_events	Style_Bossanova1_Ending2B
-Style_Bossanova1_Ending2B_Events:		# 6 bars of 4 beats, 2391 bytes
+	var_events	Style_Bossanova1_Ending2Minor
+Style_Bossanova1_Ending2Minor_Events:		# 6 bars of 4 beats, 2391 bytes
 	ev_beat
 	ev_note	0, 18, 84, 12, 0, 0
 	ev_note	7, 49, 85, 28, 0, 0
@@ -6870,4 +6870,4 @@ Style_Bossanova1_Ending2B_Events:		# 6 bars of 4 beats, 2391 bytes
 	ev_at	75
 	ev_cc	5, 11, 64
 	ev_end
-	var_end	Style_Bossanova1_Ending2B
+	var_end	Style_Bossanova1_Ending2Minor

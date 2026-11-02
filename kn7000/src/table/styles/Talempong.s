@@ -19,14 +19,14 @@ Style_Talempong:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_Talempong
 
-Style_Talempong_Intro1A:
-	var_head	Style_Talempong_Intro1A, 4, 4, 0xff, 0x04
+Style_Talempong_Intro1Major:
+	var_head	Style_Talempong_Intro1Major, 4, 4, 0xff, 0x04
 	ev_cc	1, 97, 11
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Talempong_Intro1A
-Style_Talempong_Intro1A_Events:		# 4 bars of 4 beats, 1334 bytes
+	var_events	Style_Talempong_Intro1Major
+Style_Talempong_Intro1Major_Events:		# 4 bars of 4 beats, 1334 bytes
 	ev_beat
 	ev_at	2
 	ev_note	3, 62, 93, 68, 0, 1
@@ -366,18 +366,18 @@ Style_Talempong_Intro1A_Events:		# 4 bars of 4 beats, 1334 bytes
 	ev_note	2, 84, 71, 15, 0, 1
 	ev_note	2, 79, 90, 9, 0, 1
 	ev_end
-	var_end	Style_Talempong_Intro1A
+	var_end	Style_Talempong_Intro1Major
 
-Style_Talempong_Intro1B:
-	var_head	Style_Talempong_Intro1B, 4, 4, 0xff, 0x04
+Style_Talempong_Intro1Minor:
+	var_head	Style_Talempong_Intro1Minor, 4, 4, 0xff, 0x04
 	ev_cc	1, 97, 11
 	ev_cc	4, 7, 94
 	ev_pc	4, 0x4b, 0x04, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Talempong_Intro1B
-Style_Talempong_Intro1B_Events:		# 4 bars of 4 beats, 1431 bytes
+	var_events	Style_Talempong_Intro1Minor
+Style_Talempong_Intro1Minor_Events:		# 4 bars of 4 beats, 1431 bytes
 	ev_beat
 	ev_at	2
 	ev_note	3, 62, 93, 68, 0, 1
@@ -744,18 +744,18 @@ Style_Talempong_Intro1B_Events:		# 4 bars of 4 beats, 1431 bytes
 	ev_note	2, 79, 90, 9, 0, 1
 	ev_note	2, 84, 71, 15, 0, 1
 	ev_end
-	var_end	Style_Talempong_Intro1B
+	var_end	Style_Talempong_Intro1Minor
 
-Style_Talempong_Ending1A:
-	var_head	Style_Talempong_Ending1A, 8, 4, 0xff, 0x04
+Style_Talempong_Intro2Major:
+	var_head	Style_Talempong_Intro2Major, 8, 4, 0xff, 0x04
 	ev_pc	0, 0x11, 0x00, 0x26
 	ev_cc	1, 97, 11
 	ev_pc	4, 0x4a, 0x00, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Talempong_Ending1A
-Style_Talempong_Ending1A_Events:		# 8 bars of 4 beats, 3771 bytes
+	var_events	Style_Talempong_Intro2Major
+Style_Talempong_Intro2Major_Events:		# 8 bars of 4 beats, 3771 bytes
 	ev_beat
 	ev_at	1
 	ev_note	3, 62, 90, 53, 0, 1
@@ -1627,10 +1627,10 @@ Style_Talempong_Ending1A_Events:		# 8 bars of 4 beats, 3771 bytes
 	ev_note	2, 79, 99, 17, 0, 1
 	ev_note	4, 76, 96, 16, 0, 1
 	ev_end
-	var_end	Style_Talempong_Ending1A
+	var_end	Style_Talempong_Intro2Major
 
-Style_Talempong_Ending1B:
-	var_head	Style_Talempong_Ending1B, 8, 4, 0xff, 0x04
+Style_Talempong_Intro2Minor:
+	var_head	Style_Talempong_Intro2Minor, 8, 4, 0xff, 0x04
 	ev_pc	0, 0x11, 0x00, 0x26
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 109
@@ -1638,8 +1638,8 @@ Style_Talempong_Ending1B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Talempong_Ending1B
-Style_Talempong_Ending1B_Events:		# 8 bars of 4 beats, 3771 bytes
+	var_events	Style_Talempong_Intro2Minor
+Style_Talempong_Intro2Minor_Events:		# 8 bars of 4 beats, 3771 bytes
 	ev_beat
 	ev_at	1
 	ev_note	3, 62, 90, 53, 0, 1
@@ -2511,7 +2511,7 @@ Style_Talempong_Ending1B_Events:		# 8 bars of 4 beats, 3771 bytes
 	ev_note	2, 79, 99, 17, 0, 1
 	ev_note	4, 75, 96, 16, 0, 1
 	ev_end
-	var_end	Style_Talempong_Ending1B
+	var_end	Style_Talempong_Intro2Minor
 
 Style_Talempong_Var1:
 	var_head	Style_Talempong_Var1, 4, 4, 0xff, 0x04
@@ -4922,16 +4922,16 @@ Style_Talempong_Var4Fill2_Events:		# 1 bars of 4 beats, 487 bytes
 	ev_end
 	var_end	Style_Talempong_Var4Fill2
 
-Style_Talempong_Intro2A:
-	var_head	Style_Talempong_Intro2A, 3, 4, 0xff, 0x04
+Style_Talempong_Ending1Major:
+	var_head	Style_Talempong_Ending1Major, 3, 4, 0xff, 0x04
 	ev_cc	1, 97, 11
 	ev_pc	2, 0x0a, 0x00, 0x20
 	ev_pc	4, 0x46, 0x00, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Talempong_Intro2A
-Style_Talempong_Intro2A_Events:		# 3 bars of 4 beats, 1179 bytes
+	var_events	Style_Talempong_Ending1Major
+Style_Talempong_Ending1Major_Events:		# 3 bars of 4 beats, 1179 bytes
 	ev_beat
 	ev_note	0, 112, 94, 8, 0, 0
 	ev_note	0, 53, 74, 8, 0, 0
@@ -5201,18 +5201,18 @@ Style_Talempong_Intro2A_Events:		# 3 bars of 4 beats, 1179 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Talempong_Intro2A
+	var_end	Style_Talempong_Ending1Major
 
-Style_Talempong_Intro2B:
-	var_head	Style_Talempong_Intro2B, 3, 4, 0xff, 0x04
+Style_Talempong_Ending1Minor:
+	var_head	Style_Talempong_Ending1Minor, 3, 4, 0xff, 0x04
 	ev_cc	1, 97, 11
 	ev_pc	2, 0x0a, 0x00, 0x20
 	ev_pc	4, 0x46, 0x00, 0x20
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Talempong_Intro2B
-Style_Talempong_Intro2B_Events:		# 3 bars of 4 beats, 1179 bytes
+	var_events	Style_Talempong_Ending1Minor
+Style_Talempong_Ending1Minor_Events:		# 3 bars of 4 beats, 1179 bytes
 	ev_beat
 	ev_note	0, 112, 94, 8, 0, 0
 	ev_note	0, 53, 74, 8, 0, 0
@@ -5482,10 +5482,10 @@ Style_Talempong_Intro2B_Events:		# 3 bars of 4 beats, 1179 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Talempong_Intro2B
+	var_end	Style_Talempong_Ending1Minor
 
-Style_Talempong_Ending2A:
-	var_head	Style_Talempong_Ending2A, 3, 4, 0xff, 0x04
+Style_Talempong_Ending2Major:
+	var_head	Style_Talempong_Ending2Major, 3, 4, 0xff, 0x04
 	ev_pc	0, 0x11, 0x00, 0x26
 	ev_cc	1, 97, 11
 	ev_pc	2, 0x0a, 0x00, 0x20
@@ -5494,8 +5494,8 @@ Style_Talempong_Ending2A:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Talempong_Ending2A
-Style_Talempong_Ending2A_Events:		# 3 bars of 4 beats, 1533 bytes
+	var_events	Style_Talempong_Ending2Major
+Style_Talempong_Ending2Major_Events:		# 3 bars of 4 beats, 1533 bytes
 	ev_beat
 	ev_note	0, 112, 94, 8, 0, 0
 	ev_note	0, 53, 74, 8, 0, 0
@@ -5819,10 +5819,10 @@ Style_Talempong_Ending2A_Events:		# 3 bars of 4 beats, 1533 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Talempong_Ending2A
+	var_end	Style_Talempong_Ending2Major
 
-Style_Talempong_Ending2B:
-	var_head	Style_Talempong_Ending2B, 3, 4, 0xff, 0x04
+Style_Talempong_Ending2Minor:
+	var_head	Style_Talempong_Ending2Minor, 3, 4, 0xff, 0x04
 	ev_pc	0, 0x11, 0x00, 0x26
 	ev_cc	1, 97, 11
 	ev_pc	2, 0x0a, 0x00, 0x20
@@ -5831,8 +5831,8 @@ Style_Talempong_Ending2B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_Talempong_Ending2B
-Style_Talempong_Ending2B_Events:		# 3 bars of 4 beats, 1533 bytes
+	var_events	Style_Talempong_Ending2Minor
+Style_Talempong_Ending2Minor_Events:		# 3 bars of 4 beats, 1533 bytes
 	ev_beat
 	ev_note	0, 112, 94, 8, 0, 0
 	ev_note	0, 53, 74, 8, 0, 0
@@ -6156,4 +6156,4 @@ Style_Talempong_Ending2B_Events:		# 3 bars of 4 beats, 1533 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Talempong_Ending2B
+	var_end	Style_Talempong_Ending2Minor

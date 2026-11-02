@@ -331,6 +331,14 @@ its opaque bytes fall by 726 (pieces split at labels the new records and reader 
   effect DSP's program streams, parameter scripts and address maps of the 208 DSP types, 55,111 bytes,
   typed by `gen_data_s.py fx_streams()`.
 - The one-touch bytes the macros keep as hex (PM_PART fields are named in panel_memory.inc).
+  (Mostly resolved 2026-11-02, lane mn10300-names, from the KN6000 merge tables 0x4C19AB04..: PM_SET77's
+  m008040 is `conductor` (0x008040, 0..5, the KN5000's SndParam_Conductor; func_4C02EDD9 / func_4C02F302 pick
+  the RIGHT1 / RIGHT2 / left-zone parts from it) and m00c084 is `left_hold` (0x00C084, LeftholdToggleFunc;
+  the mask 0x01 drops ON BASS); PM_SET8C's m00e001 is `pad_volume` (0x00E001 goes out as controller 7 to parts
+  0x1D / 0x1E, "PAD PART1" / "PAD PART2" in ApcToSMFConvGrid).  PM_ENTRIES' eight bytes were already named
+  (the accompaniment parts' volumes).  Left: PM_SET88's m008008 (0x008008 / 0x008009), which KN6000
+  func_4C114253 sets from latched panel control 0xC6.  `kn7000/src/include/panel_memory.inc`; the values are
+  still written in hex by `gen_data_s.py style_panels()`.)
 
 ## Website page draft
 

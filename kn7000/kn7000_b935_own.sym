@@ -1,0 +1,50 @@
+; KN7000 program 935 (v1.5) -- names written for THIS build: routines and data 941 has no 1:1
+; counterpart for (code 941 rewrote or moved), and corrections where a name ported from 941 sits
+; on the wrong routine.  Hand-curated; read last by tools/gen_program_s.py --profile b935, and a
+; row here replaces any ported row (kn7000_b935{,_manual,_exports,_bycode}.sym) at the same
+; address or with the same name (an X_entry row goes with X).  Not generated, so
+; `make symbols-check` does not compare it.  Notes: notes/older-program-builds.md.
+; *_entry = the register-save `call` entry after the `movm` / `add -N, sp` prologue.
+;
+; ---- DSP host port (the block 941 moved to 0x48404D10..0x4840557E; here 0x4840AE62..0x4840B696) ----
+; Matched routine for routine against 941 in order, every pair the same relocation-masked code
+; except where 941 added the bus-timing switch (DspPortRead/DspPortWrite) -- probe
+; notes/mn10300-names-probes/oldbuilds_dsp_hostport_match.py.  Ports: 0x98000000 = index (port id
+; 0x9C2), 0x9C000000 = data (port id 0x9C4).  Rows that name a call entry (3 bytes past an
+; `add -N, sp`) are at the same point as 941's names; the rest name the func_<ADDR> prologue.
+0x4840AE62  DspReadyWaitOn          ; DspReadyWaitEnabled := 1 (DspWaitReady then polls the DSP's ready request)
+0x4840AE6D  DspReadyWaitOff         ; DspReadyWaitEnabled := 0 (DspBootProbe: off after loading the resident kernel, on again after DspFullReinit)
+0x4840AE77  DspWaitReady            ; when DspReadyWaitEnabled: write 1 to GxICR 0x3400015C and poll its bit 4 (the request flag) up to 0x40000 times; on time-out DspHostPortError := -1
+0x4840AEC3  DspReadyIrqModeSet      ; EXTMD 0x34000280 bits 1:0 := 2 (the ready line's detection mode); an unreachable `clr d0; ret` follows
+0x4840AEDD  DspDebugPrint           ; empty: `ret` -- [INFERENCE] a debug print compiled out; DspDebugPrintHex16 is its only caller
+0x4840AEE0  DspHexDigit             ; (d0 nibble) -> '0'..'9', 'a'..'f'
+0x4840AF06  DspDebugPrintHex16      ; (d0) four hex digits into a copy of a 5-byte template, then DspDebugPrint; nothing calls it
+0x4840AF76  DspPortRead             ; (d0 = port id) 0x9C4: under loc_cpu, DspWaitReady, read the halfword at 0x9C000000; 0x9C0 / 0x9C2 -> 0. (941's also sets the bus control word 0x32000026 to 0x924 around the read)
+0x4840AFBD  DspPortWrite            ; (d0 = port id, d1 = value) 0x9C2: the index port 0x98000000; 0x9C4: under loc_cpu, DspWaitReady, the data port 0x9C000000 (941: with 0x32000026 = 0x924 around it)
+0x4840B00D  DspPortWriteChecked     ; DspPortWrite unless DspHostPortError is set
+0x4840B031  DspPortWriteSlow        ; DspPortWrite with the bus slowed: 0x32000026 bits 8..12 := 0x0F, 0x3200002E bit 1 clear, both restored after
+0x4840B090  DspPortReadChecked      ; -1 when DspHostPortError is set, else DspPortRead(0x9C4)
+0x4840B0AF  DspPortReadSlow         ; DspPortRead(0x9C4) with the bus slowed as in DspPortWriteSlow
+0x4840B10E  DspFullReinit           ; GPIO 0x36008004 bit 7 pulsed (DSP reset: set, 10 ms, clear, 10 ms, set), DspReadyIrqModeSet, then up to 11 tries of writing 0x91919191 and 0x20 to index 0 byte-wide (DspIndexWriteBytes32Slow) and reading it back; 0x20 back clears DspHostPortError, else it is set to -1
+0x4840B19B  DspSetIndex             ; (d0) DspPortWriteChecked(0x9C2, d0): select the DSP address/register
+0x4840B1B4  DspSetIndexSlow         ; (d0) DspPortWriteSlow(0x9C2, d0)
+0x4840B1D0  DspWritePMWord          ; stream one 48-bit SHARC PM word (3x BE u16) to the data port
+0x4840B1FA  DspIndexWritePMWord     ; (d0 = index, then the three halfwords) DspSetIndex + three data writes
+0x4840B232  DspWriteDMWord          ; stream one SHARC DM word (2x u16) to the data port
+0x4840B25B  DspWriteDMWordSlow      ; the two halfwords through DspPortWriteSlow
+0x4840B287  DspIndexWriteBytes32    ; (d0 = index, d1 = low half, stack = high half) DspSetIndex + the 32-bit word as four byte writes; nothing calls it
+0x4840B2DD  DspIndexReadBytes32     ; (d0 = index) DspSetIndex + four byte reads into a 32-bit word; nothing calls it
+0x4840B33E  DspIndexReadBytes32Slow ; the same through DspSetIndexSlow / DspPortReadSlow (DspFullReinit's read-back)
+0x4840B39F  DspIndexWriteBytes32Slow ; the same as DspIndexWriteBytes32 through the slow writers (DspFullReinit, the boot handshake)
+0x4840B3F8  DspRegWrite             ; write DSP host register: idx->0x98000000, 32-bit value->data port
+0x4840B414  DspRegWriteSlow         ; DspSetIndexSlow + DspWriteDMWordSlow
+0x4840B433  DspRegRead              ; (d0 = index) -> (second halfword << 16) + first, through DspPortReadChecked
+0x4840B464  DspRegReadSlow          ; the same through the slow readers
+0x4840B530  DspHostPortStatus       ; -> 0, or -1 when DspHostPortError is set (the device-wait screen and the DSP self-test, TEST6DSP_OK)
+0x4840B545  DspBootRunTestRecord    ; (a0 = pool record) func_4840A4E1(0, 0), DspRecordInterpreter, func_4840A4E1(0, 1), dly_tsk(100) -- DspBootProbe's four SDRAM self-test records
+0x4840B575  DspBootTestResult       ; -> DspRegRead(0x0B), 0 = the self-test passed
+0x4840B649  StrapReadDelay          ; empty: `ret`, called between StrapBit3Debounced's two reads
+0x4840B64C  StrapBit3Debounced      ; bit 3 (0x08) of the strap halfword 0x98070000 read twice; when both agree it is latched; returns the latch (s8)
+;
+0x500066DC  DspHostPortError        ; RAM s8: 0 = the DSP host port answered; -1 after a DspWaitReady time-out or a failed DspFullReinit handshake (941: 0x500066CC)
+0x500066DD  DspReadyWaitEnabled     ; RAM u8: DspWaitReady polls the ready request only when 1 (941: 0x500066CD)

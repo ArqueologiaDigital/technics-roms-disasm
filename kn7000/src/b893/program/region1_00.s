@@ -31,18 +31,18 @@ loc_484000AA:
 loc_484000B2:
     jmp     loc_4840013F
 loc_484000B5:
-    movbu   (0x98020004), d0
+    movbu   (FDC_DOR), d0
     movbu   d0, (0x50007f42)
     mov     0x1c, d0
-    movbu   d0, (0x98020004)
+    movbu   d0, (FDC_DOR)
     bra     loc_4840013F
 loc_484000CB:
     movbu   (0x50007f42), d0
-    movbu   d0, (0x98020004)
+    movbu   d0, (FDC_DOR)
     bra     loc_4840013F
 loc_484000D9:
     mov     0x1c, d0
-    movbu   d0, (0x98020004)
+    movbu   d0, (FDC_DOR)
     mov     1, d0
     movbu   d0, (func_48400084_Records)
     bra     loc_4840013F
@@ -74,14 +74,14 @@ loc_48400130:
     clr     d0
     movbu   d0, (func_48400084_Records)
     mov     0xc, d0
-    movbu   d0, (0x98020004)
+    movbu   d0, (FDC_DOR)
 loc_4840013F:
     ret     0, 0
 
 func_48400142:
     add     -0x10, sp
 func_48400142_entry:
-    movbu   (0x98020008), d0
+    movbu   (FDC_MSR_DSR), d0
     movbu   d0, (0xc, sp)
     mov     2, d0
     call    func_48400929, 0, 0
@@ -89,7 +89,7 @@ func_48400142_entry:
     ret     0, 0x10
 
 func_4840015B:
-    movbu   (0x9802000a), d0
+    movbu   (FDC_FIFO), d0
     ret     0, 0
 
 func_48400164:
@@ -98,12 +98,12 @@ func_48400164:
     movbu   d0, (0x5009e910)
     movbu   (8, sp), d0
     movbu   d0, (0x5009e911)
-    movbu   d0, (0x98020008)
+    movbu   d0, (FDC_MSR_DSR)
     ret     0, 0
 
 func_48400185:
     movbu   d0, (8, sp)
-    movbu   d0, (0x9802000a)
+    movbu   d0, (FDC_FIFO)
     ret     0, 0
 
 func_48400191:
@@ -427,7 +427,7 @@ loc_4840043D:
     clr     d0
     movbu   d0, (0x11, sp)
     mov     2, d0
-    movbu   d0, (0x9802000e)
+    movbu   d0, (FDC_DIR_CCR)
     jmp     loc_48400507
 loc_4840045A:
     clr     d0
@@ -437,7 +437,7 @@ loc_4840045A:
     mov     0xc0, d0
     movbu   d0, (0x11, sp)
     mov     2, d0
-    movbu   d0, (0x9802000e)
+    movbu   d0, (FDC_DIR_CCR)
     jmp     loc_48400507
 loc_48400479:
     mov     2, d0
@@ -447,7 +447,7 @@ loc_48400479:
     mov     0x40, d0
     movbu   d0, (0x11, sp)
     clr     d0
-    movbu   d0, (0x9802000e)
+    movbu   d0, (FDC_DIR_CCR)
     bra     loc_48400507
 loc_48400496:
     mov     3, d0
@@ -457,7 +457,7 @@ loc_48400496:
     mov     0x40, d0
     movbu   d0, (0x11, sp)
     clr     d0
-    movbu   d0, (0x9802000e)
+    movbu   d0, (FDC_DIR_CCR)
     bra     loc_48400507
 loc_484004B3:
     mov     4, d0
@@ -467,7 +467,7 @@ loc_484004B3:
     clr     d0
     movbu   d0, (0x11, sp)
     mov     2, d0
-    movbu   d0, (0x9802000e)
+    movbu   d0, (FDC_DIR_CCR)
     bra     loc_48400507
 loc_484004D0:
     mov     5, d0
@@ -477,7 +477,7 @@ loc_484004D0:
     clr     d0
     movbu   d0, (0x11, sp)
     mov     2, d0
-    movbu   d0, (0x9802000e)
+    movbu   d0, (FDC_DIR_CCR)
     bra     loc_48400507
 loc_484004ED:
     clr     d0
@@ -487,7 +487,7 @@ loc_484004ED:
     clr     d0
     movbu   d0, (0x11, sp)
     mov     2, d0
-    movbu   d0, (0x9802000e)
+    movbu   d0, (FDC_DIR_CCR)
 loc_48400507:
     call    func_48401D61_entry, 0, 0xc
     movbu   (0x5009e84c), d0
@@ -976,87 +976,87 @@ loc_484009BB:
     ret     0, 8
 
 func_484009BE:
-    mov     (0x32000800), d0
+    mov     (DMAC0_CTR), d0
     and     0xfffeffff, d0
-    mov     d0, (0x32000800)
-    mov     0x98010000, d0
-    mov     d0, (0x32000804)
+    mov     d0, (DMAC0_CTR)
+    mov     FDC_DACK, d0
+    mov     d0, (DMAC0_SRC)
     mov     (0x5009e880), d0
-    mov     d0, (0x32000808)
+    mov     d0, (DMAC0_DST)
     mov     (0x5009e83c), d0
     mov     2, d1
     sub     d1, d0
-    movhu   d0, (0x3200080c)
+    movhu   d0, (DMAC0_CNT)
     mov     0xf, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xffffffdf, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xffffff3f, d0
     or      0x80, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xfffffcff, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xfffffbff, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xffffe7ff, d0
     or      0x0800, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xffff9fff, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     or      0x8000, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     or      0x00010000, d0
-    mov     d0, (0x32000800)
+    mov     d0, (DMAC0_CTR)
     ret     0, 0
 
 func_48400A98:
-    mov     (0x32000800), d0
+    mov     (DMAC0_CTR), d0
     and     0xfffeffff, d0
-    mov     d0, (0x32000800)
+    mov     d0, (DMAC0_CTR)
     mov     (0x5009e880), d0
-    mov     d0, (0x32000804)
-    mov     0x98010000, d0
-    mov     d0, (0x32000808)
+    mov     d0, (DMAC0_SRC)
+    mov     FDC_DACK, d0
+    mov     d0, (DMAC0_DST)
     mov     (0x5009e83c), d0
     mov     2, d1
     sub     d1, d0
-    movhu   d0, (0x3200080c)
+    movhu   d0, (DMAC0_CNT)
     mov     0xf, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xffffffdf, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xffffff3f, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xfffffcff, d0
     or      0x0200, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     or      0x0400, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xffffe7ff, d0
     or      0x0800, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xffff9fff, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     or      0x8000, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     or      0x00010000, d0
-    mov     d0, (0x32000800)
+    mov     d0, (DMAC0_CTR)
     ret     0, 0
 
 func_48400B71:
@@ -1299,9 +1299,9 @@ loc_48400D58:
     clr     d0
     jmp     loc_48400E18
 loc_48400D5C:
-    mov     (0x32000800), d0
+    mov     (DMAC0_CTR), d0
     and     0xfffeffff, d0
-    mov     d0, (0x32000800)
+    mov     d0, (DMAC0_CTR)
     movbu   (0x10, sp), d0
     btst    0x08, d0
     bne     loc_48400D78
@@ -2946,8 +2946,8 @@ loc_48401E5D:
     call    func_484044BB_entry, 0, 0x40
     jmp     loc_48401F2F
 loc_48401E65:
-    bset    0x10, (0x36008024)
-    bset    0x10, (0x36008064)
+    bset    0x10, (P24)
+    bset    0x10, (P64)
     mov     0xe, d0
     call    dis_int_entry, [d2], 4
     mov     1, d0
@@ -2956,7 +2956,7 @@ loc_48401E65:
     mov     d0, (0x20, sp)
     mov     0x18, d0
     movhu   d0, (0x24, sp)
-    mov     0x34000160, d0
+    mov     G24ICR, d0
     mov     d0, (0x28, sp)
     clr     d0
     movhu   d0, (0x2c, sp)
@@ -2966,17 +2966,17 @@ loc_48401E65:
     mov     d0, (0x10, sp)
     mov     sp, a0
     add     0x1c, a0
-    call    func_4C03DB0E_entry, [d2,d3,a2,a3], 0x24
-    movhu   (0x34000280), d0
+    call    KernelDefInt_entry, [d2,d3,a2,a3], 0x24
+    movhu   (EXTMD), d0
     and     0xfff3, d0
-    movhu   d0, (0x34000280)
+    movhu   d0, (EXTMD)
     mov     1, d0
     movhu   d0, (0x30, sp)
     mov     FdcIrq, d0
     mov     d0, (0x34, sp)
     mov     0x19, d0
     movhu   d0, (0x38, sp)
-    mov     0x34000164, d0
+    mov     G25ICR, d0
     mov     d0, (0x3c, sp)
     clr     d0
     movhu   d0, (0x40, sp)
@@ -2986,7 +2986,7 @@ loc_48401E65:
     mov     d0, (0x14, sp)
     mov     sp, a0
     add     0x30, a0
-    call    func_4C03DB0E_entry, [d2,d3,a2,a3], 0x24
+    call    KernelDefInt_entry, [d2,d3,a2,a3], 0x24
     mov     (0x14, sp), d0
     call    ena_int_entry, [d2], 4
     mov     1, d0
@@ -2995,7 +2995,7 @@ loc_48401E65:
     mov     d0, (0x48, sp)
     mov     0xf, d0
     movhu   d0, (0x4c, sp)
-    mov     0x3400013c, d0
+    mov     G15ICR, d0
     mov     d0, (0x50, sp)
     clr     d0
     movhu   d0, (0x54, sp)
@@ -3004,7 +3004,7 @@ loc_48401E65:
     mov     d0, (0x18, sp)
     mov     sp, a0
     add     0x44, a0
-    call    func_4C03DB0E_entry, [d2,d3,a2,a3], 0x24
+    call    KernelDefInt_entry, [d2,d3,a2,a3], 0x24
     mov     (0x18, sp), d0
     call    ena_int_entry, [d2], 4
 loc_48401F2F:
@@ -3207,11 +3207,11 @@ func_48402109_entry:
     and     0xf7ff, psw
     nop
     nop
-    movhu   (0x34000160), d0
+    movhu   (G24ICR), d0
     and     0xff00, d0
     or      0x01, d0
-    movhu   d0, (0x34000160)
-    movhu   (0x34000160), d0
+    movhu   d0, (G24ICR)
+    movhu   (G24ICR), d0
     movhu   d0, (0x5009e912)
     movbu   (0x5009e84e), d0
     and     0x1f, d0
@@ -3233,7 +3233,7 @@ loc_4840214E:
     mov     (0x5009e83c), d0
     mov     1, d1
     sub     d1, d0
-    movbu   (0x98010000), d1
+    movbu   (FDC_DACK), d1
     movbu   d1, (d0, a0)
     bra     loc_48402183
 loc_48402168:
@@ -3242,15 +3242,15 @@ loc_48402168:
     mov     1, d1
     sub     d1, d0
     movbu   (d0, a0), d1
-    movbu   d1, (0x98010000)
+    movbu   d1, (FDC_DACK)
     bra     loc_48402183
 loc_48402182:
     nop
 loc_48402183:
-    bclr    0x10, (0x36008004)
+    bclr    0x10, (P04)
     mov     0xe, d0
     call    dis_int_entry, [d2], 4
-    movhu   (0x34000160), d0
+    movhu   (G24ICR), d0
     ret     0, 0xc
 
 func_4840219C:
@@ -3258,24 +3258,24 @@ func_4840219C:
     and     0xf7ff, psw
     nop
     nop
-    movhu   (0x3400013c), d0
+    movhu   (G15ICR), d0
     and     0xff00, d0
     or      0x01, d0
-    movhu   d0, (0x3400013c)
-    movhu   (0x3400013c), d0
+    movhu   d0, (G15ICR)
+    movhu   (G15ICR), d0
     movhu   d0, (0x5009e912)
-    bset    0x10, (0x36008004)
-    movhu   (0x34000160), d0
+    bset    0x10, (P04)
+    movhu   (G24ICR), d0
     and     0xff00, d0
     or      0x01, d0
-    movhu   d0, (0x34000160)
-    movhu   (0x34000160), d0
+    movhu   d0, (G24ICR)
+    movhu   (G24ICR), d0
     movhu   d0, (0x5009e912)
     mov     0x58, d0
     movbu   d0, (8, sp)
     bra     loc_48402206
 loc_484021F1:
-    movhu   (0x34000160), d0
+    movhu   (G24ICR), d0
     btst    0x10, d0
     beq     loc_484021FE
     bra     loc_4840220F
@@ -3290,7 +3290,7 @@ loc_48402206:
     bra     loc_484021F1
 loc_4840220F:
     call    func_48402109_entry, 0, 0xc
-    movhu   (0x3400013c), d0
+    movhu   (G15ICR), d0
     ret     0, 0xc
 # FdcIrq  (CPU 0x4840221d)
 FdcIrq:
@@ -3298,11 +3298,11 @@ FdcIrq:
     and     0xf7ff, psw
     nop
     nop
-    movhu   (0x34000164), d0
+    movhu   (G25ICR), d0
     and     0xff00, d0
     or      0x01, d0
-    movhu   d0, (0x34000164)
-    movhu   (0x34000164), d0
+    movhu   d0, (G25ICR)
+    movhu   (G25ICR), d0
     movhu   d0, (0x5009e912)
     or      0x0800, psw
     nop
@@ -3364,7 +3364,7 @@ loc_484022BC:
 loc_484022C1:
     clr     d0
     movbu   d0, (0x5009e8a0)
-    movhu   (0x34000164), d0
+    movhu   (G25ICR), d0
     ret     0, 0x18
     ret     0, 0
 
@@ -3373,7 +3373,7 @@ func_484022D4:
 func_484022D4_entry:
     call    loc_cpu_entry, 0, 0x10
     mov     d3, a1
-    mov     0x20000070, a0
+    mov     CHCTR, a0
     movhu   (a0), d0
     btst    0x02, d0
     beq     loc_48402348
@@ -3389,7 +3389,7 @@ func_484022D4_entry:
     bne     loc_48402331
     btst    0x1000, d0
     bne     loc_48402319
-    mov     0x28400000, a0
+    mov     DCACHE_WAY0, a0
     mov     0x80, d1
     setlb
     nop
@@ -3401,7 +3401,7 @@ func_484022D4_entry:
 loc_48402319:
     btst    0x2000, d0
     bne     loc_48402331
-    mov     0x28401000, a0
+    mov     DCACHE_WAY1, a0
     mov     0x80, d1
     setlb
     nop
@@ -3411,7 +3411,7 @@ loc_48402319:
     nop
     lne
 loc_48402331:
-    mov     0x20000070, a0
+    mov     CHCTR, a0
     mov     (a0), d0
     or      0x00000020:32, d0
     mov     d0, (a0)
@@ -3535,7 +3535,7 @@ func_484024DF_entry:
     mov     d0, (0x18, sp)
     mov     0x1e, d0
     movhu   d0, (0x1c, sp)
-    mov     0x34000178, d0
+    mov     G30ICR, d0
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
@@ -3545,7 +3545,7 @@ func_484024DF_entry:
     mov     d0, (0x10, sp)
     mov     sp, a0
     add     0x14, a0
-    call    func_4C03DB0E_entry, [d2,d3,a2,a3], 0x24
+    call    KernelDefInt_entry, [d2,d3,a2,a3], 0x24
     clr     d0
     mov     d0, (0x5009e914)
     mov     d0, (0x5009e918)
@@ -3586,17 +3586,17 @@ loc_4840259B:
     and     0xf7ff, psw
     nop
     nop
-    movhu   (0x34000178), d0
+    movhu   (G30ICR), d0
     and     0xff00, d0
     or      0x01, d0
-    movhu   d0, (0x34000178)
-    movhu   (0x34000178), d0
+    movhu   d0, (G30ICR)
+    movhu   (G30ICR), d0
     movhu   d0, (0x5009e912)
     mov     (0x50151bd8), d0
     mov     d0, (func_48402563_Var)
     mov     1, d0
     movbu   d0, (func_48402563_Table)
-    movhu   (0x34000178), d0
+    movhu   (G30ICR), d0
     ret     0, 0
 
 func_484025DD:
@@ -3627,7 +3627,7 @@ loc_48402613:
     call    func_48400084, 0, 0
     mov     0x83, d0
     call    func_48400084, 0, 0
-    movbu   (0x9802000e), d0
+    movbu   (FDC_DIR_CCR), d0
     movbu   d0, (0xd, sp)
     mov     0x84, d0
     call    func_48400084, 0, 0
@@ -3678,7 +3678,7 @@ loc_48402688:
 loc_48402690:
     mov     0x83, d0
     call    func_48400084, 0, 0
-    movbu   (0x9802000e), d0
+    movbu   (FDC_DIR_CCR), d0
     movbu   d0, (0xd, sp)
     mov     0x84, d0
     call    func_48400084, 0, 0
@@ -3704,7 +3704,7 @@ loc_484026B3:
 loc_484026CF:
     mov     0x83, d0
     call    func_48400084, 0, 0
-    movbu   (0x9802000e), d0
+    movbu   (FDC_DIR_CCR), d0
     movbu   d0, (0xd, sp)
     mov     0x84, d0
     call    func_48400084, 0, 0
@@ -3807,18 +3807,18 @@ loc_484027B3:
 loc_484027BB:
     jmp     loc_48402848
 loc_484027BE:
-    movbu   (0x98020004), d0
+    movbu   (FDC_DOR), d0
     movbu   d0, (0x50007f46)
     mov     0x1c, d0
-    movbu   d0, (0x98020004)
+    movbu   d0, (FDC_DOR)
     bra     loc_48402848
 loc_484027D4:
     movbu   (0x50007f46), d0
-    movbu   d0, (0x98020004)
+    movbu   d0, (FDC_DOR)
     bra     loc_48402848
 loc_484027E2:
     mov     0x1c, d0
-    movbu   d0, (0x98020004)
+    movbu   d0, (FDC_DOR)
     mov     1, d0
     movbu   d0, (func_4840278D_Table)
     bra     loc_48402848
@@ -3850,14 +3850,14 @@ loc_48402839:
     clr     d0
     movbu   d0, (func_4840278D_Table)
     mov     0xc, d0
-    movbu   d0, (0x98020004)
+    movbu   d0, (FDC_DOR)
 loc_48402848:
     ret     0, 0
 
 func_4840284B:
     add     -0x10, sp
 func_4840284B_entry:
-    movbu   (0x98020008), d0
+    movbu   (FDC_MSR_DSR), d0
     movbu   d0, (0xc, sp)
     mov     2, d0
     call    func_4840303D, 0, 0
@@ -3865,12 +3865,12 @@ func_4840284B_entry:
     ret     0, 0x10
 
 func_48402864:
-    movbu   (0x9802000a), d0
+    movbu   (FDC_FIFO), d0
     ret     0, 0
 
 func_4840286D:
     movbu   d0, (8, sp)
-    movbu   d0, (0x98020008)
+    movbu   d0, (FDC_MSR_DSR)
     ret     0, 0
 
 func_48402879:
@@ -3879,12 +3879,12 @@ func_48402879:
     movbu   d0, (0x50008020)
     movbu   (8, sp), d0
     movbu   d0, (0x50008021)
-    movbu   d0, (0x98020008)
+    movbu   d0, (FDC_MSR_DSR)
     ret     0, 0
 
 func_4840289A:
     movbu   d0, (8, sp)
-    movbu   d0, (0x9802000a)
+    movbu   d0, (FDC_FIFO)
     ret     0, 0
 
 func_484028A6:
@@ -4702,10 +4702,10 @@ loc_4840305E:
     ret     0, 0
 
 func_48403061:
-    bclr    0x10, (0x36008004)
-    movbu   (0x98010000), d0
+    bclr    0x10, (P04)
+    movbu   (FDC_DACK), d0
     movbu   d0, (0x50008022)
-    bset    0x10, (0x36008004)
+    bset    0x10, (P04)
     ret     0, 0
 
 func_4840307E:
@@ -4764,87 +4764,87 @@ loc_484030E9:
     ret     0, 8
 
 func_484030EC:
-    mov     (0x32000800), d0
+    mov     (DMAC0_CTR), d0
     and     0xfffeffff, d0
-    mov     d0, (0x32000800)
-    mov     0x98010000, d0
-    mov     d0, (0x32000804)
+    mov     d0, (DMAC0_CTR)
+    mov     FDC_DACK, d0
+    mov     d0, (DMAC0_SRC)
     mov     (0x50007f90), d0
-    mov     d0, (0x32000808)
+    mov     d0, (DMAC0_DST)
     mov     (0x50007f4c), d0
     mov     1, d1
     sub     d1, d0
-    movhu   d0, (0x3200080c)
+    movhu   d0, (DMAC0_CNT)
     mov     0xf, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xffffffdf, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xffffff3f, d0
     or      0x80, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xfffffcff, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xfffffbff, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xffffe7ff, d0
     or      0x0800, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xffff9fff, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     or      0x8000, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     or      0x00010000, d0
-    mov     d0, (0x32000800)
+    mov     d0, (DMAC0_CTR)
     ret     0, 0
 
 func_484031C6:
-    mov     (0x32000800), d0
+    mov     (DMAC0_CTR), d0
     and     0xfffeffff, d0
-    mov     d0, (0x32000800)
+    mov     d0, (DMAC0_CTR)
     mov     (0x50007f90), d0
-    mov     d0, (0x32000804)
-    mov     0x98010000, d0
-    mov     d0, (0x32000808)
+    mov     d0, (DMAC0_SRC)
+    mov     FDC_DACK, d0
+    mov     d0, (DMAC0_DST)
     mov     (0x50007f4c), d0
     mov     1, d1
     sub     d1, d0
-    movhu   d0, (0x3200080c)
+    movhu   d0, (DMAC0_CNT)
     mov     0xf, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xffffffdf, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xffffff3f, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xfffffcff, d0
     or      0x0200, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     or      0x0400, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xffffe7ff, d0
     or      0x0800, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     and     0xffff9fff, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     or      0x8000, d0
-    mov     d0, (0x32000800)
-    mov     (0x32000800), d0
+    mov     d0, (DMAC0_CTR)
+    mov     (DMAC0_CTR), d0
     or      0x00010000, d0
-    mov     d0, (0x32000800)
+    mov     d0, (DMAC0_CTR)
     ret     0, 0
 
 func_4840329F:
@@ -6681,15 +6681,15 @@ loc_484044B8:
 func_484044BB:
     add     -0x40, sp
 func_484044BB_entry:
-    bset    0x10, (0x36008024)
-    bset    0x10, (0x36008064)
+    bset    0x10, (P24)
+    bset    0x10, (P64)
     mov     1, d0
     movhu   d0, (0x18, sp)
     mov     func_484047A8, d0
     mov     d0, (0x1c, sp)
     mov     0x19, d0
     movhu   d0, (0x20, sp)
-    mov     0x34000164, d0
+    mov     G25ICR, d0
     mov     d0, (0x24, sp)
     clr     d0
     movhu   d0, (0x28, sp)
@@ -6703,7 +6703,7 @@ func_484044BB_entry:
     mov     d0, (0x30, sp)
     mov     0xf, d0
     movhu   d0, (0x34, sp)
-    mov     0x3400013c, d0
+    mov     G15ICR, d0
     mov     d0, (0x38, sp)
     clr     d0
     movhu   d0, (0x3c, sp)
@@ -6714,11 +6714,11 @@ func_484044BB_entry:
     mov     (0x10, sp), d0
     mov     sp, a0
     add     0x18, a0
-    call    func_4C03DB0E_entry, [d2,d3,a2,a3], 0x24
+    call    KernelDefInt_entry, [d2,d3,a2,a3], 0x24
     mov     (0x14, sp), d0
     mov     sp, a0
     add     0x2c, a0
-    call    func_4C03DB0E_entry, [d2,d3,a2,a3], 0x24
+    call    KernelDefInt_entry, [d2,d3,a2,a3], 0x24
     mov     (0x14, sp), d0
     call    ena_int_entry, [d2], 4
     mov     (0x10, sp), d0
@@ -6928,13 +6928,13 @@ func_48404774:
     call    func_48403061, 0, 0
     clr     d0
     call    dis_int_entry, [d2], 4
-    movhu   (0x3400013c), d0
+    movhu   (G15ICR), d0
     and     0xff00, d0
     or      0x01, d0
-    movhu   d0, (0x3400013c)
+    movhu   d0, (G15ICR)
     clr     d0
     call    ena_int_entry, [d2], 4
-    movhu   (0x3400013c), d0
+    movhu   (G15ICR), d0
     ret     0, 0xc
 
 func_484047A8:
@@ -7022,13 +7022,13 @@ loc_48404859:
     movbu   d0, (0x50007fb0)
     clr     d0
     call    dis_int_entry, [d2], 4
-    movhu   (0x34000164), d0
+    movhu   (G25ICR), d0
     and     0xff00, d0
     or      0x01, d0
-    movhu   d0, (0x34000164)
+    movhu   d0, (G25ICR)
     clr     d0
     call    ena_int_entry, [d2], 4
-    movhu   (0x34000164), d0
+    movhu   (G25ICR), d0
     ret     0, 0x18
 
 func_4840488C:
@@ -7044,7 +7044,7 @@ func_484048A0:
 func_484048A0_entry:
     call    loc_cpu_entry, 0, 0x10
     mov     d3, a1
-    mov     0x20000070, a0
+    mov     CHCTR, a0
     movhu   (a0), d0
     btst    0x02, d0
     beq     loc_48404914
@@ -7060,7 +7060,7 @@ func_484048A0_entry:
     bne     loc_484048FD
     btst    0x1000, d0
     bne     loc_484048E5
-    mov     0x28400000, a0
+    mov     DCACHE_WAY0, a0
     mov     0x80, d1
     setlb
     nop
@@ -7072,7 +7072,7 @@ func_484048A0_entry:
 loc_484048E5:
     btst    0x2000, d0
     bne     loc_484048FD
-    mov     0x28401000, a0
+    mov     DCACHE_WAY1, a0
     mov     0x80, d1
     setlb
     nop
@@ -7082,7 +7082,7 @@ loc_484048E5:
     nop
     lne
 loc_484048FD:
-    mov     0x20000070, a0
+    mov     CHCTR, a0
     mov     (a0), d0
     or      0x00000020:32, d0
     mov     d0, (a0)
@@ -7204,7 +7204,7 @@ func_48404AA8_entry:
     mov     d0, (0x18, sp)
     mov     0x1e, d0
     movhu   d0, (0x1c, sp)
-    mov     0x34000178, d0
+    mov     G30ICR, d0
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
@@ -7214,7 +7214,7 @@ func_48404AA8_entry:
     mov     d0, (0x10, sp)
     mov     sp, a0
     add     0x14, a0
-    call    func_4C03DB0E_entry, [d2,d3,a2,a3], 0x24
+    call    KernelDefInt_entry, [d2,d3,a2,a3], 0x24
     clr     d0
     mov     d0, (0x50008024)
     mov     d0, (0x50008028)
@@ -7260,10 +7260,10 @@ func_48404B64:
     movbu   d0, (func_48404B2C_Table)
     clr     d0
     call    dis_int_entry, [d2], 4
-    movhu   (0x34000178), d0
+    movhu   (G30ICR), d0
     and     0xff00, d0
     or      0x01, d0
-    movhu   d0, (0x34000178)
+    movhu   d0, (G30ICR)
     clr     d0
     call    ena_int_entry, [d2], 4
     ret     0, 0xc
@@ -7286,7 +7286,7 @@ loc_48404BC1:
     call    func_4840278D, 0, 0
     mov     0x83, d0
     call    func_4840278D, 0, 0
-    movbu   (0x9802000e), d0
+    movbu   (FDC_DIR_CCR), d0
     movbu   d0, (0xd, sp)
     mov     0x84, d0
     call    func_4840278D, 0, 0
@@ -7326,7 +7326,7 @@ func_48404C21_entry:
     movbu   d0, (0xc, sp)
     mov     0x83, d0
     call    func_4840278D, 0, 0
-    movbu   (0x9802000e), d0
+    movbu   (FDC_DIR_CCR), d0
     movbu   d0, (0xd, sp)
     mov     0x84, d0
     call    func_4840278D, 0, 0
@@ -7352,7 +7352,7 @@ loc_48404C4B:
 loc_48404C67:
     mov     0x83, d0
     call    func_4840278D, 0, 0
-    movbu   (0x9802000e), d0
+    movbu   (FDC_DIR_CCR), d0
     movbu   d0, (0xd, sp)
     mov     0x84, d0
     call    func_4840278D, 0, 0
@@ -12251,43 +12251,43 @@ loc_484079EB:
 # ResetEntry  (CPU 0x484079ee)
 ResetEntry:
     mov     0xfe, d0
-    movbu   d0, (0x36008024)
+    movbu   d0, (P24)
     mov     2, d0
-    movbu   d0, (0x36008044)
+    movbu   d0, (P44)
     mov     2, d0
-    movbu   d0, (0x36008004)
+    movbu   d0, (P04)
     mov     0xbf, d0
-    movbu   d0, (0x36008064)
-    mov     0x20000070, a0
+    movbu   d0, (P64)
+    mov     CHCTR, a0
     mov     0x00000030:32, d0
     mov     d0, (a0)
     mov     0x00000003:32, d0
     mov     d0, (a0)
     nop
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     mov     0x497, d0
-    movhu   d0, (0x32000040)
+    movhu   d0, (SDRAM_CTRL)
     mov     0xea6, d0
-    movhu   d0, (0x32000042)
+    movhu   d0, (SDRAM_REFRESH)
     mov     0x865, d0
-    movhu   d0, (0x32000028)
-    movhu   (0x32000020), d0
+    movhu   d0, (MEMCTR4)
+    movhu   (MEMCTR0), d0
     and     0x8000, d0
     or      0x0804, d0
-    movhu   d0, (0x32000020)
+    movhu   d0, (MEMCTR0)
     clr     d1
-    movbu   d1, (0x34004002)
+    movbu   d1, (UNKNOWN_34004002)
 
 func_48407A69:
     mov     0x50021cc8, a0
     mov     a0, sp
     add     -0xc, sp
     call    func_484D6F01_entry, 0, 8
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
     mov     0x001780c0, d1
     cmp     0, d1
     ble     loc_48407AAE
@@ -12335,18 +12335,18 @@ loc_48407AE0:
     mov     0x10, d1
     lsr     d1, d0
     movhu   d0, (a0)
-    mov     0x20000070, a0
+    mov     CHCTR, a0
     mov     (a0), d0
     or      0x80, d0
     mov     d0, (a0)
     clr     d1
-    movhu   d1, (0x20000000)
-    movhu   d1, (0x20000004)
-    movhu   d1, (0x20000008)
-    movhu   d1, (0x2000000c)
-    movhu   d1, (0x20000010)
-    movhu   d1, (0x20000014)
-    movhu   d1, (0x20000018)
+    movhu   d1, (IVAR0)
+    movhu   d1, (IVAR1)
+    movhu   d1, (IVAR2)
+    movhu   d1, (IVAR3)
+    movhu   d1, (IVAR4)
+    movhu   d1, (IVAR5)
+    movhu   d1, (IVAR6)
     mov     0x90000006, a0
     mov     0x0000dccb, d0
     movhu   d0, (a0)
@@ -12359,22 +12359,22 @@ loc_48407AE0:
     mov     0x10, d1
     lsr     d1, d0
     movhu   d0, (a0)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    bset    0x20, (0x36008004)
-    bclr    0x20, (0x36008004)
-    call    func_484D782E_entry, [d2,d3,a2,a3], 0x54
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    bset    0x20, (P04)
+    bclr    0x20, (P04)
+    call    LibImageLoad_entry, [d2,d3,a2,a3], 0x54
     jmp     KernelStart
     jmp     LibIrqScheduler
-    mov     0x20000070, a0
+    mov     CHCTR, a0
     movhu   (a0), d0
     and     0xfffe, d0
     mov     d0, d1
@@ -12393,7 +12393,7 @@ loc_48407AE0:
     or      0x01, d1
     movhu   d1, (a0)
     ret     0, 0
-    mov     0x20000070, a0
+    mov     CHCTR, a0
     movhu   (a0), d0
     and     0xfffd, d0
     mov     d0, d1
@@ -12412,7 +12412,7 @@ loc_48407AE0:
     or      0x02, d1
     movhu   d1, (a0)
     ret     0, 0
-    mov     0x20000070, a0
+    mov     CHCTR, a0
     movhu   (a0), d0
     btst    0x01, d0
     beq     loc_48407C36
@@ -12430,7 +12430,7 @@ loc_48407C36:
     ret     0, 0
 # DCacheFlushDisable  (CPU 0x48407c39)
 DCacheFlushDisable:
-    mov     0x20000070, a0
+    mov     CHCTR, a0
     movhu   (a0), d0
     btst    0x02, d0
     beq     loc_48407C8A
@@ -12446,7 +12446,7 @@ DCacheFlushDisable:
     bne     loc_48407C8A
     btst    0x1000, d0
     bne     loc_48407C72
-    mov     0x28400000, a0
+    mov     DCACHE_WAY0, a0
     mov     0x80, d1
     setlb
     nop
@@ -12458,7 +12458,7 @@ DCacheFlushDisable:
 loc_48407C72:
     btst    0x2000, d0
     bne     loc_48407C8A
-    mov     0x28401000, a0
+    mov     DCACHE_WAY1, a0
     mov     0x80, d1
     setlb
     nop
@@ -12468,7 +12468,7 @@ loc_48407C72:
     nop
     lne
 loc_48407C8A:
-    mov     0x20000070, a0
+    mov     CHCTR, a0
     movhu   (a0), d0
     and     0xfffd, d0
     mov     d0, d1
@@ -13450,8 +13450,8 @@ DspManagerInit:
     mov     -1, d0
     mov     d0, (0x500c6a88)
     mov     d0, (0x500c6a8c)
-    call    func_4840B10B_entry, 0, 0x1c
-    movbu   (DspManagerInit_Var), d0
+    call    DspFullReinit, 0, 0x1c
+    movbu   (DspHostPortError), d0
     extb    d0
     movhu   d0, (0x24, sp)
     clr     d0
@@ -13705,22 +13705,22 @@ DspDownloadAll:
     mov     d0, (0x10, sp)
     mov     0x1c, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     0xa0, d0
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x43, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x4b, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     DspRecord_486EEFF4, d0
     mov     d0, (0x20, sp)
     mov     sp, a0
@@ -13749,7 +13749,7 @@ loc_484087F4:
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     call    func_4840A209_entry, 0, 0x14
     mov     sp, a0
     add     0x20, a0
@@ -13760,17 +13760,17 @@ loc_484087F4:
     mov     d0, (0x10, sp)
     mov     0x43, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x4b, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     0xa0, d0
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     call    func_4840A209_entry, 0, 0x14
 loc_4840883A:
     movhu   (0x26, sp), d0
@@ -13783,7 +13783,7 @@ loc_48408841:
     bra     loc_484087DF
 loc_4840884C:
     call    func_4840A209_entry, 0, 0x14
-    call    func_4840AE62, 0, 0
+    call    DspReadyWaitOn, 0, 0
     movhu   (0x2a, sp), d0
     ret     [d2], 0x30
 # DspEffectTypeValid  (CPU 0x4840885f; its register-save prologue starts at 0x4840885c)
@@ -14140,12 +14140,12 @@ loc_48408B2C:
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x4b, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     movhu   (0x38, sp), d0
     add     2, d0
     exthu   d0
@@ -14175,17 +14175,17 @@ loc_48408B2C:
     mov     d0, (0x10, sp)
     mov     9, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     0x3a3, d0
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     8, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     1, d0
     call    dly_tsk_entry, [d2,a2], 0x18
     call    func_4840A221_entry, 0, 0x10
@@ -14195,12 +14195,12 @@ loc_48408BBF:
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x4b, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     movhu   (0x38, sp), d0
     add     2, d0
     exthu   d0
@@ -14239,17 +14239,17 @@ loc_48408BBF:
     mov     d0, (0x10, sp)
     mov     9, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     0x3a3, d0
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     8, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     1, d0
     call    dly_tsk_entry, [d2,a2], 0x18
     call    func_4840A221_entry, 0, 0x10
@@ -14275,12 +14275,12 @@ loc_48408C7D:
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x4b, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     movhu   (0x1c, sp), d0
     ret     [d2,d3], 0x28
 
@@ -14317,12 +14317,12 @@ loc_48408CDD:
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x4b, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     movhu   (0x34, sp), d0
     add     2, d0
     exthu   d0
@@ -14352,17 +14352,17 @@ loc_48408CDD:
     mov     d0, (0x10, sp)
     mov     9, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     0x343, d0
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     8, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     1, d0
     call    dly_tsk_entry, [d2,a2], 0x18
     call    func_4840A221_entry, 0, 0x10
@@ -14372,12 +14372,12 @@ loc_48408D70:
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x4b, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     movhu   (0x34, sp), d0
     add     2, d0
     exthu   d0
@@ -14412,17 +14412,17 @@ loc_48408D70:
     mov     d0, (0x10, sp)
     mov     9, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     0x343, d0
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     8, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     1, d0
     call    dly_tsk_entry, [d2,a2], 0x18
     call    func_4840A221_entry, 0, 0x10
@@ -14448,12 +14448,12 @@ loc_48408E29:
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x4b, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     movhu   (0x1c, sp), d0
     ret     [d2], 0x24
 
@@ -14490,12 +14490,12 @@ loc_48408E89:
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x4b, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     movhu   (0x34, sp), d0
     add     2, d0
     exthu   d0
@@ -14525,17 +14525,17 @@ loc_48408E89:
     mov     d0, (0x10, sp)
     mov     9, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     0x343, d0
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     8, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     1, d0
     call    dly_tsk_entry, [d2,a2], 0x18
     call    func_4840A221_entry, 0, 0x10
@@ -14545,12 +14545,12 @@ loc_48408F1C:
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x4b, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     movhu   (0x34, sp), d0
     add     2, d0
     exthu   d0
@@ -14585,17 +14585,17 @@ loc_48408F1C:
     mov     d0, (0x10, sp)
     mov     9, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     0x343, d0
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     8, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     1, d0
     call    dly_tsk_entry, [d2,a2], 0x18
     call    func_4840A221_entry, 0, 0x10
@@ -14621,12 +14621,12 @@ loc_48408FD5:
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x4b, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     movhu   (0x1c, sp), d0
     ret     [d2], 0x24
 
@@ -14673,7 +14673,7 @@ loc_48409044:
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     movhu   (0x1c, sp), d0
     cmp     1, d0
     beq     loc_4840905A
@@ -14728,7 +14728,7 @@ loc_484090C5:
     mov     d0, (0x10, sp)
     mov     0x1d, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     movhu   (0x1c, sp), d0
     mov     0x14ac, d1
     nop
@@ -15091,14 +15091,14 @@ loc_484093F1:
     call    func_4840A1D5_entry, 0, 0x14
     call    func_4840A1C3_entry, 0, 0x14
     mov     4, d0
-    call    func_4840B19B_entry, 0, 0x10
+    call    DspSetIndex_entry, 0, 0x10
     clr     d0
     movhu   d0, (0x18, sp)
     bra     loc_48409423
 loc_48409415:
     clr     d0
     mov     d0, d1
-    call    func_4840B22F_entry, 0, 0x10
+    call    DspWriteDMWord, 0, 0x10
     movhu   (0x18, sp), d0
     inc     d0
     movhu   d0, (0x18, sp)
@@ -15823,7 +15823,7 @@ func_48409A83:
     call    func_4840A1D5_entry, 0, 0x14
     call    func_4840A1C3_entry, 0, 0x14
     mov     4, d0
-    call    func_4840B433_entry, 0, 0x18
+    call    DspRegRead_entry, 0, 0x18
     mov     d0, (0x14, sp)
     call    func_4840A209_entry, 0, 0x14
     mov     (0x14, sp), d0
@@ -15833,7 +15833,7 @@ func_48409AB4:
     add     -0x10, sp
 func_48409AB4_entry:
     mov     0xc, d0
-    call    func_4840B433_entry, 0, 0x18
+    call    DspRegRead_entry, 0, 0x18
     mov     d0, (0xc, sp)
     ret     0, 0x10
 
@@ -16462,17 +16462,17 @@ func_4840A180_entry:
     mov     d0, (0x10, sp)
     clr     d0
     clr     d1
-    call    func_4840B39F_entry, 0, 0x10
+    call    DspIndexWriteBytes32Slow_entry, 0, 0x10
     clr     d0
-    call    func_4840B464_entry, 0, 0x18
+    call    DspRegReadSlow_entry, 0, 0x18
     movhu   d0, (0x14, sp)
     mov     0x410, d0
     mov     d0, (0x10, sp)
     clr     d0
     clr     d1
-    call    func_4840B414_entry, 0, 0x10
+    call    DspRegWriteSlow_entry, 0, 0x10
     clr     d0
-    call    func_4840B464_entry, 0, 0x18
+    call    DspRegReadSlow_entry, 0, 0x18
     movhu   d0, (0x14, sp)
     ret     0, 0x18
 
@@ -16483,7 +16483,7 @@ func_4840A1B0_entry:
     mov     d0, (0x10, sp)
     mov     0x1c, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     ret     0, 0x14
 
 func_4840A1C3:
@@ -16493,7 +16493,7 @@ func_4840A1C3_entry:
     mov     d0, (0x10, sp)
     mov     0x1c, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     ret     0, 0x14
 
 func_4840A1D5:
@@ -16505,17 +16505,17 @@ func_4840A1D5_entry:
     mov     d0, (0x10, sp)
     mov     0x40, d0
     movhu   (0x1c, sp), d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x41, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     movhu   (0x24, sp), d0
     mov     d0, (0x10, sp)
     mov     0x42, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     ret     0, 0x14
 
 func_4840A209:
@@ -16526,20 +16526,20 @@ func_4840A209_entry:
     mov     d0, (0x10, sp)
     mov     0x1c, d0
     clr     d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     ret     0, 0x14
 
 func_4840A221:
     add     -0x10, sp
 func_4840A221_entry:
-    movbu   (DspManagerInit_Var), d0
+    movbu   (DspHostPortError), d0
     extb    d0
     cmp     0, d0
     beq     loc_4840A231
     bra     loc_4840A245
 loc_4840A231:
     mov     0x37, d0
-    call    func_4840B433_entry, 0, 0x18
+    call    DspRegRead_entry, 0, 0x18
     and     0x80, d0
     mov     d0, (0xc, sp)
     mov     (0xc, sp), d0
@@ -16576,7 +16576,7 @@ func_4840A24B_entry:
     mov     d0, (0x14, sp)
     mov     4, d0
     movhu   (0x2c, sp), d1
-    call    func_4840B1FA_entry, 0, 0x10
+    call    DspIndexWritePMWord_entry, 0, 0x10
     call    func_4840A209_entry, 0, 0x14
     movhu   (0x18, sp), d0
     ret     0, 0x1c
@@ -16604,7 +16604,7 @@ func_4840A292_entry:
     mov     (0x28, sp), d1
     lsr     16, d1
     exthu   d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
     call    func_4840A209_entry, 0, 0x14
     clr     d0
     ret     0, 0x1c
@@ -16780,7 +16780,7 @@ loc_4840A41A:
     call    func_4840A1C3_entry, 0, 0x14
 loc_4840A437:
     mov     4, d0
-    call    func_4840B19B_entry, 0, 0x10
+    call    DspSetIndex_entry, 0, 0x10
     bra     loc_4840A4BA
 loc_4840A440:
     movhu   (0x1c, sp), d0
@@ -16814,7 +16814,7 @@ loc_4840A454:
     exthu   d0
     movhu   (0x2c, sp), d1
     exthu   d1
-    call    func_4840B1CD_entry, 0, 0x10
+    call    DspWritePMWord, 0, 0x10
     bra     loc_4840A4BA
 loc_4840A48A:
     mov     sp, a0
@@ -16836,7 +16836,7 @@ loc_4840A48A:
     exthu   d0
     movhu   (0x2e, sp), d1
     exthu   d1
-    call    func_4840B22F_entry, 0, 0x10
+    call    DspWriteDMWord, 0, 0x10
 loc_4840A4BA:
     movhu   (0x26, sp), d1
     movhu   (0x26, sp), d0
@@ -17095,7 +17095,7 @@ loc_4840A682:
     mov     (0x18, sp), d1
     lsr     16, d1
     exthu   d1
-    call    func_4840B3F5_entry, 0, 0x10
+    call    DspRegWrite, 0, 0x10
 loc_4840A695:
     call    func_4840A209_entry, 0, 0x14
     movhu   (0x48, sp), d0
@@ -17225,7 +17225,7 @@ loc_4840A7A0:
     mov     d0, (0x14, sp)
     mov     4, d0
     mov     0x6be, d1
-    call    func_4840B1FA_entry, 0, 0x10
+    call    DspIndexWritePMWord_entry, 0, 0x10
     jmp     loc_4840A87A
 loc_4840A7B7:
     movhu   (0x50, sp), d0
@@ -17239,7 +17239,7 @@ loc_4840A7C0:
     mov     d0, (0x14, sp)
     mov     4, d0
     mov     0x6be, d1
-    call    func_4840B1FA_entry, 0, 0x10
+    call    DspIndexWritePMWord_entry, 0, 0x10
     jmp     loc_4840A87A
 loc_4840A7DA:
     movhu   (0x48, sp), d0
@@ -17253,7 +17253,7 @@ loc_4840A7E3:
     mov     d0, (0x14, sp)
     mov     4, d0
     mov     0x6be, d1
-    call    func_4840B1FA_entry, 0, 0x10
+    call    DspIndexWritePMWord_entry, 0, 0x10
     jmp     loc_4840A87A
 loc_4840A7FD:
     movhu   (0x48, sp), d0
@@ -17267,7 +17267,7 @@ loc_4840A806:
     mov     d0, (0x14, sp)
     mov     4, d0
     mov     0x6be, d1
-    call    func_4840B1FA_entry, 0, 0x10
+    call    DspIndexWritePMWord_entry, 0, 0x10
     bra     loc_4840A87A
 loc_4840A81F:
     movhu   (0x50, sp), d0
@@ -17281,7 +17281,7 @@ loc_4840A828:
     mov     d0, (0x14, sp)
     mov     4, d0
     mov     0x6be, d1
-    call    func_4840B1FA_entry, 0, 0x10
+    call    DspIndexWritePMWord_entry, 0, 0x10
     bra     loc_4840A87A
 loc_4840A841:
     movhu   (0x50, sp), d0
@@ -17295,7 +17295,7 @@ loc_4840A84A:
     mov     d0, (0x14, sp)
     mov     4, d0
     mov     0x6be, d1
-    call    func_4840B1FA_entry, 0, 0x10
+    call    DspIndexWritePMWord_entry, 0, 0x10
     bra     loc_4840A87A
 loc_4840A863:
     mov     0x400, d0
@@ -17304,7 +17304,7 @@ loc_4840A863:
     mov     d0, (0x14, sp)
     mov     4, d0
     mov     0x6be, d1
-    call    func_4840B1FA_entry, 0, 0x10
+    call    DspIndexWritePMWord_entry, 0, 0x10
 loc_4840A87A:
     call    func_4840A209_entry, 0, 0x14
     movhu   (0x22, sp), d0
@@ -17943,21 +17943,21 @@ func_4840AE06_entry:
     mov     d1, d0
     mov     d2, d1
     ret     [d2], 0x24
-
-func_4840AE62:
+# DspReadyWaitOn  (CPU 0x4840ae62)
+DspReadyWaitOn:
     mov     1, d0
     movbu   d0, (func_4840AE62_Table)
     ret     0, 0
-
-func_4840AE6D:
+# DspReadyWaitOff  (CPU 0x4840ae6d)
+DspReadyWaitOff:
     clr     d0
     movbu   d0, (func_4840AE62_Table)
     ret     0, 0
-
-func_4840AE77:
+# DspWaitReady  (CPU 0x4840ae77)
+DspWaitReady:
     movm    [d2], (sp)
     add     -4, sp
-func_4840AE77_entry:
+DspWaitReady_entry:
     mov     0x0003ffff, d0
     mov     d0, (0, sp)
     movbu   (func_4840AE62_Table), d0
@@ -17966,7 +17966,7 @@ func_4840AE77_entry:
     bra     loc_4840AEC0
 loc_4840AE90:
     mov     1, d0
-    movhu   d0, (0x3400015c)
+    movhu   d0, (G23ICR)
     bra     loc_4840AEB3
 loc_4840AE9A:
     mov     (0, sp), d0
@@ -17979,29 +17979,29 @@ loc_4840AE9A:
     bra     loc_4840AEB3
 loc_4840AEA9:
     mov     -1, d0
-    movbu   d0, (DspManagerInit_Var)
+    movbu   d0, (DspHostPortError)
     bra     loc_4840AEC0
 loc_4840AEB3:
-    movhu   (0x3400015c), d0
+    movhu   (G23ICR), d0
     btst    0x10, d0
     bne     loc_4840AEC0
     bra     loc_4840AE9A
 loc_4840AEC0:
     ret     [d2], 8
-
-func_4840AEC3:
-    movhu   (0x34000280), d0
+# DspReadyIrqModeSet  (CPU 0x4840aec3)
+DspReadyIrqModeSet:
+    movhu   (EXTMD), d0
     and     0xfffc, d0
     or      0x02, d0
-    movhu   d0, (0x34000280)
+    movhu   d0, (EXTMD)
     ret     0, 0
     clr     d0
     ret     0, 0
-
-func_4840AEDD:
+# DspDebugPrint  (CPU 0x4840aedd)
+DspDebugPrint:
     ret     0, 0
-
-func_4840AEE0:
+# DspHexDigit  (CPU 0x4840aee0)
+DspHexDigit:
     movbu   d0, (8, sp)
     movbu   (8, sp), d0
     and     0x0f, d0
@@ -18021,8 +18021,8 @@ loc_4840AEFD:
     extbu   d0
 loc_4840AF03:
     ret     0, 0
-
-func_4840AF06:
+# DspDebugPrintHex16  (CPU 0x4840af06)
+DspDebugPrintHex16:
     add     -0x14, sp
     movhu   d0, (0x1c, sp)
     mov     func_4840AF06_Table, a1
@@ -18042,35 +18042,35 @@ loc_4840AF22:
     asr     12, d0
     and     0x0f, d0
     extbu   d0
-    call    func_4840AEE0, 0, 0
+    call    DspHexDigit, 0, 0
     movbu   d0, (0xc, sp)
     movhu   (0x1c, sp), d0
     asr     8, d0
     and     0x0f, d0
     extbu   d0
-    call    func_4840AEE0, 0, 0
+    call    DspHexDigit, 0, 0
     movbu   d0, (0xd, sp)
     movhu   (0x1c, sp), d0
     asr     4, d0
     and     0x0f, d0
     extbu   d0
-    call    func_4840AEE0, 0, 0
+    call    DspHexDigit, 0, 0
     movbu   d0, (0xe, sp)
     movhu   (0x1c, sp), d0
     and     0x0f, d0
     extbu   d0
-    call    func_4840AEE0, 0, 0
+    call    DspHexDigit, 0, 0
     movbu   d0, (0xf, sp)
     clr     d0
     movbu   d0, (0x10, sp)
     mov     sp, a0
     add     0xc, a0
-    call    func_4840AEDD, 0, 0
+    call    DspDebugPrint, 0, 0
     ret     0, 0x14
-
-func_4840AF76:
+# DspPortRead  (CPU 0x4840af76)
+DspPortRead:
     add     -0xc, sp
-func_4840AF76_entry:
+DspPortRead_entry:
     movhu   d0, (0x14, sp)
     clr     d0
     movhu   d0, (8, sp)
@@ -18088,17 +18088,17 @@ loc_4840AF93:
     bra     loc_4840AFB7
 loc_4840AF9B:
     call    loc_cpu_entry, 0, 0x10
-    call    func_4840AE77_entry, [d2], 8
+    call    DspWaitReady_entry, [d2], 8
     movhu   (0x9c000000), d0
     movhu   d0, (8, sp)
     call    unl_cpu, 0, 0
 loc_4840AFB7:
     movhu   (8, sp), d0
     ret     0, 0xc
-
-func_4840AFBD:
+# DspPortWrite  (CPU 0x4840afbd)
+DspPortWrite:
     add     -8, sp
-func_4840AFBD_entry:
+DspPortWrite_entry:
     movhu   d1, (0x14, sp)
     movhu   d0, (0x10, sp)
     movhu   (0x10, sp), d0
@@ -18121,19 +18121,19 @@ loc_4840AFE3:
     bra     loc_4840B00A
 loc_4840AFEE:
     call    loc_cpu_entry, 0, 0x10
-    call    func_4840AE77_entry, [d2], 8
+    call    DspWaitReady_entry, [d2], 8
     movhu   (0x14, sp), d0
     movhu   d0, (0x9c000000)
     call    unl_cpu, 0, 0
 loc_4840B00A:
     ret     0, 8
-
-func_4840B00D:
+# DspPortWriteChecked  (CPU 0x4840b00d)
+DspPortWriteChecked:
     add     -0x10, sp
-func_4840B00D_entry:
+DspPortWriteChecked_entry:
     movhu   d1, (0x1c, sp)
     movhu   d0, (0x18, sp)
-    movbu   (DspManagerInit_Var), d0
+    movbu   (DspHostPortError), d0
     extb    d0
     cmp     0, d0
     beq     loc_4840B023
@@ -18141,39 +18141,39 @@ func_4840B00D_entry:
 loc_4840B023:
     movhu   (0x18, sp), d0
     movhu   (0x1c, sp), d1
-    call    func_4840AFBD_entry, 0, 8
+    call    DspPortWrite_entry, 0, 8
 loc_4840B02E:
     ret     0, 0x10
-
-func_4840B031:
+# DspPortWriteSlow  (CPU 0x4840b031)
+DspPortWriteSlow:
     add     -0x14, sp
-func_4840B031_entry:
+DspPortWriteSlow_entry:
     movhu   d1, (0x20, sp)
     movhu   d0, (0x1c, sp)
-    movhu   (0x32000026), d0
+    movhu   (MEMCTR3), d0
     movhu   d0, (0x10, sp)
-    movhu   (0x3200002e), d0
+    movhu   (MEMCTR7), d0
     movhu   d0, (0x12, sp)
-    movhu   (0x32000026), d0
+    movhu   (MEMCTR3), d0
     and     0xe0ff, d0
     or      0x0f00, d0
-    movhu   d0, (0x32000026)
-    movhu   (0x3200002e), d0
+    movhu   d0, (MEMCTR3)
+    movhu   (MEMCTR7), d0
     and     0xfffd, d0
-    movhu   d0, (0x3200002e)
+    movhu   d0, (MEMCTR7)
     movhu   (0x1c, sp), d0
     movhu   (0x20, sp), d1
-    call    func_4840AFBD_entry, 0, 8
+    call    DspPortWrite_entry, 0, 8
     movhu   (0x10, sp), d0
-    movhu   d0, (0x32000026)
+    movhu   d0, (MEMCTR3)
     movhu   (0x12, sp), d0
-    movhu   d0, (0x3200002e)
+    movhu   d0, (MEMCTR7)
     ret     0, 0x14
-
-func_4840B090:
+# DspPortReadChecked  (CPU 0x4840b090)
+DspPortReadChecked:
     add     -0xc, sp
-func_4840B090_entry:
-    movbu   (DspManagerInit_Var), d0
+DspPortReadChecked_entry:
+    movbu   (DspHostPortError), d0
     extb    d0
     cmp     0, d0
     bne     loc_4840B0A0
@@ -18183,45 +18183,44 @@ loc_4840B0A0:
     bra     loc_4840B0AC
 loc_4840B0A4:
     mov     0x9c4, d0
-    call    func_4840AF76_entry, 0, 0xc
+    call    DspPortRead_entry, 0, 0xc
 loc_4840B0AC:
     ret     0, 0xc
-
-func_4840B0AF:
+# DspPortReadSlow  (CPU 0x4840b0af)
+DspPortReadSlow:
     add     -0x14, sp
-func_4840B0AF_entry:
-    movhu   (0x32000026), d0
+DspPortReadSlow_entry:
+    movhu   (MEMCTR3), d0
     movhu   d0, (0xc, sp)
-    movhu   (0x3200002e), d0
+    movhu   (MEMCTR7), d0
     movhu   d0, (0xe, sp)
-    movhu   (0x32000026), d0
+    movhu   (MEMCTR3), d0
     and     0xe0ff, d0
     or      0x0f00, d0
-    movhu   d0, (0x32000026)
-    movhu   (0x3200002e), d0
+    movhu   d0, (MEMCTR3)
+    movhu   (MEMCTR7), d0
     and     0xfffd, d0
-    movhu   d0, (0x3200002e)
+    movhu   d0, (MEMCTR7)
     mov     0x9c4, d0
-    call    func_4840AF76_entry, 0, 0xc
+    call    DspPortRead_entry, 0, 0xc
     movhu   d0, (0x10, sp)
     movhu   (0xc, sp), d0
-    movhu   d0, (0x32000026)
+    movhu   d0, (MEMCTR3)
     movhu   (0xe, sp), d0
-    movhu   d0, (0x3200002e)
+    movhu   d0, (MEMCTR7)
     movhu   (0x10, sp), d0
     ret     0, 0x14
-
-func_4840B10B:
+# DspFullReinit  (CPU 0x4840b10e; its register-save prologue starts at 0x4840b10b)
     add     -0x1c, sp
-func_4840B10B_entry:
-    bset    0x80, (0x36008004)
+DspFullReinit:
+    bset    0x80, (P04)
     mov     0xa, d0
     call    dly_tsk_entry, [d2,a2], 0x18
-    bclr    0x80, (0x36008004)
+    bclr    0x80, (P04)
     mov     0xa, d0
     call    dly_tsk_entry, [d2,a2], 0x18
-    bset    0x80, (0x36008004)
-    call    func_4840AEC3, 0, 0
+    bset    0x80, (P04)
+    call    DspReadyIrqModeSet, 0, 0
     clr     d0
     movbu   d0, (0x18, sp)
     bra     loc_4840B187
@@ -18230,17 +18229,17 @@ loc_4840B140:
     mov     d0, (0x10, sp)
     clr     d0
     mov     0x00009191, d1
-    call    func_4840B39F_entry, 0, 0x10
+    call    DspIndexWriteBytes32Slow_entry, 0, 0x10
     clr     d0
-    call    func_4840B33E_entry, 0, 0x20
+    call    DspIndexReadBytes32Slow_entry, 0, 0x20
     mov     d0, (0x14, sp)
     mov     0x20, d0
     mov     d0, (0x10, sp)
     clr     d0
     clr     d1
-    call    func_4840B39F_entry, 0, 0x10
+    call    DspIndexWriteBytes32Slow_entry, 0, 0x10
     clr     d0
-    call    func_4840B33E_entry, 0, 0x20
+    call    DspIndexReadBytes32Slow_entry, 0, 0x20
     mov     d0, (0x14, sp)
     mov     (0x14, sp), d0
     cmp     0x20, d0
@@ -18248,7 +18247,7 @@ loc_4840B140:
     bra     loc_4840B180
 loc_4840B177:
     clr     d0
-    movbu   d0, (DspManagerInit_Var)
+    movbu   d0, (DspHostPortError)
     bra     loc_4840B198
 loc_4840B180:
     movbu   (0x18, sp), d0
@@ -18261,152 +18260,150 @@ loc_4840B187:
     bra     loc_4840B140
 loc_4840B190:
     mov     -1, d0
-    movbu   d0, (DspManagerInit_Var)
+    movbu   d0, (DspHostPortError)
 loc_4840B198:
     ret     0, 0x1c
-
-func_4840B19B:
+# DspSetIndex  (CPU 0x4840b19b)
+DspSetIndex:
     add     -0x10, sp
-func_4840B19B_entry:
+DspSetIndex_entry:
     movhu   d0, (0x18, sp)
     mov     0x9c2, d0
     movhu   (0x18, sp), d1
     and     0xffff, d1
     exthu   d1
-    call    func_4840B00D_entry, 0, 0x10
+    call    DspPortWriteChecked_entry, 0, 0x10
     ret     0, 0x10
-
-func_4840B1B4:
+# DspSetIndexSlow  (CPU 0x4840b1b4)
+DspSetIndexSlow:
     add     -0x10, sp
-func_4840B1B4_entry:
+DspSetIndexSlow_entry:
     movhu   d0, (0x18, sp)
     mov     0x9c2, d0
     movhu   (0x18, sp), d1
     and     0xffff, d1
     exthu   d1
-    call    func_4840B031_entry, 0, 0x14
+    call    DspPortWriteSlow_entry, 0, 0x14
     ret     0, 0x10
-
-func_4840B1CD:
+# DspWritePMWord  (CPU 0x4840b1d0; its register-save prologue starts at 0x4840b1cd)
     add     -0x10, sp
-func_4840B1CD_entry:
+DspWritePMWord:
     movhu   d0, (0x18, sp)
     movhu   d1, (0x1c, sp)
     mov     0x9c4, d0
     movhu   (0x20, sp), d1
-    call    func_4840B00D_entry, 0, 0x10
+    call    DspPortWriteChecked_entry, 0, 0x10
     mov     0x9c4, d0
     movhu   (0x1c, sp), d1
-    call    func_4840B00D_entry, 0, 0x10
+    call    DspPortWriteChecked_entry, 0, 0x10
     mov     0x9c4, d0
     movhu   (0x18, sp), d1
-    call    func_4840B00D_entry, 0, 0x10
+    call    DspPortWriteChecked_entry, 0, 0x10
     ret     0, 0x10
-
-func_4840B1FA:
+# DspIndexWritePMWord  (CPU 0x4840b1fa)
+DspIndexWritePMWord:
     add     -0x10, sp
-func_4840B1FA_entry:
+DspIndexWritePMWord_entry:
     movhu   d1, (0x1c, sp)
     mov     d0, (0x18, sp)
     movhu   (0x18, sp), d0
     exthu   d0
-    call    func_4840B19B_entry, 0, 0x10
+    call    DspSetIndex_entry, 0, 0x10
     mov     0x9c4, d0
     movhu   (0x24, sp), d1
-    call    func_4840B00D_entry, 0, 0x10
+    call    DspPortWriteChecked_entry, 0, 0x10
     mov     0x9c4, d0
     movhu   (0x20, sp), d1
-    call    func_4840B00D_entry, 0, 0x10
+    call    DspPortWriteChecked_entry, 0, 0x10
     mov     0x9c4, d0
     movhu   (0x1c, sp), d1
-    call    func_4840B00D_entry, 0, 0x10
+    call    DspPortWriteChecked_entry, 0, 0x10
     ret     0, 0x10
-
-func_4840B22F:
+# DspWriteDMWord  (CPU 0x4840b232; its register-save prologue starts at 0x4840b22f)
     add     -0x10, sp
-func_4840B22F_entry:
+DspWriteDMWord:
     movhu   d0, (0x18, sp)
     movhu   d1, (0x1c, sp)
     mov     0x9c4, d0
     movhu   (0x1c, sp), d1
     and     0xffff, d1
     exthu   d1
-    call    func_4840B00D_entry, 0, 0x10
+    call    DspPortWriteChecked_entry, 0, 0x10
     mov     0x9c4, d0
     movhu   (0x18, sp), d1
     and     0xffff, d1
     exthu   d1
-    call    func_4840B00D_entry, 0, 0x10
+    call    DspPortWriteChecked_entry, 0, 0x10
     ret     0, 0x10
-
-func_4840B25B:
+# DspWriteDMWordSlow  (CPU 0x4840b25b)
+DspWriteDMWordSlow:
     add     -0x10, sp
-func_4840B25B_entry:
+DspWriteDMWordSlow_entry:
     movhu   d0, (0x18, sp)
     movhu   d1, (0x1c, sp)
     mov     0x9c4, d0
     movhu   (0x1c, sp), d1
     and     0xffff, d1
     exthu   d1
-    call    func_4840B031_entry, 0, 0x14
+    call    DspPortWriteSlow_entry, 0, 0x14
     mov     0x9c4, d0
     movhu   (0x18, sp), d1
     and     0xffff, d1
     exthu   d1
-    call    func_4840B031_entry, 0, 0x14
+    call    DspPortWriteSlow_entry, 0, 0x14
     ret     0, 0x10
-
-func_4840B287:
+# DspIndexWriteBytes32  (CPU 0x4840b287)
+DspIndexWriteBytes32:
     add     -0x10, sp
     movhu   d1, (0x1c, sp)
     mov     d0, (0x18, sp)
     movhu   (0x18, sp), d0
     exthu   d0
-    call    func_4840B19B_entry, 0, 0x10
+    call    DspSetIndex_entry, 0, 0x10
     mov     0x9c4, d0
     movhu   (0x20, sp), d1
     and     0xff, d1
     exthu   d1
-    call    func_4840B00D_entry, 0, 0x10
+    call    DspPortWriteChecked_entry, 0, 0x10
     mov     0x9c4, d0
     movhu   (0x20, sp), d1
     asr     8, d1
     and     0xff, d1
     exthu   d1
-    call    func_4840B00D_entry, 0, 0x10
+    call    DspPortWriteChecked_entry, 0, 0x10
     mov     0x9c4, d0
     movhu   (0x1c, sp), d1
     and     0xff, d1
     exthu   d1
-    call    func_4840B00D_entry, 0, 0x10
+    call    DspPortWriteChecked_entry, 0, 0x10
     mov     0x9c4, d0
     movhu   (0x1c, sp), d1
     asr     8, d1
     and     0xff, d1
     exthu   d1
-    call    func_4840B00D_entry, 0, 0x10
+    call    DspPortWriteChecked_entry, 0, 0x10
     ret     0, 0x10
-
-func_4840B2DD:
+# DspIndexReadBytes32  (CPU 0x4840b2dd)
+DspIndexReadBytes32:
     add     -0x20, sp
     mov     d0, (0x28, sp)
     movhu   (0x28, sp), d0
     exthu   d0
-    call    func_4840B19B_entry, 0, 0x10
+    call    DspSetIndex_entry, 0, 0x10
     mov     0x9c4, d0
-    call    func_4840B090_entry, 0, 0xc
+    call    DspPortReadChecked_entry, 0, 0xc
     exth    d0
     mov     d0, (0xc, sp)
     mov     0x9c4, d0
-    call    func_4840B090_entry, 0, 0xc
+    call    DspPortReadChecked_entry, 0, 0xc
     exth    d0
     mov     d0, (0x10, sp)
     mov     0x9c4, d0
-    call    func_4840B090_entry, 0, 0xc
+    call    DspPortReadChecked_entry, 0, 0xc
     exth    d0
     mov     d0, (0x14, sp)
     mov     0x9c4, d0
-    call    func_4840B090_entry, 0, 0xc
+    call    DspPortReadChecked_entry, 0, 0xc
     exth    d0
     mov     d0, (0x18, sp)
     mov     (0x10, sp), d1
@@ -18425,28 +18422,28 @@ func_4840B2DD:
     and     d1, d0
     mov     d0, (0x1c, sp)
     ret     0, 0x20
-
-func_4840B33E:
+# DspIndexReadBytes32Slow  (CPU 0x4840b33e)
+DspIndexReadBytes32Slow:
     add     -0x20, sp
-func_4840B33E_entry:
+DspIndexReadBytes32Slow_entry:
     mov     d0, (0x28, sp)
     movhu   (0x28, sp), d0
     exthu   d0
-    call    func_4840B19B_entry, 0, 0x10
+    call    DspSetIndex_entry, 0, 0x10
     mov     0x9c4, d0
-    call    func_4840B0AF_entry, 0, 0x14
+    call    DspPortReadSlow_entry, 0, 0x14
     exth    d0
     mov     d0, (0xc, sp)
     mov     0x9c4, d0
-    call    func_4840B0AF_entry, 0, 0x14
+    call    DspPortReadSlow_entry, 0, 0x14
     exth    d0
     mov     d0, (0x10, sp)
     mov     0x9c4, d0
-    call    func_4840B0AF_entry, 0, 0x14
+    call    DspPortReadSlow_entry, 0, 0x14
     exth    d0
     mov     d0, (0x14, sp)
     mov     0x9c4, d0
-    call    func_4840B0AF_entry, 0, 0x14
+    call    DspPortReadSlow_entry, 0, 0x14
     exth    d0
     mov     d0, (0x18, sp)
     mov     (0x10, sp), d1
@@ -18465,78 +18462,77 @@ func_4840B33E_entry:
     and     d1, d0
     mov     d0, (0x1c, sp)
     ret     0, 0x20
-
-func_4840B39F:
+# DspIndexWriteBytes32Slow  (CPU 0x4840b39f)
+DspIndexWriteBytes32Slow:
     add     -0x10, sp
-func_4840B39F_entry:
+DspIndexWriteBytes32Slow_entry:
     movhu   d1, (0x1c, sp)
     mov     d0, (0x18, sp)
     movhu   (0x18, sp), d0
     exthu   d0
-    call    func_4840B1B4_entry, 0, 0x10
+    call    DspSetIndexSlow_entry, 0, 0x10
     mov     0x9c4, d0
     movhu   (0x20, sp), d1
     and     0xff, d1
     exthu   d1
-    call    func_4840B031_entry, 0, 0x14
+    call    DspPortWriteSlow_entry, 0, 0x14
     mov     0x9c4, d0
     movhu   (0x20, sp), d1
     asr     8, d1
     and     0xff, d1
     exthu   d1
-    call    func_4840B031_entry, 0, 0x14
+    call    DspPortWriteSlow_entry, 0, 0x14
     mov     0x9c4, d0
     movhu   (0x1c, sp), d1
     and     0xff, d1
     exthu   d1
-    call    func_4840B031_entry, 0, 0x14
+    call    DspPortWriteSlow_entry, 0, 0x14
     mov     0x9c4, d0
     movhu   (0x1c, sp), d1
     asr     8, d1
     and     0xff, d1
     exthu   d1
-    call    func_4840B031_entry, 0, 0x14
+    call    DspPortWriteSlow_entry, 0, 0x14
     ret     0, 0x10
-
-func_4840B3F5:
+# DspRegWrite  (CPU 0x4840b3f8; its register-save prologue starts at 0x4840b3f5)
     add     -0x10, sp
-func_4840B3F5_entry:
+DspRegWrite:
     movhu   d1, (0x1c, sp)
     mov     d0, (0x18, sp)
     movhu   (0x18, sp), d0
     exthu   d0
-    call    func_4840B19B_entry, 0, 0x10
+    call    DspSetIndex_entry, 0, 0x10
     movhu   (0x1c, sp), d0
     movhu   (0x20, sp), d1
-    call    func_4840B22F_entry, 0, 0x10
+    call    DspWriteDMWord, 0, 0x10
     ret     0, 0x10
-
-func_4840B414:
+# DspRegWriteSlow  (CPU 0x4840b414)
+DspRegWriteSlow:
     add     -0x10, sp
-func_4840B414_entry:
+DspRegWriteSlow_entry:
     movhu   d1, (0x1c, sp)
     mov     d0, (0x18, sp)
     movhu   (0x18, sp), d0
     exthu   d0
-    call    func_4840B1B4_entry, 0, 0x10
+    call    DspSetIndexSlow_entry, 0, 0x10
     movhu   (0x1c, sp), d0
     movhu   (0x20, sp), d1
-    call    func_4840B25B_entry, 0, 0x10
+    call    DspWriteDMWordSlow_entry, 0, 0x10
     ret     0, 0x10
-
-func_4840B433:
+# DspRegRead  (CPU 0x4840b433)
+DspRegRead:
     add     -0x18, sp
-func_4840B433_entry:
+DspRegRead_entry:
     mov     d0, (0x20, sp)
     movhu   (0x20, sp), d0
     exthu   d0
-    call    func_4840B19B_entry, 0, 0x10
+    call    DspSetIndex_entry, 0, 0x10
     mov     0x9c4, d0
-    call    func_4840B090_entry, 0, 0xc
+    call    DspPortReadChecked_entry, 0, 0xc
     exth    d0
     mov     d0, (0xc, sp)
     mov     0x9c4, d0
-    call    func_4840B090_entry, 0, 0xc
+    call    DspPortReadChecked_entry, 0, 0xc
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x10, sp), d0
@@ -18545,20 +18541,20 @@ func_4840B433_entry:
     add     d1, d0
     mov     d0, (0x14, sp)
     ret     0, 0x18
-
-func_4840B464:
+# DspRegReadSlow  (CPU 0x4840b464)
+DspRegReadSlow:
     add     -0x18, sp
-func_4840B464_entry:
+DspRegReadSlow_entry:
     mov     d0, (0x20, sp)
     movhu   (0x20, sp), d0
     exthu   d0
-    call    func_4840B1B4_entry, 0, 0x10
+    call    DspSetIndexSlow_entry, 0, 0x10
     mov     0x9c4, d0
-    call    func_4840B0AF_entry, 0, 0x14
+    call    DspPortReadSlow_entry, 0, 0x14
     exth    d0
     mov     d0, (0xc, sp)
     mov     0x9c4, d0
-    call    func_4840B0AF_entry, 0, 0x14
+    call    DspPortReadSlow_entry, 0, 0x14
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x10, sp), d0
@@ -18617,9 +18613,9 @@ loc_4840B4BF:
     call    func_4840827F, 0, 0
 loc_4840B52D:
     ret     0, 0x14
-
-func_4840B530:
-    movbu   (DspManagerInit_Var), d0
+# DspHostPortStatus  (CPU 0x4840b530)
+DspHostPortStatus:
+    movbu   (DspHostPortError), d0
     extb    d0
     cmp     0, d0
     beq     loc_4840B53D
@@ -18631,10 +18627,10 @@ loc_4840B540:
     mov     -1, d0
 loc_4840B542:
     ret     0, 0
-
-func_4840B545:
+# DspBootRunTestRecord  (CPU 0x4840b545)
+DspBootRunTestRecord:
     add     -0x18, sp
-func_4840B545_entry:
+DspBootRunTestRecord_entry:
     mov     a0, (0x20, sp)
     clr     d0
     mov     d0, (0x10, sp)
@@ -18652,13 +18648,13 @@ func_4840B545_entry:
     mov     0x64, d0
     call    dly_tsk_entry, [d2,a2], 0x18
     ret     0, 0x18
-
-func_4840B575:
+# DspBootTestResult  (CPU 0x4840b575)
+DspBootTestResult:
     add     -0x14, sp
-func_4840B575_entry:
+DspBootTestResult_entry:
     mov     0xb, d0
     mov     d0, (0xc, sp)
-    call    func_4840B433_entry, 0, 0x18
+    call    DspRegRead_entry, 0, 0x18
     mov     d0, (0x10, sp)
     mov     (0x10, sp), d0
     ret     0, 0x14
@@ -18672,40 +18668,40 @@ DspBootProbe_entry:
     add     0x10, a0
     clr     d0
     call    DspRecordInterpreter, [d2], 0x34
-    call    func_4840AE6D, 0, 0
+    call    DspReadyWaitOff, 0, 0
     mov     DspRecord_486EE510, a0
-    call    func_4840B545_entry, 0, 0x18
-    call    func_4840B575_entry, 0, 0x14
+    call    DspBootRunTestRecord_entry, 0, 0x18
+    call    DspBootTestResult_entry, 0, 0x14
     mov     d0, (0x14, sp)
     cmp     0, d0
     beq     loc_4840B5B9
     bra     loc_4840B624
 loc_4840B5B9:
     mov     DspRecord_486EE7C9, a0
-    call    func_4840B545_entry, 0, 0x18
-    call    func_4840B575_entry, 0, 0x14
+    call    DspBootRunTestRecord_entry, 0, 0x18
+    call    DspBootTestResult_entry, 0, 0x14
     mov     d0, (0x14, sp)
     cmp     0, d0
     beq     loc_4840B5D1
     bra     loc_4840B624
 loc_4840B5D1:
     mov     DspRecord_486EEA82, a0
-    call    func_4840B545_entry, 0, 0x18
-    call    func_4840B575_entry, 0, 0x14
+    call    DspBootRunTestRecord_entry, 0, 0x18
+    call    DspBootTestResult_entry, 0, 0x14
     mov     d0, (0x14, sp)
     cmp     0, d0
     beq     loc_4840B5E9
     bra     loc_4840B624
 loc_4840B5E9:
     mov     DspRecord_486EED3B, a0
-    call    func_4840B545_entry, 0, 0x18
-    call    func_4840B575_entry, 0, 0x14
+    call    DspBootRunTestRecord_entry, 0, 0x18
+    call    DspBootTestResult_entry, 0, 0x14
     mov     d0, (0x14, sp)
     cmp     0, d0
     beq     loc_4840B601
     bra     loc_4840B624
 loc_4840B601:
-    call    func_4840B10B_entry, 0, 0x1c
+    call    DspFullReinit, 0, 0x1c
     call    func_4840A180_entry, 0, 0x18
     mov     DspRecord_486EEFF4, d0
     mov     d0, (0x10, sp)
@@ -18713,11 +18709,11 @@ loc_4840B601:
     add     0x10, a0
     clr     d0
     call    DspRecordInterpreter, [d2], 0x34
-    call    func_4840AE62, 0, 0
+    call    DspReadyWaitOn, 0, 0
     clr     d0
     bra     loc_4840B646
 loc_4840B624:
-    call    func_4840B10B_entry, 0, 0x1c
+    call    DspFullReinit, 0, 0x1c
     call    func_4840A180_entry, 0, 0x18
     mov     DspRecord_486EEFF4, d0
     mov     d0, (0x10, sp)
@@ -18725,25 +18721,25 @@ loc_4840B624:
     add     0x10, a0
     clr     d0
     call    DspRecordInterpreter, [d2], 0x34
-    call    func_4840AE62, 0, 0
+    call    DspReadyWaitOn, 0, 0
     mov     -1, d0
 loc_4840B646:
     ret     0, 0x18
-
-func_4840B649:
+# StrapReadDelay  (CPU 0x4840b649)
+StrapReadDelay:
     ret     0, 0
-
-func_4840B64C:
+# StrapBit3Debounced  (CPU 0x4840b64c)
+StrapBit3Debounced:
     add     -0xc, sp
-func_4840B64C_entry:
-    movhu   (0x98070000), d0
+StrapBit3Debounced_entry:
+    movhu   (BOARD_STRAP), d0
     mov     3, d1
     exthu   d1
     lsr     d1, d0
     and     0x01, d0
     movbu   d0, (8, sp)
-    call    func_4840B649, 0, 0
-    movhu   (0x98070000), d1
+    call    StrapReadDelay, 0, 0
+    movhu   (BOARD_STRAP), d1
     mov     3, d0
     exthu   d0
     lsr     d0, d1
@@ -25806,7 +25802,7 @@ SndUnitSettingApplyFull_entry:
     mov     d1, (0x38, sp)
     mov     d1, (0x2c, sp)
     mov     d3, d0
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     0, d0
     bge     loc_484105C9
@@ -25840,7 +25836,7 @@ loc_484105E6:
     or      0x80, d1
     mov     d1, (0x20, sp)
     mov     d3, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     mov     d0, d1
     mov     (0x24, sp), d0
     exthu   d1
@@ -25852,10 +25848,10 @@ loc_48410614:
     ret     [d2,d3,a2,a3], 0x7c
 loc_48410617:
     mov     d3, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     mov     d0, d2
     mov     (0x20, sp), d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exthu   d2
     mov     d2, (0x34, sp)
     exth    d0
@@ -26254,7 +26250,7 @@ loc_48410962:
     mov     0xc, d1
     call    memset_entry, [a2], 4
     mov     a3, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     movhu   d0, (0x2e, sp)
     mov     a3, d0
     movbu   (0x29, sp), d1
@@ -26524,7 +26520,7 @@ loc_48410BA8:
     mov     0xc, d1
     call    memset_entry, [a2], 4
     mov     a2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     mov     d0, d2
     mov     a2, d0
     movbu   (0x29, sp), d1
@@ -26780,7 +26776,7 @@ loc_48410E01:
     mov     d0, (0x24, sp)
 loc_48410E04:
     mov     0x180, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     movhu   d0, (0x28, sp)
     exthu   d0
     cmp     0x7c, d0
@@ -26915,7 +26911,7 @@ SndSetupBroadcastOne_entry:
     cmp     0, d0
     beq     loc_48410F6B
     mov     0x180, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     mov     d0, d2
     mov     d2, d1
     exthu   d1
@@ -27074,7 +27070,7 @@ loc_4841103E:
 loc_4841104A:
     movbu   d2, (0x12, sp)
     mov     a2, a0
-    call    SndCmdStreamWrite_entry, [d2,d3,a2], 0x34
+    call    TgcBufWrite_entry, [d2,d3,a2], 0x34
     inc     d3
     mov     d3, d2
     extb    d3
@@ -27095,7 +27091,7 @@ loc_48411069:
 loc_48411071:
     movbu   d0, (0x12, sp)
     mov     a2, a0
-    call    SndCmdStreamWrite_entry, [d2,d3,a2], 0x34
+    call    TgcBufWrite_entry, [d2,d3,a2], 0x34
 loc_4841107C:
     inc     d2
     mov     d2, d0
@@ -27116,7 +27112,7 @@ loc_4841108B:
     movbu   d0, (0x12, sp)
     movbu   d3, (0x13, sp)
     mov     a2, a0
-    call    SndCmdStreamWrite_entry, [d2,d3,a2], 0x34
+    call    TgcBufWrite_entry, [d2,d3,a2], 0x34
     bra     loc_484110BC
 loc_484110A8:
     mov     0xc4, d0
@@ -27124,13 +27120,13 @@ loc_484110A8:
     movbu   d3, (0x14, sp)
     movbu   d2, (0x12, sp)
     mov     a2, a0
-    call    SndCmdStreamWrite_entry, [d2,d3,a2], 0x34
+    call    TgcBufWrite_entry, [d2,d3,a2], 0x34
 loc_484110BC:
     ret     [d2,d3,a2], 0x24
 # SndCmdEmitGlobalDepth  (CPU 0x484110bf)
 #   ★ a SOUND-COMMAND MESSAGE PRODUCER (d0 = selector, d1 = 0..0x63).
 #   Builds { len 3, status 0xF0, id, value } on the stack and hands it to
-#   the library stream writer SndCmdStreamWrite (0x4C003A50); the stream
+#   the library stream writer TgcBufWrite (0x4C003A50); the stream
 #   interpreter 0x4C003B1C decodes 0xFx + two data bytes as
 #   TgGlobalParamCommand(id, value).  value = d1 * 0x7F / 0x63.
 #     selector 1 -> id 0x33   (TgDrawbarGlobal82BFSet, chan 6 refresh)
@@ -27188,7 +27184,7 @@ loc_48411102:
     call    LibDiv32, 0, 0
     movbu   d0, (0x13, sp)
     mov     a2, a0
-    call    SndCmdStreamWrite_entry, [d2,d3,a2], 0x34
+    call    TgcBufWrite_entry, [d2,d3,a2], 0x34
 loc_48411128:
     ret     [d2,a2], 0x1c
 # SndSetupApplyMemoryPair  (CPU 0x4841112b)
@@ -27319,7 +27315,7 @@ loc_4841125E:
     mov     d1, d2
     exth    d2
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     movhu   d0, (0x24, sp)
     mov     d2, d0
     call    func_48412023_entry, [d2], 0x10
@@ -27472,7 +27468,7 @@ loc_484113BF:
     or      0x80, d2
     exthu   d2
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     mov     d2, d0
     call    func_48412023_entry, [d2], 0x10
     exth    d0
@@ -27586,7 +27582,7 @@ loc_484114C9:
     or      d1, d2
     or      0x80, d2
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     mov     d2, d0
     call    func_48412023_entry, [d2], 0x10
     mov     d0, d3
@@ -27619,7 +27615,7 @@ loc_484114C9:
     cmp     0, d0
     beq     loc_48411543
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exthu   d3
     mov     d3, (0x10, sp)
     mov     d0, d1
@@ -27946,7 +27942,7 @@ loc_48411813:
 loc_48411830:
     mov     sp, a2
     mov     a3, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     movhu   d0, (0x2a, sp)
     add     0x30, a2
     mov     a2, a0
@@ -28108,7 +28104,7 @@ loc_48411980:
     jmp     loc_48411AAB
 loc_484119A9:
     mov     (0x20, sp), d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     mov     d0, d2
     mov     sp, a0
     mov     a0, d0
@@ -28360,7 +28356,7 @@ SndRecTriFieldGet:
     add     -0x10, sp
 SndRecTriFieldGet_entry:
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     mov     d0, d1
     exthu   d1
     cmp     0, d1
@@ -28418,7 +28414,7 @@ loc_48411C00:
     bra     loc_48411C63
 loc_48411C25:
     mov     d2, d0
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exthu   d0
     cmp     8, d0
     beq     loc_48411C3E
@@ -28550,7 +28546,7 @@ SndRecByteFieldGetA:
 SndRecByteFieldGetA_entry:
     mov     d1, a2
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     mov     d0, d1
     exthu   d1
     cmp     1, d1
@@ -28600,7 +28596,7 @@ SndRecTriFieldGet2:
     add     -0x10, sp
 SndRecTriFieldGet2_entry:
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     mov     d0, d1
     exthu   d1
     cmp     0, d1
@@ -28649,7 +28645,7 @@ loc_48411DBE:
     ret     [d2], 0x14
 loc_48411DCD:
     mov     d2, d0
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exthu   d0
     cmp     8, d0
     beq     loc_48411DE6
@@ -28706,7 +28702,7 @@ SndRecByteFieldGetB:
 SndRecByteFieldGetB_entry:
     mov     a0, a2
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     mov     d0, d1
     exthu   d1
     cmp     1, d1
@@ -28746,7 +28742,7 @@ SndRecCountGet:
     add     -0x10, sp
 SndRecCountGet_entry:
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     mov     d0, d1
     exthu   d1
     cmp     0, d1
@@ -28801,7 +28797,7 @@ loc_48411EEB:
     ret     [d2], 0x14
 loc_48411EFD:
     mov     d2, d0
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exthu   d0
     cmp     8, d0
     beq     loc_48411F16
@@ -28860,7 +28856,7 @@ SndRecByteFieldGetC:
 SndRecByteFieldGetC_entry:
     mov     d1, d3
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     mov     d0, d1
     exthu   d1
     cmp     1, d1
@@ -28934,7 +28930,7 @@ func_48411FEA:
     movm    [d2], (sp)
     add     -0xc, sp
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     0, d0
     blt     loc_4841201E
@@ -28946,7 +28942,7 @@ func_48411FEA:
     jmp     (a0)
 loc_48412009:
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exth    d0
     asl2    d0
     mov     func_48411FEA_Table_2, a0
@@ -28963,7 +28959,7 @@ func_48412023:
     add     -0xc, sp
 func_48412023_entry:
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     0, d0
     blt     loc_48412058
@@ -28975,7 +28971,7 @@ func_48412023_entry:
     jmp     (a0)
 loc_48412042:
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exth    d0
     asl2    d0
     mov     func_48411FEA_Table_2, a0
@@ -28993,7 +28989,7 @@ func_4841205D:
     add     -0xc, sp
 func_4841205D_entry:
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     0, d0
     blt     loc_48412092
@@ -29005,7 +29001,7 @@ func_4841205D_entry:
     jmp     (a0)
 loc_4841207C:
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exth    d0
     asl2    d0
     mov     func_48411FEA_Table_2, a0
@@ -29023,7 +29019,7 @@ func_48412097:
     add     -0xc, sp
 func_48412097_entry:
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     0, d0
     blt     loc_484120CC
@@ -29035,7 +29031,7 @@ func_48412097_entry:
     jmp     (a0)
 loc_484120B6:
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exth    d0
     asl2    d0
     mov     func_48411FEA_Table_2, a0
@@ -29053,7 +29049,7 @@ func_484120D1:
     add     -0xc, sp
 func_484120D1_entry:
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     0, d0
     blt     loc_48412106
@@ -29065,7 +29061,7 @@ func_484120D1_entry:
     jmp     (a0)
 loc_484120F0:
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exth    d0
     asl2    d0
     mov     func_48411FEA_Table_2, a0
@@ -29083,7 +29079,7 @@ func_4841210B:
     add     -0xc, sp
 func_4841210B_entry:
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     0, d0
     blt     loc_48412140
@@ -29095,7 +29091,7 @@ func_4841210B_entry:
     jmp     (a0)
 loc_4841212A:
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exth    d0
     asl2    d0
     mov     func_48411FEA_Table_2, a0
@@ -29107,13 +29103,13 @@ loc_48412140:
     mov     -1, d0
 loc_48412142:
     ret     [d2], 0x10
-
-func_48412145:
+# DspPresetEffectTypeGet  (CPU 0x48412145)
+DspPresetEffectTypeGet:
     movm    [d2], (sp)
     add     -0x10, sp
-func_48412145_entry:
+DspPresetEffectTypeGet_entry:
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     mov     d0, d1
     exthu   d1
     cmp     0, d1
@@ -29168,7 +29164,7 @@ loc_484121B0:
     ret     [d2], 0x14
 loc_484121C2:
     mov     d2, d0
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exthu   d0
     cmp     8, d0
     beq     loc_484121DB
@@ -29227,7 +29223,7 @@ func_4841222C:
 func_4841222C_entry:
     mov     d1, d3
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     mov     d0, d1
     exthu   d1
     cmp     1, d1
@@ -29268,7 +29264,7 @@ func_48412274:
 func_48412274_entry:
     movbu   d1, (0x24, sp)
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     mov     d0, d1
     exthu   d1
     cmp     0, d1
@@ -29335,7 +29331,7 @@ loc_484122F3:
     ret     [d2,d3], 0x18
 loc_4841230A:
     mov     d2, d0
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exthu   d0
     cmp     8, d0
     beq     loc_48412323
@@ -29614,7 +29610,7 @@ func_48412513:
 func_48412513_entry:
     mov     d1, d3
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     0, d0
     blt     loc_48412553
@@ -29626,7 +29622,7 @@ func_48412513_entry:
     jmp     (a0)
 loc_48412533:
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exth    d0
     asl2    d0
     mov     func_48411FEA_Table_2, a0
@@ -29651,7 +29647,7 @@ func_48412558:
 func_48412558_entry:
     mov     d1, d3
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     0, d0
     blt     loc_48412599
@@ -29663,7 +29659,7 @@ func_48412558_entry:
     jmp     (a0)
 loc_48412578:
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exth    d0
     asl2    d0
     mov     func_48411FEA_Table_2, a0
@@ -29688,7 +29684,7 @@ func_4841259E:
 func_4841259E_entry:
     mov     d1, d3
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     0, d0
     blt     loc_484125DF
@@ -29700,7 +29696,7 @@ func_4841259E_entry:
     jmp     (a0)
 loc_484125BE:
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exth    d0
     asl2    d0
     mov     func_48411FEA_Table_2, a0
@@ -29725,7 +29721,7 @@ func_484125E4:
 func_484125E4_entry:
     mov     d1, d3
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     0, d0
     blt     loc_48412625
@@ -29737,7 +29733,7 @@ func_484125E4_entry:
     jmp     (a0)
 loc_48412604:
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exth    d0
     asl2    d0
     mov     func_48411FEA_Table_2, a0
@@ -29762,7 +29758,7 @@ func_4841262A:
 func_4841262A_entry:
     mov     d1, d3
     mov     d0, a2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     0, d0
     bge     loc_4841263F
@@ -29803,7 +29799,7 @@ loc_48412676:
     cmp     -1, d1
     bne     loc_484126A6
     mov     a2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exth    d0
     asl2    d0
     mov     (d0, a3), a0
@@ -29825,7 +29821,7 @@ loc_484126A6:
     cmp     d0, d1
     bne     loc_484126CD
     mov     a2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exth    d0
     asl2    d0
     mov     (d0, a3), a0
@@ -29865,7 +29861,7 @@ func_484126E5:
 func_484126E5_entry:
     mov     d1, d3
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     0, d0
     blt     loc_48412727
@@ -29877,7 +29873,7 @@ func_484126E5_entry:
     jmp     (a0)
 loc_48412705:
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exth    d0
     asl2    d0
     mov     func_48411FEA_Table_2, a0
@@ -29903,7 +29899,7 @@ func_4841272C:
 func_4841272C_entry:
     mov     d1, d3
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     0, d0
     blt     loc_4841276E
@@ -29915,7 +29911,7 @@ func_4841272C_entry:
     jmp     (a0)
 loc_4841274C:
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exth    d0
     asl2    d0
     mov     func_48411FEA_Table_2, a0
@@ -29941,7 +29937,7 @@ func_48412773:
 func_48412773_entry:
     mov     d1, d3
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     0, d0
     blt     loc_484127B5
@@ -29953,7 +29949,7 @@ func_48412773_entry:
     jmp     (a0)
 loc_48412793:
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exth    d0
     asl2    d0
     mov     func_48411FEA_Table_2, a0
@@ -29979,7 +29975,7 @@ func_484127BA:
 func_484127BA_entry:
     mov     d1, d3
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     0, d0
     blt     loc_484127FB
@@ -29991,7 +29987,7 @@ func_484127BA_entry:
     jmp     (a0)
 loc_484127DA:
     mov     d2, d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     exth    d0
     asl2    d0
     mov     func_48411FEA_Table_2, a0
@@ -30016,7 +30012,7 @@ func_48412800:
 func_48412800_entry:
     mov     d1, d3
     mov     d0, d2
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     mov     d0, d1
     exthu   d1
     cmp     1, d1
@@ -30063,7 +30059,7 @@ func_48412853:
 func_48412853_entry:
     mov     d1, (0x30, sp)
     mov     d0, a3
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exth    d0
     cmp     1, d0
     bge     loc_48412869
@@ -30093,7 +30089,7 @@ loc_4841287D:
     mov     a2, a1
     call    memcpy_entry, [a2,a3], 8
     mov     (0x30, sp), d0
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     mov     d0, d1
     mov     a3, d0
     exth    d1
@@ -30483,8 +30479,8 @@ loc_48412B91:
     mov     -1, d0
 loc_48412B93:
     retf    0, 0
-
-func_48412B96:
+# DspPresetKeyKind  (CPU 0x48412b96)
+DspPresetKeyKind:
     and     0xff, d0
     mov     d0, d1
     extbu   d1
@@ -30776,7 +30772,7 @@ func_48412DB6_entry:
     asl     8, d0
     or      0x80, d0
     mov     d0, a3
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     mov     d0, d1
     exthu   d1
     cmp     0, d1
@@ -30901,7 +30897,7 @@ loc_48412EA7:
     ret     [d2,d3,a2,a3], 0x20
 loc_48412EAB:
     mov     a3, d0
-    call    func_48412B96, 0, 0
+    call    DspPresetKeyKind, 0, 0
     exthu   d0
     cmp     8, d0
     beq     loc_48412EC5
@@ -32989,7 +32985,7 @@ func_48413F93:
     add     -0xc, sp
 func_48413F93_entry:
     mov     d1, d2
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     mov     d0, d1
     exthu   d1
     cmp     0x10, d1
@@ -33052,7 +33048,7 @@ func_48413FF6:
     add     -0xc, sp
 func_48413FF6_entry:
     mov     d1, d2
-    call    func_48412145_entry, [d2], 0x14
+    call    DspPresetEffectTypeGet_entry, [d2], 0x14
     mov     d0, d1
     exthu   d1
     cmp     0x52, d1
@@ -34296,7 +34292,7 @@ loc_48414CE8:
     add     d0, d1
     add     d1, d1
     mov     d1, a0
-    add     0x9ce00000, a0
+    add     LCDC_VRAM, a0
     mov     0x280, d1
     nop
     nop
@@ -34408,7 +34404,7 @@ loc_48414DC5:
     mov     d1, d0
     add     d1, d0
     mov     d0, a3
-    add     0x9ce00000, a3
+    add     LCDC_VRAM, a3
     cmp     0xf0, d3
     blt     loc_48414E1F
     jmp     loc_48414EF1
@@ -34542,7 +34538,7 @@ loc_48414F14:
     mul     d2, d0
     add     d1, d0
     add     d0, d0
-    add     0x9ce00000, d0
+    add     LCDC_VRAM, d0
     mov     0x280, d1
     nop
     nop
@@ -34615,7 +34611,7 @@ loc_48414FD1:
 loc_48414FDE:
     ret     [d2,d3,a2,a3], 0x3c
 loc_48414FE1:
-    mov     0x9ce00000, d0
+    mov     LCDC_VRAM, d0
     mov     d0, (0x14, sp)
     clr     d0
     mov     d0, (0x18, sp)
@@ -34830,7 +34826,7 @@ loc_4841514A:
     add     d0, d0
     mov     d0, a1
     movhu   (a0), d0
-    add     0x9ce00000, a1
+    add     LCDC_VRAM, a1
     exth    d0
     cmp     d0, a3
     bgt     loc_484151E4
@@ -34981,7 +34977,7 @@ loc_48415264:
     add     d0, d0
     mov     d0, a3
     movhu   (a0), d0
-    add     0x9ce00000, a3
+    add     LCDC_VRAM, a3
     exth    d0
     cmp     d0, d1
     ble     loc_484152B0
@@ -35155,7 +35151,7 @@ loc_484153DF:
     add     d2, d0
     add     d1, d0
     add     d0, d0
-    add     0x9ce00000, d0
+    add     LCDC_VRAM, d0
     add     d0, a0
     movhu   (a2), d0
     mov     a0, (0x44, sp)
@@ -35291,7 +35287,7 @@ loc_484154CF:
     mul     d2, d0
     add     d1, d0
     add     d0, d0
-    add     0x9ce00000, d0
+    add     LCDC_VRAM, d0
     mov     d0, (0x20, sp)
     mov     (0x24, sp), d0
     mov     0x280, d1
@@ -35576,7 +35572,7 @@ loc_4841576F:
     mul     d1, d0
     add     d0, d0
     mov     d0, a0
-    add     0x9ce00000, a0
+    add     LCDC_VRAM, a0
     mov     0, a1
     setlb
     movhu   (a0), d3
@@ -36067,7 +36063,7 @@ loc_48415BD1:
     mul     d3, d0
     add     d2, d0
     add     d0, d0
-    add     0x9ce00000, d0
+    add     LCDC_VRAM, d0
     mov     0x500, a2
     add     d0, a2
     movhu   (0x34, sp), d0
@@ -36889,7 +36885,7 @@ MainGetEffName:
 loc_484162DA:
     mov     (0x1c, sp), d0
     extbu   d0
-    call    func_4C021244_entry, [d2,d3], 8
+    call    PartDspUnitFind_entry, [d2,d3], 8
     exth    d0
     bra     loc_484162EB
 loc_484162E7:

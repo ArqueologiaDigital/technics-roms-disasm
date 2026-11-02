@@ -32640,7 +32640,7 @@ loc_48481DA6:
     movbu   d0, (0x134, sp)
 loc_48481DAD:
     mov     a2, a0
-    call    SndCmdStreamWrite_entry, [d2,d3,a2], 0x34
+    call    TgcBufWrite_entry, [d2,d3,a2], 0x34
     inc     d2
     mov     d2, d0
     extbu   d2
@@ -32729,7 +32729,7 @@ loc_48481E5D:
 loc_48481E62:
     movbu   d0, (0xe, sp)
     mov     a2, a0
-    call    SndCmdStreamWrite_entry, [d2,d3,a2], 0x34
+    call    TgcBufWrite_entry, [d2,d3,a2], 0x34
     inc     d2
     mov     d2, d0
     extbu   d2

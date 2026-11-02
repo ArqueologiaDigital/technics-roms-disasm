@@ -1611,7 +1611,7 @@ func_4848399E_entry:
 loc_484839B3:
     mov     0x00008000, d0
     movhu   d0, (0x10, sp)
-    movhu   d0, (0x98050006)
+    movhu   d0, (TGA_KEY_FIFO+2)
     mov     1, d0
     call    dly_tsk_entry, [d2,a2], 0x18
     mov     0x00008000, d0
@@ -1624,7 +1624,7 @@ loc_484839DE:
     movhu   (0x10, sp), d1
     movhu   (0x14, sp), d0
     or      d0, d1
-    movhu   d1, (0x98050006)
+    movhu   d1, (TGA_KEY_FIFO+2)
     movbu   (0x30, sp), d0
     extbu   d0
     movhu   d0, (0x16, sp)
@@ -1668,7 +1668,7 @@ loc_48483A3B:
 loc_48483A49:
     clr     d0
     movhu   d0, (0x10, sp)
-    movhu   d0, (0x98050006)
+    movhu   d0, (TGA_KEY_FIFO+2)
     mov     1, d0
     call    dly_tsk_entry, [d2,a2], 0x18
     jmp     loc_48483B08
@@ -15706,8 +15706,8 @@ loc_4848BC88:
 loc_4848BC96:
     mov     d2, d0
     ret     [d2,d3,a2,a3], 0x28
-
-func_4848BC9A:
+# PartEqFcText  (CPU 0x4848bc9a)
+PartEqFcText:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
     mov     (0x3c, sp), a0
@@ -15765,8 +15765,8 @@ loc_4848BD0B:
 loc_4848BD1C:
     mov     (0x18, sp), d0
     ret     [d2,d3,a2,a3], 0x2c
-
-func_4848BD21:
+# PartEqGainText  (CPU 0x4848bd21)
+PartEqGainText:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
     mov     (0x3c, sp), a0
@@ -29403,7 +29403,7 @@ loc_48494360:
     mov     5, a0
     add     a2, a0
     call    func_484343D4_entry, 0, 0x10
-    call    func_4843440A, 0, 0
+    call    PadCurLoopGet, 0, 0
     clr     d2
     extbu   d0
     cmp     d2, d0
@@ -29413,7 +29413,7 @@ loc_48494360:
     call    strcat_entry, [a2], 4
     mov     1, d2
 loc_484943AA:
-    call    func_48434424, 0, 0
+    call    PadCurFlag2Get, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_484943E8
@@ -29608,7 +29608,7 @@ loc_484945DC:
     extbu   d1
     call    func_4843752C_entry, [d2,d3], 0x14
     mov     a3, a0
-    call    func_48434591_entry, [d2,a2,a3], 0x20
+    call    PadNameGet_entry, [d2,a2,a3], 0x20
     exth    d0
     cmp     0, d0
     bge     loc_48494600

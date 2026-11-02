@@ -57,13 +57,15 @@ Font 5 is proportional: its kern table, typed in the source, holds {u8 advance w
 offset of the glyph} per character from 0x20. The offsets are contiguous, and each glyph's column
 count is its offset step over the height. The PNG lists those column counts in its format string.
 
-The USER HP pictures are drawn in a box that `GetBox` takes from the item's view (the 12-byte rows of
-0x485F921C: view ID, item). The box sizes are in the view resources, which were not traced.
-`[INFERENCE]` The row lengths in `table_segments.PNG_GROUPS` were chosen as heights that are a
-multiple of the 13-pixel text line, with the row length whose rows repeat most. They were checked by
-eye: all 47 show coherent panels (bank lists, mixer strips, "PICTURE", tempo and chord boxes). Slot
-47 was set by hand to 40 bytes, because at 80 it shows two half-panels side by side. Any row length
-gives the same bytes back, so this only affects how the PNG looks.
+The USER HP pictures are half-size previews of the HOME PAGE parts. For part k, AcHpPreviewProc takes
+the view `TtNormal_Table[k].view` (0x485F921C); func_48493ECC does GetBox(view) and moves both corners
+together, func_484968E2 halves all four corners and adds the preview's client-box origin, and
+func_48496B28 draws item k with W = x2 - x1 + 1, H = y2 - y1 + 1 (DrawBitmapSPFast4, rows of (W + 3) / 4
+bytes). So a picture is ceil(W/2) x ceil(H/2) of its view (320 x 14 for a 640 x 28 title bar).
+`notes/mn10300-names-probes/ramgui_userhp_boxes.py` checks this against every item's size: 47 of 49 parts
+match exactly; parts 12 / 14 (HppVol7, 160 x 39) share one picture followed by 2 bytes `00 00`. The
+PNG_GROUPS row lengths (slot 47's 40 included) and every PNG size already equal these values; they are
+no longer an inference (lane mn10300-names, 2026-11-02).
 
 ## The style data: `tools/gen_table_styles.py`
 
@@ -88,9 +90,20 @@ checks the 16-byte name and reads the u24BE offsets at +0x18 (the count block, w
 0x50034C30). `func_4843443E` looks a pad up: an index entry below the count is pad n, and
 0x8000 + n sends the lookup to entry n. The index has 1024 entries, folded by `func_48434591` as
 `((id & 0x0700) >> 1) | (id & 0x7F)`. A pad is a 16-byte name, then 6 bytes `pad_head` (bars - 1,
-beats - 1, then four bytes with no reader traced), two 15-byte part set-ups (`style_part`), a u24BE
-stream length and the stream. The 120 pads tile the segment. Five bytes follow the last one,
-`00 6C 00 00 00`, which nothing reads; they are a commented `.byte` row.
+beats - 1, a flags byte, three bytes no routine reads), two 15-byte part set-ups (`style_part`), a
+u24BE stream length and the stream. The flags byte (+0x12) is read by `func_48434096` into
+0x50122E06 and by `func_48434239` (by pad ID); its user-pad twin is the TPAD record's +0x1A, whose
+setters name two bits: bit 0 LOOP (`MainPAD_SetUserPadLoop` -> `func_484324E7`), bit 1 SYNCHRO
+(`MainPAD_SetUserPadSync` -> `func_4843248B`). Bit 2 is set on the 40 "... Maj" / "... Min" pads and
+bit 3 on the 20 "Min" ones only; `RhyNoteOnVoice` and `PadRecPtChdGrid` test bit 2. `[INFERENCE]` bit 2
+a fixed-chord pad, bit 3 minor. +0x13..+0x15 are `00 00 FF` in all 120 pads; neither the binders
+(`func_48433FE8` / `func_48434096`, `func_48434239`), the name getter `func_48434591` nor the copy into
+a user pad (`func_48431D21`, which takes +0x10..+0x12 and the set-ups) reads them. The 120 pads tile
+the segment but for one byte, `00`: every one of the 84 directory offsets is a multiple of 4, and
+that byte takes segment 5 from 0x5667B to 0x5667C, so it is alignment fill (the source now says
+`.align 4, 0x00`). (Corrected 2026-11-02: this paragraph used to give the fill as five bytes,
+`00 6C 00 00 00`; the last four are segment 5's first word. `notes/mn10300-names-probes/
+songtable_pad_fields.py`.)
 
 **'TCMP', segment 2** (`notes/tcmp-container-synthesis.md`, the TCMP section of
 `kn7000_manual.sym`) has the following parts:
@@ -101,15 +114,28 @@ stream length and the stream. The 120 pads tile the segment. Five bytes follow t
   indices and the two sound-unit keys (`style_units`, at +0x70 as in the Technics Rhythms record's
   +0x0D);
 - 60 variation records of 0xE0 bytes: a 0x20-byte head (bars - 1 and beats - 1 at +0x10, and the
-  stream's offset at +0x15 as a label difference), then eight 0x18-byte part blocks. A part block is
-  `style_part` plus `part_more`, the nine further fields of the part-field table 0x485B77D4.
-  `[INFERENCE]` The order of `part_more`'s names;
+  stream's offset at +0x15 as a label difference), then eight 0x18-byte part blocks. Readers found
+  for the head (2026-11-02): +0x00..+0x02 the source pattern, the style-ID index entry of the
+  preset it was copied from in two 7-bit halves (`func_4843B5DB` / `func_4843B8D7` write it,
+  `func_4843511C` reads it); +0x03 RECORD KEY / CHORD, bits 0-3 the key and bit 4 Min
+  (`MainCMP_SetCmpRecordChord` -> `func_4843C186`; `func_4843C149` forces bit 4 from the A/B parity
+  in slots 12-19, so the B intros and endings are the minor ones); +0x18 / +0x19 EFFECT PART 1 / 2,
+  0xFF none (`MainCMP_SetCmpEffectPart` -> `func_4843C10D`, read by `func_4843C0ED`). No reader was
+  found for +0x0C..+0x0F, +0x12..+0x14 and +0x1A..+0x1F (zero in all 60 records). A part block is
+  `style_part` plus `part_more`: nine bytes that nothing reads or writes. `StyleRecordBindMem` points
+  0x50034BAC[] at the blocks and `func_4844187A` copies only 15 bytes of each into the part template
+  0x5003A37C, and `func_48441EB4` writes 15; all 40,640 blocks of the 250 TCMP containers in tables
+  84/83 and the IC21 images hold zeros there (`songtable_part_more.py`). So no order can be read from
+  the firmware: the macro's field names (the table's fields 15-23) stay `[INFERENCE]`;
 - the heap: per variation its index, a u24BE length and the events.
 
 **'TPAD', segment 3** is read by its likeness to TCMP. The header has the same shape. Five bank
 records of 0x30 bytes follow, each a name and six 3-byte references (`tpad_ref`). Then come 18 pad
 records of 0x60 bytes: a name, two bytes `[INFERENCE: the pad's ID]`, two flag bytes, bars - 1,
-beats - 1, a kind byte, the heap offset, two part blocks and 8 bytes. The heap has the TCMP item
+beats - 1, a kind byte, the heap offset, two part blocks and 8 bytes (2026-11-02: +0x10 / +0x11 are
+the ID of the built-in pad the record was copied from, `ID & 0x7F` and `ID >> 7`, and +0x12 is
+cleared, by `func_48431D21`; +0x13 is RECORD KEY / CHORD as in TCMP's +0x03, `func_484325B4`; the
+"kind" at +0x1A is the flags byte of `pad_head`; +0x14 / +0x15 have no reader found). The heap has the TCMP item
 shape. The header's checksum covers the three user banks and the pad records, 0xD0..0x820. That is
 measured, not inferred: SumU16BE gives 0xE13D, the stored value.
 
@@ -125,11 +151,36 @@ TPAD streams, are followed by their data as `.byte`.
 (`'ZZZJ', 0, 'K', 0, 0xDC`). It then copies records lo..hi (0x18 bytes each, from +0x10) over the
 battery-SRAM table 0x84030FF8. Bit 7 of a record's first byte is a flag: `func_4843FCE6` sets or
 clears it and `func_4843FCA2` tests it, for the record `func_4843FACD` picks from GetM3EmVal(0xC000).
-`[INFERENCE]` A record is eight {prog, bank_lsb, bank_msb} entries (`zzzj_voice`). The probe shows
-bank_msb 0x26 in entries 0 and 1 of all 220 records, and 0x20 elsewhere in 217-220 of them, the
-drum/melodic pattern of `style_part`'s program bytes. 220 is the rhythm count. Matching a record
-against a style's eight part programs found no exact match for any of the 52 table styles, so what
-the records configure (per rhythm or not) is open.
+They are the **SOUND ARRANGER**'s factory settings (traced 2026-11-02, `notes/mn10300-names-probes/
+songtable_zzzj.py`). The help text (table 0x391F04, 0x392130) says "There are some preset settings
+already in the Sound Arranger ... Turn Sound Arranger off to return to the factory settings".
+
+- **Records.** `func_4843FACD` (StyleIdToPresetOrdinal) turns a rhythm id into a number: the counts
+  (+0x11) of the GenreStyleTable genres before its own plus its index (ResolveStyleId); it returns -1
+  for ids with bits 0x700000 (CUSTOM, MEMORY, composer). Genres 0..13 hold 10 + 16 + ... + 26 = 220
+  rhythms, so record n is preset rhythm n (8Bt Standard, 8 Beat Rock, ...). The SRAM block is
+  0x84030FE8: the 8-byte signature, then the records at +0x10. The u16BE at +6 is the record count:
+  `func_48440158` reloads the factory records from that count up to 219 when the SRAM copy is older
+  ('ZZZI', or fewer than 220), then writes the signature.
+- **Entries.** Eight {program, bank LSB, bank MSB}, one per accompaniment part in the order Drum,
+  Perc, Bass, Acc1..Acc5. `func_4843FB49` maps M3 parts 0x13..0x1A to entries 3, 4, 5, 6, 7, 2, 0, 1
+  (table 0x485B73A0), `func_4843FFD0` style parts 0..7 (Drum, Bass, Acc1-5, Perc) to entries 0, 2, 3,
+  4, 5, 6, 7, 1 (0x485B7396). The fall-back record 0x485B737E is a plain set: kit, kit, bass 33,
+  piano 0, strings 48, flute 73, pad 88, guitar 25 (GM numbering, `[INFERENCE]`).
+- **Bit 7.** Of entry 0's program byte: the arranger is ON for that rhythm (`func_4843FCE6` sets it,
+  `func_4843FCA2` tests it; on a rhythm change `func_48435ED4` publishes it as M3 id 0x0000B0, source
+  7). It is 0 in all 220 factory records. Of entries 2..7: that part's CC94 is 127 instead of 0.
+  `func_4843FECE` takes it from the part's 0x00B0005E, `func_4843FFD0` writes it into field 5 (CC94)
+  of the part template. Entry 1's bit 7 is cleared on every write. 44 entries have it.
+- **Use.** On a rhythm change `func_4843FFA4` returns the record number when the arranger is ON, else
+  -1 (0x5003A472). `func_48441DEB` then overwrites the eight part templates' program bytes and CC94
+  with the record's (`func_4843FFD0`). `TtSndArg` / `MainSNDARG_SetSndaParaCur` (`func_4843FEAF`,
+  `func_4843FF83`) read and write the current rhythm's record. `func_4844003A` imports a 'ZZZ' file of
+  five entries a record from a file read at offset 0x5800 / 0x640 / 0x6A0 (`func_48437D57`).
+  `[INFERENCE]` That file is another model's.
+
+Matching a record against a style's own eight part programs found no match (2026-10-29). That fits:
+the records are the replacements, not the style's sounds.
 
 ## Table 83's plug-in and BASEEXT.XAP
 
@@ -296,11 +347,20 @@ from table 83's assembled image, so they carry table 83's remaining generic byte
 
 - The 'JK' voice archive's records (the largest item left). (Resolved: ab0004a09..dd05c95d3, 0a47d3bdc, section "The 'JK' internal voice archive" above; open-items register 2026-10-31.)
 - ~~The plug-in's widget/descriptor tables (table 83, about 46 KB).~~ Typed 2026-10-30 (`data-final/README.md`).
-- 'ZZZJ': what the 220 records and their eight entries select.
-- The USER HP pictures' true box sizes (the view resources behind `GetBox`).
-- Pad bytes +0x12..+0x15 (`pad_head`'s `kind`, b13-b15), the TPAD record bytes +0x10..+0x15, and the
-  TCMP variation head's undocumented bytes: no reader traced.
-- The order of `part_more`'s nine fields within the part-field table.
+- ~~'ZZZJ': what the 220 records and their eight entries select.~~ The SOUND ARRANGER's factory
+  settings, one record per preset rhythm and one entry per accompaniment part (section "'ZZZJ',
+  segment 1", 2026-11-02).
+- ~~The USER HP pictures' true box sizes (the view resources behind `GetBox`).~~ (Resolved 2026-11-02:
+  half the view's size; `notes/mn10300-names-probes/ramgui_userhp_boxes.py`.)
+- Pad bytes +0x12..+0x15, TPAD +0x10..+0x15, the TCMP variation head (2026-11-02, sections above):
+  pad +0x12 is the flags byte (LOOP, SYNCHRO named; bits 2 / 3 `[INFERENCE]` chord pad / minor);
+  TPAD +0x10/+0x11 the source pad's ID, +0x13 RECORD KEY/CHORD; TCMP +0x00..+0x03 the source pattern
+  and RECORD KEY/CHORD, +0x18/+0x19 EFFECT PART 1/2. Still no reader for pad +0x13..+0x15, TPAD
+  +0x14/+0x15 and TCMP +0x0C..+0x0F, +0x12..+0x14, +0x1A..+0x1F: next step a write-watch on those
+  bytes of the MEMORY area in MAME while editing a pad or composer pattern.
+- ~~The order of `part_more`'s nine fields within the part-field table.~~ Nothing reads or writes
+  them (section 'TCMP' above): the order cannot be confirmed from the program, and the bytes are zero
+  in every container.
 
 ## Website page draft
 
@@ -324,7 +384,8 @@ from table 83's assembled image, so they carry table 83's remaining generic byte
 >   PERFORMANCE PAD user memory ('TPAD': banks, 18 pads).
 > - **MEMORY styles**: the factory 'TCMP' container with three styles (Easy 8 Beat, Easy 16 Beat,
 >   Easy Swing).
-> - **'ZZZJ'**: 220 battery-SRAM default records of eight program selections each.
+> - **'ZZZJ'**: the SOUND ARRANGER's factory settings: for each of the 220 preset rhythms, the sound
+>   it gives each of the eight accompaniment parts (Drum, Perc, Bass, Acc1-5), copied to battery SRAM.
 > - **Still opaque**: the 'JK' internal voice archive (0.8 MB), the voices' parameter records.
 >
 > `make -C kn7000 verify verify-sp7001 verify-table80` rebuilds tables 84, 83 and 80 byte for

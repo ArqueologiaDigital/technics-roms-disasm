@@ -5070,9 +5070,7 @@ Str_ZZ_2:	.asciz "ZZ"
 
 PanelMemory_484064FC:
 # panel memory "": 43 records
-	PMR_NAME_HEAD
-	.ascii	"                "
-	PMR_NAME_TAIL	0, 0
+	PMR_NAME	"                ", 0, 0
 	PMR_PART	0x10, 0, 1, 32, 127, 53, 249, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	PMR_PART	0x11, 61, 0, 32, 127, 53, 249, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 80, 64, 128, 2, 64, 0, 0, 0, 0, 0, 119, 88, 36, 1, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 23, 0, 35, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	PMR_PART	0x12, 5, 0, 32, 94, 101, 8, 2, 0, 0, 0, 0, 0, 80, 80, 40, 128, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 48, 64, 128, 2, 64, 0, 0, 0, 0, 0, 128, 96, 52, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 6, 0, 35, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -8875,7 +8873,7 @@ func_50173BF4_entry_L54_Records:	# 32 x REC_func_50173BF4_entry_L54_Records (8 b
 	REC_func_50173BF4_entry_L54_Records	key=57246, proc=loc_50173DF8
 	REC_func_50173BF4_entry_L54_Records	key=57247, proc=loc_50173DF8
 
-func_50173EDC_Table:	# 44 x u8, 0..255; read by func_50173EDC : `movbu	(d0, a0), d0`; func_50173F49_entry : `movbu	(d0, a0), d0`
+func_50173EDC_Table:	# 44 x u8, 0..255; read by ChordTypeIsMinor : `movbu	(d0, a0), d0`; NoteConvApply_entry : `movbu	(d0, a0), d0`
 	tab_u8	0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1	# [16]
 	tab_u8	0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 255, 255	# [32]
@@ -8966,13 +8964,13 @@ Str_ZZZJ:	.asciz "ZZZJ"
 # census: opaque -- unknown-dump: 9 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00CE3B, 0x00CE44
 
-func_5017CFB1_entry_L9a_Block:	# 24 bytes, copied whole by func_5017CFB1_entry_L9a 0x5017D050: memcpy(.., 24); func_5017CFB1_entry_Lc8 0x5017D07E: memcpy(.., 24); func_5017D490_entry_L5c 0x5017D4F1: memcpy(.., 24)
+func_5017CFB1_entry_L9a_Block:	# 24 bytes, copied whole by func_5017CFB1_entry_L9a 0x5017D050: memcpy(.., 24); func_5017CFB1_entry_Lc8 0x5017D07E: memcpy(.., 24); SndArgImportZZZ_entry_L5c 0x5017D4F1: memcpy(.., 24)
 	tab_u8	0, 0, 38, 0, 0, 38, 33, 0, 32, 0, 0, 32, 48, 0, 32, 73	# [0]
 	tab_u8	0, 32, 88, 0, 32, 25, 0, 32	# [16]
 
-func_5017D426_Table:	# 8 x u8, 0..7; read by func_5017D426_entry : `movbu	(d1, a1), d0`; func_5017D490_entry : `movbu	(d0, a0), d0`
+func_5017D426_Table:	# 8 x u8, 0..7; read by SndArgImportZZZ_entry : `movbu	(d0, a0), d0`; SndArgTemplateApply_entry : `movbu	(d1, a1), d0`
 	tab_u8	0, 2, 3, 4, 5, 6, 7, 1
-func_5017CF95_Ld_Table:	# 19 x u32, 0..55116105; read by func_5017CF95_Ld 0x5017CFA2: `mov	(-0x4c, a0), d0`
+func_5017CF95_Ld_Table:	# 19 x u32, 0..55116105; read by SndArgPartEntry_Ld 0x5017CFA2: `mov	(-0x4c, a0), d0`
 	tab_u32	3, 4, 5, 6, 7, 2, 0, 1	# [0]
 	tab_u32	35520798, 35586335, 36569390, 38011204, 54723396, 36372779, 55116105, 38142537	# [8]
 	tab_u32	36438316, 35848740, 52757284	# [16]
@@ -9004,7 +9002,7 @@ func_5017D625_entry_L27_Records:	# 8 x REC_func_5017D625_entry_L27_Records (48 b
 	REC_func_5017D625_entry_L27_Records	2097164, 2097164, 2097164, 2097164, 2097165, 2097165, 2097165, 2097165, 2097166, 2097166, 2097166, 2097166
 	REC_func_5017D625_entry_L27_Records	2097167, 2097167, 2097167, 2097167, 2097168, 2097168, 2097168, 2097168, 2097169, 2097169, 2097169, 2097169
 	REC_func_5017D625_entry_L27_Records	2097170, 2097170, 2097170, 2097170, 2097171, 2097171, 2097171, 2097171, 2097152, 2097152, 2097152, 2097152
-func_5017DCBF_Table:	# 26 x REC_func_5017DCBF_Table (2 bytes each); read by func_5017DAC4 0x5017DAC4 `movbu (1, a0), d3`; func_5017DCBF 0x5017DCBF `movbu (d0, a2), d1`; func_4860A351 0x4860A351 `call func_4860ABA6_entry, [d2], 0x18` (+6)
+func_5017DCBF_Table:	# 26 x REC_func_5017DCBF_Table (2 bytes each); read by PartFieldCcSend 0x5017DAC4 `movbu (1, a0), d3`; StylePartFieldEmit 0x5017DCBF `movbu (d0, a2), d1`; func_4860A351 0x4860A351 `call func_4860ABA6_entry, [d2], 0x18` (+6)
 	REC_func_5017DCBF_Table	kind=176, f1=255	# [0]
 	REC_func_5017DCBF_Table	kind=176, f1=7
 	REC_func_5017DCBF_Table	kind=192
@@ -9032,7 +9030,7 @@ func_5017DCBF_Table:	# 26 x REC_func_5017DCBF_Table (2 bytes each); read by func
 	REC_func_5017DCBF_Table	kind=176, f1=71	# [24]
 	REC_func_5017DCBF_Table	kind=176, f1=74
 
-func_5017DCBF_entry_L48_Table:	# REC_func_5017DABB_Result (21 bytes), then 133 x u8 the code indexes from +0 (read by func_5017DCBF_entry_L48 0x5017DD0C `movbu (d3, a1), d3`; func_5017DCBF_entry_L5d 0x5017DD21 `movbu (d3, a1), d2`)
+func_5017DCBF_entry_L48_Table:	# REC_func_5017DABB_Result (21 bytes), then 133 x u8 the code indexes from +0 (read by StylePartFieldEmit_entry_L48 0x5017DD0C `movbu (d3, a1), d3`; StylePartFieldEmit_entry_L5d 0x5017DD21 `movbu (d3, a1), d2`)
 	REC_func_5017DABB_Result	s0="\xFF\xFF", key=255, f3=255, f4=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", f20=64
 	tab_u8	64, 64, 64, 64, 64, 255, 16, 255, 255, 255, 255, 255, 1, 255, 255, 8	# [0]
 	tab_u8	17, 255, 23, 255, 255, 21, 22, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [16]
@@ -11766,7 +11764,7 @@ Str_MD_1e:	.asciz "_MD_1e"
 # census: opaque -- unknown-dump: 10 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x013C4E, 0x013C58
 
-names_48413C58:
+ModeNameTable:
 	.long	Str_MD_PS_2, Str_MD_NORMAL_2
 	.long	Str_MD_PROGRAM_2, Str_MD_SOUND_2
 	.long	Str_MD_MIDI_2, Str_MD_CONTROL_2
@@ -12122,7 +12120,7 @@ Str_TT_13e:	.asciz "_TT_13e"
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x014BCC, 0x014BD8
 
-names_48414BD8:
+TitleNameTable:
 	.long	Str_TT_PS_2, Str_TT_NORMAL_2
 	.long	Str_TT_WELCOME_6, Str_TT_MESSAGE_2
 	.long	Str_TT_SVARI_2, Str_TT_RVARI_2
@@ -12306,7 +12304,7 @@ InitModeTitleTable_Table:	# 4 x u32, 131072..4294967295; read by InitModeTitleTa
 	tab_u32	131072, 983040, 4294967295, 1212240296
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0151BC, 0x0151C0
-InitModeTitleTable_entry_L87_Table:	# 7 x u32, 0..4294967295; read by InitModeTitleTable_entry_L87 0x48608E87: `mov	(a1), d0`; 7 records: the index is bounded by InitModeTitleTable 0x48608DFB: `mov -7, d1` / setlb / `mov (a1), d0` / `inc4 a1` / `inc d1` / lne (7 passes)
+TitleDefaultRecord:	# 7 x u32, 0..4294967295; read by InitModeTitleTable_entry_L87 0x48608E87: `mov	(a1), d0`; 7 records: the index is bounded by InitModeTitleTable 0x48608DFB: `mov -7, d1` / setlb / `mov (a1), d0` / `inc4 a1` / `inc d1` / lne (7 passes)
 	tab_u32	131072, 4294967295, 4294967295, 1212240316, 0, 0, 0
 data_484151DC:
 	# a string, 4 bytes with its pad, read by UnregisteredMode 0x48608F75 `mov data_484151DC, d0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
@@ -16271,10 +16269,10 @@ func_4860BF82_Table:	# 36 x u8, 0..255; read by func_4860BF82_entry : `movbu	(a1
 Str_House_Shot:	.asciz "   House Shot   "
 	.align	4, 0xFF	# pad after Str_House_Shot
 
-SndCmdStreamWrite_Table_2:	# u8, a constant; read / written by SndCmdStreamWrite 0x50123A20: `movbu (a2), d2`
+SndCmdStreamWrite_Table_2:	# u8, a constant; read / written by TgcBufWrite 0x50123A20: `movbu (a2), d2`
 	.byte	3
 
-SndCmdStreamWrite_entry_L51_Table:	# 3 x u8, 43..240; read by SndCmdStreamWrite_entry_L51 0x50123A76: `movbu (a2), d0`
+TgcBufWrite_entry_L51_Table:	# 3 x u8, 43..240; read by TgcBufWrite_entry_L51 0x50123A76: `movbu (a2), d0`
 	tab_u8	240, 43, 127
 func_4860C784_Table:	# 428 x u8, 0..255; read by func_4860C784_entry : `movbu	(a2), d0`
 	tab_u8	32, 32, 32, 32, 73, 110, 105, 116, 105, 97, 108, 32, 32, 32, 32, 32	# [0]
@@ -23854,17 +23852,17 @@ SndRecTriFieldGet2_Table:
 	.long	loc_4863D0F3
 	.long	loc_4863D105
 	.long	loc_4863D105
-	.long	SndRecTriFieldGet2_entry_L8f
+	.long	func_4863D0CD_entry_L8f
 	.long	loc_4863D105
 	.long	loc_4863D105
 	.long	loc_4863D105
-	.long	SndRecTriFieldGet2_entry_L8f
+	.long	func_4863D0CD_entry_L8f
 	.long	loc_4863D11B
-	.long	SndRecTriFieldGet2_entry_L8f
+	.long	func_4863D0CD_entry_L8f
 	.long	loc_4863D11B
 	.long	loc_4863D11B
 	.long	loc_4863D11B
-	.long	SndRecTriFieldGet2_entry_L8f
+	.long	func_4863D0CD_entry_L8f
 	.long	loc_4863D0FC
 SndRecByteFieldGetB_Table:
 	.long	loc_4863D189
@@ -40002,3 +40000,6 @@ Str_STEREO:	.asciz "STEREO"
 	.align	4, 0xFF	# pad after Str_STEREO
 
 		AcStrRadioBox	Sdspstereo, super=TtSdseparate, next=Sdspmono, prev=Sdspoff, flag=VF_Const, X=4, Y=73, W=94, H=34, color=CL_WallPattern, index=1, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=Sdspstereo_selected, tag=2, str=Str_STEREO	# str "STEREO"
+
+Str_MONO_x_2:	.asciz "MONO x 2"
+	.align	4, 0xFF	# pad after Str_MONO_x_2

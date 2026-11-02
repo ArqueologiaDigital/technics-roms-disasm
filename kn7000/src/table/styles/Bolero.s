@@ -19,12 +19,12 @@ Style_Bolero:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_Bolero
 
-Style_Bolero_Intro1A:
-	var_head	Style_Bolero_Intro1A, 4, 4, 0xff, 0xff
+Style_Bolero_Intro1Major:
+	var_head	Style_Bolero_Intro1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	3, 0x49, 0x04, 0x20
-	var_events	Style_Bolero_Intro1A
-Style_Bolero_Intro1A_Events:		# 4 bars of 4 beats, 1845 bytes
+	var_events	Style_Bolero_Intro1Major
+Style_Bolero_Intro1Major_Events:		# 4 bars of 4 beats, 1845 bytes
 	ev_beat
 	ev_note	0, 36, 66, 5, 0, 0
 	ev_cc	6, 11, 116
@@ -619,13 +619,13 @@ Style_Bolero_Intro1A_Events:		# 4 bars of 4 beats, 1845 bytes
 	ev_at	95
 	ev_note	0, 51, 84, 13, 0, 0
 	ev_end
-	var_end	Style_Bolero_Intro1A
+	var_end	Style_Bolero_Intro1Major
 
-Style_Bolero_Intro1B:
-	var_head	Style_Bolero_Intro1B, 4, 4, 0xff, 0xff
+Style_Bolero_Intro1Minor:
+	var_head	Style_Bolero_Intro1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
-	var_events	Style_Bolero_Intro1B
-Style_Bolero_Intro1B_Events:		# 4 bars of 4 beats, 1313 bytes
+	var_events	Style_Bolero_Intro1Minor
+Style_Bolero_Intro1Minor_Events:		# 4 bars of 4 beats, 1313 bytes
 	ev_beat
 	ev_note	0, 36, 66, 5, 0, 0
 	ev_note	7, 72, 103, 23, 0, 0
@@ -955,18 +955,18 @@ Style_Bolero_Intro1B_Events:		# 4 bars of 4 beats, 1313 bytes
 	ev_at	48
 	ev_note	7, 78, 102, 11, 0, 0
 	ev_end
-	var_end	Style_Bolero_Intro1B
+	var_end	Style_Bolero_Intro1Minor
 
-Style_Bolero_Ending1A:
-	var_head	Style_Bolero_Ending1A, 4, 4, 0xff, 0xff
+Style_Bolero_Intro2Major:
+	var_head	Style_Bolero_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 119
 	ev_cc	3, 91, 52
 	ev_pc	3, 0x38, 0x44, 0x20
 	ev_cc	5, 10, 88
 	ev_pc	5, 0x30, 0x39, 0x20
-	var_events	Style_Bolero_Ending1A
-Style_Bolero_Ending1A_Events:		# 4 bars of 4 beats, 1227 bytes
+	var_events	Style_Bolero_Intro2Major
+Style_Bolero_Intro2Major_Events:		# 4 bars of 4 beats, 1227 bytes
 	ev_beat
 	ev_at	51
 	ev_note	6, 55, 90, 49, 0, 1
@@ -1369,10 +1369,10 @@ Style_Bolero_Ending1A_Events:		# 4 bars of 4 beats, 1227 bytes
 	ev_at	95
 	ev_note	0, 49, 71, 12, 0, 0
 	ev_end
-	var_end	Style_Bolero_Ending1A
+	var_end	Style_Bolero_Intro2Major
 
-Style_Bolero_Ending1B:
-	var_head	Style_Bolero_Ending1B, 4, 4, 0xff, 0xff
+Style_Bolero_Intro2Minor:
+	var_head	Style_Bolero_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 107
 	ev_cc	3, 91, 52
@@ -1380,8 +1380,8 @@ Style_Bolero_Ending1B:
 	ev_cc	5, 7, 69
 	ev_cc	5, 10, 64
 	ev_pc	5, 0x39, 0x14, 0x20
-	var_events	Style_Bolero_Ending1B
-Style_Bolero_Ending1B_Events:		# 4 bars of 4 beats, 2279 bytes
+	var_events	Style_Bolero_Intro2Minor
+Style_Bolero_Intro2Minor_Events:		# 4 bars of 4 beats, 2279 bytes
 	ev_beat
 	ev_note	0, 36, 66, 5, 0, 0
 	ev_note	7, 72, 103, 23, 0, 0
@@ -2023,7 +2023,7 @@ Style_Bolero_Ending1B_Events:		# 4 bars of 4 beats, 2279 bytes
 	ev_at	95
 	ev_note	0, 49, 72, 15, 0, 0
 	ev_end
-	var_end	Style_Bolero_Ending1B
+	var_end	Style_Bolero_Intro2Minor
 
 Style_Bolero_Var1:
 	var_head	Style_Bolero_Var1, 4, 4, 0xff, 0xff
@@ -3822,11 +3822,11 @@ Style_Bolero_Var4Fill2_Events:		# 1 bars of 4 beats, 280 bytes
 	ev_end
 	var_end	Style_Bolero_Var4Fill2
 
-Style_Bolero_Intro2A:
-	var_head	Style_Bolero_Intro2A, 4, 4, 0xff, 0xff
+Style_Bolero_Ending1Major:
+	var_head	Style_Bolero_Ending1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
-	var_events	Style_Bolero_Intro2A
-Style_Bolero_Intro2A_Events:		# 4 bars of 4 beats, 1404 bytes
+	var_events	Style_Bolero_Ending1Major
+Style_Bolero_Ending1Major_Events:		# 4 bars of 4 beats, 1404 bytes
 	ev_beat
 	ev_note	0, 36, 66, 5, 0, 0
 	ev_note	1, 38, 70, 0, 1, 1
@@ -4190,13 +4190,13 @@ Style_Bolero_Intro2A_Events:		# 4 bars of 4 beats, 1404 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Bolero_Intro2A
+	var_end	Style_Bolero_Ending1Major
 
-Style_Bolero_Intro2B:
-	var_head	Style_Bolero_Intro2B, 4, 4, 0xff, 0xff
+Style_Bolero_Ending1Minor:
+	var_head	Style_Bolero_Ending1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
-	var_events	Style_Bolero_Intro2B
-Style_Bolero_Intro2B_Events:		# 4 bars of 4 beats, 1340 bytes
+	var_events	Style_Bolero_Ending1Minor
+Style_Bolero_Ending1Minor_Events:		# 4 bars of 4 beats, 1340 bytes
 	ev_beat
 	ev_note	0, 36, 66, 5, 0, 0
 	ev_note	1, 41, 70, 0, 1, 1
@@ -4541,18 +4541,18 @@ Style_Bolero_Intro2B_Events:		# 4 bars of 4 beats, 1340 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Bolero_Intro2B
+	var_end	Style_Bolero_Ending1Minor
 
-Style_Bolero_Ending2A:
-	var_head	Style_Bolero_Ending2A, 4, 4, 0xff, 0xff
+Style_Bolero_Ending2Major:
+	var_head	Style_Bolero_Ending2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 94
 	ev_cc	3, 91, 52
 	ev_pc	3, 0x38, 0x04, 0x20
 	ev_cc	4, 7, 69
 	ev_pc	4, 0x39, 0x14, 0x20
-	var_events	Style_Bolero_Ending2A
-Style_Bolero_Ending2A_Events:		# 4 bars of 4 beats, 2725 bytes
+	var_events	Style_Bolero_Ending2Major
+Style_Bolero_Ending2Major_Events:		# 4 bars of 4 beats, 2725 bytes
 	ev_beat
 	ev_note	0, 36, 66, 5, 0, 0
 	ev_note	7, 60, 106, 25, 0, 0
@@ -5377,10 +5377,10 @@ Style_Bolero_Ending2A_Events:		# 4 bars of 4 beats, 2725 bytes
 	ev_at	95
 	ev_note	7, 79, 110, 16, 0, 0
 	ev_end
-	var_end	Style_Bolero_Ending2A
+	var_end	Style_Bolero_Ending2Major
 
-Style_Bolero_Ending2B:
-	var_head	Style_Bolero_Ending2B, 4, 4, 0xff, 0xff
+Style_Bolero_Ending2Minor:
+	var_head	Style_Bolero_Ending2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 127
 	ev_cc	3, 7, 114
@@ -5388,8 +5388,8 @@ Style_Bolero_Ending2B:
 	ev_cc	3, 91, 52
 	ev_pc	3, 0x38, 0x04, 0x20
 	ev_cc	4, 7, 127
-	var_events	Style_Bolero_Ending2B
-Style_Bolero_Ending2B_Events:		# 4 bars of 4 beats, 2262 bytes
+	var_events	Style_Bolero_Ending2Minor
+Style_Bolero_Ending2Minor_Events:		# 4 bars of 4 beats, 2262 bytes
 	ev_beat
 	ev_note	0, 36, 66, 5, 0, 0
 	ev_note	6, 84, 79, 71, 1, 1
@@ -6002,4 +6002,4 @@ Style_Bolero_Ending2B_Events:		# 4 bars of 4 beats, 2262 bytes
 	ev_at	65
 	ev_cc	2, 64, 0
 	ev_end
-	var_end	Style_Bolero_Ending2B
+	var_end	Style_Bolero_Ending2Minor

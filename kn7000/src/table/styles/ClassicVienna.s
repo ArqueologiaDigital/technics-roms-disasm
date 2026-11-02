@@ -19,8 +19,8 @@ Style_ClassicVienna:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_ClassicVienna
 
-Style_ClassicVienna_Intro1A:
-	var_head	Style_ClassicVienna_Intro1A, 8, 3, 0xff, 0xff
+Style_ClassicVienna_Intro1Major:
+	var_head	Style_ClassicVienna_Intro1Major, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 92, 12
 	ev_cc	5, 82, 48
@@ -29,8 +29,8 @@ Style_ClassicVienna_Intro1A:
 	ev_cc	6, 80, 84
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 84
-	var_events	Style_ClassicVienna_Intro1A
-Style_ClassicVienna_Intro1A_Events:		# 8 bars of 3 beats, 1531 bytes
+	var_events	Style_ClassicVienna_Intro1Major
+Style_ClassicVienna_Intro1Major_Events:		# 8 bars of 3 beats, 1531 bytes
 	ev_beat
 	ev_note	0, 36, 86, 26, 0, 0
 	ev_note	0, 52, 103, 26, 0, 0
@@ -417,10 +417,10 @@ Style_ClassicVienna_Intro1A_Events:		# 8 bars of 3 beats, 1531 bytes
 	ev_note	2, 79, 70, 20, 0, 1
 	ev_note	2, 67, 70, 20, 0, 1
 	ev_end
-	var_end	Style_ClassicVienna_Intro1A
+	var_end	Style_ClassicVienna_Intro1Major
 
-Style_ClassicVienna_Intro1B:
-	var_head	Style_ClassicVienna_Intro1B, 8, 3, 0xff, 0xff
+Style_ClassicVienna_Intro1Minor:
+	var_head	Style_ClassicVienna_Intro1Minor, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 81, 75
 	ev_cc	3, 92, 12
@@ -432,8 +432,8 @@ Style_ClassicVienna_Intro1B:
 	ev_cc	6, 80, 84
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 84
-	var_events	Style_ClassicVienna_Intro1B
-Style_ClassicVienna_Intro1B_Events:		# 8 bars of 3 beats, 1531 bytes
+	var_events	Style_ClassicVienna_Intro1Minor
+Style_ClassicVienna_Intro1Minor_Events:		# 8 bars of 3 beats, 1531 bytes
 	ev_beat
 	ev_note	0, 36, 86, 26, 0, 0
 	ev_note	0, 52, 103, 26, 0, 0
@@ -820,10 +820,10 @@ Style_ClassicVienna_Intro1B_Events:		# 8 bars of 3 beats, 1531 bytes
 	ev_note	2, 67, 70, 20, 0, 1
 	ev_note	2, 79, 70, 20, 0, 1
 	ev_end
-	var_end	Style_ClassicVienna_Intro1B
+	var_end	Style_ClassicVienna_Intro1Minor
 
-Style_ClassicVienna_Ending1A:
-	var_head	Style_ClassicVienna_Ending1A, 8, 3, 0xff, 0xff
+Style_ClassicVienna_Intro2Major:
+	var_head	Style_ClassicVienna_Intro2Major, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	1, 0x20, 0x00, 0x20
 	ev_cc	3, 7, 109
@@ -840,8 +840,8 @@ Style_ClassicVienna_Ending1A:
 	ev_cc	6, 80, 84
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 84
-	var_events	Style_ClassicVienna_Ending1A
-Style_ClassicVienna_Ending1A_Events:		# 8 bars of 3 beats, 1429 bytes
+	var_events	Style_ClassicVienna_Intro2Major
+Style_ClassicVienna_Intro2Major_Events:		# 8 bars of 3 beats, 1429 bytes
 	ev_beat
 	ev_note	0, 36, 82, 16, 0, 0
 	ev_note	0, 51, 112, 14, 0, 0
@@ -1122,10 +1122,10 @@ Style_ClassicVienna_Ending1A_Events:		# 8 bars of 3 beats, 1429 bytes
 	ev_note	4, 67, 90, 71, 0, 1
 	ev_note	4, 55, 80, 74, 0, 1
 	ev_end
-	var_end	Style_ClassicVienna_Ending1A
+	var_end	Style_ClassicVienna_Intro2Major
 
-Style_ClassicVienna_Ending1B:
-	var_head	Style_ClassicVienna_Ending1B, 8, 3, 0xff, 0xff
+Style_ClassicVienna_Intro2Minor:
+	var_head	Style_ClassicVienna_Intro2Minor, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	1, 0x20, 0x00, 0x20
 	ev_cc	3, 7, 109
@@ -1142,8 +1142,8 @@ Style_ClassicVienna_Ending1B:
 	ev_cc	6, 80, 84
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 84
-	var_events	Style_ClassicVienna_Ending1B
-Style_ClassicVienna_Ending1B_Events:		# 8 bars of 3 beats, 1429 bytes
+	var_events	Style_ClassicVienna_Intro2Minor
+Style_ClassicVienna_Intro2Minor_Events:		# 8 bars of 3 beats, 1429 bytes
 	ev_beat
 	ev_note	0, 36, 82, 16, 0, 0
 	ev_note	0, 51, 112, 14, 0, 0
@@ -1424,7 +1424,7 @@ Style_ClassicVienna_Ending1B_Events:		# 8 bars of 3 beats, 1429 bytes
 	ev_note	4, 55, 80, 74, 0, 1
 	ev_note	4, 67, 90, 71, 0, 1
 	ev_end
-	var_end	Style_ClassicVienna_Ending1B
+	var_end	Style_ClassicVienna_Intro2Minor
 
 Style_ClassicVienna_Var1:
 	var_head	Style_ClassicVienna_Var1, 4, 3, 0xff, 0xff
@@ -2557,8 +2557,8 @@ Style_ClassicVienna_Var4Fill2_Events:		# 1 bars of 3 beats, 198 bytes
 	ev_end
 	var_end	Style_ClassicVienna_Var4Fill2
 
-Style_ClassicVienna_Intro2A:
-	var_head	Style_ClassicVienna_Intro2A, 8, 3, 0xff, 0xff
+Style_ClassicVienna_Ending1Major:
+	var_head	Style_ClassicVienna_Ending1Major, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 105
 	ev_cc	4, 82, 68
@@ -2570,8 +2570,8 @@ Style_ClassicVienna_Intro2A:
 	ev_cc	6, 80, 84
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 84
-	var_events	Style_ClassicVienna_Intro2A
-Style_ClassicVienna_Intro2A_Events:		# 8 bars of 3 beats, 1717 bytes
+	var_events	Style_ClassicVienna_Ending1Major
+Style_ClassicVienna_Ending1Major_Events:		# 8 bars of 3 beats, 1717 bytes
 	ev_beat
 	ev_note	1, 36, 73, 18, 2, 1
 	ev_note	3, 52, 66, 18, 2, 1
@@ -2989,10 +2989,10 @@ Style_ClassicVienna_Intro2A_Events:		# 8 bars of 3 beats, 1717 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_ClassicVienna_Intro2A
+	var_end	Style_ClassicVienna_Ending1Major
 
-Style_ClassicVienna_Intro2B:
-	var_head	Style_ClassicVienna_Intro2B, 8, 3, 0xff, 0xff
+Style_ClassicVienna_Ending1Minor:
+	var_head	Style_ClassicVienna_Ending1Minor, 8, 3, 0xff, 0xff
 	ev_cc	0, 91, 44
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 105
@@ -3007,8 +3007,8 @@ Style_ClassicVienna_Intro2B:
 	ev_cc	6, 80, 84
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 84
-	var_events	Style_ClassicVienna_Intro2B
-Style_ClassicVienna_Intro2B_Events:		# 8 bars of 3 beats, 1717 bytes
+	var_events	Style_ClassicVienna_Ending1Minor
+Style_ClassicVienna_Ending1Minor_Events:		# 8 bars of 3 beats, 1717 bytes
 	ev_beat
 	ev_note	1, 36, 73, 18, 2, 1
 	ev_note	3, 51, 66, 18, 2, 1
@@ -3426,10 +3426,10 @@ Style_ClassicVienna_Intro2B_Events:		# 8 bars of 3 beats, 1717 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_ClassicVienna_Intro2B
+	var_end	Style_ClassicVienna_Ending1Minor
 
-Style_ClassicVienna_Ending2A:
-	var_head	Style_ClassicVienna_Ending2A, 8, 3, 0xff, 0xff
+Style_ClassicVienna_Ending2Major:
+	var_head	Style_ClassicVienna_Ending2Major, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_pc	1, 0x20, 0x00, 0x20
 	ev_cc	3, 7, 109
@@ -3446,8 +3446,8 @@ Style_ClassicVienna_Ending2A:
 	ev_cc	6, 80, 84
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 84
-	var_events	Style_ClassicVienna_Ending2A
-Style_ClassicVienna_Ending2A_Events:		# 8 bars of 3 beats, 1651 bytes
+	var_events	Style_ClassicVienna_Ending2Major
+Style_ClassicVienna_Ending2Major_Events:		# 8 bars of 3 beats, 1651 bytes
 	ev_beat
 	ev_note	0, 36, 87, 16, 0, 0
 	ev_note	0, 51, 105, 19, 0, 0
@@ -3803,10 +3803,10 @@ Style_ClassicVienna_Ending2A_Events:		# 8 bars of 3 beats, 1651 bytes
 	ev_note	0, 52, 127, 18, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_ClassicVienna_Ending2A
+	var_end	Style_ClassicVienna_Ending2Major
 
-Style_ClassicVienna_Ending2B:
-	var_head	Style_ClassicVienna_Ending2B, 8, 3, 0xff, 0xff
+Style_ClassicVienna_Ending2Minor:
+	var_head	Style_ClassicVienna_Ending2Minor, 8, 3, 0xff, 0xff
 	ev_cc	0, 91, 41
 	ev_cc	1, 97, 11
 	ev_pc	1, 0x20, 0x00, 0x20
@@ -3824,8 +3824,8 @@ Style_ClassicVienna_Ending2B:
 	ev_cc	6, 80, 84
 	ev_cc	7, 82, 48
 	ev_cc	7, 80, 84
-	var_events	Style_ClassicVienna_Ending2B
-Style_ClassicVienna_Ending2B_Events:		# 8 bars of 3 beats, 1651 bytes
+	var_events	Style_ClassicVienna_Ending2Minor
+Style_ClassicVienna_Ending2Minor_Events:		# 8 bars of 3 beats, 1651 bytes
 	ev_beat
 	ev_note	0, 36, 87, 16, 0, 0
 	ev_note	0, 51, 105, 19, 0, 0
@@ -4181,4 +4181,4 @@ Style_ClassicVienna_Ending2B_Events:		# 8 bars of 3 beats, 1651 bytes
 	ev_note	0, 52, 127, 18, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_ClassicVienna_Ending2B
+	var_end	Style_ClassicVienna_Ending2Minor

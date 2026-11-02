@@ -19,11 +19,11 @@ Style_Salsa:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_Salsa
 
-Style_Salsa_Intro1A:
-	var_head	Style_Salsa_Intro1A, 2, 4, 0xff, 0xff
+Style_Salsa_Intro1Major:
+	var_head	Style_Salsa_Intro1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
-	var_events	Style_Salsa_Intro1A
-Style_Salsa_Intro1A_Events:		# 2 bars of 4 beats, 1548 bytes
+	var_events	Style_Salsa_Intro1Major
+Style_Salsa_Intro1Major_Events:		# 2 bars of 4 beats, 1548 bytes
 	ev_beat
 	ev_note	1, 36, 105, 61, 0, 1
 	ev_note	2, 86, 93, 25, 0, 1
@@ -367,13 +367,13 @@ Style_Salsa_Intro1A_Events:		# 2 bars of 4 beats, 1548 bytes
 	ev_at	95
 	ev_note	0, 49, 121, 14, 0, 0
 	ev_end
-	var_end	Style_Salsa_Intro1A
+	var_end	Style_Salsa_Intro1Major
 
-Style_Salsa_Intro1B:
-	var_head	Style_Salsa_Intro1B, 2, 4, 0xff, 0xff
+Style_Salsa_Intro1Minor:
+	var_head	Style_Salsa_Intro1Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
-	var_events	Style_Salsa_Intro1B
-Style_Salsa_Intro1B_Events:		# 2 bars of 4 beats, 1152 bytes
+	var_events	Style_Salsa_Intro1Minor
+Style_Salsa_Intro1Minor_Events:		# 2 bars of 4 beats, 1152 bytes
 	ev_beat
 	ev_note	6, 67, 107, 81, 1, 1
 	ev_note	2, 60, 71, 44, 0, 1
@@ -641,13 +641,13 @@ Style_Salsa_Intro1B_Events:		# 2 bars of 4 beats, 1152 bytes
 	ev_at	95
 	ev_note	0, 49, 121, 14, 0, 0
 	ev_end
-	var_end	Style_Salsa_Intro1B
+	var_end	Style_Salsa_Intro1Minor
 
-Style_Salsa_Ending1A:
-	var_head	Style_Salsa_Ending1A, 4, 4, 0xff, 0xff
+Style_Salsa_Intro2Major:
+	var_head	Style_Salsa_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
-	var_events	Style_Salsa_Ending1A
-Style_Salsa_Ending1A_Events:		# 4 bars of 4 beats, 4157 bytes
+	var_events	Style_Salsa_Intro2Major
+Style_Salsa_Intro2Major_Events:		# 4 bars of 4 beats, 4157 bytes
 	ev_beat
 	ev_note	0, 44, 114, 14, 0, 0
 	ev_note	7, 72, 124, 21, 0, 0
@@ -1528,13 +1528,13 @@ Style_Salsa_Ending1A_Events:		# 4 bars of 4 beats, 4157 bytes
 	ev_at	95
 	ev_note	0, 49, 116, 9, 0, 0
 	ev_end
-	var_end	Style_Salsa_Ending1A
+	var_end	Style_Salsa_Intro2Major
 
-Style_Salsa_Ending1B:
-	var_head	Style_Salsa_Ending1B, 4, 4, 0xff, 0xff
+Style_Salsa_Intro2Minor:
+	var_head	Style_Salsa_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
-	var_events	Style_Salsa_Ending1B
-Style_Salsa_Ending1B_Events:		# 4 bars of 4 beats, 2415 bytes
+	var_events	Style_Salsa_Intro2Minor
+Style_Salsa_Intro2Minor_Events:		# 4 bars of 4 beats, 2415 bytes
 	ev_beat
 	ev_note	0, 69, 75, 12, 0, 0
 	ev_at	1
@@ -2104,7 +2104,7 @@ Style_Salsa_Ending1B_Events:		# 4 bars of 4 beats, 2415 bytes
 	ev_note	0, 82, 69, 11, 0, 0
 	ev_note	7, 98, 86, 16, 0, 0
 	ev_end
-	var_end	Style_Salsa_Ending1B
+	var_end	Style_Salsa_Intro2Minor
 
 Style_Salsa_Var1:
 	var_head	Style_Salsa_Var1, 4, 4, 0xff, 0xff
@@ -5926,11 +5926,11 @@ Style_Salsa_Var4Fill2_Events:		# 1 bars of 4 beats, 561 bytes
 	ev_end
 	var_end	Style_Salsa_Var4Fill2
 
-Style_Salsa_Intro2A:
-	var_head	Style_Salsa_Intro2A, 3, 4, 0xff, 0xff
+Style_Salsa_Ending1Major:
+	var_head	Style_Salsa_Ending1Major, 3, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
-	var_events	Style_Salsa_Intro2A
-Style_Salsa_Intro2A_Events:		# 3 bars of 4 beats, 2062 bytes
+	var_events	Style_Salsa_Ending1Major
+Style_Salsa_Ending1Major_Events:		# 3 bars of 4 beats, 2062 bytes
 	ev_beat
 	ev_note	0, 82, 74, 13, 0, 0
 	ev_note	0, 116, 101, 13, 0, 0
@@ -6338,13 +6338,13 @@ Style_Salsa_Intro2A_Events:		# 3 bars of 4 beats, 2062 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Salsa_Intro2A
+	var_end	Style_Salsa_Ending1Major
 
-Style_Salsa_Intro2B:
-	var_head	Style_Salsa_Intro2B, 3, 4, 0xff, 0xff
+Style_Salsa_Ending1Minor:
+	var_head	Style_Salsa_Ending1Minor, 3, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
-	var_events	Style_Salsa_Intro2B
-Style_Salsa_Intro2B_Events:		# 3 bars of 4 beats, 2000 bytes
+	var_events	Style_Salsa_Ending1Minor
+Style_Salsa_Ending1Minor_Events:		# 3 bars of 4 beats, 2000 bytes
 	ev_beat
 	ev_note	0, 82, 74, 13, 0, 0
 	ev_note	0, 116, 101, 13, 0, 0
@@ -6767,13 +6767,13 @@ Style_Salsa_Intro2B_Events:		# 3 bars of 4 beats, 2000 bytes
 	ev_at	70
 	ev_cc	2, 64, 0
 	ev_end
-	var_end	Style_Salsa_Intro2B
+	var_end	Style_Salsa_Ending1Minor
 
-Style_Salsa_Ending2A:
-	var_head	Style_Salsa_Ending2A, 4, 4, 0xff, 0xff
+Style_Salsa_Ending2Major:
+	var_head	Style_Salsa_Ending2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
-	var_events	Style_Salsa_Ending2A
-Style_Salsa_Ending2A_Events:		# 4 bars of 4 beats, 2228 bytes
+	var_events	Style_Salsa_Ending2Major
+Style_Salsa_Ending2Major_Events:		# 4 bars of 4 beats, 2228 bytes
 	ev_beat
 	ev_note	0, 44, 114, 14, 0, 0
 	ev_note	7, 72, 124, 21, 0, 0
@@ -7273,13 +7273,13 @@ Style_Salsa_Ending2A_Events:		# 4 bars of 4 beats, 2228 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Salsa_Ending2A
+	var_end	Style_Salsa_Ending2Major
 
-Style_Salsa_Ending2B:
-	var_head	Style_Salsa_Ending2B, 4, 4, 0xff, 0xff
+Style_Salsa_Ending2Minor:
+	var_head	Style_Salsa_Ending2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
-	var_events	Style_Salsa_Ending2B
-Style_Salsa_Ending2B_Events:		# 4 bars of 4 beats, 4457 bytes
+	var_events	Style_Salsa_Ending2Minor
+Style_Salsa_Ending2Minor_Events:		# 4 bars of 4 beats, 4457 bytes
 	ev_beat
 	ev_note	0, 42, 114, 14, 0, 0
 	ev_note	0, 53, 91, 19, 0, 0
@@ -8232,4 +8232,4 @@ Style_Salsa_Ending2B_Events:		# 4 bars of 4 beats, 4457 bytes
 	ev_at	50
 	ev_note	0, 49, 102, 10, 0, 0
 	ev_end
-	var_end	Style_Salsa_Ending2B
+	var_end	Style_Salsa_Ending2Minor

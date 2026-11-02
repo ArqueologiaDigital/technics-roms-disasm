@@ -11472,10 +11472,10 @@
 0x4C1D6A1C  Str_TT_PMBKNAME  12
 0x4C1D6A28  Str_TT_VOCALIST  12
 0x4C1D6A34  Str_TT_SNDCTLASS  13
-0x4C1D6A44  Bitmap_4C0A0012_Pixels  4104
-0x4C1D7A4C  Bitmap_4C0A004D_Pixels  76
-0x4C1D7A98  Bitmap_4C0A0087_Pixels  24
-0x4C1D7AB0  Bitmap_4C0A00C1_Pixels  768
+0x4C1D6A44  BitmapCompConnDiagram_Pixels  4104
+0x4C1D7A4C  BitmapCompConnMaster_Pixels  76
+0x4C1D7A98  BitmapCompConnSlaveArrow_Pixels  24
+0x4C1D7AB0  BitmapCompConnSlaveWire_Pixels  768
 0x4C1D7DB0  BitmapKn6000_Palette  64
 0x4C1D7DF0  BitmapKn6000_Pixels  17526
 0x4C1DC268  BitmapNx_Pixels  2600

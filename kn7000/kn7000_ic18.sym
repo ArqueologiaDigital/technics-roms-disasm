@@ -70,7 +70,7 @@
 ; ---- the control-panel link (serial 0), a copy of the firmware's driver -------
 ; Same source as the firmware's Panel* routines (kn7000_manual.sym, 0x484ABAF4..), so
 ; the names follow them; the generator names the ones whose code is the same.
-0x500025C6  PanelDisableIrqGroups   ; disables the four interrupt groups whose numbers are kept at 0x50019738..44 (IrqGroupSetup)
+0x500025C6  TickHookPass            ; passes each of the four words TickHookArg0..3, with its index 0..3, to TickHookStub, which does nothing; nothing calls it here. Program 941's twin (0x484ABA68) runs first in every pass of its tick task (0x4C02BBCD), with four ROM words that all hold the time base's address 0x50151BFC [INFERENCE: a debug hook the boot link left without a caller] (ic18boot_xref.py)
 0x500025FF  PanelSendCmd1C          ; sends command 0x1C with its argument clamped to 3..100
 0x50002620  PanelModeFlagSet        ; the panel wiring-mode flag: 0 = mode A, else mode B
 0x50002629  PanelModeFlagGet
@@ -141,7 +141,7 @@
 0x500102EC  PanelLinkState          ; the PanelXferStateTable index: 1-6 transmit, 8-9 receive
 0x500102ED  PanelReplyCountdown     ; reply bytes still expected
 0x500102EE  PanelLinkFlags          ; 0x01 and 0x02 a transfer under way (PanelTxKick sets 0x02; PanelWaitLinkIdle waits for both clear), 0x04 a reply expected, 0xC0 the pump's phase
-0x500102EF  PanelLinkConst7D        ; PanelLinkInit sets it to 0x7D; TODO: nothing in this ROM reads it
+0x500102EF  PanelLinkConst7D        ; PanelLinkInit sets it to 0x7D; nothing reads it, in this ROM or in program 941, where its copy 0x5006BDA3 is likewise only written, by PanelLinkInit (0x484ABBE7) (ic18boot_xref.py)
 0x500102F0  PanelLinkStatus         ; 0x01 the rings were reset, 0x04 back to ATN-armed idle (PanelLinkRxRearm), 0x80 an error or a time-out
 0x500102F1  PanelPingResult         ; PanelTransaction: bit 0 left panel, bit 3 right panel answered
 0x500102F5  PanelIdleRetries        ; PanelWaitLinkIdle's countdown
@@ -158,7 +158,7 @@
 0x500103DF  PanelModeFlag           ; PanelModeFlagSet / Get
 
 ; ---- interrupts, and the stand-ins for the firmware's kernel calls ------------
-0x5000841F  IrqDispatch             ; the maskable interrupt (IrqThunk): saves the movm group 0x08 (unidasm's other3), calls IrqHandlerTable[INTC_GROUP_VECTOR], restores it, rti
+0x5000841F  IrqDispatch             ; the maskable interrupt (IrqThunk): saves the movm group 0x08 (unidasm's other3), calls IrqHandlerTable[IAGR], restores it, rti
 0x5000965C  IrqDefaultHandler       ; every IrqHandlerTable slot until IrqRegister fills it: returns
 0x5000965F  LibTickSleep            ; waits until the tick counter (TickCount) has moved on by d0
 0x5000967C  IrqRegister             ; slot d0 := the 20-byte descriptor at a0 {.., handler, group, GxICR address, level, ..}; the group's ICR gets the level, its handler goes in IrqHandlerTable
@@ -169,7 +169,7 @@
 0x5000974C  BoardClass              ; returns 1: a stand-in for the firmware's strap probe, so PanelInit always picks wiring mode A
 0x50009751  KernelStubZero          ; returns 0; only unreferenced code calls it
 0x50009755  PanelCtrlDispatch       ; a stand-in for the firmware's latched-control dispatch: PanelFrameDecode calls it where the firmware calls its PanelCtrlDispatch
-0x50009758  KernelStubSlot          ; does nothing; PanelDisableIrqGroups calls it with four interrupt slots
+0x50009758  TickHookStub            ; does nothing; TickHookPass calls it with each hook word and its index (program 941's 0x48431D04 is as empty)
 0x5000975B  PanelSubTypeGet         ; returns 1: a stand-in for the firmware's board sub-type probe (5, 1, 2 or 3 from the strap), so the SD code always takes the class-1 paths
 0x500100F0  IrqHandlerTable         ; one handler per interrupt group, all IrqDefaultHandler in the image
 0x50019730  TickCount               ; counted up by TickIsr
@@ -339,7 +339,7 @@
 0x50007633  FatEof                  ; 1 when the position has reached the size
 0x50007644  FatClose                ; the file control block back to FatFileInitImage
 0x50007657  FatReadTestFile         ; opens MORITANI.DAT and reads it through to the end, 512 bytes at a time into a ten-sector ring
-0x5000DF70  FatMountFailImage       ; FatMount copies these nine words over its volume variables when it rejects the boot sector, then returns -1. TODO: the numbers do not describe a usable volume (32 bytes a sector, no FAT); what they were meant to be is not known
+0x5000DF70  FatMountFailImage       ; FatMount copies these nine words over its volume variables when it rejects the boot sector, then returns -1. No code uses the numbers: every caller (SdFatOpenVolume -> -2: SdFlashUpdate, SdUpdateFilePresent, FatReadTestFile) stops on the failure, and a good mount rewrites every word. [INFERENCE] placeholders: the name is "12345678", and they describe no volume (32 bytes a sector, no FAT)
 0x5000DF94  FatFileInitImage        ; a closed file control block
 0x500128F8  FatVolumeName
 0x50012904  FatPartitionStart
@@ -420,7 +420,7 @@
 0x5000CD70  FlashDeviceBaseCases    ; FlashDeviceBase's switch
 0x5000CDA4  FlashResetById          ; FlashResetToRead's hashed switch on the device code
 0x5000CE24  FlashFujitsuIds         ; FlashIdentify's hashed switch on the Fujitsu device codes 0x2227..0x22F9
-0x5000E104  FontTable               ; two 8x16 fonts: {width, height, .., glyph bitmaps}
+0x5000E104  FontTable               ; two 8x16 fonts, 12 bytes each: {width, height, descent, byte columns a glyph, glyph bitmaps}, program 941's font descriptor without its kerning and double-byte tables. LcdDrawChar reads width, height, byte columns and the glyphs; nothing here reads the descent (941's DrawString_Impl places Shift-JIS glyphs by it)
 0x5001006C  Flash32ChipId           ; both chips' device codes, or -1
 0x50010170  FlashChipId             ; the 16-bit chip's device code, 0xFFFF until identified
 0x50012468  FlashPageBuffer         ; FlashPageWrite's 128 words; Reset puts the stack top 12 bytes below it
@@ -479,7 +479,7 @@
 0x5000BDFA  DiskStart               ; LCDC_GPIO_CONFIG1 := 0x0E (pins 1-3 outputs), DiskInit
 0x50010174  UpdateFileNames         ; KN7KPRG.DAT, KN7KTBL.DAT, KN7KCSTM.DAT, KN7KRHY.DAT, KN7KAROM.DAT, ""
 0x50012570  StatusLatchShadow
-0x50007060  StatusLatchWrite        ; sends d0 & 0x7F on the SPI shift register, then pulses the SD select line, which latches it (TODO: which device: the update's status lamps, by StatusLedOff)
+0x50007060  StatusLatchWrite        ; sends d0 & 0x7F on the SPI shift register with the card deselected, then pulses the SD select line, which latches it: six status lamps by SdFlashUpdate's use (bit 0 blinks with progress, bits 2-5 one per update file, 0x3F all; StatusLedOff). TODO: which device; the service manual's schematics show none on the SPI lines. [INFERENCE] a lamp register on the factory jig at CN106 (MAIN 2/5), the one connector that carries SDCS, SDSO, SDCLK and SDSI, beside JIGU.ON
 
 ; ---- the text screen and the soft keys -------------------------------------------
 0x5000BE0D  ScreenClear             ; the 10 x 78 text buffer to spaces, the cursor home, the frame buffer cleared
@@ -573,11 +573,11 @@
 0x50010082  SdFrameSlowCmd2
 0x50010086  SdFrameSlowCmd2Bytes    ; the code fills in its argument
 0x5001008B  SdFrameSlowCmd2Crc
-0x5001008C  SdFrameR2Cmd0           ; response type 2 frames: TODO, commands 0x40, 0x45, 0x43, 0x46, 0x47 with arguments
-0x50010096  SdFrameR2Cmd5
-0x500100A0  SdFrameR2Cmd3
-0x500100AA  SdFrameR2Cmd6
-0x500100B4  SdFrameR2Cmd7
+0x5001008C  SdFrameR2Cmd0           ; slow-clock frames with response type 2: {2, 2, 0x40|n, four argument bytes, CRC}. This one, n = 0 with argument 0x00000F00, is the only one read: DiskDriveCtrl's '@' attach sends it through SdCardRegRead, which computes its CRC and reads 15 bytes into SdCsdRecord (program 941 does the same with its copy 0x50007E94). Not an SD card command (CMD0 takes no argument and answers R1); in mode 2 SdReadBlockCmd also waits for the sense line, so [INFERENCE] the device that answers is not the card
+0x50010096  SdFrameR2Cmd5           ; n = 5, argument 0; this and the next three: nothing reads them, here or in program 941
+0x500100A0  SdFrameR2Cmd3           ; n = 3, argument 0x00000100
+0x500100AA  SdFrameR2Cmd6           ; n = 6, argument 0
+0x500100B4  SdFrameR2Cmd7           ; n = 7, argument 0
 0x500100BE  SdFrameCmd0             ; ... and the working clock (mode 3): GO_IDLE_STATE with its CRC 0x95
 0x500100C8  SdFrameCmd1             ; SEND_OP_COND
 0x500100D2  SdFrameCmd17            ; READ_SINGLE_BLOCK
@@ -586,7 +586,7 @@
 0x500100E0  SdFrameCmd24Bytes
 0x500100EC  SdDetectOverride        ; the latched card presence (SdSlotDischarge), -1 for none
 0x5001018C  UpdateFileKinds         ; the device kind of each UpdateFileNames entry: 0 program, 2 table, 4 IC21, 8 rhythm, 0x0B, then 0x32
-0x50010192  SdUpdateWaitFlag        ; SdUpdateStart clears it; SdFlashUpdate pauses between files when it is set (TODO: who sets it)
+0x50010192  SdUpdateVerify          ; nonzero: SdFlashUpdate reads each written file back against the flash ("Now verifying"); 0: it skips that pass. Nothing sets it at run time: .data starts it at 1, which BootMain's strap path (SdFlashUpdate directly) keeps, and SdUpdateStart, the menu path, clears it
 0x5000D121  Str_EndOfList           ; the empty name that ends UpdateFileNames
 
 ; ---- the C library's data ----------------------------------------------------------
@@ -627,10 +627,10 @@
 0x50010243  PanelEventFifoBufEnd
 0x50010258  PanelTxFifoBuf
 0x500102D7  PanelTxFifoBufEnd
-0x500102F2  PanelFrameByte0         ; PanelFrameDecode's bytes of the report being assembled (TODO: their roles)
-0x500102F3  PanelFrameByte1
-0x500102F4  PanelFrameByte2
-0x500102F6  PanelAtnCountdown       ; set by PanelAtnIsr, counted down by PanelTxPump (TODO: its unit)
+0x500102F2  PanelLastFrameAddr      ; PanelFrameDecode keeps the last report it decoded here, the triplet it also pushes into the event FIFO: the address byte (a switch group for report types 0/1, a control address for type 2). Written only, here and in program 941 (0x5006BDA6..A8, "latch" in 941's PanelFrameDecode) (ic18boot_xref.py)
+0x500102F3  PanelLastFrameData      ; the data byte: the switch bits, or the control's raw value
+0x500102F4  PanelLastFrameResult    ; the switch bits that changed (data XOR PanelSwShadow), or the value PanelCtrlDispatch returned for a control
+0x500102F6  PanelBusyPumpCount      ; PanelTxPump calls in a row that found the link busy (P84 bit 0 low, or PanelLinkFlags 0x01/0x02): counted up there, cleared by the ATN pulse's second edge (PanelAtnIsr); at 20 PanelLinkStatus bit 7 (time-out). Its unit is a pump call: here only polling loops pump (PanelWaitEvent, ScreenInit, PanelDiskLed through PanelPump); program 941's tick task pumps every 24 TickCount ticks (48 ms, TickJobs bits 0x80 and 0x20), so there it is about 0.96 s
 0x5001039C  PanelSwShadow00         ; the switch-report bytes as PanelFrameDecode stores them; each name ends in the byte's offset in the report, in hex
 0x5001039E  PanelSwShadow02
 0x5001039F  PanelSwShadow03
@@ -649,12 +649,12 @@
 0x5000C764  BootKeyCombo6
 0x5000C774  BootKeyCombo7           ; BootMain: UPDATE DISK CHECK
 0x50012580  PanelRxErrorFlag        ; PanelRxIsr: a serial error was seen
-0x50019734  TickJobs                ; request bits TickIsr sets on its cycle (TODO: their consumers)
-0x50019735  TickJobs2
-0x50019738  PanelIrqSlot0           ; the four slots PanelDisableIrqGroups passes on (TODO: nothing in the image sets them)
-0x5001973C  PanelIrqSlot1
-0x50019740  PanelIrqSlot2
-0x50019744  PanelIrqSlot3
+0x50019734  TickJobs                ; request bits TickIsr sets: 0x08, 0x04, 0x02 every 3 ticks; 0x80, 0x40, 0x20, 0x10 each every 48, 12 ticks apart (2 ms ticks: TM4BR 0xFA0 is twice program 941's 1 ms 0x7D0, and 941 runs this code every second tick). Nothing in this ROM reads them: TickIsr is program 941's TimeBase2msTick, whose consumer is 941's tick task 0x4C02BBCD (TickJobs there = 0x50151C00: 0x08 PanelService and the switch events, 0x02 0x48402703, 0x80 and 0x20 PanelPump, 0x80 also P04 bit 5 toggled; 0x04, 0x01 only cleared; 0x40, 0x10 0x484AE78C) (ic18boot_xref.py)
+0x50019735  TickJobs2               ; 0x80 every 6 ticks (941's tick task: 0x48473A86, 0x4840791C), 0x40 every 6 (not tested by 941 either)
+0x50019738  TickHookArg0            ; TickHookPass's four words: .bss, so 0; nothing in the image sets them (program 941 has them as ROM constants, all 0x50151BFC)
+0x5001973C  TickHookArg1
+0x50019740  TickHookArg2
+0x50019744  TickHookArg3
 0x50019748  PanelLedMirror          ; the LED bytes last sent; PanelLedMirrorResetA clears them
 0x5001975A  PanelLedMirrorEnd
 

@@ -17452,7 +17452,7 @@ func_4C057DC0_entry_L53_Records:	# 16 x REC_func_4C057DC0_entry_L53_Records (8 b
 	REC_func_4C057DC0_entry_L53_Records	key=44982, proc=loc_4C057F80
 	REC_func_4C057DC0_entry_L53_Records	proc=func_4C057DC0_entry_L1fa
 
-func_4C057FEF_L8_Table:	# 44 x u8, 0..255; read by func_4C057FEF : `movbu	(d0, a0), d0`; func_4C05805C_entry : `movbu	(d0, a0), d0`
+func_4C057FEF_L8_Table:	# 44 x u8, 0..255; read by ChordTypeIsMinor : `movbu	(d0, a0), d0`; func_4C05805C_entry : `movbu	(d0, a0), d0`
 	tab_u8	0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1	# [16]
 	tab_u8	0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 255, 255	# [32]
@@ -17539,13 +17539,13 @@ Str_ZZZI:	.asciz "ZZZI"
 # census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x1A2A75, 0x1A2A78
 
-func_4C061828_entry_L3e_Block:	# 24 bytes, copied whole by func_4C061828_entry_L3e 0x4C06186B: memcpy(.., 24); func_4C061C63_entry_L5c 0x4C061CC4: memcpy(.., 24)
+func_4C061828_entry_L3e_Block:	# 24 bytes, copied whole by func_4C061828_entry_L3e 0x4C06186B: memcpy(.., 24); SndArgImportZZZ_entry_L5c 0x4C061CC4: memcpy(.., 24)
 	tab_u8	0, 0, 38, 0, 0, 38, 33, 0, 32, 0, 0, 32, 48, 0, 32, 73	# [0]
 	tab_u8	0, 32, 88, 0, 32, 25, 0, 32	# [16]
 
-func_4C061BF9_Table:	# 8 x u8, 0..7; read by func_4C061BF9_entry : `movbu	(d1, a1), d0`; func_4C061C63_entry : `movbu	(d0, a0), d0`
+func_4C061BF9_Table:	# 8 x u8, 0..7; read by SndArgImportZZZ_entry : `movbu	(d0, a0), d0`; SndArgTemplateApply_entry : `movbu	(d1, a1), d0`
 	tab_u8	0, 2, 3, 4, 5, 6, 7, 1
-func_4C06180C_Ld_Table:	# 19 x u32, 0..24772985; read by func_4C06180C_Ld 0x4C061819: `mov	(-0x4c, a0), d0`
+func_4C06180C_Ld_Table:	# 19 x u32, 0..24772985; read by SndArgPartEntry_Ld 0x4C061819: `mov	(-0x4c, a0), d0`
 	tab_u32	3, 4, 5, 6, 7, 2, 0, 1	# [0]
 	tab_u32	24183152, 24641906, 24772985, 22151505, 22348115, 22544720, 17039626, 17236229	# [8]
 	tab_u32	16908545, 17957137, 19071253	# [16]
@@ -17603,7 +17603,7 @@ func_4C061D81_Var:	# 16 x REC_func_4C061D81_Var (4 bytes each); read by func_4C0
 	REC_func_4C061D81_Var	key=123, key_=4, f2=122, index=2
 	REC_func_4C061D81_Var	key=125, key_=3, f2=126, index=10
 	.space	4, 0xFF
-func_4C062465_Table:	# 24 x REC_func_4C062465_Table (2 bytes each); read by func_4C06226A 0x4C06226A `movbu (1, a0), d3`; func_4C062465 0x4C062465 `movbu (d0, a2), d1`; func_4C06226A_entry_Lb0 0x4C06231F `call func_4C07BAF4_entry, [d2,a2], 0x1c` (+11)
+func_4C062465_Table:	# 24 x REC_func_4C062465_Table (2 bytes each); read by PartFieldCcSend 0x4C06226A `movbu (1, a0), d3`; StylePartFieldEmit 0x4C062465 `movbu (d0, a2), d1`; PartFieldCcSend_entry_Lb0 0x4C06231F `call func_4C07BAF4_entry, [d2,a2], 0x1c` (+11)
 	REC_func_4C062465_Table	kind=176, f1=255	# [0]
 	REC_func_4C062465_Table	kind=176, f1=7
 	REC_func_4C062465_Table	kind=192
@@ -17629,7 +17629,7 @@ func_4C062465_Table:	# 24 x REC_func_4C062465_Table (2 bytes each); read by func
 	REC_func_4C062465_Table	kind=176, f1=17
 	REC_func_4C062465_Table	kind=176, f1=13
 
-func_4C062465_entry_L48_Table:	# REC_func_4C062261_Result (21 bytes), then 131 x u8 the code indexes from +0 (read by func_4C062465_entry_L48 0x4C0624B2 `movbu (d3, a1), d3`; func_4C062465_entry_L5d 0x4C0624C7 `movbu (d3, a1), d2`)
+func_4C062465_entry_L48_Table:	# REC_func_4C062261_Result (21 bytes), then 131 x u8 the code indexes from +0 (read by StylePartFieldEmit_entry_L48 0x4C0624B2 `movbu (d3, a1), d3`; StylePartFieldEmit_entry_L5d 0x4C0624C7 `movbu (d3, a1), d2`)
 	REC_func_4C062261_Result	s0="\xFF\xFF", key=255, f3=255, f4=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", f20=64
 	tab_u8	64, 64, 64, 255, 16, 255, 255, 255, 255, 255, 1, 255, 255, 8, 17, 255	# [0]
 	tab_u8	23, 255, 255, 21, 22, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [16]
@@ -21946,10 +21946,10 @@ func_4C06A6F6_Records:	# 67 x REC_func_4C06A6F6_Records (28 bytes each); read by
 	REC_func_4C06A6F6_Records	proc=func_4C06A7AD, key=func_4C06A6F6_Records_p4_24, p8=func_4C06A6F6_Records_p4_p0_7, p12=data_4C1B55CA, f16=0xB0005D, f20=0xFFFFFFFF
 	REC_func_4C06A6F6_Records	proc=func_4C06A7AD, key=func_4C06A6F6_Records_p4_25, p8=func_4C06A6F6_Records_p4_p0_8, p12=data_4C1B55EC, f16=0x20005C, f20=0xFFFFFFFF, index=ptrs_4C1B59D0
 	REC_func_4C06A6F6_Records	proc=func_4C06A7AD, key=func_4C06A6F6_Records_p4_25, p8=func_4C06A6F6_Records_p4_p0_8, p12=data_4C1B55EC, f16=0xB0005C, f20=0xFFFFFFFF
-	REC_func_4C06A6F6_Records	proc=func_4C06B2F4, key=func_4C06A6F6_Records_p4_26, p8=func_4C06A6F6_Records_p4_p0_9, p12=data_4C1B560E, f16=0xB00052, f20=0xFFFFFFFF	# [24]
-	REC_func_4C06A6F6_Records	proc=func_4C06B37B, key=func_4C06A6F6_Records_p4_26, p8=func_4C06A6F6_Records_p4_p0_9, p12=data_4C1B560E, f16=0xB00053, f20=0xFFFFFFFF
-	REC_func_4C06A6F6_Records	proc=func_4C06B2F4, key=func_4C06A6F6_Records_p4_26, p8=func_4C06A6F6_Records_p4_p0_9, p12=data_4C1B560E, f16=0xB00050, f20=0xFFFFFFFF
-	REC_func_4C06A6F6_Records	proc=func_4C06B37B, key=func_4C06A6F6_Records_p4_26, p8=func_4C06A6F6_Records_p4_p0_9, p12=data_4C1B560E, f16=0xB00051, f20=0xFFFFFFFF
+	REC_func_4C06A6F6_Records	proc=PartEqFcText, key=func_4C06A6F6_Records_p4_26, p8=func_4C06A6F6_Records_p4_p0_9, p12=data_4C1B560E, f16=0xB00052, f20=0xFFFFFFFF	# [24]
+	REC_func_4C06A6F6_Records	proc=PartEqGainText, key=func_4C06A6F6_Records_p4_26, p8=func_4C06A6F6_Records_p4_p0_9, p12=data_4C1B560E, f16=0xB00053, f20=0xFFFFFFFF
+	REC_func_4C06A6F6_Records	proc=PartEqFcText, key=func_4C06A6F6_Records_p4_26, p8=func_4C06A6F6_Records_p4_p0_9, p12=data_4C1B560E, f16=0xB00050, f20=0xFFFFFFFF
+	REC_func_4C06A6F6_Records	proc=PartEqGainText, key=func_4C06A6F6_Records_p4_26, p8=func_4C06A6F6_Records_p4_p0_9, p12=data_4C1B560E, f16=0xB00051, f20=0xFFFFFFFF
 	REC_func_4C06A6F6_Records	proc=func_4C06A977, key=func_4C06A6F6_Records_p4_9, p8=func_4C06A6F6_Records_p4_p0_19, p12=func_4C06A6F6_Records_p4_p0_19, f16=0xB0007E, f20=0xFFFFFFFF, index=ptrs_4C1B59E4
 	REC_func_4C06A6F6_Records	proc=func_4C06AB70, key=func_4C06A6F6_Records_p4_10, p8=func_4C06A6F6_Records_p4_p0_20, p12=func_4C06A6F6_Records_p4_p0_20, f16=0xB00041, f20=0xFFFFFFFF, index=ptrs_4C1B59D0
 	REC_func_4C06A6F6_Records	proc=func_4C06A7AD, key=func_4C06A6F6_Records_p4_10, p8=func_4C06A6F6_Records_p4_p0_20, p12=func_4C06A6F6_Records_p4_p0_20, f16=0xB00005, f20=0xFFFFFFFF
@@ -26030,7 +26030,7 @@ PsDrawEditProc_L1e_Records:	# 32 x REC_PsDrawEditProc_L1e_Records (8 bytes each)
 	REC_PsDrawEditProc_L1e_Records	key=0x20003D, proc=loc_4C07179B
 	REC_PsDrawEditProc_L1e_Records	key=0x20003E, proc=loc_4C071936
 	REC_PsDrawEditProc_L1e_Records	key=0x20003F, proc=loc_4C07193A
-FavSetText_L1d_Records:	# 16 x REC_FavSetText_L1d_Records (8 bytes each); read by FavSetText_L1d 0x4C072B01 `mov (a0), d0`; FavSetText_L4b 0x4C072B2F `mov (a0), d0`; FavSetText_L4e 0x4C072B32 `mov (4, a0), a0`
+FavSetText_L1d_Records:	# 16 x REC_FavSetText_L1d_Records (8 bytes each); read by MmmMtune_L1d 0x4C072B01 `mov (a0), d0`; MmmMtune_L4b 0x4C072B2F `mov (a0), d0`; MmmMtune_L4e 0x4C072B32 `mov (4, a0), a0`
 	REC_FavSetText_L1d_Records	key=128, proc=loc_4C072B37	# [0]
 	REC_FavSetText_L1d_Records	key=129, proc=loc_4C072B85
 	REC_FavSetText_L1d_Records	key=130, proc=loc_4C072B88
@@ -26038,13 +26038,13 @@ FavSetText_L1d_Records:	# 16 x REC_FavSetText_L1d_Records (8 bytes each); read b
 	REC_FavSetText_L1d_Records	key=1, proc=loc_4C072BA6
 	REC_FavSetText_L1d_Records	key=2, proc=loc_4C072BAA
 	REC_FavSetText_L1d_Records	key=111, proc=loc_4C072BB2
-	REC_FavSetText_L1d_Records	proc=FavSetText_Ld1
-	REC_FavSetText_L1d_Records	proc=FavSetText_Ld1	# [8]
-	REC_FavSetText_L1d_Records	proc=FavSetText_Ld1
-	REC_FavSetText_L1d_Records	proc=FavSetText_Ld1
-	REC_FavSetText_L1d_Records	proc=FavSetText_Ld1
-	REC_FavSetText_L1d_Records	proc=FavSetText_Ld1
-	REC_FavSetText_L1d_Records	proc=FavSetText_Ld1
+	REC_FavSetText_L1d_Records	proc=MmmMtune_Ld1
+	REC_FavSetText_L1d_Records	proc=MmmMtune_Ld1	# [8]
+	REC_FavSetText_L1d_Records	proc=MmmMtune_Ld1
+	REC_FavSetText_L1d_Records	proc=MmmMtune_Ld1
+	REC_FavSetText_L1d_Records	proc=MmmMtune_Ld1
+	REC_FavSetText_L1d_Records	proc=MmmMtune_Ld1
+	REC_FavSetText_L1d_Records	proc=MmmMtune_Ld1
 	REC_FavSetText_L1d_Records	key=110, proc=loc_4C072BAE
 	REC_FavSetText_L1d_Records	key=127, proc=loc_4C072B8B
 AcTechniChordProc_L1d_Records:	# 16 x REC_AcTechniChordProc_L1d_Records (8 bytes each); read by AcTechniChordProc_L1d 0x4C072C46 `mov (a0), d0`; AcTechniChordProc_L4b 0x4C072C74 `mov (a0), d0`; AcTechniChordProc_L4e 0x4C072C77 `mov (4, a0), a0`
@@ -26859,7 +26859,7 @@ func_4C08632C_Table:	# 3 x u8, 0..255; read by func_4C08632C 0x4C08632C: `movbu 
 	tab_u8	0, 255, 255
 TgGlobalRampParamSet_entry_L17_Table:	# 8 x u16, 24704..27776; read by TgGlobalRampParamSet_entry_L17 0x4C088319: `movhu	(d0, a0), d2`
 	tab_u16	24704, 25216, 25728, 25984, 26496, 27008, 27520, 27776
-func_4C088C3F_entry_L223_Table:	# 36 x u8, 0..255; read by func_4C088C3F_entry : `movbu	(d0, a0), d1`
+func_4C088C3F_entry_L223_Table:	# 36 x u8, 0..255; read by TgGlobalParamInit_entry : `movbu	(d0, a0), d1`
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
 	tab_u8	1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1, 1, 0	# [16]
 	tab_u8	0, 0, 255, 255	# [32]
@@ -33240,14 +33240,14 @@ Str_TT_VOCALIST:	.asciz "TT_VOCALIST"
 Str_TT_SNDCTLASS:	.asciz "TT_SNDCTLASS"
 	.align	4, 0xFF	# pad after Str_TT_SNDCTLASS
 
-Bitmap_4C0A0012_Pixels:	# 296 x 108, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_4C0A0012 answers MT_GetBitmapData with (src/program/data/media/Bitmap_4C0A0012_Pixels.png)
-	.incbin	"build/bitmaps/Bitmap_4C0A0012_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 296 108) from src/program/data/media/Bitmap_4C0A0012_Pixels.png
-Bitmap_4C0A004D_Pixels:	# 17 x 19, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_4C0A004D answers MT_GetBitmapData with (src/program/data/media/Bitmap_4C0A004D_Pixels.png)
-	.incbin	"build/bitmaps/Bitmap_4C0A004D_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 17 19) from src/program/data/media/Bitmap_4C0A004D_Pixels.png
-Bitmap_4C0A0087_Pixels:	# 10 x 12, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_4C0A0087 answers MT_GetBitmapData with (src/program/data/media/Bitmap_4C0A0087_Pixels.png)
-	.incbin	"build/bitmaps/Bitmap_4C0A0087_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 10 12) from src/program/data/media/Bitmap_4C0A0087_Pixels.png
-Bitmap_4C0A00C1_Pixels:	# 253 x 24, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_4C0A00C1 answers MT_GetBitmapData with (src/program/data/media/Bitmap_4C0A00C1_Pixels.png)
-	.incbin	"build/bitmaps/Bitmap_4C0A00C1_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 253 24) from src/program/data/media/Bitmap_4C0A00C1_Pixels.png
+BitmapCompConnDiagram_Pixels:	# 296 x 108, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapCompConnDiagram answers MT_GetBitmapData with (src/program/data/media/BitmapCompConnDiagram_Pixels.png)
+	.incbin	"build/bitmaps/BitmapCompConnDiagram_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 296 108) from src/program/data/media/BitmapCompConnDiagram_Pixels.png
+BitmapCompConnMaster_Pixels:	# 17 x 19, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapCompConnMaster answers MT_GetBitmapData with (src/program/data/media/BitmapCompConnMaster_Pixels.png)
+	.incbin	"build/bitmaps/BitmapCompConnMaster_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 17 19) from src/program/data/media/BitmapCompConnMaster_Pixels.png
+BitmapCompConnSlaveArrow_Pixels:	# 10 x 12, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapCompConnSlaveArrow answers MT_GetBitmapData with (src/program/data/media/BitmapCompConnSlaveArrow_Pixels.png)
+	.incbin	"build/bitmaps/BitmapCompConnSlaveArrow_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 10 12) from src/program/data/media/BitmapCompConnSlaveArrow_Pixels.png
+BitmapCompConnSlaveWire_Pixels:	# 253 x 24, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapCompConnSlaveWire answers MT_GetBitmapData with (src/program/data/media/BitmapCompConnSlaveWire_Pixels.png)
+	.incbin	"build/bitmaps/BitmapCompConnSlaveWire_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 253 24) from src/program/data/media/BitmapCompConnSlaveWire_Pixels.png
 
 BitmapKn6000_Palette:	# 16 colours, 0x00BBGGRR (BitmapKn6000: MT_GetBitmapPalette)
 	.long	0x001A2931, 0x003F515D, 0x005C6C78, 0x0079808A, 0x008A959E, 0x00A2A5AC, 0x00B6C1CA, 0x00D4D9DD

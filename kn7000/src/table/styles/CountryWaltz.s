@@ -19,11 +19,11 @@ Style_CountryWaltz:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_CountryWaltz
 
-Style_CountryWaltz_Intro1A:
-	var_head	Style_CountryWaltz_Intro1A, 4, 3, 0xff, 0xff
+Style_CountryWaltz_Intro1Major:
+	var_head	Style_CountryWaltz_Intro1Major, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
-	var_events	Style_CountryWaltz_Intro1A
-Style_CountryWaltz_Intro1A_Events:		# 4 bars of 3 beats, 1662 bytes
+	var_events	Style_CountryWaltz_Intro1Major
+Style_CountryWaltz_Intro1Major_Events:		# 4 bars of 3 beats, 1662 bytes
 	ev_beat
 	ev_note	0, 36, 70, 12, 0, 0
 	ev_note	0, 51, 82, 12, 0, 0
@@ -587,13 +587,13 @@ Style_CountryWaltz_Intro1A_Events:		# 4 bars of 3 beats, 1662 bytes
 	ev_at	64
 	ev_note	7, 54, 68, 12, 0, 0
 	ev_end
-	var_end	Style_CountryWaltz_Intro1A
+	var_end	Style_CountryWaltz_Intro1Major
 
-Style_CountryWaltz_Intro1B:
-	var_head	Style_CountryWaltz_Intro1B, 4, 3, 0xff, 0xff
+Style_CountryWaltz_Intro1Minor:
+	var_head	Style_CountryWaltz_Intro1Minor, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
-	var_events	Style_CountryWaltz_Intro1B
-Style_CountryWaltz_Intro1B_Events:		# 4 bars of 3 beats, 1601 bytes
+	var_events	Style_CountryWaltz_Intro1Minor
+Style_CountryWaltz_Intro1Minor_Events:		# 4 bars of 3 beats, 1601 bytes
 	ev_beat
 	ev_note	0, 36, 70, 12, 0, 0
 	ev_note	0, 51, 82, 12, 0, 0
@@ -1141,15 +1141,15 @@ Style_CountryWaltz_Intro1B_Events:		# 4 bars of 3 beats, 1601 bytes
 	ev_at	64
 	ev_note	7, 54, 68, 12, 0, 0
 	ev_end
-	var_end	Style_CountryWaltz_Intro1B
+	var_end	Style_CountryWaltz_Intro1Minor
 
-Style_CountryWaltz_Ending1A:
-	var_head	Style_CountryWaltz_Ending1A, 5, 3, 0xff, 0xff
+Style_CountryWaltz_Intro2Major:
+	var_head	Style_CountryWaltz_Intro2Major, 5, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 10, 64
 	ev_pc	5, 0x16, 0x00, 0x20
-	var_events	Style_CountryWaltz_Ending1A
-Style_CountryWaltz_Ending1A_Events:		# 5 bars of 3 beats, 1278 bytes
+	var_events	Style_CountryWaltz_Intro2Major
+Style_CountryWaltz_Intro2Major_Events:		# 5 bars of 3 beats, 1278 bytes
 	ev_beat
 	ev_note	0, 51, 81, 12, 0, 0
 	ev_note	1, 31, 70, 97, 0, 1
@@ -1534,15 +1534,15 @@ Style_CountryWaltz_Ending1A_Events:		# 5 bars of 3 beats, 1278 bytes
 	ev_cc	2, 64, 0
 	ev_cc	3, 64, 0
 	ev_end
-	var_end	Style_CountryWaltz_Ending1A
+	var_end	Style_CountryWaltz_Intro2Major
 
-Style_CountryWaltz_Ending1B:
-	var_head	Style_CountryWaltz_Ending1B, 5, 3, 0xff, 0xff
+Style_CountryWaltz_Intro2Minor:
+	var_head	Style_CountryWaltz_Intro2Minor, 5, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 10, 64
 	ev_pc	5, 0x16, 0x00, 0x20
-	var_events	Style_CountryWaltz_Ending1B
-Style_CountryWaltz_Ending1B_Events:		# 5 bars of 3 beats, 969 bytes
+	var_events	Style_CountryWaltz_Intro2Minor
+Style_CountryWaltz_Intro2Minor_Events:		# 5 bars of 3 beats, 969 bytes
 	ev_beat
 	ev_note	0, 51, 81, 12, 0, 0
 	ev_note	1, 31, 56, 97, 0, 1
@@ -1796,7 +1796,7 @@ Style_CountryWaltz_Ending1B_Events:		# 5 bars of 3 beats, 969 bytes
 	ev_at	64
 	ev_note	7, 54, 68, 12, 0, 0
 	ev_end
-	var_end	Style_CountryWaltz_Ending1B
+	var_end	Style_CountryWaltz_Intro2Minor
 
 Style_CountryWaltz_Var1:
 	var_head	Style_CountryWaltz_Var1, 4, 3, 0xff, 0xff
@@ -3293,11 +3293,11 @@ Style_CountryWaltz_Var4Fill2_Events:		# 1 bars of 3 beats, 283 bytes
 	ev_end
 	var_end	Style_CountryWaltz_Var4Fill2
 
-Style_CountryWaltz_Intro2A:
-	var_head	Style_CountryWaltz_Intro2A, 4, 3, 0xff, 0xff
+Style_CountryWaltz_Ending1Major:
+	var_head	Style_CountryWaltz_Ending1Major, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
-	var_events	Style_CountryWaltz_Intro2A
-Style_CountryWaltz_Intro2A_Events:		# 4 bars of 3 beats, 900 bytes
+	var_events	Style_CountryWaltz_Ending1Major
+Style_CountryWaltz_Ending1Major_Events:		# 4 bars of 3 beats, 900 bytes
 	ev_beat
 	ev_note	0, 59, 60, 12, 0, 0
 	ev_note	0, 36, 70, 12, 0, 0
@@ -3553,15 +3553,15 @@ Style_CountryWaltz_Intro2A_Events:		# 4 bars of 3 beats, 900 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_CountryWaltz_Intro2A
+	var_end	Style_CountryWaltz_Ending1Major
 
-Style_CountryWaltz_Intro2B:
-	var_head	Style_CountryWaltz_Intro2B, 4, 3, 0xff, 0xff
+Style_CountryWaltz_Ending1Minor:
+	var_head	Style_CountryWaltz_Ending1Minor, 4, 3, 0xff, 0xff
 	ev_pc	0, 0x20, 0x00, 0x26
 	ev_cc	1, 97, 11
 	ev_pc	7, 0x20, 0x00, 0x26
-	var_events	Style_CountryWaltz_Intro2B
-Style_CountryWaltz_Intro2B_Events:		# 4 bars of 3 beats, 893 bytes
+	var_events	Style_CountryWaltz_Ending1Minor
+Style_CountryWaltz_Ending1Minor_Events:		# 4 bars of 3 beats, 893 bytes
 	ev_beat
 	ev_note	0, 59, 60, 12, 0, 0
 	ev_note	0, 36, 70, 12, 0, 0
@@ -3815,16 +3815,16 @@ Style_CountryWaltz_Intro2B_Events:		# 4 bars of 3 beats, 893 bytes
 	ev_note	0, 51, 43, 12, 0, 0
 	ev_beat
 	ev_end
-	var_end	Style_CountryWaltz_Intro2B
+	var_end	Style_CountryWaltz_Ending1Minor
 
-Style_CountryWaltz_Ending2A:
-	var_head	Style_CountryWaltz_Ending2A, 8, 3, 0xff, 0xff
+Style_CountryWaltz_Ending2Major:
+	var_head	Style_CountryWaltz_Ending2Major, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 7, 79
 	ev_cc	5, 10, 64
 	ev_pc	5, 0x16, 0x00, 0x20
-	var_events	Style_CountryWaltz_Ending2A
-Style_CountryWaltz_Ending2A_Events:		# 8 bars of 3 beats, 2693 bytes
+	var_events	Style_CountryWaltz_Ending2Major
+Style_CountryWaltz_Ending2Major_Events:		# 8 bars of 3 beats, 2693 bytes
 	ev_beat
 	ev_note	0, 36, 75, 12, 0, 0
 	ev_note	0, 51, 80, 12, 0, 0
@@ -4700,15 +4700,15 @@ Style_CountryWaltz_Ending2A_Events:		# 8 bars of 3 beats, 2693 bytes
 	ev_cc	4, 11, 42
 	ev_beat
 	ev_end
-	var_end	Style_CountryWaltz_Ending2A
+	var_end	Style_CountryWaltz_Ending2Major
 
-Style_CountryWaltz_Ending2B:
-	var_head	Style_CountryWaltz_Ending2B, 8, 3, 0xff, 0xff
+Style_CountryWaltz_Ending2Minor:
+	var_head	Style_CountryWaltz_Ending2Minor, 8, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	5, 10, 64
 	ev_pc	5, 0x16, 0x00, 0x20
-	var_events	Style_CountryWaltz_Ending2B
-Style_CountryWaltz_Ending2B_Events:		# 8 bars of 3 beats, 1878 bytes
+	var_events	Style_CountryWaltz_Ending2Minor
+Style_CountryWaltz_Ending2Minor_Events:		# 8 bars of 3 beats, 1878 bytes
 	ev_beat
 	ev_note	0, 36, 75, 12, 0, 0
 	ev_note	0, 51, 80, 12, 0, 0
@@ -5236,4 +5236,4 @@ Style_CountryWaltz_Ending2B_Events:		# 8 bars of 3 beats, 1878 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_CountryWaltz_Ending2B
+	var_end	Style_CountryWaltz_Ending2Minor

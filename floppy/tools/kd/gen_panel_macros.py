@@ -90,8 +90,10 @@ ENTRY_FIELDS = [('volume', PART_FIELDS[3][1]), ('tg_bits', 'part +0x05'), ('midi
                 ('midi_channel', 'part +0x3B')]
 # Other records: {tag: {offset: (name, evidence)}}.
 OTHER_FIELDS = {
-    0x41: {0x00: ('m008040', 'bits 0-2 0x008040, 0..5'),
-           0x03: ('m00c084', 'bit 0 0x00C084, bit 1 0x00C083 (ApcSelFunc)'),
+    0x41: {0x00: ('conductor', 'bits 0-2 0x008040 CONDUCTOR, 0..5 (the KN5000 tag 0x90 SndParam_Conductor; KN6000 '
+                                 'func_4C02EDD9 / func_4C02F302 pick the RIGHT1 / RIGHT2 / left-zone parts from it)'),
+           0x03: ('left_hold_on_bass', 'bit 0 0x00C084 LEFT HOLD (LeftholdToggleFunc), bit 1 0x00C083 ON BASS '
+                                         '(OnbassToggleFunc); ApcSelFunc'),
            0x04: ('r_octave', '0x008038, 40..88 (AcRightOctProc; the PANEL MEMORY filter row "R1/R2 OCTAVE")')},
     0x42: {0x00: ('rhythm_lo', '0x00C000 the rhythm: kind 6, a 24-bit style id over +0..+2 (MainGetRhythmName, '
                                'CustomStyleIndexFromParam; the one-touch writer stores slot | 0x200000 there)'),
@@ -117,7 +119,8 @@ OTHER_FIELDS = {
            **{0x0C + k: ('apc_rev%d' % (k + 1), 'KN7000 only: 0x%06X APC reverb DEPTH of row %d, bit 7 0x%06X (ApcRevFunc, '
                          'grid "PART | DEPTH" ACCOMP1..)' % (0x00E030 + k, k + 1, 0x00E038 + k)) for k in range(8)}},
     0x45: {0x00: ('m005040', 'bit 0 0x005040, bit 1 0x005041')},
-    0x46: {0x00: ('m00e001', 'bits 0-6 0x00E001, bit 7 0x00E002'),
+    0x46: {0x00: ('pad_volume', 'bits 0-6 0x00E001, bit 7 0x00E002: sent as controller 7 / code 0x90 to parts 0x1D / '
+                                  '0x1E, "PAD PART1" / "PAD PART2" (KN6000 func_4C0484C7, ApcToSMFConvGrid)'),
            0x01: ('pad_bank', '0x00E005 the PAD BANK (AcPadBankProc, MainPAD_GetPadName)')},
     0x47: {0x00: ('midi_bits0', 'MIDI message flags, bits 0x002021 (0-1), 0x002020, 0x002022, 0x002023, 0x002013, 0x002011, '
                                 '0x002014 (MidiInputGrid, MidiControlGrid)'),

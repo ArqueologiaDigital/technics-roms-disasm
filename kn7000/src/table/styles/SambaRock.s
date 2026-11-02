@@ -19,12 +19,12 @@ Style_SambaRock:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_SambaRock
 
-Style_SambaRock_Intro1A:
-	var_head	Style_SambaRock_Intro1A, 4, 4, 0xff, 0x03
+Style_SambaRock_Intro1Major:
+	var_head	Style_SambaRock_Intro1Major, 4, 4, 0xff, 0x03
 	ev_cc	1, 97, 11
 	ev_cc	3, 92, 0
-	var_events	Style_SambaRock_Intro1A
-Style_SambaRock_Intro1A_Events:		# 4 bars of 4 beats, 1443 bytes
+	var_events	Style_SambaRock_Intro1Major
+Style_SambaRock_Intro1Major_Events:		# 4 bars of 4 beats, 1443 bytes
 	ev_beat
 	ev_note	7, 104, 110, 11, 0, 0
 	ev_note	2, 59, 84, 50, 2, 1
@@ -403,13 +403,13 @@ Style_SambaRock_Intro1A_Events:		# 4 bars of 4 beats, 1443 bytes
 	ev_at	95
 	ev_note	0, 49, 112, 17, 0, 0
 	ev_end
-	var_end	Style_SambaRock_Intro1A
+	var_end	Style_SambaRock_Intro1Major
 
-Style_SambaRock_Intro1B:
-	var_head	Style_SambaRock_Intro1B, 4, 4, 0xff, 0x03
+Style_SambaRock_Intro1Minor:
+	var_head	Style_SambaRock_Intro1Minor, 4, 4, 0xff, 0x03
 	ev_cc	1, 97, 11
-	var_events	Style_SambaRock_Intro1B
-Style_SambaRock_Intro1B_Events:		# 4 bars of 4 beats, 1451 bytes
+	var_events	Style_SambaRock_Intro1Minor
+Style_SambaRock_Intro1Minor_Events:		# 4 bars of 4 beats, 1451 bytes
 	ev_beat
 	ev_note	7, 104, 110, 11, 0, 0
 	ev_note	2, 67, 87, 126, 1, 1
@@ -796,13 +796,13 @@ Style_SambaRock_Intro1B_Events:		# 4 bars of 4 beats, 1451 bytes
 	ev_at	95
 	ev_note	0, 49, 112, 17, 0, 0
 	ev_end
-	var_end	Style_SambaRock_Intro1B
+	var_end	Style_SambaRock_Intro1Minor
 
-Style_SambaRock_Ending1A:
-	var_head	Style_SambaRock_Ending1A, 9, 4, 0xff, 0x03
+Style_SambaRock_Intro2Major:
+	var_head	Style_SambaRock_Intro2Major, 9, 4, 0xff, 0x03
 	ev_cc	1, 97, 11
-	var_events	Style_SambaRock_Ending1A
-Style_SambaRock_Ending1A_Events:		# 9 bars of 4 beats, 4501 bytes
+	var_events	Style_SambaRock_Intro2Major
+Style_SambaRock_Intro2Major_Events:		# 9 bars of 4 beats, 4501 bytes
 	ev_beat
 	ev_beat
 	ev_beat
@@ -1839,13 +1839,13 @@ Style_SambaRock_Ending1A_Events:		# 9 bars of 4 beats, 4501 bytes
 	ev_at	95
 	ev_note	0, 49, 112, 16, 0, 0
 	ev_end
-	var_end	Style_SambaRock_Ending1A
+	var_end	Style_SambaRock_Intro2Major
 
-Style_SambaRock_Ending1B:
-	var_head	Style_SambaRock_Ending1B, 9, 4, 0xff, 0x03
+Style_SambaRock_Intro2Minor:
+	var_head	Style_SambaRock_Intro2Minor, 9, 4, 0xff, 0x03
 	ev_cc	1, 97, 11
-	var_events	Style_SambaRock_Ending1B
-Style_SambaRock_Ending1B_Events:		# 9 bars of 4 beats, 4196 bytes
+	var_events	Style_SambaRock_Intro2Minor
+Style_SambaRock_Intro2Minor_Events:		# 9 bars of 4 beats, 4196 bytes
 	ev_beat
 	ev_beat
 	ev_beat
@@ -2847,7 +2847,7 @@ Style_SambaRock_Ending1B_Events:		# 9 bars of 4 beats, 4196 bytes
 	ev_at	95
 	ev_note	0, 49, 112, 16, 0, 0
 	ev_end
-	var_end	Style_SambaRock_Ending1B
+	var_end	Style_SambaRock_Intro2Minor
 
 Style_SambaRock_Var1:
 	var_head	Style_SambaRock_Var1, 4, 4, 0xff, 0x03
@@ -5542,11 +5542,11 @@ Style_SambaRock_Var4Fill2_Events:		# 1 bars of 4 beats, 301 bytes
 	ev_end
 	var_end	Style_SambaRock_Var4Fill2
 
-Style_SambaRock_Intro2A:
-	var_head	Style_SambaRock_Intro2A, 4, 4, 0xff, 0x03
+Style_SambaRock_Ending1Major:
+	var_head	Style_SambaRock_Ending1Major, 4, 4, 0xff, 0x03
 	ev_cc	1, 97, 11
-	var_events	Style_SambaRock_Intro2A
-Style_SambaRock_Intro2A_Events:		# 4 bars of 4 beats, 2623 bytes
+	var_events	Style_SambaRock_Ending1Major
+Style_SambaRock_Ending1Major_Events:		# 4 bars of 4 beats, 2623 bytes
 	ev_beat
 	ev_note	0, 36, 124, 25, 0, 0
 	ev_note	7, 67, 114, 13, 0, 0
@@ -6094,13 +6094,13 @@ Style_SambaRock_Intro2A_Events:		# 4 bars of 4 beats, 2623 bytes
 	ev_note	3, 64, 108, 85, 0, 1
 	ev_note	5, 60, 127, 31, 0, 1
 	ev_end
-	var_end	Style_SambaRock_Intro2A
+	var_end	Style_SambaRock_Ending1Major
 
-Style_SambaRock_Intro2B:
-	var_head	Style_SambaRock_Intro2B, 4, 4, 0xff, 0x03
+Style_SambaRock_Ending1Minor:
+	var_head	Style_SambaRock_Ending1Minor, 4, 4, 0xff, 0x03
 	ev_cc	1, 97, 11
-	var_events	Style_SambaRock_Intro2B
-Style_SambaRock_Intro2B_Events:		# 4 bars of 4 beats, 2875 bytes
+	var_events	Style_SambaRock_Ending1Minor
+Style_SambaRock_Ending1Minor_Events:		# 4 bars of 4 beats, 2875 bytes
 	ev_beat
 	ev_note	0, 36, 124, 25, 0, 0
 	ev_note	6, 60, 99, 19, 0, 1
@@ -6714,13 +6714,13 @@ Style_SambaRock_Intro2B_Events:		# 4 bars of 4 beats, 2875 bytes
 	ev_note	3, 63, 93, 54, 0, 1
 	ev_note	5, 60, 104, 29, 0, 1
 	ev_end
-	var_end	Style_SambaRock_Intro2B
+	var_end	Style_SambaRock_Ending1Minor
 
-Style_SambaRock_Ending2A:
-	var_head	Style_SambaRock_Ending2A, 4, 4, 0xff, 0x03
+Style_SambaRock_Ending2Major:
+	var_head	Style_SambaRock_Ending2Major, 4, 4, 0xff, 0x03
 	ev_cc	1, 97, 11
-	var_events	Style_SambaRock_Ending2A
-Style_SambaRock_Ending2A_Events:		# 4 bars of 4 beats, 3026 bytes
+	var_events	Style_SambaRock_Ending2Major
+Style_SambaRock_Ending2Major_Events:		# 4 bars of 4 beats, 3026 bytes
 	ev_beat
 	ev_note	0, 36, 124, 25, 0, 0
 	ev_note	7, 63, 87, 16, 0, 0
@@ -7445,13 +7445,13 @@ Style_SambaRock_Ending2A_Events:		# 4 bars of 4 beats, 3026 bytes
 	ev_note	3, 52, 116, 36, 0, 1
 	ev_beat
 	ev_end
-	var_end	Style_SambaRock_Ending2A
+	var_end	Style_SambaRock_Ending2Major
 
-Style_SambaRock_Ending2B:
-	var_head	Style_SambaRock_Ending2B, 4, 4, 0xff, 0x03
+Style_SambaRock_Ending2Minor:
+	var_head	Style_SambaRock_Ending2Minor, 4, 4, 0xff, 0x03
 	ev_cc	1, 97, 11
-	var_events	Style_SambaRock_Ending2B
-Style_SambaRock_Ending2B_Events:		# 4 bars of 4 beats, 2648 bytes
+	var_events	Style_SambaRock_Ending2Minor
+Style_SambaRock_Ending2Minor_Events:		# 4 bars of 4 beats, 2648 bytes
 	ev_beat
 	ev_note	0, 36, 124, 25, 0, 0
 	ev_note	7, 63, 87, 16, 0, 0
@@ -8053,4 +8053,4 @@ Style_SambaRock_Ending2B_Events:		# 4 bars of 4 beats, 2648 bytes
 	ev_at	2
 	ev_note	0, 36, 127, 43, 0, 0
 	ev_end
-	var_end	Style_SambaRock_Ending2B
+	var_end	Style_SambaRock_Ending2Minor

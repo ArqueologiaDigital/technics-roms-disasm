@@ -42,8 +42,9 @@ run time; see the documentation site's `kn2400-kn2600` page.
 | `0x000000`-`0x000010` | `0x48400000`            | boot header: `_reset` (jmp to `crt0_start`), 5 nops, `_vector_0a`, one data byte |
 | `0x000010`-`0x1e427c` | `0x48400000`            | data: names, styles, bitmaps, tables, the `MILK MN10300 Ver1.0R1` banner         |
 | `0x1e427c`-`0x3285be` | `0x48400000`            | code linked for flash: the MILK kernel and application                           |
-| `0x3285be`-`0x3965bb` | `0x50120000` (work RAM) | code linked for work RAM                                                         |
-| `0x3965bb`-`0x3965d3` | none                    | 24 bytes after the last instruction (see below)                                  |
+| `0x3285be`-`0x3965b8` | `0x50120000` (work RAM) | code linked for work RAM (RamSectionsCopy's first record)                        |
+| `0x3965b8`-`0x3965bb` | `0x5018fff0` (work RAM) | a 3-byte `retf` stub nothing calls (RamSectionsCopy's second record)             |
+| `0x3965bb`-`0x3965d3` | none                    | RamSectionsCopy's table: two 12-byte records (see below)                         |
 
 The data comes first and the code after it: the reverse of the KN7000's program image.
 
@@ -68,9 +69,11 @@ those of them whose KN7000 address is `0x4C000000` or above).
 `src/program.s` assembles that range under `.mnbase 0x4fdf7a42`, so its PC-relative encodings
 are reproduced exactly. The 24 bytes after it hold, among others, `0x487285be` (the flash
 address of the RAM-linked range), `0x50120000` (its link address) and `0x487965b8`. Those values
-fit a copy descriptor. No code in this image reads them, and the routine that copies the range
-to RAM has not been found: crt0 copies only `.data`, `0x6e78` bytes from `0x485dd334` to
-`0x50000010`. Both points are open.
+are a copy table. crt0 copies `.data` itself (`0x6e78` bytes from `0x485dd334` to `0x50000010`) and
+then calls `RamSectionsCopy` (0x4870587e), which walks the table from `0x487965bb`: 12-byte records
+{u16 flags, u16 length, u32 source, u32 dest}. It copies `0x487285be` -> `0x50120000`, `0x6dffa` bytes,
+and the trailer's first 3 bytes (`retf [], 0`) to `0x5018fff0`, through the uncached view (dest +
+`0x40000000`) (`notes/data-region/README.md`, resolved 2026-11-02).
 
 ## Symbols
 
@@ -152,13 +155,22 @@ evidence and what is still binary.
 
 ## Open work
 
-- Names: 11,993 entries are still `func_<ADDR>`. `make ported-names` carries unique,
-  non-trivial matches with a KN7000 routine, exact or, with `--fuzzy`, near-exact; most of
-  what is left has no KN7000 name either (`../kn7000/notes/function-naming-2026-10-24/`).
-- Reflection tables whose procedures are in the RAM-linked range: `gen_symbols.py` assumes one
-  link base, so it pairs none of them.
-- RAM and I/O addresses outside the initialised RAM image are still numbers in the code; data
-  addresses are labels (`src/program/data/labels.sym`).
+- Names: 11,678 entries are still `func_<ADDR>` (2026-11-02). `make ported-names` carries
+  unique, non-trivial matches from the KN7000 (exact, or with `--fuzzy` near-exact), then
+  from the two other siblings' reflection and hand names (`--also-a`, lane mn10300-names:
+  KN6000 1, KN6500 0 more names; what the siblings name and this image does not is their own code).
+  What is left is per-subsystem naming (callers, strings, MILK messages).
+- (settled 2026-11-02, lane mn10300-names) No reflection table names a procedure in the
+  RAM-linked range: `../kn7000/notes/mn10300-names-probes/names_kn2400_ram_tables.py` finds no
+  name run with RAM-linked code pointers before it, and no identifier string there that a
+  pointer names by its link address.  `make symbols` now gives `gen_symbols.py` that range
+  (`--code-range 0x3285be:0x3965b8:0x50120000`, the `LO:HI:LINK` form of `gen_image_s.py
+  --code`) and writes the same `kn2400.sym`; the 133 names at `0x50120000` and above come from
+  `kn2400_ported.sym`.
+- RAM addresses: the on-chip registers and board latches are names
+  (`../kn7000/src/include/mn103002a_sfr.inc`), and a `kn2400_manual.sym` name of a RAM
+  address is spelled in the code; 22,483 RAM operands over 3,521 addresses are still numbers
+  (`../kn7000/notes/mn10300-names/README.md`, "RAM addresses").
 - The data region's remaining binary pieces (`notes/data-region/README.md`, "What is left"): generic 0; the
   census-opaque pieces fell from 2,885 / 61,226 to 1,192 / 27,313 bytes with lane mn10300-data's passes
   (2026-11-02; what is left and why: `../kn7000/notes/mn10300-data/README.md` section 4).

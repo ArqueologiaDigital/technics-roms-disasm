@@ -202,6 +202,21 @@ def _ident_offsets(data):
 START_ALIGNED = True
 
 
+def _registered_code_start(data, name_off, cands):
+    """The candidate code-array offset whose address the image holds as a 32-bit value in
+    the 0x40 bytes before a reference to the name array (a registering call's two `mov
+    imm32` operands), or None when there is no such reference or it is ambiguous."""
+    import re
+    nv = struct.pack("<I", PROGRAM_BASE + name_off)
+    found = set()
+    for m in re.finditer(re.escape(nv), data):
+        window = data[max(0, m.start() - 0x40):m.start()]
+        for c in cands:
+            if struct.pack("<I", PROGRAM_BASE + c) in window:
+                found.add(c)
+    return found.pop() if len(found) == 1 else None
+
+
 def find_tables(data, ident_offsets):
     """Yield (code_array_off, name_array_off, n) for every MILK reflection table.
 
@@ -252,7 +267,17 @@ def find_tables(data, ident_offsets):
                 and not _is_empty_str_after_ident(data, ident_offsets, read_u32(data, k)):
             k -= 4
         if START_ALIGNED and (name_off - 8 - k) // 4 > n_names:
-            code_off = k + 4
+            # The code run is longer than the names: which end of it do they name?  The
+            # firmware's registering call answers it -- it loads the code array's address a
+            # few bytes before the name array's (KN7000 0x484D7C94 / 0x484D7CAE).  The KN2400
+            # SDFM MainFunctions registers the run's start (0x485CFA58, 111 entries); the
+            # KN6000 / KN6500 Se table registers start + 16 (0x4C37EEF0: 4 leading pointers
+            # that are not its own, 3 bytes apart), so its names are end-aligned (lane
+            # mn10300-names, 2026-11-02; with start alignment Ed1stOnSe..Ed4thOnSe fell on
+            # those 4 pointers and every name after them one routine early).  Without such a
+            # reference the start is kept.
+            reg = _registered_code_start(data, name_off, (k + 4, code_off))
+            code_off = reg if reg is not None else k + 4
         if code_off < 0:
             continue
         codes = [read_u32(data, code_off + 4 * k) for k in range(n_names)]
@@ -261,8 +286,23 @@ def find_tables(data, ident_offsets):
             yield code_off, name_off, n_names
 
 
+# --code-range LO:HI:LINK ranges: file bytes LO..HI that the firmware copies to RAM and runs
+# at LINK (KN2400: 0x3285BE..0x3965B8 -> 0x50120000).  A reflection table names such a
+# procedure by its link address, so the pointer is code when it falls in LINK..LINK+(HI-LO).
+LINKED = []
+
+
+def _linked_off(v):
+    """File offset of link address v inside a --code-range LO:HI:LINK range, else None."""
+    for lo, hi, link in LINKED:
+        if link <= v < link + (hi - lo):
+            return lo + (v - link)
+    return None
+
+
 def recover_symbols(data):
-    """Returns a sorted list of (cpu_addr, file_offset, name)."""
+    """Returns a sorted list of (cpu_addr, file_offset, name): cpu_addr is the address the
+    reflection table gives (the link address for a procedure in a RAM-linked range)."""
     ident_offsets = _ident_offsets(data)
     out = {}          # file_offset -> name
     used = set()      # names already taken (keep them unique)
@@ -271,8 +311,12 @@ def recover_symbols(data):
         for k in range(n):
             code = read_u32(data, code_arr + 4 * k)
             name = read_name(data, read_u32(data, name_arr + 4 * k))
-            coff = code - PROGRAM_BASE
-            if name is None or not (CODE_LO <= coff < CODE_HI) or coff in out:
+            coff = _linked_off(code)
+            if coff is None:
+                coff = code - PROGRAM_BASE
+                if not (CODE_LO <= coff < CODE_HI):
+                    continue
+            if name is None or coff in out:
                 continue
             if not (name[0].isalpha() or name[0] == "_"):
                 continue
@@ -282,9 +326,9 @@ def recover_symbols(data):
                 unique = f"{name}_{k2}"
                 k2 += 1
             used.add(unique)
-            out[coff] = unique
+            out[coff] = (code, unique)
 
-    return sorted((PROGRAM_BASE + off, off, name) for off, name in out.items())
+    return sorted((cpu, off, name) for off, (cpu, name) in out.items())
 
 
 def main():
@@ -307,10 +351,12 @@ def main():
                              "Start alignment reproduces every committed symbol file (KN7000 941, "
                              "935, 893, the SP7001 plug-in, KN6000, KN6500, KN2400, HD-SX3); "
                              "end alignment does not reproduce the KN6000 / KN6500 / KN2400 ones")
-    parser.add_argument("--code-range", action="append", metavar="LO:HI",
+    parser.add_argument("--code-range", action="append", metavar="LO:HI[:LINK]",
                         help="file-offset range holding code (repeatable). Default: the build-941 "
                              "program image's two code regions. Needed for other builds (e.g. "
-                             "SP7001's 942) and for the SP7001 plug-in blob in the table image.")
+                             "SP7001's 942) and for the SP7001 plug-in blob in the table image. "
+                             "LINK: the bytes run at that address (copied to RAM), as in "
+                             "gen_image_s.py --code; the tables name their procedures by it.")
     parser.add_argument("--no-manual", action="store_true",
                         help="emit only the reflection-table names (no memory map, no manual "
                              "symbols) -- e.g. for an image other than the build-941 program")
@@ -322,8 +368,11 @@ def main():
     START_ALIGNED = not args.end_aligned
     PROGRAM_BASE = args.program_base
     if args.code_range:
-        rngs = [tuple(int(x, 0) for x in r.split(":")) for r in args.code_range]
-        _is_code = lambda v: any(lo <= v - PROGRAM_BASE < hi for lo, hi in rngs)
+        parsed = [tuple(int(x, 0) for x in r.split(":")) for r in args.code_range]
+        rngs = [r for r in parsed if len(r) == 2]
+        LINKED[:] = [r for r in parsed if len(r) == 3]
+        _is_code = lambda v: (any(lo <= v - PROGRAM_BASE < hi for lo, hi in rngs)
+                              or _linked_off(v) is not None)
         CODE_LO, CODE_HI = min(r[0] for r in rngs), max(r[1] for r in rngs)
 
     data = open(args.program_rom, "rb").read()

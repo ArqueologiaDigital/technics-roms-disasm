@@ -124,11 +124,15 @@ and what is still a blob: `../kn6000/notes/data-region.md`.
 
 ## Open work
 
-- Names: 10,295 entries are still `func_<ADDR>`. `make ported-names` carries unique,
-  non-trivial matches from the KN7000, exact or, with `--fuzzy`, near-exact. Names from the
-  KN2400's and the other KN6xxx's reflection tables have not been carried between the
-  siblings yet (the KN7000 takes this tree's: `../kn7000/tools/port_sibling_names.py`).
-- RAM and I/O addresses are still numbers in the source (data addresses are labels).
+- Names: 10,098 entries are still `func_<ADDR>` (2026-11-02). `make ported-names` carries
+  unique, non-trivial matches from the KN7000 (exact, or with `--fuzzy` near-exact), then
+  from the two other siblings' reflection and hand names (`--also-a`, lane mn10300-names:
+  KN6500 0, KN2400 0 more names; what the siblings name and this image does not is their own code).
+  What is left is per-subsystem naming (callers, strings, MILK messages).
+- RAM addresses: the on-chip registers and board latches are names
+  (`../kn7000/src/include/mn103002a_sfr.inc`), and a `kn6000_manual.sym` name of a RAM
+  address is spelled in the code; 19,019 RAM operands over 2,944 addresses are still numbers
+  (`../kn7000/notes/mn10300-names/README.md`, "RAM addresses").
 - Part of the data region is still `.incbin_range` (`../kn6000/notes/data-region.md`, "What is
   still generic"): generic 0; the census-opaque pieces fell from 2,175 / 39,985 to 1,145 / 24,654 bytes with
   lane mn10300-data's passes (2026-11-02; what is left and why: `../kn7000/notes/mn10300-data/README.md`

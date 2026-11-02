@@ -104,13 +104,87 @@ The `func_` count is the number of function labels that no symbol file names:
 
 ## Still open
 
-- Name, by reading the code, 935's and 893's own versions of the DSP host-port routines that
-  941 rewrote. They are at the front of region 1, `0x48404D10` to `0x48407CA8`, where the
-  two builds have the same code apart from relocated absolute addresses (so they are not
-  byte-identical there). The four 941 names that found no place would name them if the code were
-  the same.
-- 893's `func_` labels and the SD-card code that 941 reworked (the `SdSnd*` index accessors
-  that have no counterpart) are named only where 941's names port.
+- ~~Name, by reading the code, 935's and 893's own versions of the DSP host-port routines that
+  941 rewrote.~~ **CLOSED 2026-11-02** (lane mn10300-names). The range given here before,
+  `0x48404D10`..`0x48407CA8`, is wrong for 935 and 893. In those builds that range holds the code
+  941 has at `0xD29C`..`0x1023C` (the JPEG engine, `ResetEntry`). 935's and 893's DSP host-port
+  block is **`0x4840AE62`..`0x4840B696`**, at the same address in both builds and with the same
+  code apart from relocated addresses. 941 moved it to `0x48404D10`..`0x4840557E`. The probe
+  `notes/mn10300-names-probes/oldbuilds_dsp_hostport_match.py` splits both blocks at their
+  function starts and finds 35 functions on each side, in the same order. 30 pairs have the same
+  relocation-masked code. The other five differ as follows:
+  - `DspPortRead` and `DspPortWrite`: 941 sets the bus control word `0x32000026` to `0x924`
+    around the data-port access;
+  - `DspPortWriteChecked` and `DspPortWriteSlow`: a callee frame size;
+  - `DspDebugPrintHex16`: 941 has a dead `nop; ret` after it.
+
+  That is all 941 "rewrote" here; the rest is the move. The four names that found no place sit at
+  the same call entries as in 941:
+
+  | name             | 941          | 935 / 893    |
+  |------------------|--------------|--------------|
+  | `DspFullReinit`  | `0x48404FF6` | `0x4840B10E` |
+  | `DspWritePMWord` | `0x484050B8` | `0x4840B1D0` |
+  | `DspWriteDMWord` | `0x4840511A` | `0x4840B232` |
+  | `DspRegWrite`    | `0x484052E0` | `0x4840B3F8` |
+
+  The lane also names the block's 29 unnamed helpers in all three builds: `DspPortRead` /
+  `DspPortWrite` (port id `0x9C2` = the index port `0x98000000`, `0x9C4` = the data port
+  `0x9C000000`), `DspWaitReady`, `DspSetIndex`, `DspRegRead`, the `*Slow` variants that raise the
+  bus wait states, `DspHostPortStatus`, `DspBootRunTestRecord`, `StrapBit3Debounced`, and the
+  RAM flags `DspHostPortError` / `DspReadyWaitEnabled`. 941's rows go in `kn7000_manual.sym`, and
+  935's and 893's in `kn7000_b935_own.sym` / `kn7000_b893_own.sym`.
+
+  Two causes kept these names from porting. First, the offset map aligns 941's moved block only
+  as single bytes scattered across 893's moved code. Second, `tools/port_names_by_code.py` takes
+  the build's candidates from its `func_<ADDR>` labels, which sit at the `add -N, sp` prologue,
+  while 941 names these four at the call entry 3 bytes in, so the two signatures never compare
+  equal. `kn7000_manual.sym` also said `DspFullReinit` "downloads the kernel then every effect
+  record". The code does something else. It pulses the DSP reset line (GPIO `0x36008004` bit 7),
+  sets the ready line's interrupt mode, and then makes up to 11 attempts to write `0x91919191` and
+  `0x20` to index 0 one byte at a time and read them back. A good read-back clears
+  `DspHostPortError`.
+- 893's `func_` labels and the SD-card code that 941 reworked are named only where 941's
+  names port. **Measured and split 2026-11-02**
+  (`notes/mn10300-names-probes/oldbuilds_b893_func_census.py`, at `c240d1c0b`). 893 has 6,463
+  `func_` labels; the 6,615 in the table below is an older count. They fall into four classes:
+  - **6,402** have a 941 twin that 941 does not name either. These are named by naming 941.
+  - **5** have a twin that 941 now names but that 893 does not carry yet: `TickHookStub`,
+    `TickHookPass`, `PanelService`, `PanelPump`, `TickJobsTask`. These are new, uncommitted rows of
+    `kn7000_manual.sym`, and `make symbols-893` carries them.
+  - **16** have a same-code twin in 941 within 0x100 bytes, but no 16-byte 1:1 run covers their
+    first byte.
+  - **40** have no twin at all.
+
+  The SD-card part is **CLOSED**:
+  - **893's SD SOUND / SD AUDIO cursor accessors are mislabelled.** 893 keeps those cursors 8
+    bytes lower in RAM (`0x500062F4..`, against 941's `0x500062FC..`). The offset map therefore
+    aligned 941's byte-identical one-line getters with the wrong variables, and six ported names
+    sit on the wrong routine. `SdAudSongIndexGet` at `0x48572487` is really `SdSndSongIndexGet`,
+    for example, and `SdSndSongIndexGet` at `0x48572499` is really `SdSndPlayChIndexGet`.
+    `check-names-893` cannot see this, because the masked code is identical. Each setter's bound
+    and store fixes which variable is which. `oldbuilds_ported_ram_check.py` compares the RAM
+    operands of all 681 short ported routines that name RAM against the map's RAM deltas, and only
+    one disagrees: `SdAudSongIndexSet`. The deltas come from the same mis-aligned runs, so the
+    getters themselves still look consistent to it.
+  - The eight "unported" `SdSnd*` rows all have their 893 routine. `kn7000_b893_own.sym` gives the
+    15 corrected rows, at `0x48572475`..`0x48572599`.
+  - The other SD near-twins (`0x485583C9` after `SdcFmm`, and `0x4855E040`, `0x4855E09F` and
+    `0x4855E0D6`, the SD free-space cache) are unnamed in 941 too.
+
+  Of the 40 with no twin, 33 are the DSP block above, now named. The remaining **7** are open,
+  with this next step: find the 941 routine that has the same callers, then name both builds.
+  - `0x48404D10`, `0x48404E71` and `0x48405091` are JPEG decoder helpers. Their 941 twins are the
+    unnamed `func_4840D29C`, `func_4840D3FD` and `func_4840D61D`: same prologue, edited bodies.
+  - `0x484101FD` is a routine nothing calls: it waits 20 ticks, calls `DspManagerInit`, then
+    loops over `func_4841222C(0x80 | n, 0xFF)`.
+  - `0x48451649` (after `GetChord`) reads `GetM3EmVal(0x00C00000 | ...)`.
+  - `0x485785B0` and `0x485788D8` are SD AUDIO player state routines.
+    `0x485785B0` reloads the tempo through `TempoBpmReloadWrite`.
+    `0x485788D8` requires `func_48577DCD() == 2`.
+
+  The other 9 near-twins are also unnamed in 941: `0x48523537`, `0x4852358B` and `0x4852365C`
+  (after `SingleLoad*`), and `0x4852F74D`, `0x4852F76C` and `0x4852F77B` (after `ResetSave*`).
 - ~~`scripts/analysis/semantic_score.py` and `doc_quality_census.py` include neither 942 nor these
   builds.~~ **CLOSED 2026-10-31** (lane open4/misc): 942 has been rated since rules 4 (2026-10-24), and
   both scripts now list `program935` and `program893` as well (semantic score rules 6).  At the lane's
@@ -139,7 +213,24 @@ saves the maps in `build/offset-maps/`, keyed by the SHA-1 of both images and of
   `DspBootDefaultEffects` and `DspBootProbe` at the same addresses, by code;
 - after the library loader's last record, 893 has one byte more than 941 and 935: `0xF0`, at
   `0x3F55CE`. It is emitted as a data island of this build alone (`PORTED_BUILDS["b893"]
-  ["islands"]`), with a TODO, because its purpose is unknown;
+  ["islands"]`). **Checked 2026-11-02:** nothing reads it.
+  - The loader is `func_484D782E` in 893 and `func_484D7A3B` in 941. `ResetEntry`'s tail calls
+    it just before `jmp KernelStart`. It reads 12-byte records `{u16 flags, u16 len, u32 src, u32
+    dest}`. For a record without bit 15 it takes the length from the next record's `src`; for the
+    record with bit 15 it uses `len`. It copies the bytes and stops after that record:
+    `mov a3, d0; and 0x8000, d0; bne` -> `retf`.
+  - No 32-bit word of the image points at `0x487F55CE`.
+  - `kn7000_ic18.sym` names no checksum of the program flash; the boot ROM's sums cover update
+    disks only.
+  - The boot ROM's update writer stops at the stream's size. `UpdFlashFlush` pads only the last
+    partial word, and it pads with 0xFF.
+
+  So the byte belongs to the image itself and is not a flash leftover from a short update. The
+  v1.4 upper half (build 929, `kn7000_program_{even,odd}_v1.4_b929_upper`) ends at its record too,
+  as 941 and 935 do. [INFERENCE] The tool that built 893's image left it there. No v1.3 update
+  disk is held to check this against. Also, the record-1 comment that `gen_program_s.py` carries
+  over from 941 says "length 0xDF15" in 893 too. 893's word is `0xDF02`, the low half of its own
+  library length `0x3DF02`; 941's and 935's are `0xDF15`;
 - 941's `LibF64ToI16` (library) has no counterpart, and its LIB_CONVERT range is dropped.
 
 | what                                                                   | value        | from                      |

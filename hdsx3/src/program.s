@@ -11,6 +11,7 @@
 .include "src/symbols.inc"
 .include "src/labels.inc"
 .include "src/program/data/gui_code_ids.inc"
+.include "../kn7000/src/include/mn103002a_sfr.inc"
 
 	.ascii	"XAPR"
 	.long	XaprTrailerSignature
@@ -59396,13 +59397,13 @@ func_97824338_entry_L93:
 	asl2	d0
 	mov	0x9798ad40, a0
 	mov	(d0, a0), d0
-	and	0x20000000, d0
-	cmp	0x20000000, d0
+	and	IVAR0, d0
+	cmp	IVAR0, d0
 	beq	func_97824338_entry_Lb2
 	jmp	func_97824338_entry_L1bd
 func_97824338_entry_Lb2:
 	mov	(0x97913fc0), d0
-	sub	0x20000000, d0
+	sub	IVAR0, d0
 	mov	d0, (0x97913fc0)
 	mov	(XaprHostRegistry), a0
 	mov	(0x107c, a0), a0

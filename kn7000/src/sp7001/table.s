@@ -9,14 +9,14 @@
 # 0x200, then 84 asset segments. Segment names and comments come from
 # tools/table_segments.py; the JPEG segments are files in src/table/.
 # Reference image: kn7000_table_sp7001.rom, SHA-1 482e73af2c84a257ebc835292943cb159b6d1d07.
-# Plug-in: 141 code chunks converted to MN10300 assembly; its data is typed (src/sp7001/plugin/data/).
+# Plug-in: 144 code chunks converted to MN10300 assembly; its data is typed (src/sp7001/plugin/data/).
 
 .include "src/table/style_macros.inc"   # the style format's record and event macros
 
 .equ TABLE_ROM_BASE, 0x48000000
 .mnbase 0x48000000   # CPU address of output offset 0 (for PC-relative ops)
 
-# 334 symbols referenced by the plug-in source (CPU addresses)
+# 337 symbols referenced by the plug-in source (CPU addresses)
 .equ XapSlotDefault, 0x483E803C
 .equ func_483E803E, 0x483E803E
 .equ func_483E8071, 0x483E8071
@@ -100,8 +100,8 @@
 .equ loc_483EB662, 0x483EB662
 .equ loc_483EB680, 0x483EB680
 .equ loc_483EB6A2, 0x483EB6A2
-.equ func_483EB6A4, 0x483EB6A4
-.equ func_483EB6A4_entry, 0x483EB6A7
+.equ KssDialogShow, 0x483EB6A4
+.equ KssDialogShow_entry, 0x483EB6A7
 .equ loc_483EB95F, 0x483EB95F
 .equ loc_483EB967, 0x483EB967
 .equ func_483EB967_entry, 0x483EB96A
@@ -115,22 +115,22 @@
 .equ loc_483EBC0D, 0x483EBC0D
 .equ func_483EBC0F, 0x483EBC0F
 .equ func_483EBC0F_entry, 0x483EBC12
-.equ loc_483EBCC9, 0x483EBCC9
+.equ KssUnhandledException, 0x483EBCC9
 .equ func_483EBCC9_entry, 0x483EBCCC
 .equ loc_483EBD8D, 0x483EBD8D
-.equ func_483EBD8F, 0x483EBD8F
-.equ func_483EBD8F_entry, 0x483EBD92
+.equ KssRsprintf, 0x483EBD8F
+.equ KssRsprintf_entry, 0x483EBD92
 .equ loc_483EBE1E, 0x483EBE1E
 .equ loc_483EBE82, 0x483EBE82
 .equ func_483EBE84, 0x483EBE84
 .equ loc_483EBF24, 0x483EBF24
-.equ func_483EBF26, 0x483EBF26
-.equ func_483EBF26_entry, 0x483EBF29
+.equ KssThrow, 0x483EBF26
+.equ KssThrow_entry, 0x483EBF29
 .equ loc_483EBFC0, 0x483EBFC0
-.equ func_483EBFC2, 0x483EBFC2
-.equ func_483EBFC2_entry, 0x483EBFC5
+.equ KssThrowBug, 0x483EBFC2
+.equ KssThrowBug_entry, 0x483EBFC5
 .equ loc_483EBFF2, 0x483EBFF2
-.equ loc_483EC03A, 0x483EC03A
+.equ KssTraceForward, 0x483EC03A
 .equ func_483EC03A_entry, 0x483EC03D
 .equ loc_483EC077, 0x483EC077
 .equ func_483EC079, 0x483EC079
@@ -139,8 +139,8 @@
 .equ func_483EC1BE, 0x483EC1BE
 .equ func_483EC1BE_entry, 0x483EC1C1
 .equ loc_483EC486, 0x483EC486
-.equ func_483EC488, 0x483EC488
-.equ func_483EC488_entry, 0x483EC48B
+.equ KssLogPrintf, 0x483EC488
+.equ KssLogPrintf_entry, 0x483EC48B
 .equ loc_483EC56D, 0x483EC56D
 .equ loc_483EC58F, 0x483EC58F
 .equ loc_483EC5BA, 0x483EC5BA
@@ -154,39 +154,42 @@
 .equ func_483EC899, 0x483EC899
 .equ func_483EC899_entry, 0x483EC89C
 .equ loc_483EC9BB, 0x483EC9BB
-.equ func_483EC9BD, 0x483EC9BD
-.equ func_483EC9BD_entry, 0x483EC9C0
+.equ KssFwrite, 0x483EC9BD
+.equ KssFwrite_entry, 0x483EC9C0
 .equ loc_483ECA04, 0x483ECA04
-.equ func_483ECA06, 0x483ECA06
-.equ func_483ECA06_entry, 0x483ECA09
+.equ KssFread, 0x483ECA06
+.equ KssFread_entry, 0x483ECA09
 .equ loc_483ECA4D, 0x483ECA4D
-.equ func_483ECA4F, 0x483ECA4F
+.equ KssFileCopy, 0x483ECA4F
 .equ loc_483ECB76, 0x483ECB76
 .equ loc_483ECB8D, 0x483ECB8D
 .equ func_483ECB8F, 0x483ECB8F
 .equ func_483ECB8F_entry, 0x483ECB92
 .equ loc_483ECC07, 0x483ECC07
+.equ KssFileSkip, 0x483ECC09
 .equ loc_483ECC6B, 0x483ECC6B
 .equ KssPad16, 0x483ECC6D
 .equ loc_483ECC8C, 0x483ECC8C
+.equ KssTextFieldCopy, 0x483ECC8E
 .equ loc_483ECCD4, 0x483ECCD4
-.equ loc_483ECCDC, 0x483ECCDC
+.equ KssStrUpper, 0x483ECCDC
 .equ loc_483ECCFD, 0x483ECCFD
-.equ func_483ECCFF, 0x483ECCFF
-.equ func_483ECCFF_entry, 0x483ECD02
+.equ KssSdCardCheck, 0x483ECCFF
+.equ KssSdCardCheck_entry, 0x483ECD02
 .equ loc_483ECD5D, 0x483ECD5D
+.equ KssMasterCodeCheck, 0x483ECD5F
 .equ loc_483ECD83, 0x483ECD83
 .equ func_483ECDF5, 0x483ECDF5
 .equ func_483ECDF5_entry, 0x483ECDF8
 .equ loc_483ED264, 0x483ED264
-.equ func_483ED266, 0x483ED266
-.equ func_483ED266_entry, 0x483ED269
+.equ PtrStrListCreate, 0x483ED266
+.equ PtrStrListCreate_entry, 0x483ED269
 .equ loc_483ED2D0, 0x483ED2D0
 .equ func_483ED2D2, 0x483ED2D2
 .equ func_483ED2D2_entry, 0x483ED2D5
 .equ loc_483ED343, 0x483ED343
-.equ func_483ED345, 0x483ED345
-.equ func_483ED345_entry, 0x483ED348
+.equ PtrStrListAdd, 0x483ED345
+.equ PtrStrListAdd_entry, 0x483ED348
 .equ loc_483ED393, 0x483ED393
 .equ func_483ED395, 0x483ED395
 .equ func_483ED395_entry, 0x483ED398
@@ -198,12 +201,12 @@
 .equ func_483ED48A_entry, 0x483ED48D
 .equ loc_483ED4EE, 0x483ED4EE
 .equ func_483ED4EE_entry, 0x483ED4F1
-.equ loc_483ED51F, 0x483ED51F
+.equ PtrStrListCount, 0x483ED51F
 .equ loc_483ED524, 0x483ED524
-.equ loc_483ED553, 0x483ED553
+.equ PtrStrListClear, 0x483ED553
 .equ loc_483ED562, 0x483ED562
-.equ func_483ED564, 0x483ED564
-.equ func_483ED564_entry, 0x483ED567
+.equ StrListCreate, 0x483ED564
+.equ StrListCreate_entry, 0x483ED567
 .equ loc_483ED5C9, 0x483ED5C9
 .equ func_483ED5CB, 0x483ED5CB
 .equ func_483ED5CB_entry, 0x483ED5CE
@@ -2435,1996 +2438,2003 @@ ResFont11Glyphs:
 # program's copy 0x485b7370), 8 zero bytes, then 220 records of 0x18 bytes, which fill
 # the segment. Read through TableRomSeg01PtrSize by SramRecordsLoadFactory: it copies
 # records lo..hi over the battery-SRAM table at 0x84030ff8 (same stride), or a
-# program-ROM default record (0x485b737e) when the signature does not match. Each record
-# is eight 3-byte entries (zzzj_voice, src/table/style_macros.inc). TODO: what the 220
-# records configure.
+# program-ROM default record (0x485b737e) when the signature does not match. They are
+# the SOUND ARRANGER's factory settings (its help text: "There are some preset settings
+# already in the Sound Arranger"): record n is preset rhythm n, counted through
+# GenreStyleTable's genres 0..13 (StyleIdToPresetOrdinal 0x4843facd; CUSTOM and MEMORY
+# have none), and its eight entries (zzzj_voice, src/table/style_macros.inc) are the
+# {program, bank LSB, bank MSB} the arranger gives the accompaniment parts, in the order
+# Drum, Perc, Bass, Acc1-Acc5 (0x485b73a0 maps M3 parts 0x13..0x1a to them, 0x485b7396
+# the style parts). Bit 7 of entry 0's program byte = the arranger is ON for the rhythm
+# (0 in all 220; SndArgOnSet 0x4843fce6), bit 7 of entries 2..7 = that part's CC94 127
+# instead of 0 (SndArgTemplateApply 0x4843ffd0, the part's 0x00b0005e). Probe:
+# notes/mn10300-names-probes/songtable_zzzj.py.
 SramRecordDefaultsZZZJ:
     .ascii	"ZZZJ"
     .byte	0
     .ascii	"K"
-    .byte	0
-    .byte	220		# record count (0xDC)
+    .be16	220		# record count (func_48440158 reads the SRAM copy's as a u16BE; 'ZZZI' marks an older one)
     .space	8, 0x00
-SramRecordDefault000:
-    zzzj_voice	0x1e, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x40, 0x20
-    zzzj_voice	0x19, 0x00, 0x20
-    zzzj_voice	0x18, 0x10, 0x20
-    zzzj_voice	0x2e, 0x00, 0x20
-    zzzj_voice	0x1f, 0x30, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-SramRecordDefault001:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x40, 0x20
-    zzzj_voice	0x1a, 0x00, 0x20
-    zzzj_voice	0x1b, 0x40, 0x20
-    zzzj_voice	0x05, 0x10, 0x20
-    zzzj_voice	0x3f, 0x00, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-SramRecordDefault002:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x1b, 0x11, 0x20
-    zzzj_voice	0x1b, 0x18, 0x20
-    zzzj_voice	0x1f, 0x30, 0x20
-    zzzj_voice	0x1b, 0x18, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault003:
-    zzzj_voice	0x24, 0x00, 0x26
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x21, 0x44, 0x20
-    zzzj_voice	0x04, 0x14, 0x20
-    zzzj_voice	0x07, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x5f, 0x10, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault004:
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x19, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x1b, 0x18, 0x20
-    zzzj_voice	0x1a, 0x30, 0x20
-    zzzj_voice	0x35, 0x20, 0x20
-    zzzj_voice	0x35, 0x20, 0x20
-    zzzj_voice	0x58, 0x10, 0x20
-SramRecordDefault005:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x1e, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x05, 0x14, 0x20
-    zzzj_voice	0x34, 0x40, 0x20
-    zzzj_voice	0x1b, 0x01, 0x20
-    zzzj_voice	0x1b, 0x21, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-SramRecordDefault006:
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x08, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-    zzzj_voice	0x05, 0x10, 0x20
-    zzzj_voice	0x19, 0x00, 0x20
-    zzzj_voice	0x1b, 0x11, 0x20
-    zzzj_voice	0x32, 0x00, 0x20
-SramRecordDefault007:
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x01, 0x30, 0x20
-    zzzj_voice	0x58, 0x10, 0x20
-    zzzj_voice	0x1a, 0x30, 0x20
-    zzzj_voice	0x34, 0x01, 0x20
-    zzzj_voice	0x51, 0x74, 0x20
-SramRecordDefault008:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x21, 0x40, 0x20
-    zzzj_voice	0x85, 0x00, 0x20
-    zzzj_voice	0x9b, 0x21, 0x20
-    zzzj_voice	0x33, 0x00, 0x20
-    zzzj_voice	0x58, 0x30, 0x20
-    zzzj_voice	0x30, 0x08, 0x20
-SramRecordDefault009:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x08, 0x00, 0x26
-    zzzj_voice	0x26, 0x40, 0x20
-    zzzj_voice	0x59, 0x08, 0x20
-    zzzj_voice	0x04, 0x10, 0x20
-    zzzj_voice	0x31, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault010:
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x03, 0x00, 0x20
-    zzzj_voice	0x42, 0x30, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x35, 0x50, 0x20
-    zzzj_voice	0x3d, 0x60, 0x20
-SramRecordDefault011:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x28, 0x00, 0x26
-    zzzj_voice	0x20, 0x10, 0x20
-    zzzj_voice	0x01, 0x00, 0x20
-    zzzj_voice	0x19, 0x28, 0x20
-    zzzj_voice	0x08, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault012:
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x08, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-    zzzj_voice	0x1b, 0x11, 0x20
-    zzzj_voice	0x35, 0x50, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault013:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x22, 0x20, 0x20
-    zzzj_voice	0x11, 0x14, 0x20
-    zzzj_voice	0x1b, 0x18, 0x20
-    zzzj_voice	0x41, 0x04, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault014:
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x1c, 0x01, 0x20
-    zzzj_voice	0x02, 0x00, 0x20
-    zzzj_voice	0x1b, 0x41, 0x20
-    zzzj_voice	0x1b, 0x01, 0x20
-    zzzj_voice	0x43, 0x00, 0x20
-SramRecordDefault015:
-    zzzj_voice	0x1e, 0x00, 0x26
-    zzzj_voice	0x1d, 0x00, 0x26
-    zzzj_voice	0x27, 0x08, 0x20
-    zzzj_voice	0x34, 0x24, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x58, 0x40, 0x20
-    zzzj_voice	0x04, 0x10, 0x20
-    zzzj_voice	0x04, 0x10, 0x20
-SramRecordDefault016:
-    zzzj_voice	0x1a, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x27, 0x08, 0x20
-    zzzj_voice	0x01, 0x30, 0x20
-    zzzj_voice	0x07, 0x00, 0x20
-    zzzj_voice	0x35, 0x20, 0x20
-    zzzj_voice	0x51, 0x00, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-SramRecordDefault017:
-    zzzj_voice	0x1e, 0x00, 0x26
-    zzzj_voice	0x40, 0x00, 0x26
-    zzzj_voice	0x26, 0x08, 0x20
-    zzzj_voice	0x34, 0x28, 0x20
-    zzzj_voice	0x01, 0x00, 0x20
-    zzzj_voice	0x1b, 0x18, 0x20
-    zzzj_voice	0x78, 0x40, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault018:
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x22, 0x00, 0x20
-    zzzj_voice	0x1b, 0x10, 0x20
-    zzzj_voice	0x1b, 0x20, 0x20
-    zzzj_voice	0x90, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault019:
-    zzzj_voice	0x10, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x1b, 0x11, 0x20
-    zzzj_voice	0x1b, 0x18, 0x20
-    zzzj_voice	0x1b, 0x11, 0x20
-    zzzj_voice	0x12, 0x18, 0x20
-    zzzj_voice	0x3d, 0x60, 0x20
-SramRecordDefault020:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x01, 0x04, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x02, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x30, 0x08, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault021:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x1b, 0x10, 0x20
-    zzzj_voice	0x1c, 0x20, 0x20
-    zzzj_voice	0x90, 0x08, 0x20
-    zzzj_voice	0x2e, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault022:
-    zzzj_voice	0x1a, 0x00, 0x26
-    zzzj_voice	0x38, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x03, 0x00, 0x20
-    zzzj_voice	0x3e, 0x00, 0x20
-    zzzj_voice	0x1b, 0x21, 0x20
-    zzzj_voice	0x1b, 0x01, 0x20
-    zzzj_voice	0x3d, 0x50, 0x20
-SramRecordDefault023:
-    zzzj_voice	0x1d, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x01, 0x30, 0x20
-    zzzj_voice	0x1b, 0x40, 0x20
-    zzzj_voice	0x1f, 0x10, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault024:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x24, 0x00, 0x20
-    zzzj_voice	0x00, 0x28, 0x20
-    zzzj_voice	0x34, 0x1c, 0x20
-    zzzj_voice	0x1c, 0x00, 0x20
-    zzzj_voice	0x1c, 0x20, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault025:
-    zzzj_voice	0x1d, 0x04, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x26, 0x0d, 0x20
-    zzzj_voice	0x2e, 0x00, 0x20
-    zzzj_voice	0x3d, 0x20, 0x20
-    zzzj_voice	0x32, 0x10, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault026:
-    zzzj_voice	0x10, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x27, 0x20, 0x20
-    zzzj_voice	0x06, 0x00, 0x20
-    zzzj_voice	0x34, 0x3a, 0x20
-    zzzj_voice	0x35, 0x24, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault027:
-    zzzj_voice	0x1c, 0x00, 0x26
-    zzzj_voice	0x1b, 0x00, 0x26
-    zzzj_voice	0x25, 0x00, 0x20
-    zzzj_voice	0x04, 0x30, 0x20
-    zzzj_voice	0x58, 0x10, 0x20
-    zzzj_voice	0x22, 0x20, 0x20
-    zzzj_voice	0x64, 0x00, 0x20
-    zzzj_voice	0x34, 0x10, 0x20
-SramRecordDefault028:
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x02, 0x48, 0x20
-    zzzj_voice	0x1b, 0x18, 0x20
-    zzzj_voice	0x85, 0x00, 0x20
-    zzzj_voice	0x58, 0x00, 0x20
-    zzzj_voice	0x1e, 0x00, 0x20
-SramRecordDefault029:
-    zzzj_voice	0x19, 0x00, 0x26
-    zzzj_voice	0x02, 0x00, 0x26
-    zzzj_voice	0x27, 0x28, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-    zzzj_voice	0x35, 0x2a, 0x20
-    zzzj_voice	0x2e, 0x00, 0x20
-    zzzj_voice	0x4b, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault030:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x48, 0x00, 0x26
-    zzzj_voice	0x26, 0x40, 0x20
-    zzzj_voice	0x06, 0x00, 0x20
-    zzzj_voice	0x34, 0x2c, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-    zzzj_voice	0x58, 0x10, 0x20
-SramRecordDefault031:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x1b, 0x18, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-    zzzj_voice	0x5a, 0x50, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault032:
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x1b, 0x00, 0x20
-    zzzj_voice	0x04, 0x04, 0x20
-    zzzj_voice	0x3d, 0x61, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault033:
-    zzzj_voice	0x08, 0x00, 0x26
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x1c, 0x01, 0x20
-    zzzj_voice	0x35, 0x40, 0x20
-    zzzj_voice	0x30, 0x18, 0x20
-    zzzj_voice	0x04, 0x10, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-SramRecordDefault034:
-    zzzj_voice	0x1e, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x35, 0x22, 0x20
-    zzzj_voice	0x19, 0x00, 0x20
-    zzzj_voice	0x35, 0x20, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-SramRecordDefault035:
-    zzzj_voice	0x19, 0x00, 0x26
-    zzzj_voice	0x01, 0x04, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x01, 0x30, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x34, 0x2c, 0x20
-    zzzj_voice	0x35, 0x32, 0x20
-    zzzj_voice	0x2f, 0x00, 0x20
-SramRecordDefault036:
-    zzzj_voice	0x19, 0x00, 0x26
-    zzzj_voice	0x02, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x04, 0x14, 0x20
-    zzzj_voice	0x05, 0x10, 0x20
-    zzzj_voice	0x3e, 0x20, 0x20
-    zzzj_voice	0x90, 0x08, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault037:
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x21, 0x30, 0x20
-    zzzj_voice	0x34, 0x24, 0x20
-    zzzj_voice	0x19, 0x00, 0x20
-    zzzj_voice	0x04, 0x14, 0x20
-    zzzj_voice	0x1b, 0x11, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault038:
-    zzzj_voice	0x11, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x27, 0x20, 0x20
-    zzzj_voice	0x01, 0x00, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-    zzzj_voice	0x33, 0x00, 0x20
-    zzzj_voice	0x1b, 0x10, 0x20
-    zzzj_voice	0x19, 0x00, 0x20
-SramRecordDefault039:
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x1d, 0x00, 0x26
-    zzzj_voice	0x26, 0x0d, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-    zzzj_voice	0x1c, 0x01, 0x20
-    zzzj_voice	0x1b, 0x11, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault040:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x1f, 0x04, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x01, 0x01, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x31, 0x00, 0x20
-    zzzj_voice	0x3d, 0x10, 0x20
-    zzzj_voice	0x01, 0x00, 0x20
-SramRecordDefault041:
-    zzzj_voice	0x25, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x27, 0x38, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-    zzzj_voice	0x18, 0x10, 0x20
-    zzzj_voice	0x30, 0x30, 0x20
-    zzzj_voice	0x00, 0x01, 0x20
-    zzzj_voice	0x00, 0x01, 0x20
-SramRecordDefault042:
-    zzzj_voice	0x28, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x04, 0x10, 0x20
-    zzzj_voice	0x3b, 0x00, 0x20
-    zzzj_voice	0x41, 0x38, 0x20
-    zzzj_voice	0x38, 0x30, 0x20
-    zzzj_voice	0x49, 0x14, 0x20
-SramRecordDefault043:
-    zzzj_voice	0x28, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x04, 0x10, 0x20
-    zzzj_voice	0x18, 0x10, 0x20
-    zzzj_voice	0x35, 0x50, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault044:
-    zzzj_voice	0x28, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-    zzzj_voice	0x38, 0x30, 0x20
-    zzzj_voice	0x41, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault045:
-    zzzj_voice	0x40, 0x00, 0x26
-    zzzj_voice	0x40, 0x00, 0x26
-    zzzj_voice	0x21, 0x40, 0x20
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x3d, 0x61, 0x20
-    zzzj_voice	0x38, 0x44, 0x20
-    zzzj_voice	0x41, 0x08, 0x20
-SramRecordDefault046:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x42, 0x14, 0x20
-    zzzj_voice	0x35, 0x26, 0x20
-    zzzj_voice	0x38, 0x00, 0x20
-    zzzj_voice	0x39, 0x18, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault047:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x1a, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x3d, 0x48, 0x20
-    zzzj_voice	0x41, 0x18, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault048:
-    zzzj_voice	0x21, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x84, 0x00, 0x20
-    zzzj_voice	0x1a, 0x00, 0x20
-    zzzj_voice	0x41, 0x1c, 0x20
-    zzzj_voice	0x3b, 0x20, 0x20
-    zzzj_voice	0x43, 0x50, 0x20
-SramRecordDefault049:
-    zzzj_voice	0x28, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x18, 0x18, 0x20
-    zzzj_voice	0x41, 0x00, 0x20
-    zzzj_voice	0x42, 0x00, 0x20
-    zzzj_voice	0x39, 0x18, 0x20
-    zzzj_voice	0x04, 0x10, 0x20
-SramRecordDefault050:
-    zzzj_voice	0x20, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-    zzzj_voice	0x18, 0x10, 0x20
-    zzzj_voice	0x34, 0x20, 0x20
-    zzzj_voice	0x18, 0x10, 0x20
-    zzzj_voice	0x4b, 0x04, 0x20
-SramRecordDefault051:
-    zzzj_voice	0x28, 0x00, 0x26
-    zzzj_voice	0x28, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x1a, 0x00, 0x20
-    zzzj_voice	0x3b, 0x20, 0x20
-    zzzj_voice	0x39, 0x00, 0x20
-    zzzj_voice	0x47, 0x10, 0x20
-    zzzj_voice	0x47, 0x18, 0x20
-SramRecordDefault052:
-    zzzj_voice	0x28, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x31, 0x48, 0x20
-    zzzj_voice	0x18, 0x18, 0x20
-    zzzj_voice	0x39, 0x18, 0x20
-    zzzj_voice	0x31, 0x48, 0x20
-    zzzj_voice	0x1a, 0x08, 0x20
-SramRecordDefault053:
-    zzzj_voice	0x28, 0x00, 0x26
-    zzzj_voice	0x2c, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x18, 0x10, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-    zzzj_voice	0x8b, 0x04, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault054:
-    zzzj_voice	0x20, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x20, 0x10, 0x20
-    zzzj_voice	0x01, 0x00, 0x20
-    zzzj_voice	0x1b, 0x40, 0x20
-    zzzj_voice	0x33, 0x00, 0x20
-    zzzj_voice	0x12, 0x10, 0x20
-    zzzj_voice	0x1d, 0x00, 0x20
-SramRecordDefault055:
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x35, 0x20, 0x20
-    zzzj_voice	0x35, 0x50, 0x20
-    zzzj_voice	0x34, 0x24, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault056:
-    zzzj_voice	0x40, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0xa7, 0x20, 0x20
-    zzzj_voice	0x12, 0x10, 0x20
-    zzzj_voice	0x50, 0x0c, 0x20
-    zzzj_voice	0x50, 0x0c, 0x20
-    zzzj_voice	0x51, 0x08, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault057:
-    zzzj_voice	0x20, 0x00, 0x26
-    zzzj_voice	0x2d, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x84, 0x10, 0x20
-    zzzj_voice	0x1a, 0x00, 0x20
-    zzzj_voice	0x3b, 0x20, 0x20
-    zzzj_voice	0x3b, 0x00, 0x20
-    zzzj_voice	0x3d, 0x00, 0x20
-SramRecordDefault058:
-    zzzj_voice	0x20, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x18, 0x10, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-    zzzj_voice	0x3b, 0x20, 0x20
-    zzzj_voice	0x41, 0x04, 0x20
-    zzzj_voice	0x42, 0x00, 0x20
-SramRecordDefault059:
-    zzzj_voice	0x19, 0x00, 0x26
-    zzzj_voice	0x48, 0x04, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x19, 0x2c, 0x20
-    zzzj_voice	0x41, 0x1c, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault060:
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x38, 0x00, 0x26
-    zzzj_voice	0x51, 0x0c, 0x28
-    zzzj_voice	0x50, 0x0c, 0x20
-    zzzj_voice	0x07, 0x00, 0x20
-    zzzj_voice	0x50, 0x0c, 0x20
-    zzzj_voice	0x39, 0x00, 0x20
-    zzzj_voice	0x03, 0x00, 0x20
-SramRecordDefault061:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x03, 0x00, 0x20
-    zzzj_voice	0x1b, 0x18, 0x20
-    zzzj_voice	0x03, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault062:
-    zzzj_voice	0x24, 0x00, 0x26
-    zzzj_voice	0x28, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x19, 0x08, 0x20
-    zzzj_voice	0x59, 0x20, 0x20
-    zzzj_voice	0x18, 0x0e, 0x20
-    zzzj_voice	0x34, 0x20, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault063:
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x48, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x1b, 0x21, 0x20
-    zzzj_voice	0x01, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x3d, 0x00, 0x20
-    zzzj_voice	0x35, 0x21, 0x20
-SramRecordDefault064:
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x9b, 0x41, 0x20
-    zzzj_voice	0x3b, 0x20, 0x20
-    zzzj_voice	0x30, 0x30, 0x20
-    zzzj_voice	0x5a, 0x10, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault065:
-    zzzj_voice	0x28, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x1a, 0x00, 0x20
-    zzzj_voice	0x43, 0x00, 0x20
-    zzzj_voice	0x43, 0x50, 0x20
-    zzzj_voice	0x47, 0x10, 0x20
-SramRecordDefault066:
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x04, 0x10, 0x20
-    zzzj_voice	0x3d, 0x00, 0x20
-    zzzj_voice	0x15, 0x4c, 0x20
-    zzzj_voice	0x1a, 0x30, 0x20
-    zzzj_voice	0x41, 0x08, 0x20
-SramRecordDefault067:
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x1b, 0x41, 0x20
-    zzzj_voice	0x1b, 0x11, 0x20
-    zzzj_voice	0x43, 0x00, 0x20
-    zzzj_voice	0x3d, 0x48, 0x20
-    zzzj_voice	0x3d, 0x48, 0x20
-SramRecordDefault068:
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x0c, 0x00, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault069:
-    zzzj_voice	0x08, 0x00, 0x26
-    zzzj_voice	0x48, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x01, 0x01, 0x20
-    zzzj_voice	0x19, 0x00, 0x20
-    zzzj_voice	0x1a, 0x20, 0x20
-    zzzj_voice	0x35, 0x20, 0x20
-    zzzj_voice	0x0c, 0x00, 0x20
-SramRecordDefault070:
-    zzzj_voice	0x1d, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x22, 0x20, 0x20
-    zzzj_voice	0x04, 0x10, 0x20
-    zzzj_voice	0x18, 0x0e, 0x20
-    zzzj_voice	0x38, 0x60, 0x20
-    zzzj_voice	0x3d, 0x48, 0x20
-    zzzj_voice	0x3d, 0x30, 0x20
-SramRecordDefault071:
-    zzzj_voice	0x24, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x19, 0x04, 0x20
-    zzzj_voice	0x34, 0x20, 0x20
-    zzzj_voice	0x01, 0x30, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault072:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x04, 0x10, 0x20
-    zzzj_voice	0x3d, 0x18, 0x20
-    zzzj_voice	0x3d, 0x30, 0x20
-    zzzj_voice	0x48, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault073:
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x00, 0x40, 0x20
-    zzzj_voice	0x2d, 0x00, 0x20
-    zzzj_voice	0x18, 0x08, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault074:
-    zzzj_voice	0x21, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x00, 0x40, 0x20
-    zzzj_voice	0x19, 0x50, 0x20
-    zzzj_voice	0x00, 0x40, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault075:
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x85, 0x00, 0x20
-    zzzj_voice	0x5f, 0x10, 0x20
-    zzzj_voice	0x30, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault076:
-    zzzj_voice	0x21, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x18, 0x00, 0x20
-    zzzj_voice	0x01, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault077:
-    zzzj_voice	0x1d, 0x00, 0x26
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x35, 0x2a, 0x20
-    zzzj_voice	0x01, 0x00, 0x20
-    zzzj_voice	0x3f, 0x00, 0x20
-    zzzj_voice	0x38, 0x50, 0x20
-    zzzj_voice	0x3d, 0x60, 0x20
-SramRecordDefault078:
-    zzzj_voice	0x1b, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x00, 0x01, 0x20
-    zzzj_voice	0x32, 0x00, 0x20
-    zzzj_voice	0x35, 0x21, 0x20
-    zzzj_voice	0x57, 0x30, 0x20
-    zzzj_voice	0x49, 0x04, 0x20
-SramRecordDefault079:
-    zzzj_voice	0x20, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x8b, 0x04, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-    zzzj_voice	0x47, 0x20, 0x20
-    zzzj_voice	0x52, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault080:
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-    zzzj_voice	0x34, 0x00, 0x20
-    zzzj_voice	0x58, 0x00, 0x20
-    zzzj_voice	0x32, 0x10, 0x20
-    zzzj_voice	0x50, 0x14, 0x20
-SramRecordDefault081:
-    zzzj_voice	0x11, 0x00, 0x26
-    zzzj_voice	0x11, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x85, 0x00, 0x20
-    zzzj_voice	0x2e, 0x00, 0x20
-    zzzj_voice	0x59, 0x18, 0x20
-    zzzj_voice	0x5f, 0x10, 0x20
-    zzzj_voice	0x34, 0x0c, 0x20
-SramRecordDefault082:
-    zzzj_voice	0x20, 0x00, 0x26
-    zzzj_voice	0x1e, 0x00, 0x26
-    zzzj_voice	0x26, 0x00, 0x20
-    zzzj_voice	0x15, 0x4c, 0x20
-    zzzj_voice	0x49, 0x20, 0x20
-    zzzj_voice	0x57, 0x30, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault083:
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x48, 0x00, 0x26
-    zzzj_voice	0x21, 0x44, 0x20
-    zzzj_voice	0x03, 0x00, 0x20
-    zzzj_voice	0x3e, 0x00, 0x20
-    zzzj_voice	0x38, 0x58, 0x20
-    zzzj_voice	0x49, 0x04, 0x20
-    zzzj_voice	0x5f, 0x10, 0x20
-SramRecordDefault084:
-    zzzj_voice	0x20, 0x00, 0x26
-    zzzj_voice	0x48, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-    zzzj_voice	0x5a, 0x10, 0x20
-    zzzj_voice	0x38, 0x64, 0x20
-    zzzj_voice	0x45, 0x04, 0x20
-SramRecordDefault085:
-    zzzj_voice	0x28, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x19, 0x0e, 0x20
-    zzzj_voice	0x35, 0x20, 0x20
-    zzzj_voice	0x2d, 0x00, 0x20
-    zzzj_voice	0x8b, 0x10, 0x20
-    zzzj_voice	0x7e, 0x31, 0x20
-SramRecordDefault086:
-    zzzj_voice	0x20, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x18, 0x1b, 0x20
-    zzzj_voice	0x19, 0x0e, 0x20
-    zzzj_voice	0x08, 0x40, 0x24
-    zzzj_voice	0x15, 0x40, 0x20
-    zzzj_voice	0x2e, 0x00, 0x20
-SramRecordDefault087:
-    zzzj_voice	0x21, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x22, 0x00, 0x20
-    zzzj_voice	0x19, 0x0e, 0x20
-    zzzj_voice	0x30, 0x30, 0x20
-    zzzj_voice	0x3d, 0x0a, 0x20
-    zzzj_voice	0x51, 0x38, 0x20
-    zzzj_voice	0x2e, 0x10, 0x20
-SramRecordDefault088:
-    zzzj_voice	0x08, 0x00, 0x26
-    zzzj_voice	0x24, 0x00, 0x26
-    zzzj_voice	0x24, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x1a, 0x41, 0x20
-    zzzj_voice	0x1a, 0x08, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault089:
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x1b, 0x20, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault090:
-    zzzj_voice	0x1a, 0x00, 0x26
-    zzzj_voice	0x1a, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x19, 0x0e, 0x20
-    zzzj_voice	0x5d, 0x40, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-    zzzj_voice	0xd8, 0x50, 0x20
-    zzzj_voice	0x4f, 0x30, 0x20
-SramRecordDefault091:
-    zzzj_voice	0x21, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x26
-    zzzj_voice	0x50, 0x00, 0x20
-    zzzj_voice	0x00, 0x01, 0x20
-    zzzj_voice	0x0d, 0x00, 0x20
-    zzzj_voice	0x30, 0x30, 0x20
-    zzzj_voice	0x46, 0x04, 0x20
-    zzzj_voice	0x47, 0x0c, 0x20
-SramRecordDefault092:
-    zzzj_voice	0x1c, 0x00, 0x26
-    zzzj_voice	0x1c, 0x00, 0x26
-    zzzj_voice	0x27, 0x20, 0x20
-    zzzj_voice	0x51, 0x00, 0x20
-    zzzj_voice	0x59, 0x1c, 0x20
-    zzzj_voice	0x1c, 0x00, 0x20
-    zzzj_voice	0x54, 0x48, 0x20
-    zzzj_voice	0x50, 0x18, 0x20
-SramRecordDefault093:
-    zzzj_voice	0x1a, 0x00, 0x26
-    zzzj_voice	0x30, 0x04, 0x26
-    zzzj_voice	0x26, 0x40, 0x20
-    zzzj_voice	0x5f, 0x08, 0x20
-    zzzj_voice	0x67, 0x00, 0x20
-    zzzj_voice	0x5b, 0x20, 0x20
-    zzzj_voice	0x0e, 0x00, 0x20
-    zzzj_voice	0x2e, 0x10, 0x20
-SramRecordDefault094:
-    zzzj_voice	0x28, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-    zzzj_voice	0x8b, 0x04, 0x20
-    zzzj_voice	0x41, 0x04, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault095:
-    zzzj_voice	0x30, 0x00, 0x26
-    zzzj_voice	0x30, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x85, 0x00, 0x20
-    zzzj_voice	0x34, 0x38, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-    zzzj_voice	0x85, 0x00, 0x20
-    zzzj_voice	0x85, 0x00, 0x20
-SramRecordDefault096:
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x20, 0x10, 0x20
-    zzzj_voice	0x5a, 0x10, 0x20
-    zzzj_voice	0x44, 0x50, 0x20
-    zzzj_voice	0x6b, 0x00, 0x20
-    zzzj_voice	0x09, 0x00, 0x20
-    zzzj_voice	0x48, 0x00, 0x20
-SramRecordDefault097:
-    zzzj_voice	0x30, 0x00, 0x26
-    zzzj_voice	0x19, 0x00, 0x26
-    zzzj_voice	0x27, 0x20, 0x20
-    zzzj_voice	0x3d, 0x40, 0x20
-    zzzj_voice	0x3d, 0x20, 0x20
-    zzzj_voice	0x09, 0x00, 0x20
-    zzzj_voice	0x00, 0x01, 0x20
-    zzzj_voice	0x3d, 0x50, 0x20
-SramRecordDefault098:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x21, 0x30, 0x20
-    zzzj_voice	0x58, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x1b, 0x00, 0x20
-    zzzj_voice	0x51, 0x30, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault099:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x10, 0x00, 0x26
-    zzzj_voice	0x50, 0x04, 0x20
-    zzzj_voice	0x6b, 0x00, 0x20
-    zzzj_voice	0x1c, 0x00, 0x20
-    zzzj_voice	0x1e, 0x00, 0x20
-    zzzj_voice	0x58, 0x10, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-SramRecordDefault100:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x30, 0x20
-    zzzj_voice	0x04, 0x10, 0x20
-    zzzj_voice	0x12, 0x18, 0x20
-    zzzj_voice	0x38, 0x50, 0x20
-    zzzj_voice	0x3d, 0x50, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault101:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x30, 0x20
-    zzzj_voice	0x1b, 0x10, 0x20
-    zzzj_voice	0x1b, 0x19, 0x20
-    zzzj_voice	0x92, 0x00, 0x20
-    zzzj_voice	0x38, 0x50, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault102:
-    zzzj_voice	0x1d, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x27, 0x20, 0x20
-    zzzj_voice	0x51, 0x68, 0x20
-    zzzj_voice	0x34, 0x38, 0x20
-    zzzj_voice	0x3d, 0x30, 0x20
-    zzzj_voice	0x3d, 0x20, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault103:
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x10, 0x00, 0x26
-    zzzj_voice	0x27, 0x08, 0x20
-    zzzj_voice	0x59, 0x10, 0x20
-    zzzj_voice	0x01, 0x30, 0x20
-    zzzj_voice	0x1b, 0x10, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault104:
-    zzzj_voice	0x1d, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x1a, 0x30, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-    zzzj_voice	0x58, 0x10, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault105:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x5a, 0x08, 0x20
-    zzzj_voice	0x1b, 0x40, 0x20
-    zzzj_voice	0x58, 0x30, 0x20
-    zzzj_voice	0x18, 0x10, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-SramRecordDefault106:
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x05, 0x30, 0x20
-    zzzj_voice	0x1a, 0x30, 0x20
-    zzzj_voice	0x1c, 0x20, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-    zzzj_voice	0x2f, 0x00, 0x20
-SramRecordDefault107:
-    zzzj_voice	0x02, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x27, 0x20, 0x20
-    zzzj_voice	0x5a, 0x30, 0x20
-    zzzj_voice	0x02, 0x00, 0x20
-    zzzj_voice	0x5a, 0x08, 0x20
-    zzzj_voice	0x0c, 0x00, 0x20
-    zzzj_voice	0x58, 0x00, 0x20
-SramRecordDefault108:
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x44, 0x20
-    zzzj_voice	0x32, 0x00, 0x20
-    zzzj_voice	0x34, 0x38, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault109:
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x24, 0x00, 0x20
-    zzzj_voice	0x00, 0x38, 0x24
-    zzzj_voice	0x1b, 0x41, 0x20
-    zzzj_voice	0x0c, 0x00, 0x20
-    zzzj_voice	0x3d, 0x30, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault110:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x40, 0x20
-    zzzj_voice	0x34, 0x20, 0x20
-    zzzj_voice	0x1b, 0x11, 0x20
-    zzzj_voice	0x38, 0x58, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault111:
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x08, 0x00, 0x26
-    zzzj_voice	0x22, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x1b, 0x01, 0x20
-    zzzj_voice	0x91, 0x00, 0x20
-    zzzj_voice	0x3d, 0x61, 0x20
-    zzzj_voice	0x3d, 0x48, 0x20
-SramRecordDefault112:
-    zzzj_voice	0x24, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x15, 0x4c, 0x20
-    zzzj_voice	0x40, 0x14, 0x20
-    zzzj_voice	0x90, 0x08, 0x20
-    zzzj_voice	0x1a, 0x08, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault113:
-    zzzj_voice	0x1c, 0x00, 0x26
-    zzzj_voice	0x01, 0x04, 0x26
-    zzzj_voice	0x22, 0x00, 0x20
-    zzzj_voice	0x1b, 0x10, 0x20
-    zzzj_voice	0x5a, 0x10, 0x20
-    zzzj_voice	0x11, 0x14, 0x20
-    zzzj_voice	0x10, 0x06, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault114:
-    zzzj_voice	0x20, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x26
-    zzzj_voice	0x26, 0x60, 0x20
-    zzzj_voice	0x1a, 0x00, 0x20
-    zzzj_voice	0x3d, 0x18, 0x20
-    zzzj_voice	0x10, 0x16, 0x20
-    zzzj_voice	0x10, 0x1e, 0x20
-    zzzj_voice	0x11, 0x14, 0x20
-SramRecordDefault115:
-    zzzj_voice	0x10, 0x00, 0x26
-    zzzj_voice	0x48, 0x00, 0x26
-    zzzj_voice	0x26, 0x18, 0x20
-    zzzj_voice	0x19, 0x2a, 0x20
-    zzzj_voice	0x10, 0x1e, 0x20
-    zzzj_voice	0x10, 0x1e, 0x20
-    zzzj_voice	0x10, 0x16, 0x20
-    zzzj_voice	0x18, 0x1c, 0x20
-SramRecordDefault116:
-    zzzj_voice	0x20, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x0a, 0x20, 0x20
-    zzzj_voice	0x13, 0x41, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x10, 0x06, 0x20
-    zzzj_voice	0x10, 0x16, 0x20
-SramRecordDefault117:
-    zzzj_voice	0x2d, 0x00, 0x26
-    zzzj_voice	0x2d, 0x00, 0x26
-    zzzj_voice	0x26, 0x30, 0x20
-    zzzj_voice	0x30, 0x08, 0x20
-    zzzj_voice	0x10, 0x06, 0x20
-    zzzj_voice	0x10, 0x04, 0x20
-    zzzj_voice	0x10, 0x1e, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault118:
-    zzzj_voice	0x2c, 0x00, 0x26
-    zzzj_voice	0x2d, 0x00, 0x26
-    zzzj_voice	0x3f, 0x10, 0x20
-    zzzj_voice	0x59, 0x04, 0x20
-    zzzj_voice	0x56, 0x20, 0x20
-    zzzj_voice	0x19, 0x2c, 0x20
-    zzzj_voice	0x10, 0x1e, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault119:
-    zzzj_voice	0x30, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x5a, 0x40, 0x20
-    zzzj_voice	0x30, 0x08, 0x20
-    zzzj_voice	0x56, 0x20, 0x20
-    zzzj_voice	0x13, 0x40, 0x20
-    zzzj_voice	0x13, 0x58, 0x20
-    zzzj_voice	0x13, 0x44, 0x20
-SramRecordDefault120:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x03, 0x00, 0x20
-    zzzj_voice	0x30, 0x00, 0x20
-    zzzj_voice	0x47, 0x20, 0x20
-    zzzj_voice	0x49, 0x20, 0x20
-    zzzj_voice	0x19, 0x00, 0x20
-SramRecordDefault121:
-    zzzj_voice	0x30, 0x00, 0x26
-    zzzj_voice	0x30, 0x00, 0x26
-    zzzj_voice	0x5a, 0x40, 0x20
-    zzzj_voice	0x13, 0x4c, 0x20
-    zzzj_voice	0x1a, 0x30, 0x20
-    zzzj_voice	0x13, 0x58, 0x20
-    zzzj_voice	0x13, 0x40, 0x20
-    zzzj_voice	0x13, 0x40, 0x20
-SramRecordDefault122:
-    zzzj_voice	0x02, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x19, 0x08, 0x20
-    zzzj_voice	0x1b, 0x40, 0x20
-    zzzj_voice	0x8b, 0x04, 0x20
-    zzzj_voice	0x58, 0x10, 0x20
-    zzzj_voice	0x78, 0x08, 0x20
-SramRecordDefault123:
-    zzzj_voice	0x10, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x24, 0x00, 0x20
-    zzzj_voice	0x03, 0x00, 0x20
-    zzzj_voice	0x1e, 0x10, 0x20
-    zzzj_voice	0x1e, 0x31, 0x20
-    zzzj_voice	0x3f, 0x00, 0x20
-    zzzj_voice	0x54, 0x54, 0x20
-SramRecordDefault124:
-    zzzj_voice	0x08, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x24, 0x00, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-    zzzj_voice	0x1b, 0x40, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x59, 0x00, 0x20
-    zzzj_voice	0x39, 0x64, 0x20
-SramRecordDefault125:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x19, 0x08, 0x20
-    zzzj_voice	0x58, 0x10, 0x20
-    zzzj_voice	0x49, 0x00, 0x20
-    zzzj_voice	0x58, 0x00, 0x20
-    zzzj_voice	0x19, 0x00, 0x20
-SramRecordDefault126:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x21, 0x40, 0x20
-    zzzj_voice	0x19, 0x28, 0x20
-    zzzj_voice	0x35, 0x2c, 0x20
-    zzzj_voice	0x50, 0x00, 0x20
-    zzzj_voice	0x10, 0x1e, 0x20
-    zzzj_voice	0x35, 0x24, 0x20
-SramRecordDefault127:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x20, 0x30, 0x20
-    zzzj_voice	0x01, 0x20, 0x20
-    zzzj_voice	0x19, 0x28, 0x20
-    zzzj_voice	0x34, 0x00, 0x20
-    zzzj_voice	0x09, 0x00, 0x20
-    zzzj_voice	0x33, 0x00, 0x20
-SramRecordDefault128:
-    zzzj_voice	0x08, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x22, 0x00, 0x20
-    zzzj_voice	0x58, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x31, 0x00, 0x20
-    zzzj_voice	0x09, 0x00, 0x20
-    zzzj_voice	0x1b, 0x20, 0x20
-SramRecordDefault129:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x24, 0x00, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-    zzzj_voice	0x1a, 0x30, 0x20
-    zzzj_voice	0x30, 0x16, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault130:
-    zzzj_voice	0x02, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x50, 0x00, 0x20
-    zzzj_voice	0x1b, 0x19, 0x20
-    zzzj_voice	0x3f, 0x08, 0x20
-    zzzj_voice	0x92, 0x00, 0x20
-    zzzj_voice	0x35, 0x51, 0x20
-    zzzj_voice	0x3d, 0x61, 0x20
-SramRecordDefault131:
-    zzzj_voice	0x1e, 0x00, 0x26
-    zzzj_voice	0x01, 0x04, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x05, 0x10, 0x20
-    zzzj_voice	0x11, 0x14, 0x20
-    zzzj_voice	0x35, 0x2c, 0x20
-    zzzj_voice	0x34, 0x26, 0x20
-SramRecordDefault132:
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x24, 0x00, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-    zzzj_voice	0x1e, 0x30, 0x20
-    zzzj_voice	0x12, 0x20, 0x20
-    zzzj_voice	0x90, 0x18, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault133:
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x48, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x03, 0x00, 0x20
-    zzzj_voice	0x35, 0x21, 0x20
-    zzzj_voice	0x3d, 0x61, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault134:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x40, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-    zzzj_voice	0x1c, 0x01, 0x20
-    zzzj_voice	0x01, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault135:
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x1a, 0x00, 0x26
-    zzzj_voice	0x26, 0x40, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x51, 0x68, 0x20
-    zzzj_voice	0x57, 0x30, 0x20
-    zzzj_voice	0x02, 0x48, 0x20
-    zzzj_voice	0x50, 0x00, 0x20
-SramRecordDefault136:
-    zzzj_voice	0x1c, 0x00, 0x26
-    zzzj_voice	0x1e, 0x00, 0x26
-    zzzj_voice	0x27, 0x28, 0x20
-    zzzj_voice	0xd6, 0x08, 0x20
-    zzzj_voice	0x51, 0x00, 0x20
-    zzzj_voice	0x33, 0x20, 0x20
-    zzzj_voice	0x32, 0x40, 0x20
-    zzzj_voice	0x58, 0x10, 0x20
-SramRecordDefault137:
-    zzzj_voice	0x10, 0x00, 0x26
-    zzzj_voice	0x01, 0x04, 0x26
-    zzzj_voice	0x26, 0x60, 0x20
-    zzzj_voice	0x3d, 0x20, 0x20
-    zzzj_voice	0x5d, 0x40, 0x20
-    zzzj_voice	0x5f, 0x18, 0x20
-    zzzj_voice	0x50, 0x00, 0x20
-    zzzj_voice	0x04, 0x40, 0x20
-SramRecordDefault138:
-    zzzj_voice	0x1e, 0x00, 0x26
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x24, 0x00, 0x20
-    zzzj_voice	0x07, 0x00, 0x20
-    zzzj_voice	0x3d, 0x20, 0x20
-    zzzj_voice	0x37, 0x30, 0x20
-    zzzj_voice	0x37, 0x30, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault139:
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x1d, 0x00, 0x26
-    zzzj_voice	0x27, 0x20, 0x20
-    zzzj_voice	0x54, 0x40, 0x20
-    zzzj_voice	0x5f, 0x00, 0x20
-    zzzj_voice	0x53, 0x28, 0x20
-    zzzj_voice	0x5f, 0x00, 0x20
-    zzzj_voice	0x61, 0x00, 0x20
-SramRecordDefault140:
-    zzzj_voice	0x19, 0x00, 0x26
-    zzzj_voice	0x11, 0x00, 0x26
-    zzzj_voice	0x27, 0x28, 0x20
-    zzzj_voice	0x5f, 0x10, 0x20
-    zzzj_voice	0x01, 0x00, 0x20
-    zzzj_voice	0xd6, 0x08, 0x20
-    zzzj_voice	0x51, 0x70, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault141:
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x27, 0x28, 0x20
-    zzzj_voice	0x25, 0x00, 0x20
-    zzzj_voice	0x54, 0x4c, 0x20
-    zzzj_voice	0x51, 0x40, 0x20
-    zzzj_voice	0x53, 0x28, 0x20
-    zzzj_voice	0x50, 0x40, 0x20
-SramRecordDefault142:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x1c, 0x00, 0x26
-    zzzj_voice	0x27, 0x00, 0x20
-    zzzj_voice	0x3d, 0x20, 0x20
-    zzzj_voice	0x41, 0x08, 0x20
-    zzzj_voice	0x01, 0x00, 0x20
-    zzzj_voice	0x66, 0x00, 0x20
-    zzzj_voice	0x07, 0x00, 0x20
-SramRecordDefault143:
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x1d, 0x00, 0x26
-    zzzj_voice	0x27, 0x00, 0x20
-    zzzj_voice	0x34, 0x20, 0x20
-    zzzj_voice	0x51, 0x68, 0x20
-    zzzj_voice	0x1b, 0x41, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-    zzzj_voice	0x58, 0x00, 0x20
-SramRecordDefault144:
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x38, 0x00, 0x26
-    zzzj_voice	0x26, 0x40, 0x20
-    zzzj_voice	0x25, 0x00, 0x20
-    zzzj_voice	0x07, 0x10, 0x20
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x51, 0x30, 0x20
-    zzzj_voice	0x34, 0x20, 0x20
-SramRecordDefault145:
-    zzzj_voice	0x10, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x27, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x59, 0x10, 0x20
-    zzzj_voice	0x01, 0x30, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault146:
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x26, 0x40, 0x20
-    zzzj_voice	0x51, 0x68, 0x20
-    zzzj_voice	0x1a, 0x28, 0x20
-    zzzj_voice	0x3d, 0x48, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault147:
-    zzzj_voice	0x1b, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x27, 0x08, 0x20
-    zzzj_voice	0x5f, 0x00, 0x20
-    zzzj_voice	0x07, 0x30, 0x20
-    zzzj_voice	0x3f, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault148:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x3e, 0x30, 0x20
-    zzzj_voice	0x1c, 0x20, 0x20
-    zzzj_voice	0x3d, 0x48, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault149:
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x21, 0x30, 0x20
-    zzzj_voice	0x5a, 0x08, 0x20
-    zzzj_voice	0x1b, 0x21, 0x20
-    zzzj_voice	0x01, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault150:
-    zzzj_voice	0x1d, 0x00, 0x26
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x21, 0x30, 0x20
-    zzzj_voice	0x05, 0x10, 0x20
-    zzzj_voice	0x1b, 0x41, 0x20
-    zzzj_voice	0x58, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault151:
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x26, 0x08, 0x20
-    zzzj_voice	0x35, 0x21, 0x20
-    zzzj_voice	0x0a, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault152:
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x02, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x04, 0x10, 0x20
-    zzzj_voice	0x1b, 0x41, 0x20
-    zzzj_voice	0x42, 0x00, 0x20
-    zzzj_voice	0x41, 0x08, 0x20
-    zzzj_voice	0x3d, 0x00, 0x20
-SramRecordDefault153:
-    zzzj_voice	0x10, 0x00, 0x26
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x50, 0x48, 0x20
-    zzzj_voice	0x35, 0x50, 0x20
-    zzzj_voice	0x24, 0x00, 0x20
-SramRecordDefault154:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x02, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x19, 0x00, 0x20
-    zzzj_voice	0x04, 0x04, 0x20
-    zzzj_voice	0x90, 0x08, 0x20
-    zzzj_voice	0x35, 0x24, 0x20
-    zzzj_voice	0x35, 0x20, 0x20
-SramRecordDefault155:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-    zzzj_voice	0x91, 0x00, 0x20
-    zzzj_voice	0x3f, 0x00, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault156:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x01, 0x20, 0x20
-    zzzj_voice	0x90, 0x08, 0x20
-    zzzj_voice	0x35, 0x50, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault157:
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x35, 0x20, 0x20
-    zzzj_voice	0x3f, 0x00, 0x20
-    zzzj_voice	0x5a, 0x10, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault158:
-    zzzj_voice	0x02, 0x00, 0x26
-    zzzj_voice	0x1e, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x19, 0x08, 0x20
-    zzzj_voice	0x34, 0x24, 0x20
-    zzzj_voice	0x90, 0x08, 0x20
-    zzzj_voice	0x01, 0x01, 0x20
-    zzzj_voice	0x00, 0x20, 0x20
-SramRecordDefault159:
-    zzzj_voice	0x1d, 0x00, 0x26
-    zzzj_voice	0x1a, 0x00, 0x26
-    zzzj_voice	0x27, 0x28, 0x20
-    zzzj_voice	0x5f, 0x08, 0x20
-    zzzj_voice	0x1b, 0x21, 0x20
-    zzzj_voice	0x07, 0x00, 0x20
-    zzzj_voice	0x38, 0x50, 0x20
-    zzzj_voice	0x38, 0x68, 0x20
-SramRecordDefault160:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x25, 0x00, 0x20
-    zzzj_voice	0x03, 0x00, 0x20
-    zzzj_voice	0x1c, 0x20, 0x20
-    zzzj_voice	0x3d, 0x20, 0x20
-    zzzj_voice	0x43, 0x00, 0x20
-    zzzj_voice	0x12, 0x10, 0x20
-SramRecordDefault161:
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x24, 0x00, 0x20
-    zzzj_voice	0x85, 0x00, 0x20
-    zzzj_voice	0x3d, 0x20, 0x20
-    zzzj_voice	0x1b, 0x20, 0x20
-    zzzj_voice	0x38, 0x50, 0x20
-    zzzj_voice	0x3d, 0x48, 0x20
-SramRecordDefault162:
-    zzzj_voice	0x1d, 0x00, 0x26
-    zzzj_voice	0x1e, 0x00, 0x26
-    zzzj_voice	0x25, 0x00, 0x20
-    zzzj_voice	0x01, 0x20, 0x20
-    zzzj_voice	0x3f, 0x00, 0x20
-    zzzj_voice	0x1c, 0x01, 0x20
-    zzzj_voice	0x41, 0x08, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault163:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x04, 0x10, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-    zzzj_voice	0x04, 0x10, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault164:
-    zzzj_voice	0x19, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x21, 0x30, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-    zzzj_voice	0x1b, 0x19, 0x20
-    zzzj_voice	0x34, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault165:
-    zzzj_voice	0x1d, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-    zzzj_voice	0x1c, 0x01, 0x20
-    zzzj_voice	0x43, 0x00, 0x20
-    zzzj_voice	0x3d, 0x48, 0x20
-    zzzj_voice	0x90, 0x10, 0x20
-SramRecordDefault166:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x1b, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x04, 0x10, 0x20
-    zzzj_voice	0x3e, 0x08, 0x20
-    zzzj_voice	0x1b, 0x21, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault167:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x90, 0x08, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault168:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x8b, 0x10, 0x20
-    zzzj_voice	0x1a, 0x41, 0x20
-    zzzj_voice	0x50, 0x0c, 0x20
-    zzzj_voice	0x19, 0x28, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault169:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x02, 0x00, 0x26
-    zzzj_voice	0x25, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x1b, 0x41, 0x20
-    zzzj_voice	0x90, 0x00, 0x20
-    zzzj_voice	0x01, 0x20, 0x20
-    zzzj_voice	0x16, 0x08, 0x20
-SramRecordDefault170:
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x38, 0x00, 0x26
-    zzzj_voice	0x20, 0x30, 0x20
-    zzzj_voice	0x03, 0x00, 0x20
-    zzzj_voice	0x19, 0x28, 0x20
-    zzzj_voice	0x1b, 0x20, 0x20
-    zzzj_voice	0x19, 0x28, 0x20
-    zzzj_voice	0x1a, 0x20, 0x20
-SramRecordDefault171:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x19, 0x00, 0x20
-    zzzj_voice	0x1b, 0x11, 0x20
-    zzzj_voice	0x31, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault172:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x19, 0x00, 0x20
-    zzzj_voice	0x1b, 0x18, 0x20
-    zzzj_voice	0x16, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault173:
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x02, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x1a, 0x30, 0x20
-    zzzj_voice	0x02, 0x00, 0x20
-    zzzj_voice	0x04, 0x10, 0x20
-SramRecordDefault174:
-    zzzj_voice	0x08, 0x00, 0x26
-    zzzj_voice	0x08, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x1c, 0x01, 0x20
-    zzzj_voice	0x1c, 0x01, 0x20
-    zzzj_voice	0x1b, 0x18, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault175:
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x35, 0x2c, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-    zzzj_voice	0x1c, 0x01, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-    zzzj_voice	0x05, 0x00, 0x20
-SramRecordDefault176:
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x38, 0x00, 0x26
-    zzzj_voice	0x25, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x00, 0x01, 0x20
-    zzzj_voice	0x1a, 0x20, 0x20
-    zzzj_voice	0x1a, 0x41, 0x20
-    zzzj_voice	0x30, 0x14, 0x20
-SramRecordDefault177:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x19, 0x00, 0x20
-    zzzj_voice	0x02, 0x00, 0x20
-    zzzj_voice	0x30, 0x30, 0x20
-    zzzj_voice	0x18, 0x08, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-SramRecordDefault178:
-    zzzj_voice	0x10, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x01, 0x00, 0x20
-    zzzj_voice	0x00, 0x08, 0x24
-    zzzj_voice	0x6a, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault179:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x1b, 0x10, 0x20
-    zzzj_voice	0x1b, 0x11, 0x20
-    zzzj_voice	0x92, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault180:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x1a, 0x40, 0x20
-    zzzj_voice	0x6e, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x01, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault181:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x26, 0x44, 0x20
-    zzzj_voice	0x8b, 0x10, 0x20
-    zzzj_voice	0x51, 0x68, 0x20
-    zzzj_voice	0x1a, 0x41, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x91, 0x00, 0x20
-SramRecordDefault182:
-    zzzj_voice	0x34, 0x00, 0x26
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x50, 0x00, 0x20
-    zzzj_voice	0x3d, 0x20, 0x20
-    zzzj_voice	0x39, 0x00, 0x20
-    zzzj_voice	0x3d, 0x00, 0x20
-    zzzj_voice	0x08, 0x00, 0x20
-    zzzj_voice	0x47, 0x04, 0x20
-SramRecordDefault183:
-    zzzj_voice	0x21, 0x00, 0x26
-    zzzj_voice	0x24, 0x00, 0x26
-    zzzj_voice	0x26, 0x18, 0x20
-    zzzj_voice	0x54, 0x00, 0x20
-    zzzj_voice	0x3e, 0x08, 0x20
-    zzzj_voice	0xda, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault184:
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x50, 0x0c, 0x20
-    zzzj_voice	0x49, 0x04, 0x20
-    zzzj_voice	0x58, 0x10, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault185:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x26, 0x00, 0x20
-    zzzj_voice	0x15, 0x44, 0x20
-    zzzj_voice	0x50, 0x08, 0x20
-    zzzj_voice	0x18, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault186:
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x15, 0x48, 0x20
-    zzzj_voice	0x18, 0x08, 0x20
-    zzzj_voice	0x47, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault187:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x28, 0x00, 0x26
-    zzzj_voice	0x20, 0x10, 0x20
-    zzzj_voice	0x04, 0x30, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x19, 0x00, 0x20
-    zzzj_voice	0x30, 0x00, 0x20
-    zzzj_voice	0x35, 0x46, 0x20
-SramRecordDefault188:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x01, 0x01, 0x20
-    zzzj_voice	0x1a, 0x38, 0x20
-    zzzj_voice	0x30, 0x18, 0x20
-    zzzj_voice	0x1a, 0x38, 0x20
-    zzzj_voice	0x01, 0x01, 0x20
-SramRecordDefault189:
-    zzzj_voice	0x10, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x18, 0x10, 0x20
-    zzzj_voice	0x90, 0x08, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault190:
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x1a, 0x08, 0x20
-    zzzj_voice	0x30, 0x08, 0x20
-    zzzj_voice	0x35, 0x21, 0x20
-    zzzj_voice	0x15, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault191:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x35, 0x50, 0x20
-    zzzj_voice	0x49, 0x04, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault192:
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x20, 0x10, 0x20
-    zzzj_voice	0x51, 0x68, 0x20
-    zzzj_voice	0x19, 0x00, 0x20
-    zzzj_voice	0x31, 0x00, 0x20
-    zzzj_voice	0x1a, 0x08, 0x20
-    zzzj_voice	0x5d, 0x40, 0x20
-SramRecordDefault193:
-    zzzj_voice	0x34, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x3a, 0x20, 0x20
-    zzzj_voice	0x03, 0x00, 0x20
-    zzzj_voice	0x32, 0x10, 0x20
-    zzzj_voice	0x3c, 0x40, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault194:
-    zzzj_voice	0x19, 0x00, 0x26
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x18, 0x0e, 0x20
-    zzzj_voice	0x58, 0x10, 0x20
-    zzzj_voice	0x34, 0x1c, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-SramRecordDefault195:
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x03, 0x00, 0x20
-    zzzj_voice	0x32, 0x10, 0x20
-    zzzj_voice	0x49, 0x14, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault196:
-    zzzj_voice	0x48, 0x00, 0x26
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x1c, 0x20, 0x20
-    zzzj_voice	0x0c, 0x00, 0x20
-    zzzj_voice	0x3d, 0x08, 0x20
-    zzzj_voice	0x5a, 0x10, 0x20
-    zzzj_voice	0x30, 0x30, 0x20
-SramRecordDefault197:
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x48, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x85, 0x00, 0x20
-    zzzj_voice	0x18, 0x1c, 0x20
-    zzzj_voice	0x35, 0x20, 0x20
-    zzzj_voice	0x00, 0x01, 0x20
-    zzzj_voice	0x42, 0x14, 0x20
-SramRecordDefault198:
-    zzzj_voice	0x20, 0x00, 0x26
-    zzzj_voice	0x48, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x18, 0x18, 0x20
-    zzzj_voice	0x51, 0x10, 0x20
-    zzzj_voice	0x38, 0x44, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault199:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x48, 0x00, 0x26
-    zzzj_voice	0x24, 0x00, 0x20
-    zzzj_voice	0x00, 0x41, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-    zzzj_voice	0x35, 0x46, 0x20
-    zzzj_voice	0x3d, 0x00, 0x20
-    zzzj_voice	0x3d, 0x61, 0x20
-SramRecordDefault200:
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x01, 0x04, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x1b, 0x18, 0x20
-    zzzj_voice	0x40, 0x00, 0x20
-    zzzj_voice	0x3f, 0x20, 0x20
-    zzzj_voice	0x3d, 0x20, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault201:
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x50, 0x00, 0x20
-    zzzj_voice	0x04, 0x40, 0x20
-    zzzj_voice	0x19, 0x00, 0x20
-    zzzj_voice	0x5d, 0x40, 0x20
-    zzzj_voice	0x38, 0x50, 0x20
-    zzzj_voice	0x38, 0x04, 0x20
-SramRecordDefault202:
-    zzzj_voice	0x08, 0x00, 0x26
-    zzzj_voice	0x48, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x19, 0x08, 0x20
-    zzzj_voice	0x3d, 0x40, 0x20
-    zzzj_voice	0x38, 0x60, 0x20
-    zzzj_voice	0x39, 0x19, 0x20
-    zzzj_voice	0x3d, 0x08, 0x20
-SramRecordDefault203:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x24, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x00, 0x40, 0x20
-    zzzj_voice	0x2d, 0x00, 0x20
-    zzzj_voice	0x08, 0x20, 0x24
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault204:
-    zzzj_voice	0x2c, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x30, 0x10, 0x20
-    zzzj_voice	0x34, 0x24, 0x20
-    zzzj_voice	0x04, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault205:
-    zzzj_voice	0x02, 0x00, 0x26
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x1c, 0x20, 0x20
-    zzzj_voice	0x39, 0x00, 0x20
-    zzzj_voice	0x3d, 0x30, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault206:
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x21, 0x44, 0x20
-    zzzj_voice	0x18, 0x0e, 0x20
-    zzzj_voice	0x18, 0x10, 0x20
-    zzzj_voice	0x03, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault207:
-    zzzj_voice	0x02, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x3d, 0x48, 0x20
-    zzzj_voice	0x18, 0x08, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault208:
-    zzzj_voice	0x19, 0x00, 0x26
-    zzzj_voice	0x09, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x4f, 0x20, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x28, 0x04, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault209:
-    zzzj_voice	0x28, 0x00, 0x26
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x21, 0x20, 0x20
-    zzzj_voice	0x18, 0x1c, 0x20
-    zzzj_voice	0x18, 0x18, 0x20
-    zzzj_voice	0x18, 0x1c, 0x20
-    zzzj_voice	0x1a, 0x38, 0x20
-    zzzj_voice	0x1f, 0x30, 0x20
-SramRecordDefault210:
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x08, 0x00, 0x26
-    zzzj_voice	0x21, 0x10, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x18, 0x1c, 0x20
-    zzzj_voice	0x3f, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault211:
-    zzzj_voice	0x1d, 0x00, 0x26
-    zzzj_voice	0x19, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x1c, 0x01, 0x20
-    zzzj_voice	0x3f, 0x00, 0x20
-    zzzj_voice	0x38, 0x50, 0x20
-    zzzj_voice	0x59, 0x00, 0x20
-    zzzj_voice	0x59, 0x00, 0x20
-SramRecordDefault212:
-    zzzj_voice	0x02, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x20, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x3d, 0x48, 0x20
-    zzzj_voice	0x15, 0x40, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault213:
-    zzzj_voice	0x21, 0x00, 0x26
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x20, 0x10, 0x20
-    zzzj_voice	0x15, 0x00, 0x20
-    zzzj_voice	0x15, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault214:
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x0c, 0x00, 0x26
-    zzzj_voice	0x23, 0x00, 0x20
-    zzzj_voice	0x03, 0x00, 0x20
-    zzzj_voice	0x3f, 0x00, 0x20
-    zzzj_voice	0x41, 0x34, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault215:
-    zzzj_voice	0x28, 0x00, 0x26
-    zzzj_voice	0x01, 0x00, 0x26
-    zzzj_voice	0x21, 0x00, 0x20
-    zzzj_voice	0x1a, 0x08, 0x20
-    zzzj_voice	0x85, 0x00, 0x20
-    zzzj_voice	0x32, 0x10, 0x20
-    zzzj_voice	0x38, 0x30, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault216:
-    zzzj_voice	0x1e, 0x00, 0x26
-    zzzj_voice	0x1b, 0x00, 0x26
-    zzzj_voice	0x26, 0x10, 0x20
-    zzzj_voice	0x70, 0x38, 0x20
-    zzzj_voice	0x35, 0x24, 0x20
-    zzzj_voice	0x50, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault217:
-    zzzj_voice	0x03, 0x00, 0x26
-    zzzj_voice	0x14, 0x00, 0x26
-    zzzj_voice	0x27, 0x20, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x34, 0x08, 0x20
-    zzzj_voice	0x5d, 0x40, 0x20
-    zzzj_voice	0x30, 0x14, 0x20
-    zzzj_voice	0x15, 0x10, 0x20
-SramRecordDefault218:
-    zzzj_voice	0x1c, 0x00, 0x26
-    zzzj_voice	0x19, 0x00, 0x26
-    zzzj_voice	0x26, 0x00, 0x20
-    zzzj_voice	0x19, 0x20, 0x20
-    zzzj_voice	0x34, 0x08, 0x20
-    zzzj_voice	0x19, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-SramRecordDefault219:
-    zzzj_voice	0x1f, 0x00, 0x26
-    zzzj_voice	0x00, 0x00, 0x26
-    zzzj_voice	0x26, 0x18, 0x20
-    zzzj_voice	0x2e, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x34, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
-    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault000:		# preset rhythm 0: 8&16 BEAT, rhythm 1 of 10
+    zzzj_voice	0x1e, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x40, 0x20	# Bass
+    zzzj_voice	0x19, 0x00, 0x20	# Acc1
+    zzzj_voice	0x18, 0x10, 0x20	# Acc2
+    zzzj_voice	0x2e, 0x00, 0x20	# Acc3
+    zzzj_voice	0x1f, 0x30, 0x20	# Acc4
+    zzzj_voice	0x30, 0x10, 0x20	# Acc5
+SramRecordDefault001:		# preset rhythm 1: 8&16 BEAT, rhythm 2 of 10
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x40, 0x20	# Bass
+    zzzj_voice	0x1a, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x40, 0x20	# Acc2
+    zzzj_voice	0x05, 0x10, 0x20	# Acc3
+    zzzj_voice	0x3f, 0x00, 0x20	# Acc4
+    zzzj_voice	0x30, 0x10, 0x20	# Acc5
+SramRecordDefault002:		# preset rhythm 2: 8&16 BEAT, rhythm 3 of 10
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x1b, 0x11, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x18, 0x20	# Acc2
+    zzzj_voice	0x1f, 0x30, 0x20	# Acc3
+    zzzj_voice	0x1b, 0x18, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault003:		# preset rhythm 3: 8&16 BEAT, rhythm 4 of 10
+    zzzj_voice	0x24, 0x00, 0x26	# Drum
+    zzzj_voice	0x03, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x44, 0x20	# Bass
+    zzzj_voice	0x04, 0x14, 0x20	# Acc1
+    zzzj_voice	0x07, 0x00, 0x20	# Acc2
+    zzzj_voice	0x00, 0x00, 0x20	# Acc3
+    zzzj_voice	0x5f, 0x10, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault004:		# preset rhythm 4: 8&16 BEAT, rhythm 5 of 10
+    zzzj_voice	0x03, 0x00, 0x26	# Drum
+    zzzj_voice	0x19, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x1b, 0x18, 0x20	# Acc1
+    zzzj_voice	0x1a, 0x30, 0x20	# Acc2
+    zzzj_voice	0x35, 0x20, 0x20	# Acc3
+    zzzj_voice	0x35, 0x20, 0x20	# Acc4
+    zzzj_voice	0x58, 0x10, 0x20	# Acc5
+SramRecordDefault005:		# preset rhythm 5: 8&16 BEAT, rhythm 6 of 10
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x1e, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x05, 0x14, 0x20	# Acc1
+    zzzj_voice	0x34, 0x40, 0x20	# Acc2
+    zzzj_voice	0x1b, 0x01, 0x20	# Acc3
+    zzzj_voice	0x1b, 0x21, 0x20	# Acc4
+    zzzj_voice	0x30, 0x10, 0x20	# Acc5
+SramRecordDefault006:		# preset rhythm 6: 8&16 BEAT, rhythm 7 of 10
+    zzzj_voice	0x0c, 0x00, 0x26	# Drum
+    zzzj_voice	0x08, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x05, 0x00, 0x20	# Acc1
+    zzzj_voice	0x05, 0x10, 0x20	# Acc2
+    zzzj_voice	0x19, 0x00, 0x20	# Acc3
+    zzzj_voice	0x1b, 0x11, 0x20	# Acc4
+    zzzj_voice	0x32, 0x00, 0x20	# Acc5
+SramRecordDefault007:		# preset rhythm 7: 8&16 BEAT, rhythm 8 of 10
+    zzzj_voice	0x03, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x01, 0x30, 0x20	# Acc1
+    zzzj_voice	0x58, 0x10, 0x20	# Acc2
+    zzzj_voice	0x1a, 0x30, 0x20	# Acc3
+    zzzj_voice	0x34, 0x01, 0x20	# Acc4
+    zzzj_voice	0x51, 0x74, 0x20	# Acc5
+SramRecordDefault008:		# preset rhythm 8: 8&16 BEAT, rhythm 9 of 10
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x40, 0x20	# Bass
+    zzzj_voice	0x85, 0x00, 0x20	# Acc1: CC94 127
+    zzzj_voice	0x9b, 0x21, 0x20	# Acc2: CC94 127
+    zzzj_voice	0x33, 0x00, 0x20	# Acc3
+    zzzj_voice	0x58, 0x30, 0x20	# Acc4
+    zzzj_voice	0x30, 0x08, 0x20	# Acc5
+SramRecordDefault009:		# preset rhythm 9: 8&16 BEAT, rhythm 10 of 10
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x08, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x40, 0x20	# Bass
+    zzzj_voice	0x59, 0x08, 0x20	# Acc1
+    zzzj_voice	0x04, 0x10, 0x20	# Acc2
+    zzzj_voice	0x31, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault010:		# preset rhythm 10: ROCK & POP, rhythm 1 of 16
+    zzzj_voice	0x0c, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x03, 0x00, 0x20	# Acc1
+    zzzj_voice	0x42, 0x30, 0x20	# Acc2
+    zzzj_voice	0x19, 0x20, 0x20	# Acc3
+    zzzj_voice	0x35, 0x50, 0x20	# Acc4
+    zzzj_voice	0x3d, 0x60, 0x20	# Acc5
+SramRecordDefault011:		# preset rhythm 11: ROCK & POP, rhythm 2 of 16
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x28, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x10, 0x20	# Bass
+    zzzj_voice	0x01, 0x00, 0x20	# Acc1
+    zzzj_voice	0x19, 0x28, 0x20	# Acc2
+    zzzj_voice	0x08, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault012:		# preset rhythm 12: ROCK & POP, rhythm 3 of 16
+    zzzj_voice	0x00, 0x00, 0x26	# Drum
+    zzzj_voice	0x08, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x04, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x11, 0x20	# Acc2
+    zzzj_voice	0x35, 0x50, 0x20	# Acc3
+    zzzj_voice	0x04, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault013:		# preset rhythm 13: ROCK & POP, rhythm 4 of 16
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x22, 0x20, 0x20	# Bass
+    zzzj_voice	0x11, 0x14, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x18, 0x20	# Acc2
+    zzzj_voice	0x41, 0x04, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault014:		# preset rhythm 14: ROCK & POP, rhythm 5 of 16
+    zzzj_voice	0x03, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x1c, 0x01, 0x20	# Acc1
+    zzzj_voice	0x02, 0x00, 0x20	# Acc2
+    zzzj_voice	0x1b, 0x41, 0x20	# Acc3
+    zzzj_voice	0x1b, 0x01, 0x20	# Acc4
+    zzzj_voice	0x43, 0x00, 0x20	# Acc5
+SramRecordDefault015:		# preset rhythm 15: ROCK & POP, rhythm 6 of 16
+    zzzj_voice	0x1e, 0x00, 0x26	# Drum
+    zzzj_voice	0x1d, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x08, 0x20	# Bass
+    zzzj_voice	0x34, 0x24, 0x20	# Acc1
+    zzzj_voice	0x19, 0x20, 0x20	# Acc2
+    zzzj_voice	0x58, 0x40, 0x20	# Acc3
+    zzzj_voice	0x04, 0x10, 0x20	# Acc4
+    zzzj_voice	0x04, 0x10, 0x20	# Acc5
+SramRecordDefault016:		# preset rhythm 16: ROCK & POP, rhythm 7 of 16
+    zzzj_voice	0x1a, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x08, 0x20	# Bass
+    zzzj_voice	0x01, 0x30, 0x20	# Acc1
+    zzzj_voice	0x07, 0x00, 0x20	# Acc2
+    zzzj_voice	0x35, 0x20, 0x20	# Acc3
+    zzzj_voice	0x51, 0x00, 0x20	# Acc4
+    zzzj_voice	0x30, 0x10, 0x20	# Acc5
+SramRecordDefault017:		# preset rhythm 17: ROCK & POP, rhythm 8 of 16
+    zzzj_voice	0x1e, 0x00, 0x26	# Drum
+    zzzj_voice	0x40, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x08, 0x20	# Bass
+    zzzj_voice	0x34, 0x28, 0x20	# Acc1
+    zzzj_voice	0x01, 0x00, 0x20	# Acc2
+    zzzj_voice	0x1b, 0x18, 0x20	# Acc3
+    zzzj_voice	0x78, 0x40, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault018:		# preset rhythm 18: ROCK & POP, rhythm 9 of 16
+    zzzj_voice	0x1f, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x22, 0x00, 0x20	# Bass
+    zzzj_voice	0x1b, 0x10, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x20, 0x20	# Acc2
+    zzzj_voice	0x90, 0x00, 0x20	# Acc3: CC94 127
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault019:		# preset rhythm 19: ROCK & POP, rhythm 10 of 16
+    zzzj_voice	0x10, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x1b, 0x11, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x18, 0x20	# Acc2
+    zzzj_voice	0x1b, 0x11, 0x20	# Acc3
+    zzzj_voice	0x12, 0x18, 0x20	# Acc4
+    zzzj_voice	0x3d, 0x60, 0x20	# Acc5
+SramRecordDefault020:		# preset rhythm 20: ROCK & POP, rhythm 11 of 16
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x04, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x02, 0x00, 0x20	# Acc1
+    zzzj_voice	0x19, 0x20, 0x20	# Acc2
+    zzzj_voice	0x30, 0x08, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault021:		# preset rhythm 21: ROCK & POP, rhythm 12 of 16
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x1f, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x1b, 0x10, 0x20	# Acc1
+    zzzj_voice	0x1c, 0x20, 0x20	# Acc2
+    zzzj_voice	0x90, 0x08, 0x20	# Acc3: CC94 127
+    zzzj_voice	0x2e, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault022:		# preset rhythm 22: ROCK & POP, rhythm 13 of 16
+    zzzj_voice	0x1a, 0x00, 0x26	# Drum
+    zzzj_voice	0x38, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x03, 0x00, 0x20	# Acc1
+    zzzj_voice	0x3e, 0x00, 0x20	# Acc2
+    zzzj_voice	0x1b, 0x21, 0x20	# Acc3
+    zzzj_voice	0x1b, 0x01, 0x20	# Acc4
+    zzzj_voice	0x3d, 0x50, 0x20	# Acc5
+SramRecordDefault023:		# preset rhythm 23: ROCK & POP, rhythm 14 of 16
+    zzzj_voice	0x1d, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x01, 0x30, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x40, 0x20	# Acc2
+    zzzj_voice	0x1f, 0x10, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault024:		# preset rhythm 24: ROCK & POP, rhythm 15 of 16
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x24, 0x00, 0x20	# Bass
+    zzzj_voice	0x00, 0x28, 0x20	# Acc1
+    zzzj_voice	0x34, 0x1c, 0x20	# Acc2
+    zzzj_voice	0x1c, 0x00, 0x20	# Acc3
+    zzzj_voice	0x1c, 0x20, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault025:		# preset rhythm 25: ROCK & POP, rhythm 16 of 16
+    zzzj_voice	0x1d, 0x04, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x0d, 0x20	# Bass
+    zzzj_voice	0x2e, 0x00, 0x20	# Acc1
+    zzzj_voice	0x3d, 0x20, 0x20	# Acc2
+    zzzj_voice	0x32, 0x10, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault026:		# preset rhythm 26: BALLAD, rhythm 1 of 16
+    zzzj_voice	0x10, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x20, 0x20	# Bass
+    zzzj_voice	0x06, 0x00, 0x20	# Acc1
+    zzzj_voice	0x34, 0x3a, 0x20	# Acc2
+    zzzj_voice	0x35, 0x24, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault027:		# preset rhythm 27: BALLAD, rhythm 2 of 16
+    zzzj_voice	0x1c, 0x00, 0x26	# Drum
+    zzzj_voice	0x1b, 0x00, 0x26	# Perc
+    zzzj_voice	0x25, 0x00, 0x20	# Bass
+    zzzj_voice	0x04, 0x30, 0x20	# Acc1
+    zzzj_voice	0x58, 0x10, 0x20	# Acc2
+    zzzj_voice	0x22, 0x20, 0x20	# Acc3
+    zzzj_voice	0x64, 0x00, 0x20	# Acc4
+    zzzj_voice	0x34, 0x10, 0x20	# Acc5
+SramRecordDefault028:		# preset rhythm 28: BALLAD, rhythm 3 of 16
+    zzzj_voice	0x01, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x02, 0x48, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x18, 0x20	# Acc2
+    zzzj_voice	0x85, 0x00, 0x20	# Acc3: CC94 127
+    zzzj_voice	0x58, 0x00, 0x20	# Acc4
+    zzzj_voice	0x1e, 0x00, 0x20	# Acc5
+SramRecordDefault029:		# preset rhythm 29: BALLAD, rhythm 4 of 16
+    zzzj_voice	0x19, 0x00, 0x26	# Drum
+    zzzj_voice	0x02, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x28, 0x20	# Bass
+    zzzj_voice	0x05, 0x00, 0x20	# Acc1
+    zzzj_voice	0x35, 0x2a, 0x20	# Acc2
+    zzzj_voice	0x2e, 0x00, 0x20	# Acc3
+    zzzj_voice	0x4b, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault030:		# preset rhythm 30: BALLAD, rhythm 5 of 16
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x48, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x40, 0x20	# Bass
+    zzzj_voice	0x06, 0x00, 0x20	# Acc1
+    zzzj_voice	0x34, 0x2c, 0x20	# Acc2
+    zzzj_voice	0x19, 0x20, 0x20	# Acc3
+    zzzj_voice	0x30, 0x10, 0x20	# Acc4
+    zzzj_voice	0x58, 0x10, 0x20	# Acc5
+SramRecordDefault031:		# preset rhythm 31: BALLAD, rhythm 6 of 16
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x1b, 0x18, 0x20	# Acc1
+    zzzj_voice	0x05, 0x00, 0x20	# Acc2
+    zzzj_voice	0x5a, 0x50, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault032:		# preset rhythm 32: BALLAD, rhythm 7 of 16
+    zzzj_voice	0x00, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x1b, 0x00, 0x20	# Acc1
+    zzzj_voice	0x04, 0x04, 0x20	# Acc2
+    zzzj_voice	0x3d, 0x61, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault033:		# preset rhythm 33: BALLAD, rhythm 8 of 16
+    zzzj_voice	0x08, 0x00, 0x26	# Drum
+    zzzj_voice	0x03, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x1c, 0x01, 0x20	# Acc1
+    zzzj_voice	0x35, 0x40, 0x20	# Acc2
+    zzzj_voice	0x30, 0x18, 0x20	# Acc3
+    zzzj_voice	0x04, 0x10, 0x20	# Acc4
+    zzzj_voice	0x05, 0x00, 0x20	# Acc5
+SramRecordDefault034:		# preset rhythm 34: BALLAD, rhythm 9 of 16
+    zzzj_voice	0x1e, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x00, 0x00, 0x20	# Acc1
+    zzzj_voice	0x35, 0x22, 0x20	# Acc2
+    zzzj_voice	0x19, 0x00, 0x20	# Acc3
+    zzzj_voice	0x35, 0x20, 0x20	# Acc4
+    zzzj_voice	0x05, 0x00, 0x20	# Acc5
+SramRecordDefault035:		# preset rhythm 35: BALLAD, rhythm 10 of 16
+    zzzj_voice	0x19, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x04, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x01, 0x30, 0x20	# Acc1
+    zzzj_voice	0x00, 0x00, 0x20	# Acc2
+    zzzj_voice	0x34, 0x2c, 0x20	# Acc3
+    zzzj_voice	0x35, 0x32, 0x20	# Acc4
+    zzzj_voice	0x2f, 0x00, 0x20	# Acc5
+SramRecordDefault036:		# preset rhythm 36: BALLAD, rhythm 11 of 16
+    zzzj_voice	0x19, 0x00, 0x26	# Drum
+    zzzj_voice	0x02, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x04, 0x14, 0x20	# Acc1
+    zzzj_voice	0x05, 0x10, 0x20	# Acc2
+    zzzj_voice	0x3e, 0x20, 0x20	# Acc3
+    zzzj_voice	0x90, 0x08, 0x20	# Acc4: CC94 127
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault037:		# preset rhythm 37: BALLAD, rhythm 12 of 16
+    zzzj_voice	0x03, 0x00, 0x26	# Drum
+    zzzj_voice	0x1f, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x30, 0x20	# Bass
+    zzzj_voice	0x34, 0x24, 0x20	# Acc1
+    zzzj_voice	0x19, 0x00, 0x20	# Acc2
+    zzzj_voice	0x04, 0x14, 0x20	# Acc3
+    zzzj_voice	0x1b, 0x11, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault038:		# preset rhythm 38: BALLAD, rhythm 13 of 16
+    zzzj_voice	0x11, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x20, 0x20	# Bass
+    zzzj_voice	0x01, 0x00, 0x20	# Acc1
+    zzzj_voice	0x05, 0x00, 0x20	# Acc2
+    zzzj_voice	0x33, 0x00, 0x20	# Acc3
+    zzzj_voice	0x1b, 0x10, 0x20	# Acc4
+    zzzj_voice	0x19, 0x00, 0x20	# Acc5
+SramRecordDefault039:		# preset rhythm 39: BALLAD, rhythm 14 of 16
+    zzzj_voice	0x0c, 0x00, 0x26	# Drum
+    zzzj_voice	0x1d, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x0d, 0x20	# Bass
+    zzzj_voice	0x05, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1c, 0x01, 0x20	# Acc2
+    zzzj_voice	0x1b, 0x11, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault040:		# preset rhythm 40: BALLAD, rhythm 15 of 16
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x1f, 0x04, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x01, 0x01, 0x20	# Acc1
+    zzzj_voice	0x19, 0x20, 0x20	# Acc2
+    zzzj_voice	0x31, 0x00, 0x20	# Acc3
+    zzzj_voice	0x3d, 0x10, 0x20	# Acc4
+    zzzj_voice	0x01, 0x00, 0x20	# Acc5
+SramRecordDefault041:		# preset rhythm 41: BALLAD, rhythm 16 of 16
+    zzzj_voice	0x25, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x38, 0x20	# Bass
+    zzzj_voice	0x05, 0x00, 0x20	# Acc1
+    zzzj_voice	0x18, 0x10, 0x20	# Acc2
+    zzzj_voice	0x30, 0x30, 0x20	# Acc3
+    zzzj_voice	0x00, 0x01, 0x20	# Acc4
+    zzzj_voice	0x00, 0x01, 0x20	# Acc5
+SramRecordDefault042:		# preset rhythm 42: JAZZ & SWING, rhythm 1 of 20
+    zzzj_voice	0x28, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x04, 0x10, 0x20	# Acc1
+    zzzj_voice	0x3b, 0x00, 0x20	# Acc2
+    zzzj_voice	0x41, 0x38, 0x20	# Acc3
+    zzzj_voice	0x38, 0x30, 0x20	# Acc4
+    zzzj_voice	0x49, 0x14, 0x20	# Acc5
+SramRecordDefault043:		# preset rhythm 43: JAZZ & SWING, rhythm 2 of 20
+    zzzj_voice	0x28, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x04, 0x10, 0x20	# Acc1
+    zzzj_voice	0x18, 0x10, 0x20	# Acc2
+    zzzj_voice	0x35, 0x50, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault044:		# preset rhythm 44: JAZZ & SWING, rhythm 3 of 20
+    zzzj_voice	0x28, 0x00, 0x26	# Drum
+    zzzj_voice	0x20, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x04, 0x00, 0x20	# Acc1
+    zzzj_voice	0x38, 0x30, 0x20	# Acc2
+    zzzj_voice	0x41, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault045:		# preset rhythm 45: JAZZ & SWING, rhythm 4 of 20
+    zzzj_voice	0x40, 0x00, 0x26	# Drum
+    zzzj_voice	0x40, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x40, 0x20	# Bass
+    zzzj_voice	0x21, 0x00, 0x20	# Acc1
+    zzzj_voice	0x00, 0x00, 0x20	# Acc2
+    zzzj_voice	0x3d, 0x61, 0x20	# Acc3
+    zzzj_voice	0x38, 0x44, 0x20	# Acc4
+    zzzj_voice	0x41, 0x08, 0x20	# Acc5
+SramRecordDefault046:		# preset rhythm 46: JAZZ & SWING, rhythm 5 of 20
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x42, 0x14, 0x20	# Acc1
+    zzzj_voice	0x35, 0x26, 0x20	# Acc2
+    zzzj_voice	0x38, 0x00, 0x20	# Acc3
+    zzzj_voice	0x39, 0x18, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault047:		# preset rhythm 47: JAZZ & SWING, rhythm 6 of 20
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x1a, 0x00, 0x20	# Acc1
+    zzzj_voice	0x00, 0x00, 0x20	# Acc2
+    zzzj_voice	0x3d, 0x48, 0x20	# Acc3
+    zzzj_voice	0x41, 0x18, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault048:		# preset rhythm 48: JAZZ & SWING, rhythm 7 of 20
+    zzzj_voice	0x21, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x84, 0x00, 0x20	# Acc1: CC94 127
+    zzzj_voice	0x1a, 0x00, 0x20	# Acc2
+    zzzj_voice	0x41, 0x1c, 0x20	# Acc3
+    zzzj_voice	0x3b, 0x20, 0x20	# Acc4
+    zzzj_voice	0x43, 0x50, 0x20	# Acc5
+SramRecordDefault049:		# preset rhythm 49: JAZZ & SWING, rhythm 8 of 20
+    zzzj_voice	0x28, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x18, 0x18, 0x20	# Acc1
+    zzzj_voice	0x41, 0x00, 0x20	# Acc2
+    zzzj_voice	0x42, 0x00, 0x20	# Acc3
+    zzzj_voice	0x39, 0x18, 0x20	# Acc4
+    zzzj_voice	0x04, 0x10, 0x20	# Acc5
+SramRecordDefault050:		# preset rhythm 50: JAZZ & SWING, rhythm 9 of 20
+    zzzj_voice	0x20, 0x00, 0x26	# Drum
+    zzzj_voice	0x20, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x05, 0x00, 0x20	# Acc1
+    zzzj_voice	0x18, 0x10, 0x20	# Acc2
+    zzzj_voice	0x34, 0x20, 0x20	# Acc3
+    zzzj_voice	0x18, 0x10, 0x20	# Acc4
+    zzzj_voice	0x4b, 0x04, 0x20	# Acc5
+SramRecordDefault051:		# preset rhythm 51: JAZZ & SWING, rhythm 10 of 20
+    zzzj_voice	0x28, 0x00, 0x26	# Drum
+    zzzj_voice	0x28, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x1a, 0x00, 0x20	# Acc1
+    zzzj_voice	0x3b, 0x20, 0x20	# Acc2
+    zzzj_voice	0x39, 0x00, 0x20	# Acc3
+    zzzj_voice	0x47, 0x10, 0x20	# Acc4
+    zzzj_voice	0x47, 0x18, 0x20	# Acc5
+SramRecordDefault052:		# preset rhythm 52: JAZZ & SWING, rhythm 11 of 20
+    zzzj_voice	0x28, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x31, 0x48, 0x20	# Acc1
+    zzzj_voice	0x18, 0x18, 0x20	# Acc2
+    zzzj_voice	0x39, 0x18, 0x20	# Acc3
+    zzzj_voice	0x31, 0x48, 0x20	# Acc4
+    zzzj_voice	0x1a, 0x08, 0x20	# Acc5
+SramRecordDefault053:		# preset rhythm 53: JAZZ & SWING, rhythm 12 of 20
+    zzzj_voice	0x28, 0x00, 0x26	# Drum
+    zzzj_voice	0x2c, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x18, 0x10, 0x20	# Acc1
+    zzzj_voice	0x04, 0x00, 0x20	# Acc2
+    zzzj_voice	0x8b, 0x04, 0x20	# Acc3: CC94 127
+    zzzj_voice	0x04, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault054:		# preset rhythm 54: JAZZ & SWING, rhythm 13 of 20
+    zzzj_voice	0x20, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x10, 0x20	# Bass
+    zzzj_voice	0x01, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x40, 0x20	# Acc2
+    zzzj_voice	0x33, 0x00, 0x20	# Acc3
+    zzzj_voice	0x12, 0x10, 0x20	# Acc4
+    zzzj_voice	0x1d, 0x00, 0x20	# Acc5
+SramRecordDefault055:		# preset rhythm 55: JAZZ & SWING, rhythm 14 of 20
+    zzzj_voice	0x00, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x35, 0x20, 0x20	# Acc1
+    zzzj_voice	0x35, 0x50, 0x20	# Acc2
+    zzzj_voice	0x34, 0x24, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault056:		# preset rhythm 56: JAZZ & SWING, rhythm 15 of 20
+    zzzj_voice	0x40, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0xa7, 0x20, 0x20	# Bass: CC94 127
+    zzzj_voice	0x12, 0x10, 0x20	# Acc1
+    zzzj_voice	0x50, 0x0c, 0x20	# Acc2
+    zzzj_voice	0x50, 0x0c, 0x20	# Acc3
+    zzzj_voice	0x51, 0x08, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault057:		# preset rhythm 57: JAZZ & SWING, rhythm 16 of 20
+    zzzj_voice	0x20, 0x00, 0x26	# Drum
+    zzzj_voice	0x2d, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x84, 0x10, 0x20	# Acc1: CC94 127
+    zzzj_voice	0x1a, 0x00, 0x20	# Acc2
+    zzzj_voice	0x3b, 0x20, 0x20	# Acc3
+    zzzj_voice	0x3b, 0x00, 0x20	# Acc4
+    zzzj_voice	0x3d, 0x00, 0x20	# Acc5
+SramRecordDefault058:		# preset rhythm 58: JAZZ & SWING, rhythm 17 of 20
+    zzzj_voice	0x20, 0x00, 0x26	# Drum
+    zzzj_voice	0x20, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x18, 0x10, 0x20	# Acc1
+    zzzj_voice	0x04, 0x00, 0x20	# Acc2
+    zzzj_voice	0x3b, 0x20, 0x20	# Acc3
+    zzzj_voice	0x41, 0x04, 0x20	# Acc4
+    zzzj_voice	0x42, 0x00, 0x20	# Acc5
+SramRecordDefault059:		# preset rhythm 59: JAZZ & SWING, rhythm 18 of 20
+    zzzj_voice	0x19, 0x00, 0x26	# Drum
+    zzzj_voice	0x48, 0x04, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x00, 0x00, 0x20	# Acc1
+    zzzj_voice	0x19, 0x2c, 0x20	# Acc2
+    zzzj_voice	0x41, 0x1c, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault060:		# preset rhythm 60: JAZZ & SWING, rhythm 19 of 20
+    zzzj_voice	0x00, 0x00, 0x26	# Drum
+    zzzj_voice	0x38, 0x00, 0x26	# Perc
+    zzzj_voice	0x51, 0x0c, 0x28	# Bass
+    zzzj_voice	0x50, 0x0c, 0x20	# Acc1
+    zzzj_voice	0x07, 0x00, 0x20	# Acc2
+    zzzj_voice	0x50, 0x0c, 0x20	# Acc3
+    zzzj_voice	0x39, 0x00, 0x20	# Acc4
+    zzzj_voice	0x03, 0x00, 0x20	# Acc5
+SramRecordDefault061:		# preset rhythm 61: JAZZ & SWING, rhythm 20 of 20
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x03, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x18, 0x20	# Acc2
+    zzzj_voice	0x03, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault062:		# preset rhythm 62: BALLROOM, rhythm 1 of 16
+    zzzj_voice	0x24, 0x00, 0x26	# Drum
+    zzzj_voice	0x28, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x19, 0x08, 0x20	# Acc1
+    zzzj_voice	0x59, 0x20, 0x20	# Acc2
+    zzzj_voice	0x18, 0x0e, 0x20	# Acc3
+    zzzj_voice	0x34, 0x20, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault063:		# preset rhythm 63: BALLROOM, rhythm 2 of 16
+    zzzj_voice	0x00, 0x00, 0x26	# Drum
+    zzzj_voice	0x48, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x1b, 0x21, 0x20	# Acc1
+    zzzj_voice	0x01, 0x00, 0x20	# Acc2
+    zzzj_voice	0x00, 0x00, 0x20	# Acc3
+    zzzj_voice	0x3d, 0x00, 0x20	# Acc4
+    zzzj_voice	0x35, 0x21, 0x20	# Acc5
+SramRecordDefault064:		# preset rhythm 64: BALLROOM, rhythm 3 of 16
+    zzzj_voice	0x01, 0x00, 0x26	# Drum
+    zzzj_voice	0x03, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x9b, 0x41, 0x20	# Acc1: CC94 127
+    zzzj_voice	0x3b, 0x20, 0x20	# Acc2
+    zzzj_voice	0x30, 0x30, 0x20	# Acc3
+    zzzj_voice	0x5a, 0x10, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault065:		# preset rhythm 65: BALLROOM, rhythm 4 of 16
+    zzzj_voice	0x28, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x00, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1a, 0x00, 0x20	# Acc2
+    zzzj_voice	0x43, 0x00, 0x20	# Acc3
+    zzzj_voice	0x43, 0x50, 0x20	# Acc4
+    zzzj_voice	0x47, 0x10, 0x20	# Acc5
+SramRecordDefault066:		# preset rhythm 66: BALLROOM, rhythm 5 of 16
+    zzzj_voice	0x00, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x04, 0x10, 0x20	# Acc1
+    zzzj_voice	0x3d, 0x00, 0x20	# Acc2
+    zzzj_voice	0x15, 0x4c, 0x20	# Acc3
+    zzzj_voice	0x1a, 0x30, 0x20	# Acc4
+    zzzj_voice	0x41, 0x08, 0x20	# Acc5
+SramRecordDefault067:		# preset rhythm 67: BALLROOM, rhythm 6 of 16
+    zzzj_voice	0x01, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x1b, 0x41, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x11, 0x20	# Acc2
+    zzzj_voice	0x43, 0x00, 0x20	# Acc3
+    zzzj_voice	0x3d, 0x48, 0x20	# Acc4
+    zzzj_voice	0x3d, 0x48, 0x20	# Acc5
+SramRecordDefault068:		# preset rhythm 68: BALLROOM, rhythm 7 of 16
+    zzzj_voice	0x00, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x20, 0x20	# Acc1
+    zzzj_voice	0x0c, 0x00, 0x20	# Acc2
+    zzzj_voice	0x30, 0x10, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault069:		# preset rhythm 69: BALLROOM, rhythm 8 of 16
+    zzzj_voice	0x08, 0x00, 0x26	# Drum
+    zzzj_voice	0x48, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x01, 0x01, 0x20	# Acc1
+    zzzj_voice	0x19, 0x00, 0x20	# Acc2
+    zzzj_voice	0x1a, 0x20, 0x20	# Acc3
+    zzzj_voice	0x35, 0x20, 0x20	# Acc4
+    zzzj_voice	0x0c, 0x00, 0x20	# Acc5
+SramRecordDefault070:		# preset rhythm 70: BALLROOM, rhythm 9 of 16
+    zzzj_voice	0x1d, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x22, 0x20, 0x20	# Bass
+    zzzj_voice	0x04, 0x10, 0x20	# Acc1
+    zzzj_voice	0x18, 0x0e, 0x20	# Acc2
+    zzzj_voice	0x38, 0x60, 0x20	# Acc3
+    zzzj_voice	0x3d, 0x48, 0x20	# Acc4
+    zzzj_voice	0x3d, 0x30, 0x20	# Acc5
+SramRecordDefault071:		# preset rhythm 71: BALLROOM, rhythm 10 of 16
+    zzzj_voice	0x24, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x04, 0x20	# Acc1
+    zzzj_voice	0x34, 0x20, 0x20	# Acc2
+    zzzj_voice	0x01, 0x30, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault072:		# preset rhythm 72: BALLROOM, rhythm 11 of 16
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x04, 0x10, 0x20	# Acc1
+    zzzj_voice	0x3d, 0x18, 0x20	# Acc2
+    zzzj_voice	0x3d, 0x30, 0x20	# Acc3
+    zzzj_voice	0x48, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault073:		# preset rhythm 73: BALLROOM, rhythm 12 of 16
+    zzzj_voice	0x00, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x00, 0x40, 0x20	# Acc1
+    zzzj_voice	0x2d, 0x00, 0x20	# Acc2
+    zzzj_voice	0x18, 0x08, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault074:		# preset rhythm 74: BALLROOM, rhythm 13 of 16
+    zzzj_voice	0x21, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x00, 0x40, 0x20	# Acc1
+    zzzj_voice	0x19, 0x50, 0x20	# Acc2
+    zzzj_voice	0x00, 0x40, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault075:		# preset rhythm 75: BALLROOM, rhythm 14 of 16
+    zzzj_voice	0x01, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x20, 0x20	# Acc1
+    zzzj_voice	0x85, 0x00, 0x20	# Acc2: CC94 127
+    zzzj_voice	0x5f, 0x10, 0x20	# Acc3
+    zzzj_voice	0x30, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault076:		# preset rhythm 76: BALLROOM, rhythm 15 of 16
+    zzzj_voice	0x21, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x18, 0x00, 0x20	# Acc1
+    zzzj_voice	0x01, 0x00, 0x20	# Acc2
+    zzzj_voice	0x00, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault077:		# preset rhythm 77: BALLROOM, rhythm 16 of 16
+    zzzj_voice	0x1d, 0x00, 0x26	# Drum
+    zzzj_voice	0x03, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x35, 0x2a, 0x20	# Acc1
+    zzzj_voice	0x01, 0x00, 0x20	# Acc2
+    zzzj_voice	0x3f, 0x00, 0x20	# Acc3
+    zzzj_voice	0x38, 0x50, 0x20	# Acc4
+    zzzj_voice	0x3d, 0x60, 0x20	# Acc5
+SramRecordDefault078:		# preset rhythm 78: MOVIE & SHOW, rhythm 1 of 20
+    zzzj_voice	0x1b, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x00, 0x01, 0x20	# Acc1
+    zzzj_voice	0x32, 0x00, 0x20	# Acc2
+    zzzj_voice	0x35, 0x21, 0x20	# Acc3
+    zzzj_voice	0x57, 0x30, 0x20	# Acc4
+    zzzj_voice	0x49, 0x04, 0x20	# Acc5
+SramRecordDefault079:		# preset rhythm 79: MOVIE & SHOW, rhythm 2 of 20
+    zzzj_voice	0x20, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x8b, 0x04, 0x20	# Acc1: CC94 127
+    zzzj_voice	0x30, 0x10, 0x20	# Acc2
+    zzzj_voice	0x47, 0x20, 0x20	# Acc3
+    zzzj_voice	0x52, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault080:		# preset rhythm 80: MOVIE & SHOW, rhythm 3 of 20
+    zzzj_voice	0x03, 0x00, 0x26	# Drum
+    zzzj_voice	0x03, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x05, 0x00, 0x20	# Acc1
+    zzzj_voice	0x34, 0x00, 0x20	# Acc2
+    zzzj_voice	0x58, 0x00, 0x20	# Acc3
+    zzzj_voice	0x32, 0x10, 0x20	# Acc4
+    zzzj_voice	0x50, 0x14, 0x20	# Acc5
+SramRecordDefault081:		# preset rhythm 81: MOVIE & SHOW, rhythm 4 of 20
+    zzzj_voice	0x11, 0x00, 0x26	# Drum
+    zzzj_voice	0x11, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x85, 0x00, 0x20	# Acc1: CC94 127
+    zzzj_voice	0x2e, 0x00, 0x20	# Acc2
+    zzzj_voice	0x59, 0x18, 0x20	# Acc3
+    zzzj_voice	0x5f, 0x10, 0x20	# Acc4
+    zzzj_voice	0x34, 0x0c, 0x20	# Acc5
+SramRecordDefault082:		# preset rhythm 82: MOVIE & SHOW, rhythm 5 of 20
+    zzzj_voice	0x20, 0x00, 0x26	# Drum
+    zzzj_voice	0x1e, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x00, 0x20	# Bass
+    zzzj_voice	0x15, 0x4c, 0x20	# Acc1
+    zzzj_voice	0x49, 0x20, 0x20	# Acc2
+    zzzj_voice	0x57, 0x30, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault083:		# preset rhythm 83: MOVIE & SHOW, rhythm 6 of 20
+    zzzj_voice	0x1f, 0x00, 0x26	# Drum
+    zzzj_voice	0x48, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x44, 0x20	# Bass
+    zzzj_voice	0x03, 0x00, 0x20	# Acc1
+    zzzj_voice	0x3e, 0x00, 0x20	# Acc2
+    zzzj_voice	0x38, 0x58, 0x20	# Acc3
+    zzzj_voice	0x49, 0x04, 0x20	# Acc4
+    zzzj_voice	0x5f, 0x10, 0x20	# Acc5
+SramRecordDefault084:		# preset rhythm 84: MOVIE & SHOW, rhythm 7 of 20
+    zzzj_voice	0x20, 0x00, 0x26	# Drum
+    zzzj_voice	0x48, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x00, 0x00, 0x20	# Acc1
+    zzzj_voice	0x30, 0x10, 0x20	# Acc2
+    zzzj_voice	0x5a, 0x10, 0x20	# Acc3
+    zzzj_voice	0x38, 0x64, 0x20	# Acc4
+    zzzj_voice	0x45, 0x04, 0x20	# Acc5
+SramRecordDefault085:		# preset rhythm 85: MOVIE & SHOW, rhythm 8 of 20
+    zzzj_voice	0x28, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x0e, 0x20	# Acc1
+    zzzj_voice	0x35, 0x20, 0x20	# Acc2
+    zzzj_voice	0x2d, 0x00, 0x20	# Acc3
+    zzzj_voice	0x8b, 0x10, 0x20	# Acc4: CC94 127
+    zzzj_voice	0x7e, 0x31, 0x20	# Acc5
+SramRecordDefault086:		# preset rhythm 86: MOVIE & SHOW, rhythm 9 of 20
+    zzzj_voice	0x20, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x18, 0x1b, 0x20	# Acc1
+    zzzj_voice	0x19, 0x0e, 0x20	# Acc2
+    zzzj_voice	0x08, 0x40, 0x24	# Acc3
+    zzzj_voice	0x15, 0x40, 0x20	# Acc4
+    zzzj_voice	0x2e, 0x00, 0x20	# Acc5
+SramRecordDefault087:		# preset rhythm 87: MOVIE & SHOW, rhythm 10 of 20
+    zzzj_voice	0x21, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x22, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x0e, 0x20	# Acc1
+    zzzj_voice	0x30, 0x30, 0x20	# Acc2
+    zzzj_voice	0x3d, 0x0a, 0x20	# Acc3
+    zzzj_voice	0x51, 0x38, 0x20	# Acc4
+    zzzj_voice	0x2e, 0x10, 0x20	# Acc5
+SramRecordDefault088:		# preset rhythm 88: MOVIE & SHOW, rhythm 11 of 20
+    zzzj_voice	0x08, 0x00, 0x26	# Drum
+    zzzj_voice	0x24, 0x00, 0x26	# Perc
+    zzzj_voice	0x24, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x20, 0x20	# Acc1
+    zzzj_voice	0x1a, 0x41, 0x20	# Acc2
+    zzzj_voice	0x1a, 0x08, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault089:		# preset rhythm 89: MOVIE & SHOW, rhythm 12 of 20
+    zzzj_voice	0x00, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x20, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x20, 0x20	# Acc2
+    zzzj_voice	0x00, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault090:		# preset rhythm 90: MOVIE & SHOW, rhythm 13 of 20
+    zzzj_voice	0x1a, 0x00, 0x26	# Drum
+    zzzj_voice	0x1a, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x0e, 0x20	# Acc1
+    zzzj_voice	0x5d, 0x40, 0x20	# Acc2
+    zzzj_voice	0x30, 0x10, 0x20	# Acc3
+    zzzj_voice	0xd8, 0x50, 0x20	# Acc4: CC94 127
+    zzzj_voice	0x4f, 0x30, 0x20	# Acc5
+SramRecordDefault091:		# preset rhythm 91: MOVIE & SHOW, rhythm 14 of 20
+    zzzj_voice	0x21, 0x00, 0x26	# Drum
+    zzzj_voice	0x21, 0x00, 0x26	# Perc
+    zzzj_voice	0x50, 0x00, 0x20	# Bass
+    zzzj_voice	0x00, 0x01, 0x20	# Acc1
+    zzzj_voice	0x0d, 0x00, 0x20	# Acc2
+    zzzj_voice	0x30, 0x30, 0x20	# Acc3
+    zzzj_voice	0x46, 0x04, 0x20	# Acc4
+    zzzj_voice	0x47, 0x0c, 0x20	# Acc5
+SramRecordDefault092:		# preset rhythm 92: MOVIE & SHOW, rhythm 15 of 20
+    zzzj_voice	0x1c, 0x00, 0x26	# Drum
+    zzzj_voice	0x1c, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x20, 0x20	# Bass
+    zzzj_voice	0x51, 0x00, 0x20	# Acc1
+    zzzj_voice	0x59, 0x1c, 0x20	# Acc2
+    zzzj_voice	0x1c, 0x00, 0x20	# Acc3
+    zzzj_voice	0x54, 0x48, 0x20	# Acc4
+    zzzj_voice	0x50, 0x18, 0x20	# Acc5
+SramRecordDefault093:		# preset rhythm 93: MOVIE & SHOW, rhythm 16 of 20
+    zzzj_voice	0x1a, 0x00, 0x26	# Drum
+    zzzj_voice	0x30, 0x04, 0x26	# Perc
+    zzzj_voice	0x26, 0x40, 0x20	# Bass
+    zzzj_voice	0x5f, 0x08, 0x20	# Acc1
+    zzzj_voice	0x67, 0x00, 0x20	# Acc2
+    zzzj_voice	0x5b, 0x20, 0x20	# Acc3
+    zzzj_voice	0x0e, 0x00, 0x20	# Acc4
+    zzzj_voice	0x2e, 0x10, 0x20	# Acc5
+SramRecordDefault094:		# preset rhythm 94: MOVIE & SHOW, rhythm 17 of 20
+    zzzj_voice	0x28, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x04, 0x00, 0x20	# Acc1
+    zzzj_voice	0x8b, 0x04, 0x20	# Acc2: CC94 127
+    zzzj_voice	0x41, 0x04, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault095:		# preset rhythm 95: MOVIE & SHOW, rhythm 18 of 20
+    zzzj_voice	0x30, 0x00, 0x26	# Drum
+    zzzj_voice	0x30, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x85, 0x00, 0x20	# Acc1: CC94 127
+    zzzj_voice	0x34, 0x38, 0x20	# Acc2
+    zzzj_voice	0x30, 0x10, 0x20	# Acc3
+    zzzj_voice	0x85, 0x00, 0x20	# Acc4: CC94 127
+    zzzj_voice	0x85, 0x00, 0x20	# Acc5: CC94 127
+SramRecordDefault096:		# preset rhythm 96: MOVIE & SHOW, rhythm 19 of 20
+    zzzj_voice	0x00, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x10, 0x20	# Bass
+    zzzj_voice	0x5a, 0x10, 0x20	# Acc1
+    zzzj_voice	0x44, 0x50, 0x20	# Acc2
+    zzzj_voice	0x6b, 0x00, 0x20	# Acc3
+    zzzj_voice	0x09, 0x00, 0x20	# Acc4
+    zzzj_voice	0x48, 0x00, 0x20	# Acc5
+SramRecordDefault097:		# preset rhythm 97: MOVIE & SHOW, rhythm 20 of 20
+    zzzj_voice	0x30, 0x00, 0x26	# Drum
+    zzzj_voice	0x19, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x20, 0x20	# Bass
+    zzzj_voice	0x3d, 0x40, 0x20	# Acc1
+    zzzj_voice	0x3d, 0x20, 0x20	# Acc2
+    zzzj_voice	0x09, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x01, 0x20	# Acc4
+    zzzj_voice	0x3d, 0x50, 0x20	# Acc5
+SramRecordDefault098:		# preset rhythm 98: ENTERTAINER, rhythm 1 of 14
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x30, 0x20	# Bass
+    zzzj_voice	0x58, 0x00, 0x20	# Acc1
+    zzzj_voice	0x19, 0x20, 0x20	# Acc2
+    zzzj_voice	0x1b, 0x00, 0x20	# Acc3
+    zzzj_voice	0x51, 0x30, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault099:		# preset rhythm 99: ENTERTAINER, rhythm 2 of 14
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x10, 0x00, 0x26	# Perc
+    zzzj_voice	0x50, 0x04, 0x20	# Bass
+    zzzj_voice	0x6b, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1c, 0x00, 0x20	# Acc2
+    zzzj_voice	0x1e, 0x00, 0x20	# Acc3
+    zzzj_voice	0x58, 0x10, 0x20	# Acc4
+    zzzj_voice	0x05, 0x00, 0x20	# Acc5
+SramRecordDefault100:		# preset rhythm 100: ENTERTAINER, rhythm 3 of 14
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x30, 0x20	# Bass
+    zzzj_voice	0x04, 0x10, 0x20	# Acc1
+    zzzj_voice	0x12, 0x18, 0x20	# Acc2
+    zzzj_voice	0x38, 0x50, 0x20	# Acc3
+    zzzj_voice	0x3d, 0x50, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault101:		# preset rhythm 101: ENTERTAINER, rhythm 4 of 14
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x30, 0x20	# Bass
+    zzzj_voice	0x1b, 0x10, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x19, 0x20	# Acc2
+    zzzj_voice	0x92, 0x00, 0x20	# Acc3: CC94 127
+    zzzj_voice	0x38, 0x50, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault102:		# preset rhythm 102: ENTERTAINER, rhythm 5 of 14
+    zzzj_voice	0x1d, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x20, 0x20	# Bass
+    zzzj_voice	0x51, 0x68, 0x20	# Acc1
+    zzzj_voice	0x34, 0x38, 0x20	# Acc2
+    zzzj_voice	0x3d, 0x30, 0x20	# Acc3
+    zzzj_voice	0x3d, 0x20, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault103:		# preset rhythm 103: ENTERTAINER, rhythm 6 of 14
+    zzzj_voice	0x03, 0x00, 0x26	# Drum
+    zzzj_voice	0x10, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x08, 0x20	# Bass
+    zzzj_voice	0x59, 0x10, 0x20	# Acc1
+    zzzj_voice	0x01, 0x30, 0x20	# Acc2
+    zzzj_voice	0x1b, 0x10, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault104:		# preset rhythm 104: ENTERTAINER, rhythm 7 of 14
+    zzzj_voice	0x1d, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x1a, 0x30, 0x20	# Acc1
+    zzzj_voice	0x30, 0x10, 0x20	# Acc2
+    zzzj_voice	0x58, 0x10, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault105:		# preset rhythm 105: ENTERTAINER, rhythm 8 of 14
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x5a, 0x08, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x40, 0x20	# Acc2
+    zzzj_voice	0x58, 0x30, 0x20	# Acc3
+    zzzj_voice	0x18, 0x10, 0x20	# Acc4
+    zzzj_voice	0x30, 0x10, 0x20	# Acc5
+SramRecordDefault106:		# preset rhythm 106: ENTERTAINER, rhythm 9 of 14
+    zzzj_voice	0x1f, 0x00, 0x26	# Drum
+    zzzj_voice	0x0c, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x05, 0x30, 0x20	# Acc1
+    zzzj_voice	0x1a, 0x30, 0x20	# Acc2
+    zzzj_voice	0x1c, 0x20, 0x20	# Acc3
+    zzzj_voice	0x30, 0x10, 0x20	# Acc4
+    zzzj_voice	0x2f, 0x00, 0x20	# Acc5
+SramRecordDefault107:		# preset rhythm 107: ENTERTAINER, rhythm 10 of 14
+    zzzj_voice	0x02, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x20, 0x20	# Bass
+    zzzj_voice	0x5a, 0x30, 0x20	# Acc1
+    zzzj_voice	0x02, 0x00, 0x20	# Acc2
+    zzzj_voice	0x5a, 0x08, 0x20	# Acc3
+    zzzj_voice	0x0c, 0x00, 0x20	# Acc4
+    zzzj_voice	0x58, 0x00, 0x20	# Acc5
+SramRecordDefault108:		# preset rhythm 108: ENTERTAINER, rhythm 11 of 14
+    zzzj_voice	0x03, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x44, 0x20	# Bass
+    zzzj_voice	0x32, 0x00, 0x20	# Acc1
+    zzzj_voice	0x34, 0x38, 0x20	# Acc2
+    zzzj_voice	0x19, 0x20, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault109:		# preset rhythm 109: ENTERTAINER, rhythm 12 of 14
+    zzzj_voice	0x0c, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x24, 0x00, 0x20	# Bass
+    zzzj_voice	0x00, 0x38, 0x24	# Acc1
+    zzzj_voice	0x1b, 0x41, 0x20	# Acc2
+    zzzj_voice	0x0c, 0x00, 0x20	# Acc3
+    zzzj_voice	0x3d, 0x30, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault110:		# preset rhythm 110: ENTERTAINER, rhythm 13 of 14
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x40, 0x20	# Bass
+    zzzj_voice	0x34, 0x20, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x11, 0x20	# Acc2
+    zzzj_voice	0x38, 0x58, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault111:		# preset rhythm 111: ENTERTAINER, rhythm 14 of 14
+    zzzj_voice	0x1f, 0x00, 0x26	# Drum
+    zzzj_voice	0x08, 0x00, 0x26	# Perc
+    zzzj_voice	0x22, 0x00, 0x20	# Bass
+    zzzj_voice	0x00, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x01, 0x20	# Acc2
+    zzzj_voice	0x91, 0x00, 0x20	# Acc3: CC94 127
+    zzzj_voice	0x3d, 0x61, 0x20	# Acc4
+    zzzj_voice	0x3d, 0x48, 0x20	# Acc5
+SramRecordDefault112:		# preset rhythm 112: ORGANIST, rhythm 1 of 10
+    zzzj_voice	0x24, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x15, 0x4c, 0x20	# Acc1
+    zzzj_voice	0x40, 0x14, 0x20	# Acc2
+    zzzj_voice	0x90, 0x08, 0x20	# Acc3: CC94 127
+    zzzj_voice	0x1a, 0x08, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault113:		# preset rhythm 113: ORGANIST, rhythm 2 of 10
+    zzzj_voice	0x1c, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x04, 0x26	# Perc
+    zzzj_voice	0x22, 0x00, 0x20	# Bass
+    zzzj_voice	0x1b, 0x10, 0x20	# Acc1
+    zzzj_voice	0x5a, 0x10, 0x20	# Acc2
+    zzzj_voice	0x11, 0x14, 0x20	# Acc3
+    zzzj_voice	0x10, 0x06, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault114:		# preset rhythm 114: ORGANIST, rhythm 3 of 10
+    zzzj_voice	0x20, 0x00, 0x26	# Drum
+    zzzj_voice	0x20, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x60, 0x20	# Bass
+    zzzj_voice	0x1a, 0x00, 0x20	# Acc1
+    zzzj_voice	0x3d, 0x18, 0x20	# Acc2
+    zzzj_voice	0x10, 0x16, 0x20	# Acc3
+    zzzj_voice	0x10, 0x1e, 0x20	# Acc4
+    zzzj_voice	0x11, 0x14, 0x20	# Acc5
+SramRecordDefault115:		# preset rhythm 115: ORGANIST, rhythm 4 of 10
+    zzzj_voice	0x10, 0x00, 0x26	# Drum
+    zzzj_voice	0x48, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x18, 0x20	# Bass
+    zzzj_voice	0x19, 0x2a, 0x20	# Acc1
+    zzzj_voice	0x10, 0x1e, 0x20	# Acc2
+    zzzj_voice	0x10, 0x1e, 0x20	# Acc3
+    zzzj_voice	0x10, 0x16, 0x20	# Acc4
+    zzzj_voice	0x18, 0x1c, 0x20	# Acc5
+SramRecordDefault116:		# preset rhythm 116: ORGANIST, rhythm 5 of 10
+    zzzj_voice	0x20, 0x00, 0x26	# Drum
+    zzzj_voice	0x20, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x0a, 0x20, 0x20	# Acc1
+    zzzj_voice	0x13, 0x41, 0x20	# Acc2
+    zzzj_voice	0x00, 0x00, 0x20	# Acc3
+    zzzj_voice	0x10, 0x06, 0x20	# Acc4
+    zzzj_voice	0x10, 0x16, 0x20	# Acc5
+SramRecordDefault117:		# preset rhythm 117: ORGANIST, rhythm 6 of 10
+    zzzj_voice	0x2d, 0x00, 0x26	# Drum
+    zzzj_voice	0x2d, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x30, 0x20	# Bass
+    zzzj_voice	0x30, 0x08, 0x20	# Acc1
+    zzzj_voice	0x10, 0x06, 0x20	# Acc2
+    zzzj_voice	0x10, 0x04, 0x20	# Acc3
+    zzzj_voice	0x10, 0x1e, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault118:		# preset rhythm 118: ORGANIST, rhythm 7 of 10
+    zzzj_voice	0x2c, 0x00, 0x26	# Drum
+    zzzj_voice	0x2d, 0x00, 0x26	# Perc
+    zzzj_voice	0x3f, 0x10, 0x20	# Bass
+    zzzj_voice	0x59, 0x04, 0x20	# Acc1
+    zzzj_voice	0x56, 0x20, 0x20	# Acc2
+    zzzj_voice	0x19, 0x2c, 0x20	# Acc3
+    zzzj_voice	0x10, 0x1e, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault119:		# preset rhythm 119: ORGANIST, rhythm 8 of 10
+    zzzj_voice	0x30, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x5a, 0x40, 0x20	# Bass
+    zzzj_voice	0x30, 0x08, 0x20	# Acc1
+    zzzj_voice	0x56, 0x20, 0x20	# Acc2
+    zzzj_voice	0x13, 0x40, 0x20	# Acc3
+    zzzj_voice	0x13, 0x58, 0x20	# Acc4
+    zzzj_voice	0x13, 0x44, 0x20	# Acc5
+SramRecordDefault120:		# preset rhythm 120: ORGANIST, rhythm 9 of 10
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x03, 0x00, 0x20	# Acc1
+    zzzj_voice	0x30, 0x00, 0x20	# Acc2
+    zzzj_voice	0x47, 0x20, 0x20	# Acc3
+    zzzj_voice	0x49, 0x20, 0x20	# Acc4
+    zzzj_voice	0x19, 0x00, 0x20	# Acc5
+SramRecordDefault121:		# preset rhythm 121: ORGANIST, rhythm 10 of 10
+    zzzj_voice	0x30, 0x00, 0x26	# Drum
+    zzzj_voice	0x30, 0x00, 0x26	# Perc
+    zzzj_voice	0x5a, 0x40, 0x20	# Bass
+    zzzj_voice	0x13, 0x4c, 0x20	# Acc1
+    zzzj_voice	0x1a, 0x30, 0x20	# Acc2
+    zzzj_voice	0x13, 0x58, 0x20	# Acc3
+    zzzj_voice	0x13, 0x40, 0x20	# Acc4
+    zzzj_voice	0x13, 0x40, 0x20	# Acc5
+SramRecordDefault122:		# preset rhythm 122: 60s & 70s, rhythm 1 of 13
+    zzzj_voice	0x02, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x08, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x40, 0x20	# Acc2
+    zzzj_voice	0x8b, 0x04, 0x20	# Acc3: CC94 127
+    zzzj_voice	0x58, 0x10, 0x20	# Acc4
+    zzzj_voice	0x78, 0x08, 0x20	# Acc5
+SramRecordDefault123:		# preset rhythm 123: 60s & 70s, rhythm 2 of 13
+    zzzj_voice	0x10, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x24, 0x00, 0x20	# Bass
+    zzzj_voice	0x03, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1e, 0x10, 0x20	# Acc2
+    zzzj_voice	0x1e, 0x31, 0x20	# Acc3
+    zzzj_voice	0x3f, 0x00, 0x20	# Acc4
+    zzzj_voice	0x54, 0x54, 0x20	# Acc5
+SramRecordDefault124:		# preset rhythm 124: 60s & 70s, rhythm 3 of 13
+    zzzj_voice	0x08, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x24, 0x00, 0x20	# Bass
+    zzzj_voice	0x05, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x40, 0x20	# Acc2
+    zzzj_voice	0x19, 0x20, 0x20	# Acc3
+    zzzj_voice	0x59, 0x00, 0x20	# Acc4
+    zzzj_voice	0x39, 0x64, 0x20	# Acc5
+SramRecordDefault125:		# preset rhythm 125: 60s & 70s, rhythm 4 of 13
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x08, 0x20	# Acc1
+    zzzj_voice	0x58, 0x10, 0x20	# Acc2
+    zzzj_voice	0x49, 0x00, 0x20	# Acc3
+    zzzj_voice	0x58, 0x00, 0x20	# Acc4
+    zzzj_voice	0x19, 0x00, 0x20	# Acc5
+SramRecordDefault126:		# preset rhythm 126: 60s & 70s, rhythm 5 of 13
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x0c, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x40, 0x20	# Bass
+    zzzj_voice	0x19, 0x28, 0x20	# Acc1
+    zzzj_voice	0x35, 0x2c, 0x20	# Acc2
+    zzzj_voice	0x50, 0x00, 0x20	# Acc3
+    zzzj_voice	0x10, 0x1e, 0x20	# Acc4
+    zzzj_voice	0x35, 0x24, 0x20	# Acc5
+SramRecordDefault127:		# preset rhythm 127: 60s & 70s, rhythm 6 of 13
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x30, 0x20	# Bass
+    zzzj_voice	0x01, 0x20, 0x20	# Acc1
+    zzzj_voice	0x19, 0x28, 0x20	# Acc2
+    zzzj_voice	0x34, 0x00, 0x20	# Acc3
+    zzzj_voice	0x09, 0x00, 0x20	# Acc4
+    zzzj_voice	0x33, 0x00, 0x20	# Acc5
+SramRecordDefault128:		# preset rhythm 128: 60s & 70s, rhythm 7 of 13
+    zzzj_voice	0x08, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x22, 0x00, 0x20	# Bass
+    zzzj_voice	0x58, 0x00, 0x20	# Acc1
+    zzzj_voice	0x19, 0x20, 0x20	# Acc2
+    zzzj_voice	0x31, 0x00, 0x20	# Acc3
+    zzzj_voice	0x09, 0x00, 0x20	# Acc4
+    zzzj_voice	0x1b, 0x20, 0x20	# Acc5
+SramRecordDefault129:		# preset rhythm 129: 60s & 70s, rhythm 8 of 13
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x24, 0x00, 0x20	# Bass
+    zzzj_voice	0x05, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1a, 0x30, 0x20	# Acc2
+    zzzj_voice	0x30, 0x16, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault130:		# preset rhythm 130: 60s & 70s, rhythm 9 of 13
+    zzzj_voice	0x02, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x50, 0x00, 0x20	# Bass
+    zzzj_voice	0x1b, 0x19, 0x20	# Acc1
+    zzzj_voice	0x3f, 0x08, 0x20	# Acc2
+    zzzj_voice	0x92, 0x00, 0x20	# Acc3: CC94 127
+    zzzj_voice	0x35, 0x51, 0x20	# Acc4
+    zzzj_voice	0x3d, 0x61, 0x20	# Acc5
+SramRecordDefault131:		# preset rhythm 131: 60s & 70s, rhythm 10 of 13
+    zzzj_voice	0x1e, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x04, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x19, 0x20, 0x20	# Acc1
+    zzzj_voice	0x05, 0x10, 0x20	# Acc2
+    zzzj_voice	0x11, 0x14, 0x20	# Acc3
+    zzzj_voice	0x35, 0x2c, 0x20	# Acc4
+    zzzj_voice	0x34, 0x26, 0x20	# Acc5
+SramRecordDefault132:		# preset rhythm 132: 60s & 70s, rhythm 11 of 13
+    zzzj_voice	0x03, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x24, 0x00, 0x20	# Bass
+    zzzj_voice	0x30, 0x10, 0x20	# Acc1
+    zzzj_voice	0x1e, 0x30, 0x20	# Acc2
+    zzzj_voice	0x12, 0x20, 0x20	# Acc3
+    zzzj_voice	0x90, 0x18, 0x20	# Acc4: CC94 127
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault133:		# preset rhythm 133: 60s & 70s, rhythm 12 of 13
+    zzzj_voice	0x00, 0x00, 0x26	# Drum
+    zzzj_voice	0x48, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x03, 0x00, 0x20	# Acc1
+    zzzj_voice	0x35, 0x21, 0x20	# Acc2
+    zzzj_voice	0x3d, 0x61, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault134:		# preset rhythm 134: 60s & 70s, rhythm 13 of 13
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x40, 0x20	# Bass
+    zzzj_voice	0x04, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1c, 0x01, 0x20	# Acc2
+    zzzj_voice	0x01, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault135:		# preset rhythm 135: MODERN DANCE, rhythm 1 of 14
+    zzzj_voice	0x1f, 0x00, 0x26	# Drum
+    zzzj_voice	0x1a, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x40, 0x20	# Bass
+    zzzj_voice	0x00, 0x00, 0x20	# Acc1
+    zzzj_voice	0x51, 0x68, 0x20	# Acc2
+    zzzj_voice	0x57, 0x30, 0x20	# Acc3
+    zzzj_voice	0x02, 0x48, 0x20	# Acc4
+    zzzj_voice	0x50, 0x00, 0x20	# Acc5
+SramRecordDefault136:		# preset rhythm 136: MODERN DANCE, rhythm 2 of 14
+    zzzj_voice	0x1c, 0x00, 0x26	# Drum
+    zzzj_voice	0x1e, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x28, 0x20	# Bass
+    zzzj_voice	0xd6, 0x08, 0x20	# Acc1: CC94 127
+    zzzj_voice	0x51, 0x00, 0x20	# Acc2
+    zzzj_voice	0x33, 0x20, 0x20	# Acc3
+    zzzj_voice	0x32, 0x40, 0x20	# Acc4
+    zzzj_voice	0x58, 0x10, 0x20	# Acc5
+SramRecordDefault137:		# preset rhythm 137: MODERN DANCE, rhythm 3 of 14
+    zzzj_voice	0x10, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x04, 0x26	# Perc
+    zzzj_voice	0x26, 0x60, 0x20	# Bass
+    zzzj_voice	0x3d, 0x20, 0x20	# Acc1
+    zzzj_voice	0x5d, 0x40, 0x20	# Acc2
+    zzzj_voice	0x5f, 0x18, 0x20	# Acc3
+    zzzj_voice	0x50, 0x00, 0x20	# Acc4
+    zzzj_voice	0x04, 0x40, 0x20	# Acc5
+SramRecordDefault138:		# preset rhythm 138: MODERN DANCE, rhythm 4 of 14
+    zzzj_voice	0x1e, 0x00, 0x26	# Drum
+    zzzj_voice	0x1f, 0x00, 0x26	# Perc
+    zzzj_voice	0x24, 0x00, 0x20	# Bass
+    zzzj_voice	0x07, 0x00, 0x20	# Acc1
+    zzzj_voice	0x3d, 0x20, 0x20	# Acc2
+    zzzj_voice	0x37, 0x30, 0x20	# Acc3
+    zzzj_voice	0x37, 0x30, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault139:		# preset rhythm 139: MODERN DANCE, rhythm 5 of 14
+    zzzj_voice	0x1f, 0x00, 0x26	# Drum
+    zzzj_voice	0x1d, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x20, 0x20	# Bass
+    zzzj_voice	0x54, 0x40, 0x20	# Acc1
+    zzzj_voice	0x5f, 0x00, 0x20	# Acc2
+    zzzj_voice	0x53, 0x28, 0x20	# Acc3
+    zzzj_voice	0x5f, 0x00, 0x20	# Acc4
+    zzzj_voice	0x61, 0x00, 0x20	# Acc5
+SramRecordDefault140:		# preset rhythm 140: MODERN DANCE, rhythm 6 of 14
+    zzzj_voice	0x19, 0x00, 0x26	# Drum
+    zzzj_voice	0x11, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x28, 0x20	# Bass
+    zzzj_voice	0x5f, 0x10, 0x20	# Acc1
+    zzzj_voice	0x01, 0x00, 0x20	# Acc2
+    zzzj_voice	0xd6, 0x08, 0x20	# Acc3: CC94 127
+    zzzj_voice	0x51, 0x70, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault141:		# preset rhythm 141: MODERN DANCE, rhythm 7 of 14
+    zzzj_voice	0x1f, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x28, 0x20	# Bass
+    zzzj_voice	0x25, 0x00, 0x20	# Acc1
+    zzzj_voice	0x54, 0x4c, 0x20	# Acc2
+    zzzj_voice	0x51, 0x40, 0x20	# Acc3
+    zzzj_voice	0x53, 0x28, 0x20	# Acc4
+    zzzj_voice	0x50, 0x40, 0x20	# Acc5
+SramRecordDefault142:		# preset rhythm 142: MODERN DANCE, rhythm 8 of 14
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x1c, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x00, 0x20	# Bass
+    zzzj_voice	0x3d, 0x20, 0x20	# Acc1
+    zzzj_voice	0x41, 0x08, 0x20	# Acc2
+    zzzj_voice	0x01, 0x00, 0x20	# Acc3
+    zzzj_voice	0x66, 0x00, 0x20	# Acc4
+    zzzj_voice	0x07, 0x00, 0x20	# Acc5
+SramRecordDefault143:		# preset rhythm 143: MODERN DANCE, rhythm 9 of 14
+    zzzj_voice	0x1f, 0x00, 0x26	# Drum
+    zzzj_voice	0x1d, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x00, 0x20	# Bass
+    zzzj_voice	0x34, 0x20, 0x20	# Acc1
+    zzzj_voice	0x51, 0x68, 0x20	# Acc2
+    zzzj_voice	0x1b, 0x41, 0x20	# Acc3
+    zzzj_voice	0x30, 0x10, 0x20	# Acc4
+    zzzj_voice	0x58, 0x00, 0x20	# Acc5
+SramRecordDefault144:		# preset rhythm 144: MODERN DANCE, rhythm 10 of 14
+    zzzj_voice	0x1f, 0x00, 0x26	# Drum
+    zzzj_voice	0x38, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x40, 0x20	# Bass
+    zzzj_voice	0x25, 0x00, 0x20	# Acc1
+    zzzj_voice	0x07, 0x10, 0x20	# Acc2
+    zzzj_voice	0x1f, 0x00, 0x26	# Acc3
+    zzzj_voice	0x51, 0x30, 0x20	# Acc4
+    zzzj_voice	0x34, 0x20, 0x20	# Acc5
+SramRecordDefault145:		# preset rhythm 145: MODERN DANCE, rhythm 11 of 14
+    zzzj_voice	0x10, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x20, 0x20	# Acc1
+    zzzj_voice	0x59, 0x10, 0x20	# Acc2
+    zzzj_voice	0x01, 0x30, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault146:		# preset rhythm 146: MODERN DANCE, rhythm 12 of 14
+    zzzj_voice	0x1f, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x40, 0x20	# Bass
+    zzzj_voice	0x51, 0x68, 0x20	# Acc1
+    zzzj_voice	0x1a, 0x28, 0x20	# Acc2
+    zzzj_voice	0x3d, 0x48, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault147:		# preset rhythm 147: MODERN DANCE, rhythm 13 of 14
+    zzzj_voice	0x1b, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x08, 0x20	# Bass
+    zzzj_voice	0x5f, 0x00, 0x20	# Acc1
+    zzzj_voice	0x07, 0x30, 0x20	# Acc2
+    zzzj_voice	0x3f, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault148:		# preset rhythm 148: MODERN DANCE, rhythm 14 of 14
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x3e, 0x30, 0x20	# Acc1
+    zzzj_voice	0x1c, 0x20, 0x20	# Acc2
+    zzzj_voice	0x3d, 0x48, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault149:		# preset rhythm 149: SOUL & R&B, rhythm 1 of 19
+    zzzj_voice	0x03, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x30, 0x20	# Bass
+    zzzj_voice	0x5a, 0x08, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x21, 0x20	# Acc2
+    zzzj_voice	0x01, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault150:		# preset rhythm 150: SOUL & R&B, rhythm 2 of 19
+    zzzj_voice	0x1d, 0x00, 0x26	# Drum
+    zzzj_voice	0x03, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x30, 0x20	# Bass
+    zzzj_voice	0x05, 0x10, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x41, 0x20	# Acc2
+    zzzj_voice	0x58, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault151:		# preset rhythm 151: SOUL & R&B, rhythm 3 of 19
+    zzzj_voice	0x0c, 0x00, 0x26	# Drum
+    zzzj_voice	0x0c, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x08, 0x20	# Bass
+    zzzj_voice	0x35, 0x21, 0x20	# Acc1
+    zzzj_voice	0x0a, 0x00, 0x20	# Acc2
+    zzzj_voice	0x00, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault152:		# preset rhythm 152: SOUL & R&B, rhythm 4 of 19
+    zzzj_voice	0x1f, 0x00, 0x26	# Drum
+    zzzj_voice	0x02, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x04, 0x10, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x41, 0x20	# Acc2
+    zzzj_voice	0x42, 0x00, 0x20	# Acc3
+    zzzj_voice	0x41, 0x08, 0x20	# Acc4
+    zzzj_voice	0x3d, 0x00, 0x20	# Acc5
+SramRecordDefault153:		# preset rhythm 153: SOUL & R&B, rhythm 5 of 19
+    zzzj_voice	0x10, 0x00, 0x26	# Drum
+    zzzj_voice	0x14, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x05, 0x00, 0x20	# Acc1
+    zzzj_voice	0x19, 0x20, 0x20	# Acc2
+    zzzj_voice	0x50, 0x48, 0x20	# Acc3
+    zzzj_voice	0x35, 0x50, 0x20	# Acc4
+    zzzj_voice	0x24, 0x00, 0x20	# Acc5
+SramRecordDefault154:		# preset rhythm 154: SOUL & R&B, rhythm 6 of 19
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x02, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x19, 0x00, 0x20	# Acc1
+    zzzj_voice	0x04, 0x04, 0x20	# Acc2
+    zzzj_voice	0x90, 0x08, 0x20	# Acc3: CC94 127
+    zzzj_voice	0x35, 0x24, 0x20	# Acc4
+    zzzj_voice	0x35, 0x20, 0x20	# Acc5
+SramRecordDefault155:		# preset rhythm 155: SOUL & R&B, rhythm 7 of 19
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x04, 0x00, 0x20	# Acc1
+    zzzj_voice	0x91, 0x00, 0x20	# Acc2: CC94 127
+    zzzj_voice	0x3f, 0x00, 0x20	# Acc3
+    zzzj_voice	0x04, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault156:		# preset rhythm 156: SOUL & R&B, rhythm 8 of 19
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x01, 0x20, 0x20	# Acc1
+    zzzj_voice	0x90, 0x08, 0x20	# Acc2: CC94 127
+    zzzj_voice	0x35, 0x50, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault157:		# preset rhythm 157: SOUL & R&B, rhythm 9 of 19
+    zzzj_voice	0x00, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x00, 0x00, 0x20	# Acc1
+    zzzj_voice	0x35, 0x20, 0x20	# Acc2
+    zzzj_voice	0x3f, 0x00, 0x20	# Acc3
+    zzzj_voice	0x5a, 0x10, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault158:		# preset rhythm 158: SOUL & R&B, rhythm 10 of 19
+    zzzj_voice	0x02, 0x00, 0x26	# Drum
+    zzzj_voice	0x1e, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x19, 0x08, 0x20	# Acc1
+    zzzj_voice	0x34, 0x24, 0x20	# Acc2
+    zzzj_voice	0x90, 0x08, 0x20	# Acc3: CC94 127
+    zzzj_voice	0x01, 0x01, 0x20	# Acc4
+    zzzj_voice	0x00, 0x20, 0x20	# Acc5
+SramRecordDefault159:		# preset rhythm 159: SOUL & R&B, rhythm 11 of 19
+    zzzj_voice	0x1d, 0x00, 0x26	# Drum
+    zzzj_voice	0x1a, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x28, 0x20	# Bass
+    zzzj_voice	0x5f, 0x08, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x21, 0x20	# Acc2
+    zzzj_voice	0x07, 0x00, 0x20	# Acc3
+    zzzj_voice	0x38, 0x50, 0x20	# Acc4
+    zzzj_voice	0x38, 0x68, 0x20	# Acc5
+SramRecordDefault160:		# preset rhythm 160: SOUL & R&B, rhythm 12 of 19
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x25, 0x00, 0x20	# Bass
+    zzzj_voice	0x03, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1c, 0x20, 0x20	# Acc2
+    zzzj_voice	0x3d, 0x20, 0x20	# Acc3
+    zzzj_voice	0x43, 0x00, 0x20	# Acc4
+    zzzj_voice	0x12, 0x10, 0x20	# Acc5
+SramRecordDefault161:		# preset rhythm 161: SOUL & R&B, rhythm 13 of 19
+    zzzj_voice	0x03, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x24, 0x00, 0x20	# Bass
+    zzzj_voice	0x85, 0x00, 0x20	# Acc1: CC94 127
+    zzzj_voice	0x3d, 0x20, 0x20	# Acc2
+    zzzj_voice	0x1b, 0x20, 0x20	# Acc3
+    zzzj_voice	0x38, 0x50, 0x20	# Acc4
+    zzzj_voice	0x3d, 0x48, 0x20	# Acc5
+SramRecordDefault162:		# preset rhythm 162: SOUL & R&B, rhythm 14 of 19
+    zzzj_voice	0x1d, 0x00, 0x26	# Drum
+    zzzj_voice	0x1e, 0x00, 0x26	# Perc
+    zzzj_voice	0x25, 0x00, 0x20	# Bass
+    zzzj_voice	0x01, 0x20, 0x20	# Acc1
+    zzzj_voice	0x3f, 0x00, 0x20	# Acc2
+    zzzj_voice	0x1c, 0x01, 0x20	# Acc3
+    zzzj_voice	0x41, 0x08, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault163:		# preset rhythm 163: SOUL & R&B, rhythm 15 of 19
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x04, 0x10, 0x20	# Acc1
+    zzzj_voice	0x04, 0x00, 0x20	# Acc2
+    zzzj_voice	0x04, 0x00, 0x20	# Acc3
+    zzzj_voice	0x04, 0x10, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault164:		# preset rhythm 164: SOUL & R&B, rhythm 16 of 19
+    zzzj_voice	0x19, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x30, 0x20	# Bass
+    zzzj_voice	0x05, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x19, 0x20	# Acc2
+    zzzj_voice	0x34, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault165:		# preset rhythm 165: SOUL & R&B, rhythm 17 of 19
+    zzzj_voice	0x1d, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x04, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1c, 0x01, 0x20	# Acc2
+    zzzj_voice	0x43, 0x00, 0x20	# Acc3
+    zzzj_voice	0x3d, 0x48, 0x20	# Acc4
+    zzzj_voice	0x90, 0x10, 0x20	# Acc5: CC94 127
+SramRecordDefault166:		# preset rhythm 166: SOUL & R&B, rhythm 18 of 19
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x1b, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x04, 0x10, 0x20	# Acc1
+    zzzj_voice	0x3e, 0x08, 0x20	# Acc2
+    zzzj_voice	0x1b, 0x21, 0x20	# Acc3
+    zzzj_voice	0x30, 0x10, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault167:		# preset rhythm 167: SOUL & R&B, rhythm 19 of 19
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x19, 0x20, 0x20	# Acc1
+    zzzj_voice	0x90, 0x08, 0x20	# Acc2: CC94 127
+    zzzj_voice	0x30, 0x10, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault168:		# preset rhythm 168: COUNTRY&WESTERN, rhythm 1 of 14
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x8b, 0x10, 0x20	# Acc1: CC94 127
+    zzzj_voice	0x1a, 0x41, 0x20	# Acc2
+    zzzj_voice	0x50, 0x0c, 0x20	# Acc3
+    zzzj_voice	0x19, 0x28, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault169:		# preset rhythm 169: COUNTRY&WESTERN, rhythm 2 of 14
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x02, 0x00, 0x26	# Perc
+    zzzj_voice	0x25, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x20, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x41, 0x20	# Acc2
+    zzzj_voice	0x90, 0x00, 0x20	# Acc3: CC94 127
+    zzzj_voice	0x01, 0x20, 0x20	# Acc4
+    zzzj_voice	0x16, 0x08, 0x20	# Acc5
+SramRecordDefault170:		# preset rhythm 170: COUNTRY&WESTERN, rhythm 3 of 14
+    zzzj_voice	0x03, 0x00, 0x26	# Drum
+    zzzj_voice	0x38, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x30, 0x20	# Bass
+    zzzj_voice	0x03, 0x00, 0x20	# Acc1
+    zzzj_voice	0x19, 0x28, 0x20	# Acc2
+    zzzj_voice	0x1b, 0x20, 0x20	# Acc3
+    zzzj_voice	0x19, 0x28, 0x20	# Acc4
+    zzzj_voice	0x1a, 0x20, 0x20	# Acc5
+SramRecordDefault171:		# preset rhythm 171: COUNTRY&WESTERN, rhythm 4 of 14
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x11, 0x20	# Acc2
+    zzzj_voice	0x31, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault172:		# preset rhythm 172: COUNTRY&WESTERN, rhythm 5 of 14
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x00, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x18, 0x20	# Acc2
+    zzzj_voice	0x16, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault173:		# preset rhythm 173: COUNTRY&WESTERN, rhythm 6 of 14
+    zzzj_voice	0x01, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x02, 0x00, 0x20	# Acc1
+    zzzj_voice	0x19, 0x20, 0x20	# Acc2
+    zzzj_voice	0x1a, 0x30, 0x20	# Acc3
+    zzzj_voice	0x02, 0x00, 0x20	# Acc4
+    zzzj_voice	0x04, 0x10, 0x20	# Acc5
+SramRecordDefault174:		# preset rhythm 174: COUNTRY&WESTERN, rhythm 7 of 14
+    zzzj_voice	0x08, 0x00, 0x26	# Drum
+    zzzj_voice	0x08, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x1c, 0x01, 0x20	# Acc1
+    zzzj_voice	0x1c, 0x01, 0x20	# Acc2
+    zzzj_voice	0x1b, 0x18, 0x20	# Acc3
+    zzzj_voice	0x04, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault175:		# preset rhythm 175: COUNTRY&WESTERN, rhythm 8 of 14
+    zzzj_voice	0x00, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x35, 0x2c, 0x20	# Acc1
+    zzzj_voice	0x04, 0x00, 0x20	# Acc2
+    zzzj_voice	0x1c, 0x01, 0x20	# Acc3
+    zzzj_voice	0x05, 0x00, 0x20	# Acc4
+    zzzj_voice	0x05, 0x00, 0x20	# Acc5
+SramRecordDefault176:		# preset rhythm 176: COUNTRY&WESTERN, rhythm 9 of 14
+    zzzj_voice	0x1f, 0x00, 0x26	# Drum
+    zzzj_voice	0x38, 0x00, 0x26	# Perc
+    zzzj_voice	0x25, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x20, 0x20	# Acc1
+    zzzj_voice	0x00, 0x01, 0x20	# Acc2
+    zzzj_voice	0x1a, 0x20, 0x20	# Acc3
+    zzzj_voice	0x1a, 0x41, 0x20	# Acc4
+    zzzj_voice	0x30, 0x14, 0x20	# Acc5
+SramRecordDefault177:		# preset rhythm 177: COUNTRY&WESTERN, rhythm 10 of 14
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x19, 0x00, 0x20	# Acc1
+    zzzj_voice	0x02, 0x00, 0x20	# Acc2
+    zzzj_voice	0x30, 0x30, 0x20	# Acc3
+    zzzj_voice	0x18, 0x08, 0x20	# Acc4
+    zzzj_voice	0x04, 0x00, 0x20	# Acc5
+SramRecordDefault178:		# preset rhythm 178: COUNTRY&WESTERN, rhythm 11 of 14
+    zzzj_voice	0x10, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x01, 0x00, 0x20	# Acc1
+    zzzj_voice	0x00, 0x08, 0x24	# Acc2
+    zzzj_voice	0x6a, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault179:		# preset rhythm 179: COUNTRY&WESTERN, rhythm 12 of 14
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x1b, 0x10, 0x20	# Acc1
+    zzzj_voice	0x1b, 0x11, 0x20	# Acc2
+    zzzj_voice	0x92, 0x00, 0x20	# Acc3: CC94 127
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault180:		# preset rhythm 180: COUNTRY&WESTERN, rhythm 13 of 14
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x1a, 0x40, 0x20	# Acc1
+    zzzj_voice	0x6e, 0x00, 0x20	# Acc2
+    zzzj_voice	0x00, 0x00, 0x20	# Acc3
+    zzzj_voice	0x01, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault181:		# preset rhythm 181: COUNTRY&WESTERN, rhythm 14 of 14
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x44, 0x20	# Bass
+    zzzj_voice	0x8b, 0x10, 0x20	# Acc1: CC94 127
+    zzzj_voice	0x51, 0x68, 0x20	# Acc2
+    zzzj_voice	0x1a, 0x41, 0x20	# Acc3
+    zzzj_voice	0x19, 0x20, 0x20	# Acc4
+    zzzj_voice	0x91, 0x00, 0x20	# Acc5: CC94 127
+SramRecordDefault182:		# preset rhythm 182: MARCH & WALTZ, rhythm 1 of 12
+    zzzj_voice	0x34, 0x00, 0x26	# Drum
+    zzzj_voice	0x0c, 0x00, 0x26	# Perc
+    zzzj_voice	0x50, 0x00, 0x20	# Bass
+    zzzj_voice	0x3d, 0x20, 0x20	# Acc1
+    zzzj_voice	0x39, 0x00, 0x20	# Acc2
+    zzzj_voice	0x3d, 0x00, 0x20	# Acc3
+    zzzj_voice	0x08, 0x00, 0x20	# Acc4
+    zzzj_voice	0x47, 0x04, 0x20	# Acc5
+SramRecordDefault183:		# preset rhythm 183: MARCH & WALTZ, rhythm 2 of 12
+    zzzj_voice	0x21, 0x00, 0x26	# Drum
+    zzzj_voice	0x24, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x18, 0x20	# Bass
+    zzzj_voice	0x54, 0x00, 0x20	# Acc1
+    zzzj_voice	0x3e, 0x08, 0x20	# Acc2
+    zzzj_voice	0xda, 0x00, 0x20	# Acc3: CC94 127
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault184:		# preset rhythm 184: MARCH & WALTZ, rhythm 3 of 12
+    zzzj_voice	0x1f, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x50, 0x0c, 0x20	# Acc1
+    zzzj_voice	0x49, 0x04, 0x20	# Acc2
+    zzzj_voice	0x58, 0x10, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault185:		# preset rhythm 185: MARCH & WALTZ, rhythm 4 of 12
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x00, 0x20	# Bass
+    zzzj_voice	0x15, 0x44, 0x20	# Acc1
+    zzzj_voice	0x50, 0x08, 0x20	# Acc2
+    zzzj_voice	0x18, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault186:		# preset rhythm 186: MARCH & WALTZ, rhythm 5 of 12
+    zzzj_voice	0x0c, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x15, 0x48, 0x20	# Acc1
+    zzzj_voice	0x18, 0x08, 0x20	# Acc2
+    zzzj_voice	0x47, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault187:		# preset rhythm 187: MARCH & WALTZ, rhythm 6 of 12
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x28, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x10, 0x20	# Bass
+    zzzj_voice	0x04, 0x30, 0x20	# Acc1
+    zzzj_voice	0x00, 0x00, 0x20	# Acc2
+    zzzj_voice	0x19, 0x00, 0x20	# Acc3
+    zzzj_voice	0x30, 0x00, 0x20	# Acc4
+    zzzj_voice	0x35, 0x46, 0x20	# Acc5
+SramRecordDefault188:		# preset rhythm 188: MARCH & WALTZ, rhythm 7 of 12
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x01, 0x01, 0x20	# Acc1
+    zzzj_voice	0x1a, 0x38, 0x20	# Acc2
+    zzzj_voice	0x30, 0x18, 0x20	# Acc3
+    zzzj_voice	0x1a, 0x38, 0x20	# Acc4
+    zzzj_voice	0x01, 0x01, 0x20	# Acc5
+SramRecordDefault189:		# preset rhythm 189: MARCH & WALTZ, rhythm 8 of 12
+    zzzj_voice	0x10, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x00, 0x00, 0x20	# Acc1
+    zzzj_voice	0x18, 0x10, 0x20	# Acc2
+    zzzj_voice	0x90, 0x08, 0x20	# Acc3: CC94 127
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault190:		# preset rhythm 190: MARCH & WALTZ, rhythm 9 of 12
+    zzzj_voice	0x0c, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x1a, 0x08, 0x20	# Acc1
+    zzzj_voice	0x30, 0x08, 0x20	# Acc2
+    zzzj_voice	0x35, 0x21, 0x20	# Acc3
+    zzzj_voice	0x15, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault191:		# preset rhythm 191: MARCH & WALTZ, rhythm 10 of 12
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x35, 0x50, 0x20	# Acc1
+    zzzj_voice	0x49, 0x04, 0x20	# Acc2
+    zzzj_voice	0x19, 0x20, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault192:		# preset rhythm 192: MARCH & WALTZ, rhythm 11 of 12
+    zzzj_voice	0x1f, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x10, 0x20	# Bass
+    zzzj_voice	0x51, 0x68, 0x20	# Acc1
+    zzzj_voice	0x19, 0x00, 0x20	# Acc2
+    zzzj_voice	0x31, 0x00, 0x20	# Acc3
+    zzzj_voice	0x1a, 0x08, 0x20	# Acc4
+    zzzj_voice	0x5d, 0x40, 0x20	# Acc5
+SramRecordDefault193:		# preset rhythm 193: MARCH & WALTZ, rhythm 12 of 12
+    zzzj_voice	0x34, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x3a, 0x20, 0x20	# Bass
+    zzzj_voice	0x03, 0x00, 0x20	# Acc1
+    zzzj_voice	0x32, 0x10, 0x20	# Acc2
+    zzzj_voice	0x3c, 0x40, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault194:		# preset rhythm 194: LATIN & WORLD, rhythm 1 of 26
+    zzzj_voice	0x19, 0x00, 0x26	# Drum
+    zzzj_voice	0x0c, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x18, 0x0e, 0x20	# Acc1
+    zzzj_voice	0x58, 0x10, 0x20	# Acc2
+    zzzj_voice	0x34, 0x1c, 0x20	# Acc3
+    zzzj_voice	0x30, 0x10, 0x20	# Acc4
+    zzzj_voice	0x30, 0x10, 0x20	# Acc5
+SramRecordDefault195:		# preset rhythm 195: LATIN & WORLD, rhythm 2 of 26
+    zzzj_voice	0x0c, 0x00, 0x26	# Drum
+    zzzj_voice	0x0c, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x20, 0x20	# Acc1
+    zzzj_voice	0x03, 0x00, 0x20	# Acc2
+    zzzj_voice	0x32, 0x10, 0x20	# Acc3
+    zzzj_voice	0x49, 0x14, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault196:		# preset rhythm 196: LATIN & WORLD, rhythm 3 of 26
+    zzzj_voice	0x48, 0x00, 0x26	# Drum
+    zzzj_voice	0x0c, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x1c, 0x20, 0x20	# Acc1
+    zzzj_voice	0x0c, 0x00, 0x20	# Acc2
+    zzzj_voice	0x3d, 0x08, 0x20	# Acc3
+    zzzj_voice	0x5a, 0x10, 0x20	# Acc4
+    zzzj_voice	0x30, 0x30, 0x20	# Acc5
+SramRecordDefault197:		# preset rhythm 197: LATIN & WORLD, rhythm 4 of 26
+    zzzj_voice	0x0c, 0x00, 0x26	# Drum
+    zzzj_voice	0x48, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x85, 0x00, 0x20	# Acc1: CC94 127
+    zzzj_voice	0x18, 0x1c, 0x20	# Acc2
+    zzzj_voice	0x35, 0x20, 0x20	# Acc3
+    zzzj_voice	0x00, 0x01, 0x20	# Acc4
+    zzzj_voice	0x42, 0x14, 0x20	# Acc5
+SramRecordDefault198:		# preset rhythm 198: LATIN & WORLD, rhythm 5 of 26
+    zzzj_voice	0x20, 0x00, 0x26	# Drum
+    zzzj_voice	0x48, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x18, 0x18, 0x20	# Acc1
+    zzzj_voice	0x51, 0x10, 0x20	# Acc2
+    zzzj_voice	0x38, 0x44, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault199:		# preset rhythm 199: LATIN & WORLD, rhythm 6 of 26
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x48, 0x00, 0x26	# Perc
+    zzzj_voice	0x24, 0x00, 0x20	# Bass
+    zzzj_voice	0x00, 0x41, 0x20	# Acc1
+    zzzj_voice	0x30, 0x10, 0x20	# Acc2
+    zzzj_voice	0x35, 0x46, 0x20	# Acc3
+    zzzj_voice	0x3d, 0x00, 0x20	# Acc4
+    zzzj_voice	0x3d, 0x61, 0x20	# Acc5
+SramRecordDefault200:		# preset rhythm 200: LATIN & WORLD, rhythm 7 of 26
+    zzzj_voice	0x09, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x04, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x1b, 0x18, 0x20	# Acc1
+    zzzj_voice	0x40, 0x00, 0x20	# Acc2
+    zzzj_voice	0x3f, 0x20, 0x20	# Acc3
+    zzzj_voice	0x3d, 0x20, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault201:		# preset rhythm 201: LATIN & WORLD, rhythm 8 of 26
+    zzzj_voice	0x1f, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x50, 0x00, 0x20	# Bass
+    zzzj_voice	0x04, 0x40, 0x20	# Acc1
+    zzzj_voice	0x19, 0x00, 0x20	# Acc2
+    zzzj_voice	0x5d, 0x40, 0x20	# Acc3
+    zzzj_voice	0x38, 0x50, 0x20	# Acc4
+    zzzj_voice	0x38, 0x04, 0x20	# Acc5
+SramRecordDefault202:		# preset rhythm 202: LATIN & WORLD, rhythm 9 of 26
+    zzzj_voice	0x08, 0x00, 0x26	# Drum
+    zzzj_voice	0x48, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x19, 0x08, 0x20	# Acc1
+    zzzj_voice	0x3d, 0x40, 0x20	# Acc2
+    zzzj_voice	0x38, 0x60, 0x20	# Acc3
+    zzzj_voice	0x39, 0x19, 0x20	# Acc4
+    zzzj_voice	0x3d, 0x08, 0x20	# Acc5
+SramRecordDefault203:		# preset rhythm 203: LATIN & WORLD, rhythm 10 of 26
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x24, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x00, 0x40, 0x20	# Acc1
+    zzzj_voice	0x2d, 0x00, 0x20	# Acc2
+    zzzj_voice	0x08, 0x20, 0x24	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault204:		# preset rhythm 204: LATIN & WORLD, rhythm 11 of 26
+    zzzj_voice	0x2c, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x20, 0x20	# Acc1
+    zzzj_voice	0x30, 0x10, 0x20	# Acc2
+    zzzj_voice	0x34, 0x24, 0x20	# Acc3
+    zzzj_voice	0x04, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault205:		# preset rhythm 205: LATIN & WORLD, rhythm 12 of 26
+    zzzj_voice	0x02, 0x00, 0x26	# Drum
+    zzzj_voice	0x0c, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x1c, 0x20, 0x20	# Acc1
+    zzzj_voice	0x39, 0x00, 0x20	# Acc2
+    zzzj_voice	0x3d, 0x30, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault206:		# preset rhythm 206: LATIN & WORLD, rhythm 13 of 26
+    zzzj_voice	0x03, 0x00, 0x26	# Drum
+    zzzj_voice	0x14, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x44, 0x20	# Bass
+    zzzj_voice	0x18, 0x0e, 0x20	# Acc1
+    zzzj_voice	0x18, 0x10, 0x20	# Acc2
+    zzzj_voice	0x03, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault207:		# preset rhythm 207: LATIN & WORLD, rhythm 14 of 26
+    zzzj_voice	0x02, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x20, 0x20	# Acc1
+    zzzj_voice	0x3d, 0x48, 0x20	# Acc2
+    zzzj_voice	0x18, 0x08, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault208:		# preset rhythm 208: LATIN & WORLD, rhythm 15 of 26
+    zzzj_voice	0x19, 0x00, 0x26	# Drum
+    zzzj_voice	0x09, 0x00, 0x26	# Perc
+    zzzj_voice	0x00, 0x00, 0x20	# Bass
+    zzzj_voice	0x00, 0x00, 0x20	# Acc1
+    zzzj_voice	0x4f, 0x20, 0x20	# Acc2
+    zzzj_voice	0x00, 0x00, 0x20	# Acc3
+    zzzj_voice	0x28, 0x04, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault209:		# preset rhythm 209: LATIN & WORLD, rhythm 16 of 26
+    zzzj_voice	0x28, 0x00, 0x26	# Drum
+    zzzj_voice	0x0c, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x20, 0x20	# Bass
+    zzzj_voice	0x18, 0x1c, 0x20	# Acc1
+    zzzj_voice	0x18, 0x18, 0x20	# Acc2
+    zzzj_voice	0x18, 0x1c, 0x20	# Acc3
+    zzzj_voice	0x1a, 0x38, 0x20	# Acc4
+    zzzj_voice	0x1f, 0x30, 0x20	# Acc5
+SramRecordDefault210:		# preset rhythm 210: LATIN & WORLD, rhythm 17 of 26
+    zzzj_voice	0x00, 0x00, 0x26	# Drum
+    zzzj_voice	0x08, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x10, 0x20	# Bass
+    zzzj_voice	0x19, 0x20, 0x20	# Acc1
+    zzzj_voice	0x18, 0x1c, 0x20	# Acc2
+    zzzj_voice	0x3f, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault211:		# preset rhythm 211: LATIN & WORLD, rhythm 18 of 26
+    zzzj_voice	0x1d, 0x00, 0x26	# Drum
+    zzzj_voice	0x19, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x1c, 0x01, 0x20	# Acc1
+    zzzj_voice	0x3f, 0x00, 0x20	# Acc2
+    zzzj_voice	0x38, 0x50, 0x20	# Acc3
+    zzzj_voice	0x59, 0x00, 0x20	# Acc4
+    zzzj_voice	0x59, 0x00, 0x20	# Acc5
+SramRecordDefault212:		# preset rhythm 212: LATIN & WORLD, rhythm 19 of 26
+    zzzj_voice	0x02, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x20, 0x20	# Acc1
+    zzzj_voice	0x3d, 0x48, 0x20	# Acc2
+    zzzj_voice	0x15, 0x40, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault213:		# preset rhythm 213: LATIN & WORLD, rhythm 20 of 26
+    zzzj_voice	0x21, 0x00, 0x26	# Drum
+    zzzj_voice	0x03, 0x00, 0x26	# Perc
+    zzzj_voice	0x20, 0x10, 0x20	# Bass
+    zzzj_voice	0x15, 0x00, 0x20	# Acc1
+    zzzj_voice	0x15, 0x00, 0x20	# Acc2
+    zzzj_voice	0x00, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault214:		# preset rhythm 214: LATIN & WORLD, rhythm 21 of 26
+    zzzj_voice	0x14, 0x00, 0x26	# Drum
+    zzzj_voice	0x0c, 0x00, 0x26	# Perc
+    zzzj_voice	0x23, 0x00, 0x20	# Bass
+    zzzj_voice	0x03, 0x00, 0x20	# Acc1
+    zzzj_voice	0x3f, 0x00, 0x20	# Acc2
+    zzzj_voice	0x41, 0x34, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault215:		# preset rhythm 215: LATIN & WORLD, rhythm 22 of 26
+    zzzj_voice	0x28, 0x00, 0x26	# Drum
+    zzzj_voice	0x01, 0x00, 0x26	# Perc
+    zzzj_voice	0x21, 0x00, 0x20	# Bass
+    zzzj_voice	0x1a, 0x08, 0x20	# Acc1
+    zzzj_voice	0x85, 0x00, 0x20	# Acc2: CC94 127
+    zzzj_voice	0x32, 0x10, 0x20	# Acc3
+    zzzj_voice	0x38, 0x30, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault216:		# preset rhythm 216: LATIN & WORLD, rhythm 23 of 26
+    zzzj_voice	0x1e, 0x00, 0x26	# Drum
+    zzzj_voice	0x1b, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x10, 0x20	# Bass
+    zzzj_voice	0x70, 0x38, 0x20	# Acc1
+    zzzj_voice	0x35, 0x24, 0x20	# Acc2
+    zzzj_voice	0x50, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault217:		# preset rhythm 217: LATIN & WORLD, rhythm 24 of 26
+    zzzj_voice	0x03, 0x00, 0x26	# Drum
+    zzzj_voice	0x14, 0x00, 0x26	# Perc
+    zzzj_voice	0x27, 0x20, 0x20	# Bass
+    zzzj_voice	0x00, 0x00, 0x20	# Acc1
+    zzzj_voice	0x34, 0x08, 0x20	# Acc2
+    zzzj_voice	0x5d, 0x40, 0x20	# Acc3
+    zzzj_voice	0x30, 0x14, 0x20	# Acc4
+    zzzj_voice	0x15, 0x10, 0x20	# Acc5
+SramRecordDefault218:		# preset rhythm 218: LATIN & WORLD, rhythm 25 of 26
+    zzzj_voice	0x1c, 0x00, 0x26	# Drum
+    zzzj_voice	0x19, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x00, 0x20	# Bass
+    zzzj_voice	0x19, 0x20, 0x20	# Acc1
+    zzzj_voice	0x34, 0x08, 0x20	# Acc2
+    zzzj_voice	0x19, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
+SramRecordDefault219:		# preset rhythm 219: LATIN & WORLD, rhythm 26 of 26
+    zzzj_voice	0x1f, 0x00, 0x26	# Drum
+    zzzj_voice	0x00, 0x00, 0x26	# Perc
+    zzzj_voice	0x26, 0x18, 0x20	# Bass
+    zzzj_voice	0x2e, 0x00, 0x20	# Acc1
+    zzzj_voice	0x00, 0x00, 0x20	# Acc2
+    zzzj_voice	0x34, 0x00, 0x20	# Acc3
+    zzzj_voice	0x00, 0x00, 0x20	# Acc4
+    zzzj_voice	0x00, 0x00, 0x20	# Acc5
 
 # dir[2], 0xa96c bytes; unchanged vs build 84.
 # The factory MEMORY-style container ('TCMP'): MemStyleAreaLoadFactory copies it
@@ -4492,14 +4502,15 @@ TcmpStyle2:		# MemStyleRecPtr 2
 	style_units	0x44, 0x00, 0x44, 0x00
 	.space	12, 0x00
 TcmpVar00:		# MemStyleVarRecPtr 0: style 0 slot 0 (Var1)
-	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream00 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4517,14 +4528,15 @@ TcmpVar00:		# MemStyleVarRecPtr 0: style 0 slot 0 (Var1)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar01:		# MemStyleVarRecPtr 1: style 0 slot 1 (Var1Fill1)
-	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream01 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4542,14 +4554,15 @@ TcmpVar01:		# MemStyleVarRecPtr 1: style 0 slot 1 (Var1Fill1)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar02:		# MemStyleVarRecPtr 2: style 0 slot 2 (Var1Fill2)
-	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream02 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4567,14 +4580,15 @@ TcmpVar02:		# MemStyleVarRecPtr 2: style 0 slot 2 (Var1Fill2)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar03:		# MemStyleVarRecPtr 3: style 0 slot 3 (Var2)
-	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream03 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4592,14 +4606,15 @@ TcmpVar03:		# MemStyleVarRecPtr 3: style 0 slot 3 (Var2)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar04:		# MemStyleVarRecPtr 4: style 0 slot 4 (Var2Fill1)
-	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream04 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4617,14 +4632,15 @@ TcmpVar04:		# MemStyleVarRecPtr 4: style 0 slot 4 (Var2Fill1)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar05:		# MemStyleVarRecPtr 5: style 0 slot 5 (Var2Fill2)
-	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream05 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4642,14 +4658,15 @@ TcmpVar05:		# MemStyleVarRecPtr 5: style 0 slot 5 (Var2Fill2)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar06:		# MemStyleVarRecPtr 6: style 0 slot 6 (Var3)
-	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream06 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4667,14 +4684,15 @@ TcmpVar06:		# MemStyleVarRecPtr 6: style 0 slot 6 (Var3)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar07:		# MemStyleVarRecPtr 7: style 0 slot 7 (Var3Fill1)
-	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream07 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4692,14 +4710,15 @@ TcmpVar07:		# MemStyleVarRecPtr 7: style 0 slot 7 (Var3Fill1)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar08:		# MemStyleVarRecPtr 8: style 0 slot 8 (Var3Fill2)
-	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream08 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4717,14 +4736,15 @@ TcmpVar08:		# MemStyleVarRecPtr 8: style 0 slot 8 (Var3Fill2)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar09:		# MemStyleVarRecPtr 9: style 0 slot 9 (Var4)
-	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream09 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4742,14 +4762,15 @@ TcmpVar09:		# MemStyleVarRecPtr 9: style 0 slot 9 (Var4)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar10:		# MemStyleVarRecPtr 10: style 0 slot 10 (Var4Fill1)
-	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream10 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4767,14 +4788,15 @@ TcmpVar10:		# MemStyleVarRecPtr 10: style 0 slot 10 (Var4Fill1)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar11:		# MemStyleVarRecPtr 11: style 0 slot 11 (Var4Fill2)
-	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream11 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4791,15 +4813,16 @@ TcmpVar11:		# MemStyleVarRecPtr 11: style 0 slot 11 (Var4Fill2)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar12:		# MemStyleVarRecPtr 12: style 0 slot 12 (Intro1A)
-	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar12:		# MemStyleVarRecPtr 12: style 0 slot 12 (Intro1Major)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream12 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4816,15 +4839,16 @@ TcmpVar12:		# MemStyleVarRecPtr 12: style 0 slot 12 (Intro1A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar13:		# MemStyleVarRecPtr 13: style 0 slot 13 (Intro1B)
-	.byte	0x5a, 0x03, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar13:		# MemStyleVarRecPtr 13: style 0 slot 13 (Intro1Minor)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream13 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 127, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4841,15 +4865,16 @@ TcmpVar13:		# MemStyleVarRecPtr 13: style 0 slot 13 (Intro1B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar14:		# MemStyleVarRecPtr 14: style 0 slot 14 (Intro2A)
-	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar14:		# MemStyleVarRecPtr 14: style 0 slot 14 (Ending1Major)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream14 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4866,15 +4891,16 @@ TcmpVar14:		# MemStyleVarRecPtr 14: style 0 slot 14 (Intro2A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar15:		# MemStyleVarRecPtr 15: style 0 slot 15 (Intro2B)
-	.byte	0x5a, 0x03, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar15:		# MemStyleVarRecPtr 15: style 0 slot 15 (Ending1Minor)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream15 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 127, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4891,15 +4917,16 @@ TcmpVar15:		# MemStyleVarRecPtr 15: style 0 slot 15 (Intro2B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar16:		# MemStyleVarRecPtr 16: style 0 slot 16 (Ending1A)
-	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar16:		# MemStyleVarRecPtr 16: style 0 slot 16 (Intro2Major)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream16 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4916,15 +4943,16 @@ TcmpVar16:		# MemStyleVarRecPtr 16: style 0 slot 16 (Ending1A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar17:		# MemStyleVarRecPtr 17: style 0 slot 17 (Ending1B)
-	.byte	0x5a, 0x03, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar17:		# MemStyleVarRecPtr 17: style 0 slot 17 (Intro2Minor)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream17 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4941,15 +4969,16 @@ TcmpVar17:		# MemStyleVarRecPtr 17: style 0 slot 17 (Ending1B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar18:		# MemStyleVarRecPtr 18: style 0 slot 18 (Ending2A)
-	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar18:		# MemStyleVarRecPtr 18: style 0 slot 18 (Ending2Major)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream18 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4966,15 +4995,16 @@ TcmpVar18:		# MemStyleVarRecPtr 18: style 0 slot 18 (Ending2A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar19:		# MemStyleVarRecPtr 19: style 0 slot 19 (Ending2B)
-	.byte	0x5a, 0x03, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar19:		# MemStyleVarRecPtr 19: style 0 slot 19 (Ending2Minor)
+	.byte	0x5a, 0x03, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream19 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
@@ -4992,14 +5022,15 @@ TcmpVar19:		# MemStyleVarRecPtr 19: style 0 slot 19 (Ending2B)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar20:		# MemStyleVarRecPtr 20: style 1 slot 0 (Var1)
-	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream20 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5017,14 +5048,15 @@ TcmpVar20:		# MemStyleVarRecPtr 20: style 1 slot 0 (Var1)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar21:		# MemStyleVarRecPtr 21: style 1 slot 1 (Var1Fill1)
-	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream21 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5042,14 +5074,15 @@ TcmpVar21:		# MemStyleVarRecPtr 21: style 1 slot 1 (Var1Fill1)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar22:		# MemStyleVarRecPtr 22: style 1 slot 2 (Var1Fill2)
-	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream22 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5067,14 +5100,15 @@ TcmpVar22:		# MemStyleVarRecPtr 22: style 1 slot 2 (Var1Fill2)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar23:		# MemStyleVarRecPtr 23: style 1 slot 3 (Var2)
-	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream23 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5092,14 +5126,15 @@ TcmpVar23:		# MemStyleVarRecPtr 23: style 1 slot 3 (Var2)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar24:		# MemStyleVarRecPtr 24: style 1 slot 4 (Var2Fill1)
-	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream24 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5117,14 +5152,15 @@ TcmpVar24:		# MemStyleVarRecPtr 24: style 1 slot 4 (Var2Fill1)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar25:		# MemStyleVarRecPtr 25: style 1 slot 5 (Var2Fill2)
-	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream25 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5142,14 +5178,15 @@ TcmpVar25:		# MemStyleVarRecPtr 25: style 1 slot 5 (Var2Fill2)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar26:		# MemStyleVarRecPtr 26: style 1 slot 6 (Var3)
-	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream26 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5167,14 +5204,15 @@ TcmpVar26:		# MemStyleVarRecPtr 26: style 1 slot 6 (Var3)
 	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar27:		# MemStyleVarRecPtr 27: style 1 slot 7 (Var3Fill1)
-	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream27 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5192,14 +5230,15 @@ TcmpVar27:		# MemStyleVarRecPtr 27: style 1 slot 7 (Var3Fill1)
 	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar28:		# MemStyleVarRecPtr 28: style 1 slot 8 (Var3Fill2)
-	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream28 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5217,14 +5256,15 @@ TcmpVar28:		# MemStyleVarRecPtr 28: style 1 slot 8 (Var3Fill2)
 	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar29:		# MemStyleVarRecPtr 29: style 1 slot 9 (Var4)
-	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream29 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5242,14 +5282,15 @@ TcmpVar29:		# MemStyleVarRecPtr 29: style 1 slot 9 (Var4)
 	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar30:		# MemStyleVarRecPtr 30: style 1 slot 10 (Var4Fill1)
-	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream30 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5267,14 +5308,15 @@ TcmpVar30:		# MemStyleVarRecPtr 30: style 1 slot 10 (Var4Fill1)
 	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar31:		# MemStyleVarRecPtr 31: style 1 slot 11 (Var4Fill2)
-	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream31 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5291,15 +5333,16 @@ TcmpVar31:		# MemStyleVarRecPtr 31: style 1 slot 11 (Var4Fill2)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar32:		# MemStyleVarRecPtr 32: style 1 slot 12 (Intro1A)
-	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar32:		# MemStyleVarRecPtr 32: style 1 slot 12 (Intro1Major)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream32 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5316,15 +5359,16 @@ TcmpVar32:		# MemStyleVarRecPtr 32: style 1 slot 12 (Intro1A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar33:		# MemStyleVarRecPtr 33: style 1 slot 13 (Intro1B)
-	.byte	0x60, 0x07, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar33:		# MemStyleVarRecPtr 33: style 1 slot 13 (Intro1Minor)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream33 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5341,15 +5385,16 @@ TcmpVar33:		# MemStyleVarRecPtr 33: style 1 slot 13 (Intro1B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar34:		# MemStyleVarRecPtr 34: style 1 slot 14 (Intro2A)
-	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar34:		# MemStyleVarRecPtr 34: style 1 slot 14 (Ending1Major)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream34 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5366,15 +5411,16 @@ TcmpVar34:		# MemStyleVarRecPtr 34: style 1 slot 14 (Intro2A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar35:		# MemStyleVarRecPtr 35: style 1 slot 15 (Intro2B)
-	.byte	0x60, 0x07, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar35:		# MemStyleVarRecPtr 35: style 1 slot 15 (Ending1Minor)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream35 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5391,15 +5437,16 @@ TcmpVar35:		# MemStyleVarRecPtr 35: style 1 slot 15 (Intro2B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar36:		# MemStyleVarRecPtr 36: style 1 slot 16 (Ending1A)
-	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar36:		# MemStyleVarRecPtr 36: style 1 slot 16 (Intro2Major)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream36 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5416,15 +5463,16 @@ TcmpVar36:		# MemStyleVarRecPtr 36: style 1 slot 16 (Ending1A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar37:		# MemStyleVarRecPtr 37: style 1 slot 17 (Ending1B)
-	.byte	0x60, 0x07, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar37:		# MemStyleVarRecPtr 37: style 1 slot 17 (Intro2Minor)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream37 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5441,15 +5489,16 @@ TcmpVar37:		# MemStyleVarRecPtr 37: style 1 slot 17 (Ending1B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar38:		# MemStyleVarRecPtr 38: style 1 slot 18 (Ending2A)
-	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar38:		# MemStyleVarRecPtr 38: style 1 slot 18 (Ending2Major)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	3 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream38 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5466,15 +5515,16 @@ TcmpVar38:		# MemStyleVarRecPtr 38: style 1 slot 18 (Ending2A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar39:		# MemStyleVarRecPtr 39: style 1 slot 19 (Ending2B)
-	.byte	0x60, 0x07, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar39:		# MemStyleVarRecPtr 39: style 1 slot 19 (Ending2Minor)
+	.byte	0x60, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	3 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream39 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
@@ -5492,14 +5542,15 @@ TcmpVar39:		# MemStyleVarRecPtr 39: style 1 slot 19 (Ending2B)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar40:		# MemStyleVarRecPtr 40: style 2 slot 0 (Var1)
-	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream40 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5517,14 +5568,15 @@ TcmpVar40:		# MemStyleVarRecPtr 40: style 2 slot 0 (Var1)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar41:		# MemStyleVarRecPtr 41: style 2 slot 1 (Var1Fill1)
-	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream41 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5542,14 +5594,15 @@ TcmpVar41:		# MemStyleVarRecPtr 41: style 2 slot 1 (Var1Fill1)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar42:		# MemStyleVarRecPtr 42: style 2 slot 2 (Var1Fill2)
-	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream42 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5567,14 +5620,15 @@ TcmpVar42:		# MemStyleVarRecPtr 42: style 2 slot 2 (Var1Fill2)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar43:		# MemStyleVarRecPtr 43: style 2 slot 3 (Var2)
-	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream43 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5592,14 +5646,15 @@ TcmpVar43:		# MemStyleVarRecPtr 43: style 2 slot 3 (Var2)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar44:		# MemStyleVarRecPtr 44: style 2 slot 4 (Var2Fill1)
-	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream44 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5617,14 +5672,15 @@ TcmpVar44:		# MemStyleVarRecPtr 44: style 2 slot 4 (Var2Fill1)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar45:		# MemStyleVarRecPtr 45: style 2 slot 5 (Var2Fill2)
-	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream45 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5642,14 +5698,15 @@ TcmpVar45:		# MemStyleVarRecPtr 45: style 2 slot 5 (Var2Fill2)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar46:		# MemStyleVarRecPtr 46: style 2 slot 6 (Var3)
-	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream46 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5667,14 +5724,15 @@ TcmpVar46:		# MemStyleVarRecPtr 46: style 2 slot 6 (Var3)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar47:		# MemStyleVarRecPtr 47: style 2 slot 7 (Var3Fill1)
-	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream47 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5692,14 +5750,15 @@ TcmpVar47:		# MemStyleVarRecPtr 47: style 2 slot 7 (Var3Fill1)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar48:		# MemStyleVarRecPtr 48: style 2 slot 8 (Var3Fill2)
-	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream48 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5717,14 +5776,15 @@ TcmpVar48:		# MemStyleVarRecPtr 48: style 2 slot 8 (Var3Fill2)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar49:		# MemStyleVarRecPtr 49: style 2 slot 9 (Var4)
-	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream49 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5742,14 +5802,15 @@ TcmpVar49:		# MemStyleVarRecPtr 49: style 2 slot 9 (Var4)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar50:		# MemStyleVarRecPtr 50: style 2 slot 10 (Var4Fill1)
-	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream50 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5767,14 +5828,15 @@ TcmpVar50:		# MemStyleVarRecPtr 50: style 2 slot 10 (Var4Fill1)
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 TcmpVar51:		# MemStyleVarRecPtr 51: style 2 slot 11 (Var4Fill2)
-	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream51 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5791,15 +5853,16 @@ TcmpVar51:		# MemStyleVarRecPtr 51: style 2 slot 11 (Var4Fill2)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar52:		# MemStyleVarRecPtr 52: style 2 slot 12 (Intro1A)
-	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar52:		# MemStyleVarRecPtr 52: style 2 slot 12 (Intro1Major)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream52 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5816,15 +5879,16 @@ TcmpVar52:		# MemStyleVarRecPtr 52: style 2 slot 12 (Intro1A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar53:		# MemStyleVarRecPtr 53: style 2 slot 13 (Intro1B)
-	.byte	0x22, 0x07, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar53:		# MemStyleVarRecPtr 53: style 2 slot 13 (Intro1Minor)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream53 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5841,15 +5905,16 @@ TcmpVar53:		# MemStyleVarRecPtr 53: style 2 slot 13 (Intro1B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar54:		# MemStyleVarRecPtr 54: style 2 slot 14 (Intro2A)
-	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar54:		# MemStyleVarRecPtr 54: style 2 slot 14 (Ending1Major)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream54 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5866,15 +5931,16 @@ TcmpVar54:		# MemStyleVarRecPtr 54: style 2 slot 14 (Intro2A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar55:		# MemStyleVarRecPtr 55: style 2 slot 15 (Intro2B)
-	.byte	0x22, 0x07, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar55:		# MemStyleVarRecPtr 55: style 2 slot 15 (Ending1Minor)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream55 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5891,15 +5957,16 @@ TcmpVar55:		# MemStyleVarRecPtr 55: style 2 slot 15 (Intro2B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar56:		# MemStyleVarRecPtr 56: style 2 slot 16 (Ending1A)
-	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar56:		# MemStyleVarRecPtr 56: style 2 slot 16 (Intro2Major)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream56 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5916,15 +5983,16 @@ TcmpVar56:		# MemStyleVarRecPtr 56: style 2 slot 16 (Ending1A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar57:		# MemStyleVarRecPtr 57: style 2 slot 17 (Ending1B)
-	.byte	0x22, 0x07, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar57:		# MemStyleVarRecPtr 57: style 2 slot 17 (Intro2Minor)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream57 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 124, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -5941,15 +6009,16 @@ TcmpVar57:		# MemStyleVarRecPtr 57: style 2 slot 17 (Ending1B)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar58:		# MemStyleVarRecPtr 58: style 2 slot 18 (Ending2A)
-	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar58:		# MemStyleVarRecPtr 58: style 2 slot 18 (Ending2Major)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x00		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	3 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream58 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 64, 96, 64, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 64, 108, 64, 0	# Bass
@@ -5966,15 +6035,16 @@ TcmpVar58:		# MemStyleVarRecPtr 58: style 2 slot 18 (Ending2A)
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
-TcmpVar59:		# MemStyleVarRecPtr 59: style 2 slot 19 (Ending2B)
-	.byte	0x22, 0x07, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+TcmpVar59:		# MemStyleVarRecPtr 59: style 2 slot 19 (Ending2Minor)
+	.byte	0x22, 0x07, 0x00	# +0x00 the source pattern: style-ID index entry, 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)
+	.byte	0x10		# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord -> func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)
 	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
-	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0x00	# +0x0c: no reader found
 	.byte	3 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
-	.byte	0x00, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00	# +0x12: no reader found
 	.be24	TcmpStream59 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
-	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.byte	0xff, 0xff	# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D; func_4843C0ED, func_4843CB41)
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +0x1a: no reader found
 	style_part	0x00, 124, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
 	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
 	style_part	0x0b, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
@@ -13092,9 +13162,10 @@ TpadBank4:
 	.space	14, 0x00
 TpadPad00:
 	.ascii	"   Voice Loop   "
-	.byte	0x71, 0x02, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	1 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x71, 0x02, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	1 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream00 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x08, 127, 0x40, 0x00, 0x26, 64, 0, 0, 64, 12, 60, 68, 92, 84, 0	# set-up 0
@@ -13104,9 +13175,10 @@ TpadPad00:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad01:
 	.ascii	"  Voice Drum 1  "
-	.byte	0x75, 0x02, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	2 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x75, 0x02, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	2 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream01 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x08, 127, 0x40, 0x00, 0x26, 64, 44, 0, 64, 12, 60, 62, 92, 70, 0	# set-up 0
@@ -13116,9 +13188,10 @@ TpadPad01:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad02:
 	.ascii	"  Voice Drum 2  "
-	.byte	0x77, 0x01, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	4 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x77, 0x01, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	4 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream02 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x08, 127, 0x40, 0x00, 0x26, 64, 26, 0, 64, 12, 60, 64, 92, 72, 0	# set-up 0
@@ -13128,9 +13201,10 @@ TpadPad02:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad03:
 	.ascii	"   Voice Scat   "
-	.byte	0x78, 0x01, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	4 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x78, 0x01, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	4 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream03 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x08, 116, 0x35, 0x50, 0x20, 64, 15, 0, 64, 12, 60, 52, 92, 88, 0	# set-up 0
@@ -13140,9 +13214,10 @@ TpadPad03:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad04:
 	.ascii	"  Whistle Maj   "
-	.byte	0x28, 0x01, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	8 - 1, 4 - 1, 6, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x28, 0x01, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	8 - 1, 4 - 1, 6, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream04 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x08, 127, 0x4e, 0x00, 0x20, 64, 40, 0, 89, 12, 28, 64, 108, 64, 0	# set-up 0
@@ -13152,9 +13227,10 @@ TpadPad04:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad05:
 	.ascii	"  Whistle Min   "
-	.byte	0x28, 0x02, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	8 - 1, 4 - 1, 14, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x28, 0x02, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	8 - 1, 4 - 1, 14, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream05 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x08, 127, 0x4e, 0x00, 0x20, 64, 40, 0, 89, 12, 28, 64, 108, 64, 0	# set-up 0
@@ -13164,9 +13240,10 @@ TpadPad05:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad06:
 	.ascii	"  Piano Minuet  "
-	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	4 - 1, 4 - 1, 2, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x00, 0x00, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	4 - 1, 4 - 1, 2, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream06 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x06, 127, 0x00, 0x00, 0x20, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
@@ -13176,9 +13253,10 @@ TpadPad06:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad07:
 	.ascii	"BaroqueInterlude"
-	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	4 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x00, 0x00, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	4 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream07 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x06, 127, 0x06, 0x00, 0x20, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
@@ -13188,9 +13266,10 @@ TpadPad07:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad08:
 	.ascii	"   Grandiose    "
-	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	2 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x00, 0x00, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	2 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream08 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x06, 127, 0x00, 0x00, 0x20, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
@@ -13200,9 +13279,10 @@ TpadPad08:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad09:
 	.ascii	"  Pizz Ending   "
-	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x01, 0x01, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	2 - 1, 4 - 1, 0, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x00, 0x00, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x01, 0x01, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	2 - 1, 4 - 1, 0, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream09 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x06, 127, 0x2d, 0x00, 0x20, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
@@ -13212,9 +13292,10 @@ TpadPad09:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad10:
 	.ascii	"ClassicInterlude"
-	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	4 - 1, 4 - 1, 6, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x00, 0x00, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	4 - 1, 4 - 1, 6, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream10 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x06, 127, 0x00, 0x00, 0x20, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
@@ -13224,9 +13305,10 @@ TpadPad10:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad11:
 	.ascii	"ClassicInterlude"
-	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	4 - 1, 4 - 1, 14, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x00, 0x00, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	4 - 1, 4 - 1, 14, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream11 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x06, 127, 0x00, 0x00, 0x20, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
@@ -13236,9 +13318,10 @@ TpadPad11:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad12:
 	.ascii	"   Tom Flam 1   "
-	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x00, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	1 - 1, 4 - 1, 0, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x00, 0x00, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x00, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	1 - 1, 4 - 1, 0, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream12 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x06, 127, 0x00, 0x00, 0x26, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
@@ -13248,9 +13331,10 @@ TpadPad12:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad13:
 	.ascii	"   Tom Flam 2   "
-	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x00, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	1 - 1, 4 - 1, 0, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x00, 0x00, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x00, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	1 - 1, 4 - 1, 0, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream13 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x06, 127, 0x00, 0x00, 0x26, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
@@ -13260,9 +13344,10 @@ TpadPad13:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad14:
 	.ascii	"   Tom Flam 3   "
-	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x00, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	1 - 1, 4 - 1, 0, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x00, 0x00, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x00, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	1 - 1, 4 - 1, 0, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream14 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x06, 127, 0x00, 0x00, 0x26, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
@@ -13272,9 +13357,10 @@ TpadPad14:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad15:
 	.ascii	"   Tom Flam 4   "
-	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x00, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	1 - 1, 4 - 1, 0, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x00, 0x00, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x00, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	1 - 1, 4 - 1, 0, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream15 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x06, 127, 0x00, 0x00, 0x26, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
@@ -13284,9 +13370,10 @@ TpadPad15:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad16:
 	.ascii	"Four Chord Trick"
-	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	8 - 1, 4 - 1, 4, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x00, 0x00, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	8 - 1, 4 - 1, 4, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream16 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x06, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0	# set-up 0
@@ -13296,9 +13383,10 @@ TpadPad16:
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 TpadPad17:
 	.ascii	"12 Bar In Minor "
-	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
-	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
-	.byte	12 - 1, 4 - 1, 14, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.byte	0x00, 0x00, 0	# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0 (func_48431D21)
+	.byte	0x00		# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord -> func_484325B4; func_4843259F)
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found
+	.byte	12 - 1, 4 - 1, 14, 0, 0	# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP, bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a fixed-chord pad, bit 3 Min
 	.be24	TpadStream17 - FactoryMemPadContainer	# the stream in the heap
 	.space	8, 0x00
 	style_part	0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
@@ -16556,7 +16644,7 @@ PadTable:
     .include	"src/table/pads/GospelWaltz.s"
     .include	"src/table/pads/SwingyWaltzMaj.s"
     .include	"src/table/pads/SwingyWaltzMin.s"
-    .byte	0x00	# TODO: after the last pad; nothing reads it
+    .align	4, 0x00	# fill to the next segment, which starts on a multiple of 4 as all 84 do; TechnicsPadsResourceParse reads only the count, so nothing reads it
 
 # dir[5], 0x1841c bytes; unchanged vs build 84.
 # The boot opening screen's animation: OpeningFrameDraw draws frame n from u32
@@ -16875,25 +16963,31 @@ DemoJpgK4:
 
 # dir[51], 0x4 bytes; unchanged vs build 84.
 # Not a picture: the 4-byte '27' + line feed that DemoJpgDataL1 returns in
-# place of a JPEG. TODO: whether the demo ever asks for it.
+# place of a JPEG.
+# The JpegFile widgets of the ten screens fdemo_l1..fdemo_la all name
+# DemoJpgDataL1, but no built-in demo script SHOWs those screens
+# (StartFeatureDemo_Table's slots 11..15 are the empty script).
 DemoJpgL1Placeholder:
     .asciz	"27\n"
 
 # dir[52], 0x4 bytes; unchanged vs build 84.
 # Not a picture: the 4-byte '27' + line feed that DemoJpgDataL2 returns in
-# place of a JPEG. TODO: whether the demo ever asks for it.
+# place of a JPEG.
+# No view names DemoJpgDataL2 (only its IDNAME row): nothing asks for it.
 DemoJpgL2Placeholder:
     .asciz	"27\n"
 
 # dir[53], 0x4 bytes; unchanged vs build 84.
 # Not a picture: the 4-byte '27' + line feed that DemoJpgDataL3 returns in
-# place of a JPEG. TODO: whether the demo ever asks for it.
+# place of a JPEG.
+# No view names DemoJpgDataL3 (only its IDNAME row): nothing asks for it.
 DemoJpgL3Placeholder:
     .asciz	"27\n"
 
 # dir[54], 0x4 bytes; unchanged vs build 84.
 # Not a picture: the 4-byte '27' + line feed that DemoJpgDataL4 returns in
-# place of a JPEG. TODO: whether the demo ever asks for it.
+# place of a JPEG.
+# No view names DemoJpgDataL4 (only its IDNAME row): nothing asks for it.
 DemoJpgL4Placeholder:
     .asciz	"27\n"
 
@@ -17618,13 +17712,15 @@ DemoJpgL6:
 
 # dir[65], 0x4 bytes; unchanged vs build 84.
 # Not a picture: the 4-byte '27' + line feed that DemoJpgDataL7 returns in
-# place of a JPEG. TODO: whether the demo ever asks for it.
+# place of a JPEG.
+# No view names DemoJpgDataL7 (only its IDNAME row): nothing asks for it.
 DemoJpgL7Placeholder:
     .asciz	"27\n"
 
 # dir[66], 0x4 bytes; unchanged vs build 84.
 # Not a picture: the 4-byte '27' + line feed that DemoJpgDataL8 returns in
-# place of a JPEG. TODO: whether the demo ever asks for it.
+# place of a JPEG.
+# No view names DemoJpgDataL8 (only its IDNAME row): nothing asks for it.
 DemoJpgL8Placeholder:
     .asciz	"27\n"
 
@@ -24803,7 +24899,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x968, a0
     mov     2, d0
     mov     0x1fa, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     clr     d0
     bra     0x483e8569
     mov     (ptr_50299040), a0
@@ -24812,7 +24908,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x968, a0
     mov     2, d0
     mov     0x1fe, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     clr     d0
     ret     0, 0x1c
     movm    [d2,d3,a2], (sp)
@@ -26051,14 +26147,14 @@ TableRomImageEnd:
     mov     d0, (8, sp)
     mov     Str_C_TECHNICS_5, d0
     mov     d0, (0xc, sp)
-    call    func_483EBD8F_entry, [d2,a2,a3], 0x24
+    call    KssRsprintf_entry, [d2,a2,a3], 0x24
     mov     (ptr_5029904C), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     2, d0
     mov     0x54, d1
     mov     KssWorkRam+0x968, a0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     -2, d0
     ret     [d2,a2,a3], 0x3c
     mov     (KssFrameworkObj), a1
@@ -26097,14 +26193,14 @@ TableRomImageEnd:
     mov     Str_s_not_found_2, d0
     mov     d0, (8, sp)
     mov     a3, (0xc, sp)
-    call    func_483EBD8F_entry, [d2,a2,a3], 0x24
+    call    KssRsprintf_entry, [d2,a2,a3], 0x24
     mov     (ptr_5029904C), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     2, d0
     mov     0x60, d1
     mov     KssWorkRam+0x968, a0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     -1, d0
     ret     [d2,a2,a3], 0x3c
     mov     (KssFrameworkObj), a1
@@ -26132,14 +26228,14 @@ TableRomImageEnd:
     mov     d0, (8, sp)
     mov     Str_C_TECHNICS_DATA_4, d0
     mov     d0, (0xc, sp)
-    call    func_483EBD8F_entry, [d2,a2,a3], 0x24
+    call    KssRsprintf_entry, [d2,a2,a3], 0x24
     mov     (ptr_5029904C), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     2, d0
     mov     0x6a, d1
     mov     KssWorkRam+0x968, a0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     -1, d0
     bra     0x483e933d
     mov     (KssFrameworkObj), a1
@@ -26190,7 +26286,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x84, d1
     mov     (ptr_5029904C), a1
-    call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
+    call    KssThrow_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,a2,a3], 0x38
     mov     (KssFrameworkObj), a1
     mov     (0x2e1c, a1), a1
@@ -26237,7 +26333,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x8f, d1
     mov     (ptr_5029904C), a1
-    call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
+    call    KssThrow_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,a2,a3], 0x38
     mov     (KssFrameworkObj), a1
     mov     (0x2e1c, a1), a1
@@ -26272,7 +26368,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x99, d1
     mov     (ptr_5029904C), a1
-    call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
+    call    KssThrow_entry, [d2,d3,a2,a3], 0x2c
     bra     0x483e94ee
     mov     (KssFrameworkObj), a1
     mov     (0x2e1c, a1), a1
@@ -27012,14 +27108,14 @@ TableRomImageEnd:
     extb    d0
     mov     d0, (0x18, sp)
     mov     a2, (0x1c, sp)
-    call    func_483EBD8F_entry, [d2,a2,a3], 0x24
+    call    KssRsprintf_entry, [d2,a2,a3], 0x24
     mov     (ptr_50299058), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     2, d0
     mov     0x76, d1
     mov     KssWorkRam+0x968, a0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     clr     d0
     call    loc_483EED42, 0, 0
     cmp     0, d0
@@ -27046,7 +27142,7 @@ TableRomImageEnd:
     mov     d0, (0x1c, sp)
     mov     1, d0
     mov     9, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
     clr     d0
@@ -27060,7 +27156,7 @@ TableRomImageEnd:
     mov     Str_Updateversion_kann_nicht_freigeschalten, a0
     mov     Str_Sie_haben_ihre_PLUG_iN_noch_nicht_freige, a1
     mov     0x18, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
     mov     (KssWorkRam+0xA44), a0
@@ -27177,7 +27273,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     (ptr_502992BC), a1
     mov     0xc1, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     bra     0x483e9e93
     mov     (ptr_50299058), a0
     mov     1, d0
@@ -27185,7 +27281,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0xc1, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -27233,7 +27329,7 @@ TableRomImageEnd:
     mov     KssMsgWrongPassword, a0
     mov     Str_Der_eingegebene_Passwortcode_ist_nicht_k, a1
     mov     0x18, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
     mov     (KssFrameworkObj), a0
@@ -27534,7 +27630,7 @@ TableRomImageEnd:
     jmp     0x483eb2d6
     mov     d2, d0
     mov     2, d1
-    call    func_483ECCFF_entry, [d2,d3,a2], 0x2c
+    call    KssSdCardCheck_entry, [d2,d3,a2], 0x2c
     cmp     0, d0
     bne     0x483ea2e0
     clr     d0
@@ -27577,7 +27673,7 @@ TableRomImageEnd:
     mov     Str_Es_wurde_kein_PLUG_iN_auf_der_SD_Card_ge, a0
     mov     Str_Wollen_Sie_dieses_installieren, a1
     mov     9, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     mov     d2, (0x18, sp)
@@ -27587,7 +27683,7 @@ TableRomImageEnd:
     mov     Str_Nur_Teile_des_PLUG_iN_wurden_auf_der_SD, a0
     mov     Str_Wollen_Sie_eine_neue_PLUG_iN_Installatio, a1
     mov     9, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     mov     (KssWorkRam+0x21C), d0
@@ -27629,7 +27725,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     (ptr_502992BC), a1
     mov     0x208, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     bra     0x483ea43a
     mov     (ptr_50299058), a0
     mov     1, d0
@@ -27637,7 +27733,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x208, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -27686,7 +27782,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x21f, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -27714,7 +27810,7 @@ TableRomImageEnd:
     mov     Str_BaseExt_xap_wurde_auf_der_SD_Card_nicht, a0
     mov     Str_Bitte_legen_Sie_die_richtige_Diskette_Ta_3, a1
     mov     9, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     cmp     0xb, d0
@@ -27725,7 +27821,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x22c, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -27741,7 +27837,7 @@ TableRomImageEnd:
     mov     Str_Die_BaseExt_xap_entspricht_nicht_dem_PLU, a0
     mov     Str_Bitte_legen_Sie_die_richtige_Diskette_Ta_2, a1
     mov     9, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     cmp     1, d0
@@ -27752,7 +27848,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     (ptr_502992BC), a1
     mov     0x236, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     bra     0x483ea5fa
     mov     (ptr_50299058), a0
     mov     1, d0
@@ -27760,7 +27856,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x236, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -27776,7 +27872,7 @@ TableRomImageEnd:
     mov     Str_Die_BaseExt_xap_Datei_kann_nicht_von_der, a0
     mov     Str_Bitte_legen_Sie_die_richtige_Diskette_Ta, a1
     mov     9, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     mov     1, d0
@@ -27827,7 +27923,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     (ptr_502992BC), a1
     mov     0x25a, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     bra     0x483ea6ff
     mov     (ptr_50299058), a0
     mov     1, d0
@@ -27835,7 +27931,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x25a, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -27890,7 +27986,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x26f, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -27917,7 +28013,7 @@ TableRomImageEnd:
     mov     Str_Der_FSB_wurde_auf_der_SD_Card_nicht_gefu, a0
     mov     Str_Soll_ein_neuer_FSB_erstellt_werden_Dadur_3, a1
     mov     9, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     cmp     7, d0
@@ -27928,7 +28024,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x27c, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -27944,7 +28040,7 @@ TableRomImageEnd:
     mov     Str_Der_FSB_ist_besch_digt_oder_nicht_korrek, a0
     mov     Str_Soll_ein_neuer_FSB_erstellt_werden_Dadur_2, a1
     mov     9, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     cmp     9, d0
@@ -27955,7 +28051,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x286, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -27971,7 +28067,7 @@ TableRomImageEnd:
     mov     Str_Die_C_L_S_ist_besch_digt_oder_nicht_korr, a0
     mov     Str_Soll_eine_neue_C_L_S_erstellt_werden_Dad, a1
     mov     9, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     cmp     1, d0
@@ -27982,7 +28078,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     (ptr_502992BC), a1
     mov     0x290, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     bra     0x483ea93b
     mov     (ptr_50299058), a0
     mov     1, d0
@@ -27990,7 +28086,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x290, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -28006,7 +28102,7 @@ TableRomImageEnd:
     mov     Str_Der_FSB_kann_nicht_geladen_werden, a0
     mov     Str_Soll_ein_neuer_FSB_erstellt_werden_Dadur, a1
     mov     9, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     mov     (KssFrameworkObj), a0
@@ -28035,7 +28131,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x2a8, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -28063,7 +28159,7 @@ TableRomImageEnd:
     mov     Str_Die_SETTING_Datei_ist_nicht_vorhanden, a0
     mov     Str_Soll_eine_Neue_erstellt_werden_2, a1
     mov     9, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     cmp     8, d0
@@ -28074,7 +28170,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x2b4, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -28090,7 +28186,7 @@ TableRomImageEnd:
     mov     Str_Die_SETTING_Datei_ist_besch_digt_oder_fa, a0
     mov     Str_Soll_eine_Neue_erstellt_werden, a1
     mov     9, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     cmp     1, d0
@@ -28101,7 +28197,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     (ptr_502992BC), a1
     mov     0x2bd, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     bra     0x483eaaeb
     mov     (ptr_50299058), a0
     mov     1, d0
@@ -28109,7 +28205,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x2bd, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -28163,7 +28259,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     (ptr_502992BC), a1
     mov     0x2d1, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     bra     0x483eabc3
     mov     (ptr_50299058), a0
     mov     1, d0
@@ -28171,7 +28267,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x2d1, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -28187,7 +28283,7 @@ TableRomImageEnd:
     mov     Str_Dies_ist_keine_MASTER_START_SD_Card, a0
     mov     Str_ACHTUNG_Sofern_es_sich_NICHT_um_Ihre_ers, a1
     mov     0x19, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     mov     (KssFrameworkObj), a0
@@ -28234,21 +28330,21 @@ TableRomImageEnd:
     call    func_483EEE4D_entry, 0, 0x18
     mov     a3, a1
     mov     a2, a0
-    call    func_483ECA4F, [d2,d3,a2,a3], 0x10
+    call    KssFileCopy, [d2,d3,a2,a3], 0x10
     exth    d0
     cmp     0, d0
     bge     0x483eacbb
     mov     Str_MT_Main_CopyBaseExtXap_err_i, d1
     mov     d1, (8, sp)
     mov     d0, (0xc, sp)
-    call    func_483EBD8F_entry, [d2,a2,a3], 0x24
+    call    KssRsprintf_entry, [d2,a2,a3], 0x24
     mov     (ptr_50299058), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     2, d0
     mov     0x30c, d1
     mov     KssWorkRam+0x968, a0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     d2, (0x18, sp)
     mov     5, d0
     mov     d0, (0x1c, sp)
@@ -28256,7 +28352,7 @@ TableRomImageEnd:
     mov     Str_BaseExt_xap_kann_nicht_kopiert_werden, a0
     mov     Str_Haben_Sie_die_richtige_Diskette_Table2_2, a1
     mov     0x18, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     mov     (KssFrameworkObj), a0
@@ -28282,7 +28378,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     (ptr_502992BC), a1
     mov     0x322, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     bra     0x483ead4b
     mov     (ptr_50299058), a0
     mov     1, d0
@@ -28290,7 +28386,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x322, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -28306,7 +28402,7 @@ TableRomImageEnd:
     mov     Str_Es_kann_kein_neues_PLUG_iN_System_erstel, a0
     mov     Str_empty_51, a1
     mov     d0, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     mov     (KssWorkRam+0x21C), d0
@@ -28349,7 +28445,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     (ptr_502992BC), a1
     mov     0x33c, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     bra     0x483eae35
     mov     (ptr_50299058), a0
     mov     1, d0
@@ -28357,7 +28453,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x33c, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -28400,7 +28496,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     (ptr_502992BC), a1
     mov     0x34c, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     bra     0x483eaeef
     mov     (ptr_50299058), a0
     mov     1, d0
@@ -28408,7 +28504,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x34c, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -28442,7 +28538,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     (ptr_502992BC), a1
     mov     0x353, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     bra     0x483eaf8c
     mov     (ptr_50299058), a0
     mov     1, d0
@@ -28450,7 +28546,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x353, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -28493,7 +28589,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     (ptr_502992BC), a1
     mov     0x363, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     bra     0x483eb046
     mov     (ptr_50299058), a0
     mov     1, d0
@@ -28501,7 +28597,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x363, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -28542,7 +28638,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     (ptr_502992BC), a1
     mov     0x373, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     bra     0x483eb0f9
     mov     (ptr_50299058), a0
     mov     1, d0
@@ -28550,7 +28646,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x373, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -28864,7 +28960,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x968, a0
     mov     2, d0
     mov     0x139, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     clr     d0
     ret     [d2,d3,a2], 0x2c
     call    loc_483E94F9, 0, 0
@@ -29042,9 +29138,10 @@ TableRomImageEnd:
     ret     [d2,d3,a2], 0x20
 # loc_483EB6A2:   (label)
     movm    [d2,d3,a2,a3], (sp)
-# func_483EB6A4  (CPU 0x483EB6A4)
+# KssDialogShow  (CPU 0x483EB6A4)
+#   KssContext+0x8C (17): (a0 = title, a1 = text, d1) the ScrDialog message box (sets the class-name pointer to 'ScrDialog')
     add     -0x20, sp
-# func_483EB6A4_entry:   (register-save `call` entry)
+# KssDialogShow_entry:   (register-save `call` entry)
     mov     a1, a3
     mov     (ptr_50299080), a1
     mov     a0, (0x3c, sp)
@@ -29084,7 +29181,7 @@ TableRomImageEnd:
     bgt     0x483eb70e
     mov     0, a0
     mov     0x8e, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     -1, d0
     ret     [d2,d3,a2,a3], 0x30
     mov     d0, d2
@@ -29543,7 +29640,8 @@ TableRomImageEnd:
     mov     (0x84, a0), a0
     calls   (a0)
     ret     [d2,a2], 0x1c
-# loc_483EBCC9  (CPU 0x483EBCC9)
+# KssUnhandledException  (CPU 0x483EBCC9)
+#   KssContext+0x20 (25): logs the pending exception (KssActivationStatus), runs KssTraceForward, and shows 'Unbekannter Fehler' / 'Druecken Sie OK um zur Hauptseite zu wechseln' through KssDialogShow
     add     -0x20, sp
 # func_483EBCC9_entry:   (register-save `call` entry)
     mov     (KssActivationStatus), d0
@@ -29558,7 +29656,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     (ptr_502992BC), a1
     mov     0x109, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     bra     0x483ebd3a
     mov     (ptr_5029908C), a0
     mov     1, d0
@@ -29566,7 +29664,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x860, a0
     mov     (ptr_502992C0), a1
     mov     0x109, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (ptr_502992D4), d0
     mov     KssWorkRam+0x900, a0
     mov     d0, (ptr_502992D0)
@@ -29592,15 +29690,16 @@ TableRomImageEnd:
     mov     Str_Unbekannter_Fehler, a0
     mov     Str_Dr_cken_Sie_OK_um_zur_Hauptseite_zu_wech, a1
     mov     0x41, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     mov     1, d0
     call    loc_483E94F1, 0, 0
     ret     0, 0x20
 # loc_483EBD8D:   (label)
     movm    [d2,a2,a3], (sp)
-# func_483EBD8F  (CPU 0x483EBD8F)
+# KssRsprintf  (CPU 0x483EBD8F)
+#   KssContext+0x2C (23): sprintf into a debug ring buffer ('rsprintf buf too small %i %i', 'debug out of order')
     add     -0x18, sp
-# func_483EBD8F_entry:   (register-save `call` entry)
+# KssRsprintf_entry:   (register-save `call` entry)
     mov     (KssWorkRam+0x238), d0
     mov     0, a0
     inc     d0
@@ -29715,9 +29814,10 @@ TableRomImageEnd:
     retf    [d2], 4
 # loc_483EBF24:   (label)
     movm    [d2,d3,a2,a3], (sp)
-# func_483EBF26  (CPU 0x483EBF26)
+# KssThrow  (CPU 0x483EBF26)
+#   KssContext+0x6C (29): (d0 = exception code, ...) logs 'thrown %s' and sets KssActivationStatus := d0; refuses while one is pending ('Can't throw exception while an old one is uncatched', 'Printing uncatched exception ...')
     add     -0x1c, sp
-# func_483EBF26_entry:   (register-save `call` entry)
+# KssThrow_entry:   (register-save `call` entry)
     mov     d1, d3
     mov     a1, a3
     mov     d0, d2
@@ -29732,13 +29832,13 @@ TableRomImageEnd:
     mov     (d0, a1), d0
     mov     d0, (0xc, sp)
     mov     a0, (0x10, sp)
-    call    func_483EBD8F_entry, [d2,a2,a3], 0x24
+    call    KssRsprintf_entry, [d2,a2,a3], 0x24
     mov     a0, a1
     mov     a3, (0x18, sp)
     mov     KssWorkRam+0x860, a0
     mov     d3, d1
     mov     1, d0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     d2, (KssActivationStatus)
     bra     0x483ebfbd
     cmp     1, d0
@@ -29748,13 +29848,13 @@ TableRomImageEnd:
     mov     a2, a0
     mov     Str_Can_t_throw_exception_while_an_old_one_i, a1
     mov     1, d0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     a3, (0x18, sp)
     mov     Str_Printing_uncatched_exception_throwing_ne, a1
     mov     1, d0
     mov     d3, d1
     mov     a2, a0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     2, d0
     mov     a3, a0
     mov     d3, d1
@@ -29766,25 +29866,26 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     Str_Can_t_throw_exception_while_a_bug_is_unc, a1
     mov     1, d0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     ret     [d2,d3,a2,a3], 0x2c
 # loc_483EBFC0:   (label)
     movm    [d2,a2], (sp)
-# func_483EBFC2  (CPU 0x483EBFC2)
+# KssThrowBug  (CPU 0x483EBFC2)
+#   KssContext+0x70 (40): logs ('can't throw bug while a bug exception is ...') and sets KssActivationStatus := 1
     add     -0x1c, sp
-# func_483EBFC2_entry:   (register-save `call` entry)
+# KssThrowBug_entry:   (register-save `call` entry)
     mov     d0, d2
     mov     (Str_Hcan_t_throw_bug_while_a_bug_exception_i), d0
     mov     a1, a2
     mov     d0, (8, sp)
     mov     a0, (0xc, sp)
-    call    func_483EBD8F_entry, [d2,a2,a3], 0x24
+    call    KssRsprintf_entry, [d2,a2,a3], 0x24
     mov     a0, a1
     mov     a2, (0x18, sp)
     mov     d2, d1
     mov     1, d0
     mov     KssWorkRam+0x8D8, a0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     1, d0
     mov     d0, (KssActivationStatus)
     ret     [d2,a2], 0x24
@@ -29802,17 +29903,18 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     (Str_d_Hcan_t_enter_func_exception_uncatched), a1
     mov     1, d0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     -1, d0
     bra     0x483ec037
     mov     a0, (0x18, sp)
     mov     KssWorkRam+0x8D8, a0
     mov     (Str_Hprinting_exception_throwing_new_bug), a1
     mov     1, d0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     -1, d0
     ret     0, 0x1c
-# loc_483EC03A  (CPU 0x483EC03A)
+# KssTraceForward  (CPU 0x483EC03A)
+#   KssContext+0x78 (85): when KssActivationStatus == 1 logs '%H forwarded', else '%H stack trace' (the frame-exit trace of the exception scheme)
     add     -0x1c, sp
 # func_483EC03A_entry:   (register-save `call` entry)
     mov     d0, d1
@@ -29823,13 +29925,13 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8D8, a0
     mov     (Str_0_Hforwarded), a1
     mov     1, d0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     bra     0x483ec074
     mov     a0, (0x18, sp)
     mov     KssWorkRam+0x860, a0
     mov     (Str_Hstack_trace), a1
     mov     1, d0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     ret     0, 0x1c
 # loc_483EC077:   (label)
     movm    [d2,d3,a2,a3], (sp)
@@ -29905,7 +30007,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x8B0, a0
     mov     (Str_P_Hcan_t_enter_func_bug_uncatched), a1
     mov     1, d0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (KssWorkRam+0x990), a0
     mov     d2, d0
     mov     (0x28, a0), a1
@@ -29923,7 +30025,7 @@ TableRomImageEnd:
     mov     1, d0
     mov     0x118, d1
     mov     KssWorkRam+0x888, a0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (KssWorkRam+0x990), a0
     mov     (4, a0), a1
     mov     a3, a0
@@ -30287,9 +30389,10 @@ TableRomImageEnd:
     ret     [a2,a3], 0x14
 # loc_483EC486:   (label)
     movm    [d2,d3,a2,a3], (sp)
-# func_483EC488  (CPU 0x483EC488)
+# KssLogPrintf  (CPU 0x483EC488)
+#   KssContext+0x00 (34 BASEEXT calls): (a0 = log buffer in KssWorkRam, d0 = 1, a1 = format, ...) [INFERENCE: the trace/log printer the exception code writes "%H forwarded" / "%H stack trace" with]
     add     -0x38, sp
-# func_483EC488_entry:   (register-save `call` entry)
+# KssLogPrintf_entry:   (register-save `call` entry)
     mov     d1, (0x5c, sp)
     mov     d0, (0x58, sp)
     mov     a1, (0x54, sp)
@@ -30815,9 +30918,10 @@ TableRomImageEnd:
     ret     [a2], 0x1c
 # loc_483EC9BB:   (label)
     movm    [d2,d3,a2,a3], (sp)
-# func_483EC9BD  (CPU 0x483EC9BD)
+# KssFwrite  (CPU 0x483EC9BD)
+#   KssContext+0xD4 (8): (a0 = buffer, d0 = size, d1 = count, a1 = file) fwrite_api in chunks of at most 0x7FFF bytes -> bytes written
     add     -0x18, sp
-# func_483EC9BD_entry:   (register-save `call` entry)
+# KssFwrite_entry:   (register-save `call` entry)
     mov     a1, (0x3c, sp)
     mov     a0, (0x30, sp)
     mov     d1, d2
@@ -30853,9 +30957,10 @@ TableRomImageEnd:
     ret     [d2,d3,a2,a3], 0x28
 # loc_483ECA04:   (label)
     movm    [d2,d3,a2,a3], (sp)
-# func_483ECA06  (CPU 0x483ECA06)
+# KssFread  (CPU 0x483ECA06)
+#   KssContext+0xD8 (7): the same through fread_api
     add     -0x18, sp
-# func_483ECA06_entry:   (register-save `call` entry)
+# KssFread_entry:   (register-save `call` entry)
     mov     a1, (0x3c, sp)
     mov     a0, (0x30, sp)
     mov     d1, d2
@@ -30891,7 +30996,8 @@ TableRomImageEnd:
     ret     [d2,d3,a2,a3], 0x28
 # loc_483ECA4D:   (label)
     movm    [d2,d3,a2,a3], (sp)
-# func_483ECA4F  (CPU 0x483ECA4F)
+# KssFileCopy  (CPU 0x483ECA4F)
+#   KssContext+0xE4 (1): _findfirst, fopen_api 'rb' and 'wb', a malloc_X buffer, KssFread / KssFwrite, free_X, both fclose_api
     add     -0x130, sp
     mov     a0, (0x148, sp)
     mov     a1, (0x14c, sp)
@@ -30956,13 +31062,13 @@ TableRomImageEnd:
     mov     1, d0
     mov     d2, d1
     mov     (0x20, sp), a1
-    call    func_483ECA06_entry, [d2,d3,a2,a3], 0x28
+    call    KssFread_entry, [d2,d3,a2,a3], 0x28
     mov     d0, d3
     mov     (0x18, sp), a0
     mov     1, d0
     mov     d2, d1
     mov     (0x1c, sp), a1
-    call    func_483EC9BD_entry, [d2,d3,a2,a3], 0x28
+    call    KssFwrite_entry, [d2,d3,a2,a3], 0x28
     cmp     d3, d2
     bne     0x483ecb1e
     cmp     d0, d2
@@ -31017,7 +31123,7 @@ TableRomImageEnd:
     mov     a0, (ptrs_502992C8)
     mov     a3, a0
     mov     (word_483FA100), d0
-    call    func_483ED266_entry, [d2,d3,a2], 0x20
+    call    PtrStrListCreate_entry, [d2,d3,a2], 0x20
     mov     (KssActivationStatus), d0
     clr     d2
     cmp     d2, d0
@@ -31048,6 +31154,8 @@ TableRomImageEnd:
     ret     [d2,a2,a3], 0x1c
 # loc_483ECC07:   (label)
     movm    [d2,d3,a2,a3], (sp)
+# KssFileSkip  (CPU 0x483ECC09)
+#   KssContext+0xE0 (2): (a0 = file, d0 = n) reads and discards n bytes through a 0x400-byte malloc_X buffer -> bytes read
     add     -0x1c, sp
     mov     a0, (0x34, sp)
     mov     (KssFrameworkObj), a0
@@ -31109,6 +31217,8 @@ TableRomImageEnd:
     retf    [d2], 4
 # loc_483ECC8C:   (label)
     movm    [a2], (sp)
+# KssTextFieldCopy  (CPU 0x483ECC8E)
+#   KssContext+0xD0 (4): (a0 = dest, a1 = src, d0 = n) copies up to n chars, CR / LF / TAB -> space, then pads with spaces to n
     mov     d0, a2
     bra     0x483eccb7
     movbu   (a1), d0
@@ -31152,7 +31262,7 @@ TableRomImageEnd:
 # loc_483ECCD4  (CPU 0x483ECCD4)
     mov     Str_Aug_23_2003_20_56_19, a0
     rets
-# loc_483ECCDC:   (label)
+# KssStrUpper:   (KssContext+0xDC (1): a..z -> A..Z in place)
     bra     0x483eccf4
     movbu   (a0), d0
     extb    d0
@@ -31174,9 +31284,10 @@ TableRomImageEnd:
     rets
 # loc_483ECCFD:   (label)
     movm    [d2,d3,a2], (sp)
-# func_483ECCFF  (CPU 0x483ECCFF)
+# KssSdCardCheck  (CPU 0x483ECCFF)
+#   KssContext+0xC8 (7): fopen_api('C:', ...) and fclose_api; when it fails shows 'Es ist keine SD Card im Schacht' / 'Bitte setzen Sie eine SD Card ein ...' and returns 0, else 1
     add     -0x20, sp
-# func_483ECCFF_entry:   (register-save `call` entry)
+# KssSdCardCheck_entry:   (register-save `call` entry)
     mov     (KssFrameworkObj), a0
     mov     Str_d, a1
     mov     (0x2e1c, a0), a0
@@ -31205,11 +31316,13 @@ TableRomImageEnd:
     mov     Str_Es_ist_keine_SD_Card_im_Schacht, a0
     mov     Str_Bitte_setzen_Sie_eine_SD_Card_ein_schlie, a1
     mov     0x18, d1
-    call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
+    call    KssDialogShow_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2], 0x2c
 # loc_483ECD5D:   (label)
     movm    [a2], (sp)
+# KssMasterCodeCheck  (CPU 0x483ECD5F)
+#   KssContext+0xB4 (1): (a0 = string) -> 1 when strcmp(a0, '73298125') == 0, else 0
     add     -0x10, sp
     mov     (KssFrameworkObj), a2
     mov     a0, a1
@@ -31278,7 +31391,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x1d, d0
     mov     (ptr_502990B8), a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
     mov     (ptr_483FA0AC), a1
@@ -31364,7 +31477,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x24, d0
     mov     (ptr_502990B8), a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
     inc     d2
     cmp     5, d2
@@ -31378,7 +31491,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x27, d0
     mov     (ptr_502990B8), a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
     mov     4, d0
@@ -31431,7 +31544,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x2b, d0
     mov     (ptr_502990B8), a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
     mov     (KssFrameworkObj), a0
     mov     1, d0
@@ -31448,7 +31561,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x2c, d0
     mov     (ptr_502990B8), a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
     mov     (func_483ECB8F_Table), a1
@@ -31516,7 +31629,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x32, d0
     mov     (ptr_502990B8), a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
     mov     (KssFrameworkObj), a0
     mov     1, d0
@@ -31533,7 +31646,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x33, d0
     mov     (ptr_502990B8), a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
     mov     (KssFrameworkObj), a0
     mov     2, d0
@@ -31550,7 +31663,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x34, d0
     mov     (ptr_502990B8), a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
     mov     (0x30, sp), a0
     mov     1, d2
@@ -31589,7 +31702,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x3c, d0
     mov     (ptr_502990B8), a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
     mov     (0x30, sp), a0
     mov     (a0), a0
@@ -31610,7 +31723,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x3d, d0
     mov     (ptr_502990B8), a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     bra     0x483ed261
     inc     d2
     mov     (0x30, sp), a0
@@ -31630,7 +31743,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x40, d0
     mov     (ptr_502990B8), a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     bra     0x483ed261
     mov     (0x30, sp), a0
     mov     (a0), a0
@@ -31642,13 +31755,14 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x41, d0
     mov     (ptr_502990B8), a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
 # loc_483ED264:   (label)
     movm    [d2,d3,a2], (sp)
-# func_483ED266  (CPU 0x483ED266)
+# PtrStrListCreate  (CPU 0x483ED266)
+#   KssContext+0x118 (11): (a0 = object, d0 = capacity) items := malloc_X(4 * capacity) (KssThrowBug 0x68 when that fails), cleared; vtable PtrStrListVtbl, magic 0xF34E32BB
     add     -0x14, sp
-# func_483ED266_entry:   (register-save `call` entry)
+# PtrStrListCreate_entry:   (register-save `call` entry)
     mov     a0, a2
     mov     (ptr_502990BC), a0
     mov     d0, d2
@@ -31667,7 +31781,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x68, d0
     mov     (ptr_502990BC), a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     bra     0x483ed2cd
     mov     (a1), a0
     mov     d1, d0
@@ -31704,7 +31818,7 @@ TableRomImageEnd:
     beq     0x483ed2fc
     mov     0, a0
     mov     0x7d, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     bra     0x483ed340
     mov     8, a2
     add     a3, a2
@@ -31713,7 +31827,7 @@ TableRomImageEnd:
     bne     0x483ed310
     mov     0, a0
     mov     0x7e, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     bra     0x483ed340
     mov     (a2), d0
     cmp     0, d0
@@ -31739,9 +31853,10 @@ TableRomImageEnd:
     ret     [d2,a2,a3], 0x20
 # loc_483ED343:   (label)
     movm    [a2,a3], (sp)
-# func_483ED345  (CPU 0x483ED345)
+# PtrStrListAdd  (CPU 0x483ED345)
+#   PtrStrListVtbl+0x04: (a0 = list, a1 = string) items[count++] := a1; KssThrowBug 0x92 for NULL, 0x93 when full
     add     -0x14, sp
-# func_483ED345_entry:   (register-save `call` entry)
+# PtrStrListAdd_entry:   (register-save `call` entry)
     mov     a1, a3
     mov     (ptr_502990BC), a1
     cmp     0, a3
@@ -31749,7 +31864,7 @@ TableRomImageEnd:
     bne     0x483ed367
     mov     0, a0
     mov     0x92, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     -1, d0
     bra     0x483ed390
     mov     (0xc, a0), d0
@@ -31760,7 +31875,7 @@ TableRomImageEnd:
     blt     0x483ed380
     mov     0, a0
     mov     0x93, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     -1, d0
     bra     0x483ed390
     mov     (a2), d0
@@ -31792,7 +31907,7 @@ TableRomImageEnd:
     ble     0x483ed3c5
     mov     0, a0
     mov     0xa0, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     -1, d0
     ret     [d2,d3,a2,a3], 0x2c
     mov     (0x3c, sp), d0
@@ -31800,7 +31915,7 @@ TableRomImageEnd:
     bne     0x483ed3d9
     mov     0, a0
     mov     0xa1, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     -1, d0
     bra     0x483ed437
     mov     (a3), d1
@@ -31809,7 +31924,7 @@ TableRomImageEnd:
     blt     0x483ed3ee
     mov     0, a0
     mov     0xa2, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     -1, d0
     bra     0x483ed437
     mov     (a3), d0
@@ -31868,14 +31983,14 @@ TableRomImageEnd:
     blt     0x483ed466
     mov     0, a0
     mov     0xb6, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     -1, d0
     bra     0x483ed485
     cmp     0, a3
     bne     0x483ed478
     mov     0, a0
     mov     0xb7, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     -1, d0
     bra     0x483ed485
     mov     (8, a2), a0
@@ -31903,7 +32018,7 @@ TableRomImageEnd:
     blt     0x483ed4b5
     mov     0, a0
     mov     0xc4, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     bra     0x483ed4eb
     mov     (KssFrameworkObj), a0
     mov     a2, d1
@@ -31946,14 +32061,15 @@ TableRomImageEnd:
     blt     0x483ed516
     mov     0, a0
     mov     0xd3, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     0, a0
     bra     0x483ed51c
     mov     (8, a0), a0
     asl2    d1
     mov     (d1, a0), a0
     ret     0, 0x14
-# loc_483ED51F  (CPU 0x483ED51F)
+# PtrStrListCount  (CPU 0x483ED51F)
+#   PtrStrListVtbl+0x20: -> count (+0x10)
     mov     (0x10, a0), d0
     rets
 # loc_483ED524:   (label)
@@ -31969,10 +32085,10 @@ TableRomImageEnd:
     calls   (a0)
     mov     a0, a2
     mov     a3, a1
-    call    func_483ED564_entry, [a2,a3], 0x1c
+    call    StrListCreate_entry, [a2,a3], 0x1c
     mov     a2, a0
     ret     [a2,a3], 0x18
-# loc_483ED553:   (label)
+# PtrStrListClear:   (PtrStrListVtbl+0x28: count := 0)
     add     -0xc, sp
     clr     d0
     mov     d0, (0x10, a0)
@@ -31980,9 +32096,10 @@ TableRomImageEnd:
     ret     0, 0xc
 # loc_483ED562:   (label)
     movm    [a2,a3], (sp)
-# func_483ED564  (CPU 0x483ED564)
+# StrListCreate  (CPU 0x483ED564)
+#   KssContext+0x11C (11): (a0 = object, a1 = a PtrStrList, checked by its magic, else KssThrowBug 0xFE) vtable StrListVtbl, magic 0x89426ACE, linked to the list
     add     -0x14, sp
-# func_483ED564_entry:   (register-save `call` entry)
+# StrListCreate_entry:   (register-save `call` entry)
     mov     a1, a3
     mov     (ptr_502990BC), a1
     mov     a0, a2
@@ -31992,7 +32109,7 @@ TableRomImageEnd:
     beq     0x483ed58c
     mov     0, a0
     mov     0xfe, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     bra     0x483ed5c6
     mov     0x18, a1
     mov     ptrs_502990F0, d0
@@ -32037,7 +32154,7 @@ TableRomImageEnd:
     beq     0x483ed5f6
     mov     0, a0
     mov     0x119, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     bra     0x483ed640
     mov     0x14, d1
     add     a3, d1
@@ -32105,7 +32222,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x137, d0
     mov     a3, a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     0, a0
     bra     0x483ed69b
     mov     (a2), d1
@@ -32146,7 +32263,7 @@ TableRomImageEnd:
     ble     0x483ed6eb
     mov     0, a0
     mov     0x152, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     bra     0x483ed6ee
     mov     d0, (8, a0)
     ret     [a2], 0x18
@@ -32168,7 +32285,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x15c, d0
     mov     a2, a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     bra     0x483ed725
     mov     (a1), d1
     add     d0, d1
@@ -32177,7 +32294,7 @@ TableRomImageEnd:
 # loc_483ED728:   (label)
     add     -0x10, sp
     mov     (0xc, a0), a0
-    call    func_483ED345_entry, [a2,a3], 0x1c
+    call    PtrStrListAdd_entry, [a2,a3], 0x1c
     ret     0, 0x10
 # loc_483ED736:   (label)
     movm    [a2], (sp)
@@ -32205,7 +32322,7 @@ TableRomImageEnd:
 # loc_483ED770:   (label)
     add     -0xc, sp
     mov     (0xc, a0), a0
-    call    loc_483ED51F, 0, 0
+    call    PtrStrListCount, 0, 0
     ret     0, 0xc
 # loc_483ED77E:   (label)
     mov     (0xc, a0), a0
@@ -32226,7 +32343,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     a1, (ptrs_502992C8)
     mov     0x1a2, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     -1, d0
     ret     0, 0x14
 # loc_483ED7B5:   (label)
@@ -32235,7 +32352,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     a1, (ptrs_502992C8)
     mov     0x1a6, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     -1, d0
     ret     0, 0x14
 # loc_483ED7D3:   (label)
@@ -32244,7 +32361,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     a1, (ptrs_502992C8)
     mov     0x1aa, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     -1, d0
     ret     0, 0x14
 # loc_483ED7F1:   (label)
@@ -32253,7 +32370,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     a1, (ptrs_502992C8)
     mov     0x1ae, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     -1, d0
     ret     0, 0x14
 # loc_483ED80F:   (label)
@@ -32262,7 +32379,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     a1, (ptrs_502992C8)
     mov     0x1b2, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     -1, d0
     ret     0, 0x14
 # loc_483ED82D:   (label)
@@ -32271,7 +32388,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     a1, (ptrs_502992C8)
     mov     0x1b6, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     0, a0
     ret     0, 0x14
 # loc_483ED84B:   (label)
@@ -32280,7 +32397,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     a1, (ptrs_502992C8)
     mov     0x1ba, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     -1, d0
     ret     0, 0x14
 # loc_483ED869:   (label)
@@ -32289,7 +32406,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     a1, (ptrs_502992C8)
     mov     0x1be, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     mov     -1, d0
     ret     0, 0x14
 # loc_483ED887:   (label)
@@ -32298,7 +32415,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     a1, (ptrs_502992C8)
     mov     0x1c2, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     ret     0, 0x14
 # loc_483ED8A3:   (label)
     movm    [a2,a3], (sp)
@@ -32308,12 +32425,12 @@ TableRomImageEnd:
     add     0x1c, a3
     mov     a3, a0
     mov     0x64, d0
-    call    func_483ED266_entry, [d2,d3,a2], 0x20
+    call    PtrStrListCreate_entry, [d2,d3,a2], 0x20
     mov     sp, a2
     add     0x38, a2
     mov     a2, a0
     mov     a3, a1
-    call    func_483ED564_entry, [a2,a3], 0x1c
+    call    StrListCreate_entry, [a2,a3], 0x1c
     mov     a3, a0
     mov     a2, a1
     mov     a0, (0x18, sp)
@@ -33805,7 +33922,7 @@ TableRomImageEnd:
     mov     Str_C_TECHNICS_DATA_CTDV10KL_CDF_5, a0
     mov     0x98, d1
     mov     (ptr_502991C4), a1
-    call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
+    call    KssThrow_entry, [d2,d3,a2,a3], 0x2c
     mov     -1, d0
     jmp     0x483ee68c
     mov     (KssFrameworkObj), a0
@@ -33828,7 +33945,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x9d, d1
     mov     (ptr_502991C4), a1
-    call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
+    call    KssThrow_entry, [d2,d3,a2,a3], 0x2c
     mov     -1, d0
     jmp     0x483ee68c
     mov     (KssFrameworkObj), a0
@@ -33843,7 +33960,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0xa0, d1
     mov     (ptr_502991C4), a1
-    call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
+    call    KssThrow_entry, [d2,d3,a2,a3], 0x2c
     mov     -1, d0
     jmp     0x483ee68c
     mov     (KssFrameworkObj), a0
@@ -33860,7 +33977,7 @@ TableRomImageEnd:
     mov     1, d0
     mov     a0, a1
     mov     d2, a0
-    call    func_483ECA06_entry, [d2,d3,a2,a3], 0x28
+    call    KssFread_entry, [d2,d3,a2,a3], 0x28
     mov     d0, d2
     mov     (KssFrameworkObj), a0
     clr     d0
@@ -33887,7 +34004,7 @@ TableRomImageEnd:
     mov     (ptr_502991C4), a1
     mov     0, a0
     mov     0xab, d1
-    call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
+    call    KssThrow_entry, [d2,d3,a2,a3], 0x2c
     mov     -1, d0
     bra     0x483ee68c
     mov     (0x140, sp), a0
@@ -33910,7 +34027,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x968, a0
     mov     2, d0
     mov     0xc7, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     sp, a0
     add     0x2c, a0
     mov     sp, a1
@@ -33990,7 +34107,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0xd5, d1
     mov     (ptr_502991C4), a1
-    call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
+    call    KssThrow_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,d3,a2,a3], 0x94
     mov     (KssFrameworkObj), a0
     inc     a1
@@ -34033,14 +34150,14 @@ TableRomImageEnd:
     mov     d3, (0x10, sp)
     mov     (0x20, sp), d0
     mov     d0, (0x14, sp)
-    call    func_483EBD8F_entry, [d2,a2,a3], 0x24
+    call    KssRsprintf_entry, [d2,a2,a3], 0x24
     mov     (ptr_502991C4), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     2, d0
     mov     0xdb, d1
     mov     KssWorkRam+0x968, a0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     bra     0x483ee837
     mov     1, d0
     mov     d0, (0x2c, a3)
@@ -34051,14 +34168,14 @@ TableRomImageEnd:
     mov     d3, (0x10, sp)
     mov     (0x20, sp), d0
     mov     d0, (0x14, sp)
-    call    func_483EBD8F_entry, [d2,a2,a3], 0x24
+    call    KssRsprintf_entry, [d2,a2,a3], 0x24
     mov     (ptr_502991C4), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     2, d0
     mov     0xe1, d1
     mov     KssWorkRam+0x968, a0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     (0x1c, sp), d0
     inc     d0
     mov     d0, (0x1c, sp)
@@ -34102,7 +34219,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0xf4, d1
     mov     (ptr_502991C4), a1
-    call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
+    call    KssThrow_entry, [d2,d3,a2,a3], 0x2c
     bra     0x483ee8e1
     mov     (KssFrameworkObj), a1
     mov     (0x2e1c, a1), a1
@@ -34157,7 +34274,7 @@ TableRomImageEnd:
     blt     0x483ee946
     mov     0, a0
     mov     0x118, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x44
     call    KssPasswordCheck, [d2,a2,a3], 0x40
     cmp     0, d0
@@ -34165,7 +34282,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x119, d0
     mov     (ptr_502991C4), a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x44
     mov     (0x4c, sp), d0
     mov     sp, a1
@@ -34238,7 +34355,7 @@ TableRomImageEnd:
     mov     Str_C_TECHNICS_DATA_CTDV10KL_CDF, a0
     mov     0x12b, d1
     mov     (ptr_502991C4), a1
-    call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
+    call    KssThrow_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,d3,a2,a3], 0x44
     mov     1, d0
     mov     (0x1c, sp), d1
@@ -34249,7 +34366,7 @@ TableRomImageEnd:
     mov     d3, d1
     mov     d2, a1
     mov     (0x18, sp), a0
-    call    func_483EC9BD_entry, [d2,d3,a2,a3], 0x28
+    call    KssFwrite_entry, [d2,d3,a2,a3], 0x28
     cmp     0, a3
     bne     0x483eea70
     mov     (0x4c, sp), d0
@@ -34268,7 +34385,7 @@ TableRomImageEnd:
     mov     a3, a0
     mov     1, d0
     mov     0x14, d1
-    call    func_483EC9BD_entry, [d2,d3,a2,a3], 0x28
+    call    KssFwrite_entry, [d2,d3,a2,a3], 0x28
     mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x138, a0), a1
@@ -34296,7 +34413,7 @@ TableRomImageEnd:
     mov     Str_PluginLoad_id_i, d0
     mov     d0, (8, sp)
     mov     d3, (0xc, sp)
-    call    func_483EBD8F_entry, [d2,a2,a3], 0x24
+    call    KssRsprintf_entry, [d2,a2,a3], 0x24
     mov     (ptr_502991C4), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
@@ -34304,7 +34421,7 @@ TableRomImageEnd:
     mov     a2, a0
     mov     2, d0
     mov     0x154, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     cmp     0, d3
     blt     0x483eeaeb
     cmp     4, d3
@@ -34312,7 +34429,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x156, d0
     mov     (ptr_502991C4), a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     jmp     0x483eed28
     mov     d3, d0
     call    loc_483EED42, 0, 0
@@ -34326,7 +34443,7 @@ TableRomImageEnd:
     mov     a2, a0
     mov     3, d0
     mov     0x15c, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     jmp     0x483eed28
     mov     sp, a3
     add     0x24, a3
@@ -34351,7 +34468,7 @@ TableRomImageEnd:
     mov     0x164, d1
     mov     (ptr_502991C4), a1
     mov     a3, a0
-    call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
+    call    KssThrow_entry, [d2,d3,a2,a3], 0x2c
     jmp     0x483eed28
     mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
@@ -34364,11 +34481,11 @@ TableRomImageEnd:
     mov     d0, (8, sp)
     mov     (0x8c, sp), d0
     mov     d0, (0xc, sp)
-    call    func_483EBD8F_entry, [d2,a2,a3], 0x24
+    call    KssRsprintf_entry, [d2,a2,a3], 0x24
     mov     2, d0
     mov     (ptr_502991C4), a1
     mov     0x166, d1
-    call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
+    call    KssThrow_entry, [d2,d3,a2,a3], 0x2c
     jmp     0x483eed28
     mov     (KssFrameworkObj), a0
     mov     Str_rb, a1
@@ -34383,13 +34500,13 @@ TableRomImageEnd:
     mov     0x16a, d1
     mov     (ptr_502991C4), a1
     mov     a3, a0
-    call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
+    call    KssThrow_entry, [d2,d3,a2,a3], 0x2c
     jmp     0x483eed28
     mov     a2, a1
     mov     0x5029b000, a0
     mov     1, d0
     mov     0x0001d000, d1
-    call    func_483ECA06_entry, [d2,d3,a2,a3], 0x28
+    call    KssFread_entry, [d2,d3,a2,a3], 0x28
     mov     (KssFrameworkObj), a0
     mov     d0, d2
     mov     (0x2e1c, a0), a0
@@ -34402,7 +34519,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x172, d1
     mov     (ptr_502991C4), a1
-    call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
+    call    KssThrow_entry, [d2,d3,a2,a3], 0x2c
     jmp     0x483eed28
     mov     sp, a2
     mov     a2, d0
@@ -34421,10 +34538,10 @@ TableRomImageEnd:
     mov     d1, (8, sp)
     mov     d0, (0xc, sp)
     mov     d3, (0x10, sp)
-    call    func_483EBD8F_entry, [d2,a2,a3], 0x24
+    call    KssRsprintf_entry, [d2,a2,a3], 0x24
     mov     0x185, d0
     mov     (ptr_502991C4), a1
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     jmp     0x483eed28
     mov     (0x1c, sp), d0
     call    func_483EEEF9_entry, 0, 0xc
@@ -34436,19 +34553,19 @@ TableRomImageEnd:
     mov     d0, (0xc, sp)
     mov     (0x1c, sp), d0
     mov     d0, (0x10, sp)
-    call    func_483EBD8F_entry, [d2,a2,a3], 0x24
+    call    KssRsprintf_entry, [d2,a2,a3], 0x24
     mov     (ptr_502991C4), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     3, d0
     mov     0x18d, d1
     mov     KssWorkRam+0x968, a0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     mov     0xb, d0
     mov     0, a0
     mov     0x18e, d1
     mov     (ptr_502991C4), a1
-    call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
+    call    KssThrow_entry, [d2,d3,a2,a3], 0x2c
     bra     0x483eed28
     mov     KssWorkRam+0xA38, a1
     mov     d3, d0
@@ -34482,14 +34599,14 @@ TableRomImageEnd:
     mov     Str_PluginLoad_id_i_successfull, d0
     mov     d0, (8, sp)
     mov     d3, (0xc, sp)
-    call    func_483EBD8F_entry, [d2,a2,a3], 0x24
+    call    KssRsprintf_entry, [d2,a2,a3], 0x24
     mov     (ptr_502991C4), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     2, d0
     mov     0x19e, d1
     mov     KssWorkRam+0x968, a0
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     add     0x194, sp
     ret     [d2,d3,a2,a3], 0x10
 # loc_483EED2F  (CPU 0x483EED2F)
@@ -34553,7 +34670,7 @@ TableRomImageEnd:
     mov     0, a0
     mov     0x1c2, d1
     mov     (ptr_502991C4), a1
-    call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
+    call    KssThrow_entry, [d2,d3,a2,a3], 0x2c
     bra     0x483eedfa
     mov     (KssFrameworkObj), a0
     mov     d3, a1
@@ -34582,7 +34699,7 @@ TableRomImageEnd:
     blt     0x483eee20
     mov     0, a0
     mov     0x1d2, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     bra     0x483eee4a
     mov     (KssFrameworkObj), a1
     mov     Str_A_s_XAP, d1
@@ -34610,7 +34727,7 @@ TableRomImageEnd:
     blt     0x483eee70
     mov     0, a0
     mov     0x1dc, d0
-    call    func_483EBFC2_entry, [d2,a2], 0x24
+    call    KssThrowBug_entry, [d2,a2], 0x24
     bra     0x483eeea2
     mov     (KssFrameworkObj), a1
     mov     Str_s_s_XAP, d1
@@ -34636,7 +34753,7 @@ TableRomImageEnd:
     mov     KssWorkRam+0x968, a0
     mov     1, d0
     mov     0x1e6, d1
-    call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
+    call    KssLogPrintf_entry, [d2,d3,a2,a3], 0x48
     ret     0, 0x1c
     movm    [a2], (sp)
     add     -0x10, sp

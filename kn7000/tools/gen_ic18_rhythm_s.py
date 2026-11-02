@@ -27,7 +27,10 @@
 # Events: one macro per kind (note, named controllers, program change, pitch
 # bend, pressure, beat marker, end); a position byte (the tick in the beat) folds
 # into the event after it as the @ form of its macro. Drum-part keys are spelled
-# with the GS/GM percussion names. Each stream is checked as it is written: it
+# by table 84's Standard Kit 1 names (DRUM_KEYS), a note's gate as one number of
+# ticks and its rule by its NoteConvRules name (NCR_NAMES, checked against program
+# 941), the two sound-unit keys get their DSP preset names in a comment. Each
+# stream is checked as it is written: it
 # opens with a beat marker, ends with 0xF5, holds bars x beats markers, and every
 # event has the length RhyEventLenByStatus gives it (the same checks as
 # notes/ic18-rhythm-rom-probes/ic18_rhythm_probe.py).
@@ -54,10 +57,15 @@ GENRE_TABLE = 0x48735EE4        # RhythmGenreNameTable, program 941
 TABLE_STYLE_SUBTABLE_DIR = 0xEC  # TableRomStyleSubTablePtr: table ROM + *(0x480000EC)
 
 PART_NAMES = ["Drum", "Bass", "Acc1", "Acc2", "Acc3", "Acc4", "Acc5", "Perc"]
+# Slots 12-19 (program 941): INTRO k+1 is slot 12 + 4k (func_484437DA), ENDING k+1 slot 14 + 4k
+# (func_484439EB); StyleRecordSlotSelect adds 0x5003A46A = func_484361BC(chord type), 1 for
+# the minor-family chord types, so the odd slot of each pair is the minor version
+# (notes/mn10300-names-probes/rhythm_style_semantics.py, sections 1 and 2).
 SLOT_NAMES = ["Var1", "Var1Fill1", "Var1Fill2", "Var2", "Var2Fill1", "Var2Fill2",
               "Var3", "Var3Fill1", "Var3Fill2", "Var4", "Var4Fill1", "Var4Fill2",
-              "Intro1A", "Intro1B", "Intro2A", "Intro2B",
-              "Ending1A", "Ending1B", "Ending2A", "Ending2B"]
+              "Intro1Major", "Intro1Minor", "Ending1Major", "Ending1Minor",
+              "Intro2Major", "Intro2Minor", "Ending2Major", "Ending2Minor"]
+DSP_PRESET_TABLE = 0x48703558   # func_48412187: kind-0 DSP preset key -> record, index lo << 6 | hi & 0x3F
 
 
 class Img:
@@ -128,22 +136,89 @@ def hx(v):
 
 # Controllers the source spells by name (the part-field table 0x485B77D4 and the
 # controllers the streams use); any other is `cc part, number, value`.
-CC_NAMES = {1: "mod", 7: "vol", 10: "pan", 11: "expr", 64: "sus", 91: "rev", 93: "cho", 97: "mode"}
+CC_NAMES = {1: "mod", 7: "vol", 10: "pan", 11: "expr", 64: "sus", 91: "rev", 93: "cho",
+            80: "eq_hi_fc", 81: "eq_hi_gain", 82: "eq_lo_fc", 83: "eq_lo_gain", 92: "multi",
+            94: "dsp_sw", 96: "bend_range", 97: "fold_root"}   # the part set-up's fields (style_part)
 DRUM_PARTS = (0, 7)
-# Drum keys on parts 0 and 7, by the GS/GM percussion map (27-87). [INFERENCE] that the
-# KN7000's kits follow it: table 84's drum-voice records near 0x1088D0 run "Bass Drum 2",
-# "Bass Drum 1", "Side Stick", "Snare Drum 1" in the GM order of keys 35-38.
+# Drum keys on parts 0 and 7, by the names table 84 gives them in Standard Kit 1 (tone
+# 0x260000, program 0 of the kit bank 0x26): a kit is a table tone whose per-note
+# {program, LSB, MSB} triple (TgNoteOnTableTone 0x4C03600D) selects a voice record, whose
+# name this is ("H.H.On Beat" -> KitHHOnBeat). The other kits keep the layout: 92.5 % of
+# the styles' drum notes play a voice of that name in their own kit; the rest are the
+# brush, orchestral, bongo/conga, voice and SFX kits' own sounds on the same keys
+# (notes/mn10300-names-probes/rhythm_drum_kit_keys.py). Keys 0, 1 and 117-127 are
+# "Silent" in Standard Kit 1 and stay numbers.
 DRUM_KEYS = {
-    27: "HIGHQ", 28: "SLAP", 29: "SCRPUSH", 30: "SCRPULL", 31: "STICKS", 32: "SQCLICK",
-    33: "MCLICK", 34: "MBELL", 35: "BD2", 36: "BD1", 37: "SSTICK", 38: "SD1", 39: "CLAP",
-    40: "SD2", 41: "LTOM2", 42: "HHC", 43: "LTOM1", 44: "HHP", 45: "MTOM2", 46: "HHO",
-    47: "MTOM1", 48: "HTOM2", 49: "CRASH1", 50: "HTOM1", 51: "RIDE1", 52: "CHINA",
-    53: "RBELL", 54: "TAMB", 55: "SPLASH", 56: "COWBELL", 57: "CRASH2", 58: "VSLAP",
-    59: "RIDE2", 60: "HBONGO", 61: "LBONGO", 62: "MHCONGA", 63: "OHCONGA", 64: "LCONGA",
-    65: "HTIMB", 66: "LTIMB", 67: "HAGOGO", 68: "LAGOGO", 69: "CABASA", 70: "MARACAS",
-    71: "SWHISTL", 72: "LWHISTL", 73: "SGUIRO", 74: "LGUIRO", 75: "CLAVES", 76: "HWOOD",
-    77: "LWOOD", 78: "MCUICA", 79: "OCUICA", 80: "MTRI", 81: "OTRI", 82: "SHAKER",
-    83: "JBELL", 84: "BELLTREE", 85: "CASTAN", 86: "MSURDO", 87: "OSURDO"}
+    2: "KitElectricSD", 3: "KitElectricTomL", 4: "KitElectricTomM", 5: "KitElectricTomH",
+    6: "KitOrchTambourin", 7: "KitOrchBassDrum", 8: "KitOrchSnare", 9: "KitOrchCymbal", 10: "KitBrushSwirl",
+    11: "KitBrushSlap", 12: "KitVoiceAh", 13: "KitVoiceYeh", 14: "KitVoiceUhs", 15: "KitAmbientHammer",
+    16: "KitClick1", 17: "KitClick2", 18: "KitHHOnBeat", 19: "KitHHOffBeat", 20: "KitHiHatAccent",
+    21: "KitHHHalfOpen", 22: "KitReverseCymbal", 23: "KitReverseSnare", 24: "KitPiccoloSnare",
+    25: "KitSnareRoll", 26: "KitFingerSnap", 27: "KitHighQ", 28: "KitSlap", 29: "KitScratchPush",
+    30: "KitScratchPull", 31: "KitSticks", 32: "KitSquareClick", 33: "KitMetronomeTap",
+    34: "KitMetronomeBell", 35: "KitBassDrum2", 36: "KitBassDrum1", 37: "KitRimShot", 38: "KitSnareDrum1",
+    39: "KitHandClaps", 40: "KitSnareDrum2", 41: "KitBassTomL", 42: "KitHiHatClosed", 43: "KitBassTomH",
+    44: "KitHiHatPedal", 45: "KitLowTom", 46: "KitHiHatOpen", 47: "KitMidTomL", 48: "KitMidTomH",
+    49: "KitCrashCymbal1", 50: "KitHighTom", 51: "KitRideCymbal1", 52: "KitChinaCymbal", 53: "KitRideBell",
+    54: "KitTambourine", 55: "KitSplashCymbal", 56: "KitCowbell", 57: "KitCrashCymbal2", 58: "KitVibraslap",
+    59: "KitRideCymbal2", 60: "KitBongoHigh", 61: "KitBongoLow", 62: "KitCongaMuteSlp", 63: "KitCongaHigh",
+    64: "KitCongaLow", 65: "KitTimbalesHigh", 66: "KitTimbalesLow", 67: "KitAgogoHigh", 68: "KitAgogoLow",
+    69: "KitCabasa", 70: "KitMaracas", 71: "KitShortWhistle", 72: "KitLongWhistle", 73: "KitGuiroShort",
+    74: "KitGuiroLong", 75: "KitClaves", 76: "KitWoodBlockH", 77: "KitWoodBlockL", 78: "KitCuicaMute",
+    79: "KitCuicaOpen", 80: "KitTriangleMute", 81: "KitTriangleOpen", 82: "KitShaker", 83: "KitSleighBell",
+    84: "KitBellTree", 85: "KitCastanets", 86: "KitSurdoMute", 87: "KitSurdoOpen", 88: "KitApplause",
+    89: "KitWindchime", 90: "KitSambaDrumOn", 91: "KitSambaDrumOff", 92: "KitSmallCongaH",
+    93: "KitSmallCongaL", 94: "KitCongaMuteOn", 95: "KitCongaMuteOff", 96: "KitCongaOpenSlp",
+    97: "KitBongoMute1", 98: "KitBongoMute2", 99: "KitBongoMute3", 100: "KitTimbalesOpenH",
+    101: "KitTimbalesPaila", 102: "KitSambaWhistleH", 103: "KitSambaWhistleL", 104: "KitShakerOnBeat",
+    105: "KitShakerOffBeat", 106: "KitMaracasOn", 107: "KitMaracasOff", 108: "KitTambourineOn",
+    109: "KitTambourineOff", 110: "KitSmallWoodBlk", 111: "KitCowbell1", 112: "KitCowbell2",
+    113: "KitCowbell3", 114: "KitCowbell4", 115: "KitCowbell5", 116: "KitCowbell6"}
+# A note's last byte: its entry of NoteConvRules 0x48736104 (128 x 8 bytes; func_4843D558 /
+# func_4843CEF3 / func_48436229), by the name of the conversion table +4 points at (the
+# table's first word). Rule 0 has no table: func_48436229 returns the key unchanged. The
+# entries not named here repeat a named one's table (25-79, 84-127 and 2, 15, 81, 99) or
+# have none (3-14) and stay numbers. "Merodic" is the firmware's spelling.
+NCR_NAMES = {
+    0: "NcrNone", 1: "NcrRootShiftOnly", 16: "NcrMelodyBasic", 17: "NcrMelodyIn7thGToBb",
+    18: "NcrMelodyIn7thCToBb", 19: "NcrMajInclFForGospelEtc", 20: "NcrMajInclAForWalkingBass",
+    21: "NcrMajInclBbForMajIs7th", 22: "NcrNaturalIsMelodicDown", 23: "NcrHarmonicMinor",
+    24: "NcrMerodicMinAscend", 80: "NcrBasicChord100", 82: "NcrKeepNearC", 83: "NcrHardRockChord",
+    96: "NcrChordCEGB", 97: "NcrChordCDEG", 98: "NcrChordDEGB", 100: "NcrChordCEGA",
+    101: "NcrChordADGC", 102: "NcrChordEGAD", 103: "NcrChordCEAD"}
+NCR_TABLE = 0x48736104          # NoteConvRules, program 941
+NCR_FIRMWARE_NAMES = {          # the names the program carries for them, checked by main()
+    1: "Root Shift Only", 16: "Melody Basic", 17: "Melody In 7th G>Bb", 18: "Melody In 7th C>Bb",
+    19: "Maj incl. F for Gospel etc", 20: "Maj incl. A for walking Bass", 21: "Maj incl.Bb for MAJ=7th",
+    22: "Natural=MelodicDown", 23: "Harmonic Minor", 24: "Merodic Min Ascend", 80: "Basic Chord 100%",
+    82: "Keep near C", 83: "HardRock Chord", 96: "Chord CEGB", 97: "Chord CDEG", 98: "Chord DEGB",
+    100: "Chord CEGA", 101: "Chord ADGC", 102: "Chord EGAD", 103: "Chord CEAD"}
+
+
+def check_ncr_names(prog):
+    """Refuse a program 941 whose NoteConvRules do not carry the names NCR_NAMES spells."""
+    o = NCR_TABLE - PROGRAM_BASE
+    if struct.unpack_from("<I", prog, o + 4)[0] != 0:
+        raise SystemExit("NoteConvRules: rule 0 has a table")
+    for k, want in NCR_FIRMWARE_NAMES.items():
+        t = struct.unpack_from("<I", prog, o + 8 * k + 4)[0] - PROGRAM_BASE
+        s = struct.unpack_from("<I", prog, t)[0] - PROGRAM_BASE
+        got = prog[s:prog.index(b"\0", s)].decode("latin-1").strip()
+        if got != want:
+            raise SystemExit(f"NoteConvRules rule {k}: {got!r}, want {want!r}")
+
+
+def dsp_preset(prog, pair):
+    """The DSP preset a style's sound-unit pair selects (func_484420C8 + func_48412187): its
+    name, or None when the key is not a kind-0 preset of program 941's table."""
+    lo, hi = pair[0] & 0x7F, pair[1] & 0x3F
+    if lo >= 0x70:
+        return None
+    a = struct.unpack_from("<I", prog, DSP_PRESET_TABLE - PROGRAM_BASE + 4 * ((lo << 6) | hi))[0]
+    o = a - PROGRAM_BASE
+    if not 0 <= o < len(prog) - 0x20 or prog[o + 0x1C:o + 0x1E] != bytes((lo, hi)):
+        return None
+    return prog[o:o + 16].decode("latin-1").strip()
 
 
 def one_event(d, p, tick):
@@ -159,7 +234,7 @@ def one_event(d, p, tick):
     part, kind = c & 15, c & 0xF0
     if kind == 0x90:
         key = DRUM_KEYS.get(a[0], a[0]) if part in DRUM_PARTS else a[0]
-        name, args = "n", [part, key] + a[1:]
+        name, args = "n", [part, key, a[1], a[2] | a[3] << 7, NCR_NAMES.get(a[4], a[4])]
     elif kind == 0xB0:
         if a[0] in CC_NAMES:
             name, args = CC_NAMES[a[0]], [part, a[1]]
@@ -247,8 +322,11 @@ def macro_defs():
     w("# 0-95 (96 a beat); without it the event is at the tick of the one before (tick 0 after a")
     w("# beat marker).")
     defs = [
-        ("n", "part, key, vel, len_lo, len_hi, cls", "0x90 + \\part, \\key, \\vel, \\len_lo, \\len_hi, \\cls",
-         "note. [INFERENCE] len_lo/len_hi its length, cls its chord-adaptation class (0 on every drum-part note)"),
+        ("n", "part, key, vel, gate, rule", "0x90 + \\part, \\key, \\vel, (\\gate) & 0x7f, (\\gate) >> 7, \\rule",
+         "note. gate = its length in ticks, 7 bits a byte, low first (func_484425FE:\n"
+         "#    `movbu (4, a1), d0` `movbu (3, a1), d1` `asl 7, d0` `add d1, d0`); rule = its\n"
+         "#    NoteConvRules entry, how the key follows the chord (func_4843D558 -> func_4843CEF3 ->\n"
+         "#    func_48436229; NcrNone on every drum-part note)"),
         ("cc", "part, ctl, value", "0xb0 + \\part, \\ctl, \\value", "control change, controller by number"),
         ("pc", "part, prog, bank_lsb, bank_msb", "0xc0 + \\part, \\prog, \\bank_lsb, \\bank_msb",
          "program change: the three bytes of a part set-up's prog/bank_lsb/bank_msb"),
@@ -276,10 +354,14 @@ def macro_defs():
     w(".macro end")
     w("\t.byte 0xf5")
     w(".endm")
-    w("# Drum keys, used on parts 0 and 7: the GS/GM percussion map. [INFERENCE] that the")
-    w("# KN7000's kits follow it (table 84's drum-voice records near 0x1088D0 list Bass Drum 2,")
-    w("# Bass Drum 1, Side Stick, Snare Drum 1 in the GM order of keys 35-38).")
+    w("# Drum keys, used on parts 0 and 7: the names of table 84's Standard Kit 1 (tone 0x260000;")
+    w("# its per-note voice records, TgNoteOnTableTone). The other kits keep the layout: 92.5 % of the")
+    w("# styles' drum notes play a voice of that name in their own kit (notes/ic18-rhythm-rom.md).")
     for k, nm in sorted(DRUM_KEYS.items()):
+        w(f".equ {nm}, {k}")
+    w("# Note conversion rules (a note's last byte): NoteConvRules 0x48736104, by the name of the")
+    w("# rule's table in program 941. NcrNone has no table: the key does not follow the chord.")
+    for k, nm in sorted(NCR_NAMES.items()):
         w(f".equ {nm}, {k}")
     return m
 
@@ -304,6 +386,7 @@ def main():
     d = data
     prog = open(args.program, "rb").read()
     table = open(args.table, "rb").read()
+    check_ncr_names(prog)
 
     # ---- header -----------------------------------------------------------
     if d[BASE:BASE + 16] != b"Technics Rhythms":
@@ -408,12 +491,17 @@ def main():
             S(f'# Style {i}: "{nm.strip()}"')
         S(f"{lab}:")
         S(f'\t.ascii\t"{nm}"')
-        S(f"\tstyle_units\t{hx(d[o + 13])}, {hx(d[o + 14])}, {hx(d[o + 15])}, {hx(d[o + 16])}")
+        p4, p5 = dsp_preset(prog, d[o + 13:o + 15]), dsp_preset(prog, d[o + 15:o + 17])
+        if p4 is None or p5 is None:
+            raise SystemExit(f"style {i}: a sound-unit key that is no DSP preset of program 941")
+        tm = ", TOTAL MODE" if d[o + 14] & 0x80 else ""
+        S(f"\tstyle_units\t{hx(d[o + 13])}, {hx(d[o + 14])}, {hx(d[o + 15])}, {hx(d[o + 16])}"
+          f'\t# EFF4 "{p4}", EFF5 "{p5}"{tm}')
         for p in range(8):
             f = d[o + 0x11 + 15 * p:o + 0x11 + 15 * p + 15]
             vals = [hx(f[0]), str(f[1]), hx(f[2]), hx(f[3]), hx(f[4])] + [str(x) for x in f[5:]]
             S(f"\tstyle_part\t{', '.join(vals)}\t# {PART_NAMES[p]}")
-        S("\t.byte\t1\t\t\t# TODO: 1 in every style; no reader found")
+        S("\t.byte\t1\t\t\t# +0x89: unread (1 in every style; no reader in 941, notes/ic18-rhythm-rom.md)")
         S(f"\tstyle_slots\t{lab}")
         pos = o + 0xC6
         for off in sorted(offs):
@@ -439,7 +527,7 @@ def main():
 
     # ---- the leftovers past the last style ------------------------------------
     old_slots = ["Var3", "Var3Fill1", "Var3Fill2", "Var4", "Var4Fill1", "Var4Fill2",
-                 "Intro2A", "Intro2B", "Ending2A", "Ending2B"]
+                 "Ending1Major", "Ending1Minor", "Ending2Major", "Ending2Minor"]
     tail_src = []
     T = tail_src.append
     f0_end = d.index(b"\xf5", last_end) + 1
@@ -449,7 +537,7 @@ def main():
     T("# First the end of an event stream whose start the current data overwrote, then ten whole")
     T("# variation records of a style that is not in this build. [INFERENCE] By their bar counts")
     T("# (4,1,1, 4,1,1, then two equal pairs) and the order every style here stores its slots in,")
-    T("# they are slots Var3..Var4Fill2, Intro2A/B and Ending2A/B of that style, and the fragment")
+    T("# they are slots Var3..Var4Fill2 and the four endings of that style, and the fragment")
     T("# before them the end of its Var2Fill2. Then two shorter fragments of event streams, the")
     T("# second a copy of the first one's last 135 bytes.")
     T("OldBuildStyle_Var2Fill2_Tail:")
@@ -515,36 +603,49 @@ def main():
     w("# the firmware's field table 0x485B77D4 (CC -> field map 0x485B781C). The firmware")
     w("# copies the eight of a style into the part table 0x5003A37C (func_4844187A); the")
     w("# set-up events of a variation then overwrite single fields (func_48441EB4).")
-    w("#   mode     CC97; 0x00 on the two drum parts, 0x08 on the others   [INFERENCE: role]")
-    w("#   volume   CC7")
-    w("#   prog, bank_lsb, bank_msb   the three data bytes of the part's program change")
-    w("#            (StyleRecordToTemplate); bank_msb is 0x26 on the drum parts, 0x20 on the")
-    w("#            others. [INFERENCE] the names of the two bank bytes")
-    w("#   cc94     CC94          reverb   CC91          chorus   CC93          pan   CC10")
-    w("#   cc96, cc82, cc83, cc80, cc81, cc92   those controllers")
-    w(".macro style_part mode, volume, prog, bank_lsb, bank_msb, cc94, reverb, chorus, pan, cc96, cc82, cc83, cc80, cc81, cc92")
-    w("\t.byte\t\\mode, \\volume, \\prog, \\bank_lsb, \\bank_msb, \\cc94, \\reverb, \\chorus, \\pan")
-    w("\t.byte\t\\cc96, \\cc82, \\cc83, \\cc80, \\cc81, \\cc92")
+    w("# The meanings are program 941's (notes/ic18-rhythm-rom.md, \"A part set-up\"): the CC is turned")
+    w("# into the part parameter 0xB000cc (func_48440533), named by the SP7001 parameter dump")
+    w("# func_48500C71 (\"EQ LOW FC\", \"DIGITAL EFFECT\" ...).")
+    w("#   fold_root  CC97, never sent (func_48440662 skips a controller above 127; the field table")
+    w("#              gives it 255): a note follows the chord root up by root - 1 semitones, an")
+    w("#              octave lower when root - 1 > fold_root (func_484419BB -> func_48436229).")
+    w("#              0x00 on the drum parts, 0x08 (G#) on the others")
+    w("#   volume     CC7, sent folded into CC11 (func_48440662: expression + volume - 127)")
+    w("#   prog, bank_lsb, bank_msb   the part's sound {program, bank LSB, bank MSB}; MSB 0x26 = kits")
+    w("#   dsp_sw     CC94, DIGITAL EFFECT: 0 off, 127 on, any other value (64 in every style) the")
+    w("#              sound's own setting, which func_48448D93 looks up (func_48440662 sends 0 or 127)")
+    w("#   reverb     CC91          chorus   CC93 (CHORUS DEPTH)          pan   CC10")
+    w("#   bend_range CC96 -> parameter 0xB08000, RPN 0: BEND SENS, in semitones")
+    w("#   eq_lo_fc, eq_lo_gain, eq_hi_fc, eq_hi_gain   CC82, CC83, CC80, CC81: the part EQ; FC >> 2")
+    w("#              indexes 20 Hz .. 20 kHz in third octaves (0x485EC344, func_4848BC9A), gain (v - 64) / 2 dB")
+    w("#   multi      CC92, MULTI EFFECT DEPTH")
+    w(".macro style_part fold_root, volume, prog, bank_lsb, bank_msb, dsp_sw, reverb, chorus, pan, bend_range, eq_lo_fc, eq_lo_gain, eq_hi_fc, eq_hi_gain, multi")
+    w("\t.byte\t\\fold_root, \\volume, \\prog, \\bank_lsb, \\bank_msb, \\dsp_sw, \\reverb, \\chorus, \\pan")
+    w("\t.byte\t\\bend_range, \\eq_lo_fc, \\eq_lo_gain, \\eq_hi_fc, \\eq_hi_gain, \\multi")
     w(".endm")
     w("# The two sound-unit keys of a style (record +0x0D, 4 bytes; func_484420EF): each pair is")
-    w("# a 14-bit value, 7 bits a byte, low byte first (bit 6 of the second byte adds 0x10000);")
-    w("# they are stored to parameter keys 0xB044 and 0xB054, the sound-unit groups 0xB040 and")
-    w("# 0xB050 (SndUnitRefreshGroups56). Bit 7 of the second byte goes to key 0xB001.")
-    w(".macro style_units unit5_lo, unit5_hi, unit6_lo, unit6_hi")
-    w("\t.byte\t\\unit5_lo, \\unit5_hi, \\unit6_lo, \\unit6_hi")
+    w("# a 14-bit value, 7 bits a byte, low byte first (bit 6 of the second byte adds 0x10000),")
+    w("# stored to parameter keys 0xB044 and 0xB054: the DSP preset of effect units EFF4 and EFF5")
+    w("# (groups 0xB040 / 0xB050, SndUnitRefreshGroups56). The key is a preset of program 941's")
+    w("# table 0x48703558, index lo << 6 | hi (func_48412187), whose name the comment gives.")
+    w("# Bit 7 of the first pair's second byte goes to key 0xB001, the EFFECT DEBUG screen's")
+    w("# TOTAL MODE / SOUND MODE switch (EffApcSw).")
+    w(".macro style_units eff4_lo, eff4_hi, eff5_lo, eff5_hi")
+    w("\t.byte\t\\eff4_lo, \\eff4_hi, \\eff5_lo, \\eff5_hi")
     w(".endm")
     w("# The 20 slot offsets of a style (record +0x8A, from the record): StyleNameCommit loads")
     w("# them into 0x50034BCC[]. Slots 0-11 are four variations, each a main pattern and two")
-    w("# fill-ins (only slot % 3 == 0 has a name in a MEMORY style: MemStyleVarCopy); 12-19 are")
-    w("# four A/B pairs, 12-15 intros, 16-19 endings (func_4844232B tells (slot - 12) % 4 < 2,")
-    w("# number 1, from number 2). [INFERENCE] the intro/ending and fill-in roles")
+    w("# fill-ins (only slot % 3 == 0 has a name in a MEMORY style: MemStyleVarCopy). 12-19 are")
+    w("# INTRO 1, ENDING 1, INTRO 2, ENDING 2 (slot 12 + 4k, 14 + 4k: func_484437DA, func_484439EB),")
+    w("# each a major and a minor version: StyleRecordSlotSelect adds 0x5003A46A, 1 for a minor-")
+    w("# family chord (func_484361BC). [INFERENCE] the fill-in role")
     w(".macro style_slots s")
     w("\t.be24\t\\s_Var1 - \\s, \\s_Var1Fill1 - \\s, \\s_Var1Fill2 - \\s")
     w("\t.be24\t\\s_Var2 - \\s, \\s_Var2Fill1 - \\s, \\s_Var2Fill2 - \\s")
     w("\t.be24\t\\s_Var3 - \\s, \\s_Var3Fill1 - \\s, \\s_Var3Fill2 - \\s")
     w("\t.be24\t\\s_Var4 - \\s, \\s_Var4Fill1 - \\s, \\s_Var4Fill2 - \\s")
-    w("\t.be24\t\\s_Intro1A - \\s, \\s_Intro1B - \\s, \\s_Intro2A - \\s, \\s_Intro2B - \\s")
-    w("\t.be24\t\\s_Ending1A - \\s, \\s_Ending1B - \\s, \\s_Ending2A - \\s, \\s_Ending2B - \\s")
+    w("\t.be24\t\\s_Intro1Major - \\s, \\s_Intro1Minor - \\s, \\s_Ending1Major - \\s, \\s_Ending1Minor - \\s")
+    w("\t.be24\t\\s_Intro2Major - \\s, \\s_Intro2Minor - \\s, \\s_Ending2Major - \\s, \\s_Ending2Minor - \\s")
     w(".endm")
     w("# A variation record (StyleRecordBindBuiltin): bars - 1 (-> 0x50122DCE), beats a bar - 1")
     w("# (-> 0x50122DCF; StyleBoundRecByteCfLow3), two part numbers for the sound units (0xFF =")
@@ -590,11 +691,13 @@ def main():
     blk = d[BASE + o_count:BASE + o_index]
     if im.u16(BASE + o_count) != 0 or im.u16(BASE + o_count + 4) != 96:
         raise SystemExit("unexpected count block")
-    w("\t.be16\t0\t\t\t# TODO: not read")
+    w("# Only the u16 at +2 is read (StyleBuiltinNameTableInit: `add 2, a0` / LoadU16BE); no routine")
+    w("# reads the other ten bytes (notes/mn10300-names-probes/rhythm_count_block_readers.py).")
+    w("\t.be16\t0\t\t\t# unread")
     w(f"\t.be16\t{count}\t\t\t# the rhythm count -> 0x50034B74; the index's limit")
-    w("\t.be16\t96\t\t\t# [INFERENCE] ticks a beat: every position byte of every stream is 0..95")
-    w(f"\t.byte\t{', '.join(str(x) for x in blk[6:])}\t# [INFERENCE] name length 13, 8 parts, 4 variations, 2 fill-ins, 2 intros,")
-    w("\t\t\t\t\t# 2 endings (4 + 4x2 + 2x2 + 2x2 = 20 slots); nothing reads them")
+    w("\t.be16\t96\t\t\t# unread; [INFERENCE] ticks a beat: every position byte of every stream is 0..95")
+    w(f"\t.byte\t{', '.join(str(x) for x in blk[6:])}\t# unread; [INFERENCE] name length 13, 8 parts, 4 variations, 2 fill-ins,")
+    w("\t\t\t\t\t# 2 intros, 2 endings (4 + 4x2 + 2x2 + 2x2 = 20 slots)")
     w("")
     w("# ---- the style-ID index (StyleBuiltinNameResolve) --------------------------------")
     w("# 2048 entries; entry ((id & 0x0F00) >> 1) | (id & 0x7F) serves style-ID id. An entry")
@@ -625,9 +728,10 @@ def main():
     for i in range(nstyles):
         w(f"\t.be24\t{labels[i]} - TechnicsRhythms")
     w("")
-    w("# ---- the count-in patterns, one per meter (StyleVariationNameGet) ---------------")
-    w("# Slot 20 of StyleRecordSlotSelect: the low 3 bits of the bound variation's meter byte")
-    w("# pick one (unless resource 0xD00A answers, then the program's table 0x48736078).")
+    w("# ---- the count-in patterns, one per meter (StyleCountInRecordGet) ---------------")
+    w("# Slot 20 of StyleRecordSlotSelect: the low 3 bits of the main variation's meter byte pick")
+    w("# one. With COUNT INTRO on (parameter 0xD00A == 1) a 1-4 beat meter takes the program's")
+    w("# own pattern instead (table 0x48736078: Voice Kit keys 74-77, \"Count 1\"..\"Count 4\").")
     w("RhythmCountInTable:")
     for k in range(8):
         w(f"\t.be24\tCountIn_{k + 1}Beats - TechnicsRhythms")

@@ -31,6 +31,8 @@ SP7001_PR2  := $(SP7001_UPDATES)/PROGR2_2v1.6PLUG-iN.exe
 UNIDASM     ?= ../../mame-sony-video/unidasm
 
 TARGETS     := build/kn7000_program.rom build/kn7000_table.rom
+# the register / board-device names the program sources include (tools/check_sfr_names.py)
+SFR_INCS    := src/include/mn103002a_sfr.inc src/include/kn7000_board_io.inc
 REFS        := baserom/kn7000_program.rom baserom/kn7000_table.rom
 
 .PHONY: all verify verify-listings disasm disasm-dsp symbols program-src constants clean distclean baserom
@@ -75,7 +77,7 @@ $(eval $(call PROGRAM_BITMAPS,b935,src/b935/program/data))
 $(eval $(call PROGRAM_BITMAPS,b893,src/b893/program/data))
 
 build/kn7000_program.rom: src/program.s $(wildcard src/program/*.s) $(wildcard src/program/data/*) src/symbols.inc \
-		src/constants.inc tools/kn7asm.py baserom/kn7000_program.rom build/bitmaps/941/.stamp
+		src/constants.inc $(SFR_INCS) tools/kn7asm.py baserom/kn7000_program.rom build/bitmaps/941/.stamp
 	@mkdir -p build
 	$(ASM) src/program.s -I . -o $@ --labels build/kn7000_program.labels
 
@@ -108,6 +110,7 @@ symbols-check:
 	    if cmp -s "$(SYMCHECK)/$$f" "$$f"; then echo "OK    $$f is what its generator writes"; \
 	    else echo "FAIL  $$f differs from its generator's output ($(SYMCHECK)/$$f)"; ok=0; fi; done; \
 	 [ $$ok -eq 1 ]
+	$(PYTHON) tools/check_sfr_names.py
 
 # Regenerate src/program.s and its parts in src/program/ (code region 1 and the
 # library image as MN10300 assembly; tools/gen_program_s.py, needs unidasm,
@@ -123,6 +126,7 @@ constants: tools/gen_constants.py baserom/kn7000_program.rom
 	$(PYTHON) tools/gen_constants.py baserom/kn7000_program.rom --inc src/constants.inc
 
 program-src: tools/gen_program_s.py tools/mn10300_asm.py kn7000.sym kn7000_manual.sym \
+		src/include/mn103002a_sfr.inc src/include/kn7000_board_io.inc \
 		kn7000_exports_from_942.sym $(wildcard annotations/*.ann) baserom/kn7000_program.rom
 	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_program_s.py
 
@@ -318,7 +322,7 @@ baserom/kn7000_table_sp7001.rom: tools/rom_from_eproms.py
 	    "$(ROMSET_DIR)/kn7000_table_odd_sp7001_b83.ic16" $@
 
 build/kn7000_program_sp7001.rom: src/sp7001/program.s $(wildcard src/sp7001/program/*.s) \
-		$(wildcard src/sp7001/program/data/*) src/constants.inc src/sp7001/symbols.inc tools/kn7asm.py \
+		$(wildcard src/sp7001/program/data/*) src/constants.inc $(SFR_INCS) src/sp7001/symbols.inc tools/kn7asm.py \
 		baserom/kn7000_program_sp7001.rom build/bitmaps/sp7001/.stamp
 	@mkdir -p build
 	$(ASM) src/sp7001/program.s -I . -o $@ --labels build/kn7000_program_sp7001.labels
@@ -728,7 +732,7 @@ baserom/kn7000_program_b$(1).rom: tools/rom_from_eproms.py
 	mv $$@.tmp $$@
 
 build/kn7000_program_b$(1).rom: src/b$(1)/program.s $$(wildcard src/b$(1)/program/*.s) \
-		$$(wildcard src/b$(1)/program/data/*) src/constants.inc src/b$(1)/symbols.inc \
+		$$(wildcard src/b$(1)/program/data/*) src/constants.inc $$(SFR_INCS) src/b$(1)/symbols.inc \
 		tools/kn7asm.py tools/mn10300_asm.py baserom/kn7000_program_b$(1).rom build/bitmaps/b$(1)/.stamp
 	@mkdir -p build
 	$$(ASM) src/b$(1)/program.s -I . -o $$@ --labels build/kn7000_program_b$(1).labels
@@ -755,6 +759,7 @@ symbols-$(1): $$(REFS) $$(B$(1)_TABLE) baserom/kn7000_program_b$(1).rom
 
 program-src-$(1): tools/gen_program_s.py tools/mn10300_asm.py tools/port_symbols.py tools/offset_map.py \
 		kn7000_b$(1).sym kn7000_b$(1)_manual.sym kn7000_b$(1)_exports.sym $$(wildcard kn7000_b$(1)_bycode.sym) \
+		$$(wildcard kn7000_b$(1)_own.sym) \
 		$$(wildcard annotations/*.ann) $$(REFS) $$(B$(1)_TABLE) baserom/kn7000_program_b$(1).rom
 	UNIDASM=$$(UNIDASM) $$(PYTHON) tools/gen_program_s.py --profile b$(1)
 
@@ -763,7 +768,7 @@ ported-names-$(1): tools/port_names_by_code.py tools/gen_image_s.py src/b$(1)/pr
 	$$(PYTHON) tools/port_names_by_code.py --a-rom baserom/kn7000_program.rom \
 	    $$(B941_CODE:%=--a-code %) --a-sym kn7000_manual.sym kn7000_exports_from_942.sym kn7000.sym \
 	    --b-rom baserom/kn7000_program_b$(1).rom --b-base 0x48400000 $$(B$(1)_CODE:%=--b-code %) \
-	    --b-sym kn7000_b$(1).sym kn7000_b$(1)_manual.sym kn7000_b$(1)_exports.sym \
+	    --b-sym kn7000_b$(1).sym kn7000_b$(1)_manual.sym kn7000_b$(1)_exports.sym $$(wildcard kn7000_b$(1)_own.sym) \
 	    --b-src src/b$(1)/program.s $$(wildcard src/b$(1)/program/*.s) \
 	    --out kn7000_b$(1)_bycode.sym --unidasm $$(UNIDASM) \
 	    --title "KN7000 program $(1): names carried from program 941 by code (routines the offset map cannot place)"

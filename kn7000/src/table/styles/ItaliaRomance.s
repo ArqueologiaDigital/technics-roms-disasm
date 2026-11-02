@@ -19,8 +19,8 @@ Style_ItaliaRomance:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_ItaliaRomance
 
-Style_ItaliaRomance_Intro1A:
-	var_head	Style_ItaliaRomance_Intro1A, 4, 3, 0xff, 0xff
+Style_ItaliaRomance_Intro1Major:
+	var_head	Style_ItaliaRomance_Intro1Major, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 100
 	ev_cc	3, 83, 78
@@ -33,8 +33,8 @@ Style_ItaliaRomance_Intro1A:
 	ev_cc	5, 81, 72
 	ev_cc	6, 83, 59
 	ev_cc	6, 81, 67
-	var_events	Style_ItaliaRomance_Intro1A
-Style_ItaliaRomance_Intro1A_Events:		# 4 bars of 3 beats, 1918 bytes
+	var_events	Style_ItaliaRomance_Intro1Major
+Style_ItaliaRomance_Intro1Major_Events:		# 4 bars of 3 beats, 1918 bytes
 	ev_beat
 	ev_note	1, 36, 77, 58, 1, 1
 	ev_note	2, 48, 81, 34, 2, 1
@@ -603,10 +603,10 @@ Style_ItaliaRomance_Intro1A_Events:		# 4 bars of 3 beats, 1918 bytes
 	ev_at	93
 	ev_cc	5, 64, 0
 	ev_end
-	var_end	Style_ItaliaRomance_Intro1A
+	var_end	Style_ItaliaRomance_Intro1Major
 
-Style_ItaliaRomance_Intro1B:
-	var_head	Style_ItaliaRomance_Intro1B, 4, 3, 0xff, 0xff
+Style_ItaliaRomance_Intro1Minor:
+	var_head	Style_ItaliaRomance_Intro1Minor, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 100
 	ev_cc	3, 83, 78
@@ -621,8 +621,8 @@ Style_ItaliaRomance_Intro1B:
 	ev_cc	6, 83, 59
 	ev_cc	6, 81, 67
 	ev_pc	7, 0x1f, 0x00, 0x26
-	var_events	Style_ItaliaRomance_Intro1B
-Style_ItaliaRomance_Intro1B_Events:		# 4 bars of 3 beats, 2072 bytes
+	var_events	Style_ItaliaRomance_Intro1Minor
+Style_ItaliaRomance_Intro1Minor_Events:		# 4 bars of 3 beats, 2072 bytes
 	ev_beat
 	ev_cc	6, 11, 127
 	ev_note	2, 48, 81, 34, 2, 1
@@ -1195,10 +1195,10 @@ Style_ItaliaRomance_Intro1B_Events:		# 4 bars of 3 beats, 2072 bytes
 	ev_at	94
 	ev_cc	4, 64, 0
 	ev_end
-	var_end	Style_ItaliaRomance_Intro1B
+	var_end	Style_ItaliaRomance_Intro1Minor
 
-Style_ItaliaRomance_Ending1A:
-	var_head	Style_ItaliaRomance_Ending1A, 4, 3, 0xff, 0xff
+Style_ItaliaRomance_Intro2Major:
+	var_head	Style_ItaliaRomance_Intro2Major, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 100
 	ev_cc	3, 83, 78
@@ -1212,8 +1212,8 @@ Style_ItaliaRomance_Ending1A:
 	ev_cc	6, 7, 100
 	ev_cc	6, 83, 59
 	ev_cc	6, 81, 67
-	var_events	Style_ItaliaRomance_Ending1A
-Style_ItaliaRomance_Ending1A_Events:		# 4 bars of 3 beats, 2289 bytes
+	var_events	Style_ItaliaRomance_Intro2Major
+Style_ItaliaRomance_Intro2Major_Events:		# 4 bars of 3 beats, 2289 bytes
 	ev_beat
 	ev_cc	6, 11, 127
 	ev_note	1, 36, 95, 74, 1, 1
@@ -1863,10 +1863,10 @@ Style_ItaliaRomance_Ending1A_Events:		# 4 bars of 3 beats, 2289 bytes
 	ev_at	93
 	ev_cc	5, 64, 0
 	ev_end
-	var_end	Style_ItaliaRomance_Ending1A
+	var_end	Style_ItaliaRomance_Intro2Major
 
-Style_ItaliaRomance_Ending1B:
-	var_head	Style_ItaliaRomance_Ending1B, 4, 3, 0xff, 0xff
+Style_ItaliaRomance_Intro2Minor:
+	var_head	Style_ItaliaRomance_Intro2Minor, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 100
 	ev_cc	3, 83, 78
@@ -1881,8 +1881,8 @@ Style_ItaliaRomance_Ending1B:
 	ev_cc	6, 7, 100
 	ev_cc	6, 83, 59
 	ev_cc	6, 81, 67
-	var_events	Style_ItaliaRomance_Ending1B
-Style_ItaliaRomance_Ending1B_Events:		# 4 bars of 3 beats, 2021 bytes
+	var_events	Style_ItaliaRomance_Intro2Minor
+Style_ItaliaRomance_Intro2Minor_Events:		# 4 bars of 3 beats, 2021 bytes
 	ev_beat
 	ev_note	6, 72, 76, 97, 0, 1
 	ev_note	5, 73, 43, 14, 0, 1
@@ -2418,7 +2418,7 @@ Style_ItaliaRomance_Ending1B_Events:		# 4 bars of 3 beats, 2021 bytes
 	ev_at	86
 	ev_cc	5, 64, 0
 	ev_end
-	var_end	Style_ItaliaRomance_Ending1B
+	var_end	Style_ItaliaRomance_Intro2Minor
 
 Style_ItaliaRomance_Var1:
 	var_head	Style_ItaliaRomance_Var1, 4, 3, 0xff, 0xff
@@ -6303,8 +6303,8 @@ Style_ItaliaRomance_Var4Fill2_Events:		# 1 bars of 3 beats, 813 bytes
 	ev_end
 	var_end	Style_ItaliaRomance_Var4Fill2
 
-Style_ItaliaRomance_Intro2A:
-	var_head	Style_ItaliaRomance_Intro2A, 4, 3, 0xff, 0xff
+Style_ItaliaRomance_Ending1Major:
+	var_head	Style_ItaliaRomance_Ending1Major, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 100
 	ev_cc	3, 83, 78
@@ -6317,8 +6317,8 @@ Style_ItaliaRomance_Intro2A:
 	ev_cc	5, 81, 72
 	ev_cc	6, 83, 59
 	ev_cc	6, 81, 67
-	var_events	Style_ItaliaRomance_Intro2A
-Style_ItaliaRomance_Intro2A_Events:		# 4 bars of 3 beats, 1971 bytes
+	var_events	Style_ItaliaRomance_Ending1Major
+Style_ItaliaRomance_Ending1Major_Events:		# 4 bars of 3 beats, 1971 bytes
 	ev_beat
 	ev_note	1, 36, 77, 58, 1, 1
 	ev_note	2, 48, 81, 34, 2, 1
@@ -6922,10 +6922,10 @@ Style_ItaliaRomance_Intro2A_Events:		# 4 bars of 3 beats, 1971 bytes
 	ev_at	92
 	ev_note	0, 51, 49, 9, 0, 0
 	ev_end
-	var_end	Style_ItaliaRomance_Intro2A
+	var_end	Style_ItaliaRomance_Ending1Major
 
-Style_ItaliaRomance_Intro2B:
-	var_head	Style_ItaliaRomance_Intro2B, 4, 3, 0xff, 0xff
+Style_ItaliaRomance_Ending1Minor:
+	var_head	Style_ItaliaRomance_Ending1Minor, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 100
 	ev_cc	3, 83, 78
@@ -6940,8 +6940,8 @@ Style_ItaliaRomance_Intro2B:
 	ev_cc	6, 83, 59
 	ev_cc	6, 81, 67
 	ev_pc	7, 0x1f, 0x00, 0x26
-	var_events	Style_ItaliaRomance_Intro2B
-Style_ItaliaRomance_Intro2B_Events:		# 4 bars of 3 beats, 2116 bytes
+	var_events	Style_ItaliaRomance_Ending1Minor
+Style_ItaliaRomance_Ending1Minor_Events:		# 4 bars of 3 beats, 2116 bytes
 	ev_beat
 	ev_note	1, 36, 81, 58, 1, 1
 	ev_note	2, 48, 81, 34, 2, 1
@@ -7527,10 +7527,10 @@ Style_ItaliaRomance_Intro2B_Events:		# 4 bars of 3 beats, 2116 bytes
 	ev_at	92
 	ev_note	0, 51, 49, 9, 0, 0
 	ev_end
-	var_end	Style_ItaliaRomance_Intro2B
+	var_end	Style_ItaliaRomance_Ending1Minor
 
-Style_ItaliaRomance_Ending2A:
-	var_head	Style_ItaliaRomance_Ending2A, 4, 3, 0xff, 0xff
+Style_ItaliaRomance_Ending2Major:
+	var_head	Style_ItaliaRomance_Ending2Major, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 100
 	ev_cc	3, 83, 78
@@ -7544,8 +7544,8 @@ Style_ItaliaRomance_Ending2A:
 	ev_cc	6, 7, 100
 	ev_cc	6, 83, 59
 	ev_cc	6, 81, 67
-	var_events	Style_ItaliaRomance_Ending2A
-Style_ItaliaRomance_Ending2A_Events:		# 4 bars of 3 beats, 2511 bytes
+	var_events	Style_ItaliaRomance_Ending2Major
+Style_ItaliaRomance_Ending2Major_Events:		# 4 bars of 3 beats, 2511 bytes
 	ev_beat
 	ev_cc	6, 11, 127
 	ev_note	1, 36, 95, 62, 1, 1
@@ -8416,10 +8416,10 @@ Style_ItaliaRomance_Ending2A_Events:		# 4 bars of 3 beats, 2511 bytes
 	ev_at	94
 	ev_cc	4, 11, 79
 	ev_end
-	var_end	Style_ItaliaRomance_Ending2A
+	var_end	Style_ItaliaRomance_Ending2Major
 
-Style_ItaliaRomance_Ending2B:
-	var_head	Style_ItaliaRomance_Ending2B, 4, 3, 0xff, 0xff
+Style_ItaliaRomance_Ending2Minor:
+	var_head	Style_ItaliaRomance_Ending2Minor, 4, 3, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 100
 	ev_cc	3, 83, 78
@@ -8434,8 +8434,8 @@ Style_ItaliaRomance_Ending2B:
 	ev_cc	6, 7, 100
 	ev_cc	6, 83, 59
 	ev_cc	6, 81, 67
-	var_events	Style_ItaliaRomance_Ending2B
-Style_ItaliaRomance_Ending2B_Events:		# 4 bars of 3 beats, 1720 bytes
+	var_events	Style_ItaliaRomance_Ending2Minor
+Style_ItaliaRomance_Ending2Minor_Events:		# 4 bars of 3 beats, 1720 bytes
 	ev_beat
 	ev_note	6, 72, 91, 11, 0, 1
 	ev_note	5, 75, 43, 14, 0, 1
@@ -8895,4 +8895,4 @@ Style_ItaliaRomance_Ending2B_Events:		# 4 bars of 3 beats, 1720 bytes
 	ev_at	86
 	ev_cc	5, 64, 0
 	ev_end
-	var_end	Style_ItaliaRomance_Ending2B
+	var_end	Style_ItaliaRomance_Ending2Minor

@@ -19,15 +19,15 @@ Style_CajunCountry:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_CajunCountry
 
-Style_CajunCountry_Intro1A:
-	var_head	Style_CajunCountry_Intro1A, 2, 4, 0xff, 0xff
+Style_CajunCountry_Intro1Major:
+	var_head	Style_CajunCountry_Intro1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	6, 7, 127
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_cc	7, 7, 102
 	ev_pc	7, 0x10, 0x00, 0x26
-	var_events	Style_CajunCountry_Intro1A
-Style_CajunCountry_Intro1A_Events:		# 2 bars of 4 beats, 1127 bytes
+	var_events	Style_CajunCountry_Intro1Major
+Style_CajunCountry_Intro1Major_Events:		# 2 bars of 4 beats, 1127 bytes
 	ev_beat
 	ev_note	7, 36, 107, 8, 0, 0
 	ev_note	7, 49, 114, 3, 0, 0
@@ -274,18 +274,18 @@ Style_CajunCountry_Intro1A_Events:		# 2 bars of 4 beats, 1127 bytes
 	ev_at	95
 	ev_note	0, 49, 114, 1, 0, 0
 	ev_end
-	var_end	Style_CajunCountry_Intro1A
+	var_end	Style_CajunCountry_Intro1Major
 
-Style_CajunCountry_Intro1B:
-	var_head	Style_CajunCountry_Intro1B, 2, 4, 0xff, 0xff
+Style_CajunCountry_Intro1Minor:
+	var_head	Style_CajunCountry_Intro1Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 10, 116
 	ev_cc	6, 7, 127
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_cc	7, 7, 102
 	ev_pc	7, 0x10, 0x00, 0x26
-	var_events	Style_CajunCountry_Intro1B
-Style_CajunCountry_Intro1B_Events:		# 2 bars of 4 beats, 1250 bytes
+	var_events	Style_CajunCountry_Intro1Minor
+Style_CajunCountry_Intro1Minor_Events:		# 2 bars of 4 beats, 1250 bytes
 	ev_beat
 	ev_note	7, 36, 107, 8, 0, 0
 	ev_note	7, 49, 114, 3, 0, 0
@@ -573,18 +573,18 @@ Style_CajunCountry_Intro1B_Events:		# 2 bars of 4 beats, 1250 bytes
 	ev_at	95
 	ev_note	0, 49, 114, 1, 0, 0
 	ev_end
-	var_end	Style_CajunCountry_Intro1B
+	var_end	Style_CajunCountry_Intro1Minor
 
-Style_CajunCountry_Ending1A:
-	var_head	Style_CajunCountry_Ending1A, 4, 4, 0xff, 0xff
+Style_CajunCountry_Intro2Major:
+	var_head	Style_CajunCountry_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 127
 	ev_pc	3, 0x28, 0x00, 0x20
 	ev_cc	6, 7, 98
 	ev_cc	7, 7, 102
 	ev_pc	7, 0x10, 0x00, 0x26
-	var_events	Style_CajunCountry_Ending1A
-Style_CajunCountry_Ending1A_Events:		# 4 bars of 4 beats, 2499 bytes
+	var_events	Style_CajunCountry_Intro2Major
+Style_CajunCountry_Intro2Major_Events:		# 4 bars of 4 beats, 2499 bytes
 	ev_beat
 	ev_note	0, 38, 79, 13, 0, 0
 	ev_note	6, 72, 67, 32, 0, 1
@@ -1108,18 +1108,18 @@ Style_CajunCountry_Ending1A_Events:		# 4 bars of 4 beats, 2499 bytes
 	ev_at	95
 	ev_note	7, 49, 93, 1, 0, 0
 	ev_end
-	var_end	Style_CajunCountry_Ending1A
+	var_end	Style_CajunCountry_Intro2Major
 
-Style_CajunCountry_Ending1B:
-	var_head	Style_CajunCountry_Ending1B, 4, 4, 0xff, 0xff
+Style_CajunCountry_Intro2Minor:
+	var_head	Style_CajunCountry_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 127
 	ev_pc	3, 0x28, 0x00, 0x20
 	ev_cc	6, 7, 98
 	ev_cc	7, 7, 102
 	ev_pc	7, 0x10, 0x00, 0x26
-	var_events	Style_CajunCountry_Ending1B
-Style_CajunCountry_Ending1B_Events:		# 4 bars of 4 beats, 2488 bytes
+	var_events	Style_CajunCountry_Intro2Minor
+Style_CajunCountry_Intro2Minor_Events:		# 4 bars of 4 beats, 2488 bytes
 	ev_beat
 	ev_note	0, 38, 79, 13, 0, 0
 	ev_note	6, 72, 67, 32, 0, 1
@@ -1635,7 +1635,7 @@ Style_CajunCountry_Ending1B_Events:		# 4 bars of 4 beats, 2488 bytes
 	ev_at	95
 	ev_note	7, 49, 93, 1, 0, 0
 	ev_end
-	var_end	Style_CajunCountry_Ending1B
+	var_end	Style_CajunCountry_Intro2Minor
 
 Style_CajunCountry_Var1:
 	var_head	Style_CajunCountry_Var1, 4, 4, 0xff, 0xff
@@ -5517,15 +5517,15 @@ Style_CajunCountry_Var4Fill2_Events:		# 1 bars of 4 beats, 502 bytes
 	ev_end
 	var_end	Style_CajunCountry_Var4Fill2
 
-Style_CajunCountry_Intro2A:
-	var_head	Style_CajunCountry_Intro2A, 4, 4, 0xff, 0xff
+Style_CajunCountry_Ending1Major:
+	var_head	Style_CajunCountry_Ending1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	6, 7, 127
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_cc	7, 7, 102
 	ev_pc	7, 0x10, 0x00, 0x26
-	var_events	Style_CajunCountry_Intro2A
-Style_CajunCountry_Intro2A_Events:		# 4 bars of 4 beats, 2171 bytes
+	var_events	Style_CajunCountry_Ending1Major
+Style_CajunCountry_Ending1Major_Events:		# 4 bars of 4 beats, 2171 bytes
 	ev_beat
 	ev_note	0, 57, 114, 5, 0, 0
 	ev_note	0, 36, 98, 20, 0, 0
@@ -6100,18 +6100,18 @@ Style_CajunCountry_Intro2A_Events:		# 4 bars of 4 beats, 2171 bytes
 	ev_beat
 	ev_note	1, 36, 104, 3, 0, 1
 	ev_end
-	var_end	Style_CajunCountry_Intro2A
+	var_end	Style_CajunCountry_Ending1Major
 
-Style_CajunCountry_Intro2B:
-	var_head	Style_CajunCountry_Intro2B, 4, 4, 0xff, 0xff
+Style_CajunCountry_Ending1Minor:
+	var_head	Style_CajunCountry_Ending1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 10, 116
 	ev_cc	6, 7, 127
 	ev_pc	6, 0x00, 0x00, 0x20
 	ev_cc	7, 7, 102
 	ev_pc	7, 0x10, 0x00, 0x26
-	var_events	Style_CajunCountry_Intro2B
-Style_CajunCountry_Intro2B_Events:		# 4 bars of 4 beats, 2153 bytes
+	var_events	Style_CajunCountry_Ending1Minor
+Style_CajunCountry_Ending1Minor_Events:		# 4 bars of 4 beats, 2153 bytes
 	ev_beat
 	ev_note	0, 57, 114, 5, 0, 0
 	ev_note	0, 36, 98, 20, 0, 0
@@ -6653,15 +6653,15 @@ Style_CajunCountry_Intro2B_Events:		# 4 bars of 4 beats, 2153 bytes
 	ev_note	3, 55, 92, 32, 0, 1
 	ev_note	3, 60, 112, 30, 0, 1
 	ev_end
-	var_end	Style_CajunCountry_Intro2B
+	var_end	Style_CajunCountry_Ending1Minor
 
-Style_CajunCountry_Ending2A:
-	var_head	Style_CajunCountry_Ending2A, 7, 4, 0xff, 0xff
+Style_CajunCountry_Ending2Major:
+	var_head	Style_CajunCountry_Ending2Major, 7, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	7, 7, 102
 	ev_pc	7, 0x10, 0x00, 0x26
-	var_events	Style_CajunCountry_Ending2A
-Style_CajunCountry_Ending2A_Events:		# 7 bars of 4 beats, 5495 bytes
+	var_events	Style_CajunCountry_Ending2Major
+Style_CajunCountry_Ending2Major_Events:		# 7 bars of 4 beats, 5495 bytes
 	ev_beat
 	ev_note	0, 38, 79, 13, 0, 0
 	ev_note	6, 72, 118, 18, 0, 1
@@ -8039,18 +8039,18 @@ Style_CajunCountry_Ending2A_Events:		# 7 bars of 4 beats, 5495 bytes
 	ev_cc	5, 64, 0
 	ev_beat
 	ev_end
-	var_end	Style_CajunCountry_Ending2A
+	var_end	Style_CajunCountry_Ending2Major
 
-Style_CajunCountry_Ending2B:
-	var_head	Style_CajunCountry_Ending2B, 7, 4, 0xff, 0xff
+Style_CajunCountry_Ending2Minor:
+	var_head	Style_CajunCountry_Ending2Minor, 7, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	3, 7, 127
 	ev_pc	3, 0x28, 0x00, 0x20
 	ev_cc	6, 7, 98
 	ev_cc	7, 7, 102
 	ev_pc	7, 0x10, 0x00, 0x26
-	var_events	Style_CajunCountry_Ending2B
-Style_CajunCountry_Ending2B_Events:		# 7 bars of 4 beats, 5495 bytes
+	var_events	Style_CajunCountry_Ending2Minor
+Style_CajunCountry_Ending2Minor_Events:		# 7 bars of 4 beats, 5495 bytes
 	ev_beat
 	ev_note	0, 38, 79, 13, 0, 0
 	ev_note	6, 72, 118, 18, 0, 1
@@ -9428,4 +9428,4 @@ Style_CajunCountry_Ending2B_Events:		# 7 bars of 4 beats, 5495 bytes
 	ev_cc	5, 64, 0
 	ev_beat
 	ev_end
-	var_end	Style_CajunCountry_Ending2B
+	var_end	Style_CajunCountry_Ending2Minor

@@ -12,6 +12,8 @@
 PYTHON   ?= python3
 TOOLS    := ../kn7000/tools
 ASM      := $(PYTHON) $(TOOLS)/kn7asm.py
+# the MN103002A on-chip registers and board I/O latches, by name (shared by every MN10300 tree)
+SFR_INC  := ../kn7000/src/include/mn103002a_sfr.inc
 
 # The Technics/Panasonic customer-service mirror beside this tree (private, not in
 # git). kn24-11.zip holds the two self-extracting floppy images of update v1.1;
@@ -125,7 +127,7 @@ SYMOUT ?= .
 symbols: baserom/$(ROM)
 	@mkdir -p $(SYMOUT)/src
 	$(PYTHON) $(TOOLS)/gen_symbols.py baserom/$(ROM) --program-base 0x48400000 \
-	    --code-range 0x1e427c:0x3285be --no-manual \
+	    --code-range 0x1e427c:0x3285be --code-range 0x3285be:0x3965b8:0x50120000 --no-manual \
 	    --title "KN2400/KN2600 program-image symbols recovered from the MILK toolkit" \
 	    --inc-title "KN2400/KN2600 symbols" --sym $(SYMOUT)/$(MODEL).sym --inc $(SYMOUT)/src/symbols.inc
 symbols-check:
@@ -137,10 +139,10 @@ symbols-check:
 	 [ $$ok -eq 1 ]
 
 # ---- regenerate src/program.s (needs unidasm) ------------------------------------
-program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym src/symbols.inc baserom/$(ROM)
+program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym src/symbols.inc $(SFR_INC) baserom/$(ROM)
 	$(PYTHON) $(TOOLS)/gen_image_s.py --rom baserom/$(ROM) --base 0x48400000 $(CODE) --reflection-tables $(DATA) \
 	    --sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym $(FN_SYM) --inc src/symbols.inc \
-	    --labels-inc src/labels.inc --out src/program.s \
+	    --labels-inc src/labels.inc --sfr-inc $(SFR_INC) --out src/program.s \
 	    --unidasm $(UNIDASM) --stats notes/conversion-stats.txt $(IDS) \
 	    --title 'Technics SX-KN2400 / SX-KN2600 program flash image (update v1.1) - byte-exact.' \
 	    --title 'Panasonic MN10300, linked at 0x48400000. See README.md.'
@@ -183,12 +185,18 @@ PORT_FROM  := --a-rom $(KN7000_DIR)/baserom/kn7000_program.rom \
               --a-sym $(KN7000_DIR)/kn7000_manual.sym $(KN7000_DIR)/kn7000_exports_from_942.sym \
                       $(KN7000_DIR)/kn7000.sym
 
+# (lane mn10300-names, 2026-11-02) then the sibling images, in this order, into what is still
+# unnamed: their reflection names and hand names only (not their *_ported.sym, which came
+# from the KN7000); the rows say '= KN6500 0x...'.  Needs their baserom/ (make -C ../<model> baserom).
+PORT_SIBLINGS := --also-a KN6000 ../kn6000/baserom/kn6000_program.rom 0x4c000000 0x0:0xd,0x80:0x176037,0x3f47ec:0x3f77e7,0x3f78b4:0x3f7a31 ../kn6000/kn6000.sym,../kn6000/kn6000_manual.sym \
+                 --also-a KN6500 ../kn6500/baserom/kn6500_program.rom 0x4c000000 0x0:0xd,0x80:0x176839,0x37e44c:0x381447,0x381514:0x381691 ../kn6500/kn6500.sym,../kn6500/kn6500_manual.sym
+
 .PHONY: ported-names
 ported-names: $(TOOLS)/port_names_by_code.py $(TOOLS)/gen_image_s.py src/labels.inc baserom/$(ROM)
 	$(PYTHON) $(TOOLS)/port_names_by_code.py $(PORT_FROM) --b-rom baserom/$(ROM) --b-base $(BASE) \
 	    $(subst --code,--b-code,$(CODE)) --b-sym $(MODEL).sym $(MODEL)_manual.sym \
-	    --b-labels src/labels.inc --out $(MODEL)_ported.sym --unidasm $(UNIDASM) --fuzzy \
-	    --title "$(MODEL): names carried over from KN7000 program 941 (same code, relinked)"
+	    --b-labels src/labels.inc --out $(MODEL)_ported.sym --unidasm $(UNIDASM) --fuzzy $(PORT_SIBLINGS) $(if $(PORT_CACHE),--cache $(PORT_CACHE)) \
+	    --title "$(MODEL): names carried over from KN7000 program 941 and the sibling images (same code, relinked)"
 
 clean:
 	rm -rf build

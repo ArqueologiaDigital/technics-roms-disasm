@@ -846,7 +846,7 @@ loc_48500910:
     asl     16, d3
     add     d2, d3
     mov     d3, d1
-    call    func_48500A08_entry, [d2,d3,a2,a3], 0xc0
+    call    PartParamDumpLine_entry, [d2,d3,a2,a3], 0xc0
     mov     a0, (0x14, sp)
     movhu   (a2), d0
     call    func_485005D6_entry, [a2], 0x18
@@ -918,11 +918,11 @@ loc_485009FA:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
 loc_48500A05:
     ret     [d2,d3,a2,a3], 0xa8
-
-func_48500A08:
+# PartParamDumpLine  (CPU 0x48500a08)
+PartParamDumpLine:
     movm    [d2,d3,a2,a3], (sp)
     add     -0xb0, sp
-func_48500A08_entry:
+PartParamDumpLine_entry:
     mov     a0, (0xc8, sp)
     mov     d0, (0xcc, sp)
     mov     d1, a3
@@ -2336,7 +2336,7 @@ loc_48501921:
     mov     sp, a2
     add     0x30, a2
     mov     a2, a0
-    call    func_4843454F_entry, [d2,a2,a3], 0x20
+    call    PadNameGet_entry, [d2,a2,a3], 0x20
     mov     (0xc8, sp), d0
     mov     d0, (8, sp)
     mov     Str_PAD_16s, d0
@@ -3642,7 +3642,7 @@ loc_4850264F:
     asl     16, d3
     mov     d2, d1
     add     d3, d1
-    call    func_48500A08_entry, [d2,d3,a2,a3], 0xc0
+    call    PartParamDumpLine_entry, [d2,d3,a2,a3], 0xc0
     mov     sp, a0
     clr     d0
     movbu   d0, (0x44, sp)
@@ -3727,7 +3727,7 @@ loc_4850272B:
     asl     16, d3
     mov     d2, d1
     add     d3, d1
-    call    func_48500A08_entry, [d2,d3,a2,a3], 0xc0
+    call    PartParamDumpLine_entry, [d2,d3,a2,a3], 0xc0
     mov     a0, (0x14, sp)
     mov     (0x20, sp), a0
     movhu   (a0), d0
@@ -4014,7 +4014,7 @@ loc_48502A24:
     asl     24, d2
     mov     d2, d1
     or      d3, d1
-    call    func_48500A08_entry, [d2,d3,a2,a3], 0xc0
+    call    PartParamDumpLine_entry, [d2,d3,a2,a3], 0xc0
     mov     a0, (0x14, sp)
     movhu   (a2), d0
     call    func_485005D6_entry, [a2], 0x18
@@ -4076,7 +4076,7 @@ loc_48502AE5:
     add     d3, d0
     asl     16, d1
     add     d2, d1
-    call    func_48500A08_entry, [d2,d3,a2,a3], 0xc0
+    call    PartParamDumpLine_entry, [d2,d3,a2,a3], 0xc0
     mov     a0, (0x14, sp)
     movhu   (a2), d0
     call    func_485005D6_entry, [a2], 0x18
@@ -5901,7 +5901,7 @@ func_48503E1B_entry:
     exthu   d0
     cmp     0, d0
     bne     loc_48503E7B
-    call    func_4843248C_entry, 0, 0xc
+    call    UserPadLoopGet_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_48503E4E
@@ -10775,7 +10775,7 @@ MainSNDARG_SetSndaParaCur:
     mov     (0x24, sp), d1
     mov     a0, d0
     extbu   d1
-    call    func_4843FF41_entry, [d2,d3], 0x1c
+    call    SndArgCurPartVoiceSet_entry, [d2,d3], 0x1c
     exth    d0
     cmp     0, d0
     bge     loc_48506F35
@@ -10958,7 +10958,7 @@ loc_48507102:
     add     0x18, a0
     mov     sp, a1
     add     0x1c, a1
-    call    func_4843FE6D_entry, [a2,a3], 0x1c
+    call    SndArgCurPartVoiceGet_entry, [a2,a3], 0x1c
     mov     (0x18, sp), d0
     mov     d0, (0x5006e228)
     movbu   (0x1c, sp), d0
@@ -10985,7 +10985,7 @@ loc_48507102:
     mov     d2, d0
     and     0xff, d1
     extbu   d1
-    call    func_4843FF41_entry, [d2,d3], 0x1c
+    call    SndArgCurPartVoiceSet_entry, [d2,d3], 0x1c
     bra     loc_485071B6
 loc_48507178:
     call    func_48506ED6_entry, 0, 0x14
@@ -11008,7 +11008,7 @@ loc_48507178:
     mov     (0x5006e228), d0
     extbu   d2
     mov     d2, d1
-    call    func_4843FF41_entry, [d2,d3], 0x1c
+    call    SndArgCurPartVoiceSet_entry, [d2,d3], 0x1c
 loc_485071B6:
     clr     d0
     bra     loc_48507211
@@ -12845,7 +12845,7 @@ loc_485085FE:
     clr     d0
     ret     [d2], 0x18
 loc_48508602:
-    call    func_4843C107_entry, [d2], 0x10
+    call    MemVarRecChordGet_entry, [d2], 0x10
     mov     d0, d1
     extbu   d1
     mov     0xf, d0
@@ -12880,7 +12880,7 @@ loc_4850865C:
     clr     d0
     ret     [d2], 0x18
 loc_48508660:
-    call    func_4843C107_entry, [d2], 0x10
+    call    MemVarRecChordGet_entry, [d2], 0x10
     mov     d0, d1
     extbu   d1
     mov     0xf, d0
@@ -12915,7 +12915,7 @@ loc_485086BB:
     clr     d0
     bra     loc_485086E1
 loc_485086BE:
-    call    func_4843C107_entry, [d2], 0x10
+    call    MemVarRecChordGet_entry, [d2], 0x10
     mov     (0x28, sp), a0
     extbu   d0
     and     0x0f, d0
@@ -12964,7 +12964,7 @@ loc_48508734:
     movbu   (0x50152310), d0
     cmp     0xc, d0
     bge     loc_4850878E
-    call    func_4843C107_entry, [d2], 0x10
+    call    MemVarRecChordGet_entry, [d2], 0x10
     mov     d0, d2
     extbu   d2
     btst    0x10, d2
@@ -12993,7 +12993,7 @@ loc_48508792:
     movbu   (0x50152310), d0
     cmp     0xc, d0
     bge     loc_485087EF
-    call    func_4843C107_entry, [d2], 0x10
+    call    MemVarRecChordGet_entry, [d2], 0x10
     mov     d0, d2
     extbu   d2
     btst    0x10, d2
@@ -13022,7 +13022,7 @@ loc_485087F2:
     movbu   (0x50152310), d0
     cmp     0xc, d0
     bge     loc_48508820
-    call    func_4843C107_entry, [d2], 0x10
+    call    MemVarRecChordGet_entry, [d2], 0x10
     mov     Str_Min_4, a1
     extbu   d0
     btst    0x10, d0
@@ -20157,7 +20157,7 @@ loc_4850D0F8:
     jmp     loc_4850D1F5
 loc_4850D108:
     clr     d0
-    call    func_4843C0AB_entry, [d2], 0x10
+    call    MemVarEffectPartGet_entry, [d2], 0x10
     mov     CmpPartSetGrid2_Table, a2
     extbu   d0
     mov     d0, a3
@@ -20190,7 +20190,7 @@ loc_4850D15D:
     cmp     0, d0
     bne     loc_4850D183
     mov     1, d0
-    call    func_4843C0AB_entry, [d2], 0x10
+    call    MemVarEffectPartGet_entry, [d2], 0x10
     movhu   (0x1e, sp), d1
     extbu   d0
     exth    d1
@@ -20356,7 +20356,7 @@ loc_4850D2F5:
     jmp     loc_4850D3F3
 loc_4850D306:
     mov     1, d0
-    call    func_4843C0AB_entry, [d2], 0x10
+    call    MemVarEffectPartGet_entry, [d2], 0x10
     mov     CmpPartSetGrid2_Table, a2
     extbu   d0
     mov     d0, a3
@@ -20389,7 +20389,7 @@ loc_4850D35D:
     cmp     0, d0
     bne     loc_4850D381
     clr     d0
-    call    func_4843C0AB_entry, [d2], 0x10
+    call    MemVarEffectPartGet_entry, [d2], 0x10
     movhu   (0x1e, sp), d1
     extbu   d0
     exth    d1
@@ -20688,7 +20688,7 @@ loc_4850D64D:
     cmp     0, d0
     bne     loc_4850D696
     clr     d0
-    call    func_4843C0AB_entry, [d2], 0x10
+    call    MemVarEffectPartGet_entry, [d2], 0x10
     movhu   (0x1e, sp), d1
     mov     CmpPartSetGrid2_Table, a0
     exth    d1
@@ -20732,7 +20732,7 @@ loc_4850D6D0:
     cmp     0, d0
     bne     loc_4850D719
     mov     1, d0
-    call    func_4843C0AB_entry, [d2], 0x10
+    call    MemVarEffectPartGet_entry, [d2], 0x10
     movhu   (0x1e, sp), d1
     mov     CmpPartSetGrid2_Table, a0
     exth    d1
@@ -24817,7 +24817,7 @@ MainCMP_SetCmpRecordChord:
     mov     (0x24, sp), d0
     add     d3, d2
     extbu   d0
-    call    func_4843C144_entry, [d2], 0x10
+    call    MemVarRecChordSet_entry, [d2], 0x10
     clr     d0
     call    func_48500194, 0, 0
     mov     d2, d0
@@ -24964,7 +24964,7 @@ loc_48510034:
 loc_485100A7:
     mov     0x9000c080, d0
     call    PutM3Em_entry, [d2,d3,a2], 0x24
-    call    func_4843C107_entry, [d2], 0x10
+    call    MemVarRecChordGet_entry, [d2], 0x10
     extbu   d0
     mov     5, d1
     btst    0x10, d0
@@ -25541,7 +25541,7 @@ MainCMP_SetCmpEffectPart:
     mov     d1, d0
     mov     (0x24, sp), d1
     extbu   d1
-    call    func_4843C0CB_entry, [d2,d3], 0x18
+    call    MemVarEffectPartSet_entry, [d2,d3], 0x18
     mov     d2, d0
     ret     [d2], 0x14
 # MainCMP_CmpMeasureCopy  (CPU 0x485106af)
@@ -27929,7 +27929,7 @@ loc_48511F81:
     movbu   (0x50152320), d1
     extbu   d0
     call    func_484374EA_entry, [d2,d3], 0x14
-    call    func_484345DF_entry, 0, 0xc
+    call    PadFlag2ById_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_48511FB3
@@ -28354,7 +28354,7 @@ loc_485123F9:
     call    Malloc_entry, [d2,a2,a3], 0x28
     mov     a0, a2
     mov     d2, d0
-    call    func_4843454F_entry, [d2,a2,a3], 0x20
+    call    PadNameGet_entry, [d2,a2,a3], 0x20
     mov     d3, (8, sp)
     mov     Str_1d_16s_3, d0
     mov     d0, (0xc, sp)
@@ -28492,7 +28492,7 @@ loc_4851254F:
     clr     d0
     ret     [d2], 0x18
 loc_48512553:
-    call    func_4843255D_entry, 0, 0xc
+    call    UserPadRecChordGet_entry, 0, 0xc
     mov     d0, d1
     extbu   d1
     mov     0xf, d0
@@ -28527,7 +28527,7 @@ loc_485125AD:
     clr     d0
     ret     [d2], 0x18
 loc_485125B1:
-    call    func_4843255D_entry, 0, 0xc
+    call    UserPadRecChordGet_entry, 0, 0xc
     mov     d0, d1
     extbu   d1
     mov     0xf, d0
@@ -28562,7 +28562,7 @@ loc_4851260C:
     clr     d0
     bra     loc_48512632
 loc_4851260F:
-    call    func_4843255D_entry, 0, 0xc
+    call    UserPadRecChordGet_entry, 0, 0xc
     mov     (0x28, sp), a0
     extbu   d0
     and     0x0f, d0
@@ -28606,7 +28606,7 @@ loc_4851267E:
     clr     d0
     ret     [d2,a2], 0x1c
 loc_48512682:
-    call    func_4843255D_entry, 0, 0xc
+    call    UserPadRecChordGet_entry, 0, 0xc
     mov     d0, d2
     extbu   d2
     btst    0x10, d2
@@ -28632,7 +28632,7 @@ loc_485126D2:
     clr     d0
     ret     [d2,a2], 0x1c
 loc_485126D6:
-    call    func_4843255D_entry, 0, 0xc
+    call    UserPadRecChordGet_entry, 0, 0xc
     mov     d0, d2
     extbu   d2
     btst    0x10, d2
@@ -28658,7 +28658,7 @@ loc_48512729:
     clr     d0
     bra     loc_48512754
 loc_4851272C:
-    call    func_4843255D_entry, 0, 0xc
+    call    UserPadRecChordGet_entry, 0, 0xc
     mov     Str_Min, a1
     extbu   d0
     btst    0x10, d0
@@ -28738,7 +28738,7 @@ loc_48512810:
     extbu   d0
     call    func_484374EA_entry, [d2,d3], 0x14
     mov     (0x24, sp), a0
-    call    func_4843454F_entry, [d2,a2,a3], 0x20
+    call    PadNameGet_entry, [d2,a2,a3], 0x20
     mov     d2, d0
     bra     loc_48512838
 loc_48512830:
@@ -28805,7 +28805,7 @@ loc_485128A6:
     extbu   d1
     call    func_484374EA_entry, [d2,d3], 0x14
     mov     (0x28, sp), a0
-    call    func_4843454F_entry, [d2,a2,a3], 0x20
+    call    PadNameGet_entry, [d2,a2,a3], 0x20
     clr     d0
     bra     loc_485128D6
 loc_485128CB:
@@ -29160,7 +29160,7 @@ loc_48512CA8:
     movbu   (0x501523b9), d0
     call    func_484374EA_entry, [d2,d3], 0x14
     mov     a2, a0
-    call    func_4843454F_entry, [d2,a2,a3], 0x20
+    call    PadNameGet_entry, [d2,a2,a3], 0x20
     mov     (0x4c, sp), a1
     mov     Str_1d_16s_2, d0
     mov     a1, (8, sp)
@@ -29389,7 +29389,7 @@ loc_48512F73:
     movbu   (0x501523bb), d0
     call    func_484374EA_entry, [d2,d3], 0x14
     mov     a2, a0
-    call    func_4843454F_entry, [d2,a2,a3], 0x20
+    call    PadNameGet_entry, [d2,a2,a3], 0x20
     mov     (0x4c, sp), a1
     mov     Str_1d_16s, d0
     mov     a1, (8, sp)
@@ -29598,7 +29598,7 @@ loc_48513194:
 loc_485131D2:
     mov     d1, d2
 loc_485131D3:
-    call    func_484343E2, 0, 0
+    call    PadCurFlag2Get, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_485131ED
@@ -29806,7 +29806,7 @@ loc_485133DC:
     mov     sp, a2
     add     0x1c, a2
     mov     a2, (0x18, sp)
-    call    func_484343E2, 0, 0
+    call    PadCurFlag2Get, 0, 0
     extbu   d0
     cmp     d2, d0
     beq     loc_4851341B
@@ -30016,7 +30016,7 @@ loc_485135FA:
     clr     d0
     bra     loc_48513663
 loc_485135FD:
-    call    func_48432430_entry, 0, 0xc
+    call    UserPadSynchroGet_entry, 0, 0xc
     clr     d1
     extbu   d0
     cmp     d1, d0
@@ -30037,7 +30037,7 @@ loc_4851360B:
     clr     d0
     bra     loc_48513663
 loc_4851363C:
-    call    func_48432430_entry, 0, 0xc
+    call    UserPadSynchroGet_entry, 0, 0xc
     mov     Str_SYNCHRO, a1
     extbu   d0
     cmp     0, d0
@@ -30076,7 +30076,7 @@ loc_485136A6:
     clr     d0
     bra     loc_4851370F
 loc_485136A9:
-    call    func_4843248C_entry, 0, 0xc
+    call    UserPadLoopGet_entry, 0, 0xc
     clr     d1
     extbu   d0
     cmp     d1, d0
@@ -30097,7 +30097,7 @@ loc_485136B7:
     clr     d0
     bra     loc_4851370F
 loc_485136E8:
-    call    func_4843248C_entry, 0, 0xc
+    call    UserPadLoopGet_entry, 0, 0xc
     mov     Str_ON_37, a1
     extbu   d0
     cmp     0, d0
@@ -30259,7 +30259,7 @@ loc_4851385C:
     mov     0, a0
 loc_4851389E:
     mov     a0, d3
-    call    func_484343E2, 0, 0
+    call    PadCurFlag2Get, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_485138B9
@@ -30458,7 +30458,7 @@ loc_48513A5E:
     add     0x24, a3
     movhu   d1, (0x1e, sp)
     mov     a3, (0x20, sp)
-    call    func_484343E2, 0, 0
+    call    PadCurFlag2Get, 0, 0
     extbu   d0
     cmp     d2, d0
     beq     loc_48513AA1
@@ -30865,7 +30865,7 @@ loc_48513E82:
     mov     0, a0
 loc_48513EC5:
     mov     a0, d3
-    call    func_484343E2, 0, 0
+    call    PadCurFlag2Get, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_48513EE0
@@ -31022,7 +31022,7 @@ loc_48514008:
     mov     sp, a2
     add     0x20, a2
     mov     a2, (0x1c, sp)
-    call    func_484343E2, 0, 0
+    call    PadCurFlag2Get, 0, 0
     extbu   d0
     cmp     d2, d0
     beq     loc_48514047
@@ -31692,7 +31692,7 @@ loc_485146F6:
     movbu   (0x50152320), d1
     extbu   d0
     call    func_484374EA_entry, [d2,d3], 0x14
-    call    func_484345DF_entry, 0, 0xc
+    call    PadFlag2ById_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_48514728
@@ -31886,7 +31886,7 @@ loc_485148B5:
     mov     d3, d0
     extbu   d0
     call    func_484374EA_entry, [d2,d3], 0x14
-    call    func_484345DF_entry, 0, 0xc
+    call    PadFlag2ById_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_485148E9
@@ -31981,7 +31981,7 @@ loc_4851499D:
     mov     d3, d0
     extbu   d0
     call    func_484374EA_entry, [d2,d3], 0x14
-    call    func_484345DF_entry, 0, 0xc
+    call    PadFlag2ById_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_485149DE
@@ -32023,7 +32023,7 @@ loc_48514A15:
     extbu   d3
     mov     d3, d0
     call    func_484374EA_entry, [d2,d3], 0x14
-    call    func_484345DF_entry, 0, 0xc
+    call    PadFlag2ById_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_48514AAC
@@ -32546,7 +32546,7 @@ loc_48514F10:
     mov     d3, d0
     extbu   d0
     call    func_484374EA_entry, [d2,d3], 0x14
-    call    func_484345DF_entry, 0, 0xc
+    call    PadFlag2ById_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_48514F5F
@@ -32889,7 +32889,7 @@ loc_4851525C:
     extbu   d2
     mov     d2, d1
     call    func_484374EA_entry, [d2,d3], 0x14
-    call    func_484345DF_entry, 0, 0xc
+    call    PadFlag2ById_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_485152CD
@@ -33371,7 +33371,7 @@ loc_485157CA:
     extbu   d1
     call    func_484374EA_entry, [d2,d3], 0x14
     mov     a2, a0
-    call    func_4843454F_entry, [d2,a2,a3], 0x20
+    call    PadNameGet_entry, [d2,a2,a3], 0x20
     exth    d0
     cmp     0, d0
     bge     loc_485157ED
@@ -33516,7 +33516,7 @@ loc_48515907:
     mov     0x32, d0
     mov     d3, d1
     call    func_484AE08C_entry, [d2,d3], 8
-    call    func_4843255D_entry, 0, 0xc
+    call    UserPadRecChordGet_entry, 0, 0xc
     extbu   d0
     mov     5, d1
     btst    0x10, d0
@@ -33611,7 +33611,7 @@ MainPAD_SetUserPadRecordChord:
     mov     (0x24, sp), d0
     add     d3, d2
     extbu   d0
-    call    func_48432572_entry, [d2], 0x10
+    call    UserPadRecChordSet_entry, [d2], 0x10
     clr     d0
     call    func_48500194, 0, 0
     mov     d2, d0
@@ -33802,7 +33802,7 @@ MainPAD_SetUserPadSync:
     mov     (0x24, sp), d0
     add     d3, d2
     extbu   d0
-    call    func_48432449_entry, 0, 0xc
+    call    UserPadSynchroSet_entry, 0, 0xc
     mov     d2, d0
     ret     [d2,d3], 0x14
 # MainPAD_SetUserPadLoop  (CPU 0x48515c1e)
@@ -33814,7 +33814,7 @@ MainPAD_SetUserPadLoop:
     mov     (0x24, sp), d0
     add     d3, d2
     extbu   d0
-    call    func_484324A5_entry, 0, 0xc
+    call    UserPadLoopSet_entry, 0, 0xc
     mov     d2, d0
     ret     [d2,d3], 0x14
 # MainPAD_SetUserPadPartSetting  (CPU 0x48515c34)

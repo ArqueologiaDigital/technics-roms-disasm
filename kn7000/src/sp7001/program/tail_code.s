@@ -501,9 +501,9 @@ KernelInitHook:
 #   of the image holds its address, and func_48447F33 installs KernelTickHandler for the
 #   same interrupt (number 1, G6ICR) through the def_int service func_4C03DB21.
 KernelTickIsrDefault:
-    movhu   (0x34000118), d0
+    movhu   (G6ICR), d0
     and     0xff0f, d0
-    movhu   d0, (0x34000118)
+    movhu   d0, (G6ICR)
     add     -4, sp
     call    func_4C03E182_entry, 0, 0xc
     add     4, sp

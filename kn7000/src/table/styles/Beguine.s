@@ -19,8 +19,8 @@ Style_Beguine:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_Beguine
 
-Style_Beguine_Intro1A:
-	var_head	Style_Beguine_Intro1A, 2, 4, 0xff, 0xff
+Style_Beguine_Intro1Major:
+	var_head	Style_Beguine_Intro1Major, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 82
 	ev_cc	3, 7, 69
@@ -30,8 +30,8 @@ Style_Beguine_Intro1A:
 	ev_cc	6, 7, 127
 	ev_cc	6, 91, 55
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_Beguine_Intro1A
-Style_Beguine_Intro1A_Events:		# 2 bars of 4 beats, 1031 bytes
+	var_events	Style_Beguine_Intro1Major
+Style_Beguine_Intro1Major_Events:		# 2 bars of 4 beats, 1031 bytes
 	ev_beat
 	ev_note	0, 86, 91, 75, 0, 0
 	ev_note	7, 91, 119, 44, 0, 0
@@ -278,10 +278,10 @@ Style_Beguine_Intro1A_Events:		# 2 bars of 4 beats, 1031 bytes
 	ev_at	52
 	ev_note	1, 43, 81, 40, 0, 1
 	ev_end
-	var_end	Style_Beguine_Intro1A
+	var_end	Style_Beguine_Intro1Major
 
-Style_Beguine_Intro1B:
-	var_head	Style_Beguine_Intro1B, 2, 4, 0xff, 0xff
+Style_Beguine_Intro1Minor:
+	var_head	Style_Beguine_Intro1Minor, 2, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 82
 	ev_cc	3, 7, 69
@@ -291,8 +291,8 @@ Style_Beguine_Intro1B:
 	ev_cc	6, 7, 127
 	ev_cc	6, 91, 55
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_Beguine_Intro1B
-Style_Beguine_Intro1B_Events:		# 2 bars of 4 beats, 1067 bytes
+	var_events	Style_Beguine_Intro1Minor
+Style_Beguine_Intro1Minor_Events:		# 2 bars of 4 beats, 1067 bytes
 	ev_beat
 	ev_note	0, 86, 91, 75, 0, 0
 	ev_note	7, 91, 119, 44, 0, 0
@@ -550,10 +550,10 @@ Style_Beguine_Intro1B_Events:		# 2 bars of 4 beats, 1067 bytes
 	ev_at	51
 	ev_note	1, 43, 117, 43, 0, 1
 	ev_end
-	var_end	Style_Beguine_Intro1B
+	var_end	Style_Beguine_Intro1Minor
 
-Style_Beguine_Ending1A:
-	var_head	Style_Beguine_Ending1A, 4, 4, 0xff, 0xff
+Style_Beguine_Intro2Major:
+	var_head	Style_Beguine_Intro2Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 82
 	ev_cc	3, 7, 82
@@ -567,8 +567,8 @@ Style_Beguine_Ending1A:
 	ev_cc	6, 7, 82
 	ev_cc	6, 10, 104
 	ev_pc	6, 0x49, 0x44, 0x20
-	var_events	Style_Beguine_Ending1A
-Style_Beguine_Ending1A_Events:		# 4 bars of 4 beats, 2719 bytes
+	var_events	Style_Beguine_Intro2Major
+Style_Beguine_Intro2Major_Events:		# 4 bars of 4 beats, 2719 bytes
 	ev_beat
 	ev_note	0, 86, 91, 75, 0, 0
 	ev_note	7, 75, 119, 44, 0, 0
@@ -1213,10 +1213,10 @@ Style_Beguine_Ending1A_Events:		# 4 bars of 4 beats, 2719 bytes
 	ev_at	95
 	ev_note	0, 86, 85, 76, 0, 0
 	ev_end
-	var_end	Style_Beguine_Ending1A
+	var_end	Style_Beguine_Intro2Major
 
-Style_Beguine_Ending1B:
-	var_head	Style_Beguine_Ending1B, 4, 4, 0xff, 0xff
+Style_Beguine_Intro2Minor:
+	var_head	Style_Beguine_Intro2Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 82
 	ev_cc	3, 7, 82
@@ -1230,8 +1230,8 @@ Style_Beguine_Ending1B:
 	ev_cc	6, 7, 82
 	ev_cc	6, 10, 104
 	ev_pc	6, 0x49, 0x44, 0x20
-	var_events	Style_Beguine_Ending1B
-Style_Beguine_Ending1B_Events:		# 4 bars of 4 beats, 2734 bytes
+	var_events	Style_Beguine_Intro2Minor
+Style_Beguine_Intro2Minor_Events:		# 4 bars of 4 beats, 2734 bytes
 	ev_beat
 	ev_note	0, 86, 91, 75, 0, 0
 	ev_note	7, 75, 119, 44, 0, 0
@@ -1881,7 +1881,7 @@ Style_Beguine_Ending1B_Events:		# 4 bars of 4 beats, 2734 bytes
 	ev_at	49
 	ev_note	7, 38, 43, 13, 0, 0
 	ev_end
-	var_end	Style_Beguine_Ending1B
+	var_end	Style_Beguine_Intro2Minor
 
 Style_Beguine_Var1:
 	var_head	Style_Beguine_Var1, 4, 4, 0xff, 0xff
@@ -5006,8 +5006,8 @@ Style_Beguine_Var4Fill2_Events:		# 1 bars of 4 beats, 669 bytes
 	ev_end
 	var_end	Style_Beguine_Var4Fill2
 
-Style_Beguine_Intro2A:
-	var_head	Style_Beguine_Intro2A, 3, 4, 0xff, 0xff
+Style_Beguine_Ending1Major:
+	var_head	Style_Beguine_Ending1Major, 3, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 82
 	ev_cc	3, 7, 69
@@ -5017,8 +5017,8 @@ Style_Beguine_Intro2A:
 	ev_cc	6, 7, 127
 	ev_cc	6, 91, 55
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_Beguine_Intro2A
-Style_Beguine_Intro2A_Events:		# 3 bars of 4 beats, 1010 bytes
+	var_events	Style_Beguine_Ending1Major
+Style_Beguine_Ending1Major_Events:		# 3 bars of 4 beats, 1010 bytes
 	ev_beat
 	ev_note	0, 86, 91, 75, 0, 0
 	ev_note	7, 91, 119, 44, 0, 0
@@ -5259,10 +5259,10 @@ Style_Beguine_Intro2A_Events:		# 3 bars of 4 beats, 1010 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Beguine_Intro2A
+	var_end	Style_Beguine_Ending1Major
 
-Style_Beguine_Intro2B:
-	var_head	Style_Beguine_Intro2B, 3, 4, 0xff, 0xff
+Style_Beguine_Ending1Minor:
+	var_head	Style_Beguine_Ending1Minor, 3, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 82
 	ev_cc	3, 7, 69
@@ -5272,8 +5272,8 @@ Style_Beguine_Intro2B:
 	ev_cc	6, 7, 127
 	ev_cc	6, 91, 55
 	ev_pc	6, 0x00, 0x00, 0x20
-	var_events	Style_Beguine_Intro2B
-Style_Beguine_Intro2B_Events:		# 3 bars of 4 beats, 1247 bytes
+	var_events	Style_Beguine_Ending1Minor
+Style_Beguine_Ending1Minor_Events:		# 3 bars of 4 beats, 1247 bytes
 	ev_beat
 	ev_note	0, 86, 91, 75, 0, 0
 	ev_note	7, 91, 119, 44, 0, 0
@@ -5571,10 +5571,10 @@ Style_Beguine_Intro2B_Events:		# 3 bars of 4 beats, 1247 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Beguine_Intro2B
+	var_end	Style_Beguine_Ending1Minor
 
-Style_Beguine_Ending2A:
-	var_head	Style_Beguine_Ending2A, 3, 4, 0xff, 0xff
+Style_Beguine_Ending2Major:
+	var_head	Style_Beguine_Ending2Major, 3, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 82
 	ev_pc	3, 0x0c, 0x00, 0x20
@@ -5586,8 +5586,8 @@ Style_Beguine_Ending2A:
 	ev_pc	5, 0x30, 0x10, 0x20
 	ev_cc	6, 10, 104
 	ev_pc	6, 0x49, 0x44, 0x20
-	var_events	Style_Beguine_Ending2A
-Style_Beguine_Ending2A_Events:		# 3 bars of 4 beats, 2071 bytes
+	var_events	Style_Beguine_Ending2Major
+Style_Beguine_Ending2Major_Events:		# 3 bars of 4 beats, 2071 bytes
 	ev_beat
 	ev_note	0, 86, 91, 75, 0, 0
 	ev_note	7, 75, 119, 44, 0, 0
@@ -6172,10 +6172,10 @@ Style_Beguine_Ending2A_Events:		# 3 bars of 4 beats, 2071 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Beguine_Ending2A
+	var_end	Style_Beguine_Ending2Major
 
-Style_Beguine_Ending2B:
-	var_head	Style_Beguine_Ending2B, 3, 4, 0xff, 0xff
+Style_Beguine_Ending2Minor:
+	var_head	Style_Beguine_Ending2Minor, 3, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 82
 	ev_pc	3, 0x0c, 0x00, 0x20
@@ -6187,8 +6187,8 @@ Style_Beguine_Ending2B:
 	ev_pc	5, 0x30, 0x10, 0x20
 	ev_cc	6, 10, 104
 	ev_pc	6, 0x49, 0x44, 0x20
-	var_events	Style_Beguine_Ending2B
-Style_Beguine_Ending2B_Events:		# 3 bars of 4 beats, 2064 bytes
+	var_events	Style_Beguine_Ending2Minor
+Style_Beguine_Ending2Minor_Events:		# 3 bars of 4 beats, 2064 bytes
 	ev_beat
 	ev_note	0, 86, 91, 75, 0, 0
 	ev_note	7, 75, 119, 44, 0, 0
@@ -6771,4 +6771,4 @@ Style_Beguine_Ending2B_Events:		# 3 bars of 4 beats, 2064 bytes
 	ev_beat
 	ev_beat
 	ev_end
-	var_end	Style_Beguine_Ending2B
+	var_end	Style_Beguine_Ending2Minor

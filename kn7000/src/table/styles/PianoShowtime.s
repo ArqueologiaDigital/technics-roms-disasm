@@ -19,8 +19,8 @@ Style_PianoShowtime:
 	.byte	1			# 1 in every style; no reader found
 	style_slots	Style_PianoShowtime
 
-Style_PianoShowtime_Intro1A:
-	var_head	Style_PianoShowtime_Intro1A, 4, 4, 0xff, 0xff
+Style_PianoShowtime_Intro1Major:
+	var_head	Style_PianoShowtime_Intro1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 100
 	ev_cc	4, 7, 114
@@ -28,8 +28,8 @@ Style_PianoShowtime_Intro1A:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_PianoShowtime_Intro1A
-Style_PianoShowtime_Intro1A_Events:		# 4 bars of 4 beats, 967 bytes
+	var_events	Style_PianoShowtime_Intro1Major
+Style_PianoShowtime_Intro1Major_Events:		# 4 bars of 4 beats, 967 bytes
 	ev_beat
 	ev_note	0, 36, 75, 32, 0, 0
 	ev_note	0, 46, 72, 0, 0, 0
@@ -267,10 +267,10 @@ Style_PianoShowtime_Intro1A_Events:		# 4 bars of 4 beats, 967 bytes
 	ev_at	92
 	ev_note	0, 46, 73, 4, 0, 0
 	ev_end
-	var_end	Style_PianoShowtime_Intro1A
+	var_end	Style_PianoShowtime_Intro1Major
 
-Style_PianoShowtime_Intro1B:
-	var_head	Style_PianoShowtime_Intro1B, 4, 4, 0xff, 0xff
+Style_PianoShowtime_Intro1Minor:
+	var_head	Style_PianoShowtime_Intro1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 100
 	ev_cc	4, 7, 114
@@ -278,8 +278,8 @@ Style_PianoShowtime_Intro1B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_PianoShowtime_Intro1B
-Style_PianoShowtime_Intro1B_Events:		# 4 bars of 4 beats, 983 bytes
+	var_events	Style_PianoShowtime_Intro1Minor
+Style_PianoShowtime_Intro1Minor_Events:		# 4 bars of 4 beats, 983 bytes
 	ev_beat
 	ev_note	0, 36, 75, 32, 0, 0
 	ev_note	0, 46, 72, 0, 0, 0
@@ -518,10 +518,10 @@ Style_PianoShowtime_Intro1B_Events:		# 4 bars of 4 beats, 983 bytes
 	ev_at	92
 	ev_note	0, 46, 73, 4, 0, 0
 	ev_end
-	var_end	Style_PianoShowtime_Intro1B
+	var_end	Style_PianoShowtime_Intro1Minor
 
-Style_PianoShowtime_Ending1A:
-	var_head	Style_PianoShowtime_Ending1A, 5, 4, 0xff, 0xff
+Style_PianoShowtime_Intro2Major:
+	var_head	Style_PianoShowtime_Intro2Major, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 100
 	ev_cc	3, 7, 114
@@ -531,8 +531,8 @@ Style_PianoShowtime_Ending1A:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_PianoShowtime_Ending1A
-Style_PianoShowtime_Ending1A_Events:		# 5 bars of 4 beats, 1473 bytes
+	var_events	Style_PianoShowtime_Intro2Major
+Style_PianoShowtime_Intro2Major_Events:		# 5 bars of 4 beats, 1473 bytes
 	ev_beat
 	ev_beat
 	ev_beat
@@ -900,10 +900,10 @@ Style_PianoShowtime_Ending1A_Events:		# 5 bars of 4 beats, 1473 bytes
 	ev_at	3
 	ev_note	2, 59, 104, 28, 0, 1
 	ev_end
-	var_end	Style_PianoShowtime_Ending1A
+	var_end	Style_PianoShowtime_Intro2Major
 
-Style_PianoShowtime_Ending1B:
-	var_head	Style_PianoShowtime_Ending1B, 5, 4, 0xff, 0xff
+Style_PianoShowtime_Intro2Minor:
+	var_head	Style_PianoShowtime_Intro2Minor, 5, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 100
 	ev_cc	3, 7, 114
@@ -913,8 +913,8 @@ Style_PianoShowtime_Ending1B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_PianoShowtime_Ending1B
-Style_PianoShowtime_Ending1B_Events:		# 5 bars of 4 beats, 1440 bytes
+	var_events	Style_PianoShowtime_Intro2Minor
+Style_PianoShowtime_Intro2Minor_Events:		# 5 bars of 4 beats, 1440 bytes
 	ev_beat
 	ev_beat
 	ev_beat
@@ -1274,7 +1274,7 @@ Style_PianoShowtime_Ending1B_Events:		# 5 bars of 4 beats, 1440 bytes
 	ev_at	3
 	ev_note	2, 59, 104, 28, 0, 1
 	ev_end
-	var_end	Style_PianoShowtime_Ending1B
+	var_end	Style_PianoShowtime_Intro2Minor
 
 Style_PianoShowtime_Var1:
 	var_head	Style_PianoShowtime_Var1, 4, 4, 0xff, 0xff
@@ -2838,8 +2838,8 @@ Style_PianoShowtime_Var4Fill2_Events:		# 1 bars of 4 beats, 362 bytes
 	ev_end
 	var_end	Style_PianoShowtime_Var4Fill2
 
-Style_PianoShowtime_Intro2A:
-	var_head	Style_PianoShowtime_Intro2A, 4, 4, 0xff, 0xff
+Style_PianoShowtime_Ending1Major:
+	var_head	Style_PianoShowtime_Ending1Major, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 100
 	ev_cc	4, 7, 114
@@ -2847,8 +2847,8 @@ Style_PianoShowtime_Intro2A:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_PianoShowtime_Intro2A
-Style_PianoShowtime_Intro2A_Events:		# 4 bars of 4 beats, 887 bytes
+	var_events	Style_PianoShowtime_Ending1Major
+Style_PianoShowtime_Ending1Major_Events:		# 4 bars of 4 beats, 887 bytes
 	ev_beat
 	ev_note	0, 36, 57, 34, 0, 0
 	ev_note	0, 24, 58, 21, 0, 0
@@ -3056,10 +3056,10 @@ Style_PianoShowtime_Intro2A_Events:		# 4 bars of 4 beats, 887 bytes
 	ev_note	0, 36, 110, 21, 0, 0
 	ev_note	1, 36, 116, 35, 0, 1
 	ev_end
-	var_end	Style_PianoShowtime_Intro2A
+	var_end	Style_PianoShowtime_Ending1Major
 
-Style_PianoShowtime_Intro2B:
-	var_head	Style_PianoShowtime_Intro2B, 4, 4, 0xff, 0xff
+Style_PianoShowtime_Ending1Minor:
+	var_head	Style_PianoShowtime_Ending1Minor, 4, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 100
 	ev_cc	4, 7, 114
@@ -3067,8 +3067,8 @@ Style_PianoShowtime_Intro2B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_PianoShowtime_Intro2B
-Style_PianoShowtime_Intro2B_Events:		# 4 bars of 4 beats, 901 bytes
+	var_events	Style_PianoShowtime_Ending1Minor
+Style_PianoShowtime_Ending1Minor_Events:		# 4 bars of 4 beats, 901 bytes
 	ev_beat
 	ev_note	0, 36, 57, 34, 0, 0
 	ev_note	0, 24, 58, 21, 0, 0
@@ -3280,10 +3280,10 @@ Style_PianoShowtime_Intro2B_Events:		# 4 bars of 4 beats, 901 bytes
 	ev_note	0, 36, 110, 21, 0, 0
 	ev_note	1, 36, 116, 35, 0, 1
 	ev_end
-	var_end	Style_PianoShowtime_Intro2B
+	var_end	Style_PianoShowtime_Ending1Minor
 
-Style_PianoShowtime_Ending2A:
-	var_head	Style_PianoShowtime_Ending2A, 9, 4, 0xff, 0xff
+Style_PianoShowtime_Ending2Major:
+	var_head	Style_PianoShowtime_Ending2Major, 9, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 100
 	ev_cc	3, 7, 114
@@ -3293,8 +3293,8 @@ Style_PianoShowtime_Ending2A:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_PianoShowtime_Ending2A
-Style_PianoShowtime_Ending2A_Events:		# 9 bars of 4 beats, 2844 bytes
+	var_events	Style_PianoShowtime_Ending2Major
+Style_PianoShowtime_Ending2Major_Events:		# 9 bars of 4 beats, 2844 bytes
 	ev_beat
 	ev_note	0, 36, 69, 95, 0, 0
 	ev_note	0, 46, 63, 14, 0, 0
@@ -3995,10 +3995,10 @@ Style_PianoShowtime_Ending2A_Events:		# 9 bars of 4 beats, 2844 bytes
 	ev_note	3, 81, 76, 21, 0, 1
 	ev_note	4, 72, 105, 20, 0, 1
 	ev_end
-	var_end	Style_PianoShowtime_Ending2A
+	var_end	Style_PianoShowtime_Ending2Major
 
-Style_PianoShowtime_Ending2B:
-	var_head	Style_PianoShowtime_Ending2B, 9, 4, 0xff, 0xff
+Style_PianoShowtime_Ending2Minor:
+	var_head	Style_PianoShowtime_Ending2Minor, 9, 4, 0xff, 0xff
 	ev_cc	1, 97, 11
 	ev_cc	2, 7, 100
 	ev_cc	3, 7, 114
@@ -4008,8 +4008,8 @@ Style_PianoShowtime_Ending2B:
 	ev_cc	5, 91, 40
 	ev_cc	6, 91, 40
 	ev_cc	7, 91, 40
-	var_events	Style_PianoShowtime_Ending2B
-Style_PianoShowtime_Ending2B_Events:		# 9 bars of 4 beats, 2785 bytes
+	var_events	Style_PianoShowtime_Ending2Minor
+Style_PianoShowtime_Ending2Minor_Events:		# 9 bars of 4 beats, 2785 bytes
 	ev_beat
 	ev_note	0, 36, 69, 95, 0, 0
 	ev_note	0, 46, 63, 14, 0, 0
@@ -4701,4 +4701,4 @@ Style_PianoShowtime_Ending2B_Events:		# 9 bars of 4 beats, 2785 bytes
 	ev_note	3, 81, 76, 21, 0, 1
 	ev_note	4, 72, 105, 20, 0, 1
 	ev_end
-	var_end	Style_PianoShowtime_Ending2B
+	var_end	Style_PianoShowtime_Ending2Minor

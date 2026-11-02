@@ -11,6 +11,7 @@
 .include "src/symbols.inc"
 .include "src/labels.inc"
 .include "src/program/data/gui_code_ids.inc"
+.include "../kn7000/src/include/mn103002a_sfr.inc"
 
 
 _reset:
@@ -318,31 +319,31 @@ LibF64Pow_entry_L25b:
 
 crt0_start:
 	mov	0xfe, d0
-	movbu	d0, (0x36008024)
+	movbu	d0, (P24)
 	mov	2, d0
-	movbu	d0, (0x36008044)
+	movbu	d0, (P44)
 	mov	2, d0
-	movbu	d0, (0x36008004)
+	movbu	d0, (P04)
 	mov	0xff, d0
-	movbu	d0, (0x36008064)
-	mov	0x20000070, a0
+	movbu	d0, (P64)
+	mov	CHCTR, a0
 	mov	0x00000030:32, d0
 	mov	d0, (a0)
 	mov	0x00000003:32, d0
 	mov	d0, (a0)
 	nop
 	mov	0x497, d0
-	movhu	d0, (0x32000040)
+	movhu	d0, (SDRAM_CTRL)
 	mov	0xea6, d0
-	movhu	d0, (0x32000042)
+	movhu	d0, (SDRAM_REFRESH)
 	mov	0x865, d0
-	movhu	d0, (0x32000028)
-	movhu	(0x32000020), d0
+	movhu	d0, (MEMCTR4)
+	movhu	(MEMCTR0), d0
 	and	0x8000, d0
 	or	0x0804, d0
-	movhu	d0, (0x32000020)
+	movhu	d0, (MEMCTR0)
 	clr	d1
-	movbu	d1, (0x34004002)
+	movbu	d1, (UNKNOWN_34004002)
 
 func_4C000350:
 	mov	0x50007738, a0
@@ -396,18 +397,18 @@ func_4C000350_L5b:
 	mov	0x10, d1
 	lsr	d1, d0
 	movhu	d0, (a0)
-	mov	0x20000070, a0
+	mov	CHCTR, a0
 	mov	(a0), d0
 	or	0x80, d0
 	mov	d0, (a0)
 	clr	d1
-	movhu	d1, (0x20000000)
-	movhu	d1, (0x20000004)
-	movhu	d1, (0x20000008)
-	movhu	d1, (0x2000000c)
-	movhu	d1, (0x20000010)
-	movhu	d1, (0x20000014)
-	movhu	d1, (0x20000018)
+	movhu	d1, (IVAR0)
+	movhu	d1, (IVAR1)
+	movhu	d1, (IVAR2)
+	movhu	d1, (IVAR3)
+	movhu	d1, (IVAR4)
+	movhu	d1, (IVAR5)
+	movhu	d1, (IVAR6)
 	mov	0x90000006, a0
 	mov	0x0000dccb, d0
 	movhu	d0, (a0)
@@ -423,7 +424,7 @@ func_4C000350_L5b:
 	jmp	KernelStart
 # func_4C000350 + 0xe6: no traced path reaches what follows (--decode-gaps)
 	jmp	KernelIntDispatch
-	mov	0x20000070, a0
+	mov	CHCTR, a0
 	movhu	(a0), d0
 	and	0xfffe, d0
 	mov	d0, d1
@@ -442,7 +443,7 @@ func_4C000350_L5b:
 	or	0x01, d1
 	movhu	d1, (a0)
 	ret	0, 0
-	mov	0x20000070, a0
+	mov	CHCTR, a0
 	movhu	(a0), d0
 	and	0xfffd, d0
 	mov	d0, d1
@@ -461,7 +462,7 @@ func_4C000350_L5b:
 	or	0x02, d1
 	movhu	d1, (a0)
 	ret	0, 0
-	mov	0x20000070, a0
+	mov	CHCTR, a0
 	movhu	(a0), d0
 	btst	0x01, d0
 	beq	func_4C000350_L156
@@ -479,7 +480,7 @@ func_4C000350_L156:
 	ret	0, 0
 
 DCacheFlushDisable:
-	mov	0x20000070, a0
+	mov	CHCTR, a0
 	movhu	(a0), d0
 	btst	0x02, d0
 	beq	DCacheFlushDisable_L51
@@ -495,7 +496,7 @@ DCacheFlushDisable:
 	bne	DCacheFlushDisable_L51
 	btst	0x1000, d0
 	bne	DCacheFlushDisable_L39
-	mov	0x28400000, a0
+	mov	DCACHE_WAY0, a0
 	mov	0x80, d1
 	setlb
 	nop
@@ -507,7 +508,7 @@ DCacheFlushDisable:
 DCacheFlushDisable_L39:
 	btst	0x2000, d0
 	bne	DCacheFlushDisable_L51
-	mov	0x28401000, a0
+	mov	DCACHE_WAY1, a0
 	mov	0x80, d1
 	setlb
 	nop
@@ -517,7 +518,7 @@ DCacheFlushDisable_L39:
 	nop
 	lne
 DCacheFlushDisable_L51:
-	mov	0x20000070, a0
+	mov	CHCTR, a0
 	movhu	(a0), d0
 	and	0xfffd, d0
 	mov	d0, d1
@@ -15141,7 +15142,7 @@ MainGetSoundName_L26:
 	extbu	d0
 	extbu	d2
 	mov	d2, d1
-	call	func_4C07BBF5_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x10, a3)
 	mov	a2, (0x10, sp)
@@ -15180,7 +15181,7 @@ MainGetSoundName_Lb7:
 	extbu	d0
 	mov	d0, (0x10, sp)
 	mov	d2, d0
-	call	func_4C07BD5C_entry, [d2], 0x20
+	call	SoundIconFetch_entry, [d2], 0x20
 	extbu	d0
 	bra	MainGetSoundName_L169
 MainGetSoundName_Lf9:
@@ -15209,7 +15210,7 @@ MainGetSoundName_Lf9:
 	movbu	d0, (0x21, sp)
 	mov	d2, d0
 	exthu	d0
-	call	func_4C007A69_entry, [d2,d3,a2,a3], 0x20
+	call	PartHasDspUnit_entry, [d2,d3,a2,a3], 0x20
 	cmp	0, d0
 	bne	MainGetSoundName_L14c
 	movbu	(0x21, sp), d0
@@ -15217,7 +15218,7 @@ MainGetSoundName_Lf9:
 	movbu	d0, (0x21, sp)
 MainGetSoundName_L14c:
 	mov	a2, a0
-	call	func_4C07C1A6_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1c, sp), d0
 	movbu	(0x1d, sp), d1
 	asl	8, d0
@@ -15259,7 +15260,7 @@ GetSoundDev_entry:
 	lsr	24, d0
 	extbu	d0
 	exthu	d0
-	call	func_4C007A69_entry, [d2,d3,a2,a3], 0x20
+	call	PartHasDspUnit_entry, [d2,d3,a2,a3], 0x20
 	cmp	d2, d0
 	beq	GetSoundDev_entry_L43
 	mov	2, d0
@@ -15270,7 +15271,7 @@ GetSoundDev_entry_L43:
 	movbu	d0, (0x15, sp)
 GetSoundDev_entry_L48:
 	mov	a2, a0
-	call	func_4C07C1A6_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x15, sp), d0
 	cmp	2, d0
 	blt	GetSoundDev_entry_L6b
@@ -15286,30 +15287,30 @@ GetSoundDev_entry_L6b:
 	mov	d2, d0
 	ret	[d2,a2], 0x20
 
-func_4C007A69:
+PartHasDspUnit:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x10, sp
 
-func_4C007A69_entry:
+PartHasDspUnit_entry:
 	mov	d0, d3
 	mov	(func_4C007A69_entry_L14_Table), d0
 	clr	d2
 	clr	d1
 	cmp	-1, d0
 	mov	func_4C007A69_entry_L14_Table, a2
-	beq	func_4C007A69_entry_L33
+	beq	PartHasDspUnit_entry_L33
 	exthu	d3
-func_4C007A69_entry_L14:
+PartHasDspUnit_entry_L14:
 	asl2	d1
 	mov	(d1, a2), d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
 	exthu	d0
 	cmp	d0, d3
-	bne	func_4C007A69_entry_L27
+	bne	PartHasDspUnit_entry_L27
 	mov	1, d0
-	bra	func_4C007A69_entry_L34
-func_4C007A69_entry_L27:
+	bra	PartHasDspUnit_entry_L34
+PartHasDspUnit_entry_L27:
 	exthu	d2
 	inc	d2
 	mov	d2, d1
@@ -15318,10 +15319,10 @@ func_4C007A69_entry_L27:
 	asl2	d0
 	mov	(d0, a2), d0
 	cmp	-1, d0
-	bne	func_4C007A69_entry_L14
-func_4C007A69_entry_L33:
+	bne	PartHasDspUnit_entry_L14
+PartHasDspUnit_entry_L33:
 	clr	d0
-func_4C007A69_entry_L34:
+PartHasDspUnit_entry_L34:
 	ret	[d2,d3,a2,a3], 0x20
 
 MainGetRhythmName:
@@ -67242,12 +67243,12 @@ loc_4C0242DB:
 loc_4C0242DE:
 	retf	0, 0
 
-func_4C0242E1:
+PanelService:
 	add	-8, sp
 
-func_4C0242E1_entry:
+PanelService_entry:
 	btst	0xc0, (0x5001af22)
-	beq	func_4C0242E1_entry_L32
+	beq	PanelService_entry_L32
 	call	func_4C025A78, 0, 0
 	call	loc_cpu_entry, 0, 0x10
 	clr	d0
@@ -67255,10 +67256,10 @@ func_4C0242E1_entry:
 	movhu	d0, (0x5001af32)
 	bset	0x01, (0x5001af24)
 	call	unl_cpu, 0, 0
-	bra	func_4C0242E1_entry_L37
-func_4C0242E1_entry_L32:
+	bra	PanelService_entry_L37
+PanelService_entry_L32:
 	call	func_4C0255F5_entry, 0, 8
-func_4C0242E1_entry_L37:
+PanelService_entry_L37:
 	ret	0, 8
 
 func_4C02431E:
@@ -67304,7 +67305,7 @@ func_4C024359_entry:
 	mov	d1, (0x14, sp)
 	mov	0x1a, d1
 	movhu	d1, (0x18, sp)
-	mov	0x34000168, d1
+	mov	G26ICR, d1
 	mov	d1, (0x1c, sp)
 	clr	d1
 	movhu	d1, (0x20, sp)
@@ -67314,7 +67315,7 @@ func_4C024359_entry:
 	mov	d1, (0x28, sp)
 	mov	0x10, d1
 	movhu	d1, (0x2c, sp)
-	mov	0x34000140, d1
+	mov	G16ICR, d1
 	mov	sp, a3
 	add	0x10, a3
 	mov	d1, (0x30, sp)
@@ -67328,38 +67329,38 @@ func_4C024359_entry:
 	mov	d0, (0x3c, sp)
 	mov	0x11, d0
 	movhu	d0, (0x40, sp)
-	mov	0x34000144, d0
+	mov	G17ICR, d0
 	mov	d0, (0x44, sp)
 	movhu	d1, (0x48, sp)
 	movhu	d1, (0x42, sp)
 	call	func_4C025A78, 0, 0
 	call	func_4C025A90, 0, 0
-	bset	0x01, (0x36008004)
-	bset	0x01, (0x36008024)
-	bclr	0x01, (0x36008044)
-	bclr	0x01, (0x36008064)
-	bset	0x40, (0x36008024)
-	bset	0x40, (0x36008064)
-	bclr	0x40, (0x36008004)
-	bset	0x01, (0x36008005)
-	bset	0x01, (0x36008025)
-	bclr	0x01, (0x36008065)
+	bset	0x01, (P04)
+	bset	0x01, (P24)
+	bclr	0x01, (P44)
+	bclr	0x01, (P64)
+	bset	0x40, (P24)
+	bset	0x40, (P64)
+	bclr	0x40, (P04)
+	bset	0x01, (P05)
+	bset	0x01, (P25)
+	bclr	0x01, (P65)
 	clr	d0
-	movbu	d0, (0x34000804)
+	movbu	d0, (SC0ICR)
 	mov	0xc84, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	mov	0xa, d0
-	movbu	d0, (0x34001010)
+	movbu	d0, (TM0BR)
 	mov	0x80, d0
-	movbu	d0, (0x34001000)
+	movbu	d0, (TM0MD)
 	clr	d0
 	movbu	d0, (0x5001b012)
-	movhu	(0x34000280), d0
+	movhu	(EXTMD), d0
 	add	0x24, d2
 	mov	sp, a2
 	add	0x38, a2
 	or	0xc0, d0
-	movhu	d0, (0x34000280)
+	movhu	d0, (EXTMD)
 	mov	a3, a0
 	mov	4, d0
 	call	KernelDefInt_entry, [d2,d3,a2,a3], 0x24
@@ -67424,12 +67425,12 @@ func_4C0244CE_entry:
 	call	PanelBusyWait6000_entry, 0, 8
 	call	PanelBusyWait6000_entry, 0, 8
 	call	loc_cpu_entry, 0, 0x10
-	movhu	(0x34000800), d0
+	movhu	(SC0CTR), d0
 	and	0xbfff, d0
-	movhu	d0, (0x34000800)
-	movhu	(0x34000800), d0
+	movhu	d0, (SC0CTR)
+	movhu	(SC0CTR), d0
 	and	0x7fff, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	clr	d0
 	movhu	d0, (0x5001af30)
 	movhu	d0, (0x5001af32)
@@ -67443,57 +67444,57 @@ func_4C024581:
 	add	-0xc, sp
 	movbu	d0, (0x5001af94)
 	movbu	d1, (0x5001af95)
-	bset	0x01, (0x36008024)
-	bset	0x01, (0x36008025)
+	bset	0x01, (P24)
+	bset	0x01, (P25)
 	mov	6, d0
 	call	dis_int_entry, [d2], 4
 	mov	5, d0
 	call	dis_int_entry, [d2], 4
 	mov	4, d0
 	call	dis_int_entry, [d2], 4
-	bset	0x40, (0x36008004)
-	bclr	0x01, (0x36008004)
-	bset	0x01, (0x36008064)
-	bset	0x01, (0x36008024)
+	bset	0x40, (P04)
+	bclr	0x01, (P04)
+	bset	0x01, (P64)
+	bset	0x01, (P24)
 	call	func_4C024710_entry, 0, 8
 	call	func_4C024710_entry, 0, 8
-	bclr	0x40, (0x36008004)
-	bset	0x01, (0x36008004)
-	bclr	0x01, (0x36008064)
+	bclr	0x40, (P04)
+	bset	0x01, (P04)
+	bclr	0x01, (P64)
 	call	func_4C024710_entry, 0, 8
 	call	func_4C024710_entry, 0, 8
-	bset	0x40, (0x36008004)
-	bclr	0x01, (0x36008024)
-	bclr	0x01, (0x36008025)
-	movhu	(0x34000800), d0
+	bset	0x40, (P04)
+	bclr	0x01, (P24)
+	bclr	0x01, (P25)
+	movhu	(SC0CTR), d0
 	and	0xfff8, d0
 	or	0x04, d0
-	movhu	d0, (0x34000800)
-	movhu	(0x34000800), d0
+	movhu	d0, (SC0CTR)
+	movhu	(SC0CTR), d0
 	or	0x8000, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	movbu	(0x5001af94), d0
-	movbu	d0, (0x34000808)
+	movbu	d0, (SC0TXB)
 	call	func_4C024710_entry, 0, 8
-	bclr	0x40, (0x36008004)
+	bclr	0x40, (P04)
 	call	func_4C024710_entry, 0, 8
-	bset	0x40, (0x36008004)
+	bset	0x40, (P04)
 	movbu	(0x5001af95), d0
-	movbu	d0, (0x34000808)
+	movbu	d0, (SC0TXB)
 	call	func_4C024710_entry, 0, 8
 	call	func_4C024710_entry, 0, 8
-	bclr	0x40, (0x36008004)
+	bclr	0x40, (P04)
 	mov	6, d0
 	call	dis_int_entry, [d2], 4
 	mov	5, d0
 	call	dis_int_entry, [d2], 4
-	movhu	(0x34000800), d0
+	movhu	(SC0CTR), d0
 	or	0x07, d0
-	movhu	d0, (0x34000800)
-	bset	0x01, (0x36008024)
-	bset	0x01, (0x36008025)
-	bclr	0x01, (0x36008064)
-	bclr	0x01, (0x36008065)
+	movhu	d0, (SC0CTR)
+	bset	0x01, (P24)
+	bset	0x01, (P25)
+	bclr	0x01, (P64)
+	bclr	0x01, (P65)
 	ret	0, 0xc
 
 PanelBusyWait30:
@@ -67811,7 +67812,7 @@ PanelWaitLinkIdle_entry:
 	movbu	d0, (0x5001af29)
 PanelWaitLinkIdle_entry_L9:
 	call	loc_cpu_entry, 0, 0x10
-	btst	0x01, (0x36008084)
+	btst	0x01, (P84)
 	beq	PanelWaitLinkIdle_entry_L41
 	movbu	(0x5001af22), d0
 	btst	0x02, d0
@@ -67861,31 +67862,31 @@ PanelTxKick_entry:
 	mov	1, d0
 	movbu	d0, (0x5001af20)
 	mov	0x78, d0
-	movbu	d0, (0x34001010)
-	bset	0x01, (0x36008024)
-	bset	0x01, (0x36008025)
-	bset	0x40, (0x36008004)
-	bclr	0x01, (0x36008004)
-	bset	0x01, (0x36008064)
+	movbu	d0, (TM0BR)
+	bset	0x01, (P24)
+	bset	0x01, (P25)
+	bset	0x40, (P04)
+	bclr	0x01, (P04)
+	bset	0x01, (P64)
 	call	unl_cpu, 0, 0
 	mov	4, d0
 	call	dis_int_entry, [d2], 4
-	movhu	(0x34000800), d0
+	movhu	(SC0CTR), d0
 	and	0xbfff, d0
-	movhu	d0, (0x34000800)
-	movhu	(0x34000800), d0
+	movhu	d0, (SC0CTR)
+	movhu	(SC0CTR), d0
 	and	0xfff8, d0
 	or	0x04, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	mov	6, d0
 	call	dis_int_entry, [d2], 4
 	mov	5, d0
 	call	ena_int_entry, [d2], 4
-	movhu	(0x34000800), d0
+	movhu	(SC0CTR), d0
 	or	0x8000, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	clr	d0
-	movbu	d0, (0x34000808)
+	movbu	d0, (SC0TXB)
 	ret	[d2,d3], 0x14
 
 PanelAtnIsr:
@@ -67893,20 +67894,20 @@ PanelAtnIsr:
 	movbu	(0x5001b012), d0
 	cmp	0, d0
 	bne	PanelAtnIsr_L51
-	movhu	(0x34000280), d0
+	movhu	(EXTMD), d0
 	and	0xff3f, d0
 	or	0x80, d0
-	movhu	d0, (0x34000280)
+	movhu	d0, (EXTMD)
 	mov	1, d0
 	movbu	d0, (0x5001b012)
 	bset	0x01, (0x5001af22)
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000168), d0
+	movhu	(G26ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000168)
+	movhu	d0, (G26ICR)
 	or	0x0800, psw
 	nop
 	nop
@@ -67917,25 +67918,25 @@ PanelAtnIsr_L51:
 	movbu	(0x5001af21), d0
 	cmp	0, d0
 	bne	PanelAtnIsr_Ld1
-	bset	0x01, (0x36008024)
-	bclr	0x01, (0x36008064)
-	movhu	(0x34000800), d0
+	bset	0x01, (P24)
+	bclr	0x01, (P64)
+	movhu	(SC0CTR), d0
 	or	0x07, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	mov	6, d0
 	call	ena_int_entry, [d2], 4
 	mov	5, d0
 	call	dis_int_entry, [d2], 4
-	movhu	(0x34000800), d0
+	movhu	(SC0CTR), d0
 	or	0x4000, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000168), d0
+	movhu	(G26ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000168)
+	movhu	d0, (G26ICR)
 	or	0x0800, psw
 	nop
 	nop
@@ -67949,21 +67950,21 @@ PanelAtnIsr_Ld1:
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000168), d0
+	movhu	(G26ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000168)
+	movhu	d0, (G26ICR)
 	or	0x0800, psw
 	nop
 	nop
 PanelAtnIsr_Lfe:
-	movhu	(0x34000280), d0
+	movhu	(EXTMD), d0
 	or	0xc0, d0
-	movhu	d0, (0x34000280)
+	movhu	d0, (EXTMD)
 	clr	d0
 	movbu	d0, (0x5001b012)
 PanelAtnIsr_L114:
-	movhu	(0x34000168), d0
+	movhu	(G26ICR), d0
 	ret	0, 0xc
 
 PanelTxDoneIsr:
@@ -67976,17 +67977,17 @@ PanelTxDoneIsr:
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000144), d0
+	movhu	(G17ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000144)
+	movhu	d0, (G17ICR)
 	or	0x0800, psw
 	nop
 	nop
-	movhu	(0x34000144), d0
+	movhu	(G17ICR), d0
 	ret	0, 8
 	add	-8, sp
-	movhu	(0x3400080c), d0
+	movhu	(SC0STR), d0
 	btst	0x07, d0
 	beq	PanelTxDoneIsr_L52
 	mov	1, d0
@@ -68000,39 +68001,39 @@ PanelTxDoneIsr_L52:
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000140), d0
+	movhu	(G16ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000140)
+	movhu	d0, (G16ICR)
 	or	0x0800, psw
 	nop
 	nop
-	movhu	(0x34000140), d0
+	movhu	(G16ICR), d0
 	ret	0, 8
 loc_4C024CE4:
 	add	-0xc, sp
 	mov	0x3c, d0
-	bclr	0x01, (0x36008064)
-	bset	0x01, (0x36008025)
-	bclr	0x40, (0x36008004)
-	movbu	d0, (0x34001010)
+	bclr	0x01, (P64)
+	bset	0x01, (P25)
+	bclr	0x40, (P04)
+	movbu	d0, (TM0BR)
 	mov	4, d0
 	call	dis_int_entry, [d2], 4
 	mov	5, d0
 	call	ena_int_entry, [d2], 4
-	movhu	(0x34000800), d0
+	movhu	(SC0CTR), d0
 	and	0xfff8, d0
 	or	0x04, d0
-	movhu	d0, (0x34000800)
-	movhu	(0x34000800), d0
+	movhu	d0, (SC0CTR)
+	movhu	(SC0CTR), d0
 	or	0x8000, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	clr	d0
-	movbu	d0, (0x34000808)
+	movbu	d0, (SC0TXB)
 	movbu	(0x5001af20), d0
 	inc	d0
 	movbu	d0, (0x5001af20)
-	btst	0x01, (0x36008084)
+	btst	0x01, (P84)
 	bne	PanelTxDoneIsr_L132
 	clr	d0
 	movbu	d0, (0x5001af21)
@@ -68043,28 +68044,28 @@ loc_4C024CE4:
 	mov	5, d0
 	call	dis_int_entry, [d2], 4
 	mov	0x3c, d0
-	movbu	d0, (0x34001010)
+	movbu	d0, (TM0BR)
 	bclr	0x02, (0x5001af22)
 PanelTxDoneIsr_L132:
 	ret	0, 0xc
 loc_4C024D8E:
 	add	-0xc, sp
 	mov	0xa, d0
-	movbu	d0, (0x34001010)
-	bset	0x40, (0x36008004)
-	bclr	0x01, (0x36008024)
-	bclr	0x01, (0x36008025)
-	movhu	(0x34000800), d0
+	movbu	d0, (TM0BR)
+	bset	0x40, (P04)
+	bclr	0x01, (P24)
+	bclr	0x01, (P25)
+	movhu	(SC0CTR), d0
 	and	0xfff8, d0
 	or	0x04, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000168), d0
+	movhu	(G26ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000168)
+	movhu	d0, (G26ICR)
 	or	0x0800, psw
 	nop
 	nop
@@ -68077,7 +68078,7 @@ loc_4C024D8E:
 	movhu	(0x5001af90), d0
 	mov	0x5001af94, a0
 	movbu	(d0, a0), d0
-	movbu	d0, (0x34000808)
+	movbu	d0, (SC0TXB)
 	movhu	(0x5001af90), d1
 	inc	d1
 	movhu	d1, (0x5001af90)
@@ -68106,20 +68107,20 @@ PanelTxDoneIsr_L1f1:
 loc_4C024E5A:
 	add	-0xc, sp
 	call	func_4C0246F1_entry, 0, 8
-	bclr	0x40, (0x36008004)
-	bclr	0x01, (0x36008064)
-	bset	0x01, (0x36008024)
-	bset	0x01, (0x36008025)
+	bclr	0x40, (P04)
+	bclr	0x01, (P64)
+	bset	0x01, (P24)
+	bset	0x01, (P25)
 	mov	0x3c, d0
-	movbu	d0, (0x34001010)
+	movbu	d0, (TM0BR)
 	mov	5, d0
 	call	ena_int_entry, [d2], 4
-	movhu	(0x34000800), d0
+	movhu	(SC0CTR), d0
 	and	0xfff8, d0
 	or	0x04, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	clr	d0
-	movbu	d0, (0x34000808)
+	movbu	d0, (SC0TXB)
 	movbu	(0x5001af20), d0
 	inc	d0
 	movbu	d0, (0x5001af20)
@@ -68127,17 +68128,17 @@ loc_4C024E5A:
 loc_4C024EB9:
 	add	-0xc, sp
 	mov	0xa, d0
-	movbu	d0, (0x34001010)
-	bset	0x40, (0x36008004)
-	bclr	0x01, (0x36008024)
-	bclr	0x01, (0x36008025)
+	movbu	d0, (TM0BR)
+	bset	0x40, (P04)
+	bclr	0x01, (P24)
+	bclr	0x01, (P25)
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000168), d0
+	movhu	(G26ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000168)
+	movhu	d0, (G26ICR)
 	or	0x0800, psw
 	nop
 	nop
@@ -68150,7 +68151,7 @@ loc_4C024EB9:
 	movhu	(0x5001af90), d0
 	mov	0x5001af94, a0
 	movbu	(d0, a0), d0
-	movbu	d0, (0x34000808)
+	movbu	d0, (SC0TXB)
 	movhu	(0x5001af90), d0
 	inc	d0
 	movhu	d0, (0x5001af90)
@@ -68181,21 +68182,21 @@ PanelTxDoneIsr_L325:
 loc_4C024F81:
 	add	-0xc, sp
 	call	func_4C0246F1_entry, 0, 8
-	bclr	0x40, (0x36008004)
-	bclr	0x01, (0x36008064)
-	bset	0x01, (0x36008024)
-	bset	0x01, (0x36008025)
+	bclr	0x40, (P04)
+	bclr	0x01, (P64)
+	bset	0x01, (P24)
+	bset	0x01, (P25)
 	mov	0x3c, d0
-	movbu	d0, (0x34001010)
+	movbu	d0, (TM0BR)
 	clr	d0
-	movbu	d0, (0x34000808)
+	movbu	d0, (SC0TXB)
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000168), d0
+	movhu	(G26ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000168)
+	movhu	d0, (G26ICR)
 	or	0x0800, psw
 	nop
 	nop
@@ -68205,12 +68206,12 @@ loc_4C024F81:
 	call	ena_int_entry, [d2], 4
 	mov	6, d0
 	call	dis_int_entry, [d2], 4
-	movhu	(0x34000800), d0
+	movhu	(SC0CTR), d0
 	and	0xfff8, d0
 	or	0x04, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	clr	d0
-	movbu	d0, (0x34000808)
+	movbu	d0, (SC0TXB)
 	movbu	(0x5001af20), d0
 	inc	d0
 	movbu	d0, (0x5001af20)
@@ -68237,38 +68238,38 @@ func_4C025018_L29:
 	blt	func_4C025018_L98
 	mov	1, d0
 	movbu	d0, (0x5001af20)
-	bset	0x01, (0x36008024)
-	bset	0x40, (0x36008004)
-	bclr	0x01, (0x36008004)
-	bset	0x01, (0x36008064)
+	bset	0x01, (P24)
+	bset	0x40, (P04)
+	bclr	0x01, (P04)
+	bset	0x01, (P64)
 	mov	0x78, d0
-	movbu	d0, (0x34001010)
+	movbu	d0, (TM0BR)
 	mov	4, d0
 	call	dis_int_entry, [d2], 4
-	movhu	(0x34000800), d0
+	movhu	(SC0CTR), d0
 	and	0xfff8, d0
 	or	0x04, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	mov	6, d0
 	call	dis_int_entry, [d2], 4
 	mov	5, d0
 	call	ena_int_entry, [d2], 4
 	clr	d0
-	movbu	d0, (0x34000808)
+	movbu	d0, (SC0TXB)
 	bset	0x02, (0x5001af22)
 	bra	func_4C025018_Lfd
 func_4C025018_L98:
-	bclr	0x01, (0x36008064)
-	bset	0x01, (0x36008024)
-	bset	0x01, (0x36008025)
-	bclr	0x40, (0x36008004)
+	bclr	0x01, (P64)
+	bset	0x01, (P24)
+	bset	0x01, (P25)
+	bclr	0x40, (P04)
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000168), d0
+	movhu	(G26ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000168)
+	movhu	d0, (G26ICR)
 	or	0x0800, psw
 	nop
 	nop
@@ -68279,7 +68280,7 @@ func_4C025018_L98:
 	mov	5, d0
 	call	dis_int_entry, [d2], 4
 	mov	0x3c, d0
-	movbu	d0, (0x34001010)
+	movbu	d0, (TM0BR)
 	bclr	0x02, (0x5001af22)
 func_4C025018_Lfd:
 	ret	[d2], 0x10
@@ -68287,19 +68288,19 @@ func_4C025018_Lfd:
 PanelRxState8:
 	movm	[d2,d3], (sp)
 	add	-0xc, sp
-	bclr	0x01, (0x36008064)
-	bset	0x01, (0x36008024)
-	bset	0x01, (0x36008025)
-	movhu	(0x34000800), d0
+	bclr	0x01, (P64)
+	bset	0x01, (P24)
+	bset	0x01, (P25)
+	movhu	(SC0CTR), d0
 	or	0x07, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000168), d0
+	movhu	(G26ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000168)
+	movhu	d0, (G26ICR)
 	or	0x0800, psw
 	nop
 	nop
@@ -68307,7 +68308,7 @@ PanelRxState8:
 	call	ena_int_entry, [d2], 4
 	mov	6, d0
 	call	ena_int_entry, [d2], 4
-	movbu	(0x34000809), d3
+	movbu	(SC0RXB), d3
 	movhu	(0x5001af32), d0
 	mov	0x5001af34, a0
 	movbu	d3, (d0, a0)
@@ -68358,7 +68359,7 @@ PanelRxState8_Ld3:
 loc_4C0251FB:
 	add	-0xc, sp
 	movhu	(0x5001af32), d0
-	movbu	(0x34000809), d1
+	movbu	(SC0RXB), d1
 	mov	0x5001af34, a0
 	movbu	d1, (d0, a0)
 	btst	0x01, (0x5001af24)
@@ -68384,20 +68385,20 @@ PanelRxState8_L13c:
 	movbu	d0, (0x5001af21)
 	bclr	0x01, (0x5001af22)
 	movbu	d0, (0x5001af20)
-	bclr	0x01, (0x36008064)
-	bset	0x01, (0x36008024)
-	bset	0x01, (0x36008025)
-	movhu	(0x34000800), d0
+	bclr	0x01, (P64)
+	bset	0x01, (P24)
+	bset	0x01, (P25)
+	movhu	(SC0CTR), d0
 	and	0xfff8, d0
 	or	0x04, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000168), d0
+	movhu	(G26ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000168)
+	movhu	d0, (G26ICR)
 	or	0x0800, psw
 	nop
 	nop
@@ -68407,24 +68408,24 @@ PanelRxState8_L13c:
 	call	ena_int_entry, [d2], 4
 	mov	5, d0
 	call	dis_int_entry, [d2], 4
-	movhu	(0x34000800), d0
+	movhu	(SC0CTR), d0
 	and	0xbfff, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	bra	PanelRxState8_L222
 PanelRxState8_L1c4:
-	bclr	0x01, (0x36008064)
-	bset	0x01, (0x36008024)
-	bset	0x01, (0x36008025)
-	movhu	(0x34000800), d0
+	bclr	0x01, (P64)
+	bset	0x01, (P24)
+	bset	0x01, (P25)
+	movhu	(SC0CTR), d0
 	or	0x07, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000168), d0
+	movhu	(G26ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000168)
+	movhu	d0, (G26ICR)
 	or	0x0800, psw
 	nop
 	nop
@@ -68444,9 +68445,9 @@ PanelLinkRxRearm:
 	add	-0xc, sp
 	bclr	0x03, (0x5001af22)
 	bset	0x04, (0x5001af24)
-	movhu	(0x34000800), d0
+	movhu	(SC0CTR), d0
 	and	0xbfff, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	mov	6, d0
 	call	dis_int_entry, [d2], 4
 	mov	5, d0
@@ -68454,10 +68455,10 @@ PanelLinkRxRearm:
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000168), d0
+	movhu	(G26ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000168)
+	movhu	d0, (G26ICR)
 	or	0x0800, psw
 	nop
 	nop
@@ -68490,7 +68491,7 @@ func_4C0253A5_entry_L2a:
 	call	PanelTxFifoToRing_entry, [d2,a2], 0x10
 func_4C0253A5_entry_L2f:
 	call	loc_cpu_entry, 0, 0x10
-	btst	0x01, (0x36008084)
+	btst	0x01, (P84)
 	bne	func_4C0253A5_entry_L42
 	jmp	func_4C0253A5_entry_L108
 func_4C0253A5_entry_L42:
@@ -68524,28 +68525,28 @@ func_4C0253A5_entry_L77:
 	mov	1, d0
 	movbu	d0, (0x5001af20)
 	mov	0x78, d0
-	movbu	d0, (0x34001010)
-	bset	0x01, (0x36008024)
-	bset	0x01, (0x36008025)
-	bset	0x40, (0x36008004)
-	bclr	0x01, (0x36008004)
-	bset	0x01, (0x36008064)
-	movhu	(0x34000800), d0
+	movbu	d0, (TM0BR)
+	bset	0x01, (P24)
+	bset	0x01, (P25)
+	bset	0x40, (P04)
+	bclr	0x01, (P04)
+	bset	0x01, (P64)
+	movhu	(SC0CTR), d0
 	and	0xbfff, d0
-	movhu	d0, (0x34000800)
-	movhu	(0x34000800), d0
+	movhu	d0, (SC0CTR)
+	movhu	(SC0CTR), d0
 	and	0xfff8, d0
 	or	0x04, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	mov	6, d0
 	call	dis_int_entry, [d2], 4
 	mov	5, d0
 	call	ena_int_entry, [d2], 4
-	movhu	(0x34000800), d0
+	movhu	(SC0CTR), d0
 	or	0x8000, d0
-	movhu	d0, (0x34000800)
+	movhu	d0, (SC0CTR)
 	clr	d0
-	movbu	d0, (0x34000808)
+	movbu	d0, (SC0TXB)
 	bra	func_4C0253A5_entry_L126
 func_4C0253A5_entry_L108:
 	movbu	(0x5001af2a), d0
@@ -71562,7 +71563,7 @@ func_4C026D6C_entry:
 	and	0xff000000, d0
 	lsr	24, d0
 	extbu	d0
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
@@ -71903,7 +71904,7 @@ func_4C026FD9_entry:
 	and	0xff000000, d0
 	lsr	24, d0
 	extbu	d0
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
@@ -72047,7 +72048,7 @@ loc_4C027110:
 	mov	d0, (0x14, sp)
 	mov	d2, d0
 	mov	a1, a0
-	call	func_4C027CFB_entry, [d2,d3], 0x20
+	call	M3SetPmemNumber_entry, [d2,d3], 0x20
 	ret	[d2,d3], 0x20
 loc_4C027120:
 	movhu	(0x34, sp), d0
@@ -73042,7 +73043,7 @@ func_4C027891_entry_Lbc:
 	bra	func_4C027891_entry_Lf0
 func_4C027891_entry_Ldc:
 	mov	a3, d0
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	1, d1
 	exth	d0
 	cmp	0, d0
@@ -73052,7 +73053,7 @@ func_4C027891_entry_Led:
 	movbu	d1, (0x31, sp)
 func_4C027891_entry_Lf0:
 	mov	a2, a0
-	call	func_4C07C1A6_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x2c, sp), d0
 	mov	sp, a0
 	movbu	d0, (0x34, sp)
@@ -73441,11 +73442,11 @@ func_4C027C79_entry_L79:
 	mov	d3, d0
 	ret	[d2,d3,a2,a3], 0x38
 
-func_4C027CFB:
+M3SetPmemNumber:
 	movm	[d2,d3], (sp)
 	add	-0x18, sp
 
-func_4C027CFB_entry:
+M3SetPmemNumber_entry:
 	mov	d1, (0x30, sp)
 	mov	d0, (0x2c, sp)
 	movhu	(0x34, sp), d2
@@ -73453,11 +73454,11 @@ func_4C027CFB_entry:
 	call	func_4C02722A_entry, [d2,d3,a2,a3], 0x30
 	mov	d0, d3
 	btst	0x01, d2
-	bne	func_4C027CFB_entry_L1f
+	bne	M3SetPmemNumber_entry_L1f
 	mov	(0x2c, sp), d0
 	mov	(0x30, sp), d1
 	call	func_4C03CF62_entry, [d2,d3,a2], 0x1c
-func_4C027CFB_entry_L1f:
+M3SetPmemNumber_entry_L1f:
 	mov	d3, d0
 	ret	[d2,d3], 0x20
 
@@ -73977,7 +73978,7 @@ func_4C0280ED_entry_La5:
 func_4C0280ED_entry_Lac:
 	extbu	d3
 	mov	d3, d0
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	exth	d0
 	cmp	-1, d0
 	beq	func_4C0280ED_entry_Lbf
@@ -74047,7 +74048,7 @@ func_4C0280ED_entry_L13c:
 func_4C0280ED_entry_L143:
 	extbu	d3
 	mov	d3, d0
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	exth	d0
 	cmp	-1, d0
 	beq	func_4C0280ED_entry_L156
@@ -74173,7 +74174,7 @@ func_4C0280ED_entry_L25b:
 func_4C0280ED_entry_L262:
 	extbu	d3
 	mov	d3, d0
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	exth	d0
 	cmp	-1, d0
 	beq	func_4C0280ED_entry_L275
@@ -74206,7 +74207,7 @@ func_4C0280ED_entry_L2a7:
 func_4C0280ED_entry_L2ae:
 	extbu	d3
 	mov	d3, d0
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	exth	d0
 	cmp	-1, d0
 	beq	func_4C0280ED_entry_L2c1
@@ -74839,7 +74840,7 @@ func_4C028922_entry:
 	and	d2, d0
 	lsr	24, d0
 	extbu	d0
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
@@ -76466,7 +76467,7 @@ func_4C0295F3_entry:
 	and	d2, d0
 	lsr	24, d0
 	extbu	d0
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
@@ -77229,7 +77230,7 @@ func_4C029BB8_entry_L73:
 	bra	func_4C029BB8_entry_Laa
 func_4C029BB8_entry_L97:
 	mov	d2, d0
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	1, d1
 	exth	d0
 	cmp	0, d0
@@ -77239,7 +77240,7 @@ func_4C029BB8_entry_La7:
 	movbu	d1, (0x31, sp)
 func_4C029BB8_entry_Laa:
 	mov	a2, a0
-	call	func_4C07C25A_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 func_4C029BB8_entry_Lb2:
 	movbu	(0x2f, sp), d0
 	movbu	(0x30, sp), d1
@@ -79179,7 +79180,7 @@ func_4C02ACAB_entry:
 	mov	-1, d0
 	bra	func_4C02ACAB_entry_L2e
 func_4C02ACAB_entry_L12:
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	exth	d0
 	cmp	0, d0
 	bge	func_4C02ACAB_entry_L20
@@ -79221,7 +79222,7 @@ func_4C02ACE1_entry_L11:
 	mov	d3, d0
 	ret	[d2,d3,a2,a3], 0x3c
 func_4C02ACE1_entry_L28:
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
@@ -80380,7 +80381,7 @@ func_4C02B65F_entry_L1e:
 	and	0xff000000, d0
 	add	0x80, d0
 	clr	d1
-	call	func_4C027CFB_entry, [d2,d3], 0x20
+	call	M3SetPmemNumber_entry, [d2,d3], 0x20
 	mov	a2, d1
 	mov	d3, d0
 	call	func_4C03D01C_entry, [d2], 0x14
@@ -89511,7 +89512,7 @@ func_4C030423_entry_Le5:
 	or	d0, d1
 	movbu	d1, (a3)
 	mov	d2, d0
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
@@ -90145,7 +90146,7 @@ func_4C0309C6_entry_L1b:
 	bra	func_4C0309C6_entry_L72
 func_4C0309C6_entry_L61:
 	mov	d2, d0
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	1, d1
 	exth	d0
 	cmp	0, d0
@@ -90155,7 +90156,7 @@ func_4C0309C6_entry_L6f:
 	movbu	d1, (0x21, sp)
 func_4C0309C6_entry_L72:
 	mov	a3, a0
-	call	func_4C07C1A6_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1c, sp), d0
 	mov	a2, a0
 	movbu	d0, (0x24, sp)
@@ -90293,7 +90294,7 @@ func_4C030AE7_entry_L3c:
 	bra	func_4C030AE7_entry_L84
 func_4C030AE7_entry_L72:
 	movbu	(a2), d0
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	1, d1
 	exth	d0
 	cmp	0, d0
@@ -90303,7 +90304,7 @@ func_4C030AE7_entry_L81:
 	movbu	d1, (0x21, sp)
 func_4C030AE7_entry_L84:
 	mov	d3, a0
-	call	func_4C07C1A6_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1c, sp), d0
 	mov	d2, a0
 	movbu	d0, (0x24, sp)
@@ -92421,10 +92422,10 @@ func_4C032001_entry:
 	call	TempoBpmReloadWrite_entry, [d2], 4
 	ret	0, 0xc
 
-func_4C03201D:
+PartDspUnitFind:
 	movm	[d2,d3], (sp)
 
-func_4C03201D_entry:
+PartDspUnitFind_entry:
 	mov	d0, d3
 	clr	d2
 	clr	d0
@@ -92435,10 +92436,10 @@ func_4C03201D_entry:
 	mov	0x84000722, a0
 	movbu	(d1, a0), d1
 	cmp	d3, d1
-	bne	func_4C03201D_entry_L1b
+	bne	PartDspUnitFind_entry_L1b
 	mov	d2, d0
-	bra	func_4C03201D_entry_L24
-func_4C03201D_entry_L1b:
+	bra	PartDspUnitFind_entry_L24
+PartDspUnitFind_entry_L1b:
 	mov	d0, d2
 	inc	d2
 	mov	d2, d0
@@ -92446,7 +92447,7 @@ func_4C03201D_entry_L1b:
 	cmp	5, d0
 	lcs
 	mov	-1, d0
-func_4C03201D_entry_L24:
+PartDspUnitFind_entry_L24:
 	retf	[d2,d3], 8
 
 func_4C032046:
@@ -92714,26 +92715,26 @@ func_4C0321C2_L6:
 func_4C0321C2_L1ac:
 	ret	[d2,d3,a2], 0x20
 	add	-0x10, sp
-	movhu	(0x3400081c), d0
+	movhu	(SC1STR), d0
 	btst	0x07, d0
 	beq	func_4C0321C2_L1f3
-	movbu	(0x34000819), d0
+	movbu	(SC1RXB), d0
 	movbu	d0, (0xc, sp)
 	call	func_4C032E44_entry, 0, 0xc
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000148), d0
+	movhu	(G18ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000148)
+	movhu	d0, (G18ICR)
 	or	0x0800, psw
 	nop
 	nop
-	movhu	(0x34000148), d0
+	movhu	(G18ICR), d0
 	ret	0, 0x10
 func_4C0321C2_L1f3:
-	movbu	(0x34000819), d0
+	movbu	(SC1RXB), d0
 	movbu	d0, (0xc, sp)
 	call	func_4C032E6B, 0, 0
 	call	func_4C03291F, 0, 0
@@ -92773,14 +92774,14 @@ func_4C0321C2_L260:
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000148), d0
+	movhu	(G18ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000148)
+	movhu	d0, (G18ICR)
 	or	0x0800, psw
 	nop
 	nop
-	movhu	(0x34000148), d0
+	movhu	(G18ICR), d0
 	ret	0, 0x10
 
 func_4C03244A:
@@ -92799,7 +92800,7 @@ func_4C03244A_L10:
 	bne	func_4C03244A_L37
 	mov	7, d0
 	call	dis_int_entry, [d2], 4
-	movhu	(0x3400014c), d0
+	movhu	(G19ICR), d0
 	ret	0, 0xc
 func_4C03244A_L37:
 	btst	0xf8, (0x5001ffdc)
@@ -92810,28 +92811,28 @@ func_4C03244A_L43:
 	beq	func_4C03244A_L5f
 	bclr	0x08, (0x5001ffdc)
 	mov	0xf8, d0
-	movbu	d0, (0x34000818)
+	movbu	d0, (SC1TXB)
 	jmp	func_4C03244A_L13a
 func_4C03244A_L5f:
 	btst	0x80, (0x5001ffdc)
 	beq	func_4C03244A_L7b
 	bclr	0x80, (0x5001ffdc)
 	mov	0xfe, d0
-	movbu	d0, (0x34000818)
+	movbu	d0, (SC1TXB)
 	jmp	func_4C03244A_L13a
 func_4C03244A_L7b:
 	btst	0x40, (0x5001ffdc)
 	beq	func_4C03244A_L97
 	bclr	0x40, (0x5001ffdc)
 	mov	0xfa, d0
-	movbu	d0, (0x34000818)
+	movbu	d0, (SC1TXB)
 	jmp	func_4C03244A_L13a
 func_4C03244A_L97:
 	btst	0x10, (0x5001ffdc)
 	beq	func_4C03244A_Lb3
 	bclr	0x10, (0x5001ffdc)
 	mov	0xfb, d0
-	movbu	d0, (0x34000818)
+	movbu	d0, (SC1TXB)
 	jmp	func_4C03244A_L13a
 func_4C03244A_Lb3:
 	btst	0x20, (0x5001ffdc)
@@ -92840,7 +92841,7 @@ func_4C03244A_Lb3:
 func_4C03244A_Lbf:
 	bclr	0x20, (0x5001ffdc)
 	mov	0xfc, d0
-	movbu	d0, (0x34000818)
+	movbu	d0, (SC1TXB)
 	bra	func_4C03244A_L13a
 func_4C03244A_Ld1:
 	call	func_4C048409_entry, 0, 0xc
@@ -92848,7 +92849,7 @@ func_4C03244A_Ld1:
 	exth	d1
 	cmp	-1, d1
 	beq	func_4C03244A_L13a
-	movbu	d0, (0x34000818)
+	movbu	d0, (SC1TXB)
 	bra	func_4C03244A_L13a
 func_4C03244A_Le6:
 	btst	0x80, (0x5001ffdc)
@@ -92859,14 +92860,14 @@ func_4C03244A_Le6:
 	bne	func_4C03244A_L10c
 	mov	7, d0
 	call	dis_int_entry, [d2], 4
-	movhu	(0x3400014c), d0
+	movhu	(G19ICR), d0
 	bra	func_4C03244A_L15f
 func_4C03244A_L10c:
 	btst	0x80, (0x5001ffdc)
 	beq	func_4C03244A_L127
 	bclr	0x80, (0x5001ffdc)
 	mov	0xfe, d0
-	movbu	d0, (0x34000818)
+	movbu	d0, (SC1TXB)
 	bra	func_4C03244A_L13a
 func_4C03244A_L127:
 	call	func_4C048409_entry, 0, 0xc
@@ -92874,43 +92875,43 @@ func_4C03244A_L127:
 	exth	d1
 	cmp	-1, d1
 	beq	func_4C03244A_L13a
-	movbu	d0, (0x34000818)
+	movbu	d0, (SC1TXB)
 func_4C03244A_L13a:
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x3400014c), d0
+	movhu	(G19ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x3400014c)
+	movhu	d0, (G19ICR)
 	or	0x0800, psw
 	nop
 	nop
-	movhu	(0x3400014c), d0
+	movhu	(G19ICR), d0
 func_4C03244A_L15f:
 	ret	0, 0xc
 
 func_4C0325AC:
 	add	-0x10, sp
-	btst	0x07, (0x3400082c)
+	btst	0x07, (SC2STR)
 	beq	func_4C0325AC_L42
-	movbu	(0x34000829), d0
+	movbu	(SC2RXB), d0
 	movbu	d0, (0xc, sp)
 	call	func_4C032E44_entry, 0, 0xc
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000150), d0
+	movhu	(G20ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000150)
+	movhu	d0, (G20ICR)
 	or	0x0800, psw
 	nop
 	nop
-	movhu	(0x34000150), d0
+	movhu	(G20ICR), d0
 	ret	0, 0x10
 func_4C0325AC_L42:
-	movbu	(0x34000829), d0
+	movbu	(SC2RXB), d0
 	movbu	d0, (0xc, sp)
 	call	func_4C032E6B, 0, 0
 	call	func_4C03291F, 0, 0
@@ -92955,14 +92956,14 @@ func_4C0325AC_Lb7:
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000150), d0
+	movhu	(G20ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000150)
+	movhu	d0, (G20ICR)
 	or	0x0800, psw
 	nop
 	nop
-	movhu	(0x34000150), d0
+	movhu	(G20ICR), d0
 	ret	0, 0x10
 
 func_4C03268B:
@@ -92981,7 +92982,7 @@ func_4C03268B_L10:
 	bne	func_4C03268B_L37
 	mov	9, d0
 	call	dis_int_entry, [d2], 4
-	movhu	(0x34000154), d0
+	movhu	(G21ICR), d0
 	ret	0, 0xc
 func_4C03268B_L37:
 	btst	0x7c, (0x5001ffdc)
@@ -92992,35 +92993,35 @@ func_4C03268B_L43:
 	beq	func_4C03268B_L5f
 	bclr	0x08, (0x5001ffdc)
 	mov	0xf8, d0
-	movbu	d0, (0x34000828)
+	movbu	d0, (SC2TXB)
 	jmp	func_4C03268B_Lfa
 func_4C03268B_L5f:
 	btst	0x04, (0x5001ffdc)
 	beq	func_4C03268B_L7b
 	bclr	0x04, (0x5001ffdc)
 	mov	0xfe, d0
-	movbu	d0, (0x34000828)
+	movbu	d0, (SC2TXB)
 	jmp	func_4C03268B_Lfa
 func_4C03268B_L7b:
 	btst	0x40, (0x5001ffdc)
 	beq	func_4C03268B_L96
 	bclr	0x40, (0x5001ffdc)
 	mov	0xfa, d0
-	movbu	d0, (0x34000828)
+	movbu	d0, (SC2TXB)
 	bra	func_4C03268B_Lfa
 func_4C03268B_L96:
 	btst	0x10, (0x5001ffdc)
 	beq	func_4C03268B_Lb1
 	bclr	0x10, (0x5001ffdc)
 	mov	0xfb, d0
-	movbu	d0, (0x34000828)
+	movbu	d0, (SC2TXB)
 	bra	func_4C03268B_Lfa
 func_4C03268B_Lb1:
 	btst	0x20, (0x5001ffdc)
 	beq	func_4C03268B_Lfa
 	bclr	0x20, (0x5001ffdc)
 	mov	0xfc, d0
-	movbu	d0, (0x34000828)
+	movbu	d0, (SC2TXB)
 	bra	func_4C03268B_Lfa
 func_4C03268B_Lcc:
 	call	func_4C048457_entry, 0, 0xc
@@ -93028,26 +93029,26 @@ func_4C03268B_Lcc:
 	exth	d1
 	cmp	-1, d1
 	beq	func_4C03268B_Lfa
-	movbu	d0, (0x34000828)
+	movbu	d0, (SC2TXB)
 	bra	func_4C03268B_Lfa
 func_4C03268B_Le1:
 	btst	0x04, (0x5001ffdc)
 	beq	func_4C03268B_Lfa
 	bclr	0x04, (0x5001ffdc)
 	mov	0xfe, d0
-	movbu	d0, (0x34000818)
+	movbu	d0, (SC1TXB)
 func_4C03268B_Lfa:
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000154), d0
+	movhu	(G21ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000154)
+	movhu	d0, (G21ICR)
 	or	0x0800, psw
 	nop
 	nop
-	movhu	(0x34000154), d0
+	movhu	(G21ICR), d0
 	ret	0, 0xc
 
 func_4C0327AD:
@@ -93238,9 +93239,9 @@ func_4C03296C:
 
 func_4C03296C_entry:
 	mov	0x3f, d0
-	movbu	d0, (0x34001013)
+	movbu	d0, (TM3BR)
 	mov	0x80, d0
-	movbu	d0, (0x34001003)
+	movbu	d0, (TM3MD)
 	call	func_4C03291F, 0, 0
 	extbu	d0
 	cmp	1, d0
@@ -93251,35 +93252,35 @@ func_4C03296C_entry:
 	beq	func_4C03296C_entry_L81
 	bra	func_4C03296C_entry_L9a
 func_4C03296C_entry_L25:
-	bclr	0x02, (0x36008024)
-	bset	0x02, (0x36008044)
-	bset	0x02, (0x36008064)
+	bclr	0x02, (P24)
+	bset	0x02, (P44)
+	bset	0x02, (P64)
 	mov	4, d0
-	movbu	d0, (0x34001012)
+	movbu	d0, (TM2BR)
 	mov	0x65, d0
-	movbu	d0, (0x3400082d)
+	movbu	d0, (SC2STR+1)
 	mov	0x80, d0
-	movbu	d0, (0x34001002)
+	movbu	d0, (TM2MD)
 	mov	7, d0
-	movbu	d0, (0x34001011)
+	movbu	d0, (TM1BR)
 	mov	0x80, d0
-	movbu	d0, (0x34001001)
+	movbu	d0, (TM1MD)
 	bra	func_4C03296C_entry_L9a
 func_4C03296C_entry_L66:
 	mov	4, d0
-	movbu	d0, (0x34001012)
+	movbu	d0, (TM2BR)
 	mov	0x65, d0
-	movbu	d0, (0x3400082d)
+	movbu	d0, (SC2STR+1)
 	mov	0x80, d0
-	movbu	d0, (0x34001002)
+	movbu	d0, (TM2MD)
 	bra	func_4C03296C_entry_L9a
 func_4C03296C_entry_L81:
 	mov	3, d0
-	movbu	d0, (0x34001012)
+	movbu	d0, (TM2BR)
 	mov	0x67, d0
-	movbu	d0, (0x3400082d)
+	movbu	d0, (SC2STR+1)
 	mov	0x80, d0
-	movbu	d0, (0x34001002)
+	movbu	d0, (TM2MD)
 func_4C03296C_entry_L9a:
 	ret	0, 8
 
@@ -93301,7 +93302,7 @@ func_4C032A0C_entry:
 	mov	d0, (0x14, sp)
 	mov	0x12, d0
 	movhu	d0, (0x18, sp)
-	mov	0x34000148, d0
+	mov	G18ICR, d0
 	mov	d0, (0x1c, sp)
 	clr	d0
 	movhu	d0, (0x20, sp)
@@ -93313,7 +93314,7 @@ func_4C032A0C_entry:
 	mov	d0, (0x28, sp)
 	mov	0x13, d0
 	movhu	d0, (0x2c, sp)
-	mov	0x3400014c, d0
+	mov	G19ICR, d0
 	mov	d0, (0x30, sp)
 	clr	d0
 	movhu	d0, (0x34, sp)
@@ -93323,7 +93324,7 @@ func_4C032A0C_entry:
 	mov	d0, (0x3c, sp)
 	mov	0x14, d0
 	movhu	d0, (0x40, sp)
-	mov	0x34000150, d0
+	mov	G20ICR, d0
 	mov	d0, (0x44, sp)
 	clr	d0
 	movhu	d0, (0x48, sp)
@@ -93334,7 +93335,7 @@ func_4C032A0C_entry:
 	mov	d1, (0x50, sp)
 	mov	0x15, d1
 	movhu	d1, (0x54, sp)
-	mov	0x34000154, d1
+	mov	G21ICR, d1
 	mov	d1, (0x58, sp)
 	clr	d1
 	movhu	d1, (0x5c, sp)
@@ -93344,13 +93345,13 @@ func_4C032A0C_entry:
 	call	func_4C048479_entry, 0, 0x14
 	call	func_4C0484E9_entry, 0, 0x14
 	mov	0x85, d0
-	movhu	d0, (0x34000810)
+	movhu	d0, (SC1CTR)
 	clr	d0
-	movbu	d0, (0x34000814)
+	movbu	d0, (SC1ICR)
 	mov	0x81, d0
-	movhu	d0, (0x34000820)
+	movhu	d0, (SC2CTR)
 	clr	d0
-	movbu	d0, (0x34000824)
+	movbu	d0, (SC2ICR)
 	call	func_4C032902, 0, 0
 	call	func_4C03296C_entry, 0, 8
 	mov	d2, a0
@@ -93373,22 +93374,22 @@ func_4C032A0C_entry:
 	call	ena_int_entry, [d2], 4
 	mov	9, d0
 	call	ena_int_entry, [d2], 4
-	movhu	(0x34000810), d0
+	movhu	(SC1CTR), d0
 	mov	0x4000, d2
 	or	d2, d0
-	movhu	d0, (0x34000810)
-	movhu	(0x34000810), d0
+	movhu	d0, (SC1CTR)
+	movhu	(SC1CTR), d0
 	or	0x8000, d0
-	movhu	d0, (0x34000810)
-	movhu	(0x34000820), d0
+	movhu	d0, (SC1CTR)
+	movhu	(SC2CTR), d0
 	or	d2, d0
-	movhu	d0, (0x34000820)
-	movhu	(0x34000820), d0
+	movhu	d0, (SC2CTR)
+	movhu	(SC2CTR), d0
 	or	0x8000, d0
-	movhu	d0, (0x34000820)
+	movhu	d0, (SC2CTR)
 	mov	0xfe, d0
-	movbu	d0, (0x34000818)
-	movbu	d0, (0x34000828)
+	movbu	d0, (SC1TXB)
+	movbu	d0, (SC2TXB)
 	ret	[d2,d3,a2,a3], 0x70
 
 func_4C032B85:
@@ -103070,7 +103071,7 @@ func_4C0379EE:
 	btst	0x01, d0
 	beq	func_4C0379EE_L15
 	mov	(a0), d1
-	add	0x20000000, d1
+	add	IVAR0, d1
 	mov	d1, (a0)
 	bra	func_4C0379EE_L24
 func_4C0379EE_L15:
@@ -140719,7 +140720,7 @@ func_4C04CFA1_entry:
 	asl	8, d0
 	add	d0, d1
 	mov	d1, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	cmp	0, d0
 	bne	func_4C04CFA1_entry_L3d
@@ -140745,7 +140746,7 @@ func_4C04CFA1_entry_L3d:
 	asl	8, d0
 	add	d0, d1
 	mov	d1, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	cmp	0, d0
 	bne	func_4C04CFA1_entry_L74
@@ -140771,7 +140772,7 @@ func_4C04CFA1_entry_L74:
 	asl	8, d0
 	add	d0, d1
 	mov	d1, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	cmp	0, d0
 	bne	func_4C04CFA1_entry_Lac
@@ -140797,7 +140798,7 @@ func_4C04CFA1_entry_Lac:
 	asl	8, d0
 	add	d0, d1
 	mov	d1, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	cmp	0, d0
 	bne	func_4C04CFA1_entry_Le4
@@ -140828,7 +140829,7 @@ func_4C04CFA1_entry_Le4:
 	asl	10, d0
 	add	d0, d1
 	mov	d1, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	cmp	0, d0
 	bne	func_4C04CFA1_entry_L131
@@ -140864,7 +140865,7 @@ func_4C04CFA1_entry_L131:
 	asl	10, d0
 	add	d0, d1
 	mov	d1, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	cmp	0, d0
 	bne	func_4C04CFA1_entry_L17e
@@ -140900,7 +140901,7 @@ func_4C04CFA1_entry_L17e:
 	mov	d0, d1
 	add	d2, d1
 	mov	d1, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	cmp	0, d0
 	bne	func_4C04CFA1_entry_L1cb
@@ -140936,7 +140937,7 @@ func_4C04CFA1_entry_L1cb:
 	asl	10, d0
 	add	d0, d1
 	mov	d1, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	cmp	0, d0
 	bne	func_4C04CFA1_entry_L218
@@ -140972,7 +140973,7 @@ func_4C04CFA1_entry_L218:
 	asl	10, d0
 	add	d0, d1
 	mov	d1, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	cmp	0, d0
 	bne	func_4C04CFA1_entry_L265
@@ -144461,7 +144462,7 @@ func_4C04EFAD_entry_L3d:
 	movbu	d0, (0x19, sp)
 	movbu	(0x18, sp), d0
 	movbu	d0, (0x14, sp)
-	call	func_4C07C1A6_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x14, sp), d0
 	cmp	4, d0
 	bge	func_4C04EFAD_entry_Lba
@@ -144679,7 +144680,7 @@ func_4C04F286:
 	bclr	0x08, (0x50250354)
 	bra	func_4C04F286_L69
 func_4C04F286_L1a:
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	cmp	0, d0
 	bge	func_4C04F286_L2e
 	bclr	0x08, (0x50250354)
@@ -144718,7 +144719,7 @@ func_4C04F2F2:
 	bclr	0x04, (0x50250354)
 	bra	func_4C04F2F2_L5c
 func_4C04F2F2_L1f:
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	cmp	0, d0
 	bge	func_4C04F2F2_L33
 	bclr	0x04, (0x50250354)
@@ -146580,9 +146581,9 @@ func_4C05071A:
 
 func_4C05071A_entry:
 	movhu	(0x98070000), d0
-	bset	0x20, (0x36008024)
-	bset	0x20, (0x36008064)
-	bset	0x20, (0x36008004)
+	bset	0x20, (P24)
+	bset	0x20, (P64)
+	bset	0x20, (P04)
 	btst	0x8000, d0
 	beq	func_4C05071A_entry_L24
 	ret	[d2], 0x10
@@ -146639,7 +146640,7 @@ func_4C0507BF_entry:
 	mov	d0, d3
 	clr	d1
 func_4C0507BF_entry_L2:
-	bclr	0x20, (0x36008004)
+	bclr	0x20, (P04)
 	extbu	d3
 	mov	0x0000f000, d2
 	btst	0x01, d3
@@ -146660,7 +146661,7 @@ func_4C0507BF_entry_L1f:
 	cmp	0, d2
 	bhi	func_4C0507BF_entry_L1f
 func_4C0507BF_entry_L2e:
-	bset	0x20, (0x36008004)
+	bset	0x20, (P04)
 	mov	0x00008000, d2
 func_4C0507BF_entry_L3b:
 	clr	d0
@@ -147209,10 +147210,10 @@ func_4C050C0E_entry:
 	extbu	d3
 	cmp	0, d3
 	beq	func_4C050C0E_entry_L29
-	bclr	0x20, (0x36008004)
+	bclr	0x20, (P04)
 	bra	func_4C050C0E_entry_L30
 func_4C050C0E_entry_L29:
-	bset	0x20, (0x36008004)
+	bset	0x20, (P04)
 func_4C050C0E_entry_L30:
 	ret	[d2,d3], 0x10
 
@@ -147764,7 +147765,7 @@ func_4C051144_entry:
 	mov	(0x10, sp), a0
 	movbu	d0, (5, a0)
 	mov	(0x10, sp), a0
-	call	func_4C07C1A6_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	mov	0x90008020, d0
 	clr	d1
 	call	PutM3Em_entry, [d2,d3,a2], 0x24
@@ -147791,7 +147792,7 @@ func_4C05118F_entry:
 	mov	(0x10, sp), a0
 	movbu	d0, (5, a0)
 	mov	(0x10, sp), a0
-	call	func_4C07C1A6_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	mov	0x90008020, d0
 	clr	d1
 	call	PutM3Em_entry, [d2,d3,a2], 0x24
@@ -148346,7 +148347,7 @@ func_4C051768_entry:
 	movbu	d0, (0x11, sp)
 	mov	sp, a0
 	add	0xc, a0
-	call	func_4C07C25A_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	call	func_4C032D3D_entry, [d2], 0x18
 func_4C051768_entry_L52:
 	ret	0, 0x14
@@ -148649,7 +148650,7 @@ func_4C051A8B_entry_L2c:
 	mov	EV_SHOW, d1
 	call	ApPostEvent_entry, [d2], 0x1c
 func_4C051A8B_entry_L42:
-	call	func_4C158238, 0, 0
+	call	DspHostPortStatus, 0, 0
 	exth	d0
 	cmp	0, d0
 	bne	func_4C051A8B_entry_L66
@@ -151986,7 +151987,7 @@ func_4C053D2C_L1b:
 	bra	func_4C053D2C_L84
 func_4C053D2C_L59:
 	bclr	0x08, (0x50276e4c)
-	call	func_4C0242E1_entry, 0, 8
+	call	PanelService_entry, 0, 8
 	call	func_4C04EBFE_entry, 0, 8
 	call	func_4C04EE8B, 0, 0
 	call	func_4C04D455_entry, [d2], 0xc
@@ -152032,8 +152033,8 @@ func_4C053D2C_Lec:
 	call	func_4C09F3EA_entry, 0, 0x10
 	call	func_4C11650B_entry, 0, 8
 	call	func_4C16B6BD_entry, 0, 8
-	movbu	(0x36008004), d0
-	movbu	(0x36008004), d3
+	movbu	(P04), d0
+	movbu	(P04), d3
 	mov	5, d1
 	exthu	d1
 	lsr	d1, d0
@@ -152047,7 +152048,7 @@ func_4C053D2C_Lec:
 	asl	d1, d2
 	and	0xffffffdf, d3
 	or	d3, d2
-	movbu	d2, (0x36008004)
+	movbu	d2, (P04)
 func_4C053D2C_L14c:
 	btst	0x40, (0x50276e4c)
 	bne	func_4C053D2C_L157
@@ -152100,11 +152101,11 @@ func_4C053D2C_L1b7:
 # func_4C053D2C + 0x242: no traced path reaches what follows (--decode-gaps)
 	ret	[d2,d3], 0x24
 
-func_4C053F71:
+PadCopyBuiltinToUser:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x20, sp
 
-func_4C053F71_entry:
+PadCopyBuiltinToUser_entry:
 	exthu	d1
 	movhu	d0, (0x38, sp)
 	mov	d1, (0x18, sp)
@@ -152124,7 +152125,7 @@ func_4C053F71_entry:
 	add	0x16, d3
 	mov	0x28, a2
 	add	a3, a2
-func_4C053F71_entry_L2e:
+PadCopyBuiltinToUser_entry_L2e:
 	exthu	d1
 	mov	0x18, d0
 	nop
@@ -152143,7 +152144,7 @@ func_4C053F71_entry_L2e:
 	mov	d2, d1
 	exthu	d2
 	cmp	2, d2
-	blt	func_4C053F71_entry_L2e
+	blt	PadCopyBuiltinToUser_entry_L2e
 	mov	(0x18, sp), d0
 	mov	0x10, a0
 	add	a3, a0
@@ -152183,10 +152184,10 @@ func_4C053F71_entry_L2e:
 	call	func_4C05A75A_entry, [d2], 0x10
 	exth	d0
 	cmp	0, d0
-	bge	func_4C053F71_entry_Lba
+	bge	PadCopyBuiltinToUser_entry_Lba
 	mov	-2, d0
-	bra	func_4C053F71_entry_Ld9
-func_4C053F71_entry_Lba:
+	bra	PadCopyBuiltinToUser_entry_Ld9
+PadCopyBuiltinToUser_entry_Lba:
 	mov	a3, d0
 	add	d2, d0
 	mov	d0, a0
@@ -152201,7 +152202,7 @@ func_4C053F71_entry_Lba:
 	movhu	(0x38, sp), d0
 	movbu	d0, (a3)
 	mov	1, d0
-func_4C053F71_entry_Ld9:
+PadCopyBuiltinToUser_entry_Ld9:
 	ret	[d2,d3,a2,a3], 0x30
 
 func_4C054052:
@@ -152866,7 +152867,7 @@ func_4C054536_entry_L4b:
 	or	d1, d2
 	mov	d2, d1
 	exthu	d1
-	call	func_4C053F71_entry, [d2,d3,a2,a3], 0x30
+	call	PadCopyBuiltinToUser_entry, [d2,d3,a2,a3], 0x30
 	mov	d0, d2
 	bra	func_4C054536_entry_La0
 func_4C054536_entry_L6b:
@@ -153036,13 +153037,13 @@ func_4C0546D2_entry:
 	extbu	d0
 	ret	0, 0xc
 
-func_4C0546EB:
+UserPadSynchroSet:
 	add	-0xc, sp
 
-func_4C0546EB_entry:
+UserPadSynchroSet_entry:
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C0546EB_entry_L1c
+	beq	UserPadSynchroSet_entry_L1c
 	movbu	(func_4C05415F_Var), d0
 	exthu	d0
 	call	func_4C05A7DE, 0, 0
@@ -153050,8 +153051,8 @@ func_4C0546EB_entry:
 	movbu	(a0), d0
 	or	0x02, d0
 	movbu	d0, (a0)
-	bra	func_4C0546EB_entry_L34
-func_4C0546EB_entry_L1c:
+	bra	UserPadSynchroSet_entry_L34
+UserPadSynchroSet_entry_L1c:
 	movbu	(func_4C05415F_Var), d0
 	exthu	d0
 	call	func_4C05A7DE, 0, 0
@@ -153059,7 +153060,7 @@ func_4C0546EB_entry_L1c:
 	movbu	(a0), d0
 	and	0xfffffffd, d0
 	movbu	d0, (a0)
-func_4C0546EB_entry_L34:
+UserPadSynchroSet_entry_L34:
 	call	func_4C066E33_entry, 0, 0xc
 	mov	1, d0
 	ret	0, 0xc
@@ -153076,13 +153077,13 @@ func_4C05472E_entry:
 	extbu	d0
 	ret	0, 0xc
 
-func_4C054747:
+UserPadLoopSet:
 	add	-0xc, sp
 
-func_4C054747_entry:
+UserPadLoopSet_entry:
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C054747_entry_L1c
+	beq	UserPadLoopSet_entry_L1c
 	movbu	(func_4C05415F_Var), d0
 	exthu	d0
 	call	func_4C05A7DE, 0, 0
@@ -153090,8 +153091,8 @@ func_4C054747_entry:
 	movbu	(a0), d0
 	or	0x01, d0
 	movbu	d0, (a0)
-	bra	func_4C054747_entry_L34
-func_4C054747_entry_L1c:
+	bra	UserPadLoopSet_entry_L34
+UserPadLoopSet_entry_L1c:
 	movbu	(func_4C05415F_Var), d0
 	exthu	d0
 	call	func_4C05A7DE, 0, 0
@@ -153099,7 +153100,7 @@ func_4C054747_entry_L1c:
 	movbu	(a0), d0
 	and	0xfffffffe, d0
 	movbu	d0, (a0)
-func_4C054747_entry_L34:
+UserPadLoopSet_entry_L34:
 	call	func_4C066E33_entry, 0, 0xc
 	mov	1, d0
 	ret	0, 0xc
@@ -153160,11 +153161,11 @@ func_4C0547FF_entry:
 	movbu	(0x13, a0), d0
 	ret	0, 0xc
 
-func_4C054814:
+UserPadRecChordSet:
 	movm	[d2], (sp)
 	add	-0xc, sp
 
-func_4C054814_entry:
+UserPadRecChordSet_entry:
 	mov	d0, d2
 	movbu	(func_4C05415F_Var), d0
 	exthu	d0
@@ -155124,11 +155125,11 @@ StyleNameCommitCustom_entry_L22:
 	mov	d0, (0x5002dde4)
 	ret	[d2,d3,a2,a3], 0x24
 
-StyleVariationNameGet:
+StyleCountInRecordGet:
 	movm	[d2,a2], (sp)
 	add	-0x10, sp
 
-StyleVariationNameGet_entry:
+StyleCountInRecordGet_entry:
 	extbu	d0
 	asl2	d0
 	mov	0, a2
@@ -155136,31 +155137,31 @@ StyleVariationNameGet_entry:
 	mov	(d0, a0), a0
 	mov	(0x5002dd58), d0
 	cmp	0, d0
-	bne	StyleVariationNameGet_entry_L1f
+	bne	StyleCountInRecordGet_entry_L1f
 	movbu	(1, a0), d0
 	mov	7, d2
 	and	d0, d2
-	bra	StyleVariationNameGet_entry_L25
-StyleVariationNameGet_entry_L1f:
+	bra	StyleCountInRecordGet_entry_L25
+StyleCountInRecordGet_entry_L1f:
 	movbu	(0x11, a0), d2
 	and	0x07, d2
-StyleVariationNameGet_entry_L25:
+StyleCountInRecordGet_entry_L25:
 	mov	0x0000d00a, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
 	cmp	1, d0
-	bne	StyleVariationNameGet_entry_L42
+	bne	StyleCountInRecordGet_entry_L42
 	mov	d2, d0
 	exthu	d0
 	asl2	d0
 	mov	StyleVariationNameGet_entry_L25_Table, a0
 	mov	(d0, a0), a2
-StyleVariationNameGet_entry_L42:
+StyleCountInRecordGet_entry_L42:
 	cmp	0, a2
-	bne	StyleVariationNameGet_entry_L6f
+	bne	StyleCountInRecordGet_entry_L6f
 	mov	(0x5002dd48), a0
 	cmp	0, a0
-	beq	StyleVariationNameGet_entry_L6f
+	beq	StyleCountInRecordGet_entry_L6f
 	mov	a0, a1
 	exthu	d2
 	mov	d2, d0
@@ -155171,16 +155172,16 @@ StyleVariationNameGet_entry_L42:
 	mov	a1, a0
 	call	LoadU24BE, 0, 0
 	cmp	0, d0
-	bls	StyleVariationNameGet_entry_L6f
+	bls	StyleCountInRecordGet_entry_L6f
 	mov	(0x5002dd3c), d1
 	add	d0, d1
 	mov	d1, a2
-StyleVariationNameGet_entry_L6f:
+StyleCountInRecordGet_entry_L6f:
 	cmp	0, a2
-	beq	StyleVariationNameGet_entry_L7b
+	beq	StyleCountInRecordGet_entry_L7b
 	mov	1, d0
 	movbu	d0, (0x50250578)
-StyleVariationNameGet_entry_L7b:
+StyleCountInRecordGet_entry_L7b:
 	mov	a2, a0
 	ret	[d2,a2], 0x18
 
@@ -155219,7 +155220,7 @@ StyleRecordSlotSelect_entry_L29:
 	mov	(0x10, sp), d3
 	cmp	0x14, d1
 	bne	StyleRecordSlotSelect_entry_L4f
-	call	StyleVariationNameGet_entry, [d2,a2], 0x18
+	call	StyleCountInRecordGet_entry, [d2,a2], 0x18
 	cmp	0, a0
 	bne	StyleRecordSlotSelect_entry_L7d
 	movbu	(0x2c, sp), d0
@@ -156174,13 +156175,13 @@ func_4C056099_entry_L90:
 func_4C056099_entry_Lac:
 	ret	[d2,d3,a2], 0x1c
 
-func_4C05614D:
+StylePartSetupPtrGet:
 	mov	d0, d1
 	extbu	d1
 	cmp	8, d1
-	blt	func_4C05614D_L7
+	blt	StylePartSetupPtrGet_L7
 	clr	d0
-func_4C05614D_L7:
+StylePartSetupPtrGet_L7:
 	extbu	d0
 	asl2	d0
 	mov	0x5002dd70, a0
@@ -156330,11 +156331,11 @@ TechnicsPadsResourceParse_entry_L87:
 TechnicsPadsResourceParse_entry_L96:
 	ret	[d2], 0x18
 
-func_4C0562EA:
+PadSelectById:
 	movm	[d2,d3,a2], (sp)
 	add	-0x10, sp
 
-func_4C0562EA_entry:
+PadSelectById_entry:
 	mov	d0, d2
 	mov	0x700, d1
 	and	d2, d1
@@ -156347,20 +156348,20 @@ func_4C0562EA_entry:
 	mov	d1, d0
 	mov	d2, d1
 	and	0x00700000, d1
-	bne	func_4C0562EA_entry_L2a
+	bne	PadSelectById_entry_L2a
 	exthu	d0
 	call	func_4C056740_entry, [d2,d3,a2,a3], 0x1c
 	clr	d0
 	mov	d0, (0x50250580)
-	bra	func_4C0562EA_entry_L93
-func_4C0562EA_entry_L2a:
+	bra	PadSelectById_entry_L93
+PadSelectById_entry_L2a:
 	mov	0x00200000, d3
 	cmp	d3, d1
-	bne	func_4C0562EA_entry_L73
+	bne	PadSelectById_entry_L73
 	call	CustomStyleBlockFetchCur_entry, [d2], 0x10
 	mov	a0, a2
 	cmp	0, a2
-	beq	func_4C0562EA_entry_L5a
+	beq	PadSelectById_entry_L5a
 	lsr	8, d2
 	mov	d2, d0
 	extbu	d0
@@ -156368,8 +156369,8 @@ func_4C0562EA_entry_L2a:
 	call	func_4C0633AF, 0, 0
 	mov	a2, (0x50250584)
 	mov	d3, (0x50250580)
-	bra	func_4C0562EA_entry_L93
-func_4C0562EA_entry_L5a:
+	bra	PadSelectById_entry_L93
+PadSelectById_entry_L5a:
 	lsr	8, d2
 	mov	d2, d0
 	extbu	d0
@@ -156377,37 +156378,37 @@ func_4C0562EA_entry_L5a:
 	call	func_4C05A7DE, 0, 0
 	mov	0x00100000, d0
 	mov	d0, (0x50250580)
-	bra	func_4C0562EA_entry_L93
-func_4C0562EA_entry_L73:
+	bra	PadSelectById_entry_L93
+PadSelectById_entry_L73:
 	exthu	d0
 	call	func_4C05A7B7_entry, [d2], 4
 	mov	d0, d1
 	exth	d0
 	cmp	0, d0
-	bge	func_4C0562EA_entry_L80
+	bge	PadSelectById_entry_L80
 	clr	d1
-func_4C0562EA_entry_L80:
+PadSelectById_entry_L80:
 	mov	d1, d0
 	exthu	d0
 	call	func_4C05A7DE, 0, 0
 	mov	0x00100000, d0
 	mov	d0, (0x50250580)
-func_4C0562EA_entry_L93:
+PadSelectById_entry_L93:
 	mov	(0x5002ddf8), a1
 	cmp	a1, a0
-	beq	func_4C0562EA_entry_La4
+	beq	PadSelectById_entry_La4
 	mov	a0, (0x5002ddf8)
-	bra	func_4C0562EA_entry_La6
-func_4C0562EA_entry_La4:
+	bra	PadSelectById_entry_La6
+PadSelectById_entry_La4:
 	mov	0, a0
-func_4C0562EA_entry_La6:
+PadSelectById_entry_La6:
 	ret	[d2,d3,a2], 0x1c
 
-func_4C056398:
+PadBindBuiltin:
 	movm	[d2,d3,a2], (sp)
 	add	-0x14, sp
 
-func_4C056398_entry:
+PadBindBuiltin_entry:
 	mov	(0x5002ddf8), a2
 	mov	0x50250588, a0
 	mov	a2, a1
@@ -156453,15 +156454,15 @@ func_4C056398_entry:
 	mov	(0x502505a4), a0
 	movbu	(a0), d0
 	cmp	0xf4, d0
-	bne	func_4C056398_entry_L83
-func_4C056398_entry_L83:
+	bne	PadBindBuiltin_entry_L83
+PadBindBuiltin_entry_L83:
 	ret	[d2,d3,a2], 0x20
 
-func_4C056423:
+PadBindUser:
 	movm	[d2,d3,a2], (sp)
 	add	-0x14, sp
 
-func_4C056423_entry:
+PadBindUser_entry:
 	mov	(0x5002ddf8), a2
 	mov	0x50250588, a0
 	mov	a2, a1
@@ -156507,8 +156508,8 @@ func_4C056423_entry:
 	mov	d2, (0x502505a8)
 	movbu	(a2), d0
 	cmp	0xf4, d0
-	bne	func_4C056423_entry_L80
-func_4C056423_entry_L80:
+	bne	PadBindUser_entry_L80
+PadBindUser_entry_L80:
 	ret	[d2,d3,a2], 0x20
 
 func_4C0564AB:
@@ -156566,11 +156567,11 @@ func_4C0564AB_entry:
 func_4C0564AB_entry_L88:
 	ret	[d2,d3,a2], 0x20
 
-func_4C05653B:
+PadFlagsById:
 	movm	[d2], (sp)
 	add	-0x10, sp
 
-func_4C05653B_entry:
+PadFlagsById_entry:
 	mov	d0, d2
 	mov	0x700, d1
 	and	d2, d1
@@ -156583,46 +156584,46 @@ func_4C05653B_entry:
 	mov	d1, d0
 	mov	d2, d1
 	and	0x00700000, d1
-	bne	func_4C05653B_entry_L26
+	bne	PadFlagsById_entry_L26
 	exthu	d0
 	call	func_4C056740_entry, [d2,d3,a2,a3], 0x1c
 	movbu	(0x12, a0), d0
-	bra	func_4C05653B_entry_L72
-func_4C05653B_entry_L26:
+	bra	PadFlagsById_entry_L72
+PadFlagsById_entry_L26:
 	cmp	0x200000, d1
-	bne	func_4C05653B_entry_L5b
+	bne	PadFlagsById_entry_L5b
 	call	CustomStyleBlockFetchCur_entry, [d2], 0x10
 	cmp	0, a0
-	beq	func_4C05653B_entry_L4b
+	beq	PadFlagsById_entry_L4b
 	lsr	8, d2
 	mov	d2, d0
 	extbu	d0
 	exthu	d0
 	call	func_4C0633AF, 0, 0
 	movbu	(0x1a, a0), d0
-	bra	func_4C05653B_entry_L72
-func_4C05653B_entry_L4b:
+	bra	PadFlagsById_entry_L72
+PadFlagsById_entry_L4b:
 	lsr	8, d2
 	mov	d2, d0
 	extbu	d0
 	exthu	d0
 	call	func_4C05A7DE, 0, 0
 	movbu	(0x1a, a0), d0
-	bra	func_4C05653B_entry_L72
-func_4C05653B_entry_L5b:
+	bra	PadFlagsById_entry_L72
+PadFlagsById_entry_L5b:
 	exthu	d0
 	call	func_4C05A7B7_entry, [d2], 4
 	mov	d0, d1
 	exth	d0
 	cmp	0, d0
-	bge	func_4C05653B_entry_L68
+	bge	PadFlagsById_entry_L68
 	clr	d1
-func_4C05653B_entry_L68:
+PadFlagsById_entry_L68:
 	mov	d1, d0
 	exthu	d0
 	call	func_4C05A7DE, 0, 0
 	movbu	(0x1a, a0), d0
-func_4C05653B_entry_L72:
+PadFlagsById_entry_L72:
 	extbu	d0
 	ret	[d2], 0x14
 
@@ -156690,7 +156691,7 @@ func_4C056655:
 	add	-0xc, sp
 
 func_4C056655_entry:
-	call	func_4C0562EA_entry, [d2,d3,a2], 0x1c
+	call	PadSelectById_entry, [d2,d3,a2], 0x1c
 	cmp	0, a0
 	beq	func_4C056655_entry_L40
 	mov	(0x50250580), d0
@@ -156702,11 +156703,11 @@ func_4C056655_entry:
 	beq	func_4C056655_entry_L37
 	bra	func_4C056655_entry_L40
 func_4C056655_entry_L25:
-	call	func_4C056398_entry, [d2,d3,a2], 0x20
+	call	PadBindBuiltin_entry, [d2,d3,a2], 0x20
 	mov	1, d0
 	bra	func_4C056655_entry_L41
 func_4C056655_entry_L2e:
-	call	func_4C056423_entry, [d2,d3,a2], 0x20
+	call	PadBindUser_entry, [d2,d3,a2], 0x20
 	mov	1, d0
 	bra	func_4C056655_entry_L41
 func_4C056655_entry_L37:
@@ -156722,7 +156723,7 @@ func_4C05669C:
 	add	-0xc, sp
 
 func_4C05669C_entry:
-	call	func_4C0562EA_entry, [d2,d3,a2], 0x1c
+	call	PadSelectById_entry, [d2,d3,a2], 0x1c
 	mov	(0x50250580), d0
 	cmp	0, d0
 	beq	func_4C05669C_entry_L21
@@ -156732,10 +156733,10 @@ func_4C05669C_entry:
 	beq	func_4C05669C_entry_L2f
 	bra	func_4C05669C_entry_L34
 func_4C05669C_entry_L21:
-	call	func_4C056398_entry, [d2,d3,a2], 0x20
+	call	PadBindBuiltin_entry, [d2,d3,a2], 0x20
 	bra	func_4C05669C_entry_L34
 func_4C05669C_entry_L28:
-	call	func_4C056423_entry, [d2,d3,a2], 0x20
+	call	PadBindUser_entry, [d2,d3,a2], 0x20
 	bra	func_4C05669C_entry_L34
 func_4C05669C_entry_L2f:
 	call	func_4C0564AB_entry, [d2,d3,a2], 0x20
@@ -156922,11 +156923,11 @@ func_4C056740_entry_L14a:
 	mov	a2, a0
 	ret	[d2,d3,a2,a3], 0x1c
 
-func_4C056893:
+PadNameGet:
 	movm	[d2,a2,a3], (sp)
 	add	-0x14, sp
 
-func_4C056893_entry:
+PadNameGet_entry:
 	mov	a0, a3
 	mov	d0, d2
 	mov	0x700, d1
@@ -156940,42 +156941,42 @@ func_4C056893_entry:
 	mov	d1, d0
 	mov	d2, d1
 	and	0x00700000, d1
-	bne	func_4C056893_entry_L24
+	bne	PadNameGet_entry_L24
 	exthu	d0
 	call	func_4C056740_entry, [d2,d3,a2,a3], 0x1c
-	bra	func_4C056893_entry_L67
-func_4C056893_entry_L24:
+	bra	PadNameGet_entry_L67
+PadNameGet_entry_L24:
 	cmp	0x200000, d1
-	bne	func_4C056893_entry_L53
+	bne	PadNameGet_entry_L53
 	call	CustomStyleBlockFetchCur_entry, [d2], 0x10
 	cmp	0, a0
-	beq	func_4C056893_entry_L46
+	beq	PadNameGet_entry_L46
 	lsr	8, d2
 	mov	d2, d0
 	extbu	d0
 	exthu	d0
 	call	func_4C0633AF, 0, 0
-	bra	func_4C056893_entry_L67
-func_4C056893_entry_L46:
+	bra	PadNameGet_entry_L67
+PadNameGet_entry_L46:
 	lsr	8, d2
 	mov	d2, d0
 	extbu	d0
 	exthu	d0
 	call	func_4C05A7DE, 0, 0
-	bra	func_4C056893_entry_L67
-func_4C056893_entry_L53:
+	bra	PadNameGet_entry_L67
+PadNameGet_entry_L53:
 	exthu	d0
 	call	func_4C05A7B7_entry, [d2], 4
 	mov	d0, d1
 	exth	d0
 	cmp	0, d0
-	bge	func_4C056893_entry_L60
+	bge	PadNameGet_entry_L60
 	clr	d1
-func_4C056893_entry_L60:
+PadNameGet_entry_L60:
 	mov	d1, d0
 	exthu	d0
 	call	func_4C05A7DE, 0, 0
-func_4C056893_entry_L67:
+PadNameGet_entry_L67:
 	mov	a0, a1
 	mov	0x10, d0
 	mov	a3, a0
@@ -156989,7 +156990,7 @@ func_4C056913:
 	add	-0xc, sp
 
 func_4C056913_entry:
-	call	func_4C05653B_entry, [d2], 0x14
+	call	PadFlagsById_entry, [d2], 0x14
 	extbu	d0
 	and	0x02, d0
 	extbu	d0
@@ -156999,7 +157000,7 @@ func_4C056923:
 	add	-0xc, sp
 
 func_4C056923_entry:
-	call	func_4C05653B_entry, [d2], 0x14
+	call	PadFlagsById_entry, [d2], 0x14
 	extbu	d0
 	and	0x04, d0
 	extbu	d0
@@ -160151,7 +160152,7 @@ func_4C0580B7_entry_L9f:
 	mov	a2, d0
 	call	func_4C065617_entry, [d2], 0x14
 	mov	a2, d0
-	call	func_4C061BEE_entry, 0, 0xc
+	call	SndArgIsOn_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	ble	func_4C0580B7_entry_Ld1
@@ -160174,7 +160175,7 @@ loc_4C0581AD:
 	mov	d1, d0
 	and	0xff, d0
 	extbu	d0
-	call	func_4C0656EC_entry, [d2], 0x14
+	call	RhythmIntroSelect_entry, [d2], 0x14
 	jmp	func_4C0580B7_entry_L200
 loc_4C0581BC:
 	mov	d1, d0
@@ -160197,7 +160198,7 @@ loc_4C0581E2:
 	mov	d1, d0
 	and	0xff, d0
 	extbu	d0
-	call	func_4C0658FD_entry, [d2], 0x14
+	call	RhythmEndingSelect_entry, [d2], 0x14
 	jmp	func_4C0580B7_entry_L200
 loc_4C0581F1:
 	mov	d1, d0
@@ -160317,31 +160318,31 @@ func_4C0582C1_entry_L1f:
 	mov	d1, d0
 	retf	[d2], 4
 
-func_4C0582E6:
+ChordTypeIsMinor:
 	extbu	d0
 	cmp	0x2a, d0
-	bcs	func_4C0582E6_L8
+	bcs	ChordTypeIsMinor_L8
 	clr	d0
-	bra	func_4C0582E6_L19
-func_4C0582E6_L8:
+	bra	ChordTypeIsMinor_L19
+ChordTypeIsMinor_L8:
 	mov	func_4C0582E6_L8_Table, a0
 	movbu	(d0, a0), d0
 	cmp	0, d0
-	beq	func_4C0582E6_L18
+	beq	ChordTypeIsMinor_L18
 	mov	1, d0
-	bra	func_4C0582E6_L19
-func_4C0582E6_L18:
+	bra	ChordTypeIsMinor_L19
+ChordTypeIsMinor_L18:
 	clr	d0
-func_4C0582E6_L19:
+ChordTypeIsMinor_L19:
 	retf	0, 0
 
-func_4C058302:
+NoteConvRuleByte1Get:
 	mov	d0, d1
 	extbu	d1
 	cmp	0x80, d1
-	blt	func_4C058302_L9
+	blt	NoteConvRuleByte1Get_L9
 	clr	d0
-func_4C058302_L9:
+NoteConvRuleByte1Get_L9:
 	extbu	d0
 	asl	3, d0
 	add	NoteConvRules, d0
@@ -160349,13 +160350,13 @@ func_4C058302_L9:
 	movbu	(1, a0), d0
 	retf	0, 0
 
-func_4C05831D:
+NoteConvRuleByte2Get:
 	mov	d0, d1
 	extbu	d1
 	cmp	0x80, d1
-	blt	func_4C05831D_L9
+	blt	NoteConvRuleByte2Get_L9
 	clr	d0
-func_4C05831D_L9:
+NoteConvRuleByte2Get_L9:
 	extbu	d0
 	asl	3, d0
 	add	NoteConvRules, d0
@@ -160363,13 +160364,13 @@ func_4C05831D_L9:
 	movbu	(2, a0), d0
 	retf	0, 0
 
-func_4C058338:
+NoteConvRuleByte3Get:
 	mov	d0, d1
 	extbu	d1
 	cmp	0x80, d1
-	blt	func_4C058338_L9
+	blt	NoteConvRuleByte3Get_L9
 	clr	d0
-func_4C058338_L9:
+NoteConvRuleByte3Get_L9:
 	extbu	d0
 	asl	3, d0
 	add	NoteConvRules, d0
@@ -160778,7 +160779,7 @@ func_4C058686:
 func_4C058686_entry:
 	mov	d0, d2
 	extbu	d2
-	call	func_4C05E196_entry, [d2], 0x10
+	call	MemVarRecChordGet_entry, [d2], 0x10
 	extbu	d0
 	mov	d0, a3
 	call	func_4C05DD99, 0, 0
@@ -160792,7 +160793,7 @@ func_4C058686_entry:
 	cmp	0, d3
 	ble	func_4C058686_entry_L50
 	movbu	(0x10, sp), d0
-	call	func_4C058338, 0, 0
+	call	NoteConvRuleByte3Get, 0, 0
 	extbu	d0
 	cmp	0, d0
 	bne	func_4C058686_entry_L50
@@ -160822,7 +160823,7 @@ func_4C058686_entry_L50:
 	and	0x10, d0
 	beq	func_4C058686_entry_L75
 	movbu	(0x10, sp), d0
-	call	func_4C05831D, 0, 0
+	call	NoteConvRuleByte2Get, 0, 0
 	extbu	d0
 	cmp	0, d0
 	bne	func_4C058686_entry_L75
@@ -163410,7 +163411,7 @@ func_4C059DB6_entry_L41:
 	cmp	0, d0
 	blt	func_4C059DB6_entry_L80
 	mov	a2, a0
-	call	func_4C061F86_entry, [d2,d3,a2,a3], 0x44
+	call	SndArgImportZZZ_entry, [d2,d3,a2,a3], 0x44
 	mov	d0, d2
 	exth	d2
 	call	func_4C065A66_entry, 0, 0x18
@@ -165041,7 +165042,7 @@ func_4C05AAFE_entry:
 	cmp	0, d3
 	ble	func_4C05AAFE_entry_L50
 	movbu	(0x10, sp), d0
-	call	func_4C058338, 0, 0
+	call	NoteConvRuleByte3Get, 0, 0
 	extbu	d0
 	cmp	0, d0
 	bne	func_4C05AAFE_entry_L50
@@ -165071,7 +165072,7 @@ func_4C05AAFE_entry_L50:
 	and	0x10, d0
 	beq	func_4C05AAFE_entry_L75
 	movbu	(0x10, sp), d0
-	call	func_4C05831D, 0, 0
+	call	NoteConvRuleByte2Get, 0, 0
 	extbu	d0
 	cmp	0, d0
 	bne	func_4C05AAFE_entry_L75
@@ -171368,7 +171369,7 @@ func_4C05DC76_entry_Lc:
 	call	LibDiv32, 0, 0
 	add	2, d0
 	extbu	d0
-	call	func_4C0656EC_entry, [d2], 0x14
+	call	RhythmIntroSelect_entry, [d2], 0x14
 	bra	func_4C05DC76_entry_Lc3
 func_4C05DC76_entry_L66:
 	cmp	0xc, d3
@@ -171386,7 +171387,7 @@ func_4C05DC76_entry_L66:
 	call	LibDiv32, 0, 0
 	inc	d0
 	extbu	d0
-	call	func_4C0658FD_entry, [d2], 0x14
+	call	RhythmEndingSelect_entry, [d2], 0x14
 	bra	func_4C05DC76_entry_Lc3
 func_4C05DC76_entry_L8b:
 	cmp	0xc, d3
@@ -171909,17 +171910,17 @@ func_4C05E0D4_entry_Lb:
 func_4C05E0D4_entry_L5e:
 	ret	[d2,d3], 0x14
 
-func_4C05E13A:
+MemVarEffectPartGet:
 	movm	[d2], (sp)
 	add	-0xc, sp
 
-func_4C05E13A_entry:
+MemVarEffectPartGet_entry:
 	mov	d0, d2
 	extbu	d0
 	cmp	2, d0
-	blt	func_4C05E13A_entry_L7
+	blt	MemVarEffectPartGet_entry_L7
 	clr	d2
-func_4C05E13A_entry_L7:
+MemVarEffectPartGet_entry_L7:
 	movbu	(func_4C05DC1D_entry_La_Var_3), d0
 	extbu	d2
 	exthu	d0
@@ -171928,19 +171929,19 @@ func_4C05E13A_entry_L7:
 	movbu	(d2, a0), d0
 	ret	[d2], 0x10
 
-func_4C05E15A:
+MemVarEffectPartSet:
 	movm	[d2,d3], (sp)
 	add	-0x10, sp
 
-func_4C05E15A_entry:
+MemVarEffectPartSet_entry:
 	mov	d1, d3
 	mov	d0, d2
 	extbu	d0
 	cmp	2, d0
-	blt	func_4C05E15A_entry_Lb
+	blt	MemVarEffectPartSet_entry_Lb
 	mov	-1, d0
-	bra	func_4C05E15A_entry_L34
-func_4C05E15A_entry_Lb:
+	bra	MemVarEffectPartSet_entry_L34
+MemVarEffectPartSet_entry_Lb:
 	movbu	(func_4C05DC1D_entry_La_Var_3), d0
 	extbu	d2
 	exthu	d0
@@ -171952,43 +171953,43 @@ func_4C05E15A_entry_Lb:
 	call	func_4C05EB8E_entry, [d2,d3,a2], 0x18
 	call	func_4C065B63_entry, 0, 0x18
 	mov	1, d0
-func_4C05E15A_entry_L34:
+MemVarEffectPartSet_entry_L34:
 	ret	[d2,d3], 0x18
 
-func_4C05E196:
+MemVarRecChordGet:
 	movm	[d2], (sp)
 	add	-0xc, sp
 
-func_4C05E196_entry:
+MemVarRecChordGet_entry:
 	movbu	(func_4C05DC1D_entry_La_Var_3), d0
 	exthu	d0
 	call	MemStyleVarRecPtr, 0, 0
 	movbu	(func_4C05DC1D_entry_La_Var_2), d1
 	movbu	(3, a0), d0
 	cmp	0xc, d1
-	blt	func_4C05E196_entry_L34
+	blt	MemVarRecChordGet_entry_L34
 	add	-0xc, d1
 	mov	2, d2
 	ext	d1
 	div	d2, d1
 	mov	mdr, d1
 	cmp	0, d1
-	bne	func_4C05E196_entry_L30
+	bne	MemVarRecChordGet_entry_L30
 	extbu	d0
 	and	0xffffffef, d0
-	bra	func_4C05E196_entry_L34
-func_4C05E196_entry_L30:
+	bra	MemVarRecChordGet_entry_L34
+MemVarRecChordGet_entry_L30:
 	extbu	d0
 	or	0x10, d0
-func_4C05E196_entry_L34:
+MemVarRecChordGet_entry_L34:
 	extbu	d0
 	ret	[d2], 0x10
 
-func_4C05E1D3:
+MemVarRecChordSet:
 	movm	[d2], (sp)
 	add	-0xc, sp
 
-func_4C05E1D3_entry:
+MemVarRecChordSet_entry:
 	mov	d0, d2
 	movbu	(func_4C05DC1D_entry_La_Var_3), d0
 	exthu	d0
@@ -173691,80 +173692,80 @@ func_4C05EEB8_entry_L71:
 func_4C05EEB8_entry_L80:
 	ret	[d2,d3,a2,a3], 0x2c
 
-func_4C05EF40:
+StyleNoteKeyConvert:
 	movm	[d2,d3,a2], (sp)
 	add	-0x30, sp
 
-func_4C05EF40_entry:
+StyleNoteKeyConvert_entry:
 	mov	d1, d3
 	mov	d0, d2
 	call	func_4C057C4B, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C05EF40_entry_L21
+	beq	StyleNoteKeyConvert_entry_L21
 	call	func_4C05DD99, 0, 0
 	mov	d2, d1
 	extbu	d1
 	extbu	d0
 	cmp	d0, d1
-	bne	func_4C05EF40_entry_L21
+	bne	StyleNoteKeyConvert_entry_L21
 	mov	sp, a2
 	add	0x10, a2
 	mov	1, d0
 	movbu	d0, (0x1c, sp)
-	bra	func_4C05EF40_entry_L28
-func_4C05EF40_entry_L21:
+	bra	StyleNoteKeyConvert_entry_L28
+StyleNoteKeyConvert_entry_L21:
 	mov	sp, a2
 	add	0x10, a2
 	clr	d0
 	movbu	d0, (0x1c, sp)
-func_4C05EF40_entry_L28:
+StyleNoteKeyConvert_entry_L28:
 	movbu	(0x50031f5a), d0
 	cmp	0, d0
-	bne	func_4C05EF40_entry_L5a
+	bne	StyleNoteKeyConvert_entry_L5a
 	movbu	(0x50031f5b), d0
 	cmp	0, d0
-	bne	func_4C05EF40_entry_L5a
+	bne	StyleNoteKeyConvert_entry_L5a
 	mov	d2, d0
 	extbu	d0
 	call	func_4C06388B_entry, [d2], 0x18
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C05EF40_entry_L54
+	beq	StyleNoteKeyConvert_entry_L54
 	clr	d0
 	movbu	d0, (0x13, sp)
 	movbu	d0, (0x14, sp)
 	movbu	d0, (0x15, sp)
-	bra	func_4C05EF40_entry_Lb5
-func_4C05EF40_entry_L54:
+	bra	StyleNoteKeyConvert_entry_Lb5
+StyleNoteKeyConvert_entry_L54:
 	mov	0xff, d0
 	ret	[d2,d3,a2], 0x3c
-func_4C05EF40_entry_L5a:
+StyleNoteKeyConvert_entry_L5a:
 	movbu	(0x4c, sp), d0
-	call	func_4C058302, 0, 0
+	call	NoteConvRuleByte1Get, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C05EF40_entry_L99
+	beq	StyleNoteKeyConvert_entry_L99
 	mov	sp, a0
 	add	0x20, a0
 	call	func_4C09E139, 0, 0
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	func_4C05EF40_entry_L8c
+	beq	StyleNoteKeyConvert_entry_L8c
 	movbu	(0x21, sp), d0
 	movbu	d0, (0x13, sp)
 	movbu	(0x20, sp), d0
 	movbu	d0, (0x14, sp)
 	movbu	(0x22, sp), d0
 	movbu	d0, (0x15, sp)
-	bra	func_4C05EF40_entry_Lb5
-func_4C05EF40_entry_L8c:
+	bra	StyleNoteKeyConvert_entry_Lb5
+StyleNoteKeyConvert_entry_L8c:
 	mov	1, d0
 	movbu	d0, (0x13, sp)
 	movbu	d0, (0x14, sp)
 	movbu	d0, (0x15, sp)
-	bra	func_4C05EF40_entry_Lb5
-func_4C05EF40_entry_L99:
+	bra	StyleNoteKeyConvert_entry_Lb5
+StyleNoteKeyConvert_entry_L99:
 	mov	sp, a0
 	add	0x28, a0
 	call	func_4C09E165, 0, 0
@@ -173774,7 +173775,7 @@ func_4C05EF40_entry_L99:
 	movbu	d0, (0x14, sp)
 	movbu	(0x2a, sp), d0
 	movbu	d0, (0x15, sp)
-func_4C05EF40_entry_Lb5:
+StyleNoteKeyConvert_entry_Lb5:
 	movbu	(0x4c, sp), d0
 	extbu	d2
 	movbu	d0, (0x10, sp)
@@ -173782,9 +173783,9 @@ func_4C05EF40_entry_Lb5:
 	clr	d1
 	movbu	d0, (0x11, sp)
 	cmp	1, d2
-	bne	func_4C05EF40_entry_Lc9
+	bne	StyleNoteKeyConvert_entry_Lc9
 	mov	1, d1
-func_4C05EF40_entry_Lc9:
+StyleNoteKeyConvert_entry_Lc9:
 	movbu	d1, (0x12, sp)
 	mov	0x50031f59, d0
 	mov	d0, (0x18, sp)
@@ -174041,7 +174042,7 @@ func_4C05F17F_entry_L6c:
 	mov	d0, (0x14, sp)
 	mov	d3, d1
 	mov	d2, d0
-	call	func_4C05EF40_entry, [d2,d3,a2], 0x3c
+	call	StyleNoteKeyConvert_entry, [d2,d3,a2], 0x3c
 	movbu	d0, (0x19, sp)
 	movbu	(0x18, sp), d0
 	cmp	0, d0
@@ -174214,7 +174215,7 @@ func_4C05F2E2_entry_L84:
 	mov	d0, (0x14, sp)
 	mov	d3, d1
 	mov	d2, d0
-	call	func_4C05EF40_entry, [d2,d3,a2], 0x3c
+	call	StyleNoteKeyConvert_entry, [d2,d3,a2], 0x3c
 	movbu	d0, (0x1d, sp)
 	movbu	(0x1c, sp), d0
 	cmp	0, d0
@@ -174370,15 +174371,15 @@ func_4C05F45D_entry_L7f:
 	mov	d0, (0x14, sp)
 	mov	a3, d0
 	movbu	(0x23, sp), d1
-	call	func_4C05EF40_entry, [d2,d3,a2], 0x3c
+	call	StyleNoteKeyConvert_entry, [d2,d3,a2], 0x3c
 	movbu	d0, (0x21, sp)
 	mov	d2, d0
-	call	func_4C05831D, 0, 0
+	call	NoteConvRuleByte2Get, 0, 0
 	extbu	d0
 	cmp	0, d0
 	beq	func_4C05F45D_entry_Lbf
 	mov	d2, d0
-	call	func_4C058338, 0, 0
+	call	NoteConvRuleByte3Get, 0, 0
 	extbu	d0
 	cmp	0, d0
 	beq	func_4C05F45D_entry_Lbf
@@ -174451,16 +174452,16 @@ func_4C05F45D_entry_Ld6:
 func_4C05F45D_entry_L140:
 	ret	[d2,d3,a2,a3], 0x38
 
-func_4C05F5A5:
+StylePatternNoteRestart:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x20, sp
 
-func_4C05F5A5_entry:
+StylePatternNoteRestart_entry:
 	mov	d0, (0x3c, sp)
 	cmp	0x60, d0
-	bge	func_4C05F5A5_entry_L9
+	bge	StylePatternNoteRestart_entry_L9
 	ret	[d2,d3,a2,a3], 0x30
-func_4C05F5A5_entry_L9:
+StylePatternNoteRestart_entry_L9:
 	movbu	(a0), d0
 	and	0xffffff0f, d0
 	movbu	d0, (0x1c, sp)
@@ -174472,50 +174473,50 @@ func_4C05F5A5_entry_L9:
 	movbu	d0, (0x1e, sp)
 	movbu	(0x1f, sp), d0
 	cmp	0, d0
-	bne	func_4C05F5A5_entry_L30
+	bne	StylePatternNoteRestart_entry_L30
 	ret	[d2,d3,a2,a3], 0x30
-func_4C05F5A5_entry_L30:
+StylePatternNoteRestart_entry_L30:
 	call	func_4C057C4B, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C05F5A5_entry_L4d
+	beq	StylePatternNoteRestart_entry_L4d
 	movbu	(0x50031f58), d1
 	cmp	8, d1
-	bge	func_4C05F5A5_entry_L4d
+	bge	StylePatternNoteRestart_entry_L4d
 	movbu	(0x1c, sp), d0
 	cmp	d1, d0
-	beq	func_4C05F5A5_entry_L4d
+	beq	StylePatternNoteRestart_entry_L4d
 	ret	[d2,d3,a2,a3], 0x30
-func_4C05F5A5_entry_L4d:
+StylePatternNoteRestart_entry_L4d:
 	movbu	(0x1c, sp), d0
 	mov	d0, a3
 	call	func_4C06388B_entry, [d2], 0x18
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C05F5A5_entry_L5f
+	beq	StylePatternNoteRestart_entry_L5f
 	ret	[d2,d3,a2,a3], 0x30
-func_4C05F5A5_entry_L5f:
+StylePatternNoteRestart_entry_L5f:
 	movbu	(0x1e, sp), d2
 	mov	d2, d0
-	call	func_4C05831D, 0, 0
+	call	NoteConvRuleByte2Get, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C05F5A5_entry_L7b
+	beq	StylePatternNoteRestart_entry_L7b
 	mov	d2, d0
-	call	func_4C058338, 0, 0
+	call	NoteConvRuleByte3Get, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C05F5A5_entry_L7b
+	beq	StylePatternNoteRestart_entry_L7b
 	ret	[d2,d3,a2,a3], 0x30
-func_4C05F5A5_entry_L7b:
+StylePatternNoteRestart_entry_L7b:
 	movhu	(0x50031f60), d3
 	mov	0x50031f5c, a2
 	exthu	d3
 	mov	d3, (0x18, sp)
 	cmp	0, d3
-	bne	func_4C05F5A5_entry_L91
+	bne	StylePatternNoteRestart_entry_L91
 	ret	[d2,d3,a2,a3], 0x30
-func_4C05F5A5_entry_L91:
+StylePatternNoteRestart_entry_L91:
 	exthu	d3
 	mov	d2, (0x10, sp)
 	mov	a3, d0
@@ -174524,7 +174525,7 @@ func_4C05F5A5_entry_L91:
 	mov	d0, (0x14, sp)
 	mov	a3, d0
 	movbu	(0x1d, sp), d1
-	call	func_4C05EF40_entry, [d2,d3,a2], 0x3c
+	call	StyleNoteKeyConvert_entry, [d2,d3,a2], 0x3c
 	mov	d0, d2
 	mov	a3, d0
 	mov	d2, d1
@@ -174814,7 +174815,7 @@ func_4C05F86A_entry_L26:
 	movbu	d0, (0x20, sp)
 func_4C05F86A_entry_L2d:
 	movbu	(0x48, sp), d0
-	call	func_4C058302, 0, 0
+	call	NoteConvRuleByte1Get, 0, 0
 	extbu	d0
 	cmp	0, d0
 	beq	func_4C05F86A_entry_L46
@@ -175226,12 +175227,12 @@ func_4C05FB53_entry_L90:
 	call	func_4C05F86A_entry, [d2,d3,a2], 0x38
 	movbu	d0, (0x21, sp)
 	mov	d2, d0
-	call	func_4C05831D, 0, 0
+	call	NoteConvRuleByte2Get, 0, 0
 	extbu	d0
 	cmp	0, d0
 	beq	func_4C05FB53_entry_Ld0
 	mov	d2, d0
-	call	func_4C058338, 0, 0
+	call	NoteConvRuleByte3Get, 0, 0
 	extbu	d0
 	cmp	0, d0
 	beq	func_4C05FB53_entry_Ld0
@@ -175382,7 +175383,7 @@ func_4C05FD27:
 func_4C05FD27_entry:
 	mov	a0, a2
 	mov	a1, a0
-	call	func_4C064035_entry, [d2], 4
+	call	StyleDspKeyDecode_entry, [d2], 4
 	mov	d0, d1
 	mov	0xff, d3
 	and	d1, d3
@@ -175421,7 +175422,7 @@ StyleRefIdApply_entry:
 	mov	a0, a3
 	mov	a1, a2
 	mov	a2, a0
-	call	func_4C064035_entry, [d2], 4
+	call	StyleDspKeyDecode_entry, [d2], 4
 	mov	d0, d1
 	mov	5, d0
 	call	func_4C160304_entry, [d2,d3], 8
@@ -179248,21 +179249,21 @@ func_4C061ACD_entry_L54:
 func_4C061ACD_entry_L5a:
 	ret	[d2,d3], 0x20
 
-func_4C061B2F:
+SndArgPartEntry:
 	extbu	d0
 	cmp	0x13, d0
-	blt	func_4C061B2F_L9
+	blt	SndArgPartEntry_L9
 	cmp	0x1a, d0
-	ble	func_4C061B2F_Ld
-func_4C061B2F_L9:
+	ble	SndArgPartEntry_Ld
+SndArgPartEntry_L9:
 	mov	-1, d0
-	bra	func_4C061B2F_L19
-func_4C061B2F_Ld:
+	bra	SndArgPartEntry_L19
+SndArgPartEntry_Ld:
 	asl2	d0
 	add	func_4C061B2F_Ld_Table, d0
 	mov	d0, a0
 	mov	(-0x4c, a0), d0
-func_4C061B2F_L19:
+SndArgPartEntry_L19:
 	retf	0, 0
 
 func_4C061B4B:
@@ -179333,18 +179334,18 @@ func_4C061BC4_entry_L22:
 func_4C061BC4_entry_L24:
 	ret	0, 0x14
 
-func_4C061BEE:
+SndArgIsOn:
 	add	-0xc, sp
 
-func_4C061BEE_entry:
+SndArgIsOn_entry:
 	call	func_4C061ACD_entry, [d2,d3], 0x20
 	mov	d0, d1
 	exth	d0
 	cmp	0, d0
-	bge	func_4C061BEE_entry_Le
+	bge	SndArgIsOn_entry_Le
 	mov	d1, d0
-	bra	func_4C061BEE_entry_L24
-func_4C061BEE_entry_Le:
+	bra	SndArgIsOn_entry_L24
+SndArgIsOn_entry_Le:
 	mov	0x18, d1
 	nop
 	nop
@@ -179353,9 +179354,9 @@ func_4C061BEE_entry_Le:
 	movbu	(d0, a0), d1
 	mov	1, d0
 	btst	0x80, d1
-	bne	func_4C061BEE_entry_L24
+	bne	SndArgIsOn_entry_L24
 	clr	d0
-func_4C061BEE_entry_L24:
+SndArgIsOn_entry_L24:
 	ret	0, 0xc
 	add	-0x10, sp
 
@@ -179363,26 +179364,26 @@ func_4C061C1B:
 	mov	0x0000c000, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
-	call	func_4C061BEE_entry, 0, 0xc
+	call	SndArgIsOn_entry, 0, 0xc
 	exth	d0
 	ret	0, 0x10
 
-func_4C061C32:
+SndArgOnSet:
 	movm	[d2], (sp)
 	add	-0xc, sp
 
-func_4C061C32_entry:
+SndArgOnSet_entry:
 	mov	d1, d2
 	call	func_4C061ACD_entry, [d2,d3], 0x20
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	bge	func_4C061C32_entry_Le
-	bra	func_4C061C32_entry_L49
-func_4C061C32_entry_Le:
+	bge	SndArgOnSet_entry_Le
+	bra	SndArgOnSet_entry_L49
+SndArgOnSet_entry_Le:
 	extbu	d2
 	cmp	0, d2
-	beq	func_4C061C32_entry_L2e
+	beq	SndArgOnSet_entry_L2e
 	mov	0x8402e0f4, a0
 	mov	0x18, d0
 	nop
@@ -179395,8 +179396,8 @@ func_4C061C32_entry_Le:
 	mul	d2, d1
 	or	0x80, d0
 	movbu	d0, (d1, a0)
-	bra	func_4C061C32_entry_L47
-func_4C061C32_entry_L2e:
+	bra	SndArgOnSet_entry_L47
+SndArgOnSet_entry_L2e:
 	mov	0x8402e0f4, a0
 	mov	0x18, d0
 	nop
@@ -179409,9 +179410,9 @@ func_4C061C32_entry_L2e:
 	mul	d2, d1
 	and	0x7f, d0
 	movbu	d0, (d1, a0)
-func_4C061C32_entry_L47:
+SndArgOnSet_entry_L47:
 	mov	1, d0
-func_4C061C32_entry_L49:
+SndArgOnSet_entry_L49:
 	ret	[d2], 0x10
 
 func_4C061C83:
@@ -179424,7 +179425,7 @@ func_4C061C83:
 	and	0xff, d2
 	mov	d2, d1
 	extbu	d1
-	call	func_4C061C32_entry, [d2], 0x10
+	call	SndArgOnSet_entry, [d2], 0x10
 	exth	d0
 	ret	[d2], 0x14
 
@@ -179536,32 +179537,32 @@ func_4C061CA5_entry_Ld4:
 	mov	1, d0
 	ret	[d2,d3,a2,a3], 0x24
 
-func_4C061D83:
+SndArgPartVoiceGet:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0xc, sp
 
-func_4C061D83_entry:
+SndArgPartVoiceGet_entry:
 	mov	a1, a3
 	mov	a0, a2
 	call	func_4C061ACD_entry, [d2,d3], 0x20
 	mov	d0, d2
 	exth	d2
 	cmp	0, d2
-	bge	func_4C061D83_entry_Lf
-	bra	func_4C061D83_entry_L70
-func_4C061D83_entry_Lf:
+	bge	SndArgPartVoiceGet_entry_Lf
+	bra	SndArgPartVoiceGet_entry_L70
+SndArgPartVoiceGet_entry_Lf:
 	mov	(a2), d0
 	mov	0xff000000, d3
 	and	d3, d0
 	lsr	24, d0
 	extbu	d0
-	call	func_4C061B2F, 0, 0
+	call	SndArgPartEntry, 0, 0
 	exth	d0
 	mov	d0, a1
 	cmp	0, a1
-	bge	func_4C061D83_entry_L2a
-	bra	func_4C061D83_entry_L70
-func_4C061D83_entry_L2a:
+	bge	SndArgPartVoiceGet_entry_L2a
+	bra	SndArgPartVoiceGet_entry_L70
+SndArgPartVoiceGet_entry_L2a:
 	mov	(a2), d1
 	mov	0x18, d0
 	nop
@@ -179586,26 +179587,26 @@ func_4C061D83_entry_L2a:
 	or	d1, d2
 	mov	d2, (a2)
 	cmp	1, a1
-	ble	func_4C061D83_entry_L6b
+	ble	SndArgPartVoiceGet_entry_L6b
 	movbu	(a0), d0
 	btst	0x80, d0
-	beq	func_4C061D83_entry_L6b
+	beq	SndArgPartVoiceGet_entry_L6b
 	mov	1, d0
 	movbu	d0, (a3)
-	bra	func_4C061D83_entry_L6e
-func_4C061D83_entry_L6b:
+	bra	SndArgPartVoiceGet_entry_L6e
+SndArgPartVoiceGet_entry_L6b:
 	clr	d0
 	movbu	d0, (a3)
-func_4C061D83_entry_L6e:
+SndArgPartVoiceGet_entry_L6e:
 	mov	1, d0
-func_4C061D83_entry_L70:
+SndArgPartVoiceGet_entry_L70:
 	ret	[d2,d3,a2,a3], 0x1c
 
-func_4C061DFB:
+SndArgCurPartVoiceGet:
 	movm	[a2,a3], (sp)
 	add	-0x14, sp
 
-func_4C061DFB_entry:
+SndArgCurPartVoiceGet_entry:
 	mov	a1, a3
 	mov	a0, a2
 	mov	0x0000c000, d0
@@ -179613,33 +179614,33 @@ func_4C061DFB_entry:
 	call	GetM3EmVal_entry, 0, 0x10
 	mov	a3, a1
 	mov	a2, a0
-	call	func_4C061D83_entry, [d2,d3,a2,a3], 0x1c
+	call	SndArgPartVoiceGet_entry, [d2,d3,a2,a3], 0x1c
 	ret	[a2,a3], 0x1c
 
-func_4C061E1A:
+SndArgPartVoiceSet:
 	movm	[d2,d3,a2], (sp)
 	add	-0xc, sp
 
-func_4C061E1A_entry:
+SndArgPartVoiceSet_entry:
 	mov	d1, a2
 	call	func_4C061ACD_entry, [d2,d3], 0x20
 	mov	d0, d3
 	exth	d3
 	cmp	0, d3
-	bge	func_4C061E1A_entry_L10
+	bge	SndArgPartVoiceSet_entry_L10
 	ret	[d2,d3,a2], 0x18
-func_4C061E1A_entry_L10:
+SndArgPartVoiceSet_entry_L10:
 	mov	a2, d0
 	and	0xff000000, d0
 	lsr	24, d0
 	extbu	d0
-	call	func_4C061B2F, 0, 0
+	call	SndArgPartEntry, 0, 0
 	mov	d0, d2
 	exth	d2
 	cmp	0, d2
-	bge	func_4C061E1A_entry_L2a
+	bge	SndArgPartVoiceSet_entry_L2a
 	ret	[d2,d3,a2], 0x18
-func_4C061E1A_entry_L2a:
+SndArgPartVoiceSet_entry_L2a:
 	mov	0x18, d0
 	nop
 	nop
@@ -179659,7 +179660,7 @@ func_4C061E1A_entry_L2a:
 	lsr	16, d0
 	movbu	d0, (2, a0)
 	cmp	0, d2
-	bne	func_4C061E1A_entry_L76
+	bne	SndArgPartVoiceSet_entry_L76
 	movbu	(a0), d3
 	mov	a2, d0
 	and	0xff, d0
@@ -179673,42 +179674,42 @@ func_4C061E1A_entry_L2a:
 	and	d3, d0
 	or	d0, d2
 	movbu	d2, (a0)
-	bra	func_4C061E1A_entry_La6
-func_4C061E1A_entry_L76:
+	bra	SndArgPartVoiceSet_entry_La6
+SndArgPartVoiceSet_entry_L76:
 	cmp	1, d2
-	bne	func_4C061E1A_entry_L87
+	bne	SndArgPartVoiceSet_entry_L87
 	mov	a2, d0
 	and	0xff, d0
 	extbu	d0
 	and	0x7f, d0
 	movbu	d0, (a0)
-	bra	func_4C061E1A_entry_La6
-func_4C061E1A_entry_L87:
+	bra	SndArgPartVoiceSet_entry_La6
+SndArgPartVoiceSet_entry_L87:
 	movbu	(0x28, sp), d0
 	cmp	0, d0
-	beq	func_4C061E1A_entry_L9b
+	beq	SndArgPartVoiceSet_entry_L9b
 	mov	a2, d0
 	and	0xff, d0
 	extbu	d0
 	or	0x80, d0
 	movbu	d0, (a0)
-	bra	func_4C061E1A_entry_La6
-func_4C061E1A_entry_L9b:
+	bra	SndArgPartVoiceSet_entry_La6
+SndArgPartVoiceSet_entry_L9b:
 	mov	a2, d0
 	and	0xff, d0
 	extbu	d0
 	and	0x7f, d0
 	movbu	d0, (a0)
-func_4C061E1A_entry_La6:
+SndArgPartVoiceSet_entry_La6:
 	call	func_4C065B63_entry, 0, 0x18
 	mov	1, d0
 	ret	[d2,d3,a2], 0x18
 
-func_4C061ECF:
+SndArgCurPartVoiceSet:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 
-func_4C061ECF_entry:
+SndArgCurPartVoiceSet_entry:
 	mov	d0, d3
 	mov	d1, d2
 	mov	0x0000c000, d0
@@ -179717,21 +179718,21 @@ func_4C061ECF_entry:
 	extbu	d2
 	mov	d2, (0x10, sp)
 	mov	d3, d1
-	call	func_4C061E1A_entry, [d2,d3,a2], 0x18
+	call	SndArgPartVoiceSet_entry, [d2,d3,a2], 0x18
 	ret	[d2,d3], 0x1c
 
-func_4C061EF0:
+SndArgRecordIfOn:
 	movm	[d2], (sp)
 	add	-0xc, sp
 
-func_4C061EF0_entry:
+SndArgRecordIfOn_entry:
 	call	func_4C061ACD_entry, [d2,d3], 0x20
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	bge	func_4C061EF0_entry_Ld
-	bra	func_4C061EF0_entry_L24
-func_4C061EF0_entry_Ld:
+	bge	SndArgRecordIfOn_entry_Ld
+	bra	SndArgRecordIfOn_entry_L24
+SndArgRecordIfOn_entry_Ld:
 	mov	0x18, d2
 	nop
 	nop
@@ -179739,26 +179740,26 @@ func_4C061EF0_entry_Ld:
 	mov	0x8402e0f4, a0
 	movbu	(d1, a0), d1
 	btst	0x80, d1
-	beq	func_4C061EF0_entry_L22
-	bra	func_4C061EF0_entry_L24
-func_4C061EF0_entry_L22:
+	beq	SndArgRecordIfOn_entry_L22
+	bra	SndArgRecordIfOn_entry_L24
+SndArgRecordIfOn_entry_L22:
 	mov	-1, d0
-func_4C061EF0_entry_L24:
+SndArgRecordIfOn_entry_L24:
 	ret	[d2], 0x10
 
-func_4C061F1C:
+SndArgTemplateApply:
 	movm	[d2,d3], (sp)
 	add	-4, sp
 
-func_4C061F1C_entry:
+SndArgTemplateApply_entry:
 	mov	d0, d3
 	exthu	d0
 	cmp	0xdc, d0
-	bge	func_4C061F1C_entry_L62
+	bge	SndArgTemplateApply_entry_L62
 	mov	d1, d0
 	extbu	d0
 	cmp	8, d0
-	bge	func_4C061F1C_entry_L62
+	bge	SndArgTemplateApply_entry_L62
 	extbu	d1
 	mov	func_4C061F1C_Table, a1
 	movbu	(d1, a1), d0
@@ -179787,54 +179788,54 @@ func_4C061F1C_entry:
 	movbu	d0, (4, a0)
 	movbu	(0, sp), d0
 	cmp	1, d0
-	ble	func_4C061F1C_entry_L5e
+	ble	SndArgTemplateApply_entry_L5e
 	movbu	(a1), d1
 	btst	0x80, d1
-	bne	func_4C061F1C_entry_L59
+	bne	SndArgTemplateApply_entry_L59
 	clr	d2
-func_4C061F1C_entry_L59:
+SndArgTemplateApply_entry_L59:
 	movbu	d2, (5, a0)
-	bra	func_4C061F1C_entry_L62
-func_4C061F1C_entry_L5e:
+	bra	SndArgTemplateApply_entry_L62
+SndArgTemplateApply_entry_L5e:
 	clr	d0
 	movbu	d0, (5, a0)
-func_4C061F1C_entry_L62:
+SndArgTemplateApply_entry_L62:
 	ret	[d2,d3], 0xc
 
-func_4C061F86:
+SndArgImportZZZ:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x34, sp
 
-func_4C061F86_entry:
+SndArgImportZZZ_entry:
 	mov	a0, (0x4c, sp)
 	movbu	(a0), d0
 	cmp	0x5a, d0
-	bne	func_4C061F86_entry_L16
+	bne	SndArgImportZZZ_entry_L16
 	movbu	(1, a0), d0
 	cmp	0x5a, d0
-	bne	func_4C061F86_entry_L16
+	bne	SndArgImportZZZ_entry_L16
 	movbu	(2, a0), d0
 	cmp	0x5a, d0
-	beq	func_4C061F86_entry_L1b
-func_4C061F86_entry_L16:
+	beq	SndArgImportZZZ_entry_L1b
+SndArgImportZZZ_entry_L16:
 	mov	-1, d0
 	ret	[d2,d3,a2,a3], 0x44
-func_4C061F86_entry_L1b:
+SndArgImportZZZ_entry_L1b:
 	mov	a0, d0
 	add	6, d0
 	mov	d0, (0x24, sp)
 	mov	d0, a0
 	movbu	(a0), d0
 	cmp	0xdc, d0
-	bgt	func_4C061F86_entry_L34
+	bgt	SndArgImportZZZ_entry_L34
 	mov	(0x4c, sp), a0
 	movbu	(7, a0), d0
 	cmp	0, d0
-	ble	func_4C061F86_entry_L39
-func_4C061F86_entry_L34:
+	ble	SndArgImportZZZ_entry_L39
+SndArgImportZZZ_entry_L34:
 	mov	-1, d0
 	ret	[d2,d3,a2,a3], 0x44
-func_4C061F86_entry_L39:
+SndArgImportZZZ_entry_L39:
 	mov	(0x24, sp), a0
 	clr	d0
 	mov	d0, (0x14, sp)
@@ -179842,9 +179843,9 @@ func_4C061F86_entry_L39:
 	mov	0x10, a3
 	clr	d2
 	cmp	d2, d0
-	bgt	func_4C061F86_entry_L49
-	jmp	func_4C061F86_entry_L114
-func_4C061F86_entry_L49:
+	bgt	SndArgImportZZZ_entry_L49
+	jmp	SndArgImportZZZ_entry_L114
+SndArgImportZZZ_entry_L49:
 	mov	sp, a0
 	mov	a0, d0
 	add	0x30, d0
@@ -179855,7 +179856,7 @@ func_4C061F86_entry_L49:
 	mov	a0, d0
 	add	0x32, d0
 	mov	d0, (0x1c, sp)
-func_4C061F86_entry_L5c:
+SndArgImportZZZ_entry_L5c:
 	exthu	d2
 	mov	0x18, d1
 	nop
@@ -179874,18 +179875,18 @@ func_4C061F86_entry_L5c:
 	mulu	d0, d2
 	add	0x8402e0f4, d2
 	mov	d2, (0x18, sp)
-func_4C061F86_entry_L8b:
+SndArgImportZZZ_entry_L8b:
 	mov	(0x4c, sp), a0
 	mov	a3, d0
 	exthu	d0
 	movbu	(d0, a0), d1
 	cmp	0, d3
 	movbu	d1, (0x32, sp)
-	bne	func_4C061F86_entry_La2
+	bne	SndArgImportZZZ_entry_La2
 	movbu	(0x32, sp), d0
 	or	0xf0, d0
 	movbu	d0, (0x32, sp)
-func_4C061F86_entry_La2:
+SndArgImportZZZ_entry_La2:
 	mov	a3, d0
 	exthu	d0
 	mov	d0, a3
@@ -179928,7 +179929,7 @@ func_4C061F86_entry_La2:
 	add	a3, d0
 	mov	d0, a3
 	cmp	5, d3
-	blt	func_4C061F86_entry_L8b
+	blt	SndArgImportZZZ_entry_L8b
 	mov	(0x14, sp), d1
 	mov	(0x24, sp), a0
 	inc	d1
@@ -179937,9 +179938,9 @@ func_4C061F86_entry_La2:
 	mov	d2, (0x14, sp)
 	movbu	(a0), d0
 	cmp	d0, d2
-	bge	func_4C061F86_entry_L114
-	jmp	func_4C061F86_entry_L5c
-func_4C061F86_entry_L114:
+	bge	SndArgImportZZZ_entry_L114
+	jmp	SndArgImportZZZ_entry_L5c
+SndArgImportZZZ_entry_L114:
 	mov	1, d0
 	ret	[d2,d3,a2,a3], 0x44
 
@@ -180686,11 +180687,11 @@ func_4C0625ED:
 	mov	func_4C0627F1_entry_L48_Table, a0
 	retf	0, 0
 
-func_4C0625F6:
+PartFieldCcSend:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x18, sp
 
-func_4C0625F6_entry:
+PartFieldCcSend_entry:
 	movbu	d1, (0x34, sp)
 	movbu	d0, (0x30, sp)
 	movbu	(0x38, sp), d0
@@ -180706,40 +180707,40 @@ func_4C0625F6_entry:
 	movbu	(1, a0), d3
 	clr	d1
 	cmp	d2, d0
-	bne	func_4C0625F6_entry_L28
-	jmp	func_4C0625F6_entry_L111
-func_4C0625F6_entry_L28:
+	bne	PartFieldCcSend_entry_L28
+	jmp	PartFieldCcSend_entry_L111
+PartFieldCcSend_entry_L28:
 	movbu	(0x34, sp), d0
 	extbu	d3
 	movbu	d0, (a1)
 	mov	d3, a3
 	cmp	0x7f, a3
 	mov	0x7f, d3
-	ble	func_4C0625F6_entry_L39
-	jmp	func_4C0625F6_entry_L111
-func_4C0625F6_entry_L39:
+	ble	PartFieldCcSend_entry_L39
+	jmp	PartFieldCcSend_entry_L111
+PartFieldCcSend_entry_L39:
 	mov	(0x40, sp), d0
 	cmp	d1, d0
-	bne	func_4C0625F6_entry_L41
-	jmp	func_4C0625F6_entry_L111
-func_4C0625F6_entry_L41:
+	bne	PartFieldCcSend_entry_L41
+	jmp	PartFieldCcSend_entry_L111
+PartFieldCcSend_entry_L41:
 	movbu	(0x38, sp), d0
 	cmp	1, d0
-	beq	func_4C0625F6_entry_L61
+	beq	PartFieldCcSend_entry_L61
 	cmp	0x11, d0
-	beq	func_4C0625F6_entry_L89
+	beq	PartFieldCcSend_entry_L89
 	cmp	5, d0
-	beq	func_4C0625F6_entry_Lb0
+	beq	PartFieldCcSend_entry_Lb0
 	cmp	0xe, d0
-	bne	func_4C0625F6_entry_L57
-	jmp	func_4C0625F6_entry_Lef
-func_4C0625F6_entry_L57:
+	bne	PartFieldCcSend_entry_L57
+	jmp	PartFieldCcSend_entry_Lef
+PartFieldCcSend_entry_L57:
 	cmp	0x17, d0
-	bne	func_4C0625F6_entry_L5e
-	jmp	func_4C0625F6_entry_Lef
-func_4C0625F6_entry_L5e:
-	jmp	func_4C0625F6_entry_L101
-func_4C0625F6_entry_L61:
+	bne	PartFieldCcSend_entry_L5e
+	jmp	PartFieldCcSend_entry_Lef
+PartFieldCcSend_entry_L5e:
+	jmp	PartFieldCcSend_entry_L101
+PartFieldCcSend_entry_L61:
 	movbu	(0x11, a2), d0
 	exth	d0
 	add	d2, d0
@@ -180747,14 +180748,14 @@ func_4C0625F6_entry_L61:
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	bge	func_4C0625F6_entry_L71
+	bge	PartFieldCcSend_entry_L71
 	clr	d0
-	bra	func_4C0625F6_entry_L75
-func_4C0625F6_entry_L71:
+	bra	PartFieldCcSend_entry_L75
+PartFieldCcSend_entry_L71:
 	cmp	d3, d1
-	ble	func_4C0625F6_entry_L75
+	ble	PartFieldCcSend_entry_L75
 	mov	d3, d0
-func_4C0625F6_entry_L75:
+PartFieldCcSend_entry_L75:
 	extbu	d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -180764,8 +180765,8 @@ func_4C0625F6_entry_L75:
 	mov	(0x40, sp), a0
 	calls	(a0)
 	mov	1, d1
-	jmp	func_4C0625F6_entry_L111
-func_4C0625F6_entry_L89:
+	jmp	PartFieldCcSend_entry_L111
+PartFieldCcSend_entry_L89:
 	movbu	(1, a2), d0
 	exth	d0
 	add	d2, d0
@@ -180773,14 +180774,14 @@ func_4C0625F6_entry_L89:
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	bge	func_4C0625F6_entry_L99
+	bge	PartFieldCcSend_entry_L99
 	clr	d0
-	bra	func_4C0625F6_entry_L9d
-func_4C0625F6_entry_L99:
+	bra	PartFieldCcSend_entry_L9d
+PartFieldCcSend_entry_L99:
 	cmp	d3, d1
-	ble	func_4C0625F6_entry_L9d
+	ble	PartFieldCcSend_entry_L9d
 	mov	d3, d0
-func_4C0625F6_entry_L9d:
+PartFieldCcSend_entry_L9d:
 	extbu	d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -180790,12 +180791,12 @@ func_4C0625F6_entry_L9d:
 	mov	(0x40, sp), a0
 	calls	(a0)
 	mov	1, d1
-	bra	func_4C0625F6_entry_L111
-func_4C0625F6_entry_Lb0:
+	bra	PartFieldCcSend_entry_L111
+PartFieldCcSend_entry_Lb0:
 	cmp	d1, d2
-	beq	func_4C0625F6_entry_Lda
+	beq	PartFieldCcSend_entry_Lda
 	cmp	d3, d2
-	beq	func_4C0625F6_entry_Lda
+	beq	PartFieldCcSend_entry_Lda
 	movbu	(2, a2), d1
 	movbu	(3, a2), d2
 	movbu	(4, a2), d0
@@ -180808,12 +180809,12 @@ func_4C0625F6_entry_Lb0:
 	mov	0x7f, a0
 	extbu	d0
 	cmp	0, d0
-	bne	func_4C0625F6_entry_Ld5
+	bne	PartFieldCcSend_entry_Ld5
 	mov	0, a0
-func_4C0625F6_entry_Ld5:
+PartFieldCcSend_entry_Ld5:
 	mov	a0, d0
 	movbu	d0, (0x34, sp)
-func_4C0625F6_entry_Lda:
+PartFieldCcSend_entry_Lda:
 	movbu	(0x34, sp), d0
 	mov	a3, d1
 	mov	d0, (0x10, sp)
@@ -180823,8 +180824,8 @@ func_4C0625F6_entry_Lda:
 	mov	(0x40, sp), a0
 	calls	(a0)
 	mov	1, d1
-	bra	func_4C0625F6_entry_L111
-func_4C0625F6_entry_Lef:
+	bra	PartFieldCcSend_entry_L111
+PartFieldCcSend_entry_Lef:
 	mov	d2, (0x10, sp)
 	clr	d0
 	mov	d0, (0x14, sp)
@@ -180833,8 +180834,8 @@ func_4C0625F6_entry_Lef:
 	mov	(0x40, sp), a0
 	calls	(a0)
 	mov	1, d1
-	bra	func_4C0625F6_entry_L111
-func_4C0625F6_entry_L101:
+	bra	PartFieldCcSend_entry_L111
+PartFieldCcSend_entry_L101:
 	mov	d2, (0x10, sp)
 	clr	d0
 	mov	d0, (0x14, sp)
@@ -180843,7 +180844,7 @@ func_4C0625F6_entry_L101:
 	mov	(0x40, sp), a0
 	calls	(a0)
 	mov	1, d1
-func_4C0625F6_entry_L111:
+PartFieldCcSend_entry_L111:
 	mov	d1, d0
 	ret	[d2,d3,a2,a3], 0x28
 
@@ -180972,11 +180973,11 @@ func_4C0627B4_entry_L19:
 func_4C0627B4_entry_L35:
 	ret	[d2,d3,a2,a3], 0x28
 
-func_4C0627F1:
+StylePartFieldEmit:
 	movm	[d2,d3,a2], (sp)
 	add	-0x20, sp
 
-func_4C0627F1_entry:
+StylePartFieldEmit_entry:
 	mov	d1, d2
 	movbu	d0, (0x34, sp)
 	mov	d2, d3
@@ -180987,15 +180988,15 @@ func_4C0627F1_entry:
 	movbu	(d0, a2), d1
 	extbu	d1
 	cmp	0xc0, d1
-	beq	func_4C0627F1_entry_L2b
+	beq	StylePartFieldEmit_entry_L2b
 	cmp	0xb0, d1
-	beq	func_4C0627F1_entry_L48
+	beq	StylePartFieldEmit_entry_L48
 	cmp	0xd0, d1
-	beq	func_4C0627F1_entry_L5d
+	beq	StylePartFieldEmit_entry_L5d
 	cmp	0xe0, d1
-	beq	func_4C0627F1_entry_L71
-	bra	func_4C0627F1_entry_L89
-func_4C0627F1_entry_L2b:
+	beq	StylePartFieldEmit_entry_L71
+	bra	StylePartFieldEmit_entry_L89
+StylePartFieldEmit_entry_L2b:
 	movbu	(2, a1), d2
 	movbu	(3, a1), d0
 	mov	d0, (0x10, sp)
@@ -181007,8 +181008,8 @@ func_4C0627F1_entry_L2b:
 	extbu	d0
 	mov	d2, d1
 	call	func_4C062710_entry, [d2,d3,a2,a3], 0x28
-	bra	func_4C0627F1_entry_L8b
-func_4C0627F1_entry_L48:
+	bra	StylePartFieldEmit_entry_L8b
+StylePartFieldEmit_entry_L48:
 	movbu	(d3, a1), d3
 	extbu	d2
 	mov	d2, (0x10, sp)
@@ -181017,9 +181018,9 @@ func_4C0627F1_entry_L48:
 	or	d1, d0
 	extbu	d0
 	mov	d3, d1
-	call	func_4C0625F6_entry, [d2,d3,a2,a3], 0x28
-	bra	func_4C0627F1_entry_L8b
-func_4C0627F1_entry_L5d:
+	call	PartFieldCcSend_entry, [d2,d3,a2,a3], 0x28
+	bra	StylePartFieldEmit_entry_L8b
+StylePartFieldEmit_entry_L5d:
 	movbu	(d3, a1), d2
 	movbu	(0x34, sp), d0
 	add	d3, a0
@@ -181028,8 +181029,8 @@ func_4C0627F1_entry_L5d:
 	mov	(0x44, sp), a1
 	mov	d2, d1
 	call	func_4C06278D_entry, [d2,d3], 0x20
-	bra	func_4C0627F1_entry_L8b
-func_4C0627F1_entry_L71:
+	bra	StylePartFieldEmit_entry_L8b
+StylePartFieldEmit_entry_L71:
 	movbu	(0x13, a1), d2
 	movbu	(0x14, a1), d0
 	mov	d0, (0x10, sp)
@@ -181039,10 +181040,10 @@ func_4C0627F1_entry_L71:
 	extbu	d0
 	mov	d2, d1
 	call	func_4C0627B4_entry, [d2,d3,a2,a3], 0x28
-	bra	func_4C0627F1_entry_L8b
-func_4C0627F1_entry_L89:
+	bra	StylePartFieldEmit_entry_L8b
+StylePartFieldEmit_entry_L89:
 	mov	-1, d0
-func_4C0627F1_entry_L8b:
+StylePartFieldEmit_entry_L8b:
 	ret	[d2,d3,a2], 0x2c
 
 func_4C062884:
@@ -183060,16 +183061,16 @@ func_4C0637A8_entry:
 func_4C0637A8_entry_L33:
 	ret	[d2,d3,a2], 0x1c
 
-func_4C0637E3:
+StyleTemplateLoadParts:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 
-func_4C0637E3_entry:
+StyleTemplateLoadParts_entry:
 	clr	d2
 	clr	d3
-func_4C0637E3_entry_L2:
+StyleTemplateLoadParts_entry_L2:
 	mov	d3, d0
-	call	func_4C05614D, 0, 0
+	call	StylePartSetupPtrGet, 0, 0
 	mov	a0, a1
 	extbu	d2
 	mov	0x18, d0
@@ -183084,7 +183085,7 @@ func_4C0637E3_entry_L2:
 	mov	d3, d2
 	extbu	d3
 	cmp	8, d3
-	blt	func_4C0637E3_entry_L2
+	blt	StyleTemplateLoadParts_entry_L2
 	ret	[d2,d3], 0x1c
 
 func_4C063815:
@@ -183112,7 +183113,7 @@ func_4C063815_entry_L1a:
 	mov	d2, d1
 	mov	a2, a0
 	mov	a3, a1
-	call	func_4C0627F1_entry, [d2,d3,a2], 0x2c
+	call	StylePartFieldEmit_entry, [d2,d3,a2], 0x2c
 	inc	d2
 	extbu	d2
 	cmp	0xf, d2
@@ -183283,7 +183284,7 @@ func_4C063958_entry_L13:
 	mov	d3, d0
 	mov	d2, d1
 	mov	a2, a0
-	call	func_4C0627F1_entry, [d2,d3,a2], 0x2c
+	call	StylePartFieldEmit_entry, [d2,d3,a2], 0x2c
 	inc	d2
 	extbu	d2
 	cmp	0x18, d2
@@ -183317,7 +183318,7 @@ func_4C063996_entry_L2:
 	mov	d2, d0
 	mov	0xf, d1
 	mov	a2, a0
-	call	func_4C0627F1_entry, [d2,d3,a2], 0x2c
+	call	StylePartFieldEmit_entry, [d2,d3,a2], 0x2c
 	inc	d2
 	mov	d2, d0
 	extbu	d2
@@ -183449,7 +183450,7 @@ func_4C063A7D_entry:
 	add	0x50033480, a0
 	mov	0x4c057fe0, a1
 	mov	a3, d0
-	call	func_4C0625F6_entry, [d2,d3,a2,a3], 0x28
+	call	PartFieldCcSend_entry, [d2,d3,a2,a3], 0x28
 func_4C063A7D_entry_L41:
 	ret	[d2,a2,a3], 0x28
 
@@ -183677,7 +183678,7 @@ StyleTemplateBuildLoop_entry_L1a:
 	mov	d2, d1
 	mov	a2, a0
 	mov	a3, a1
-	call	func_4C0627F1_entry, [d2,d3,a2], 0x2c
+	call	StylePartFieldEmit_entry, [d2,d3,a2], 0x2c
 	inc	d2
 	extbu	d2
 	cmp	0x18, d2
@@ -183783,13 +183784,13 @@ StyleRecordToTemplate_entry_Lab:
 StyleRecordToTemplate_entry_Lc8:
 	ret	[d2,d3,a2], 0x1c
 
-func_4C063D58:
+StyleTemplateRebuild:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x18, sp
 
-func_4C063D58_entry:
+StyleTemplateRebuild_entry:
 	mov	d0, a3
-	call	func_4C0637E3_entry, [d2,d3], 0x1c
+	call	StyleTemplateLoadParts_entry, [d2,d3], 0x1c
 	mov	sp, a0
 	add	0x14, a0
 	call	func_4C056161, 0, 0
@@ -183797,80 +183798,80 @@ func_4C063D58_entry:
 	mov	a0, a2
 	clr	d2
 	cmp	d2, d1
-	ble	func_4C063D58_entry_L84
+	ble	StyleTemplateRebuild_entry_L84
 	mov	a3, d3
 	exth	d3
-func_4C063D58_entry_L1c:
+StyleTemplateRebuild_entry_L1c:
 	movbu	(a2), d0
 	mov	d0, d1
 	and	0xf0, d1
 	cmp	0x90, d1
-	beq	func_4C063D58_entry_L42
+	beq	StyleTemplateRebuild_entry_L42
 	cmp	0xb0, d1
-	beq	func_4C063D58_entry_L48
+	beq	StyleTemplateRebuild_entry_L48
 	cmp	0xc0, d1
-	beq	func_4C063D58_entry_L54
+	beq	StyleTemplateRebuild_entry_L54
 	cmp	0xd0, d1
-	beq	func_4C063D58_entry_L6f
+	beq	StyleTemplateRebuild_entry_L6f
 	cmp	0xe0, d1
-	beq	func_4C063D58_entry_L75
-	bra	func_4C063D58_entry_L7b
-func_4C063D58_entry_L42:
+	beq	StyleTemplateRebuild_entry_L75
+	bra	StyleTemplateRebuild_entry_L7b
+StyleTemplateRebuild_entry_L42:
 	add	6, a2
 	add	6, d2
-	bra	func_4C063D58_entry_L7d
-func_4C063D58_entry_L48:
+	bra	StyleTemplateRebuild_entry_L7d
+StyleTemplateRebuild_entry_L48:
 	mov	a2, a0
 	call	func_4C0637A8_entry, [d2,d3,a2], 0x1c
 	add	3, a2
 	add	3, d2
-	bra	func_4C063D58_entry_L7d
-func_4C063D58_entry_L54:
+	bra	StyleTemplateRebuild_entry_L7d
+StyleTemplateRebuild_entry_L54:
 	cmp	0, d3
-	blt	func_4C063D58_entry_L64
+	blt	StyleTemplateRebuild_entry_L64
 	call	func_4C055CEC, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C063D58_entry_L6a
-func_4C063D58_entry_L64:
+	beq	StyleTemplateRebuild_entry_L6a
+StyleTemplateRebuild_entry_L64:
 	mov	a2, a0
 	call	func_4C063BAB_entry, [d2], 4
-func_4C063D58_entry_L6a:
+StyleTemplateRebuild_entry_L6a:
 	inc4	a2
 	add	4, d2
-	bra	func_4C063D58_entry_L7d
-func_4C063D58_entry_L6f:
+	bra	StyleTemplateRebuild_entry_L7d
+StyleTemplateRebuild_entry_L6f:
 	add	2, a2
 	add	2, d2
-	bra	func_4C063D58_entry_L7d
-func_4C063D58_entry_L75:
+	bra	StyleTemplateRebuild_entry_L7d
+StyleTemplateRebuild_entry_L75:
 	add	3, a2
 	add	3, d2
-	bra	func_4C063D58_entry_L7d
-func_4C063D58_entry_L7b:
+	bra	StyleTemplateRebuild_entry_L7d
+StyleTemplateRebuild_entry_L7b:
 	inc	a2
 	inc	d2
-func_4C063D58_entry_L7d:
+StyleTemplateRebuild_entry_L7d:
 	movhu	(0x14, sp), d0
 	exthu	d2
 	cmp	d0, d2
-	blt	func_4C063D58_entry_L1c
-func_4C063D58_entry_L84:
+	blt	StyleTemplateRebuild_entry_L1c
+StyleTemplateRebuild_entry_L84:
 	mov	a3, d0
 	exth	d0
 	cmp	0, d0
-	blt	func_4C063D58_entry_Lbc
+	blt	StyleTemplateRebuild_entry_Lbc
 	call	func_4C055CEC, 0, 0
 	extbu	d0
 	cmp	0, d0
-	bne	func_4C063D58_entry_Lbc
+	bne	StyleTemplateRebuild_entry_Lbc
 	clr	d0
 	clr	d2
 	mov	a3, d1
 	exthu	d1
 	mov	d1, a2
 	mov	0x18, d3
-func_4C063D58_entry_La0:
+StyleTemplateRebuild_entry_La0:
 	mov	d2, d1
 	extbu	d0
 	nop
@@ -183879,13 +183880,13 @@ func_4C063D58_entry_La0:
 	mov	d0, a0
 	add	0x50033540, a0
 	mov	a2, d0
-	call	func_4C061F1C_entry, [d2,d3], 0xc
+	call	SndArgTemplateApply_entry, [d2,d3], 0xc
 	inc	d2
 	mov	d2, d0
 	extbu	d2
 	cmp	8, d2
-	blt	func_4C063D58_entry_La0
-func_4C063D58_entry_Lbc:
+	blt	StyleTemplateRebuild_entry_La0
+StyleTemplateRebuild_entry_Lbc:
 	call	func_4C063815_entry, [d2,d3,a2,a3], 0x2c
 	ret	[d2,d3,a2,a3], 0x28
 
@@ -184161,10 +184162,10 @@ func_4C063FFD_entry:
 func_4C063FFD_entry_L33:
 	retf	[d2], 4
 
-func_4C064035:
+StyleDspKeyDecode:
 	movm	[d2], (sp)
 
-func_4C064035_entry:
+StyleDspKeyDecode_entry:
 	movbu	(a0), d2
 	movbu	(1, a0), d0
 	and	0x7f, d2
@@ -184172,57 +184173,57 @@ func_4C064035_entry:
 	mov	d0, d1
 	extbu	d1
 	btst	0x40, d1
-	beq	func_4C064035_entry_L1c
+	beq	StyleDspKeyDecode_entry_L1c
 	or	0x00010000, d2
 	and	0x3f, d1
 	mov	d1, d0
-func_4C064035_entry_L1c:
+StyleDspKeyDecode_entry_L1c:
 	extbu	d0
 	asl	8, d0
 	or	d2, d0
 	retf	[d2], 4
 
-func_4C06405C:
+StyleDspUnitsApply:
 	movm	[d2,d3,a2], (sp)
 	add	-0x10, sp
 
-func_4C06405C_entry:
+StyleDspUnitsApply_entry:
 	call	func_4C056172, 0, 0
 	mov	a0, a2
-	call	func_4C064035_entry, [d2], 4
+	call	StyleDspKeyDecode_entry, [d2], 4
 	mov	d0, d2
 	mov	2, a0
 	add	a2, a0
-	call	func_4C064035_entry, [d2], 4
+	call	StyleDspKeyDecode_entry, [d2], 4
 	mov	d0, d3
 	movbu	(1, a2), d0
 	mov	1, d1
 	btst	0x80, d0
-	bne	func_4C06405C_entry_L23
+	bne	StyleDspUnitsApply_entry_L23
 	clr	d1
-func_4C06405C_entry_L23:
+StyleDspUnitsApply_entry_L23:
 	movbu	(0x50033600), d0
 	cmp	0, d0
-	beq	func_4C06405C_entry_L6d
+	beq	StyleDspUnitsApply_entry_L6d
 	extbu	d1
 	cmp	0, d1
-	beq	func_4C06405C_entry_L43
+	beq	StyleDspUnitsApply_entry_L43
 	mov	0x7000b001, d0
 	mov	1, d1
 	call	func_4C057F91_entry, [d2,d3], 8
-	bra	func_4C06405C_entry_L51
-func_4C06405C_entry_L43:
+	bra	StyleDspUnitsApply_entry_L51
+StyleDspUnitsApply_entry_L43:
 	mov	0x7000b001, d0
 	clr	d1
 	call	func_4C057F91_entry, [d2,d3], 8
-func_4C06405C_entry_L51:
+StyleDspUnitsApply_entry_L51:
 	mov	0x7000b044, d0
 	mov	d2, d1
 	call	func_4C057F91_entry, [d2,d3], 8
 	mov	0x7000b054, d0
 	mov	d3, d1
 	call	func_4C057F91_entry, [d2,d3], 8
-func_4C06405C_entry_L6d:
+StyleDspUnitsApply_entry_L6d:
 	ret	[d2,d3,a2], 0x1c
 
 func_4C0640D1:
@@ -184323,7 +184324,7 @@ func_4C0641A7_entry:
 	cmp	d1, d2
 	beq	func_4C0641A7_entry_L1b
 	movbu	d0, (0x50033600)
-	call	func_4C06405C_entry, [d2,d3,a2], 0x1c
+	call	StyleDspUnitsApply_entry, [d2,d3,a2], 0x1c
 	call	func_4C0640D1_entry, [d2,d3], 0x1c
 func_4C0641A7_entry_L1b:
 	ret	[d2], 0xc
@@ -184828,7 +184829,7 @@ func_4C06456B_entry_L158:
 	ble	func_4C06456B_entry_L171
 	sub	d3, d0
 	mov	a1, a0
-	call	func_4C05F5A5_entry, [d2,d3,a2,a3], 0x30
+	call	StylePatternNoteRestart_entry, [d2,d3,a2,a3], 0x30
 func_4C06456B_entry_L171:
 	mov	(0x5003361c), d0
 	mov	6, a1
@@ -184981,12 +184982,12 @@ func_4C06480F_entry_L40:
 	call	func_4C05F137_entry, [d2,a2], 0x20
 	cmp	0, d2
 	ble	func_4C06480F_entry_L53
-	call	func_4C06405C_entry, [d2,d3,a2], 0x1c
+	call	StyleDspUnitsApply_entry, [d2,d3,a2], 0x1c
 func_4C06480F_entry_L53:
 	call	func_4C0640D1_entry, [d2,d3], 0x1c
 	movhu	(0x50033636), d0
 	exth	d0
-	call	func_4C063D58_entry, [d2,d3,a2,a3], 0x28
+	call	StyleTemplateRebuild_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
 	call	func_4C064200_entry, [d2], 0x10
 	movbu	(0x28, sp), d0
@@ -185054,7 +185055,7 @@ func_4C0648C1_entry_L4c:
 	mov	d0, (0x50033620)
 	mov	d1, (0x50033624)
 	mov	1, d2
-	call	func_4C061EF0_entry, [d2], 0x10
+	call	SndArgRecordIfOn_entry, [d2], 0x10
 	movhu	d0, (0x50033636)
 func_4C0648C1_entry_L74:
 	mov	d2, d0
@@ -185111,7 +185112,7 @@ func_4C064952_entry_L58:
 	mov	d0, (0x50033620)
 	mov	d1, (0x50033624)
 	mov	1, d2
-	call	func_4C061EF0_entry, [d2], 0x10
+	call	SndArgRecordIfOn_entry, [d2], 0x10
 	movhu	d0, (0x50033636)
 func_4C064952_entry_L80:
 	mov	d2, d0
@@ -185197,7 +185198,7 @@ func_4C064A71_entry:
 	mov	d0, (0x50033624)
 	mov	1, d2
 	mov	(0x50033620), d0
-	call	func_4C061EF0_entry, [d2], 0x10
+	call	SndArgRecordIfOn_entry, [d2], 0x10
 	movhu	d0, (0x50033636)
 func_4C064A71_entry_L32:
 	movbu	(0x50033629), d0
@@ -185293,7 +185294,7 @@ func_4C064B12_entry_L79:
 	beq	func_4C064B12_entry_L9f
 	mov	d0, (0x50033620)
 	mov	d1, (0x50033624)
-	call	func_4C061EF0_entry, [d2], 0x10
+	call	SndArgRecordIfOn_entry, [d2], 0x10
 	movhu	d0, (0x50033636)
 func_4C064B12_entry_L9f:
 	movbu	(0x50033638), d0
@@ -185421,7 +185422,7 @@ func_4C064CA9_entry_L59:
 	beq	func_4C064CA9_entry_L7f
 	mov	d0, (0x50033620)
 	mov	d1, (0x50033624)
-	call	func_4C061EF0_entry, [d2], 0x10
+	call	SndArgRecordIfOn_entry, [d2], 0x10
 	movhu	d0, (0x50033636)
 func_4C064CA9_entry_L7f:
 	mov	(0x50033620), d0
@@ -185477,11 +185478,11 @@ func_4C064DAA_entry:
 	cmp	0, d0
 	beq	func_4C064DAA_entry_L2c
 	call	func_4C063958_entry, [d2,d3,a2], 0x28
-	call	func_4C06405C_entry, [d2,d3,a2], 0x1c
+	call	StyleDspUnitsApply_entry, [d2,d3,a2], 0x1c
 	call	func_4C0640D1_entry, [d2,d3], 0x1c
 	movhu	(0x50033636), d0
 	exth	d0
-	call	func_4C063D58_entry, [d2,d3,a2,a3], 0x28
+	call	StyleTemplateRebuild_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
 	movbu	d0, (0x50033639)
 func_4C064DAA_entry_L2c:
@@ -185506,7 +185507,7 @@ func_4C064DDC_entry:
 	call	func_4C0640D1_entry, [d2,d3], 0x1c
 	movhu	(0x50033636), d0
 	exth	d0
-	call	func_4C063D58_entry, [d2,d3,a2,a3], 0x28
+	call	StyleTemplateRebuild_entry, [d2,d3,a2,a3], 0x28
 	mov	1, d0
 	call	func_4C064200_entry, [d2], 0x10
 	call	func_4C0673F5, 0, 0
@@ -185634,7 +185635,7 @@ func_4C064F0B_entry:
 	ret	[d2,d3], 0x18
 func_4C064F0B_entry_Le:
 	movbu	(0x50033630), d0
-	call	func_4C0582E6, 0, 0
+	call	ChordTypeIsMinor, 0, 0
 	mov	d0, d2
 	call	func_4C0673F5, 0, 0
 	exthu	d0
@@ -186355,42 +186356,42 @@ func_4C065663_entry_L7b:
 func_4C065663_entry_L81:
 	ret	[d2], 0x14
 
-func_4C0656EC:
+RhythmIntroSelect:
 	movm	[d2], (sp)
 	add	-0x10, sp
 
-func_4C0656EC_entry:
+RhythmIntroSelect_entry:
 	mov	d0, d1
 	extbu	d1
 	cmp	0, d1
-	bne	func_4C0656EC_entry_L1d
+	bne	RhythmIntroSelect_entry_L1d
 	call	func_4C0673F5, 0, 0
 	exthu	d0
 	cmp	0, d0
-	beq	func_4C0656EC_entry_L13
+	beq	RhythmIntroSelect_entry_L13
 	ret	[d2], 0x14
-func_4C0656EC_entry_L13:
+RhythmIntroSelect_entry_L13:
 	clr	d0
 	mov	d0, d1
 	call	func_4C064952_entry, [d2,d3], 0x20
 	ret	[d2], 0x14
-func_4C0656EC_entry_L1d:
+RhythmIntroSelect_entry_L1d:
 	cmp	2, d1
-	blt	func_4C0656EC_entry_L26
+	blt	RhythmIntroSelect_entry_L26
 	add	-2, d1
 	mov	d1, d0
-	bra	func_4C0656EC_entry_L2c
-func_4C0656EC_entry_L26:
+	bra	RhythmIntroSelect_entry_L2c
+RhythmIntroSelect_entry_L26:
 	cmp	1, d1
-	bne	func_4C0656EC_entry_L2c
+	bne	RhythmIntroSelect_entry_L2c
 	mov	2, d0
-func_4C0656EC_entry_L2c:
+RhythmIntroSelect_entry_L2c:
 	mov	d0, d1
 	extbu	d1
 	cmp	3, d1
-	blt	func_4C0656EC_entry_L33
+	blt	RhythmIntroSelect_entry_L33
 	clr	d0
-func_4C0656EC_entry_L33:
+RhythmIntroSelect_entry_L33:
 	extbu	d0
 	mov	d0, d2
 	asl2	d2
@@ -186398,40 +186399,40 @@ func_4C0656EC_entry_L33:
 	call	func_4C057C4B, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C0656EC_entry_L4e
+	beq	RhythmIntroSelect_entry_L4e
 	extbu	d2
 	clr	d1
 	mov	d2, d0
 	call	func_4C064952_entry, [d2,d3], 0x20
-	bra	func_4C0656EC_entry_L90
-func_4C0656EC_entry_L4e:
+	bra	RhythmIntroSelect_entry_L90
+RhythmIntroSelect_entry_L4e:
 	call	func_4C0673F5, 0, 0
 	exthu	d0
 	cmp	0, d0
-	beq	func_4C0656EC_entry_L88
+	beq	RhythmIntroSelect_entry_L88
 	call	func_4C0641CA, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C0656EC_entry_L77
+	beq	RhythmIntroSelect_entry_L77
 	movhu	(0x50033618), d0
 	cmp	1, d0
-	ble	func_4C0656EC_entry_L77
+	ble	RhythmIntroSelect_entry_L77
 	extbu	d2
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C064952_entry, [d2,d3], 0x20
-	bra	func_4C0656EC_entry_L90
-func_4C0656EC_entry_L77:
+	bra	RhythmIntroSelect_entry_L90
+RhythmIntroSelect_entry_L77:
 	movbu	d2, (0x5003362b)
 	mov	0xff, d0
 	movbu	d0, (0x5003362d)
-	bra	func_4C0656EC_entry_L90
-func_4C0656EC_entry_L88:
+	bra	RhythmIntroSelect_entry_L90
+RhythmIntroSelect_entry_L88:
 	extbu	d2
 	clr	d1
 	mov	d2, d0
 	call	func_4C064952_entry, [d2,d3], 0x20
-func_4C0656EC_entry_L90:
+RhythmIntroSelect_entry_L90:
 	ret	[d2], 0x14
 
 func_4C065784:
@@ -186601,25 +186602,25 @@ func_4C065784_entry_L162:
 func_4C065784_entry_L171:
 	ret	[d2], 0x14
 
-func_4C0658FD:
+RhythmEndingSelect:
 	movm	[d2], (sp)
 	add	-0x10, sp
 
-func_4C0658FD_entry:
+RhythmEndingSelect_entry:
 	mov	d0, d2
 	extbu	d0
 	cmp	0, d0
-	bne	func_4C0658FD_entry_L9
+	bne	RhythmEndingSelect_entry_L9
 	ret	[d2], 0x14
-func_4C0658FD_entry_L9:
+RhythmEndingSelect_entry_L9:
 	cmp	1, d0
-	blt	func_4C0658FD_entry_L10
+	blt	RhythmEndingSelect_entry_L10
 	mov	-1, d2
 	add	d0, d2
-func_4C0658FD_entry_L10:
+RhythmEndingSelect_entry_L10:
 	extbu	d2
 	cmp	2, d2
-	bge	func_4C0658FD_entry_L68
+	bge	RhythmEndingSelect_entry_L68
 	add	d2, d2
 	inc	d2
 	add	d2, d2
@@ -186627,34 +186628,34 @@ func_4C0658FD_entry_L10:
 	call	func_4C057C4B, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C0658FD_entry_L30
+	beq	RhythmEndingSelect_entry_L30
 	extbu	d2
 	clr	d1
 	mov	d2, d0
 	call	func_4C064952_entry, [d2,d3], 0x20
-	bra	func_4C0658FD_entry_L68
-func_4C0658FD_entry_L30:
+	bra	RhythmEndingSelect_entry_L68
+RhythmEndingSelect_entry_L30:
 	call	func_4C0673F5, 0, 0
 	exthu	d0
 	cmp	0, d0
-	beq	func_4C0658FD_entry_L68
+	beq	RhythmEndingSelect_entry_L68
 	call	func_4C0641CA, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	func_4C0658FD_entry_L59
+	beq	RhythmEndingSelect_entry_L59
 	movhu	(0x50033618), d0
 	cmp	1, d0
-	ble	func_4C0658FD_entry_L59
+	ble	RhythmEndingSelect_entry_L59
 	extbu	d2
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C064952_entry, [d2,d3], 0x20
-	bra	func_4C0658FD_entry_L68
-func_4C0658FD_entry_L59:
+	bra	RhythmEndingSelect_entry_L68
+RhythmEndingSelect_entry_L59:
 	movbu	d2, (0x5003362b)
 	mov	0xff, d0
 	movbu	d0, (0x5003362d)
-func_4C0658FD_entry_L68:
+RhythmEndingSelect_entry_L68:
 	ret	[d2], 0x14
 
 func_4C06596D:
@@ -186755,14 +186756,14 @@ func_4C065A66_entry:
 	call	StyleNameAndRecordSelect_entry, [d2], 0x18
 	call	func_4C063958_entry, [d2,d3,a2], 0x28
 	call	func_4C05F137_entry, [d2,a2], 0x20
-	call	func_4C06405C_entry, [d2,d3,a2], 0x1c
+	call	StyleDspUnitsApply_entry, [d2,d3,a2], 0x1c
 	call	func_4C0640D1_entry, [d2,d3], 0x1c
 	mov	(0x50033620), d0
-	call	func_4C061EF0_entry, [d2], 0x10
+	call	SndArgRecordIfOn_entry, [d2], 0x10
 	movhu	d0, (0x50033636)
 	movhu	(0x50033636), d0
 	exth	d0
-	call	func_4C063D58_entry, [d2,d3,a2,a3], 0x28
+	call	StyleTemplateRebuild_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
 	call	func_4C064200_entry, [d2], 0x10
 	call	func_4C0673F5, 0, 0
@@ -186789,14 +186790,14 @@ func_4C065AE4_entry:
 	call	StyleNameAndRecordSelect_entry, [d2], 0x18
 	call	func_4C063958_entry, [d2,d3,a2], 0x28
 	call	func_4C05F137_entry, [d2,a2], 0x20
-	call	func_4C06405C_entry, [d2,d3,a2], 0x1c
+	call	StyleDspUnitsApply_entry, [d2,d3,a2], 0x1c
 	call	func_4C0640D1_entry, [d2,d3], 0x1c
 	mov	(0x50033620), d0
-	call	func_4C061EF0_entry, [d2], 0x10
+	call	SndArgRecordIfOn_entry, [d2], 0x10
 	movhu	d0, (0x50033636)
 	movhu	(0x50033636), d0
 	exth	d0
-	call	func_4C063D58_entry, [d2,d3,a2,a3], 0x28
+	call	StyleTemplateRebuild_entry, [d2,d3,a2,a3], 0x28
 	mov	1, d0
 	call	func_4C064200_entry, [d2], 0x10
 	call	func_4C0673F5, 0, 0
@@ -186823,11 +186824,11 @@ func_4C065B63_entry:
 	call	StyleNameAndRecordSelect_entry, [d2], 0x18
 	call	func_4C0640D1_entry, [d2,d3], 0x1c
 	mov	(0x50033620), d0
-	call	func_4C061EF0_entry, [d2], 0x10
+	call	SndArgRecordIfOn_entry, [d2], 0x10
 	movhu	d0, (0x50033636)
 	movhu	(0x50033636), d0
 	exth	d0
-	call	func_4C063D58_entry, [d2,d3,a2,a3], 0x28
+	call	StyleTemplateRebuild_entry, [d2,d3,a2,a3], 0x28
 	ret	0, 0x18
 
 func_4C065BAE:
@@ -186937,7 +186938,7 @@ func_4C065C44_entry_L13:
 	mov	d3, d0
 	mov	d2, d1
 	mov	a2, a0
-	call	func_4C0627F1_entry, [d2,d3,a2], 0x2c
+	call	StylePartFieldEmit_entry, [d2,d3,a2], 0x2c
 	inc	d2
 	extbu	d2
 	cmp	0x18, d2
@@ -186971,7 +186972,7 @@ func_4C065C82_entry_L2:
 	mov	d2, d0
 	mov	0xf, d1
 	mov	a2, a0
-	call	func_4C0627F1_entry, [d2,d3,a2], 0x2c
+	call	StylePartFieldEmit_entry, [d2,d3,a2], 0x2c
 	inc	d2
 	mov	d2, d0
 	extbu	d2
@@ -187054,7 +187055,7 @@ func_4C065D17_entry_L12:
 	mov	d3, d0
 	mov	d2, d1
 	mov	a2, a0
-	call	func_4C0627F1_entry, [d2,d3,a2], 0x2c
+	call	StylePartFieldEmit_entry, [d2,d3,a2], 0x2c
 	inc	d2
 	extbu	d2
 	cmp	0xf, d2
@@ -187100,7 +187101,7 @@ func_4C065D57_entry:
 	add	0x5003363c, a0
 	mov	0x4c059993, a1
 	mov	a3, d0
-	call	func_4C0625F6_entry, [d2,d3,a2,a3], 0x28
+	call	PartFieldCcSend_entry, [d2,d3,a2,a3], 0x28
 func_4C065D57_entry_L41:
 	ret	[d2,a2,a3], 0x28
 
@@ -187330,7 +187331,7 @@ func_4C065F21_entry_L1a:
 	mov	d2, d1
 	mov	a2, a0
 	mov	a3, a1
-	call	func_4C0627F1_entry, [d2,d3,a2], 0x2c
+	call	StylePartFieldEmit_entry, [d2,d3,a2], 0x2c
 	inc	d2
 	extbu	d2
 	cmp	0x18, d2
@@ -188944,8 +188945,7 @@ func_4C067038_entry_L2a:
 	mov	1, d0
 func_4C067038_entry_L2c:
 	ret	0, 0x10
-
-MmmMtune:
+loc_4C06706A:
 	add	-8, sp
 	call	func_4C0696CC_entry, 0, 8
 	call	TempoClocksReset_entry, 0, 0x14
@@ -188962,8 +188962,7 @@ MmmMtune:
 	movbu	d0, (0x500336d2)
 	movbu	d0, (0x50276e0a)
 	ret	0, 8
-
-MmmOrchestrator:
+loc_4C0670BD:
 	retf	0, 0
 
 func_4C0670C0:
@@ -191061,15 +191060,13 @@ MetronomeClickPost_entry_L4a:
 	mov	0x10, d0
 	movhu	d0, (0x500336f6)
 	ret	[d2,d3], 0x18
-
-MessageText:
+loc_4C068952:
 	clr	d0
 	movhu	d0, (0x500336f6)
 	mov	0x60, d0
 	movhu	d0, (0x500336f8)
 	retf	0, 0
-
-MessageHeader:
+loc_4C068964:
 	add	-0x1c, sp
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -191841,14 +191838,14 @@ TempoTick96Isr_L2b5:
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000124), d0
+	movhu	(G9ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000124)
+	movhu	d0, (G9ICR)
 	or	0x0800, psw
 	nop
 	nop
-	movhu	(0x34000124), d0
+	movhu	(G9ICR), d0
 	ret	[d2,d3,a2,a3], 0x1c
 
 MidiClockRxHandler:
@@ -192198,49 +192195,49 @@ MidiStopRxHandler_entry_Lb9:
 	ret	[d2], 0x10
 
 func_4C0695A6:
-	movhu	(0x34001084), d0
-	bclr	0x07, (0x340010b4)
+	movhu	(TM6MD), d0
+	bclr	0x07, (TM6MDA)
 	and	0xfff8, d0
 	or	0x01, d0
-	movhu	d0, (0x34001084)
-	movhu	(0x34001084), d0
-	bclr	0x10, (0x340010b4)
+	movhu	d0, (TM6MD)
+	movhu	(TM6MD), d0
+	bclr	0x10, (TM6MDA)
 	or	0x10, d0
-	movhu	d0, (0x34001084)
-	movhu	(0x34001084), d0
-	bclr	0x20, (0x340010b4)
+	movhu	d0, (TM6MD)
+	movhu	(TM6MD), d0
+	bclr	0x20, (TM6MDA)
 	and	0xffbf, d0
-	movhu	d0, (0x34001084)
-	movhu	(0x34001084), d0
+	movhu	d0, (TM6MD)
+	movhu	(TM6MD), d0
 	and	0xff7f, d0
-	movhu	d0, (0x34001084)
-	movhu	(0x34001084), d0
+	movhu	d0, (TM6MD)
+	movhu	(TM6MD), d0
 	and	0xe7ff, d0
-	movhu	d0, (0x34001084)
-	movhu	(0x34001084), d0
+	movhu	d0, (TM6MD)
+	movhu	(TM6MD), d0
 	and	0xdfff, d0
-	movhu	d0, (0x34001084)
-	movhu	(0x34001084), d0
+	movhu	d0, (TM6MD)
+	movhu	(TM6MD), d0
 	and	0xbfff, d0
-	movhu	d0, (0x34001084)
-	movhu	(0x34001084), d0
+	movhu	d0, (TM6MD)
+	movhu	(TM6MD), d0
 	and	0x7fff, d0
-	movhu	d0, (0x34001084)
-	movhu	(0x34001084), d0
+	movhu	d0, (TM6MD)
+	movhu	(TM6MD), d0
 	or	0x4000, d0
-	movhu	d0, (0x34001084)
-	movhu	(0x34001084), d0
+	movhu	d0, (TM6MD)
+	movhu	(TM6MD), d0
 	and	0xbfff, d0
-	movhu	d0, (0x34001084)
-	movbu	(0x340010b4), d0
+	movhu	d0, (TM6MD)
+	movbu	(TM6MDA), d0
 	and	0xffffff3f, d0
 	or	0x40, d0
-	movbu	d0, (0x340010b4)
-	movhu	(0x34001084), d0
+	movbu	d0, (TM6MDA)
+	movhu	(TM6MD), d0
 	or	0x8000, d0
-	movhu	d0, (0x34001084)
+	movhu	d0, (TM6MD)
 	mov	0x28b0, d0
-	movhu	d0, (0x340010c4)
+	movhu	d0, (TM6CA)
 	retf	0, 0
 
 func_4C06968E:
@@ -192253,7 +192250,7 @@ func_4C06968E_entry:
 	mov	d0, (0x14, sp)
 	mov	9, d0
 	movhu	d0, (0x18, sp)
-	mov	0x34000124, d0
+	mov	G9ICR, d0
 	mov	d0, (0x1c, sp)
 	clr	d0
 	movhu	d0, (0x20, sp)
@@ -192297,7 +192294,7 @@ TempoBpmReloadWrite_entry_Le:
 	clr	d2
 	mov	d2, mdr
 	divu	d0, d1
-	movhu	d1, (0x340010c4)
+	movhu	d1, (TM6CA)
 	ret	[d2], 4
 
 TempoReloadFromInterval:
@@ -192324,23 +192321,23 @@ TempoReloadFromInterval_entry_L1d:
 	nop
 	mulu	d1, d0
 	lsr	2, d0
-	movhu	d0, (0x340010c4)
+	movhu	d0, (TM6CA)
 TempoReloadFromInterval_entry_L31:
 	ret	0, 0xc
 
 func_4C06974D:
-	movhu	(0x34001084), d0
+	movhu	(TM6MD), d0
 	and	0x7fff, d0
-	movhu	d0, (0x34001084)
-	movhu	(0x34001084), d0
+	movhu	d0, (TM6MD)
+	movhu	(TM6MD), d0
 	or	0x4000, d0
-	movhu	d0, (0x34001084)
-	movhu	(0x34001084), d0
+	movhu	d0, (TM6MD)
+	movhu	(TM6MD), d0
 	and	0xbfff, d0
-	movhu	d0, (0x34001084)
-	movhu	(0x34001084), d0
+	movhu	d0, (TM6MD)
+	movhu	(TM6MD), d0
 	or	0x8000, d0
-	movhu	d0, (0x34001084)
+	movhu	d0, (TM6MD)
 	retf	0, 0
 
 TempoSyncD001Set:
@@ -192814,13 +192811,13 @@ TempoSyncPartB0Set_entry:
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
 	mov	d0, d2
-	call	func_4C061BEE_entry:32, 0, 0xc
+	call	SndArgIsOn_entry:32, 0, 0xc
 	exth	d0
 	cmp	0, d0
 	bne	TempoSyncPartB0Set_entry_L41
 	mov	1, d1
 	mov	d2, d0
-	call	func_4C061C32_entry:32, [d2], 0x10
+	call	SndArgOnSet_entry:32, [d2], 0x10
 	extbu	d3
 	asl	24, d3
 	or	0xb0, d3
@@ -192831,7 +192828,7 @@ TempoSyncPartB0Set_entry:
 TempoSyncPartB0Set_entry_L41:
 	clr	d1
 	mov	d2, d0
-	call	func_4C061C32_entry:32, [d2], 0x10
+	call	SndArgOnSet_entry:32, [d2], 0x10
 	extbu	d3
 	mov	d3, d0
 	asl	24, d0
@@ -193016,7 +193013,7 @@ func_4C069D9E_entry:
 	mov	d0, (0x14, sp)
 	mov	6, d0
 	movhu	d0, (0x18, sp)
-	mov	0x34000118, d1
+	mov	G6ICR, d1
 	mov	d1, (0x1c, sp)
 	clr	d1
 	movhu	d1, (0x20, sp)
@@ -193747,36 +193744,36 @@ func_4C06A6F1_L4e:
 	clr	d0
 	rets
 
-func_4C06A742:
+PartHasDspUnitExceptAcc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x10, sp
 
-func_4C06A742_entry:
+PartHasDspUnitExceptAcc_entry:
 	exthu	d0
 	mov	d0, a3
 	cmp	0x12, a3
-	ble	func_4C06A742_entry_La
+	ble	PartHasDspUnitExceptAcc_entry_La
 	clr	d0
-	bra	func_4C06A742_entry_L3e
-func_4C06A742_entry_La:
+	bra	PartHasDspUnitExceptAcc_entry_L3e
+PartHasDspUnitExceptAcc_entry_La:
 	clr	d2
 	clr	d1
 	mov	func_4C06A742_entry_L1e_Table, a2
 	mov	(func_4C06A742_entry_L1e_Table), a0
 	mov	-1, d3
 	cmp	d3, a0
-	beq	func_4C06A742_entry_L3d
-func_4C06A742_entry_L1e:
+	beq	PartHasDspUnitExceptAcc_entry_L3d
+PartHasDspUnitExceptAcc_entry_L1e:
 	asl2	d1
 	mov	(d1, a2), d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
 	exthu	d0
 	cmp	d0, a3
-	bne	func_4C06A742_entry_L32
+	bne	PartHasDspUnitExceptAcc_entry_L32
 	mov	1, d0
-	bra	func_4C06A742_entry_L3e
-func_4C06A742_entry_L32:
+	bra	PartHasDspUnitExceptAcc_entry_L3e
+PartHasDspUnitExceptAcc_entry_L32:
 	exthu	d2
 	inc	d2
 	mov	d2, d1
@@ -193785,10 +193782,10 @@ func_4C06A742_entry_L32:
 	asl2	d0
 	mov	(d0, a2), d0
 	cmp	d3, d0
-	bne	func_4C06A742_entry_L1e
-func_4C06A742_entry_L3d:
+	bne	PartHasDspUnitExceptAcc_entry_L1e
+PartHasDspUnitExceptAcc_entry_L3d:
 	clr	d0
-func_4C06A742_entry_L3e:
+PartHasDspUnitExceptAcc_entry_L3e:
 	ret	[d2,d3,a2,a3], 0x20
 
 AcResetPageProc:
@@ -195515,7 +195512,7 @@ func_4C06B691:
 	beq	func_4C06B691_L6d
 	exthu	d1
 	mov	d1, d0
-	call	func_4C06A742_entry, [d2,d3,a2,a3], 0x20
+	call	PartHasDspUnitExceptAcc_entry, [d2,d3,a2,a3], 0x20
 	cmp	d2, d0
 	beq	func_4C06B691_L6d
 	mov	a2, d1
@@ -195540,7 +195537,7 @@ func_4C06B691_L6d:
 	mov	d2, d0
 	ret	[d2,d3,a2,a3], 0x28
 
-func_4C06B702:
+PartEqFcText:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x1c, sp
 	mov	(0x3c, sp), a0
@@ -195548,7 +195545,7 @@ func_4C06B702:
 	clr	d1
 	mov	d1, (0x18, sp)
 	cmp	MT_GetString, a0
-	bne	func_4C06B702_L71
+	bne	PartEqFcText_L71
 	mov	d0, d3
 	exth	d3
 	mov	a2, d2
@@ -195570,7 +195567,7 @@ func_4C06B702:
 	mov	d3, d0
 	call	func_4C06AB95_entry, [d2], 0x1c
 	cmp	0, d0
-	beq	func_4C06B702_L60
+	beq	PartEqFcText_L60
 	mov	(0x40, sp), a0
 	mov	a3, d0
 	exth	d0
@@ -195580,13 +195577,13 @@ func_4C06B702:
 	mov	func_4C06B702_Table, a1
 	mov	(d0, a1), a1
 	call	strcpy_entry, [a2], 4
-	bra	func_4C06B702_L82
-func_4C06B702_L60:
+	bra	PartEqFcText_L82
+PartEqFcText_L60:
 	mov	Str_empty_1091, a1
 	mov	(0x40, sp), a0
 	call	strcpy_entry, [a2], 4
-	bra	func_4C06B702_L82
-func_4C06B702_L71:
+	bra	PartEqFcText_L82
+PartEqFcText_L71:
 	mov	a0, (0x10, sp)
 	mov	(0x40, sp), a0
 	exth	d0
@@ -195595,11 +195592,11 @@ func_4C06B702_L71:
 	exthu	d1
 	call	func_4C06ABBB_entry, [d2,d3,a2,a3], 0x2c
 	mov	d0, (0x18, sp)
-func_4C06B702_L82:
+PartEqFcText_L82:
 	mov	(0x18, sp), d0
 	ret	[d2,d3,a2,a3], 0x2c
 
-func_4C06B789:
+PartEqGainText:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x1c, sp
 	mov	(0x3c, sp), a0
@@ -195607,9 +195604,9 @@ func_4C06B789:
 	clr	d1
 	mov	d1, (0x18, sp)
 	cmp	MT_GetString, a0
-	beq	func_4C06B789_L17
-	jmp	func_4C06B789_L11b
-func_4C06B789_L17:
+	beq	PartEqGainText_L17
+	jmp	PartEqGainText_L11b
+PartEqGainText_L17:
 	exth	d0
 	mov	d0, a2
 	mov	a3, d3
@@ -195631,25 +195628,25 @@ func_4C06B789_L17:
 	mov	d3, d1
 	call	func_4C06AB95_entry, [d2], 0x1c
 	cmp	0, d0
-	bne	func_4C06B789_L4d
-	jmp	func_4C06B789_L10a
-func_4C06B789_L4d:
+	bne	PartEqGainText_L4d
+	jmp	PartEqGainText_L10a
+PartEqGainText_L4d:
 	mov	d2, d1
 	exth	d1
 	cmp	0x28, d1
-	bge	func_4C06B789_L57
+	bge	PartEqGainText_L57
 	mov	0x28, d2
-	bra	func_4C06B789_L5d
-func_4C06B789_L57:
+	bra	PartEqGainText_L5d
+PartEqGainText_L57:
 	cmp	0x58, d1
-	ble	func_4C06B789_L5d
+	ble	PartEqGainText_L5d
 	mov	0x58, d2
-func_4C06B789_L5d:
+PartEqGainText_L5d:
 	exth	d2
 	add	-0x40, d2
 	exth	d2
 	cmp	0, d2
-	ble	func_4C06B789_Lab
+	ble	PartEqGainText_Lab
 	mov	(0x40, sp), a2
 	mov	d2, d0
 	mov	2, d1
@@ -195660,19 +195657,19 @@ func_4C06B789_L5d:
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	btst	0x01, d2
-	beq	func_4C06B789_L9a
+	beq	PartEqGainText_L9a
 	mov	Str_5_24, a1
 	mov	a2, a0
 	call	strcat_entry, [a2], 4
-	jmp	func_4C06B789_L12c
-func_4C06B789_L9a:
+	jmp	PartEqGainText_L12c
+PartEqGainText_L9a:
 	mov	Str_0_20, a1
 	mov	a2, a0
 	call	strcat_entry, [a2], 4
-	jmp	func_4C06B789_L12c
-func_4C06B789_Lab:
+	jmp	PartEqGainText_L12c
+PartEqGainText_Lab:
 	cmp	0, d2
-	bge	func_4C06B789_Lf9
+	bge	PartEqGainText_Lf9
 	mov	(0x40, sp), a2
 	mov	d2, d0
 	mov	2, d1
@@ -195687,27 +195684,27 @@ func_4C06B789_Lab:
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	btst	0x01, d2
-	beq	func_4C06B789_Le9
+	beq	PartEqGainText_Le9
 	mov	Str_5_23, a1
 	mov	a2, a0
 	call	strcat_entry, [a2], 4
-	bra	func_4C06B789_L12c
-func_4C06B789_Le9:
+	bra	PartEqGainText_L12c
+PartEqGainText_Le9:
 	mov	Str_0_19, a1
 	mov	a2, a0
 	call	strcat_entry, [a2], 4
-	bra	func_4C06B789_L12c
-func_4C06B789_Lf9:
+	bra	PartEqGainText_L12c
+PartEqGainText_Lf9:
 	mov	Str_0_0, a1
 	mov	(0x40, sp), a0
 	call	strcpy_entry, [a2], 4
-	bra	func_4C06B789_L12c
-func_4C06B789_L10a:
+	bra	PartEqGainText_L12c
+PartEqGainText_L10a:
 	mov	Str_empty_1090, a1
 	mov	(0x40, sp), a0
 	call	strcpy_entry, [a2], 4
-	bra	func_4C06B789_L12c
-func_4C06B789_L11b:
+	bra	PartEqGainText_L12c
+PartEqGainText_L11b:
 	mov	a0, (0x10, sp)
 	mov	(0x40, sp), a0
 	exth	d0
@@ -195716,7 +195713,7 @@ func_4C06B789_L11b:
 	exthu	d1
 	call	func_4C06ABBB_entry, [d2,d3,a2,a3], 0x2c
 	mov	d0, (0x18, sp)
-func_4C06B789_L12c:
+PartEqGainText_L12c:
 	mov	(0x18, sp), d0
 	ret	[d2,d3,a2,a3], 0x2c
 
@@ -195865,7 +195862,7 @@ func_4C06B9A1_L1d:
 	extbu	d2
 	mov	a2, a0
 	mov	d2, d0
-	call	func_4C07BBF5_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x10, a2)
 	bra	func_4C06B9A1_Lb9
@@ -195960,7 +195957,7 @@ MainSoundAdd_L22:
 	movhu	d0, (0x32, sp)
 	movhu	(0x32, sp), d0
 	mov	d0, (0x18, sp)
-	call	func_4C06A742_entry, [d2,d3,a2,a3], 0x20
+	call	PartHasDspUnitExceptAcc_entry, [d2,d3,a2,a3], 0x20
 	cmp	d2, d0
 	bne	MainSoundAdd_L6b
 	mov	1, d2
@@ -195976,7 +195973,7 @@ MainSoundAdd_L6b:
 	movbu	d3, (0x3a, sp)
 	movbu	d2, (0x3d, sp)
 	mov	(0x20, sp), a0
-	call	func_4C07C1A6_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x38, sp), d0
 	cmp	0xf, d0
 	beq	MainSoundAdd_Ld0
@@ -195995,14 +195992,14 @@ MainSoundAdd_L6b:
 	add	2, d0
 	movbu	d0, (0x3d, sp)
 	mov	(0x20, sp), a0
-	call	func_4C07C1A6_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	bra	MainSoundAdd_Ld0
 MainSoundAdd_Lbf:
 	movbu	(0x3d, sp), d0
 	add	2, d0
 	movbu	d0, (0x3d, sp)
 	mov	(0x20, sp), a0
-	call	func_4C07C1A6_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 MainSoundAdd_Ld0:
 	movbu	(0x38, sp), d0
 	mov	d0, a2
@@ -196136,7 +196133,7 @@ MainSoundAdd_L1b0:
 	movbu	(0x2c, sp), d0
 	movbu	d0, (0x3d, sp)
 	mov	(0x20, sp), a0
-	call	func_4C07C25A_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x3c, sp), d2
 	movbu	(0x3a, sp), d0
 	movbu	(0x3b, sp), d1
@@ -196316,7 +196313,7 @@ MainSoundAdd_L329:
 	movbu	d0, (0x39, sp)
 	movbu	d2, (0x3d, sp)
 	mov	(0x20, sp), a0
-	call	func_4C07C25A_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x3c, sp), d2
 	movbu	(0x3a, sp), d0
 	movbu	(0x3b, sp), d1
@@ -196392,7 +196389,7 @@ MainSoundAdd_L3dc:
 	movhu	(0x30, sp), d0
 	movbu	d0, (0x3d, sp)
 	mov	(0x20, sp), a0
-	call	func_4C07C25A_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x3a, sp), d2
 	movbu	(0x3b, sp), d3
 	movbu	(0x3c, sp), d0
@@ -197598,7 +197595,7 @@ MainPadRun_entry_L146:
 	extbu	d1
 	call	func_4C059606_entry, [d2,d3], 0x14
 	mov	a3, a0
-	call	func_4C056893_entry, [d2,a2,a3], 0x20
+	call	PadNameGet_entry, [d2,a2,a3], 0x20
 	exth	d0
 	cmp	0, d0
 	bge	MainPadRun_entry_L16a
@@ -202866,7 +202863,7 @@ func_4C06FE76_entry:
 	clr	d0
 	movhu	d0, (0x50033938)
 	movhu	(0x50033920), d0
-	call	func_4C06A742_entry, [d2,d3,a2,a3], 0x20
+	call	PartHasDspUnitExceptAcc_entry, [d2,d3,a2,a3], 0x20
 	cmp	0, d0
 	bne	func_4C06FE76_entry_L40
 	movhu	(0x50033938), d0
@@ -202896,7 +202893,7 @@ func_4C06FE76_entry_L40:
 	movbu	d0, (0x1e, sp)
 	movhu	(0x50033938), d0
 	movbu	d0, (0x21, sp)
-	call	func_4C07C1A6_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	mov	(0x18, sp), d0
 	mov	d0, (0x50033930)
 	movbu	(0x1c, sp), d0
@@ -202909,7 +202906,7 @@ func_4C06FE76_entry_L40:
 	movbu	(0x1e, sp), d0
 	movbu	(0x1f, sp), d1
 	mov	d2, (0x10, sp)
-	call	func_4C07BD5C_entry, [d2], 0x20
+	call	SoundIconFetch_entry, [d2], 0x20
 	extbu	d0
 	movhu	d0, (0x50033942)
 	mov	(0x5003393c), d0
@@ -202963,7 +202960,7 @@ func_4C06FE76_entry_L138:
 	movhu	d0, (0x50033938)
 	movhu	(0x50033938), d0
 	movbu	d0, (0x21, sp)
-	call	func_4C07C1A6_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x21, sp), d0
 	mov	2, d1
 	extbu	d0
@@ -203072,7 +203069,7 @@ func_4C0700D7_entry_L38:
 	clr	d0
 	movbu	d0, (0x19, sp)
 	mov	(0x14, sp), a0
-	call	func_4C07C25A_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1c, sp), d2
 	movbu	(0x1a, sp), d0
 	movbu	(0x1b, sp), d1
@@ -203720,7 +203717,7 @@ AcSndVariProc_L1f3:
 	movhu	(0x5003393a), d0
 	add	0x1c, a0
 	movbu	d0, (0x21, sp)
-	call	func_4C07C25A_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1e, sp), d1
 	movbu	(0x1f, sp), d2
 	movbu	(0x20, sp), d3
@@ -203797,7 +203794,7 @@ AcSndVariProc_L2ec:
 	movhu	(0x5003393a), d0
 	add	0x1c, a0
 	movbu	d0, (0x21, sp)
-	call	func_4C07C25A_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1f, sp), d2
 	movbu	(0x20, sp), d1
 	movbu	(0x1e, sp), d0
@@ -203805,7 +203802,7 @@ AcSndVariProc_L2ec:
 	mov	(0x44, sp), a2
 	mov	d2, d1
 	mov	a2, a0
-	call	func_4C07BBF5_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x10, a2)
 	bra	AcSndVariProc_L385
@@ -204011,7 +204008,7 @@ AcSndGroupProc_L6f:
 	bra	AcSndGroupProc_Lba
 AcSndGroupProc_L80:
 	movhu	(0x50033920), d0
-	call	func_4C06A742_entry, [d2,d3,a2,a3], 0x20
+	call	PartHasDspUnitExceptAcc_entry, [d2,d3,a2,a3], 0x20
 	cmp	0, d0
 	beq	AcSndGroupProc_La3
 	mov	(0x2c, sp), a2
@@ -204627,7 +204624,7 @@ loc_4C0710F7:
 	movhu	(0x5003393a), d0
 	add	0x38, a0
 	movbu	d0, (0x3d, sp)
-	call	func_4C07C25A_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x3a, sp), d0
 	movbu	(0x3b, sp), d3
 	movbu	(0x3c, sp), d2
@@ -206034,7 +206031,7 @@ AcDrawVariProc_L108:
 	movbu	d0, (0x19, sp)
 AcDrawVariProc_L10d:
 	mov	a2, a0
-	call	func_4C07C25A_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1a, sp), d0
 	movbu	(0x1b, sp), d3
 	movbu	(0x1c, sp), d2
@@ -206116,7 +206113,7 @@ AcDrawVariProc_L1bf:
 	movhu	(0x5003393a), d0
 	add	0x18, a0
 	movbu	d0, (0x1d, sp)
-	call	func_4C07C25A_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1b, sp), d2
 	movbu	(0x1c, sp), d1
 	movbu	(0x1a, sp), d0
@@ -206124,7 +206121,7 @@ AcDrawVariProc_L1bf:
 	mov	(0x40, sp), a2
 	mov	d2, d1
 	mov	a2, a0
-	call	func_4C07BBF5_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x10, a2)
 	bra	AcDrawVariProc_L215
@@ -206643,7 +206640,7 @@ AcSndExpVariProc_L1c:
 	movhu	(0x5003393a), d0
 	add	0x1c, a0
 	movbu	d0, (0x21, sp)
-	call	func_4C07C25A_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	mov	(0x44, sp), a1
 	mov	Str_d_d_d, d0
 	mov	a1, (8, sp)
@@ -206685,7 +206682,7 @@ AcSndExpVariProc_L72:
 	movhu	(0x5003393a), d0
 	add	0x1c, a0
 	movbu	d0, (0x21, sp)
-	call	func_4C07C25A_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwToBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(0x1e, sp), d1
 	movbu	(0x1f, sp), d0
 	movbu	(0x20, sp), d3
@@ -207553,19 +207550,19 @@ func_4C072DC0_entry_L129:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
 
-FavSetText:
+MmmMtune:
 	movm	[d2,d3], (sp)
 	add	-0x10, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	MT_GetLargeStep, d2
-	bge	FavSetText_L12
-	jmp	FavSetText_Ld1
-FavSetText_L12:
+	bge	MmmMtune_L12
+	jmp	MmmMtune_Ld1
+MmmMtune_L12:
 	cmp	MT_GetMmmData, d2
-	ble	FavSetText_L1d
-	jmp	FavSetText_Ld1
-FavSetText_L1d:
+	ble	MmmMtune_L1d
+	jmp	MmmMtune_Ld1
+MmmMtune_L1d:
 	mov	FavSetText_L1d_Records, a1
 	add	0xfe5fffc3, d2
 	mov	0xf, d0
@@ -207575,21 +207572,21 @@ FavSetText_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	FavSetText_L4e
+	beq	MmmMtune_L4e
 	setlb
 	cmp	0, d0
-	bne	FavSetText_L40
-	jmp	FavSetText_Ld1
-FavSetText_L40:
+	bne	MmmMtune_L40
+	jmp	MmmMtune_Ld1
+MmmMtune_L40:
 	add	8, a0
 	cmp	AcTechniChordProc_L1d_Records, a0
-	bcs	FavSetText_L4b
+	bcs	MmmMtune_L4b
 	mov	a1, a0
-FavSetText_L4b:
+MmmMtune_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-FavSetText_L4e:
+MmmMtune_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C072F45:
@@ -207599,11 +207596,11 @@ loc_4C072F45:
 	movhu	(a1), d0
 	exth	d0
 	cmp	0xc0, d0
-	blt	FavSetText_L88
+	blt	MmmMtune_L88
 	movhu	(a1), d0
 	exth	d0
 	cmp	0xff, d0
-	bgt	FavSetText_L88
+	bgt	MmmMtune_L88
 	movhu	(a1), d0
 	mov	(0xc, a0), a0
 	exth	d0
@@ -207613,8 +207610,8 @@ loc_4C072F45:
 	mov	FavSetText_L4e_Table, a1
 	mov	(d0, a1), a1
 	call	strcpy_entry, [a2], 4
-	bra	FavSetText_L9e
-FavSetText_L88:
+	bra	MmmMtune_L9e
+MmmMtune_L88:
 	movhu	(a1), d0
 	mov	(0xc, a0), a0
 	exth	d0
@@ -207622,44 +207619,44 @@ FavSetText_L88:
 	mov	FavSetText_L88_Table, a1
 	mov	(d0, a1), a1
 	call	strcpy_entry, [a2], 4
-FavSetText_L9e:
+MmmMtune_L9e:
 	mov	d3, d0
-	bra	FavSetText_Ld2
+	bra	MmmMtune_Ld2
 loc_4C072F93:
 	clr	d0
-	bra	FavSetText_Ld2
+	bra	MmmMtune_Ld2
 loc_4C072F96:
 	clr	d0
-	bra	FavSetText_Ld2
+	bra	MmmMtune_Ld2
 loc_4C072F99:
 	mov	(0x28, sp), a0
 	clr	d0
 	mov	(a0), d1
 	btst	0x00ffffff, d1
-	bne	FavSetText_Ld2
+	bne	MmmMtune_Ld2
 	mov	1, d0
-	bra	FavSetText_Ld2
+	bra	MmmMtune_Ld2
 loc_4C072FA9:
 	mov	(0x28, sp), a0
 	mov	(4, a0), d0
 	and	0xff, d0
 	extbu	d0
-	bra	FavSetText_Ld2
+	bra	MmmMtune_Ld2
 loc_4C072FB4:
 	mov	4, d0
-	bra	FavSetText_Ld2
+	bra	MmmMtune_Ld2
 loc_4C072FB8:
 	mov	1, d0
-	bra	FavSetText_Ld2
+	bra	MmmMtune_Ld2
 loc_4C072FBC:
 	mov	1, d0
-	bra	FavSetText_Ld2
+	bra	MmmMtune_Ld2
 loc_4C072FC0:
 	clr	d0
-	bra	FavSetText_Ld2
-FavSetText_Ld1:
+	bra	MmmMtune_Ld2
+MmmMtune_Ld1:
 	clr	d0
-FavSetText_Ld2:
+MmmMtune_Ld2:
 	ret	[d2,d3], 0x18
 
 TtSdtecd:
@@ -208221,37 +208218,37 @@ AcTechniChordProc_L4e3:
 AcTechniChordProc_L4f0:
 	ret	[d2,d3,a2,a3], 0x64
 
-func_4C07352A:
+MmmOrchestrator:
 	movm	[d2], (sp)
 	add	-0x10, sp
 	mov	d0, d2
 	cmp	MT_GetMmmString, d1
-	beq	func_4C07352A_L46
+	beq	MmmOrchestrator_L46
 	cmp	MT_GetMmmParam1, d1
-	beq	func_4C07352A_L80
+	beq	MmmOrchestrator_L80
 	cmp	MT_GetMmmParam2, d1
-	beq	func_4C07352A_L88
+	beq	MmmOrchestrator_L88
 	cmp	MT_CheckMmmData, d1
-	beq	func_4C07352A_L8b
+	beq	MmmOrchestrator_L8b
 	cmp	MT_GetMmmData, d1
-	bne	func_4C07352A_L31
-	jmp	func_4C07352A_La1
-func_4C07352A_L31:
+	bne	MmmOrchestrator_L31
+	jmp	MmmOrchestrator_La1
+MmmOrchestrator_L31:
 	cmp	MT_GetLargeStep, d1
-	bne	func_4C07352A_L3c
-	jmp	func_4C07352A_Lac
-func_4C07352A_L3c:
+	bne	MmmOrchestrator_L3c
+	jmp	MmmOrchestrator_Lac
+MmmOrchestrator_L3c:
 	cmp	MT_GetSmallStep, d1
-	beq	func_4C07352A_Lb0
-	bra	func_4C07352A_Lb4
-func_4C07352A_L46:
+	beq	MmmOrchestrator_Lb0
+	bra	MmmOrchestrator_Lb4
+MmmOrchestrator_L46:
 	mov	(0x24, sp), a0
 	mov	8, a1
 	add	a0, a1
 	movhu	(a1), d0
 	exth	d0
 	cmp	0xff, d0
-	beq	func_4C07352A_L6d
+	beq	MmmOrchestrator_L6d
 	movhu	(a1), d0
 	mov	(0xc, a0), a0
 	exth	d0
@@ -208259,44 +208256,44 @@ func_4C07352A_L46:
 	mov	func_4C07352A_L46_Table, a1
 	mov	(d0, a1), a1
 	call	strcpy_entry, [a2], 4
-	bra	func_4C07352A_L7d
-func_4C07352A_L6d:
+	bra	MmmOrchestrator_L7d
+MmmOrchestrator_L6d:
 	mov	(0xc, a0), a0
 	mov	Str_CONDUCTOR_2, a1
 	call	strcpy_entry, [a2], 4
-func_4C07352A_L7d:
+MmmOrchestrator_L7d:
 	mov	d2, d0
-	bra	func_4C07352A_Lb5
-func_4C07352A_L80:
+	bra	MmmOrchestrator_Lb5
+MmmOrchestrator_L80:
 	mov	0x00008082, d0
-	bra	func_4C07352A_Lb5
-func_4C07352A_L88:
+	bra	MmmOrchestrator_Lb5
+MmmOrchestrator_L88:
 	clr	d0
-	bra	func_4C07352A_Lb5
-func_4C07352A_L8b:
+	bra	MmmOrchestrator_Lb5
+MmmOrchestrator_L8b:
 	mov	(0x24, sp), a0
 	clr	d0
 	mov	(a0), d1
 	and	0x00ffffff, d1
 	cmp	0x8082, d1
-	bne	func_4C07352A_Lb5
+	bne	MmmOrchestrator_Lb5
 	mov	1, d0
-	bra	func_4C07352A_Lb5
-func_4C07352A_La1:
+	bra	MmmOrchestrator_Lb5
+MmmOrchestrator_La1:
 	mov	(0x24, sp), a0
 	mov	(4, a0), d0
 	and	0xff, d0
 	extbu	d0
-	bra	func_4C07352A_Lb5
-func_4C07352A_Lac:
+	bra	MmmOrchestrator_Lb5
+MmmOrchestrator_Lac:
 	mov	1, d0
-	bra	func_4C07352A_Lb5
-func_4C07352A_Lb0:
+	bra	MmmOrchestrator_Lb5
+MmmOrchestrator_Lb0:
 	mov	1, d0
-	bra	func_4C07352A_Lb5
-func_4C07352A_Lb4:
+	bra	MmmOrchestrator_Lb5
+MmmOrchestrator_Lb4:
 	clr	d0
-func_4C07352A_Lb5:
+MmmOrchestrator_Lb5:
 	ret	[d2], 0x14
 
 AcTcdImageProc:
@@ -213261,7 +213258,7 @@ func_4C076609_entry_L15a:
 	extbu	d2
 	mov	d3, a0
 	mov	d2, d0
-	call	func_4C07BBF5_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x58, sp)
 	mov	(0x30, sp), a0
@@ -216679,68 +216676,69 @@ CheckMessage_Le7:
 	clr	d0
 CheckMessage_Le8:
 	ret	[a2,a3], 0x1c
-loc_4C0789F3:
+
+MessageText:
 	add	-8, sp
 	cmp	MT_GetLanguagePtr, d1
-	beq	CheckMessage_L100
+	beq	MessageText_L15
 	cmp	MT_IsEucCode, d1
-	beq	CheckMessage_L15c
-	bra	CheckMessage_L160
-CheckMessage_L100:
+	beq	MessageText_L71
+	bra	MessageText_L75
+MessageText_L15:
 	movhu	(0x500339b4), d0
 	exth	d0
 	cmp	0x1a, d0
-	bne	CheckMessage_L14c
+	bne	MessageText_L61
 	call	func_4C0B55F1, 0, 0
 	cmp	0, d0
-	beq	CheckMessage_L124
+	beq	MessageText_L39
 	cmp	1, d0
-	beq	CheckMessage_L12c
+	beq	MessageText_L41
 	cmp	2, d0
-	beq	CheckMessage_L134
+	beq	MessageText_L49
 	cmp	3, d0
-	beq	CheckMessage_L13c
-	bra	CheckMessage_L144
-CheckMessage_L124:
+	beq	MessageText_L51
+	bra	MessageText_L59
+MessageText_L39:
 	mov	ptrs_4C1BD664, d0
-	bra	CheckMessage_L161
-CheckMessage_L12c:
+	bra	MessageText_L76
+MessageText_L41:
 	mov	ptrs_4C1BD88C, d0
-	bra	CheckMessage_L161
-CheckMessage_L134:
+	bra	MessageText_L76
+MessageText_L49:
 	mov	ptrs_4C1BDAD0, d0
-	bra	CheckMessage_L161
-CheckMessage_L13c:
+	bra	MessageText_L76
+MessageText_L51:
 	mov	ptrs_4C1BDCE4, d0
-	bra	CheckMessage_L161
-CheckMessage_L144:
+	bra	MessageText_L76
+MessageText_L59:
 	mov	ptrs_4C1BD664, d0
-	bra	CheckMessage_L161
-CheckMessage_L14c:
+	bra	MessageText_L76
+MessageText_L61:
 	asl	4, d0
 	mov	d0, a0
 	add	TtMessage_L39_Table, a0
 	mov	(0xc, a0), d0
-	bra	CheckMessage_L161
-CheckMessage_L15c:
+	bra	MessageText_L76
+MessageText_L71:
 	mov	1, d0
-	bra	CheckMessage_L161
-CheckMessage_L160:
+	bra	MessageText_L76
+MessageText_L75:
 	clr	d0
-CheckMessage_L161:
+MessageText_L76:
 	ret	0, 8
 
-func_4C078A6C:
+MessageHeader:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x20, sp
 	cmp	MT_GetLanguagePtr, d1
-	beq	func_4C078A6C_L1b
+	beq	MessageHeader_L1b
 	cmp	MT_IsEucCode, d1
-	bne	func_4C078A6C_L18
-	jmp	func_4C078A6C_Le6
-func_4C078A6C_L18:
-	jmp	func_4C078A6C_Lea
-func_4C078A6C_L1b:
+	bne	MessageHeader_L18
+	jmp	MessageHeader_Le6
+MessageHeader_L18:
+	jmp	MessageHeader_Lea
+MessageHeader_L1b:
 	movhu	(0x500339b4), d1
 	mov	TtMessage_L39_Table, a3
 	exth	d1
@@ -216749,9 +216747,9 @@ func_4C078A6C_L1b:
 	movhu	(d0, a3), d0
 	exth	d0
 	cmp	3, d0
-	beq	func_4C078A6C_L36
-	jmp	func_4C078A6C_Ldc
-func_4C078A6C_L36:
+	beq	MessageHeader_L36
+	jmp	MessageHeader_Ldc
+MessageHeader_L36:
 	mov	0x10, d0
 	call	Malloc_entry, [d2,a2,a3], 0x28
 	mov	a0, (0x18, sp)
@@ -216762,7 +216760,7 @@ func_4C078A6C_L36:
 	call	PostEvent_entry, [d2,d3], 0x24
 	clr	d0
 	clr	d3
-func_4C078A6C_L56:
+MessageHeader_L56:
 	movhu	(0x500339b4), d1
 	mov	d0, d2
 	exth	d1
@@ -216812,22 +216810,22 @@ func_4C078A6C_L56:
 	mov	a2, (d2, a0)
 	exthu	d3
 	cmp	3, d3
-	bgt	func_4C078A6C_Ld8
-	bra	func_4C078A6C_L56
-func_4C078A6C_Ld8:
+	bgt	MessageHeader_Ld8
+	bra	MessageHeader_L56
+MessageHeader_Ld8:
 	mov	(0x1c, sp), d0
-	bra	func_4C078A6C_Leb
-func_4C078A6C_Ldc:
+	bra	MessageHeader_Leb
+MessageHeader_Ldc:
 	asl	4, d1
 	add	d1, a3
 	mov	(8, a3), d0
-	bra	func_4C078A6C_Leb
-func_4C078A6C_Le6:
+	bra	MessageHeader_Leb
+MessageHeader_Le6:
 	mov	1, d0
-	bra	func_4C078A6C_Leb
-func_4C078A6C_Lea:
+	bra	MessageHeader_Leb
+MessageHeader_Lea:
 	clr	d0
-func_4C078A6C_Leb:
+MessageHeader_Leb:
 	ret	[d2,d3,a2,a3], 0x30
 
 TtFavorite:
@@ -217937,7 +217935,7 @@ loc_4C079594:
 	extbu	d0
 	mov	a2, a0
 	mov	d2, d1
-	call	func_4C07BBF5_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x40, sp)
 	mov	(0x60, sp), a0
@@ -217975,7 +217973,7 @@ loc_4C079643:
 	mov	d1, d0
 	mov	a2, a0
 	mov	d2, d1
-	call	func_4C07BBF5_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x40, sp)
 	mov	(0x60, sp), a1
@@ -219915,21 +219913,22 @@ AcFavItemProc_L31f:
 	mov	(0x54, sp), d0
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 	ret	[d2,d3,a2,a3], 0x4c
-loc_4C07A9B0:
+
+FavSetText:
 	cmp	MT_GetLanguagePtr, d1
-	beq	AcFavItemProc_L342
+	beq	FavSetText_L12
 	cmp	MT_IsEucCode, d1
-	beq	AcFavItemProc_L34a
-	bra	AcFavItemProc_L34e
-AcFavItemProc_L342:
+	beq	FavSetText_L1a
+	bra	FavSetText_L1e
+FavSetText_L12:
 	mov	ptrs_4C1C7EC0, d0
-	bra	AcFavItemProc_L34f
-AcFavItemProc_L34a:
+	bra	FavSetText_L1f
+FavSetText_L1a:
 	mov	1, d0
-	bra	AcFavItemProc_L34f
-AcFavItemProc_L34e:
+	bra	FavSetText_L1f
+FavSetText_L1e:
 	clr	d0
-AcFavItemProc_L34f:
+FavSetText_L1f:
 	retf	0, 0
 
 func_4C07A9D2:
@@ -220319,95 +220318,95 @@ func_4C07AD6B:
 
 func_4C07AD6B_entry:
 	mov	0x400, d0
-	movhu	d0, (0x32000010)
+	movhu	d0, (UNKNOWN_32000010)
 	call	func_4C07B2B2, 0, 0
 	extbu	d0
 	cmp	1, d0
 	beq	func_4C07AD6B_entry_L15
 	bra	func_4C07AD6B_entry_L8e
 func_4C07AD6B_entry_L15:
-	movhu	(0x32000020), d0
+	movhu	(MEMCTR0), d0
 	or	0x04, d0
-	movhu	d0, (0x32000020)
-	movhu	(0x32000020), d0
+	movhu	d0, (MEMCTR0)
+	movhu	(MEMCTR0), d0
 	and	0xe0ff, d0
 	or	0x0800, d0
-	movhu	d0, (0x32000020)
+	movhu	d0, (MEMCTR0)
 	mov	0x804, d0
-	movhu	d0, (0x32000022)
-	movhu	d0, (0x32000024)
+	movhu	d0, (MEMCTR1)
+	movhu	d0, (MEMCTR2)
 	mov	0x824, d0
-	movhu	d0, (0x32000026)
-	movhu	(0x32000020), d0
+	movhu	d0, (MEMCTR3)
+	movhu	(MEMCTR0), d0
 	btst	0x8000, d0
 	bne	func_4C07AD6B_entry_L5e
 	bra	func_4C07AD6B_entry_L69
 func_4C07AD6B_entry_L5e:
 	mov	0x287, d0
-	movhu	d0, (0x32000040)
+	movhu	d0, (SDRAM_CTRL)
 	bra	func_4C07AD6B_entry_L72
 func_4C07AD6B_entry_L69:
 	mov	0x3bf, d0
-	movhu	d0, (0x32000040)
+	movhu	d0, (SDRAM_CTRL)
 func_4C07AD6B_entry_L72:
 	mov	0x7d0, d0
-	movhu	d0, (0x32000042)
+	movhu	d0, (SDRAM_REFRESH)
 	mov	0x865, d0
-	movhu	d0, (0x32000028)
+	movhu	d0, (MEMCTR4)
 	mov	4, d0
-	movhu	d0, (0x3200002a)
+	movhu	d0, (MEMCTR5)
 	bra	func_4C07AD6B_entry_L108
 func_4C07AD6B_entry_L8e:
-	movhu	(0x32000020), d0
+	movhu	(MEMCTR0), d0
 	or	0x04, d0
-	movhu	d0, (0x32000020)
-	movhu	(0x32000020), d0
+	movhu	d0, (MEMCTR0)
+	movhu	(MEMCTR0), d0
 	and	0xe0ff, d0
 	or	0x0900, d0
-	movhu	d0, (0x32000020)
+	movhu	d0, (MEMCTR0)
 	mov	0xb24, d0
-	movhu	d0, (0x32000022)
+	movhu	d0, (MEMCTR1)
 	mov	0x924, d0
-	movhu	d0, (0x32000024)
+	movhu	d0, (MEMCTR2)
 	mov	0x704, d0
-	movhu	d0, (0x32000026)
-	movhu	(0x32000020), d0
+	movhu	d0, (MEMCTR3)
+	movhu	(MEMCTR0), d0
 	btst	0x8000, d0
 	bne	func_4C07AD6B_entry_Lda
 	bra	func_4C07AD6B_entry_Le5
 func_4C07AD6B_entry_Lda:
 	mov	0x287, d0
-	movhu	d0, (0x32000040)
+	movhu	d0, (SDRAM_CTRL)
 	bra	func_4C07AD6B_entry_Lee
 func_4C07AD6B_entry_Le5:
 	mov	0x297, d0
-	movhu	d0, (0x32000040)
+	movhu	d0, (SDRAM_CTRL)
 func_4C07AD6B_entry_Lee:
 	mov	0x7d0, d0
-	movhu	d0, (0x32000042)
+	movhu	d0, (SDRAM_REFRESH)
 	mov	0x765, d0
-	movhu	d0, (0x32000028)
+	movhu	d0, (MEMCTR4)
 	mov	4, d0
-	movhu	d0, (0x3200002a)
+	movhu	d0, (MEMCTR5)
 func_4C07AD6B_entry_L108:
 	clr	d0
-	movhu	d0, (0x3200002c)
+	movhu	d0, (MEMCTR6)
 	mov	2, d0
-	movhu	d0, (0x3200002e)
+	movhu	d0, (MEMCTR7)
 	mov	0xfe, d0
-	movbu	d0, (0x36008024)
+	movbu	d0, (P24)
 	mov	2, d0
-	movbu	d0, (0x36008044)
+	movbu	d0, (P44)
 	mov	2, d0
-	mov	d0, (0x36008004)
+	mov	d0, (P04)
 	mov	0xff, d0
-	movbu	d0, (0x36008064)
+	movbu	d0, (P64)
 	clr	d0
-	movbu	d0, (0x36008025)
+	movbu	d0, (P25)
 	mov	3, d0
-	movbu	d0, (0x36008065)
+	movbu	d0, (P65)
 	mov	0x0000ffff, d0
-	movhu	d0, (0x34000280)
+	movhu	d0, (EXTMD)
 	ret	0, 8
 
 func_4C07AEC5:
@@ -220420,7 +220419,7 @@ func_4C07AEC5_entry:
 	mov	d0, (0x18, sp)
 	mov	7, d0
 	movhu	d0, (0x1c, sp)
-	mov	0x3400011c, d0
+	mov	G7ICR, d0
 	mov	d0, (0x20, sp)
 	clr	d0
 	movhu	d0, (0x24, sp)
@@ -220439,15 +220438,15 @@ func_4C07AEC5_entry:
 	mov	d0, (0x50276e48)
 	call	func_4C07B1B9, 0, 0
 	mov	0xfa0, d0
-	movhu	d0, (0x34001092)
+	movhu	d0, (TM5BR)
 	mov	0x81, d0
-	movbu	d0, (0x34001082)
+	movbu	d0, (TM5MD)
 	mov	0x7d0, d0
-	movhu	d0, (0x34001090)
+	movhu	d0, (TM4BR)
 	mov	0x81, d0
-	movbu	d0, (0x34001080)
+	movbu	d0, (TM4MD)
 	mov	0x80, d0
-	movbu	d0, (0x34001071)
+	movbu	d0, (TMPSCNT)
 	ret	0, 0x28
 
 func_4C07AF4A:
@@ -220495,7 +220494,7 @@ func_4C07AF4A_entry_L7b:
 	movbu	d0, (0x9cc00020)
 	mov	7, d0
 	movbu	d0, (0x9cc00020)
-	bset	0x04, (0x36008004)
+	bset	0x04, (P04)
 	call	func_4C07B1C3, 0, 0
 	call	func_4C07B923_entry, [a2], 0x14
 	mov	0x80, d0
@@ -220503,87 +220502,87 @@ func_4C07AF4A_entry_L7b:
 	ret	0, 0xc
 
 func_4C07B006:
-	movhu	(0x34000108), d0
+	movhu	(G2ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000108)
-	movhu	(0x3400010c), d0
+	movhu	d0, (G2ICR)
+	movhu	(G3ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x3400010c)
-	movhu	(0x34000110), d0
+	movhu	d0, (G3ICR)
+	movhu	(G4ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000110)
-	movhu	(0x34000114), d0
+	movhu	d0, (G4ICR)
+	movhu	(G5ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000114)
-	movhu	(0x34000118), d0
+	movhu	d0, (G5ICR)
+	movhu	(G6ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000118)
-	movhu	(0x3400011c), d0
+	movhu	d0, (G6ICR)
+	movhu	(G7ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x3400011c)
-	movhu	(0x34000120), d0
+	movhu	d0, (G7ICR)
+	movhu	(G8ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000120)
-	movhu	(0x34000124), d0
+	movhu	d0, (G8ICR)
+	movhu	(G9ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000124)
-	movhu	(0x34000128), d0
+	movhu	d0, (G9ICR)
+	movhu	(G10ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000128)
-	movhu	(0x34000130), d0
+	movhu	d0, (G10ICR)
+	movhu	(G12ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000130)
-	movhu	(0x34000134), d0
+	movhu	d0, (G12ICR)
+	movhu	(G13ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000134)
-	movhu	(0x34000138), d0
+	movhu	d0, (G13ICR)
+	movhu	(G14ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000138)
-	movhu	(0x3400013c), d0
+	movhu	d0, (G14ICR)
+	movhu	(G15ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x3400013c)
-	movhu	(0x34000140), d0
+	movhu	d0, (G15ICR)
+	movhu	(G16ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000140)
-	movhu	(0x34000144), d0
+	movhu	d0, (G16ICR)
+	movhu	(G17ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000144)
-	movhu	(0x34000148), d0
+	movhu	d0, (G17ICR)
+	movhu	(G18ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000148)
-	movhu	(0x3400014c), d0
+	movhu	d0, (G18ICR)
+	movhu	(G19ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x3400014c)
-	movhu	(0x34000150), d0
+	movhu	d0, (G19ICR)
+	movhu	(G20ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000150)
-	movhu	(0x34000154), d0
+	movhu	d0, (G20ICR)
+	movhu	(G21ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000154)
-	movhu	(0x3400015c), d0
+	movhu	d0, (G21ICR)
+	movhu	(G23ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x3400015c)
-	movhu	(0x34000160), d0
+	movhu	d0, (G23ICR)
+	movhu	(G24ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000160)
-	movhu	(0x34000164), d0
+	movhu	d0, (G24ICR)
+	movhu	(G25ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000164)
-	movhu	(0x34000168), d0
+	movhu	d0, (G25ICR)
+	movhu	(G26ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000168)
-	movhu	(0x3400016c), d0
+	movhu	d0, (G26ICR)
+	movhu	(G27ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x3400016c)
-	movhu	(0x34000170), d0
+	movhu	d0, (G27ICR)
+	movhu	(G28ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000170)
-	movhu	(0x34000174), d0
+	movhu	d0, (G28ICR)
+	movhu	(G29ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000174)
-	movhu	(0x34000178), d0
+	movhu	d0, (G29ICR)
+	movhu	(G30ICR), d0
 	and	0xfeff, d0
-	movhu	d0, (0x34000178)
+	movhu	d0, (G30ICR)
 	ret	0, 0
 
 func_4C07B1B9:
@@ -220777,37 +220776,37 @@ func_4C07B331:
 	add	-0xc, sp
 	call	func_4C07B006, 0, 0
 	mov	0x0000ffff, d0
-	movhu	d0, (0x34001092)
+	movhu	d0, (TM5BR)
 	mov	0x82, d0
-	movbu	d0, (0x34001082)
-	movhu	(0x340010a2), d0
+	movbu	d0, (TM5MD)
+	movhu	(TM5BC), d0
 	movhu	d0, (8, sp)
 	clr	d0
 	movhu	d0, (0x9000000e)
-	bclr	0x04, (0x36008004)
+	bclr	0x04, (P04)
 	call	DCacheFlushDisable, 0, 0
-	bclr	0x20, (0x36008004)
-	bset	0x20, (0x36008004)
-	bclr	0x20, (0x36008004)
-	bset	0x20, (0x36008004)
+	bclr	0x20, (P04)
+	bset	0x20, (P04)
+	bclr	0x20, (P04)
+	bset	0x20, (P04)
 	call	func_4C07B3D4, 0, 0x10
-	bclr	0x20, (0x36008004)
-	bset	0x20, (0x36008004)
-	bclr	0x20, (0x36008004)
-	bset	0x20, (0x36008004)
+	bclr	0x20, (P04)
+	bset	0x20, (P04)
+	bclr	0x20, (P04)
+	bset	0x20, (P04)
 	clr	d0
 	movbu	d0, (0x50033b65)
 func_4C07B331_L7f:
 	movhu	(8, sp), d1
 	exth	d1
-	movhu	(0x340010a2), d0
+	movhu	(TM5BC), d0
 	exth	d0
 	sub	d0, d1
 	cmp	0x1b58, d1
 	bge	func_4C07B331_L94
 	bra	func_4C07B331_L7f
 func_4C07B331_L94:
-	bset	0x08, (0x36008004)
+	bset	0x08, (P04)
 func_4C07B331_L9b:
 	bra	func_4C07B331_L9b
 # func_4C07B331 + 0x9d: no traced path reaches what follows (--decode-gaps)
@@ -221077,14 +221076,14 @@ func_4C07B574_L12f:
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x3400011c), d0
+	movhu	(G7ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x3400011c)
+	movhu	d0, (G7ICR)
 	or	0x0800, psw
 	nop
 	nop
-	movhu	(0x3400011c), d0
+	movhu	(G7ICR), d0
 	ret	0, 8
 
 func_4C07B6CB:
@@ -221743,40 +221742,40 @@ func_4C07BBAD_entry_L2b:
 func_4C07BBAD_entry_L40:
 	ret	[d2,a2], 0x20
 
-func_4C07BBF5:
+SoundNameGet:
 	movm	[d2,a2], (sp)
 	add	-0x24, sp
 
-func_4C07BBF5_entry:
+SoundNameGet_entry:
 	mov	a0, a2
 	mov	d1, d2
 	extbu	d0
 	cmp	0x10, d0
-	beq	func_4C07BBF5_entry_L15
+	beq	SoundNameGet_entry_L15
 	cmp	0x11, d0
-	beq	func_4C07BBF5_entry_L1f
+	beq	SoundNameGet_entry_L1f
 	cmp	0x18, d0
-	beq	func_4C07BBF5_entry_L29
+	beq	SoundNameGet_entry_L29
 	cmp	0x19, d0
-	beq	func_4C07BBF5_entry_L33
-	bra	func_4C07BBF5_entry_L3d
-func_4C07BBF5_entry_L15:
+	beq	SoundNameGet_entry_L33
+	bra	SoundNameGet_entry_L3d
+SoundNameGet_entry_L15:
 	movbu	(0x3c, sp), d0
 	call	func_4C07D5D8, 0, 0
-	bra	func_4C07BBF5_entry_L67
-func_4C07BBF5_entry_L1f:
+	bra	SoundNameGet_entry_L67
+SoundNameGet_entry_L1f:
 	movbu	(0x3c, sp), d0
 	call	func_4C07D5EC, 0, 0
-	bra	func_4C07BBF5_entry_L67
-func_4C07BBF5_entry_L29:
+	bra	SoundNameGet_entry_L67
+SoundNameGet_entry_L29:
 	movbu	(0x3c, sp), d0
 	call	func_4C07CDF8_entry, 0, 0x14
-	bra	func_4C07BBF5_entry_L67
-func_4C07BBF5_entry_L33:
+	bra	SoundNameGet_entry_L67
+SoundNameGet_entry_L33:
 	movbu	(0x3c, sp), d0
 	call	func_4C07CE15_entry, 0, 0x14
-	bra	func_4C07BBF5_entry_L67
-func_4C07BBF5_entry_L3d:
+	bra	SoundNameGet_entry_L67
+SoundNameGet_entry_L3d:
 	movbu	(0x3c, sp), d1
 	extbu	d2
 	mov	d1, (0x10, sp)
@@ -221785,15 +221784,15 @@ func_4C07BBF5_entry_L3d:
 	mov	sp, a1
 	add	0x1c, a1
 	mov	d2, d1
-	call	func_4C09AF1B_entry, [d2,a2], 0x20
+	call	SoundToneIndexGet_entry, [d2,a2], 0x20
 	exth	d0
 	cmp	0, d0
 	mov	Str_WRONG_SW_NUMBER_Sound_Name_ErrorSName_Er+16, a0
-	beq	func_4C07BBF5_entry_L67
+	beq	SoundNameGet_entry_L67
 	movhu	(0x20, sp), d0
 	movbu	(0x1c, sp), d1
 	call	func_4C07C4B7_entry, [d2,d3], 0xc
-func_4C07BBF5_entry_L67:
+SoundNameGet_entry_L67:
 	clr	d0
 	clr	d2
 	setlb
@@ -221934,11 +221933,11 @@ func_4C07BCCF_entry_L7a:
 	call	set_flg, 0, 0
 	ret	[d2,d3,a2], 0x2c
 
-func_4C07BD5C:
+SoundIconFetch:
 	movm	[d2], (sp)
 	add	-0x1c, sp
 
-func_4C07BD5C_entry:
+SoundIconFetch_entry:
 	mov	d0, d2
 	movbu	(0x30, sp), d0
 	extbu	d2
@@ -221947,13 +221946,13 @@ func_4C07BD5C_entry:
 	mov	sp, a0
 	add	0x18, a0
 	mov	d2, d0
-	call	func_4C09AEF1_entry, [d2,a2], 0x24
+	call	SoundIconGet_entry, [d2,a2], 0x24
 	exth	d0
 	cmp	0, d0
-	bne	func_4C07BD5C_entry_L1c
+	bne	SoundIconFetch_entry_L1c
 	clr	d0
 	movbu	d0, (0x18, sp)
-func_4C07BD5C_entry_L1c:
+SoundIconFetch_entry_L1c:
 	movbu	(0x18, sp), d0
 	ret	[d2], 0x20
 
@@ -222481,7 +222480,7 @@ func_4C07C132_entry:
 	call	VoiceDirPartRefProbe_entry, [d2,d3,a2,a3], 0x28
 	ret	[d2], 0x20
 
-func_4C07C14F:
+SoundSwFromBankState0:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x28, sp
 	mov	a0, a3
@@ -222512,14 +222511,14 @@ func_4C07C14F:
 	mov	a2, (0x1c, sp)
 	mov	d2, a1
 	mov	d3, d1
-	call	func_4C09AE66_entry, [d2,a2,a3], 0x28
+	call	SoundSwNoGet_entry, [d2,a2,a3], 0x28
 	exth	d0
 	cmp	0, d0
-	bne	func_4C07C14F_L46
+	bne	SoundSwFromBankState0_L46
 	clr	d0
 	movbu	d0, (0x20, sp)
 	movbu	d0, (a2)
-func_4C07C14F_L46:
+SoundSwFromBankState0_L46:
 	mov	sp, a1
 	add	0x20, a1
 	mov	-6, d1
@@ -222532,11 +222531,11 @@ func_4C07C14F_L46:
 	lne
 	ret	[d2,d3,a2,a3], 0x38
 
-func_4C07C1A6:
+SoundSwFromBank:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x28, sp
 
-func_4C07C1A6_entry:
+SoundSwFromBank_entry:
 	mov	a0, a3
 	mov	a3, a1
 	mov	sp, a0
@@ -222563,14 +222562,14 @@ func_4C07C1A6_entry:
 	mov	d3, d1
 	mov	5, a0
 	add	d2, a0
-	call	func_4C09AE66_entry, [d2,a2,a3], 0x28
+	call	SoundSwNoGet_entry, [d2,a2,a3], 0x28
 	exth	d0
 	cmp	0, d0
-	bne	func_4C07C1A6_entry_L3e
+	bne	SoundSwFromBank_entry_L3e
 	clr	d0
 	movbu	d0, (0x20, sp)
 	movbu	d0, (a2)
-func_4C07C1A6_entry_L3e:
+SoundSwFromBank_entry_L3e:
 	mov	sp, a1
 	add	0x20, a1
 	mov	-6, d1
@@ -222583,7 +222582,7 @@ func_4C07C1A6_entry_L3e:
 	lne
 	ret	[d2,d3,a2,a3], 0x38
 
-func_4C07C1FA:
+SoundSwToBankState0:
 	movm	[d2,a2,a3], (sp)
 	add	-0x28, sp
 	mov	a0, (0x3c, sp)
@@ -222615,17 +222614,17 @@ func_4C07C1FA:
 	mov	d2, (0x1c, sp)
 	mov	a3, a1
 	clr	d0
-	call	func_4C09B0B4_entry, [d2,a2,a3], 0x18
+	call	SoundSwNoBankGet_entry, [d2,a2,a3], 0x18
 	exth	d0
 	cmp	0, d0
-	bne	func_4C07C1FA_L4d
+	bne	SoundSwToBankState0_L4d
 	mov	0x14, d0
 	movbu	d0, (a2)
 	clr	d0
 	movbu	d0, (a3)
 	mov	d2, a0
 	movbu	d0, (a0)
-func_4C07C1FA_L4d:
+SoundSwToBankState0_L4d:
 	mov	sp, a1
 	add	0x20, a1
 	mov	(0x3c, sp), a0
@@ -222639,11 +222638,11 @@ func_4C07C1FA_L4d:
 	lne
 	ret	[d2,a2,a3], 0x34
 
-func_4C07C25A:
+SoundSwToBank:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x28, sp
 
-func_4C07C25A_entry:
+SoundSwToBank_entry:
 	mov	a0, (0x40, sp)
 	mov	a0, a1
 	mov	sp, a0
@@ -222672,17 +222671,17 @@ func_4C07C25A_entry:
 	add	4, d2
 	mov	d2, (0x1c, sp)
 	mov	a3, a1
-	call	func_4C09B0B4_entry, [d2,a2,a3], 0x18
+	call	SoundSwNoBankGet_entry, [d2,a2,a3], 0x18
 	exth	d0
 	cmp	0, d0
-	bne	func_4C07C25A_entry_L47
+	bne	SoundSwToBank_entry_L47
 	mov	0x14, d0
 	movbu	d0, (a2)
 	clr	d0
 	movbu	d0, (a3)
 	mov	d2, a0
 	movbu	d0, (a0)
-func_4C07C25A_entry_L47:
+SoundSwToBank_entry_L47:
 	mov	sp, a1
 	add	0x20, a1
 	mov	(0x40, sp), a0
@@ -222880,7 +222879,7 @@ func_4C07C3E9_entry:
 	add	0x20, a0
 	mov	sp, a1
 	add	0x1c, a1
-	call	func_4C09AF1B_entry, [d2,a2], 0x20
+	call	SoundToneIndexGet_entry, [d2,a2], 0x20
 	exth	d0
 	cmp	0, d0
 	bne	func_4C07C3E9_entry_L1d
@@ -223040,7 +223039,7 @@ func_4C07C520_entry:
 	mov	sp, a1
 	add	0x1c, a1
 	mov	d2, d1
-	call	func_4C09BB07_entry, [d2,d3,a2,a3], 0x1c
+	call	SoundBankIndexGet_entry, [d2,d3,a2,a3], 0x1c
 	movbu	(0x1c, sp), d0
 	cmp	0, d0
 	beq	func_4C07C520_entry_L29
@@ -223083,11 +223082,11 @@ func_4C07C520_entry_L61:
 func_4C07C520_entry_L7b:
 	ret	[d2], 0x28
 
-func_4C07C5A3:
+VoiceSubRecFetch:
 	movm	[d2,d3,a2], (sp)
 	add	-0x14, sp
 
-func_4C07C5A3_entry:
+VoiceSubRecFetch_entry:
 	movbu	(0x34, sp), d2
 	mov	d0, d3
 	mov	d2, (0x10, sp)
@@ -223103,10 +223102,10 @@ func_4C07C5A3_entry:
 	mov	d0, d1
 	extbu	d1
 	cmp	0xff, d1
-	bne	func_4C07C5A3_entry_L2a
+	bne	VoiceSubRecFetch_entry_L2a
 	call	func_4C07C628_entry, 0, 8
-	bra	func_4C07C5A3_entry_L38
-func_4C07C5A3_entry_L2a:
+	bra	VoiceSubRecFetch_entry_L38
+VoiceSubRecFetch_entry_L2a:
 	extbu	d0
 	mov	0x1c, d1
 	nop
@@ -223116,7 +223115,7 @@ func_4C07C5A3_entry_L2a:
 	add	a2, d1
 	add	d0, d1
 	mov	d1, a0
-func_4C07C5A3_entry_L38:
+VoiceSubRecFetch_entry_L38:
 	ret	[d2,d3,a2], 0x20
 
 func_4C07C5E3:
@@ -223164,19 +223163,19 @@ func_4C07C635:
 	call	func_4C07C68C_entry, [d2], 4
 	ret	0, 0x10
 
-func_4C07C642:
+VoiceModRecFetch:
 	movm	[d2,a2], (sp)
 	add	-0x10, sp
 
-func_4C07C642_entry:
+VoiceModRecFetch_entry:
 	mov	a0, a2
 	mov	d1, d2
 	extbu	d0
 	cmp	0x22, d0
-	beq	func_4C07C642_entry_Lb
+	beq	VoiceModRecFetch_entry_Lb
 	cmp	0x2a, d0
-	bne	func_4C07C642_entry_L1b
-func_4C07C642_entry_Lb:
+	bne	VoiceModRecFetch_entry_L1b
+VoiceModRecFetch_entry_Lb:
 	extbu	d2
 	mov	0x7a, d0
 	nop
@@ -223186,8 +223185,8 @@ func_4C07C642_entry_Lb:
 	add	a2, d0
 	add	d2, d0
 	mov	d0, a0
-	bra	func_4C07C642_entry_L42
-func_4C07C642_entry_L1b:
+	bra	VoiceModRecFetch_entry_L42
+VoiceModRecFetch_entry_L1b:
 	movbu	(0x11, a2), d1
 	extbu	d2
 	mov	d2, d0
@@ -223195,10 +223194,10 @@ func_4C07C642_entry_L1b:
 	mov	d0, d1
 	extbu	d1
 	cmp	0xff, d1
-	bne	func_4C07C642_entry_L34
+	bne	VoiceModRecFetch_entry_L34
 	call	func_4C07C5E3, 0, 0
-	bra	func_4C07C642_entry_L42
-func_4C07C642_entry_L34:
+	bra	VoiceModRecFetch_entry_L42
+VoiceModRecFetch_entry_L34:
 	extbu	d0
 	mov	0x7a, d1
 	nop
@@ -223208,7 +223207,7 @@ func_4C07C642_entry_L34:
 	add	a2, d1
 	add	d0, d1
 	mov	d1, a0
-func_4C07C642_entry_L42:
+VoiceModRecFetch_entry_L42:
 	ret	[d2,a2], 0x18
 
 func_4C07C68C:
@@ -224148,7 +224147,7 @@ func_4C07CE7C_entry_L1a:
 	mov	0x20, d0
 	extbu	d2
 	mov	d2, d1
-	call	func_4C07C642_entry, [d2,a2], 0x18
+	call	VoiceModRecFetch_entry, [d2,a2], 0x18
 func_4C07CE7C_entry_L2e:
 	ret	[d2], 0x18
 
@@ -224196,7 +224195,7 @@ func_4C07CEB2_entry_L28:
 	movbu	(2, a0), d0
 	mov	d0, (0x14, sp)
 	movbu	(0x2c, sp), d0
-	call	func_4C07C5A3_entry, [d2,d3,a2], 0x20
+	call	VoiceSubRecFetch_entry, [d2,d3,a2], 0x20
 func_4C07CEB2_entry_L53:
 	ret	[d2], 0x1c
 
@@ -224229,7 +224228,7 @@ func_4C07CF0D_entry_L20:
 	movbu	(0x34, sp), d2
 	mov	0x20, d0
 	mov	d2, d1
-	call	func_4C07C642_entry, [d2,a2], 0x18
+	call	VoiceModRecFetch_entry, [d2,a2], 0x18
 	movbu	(4, a0), d0
 	extbu	d3
 	and	0x7f, d0
@@ -224290,7 +224289,7 @@ func_4C07CF68_entry_L2c:
 	movbu	(2, a0), d0
 	mov	d0, (0x14, sp)
 	mov	d3, d0
-	call	func_4C07C5A3_entry, [d2,d3,a2], 0x20
+	call	VoiceSubRecFetch_entry, [d2,d3,a2], 0x20
 	movbu	(1, a0), d0
 	mov	d3, d1
 	and	0x7f, d0
@@ -225717,7 +225716,7 @@ func_4C07D9F2_entry:
 	movbu	(2, a0), d0
 	mov	d0, (0x14, sp)
 	clr	d0
-	call	func_4C07C5A3_entry, [d2,d3,a2], 0x20
+	call	VoiceSubRecFetch_entry, [d2,d3,a2], 0x20
 	mov	(0x18, sp), d1
 	mov	(0x50276e88), d0
 	mov	a0, a2
@@ -225782,7 +225781,7 @@ func_4C07D9F2_entry:
 	movbu	(2, a3), d0
 	mov	d0, (0x14, sp)
 	mov	1, d0
-	call	func_4C07C5A3_entry, [d2,d3,a2], 0x20
+	call	VoiceSubRecFetch_entry, [d2,d3,a2], 0x20
 	mov	(0x18, sp), d1
 	mov	(0x50276e88), d0
 	mov	a0, a2
@@ -230087,7 +230086,7 @@ loc_4C07FDD1:
 	call	func_4C095B39_entry, [d2,d3,a2,a3], 0x3c
 	call	TgPartProgramInitAll_entry, [d2], 0x20
 	call	TgLocalEditResetAll_entry, [d2], 0x10
-	call	func_4C088B09_entry, [d2,d3,a2,a3], 0x24
+	call	TgGlobalParamInit_entry, [d2,d3,a2,a3], 0x24
 	ret	0, 0x10
 loc_4C07FE66:
 	retf	0, 0
@@ -243416,11 +243415,11 @@ func_4C08687D:
 	mov	(d0, a0), d0
 	retf	0, 0
 
-func_4C08688A:
+TgPartEqCoefCalc:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x3c, sp
 
-func_4C08688A_entry:
+TgPartEqCoefCalc_entry:
 	extbu	d0
 	mov	0x548, d1
 	nop
@@ -243437,31 +243436,31 @@ func_4C08688A_entry:
 	mov	d2, a3
 	clr	d3
 	cmp	0, a3
-	bge	func_4C08688A_entry_L25
+	bge	TgPartEqCoefCalc_entry_L25
 	not	d2
 	inc	d2
-func_4C08688A_entry_L25:
+TgPartEqCoefCalc_entry_L25:
 	add	d0, d2
 	cmp	0x74, d0
-	ble	func_4C08688A_entry_L31
+	ble	TgPartEqCoefCalc_entry_L31
 	mov	a3, d3
 	mov	0x74, d2
 	mov	d2, d0
-	bra	func_4C08688A_entry_L44
-func_4C08688A_entry_L31:
+	bra	TgPartEqCoefCalc_entry_L44
+TgPartEqCoefCalc_entry_L31:
 	cmp	0x74, d2
-	ble	func_4C08688A_entry_L44
+	ble	TgPartEqCoefCalc_entry_L44
 	mov	-0x74, d3
 	add	d2, d3
 	cmp	0, a3
-	bge	func_4C08688A_entry_L42
+	bge	TgPartEqCoefCalc_entry_L42
 	mov	-0x74, d3
 	add	d2, d3
 	not	d3
 	inc	d3
-func_4C08688A_entry_L42:
+TgPartEqCoefCalc_entry_L42:
 	mov	0x74, d2
-func_4C08688A_entry_L44:
+TgPartEqCoefCalc_entry_L44:
 	exthu	d0
 	call	func_4C08687D, 0, 0
 	mov	d0, a2
@@ -243470,14 +243469,14 @@ func_4C08688A_entry_L44:
 	call	func_4C08687D, 0, 0
 	mov	d0, a0
 	cmp	0, a3
-	bge	func_4C08688A_entry_L5a
+	bge	TgPartEqCoefCalc_entry_L5a
 	mov	a2, a0
-func_4C08688A_entry_L5a:
+TgPartEqCoefCalc_entry_L5a:
 	mov	a0, (0x20, sp)
 	cmp	0, a3
-	bge	func_4C08688A_entry_L62
+	bge	TgPartEqCoefCalc_entry_L62
 	mov	d0, a2
-func_4C08688A_entry_L62:
+TgPartEqCoefCalc_entry_L62:
 	mov	(0x28, sp), a0
 	mov	a2, (0x24, sp)
 	movbu	(0x24, a0), d0
@@ -243486,29 +243485,29 @@ func_4C08688A_entry_L62:
 	exth	d0
 	mov	d0, a3
 	cmp	0, a3
-	bge	func_4C08688A_entry_L77
+	bge	TgPartEqCoefCalc_entry_L77
 	not	d0
 	inc	d0
-func_4C08688A_entry_L77:
+TgPartEqCoefCalc_entry_L77:
 	mov	d1, d2
 	sub	d0, d2
 	cmp	0, d2
-	bge	func_4C08688A_entry_L90
+	bge	TgPartEqCoefCalc_entry_L90
 	cmp	0, a3
-	blt	func_4C08688A_entry_L89
+	blt	TgPartEqCoefCalc_entry_L89
 	mov	d2, d0
 	not	d0
 	add	d0, d3
 	inc	d3
-	bra	func_4C08688A_entry_L8f
-func_4C08688A_entry_L89:
+	bra	TgPartEqCoefCalc_entry_L8f
+TgPartEqCoefCalc_entry_L89:
 	not	d2
 	mov	d2, d0
 	inc	d0
 	sub	d0, d3
-func_4C08688A_entry_L8f:
+TgPartEqCoefCalc_entry_L8f:
 	clr	d2
-func_4C08688A_entry_L90:
+TgPartEqCoefCalc_entry_L90:
 	exthu	d1
 	mov	d1, d0
 	call	func_4C08687D, 0, 0
@@ -243518,14 +243517,14 @@ func_4C08688A_entry_L90:
 	call	func_4C08687D, 0, 0
 	mov	d0, a0
 	cmp	0, a3
-	bge	func_4C08688A_entry_La7
+	bge	TgPartEqCoefCalc_entry_La7
 	mov	a2, a0
-func_4C08688A_entry_La7:
+TgPartEqCoefCalc_entry_La7:
 	mov	a0, (0x18, sp)
 	cmp	0, a3
-	bge	func_4C08688A_entry_Laf
+	bge	TgPartEqCoefCalc_entry_Laf
 	mov	d0, a2
-func_4C08688A_entry_Laf:
+TgPartEqCoefCalc_entry_Laf:
 	mov	(0x24, sp), d0
 	mov	0x01000000, d1
 	sub	d0, d1
@@ -243608,20 +243607,20 @@ func_4C08688A_entry_Laf:
 	mov	d1, a1
 	mov	d2, d0
 	cmp	0, d0
-	bge	func_4C08688A_entry_L182
+	bge	TgPartEqCoefCalc_entry_L182
 	not	d0
 	inc	d0
-func_4C08688A_entry_L182:
+TgPartEqCoefCalc_entry_L182:
 	mov	0x01000000, d1
 	cmp	d1, d0
-	bcs	func_4C08688A_entry_L196
+	bcs	TgPartEqCoefCalc_entry_L196
 	setlb
 	add	0xc, d3
 	asr	1, d2
 	lsr	1, d0
 	cmp	d1, d0
 	lcc
-func_4C08688A_entry_L196:
+TgPartEqCoefCalc_entry_L196:
 	mov	(0x28, sp), a0
 	mov	(0x1c, sp), d0
 	add	0x28, a0
@@ -243721,10 +243720,10 @@ func_4C086AFE:
 	extb	d0
 	rets
 
-func_4C086B14:
+TgPartEqHiFcSet:
 	movm	[d2], (sp)
 
-func_4C086B14_entry:
+TgPartEqHiFcSet_entry:
 	mov	d1, d2
 	extbu	d0
 	mov	0x548, d1
@@ -243737,14 +243736,14 @@ func_4C086B14_entry:
 	movbu	(a0), d1
 	extbu	d2
 	cmp	d2, d1
-	beq	func_4C086B14_entry_L21
+	beq	TgPartEqHiFcSet_entry_L21
 	mov	0x7c, d1
 	cmp	d1, d2
-	bge	func_4C086B14_entry_L1f
+	bge	TgPartEqHiFcSet_entry_L1f
 	mov	d2, d1
-func_4C086B14_entry_L1f:
+TgPartEqHiFcSet_entry_L1f:
 	movbu	d1, (a0)
-func_4C086B14_entry_L21:
+TgPartEqHiFcSet_entry_L21:
 	ret	[d2], 4
 
 func_4C086B3A:
@@ -243784,10 +243783,10 @@ func_4C086B3A_entry_L32:
 func_4C086B3A_entry_L34:
 	ret	[d2,d3], 8
 
-func_4C086B73:
+TgPartEqLoFcSet:
 	movm	[d2], (sp)
 
-func_4C086B73_entry:
+TgPartEqLoFcSet_entry:
 	mov	d1, d2
 	extbu	d0
 	mov	0x548, d1
@@ -243800,14 +243799,14 @@ func_4C086B73_entry:
 	movbu	(a0), d1
 	extbu	d2
 	cmp	d2, d1
-	beq	func_4C086B73_entry_L21
+	beq	TgPartEqLoFcSet_entry_L21
 	mov	0x7c, d1
 	cmp	d1, d2
-	bgt	func_4C086B73_entry_L1f
+	bgt	TgPartEqLoFcSet_entry_L1f
 	mov	d2, d1
-func_4C086B73_entry_L1f:
+TgPartEqLoFcSet_entry_L1f:
 	movbu	d1, (a0)
-func_4C086B73_entry_L21:
+TgPartEqLoFcSet_entry_L21:
 	ret	[d2], 4
 
 func_4C086B99:
@@ -244683,7 +244682,7 @@ loc_4C087346:
 loc_4C087354:
 	movbu	(0x88, sp), d0
 	movbu	(0x90, sp), d1
-	call	func_4C086B14_entry, [d2], 4
+	call	TgPartEqHiFcSet_entry, [d2], 4
 	jmp	func_4C086FC5_entry_Lc73
 loc_4C087362:
 	movbu	(0x90, sp), d1
@@ -244694,7 +244693,7 @@ loc_4C087362:
 loc_4C087371:
 	movbu	(0x88, sp), d0
 	movbu	(0x90, sp), d1
-	call	func_4C086B73_entry, [d2], 4
+	call	TgPartEqLoFcSet_entry, [d2], 4
 	jmp	func_4C086FC5_entry_Lc73
 loc_4C08737F:
 	movbu	(0x90, sp), d1
@@ -245571,7 +245570,7 @@ loc_4C087C1B:
 	movbu	(0x88, sp), d2
 	mov	sp, a2
 	mov	d2, d0
-	call	func_4C08688A_entry, [d2,d3,a2,a3], 0x4c
+	call	TgPartEqCoefCalc_entry, [d2,d3,a2,a3], 0x4c
 	add	0x28, a2
 	mov	a2, a0
 	mov	d2, d0
@@ -247214,11 +247213,11 @@ loc_4C088AF8:
 func_4C0888DD_entry_L224:
 	ret	[d2,a2], 0x5c
 
-func_4C088B09:
+TgGlobalParamInit:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 
-func_4C088B09_entry:
+TgGlobalParamInit_entry:
 	clr	d0
 	movhu	d0, (0x50041888)
 	mov	3, d0
@@ -247241,7 +247240,7 @@ func_4C088B09_entry:
 	movhu	d0, (0x500418c2)
 	clr	d2
 	clr	d3
-func_4C088B09_entry_L65:
+TgGlobalParamInit_entry_L65:
 	mov	d3, d0
 	call	func_4C086262_entry, [d2,d3,a2,a3], 0x28
 	extbu	d2
@@ -247422,7 +247421,7 @@ func_4C088B09_entry_L65:
 	clr	d1
 	call	func_4C0867EC, 0, 0
 	clr	d2
-func_4C088B09_entry_L223:
+TgGlobalParamInit_entry_L223:
 	mov	0x80, d0
 	mov	d0, (0x10, sp)
 	mov	d3, d0
@@ -247431,7 +247430,7 @@ func_4C088B09_entry_L223:
 	inc	d2
 	extbu	d2
 	cmp	0xc, d2
-	blt	func_4C088B09_entry_L223
+	blt	TgGlobalParamInit_entry_L223
 	mov	d3, d0
 	clr	d1
 	call	func_4C086C2B_entry, [d2,d3,a2,a3], 0x24
@@ -247455,7 +247454,7 @@ func_4C088B09_entry_L223:
 	clr	d0
 	movbu	d0, (0x23, a2)
 	mov	d3, d0
-	call	func_4C08688A_entry, [d2,d3,a2,a3], 0x4c
+	call	TgPartEqCoefCalc_entry, [d2,d3,a2,a3], 0x4c
 	mov	d3, d0
 	clr	d1
 	call	func_4C087D7F_entry, [d2,d3,a2,a3], 0x40
@@ -247463,9 +247462,9 @@ func_4C088B09_entry_L223:
 	mov	d3, d2
 	extbu	d3
 	cmp	0x22, d3
-	bge	func_4C088B09_entry_L283
-	jmp	func_4C088B09_entry_L65
-func_4C088B09_entry_L283:
+	bge	TgGlobalParamInit_entry_L283
+	jmp	TgGlobalParamInit_entry_L65
+TgGlobalParamInit_entry_L283:
 	mov	0x7f, d0
 	call	func_4C0888A6, 0, 0
 	mov	0x7f, d0
@@ -247988,7 +247987,7 @@ func_4C08928C:
 	add	-8, sp
 
 func_4C08928C_entry:
-	call	func_4C158354_entry, 0, 0xc
+	call	StrapBit3Debounced_entry, 0, 0xc
 	movhu	(0x500418c2), d1
 	mov	d0, d2
 	exth	d2
@@ -270157,7 +270156,7 @@ func_4C094795_entry:
 	mov	d2, d0
 	asl	20, d0
 	or	d1, d0
-	or	0x20000000, d0
+	or	IVAR0, d0
 	call	func_4C094525, 0, 0
 	mov	(0x54, a2), d1
 	mov	d2, d0
@@ -276455,7 +276454,7 @@ TgPartVoiceRecFetchIdx_entry_L4a:
 	movbu	(0x38, sp), d0
 	mov	d0, (0x14, sp)
 	movbu	(0x2c, sp), d0
-	call	func_4C07C5A3_entry, [d2,d3,a2], 0x20
+	call	VoiceSubRecFetch_entry, [d2,d3,a2], 0x20
 TgPartVoiceRecFetchIdx_entry_L5e:
 	ret	[d2], 0x1c
 
@@ -277379,7 +277378,7 @@ func_4C0983AC_entry_L455:
 	mov	(a0), d2
 	mov	(0x1c, sp), d1
 	mov	d2, a0
-	call	func_4C07C642_entry, [d2,a2], 0x18
+	call	VoiceModRecFetch_entry, [d2,a2], 0x18
 	mov	(0x34, sp), d1
 	mov	a0, d2
 	extbu	d3
@@ -277472,7 +277471,7 @@ func_4C0983AC_entry_L509:
 	mov	(a0), d2
 	mov	a2, d1
 	mov	d2, a0
-	call	func_4C07C642_entry, [d2,a2], 0x18
+	call	VoiceModRecFetch_entry, [d2,a2], 0x18
 	mov	(0x24, sp), d1
 	mov	a0, d2
 	extbu	d3
@@ -282083,11 +282082,11 @@ TgVoiceListBuild_entry_L155:
 TgVoiceListBuild_entry_L15a:
 	ret	[d2,d3,a2,a3], 0x3c
 
-func_4C09ABA9:
+ToneKeyFind:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 
-func_4C09ABA9_entry:
+ToneKeyFind_entry:
 	mov	a0, a2
 	mov	d1, d3
 	movbu	d0, (0x2c, sp)
@@ -282095,7 +282094,7 @@ func_4C09ABA9_entry:
 	call	VoiceBankSourcePresentAlt_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09ABA9_entry_L34
+	bne	ToneKeyFind_entry_L34
 	movbu	(0x2c, sp), d0
 	mov	d3, d1
 	asl	16, d0
@@ -282107,16 +282106,16 @@ func_4C09ABA9_entry:
 	mov	d1, d0
 	call	func_4C09AFB3_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09ABA9_entry_L34
+	beq	ToneKeyFind_entry_L34
 	mov	1, d0
 	movbu	d0, (a2)
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ABA9_entry_L34:
+ToneKeyFind_entry_L34:
 	mov	2, d0
 	call	VoiceBankSourcePresentAlt_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09ABA9_entry_L62
+	bne	ToneKeyFind_entry_L62
 	movbu	(0x2c, sp), d1
 	mov	d3, d0
 	asl	16, d1
@@ -282127,11 +282126,11 @@ func_4C09ABA9_entry_L34:
 	add	d1, d0
 	call	func_4C09B024_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09ABA9_entry_L62
+	beq	ToneKeyFind_entry_L62
 	mov	2, d0
 	movbu	d0, (a2)
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ABA9_entry_L62:
+ToneKeyFind_entry_L62:
 	clr	d0
 	movbu	d0, (a2)
 	movbu	(0x2c, sp), d2
@@ -282152,64 +282151,64 @@ func_4C09ABA9_entry_L62:
 	mov	a0, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09ABA9_entry_L91
+	beq	ToneKeyFind_entry_L91
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ABA9_entry_L91:
+ToneKeyFind_entry_L91:
 	cmp	0x28, d2
-	bge	func_4C09ABA9_entry_L98
-	jmp	func_4C09ABA9_entry_L113
-func_4C09ABA9_entry_L98:
+	bge	ToneKeyFind_entry_L98
+	jmp	ToneKeyFind_entry_L113
+ToneKeyFind_entry_L98:
 	cmp	0x2f, d2
-	bgt	func_4C09ABA9_entry_L113
+	bgt	ToneKeyFind_entry_L113
 	cmp	0x28, d2
-	beq	func_4C09ABA9_entry_Lbe
+	beq	ToneKeyFind_entry_Lbe
 	cmp	0x29, d2
-	beq	func_4C09ABA9_entry_Lc5
+	beq	ToneKeyFind_entry_Lc5
 	cmp	0x2a, d2
-	beq	func_4C09ABA9_entry_Lcc
+	beq	ToneKeyFind_entry_Lcc
 	cmp	0x2b, d2
-	beq	func_4C09ABA9_entry_Ld3
+	beq	ToneKeyFind_entry_Ld3
 	cmp	0x2c, d2
-	beq	func_4C09ABA9_entry_Lda
+	beq	ToneKeyFind_entry_Lda
 	cmp	0x2d, d2
-	beq	func_4C09ABA9_entry_Le1
+	beq	ToneKeyFind_entry_Le1
 	cmp	0x2e, d2
-	beq	func_4C09ABA9_entry_Le8
+	beq	ToneKeyFind_entry_Le8
 	cmp	0x2f, d2
-	beq	func_4C09ABA9_entry_Lef
-	bra	func_4C09ABA9_entry_Lf4
-func_4C09ABA9_entry_Lbe:
+	beq	ToneKeyFind_entry_Lef
+	bra	ToneKeyFind_entry_Lf4
+ToneKeyFind_entry_Lbe:
 	mov	0x20, d0
 	movbu	d0, (0x2c, sp)
-	bra	func_4C09ABA9_entry_Lf4
-func_4C09ABA9_entry_Lc5:
+	bra	ToneKeyFind_entry_Lf4
+ToneKeyFind_entry_Lc5:
 	mov	0x21, d0
 	movbu	d0, (0x2c, sp)
-	bra	func_4C09ABA9_entry_Lf4
-func_4C09ABA9_entry_Lcc:
+	bra	ToneKeyFind_entry_Lf4
+ToneKeyFind_entry_Lcc:
 	mov	0x22, d0
 	movbu	d0, (0x2c, sp)
-	bra	func_4C09ABA9_entry_Lf4
-func_4C09ABA9_entry_Ld3:
+	bra	ToneKeyFind_entry_Lf4
+ToneKeyFind_entry_Ld3:
 	mov	0x23, d0
 	movbu	d0, (0x2c, sp)
-	bra	func_4C09ABA9_entry_Lf4
-func_4C09ABA9_entry_Lda:
+	bra	ToneKeyFind_entry_Lf4
+ToneKeyFind_entry_Lda:
 	mov	0x24, d0
 	movbu	d0, (0x2c, sp)
-	bra	func_4C09ABA9_entry_Lf4
-func_4C09ABA9_entry_Le1:
+	bra	ToneKeyFind_entry_Lf4
+ToneKeyFind_entry_Le1:
 	mov	0x25, d0
 	movbu	d0, (0x2c, sp)
-	bra	func_4C09ABA9_entry_Lf4
-func_4C09ABA9_entry_Le8:
+	bra	ToneKeyFind_entry_Lf4
+ToneKeyFind_entry_Le8:
 	mov	0x26, d0
 	movbu	d0, (0x2c, sp)
-	bra	func_4C09ABA9_entry_Lf4
-func_4C09ABA9_entry_Lef:
+	bra	ToneKeyFind_entry_Lf4
+ToneKeyFind_entry_Lef:
 	mov	0x27, d0
 	movbu	d0, (0x2c, sp)
-func_4C09ABA9_entry_Lf4:
+ToneKeyFind_entry_Lf4:
 	mov	(0x10, sp), d1
 	movbu	(0x2c, sp), d2
 	mov	d2, d0
@@ -282221,22 +282220,22 @@ func_4C09ABA9_entry_Lf4:
 	mov	d1, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	bne	func_4C09ABA9_entry_L110
-	jmp	func_4C09ABA9_entry_L19c
-func_4C09ABA9_entry_L110:
+	bne	ToneKeyFind_entry_L110
+	jmp	ToneKeyFind_entry_L19c
+ToneKeyFind_entry_L110:
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ABA9_entry_L113:
+ToneKeyFind_entry_L113:
 	cmp	0x4d, d2
-	bne	func_4C09ABA9_entry_L125
+	bne	ToneKeyFind_entry_L125
 	mov	0x00207f7f, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ABA9_entry_L125:
+ToneKeyFind_entry_L125:
 	cmp	0x4e, d2
-	beq	func_4C09ABA9_entry_L12d
+	beq	ToneKeyFind_entry_L12d
 	cmp	0x4f, d2
-	bne	func_4C09ABA9_entry_L162
-func_4C09ABA9_entry_L12d:
+	bne	ToneKeyFind_entry_L162
+ToneKeyFind_entry_L12d:
 	mov	0x26, d0
 	movbu	d0, (0x2c, sp)
 	mov	(0xc, sp), d0
@@ -282258,13 +282257,13 @@ func_4C09ABA9_entry_L12d:
 	mov	d1, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09ABA9_entry_L19c
+	beq	ToneKeyFind_entry_L19c
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ABA9_entry_L162:
+ToneKeyFind_entry_L162:
 	cmp	0x50, d2
-	blt	func_4C09ABA9_entry_L19c
+	blt	ToneKeyFind_entry_L19c
 	cmp	0x5f, d2
-	bgt	func_4C09ABA9_entry_L19c
+	bgt	ToneKeyFind_entry_L19c
 	mov	0x20, d0
 	movbu	d0, (0x2c, sp)
 	mov	(0xc, sp), d0
@@ -282286,27 +282285,27 @@ func_4C09ABA9_entry_L162:
 	mov	d1, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09ABA9_entry_L19c
+	beq	ToneKeyFind_entry_L19c
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ABA9_entry_L19c:
+ToneKeyFind_entry_L19c:
 	cmp	0x21, d2
-	beq	func_4C09ABA9_entry_L1a4
+	beq	ToneKeyFind_entry_L1a4
 	cmp	0x23, d2
-	bne	func_4C09ABA9_entry_L1d6
-func_4C09ABA9_entry_L1a4:
+	bne	ToneKeyFind_entry_L1d6
+ToneKeyFind_entry_L1a4:
 	cmp	0x21, d2
-	beq	func_4C09ABA9_entry_L1ae
+	beq	ToneKeyFind_entry_L1ae
 	cmp	0x23, d2
-	beq	func_4C09ABA9_entry_L1b5
-	bra	func_4C09ABA9_entry_L1ba
-func_4C09ABA9_entry_L1ae:
+	beq	ToneKeyFind_entry_L1b5
+	bra	ToneKeyFind_entry_L1ba
+ToneKeyFind_entry_L1ae:
 	mov	0x20, d0
 	movbu	d0, (0x2c, sp)
-	bra	func_4C09ABA9_entry_L1ba
-func_4C09ABA9_entry_L1b5:
+	bra	ToneKeyFind_entry_L1ba
+ToneKeyFind_entry_L1b5:
 	mov	0x22, d0
 	movbu	d0, (0x2c, sp)
-func_4C09ABA9_entry_L1ba:
+ToneKeyFind_entry_L1ba:
 	mov	(0x10, sp), d1
 	movbu	(0x2c, sp), d2
 	mov	d2, d0
@@ -282318,11 +282317,11 @@ func_4C09ABA9_entry_L1ba:
 	mov	d1, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09ABA9_entry_L1d6
+	beq	ToneKeyFind_entry_L1d6
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ABA9_entry_L1d6:
+ToneKeyFind_entry_L1d6:
 	cmp	0x24, d2
-	bne	func_4C09ABA9_entry_L210
+	bne	ToneKeyFind_entry_L210
 	mov	(0x10, sp), d0
 	mov	d3, d1
 	and	0xfffffff8, d0
@@ -282331,53 +282330,53 @@ func_4C09ABA9_entry_L1d6:
 	mov	d1, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09ABA9_entry_L1f2
+	beq	ToneKeyFind_entry_L1f2
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ABA9_entry_L1f2:
+ToneKeyFind_entry_L1f2:
 	mov	d3, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09ABA9_entry_L1ff
+	beq	ToneKeyFind_entry_L1ff
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ABA9_entry_L1ff:
+ToneKeyFind_entry_L1ff:
 	mov	a2, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	bne	func_4C09ABA9_entry_L20d
-	jmp	func_4C09ABA9_entry_L2aa
-func_4C09ABA9_entry_L20d:
+	bne	ToneKeyFind_entry_L20d
+	jmp	ToneKeyFind_entry_L2aa
+ToneKeyFind_entry_L20d:
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ABA9_entry_L210:
+ToneKeyFind_entry_L210:
 	cmp	0x27, d2
-	beq	func_4C09ABA9_entry_L21c
+	beq	ToneKeyFind_entry_L21c
 	cmp	0x69, d2
-	beq	func_4C09ABA9_entry_L21c
+	beq	ToneKeyFind_entry_L21c
 	cmp	0x6b, d2
-	bne	func_4C09ABA9_entry_L22a
-func_4C09ABA9_entry_L21c:
+	bne	ToneKeyFind_entry_L22a
+ToneKeyFind_entry_L21c:
 	mov	0x00207f7f, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ABA9_entry_L22a:
+ToneKeyFind_entry_L22a:
 	cmp	0x68, d2
-	bne	func_4C09ABA9_entry_L240
+	bne	ToneKeyFind_entry_L240
 	mov	(0x10, sp), d0
 	add	d0, a2
 	mov	a2, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09ABA9_entry_L2aa
+	beq	ToneKeyFind_entry_L2aa
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ABA9_entry_L240:
+ToneKeyFind_entry_L240:
 	cmp	0x20, d2
-	bne	func_4C09ABA9_entry_L258
+	bne	ToneKeyFind_entry_L258
 	mov	(0x10, sp), d0
 	cmp	0x78, d0
-	blt	func_4C09ABA9_entry_L258
+	blt	ToneKeyFind_entry_L258
 	mov	0x00207f7f, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
 	ret	[d2,d3,a2,a3], 0x24
-func_4C09ABA9_entry_L258:
+ToneKeyFind_entry_L258:
 	mov	(0xc, sp), d0
 	mov	(0x10, sp), a0
 	and	0xfffffff8, d0
@@ -282388,42 +282387,42 @@ func_4C09ABA9_entry_L258:
 	mov	a0, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09ABA9_entry_L277
-	bra	func_4C09ABA9_entry_L2b5
-func_4C09ABA9_entry_L277:
+	beq	ToneKeyFind_entry_L277
+	bra	ToneKeyFind_entry_L2b5
+ToneKeyFind_entry_L277:
 	mov	(0x10, sp), d1
 	add	a2, d1
 	mov	d1, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09ABA9_entry_L287
-	bra	func_4C09ABA9_entry_L2b5
-func_4C09ABA9_entry_L287:
+	beq	ToneKeyFind_entry_L287
+	bra	ToneKeyFind_entry_L2b5
+ToneKeyFind_entry_L287:
 	mov	(0x10, sp), d0
 	and	0xfffffff8, d0
 	extbu	d0
 	add	a2, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09ABA9_entry_L29d
-	bra	func_4C09ABA9_entry_L2b5
-func_4C09ABA9_entry_L29d:
+	beq	ToneKeyFind_entry_L29d
+	bra	ToneKeyFind_entry_L2b5
+ToneKeyFind_entry_L29d:
 	mov	a2, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09ABA9_entry_L2aa
-	bra	func_4C09ABA9_entry_L2b5
-func_4C09ABA9_entry_L2aa:
+	beq	ToneKeyFind_entry_L2aa
+	bra	ToneKeyFind_entry_L2b5
+ToneKeyFind_entry_L2aa:
 	mov	0x00207f7f, d0
 	call	func_4C09AF42_entry, [d2,d3,a2], 0x20
-func_4C09ABA9_entry_L2b5:
+ToneKeyFind_entry_L2b5:
 	ret	[d2,d3,a2,a3], 0x24
 
-func_4C09AE66:
+SoundSwNoGet:
 	movm	[d2,a2,a3], (sp)
 	add	-0x1c, sp
 
-func_4C09AE66_entry:
+SoundSwNoGet_entry:
 	mov	a1, a2
 	mov	a0, a3
 	mov	d1, d2
@@ -282434,39 +282433,39 @@ func_4C09AE66_entry:
 	mov	sp, a0
 	add	0x18, a0
 	mov	d2, d1
-	call	func_4C09ABA9_entry, [d2,d3,a2,a3], 0x24
+	call	ToneKeyFind_entry, [d2,d3,a2,a3], 0x24
 	cmp	0, a0
-	bne	func_4C09AE66_entry_L1b
+	bne	SoundSwNoGet_entry_L1b
 	clr	d0
 	ret	[d2,a2,a3], 0x28
-func_4C09AE66_entry_L1b:
+SoundSwNoGet_entry_L1b:
 	movbu	(a3), d0
 	cmp	0, d0
-	beq	func_4C09AE66_entry_L2f
+	beq	SoundSwNoGet_entry_L2f
 	cmp	1, d0
-	beq	func_4C09AE66_entry_L3f
+	beq	SoundSwNoGet_entry_L3f
 	cmp	2, d0
-	beq	func_4C09AE66_entry_L4f
+	beq	SoundSwNoGet_entry_L4f
 	cmp	3, d0
-	beq	func_4C09AE66_entry_L69
-	bra	func_4C09AE66_entry_L82
-func_4C09AE66_entry_L2f:
+	beq	SoundSwNoGet_entry_L69
+	bra	SoundSwNoGet_entry_L82
+SoundSwNoGet_entry_L2f:
 	movbu	(3, a0), d0
 	movbu	d0, (a2)
 	movbu	(5, a0), d0
 	mov	(0x44, sp), a0
 	movbu	d0, (a0)
 	mov	1, d0
-	bra	func_4C09AE66_entry_L83
-func_4C09AE66_entry_L3f:
+	bra	SoundSwNoGet_entry_L83
+SoundSwNoGet_entry_L3f:
 	movbu	(3, a0), d0
 	movbu	d0, (a2)
 	movbu	(6, a0), d0
 	mov	(0x44, sp), a0
 	movbu	d0, (a0)
 	mov	1, d0
-	bra	func_4C09AE66_entry_L83
-func_4C09AE66_entry_L4f:
+	bra	SoundSwNoGet_entry_L83
+SoundSwNoGet_entry_L4f:
 	movbu	(4, a0), d0
 	movbu	d0, (a2)
 	movbu	(7, a0), d0
@@ -282479,8 +282478,8 @@ func_4C09AE66_entry_L4f:
 	add	d2, d0
 	movbu	d0, (a3)
 	mov	1, d0
-	bra	func_4C09AE66_entry_L83
-func_4C09AE66_entry_L69:
+	bra	SoundSwNoGet_entry_L83
+SoundSwNoGet_entry_L69:
 	movbu	(4, a0), d0
 	movbu	d0, (a2)
 	movbu	(8, a0), d0
@@ -282492,17 +282491,17 @@ func_4C09AE66_entry_L69:
 	add	d0, d1
 	movbu	d1, (a3)
 	mov	1, d0
-	bra	func_4C09AE66_entry_L83
-func_4C09AE66_entry_L82:
+	bra	SoundSwNoGet_entry_L83
+SoundSwNoGet_entry_L82:
 	clr	d0
-func_4C09AE66_entry_L83:
+SoundSwNoGet_entry_L83:
 	ret	[d2,a2,a3], 0x28
 
-func_4C09AEF1:
+SoundIconGet:
 	movm	[d2,a2], (sp)
 	add	-0x1c, sp
 
-func_4C09AEF1_entry:
+SoundIconGet_entry:
 	mov	a0, a2
 	mov	d1, d2
 	mov	d0, d1
@@ -282514,23 +282513,23 @@ func_4C09AEF1_entry:
 	mov	sp, a0
 	add	0x18, a0
 	mov	d2, d1
-	call	func_4C09ABA9_entry, [d2,d3,a2,a3], 0x24
+	call	ToneKeyFind_entry, [d2,d3,a2,a3], 0x24
 	cmp	0, a0
-	bne	func_4C09AEF1_entry_L1b
+	bne	SoundIconGet_entry_L1b
 	clr	d0
-	bra	func_4C09AEF1_entry_L22
-func_4C09AEF1_entry_L1b:
+	bra	SoundIconGet_entry_L22
+SoundIconGet_entry_L1b:
 	movbu	(2, a0), d0
 	movbu	d0, (a2)
 	mov	1, d0
-func_4C09AEF1_entry_L22:
+SoundIconGet_entry_L22:
 	ret	[d2,a2], 0x24
 
-func_4C09AF1B:
+SoundToneIndexGet:
 	movm	[d2,a2], (sp)
 	add	-0x18, sp
 
-func_4C09AF1B_entry:
+SoundToneIndexGet_entry:
 	mov	a0, a2
 	mov	d1, d2
 	mov	d0, d1
@@ -282541,16 +282540,16 @@ func_4C09AF1B_entry:
 	extbu	d2
 	mov	a1, a0
 	mov	d2, d1
-	call	func_4C09ABA9_entry, [d2,d3,a2,a3], 0x24
+	call	ToneKeyFind_entry, [d2,d3,a2,a3], 0x24
 	cmp	0, a0
-	bne	func_4C09AF1B_entry_L19
+	bne	SoundToneIndexGet_entry_L19
 	clr	d0
-	bra	func_4C09AF1B_entry_L1f
-func_4C09AF1B_entry_L19:
+	bra	SoundToneIndexGet_entry_L1f
+SoundToneIndexGet_entry_L19:
 	movhu	(a0), d0
 	movhu	d0, (a2)
 	mov	1, d0
-func_4C09AF1B_entry_L1f:
+SoundToneIndexGet_entry_L1f:
 	ret	[d2,a2], 0x20
 
 func_4C09AF42:
@@ -282764,105 +282763,105 @@ func_4C09B0A0_entry:
 	mov	mdr, d0
 	ret	[d2], 4
 
-func_4C09B0B4:
+SoundSwNoBankGet:
 	movm	[d2,a2,a3], (sp)
 	add	-0xc, sp
 
-func_4C09B0B4_entry:
+SoundSwNoBankGet_entry:
 	mov	a1, a2
 	mov	a0, a3
 	mov	d1, d2
 	extbu	d0
 	clr	d1
 	cmp	d1, d0
-	beq	func_4C09B0B4_entry_L55
+	beq	SoundSwNoBankGet_entry_L55
 	cmp	1, d0
-	beq	func_4C09B0B4_entry_L26
+	beq	SoundSwNoBankGet_entry_L26
 	cmp	2, d0
-	beq	func_4C09B0B4_entry_L2b
+	beq	SoundSwNoBankGet_entry_L2b
 	cmp	3, d0
-	beq	func_4C09B0B4_entry_L30
+	beq	SoundSwNoBankGet_entry_L30
 	cmp	4, d0
-	beq	func_4C09B0B4_entry_L35
+	beq	SoundSwNoBankGet_entry_L35
 	cmp	5, d0
-	beq	func_4C09B0B4_entry_L3c
+	beq	SoundSwNoBankGet_entry_L3c
 	cmp	6, d0
-	beq	func_4C09B0B4_entry_L43
+	beq	SoundSwNoBankGet_entry_L43
 	cmp	7, d0
-	beq	func_4C09B0B4_entry_L4a
-	bra	func_4C09B0B4_entry_L51
-func_4C09B0B4_entry_L26:
+	beq	SoundSwNoBankGet_entry_L4a
+	bra	SoundSwNoBankGet_entry_L51
+SoundSwNoBankGet_entry_L26:
 	extbu	d2
 	add	0x10, d2
-	bra	func_4C09B0B4_entry_L55
-func_4C09B0B4_entry_L2b:
+	bra	SoundSwNoBankGet_entry_L55
+SoundSwNoBankGet_entry_L2b:
 	extbu	d2
 	add	0x40, d2
-	bra	func_4C09B0B4_entry_L55
-func_4C09B0B4_entry_L30:
+	bra	SoundSwNoBankGet_entry_L55
+SoundSwNoBankGet_entry_L30:
 	extbu	d2
 	add	0x60, d2
-	bra	func_4C09B0B4_entry_L55
-func_4C09B0B4_entry_L35:
+	bra	SoundSwNoBankGet_entry_L55
+SoundSwNoBankGet_entry_L35:
 	extbu	d2
 	add	0x40, d2
 	mov	1, d1
-	bra	func_4C09B0B4_entry_L55
-func_4C09B0B4_entry_L3c:
+	bra	SoundSwNoBankGet_entry_L55
+SoundSwNoBankGet_entry_L3c:
 	extbu	d2
 	add	0x60, d2
 	mov	1, d1
-	bra	func_4C09B0B4_entry_L55
-func_4C09B0B4_entry_L43:
+	bra	SoundSwNoBankGet_entry_L55
+SoundSwNoBankGet_entry_L43:
 	extbu	d2
 	add	0x40, d2
 	mov	2, d1
-	bra	func_4C09B0B4_entry_L55
-func_4C09B0B4_entry_L4a:
+	bra	SoundSwNoBankGet_entry_L55
+SoundSwNoBankGet_entry_L4a:
 	extbu	d2
 	add	0x60, d2
 	mov	2, d1
-	bra	func_4C09B0B4_entry_L55
-func_4C09B0B4_entry_L51:
+	bra	SoundSwNoBankGet_entry_L55
+SoundSwNoBankGet_entry_L51:
 	clr	d0
 	ret	[d2,a2,a3], 0x18
-func_4C09B0B4_entry_L55:
+SoundSwNoBankGet_entry_L55:
 	mov	d2, d0
 	extbu	d0
 	cmp	0x80, d0
-	blt	func_4C09B0B4_entry_L60
+	blt	SoundSwNoBankGet_entry_L60
 	clr	d0
-	bra	func_4C09B0B4_entry_La6
-func_4C09B0B4_entry_L60:
+	bra	SoundSwNoBankGet_entry_La6
+SoundSwNoBankGet_entry_L60:
 	movbu	(0x28, sp), d2
 	asl	8, d0
 	add	d0, d2
 	mov	d2, d0
 	extbu	d1
 	cmp	0, d1
-	beq	func_4C09B0B4_entry_L77
+	beq	SoundSwNoBankGet_entry_L77
 	cmp	1, d1
-	beq	func_4C09B0B4_entry_L7f
+	beq	SoundSwNoBankGet_entry_L7f
 	cmp	2, d1
-	beq	func_4C09B0B4_entry_L87
-	bra	func_4C09B0B4_entry_L8d
-func_4C09B0B4_entry_L77:
+	beq	SoundSwNoBankGet_entry_L87
+	bra	SoundSwNoBankGet_entry_L8d
+SoundSwNoBankGet_entry_L77:
 	exthu	d0
 	call	func_4C09B162_entry, [d2,d3,a2,a3], 0x24
-	bra	func_4C09B0B4_entry_L8d
-func_4C09B0B4_entry_L7f:
+	bra	SoundSwNoBankGet_entry_L8d
+SoundSwNoBankGet_entry_L7f:
 	exthu	d0
 	call	func_4C09B1D8_entry, [d2,d3,a2,a3], 0x24
-	bra	func_4C09B0B4_entry_L8d
-func_4C09B0B4_entry_L87:
+	bra	SoundSwNoBankGet_entry_L8d
+SoundSwNoBankGet_entry_L87:
 	exthu	d0
 	call	func_4C09B24E_entry, [d2,d3,a2,a3], 0x24
-func_4C09B0B4_entry_L8d:
+SoundSwNoBankGet_entry_L8d:
 	cmp	0, a0
-	bne	func_4C09B0B4_entry_L94
+	bne	SoundSwNoBankGet_entry_L94
 	clr	d0
-	bra	func_4C09B0B4_entry_La6
-func_4C09B0B4_entry_L94:
+	bra	SoundSwNoBankGet_entry_La6
+SoundSwNoBankGet_entry_L94:
 	movbu	(a0), d0
 	movbu	d0, (a3)
 	movbu	(1, a0), d0
@@ -282871,7 +282870,7 @@ func_4C09B0B4_entry_L94:
 	mov	(0x34, sp), a0
 	movbu	d0, (a0)
 	mov	1, d0
-func_4C09B0B4_entry_La6:
+SoundSwNoBankGet_entry_La6:
 	ret	[d2,a2,a3], 0x18
 
 func_4C09B162:
@@ -284191,25 +284190,25 @@ func_4C09BAF3_entry:
 	mov	mdr, d0
 	ret	[d2], 4
 
-func_4C09BB07:
+SoundBankIndexGet:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0xc, sp
 
-func_4C09BB07_entry:
+SoundBankIndexGet_entry:
 	movbu	(0x2c, sp), d3
 	mov	a1, a2
 	mov	a0, a3
 	movbu	d0, (0x24, sp)
 	mov	d1, d2
 	cmp	0, d3
-	bne	func_4C09BB07_entry_Lf
-	bra	func_4C09BB07_entry_L86
-func_4C09BB07_entry_Lf:
+	bne	SoundBankIndexGet_entry_Lf
+	bra	SoundBankIndexGet_entry_L86
+SoundBankIndexGet_entry_Lf:
 	mov	1, d0
 	call	VoiceBankSourcePresentAlt_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09BB07_entry_L40
+	bne	SoundBankIndexGet_entry_L40
 	movbu	(0x24, sp), d1
 	mov	d2, d0
 	extbu	d0
@@ -284221,18 +284220,18 @@ func_4C09BB07_entry_Lf:
 	mov	d1, d0
 	call	func_4C09BC32_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09BB07_entry_L40
+	beq	SoundBankIndexGet_entry_L40
 	movhu	(a0), d0
 	movhu	d0, (a3)
 	mov	1, d0
 	movbu	d0, (a2)
 	ret	[d2,d3,a2,a3], 0x1c
-func_4C09BB07_entry_L40:
+SoundBankIndexGet_entry_L40:
 	mov	2, d0
 	call	VoiceBankSourcePresentAlt_entry, 0, 0xc
 	exth	d0
 	cmp	0, d0
-	bne	func_4C09BB07_entry_L75
+	bne	SoundBankIndexGet_entry_L75
 	movbu	(0x24, sp), d0
 	extbu	d2
 	asl	8, d2
@@ -284243,14 +284242,14 @@ func_4C09BB07_entry_L40:
 	mov	a0, d0
 	call	func_4C09BCA5_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09BB07_entry_L75
+	beq	SoundBankIndexGet_entry_L75
 	movhu	(a0), d0
 	movhu	d0, (a3)
 	mov	2, d0
 	movbu	d0, (a2)
 	mov	1, d0
-	bra	func_4C09BB07_entry_Lb0
-func_4C09BB07_entry_L75:
+	bra	SoundBankIndexGet_entry_Lb0
+SoundBankIndexGet_entry_L75:
 	clr	d0
 	call	func_4C09BBBF_entry, [d2,d3,a2], 0x20
 	movhu	(a0), d0
@@ -284258,8 +284257,8 @@ func_4C09BB07_entry_L75:
 	clr	d0
 	movbu	d0, (a2)
 	mov	1, d0
-	bra	func_4C09BB07_entry_Lb0
-func_4C09BB07_entry_L86:
+	bra	SoundBankIndexGet_entry_Lb0
+SoundBankIndexGet_entry_L86:
 	clr	d0
 	movbu	d0, (a2)
 	movbu	(0x24, sp), d0
@@ -284270,18 +284269,18 @@ func_4C09BB07_entry_L86:
 	mov	d1, d0
 	call	func_4C09BBBF_entry, [d2,d3,a2], 0x20
 	cmp	0, a0
-	beq	func_4C09BB07_entry_La4
+	beq	SoundBankIndexGet_entry_La4
 	movhu	(a0), d0
 	movhu	d0, (a3)
 	mov	1, d0
-	bra	func_4C09BB07_entry_Lb0
-func_4C09BB07_entry_La4:
+	bra	SoundBankIndexGet_entry_Lb0
+SoundBankIndexGet_entry_La4:
 	clr	d0
 	call	func_4C09BBBF_entry, [d2,d3,a2], 0x20
 	movhu	(a0), d0
 	movhu	d0, (a3)
 	mov	1, d0
-func_4C09BB07_entry_Lb0:
+SoundBankIndexGet_entry_Lb0:
 	ret	[d2,d3,a2,a3], 0x1c
 
 func_4C09BBBF:
@@ -291940,112 +291939,112 @@ InitializeUser02_entry:
 	call	RegisterTitle_entry, [d2,a2], 8
 	ret	[d2,d3,a2,a3], 0x3c
 
-func_4C09FD93:
+BitmapCompConnDiagram:
 	cmp	MT_GetBitmapData, d1
-	beq	func_4C09FD93_L22
+	beq	BitmapCompConnDiagram_L22
 	cmp	MT_GetBitmapWidth, d1
-	beq	func_4C09FD93_L2a
+	beq	BitmapCompConnDiagram_L2a
 	cmp	MT_GetBitmapHeight, d1
-	beq	func_4C09FD93_L2f
+	beq	BitmapCompConnDiagram_L2f
 	cmp	MT_GetBitCount, d1
-	beq	func_4C09FD93_L33
-	bra	func_4C09FD93_L37
-func_4C09FD93_L22:
-	mov	Bitmap_4C09FD93_Pixels, d0
-	bra	func_4C09FD93_L38
-func_4C09FD93_L2a:
+	beq	BitmapCompConnDiagram_L33
+	bra	BitmapCompConnDiagram_L37
+BitmapCompConnDiagram_L22:
+	mov	BitmapCompConnDiagram_Pixels, d0
+	bra	BitmapCompConnDiagram_L38
+BitmapCompConnDiagram_L2a:
 	mov	0x128, d0
-	bra	func_4C09FD93_L38
-func_4C09FD93_L2f:
+	bra	BitmapCompConnDiagram_L38
+BitmapCompConnDiagram_L2f:
 	mov	0x6c, d0
-	bra	func_4C09FD93_L38
-func_4C09FD93_L33:
+	bra	BitmapCompConnDiagram_L38
+BitmapCompConnDiagram_L33:
 	mov	1, d0
-	bra	func_4C09FD93_L38
-func_4C09FD93_L37:
+	bra	BitmapCompConnDiagram_L38
+BitmapCompConnDiagram_L37:
 	clr	d0
-func_4C09FD93_L38:
+BitmapCompConnDiagram_L38:
 	retf	0, 0
 
-func_4C09FDCE:
+BitmapCompConnMaster:
 	cmp	MT_GetBitmapData, d1
-	beq	func_4C09FDCE_L22
+	beq	BitmapCompConnMaster_L22
 	cmp	MT_GetBitmapWidth, d1
-	beq	func_4C09FDCE_L2a
+	beq	BitmapCompConnMaster_L2a
 	cmp	MT_GetBitmapHeight, d1
-	beq	func_4C09FDCE_L2e
+	beq	BitmapCompConnMaster_L2e
 	cmp	MT_GetBitCount, d1
-	beq	func_4C09FDCE_L32
-	bra	func_4C09FDCE_L36
-func_4C09FDCE_L22:
-	mov	Bitmap_4C09FDCE_Pixels, d0
-	bra	func_4C09FDCE_L37
-func_4C09FDCE_L2a:
+	beq	BitmapCompConnMaster_L32
+	bra	BitmapCompConnMaster_L36
+BitmapCompConnMaster_L22:
+	mov	BitmapCompConnMaster_Pixels, d0
+	bra	BitmapCompConnMaster_L37
+BitmapCompConnMaster_L2a:
 	mov	0x11, d0
-	bra	func_4C09FDCE_L37
-func_4C09FDCE_L2e:
+	bra	BitmapCompConnMaster_L37
+BitmapCompConnMaster_L2e:
 	mov	0x13, d0
-	bra	func_4C09FDCE_L37
-func_4C09FDCE_L32:
+	bra	BitmapCompConnMaster_L37
+BitmapCompConnMaster_L32:
 	mov	1, d0
-	bra	func_4C09FDCE_L37
-func_4C09FDCE_L36:
+	bra	BitmapCompConnMaster_L37
+BitmapCompConnMaster_L36:
 	clr	d0
-func_4C09FDCE_L37:
+BitmapCompConnMaster_L37:
 	retf	0, 0
 
-func_4C09FE08:
+BitmapCompConnSlaveArrow:
 	cmp	MT_GetBitmapData, d1
-	beq	func_4C09FE08_L22
+	beq	BitmapCompConnSlaveArrow_L22
 	cmp	MT_GetBitmapWidth, d1
-	beq	func_4C09FE08_L2a
+	beq	BitmapCompConnSlaveArrow_L2a
 	cmp	MT_GetBitmapHeight, d1
-	beq	func_4C09FE08_L2e
+	beq	BitmapCompConnSlaveArrow_L2e
 	cmp	MT_GetBitCount, d1
-	beq	func_4C09FE08_L32
-	bra	func_4C09FE08_L36
-func_4C09FE08_L22:
-	mov	Bitmap_4C09FE08_Pixels, d0
-	bra	func_4C09FE08_L37
-func_4C09FE08_L2a:
+	beq	BitmapCompConnSlaveArrow_L32
+	bra	BitmapCompConnSlaveArrow_L36
+BitmapCompConnSlaveArrow_L22:
+	mov	BitmapCompConnSlaveArrow_Pixels, d0
+	bra	BitmapCompConnSlaveArrow_L37
+BitmapCompConnSlaveArrow_L2a:
 	mov	0xa, d0
-	bra	func_4C09FE08_L37
-func_4C09FE08_L2e:
+	bra	BitmapCompConnSlaveArrow_L37
+BitmapCompConnSlaveArrow_L2e:
 	mov	0xc, d0
-	bra	func_4C09FE08_L37
-func_4C09FE08_L32:
+	bra	BitmapCompConnSlaveArrow_L37
+BitmapCompConnSlaveArrow_L32:
 	mov	1, d0
-	bra	func_4C09FE08_L37
-func_4C09FE08_L36:
+	bra	BitmapCompConnSlaveArrow_L37
+BitmapCompConnSlaveArrow_L36:
 	clr	d0
-func_4C09FE08_L37:
+BitmapCompConnSlaveArrow_L37:
 	retf	0, 0
 
-func_4C09FE42:
+BitmapCompConnSlaveWire:
 	cmp	MT_GetBitmapData, d1
-	beq	func_4C09FE42_L22
+	beq	BitmapCompConnSlaveWire_L22
 	cmp	MT_GetBitmapWidth, d1
-	beq	func_4C09FE42_L2a
+	beq	BitmapCompConnSlaveWire_L2a
 	cmp	MT_GetBitmapHeight, d1
-	beq	func_4C09FE42_L2f
+	beq	BitmapCompConnSlaveWire_L2f
 	cmp	MT_GetBitCount, d1
-	beq	func_4C09FE42_L33
-	bra	func_4C09FE42_L37
-func_4C09FE42_L22:
-	mov	Bitmap_4C09FE42_Pixels_2, d0
-	bra	func_4C09FE42_L38
-func_4C09FE42_L2a:
+	beq	BitmapCompConnSlaveWire_L33
+	bra	BitmapCompConnSlaveWire_L37
+BitmapCompConnSlaveWire_L22:
+	mov	BitmapCompConnSlaveWire_Pixels, d0
+	bra	BitmapCompConnSlaveWire_L38
+BitmapCompConnSlaveWire_L2a:
 	mov	0xfd, d0
-	bra	func_4C09FE42_L38
-func_4C09FE42_L2f:
+	bra	BitmapCompConnSlaveWire_L38
+BitmapCompConnSlaveWire_L2f:
 	mov	0x18, d0
-	bra	func_4C09FE42_L38
-func_4C09FE42_L33:
+	bra	BitmapCompConnSlaveWire_L38
+BitmapCompConnSlaveWire_L33:
 	mov	1, d0
-	bra	func_4C09FE42_L38
-func_4C09FE42_L37:
+	bra	BitmapCompConnSlaveWire_L38
+BitmapCompConnSlaveWire_L37:
 	clr	d0
-func_4C09FE42_L38:
+BitmapCompConnSlaveWire_L38:
 	retf	0, 0
 
 BitmapKn6000:
@@ -292070,7 +292069,7 @@ BitmapKn6000_L37:
 	mov	0x7f, d0
 	bra	BitmapKn6000_L48
 BitmapKn6000_L3b:
-	mov	Bitmap_4C09FE42_Palette, d0
+	mov	BitmapKn6000_Palette, d0
 	bra	BitmapKn6000_L48
 BitmapKn6000_L43:
 	mov	4, d0
@@ -292118,7 +292117,7 @@ BitmapGm2:
 	beq	BitmapGm2_L33
 	bra	BitmapGm2_L37
 BitmapGm2_L22:
-	mov	Bitmap_4C09FE42_Pixels, d0
+	mov	BitmapGm2_Pixels, d0
 	bra	BitmapGm2_L38
 BitmapGm2_L2a:
 	mov	0xc8, d0
@@ -304390,7 +304389,7 @@ ComputerConnection_Le0:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	MT_GetBitmapData, d1
-	call	func_4C09FD93, 0, 0
+	call	BitmapCompConnDiagram, 0, 0
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	clr	d1
@@ -304420,7 +304419,7 @@ ComputerConnection_L138:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	MT_GetBitmapData, d1
-	call	func_4C09FD93, 0, 0
+	call	BitmapCompConnDiagram, 0, 0
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	clr	d1
@@ -304434,7 +304433,7 @@ ComputerConnection_L138:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	MT_GetBitmapData, d1
-	call	func_4C09FDCE, 0, 0
+	call	BitmapCompConnMaster, 0, 0
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	clr	d1
@@ -304464,7 +304463,7 @@ ComputerConnection_L1b8:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	MT_GetBitmapData, d1
-	call	func_4C09FD93, 0, 0
+	call	BitmapCompConnDiagram, 0, 0
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	clr	d1
@@ -304478,7 +304477,7 @@ ComputerConnection_L1b8:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	MT_GetBitmapData, d1
-	call	func_4C09FE08, 0, 0
+	call	BitmapCompConnSlaveArrow, 0, 0
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	clr	d1
@@ -304492,7 +304491,7 @@ ComputerConnection_L1b8:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	MT_GetBitmapData, d1
-	call	func_4C09FE42, 0, 0
+	call	BitmapCompConnSlaveWire, 0, 0
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	clr	d1
@@ -312132,7 +312131,7 @@ MainPAD_GetPadName_L55:
 	extbu	d1
 	call	func_4C059606_entry, [d2,d3], 0x14
 	mov	a2, a0
-	call	func_4C056893_entry, [d2,a2,a3], 0x20
+	call	PadNameGet_entry, [d2,a2,a3], 0x20
 	exth	d0
 	cmp	0, d0
 	bge	MainPAD_GetPadName_L78
@@ -312222,7 +312221,7 @@ MainSNDARG_SetSndaParaCur:
 	mov	(0x24, sp), d1
 	mov	a0, d0
 	extbu	d1
-	call	func_4C061ECF_entry, [d2,d3], 0x1c
+	call	SndArgCurPartVoiceSet_entry, [d2,d3], 0x1c
 	exth	d0
 	cmp	0, d0
 	bge	MainSNDARG_SetSndaParaCur_L27
@@ -312402,7 +312401,7 @@ TtSndArg_L182:
 	add	0x18, a0
 	mov	sp, a1
 	add	0x1c, a1
-	call	func_4C061DFB_entry, [a2,a3], 0x1c
+	call	SndArgCurPartVoiceGet_entry, [a2,a3], 0x1c
 	mov	(0x18, sp), d0
 	mov	d0, (0x5004b3b8)
 	movbu	(0x1c, sp), d0
@@ -312429,7 +312428,7 @@ TtSndArg_L182:
 	mov	d2, d0
 	and	0xff, d1
 	extbu	d1
-	call	func_4C061ECF_entry, [d2,d3], 0x1c
+	call	SndArgCurPartVoiceSet_entry, [d2,d3], 0x1c
 	bra	TtSndArg_L23e
 TtSndArg_L1fe:
 	call	func_4C0B7F0B_entry, 0, 0x14
@@ -312452,7 +312451,7 @@ TtSndArg_L1fe:
 	mov	(0x5004b3b8), d0
 	extbu	d2
 	mov	d2, d1
-	call	func_4C061ECF_entry, [d2,d3], 0x1c
+	call	SndArgCurPartVoiceSet_entry, [d2,d3], 0x1c
 TtSndArg_L23e:
 	clr	d0
 	bra	TtSndArg_L299
@@ -313514,7 +313513,7 @@ func_4C0AE5CB_entry_Ld:
 func_4C0AE5CB_entry_L80:
 	mov	0x9000c080, d0
 	call	PutM3Em_entry, [d2,d3,a2], 0x24
-	call	func_4C05E196_entry, [d2], 0x10
+	call	MemVarRecChordGet_entry, [d2], 0x10
 	extbu	d0
 	mov	5, d1
 	btst	0x10, d0
@@ -313764,7 +313763,7 @@ MainCMP_SetCmpRecordChord:
 	mov	(0x24, sp), d0
 	add	d3, d2
 	extbu	d0
-	call	func_4C05E1D3_entry, [d2], 0x10
+	call	MemVarRecChordSet_entry, [d2], 0x10
 	clr	d0
 	call	func_4C0BA8D2, 0, 0
 	mov	d2, d0
@@ -314014,7 +314013,7 @@ MainCMP_SetCmpEffectPart:
 	mov	d1, d0
 	mov	(0x24, sp), d1
 	extbu	d1
-	call	func_4C05E15A_entry, [d2,d3], 0x18
+	call	MemVarEffectPartSet_entry, [d2,d3], 0x18
 	mov	d2, d0
 	ret	[d2], 0x14
 
@@ -315013,7 +315012,7 @@ MainPAD_SetUserPadRecordChord:
 	mov	(0x24, sp), d0
 	add	d3, d2
 	extbu	d0
-	call	func_4C054814_entry, [d2], 0x10
+	call	UserPadRecChordSet_entry, [d2], 0x10
 	clr	d0
 	call	func_4C0BA8D2, 0, 0
 	mov	d2, d0
@@ -315225,7 +315224,7 @@ MainPAD_SetUserPadSync:
 	mov	(0x24, sp), d0
 	add	d3, d2
 	extbu	d0
-	call	func_4C0546EB_entry, 0, 0xc
+	call	UserPadSynchroSet_entry, 0, 0xc
 	mov	d2, d0
 	ret	[d2,d3], 0x14
 
@@ -315237,7 +315236,7 @@ MainPAD_SetUserPadLoop:
 	mov	(0x24, sp), d0
 	add	d3, d2
 	extbu	d0
-	call	func_4C054747_entry, 0, 0xc
+	call	UserPadLoopSet_entry, 0, 0xc
 	mov	d2, d0
 	ret	[d2,d3], 0x14
 
@@ -328662,7 +328661,7 @@ MspCompileSetGridCheck_L365:
 	call	Malloc_entry, [d2,a2,a3], 0x28
 	mov	a0, a2
 	mov	d2, d0
-	call	func_4C056893_entry, [d2,a2,a3], 0x20
+	call	PadNameGet_entry, [d2,a2,a3], 0x20
 	mov	d3, (8, sp)
 	mov	Str_1d_16s_3, d0
 	mov	d0, (0xc, sp)
@@ -329428,7 +329427,7 @@ SndArgGridCheck_L26a:
 	extbu	d0
 	extbu	d2
 	mov	d2, d1
-	call	func_4C07BBF5_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x34, sp)
 	call	GetFocusObject_entry, 0, 0x10
@@ -331451,7 +331450,7 @@ FuncEdit_srcPad_L176:
 	movbu	(0x50287937), d0
 	call	func_4C059606_entry, [d2,d3], 0x14
 	mov	a2, a0
-	call	func_4C056893_entry, [d2,a2,a3], 0x20
+	call	PadNameGet_entry, [d2,a2,a3], 0x20
 	mov	(0x4c, sp), a1
 	mov	Str_1d_16s_2, d0
 	mov	a1, (8, sp)
@@ -331682,7 +331681,7 @@ FuncEdit_dstPad_L176:
 	movbu	(0x50287939), d0
 	call	func_4C059606_entry, [d2,d3], 0x14
 	mov	a2, a0
-	call	func_4C056893_entry, [d2,a2,a3], 0x20
+	call	PadNameGet_entry, [d2,a2,a3], 0x20
 	mov	(0x4c, sp), a1
 	mov	Str_1d_16s, d0
 	mov	a1, (8, sp)
@@ -334573,7 +334572,7 @@ FE_CmpRecSetKey_L4c:
 	clr	d0
 	ret	[d2], 0x18
 FE_CmpRecSetKey_L50:
-	call	func_4C05E196_entry, [d2], 0x10
+	call	MemVarRecChordGet_entry, [d2], 0x10
 	mov	d0, d1
 	extbu	d1
 	mov	0xf, d0
@@ -334608,7 +334607,7 @@ FE_CmpRecSetKey_Laa:
 	clr	d0
 	ret	[d2], 0x18
 FE_CmpRecSetKey_Lae:
-	call	func_4C05E196_entry, [d2], 0x10
+	call	MemVarRecChordGet_entry, [d2], 0x10
 	mov	d0, d1
 	extbu	d1
 	mov	0xf, d0
@@ -334643,7 +334642,7 @@ FE_CmpRecSetKey_L109:
 	clr	d0
 	bra	FE_CmpRecSetKey_L12f
 FE_CmpRecSetKey_L10c:
-	call	func_4C05E196_entry, [d2], 0x10
+	call	MemVarRecChordGet_entry, [d2], 0x10
 	mov	(0x28, sp), a0
 	extbu	d0
 	and	0x0f, d0
@@ -334693,7 +334692,7 @@ FE_CmpRecSetChord_L50:
 	movbu	(0x50287940), d0
 	cmp	0xc, d0
 	bge	FE_CmpRecSetChord_Laa
-	call	func_4C05E196_entry, [d2], 0x10
+	call	MemVarRecChordGet_entry, [d2], 0x10
 	mov	d0, d2
 	extbu	d2
 	btst	0x10, d2
@@ -334722,7 +334721,7 @@ FE_CmpRecSetChord_Lae:
 	movbu	(0x50287940), d0
 	cmp	0xc, d0
 	bge	FE_CmpRecSetChord_L10b
-	call	func_4C05E196_entry, [d2], 0x10
+	call	MemVarRecChordGet_entry, [d2], 0x10
 	mov	d0, d2
 	extbu	d2
 	btst	0x10, d2
@@ -334751,7 +334750,7 @@ FE_CmpRecSetChord_L10e:
 	movbu	(0x50287940), d0
 	cmp	0xc, d0
 	bge	FE_CmpRecSetChord_L13c
-	call	func_4C05E196_entry, [d2], 0x10
+	call	MemVarRecChordGet_entry, [d2], 0x10
 	mov	Str_Min_4, a1
 	extbu	d0
 	btst	0x10, d0
@@ -335961,7 +335960,7 @@ CmpPartSetGrid1_L3f3:
 	extbu	d1
 	mov	a3, a0
 	mov	d3, d0
-	call	func_4C07BBF5_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x34, sp)
 	jmp	CmpPartSetGrid1_L5eb
@@ -336556,7 +336555,7 @@ CmpPartSetGrid2_L311:
 	jmp	CmpPartSetGrid2_L408
 CmpPartSetGrid2_L321:
 	clr	d0
-	call	func_4C05E13A_entry, [d2], 0x10
+	call	MemVarEffectPartGet_entry, [d2], 0x10
 	mov	CmpPartSetGrid2_L1ee_Table, a2
 	extbu	d0
 	mov	d0, a3
@@ -336589,7 +336588,7 @@ CmpPartSetGrid2_L374:
 	cmp	0, d0
 	bne	CmpPartSetGrid2_L39a
 	mov	1, d0
-	call	func_4C05E13A_entry, [d2], 0x10
+	call	MemVarEffectPartGet_entry, [d2], 0x10
 	movhu	(0x1e, sp), d1
 	extbu	d0
 	exth	d1
@@ -336755,7 +336754,7 @@ CmpPartSetGrid2_L504:
 	jmp	CmpPartSetGrid2_L5fc
 CmpPartSetGrid2_L515:
 	mov	1, d0
-	call	func_4C05E13A_entry, [d2], 0x10
+	call	MemVarEffectPartGet_entry, [d2], 0x10
 	mov	CmpPartSetGrid2_L1ee_Table, a2
 	extbu	d0
 	mov	d0, a3
@@ -336788,7 +336787,7 @@ CmpPartSetGrid2_L56a:
 	cmp	0, d0
 	bne	CmpPartSetGrid2_L58e
 	clr	d0
-	call	func_4C05E13A_entry, [d2], 0x10
+	call	MemVarEffectPartGet_entry, [d2], 0x10
 	movhu	(0x1e, sp), d1
 	extbu	d0
 	exth	d1
@@ -337087,7 +337086,7 @@ CmpPartSetGrid2_L854:
 	cmp	0, d0
 	bne	CmpPartSetGrid2_L89d
 	clr	d0
-	call	func_4C05E13A_entry, [d2], 0x10
+	call	MemVarEffectPartGet_entry, [d2], 0x10
 	movhu	(0x1e, sp), d1
 	mov	CmpPartSetGrid2_L1ee_Table, a0
 	exth	d1
@@ -337131,7 +337130,7 @@ CmpPartSetGrid2_L8d7:
 	cmp	0, d0
 	bne	CmpPartSetGrid2_L920
 	mov	1, d0
-	call	func_4C05E13A_entry, [d2], 0x10
+	call	MemVarEffectPartGet_entry, [d2], 0x10
 	movhu	(0x1e, sp), d1
 	mov	CmpPartSetGrid2_L1ee_Table, a0
 	exth	d1
@@ -337325,7 +337324,7 @@ AcRecPadNameBoxProc_L37:
 	extbu	d1
 	call	func_4C059606_entry, [d2,d3], 0x14
 	mov	(0x28, sp), a0
-	call	func_4C056893_entry, [d2,a2,a3], 0x20
+	call	PadNameGet_entry, [d2,a2,a3], 0x20
 	clr	d0
 	bra	AcRecPadNameBoxProc_L67
 AcRecPadNameBoxProc_L5c:
@@ -340074,7 +340073,7 @@ PadPartSetGrid1_L427:
 	extbu	d1
 	mov	a3, a0
 	mov	d3, d0
-	call	func_4C07BBF5_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x34, sp)
 	jmp	PadPartSetGrid1_L5ff
@@ -341134,7 +341133,7 @@ MspPadNmChk_L20:
 	extbu	d0
 	call	func_4C059606_entry, [d2,d3], 0x14
 	mov	(0x24, sp), a0
-	call	func_4C056893_entry, [d2,a2,a3], 0x20
+	call	PadNameGet_entry, [d2,a2,a3], 0x20
 	mov	d2, d0
 	bra	MspPadNmChk_L48
 MspPadNmChk_L40:
@@ -366909,7 +366908,7 @@ loc_4C0CF70D:
 	lsr	8, d1
 	extbu	d1
 	mov	a2, a0
-	call	func_4C07BBF5_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x40, sp)
 	mov	(0xc8, sp), d0
@@ -368261,7 +368260,7 @@ func_4C0CF6A4_entry_Lf21:
 	mov	sp, a2
 	add	0x30, a2
 	mov	a2, a0
-	call	func_4C056893_entry, [d2,a2,a3], 0x20
+	call	PadNameGet_entry, [d2,a2,a3], 0x20
 	mov	(0xc8, sp), d0
 	mov	d0, (8, sp)
 	mov	Str_PAD_16s, d0
@@ -376321,7 +376320,7 @@ func_4C0D55C3_entry_L3ca:
 	mov	sp, a2
 	add	0x3c, a2
 	mov	a2, a0
-	call	func_4C07BBF5_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	mov	a2, a0
 	clr	d0
 	movbu	d0, (0x4c, sp)
@@ -377374,7 +377373,7 @@ func_4C0D5F48_entry_L57f:
 	mov	d2, d1
 	extbu	d1
 	mov	a2, a0
-	call	func_4C07BBF5_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	clr	d0
 	movbu	d0, (0x30, sp)
 	mov	0x489, d0
@@ -378724,7 +378723,7 @@ func_4C0D724C_entry_L9:
 func_4C0D724C_entry_L16:
 	btst	0x02, d1
 	beq	func_4C0D724C_entry_L23
-	mov	0x20000000, d0
+	mov	IVAR0, d0
 	bra	func_4C0D724C_entry_L62
 func_4C0D724C_entry_L23:
 	btst	0x04, d1
@@ -383276,21 +383275,17 @@ func_4C0D9504_entry_Lc9:
 	movbu	d0, (a2)
 func_4C0D9504_entry_Le2:
 	ret	[d2,d3,a2,a3], 0x30
-
-Ed1stOnSe:
+loc_4C0D95EE:
 	add	-8, sp
 	call	func_4C0D8207_entry, [d2,d3], 0xc
 	call	func_4C0D86D4_entry, [d2,d3], 0xc
 	call	func_4C0D8D0C_entry, [d2,d3], 0x1c
 	ret	0, 8
-
-Ed2ndOnSe:
+loc_4C0D9603:
 	retf	0, 0
-
-Ed3rdOnSe:
+loc_4C0D9606:
 	retf	0, 0
-
-Ed4thOnSe:
+loc_4C0D9609:
 	retf	0, 0
 
 func_4C0D960C:
@@ -388277,7 +388272,7 @@ VwMnameSeProc_L37:
 	mov	a3, a0
 	mov	0x10, d0
 	clr	d1
-	call	func_4C07BBF5_entry, [d2,a2], 0x2c
+	call	SoundNameGet_entry, [d2,a2], 0x2c
 	mov	a3, a1
 	clr	d0
 	movbu	d0, (Str_Sound_Naming_Edt_3+16)
@@ -388513,25 +388508,25 @@ AcEditBoxSeProc_L193:
 AcEditBoxSeProc_L1a0:
 	ret	[d2,d3,a2,a3], 0x24
 
-EzAtkSe:
+EzBrillSe:
 	movm	[d2], (sp)
 	add	-0x18, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	EzAtkSe_L3b
+	beq	EzBrillSe_L3b
 	cmp	EV_INDEXSW_UP, d1
-	beq	EzAtkSe_L3b
+	beq	EzBrillSe_L3b
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	EzAtkSe_L6e
+	beq	EzBrillSe_L6e
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	EzAtkSe_L6e
+	beq	EzBrillSe_L6e
 	cmp	MT_GetString, d1
-	beq	EzAtkSe_La2
+	beq	EzBrillSe_La2
 	cmp	0x1800000, d1
-	bne	EzAtkSe_L38
+	bne	EzBrillSe_L38
 	ret	[d2], 0x1c
-EzAtkSe_L38:
-	jmp	EzAtkSe_Ld3
-EzAtkSe_L3b:
+EzBrillSe_L38:
+	jmp	EzBrillSe_Ld3
+EzBrillSe_L3b:
 	call	GetPartSelect_entry, 0, 0x14
 	clr	d1
 	mov	d0, d2
@@ -388542,10 +388537,10 @@ EzAtkSe_L3b:
 	movbu	(0x14, sp), d0
 	extb	d0
 	cmp	0xa, d0
-	bge	EzAtkSe_L5b
+	bge	EzBrillSe_L5b
 	inc	d0
 	movbu	d0, (0x14, sp)
-EzAtkSe_L5b:
+EzBrillSe_L5b:
 	movbu	(0x14, sp), d0
 	extbu	d2
 	extb	d0
@@ -388554,8 +388549,8 @@ EzAtkSe_L5b:
 	clr	d1
 	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
 	clr	d0
-	bra	EzAtkSe_Ld4
-EzAtkSe_L6e:
+	bra	EzBrillSe_Ld4
+EzBrillSe_L6e:
 	call	GetPartSelect_entry, 0, 0x14
 	clr	d1
 	mov	d0, d2
@@ -388566,10 +388561,10 @@ EzAtkSe_L6e:
 	movbu	(0x14, sp), d0
 	extb	d0
 	cmp	-0xa, d0
-	ble	EzAtkSe_L8f
+	ble	EzBrillSe_L8f
 	add	-1, d0
 	movbu	d0, (0x14, sp)
-EzAtkSe_L8f:
+EzBrillSe_L8f:
 	movbu	(0x14, sp), d0
 	extbu	d2
 	extb	d0
@@ -388578,8 +388573,8 @@ EzAtkSe_L8f:
 	clr	d1
 	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
 	clr	d0
-	bra	EzAtkSe_Ld4
-EzAtkSe_La2:
+	bra	EzBrillSe_Ld4
+EzBrillSe_La2:
 	call	GetPartSelect_entry, 0, 0x14
 	extbu	d0
 	mov	sp, a0
@@ -388595,12 +388590,382 @@ EzAtkSe_La2:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	EzAtkSe_Ld4
-# EzAtkSe + 0xd1: no traced path reaches what follows (--decode-gaps)
-	bra	EzAtkSe_Ld4
-EzAtkSe_Ld3:
+	bra	EzBrillSe_Ld4
+# EzBrillSe + 0xd1: no traced path reaches what follows (--decode-gaps)
+	bra	EzBrillSe_Ld4
+EzBrillSe_Ld3:
 	clr	d0
-EzAtkSe_Ld4:
+EzBrillSe_Ld4:
+	ret	[d2], 0x1c
+
+EzVibDepSe:
+	movm	[d2], (sp)
+	add	-0x18, sp
+	cmp	EV_INDEXSW_UP_AIC, d1
+	beq	EzVibDepSe_L3b
+	cmp	EV_INDEXSW_UP, d1
+	beq	EzVibDepSe_L3b
+	cmp	EV_INDEXSW_DOWN_AIC, d1
+	beq	EzVibDepSe_L71
+	cmp	EV_INDEXSW_DOWN, d1
+	beq	EzVibDepSe_L71
+	cmp	MT_GetString, d1
+	beq	EzVibDepSe_La7
+	cmp	0x1800000, d1
+	bne	EzVibDepSe_L38
+	ret	[d2], 0x1c
+EzVibDepSe_L38:
+	jmp	EzVibDepSe_Lf2
+EzVibDepSe_L3b:
+	call	GetPartSelect_entry, 0, 0x14
+	mov	1, d1
+	mov	d0, d2
+	extbu	d0
+	mov	sp, a0
+	add	0x14, a0
+	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
+	movbu	(0x14, sp), d0
+	extb	d0
+	cmp	0xa, d0
+	bge	EzVibDepSe_L5c
+	inc	d0
+	movbu	d0, (0x14, sp)
+EzVibDepSe_L5c:
+	movbu	(0x14, sp), d0
+	extbu	d2
+	extb	d0
+	mov	d0, (0x10, sp)
+	mov	d2, d0
+	mov	1, d1
+	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
+	clr	d0
+	ret	[d2], 0x1c
+EzVibDepSe_L71:
+	call	GetPartSelect_entry, 0, 0x14
+	mov	1, d1
+	mov	d0, d2
+	extbu	d0
+	mov	sp, a0
+	add	0x14, a0
+	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
+	movbu	(0x14, sp), d0
+	extb	d0
+	cmp	-0xb, d0
+	ble	EzVibDepSe_L93
+	add	-1, d0
+	movbu	d0, (0x14, sp)
+EzVibDepSe_L93:
+	movbu	(0x14, sp), d0
+	extbu	d2
+	extb	d0
+	mov	d0, (0x10, sp)
+	mov	d2, d0
+	mov	1, d1
+	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
+	clr	d0
+	bra	EzVibDepSe_Lf3
+EzVibDepSe_La7:
+	call	GetPartSelect_entry, 0, 0x14
+	extbu	d0
+	mov	1, d1
+	mov	sp, a0
+	add	0x14, a0
+	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
+	movbu	(0x14, sp), d0
+	extb	d0
+	cmp	-0xb, d0
+	bne	EzVibDepSe_Ld8
+	mov	(0x2c, sp), a0
+	mov	Str_OFF_58, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	EzVibDepSe_Led
+EzVibDepSe_Ld8:
+	mov	(0x2c, sp), a0
+	mov	Str_3d_138, d1
+	mov	a0, (8, sp)
+	mov	d1, (0xc, sp)
+	mov	d0, (0x10, sp)
+	call	sprintf_entry, [a2], 0x20
+EzVibDepSe_Led:
+	clr	d0
+	bra	EzVibDepSe_Lf3
+# EzVibDepSe + 0xf0: no traced path reaches what follows (--decode-gaps)
+	bra	EzVibDepSe_Lf3
+EzVibDepSe_Lf2:
+	clr	d0
+EzVibDepSe_Lf3:
+	ret	[d2], 0x1c
+
+EzVibSpdSe:
+	movm	[d2], (sp)
+	add	-0x18, sp
+	cmp	EV_INDEXSW_UP_AIC, d1
+	beq	EzVibSpdSe_L3b
+	cmp	EV_INDEXSW_UP, d1
+	beq	EzVibSpdSe_L3b
+	cmp	EV_INDEXSW_DOWN_AIC, d1
+	beq	EzVibSpdSe_L70
+	cmp	EV_INDEXSW_DOWN, d1
+	beq	EzVibSpdSe_L70
+	cmp	MT_GetString, d1
+	beq	EzVibSpdSe_La6
+	cmp	0x1800000, d1
+	bne	EzVibSpdSe_L38
+	ret	[d2], 0x1c
+EzVibSpdSe_L38:
+	jmp	EzVibSpdSe_Ld8
+EzVibSpdSe_L3b:
+	call	GetPartSelect_entry, 0, 0x14
+	mov	2, d1
+	mov	d0, d2
+	extbu	d0
+	mov	sp, a0
+	add	0x14, a0
+	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
+	movbu	(0x14, sp), d0
+	extb	d0
+	cmp	0xa, d0
+	bge	EzVibSpdSe_L5c
+	inc	d0
+	movbu	d0, (0x14, sp)
+EzVibSpdSe_L5c:
+	movbu	(0x14, sp), d0
+	extbu	d2
+	extb	d0
+	mov	d0, (0x10, sp)
+	mov	d2, d0
+	mov	2, d1
+	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
+	clr	d0
+	bra	EzVibSpdSe_Ld9
+EzVibSpdSe_L70:
+	call	GetPartSelect_entry, 0, 0x14
+	mov	2, d1
+	mov	d0, d2
+	extbu	d0
+	mov	sp, a0
+	add	0x14, a0
+	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
+	movbu	(0x14, sp), d0
+	extb	d0
+	cmp	-0xa, d0
+	ble	EzVibSpdSe_L92
+	add	-1, d0
+	movbu	d0, (0x14, sp)
+EzVibSpdSe_L92:
+	movbu	(0x14, sp), d0
+	extbu	d2
+	extb	d0
+	mov	d0, (0x10, sp)
+	mov	d2, d0
+	mov	2, d1
+	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
+	clr	d0
+	bra	EzVibSpdSe_Ld9
+EzVibSpdSe_La6:
+	call	GetPartSelect_entry, 0, 0x14
+	extbu	d0
+	mov	sp, a0
+	add	0x14, a0
+	mov	2, d1
+	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
+	mov	(0x2c, sp), a0
+	mov	Str_3d_137, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	movbu	(0x14, sp), d0
+	extb	d0
+	mov	d0, (0x10, sp)
+	call	sprintf_entry, [a2], 0x20
+	clr	d0
+	bra	EzVibSpdSe_Ld9
+# EzVibSpdSe + 0xd6: no traced path reaches what follows (--decode-gaps)
+	bra	EzVibSpdSe_Ld9
+EzVibSpdSe_Ld8:
+	clr	d0
+EzVibSpdSe_Ld9:
+	ret	[d2], 0x1c
+
+EzVibDlySe:
+	movm	[d2], (sp)
+	add	-0x18, sp
+	cmp	EV_INDEXSW_UP_AIC, d1
+	beq	EzVibDlySe_L3b
+	cmp	EV_INDEXSW_UP, d1
+	beq	EzVibDlySe_L3b
+	cmp	EV_INDEXSW_DOWN_AIC, d1
+	beq	EzVibDlySe_L70
+	cmp	EV_INDEXSW_DOWN, d1
+	beq	EzVibDlySe_L70
+	cmp	MT_GetString, d1
+	beq	EzVibDlySe_La6
+	cmp	0x1800000, d1
+	bne	EzVibDlySe_L38
+	ret	[d2], 0x1c
+EzVibDlySe_L38:
+	jmp	EzVibDlySe_Ld8
+EzVibDlySe_L3b:
+	call	GetPartSelect_entry, 0, 0x14
+	mov	3, d1
+	mov	d0, d2
+	extbu	d0
+	mov	sp, a0
+	add	0x14, a0
+	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
+	movbu	(0x14, sp), d0
+	extb	d0
+	cmp	0xa, d0
+	bge	EzVibDlySe_L5c
+	inc	d0
+	movbu	d0, (0x14, sp)
+EzVibDlySe_L5c:
+	movbu	(0x14, sp), d0
+	extbu	d2
+	extb	d0
+	mov	d0, (0x10, sp)
+	mov	d2, d0
+	mov	3, d1
+	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
+	clr	d0
+	bra	EzVibDlySe_Ld9
+EzVibDlySe_L70:
+	call	GetPartSelect_entry, 0, 0x14
+	mov	3, d1
+	mov	d0, d2
+	extbu	d0
+	mov	sp, a0
+	add	0x14, a0
+	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
+	movbu	(0x14, sp), d0
+	extb	d0
+	cmp	-0xa, d0
+	ble	EzVibDlySe_L92
+	add	-1, d0
+	movbu	d0, (0x14, sp)
+EzVibDlySe_L92:
+	movbu	(0x14, sp), d0
+	extbu	d2
+	extb	d0
+	mov	d0, (0x10, sp)
+	mov	d2, d0
+	mov	3, d1
+	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
+	clr	d0
+	bra	EzVibDlySe_Ld9
+EzVibDlySe_La6:
+	call	GetPartSelect_entry, 0, 0x14
+	extbu	d0
+	mov	sp, a0
+	add	0x14, a0
+	mov	3, d1
+	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
+	mov	(0x2c, sp), a0
+	mov	Str_3d_136, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	movbu	(0x14, sp), d0
+	extb	d0
+	mov	d0, (0x10, sp)
+	call	sprintf_entry, [a2], 0x20
+	clr	d0
+	bra	EzVibDlySe_Ld9
+# EzVibDlySe + 0xd6: no traced path reaches what follows (--decode-gaps)
+	bra	EzVibDlySe_Ld9
+EzVibDlySe_Ld8:
+	clr	d0
+EzVibDlySe_Ld9:
+	ret	[d2], 0x1c
+
+EzAtkSe:
+	movm	[d2], (sp)
+	add	-0x18, sp
+	cmp	EV_INDEXSW_UP_AIC, d1
+	beq	EzAtkSe_L3b
+	cmp	EV_INDEXSW_UP, d1
+	beq	EzAtkSe_L3b
+	cmp	EV_INDEXSW_DOWN_AIC, d1
+	beq	EzAtkSe_L70
+	cmp	EV_INDEXSW_DOWN, d1
+	beq	EzAtkSe_L70
+	cmp	MT_GetString, d1
+	beq	EzAtkSe_La6
+	cmp	0x1800000, d1
+	bne	EzAtkSe_L38
+	ret	[d2], 0x1c
+EzAtkSe_L38:
+	jmp	EzAtkSe_Ld8
+EzAtkSe_L3b:
+	call	GetPartSelect_entry, 0, 0x14
+	mov	5, d1
+	mov	d0, d2
+	extbu	d0
+	mov	sp, a0
+	add	0x14, a0
+	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
+	movbu	(0x14, sp), d0
+	extb	d0
+	cmp	0xa, d0
+	bge	EzAtkSe_L5c
+	inc	d0
+	movbu	d0, (0x14, sp)
+EzAtkSe_L5c:
+	movbu	(0x14, sp), d0
+	extbu	d2
+	extb	d0
+	mov	d0, (0x10, sp)
+	mov	d2, d0
+	mov	5, d1
+	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
+	clr	d0
+	bra	EzAtkSe_Ld9
+EzAtkSe_L70:
+	call	GetPartSelect_entry, 0, 0x14
+	mov	5, d1
+	mov	d0, d2
+	extbu	d0
+	mov	sp, a0
+	add	0x14, a0
+	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
+	movbu	(0x14, sp), d0
+	extb	d0
+	cmp	-0xa, d0
+	ble	EzAtkSe_L92
+	add	-1, d0
+	movbu	d0, (0x14, sp)
+EzAtkSe_L92:
+	movbu	(0x14, sp), d0
+	extbu	d2
+	extb	d0
+	mov	d0, (0x10, sp)
+	mov	d2, d0
+	mov	5, d1
+	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
+	clr	d0
+	bra	EzAtkSe_Ld9
+EzAtkSe_La6:
+	call	GetPartSelect_entry, 0, 0x14
+	extbu	d0
+	mov	sp, a0
+	add	0x14, a0
+	mov	5, d1
+	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
+	mov	(0x2c, sp), a0
+	mov	Str_3d_135, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	movbu	(0x14, sp), d0
+	extb	d0
+	mov	d0, (0x10, sp)
+	call	sprintf_entry, [a2], 0x20
+	clr	d0
+	bra	EzAtkSe_Ld9
+# EzAtkSe + 0xd6: no traced path reaches what follows (--decode-gaps)
+	bra	EzAtkSe_Ld9
+EzAtkSe_Ld8:
+	clr	d0
+EzAtkSe_Ld9:
 	ret	[d2], 0x1c
 
 EzRlsSe:
@@ -388611,19 +388976,19 @@ EzRlsSe:
 	cmp	EV_INDEXSW_UP, d1
 	beq	EzRlsSe_L3b
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	EzRlsSe_L71
+	beq	EzRlsSe_L70
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	EzRlsSe_L71
+	beq	EzRlsSe_L70
 	cmp	MT_GetString, d1
-	beq	EzRlsSe_La7
+	beq	EzRlsSe_La6
 	cmp	0x1800000, d1
 	bne	EzRlsSe_L38
 	ret	[d2], 0x1c
 EzRlsSe_L38:
-	jmp	EzRlsSe_Lf2
+	jmp	EzRlsSe_Ld8
 EzRlsSe_L3b:
 	call	GetPartSelect_entry, 0, 0x14
-	mov	1, d1
+	mov	6, d1
 	mov	d0, d2
 	extbu	d0
 	mov	sp, a0
@@ -388641,381 +389006,11 @@ EzRlsSe_L5c:
 	extb	d0
 	mov	d0, (0x10, sp)
 	mov	d2, d0
-	mov	1, d1
-	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
-	clr	d0
-	ret	[d2], 0x1c
-EzRlsSe_L71:
-	call	GetPartSelect_entry, 0, 0x14
-	mov	1, d1
-	mov	d0, d2
-	extbu	d0
-	mov	sp, a0
-	add	0x14, a0
-	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
-	movbu	(0x14, sp), d0
-	extb	d0
-	cmp	-0xb, d0
-	ble	EzRlsSe_L93
-	add	-1, d0
-	movbu	d0, (0x14, sp)
-EzRlsSe_L93:
-	movbu	(0x14, sp), d0
-	extbu	d2
-	extb	d0
-	mov	d0, (0x10, sp)
-	mov	d2, d0
-	mov	1, d1
-	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
-	clr	d0
-	bra	EzRlsSe_Lf3
-EzRlsSe_La7:
-	call	GetPartSelect_entry, 0, 0x14
-	extbu	d0
-	mov	1, d1
-	mov	sp, a0
-	add	0x14, a0
-	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
-	movbu	(0x14, sp), d0
-	extb	d0
-	cmp	-0xb, d0
-	bne	EzRlsSe_Ld8
-	mov	(0x2c, sp), a0
-	mov	Str_OFF_58, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	EzRlsSe_Led
-EzRlsSe_Ld8:
-	mov	(0x2c, sp), a0
-	mov	Str_3d_138, d1
-	mov	a0, (8, sp)
-	mov	d1, (0xc, sp)
-	mov	d0, (0x10, sp)
-	call	sprintf_entry, [a2], 0x20
-EzRlsSe_Led:
-	clr	d0
-	bra	EzRlsSe_Lf3
-# EzRlsSe + 0xf0: no traced path reaches what follows (--decode-gaps)
-	bra	EzRlsSe_Lf3
-EzRlsSe_Lf2:
-	clr	d0
-EzRlsSe_Lf3:
-	ret	[d2], 0x1c
-
-EzDeffSe:
-	movm	[d2], (sp)
-	add	-0x18, sp
-	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	EzDeffSe_L3b
-	cmp	EV_INDEXSW_UP, d1
-	beq	EzDeffSe_L3b
-	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	EzDeffSe_L70
-	cmp	EV_INDEXSW_DOWN, d1
-	beq	EzDeffSe_L70
-	cmp	MT_GetString, d1
-	beq	EzDeffSe_La6
-	cmp	0x1800000, d1
-	bne	EzDeffSe_L38
-	ret	[d2], 0x1c
-EzDeffSe_L38:
-	jmp	EzDeffSe_Ld8
-EzDeffSe_L3b:
-	call	GetPartSelect_entry, 0, 0x14
-	mov	2, d1
-	mov	d0, d2
-	extbu	d0
-	mov	sp, a0
-	add	0x14, a0
-	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
-	movbu	(0x14, sp), d0
-	extb	d0
-	cmp	0xa, d0
-	bge	EzDeffSe_L5c
-	inc	d0
-	movbu	d0, (0x14, sp)
-EzDeffSe_L5c:
-	movbu	(0x14, sp), d0
-	extbu	d2
-	extb	d0
-	mov	d0, (0x10, sp)
-	mov	d2, d0
-	mov	2, d1
-	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
-	clr	d0
-	bra	EzDeffSe_Ld9
-EzDeffSe_L70:
-	call	GetPartSelect_entry, 0, 0x14
-	mov	2, d1
-	mov	d0, d2
-	extbu	d0
-	mov	sp, a0
-	add	0x14, a0
-	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
-	movbu	(0x14, sp), d0
-	extb	d0
-	cmp	-0xa, d0
-	ble	EzDeffSe_L92
-	add	-1, d0
-	movbu	d0, (0x14, sp)
-EzDeffSe_L92:
-	movbu	(0x14, sp), d0
-	extbu	d2
-	extb	d0
-	mov	d0, (0x10, sp)
-	mov	d2, d0
-	mov	2, d1
-	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
-	clr	d0
-	bra	EzDeffSe_Ld9
-EzDeffSe_La6:
-	call	GetPartSelect_entry, 0, 0x14
-	extbu	d0
-	mov	sp, a0
-	add	0x14, a0
-	mov	2, d1
-	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
-	mov	(0x2c, sp), a0
-	mov	Str_3d_137, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	movbu	(0x14, sp), d0
-	extb	d0
-	mov	d0, (0x10, sp)
-	call	sprintf_entry, [a2], 0x20
-	clr	d0
-	bra	EzDeffSe_Ld9
-# EzDeffSe + 0xd6: no traced path reaches what follows (--decode-gaps)
-	bra	EzDeffSe_Ld9
-EzDeffSe_Ld8:
-	clr	d0
-EzDeffSe_Ld9:
-	ret	[d2], 0x1c
-
-ToneSelGridSe:
-	movm	[d2], (sp)
-	add	-0x18, sp
-	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	ToneSelGridSe_L3b
-	cmp	EV_INDEXSW_UP, d1
-	beq	ToneSelGridSe_L3b
-	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	ToneSelGridSe_L70
-	cmp	EV_INDEXSW_DOWN, d1
-	beq	ToneSelGridSe_L70
-	cmp	MT_GetString, d1
-	beq	ToneSelGridSe_La6
-	cmp	0x1800000, d1
-	bne	ToneSelGridSe_L38
-	ret	[d2], 0x1c
-ToneSelGridSe_L38:
-	jmp	ToneSelGridSe_Ld8
-ToneSelGridSe_L3b:
-	call	GetPartSelect_entry, 0, 0x14
-	mov	3, d1
-	mov	d0, d2
-	extbu	d0
-	mov	sp, a0
-	add	0x14, a0
-	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
-	movbu	(0x14, sp), d0
-	extb	d0
-	cmp	0xa, d0
-	bge	ToneSelGridSe_L5c
-	inc	d0
-	movbu	d0, (0x14, sp)
-ToneSelGridSe_L5c:
-	movbu	(0x14, sp), d0
-	extbu	d2
-	extb	d0
-	mov	d0, (0x10, sp)
-	mov	d2, d0
-	mov	3, d1
-	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
-	clr	d0
-	bra	ToneSelGridSe_Ld9
-ToneSelGridSe_L70:
-	call	GetPartSelect_entry, 0, 0x14
-	mov	3, d1
-	mov	d0, d2
-	extbu	d0
-	mov	sp, a0
-	add	0x14, a0
-	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
-	movbu	(0x14, sp), d0
-	extb	d0
-	cmp	-0xa, d0
-	ble	ToneSelGridSe_L92
-	add	-1, d0
-	movbu	d0, (0x14, sp)
-ToneSelGridSe_L92:
-	movbu	(0x14, sp), d0
-	extbu	d2
-	extb	d0
-	mov	d0, (0x10, sp)
-	mov	d2, d0
-	mov	3, d1
-	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
-	clr	d0
-	bra	ToneSelGridSe_Ld9
-ToneSelGridSe_La6:
-	call	GetPartSelect_entry, 0, 0x14
-	extbu	d0
-	mov	sp, a0
-	add	0x14, a0
-	mov	3, d1
-	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
-	mov	(0x2c, sp), a0
-	mov	Str_3d_136, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	movbu	(0x14, sp), d0
-	extb	d0
-	mov	d0, (0x10, sp)
-	call	sprintf_entry, [a2], 0x20
-	clr	d0
-	bra	ToneSelGridSe_Ld9
-# ToneSelGridSe + 0xd6: no traced path reaches what follows (--decode-gaps)
-	bra	ToneSelGridSe_Ld9
-ToneSelGridSe_Ld8:
-	clr	d0
-ToneSelGridSe_Ld9:
-	ret	[d2], 0x1c
-
-ToneGridSe1:
-	movm	[d2], (sp)
-	add	-0x18, sp
-	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	ToneGridSe1_L3b
-	cmp	EV_INDEXSW_UP, d1
-	beq	ToneGridSe1_L3b
-	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	ToneGridSe1_L70
-	cmp	EV_INDEXSW_DOWN, d1
-	beq	ToneGridSe1_L70
-	cmp	MT_GetString, d1
-	beq	ToneGridSe1_La6
-	cmp	0x1800000, d1
-	bne	ToneGridSe1_L38
-	ret	[d2], 0x1c
-ToneGridSe1_L38:
-	jmp	ToneGridSe1_Ld8
-ToneGridSe1_L3b:
-	call	GetPartSelect_entry, 0, 0x14
-	mov	5, d1
-	mov	d0, d2
-	extbu	d0
-	mov	sp, a0
-	add	0x14, a0
-	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
-	movbu	(0x14, sp), d0
-	extb	d0
-	cmp	0xa, d0
-	bge	ToneGridSe1_L5c
-	inc	d0
-	movbu	d0, (0x14, sp)
-ToneGridSe1_L5c:
-	movbu	(0x14, sp), d0
-	extbu	d2
-	extb	d0
-	mov	d0, (0x10, sp)
-	mov	d2, d0
-	mov	5, d1
-	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
-	clr	d0
-	bra	ToneGridSe1_Ld9
-ToneGridSe1_L70:
-	call	GetPartSelect_entry, 0, 0x14
-	mov	5, d1
-	mov	d0, d2
-	extbu	d0
-	mov	sp, a0
-	add	0x14, a0
-	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
-	movbu	(0x14, sp), d0
-	extb	d0
-	cmp	-0xa, d0
-	ble	ToneGridSe1_L92
-	add	-1, d0
-	movbu	d0, (0x14, sp)
-ToneGridSe1_L92:
-	movbu	(0x14, sp), d0
-	extbu	d2
-	extb	d0
-	mov	d0, (0x10, sp)
-	mov	d2, d0
-	mov	5, d1
-	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
-	clr	d0
-	bra	ToneGridSe1_Ld9
-ToneGridSe1_La6:
-	call	GetPartSelect_entry, 0, 0x14
-	extbu	d0
-	mov	sp, a0
-	add	0x14, a0
-	mov	5, d1
-	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
-	mov	(0x2c, sp), a0
-	mov	Str_3d_135, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	movbu	(0x14, sp), d0
-	extb	d0
-	mov	d0, (0x10, sp)
-	call	sprintf_entry, [a2], 0x20
-	clr	d0
-	bra	ToneGridSe1_Ld9
-# ToneGridSe1 + 0xd6: no traced path reaches what follows (--decode-gaps)
-	bra	ToneGridSe1_Ld9
-ToneGridSe1_Ld8:
-	clr	d0
-ToneGridSe1_Ld9:
-	ret	[d2], 0x1c
-
-ToneGridSe2:
-	movm	[d2], (sp)
-	add	-0x18, sp
-	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	ToneGridSe2_L3b
-	cmp	EV_INDEXSW_UP, d1
-	beq	ToneGridSe2_L3b
-	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	ToneGridSe2_L70
-	cmp	EV_INDEXSW_DOWN, d1
-	beq	ToneGridSe2_L70
-	cmp	MT_GetString, d1
-	beq	ToneGridSe2_La6
-	cmp	0x1800000, d1
-	bne	ToneGridSe2_L38
-	ret	[d2], 0x1c
-ToneGridSe2_L38:
-	jmp	ToneGridSe2_Ld8
-ToneGridSe2_L3b:
-	call	GetPartSelect_entry, 0, 0x14
-	mov	6, d1
-	mov	d0, d2
-	extbu	d0
-	mov	sp, a0
-	add	0x14, a0
-	call	func_4C097790_entry, [d2,d3,a2,a3], 0x2c
-	movbu	(0x14, sp), d0
-	extb	d0
-	cmp	0xa, d0
-	bge	ToneGridSe2_L5c
-	inc	d0
-	movbu	d0, (0x14, sp)
-ToneGridSe2_L5c:
-	movbu	(0x14, sp), d0
-	extbu	d2
-	extb	d0
-	mov	d0, (0x10, sp)
-	mov	d2, d0
 	mov	6, d1
 	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
 	clr	d0
-	bra	ToneGridSe2_Ld9
-ToneGridSe2_L70:
+	bra	EzRlsSe_Ld9
+EzRlsSe_L70:
 	call	GetPartSelect_entry, 0, 0x14
 	mov	6, d1
 	mov	d0, d2
@@ -389026,10 +389021,10 @@ ToneGridSe2_L70:
 	movbu	(0x14, sp), d0
 	extb	d0
 	cmp	-0xa, d0
-	ble	ToneGridSe2_L92
+	ble	EzRlsSe_L92
 	add	-1, d0
 	movbu	d0, (0x14, sp)
-ToneGridSe2_L92:
+EzRlsSe_L92:
 	movbu	(0x14, sp), d0
 	extbu	d2
 	extb	d0
@@ -389038,8 +389033,8 @@ ToneGridSe2_L92:
 	mov	6, d1
 	call	func_4C08E62C_entry, [d2,d3,a2,a3], 0x78
 	clr	d0
-	bra	ToneGridSe2_Ld9
-ToneGridSe2_La6:
+	bra	EzRlsSe_Ld9
+EzRlsSe_La6:
 	call	GetPartSelect_entry, 0, 0x14
 	extbu	d0
 	mov	sp, a0
@@ -389055,44 +389050,44 @@ ToneGridSe2_La6:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	ToneGridSe2_Ld9
-# ToneGridSe2 + 0xd6: no traced path reaches what follows (--decode-gaps)
-	bra	ToneGridSe2_Ld9
-ToneGridSe2_Ld8:
+	bra	EzRlsSe_Ld9
+# EzRlsSe + 0xd6: no traced path reaches what follows (--decode-gaps)
+	bra	EzRlsSe_Ld9
+EzRlsSe_Ld8:
 	clr	d0
-ToneGridSe2_Ld9:
+EzRlsSe_Ld9:
 	ret	[d2], 0x1c
 
-TsetGridSe:
+EzDeffSe:
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	TsetGridSe_L55
+	beq	EzDeffSe_L55
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	TsetGridSe_L85
+	beq	EzDeffSe_L85
 	cmp	EV_INDEXSW_UP, d1
-	beq	TsetGridSe_L85
+	beq	EzDeffSe_L85
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	TsetGridSe_L26
-	jmp	TsetGridSe_Le4
-TsetGridSe_L26:
+	bne	EzDeffSe_L26
+	jmp	EzDeffSe_Le4
+EzDeffSe_L26:
 	cmp	EV_INDEXSW_DOWN, d1
-	bne	TsetGridSe_L31
-	jmp	TsetGridSe_Le4
-TsetGridSe_L31:
+	bne	EzDeffSe_L31
+	jmp	EzDeffSe_Le4
+EzDeffSe_L31:
 	cmp	EV_MMMDATA, d1
-	bne	TsetGridSe_L3c
-	jmp	TsetGridSe_L13b
-TsetGridSe_L3c:
+	bne	EzDeffSe_L3c
+	jmp	EzDeffSe_L13b
+EzDeffSe_L3c:
 	cmp	MT_GetString, d1
-	bne	TsetGridSe_L47
-	jmp	TsetGridSe_L164
-TsetGridSe_L47:
+	bne	EzDeffSe_L47
+	jmp	EzDeffSe_L164
+EzDeffSe_L47:
 	cmp	0x1800000, d1
-	bne	TsetGridSe_L52
+	bne	EzDeffSe_L52
 	ret	0, 0x14
-TsetGridSe_L52:
-	jmp	TsetGridSe_L2c4
-TsetGridSe_L55:
+EzDeffSe_L52:
+	jmp	EzDeffSe_L2c4
+EzDeffSe_L55:
 	mov	CmpBkslScreen_Label_MEMORY_NAME_id, d0
 	call	SetMmmFilter_entry, [d2], 0x18
 	call	func_4C0FCC38_entry, 0, 0x18
@@ -389103,14 +389098,14 @@ TsetGridSe_L55:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	0, 0x14
-TsetGridSe_L85:
+EzDeffSe_L85:
 	movbu	(0x5004d754), d0
 	cmp	0, d0
-	beq	TsetGridSe_L95
+	beq	EzDeffSe_L95
 	cmp	1, d0
-	beq	TsetGridSe_Lc2
-	bra	TsetGridSe_Le0
-TsetGridSe_L95:
+	beq	EzDeffSe_Lc2
+	bra	EzDeffSe_Le0
+EzDeffSe_L95:
 	clr	d0
 	call	func_4C0FCC94_entry, 0, 0x14
 	call	GetPartSelect_entry, 0, 0x14
@@ -389122,35 +389117,35 @@ TsetGridSe_L95:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 	mov	1, d0
 	movbu	d0, (0x5004d754)
-	bra	TsetGridSe_Le0
-TsetGridSe_Lc2:
+	bra	EzDeffSe_Le0
+EzDeffSe_Lc2:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0xc, d0
-	bge	TsetGridSe_Le0
+	bge	EzDeffSe_Le0
 	inc	d0
 	movbu	d0, (TsetGridSe_L55_Var)
 	movbu	(TsetGridSe_L55_Var), d0
 	call	func_4C0FCC94_entry, 0, 0x14
-TsetGridSe_Le0:
+EzDeffSe_Le0:
 	clr	d0
 	ret	0, 0x14
-TsetGridSe_Le4:
+EzDeffSe_Le4:
 	movbu	(0x5004d754), d0
 	cmp	0, d0
-	beq	TsetGridSe_L137
+	beq	EzDeffSe_L137
 	cmp	1, d0
-	bne	TsetGridSe_L137
+	bne	EzDeffSe_L137
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	ble	TsetGridSe_L113
+	ble	EzDeffSe_L113
 	add	-1, d0
 	movbu	d0, (TsetGridSe_L55_Var)
 	movbu	(TsetGridSe_L55_Var), d0
 	call	func_4C0FCC94_entry, 0, 0x14
-	bra	TsetGridSe_L137
-TsetGridSe_L113:
+	bra	EzDeffSe_L137
+EzDeffSe_L113:
 	cmp	0, d0
-	bne	TsetGridSe_L137
+	bne	EzDeffSe_L137
 	call	GetPartSelect_entry, 0, 0x14
 	mov	d0, d1
 	mov	CmpBkslScreen_Label_MEMORY_NAME_id, d0
@@ -389159,50 +389154,50 @@ TsetGridSe_L113:
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
 	clr	d0
 	movbu	d0, (0x5004d754)
-TsetGridSe_L137:
+EzDeffSe_L137:
 	clr	d0
 	ret	0, 0x14
-TsetGridSe_L13b:
+EzDeffSe_L13b:
 	mov	(0x24, sp), a0
 	mov	(a0), d0
 	cmp	CmpBkslScreen_Label_MEMORY_NAME_id, d0
-	bne	TsetGridSe_L160
+	bne	EzDeffSe_L160
 	mov	(4, a0), d0
 	mov	1, d1
 	movbu	d1, (0x5004d754)
 	and	0xff, d0
 	extbu	d0
 	cmp	0, d0
-	bgt	TsetGridSe_L160
+	bgt	EzDeffSe_L160
 	clr	d0
 	movbu	d0, (0x5004d754)
-TsetGridSe_L160:
+EzDeffSe_L160:
 	clr	d0
 	ret	0, 0x14
-TsetGridSe_L164:
+EzDeffSe_L164:
 	movbu	(0x5004d754), d0
 	cmp	0, d0
-	beq	TsetGridSe_L175
+	beq	EzDeffSe_L175
 	cmp	1, d0
-	beq	TsetGridSe_L18b
-	jmp	TsetGridSe_L2bf
-TsetGridSe_L175:
+	beq	EzDeffSe_L18b
+	jmp	EzDeffSe_L2bf
+EzDeffSe_L175:
 	mov	(0x24, sp), a1
 	mov	Str_OFF_57, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	TsetGridSe_L2bf
-TsetGridSe_L18b:
+	jmp	EzDeffSe_L2bf
+EzDeffSe_L18b:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	TsetGridSe_L198
-	jmp	TsetGridSe_L2bf
-TsetGridSe_L198:
+	bge	EzDeffSe_L198
+	jmp	EzDeffSe_L2bf
+EzDeffSe_L198:
 	cmp	0xc, d0
-	ble	TsetGridSe_L19f
-	jmp	TsetGridSe_L2bf
-TsetGridSe_L19f:
+	ble	EzDeffSe_L19f
+	jmp	EzDeffSe_L2bf
+EzDeffSe_L19f:
 	asl2	d0
 	mov	TsetGridSe_L19f_Table, a0
 	mov	(d0, a0), a0
@@ -389213,139 +389208,139 @@ loc_4C0DCDED:
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	TsetGridSe_L2bf
+	jmp	EzDeffSe_L2bf
 loc_4C0DCE03:
 	mov	(0x24, sp), a1
 	mov	Str_CELESTE_2_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	TsetGridSe_L2bf
+	jmp	EzDeffSe_L2bf
 loc_4C0DCE19:
 	mov	(0x24, sp), a1
 	mov	Str_CHORUS_1_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	TsetGridSe_L2bf
+	jmp	EzDeffSe_L2bf
 loc_4C0DCE2F:
 	mov	(0x24, sp), a1
 	mov	Str_CHORUS_2_3, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	TsetGridSe_L2bf
+	jmp	EzDeffSe_L2bf
 loc_4C0DCE45:
 	mov	(0x24, sp), a1
 	mov	Str_ENSEMBLE_1_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	TsetGridSe_L2bf
+	jmp	EzDeffSe_L2bf
 loc_4C0DCE5B:
 	mov	(0x24, sp), a1
 	mov	Str_ENSEMBLE_2_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	TsetGridSe_L2bf
+	jmp	EzDeffSe_L2bf
 loc_4C0DCE71:
 	mov	(0x24, sp), a1
 	mov	Str_TREMOLO_3, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	TsetGridSe_L2bf
+	bra	EzDeffSe_L2bf
 loc_4C0DCE86:
 	mov	(0x24, sp), a1
 	mov	Str_ORGAN_TREMOLO_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	TsetGridSe_L2bf
+	bra	EzDeffSe_L2bf
 loc_4C0DCE9B:
 	mov	(0x24, sp), a1
 	mov	Str_DELAY_17, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	TsetGridSe_L2bf
+	bra	EzDeffSe_L2bf
 loc_4C0DCEB0:
 	mov	(0x24, sp), a1
 	mov	Str_REPEAT_1_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	TsetGridSe_L2bf
+	bra	EzDeffSe_L2bf
 loc_4C0DCEC5:
 	mov	(0x24, sp), a1
 	mov	Str_REPEAT_2_3, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	TsetGridSe_L2bf
+	bra	EzDeffSe_L2bf
 loc_4C0DCEDA:
 	mov	(0x24, sp), a1
 	mov	Str_SOLO_EFFECT_1_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	TsetGridSe_L2bf
+	bra	EzDeffSe_L2bf
 loc_4C0DCEEF:
 	mov	(0x24, sp), a1
 	mov	Str_SOLO_EFFECT_2_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-TsetGridSe_L2bf:
+EzDeffSe_L2bf:
 	clr	d0
-	bra	TsetGridSe_L2c5
-# TsetGridSe + 0x2c2: no traced path reaches what follows (--decode-gaps)
-	bra	TsetGridSe_L2c5
-TsetGridSe_L2c4:
+	bra	EzDeffSe_L2c5
+# EzDeffSe + 0x2c2: no traced path reaches what follows (--decode-gaps)
+	bra	EzDeffSe_L2c5
+EzDeffSe_L2c4:
 	clr	d0
-TsetGridSe_L2c5:
+EzDeffSe_L2c5:
 	ret	0, 0x14
 
-EzBrillSe:
+Ed1stOnSe:
 	movm	[a2,a3], (sp)
 	add	-0x20, sp
 	cmp	MT_SetSelected, d1
-	beq	EzBrillSe_L3f
+	beq	Ed1stOnSe_L3f
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	EzBrillSe_L58
+	beq	Ed1stOnSe_L58
 	cmp	EV_INDEXSW_UP, d1
-	beq	EzBrillSe_L58
+	beq	Ed1stOnSe_L58
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	EzBrillSe_L65
+	beq	Ed1stOnSe_L65
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	EzBrillSe_L65
+	beq	Ed1stOnSe_L65
 	cmp	MT_GetString, d1
-	beq	EzBrillSe_L71
+	beq	Ed1stOnSe_L71
 	cmp	0x1800000, d1
-	beq	EzBrillSe_L8d
-	bra	EzBrillSe_L8c
-EzBrillSe_L3f:
+	beq	Ed1stOnSe_L8d
+	bra	Ed1stOnSe_L8c
+Ed1stOnSe_L3f:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	ToneSetGrid_id, d0
 	mov	0x01ae0000, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	EzBrillSe_L8d
-EzBrillSe_L58:
+	bra	Ed1stOnSe_L8d
+Ed1stOnSe_L58:
 	mov	1, d0
 	clr	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
 	clr	d0
-	bra	EzBrillSe_L8d
-EzBrillSe_L65:
+	bra	Ed1stOnSe_L8d
+Ed1stOnSe_L65:
 	clr	d0
 	mov	d0, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
 	clr	d0
-	bra	EzBrillSe_L8d
-EzBrillSe_L71:
+	bra	Ed1stOnSe_L8d
+Ed1stOnSe_L71:
 	mov	sp, a3
 	add	0x14, a3
 	mov	a3, a0
@@ -389355,53 +389350,53 @@ EzBrillSe_L71:
 	mov	(0x38, sp), a0
 	call	strcpy_entry, [a2], 4
 	clr	d0
-	bra	EzBrillSe_L8d
-# EzBrillSe + 0x8a: no traced path reaches what follows (--decode-gaps)
-	bra	EzBrillSe_L8d
-EzBrillSe_L8c:
+	bra	Ed1stOnSe_L8d
+# Ed1stOnSe + 0x8a: no traced path reaches what follows (--decode-gaps)
+	bra	Ed1stOnSe_L8d
+Ed1stOnSe_L8c:
 	clr	d0
-EzBrillSe_L8d:
+Ed1stOnSe_L8d:
 	ret	[a2,a3], 0x28
 
-EzVibDepSe:
+Ed2ndOnSe:
 	movm	[a2,a3], (sp)
 	add	-0x20, sp
 	cmp	MT_SetSelected, d1
-	beq	EzVibDepSe_L3f
+	beq	Ed2ndOnSe_L3f
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	EzVibDepSe_L59
+	beq	Ed2ndOnSe_L59
 	cmp	EV_INDEXSW_UP, d1
-	beq	EzVibDepSe_L59
+	beq	Ed2ndOnSe_L59
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	EzVibDepSe_L66
+	beq	Ed2ndOnSe_L66
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	EzVibDepSe_L66
+	beq	Ed2ndOnSe_L66
 	cmp	MT_GetString, d1
-	beq	EzVibDepSe_L73
+	beq	Ed2ndOnSe_L73
 	cmp	0x1800000, d1
-	beq	EzVibDepSe_L90
-	bra	EzVibDepSe_L8f
-EzVibDepSe_L3f:
+	beq	Ed2ndOnSe_L90
+	bra	Ed2ndOnSe_L8f
+Ed2ndOnSe_L3f:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	ToneSetGrid_id, d0
 	mov	0x01ae0000, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	EzVibDepSe_L90
-EzVibDepSe_L59:
+	bra	Ed2ndOnSe_L90
+Ed2ndOnSe_L59:
 	mov	1, d0
 	mov	d0, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
 	clr	d0
-	bra	EzVibDepSe_L90
-EzVibDepSe_L66:
+	bra	Ed2ndOnSe_L90
+Ed2ndOnSe_L66:
 	clr	d0
 	mov	1, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
 	clr	d0
-	bra	EzVibDepSe_L90
-EzVibDepSe_L73:
+	bra	Ed2ndOnSe_L90
+Ed2ndOnSe_L73:
 	mov	sp, a3
 	add	0x14, a3
 	mov	a3, a0
@@ -389411,53 +389406,53 @@ EzVibDepSe_L73:
 	mov	(0x38, sp), a0
 	call	strcpy_entry, [a2], 4
 	clr	d0
-	bra	EzVibDepSe_L90
-# EzVibDepSe + 0x8d: no traced path reaches what follows (--decode-gaps)
-	bra	EzVibDepSe_L90
-EzVibDepSe_L8f:
+	bra	Ed2ndOnSe_L90
+# Ed2ndOnSe + 0x8d: no traced path reaches what follows (--decode-gaps)
+	bra	Ed2ndOnSe_L90
+Ed2ndOnSe_L8f:
 	clr	d0
-EzVibDepSe_L90:
+Ed2ndOnSe_L90:
 	ret	[a2,a3], 0x28
 
-EzVibSpdSe:
+Ed3rdOnSe:
 	movm	[a2,a3], (sp)
 	add	-0x20, sp
 	cmp	MT_SetSelected, d1
-	beq	EzVibSpdSe_L3f
+	beq	Ed3rdOnSe_L3f
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	EzVibSpdSe_L59
+	beq	Ed3rdOnSe_L59
 	cmp	EV_INDEXSW_UP, d1
-	beq	EzVibSpdSe_L59
+	beq	Ed3rdOnSe_L59
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	EzVibSpdSe_L67
+	beq	Ed3rdOnSe_L67
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	EzVibSpdSe_L67
+	beq	Ed3rdOnSe_L67
 	cmp	MT_GetString, d1
-	beq	EzVibSpdSe_L74
+	beq	Ed3rdOnSe_L74
 	cmp	0x1800000, d1
-	beq	EzVibSpdSe_L91
-	bra	EzVibSpdSe_L90
-EzVibSpdSe_L3f:
+	beq	Ed3rdOnSe_L91
+	bra	Ed3rdOnSe_L90
+Ed3rdOnSe_L3f:
 	mov	2, d0
 	mov	d0, (0x10, sp)
 	mov	ToneSetGrid_id, d0
 	mov	0x01ae0000, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	EzVibSpdSe_L91
-EzVibSpdSe_L59:
+	bra	Ed3rdOnSe_L91
+Ed3rdOnSe_L59:
 	mov	1, d0
 	mov	2, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
 	clr	d0
-	bra	EzVibSpdSe_L91
-EzVibSpdSe_L67:
+	bra	Ed3rdOnSe_L91
+Ed3rdOnSe_L67:
 	clr	d0
 	mov	2, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
 	clr	d0
-	bra	EzVibSpdSe_L91
-EzVibSpdSe_L74:
+	bra	Ed3rdOnSe_L91
+Ed3rdOnSe_L74:
 	mov	sp, a3
 	add	0x14, a3
 	mov	a3, a0
@@ -389467,53 +389462,53 @@ EzVibSpdSe_L74:
 	mov	(0x38, sp), a0
 	call	strcpy_entry, [a2], 4
 	clr	d0
-	bra	EzVibSpdSe_L91
-# EzVibSpdSe + 0x8e: no traced path reaches what follows (--decode-gaps)
-	bra	EzVibSpdSe_L91
-EzVibSpdSe_L90:
+	bra	Ed3rdOnSe_L91
+# Ed3rdOnSe + 0x8e: no traced path reaches what follows (--decode-gaps)
+	bra	Ed3rdOnSe_L91
+Ed3rdOnSe_L90:
 	clr	d0
-EzVibSpdSe_L91:
+Ed3rdOnSe_L91:
 	ret	[a2,a3], 0x28
 
-EzVibDlySe:
+Ed4thOnSe:
 	movm	[a2,a3], (sp)
 	add	-0x20, sp
 	cmp	MT_SetSelected, d1
-	beq	EzVibDlySe_L3f
+	beq	Ed4thOnSe_L3f
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	EzVibDlySe_L59
+	beq	Ed4thOnSe_L59
 	cmp	EV_INDEXSW_UP, d1
-	beq	EzVibDlySe_L59
+	beq	Ed4thOnSe_L59
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	EzVibDlySe_L67
+	beq	Ed4thOnSe_L67
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	EzVibDlySe_L67
+	beq	Ed4thOnSe_L67
 	cmp	MT_GetString, d1
-	beq	EzVibDlySe_L74
+	beq	Ed4thOnSe_L74
 	cmp	0x1800000, d1
-	beq	EzVibDlySe_L91
-	bra	EzVibDlySe_L90
-EzVibDlySe_L3f:
+	beq	Ed4thOnSe_L91
+	bra	Ed4thOnSe_L90
+Ed4thOnSe_L3f:
 	mov	3, d0
 	mov	d0, (0x10, sp)
 	mov	ToneSetGrid_id, d0
 	mov	0x01ae0000, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	EzVibDlySe_L91
-EzVibDlySe_L59:
+	bra	Ed4thOnSe_L91
+Ed4thOnSe_L59:
 	mov	1, d0
 	mov	3, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
 	clr	d0
-	bra	EzVibDlySe_L91
-EzVibDlySe_L67:
+	bra	Ed4thOnSe_L91
+Ed4thOnSe_L67:
 	clr	d0
 	mov	3, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
 	clr	d0
-	bra	EzVibDlySe_L91
-EzVibDlySe_L74:
+	bra	Ed4thOnSe_L91
+Ed4thOnSe_L74:
 	mov	sp, a3
 	add	0x14, a3
 	mov	a3, a0
@@ -389523,34 +389518,34 @@ EzVibDlySe_L74:
 	mov	(0x38, sp), a0
 	call	strcpy_entry, [a2], 4
 	clr	d0
-	bra	EzVibDlySe_L91
-# EzVibDlySe + 0x8e: no traced path reaches what follows (--decode-gaps)
-	bra	EzVibDlySe_L91
-EzVibDlySe_L90:
+	bra	Ed4thOnSe_L91
+# Ed4thOnSe + 0x8e: no traced path reaches what follows (--decode-gaps)
+	bra	Ed4thOnSe_L91
+Ed4thOnSe_L90:
 	clr	d0
-EzVibDlySe_L91:
+Ed4thOnSe_L91:
 	ret	[a2,a3], 0x28
 
-NamingSe:
+GlideEditSe:
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	NamingSe_L3b
+	beq	GlideEditSe_L3b
 	cmp	EV_INDEXSW_UP, d1
-	beq	NamingSe_L3b
+	beq	GlideEditSe_L3b
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	NamingSe_L54
+	beq	GlideEditSe_L54
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	NamingSe_L54
+	beq	GlideEditSe_L54
 	cmp	MT_GetString, d1
-	beq	NamingSe_L6b
+	beq	GlideEditSe_L6b
 	cmp	0x1800000, d1
-	beq	NamingSe_L36
-	jmp	NamingSe_Lb3
-NamingSe_L36:
+	beq	GlideEditSe_L36
+	jmp	GlideEditSe_Lb3
+GlideEditSe_L36:
 	ret	0, 0x20
-# NamingSe + 0x39: no traced path reaches what follows (--decode-gaps)
-	bra	NamingSe_Lb3
-NamingSe_L3b:
+# GlideEditSe + 0x39: no traced path reaches what follows (--decode-gaps)
+	bra	GlideEditSe_Lb3
+GlideEditSe_L3b:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -389561,8 +389556,8 @@ NamingSe_L3b:
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	NamingSe_Lb4
-NamingSe_L54:
+	bra	GlideEditSe_Lb4
+GlideEditSe_L54:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -389572,8 +389567,8 @@ NamingSe_L54:
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	NamingSe_Lb4
-NamingSe_L6b:
+	bra	GlideEditSe_Lb4
+GlideEditSe_L6b:
 	mov	sp, a0
 	add	0x1c, a0
 	mov	0x10, d0
@@ -389581,57 +389576,57 @@ NamingSe_L6b:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x1c, sp), d0
 	cmp	0, d0
-	beq	NamingSe_L86
+	beq	GlideEditSe_L86
 	cmp	1, d0
-	beq	NamingSe_L9b
-	bra	NamingSe_Lae
-NamingSe_L86:
+	beq	GlideEditSe_L9b
+	bra	GlideEditSe_Lae
+GlideEditSe_L86:
 	mov	(0x30, sp), a0
 	mov	Str_DISABLE_4, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	NamingSe_Lae
-NamingSe_L9b:
+	bra	GlideEditSe_Lae
+GlideEditSe_L9b:
 	mov	(0x30, sp), a1
 	mov	Str_ENABLE_4, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-NamingSe_Lae:
+GlideEditSe_Lae:
 	clr	d0
-	bra	NamingSe_Lb4
-	bra	NamingSe_Lb4
-NamingSe_Lb3:
+	bra	GlideEditSe_Lb4
+	bra	GlideEditSe_Lb4
+GlideEditSe_Lb3:
 	clr	d0
-NamingSe_Lb4:
+GlideEditSe_Lb4:
 	ret	0, 0x20
 
-NamingFixSe:
+OctShiftSe:
 	movm	[a2,a3], (sp)
 	add	-0x24, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	NamingFixSe_L44
+	beq	OctShiftSe_L44
 	cmp	EV_INDEXSW_UP, d1
-	beq	NamingFixSe_L44
+	beq	OctShiftSe_L44
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	NamingFixSe_L20
-	jmp	NamingFixSe_Lc6
-NamingFixSe_L20:
+	bne	OctShiftSe_L20
+	jmp	OctShiftSe_Lc6
+OctShiftSe_L20:
 	cmp	EV_INDEXSW_DOWN, d1
-	bne	NamingFixSe_L2b
-	jmp	NamingFixSe_Lc6
-NamingFixSe_L2b:
+	bne	OctShiftSe_L2b
+	jmp	OctShiftSe_Lc6
+OctShiftSe_L2b:
 	cmp	MT_GetString, d1
-	bne	NamingFixSe_L36
-	jmp	NamingFixSe_L147
-NamingFixSe_L36:
+	bne	OctShiftSe_L36
+	jmp	OctShiftSe_L147
+OctShiftSe_L36:
 	cmp	0x1800000, d1
-	bne	NamingFixSe_L41
+	bne	OctShiftSe_L41
 	ret	[a2,a3], 0x2c
-NamingFixSe_L41:
-	jmp	NamingFixSe_L175
-NamingFixSe_L44:
+OctShiftSe_L41:
+	jmp	OctShiftSe_L175
+OctShiftSe_L44:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0xb, d0
@@ -389687,7 +389682,7 @@ NamingFixSe_L44:
 	call	SoundEditRefSet_entry, 0, 8
 	clr	d0
 	ret	[a2,a3], 0x2c
-NamingFixSe_Lc6:
+OctShiftSe_Lc6:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	5, d0
@@ -389742,8 +389737,8 @@ NamingFixSe_Lc6:
 	mov	a3, a0
 	call	SoundEditRefSet_entry, 0, 8
 	clr	d0
-	bra	NamingFixSe_L176
-NamingFixSe_L147:
+	bra	OctShiftSe_L176
+OctShiftSe_L147:
 	mov	sp, a0
 	add	0x1c, a0
 	mov	0x4f, d0
@@ -389759,39 +389754,39 @@ NamingFixSe_L147:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	NamingFixSe_L176
-# NamingFixSe + 0x173: no traced path reaches what follows (--decode-gaps)
-	bra	NamingFixSe_L176
-NamingFixSe_L175:
+	bra	OctShiftSe_L176
+# OctShiftSe + 0x173: no traced path reaches what follows (--decode-gaps)
+	bra	OctShiftSe_L176
+OctShiftSe_L175:
 	clr	d0
-NamingFixSe_L176:
+OctShiftSe_L176:
 	ret	[a2,a3], 0x2c
 
-DrumNamingSe:
+RightSplitSe:
 	movm	[a2,a3], (sp)
 	add	-0x24, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DrumNamingSe_L44
+	beq	RightSplitSe_L44
 	cmp	EV_INDEXSW_UP, d1
-	beq	DrumNamingSe_L44
+	beq	RightSplitSe_L44
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DrumNamingSe_L20
-	jmp	DrumNamingSe_Lc7
-DrumNamingSe_L20:
+	bne	RightSplitSe_L20
+	jmp	RightSplitSe_Lc7
+RightSplitSe_L20:
 	cmp	EV_INDEXSW_DOWN, d1
-	bne	DrumNamingSe_L2b
-	jmp	DrumNamingSe_Lc7
-DrumNamingSe_L2b:
+	bne	RightSplitSe_L2b
+	jmp	RightSplitSe_Lc7
+RightSplitSe_L2b:
 	cmp	MT_GetString, d1
-	bne	DrumNamingSe_L36
-	jmp	DrumNamingSe_L149
-DrumNamingSe_L36:
+	bne	RightSplitSe_L36
+	jmp	RightSplitSe_L149
+RightSplitSe_L36:
 	cmp	0x1800000, d1
-	bne	DrumNamingSe_L41
+	bne	RightSplitSe_L41
 	ret	[a2,a3], 0x2c
-DrumNamingSe_L41:
-	jmp	DrumNamingSe_L178
-DrumNamingSe_L44:
+RightSplitSe_L41:
+	jmp	RightSplitSe_L178
+RightSplitSe_L44:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0xb, d0
@@ -389847,7 +389842,7 @@ DrumNamingSe_L44:
 	call	SoundEditRefSet_entry, 0, 8
 	clr	d0
 	ret	[a2,a3], 0x2c
-DrumNamingSe_Lc7:
+RightSplitSe_Lc7:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	5, d0
@@ -389902,8 +389897,8 @@ DrumNamingSe_Lc7:
 	mov	a3, a0
 	call	SoundEditRefSet_entry, 0, 8
 	clr	d0
-	bra	DrumNamingSe_L179
-DrumNamingSe_L149:
+	bra	RightSplitSe_L179
+RightSplitSe_L149:
 	mov	sp, a0
 	add	0x1c, a0
 	mov	0x50, d0
@@ -389919,39 +389914,39 @@ DrumNamingSe_L149:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	DrumNamingSe_L179
-# DrumNamingSe + 0x176: no traced path reaches what follows (--decode-gaps)
-	bra	DrumNamingSe_L179
-DrumNamingSe_L178:
+	bra	RightSplitSe_L179
+# RightSplitSe + 0x176: no traced path reaches what follows (--decode-gaps)
+	bra	RightSplitSe_L179
+RightSplitSe_L178:
 	clr	d0
-DrumNamingSe_L179:
+RightSplitSe_L179:
 	ret	[a2,a3], 0x2c
 
-DrumNamingFixSe:
+LeftSplitSe:
 	movm	[a2,a3], (sp)
 	add	-0x24, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DrumNamingFixSe_L44
+	beq	LeftSplitSe_L44
 	cmp	EV_INDEXSW_UP, d1
-	beq	DrumNamingFixSe_L44
+	beq	LeftSplitSe_L44
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DrumNamingFixSe_L20
-	jmp	DrumNamingFixSe_Lc6
-DrumNamingFixSe_L20:
+	bne	LeftSplitSe_L20
+	jmp	LeftSplitSe_Lc6
+LeftSplitSe_L20:
 	cmp	EV_INDEXSW_DOWN, d1
-	bne	DrumNamingFixSe_L2b
-	jmp	DrumNamingFixSe_Lc6
-DrumNamingFixSe_L2b:
+	bne	LeftSplitSe_L2b
+	jmp	LeftSplitSe_Lc6
+LeftSplitSe_L2b:
 	cmp	MT_GetString, d1
-	bne	DrumNamingFixSe_L36
-	jmp	DrumNamingFixSe_L147
-DrumNamingFixSe_L36:
+	bne	LeftSplitSe_L36
+	jmp	LeftSplitSe_L147
+LeftSplitSe_L36:
 	cmp	0x1800000, d1
-	bne	DrumNamingFixSe_L41
+	bne	LeftSplitSe_L41
 	ret	[a2,a3], 0x2c
-DrumNamingFixSe_L41:
-	jmp	DrumNamingFixSe_L175
-DrumNamingFixSe_L44:
+LeftSplitSe_L41:
+	jmp	LeftSplitSe_L175
+LeftSplitSe_L44:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0xb, d0
@@ -390007,7 +390002,7 @@ DrumNamingFixSe_L44:
 	call	SoundEditRefSet_entry, 0, 8
 	clr	d0
 	ret	[a2,a3], 0x2c
-DrumNamingFixSe_Lc6:
+LeftSplitSe_Lc6:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	5, d0
@@ -390062,8 +390057,8 @@ DrumNamingFixSe_Lc6:
 	mov	a3, a0
 	call	SoundEditRefSet_entry, 0, 8
 	clr	d0
-	bra	DrumNamingFixSe_L176
-DrumNamingFixSe_L147:
+	bra	LeftSplitSe_L176
+LeftSplitSe_L147:
 	mov	sp, a0
 	add	0x1c, a0
 	mov	0x50, d0
@@ -390079,42 +390074,42 @@ DrumNamingFixSe_L147:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	DrumNamingFixSe_L176
-# DrumNamingFixSe + 0x173: no traced path reaches what follows (--decode-gaps)
-	bra	DrumNamingFixSe_L176
-DrumNamingFixSe_L175:
+	bra	LeftSplitSe_L176
+# LeftSplitSe + 0x173: no traced path reaches what follows (--decode-gaps)
+	bra	LeftSplitSe_L176
+LeftSplitSe_L175:
 	clr	d0
-DrumNamingFixSe_L176:
+LeftSplitSe_L176:
 	ret	[a2,a3], 0x2c
 
-LayerGridSe2:
+MonoPolySe:
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	LayerGridSe2_L52
+	beq	MonoPolySe_L52
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	LayerGridSe2_L75
+	beq	MonoPolySe_L75
 	cmp	EV_INDEXSW_UP, d1
-	beq	LayerGridSe2_L75
+	beq	MonoPolySe_L75
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	LayerGridSe2_L26
-	jmp	LayerGridSe2_La4
-LayerGridSe2_L26:
+	bne	MonoPolySe_L26
+	jmp	MonoPolySe_La4
+MonoPolySe_L26:
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	LayerGridSe2_La4
+	beq	MonoPolySe_La4
 	cmp	EV_MMMDATA, d1
-	bne	LayerGridSe2_L39
-	jmp	LayerGridSe2_Ld3
-LayerGridSe2_L39:
+	bne	MonoPolySe_L39
+	jmp	MonoPolySe_Ld3
+MonoPolySe_L39:
 	cmp	MT_GetString, d1
-	bne	LayerGridSe2_L44
-	jmp	LayerGridSe2_L104
-LayerGridSe2_L44:
+	bne	MonoPolySe_L44
+	jmp	MonoPolySe_L104
+MonoPolySe_L44:
 	cmp	0x1800000, d1
-	bne	LayerGridSe2_L4f
+	bne	MonoPolySe_L4f
 	ret	0, 0x14
-LayerGridSe2_L4f:
-	jmp	LayerGridSe2_L16d
-LayerGridSe2_L52:
+MonoPolySe_L4f:
+	jmp	MonoPolySe_L16d
+MonoPolySe_L52:
 	mov	CmpMemClrWin_LanguageText1_id, d0
 	call	SetMmmFilter_entry, [d2], 0x18
 	mov	0x4f, d0
@@ -390123,10 +390118,10 @@ LayerGridSe2_L52:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	0, 0x14
-LayerGridSe2_L75:
+MonoPolySe_L75:
 	movbu	(LayerGridSe2_L75_Var), d0
 	cmp	1, d0
-	bge	LayerGridSe2_La0
+	bge	MonoPolySe_La0
 	inc	d0
 	movbu	d0, (LayerGridSe2_L75_Var)
 	call	GetPartSelect_entry, 0, 0x14
@@ -390136,13 +390131,13 @@ LayerGridSe2_L75:
 	asl	24, d1
 	inc	d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-LayerGridSe2_La0:
+MonoPolySe_La0:
 	clr	d0
 	ret	0, 0x14
-LayerGridSe2_La4:
+MonoPolySe_La4:
 	movbu	(LayerGridSe2_L75_Var), d0
 	cmp	0, d0
-	ble	LayerGridSe2_Lcf
+	ble	MonoPolySe_Lcf
 	add	-1, d0
 	movbu	d0, (LayerGridSe2_L75_Var)
 	call	GetPartSelect_entry, 0, 0x14
@@ -390151,53 +390146,53 @@ LayerGridSe2_La4:
 	exthu	d1
 	asl	24, d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-LayerGridSe2_Lcf:
+MonoPolySe_Lcf:
 	clr	d0
 	ret	0, 0x14
-LayerGridSe2_Ld3:
+MonoPolySe_Ld3:
 	mov	(0x24, sp), a0
 	mov	(a0), d0
 	cmp	CmpMemClrWin_LanguageText1_id, d0
-	bne	LayerGridSe2_L100
+	bne	MonoPolySe_L100
 	mov	(4, a0), d0
 	and	0xff, d0
 	extbu	d0
 	cmp	1, d0
-	beq	LayerGridSe2_Lef
+	beq	MonoPolySe_Lef
 	cmp	0, d0
-	beq	LayerGridSe2_Lf9
-	bra	LayerGridSe2_L100
-LayerGridSe2_Lef:
+	beq	MonoPolySe_Lf9
+	bra	MonoPolySe_L100
+MonoPolySe_Lef:
 	mov	1, d0
 	movbu	d0, (LayerGridSe2_L75_Var)
-	bra	LayerGridSe2_L100
-LayerGridSe2_Lf9:
+	bra	MonoPolySe_L100
+MonoPolySe_Lf9:
 	clr	d0
 	movbu	d0, (LayerGridSe2_L75_Var)
-LayerGridSe2_L100:
+MonoPolySe_L100:
 	clr	d0
 	ret	0, 0x14
-LayerGridSe2_L104:
+MonoPolySe_L104:
 	movbu	(LayerGridSe2_L75_Var), d0
 	cmp	0, d0
-	beq	LayerGridSe2_L114
+	beq	MonoPolySe_L114
 	cmp	1, d0
-	beq	LayerGridSe2_L129
-	bra	LayerGridSe2_L13c
-LayerGridSe2_L114:
+	beq	MonoPolySe_L129
+	bra	MonoPolySe_L13c
+MonoPolySe_L114:
 	mov	(0x24, sp), a1
 	mov	Str_POLY_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	LayerGridSe2_L13c
-LayerGridSe2_L129:
+	bra	MonoPolySe_L13c
+MonoPolySe_L129:
 	mov	(0x24, sp), a0
 	mov	Str_MONO_2, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-LayerGridSe2_L13c:
+MonoPolySe_L13c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	PortaOn_id, d0
@@ -390209,46 +390204,46 @@ LayerGridSe2_L13c:
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	LayerGridSe2_L16e
-# LayerGridSe2 + 0x16b: no traced path reaches what follows (--decode-gaps)
-	bra	LayerGridSe2_L16e
-LayerGridSe2_L16d:
+	bra	MonoPolySe_L16e
+# MonoPolySe + 0x16b: no traced path reaches what follows (--decode-gaps)
+	bra	MonoPolySe_L16e
+MonoPolySe_L16d:
 	clr	d0
-LayerGridSe2_L16e:
+MonoPolySe_L16e:
 	ret	0, 0x14
 
-GraphKeyLay1Se:
+PortamentOnSe:
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	GraphKeyLay1Se_L44
+	beq	PortamentOnSe_L44
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	GraphKeyLay1Se_L5a
+	beq	PortamentOnSe_L5a
 	cmp	EV_INDEXSW_UP, d1
-	beq	GraphKeyLay1Se_L5a
+	beq	PortamentOnSe_L5a
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	GraphKeyLay1Se_L8a
+	beq	PortamentOnSe_L8a
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	GraphKeyLay1Se_L8a
+	beq	PortamentOnSe_L8a
 	cmp	MT_GetString, d1
-	bne	GraphKeyLay1Se_L36
-	jmp	GraphKeyLay1Se_Lb9
-GraphKeyLay1Se_L36:
+	bne	PortamentOnSe_L36
+	jmp	PortamentOnSe_Lb9
+PortamentOnSe_L36:
 	cmp	0x1800000, d1
-	bne	GraphKeyLay1Se_L41
+	bne	PortamentOnSe_L41
 	ret	0, 0x14
-GraphKeyLay1Se_L41:
-	jmp	GraphKeyLay1Se_L11b
-GraphKeyLay1Se_L44:
+PortamentOnSe_L41:
+	jmp	PortamentOnSe_L11b
+PortamentOnSe_L44:
 	mov	0x4d, d0
 	mov	0x5004d758, a0
 	mov	0x80, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	0, 0x14
-GraphKeyLay1Se_L5a:
+PortamentOnSe_L5a:
 	movbu	(0x5004d758), d0
 	cmp	1, d0
-	bge	GraphKeyLay1Se_L86
+	bge	PortamentOnSe_L86
 	inc	d0
 	movbu	d0, (0x5004d758)
 	call	GetPartSelect_entry, 0, 0x14
@@ -390258,13 +390253,13 @@ GraphKeyLay1Se_L5a:
 	asl	24, d1
 	add	0x7f, d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-GraphKeyLay1Se_L86:
+PortamentOnSe_L86:
 	clr	d0
 	ret	0, 0x14
-GraphKeyLay1Se_L8a:
+PortamentOnSe_L8a:
 	movbu	(0x5004d758), d0
 	cmp	0, d0
-	ble	GraphKeyLay1Se_Lb5
+	ble	PortamentOnSe_Lb5
 	add	-1, d0
 	movbu	d0, (0x5004d758)
 	call	GetPartSelect_entry, 0, 0x14
@@ -390273,86 +390268,86 @@ GraphKeyLay1Se_L8a:
 	exthu	d1
 	asl	24, d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-GraphKeyLay1Se_Lb5:
+PortamentOnSe_Lb5:
 	clr	d0
 	ret	0, 0x14
-GraphKeyLay1Se_Lb9:
+PortamentOnSe_Lb9:
 	movbu	(LayerGridSe2_L75_Var), d0
 	cmp	0, d0
-	beq	GraphKeyLay1Se_Lc9
+	beq	PortamentOnSe_Lc9
 	cmp	1, d0
-	beq	GraphKeyLay1Se_Lde
-	bra	GraphKeyLay1Se_L116
-GraphKeyLay1Se_Lc9:
+	beq	PortamentOnSe_Lde
+	bra	PortamentOnSe_L116
+PortamentOnSe_Lc9:
 	mov	(0x24, sp), a1
 	mov	Str_empty_771, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	GraphKeyLay1Se_L116
-GraphKeyLay1Se_Lde:
+	bra	PortamentOnSe_L116
+PortamentOnSe_Lde:
 	movbu	(0x5004d758), d0
 	cmp	0, d0
-	beq	GraphKeyLay1Se_Lee
+	beq	PortamentOnSe_Lee
 	cmp	1, d0
-	beq	GraphKeyLay1Se_L103
-	bra	GraphKeyLay1Se_L116
-GraphKeyLay1Se_Lee:
+	beq	PortamentOnSe_L103
+	bra	PortamentOnSe_L116
+PortamentOnSe_Lee:
 	mov	(0x24, sp), a0
 	mov	Str_OFF_56, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	GraphKeyLay1Se_L116
-GraphKeyLay1Se_L103:
+	bra	PortamentOnSe_L116
+PortamentOnSe_L103:
 	mov	(0x24, sp), a1
 	mov	Str_ON_46, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-GraphKeyLay1Se_L116:
+PortamentOnSe_L116:
 	clr	d0
-	bra	GraphKeyLay1Se_L11c
-# GraphKeyLay1Se + 0x119: no traced path reaches what follows (--decode-gaps)
-	bra	GraphKeyLay1Se_L11c
-GraphKeyLay1Se_L11b:
+	bra	PortamentOnSe_L11c
+# PortamentOnSe + 0x119: no traced path reaches what follows (--decode-gaps)
+	bra	PortamentOnSe_L11c
+PortamentOnSe_L11b:
 	clr	d0
-GraphKeyLay1Se_L11c:
+PortamentOnSe_L11c:
 	ret	0, 0x14
 
-GraphKeyLay2Se:
+PortamentTimeSe:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	GraphKeyLay2Se_L46
+	beq	PortamentTimeSe_L46
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	GraphKeyLay2Se_L5b
+	beq	PortamentTimeSe_L5b
 	cmp	EV_INDEXSW_UP, d1
-	beq	GraphKeyLay2Se_L5b
+	beq	PortamentTimeSe_L5b
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	GraphKeyLay2Se_L8f
+	beq	PortamentTimeSe_L8f
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	GraphKeyLay2Se_L8f
+	beq	PortamentTimeSe_L8f
 	cmp	MT_GetString, d1
-	bne	GraphKeyLay2Se_L38
-	jmp	GraphKeyLay2Se_Lc4
-GraphKeyLay2Se_L38:
+	bne	PortamentTimeSe_L38
+	jmp	PortamentTimeSe_Lc4
+PortamentTimeSe_L38:
 	cmp	0x1800000, d1
-	bne	GraphKeyLay2Se_L43
+	bne	PortamentTimeSe_L43
 	ret	[d2], 0x18
-GraphKeyLay2Se_L43:
-	jmp	GraphKeyLay2Se_L109
-GraphKeyLay2Se_L46:
+PortamentTimeSe_L43:
+	jmp	PortamentTimeSe_L109
+PortamentTimeSe_L46:
 	mov	0x4d, d0
 	mov	0x5004d75c, a0
 	mov	0x7f, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	[d2], 0x18
-GraphKeyLay2Se_L5b:
+PortamentTimeSe_L5b:
 	movbu	(0x5004d75c), d0
 	cmp	0x7f, d0
-	bge	GraphKeyLay2Se_L8b
+	bge	PortamentTimeSe_L8b
 	inc	d0
 	movbu	d0, (0x5004d75c)
 	call	GetPartSelect_entry, 0, 0x14
@@ -390362,13 +390357,13 @@ GraphKeyLay2Se_L5b:
 	add	d0, d1
 	mov	SndArgrScreen_SndArgGridBox1_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-GraphKeyLay2Se_L8b:
+PortamentTimeSe_L8b:
 	clr	d0
 	ret	[d2], 0x18
-GraphKeyLay2Se_L8f:
+PortamentTimeSe_L8f:
 	movbu	(0x5004d75c), d0
 	cmp	0, d0
-	ble	GraphKeyLay2Se_Lc1
+	ble	PortamentTimeSe_Lc1
 	add	-1, d0
 	movbu	d0, (0x5004d75c)
 	call	GetPartSelect_entry, 0, 0x14
@@ -390379,24 +390374,24 @@ GraphKeyLay2Se_L8f:
 	add	d0, d1
 	mov	SndArgrScreen_SndArgGridBox1_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-GraphKeyLay2Se_Lc1:
+PortamentTimeSe_Lc1:
 	clr	d0
-	bra	GraphKeyLay2Se_L10a
-GraphKeyLay2Se_Lc4:
+	bra	PortamentTimeSe_L10a
+PortamentTimeSe_Lc4:
 	movbu	(LayerGridSe2_L75_Var), d0
 	cmp	0, d0
-	beq	GraphKeyLay2Se_Ld4
+	beq	PortamentTimeSe_Ld4
 	cmp	1, d0
-	beq	GraphKeyLay2Se_Le9
-	bra	GraphKeyLay2Se_L104
-GraphKeyLay2Se_Ld4:
+	beq	PortamentTimeSe_Le9
+	bra	PortamentTimeSe_L104
+PortamentTimeSe_Ld4:
 	mov	(0x28, sp), a0
 	mov	Str_empty_770, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	GraphKeyLay2Se_L104
-GraphKeyLay2Se_Le9:
+	bra	PortamentTimeSe_L104
+PortamentTimeSe_Le9:
 	mov	(0x28, sp), a1
 	mov	Str_3d_133, d0
 	mov	a1, (8, sp)
@@ -390404,44 +390399,44 @@ GraphKeyLay2Se_Le9:
 	movbu	(0x5004d75c), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-GraphKeyLay2Se_L104:
+PortamentTimeSe_L104:
 	clr	d0
-	bra	GraphKeyLay2Se_L10a
-# GraphKeyLay2Se + 0x107: no traced path reaches what follows (--decode-gaps)
-	bra	GraphKeyLay2Se_L10a
-GraphKeyLay2Se_L109:
+	bra	PortamentTimeSe_L10a
+# PortamentTimeSe + 0x107: no traced path reaches what follows (--decode-gaps)
+	bra	PortamentTimeSe_L10a
+PortamentTimeSe_L109:
 	clr	d0
-GraphKeyLay2Se_L10a:
+PortamentTimeSe_L10a:
 	ret	[d2], 0x18
 
-DspVariSe:
+DspOnSe:
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	DspVariSe_L52
+	beq	DspOnSe_L52
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DspVariSe_L75
+	beq	DspOnSe_L75
 	cmp	EV_INDEXSW_UP, d1
-	beq	DspVariSe_L75
+	beq	DspOnSe_L75
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DspVariSe_L26
-	jmp	DspVariSe_La4
-DspVariSe_L26:
+	bne	DspOnSe_L26
+	jmp	DspOnSe_La4
+DspOnSe_L26:
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DspVariSe_La4
+	beq	DspOnSe_La4
 	cmp	MT_GetString, d1
-	bne	DspVariSe_L39
-	jmp	DspVariSe_Ld3
-DspVariSe_L39:
+	bne	DspOnSe_L39
+	jmp	DspOnSe_Ld3
+DspOnSe_L39:
 	cmp	EV_MMMDATA, d1
-	bne	DspVariSe_L44
-	jmp	DspVariSe_L10e
-DspVariSe_L44:
+	bne	DspOnSe_L44
+	jmp	DspOnSe_L10e
+DspOnSe_L44:
 	cmp	0x1800000, d1
-	bne	DspVariSe_L4f
+	bne	DspOnSe_L4f
 	ret	0, 0x14
-DspVariSe_L4f:
-	jmp	DspVariSe_L140
-DspVariSe_L52:
+DspOnSe_L4f:
+	jmp	DspOnSe_L140
+DspOnSe_L52:
 	mov	0x0020005f, d0
 	call	SetMmmFilter_entry, [d2], 0x18
 	mov	0x51, d0
@@ -390450,10 +390445,10 @@ DspVariSe_L52:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	0, 0x14
-DspVariSe_L75:
+DspOnSe_L75:
 	movbu	(0x5004d760), d0
 	cmp	1, d0
-	bge	DspVariSe_La0
+	bge	DspOnSe_La0
 	inc	d0
 	movbu	d0, (0x5004d760)
 	call	GetPartSelect_entry, 0, 0x14
@@ -390463,13 +390458,13 @@ DspVariSe_L75:
 	asl	24, d1
 	inc	d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DspVariSe_La0:
+DspOnSe_La0:
 	clr	d0
 	ret	0, 0x14
-DspVariSe_La4:
+DspOnSe_La4:
 	movbu	(0x5004d760), d0
 	cmp	0, d0
-	ble	DspVariSe_Lcf
+	ble	DspOnSe_Lcf
 	add	-1, d0
 	movbu	d0, (0x5004d760)
 	call	GetPartSelect_entry, 0, 0x14
@@ -390478,90 +390473,90 @@ DspVariSe_La4:
 	exthu	d1
 	asl	24, d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DspVariSe_Lcf:
+DspOnSe_Lcf:
 	clr	d0
 	ret	0, 0x14
-DspVariSe_Ld3:
+DspOnSe_Ld3:
 	movbu	(0x5004d760), d0
 	cmp	0, d0
-	beq	DspVariSe_Le3
+	beq	DspOnSe_Le3
 	cmp	1, d0
-	beq	DspVariSe_Lf8
-	bra	DspVariSe_L10b
-DspVariSe_Le3:
+	beq	DspOnSe_Lf8
+	bra	DspOnSe_L10b
+DspOnSe_Le3:
 	mov	(0x24, sp), a0
 	mov	Str_OFF_55, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DspVariSe_L10b
-DspVariSe_Lf8:
+	bra	DspOnSe_L10b
+DspOnSe_Lf8:
 	mov	(0x24, sp), a1
 	mov	Str_ON_45, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DspVariSe_L10b:
+DspOnSe_L10b:
 	clr	d0
-	bra	DspVariSe_L141
-DspVariSe_L10e:
+	bra	DspOnSe_L141
+DspOnSe_L10e:
 	mov	(0x24, sp), a0
 	mov	(a0), d0
 	cmp	0x20005f, d0
-	bne	DspVariSe_L13b
+	bne	DspOnSe_L13b
 	mov	(4, a0), d0
 	and	0xff, d0
 	extbu	d0
 	cmp	1, d0
-	beq	DspVariSe_L12a
+	beq	DspOnSe_L12a
 	cmp	0, d0
-	beq	DspVariSe_L134
-	bra	DspVariSe_L13b
-DspVariSe_L12a:
+	beq	DspOnSe_L134
+	bra	DspOnSe_L13b
+DspOnSe_L12a:
 	mov	1, d0
 	movbu	d0, (0x5004d760)
-	bra	DspVariSe_L13b
-DspVariSe_L134:
+	bra	DspOnSe_L13b
+DspOnSe_L134:
 	clr	d0
 	movbu	d0, (0x5004d760)
-DspVariSe_L13b:
+DspOnSe_L13b:
 	clr	d0
-	bra	DspVariSe_L141
-# DspVariSe + 0x13e: no traced path reaches what follows (--decode-gaps)
-	bra	DspVariSe_L141
-DspVariSe_L140:
+	bra	DspOnSe_L141
+# DspOnSe + 0x13e: no traced path reaches what follows (--decode-gaps)
+	bra	DspOnSe_L141
+DspOnSe_L140:
 	clr	d0
-DspVariSe_L141:
+DspOnSe_L141:
 	ret	0, 0x14
 
-DrumDspDptSe:
+DrumDspOnSe:
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	DrumDspDptSe_L52
+	beq	DrumDspOnSe_L52
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DrumDspDptSe_L75
+	beq	DrumDspOnSe_L75
 	cmp	EV_INDEXSW_UP, d1
-	beq	DrumDspDptSe_L75
+	beq	DrumDspOnSe_L75
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DrumDspDptSe_L26
-	jmp	DrumDspDptSe_La4
-DrumDspDptSe_L26:
+	bne	DrumDspOnSe_L26
+	jmp	DrumDspOnSe_La4
+DrumDspOnSe_L26:
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DrumDspDptSe_La4
+	beq	DrumDspOnSe_La4
 	cmp	EV_MMMDATA, d1
-	bne	DrumDspDptSe_L39
-	jmp	DrumDspDptSe_Ld3
-DrumDspDptSe_L39:
+	bne	DrumDspOnSe_L39
+	jmp	DrumDspOnSe_Ld3
+DrumDspOnSe_L39:
 	cmp	MT_GetString, d1
-	bne	DrumDspDptSe_L44
-	jmp	DrumDspDptSe_L103
-DrumDspDptSe_L44:
+	bne	DrumDspOnSe_L44
+	jmp	DrumDspOnSe_L103
+DrumDspOnSe_L44:
 	cmp	0x1800000, d1
-	bne	DrumDspDptSe_L4f
+	bne	DrumDspOnSe_L4f
 	ret	0, 0x14
-DrumDspDptSe_L4f:
-	jmp	DrumDspDptSe_L140
-DrumDspDptSe_L52:
+DrumDspOnSe_L4f:
+	jmp	DrumDspOnSe_L140
+DrumDspOnSe_L52:
 	mov	0x0020005f, d0
 	call	SetMmmFilter_entry, [d2], 0x18
 	mov	0x24, d0
@@ -390570,10 +390565,10 @@ DrumDspDptSe_L52:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	0, 0x14
-DrumDspDptSe_L75:
+DrumDspOnSe_L75:
 	movbu	(0x5004d764), d0
 	cmp	1, d0
-	bge	DrumDspDptSe_La0
+	bge	DrumDspOnSe_La0
 	inc	d0
 	movbu	d0, (0x5004d764)
 	call	GetPartSelect_entry, 0, 0x14
@@ -390583,13 +390578,13 @@ DrumDspDptSe_L75:
 	asl	24, d1
 	inc	d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DrumDspDptSe_La0:
+DrumDspOnSe_La0:
 	clr	d0
 	ret	0, 0x14
-DrumDspDptSe_La4:
+DrumDspOnSe_La4:
 	movbu	(0x5004d764), d0
 	cmp	0, d0
-	ble	DrumDspDptSe_Lcf
+	ble	DrumDspOnSe_Lcf
 	add	-1, d0
 	movbu	d0, (0x5004d764)
 	call	GetPartSelect_entry, 0, 0x14
@@ -390598,97 +390593,97 @@ DrumDspDptSe_La4:
 	exthu	d1
 	asl	24, d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DrumDspDptSe_Lcf:
+DrumDspOnSe_Lcf:
 	clr	d0
 	ret	0, 0x14
-DrumDspDptSe_Ld3:
+DrumDspOnSe_Ld3:
 	mov	(0x24, sp), a0
 	mov	(a0), d0
 	cmp	0x20005f, d0
-	bne	DrumDspDptSe_L100
+	bne	DrumDspOnSe_L100
 	mov	(4, a0), d0
 	and	0xff, d0
 	extbu	d0
 	cmp	1, d0
-	beq	DrumDspDptSe_Lef
+	beq	DrumDspOnSe_Lef
 	cmp	0, d0
-	beq	DrumDspDptSe_Lf9
-	bra	DrumDspDptSe_L100
-DrumDspDptSe_Lef:
+	beq	DrumDspOnSe_Lf9
+	bra	DrumDspOnSe_L100
+DrumDspOnSe_Lef:
 	mov	1, d0
 	movbu	d0, (0x5004d764)
-	bra	DrumDspDptSe_L100
-DrumDspDptSe_Lf9:
+	bra	DrumDspOnSe_L100
+DrumDspOnSe_Lf9:
 	clr	d0
 	movbu	d0, (0x5004d764)
-DrumDspDptSe_L100:
+DrumDspOnSe_L100:
 	clr	d0
-	bra	DrumDspDptSe_L141
-DrumDspDptSe_L103:
+	bra	DrumDspOnSe_L141
+DrumDspOnSe_L103:
 	movbu	(0x5004d764), d0
 	cmp	0, d0
-	beq	DrumDspDptSe_L113
+	beq	DrumDspOnSe_L113
 	cmp	1, d0
-	beq	DrumDspDptSe_L128
-	bra	DrumDspDptSe_L13b
-DrumDspDptSe_L113:
+	beq	DrumDspOnSe_L128
+	bra	DrumDspOnSe_L13b
+DrumDspOnSe_L113:
 	mov	(0x24, sp), a0
 	mov	Str_OFF_54, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DrumDspDptSe_L13b
-DrumDspDptSe_L128:
+	bra	DrumDspOnSe_L13b
+DrumDspOnSe_L128:
 	mov	(0x24, sp), a1
 	mov	Str_ON_44, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DrumDspDptSe_L13b:
+DrumDspOnSe_L13b:
 	clr	d0
-	bra	DrumDspDptSe_L141
-# DrumDspDptSe + 0x13e: no traced path reaches what follows (--decode-gaps)
-	bra	DrumDspDptSe_L141
-DrumDspDptSe_L140:
+	bra	DrumDspOnSe_L141
+# DrumDspOnSe + 0x13e: no traced path reaches what follows (--decode-gaps)
+	bra	DrumDspOnSe_L141
+DrumDspOnSe_L140:
 	clr	d0
-DrumDspDptSe_L141:
+DrumDspOnSe_L141:
 	ret	0, 0x14
 
-DspVOnSe:
+DspTenSe:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	DspVOnSe_L49
+	beq	DspTenSe_L49
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DspVOnSe_L5e
+	beq	DspTenSe_L5e
 	cmp	EV_INDEXSW_UP, d1
-	beq	DspVOnSe_L5e
+	beq	DspTenSe_L5e
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DspVOnSe_L28
-	jmp	DspVOnSe_La6
-DspVOnSe_L28:
+	bne	DspTenSe_L28
+	jmp	DspTenSe_La6
+DspTenSe_L28:
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DspVOnSe_La6
+	beq	DspTenSe_La6
 	cmp	MT_GetString, d1
-	bne	DspVOnSe_L3b
-	jmp	DspVOnSe_Lf0
-DspVOnSe_L3b:
+	bne	DspTenSe_L3b
+	jmp	DspTenSe_Lf0
+DspTenSe_L3b:
 	cmp	0x1800000, d1
-	bne	DspVOnSe_L46
+	bne	DspTenSe_L46
 	ret	[d2,d3], 0x1c
-DspVOnSe_L46:
-	jmp	DspVOnSe_L110
-DspVOnSe_L49:
+DspTenSe_L46:
+	jmp	DspTenSe_L110
+DspTenSe_L49:
 	mov	0x51, d0
 	mov	Str_empty_256, a0
 	mov	0x7f, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	[d2,d3], 0x1c
-DspVOnSe_L5e:
+DspTenSe_L5e:
 	movbu	(Str_empty_256), d0
 	cmp	0x7f, d0
-	bge	DspVOnSe_La3
+	bge	DspTenSe_La3
 	inc	d0
 	movbu	d0, (Str_empty_256)
 	call	GetPartSelect_entry, 0, 0x14
@@ -390705,13 +390700,13 @@ DspVOnSe_L5e:
 	mov	d2, d1
 	mov	CmpMenuScreen_Line2_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DspVOnSe_La3:
+DspTenSe_La3:
 	clr	d0
-	bra	DspVOnSe_L111
-DspVOnSe_La6:
+	bra	DspTenSe_L111
+DspTenSe_La6:
 	movbu	(Str_empty_256), d0
 	cmp	0, d0
-	ble	DspVOnSe_Led
+	ble	DspTenSe_Led
 	add	-1, d0
 	movbu	d0, (Str_empty_256)
 	call	GetPartSelect_entry, 0, 0x14
@@ -390729,10 +390724,10 @@ DspVOnSe_La6:
 	add	d1, d2
 	mov	d2, d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DspVOnSe_Led:
+DspTenSe_Led:
 	clr	d0
-	bra	DspVOnSe_L111
-DspVOnSe_Lf0:
+	bra	DspTenSe_L111
+DspTenSe_Lf0:
 	mov	(0x2c, sp), a1
 	mov	Str_02x_2, d0
 	mov	a1, (8, sp)
@@ -390741,49 +390736,49 @@ DspVOnSe_Lf0:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	DspVOnSe_L111
-# DspVOnSe + 0x10e: no traced path reaches what follows (--decode-gaps)
-	bra	DspVOnSe_L111
-DspVOnSe_L110:
+	bra	DspTenSe_L111
+# DspTenSe + 0x10e: no traced path reaches what follows (--decode-gaps)
+	bra	DspTenSe_L111
+DspTenSe_L110:
 	clr	d0
-DspVOnSe_L111:
+DspTenSe_L111:
 	ret	[d2,d3], 0x1c
 
-DspDptSe:
+DspSufSe:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	DspDptSe_L49
+	beq	DspSufSe_L49
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DspDptSe_L5e
+	beq	DspSufSe_L5e
 	cmp	EV_INDEXSW_UP, d1
-	beq	DspDptSe_L5e
+	beq	DspSufSe_L5e
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DspDptSe_L28
-	jmp	DspDptSe_La6
-DspDptSe_L28:
+	bne	DspSufSe_L28
+	jmp	DspSufSe_La6
+DspSufSe_L28:
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DspDptSe_La6
+	beq	DspSufSe_La6
 	cmp	MT_GetString, d1
-	bne	DspDptSe_L3b
-	jmp	DspDptSe_Lf0
-DspDptSe_L3b:
+	bne	DspSufSe_L3b
+	jmp	DspSufSe_Lf0
+DspSufSe_L3b:
 	cmp	0x1800000, d1
-	bne	DspDptSe_L46
+	bne	DspSufSe_L46
 	ret	[d2,d3], 0x1c
-DspDptSe_L46:
-	jmp	DspDptSe_L110
-DspDptSe_L49:
+DspSufSe_L46:
+	jmp	DspSufSe_L110
+DspSufSe_L49:
 	mov	0x52, d0
 	mov	Str_empty_256+1, a0
 	mov	0x3f, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	[d2,d3], 0x1c
-DspDptSe_L5e:
+DspSufSe_L5e:
 	movbu	(Str_empty_256+1), d0
 	cmp	0x3f, d0
-	bge	DspDptSe_La3
+	bge	DspSufSe_La3
 	inc	d0
 	movbu	d0, (Str_empty_256+1)
 	call	GetPartSelect_entry, 0, 0x14
@@ -390800,13 +390795,13 @@ DspDptSe_L5e:
 	mov	d2, d1
 	mov	CmpMenuScreen_Line2_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DspDptSe_La3:
+DspSufSe_La3:
 	clr	d0
-	bra	DspDptSe_L111
-DspDptSe_La6:
+	bra	DspSufSe_L111
+DspSufSe_La6:
 	movbu	(Str_empty_256+1), d0
 	cmp	0, d0
-	ble	DspDptSe_Led
+	ble	DspSufSe_Led
 	add	-1, d0
 	movbu	d0, (Str_empty_256+1)
 	call	GetPartSelect_entry, 0, 0x14
@@ -390824,10 +390819,10 @@ DspDptSe_La6:
 	add	d1, d2
 	mov	d2, d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DspDptSe_Led:
+DspSufSe_Led:
 	clr	d0
-	bra	DspDptSe_L111
-DspDptSe_Lf0:
+	bra	DspSufSe_L111
+DspSufSe_Lf0:
 	mov	(0x2c, sp), a1
 	mov	Str_02x, d0
 	mov	a1, (8, sp)
@@ -390836,41 +390831,41 @@ DspDptSe_Lf0:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	DspDptSe_L111
-# DspDptSe + 0x10e: no traced path reaches what follows (--decode-gaps)
-	bra	DspDptSe_L111
-DspDptSe_L110:
+	bra	DspSufSe_L111
+# DspSufSe + 0x10e: no traced path reaches what follows (--decode-gaps)
+	bra	DspSufSe_L111
+DspSufSe_L110:
 	clr	d0
-DspDptSe_L111:
+DspSufSe_L111:
 	ret	[d2,d3], 0x1c
 
-DrumDspOnSe:
+DspGroupSe:
 	movm	[d2,d3,a2], (sp)
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	DrumDspOnSe_L4c
+	beq	DspGroupSe_L4c
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DrumDspOnSe_L83
+	beq	DspGroupSe_L83
 	cmp	EV_INDEXSW_UP, d1
-	beq	DrumDspOnSe_L83
+	beq	DspGroupSe_L83
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DrumDspOnSe_L28
-	jmp	DrumDspOnSe_L14a
-DrumDspOnSe_L28:
+	bne	DspGroupSe_L28
+	jmp	DspGroupSe_L14a
+DspGroupSe_L28:
 	cmp	EV_INDEXSW_DOWN, d1
-	bne	DrumDspOnSe_L33
-	jmp	DrumDspOnSe_L14a
-DrumDspOnSe_L33:
+	bne	DspGroupSe_L33
+	jmp	DspGroupSe_L14a
+DspGroupSe_L33:
 	cmp	MT_GetString, d1
-	bne	DrumDspOnSe_L3e
-	jmp	DrumDspOnSe_L1df
-DrumDspOnSe_L3e:
+	bne	DspGroupSe_L3e
+	jmp	DspGroupSe_L1df
+DspGroupSe_L3e:
 	cmp	0x1800000, d1
-	bne	DrumDspOnSe_L49
+	bne	DspGroupSe_L49
 	ret	[d2,d3,a2], 0x20
-DrumDspOnSe_L49:
-	jmp	DrumDspOnSe_L232
-DrumDspOnSe_L4c:
+DspGroupSe_L49:
+	jmp	DspGroupSe_L232
+DspGroupSe_L4c:
 	mov	0x51, d0
 	mov	Str_empty_256, a0
 	mov	0x7f, d1
@@ -390885,7 +390880,7 @@ DrumDspOnSe_L4c:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-DrumDspOnSe_L83:
+DspGroupSe_L83:
 	movbu	(Str_empty_256), d1
 	movbu	(Str_empty_256+1), d0
 	asl	8, d0
@@ -390899,9 +390894,9 @@ DrumDspOnSe_L83:
 	call	func_4C15F695_entry, [d2,d3], 0x18
 	mov	d0, d3
 	cmp	-1, d3
-	bgt	DrumDspOnSe_Lb2
-	jmp	DrumDspOnSe_L146
-DrumDspOnSe_Lb2:
+	bgt	DspGroupSe_Lb2
+	jmp	DspGroupSe_L146
+DspGroupSe_Lb2:
 	movbu	(Str_empty_256), d0
 	movbu	(Str_empty_256+1), d1
 	mov	0xff, a2
@@ -390916,13 +390911,13 @@ DrumDspOnSe_Lb2:
 	mov	2, d0
 	call	func_4C15F5E6_entry, [d2,d3,a2,a3], 0x24
 	cmp	-1, d0
-	ble	DrumDspOnSe_L146
+	ble	DspGroupSe_L146
 	exthu	d3
 	mov	a2, d1
 	and	d1, d0
 	extbu	d0
 	cmp	d0, d3
-	bge	DrumDspOnSe_L146
+	bge	DspGroupSe_L146
 	mov	d3, d2
 	inc	d2
 	exthu	d2
@@ -390931,7 +390926,7 @@ DrumDspOnSe_Lb2:
 	mov	2, d1
 	call	func_4C15F695_entry, [d2,d3], 0x18
 	cmp	-1, d0
-	ble	DrumDspOnSe_L146
+	ble	DspGroupSe_L146
 	mov	a2, d1
 	and	d0, d1
 	movbu	d1, (Str_empty_256)
@@ -390951,10 +390946,10 @@ DrumDspOnSe_Lb2:
 	add	d2, d1
 	mov	CmpMenuScreen_Line2_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DrumDspOnSe_L146:
+DspGroupSe_L146:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-DrumDspOnSe_L14a:
+DspGroupSe_L14a:
 	movbu	(Str_empty_256), d0
 	movbu	(Str_empty_256+1), d1
 	asl	8, d1
@@ -390967,13 +390962,13 @@ DrumDspOnSe_L14a:
 	mov	2, d1
 	call	func_4C15F695_entry, [d2,d3], 0x18
 	cmp	-1, d0
-	ble	DrumDspOnSe_L1dc
+	ble	DspGroupSe_L1dc
 	mov	0xff, d2
 	and	d2, d0
 	extbu	d0
 	exthu	d0
 	cmp	0, d0
-	ble	DrumDspOnSe_L1dc
+	ble	DspGroupSe_L1dc
 	add	-1, d0
 	exthu	d0
 	mov	d0, (0x10, sp)
@@ -390981,7 +390976,7 @@ DrumDspOnSe_L14a:
 	mov	2, d1
 	call	func_4C15F695_entry, [d2,d3], 0x18
 	cmp	-1, d0
-	ble	DrumDspOnSe_L1dc
+	ble	DspGroupSe_L1dc
 	and	d0, d2
 	movbu	d2, (Str_empty_256)
 	and	0xff00, d0
@@ -391001,10 +390996,10 @@ DrumDspOnSe_L14a:
 	mov	d2, d1
 	mov	CmpMenuScreen_Line2_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DrumDspOnSe_L1dc:
+DspGroupSe_L1dc:
 	clr	d0
-	bra	DrumDspOnSe_L233
-DrumDspOnSe_L1df:
+	bra	DspGroupSe_L233
+DspGroupSe_L1df:
 	mov	(0x30, sp), a2
 	movbu	(Str_empty_256), d0
 	movbu	(Str_empty_256+1), d1
@@ -391026,41 +391021,41 @@ DrumDspOnSe_L1df:
 	mov	MT_ParaDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	DrumDspOnSe_L233
-# DrumDspOnSe + 0x230: no traced path reaches what follows (--decode-gaps)
-	bra	DrumDspOnSe_L233
-DrumDspOnSe_L232:
+	bra	DspGroupSe_L233
+# DspGroupSe + 0x230: no traced path reaches what follows (--decode-gaps)
+	bra	DspGroupSe_L233
+DspGroupSe_L232:
 	clr	d0
-DrumDspOnSe_L233:
+DspGroupSe_L233:
 	ret	[d2,d3,a2], 0x20
 
-DeffOnSe:
+DrumDspGroupSe:
 	movm	[d2,d3,a2], (sp)
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	DeffOnSe_L4c
+	beq	DrumDspGroupSe_L4c
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DeffOnSe_L83
+	beq	DrumDspGroupSe_L83
 	cmp	EV_INDEXSW_UP, d1
-	beq	DeffOnSe_L83
+	beq	DrumDspGroupSe_L83
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DeffOnSe_L28
-	jmp	DeffOnSe_L14a
-DeffOnSe_L28:
+	bne	DrumDspGroupSe_L28
+	jmp	DrumDspGroupSe_L14a
+DrumDspGroupSe_L28:
 	cmp	EV_INDEXSW_DOWN, d1
-	bne	DeffOnSe_L33
-	jmp	DeffOnSe_L14a
-DeffOnSe_L33:
+	bne	DrumDspGroupSe_L33
+	jmp	DrumDspGroupSe_L14a
+DrumDspGroupSe_L33:
 	cmp	MT_GetString, d1
-	bne	DeffOnSe_L3e
-	jmp	DeffOnSe_L1df
-DeffOnSe_L3e:
+	bne	DrumDspGroupSe_L3e
+	jmp	DrumDspGroupSe_L1df
+DrumDspGroupSe_L3e:
 	cmp	0x1800000, d1
-	bne	DeffOnSe_L49
+	bne	DrumDspGroupSe_L49
 	ret	[d2,d3,a2], 0x20
-DeffOnSe_L49:
-	jmp	DeffOnSe_L232
-DeffOnSe_L4c:
+DrumDspGroupSe_L49:
+	jmp	DrumDspGroupSe_L232
+DrumDspGroupSe_L4c:
 	mov	0x24, d0
 	mov	Str_empty_256, a0
 	mov	0x7f, d1
@@ -391075,7 +391070,7 @@ DeffOnSe_L4c:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-DeffOnSe_L83:
+DrumDspGroupSe_L83:
 	movbu	(Str_empty_256), d1
 	movbu	(Str_empty_256+1), d0
 	asl	8, d0
@@ -391089,9 +391084,9 @@ DeffOnSe_L83:
 	call	func_4C15F695_entry, [d2,d3], 0x18
 	mov	d0, d3
 	cmp	-1, d3
-	bgt	DeffOnSe_Lb2
-	jmp	DeffOnSe_L146
-DeffOnSe_Lb2:
+	bgt	DrumDspGroupSe_Lb2
+	jmp	DrumDspGroupSe_L146
+DrumDspGroupSe_Lb2:
 	movbu	(Str_empty_256), d0
 	movbu	(Str_empty_256+1), d1
 	mov	0xff, a2
@@ -391106,13 +391101,13 @@ DeffOnSe_Lb2:
 	mov	2, d0
 	call	func_4C15F5E6_entry, [d2,d3,a2,a3], 0x24
 	cmp	-1, d0
-	ble	DeffOnSe_L146
+	ble	DrumDspGroupSe_L146
 	exthu	d3
 	mov	a2, d1
 	and	d1, d0
 	extbu	d0
 	cmp	d0, d3
-	bge	DeffOnSe_L146
+	bge	DrumDspGroupSe_L146
 	mov	d3, d2
 	inc	d2
 	exthu	d2
@@ -391121,7 +391116,7 @@ DeffOnSe_Lb2:
 	mov	2, d1
 	call	func_4C15F695_entry, [d2,d3], 0x18
 	cmp	-1, d0
-	ble	DeffOnSe_L146
+	ble	DrumDspGroupSe_L146
 	mov	a2, d1
 	and	d0, d1
 	movbu	d1, (Str_empty_256)
@@ -391141,10 +391136,10 @@ DeffOnSe_Lb2:
 	add	d2, d1
 	mov	CmpMenuScreen_Line2_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DeffOnSe_L146:
+DrumDspGroupSe_L146:
 	clr	d0
 	ret	[d2,d3,a2], 0x20
-DeffOnSe_L14a:
+DrumDspGroupSe_L14a:
 	movbu	(Str_empty_256), d0
 	movbu	(Str_empty_256+1), d1
 	asl	8, d1
@@ -391157,13 +391152,13 @@ DeffOnSe_L14a:
 	mov	2, d1
 	call	func_4C15F695_entry, [d2,d3], 0x18
 	cmp	-1, d0
-	ble	DeffOnSe_L1dc
+	ble	DrumDspGroupSe_L1dc
 	mov	0xff, d2
 	and	d2, d0
 	extbu	d0
 	exthu	d0
 	cmp	0, d0
-	ble	DeffOnSe_L1dc
+	ble	DrumDspGroupSe_L1dc
 	add	-1, d0
 	exthu	d0
 	mov	d0, (0x10, sp)
@@ -391171,7 +391166,7 @@ DeffOnSe_L14a:
 	mov	2, d1
 	call	func_4C15F695_entry, [d2,d3], 0x18
 	cmp	-1, d0
-	ble	DeffOnSe_L1dc
+	ble	DrumDspGroupSe_L1dc
 	and	d0, d2
 	movbu	d2, (Str_empty_256)
 	and	0xff00, d0
@@ -391191,10 +391186,10 @@ DeffOnSe_L14a:
 	mov	d2, d1
 	mov	CmpMenuScreen_Line2_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DeffOnSe_L1dc:
+DrumDspGroupSe_L1dc:
 	clr	d0
-	bra	DeffOnSe_L233
-DeffOnSe_L1df:
+	bra	DrumDspGroupSe_L233
+DrumDspGroupSe_L1df:
 	mov	(0x30, sp), a2
 	movbu	(Str_empty_256), d0
 	movbu	(Str_empty_256+1), d1
@@ -391216,41 +391211,41 @@ DeffOnSe_L1df:
 	mov	MT_ParaDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	DeffOnSe_L233
-# DeffOnSe + 0x230: no traced path reaches what follows (--decode-gaps)
-	bra	DeffOnSe_L233
-DeffOnSe_L232:
+	bra	DrumDspGroupSe_L233
+# DrumDspGroupSe + 0x230: no traced path reaches what follows (--decode-gaps)
+	bra	DrumDspGroupSe_L233
+DrumDspGroupSe_L232:
 	clr	d0
-DeffOnSe_L233:
+DrumDspGroupSe_L233:
 	ret	[d2,d3,a2], 0x20
 
-DrumDspGroupSe:
+DspVariSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	DrumDspGroupSe_L4c
+	beq	DspVariSe_L4c
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DrumDspGroupSe_L83
+	beq	DspVariSe_L83
 	cmp	EV_INDEXSW_UP, d1
-	beq	DrumDspGroupSe_L83
+	beq	DspVariSe_L83
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DrumDspGroupSe_L28
-	jmp	DrumDspGroupSe_L163
-DrumDspGroupSe_L28:
+	bne	DspVariSe_L28
+	jmp	DspVariSe_L163
+DspVariSe_L28:
 	cmp	EV_INDEXSW_DOWN, d1
-	bne	DrumDspGroupSe_L33
-	jmp	DrumDspGroupSe_L163
-DrumDspGroupSe_L33:
+	bne	DspVariSe_L33
+	jmp	DspVariSe_L163
+DspVariSe_L33:
 	cmp	MT_GetString, d1
-	bne	DrumDspGroupSe_L3e
-	jmp	DrumDspGroupSe_L206
-DrumDspGroupSe_L3e:
+	bne	DspVariSe_L3e
+	jmp	DspVariSe_L206
+DspVariSe_L3e:
 	cmp	0x1800000, d1
-	bne	DrumDspGroupSe_L49
+	bne	DspVariSe_L49
 	ret	[d2,d3,a2,a3], 0x24
-DrumDspGroupSe_L49:
-	jmp	DrumDspGroupSe_L242
-DrumDspGroupSe_L4c:
+DspVariSe_L49:
+	jmp	DspVariSe_L242
+DspVariSe_L4c:
 	mov	0x51, d0
 	mov	Str_empty_256, a0
 	mov	0x7f, d1
@@ -391265,7 +391260,7 @@ DrumDspGroupSe_L4c:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-DrumDspGroupSe_L83:
+DspVariSe_L83:
 	movbu	(Str_empty_256), d1
 	movbu	(Str_empty_256+1), d0
 	asl	8, d0
@@ -391278,9 +391273,9 @@ DrumDspGroupSe_L83:
 	mov	2, d1
 	call	func_4C15F695_entry, [d2,d3], 0x18
 	cmp	-1, d0
-	bgt	DrumDspGroupSe_Lb1
-	jmp	DrumDspGroupSe_L15f
-DrumDspGroupSe_Lb1:
+	bgt	DspVariSe_Lb1
+	jmp	DspVariSe_L15f
+DspVariSe_Lb1:
 	movbu	(Str_empty_256), d1
 	movbu	(Str_empty_256+1), d2
 	mov	0xff00, a2
@@ -391302,14 +391297,14 @@ DrumDspGroupSe_Lb1:
 	mov	2, d0
 	call	func_4C15F5E6_entry, [d2,d3,a2,a3], 0x24
 	cmp	-1, d0
-	ble	DrumDspGroupSe_L15f
+	ble	DspVariSe_L15f
 	exthu	d3
 	mov	a2, d1
 	and	d1, d0
 	asr	8, d0
 	extbu	d0
 	cmp	d0, d3
-	bge	DrumDspGroupSe_L15f
+	bge	DspVariSe_L15f
 	mov	a3, d2
 	exthu	d2
 	mov	d3, d1
@@ -391323,7 +391318,7 @@ DrumDspGroupSe_Lb1:
 	mov	2, d1
 	call	func_4C15F695_entry, [d2,d3], 0x18
 	cmp	-1, d0
-	ble	DrumDspGroupSe_L15f
+	ble	DspVariSe_L15f
 	mov	0xff, d1
 	and	d0, d1
 	movbu	d1, (Str_empty_256)
@@ -391344,10 +391339,10 @@ DrumDspGroupSe_Lb1:
 	add	d2, d1
 	mov	CmpMenuScreen_Line2_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DrumDspGroupSe_L15f:
+DspVariSe_L15f:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-DrumDspGroupSe_L163:
+DspVariSe_L163:
 	movbu	(Str_empty_256), d0
 	movbu	(Str_empty_256+1), d1
 	asl	8, d1
@@ -391360,7 +391355,7 @@ DrumDspGroupSe_L163:
 	mov	2, d1
 	call	func_4C15F695_entry, [d2,d3], 0x18
 	cmp	-1, d0
-	ble	DrumDspGroupSe_L203
+	ble	DspVariSe_L203
 	mov	0xff, d3
 	mov	d0, d1
 	and	d3, d1
@@ -391370,7 +391365,7 @@ DrumDspGroupSe_L163:
 	extbu	d0
 	exthu	d0
 	cmp	0, d0
-	ble	DrumDspGroupSe_L203
+	ble	DspVariSe_L203
 	exthu	d1
 	add	-1, d0
 	exthu	d0
@@ -391381,7 +391376,7 @@ DrumDspGroupSe_L163:
 	mov	2, d1
 	call	func_4C15F695_entry, [d2,d3], 0x18
 	cmp	-1, d0
-	ble	DrumDspGroupSe_L203
+	ble	DspVariSe_L203
 	and	d0, d3
 	movbu	d3, (Str_empty_256)
 	and	0xff00, d0
@@ -391401,10 +391396,10 @@ DrumDspGroupSe_L163:
 	mov	d2, d1
 	mov	CmpMenuScreen_Line2_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DrumDspGroupSe_L203:
+DspVariSe_L203:
 	clr	d0
-	bra	DrumDspGroupSe_L243
-DrumDspGroupSe_L206:
+	bra	DspVariSe_L243
+DspVariSe_L206:
 	mov	(0x34, sp), a2
 	mov	Str_s_53, d0
 	mov	d0, (0xc, sp)
@@ -391421,41 +391416,41 @@ DrumDspGroupSe_L206:
 	mov	a2, (8, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	DrumDspGroupSe_L243
-# DrumDspGroupSe + 0x240: no traced path reaches what follows (--decode-gaps)
-	bra	DrumDspGroupSe_L243
-DrumDspGroupSe_L242:
+	bra	DspVariSe_L243
+# DspVariSe + 0x240: no traced path reaches what follows (--decode-gaps)
+	bra	DspVariSe_L243
+DspVariSe_L242:
 	clr	d0
-DrumDspGroupSe_L243:
+DspVariSe_L243:
 	ret	[d2,d3,a2,a3], 0x24
 
-DeffStereoSe:
+DrumDspVariSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	DeffStereoSe_L4c
+	beq	DrumDspVariSe_L4c
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DeffStereoSe_L83
+	beq	DrumDspVariSe_L83
 	cmp	EV_INDEXSW_UP, d1
-	beq	DeffStereoSe_L83
+	beq	DrumDspVariSe_L83
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DeffStereoSe_L28
-	jmp	DeffStereoSe_L163
-DeffStereoSe_L28:
+	bne	DrumDspVariSe_L28
+	jmp	DrumDspVariSe_L163
+DrumDspVariSe_L28:
 	cmp	EV_INDEXSW_DOWN, d1
-	bne	DeffStereoSe_L33
-	jmp	DeffStereoSe_L163
-DeffStereoSe_L33:
+	bne	DrumDspVariSe_L33
+	jmp	DrumDspVariSe_L163
+DrumDspVariSe_L33:
 	cmp	MT_GetString, d1
-	bne	DeffStereoSe_L3e
-	jmp	DeffStereoSe_L206
-DeffStereoSe_L3e:
+	bne	DrumDspVariSe_L3e
+	jmp	DrumDspVariSe_L206
+DrumDspVariSe_L3e:
 	cmp	0x1800000, d1
-	bne	DeffStereoSe_L49
+	bne	DrumDspVariSe_L49
 	ret	[d2,d3,a2,a3], 0x24
-DeffStereoSe_L49:
-	jmp	DeffStereoSe_L242
-DeffStereoSe_L4c:
+DrumDspVariSe_L49:
+	jmp	DrumDspVariSe_L242
+DrumDspVariSe_L4c:
 	mov	0x24, d0
 	mov	Str_empty_256, a0
 	mov	0x7f, d1
@@ -391470,7 +391465,7 @@ DeffStereoSe_L4c:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-DeffStereoSe_L83:
+DrumDspVariSe_L83:
 	movbu	(Str_empty_256), d1
 	movbu	(Str_empty_256+1), d0
 	asl	8, d0
@@ -391483,9 +391478,9 @@ DeffStereoSe_L83:
 	mov	2, d1
 	call	func_4C15F695_entry, [d2,d3], 0x18
 	cmp	-1, d0
-	bgt	DeffStereoSe_Lb1
-	jmp	DeffStereoSe_L15f
-DeffStereoSe_Lb1:
+	bgt	DrumDspVariSe_Lb1
+	jmp	DrumDspVariSe_L15f
+DrumDspVariSe_Lb1:
 	movbu	(Str_empty_256), d1
 	movbu	(Str_empty_256+1), d2
 	mov	0xff00, a2
@@ -391507,14 +391502,14 @@ DeffStereoSe_Lb1:
 	mov	2, d0
 	call	func_4C15F5E6_entry, [d2,d3,a2,a3], 0x24
 	cmp	-1, d0
-	ble	DeffStereoSe_L15f
+	ble	DrumDspVariSe_L15f
 	exthu	d3
 	mov	a2, d1
 	and	d1, d0
 	asr	8, d0
 	extbu	d0
 	cmp	d0, d3
-	bge	DeffStereoSe_L15f
+	bge	DrumDspVariSe_L15f
 	mov	a3, d2
 	exthu	d2
 	mov	d3, d1
@@ -391528,7 +391523,7 @@ DeffStereoSe_Lb1:
 	mov	2, d1
 	call	func_4C15F695_entry, [d2,d3], 0x18
 	cmp	-1, d0
-	ble	DeffStereoSe_L15f
+	ble	DrumDspVariSe_L15f
 	mov	0xff, d1
 	and	d0, d1
 	movbu	d1, (Str_empty_256)
@@ -391549,10 +391544,10 @@ DeffStereoSe_Lb1:
 	add	d2, d1
 	mov	CmpMenuScreen_Line2_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DeffStereoSe_L15f:
+DrumDspVariSe_L15f:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x24
-DeffStereoSe_L163:
+DrumDspVariSe_L163:
 	movbu	(Str_empty_256), d0
 	movbu	(Str_empty_256+1), d1
 	asl	8, d1
@@ -391565,7 +391560,7 @@ DeffStereoSe_L163:
 	mov	2, d1
 	call	func_4C15F695_entry, [d2,d3], 0x18
 	cmp	-1, d0
-	ble	DeffStereoSe_L203
+	ble	DrumDspVariSe_L203
 	mov	0xff, d3
 	mov	d0, d1
 	and	d3, d1
@@ -391575,7 +391570,7 @@ DeffStereoSe_L163:
 	extbu	d0
 	exthu	d0
 	cmp	0, d0
-	ble	DeffStereoSe_L203
+	ble	DrumDspVariSe_L203
 	exthu	d1
 	add	-1, d0
 	exthu	d0
@@ -391586,7 +391581,7 @@ DeffStereoSe_L163:
 	mov	2, d1
 	call	func_4C15F695_entry, [d2,d3], 0x18
 	cmp	-1, d0
-	ble	DeffStereoSe_L203
+	ble	DrumDspVariSe_L203
 	and	d0, d3
 	movbu	d3, (Str_empty_256)
 	and	0xff00, d0
@@ -391606,10 +391601,10 @@ DeffStereoSe_L163:
 	mov	d2, d1
 	mov	CmpMenuScreen_Line2_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DeffStereoSe_L203:
+DrumDspVariSe_L203:
 	clr	d0
-	bra	DeffStereoSe_L243
-DeffStereoSe_L206:
+	bra	DrumDspVariSe_L243
+DrumDspVariSe_L206:
 	mov	(0x34, sp), a2
 	mov	Str_s_52, d0
 	mov	d0, (0xc, sp)
@@ -391626,47 +391621,47 @@ DeffStereoSe_L206:
 	mov	a2, (8, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	DeffStereoSe_L243
-# DeffStereoSe + 0x240: no traced path reaches what follows (--decode-gaps)
-	bra	DeffStereoSe_L243
-DeffStereoSe_L242:
+	bra	DrumDspVariSe_L243
+# DrumDspVariSe + 0x240: no traced path reaches what follows (--decode-gaps)
+	bra	DrumDspVariSe_L243
+DrumDspVariSe_L242:
 	clr	d0
-DeffStereoSe_L243:
+DrumDspVariSe_L243:
 	ret	[d2,d3,a2,a3], 0x24
 
-DrumDspVariSe:
+DspVOnSe:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	DrumDspVariSe_L5a
+	beq	DspVOnSe_L5a
 	cmp	EV_INDEXSW_UP_AIC, d1
-	bne	DrumDspVariSe_L18
-	jmp	DrumDspVariSe_L96
-DrumDspVariSe_L18:
+	bne	DspVOnSe_L18
+	jmp	DspVOnSe_L96
+DspVOnSe_L18:
 	cmp	EV_INDEXSW_UP, d1
-	beq	DrumDspVariSe_L96
+	beq	DspVOnSe_L96
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DrumDspVariSe_L2b
-	jmp	DrumDspVariSe_Le0
-DrumDspVariSe_L2b:
+	bne	DspVOnSe_L2b
+	jmp	DspVOnSe_Le0
+DspVOnSe_L2b:
 	cmp	EV_INDEXSW_DOWN, d1
-	bne	DrumDspVariSe_L36
-	jmp	DrumDspVariSe_Le0
-DrumDspVariSe_L36:
+	bne	DspVOnSe_L36
+	jmp	DspVOnSe_Le0
+DspVOnSe_L36:
 	cmp	EV_MMMDATA, d1
-	bne	DrumDspVariSe_L41
-	jmp	DrumDspVariSe_L12c
-DrumDspVariSe_L41:
+	bne	DspVOnSe_L41
+	jmp	DspVOnSe_L12c
+DspVOnSe_L41:
 	cmp	MT_GetString, d1
-	bne	DrumDspVariSe_L4c
-	jmp	DrumDspVariSe_L174
-DrumDspVariSe_L4c:
+	bne	DspVOnSe_L4c
+	jmp	DspVOnSe_L174
+DspVOnSe_L4c:
 	cmp	0x1800000, d1
-	bne	DrumDspVariSe_L57
+	bne	DspVOnSe_L57
 	ret	[d2,d3], 0x1c
-DrumDspVariSe_L57:
-	jmp	DrumDspVariSe_L1b1
-DrumDspVariSe_L5a:
+DspVOnSe_L57:
+	jmp	DspVOnSe_L1b1
+DspVOnSe_L5a:
 	mov	0x0000b014, d0
 	call	SetMmmFilter_entry, [d2], 0x18
 	mov	0x0000b024, d0
@@ -391679,10 +391674,10 @@ DrumDspVariSe_L5a:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	[d2,d3], 0x1c
-DrumDspVariSe_L96:
+DspVOnSe_L96:
 	movbu	(DspVOnSe_L5e_Var), d0
 	cmp	1, d0
-	bge	DrumDspVariSe_Ldc
+	bge	DspVOnSe_Ldc
 	inc	d0
 	movbu	d0, (DspVOnSe_L5e_Var)
 	call	GetPartSelect_entry, 0, 0x14
@@ -391700,13 +391695,13 @@ DrumDspVariSe_L96:
 	mov	d3, d1
 	mov	CmpMenuScreen_Line2_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DrumDspVariSe_Ldc:
+DspVOnSe_Ldc:
 	clr	d0
 	ret	[d2,d3], 0x1c
-DrumDspVariSe_Le0:
+DspVOnSe_Le0:
 	movbu	(DspVOnSe_L5e_Var), d0
 	cmp	0, d0
-	ble	DrumDspVariSe_L128
+	ble	DspVOnSe_L128
 	add	-1, d0
 	movbu	d0, (DspVOnSe_L5e_Var)
 	call	GetPartSelect_entry, 0, 0x14
@@ -391725,103 +391720,103 @@ DrumDspVariSe_Le0:
 	mov	d2, d1
 	mov	CmpMenuScreen_Line2_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DrumDspVariSe_L128:
+DspVOnSe_L128:
 	clr	d0
 	ret	[d2,d3], 0x1c
-DrumDspVariSe_L12c:
+DspVOnSe_L12c:
 	mov	(0x2c, sp), a0
 	mov	(a0), d0
 	cmp	0xb014, d0
-	beq	DrumDspVariSe_L149
+	beq	DspVOnSe_L149
 	mov	(a0), d0
 	cmp	0xb024, d0
-	beq	DrumDspVariSe_L149
+	beq	DspVOnSe_L149
 	mov	(a0), d0
 	cmp	0xb034, d0
-	bne	DrumDspVariSe_L171
-DrumDspVariSe_L149:
+	bne	DspVOnSe_L171
+DspVOnSe_L149:
 	mov	(4, a0), d0
 	and	0x00ff0000, d0
 	lsr	16, d0
 	extbu	d0
 	cmp	1, d0
-	beq	DrumDspVariSe_L160
+	beq	DspVOnSe_L160
 	cmp	0, d0
-	beq	DrumDspVariSe_L16a
-	bra	DrumDspVariSe_L171
-DrumDspVariSe_L160:
+	beq	DspVOnSe_L16a
+	bra	DspVOnSe_L171
+DspVOnSe_L160:
 	mov	1, d0
 	movbu	d0, (DspVOnSe_L5e_Var)
-	bra	DrumDspVariSe_L171
-DrumDspVariSe_L16a:
+	bra	DspVOnSe_L171
+DspVOnSe_L16a:
 	clr	d0
 	movbu	d0, (DspVOnSe_L5e_Var)
-DrumDspVariSe_L171:
+DspVOnSe_L171:
 	clr	d0
-	bra	DrumDspVariSe_L1b2
-DrumDspVariSe_L174:
+	bra	DspVOnSe_L1b2
+DspVOnSe_L174:
 	movbu	(DspVOnSe_L5e_Var), d0
 	cmp	0, d0
-	beq	DrumDspVariSe_L184
+	beq	DspVOnSe_L184
 	cmp	1, d0
-	beq	DrumDspVariSe_L199
-	bra	DrumDspVariSe_L1ac
-DrumDspVariSe_L184:
+	beq	DspVOnSe_L199
+	bra	DspVOnSe_L1ac
+DspVOnSe_L184:
 	mov	(0x2c, sp), a1
 	mov	Str_OFF_53, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DrumDspVariSe_L1ac
-DrumDspVariSe_L199:
+	bra	DspVOnSe_L1ac
+DspVOnSe_L199:
 	mov	(0x2c, sp), a1
 	mov	Str_ON_43, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DrumDspVariSe_L1ac:
+DspVOnSe_L1ac:
 	clr	d0
-	bra	DrumDspVariSe_L1b2
-# DrumDspVariSe + 0x1af: no traced path reaches what follows (--decode-gaps)
-	bra	DrumDspVariSe_L1b2
-DrumDspVariSe_L1b1:
+	bra	DspVOnSe_L1b2
+# DspVOnSe + 0x1af: no traced path reaches what follows (--decode-gaps)
+	bra	DspVOnSe_L1b2
+DspVOnSe_L1b1:
 	clr	d0
-DrumDspVariSe_L1b2:
+DspVOnSe_L1b2:
 	ret	[d2,d3], 0x1c
 
-DeffTypeSe:
+DrumDspVOnSe:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	DeffTypeSe_L5a
+	beq	DrumDspVOnSe_L5a
 	cmp	EV_INDEXSW_UP_AIC, d1
-	bne	DeffTypeSe_L18
-	jmp	DeffTypeSe_L96
-DeffTypeSe_L18:
+	bne	DrumDspVOnSe_L18
+	jmp	DrumDspVOnSe_L96
+DrumDspVOnSe_L18:
 	cmp	EV_INDEXSW_UP, d1
-	beq	DeffTypeSe_L96
+	beq	DrumDspVOnSe_L96
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DeffTypeSe_L2b
-	jmp	DeffTypeSe_Le0
-DeffTypeSe_L2b:
+	bne	DrumDspVOnSe_L2b
+	jmp	DrumDspVOnSe_Le0
+DrumDspVOnSe_L2b:
 	cmp	EV_INDEXSW_DOWN, d1
-	bne	DeffTypeSe_L36
-	jmp	DeffTypeSe_Le0
-DeffTypeSe_L36:
+	bne	DrumDspVOnSe_L36
+	jmp	DrumDspVOnSe_Le0
+DrumDspVOnSe_L36:
 	cmp	EV_MMMDATA, d1
-	bne	DeffTypeSe_L41
-	jmp	DeffTypeSe_L12c
-DeffTypeSe_L41:
+	bne	DrumDspVOnSe_L41
+	jmp	DrumDspVOnSe_L12c
+DrumDspVOnSe_L41:
 	cmp	MT_GetString, d1
-	bne	DeffTypeSe_L4c
-	jmp	DeffTypeSe_L174
-DeffTypeSe_L4c:
+	bne	DrumDspVOnSe_L4c
+	jmp	DrumDspVOnSe_L174
+DrumDspVOnSe_L4c:
 	cmp	0x1800000, d1
-	bne	DeffTypeSe_L57
+	bne	DrumDspVOnSe_L57
 	ret	[d2,d3], 0x1c
-DeffTypeSe_L57:
-	jmp	DeffTypeSe_L1b1
-DeffTypeSe_L5a:
+DrumDspVOnSe_L57:
+	jmp	DrumDspVOnSe_L1b1
+DrumDspVOnSe_L5a:
 	mov	0x0000b014, d0
 	call	SetMmmFilter_entry, [d2], 0x18
 	mov	0x0000b024, d0
@@ -391834,10 +391829,10 @@ DeffTypeSe_L5a:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	[d2,d3], 0x1c
-DeffTypeSe_L96:
+DrumDspVOnSe_L96:
 	movbu	(DspVOnSe_L5e_Var), d0
 	cmp	1, d0
-	bge	DeffTypeSe_Ldc
+	bge	DrumDspVOnSe_Ldc
 	inc	d0
 	movbu	d0, (DspVOnSe_L5e_Var)
 	call	GetPartSelect_entry, 0, 0x14
@@ -391855,13 +391850,13 @@ DeffTypeSe_L96:
 	mov	d3, d1
 	mov	CmpMenuScreen_Line2_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DeffTypeSe_Ldc:
+DrumDspVOnSe_Ldc:
 	clr	d0
 	ret	[d2,d3], 0x1c
-DeffTypeSe_Le0:
+DrumDspVOnSe_Le0:
 	movbu	(DspVOnSe_L5e_Var), d0
 	cmp	0, d0
-	ble	DeffTypeSe_L128
+	ble	DrumDspVOnSe_L128
 	add	-1, d0
 	movbu	d0, (DspVOnSe_L5e_Var)
 	call	GetPartSelect_entry, 0, 0x14
@@ -391880,103 +391875,103 @@ DeffTypeSe_Le0:
 	mov	d2, d1
 	mov	CmpMenuScreen_Line2_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DeffTypeSe_L128:
+DrumDspVOnSe_L128:
 	clr	d0
 	ret	[d2,d3], 0x1c
-DeffTypeSe_L12c:
+DrumDspVOnSe_L12c:
 	mov	(0x2c, sp), a0
 	mov	(a0), d0
 	cmp	0xb014, d0
-	beq	DeffTypeSe_L149
+	beq	DrumDspVOnSe_L149
 	mov	(a0), d0
 	cmp	0xb024, d0
-	beq	DeffTypeSe_L149
+	beq	DrumDspVOnSe_L149
 	mov	(a0), d0
 	cmp	0xb034, d0
-	bne	DeffTypeSe_L171
-DeffTypeSe_L149:
+	bne	DrumDspVOnSe_L171
+DrumDspVOnSe_L149:
 	mov	(4, a0), d0
 	and	0x00ff0000, d0
 	lsr	16, d0
 	extbu	d0
 	cmp	1, d0
-	beq	DeffTypeSe_L160
+	beq	DrumDspVOnSe_L160
 	cmp	0, d0
-	beq	DeffTypeSe_L16a
-	bra	DeffTypeSe_L171
-DeffTypeSe_L160:
+	beq	DrumDspVOnSe_L16a
+	bra	DrumDspVOnSe_L171
+DrumDspVOnSe_L160:
 	mov	1, d0
 	movbu	d0, (DspVOnSe_L5e_Var)
-	bra	DeffTypeSe_L171
-DeffTypeSe_L16a:
+	bra	DrumDspVOnSe_L171
+DrumDspVOnSe_L16a:
 	clr	d0
 	movbu	d0, (DspVOnSe_L5e_Var)
-DeffTypeSe_L171:
+DrumDspVOnSe_L171:
 	clr	d0
-	bra	DeffTypeSe_L1b2
-DeffTypeSe_L174:
+	bra	DrumDspVOnSe_L1b2
+DrumDspVOnSe_L174:
 	movbu	(DspVOnSe_L5e_Var), d0
 	cmp	0, d0
-	beq	DeffTypeSe_L184
+	beq	DrumDspVOnSe_L184
 	cmp	1, d0
-	beq	DeffTypeSe_L199
-	bra	DeffTypeSe_L1ac
-DeffTypeSe_L184:
+	beq	DrumDspVOnSe_L199
+	bra	DrumDspVOnSe_L1ac
+DrumDspVOnSe_L184:
 	mov	(0x2c, sp), a1
 	mov	Str_OFF_52, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffTypeSe_L1ac
-DeffTypeSe_L199:
+	bra	DrumDspVOnSe_L1ac
+DrumDspVOnSe_L199:
 	mov	(0x2c, sp), a1
 	mov	Str_ON_42, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DeffTypeSe_L1ac:
+DrumDspVOnSe_L1ac:
 	clr	d0
-	bra	DeffTypeSe_L1b2
-# DeffTypeSe + 0x1af: no traced path reaches what follows (--decode-gaps)
-	bra	DeffTypeSe_L1b2
-DeffTypeSe_L1b1:
+	bra	DrumDspVOnSe_L1b2
+# DrumDspVOnSe + 0x1af: no traced path reaches what follows (--decode-gaps)
+	bra	DrumDspVOnSe_L1b2
+DrumDspVOnSe_L1b1:
 	clr	d0
-DeffTypeSe_L1b2:
+DrumDspVOnSe_L1b2:
 	ret	[d2,d3], 0x1c
 
-DrumDspVOnSe:
+DspDptSe:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	DrumDspVOnSe_L46
+	beq	DspDptSe_L46
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DrumDspVOnSe_L5b
+	beq	DspDptSe_L5b
 	cmp	EV_INDEXSW_UP, d1
-	beq	DrumDspVOnSe_L5b
+	beq	DspDptSe_L5b
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	DrumDspVOnSe_L8e
+	beq	DspDptSe_L8e
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DrumDspVOnSe_L8e
+	beq	DspDptSe_L8e
 	cmp	MT_GetString, d1
-	bne	DrumDspVOnSe_L38
-	jmp	DrumDspVOnSe_Lc2
-DrumDspVOnSe_L38:
+	bne	DspDptSe_L38
+	jmp	DspDptSe_Lc2
+DspDptSe_L38:
 	cmp	0x1800000, d1
-	bne	DrumDspVOnSe_L43
+	bne	DspDptSe_L43
 	ret	[d2], 0x18
-DrumDspVOnSe_L43:
-	jmp	DrumDspVOnSe_Le2
-DrumDspVOnSe_L46:
+DspDptSe_L43:
+	jmp	DspDptSe_Le2
+DspDptSe_L46:
 	mov	0x53, d0
 	mov	0x5004d768, a0
 	mov	0x7f, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	[d2], 0x18
-DrumDspVOnSe_L5b:
+DspDptSe_L5b:
 	movbu	(0x5004d768), d0
 	cmp	0x7f, d0
-	bge	DrumDspVOnSe_L8b
+	bge	DspDptSe_L8b
 	inc	d0
 	movbu	d0, (0x5004d768)
 	call	GetPartSelect_entry, 0, 0x14
@@ -391986,13 +391981,13 @@ DrumDspVOnSe_L5b:
 	add	d0, d1
 	mov	CmpBkslScreen_CmpMemNameBox1_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DrumDspVOnSe_L8b:
+DspDptSe_L8b:
 	clr	d0
-	bra	DrumDspVOnSe_Le3
-DrumDspVOnSe_L8e:
+	bra	DspDptSe_Le3
+DspDptSe_L8e:
 	movbu	(0x5004d768), d0
 	cmp	0, d0
-	ble	DrumDspVOnSe_Lbf
+	ble	DspDptSe_Lbf
 	add	-1, d0
 	movbu	d0, (0x5004d768)
 	call	GetPartSelect_entry, 0, 0x14
@@ -392002,10 +391997,10 @@ DrumDspVOnSe_L8e:
 	add	d0, d1
 	mov	CmpBkslScreen_CmpMemNameBox1_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DrumDspVOnSe_Lbf:
+DspDptSe_Lbf:
 	clr	d0
-	bra	DrumDspVOnSe_Le3
-DrumDspVOnSe_Lc2:
+	bra	DspDptSe_Le3
+DspDptSe_Lc2:
 	mov	(0x28, sp), a0
 	mov	Str_3d_132, d0
 	mov	a0, (8, sp)
@@ -392014,47 +392009,47 @@ DrumDspVOnSe_Lc2:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	DrumDspVOnSe_Le3
-# DrumDspVOnSe + 0xe0: no traced path reaches what follows (--decode-gaps)
-	bra	DrumDspVOnSe_Le3
-DrumDspVOnSe_Le2:
+	bra	DspDptSe_Le3
+# DspDptSe + 0xe0: no traced path reaches what follows (--decode-gaps)
+	bra	DspDptSe_Le3
+DspDptSe_Le2:
 	clr	d0
-DrumDspVOnSe_Le3:
+DspDptSe_Le3:
 	ret	[d2], 0x18
 
-DeffVal0Se:
+DrumDspDptSe:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	DeffVal0Se_L46
+	beq	DrumDspDptSe_L46
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DeffVal0Se_L5b
+	beq	DrumDspDptSe_L5b
 	cmp	EV_INDEXSW_UP, d1
-	beq	DeffVal0Se_L5b
+	beq	DrumDspDptSe_L5b
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	DeffVal0Se_L8e
+	beq	DrumDspDptSe_L8e
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DeffVal0Se_L8e
+	beq	DrumDspDptSe_L8e
 	cmp	MT_GetString, d1
-	bne	DeffVal0Se_L38
-	jmp	DeffVal0Se_Lc2
-DeffVal0Se_L38:
+	bne	DrumDspDptSe_L38
+	jmp	DrumDspDptSe_Lc2
+DrumDspDptSe_L38:
 	cmp	0x1800000, d1
-	bne	DeffVal0Se_L43
+	bne	DrumDspDptSe_L43
 	ret	[d2], 0x18
-DeffVal0Se_L43:
-	jmp	DeffVal0Se_Le2
-DeffVal0Se_L46:
+DrumDspDptSe_L43:
+	jmp	DrumDspDptSe_Le2
+DrumDspDptSe_L46:
 	mov	0x26, d0
 	mov	0x5004d76c, a0
 	mov	0x7f, d1
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	[d2], 0x18
-DeffVal0Se_L5b:
+DrumDspDptSe_L5b:
 	movbu	(0x5004d76c), d0
 	cmp	0x7f, d0
-	bge	DeffVal0Se_L8b
+	bge	DrumDspDptSe_L8b
 	inc	d0
 	movbu	d0, (0x5004d76c)
 	call	GetPartSelect_entry, 0, 0x14
@@ -392064,13 +392059,13 @@ DeffVal0Se_L5b:
 	add	d0, d1
 	mov	CmpBkslScreen_CmpMemNameBox1_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DeffVal0Se_L8b:
+DrumDspDptSe_L8b:
 	clr	d0
-	bra	DeffVal0Se_Le3
-DeffVal0Se_L8e:
+	bra	DrumDspDptSe_Le3
+DrumDspDptSe_L8e:
 	movbu	(0x5004d76c), d0
 	cmp	0, d0
-	ble	DeffVal0Se_Lbf
+	ble	DrumDspDptSe_Lbf
 	add	-1, d0
 	movbu	d0, (0x5004d76c)
 	call	GetPartSelect_entry, 0, 0x14
@@ -392080,10 +392075,10 @@ DeffVal0Se_L8e:
 	add	d0, d1
 	mov	CmpBkslScreen_CmpMemNameBox1_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DeffVal0Se_Lbf:
+DrumDspDptSe_Lbf:
 	clr	d0
-	bra	DeffVal0Se_Le3
-DeffVal0Se_Lc2:
+	bra	DrumDspDptSe_Le3
+DrumDspDptSe_Lc2:
 	mov	(0x28, sp), a0
 	mov	Str_3d_131, d0
 	mov	a0, (8, sp)
@@ -392092,42 +392087,42 @@ DeffVal0Se_Lc2:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	DeffVal0Se_Le3
-# DeffVal0Se + 0xe0: no traced path reaches what follows (--decode-gaps)
-	bra	DeffVal0Se_Le3
-DeffVal0Se_Le2:
+	bra	DrumDspDptSe_Le3
+# DrumDspDptSe + 0xe0: no traced path reaches what follows (--decode-gaps)
+	bra	DrumDspDptSe_Le3
+DrumDspDptSe_Le2:
 	clr	d0
-DeffVal0Se_Le3:
+DrumDspDptSe_Le3:
 	ret	[d2], 0x18
 
-DrumCtrlGridSe:
+ChoOnSe:
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	DrumCtrlGridSe_L52
+	beq	ChoOnSe_L52
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DrumCtrlGridSe_L75
+	beq	ChoOnSe_L75
 	cmp	EV_INDEXSW_UP, d1
-	beq	DrumCtrlGridSe_L75
+	beq	ChoOnSe_L75
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DrumCtrlGridSe_L26
-	jmp	DrumCtrlGridSe_La4
-DrumCtrlGridSe_L26:
+	bne	ChoOnSe_L26
+	jmp	ChoOnSe_La4
+ChoOnSe_L26:
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DrumCtrlGridSe_La4
+	beq	ChoOnSe_La4
 	cmp	EV_MMMDATA, d1
-	bne	DrumCtrlGridSe_L39
-	jmp	DrumCtrlGridSe_Ld3
-DrumCtrlGridSe_L39:
+	bne	ChoOnSe_L39
+	jmp	ChoOnSe_Ld3
+ChoOnSe_L39:
 	cmp	MT_GetString, d1
-	bne	DrumCtrlGridSe_L44
-	jmp	DrumCtrlGridSe_L103
-DrumCtrlGridSe_L44:
+	bne	ChoOnSe_L44
+	jmp	ChoOnSe_L103
+ChoOnSe_L44:
 	cmp	0x1800000, d1
-	bne	DrumCtrlGridSe_L4f
+	bne	ChoOnSe_L4f
 	ret	0, 0x14
-DrumCtrlGridSe_L4f:
-	jmp	DrumCtrlGridSe_L140
-DrumCtrlGridSe_L52:
+ChoOnSe_L4f:
+	jmp	ChoOnSe_L140
+ChoOnSe_L52:
 	mov	0x0020005d, d0
 	call	SetMmmFilter_entry, [d2], 0x18
 	mov	0x4e, d0
@@ -392136,10 +392131,10 @@ DrumCtrlGridSe_L52:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	0, 0x14
-DrumCtrlGridSe_L75:
+ChoOnSe_L75:
 	movbu	(0x5004d770), d0
 	cmp	1, d0
-	bge	DrumCtrlGridSe_La0
+	bge	ChoOnSe_La0
 	inc	d0
 	movbu	d0, (0x5004d770)
 	call	GetPartSelect_entry, 0, 0x14
@@ -392149,13 +392144,13 @@ DrumCtrlGridSe_L75:
 	asl	24, d1
 	inc	d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DrumCtrlGridSe_La0:
+ChoOnSe_La0:
 	clr	d0
 	ret	0, 0x14
-DrumCtrlGridSe_La4:
+ChoOnSe_La4:
 	movbu	(0x5004d770), d0
 	cmp	0, d0
-	ble	DrumCtrlGridSe_Lcf
+	ble	ChoOnSe_Lcf
 	add	-1, d0
 	movbu	d0, (0x5004d770)
 	call	GetPartSelect_entry, 0, 0x14
@@ -392164,95 +392159,95 @@ DrumCtrlGridSe_La4:
 	exthu	d1
 	asl	24, d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DrumCtrlGridSe_Lcf:
+ChoOnSe_Lcf:
 	clr	d0
 	ret	0, 0x14
-DrumCtrlGridSe_Ld3:
+ChoOnSe_Ld3:
 	mov	(0x24, sp), a0
 	mov	(a0), d0
 	cmp	0x20005d, d0
-	bne	DrumCtrlGridSe_L100
+	bne	ChoOnSe_L100
 	mov	(4, a0), d0
 	and	0xff, d0
 	extbu	d0
 	cmp	1, d0
-	beq	DrumCtrlGridSe_Lef
+	beq	ChoOnSe_Lef
 	cmp	0, d0
-	beq	DrumCtrlGridSe_Lf9
-	bra	DrumCtrlGridSe_L100
-DrumCtrlGridSe_Lef:
+	beq	ChoOnSe_Lf9
+	bra	ChoOnSe_L100
+ChoOnSe_Lef:
 	mov	1, d0
 	movbu	d0, (0x5004d770)
-	bra	DrumCtrlGridSe_L100
-DrumCtrlGridSe_Lf9:
+	bra	ChoOnSe_L100
+ChoOnSe_Lf9:
 	clr	d0
 	movbu	d0, (0x5004d770)
-DrumCtrlGridSe_L100:
+ChoOnSe_L100:
 	clr	d0
-	bra	DrumCtrlGridSe_L141
-DrumCtrlGridSe_L103:
+	bra	ChoOnSe_L141
+ChoOnSe_L103:
 	movbu	(0x5004d770), d0
 	cmp	0, d0
-	beq	DrumCtrlGridSe_L113
+	beq	ChoOnSe_L113
 	cmp	1, d0
-	beq	DrumCtrlGridSe_L128
-	bra	DrumCtrlGridSe_L13b
-DrumCtrlGridSe_L113:
+	beq	ChoOnSe_L128
+	bra	ChoOnSe_L13b
+ChoOnSe_L113:
 	mov	(0x24, sp), a0
 	mov	Str_OFF_51, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DrumCtrlGridSe_L13b
-DrumCtrlGridSe_L128:
+	bra	ChoOnSe_L13b
+ChoOnSe_L128:
 	mov	(0x24, sp), a1
 	mov	Str_ON_41, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DrumCtrlGridSe_L13b:
+ChoOnSe_L13b:
 	clr	d0
-	bra	DrumCtrlGridSe_L141
-# DrumCtrlGridSe + 0x13e: no traced path reaches what follows (--decode-gaps)
-	bra	DrumCtrlGridSe_L141
-DrumCtrlGridSe_L140:
+	bra	ChoOnSe_L141
+# ChoOnSe + 0x13e: no traced path reaches what follows (--decode-gaps)
+	bra	ChoOnSe_L141
+ChoOnSe_L140:
 	clr	d0
-DrumCtrlGridSe_L141:
+ChoOnSe_L141:
 	ret	0, 0x14
 
-GlideEditSe:
+ChoDptSe:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	GlideEditSe_L46
+	beq	ChoDptSe_L46
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	GlideEditSe_L5b
+	beq	ChoDptSe_L5b
 	cmp	EV_INDEXSW_UP, d1
-	beq	GlideEditSe_L5b
+	beq	ChoDptSe_L5b
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	GlideEditSe_L8e
+	beq	ChoDptSe_L8e
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	GlideEditSe_L8e
+	beq	ChoDptSe_L8e
 	cmp	MT_GetString, d1
-	bne	GlideEditSe_L38
-	jmp	GlideEditSe_Lc2
-GlideEditSe_L38:
+	bne	ChoDptSe_L38
+	jmp	ChoDptSe_Lc2
+ChoDptSe_L38:
 	cmp	0x1800000, d1
-	bne	GlideEditSe_L43
+	bne	ChoDptSe_L43
 	ret	[d2], 0x18
-GlideEditSe_L43:
-	jmp	GlideEditSe_Le2
-GlideEditSe_L46:
+ChoDptSe_L43:
+	jmp	ChoDptSe_Le2
+ChoDptSe_L46:
 	mov	0x4e, d0
 	mov	0x5004d774, a0
 	mov	0x7f, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	[d2], 0x18
-GlideEditSe_L5b:
+ChoDptSe_L5b:
 	movbu	(0x5004d774), d0
 	cmp	0x7f, d0
-	bge	GlideEditSe_L8b
+	bge	ChoDptSe_L8b
 	inc	d0
 	movbu	d0, (0x5004d774)
 	call	GetPartSelect_entry, 0, 0x14
@@ -392262,13 +392257,13 @@ GlideEditSe_L5b:
 	add	d0, d1
 	mov	CmpBkslScreen_Box1_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-GlideEditSe_L8b:
+ChoDptSe_L8b:
 	clr	d0
-	bra	GlideEditSe_Le3
-GlideEditSe_L8e:
+	bra	ChoDptSe_Le3
+ChoDptSe_L8e:
 	movbu	(0x5004d774), d0
 	cmp	0, d0
-	ble	GlideEditSe_Lbf
+	ble	ChoDptSe_Lbf
 	add	-1, d0
 	movbu	d0, (0x5004d774)
 	call	GetPartSelect_entry, 0, 0x14
@@ -392278,10 +392273,10 @@ GlideEditSe_L8e:
 	add	d0, d1
 	mov	CmpBkslScreen_Box1_id, d0
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-GlideEditSe_Lbf:
+ChoDptSe_Lbf:
 	clr	d0
-	bra	GlideEditSe_Le3
-GlideEditSe_Lc2:
+	bra	ChoDptSe_Le3
+ChoDptSe_Lc2:
 	mov	(0x28, sp), a0
 	mov	Str_3d_130, d0
 	mov	a0, (8, sp)
@@ -392290,30 +392285,30 @@ GlideEditSe_Lc2:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	GlideEditSe_Le3
-# GlideEditSe + 0xe0: no traced path reaches what follows (--decode-gaps)
-	bra	GlideEditSe_Le3
-GlideEditSe_Le2:
+	bra	ChoDptSe_Le3
+# ChoDptSe + 0xe0: no traced path reaches what follows (--decode-gaps)
+	bra	ChoDptSe_Le3
+ChoDptSe_Le2:
 	clr	d0
-GlideEditSe_Le3:
+ChoDptSe_Le3:
 	ret	[d2], 0x18
 
-OctShiftSe:
+RevAdjSe:
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	OctShiftSe_L35
+	beq	RevAdjSe_L35
 	cmp	EV_INDEXSW_UP, d1
-	beq	OctShiftSe_L35
+	beq	RevAdjSe_L35
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	OctShiftSe_L50
+	beq	RevAdjSe_L50
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	OctShiftSe_L50
+	beq	RevAdjSe_L50
 	cmp	MT_GetString, d1
-	beq	OctShiftSe_L6b
+	beq	RevAdjSe_L6b
 	cmp	0x1800000, d1
-	beq	OctShiftSe_L99
-	bra	OctShiftSe_L98
-OctShiftSe_L35:
+	beq	RevAdjSe_L99
+	bra	RevAdjSe_L98
+RevAdjSe_L35:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -392324,8 +392319,8 @@ OctShiftSe_L35:
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	OctShiftSe_L99
-OctShiftSe_L50:
+	bra	RevAdjSe_L99
+RevAdjSe_L50:
 	mov	-0x80, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -392336,8 +392331,8 @@ OctShiftSe_L50:
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	OctShiftSe_L99
-OctShiftSe_L6b:
+	bra	RevAdjSe_L99
+RevAdjSe_L6b:
 	mov	sp, a0
 	add	0x1c, a0
 	mov	0x43, d0
@@ -392352,42 +392347,42 @@ OctShiftSe_L6b:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	OctShiftSe_L99
-# OctShiftSe + 0x96: no traced path reaches what follows (--decode-gaps)
-	bra	OctShiftSe_L99
-OctShiftSe_L98:
+	bra	RevAdjSe_L99
+# RevAdjSe + 0x96: no traced path reaches what follows (--decode-gaps)
+	bra	RevAdjSe_L99
+RevAdjSe_L98:
 	clr	d0
-OctShiftSe_L99:
+RevAdjSe_L99:
 	ret	0, 0x20
 
-DeffVal0SwSe:
+DeffOnSe:
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	DeffVal0SwSe_L52
+	beq	DeffOnSe_L52
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DeffVal0SwSe_L75
+	beq	DeffOnSe_L75
 	cmp	EV_INDEXSW_UP, d1
-	beq	DeffVal0SwSe_L75
+	beq	DeffOnSe_L75
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DeffVal0SwSe_L26
-	jmp	DeffVal0SwSe_La5
-DeffVal0SwSe_L26:
+	bne	DeffOnSe_L26
+	jmp	DeffOnSe_La5
+DeffOnSe_L26:
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DeffVal0SwSe_La5
+	beq	DeffOnSe_La5
 	cmp	MT_GetString, d1
-	bne	DeffVal0SwSe_L39
-	jmp	DeffVal0SwSe_Ld4
-DeffVal0SwSe_L39:
+	bne	DeffOnSe_L39
+	jmp	DeffOnSe_Ld4
+DeffOnSe_L39:
 	cmp	EV_MMMDATA, d1
-	bne	DeffVal0SwSe_L44
-	jmp	DeffVal0SwSe_L10f
-DeffVal0SwSe_L44:
+	bne	DeffOnSe_L44
+	jmp	DeffOnSe_L10f
+DeffOnSe_L44:
 	cmp	0x1800000, d1
-	bne	DeffVal0SwSe_L4f
+	bne	DeffOnSe_L4f
 	ret	0, 0x14
-DeffVal0SwSe_L4f:
-	jmp	DeffVal0SwSe_L139
-DeffVal0SwSe_L52:
+DeffOnSe_L4f:
+	jmp	DeffOnSe_L139
+DeffOnSe_L52:
 	mov	CmpBkslScreen_Label_MEMORY_NAME_id, d0
 	call	SetMmmFilter_entry, [d2], 0x18
 	mov	0x44, d0
@@ -392396,10 +392391,10 @@ DeffVal0SwSe_L52:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	clr	d0
 	ret	0, 0x14
-DeffVal0SwSe_L75:
+DeffOnSe_L75:
 	movbu	(0x5004d778), d0
 	cmp	1, d0
-	bge	DeffVal0SwSe_La1
+	bge	DeffOnSe_La1
 	inc	d0
 	movbu	d0, (0x5004d778)
 	call	GetPartSelect_entry, 0, 0x14
@@ -392409,13 +392404,13 @@ DeffVal0SwSe_L75:
 	asl	24, d1
 	add	0x7f, d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DeffVal0SwSe_La1:
+DeffOnSe_La1:
 	clr	d0
 	ret	0, 0x14
-DeffVal0SwSe_La5:
+DeffOnSe_La5:
 	movbu	(0x5004d778), d0
 	cmp	0, d0
-	ble	DeffVal0SwSe_Ld0
+	ble	DeffOnSe_Ld0
 	add	-1, d0
 	movbu	d0, (0x5004d778)
 	call	GetPartSelect_entry, 0, 0x14
@@ -392424,76 +392419,76 @@ DeffVal0SwSe_La5:
 	exthu	d1
 	asl	24, d1
 	call	MainPutM3Em_entry, [d2,d3,a2], 0x20
-DeffVal0SwSe_Ld0:
+DeffOnSe_Ld0:
 	clr	d0
 	ret	0, 0x14
-DeffVal0SwSe_Ld4:
+DeffOnSe_Ld4:
 	movbu	(0x5004d778), d0
 	cmp	0, d0
-	beq	DeffVal0SwSe_Le4
+	beq	DeffOnSe_Le4
 	cmp	1, d0
-	beq	DeffVal0SwSe_Lf9
-	bra	DeffVal0SwSe_L10c
-DeffVal0SwSe_Le4:
+	beq	DeffOnSe_Lf9
+	bra	DeffOnSe_L10c
+DeffOnSe_Le4:
 	mov	(0x24, sp), a0
 	mov	Str_OFF_50, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal0SwSe_L10c
-DeffVal0SwSe_Lf9:
+	bra	DeffOnSe_L10c
+DeffOnSe_Lf9:
 	mov	(0x24, sp), a1
 	mov	Str_ON_40, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DeffVal0SwSe_L10c:
+DeffOnSe_L10c:
 	clr	d0
-	bra	DeffVal0SwSe_L13a
-DeffVal0SwSe_L10f:
+	bra	DeffOnSe_L13a
+DeffOnSe_L10f:
 	mov	(0x24, sp), a0
 	mov	(a0), d0
 	cmp	CmpBkslScreen_Label_MEMORY_NAME_id, d0
-	bne	DeffVal0SwSe_L134
+	bne	DeffOnSe_L134
 	mov	(4, a0), d0
 	mov	1, d1
 	movbu	d1, (0x5004d778)
 	and	0xff, d0
 	extbu	d0
 	cmp	0, d0
-	bgt	DeffVal0SwSe_L134
+	bgt	DeffOnSe_L134
 	clr	d0
 	movbu	d0, (0x5004d778)
-DeffVal0SwSe_L134:
+DeffOnSe_L134:
 	clr	d0
-	bra	DeffVal0SwSe_L13a
-# DeffVal0SwSe + 0x137: no traced path reaches what follows (--decode-gaps)
-	bra	DeffVal0SwSe_L13a
-DeffVal0SwSe_L139:
+	bra	DeffOnSe_L13a
+# DeffOnSe + 0x137: no traced path reaches what follows (--decode-gaps)
+	bra	DeffOnSe_L13a
+DeffOnSe_L139:
 	clr	d0
-DeffVal0SwSe_L13a:
+DeffOnSe_L13a:
 	ret	0, 0x14
 
-DeffVal1Se:
+DeffStereoSe:
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DeffVal1Se_L3b
+	beq	DeffStereoSe_L3b
 	cmp	EV_INDEXSW_UP, d1
-	beq	DeffVal1Se_L3b
+	beq	DeffStereoSe_L3b
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	DeffVal1Se_L54
+	beq	DeffStereoSe_L54
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DeffVal1Se_L54
+	beq	DeffStereoSe_L54
 	cmp	MT_GetString, d1
-	beq	DeffVal1Se_L6b
+	beq	DeffStereoSe_L6b
 	cmp	0x1800000, d1
-	beq	DeffVal1Se_L36
-	jmp	DeffVal1Se_Lb3
-DeffVal1Se_L36:
+	beq	DeffStereoSe_L36
+	jmp	DeffStereoSe_Lb3
+DeffStereoSe_L36:
 	ret	0, 0x20
-# DeffVal1Se + 0x39: no traced path reaches what follows (--decode-gaps)
-	bra	DeffVal1Se_Lb3
-DeffVal1Se_L3b:
+# DeffStereoSe + 0x39: no traced path reaches what follows (--decode-gaps)
+	bra	DeffStereoSe_Lb3
+DeffStereoSe_L3b:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -392504,8 +392499,8 @@ DeffVal1Se_L3b:
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	DeffVal1Se_Lb4
-DeffVal1Se_L54:
+	bra	DeffStereoSe_Lb4
+DeffStereoSe_L54:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -392515,8 +392510,8 @@ DeffVal1Se_L54:
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	DeffVal1Se_Lb4
-DeffVal1Se_L6b:
+	bra	DeffStereoSe_Lb4
+DeffStereoSe_L6b:
 	mov	sp, a0
 	add	0x1c, a0
 	mov	0x44, d0
@@ -392524,67 +392519,67 @@ DeffVal1Se_L6b:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x1c, sp), d0
 	cmp	0, d0
-	beq	DeffVal1Se_L86
+	beq	DeffStereoSe_L86
 	cmp	1, d0
-	beq	DeffVal1Se_L9b
-	bra	DeffVal1Se_Lae
-DeffVal1Se_L86:
+	beq	DeffStereoSe_L9b
+	bra	DeffStereoSe_Lae
+DeffStereoSe_L86:
 	mov	(0x30, sp), a0
 	mov	Str_MONO_4, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal1Se_Lae
-DeffVal1Se_L9b:
+	bra	DeffStereoSe_Lae
+DeffStereoSe_L9b:
 	mov	(0x30, sp), a1
 	mov	Str_STEREO, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DeffVal1Se_Lae:
+DeffStereoSe_Lae:
 	clr	d0
-	bra	DeffVal1Se_Lb4
-	bra	DeffVal1Se_Lb4
-DeffVal1Se_Lb3:
+	bra	DeffStereoSe_Lb4
+	bra	DeffStereoSe_Lb4
+DeffStereoSe_Lb3:
 	clr	d0
-DeffVal1Se_Lb4:
+DeffStereoSe_Lb4:
 	ret	0, 0x20
 
-DeffVal1SwSe:
+DeffTypeSe:
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	DeffVal1SwSe_L44
+	beq	DeffTypeSe_L44
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DeffVal1SwSe_L55
+	beq	DeffTypeSe_L55
 	cmp	EV_INDEXSW_UP, d1
-	beq	DeffVal1SwSe_L55
+	beq	DeffTypeSe_L55
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	DeffVal1SwSe_L89
+	beq	DeffTypeSe_L89
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DeffVal1SwSe_L89
+	beq	DeffTypeSe_L89
 	cmp	MT_GetString, d1
-	bne	DeffVal1SwSe_L36
-	jmp	DeffVal1SwSe_Lbe
-DeffVal1SwSe_L36:
+	bne	DeffTypeSe_L36
+	jmp	DeffTypeSe_Lbe
+DeffTypeSe_L36:
 	cmp	0x1800000, d1
-	bne	DeffVal1SwSe_L41
+	bne	DeffTypeSe_L41
 	ret	0, 0x14
-DeffVal1SwSe_L41:
-	jmp	DeffVal1SwSe_L1f7
-DeffVal1SwSe_L44:
+DeffTypeSe_L41:
+	jmp	DeffTypeSe_L1f7
+DeffTypeSe_L44:
 	call	func_4C0FCC38_entry, 0, 0x18
 	movbu	d0, (TsetGridSe_L55_Var)
 	clr	d0
 	ret	0, 0x14
-DeffVal1SwSe_L55:
+DeffTypeSe_L55:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0xc, d0
-	bge	DeffVal1SwSe_L73
+	bge	DeffTypeSe_L73
 	inc	d0
 	movbu	d0, (TsetGridSe_L55_Var)
 	movbu	(TsetGridSe_L55_Var), d0
 	call	func_4C0FCC94_entry, 0, 0x14
-DeffVal1SwSe_L73:
+DeffTypeSe_L73:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -392592,15 +392587,15 @@ DeffVal1SwSe_L73:
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
 	ret	0, 0x14
-DeffVal1SwSe_L89:
+DeffTypeSe_L89:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	ble	DeffVal1SwSe_La8
+	ble	DeffTypeSe_La8
 	add	-1, d0
 	movbu	d0, (TsetGridSe_L55_Var)
 	movbu	(TsetGridSe_L55_Var), d0
 	call	func_4C0FCC94_entry, 0, 0x14
-DeffVal1SwSe_La8:
+DeffTypeSe_La8:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -392608,16 +392603,16 @@ DeffVal1SwSe_La8:
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
 	ret	0, 0x14
-DeffVal1SwSe_Lbe:
+DeffTypeSe_Lbe:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	DeffVal1SwSe_Lcb
-	jmp	DeffVal1SwSe_L1f2
-DeffVal1SwSe_Lcb:
+	bge	DeffTypeSe_Lcb
+	jmp	DeffTypeSe_L1f2
+DeffTypeSe_Lcb:
 	cmp	0xc, d0
-	ble	DeffVal1SwSe_Ld2
-	jmp	DeffVal1SwSe_L1f2
-DeffVal1SwSe_Ld2:
+	ble	DeffTypeSe_Ld2
+	jmp	DeffTypeSe_L1f2
+DeffTypeSe_Ld2:
 	asl2	d0
 	mov	DeffVal1SwSe_Ld2_Table, a0
 	mov	(d0, a0), a0
@@ -392628,134 +392623,134 @@ loc_4C0DF28D:
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DeffVal1SwSe_L1f2
+	jmp	DeffTypeSe_L1f2
 loc_4C0DF2A3:
 	mov	(0x24, sp), a0
 	mov	Str_CELESTE_2, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DeffVal1SwSe_L1f2
+	jmp	DeffTypeSe_L1f2
 loc_4C0DF2B9:
 	mov	(0x24, sp), a0
 	mov	Str_CHORUS_1, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DeffVal1SwSe_L1f2
+	jmp	DeffTypeSe_L1f2
 loc_4C0DF2CF:
 	mov	(0x24, sp), a1
 	mov	Str_CHORUS_2_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DeffVal1SwSe_L1f2
+	jmp	DeffTypeSe_L1f2
 loc_4C0DF2E5:
 	mov	(0x24, sp), a0
 	mov	Str_ENSEMBLE_1, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DeffVal1SwSe_L1f2
+	jmp	DeffTypeSe_L1f2
 loc_4C0DF2FB:
 	mov	(0x24, sp), a0
 	mov	Str_ENSEMBLE_2, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DeffVal1SwSe_L1f2
+	jmp	DeffTypeSe_L1f2
 loc_4C0DF311:
 	mov	(0x24, sp), a1
 	mov	Str_TREMOLO_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal1SwSe_L1f2
+	bra	DeffTypeSe_L1f2
 loc_4C0DF326:
 	mov	(0x24, sp), a1
 	mov	Str_ORGAN_TREMOLO, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal1SwSe_L1f2
+	bra	DeffTypeSe_L1f2
 loc_4C0DF33B:
 	mov	(0x24, sp), a1
 	mov	Str_DELAY_16, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal1SwSe_L1f2
+	bra	DeffTypeSe_L1f2
 loc_4C0DF350:
 	mov	(0x24, sp), a0
 	mov	Str_REPEAT_1, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal1SwSe_L1f2
+	bra	DeffTypeSe_L1f2
 loc_4C0DF365:
 	mov	(0x24, sp), a0
 	mov	Str_REPEAT_2_2, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal1SwSe_L1f2
+	bra	DeffTypeSe_L1f2
 loc_4C0DF37A:
 	mov	(0x24, sp), a1
 	mov	Str_SOLO_EFFECT_1, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal1SwSe_L1f2
+	bra	DeffTypeSe_L1f2
 loc_4C0DF38F:
 	mov	(0x24, sp), a0
 	mov	Str_SOLO_EFFECT_2, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DeffVal1SwSe_L1f2:
+DeffTypeSe_L1f2:
 	clr	d0
-	bra	DeffVal1SwSe_L1f8
-# DeffVal1SwSe + 0x1f5: no traced path reaches what follows (--decode-gaps)
-	bra	DeffVal1SwSe_L1f8
-DeffVal1SwSe_L1f7:
+	bra	DeffTypeSe_L1f8
+# DeffTypeSe + 0x1f5: no traced path reaches what follows (--decode-gaps)
+	bra	DeffTypeSe_L1f8
+DeffTypeSe_L1f7:
 	clr	d0
-DeffVal1SwSe_L1f8:
+DeffTypeSe_L1f8:
 	ret	0, 0x14
 
-GraphLvlKfSe:
+MemoryBankSe:
 	add	-0x14, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	GraphLvlKfSe_L35
+	beq	MemoryBankSe_L35
 	cmp	EV_INDEXSW_UP, d1
-	beq	GraphLvlKfSe_L35
+	beq	MemoryBankSe_L35
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	GraphLvlKfSe_L49
+	beq	MemoryBankSe_L49
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	GraphLvlKfSe_L49
+	beq	MemoryBankSe_L49
 	cmp	MT_GetString, d1
-	beq	GraphLvlKfSe_L5e
+	beq	MemoryBankSe_L5e
 	cmp	0x1800000, d1
-	beq	GraphLvlKfSe_L96
-	bra	GraphLvlKfSe_L95
-GraphLvlKfSe_L35:
+	beq	MemoryBankSe_L96
+	bra	MemoryBankSe_L95
+MemoryBankSe_L35:
 	movhu	(MdSoundEdit_L132_Var), d0
 	cmp	0x27, d0
-	bge	GraphLvlKfSe_L46
+	bge	MemoryBankSe_L46
 	inc	d0
 	movhu	d0, (MdSoundEdit_L132_Var)
-GraphLvlKfSe_L46:
+MemoryBankSe_L46:
 	clr	d0
-	bra	GraphLvlKfSe_L96
-GraphLvlKfSe_L49:
+	bra	MemoryBankSe_L96
+MemoryBankSe_L49:
 	movhu	(MdSoundEdit_L132_Var), d0
 	cmp	0, d0
-	ble	GraphLvlKfSe_L5b
+	ble	MemoryBankSe_L5b
 	add	-1, d0
 	movhu	d0, (MdSoundEdit_L132_Var)
-GraphLvlKfSe_L5b:
+MemoryBankSe_L5b:
 	clr	d0
-	bra	GraphLvlKfSe_L96
-GraphLvlKfSe_L5e:
+	bra	MemoryBankSe_L96
+MemoryBankSe_L5e:
 	mov	(0x24, sp), a1
 	mov	Str_2d_14, d0
 	mov	a1, (8, sp)
@@ -392770,32 +392765,32 @@ GraphLvlKfSe_L5e:
 	mov	MemName_id, d0
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	GraphLvlKfSe_L96
-# GraphLvlKfSe + 0x93: no traced path reaches what follows (--decode-gaps)
-	bra	GraphLvlKfSe_L96
-GraphLvlKfSe_L95:
+	bra	MemoryBankSe_L96
+# MemoryBankSe + 0x93: no traced path reaches what follows (--decode-gaps)
+	bra	MemoryBankSe_L96
+MemoryBankSe_L95:
 	clr	d0
-GraphLvlKfSe_L96:
+MemoryBankSe_L96:
 	ret	0, 0x14
 
-DrumAmpGridSe:
+DrumRevAdjSe:
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DrumAmpGridSe_L39
+	beq	DrumRevAdjSe_L39
 	cmp	EV_INDEXSW_UP, d1
-	beq	DrumAmpGridSe_L39
+	beq	DrumRevAdjSe_L39
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	DrumAmpGridSe_L64
+	beq	DrumRevAdjSe_L64
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DrumAmpGridSe_L64
+	beq	DrumRevAdjSe_L64
 	cmp	MT_GetString, d1
-	beq	DrumAmpGridSe_L90
+	beq	DrumRevAdjSe_L90
 	cmp	0x1800000, d1
-	bne	DrumAmpGridSe_L36
+	bne	DrumRevAdjSe_L36
 	ret	0, 0x20
-DrumAmpGridSe_L36:
-	jmp	DrumAmpGridSe_Lce
-DrumAmpGridSe_L39:
+DrumRevAdjSe_L36:
+	jmp	DrumRevAdjSe_Lce
+DrumRevAdjSe_L39:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -392812,8 +392807,8 @@ DrumAmpGridSe_L39:
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	DrumAmpGridSe_Lcf
-DrumAmpGridSe_L64:
+	bra	DrumRevAdjSe_Lcf
+DrumRevAdjSe_L64:
 	mov	-0x80, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -392831,8 +392826,8 @@ DrumAmpGridSe_L64:
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	DrumAmpGridSe_Lcf
-DrumAmpGridSe_L90:
+	bra	DrumRevAdjSe_Lcf
+DrumRevAdjSe_L90:
 	movbu	(Str_empty_255), d0
 	mov	sp, a0
 	mov	d0, d1
@@ -392854,32 +392849,32 @@ DrumAmpGridSe_L90:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	DrumAmpGridSe_Lcf
-# DrumAmpGridSe + 0xcc: no traced path reaches what follows (--decode-gaps)
-	bra	DrumAmpGridSe_Lcf
-DrumAmpGridSe_Lce:
+	bra	DrumRevAdjSe_Lcf
+# DrumRevAdjSe + 0xcc: no traced path reaches what follows (--decode-gaps)
+	bra	DrumRevAdjSe_Lcf
+DrumRevAdjSe_Lce:
 	clr	d0
-DrumAmpGridSe_Lcf:
+DrumRevAdjSe_Lcf:
 	ret	0, 0x20
 
-DrumLfoGridSe:
+DrumPrioritySe:
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DrumLfoGridSe_L39
+	beq	DrumPrioritySe_L39
 	cmp	EV_INDEXSW_UP, d1
-	beq	DrumLfoGridSe_L39
+	beq	DrumPrioritySe_L39
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	DrumLfoGridSe_L63
+	beq	DrumPrioritySe_L63
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DrumLfoGridSe_L63
+	beq	DrumPrioritySe_L63
 	cmp	MT_GetString, d1
-	beq	DrumLfoGridSe_L8b
+	beq	DrumPrioritySe_L8b
 	cmp	0x1800000, d1
-	bne	DrumLfoGridSe_L36
+	bne	DrumPrioritySe_L36
 	ret	0, 0x20
-DrumLfoGridSe_L36:
-	jmp	DrumLfoGridSe_Lc8
-DrumLfoGridSe_L39:
+DrumPrioritySe_L36:
+	jmp	DrumPrioritySe_Lc8
+DrumPrioritySe_L39:
 	mov	3, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -392896,8 +392891,8 @@ DrumLfoGridSe_L39:
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	DrumLfoGridSe_Lc9
-DrumLfoGridSe_L63:
+	bra	DrumPrioritySe_Lc9
+DrumPrioritySe_L63:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -392913,8 +392908,8 @@ DrumLfoGridSe_L63:
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	DrumLfoGridSe_Lc9
-DrumLfoGridSe_L8b:
+	bra	DrumPrioritySe_Lc9
+DrumPrioritySe_L8b:
 	movbu	(Str_empty_255), d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -392935,32 +392930,32 @@ DrumLfoGridSe_L8b:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	DrumLfoGridSe_Lc9
-# DrumLfoGridSe + 0xc6: no traced path reaches what follows (--decode-gaps)
-	bra	DrumLfoGridSe_Lc9
-DrumLfoGridSe_Lc8:
+	bra	DrumPrioritySe_Lc9
+# DrumPrioritySe + 0xc6: no traced path reaches what follows (--decode-gaps)
+	bra	DrumPrioritySe_Lc9
+DrumPrioritySe_Lc8:
 	clr	d0
-DrumLfoGridSe_Lc9:
+DrumPrioritySe_Lc9:
 	ret	0, 0x20
 
-DrumFilterGridSe:
+DrumGDumpOnSe:
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DrumFilterGridSe_L39
+	beq	DrumGDumpOnSe_L39
 	cmp	EV_INDEXSW_UP, d1
-	beq	DrumFilterGridSe_L39
+	beq	DrumGDumpOnSe_L39
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	DrumFilterGridSe_L64
+	beq	DrumGDumpOnSe_L64
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DrumFilterGridSe_L64
+	beq	DrumGDumpOnSe_L64
 	cmp	MT_GetString, d1
-	beq	DrumFilterGridSe_L8d
+	beq	DrumGDumpOnSe_L8d
 	cmp	0x1800000, d1
-	bne	DrumFilterGridSe_L36
+	bne	DrumGDumpOnSe_L36
 	ret	0, 0x20
-DrumFilterGridSe_L36:
-	jmp	DrumFilterGridSe_Le7
-DrumFilterGridSe_L39:
+DrumGDumpOnSe_L36:
+	jmp	DrumGDumpOnSe_Le7
+DrumGDumpOnSe_L39:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -392978,7 +392973,7 @@ DrumFilterGridSe_L39:
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
 	clr	d0
 	ret	0, 0x20
-DrumFilterGridSe_L64:
+DrumGDumpOnSe_L64:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -392995,8 +392990,8 @@ DrumFilterGridSe_L64:
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	DrumFilterGridSe_Le8
-DrumFilterGridSe_L8d:
+	bra	DrumGDumpOnSe_Le8
+DrumGDumpOnSe_L8d:
 	movbu	(Str_empty_255), d0
 	mov	sp, a0
 	mov	d0, d1
@@ -393011,51 +393006,51 @@ DrumFilterGridSe_L8d:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x1c, sp), d0
 	cmp	1, d0
-	beq	DrumFilterGridSe_Lba
+	beq	DrumGDumpOnSe_Lba
 	cmp	0, d0
-	beq	DrumFilterGridSe_Lcf
-	bra	DrumFilterGridSe_Le2
-DrumFilterGridSe_Lba:
+	beq	DrumGDumpOnSe_Lcf
+	bra	DrumGDumpOnSe_Le2
+DrumGDumpOnSe_Lba:
 	mov	(0x30, sp), a0
 	mov	Str_ON_39, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DrumFilterGridSe_Le2
-DrumFilterGridSe_Lcf:
+	bra	DrumGDumpOnSe_Le2
+DrumGDumpOnSe_Lcf:
 	mov	(0x30, sp), a1
 	mov	Str_OFF_49, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DrumFilterGridSe_Le2:
+DrumGDumpOnSe_Le2:
 	clr	d0
-	bra	DrumFilterGridSe_Le8
-# DrumFilterGridSe + 0xe5: no traced path reaches what follows (--decode-gaps)
-	bra	DrumFilterGridSe_Le8
-DrumFilterGridSe_Le7:
+	bra	DrumGDumpOnSe_Le8
+# DrumGDumpOnSe + 0xe5: no traced path reaches what follows (--decode-gaps)
+	bra	DrumGDumpOnSe_Le8
+DrumGDumpOnSe_Le7:
 	clr	d0
-DrumFilterGridSe_Le8:
+DrumGDumpOnSe_Le8:
 	ret	0, 0x20
 
-DrumKeyOffSe:
+DrumGDumpGroupSe:
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DrumKeyOffSe_L39
+	beq	DrumGDumpGroupSe_L39
 	cmp	EV_INDEXSW_UP, d1
-	beq	DrumKeyOffSe_L39
+	beq	DrumGDumpGroupSe_L39
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	DrumKeyOffSe_L62
+	beq	DrumGDumpGroupSe_L62
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DrumKeyOffSe_L62
+	beq	DrumGDumpGroupSe_L62
 	cmp	MT_GetString, d1
-	beq	DrumKeyOffSe_L89
+	beq	DrumGDumpGroupSe_L89
 	cmp	0x1800000, d1
-	bne	DrumKeyOffSe_L36
+	bne	DrumGDumpGroupSe_L36
 	ret	0, 0x20
-DrumKeyOffSe_L36:
-	jmp	DrumKeyOffSe_Lc4
-DrumKeyOffSe_L39:
+DrumGDumpGroupSe_L36:
+	jmp	DrumGDumpGroupSe_Lc4
+DrumGDumpGroupSe_L39:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -393072,8 +393067,8 @@ DrumKeyOffSe_L39:
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	DrumKeyOffSe_Lc5
-DrumKeyOffSe_L62:
+	bra	DrumGDumpGroupSe_Lc5
+DrumGDumpGroupSe_L62:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -393089,8 +393084,8 @@ DrumKeyOffSe_L62:
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
 	clr	d0
-	bra	DrumKeyOffSe_Lc5
-DrumKeyOffSe_L89:
+	bra	DrumGDumpGroupSe_Lc5
+DrumGDumpGroupSe_L89:
 	movbu	(Str_empty_255), d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -393110,32 +393105,32 @@ DrumKeyOffSe_L89:
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	DrumKeyOffSe_Lc5
-# DrumKeyOffSe + 0xc2: no traced path reaches what follows (--decode-gaps)
-	bra	DrumKeyOffSe_Lc5
-DrumKeyOffSe_Lc4:
+	bra	DrumGDumpGroupSe_Lc5
+# DrumGDumpGroupSe + 0xc2: no traced path reaches what follows (--decode-gaps)
+	bra	DrumGDumpGroupSe_Lc5
+DrumGDumpGroupSe_Lc4:
 	clr	d0
-DrumKeyOffSe_Lc5:
+DrumGDumpGroupSe_Lc5:
 	ret	0, 0x20
 
-CopyOptSe:
+DrumKeyOffSe:
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	CopyOptSe_L39
+	beq	DrumKeyOffSe_L39
 	cmp	EV_INDEXSW_UP, d1
-	beq	CopyOptSe_L39
+	beq	DrumKeyOffSe_L39
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	CopyOptSe_L63
+	beq	DrumKeyOffSe_L63
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	CopyOptSe_L63
+	beq	DrumKeyOffSe_L63
 	cmp	MT_GetString, d1
-	beq	CopyOptSe_L8b
+	beq	DrumKeyOffSe_L8b
 	cmp	0x1800000, d1
-	bne	CopyOptSe_L36
+	bne	DrumKeyOffSe_L36
 	ret	0, 0x20
-CopyOptSe_L36:
-	jmp	CopyOptSe_L10b
-CopyOptSe_L39:
+DrumKeyOffSe_L36:
+	jmp	DrumKeyOffSe_L10b
+DrumKeyOffSe_L39:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -393153,7 +393148,7 @@ CopyOptSe_L39:
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
 	clr	d0
 	ret	0, 0x20
-CopyOptSe_L63:
+DrumKeyOffSe_L63:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -393170,7 +393165,7 @@ CopyOptSe_L63:
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
 	clr	d0
 	ret	0, 0x20
-CopyOptSe_L8b:
+DrumKeyOffSe_L8b:
 	movbu	(Str_empty_255), d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -393184,24 +393179,24 @@ CopyOptSe_L8b:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x1c, sp), d0
 	cmp	0, d0
-	beq	CopyOptSe_Lb6
+	beq	DrumKeyOffSe_Lb6
 	cmp	1, d0
-	beq	CopyOptSe_Lcb
-	bra	CopyOptSe_Lde
-CopyOptSe_Lb6:
+	beq	DrumKeyOffSe_Lcb
+	bra	DrumKeyOffSe_Lde
+DrumKeyOffSe_Lb6:
 	mov	(0x30, sp), a1
 	mov	Str_DISABLE, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	CopyOptSe_Lde
-CopyOptSe_Lcb:
+	bra	DrumKeyOffSe_Lde
+DrumKeyOffSe_Lcb:
 	mov	(0x30, sp), a0
 	mov	Str_ENABLE, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-CopyOptSe_Lde:
+DrumKeyOffSe_Lde:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -393213,338 +393208,340 @@ CopyOptSe_Lde:
 	mov	MT_ParaDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	CopyOptSe_L10c
-# CopyOptSe + 0x109: no traced path reaches what follows (--decode-gaps)
-	bra	CopyOptSe_L10c
-CopyOptSe_L10b:
+	bra	DrumKeyOffSe_L10c
+# DrumKeyOffSe + 0x109: no traced path reaches what follows (--decode-gaps)
+	bra	DrumKeyOffSe_L10c
+DrumKeyOffSe_L10b:
 	clr	d0
-CopyOptSe_L10c:
+DrumKeyOffSe_L10c:
 	ret	0, 0x20
 
-LfoViewSe:
+CopyFromSe:
 	movm	[d2], (sp)
 	add	-0x10, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	LfoViewSe_L3e
+	beq	CopyFromSe_L3e
 	cmp	EV_INDEXSW_UP, d1
-	beq	LfoViewSe_L3e
+	beq	CopyFromSe_L3e
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	LfoViewSe_L77
+	beq	CopyFromSe_L77
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	LfoViewSe_L77
+	beq	CopyFromSe_L77
 	cmp	MT_GetString, d1
-	bne	LfoViewSe_L30
-	jmp	LfoViewSe_Lb3
-LfoViewSe_L30:
+	bne	CopyFromSe_L30
+	jmp	CopyFromSe_Lb3
+CopyFromSe_L30:
 	cmp	0x1800000, d1
-	bne	LfoViewSe_L3b
+	bne	CopyFromSe_L3b
 	ret	[d2], 0x14
-LfoViewSe_L3b:
-	jmp	LfoViewSe_L122
-LfoViewSe_L3e:
+CopyFromSe_L3b:
+	jmp	CopyFromSe_L122
+CopyFromSe_L3e:
 	movbu	(Str_empty_255+1), d0
 	cmp	3, d0
-	bge	LfoViewSe_L5c
+	bge	CopyFromSe_L5c
 	movbu	(MdSoundEdit_L132_Var_4), d2
 	mov	d0, d1
 	inc	d1
 	cmp	d2, d1
-	beq	LfoViewSe_L5c
+	beq	CopyFromSe_L5c
 	inc	d0
 	movbu	d0, (Str_empty_255+1)
-	bra	LfoViewSe_L73
-LfoViewSe_L5c:
+	bra	CopyFromSe_L73
+CopyFromSe_L5c:
 	movbu	(MdSoundEdit_L132_Var_4), d2
 	mov	d0, d1
 	inc	d1
 	cmp	d2, d1
-	bne	LfoViewSe_L73
+	bne	CopyFromSe_L73
 	cmp	3, d2
-	bge	LfoViewSe_L73
+	bge	CopyFromSe_L73
 	add	2, d0
 	movbu	d0, (Str_empty_255+1)
-LfoViewSe_L73:
+CopyFromSe_L73:
 	clr	d0
 	ret	[d2], 0x14
-LfoViewSe_L77:
+CopyFromSe_L77:
 	movbu	(Str_empty_255+1), d0
 	cmp	0, d0
-	ble	LfoViewSe_L97
+	ble	CopyFromSe_L97
 	movbu	(MdSoundEdit_L132_Var_4), d2
 	mov	-1, d1
 	add	d0, d1
 	cmp	d2, d1
-	beq	LfoViewSe_L97
+	beq	CopyFromSe_L97
 	add	-1, d0
 	movbu	d0, (Str_empty_255+1)
-	bra	LfoViewSe_Laf
-LfoViewSe_L97:
+	bra	CopyFromSe_Laf
+CopyFromSe_L97:
 	movbu	(MdSoundEdit_L132_Var_4), d2
 	mov	-1, d1
 	add	d0, d1
 	cmp	d2, d1
-	bne	LfoViewSe_Laf
+	bne	CopyFromSe_Laf
 	cmp	0, d2
-	ble	LfoViewSe_Laf
+	ble	CopyFromSe_Laf
 	add	-2, d0
 	movbu	d0, (Str_empty_255+1)
-LfoViewSe_Laf:
+CopyFromSe_Laf:
 	clr	d0
 	ret	[d2], 0x14
-LfoViewSe_Lb3:
+CopyFromSe_Lb3:
 	movbu	(Str_empty_255+1), d0
 	cmp	0, d0
-	beq	LfoViewSe_Lcb
+	beq	CopyFromSe_Lcb
 	cmp	1, d0
-	beq	LfoViewSe_Le0
+	beq	CopyFromSe_Le0
 	cmp	2, d0
-	beq	LfoViewSe_Lf5
+	beq	CopyFromSe_Lf5
 	cmp	3, d0
-	beq	LfoViewSe_L10a
-	bra	LfoViewSe_L11d
-LfoViewSe_Lcb:
+	beq	CopyFromSe_L10a
+	bra	CopyFromSe_L11d
+CopyFromSe_Lcb:
 	mov	(0x24, sp), a1
 	mov	Str_1st_TONE_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	LfoViewSe_L11d
-LfoViewSe_Le0:
+	bra	CopyFromSe_L11d
+CopyFromSe_Le0:
 	mov	(0x24, sp), a1
 	mov	Str_2nd_TONE_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	LfoViewSe_L11d
-LfoViewSe_Lf5:
+	bra	CopyFromSe_L11d
+CopyFromSe_Lf5:
 	mov	(0x24, sp), a0
 	mov	Str_3rd_TONE_2, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	LfoViewSe_L11d
-LfoViewSe_L10a:
+	bra	CopyFromSe_L11d
+CopyFromSe_L10a:
 	mov	(0x24, sp), a1
 	mov	Str_4th_TONE_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-LfoViewSe_L11d:
+CopyFromSe_L11d:
 	clr	d0
-	bra	LfoViewSe_L123
-# LfoViewSe + 0x120: no traced path reaches what follows (--decode-gaps)
-	bra	LfoViewSe_L123
-LfoViewSe_L122:
+	bra	CopyFromSe_L123
+# CopyFromSe + 0x120: no traced path reaches what follows (--decode-gaps)
+	bra	CopyFromSe_L123
+CopyFromSe_L122:
 	clr	d0
-LfoViewSe_L123:
+CopyFromSe_L123:
 	ret	[d2], 0x14
 
-func_4C0DF9CA:
+CopyToSe:
 	movm	[d2], (sp)
 	add	-0x10, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	func_4C0DF9CA_L3e
+	beq	CopyToSe_L3e
 	cmp	EV_INDEXSW_UP, d1
-	beq	func_4C0DF9CA_L3e
+	beq	CopyToSe_L3e
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	func_4C0DF9CA_L77
+	beq	CopyToSe_L77
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	func_4C0DF9CA_L77
+	beq	CopyToSe_L77
 	cmp	MT_GetString, d1
-	bne	func_4C0DF9CA_L30
-	jmp	func_4C0DF9CA_Lb3
-func_4C0DF9CA_L30:
+	bne	CopyToSe_L30
+	jmp	CopyToSe_Lb3
+CopyToSe_L30:
 	cmp	0x1800000, d1
-	bne	func_4C0DF9CA_L3b
+	bne	CopyToSe_L3b
 	ret	[d2], 0x14
-func_4C0DF9CA_L3b:
-	jmp	func_4C0DF9CA_L122
-func_4C0DF9CA_L3e:
+CopyToSe_L3b:
+	jmp	CopyToSe_L122
+CopyToSe_L3e:
 	movbu	(MdSoundEdit_L132_Var_4), d0
 	cmp	3, d0
-	bge	func_4C0DF9CA_L5c
+	bge	CopyToSe_L5c
 	movbu	(Str_empty_255+1), d2
 	mov	d0, d1
 	inc	d1
 	cmp	d2, d1
-	beq	func_4C0DF9CA_L5c
+	beq	CopyToSe_L5c
 	inc	d0
 	movbu	d0, (MdSoundEdit_L132_Var_4)
-	bra	func_4C0DF9CA_L73
-func_4C0DF9CA_L5c:
+	bra	CopyToSe_L73
+CopyToSe_L5c:
 	movbu	(Str_empty_255+1), d2
 	mov	d0, d1
 	inc	d1
 	cmp	d2, d1
-	bne	func_4C0DF9CA_L73
+	bne	CopyToSe_L73
 	cmp	3, d2
-	bge	func_4C0DF9CA_L73
+	bge	CopyToSe_L73
 	add	2, d0
 	movbu	d0, (MdSoundEdit_L132_Var_4)
-func_4C0DF9CA_L73:
+CopyToSe_L73:
 	clr	d0
 	ret	[d2], 0x14
-func_4C0DF9CA_L77:
+CopyToSe_L77:
 	movbu	(MdSoundEdit_L132_Var_4), d0
 	cmp	0, d0
-	ble	func_4C0DF9CA_L97
+	ble	CopyToSe_L97
 	movbu	(Str_empty_255+1), d2
 	mov	-1, d1
 	add	d0, d1
 	cmp	d2, d1
-	beq	func_4C0DF9CA_L97
+	beq	CopyToSe_L97
 	add	-1, d0
 	movbu	d0, (MdSoundEdit_L132_Var_4)
-	bra	func_4C0DF9CA_Laf
-func_4C0DF9CA_L97:
+	bra	CopyToSe_Laf
+CopyToSe_L97:
 	movbu	(Str_empty_255+1), d2
 	mov	-1, d1
 	add	d0, d1
 	cmp	d2, d1
-	bne	func_4C0DF9CA_Laf
+	bne	CopyToSe_Laf
 	cmp	0, d2
-	ble	func_4C0DF9CA_Laf
+	ble	CopyToSe_Laf
 	add	-2, d0
 	movbu	d0, (MdSoundEdit_L132_Var_4)
-func_4C0DF9CA_Laf:
+CopyToSe_Laf:
 	clr	d0
 	ret	[d2], 0x14
-func_4C0DF9CA_Lb3:
+CopyToSe_Lb3:
 	movbu	(MdSoundEdit_L132_Var_4), d0
 	cmp	0, d0
-	beq	func_4C0DF9CA_Lcb
+	beq	CopyToSe_Lcb
 	cmp	1, d0
-	beq	func_4C0DF9CA_Le0
+	beq	CopyToSe_Le0
 	cmp	2, d0
-	beq	func_4C0DF9CA_Lf5
+	beq	CopyToSe_Lf5
 	cmp	3, d0
-	beq	func_4C0DF9CA_L10a
-	bra	func_4C0DF9CA_L11d
-func_4C0DF9CA_Lcb:
+	beq	CopyToSe_L10a
+	bra	CopyToSe_L11d
+CopyToSe_Lcb:
 	mov	(0x24, sp), a1
 	mov	Str_1st_TONE, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	func_4C0DF9CA_L11d
-func_4C0DF9CA_Le0:
+	bra	CopyToSe_L11d
+CopyToSe_Le0:
 	mov	(0x24, sp), a1
 	mov	Str_2nd_TONE, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	func_4C0DF9CA_L11d
-func_4C0DF9CA_Lf5:
+	bra	CopyToSe_L11d
+CopyToSe_Lf5:
 	mov	(0x24, sp), a0
 	mov	Str_3rd_TONE, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	func_4C0DF9CA_L11d
-func_4C0DF9CA_L10a:
+	bra	CopyToSe_L11d
+CopyToSe_L10a:
 	mov	(0x24, sp), a1
 	mov	Str_4th_TONE, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-func_4C0DF9CA_L11d:
+CopyToSe_L11d:
 	clr	d0
-	bra	func_4C0DF9CA_L123
-# func_4C0DF9CA + 0x120: no traced path reaches what follows (--decode-gaps)
-	bra	func_4C0DF9CA_L123
-func_4C0DF9CA_L122:
+	bra	CopyToSe_L123
+# CopyToSe + 0x120: no traced path reaches what follows (--decode-gaps)
+	bra	CopyToSe_L123
+CopyToSe_L122:
 	clr	d0
-func_4C0DF9CA_L123:
+CopyToSe_L123:
 	ret	[d2], 0x14
-loc_4C0DFAF0:
+
+CopyOptSe:
 	add	-0x10, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	func_4C0DF9CA_L15f
+	beq	CopyOptSe_L39
 	cmp	EV_INDEXSW_UP, d1
-	beq	func_4C0DF9CA_L15f
+	beq	CopyOptSe_L39
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	func_4C0DF9CA_L174
+	beq	CopyOptSe_L4e
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	func_4C0DF9CA_L174
+	beq	CopyOptSe_L4e
 	cmp	MT_GetString, d1
-	beq	func_4C0DF9CA_L18a
+	beq	CopyOptSe_L64
 	cmp	0x1800000, d1
-	bne	func_4C0DF9CA_L15c
+	bne	CopyOptSe_L36
 	ret	0, 0x10
-func_4C0DF9CA_L15c:
-	jmp	func_4C0DF9CA_L212
-func_4C0DF9CA_L15f:
+CopyOptSe_L36:
+	jmp	CopyOptSe_Lec
+CopyOptSe_L39:
 	movbu	(func_4C0DF9CA_L15f_Var), d0
 	cmp	4, d0
-	bge	func_4C0DF9CA_L170
+	bge	CopyOptSe_L4a
 	inc	d0
 	movbu	d0, (func_4C0DF9CA_L15f_Var)
-func_4C0DF9CA_L170:
+CopyOptSe_L4a:
 	clr	d0
 	ret	0, 0x10
-func_4C0DF9CA_L174:
+CopyOptSe_L4e:
 	movbu	(func_4C0DF9CA_L15f_Var), d0
 	cmp	0, d0
-	ble	func_4C0DF9CA_L186
+	ble	CopyOptSe_L60
 	add	-1, d0
 	movbu	d0, (func_4C0DF9CA_L15f_Var)
-func_4C0DF9CA_L186:
+CopyOptSe_L60:
 	clr	d0
 	ret	0, 0x10
-func_4C0DF9CA_L18a:
+CopyOptSe_L64:
 	movbu	(func_4C0DF9CA_L15f_Var), d0
 	cmp	0, d0
-	beq	func_4C0DF9CA_L1a6
+	beq	CopyOptSe_L80
 	cmp	1, d0
-	beq	func_4C0DF9CA_L1bb
+	beq	CopyOptSe_L95
 	cmp	2, d0
-	beq	func_4C0DF9CA_L1d0
+	beq	CopyOptSe_Laa
 	cmp	3, d0
-	beq	func_4C0DF9CA_L1e5
+	beq	CopyOptSe_Lbf
 	cmp	4, d0
-	beq	func_4C0DF9CA_L1fa
-	bra	func_4C0DF9CA_L20d
-func_4C0DF9CA_L1a6:
+	beq	CopyOptSe_Ld4
+	bra	CopyOptSe_Le7
+CopyOptSe_L80:
 	mov	(0x20, sp), a0
 	mov	Str_TOTAL_7, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	func_4C0DF9CA_L20d
-func_4C0DF9CA_L1bb:
+	bra	CopyOptSe_Le7
+CopyOptSe_L95:
 	mov	(0x20, sp), a1
 	mov	Str_AMPLITUDE_7, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	func_4C0DF9CA_L20d
-func_4C0DF9CA_L1d0:
+	bra	CopyOptSe_Le7
+CopyOptSe_Laa:
 	mov	(0x20, sp), a1
 	mov	Str_PITCH_7, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	func_4C0DF9CA_L20d
-func_4C0DF9CA_L1e5:
+	bra	CopyOptSe_Le7
+CopyOptSe_Lbf:
 	mov	(0x20, sp), a1
 	mov	Str_FILTER_9, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	func_4C0DF9CA_L20d
-func_4C0DF9CA_L1fa:
+	bra	CopyOptSe_Le7
+CopyOptSe_Ld4:
 	mov	(0x20, sp), a1
 	mov	Str_CLEAR_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-func_4C0DF9CA_L20d:
+CopyOptSe_Le7:
 	clr	d0
-	bra	func_4C0DF9CA_L213
-	bra	func_4C0DF9CA_L213
-func_4C0DF9CA_L212:
+	bra	CopyOptSe_Led
+# CopyOptSe + 0xea: no traced path reaches what follows (--decode-gaps)
+	bra	CopyOptSe_Led
+CopyOptSe_Lec:
 	clr	d0
-func_4C0DF9CA_L213:
+CopyOptSe_Led:
 	ret	0, 0x10
 
 Ac1stEditBoxSeProc:
@@ -394641,39 +394638,39 @@ AcChEditBoxSeProc_L152:
 AcChEditBoxSeProc_L15f:
 	ret	[d2,d3,a2,a3], 0x24
 
-DeffVal2Se:
+DeffVal0Se:
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DeffVal2Se_L4d
+	beq	DeffVal0Se_L4d
 	cmp	EV_INDEXSW_UP, d1
-	beq	DeffVal2Se_L4d
+	beq	DeffVal0Se_L4d
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DeffVal2Se_L1e
-	jmp	DeffVal2Se_Lb3
-DeffVal2Se_L1e:
+	bne	DeffVal0Se_L1e
+	jmp	DeffVal0Se_Lb3
+DeffVal0Se_L1e:
 	cmp	EV_INDEXSW_DOWN, d1
-	bne	DeffVal2Se_L29
-	jmp	DeffVal2Se_Lb3
-DeffVal2Se_L29:
+	bne	DeffVal0Se_L29
+	jmp	DeffVal0Se_Lb3
+DeffVal0Se_L29:
 	cmp	MT_GetString, d1
-	bne	DeffVal2Se_L34
-	jmp	DeffVal2Se_Le5
-DeffVal2Se_L34:
+	bne	DeffVal0Se_L34
+	jmp	DeffVal0Se_Le5
+DeffVal0Se_L34:
 	cmp	MT_GetCaption, d1
-	bne	DeffVal2Se_L3f
-	jmp	DeffVal2Se_L19f
-DeffVal2Se_L3f:
+	bne	DeffVal0Se_L3f
+	jmp	DeffVal0Se_L19f
+DeffVal0Se_L3f:
 	cmp	0x1800000, d1
-	bne	DeffVal2Se_L4a
+	bne	DeffVal0Se_L4a
 	ret	0, 0x20
-DeffVal2Se_L4a:
-	jmp	DeffVal2Se_L325
-DeffVal2Se_L4d:
+DeffVal0Se_L4a:
+	jmp	DeffVal0Se_L325
+DeffVal0Se_L4d:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	DeffVal2Se_Laf
+	blt	DeffVal0Se_Laf
 	cmp	0xc, d0
-	bgt	DeffVal2Se_Laf
+	bgt	DeffVal0Se_Laf
 	asl2	d0
 	mov	DeffVal2Se_L4d_Table, a0
 	mov	(d0, a0), a0
@@ -394688,7 +394685,7 @@ loc_4C0E07E0:
 	mov	0x45, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal2Se_Laf
+	bra	DeffVal0Se_Laf
 loc_4C0E07F9:
 	mov	0x1e, d0
 	mov	d0, (0x10, sp)
@@ -394699,7 +394696,7 @@ loc_4C0E07F9:
 	mov	0x45, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal2Se_Laf
+	bra	DeffVal0Se_Laf
 loc_4C0E0812:
 	mov	1, d0
 	mov	d0, (0x10, sp)
@@ -394710,15 +394707,15 @@ loc_4C0E0812:
 	mov	0x45, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DeffVal2Se_Laf:
+DeffVal0Se_Laf:
 	clr	d0
 	ret	0, 0x20
-DeffVal2Se_Lb3:
+DeffVal0Se_Lb3:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	DeffVal2Se_Le1
+	blt	DeffVal0Se_Le1
 	cmp	0xc, d0
-	bgt	DeffVal2Se_Le1
+	bgt	DeffVal0Se_Le1
 	asl2	d0
 	mov	DeffVal2Se_Lb3_Table, a0
 	mov	(d0, a0), a0
@@ -394732,19 +394729,19 @@ loc_4C0E0846:
 	mov	0x45, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DeffVal2Se_Le1:
+DeffVal0Se_Le1:
 	clr	d0
 	ret	0, 0x20
-DeffVal2Se_Le5:
+DeffVal0Se_Le5:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	DeffVal2Se_Lf2
-	jmp	DeffVal2Se_L188
-DeffVal2Se_Lf2:
+	bge	DeffVal0Se_Lf2
+	jmp	DeffVal0Se_L188
+DeffVal0Se_Lf2:
 	cmp	0xc, d0
-	ble	DeffVal2Se_Lf9
-	jmp	DeffVal2Se_L188
-DeffVal2Se_Lf9:
+	ble	DeffVal0Se_Lf9
+	jmp	DeffVal0Se_L188
+DeffVal0Se_Lf9:
 	asl2	d0
 	mov	DeffVal2Se_Lf9_Table, a0
 	mov	(d0, a0), a0
@@ -394762,7 +394759,7 @@ loc_4C0E087E:
 	movbu	(0x1c, sp), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal2Se_L19b
+	bra	DeffVal0Se_L19b
 loc_4C0E08A7:
 	mov	sp, a0
 	add	0x1c, a0
@@ -394771,50 +394768,50 @@ loc_4C0E08A7:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x1c, sp), d0
 	cmp	0, d0
-	beq	DeffVal2Se_L149
+	beq	DeffVal0Se_L149
 	cmp	1, d0
-	beq	DeffVal2Se_L15e
-	bra	DeffVal2Se_L173
-DeffVal2Se_L149:
+	beq	DeffVal0Se_L15e
+	bra	DeffVal0Se_L173
+DeffVal0Se_L149:
 	mov	(0x30, sp), a1
 	mov	Str_OFF_48, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal2Se_L19b
-DeffVal2Se_L15e:
+	bra	DeffVal0Se_L19b
+DeffVal0Se_L15e:
 	mov	(0x30, sp), a0
 	mov	Str_ON_38, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal2Se_L19b
-DeffVal2Se_L173:
+	bra	DeffVal0Se_L19b
+DeffVal0Se_L173:
 	mov	(0x30, sp), a0
 	mov	Str_empty_769, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal2Se_L19b
-DeffVal2Se_L188:
+	bra	DeffVal0Se_L19b
+DeffVal0Se_L188:
 	mov	(0x30, sp), a1
 	mov	Str_empty_768, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DeffVal2Se_L19b:
+DeffVal0Se_L19b:
 	clr	d0
 	ret	0, 0x20
-DeffVal2Se_L19f:
+DeffVal0Se_L19f:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	DeffVal2Se_L1ac
-	jmp	DeffVal2Se_L2f7
-DeffVal2Se_L1ac:
+	bge	DeffVal0Se_L1ac
+	jmp	DeffVal0Se_L2f7
+DeffVal0Se_L1ac:
 	cmp	0xc, d0
-	ble	DeffVal2Se_L1b3
-	jmp	DeffVal2Se_L2f7
-DeffVal2Se_L1b3:
+	ble	DeffVal0Se_L1b3
+	jmp	DeffVal0Se_L2f7
+DeffVal0Se_L1b3:
 	asl2	d0
 	mov	DeffVal2Se_L1b3_Table, a0
 	mov	(d0, a0), a0
@@ -394830,7 +394827,7 @@ loc_4C0E0938:
 	mov	swVal0_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal2Se_L320
+	jmp	DeffVal0Se_L320
 loc_4C0E0965:
 	mov	(0x30, sp), a1
 	mov	Text_DEPTH+16, d0
@@ -394842,7 +394839,7 @@ loc_4C0E0965:
 	mov	swVal0_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal2Se_L320
+	jmp	DeffVal0Se_L320
 loc_4C0E0992:
 	mov	(0x30, sp), a0
 	mov	Text_DEPTH+32, d0
@@ -394854,7 +394851,7 @@ loc_4C0E0992:
 	mov	swVal0_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal2Se_L320
+	jmp	DeffVal0Se_L320
 loc_4C0E09BF:
 	mov	(0x30, sp), a0
 	mov	Text_DEPTH+48, d0
@@ -394866,7 +394863,7 @@ loc_4C0E09BF:
 	mov	swVal0_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal2Se_L320
+	jmp	DeffVal0Se_L320
 loc_4C0E09EC:
 	mov	(0x30, sp), a1
 	mov	Text_DEPTH+64, d0
@@ -394878,7 +394875,7 @@ loc_4C0E09EC:
 	mov	swVal0_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal2Se_L320
+	jmp	DeffVal0Se_L320
 loc_4C0E0A19:
 	mov	(0x30, sp), a0
 	mov	Text_DEPTH+80, d0
@@ -394890,7 +394887,7 @@ loc_4C0E0A19:
 	mov	swVal0_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	DeffVal2Se_L320
+	bra	DeffVal0Se_L320
 loc_4C0E0A45:
 	mov	(0x30, sp), a0
 	mov	Text_DEPTH+96, d0
@@ -394902,8 +394899,8 @@ loc_4C0E0A45:
 	mov	swVal0_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	DeffVal2Se_L320
-DeffVal2Se_L2f7:
+	bra	DeffVal0Se_L320
+DeffVal0Se_L2f7:
 	mov	(0x30, sp), a0
 	mov	Text_DEPTH+112, d0
 	mov	a0, (8, sp)
@@ -394914,49 +394911,49 @@ DeffVal2Se_L2f7:
 	mov	swVal0_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-DeffVal2Se_L320:
+DeffVal0Se_L320:
 	clr	d0
-	bra	DeffVal2Se_L326
-# DeffVal2Se + 0x323: no traced path reaches what follows (--decode-gaps)
-	bra	DeffVal2Se_L326
-DeffVal2Se_L325:
+	bra	DeffVal0Se_L326
+# DeffVal0Se + 0x323: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal0Se_L326
+DeffVal0Se_L325:
 	clr	d0
-DeffVal2Se_L326:
+DeffVal0Se_L326:
 	ret	0, 0x20
 
-DeffVal3Se:
+DeffVal1Se:
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DeffVal3Se_L4d
+	beq	DeffVal1Se_L4d
 	cmp	EV_INDEXSW_UP, d1
-	beq	DeffVal3Se_L4d
+	beq	DeffVal1Se_L4d
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DeffVal3Se_L1e
-	jmp	DeffVal3Se_Lcd
-DeffVal3Se_L1e:
+	bne	DeffVal1Se_L1e
+	jmp	DeffVal1Se_Lcd
+DeffVal1Se_L1e:
 	cmp	EV_INDEXSW_DOWN, d1
-	bne	DeffVal3Se_L29
-	jmp	DeffVal3Se_Lcd
-DeffVal3Se_L29:
+	bne	DeffVal1Se_L29
+	jmp	DeffVal1Se_Lcd
+DeffVal1Se_L29:
 	cmp	MT_GetString, d1
-	bne	DeffVal3Se_L34
-	jmp	DeffVal3Se_L130
-DeffVal3Se_L34:
+	bne	DeffVal1Se_L34
+	jmp	DeffVal1Se_L130
+DeffVal1Se_L34:
 	cmp	MT_GetCaption, d1
-	bne	DeffVal3Se_L3f
-	jmp	DeffVal3Se_L1e2
-DeffVal3Se_L3f:
+	bne	DeffVal1Se_L3f
+	jmp	DeffVal1Se_L1e2
+DeffVal1Se_L3f:
 	cmp	0x1800000, d1
-	bne	DeffVal3Se_L4a
+	bne	DeffVal1Se_L4a
 	ret	0, 0x20
-DeffVal3Se_L4a:
-	jmp	DeffVal3Se_L368
-DeffVal3Se_L4d:
+DeffVal1Se_L4a:
+	jmp	DeffVal1Se_L368
+DeffVal1Se_L4d:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	DeffVal3Se_Lc9
+	blt	DeffVal1Se_Lc9
 	cmp	0xc, d0
-	bgt	DeffVal3Se_Lc9
+	bgt	DeffVal1Se_Lc9
 	asl2	d0
 	mov	DeffVal3Se_L4d_Table, a0
 	mov	(d0, a0), a0
@@ -394971,7 +394968,7 @@ loc_4C0E0B09:
 	mov	0x46, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal3Se_Lc9
+	bra	DeffVal1Se_Lc9
 loc_4C0E0B22:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -394982,7 +394979,7 @@ loc_4C0E0B22:
 	mov	0x46, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal3Se_Lc9
+	bra	DeffVal1Se_Lc9
 loc_4C0E0B3C:
 	mov	0x1e, d0
 	mov	d0, (0x10, sp)
@@ -394993,7 +394990,7 @@ loc_4C0E0B3C:
 	mov	0x46, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal3Se_Lc9
+	bra	DeffVal1Se_Lc9
 loc_4C0E0B55:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -395004,15 +395001,15 @@ loc_4C0E0B55:
 	mov	0x46, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DeffVal3Se_Lc9:
+DeffVal1Se_Lc9:
 	clr	d0
 	ret	0, 0x20
-DeffVal3Se_Lcd:
+DeffVal1Se_Lcd:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	DeffVal3Se_L12c
+	blt	DeffVal1Se_L12c
 	cmp	0xc, d0
-	bgt	DeffVal3Se_L12c
+	bgt	DeffVal1Se_L12c
 	asl2	d0
 	mov	DeffVal3Se_Lcd_Table, a0
 	mov	(d0, a0), a0
@@ -395026,7 +395023,7 @@ loc_4C0E0B89:
 	mov	0x46, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal3Se_L12c
+	bra	DeffVal1Se_L12c
 loc_4C0E0BA0:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -395037,7 +395034,7 @@ loc_4C0E0BA0:
 	mov	0x46, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal3Se_L12c
+	bra	DeffVal1Se_L12c
 loc_4C0E0BBA:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -395047,19 +395044,19 @@ loc_4C0E0BBA:
 	mov	0x46, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DeffVal3Se_L12c:
+DeffVal1Se_L12c:
 	clr	d0
 	ret	0, 0x20
-DeffVal3Se_L130:
+DeffVal1Se_L130:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	DeffVal3Se_L13d
-	jmp	DeffVal3Se_L1cb
-DeffVal3Se_L13d:
+	bge	DeffVal1Se_L13d
+	jmp	DeffVal1Se_L1cb
+DeffVal1Se_L13d:
 	cmp	0xc, d0
-	ble	DeffVal3Se_L144
-	jmp	DeffVal3Se_L1cb
-DeffVal3Se_L144:
+	ble	DeffVal1Se_L144
+	jmp	DeffVal1Se_L1cb
+DeffVal1Se_L144:
 	asl2	d0
 	mov	DeffVal3Se_L144_Table, a0
 	mov	(d0, a0), a0
@@ -395077,7 +395074,7 @@ loc_4C0E0BF2:
 	movbu	(0x1c, sp), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal3Se_L1de
+	bra	DeffVal1Se_L1de
 loc_4C0E0C1B:
 	mov	sp, a0
 	add	0x1c, a0
@@ -395092,7 +395089,7 @@ loc_4C0E0C1B:
 	extb	d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal3Se_L1de
+	bra	DeffVal1Se_L1de
 loc_4C0E0C45:
 	mov	sp, a0
 	add	0x1c, a0
@@ -395106,26 +395103,26 @@ loc_4C0E0C45:
 	movbu	(0x1c, sp), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal3Se_L1de
-DeffVal3Se_L1cb:
+	bra	DeffVal1Se_L1de
+DeffVal1Se_L1cb:
 	mov	(0x30, sp), a0
 	mov	Str_empty_766, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DeffVal3Se_L1de:
+DeffVal1Se_L1de:
 	clr	d0
 	ret	0, 0x20
-DeffVal3Se_L1e2:
+DeffVal1Se_L1e2:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	DeffVal3Se_L1ef
-	jmp	DeffVal3Se_L33a
-DeffVal3Se_L1ef:
+	bge	DeffVal1Se_L1ef
+	jmp	DeffVal1Se_L33a
+DeffVal1Se_L1ef:
 	cmp	0xc, d0
-	ble	DeffVal3Se_L1f6
-	jmp	DeffVal3Se_L33a
-DeffVal3Se_L1f6:
+	ble	DeffVal1Se_L1f6
+	jmp	DeffVal1Se_L33a
+DeffVal1Se_L1f6:
 	asl2	d0
 	mov	DeffVal3Se_L1f6_Table, a0
 	mov	(d0, a0), a0
@@ -395141,7 +395138,7 @@ loc_4C0E0CA4:
 	mov	swVal1_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal3Se_L363
+	jmp	DeffVal1Se_L363
 loc_4C0E0CD1:
 	mov	(0x30, sp), a0
 	mov	Text_SPEED+16, d0
@@ -395153,7 +395150,7 @@ loc_4C0E0CD1:
 	mov	swVal1_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal3Se_L363
+	jmp	DeffVal1Se_L363
 loc_4C0E0CFE:
 	mov	(0x30, sp), a1
 	mov	Text_SPEED+32, d0
@@ -395165,7 +395162,7 @@ loc_4C0E0CFE:
 	mov	swVal1_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal3Se_L363
+	jmp	DeffVal1Se_L363
 loc_4C0E0D2B:
 	mov	(0x30, sp), a1
 	mov	Text_SPEED+48, d0
@@ -395177,7 +395174,7 @@ loc_4C0E0D2B:
 	mov	swVal1_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal3Se_L363
+	jmp	DeffVal1Se_L363
 loc_4C0E0D58:
 	mov	(0x30, sp), a0
 	mov	Text_SPEED+64, d0
@@ -395189,7 +395186,7 @@ loc_4C0E0D58:
 	mov	swVal1_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal3Se_L363
+	jmp	DeffVal1Se_L363
 loc_4C0E0D85:
 	mov	(0x30, sp), a0
 	mov	Text_SPEED+80, d0
@@ -395201,7 +395198,7 @@ loc_4C0E0D85:
 	mov	swVal1_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	DeffVal3Se_L363
+	bra	DeffVal1Se_L363
 loc_4C0E0DB1:
 	mov	(0x30, sp), a1
 	mov	Text_SPEED+96, d0
@@ -395213,8 +395210,8 @@ loc_4C0E0DB1:
 	mov	swVal1_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	DeffVal3Se_L363
-DeffVal3Se_L33a:
+	bra	DeffVal1Se_L363
+DeffVal1Se_L33a:
 	mov	(0x30, sp), a0
 	mov	Text_SPEED+112, d0
 	mov	a0, (8, sp)
@@ -395225,53 +395222,53 @@ DeffVal3Se_L33a:
 	mov	swVal1_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-DeffVal3Se_L363:
+DeffVal1Se_L363:
 	clr	d0
-	bra	DeffVal3Se_L369
-# DeffVal3Se + 0x366: no traced path reaches what follows (--decode-gaps)
-	bra	DeffVal3Se_L369
-DeffVal3Se_L368:
+	bra	DeffVal1Se_L369
+# DeffVal1Se + 0x366: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal1Se_L369
+DeffVal1Se_L368:
 	clr	d0
-DeffVal3Se_L369:
+DeffVal1Se_L369:
 	ret	0, 0x20
 
-DeffVal4Se:
+DeffVal2Se:
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DeffVal4Se_L4d
+	beq	DeffVal2Se_L4d
 	cmp	EV_INDEXSW_UP, d1
-	beq	DeffVal4Se_L4d
+	beq	DeffVal2Se_L4d
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DeffVal4Se_L1e
-	jmp	DeffVal4Se_L120
-DeffVal4Se_L1e:
+	bne	DeffVal2Se_L1e
+	jmp	DeffVal2Se_L120
+DeffVal2Se_L1e:
 	cmp	EV_INDEXSW_DOWN, d1
-	bne	DeffVal4Se_L29
-	jmp	DeffVal4Se_L120
-DeffVal4Se_L29:
+	bne	DeffVal2Se_L29
+	jmp	DeffVal2Se_L120
+DeffVal2Se_L29:
 	cmp	MT_GetString, d1
-	bne	DeffVal4Se_L34
-	jmp	DeffVal4Se_L19d
-DeffVal4Se_L34:
+	bne	DeffVal2Se_L34
+	jmp	DeffVal2Se_L19d
+DeffVal2Se_L34:
 	cmp	MT_GetCaption, d1
-	bne	DeffVal4Se_L3f
-	jmp	DeffVal4Se_L336
-DeffVal4Se_L3f:
+	bne	DeffVal2Se_L3f
+	jmp	DeffVal2Se_L336
+DeffVal2Se_L3f:
 	cmp	0x1800000, d1
-	bne	DeffVal4Se_L4a
+	bne	DeffVal2Se_L4a
 	ret	0, 0x20
-DeffVal4Se_L4a:
-	jmp	DeffVal4Se_L4bc
-DeffVal4Se_L4d:
+DeffVal2Se_L4a:
+	jmp	DeffVal2Se_L4bc
+DeffVal2Se_L4d:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	DeffVal4Se_L5a
-	jmp	DeffVal4Se_L11c
-DeffVal4Se_L5a:
+	bge	DeffVal2Se_L5a
+	jmp	DeffVal2Se_L11c
+DeffVal2Se_L5a:
 	cmp	0xc, d0
-	ble	DeffVal4Se_L61
-	jmp	DeffVal4Se_L11c
-DeffVal4Se_L61:
+	ble	DeffVal2Se_L61
+	jmp	DeffVal2Se_L11c
+DeffVal2Se_L61:
 	asl2	d0
 	mov	DeffVal4Se_L61_Table, a0
 	mov	(d0, a0), a0
@@ -395286,7 +395283,7 @@ loc_4C0E0E7B:
 	mov	0x47, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DeffVal4Se_L11c
+	jmp	DeffVal2Se_L11c
 loc_4C0E0E96:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -395297,7 +395294,7 @@ loc_4C0E0E96:
 	mov	0x47, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal4Se_L11c
+	bra	DeffVal2Se_L11c
 loc_4C0E0EAF:
 	mov	3, d0
 	mov	d0, (0x10, sp)
@@ -395308,7 +395305,7 @@ loc_4C0E0EAF:
 	mov	0x47, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal4Se_L11c
+	bra	DeffVal2Se_L11c
 loc_4C0E0EC8:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -395319,7 +395316,7 @@ loc_4C0E0EC8:
 	mov	0x47, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal4Se_L11c
+	bra	DeffVal2Se_L11c
 loc_4C0E0EE1:
 	mov	0x18, d0
 	mov	d0, (0x10, sp)
@@ -395330,7 +395327,7 @@ loc_4C0E0EE1:
 	mov	0x47, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal4Se_L11c
+	bra	DeffVal2Se_L11c
 loc_4C0E0EFB:
 	mov	0x1e, d0
 	mov	d0, (0x10, sp)
@@ -395341,7 +395338,7 @@ loc_4C0E0EFB:
 	mov	0x47, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal4Se_L11c
+	bra	DeffVal2Se_L11c
 loc_4C0E0F14:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -395352,15 +395349,15 @@ loc_4C0E0F14:
 	mov	0x47, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DeffVal4Se_L11c:
+DeffVal2Se_L11c:
 	clr	d0
 	ret	0, 0x20
-DeffVal4Se_L120:
+DeffVal2Se_L120:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	DeffVal4Se_L199
+	blt	DeffVal2Se_L199
 	cmp	0xc, d0
-	bgt	DeffVal4Se_L199
+	bgt	DeffVal2Se_L199
 	asl2	d0
 	mov	DeffVal4Se_L120_Table, a0
 	mov	(d0, a0), a0
@@ -395375,7 +395372,7 @@ loc_4C0E0F48:
 	mov	0x47, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal4Se_L199
+	bra	DeffVal2Se_L199
 loc_4C0E0F62:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -395385,7 +395382,7 @@ loc_4C0E0F62:
 	mov	0x47, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal4Se_L199
+	bra	DeffVal2Se_L199
 loc_4C0E0F79:
 	mov	-0x18, d0
 	mov	d0, (0x10, sp)
@@ -395396,7 +395393,7 @@ loc_4C0E0F79:
 	mov	0x47, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal4Se_L199
+	bra	DeffVal2Se_L199
 loc_4C0E0F93:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -395406,19 +395403,19 @@ loc_4C0E0F93:
 	mov	0x47, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DeffVal4Se_L199:
+DeffVal2Se_L199:
 	clr	d0
 	ret	0, 0x20
-DeffVal4Se_L19d:
+DeffVal2Se_L19d:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	DeffVal4Se_L1aa
-	jmp	DeffVal4Se_L31f
-DeffVal4Se_L1aa:
+	bge	DeffVal2Se_L1aa
+	jmp	DeffVal2Se_L31f
+DeffVal2Se_L1aa:
 	cmp	0xc, d0
-	ble	DeffVal4Se_L1b1
-	jmp	DeffVal4Se_L31f
-DeffVal4Se_L1b1:
+	ble	DeffVal2Se_L1b1
+	jmp	DeffVal2Se_L31f
+DeffVal2Se_L1b1:
 	asl2	d0
 	mov	DeffVal4Se_L1b1_Table, a0
 	mov	(d0, a0), a0
@@ -395437,7 +395434,7 @@ loc_4C0E0FCB:
 	extb	d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DeffVal4Se_L332
+	jmp	DeffVal2Se_L332
 loc_4C0E0FF6:
 	mov	sp, a0
 	add	0x1c, a0
@@ -395451,7 +395448,7 @@ loc_4C0E0FF6:
 	movbu	(0x1c, sp), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DeffVal4Se_L332
+	jmp	DeffVal2Se_L332
 loc_4C0E1020:
 	mov	sp, a0
 	add	0x1c, a0
@@ -395460,49 +395457,49 @@ loc_4C0E1020:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x1c, sp), d0
 	cmp	0, d0
-	beq	DeffVal4Se_L235
+	beq	DeffVal2Se_L235
 	cmp	1, d0
-	beq	DeffVal4Se_L24b
+	beq	DeffVal2Se_L24b
 	cmp	2, d0
-	beq	DeffVal4Se_L261
+	beq	DeffVal2Se_L261
 	cmp	3, d0
-	beq	DeffVal4Se_L277
-	bra	DeffVal4Se_L28d
-DeffVal4Se_L235:
+	beq	DeffVal2Se_L277
+	bra	DeffVal2Se_L28d
+DeffVal2Se_L235:
 	mov	(0x30, sp), a0
 	mov	Str_SIN_5, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DeffVal4Se_L332
-DeffVal4Se_L24b:
+	jmp	DeffVal2Se_L332
+DeffVal2Se_L24b:
 	mov	(0x30, sp), a1
 	mov	Str_TRI_5, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DeffVal4Se_L332
-DeffVal4Se_L261:
+	jmp	DeffVal2Se_L332
+DeffVal2Se_L261:
 	mov	(0x30, sp), a1
 	mov	Str_SQR, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DeffVal4Se_L332
-DeffVal4Se_L277:
+	jmp	DeffVal2Se_L332
+DeffVal2Se_L277:
 	mov	(0x30, sp), a1
 	mov	Str_SAW_5, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DeffVal4Se_L332
-DeffVal4Se_L28d:
+	jmp	DeffVal2Se_L332
+DeffVal2Se_L28d:
 	mov	(0x30, sp), a1
 	mov	Str_empty_764, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DeffVal4Se_L332
+	jmp	DeffVal2Se_L332
 loc_4C0E10B2:
 	mov	sp, a0
 	add	0x1c, a0
@@ -395516,7 +395513,7 @@ loc_4C0E10B2:
 	movbu	(0x1c, sp), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal4Se_L332
+	bra	DeffVal2Se_L332
 loc_4C0E10DB:
 	mov	sp, a0
 	add	0x1c, a0
@@ -395531,7 +395528,7 @@ loc_4C0E10DB:
 	extb	d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal4Se_L332
+	bra	DeffVal2Se_L332
 loc_4C0E1105:
 	mov	sp, a0
 	add	0x1c, a0
@@ -395545,26 +395542,26 @@ loc_4C0E1105:
 	movbu	(0x1c, sp), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal4Se_L332
-DeffVal4Se_L31f:
+	bra	DeffVal2Se_L332
+DeffVal2Se_L31f:
 	mov	(0x30, sp), a1
 	mov	Str_empty_763, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DeffVal4Se_L332:
+DeffVal2Se_L332:
 	clr	d0
 	ret	0, 0x20
-DeffVal4Se_L336:
+DeffVal2Se_L336:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	DeffVal4Se_L343
-	jmp	DeffVal4Se_L48e
-DeffVal4Se_L343:
+	bge	DeffVal2Se_L343
+	jmp	DeffVal2Se_L48e
+DeffVal2Se_L343:
 	cmp	0xc, d0
-	ble	DeffVal4Se_L34a
-	jmp	DeffVal4Se_L48e
-DeffVal4Se_L34a:
+	ble	DeffVal2Se_L34a
+	jmp	DeffVal2Se_L48e
+DeffVal2Se_L34a:
 	asl2	d0
 	mov	DeffVal4Se_L34a_Table, a0
 	mov	(d0, a0), a0
@@ -395580,7 +395577,7 @@ loc_4C0E1164:
 	mov	swVal2_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal4Se_L4b7
+	jmp	DeffVal2Se_L4b7
 loc_4C0E1191:
 	mov	(0x30, sp), a1
 	mov	Text_DETUNE+16, d0
@@ -395592,7 +395589,7 @@ loc_4C0E1191:
 	mov	swVal2_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal4Se_L4b7
+	jmp	DeffVal2Se_L4b7
 loc_4C0E11BE:
 	mov	(0x30, sp), a1
 	mov	Text_DETUNE+32, d0
@@ -395604,7 +395601,7 @@ loc_4C0E11BE:
 	mov	swVal2_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal4Se_L4b7
+	jmp	DeffVal2Se_L4b7
 loc_4C0E11EB:
 	mov	(0x30, sp), a1
 	mov	Text_DETUNE+48, d0
@@ -395616,7 +395613,7 @@ loc_4C0E11EB:
 	mov	swVal2_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal4Se_L4b7
+	jmp	DeffVal2Se_L4b7
 loc_4C0E1218:
 	mov	(0x30, sp), a1
 	mov	Text_DETUNE+64, d0
@@ -395628,7 +395625,7 @@ loc_4C0E1218:
 	mov	swVal2_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal4Se_L4b7
+	jmp	DeffVal2Se_L4b7
 loc_4C0E1245:
 	mov	(0x30, sp), a1
 	mov	Text_DETUNE+80, d0
@@ -395640,7 +395637,7 @@ loc_4C0E1245:
 	mov	swVal2_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	DeffVal4Se_L4b7
+	bra	DeffVal2Se_L4b7
 loc_4C0E1271:
 	mov	(0x30, sp), a1
 	mov	Text_DETUNE+96, d0
@@ -395652,8 +395649,8 @@ loc_4C0E1271:
 	mov	swVal2_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	DeffVal4Se_L4b7
-DeffVal4Se_L48e:
+	bra	DeffVal2Se_L4b7
+DeffVal2Se_L48e:
 	mov	(0x30, sp), a1
 	mov	Text_DETUNE+112, d0
 	mov	a1, (8, sp)
@@ -395664,53 +395661,53 @@ DeffVal4Se_L48e:
 	mov	swVal2_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-DeffVal4Se_L4b7:
+DeffVal2Se_L4b7:
 	clr	d0
-	bra	DeffVal4Se_L4bd
-# DeffVal4Se + 0x4ba: no traced path reaches what follows (--decode-gaps)
-	bra	DeffVal4Se_L4bd
-DeffVal4Se_L4bc:
+	bra	DeffVal2Se_L4bd
+# DeffVal2Se + 0x4ba: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal2Se_L4bd
+DeffVal2Se_L4bc:
 	clr	d0
-DeffVal4Se_L4bd:
+DeffVal2Se_L4bd:
 	ret	0, 0x20
 
-DeffVal5Se:
+DeffVal3Se:
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DeffVal5Se_L4d
+	beq	DeffVal3Se_L4d
 	cmp	EV_INDEXSW_UP, d1
-	beq	DeffVal5Se_L4d
+	beq	DeffVal3Se_L4d
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DeffVal5Se_L1e
-	jmp	DeffVal5Se_Leb
-DeffVal5Se_L1e:
+	bne	DeffVal3Se_L1e
+	jmp	DeffVal3Se_Leb
+DeffVal3Se_L1e:
 	cmp	EV_INDEXSW_DOWN, d1
-	bne	DeffVal5Se_L29
-	jmp	DeffVal5Se_Leb
-DeffVal5Se_L29:
+	bne	DeffVal3Se_L29
+	jmp	DeffVal3Se_Leb
+DeffVal3Se_L29:
 	cmp	MT_GetString, d1
-	bne	DeffVal5Se_L34
-	jmp	DeffVal5Se_L11d
-DeffVal5Se_L34:
+	bne	DeffVal3Se_L34
+	jmp	DeffVal3Se_L11d
+DeffVal3Se_L34:
 	cmp	MT_GetCaption, d1
-	bne	DeffVal5Se_L3f
-	jmp	DeffVal5Se_L18b
-DeffVal5Se_L3f:
+	bne	DeffVal3Se_L3f
+	jmp	DeffVal3Se_L18b
+DeffVal3Se_L3f:
 	cmp	0x1800000, d1
-	bne	DeffVal5Se_L4a
+	bne	DeffVal3Se_L4a
 	ret	0, 0x20
-DeffVal5Se_L4a:
-	jmp	DeffVal5Se_L310
-DeffVal5Se_L4d:
+DeffVal3Se_L4a:
+	jmp	DeffVal3Se_L310
+DeffVal3Se_L4d:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	DeffVal5Se_L5a
-	jmp	DeffVal5Se_Le7
-DeffVal5Se_L5a:
+	bge	DeffVal3Se_L5a
+	jmp	DeffVal3Se_Le7
+DeffVal3Se_L5a:
 	cmp	0xc, d0
-	ble	DeffVal5Se_L61
-	jmp	DeffVal5Se_Le7
-DeffVal5Se_L61:
+	ble	DeffVal3Se_L61
+	jmp	DeffVal3Se_Le7
+DeffVal3Se_L61:
 	asl2	d0
 	mov	DeffVal5Se_L61_Table, a0
 	mov	(d0, a0), a0
@@ -395725,7 +395722,7 @@ loc_4C0E133B:
 	mov	0x48, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal5Se_Le7
+	bra	DeffVal3Se_Le7
 loc_4C0E1354:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -395736,7 +395733,7 @@ loc_4C0E1354:
 	mov	0x48, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal5Se_Le7
+	bra	DeffVal3Se_Le7
 loc_4C0E136D:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -395747,7 +395744,7 @@ loc_4C0E136D:
 	mov	0x48, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal5Se_Le7
+	bra	DeffVal3Se_Le7
 loc_4C0E1386:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -395758,7 +395755,7 @@ loc_4C0E1386:
 	mov	0x48, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal5Se_Le7
+	bra	DeffVal3Se_Le7
 loc_4C0E139F:
 	mov	0x1e, d0
 	mov	d0, (0x10, sp)
@@ -395769,15 +395766,15 @@ loc_4C0E139F:
 	mov	0x48, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DeffVal5Se_Le7:
+DeffVal3Se_Le7:
 	clr	d0
 	ret	0, 0x20
-DeffVal5Se_Leb:
+DeffVal3Se_Leb:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	DeffVal5Se_L119
+	blt	DeffVal3Se_L119
 	cmp	0xc, d0
-	bgt	DeffVal5Se_L119
+	bgt	DeffVal3Se_L119
 	asl2	d0
 	mov	DeffVal5Se_Leb_Table, a0
 	mov	(d0, a0), a0
@@ -395791,15 +395788,15 @@ loc_4C0E13D3:
 	mov	0x48, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DeffVal5Se_L119:
+DeffVal3Se_L119:
 	clr	d0
 	ret	0, 0x20
-DeffVal5Se_L11d:
+DeffVal3Se_L11d:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	DeffVal5Se_L174
+	blt	DeffVal3Se_L174
 	cmp	0xc, d0
-	bgt	DeffVal5Se_L174
+	bgt	DeffVal3Se_L174
 	asl2	d0
 	mov	DeffVal5Se_L11d_Table, a0
 	mov	(d0, a0), a0
@@ -395817,33 +395814,33 @@ loc_4C0E1405:
 	movbu	(0x1c, sp), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal5Se_L187
+	bra	DeffVal3Se_L187
 loc_4C0E142E:
 	mov	(0x30, sp), a0
 	mov	Str_empty_761, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal5Se_L187
-DeffVal5Se_L174:
+	bra	DeffVal3Se_L187
+DeffVal3Se_L174:
 	mov	(0x30, sp), a1
 	mov	Str_empty_760, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DeffVal5Se_L187:
+DeffVal3Se_L187:
 	clr	d0
 	ret	0, 0x20
-DeffVal5Se_L18b:
+DeffVal3Se_L18b:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	DeffVal5Se_L198
-	jmp	DeffVal5Se_L2e2
-DeffVal5Se_L198:
+	bge	DeffVal3Se_L198
+	jmp	DeffVal3Se_L2e2
+DeffVal3Se_L198:
 	cmp	0xc, d0
-	ble	DeffVal5Se_L19f
-	jmp	DeffVal5Se_L2e2
-DeffVal5Se_L19f:
+	ble	DeffVal3Se_L19f
+	jmp	DeffVal3Se_L2e2
+DeffVal3Se_L19f:
 	asl2	d0
 	mov	DeffVal5Se_L19f_Table, a0
 	mov	(d0, a0), a0
@@ -395859,7 +395856,7 @@ loc_4C0E1479:
 	mov	swVal3_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal5Se_L30b
+	jmp	DeffVal3Se_L30b
 loc_4C0E14A6:
 	mov	(0x30, sp), a0
 	mov	Text_DELAY+16, d0
@@ -395871,7 +395868,7 @@ loc_4C0E14A6:
 	mov	swVal3_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal5Se_L30b
+	jmp	DeffVal3Se_L30b
 loc_4C0E14D3:
 	mov	(0x30, sp), a0
 	mov	Text_DELAY+32, d0
@@ -395883,7 +395880,7 @@ loc_4C0E14D3:
 	mov	swVal3_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal5Se_L30b
+	jmp	DeffVal3Se_L30b
 loc_4C0E1500:
 	mov	(0x30, sp), a0
 	mov	Text_DELAY+48, d0
@@ -395895,7 +395892,7 @@ loc_4C0E1500:
 	mov	swVal3_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal5Se_L30b
+	jmp	DeffVal3Se_L30b
 loc_4C0E152D:
 	mov	(0x30, sp), a1
 	mov	Text_DELAY+64, d0
@@ -395907,7 +395904,7 @@ loc_4C0E152D:
 	mov	swVal3_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal5Se_L30b
+	jmp	DeffVal3Se_L30b
 loc_4C0E155A:
 	mov	(0x30, sp), a0
 	mov	Text_DELAY+80, d0
@@ -395919,7 +395916,7 @@ loc_4C0E155A:
 	mov	swVal3_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	DeffVal5Se_L30b
+	bra	DeffVal3Se_L30b
 loc_4C0E1586:
 	mov	(0x30, sp), a0
 	mov	Text_DELAY+96, d0
@@ -395931,8 +395928,8 @@ loc_4C0E1586:
 	mov	swVal3_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	DeffVal5Se_L30b
-DeffVal5Se_L2e2:
+	bra	DeffVal3Se_L30b
+DeffVal3Se_L2e2:
 	mov	(0x30, sp), a0
 	mov	Text_DELAY+112, d0
 	mov	a0, (8, sp)
@@ -395943,47 +395940,47 @@ DeffVal5Se_L2e2:
 	mov	swVal3_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-DeffVal5Se_L30b:
+DeffVal3Se_L30b:
 	clr	d0
-	bra	DeffVal5Se_L311
-# DeffVal5Se + 0x30e: no traced path reaches what follows (--decode-gaps)
-	bra	DeffVal5Se_L311
-DeffVal5Se_L310:
+	bra	DeffVal3Se_L311
+# DeffVal3Se + 0x30e: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal3Se_L311
+DeffVal3Se_L310:
 	clr	d0
-DeffVal5Se_L311:
+DeffVal3Se_L311:
 	ret	0, 0x20
 
-DeffVal6Se:
+DeffVal4Se:
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DeffVal6Se_L4a
+	beq	DeffVal4Se_L4a
 	cmp	EV_INDEXSW_UP, d1
-	beq	DeffVal6Se_L4a
+	beq	DeffVal4Se_L4a
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	DeffVal6Se_L1e
-	jmp	DeffVal6Se_L98
-DeffVal6Se_L1e:
+	bne	DeffVal4Se_L1e
+	jmp	DeffVal4Se_L98
+DeffVal4Se_L1e:
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DeffVal6Se_L98
+	beq	DeffVal4Se_L98
 	cmp	MT_GetString, d1
-	bne	DeffVal6Se_L31
-	jmp	DeffVal6Se_Le4
-DeffVal6Se_L31:
+	bne	DeffVal4Se_L31
+	jmp	DeffVal4Se_Le4
+DeffVal4Se_L31:
 	cmp	MT_GetCaption, d1
-	bne	DeffVal6Se_L3c
-	jmp	DeffVal6Se_L17c
-DeffVal6Se_L3c:
+	bne	DeffVal4Se_L3c
+	jmp	DeffVal4Se_L17c
+DeffVal4Se_L3c:
 	cmp	0x1800000, d1
-	bne	DeffVal6Se_L47
+	bne	DeffVal4Se_L47
 	ret	0, 0x20
-DeffVal6Se_L47:
-	jmp	DeffVal6Se_L24d
-DeffVal6Se_L4a:
+DeffVal4Se_L47:
+	jmp	DeffVal4Se_L24d
+DeffVal4Se_L4a:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	DeffVal6Se_L94
+	blt	DeffVal4Se_L94
 	cmp	0xc, d0
-	bgt	DeffVal6Se_L94
+	bgt	DeffVal4Se_L94
 	asl2	d0
 	mov	DeffVal6Se_L4a_Table, a0
 	mov	(d0, a0), a0
@@ -395998,7 +395995,7 @@ loc_4C0E1646:
 	mov	0x49, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal6Se_L94
+	bra	DeffVal4Se_L94
 loc_4C0E165F:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -396009,15 +396006,15 @@ loc_4C0E165F:
 	mov	0x49, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DeffVal6Se_L94:
+DeffVal4Se_L94:
 	clr	d0
 	ret	0, 0x20
-DeffVal6Se_L98:
+DeffVal4Se_L98:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	DeffVal6Se_Le0
+	blt	DeffVal4Se_Le0
 	cmp	0xc, d0
-	bgt	DeffVal6Se_Le0
+	bgt	DeffVal4Se_Le0
 	asl2	d0
 	mov	DeffVal6Se_L98_Table, a0
 	mov	(d0, a0), a0
@@ -396031,7 +396028,7 @@ loc_4C0E1694:
 	mov	0x49, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DeffVal6Se_Le0
+	bra	DeffVal4Se_Le0
 loc_4C0E16AB:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -396042,15 +396039,15 @@ loc_4C0E16AB:
 	mov	0x49, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DeffVal6Se_Le0:
+DeffVal4Se_Le0:
 	clr	d0
 	ret	0, 0x20
-DeffVal6Se_Le4:
+DeffVal4Se_Le4:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	DeffVal6Se_L165
+	blt	DeffVal4Se_L165
 	cmp	0xc, d0
-	bgt	DeffVal6Se_L165
+	bgt	DeffVal4Se_L165
 	asl2	d0
 	mov	DeffVal6Se_Le4_Table, a0
 	mov	(d0, a0), a0
@@ -396068,7 +396065,7 @@ loc_4C0E16E0:
 	movbu	(0x1c, sp), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal6Se_L178
+	bra	DeffVal4Se_L178
 loc_4C0E1709:
 	mov	sp, a0
 	add	0x1c, a0
@@ -396083,33 +396080,33 @@ loc_4C0E1709:
 	extb	d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal6Se_L178
+	bra	DeffVal4Se_L178
 loc_4C0E1733:
 	mov	(0x30, sp), a0
 	mov	Str_empty_757, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal6Se_L178
-DeffVal6Se_L165:
+	bra	DeffVal4Se_L178
+DeffVal4Se_L165:
 	mov	(0x30, sp), a1
 	mov	Str_empty_756, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DeffVal6Se_L178:
+DeffVal4Se_L178:
 	clr	d0
 	ret	0, 0x20
-DeffVal6Se_L17c:
+DeffVal4Se_L17c:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	DeffVal6Se_L189
-	jmp	DeffVal6Se_L21f
-DeffVal6Se_L189:
+	bge	DeffVal4Se_L189
+	jmp	DeffVal4Se_L21f
+DeffVal4Se_L189:
 	cmp	0xc, d0
-	ble	DeffVal6Se_L190
-	jmp	DeffVal6Se_L21f
-DeffVal6Se_L190:
+	ble	DeffVal4Se_L190
+	jmp	DeffVal4Se_L21f
+DeffVal4Se_L190:
 	asl2	d0
 	mov	DeffVal6Se_L190_Table, a0
 	mov	(d0, a0), a0
@@ -396125,7 +396122,7 @@ loc_4C0E177E:
 	mov	swVal4_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal6Se_L248
+	jmp	DeffVal4Se_L248
 loc_4C0E17AB:
 	mov	(0x30, sp), a0
 	mov	Str_DETUNE_7, d0
@@ -396137,7 +396134,7 @@ loc_4C0E17AB:
 	mov	swVal4_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	DeffVal6Se_L248
+	bra	DeffVal4Se_L248
 loc_4C0E17D7:
 	mov	(0x30, sp), a0
 	mov	Str_empty_755, d0
@@ -396149,8 +396146,8 @@ loc_4C0E17D7:
 	mov	swVal4_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	DeffVal6Se_L248
-DeffVal6Se_L21f:
+	bra	DeffVal4Se_L248
+DeffVal4Se_L21f:
 	mov	(0x30, sp), a0
 	mov	Str_empty_754, d0
 	mov	a0, (8, sp)
@@ -396161,51 +396158,51 @@ DeffVal6Se_L21f:
 	mov	swVal4_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-DeffVal6Se_L248:
+DeffVal4Se_L248:
 	clr	d0
-	bra	DeffVal6Se_L24e
-# DeffVal6Se + 0x24b: no traced path reaches what follows (--decode-gaps)
-	bra	DeffVal6Se_L24e
-DeffVal6Se_L24d:
+	bra	DeffVal4Se_L24e
+# DeffVal4Se + 0x24b: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal4Se_L24e
+DeffVal4Se_L24d:
 	clr	d0
-DeffVal6Se_L24e:
+DeffVal4Se_L24e:
 	ret	0, 0x20
 
-DeffVal7Se:
+DeffVal5Se:
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DeffVal7Se_L47
+	beq	DeffVal5Se_L47
 	cmp	EV_INDEXSW_UP, d1
-	beq	DeffVal7Se_L47
+	beq	DeffVal5Se_L47
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	DeffVal7Se_L7d
+	beq	DeffVal5Se_L7d
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DeffVal7Se_L7d
+	beq	DeffVal5Se_L7d
 	cmp	MT_GetString, d1
-	bne	DeffVal7Se_L2e
-	jmp	DeffVal7Se_Lb1
-DeffVal7Se_L2e:
+	bne	DeffVal5Se_L2e
+	jmp	DeffVal5Se_Lb1
+DeffVal5Se_L2e:
 	cmp	MT_GetCaption, d1
-	bne	DeffVal7Se_L39
-	jmp	DeffVal7Se_L134
-DeffVal7Se_L39:
+	bne	DeffVal5Se_L39
+	jmp	DeffVal5Se_L134
+DeffVal5Se_L39:
 	cmp	0x1800000, d1
-	bne	DeffVal7Se_L44
+	bne	DeffVal5Se_L44
 	ret	0, 0x20
-DeffVal7Se_L44:
-	jmp	DeffVal7Se_L204
-DeffVal7Se_L47:
+DeffVal5Se_L44:
+	jmp	DeffVal5Se_L204
+DeffVal5Se_L47:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	DeffVal7Se_L79
+	blt	DeffVal5Se_L79
 	cmp	0xc, d0
-	bgt	DeffVal7Se_L79
+	bgt	DeffVal5Se_L79
 	asl2	d0
 	mov	DeffVal7Se_L47_Table, a0
 	mov	(d0, a0), a0
 	jmp	(a0)
 loc_4C0E1894:
-	bra	DeffVal7Se_L79
+	bra	DeffVal5Se_L79
 loc_4C0E1896:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -396216,21 +396213,21 @@ loc_4C0E1896:
 	mov	0x4a, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DeffVal7Se_L79:
+DeffVal5Se_L79:
 	clr	d0
 	ret	0, 0x20
-DeffVal7Se_L7d:
+DeffVal5Se_L7d:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	DeffVal7Se_Lad
+	blt	DeffVal5Se_Lad
 	cmp	0xc, d0
-	bgt	DeffVal7Se_Lad
+	bgt	DeffVal5Se_Lad
 	asl2	d0
 	mov	DeffVal7Se_L7d_Table, a0
 	mov	(d0, a0), a0
 	jmp	(a0)
 loc_4C0E18CA:
-	bra	DeffVal7Se_Lad
+	bra	DeffVal5Se_Lad
 loc_4C0E18CC:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -396240,15 +396237,15 @@ loc_4C0E18CC:
 	mov	0x4a, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DeffVal7Se_Lad:
+DeffVal5Se_Lad:
 	clr	d0
 	ret	0, 0x20
-DeffVal7Se_Lb1:
+DeffVal5Se_Lb1:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	DeffVal7Se_L11d
+	blt	DeffVal5Se_L11d
 	cmp	0xc, d0
-	bgt	DeffVal7Se_L11d
+	bgt	DeffVal5Se_L11d
 	asl2	d0
 	mov	DeffVal7Se_Lb1_Table, a0
 	mov	(d0, a0), a0
@@ -396259,7 +396256,7 @@ loc_4C0E18FE:
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal7Se_L130
+	bra	DeffVal5Se_L130
 loc_4C0E1913:
 	mov	sp, a0
 	add	0x1c, a0
@@ -396273,33 +396270,33 @@ loc_4C0E1913:
 	movbu	(0x1c, sp), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal7Se_L130
+	bra	DeffVal5Se_L130
 loc_4C0E193C:
 	mov	(0x30, sp), a1
 	mov	Str_empty_752, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal7Se_L130
-DeffVal7Se_L11d:
+	bra	DeffVal5Se_L130
+DeffVal5Se_L11d:
 	mov	(0x30, sp), a0
 	mov	Str_empty_751, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DeffVal7Se_L130:
+DeffVal5Se_L130:
 	clr	d0
 	ret	0, 0x20
-DeffVal7Se_L134:
+DeffVal5Se_L134:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	DeffVal7Se_L141
-	jmp	DeffVal7Se_L1d6
-DeffVal7Se_L141:
+	bge	DeffVal5Se_L141
+	jmp	DeffVal5Se_L1d6
+DeffVal5Se_L141:
 	cmp	0xc, d0
-	ble	DeffVal7Se_L148
-	jmp	DeffVal7Se_L1d6
-DeffVal7Se_L148:
+	ble	DeffVal5Se_L148
+	jmp	DeffVal5Se_L1d6
+DeffVal5Se_L148:
 	asl2	d0
 	mov	DeffVal7Se_L148_Table, a0
 	mov	(d0, a0), a0
@@ -396315,7 +396312,7 @@ loc_4C0E1987:
 	mov	swVal5_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DeffVal7Se_L1ff
+	jmp	DeffVal5Se_L1ff
 loc_4C0E19B3:
 	mov	(0x30, sp), a1
 	mov	Str_DELAY_13, d0
@@ -396327,7 +396324,7 @@ loc_4C0E19B3:
 	mov	swVal5_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	DeffVal7Se_L1ff
+	bra	DeffVal5Se_L1ff
 loc_4C0E19DF:
 	mov	(0x30, sp), a0
 	mov	Str_empty_749, d0
@@ -396339,8 +396336,8 @@ loc_4C0E19DF:
 	mov	swVal5_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	DeffVal7Se_L1ff
-DeffVal7Se_L1d6:
+	bra	DeffVal5Se_L1ff
+DeffVal5Se_L1d6:
 	mov	(0x30, sp), a1
 	mov	Str_empty_748, d0
 	mov	a1, (8, sp)
@@ -396351,47 +396348,47 @@ DeffVal7Se_L1d6:
 	mov	swVal5_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-DeffVal7Se_L1ff:
+DeffVal5Se_L1ff:
 	clr	d0
-	bra	DeffVal7Se_L205
-# DeffVal7Se + 0x202: no traced path reaches what follows (--decode-gaps)
-	bra	DeffVal7Se_L205
-DeffVal7Se_L204:
+	bra	DeffVal5Se_L205
+# DeffVal5Se + 0x202: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal5Se_L205
+DeffVal5Se_L204:
 	clr	d0
-DeffVal7Se_L205:
+DeffVal5Se_L205:
 	ret	0, 0x20
 
-ChoOnSe:
+DeffVal6Se:
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	ChoOnSe_L4a
+	beq	DeffVal6Se_L4a
 	cmp	EV_INDEXSW_UP, d1
-	beq	ChoOnSe_L4a
+	beq	DeffVal6Se_L4a
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	ChoOnSe_L1e
-	jmp	ChoOnSe_L99
-ChoOnSe_L1e:
+	bne	DeffVal6Se_L1e
+	jmp	DeffVal6Se_L99
+DeffVal6Se_L1e:
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	ChoOnSe_L99
+	beq	DeffVal6Se_L99
 	cmp	MT_GetString, d1
-	bne	ChoOnSe_L31
-	jmp	ChoOnSe_Le8
-ChoOnSe_L31:
+	bne	DeffVal6Se_L31
+	jmp	DeffVal6Se_Le8
+DeffVal6Se_L31:
 	cmp	MT_GetCaption, d1
-	bne	ChoOnSe_L3c
-	jmp	ChoOnSe_L184
-ChoOnSe_L3c:
+	bne	DeffVal6Se_L3c
+	jmp	DeffVal6Se_L184
+DeffVal6Se_L3c:
 	cmp	0x1800000, d1
-	bne	ChoOnSe_L47
+	bne	DeffVal6Se_L47
 	ret	0, 0x20
-ChoOnSe_L47:
-	jmp	ChoOnSe_L255
-ChoOnSe_L4a:
+DeffVal6Se_L47:
+	jmp	DeffVal6Se_L255
+DeffVal6Se_L4a:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	ChoOnSe_L95
+	blt	DeffVal6Se_L95
 	cmp	0xc, d0
-	bgt	ChoOnSe_L95
+	bgt	DeffVal6Se_L95
 	asl2	d0
 	mov	ChoOnSe_L4a_Table, a0
 	mov	(d0, a0), a0
@@ -396407,7 +396404,7 @@ loc_4C0E1A9F:
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 loc_4C0E1AB7:
-	bra	ChoOnSe_L95
+	bra	DeffVal6Se_L95
 loc_4C0E1AB9:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -396418,15 +396415,15 @@ loc_4C0E1AB9:
 	mov	0x4b, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-ChoOnSe_L95:
+DeffVal6Se_L95:
 	clr	d0
 	ret	0, 0x20
-ChoOnSe_L99:
+DeffVal6Se_L99:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	ChoOnSe_Le4
+	blt	DeffVal6Se_Le4
 	cmp	0xc, d0
-	bgt	ChoOnSe_Le4
+	bgt	DeffVal6Se_Le4
 	asl2	d0
 	mov	ChoOnSe_L99_Table, a0
 	mov	(d0, a0), a0
@@ -396442,7 +396439,7 @@ loc_4C0E1AEE:
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 loc_4C0E1B06:
-	bra	ChoOnSe_Le4
+	bra	DeffVal6Se_Le4
 loc_4C0E1B08:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -396453,17 +396450,17 @@ loc_4C0E1B08:
 	mov	0x4b, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-ChoOnSe_Le4:
+DeffVal6Se_Le4:
 	clr	d0
 	ret	0, 0x20
-ChoOnSe_Le8:
+DeffVal6Se_Le8:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	ChoOnSe_Lf5
-	jmp	ChoOnSe_L16d
-ChoOnSe_Lf5:
+	bge	DeffVal6Se_Lf5
+	jmp	DeffVal6Se_L16d
+DeffVal6Se_Lf5:
 	cmp	0xc, d0
-	bgt	ChoOnSe_L16d
+	bgt	DeffVal6Se_L16d
 	asl2	d0
 	mov	ChoOnSe_Lf5_Table, a0
 	mov	(d0, a0), a0
@@ -396482,14 +396479,14 @@ loc_4C0E1B40:
 	extb	d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	ChoOnSe_L180
+	bra	DeffVal6Se_L180
 loc_4C0E1B6A:
 	mov	(0x30, sp), a0
 	mov	Str_empty_747, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	ChoOnSe_L180
+	bra	DeffVal6Se_L180
 loc_4C0E1B7F:
 	mov	sp, a0
 	add	0x1c, a0
@@ -396504,26 +396501,26 @@ loc_4C0E1B7F:
 	extb	d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	ChoOnSe_L180
-ChoOnSe_L16d:
+	bra	DeffVal6Se_L180
+DeffVal6Se_L16d:
 	mov	(0x30, sp), a1
 	mov	Str_empty_746, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-ChoOnSe_L180:
+DeffVal6Se_L180:
 	clr	d0
 	ret	0, 0x20
-ChoOnSe_L184:
+DeffVal6Se_L184:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	ChoOnSe_L191
-	jmp	ChoOnSe_L227
-ChoOnSe_L191:
+	bge	DeffVal6Se_L191
+	jmp	DeffVal6Se_L227
+DeffVal6Se_L191:
 	cmp	0xc, d0
-	ble	ChoOnSe_L198
-	jmp	ChoOnSe_L227
-ChoOnSe_L198:
+	ble	DeffVal6Se_L198
+	jmp	DeffVal6Se_L227
+DeffVal6Se_L198:
 	asl2	d0
 	mov	ChoOnSe_L198_Table, a0
 	mov	(d0, a0), a0
@@ -396539,7 +396536,7 @@ loc_4C0E1BDF:
 	mov	swVal6_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	ChoOnSe_L250
+	jmp	DeffVal6Se_L250
 loc_4C0E1C0C:
 	mov	(0x30, sp), a0
 	mov	Str_empty_745, d0
@@ -396551,7 +396548,7 @@ loc_4C0E1C0C:
 	mov	swVal6_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	ChoOnSe_L250
+	bra	DeffVal6Se_L250
 loc_4C0E1C37:
 	mov	(0x30, sp), a0
 	mov	Str_INTENSITY, d0
@@ -396563,8 +396560,8 @@ loc_4C0E1C37:
 	mov	swVal6_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	ChoOnSe_L250
-ChoOnSe_L227:
+	bra	DeffVal6Se_L250
+DeffVal6Se_L227:
 	mov	(0x30, sp), a0
 	mov	Str_empty_744, d0
 	mov	a0, (8, sp)
@@ -396575,45 +396572,45 @@ ChoOnSe_L227:
 	mov	swVal6_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-ChoOnSe_L250:
+DeffVal6Se_L250:
 	clr	d0
-	bra	ChoOnSe_L256
-# ChoOnSe + 0x253: no traced path reaches what follows (--decode-gaps)
-	bra	ChoOnSe_L256
-ChoOnSe_L255:
+	bra	DeffVal6Se_L256
+# DeffVal6Se + 0x253: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal6Se_L256
+DeffVal6Se_L255:
 	clr	d0
-ChoOnSe_L256:
+DeffVal6Se_L256:
 	ret	0, 0x20
 
-RevAdjSe:
+DeffVal7Se:
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	RevAdjSe_L47
+	beq	DeffVal7Se_L47
 	cmp	EV_INDEXSW_UP, d1
-	beq	RevAdjSe_L47
+	beq	DeffVal7Se_L47
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	RevAdjSe_L7c
+	beq	DeffVal7Se_L7c
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	RevAdjSe_L7c
+	beq	DeffVal7Se_L7c
 	cmp	MT_GetString, d1
-	bne	RevAdjSe_L2e
-	jmp	RevAdjSe_Lb1
-RevAdjSe_L2e:
+	bne	DeffVal7Se_L2e
+	jmp	DeffVal7Se_Lb1
+DeffVal7Se_L2e:
 	cmp	MT_GetCaption, d1
-	bne	RevAdjSe_L39
-	jmp	RevAdjSe_L10b
-RevAdjSe_L39:
+	bne	DeffVal7Se_L39
+	jmp	DeffVal7Se_L10b
+DeffVal7Se_L39:
 	cmp	0x1800000, d1
-	bne	RevAdjSe_L44
+	bne	DeffVal7Se_L44
 	ret	0, 0x20
-RevAdjSe_L44:
-	jmp	RevAdjSe_L17e
-RevAdjSe_L47:
+DeffVal7Se_L44:
+	jmp	DeffVal7Se_L17e
+DeffVal7Se_L47:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	RevAdjSe_L78
+	blt	DeffVal7Se_L78
 	cmp	0xc, d0
-	bgt	RevAdjSe_L78
+	bgt	DeffVal7Se_L78
 	asl2	d0
 	mov	RevAdjSe_L47_Table, a0
 	mov	(d0, a0), a0
@@ -396628,15 +396625,15 @@ loc_4C0E1CF5:
 	mov	0x4c, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-RevAdjSe_L78:
+DeffVal7Se_L78:
 	clr	d0
 	ret	0, 0x20
-RevAdjSe_L7c:
+DeffVal7Se_L7c:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	RevAdjSe_Lad
+	blt	DeffVal7Se_Lad
 	cmp	0xc, d0
-	bgt	RevAdjSe_Lad
+	bgt	DeffVal7Se_Lad
 	asl2	d0
 	mov	RevAdjSe_L7c_Table, a0
 	mov	(d0, a0), a0
@@ -396651,15 +396648,15 @@ loc_4C0E1D2A:
 	mov	0x4c, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-RevAdjSe_Lad:
+DeffVal7Se_Lad:
 	clr	d0
 	ret	0, 0x20
-RevAdjSe_Lb1:
+DeffVal7Se_Lb1:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	RevAdjSe_Lf4
+	blt	DeffVal7Se_Lf4
 	cmp	0xc, d0
-	bgt	RevAdjSe_Lf4
+	bgt	DeffVal7Se_Lf4
 	asl2	d0
 	mov	RevAdjSe_Lb1_Table, a0
 	mov	(d0, a0), a0
@@ -396678,22 +396675,22 @@ loc_4C0E1D5F:
 	extb	d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	RevAdjSe_L107
-RevAdjSe_Lf4:
+	bra	DeffVal7Se_L107
+DeffVal7Se_Lf4:
 	mov	(0x30, sp), a1
 	mov	Str_empty_743, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-RevAdjSe_L107:
+DeffVal7Se_L107:
 	clr	d0
 	ret	0, 0x20
-RevAdjSe_L10b:
+DeffVal7Se_L10b:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	RevAdjSe_L150
+	blt	DeffVal7Se_L150
 	cmp	0xc, d0
-	bgt	RevAdjSe_L150
+	bgt	DeffVal7Se_L150
 	asl2	d0
 	mov	RevAdjSe_L10b_Table, a0
 	mov	(d0, a0), a0
@@ -396709,8 +396706,8 @@ loc_4C0E1DB9:
 	mov	swVal7_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	RevAdjSe_L179
-RevAdjSe_L150:
+	bra	DeffVal7Se_L179
+DeffVal7Se_L150:
 	mov	(0x30, sp), a1
 	mov	Str_empty_742, d0
 	mov	a1, (8, sp)
@@ -396721,61 +396718,61 @@ RevAdjSe_L150:
 	mov	swVal7_id, d0
 	mov	MT_SetVisible, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-RevAdjSe_L179:
+DeffVal7Se_L179:
 	clr	d0
-	bra	RevAdjSe_L17f
-# RevAdjSe + 0x17c: no traced path reaches what follows (--decode-gaps)
-	bra	RevAdjSe_L17f
-RevAdjSe_L17e:
+	bra	DeffVal7Se_L17f
+# DeffVal7Se + 0x17c: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal7Se_L17f
+DeffVal7Se_L17e:
 	clr	d0
-RevAdjSe_L17f:
+DeffVal7Se_L17f:
 	ret	0, 0x20
 
-DrumGDumpGroupSe:
+DrumKeyNameSe:
 	movm	[d2,d3,a2], (sp)
 	add	-0x20, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	DrumGDumpGroupSe_L46
+	beq	DrumKeyNameSe_L46
 	cmp	EV_INDEXSW_UP, d1
-	beq	DrumGDumpGroupSe_L46
+	beq	DrumKeyNameSe_L46
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	beq	DrumGDumpGroupSe_L5b
+	beq	DrumKeyNameSe_L5b
 	cmp	EV_INDEXSW_DOWN, d1
-	beq	DrumGDumpGroupSe_L5b
+	beq	DrumKeyNameSe_L5b
 	cmp	MT_GetString, d1
-	beq	DrumGDumpGroupSe_L71
+	beq	DrumKeyNameSe_L71
 	cmp	MT_GetCaption, d1
-	bne	DrumGDumpGroupSe_L38
-	jmp	DrumGDumpGroupSe_Lc7
-DrumGDumpGroupSe_L38:
+	bne	DrumKeyNameSe_L38
+	jmp	DrumKeyNameSe_Lc7
+DrumKeyNameSe_L38:
 	cmp	0x1800000, d1
-	bne	DrumGDumpGroupSe_L43
+	bne	DrumKeyNameSe_L43
 	ret	[d2,d3,a2], 0x2c
-DrumGDumpGroupSe_L43:
-	jmp	DrumGDumpGroupSe_Lf2
-DrumGDumpGroupSe_L46:
+DrumKeyNameSe_L43:
+	jmp	DrumKeyNameSe_Lf2
+DrumKeyNameSe_L46:
 	movbu	(Str_empty_255), d0
 	cmp	0x7f, d0
-	bge	DrumGDumpGroupSe_L57
+	bge	DrumKeyNameSe_L57
 	inc	d0
 	movbu	d0, (Str_empty_255)
-DrumGDumpGroupSe_L57:
+DrumKeyNameSe_L57:
 	clr	d0
 	ret	[d2,d3,a2], 0x2c
-DrumGDumpGroupSe_L5b:
+DrumKeyNameSe_L5b:
 	movbu	(Str_empty_255), d0
 	cmp	0, d0
-	ble	DrumGDumpGroupSe_L6d
+	ble	DrumKeyNameSe_L6d
 	add	-1, d0
 	movbu	d0, (Str_empty_255)
-DrumGDumpGroupSe_L6d:
+DrumKeyNameSe_L6d:
 	clr	d0
 	ret	[d2,d3,a2], 0x2c
-DrumGDumpGroupSe_L71:
+DrumKeyNameSe_L71:
 	clr	d0
 	clr	d2
 	mov	0x8e, d3
-DrumGDumpGroupSe_L76:
+DrumKeyNameSe_L76:
 	extbu	d0
 	mov	d0, a0
 	mov	d0, d1
@@ -396795,7 +396792,7 @@ DrumGDumpGroupSe_L76:
 	mov	d2, d0
 	extbu	d2
 	cmp	0xd, d2
-	blt	DrumGDumpGroupSe_L76
+	blt	DrumKeyNameSe_L76
 	mov	(0x3c, sp), a0
 	mov	Str_DrumSoundName, a1
 	call	strcpy_entry, [a2], 4
@@ -396805,8 +396802,8 @@ DrumGDumpGroupSe_L76:
 	mov	EV_KeySelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	DrumGDumpGroupSe_Lf3
-DrumGDumpGroupSe_Lc7:
+	bra	DrumKeyNameSe_Lf3
+DrumKeyNameSe_Lc7:
 	mov	sp, a2
 	add	0x14, a2
 	mov	a2, a0
@@ -396819,12 +396816,12 @@ DrumGDumpGroupSe_Lc7:
 	mov	a2, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	clr	d0
-	bra	DrumGDumpGroupSe_Lf3
-# DrumGDumpGroupSe + 0xf0: no traced path reaches what follows (--decode-gaps)
-	bra	DrumGDumpGroupSe_Lf3
-DrumGDumpGroupSe_Lf2:
+	bra	DrumKeyNameSe_Lf3
+# DrumKeyNameSe + 0xf0: no traced path reaches what follows (--decode-gaps)
+	bra	DrumKeyNameSe_Lf3
+DrumKeyNameSe_Lf2:
 	clr	d0
-DrumGDumpGroupSe_Lf3:
+DrumKeyNameSe_Lf3:
 	ret	[d2,d3,a2], 0x2c
 
 AcFuncBoxSeProc:
@@ -396879,6 +396876,182 @@ AcFuncBoxSeProc_L80:
 AcFuncBoxSeProc_L8b:
 	ret	[d2,d3], 0x1c
 
+DeffVal0SwSe:
+	add	-0x10, sp
+	cmp	MT_GetString, d1
+	beq	DeffVal0SwSe_L19
+	cmp	0x1800000, d1
+	bne	DeffVal0SwSe_L16
+	ret	0, 0x10
+DeffVal0SwSe_L16:
+	jmp	DeffVal0SwSe_Le4
+DeffVal0SwSe_L19:
+	movbu	(TsetGridSe_L55_Var), d0
+	cmp	0, d0
+	bge	DeffVal0SwSe_L26
+	jmp	DeffVal0SwSe_Lcc
+DeffVal0SwSe_L26:
+	cmp	0xc, d0
+	ble	DeffVal0SwSe_L2d
+	jmp	DeffVal0SwSe_Lcc
+DeffVal0SwSe_L2d:
+	asl2	d0
+	mov	DeffVal2SwSe_L2d_Table, a0
+	mov	(d0, a0), a0
+	jmp	(a0)
+loc_4C0E1FD3:
+	mov	(0x20, sp), a1
+	mov	Str_DEPTH_23, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	jmp	DeffVal0SwSe_Ldf
+loc_4C0E1FE9:
+	mov	(0x20, sp), a0
+	mov	Str_DEPTH1_2, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal0SwSe_Ldf
+loc_4C0E1FFE:
+	mov	(0x20, sp), a0
+	mov	Str_DEPTH_22, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal0SwSe_Ldf
+loc_4C0E2013:
+	mov	(0x20, sp), a1
+	mov	Str_DEPTH1, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal0SwSe_Ldf
+loc_4C0E2028:
+	mov	(0x20, sp), a0
+	mov	Str_DELAY_12, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal0SwSe_Ldf
+loc_4C0E203D:
+	mov	(0x20, sp), a1
+	mov	Str_SPEED_10, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal0SwSe_Ldf
+loc_4C0E2052:
+	mov	(0x20, sp), a0
+	mov	Str_DIST, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal0SwSe_Ldf
+DeffVal0SwSe_Lcc:
+	mov	(0x20, sp), a1
+	mov	Str_empty_741, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+DeffVal0SwSe_Ldf:
+	clr	d0
+	bra	DeffVal0SwSe_Le5
+# DeffVal0SwSe + 0xe2: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal0SwSe_Le5
+DeffVal0SwSe_Le4:
+	clr	d0
+DeffVal0SwSe_Le5:
+	ret	0, 0x10
+
+DeffVal1SwSe:
+	add	-0x10, sp
+	cmp	MT_GetString, d1
+	beq	DeffVal1SwSe_L19
+	cmp	0x1800000, d1
+	bne	DeffVal1SwSe_L16
+	ret	0, 0x10
+DeffVal1SwSe_L16:
+	jmp	DeffVal1SwSe_Le4
+DeffVal1SwSe_L19:
+	movbu	(TsetGridSe_L55_Var), d0
+	cmp	0, d0
+	bge	DeffVal1SwSe_L26
+	jmp	DeffVal1SwSe_Lcc
+DeffVal1SwSe_L26:
+	cmp	0xc, d0
+	ble	DeffVal1SwSe_L2d
+	jmp	DeffVal1SwSe_Lcc
+DeffVal1SwSe_L2d:
+	asl2	d0
+	mov	DeffVal3SwSe_L2d_Table, a0
+	mov	(d0, a0), a0
+	jmp	(a0)
+loc_4C0E20BB:
+	mov	(0x20, sp), a1
+	mov	Str_SPEED_9, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	jmp	DeffVal1SwSe_Ldf
+loc_4C0E20D1:
+	mov	(0x20, sp), a0
+	mov	Str_SPEED1_2, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal1SwSe_Ldf
+loc_4C0E20E6:
+	mov	(0x20, sp), a0
+	mov	Str_SPEED_8, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal1SwSe_Ldf
+loc_4C0E20FB:
+	mov	(0x20, sp), a1
+	mov	Str_SPEED1, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal1SwSe_Ldf
+loc_4C0E2110:
+	mov	(0x20, sp), a0
+	mov	Str_DETUNE_6, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal1SwSe_Ldf
+loc_4C0E2125:
+	mov	(0x20, sp), a1
+	mov	Str_DECAY_2, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal1SwSe_Ldf
+loc_4C0E213A:
+	mov	(0x20, sp), a0
+	mov	Str_TOUCH_11, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DeffVal1SwSe_Ldf
+DeffVal1SwSe_Lcc:
+	mov	(0x20, sp), a1
+	mov	Str_empty_740, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+DeffVal1SwSe_Ldf:
+	clr	d0
+	bra	DeffVal1SwSe_Le5
+# DeffVal1SwSe + 0xe2: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal1SwSe_Le5
+DeffVal1SwSe_Le4:
+	clr	d0
+DeffVal1SwSe_Le5:
+	ret	0, 0x10
+
 DeffVal2SwSe:
 	add	-0x10, sp
 	cmp	MT_GetString, d1
@@ -396899,61 +397072,61 @@ DeffVal2SwSe_L26:
 	jmp	DeffVal2SwSe_Lcc
 DeffVal2SwSe_L2d:
 	asl2	d0
-	mov	DeffVal2SwSe_L2d_Table, a0
+	mov	DeffVal4SwSe_L2d_Table, a0
 	mov	(d0, a0), a0
 	jmp	(a0)
-loc_4C0E1FD3:
+loc_4C0E21A3:
 	mov	(0x20, sp), a1
-	mov	Str_DEPTH_23, d0
+	mov	Str_DETUNE_5, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	jmp	DeffVal2SwSe_Ldf
-loc_4C0E1FE9:
+loc_4C0E21B9:
 	mov	(0x20, sp), a0
-	mov	Str_DEPTH1_2, d0
+	mov	Str_DEPTH2_2, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal2SwSe_Ldf
-loc_4C0E1FFE:
+loc_4C0E21CE:
 	mov	(0x20, sp), a0
-	mov	Str_DEPTH_22, d0
+	mov	Str_WAVE_5, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal2SwSe_Ldf
-loc_4C0E2013:
+loc_4C0E21E3:
 	mov	(0x20, sp), a1
-	mov	Str_DEPTH1, d0
+	mov	Str_DEPTH2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal2SwSe_Ldf
-loc_4C0E2028:
+loc_4C0E21F8:
 	mov	(0x20, sp), a0
-	mov	Str_DELAY_12, d0
+	mov	Str_KEY_5, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal2SwSe_Ldf
-loc_4C0E203D:
+loc_4C0E220D:
 	mov	(0x20, sp), a1
-	mov	Str_SPEED_10, d0
+	mov	Str_SUST, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal2SwSe_Ldf
-loc_4C0E2052:
+loc_4C0E2222:
 	mov	(0x20, sp), a0
-	mov	Str_DIST, d0
+	mov	Str_DEPTH_21, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal2SwSe_Ldf
 DeffVal2SwSe_Lcc:
 	mov	(0x20, sp), a1
-	mov	Str_empty_741, d0
+	mov	Str_empty_739, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
@@ -396987,61 +397160,61 @@ DeffVal3SwSe_L26:
 	jmp	DeffVal3SwSe_Lcc
 DeffVal3SwSe_L2d:
 	asl2	d0
-	mov	DeffVal3SwSe_L2d_Table, a0
+	mov	DeffVal5SwSe_L2d_Table, a0
 	mov	(d0, a0), a0
 	jmp	(a0)
-loc_4C0E20BB:
+loc_4C0E228B:
 	mov	(0x20, sp), a1
-	mov	Str_SPEED_9, d0
+	mov	Str_DELAY_11, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	jmp	DeffVal3SwSe_Ldf
-loc_4C0E20D1:
+loc_4C0E22A1:
 	mov	(0x20, sp), a0
-	mov	Str_SPEED1_2, d0
+	mov	Str_SPEED2_2, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal3SwSe_Ldf
-loc_4C0E20E6:
+loc_4C0E22B6:
 	mov	(0x20, sp), a0
-	mov	Str_SPEED_8, d0
+	mov	Str_BAL_8, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal3SwSe_Ldf
-loc_4C0E20FB:
+loc_4C0E22CB:
 	mov	(0x20, sp), a1
-	mov	Str_SPEED1, d0
+	mov	Str_SPEED2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal3SwSe_Ldf
-loc_4C0E2110:
+loc_4C0E22E0:
 	mov	(0x20, sp), a0
-	mov	Str_DETUNE_6, d0
+	mov	Str_BAL_7, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal3SwSe_Ldf
-loc_4C0E2125:
+loc_4C0E22F5:
 	mov	(0x20, sp), a1
-	mov	Str_DECAY_2, d0
+	mov	Str_RLS_8, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal3SwSe_Ldf
-loc_4C0E213A:
+loc_4C0E230A:
 	mov	(0x20, sp), a0
-	mov	Str_TOUCH_11, d0
+	mov	Str_empty_738, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal3SwSe_Ldf
 DeffVal3SwSe_Lcc:
 	mov	(0x20, sp), a1
-	mov	Str_empty_740, d0
+	mov	Str_empty_737, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
@@ -397058,177 +397231,111 @@ DeffVal3SwSe_Le5:
 DeffVal4SwSe:
 	add	-0x10, sp
 	cmp	MT_GetString, d1
-	beq	DeffVal4SwSe_L19
+	beq	DeffVal4SwSe_L18
 	cmp	0x1800000, d1
-	bne	DeffVal4SwSe_L16
+	bne	DeffVal4SwSe_L88
 	ret	0, 0x10
-DeffVal4SwSe_L16:
-	jmp	DeffVal4SwSe_Le4
-DeffVal4SwSe_L19:
+# DeffVal4SwSe + 0x16: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal4SwSe_L88
+DeffVal4SwSe_L18:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	DeffVal4SwSe_L26
-	jmp	DeffVal4SwSe_Lcc
-DeffVal4SwSe_L26:
+	blt	DeffVal4SwSe_L70
 	cmp	0xc, d0
-	ble	DeffVal4SwSe_L2d
-	jmp	DeffVal4SwSe_Lcc
-DeffVal4SwSe_L2d:
+	bgt	DeffVal4SwSe_L70
 	asl2	d0
-	mov	DeffVal4SwSe_L2d_Table, a0
+	mov	DeffVal6SwSe_L18_Table, a0
 	mov	(d0, a0), a0
 	jmp	(a0)
-loc_4C0E21A3:
-	mov	(0x20, sp), a1
-	mov	Str_DETUNE_5, d0
-	mov	a1, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	jmp	DeffVal4SwSe_Ldf
-loc_4C0E21B9:
+loc_4C0E236C:
 	mov	(0x20, sp), a0
-	mov	Str_DEPTH2_2, d0
+	mov	Str_BAL_9, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal4SwSe_Ldf
-loc_4C0E21CE:
+	bra	DeffVal4SwSe_L83
+loc_4C0E2381:
 	mov	(0x20, sp), a0
-	mov	Str_WAVE_5, d0
+	mov	Str_DETUNE_10, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal4SwSe_Ldf
-loc_4C0E21E3:
+	bra	DeffVal4SwSe_L83
+loc_4C0E2396:
 	mov	(0x20, sp), a1
-	mov	Str_DEPTH2, d0
+	mov	Str_empty_810, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal4SwSe_Ldf
-loc_4C0E21F8:
+	bra	DeffVal4SwSe_L83
+DeffVal4SwSe_L70:
 	mov	(0x20, sp), a0
-	mov	Str_KEY_5, d0
+	mov	Str_empty_809, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal4SwSe_Ldf
-loc_4C0E220D:
-	mov	(0x20, sp), a1
-	mov	Str_SUST, d0
-	mov	a1, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal4SwSe_Ldf
-loc_4C0E2222:
-	mov	(0x20, sp), a0
-	mov	Str_DEPTH_21, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal4SwSe_Ldf
-DeffVal4SwSe_Lcc:
-	mov	(0x20, sp), a1
-	mov	Str_empty_739, d0
-	mov	a1, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-DeffVal4SwSe_Ldf:
+DeffVal4SwSe_L83:
 	clr	d0
-	bra	DeffVal4SwSe_Le5
-# DeffVal4SwSe + 0xe2: no traced path reaches what follows (--decode-gaps)
-	bra	DeffVal4SwSe_Le5
-DeffVal4SwSe_Le4:
+	bra	DeffVal4SwSe_L89
+	bra	DeffVal4SwSe_L89
+DeffVal4SwSe_L88:
 	clr	d0
-DeffVal4SwSe_Le5:
+DeffVal4SwSe_L89:
 	ret	0, 0x10
 
 DeffVal5SwSe:
 	add	-0x10, sp
 	cmp	MT_GetString, d1
-	beq	DeffVal5SwSe_L19
+	beq	DeffVal5SwSe_L18
 	cmp	0x1800000, d1
-	bne	DeffVal5SwSe_L16
+	bne	DeffVal5SwSe_L88
 	ret	0, 0x10
-DeffVal5SwSe_L16:
-	jmp	DeffVal5SwSe_Le4
-DeffVal5SwSe_L19:
+# DeffVal5SwSe + 0x16: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal5SwSe_L88
+DeffVal5SwSe_L18:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	bge	DeffVal5SwSe_L26
-	jmp	DeffVal5SwSe_Lcc
-DeffVal5SwSe_L26:
+	blt	DeffVal5SwSe_L70
 	cmp	0xc, d0
-	ble	DeffVal5SwSe_L2d
-	jmp	DeffVal5SwSe_Lcc
-DeffVal5SwSe_L2d:
+	bgt	DeffVal5SwSe_L70
 	asl2	d0
-	mov	DeffVal5SwSe_L2d_Table, a0
+	mov	DeffVal7SwSe_L18_Table, a0
 	mov	(d0, a0), a0
 	jmp	(a0)
-loc_4C0E228B:
-	mov	(0x20, sp), a1
-	mov	Str_DELAY_11, d0
-	mov	a1, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	jmp	DeffVal5SwSe_Ldf
-loc_4C0E22A1:
+loc_4C0E23F8:
 	mov	(0x20, sp), a0
-	mov	Str_SPEED2_2, d0
+	mov	Str_empty_808, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal5SwSe_Ldf
-loc_4C0E22B6:
+	bra	DeffVal5SwSe_L83
+loc_4C0E240D:
 	mov	(0x20, sp), a0
-	mov	Str_BAL_8, d0
+	mov	Str_DELAY_18, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal5SwSe_Ldf
-loc_4C0E22CB:
+	bra	DeffVal5SwSe_L83
+loc_4C0E2422:
 	mov	(0x20, sp), a1
-	mov	Str_SPEED2, d0
+	mov	Str_empty_807, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal5SwSe_Ldf
-loc_4C0E22E0:
+	bra	DeffVal5SwSe_L83
+DeffVal5SwSe_L70:
 	mov	(0x20, sp), a0
-	mov	Str_BAL_7, d0
+	mov	Str_empty_806, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal5SwSe_Ldf
-loc_4C0E22F5:
-	mov	(0x20, sp), a1
-	mov	Str_RLS_8, d0
-	mov	a1, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal5SwSe_Ldf
-loc_4C0E230A:
-	mov	(0x20, sp), a0
-	mov	Str_empty_738, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal5SwSe_Ldf
-DeffVal5SwSe_Lcc:
-	mov	(0x20, sp), a1
-	mov	Str_empty_737, d0
-	mov	a1, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-DeffVal5SwSe_Ldf:
+DeffVal5SwSe_L83:
 	clr	d0
-	bra	DeffVal5SwSe_Le5
-# DeffVal5SwSe + 0xe2: no traced path reaches what follows (--decode-gaps)
-	bra	DeffVal5SwSe_Le5
-DeffVal5SwSe_Le4:
+	bra	DeffVal5SwSe_L89
+	bra	DeffVal5SwSe_L89
+DeffVal5SwSe_L88:
 	clr	d0
-DeffVal5SwSe_Le5:
+DeffVal5SwSe_L89:
 	ret	0, 0x10
 
 DeffVal6SwSe:
@@ -397247,33 +397354,33 @@ DeffVal6SwSe_L18:
 	cmp	0xc, d0
 	bgt	DeffVal6SwSe_L70
 	asl2	d0
-	mov	DeffVal6SwSe_L18_Table, a0
+	mov	ChoDptSe_L18_Table, a0
 	mov	(d0, a0), a0
 	jmp	(a0)
-loc_4C0E236C:
+loc_4C0E2484:
 	mov	(0x20, sp), a0
-	mov	Str_BAL_9, d0
+	mov	Str_INTENS, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal6SwSe_L83
-loc_4C0E2381:
+loc_4C0E2499:
 	mov	(0x20, sp), a0
-	mov	Str_DETUNE_10, d0
+	mov	Str_empty_805, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal6SwSe_L83
-loc_4C0E2396:
+loc_4C0E24AE:
 	mov	(0x20, sp), a1
-	mov	Str_empty_810, d0
+	mov	Str_INTENS_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DeffVal6SwSe_L83
 DeffVal6SwSe_L70:
 	mov	(0x20, sp), a0
-	mov	Str_empty_809, d0
+	mov	Str_empty_774, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
@@ -397289,126 +397396,16 @@ DeffVal6SwSe_L89:
 DeffVal7SwSe:
 	add	-0x10, sp
 	cmp	MT_GetString, d1
-	beq	DeffVal7SwSe_L18
+	beq	DeffVal7SwSe_L15
 	cmp	0x1800000, d1
-	bne	DeffVal7SwSe_L88
-	ret	0, 0x10
-# DeffVal7SwSe + 0x16: no traced path reaches what follows (--decode-gaps)
-	bra	DeffVal7SwSe_L88
-DeffVal7SwSe_L18:
+	beq	DeffVal7SwSe_L5c
+	bra	DeffVal7SwSe_L5b
+DeffVal7SwSe_L15:
 	movbu	(TsetGridSe_L55_Var), d0
 	cmp	0, d0
-	blt	DeffVal7SwSe_L70
+	blt	DeffVal7SwSe_L43
 	cmp	0xc, d0
-	bgt	DeffVal7SwSe_L70
-	asl2	d0
-	mov	DeffVal7SwSe_L18_Table, a0
-	mov	(d0, a0), a0
-	jmp	(a0)
-loc_4C0E23F8:
-	mov	(0x20, sp), a0
-	mov	Str_empty_808, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal7SwSe_L83
-loc_4C0E240D:
-	mov	(0x20, sp), a0
-	mov	Str_DELAY_18, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal7SwSe_L83
-loc_4C0E2422:
-	mov	(0x20, sp), a1
-	mov	Str_empty_807, d0
-	mov	a1, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	DeffVal7SwSe_L83
-DeffVal7SwSe_L70:
-	mov	(0x20, sp), a0
-	mov	Str_empty_806, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-DeffVal7SwSe_L83:
-	clr	d0
-	bra	DeffVal7SwSe_L89
-	bra	DeffVal7SwSe_L89
-DeffVal7SwSe_L88:
-	clr	d0
-DeffVal7SwSe_L89:
-	ret	0, 0x10
-
-ChoDptSe:
-	add	-0x10, sp
-	cmp	MT_GetString, d1
-	beq	ChoDptSe_L18
-	cmp	0x1800000, d1
-	bne	ChoDptSe_L88
-	ret	0, 0x10
-# ChoDptSe + 0x16: no traced path reaches what follows (--decode-gaps)
-	bra	ChoDptSe_L88
-ChoDptSe_L18:
-	movbu	(TsetGridSe_L55_Var), d0
-	cmp	0, d0
-	blt	ChoDptSe_L70
-	cmp	0xc, d0
-	bgt	ChoDptSe_L70
-	asl2	d0
-	mov	ChoDptSe_L18_Table, a0
-	mov	(d0, a0), a0
-	jmp	(a0)
-loc_4C0E2484:
-	mov	(0x20, sp), a0
-	mov	Str_INTENS, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	ChoDptSe_L83
-loc_4C0E2499:
-	mov	(0x20, sp), a0
-	mov	Str_empty_805, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	ChoDptSe_L83
-loc_4C0E24AE:
-	mov	(0x20, sp), a1
-	mov	Str_INTENS_2, d0
-	mov	a1, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	ChoDptSe_L83
-ChoDptSe_L70:
-	mov	(0x20, sp), a0
-	mov	Str_empty_774, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-ChoDptSe_L83:
-	clr	d0
-	bra	ChoDptSe_L89
-	bra	ChoDptSe_L89
-ChoDptSe_L88:
-	clr	d0
-ChoDptSe_L89:
-	ret	0, 0x10
-
-CtrlGridSe1:
-	add	-0x10, sp
-	cmp	MT_GetString, d1
-	beq	CtrlGridSe1_L15
-	cmp	0x1800000, d1
-	beq	CtrlGridSe1_L5c
-	bra	CtrlGridSe1_L5b
-CtrlGridSe1_L15:
-	movbu	(TsetGridSe_L55_Var), d0
-	cmp	0, d0
-	blt	CtrlGridSe1_L43
-	cmp	0xc, d0
-	bgt	CtrlGridSe1_L43
+	bgt	DeffVal7SwSe_L43
 	asl2	d0
 	mov	CtrlGridSe1_L15_Table, a0
 	mov	(d0, a0), a0
@@ -397419,183 +397416,417 @@ loc_4C0E250D:
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	CtrlGridSe1_L56
-CtrlGridSe1_L43:
+	bra	DeffVal7SwSe_L56
+DeffVal7SwSe_L43:
 	mov	(0x20, sp), a0
 	mov	Str_empty_736, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-CtrlGridSe1_L56:
+DeffVal7SwSe_L56:
 	clr	d0
-	bra	CtrlGridSe1_L5c
-# CtrlGridSe1 + 0x59: no traced path reaches what follows (--decode-gaps)
-	bra	CtrlGridSe1_L5c
-CtrlGridSe1_L5b:
+	bra	DeffVal7SwSe_L5c
+# DeffVal7SwSe + 0x59: no traced path reaches what follows (--decode-gaps)
+	bra	DeffVal7SwSe_L5c
+DeffVal7SwSe_L5b:
 	clr	d0
-CtrlGridSe1_L5c:
+DeffVal7SwSe_L5c:
 	ret	0, 0x10
 
-DrumFltGraphTitleSe:
+EnvKfGraphTitleSe:
 	add	-0x10, sp
 	cmp	MT_GetString, d1
-	beq	DrumFltGraphTitleSe_L18
+	beq	EnvKfGraphTitleSe_L18
 	cmp	0x1800000, d1
-	bne	DrumFltGraphTitleSe_L83
+	bne	EnvKfGraphTitleSe_L83
 	ret	0, 0x10
-# DrumFltGraphTitleSe + 0x16: no traced path reaches what follows (--decode-gaps)
-	bra	DrumFltGraphTitleSe_L83
-DrumFltGraphTitleSe_L18:
+# EnvKfGraphTitleSe + 0x16: no traced path reaches what follows (--decode-gaps)
+	bra	EnvKfGraphTitleSe_L83
+EnvKfGraphTitleSe_L18:
 	movbu	(DrumFltGraphTitleSe_L18_Var), d0
 	cmp	0, d0
-	beq	DrumFltGraphTitleSe_L2c
+	beq	EnvKfGraphTitleSe_L2c
 	cmp	1, d0
-	beq	DrumFltGraphTitleSe_L41
+	beq	EnvKfGraphTitleSe_L41
 	cmp	2, d0
-	beq	DrumFltGraphTitleSe_L56
-	bra	DrumFltGraphTitleSe_L6b
-DrumFltGraphTitleSe_L2c:
+	beq	EnvKfGraphTitleSe_L56
+	bra	EnvKfGraphTitleSe_L6b
+EnvKfGraphTitleSe_L2c:
 	mov	(0x20, sp), a1
 	mov	Str_ATTACK_KEY_FOLLOW, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DrumFltGraphTitleSe_L7e
-DrumFltGraphTitleSe_L41:
+	bra	EnvKfGraphTitleSe_L7e
+EnvKfGraphTitleSe_L41:
 	mov	(0x20, sp), a0
 	mov	Str_DECAY_KEY_FOLLOW, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DrumFltGraphTitleSe_L7e
-DrumFltGraphTitleSe_L56:
+	bra	EnvKfGraphTitleSe_L7e
+EnvKfGraphTitleSe_L56:
 	mov	(0x20, sp), a1
 	mov	Str_RELEASE_KEY_FOLLOW, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DrumFltGraphTitleSe_L7e
-DrumFltGraphTitleSe_L6b:
+	bra	EnvKfGraphTitleSe_L7e
+EnvKfGraphTitleSe_L6b:
 	mov	(0x20, sp), a0
 	mov	Str_ATTACK_KEY_FOLLOW_2, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DrumFltGraphTitleSe_L7e:
+EnvKfGraphTitleSe_L7e:
 	clr	d0
-	bra	DrumFltGraphTitleSe_L84
-	bra	DrumFltGraphTitleSe_L84
-DrumFltGraphTitleSe_L83:
+	bra	EnvKfGraphTitleSe_L84
+	bra	EnvKfGraphTitleSe_L84
+EnvKfGraphTitleSe_L83:
 	clr	d0
-DrumFltGraphTitleSe_L84:
+EnvKfGraphTitleSe_L84:
 	ret	0, 0x10
 
-DrumEqGraphTitleSe:
+FltGraphTitleSe:
 	add	-0x10, sp
 	cmp	MT_GetString, d1
-	beq	DrumEqGraphTitleSe_L19
+	beq	FltGraphTitleSe_L19
 	cmp	0x1800000, d1
-	bne	DrumEqGraphTitleSe_L16
+	bne	FltGraphTitleSe_L16
 	ret	0, 0x10
-DrumEqGraphTitleSe_L16:
-	jmp	DrumEqGraphTitleSe_L115
-DrumEqGraphTitleSe_L19:
+FltGraphTitleSe_L16:
+	jmp	FltGraphTitleSe_L115
+FltGraphTitleSe_L19:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	0, d0
-	beq	DrumEqGraphTitleSe_L53
+	beq	FltGraphTitleSe_L53
 	cmp	2, d0
-	beq	DrumEqGraphTitleSe_L69
+	beq	FltGraphTitleSe_L69
 	cmp	1, d0
-	beq	DrumEqGraphTitleSe_L7f
+	beq	FltGraphTitleSe_L7f
 	cmp	3, d0
-	beq	DrumEqGraphTitleSe_L94
+	beq	FltGraphTitleSe_L94
 	cmp	5, d0
-	beq	DrumEqGraphTitleSe_La9
+	beq	FltGraphTitleSe_La9
 	cmp	4, d0
-	bne	DrumEqGraphTitleSe_L42
-	jmp	DrumEqGraphTitleSe_Lbe
-DrumEqGraphTitleSe_L42:
+	bne	FltGraphTitleSe_L42
+	jmp	FltGraphTitleSe_Lbe
+FltGraphTitleSe_L42:
 	cmp	6, d0
-	bne	DrumEqGraphTitleSe_L49
-	jmp	DrumEqGraphTitleSe_Ld3
-DrumEqGraphTitleSe_L49:
+	bne	FltGraphTitleSe_L49
+	jmp	FltGraphTitleSe_Ld3
+FltGraphTitleSe_L49:
 	cmp	7, d0
-	bne	DrumEqGraphTitleSe_L50
-	jmp	DrumEqGraphTitleSe_Le8
-DrumEqGraphTitleSe_L50:
-	jmp	DrumEqGraphTitleSe_Lfd
-DrumEqGraphTitleSe_L53:
+	bne	FltGraphTitleSe_L50
+	jmp	FltGraphTitleSe_Le8
+FltGraphTitleSe_L50:
+	jmp	FltGraphTitleSe_Lfd
+FltGraphTitleSe_L53:
 	mov	(0x20, sp), a1
 	mov	Str_THRU_4, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DrumEqGraphTitleSe_L110
-DrumEqGraphTitleSe_L69:
+	jmp	FltGraphTitleSe_L110
+FltGraphTitleSe_L69:
 	mov	(0x20, sp), a0
 	mov	Str_LOW_PASS_FILTER_6dB_2, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DrumEqGraphTitleSe_L110
-DrumEqGraphTitleSe_L7f:
+	jmp	FltGraphTitleSe_L110
+FltGraphTitleSe_L7f:
 	mov	(0x20, sp), a0
 	mov	Str_LOW_PASS_FILTER_12dB_2, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DrumEqGraphTitleSe_L110
-DrumEqGraphTitleSe_L94:
+	bra	FltGraphTitleSe_L110
+FltGraphTitleSe_L94:
 	mov	(0x20, sp), a1
 	mov	Str_LOW_PASS_FILTER_24dB_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DrumEqGraphTitleSe_L110
-DrumEqGraphTitleSe_La9:
+	bra	FltGraphTitleSe_L110
+FltGraphTitleSe_La9:
 	mov	(0x20, sp), a0
 	mov	Str_HIGH_PASS_FILTER_6dB_2, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DrumEqGraphTitleSe_L110
-DrumEqGraphTitleSe_Lbe:
+	bra	FltGraphTitleSe_L110
+FltGraphTitleSe_Lbe:
 	mov	(0x20, sp), a1
 	mov	Str_HIGH_PASS_FILTER_12dB_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DrumEqGraphTitleSe_L110
-DrumEqGraphTitleSe_Ld3:
+	bra	FltGraphTitleSe_L110
+FltGraphTitleSe_Ld3:
 	mov	(0x20, sp), a1
 	mov	Str_HIGH_PASS_FILTER_24dB_2, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DrumEqGraphTitleSe_L110
-DrumEqGraphTitleSe_Le8:
+	bra	FltGraphTitleSe_L110
+FltGraphTitleSe_Le8:
 	mov	(0x20, sp), a0
 	mov	Str_BAND_PASS_FILTER_2, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DrumEqGraphTitleSe_L110
-DrumEqGraphTitleSe_Lfd:
+	bra	FltGraphTitleSe_L110
+FltGraphTitleSe_Lfd:
 	mov	(0x20, sp), a1
 	mov	Str_empty_735, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DrumEqGraphTitleSe_L110:
+FltGraphTitleSe_L110:
 	clr	d0
-	bra	DrumEqGraphTitleSe_L116
-# DrumEqGraphTitleSe + 0x113: no traced path reaches what follows (--decode-gaps)
-	bra	DrumEqGraphTitleSe_L116
-DrumEqGraphTitleSe_L115:
+	bra	FltGraphTitleSe_L116
+# FltGraphTitleSe + 0x113: no traced path reaches what follows (--decode-gaps)
+	bra	FltGraphTitleSe_L116
+FltGraphTitleSe_L115:
 	clr	d0
-DrumEqGraphTitleSe_L116:
+FltGraphTitleSe_L116:
+	ret	0, 0x10
+
+EqGraphTitleSe:
+	add	-0x10, sp
+	cmp	MT_GetString, d1
+	beq	EqGraphTitleSe_L15
+	cmp	0x1800000, d1
+	beq	EqGraphTitleSe_L61
+	bra	EqGraphTitleSe_L60
+EqGraphTitleSe_L15:
+	movbu	(MdSoundEdit_L132_Var_3), d0
+	call	func_4C0FB78D_entry, [d2,a2], 0x20
+	extbu	d0
+	cmp	2, d0
+	beq	EqGraphTitleSe_L33
+	cmp	1, d0
+	beq	EqGraphTitleSe_L33
+	cmp	5, d0
+	beq	EqGraphTitleSe_L33
+	cmp	4, d0
+	bne	EqGraphTitleSe_L48
+EqGraphTitleSe_L33:
+	mov	(0x20, sp), a1
+	mov	Str_EQUALIZER_6, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	EqGraphTitleSe_L5b
+EqGraphTitleSe_L48:
+	mov	(0x20, sp), a0
+	mov	Str_empty_734, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+EqGraphTitleSe_L5b:
+	clr	d0
+	bra	EqGraphTitleSe_L61
+# EqGraphTitleSe + 0x5e: no traced path reaches what follows (--decode-gaps)
+	bra	EqGraphTitleSe_L61
+EqGraphTitleSe_L60:
+	clr	d0
+EqGraphTitleSe_L61:
+	ret	0, 0x10
+
+EqGraphXSe:
+	add	-0x10, sp
+	cmp	MT_GetString, d1
+	beq	EqGraphXSe_L15
+	cmp	0x1800000, d1
+	beq	EqGraphXSe_L61
+	bra	EqGraphXSe_L60
+EqGraphXSe_L15:
+	movbu	(MdSoundEdit_L132_Var_3), d0
+	call	func_4C0FB78D_entry, [d2,a2], 0x20
+	extbu	d0
+	cmp	2, d0
+	beq	EqGraphXSe_L33
+	cmp	1, d0
+	beq	EqGraphXSe_L33
+	cmp	5, d0
+	beq	EqGraphXSe_L33
+	cmp	4, d0
+	bne	EqGraphXSe_L48
+EqGraphXSe_L33:
+	mov	(0x20, sp), a1
+	mov	Str_FREQ_2, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	EqGraphXSe_L5b
+EqGraphXSe_L48:
+	mov	(0x20, sp), a0
+	mov	Str_empty_733, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+EqGraphXSe_L5b:
+	clr	d0
+	bra	EqGraphXSe_L61
+# EqGraphXSe + 0x5e: no traced path reaches what follows (--decode-gaps)
+	bra	EqGraphXSe_L61
+EqGraphXSe_L60:
+	clr	d0
+EqGraphXSe_L61:
+	ret	0, 0x10
+
+DrumFltGraphTitleSe:
+	add	-0x10, sp
+	cmp	MT_GetString, d1
+	beq	DrumFltGraphTitleSe_L19
+	cmp	0x1800000, d1
+	bne	DrumFltGraphTitleSe_L16
+	ret	0, 0x10
+DrumFltGraphTitleSe_L16:
+	jmp	DrumFltGraphTitleSe_L115
+DrumFltGraphTitleSe_L19:
+	movbu	(MdSoundEdit_L132_Var_3), d0
+	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
+	extbu	d0
+	cmp	0, d0
+	beq	DrumFltGraphTitleSe_L53
+	cmp	2, d0
+	beq	DrumFltGraphTitleSe_L69
+	cmp	1, d0
+	beq	DrumFltGraphTitleSe_L7f
+	cmp	3, d0
+	beq	DrumFltGraphTitleSe_L94
+	cmp	5, d0
+	beq	DrumFltGraphTitleSe_La9
+	cmp	4, d0
+	bne	DrumFltGraphTitleSe_L42
+	jmp	DrumFltGraphTitleSe_Lbe
+DrumFltGraphTitleSe_L42:
+	cmp	6, d0
+	bne	DrumFltGraphTitleSe_L49
+	jmp	DrumFltGraphTitleSe_Ld3
+DrumFltGraphTitleSe_L49:
+	cmp	7, d0
+	bne	DrumFltGraphTitleSe_L50
+	jmp	DrumFltGraphTitleSe_Le8
+DrumFltGraphTitleSe_L50:
+	jmp	DrumFltGraphTitleSe_Lfd
+DrumFltGraphTitleSe_L53:
+	mov	(0x20, sp), a1
+	mov	Str_THRU_3, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	jmp	DrumFltGraphTitleSe_L110
+DrumFltGraphTitleSe_L69:
+	mov	(0x20, sp), a0
+	mov	Str_LOW_PASS_FILTER_6dB, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	jmp	DrumFltGraphTitleSe_L110
+DrumFltGraphTitleSe_L7f:
+	mov	(0x20, sp), a0
+	mov	Str_LOW_PASS_FILTER_12dB, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DrumFltGraphTitleSe_L110
+DrumFltGraphTitleSe_L94:
+	mov	(0x20, sp), a1
+	mov	Str_LOW_PASS_FILTER_24dB, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DrumFltGraphTitleSe_L110
+DrumFltGraphTitleSe_La9:
+	mov	(0x20, sp), a0
+	mov	Str_HIGH_PASS_FILTER_6dB, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DrumFltGraphTitleSe_L110
+DrumFltGraphTitleSe_Lbe:
+	mov	(0x20, sp), a1
+	mov	Str_HIGH_PASS_FILTER_12dB, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DrumFltGraphTitleSe_L110
+DrumFltGraphTitleSe_Ld3:
+	mov	(0x20, sp), a1
+	mov	Str_HIGH_PASS_FILTER_24dB, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DrumFltGraphTitleSe_L110
+DrumFltGraphTitleSe_Le8:
+	mov	(0x20, sp), a0
+	mov	Str_BAND_PASS_FILTER, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DrumFltGraphTitleSe_L110
+DrumFltGraphTitleSe_Lfd:
+	mov	(0x20, sp), a1
+	mov	Str_empty_732, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+DrumFltGraphTitleSe_L110:
+	clr	d0
+	bra	DrumFltGraphTitleSe_L116
+# DrumFltGraphTitleSe + 0x113: no traced path reaches what follows (--decode-gaps)
+	bra	DrumFltGraphTitleSe_L116
+DrumFltGraphTitleSe_L115:
+	clr	d0
+DrumFltGraphTitleSe_L116:
+	ret	0, 0x10
+
+DrumEqGraphTitleSe:
+	add	-0x10, sp
+	cmp	MT_GetString, d1
+	beq	DrumEqGraphTitleSe_L15
+	cmp	0x1800000, d1
+	beq	DrumEqGraphTitleSe_L61
+	bra	DrumEqGraphTitleSe_L60
+DrumEqGraphTitleSe_L15:
+	movbu	(MdSoundEdit_L132_Var_3), d0
+	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
+	extbu	d0
+	cmp	2, d0
+	beq	DrumEqGraphTitleSe_L33
+	cmp	1, d0
+	beq	DrumEqGraphTitleSe_L33
+	cmp	5, d0
+	beq	DrumEqGraphTitleSe_L33
+	cmp	4, d0
+	bne	DrumEqGraphTitleSe_L48
+DrumEqGraphTitleSe_L33:
+	mov	(0x20, sp), a1
+	mov	Str_EQUALIZER_5, d0
+	mov	a1, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+	bra	DrumEqGraphTitleSe_L5b
+DrumEqGraphTitleSe_L48:
+	mov	(0x20, sp), a0
+	mov	Str_empty_731, d0
+	mov	a0, (8, sp)
+	mov	d0, (0xc, sp)
+	call	sprintf_entry, [a2], 0x20
+DrumEqGraphTitleSe_L5b:
+	clr	d0
+	bra	DrumEqGraphTitleSe_L61
+# DrumEqGraphTitleSe + 0x5e: no traced path reaches what follows (--decode-gaps)
+	bra	DrumEqGraphTitleSe_L61
+DrumEqGraphTitleSe_L60:
+	clr	d0
+DrumEqGraphTitleSe_L61:
 	ret	0, 0x10
 
 DrumEqGraphXSe:
@@ -397607,7 +397838,7 @@ DrumEqGraphXSe:
 	bra	DrumEqGraphXSe_L60
 DrumEqGraphXSe_L15:
 	movbu	(MdSoundEdit_L132_Var_3), d0
-	call	func_4C0FB78D_entry, [d2,a2], 0x20
+	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	2, d0
 	beq	DrumEqGraphXSe_L33
@@ -397619,14 +397850,14 @@ DrumEqGraphXSe_L15:
 	bne	DrumEqGraphXSe_L48
 DrumEqGraphXSe_L33:
 	mov	(0x20, sp), a1
-	mov	Str_EQUALIZER_6, d0
+	mov	Str_FREQ, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 	bra	DrumEqGraphXSe_L5b
 DrumEqGraphXSe_L48:
 	mov	(0x20, sp), a0
-	mov	Str_empty_734, d0
+	mov	Str_empty_730, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
@@ -397640,248 +397871,14 @@ DrumEqGraphXSe_L60:
 DrumEqGraphXSe_L61:
 	ret	0, 0x10
 
-DrumMainGridSe:
-	add	-0x10, sp
-	cmp	MT_GetString, d1
-	beq	DrumMainGridSe_L15
-	cmp	0x1800000, d1
-	beq	DrumMainGridSe_L61
-	bra	DrumMainGridSe_L60
-DrumMainGridSe_L15:
-	movbu	(MdSoundEdit_L132_Var_3), d0
-	call	func_4C0FB78D_entry, [d2,a2], 0x20
-	extbu	d0
-	cmp	2, d0
-	beq	DrumMainGridSe_L33
-	cmp	1, d0
-	beq	DrumMainGridSe_L33
-	cmp	5, d0
-	beq	DrumMainGridSe_L33
-	cmp	4, d0
-	bne	DrumMainGridSe_L48
-DrumMainGridSe_L33:
-	mov	(0x20, sp), a1
-	mov	Str_FREQ_2, d0
-	mov	a1, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	DrumMainGridSe_L5b
-DrumMainGridSe_L48:
-	mov	(0x20, sp), a0
-	mov	Str_empty_733, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-DrumMainGridSe_L5b:
-	clr	d0
-	bra	DrumMainGridSe_L61
-# DrumMainGridSe + 0x5e: no traced path reaches what follows (--decode-gaps)
-	bra	DrumMainGridSe_L61
-DrumMainGridSe_L60:
-	clr	d0
-DrumMainGridSe_L61:
-	ret	0, 0x10
-
-DrumKeyNameSe:
-	add	-0x10, sp
-	cmp	MT_GetString, d1
-	beq	DrumKeyNameSe_L19
-	cmp	0x1800000, d1
-	bne	DrumKeyNameSe_L16
-	ret	0, 0x10
-DrumKeyNameSe_L16:
-	jmp	DrumKeyNameSe_L115
-DrumKeyNameSe_L19:
-	movbu	(MdSoundEdit_L132_Var_3), d0
-	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
-	extbu	d0
-	cmp	0, d0
-	beq	DrumKeyNameSe_L53
-	cmp	2, d0
-	beq	DrumKeyNameSe_L69
-	cmp	1, d0
-	beq	DrumKeyNameSe_L7f
-	cmp	3, d0
-	beq	DrumKeyNameSe_L94
-	cmp	5, d0
-	beq	DrumKeyNameSe_La9
-	cmp	4, d0
-	bne	DrumKeyNameSe_L42
-	jmp	DrumKeyNameSe_Lbe
-DrumKeyNameSe_L42:
-	cmp	6, d0
-	bne	DrumKeyNameSe_L49
-	jmp	DrumKeyNameSe_Ld3
-DrumKeyNameSe_L49:
-	cmp	7, d0
-	bne	DrumKeyNameSe_L50
-	jmp	DrumKeyNameSe_Le8
-DrumKeyNameSe_L50:
-	jmp	DrumKeyNameSe_Lfd
-DrumKeyNameSe_L53:
-	mov	(0x20, sp), a1
-	mov	Str_THRU_3, d0
-	mov	a1, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	jmp	DrumKeyNameSe_L110
-DrumKeyNameSe_L69:
-	mov	(0x20, sp), a0
-	mov	Str_LOW_PASS_FILTER_6dB, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	jmp	DrumKeyNameSe_L110
-DrumKeyNameSe_L7f:
-	mov	(0x20, sp), a0
-	mov	Str_LOW_PASS_FILTER_12dB, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	DrumKeyNameSe_L110
-DrumKeyNameSe_L94:
-	mov	(0x20, sp), a1
-	mov	Str_LOW_PASS_FILTER_24dB, d0
-	mov	a1, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	DrumKeyNameSe_L110
-DrumKeyNameSe_La9:
-	mov	(0x20, sp), a0
-	mov	Str_HIGH_PASS_FILTER_6dB, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	DrumKeyNameSe_L110
-DrumKeyNameSe_Lbe:
-	mov	(0x20, sp), a1
-	mov	Str_HIGH_PASS_FILTER_12dB, d0
-	mov	a1, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	DrumKeyNameSe_L110
-DrumKeyNameSe_Ld3:
-	mov	(0x20, sp), a1
-	mov	Str_HIGH_PASS_FILTER_24dB, d0
-	mov	a1, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	DrumKeyNameSe_L110
-DrumKeyNameSe_Le8:
-	mov	(0x20, sp), a0
-	mov	Str_BAND_PASS_FILTER, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	DrumKeyNameSe_L110
-DrumKeyNameSe_Lfd:
-	mov	(0x20, sp), a1
-	mov	Str_empty_732, d0
-	mov	a1, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-DrumKeyNameSe_L110:
-	clr	d0
-	bra	DrumKeyNameSe_L116
-# DrumKeyNameSe + 0x113: no traced path reaches what follows (--decode-gaps)
-	bra	DrumKeyNameSe_L116
-DrumKeyNameSe_L115:
-	clr	d0
-DrumKeyNameSe_L116:
-	ret	0, 0x10
-
-DrumRevAdjSe:
-	add	-0x10, sp
-	cmp	MT_GetString, d1
-	beq	DrumRevAdjSe_L15
-	cmp	0x1800000, d1
-	beq	DrumRevAdjSe_L61
-	bra	DrumRevAdjSe_L60
-DrumRevAdjSe_L15:
-	movbu	(MdSoundEdit_L132_Var_3), d0
-	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
-	extbu	d0
-	cmp	2, d0
-	beq	DrumRevAdjSe_L33
-	cmp	1, d0
-	beq	DrumRevAdjSe_L33
-	cmp	5, d0
-	beq	DrumRevAdjSe_L33
-	cmp	4, d0
-	bne	DrumRevAdjSe_L48
-DrumRevAdjSe_L33:
-	mov	(0x20, sp), a1
-	mov	Str_EQUALIZER_5, d0
-	mov	a1, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	DrumRevAdjSe_L5b
-DrumRevAdjSe_L48:
-	mov	(0x20, sp), a0
-	mov	Str_empty_731, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-DrumRevAdjSe_L5b:
-	clr	d0
-	bra	DrumRevAdjSe_L61
-# DrumRevAdjSe + 0x5e: no traced path reaches what follows (--decode-gaps)
-	bra	DrumRevAdjSe_L61
-DrumRevAdjSe_L60:
-	clr	d0
-DrumRevAdjSe_L61:
-	ret	0, 0x10
-
-DrumPrioritySe:
-	add	-0x10, sp
-	cmp	MT_GetString, d1
-	beq	DrumPrioritySe_L15
-	cmp	0x1800000, d1
-	beq	DrumPrioritySe_L61
-	bra	DrumPrioritySe_L60
-DrumPrioritySe_L15:
-	movbu	(MdSoundEdit_L132_Var_3), d0
-	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
-	extbu	d0
-	cmp	2, d0
-	beq	DrumPrioritySe_L33
-	cmp	1, d0
-	beq	DrumPrioritySe_L33
-	cmp	5, d0
-	beq	DrumPrioritySe_L33
-	cmp	4, d0
-	bne	DrumPrioritySe_L48
-DrumPrioritySe_L33:
-	mov	(0x20, sp), a1
-	mov	Str_FREQ, d0
-	mov	a1, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-	bra	DrumPrioritySe_L5b
-DrumPrioritySe_L48:
-	mov	(0x20, sp), a0
-	mov	Str_empty_730, d0
-	mov	a0, (8, sp)
-	mov	d0, (0xc, sp)
-	call	sprintf_entry, [a2], 0x20
-DrumPrioritySe_L5b:
-	clr	d0
-	bra	DrumPrioritySe_L61
-# DrumPrioritySe + 0x5e: no traced path reaches what follows (--decode-gaps)
-	bra	DrumPrioritySe_L61
-DrumPrioritySe_L60:
-	clr	d0
-DrumPrioritySe_L61:
-	ret	0, 0x10
-
-CopyExeSe:
+DrumGraphKeyOffXSe:
 	add	-0x18, sp
 	cmp	MT_GetString, d1
-	beq	CopyExeSe_L15
+	beq	DrumGraphKeyOffXSe_L15
 	cmp	0x1800000, d1
-	beq	CopyExeSe_L6e
-	bra	CopyExeSe_L6d
-CopyExeSe_L15:
+	beq	DrumGraphKeyOffXSe_L6e
+	bra	DrumGraphKeyOffXSe_L6d
+DrumGraphKeyOffXSe_L15:
 	movbu	(Str_empty_255), d0
 	mov	sp, a0
 	add	0x14, a0
@@ -397895,31 +397892,31 @@ CopyExeSe_L15:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x14, sp), d0
 	cmp	0, d0
-	beq	CopyExeSe_L40
+	beq	DrumGraphKeyOffXSe_L40
 	cmp	1, d0
-	beq	CopyExeSe_L55
-	bra	CopyExeSe_L68
-CopyExeSe_L40:
+	beq	DrumGraphKeyOffXSe_L55
+	bra	DrumGraphKeyOffXSe_L68
+DrumGraphKeyOffXSe_L40:
 	mov	(0x28, sp), a1
 	mov	Str_empty_729, d0
 	mov	a1, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	CopyExeSe_L68
-CopyExeSe_L55:
+	bra	DrumGraphKeyOffXSe_L68
+DrumGraphKeyOffXSe_L55:
 	mov	(0x28, sp), a0
 	mov	Str_KEYOFF_5, d0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-CopyExeSe_L68:
+DrumGraphKeyOffXSe_L68:
 	clr	d0
-	bra	CopyExeSe_L6e
-# CopyExeSe + 0x6b: no traced path reaches what follows (--decode-gaps)
-	bra	CopyExeSe_L6e
-CopyExeSe_L6d:
+	bra	DrumGraphKeyOffXSe_L6e
+# DrumGraphKeyOffXSe + 0x6b: no traced path reaches what follows (--decode-gaps)
+	bra	DrumGraphKeyOffXSe_L6e
+DrumGraphKeyOffXSe_L6d:
 	clr	d0
-CopyExeSe_L6e:
+DrumGraphKeyOffXSe_L6e:
 	ret	0, 0x18
 
 DrumNoteSelSeProc:
@@ -397990,15 +397987,15 @@ DrumNoteSelSeProc_Lb8:
 DrumNoteSelSeProc_Lc3:
 	ret	[d2,d3], 0x1c
 
-GraphLenvKfSe:
+MemoryWriteSe:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	cmp	EV_SWIN, d1
-	beq	GraphLenvKfSe_L17
+	beq	MemoryWriteSe_L17
 	cmp	0x1800000, d1
-	beq	GraphLenvKfSe_L7c
-	bra	GraphLenvKfSe_L7b
-GraphLenvKfSe_L17:
+	beq	MemoryWriteSe_L7c
+	bra	MemoryWriteSe_L7b
+MemoryWriteSe_L17:
 	call	GetPartSelect_entry, 0, 0x14
 	mov	d0, d2
 	extbu	d0
@@ -398025,23 +398022,23 @@ GraphLenvKfSe_L17:
 	mov	0x23, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	GraphLenvKfSe_L7c
-# GraphLenvKfSe + 0x79: no traced path reaches what follows (--decode-gaps)
-	bra	GraphLenvKfSe_L7c
-GraphLenvKfSe_L7b:
+	bra	MemoryWriteSe_L7c
+# MemoryWriteSe + 0x79: no traced path reaches what follows (--decode-gaps)
+	bra	MemoryWriteSe_L7c
+MemoryWriteSe_L7b:
 	clr	d0
-GraphLenvKfSe_L7c:
+MemoryWriteSe_L7c:
 	ret	[d2], 0x18
 
-GraphFltKfSe:
+DrumMemoryWriteSe:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	cmp	EV_SWIN, d1
-	beq	GraphFltKfSe_L17
+	beq	DrumMemoryWriteSe_L17
 	cmp	0x1800000, d1
-	beq	GraphFltKfSe_L87
-	bra	GraphFltKfSe_L86
-GraphFltKfSe_L17:
+	beq	DrumMemoryWriteSe_L87
+	bra	DrumMemoryWriteSe_L86
+DrumMemoryWriteSe_L17:
 	call	GetPartSelect_entry, 0, 0x14
 	extbu	d0
 	mov	0x28, d1
@@ -398070,21 +398067,22 @@ GraphFltKfSe_L17:
 	mov	0x23, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	GraphFltKfSe_L87
-# GraphFltKfSe + 0x84: no traced path reaches what follows (--decode-gaps)
-	bra	GraphFltKfSe_L87
-GraphFltKfSe_L86:
+	bra	DrumMemoryWriteSe_L87
+# DrumMemoryWriteSe + 0x84: no traced path reaches what follows (--decode-gaps)
+	bra	DrumMemoryWriteSe_L87
+DrumMemoryWriteSe_L86:
 	clr	d0
-GraphFltKfSe_L87:
+DrumMemoryWriteSe_L87:
 	ret	[d2], 0x18
-loc_4C0E2BC7:
+
+CopyExeSe:
 	add	-0x18, sp
 	cmp	EV_SWIN, d1
-	beq	GraphFltKfSe_L9f
+	beq	CopyExeSe_L15
 	cmp	0x1800000, d1
-	beq	GraphFltKfSe_Ld5
-	bra	GraphFltKfSe_Ld4
-GraphFltKfSe_L9f:
+	beq	CopyExeSe_L4b
+	bra	CopyExeSe_L4a
+CopyExeSe_L15:
 	call	GetPartSelect_entry, 0, 0x14
 	movbu	(MdSoundEdit_L132_Var_4), d1
 	extbu	d0
@@ -398097,28 +398095,29 @@ GraphFltKfSe_L9f:
 	mov	0x23, d1
 	call	InterruptTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	GraphFltKfSe_Ld5
-	bra	GraphFltKfSe_Ld5
-GraphFltKfSe_Ld4:
+	bra	CopyExeSe_L4b
+# CopyExeSe + 0x48: no traced path reaches what follows (--decode-gaps)
+	bra	CopyExeSe_L4b
+CopyExeSe_L4a:
 	clr	d0
-GraphFltKfSe_Ld5:
+CopyExeSe_L4b:
 	ret	0, 0x18
 
-MemoryBankSe:
+NamingSe:
 	movm	[d2,a2,a3], (sp)
 	add	-0x14, sp
 	mov	d0, d2
 	cmp	MT_GetString, d1
-	beq	MemoryBankSe_L20
+	beq	NamingSe_L20
 	cmp	MT_GetNamingMode, d1
-	beq	MemoryBankSe_L4e
+	beq	NamingSe_L4e
 	cmp	MT_GetStringLength, d1
-	beq	MemoryBankSe_L51
-	bra	MemoryBankSe_L60
-MemoryBankSe_L20:
+	beq	NamingSe_L51
+	bra	NamingSe_L60
+NamingSe_L20:
 	mov	0, a2
 	mov	Str_Sound_Naming_Edt_2, a3
-MemoryBankSe_L28:
+NamingSe_L28:
 	mov	a2, d0
 	exthu	d0
 	mov	a3, a0
@@ -398127,40 +398126,40 @@ MemoryBankSe_L28:
 	inc	a2
 	inc	a3
 	cmp	0x10, a2
-	blt	MemoryBankSe_L28
+	blt	NamingSe_L28
 	mov	Str_Sound_Naming_Edt_2, a1
 	mov	(0x30, sp), a0
 	call	strcpy_entry, [a2], 4
 	mov	d2, d0
-	bra	MemoryBankSe_L61
-MemoryBankSe_L4e:
+	bra	NamingSe_L61
+NamingSe_L4e:
 	clr	d0
-	bra	MemoryBankSe_L61
-MemoryBankSe_L51:
+	bra	NamingSe_L61
+NamingSe_L51:
 	mov	Str_Sound_Naming_Edt_2, a0
 	call	LibStrlen, 0, 0
-	bra	MemoryBankSe_L61
-MemoryBankSe_L60:
+	bra	NamingSe_L61
+NamingSe_L60:
 	clr	d0
-MemoryBankSe_L61:
+NamingSe_L61:
 	ret	[d2,a2,a3], 0x20
 
-MemoryWriteSe:
+NamingFixSe:
 	movm	[a2,a3], (sp)
 	add	-0x14, sp
 	cmp	EV_SWIN, d1
-	beq	MemoryWriteSe_L17
+	beq	NamingFixSe_L17
 	cmp	0x1800000, d1
-	beq	MemoryWriteSe_L5c
-	bra	MemoryWriteSe_L5b
-MemoryWriteSe_L17:
+	beq	NamingFixSe_L5c
+	bra	NamingFixSe_L5b
+NamingFixSe_L17:
 	call	GetNamingWindowID, 0, 0
 	mov	Str_Sound_Naming_Edt, a3
 	mov	a3, (0x10, sp)
 	mov	MT_GetString, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	mov	0, a2
-MemoryWriteSe_L35:
+NamingFixSe_L35:
 	movbu	(a3), d1
 	mov	0xff, d0
 	mov	d0, (0x10, sp)
@@ -398170,35 +398169,35 @@ MemoryWriteSe_L35:
 	inc	a2
 	inc	a3
 	cmp	0x10, a2
-	blt	MemoryWriteSe_L35
+	blt	NamingFixSe_L35
 	mov	0x1c, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	MemoryWriteSe_L5c
-# MemoryWriteSe + 0x59: no traced path reaches what follows (--decode-gaps)
-	bra	MemoryWriteSe_L5c
-MemoryWriteSe_L5b:
+	bra	NamingFixSe_L5c
+# NamingFixSe + 0x59: no traced path reaches what follows (--decode-gaps)
+	bra	NamingFixSe_L5c
+NamingFixSe_L5b:
 	clr	d0
-MemoryWriteSe_L5c:
+NamingFixSe_L5c:
 	ret	[a2,a3], 0x1c
 
-DrumMemoryWriteSe:
+DrumNamingSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 	mov	d0, d2
 	cmp	MT_GetString, d1
-	beq	DrumMemoryWriteSe_L20
+	beq	DrumNamingSe_L20
 	cmp	MT_GetNamingMode, d1
-	beq	DrumMemoryWriteSe_L62
+	beq	DrumNamingSe_L62
 	cmp	MT_GetStringLength, d1
-	beq	DrumMemoryWriteSe_L65
-	bra	DrumMemoryWriteSe_L74
-DrumMemoryWriteSe_L20:
+	beq	DrumNamingSe_L65
+	bra	DrumNamingSe_L74
+DrumNamingSe_L20:
 	mov	0, a2
 	mov	Str_Sound_Naming_2, a3
 	mov	0x8e, d3
-DrumMemoryWriteSe_L2b:
+DrumNamingSe_L2b:
 	mov	a2, d1
 	exthu	d1
 	movbu	(Str_empty_255), d0
@@ -398215,40 +398214,40 @@ DrumMemoryWriteSe_L2b:
 	inc	a2
 	inc	a3
 	cmp	0xd, a2
-	blt	DrumMemoryWriteSe_L2b
+	blt	DrumNamingSe_L2b
 	mov	(0x34, sp), a0
 	mov	Str_Sound_Naming_2, a1
 	call	strcpy_entry, [a2], 4
 	mov	d2, d0
-	bra	DrumMemoryWriteSe_L75
-DrumMemoryWriteSe_L62:
+	bra	DrumNamingSe_L75
+DrumNamingSe_L62:
 	clr	d0
-	bra	DrumMemoryWriteSe_L75
-DrumMemoryWriteSe_L65:
+	bra	DrumNamingSe_L75
+DrumNamingSe_L65:
 	mov	Str_Sound_Naming_2, a0
 	call	LibStrlen, 0, 0
-	bra	DrumMemoryWriteSe_L75
-DrumMemoryWriteSe_L74:
+	bra	DrumNamingSe_L75
+DrumNamingSe_L74:
 	clr	d0
-DrumMemoryWriteSe_L75:
+DrumNamingSe_L75:
 	ret	[d2,d3,a2,a3], 0x24
 
-BitmapKenbanSe:
+DrumNamingFixSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 	cmp	EV_SWIN, d1
-	beq	BitmapKenbanSe_L17
+	beq	DrumNamingFixSe_L17
 	cmp	0x1800000, d1
-	beq	BitmapKenbanSe_L71
-	bra	BitmapKenbanSe_L70
-BitmapKenbanSe_L17:
+	beq	DrumNamingFixSe_L71
+	bra	DrumNamingFixSe_L70
+DrumNamingFixSe_L17:
 	call	GetNamingWindowID, 0, 0
 	mov	Str_Sound_Naming, a3
 	mov	a3, (0x10, sp)
 	mov	MT_GetString, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	mov	0, a2
-BitmapKenbanSe_L35:
+DrumNamingFixSe_L35:
 	movbu	(a3), d1
 	mov	0xff, d0
 	mov	d0, (0x10, sp)
@@ -398268,17 +398267,17 @@ BitmapKenbanSe_L35:
 	mov	d2, d0
 	call	func_4C0FB6C9_entry, [d2,d3,a2], 0x24
 	cmp	0xd, a2
-	blt	BitmapKenbanSe_L35
+	blt	DrumNamingFixSe_L35
 	mov	0x1f, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
 	clr	d0
-	bra	BitmapKenbanSe_L71
-# BitmapKenbanSe + 0x6e: no traced path reaches what follows (--decode-gaps)
-	bra	BitmapKenbanSe_L71
-BitmapKenbanSe_L70:
+	bra	DrumNamingFixSe_L71
+# DrumNamingFixSe + 0x6e: no traced path reaches what follows (--decode-gaps)
+	bra	DrumNamingFixSe_L71
+DrumNamingFixSe_L70:
 	clr	d0
-BitmapKenbanSe_L71:
+DrumNamingFixSe_L71:
 	ret	[d2,d3,a2,a3], 0x24
 
 AcGridBoxSeProc:
@@ -398752,19 +398751,19 @@ AcGridBoxSeProc_L54a:
 AcGridBoxSeProc_L557:
 	ret	[d2,d3,a2], 0x20
 
-DrumTsetGridSe:
+ToneSelGridSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x68, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	DrumTsetGridSe_L12
-	jmp	DrumTsetGridSe_Lbc6
-DrumTsetGridSe_L12:
+	bge	ToneSelGridSe_L12
+	jmp	ToneSelGridSe_Lbc6
+ToneSelGridSe_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	DrumTsetGridSe_L1d
-	jmp	DrumTsetGridSe_Lbc6
-DrumTsetGridSe_L1d:
+	ble	ToneSelGridSe_L1d
+	jmp	ToneSelGridSe_Lbc6
+ToneSelGridSe_L1d:
 	add	0xfe800001, d2
 	mov	DrumTsetGridSe_L1d_Records, a1
 	mov	0xf, d0
@@ -398774,21 +398773,21 @@ DrumTsetGridSe_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	DrumTsetGridSe_L4e
+	beq	ToneSelGridSe_L4e
 	setlb
 	cmp	0, d0
-	bne	DrumTsetGridSe_L40
-	jmp	DrumTsetGridSe_Lbc6
-DrumTsetGridSe_L40:
+	bne	ToneSelGridSe_L40
+	jmp	ToneSelGridSe_Lbc6
+ToneSelGridSe_L40:
 	add	8, a0
 	cmp	MonoPolySe_L3eb_Table, a0
-	bcs	DrumTsetGridSe_L4b
+	bcs	ToneSelGridSe_L4b
 	mov	a1, a0
-DrumTsetGridSe_L4b:
+ToneSelGridSe_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-DrumTsetGridSe_L4e:
+ToneSelGridSe_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0E3371:
@@ -398810,14 +398809,14 @@ loc_4C0E3371:
 	exth	d0
 	mov	d0, (0x28, sp)
 	cmp	1, d0
-	bge	DrumTsetGridSe_L8c
-	jmp	DrumTsetGridSe_L41b
-DrumTsetGridSe_L8c:
+	bge	ToneSelGridSe_L8c
+	jmp	ToneSelGridSe_L41b
+ToneSelGridSe_L8c:
 	mov	(0x28, sp), d0
 	cmp	0xb, d0
-	ble	DrumTsetGridSe_L95
-	jmp	DrumTsetGridSe_L41b
-DrumTsetGridSe_L95:
+	ble	ToneSelGridSe_L95
+	jmp	ToneSelGridSe_L41b
+ToneSelGridSe_L95:
 	mov	(0x28, sp), d0
 	mov	DrumTsetGridSe_L95_Table, a0
 	add	-1, d0
@@ -398829,7 +398828,7 @@ loc_4C0E33C2:
 	extbu	d2
 	mov	d2, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	DrumTsetGridSe_L41b
+	jmp	ToneSelGridSe_L41b
 loc_4C0E33D0:
 	extbu	d2
 	mov	sp, a0
@@ -398883,9 +398882,9 @@ loc_4C0E33D0:
 	call	func_4C09BD37_entry, [d2,d3,a2,a3], 0x20
 	exth	d0
 	cmp	0, d0
-	bne	DrumTsetGridSe_L128
-	jmp	DrumTsetGridSe_L41b
-DrumTsetGridSe_L128:
+	bne	ToneSelGridSe_L128
+	jmp	ToneSelGridSe_L41b
+ToneSelGridSe_L128:
 	movbu	(0x3f, sp), d0
 	mov	a2, a0
 	inc	d0
@@ -398893,9 +398892,9 @@ DrumTsetGridSe_L128:
 	call	func_4C09C53D_entry, [d2,d3,a2,a3], 0x1c
 	exth	d0
 	cmp	1, d0
-	beq	DrumTsetGridSe_L13d
-	jmp	DrumTsetGridSe_L41b
-DrumTsetGridSe_L13d:
+	beq	ToneSelGridSe_L13d
+	jmp	ToneSelGridSe_L41b
+ToneSelGridSe_L13d:
 	movhu	(0x48, sp), d0
 	mov	d2, d1
 	and	0x7fff, d0
@@ -398944,7 +398943,7 @@ DrumTsetGridSe_L13d:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DrumTsetGridSe_L41b
+	jmp	ToneSelGridSe_L41b
 loc_4C0E34EF:
 	extbu	d2
 	mov	0x7a, d0
@@ -398995,9 +398994,9 @@ loc_4C0E34EF:
 	call	func_4C09BD37_entry, [d2,d3,a2,a3], 0x20
 	exth	d0
 	cmp	0, d0
-	bne	DrumTsetGridSe_L242
-	jmp	DrumTsetGridSe_L41b
-DrumTsetGridSe_L242:
+	bne	ToneSelGridSe_L242
+	jmp	ToneSelGridSe_L41b
+ToneSelGridSe_L242:
 	movhu	(0x48, sp), d0
 	mov	d2, d1
 	and	0x7fff, d0
@@ -399010,9 +399009,9 @@ DrumTsetGridSe_L242:
 	call	func_4C09C1AA_entry, [d2,d3,a2,a3], 0x1c
 	exth	d0
 	cmp	0, d0
-	bne	DrumTsetGridSe_L263
-	jmp	DrumTsetGridSe_L41b
-DrumTsetGridSe_L263:
+	bne	ToneSelGridSe_L263
+	jmp	ToneSelGridSe_L41b
+ToneSelGridSe_L263:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	movhu	(0x20, sp), d0
@@ -399053,7 +399052,7 @@ DrumTsetGridSe_L263:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DrumTsetGridSe_L41b
+	jmp	ToneSelGridSe_L41b
 loc_4C0E35FD:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -399073,7 +399072,7 @@ loc_4C0E35FD:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DrumTsetGridSe_L41b
+	jmp	ToneSelGridSe_L41b
 loc_4C0E3624:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -399091,7 +399090,7 @@ loc_4C0E3624:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DrumTsetGridSe_L41b
+	jmp	ToneSelGridSe_L41b
 loc_4C0E3649:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -399112,7 +399111,7 @@ loc_4C0E3649:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DrumTsetGridSe_L41b
+	jmp	ToneSelGridSe_L41b
 loc_4C0E3673:
 	extbu	d2
 	mov	sp, a2
@@ -399148,7 +399147,7 @@ loc_4C0E3673:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	DrumTsetGridSe_L41b
+	bra	ToneSelGridSe_L41b
 loc_4C0E36D2:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -399168,7 +399167,7 @@ loc_4C0E36D2:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DrumTsetGridSe_L41b
+	bra	ToneSelGridSe_L41b
 loc_4C0E36F8:
 	extbu	d2
 	mov	0x7a, d0
@@ -399192,13 +399191,13 @@ loc_4C0E36F8:
 	movhu	(0x4a, sp), d1
 	mov	d2, d0
 	call	func_4C0FB70C_entry, [d2,d3,a2], 0x24
-	bra	DrumTsetGridSe_L41b
+	bra	ToneSelGridSe_L41b
 loc_4C0E372E:
 	extbu	d2
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C0FC815_entry, [d2,d3,a2,a3], 0x28
-DrumTsetGridSe_L41b:
+ToneSelGridSe_L41b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x30, sp), d1
 	mov	d1, (0x10, sp)
@@ -399224,14 +399223,14 @@ loc_4C0E3755:
 	exth	d0
 	mov	d0, (0x2c, sp)
 	cmp	1, d0
-	bge	DrumTsetGridSe_L46f
-	jmp	DrumTsetGridSe_L7f9
-DrumTsetGridSe_L46f:
+	bge	ToneSelGridSe_L46f
+	jmp	ToneSelGridSe_L7f9
+ToneSelGridSe_L46f:
 	mov	(0x2c, sp), d0
 	cmp	0xb, d0
-	ble	DrumTsetGridSe_L478
-	jmp	DrumTsetGridSe_L7f9
-DrumTsetGridSe_L478:
+	ble	ToneSelGridSe_L478
+	jmp	ToneSelGridSe_L7f9
+ToneSelGridSe_L478:
 	mov	(0x2c, sp), d0
 	mov	DrumTsetGridSe_L478_Table, a0
 	add	-1, d0
@@ -399242,7 +399241,7 @@ loc_4C0E37A5:
 	clr	d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	DrumTsetGridSe_L7f9
+	jmp	ToneSelGridSe_L7f9
 loc_4C0E37B1:
 	mov	d1, d2
 	extbu	d2
@@ -399296,9 +399295,9 @@ loc_4C0E37B1:
 	call	func_4C09BD37_entry, [d2,d3,a2,a3], 0x20
 	exth	d0
 	cmp	0, d0
-	bne	DrumTsetGridSe_L50b
-	jmp	DrumTsetGridSe_L7f9
-DrumTsetGridSe_L50b:
+	bne	ToneSelGridSe_L50b
+	jmp	ToneSelGridSe_L7f9
+ToneSelGridSe_L50b:
 	movbu	(0x3f, sp), d0
 	mov	a2, a0
 	add	-1, d0
@@ -399306,9 +399305,9 @@ DrumTsetGridSe_L50b:
 	call	func_4C09C53D_entry, [d2,d3,a2,a3], 0x1c
 	exth	d0
 	cmp	1, d0
-	beq	DrumTsetGridSe_L521
-	jmp	DrumTsetGridSe_L7f9
-DrumTsetGridSe_L521:
+	beq	ToneSelGridSe_L521
+	jmp	ToneSelGridSe_L7f9
+ToneSelGridSe_L521:
 	movhu	(0x48, sp), d0
 	mov	d3, a0
 	and	0x7fff, d0
@@ -399357,7 +399356,7 @@ DrumTsetGridSe_L521:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DrumTsetGridSe_L7f9
+	jmp	ToneSelGridSe_L7f9
 loc_4C0E38D5:
 	extbu	d1
 	mov	0x7a, d2
@@ -399409,9 +399408,9 @@ loc_4C0E38D5:
 	call	func_4C09BD37_entry, [d2,d3,a2,a3], 0x20
 	exth	d0
 	cmp	0, d0
-	bne	DrumTsetGridSe_L629
-	jmp	DrumTsetGridSe_L7f9
-DrumTsetGridSe_L629:
+	bne	ToneSelGridSe_L629
+	jmp	ToneSelGridSe_L7f9
+ToneSelGridSe_L629:
 	movhu	(0x48, sp), d0
 	mov	d2, d1
 	and	0x7fff, d0
@@ -399424,9 +399423,9 @@ DrumTsetGridSe_L629:
 	call	func_4C09C1AA_entry, [d2,d3,a2,a3], 0x1c
 	exth	d0
 	cmp	0, d0
-	bne	DrumTsetGridSe_L64b
-	jmp	DrumTsetGridSe_L7f9
-DrumTsetGridSe_L64b:
+	bne	ToneSelGridSe_L64b
+	jmp	ToneSelGridSe_L7f9
+ToneSelGridSe_L64b:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	movhu	(0x24, sp), d0
@@ -399467,7 +399466,7 @@ DrumTsetGridSe_L64b:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DrumTsetGridSe_L7f9
+	jmp	ToneSelGridSe_L7f9
 loc_4C0E39E5:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -399485,7 +399484,7 @@ loc_4C0E39E5:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DrumTsetGridSe_L7f9
+	jmp	ToneSelGridSe_L7f9
 loc_4C0E3A07:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -399503,7 +399502,7 @@ loc_4C0E3A07:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DrumTsetGridSe_L7f9
+	jmp	ToneSelGridSe_L7f9
 loc_4C0E3A2C:
 	mov	-0x80, d0
 	mov	d0, (0x10, sp)
@@ -399523,7 +399522,7 @@ loc_4C0E3A2C:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DrumTsetGridSe_L7f9
+	jmp	ToneSelGridSe_L7f9
 loc_4C0E3A55:
 	extbu	d1
 	mov	sp, a2
@@ -399559,7 +399558,7 @@ loc_4C0E3A55:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	DrumTsetGridSe_L7f9
+	bra	ToneSelGridSe_L7f9
 loc_4C0E3AB4:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -399577,7 +399576,7 @@ loc_4C0E3AB4:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DrumTsetGridSe_L7f9
+	bra	ToneSelGridSe_L7f9
 loc_4C0E3AD5:
 	mov	d1, d2
 	extbu	d2
@@ -399602,13 +399601,13 @@ loc_4C0E3AD5:
 	exthu	d0
 	movhu	(0x4a, sp), d1
 	call	func_4C0FB70C_entry, [d2,d3,a2], 0x24
-	bra	DrumTsetGridSe_L7f9
+	bra	ToneSelGridSe_L7f9
 loc_4C0E3B0C:
 	extbu	d1
 	mov	d1, d0
 	mov	-1, d1
 	call	func_4C0FC815_entry, [d2,d3,a2,a3], 0x28
-DrumTsetGridSe_L7f9:
+ToneSelGridSe_L7f9:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x30, sp), d1
 	mov	d1, (0x10, sp)
@@ -399653,13 +399652,13 @@ loc_4C0E3B5D:
 	movhu	(0x4c, sp), d0
 	exth	d0
 	cmp	1, d0
-	bge	DrumTsetGridSe_L870
-	jmp	DrumTsetGridSe_Lba8
-DrumTsetGridSe_L870:
+	bge	ToneSelGridSe_L870
+	jmp	ToneSelGridSe_Lba8
+ToneSelGridSe_L870:
 	cmp	0xb, d0
-	ble	DrumTsetGridSe_L877
-	jmp	DrumTsetGridSe_Lba8
-DrumTsetGridSe_L877:
+	ble	ToneSelGridSe_L877
+	jmp	ToneSelGridSe_Lba8
+ToneSelGridSe_L877:
 	add	-1, d0
 	asl2	d0
 	mov	DrumTsetGridSe_L877_Table, a0
@@ -399670,7 +399669,7 @@ loc_4C0E3BA2:
 	mov	d1, d0
 	mov	a3, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	DrumTsetGridSe_Lba8
+	jmp	ToneSelGridSe_Lba8
 loc_4C0E3BAF:
 	extbu	d1
 	mov	sp, a0
@@ -399718,7 +399717,7 @@ loc_4C0E3BAF:
 	movbu	d0, (0x54, sp)
 	clr	d0
 	movbu	d0, (0x55, sp)
-	jmp	DrumTsetGridSe_Lba8
+	jmp	ToneSelGridSe_Lba8
 loc_4C0E3C1D:
 	mov	d1, d2
 	extbu	d2
@@ -399763,7 +399762,7 @@ loc_4C0E3C1D:
 	mov	(0x38, sp), a1
 	mov	a3, a0
 	call	strcpy_entry, [a2], 4
-	jmp	DrumTsetGridSe_Lba8
+	jmp	ToneSelGridSe_Lba8
 loc_4C0E3C84:
 	mov	d1, d3
 	extbu	d3
@@ -399849,37 +399848,37 @@ loc_4C0E3C84:
 	movbu	(0x3c, sp), d1
 	movbu	(0x40, sp), d0
 	cmp	d0, d1
-	bne	DrumTsetGridSe_La66
+	bne	ToneSelGridSe_La66
 	movbu	(0x3d, sp), d1
 	movbu	(0x41, sp), d0
 	cmp	d0, d1
-	bne	DrumTsetGridSe_La66
+	bne	ToneSelGridSe_La66
 	movbu	(0x3e, sp), d1
 	movbu	(0x42, sp), d0
 	cmp	d0, d1
-	bne	DrumTsetGridSe_La66
+	bne	ToneSelGridSe_La66
 	movbu	(0x43, sp), d0
 	extb	d0
 	cmp	0, d0
-	bne	DrumTsetGridSe_La66
+	bne	ToneSelGridSe_La66
 	movbu	(0x44, sp), d0
 	extb	d0
 	cmp	0, d0
-	bne	DrumTsetGridSe_La66
+	bne	ToneSelGridSe_La66
 	movbu	(0x45, sp), d0
 	cmp	0x7f, d0
-	bne	DrumTsetGridSe_La66
+	bne	ToneSelGridSe_La66
 	mov	a3, (8, sp)
 	mov	Str_empty_727, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DrumTsetGridSe_Lba8
-DrumTsetGridSe_La66:
+	jmp	ToneSelGridSe_Lba8
+ToneSelGridSe_La66:
 	mov	a3, (8, sp)
 	mov	Str_empty_726, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DrumTsetGridSe_Lba8
+	jmp	ToneSelGridSe_Lba8
 loc_4C0E3D98:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -399897,7 +399896,7 @@ loc_4C0E3D98:
 	clr	d1
 	mov	a3, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	DrumTsetGridSe_Lba8
+	jmp	ToneSelGridSe_Lba8
 loc_4C0E3DBE:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -399915,7 +399914,7 @@ loc_4C0E3DBE:
 	mov	1, d1
 	mov	a3, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	DrumTsetGridSe_Lba8
+	jmp	ToneSelGridSe_Lba8
 loc_4C0E3DE6:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -399931,7 +399930,7 @@ loc_4C0E3DE6:
 	mov	1, d1
 	mov	a3, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	DrumTsetGridSe_Lba8
+	jmp	ToneSelGridSe_Lba8
 loc_4C0E3E0A:
 	extbu	d1
 	mov	0x7a, d0
@@ -399949,7 +399948,7 @@ loc_4C0E3E0A:
 	movhu	(0x4a, sp), d0
 	mov	a3, a0
 	call	func_4C0FCABD_entry, 0, 0x10
-	jmp	DrumTsetGridSe_Lba8
+	jmp	ToneSelGridSe_Lba8
 loc_4C0E3E36:
 	mov	d1, d2
 	extbu	d2
@@ -399966,7 +399965,7 @@ loc_4C0E3E36:
 	call	func_4C0FB648_entry, [d2,d3,a2], 0x24
 	movhu	(0x4a, sp), d0
 	cmp	0, d0
-	bne	DrumTsetGridSe_Lb58
+	bne	ToneSelGridSe_Lb58
 	add	2, d2
 	mov	d2, d0
 	exthu	d0
@@ -399977,13 +399976,13 @@ loc_4C0E3E36:
 	movbu	(0x46, sp), d0
 	mov	a3, a0
 	call	func_4C0FCB20_entry, 0, 0x14
-	bra	DrumTsetGridSe_Lba8
-DrumTsetGridSe_Lb58:
+	bra	ToneSelGridSe_Lba8
+ToneSelGridSe_Lb58:
 	mov	a3, (8, sp)
 	mov	Str_empty_725, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DrumTsetGridSe_Lba8
+	bra	ToneSelGridSe_Lba8
 loc_4C0E3E89:
 	extbu	d1
 	mov	sp, a0
@@ -400004,41 +400003,41 @@ loc_4C0E3E89:
 	movhu	(0x4a, sp), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DrumTsetGridSe_Lba8
+	bra	ToneSelGridSe_Lba8
 loc_4C0E3EBC:
 	extbu	d1
 	mov	d1, d0
 	mov	a3, a0
 	call	func_4C0FC9A5_entry, [d2,d3,a2], 0x24
-DrumTsetGridSe_Lba8:
+ToneSelGridSe_Lba8:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x20, sp), a0
 	mov	MT_GridDraw, d1
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	DrumTsetGridSe_Lbc7
+	bra	ToneSelGridSe_Lbc7
 loc_4C0E3EE1:
 	mov	d3, d0
-	bra	DrumTsetGridSe_Lbc7
-DrumTsetGridSe_Lbc6:
+	bra	ToneSelGridSe_Lbc7
+ToneSelGridSe_Lbc6:
 	clr	d0
-DrumTsetGridSe_Lbc7:
+ToneSelGridSe_Lbc7:
 	ret	[d2,d3,a2,a3], 0x78
 
-MonoPolySe:
+ToneGridSe1:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x38, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	MonoPolySe_L12
-	jmp	MonoPolySe_L57f
-MonoPolySe_L12:
+	bge	ToneGridSe1_L12
+	jmp	ToneGridSe1_L57f
+ToneGridSe1_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	MonoPolySe_L1d
-	jmp	MonoPolySe_L57f
-MonoPolySe_L1d:
+	ble	ToneGridSe1_L1d
+	jmp	ToneGridSe1_L57f
+ToneGridSe1_L1d:
 	add	0xfe800001, d2
 	mov	MonoPolySe_L1d_Records, a1
 	mov	a1, a0
@@ -400048,21 +400047,21 @@ MonoPolySe_L1d:
 	add	d0, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	MonoPolySe_L4d
+	beq	ToneGridSe1_L4d
 	setlb
 	cmp	0, d0
-	bne	MonoPolySe_L3f
-	jmp	MonoPolySe_L57f
-MonoPolySe_L3f:
+	bne	ToneGridSe1_L3f
+	jmp	ToneGridSe1_L57f
+ToneGridSe1_L3f:
 	add	8, a0
 	cmp	GraphKeyLay3Se_L1d_Records, a0
-	bcs	MonoPolySe_L4a
+	bcs	ToneGridSe1_L4a
 	mov	a1, a0
-MonoPolySe_L4a:
+ToneGridSe1_L4a:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-MonoPolySe_L4d:
+ToneGridSe1_L4d:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0E3F3A:
@@ -400079,13 +400078,13 @@ loc_4C0E3F3A:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	bge	MonoPolySe_L7d
-	jmp	MonoPolySe_L1da
-MonoPolySe_L7d:
+	bge	ToneGridSe1_L7d
+	jmp	ToneGridSe1_L1da
+ToneGridSe1_L7d:
 	cmp	9, d0
-	ble	MonoPolySe_L84
-	jmp	MonoPolySe_L1da
-MonoPolySe_L84:
+	ble	ToneGridSe1_L84
+	jmp	ToneGridSe1_L1da
+ToneGridSe1_L84:
 	add	-1, d0
 	asl2	d0
 	mov	MonoPolySe_L84_Table, a0
@@ -400095,7 +400094,7 @@ loc_4C0E3F79:
 	mov	1, d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	MonoPolySe_L1da
+	jmp	ToneGridSe1_L1da
 loc_4C0E3F86:
 	mov	2, d0
 	mov	d0, (0x10, sp)
@@ -400115,7 +400114,7 @@ loc_4C0E3F86:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	MonoPolySe_L1da
+	jmp	ToneGridSe1_L1da
 loc_4C0E3FAE:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -400135,7 +400134,7 @@ loc_4C0E3FAE:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	MonoPolySe_L1da
+	jmp	ToneGridSe1_L1da
 loc_4C0E3FD4:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -400154,13 +400153,13 @@ loc_4C0E3FD4:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	MonoPolySe_L1da
+	jmp	ToneGridSe1_L1da
 loc_4C0E3FF8:
 	extbu	d1
 	mov	d1, d0
 	mov	1, d1
 	call	func_4C0FC815_entry, [d2,d3,a2,a3], 0x28
-	jmp	MonoPolySe_L1da
+	jmp	ToneGridSe1_L1da
 loc_4C0E4006:
 	mov	d1, d2
 	extbu	d2
@@ -400185,7 +400184,7 @@ loc_4C0E4006:
 	movhu	(0x20, sp), d1
 	mov	d2, d0
 	call	func_4C0FB70C_entry, [d2,d3,a2], 0x24
-	jmp	MonoPolySe_L1da
+	jmp	ToneGridSe1_L1da
 loc_4C0E403E:
 	extbu	d1
 	mov	0x7a, d2
@@ -400209,7 +400208,7 @@ loc_4C0E403E:
 	exthu	d0
 	movhu	(0x20, sp), d1
 	call	func_4C0FB70C_entry, [d2,d3,a2], 0x24
-	bra	MonoPolySe_L1da
+	bra	ToneGridSe1_L1da
 loc_4C0E407A:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -400229,7 +400228,7 @@ loc_4C0E407A:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	MonoPolySe_L1da
+	bra	ToneGridSe1_L1da
 loc_4C0E40A0:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -400247,7 +400246,7 @@ loc_4C0E40A0:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-MonoPolySe_L1da:
+ToneGridSe1_L1da:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -400268,13 +400267,13 @@ loc_4C0E40DC:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	bge	MonoPolySe_L21f
-	jmp	MonoPolySe_L374
-MonoPolySe_L21f:
+	bge	ToneGridSe1_L21f
+	jmp	ToneGridSe1_L374
+ToneGridSe1_L21f:
 	cmp	9, d0
-	ble	MonoPolySe_L226
-	jmp	MonoPolySe_L374
-MonoPolySe_L226:
+	ble	ToneGridSe1_L226
+	jmp	ToneGridSe1_L374
+ToneGridSe1_L226:
 	add	-1, d0
 	asl2	d0
 	mov	MonoPolySe_L226_Table, a0
@@ -400284,7 +400283,7 @@ loc_4C0E411B:
 	clr	d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	MonoPolySe_L374
+	jmp	ToneGridSe1_L374
 loc_4C0E4127:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -400303,7 +400302,7 @@ loc_4C0E4127:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	MonoPolySe_L374
+	jmp	ToneGridSe1_L374
 loc_4C0E414D:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -400321,7 +400320,7 @@ loc_4C0E414D:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	MonoPolySe_L374
+	jmp	ToneGridSe1_L374
 loc_4C0E416F:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -400338,13 +400337,13 @@ loc_4C0E416F:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	MonoPolySe_L374
+	jmp	ToneGridSe1_L374
 loc_4C0E4190:
 	extbu	d1
 	mov	d1, d0
 	mov	-1, d1
 	call	func_4C0FC815_entry, [d2,d3,a2,a3], 0x28
-	jmp	MonoPolySe_L374
+	jmp	ToneGridSe1_L374
 loc_4C0E419E:
 	extbu	d1
 	mov	0x7a, d2
@@ -400368,7 +400367,7 @@ loc_4C0E419E:
 	movhu	(0x20, sp), d1
 	mov	d2, d0
 	call	func_4C0FB70C_entry, [d2,d3,a2], 0x24
-	jmp	MonoPolySe_L374
+	jmp	ToneGridSe1_L374
 loc_4C0E41D5:
 	mov	d1, d2
 	extbu	d2
@@ -400393,7 +400392,7 @@ loc_4C0E41D5:
 	movhu	(0x20, sp), d1
 	mov	d2, d0
 	call	func_4C0FB70C_entry, [d2,d3,a2], 0x24
-	bra	MonoPolySe_L374
+	bra	ToneGridSe1_L374
 loc_4C0E4212:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -400412,7 +400411,7 @@ loc_4C0E4212:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	MonoPolySe_L374
+	bra	ToneGridSe1_L374
 loc_4C0E4236:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -400432,7 +400431,7 @@ loc_4C0E4236:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-MonoPolySe_L374:
+ToneGridSe1_L374:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -400473,13 +400472,13 @@ loc_4C0E42A0:
 	add	-2, d1
 	exth	d0
 	cmp	1, d0
-	bge	MonoPolySe_L3e4
-	jmp	MonoPolySe_L563
-MonoPolySe_L3e4:
+	bge	ToneGridSe1_L3e4
+	jmp	ToneGridSe1_L563
+ToneGridSe1_L3e4:
 	cmp	9, d0
-	ble	MonoPolySe_L3eb
-	jmp	MonoPolySe_L563
-MonoPolySe_L3eb:
+	ble	ToneGridSe1_L3eb
+	jmp	ToneGridSe1_L563
+ToneGridSe1_L3eb:
 	add	-1, d0
 	asl2	d0
 	mov	MonoPolySe_L3eb_Table, a0
@@ -400490,7 +400489,7 @@ loc_4C0E42E0:
 	mov	d1, d0
 	mov	a2, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	MonoPolySe_L563
+	jmp	ToneGridSe1_L563
 loc_4C0E42ED:
 	extbu	d1
 	mov	0x7a, d0
@@ -400508,30 +400507,30 @@ loc_4C0E42ED:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x1c, sp), d0
 	cmp	0, d0
-	beq	MonoPolySe_L434
+	beq	ToneGridSe1_L434
 	cmp	1, d0
-	beq	MonoPolySe_L448
+	beq	ToneGridSe1_L448
 	cmp	2, d0
-	beq	MonoPolySe_L45c
-	jmp	MonoPolySe_L563
-MonoPolySe_L434:
+	beq	ToneGridSe1_L45c
+	jmp	ToneGridSe1_L563
+ToneGridSe1_L434:
 	mov	a2, (8, sp)
 	mov	Str_NORM_3, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	MonoPolySe_L563
-MonoPolySe_L448:
+	jmp	ToneGridSe1_L563
+ToneGridSe1_L448:
 	mov	a2, (8, sp)
 	mov	Str_DRUM_3, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	MonoPolySe_L563
-MonoPolySe_L45c:
+	jmp	ToneGridSe1_L563
+ToneGridSe1_L45c:
 	mov	a2, (8, sp)
 	mov	Str_ATK_11, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	MonoPolySe_L563
+	jmp	ToneGridSe1_L563
 loc_4C0E4358:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -400547,7 +400546,7 @@ loc_4C0E4358:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	MonoPolySe_L563
+	jmp	ToneGridSe1_L563
 loc_4C0E437A:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -400565,13 +400564,13 @@ loc_4C0E437A:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	MonoPolySe_L563
+	jmp	ToneGridSe1_L563
 loc_4C0E43A0:
 	extbu	d1
 	mov	d1, d0
 	mov	a2, a0
 	call	func_4C0FC9A5_entry, [d2,d3,a2], 0x24
-	jmp	MonoPolySe_L563
+	jmp	ToneGridSe1_L563
 loc_4C0E43AD:
 	extbu	d1
 	mov	0x7a, d0
@@ -400589,7 +400588,7 @@ loc_4C0E43AD:
 	movhu	(0x20, sp), d0
 	mov	a2, a0
 	call	func_4C0FCA89_entry, [d2,d3,a2], 0x24
-	bra	MonoPolySe_L563
+	bra	ToneGridSe1_L563
 loc_4C0E43D5:
 	extbu	d1
 	mov	0x7a, d0
@@ -400606,7 +400605,7 @@ loc_4C0E43D5:
 	movhu	(0x20, sp), d0
 	mov	a2, a0
 	call	func_4C0FCABD_entry, 0, 0x10
-	bra	MonoPolySe_L563
+	bra	ToneGridSe1_L563
 loc_4C0E43FD:
 	extbu	d1
 	mov	0x7a, d0
@@ -400625,7 +400624,7 @@ loc_4C0E43FD:
 	movbu	(0x1c, sp), d0
 	mov	a2, a0
 	call	func_4C0FCB20_entry, 0, 0x14
-	bra	MonoPolySe_L563
+	bra	ToneGridSe1_L563
 loc_4C0E4426:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -400643,34 +400642,34 @@ loc_4C0E4426:
 	mov	1, d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-MonoPolySe_L563:
+ToneGridSe1_L563:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	MonoPolySe_L580
+	bra	ToneGridSe1_L580
 loc_4C0E4464:
 	mov	d3, d0
-	bra	MonoPolySe_L580
-MonoPolySe_L57f:
+	bra	ToneGridSe1_L580
+ToneGridSe1_L57f:
 	clr	d0
-MonoPolySe_L580:
+ToneGridSe1_L580:
 	ret	[d2,d3,a2,a3], 0x48
 
-GraphKeyLay3Se:
+LayerGridSe1:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x34, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	GraphKeyLay3Se_L12
-	jmp	GraphKeyLay3Se_L5ca
-GraphKeyLay3Se_L12:
+	bge	LayerGridSe1_L12
+	jmp	LayerGridSe1_L5ca
+LayerGridSe1_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	GraphKeyLay3Se_L1d
-	jmp	GraphKeyLay3Se_L5ca
-GraphKeyLay3Se_L1d:
+	ble	LayerGridSe1_L1d
+	jmp	LayerGridSe1_L5ca
+LayerGridSe1_L1d:
 	mov	GraphKeyLay3Se_L1d_Records, a1
 	add	0xfe800001, d2
 	mov	0xf, d0
@@ -400680,21 +400679,21 @@ GraphKeyLay3Se_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	GraphKeyLay3Se_L4e
+	beq	LayerGridSe1_L4e
 	setlb
 	cmp	0, d0
-	bne	GraphKeyLay3Se_L40
-	jmp	GraphKeyLay3Se_L5ca
-GraphKeyLay3Se_L40:
+	bne	LayerGridSe1_L40
+	jmp	LayerGridSe1_L5ca
+LayerGridSe1_L40:
 	add	8, a0
 	cmp	GraphKeyLay4Se_L1d_Records, a0
-	bcs	GraphKeyLay3Se_L4b
+	bcs	LayerGridSe1_L4b
 	mov	a1, a0
-GraphKeyLay3Se_L4b:
+LayerGridSe1_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-GraphKeyLay3Se_L4e:
+LayerGridSe1_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0E44BE:
@@ -400712,27 +400711,27 @@ loc_4C0E44BE:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	GraphKeyLay3Se_L95
+	beq	LayerGridSe1_L95
 	cmp	2, d0
-	beq	GraphKeyLay3Se_La3
+	beq	LayerGridSe1_La3
 	cmp	3, d0
-	beq	GraphKeyLay3Se_Ldf
+	beq	LayerGridSe1_Ldf
 	cmp	4, d0
-	bne	GraphKeyLay3Se_L8b
-	jmp	GraphKeyLay3Se_L11a
-GraphKeyLay3Se_L8b:
+	bne	LayerGridSe1_L8b
+	jmp	LayerGridSe1_L11a
+LayerGridSe1_L8b:
 	cmp	5, d0
-	bne	GraphKeyLay3Se_L92
-	jmp	GraphKeyLay3Se_L155
-GraphKeyLay3Se_L92:
-	jmp	GraphKeyLay3Se_L176
-GraphKeyLay3Se_L95:
+	bne	LayerGridSe1_L92
+	jmp	LayerGridSe1_L155
+LayerGridSe1_L92:
+	jmp	LayerGridSe1_L176
+LayerGridSe1_L95:
 	mov	1, d0
 	mov	d2, d1
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	GraphKeyLay3Se_L176
-GraphKeyLay3Se_La3:
+	jmp	LayerGridSe1_L176
+LayerGridSe1_La3:
 	extbu	d2
 	mov	0x7a, d0
 	mov	0x20, a0
@@ -400760,8 +400759,8 @@ GraphKeyLay3Se_La3:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	GraphKeyLay3Se_L176
-GraphKeyLay3Se_Ldf:
+	jmp	LayerGridSe1_L176
+LayerGridSe1_Ldf:
 	extbu	d2
 	mov	0x7a, d0
 	mov	0x22, a0
@@ -400789,8 +400788,8 @@ GraphKeyLay3Se_Ldf:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	GraphKeyLay3Se_L176
-GraphKeyLay3Se_L11a:
+	bra	LayerGridSe1_L176
+LayerGridSe1_L11a:
 	extbu	d2
 	mov	0x7a, d0
 	mov	0x23, a0
@@ -400818,8 +400817,8 @@ GraphKeyLay3Se_L11a:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	GraphKeyLay3Se_L176
-GraphKeyLay3Se_L155:
+	bra	LayerGridSe1_L176
+LayerGridSe1_L155:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -400837,7 +400836,7 @@ GraphKeyLay3Se_L155:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-GraphKeyLay3Se_L176:
+LayerGridSe1_L176:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -400859,24 +400858,24 @@ loc_4C0E45FB:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	GraphKeyLay3Se_L1cf
+	beq	LayerGridSe1_L1cf
 	cmp	2, d0
-	beq	GraphKeyLay3Se_L1db
+	beq	LayerGridSe1_L1db
 	cmp	3, d0
-	beq	GraphKeyLay3Se_L200
+	beq	LayerGridSe1_L200
 	cmp	4, d0
-	beq	GraphKeyLay3Se_L236
+	beq	LayerGridSe1_L236
 	cmp	5, d0
-	bne	GraphKeyLay3Se_L1cc
-	jmp	GraphKeyLay3Se_L271
-GraphKeyLay3Se_L1cc:
-	jmp	GraphKeyLay3Se_L2a8
-GraphKeyLay3Se_L1cf:
+	bne	LayerGridSe1_L1cc
+	jmp	LayerGridSe1_L271
+LayerGridSe1_L1cc:
+	jmp	LayerGridSe1_L2a8
+LayerGridSe1_L1cf:
 	clr	d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	GraphKeyLay3Se_L2a8
-GraphKeyLay3Se_L1db:
+	jmp	LayerGridSe1_L2a8
+LayerGridSe1_L1db:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -400894,8 +400893,8 @@ GraphKeyLay3Se_L1db:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	GraphKeyLay3Se_L2a8
-GraphKeyLay3Se_L200:
+	jmp	LayerGridSe1_L2a8
+LayerGridSe1_L200:
 	mov	d1, d2
 	extbu	d2
 	mov	sp, a0
@@ -400922,8 +400921,8 @@ GraphKeyLay3Se_L200:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	GraphKeyLay3Se_L2a8
-GraphKeyLay3Se_L236:
+	bra	LayerGridSe1_L2a8
+LayerGridSe1_L236:
 	extbu	d1
 	mov	sp, a0
 	add	0x1c, a0
@@ -400951,8 +400950,8 @@ GraphKeyLay3Se_L236:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	GraphKeyLay3Se_L2a8
-GraphKeyLay3Se_L271:
+	bra	LayerGridSe1_L2a8
+LayerGridSe1_L271:
 	mov	d1, d2
 	extbu	d2
 	mov	0x7a, d0
@@ -400980,7 +400979,7 @@ GraphKeyLay3Se_L271:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-GraphKeyLay3Se_L2a8:
+LayerGridSe1_L2a8:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -401021,29 +401020,29 @@ loc_4C0E4757:
 	movhu	(0x20, sp), d0
 	exth	d0
 	cmp	1, d0
-	beq	GraphKeyLay3Se_L330
+	beq	LayerGridSe1_L330
 	cmp	2, d0
-	beq	GraphKeyLay3Se_L33d
+	beq	LayerGridSe1_L33d
 	cmp	3, d0
-	bne	GraphKeyLay3Se_L31f
-	jmp	GraphKeyLay3Se_L3dd
-GraphKeyLay3Se_L31f:
+	bne	LayerGridSe1_L31f
+	jmp	LayerGridSe1_L3dd
+LayerGridSe1_L31f:
 	cmp	4, d0
-	bne	GraphKeyLay3Se_L326
-	jmp	GraphKeyLay3Se_L479
-GraphKeyLay3Se_L326:
+	bne	LayerGridSe1_L326
+	jmp	LayerGridSe1_L479
+LayerGridSe1_L326:
 	cmp	5, d0
-	bne	GraphKeyLay3Se_L32d
-	jmp	GraphKeyLay3Se_L515
-GraphKeyLay3Se_L32d:
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L330:
+	bne	LayerGridSe1_L32d
+	jmp	LayerGridSe1_L515
+LayerGridSe1_L32d:
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L330:
 	extbu	d2
 	mov	d2, d0
 	mov	a2, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L33d:
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L33d:
 	mov	d2, d0
 	extbu	d0
 	mov	0x7a, d1
@@ -401064,43 +401063,43 @@ GraphKeyLay3Se_L33d:
 	call	func_4C0FB74F_entry, [d2,d3,a2], 0x24
 	extbu	d2
 	cmp	0, d2
-	beq	GraphKeyLay3Se_L379
+	beq	LayerGridSe1_L379
 	cmp	1, d2
-	beq	GraphKeyLay3Se_L392
+	beq	LayerGridSe1_L392
 	cmp	2, d2
-	beq	GraphKeyLay3Se_L3ab
+	beq	LayerGridSe1_L3ab
 	cmp	3, d2
-	beq	GraphKeyLay3Se_L3c4
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L379:
+	beq	LayerGridSe1_L3c4
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L379:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphKeyLay1_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L392:
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L392:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphKeyLay2_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L3ab:
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L3ab:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphKeyLay3_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L3c4:
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L3c4:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphKeyLay4_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L3dd:
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L3dd:
 	mov	d2, d0
 	extbu	d0
 	mov	0x7a, d1
@@ -401119,43 +401118,43 @@ GraphKeyLay3Se_L3dd:
 	call	func_4C0FB74F_entry, [d2,d3,a2], 0x24
 	extbu	d2
 	cmp	0, d2
-	beq	GraphKeyLay3Se_L415
+	beq	LayerGridSe1_L415
 	cmp	1, d2
-	beq	GraphKeyLay3Se_L42e
+	beq	LayerGridSe1_L42e
 	cmp	2, d2
-	beq	GraphKeyLay3Se_L447
+	beq	LayerGridSe1_L447
 	cmp	3, d2
-	beq	GraphKeyLay3Se_L460
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L415:
+	beq	LayerGridSe1_L460
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L415:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphKeyLay1_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L42e:
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L42e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphKeyLay2_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L447:
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L447:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphKeyLay3_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L460:
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L460:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphKeyLay4_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L479:
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L479:
 	mov	d2, d0
 	extbu	d0
 	mov	0x7a, d1
@@ -401174,43 +401173,43 @@ GraphKeyLay3Se_L479:
 	call	func_4C0FB74F_entry, [d2,d3,a2], 0x24
 	extbu	d2
 	cmp	0, d2
-	beq	GraphKeyLay3Se_L4b1
+	beq	LayerGridSe1_L4b1
 	cmp	1, d2
-	beq	GraphKeyLay3Se_L4ca
+	beq	LayerGridSe1_L4ca
 	cmp	2, d2
-	beq	GraphKeyLay3Se_L4e3
+	beq	LayerGridSe1_L4e3
 	cmp	3, d2
-	beq	GraphKeyLay3Se_L4fc
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L4b1:
+	beq	LayerGridSe1_L4fc
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L4b1:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphKeyLay1_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L4ca:
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L4ca:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphKeyLay2_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L4e3:
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L4e3:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphKeyLay3_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L4fc:
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L4fc:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphKeyLay4_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L515:
+	jmp	LayerGridSe1_L5ae
+LayerGridSe1_L515:
 	mov	d2, d0
 	extbu	d0
 	mov	0x7a, d1
@@ -401231,69 +401230,69 @@ GraphKeyLay3Se_L515:
 	call	func_4C0FB74F_entry, [d2,d3,a2], 0x24
 	extbu	d2
 	cmp	0, d2
-	beq	GraphKeyLay3Se_L550
+	beq	LayerGridSe1_L550
 	cmp	1, d2
-	beq	GraphKeyLay3Se_L568
+	beq	LayerGridSe1_L568
 	cmp	2, d2
-	beq	GraphKeyLay3Se_L580
+	beq	LayerGridSe1_L580
 	cmp	3, d2
-	beq	GraphKeyLay3Se_L598
-	bra	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L550:
+	beq	LayerGridSe1_L598
+	bra	LayerGridSe1_L5ae
+LayerGridSe1_L550:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphKeyLay1_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L568:
+	bra	LayerGridSe1_L5ae
+LayerGridSe1_L568:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphKeyLay2_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L580:
+	bra	LayerGridSe1_L5ae
+LayerGridSe1_L580:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphKeyLay3_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	GraphKeyLay3Se_L5ae
-GraphKeyLay3Se_L598:
+	bra	LayerGridSe1_L5ae
+LayerGridSe1_L598:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphKeyLay4_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-GraphKeyLay3Se_L5ae:
+LayerGridSe1_L5ae:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	GraphKeyLay3Se_L5cb
+	bra	LayerGridSe1_L5cb
 loc_4C0E4A32:
 	mov	d3, d0
-	bra	GraphKeyLay3Se_L5cb
-GraphKeyLay3Se_L5ca:
+	bra	LayerGridSe1_L5cb
+LayerGridSe1_L5ca:
 	clr	d0
-GraphKeyLay3Se_L5cb:
+LayerGridSe1_L5cb:
 	ret	[d2,d3,a2,a3], 0x44
 
-GraphKeyLay4Se:
+LayerGridSe2:
 	movm	[d2,d3,a2], (sp)
 	add	-0x34, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	GraphKeyLay4Se_L12
-	jmp	GraphKeyLay4Se_L5b6
-GraphKeyLay4Se_L12:
+	bge	LayerGridSe2_L12
+	jmp	LayerGridSe2_L5b6
+LayerGridSe2_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	GraphKeyLay4Se_L1d
-	jmp	GraphKeyLay4Se_L5b6
-GraphKeyLay4Se_L1d:
+	ble	LayerGridSe2_L1d
+	jmp	LayerGridSe2_L5b6
+LayerGridSe2_L1d:
 	mov	GraphKeyLay4Se_L1d_Records, a1
 	add	0xfe800001, d2
 	mov	a1, a0
@@ -401303,21 +401302,21 @@ GraphKeyLay4Se_L1d:
 	add	d0, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	GraphKeyLay4Se_L4d
+	beq	LayerGridSe2_L4d
 	setlb
 	cmp	0, d0
-	bne	GraphKeyLay4Se_L3f
-	jmp	GraphKeyLay4Se_L5b6
-GraphKeyLay4Se_L3f:
+	bne	LayerGridSe2_L3f
+	jmp	LayerGridSe2_L5b6
+LayerGridSe2_L3f:
 	add	8, a0
 	cmp	AmpGridSe2_L1d_Records, a0
-	bcs	GraphKeyLay4Se_L4a
+	bcs	LayerGridSe2_L4a
 	mov	a1, a0
-GraphKeyLay4Se_L4a:
+LayerGridSe2_L4a:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-GraphKeyLay4Se_L4d:
+LayerGridSe2_L4d:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0E4A8B:
@@ -401335,27 +401334,27 @@ loc_4C0E4A8B:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	GraphKeyLay4Se_L94
+	beq	LayerGridSe2_L94
 	cmp	2, d0
-	beq	GraphKeyLay4Se_La2
+	beq	LayerGridSe2_La2
 	cmp	3, d0
-	beq	GraphKeyLay4Se_Ldb
+	beq	LayerGridSe2_Ldb
 	cmp	4, d0
-	bne	GraphKeyLay4Se_L8a
-	jmp	GraphKeyLay4Se_L116
-GraphKeyLay4Se_L8a:
+	bne	LayerGridSe2_L8a
+	jmp	LayerGridSe2_L116
+LayerGridSe2_L8a:
 	cmp	5, d0
-	bne	GraphKeyLay4Se_L91
-	jmp	GraphKeyLay4Se_L14e
-GraphKeyLay4Se_L91:
-	jmp	GraphKeyLay4Se_L170
-GraphKeyLay4Se_L94:
+	bne	LayerGridSe2_L91
+	jmp	LayerGridSe2_L14e
+LayerGridSe2_L91:
+	jmp	LayerGridSe2_L170
+LayerGridSe2_L94:
 	mov	1, d0
 	mov	d2, d1
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	GraphKeyLay4Se_L170
-GraphKeyLay4Se_La2:
+	jmp	LayerGridSe2_L170
+LayerGridSe2_La2:
 	extbu	d2
 	mov	sp, a0
 	add	0x1c, a0
@@ -401382,8 +401381,8 @@ GraphKeyLay4Se_La2:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	GraphKeyLay4Se_L170
-GraphKeyLay4Se_Ldb:
+	jmp	LayerGridSe2_L170
+LayerGridSe2_Ldb:
 	extbu	d2
 	mov	0x7a, d0
 	mov	0x26, a0
@@ -401411,8 +401410,8 @@ GraphKeyLay4Se_Ldb:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	GraphKeyLay4Se_L170
-GraphKeyLay4Se_L116:
+	bra	LayerGridSe2_L170
+LayerGridSe2_L116:
 	extbu	d2
 	mov	0x7a, d0
 	mov	0x27, a0
@@ -401439,8 +401438,8 @@ GraphKeyLay4Se_L116:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	GraphKeyLay4Se_L170
-GraphKeyLay4Se_L14e:
+	bra	LayerGridSe2_L170
+LayerGridSe2_L14e:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -401459,7 +401458,7 @@ GraphKeyLay4Se_L14e:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-GraphKeyLay4Se_L170:
+LayerGridSe2_L170:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -401480,24 +401479,24 @@ loc_4C0E4BC3:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	GraphKeyLay4Se_L1c8
+	beq	LayerGridSe2_L1c8
 	cmp	2, d0
-	beq	GraphKeyLay4Se_L1d4
+	beq	LayerGridSe2_L1d4
 	cmp	3, d0
-	beq	GraphKeyLay4Se_L1f9
+	beq	LayerGridSe2_L1f9
 	cmp	4, d0
-	beq	GraphKeyLay4Se_L234
+	beq	LayerGridSe2_L234
 	cmp	5, d0
-	bne	GraphKeyLay4Se_L1c5
-	jmp	GraphKeyLay4Se_L26f
-GraphKeyLay4Se_L1c5:
-	jmp	GraphKeyLay4Se_L2a5
-GraphKeyLay4Se_L1c8:
+	bne	LayerGridSe2_L1c5
+	jmp	LayerGridSe2_L26f
+LayerGridSe2_L1c5:
+	jmp	LayerGridSe2_L2a5
+LayerGridSe2_L1c8:
 	clr	d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	GraphKeyLay4Se_L2a5
-GraphKeyLay4Se_L1d4:
+	jmp	LayerGridSe2_L2a5
+LayerGridSe2_L1d4:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -401515,8 +401514,8 @@ GraphKeyLay4Se_L1d4:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	GraphKeyLay4Se_L2a5
-GraphKeyLay4Se_L1f9:
+	jmp	LayerGridSe2_L2a5
+LayerGridSe2_L1f9:
 	extbu	d1
 	mov	0x7a, d2
 	mov	0x25, a0
@@ -401544,8 +401543,8 @@ GraphKeyLay4Se_L1f9:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	GraphKeyLay4Se_L2a5
-GraphKeyLay4Se_L234:
+	bra	LayerGridSe2_L2a5
+LayerGridSe2_L234:
 	extbu	d1
 	mov	0x7a, d2
 	mov	0x24, a0
@@ -401573,8 +401572,8 @@ GraphKeyLay4Se_L234:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	GraphKeyLay4Se_L2a5
-GraphKeyLay4Se_L26f:
+	bra	LayerGridSe2_L2a5
+LayerGridSe2_L26f:
 	extbu	d1
 	mov	0x7a, d2
 	mov	0x26, a0
@@ -401601,7 +401600,7 @@ GraphKeyLay4Se_L26f:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-GraphKeyLay4Se_L2a5:
+LayerGridSe2_L2a5:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -401641,29 +401640,29 @@ loc_4C0E4D22:
 	add	-2, d2
 	exth	d0
 	cmp	1, d0
-	beq	GraphKeyLay4Se_L32c
+	beq	LayerGridSe2_L32c
 	cmp	2, d0
-	beq	GraphKeyLay4Se_L339
+	beq	LayerGridSe2_L339
 	cmp	3, d0
-	bne	GraphKeyLay4Se_L31b
-	jmp	GraphKeyLay4Se_L3d1
-GraphKeyLay4Se_L31b:
+	bne	LayerGridSe2_L31b
+	jmp	LayerGridSe2_L3d1
+LayerGridSe2_L31b:
 	cmp	4, d0
-	bne	GraphKeyLay4Se_L322
-	jmp	GraphKeyLay4Se_L46d
-GraphKeyLay4Se_L322:
+	bne	LayerGridSe2_L322
+	jmp	LayerGridSe2_L46d
+LayerGridSe2_L322:
 	cmp	5, d0
-	bne	GraphKeyLay4Se_L329
-	jmp	GraphKeyLay4Se_L509
-GraphKeyLay4Se_L329:
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L32c:
+	bne	LayerGridSe2_L329
+	jmp	LayerGridSe2_L509
+LayerGridSe2_L329:
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L32c:
 	extbu	d2
 	mov	d2, d0
 	mov	a1, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L339:
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L339:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
 	mov	d2, d0
@@ -401681,43 +401680,43 @@ GraphKeyLay4Se_L339:
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
 	extbu	d2
 	cmp	0, d2
-	beq	GraphKeyLay4Se_L36d
+	beq	LayerGridSe2_L36d
 	cmp	1, d2
-	beq	GraphKeyLay4Se_L386
+	beq	LayerGridSe2_L386
 	cmp	2, d2
-	beq	GraphKeyLay4Se_L39f
+	beq	LayerGridSe2_L39f
 	cmp	3, d2
-	beq	GraphKeyLay4Se_L3b8
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L36d:
+	beq	LayerGridSe2_L3b8
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L36d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphVelLay1_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L386:
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L386:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphVelLay2_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L39f:
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L39f:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphVelLay3_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L3b8:
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L3b8:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphVelLay4_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L3d1:
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L3d1:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
 	mov	d2, d0
@@ -401737,43 +401736,43 @@ GraphKeyLay4Se_L3d1:
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
 	extbu	d2
 	cmp	0, d2
-	beq	GraphKeyLay4Se_L409
+	beq	LayerGridSe2_L409
 	cmp	1, d2
-	beq	GraphKeyLay4Se_L422
+	beq	LayerGridSe2_L422
 	cmp	2, d2
-	beq	GraphKeyLay4Se_L43b
+	beq	LayerGridSe2_L43b
 	cmp	3, d2
-	beq	GraphKeyLay4Se_L454
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L409:
+	beq	LayerGridSe2_L454
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L409:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphVelLay1_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L422:
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L422:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphVelLay2_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L43b:
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L43b:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphVelLay3_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L454:
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L454:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphVelLay4_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L46d:
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L46d:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
 	mov	d2, d0
@@ -401793,43 +401792,43 @@ GraphKeyLay4Se_L46d:
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
 	extbu	d2
 	cmp	0, d2
-	beq	GraphKeyLay4Se_L4a5
+	beq	LayerGridSe2_L4a5
 	cmp	1, d2
-	beq	GraphKeyLay4Se_L4be
+	beq	LayerGridSe2_L4be
 	cmp	2, d2
-	beq	GraphKeyLay4Se_L4d7
+	beq	LayerGridSe2_L4d7
 	cmp	3, d2
-	beq	GraphKeyLay4Se_L4f0
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L4a5:
+	beq	LayerGridSe2_L4f0
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L4a5:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphVelLay1_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L4be:
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L4be:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphVelLay2_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L4d7:
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L4d7:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphVelLay3_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L4f0:
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L4f0:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphVelLay4_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L509:
+	jmp	LayerGridSe2_L59a
+LayerGridSe2_L509:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
 	mov	d2, d0
@@ -401847,69 +401846,69 @@ GraphKeyLay4Se_L509:
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
 	extbu	d2
 	cmp	0, d2
-	beq	GraphKeyLay4Se_L53c
+	beq	LayerGridSe2_L53c
 	cmp	1, d2
-	beq	GraphKeyLay4Se_L554
+	beq	LayerGridSe2_L554
 	cmp	2, d2
-	beq	GraphKeyLay4Se_L56c
+	beq	LayerGridSe2_L56c
 	cmp	3, d2
-	beq	GraphKeyLay4Se_L584
-	bra	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L53c:
+	beq	LayerGridSe2_L584
+	bra	LayerGridSe2_L59a
+LayerGridSe2_L53c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphVelLay1_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L554:
+	bra	LayerGridSe2_L59a
+LayerGridSe2_L554:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphVelLay2_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L56c:
+	bra	LayerGridSe2_L59a
+LayerGridSe2_L56c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphVelLay3_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	GraphKeyLay4Se_L59a
-GraphKeyLay4Se_L584:
+	bra	LayerGridSe2_L59a
+LayerGridSe2_L584:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	GraphVelLay4_id, d0
 	mov	MT_Draw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-GraphKeyLay4Se_L59a:
+LayerGridSe2_L59a:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	GraphKeyLay4Se_L5b7
+	bra	LayerGridSe2_L5b7
 loc_4C0E4FEC:
 	mov	d3, d0
-	bra	GraphKeyLay4Se_L5b7
-GraphKeyLay4Se_L5b6:
+	bra	LayerGridSe2_L5b7
+LayerGridSe2_L5b6:
 	clr	d0
-GraphKeyLay4Se_L5b7:
+LayerGridSe2_L5b7:
 	ret	[d2,d3,a2], 0x40
 
-AmpGridSe2:
+PitchGridSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x34, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	AmpGridSe2_L12
-	jmp	AmpGridSe2_L30d
-AmpGridSe2_L12:
+	bge	PitchGridSe_L12
+	jmp	PitchGridSe_L30d
+PitchGridSe_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	AmpGridSe2_L1d
-	jmp	AmpGridSe2_L30d
-AmpGridSe2_L1d:
+	ble	PitchGridSe_L1d
+	jmp	PitchGridSe_L30d
+PitchGridSe_L1d:
 	mov	AmpGridSe2_L1d_Records, a1
 	add	0xfe800001, d2
 	mov	0xf, d0
@@ -401919,21 +401918,21 @@ AmpGridSe2_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	AmpGridSe2_L4e
+	beq	PitchGridSe_L4e
 	setlb
 	cmp	0, d0
-	bne	AmpGridSe2_L40
-	jmp	AmpGridSe2_L30d
-AmpGridSe2_L40:
+	bne	PitchGridSe_L40
+	jmp	PitchGridSe_L30d
+PitchGridSe_L40:
 	add	8, a0
 	cmp	AmpGridSe3_L46d_Table, a0
-	bcs	AmpGridSe2_L4b
+	bcs	PitchGridSe_L4b
 	mov	a1, a0
-AmpGridSe2_L4b:
+PitchGridSe_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-AmpGridSe2_L4e:
+PitchGridSe_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0E5046:
@@ -401951,20 +401950,20 @@ loc_4C0E5046:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	AmpGridSe2_L8b
+	beq	PitchGridSe_L8b
 	cmp	2, d0
-	beq	AmpGridSe2_L98
+	beq	PitchGridSe_L98
 	cmp	3, d0
-	beq	AmpGridSe2_Lc0
+	beq	PitchGridSe_Lc0
 	cmp	4, d0
-	beq	AmpGridSe2_Le5
-	jmp	AmpGridSe2_L11a
-AmpGridSe2_L8b:
+	beq	PitchGridSe_Le5
+	jmp	PitchGridSe_L11a
+PitchGridSe_L8b:
 	mov	1, d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	AmpGridSe2_L11a
-AmpGridSe2_L98:
+	jmp	PitchGridSe_L11a
+PitchGridSe_L98:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -401983,8 +401982,8 @@ AmpGridSe2_L98:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	AmpGridSe2_L11a
-AmpGridSe2_Lc0:
+	bra	PitchGridSe_L11a
+PitchGridSe_Lc0:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -402002,8 +402001,8 @@ AmpGridSe2_Lc0:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	AmpGridSe2_L11a
-AmpGridSe2_Le5:
+	bra	PitchGridSe_L11a
+PitchGridSe_Le5:
 	extbu	d1
 	mov	0x7a, d0
 	nop
@@ -402027,7 +402026,7 @@ AmpGridSe2_Le5:
 	movhu	(0x1c, sp), d1
 	mov	d2, d0
 	call	func_4C0FB70C_entry, [d2,d3,a2], 0x24
-AmpGridSe2_L11a:
+PitchGridSe_L11a:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -402048,20 +402047,20 @@ loc_4C0E5127:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	AmpGridSe2_L16b
+	beq	PitchGridSe_L16b
 	cmp	2, d0
-	beq	AmpGridSe2_L177
+	beq	PitchGridSe_L177
 	cmp	3, d0
-	beq	AmpGridSe2_L19b
+	beq	PitchGridSe_L19b
 	cmp	4, d0
-	beq	AmpGridSe2_L1c3
-	jmp	AmpGridSe2_L1f8
-AmpGridSe2_L16b:
+	beq	PitchGridSe_L1c3
+	jmp	PitchGridSe_L1f8
+PitchGridSe_L16b:
 	clr	d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	AmpGridSe2_L1f8
-AmpGridSe2_L177:
+	jmp	PitchGridSe_L1f8
+PitchGridSe_L177:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -402078,8 +402077,8 @@ AmpGridSe2_L177:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	AmpGridSe2_L1f8
-AmpGridSe2_L19b:
+	bra	PitchGridSe_L1f8
+PitchGridSe_L19b:
 	mov	-0x80, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -402098,8 +402097,8 @@ AmpGridSe2_L19b:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	AmpGridSe2_L1f8
-AmpGridSe2_L1c3:
+	bra	PitchGridSe_L1f8
+PitchGridSe_L1c3:
 	extbu	d1
 	mov	0x7a, d0
 	nop
@@ -402123,7 +402122,7 @@ AmpGridSe2_L1c3:
 	exthu	d0
 	movhu	(0x1c, sp), d1
 	call	func_4C0FB70C_entry, [d2,d3,a2], 0x24
-AmpGridSe2_L1f8:
+PitchGridSe_L1f8:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -402163,20 +402162,20 @@ loc_4C0E522F:
 	add	-2, d0
 	exth	d1
 	cmp	1, d1
-	beq	AmpGridSe2_L272
+	beq	PitchGridSe_L272
 	cmp	2, d1
-	beq	AmpGridSe2_L27d
+	beq	PitchGridSe_L27d
 	cmp	3, d1
-	beq	AmpGridSe2_L2a4
+	beq	PitchGridSe_L2a4
 	cmp	4, d1
-	beq	AmpGridSe2_L2cb
-	jmp	AmpGridSe2_L2f1
-AmpGridSe2_L272:
+	beq	PitchGridSe_L2cb
+	jmp	PitchGridSe_L2f1
+PitchGridSe_L272:
 	extbu	d0
 	mov	a2, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	bra	AmpGridSe2_L2f1
-AmpGridSe2_L27d:
+	bra	PitchGridSe_L2f1
+PitchGridSe_L27d:
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -402193,8 +402192,8 @@ AmpGridSe2_L27d:
 	mov	1, d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	bra	AmpGridSe2_L2f1
-AmpGridSe2_L2a4:
+	bra	PitchGridSe_L2f1
+PitchGridSe_L2a4:
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -402211,8 +402210,8 @@ AmpGridSe2_L2a4:
 	mov	1, d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	bra	AmpGridSe2_L2f1
-AmpGridSe2_L2cb:
+	bra	PitchGridSe_L2f1
+PitchGridSe_L2cb:
 	extbu	d0
 	mov	0x7a, d1
 	nop
@@ -402229,34 +402228,34 @@ AmpGridSe2_L2cb:
 	movhu	(0x1c, sp), d0
 	mov	a2, a0
 	call	func_4C0FCB70_entry, 0, 0x10
-AmpGridSe2_L2f1:
+PitchGridSe_L2f1:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	AmpGridSe2_L30e
+	bra	PitchGridSe_L30e
 loc_4C0E52FD:
 	mov	d3, d0
-	bra	AmpGridSe2_L30e
-AmpGridSe2_L30d:
+	bra	PitchGridSe_L30e
+PitchGridSe_L30d:
 	clr	d0
-AmpGridSe2_L30e:
+PitchGridSe_L30e:
 	ret	[d2,d3,a2,a3], 0x44
 
-AmpGridSe3:
+PitchGridSe2:
 	movm	[d2,d3,a2], (sp)
 	add	-0x30, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	AmpGridSe3_L12
-	jmp	AmpGridSe3_L6d0
-AmpGridSe3_L12:
+	bge	PitchGridSe2_L12
+	jmp	PitchGridSe2_L6d0
+PitchGridSe2_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	AmpGridSe3_L1d
-	jmp	AmpGridSe3_L6d0
-AmpGridSe3_L1d:
+	ble	PitchGridSe2_L1d
+	jmp	PitchGridSe2_L6d0
+PitchGridSe2_L1d:
 	add	0xfe800001, d2
 	mov	AmpGridSe3_L1d_Records, a1
 	mov	a1, a0
@@ -402266,21 +402265,21 @@ AmpGridSe3_L1d:
 	add	d0, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	AmpGridSe3_L4d
+	beq	PitchGridSe2_L4d
 	setlb
 	cmp	0, d0
-	bne	AmpGridSe3_L3f
-	jmp	AmpGridSe3_L6d0
-AmpGridSe3_L3f:
+	bne	PitchGridSe2_L3f
+	jmp	PitchGridSe2_L6d0
+PitchGridSe2_L3f:
 	add	8, a0
 	cmp	FilterGridSe1_L1d_Records, a0
-	bcs	AmpGridSe3_L4a
+	bcs	PitchGridSe2_L4a
 	mov	a1, a0
-AmpGridSe3_L4a:
+PitchGridSe2_L4a:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-AmpGridSe3_L4d:
+PitchGridSe2_L4d:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0E5356:
@@ -402297,13 +402296,13 @@ loc_4C0E5356:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	bge	AmpGridSe3_L7d
-	jmp	AmpGridSe3_L21c
-AmpGridSe3_L7d:
+	bge	PitchGridSe2_L7d
+	jmp	PitchGridSe2_L21c
+PitchGridSe2_L7d:
 	cmp	0xb, d0
-	ble	AmpGridSe3_L84
-	jmp	AmpGridSe3_L21c
-AmpGridSe3_L84:
+	ble	PitchGridSe2_L84
+	jmp	PitchGridSe2_L21c
+PitchGridSe2_L84:
 	add	-1, d0
 	asl2	d0
 	mov	AmpGridSe3_L84_Table, a0
@@ -402314,7 +402313,7 @@ loc_4C0E5395:
 	extbu	d2
 	mov	d2, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	AmpGridSe3_L21c
+	jmp	PitchGridSe2_L21c
 loc_4C0E53A3:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -402333,7 +402332,7 @@ loc_4C0E53A3:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	AmpGridSe3_L21c
+	jmp	PitchGridSe2_L21c
 loc_4C0E53C9:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -402352,7 +402351,7 @@ loc_4C0E53C9:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	AmpGridSe3_L21c
+	jmp	PitchGridSe2_L21c
 loc_4C0E53ED:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -402373,7 +402372,7 @@ loc_4C0E53ED:
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	AmpGridSe3_L21c
+	jmp	PitchGridSe2_L21c
 loc_4C0E5417:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -402392,7 +402391,7 @@ loc_4C0E5417:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	AmpGridSe3_L21c
+	jmp	PitchGridSe2_L21c
 loc_4C0E543B:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -402413,7 +402412,7 @@ loc_4C0E543B:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	AmpGridSe3_L21c
+	jmp	PitchGridSe2_L21c
 loc_4C0E5465:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -402431,7 +402430,7 @@ loc_4C0E5465:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	AmpGridSe3_L21c
+	jmp	PitchGridSe2_L21c
 loc_4C0E5488:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -402451,7 +402450,7 @@ loc_4C0E5488:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	AmpGridSe3_L21c
+	bra	PitchGridSe2_L21c
 loc_4C0E54B0:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -402469,7 +402468,7 @@ loc_4C0E54B0:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	AmpGridSe3_L21c
+	bra	PitchGridSe2_L21c
 loc_4C0E54D2:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -402489,7 +402488,7 @@ loc_4C0E54D2:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	AmpGridSe3_L21c
+	bra	PitchGridSe2_L21c
 loc_4C0E54FA:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -402509,7 +402508,7 @@ loc_4C0E54FA:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-AmpGridSe3_L21c:
+PitchGridSe2_L21c:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -402531,13 +402530,13 @@ loc_4C0E553A:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	bge	AmpGridSe3_L262
-	jmp	AmpGridSe3_L3f8
-AmpGridSe3_L262:
+	bge	PitchGridSe2_L262
+	jmp	PitchGridSe2_L3f8
+PitchGridSe2_L262:
 	cmp	0xb, d0
-	ble	AmpGridSe3_L269
-	jmp	AmpGridSe3_L3f8
-AmpGridSe3_L269:
+	ble	PitchGridSe2_L269
+	jmp	PitchGridSe2_L3f8
+PitchGridSe2_L269:
 	add	-1, d0
 	asl2	d0
 	mov	AmpGridSe3_L269_Table, a0
@@ -402547,7 +402546,7 @@ loc_4C0E557A:
 	clr	d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	AmpGridSe3_L3f8
+	jmp	PitchGridSe2_L3f8
 loc_4C0E5586:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -402567,7 +402566,7 @@ loc_4C0E5586:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	AmpGridSe3_L3f8
+	jmp	PitchGridSe2_L3f8
 loc_4C0E55AF:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -402585,7 +402584,7 @@ loc_4C0E55AF:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	AmpGridSe3_L3f8
+	jmp	PitchGridSe2_L3f8
 loc_4C0E55D1:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -402605,7 +402604,7 @@ loc_4C0E55D1:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	AmpGridSe3_L3f8
+	jmp	PitchGridSe2_L3f8
 loc_4C0E55FA:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -402623,7 +402622,7 @@ loc_4C0E55FA:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	AmpGridSe3_L3f8
+	jmp	PitchGridSe2_L3f8
 loc_4C0E561C:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -402642,7 +402641,7 @@ loc_4C0E561C:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	AmpGridSe3_L3f8
+	jmp	PitchGridSe2_L3f8
 loc_4C0E5642:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -402660,7 +402659,7 @@ loc_4C0E5642:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	AmpGridSe3_L3f8
+	jmp	PitchGridSe2_L3f8
 loc_4C0E5664:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -402680,7 +402679,7 @@ loc_4C0E5664:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	AmpGridSe3_L3f8
+	bra	PitchGridSe2_L3f8
 loc_4C0E568C:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -402698,7 +402697,7 @@ loc_4C0E568C:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	AmpGridSe3_L3f8
+	bra	PitchGridSe2_L3f8
 loc_4C0E56AD:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -402719,7 +402718,7 @@ loc_4C0E56AD:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	AmpGridSe3_L3f8
+	bra	PitchGridSe2_L3f8
 loc_4C0E56D6:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -402739,7 +402738,7 @@ loc_4C0E56D6:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-AmpGridSe3_L3f8:
+PitchGridSe2_L3f8:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -402779,13 +402778,13 @@ loc_4C0E5740:
 	add	-2, d1
 	exth	d0
 	cmp	1, d0
-	bge	AmpGridSe3_L466
-	jmp	AmpGridSe3_L6b4
-AmpGridSe3_L466:
+	bge	PitchGridSe2_L466
+	jmp	PitchGridSe2_L6b4
+PitchGridSe2_L466:
 	cmp	0xb, d0
-	ble	AmpGridSe3_L46d
-	jmp	AmpGridSe3_L6b4
-AmpGridSe3_L46d:
+	ble	PitchGridSe2_L46d
+	jmp	PitchGridSe2_L6b4
+PitchGridSe2_L46d:
 	add	-1, d0
 	asl2	d0
 	mov	AmpGridSe3_L46d_Table, a0
@@ -402796,7 +402795,7 @@ loc_4C0E577E:
 	mov	d1, d0
 	mov	a1, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	AmpGridSe3_L6b4
+	jmp	PitchGridSe2_L6b4
 loc_4C0E578B:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -402819,7 +402818,7 @@ loc_4C0E578B:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	AmpGridSe3_L6b4
+	jmp	PitchGridSe2_L6b4
 loc_4C0E57C5:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -402841,7 +402840,7 @@ loc_4C0E57C5:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	AmpGridSe3_L6b4
+	jmp	PitchGridSe2_L6b4
 loc_4C0E57FA:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -402864,7 +402863,7 @@ loc_4C0E57FA:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	AmpGridSe3_L6b4
+	jmp	PitchGridSe2_L6b4
 loc_4C0E5834:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -402888,7 +402887,7 @@ loc_4C0E5834:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	AmpGridSe3_L6b4
+	jmp	PitchGridSe2_L6b4
 loc_4C0E586D:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -402911,7 +402910,7 @@ loc_4C0E586D:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	AmpGridSe3_L6b4
+	jmp	PitchGridSe2_L6b4
 loc_4C0E58A7:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -402934,7 +402933,7 @@ loc_4C0E58A7:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	AmpGridSe3_L6b4
+	jmp	PitchGridSe2_L6b4
 loc_4C0E58DD:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -402957,7 +402956,7 @@ loc_4C0E58DD:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	AmpGridSe3_L6b4
+	jmp	PitchGridSe2_L6b4
 loc_4C0E5917:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -402979,7 +402978,7 @@ loc_4C0E5917:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	AmpGridSe3_L6b4
+	bra	PitchGridSe2_L6b4
 loc_4C0E594B:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -403001,7 +403000,7 @@ loc_4C0E594B:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	AmpGridSe3_L6b4
+	bra	PitchGridSe2_L6b4
 loc_4C0E5981:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -403024,34 +403023,34 @@ loc_4C0E5981:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-AmpGridSe3_L6b4:
+PitchGridSe2_L6b4:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	AmpGridSe3_L6d1
+	bra	PitchGridSe2_L6d1
 loc_4C0E59D1:
 	mov	d3, d0
-	bra	AmpGridSe3_L6d1
-AmpGridSe3_L6d0:
+	bra	PitchGridSe2_L6d1
+PitchGridSe2_L6d0:
 	clr	d0
-AmpGridSe3_L6d1:
+PitchGridSe2_L6d1:
 	ret	[d2,d3,a2], 0x3c
 
-FilterGridSe1:
+PitchGridSe3:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x34, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	FilterGridSe1_L12
-	jmp	FilterGridSe1_L503
-FilterGridSe1_L12:
+	bge	PitchGridSe3_L12
+	jmp	PitchGridSe3_L503
+PitchGridSe3_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	FilterGridSe1_L1d
-	jmp	FilterGridSe1_L503
-FilterGridSe1_L1d:
+	ble	PitchGridSe3_L1d
+	jmp	PitchGridSe3_L503
+PitchGridSe3_L1d:
 	mov	FilterGridSe1_L1d_Records, a1
 	add	0xfe800001, d2
 	mov	0xf, d0
@@ -403061,21 +403060,21 @@ FilterGridSe1_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	FilterGridSe1_L4e
+	beq	PitchGridSe3_L4e
 	setlb
 	cmp	0, d0
-	bne	FilterGridSe1_L40
-	jmp	FilterGridSe1_L503
-FilterGridSe1_L40:
+	bne	PitchGridSe3_L40
+	jmp	PitchGridSe3_L503
+PitchGridSe3_L40:
 	add	8, a0
 	cmp	FilterGridSe2_L1d_Records, a0
-	bcs	FilterGridSe1_L4b
+	bcs	PitchGridSe3_L4b
 	mov	a1, a0
-FilterGridSe1_L4b:
+PitchGridSe3_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-FilterGridSe1_L4e:
+PitchGridSe3_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0E5A2B:
@@ -403092,32 +403091,32 @@ loc_4C0E5A2B:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	FilterGridSe1_L9f
+	beq	PitchGridSe3_L9f
 	cmp	2, d0
-	beq	FilterGridSe1_Lac
+	beq	PitchGridSe3_Lac
 	cmp	3, d0
-	beq	FilterGridSe1_Ld5
+	beq	PitchGridSe3_Ld5
 	cmp	4, d0
-	beq	FilterGridSe1_Lfe
+	beq	PitchGridSe3_Lfe
 	cmp	5, d0
-	bne	FilterGridSe1_L8e
-	jmp	FilterGridSe1_L12e
-FilterGridSe1_L8e:
+	bne	PitchGridSe3_L8e
+	jmp	PitchGridSe3_L12e
+PitchGridSe3_L8e:
 	cmp	6, d0
-	bne	FilterGridSe1_L95
-	jmp	FilterGridSe1_L15b
-FilterGridSe1_L95:
+	bne	PitchGridSe3_L95
+	jmp	PitchGridSe3_L15b
+PitchGridSe3_L95:
 	cmp	7, d0
-	bne	FilterGridSe1_L9c
-	jmp	FilterGridSe1_L18b
-FilterGridSe1_L9c:
-	jmp	FilterGridSe1_L1ac
-FilterGridSe1_L9f:
+	bne	PitchGridSe3_L9c
+	jmp	PitchGridSe3_L18b
+PitchGridSe3_L9c:
+	jmp	PitchGridSe3_L1ac
+PitchGridSe3_L9f:
 	mov	1, d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	FilterGridSe1_L1ac
-FilterGridSe1_Lac:
+	jmp	PitchGridSe3_L1ac
+PitchGridSe3_Lac:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -403136,8 +403135,8 @@ FilterGridSe1_Lac:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe1_L1ac
-FilterGridSe1_Ld5:
+	jmp	PitchGridSe3_L1ac
+PitchGridSe3_Ld5:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -403156,8 +403155,8 @@ FilterGridSe1_Ld5:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe1_L1ac
-FilterGridSe1_Lfe:
+	jmp	PitchGridSe3_L1ac
+PitchGridSe3_Lfe:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -403178,8 +403177,8 @@ FilterGridSe1_Lfe:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	clr	d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	jmp	FilterGridSe1_L1ac
-FilterGridSe1_L12e:
+	jmp	PitchGridSe3_L1ac
+PitchGridSe3_L12e:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -403199,8 +403198,8 @@ FilterGridSe1_L12e:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	mov	1, d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	bra	FilterGridSe1_L1ac
-FilterGridSe1_L15b:
+	bra	PitchGridSe3_L1ac
+PitchGridSe3_L15b:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -403221,8 +403220,8 @@ FilterGridSe1_L15b:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	mov	2, d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	bra	FilterGridSe1_L1ac
-FilterGridSe1_L18b:
+	bra	PitchGridSe3_L1ac
+PitchGridSe3_L18b:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -403240,7 +403239,7 @@ FilterGridSe1_L18b:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-FilterGridSe1_L1ac:
+PitchGridSe3_L1ac:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -403261,32 +403260,32 @@ loc_4C0E5B9E:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	FilterGridSe1_L212
+	beq	PitchGridSe3_L212
 	cmp	2, d0
-	beq	FilterGridSe1_L21e
+	beq	PitchGridSe3_L21e
 	cmp	3, d0
-	beq	FilterGridSe1_L243
+	beq	PitchGridSe3_L243
 	cmp	4, d0
-	beq	FilterGridSe1_L26c
+	beq	PitchGridSe3_L26c
 	cmp	5, d0
-	bne	FilterGridSe1_L201
-	jmp	FilterGridSe1_L29c
-FilterGridSe1_L201:
+	bne	PitchGridSe3_L201
+	jmp	PitchGridSe3_L29c
+PitchGridSe3_L201:
 	cmp	6, d0
-	bne	FilterGridSe1_L208
-	jmp	FilterGridSe1_L2c9
-FilterGridSe1_L208:
+	bne	PitchGridSe3_L208
+	jmp	PitchGridSe3_L2c9
+PitchGridSe3_L208:
 	cmp	7, d0
-	bne	FilterGridSe1_L20f
-	jmp	FilterGridSe1_L2f9
-FilterGridSe1_L20f:
-	jmp	FilterGridSe1_L31b
-FilterGridSe1_L212:
+	bne	PitchGridSe3_L20f
+	jmp	PitchGridSe3_L2f9
+PitchGridSe3_L20f:
+	jmp	PitchGridSe3_L31b
+PitchGridSe3_L212:
 	clr	d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	FilterGridSe1_L31b
-FilterGridSe1_L21e:
+	jmp	PitchGridSe3_L31b
+PitchGridSe3_L21e:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -403303,8 +403302,8 @@ FilterGridSe1_L21e:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe1_L31b
-FilterGridSe1_L243:
+	jmp	PitchGridSe3_L31b
+PitchGridSe3_L243:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -403323,8 +403322,8 @@ FilterGridSe1_L243:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe1_L31b
-FilterGridSe1_L26c:
+	jmp	PitchGridSe3_L31b
+PitchGridSe3_L26c:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -403345,8 +403344,8 @@ FilterGridSe1_L26c:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	clr	d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	jmp	FilterGridSe1_L31b
-FilterGridSe1_L29c:
+	jmp	PitchGridSe3_L31b
+PitchGridSe3_L29c:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -403366,8 +403365,8 @@ FilterGridSe1_L29c:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	mov	1, d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	bra	FilterGridSe1_L31b
-FilterGridSe1_L2c9:
+	bra	PitchGridSe3_L31b
+PitchGridSe3_L2c9:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -403388,8 +403387,8 @@ FilterGridSe1_L2c9:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	mov	2, d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	bra	FilterGridSe1_L31b
-FilterGridSe1_L2f9:
+	bra	PitchGridSe3_L31b
+PitchGridSe3_L2f9:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -403407,7 +403406,7 @@ FilterGridSe1_L2f9:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-FilterGridSe1_L31b:
+PitchGridSe3_L31b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -403447,32 +403446,32 @@ loc_4C0E5D37:
 	add	-2, d0
 	exth	d1
 	cmp	1, d1
-	beq	FilterGridSe1_L3aa
+	beq	PitchGridSe3_L3aa
 	cmp	2, d1
-	beq	FilterGridSe1_L3b6
+	beq	PitchGridSe3_L3b6
 	cmp	3, d1
-	beq	FilterGridSe1_L3da
+	beq	PitchGridSe3_L3da
 	cmp	4, d1
-	beq	FilterGridSe1_L402
+	beq	PitchGridSe3_L402
 	cmp	5, d1
-	bne	FilterGridSe1_L399
-	jmp	FilterGridSe1_L43c
-FilterGridSe1_L399:
+	bne	PitchGridSe3_L399
+	jmp	PitchGridSe3_L43c
+PitchGridSe3_L399:
 	cmp	6, d1
-	bne	FilterGridSe1_L3a0
-	jmp	FilterGridSe1_L475
-FilterGridSe1_L3a0:
+	bne	PitchGridSe3_L3a0
+	jmp	PitchGridSe3_L475
+PitchGridSe3_L3a0:
 	cmp	7, d1
-	bne	FilterGridSe1_L3a7
-	jmp	FilterGridSe1_L4ae
-FilterGridSe1_L3a7:
-	jmp	FilterGridSe1_L4e7
-FilterGridSe1_L3aa:
+	bne	PitchGridSe3_L3a7
+	jmp	PitchGridSe3_L4ae
+PitchGridSe3_L3a7:
+	jmp	PitchGridSe3_L4e7
+PitchGridSe3_L3aa:
 	extbu	d0
 	mov	a2, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	FilterGridSe1_L4e7
-FilterGridSe1_L3b6:
+	jmp	PitchGridSe3_L4e7
+PitchGridSe3_L3b6:
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -403487,8 +403486,8 @@ FilterGridSe1_L3b6:
 	mov	1, d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	FilterGridSe1_L4e7
-FilterGridSe1_L3da:
+	jmp	PitchGridSe3_L4e7
+PitchGridSe3_L3da:
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -403505,8 +403504,8 @@ FilterGridSe1_L3da:
 	mov	1, d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	FilterGridSe1_L4e7
-FilterGridSe1_L402:
+	jmp	PitchGridSe3_L4e7
+PitchGridSe3_L402:
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -403528,8 +403527,8 @@ FilterGridSe1_L402:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	FilterGridSe1_L4e7
-FilterGridSe1_L43c:
+	jmp	PitchGridSe3_L4e7
+PitchGridSe3_L43c:
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -403551,8 +403550,8 @@ FilterGridSe1_L43c:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	FilterGridSe1_L4e7
-FilterGridSe1_L475:
+	bra	PitchGridSe3_L4e7
+PitchGridSe3_L475:
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -403574,8 +403573,8 @@ FilterGridSe1_L475:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	FilterGridSe1_L4e7
-FilterGridSe1_L4ae:
+	bra	PitchGridSe3_L4e7
+PitchGridSe3_L4ae:
 	extbu	d0
 	mov	0x7a, d1
 	nop
@@ -403598,34 +403597,34 @@ FilterGridSe1_L4ae:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-FilterGridSe1_L4e7:
+PitchGridSe3_L4e7:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	FilterGridSe1_L504
+	bra	PitchGridSe3_L504
 loc_4C0E5ED8:
 	mov	d3, d0
-	bra	FilterGridSe1_L504
-FilterGridSe1_L503:
+	bra	PitchGridSe3_L504
+PitchGridSe3_L503:
 	clr	d0
-FilterGridSe1_L504:
+PitchGridSe3_L504:
 	ret	[d2,d3,a2,a3], 0x44
 
-FilterGridSe2:
+AmpGridSe1:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x34, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	FilterGridSe2_L12
-	jmp	FilterGridSe2_L653
-FilterGridSe2_L12:
+	bge	AmpGridSe1_L12
+	jmp	AmpGridSe1_L653
+AmpGridSe1_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	FilterGridSe2_L1d
-	jmp	FilterGridSe2_L653
-FilterGridSe2_L1d:
+	ble	AmpGridSe1_L1d
+	jmp	AmpGridSe1_L653
+AmpGridSe1_L1d:
 	mov	FilterGridSe2_L1d_Records, a1
 	add	0xfe800001, d2
 	mov	0xf, d0
@@ -403635,21 +403634,21 @@ FilterGridSe2_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	FilterGridSe2_L4e
+	beq	AmpGridSe1_L4e
 	setlb
 	cmp	0, d0
-	bne	FilterGridSe2_L40
-	jmp	FilterGridSe2_L653
-FilterGridSe2_L40:
+	bne	AmpGridSe1_L40
+	jmp	AmpGridSe1_L653
+AmpGridSe1_L40:
 	add	8, a0
 	cmp	FilterGridSe3_L3ba_Table, a0
-	bcs	FilterGridSe2_L4b
+	bcs	AmpGridSe1_L4b
 	mov	a1, a0
-FilterGridSe2_L4b:
+AmpGridSe1_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-FilterGridSe2_L4e:
+AmpGridSe1_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0E5F32:
@@ -403668,38 +403667,38 @@ loc_4C0E5F32:
 	mov	d0, d2
 	exth	d2
 	cmp	1, d2
-	beq	FilterGridSe2_Lac
+	beq	AmpGridSe1_Lac
 	cmp	2, d2
-	beq	FilterGridSe2_Lb9
+	beq	AmpGridSe1_Lb9
 	cmp	3, d2
-	beq	FilterGridSe2_Le0
+	beq	AmpGridSe1_Le0
 	cmp	4, d2
-	bne	FilterGridSe2_L8d
-	jmp	FilterGridSe2_L109
-FilterGridSe2_L8d:
+	bne	AmpGridSe1_L8d
+	jmp	AmpGridSe1_L109
+AmpGridSe1_L8d:
 	cmp	5, d2
-	bne	FilterGridSe2_L94
-	jmp	FilterGridSe2_L14c
-FilterGridSe2_L94:
+	bne	AmpGridSe1_L94
+	jmp	AmpGridSe1_L14c
+AmpGridSe1_L94:
 	cmp	6, d2
-	bne	FilterGridSe2_L9b
-	jmp	FilterGridSe2_L172
-FilterGridSe2_L9b:
+	bne	AmpGridSe1_L9b
+	jmp	AmpGridSe1_L172
+AmpGridSe1_L9b:
 	cmp	7, d2
-	bne	FilterGridSe2_La2
-	jmp	FilterGridSe2_L1ad
-FilterGridSe2_La2:
+	bne	AmpGridSe1_La2
+	jmp	AmpGridSe1_L1ad
+AmpGridSe1_La2:
 	cmp	8, d2
-	bne	FilterGridSe2_La9
-	jmp	FilterGridSe2_L1ea
-FilterGridSe2_La9:
-	jmp	FilterGridSe2_L20e
-FilterGridSe2_Lac:
+	bne	AmpGridSe1_La9
+	jmp	AmpGridSe1_L1ea
+AmpGridSe1_La9:
+	jmp	AmpGridSe1_L20e
+AmpGridSe1_Lac:
 	mov	1, d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	FilterGridSe2_L20e
-FilterGridSe2_Lb9:
+	jmp	AmpGridSe1_L20e
+AmpGridSe1_Lb9:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -403718,8 +403717,8 @@ FilterGridSe2_Lb9:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe2_L20e
-FilterGridSe2_Le0:
+	jmp	AmpGridSe1_L20e
+AmpGridSe1_Le0:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -403738,8 +403737,8 @@ FilterGridSe2_Le0:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe2_L20e
-FilterGridSe2_L109:
+	jmp	AmpGridSe1_L20e
+AmpGridSe1_L109:
 	mov	7, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -403766,8 +403765,8 @@ FilterGridSe2_L109:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	FilterGridSe2_L20e
-FilterGridSe2_L14c:
+	jmp	AmpGridSe1_L20e
+AmpGridSe1_L14c:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -403785,8 +403784,8 @@ FilterGridSe2_L14c:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe2_L20e
-FilterGridSe2_L172:
+	jmp	AmpGridSe1_L20e
+AmpGridSe1_L172:
 	mov	d1, d2
 	extbu	d2
 	mov	sp, a0
@@ -403815,8 +403814,8 @@ FilterGridSe2_L172:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	FilterGridSe2_L20e
-FilterGridSe2_L1ad:
+	bra	AmpGridSe1_L20e
+AmpGridSe1_L1ad:
 	extbu	d1
 	mov	0x7a, d2
 	mov	0x1e, a0
@@ -403845,8 +403844,8 @@ FilterGridSe2_L1ad:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	FilterGridSe2_L20e
-FilterGridSe2_L1ea:
+	bra	AmpGridSe1_L20e
+AmpGridSe1_L1ea:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -403865,7 +403864,7 @@ FilterGridSe2_L1ea:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-FilterGridSe2_L20e:
+AmpGridSe1_L20e:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -403888,36 +403887,36 @@ loc_4C0E6107:
 	and	0xffff, d2
 	exth	d2
 	cmp	1, d2
-	beq	FilterGridSe2_L27e
+	beq	AmpGridSe1_L27e
 	cmp	2, d2
-	beq	FilterGridSe2_L28a
+	beq	AmpGridSe1_L28a
 	cmp	3, d2
-	beq	FilterGridSe2_L2ab
+	beq	AmpGridSe1_L2ab
 	cmp	4, d2
-	beq	FilterGridSe2_L2d4
+	beq	AmpGridSe1_L2d4
 	cmp	5, d2
-	bne	FilterGridSe2_L266
-	jmp	FilterGridSe2_L319
-FilterGridSe2_L266:
+	bne	AmpGridSe1_L266
+	jmp	AmpGridSe1_L319
+AmpGridSe1_L266:
 	cmp	6, d2
-	bne	FilterGridSe2_L26d
-	jmp	FilterGridSe2_L33f
-FilterGridSe2_L26d:
+	bne	AmpGridSe1_L26d
+	jmp	AmpGridSe1_L33f
+AmpGridSe1_L26d:
 	cmp	7, d2
-	bne	FilterGridSe2_L274
-	jmp	FilterGridSe2_L360
-FilterGridSe2_L274:
+	bne	AmpGridSe1_L274
+	jmp	AmpGridSe1_L360
+AmpGridSe1_L274:
 	cmp	8, d2
-	bne	FilterGridSe2_L27b
-	jmp	FilterGridSe2_L39a
-FilterGridSe2_L27b:
-	jmp	FilterGridSe2_L3d4
-FilterGridSe2_L27e:
+	bne	AmpGridSe1_L27b
+	jmp	AmpGridSe1_L39a
+AmpGridSe1_L27b:
+	jmp	AmpGridSe1_L3d4
+AmpGridSe1_L27e:
 	clr	d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	FilterGridSe2_L3d4
-FilterGridSe2_L28a:
+	jmp	AmpGridSe1_L3d4
+AmpGridSe1_L28a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -403933,8 +403932,8 @@ FilterGridSe2_L28a:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe2_L3d4
-FilterGridSe2_L2ab:
+	jmp	AmpGridSe1_L3d4
+AmpGridSe1_L2ab:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -403953,8 +403952,8 @@ FilterGridSe2_L2ab:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe2_L3d4
-FilterGridSe2_L2d4:
+	jmp	AmpGridSe1_L3d4
+AmpGridSe1_L2d4:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -403982,8 +403981,8 @@ FilterGridSe2_L2d4:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	FilterGridSe2_L3d4
-FilterGridSe2_L319:
+	jmp	AmpGridSe1_L3d4
+AmpGridSe1_L319:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -404001,8 +404000,8 @@ FilterGridSe2_L319:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe2_L3d4
-FilterGridSe2_L33f:
+	jmp	AmpGridSe1_L3d4
+AmpGridSe1_L33f:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -404019,8 +404018,8 @@ FilterGridSe2_L33f:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	FilterGridSe2_L3d4
-FilterGridSe2_L360:
+	bra	AmpGridSe1_L3d4
+AmpGridSe1_L360:
 	mov	d1, d2
 	extbu	d2
 	mov	sp, a0
@@ -404049,8 +404048,8 @@ FilterGridSe2_L360:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	FilterGridSe2_L3d4
-FilterGridSe2_L39a:
+	bra	AmpGridSe1_L3d4
+AmpGridSe1_L39a:
 	extbu	d1
 	mov	0x7a, d2
 	mov	0x1c, a0
@@ -404079,7 +404078,7 @@ FilterGridSe2_L39a:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-FilterGridSe2_L3d4:
+AmpGridSe1_L3d4:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -404119,38 +404118,38 @@ loc_4C0E62F7:
 	add	-2, d0
 	exth	d1
 	cmp	1, d1
-	beq	FilterGridSe2_L46d
+	beq	AmpGridSe1_L46d
 	cmp	2, d1
-	beq	FilterGridSe2_L479
+	beq	AmpGridSe1_L479
 	cmp	3, d1
-	beq	FilterGridSe2_L49f
+	beq	AmpGridSe1_L49f
 	cmp	4, d1
-	bne	FilterGridSe2_L44e
-	jmp	FilterGridSe2_L4fe
-FilterGridSe2_L44e:
+	bne	AmpGridSe1_L44e
+	jmp	AmpGridSe1_L4fe
+AmpGridSe1_L44e:
 	cmp	5, d1
-	bne	FilterGridSe2_L455
-	jmp	FilterGridSe2_L556
-FilterGridSe2_L455:
+	bne	AmpGridSe1_L455
+	jmp	AmpGridSe1_L556
+AmpGridSe1_L455:
 	cmp	6, d1
-	bne	FilterGridSe2_L45c
-	jmp	FilterGridSe2_L590
-FilterGridSe2_L45c:
+	bne	AmpGridSe1_L45c
+	jmp	AmpGridSe1_L590
+AmpGridSe1_L45c:
 	cmp	7, d1
-	bne	FilterGridSe2_L463
-	jmp	FilterGridSe2_L5c7
-FilterGridSe2_L463:
+	bne	AmpGridSe1_L463
+	jmp	AmpGridSe1_L5c7
+AmpGridSe1_L463:
 	cmp	8, d1
-	bne	FilterGridSe2_L46a
-	jmp	FilterGridSe2_L5fe
-FilterGridSe2_L46a:
-	jmp	FilterGridSe2_L637
-FilterGridSe2_L46d:
+	bne	AmpGridSe1_L46a
+	jmp	AmpGridSe1_L5fe
+AmpGridSe1_L46a:
+	jmp	AmpGridSe1_L637
+AmpGridSe1_L46d:
 	extbu	d0
 	mov	a2, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	FilterGridSe2_L637
-FilterGridSe2_L479:
+	jmp	AmpGridSe1_L637
+AmpGridSe1_L479:
 	mov	0x7f, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -404167,8 +404166,8 @@ FilterGridSe2_L479:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	FilterGridSe2_L637
-FilterGridSe2_L49f:
+	jmp	AmpGridSe1_L637
+AmpGridSe1_L49f:
 	mov	d0, d2
 	extbu	d2
 	mov	0x7a, d0
@@ -404191,13 +404190,13 @@ FilterGridSe2_L49f:
 	movbu	(0x1c, sp), d0
 	extb	d0
 	cmp	4, d0
-	bne	FilterGridSe2_L4e2
+	bne	AmpGridSe1_L4e2
 	mov	a2, (8, sp)
 	mov	Str_empty_717, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	FilterGridSe2_L637
-FilterGridSe2_L4e2:
+	jmp	AmpGridSe1_L637
+AmpGridSe1_L4e2:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	add	0x1a, d2
@@ -404207,8 +404206,8 @@ FilterGridSe2_L4e2:
 	mov	a2, a0
 	mov	d2, d0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	FilterGridSe2_L637
-FilterGridSe2_L4fe:
+	jmp	AmpGridSe1_L637
+AmpGridSe1_L4fe:
 	extbu	d0
 	mov	0x7a, d1
 	mov	0x1b, a0
@@ -404230,20 +404229,20 @@ FilterGridSe2_L4fe:
 	movbu	(0x1c, sp), d0
 	extb	d0
 	cmp	4, d0
-	bne	FilterGridSe2_L540
+	bne	AmpGridSe1_L540
 	mov	a2, (8, sp)
 	mov	Str_GM_3, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	FilterGridSe2_L637
-FilterGridSe2_L540:
+	jmp	AmpGridSe1_L637
+AmpGridSe1_L540:
 	mov	a2, (8, sp)
 	mov	Str_2d_13, d1
 	mov	d1, (0xc, sp)
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	FilterGridSe2_L637
-FilterGridSe2_L556:
+	jmp	AmpGridSe1_L637
+AmpGridSe1_L556:
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -404265,8 +404264,8 @@ FilterGridSe2_L556:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	FilterGridSe2_L637
-FilterGridSe2_L590:
+	jmp	AmpGridSe1_L637
+AmpGridSe1_L590:
 	extbu	d0
 	mov	0x7a, d1
 	nop
@@ -404287,8 +404286,8 @@ FilterGridSe2_L590:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	FilterGridSe2_L637
-FilterGridSe2_L5c7:
+	bra	AmpGridSe1_L637
+AmpGridSe1_L5c7:
 	extbu	d0
 	mov	0x7a, d1
 	nop
@@ -404309,8 +404308,8 @@ FilterGridSe2_L5c7:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	FilterGridSe2_L637
-FilterGridSe2_L5fe:
+	bra	AmpGridSe1_L637
+AmpGridSe1_L5fe:
 	extbu	d0
 	mov	0x7a, d1
 	nop
@@ -404333,34 +404332,34 @@ FilterGridSe2_L5fe:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-FilterGridSe2_L637:
+AmpGridSe1_L637:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	FilterGridSe2_L654
+	bra	AmpGridSe1_L654
 loc_4C0E652F:
 	mov	d3, d0
-	bra	FilterGridSe2_L654
-FilterGridSe2_L653:
+	bra	AmpGridSe1_L654
+AmpGridSe1_L653:
 	clr	d0
-FilterGridSe2_L654:
+AmpGridSe1_L654:
 	ret	[d2,d3,a2,a3], 0x44
 
-FilterGridSe3:
+AmpGridSe2:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x34, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	FilterGridSe3_L12
-	jmp	FilterGridSe3_L5c5
-FilterGridSe3_L12:
+	bge	AmpGridSe2_L12
+	jmp	AmpGridSe2_L5c5
+AmpGridSe2_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	FilterGridSe3_L1d
-	jmp	FilterGridSe3_L5c5
-FilterGridSe3_L1d:
+	ble	AmpGridSe2_L1d
+	jmp	AmpGridSe2_L5c5
+AmpGridSe2_L1d:
 	add	0xfe800001, d2
 	mov	FilterGridSe3_L1d_Records, a1
 	mov	a1, a0
@@ -404370,21 +404369,21 @@ FilterGridSe3_L1d:
 	add	d0, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	FilterGridSe3_L4d
+	beq	AmpGridSe2_L4d
 	setlb
 	cmp	0, d0
-	bne	FilterGridSe3_L3f
-	jmp	FilterGridSe3_L5c5
-FilterGridSe3_L3f:
+	bne	AmpGridSe2_L3f
+	jmp	AmpGridSe2_L5c5
+AmpGridSe2_L3f:
 	add	8, a0
 	cmp	FilterGridSe4_L45c_Table, a0
-	bcs	FilterGridSe3_L4a
+	bcs	AmpGridSe2_L4a
 	mov	a1, a0
-FilterGridSe3_L4a:
+AmpGridSe2_L4a:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-FilterGridSe3_L4d:
+AmpGridSe2_L4d:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0E6588:
@@ -404401,13 +404400,13 @@ loc_4C0E6588:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	bge	FilterGridSe3_L7d
-	jmp	FilterGridSe3_L1c9
-FilterGridSe3_L7d:
+	bge	AmpGridSe2_L7d
+	jmp	AmpGridSe2_L1c9
+AmpGridSe2_L7d:
 	cmp	9, d0
-	ble	FilterGridSe3_L84
-	jmp	FilterGridSe3_L1c9
-FilterGridSe3_L84:
+	ble	AmpGridSe2_L84
+	jmp	AmpGridSe2_L1c9
+AmpGridSe2_L84:
 	add	-1, d0
 	asl2	d0
 	mov	FilterGridSe3_L84_Table, a0
@@ -404418,7 +404417,7 @@ loc_4C0E65C7:
 	extbu	d2
 	mov	d2, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	FilterGridSe3_L1c9
+	jmp	AmpGridSe2_L1c9
 loc_4C0E65D5:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -404437,7 +404436,7 @@ loc_4C0E65D5:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe3_L1c9
+	jmp	AmpGridSe2_L1c9
 loc_4C0E65F9:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -404457,7 +404456,7 @@ loc_4C0E65F9:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe3_L1c9
+	jmp	AmpGridSe2_L1c9
 loc_4C0E6620:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -404478,7 +404477,7 @@ loc_4C0E6620:
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe3_L1c9
+	jmp	AmpGridSe2_L1c9
 loc_4C0E6648:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -404497,7 +404496,7 @@ loc_4C0E6648:
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe3_L1c9
+	jmp	AmpGridSe2_L1c9
 loc_4C0E666C:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -404517,7 +404516,7 @@ loc_4C0E666C:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	FilterGridSe3_L1c9
+	bra	AmpGridSe2_L1c9
 loc_4C0E6692:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -404537,7 +404536,7 @@ loc_4C0E6692:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	FilterGridSe3_L1c9
+	bra	AmpGridSe2_L1c9
 loc_4C0E66B8:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -404555,7 +404554,7 @@ loc_4C0E66B8:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	FilterGridSe3_L1c9
+	bra	AmpGridSe2_L1c9
 loc_4C0E66DA:
 	mov	1, d0
 	mov	d0, (0x10, sp)
@@ -404575,7 +404574,7 @@ loc_4C0E66DA:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-FilterGridSe3_L1c9:
+AmpGridSe2_L1c9:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -404597,13 +404596,13 @@ loc_4C0E6719:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	bge	FilterGridSe3_L20f
-	jmp	FilterGridSe3_L343
-FilterGridSe3_L20f:
+	bge	AmpGridSe2_L20f
+	jmp	AmpGridSe2_L343
+AmpGridSe2_L20f:
 	cmp	9, d0
-	ble	FilterGridSe3_L216
-	jmp	FilterGridSe3_L343
-FilterGridSe3_L216:
+	ble	AmpGridSe2_L216
+	jmp	AmpGridSe2_L343
+AmpGridSe2_L216:
 	add	-1, d0
 	asl2	d0
 	mov	FilterGridSe3_L216_Table, a0
@@ -404613,7 +404612,7 @@ loc_4C0E6759:
 	clr	d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	FilterGridSe3_L343
+	jmp	AmpGridSe2_L343
 loc_4C0E6765:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -404632,7 +404631,7 @@ loc_4C0E6765:
 	mov	-1, d1
 	mov	d2, d0
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe3_L343
+	jmp	AmpGridSe2_L343
 loc_4C0E6788:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -404649,7 +404648,7 @@ loc_4C0E6788:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe3_L343
+	jmp	AmpGridSe2_L343
 loc_4C0E67A9:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -404667,7 +404666,7 @@ loc_4C0E67A9:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe3_L343
+	jmp	AmpGridSe2_L343
 loc_4C0E67CB:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -404684,7 +404683,7 @@ loc_4C0E67CB:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe3_L343
+	jmp	AmpGridSe2_L343
 loc_4C0E67EC:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -404703,7 +404702,7 @@ loc_4C0E67EC:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	FilterGridSe3_L343
+	bra	AmpGridSe2_L343
 loc_4C0E6810:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -404721,7 +404720,7 @@ loc_4C0E6810:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	FilterGridSe3_L343
+	bra	AmpGridSe2_L343
 loc_4C0E6831:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -404740,7 +404739,7 @@ loc_4C0E6831:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	FilterGridSe3_L343
+	bra	AmpGridSe2_L343
 loc_4C0E6855:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -404760,7 +404759,7 @@ loc_4C0E6855:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-FilterGridSe3_L343:
+AmpGridSe2_L343:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -404801,13 +404800,13 @@ loc_4C0E68BD:
 	add	-2, d2
 	exth	d0
 	cmp	1, d0
-	bge	FilterGridSe3_L3b3
-	jmp	FilterGridSe3_L5a9
-FilterGridSe3_L3b3:
+	bge	AmpGridSe2_L3b3
+	jmp	AmpGridSe2_L5a9
+AmpGridSe2_L3b3:
 	cmp	9, d0
-	ble	FilterGridSe3_L3ba
-	jmp	FilterGridSe3_L5a9
-FilterGridSe3_L3ba:
+	ble	AmpGridSe2_L3ba
+	jmp	AmpGridSe2_L5a9
+AmpGridSe2_L3ba:
 	add	-1, d0
 	asl2	d0
 	mov	FilterGridSe3_L3ba_Table, a0
@@ -404818,7 +404817,7 @@ loc_4C0E68FD:
 	mov	d2, d0
 	mov	a2, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	FilterGridSe3_L5a9
+	jmp	AmpGridSe2_L5a9
 loc_4C0E690A:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -404841,7 +404840,7 @@ loc_4C0E690A:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	FilterGridSe3_L5a9
+	jmp	AmpGridSe2_L5a9
 loc_4C0E6942:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -404864,7 +404863,7 @@ loc_4C0E6942:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	FilterGridSe3_L5a9
+	jmp	AmpGridSe2_L5a9
 loc_4C0E697A:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -404887,7 +404886,7 @@ loc_4C0E697A:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	FilterGridSe3_L5a9
+	jmp	AmpGridSe2_L5a9
 loc_4C0E69B2:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -404910,7 +404909,7 @@ loc_4C0E69B2:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	FilterGridSe3_L5a9
+	jmp	AmpGridSe2_L5a9
 loc_4C0E69EA:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -404933,7 +404932,7 @@ loc_4C0E69EA:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	FilterGridSe3_L5a9
+	jmp	AmpGridSe2_L5a9
 loc_4C0E6A22:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -404956,7 +404955,7 @@ loc_4C0E6A22:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	FilterGridSe3_L5a9
+	jmp	AmpGridSe2_L5a9
 loc_4C0E6A5A:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -404979,7 +404978,7 @@ loc_4C0E6A5A:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	FilterGridSe3_L5a9
+	bra	AmpGridSe2_L5a9
 loc_4C0E6A91:
 	extbu	d2
 	mov	sp, a0
@@ -404997,49 +404996,49 @@ loc_4C0E6A91:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x1c, sp), d0
 	cmp	0, d0
-	beq	FilterGridSe3_L585
+	beq	AmpGridSe2_L585
 	cmp	1, d0
-	beq	FilterGridSe3_L598
-	bra	FilterGridSe3_L5a9
-FilterGridSe3_L585:
+	beq	AmpGridSe2_L598
+	bra	AmpGridSe2_L5a9
+AmpGridSe2_L585:
 	mov	a2, (8, sp)
 	mov	Str_LONG, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	FilterGridSe3_L5a9
-FilterGridSe3_L598:
+	bra	AmpGridSe2_L5a9
+AmpGridSe2_L598:
 	mov	a2, (8, sp)
 	mov	Str_HOLD_2, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-FilterGridSe3_L5a9:
+AmpGridSe2_L5a9:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	FilterGridSe3_L5c6
+	bra	AmpGridSe2_L5c6
 loc_4C0E6AF8:
 	mov	d3, d0
-	bra	FilterGridSe3_L5c6
-FilterGridSe3_L5c5:
+	bra	AmpGridSe2_L5c6
+AmpGridSe2_L5c5:
 	clr	d0
-FilterGridSe3_L5c6:
+AmpGridSe2_L5c6:
 	ret	[d2,d3,a2,a3], 0x44
 
-FilterGridSe4:
+AmpGridSe3:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x34, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	FilterGridSe4_L12
-	jmp	FilterGridSe4_L630
-FilterGridSe4_L12:
+	bge	AmpGridSe3_L12
+	jmp	AmpGridSe3_L630
+AmpGridSe3_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	FilterGridSe4_L1d
-	jmp	FilterGridSe4_L630
-FilterGridSe4_L1d:
+	ble	AmpGridSe3_L1d
+	jmp	AmpGridSe3_L630
+AmpGridSe3_L1d:
 	add	0xfe800001, d2
 	mov	FilterGridSe4_L1d_Records, a1
 	mov	a1, a0
@@ -405049,21 +405048,21 @@ FilterGridSe4_L1d:
 	add	d0, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	FilterGridSe4_L4d
+	beq	AmpGridSe3_L4d
 	setlb
 	cmp	0, d0
-	bne	FilterGridSe4_L3f
-	jmp	FilterGridSe4_L630
-FilterGridSe4_L3f:
+	bne	AmpGridSe3_L3f
+	jmp	AmpGridSe3_L630
+AmpGridSe3_L3f:
 	add	8, a0
 	cmp	LfoGridSe1_L1d_Records, a0
-	bcs	FilterGridSe4_L4a
+	bcs	AmpGridSe3_L4a
 	mov	a1, a0
-FilterGridSe4_L4a:
+AmpGridSe3_L4a:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-FilterGridSe4_L4d:
+AmpGridSe3_L4d:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0E6B51:
@@ -405080,13 +405079,13 @@ loc_4C0E6B51:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	bge	FilterGridSe4_L7d
-	jmp	FilterGridSe4_L211
-FilterGridSe4_L7d:
+	bge	AmpGridSe3_L7d
+	jmp	AmpGridSe3_L211
+AmpGridSe3_L7d:
 	cmp	9, d0
-	ble	FilterGridSe4_L84
-	jmp	FilterGridSe4_L211
-FilterGridSe4_L84:
+	ble	AmpGridSe3_L84
+	jmp	AmpGridSe3_L211
+AmpGridSe3_L84:
 	add	-1, d0
 	asl2	d0
 	mov	FilterGridSe4_L84_Table, a0
@@ -405097,7 +405096,7 @@ loc_4C0E6B90:
 	extbu	d2
 	mov	d2, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	FilterGridSe4_L211
+	jmp	AmpGridSe3_L211
 loc_4C0E6B9E:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -405117,7 +405116,7 @@ loc_4C0E6B9E:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe4_L211
+	jmp	AmpGridSe3_L211
 loc_4C0E6BC7:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -405137,7 +405136,7 @@ loc_4C0E6BC7:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe4_L211
+	jmp	AmpGridSe3_L211
 loc_4C0E6BF0:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -405158,7 +405157,7 @@ loc_4C0E6BF0:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	clr	d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	jmp	FilterGridSe4_L211
+	jmp	AmpGridSe3_L211
 loc_4C0E6C1D:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -405180,7 +405179,7 @@ loc_4C0E6C1D:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	mov	1, d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	jmp	FilterGridSe4_L211
+	jmp	AmpGridSe3_L211
 loc_4C0E6C4E:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -405200,7 +405199,7 @@ loc_4C0E6C4E:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	mov	2, d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	jmp	FilterGridSe4_L211
+	jmp	AmpGridSe3_L211
 loc_4C0E6C7B:
 	extbu	d2
 	mov	sp, a0
@@ -405229,7 +405228,7 @@ loc_4C0E6C7B:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	FilterGridSe4_L211
+	bra	AmpGridSe3_L211
 loc_4C0E6CB5:
 	extbu	d2
 	mov	sp, a0
@@ -405258,7 +405257,7 @@ loc_4C0E6CB5:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	FilterGridSe4_L211
+	bra	AmpGridSe3_L211
 loc_4C0E6CEF:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -405277,7 +405276,7 @@ loc_4C0E6CEF:
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-FilterGridSe4_L211:
+AmpGridSe3_L211:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -405299,13 +405298,13 @@ loc_4C0E6D2A:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	bge	FilterGridSe4_L257
-	jmp	FilterGridSe4_L3e5
-FilterGridSe4_L257:
+	bge	AmpGridSe3_L257
+	jmp	AmpGridSe3_L3e5
+AmpGridSe3_L257:
 	cmp	9, d0
-	ble	FilterGridSe4_L25e
-	jmp	FilterGridSe4_L3e5
-FilterGridSe4_L25e:
+	ble	AmpGridSe3_L25e
+	jmp	AmpGridSe3_L3e5
+AmpGridSe3_L25e:
 	add	-1, d0
 	asl2	d0
 	mov	FilterGridSe4_L25e_Table, a0
@@ -405315,7 +405314,7 @@ loc_4C0E6D6A:
 	clr	d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	FilterGridSe4_L3e5
+	jmp	AmpGridSe3_L3e5
 loc_4C0E6D76:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -405334,7 +405333,7 @@ loc_4C0E6D76:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe4_L3e5
+	jmp	AmpGridSe3_L3e5
 loc_4C0E6D9C:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -405353,7 +405352,7 @@ loc_4C0E6D9C:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	FilterGridSe4_L3e5
+	jmp	AmpGridSe3_L3e5
 loc_4C0E6DC2:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -405374,7 +405373,7 @@ loc_4C0E6DC2:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	clr	d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	jmp	FilterGridSe4_L3e5
+	jmp	AmpGridSe3_L3e5
 loc_4C0E6DEF:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -405397,7 +405396,7 @@ loc_4C0E6DEF:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	mov	1, d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	jmp	FilterGridSe4_L3e5
+	jmp	AmpGridSe3_L3e5
 loc_4C0E6E21:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -405417,7 +405416,7 @@ loc_4C0E6E21:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	mov	2, d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	jmp	FilterGridSe4_L3e5
+	jmp	AmpGridSe3_L3e5
 loc_4C0E6E4E:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -405436,7 +405435,7 @@ loc_4C0E6E4E:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	FilterGridSe4_L3e5
+	bra	AmpGridSe3_L3e5
 loc_4C0E6E72:
 	mov	d1, d2
 	extbu	d2
@@ -405466,7 +405465,7 @@ loc_4C0E6E72:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	FilterGridSe4_L3e5
+	bra	AmpGridSe3_L3e5
 loc_4C0E6EAC:
 	mov	d1, d2
 	extbu	d2
@@ -405496,7 +405495,7 @@ loc_4C0E6EAC:
 	mov	d2, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-FilterGridSe4_L3e5:
+AmpGridSe3_L3e5:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -405537,13 +405536,13 @@ loc_4C0E6F28:
 	add	-2, d1
 	exth	d0
 	cmp	1, d0
-	bge	FilterGridSe4_L455
-	jmp	FilterGridSe4_L614
-FilterGridSe4_L455:
+	bge	AmpGridSe3_L455
+	jmp	AmpGridSe3_L614
+AmpGridSe3_L455:
 	cmp	9, d0
-	ble	FilterGridSe4_L45c
-	jmp	FilterGridSe4_L614
-FilterGridSe4_L45c:
+	ble	AmpGridSe3_L45c
+	jmp	AmpGridSe3_L614
+AmpGridSe3_L45c:
 	add	-1, d0
 	asl2	d0
 	mov	FilterGridSe4_L45c_Table, a0
@@ -405554,7 +405553,7 @@ loc_4C0E6F68:
 	mov	d1, d0
 	mov	a2, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	FilterGridSe4_L614
+	jmp	AmpGridSe3_L614
 loc_4C0E6F75:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -405572,7 +405571,7 @@ loc_4C0E6F75:
 	mov	1, d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	FilterGridSe4_L614
+	jmp	AmpGridSe3_L614
 loc_4C0E6F9D:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -405588,7 +405587,7 @@ loc_4C0E6F9D:
 	mov	1, d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	FilterGridSe4_L614
+	jmp	AmpGridSe3_L614
 loc_4C0E6FC1:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -405611,7 +405610,7 @@ loc_4C0E6FC1:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	FilterGridSe4_L614
+	jmp	AmpGridSe3_L614
 loc_4C0E6FFB:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -405634,7 +405633,7 @@ loc_4C0E6FFB:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	FilterGridSe4_L614
+	jmp	AmpGridSe3_L614
 loc_4C0E7035:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -405657,7 +405656,7 @@ loc_4C0E7035:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	FilterGridSe4_L614
+	jmp	AmpGridSe3_L614
 loc_4C0E706F:
 	extbu	d1
 	mov	0x7a, d0
@@ -405680,7 +405679,7 @@ loc_4C0E706F:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	FilterGridSe4_L614
+	bra	AmpGridSe3_L614
 loc_4C0E70A7:
 	extbu	d1
 	mov	0x7a, d0
@@ -405702,7 +405701,7 @@ loc_4C0E70A7:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	FilterGridSe4_L614
+	bra	AmpGridSe3_L614
 loc_4C0E70DE:
 	extbu	d1
 	mov	0x7a, d0
@@ -405724,34 +405723,34 @@ loc_4C0E70DE:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-FilterGridSe4_L614:
+AmpGridSe3_L614:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	FilterGridSe4_L631
+	bra	AmpGridSe3_L631
 loc_4C0E712C:
 	mov	d3, d0
-	bra	FilterGridSe4_L631
-FilterGridSe4_L630:
+	bra	AmpGridSe3_L631
+AmpGridSe3_L630:
 	clr	d0
-FilterGridSe4_L631:
+AmpGridSe3_L631:
 	ret	[d2,d3,a2,a3], 0x44
 
-LfoGridSe1:
+FilterGridSe1:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x38, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	LfoGridSe1_L12
-	jmp	LfoGridSe1_Lae9
-LfoGridSe1_L12:
+	bge	FilterGridSe1_L12
+	jmp	FilterGridSe1_Lae9
+FilterGridSe1_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	LfoGridSe1_L1d
-	jmp	LfoGridSe1_Lae9
-LfoGridSe1_L1d:
+	ble	FilterGridSe1_L1d
+	jmp	FilterGridSe1_Lae9
+FilterGridSe1_L1d:
 	mov	LfoGridSe1_L1d_Records, a1
 	add	0xfe800001, d2
 	mov	a1, a0
@@ -405761,21 +405760,21 @@ LfoGridSe1_L1d:
 	add	d0, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	LfoGridSe1_L4d
+	beq	FilterGridSe1_L4d
 	setlb
 	cmp	0, d0
-	bne	LfoGridSe1_L3f
-	jmp	LfoGridSe1_Lae9
-LfoGridSe1_L3f:
+	bne	FilterGridSe1_L3f
+	jmp	FilterGridSe1_Lae9
+FilterGridSe1_L3f:
 	add	8, a0
 	cmp	LfoGridSe2_L1d_Records, a0
-	bcs	LfoGridSe1_L4a
+	bcs	FilterGridSe1_L4a
 	mov	a1, a0
-LfoGridSe1_L4a:
+FilterGridSe1_L4a:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-LfoGridSe1_L4d:
+FilterGridSe1_L4d:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0E7185:
@@ -405798,31 +405797,31 @@ loc_4C0E7185:
 	mov	a2, d3
 	exth	d3
 	cmp	1, d3
-	beq	LfoGridSe1_Lb2
+	beq	FilterGridSe1_Lb2
 	cmp	2, d3
-	beq	LfoGridSe1_Ld8
+	beq	FilterGridSe1_Ld8
 	cmp	3, d3
-	bne	LfoGridSe1_L93
-	jmp	LfoGridSe1_L121
-LfoGridSe1_L93:
+	bne	FilterGridSe1_L93
+	jmp	FilterGridSe1_L121
+FilterGridSe1_L93:
 	cmp	4, d3
-	bne	LfoGridSe1_L9a
-	jmp	LfoGridSe1_L1a9
-LfoGridSe1_L9a:
+	bne	FilterGridSe1_L9a
+	jmp	FilterGridSe1_L1a9
+FilterGridSe1_L9a:
 	cmp	5, d3
-	bne	LfoGridSe1_La1
-	jmp	LfoGridSe1_L218
-LfoGridSe1_La1:
+	bne	FilterGridSe1_La1
+	jmp	FilterGridSe1_L218
+FilterGridSe1_La1:
 	cmp	6, d3
-	bne	LfoGridSe1_La8
-	jmp	LfoGridSe1_L26e
-LfoGridSe1_La8:
+	bne	FilterGridSe1_La8
+	jmp	FilterGridSe1_L26e
+FilterGridSe1_La8:
 	cmp	7, d3
-	bne	LfoGridSe1_Laf
-	jmp	LfoGridSe1_L2ed
-LfoGridSe1_Laf:
-	jmp	LfoGridSe1_L36b
-LfoGridSe1_Lb2:
+	bne	FilterGridSe1_Laf
+	jmp	FilterGridSe1_L2ed
+FilterGridSe1_Laf:
+	jmp	FilterGridSe1_L36b
+FilterGridSe1_Lb2:
 	extbu	d2
 	mov	d2, d1
 	mov	1, d0
@@ -405832,8 +405831,8 @@ LfoGridSe1_Lb2:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe1_L36b
-LfoGridSe1_Ld8:
+	jmp	FilterGridSe1_L36b
+FilterGridSe1_Ld8:
 	extbu	d2
 	mov	d2, d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
@@ -405844,12 +405843,12 @@ LfoGridSe1_Ld8:
 	mov	d2, d0
 	call	func_4C0FB91E_entry, [d2], 0x18
 	cmp	7, d3
-	ble	LfoGridSe1_Lf6
-	jmp	LfoGridSe1_L36b
-LfoGridSe1_Lf6:
+	ble	FilterGridSe1_Lf6
+	jmp	FilterGridSe1_L36b
+FilterGridSe1_Lf6:
 	mov	a3, d2
 	exthu	d2
-LfoGridSe1_Lf9:
+FilterGridSe1_Lf9:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, d1
 	exthu	d1
@@ -405862,17 +405861,17 @@ LfoGridSe1_Lf9:
 	mov	d3, a2
 	exth	d3
 	cmp	7, d3
-	ble	LfoGridSe1_Lf9
-	jmp	LfoGridSe1_L36b
-LfoGridSe1_L121:
+	ble	FilterGridSe1_Lf9
+	jmp	FilterGridSe1_L36b
+FilterGridSe1_L121:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	0, d0
-	beq	LfoGridSe1_L18e
+	beq	FilterGridSe1_L18e
 	cmp	7, d0
-	bne	LfoGridSe1_L16d
+	bne	FilterGridSe1_L16d
 	extbu	d2
 	mov	sp, a0
 	add	0x20, a0
@@ -405900,8 +405899,8 @@ LfoGridSe1_L121:
 	mov	d2, d0
 	exthu	d0
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe1_L18e
-LfoGridSe1_L16d:
+	bra	FilterGridSe1_L18e
+FilterGridSe1_L16d:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -405919,22 +405918,22 @@ LfoGridSe1_L16d:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-LfoGridSe1_L18e:
+FilterGridSe1_L18e:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe1_L36b
-LfoGridSe1_L1a9:
+	jmp	FilterGridSe1_L36b
+FilterGridSe1_L1a9:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	0, d0
-	beq	LfoGridSe1_L1fd
+	beq	FilterGridSe1_L1fd
 	cmp	7, d0
-	bne	LfoGridSe1_L1dd
+	bne	FilterGridSe1_L1dd
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -405951,8 +405950,8 @@ LfoGridSe1_L1a9:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe1_L1fd
-LfoGridSe1_L1dd:
+	bra	FilterGridSe1_L1fd
+FilterGridSe1_L1dd:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -405969,27 +405968,27 @@ LfoGridSe1_L1dd:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-LfoGridSe1_L1fd:
+FilterGridSe1_L1fd:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe1_L36b
-LfoGridSe1_L218:
+	jmp	FilterGridSe1_L36b
+FilterGridSe1_L218:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	1, d0
-	beq	LfoGridSe1_L232
+	beq	FilterGridSe1_L232
 	cmp	2, d0
-	beq	LfoGridSe1_L232
+	beq	FilterGridSe1_L232
 	cmp	4, d0
-	beq	LfoGridSe1_L232
+	beq	FilterGridSe1_L232
 	cmp	5, d0
-	bne	LfoGridSe1_L253
-LfoGridSe1_L232:
+	bne	FilterGridSe1_L253
+FilterGridSe1_L232:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -406007,30 +406006,30 @@ LfoGridSe1_L232:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-LfoGridSe1_L253:
+FilterGridSe1_L253:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe1_L36b
-LfoGridSe1_L26e:
+	jmp	FilterGridSe1_L36b
+FilterGridSe1_L26e:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	1, d0
-	beq	LfoGridSe1_L28e
+	beq	FilterGridSe1_L28e
 	cmp	2, d0
-	beq	LfoGridSe1_L28e
+	beq	FilterGridSe1_L28e
 	cmp	4, d0
-	beq	LfoGridSe1_L28e
+	beq	FilterGridSe1_L28e
 	cmp	5, d0
-	beq	LfoGridSe1_L28e
+	beq	FilterGridSe1_L28e
 	cmp	7, d0
-	beq	LfoGridSe1_L2b1
-	bra	LfoGridSe1_L2d2
-LfoGridSe1_L28e:
+	beq	FilterGridSe1_L2b1
+	bra	FilterGridSe1_L2d2
+FilterGridSe1_L28e:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -406048,8 +406047,8 @@ LfoGridSe1_L28e:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe1_L2d2
-LfoGridSe1_L2b1:
+	bra	FilterGridSe1_L2d2
+FilterGridSe1_L2b1:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -406067,30 +406066,30 @@ LfoGridSe1_L2b1:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-LfoGridSe1_L2d2:
+FilterGridSe1_L2d2:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe1_L36b
-LfoGridSe1_L2ed:
+	jmp	FilterGridSe1_L36b
+FilterGridSe1_L2ed:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	1, d0
-	beq	LfoGridSe1_L30d
+	beq	FilterGridSe1_L30d
 	cmp	2, d0
-	beq	LfoGridSe1_L30d
+	beq	FilterGridSe1_L30d
 	cmp	4, d0
-	beq	LfoGridSe1_L30d
+	beq	FilterGridSe1_L30d
 	cmp	5, d0
-	beq	LfoGridSe1_L30d
+	beq	FilterGridSe1_L30d
 	cmp	7, d0
-	beq	LfoGridSe1_L333
-	bra	LfoGridSe1_L353
-LfoGridSe1_L30d:
+	beq	FilterGridSe1_L333
+	bra	FilterGridSe1_L353
+FilterGridSe1_L30d:
 	mov	0x19, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -406109,8 +406108,8 @@ LfoGridSe1_L30d:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe1_L353
-LfoGridSe1_L333:
+	bra	FilterGridSe1_L353
+FilterGridSe1_L333:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -406127,13 +406126,13 @@ LfoGridSe1_L333:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-LfoGridSe1_L353:
+FilterGridSe1_L353:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-LfoGridSe1_L36b:
+FilterGridSe1_L36b:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x48
 loc_4C0E74A2:
@@ -406155,31 +406154,31 @@ loc_4C0E74A2:
 	mov	d0, d3
 	exth	d3
 	cmp	1, d3
-	beq	LfoGridSe1_L3cd
+	beq	FilterGridSe1_L3cd
 	cmp	2, d3
-	beq	LfoGridSe1_L3f2
+	beq	FilterGridSe1_L3f2
 	cmp	3, d3
-	bne	LfoGridSe1_L3ae
-	jmp	LfoGridSe1_L43b
-LfoGridSe1_L3ae:
+	bne	FilterGridSe1_L3ae
+	jmp	FilterGridSe1_L43b
+FilterGridSe1_L3ae:
 	cmp	4, d3
-	bne	LfoGridSe1_L3b5
-	jmp	LfoGridSe1_L4a6
-LfoGridSe1_L3b5:
+	bne	FilterGridSe1_L3b5
+	jmp	FilterGridSe1_L4a6
+FilterGridSe1_L3b5:
 	cmp	5, d3
-	bne	LfoGridSe1_L3bc
-	jmp	LfoGridSe1_L512
-LfoGridSe1_L3bc:
+	bne	FilterGridSe1_L3bc
+	jmp	FilterGridSe1_L512
+FilterGridSe1_L3bc:
 	cmp	6, d3
-	bne	LfoGridSe1_L3c3
-	jmp	LfoGridSe1_L565
-LfoGridSe1_L3c3:
+	bne	FilterGridSe1_L3c3
+	jmp	FilterGridSe1_L565
+FilterGridSe1_L3c3:
 	cmp	7, d3
-	bne	LfoGridSe1_L3ca
-	jmp	LfoGridSe1_L5f4
-LfoGridSe1_L3ca:
-	jmp	LfoGridSe1_L66a
-LfoGridSe1_L3cd:
+	bne	FilterGridSe1_L3ca
+	jmp	FilterGridSe1_L5f4
+FilterGridSe1_L3ca:
+	jmp	FilterGridSe1_L66a
+FilterGridSe1_L3cd:
 	extbu	d2
 	mov	d2, d1
 	clr	d0
@@ -406189,8 +406188,8 @@ LfoGridSe1_L3cd:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe1_L66a
-LfoGridSe1_L3f2:
+	jmp	FilterGridSe1_L66a
+FilterGridSe1_L3f2:
 	extbu	d2
 	mov	d2, d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
@@ -406201,12 +406200,12 @@ LfoGridSe1_L3f2:
 	mov	d2, d0
 	call	func_4C0FB91E_entry, [d2], 0x18
 	cmp	7, d3
-	ble	LfoGridSe1_L410
-	jmp	LfoGridSe1_L66a
-LfoGridSe1_L410:
+	ble	FilterGridSe1_L410
+	jmp	FilterGridSe1_L66a
+FilterGridSe1_L410:
 	mov	a3, d2
 	exthu	d2
-LfoGridSe1_L413:
+FilterGridSe1_L413:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, d1
 	exthu	d1
@@ -406219,17 +406218,17 @@ LfoGridSe1_L413:
 	mov	d3, a2
 	exth	d3
 	cmp	7, d3
-	ble	LfoGridSe1_L413
-	jmp	LfoGridSe1_L66a
-LfoGridSe1_L43b:
+	ble	FilterGridSe1_L413
+	jmp	FilterGridSe1_L66a
+FilterGridSe1_L43b:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	0, d0
-	beq	LfoGridSe1_L48b
+	beq	FilterGridSe1_L48b
 	cmp	7, d0
-	bne	LfoGridSe1_L46d
+	bne	FilterGridSe1_L46d
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -406245,8 +406244,8 @@ LfoGridSe1_L43b:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe1_L48b
-LfoGridSe1_L46d:
+	bra	FilterGridSe1_L48b
+FilterGridSe1_L46d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -406262,22 +406261,22 @@ LfoGridSe1_L46d:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-LfoGridSe1_L48b:
+FilterGridSe1_L48b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe1_L66a
-LfoGridSe1_L4a6:
+	jmp	FilterGridSe1_L66a
+FilterGridSe1_L4a6:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	0, d0
-	beq	LfoGridSe1_L4f7
+	beq	FilterGridSe1_L4f7
 	cmp	7, d0
-	bne	LfoGridSe1_L4d8
+	bne	FilterGridSe1_L4d8
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -406293,8 +406292,8 @@ LfoGridSe1_L4a6:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe1_L4f7
-LfoGridSe1_L4d8:
+	bra	FilterGridSe1_L4f7
+FilterGridSe1_L4d8:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -406311,27 +406310,27 @@ LfoGridSe1_L4d8:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-LfoGridSe1_L4f7:
+FilterGridSe1_L4f7:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe1_L66a
-LfoGridSe1_L512:
+	jmp	FilterGridSe1_L66a
+FilterGridSe1_L512:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	1, d0
-	beq	LfoGridSe1_L52c
+	beq	FilterGridSe1_L52c
 	cmp	2, d0
-	beq	LfoGridSe1_L52c
+	beq	FilterGridSe1_L52c
 	cmp	4, d0
-	beq	LfoGridSe1_L52c
+	beq	FilterGridSe1_L52c
 	cmp	5, d0
-	bne	LfoGridSe1_L54a
-LfoGridSe1_L52c:
+	bne	FilterGridSe1_L54a
+FilterGridSe1_L52c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -406347,30 +406346,30 @@ LfoGridSe1_L52c:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-LfoGridSe1_L54a:
+FilterGridSe1_L54a:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe1_L66a
-LfoGridSe1_L565:
+	jmp	FilterGridSe1_L66a
+FilterGridSe1_L565:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	1, d0
-	beq	LfoGridSe1_L585
+	beq	FilterGridSe1_L585
 	cmp	2, d0
-	beq	LfoGridSe1_L585
+	beq	FilterGridSe1_L585
 	cmp	4, d0
-	beq	LfoGridSe1_L585
+	beq	FilterGridSe1_L585
 	cmp	5, d0
-	beq	LfoGridSe1_L585
+	beq	FilterGridSe1_L585
 	cmp	7, d0
-	beq	LfoGridSe1_L5a5
-	bra	LfoGridSe1_L5da
-LfoGridSe1_L585:
+	beq	FilterGridSe1_L5a5
+	bra	FilterGridSe1_L5da
+FilterGridSe1_L585:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -406386,8 +406385,8 @@ LfoGridSe1_L585:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe1_L5da
-LfoGridSe1_L5a5:
+	bra	FilterGridSe1_L5da
+FilterGridSe1_L5a5:
 	extbu	d2
 	mov	sp, a0
 	add	0x20, a0
@@ -406415,30 +406414,30 @@ LfoGridSe1_L5a5:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-LfoGridSe1_L5da:
+FilterGridSe1_L5da:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	LfoGridSe1_L66a
-LfoGridSe1_L5f4:
+	bra	FilterGridSe1_L66a
+FilterGridSe1_L5f4:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	1, d0
-	beq	LfoGridSe1_L614
+	beq	FilterGridSe1_L614
 	cmp	2, d0
-	beq	LfoGridSe1_L614
+	beq	FilterGridSe1_L614
 	cmp	4, d0
-	beq	LfoGridSe1_L614
+	beq	FilterGridSe1_L614
 	cmp	5, d0
-	beq	LfoGridSe1_L614
+	beq	FilterGridSe1_L614
 	cmp	7, d0
-	beq	LfoGridSe1_L634
-	bra	LfoGridSe1_L652
-LfoGridSe1_L614:
+	beq	FilterGridSe1_L634
+	bra	FilterGridSe1_L652
+FilterGridSe1_L614:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -406454,8 +406453,8 @@ LfoGridSe1_L614:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe1_L652
-LfoGridSe1_L634:
+	bra	FilterGridSe1_L652
+FilterGridSe1_L634:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -406471,13 +406470,13 @@ LfoGridSe1_L634:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-LfoGridSe1_L652:
+FilterGridSe1_L652:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-LfoGridSe1_L66a:
+FilterGridSe1_L66a:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x48
 loc_4C0E77A1:
@@ -406514,133 +406513,133 @@ loc_4C0E77CB:
 	movhu	(0x24, sp), d0
 	exth	d0
 	cmp	1, d0
-	beq	LfoGridSe1_L6ea
+	beq	FilterGridSe1_L6ea
 	cmp	2, d0
-	beq	LfoGridSe1_L6f7
+	beq	FilterGridSe1_L6f7
 	cmp	3, d0
-	bne	LfoGridSe1_L6cb
-	jmp	LfoGridSe1_L7d6
-LfoGridSe1_L6cb:
+	bne	FilterGridSe1_L6cb
+	jmp	FilterGridSe1_L7d6
+FilterGridSe1_L6cb:
 	cmp	4, d0
-	bne	LfoGridSe1_L6d2
-	jmp	LfoGridSe1_L85f
-LfoGridSe1_L6d2:
+	bne	FilterGridSe1_L6d2
+	jmp	FilterGridSe1_L85f
+FilterGridSe1_L6d2:
 	cmp	5, d0
-	bne	LfoGridSe1_L6d9
-	jmp	LfoGridSe1_L919
-LfoGridSe1_L6d9:
+	bne	FilterGridSe1_L6d9
+	jmp	FilterGridSe1_L919
+FilterGridSe1_L6d9:
 	cmp	6, d0
-	bne	LfoGridSe1_L6e0
-	jmp	LfoGridSe1_L9a5
-LfoGridSe1_L6e0:
+	bne	FilterGridSe1_L6e0
+	jmp	FilterGridSe1_L9a5
+FilterGridSe1_L6e0:
 	cmp	7, d0
-	bne	LfoGridSe1_L6e7
-	jmp	LfoGridSe1_La3a
-LfoGridSe1_L6e7:
-	jmp	LfoGridSe1_Lacd
-LfoGridSe1_L6ea:
+	bne	FilterGridSe1_L6e7
+	jmp	FilterGridSe1_La3a
+FilterGridSe1_L6e7:
+	jmp	FilterGridSe1_Lacd
+FilterGridSe1_L6ea:
 	extbu	d2
 	mov	d2, d0
 	mov	a2, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	LfoGridSe1_Lacd
-LfoGridSe1_L6f7:
+	jmp	FilterGridSe1_Lacd
+FilterGridSe1_L6f7:
 	extbu	d2
 	mov	d2, d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	0, d0
-	beq	LfoGridSe1_L72a
+	beq	FilterGridSe1_L72a
 	cmp	1, d0
-	beq	LfoGridSe1_L73e
+	beq	FilterGridSe1_L73e
 	cmp	2, d0
-	beq	LfoGridSe1_L751
+	beq	FilterGridSe1_L751
 	cmp	3, d0
-	beq	LfoGridSe1_L764
+	beq	FilterGridSe1_L764
 	cmp	4, d0
-	beq	LfoGridSe1_L777
+	beq	FilterGridSe1_L777
 	cmp	5, d0
-	beq	LfoGridSe1_L78a
+	beq	FilterGridSe1_L78a
 	cmp	6, d0
-	bne	LfoGridSe1_L720
-	jmp	LfoGridSe1_L79d
-LfoGridSe1_L720:
+	bne	FilterGridSe1_L720
+	jmp	FilterGridSe1_L79d
+FilterGridSe1_L720:
 	cmp	7, d0
-	bne	LfoGridSe1_L727
-	jmp	LfoGridSe1_L7b0
-LfoGridSe1_L727:
-	jmp	LfoGridSe1_L7c1
-LfoGridSe1_L72a:
+	bne	FilterGridSe1_L727
+	jmp	FilterGridSe1_L7b0
+FilterGridSe1_L727:
+	jmp	FilterGridSe1_L7c1
+FilterGridSe1_L72a:
 	mov	a2, (8, sp)
 	mov	Text_THRU, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	LfoGridSe1_L7c1
-LfoGridSe1_L73e:
+	jmp	FilterGridSe1_L7c1
+FilterGridSe1_L73e:
 	mov	a2, (8, sp)
 	mov	Text_THRU+8, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	LfoGridSe1_L7c1
-LfoGridSe1_L751:
+	bra	FilterGridSe1_L7c1
+FilterGridSe1_L751:
 	mov	a2, (8, sp)
 	mov	Text_THRU+16, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	LfoGridSe1_L7c1
-LfoGridSe1_L764:
+	bra	FilterGridSe1_L7c1
+FilterGridSe1_L764:
 	mov	a2, (8, sp)
 	mov	Text_THRU+24, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	LfoGridSe1_L7c1
-LfoGridSe1_L777:
+	bra	FilterGridSe1_L7c1
+FilterGridSe1_L777:
 	mov	a2, (8, sp)
 	mov	Text_THRU+32, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	LfoGridSe1_L7c1
-LfoGridSe1_L78a:
+	bra	FilterGridSe1_L7c1
+FilterGridSe1_L78a:
 	mov	a2, (8, sp)
 	mov	Text_THRU+40, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	LfoGridSe1_L7c1
-LfoGridSe1_L79d:
+	bra	FilterGridSe1_L7c1
+FilterGridSe1_L79d:
 	mov	a2, (8, sp)
 	mov	Text_THRU+48, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	LfoGridSe1_L7c1
-LfoGridSe1_L7b0:
+	bra	FilterGridSe1_L7c1
+FilterGridSe1_L7b0:
 	mov	a2, (8, sp)
 	mov	Text_THRU+56, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-LfoGridSe1_L7c1:
+FilterGridSe1_L7c1:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe1_Lacd
-LfoGridSe1_L7d6:
+	jmp	FilterGridSe1_Lacd
+FilterGridSe1_L7d6:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	0, d0
-	beq	LfoGridSe1_L7ea
+	beq	FilterGridSe1_L7ea
 	cmp	7, d0
-	beq	LfoGridSe1_L7fd
-	bra	LfoGridSe1_L823
-LfoGridSe1_L7ea:
+	beq	FilterGridSe1_L7fd
+	bra	FilterGridSe1_L823
+FilterGridSe1_L7ea:
 	mov	a2, (8, sp)
 	mov	Str_empty_713, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	LfoGridSe1_L84a
-LfoGridSe1_L7fd:
+	bra	FilterGridSe1_L84a
+FilterGridSe1_L7fd:
 	extbu	d2
 	mov	0x7a, d0
 	nop
@@ -406657,8 +406656,8 @@ LfoGridSe1_L7fd:
 	movbu	(0x20, sp), d0
 	mov	a2, a0
 	call	func_4C0FC157_entry, 0, 0x14
-	bra	LfoGridSe1_L84a
-LfoGridSe1_L823:
+	bra	FilterGridSe1_L84a
+FilterGridSe1_L823:
 	extbu	d2
 	mov	0x7a, d0
 	nop
@@ -406676,34 +406675,34 @@ LfoGridSe1_L823:
 	movbu	(0x20, sp), d0
 	mov	a2, a0
 	call	func_4C0FC157_entry, 0, 0x14
-LfoGridSe1_L84a:
+FilterGridSe1_L84a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe1_Lacd
-LfoGridSe1_L85f:
+	jmp	FilterGridSe1_Lacd
+FilterGridSe1_L85f:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	0, d0
-	beq	LfoGridSe1_L87b
+	beq	FilterGridSe1_L87b
 	cmp	7, d0
-	beq	LfoGridSe1_L88e
+	beq	FilterGridSe1_L88e
 	cmp	3, d0
-	beq	LfoGridSe1_L8b8
+	beq	FilterGridSe1_L8b8
 	cmp	6, d0
-	beq	LfoGridSe1_L8b8
-	bra	LfoGridSe1_L8df
-LfoGridSe1_L87b:
+	beq	FilterGridSe1_L8b8
+	bra	FilterGridSe1_L8df
+FilterGridSe1_L87b:
 	mov	a2, (8, sp)
 	mov	Str_empty_712, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	LfoGridSe1_L904
-LfoGridSe1_L88e:
+	bra	FilterGridSe1_L904
+FilterGridSe1_L88e:
 	extbu	d2
 	mov	0x7a, d0
 	nop
@@ -406722,8 +406721,8 @@ LfoGridSe1_L88e:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FC17A_entry, [a2], 0x24
-	bra	LfoGridSe1_L904
-LfoGridSe1_L8b8:
+	bra	FilterGridSe1_L904
+FilterGridSe1_L8b8:
 	extbu	d2
 	mov	0x7a, d0
 	nop
@@ -406740,8 +406739,8 @@ LfoGridSe1_L8b8:
 	mov	1, d1
 	mov	a2, a0
 	call	func_4C0FC17A_entry, [a2], 0x24
-	bra	LfoGridSe1_L904
-LfoGridSe1_L8df:
+	bra	FilterGridSe1_L904
+FilterGridSe1_L8df:
 	extbu	d2
 	mov	0x7a, d0
 	nop
@@ -406759,27 +406758,27 @@ LfoGridSe1_L8df:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FC17A_entry, [a2], 0x24
-LfoGridSe1_L904:
+FilterGridSe1_L904:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe1_Lacd
-LfoGridSe1_L919:
+	jmp	FilterGridSe1_Lacd
+FilterGridSe1_L919:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	1, d0
-	beq	LfoGridSe1_L933
+	beq	FilterGridSe1_L933
 	cmp	2, d0
-	beq	LfoGridSe1_L933
+	beq	FilterGridSe1_L933
 	cmp	4, d0
-	beq	LfoGridSe1_L933
+	beq	FilterGridSe1_L933
 	cmp	5, d0
-	bne	LfoGridSe1_L97f
-LfoGridSe1_L933:
+	bne	FilterGridSe1_L97f
+FilterGridSe1_L933:
 	extbu	d2
 	mov	sp, a0
 	add	0x20, a0
@@ -406795,51 +406794,51 @@ LfoGridSe1_L933:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	LfoGridSe1_L959
+	beq	FilterGridSe1_L959
 	cmp	1, d0
-	beq	LfoGridSe1_L96c
-	bra	LfoGridSe1_L990
-LfoGridSe1_L959:
+	beq	FilterGridSe1_L96c
+	bra	FilterGridSe1_L990
+FilterGridSe1_L959:
 	mov	a2, (8, sp)
 	mov	Str_LOW_4, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	LfoGridSe1_L990
-LfoGridSe1_L96c:
+	bra	FilterGridSe1_L990
+FilterGridSe1_L96c:
 	mov	a2, (8, sp)
 	mov	Str_HIGH_4, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	LfoGridSe1_L990
-LfoGridSe1_L97f:
+	bra	FilterGridSe1_L990
+FilterGridSe1_L97f:
 	mov	a2, (8, sp)
 	mov	Str_empty_711, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-LfoGridSe1_L990:
+FilterGridSe1_L990:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe1_Lacd
-LfoGridSe1_L9a5:
+	jmp	FilterGridSe1_Lacd
+FilterGridSe1_L9a5:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	1, d0
-	beq	LfoGridSe1_L9c5
+	beq	FilterGridSe1_L9c5
 	cmp	2, d0
-	beq	LfoGridSe1_L9c5
+	beq	FilterGridSe1_L9c5
 	cmp	4, d0
-	beq	LfoGridSe1_L9c5
+	beq	FilterGridSe1_L9c5
 	cmp	5, d0
-	beq	LfoGridSe1_L9c5
+	beq	FilterGridSe1_L9c5
 	cmp	7, d0
-	beq	LfoGridSe1_L9ee
-	bra	LfoGridSe1_La14
-LfoGridSe1_L9c5:
+	beq	FilterGridSe1_L9ee
+	bra	FilterGridSe1_La14
+FilterGridSe1_L9c5:
 	extbu	d2
 	mov	0x7a, d0
 	nop
@@ -406857,8 +406856,8 @@ LfoGridSe1_L9c5:
 	movbu	(0x20, sp), d0
 	mov	a2, a0
 	call	func_4C0FC157_entry, 0, 0x14
-	bra	LfoGridSe1_La25
-LfoGridSe1_L9ee:
+	bra	FilterGridSe1_La25
+FilterGridSe1_L9ee:
 	extbu	d2
 	mov	0x7a, d0
 	nop
@@ -406875,36 +406874,36 @@ LfoGridSe1_L9ee:
 	movbu	(0x20, sp), d0
 	mov	a2, a0
 	call	func_4C0FC157_entry, 0, 0x14
-	bra	LfoGridSe1_La25
-LfoGridSe1_La14:
+	bra	FilterGridSe1_La25
+FilterGridSe1_La14:
 	mov	a2, (8, sp)
 	mov	Str_empty_710, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-LfoGridSe1_La25:
+FilterGridSe1_La25:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe1_Lacd
-LfoGridSe1_La3a:
+	jmp	FilterGridSe1_Lacd
+FilterGridSe1_La3a:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	1, d0
-	beq	LfoGridSe1_La5a
+	beq	FilterGridSe1_La5a
 	cmp	2, d0
-	beq	LfoGridSe1_La5a
+	beq	FilterGridSe1_La5a
 	cmp	4, d0
-	beq	LfoGridSe1_La5a
+	beq	FilterGridSe1_La5a
 	cmp	5, d0
-	beq	LfoGridSe1_La5a
+	beq	FilterGridSe1_La5a
 	cmp	7, d0
-	beq	LfoGridSe1_La83
-	bra	LfoGridSe1_Laaa
-LfoGridSe1_La5a:
+	beq	FilterGridSe1_La83
+	bra	FilterGridSe1_Laaa
+FilterGridSe1_La5a:
 	extbu	d2
 	mov	0x7a, d0
 	nop
@@ -406922,8 +406921,8 @@ LfoGridSe1_La5a:
 	movbu	(0x20, sp), d0
 	mov	a2, a0
 	call	func_4C0FC26E_entry, 0, 0x14
-	bra	LfoGridSe1_Labb
-LfoGridSe1_La83:
+	bra	FilterGridSe1_Labb
+FilterGridSe1_La83:
 	extbu	d2
 	mov	0x7a, d0
 	nop
@@ -406941,46 +406940,46 @@ LfoGridSe1_La83:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FC17A_entry, [a2], 0x24
-	bra	LfoGridSe1_Labb
-LfoGridSe1_Laaa:
+	bra	FilterGridSe1_Labb
+FilterGridSe1_Laaa:
 	mov	a2, (8, sp)
 	mov	Str_empty_709, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-LfoGridSe1_Labb:
+FilterGridSe1_Labb:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-LfoGridSe1_Lacd:
+FilterGridSe1_Lacd:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	LfoGridSe1_Laea
+	bra	FilterGridSe1_Laea
 loc_4C0E7C19:
 	mov	d3, d0
-	bra	LfoGridSe1_Laea
-LfoGridSe1_Lae9:
+	bra	FilterGridSe1_Laea
+FilterGridSe1_Lae9:
 	clr	d0
-LfoGridSe1_Laea:
+FilterGridSe1_Laea:
 	ret	[d2,d3,a2,a3], 0x48
 
-LfoGridSe2:
+FilterGridSe2:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x34, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	LfoGridSe2_L12
-	jmp	LfoGridSe2_L5ae
-LfoGridSe2_L12:
+	bge	FilterGridSe2_L12
+	jmp	FilterGridSe2_L5ae
+FilterGridSe2_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	LfoGridSe2_L1d
-	jmp	LfoGridSe2_L5ae
-LfoGridSe2_L1d:
+	ble	FilterGridSe2_L1d
+	jmp	FilterGridSe2_L5ae
+FilterGridSe2_L1d:
 	mov	LfoGridSe2_L1d_Records, a1
 	add	0xfe800001, d2
 	mov	a1, a0
@@ -406990,21 +406989,21 @@ LfoGridSe2_L1d:
 	add	d0, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	LfoGridSe2_L4d
+	beq	FilterGridSe2_L4d
 	setlb
 	cmp	0, d0
-	bne	LfoGridSe2_L3f
-	jmp	LfoGridSe2_L5ae
-LfoGridSe2_L3f:
+	bne	FilterGridSe2_L3f
+	jmp	FilterGridSe2_L5ae
+FilterGridSe2_L3f:
 	add	8, a0
 	cmp	LfoGridSe3_L46d_Table, a0
-	bcs	LfoGridSe2_L4a
+	bcs	FilterGridSe2_L4a
 	mov	a1, a0
-LfoGridSe2_L4a:
+FilterGridSe2_L4a:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-LfoGridSe2_L4d:
+FilterGridSe2_L4d:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0E7C72:
@@ -407021,37 +407020,37 @@ loc_4C0E7C72:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	LfoGridSe2_La5
+	beq	FilterGridSe2_La5
 	cmp	2, d0
-	beq	LfoGridSe2_Lb3
+	beq	FilterGridSe2_Lb3
 	cmp	3, d0
-	beq	LfoGridSe2_Ld7
+	beq	FilterGridSe2_Ld7
 	cmp	4, d0
-	beq	LfoGridSe2_Lff
+	beq	FilterGridSe2_Lff
 	cmp	5, d0
-	bne	LfoGridSe2_L8d
-	jmp	LfoGridSe2_L126
-LfoGridSe2_L8d:
+	bne	FilterGridSe2_L8d
+	jmp	FilterGridSe2_L126
+FilterGridSe2_L8d:
 	cmp	6, d0
-	bne	LfoGridSe2_L94
-	jmp	LfoGridSe2_L150
-LfoGridSe2_L94:
+	bne	FilterGridSe2_L94
+	jmp	FilterGridSe2_L150
+FilterGridSe2_L94:
 	cmp	7, d0
-	bne	LfoGridSe2_L9b
-	jmp	LfoGridSe2_L18d
-LfoGridSe2_L9b:
+	bne	FilterGridSe2_L9b
+	jmp	FilterGridSe2_L18d
+FilterGridSe2_L9b:
 	cmp	8, d0
-	bne	LfoGridSe2_La2
-	jmp	LfoGridSe2_L1c4
-LfoGridSe2_La2:
-	jmp	LfoGridSe2_L1e8
-LfoGridSe2_La5:
+	bne	FilterGridSe2_La2
+	jmp	FilterGridSe2_L1c4
+FilterGridSe2_La2:
+	jmp	FilterGridSe2_L1e8
+FilterGridSe2_La5:
 	mov	1, d0
 	extbu	d2
 	mov	d2, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	LfoGridSe2_L1e8
-LfoGridSe2_Lb3:
+	jmp	FilterGridSe2_L1e8
+FilterGridSe2_Lb3:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -407069,8 +407068,8 @@ LfoGridSe2_Lb3:
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe2_L1e8
-LfoGridSe2_Ld7:
+	jmp	FilterGridSe2_L1e8
+FilterGridSe2_Ld7:
 	mov	6, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -407089,8 +407088,8 @@ LfoGridSe2_Ld7:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe2_L1e8
-LfoGridSe2_Lff:
+	jmp	FilterGridSe2_L1e8
+FilterGridSe2_Lff:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -407109,8 +407108,8 @@ LfoGridSe2_Lff:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe2_L1e8
-LfoGridSe2_L126:
+	jmp	FilterGridSe2_L1e8
+FilterGridSe2_L126:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -407130,8 +407129,8 @@ LfoGridSe2_L126:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe2_L1e8
-LfoGridSe2_L150:
+	jmp	FilterGridSe2_L1e8
+FilterGridSe2_L150:
 	extbu	d2
 	mov	sp, a0
 	add	0x1c, a0
@@ -407160,8 +407159,8 @@ LfoGridSe2_L150:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe2_L1e8
-LfoGridSe2_L18d:
+	bra	FilterGridSe2_L1e8
+FilterGridSe2_L18d:
 	extbu	d2
 	mov	sp, a0
 	add	0x1c, a0
@@ -407188,8 +407187,8 @@ LfoGridSe2_L18d:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe2_L1e8
-LfoGridSe2_L1c4:
+	bra	FilterGridSe2_L1e8
+FilterGridSe2_L1c4:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -407208,7 +407207,7 @@ LfoGridSe2_L1c4:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-LfoGridSe2_L1e8:
+FilterGridSe2_L1e8:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -407230,36 +407229,36 @@ loc_4C0E7E22:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	LfoGridSe2_L256
+	beq	FilterGridSe2_L256
 	cmp	2, d0
-	beq	LfoGridSe2_L262
+	beq	FilterGridSe2_L262
 	cmp	3, d0
-	beq	LfoGridSe2_L287
+	beq	FilterGridSe2_L287
 	cmp	4, d0
-	beq	LfoGridSe2_L2aa
+	beq	FilterGridSe2_L2aa
 	cmp	5, d0
-	bne	LfoGridSe2_L23e
-	jmp	LfoGridSe2_L2cb
-LfoGridSe2_L23e:
+	bne	FilterGridSe2_L23e
+	jmp	FilterGridSe2_L2cb
+FilterGridSe2_L23e:
 	cmp	6, d0
-	bne	LfoGridSe2_L245
-	jmp	LfoGridSe2_L2f1
-LfoGridSe2_L245:
+	bne	FilterGridSe2_L245
+	jmp	FilterGridSe2_L2f1
+FilterGridSe2_L245:
 	cmp	7, d0
-	bne	LfoGridSe2_L24c
-	jmp	LfoGridSe2_L315
-LfoGridSe2_L24c:
+	bne	FilterGridSe2_L24c
+	jmp	FilterGridSe2_L315
+FilterGridSe2_L24c:
 	cmp	8, d0
-	bne	LfoGridSe2_L253
-	jmp	LfoGridSe2_L352
-LfoGridSe2_L253:
-	jmp	LfoGridSe2_L38c
-LfoGridSe2_L256:
+	bne	FilterGridSe2_L253
+	jmp	FilterGridSe2_L352
+FilterGridSe2_L253:
+	jmp	FilterGridSe2_L38c
+FilterGridSe2_L256:
 	clr	d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	LfoGridSe2_L38c
-LfoGridSe2_L262:
+	jmp	FilterGridSe2_L38c
+FilterGridSe2_L262:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -407277,8 +407276,8 @@ LfoGridSe2_L262:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe2_L38c
-LfoGridSe2_L287:
+	jmp	FilterGridSe2_L38c
+FilterGridSe2_L287:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -407295,8 +407294,8 @@ LfoGridSe2_L287:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe2_L38c
-LfoGridSe2_L2aa:
+	jmp	FilterGridSe2_L38c
+FilterGridSe2_L2aa:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -407312,8 +407311,8 @@ LfoGridSe2_L2aa:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe2_L38c
-LfoGridSe2_L2cb:
+	jmp	FilterGridSe2_L38c
+FilterGridSe2_L2cb:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -407331,8 +407330,8 @@ LfoGridSe2_L2cb:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe2_L38c
-LfoGridSe2_L2f1:
+	jmp	FilterGridSe2_L38c
+FilterGridSe2_L2f1:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -407350,8 +407349,8 @@ LfoGridSe2_L2f1:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe2_L38c
-LfoGridSe2_L315:
+	bra	FilterGridSe2_L38c
+FilterGridSe2_L315:
 	mov	d1, d2
 	extbu	d2
 	mov	0x7a, d0
@@ -407381,8 +407380,8 @@ LfoGridSe2_L315:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe2_L38c
-LfoGridSe2_L352:
+	bra	FilterGridSe2_L38c
+FilterGridSe2_L352:
 	extbu	d1
 	mov	0x7a, d2
 	mov	0x3a, a0
@@ -407411,7 +407410,7 @@ LfoGridSe2_L352:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-LfoGridSe2_L38c:
+FilterGridSe2_L38c:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -407451,38 +407450,38 @@ loc_4C0E7FF0:
 	add	-2, d0
 	exth	d1
 	cmp	1, d1
-	beq	LfoGridSe2_L425
+	beq	FilterGridSe2_L425
 	cmp	2, d1
-	beq	LfoGridSe2_L431
+	beq	FilterGridSe2_L431
 	cmp	3, d1
-	beq	LfoGridSe2_L453
+	beq	FilterGridSe2_L453
 	cmp	4, d1
-	bne	LfoGridSe2_L406
-	jmp	LfoGridSe2_L48f
-LfoGridSe2_L406:
+	bne	FilterGridSe2_L406
+	jmp	FilterGridSe2_L48f
+FilterGridSe2_L406:
 	cmp	5, d1
-	bne	LfoGridSe2_L40d
-	jmp	LfoGridSe2_L4b5
-LfoGridSe2_L40d:
+	bne	FilterGridSe2_L40d
+	jmp	FilterGridSe2_L4b5
+FilterGridSe2_L40d:
 	cmp	6, d1
-	bne	LfoGridSe2_L414
-	jmp	LfoGridSe2_L4eb
-LfoGridSe2_L414:
+	bne	FilterGridSe2_L414
+	jmp	FilterGridSe2_L4eb
+FilterGridSe2_L414:
 	cmp	7, d1
-	bne	LfoGridSe2_L41b
-	jmp	LfoGridSe2_L522
-LfoGridSe2_L41b:
+	bne	FilterGridSe2_L41b
+	jmp	FilterGridSe2_L522
+FilterGridSe2_L41b:
 	cmp	8, d1
-	bne	LfoGridSe2_L422
-	jmp	LfoGridSe2_L559
-LfoGridSe2_L422:
-	jmp	LfoGridSe2_L592
-LfoGridSe2_L425:
+	bne	FilterGridSe2_L422
+	jmp	FilterGridSe2_L559
+FilterGridSe2_L422:
+	jmp	FilterGridSe2_L592
+FilterGridSe2_L425:
 	extbu	d0
 	mov	a2, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	LfoGridSe2_L592
-LfoGridSe2_L431:
+	jmp	FilterGridSe2_L592
+FilterGridSe2_L431:
 	mov	0x3f, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -407497,8 +407496,8 @@ LfoGridSe2_L431:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	LfoGridSe2_L592
-LfoGridSe2_L453:
+	jmp	FilterGridSe2_L592
+FilterGridSe2_L453:
 	extbu	d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -407522,8 +407521,8 @@ LfoGridSe2_L453:
 	extb	d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	LfoGridSe2_L592
-LfoGridSe2_L48f:
+	jmp	FilterGridSe2_L592
+FilterGridSe2_L48f:
 	mov	0x3f, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -407540,8 +407539,8 @@ LfoGridSe2_L48f:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	LfoGridSe2_L592
-LfoGridSe2_L4b5:
+	jmp	FilterGridSe2_L592
+FilterGridSe2_L4b5:
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -407561,8 +407560,8 @@ LfoGridSe2_L4b5:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe2_L592
-LfoGridSe2_L4eb:
+	jmp	FilterGridSe2_L592
+FilterGridSe2_L4eb:
 	extbu	d0
 	mov	0x7a, d1
 	nop
@@ -407583,8 +407582,8 @@ LfoGridSe2_L4eb:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	LfoGridSe2_L592
-LfoGridSe2_L522:
+	bra	FilterGridSe2_L592
+FilterGridSe2_L522:
 	extbu	d0
 	mov	0x7a, d1
 	nop
@@ -407605,8 +407604,8 @@ LfoGridSe2_L522:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	LfoGridSe2_L592
-LfoGridSe2_L559:
+	bra	FilterGridSe2_L592
+FilterGridSe2_L559:
 	extbu	d0
 	mov	0x7a, d1
 	nop
@@ -407629,34 +407628,34 @@ LfoGridSe2_L559:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-LfoGridSe2_L592:
+FilterGridSe2_L592:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	LfoGridSe2_L5af
+	bra	FilterGridSe2_L5af
 loc_4C0E81CB:
 	mov	d3, d0
-	bra	LfoGridSe2_L5af
-LfoGridSe2_L5ae:
+	bra	FilterGridSe2_L5af
+FilterGridSe2_L5ae:
 	clr	d0
-LfoGridSe2_L5af:
+FilterGridSe2_L5af:
 	ret	[d2,d3,a2,a3], 0x44
 
-LfoGridSe3:
+FilterGridSe3:
 	movm	[d2,d3,a2], (sp)
 	add	-0x30, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	LfoGridSe3_L12
-	jmp	LfoGridSe3_L6d0
-LfoGridSe3_L12:
+	bge	FilterGridSe3_L12
+	jmp	FilterGridSe3_L6d0
+FilterGridSe3_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	LfoGridSe3_L1d
-	jmp	LfoGridSe3_L6d0
-LfoGridSe3_L1d:
+	ble	FilterGridSe3_L1d
+	jmp	FilterGridSe3_L6d0
+FilterGridSe3_L1d:
 	add	0xfe800001, d2
 	mov	LfoGridSe3_L1d_Records, a1
 	mov	a1, a0
@@ -407666,21 +407665,21 @@ LfoGridSe3_L1d:
 	add	d0, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	LfoGridSe3_L4d
+	beq	FilterGridSe3_L4d
 	setlb
 	cmp	0, d0
-	bne	LfoGridSe3_L3f
-	jmp	LfoGridSe3_L6d0
-LfoGridSe3_L3f:
+	bne	FilterGridSe3_L3f
+	jmp	FilterGridSe3_L6d0
+FilterGridSe3_L3f:
 	add	8, a0
 	cmp	LfoGridSe4_L1d_Records, a0
-	bcs	LfoGridSe3_L4a
+	bcs	FilterGridSe3_L4a
 	mov	a1, a0
-LfoGridSe3_L4a:
+FilterGridSe3_L4a:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-LfoGridSe3_L4d:
+FilterGridSe3_L4d:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0E8224:
@@ -407697,13 +407696,13 @@ loc_4C0E8224:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	bge	LfoGridSe3_L7d
-	jmp	LfoGridSe3_L21c
-LfoGridSe3_L7d:
+	bge	FilterGridSe3_L7d
+	jmp	FilterGridSe3_L21c
+FilterGridSe3_L7d:
 	cmp	0xb, d0
-	ble	LfoGridSe3_L84
-	jmp	LfoGridSe3_L21c
-LfoGridSe3_L84:
+	ble	FilterGridSe3_L84
+	jmp	FilterGridSe3_L21c
+FilterGridSe3_L84:
 	add	-1, d0
 	asl2	d0
 	mov	LfoGridSe3_L84_Table, a0
@@ -407714,7 +407713,7 @@ loc_4C0E8263:
 	extbu	d2
 	mov	d2, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	LfoGridSe3_L21c
+	jmp	FilterGridSe3_L21c
 loc_4C0E8271:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -407733,7 +407732,7 @@ loc_4C0E8271:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe3_L21c
+	jmp	FilterGridSe3_L21c
 loc_4C0E8297:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -407752,7 +407751,7 @@ loc_4C0E8297:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe3_L21c
+	jmp	FilterGridSe3_L21c
 loc_4C0E82BB:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -407773,7 +407772,7 @@ loc_4C0E82BB:
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe3_L21c
+	jmp	FilterGridSe3_L21c
 loc_4C0E82E5:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -407792,7 +407791,7 @@ loc_4C0E82E5:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe3_L21c
+	jmp	FilterGridSe3_L21c
 loc_4C0E8309:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -407813,7 +407812,7 @@ loc_4C0E8309:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe3_L21c
+	jmp	FilterGridSe3_L21c
 loc_4C0E8333:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -407831,7 +407830,7 @@ loc_4C0E8333:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe3_L21c
+	jmp	FilterGridSe3_L21c
 loc_4C0E8356:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -407851,7 +407850,7 @@ loc_4C0E8356:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe3_L21c
+	bra	FilterGridSe3_L21c
 loc_4C0E837E:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
@@ -407869,7 +407868,7 @@ loc_4C0E837E:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe3_L21c
+	bra	FilterGridSe3_L21c
 loc_4C0E83A0:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -407889,7 +407888,7 @@ loc_4C0E83A0:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe3_L21c
+	bra	FilterGridSe3_L21c
 loc_4C0E83C8:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -407909,7 +407908,7 @@ loc_4C0E83C8:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-LfoGridSe3_L21c:
+FilterGridSe3_L21c:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -407931,13 +407930,13 @@ loc_4C0E8408:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	bge	LfoGridSe3_L262
-	jmp	LfoGridSe3_L3f8
-LfoGridSe3_L262:
+	bge	FilterGridSe3_L262
+	jmp	FilterGridSe3_L3f8
+FilterGridSe3_L262:
 	cmp	0xb, d0
-	ble	LfoGridSe3_L269
-	jmp	LfoGridSe3_L3f8
-LfoGridSe3_L269:
+	ble	FilterGridSe3_L269
+	jmp	FilterGridSe3_L3f8
+FilterGridSe3_L269:
 	add	-1, d0
 	asl2	d0
 	mov	LfoGridSe3_L269_Table, a0
@@ -407947,7 +407946,7 @@ loc_4C0E8448:
 	clr	d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	LfoGridSe3_L3f8
+	jmp	FilterGridSe3_L3f8
 loc_4C0E8454:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -407967,7 +407966,7 @@ loc_4C0E8454:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe3_L3f8
+	jmp	FilterGridSe3_L3f8
 loc_4C0E847D:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -407985,7 +407984,7 @@ loc_4C0E847D:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe3_L3f8
+	jmp	FilterGridSe3_L3f8
 loc_4C0E849F:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -408005,7 +408004,7 @@ loc_4C0E849F:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe3_L3f8
+	jmp	FilterGridSe3_L3f8
 loc_4C0E84C8:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -408023,7 +408022,7 @@ loc_4C0E84C8:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe3_L3f8
+	jmp	FilterGridSe3_L3f8
 loc_4C0E84EA:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -408042,7 +408041,7 @@ loc_4C0E84EA:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe3_L3f8
+	jmp	FilterGridSe3_L3f8
 loc_4C0E8510:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -408060,7 +408059,7 @@ loc_4C0E8510:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe3_L3f8
+	jmp	FilterGridSe3_L3f8
 loc_4C0E8532:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -408080,7 +408079,7 @@ loc_4C0E8532:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe3_L3f8
+	bra	FilterGridSe3_L3f8
 loc_4C0E855A:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -408098,7 +408097,7 @@ loc_4C0E855A:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe3_L3f8
+	bra	FilterGridSe3_L3f8
 loc_4C0E857B:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -408119,7 +408118,7 @@ loc_4C0E857B:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	LfoGridSe3_L3f8
+	bra	FilterGridSe3_L3f8
 loc_4C0E85A4:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -408139,7 +408138,7 @@ loc_4C0E85A4:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-LfoGridSe3_L3f8:
+FilterGridSe3_L3f8:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -408179,13 +408178,13 @@ loc_4C0E860E:
 	add	-2, d1
 	exth	d0
 	cmp	1, d0
-	bge	LfoGridSe3_L466
-	jmp	LfoGridSe3_L6b4
-LfoGridSe3_L466:
+	bge	FilterGridSe3_L466
+	jmp	FilterGridSe3_L6b4
+FilterGridSe3_L466:
 	cmp	0xb, d0
-	ble	LfoGridSe3_L46d
-	jmp	LfoGridSe3_L6b4
-LfoGridSe3_L46d:
+	ble	FilterGridSe3_L46d
+	jmp	FilterGridSe3_L6b4
+FilterGridSe3_L46d:
 	add	-1, d0
 	asl2	d0
 	mov	LfoGridSe3_L46d_Table, a0
@@ -408196,7 +408195,7 @@ loc_4C0E864C:
 	mov	d1, d0
 	mov	a1, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	LfoGridSe3_L6b4
+	jmp	FilterGridSe3_L6b4
 loc_4C0E8659:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -408219,7 +408218,7 @@ loc_4C0E8659:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe3_L6b4
+	jmp	FilterGridSe3_L6b4
 loc_4C0E8693:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -408241,7 +408240,7 @@ loc_4C0E8693:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe3_L6b4
+	jmp	FilterGridSe3_L6b4
 loc_4C0E86C8:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -408264,7 +408263,7 @@ loc_4C0E86C8:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe3_L6b4
+	jmp	FilterGridSe3_L6b4
 loc_4C0E8702:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -408288,7 +408287,7 @@ loc_4C0E8702:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe3_L6b4
+	jmp	FilterGridSe3_L6b4
 loc_4C0E873B:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -408311,7 +408310,7 @@ loc_4C0E873B:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe3_L6b4
+	jmp	FilterGridSe3_L6b4
 loc_4C0E8775:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -408334,7 +408333,7 @@ loc_4C0E8775:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe3_L6b4
+	jmp	FilterGridSe3_L6b4
 loc_4C0E87AB:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -408357,7 +408356,7 @@ loc_4C0E87AB:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe3_L6b4
+	jmp	FilterGridSe3_L6b4
 loc_4C0E87E5:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -408379,7 +408378,7 @@ loc_4C0E87E5:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	LfoGridSe3_L6b4
+	bra	FilterGridSe3_L6b4
 loc_4C0E8819:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -408401,7 +408400,7 @@ loc_4C0E8819:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	LfoGridSe3_L6b4
+	bra	FilterGridSe3_L6b4
 loc_4C0E884F:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -408424,34 +408423,34 @@ loc_4C0E884F:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-LfoGridSe3_L6b4:
+FilterGridSe3_L6b4:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	LfoGridSe3_L6d1
+	bra	FilterGridSe3_L6d1
 loc_4C0E889F:
 	mov	d3, d0
-	bra	LfoGridSe3_L6d1
-LfoGridSe3_L6d0:
+	bra	FilterGridSe3_L6d1
+FilterGridSe3_L6d0:
 	clr	d0
-LfoGridSe3_L6d1:
+FilterGridSe3_L6d1:
 	ret	[d2,d3,a2], 0x3c
 
-LfoGridSe4:
+FilterGridSe4:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x34, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	LfoGridSe4_L12
-	jmp	LfoGridSe4_L503
-LfoGridSe4_L12:
+	bge	FilterGridSe4_L12
+	jmp	FilterGridSe4_L503
+FilterGridSe4_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	LfoGridSe4_L1d
-	jmp	LfoGridSe4_L503
-LfoGridSe4_L1d:
+	ble	FilterGridSe4_L1d
+	jmp	FilterGridSe4_L503
+FilterGridSe4_L1d:
 	mov	LfoGridSe4_L1d_Records, a1
 	add	0xfe800001, d2
 	mov	0xf, d0
@@ -408461,21 +408460,21 @@ LfoGridSe4_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	LfoGridSe4_L4e
+	beq	FilterGridSe4_L4e
 	setlb
 	cmp	0, d0
-	bne	LfoGridSe4_L40
-	jmp	LfoGridSe4_L503
-LfoGridSe4_L40:
+	bne	FilterGridSe4_L40
+	jmp	FilterGridSe4_L503
+FilterGridSe4_L40:
 	add	8, a0
 	cmp	DspOnSe_L77d_Table, a0
-	bcs	LfoGridSe4_L4b
+	bcs	FilterGridSe4_L4b
 	mov	a1, a0
-LfoGridSe4_L4b:
+FilterGridSe4_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-LfoGridSe4_L4e:
+FilterGridSe4_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0E88F9:
@@ -408492,32 +408491,32 @@ loc_4C0E88F9:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	LfoGridSe4_L9f
+	beq	FilterGridSe4_L9f
 	cmp	2, d0
-	beq	LfoGridSe4_Lac
+	beq	FilterGridSe4_Lac
 	cmp	3, d0
-	beq	LfoGridSe4_Ld5
+	beq	FilterGridSe4_Ld5
 	cmp	4, d0
-	beq	LfoGridSe4_Lfe
+	beq	FilterGridSe4_Lfe
 	cmp	5, d0
-	bne	LfoGridSe4_L8e
-	jmp	LfoGridSe4_L12e
-LfoGridSe4_L8e:
+	bne	FilterGridSe4_L8e
+	jmp	FilterGridSe4_L12e
+FilterGridSe4_L8e:
 	cmp	6, d0
-	bne	LfoGridSe4_L95
-	jmp	LfoGridSe4_L15b
-LfoGridSe4_L95:
+	bne	FilterGridSe4_L95
+	jmp	FilterGridSe4_L15b
+FilterGridSe4_L95:
 	cmp	7, d0
-	bne	LfoGridSe4_L9c
-	jmp	LfoGridSe4_L18b
-LfoGridSe4_L9c:
-	jmp	LfoGridSe4_L1ac
-LfoGridSe4_L9f:
+	bne	FilterGridSe4_L9c
+	jmp	FilterGridSe4_L18b
+FilterGridSe4_L9c:
+	jmp	FilterGridSe4_L1ac
+FilterGridSe4_L9f:
 	mov	1, d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	LfoGridSe4_L1ac
-LfoGridSe4_Lac:
+	jmp	FilterGridSe4_L1ac
+FilterGridSe4_Lac:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -408536,8 +408535,8 @@ LfoGridSe4_Lac:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe4_L1ac
-LfoGridSe4_Ld5:
+	jmp	FilterGridSe4_L1ac
+FilterGridSe4_Ld5:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -408556,8 +408555,8 @@ LfoGridSe4_Ld5:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe4_L1ac
-LfoGridSe4_Lfe:
+	jmp	FilterGridSe4_L1ac
+FilterGridSe4_Lfe:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -408578,8 +408577,8 @@ LfoGridSe4_Lfe:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	clr	d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	jmp	LfoGridSe4_L1ac
-LfoGridSe4_L12e:
+	jmp	FilterGridSe4_L1ac
+FilterGridSe4_L12e:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -408599,8 +408598,8 @@ LfoGridSe4_L12e:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	mov	1, d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	bra	LfoGridSe4_L1ac
-LfoGridSe4_L15b:
+	bra	FilterGridSe4_L1ac
+FilterGridSe4_L15b:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -408621,8 +408620,8 @@ LfoGridSe4_L15b:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	mov	2, d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	bra	LfoGridSe4_L1ac
-LfoGridSe4_L18b:
+	bra	FilterGridSe4_L1ac
+FilterGridSe4_L18b:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -408640,7 +408639,7 @@ LfoGridSe4_L18b:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-LfoGridSe4_L1ac:
+FilterGridSe4_L1ac:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -408661,32 +408660,32 @@ loc_4C0E8A6C:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	LfoGridSe4_L212
+	beq	FilterGridSe4_L212
 	cmp	2, d0
-	beq	LfoGridSe4_L21e
+	beq	FilterGridSe4_L21e
 	cmp	3, d0
-	beq	LfoGridSe4_L243
+	beq	FilterGridSe4_L243
 	cmp	4, d0
-	beq	LfoGridSe4_L26c
+	beq	FilterGridSe4_L26c
 	cmp	5, d0
-	bne	LfoGridSe4_L201
-	jmp	LfoGridSe4_L29c
-LfoGridSe4_L201:
+	bne	FilterGridSe4_L201
+	jmp	FilterGridSe4_L29c
+FilterGridSe4_L201:
 	cmp	6, d0
-	bne	LfoGridSe4_L208
-	jmp	LfoGridSe4_L2c9
-LfoGridSe4_L208:
+	bne	FilterGridSe4_L208
+	jmp	FilterGridSe4_L2c9
+FilterGridSe4_L208:
 	cmp	7, d0
-	bne	LfoGridSe4_L20f
-	jmp	LfoGridSe4_L2f9
-LfoGridSe4_L20f:
-	jmp	LfoGridSe4_L31b
-LfoGridSe4_L212:
+	bne	FilterGridSe4_L20f
+	jmp	FilterGridSe4_L2f9
+FilterGridSe4_L20f:
+	jmp	FilterGridSe4_L31b
+FilterGridSe4_L212:
 	clr	d0
 	extbu	d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	LfoGridSe4_L31b
-LfoGridSe4_L21e:
+	jmp	FilterGridSe4_L31b
+FilterGridSe4_L21e:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -408703,8 +408702,8 @@ LfoGridSe4_L21e:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe4_L31b
-LfoGridSe4_L243:
+	jmp	FilterGridSe4_L31b
+FilterGridSe4_L243:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -408723,8 +408722,8 @@ LfoGridSe4_L243:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	LfoGridSe4_L31b
-LfoGridSe4_L26c:
+	jmp	FilterGridSe4_L31b
+FilterGridSe4_L26c:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -408745,8 +408744,8 @@ LfoGridSe4_L26c:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	clr	d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	jmp	LfoGridSe4_L31b
-LfoGridSe4_L29c:
+	jmp	FilterGridSe4_L31b
+FilterGridSe4_L29c:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -408766,8 +408765,8 @@ LfoGridSe4_L29c:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	mov	1, d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	bra	LfoGridSe4_L31b
-LfoGridSe4_L2c9:
+	bra	FilterGridSe4_L31b
+FilterGridSe4_L2c9:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -408788,8 +408787,8 @@ LfoGridSe4_L2c9:
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
 	mov	2, d0
 	movbu	d0, (DrumFltGraphTitleSe_L18_Var)
-	bra	LfoGridSe4_L31b
-LfoGridSe4_L2f9:
+	bra	FilterGridSe4_L31b
+FilterGridSe4_L2f9:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -408807,7 +408806,7 @@ LfoGridSe4_L2f9:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-LfoGridSe4_L31b:
+FilterGridSe4_L31b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -408847,32 +408846,32 @@ loc_4C0E8C05:
 	add	-2, d0
 	exth	d1
 	cmp	1, d1
-	beq	LfoGridSe4_L3aa
+	beq	FilterGridSe4_L3aa
 	cmp	2, d1
-	beq	LfoGridSe4_L3b6
+	beq	FilterGridSe4_L3b6
 	cmp	3, d1
-	beq	LfoGridSe4_L3da
+	beq	FilterGridSe4_L3da
 	cmp	4, d1
-	beq	LfoGridSe4_L402
+	beq	FilterGridSe4_L402
 	cmp	5, d1
-	bne	LfoGridSe4_L399
-	jmp	LfoGridSe4_L43c
-LfoGridSe4_L399:
+	bne	FilterGridSe4_L399
+	jmp	FilterGridSe4_L43c
+FilterGridSe4_L399:
 	cmp	6, d1
-	bne	LfoGridSe4_L3a0
-	jmp	LfoGridSe4_L475
-LfoGridSe4_L3a0:
+	bne	FilterGridSe4_L3a0
+	jmp	FilterGridSe4_L475
+FilterGridSe4_L3a0:
 	cmp	7, d1
-	bne	LfoGridSe4_L3a7
-	jmp	LfoGridSe4_L4ae
-LfoGridSe4_L3a7:
-	jmp	LfoGridSe4_L4e7
-LfoGridSe4_L3aa:
+	bne	FilterGridSe4_L3a7
+	jmp	FilterGridSe4_L4ae
+FilterGridSe4_L3a7:
+	jmp	FilterGridSe4_L4e7
+FilterGridSe4_L3aa:
 	extbu	d0
 	mov	a2, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	LfoGridSe4_L4e7
-LfoGridSe4_L3b6:
+	jmp	FilterGridSe4_L4e7
+FilterGridSe4_L3b6:
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -408887,8 +408886,8 @@ LfoGridSe4_L3b6:
 	mov	1, d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	LfoGridSe4_L4e7
-LfoGridSe4_L3da:
+	jmp	FilterGridSe4_L4e7
+FilterGridSe4_L3da:
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -408905,8 +408904,8 @@ LfoGridSe4_L3da:
 	mov	1, d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	LfoGridSe4_L4e7
-LfoGridSe4_L402:
+	jmp	FilterGridSe4_L4e7
+FilterGridSe4_L402:
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -408928,8 +408927,8 @@ LfoGridSe4_L402:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LfoGridSe4_L4e7
-LfoGridSe4_L43c:
+	jmp	FilterGridSe4_L4e7
+FilterGridSe4_L43c:
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -408951,8 +408950,8 @@ LfoGridSe4_L43c:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	LfoGridSe4_L4e7
-LfoGridSe4_L475:
+	bra	FilterGridSe4_L4e7
+FilterGridSe4_L475:
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -408974,8 +408973,8 @@ LfoGridSe4_L475:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	LfoGridSe4_L4e7
-LfoGridSe4_L4ae:
+	bra	FilterGridSe4_L4e7
+FilterGridSe4_L4ae:
 	extbu	d0
 	mov	0x7a, d1
 	nop
@@ -408998,34 +408997,34 @@ LfoGridSe4_L4ae:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-LfoGridSe4_L4e7:
+FilterGridSe4_L4e7:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	LfoGridSe4_L504
+	bra	FilterGridSe4_L504
 loc_4C0E8DA6:
 	mov	d3, d0
-	bra	LfoGridSe4_L504
-LfoGridSe4_L503:
+	bra	FilterGridSe4_L504
+FilterGridSe4_L503:
 	clr	d0
-LfoGridSe4_L504:
+FilterGridSe4_L504:
 	ret	[d2,d3,a2,a3], 0x44
 
-DspOnSe:
+LfoGridSe1:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x38, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	DspOnSe_L12
-	jmp	DspOnSe_Lae7
-DspOnSe_L12:
+	bge	LfoGridSe1_L12
+	jmp	LfoGridSe1_Lae7
+LfoGridSe1_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	DspOnSe_L1d
-	jmp	DspOnSe_Lae7
-DspOnSe_L1d:
+	ble	LfoGridSe1_L1d
+	jmp	LfoGridSe1_Lae7
+LfoGridSe1_L1d:
 	add	0xfe800001, d2
 	mov	DspOnSe_L1d_Records, a1
 	mov	0xf, d0
@@ -409035,21 +409034,21 @@ DspOnSe_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	DspOnSe_L4e
+	beq	LfoGridSe1_L4e
 	setlb
 	cmp	0, d0
-	bne	DspOnSe_L40
-	jmp	DspOnSe_Lae7
-DspOnSe_L40:
+	bne	LfoGridSe1_L40
+	jmp	LfoGridSe1_Lae7
+LfoGridSe1_L40:
 	add	8, a0
 	cmp	DspTenSe_L785_Table, a0
-	bcs	DspOnSe_L4b
+	bcs	LfoGridSe1_L4b
 	mov	a1, a0
-DspOnSe_L4b:
+LfoGridSe1_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-DspOnSe_L4e:
+LfoGridSe1_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0E8E00:
@@ -409067,13 +409066,13 @@ loc_4C0E8E00:
 	add	-2, d2
 	exth	d0
 	cmp	1, d0
-	bge	DspOnSe_L82
-	jmp	DspOnSe_L39a
-DspOnSe_L82:
+	bge	LfoGridSe1_L82
+	jmp	LfoGridSe1_L39a
+LfoGridSe1_L82:
 	cmp	0xb, d0
-	ble	DspOnSe_L89
-	jmp	DspOnSe_L39a
-DspOnSe_L89:
+	ble	LfoGridSe1_L89
+	jmp	LfoGridSe1_L39a
+LfoGridSe1_L89:
 	add	-1, d0
 	asl2	d0
 	mov	DspOnSe_L89_Table, a0
@@ -409084,7 +409083,7 @@ loc_4C0E8E43:
 	extbu	d2
 	mov	d2, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	DspOnSe_L39a
+	jmp	LfoGridSe1_L39a
 loc_4C0E8E51:
 	mov	0xb, d0
 	mov	d0, (0x10, sp)
@@ -409103,7 +409102,7 @@ loc_4C0E8E51:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspOnSe_L39a
+	jmp	LfoGridSe1_L39a
 loc_4C0E8E75:
 	extbu	d2
 	clr	d1
@@ -409153,7 +409152,7 @@ loc_4C0E8E75:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspOnSe_L39a
+	jmp	LfoGridSe1_L39a
 loc_4C0E8F10:
 	extbu	d2
 	clr	d1
@@ -409204,7 +409203,7 @@ loc_4C0E8F10:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspOnSe_L39a
+	jmp	LfoGridSe1_L39a
 loc_4C0E8FAD:
 	extbu	d2
 	mov	d2, d0
@@ -409224,7 +409223,7 @@ loc_4C0E8FAD:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	1, d0
-	bne	DspOnSe_L24f
+	bne	LfoGridSe1_L24f
 	clr	d1
 	mov	d2, d0
 	call	func_4C0FC2A1_entry, [d2], 0x1c
@@ -409243,7 +409242,7 @@ loc_4C0E8FAD:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DspOnSe_L24f:
+LfoGridSe1_L24f:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, d2
 	mov	d2, d1
@@ -409276,7 +409275,7 @@ DspOnSe_L24f:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspOnSe_L39a
+	jmp	LfoGridSe1_L39a
 loc_4C0E9074:
 	mov	1, d0
 	mov	d0, (0x10, sp)
@@ -409295,7 +409294,7 @@ loc_4C0E9074:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspOnSe_L39a
+	jmp	LfoGridSe1_L39a
 loc_4C0E9099:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -409313,7 +409312,7 @@ loc_4C0E9099:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspOnSe_L39a
+	jmp	LfoGridSe1_L39a
 loc_4C0E90BB:
 	mov	4, d0
 	mov	d0, (0x10, sp)
@@ -409331,7 +409330,7 @@ loc_4C0E90BB:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspOnSe_L39a
+	bra	LfoGridSe1_L39a
 loc_4C0E90DE:
 	mov	0x1e, d0
 	mov	d0, (0x10, sp)
@@ -409351,7 +409350,7 @@ loc_4C0E90DE:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspOnSe_L39a
+	bra	LfoGridSe1_L39a
 loc_4C0E9104:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -409370,7 +409369,7 @@ loc_4C0E9104:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspOnSe_L39a
+	bra	LfoGridSe1_L39a
 loc_4C0E9127:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -409388,7 +409387,7 @@ loc_4C0E9127:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DspOnSe_L39a:
+LfoGridSe1_L39a:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -409412,13 +409411,13 @@ loc_4C0E9161:
 	mov	a2, d0
 	exth	d0
 	cmp	1, d0
-	bge	DspOnSe_L3e6
-	jmp	DspOnSe_L6fa
-DspOnSe_L3e6:
+	bge	LfoGridSe1_L3e6
+	jmp	LfoGridSe1_L6fa
+LfoGridSe1_L3e6:
 	cmp	0xb, d0
-	ble	DspOnSe_L3ed
-	jmp	DspOnSe_L6fa
-DspOnSe_L3ed:
+	ble	LfoGridSe1_L3ed
+	jmp	LfoGridSe1_L6fa
+LfoGridSe1_L3ed:
 	add	-1, d0
 	asl2	d0
 	mov	DspOnSe_L3ed_Table, a0
@@ -409429,7 +409428,7 @@ loc_4C0E91A7:
 	extbu	d2
 	mov	d2, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	DspOnSe_L6fa
+	jmp	LfoGridSe1_L6fa
 loc_4C0E91B4:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -409447,7 +409446,7 @@ loc_4C0E91B4:
 	mov	-1, d1
 	mov	d2, d0
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspOnSe_L6fa
+	jmp	LfoGridSe1_L6fa
 loc_4C0E91D6:
 	extbu	d2
 	clr	d1
@@ -409496,7 +409495,7 @@ loc_4C0E91D6:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspOnSe_L6fa
+	jmp	LfoGridSe1_L6fa
 loc_4C0E926F:
 	extbu	d2
 	clr	d1
@@ -409549,7 +409548,7 @@ loc_4C0E926F:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspOnSe_L6fa
+	jmp	LfoGridSe1_L6fa
 loc_4C0E930F:
 	extbu	d2
 	mov	d2, d0
@@ -409569,7 +409568,7 @@ loc_4C0E930F:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	1, d0
-	bne	DspOnSe_L5af
+	bne	LfoGridSe1_L5af
 	clr	d1
 	mov	d2, d0
 	call	func_4C0FC2A1_entry, [d2], 0x1c
@@ -409587,7 +409586,7 @@ loc_4C0E930F:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DspOnSe_L5af:
+LfoGridSe1_L5af:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, d2
 	mov	d2, d1
@@ -409621,7 +409620,7 @@ DspOnSe_L5af:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspOnSe_L6fa
+	jmp	LfoGridSe1_L6fa
 loc_4C0E93D5:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -409638,7 +409637,7 @@ loc_4C0E93D5:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspOnSe_L6fa
+	jmp	LfoGridSe1_L6fa
 loc_4C0E93F7:
 	mov	1, d0
 	mov	d0, (0x10, sp)
@@ -409656,7 +409655,7 @@ loc_4C0E93F7:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspOnSe_L6fa
+	jmp	LfoGridSe1_L6fa
 loc_4C0E941A:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -409674,7 +409673,7 @@ loc_4C0E941A:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspOnSe_L6fa
+	bra	LfoGridSe1_L6fa
 loc_4C0E943C:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -409693,7 +409692,7 @@ loc_4C0E943C:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspOnSe_L6fa
+	bra	LfoGridSe1_L6fa
 loc_4C0E9460:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -409713,7 +409712,7 @@ loc_4C0E9460:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspOnSe_L6fa
+	bra	LfoGridSe1_L6fa
 loc_4C0E9485:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -409732,7 +409731,7 @@ loc_4C0E9485:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DspOnSe_L6fa:
+LfoGridSe1_L6fa:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -409778,13 +409777,13 @@ loc_4C0E94EB:
 	movhu	(0x24, sp), d0
 	exth	d0
 	cmp	1, d0
-	bge	DspOnSe_L776
-	jmp	DspOnSe_Lac9
-DspOnSe_L776:
+	bge	LfoGridSe1_L776
+	jmp	LfoGridSe1_Lac9
+LfoGridSe1_L776:
 	cmp	0xb, d0
-	ble	DspOnSe_L77d
-	jmp	DspOnSe_Lac9
-DspOnSe_L77d:
+	ble	LfoGridSe1_L77d
+	jmp	LfoGridSe1_Lac9
+LfoGridSe1_L77d:
 	add	-1, d0
 	asl2	d0
 	mov	DspOnSe_L77d_Table, a0
@@ -409795,7 +409794,7 @@ loc_4C0E9537:
 	mov	d2, d0
 	mov	a2, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	DspOnSe_Lac9
+	jmp	LfoGridSe1_Lac9
 loc_4C0E9544:
 	extbu	d2
 	mov	0x7a, d0
@@ -409841,7 +409840,7 @@ loc_4C0E9544:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspOnSe_Lac9
+	jmp	LfoGridSe1_Lac9
 loc_4C0E95BC:
 	extbu	d2
 	clr	d1
@@ -409857,7 +409856,7 @@ loc_4C0E95BC:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	DspOnSe_Lac9
+	jmp	LfoGridSe1_Lac9
 loc_4C0E95E1:
 	extbu	d2
 	mov	d2, d0
@@ -409876,22 +409875,22 @@ loc_4C0E95E1:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspOnSe_L863
+	beq	LfoGridSe1_L863
 	cmp	1, d0
-	beq	DspOnSe_L876
-	bra	DspOnSe_L887
-DspOnSe_L863:
+	beq	LfoGridSe1_L876
+	bra	LfoGridSe1_L887
+LfoGridSe1_L863:
 	mov	a2, (8, sp)
 	mov	Str_OFF_47, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DspOnSe_L887
-DspOnSe_L876:
+	bra	LfoGridSe1_L887
+LfoGridSe1_L876:
 	mov	a2, (8, sp)
 	mov	Str_ON_37, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DspOnSe_L887:
+LfoGridSe1_L887:
 	call	GetFocusObject_entry, 0, 0x10
 	exth	d3
 	inc	d3
@@ -409904,7 +409903,7 @@ DspOnSe_L887:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspOnSe_Lac9
+	jmp	LfoGridSe1_Lac9
 loc_4C0E9658:
 	extbu	d2
 	mov	d2, d0
@@ -409923,17 +409922,17 @@ loc_4C0E9658:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspOnSe_L8d8
+	beq	LfoGridSe1_L8d8
 	cmp	1, d0
-	beq	DspOnSe_L8ec
-	jmp	DspOnSe_Lac9
-DspOnSe_L8d8:
+	beq	LfoGridSe1_L8ec
+	jmp	LfoGridSe1_Lac9
+LfoGridSe1_L8d8:
 	mov	a2, (8, sp)
 	mov	Str_empty_704, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspOnSe_Lac9
-DspOnSe_L8ec:
+	jmp	LfoGridSe1_Lac9
+LfoGridSe1_L8ec:
 	mov	d2, d0
 	clr	d1
 	call	func_4C0FC2A1_entry, [d2], 0x1c
@@ -409956,7 +409955,7 @@ DspOnSe_L8ec:
 	add	d1, d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspOnSe_Lac9
+	jmp	LfoGridSe1_Lac9
 loc_4C0E96D1:
 	extbu	d2
 	mov	sp, a0
@@ -409972,22 +409971,22 @@ loc_4C0E96D1:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspOnSe_L94b
+	beq	LfoGridSe1_L94b
 	cmp	1, d0
-	beq	DspOnSe_L95f
-	jmp	DspOnSe_Lac9
-DspOnSe_L94b:
+	beq	LfoGridSe1_L95f
+	jmp	LfoGridSe1_Lac9
+LfoGridSe1_L94b:
 	mov	a2, (8, sp)
 	mov	Str_empty_703, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspOnSe_Lac9
-DspOnSe_L95f:
+	jmp	LfoGridSe1_Lac9
+LfoGridSe1_L95f:
 	mov	a2, (8, sp)
 	mov	Str_empty_702, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspOnSe_Lac9
+	jmp	LfoGridSe1_Lac9
 loc_4C0E9720:
 	extbu	d2
 	mov	sp, a0
@@ -410005,22 +410004,22 @@ loc_4C0E9720:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspOnSe_L99d
+	beq	LfoGridSe1_L99d
 	cmp	1, d0
-	beq	DspOnSe_L9b1
-	jmp	DspOnSe_Lac9
-DspOnSe_L99d:
+	beq	LfoGridSe1_L9b1
+	jmp	LfoGridSe1_Lac9
+LfoGridSe1_L99d:
 	mov	a2, (8, sp)
 	mov	Str_empty_701, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspOnSe_Lac9
-DspOnSe_L9b1:
+	jmp	LfoGridSe1_Lac9
+LfoGridSe1_L9b1:
 	mov	a2, (8, sp)
 	mov	Str_empty_700, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspOnSe_Lac9
+	jmp	LfoGridSe1_Lac9
 loc_4C0E9772:
 	extbu	d2
 	mov	sp, a0
@@ -410038,46 +410037,46 @@ loc_4C0E9772:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspOnSe_L9fc
+	beq	LfoGridSe1_L9fc
 	cmp	1, d0
-	beq	DspOnSe_La10
+	beq	LfoGridSe1_La10
 	cmp	2, d0
-	beq	DspOnSe_La24
+	beq	LfoGridSe1_La24
 	cmp	3, d0
-	beq	DspOnSe_La38
+	beq	LfoGridSe1_La38
 	cmp	4, d0
-	beq	DspOnSe_La4c
-	jmp	DspOnSe_Lac9
-DspOnSe_L9fc:
+	beq	LfoGridSe1_La4c
+	jmp	LfoGridSe1_Lac9
+LfoGridSe1_L9fc:
 	mov	a2, (8, sp)
 	mov	Str_SIN_4, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspOnSe_Lac9
-DspOnSe_La10:
+	jmp	LfoGridSe1_Lac9
+LfoGridSe1_La10:
 	mov	a2, (8, sp)
 	mov	Str_TRI_4, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspOnSe_Lac9
-DspOnSe_La24:
+	jmp	LfoGridSe1_Lac9
+LfoGridSe1_La24:
 	mov	a2, (8, sp)
 	mov	Str_SQU_4, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspOnSe_Lac9
-DspOnSe_La38:
+	jmp	LfoGridSe1_Lac9
+LfoGridSe1_La38:
 	mov	a2, (8, sp)
 	mov	Str_SAW_4, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspOnSe_Lac9
-DspOnSe_La4c:
+	jmp	LfoGridSe1_Lac9
+LfoGridSe1_La4c:
 	mov	a2, (8, sp)
 	mov	Str_RND_4, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DspOnSe_Lac9
+	bra	LfoGridSe1_Lac9
 loc_4C0E980C:
 	mov	0x1f, d0
 	mov	d0, (0x18, sp)
@@ -410095,7 +410094,7 @@ loc_4C0E980C:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	bra	DspOnSe_Lac9
+	bra	LfoGridSe1_Lac9
 loc_4C0E9831:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -410113,7 +410112,7 @@ loc_4C0E9831:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	bra	DspOnSe_Lac9
+	bra	LfoGridSe1_Lac9
 loc_4C0E9856:
 	mov	0x3f, d0
 	mov	d0, (0x18, sp)
@@ -410130,35 +410129,35 @@ loc_4C0E9856:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-DspOnSe_Lac9:
+LfoGridSe1_Lac9:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), a0
 	mov	MT_GridDraw, d1
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	DspOnSe_Lae8
+	bra	LfoGridSe1_Lae8
 loc_4C0E9891:
 	mov	d3, d0
-	bra	DspOnSe_Lae8
-DspOnSe_Lae7:
+	bra	LfoGridSe1_Lae8
+LfoGridSe1_Lae7:
 	clr	d0
-DspOnSe_Lae8:
+LfoGridSe1_Lae8:
 	ret	[d2,d3,a2,a3], 0x48
 
-DspTenSe:
+LfoGridSe2:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x38, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	DspTenSe_L12
-	jmp	DspTenSe_Laf3
-DspTenSe_L12:
+	bge	LfoGridSe2_L12
+	jmp	LfoGridSe2_Laf3
+LfoGridSe2_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	DspTenSe_L1d
-	jmp	DspTenSe_Laf3
-DspTenSe_L1d:
+	ble	LfoGridSe2_L1d
+	jmp	LfoGridSe2_Laf3
+LfoGridSe2_L1d:
 	add	0xfe800001, d2
 	mov	DspTenSe_L1d_Records, a1
 	mov	0xf, d0
@@ -410168,21 +410167,21 @@ DspTenSe_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	DspTenSe_L4e
+	beq	LfoGridSe2_L4e
 	setlb
 	cmp	0, d0
-	bne	DspTenSe_L40
-	jmp	DspTenSe_Laf3
-DspTenSe_L40:
+	bne	LfoGridSe2_L40
+	jmp	LfoGridSe2_Laf3
+LfoGridSe2_L40:
 	add	8, a0
 	cmp	DspSufSe_L785_Table, a0
-	bcs	DspTenSe_L4b
+	bcs	LfoGridSe2_L4b
 	mov	a1, a0
-DspTenSe_L4b:
+LfoGridSe2_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-DspTenSe_L4e:
+LfoGridSe2_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0E98EB:
@@ -410200,13 +410199,13 @@ loc_4C0E98EB:
 	add	-2, d2
 	exth	d0
 	cmp	1, d0
-	bge	DspTenSe_L82
-	jmp	DspTenSe_L39e
-DspTenSe_L82:
+	bge	LfoGridSe2_L82
+	jmp	LfoGridSe2_L39e
+LfoGridSe2_L82:
 	cmp	0xb, d0
-	ble	DspTenSe_L89
-	jmp	DspTenSe_L39e
-DspTenSe_L89:
+	ble	LfoGridSe2_L89
+	jmp	LfoGridSe2_L39e
+LfoGridSe2_L89:
 	add	-1, d0
 	asl2	d0
 	mov	DspTenSe_L89_Table, a0
@@ -410217,7 +410216,7 @@ loc_4C0E992E:
 	extbu	d2
 	mov	d2, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	DspTenSe_L39e
+	jmp	LfoGridSe2_L39e
 loc_4C0E993C:
 	mov	0xb, d0
 	mov	d0, (0x10, sp)
@@ -410236,7 +410235,7 @@ loc_4C0E993C:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspTenSe_L39e
+	jmp	LfoGridSe2_L39e
 loc_4C0E9960:
 	extbu	d2
 	mov	1, d1
@@ -410286,7 +410285,7 @@ loc_4C0E9960:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspTenSe_L39e
+	jmp	LfoGridSe2_L39e
 loc_4C0E99FC:
 	extbu	d2
 	mov	1, d1
@@ -410337,7 +410336,7 @@ loc_4C0E99FC:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspTenSe_L39e
+	jmp	LfoGridSe2_L39e
 loc_4C0E9A9A:
 	extbu	d2
 	mov	d2, d0
@@ -410357,7 +410356,7 @@ loc_4C0E9A9A:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	1, d0
-	bne	DspTenSe_L253
+	bne	LfoGridSe2_L253
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C0FC2A1_entry, [d2], 0x1c
@@ -410376,7 +410375,7 @@ loc_4C0E9A9A:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DspTenSe_L253:
+LfoGridSe2_L253:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, d2
 	mov	d2, d1
@@ -410409,7 +410408,7 @@ DspTenSe_L253:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspTenSe_L39e
+	jmp	LfoGridSe2_L39e
 loc_4C0E9B63:
 	mov	1, d0
 	mov	d0, (0x10, sp)
@@ -410428,7 +410427,7 @@ loc_4C0E9B63:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspTenSe_L39e
+	jmp	LfoGridSe2_L39e
 loc_4C0E9B88:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -410446,7 +410445,7 @@ loc_4C0E9B88:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspTenSe_L39e
+	jmp	LfoGridSe2_L39e
 loc_4C0E9BAA:
 	mov	4, d0
 	mov	d0, (0x10, sp)
@@ -410464,7 +410463,7 @@ loc_4C0E9BAA:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspTenSe_L39e
+	bra	LfoGridSe2_L39e
 loc_4C0E9BCD:
 	mov	0x1e, d0
 	mov	d0, (0x10, sp)
@@ -410484,7 +410483,7 @@ loc_4C0E9BCD:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspTenSe_L39e
+	bra	LfoGridSe2_L39e
 loc_4C0E9BF3:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -410503,7 +410502,7 @@ loc_4C0E9BF3:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspTenSe_L39e
+	bra	LfoGridSe2_L39e
 loc_4C0E9C16:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -410521,7 +410520,7 @@ loc_4C0E9C16:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DspTenSe_L39e:
+LfoGridSe2_L39e:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -410545,13 +410544,13 @@ loc_4C0E9C50:
 	mov	a2, d0
 	exth	d0
 	cmp	1, d0
-	bge	DspTenSe_L3ea
-	jmp	DspTenSe_L702
-DspTenSe_L3ea:
+	bge	LfoGridSe2_L3ea
+	jmp	LfoGridSe2_L702
+LfoGridSe2_L3ea:
 	cmp	0xb, d0
-	ble	DspTenSe_L3f1
-	jmp	DspTenSe_L702
-DspTenSe_L3f1:
+	ble	LfoGridSe2_L3f1
+	jmp	LfoGridSe2_L702
+LfoGridSe2_L3f1:
 	add	-1, d0
 	asl2	d0
 	mov	DspTenSe_L3f1_Table, a0
@@ -410562,7 +410561,7 @@ loc_4C0E9C96:
 	extbu	d2
 	mov	d2, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	DspTenSe_L702
+	jmp	LfoGridSe2_L702
 loc_4C0E9CA3:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -410580,7 +410579,7 @@ loc_4C0E9CA3:
 	mov	-1, d1
 	mov	d2, d0
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspTenSe_L702
+	jmp	LfoGridSe2_L702
 loc_4C0E9CC5:
 	extbu	d2
 	mov	1, d1
@@ -410629,7 +410628,7 @@ loc_4C0E9CC5:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspTenSe_L702
+	jmp	LfoGridSe2_L702
 loc_4C0E9D5F:
 	extbu	d2
 	mov	1, d1
@@ -410682,7 +410681,7 @@ loc_4C0E9D5F:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspTenSe_L702
+	jmp	LfoGridSe2_L702
 loc_4C0E9E00:
 	extbu	d2
 	mov	d2, d0
@@ -410702,7 +410701,7 @@ loc_4C0E9E00:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	1, d0
-	bne	DspTenSe_L5b7
+	bne	LfoGridSe2_L5b7
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C0FC2A1_entry, [d2], 0x1c
@@ -410720,7 +410719,7 @@ loc_4C0E9E00:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DspTenSe_L5b7:
+LfoGridSe2_L5b7:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, d2
 	mov	d2, d1
@@ -410754,7 +410753,7 @@ DspTenSe_L5b7:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspTenSe_L702
+	jmp	LfoGridSe2_L702
 loc_4C0E9EC8:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -410771,7 +410770,7 @@ loc_4C0E9EC8:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspTenSe_L702
+	jmp	LfoGridSe2_L702
 loc_4C0E9EEA:
 	mov	1, d0
 	mov	d0, (0x10, sp)
@@ -410789,7 +410788,7 @@ loc_4C0E9EEA:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspTenSe_L702
+	jmp	LfoGridSe2_L702
 loc_4C0E9F0D:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -410807,7 +410806,7 @@ loc_4C0E9F0D:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspTenSe_L702
+	bra	LfoGridSe2_L702
 loc_4C0E9F2F:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -410826,7 +410825,7 @@ loc_4C0E9F2F:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspTenSe_L702
+	bra	LfoGridSe2_L702
 loc_4C0E9F53:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -410846,7 +410845,7 @@ loc_4C0E9F53:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspTenSe_L702
+	bra	LfoGridSe2_L702
 loc_4C0E9F78:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -410865,7 +410864,7 @@ loc_4C0E9F78:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DspTenSe_L702:
+LfoGridSe2_L702:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -410911,13 +410910,13 @@ loc_4C0E9FDE:
 	movhu	(0x24, sp), d0
 	exth	d0
 	cmp	1, d0
-	bge	DspTenSe_L77e
-	jmp	DspTenSe_Lad5
-DspTenSe_L77e:
+	bge	LfoGridSe2_L77e
+	jmp	LfoGridSe2_Lad5
+LfoGridSe2_L77e:
 	cmp	0xb, d0
-	ble	DspTenSe_L785
-	jmp	DspTenSe_Lad5
-DspTenSe_L785:
+	ble	LfoGridSe2_L785
+	jmp	LfoGridSe2_Lad5
+LfoGridSe2_L785:
 	add	-1, d0
 	asl2	d0
 	mov	DspTenSe_L785_Table, a0
@@ -410928,7 +410927,7 @@ loc_4C0EA02A:
 	mov	d2, d0
 	mov	a2, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	DspTenSe_Lad5
+	jmp	LfoGridSe2_Lad5
 loc_4C0EA037:
 	extbu	d2
 	mov	0x7a, d0
@@ -410974,7 +410973,7 @@ loc_4C0EA037:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspTenSe_Lad5
+	jmp	LfoGridSe2_Lad5
 loc_4C0EA0AF:
 	extbu	d2
 	mov	1, d1
@@ -410990,7 +410989,7 @@ loc_4C0EA0AF:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	DspTenSe_Lad5
+	jmp	LfoGridSe2_Lad5
 loc_4C0EA0D5:
 	extbu	d2
 	mov	d2, d0
@@ -411009,22 +411008,22 @@ loc_4C0EA0D5:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspTenSe_L86d
+	beq	LfoGridSe2_L86d
 	cmp	1, d0
-	beq	DspTenSe_L880
-	bra	DspTenSe_L891
-DspTenSe_L86d:
+	beq	LfoGridSe2_L880
+	bra	LfoGridSe2_L891
+LfoGridSe2_L86d:
 	mov	a2, (8, sp)
 	mov	Str_OFF_46, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DspTenSe_L891
-DspTenSe_L880:
+	bra	LfoGridSe2_L891
+LfoGridSe2_L880:
 	mov	a2, (8, sp)
 	mov	Str_ON_36, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DspTenSe_L891:
+LfoGridSe2_L891:
 	call	GetFocusObject_entry, 0, 0x10
 	exth	d3
 	inc	d3
@@ -411037,7 +411036,7 @@ DspTenSe_L891:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspTenSe_Lad5
+	jmp	LfoGridSe2_Lad5
 loc_4C0EA14D:
 	extbu	d2
 	mov	d2, d0
@@ -411056,17 +411055,17 @@ loc_4C0EA14D:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspTenSe_L8e3
+	beq	LfoGridSe2_L8e3
 	cmp	1, d0
-	beq	DspTenSe_L8f7
-	jmp	DspTenSe_Lad5
-DspTenSe_L8e3:
+	beq	LfoGridSe2_L8f7
+	jmp	LfoGridSe2_Lad5
+LfoGridSe2_L8e3:
 	mov	a2, (8, sp)
 	mov	Str_empty_698, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspTenSe_Lad5
-DspTenSe_L8f7:
+	jmp	LfoGridSe2_Lad5
+LfoGridSe2_L8f7:
 	mov	d2, d0
 	mov	1, d1
 	call	func_4C0FC2A1_entry, [d2], 0x1c
@@ -411089,7 +411088,7 @@ DspTenSe_L8f7:
 	add	d1, d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspTenSe_Lad5
+	jmp	LfoGridSe2_Lad5
 loc_4C0EA1C8:
 	extbu	d2
 	mov	sp, a0
@@ -411105,22 +411104,22 @@ loc_4C0EA1C8:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspTenSe_L957
+	beq	LfoGridSe2_L957
 	cmp	1, d0
-	beq	DspTenSe_L96b
-	jmp	DspTenSe_Lad5
-DspTenSe_L957:
+	beq	LfoGridSe2_L96b
+	jmp	LfoGridSe2_Lad5
+LfoGridSe2_L957:
 	mov	a2, (8, sp)
 	mov	Str_empty_697, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspTenSe_Lad5
-DspTenSe_L96b:
+	jmp	LfoGridSe2_Lad5
+LfoGridSe2_L96b:
 	mov	a2, (8, sp)
 	mov	Str_empty_696, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspTenSe_Lad5
+	jmp	LfoGridSe2_Lad5
 loc_4C0EA217:
 	extbu	d2
 	mov	sp, a0
@@ -411138,22 +411137,22 @@ loc_4C0EA217:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspTenSe_L9a9
+	beq	LfoGridSe2_L9a9
 	cmp	1, d0
-	beq	DspTenSe_L9bd
-	jmp	DspTenSe_Lad5
-DspTenSe_L9a9:
+	beq	LfoGridSe2_L9bd
+	jmp	LfoGridSe2_Lad5
+LfoGridSe2_L9a9:
 	mov	a2, (8, sp)
 	mov	Str_empty_695, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspTenSe_Lad5
-DspTenSe_L9bd:
+	jmp	LfoGridSe2_Lad5
+LfoGridSe2_L9bd:
 	mov	a2, (8, sp)
 	mov	Str_empty_694, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspTenSe_Lad5
+	jmp	LfoGridSe2_Lad5
 loc_4C0EA269:
 	extbu	d2
 	mov	sp, a0
@@ -411171,46 +411170,46 @@ loc_4C0EA269:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspTenSe_La08
+	beq	LfoGridSe2_La08
 	cmp	1, d0
-	beq	DspTenSe_La1c
+	beq	LfoGridSe2_La1c
 	cmp	2, d0
-	beq	DspTenSe_La30
+	beq	LfoGridSe2_La30
 	cmp	3, d0
-	beq	DspTenSe_La44
+	beq	LfoGridSe2_La44
 	cmp	4, d0
-	beq	DspTenSe_La58
-	jmp	DspTenSe_Lad5
-DspTenSe_La08:
+	beq	LfoGridSe2_La58
+	jmp	LfoGridSe2_Lad5
+LfoGridSe2_La08:
 	mov	a2, (8, sp)
 	mov	Str_SIN_3, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspTenSe_Lad5
-DspTenSe_La1c:
+	jmp	LfoGridSe2_Lad5
+LfoGridSe2_La1c:
 	mov	a2, (8, sp)
 	mov	Str_TRI_3, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspTenSe_Lad5
-DspTenSe_La30:
+	jmp	LfoGridSe2_Lad5
+LfoGridSe2_La30:
 	mov	a2, (8, sp)
 	mov	Str_SQU_3, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspTenSe_Lad5
-DspTenSe_La44:
+	jmp	LfoGridSe2_Lad5
+LfoGridSe2_La44:
 	mov	a2, (8, sp)
 	mov	Str_SAW_3, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspTenSe_Lad5
-DspTenSe_La58:
+	jmp	LfoGridSe2_Lad5
+LfoGridSe2_La58:
 	mov	a2, (8, sp)
 	mov	Str_RND_3, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DspTenSe_Lad5
+	bra	LfoGridSe2_Lad5
 loc_4C0EA303:
 	mov	0x1f, d0
 	mov	d0, (0x18, sp)
@@ -411228,7 +411227,7 @@ loc_4C0EA303:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	bra	DspTenSe_Lad5
+	bra	LfoGridSe2_Lad5
 loc_4C0EA328:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -411246,7 +411245,7 @@ loc_4C0EA328:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	bra	DspTenSe_Lad5
+	bra	LfoGridSe2_Lad5
 loc_4C0EA34D:
 	mov	0x3f, d0
 	mov	d0, (0x18, sp)
@@ -411263,35 +411262,35 @@ loc_4C0EA34D:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-DspTenSe_Lad5:
+LfoGridSe2_Lad5:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), a0
 	mov	MT_GridDraw, d1
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	DspTenSe_Laf4
+	bra	LfoGridSe2_Laf4
 loc_4C0EA388:
 	mov	d3, d0
-	bra	DspTenSe_Laf4
-DspTenSe_Laf3:
+	bra	LfoGridSe2_Laf4
+LfoGridSe2_Laf3:
 	clr	d0
-DspTenSe_Laf4:
+LfoGridSe2_Laf4:
 	ret	[d2,d3,a2,a3], 0x48
 
-DspSufSe:
+LfoGridSe3:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x38, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	DspSufSe_L12
-	jmp	DspSufSe_Laf3
-DspSufSe_L12:
+	bge	LfoGridSe3_L12
+	jmp	LfoGridSe3_Laf3
+LfoGridSe3_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	DspSufSe_L1d
-	jmp	DspSufSe_Laf3
-DspSufSe_L1d:
+	ble	LfoGridSe3_L1d
+	jmp	LfoGridSe3_Laf3
+LfoGridSe3_L1d:
 	add	0xfe800001, d2
 	mov	DspSufSe_L1d_Records, a1
 	mov	0xf, d0
@@ -411301,21 +411300,21 @@ DspSufSe_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	DspSufSe_L4e
+	beq	LfoGridSe3_L4e
 	setlb
 	cmp	0, d0
-	bne	DspSufSe_L40
-	jmp	DspSufSe_Laf3
-DspSufSe_L40:
+	bne	LfoGridSe3_L40
+	jmp	LfoGridSe3_Laf3
+LfoGridSe3_L40:
 	add	8, a0
 	cmp	DspGroupSe_L785_Table, a0
-	bcs	DspSufSe_L4b
+	bcs	LfoGridSe3_L4b
 	mov	a1, a0
-DspSufSe_L4b:
+LfoGridSe3_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-DspSufSe_L4e:
+LfoGridSe3_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0EA3E2:
@@ -411333,13 +411332,13 @@ loc_4C0EA3E2:
 	add	-2, d2
 	exth	d0
 	cmp	1, d0
-	bge	DspSufSe_L82
-	jmp	DspSufSe_L39e
-DspSufSe_L82:
+	bge	LfoGridSe3_L82
+	jmp	LfoGridSe3_L39e
+LfoGridSe3_L82:
 	cmp	0xb, d0
-	ble	DspSufSe_L89
-	jmp	DspSufSe_L39e
-DspSufSe_L89:
+	ble	LfoGridSe3_L89
+	jmp	LfoGridSe3_L39e
+LfoGridSe3_L89:
 	add	-1, d0
 	asl2	d0
 	mov	DspSufSe_L89_Table, a0
@@ -411350,7 +411349,7 @@ loc_4C0EA425:
 	extbu	d2
 	mov	d2, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	DspSufSe_L39e
+	jmp	LfoGridSe3_L39e
 loc_4C0EA433:
 	mov	0xb, d0
 	mov	d0, (0x10, sp)
@@ -411369,7 +411368,7 @@ loc_4C0EA433:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspSufSe_L39e
+	jmp	LfoGridSe3_L39e
 loc_4C0EA457:
 	extbu	d2
 	mov	2, d1
@@ -411419,7 +411418,7 @@ loc_4C0EA457:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspSufSe_L39e
+	jmp	LfoGridSe3_L39e
 loc_4C0EA4F3:
 	extbu	d2
 	mov	2, d1
@@ -411470,7 +411469,7 @@ loc_4C0EA4F3:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspSufSe_L39e
+	jmp	LfoGridSe3_L39e
 loc_4C0EA591:
 	extbu	d2
 	mov	d2, d0
@@ -411490,7 +411489,7 @@ loc_4C0EA591:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	1, d0
-	bne	DspSufSe_L253
+	bne	LfoGridSe3_L253
 	mov	2, d1
 	mov	d2, d0
 	call	func_4C0FC2A1_entry, [d2], 0x1c
@@ -411509,7 +411508,7 @@ loc_4C0EA591:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DspSufSe_L253:
+LfoGridSe3_L253:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, d2
 	mov	d2, d1
@@ -411542,7 +411541,7 @@ DspSufSe_L253:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspSufSe_L39e
+	jmp	LfoGridSe3_L39e
 loc_4C0EA65A:
 	mov	1, d0
 	mov	d0, (0x10, sp)
@@ -411561,7 +411560,7 @@ loc_4C0EA65A:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspSufSe_L39e
+	jmp	LfoGridSe3_L39e
 loc_4C0EA67F:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -411579,7 +411578,7 @@ loc_4C0EA67F:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspSufSe_L39e
+	jmp	LfoGridSe3_L39e
 loc_4C0EA6A1:
 	mov	4, d0
 	mov	d0, (0x10, sp)
@@ -411597,7 +411596,7 @@ loc_4C0EA6A1:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspSufSe_L39e
+	bra	LfoGridSe3_L39e
 loc_4C0EA6C4:
 	mov	0x1e, d0
 	mov	d0, (0x10, sp)
@@ -411617,7 +411616,7 @@ loc_4C0EA6C4:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspSufSe_L39e
+	bra	LfoGridSe3_L39e
 loc_4C0EA6EA:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -411636,7 +411635,7 @@ loc_4C0EA6EA:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspSufSe_L39e
+	bra	LfoGridSe3_L39e
 loc_4C0EA70D:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -411654,7 +411653,7 @@ loc_4C0EA70D:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DspSufSe_L39e:
+LfoGridSe3_L39e:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -411678,13 +411677,13 @@ loc_4C0EA747:
 	mov	a2, d0
 	exth	d0
 	cmp	1, d0
-	bge	DspSufSe_L3ea
-	jmp	DspSufSe_L702
-DspSufSe_L3ea:
+	bge	LfoGridSe3_L3ea
+	jmp	LfoGridSe3_L702
+LfoGridSe3_L3ea:
 	cmp	0xb, d0
-	ble	DspSufSe_L3f1
-	jmp	DspSufSe_L702
-DspSufSe_L3f1:
+	ble	LfoGridSe3_L3f1
+	jmp	LfoGridSe3_L702
+LfoGridSe3_L3f1:
 	add	-1, d0
 	asl2	d0
 	mov	DspSufSe_L3f1_Table, a0
@@ -411695,7 +411694,7 @@ loc_4C0EA78D:
 	extbu	d2
 	mov	d2, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	DspSufSe_L702
+	jmp	LfoGridSe3_L702
 loc_4C0EA79A:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -411713,7 +411712,7 @@ loc_4C0EA79A:
 	mov	-1, d1
 	mov	d2, d0
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspSufSe_L702
+	jmp	LfoGridSe3_L702
 loc_4C0EA7BC:
 	extbu	d2
 	mov	2, d1
@@ -411762,7 +411761,7 @@ loc_4C0EA7BC:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspSufSe_L702
+	jmp	LfoGridSe3_L702
 loc_4C0EA856:
 	extbu	d2
 	mov	2, d1
@@ -411815,7 +411814,7 @@ loc_4C0EA856:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspSufSe_L702
+	jmp	LfoGridSe3_L702
 loc_4C0EA8F7:
 	extbu	d2
 	mov	d2, d0
@@ -411835,7 +411834,7 @@ loc_4C0EA8F7:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	1, d0
-	bne	DspSufSe_L5b7
+	bne	LfoGridSe3_L5b7
 	mov	2, d1
 	mov	d2, d0
 	call	func_4C0FC2A1_entry, [d2], 0x1c
@@ -411853,7 +411852,7 @@ loc_4C0EA8F7:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DspSufSe_L5b7:
+LfoGridSe3_L5b7:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, d2
 	mov	d2, d1
@@ -411887,7 +411886,7 @@ DspSufSe_L5b7:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspSufSe_L702
+	jmp	LfoGridSe3_L702
 loc_4C0EA9BF:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -411904,7 +411903,7 @@ loc_4C0EA9BF:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspSufSe_L702
+	jmp	LfoGridSe3_L702
 loc_4C0EA9E1:
 	mov	1, d0
 	mov	d0, (0x10, sp)
@@ -411922,7 +411921,7 @@ loc_4C0EA9E1:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspSufSe_L702
+	jmp	LfoGridSe3_L702
 loc_4C0EAA04:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -411940,7 +411939,7 @@ loc_4C0EAA04:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspSufSe_L702
+	bra	LfoGridSe3_L702
 loc_4C0EAA26:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -411959,7 +411958,7 @@ loc_4C0EAA26:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspSufSe_L702
+	bra	LfoGridSe3_L702
 loc_4C0EAA4A:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -411979,7 +411978,7 @@ loc_4C0EAA4A:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspSufSe_L702
+	bra	LfoGridSe3_L702
 loc_4C0EAA6F:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -411998,7 +411997,7 @@ loc_4C0EAA6F:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DspSufSe_L702:
+LfoGridSe3_L702:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -412044,13 +412043,13 @@ loc_4C0EAAD5:
 	movhu	(0x24, sp), d0
 	exth	d0
 	cmp	1, d0
-	bge	DspSufSe_L77e
-	jmp	DspSufSe_Lad5
-DspSufSe_L77e:
+	bge	LfoGridSe3_L77e
+	jmp	LfoGridSe3_Lad5
+LfoGridSe3_L77e:
 	cmp	0xb, d0
-	ble	DspSufSe_L785
-	jmp	DspSufSe_Lad5
-DspSufSe_L785:
+	ble	LfoGridSe3_L785
+	jmp	LfoGridSe3_Lad5
+LfoGridSe3_L785:
 	add	-1, d0
 	asl2	d0
 	mov	DspSufSe_L785_Table, a0
@@ -412061,7 +412060,7 @@ loc_4C0EAB21:
 	mov	d2, d0
 	mov	a2, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	DspSufSe_Lad5
+	jmp	LfoGridSe3_Lad5
 loc_4C0EAB2E:
 	extbu	d2
 	mov	0x7a, d0
@@ -412107,7 +412106,7 @@ loc_4C0EAB2E:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspSufSe_Lad5
+	jmp	LfoGridSe3_Lad5
 loc_4C0EABA6:
 	extbu	d2
 	mov	2, d1
@@ -412123,7 +412122,7 @@ loc_4C0EABA6:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	DspSufSe_Lad5
+	jmp	LfoGridSe3_Lad5
 loc_4C0EABCC:
 	extbu	d2
 	mov	d2, d0
@@ -412142,22 +412141,22 @@ loc_4C0EABCC:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspSufSe_L86d
+	beq	LfoGridSe3_L86d
 	cmp	1, d0
-	beq	DspSufSe_L880
-	bra	DspSufSe_L891
-DspSufSe_L86d:
+	beq	LfoGridSe3_L880
+	bra	LfoGridSe3_L891
+LfoGridSe3_L86d:
 	mov	a2, (8, sp)
 	mov	Str_OFF_45, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DspSufSe_L891
-DspSufSe_L880:
+	bra	LfoGridSe3_L891
+LfoGridSe3_L880:
 	mov	a2, (8, sp)
 	mov	Str_ON_35, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DspSufSe_L891:
+LfoGridSe3_L891:
 	call	GetFocusObject_entry, 0, 0x10
 	exth	d3
 	inc	d3
@@ -412170,7 +412169,7 @@ DspSufSe_L891:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspSufSe_Lad5
+	jmp	LfoGridSe3_Lad5
 loc_4C0EAC44:
 	extbu	d2
 	mov	d2, d0
@@ -412189,17 +412188,17 @@ loc_4C0EAC44:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspSufSe_L8e3
+	beq	LfoGridSe3_L8e3
 	cmp	1, d0
-	beq	DspSufSe_L8f7
-	jmp	DspSufSe_Lad5
-DspSufSe_L8e3:
+	beq	LfoGridSe3_L8f7
+	jmp	LfoGridSe3_Lad5
+LfoGridSe3_L8e3:
 	mov	a2, (8, sp)
 	mov	Str_empty_692, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspSufSe_Lad5
-DspSufSe_L8f7:
+	jmp	LfoGridSe3_Lad5
+LfoGridSe3_L8f7:
 	mov	d2, d0
 	mov	2, d1
 	call	func_4C0FC2A1_entry, [d2], 0x1c
@@ -412222,7 +412221,7 @@ DspSufSe_L8f7:
 	add	d1, d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspSufSe_Lad5
+	jmp	LfoGridSe3_Lad5
 loc_4C0EACBF:
 	extbu	d2
 	mov	sp, a0
@@ -412238,22 +412237,22 @@ loc_4C0EACBF:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspSufSe_L957
+	beq	LfoGridSe3_L957
 	cmp	1, d0
-	beq	DspSufSe_L96b
-	jmp	DspSufSe_Lad5
-DspSufSe_L957:
+	beq	LfoGridSe3_L96b
+	jmp	LfoGridSe3_Lad5
+LfoGridSe3_L957:
 	mov	a2, (8, sp)
 	mov	Str_empty_691, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspSufSe_Lad5
-DspSufSe_L96b:
+	jmp	LfoGridSe3_Lad5
+LfoGridSe3_L96b:
 	mov	a2, (8, sp)
 	mov	Str_empty_690, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspSufSe_Lad5
+	jmp	LfoGridSe3_Lad5
 loc_4C0EAD0E:
 	extbu	d2
 	mov	sp, a0
@@ -412271,22 +412270,22 @@ loc_4C0EAD0E:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspSufSe_L9a9
+	beq	LfoGridSe3_L9a9
 	cmp	1, d0
-	beq	DspSufSe_L9bd
-	jmp	DspSufSe_Lad5
-DspSufSe_L9a9:
+	beq	LfoGridSe3_L9bd
+	jmp	LfoGridSe3_Lad5
+LfoGridSe3_L9a9:
 	mov	a2, (8, sp)
 	mov	Str_empty_689, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspSufSe_Lad5
-DspSufSe_L9bd:
+	jmp	LfoGridSe3_Lad5
+LfoGridSe3_L9bd:
 	mov	a2, (8, sp)
 	mov	Str_empty_688, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspSufSe_Lad5
+	jmp	LfoGridSe3_Lad5
 loc_4C0EAD60:
 	extbu	d2
 	mov	sp, a0
@@ -412304,46 +412303,46 @@ loc_4C0EAD60:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspSufSe_La08
+	beq	LfoGridSe3_La08
 	cmp	1, d0
-	beq	DspSufSe_La1c
+	beq	LfoGridSe3_La1c
 	cmp	2, d0
-	beq	DspSufSe_La30
+	beq	LfoGridSe3_La30
 	cmp	3, d0
-	beq	DspSufSe_La44
+	beq	LfoGridSe3_La44
 	cmp	4, d0
-	beq	DspSufSe_La58
-	jmp	DspSufSe_Lad5
-DspSufSe_La08:
+	beq	LfoGridSe3_La58
+	jmp	LfoGridSe3_Lad5
+LfoGridSe3_La08:
 	mov	a2, (8, sp)
 	mov	Str_SIN_2, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspSufSe_Lad5
-DspSufSe_La1c:
+	jmp	LfoGridSe3_Lad5
+LfoGridSe3_La1c:
 	mov	a2, (8, sp)
 	mov	Str_TRI_2, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspSufSe_Lad5
-DspSufSe_La30:
+	jmp	LfoGridSe3_Lad5
+LfoGridSe3_La30:
 	mov	a2, (8, sp)
 	mov	Str_SQU_2, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspSufSe_Lad5
-DspSufSe_La44:
+	jmp	LfoGridSe3_Lad5
+LfoGridSe3_La44:
 	mov	a2, (8, sp)
 	mov	Str_SAW_2, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspSufSe_Lad5
-DspSufSe_La58:
+	jmp	LfoGridSe3_Lad5
+LfoGridSe3_La58:
 	mov	a2, (8, sp)
 	mov	Str_RND_2, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DspSufSe_Lad5
+	bra	LfoGridSe3_Lad5
 loc_4C0EADFA:
 	mov	0x1f, d0
 	mov	d0, (0x18, sp)
@@ -412361,7 +412360,7 @@ loc_4C0EADFA:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	bra	DspSufSe_Lad5
+	bra	LfoGridSe3_Lad5
 loc_4C0EAE1F:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -412379,7 +412378,7 @@ loc_4C0EAE1F:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	bra	DspSufSe_Lad5
+	bra	LfoGridSe3_Lad5
 loc_4C0EAE44:
 	mov	0x3f, d0
 	mov	d0, (0x18, sp)
@@ -412396,35 +412395,35 @@ loc_4C0EAE44:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-DspSufSe_Lad5:
+LfoGridSe3_Lad5:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), a0
 	mov	MT_GridDraw, d1
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	DspSufSe_Laf4
+	bra	LfoGridSe3_Laf4
 loc_4C0EAE7F:
 	mov	d3, d0
-	bra	DspSufSe_Laf4
-DspSufSe_Laf3:
+	bra	LfoGridSe3_Laf4
+LfoGridSe3_Laf3:
 	clr	d0
-DspSufSe_Laf4:
+LfoGridSe3_Laf4:
 	ret	[d2,d3,a2,a3], 0x48
 
-DspGroupSe:
+LfoGridSe4:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x38, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	DspGroupSe_L12
-	jmp	DspGroupSe_Laf3
-DspGroupSe_L12:
+	bge	LfoGridSe4_L12
+	jmp	LfoGridSe4_Laf3
+LfoGridSe4_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	DspGroupSe_L1d
-	jmp	DspGroupSe_Laf3
-DspGroupSe_L1d:
+	ble	LfoGridSe4_L1d
+	jmp	LfoGridSe4_Laf3
+LfoGridSe4_L1d:
 	add	0xfe800001, d2
 	mov	DspGroupSe_L1d_Records, a1
 	mov	0xf, d0
@@ -412434,21 +412433,21 @@ DspGroupSe_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	DspGroupSe_L4e
+	beq	LfoGridSe4_L4e
 	setlb
 	cmp	0, d0
-	bne	DspGroupSe_L40
-	jmp	DspGroupSe_Laf3
-DspGroupSe_L40:
+	bne	LfoGridSe4_L40
+	jmp	LfoGridSe4_Laf3
+LfoGridSe4_L40:
 	add	8, a0
 	cmp	AcGridBoxSe2Proc_L1d_Records, a0
-	bcs	DspGroupSe_L4b
+	bcs	LfoGridSe4_L4b
 	mov	a1, a0
-DspGroupSe_L4b:
+LfoGridSe4_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-DspGroupSe_L4e:
+LfoGridSe4_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0EAED9:
@@ -412466,13 +412465,13 @@ loc_4C0EAED9:
 	add	-2, d2
 	exth	d0
 	cmp	1, d0
-	bge	DspGroupSe_L82
-	jmp	DspGroupSe_L39e
-DspGroupSe_L82:
+	bge	LfoGridSe4_L82
+	jmp	LfoGridSe4_L39e
+LfoGridSe4_L82:
 	cmp	0xb, d0
-	ble	DspGroupSe_L89
-	jmp	DspGroupSe_L39e
-DspGroupSe_L89:
+	ble	LfoGridSe4_L89
+	jmp	LfoGridSe4_L39e
+LfoGridSe4_L89:
 	add	-1, d0
 	asl2	d0
 	mov	DspGroupSe_L89_Table, a0
@@ -412483,7 +412482,7 @@ loc_4C0EAF1C:
 	extbu	d2
 	mov	d2, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	DspGroupSe_L39e
+	jmp	LfoGridSe4_L39e
 loc_4C0EAF2A:
 	mov	0xb, d0
 	mov	d0, (0x10, sp)
@@ -412502,7 +412501,7 @@ loc_4C0EAF2A:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspGroupSe_L39e
+	jmp	LfoGridSe4_L39e
 loc_4C0EAF4E:
 	extbu	d2
 	mov	3, d1
@@ -412552,7 +412551,7 @@ loc_4C0EAF4E:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspGroupSe_L39e
+	jmp	LfoGridSe4_L39e
 loc_4C0EAFEA:
 	extbu	d2
 	mov	3, d1
@@ -412603,7 +412602,7 @@ loc_4C0EAFEA:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspGroupSe_L39e
+	jmp	LfoGridSe4_L39e
 loc_4C0EB088:
 	extbu	d2
 	mov	d2, d0
@@ -412623,7 +412622,7 @@ loc_4C0EB088:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	1, d0
-	bne	DspGroupSe_L253
+	bne	LfoGridSe4_L253
 	mov	3, d1
 	mov	d2, d0
 	call	func_4C0FC2A1_entry, [d2], 0x1c
@@ -412642,7 +412641,7 @@ loc_4C0EB088:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DspGroupSe_L253:
+LfoGridSe4_L253:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, d2
 	mov	d2, d1
@@ -412675,7 +412674,7 @@ DspGroupSe_L253:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspGroupSe_L39e
+	jmp	LfoGridSe4_L39e
 loc_4C0EB151:
 	mov	1, d0
 	mov	d0, (0x10, sp)
@@ -412694,7 +412693,7 @@ loc_4C0EB151:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspGroupSe_L39e
+	jmp	LfoGridSe4_L39e
 loc_4C0EB176:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -412712,7 +412711,7 @@ loc_4C0EB176:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspGroupSe_L39e
+	jmp	LfoGridSe4_L39e
 loc_4C0EB198:
 	mov	4, d0
 	mov	d0, (0x10, sp)
@@ -412730,7 +412729,7 @@ loc_4C0EB198:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspGroupSe_L39e
+	bra	LfoGridSe4_L39e
 loc_4C0EB1BB:
 	mov	0x1e, d0
 	mov	d0, (0x10, sp)
@@ -412750,7 +412749,7 @@ loc_4C0EB1BB:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspGroupSe_L39e
+	bra	LfoGridSe4_L39e
 loc_4C0EB1E1:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -412769,7 +412768,7 @@ loc_4C0EB1E1:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspGroupSe_L39e
+	bra	LfoGridSe4_L39e
 loc_4C0EB204:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -412787,7 +412786,7 @@ loc_4C0EB204:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DspGroupSe_L39e:
+LfoGridSe4_L39e:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -412811,13 +412810,13 @@ loc_4C0EB23E:
 	mov	a2, d0
 	exth	d0
 	cmp	1, d0
-	bge	DspGroupSe_L3ea
-	jmp	DspGroupSe_L702
-DspGroupSe_L3ea:
+	bge	LfoGridSe4_L3ea
+	jmp	LfoGridSe4_L702
+LfoGridSe4_L3ea:
 	cmp	0xb, d0
-	ble	DspGroupSe_L3f1
-	jmp	DspGroupSe_L702
-DspGroupSe_L3f1:
+	ble	LfoGridSe4_L3f1
+	jmp	LfoGridSe4_L702
+LfoGridSe4_L3f1:
 	add	-1, d0
 	asl2	d0
 	mov	DspGroupSe_L3f1_Table, a0
@@ -412828,7 +412827,7 @@ loc_4C0EB284:
 	extbu	d2
 	mov	d2, d1
 	call	func_4C0FB386_entry, [d2,d3], 0x20
-	jmp	DspGroupSe_L702
+	jmp	LfoGridSe4_L702
 loc_4C0EB291:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -412846,7 +412845,7 @@ loc_4C0EB291:
 	mov	-1, d1
 	mov	d2, d0
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspGroupSe_L702
+	jmp	LfoGridSe4_L702
 loc_4C0EB2B3:
 	extbu	d2
 	mov	3, d1
@@ -412895,7 +412894,7 @@ loc_4C0EB2B3:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspGroupSe_L702
+	jmp	LfoGridSe4_L702
 loc_4C0EB34D:
 	extbu	d2
 	mov	3, d1
@@ -412948,7 +412947,7 @@ loc_4C0EB34D:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspGroupSe_L702
+	jmp	LfoGridSe4_L702
 loc_4C0EB3EE:
 	extbu	d2
 	mov	d2, d0
@@ -412968,7 +412967,7 @@ loc_4C0EB3EE:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	1, d0
-	bne	DspGroupSe_L5b7
+	bne	LfoGridSe4_L5b7
 	mov	3, d1
 	mov	d2, d0
 	call	func_4C0FC2A1_entry, [d2], 0x1c
@@ -412986,7 +412985,7 @@ loc_4C0EB3EE:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DspGroupSe_L5b7:
+LfoGridSe4_L5b7:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, d2
 	mov	d2, d1
@@ -413020,7 +413019,7 @@ DspGroupSe_L5b7:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspGroupSe_L702
+	jmp	LfoGridSe4_L702
 loc_4C0EB4B6:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -413037,7 +413036,7 @@ loc_4C0EB4B6:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspGroupSe_L702
+	jmp	LfoGridSe4_L702
 loc_4C0EB4D8:
 	mov	1, d0
 	mov	d0, (0x10, sp)
@@ -413055,7 +413054,7 @@ loc_4C0EB4D8:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	DspGroupSe_L702
+	jmp	LfoGridSe4_L702
 loc_4C0EB4FB:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -413073,7 +413072,7 @@ loc_4C0EB4FB:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspGroupSe_L702
+	bra	LfoGridSe4_L702
 loc_4C0EB51D:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -413092,7 +413091,7 @@ loc_4C0EB51D:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspGroupSe_L702
+	bra	LfoGridSe4_L702
 loc_4C0EB541:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -413112,7 +413111,7 @@ loc_4C0EB541:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	DspGroupSe_L702
+	bra	LfoGridSe4_L702
 loc_4C0EB566:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -413131,7 +413130,7 @@ loc_4C0EB566:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-DspGroupSe_L702:
+LfoGridSe4_L702:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -413177,13 +413176,13 @@ loc_4C0EB5CC:
 	movhu	(0x24, sp), d0
 	exth	d0
 	cmp	1, d0
-	bge	DspGroupSe_L77e
-	jmp	DspGroupSe_Lad5
-DspGroupSe_L77e:
+	bge	LfoGridSe4_L77e
+	jmp	LfoGridSe4_Lad5
+LfoGridSe4_L77e:
 	cmp	0xb, d0
-	ble	DspGroupSe_L785
-	jmp	DspGroupSe_Lad5
-DspGroupSe_L785:
+	ble	LfoGridSe4_L785
+	jmp	LfoGridSe4_Lad5
+LfoGridSe4_L785:
 	add	-1, d0
 	asl2	d0
 	mov	DspGroupSe_L785_Table, a0
@@ -413194,7 +413193,7 @@ loc_4C0EB618:
 	mov	d2, d0
 	mov	a2, a0
 	call	func_4C0FB42B_entry, [d2,a2], 0x24
-	jmp	DspGroupSe_Lad5
+	jmp	LfoGridSe4_Lad5
 loc_4C0EB625:
 	extbu	d2
 	mov	0x7a, d0
@@ -413240,7 +413239,7 @@ loc_4C0EB625:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspGroupSe_Lad5
+	jmp	LfoGridSe4_Lad5
 loc_4C0EB69D:
 	extbu	d2
 	mov	3, d1
@@ -413256,7 +413255,7 @@ loc_4C0EB69D:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	DspGroupSe_Lad5
+	jmp	LfoGridSe4_Lad5
 loc_4C0EB6C3:
 	extbu	d2
 	mov	d2, d0
@@ -413275,22 +413274,22 @@ loc_4C0EB6C3:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspGroupSe_L86d
+	beq	LfoGridSe4_L86d
 	cmp	1, d0
-	beq	DspGroupSe_L880
-	bra	DspGroupSe_L891
-DspGroupSe_L86d:
+	beq	LfoGridSe4_L880
+	bra	LfoGridSe4_L891
+LfoGridSe4_L86d:
 	mov	a2, (8, sp)
 	mov	Str_OFF_44, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DspGroupSe_L891
-DspGroupSe_L880:
+	bra	LfoGridSe4_L891
+LfoGridSe4_L880:
 	mov	a2, (8, sp)
 	mov	Str_ON_34, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-DspGroupSe_L891:
+LfoGridSe4_L891:
 	call	GetFocusObject_entry, 0, 0x10
 	exth	d3
 	inc	d3
@@ -413303,7 +413302,7 @@ DspGroupSe_L891:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DspGroupSe_Lad5
+	jmp	LfoGridSe4_Lad5
 loc_4C0EB73B:
 	extbu	d2
 	mov	d2, d0
@@ -413322,17 +413321,17 @@ loc_4C0EB73B:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspGroupSe_L8e3
+	beq	LfoGridSe4_L8e3
 	cmp	1, d0
-	beq	DspGroupSe_L8f7
-	jmp	DspGroupSe_Lad5
-DspGroupSe_L8e3:
+	beq	LfoGridSe4_L8f7
+	jmp	LfoGridSe4_Lad5
+LfoGridSe4_L8e3:
 	mov	a2, (8, sp)
 	mov	Str_empty_686, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspGroupSe_Lad5
-DspGroupSe_L8f7:
+	jmp	LfoGridSe4_Lad5
+LfoGridSe4_L8f7:
 	mov	d2, d0
 	mov	3, d1
 	call	func_4C0FC2A1_entry, [d2], 0x1c
@@ -413355,7 +413354,7 @@ DspGroupSe_L8f7:
 	add	d1, d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspGroupSe_Lad5
+	jmp	LfoGridSe4_Lad5
 loc_4C0EB7B6:
 	extbu	d2
 	mov	sp, a0
@@ -413371,22 +413370,22 @@ loc_4C0EB7B6:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspGroupSe_L957
+	beq	LfoGridSe4_L957
 	cmp	1, d0
-	beq	DspGroupSe_L96b
-	jmp	DspGroupSe_Lad5
-DspGroupSe_L957:
+	beq	LfoGridSe4_L96b
+	jmp	LfoGridSe4_Lad5
+LfoGridSe4_L957:
 	mov	a2, (8, sp)
 	mov	Str_empty_685, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspGroupSe_Lad5
-DspGroupSe_L96b:
+	jmp	LfoGridSe4_Lad5
+LfoGridSe4_L96b:
 	mov	a2, (8, sp)
 	mov	Str_empty_684, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspGroupSe_Lad5
+	jmp	LfoGridSe4_Lad5
 loc_4C0EB805:
 	extbu	d2
 	mov	sp, a0
@@ -413404,22 +413403,22 @@ loc_4C0EB805:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspGroupSe_L9a9
+	beq	LfoGridSe4_L9a9
 	cmp	1, d0
-	beq	DspGroupSe_L9bd
-	jmp	DspGroupSe_Lad5
-DspGroupSe_L9a9:
+	beq	LfoGridSe4_L9bd
+	jmp	LfoGridSe4_Lad5
+LfoGridSe4_L9a9:
 	mov	a2, (8, sp)
 	mov	Str_empty_683, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspGroupSe_Lad5
-DspGroupSe_L9bd:
+	jmp	LfoGridSe4_Lad5
+LfoGridSe4_L9bd:
 	mov	a2, (8, sp)
 	mov	Str_empty_682, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspGroupSe_Lad5
+	jmp	LfoGridSe4_Lad5
 loc_4C0EB857:
 	extbu	d2
 	mov	sp, a0
@@ -413437,46 +413436,46 @@ loc_4C0EB857:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	DspGroupSe_La08
+	beq	LfoGridSe4_La08
 	cmp	1, d0
-	beq	DspGroupSe_La1c
+	beq	LfoGridSe4_La1c
 	cmp	2, d0
-	beq	DspGroupSe_La30
+	beq	LfoGridSe4_La30
 	cmp	3, d0
-	beq	DspGroupSe_La44
+	beq	LfoGridSe4_La44
 	cmp	4, d0
-	beq	DspGroupSe_La58
-	jmp	DspGroupSe_Lad5
-DspGroupSe_La08:
+	beq	LfoGridSe4_La58
+	jmp	LfoGridSe4_Lad5
+LfoGridSe4_La08:
 	mov	a2, (8, sp)
 	mov	Str_SIN, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspGroupSe_Lad5
-DspGroupSe_La1c:
+	jmp	LfoGridSe4_Lad5
+LfoGridSe4_La1c:
 	mov	a2, (8, sp)
 	mov	Str_TRI, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspGroupSe_Lad5
-DspGroupSe_La30:
+	jmp	LfoGridSe4_Lad5
+LfoGridSe4_La30:
 	mov	a2, (8, sp)
 	mov	Str_SQU, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspGroupSe_Lad5
-DspGroupSe_La44:
+	jmp	LfoGridSe4_Lad5
+LfoGridSe4_La44:
 	mov	a2, (8, sp)
 	mov	Str_SAW, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DspGroupSe_Lad5
-DspGroupSe_La58:
+	jmp	LfoGridSe4_Lad5
+LfoGridSe4_La58:
 	mov	a2, (8, sp)
 	mov	Str_RND, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DspGroupSe_Lad5
+	bra	LfoGridSe4_Lad5
 loc_4C0EB8F1:
 	mov	0x1f, d0
 	mov	d0, (0x18, sp)
@@ -413494,7 +413493,7 @@ loc_4C0EB8F1:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	bra	DspGroupSe_Lad5
+	bra	LfoGridSe4_Lad5
 loc_4C0EB916:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -413512,7 +413511,7 @@ loc_4C0EB916:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	bra	DspGroupSe_Lad5
+	bra	LfoGridSe4_Lad5
 loc_4C0EB93B:
 	mov	0x3f, d0
 	mov	d0, (0x18, sp)
@@ -413529,20 +413528,20 @@ loc_4C0EB93B:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-DspGroupSe_Lad5:
+LfoGridSe4_Lad5:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), a0
 	mov	MT_GridDraw, d1
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	DspGroupSe_Laf4
+	bra	LfoGridSe4_Laf4
 loc_4C0EB976:
 	mov	d3, d0
-	bra	DspGroupSe_Laf4
-DspGroupSe_Laf3:
+	bra	LfoGridSe4_Laf4
+LfoGridSe4_Laf3:
 	clr	d0
-DspGroupSe_Laf4:
+LfoGridSe4_Laf4:
 	ret	[d2,d3,a2,a3], 0x48
 
 AcGridBoxSe2Proc:
@@ -413872,19 +413871,19 @@ AcGridBoxSe2Proc_L39d:
 AcGridBoxSe2Proc_L3aa:
 	ret	[d2,d3,a2,a3], 0x24
 
-PortamentOnSe:
+ToneGridSe2:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x38, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	PortamentOnSe_L12
-	jmp	PortamentOnSe_L8b7
-PortamentOnSe_L12:
+	bge	ToneGridSe2_L12
+	jmp	ToneGridSe2_L8b7
+ToneGridSe2_L12:
 	cmp	0x1ae0000, d2
-	ble	PortamentOnSe_L1d
-	jmp	PortamentOnSe_L8b7
-PortamentOnSe_L1d:
+	ble	ToneGridSe2_L1d
+	jmp	ToneGridSe2_L8b7
+ToneGridSe2_L1d:
 	mov	PortamentOnSe_L1d_Records, a1
 	add	0xfe800001, d2
 	mov	0xf, d0
@@ -413894,21 +413893,21 @@ PortamentOnSe_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	PortamentOnSe_L4e
+	beq	ToneGridSe2_L4e
 	setlb
 	cmp	0, d0
-	bne	PortamentOnSe_L40
-	jmp	PortamentOnSe_L8b7
-PortamentOnSe_L40:
+	bne	ToneGridSe2_L40
+	jmp	ToneGridSe2_L8b7
+ToneGridSe2_L40:
 	add	8, a0
 	cmp	AcCtrlGridBoxSeProc_L1d_Records, a0
-	bcs	PortamentOnSe_L4b
+	bcs	ToneGridSe2_L4b
 	mov	a1, a0
-PortamentOnSe_L4b:
+ToneGridSe2_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-PortamentOnSe_L4e:
+ToneGridSe2_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0EBD7D:
@@ -413918,33 +413917,33 @@ loc_4C0EBD7D:
 	mov	MT_CheckSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	cmp	1, d0
-	bne	PortamentOnSe_L76
+	bne	ToneGridSe2_L76
 	clr	d0
 	movbu	d0, (MdSoundEdit_L132_Var_3)
-	bra	PortamentOnSe_Le7
-PortamentOnSe_L76:
+	bra	ToneGridSe2_Le7
+ToneGridSe2_L76:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	Tset2On_id, d0
 	mov	MT_CheckSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	cmp	1, d0
-	bne	PortamentOnSe_L9a
+	bne	ToneGridSe2_L9a
 	mov	1, d0
 	movbu	d0, (MdSoundEdit_L132_Var_3)
-	bra	PortamentOnSe_Le7
-PortamentOnSe_L9a:
+	bra	ToneGridSe2_Le7
+ToneGridSe2_L9a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	Tset3On_id, d0
 	mov	MT_CheckSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	cmp	1, d0
-	bne	PortamentOnSe_Lbe
+	bne	ToneGridSe2_Lbe
 	mov	2, d0
 	movbu	d0, (MdSoundEdit_L132_Var_3)
-	bra	PortamentOnSe_Le7
-PortamentOnSe_Lbe:
+	bra	ToneGridSe2_Le7
+ToneGridSe2_Lbe:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	Tset4On_id, d0
@@ -413953,10 +413952,10 @@ PortamentOnSe_Lbe:
 	mov	3, d1
 	movbu	d1, (MdSoundEdit_L132_Var_3)
 	cmp	1, d0
-	beq	PortamentOnSe_Le7
+	beq	ToneGridSe2_Le7
 	clr	d0
 	movbu	d0, (MdSoundEdit_L132_Var_3)
-PortamentOnSe_Le7:
+ToneGridSe2_Le7:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x48
 loc_4C0EBE15:
@@ -413985,27 +413984,27 @@ loc_4C0EBE38:
 	add	-2, d2
 	exth	d0
 	cmp	1, d0
-	beq	PortamentOnSe_L15f
+	beq	ToneGridSe2_L15f
 	cmp	2, d0
-	beq	PortamentOnSe_L1a9
+	beq	ToneGridSe2_L1a9
 	cmp	3, d0
-	bne	PortamentOnSe_L147
-	jmp	PortamentOnSe_L1ef
-PortamentOnSe_L147:
+	bne	ToneGridSe2_L147
+	jmp	ToneGridSe2_L1ef
+ToneGridSe2_L147:
 	cmp	4, d0
-	bne	PortamentOnSe_L14e
-	jmp	PortamentOnSe_L235
-PortamentOnSe_L14e:
+	bne	ToneGridSe2_L14e
+	jmp	ToneGridSe2_L235
+ToneGridSe2_L14e:
 	cmp	5, d0
-	bne	PortamentOnSe_L155
-	jmp	PortamentOnSe_L280
-PortamentOnSe_L155:
+	bne	ToneGridSe2_L155
+	jmp	ToneGridSe2_L280
+ToneGridSe2_L155:
 	cmp	6, d0
-	bne	PortamentOnSe_L15c
-	jmp	PortamentOnSe_L2c9
-PortamentOnSe_L15c:
-	jmp	PortamentOnSe_L35c
-PortamentOnSe_L15f:
+	bne	ToneGridSe2_L15c
+	jmp	ToneGridSe2_L2c9
+ToneGridSe2_L15c:
+	jmp	ToneGridSe2_L35c
+ToneGridSe2_L15f:
 	extb	d2
 	mov	2, d0
 	mov	d0, (0x10, sp)
@@ -414033,8 +414032,8 @@ PortamentOnSe_L15f:
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentOnSe_L35c
-PortamentOnSe_L1a9:
+	jmp	ToneGridSe2_L35c
+ToneGridSe2_L1a9:
 	extb	d2
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -414061,8 +414060,8 @@ PortamentOnSe_L1a9:
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentOnSe_L35c
-PortamentOnSe_L1ef:
+	jmp	ToneGridSe2_L35c
+ToneGridSe2_L1ef:
 	extb	d2
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -414089,8 +414088,8 @@ PortamentOnSe_L1ef:
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentOnSe_L35c
-PortamentOnSe_L235:
+	jmp	ToneGridSe2_L35c
+ToneGridSe2_L235:
 	extb	d2
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -414118,8 +414117,8 @@ PortamentOnSe_L235:
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentOnSe_L35c
-PortamentOnSe_L280:
+	jmp	ToneGridSe2_L35c
+ToneGridSe2_L280:
 	extb	d2
 	mov	d2, d1
 	mov	0x7f, d0
@@ -414147,18 +414146,18 @@ PortamentOnSe_L280:
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentOnSe_L35c
-PortamentOnSe_L2c9:
+	jmp	ToneGridSe2_L35c
+ToneGridSe2_L2c9:
 	mov	0x7f, d0
 	movbu	d0, (0x20, sp)
 	mov	d2, d3
 	extb	d3
 	cmp	5, d3
-	bge	PortamentOnSe_L32f
+	bge	ToneGridSe2_L32f
 	mov	0x23c, a2
 	mov	sp, a3
 	add	0x21, a3
-PortamentOnSe_L2da:
+ToneGridSe2_L2da:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	a3, a0
 	mov	0x23, d1
@@ -414172,10 +414171,10 @@ PortamentOnSe_L2da:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x21, sp), d0
 	cmp	0x7f, d0
-	bge	PortamentOnSe_L323
+	bge	ToneGridSe2_L323
 	movbu	(0x20, sp), d1
 	cmp	d1, d0
-	bgt	PortamentOnSe_L323
+	bgt	ToneGridSe2_L323
 	inc	d0
 	movbu	d0, (0x21, sp)
 	mov	0x7f, d0
@@ -414190,21 +414189,21 @@ PortamentOnSe_L2da:
 	exthu	d0
 	movbu	(0x21, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-PortamentOnSe_L323:
+ToneGridSe2_L323:
 	movbu	(0x21, sp), d0
 	inc	d3
 	movbu	d0, (0x20, sp)
 	extb	d3
 	cmp	5, d3
-	blt	PortamentOnSe_L2da
-PortamentOnSe_L32f:
+	blt	ToneGridSe2_L2da
+ToneGridSe2_L32f:
 	extb	d2
 	cmp	6, d2
-	bge	PortamentOnSe_L35c
+	bge	ToneGridSe2_L35c
 	movhu	(0x1c, sp), d3
 	exthu	d3
 	asl	16, d3
-PortamentOnSe_L33b:
+ToneGridSe2_L33b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	2, d1
 	add	d2, d1
@@ -414216,8 +414215,8 @@ PortamentOnSe_L33b:
 	inc	d2
 	extb	d2
 	cmp	6, d2
-	blt	PortamentOnSe_L33b
-PortamentOnSe_L35c:
+	blt	ToneGridSe2_L33b
+ToneGridSe2_L35c:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x48
 loc_4C0EC08A:
@@ -414236,27 +414235,27 @@ loc_4C0EC08A:
 	add	-2, d2
 	exth	d0
 	cmp	1, d0
-	beq	PortamentOnSe_L3b1
+	beq	ToneGridSe2_L3b1
 	cmp	2, d0
-	beq	PortamentOnSe_L3f9
+	beq	ToneGridSe2_L3f9
 	cmp	3, d0
-	bne	PortamentOnSe_L399
-	jmp	PortamentOnSe_L43d
-PortamentOnSe_L399:
+	bne	ToneGridSe2_L399
+	jmp	ToneGridSe2_L43d
+ToneGridSe2_L399:
 	cmp	4, d0
-	bne	PortamentOnSe_L3a0
-	jmp	PortamentOnSe_L484
-PortamentOnSe_L3a0:
+	bne	ToneGridSe2_L3a0
+	jmp	ToneGridSe2_L484
+ToneGridSe2_L3a0:
 	cmp	5, d0
-	bne	PortamentOnSe_L3a7
-	jmp	PortamentOnSe_L4cf
-PortamentOnSe_L3a7:
+	bne	ToneGridSe2_L3a7
+	jmp	ToneGridSe2_L4cf
+ToneGridSe2_L3a7:
 	cmp	6, d0
-	bne	PortamentOnSe_L3ae
-	jmp	PortamentOnSe_L51a
-PortamentOnSe_L3ae:
-	jmp	PortamentOnSe_L5ec
-PortamentOnSe_L3b1:
+	bne	ToneGridSe2_L3ae
+	jmp	ToneGridSe2_L51a
+ToneGridSe2_L3ae:
+	jmp	ToneGridSe2_L5ec
+ToneGridSe2_L3b1:
 	extb	d2
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -414283,8 +414282,8 @@ PortamentOnSe_L3b1:
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentOnSe_L5ec
-PortamentOnSe_L3f9:
+	jmp	ToneGridSe2_L5ec
+ToneGridSe2_L3f9:
 	extb	d2
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -414310,8 +414309,8 @@ PortamentOnSe_L3f9:
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentOnSe_L5ec
-PortamentOnSe_L43d:
+	jmp	ToneGridSe2_L5ec
+ToneGridSe2_L43d:
 	extb	d2
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -414338,8 +414337,8 @@ PortamentOnSe_L43d:
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentOnSe_L5ec
-PortamentOnSe_L484:
+	jmp	ToneGridSe2_L5ec
+ToneGridSe2_L484:
 	extb	d2
 	mov	-0x80, d0
 	mov	d0, (0x10, sp)
@@ -414367,8 +414366,8 @@ PortamentOnSe_L484:
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentOnSe_L5ec
-PortamentOnSe_L4cf:
+	jmp	ToneGridSe2_L5ec
+ToneGridSe2_L4cf:
 	extb	d2
 	mov	-0x80, d0
 	mov	d0, (0x10, sp)
@@ -414396,14 +414395,14 @@ PortamentOnSe_L4cf:
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentOnSe_L5ec
-PortamentOnSe_L51a:
+	jmp	ToneGridSe2_L5ec
+ToneGridSe2_L51a:
 	clr	d0
 	movbu	d0, (0x20, sp)
 	extb	d2
 	mov	d2, a2
 	cmp	1, a2
-	blt	PortamentOnSe_L548
+	blt	ToneGridSe2_L548
 	movbu	(MdSoundEdit_L132_Var_3), d1
 	mov	0x23, d0
 	nop
@@ -414419,24 +414418,24 @@ PortamentOnSe_L51a:
 	add	0x20, a0
 	mov	0x7f, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
-PortamentOnSe_L548:
+ToneGridSe2_L548:
 	cmp	5, a2
-	blt	PortamentOnSe_L54f
-	jmp	PortamentOnSe_L5ec
-PortamentOnSe_L54f:
+	blt	ToneGridSe2_L54f
+	jmp	ToneGridSe2_L5ec
+ToneGridSe2_L54f:
 	movbu	(0x20, sp), d0
 	cmp	0x7f, d0
-	bne	PortamentOnSe_L559
-	jmp	PortamentOnSe_L5ec
-PortamentOnSe_L559:
+	bne	ToneGridSe2_L559
+	jmp	ToneGridSe2_L5ec
+ToneGridSe2_L559:
 	movbu	d2, (0x20, sp)
 	extb	d2
 	cmp	0, d2
-	blt	PortamentOnSe_L5bb
+	blt	ToneGridSe2_L5bb
 	mov	0x23c, d3
 	mov	sp, a3
 	add	0x21, a3
-PortamentOnSe_L567:
+ToneGridSe2_L567:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	a3, a0
 	mov	0x23, d1
@@ -414450,10 +414449,10 @@ PortamentOnSe_L567:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x21, sp), d1
 	cmp	d2, d1
-	ble	PortamentOnSe_L5ae
+	ble	ToneGridSe2_L5ae
 	movbu	(0x20, sp), d0
 	cmp	d0, d1
-	blt	PortamentOnSe_L5ae
+	blt	ToneGridSe2_L5ae
 	add	-1, d1
 	movbu	d1, (0x21, sp)
 	mov	0x7f, d0
@@ -414468,24 +414467,24 @@ PortamentOnSe_L567:
 	exthu	d0
 	movbu	(0x21, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-PortamentOnSe_L5ae:
+ToneGridSe2_L5ae:
 	movbu	(0x21, sp), d0
 	add	-1, d2
 	movbu	d0, (0x20, sp)
 	extb	d2
 	cmp	0, d2
-	bge	PortamentOnSe_L567
-PortamentOnSe_L5bb:
+	bge	ToneGridSe2_L567
+ToneGridSe2_L5bb:
 	clr	d2
 	mov	a2, d3
 	inc	d3
 	cmp	d2, d3
-	blt	PortamentOnSe_L5ec
+	blt	ToneGridSe2_L5ec
 	movhu	(0x1c, sp), d0
 	exthu	d0
 	asl	16, d0
 	mov	d0, a2
-PortamentOnSe_L5cb:
+ToneGridSe2_L5cb:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	2, d1
 	add	d2, d1
@@ -414497,8 +414496,8 @@ PortamentOnSe_L5cb:
 	inc	d2
 	extb	d2
 	cmp	d3, d2
-	ble	PortamentOnSe_L5cb
-PortamentOnSe_L5ec:
+	ble	ToneGridSe2_L5cb
+ToneGridSe2_L5ec:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x48
 loc_4C0EC31A:
@@ -414522,29 +414521,29 @@ loc_4C0EC31E:
 	add	-2, d2
 	exth	d0
 	cmp	1, d0
-	beq	PortamentOnSe_L641
+	beq	ToneGridSe2_L641
 	cmp	2, d0
-	bne	PortamentOnSe_L622
-	jmp	PortamentOnSe_L6b8
-PortamentOnSe_L622:
+	bne	ToneGridSe2_L622
+	jmp	ToneGridSe2_L6b8
+ToneGridSe2_L622:
 	cmp	3, d0
-	bne	PortamentOnSe_L629
-	jmp	PortamentOnSe_L6e8
-PortamentOnSe_L629:
+	bne	ToneGridSe2_L629
+	jmp	ToneGridSe2_L6e8
+ToneGridSe2_L629:
 	cmp	4, d0
-	bne	PortamentOnSe_L630
-	jmp	PortamentOnSe_L71a
-PortamentOnSe_L630:
+	bne	ToneGridSe2_L630
+	jmp	ToneGridSe2_L71a
+ToneGridSe2_L630:
 	cmp	5, d0
-	bne	PortamentOnSe_L637
-	jmp	PortamentOnSe_L74b
-PortamentOnSe_L637:
+	bne	ToneGridSe2_L637
+	jmp	ToneGridSe2_L74b
+ToneGridSe2_L637:
 	cmp	6, d0
-	bne	PortamentOnSe_L63e
-	jmp	PortamentOnSe_L77f
-PortamentOnSe_L63e:
-	jmp	PortamentOnSe_L89b
-PortamentOnSe_L641:
+	bne	ToneGridSe2_L63e
+	jmp	ToneGridSe2_L77f
+ToneGridSe2_L63e:
+	jmp	ToneGridSe2_L89b
+ToneGridSe2_L641:
 	movbu	(MdSoundEdit_L132_Var_3), d1
 	extb	d2
 	mov	sp, a0
@@ -414566,31 +414565,31 @@ PortamentOnSe_L641:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x21, sp), d0
 	cmp	0, d0
-	beq	PortamentOnSe_L67c
+	beq	ToneGridSe2_L67c
 	cmp	1, d0
-	beq	PortamentOnSe_L690
+	beq	ToneGridSe2_L690
 	cmp	2, d0
-	beq	PortamentOnSe_L6a4
-	jmp	PortamentOnSe_L89b
-PortamentOnSe_L67c:
+	beq	ToneGridSe2_L6a4
+	jmp	ToneGridSe2_L89b
+ToneGridSe2_L67c:
 	mov	a2, (8, sp)
 	mov	Str_NORM_2, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	PortamentOnSe_L89b
-PortamentOnSe_L690:
+	jmp	ToneGridSe2_L89b
+ToneGridSe2_L690:
 	mov	a2, (8, sp)
 	mov	Str_DRUM, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	PortamentOnSe_L89b
-PortamentOnSe_L6a4:
+	jmp	ToneGridSe2_L89b
+ToneGridSe2_L6a4:
 	mov	a2, (8, sp)
 	mov	Str_ATK_10, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	PortamentOnSe_L89b
-PortamentOnSe_L6b8:
+	jmp	ToneGridSe2_L89b
+ToneGridSe2_L6b8:
 	extb	d2
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -414612,8 +414611,8 @@ PortamentOnSe_L6b8:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	PortamentOnSe_L89b
-PortamentOnSe_L6e8:
+	jmp	ToneGridSe2_L89b
+ToneGridSe2_L6e8:
 	extb	d2
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -414635,8 +414634,8 @@ PortamentOnSe_L6e8:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	PortamentOnSe_L89b
-PortamentOnSe_L71a:
+	jmp	ToneGridSe2_L89b
+ToneGridSe2_L71a:
 	extb	d2
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -414657,8 +414656,8 @@ PortamentOnSe_L71a:
 	mov	1, d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	PortamentOnSe_L89b
-PortamentOnSe_L74b:
+	jmp	ToneGridSe2_L89b
+ToneGridSe2_L74b:
 	extb	d2
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -414680,25 +414679,25 @@ PortamentOnSe_L74b:
 	mov	1, d1
 	mov	a2, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	PortamentOnSe_L89b
-PortamentOnSe_L77f:
+	jmp	ToneGridSe2_L89b
+ToneGridSe2_L77f:
 	extb	d2
 	cmp	0, d2
-	beq	PortamentOnSe_L79e
+	beq	ToneGridSe2_L79e
 	cmp	1, d2
-	beq	PortamentOnSe_L7d5
+	beq	ToneGridSe2_L7d5
 	cmp	2, d2
-	beq	PortamentOnSe_L7d5
+	beq	ToneGridSe2_L7d5
 	cmp	3, d2
-	beq	PortamentOnSe_L7d5
+	beq	ToneGridSe2_L7d5
 	cmp	4, d2
-	beq	PortamentOnSe_L7d5
+	beq	ToneGridSe2_L7d5
 	cmp	5, d2
-	bne	PortamentOnSe_L79b
-	jmp	PortamentOnSe_L84c
-PortamentOnSe_L79b:
-	jmp	PortamentOnSe_L89b
-PortamentOnSe_L79e:
+	bne	ToneGridSe2_L79b
+	jmp	ToneGridSe2_L84c
+ToneGridSe2_L79b:
+	jmp	ToneGridSe2_L89b
+ToneGridSe2_L79e:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	sp, a0
 	add	0x21, a0
@@ -414717,8 +414716,8 @@ PortamentOnSe_L79e:
 	movbu	(0x21, sp), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	PortamentOnSe_L89b
-PortamentOnSe_L7d5:
+	jmp	ToneGridSe2_L89b
+ToneGridSe2_L7d5:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	sp, a0
 	add	0x20, a0
@@ -414737,13 +414736,13 @@ PortamentOnSe_L7d5:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0x7f, d0
-	bne	PortamentOnSe_L812
+	bne	ToneGridSe2_L812
 	mov	a2, (8, sp)
 	mov	Str_empty_681, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	PortamentOnSe_L89b
-PortamentOnSe_L812:
+	jmp	ToneGridSe2_L89b
+ToneGridSe2_L812:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	sp, a0
 	add	0x21, a0
@@ -414766,8 +414765,8 @@ PortamentOnSe_L812:
 	movbu	(0x21, sp), d0
 	mov	d0, (0x14, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	PortamentOnSe_L89b
-PortamentOnSe_L84c:
+	bra	ToneGridSe2_L89b
+ToneGridSe2_L84c:
 	movbu	(MdSoundEdit_L132_Var_3), d1
 	add	-1, d2
 	mov	sp, a0
@@ -414784,32 +414783,32 @@ PortamentOnSe_L84c:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0x7f, d0
-	bne	PortamentOnSe_L887
+	bne	ToneGridSe2_L887
 	mov	a2, (8, sp)
 	mov	Str_empty_680, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	PortamentOnSe_L89b
-PortamentOnSe_L887:
+	bra	ToneGridSe2_L89b
+ToneGridSe2_L887:
 	mov	a2, (8, sp)
 	mov	Str_3d_127_3, d1
 	mov	d1, (0xc, sp)
 	inc	d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-PortamentOnSe_L89b:
+ToneGridSe2_L89b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	PortamentOnSe_L8b8
+	bra	ToneGridSe2_L8b8
 loc_4C0EC5DE:
 	mov	d3, d0
-	bra	PortamentOnSe_L8b8
-PortamentOnSe_L8b7:
+	bra	ToneGridSe2_L8b8
+ToneGridSe2_L8b7:
 	clr	d0
-PortamentOnSe_L8b8:
+ToneGridSe2_L8b8:
 	ret	[d2,d3,a2,a3], 0x48
 
 AcCtrlGridBoxSeProc:
@@ -415221,19 +415220,19 @@ AcCtrlGridBoxSeProc_L477:
 AcCtrlGridBoxSeProc_L484:
 	ret	[d2,d3,a2], 0x20
 
-RightSplitSe:
+CtrlGridSe1:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x3c, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	RightSplitSe_L12
-	jmp	RightSplitSe_L14f0
-RightSplitSe_L12:
+	bge	CtrlGridSe1_L12
+	jmp	CtrlGridSe1_L14f0
+CtrlGridSe1_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	RightSplitSe_L1d
-	jmp	RightSplitSe_L14f0
-RightSplitSe_L1d:
+	ble	CtrlGridSe1_L1d
+	jmp	CtrlGridSe1_L14f0
+CtrlGridSe1_L1d:
 	mov	RightSplitSe_L1d_Records, a1
 	add	0xfe800001, d2
 	mov	a1, a0
@@ -415243,21 +415242,21 @@ RightSplitSe_L1d:
 	add	d0, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	RightSplitSe_L4d
+	beq	CtrlGridSe1_L4d
 	setlb
 	cmp	0, d0
-	bne	RightSplitSe_L3f
-	jmp	RightSplitSe_L14f0
-RightSplitSe_L3f:
+	bne	CtrlGridSe1_L3f
+	jmp	CtrlGridSe1_L14f0
+CtrlGridSe1_L3f:
 	add	8, a0
 	cmp	DrumAcCtrlGridBoxSeProc_L1d_Records, a0
-	bcs	RightSplitSe_L4a
+	bcs	CtrlGridSe1_L4a
 	mov	a1, a0
-RightSplitSe_L4a:
+CtrlGridSe1_L4a:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-RightSplitSe_L4d:
+CtrlGridSe1_L4d:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0ECABE:
@@ -415276,46 +415275,46 @@ loc_4C0ECABE:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	RightSplitSe_La2
+	beq	CtrlGridSe1_La2
 	cmp	2, d0
-	bne	RightSplitSe_L83
-	jmp	RightSplitSe_L35b
-RightSplitSe_L83:
+	bne	CtrlGridSe1_L83
+	jmp	CtrlGridSe1_L35b
+CtrlGridSe1_L83:
 	cmp	3, d0
-	bne	RightSplitSe_L8a
-	jmp	RightSplitSe_L3d3
-RightSplitSe_L8a:
+	bne	CtrlGridSe1_L8a
+	jmp	CtrlGridSe1_L3d3
+CtrlGridSe1_L8a:
 	cmp	4, d0
-	bne	RightSplitSe_L91
-	jmp	RightSplitSe_L4aa
-RightSplitSe_L91:
+	bne	CtrlGridSe1_L91
+	jmp	CtrlGridSe1_L4aa
+CtrlGridSe1_L91:
 	cmp	5, d0
-	bne	RightSplitSe_L98
-	jmp	RightSplitSe_L581
-RightSplitSe_L98:
+	bne	CtrlGridSe1_L98
+	jmp	CtrlGridSe1_L581
+CtrlGridSe1_L98:
 	cmp	6, d0
-	bne	RightSplitSe_L9f
-	jmp	RightSplitSe_L658
-RightSplitSe_L9f:
-	jmp	RightSplitSe_L732
-RightSplitSe_La2:
+	bne	CtrlGridSe1_L9f
+	jmp	CtrlGridSe1_L658
+CtrlGridSe1_L9f:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_La2:
 	extbu	d1
 	cmp	0, d1
-	beq	RightSplitSe_Lbf
+	beq	CtrlGridSe1_Lbf
 	cmp	1, d1
-	bne	RightSplitSe_Lae
-	jmp	RightSplitSe_L166
-RightSplitSe_Lae:
+	bne	CtrlGridSe1_Lae
+	jmp	CtrlGridSe1_L166
+CtrlGridSe1_Lae:
 	cmp	2, d1
-	bne	RightSplitSe_Lb5
-	jmp	RightSplitSe_L20d
-RightSplitSe_Lb5:
+	bne	CtrlGridSe1_Lb5
+	jmp	CtrlGridSe1_L20d
+CtrlGridSe1_Lb5:
 	cmp	3, d1
-	bne	RightSplitSe_Lbc
-	jmp	RightSplitSe_L2b4
-RightSplitSe_Lbc:
-	jmp	RightSplitSe_L732
-RightSplitSe_Lbf:
+	bne	CtrlGridSe1_Lbc
+	jmp	CtrlGridSe1_L2b4
+CtrlGridSe1_Lbc:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_Lbf:
 	mov	0x14, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415357,8 +415356,8 @@ RightSplitSe_Lbf:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L166:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L166:
 	mov	0x17, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415400,8 +415399,8 @@ RightSplitSe_L166:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L20d:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L20d:
 	mov	0x26, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415443,8 +415442,8 @@ RightSplitSe_L20d:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L2b4:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L2b4:
 	mov	0x29, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415486,19 +415485,19 @@ RightSplitSe_L2b4:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L35b:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L35b:
 	extbu	d1
 	cmp	0, d1
-	beq	RightSplitSe_L36f
+	beq	CtrlGridSe1_L36f
 	cmp	1, d1
-	beq	RightSplitSe_L388
+	beq	CtrlGridSe1_L388
 	cmp	2, d1
-	beq	RightSplitSe_L3a1
+	beq	CtrlGridSe1_L3a1
 	cmp	3, d1
-	beq	RightSplitSe_L3ba
-	jmp	RightSplitSe_L732
-RightSplitSe_L36f:
+	beq	CtrlGridSe1_L3ba
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L36f:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -415508,8 +415507,8 @@ RightSplitSe_L36f:
 	mov	0x15, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	RightSplitSe_L732
-RightSplitSe_L388:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L388:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -415519,8 +415518,8 @@ RightSplitSe_L388:
 	mov	0x18, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	RightSplitSe_L732
-RightSplitSe_L3a1:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L3a1:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -415530,8 +415529,8 @@ RightSplitSe_L3a1:
 	mov	0x27, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	RightSplitSe_L732
-RightSplitSe_L3ba:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L3ba:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -415541,21 +415540,21 @@ RightSplitSe_L3ba:
 	mov	0x2a, d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	RightSplitSe_L732
-RightSplitSe_L3d3:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L3d3:
 	extbu	d1
 	cmp	0, d1
-	beq	RightSplitSe_L3ea
+	beq	CtrlGridSe1_L3ea
 	cmp	1, d1
-	beq	RightSplitSe_L41a
+	beq	CtrlGridSe1_L41a
 	cmp	2, d1
-	beq	RightSplitSe_L44a
+	beq	CtrlGridSe1_L44a
 	cmp	3, d1
-	bne	RightSplitSe_L3e7
-	jmp	RightSplitSe_L47a
-RightSplitSe_L3e7:
-	jmp	RightSplitSe_L732
-RightSplitSe_L3ea:
+	bne	CtrlGridSe1_L3e7
+	jmp	CtrlGridSe1_L47a
+CtrlGridSe1_L3e7:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L3ea:
 	mov	0x13, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415570,8 +415569,8 @@ RightSplitSe_L3ea:
 	mov	0x13, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L41a:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L41a:
 	mov	0x16, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415586,8 +415585,8 @@ RightSplitSe_L41a:
 	mov	0x16, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L44a:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L44a:
 	mov	0x25, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415602,8 +415601,8 @@ RightSplitSe_L44a:
 	mov	0x25, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L47a:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L47a:
 	mov	0x28, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415618,21 +415617,21 @@ RightSplitSe_L47a:
 	mov	0x28, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L4aa:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L4aa:
 	extbu	d1
 	cmp	0, d1
-	beq	RightSplitSe_L4c1
+	beq	CtrlGridSe1_L4c1
 	cmp	1, d1
-	beq	RightSplitSe_L4f1
+	beq	CtrlGridSe1_L4f1
 	cmp	2, d1
-	beq	RightSplitSe_L521
+	beq	CtrlGridSe1_L521
 	cmp	3, d1
-	bne	RightSplitSe_L4be
-	jmp	RightSplitSe_L551
-RightSplitSe_L4be:
-	jmp	RightSplitSe_L732
-RightSplitSe_L4c1:
+	bne	CtrlGridSe1_L4be
+	jmp	CtrlGridSe1_L551
+CtrlGridSe1_L4be:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L4c1:
 	mov	0x13, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415647,8 +415646,8 @@ RightSplitSe_L4c1:
 	mov	0x13, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L4f1:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L4f1:
 	mov	0x16, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415663,8 +415662,8 @@ RightSplitSe_L4f1:
 	mov	0x16, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L521:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L521:
 	mov	0x25, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415679,8 +415678,8 @@ RightSplitSe_L521:
 	mov	0x25, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L551:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L551:
 	mov	0x28, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415695,21 +415694,21 @@ RightSplitSe_L551:
 	mov	0x28, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L581:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L581:
 	extbu	d1
 	cmp	0, d1
-	beq	RightSplitSe_L598
+	beq	CtrlGridSe1_L598
 	cmp	1, d1
-	beq	RightSplitSe_L5c8
+	beq	CtrlGridSe1_L5c8
 	cmp	2, d1
-	beq	RightSplitSe_L5f8
+	beq	CtrlGridSe1_L5f8
 	cmp	3, d1
-	bne	RightSplitSe_L595
-	jmp	RightSplitSe_L628
-RightSplitSe_L595:
-	jmp	RightSplitSe_L732
-RightSplitSe_L598:
+	bne	CtrlGridSe1_L595
+	jmp	CtrlGridSe1_L628
+CtrlGridSe1_L595:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L598:
 	mov	0x13, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415724,8 +415723,8 @@ RightSplitSe_L598:
 	mov	0x13, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L5c8:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L5c8:
 	mov	0x16, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415740,8 +415739,8 @@ RightSplitSe_L5c8:
 	mov	0x16, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L5f8:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L5f8:
 	mov	0x25, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415756,8 +415755,8 @@ RightSplitSe_L5f8:
 	mov	0x25, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L628:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L628:
 	mov	0x28, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415772,21 +415771,21 @@ RightSplitSe_L628:
 	mov	0x28, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L658:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L658:
 	extbu	d1
 	cmp	0, d1
-	beq	RightSplitSe_L66f
+	beq	CtrlGridSe1_L66f
 	cmp	1, d1
-	beq	RightSplitSe_L6a1
+	beq	CtrlGridSe1_L6a1
 	cmp	2, d1
-	beq	RightSplitSe_L6d2
+	beq	CtrlGridSe1_L6d2
 	cmp	3, d1
-	bne	RightSplitSe_L66c
-	jmp	RightSplitSe_L703
-RightSplitSe_L66c:
-	jmp	RightSplitSe_L732
-RightSplitSe_L66f:
+	bne	CtrlGridSe1_L66c
+	jmp	CtrlGridSe1_L703
+CtrlGridSe1_L66c:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L66f:
 	mov	0x13, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415801,8 +415800,8 @@ RightSplitSe_L66f:
 	mov	0x13, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_L732
-RightSplitSe_L6a1:
+	jmp	CtrlGridSe1_L732
+CtrlGridSe1_L6a1:
 	mov	0x16, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415817,8 +415816,8 @@ RightSplitSe_L6a1:
 	mov	0x16, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	bra	RightSplitSe_L732
-RightSplitSe_L6d2:
+	bra	CtrlGridSe1_L732
+CtrlGridSe1_L6d2:
 	mov	0x25, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415833,8 +415832,8 @@ RightSplitSe_L6d2:
 	mov	0x25, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	bra	RightSplitSe_L732
-RightSplitSe_L703:
+	bra	CtrlGridSe1_L732
+CtrlGridSe1_L703:
 	mov	0x28, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415849,7 +415848,7 @@ RightSplitSe_L703:
 	mov	0x28, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-RightSplitSe_L732:
+CtrlGridSe1_L732:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -415871,46 +415870,46 @@ loc_4C0ED1B8:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	RightSplitSe_L79b
+	beq	CtrlGridSe1_L79b
 	cmp	2, d0
-	bne	RightSplitSe_L77c
-	jmp	RightSplitSe_La54
-RightSplitSe_L77c:
+	bne	CtrlGridSe1_L77c
+	jmp	CtrlGridSe1_La54
+CtrlGridSe1_L77c:
 	cmp	3, d0
-	bne	RightSplitSe_L783
-	jmp	RightSplitSe_Lac4
-RightSplitSe_L783:
+	bne	CtrlGridSe1_L783
+	jmp	CtrlGridSe1_Lac4
+CtrlGridSe1_L783:
 	cmp	4, d0
-	bne	RightSplitSe_L78a
-	jmp	RightSplitSe_Lb9b
-RightSplitSe_L78a:
+	bne	CtrlGridSe1_L78a
+	jmp	CtrlGridSe1_Lb9b
+CtrlGridSe1_L78a:
 	cmp	5, d0
-	bne	RightSplitSe_L791
-	jmp	RightSplitSe_Lc72
-RightSplitSe_L791:
+	bne	CtrlGridSe1_L791
+	jmp	CtrlGridSe1_Lc72
+CtrlGridSe1_L791:
 	cmp	6, d0
-	bne	RightSplitSe_L798
-	jmp	RightSplitSe_Ld49
-RightSplitSe_L798:
-	jmp	RightSplitSe_Le23
-RightSplitSe_L79b:
+	bne	CtrlGridSe1_L798
+	jmp	CtrlGridSe1_Ld49
+CtrlGridSe1_L798:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_L79b:
 	extbu	d1
 	cmp	0, d1
-	beq	RightSplitSe_L7b8
+	beq	CtrlGridSe1_L7b8
 	cmp	1, d1
-	bne	RightSplitSe_L7a7
-	jmp	RightSplitSe_L85f
-RightSplitSe_L7a7:
+	bne	CtrlGridSe1_L7a7
+	jmp	CtrlGridSe1_L85f
+CtrlGridSe1_L7a7:
 	cmp	2, d1
-	bne	RightSplitSe_L7ae
-	jmp	RightSplitSe_L906
-RightSplitSe_L7ae:
+	bne	CtrlGridSe1_L7ae
+	jmp	CtrlGridSe1_L906
+CtrlGridSe1_L7ae:
 	cmp	3, d1
-	bne	RightSplitSe_L7b5
-	jmp	RightSplitSe_L9ad
-RightSplitSe_L7b5:
-	jmp	RightSplitSe_Le23
-RightSplitSe_L7b8:
+	bne	CtrlGridSe1_L7b5
+	jmp	CtrlGridSe1_L9ad
+CtrlGridSe1_L7b5:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_L7b8:
 	mov	0x14, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415952,8 +415951,8 @@ RightSplitSe_L7b8:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_L85f:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_L85f:
 	mov	0x17, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -415995,8 +415994,8 @@ RightSplitSe_L85f:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_L906:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_L906:
 	mov	0x26, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416038,8 +416037,8 @@ RightSplitSe_L906:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_L9ad:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_L9ad:
 	mov	0x29, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416081,19 +416080,19 @@ RightSplitSe_L9ad:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_La54:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_La54:
 	extbu	d1
 	cmp	0, d1
-	beq	RightSplitSe_La68
+	beq	CtrlGridSe1_La68
 	cmp	1, d1
-	beq	RightSplitSe_La7f
+	beq	CtrlGridSe1_La7f
 	cmp	2, d1
-	beq	RightSplitSe_La96
+	beq	CtrlGridSe1_La96
 	cmp	3, d1
-	beq	RightSplitSe_Laad
-	jmp	RightSplitSe_Le23
-RightSplitSe_La68:
+	beq	CtrlGridSe1_Laad
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_La68:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -416102,8 +416101,8 @@ RightSplitSe_La68:
 	mov	0x15, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	RightSplitSe_Le23
-RightSplitSe_La7f:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_La7f:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -416112,8 +416111,8 @@ RightSplitSe_La7f:
 	mov	0x18, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	RightSplitSe_Le23
-RightSplitSe_La96:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_La96:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -416122,8 +416121,8 @@ RightSplitSe_La96:
 	mov	0x27, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	RightSplitSe_Le23
-RightSplitSe_Laad:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Laad:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -416132,21 +416131,21 @@ RightSplitSe_Laad:
 	mov	0x2a, d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	jmp	RightSplitSe_Le23
-RightSplitSe_Lac4:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Lac4:
 	extbu	d1
 	cmp	0, d1
-	beq	RightSplitSe_Ladb
+	beq	CtrlGridSe1_Ladb
 	cmp	1, d1
-	beq	RightSplitSe_Lb0b
+	beq	CtrlGridSe1_Lb0b
 	cmp	2, d1
-	beq	RightSplitSe_Lb3b
+	beq	CtrlGridSe1_Lb3b
 	cmp	3, d1
-	bne	RightSplitSe_Lad8
-	jmp	RightSplitSe_Lb6b
-RightSplitSe_Lad8:
-	jmp	RightSplitSe_Le23
-RightSplitSe_Ladb:
+	bne	CtrlGridSe1_Lad8
+	jmp	CtrlGridSe1_Lb6b
+CtrlGridSe1_Lad8:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Ladb:
 	mov	0x13, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416161,8 +416160,8 @@ RightSplitSe_Ladb:
 	mov	0x13, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_Lb0b:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Lb0b:
 	mov	0x16, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416177,8 +416176,8 @@ RightSplitSe_Lb0b:
 	mov	0x16, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_Lb3b:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Lb3b:
 	mov	0x25, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416193,8 +416192,8 @@ RightSplitSe_Lb3b:
 	mov	0x25, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_Lb6b:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Lb6b:
 	mov	0x28, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416209,21 +416208,21 @@ RightSplitSe_Lb6b:
 	mov	0x28, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_Lb9b:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Lb9b:
 	extbu	d1
 	cmp	0, d1
-	beq	RightSplitSe_Lbb2
+	beq	CtrlGridSe1_Lbb2
 	cmp	1, d1
-	beq	RightSplitSe_Lbe2
+	beq	CtrlGridSe1_Lbe2
 	cmp	2, d1
-	beq	RightSplitSe_Lc12
+	beq	CtrlGridSe1_Lc12
 	cmp	3, d1
-	bne	RightSplitSe_Lbaf
-	jmp	RightSplitSe_Lc42
-RightSplitSe_Lbaf:
-	jmp	RightSplitSe_Le23
-RightSplitSe_Lbb2:
+	bne	CtrlGridSe1_Lbaf
+	jmp	CtrlGridSe1_Lc42
+CtrlGridSe1_Lbaf:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Lbb2:
 	mov	0x13, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416238,8 +416237,8 @@ RightSplitSe_Lbb2:
 	mov	0x13, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_Lbe2:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Lbe2:
 	mov	0x16, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416254,8 +416253,8 @@ RightSplitSe_Lbe2:
 	mov	0x16, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_Lc12:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Lc12:
 	mov	0x25, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416270,8 +416269,8 @@ RightSplitSe_Lc12:
 	mov	0x25, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_Lc42:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Lc42:
 	mov	0x28, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416286,21 +416285,21 @@ RightSplitSe_Lc42:
 	mov	0x28, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_Lc72:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Lc72:
 	extbu	d1
 	cmp	0, d1
-	beq	RightSplitSe_Lc89
+	beq	CtrlGridSe1_Lc89
 	cmp	1, d1
-	beq	RightSplitSe_Lcb9
+	beq	CtrlGridSe1_Lcb9
 	cmp	2, d1
-	beq	RightSplitSe_Lce9
+	beq	CtrlGridSe1_Lce9
 	cmp	3, d1
-	bne	RightSplitSe_Lc86
-	jmp	RightSplitSe_Ld19
-RightSplitSe_Lc86:
-	jmp	RightSplitSe_Le23
-RightSplitSe_Lc89:
+	bne	CtrlGridSe1_Lc86
+	jmp	CtrlGridSe1_Ld19
+CtrlGridSe1_Lc86:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Lc89:
 	mov	0x13, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416315,8 +416314,8 @@ RightSplitSe_Lc89:
 	mov	0x13, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_Lcb9:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Lcb9:
 	mov	0x16, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416331,8 +416330,8 @@ RightSplitSe_Lcb9:
 	mov	0x16, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_Lce9:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Lce9:
 	mov	0x25, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416347,8 +416346,8 @@ RightSplitSe_Lce9:
 	mov	0x25, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_Ld19:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Ld19:
 	mov	0x28, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416363,21 +416362,21 @@ RightSplitSe_Ld19:
 	mov	0x28, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_Ld49:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Ld49:
 	extbu	d1
 	cmp	0, d1
-	beq	RightSplitSe_Ld60
+	beq	CtrlGridSe1_Ld60
 	cmp	1, d1
-	beq	RightSplitSe_Ld92
+	beq	CtrlGridSe1_Ld92
 	cmp	2, d1
-	beq	RightSplitSe_Ldc3
+	beq	CtrlGridSe1_Ldc3
 	cmp	3, d1
-	bne	RightSplitSe_Ld5d
-	jmp	RightSplitSe_Ldf4
-RightSplitSe_Ld5d:
-	jmp	RightSplitSe_Le23
-RightSplitSe_Ld60:
+	bne	CtrlGridSe1_Ld5d
+	jmp	CtrlGridSe1_Ldf4
+CtrlGridSe1_Ld5d:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Ld60:
 	mov	0x13, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416392,8 +416391,8 @@ RightSplitSe_Ld60:
 	mov	0x13, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	jmp	RightSplitSe_Le23
-RightSplitSe_Ld92:
+	jmp	CtrlGridSe1_Le23
+CtrlGridSe1_Ld92:
 	mov	0x16, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416408,8 +416407,8 @@ RightSplitSe_Ld92:
 	mov	0x16, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	bra	RightSplitSe_Le23
-RightSplitSe_Ldc3:
+	bra	CtrlGridSe1_Le23
+CtrlGridSe1_Ldc3:
 	mov	0x25, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416424,8 +416423,8 @@ RightSplitSe_Ldc3:
 	mov	0x25, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-	bra	RightSplitSe_Le23
-RightSplitSe_Ldf4:
+	bra	CtrlGridSe1_Le23
+CtrlGridSe1_Ldf4:
 	mov	0x28, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416440,7 +416439,7 @@ RightSplitSe_Ldf4:
 	mov	0x28, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-RightSplitSe_Le23:
+CtrlGridSe1_Le23:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -416481,40 +416480,40 @@ loc_4C0ED8D3:
 	add	-2, d0
 	exth	d1
 	cmp	1, d1
-	beq	RightSplitSe_Leb6
+	beq	CtrlGridSe1_Leb6
 	cmp	2, d1
-	bne	RightSplitSe_Le97
-	jmp	RightSplitSe_Lf3a
-RightSplitSe_Le97:
+	bne	CtrlGridSe1_Le97
+	jmp	CtrlGridSe1_Lf3a
+CtrlGridSe1_Le97:
 	cmp	3, d1
-	bne	RightSplitSe_Le9e
-	jmp	RightSplitSe_Lfae
-RightSplitSe_Le9e:
+	bne	CtrlGridSe1_Le9e
+	jmp	CtrlGridSe1_Lfae
+CtrlGridSe1_Le9e:
 	cmp	4, d1
-	bne	RightSplitSe_Lea5
-	jmp	RightSplitSe_L10f8
-RightSplitSe_Lea5:
+	bne	CtrlGridSe1_Lea5
+	jmp	CtrlGridSe1_L10f8
+CtrlGridSe1_Lea5:
 	cmp	5, d1
-	bne	RightSplitSe_Leac
-	jmp	RightSplitSe_L1242
-RightSplitSe_Leac:
+	bne	CtrlGridSe1_Leac
+	jmp	CtrlGridSe1_L1242
+CtrlGridSe1_Leac:
 	cmp	6, d1
-	bne	RightSplitSe_Leb3
-	jmp	RightSplitSe_L138c
-RightSplitSe_Leb3:
-	jmp	RightSplitSe_L14d4
-RightSplitSe_Leb6:
+	bne	CtrlGridSe1_Leb3
+	jmp	CtrlGridSe1_L138c
+CtrlGridSe1_Leb3:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_Leb6:
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_Leca
+	beq	CtrlGridSe1_Leca
 	cmp	1, d0
-	beq	RightSplitSe_Lee6
+	beq	CtrlGridSe1_Lee6
 	cmp	2, d0
-	beq	RightSplitSe_Lf02
+	beq	CtrlGridSe1_Lf02
 	cmp	3, d0
-	beq	RightSplitSe_Lf1e
-	jmp	RightSplitSe_L14d4
-RightSplitSe_Leca:
+	beq	CtrlGridSe1_Lf1e
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_Leca:
 	mov	0x14, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416523,8 +416522,8 @@ RightSplitSe_Leca:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC498_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_Lee6:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_Lee6:
 	mov	0x17, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416533,8 +416532,8 @@ RightSplitSe_Lee6:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC498_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_Lf02:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_Lf02:
 	mov	0x26, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416543,8 +416542,8 @@ RightSplitSe_Lf02:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC498_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_Lf1e:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_Lf1e:
 	mov	0x29, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -416553,19 +416552,19 @@ RightSplitSe_Lf1e:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC498_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_Lf3a:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_Lf3a:
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_Lf4e
+	beq	CtrlGridSe1_Lf4e
 	cmp	1, d0
-	beq	RightSplitSe_Lf66
+	beq	CtrlGridSe1_Lf66
 	cmp	2, d0
-	beq	RightSplitSe_Lf7e
+	beq	CtrlGridSe1_Lf7e
 	cmp	3, d0
-	beq	RightSplitSe_Lf96
-	jmp	RightSplitSe_L14d4
-RightSplitSe_Lf4e:
+	beq	CtrlGridSe1_Lf96
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_Lf4e:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
 	mov	0x15, d0
@@ -416573,8 +416572,8 @@ RightSplitSe_Lf4e:
 	clr	d1
 	mov	a3, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	RightSplitSe_L14d4
-RightSplitSe_Lf66:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_Lf66:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
 	mov	0x18, d0
@@ -416582,8 +416581,8 @@ RightSplitSe_Lf66:
 	clr	d1
 	mov	a3, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	RightSplitSe_L14d4
-RightSplitSe_Lf7e:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_Lf7e:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
 	mov	0x27, d0
@@ -416591,8 +416590,8 @@ RightSplitSe_Lf7e:
 	clr	d1
 	mov	a3, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	RightSplitSe_L14d4
-RightSplitSe_Lf96:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_Lf96:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
 	mov	0x2a, d0
@@ -416600,23 +416599,23 @@ RightSplitSe_Lf96:
 	clr	d1
 	mov	a3, a0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	RightSplitSe_L14d4
-RightSplitSe_Lfae:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_Lfae:
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_Lfc8
+	beq	CtrlGridSe1_Lfc8
 	cmp	1, d0
-	beq	RightSplitSe_L1014
+	beq	CtrlGridSe1_L1014
 	cmp	2, d0
-	bne	RightSplitSe_Lfbe
-	jmp	RightSplitSe_L1060
-RightSplitSe_Lfbe:
+	bne	CtrlGridSe1_Lfbe
+	jmp	CtrlGridSe1_L1060
+CtrlGridSe1_Lfbe:
 	cmp	3, d0
-	bne	RightSplitSe_Lfc5
-	jmp	RightSplitSe_L10ac
-RightSplitSe_Lfc5:
-	jmp	RightSplitSe_L14d4
-RightSplitSe_Lfc8:
+	bne	CtrlGridSe1_Lfc5
+	jmp	CtrlGridSe1_L10ac
+CtrlGridSe1_Lfc5:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_Lfc8:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0x14, d0
@@ -416627,7 +416626,7 @@ RightSplitSe_Lfc8:
 	call	func_4C0FC794, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L1000
+	beq	CtrlGridSe1_L1000
 	mov	0x13, d0
 	mov	3, d1
 	mov	a2, a0
@@ -416635,14 +416634,14 @@ RightSplitSe_Lfc8:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L1000:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L1000:
 	mov	a3, (8, sp)
 	mov	Str_empty_678, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L1014:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L1014:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0x17, d0
@@ -416653,7 +416652,7 @@ RightSplitSe_L1014:
 	call	func_4C0FC794, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L104c
+	beq	CtrlGridSe1_L104c
 	mov	0x16, d0
 	mov	3, d1
 	mov	a2, a0
@@ -416661,14 +416660,14 @@ RightSplitSe_L1014:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L104c:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L104c:
 	mov	a3, (8, sp)
 	mov	Str_empty_677, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L1060:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L1060:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0x26, d0
@@ -416679,7 +416678,7 @@ RightSplitSe_L1060:
 	call	func_4C0FC794, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L1098
+	beq	CtrlGridSe1_L1098
 	mov	0x25, d0
 	mov	3, d1
 	mov	a2, a0
@@ -416687,14 +416686,14 @@ RightSplitSe_L1060:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L1098:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L1098:
 	mov	a3, (8, sp)
 	mov	Str_empty_676, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L10ac:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L10ac:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0x29, d0
@@ -416705,7 +416704,7 @@ RightSplitSe_L10ac:
 	call	func_4C0FC794, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L10e4
+	beq	CtrlGridSe1_L10e4
 	mov	0x28, d0
 	mov	3, d1
 	mov	a2, a0
@@ -416713,29 +416712,29 @@ RightSplitSe_L10ac:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L10e4:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L10e4:
 	mov	a3, (8, sp)
 	mov	Str_empty_675, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L10f8:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L10f8:
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L1112
+	beq	CtrlGridSe1_L1112
 	cmp	1, d0
-	beq	RightSplitSe_L115e
+	beq	CtrlGridSe1_L115e
 	cmp	2, d0
-	bne	RightSplitSe_L1108
-	jmp	RightSplitSe_L11aa
-RightSplitSe_L1108:
+	bne	CtrlGridSe1_L1108
+	jmp	CtrlGridSe1_L11aa
+CtrlGridSe1_L1108:
 	cmp	3, d0
-	bne	RightSplitSe_L110f
-	jmp	RightSplitSe_L11f6
-RightSplitSe_L110f:
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L1112:
+	bne	CtrlGridSe1_L110f
+	jmp	CtrlGridSe1_L11f6
+CtrlGridSe1_L110f:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L1112:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0x14, d0
@@ -416746,7 +416745,7 @@ RightSplitSe_L1112:
 	call	func_4C0FC794, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L114a
+	beq	CtrlGridSe1_L114a
 	mov	0x13, d0
 	mov	0xc, d1
 	mov	a2, a0
@@ -416754,14 +416753,14 @@ RightSplitSe_L1112:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L114a:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L114a:
 	mov	a3, (8, sp)
 	mov	Str_empty_674, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L115e:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L115e:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0x17, d0
@@ -416772,7 +416771,7 @@ RightSplitSe_L115e:
 	call	func_4C0FC794, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L1196
+	beq	CtrlGridSe1_L1196
 	mov	0x16, d0
 	mov	0xc, d1
 	mov	a2, a0
@@ -416780,14 +416779,14 @@ RightSplitSe_L115e:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L1196:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L1196:
 	mov	a3, (8, sp)
 	mov	Str_empty_673, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L11aa:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L11aa:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0x26, d0
@@ -416798,7 +416797,7 @@ RightSplitSe_L11aa:
 	call	func_4C0FC794, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L11e2
+	beq	CtrlGridSe1_L11e2
 	mov	0x25, d0
 	mov	0xc, d1
 	mov	a2, a0
@@ -416806,14 +416805,14 @@ RightSplitSe_L11aa:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L11e2:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L11e2:
 	mov	a3, (8, sp)
 	mov	Str_empty_672, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L11f6:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L11f6:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0x29, d0
@@ -416824,7 +416823,7 @@ RightSplitSe_L11f6:
 	call	func_4C0FC794, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L122e
+	beq	CtrlGridSe1_L122e
 	mov	0x28, d0
 	mov	0xc, d1
 	mov	a2, a0
@@ -416832,29 +416831,29 @@ RightSplitSe_L11f6:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L122e:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L122e:
 	mov	a3, (8, sp)
 	mov	Str_empty_671, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L1242:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L1242:
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L125c
+	beq	CtrlGridSe1_L125c
 	cmp	1, d0
-	beq	RightSplitSe_L12a8
+	beq	CtrlGridSe1_L12a8
 	cmp	2, d0
-	bne	RightSplitSe_L1252
-	jmp	RightSplitSe_L12f4
-RightSplitSe_L1252:
+	bne	CtrlGridSe1_L1252
+	jmp	CtrlGridSe1_L12f4
+CtrlGridSe1_L1252:
 	cmp	3, d0
-	bne	RightSplitSe_L1259
-	jmp	RightSplitSe_L1340
-RightSplitSe_L1259:
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L125c:
+	bne	CtrlGridSe1_L1259
+	jmp	CtrlGridSe1_L1340
+CtrlGridSe1_L1259:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L125c:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0x14, d0
@@ -416865,7 +416864,7 @@ RightSplitSe_L125c:
 	call	func_4C0FC794, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L1294
+	beq	CtrlGridSe1_L1294
 	mov	0x13, d0
 	mov	0x30, d1
 	mov	a2, a0
@@ -416873,14 +416872,14 @@ RightSplitSe_L125c:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L1294:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L1294:
 	mov	a3, (8, sp)
 	mov	Str_empty_670, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L12a8:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L12a8:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0x17, d0
@@ -416891,7 +416890,7 @@ RightSplitSe_L12a8:
 	call	func_4C0FC794, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L12e0
+	beq	CtrlGridSe1_L12e0
 	mov	0x16, d0
 	mov	0x30, d1
 	mov	a2, a0
@@ -416899,14 +416898,14 @@ RightSplitSe_L12a8:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L12e0:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L12e0:
 	mov	a3, (8, sp)
 	mov	Str_empty_669, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L12f4:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L12f4:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0x26, d0
@@ -416917,7 +416916,7 @@ RightSplitSe_L12f4:
 	call	func_4C0FC794, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L132c
+	beq	CtrlGridSe1_L132c
 	mov	0x25, d0
 	mov	0x30, d1
 	mov	a2, a0
@@ -416925,14 +416924,14 @@ RightSplitSe_L12f4:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L132c:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L132c:
 	mov	a3, (8, sp)
 	mov	Str_empty_668, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L1340:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L1340:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0x29, d0
@@ -416943,7 +416942,7 @@ RightSplitSe_L1340:
 	call	func_4C0FC794, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L1378
+	beq	CtrlGridSe1_L1378
 	mov	0x28, d0
 	mov	0x30, d1
 	mov	a2, a0
@@ -416951,29 +416950,29 @@ RightSplitSe_L1340:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L1378:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L1378:
 	mov	a3, (8, sp)
 	mov	Str_empty_667, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L138c:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L138c:
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L13a6
+	beq	CtrlGridSe1_L13a6
 	cmp	1, d0
-	beq	RightSplitSe_L13f3
+	beq	CtrlGridSe1_L13f3
 	cmp	2, d0
-	bne	RightSplitSe_L139c
-	jmp	RightSplitSe_L1440
-RightSplitSe_L139c:
+	bne	CtrlGridSe1_L139c
+	jmp	CtrlGridSe1_L1440
+CtrlGridSe1_L139c:
 	cmp	3, d0
-	bne	RightSplitSe_L13a3
-	jmp	RightSplitSe_L148b
-RightSplitSe_L13a3:
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L13a6:
+	bne	CtrlGridSe1_L13a3
+	jmp	CtrlGridSe1_L148b
+CtrlGridSe1_L13a3:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L13a6:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0x14, d0
@@ -416984,7 +416983,7 @@ RightSplitSe_L13a6:
 	call	func_4C0FC794, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L13df
+	beq	CtrlGridSe1_L13df
 	mov	0x13, d0
 	mov	0xc0, d1
 	mov	a2, a0
@@ -416992,14 +416991,14 @@ RightSplitSe_L13a6:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L13df:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L13df:
 	mov	a3, (8, sp)
 	mov	Str_empty_666, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L13f3:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L13f3:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0x17, d0
@@ -417010,7 +417009,7 @@ RightSplitSe_L13f3:
 	call	func_4C0FC794, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L142c
+	beq	CtrlGridSe1_L142c
 	mov	0x16, d0
 	mov	0xc0, d1
 	mov	a2, a0
@@ -417018,14 +417017,14 @@ RightSplitSe_L13f3:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L142c:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L142c:
 	mov	a3, (8, sp)
 	mov	Str_empty_665, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	RightSplitSe_L14d4
-RightSplitSe_L1440:
+	jmp	CtrlGridSe1_L14d4
+CtrlGridSe1_L1440:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0x26, d0
@@ -417036,7 +417035,7 @@ RightSplitSe_L1440:
 	call	func_4C0FC794, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L1478
+	beq	CtrlGridSe1_L1478
 	mov	0x25, d0
 	mov	0xc0, d1
 	mov	a2, a0
@@ -417044,14 +417043,14 @@ RightSplitSe_L1440:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	bra	RightSplitSe_L14d4
-RightSplitSe_L1478:
+	bra	CtrlGridSe1_L14d4
+CtrlGridSe1_L1478:
 	mov	a3, (8, sp)
 	mov	Str_empty_664, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	RightSplitSe_L14d4
-RightSplitSe_L148b:
+	bra	CtrlGridSe1_L14d4
+CtrlGridSe1_L148b:
 	mov	sp, a2
 	add	0x1c, a2
 	mov	0x29, d0
@@ -417062,7 +417061,7 @@ RightSplitSe_L148b:
 	call	func_4C0FC794, 0, 0
 	extbu	d0
 	cmp	0, d0
-	beq	RightSplitSe_L14c3
+	beq	CtrlGridSe1_L14c3
 	mov	0x28, d0
 	mov	0xc0, d1
 	mov	a2, a0
@@ -417070,25 +417069,25 @@ RightSplitSe_L148b:
 	movbu	(0x1c, sp), d0
 	mov	a3, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	bra	RightSplitSe_L14d4
-RightSplitSe_L14c3:
+	bra	CtrlGridSe1_L14d4
+CtrlGridSe1_L14c3:
 	mov	a3, (8, sp)
 	mov	Str_empty_663, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-RightSplitSe_L14d4:
+CtrlGridSe1_L14d4:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d2, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	RightSplitSe_L14f1
+	bra	CtrlGridSe1_L14f1
 loc_4C0EDF59:
 	mov	d3, d0
-	bra	RightSplitSe_L14f1
-RightSplitSe_L14f0:
+	bra	CtrlGridSe1_L14f1
+CtrlGridSe1_L14f0:
 	clr	d0
-RightSplitSe_L14f1:
+CtrlGridSe1_L14f1:
 	ret	[d2,d3,a2,a3], 0x4c
 
 DrumAcCtrlGridBoxSeProc:
@@ -417412,19 +417411,19 @@ DrumAcCtrlGridBoxSeProc_L369:
 DrumAcCtrlGridBoxSeProc_L376:
 	ret	[d2,d3,a2], 0x20
 
-LeftSplitSe:
+DrumCtrlGridSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x3c, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	LeftSplitSe_L12
-	jmp	LeftSplitSe_L58c
-LeftSplitSe_L12:
+	bge	DrumCtrlGridSe_L12
+	jmp	DrumCtrlGridSe_L58c
+DrumCtrlGridSe_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	LeftSplitSe_L1d
-	jmp	LeftSplitSe_L58c
-LeftSplitSe_L1d:
+	ble	DrumCtrlGridSe_L1d
+	jmp	DrumCtrlGridSe_L58c
+DrumCtrlGridSe_L1d:
 	mov	LeftSplitSe_L1d_Records, a1
 	add	0xfe800001, d2
 	mov	0xf, d0
@@ -417434,21 +417433,21 @@ LeftSplitSe_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	LeftSplitSe_L4e
+	beq	DrumCtrlGridSe_L4e
 	setlb
 	cmp	0, d0
-	bne	LeftSplitSe_L40
-	jmp	LeftSplitSe_L58c
-LeftSplitSe_L40:
+	bne	DrumCtrlGridSe_L40
+	jmp	DrumCtrlGridSe_L58c
+DrumCtrlGridSe_L40:
 	add	8, a0
 	cmp	AcTsetGridBoxSeProc_L1d_Records, a0
-	bcs	LeftSplitSe_L4b
+	bcs	DrumCtrlGridSe_L4b
 	mov	a1, a0
-LeftSplitSe_L4b:
+DrumCtrlGridSe_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-LeftSplitSe_L4e:
+DrumCtrlGridSe_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0EE32C:
@@ -417466,28 +417465,28 @@ loc_4C0EE32C:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	LeftSplitSe_L94
+	beq	DrumCtrlGridSe_L94
 	cmp	2, d0
-	bne	LeftSplitSe_L83
-	jmp	LeftSplitSe_L10e
-LeftSplitSe_L83:
+	bne	DrumCtrlGridSe_L83
+	jmp	DrumCtrlGridSe_L10e
+DrumCtrlGridSe_L83:
 	cmp	3, d0
-	bne	LeftSplitSe_L8a
-	jmp	LeftSplitSe_L14c
-LeftSplitSe_L8a:
+	bne	DrumCtrlGridSe_L8a
+	jmp	DrumCtrlGridSe_L14c
+DrumCtrlGridSe_L8a:
 	cmp	4, d0
-	bne	LeftSplitSe_L91
-	jmp	LeftSplitSe_L1b7
-LeftSplitSe_L91:
-	jmp	LeftSplitSe_L21e
-LeftSplitSe_L94:
+	bne	DrumCtrlGridSe_L91
+	jmp	DrumCtrlGridSe_L1b7
+DrumCtrlGridSe_L91:
+	jmp	DrumCtrlGridSe_L21e
+DrumCtrlGridSe_L94:
 	extbu	d1
 	cmp	0, d1
-	beq	LeftSplitSe_La0
+	beq	DrumCtrlGridSe_La0
 	cmp	1, d1
-	beq	LeftSplitSe_Ld7
-	jmp	LeftSplitSe_L21e
-LeftSplitSe_La0:
+	beq	DrumCtrlGridSe_Ld7
+	jmp	DrumCtrlGridSe_L21e
+DrumCtrlGridSe_La0:
 	mov	sp, a0
 	add	0x1c, a0
 	mov	0x13, d0
@@ -417499,15 +417498,15 @@ LeftSplitSe_La0:
 	movbu	d0, (0x1c, sp)
 	movbu	(0x1c, sp), d1
 	cmp	6, d1
-	blt	LeftSplitSe_Lc7
-	jmp	LeftSplitSe_L21e
-LeftSplitSe_Lc7:
+	blt	DrumCtrlGridSe_Lc7
+	jmp	DrumCtrlGridSe_L21e
+DrumCtrlGridSe_Lc7:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	mov	0x13, d0
 	call	func_4C0FB6C9_entry, [d2,d3,a2], 0x24
-	jmp	LeftSplitSe_L21e
-LeftSplitSe_Ld7:
+	jmp	DrumCtrlGridSe_L21e
+DrumCtrlGridSe_Ld7:
 	mov	sp, a0
 	add	0x1c, a0
 	mov	0x16, d0
@@ -417519,22 +417518,22 @@ LeftSplitSe_Ld7:
 	movbu	d0, (0x1c, sp)
 	movbu	(0x1c, sp), d1
 	cmp	6, d1
-	blt	LeftSplitSe_Lfe
-	jmp	LeftSplitSe_L21e
-LeftSplitSe_Lfe:
+	blt	DrumCtrlGridSe_Lfe
+	jmp	DrumCtrlGridSe_L21e
+DrumCtrlGridSe_Lfe:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	mov	0x16, d0
 	call	func_4C0FB6C9_entry, [d2,d3,a2], 0x24
-	jmp	LeftSplitSe_L21e
-LeftSplitSe_L10e:
+	jmp	DrumCtrlGridSe_L21e
+DrumCtrlGridSe_L10e:
 	extbu	d1
 	cmp	0, d1
-	beq	LeftSplitSe_L11a
+	beq	DrumCtrlGridSe_L11a
 	cmp	1, d1
-	beq	LeftSplitSe_L133
-	jmp	LeftSplitSe_L21e
-LeftSplitSe_L11a:
+	beq	DrumCtrlGridSe_L133
+	jmp	DrumCtrlGridSe_L21e
+DrumCtrlGridSe_L11a:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -417544,8 +417543,8 @@ LeftSplitSe_L11a:
 	mov	0x14, d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	LeftSplitSe_L21e
-LeftSplitSe_L133:
+	jmp	DrumCtrlGridSe_L21e
+DrumCtrlGridSe_L133:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -417555,15 +417554,15 @@ LeftSplitSe_L133:
 	mov	0x17, d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	LeftSplitSe_L21e
-LeftSplitSe_L14c:
+	jmp	DrumCtrlGridSe_L21e
+DrumCtrlGridSe_L14c:
 	extbu	d1
 	cmp	0, d1
-	beq	LeftSplitSe_L158
+	beq	DrumCtrlGridSe_L158
 	cmp	1, d1
-	beq	LeftSplitSe_L188
-	jmp	LeftSplitSe_L21e
-LeftSplitSe_L158:
+	beq	DrumCtrlGridSe_L188
+	jmp	DrumCtrlGridSe_L21e
+DrumCtrlGridSe_L158:
 	mov	0x12, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -417578,8 +417577,8 @@ LeftSplitSe_L158:
 	mov	0x12, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB6C9_entry, [d2,d3,a2], 0x24
-	jmp	LeftSplitSe_L21e
-LeftSplitSe_L188:
+	jmp	DrumCtrlGridSe_L21e
+DrumCtrlGridSe_L188:
 	mov	0x15, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -417594,15 +417593,15 @@ LeftSplitSe_L188:
 	mov	0x15, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB6C9_entry, [d2,d3,a2], 0x24
-	bra	LeftSplitSe_L21e
-LeftSplitSe_L1b7:
+	bra	DrumCtrlGridSe_L21e
+DrumCtrlGridSe_L1b7:
 	extbu	d1
 	cmp	0, d1
-	beq	LeftSplitSe_L1c2
+	beq	DrumCtrlGridSe_L1c2
 	cmp	1, d1
-	beq	LeftSplitSe_L1f1
-	bra	LeftSplitSe_L21e
-LeftSplitSe_L1c2:
+	beq	DrumCtrlGridSe_L1f1
+	bra	DrumCtrlGridSe_L21e
+DrumCtrlGridSe_L1c2:
 	mov	0x12, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -417617,8 +417616,8 @@ LeftSplitSe_L1c2:
 	mov	0x12, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB6C9_entry, [d2,d3,a2], 0x24
-	bra	LeftSplitSe_L21e
-LeftSplitSe_L1f1:
+	bra	DrumCtrlGridSe_L21e
+DrumCtrlGridSe_L1f1:
 	mov	0x15, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -417633,7 +417632,7 @@ LeftSplitSe_L1f1:
 	mov	0x15, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB6C9_entry, [d2,d3,a2], 0x24
-LeftSplitSe_L21e:
+DrumCtrlGridSe_L21e:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -417654,28 +417653,28 @@ loc_4C0EE511:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	LeftSplitSe_L278
+	beq	DrumCtrlGridSe_L278
 	cmp	2, d0
-	bne	LeftSplitSe_L267
-	jmp	LeftSplitSe_L2e4
-LeftSplitSe_L267:
+	bne	DrumCtrlGridSe_L267
+	jmp	DrumCtrlGridSe_L2e4
+DrumCtrlGridSe_L267:
 	cmp	3, d0
-	bne	LeftSplitSe_L26e
-	jmp	LeftSplitSe_L31e
-LeftSplitSe_L26e:
+	bne	DrumCtrlGridSe_L26e
+	jmp	DrumCtrlGridSe_L31e
+DrumCtrlGridSe_L26e:
 	cmp	4, d0
-	bne	LeftSplitSe_L275
-	jmp	LeftSplitSe_L389
-LeftSplitSe_L275:
-	jmp	LeftSplitSe_L3f0
-LeftSplitSe_L278:
+	bne	DrumCtrlGridSe_L275
+	jmp	DrumCtrlGridSe_L389
+DrumCtrlGridSe_L275:
+	jmp	DrumCtrlGridSe_L3f0
+DrumCtrlGridSe_L278:
 	extbu	d1
 	cmp	0, d1
-	beq	LeftSplitSe_L284
+	beq	DrumCtrlGridSe_L284
 	cmp	1, d1
-	beq	LeftSplitSe_L2b4
-	jmp	LeftSplitSe_L3f0
-LeftSplitSe_L284:
+	beq	DrumCtrlGridSe_L2b4
+	jmp	DrumCtrlGridSe_L3f0
+DrumCtrlGridSe_L284:
 	mov	0x13, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -417690,8 +417689,8 @@ LeftSplitSe_L284:
 	mov	0x13, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB6C9_entry, [d2,d3,a2], 0x24
-	jmp	LeftSplitSe_L3f0
-LeftSplitSe_L2b4:
+	jmp	DrumCtrlGridSe_L3f0
+DrumCtrlGridSe_L2b4:
 	mov	0x16, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -417706,15 +417705,15 @@ LeftSplitSe_L2b4:
 	mov	0x16, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB6C9_entry, [d2,d3,a2], 0x24
-	jmp	LeftSplitSe_L3f0
-LeftSplitSe_L2e4:
+	jmp	DrumCtrlGridSe_L3f0
+DrumCtrlGridSe_L2e4:
 	extbu	d1
 	cmp	0, d1
-	beq	LeftSplitSe_L2f0
+	beq	DrumCtrlGridSe_L2f0
 	cmp	1, d1
-	beq	LeftSplitSe_L307
-	jmp	LeftSplitSe_L3f0
-LeftSplitSe_L2f0:
+	beq	DrumCtrlGridSe_L307
+	jmp	DrumCtrlGridSe_L3f0
+DrumCtrlGridSe_L2f0:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -417723,8 +417722,8 @@ LeftSplitSe_L2f0:
 	mov	0x14, d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	LeftSplitSe_L3f0
-LeftSplitSe_L307:
+	jmp	DrumCtrlGridSe_L3f0
+DrumCtrlGridSe_L307:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -417733,15 +417732,15 @@ LeftSplitSe_L307:
 	mov	0x17, d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	LeftSplitSe_L3f0
-LeftSplitSe_L31e:
+	jmp	DrumCtrlGridSe_L3f0
+DrumCtrlGridSe_L31e:
 	extbu	d1
 	cmp	0, d1
-	beq	LeftSplitSe_L32a
+	beq	DrumCtrlGridSe_L32a
 	cmp	1, d1
-	beq	LeftSplitSe_L35a
-	jmp	LeftSplitSe_L3f0
-LeftSplitSe_L32a:
+	beq	DrumCtrlGridSe_L35a
+	jmp	DrumCtrlGridSe_L3f0
+DrumCtrlGridSe_L32a:
 	mov	0x12, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -417756,8 +417755,8 @@ LeftSplitSe_L32a:
 	mov	0x12, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB6C9_entry, [d2,d3,a2], 0x24
-	jmp	LeftSplitSe_L3f0
-LeftSplitSe_L35a:
+	jmp	DrumCtrlGridSe_L3f0
+DrumCtrlGridSe_L35a:
 	mov	0x15, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -417772,15 +417771,15 @@ LeftSplitSe_L35a:
 	mov	0x15, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB6C9_entry, [d2,d3,a2], 0x24
-	bra	LeftSplitSe_L3f0
-LeftSplitSe_L389:
+	bra	DrumCtrlGridSe_L3f0
+DrumCtrlGridSe_L389:
 	extbu	d1
 	cmp	0, d1
-	beq	LeftSplitSe_L394
+	beq	DrumCtrlGridSe_L394
 	cmp	1, d1
-	beq	LeftSplitSe_L3c3
-	bra	LeftSplitSe_L3f0
-LeftSplitSe_L394:
+	beq	DrumCtrlGridSe_L3c3
+	bra	DrumCtrlGridSe_L3f0
+DrumCtrlGridSe_L394:
 	mov	0x12, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -417795,8 +417794,8 @@ LeftSplitSe_L394:
 	mov	0x12, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB6C9_entry, [d2,d3,a2], 0x24
-	bra	LeftSplitSe_L3f0
-LeftSplitSe_L3c3:
+	bra	DrumCtrlGridSe_L3f0
+DrumCtrlGridSe_L3c3:
 	mov	0x15, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -417811,7 +417810,7 @@ LeftSplitSe_L3c3:
 	mov	0x15, d0
 	movbu	(0x1c, sp), d1
 	call	func_4C0FB6C9_entry, [d2,d3,a2], 0x24
-LeftSplitSe_L3f0:
+DrumCtrlGridSe_L3f0:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -417851,26 +417850,26 @@ loc_4C0EE70D:
 	add	-2, d0
 	exth	d1
 	cmp	1, d1
-	beq	LeftSplitSe_L470
+	beq	DrumCtrlGridSe_L470
 	cmp	2, d1
-	beq	LeftSplitSe_L4b4
+	beq	DrumCtrlGridSe_L4b4
 	cmp	3, d1
-	bne	LeftSplitSe_L466
-	jmp	LeftSplitSe_L4f0
-LeftSplitSe_L466:
+	bne	DrumCtrlGridSe_L466
+	jmp	DrumCtrlGridSe_L4f0
+DrumCtrlGridSe_L466:
 	cmp	4, d1
-	bne	LeftSplitSe_L46d
-	jmp	LeftSplitSe_L531
-LeftSplitSe_L46d:
-	jmp	LeftSplitSe_L570
-LeftSplitSe_L470:
+	bne	DrumCtrlGridSe_L46d
+	jmp	DrumCtrlGridSe_L531
+DrumCtrlGridSe_L46d:
+	jmp	DrumCtrlGridSe_L570
+DrumCtrlGridSe_L470:
 	extbu	d0
 	cmp	0, d0
-	beq	LeftSplitSe_L47c
+	beq	DrumCtrlGridSe_L47c
 	cmp	1, d0
-	beq	LeftSplitSe_L498
-	jmp	LeftSplitSe_L570
-LeftSplitSe_L47c:
+	beq	DrumCtrlGridSe_L498
+	jmp	DrumCtrlGridSe_L570
+DrumCtrlGridSe_L47c:
 	mov	0x13, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -417879,8 +417878,8 @@ LeftSplitSe_L47c:
 	movbu	(0x1c, sp), d0
 	mov	a2, a0
 	call	func_4C0FC498_entry, 0, 0x10
-	jmp	LeftSplitSe_L570
-LeftSplitSe_L498:
+	jmp	DrumCtrlGridSe_L570
+DrumCtrlGridSe_L498:
 	mov	0x16, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -417889,15 +417888,15 @@ LeftSplitSe_L498:
 	movbu	(0x1c, sp), d0
 	mov	a2, a0
 	call	func_4C0FC498_entry, 0, 0x10
-	jmp	LeftSplitSe_L570
-LeftSplitSe_L4b4:
+	jmp	DrumCtrlGridSe_L570
+DrumCtrlGridSe_L4b4:
 	extbu	d0
 	cmp	0, d0
-	beq	LeftSplitSe_L4c0
+	beq	DrumCtrlGridSe_L4c0
 	cmp	1, d0
-	beq	LeftSplitSe_L4d8
-	jmp	LeftSplitSe_L570
-LeftSplitSe_L4c0:
+	beq	DrumCtrlGridSe_L4d8
+	jmp	DrumCtrlGridSe_L570
+DrumCtrlGridSe_L4c0:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
 	mov	0x14, d0
@@ -417905,8 +417904,8 @@ LeftSplitSe_L4c0:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB558_entry, [d2,d3,a2,a3], 0x2c
-	jmp	LeftSplitSe_L570
-LeftSplitSe_L4d8:
+	jmp	DrumCtrlGridSe_L570
+DrumCtrlGridSe_L4d8:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
 	mov	0x17, d0
@@ -417914,15 +417913,15 @@ LeftSplitSe_L4d8:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB558_entry, [d2,d3,a2,a3], 0x2c
-	jmp	LeftSplitSe_L570
-LeftSplitSe_L4f0:
+	jmp	DrumCtrlGridSe_L570
+DrumCtrlGridSe_L4f0:
 	extbu	d0
 	cmp	0, d0
-	beq	LeftSplitSe_L4fb
+	beq	DrumCtrlGridSe_L4fb
 	cmp	1, d0
-	beq	LeftSplitSe_L516
-	bra	LeftSplitSe_L570
-LeftSplitSe_L4fb:
+	beq	DrumCtrlGridSe_L516
+	bra	DrumCtrlGridSe_L570
+DrumCtrlGridSe_L4fb:
 	mov	0x12, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -417931,8 +417930,8 @@ LeftSplitSe_L4fb:
 	movbu	(0x1c, sp), d0
 	mov	a2, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	bra	LeftSplitSe_L570
-LeftSplitSe_L516:
+	bra	DrumCtrlGridSe_L570
+DrumCtrlGridSe_L516:
 	mov	0x15, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -417941,15 +417940,15 @@ LeftSplitSe_L516:
 	movbu	(0x1c, sp), d0
 	mov	a2, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	bra	LeftSplitSe_L570
-LeftSplitSe_L531:
+	bra	DrumCtrlGridSe_L570
+DrumCtrlGridSe_L531:
 	extbu	d0
 	cmp	0, d0
-	beq	LeftSplitSe_L53c
+	beq	DrumCtrlGridSe_L53c
 	cmp	1, d0
-	beq	LeftSplitSe_L557
-	bra	LeftSplitSe_L570
-LeftSplitSe_L53c:
+	beq	DrumCtrlGridSe_L557
+	bra	DrumCtrlGridSe_L570
+DrumCtrlGridSe_L53c:
 	mov	0x12, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -417958,8 +417957,8 @@ LeftSplitSe_L53c:
 	movbu	(0x1c, sp), d0
 	mov	a2, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-	bra	LeftSplitSe_L570
-LeftSplitSe_L557:
+	bra	DrumCtrlGridSe_L570
+DrumCtrlGridSe_L557:
 	mov	0x15, d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -417968,19 +417967,19 @@ LeftSplitSe_L557:
 	movbu	(0x1c, sp), d0
 	mov	a2, a0
 	call	func_4C0FC7B2_entry, 0, 0x10
-LeftSplitSe_L570:
+DrumCtrlGridSe_L570:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	LeftSplitSe_L58d
+	bra	DrumCtrlGridSe_L58d
 loc_4C0EE862:
 	mov	d3, d0
-	bra	LeftSplitSe_L58d
-LeftSplitSe_L58c:
+	bra	DrumCtrlGridSe_L58d
+DrumCtrlGridSe_L58c:
 	clr	d0
-LeftSplitSe_L58d:
+DrumCtrlGridSe_L58d:
 	ret	[d2,d3,a2,a3], 0x4c
 
 AcTsetGridBoxSeProc:
@@ -418307,39 +418306,39 @@ AcTsetGridBoxSeProc_L38d:
 AcTsetGridBoxSeProc_L39a:
 	ret	[d2,d3,a2,a3], 0x24
 
-PortamentTimeSe:
+TsetGridSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x5c, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	PortamentTimeSe_L5a
+	beq	TsetGridSe_L5a
 	cmp	EV_INDEXSW_UP, d1
-	beq	PortamentTimeSe_L5a
+	beq	TsetGridSe_L5a
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	PortamentTimeSe_L20
-	jmp	PortamentTimeSe_L4ac
-PortamentTimeSe_L20:
+	bne	TsetGridSe_L20
+	jmp	TsetGridSe_L4ac
+TsetGridSe_L20:
 	cmp	EV_INDEXSW_DOWN, d1
-	bne	PortamentTimeSe_L2b
-	jmp	PortamentTimeSe_L4ac
-PortamentTimeSe_L2b:
+	bne	TsetGridSe_L2b
+	jmp	TsetGridSe_L4ac
+TsetGridSe_L2b:
 	cmp	EV_MMMDATA, d1
-	bne	PortamentTimeSe_L36
-	jmp	PortamentTimeSe_L930
-PortamentTimeSe_L36:
+	bne	TsetGridSe_L36
+	jmp	TsetGridSe_L930
+TsetGridSe_L36:
 	cmp	EV_RAMDATA, d1
-	bne	PortamentTimeSe_L41
-	jmp	PortamentTimeSe_L930
-PortamentTimeSe_L41:
+	bne	TsetGridSe_L41
+	jmp	TsetGridSe_L930
+TsetGridSe_L41:
 	cmp	MT_RequestGridDraw, d1
-	bne	PortamentTimeSe_L4c
-	jmp	PortamentTimeSe_L934
-PortamentTimeSe_L4c:
+	bne	TsetGridSe_L4c
+	jmp	TsetGridSe_L934
+TsetGridSe_L4c:
 	cmp	0x1800000, d1
-	bne	PortamentTimeSe_L57
+	bne	TsetGridSe_L57
 	ret	[d2,d3,a2,a3], 0x6c
-PortamentTimeSe_L57:
-	jmp	PortamentTimeSe_Lc44
-PortamentTimeSe_L5a:
+TsetGridSe_L57:
+	jmp	TsetGridSe_Lc44
+TsetGridSe_L5a:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -418357,25 +418356,25 @@ PortamentTimeSe_L5a:
 	exth	d0
 	mov	d0, (0x28, sp)
 	cmp	1, d0
-	beq	PortamentTimeSe_Lae
+	beq	TsetGridSe_Lae
 	cmp	2, d0
-	bne	PortamentTimeSe_L96
-	jmp	PortamentTimeSe_L211
-PortamentTimeSe_L96:
+	bne	TsetGridSe_L96
+	jmp	TsetGridSe_L211
+TsetGridSe_L96:
 	cmp	3, d0
-	bne	PortamentTimeSe_L9d
-	jmp	PortamentTimeSe_L381
-PortamentTimeSe_L9d:
+	bne	TsetGridSe_L9d
+	jmp	TsetGridSe_L381
+TsetGridSe_L9d:
 	cmp	4, d0
-	bne	PortamentTimeSe_La4
-	jmp	PortamentTimeSe_L3ca
-PortamentTimeSe_La4:
+	bne	TsetGridSe_La4
+	jmp	TsetGridSe_L3ca
+TsetGridSe_La4:
 	cmp	5, d0
-	bne	PortamentTimeSe_Lab
-	jmp	PortamentTimeSe_L415
-PortamentTimeSe_Lab:
-	jmp	PortamentTimeSe_L4a8
-PortamentTimeSe_Lae:
+	bne	TsetGridSe_Lab
+	jmp	TsetGridSe_L415
+TsetGridSe_Lab:
+	jmp	TsetGridSe_L4a8
+TsetGridSe_Lae:
 	mov	sp, a0
 	mov	a0, d0
 	add	0x34, d0
@@ -418448,9 +418447,9 @@ PortamentTimeSe_Lae:
 	call	func_4C09C53D_entry, [d2,d3,a2,a3], 0x1c
 	exth	d0
 	cmp	0, d0
-	bne	PortamentTimeSe_L151
-	jmp	PortamentTimeSe_L4a8
-PortamentTimeSe_L151:
+	bne	TsetGridSe_L151
+	jmp	TsetGridSe_L4a8
+TsetGridSe_L151:
 	mov	a3, (0x14, sp)
 	mov	(0x24, sp), a1
 	mov	(0x20, sp), d1
@@ -418459,9 +418458,9 @@ PortamentTimeSe_L151:
 	call	func_4C0FCD44_entry, [d2,d3,a2,a3], 0x44
 	exth	d0
 	cmp	0, d0
-	bne	PortamentTimeSe_L169
-	jmp	PortamentTimeSe_L4a8
-PortamentTimeSe_L169:
+	bne	TsetGridSe_L169
+	jmp	TsetGridSe_L4a8
+TsetGridSe_L169:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	movbu	(MdSoundEdit_L132_Var_3), d0
@@ -418524,8 +418523,8 @@ PortamentTimeSe_L169:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentTimeSe_L4a8
-PortamentTimeSe_L211:
+	jmp	TsetGridSe_L4a8
+TsetGridSe_L211:
 	extb	d2
 	mov	d2, d1
 	asl2	d1
@@ -418610,9 +418609,9 @@ PortamentTimeSe_L211:
 	call	func_4C0FCD44_entry, [d2,d3,a2,a3], 0x44
 	exth	d0
 	cmp	0, d0
-	bne	PortamentTimeSe_L2d2
-	jmp	PortamentTimeSe_L4a8
-PortamentTimeSe_L2d2:
+	bne	TsetGridSe_L2d2
+	jmp	TsetGridSe_L4a8
+TsetGridSe_L2d2:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	movbu	(MdSoundEdit_L132_Var_3), d0
@@ -418678,8 +418677,8 @@ PortamentTimeSe_L2d2:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentTimeSe_L4a8
-PortamentTimeSe_L381:
+	jmp	TsetGridSe_L4a8
+TsetGridSe_L381:
 	extb	d2
 	mov	d2, d1
 	mov	0x7f, d0
@@ -418707,8 +418706,8 @@ PortamentTimeSe_L381:
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentTimeSe_L4a8
-PortamentTimeSe_L3ca:
+	jmp	TsetGridSe_L4a8
+TsetGridSe_L3ca:
 	extb	d2
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -418736,18 +418735,18 @@ PortamentTimeSe_L3ca:
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentTimeSe_L4a8
-PortamentTimeSe_L415:
+	jmp	TsetGridSe_L4a8
+TsetGridSe_L415:
 	mov	0x7f, d0
 	movbu	d0, (0x38, sp)
 	mov	d2, d3
 	extb	d3
 	cmp	5, d3
-	bge	PortamentTimeSe_L47b
+	bge	TsetGridSe_L47b
 	mov	0x23c, a2
 	mov	sp, a3
 	add	0x39, a3
-PortamentTimeSe_L426:
+TsetGridSe_L426:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	a3, a0
 	mov	0x23, d1
@@ -418761,10 +418760,10 @@ PortamentTimeSe_L426:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x39, sp), d0
 	cmp	0x7f, d0
-	bge	PortamentTimeSe_L46f
+	bge	TsetGridSe_L46f
 	movbu	(0x38, sp), d1
 	cmp	d1, d0
-	bgt	PortamentTimeSe_L46f
+	bgt	TsetGridSe_L46f
 	inc	d0
 	movbu	d0, (0x39, sp)
 	mov	0x7f, d0
@@ -418779,21 +418778,21 @@ PortamentTimeSe_L426:
 	exthu	d0
 	movbu	(0x39, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-PortamentTimeSe_L46f:
+TsetGridSe_L46f:
 	movbu	(0x39, sp), d0
 	inc	d3
 	movbu	d0, (0x38, sp)
 	extb	d3
 	cmp	5, d3
-	blt	PortamentTimeSe_L426
-PortamentTimeSe_L47b:
+	blt	TsetGridSe_L426
+TsetGridSe_L47b:
 	extb	d2
 	cmp	6, d2
-	bge	PortamentTimeSe_L4a8
+	bge	TsetGridSe_L4a8
 	movhu	(0x2c, sp), d3
 	exthu	d3
 	asl	16, d3
-PortamentTimeSe_L487:
+TsetGridSe_L487:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	2, d1
 	add	d2, d1
@@ -418805,11 +418804,11 @@ PortamentTimeSe_L487:
 	inc	d2
 	extb	d2
 	cmp	6, d2
-	blt	PortamentTimeSe_L487
-PortamentTimeSe_L4a8:
+	blt	TsetGridSe_L487
+TsetGridSe_L4a8:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x6c
-PortamentTimeSe_L4ac:
+TsetGridSe_L4ac:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -418828,25 +418827,25 @@ PortamentTimeSe_L4ac:
 	exth	d0
 	mov	d0, (0x28, sp)
 	cmp	1, d0
-	beq	PortamentTimeSe_L501
+	beq	TsetGridSe_L501
 	cmp	2, d0
-	bne	PortamentTimeSe_L4e9
-	jmp	PortamentTimeSe_L662
-PortamentTimeSe_L4e9:
+	bne	TsetGridSe_L4e9
+	jmp	TsetGridSe_L662
+TsetGridSe_L4e9:
 	cmp	3, d0
-	bne	PortamentTimeSe_L4f0
-	jmp	PortamentTimeSe_L7c3
-PortamentTimeSe_L4f0:
+	bne	TsetGridSe_L4f0
+	jmp	TsetGridSe_L7c3
+TsetGridSe_L4f0:
 	cmp	4, d0
-	bne	PortamentTimeSe_L4f7
-	jmp	PortamentTimeSe_L80f
-PortamentTimeSe_L4f7:
+	bne	TsetGridSe_L4f7
+	jmp	TsetGridSe_L80f
+TsetGridSe_L4f7:
 	cmp	5, d0
-	bne	PortamentTimeSe_L4fe
-	jmp	PortamentTimeSe_L858
-PortamentTimeSe_L4fe:
-	jmp	PortamentTimeSe_L92c
-PortamentTimeSe_L501:
+	bne	TsetGridSe_L4fe
+	jmp	TsetGridSe_L858
+TsetGridSe_L4fe:
+	jmp	TsetGridSe_L92c
+TsetGridSe_L501:
 	mov	sp, a0
 	mov	a0, d0
 	add	0x34, d0
@@ -418917,9 +418916,9 @@ PortamentTimeSe_L501:
 	call	func_4C09C53D_entry, [d2,d3,a2,a3], 0x1c
 	exth	d0
 	cmp	0, d0
-	bne	PortamentTimeSe_L5a1
-	jmp	PortamentTimeSe_L92c
-PortamentTimeSe_L5a1:
+	bne	TsetGridSe_L5a1
+	jmp	TsetGridSe_L92c
+TsetGridSe_L5a1:
 	mov	a3, (0x14, sp)
 	mov	(0x24, sp), a1
 	mov	(0x20, sp), d1
@@ -418928,9 +418927,9 @@ PortamentTimeSe_L5a1:
 	call	func_4C0FCD44_entry, [d2,d3,a2,a3], 0x44
 	exth	d0
 	cmp	0, d0
-	bne	PortamentTimeSe_L5b9
-	jmp	PortamentTimeSe_L92c
-PortamentTimeSe_L5b9:
+	bne	TsetGridSe_L5b9
+	jmp	TsetGridSe_L92c
+TsetGridSe_L5b9:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	movbu	(MdSoundEdit_L132_Var_3), d0
@@ -418994,8 +418993,8 @@ PortamentTimeSe_L5b9:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentTimeSe_L92c
-PortamentTimeSe_L662:
+	jmp	TsetGridSe_L92c
+TsetGridSe_L662:
 	mov	sp, a0
 	mov	a0, d0
 	add	0x34, d0
@@ -419075,9 +419074,9 @@ PortamentTimeSe_L662:
 	call	func_4C0FCD44_entry, [d2,d3,a2,a3], 0x44
 	exth	d0
 	cmp	0, d0
-	bne	PortamentTimeSe_L71a
-	jmp	PortamentTimeSe_L92c
-PortamentTimeSe_L71a:
+	bne	TsetGridSe_L71a
+	jmp	TsetGridSe_L92c
+TsetGridSe_L71a:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	movbu	(MdSoundEdit_L132_Var_3), d0
@@ -419140,8 +419139,8 @@ PortamentTimeSe_L71a:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentTimeSe_L92c
-PortamentTimeSe_L7c3:
+	jmp	TsetGridSe_L92c
+TsetGridSe_L7c3:
 	extb	d2
 	mov	d2, d1
 	mov	-0x80, d0
@@ -419170,8 +419169,8 @@ PortamentTimeSe_L7c3:
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentTimeSe_L92c
-PortamentTimeSe_L80f:
+	jmp	TsetGridSe_L92c
+TsetGridSe_L80f:
 	extb	d2
 	mov	d2, d1
 	mov	-0x80, d0
@@ -419199,14 +419198,14 @@ PortamentTimeSe_L80f:
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	PortamentTimeSe_L92c
-PortamentTimeSe_L858:
+	jmp	TsetGridSe_L92c
+TsetGridSe_L858:
 	clr	d0
 	movbu	d0, (0x38, sp)
 	extb	d2
 	mov	d2, a3
 	cmp	1, a3
-	blt	PortamentTimeSe_L888
+	blt	TsetGridSe_L888
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	0x23, d1
 	nop
@@ -419223,24 +419222,24 @@ PortamentTimeSe_L858:
 	add	0x38, a0
 	mov	0x7f, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
-PortamentTimeSe_L888:
+TsetGridSe_L888:
 	cmp	5, a3
-	blt	PortamentTimeSe_L88f
-	jmp	PortamentTimeSe_L92c
-PortamentTimeSe_L88f:
+	blt	TsetGridSe_L88f
+	jmp	TsetGridSe_L92c
+TsetGridSe_L88f:
 	movbu	(0x38, sp), d0
 	cmp	0x7f, d0
-	bne	PortamentTimeSe_L899
-	jmp	PortamentTimeSe_L92c
-PortamentTimeSe_L899:
+	bne	TsetGridSe_L899
+	jmp	TsetGridSe_L92c
+TsetGridSe_L899:
 	movbu	d2, (0x38, sp)
 	extb	d2
 	cmp	0, d2
-	blt	PortamentTimeSe_L8fb
+	blt	TsetGridSe_L8fb
 	mov	0x23c, d3
 	mov	sp, a2
 	add	0x39, a2
-PortamentTimeSe_L8a7:
+TsetGridSe_L8a7:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	a2, a0
 	mov	0x23, d1
@@ -419254,10 +419253,10 @@ PortamentTimeSe_L8a7:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x39, sp), d0
 	cmp	d2, d0
-	ble	PortamentTimeSe_L8ee
+	ble	TsetGridSe_L8ee
 	movbu	(0x38, sp), d1
 	cmp	d1, d0
-	blt	PortamentTimeSe_L8ee
+	blt	TsetGridSe_L8ee
 	add	-1, d0
 	movbu	d0, (0x39, sp)
 	mov	0x7f, d0
@@ -419272,24 +419271,24 @@ PortamentTimeSe_L8a7:
 	exthu	d0
 	movbu	(0x39, sp), d1
 	call	func_4C0FB686_entry, [d2,d3,a2], 0x24
-PortamentTimeSe_L8ee:
+TsetGridSe_L8ee:
 	movbu	(0x39, sp), d0
 	add	-1, d2
 	movbu	d0, (0x38, sp)
 	extb	d2
 	cmp	0, d2
-	bge	PortamentTimeSe_L8a7
-PortamentTimeSe_L8fb:
+	bge	TsetGridSe_L8a7
+TsetGridSe_L8fb:
 	clr	d2
 	mov	a3, d3
 	inc	d3
 	cmp	d2, d3
-	blt	PortamentTimeSe_L92c
+	blt	TsetGridSe_L92c
 	movhu	(0x2c, sp), d0
 	exthu	d0
 	asl	16, d0
 	mov	d0, a2
-PortamentTimeSe_L90b:
+TsetGridSe_L90b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	2, d1
 	add	d2, d1
@@ -419301,14 +419300,14 @@ PortamentTimeSe_L90b:
 	inc	d2
 	extb	d2
 	cmp	d3, d2
-	ble	PortamentTimeSe_L90b
-PortamentTimeSe_L92c:
+	ble	TsetGridSe_L90b
+TsetGridSe_L92c:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x6c
-PortamentTimeSe_L930:
+TsetGridSe_L930:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x6c
-PortamentTimeSe_L934:
+TsetGridSe_L934:
 	mov	(0x7c, sp), d0
 	mov	(0x7c, sp), d1
 	lsr	16, d0
@@ -419326,25 +419325,25 @@ PortamentTimeSe_L934:
 	add	-2, d0
 	exth	d1
 	cmp	1, d1
-	beq	PortamentTimeSe_L97a
+	beq	TsetGridSe_L97a
 	cmp	2, d1
-	bne	PortamentTimeSe_L962
-	jmp	PortamentTimeSe_La0b
-PortamentTimeSe_L962:
+	bne	TsetGridSe_L962
+	jmp	TsetGridSe_La0b
+TsetGridSe_L962:
 	cmp	3, d1
-	bne	PortamentTimeSe_L969
-	jmp	PortamentTimeSe_Laa0
-PortamentTimeSe_L969:
+	bne	TsetGridSe_L969
+	jmp	TsetGridSe_Laa0
+TsetGridSe_L969:
 	cmp	4, d1
-	bne	PortamentTimeSe_L970
-	jmp	PortamentTimeSe_Lad1
-PortamentTimeSe_L970:
+	bne	TsetGridSe_L970
+	jmp	TsetGridSe_Lad1
+TsetGridSe_L970:
 	cmp	5, d1
-	bne	PortamentTimeSe_L977
-	jmp	PortamentTimeSe_Lb02
-PortamentTimeSe_L977:
-	jmp	PortamentTimeSe_Lc29
-PortamentTimeSe_L97a:
+	bne	TsetGridSe_L977
+	jmp	TsetGridSe_Lb02
+TsetGridSe_L977:
+	jmp	TsetGridSe_Lc29
+TsetGridSe_L97a:
 	extb	d0
 	mov	d0, d2
 	asl2	d2
@@ -419408,8 +419407,8 @@ PortamentTimeSe_L97a:
 	movbu	d0, (0x48, sp)
 	clr	d0
 	movbu	d0, (0x49, sp)
-	jmp	PortamentTimeSe_Lc29
-PortamentTimeSe_La0b:
+	jmp	TsetGridSe_Lc29
+TsetGridSe_La0b:
 	extb	d0
 	mov	d0, d2
 	asl2	d2
@@ -419474,8 +419473,8 @@ PortamentTimeSe_La0b:
 	mov	(0x30, sp), a1
 	mov	a2, a0
 	call	strcpy_entry, [a2], 4
-	jmp	PortamentTimeSe_Lc29
-PortamentTimeSe_Laa0:
+	jmp	TsetGridSe_Lc29
+TsetGridSe_Laa0:
 	extb	d0
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
@@ -419496,8 +419495,8 @@ PortamentTimeSe_Laa0:
 	mov	a2, a0
 	mov	d2, d0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	PortamentTimeSe_Lc29
-PortamentTimeSe_Lad1:
+	jmp	TsetGridSe_Lc29
+TsetGridSe_Lad1:
 	extb	d0
 	mov	0xff, d1
 	mov	d1, (0x18, sp)
@@ -419518,26 +419517,26 @@ PortamentTimeSe_Lad1:
 	mov	a2, a0
 	mov	d2, d0
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	PortamentTimeSe_Lc29
-PortamentTimeSe_Lb02:
+	jmp	TsetGridSe_Lc29
+TsetGridSe_Lb02:
 	mov	d0, d2
 	extb	d2
 	cmp	0, d2
-	beq	PortamentTimeSe_Lb22
+	beq	TsetGridSe_Lb22
 	cmp	1, d2
-	beq	PortamentTimeSe_Lb59
+	beq	TsetGridSe_Lb59
 	cmp	2, d2
-	beq	PortamentTimeSe_Lb59
+	beq	TsetGridSe_Lb59
 	cmp	3, d2
-	beq	PortamentTimeSe_Lb59
+	beq	TsetGridSe_Lb59
 	cmp	4, d2
-	beq	PortamentTimeSe_Lb59
+	beq	TsetGridSe_Lb59
 	cmp	5, d2
-	bne	PortamentTimeSe_Lb1f
-	jmp	PortamentTimeSe_Lbd7
-PortamentTimeSe_Lb1f:
-	jmp	PortamentTimeSe_Lc29
-PortamentTimeSe_Lb22:
+	bne	TsetGridSe_Lb1f
+	jmp	TsetGridSe_Lbd7
+TsetGridSe_Lb1f:
+	jmp	TsetGridSe_Lc29
+TsetGridSe_Lb22:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	sp, a0
 	add	0x39, a0
@@ -419556,8 +419555,8 @@ PortamentTimeSe_Lb22:
 	movbu	(0x39, sp), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	PortamentTimeSe_Lc29
-PortamentTimeSe_Lb59:
+	jmp	TsetGridSe_Lc29
+TsetGridSe_Lb59:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	sp, a0
 	add	0x38, a0
@@ -419576,13 +419575,13 @@ PortamentTimeSe_Lb59:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x38, sp), d0
 	cmp	0x7f, d0
-	bne	PortamentTimeSe_Lb9d
+	bne	TsetGridSe_Lb9d
 	mov	a2, (8, sp)
 	mov	Str_empty_661, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	PortamentTimeSe_Lc29
-PortamentTimeSe_Lb9d:
+	jmp	TsetGridSe_Lc29
+TsetGridSe_Lb9d:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	sp, a0
 	add	0x39, a0
@@ -419605,8 +419604,8 @@ PortamentTimeSe_Lb9d:
 	movbu	(0x39, sp), d0
 	mov	d0, (0x14, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	PortamentTimeSe_Lc29
-PortamentTimeSe_Lbd7:
+	bra	TsetGridSe_Lc29
+TsetGridSe_Lbd7:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	add	-1, d2
 	mov	0x23, d1
@@ -419624,66 +419623,66 @@ PortamentTimeSe_Lbd7:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x38, sp), d0
 	cmp	0x7f, d0
-	bne	PortamentTimeSe_Lc15
+	bne	TsetGridSe_Lc15
 	mov	a2, (8, sp)
 	mov	Str_empty_660, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	PortamentTimeSe_Lc29
-PortamentTimeSe_Lc15:
+	bra	TsetGridSe_Lc29
+TsetGridSe_Lc15:
 	mov	a2, (8, sp)
 	mov	Str_3d_127_2, d1
 	mov	d1, (0xc, sp)
 	inc	d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-PortamentTimeSe_Lc29:
+TsetGridSe_Lc29:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	PortamentTimeSe_Lc45
-# PortamentTimeSe + 0xc42: no traced path reaches what follows (--decode-gaps)
-	bra	PortamentTimeSe_Lc45
-PortamentTimeSe_Lc44:
+	bra	TsetGridSe_Lc45
+# TsetGridSe + 0xc42: no traced path reaches what follows (--decode-gaps)
+	bra	TsetGridSe_Lc45
+TsetGridSe_Lc44:
 	clr	d0
-PortamentTimeSe_Lc45:
+TsetGridSe_Lc45:
 	ret	[d2,d3,a2,a3], 0x6c
 
-LayerGridSe1:
+DrumTsetGridSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x6c, sp
 	cmp	EV_INDEXSW_UP_AIC, d1
-	beq	LayerGridSe1_L5a
+	beq	DrumTsetGridSe_L5a
 	cmp	EV_INDEXSW_UP, d1
-	beq	LayerGridSe1_L5a
+	beq	DrumTsetGridSe_L5a
 	cmp	EV_INDEXSW_DOWN_AIC, d1
-	bne	LayerGridSe1_L20
-	jmp	LayerGridSe1_L4a1
-LayerGridSe1_L20:
+	bne	DrumTsetGridSe_L20
+	jmp	DrumTsetGridSe_L4a1
+DrumTsetGridSe_L20:
 	cmp	EV_INDEXSW_DOWN, d1
-	bne	LayerGridSe1_L2b
-	jmp	LayerGridSe1_L4a1
-LayerGridSe1_L2b:
+	bne	DrumTsetGridSe_L2b
+	jmp	DrumTsetGridSe_L4a1
+DrumTsetGridSe_L2b:
 	cmp	EV_MMMDATA, d1
-	bne	LayerGridSe1_L36
-	jmp	LayerGridSe1_L92e
-LayerGridSe1_L36:
+	bne	DrumTsetGridSe_L36
+	jmp	DrumTsetGridSe_L92e
+DrumTsetGridSe_L36:
 	cmp	EV_RAMDATA, d1
-	bne	LayerGridSe1_L41
-	jmp	LayerGridSe1_L92e
-LayerGridSe1_L41:
+	bne	DrumTsetGridSe_L41
+	jmp	DrumTsetGridSe_L92e
+DrumTsetGridSe_L41:
 	cmp	MT_RequestGridDraw, d1
-	bne	LayerGridSe1_L4c
-	jmp	LayerGridSe1_L932
-LayerGridSe1_L4c:
+	bne	DrumTsetGridSe_L4c
+	jmp	DrumTsetGridSe_L932
+DrumTsetGridSe_L4c:
 	cmp	0x1800000, d1
-	bne	LayerGridSe1_L57
+	bne	DrumTsetGridSe_L57
 	ret	[d2,d3,a2,a3], 0x7c
-LayerGridSe1_L57:
-	jmp	LayerGridSe1_Lce6
-LayerGridSe1_L5a:
+DrumTsetGridSe_L57:
+	jmp	DrumTsetGridSe_Lce6
+DrumTsetGridSe_L5a:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -419702,25 +419701,25 @@ LayerGridSe1_L5a:
 	exth	d0
 	mov	d0, (0x30, sp)
 	cmp	1, d0
-	beq	LayerGridSe1_Lb1
+	beq	DrumTsetGridSe_Lb1
 	cmp	2, d0
-	bne	LayerGridSe1_L99
-	jmp	LayerGridSe1_L1fa
-LayerGridSe1_L99:
+	bne	DrumTsetGridSe_L99
+	jmp	DrumTsetGridSe_L1fa
+DrumTsetGridSe_L99:
 	cmp	3, d0
-	bne	LayerGridSe1_La0
-	jmp	LayerGridSe1_L341
-LayerGridSe1_La0:
+	bne	DrumTsetGridSe_La0
+	jmp	DrumTsetGridSe_L341
+DrumTsetGridSe_La0:
 	cmp	4, d0
-	bne	LayerGridSe1_La7
-	jmp	LayerGridSe1_L3a2
-LayerGridSe1_La7:
+	bne	DrumTsetGridSe_La7
+	jmp	DrumTsetGridSe_L3a2
+DrumTsetGridSe_La7:
 	cmp	5, d0
-	bne	LayerGridSe1_Lae
-	jmp	LayerGridSe1_L402
-LayerGridSe1_Lae:
-	jmp	LayerGridSe1_L49d
-LayerGridSe1_Lb1:
+	bne	DrumTsetGridSe_Lae
+	jmp	DrumTsetGridSe_L402
+DrumTsetGridSe_Lae:
+	jmp	DrumTsetGridSe_L49d
+DrumTsetGridSe_Lb1:
 	movbu	(0x34, sp), d2
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	extb	d2
@@ -419811,9 +419810,9 @@ LayerGridSe1_Lb1:
 	call	func_4C09C53D_entry, [d2,d3,a2,a3], 0x1c
 	exth	d0
 	cmp	0, d0
-	bne	LayerGridSe1_L16c
-	jmp	LayerGridSe1_L49d
-LayerGridSe1_L16c:
+	bne	DrumTsetGridSe_L16c
+	jmp	DrumTsetGridSe_L49d
+DrumTsetGridSe_L16c:
 	mov	a3, (0x14, sp)
 	mov	(0x28, sp), a1
 	mov	(0x20, sp), d1
@@ -419822,9 +419821,9 @@ LayerGridSe1_L16c:
 	call	func_4C0FCD44_entry, [d2,d3,a2,a3], 0x44
 	exth	d0
 	cmp	0, d0
-	bne	LayerGridSe1_L184
-	jmp	LayerGridSe1_L49d
-LayerGridSe1_L184:
+	bne	DrumTsetGridSe_L184
+	jmp	DrumTsetGridSe_L49d
+DrumTsetGridSe_L184:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
@@ -419861,8 +419860,8 @@ LayerGridSe1_L184:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LayerGridSe1_L49d
-LayerGridSe1_L1fa:
+	jmp	DrumTsetGridSe_L49d
+DrumTsetGridSe_L1fa:
 	movbu	(0x34, sp), d2
 	movbu	(MdSoundEdit_L132_Var_3), d1
 	extb	d2
@@ -419960,9 +419959,9 @@ LayerGridSe1_L1fa:
 	call	func_4C0FCD44_entry, [d2,d3,a2,a3], 0x44
 	exth	d0
 	cmp	0, d0
-	bne	LayerGridSe1_L2ca
-	jmp	LayerGridSe1_L49d
-LayerGridSe1_L2ca:
+	bne	DrumTsetGridSe_L2ca
+	jmp	DrumTsetGridSe_L49d
+DrumTsetGridSe_L2ca:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
@@ -419999,8 +419998,8 @@ LayerGridSe1_L2ca:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LayerGridSe1_L49d
-LayerGridSe1_L341:
+	jmp	DrumTsetGridSe_L49d
+DrumTsetGridSe_L341:
 	movbu	(0x34, sp), d0
 	mov	0x7f, d1
 	mov	d1, (0x10, sp)
@@ -420038,8 +420037,8 @@ LayerGridSe1_L341:
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LayerGridSe1_L49d
-LayerGridSe1_L3a2:
+	jmp	DrumTsetGridSe_L49d
+DrumTsetGridSe_L3a2:
 	movbu	(0x34, sp), d2
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -420077,17 +420076,17 @@ LayerGridSe1_L3a2:
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LayerGridSe1_L49d
-LayerGridSe1_L402:
+	jmp	DrumTsetGridSe_L49d
+DrumTsetGridSe_L402:
 	movbu	(0x34, sp), d3
 	mov	0x7f, d0
 	movbu	d0, (0x44, sp)
 	extb	d3
 	cmp	5, d3
-	bge	LayerGridSe1_L46d
+	bge	DrumTsetGridSe_L46d
 	mov	sp, a2
 	add	0x45, a2
-LayerGridSe1_L412:
+DrumTsetGridSe_L412:
 	movbu	(MdSoundEdit_L132_Var_3), d1
 	mov	a2, a0
 	mov	0x23, d0
@@ -420111,10 +420110,10 @@ LayerGridSe1_L412:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x45, sp), d0
 	cmp	0x7f, d0
-	bge	LayerGridSe1_L461
+	bge	DrumTsetGridSe_L461
 	movbu	(0x44, sp), d1
 	cmp	d1, d0
-	bgt	LayerGridSe1_L461
+	bgt	DrumTsetGridSe_L461
 	inc	d0
 	movbu	d0, (0x45, sp)
 	mov	0x7f, d0
@@ -420122,22 +420121,22 @@ LayerGridSe1_L412:
 	movbu	(0x45, sp), d1
 	mov	d2, d0
 	call	func_4C0FB6C9_entry, [d2,d3,a2], 0x24
-LayerGridSe1_L461:
+DrumTsetGridSe_L461:
 	movbu	(0x45, sp), d0
 	inc	d3
 	movbu	d0, (0x44, sp)
 	extb	d3
 	cmp	5, d3
-	blt	LayerGridSe1_L412
-LayerGridSe1_L46d:
+	blt	DrumTsetGridSe_L412
+DrumTsetGridSe_L46d:
 	movbu	(0x34, sp), d2
 	extb	d2
 	cmp	6, d2
-	bge	LayerGridSe1_L49d
+	bge	DrumTsetGridSe_L49d
 	movhu	(0x3a, sp), d3
 	exthu	d3
 	asl	16, d3
-LayerGridSe1_L47c:
+DrumTsetGridSe_L47c:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	2, d1
 	add	d2, d1
@@ -420149,11 +420148,11 @@ LayerGridSe1_L47c:
 	inc	d2
 	extb	d2
 	cmp	6, d2
-	blt	LayerGridSe1_L47c
-LayerGridSe1_L49d:
+	blt	DrumTsetGridSe_L47c
+DrumTsetGridSe_L49d:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x7c
-LayerGridSe1_L4a1:
+DrumTsetGridSe_L4a1:
 	call	GetFocusObject_entry, 0, 0x10
 	clr	d1
 	mov	d1, (0x10, sp)
@@ -420172,25 +420171,25 @@ LayerGridSe1_L4a1:
 	exth	d0
 	mov	d0, (0x30, sp)
 	cmp	1, d0
-	beq	LayerGridSe1_L4f7
+	beq	DrumTsetGridSe_L4f7
 	cmp	2, d0
-	bne	LayerGridSe1_L4df
-	jmp	LayerGridSe1_L643
-LayerGridSe1_L4df:
+	bne	DrumTsetGridSe_L4df
+	jmp	DrumTsetGridSe_L643
+DrumTsetGridSe_L4df:
 	cmp	3, d0
-	bne	LayerGridSe1_L4e6
-	jmp	LayerGridSe1_L78b
-LayerGridSe1_L4e6:
+	bne	DrumTsetGridSe_L4e6
+	jmp	DrumTsetGridSe_L78b
+DrumTsetGridSe_L4e6:
 	cmp	4, d0
-	bne	LayerGridSe1_L4ed
-	jmp	LayerGridSe1_L7e9
-LayerGridSe1_L4ed:
+	bne	DrumTsetGridSe_L4ed
+	jmp	DrumTsetGridSe_L7e9
+DrumTsetGridSe_L4ed:
 	cmp	5, d0
-	bne	LayerGridSe1_L4f4
-	jmp	LayerGridSe1_L841
-LayerGridSe1_L4f4:
-	jmp	LayerGridSe1_L92a
-LayerGridSe1_L4f7:
+	bne	DrumTsetGridSe_L4f4
+	jmp	DrumTsetGridSe_L841
+DrumTsetGridSe_L4f4:
+	jmp	DrumTsetGridSe_L92a
+DrumTsetGridSe_L4f7:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	extb	d3
 	mov	sp, a0
@@ -420282,9 +420281,9 @@ LayerGridSe1_L4f7:
 	call	func_4C09C53D_entry, [d2,d3,a2,a3], 0x1c
 	exth	d0
 	cmp	0, d0
-	bne	LayerGridSe1_L5b5
-	jmp	LayerGridSe1_L92a
-LayerGridSe1_L5b5:
+	bne	DrumTsetGridSe_L5b5
+	jmp	DrumTsetGridSe_L92a
+DrumTsetGridSe_L5b5:
 	mov	a3, (0x14, sp)
 	mov	(0x28, sp), a1
 	mov	(0x20, sp), d1
@@ -420293,9 +420292,9 @@ LayerGridSe1_L5b5:
 	call	func_4C0FCD44_entry, [d2,d3,a2,a3], 0x44
 	exth	d0
 	cmp	0, d0
-	bne	LayerGridSe1_L5cd
-	jmp	LayerGridSe1_L92a
-LayerGridSe1_L5cd:
+	bne	DrumTsetGridSe_L5cd
+	jmp	DrumTsetGridSe_L92a
+DrumTsetGridSe_L5cd:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
@@ -420332,8 +420331,8 @@ LayerGridSe1_L5cd:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LayerGridSe1_L92a
-LayerGridSe1_L643:
+	jmp	DrumTsetGridSe_L92a
+DrumTsetGridSe_L643:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	extb	d3
 	mov	d3, d2
@@ -420433,9 +420432,9 @@ LayerGridSe1_L643:
 	call	func_4C0FCD44_entry, [d2,d3,a2,a3], 0x44
 	exth	d0
 	cmp	0, d0
-	bne	LayerGridSe1_L714
-	jmp	LayerGridSe1_L92a
-LayerGridSe1_L714:
+	bne	DrumTsetGridSe_L714
+	jmp	DrumTsetGridSe_L92a
+DrumTsetGridSe_L714:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	mov	(0x2c, sp), d0
@@ -420472,8 +420471,8 @@ LayerGridSe1_L714:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LayerGridSe1_L92a
-LayerGridSe1_L78b:
+	jmp	DrumTsetGridSe_L92a
+DrumTsetGridSe_L78b:
 	extb	d3
 	mov	-0x80, d0
 	mov	d0, (0x10, sp)
@@ -420510,8 +420509,8 @@ LayerGridSe1_L78b:
 	mov	a2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LayerGridSe1_L92a
-LayerGridSe1_L7e9:
+	jmp	DrumTsetGridSe_L92a
+DrumTsetGridSe_L7e9:
 	extb	d3
 	mov	-0x80, d0
 	mov	d0, (0x10, sp)
@@ -420546,14 +420545,14 @@ LayerGridSe1_L7e9:
 	mov	a2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	LayerGridSe1_L92a
-LayerGridSe1_L841:
+	jmp	DrumTsetGridSe_L92a
+DrumTsetGridSe_L841:
 	clr	d0
 	movbu	d0, (0x44, sp)
 	extb	d3
 	mov	d3, a3
 	cmp	1, a3
-	blt	LayerGridSe1_L87f
+	blt	DrumTsetGridSe_L87f
 	movbu	(MdSoundEdit_L132_Var_3), d2
 	mov	0x23, d0
 	nop
@@ -420578,24 +420577,24 @@ LayerGridSe1_L841:
 	add	0x44, a0
 	mov	0x7f, d1
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
-LayerGridSe1_L87f:
+DrumTsetGridSe_L87f:
 	cmp	5, a3
-	blt	LayerGridSe1_L886
-	jmp	LayerGridSe1_L92a
-LayerGridSe1_L886:
+	blt	DrumTsetGridSe_L886
+	jmp	DrumTsetGridSe_L92a
+DrumTsetGridSe_L886:
 	movbu	(0x44, sp), d0
 	cmp	0x7f, d0
-	bne	LayerGridSe1_L890
-	jmp	LayerGridSe1_L92a
-LayerGridSe1_L890:
+	bne	DrumTsetGridSe_L890
+	jmp	DrumTsetGridSe_L92a
+DrumTsetGridSe_L890:
 	movbu	d3, (0x44, sp)
 	mov	d3, d2
 	extb	d2
 	cmp	0, d2
-	blt	LayerGridSe1_L8f9
+	blt	DrumTsetGridSe_L8f9
 	mov	sp, a2
 	add	0x45, a2
-LayerGridSe1_L89c:
+DrumTsetGridSe_L89c:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	a2, a0
 	mov	0x23, d1
@@ -420620,10 +420619,10 @@ LayerGridSe1_L89c:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x45, sp), d1
 	cmp	d2, d1
-	ble	LayerGridSe1_L8ec
+	ble	DrumTsetGridSe_L8ec
 	movbu	(0x44, sp), d0
 	cmp	d0, d1
-	blt	LayerGridSe1_L8ec
+	blt	DrumTsetGridSe_L8ec
 	add	-1, d1
 	movbu	d1, (0x45, sp)
 	mov	0x7f, d0
@@ -420631,24 +420630,24 @@ LayerGridSe1_L89c:
 	movbu	(0x45, sp), d1
 	mov	d3, d0
 	call	func_4C0FB6C9_entry, [d2,d3,a2], 0x24
-LayerGridSe1_L8ec:
+DrumTsetGridSe_L8ec:
 	movbu	(0x45, sp), d0
 	add	-1, d2
 	movbu	d0, (0x44, sp)
 	extb	d2
 	cmp	0, d2
-	bge	LayerGridSe1_L89c
-LayerGridSe1_L8f9:
+	bge	DrumTsetGridSe_L89c
+DrumTsetGridSe_L8f9:
 	clr	d2
 	mov	a3, d3
 	inc	d3
 	cmp	d2, d3
-	blt	LayerGridSe1_L92a
+	blt	DrumTsetGridSe_L92a
 	movhu	(0x38, sp), d0
 	exthu	d0
 	asl	16, d0
 	mov	d0, a2
-LayerGridSe1_L909:
+DrumTsetGridSe_L909:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	2, d1
 	add	d2, d1
@@ -420660,14 +420659,14 @@ LayerGridSe1_L909:
 	inc	d2
 	extb	d2
 	cmp	d3, d2
-	ble	LayerGridSe1_L909
-LayerGridSe1_L92a:
+	ble	DrumTsetGridSe_L909
+DrumTsetGridSe_L92a:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x7c
-LayerGridSe1_L92e:
+DrumTsetGridSe_L92e:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x7c
-LayerGridSe1_L932:
+DrumTsetGridSe_L932:
 	mov	(0x8c, sp), d0
 	mov	(0x8c, sp), d1
 	lsr	16, d0
@@ -420688,25 +420687,25 @@ LayerGridSe1_L932:
 	add	-2, d1
 	mov	d1, d2
 	cmp	1, d0
-	beq	LayerGridSe1_L97d
+	beq	DrumTsetGridSe_L97d
 	cmp	2, d0
-	bne	LayerGridSe1_L965
-	jmp	LayerGridSe1_La21
-LayerGridSe1_L965:
+	bne	DrumTsetGridSe_L965
+	jmp	DrumTsetGridSe_La21
+DrumTsetGridSe_L965:
 	cmp	3, d0
-	bne	LayerGridSe1_L96c
-	jmp	LayerGridSe1_Labf
-LayerGridSe1_L96c:
+	bne	DrumTsetGridSe_L96c
+	jmp	DrumTsetGridSe_Labf
+DrumTsetGridSe_L96c:
 	cmp	4, d0
-	bne	LayerGridSe1_L973
-	jmp	LayerGridSe1_Lb06
-LayerGridSe1_L973:
+	bne	DrumTsetGridSe_L973
+	jmp	DrumTsetGridSe_Lb06
+DrumTsetGridSe_L973:
 	cmp	5, d0
-	bne	LayerGridSe1_L97a
-	jmp	LayerGridSe1_Lb4d
-LayerGridSe1_L97a:
-	jmp	LayerGridSe1_Lcc9
-LayerGridSe1_L97d:
+	bne	DrumTsetGridSe_L97a
+	jmp	DrumTsetGridSe_Lb4d
+DrumTsetGridSe_L97a:
+	jmp	DrumTsetGridSe_Lcc9
+DrumTsetGridSe_L97d:
 	movbu	(Str_empty_255), d3
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	extb	d2
@@ -420784,8 +420783,8 @@ LayerGridSe1_L97d:
 	movbu	d0, (0x58, sp)
 	clr	d0
 	movbu	d0, (0x59, sp)
-	jmp	LayerGridSe1_Lcc9
-LayerGridSe1_La21:
+	jmp	DrumTsetGridSe_Lcc9
+DrumTsetGridSe_La21:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	extb	d2
 	mov	sp, a0
@@ -420861,8 +420860,8 @@ LayerGridSe1_La21:
 	mov	(0x3c, sp), a1
 	mov	a3, a0
 	call	strcpy_entry, [a2], 4
-	jmp	LayerGridSe1_Lcc9
-LayerGridSe1_Labf:
+	jmp	DrumTsetGridSe_Lcc9
+DrumTsetGridSe_Labf:
 	extb	d1
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -420893,8 +420892,8 @@ LayerGridSe1_Labf:
 	mov	1, d1
 	mov	a3, a0
 	call	func_4C0FB558_entry, [d2,d3,a2,a3], 0x2c
-	jmp	LayerGridSe1_Lcc9
-LayerGridSe1_Lb06:
+	jmp	DrumTsetGridSe_Lcc9
+DrumTsetGridSe_Lb06:
 	extb	d1
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -420925,25 +420924,25 @@ LayerGridSe1_Lb06:
 	mov	1, d1
 	mov	a3, a0
 	call	func_4C0FB558_entry, [d2,d3,a2,a3], 0x2c
-	jmp	LayerGridSe1_Lcc9
-LayerGridSe1_Lb4d:
+	jmp	DrumTsetGridSe_Lcc9
+DrumTsetGridSe_Lb4d:
 	extb	d2
 	cmp	0, d2
-	beq	LayerGridSe1_Lb6c
+	beq	DrumTsetGridSe_Lb6c
 	cmp	1, d2
-	beq	LayerGridSe1_Lbb6
+	beq	DrumTsetGridSe_Lbb6
 	cmp	2, d2
-	beq	LayerGridSe1_Lbb6
+	beq	DrumTsetGridSe_Lbb6
 	cmp	3, d2
-	beq	LayerGridSe1_Lbb6
+	beq	DrumTsetGridSe_Lbb6
 	cmp	4, d2
-	beq	LayerGridSe1_Lbb6
+	beq	DrumTsetGridSe_Lbb6
 	cmp	5, d2
-	bne	LayerGridSe1_Lb69
-	jmp	LayerGridSe1_Lc62
-LayerGridSe1_Lb69:
-	jmp	LayerGridSe1_Lcc9
-LayerGridSe1_Lb6c:
+	bne	DrumTsetGridSe_Lb69
+	jmp	DrumTsetGridSe_Lc62
+DrumTsetGridSe_Lb69:
+	jmp	DrumTsetGridSe_Lcc9
+DrumTsetGridSe_Lb6c:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	sp, a0
 	add	0x45, a0
@@ -420973,8 +420972,8 @@ LayerGridSe1_Lb6c:
 	movbu	(0x45, sp), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	LayerGridSe1_Lcc9
-LayerGridSe1_Lbb6:
+	jmp	DrumTsetGridSe_Lcc9
+DrumTsetGridSe_Lbb6:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	0x48, d3
 	mov	0xffffffff, a0
@@ -421004,13 +421003,13 @@ LayerGridSe1_Lbb6:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x44, sp), d0
 	cmp	0x7f, d0
-	bne	LayerGridSe1_Lc11
+	bne	DrumTsetGridSe_Lc11
 	mov	a3, (8, sp)
 	mov	Str_empty_659, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	LayerGridSe1_Lcc9
-LayerGridSe1_Lc11:
+	jmp	DrumTsetGridSe_Lcc9
+DrumTsetGridSe_Lc11:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	0x23, d1
 	nop
@@ -421043,8 +421042,8 @@ LayerGridSe1_Lc11:
 	movbu	(0x45, sp), d0
 	mov	d0, (0x14, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	LayerGridSe1_Lcc9
-LayerGridSe1_Lc62:
+	bra	DrumTsetGridSe_Lcc9
+DrumTsetGridSe_Lc62:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	add	0x44, a0
 	mov	0x23, d1
@@ -421070,32 +421069,32 @@ LayerGridSe1_Lc62:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x44, sp), d0
 	cmp	0x7f, d0
-	bne	LayerGridSe1_Lcb5
+	bne	DrumTsetGridSe_Lcb5
 	mov	a3, (8, sp)
 	mov	Str_empty_658, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	LayerGridSe1_Lcc9
-LayerGridSe1_Lcb5:
+	bra	DrumTsetGridSe_Lcc9
+DrumTsetGridSe_Lcb5:
 	mov	a3, (8, sp)
 	mov	Str_3d_127, d1
 	mov	d1, (0xc, sp)
 	inc	d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-LayerGridSe1_Lcc9:
+DrumTsetGridSe_Lcc9:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x20, sp), a0
 	mov	MT_GridDraw, d1
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	LayerGridSe1_Lce7
-# LayerGridSe1 + 0xce4: no traced path reaches what follows (--decode-gaps)
-	bra	LayerGridSe1_Lce7
-LayerGridSe1_Lce6:
+	bra	DrumTsetGridSe_Lce7
+# DrumTsetGridSe + 0xce4: no traced path reaches what follows (--decode-gaps)
+	bra	DrumTsetGridSe_Lce7
+DrumTsetGridSe_Lce6:
 	clr	d0
-LayerGridSe1_Lce7:
+DrumTsetGridSe_Lce7:
 	ret	[d2,d3,a2,a3], 0x7c
 
 AcGridBoxScrlSeProc:
@@ -421456,19 +421455,19 @@ AcGridBoxScrlSeProc_L40b:
 AcGridBoxScrlSeProc_L419:
 	ret	[d2,d3,a2,a3], 0x24
 
-func_4C0F0954:
+LfoViewSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x4c, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	func_4C0F0954_L12
-	jmp	func_4C0F0954_Le6e
-func_4C0F0954_L12:
+	bge	LfoViewSe_L12
+	jmp	LfoViewSe_Le6e
+LfoViewSe_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	func_4C0F0954_L1d
-	jmp	func_4C0F0954_Le6e
-func_4C0F0954_L1d:
+	ble	LfoViewSe_L1d
+	jmp	LfoViewSe_Le6e
+LfoViewSe_L1d:
 	add	0xfe800001, d2
 	mov	func_4C0F0954_L1d_Records, a1
 	mov	a1, a0
@@ -421478,21 +421477,21 @@ func_4C0F0954_L1d:
 	add	d0, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	func_4C0F0954_L4d
+	beq	LfoViewSe_L4d
 	setlb
 	cmp	0, d0
-	bne	func_4C0F0954_L3f
-	jmp	func_4C0F0954_Le6e
-func_4C0F0954_L3f:
+	bne	LfoViewSe_L3f
+	jmp	LfoViewSe_Le6e
+LfoViewSe_L3f:
 	add	8, a0
 	cmp	AcDrumGridBoxSeProc_L1d_Records, a0
-	bcs	func_4C0F0954_L4a
+	bcs	LfoViewSe_L4a
 	mov	a1, a0
-func_4C0F0954_L4a:
+LfoViewSe_L4a:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-func_4C0F0954_L4d:
+LfoViewSe_L4d:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0F09A6:
@@ -421513,13 +421512,13 @@ loc_4C0F09A6:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	func_4C0F0954_L98
+	beq	LfoViewSe_L98
 	cmp	2, d0
-	beq	func_4C0F0954_Lbb
+	beq	LfoViewSe_Lbb
 	cmp	3, d0
-	beq	func_4C0F0954_Le3
-	jmp	func_4C0F0954_L11d
-func_4C0F0954_L98:
+	beq	LfoViewSe_Le3
+	jmp	LfoViewSe_L11d
+LfoViewSe_L98:
 	movbu	(AcGridBoxScrlSeProc_L50_Var), d2
 	extbu	d3
 	add	d3, d2
@@ -421535,8 +421534,8 @@ func_4C0F0954_L98:
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	func_4C0F0954_L11d
-func_4C0F0954_Lbb:
+	bra	LfoViewSe_L11d
+LfoViewSe_Lbb:
 	movbu	(AcGridBoxScrlSeProc_L50_Var), d1
 	extbu	d3
 	add	d3, d1
@@ -421554,8 +421553,8 @@ func_4C0F0954_Lbb:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	func_4C0F0954_L11d
-func_4C0F0954_Le3:
+	bra	LfoViewSe_L11d
+LfoViewSe_Le3:
 	movbu	(AcGridBoxScrlSeProc_L50_Var), d1
 	extbu	d3
 	add	d3, d1
@@ -421572,7 +421571,7 @@ func_4C0F0954_Le3:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L11d
+	bne	LfoViewSe_L11d
 	mov	0x47, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -421583,7 +421582,7 @@ func_4C0F0954_Le3:
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-func_4C0F0954_L11d:
+LfoViewSe_L11d:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -421608,13 +421607,13 @@ loc_4C0F0A8B:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	func_4C0F0954_L17d
+	beq	LfoViewSe_L17d
 	cmp	2, d0
-	beq	func_4C0F0954_L1a1
+	beq	LfoViewSe_L1a1
 	cmp	3, d0
-	beq	func_4C0F0954_L1c8
-	jmp	func_4C0F0954_L200
-func_4C0F0954_L17d:
+	beq	LfoViewSe_L1c8
+	jmp	LfoViewSe_L200
+LfoViewSe_L17d:
 	movbu	(AcGridBoxScrlSeProc_L50_Var), d1
 	extbu	d3
 	add	d3, d1
@@ -421630,8 +421629,8 @@ func_4C0F0954_L17d:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	func_4C0F0954_L200
-func_4C0F0954_L1a1:
+	bra	LfoViewSe_L200
+LfoViewSe_L1a1:
 	movbu	(AcGridBoxScrlSeProc_L50_Var), d2
 	extbu	d3
 	add	d3, d2
@@ -421649,8 +421648,8 @@ func_4C0F0954_L1a1:
 	mov	-1, d1
 	mov	d2, d0
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-	bra	func_4C0F0954_L200
-func_4C0F0954_L1c8:
+	bra	LfoViewSe_L200
+LfoViewSe_L1c8:
 	movbu	(AcGridBoxScrlSeProc_L50_Var), d1
 	extbu	d3
 	add	d3, d1
@@ -421667,7 +421666,7 @@ func_4C0F0954_L1c8:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L200
+	bne	LfoViewSe_L200
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -421677,7 +421676,7 @@ func_4C0F0954_L1c8:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB1AA_entry, [d2,d3,a2], 0x2c
-func_4C0F0954_L200:
+LfoViewSe_L200:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -421742,13 +421741,13 @@ loc_4C0F0BB9:
 	movhu	(0x38, sp), d0
 	exth	d0
 	cmp	1, d0
-	bge	func_4C0F0954_L2b3
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_L2b3:
+	bge	LfoViewSe_L2b3
+	jmp	LfoViewSe_Le50
+LfoViewSe_L2b3:
 	cmp	0x14, d0
-	ble	func_4C0F0954_L2ba
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_L2ba:
+	ble	LfoViewSe_L2ba
+	jmp	LfoViewSe_Le50
+LfoViewSe_L2ba:
 	add	-1, d0
 	asl2	d0
 	mov	func_4C0F0954_L2ba_Table, a0
@@ -421770,7 +421769,7 @@ loc_4C0F0C1B:
 	mov	a3, a0
 	clr	d1
 	call	func_4C0FB4E4_entry, [d2,d3,a2,a3], 0x2c
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F0C41:
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
@@ -421787,22 +421786,22 @@ loc_4C0F0C41:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	0, d0
-	beq	func_4C0F0954_L317
+	beq	LfoViewSe_L317
 	cmp	1, d0
-	beq	func_4C0F0954_L32a
-	bra	func_4C0F0954_L33b
-func_4C0F0954_L317:
+	beq	LfoViewSe_L32a
+	bra	LfoViewSe_L33b
+LfoViewSe_L317:
 	mov	a3, (8, sp)
 	mov	Str_OFF_43, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	func_4C0F0954_L33b
-func_4C0F0954_L32a:
+	bra	LfoViewSe_L33b
+LfoViewSe_L32a:
 	mov	a3, (8, sp)
 	mov	Str_ON_33, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-func_4C0F0954_L33b:
+LfoViewSe_L33b:
 	call	GetFocusObject_entry, 0, 0x10
 	exth	d2
 	inc	d2
@@ -421813,7 +421812,7 @@ func_4C0F0954_L33b:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F0CB0:
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
@@ -421832,17 +421831,17 @@ loc_4C0F0CB0:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d1
 	cmp	0, d1
-	beq	func_4C0F0954_L387
+	beq	LfoViewSe_L387
 	cmp	1, d1
-	beq	func_4C0F0954_L39b
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_L387:
+	beq	LfoViewSe_L39b
+	jmp	LfoViewSe_Le50
+LfoViewSe_L387:
 	mov	a3, (8, sp)
 	mov	Str_empty_657, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_L39b:
+	jmp	LfoViewSe_Le50
+LfoViewSe_L39b:
 	exthu	d2
 	mov	a2, a0
 	mov	d2, d0
@@ -421857,7 +421856,7 @@ func_4C0F0954_L39b:
 	add	d0, d1
 	mov	d1, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F0D17:
 	mov	sp, a2
 	add	0x34, a2
@@ -421877,22 +421876,22 @@ loc_4C0F0D17:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L403
+	bne	LfoViewSe_L403
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L404
-func_4C0F0954_L403:
+	beq	LfoViewSe_L404
+LfoViewSe_L403:
 	clr	d2
-func_4C0F0954_L404:
+LfoViewSe_L404:
 	cmp	1, d2
-	bne	func_4C0F0954_L40d
+	bne	LfoViewSe_L40d
 	mov	1, d0
 	movbu	d0, (0x30, sp)
-func_4C0F0954_L40d:
+LfoViewSe_L40d:
 	mov	a2, a0
 	mov	0x120, d0
 	mov	0x80, d1
@@ -421903,22 +421902,22 @@ func_4C0F0954_L40d:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L43f
+	bne	LfoViewSe_L43f
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L440
-func_4C0F0954_L43f:
+	beq	LfoViewSe_L440
+LfoViewSe_L43f:
 	clr	d2
-func_4C0F0954_L440:
+LfoViewSe_L440:
 	cmp	1, d2
-	bne	func_4C0F0954_L449
+	bne	LfoViewSe_L449
 	mov	1, d0
 	movbu	d0, (0x30, sp)
-func_4C0F0954_L449:
+LfoViewSe_L449:
 	mov	a2, a0
 	mov	0x19a, d0
 	mov	0x80, d1
@@ -421929,22 +421928,22 @@ func_4C0F0954_L449:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L47b
+	bne	LfoViewSe_L47b
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L47c
-func_4C0F0954_L47b:
+	beq	LfoViewSe_L47c
+LfoViewSe_L47b:
 	clr	d2
-func_4C0F0954_L47c:
+LfoViewSe_L47c:
 	cmp	1, d2
-	bne	func_4C0F0954_L485
+	bne	LfoViewSe_L485
 	mov	1, d0
 	movbu	d0, (0x30, sp)
-func_4C0F0954_L485:
+LfoViewSe_L485:
 	mov	a2, a0
 	mov	0x214, d0
 	mov	0x80, d1
@@ -421955,22 +421954,22 @@ func_4C0F0954_L485:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L4b7
+	bne	LfoViewSe_L4b7
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L4b8
-func_4C0F0954_L4b7:
+	beq	LfoViewSe_L4b8
+LfoViewSe_L4b7:
 	clr	d2
-func_4C0F0954_L4b8:
+LfoViewSe_L4b8:
 	cmp	1, d2
-	bne	func_4C0F0954_L4c1
+	bne	LfoViewSe_L4c1
 	mov	1, d0
 	movbu	d0, (0x30, sp)
-func_4C0F0954_L4c1:
+LfoViewSe_L4c1:
 	mov	a2, a0
 	mov	0xaa, d0
 	mov	0x80, d1
@@ -421981,22 +421980,22 @@ func_4C0F0954_L4c1:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L4f3
+	bne	LfoViewSe_L4f3
 	movbu	(0x31, sp), d2
 	movbu	(0x32, sp), d1
 	movbu	(0x35, sp), d0
 	add	d1, d2
 	cmp	d2, d0
 	mov	1, d3
-	beq	func_4C0F0954_L4f4
-func_4C0F0954_L4f3:
+	beq	LfoViewSe_L4f4
+LfoViewSe_L4f3:
 	clr	d3
-func_4C0F0954_L4f4:
+LfoViewSe_L4f4:
 	cmp	1, d3
-	bne	func_4C0F0954_L4fd
+	bne	LfoViewSe_L4fd
 	mov	1, d0
 	movbu	d0, (0x30, sp)
-func_4C0F0954_L4fd:
+LfoViewSe_L4fd:
 	mov	a2, a0
 	mov	0x124, d0
 	mov	0x80, d1
@@ -422007,22 +422006,22 @@ func_4C0F0954_L4fd:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L52f
+	bne	LfoViewSe_L52f
 	movbu	(0x31, sp), d2
 	movbu	(0x32, sp), d1
 	movbu	(0x35, sp), d0
 	add	d1, d2
 	cmp	d2, d0
 	mov	1, d3
-	beq	func_4C0F0954_L530
-func_4C0F0954_L52f:
+	beq	LfoViewSe_L530
+LfoViewSe_L52f:
 	clr	d3
-func_4C0F0954_L530:
+LfoViewSe_L530:
 	cmp	1, d3
-	bne	func_4C0F0954_L539
+	bne	LfoViewSe_L539
 	mov	1, d0
 	movbu	d0, (0x30, sp)
-func_4C0F0954_L539:
+LfoViewSe_L539:
 	mov	a2, a0
 	mov	0x19e, d0
 	mov	0x80, d1
@@ -422033,22 +422032,22 @@ func_4C0F0954_L539:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L56b
+	bne	LfoViewSe_L56b
 	movbu	(0x31, sp), d0
 	movbu	(0x32, sp), d1
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L56c
-func_4C0F0954_L56b:
+	beq	LfoViewSe_L56c
+LfoViewSe_L56b:
 	clr	d2
-func_4C0F0954_L56c:
+LfoViewSe_L56c:
 	cmp	1, d2
-	bne	func_4C0F0954_L575
+	bne	LfoViewSe_L575
 	mov	1, d0
 	movbu	d0, (0x30, sp)
-func_4C0F0954_L575:
+LfoViewSe_L575:
 	mov	a2, a0
 	mov	0x218, d0
 	mov	0x80, d1
@@ -422059,22 +422058,22 @@ func_4C0F0954_L575:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L5a7
+	bne	LfoViewSe_L5a7
 	movbu	(0x31, sp), d2
 	movbu	(0x32, sp), d1
 	movbu	(0x35, sp), d0
 	add	d1, d2
 	cmp	d2, d0
 	mov	1, d3
-	beq	func_4C0F0954_L5a8
-func_4C0F0954_L5a7:
+	beq	LfoViewSe_L5a8
+LfoViewSe_L5a7:
 	clr	d3
-func_4C0F0954_L5a8:
+LfoViewSe_L5a8:
 	cmp	1, d3
-	bne	func_4C0F0954_L5b1
+	bne	LfoViewSe_L5b1
 	mov	1, d0
 	movbu	d0, (0x30, sp)
-func_4C0F0954_L5b1:
+LfoViewSe_L5b1:
 	mov	a2, a0
 	mov	0xae, d0
 	mov	0x80, d1
@@ -422085,22 +422084,22 @@ func_4C0F0954_L5b1:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L5e3
+	bne	LfoViewSe_L5e3
 	movbu	(0x31, sp), d2
 	movbu	(0x32, sp), d1
 	movbu	(0x35, sp), d0
 	add	d1, d2
 	cmp	d2, d0
 	mov	1, d3
-	beq	func_4C0F0954_L5e4
-func_4C0F0954_L5e3:
+	beq	LfoViewSe_L5e4
+LfoViewSe_L5e3:
 	clr	d3
-func_4C0F0954_L5e4:
+LfoViewSe_L5e4:
 	cmp	1, d3
-	bne	func_4C0F0954_L5ed
+	bne	LfoViewSe_L5ed
 	mov	1, d0
 	movbu	d0, (0x30, sp)
-func_4C0F0954_L5ed:
+LfoViewSe_L5ed:
 	mov	a2, a0
 	mov	0x128, d0
 	mov	0x80, d1
@@ -422111,22 +422110,22 @@ func_4C0F0954_L5ed:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L61f
+	bne	LfoViewSe_L61f
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L620
-func_4C0F0954_L61f:
+	beq	LfoViewSe_L620
+LfoViewSe_L61f:
 	clr	d2
-func_4C0F0954_L620:
+LfoViewSe_L620:
 	cmp	1, d2
-	bne	func_4C0F0954_L629
+	bne	LfoViewSe_L629
 	mov	1, d0
 	movbu	d0, (0x30, sp)
-func_4C0F0954_L629:
+LfoViewSe_L629:
 	mov	a2, a0
 	mov	0x1a2, d0
 	mov	0x80, d1
@@ -422137,22 +422136,22 @@ func_4C0F0954_L629:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L65b
+	bne	LfoViewSe_L65b
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L65c
-func_4C0F0954_L65b:
+	beq	LfoViewSe_L65c
+LfoViewSe_L65b:
 	clr	d2
-func_4C0F0954_L65c:
+LfoViewSe_L65c:
 	cmp	1, d2
-	bne	func_4C0F0954_L665
+	bne	LfoViewSe_L665
 	mov	1, d0
 	movbu	d0, (0x30, sp)
-func_4C0F0954_L665:
+LfoViewSe_L665:
 	mov	a2, a0
 	mov	0x21c, d0
 	mov	0x80, d1
@@ -422163,22 +422162,22 @@ func_4C0F0954_L665:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L697
+	bne	LfoViewSe_L697
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L698
-func_4C0F0954_L697:
+	beq	LfoViewSe_L698
+LfoViewSe_L697:
 	clr	d2
-func_4C0F0954_L698:
+LfoViewSe_L698:
 	cmp	1, d2
-	bne	func_4C0F0954_L6a1
+	bne	LfoViewSe_L6a1
 	mov	1, d0
 	movbu	d0, (0x30, sp)
-func_4C0F0954_L6a1:
+LfoViewSe_L6a1:
 	mov	a2, a0
 	mov	0xb2, d0
 	mov	0x80, d1
@@ -422189,22 +422188,22 @@ func_4C0F0954_L6a1:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L6d3
+	bne	LfoViewSe_L6d3
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L6d4
-func_4C0F0954_L6d3:
+	beq	LfoViewSe_L6d4
+LfoViewSe_L6d3:
 	clr	d2
-func_4C0F0954_L6d4:
+LfoViewSe_L6d4:
 	cmp	1, d2
-	bne	func_4C0F0954_L6dd
+	bne	LfoViewSe_L6dd
 	mov	1, d0
 	movbu	d0, (0x30, sp)
-func_4C0F0954_L6dd:
+LfoViewSe_L6dd:
 	mov	a2, a0
 	mov	0x12c, d0
 	mov	0x80, d1
@@ -422215,22 +422214,22 @@ func_4C0F0954_L6dd:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L70f
+	bne	LfoViewSe_L70f
 	movbu	(0x31, sp), d0
 	movbu	(0x32, sp), d1
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L710
-func_4C0F0954_L70f:
+	beq	LfoViewSe_L710
+LfoViewSe_L70f:
 	clr	d2
-func_4C0F0954_L710:
+LfoViewSe_L710:
 	cmp	1, d2
-	bne	func_4C0F0954_L719
+	bne	LfoViewSe_L719
 	mov	1, d0
 	movbu	d0, (0x30, sp)
-func_4C0F0954_L719:
+LfoViewSe_L719:
 	mov	a2, a0
 	mov	0x1a6, d0
 	mov	0x80, d1
@@ -422241,22 +422240,22 @@ func_4C0F0954_L719:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L74b
+	bne	LfoViewSe_L74b
 	movbu	(0x31, sp), d0
 	movbu	(0x32, sp), d1
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L74c
-func_4C0F0954_L74b:
+	beq	LfoViewSe_L74c
+LfoViewSe_L74b:
 	clr	d2
-func_4C0F0954_L74c:
+LfoViewSe_L74c:
 	cmp	1, d2
-	bne	func_4C0F0954_L755
+	bne	LfoViewSe_L755
 	mov	1, d0
 	movbu	d0, (0x30, sp)
-func_4C0F0954_L755:
+LfoViewSe_L755:
 	mov	a2, a0
 	mov	0x220, d0
 	mov	0x80, d1
@@ -422267,40 +422266,40 @@ func_4C0F0954_L755:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L787
+	bne	LfoViewSe_L787
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L788
-func_4C0F0954_L787:
+	beq	LfoViewSe_L788
+LfoViewSe_L787:
 	clr	d2
-func_4C0F0954_L788:
+LfoViewSe_L788:
 	cmp	1, d2
-	bne	func_4C0F0954_L791
+	bne	LfoViewSe_L791
 	mov	1, d0
 	movbu	d0, (0x30, sp)
-func_4C0F0954_L791:
+LfoViewSe_L791:
 	movbu	(0x30, sp), d0
 	cmp	0, d0
-	beq	func_4C0F0954_L79f
+	beq	LfoViewSe_L79f
 	cmp	1, d0
-	beq	func_4C0F0954_L7b3
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_L79f:
+	beq	LfoViewSe_L7b3
+	jmp	LfoViewSe_Le50
+LfoViewSe_L79f:
 	mov	a3, (8, sp)
 	mov	Str_empty_656, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_L7b3:
+	jmp	LfoViewSe_Le50
+LfoViewSe_L7b3:
 	mov	a3, (8, sp)
 	mov	Str_empty_655, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F111B:
 	mov	sp, a0
 	add	0x34, a0
@@ -422314,34 +422313,34 @@ loc_4C0F111B:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L7fc
+	bne	LfoViewSe_L7fc
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L7fd
-func_4C0F0954_L7fc:
+	beq	LfoViewSe_L7fd
+LfoViewSe_L7fc:
 	clr	d2
-func_4C0F0954_L7fd:
+LfoViewSe_L7fd:
 	cmp	0, d2
-	beq	func_4C0F0954_L808
+	beq	LfoViewSe_L808
 	cmp	1, d2
-	beq	func_4C0F0954_L81c
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_L808:
+	beq	LfoViewSe_L81c
+	jmp	LfoViewSe_Le50
+LfoViewSe_L808:
 	mov	a3, (8, sp)
 	mov	Str_empty_654, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_L81c:
+	jmp	LfoViewSe_Le50
+LfoViewSe_L81c:
 	mov	a3, (8, sp)
 	mov	Str_empty_653, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F1184:
 	mov	sp, a0
 	add	0x34, a0
@@ -422355,34 +422354,34 @@ loc_4C0F1184:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L865
+	bne	LfoViewSe_L865
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L866
-func_4C0F0954_L865:
+	beq	LfoViewSe_L866
+LfoViewSe_L865:
 	clr	d2
-func_4C0F0954_L866:
+LfoViewSe_L866:
 	cmp	0, d2
-	beq	func_4C0F0954_L871
+	beq	LfoViewSe_L871
 	cmp	1, d2
-	beq	func_4C0F0954_L885
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_L871:
+	beq	LfoViewSe_L885
+	jmp	LfoViewSe_Le50
+LfoViewSe_L871:
 	mov	a3, (8, sp)
 	mov	Str_empty_652, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_L885:
+	jmp	LfoViewSe_Le50
+LfoViewSe_L885:
 	mov	a3, (8, sp)
 	mov	Str_empty_651, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F11ED:
 	mov	sp, a0
 	add	0x34, a0
@@ -422396,34 +422395,34 @@ loc_4C0F11ED:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L8ce
+	bne	LfoViewSe_L8ce
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L8cf
-func_4C0F0954_L8ce:
+	beq	LfoViewSe_L8cf
+LfoViewSe_L8ce:
 	clr	d2
-func_4C0F0954_L8cf:
+LfoViewSe_L8cf:
 	cmp	0, d2
-	beq	func_4C0F0954_L8da
+	beq	LfoViewSe_L8da
 	cmp	1, d2
-	beq	func_4C0F0954_L8ee
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_L8da:
+	beq	LfoViewSe_L8ee
+	jmp	LfoViewSe_Le50
+LfoViewSe_L8da:
 	mov	a3, (8, sp)
 	mov	Str_empty_650, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_L8ee:
+	jmp	LfoViewSe_Le50
+LfoViewSe_L8ee:
 	mov	a3, (8, sp)
 	mov	Str_empty_649, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F1256:
 	mov	sp, a0
 	add	0x34, a0
@@ -422437,34 +422436,34 @@ loc_4C0F1256:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L937
+	bne	LfoViewSe_L937
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L938
-func_4C0F0954_L937:
+	beq	LfoViewSe_L938
+LfoViewSe_L937:
 	clr	d2
-func_4C0F0954_L938:
+LfoViewSe_L938:
 	cmp	0, d2
-	beq	func_4C0F0954_L943
+	beq	LfoViewSe_L943
 	cmp	1, d2
-	beq	func_4C0F0954_L957
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_L943:
+	beq	LfoViewSe_L957
+	jmp	LfoViewSe_Le50
+LfoViewSe_L943:
 	mov	a3, (8, sp)
 	mov	Str_empty_648, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_L957:
+	jmp	LfoViewSe_Le50
+LfoViewSe_L957:
 	mov	a3, (8, sp)
 	mov	Str_empty_647, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F12BF:
 	mov	sp, a0
 	add	0x34, a0
@@ -422478,34 +422477,34 @@ loc_4C0F12BF:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_L9a0
+	bne	LfoViewSe_L9a0
 	movbu	(0x31, sp), d0
 	movbu	(0x32, sp), d1
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_L9a1
-func_4C0F0954_L9a0:
+	beq	LfoViewSe_L9a1
+LfoViewSe_L9a0:
 	clr	d2
-func_4C0F0954_L9a1:
+LfoViewSe_L9a1:
 	cmp	0, d2
-	beq	func_4C0F0954_L9ac
+	beq	LfoViewSe_L9ac
 	cmp	1, d2
-	beq	func_4C0F0954_L9c0
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_L9ac:
+	beq	LfoViewSe_L9c0
+	jmp	LfoViewSe_Le50
+LfoViewSe_L9ac:
 	mov	a3, (8, sp)
 	mov	Str_empty_646, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_L9c0:
+	jmp	LfoViewSe_Le50
+LfoViewSe_L9c0:
 	mov	a3, (8, sp)
 	mov	Str_empty_645, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F1328:
 	mov	sp, a0
 	add	0x34, a0
@@ -422519,34 +422518,34 @@ loc_4C0F1328:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_La09
+	bne	LfoViewSe_La09
 	movbu	(0x31, sp), d2
 	movbu	(0x32, sp), d1
 	movbu	(0x35, sp), d0
 	add	d1, d2
 	cmp	d2, d0
 	mov	1, d3
-	beq	func_4C0F0954_La0a
-func_4C0F0954_La09:
+	beq	LfoViewSe_La0a
+LfoViewSe_La09:
 	clr	d3
-func_4C0F0954_La0a:
+LfoViewSe_La0a:
 	cmp	0, d3
-	beq	func_4C0F0954_La15
+	beq	LfoViewSe_La15
 	cmp	1, d3
-	beq	func_4C0F0954_La29
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_La15:
+	beq	LfoViewSe_La29
+	jmp	LfoViewSe_Le50
+LfoViewSe_La15:
 	mov	a3, (8, sp)
 	mov	Str_empty_644, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_La29:
+	jmp	LfoViewSe_Le50
+LfoViewSe_La29:
 	mov	a3, (8, sp)
 	mov	Str_empty_643, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F1391:
 	mov	sp, a0
 	add	0x34, a0
@@ -422560,34 +422559,34 @@ loc_4C0F1391:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_La72
+	bne	LfoViewSe_La72
 	movbu	(0x31, sp), d0
 	movbu	(0x32, sp), d1
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_La73
-func_4C0F0954_La72:
+	beq	LfoViewSe_La73
+LfoViewSe_La72:
 	clr	d2
-func_4C0F0954_La73:
+LfoViewSe_La73:
 	cmp	0, d2
-	beq	func_4C0F0954_La7e
+	beq	LfoViewSe_La7e
 	cmp	1, d2
-	beq	func_4C0F0954_La92
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_La7e:
+	beq	LfoViewSe_La92
+	jmp	LfoViewSe_Le50
+LfoViewSe_La7e:
 	mov	a3, (8, sp)
 	mov	Str_empty_642, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_La92:
+	jmp	LfoViewSe_Le50
+LfoViewSe_La92:
 	mov	a3, (8, sp)
 	mov	Str_empty_641, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F13FA:
 	mov	sp, a0
 	add	0x34, a0
@@ -422601,34 +422600,34 @@ loc_4C0F13FA:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_Ladb
+	bne	LfoViewSe_Ladb
 	movbu	(0x31, sp), d2
 	movbu	(0x32, sp), d1
 	movbu	(0x35, sp), d0
 	add	d1, d2
 	cmp	d2, d0
 	mov	1, d3
-	beq	func_4C0F0954_Ladc
-func_4C0F0954_Ladb:
+	beq	LfoViewSe_Ladc
+LfoViewSe_Ladb:
 	clr	d3
-func_4C0F0954_Ladc:
+LfoViewSe_Ladc:
 	cmp	0, d3
-	beq	func_4C0F0954_Lae7
+	beq	LfoViewSe_Lae7
 	cmp	1, d3
-	beq	func_4C0F0954_Lafb
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_Lae7:
+	beq	LfoViewSe_Lafb
+	jmp	LfoViewSe_Le50
+LfoViewSe_Lae7:
 	mov	a3, (8, sp)
 	mov	Str_empty_640, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_Lafb:
+	jmp	LfoViewSe_Le50
+LfoViewSe_Lafb:
 	mov	a3, (8, sp)
 	mov	Str_empty_639, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F1463:
 	mov	sp, a0
 	add	0x34, a0
@@ -422642,34 +422641,34 @@ loc_4C0F1463:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_Lb44
+	bne	LfoViewSe_Lb44
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_Lb45
-func_4C0F0954_Lb44:
+	beq	LfoViewSe_Lb45
+LfoViewSe_Lb44:
 	clr	d2
-func_4C0F0954_Lb45:
+LfoViewSe_Lb45:
 	cmp	0, d2
-	beq	func_4C0F0954_Lb50
+	beq	LfoViewSe_Lb50
 	cmp	1, d2
-	beq	func_4C0F0954_Lb64
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_Lb50:
+	beq	LfoViewSe_Lb64
+	jmp	LfoViewSe_Le50
+LfoViewSe_Lb50:
 	mov	a3, (8, sp)
 	mov	Str_empty_638, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_Lb64:
+	jmp	LfoViewSe_Le50
+LfoViewSe_Lb64:
 	mov	a3, (8, sp)
 	mov	Str_empty_637, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F14CC:
 	mov	sp, a0
 	add	0x34, a0
@@ -422683,34 +422682,34 @@ loc_4C0F14CC:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_Lbad
+	bne	LfoViewSe_Lbad
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_Lbae
-func_4C0F0954_Lbad:
+	beq	LfoViewSe_Lbae
+LfoViewSe_Lbad:
 	clr	d2
-func_4C0F0954_Lbae:
+LfoViewSe_Lbae:
 	cmp	0, d2
-	beq	func_4C0F0954_Lbb9
+	beq	LfoViewSe_Lbb9
 	cmp	1, d2
-	beq	func_4C0F0954_Lbcd
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_Lbb9:
+	beq	LfoViewSe_Lbcd
+	jmp	LfoViewSe_Le50
+LfoViewSe_Lbb9:
 	mov	a3, (8, sp)
 	mov	Str_empty_636, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_Lbcd:
+	jmp	LfoViewSe_Le50
+LfoViewSe_Lbcd:
 	mov	a3, (8, sp)
 	mov	Str_empty_635, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F1535:
 	mov	sp, a0
 	add	0x34, a0
@@ -422724,34 +422723,34 @@ loc_4C0F1535:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_Lc16
+	bne	LfoViewSe_Lc16
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_Lc17
-func_4C0F0954_Lc16:
+	beq	LfoViewSe_Lc17
+LfoViewSe_Lc16:
 	clr	d2
-func_4C0F0954_Lc17:
+LfoViewSe_Lc17:
 	cmp	0, d2
-	beq	func_4C0F0954_Lc22
+	beq	LfoViewSe_Lc22
 	cmp	1, d2
-	beq	func_4C0F0954_Lc36
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_Lc22:
+	beq	LfoViewSe_Lc36
+	jmp	LfoViewSe_Le50
+LfoViewSe_Lc22:
 	mov	a3, (8, sp)
 	mov	Str_empty_634, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_Lc36:
+	jmp	LfoViewSe_Le50
+LfoViewSe_Lc36:
 	mov	a3, (8, sp)
 	mov	Str_empty_633, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F159E:
 	mov	sp, a0
 	add	0x34, a0
@@ -422765,34 +422764,34 @@ loc_4C0F159E:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_Lc7f
+	bne	LfoViewSe_Lc7f
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_Lc80
-func_4C0F0954_Lc7f:
+	beq	LfoViewSe_Lc80
+LfoViewSe_Lc7f:
 	clr	d2
-func_4C0F0954_Lc80:
+LfoViewSe_Lc80:
 	cmp	0, d2
-	beq	func_4C0F0954_Lc8b
+	beq	LfoViewSe_Lc8b
 	cmp	1, d2
-	beq	func_4C0F0954_Lc9f
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_Lc8b:
+	beq	LfoViewSe_Lc9f
+	jmp	LfoViewSe_Le50
+LfoViewSe_Lc8b:
 	mov	a3, (8, sp)
 	mov	Str_empty_632, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_Lc9f:
+	jmp	LfoViewSe_Le50
+LfoViewSe_Lc9f:
 	mov	a3, (8, sp)
 	mov	Str_empty_631, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F1607:
 	mov	sp, a0
 	add	0x34, a0
@@ -422806,34 +422805,34 @@ loc_4C0F1607:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_Lce8
+	bne	LfoViewSe_Lce8
 	movbu	(0x31, sp), d1
 	movbu	(0x32, sp), d0
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_Lce9
-func_4C0F0954_Lce8:
+	beq	LfoViewSe_Lce9
+LfoViewSe_Lce8:
 	clr	d2
-func_4C0F0954_Lce9:
+LfoViewSe_Lce9:
 	cmp	0, d2
-	beq	func_4C0F0954_Lcf4
+	beq	LfoViewSe_Lcf4
 	cmp	1, d2
-	beq	func_4C0F0954_Ld08
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_Lcf4:
+	beq	LfoViewSe_Ld08
+	jmp	LfoViewSe_Le50
+LfoViewSe_Lcf4:
 	mov	a3, (8, sp)
 	mov	Str_empty_630, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_Ld08:
+	jmp	LfoViewSe_Le50
+LfoViewSe_Ld08:
 	mov	a3, (8, sp)
 	mov	Str_empty_629, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F1670:
 	mov	sp, a0
 	add	0x34, a0
@@ -422847,34 +422846,34 @@ loc_4C0F1670:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_Ld51
+	bne	LfoViewSe_Ld51
 	movbu	(0x31, sp), d0
 	movbu	(0x32, sp), d1
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_Ld52
-func_4C0F0954_Ld51:
+	beq	LfoViewSe_Ld52
+LfoViewSe_Ld51:
 	clr	d2
-func_4C0F0954_Ld52:
+LfoViewSe_Ld52:
 	cmp	0, d2
-	beq	func_4C0F0954_Ld5d
+	beq	LfoViewSe_Ld5d
 	cmp	1, d2
-	beq	func_4C0F0954_Ld71
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_Ld5d:
+	beq	LfoViewSe_Ld71
+	jmp	LfoViewSe_Le50
+LfoViewSe_Ld5d:
 	mov	a3, (8, sp)
 	mov	Str_empty_628, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_Ld71:
+	jmp	LfoViewSe_Le50
+LfoViewSe_Ld71:
 	mov	a3, (8, sp)
 	mov	Str_empty_627, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	func_4C0F0954_Le50
+	jmp	LfoViewSe_Le50
 loc_4C0F16D9:
 	mov	sp, a0
 	add	0x34, a0
@@ -422888,34 +422887,34 @@ loc_4C0F16D9:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_Ldba
+	bne	LfoViewSe_Ldba
 	movbu	(0x31, sp), d0
 	movbu	(0x32, sp), d1
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_Ldbb
-func_4C0F0954_Ldba:
+	beq	LfoViewSe_Ldbb
+LfoViewSe_Ldba:
 	clr	d2
-func_4C0F0954_Ldbb:
+LfoViewSe_Ldbb:
 	cmp	0, d2
-	beq	func_4C0F0954_Ldc6
+	beq	LfoViewSe_Ldc6
 	cmp	1, d2
-	beq	func_4C0F0954_Ldd9
-	jmp	func_4C0F0954_Le50
-func_4C0F0954_Ldc6:
+	beq	LfoViewSe_Ldd9
+	jmp	LfoViewSe_Le50
+LfoViewSe_Ldc6:
 	mov	a3, (8, sp)
 	mov	Str_empty_626, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	func_4C0F0954_Le50
-func_4C0F0954_Ldd9:
+	bra	LfoViewSe_Le50
+LfoViewSe_Ldd9:
 	mov	a3, (8, sp)
 	mov	Str_empty_625, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	func_4C0F0954_Le50
+	bra	LfoViewSe_Le50
 loc_4C0F1740:
 	mov	sp, a0
 	add	0x34, a0
@@ -422929,47 +422928,47 @@ loc_4C0F1740:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	1, d0
-	bne	func_4C0F0954_Le21
+	bne	LfoViewSe_Le21
 	movbu	(0x31, sp), d0
 	movbu	(0x32, sp), d1
 	mov	1, d2
 	add	d0, d1
 	movbu	(0x35, sp), d0
 	cmp	d1, d0
-	beq	func_4C0F0954_Le22
-func_4C0F0954_Le21:
+	beq	LfoViewSe_Le22
+LfoViewSe_Le21:
 	clr	d2
-func_4C0F0954_Le22:
+LfoViewSe_Le22:
 	cmp	0, d2
-	beq	func_4C0F0954_Le2c
+	beq	LfoViewSe_Le2c
 	cmp	1, d2
-	beq	func_4C0F0954_Le3f
-	bra	func_4C0F0954_Le50
-func_4C0F0954_Le2c:
+	beq	LfoViewSe_Le3f
+	bra	LfoViewSe_Le50
+LfoViewSe_Le2c:
 	mov	a3, (8, sp)
 	mov	Str_empty_624, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	func_4C0F0954_Le50
-func_4C0F0954_Le3f:
+	bra	LfoViewSe_Le50
+LfoViewSe_Le3f:
 	mov	a3, (8, sp)
 	mov	Str_empty_623, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-func_4C0F0954_Le50:
+LfoViewSe_Le50:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x2c, sp), a0
 	mov	MT_GridDraw, d1
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	func_4C0F0954_Le6f
+	bra	LfoViewSe_Le6f
 loc_4C0F17BF:
 	mov	d3, d0
-	bra	func_4C0F0954_Le6f
-func_4C0F0954_Le6e:
+	bra	LfoViewSe_Le6f
+LfoViewSe_Le6e:
 	clr	d0
-func_4C0F0954_Le6f:
+LfoViewSe_Le6f:
 	ret	[d2,d3,a2,a3], 0x5c
 
 GraphBoxSeProc:
@@ -423012,17 +423011,17 @@ GraphBoxSeProc_L5b:
 GraphBoxSeProc_L66:
 	ret	[d2,d3,a2], 0x20
 
-GraphFenvKfSe:
+GraphLvlKfSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x50, sp
 	cmp	MT_Draw, d1
-	beq	GraphFenvKfSe_L1b
+	beq	GraphLvlKfSe_L1b
 	cmp	0x1800000, d1
-	bne	GraphFenvKfSe_L18
+	bne	GraphLvlKfSe_L18
 	ret	[d2,d3,a2,a3], 0x60
-GraphFenvKfSe_L18:
-	jmp	GraphFenvKfSe_L604
-GraphFenvKfSe_L1b:
+GraphLvlKfSe_L18:
+	jmp	GraphLvlKfSe_L604
+GraphLvlKfSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
 	add	0x3c, a0
@@ -423151,45 +423150,45 @@ GraphFenvKfSe_L1b:
 	mov	(0x1c, sp), a0
 	movbu	(a0), d0
 	cmp	0x15, d0
-	bge	GraphFenvKfSe_L151
+	bge	GraphLvlKfSe_L151
 	mov	0x15, d0
 	movbu	d0, (a0)
-	bra	GraphFenvKfSe_L15b
-GraphFenvKfSe_L151:
+	bra	GraphLvlKfSe_L15b
+GraphLvlKfSe_L151:
 	movbu	(a0), d0
 	cmp	0x6c, d0
-	ble	GraphFenvKfSe_L15b
+	ble	GraphLvlKfSe_L15b
 	mov	0x6c, d0
 	movbu	d0, (a0)
-GraphFenvKfSe_L15b:
+GraphLvlKfSe_L15b:
 	mov	(0x14, sp), a0
 	movbu	(a0), d0
 	cmp	0x15, d0
-	bge	GraphFenvKfSe_L169
+	bge	GraphLvlKfSe_L169
 	mov	0x15, d0
 	movbu	d0, (a0)
-	bra	GraphFenvKfSe_L173
-GraphFenvKfSe_L169:
+	bra	GraphLvlKfSe_L173
+GraphLvlKfSe_L169:
 	movbu	(a0), d0
 	cmp	0x6c, d0
-	ble	GraphFenvKfSe_L173
+	ble	GraphLvlKfSe_L173
 	mov	0x6c, d0
 	movbu	d0, (a0)
-GraphFenvKfSe_L173:
+GraphLvlKfSe_L173:
 	mov	(0x18, sp), a0
 	movbu	(a0), d0
 	cmp	0x15, d0
-	bge	GraphFenvKfSe_L181
+	bge	GraphLvlKfSe_L181
 	mov	0x15, d0
 	movbu	d0, (a0)
-	bra	GraphFenvKfSe_L18b
-GraphFenvKfSe_L181:
+	bra	GraphLvlKfSe_L18b
+GraphLvlKfSe_L181:
 	movbu	(a0), d0
 	cmp	0x6c, d0
-	ble	GraphFenvKfSe_L18b
+	ble	GraphLvlKfSe_L18b
 	mov	0x6c, d0
 	movbu	d0, (a0)
-GraphFenvKfSe_L18b:
+GraphLvlKfSe_L18b:
 	mov	(0x1c, sp), a0
 	movbu	(a0), d0
 	add	-0x15, d0
@@ -423258,18 +423257,18 @@ GraphFenvKfSe_L18b:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	blt	GraphFenvKfSe_L236
+	blt	GraphLvlKfSe_L236
 	movhu	(0x4a, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bgt	GraphFenvKfSe_L236
+	bgt	GraphLvlKfSe_L236
 	mov	(0x2c, sp), a0
 	mov	(0x24, sp), a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-GraphFenvKfSe_L236:
+GraphLvlKfSe_L236:
 	mov	(0x1c, sp), a0
 	movhu	(0x3c, sp), d2
 	movbu	(a0), d0
@@ -423331,7 +423330,7 @@ GraphFenvKfSe_L236:
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bge	GraphFenvKfSe_L306
+	bge	GraphLvlKfSe_L306
 	movhu	(0x48, sp), d0
 	movhu	(0x44, sp), d2
 	movhu	(0x4a, sp), d1
@@ -423365,14 +423364,14 @@ GraphFenvKfSe_L236:
 	movhu	d0, (0x44, sp)
 	movhu	(0x3e, sp), d0
 	movhu	d0, (0x46, sp)
-	bra	GraphFenvKfSe_L358
-GraphFenvKfSe_L306:
+	bra	GraphLvlKfSe_L358
+GraphLvlKfSe_L306:
 	movhu	(0x46, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	GraphFenvKfSe_L358
+	ble	GraphLvlKfSe_L358
 	movhu	(0x48, sp), d0
 	movhu	(0x44, sp), d2
 	movhu	(0x46, sp), d1
@@ -423406,13 +423405,13 @@ GraphFenvKfSe_L306:
 	movhu	d0, (0x44, sp)
 	movhu	(0x42, sp), d0
 	movhu	d0, (0x46, sp)
-GraphFenvKfSe_L358:
+GraphLvlKfSe_L358:
 	movhu	(0x4a, sp), d1
 	movhu	(0x3e, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bge	GraphFenvKfSe_L3aa
+	bge	GraphLvlKfSe_L3aa
 	movhu	(0x48, sp), d0
 	movhu	(0x44, sp), d2
 	movhu	(0x46, sp), d1
@@ -423445,14 +423444,14 @@ GraphFenvKfSe_L358:
 	movhu	d0, (0x48, sp)
 	movhu	(0x3e, sp), d0
 	movhu	d0, (0x4a, sp)
-	bra	GraphFenvKfSe_L3fa
-GraphFenvKfSe_L3aa:
+	bra	GraphLvlKfSe_L3fa
+GraphLvlKfSe_L3aa:
 	movhu	(0x4a, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	GraphFenvKfSe_L3fa
+	ble	GraphLvlKfSe_L3fa
 	movhu	(0x48, sp), d0
 	movhu	(0x44, sp), d2
 	movhu	(0x4a, sp), d1
@@ -423485,7 +423484,7 @@ GraphFenvKfSe_L3aa:
 	movhu	d0, (0x48, sp)
 	movhu	(0x42, sp), d0
 	movhu	d0, (0x4a, sp)
-GraphFenvKfSe_L3fa:
+GraphLvlKfSe_L3fa:
 	mov	(0x2c, sp), a0
 	mov	(0x24, sp), a1
 	mov	0xff, d0
@@ -423541,18 +423540,18 @@ GraphFenvKfSe_L3fa:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	blt	GraphFenvKfSe_L491
+	blt	GraphLvlKfSe_L491
 	movhu	(0x4a, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bgt	GraphFenvKfSe_L491
+	bgt	GraphLvlKfSe_L491
 	mov	(0x2c, sp), a0
 	mov	(0x24, sp), a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-GraphFenvKfSe_L491:
+GraphLvlKfSe_L491:
 	mov	(0x1c, sp), a0
 	movhu	(0x3c, sp), d2
 	movbu	(a0), d0
@@ -423586,20 +423585,20 @@ GraphFenvKfSe_L491:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	bge	GraphFenvKfSe_L4e0
+	bge	GraphLvlKfSe_L4e0
 	movhu	(0x3e, sp), d0
 	movhu	d0, (0x46, sp)
-	bra	GraphFenvKfSe_L4f1
-GraphFenvKfSe_L4e0:
+	bra	GraphLvlKfSe_L4f1
+GraphLvlKfSe_L4e0:
 	movhu	(0x46, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	GraphFenvKfSe_L4f1
+	ble	GraphLvlKfSe_L4f1
 	movhu	(0x42, sp), d0
 	movhu	d0, (0x46, sp)
-GraphFenvKfSe_L4f1:
+GraphLvlKfSe_L4f1:
 	mov	(0x1c, sp), a0
 	movhu	(0x3c, sp), d2
 	movbu	(a0), d0
@@ -423683,20 +423682,20 @@ GraphFenvKfSe_L4f1:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	bge	GraphFenvKfSe_L5bf
+	bge	GraphLvlKfSe_L5bf
 	movhu	(0x3e, sp), d0
 	movhu	d0, (0x46, sp)
-	bra	GraphFenvKfSe_L5d0
-GraphFenvKfSe_L5bf:
+	bra	GraphLvlKfSe_L5d0
+GraphLvlKfSe_L5bf:
 	movhu	(0x46, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	GraphFenvKfSe_L5d0
+	ble	GraphLvlKfSe_L5d0
 	movhu	(0x42, sp), d0
 	movhu	d0, (0x46, sp)
-GraphFenvKfSe_L5d0:
+GraphLvlKfSe_L5d0:
 	mov	(0x18, sp), a0
 	movhu	(0x3c, sp), d2
 	movbu	(a0), d0
@@ -423716,25 +423715,25 @@ GraphFenvKfSe_L5d0:
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
 	clr	d0
-	bra	GraphFenvKfSe_L605
-# GraphFenvKfSe + 0x602: no traced path reaches what follows (--decode-gaps)
-	bra	GraphFenvKfSe_L605
-GraphFenvKfSe_L604:
+	bra	GraphLvlKfSe_L605
+# GraphLvlKfSe + 0x602: no traced path reaches what follows (--decode-gaps)
+	bra	GraphLvlKfSe_L605
+GraphLvlKfSe_L604:
 	clr	d0
-GraphFenvKfSe_L605:
+GraphLvlKfSe_L605:
 	ret	[d2,d3,a2,a3], 0x60
 
-GraphAmpEnvSe:
+GraphLenvKfSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x50, sp
 	cmp	MT_Draw, d1
-	beq	GraphAmpEnvSe_L1b
+	beq	GraphLenvKfSe_L1b
 	cmp	0x1800000, d1
-	bne	GraphAmpEnvSe_L18
+	bne	GraphLenvKfSe_L18
 	ret	[d2,d3,a2,a3], 0x60
-GraphAmpEnvSe_L18:
-	jmp	GraphAmpEnvSe_L655
-GraphAmpEnvSe_L1b:
+GraphLenvKfSe_L18:
+	jmp	GraphLenvKfSe_L655
+GraphLenvKfSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
 	add	0x3c, a0
@@ -423798,13 +423797,13 @@ GraphAmpEnvSe_L1b:
 	call	DrawLine_entry, [d2,a2,a3], 0x20
 	movbu	(DrumFltGraphTitleSe_L18_Var), d0
 	cmp	0, d0
-	beq	GraphAmpEnvSe_Lc4
+	beq	GraphLenvKfSe_Lc4
 	cmp	1, d0
-	beq	GraphAmpEnvSe_Le4
+	beq	GraphLenvKfSe_Le4
 	cmp	d3, d0
-	beq	GraphAmpEnvSe_L108
-	bra	GraphAmpEnvSe_L12a
-GraphAmpEnvSe_Lc4:
+	beq	GraphLenvKfSe_L108
+	bra	GraphLenvKfSe_L12a
+GraphLenvKfSe_Lc4:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	0x7a, d1
 	nop
@@ -423817,8 +423816,8 @@ GraphAmpEnvSe_Lc4:
 	add	0x4c, a0
 	mov	0xff, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
-	bra	GraphAmpEnvSe_L12a
-GraphAmpEnvSe_Le4:
+	bra	GraphLenvKfSe_L12a
+GraphLenvKfSe_Le4:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	0x7a, d1
 	nop
@@ -423833,8 +423832,8 @@ GraphAmpEnvSe_Le4:
 	add	0x4c, a0
 	mov	0xff, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
-	bra	GraphAmpEnvSe_L12a
-GraphAmpEnvSe_L108:
+	bra	GraphLenvKfSe_L12a
+GraphLenvKfSe_L108:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	0x7a, d1
 	nop
@@ -423849,7 +423848,7 @@ GraphAmpEnvSe_L108:
 	add	0x4c, a0
 	mov	0xff, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
-GraphAmpEnvSe_L12a:
+GraphLenvKfSe_L12a:
 	mov	sp, a0
 	mov	a0, d2
 	add	0x4c, d2
@@ -423901,45 +423900,45 @@ GraphAmpEnvSe_L12a:
 	mov	(0x18, sp), a0
 	movbu	(a0), d0
 	cmp	0x15, d0
-	bge	GraphAmpEnvSe_L1a2
+	bge	GraphLenvKfSe_L1a2
 	mov	0x15, d0
 	movbu	d0, (a0)
-	bra	GraphAmpEnvSe_L1ac
-GraphAmpEnvSe_L1a2:
+	bra	GraphLenvKfSe_L1ac
+GraphLenvKfSe_L1a2:
 	movbu	(a0), d0
 	cmp	0x6c, d0
-	ble	GraphAmpEnvSe_L1ac
+	ble	GraphLenvKfSe_L1ac
 	mov	0x6c, d0
 	movbu	d0, (a0)
-GraphAmpEnvSe_L1ac:
+GraphLenvKfSe_L1ac:
 	mov	(0x1c, sp), a0
 	movbu	(a0), d0
 	cmp	0x15, d0
-	bge	GraphAmpEnvSe_L1ba
+	bge	GraphLenvKfSe_L1ba
 	mov	0x15, d0
 	movbu	d0, (a0)
-	bra	GraphAmpEnvSe_L1c4
-GraphAmpEnvSe_L1ba:
+	bra	GraphLenvKfSe_L1c4
+GraphLenvKfSe_L1ba:
 	movbu	(a0), d0
 	cmp	0x6c, d0
-	ble	GraphAmpEnvSe_L1c4
+	ble	GraphLenvKfSe_L1c4
 	mov	0x6c, d0
 	movbu	d0, (a0)
-GraphAmpEnvSe_L1c4:
+GraphLenvKfSe_L1c4:
 	mov	(0x14, sp), a0
 	movbu	(a0), d0
 	cmp	0x15, d0
-	bge	GraphAmpEnvSe_L1d2
+	bge	GraphLenvKfSe_L1d2
 	mov	0x15, d0
 	movbu	d0, (a0)
-	bra	GraphAmpEnvSe_L1dc
-GraphAmpEnvSe_L1d2:
+	bra	GraphLenvKfSe_L1dc
+GraphLenvKfSe_L1d2:
 	movbu	(a0), d0
 	cmp	0x6c, d0
-	ble	GraphAmpEnvSe_L1dc
+	ble	GraphLenvKfSe_L1dc
 	mov	0x6c, d0
 	movbu	d0, (a0)
-GraphAmpEnvSe_L1dc:
+GraphLenvKfSe_L1dc:
 	mov	(0x18, sp), a0
 	movbu	(a0), d0
 	add	-0x15, d0
@@ -424008,18 +424007,18 @@ GraphAmpEnvSe_L1dc:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	blt	GraphAmpEnvSe_L287
+	blt	GraphLenvKfSe_L287
 	movhu	(0x4a, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bgt	GraphAmpEnvSe_L287
+	bgt	GraphLenvKfSe_L287
 	mov	(0x28, sp), a0
 	mov	(0x2c, sp), a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-GraphAmpEnvSe_L287:
+GraphLenvKfSe_L287:
 	mov	(0x18, sp), a0
 	movhu	(0x3c, sp), d2
 	movbu	(a0), d0
@@ -424081,7 +424080,7 @@ GraphAmpEnvSe_L287:
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bge	GraphAmpEnvSe_L357
+	bge	GraphLenvKfSe_L357
 	movhu	(0x48, sp), d0
 	movhu	(0x44, sp), d2
 	movhu	(0x4a, sp), d1
@@ -424115,14 +424114,14 @@ GraphAmpEnvSe_L287:
 	movhu	d0, (0x44, sp)
 	movhu	(0x3e, sp), d0
 	movhu	d0, (0x46, sp)
-	bra	GraphAmpEnvSe_L3a9
-GraphAmpEnvSe_L357:
+	bra	GraphLenvKfSe_L3a9
+GraphLenvKfSe_L357:
 	movhu	(0x46, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	GraphAmpEnvSe_L3a9
+	ble	GraphLenvKfSe_L3a9
 	movhu	(0x48, sp), d0
 	movhu	(0x44, sp), d2
 	movhu	(0x46, sp), d1
@@ -424156,13 +424155,13 @@ GraphAmpEnvSe_L357:
 	movhu	d0, (0x44, sp)
 	movhu	(0x42, sp), d0
 	movhu	d0, (0x46, sp)
-GraphAmpEnvSe_L3a9:
+GraphLenvKfSe_L3a9:
 	movhu	(0x4a, sp), d1
 	movhu	(0x3e, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bge	GraphAmpEnvSe_L3fb
+	bge	GraphLenvKfSe_L3fb
 	movhu	(0x48, sp), d0
 	movhu	(0x44, sp), d2
 	movhu	(0x46, sp), d1
@@ -424195,14 +424194,14 @@ GraphAmpEnvSe_L3a9:
 	movhu	d0, (0x48, sp)
 	movhu	(0x3e, sp), d0
 	movhu	d0, (0x4a, sp)
-	bra	GraphAmpEnvSe_L44b
-GraphAmpEnvSe_L3fb:
+	bra	GraphLenvKfSe_L44b
+GraphLenvKfSe_L3fb:
 	movhu	(0x4a, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	GraphAmpEnvSe_L44b
+	ble	GraphLenvKfSe_L44b
 	movhu	(0x48, sp), d0
 	movhu	(0x44, sp), d2
 	movhu	(0x4a, sp), d1
@@ -424235,7 +424234,7 @@ GraphAmpEnvSe_L3fb:
 	movhu	d0, (0x48, sp)
 	movhu	(0x42, sp), d0
 	movhu	d0, (0x4a, sp)
-GraphAmpEnvSe_L44b:
+GraphLenvKfSe_L44b:
 	mov	(0x28, sp), a0
 	mov	(0x2c, sp), a1
 	mov	0xff, d0
@@ -424291,18 +424290,18 @@ GraphAmpEnvSe_L44b:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	blt	GraphAmpEnvSe_L4e2
+	blt	GraphLenvKfSe_L4e2
 	movhu	(0x4a, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bgt	GraphAmpEnvSe_L4e2
+	bgt	GraphLenvKfSe_L4e2
 	mov	(0x28, sp), a0
 	mov	(0x2c, sp), a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-GraphAmpEnvSe_L4e2:
+GraphLenvKfSe_L4e2:
 	mov	(0x18, sp), a0
 	movhu	(0x3c, sp), d2
 	movbu	(a0), d0
@@ -424336,20 +424335,20 @@ GraphAmpEnvSe_L4e2:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	bge	GraphAmpEnvSe_L531
+	bge	GraphLenvKfSe_L531
 	movhu	(0x3e, sp), d0
 	movhu	d0, (0x46, sp)
-	bra	GraphAmpEnvSe_L542
-GraphAmpEnvSe_L531:
+	bra	GraphLenvKfSe_L542
+GraphLenvKfSe_L531:
 	movhu	(0x46, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	GraphAmpEnvSe_L542
+	ble	GraphLenvKfSe_L542
 	movhu	(0x42, sp), d0
 	movhu	d0, (0x46, sp)
-GraphAmpEnvSe_L542:
+GraphLenvKfSe_L542:
 	mov	(0x18, sp), a0
 	movhu	(0x3c, sp), d2
 	movbu	(a0), d0
@@ -424433,20 +424432,20 @@ GraphAmpEnvSe_L542:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	bge	GraphAmpEnvSe_L610
+	bge	GraphLenvKfSe_L610
 	movhu	(0x3e, sp), d0
 	movhu	d0, (0x46, sp)
-	bra	GraphAmpEnvSe_L621
-GraphAmpEnvSe_L610:
+	bra	GraphLenvKfSe_L621
+GraphLenvKfSe_L610:
 	movhu	(0x46, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	GraphAmpEnvSe_L621
+	ble	GraphLenvKfSe_L621
 	movhu	(0x42, sp), d0
 	movhu	d0, (0x46, sp)
-GraphAmpEnvSe_L621:
+GraphLenvKfSe_L621:
 	mov	(0x14, sp), a0
 	movhu	(0x3c, sp), d2
 	movbu	(a0), d0
@@ -424466,25 +424465,25 @@ GraphAmpEnvSe_L621:
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
 	clr	d0
-	bra	GraphAmpEnvSe_L656
-# GraphAmpEnvSe + 0x653: no traced path reaches what follows (--decode-gaps)
-	bra	GraphAmpEnvSe_L656
-GraphAmpEnvSe_L655:
+	bra	GraphLenvKfSe_L656
+# GraphLenvKfSe + 0x653: no traced path reaches what follows (--decode-gaps)
+	bra	GraphLenvKfSe_L656
+GraphLenvKfSe_L655:
 	clr	d0
-GraphAmpEnvSe_L656:
+GraphLenvKfSe_L656:
 	ret	[d2,d3,a2,a3], 0x60
 
-DrumGraphAmpEnvSe:
+GraphFltKfSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x50, sp
 	cmp	MT_Draw, d1
-	beq	DrumGraphAmpEnvSe_L1b
+	beq	GraphFltKfSe_L1b
 	cmp	0x1800000, d1
-	bne	DrumGraphAmpEnvSe_L18
+	bne	GraphFltKfSe_L18
 	ret	[d2,d3,a2,a3], 0x60
-DrumGraphAmpEnvSe_L18:
-	jmp	DrumGraphAmpEnvSe_L604
-DrumGraphAmpEnvSe_L1b:
+GraphFltKfSe_L18:
+	jmp	GraphFltKfSe_L604
+GraphFltKfSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
 	add	0x3c, a0
@@ -424613,45 +424612,45 @@ DrumGraphAmpEnvSe_L1b:
 	mov	(0x1c, sp), a0
 	movbu	(a0), d0
 	cmp	0x15, d0
-	bge	DrumGraphAmpEnvSe_L151
+	bge	GraphFltKfSe_L151
 	mov	0x15, d0
 	movbu	d0, (a0)
-	bra	DrumGraphAmpEnvSe_L15b
-DrumGraphAmpEnvSe_L151:
+	bra	GraphFltKfSe_L15b
+GraphFltKfSe_L151:
 	movbu	(a0), d0
 	cmp	0x6c, d0
-	ble	DrumGraphAmpEnvSe_L15b
+	ble	GraphFltKfSe_L15b
 	mov	0x6c, d0
 	movbu	d0, (a0)
-DrumGraphAmpEnvSe_L15b:
+GraphFltKfSe_L15b:
 	mov	(0x14, sp), a0
 	movbu	(a0), d0
 	cmp	0x15, d0
-	bge	DrumGraphAmpEnvSe_L169
+	bge	GraphFltKfSe_L169
 	mov	0x15, d0
 	movbu	d0, (a0)
-	bra	DrumGraphAmpEnvSe_L173
-DrumGraphAmpEnvSe_L169:
+	bra	GraphFltKfSe_L173
+GraphFltKfSe_L169:
 	movbu	(a0), d0
 	cmp	0x6c, d0
-	ble	DrumGraphAmpEnvSe_L173
+	ble	GraphFltKfSe_L173
 	mov	0x6c, d0
 	movbu	d0, (a0)
-DrumGraphAmpEnvSe_L173:
+GraphFltKfSe_L173:
 	mov	(0x18, sp), a0
 	movbu	(a0), d0
 	cmp	0x15, d0
-	bge	DrumGraphAmpEnvSe_L181
+	bge	GraphFltKfSe_L181
 	mov	0x15, d0
 	movbu	d0, (a0)
-	bra	DrumGraphAmpEnvSe_L18b
-DrumGraphAmpEnvSe_L181:
+	bra	GraphFltKfSe_L18b
+GraphFltKfSe_L181:
 	movbu	(a0), d0
 	cmp	0x6c, d0
-	ble	DrumGraphAmpEnvSe_L18b
+	ble	GraphFltKfSe_L18b
 	mov	0x6c, d0
 	movbu	d0, (a0)
-DrumGraphAmpEnvSe_L18b:
+GraphFltKfSe_L18b:
 	mov	(0x1c, sp), a0
 	movbu	(a0), d0
 	add	-0x15, d0
@@ -424720,18 +424719,18 @@ DrumGraphAmpEnvSe_L18b:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	blt	DrumGraphAmpEnvSe_L236
+	blt	GraphFltKfSe_L236
 	movhu	(0x4a, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bgt	DrumGraphAmpEnvSe_L236
+	bgt	GraphFltKfSe_L236
 	mov	(0x2c, sp), a0
 	mov	(0x24, sp), a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-DrumGraphAmpEnvSe_L236:
+GraphFltKfSe_L236:
 	mov	(0x1c, sp), a0
 	movhu	(0x3c, sp), d2
 	movbu	(a0), d0
@@ -424793,7 +424792,7 @@ DrumGraphAmpEnvSe_L236:
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bge	DrumGraphAmpEnvSe_L306
+	bge	GraphFltKfSe_L306
 	movhu	(0x48, sp), d0
 	movhu	(0x44, sp), d2
 	movhu	(0x4a, sp), d1
@@ -424827,14 +424826,14 @@ DrumGraphAmpEnvSe_L236:
 	movhu	d0, (0x44, sp)
 	movhu	(0x3e, sp), d0
 	movhu	d0, (0x46, sp)
-	bra	DrumGraphAmpEnvSe_L358
-DrumGraphAmpEnvSe_L306:
+	bra	GraphFltKfSe_L358
+GraphFltKfSe_L306:
 	movhu	(0x46, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	DrumGraphAmpEnvSe_L358
+	ble	GraphFltKfSe_L358
 	movhu	(0x48, sp), d0
 	movhu	(0x44, sp), d2
 	movhu	(0x46, sp), d1
@@ -424868,13 +424867,13 @@ DrumGraphAmpEnvSe_L306:
 	movhu	d0, (0x44, sp)
 	movhu	(0x42, sp), d0
 	movhu	d0, (0x46, sp)
-DrumGraphAmpEnvSe_L358:
+GraphFltKfSe_L358:
 	movhu	(0x4a, sp), d1
 	movhu	(0x3e, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bge	DrumGraphAmpEnvSe_L3aa
+	bge	GraphFltKfSe_L3aa
 	movhu	(0x48, sp), d0
 	movhu	(0x44, sp), d2
 	movhu	(0x46, sp), d1
@@ -424907,14 +424906,14 @@ DrumGraphAmpEnvSe_L358:
 	movhu	d0, (0x48, sp)
 	movhu	(0x3e, sp), d0
 	movhu	d0, (0x4a, sp)
-	bra	DrumGraphAmpEnvSe_L3fa
-DrumGraphAmpEnvSe_L3aa:
+	bra	GraphFltKfSe_L3fa
+GraphFltKfSe_L3aa:
 	movhu	(0x4a, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	DrumGraphAmpEnvSe_L3fa
+	ble	GraphFltKfSe_L3fa
 	movhu	(0x48, sp), d0
 	movhu	(0x44, sp), d2
 	movhu	(0x4a, sp), d1
@@ -424947,7 +424946,7 @@ DrumGraphAmpEnvSe_L3aa:
 	movhu	d0, (0x48, sp)
 	movhu	(0x42, sp), d0
 	movhu	d0, (0x4a, sp)
-DrumGraphAmpEnvSe_L3fa:
+GraphFltKfSe_L3fa:
 	mov	(0x2c, sp), a0
 	mov	(0x24, sp), a1
 	mov	0xff, d0
@@ -425003,18 +425002,18 @@ DrumGraphAmpEnvSe_L3fa:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	blt	DrumGraphAmpEnvSe_L491
+	blt	GraphFltKfSe_L491
 	movhu	(0x4a, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bgt	DrumGraphAmpEnvSe_L491
+	bgt	GraphFltKfSe_L491
 	mov	(0x2c, sp), a0
 	mov	(0x24, sp), a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-DrumGraphAmpEnvSe_L491:
+GraphFltKfSe_L491:
 	mov	(0x1c, sp), a0
 	movhu	(0x3c, sp), d2
 	movbu	(a0), d0
@@ -425048,20 +425047,20 @@ DrumGraphAmpEnvSe_L491:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	bge	DrumGraphAmpEnvSe_L4e0
+	bge	GraphFltKfSe_L4e0
 	movhu	(0x3e, sp), d0
 	movhu	d0, (0x46, sp)
-	bra	DrumGraphAmpEnvSe_L4f1
-DrumGraphAmpEnvSe_L4e0:
+	bra	GraphFltKfSe_L4f1
+GraphFltKfSe_L4e0:
 	movhu	(0x46, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	DrumGraphAmpEnvSe_L4f1
+	ble	GraphFltKfSe_L4f1
 	movhu	(0x42, sp), d0
 	movhu	d0, (0x46, sp)
-DrumGraphAmpEnvSe_L4f1:
+GraphFltKfSe_L4f1:
 	mov	(0x1c, sp), a0
 	movhu	(0x3c, sp), d2
 	movbu	(a0), d0
@@ -425145,20 +425144,20 @@ DrumGraphAmpEnvSe_L4f1:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	bge	DrumGraphAmpEnvSe_L5bf
+	bge	GraphFltKfSe_L5bf
 	movhu	(0x3e, sp), d0
 	movhu	d0, (0x46, sp)
-	bra	DrumGraphAmpEnvSe_L5d0
-DrumGraphAmpEnvSe_L5bf:
+	bra	GraphFltKfSe_L5d0
+GraphFltKfSe_L5bf:
 	movhu	(0x46, sp), d1
 	movhu	(0x42, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	DrumGraphAmpEnvSe_L5d0
+	ble	GraphFltKfSe_L5d0
 	movhu	(0x42, sp), d0
 	movhu	d0, (0x46, sp)
-DrumGraphAmpEnvSe_L5d0:
+GraphFltKfSe_L5d0:
 	mov	(0x18, sp), a0
 	movhu	(0x3c, sp), d2
 	movbu	(a0), d0
@@ -425178,25 +425177,25 @@ DrumGraphAmpEnvSe_L5d0:
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
 	clr	d0
-	bra	DrumGraphAmpEnvSe_L605
-# DrumGraphAmpEnvSe + 0x602: no traced path reaches what follows (--decode-gaps)
-	bra	DrumGraphAmpEnvSe_L605
-DrumGraphAmpEnvSe_L604:
+	bra	GraphFltKfSe_L605
+# GraphFltKfSe + 0x602: no traced path reaches what follows (--decode-gaps)
+	bra	GraphFltKfSe_L605
+GraphFltKfSe_L604:
 	clr	d0
-DrumGraphAmpEnvSe_L605:
+GraphFltKfSe_L605:
 	ret	[d2,d3,a2,a3], 0x60
 
-GraphPitEnvSe:
+GraphPenvKfSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x48, sp
 	cmp	MT_Draw, d1
-	beq	GraphPitEnvSe_L1b
+	beq	GraphPenvKfSe_L1b
 	cmp	0x1800000, d1
-	bne	GraphPitEnvSe_L18
+	bne	GraphPenvKfSe_L18
 	ret	[d2,d3,a2,a3], 0x58
-GraphPitEnvSe_L18:
-	jmp	GraphPitEnvSe_L60c
-GraphPitEnvSe_L1b:
+GraphPenvKfSe_L18:
+	jmp	GraphPenvKfSe_L60c
+GraphPenvKfSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
 	add	0x34, a0
@@ -425260,13 +425259,13 @@ GraphPitEnvSe_L1b:
 	call	DrawLine_entry, [d2,a2,a3], 0x20
 	movbu	(DrumFltGraphTitleSe_L18_Var), d0
 	cmp	0, d0
-	beq	GraphPitEnvSe_Lc4
+	beq	GraphPenvKfSe_Lc4
 	cmp	1, d0
-	beq	GraphPitEnvSe_Le4
+	beq	GraphPenvKfSe_Le4
 	cmp	d3, d0
-	beq	GraphPitEnvSe_L108
-	bra	GraphPitEnvSe_L12a
-GraphPitEnvSe_Lc4:
+	beq	GraphPenvKfSe_L108
+	bra	GraphPenvKfSe_L12a
+GraphPenvKfSe_Lc4:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	0x7a, d1
 	nop
@@ -425279,8 +425278,8 @@ GraphPitEnvSe_Lc4:
 	add	0x44, a0
 	mov	0xff, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
-	bra	GraphPitEnvSe_L12a
-GraphPitEnvSe_Le4:
+	bra	GraphPenvKfSe_L12a
+GraphPenvKfSe_Le4:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	0x7a, d1
 	nop
@@ -425295,8 +425294,8 @@ GraphPitEnvSe_Le4:
 	add	0x44, a0
 	mov	0xff, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
-	bra	GraphPitEnvSe_L12a
-GraphPitEnvSe_L108:
+	bra	GraphPenvKfSe_L12a
+GraphPenvKfSe_L108:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	0x7a, d1
 	nop
@@ -425311,7 +425310,7 @@ GraphPitEnvSe_L108:
 	add	0x44, a0
 	mov	0xff, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
-GraphPitEnvSe_L12a:
+GraphPenvKfSe_L12a:
 	mov	sp, a0
 	clr	d0
 	movbu	d0, (0x45, sp)
@@ -425334,44 +425333,44 @@ GraphPitEnvSe_L12a:
 	movbu	d0, (0x47, sp)
 	movbu	(0x45, sp), d0
 	cmp	0x15, d0
-	bge	GraphPitEnvSe_L165
+	bge	GraphPenvKfSe_L165
 	mov	0x15, d0
 	movbu	d0, (0x45, sp)
-	bra	GraphPitEnvSe_L171
-GraphPitEnvSe_L165:
+	bra	GraphPenvKfSe_L171
+GraphPenvKfSe_L165:
 	movbu	(0x45, sp), d0
 	cmp	0x6c, d0
-	ble	GraphPitEnvSe_L171
+	ble	GraphPenvKfSe_L171
 	mov	0x6c, d0
 	movbu	d0, (0x45, sp)
-GraphPitEnvSe_L171:
+GraphPenvKfSe_L171:
 	mov	(0x14, sp), a0
 	movbu	(a0), d0
 	cmp	0x15, d0
-	bge	GraphPitEnvSe_L17f
+	bge	GraphPenvKfSe_L17f
 	mov	0x15, d0
 	movbu	d0, (a0)
-	bra	GraphPitEnvSe_L189
-GraphPitEnvSe_L17f:
+	bra	GraphPenvKfSe_L189
+GraphPenvKfSe_L17f:
 	movbu	(a0), d0
 	cmp	0x6c, d0
-	ble	GraphPitEnvSe_L189
+	ble	GraphPenvKfSe_L189
 	mov	0x6c, d0
 	movbu	d0, (a0)
-GraphPitEnvSe_L189:
+GraphPenvKfSe_L189:
 	movbu	(0x47, sp), d0
 	cmp	0x15, d0
-	bge	GraphPitEnvSe_L197
+	bge	GraphPenvKfSe_L197
 	mov	0x15, d0
 	movbu	d0, (0x47, sp)
-	bra	GraphPitEnvSe_L1a3
-GraphPitEnvSe_L197:
+	bra	GraphPenvKfSe_L1a3
+GraphPenvKfSe_L197:
 	movbu	(0x47, sp), d0
 	cmp	0x6c, d0
-	ble	GraphPitEnvSe_L1a3
+	ble	GraphPenvKfSe_L1a3
 	mov	0x6c, d0
 	movbu	d0, (0x47, sp)
-GraphPitEnvSe_L1a3:
+GraphPenvKfSe_L1a3:
 	movbu	(0x45, sp), d0
 	add	-0x15, d0
 	movbu	d0, (0x45, sp)
@@ -425435,18 +425434,18 @@ GraphPitEnvSe_L1a3:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	blt	GraphPitEnvSe_L24b
+	blt	GraphPenvKfSe_L24b
 	movhu	(0x42, sp), d1
 	movhu	(0x3a, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bgt	GraphPitEnvSe_L24b
+	bgt	GraphPenvKfSe_L24b
 	mov	(0x24, sp), a0
 	mov	(0x1c, sp), a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-GraphPitEnvSe_L24b:
+GraphPenvKfSe_L24b:
 	mov	(0x18, sp), d1
 	movbu	(0x45, sp), d0
 	movhu	(0x34, sp), d2
@@ -425504,7 +425503,7 @@ GraphPitEnvSe_L24b:
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bge	GraphPitEnvSe_L317
+	bge	GraphPenvKfSe_L317
 	movhu	(0x40, sp), d0
 	movhu	(0x3c, sp), d2
 	movhu	(0x42, sp), d1
@@ -425538,14 +425537,14 @@ GraphPitEnvSe_L24b:
 	movhu	d0, (0x3c, sp)
 	movhu	(0x36, sp), d0
 	movhu	d0, (0x3e, sp)
-	bra	GraphPitEnvSe_L369
-GraphPitEnvSe_L317:
+	bra	GraphPenvKfSe_L369
+GraphPenvKfSe_L317:
 	movhu	(0x3e, sp), d1
 	movhu	(0x3a, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	GraphPitEnvSe_L369
+	ble	GraphPenvKfSe_L369
 	movhu	(0x40, sp), d0
 	movhu	(0x3c, sp), d2
 	movhu	(0x3e, sp), d1
@@ -425579,13 +425578,13 @@ GraphPitEnvSe_L317:
 	movhu	d0, (0x3c, sp)
 	movhu	(0x3a, sp), d0
 	movhu	d0, (0x3e, sp)
-GraphPitEnvSe_L369:
+GraphPenvKfSe_L369:
 	movhu	(0x42, sp), d1
 	movhu	(0x36, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bge	GraphPitEnvSe_L3bb
+	bge	GraphPenvKfSe_L3bb
 	movhu	(0x40, sp), d0
 	movhu	(0x3c, sp), d2
 	movhu	(0x3e, sp), d1
@@ -425618,14 +425617,14 @@ GraphPitEnvSe_L369:
 	movhu	d0, (0x40, sp)
 	movhu	(0x36, sp), d0
 	movhu	d0, (0x42, sp)
-	bra	GraphPitEnvSe_L40b
-GraphPitEnvSe_L3bb:
+	bra	GraphPenvKfSe_L40b
+GraphPenvKfSe_L3bb:
 	movhu	(0x42, sp), d1
 	movhu	(0x3a, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	GraphPitEnvSe_L40b
+	ble	GraphPenvKfSe_L40b
 	movhu	(0x40, sp), d0
 	movhu	(0x3c, sp), d2
 	movhu	(0x42, sp), d1
@@ -425658,7 +425657,7 @@ GraphPitEnvSe_L3bb:
 	movhu	d0, (0x40, sp)
 	movhu	(0x3a, sp), d0
 	movhu	d0, (0x42, sp)
-GraphPitEnvSe_L40b:
+GraphPenvKfSe_L40b:
 	mov	(0x24, sp), a0
 	mov	(0x1c, sp), a1
 	mov	0xff, d0
@@ -425711,18 +425710,18 @@ GraphPitEnvSe_L40b:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	blt	GraphPitEnvSe_L49f
+	blt	GraphPenvKfSe_L49f
 	movhu	(0x42, sp), d1
 	movhu	(0x3a, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bgt	GraphPitEnvSe_L49f
+	bgt	GraphPenvKfSe_L49f
 	mov	(0x24, sp), a0
 	mov	(0x1c, sp), a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-GraphPitEnvSe_L49f:
+GraphPenvKfSe_L49f:
 	mov	(0x18, sp), d1
 	movbu	(0x45, sp), d0
 	movhu	(0x34, sp), d2
@@ -425754,20 +425753,20 @@ GraphPitEnvSe_L49f:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	bge	GraphPitEnvSe_L4ec
+	bge	GraphPenvKfSe_L4ec
 	movhu	(0x36, sp), d0
 	movhu	d0, (0x3e, sp)
-	bra	GraphPitEnvSe_L4fd
-GraphPitEnvSe_L4ec:
+	bra	GraphPenvKfSe_L4fd
+GraphPenvKfSe_L4ec:
 	movhu	(0x3e, sp), d1
 	movhu	(0x3a, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	GraphPitEnvSe_L4fd
+	ble	GraphPenvKfSe_L4fd
 	movhu	(0x3a, sp), d0
 	movhu	d0, (0x3e, sp)
-GraphPitEnvSe_L4fd:
+GraphPenvKfSe_L4fd:
 	mov	(0x18, sp), d1
 	movbu	(0x45, sp), d0
 	movhu	(0x34, sp), d2
@@ -425848,20 +425847,20 @@ GraphPitEnvSe_L4fd:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	bge	GraphPitEnvSe_L5c8
+	bge	GraphPenvKfSe_L5c8
 	movhu	(0x36, sp), d0
 	movhu	d0, (0x3e, sp)
-	bra	GraphPitEnvSe_L5d9
-GraphPitEnvSe_L5c8:
+	bra	GraphPenvKfSe_L5d9
+GraphPenvKfSe_L5c8:
 	movhu	(0x3e, sp), d1
 	movhu	(0x3a, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	GraphPitEnvSe_L5d9
+	ble	GraphPenvKfSe_L5d9
 	movhu	(0x3a, sp), d0
 	movhu	d0, (0x3e, sp)
-GraphPitEnvSe_L5d9:
+GraphPenvKfSe_L5d9:
 	mov	(0x18, sp), d1
 	movbu	(0x47, sp), d0
 	movhu	(0x34, sp), d2
@@ -425880,25 +425879,25 @@ GraphPitEnvSe_L5d9:
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
 	clr	d0
-	bra	GraphPitEnvSe_L60d
-# GraphPitEnvSe + 0x60a: no traced path reaches what follows (--decode-gaps)
-	bra	GraphPitEnvSe_L60d
-GraphPitEnvSe_L60c:
+	bra	GraphPenvKfSe_L60d
+# GraphPenvKfSe + 0x60a: no traced path reaches what follows (--decode-gaps)
+	bra	GraphPenvKfSe_L60d
+GraphPenvKfSe_L60c:
 	clr	d0
-GraphPitEnvSe_L60d:
+GraphPenvKfSe_L60d:
 	ret	[d2,d3,a2,a3], 0x58
 
-GraphFltEnvSe:
+GraphFenvKfSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x48, sp
 	cmp	MT_Draw, d1
-	beq	GraphFltEnvSe_L1b
+	beq	GraphFenvKfSe_L1b
 	cmp	0x1800000, d1
-	bne	GraphFltEnvSe_L18
+	bne	GraphFenvKfSe_L18
 	ret	[d2,d3,a2,a3], 0x58
-GraphFltEnvSe_L18:
-	jmp	GraphFltEnvSe_L60c
-GraphFltEnvSe_L1b:
+GraphFenvKfSe_L18:
+	jmp	GraphFenvKfSe_L60c
+GraphFenvKfSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
 	add	0x34, a0
@@ -425962,13 +425961,13 @@ GraphFltEnvSe_L1b:
 	call	DrawLine_entry, [d2,a2,a3], 0x20
 	movbu	(DrumFltGraphTitleSe_L18_Var), d0
 	cmp	0, d0
-	beq	GraphFltEnvSe_Lc4
+	beq	GraphFenvKfSe_Lc4
 	cmp	1, d0
-	beq	GraphFltEnvSe_Le4
+	beq	GraphFenvKfSe_Le4
 	cmp	d3, d0
-	beq	GraphFltEnvSe_L108
-	bra	GraphFltEnvSe_L12a
-GraphFltEnvSe_Lc4:
+	beq	GraphFenvKfSe_L108
+	bra	GraphFenvKfSe_L12a
+GraphFenvKfSe_Lc4:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	0x7a, d1
 	nop
@@ -425981,8 +425980,8 @@ GraphFltEnvSe_Lc4:
 	add	0x44, a0
 	mov	0xff, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
-	bra	GraphFltEnvSe_L12a
-GraphFltEnvSe_Le4:
+	bra	GraphFenvKfSe_L12a
+GraphFenvKfSe_Le4:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	0x7a, d1
 	nop
@@ -425997,8 +425996,8 @@ GraphFltEnvSe_Le4:
 	add	0x44, a0
 	mov	0xff, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
-	bra	GraphFltEnvSe_L12a
-GraphFltEnvSe_L108:
+	bra	GraphFenvKfSe_L12a
+GraphFenvKfSe_L108:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	0x7a, d1
 	nop
@@ -426013,7 +426012,7 @@ GraphFltEnvSe_L108:
 	add	0x44, a0
 	mov	0xff, d1
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
-GraphFltEnvSe_L12a:
+GraphFenvKfSe_L12a:
 	mov	sp, a0
 	clr	d0
 	movbu	d0, (0x45, sp)
@@ -426036,44 +426035,44 @@ GraphFltEnvSe_L12a:
 	movbu	d0, (0x47, sp)
 	movbu	(0x45, sp), d0
 	cmp	0x15, d0
-	bge	GraphFltEnvSe_L165
+	bge	GraphFenvKfSe_L165
 	mov	0x15, d0
 	movbu	d0, (0x45, sp)
-	bra	GraphFltEnvSe_L171
-GraphFltEnvSe_L165:
+	bra	GraphFenvKfSe_L171
+GraphFenvKfSe_L165:
 	movbu	(0x45, sp), d0
 	cmp	0x6c, d0
-	ble	GraphFltEnvSe_L171
+	ble	GraphFenvKfSe_L171
 	mov	0x6c, d0
 	movbu	d0, (0x45, sp)
-GraphFltEnvSe_L171:
+GraphFenvKfSe_L171:
 	mov	(0x14, sp), a0
 	movbu	(a0), d0
 	cmp	0x15, d0
-	bge	GraphFltEnvSe_L17f
+	bge	GraphFenvKfSe_L17f
 	mov	0x15, d0
 	movbu	d0, (a0)
-	bra	GraphFltEnvSe_L189
-GraphFltEnvSe_L17f:
+	bra	GraphFenvKfSe_L189
+GraphFenvKfSe_L17f:
 	movbu	(a0), d0
 	cmp	0x6c, d0
-	ble	GraphFltEnvSe_L189
+	ble	GraphFenvKfSe_L189
 	mov	0x6c, d0
 	movbu	d0, (a0)
-GraphFltEnvSe_L189:
+GraphFenvKfSe_L189:
 	movbu	(0x47, sp), d0
 	cmp	0x15, d0
-	bge	GraphFltEnvSe_L197
+	bge	GraphFenvKfSe_L197
 	mov	0x15, d0
 	movbu	d0, (0x47, sp)
-	bra	GraphFltEnvSe_L1a3
-GraphFltEnvSe_L197:
+	bra	GraphFenvKfSe_L1a3
+GraphFenvKfSe_L197:
 	movbu	(0x47, sp), d0
 	cmp	0x6c, d0
-	ble	GraphFltEnvSe_L1a3
+	ble	GraphFenvKfSe_L1a3
 	mov	0x6c, d0
 	movbu	d0, (0x47, sp)
-GraphFltEnvSe_L1a3:
+GraphFenvKfSe_L1a3:
 	movbu	(0x45, sp), d0
 	add	-0x15, d0
 	movbu	d0, (0x45, sp)
@@ -426137,18 +426136,18 @@ GraphFltEnvSe_L1a3:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	blt	GraphFltEnvSe_L24b
+	blt	GraphFenvKfSe_L24b
 	movhu	(0x42, sp), d1
 	movhu	(0x3a, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bgt	GraphFltEnvSe_L24b
+	bgt	GraphFenvKfSe_L24b
 	mov	(0x24, sp), a0
 	mov	(0x1c, sp), a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-GraphFltEnvSe_L24b:
+GraphFenvKfSe_L24b:
 	mov	(0x18, sp), d1
 	movbu	(0x45, sp), d0
 	movhu	(0x34, sp), d2
@@ -426206,7 +426205,7 @@ GraphFltEnvSe_L24b:
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bge	GraphFltEnvSe_L317
+	bge	GraphFenvKfSe_L317
 	movhu	(0x40, sp), d0
 	movhu	(0x3c, sp), d2
 	movhu	(0x42, sp), d1
@@ -426240,14 +426239,14 @@ GraphFltEnvSe_L24b:
 	movhu	d0, (0x3c, sp)
 	movhu	(0x36, sp), d0
 	movhu	d0, (0x3e, sp)
-	bra	GraphFltEnvSe_L369
-GraphFltEnvSe_L317:
+	bra	GraphFenvKfSe_L369
+GraphFenvKfSe_L317:
 	movhu	(0x3e, sp), d1
 	movhu	(0x3a, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	GraphFltEnvSe_L369
+	ble	GraphFenvKfSe_L369
 	movhu	(0x40, sp), d0
 	movhu	(0x3c, sp), d2
 	movhu	(0x3e, sp), d1
@@ -426281,13 +426280,13 @@ GraphFltEnvSe_L317:
 	movhu	d0, (0x3c, sp)
 	movhu	(0x3a, sp), d0
 	movhu	d0, (0x3e, sp)
-GraphFltEnvSe_L369:
+GraphFenvKfSe_L369:
 	movhu	(0x42, sp), d1
 	movhu	(0x36, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bge	GraphFltEnvSe_L3bb
+	bge	GraphFenvKfSe_L3bb
 	movhu	(0x40, sp), d0
 	movhu	(0x3c, sp), d2
 	movhu	(0x3e, sp), d1
@@ -426320,14 +426319,14 @@ GraphFltEnvSe_L369:
 	movhu	d0, (0x40, sp)
 	movhu	(0x36, sp), d0
 	movhu	d0, (0x42, sp)
-	bra	GraphFltEnvSe_L40b
-GraphFltEnvSe_L3bb:
+	bra	GraphFenvKfSe_L40b
+GraphFenvKfSe_L3bb:
 	movhu	(0x42, sp), d1
 	movhu	(0x3a, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	GraphFltEnvSe_L40b
+	ble	GraphFenvKfSe_L40b
 	movhu	(0x40, sp), d0
 	movhu	(0x3c, sp), d2
 	movhu	(0x42, sp), d1
@@ -426360,7 +426359,7 @@ GraphFltEnvSe_L3bb:
 	movhu	d0, (0x40, sp)
 	movhu	(0x3a, sp), d0
 	movhu	d0, (0x42, sp)
-GraphFltEnvSe_L40b:
+GraphFenvKfSe_L40b:
 	mov	(0x24, sp), a0
 	mov	(0x1c, sp), a1
 	mov	0xff, d0
@@ -426413,18 +426412,18 @@ GraphFltEnvSe_L40b:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	blt	GraphFltEnvSe_L49f
+	blt	GraphFenvKfSe_L49f
 	movhu	(0x42, sp), d1
 	movhu	(0x3a, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	bgt	GraphFltEnvSe_L49f
+	bgt	GraphFenvKfSe_L49f
 	mov	(0x24, sp), a0
 	mov	(0x1c, sp), a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-GraphFltEnvSe_L49f:
+GraphFenvKfSe_L49f:
 	mov	(0x18, sp), d1
 	movbu	(0x45, sp), d0
 	movhu	(0x34, sp), d2
@@ -426456,20 +426455,20 @@ GraphFltEnvSe_L49f:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	bge	GraphFltEnvSe_L4ec
+	bge	GraphFenvKfSe_L4ec
 	movhu	(0x36, sp), d0
 	movhu	d0, (0x3e, sp)
-	bra	GraphFltEnvSe_L4fd
-GraphFltEnvSe_L4ec:
+	bra	GraphFenvKfSe_L4fd
+GraphFenvKfSe_L4ec:
 	movhu	(0x3e, sp), d1
 	movhu	(0x3a, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	GraphFltEnvSe_L4fd
+	ble	GraphFenvKfSe_L4fd
 	movhu	(0x3a, sp), d0
 	movhu	d0, (0x3e, sp)
-GraphFltEnvSe_L4fd:
+GraphFenvKfSe_L4fd:
 	mov	(0x18, sp), d1
 	movbu	(0x45, sp), d0
 	movhu	(0x34, sp), d2
@@ -426550,20 +426549,20 @@ GraphFltEnvSe_L4fd:
 	exth	d0
 	exth	d1
 	cmp	d1, d0
-	bge	GraphFltEnvSe_L5c8
+	bge	GraphFenvKfSe_L5c8
 	movhu	(0x36, sp), d0
 	movhu	d0, (0x3e, sp)
-	bra	GraphFltEnvSe_L5d9
-GraphFltEnvSe_L5c8:
+	bra	GraphFenvKfSe_L5d9
+GraphFenvKfSe_L5c8:
 	movhu	(0x3e, sp), d1
 	movhu	(0x3a, sp), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
-	ble	GraphFltEnvSe_L5d9
+	ble	GraphFenvKfSe_L5d9
 	movhu	(0x3a, sp), d0
 	movhu	d0, (0x3e, sp)
-GraphFltEnvSe_L5d9:
+GraphFenvKfSe_L5d9:
 	mov	(0x18, sp), d1
 	movbu	(0x47, sp), d0
 	movhu	(0x34, sp), d2
@@ -426582,25 +426581,25 @@ GraphFltEnvSe_L5d9:
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
 	clr	d0
-	bra	GraphFltEnvSe_L60d
-# GraphFltEnvSe + 0x60a: no traced path reaches what follows (--decode-gaps)
-	bra	GraphFltEnvSe_L60d
-GraphFltEnvSe_L60c:
+	bra	GraphFenvKfSe_L60d
+# GraphFenvKfSe + 0x60a: no traced path reaches what follows (--decode-gaps)
+	bra	GraphFenvKfSe_L60d
+GraphFenvKfSe_L60c:
 	clr	d0
-GraphFltEnvSe_L60d:
+GraphFenvKfSe_L60d:
 	ret	[d2,d3,a2,a3], 0x58
 
-GraphFltSe:
+GraphAmpEnvSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x64, sp
 	cmp	MT_Draw, d1
-	beq	GraphFltSe_L1b
+	beq	GraphAmpEnvSe_L1b
 	cmp	0x1800000, d1
-	bne	GraphFltSe_L18
+	bne	GraphAmpEnvSe_L18
 	ret	[d2,d3,a2,a3], 0x74
-GraphFltSe_L18:
-	jmp	GraphFltSe_L41a
-GraphFltSe_L1b:
+GraphAmpEnvSe_L18:
+	jmp	GraphAmpEnvSe_L41a
+GraphAmpEnvSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
 	add	0x4c, a0
@@ -426775,20 +426774,20 @@ GraphFltSe_L1b:
 	mov	d1, d0
 	exthu	d0
 	cmp	0, d0
-	bne	GraphFltSe_L1a7
+	bne	GraphAmpEnvSe_L1a7
 	exthu	d2
 	mov	0x2710, d0
 	add	d2, d0
 	movhu	d0, (0x44, sp)
 	clr	d3
-	bra	GraphFltSe_L1b4
-GraphFltSe_L1a7:
+	bra	GraphAmpEnvSe_L1b4
+GraphAmpEnvSe_L1a7:
 	exthu	d2
 	exthu	d1
 	mov	d2, d0
 	call	LibDiv32, 0, 0
 	movhu	d0, (0x44, sp)
-GraphFltSe_L1b4:
+GraphAmpEnvSe_L1b4:
 	mov	(0x20, sp), a0
 	mov	a2, d1
 	movbu	(a0), d0
@@ -426807,40 +426806,40 @@ GraphFltSe_L1b4:
 	mov	d3, (0x34, sp)
 	mov	d3, d2
 	cmp	d2, d0
-	blt	GraphFltSe_L1e3
+	blt	GraphAmpEnvSe_L1e3
 	sub	d2, d0
 	exthu	d1
 	nop
 	nop
 	mul	d1, d0
-	bra	GraphFltSe_L1eb
-GraphFltSe_L1e3:
+	bra	GraphAmpEnvSe_L1eb
+GraphAmpEnvSe_L1e3:
 	sub	d0, d2
 	mov	d2, d0
 	exthu	d1
 	nop
 	nop
 	mul	d1, d0
-GraphFltSe_L1eb:
+GraphAmpEnvSe_L1eb:
 	movbu	(a0), d2
 	mov	0x64, d1
 	sub	d2, d1
 	mov	d1, d2
 	exthu	d1
 	cmp	0, d1
-	bne	GraphFltSe_L204
+	bne	GraphAmpEnvSe_L204
 	exthu	d0
 	add	0x2710, d0
 	movhu	d0, (0x42, sp)
 	movhu	d3, (0x40, sp)
-	bra	GraphFltSe_L211
-GraphFltSe_L204:
+	bra	GraphAmpEnvSe_L211
+GraphAmpEnvSe_L204:
 	exthu	d0
 	exthu	d2
 	mov	d2, d1
 	call	LibDiv32, 0, 0
 	movhu	d0, (0x42, sp)
-GraphFltSe_L211:
+GraphAmpEnvSe_L211:
 	mov	(0x2c, sp), a0
 	mov	a2, d1
 	movbu	(a0), d0
@@ -426858,41 +426857,41 @@ GraphFltSe_L211:
 	exthu	d0
 	mov	d1, (0x2c, sp)
 	cmp	d1, d0
-	blt	GraphFltSe_L23e
+	blt	GraphAmpEnvSe_L23e
 	sub	d1, d0
 	exthu	d2
 	nop
 	nop
 	mul	d0, d2
-	bra	GraphFltSe_L245
-GraphFltSe_L23e:
+	bra	GraphAmpEnvSe_L245
+GraphAmpEnvSe_L23e:
 	sub	d0, d1
 	exthu	d2
 	nop
 	nop
 	mul	d1, d2
-GraphFltSe_L245:
+GraphAmpEnvSe_L245:
 	movbu	(a0), d0
 	mov	0x64, d1
 	sub	d0, d1
 	mov	d1, d0
 	exthu	d0
 	cmp	0, d0
-	bne	GraphFltSe_L25f
+	bne	GraphAmpEnvSe_L25f
 	movhu	(0x40, sp), d0
 	exthu	d2
 	mov	d0, a2
 	mov	0x2710, d0
 	add	d2, d0
 	mov	d0, a3
-	bra	GraphFltSe_L26b
-GraphFltSe_L25f:
+	bra	GraphAmpEnvSe_L26b
+GraphAmpEnvSe_L25f:
 	exthu	d2
 	exthu	d1
 	mov	d2, d0
 	call	LibDiv32, 0, 0
 	mov	d0, a3
-GraphFltSe_L26b:
+GraphAmpEnvSe_L26b:
 	mov	(0x3c, sp), a0
 	mov	a2, d1
 	movbu	(a0), d0
@@ -426908,17 +426907,17 @@ GraphFltSe_L26b:
 	mov	d1, d2
 	exthu	d2
 	cmp	0, d2
-	bne	GraphFltSe_L28c
+	bne	GraphAmpEnvSe_L28c
 	exthu	d0
 	mov	0x2710, d3
 	add	d0, d3
-	bra	GraphFltSe_L296
-GraphFltSe_L28c:
+	bra	GraphAmpEnvSe_L296
+GraphAmpEnvSe_L28c:
 	exthu	d0
 	exthu	d1
 	call	LibDiv32, 0, 0
 	mov	d0, d3
-GraphFltSe_L296:
+GraphAmpEnvSe_L296:
 	movhu	(0x44, sp), d0
 	exthu	d3
 	mov	d0, a2
@@ -426943,15 +426942,15 @@ GraphFltSe_L296:
 	mov	d3, d1
 	exthu	d1
 	cmp	d1, d2
-	bge	GraphFltSe_L2cb
+	bge	GraphAmpEnvSe_L2cb
 	mov	d3, d0
-GraphFltSe_L2cb:
+GraphAmpEnvSe_L2cb:
 	mov	d0, d1
 	extbu	d1
 	cmp	5, d1
-	ble	GraphFltSe_L2d3
+	ble	GraphAmpEnvSe_L2d3
 	mov	5, d0
-GraphFltSe_L2d3:
+GraphAmpEnvSe_L2d3:
 	extbu	d0
 	inc	d0
 	extbu	d0
@@ -427016,7 +427015,7 @@ GraphFltSe_L2d3:
 	mov	d0, d2
 	exthu	d0
 	cmp	0, d0
-	bne	GraphFltSe_L3b9
+	bne	GraphAmpEnvSe_L3b9
 	mov	(0x28, sp), d0
 	mov	d3, d1
 	mov	d0, (0x10, sp)
@@ -427034,7 +427033,7 @@ GraphFltSe_L2d3:
 	mov	d0, d2
 	exthu	d0
 	cmp	0, d0
-	bne	GraphFltSe_L3b9
+	bne	GraphAmpEnvSe_L3b9
 	mov	a2, d0
 	exthu	d0
 	mov	d0, a2
@@ -427052,7 +427051,7 @@ GraphFltSe_L2d3:
 	mov	d0, d2
 	exthu	d0
 	cmp	0, d0
-	bne	GraphFltSe_L3b9
+	bne	GraphAmpEnvSe_L3b9
 	mov	(0x20, sp), d0
 	mov	d3, d1
 	mov	d0, (0x10, sp)
@@ -427064,7 +427063,7 @@ GraphFltSe_L2d3:
 	mov	a2, d0
 	call	func_4C0F3F8E_entry, [d2,d3,a2,a3], 0x2c
 	movhu	(0x40, sp), d2
-GraphFltSe_L3b9:
+GraphAmpEnvSe_L3b9:
 	mov	(0x3c, sp), a0
 	mov	(0x20, sp), d0
 	movhu	(0x52, sp), d1
@@ -427086,16 +427085,16 @@ GraphFltSe_L3b9:
 	mov	d1, d2
 	exthu	d1
 	cmp	0, d1
-	bne	GraphFltSe_L3e3
+	bne	GraphAmpEnvSe_L3e3
 	exthu	d0
 	add	0x2710, d0
-	bra	GraphFltSe_L3ed
-GraphFltSe_L3e3:
+	bra	GraphAmpEnvSe_L3ed
+GraphAmpEnvSe_L3e3:
 	exthu	d0
 	exthu	d2
 	mov	d2, d1
 	call	LibDiv32, 0, 0
-GraphFltSe_L3ed:
+GraphAmpEnvSe_L3ed:
 	exthu	d0
 	mov	(0x30, sp), d1
 	call	LibDiv32, 0, 0
@@ -427116,25 +427115,25 @@ GraphFltSe_L3ed:
 	exthu	d0
 	call	func_4C0F3F8E_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
-	bra	GraphFltSe_L41b
-# GraphFltSe + 0x418: no traced path reaches what follows (--decode-gaps)
-	bra	GraphFltSe_L41b
-GraphFltSe_L41a:
+	bra	GraphAmpEnvSe_L41b
+# GraphAmpEnvSe + 0x418: no traced path reaches what follows (--decode-gaps)
+	bra	GraphAmpEnvSe_L41b
+GraphAmpEnvSe_L41a:
 	clr	d0
-GraphFltSe_L41b:
+GraphAmpEnvSe_L41b:
 	ret	[d2,d3,a2,a3], 0x74
 
-GraphEqSe:
+DrumGraphAmpEnvSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x68, sp
 	cmp	MT_Draw, d1
-	beq	GraphEqSe_L1b
+	beq	DrumGraphAmpEnvSe_L1b
 	cmp	0x1800000, d1
-	bne	GraphEqSe_L18
+	bne	DrumGraphAmpEnvSe_L18
 	ret	[d2,d3,a2,a3], 0x78
-GraphEqSe_L18:
-	jmp	GraphEqSe_L4b4
-GraphEqSe_L1b:
+DrumGraphAmpEnvSe_L18:
+	jmp	DrumGraphAmpEnvSe_L4b4
+DrumGraphAmpEnvSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
 	add	0x50, a0
@@ -427343,14 +427342,14 @@ GraphEqSe_L1b:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x48, sp), d0
 	cmp	0, d0
-	bne	GraphEqSe_L1ec
+	bne	DrumGraphAmpEnvSe_L1ec
 	mov	(0x20, sp), a0
 	clr	d0
 	movbu	d0, (a0)
 	mov	(0x38, sp), a0
 	movbu	d0, (a0)
-	bra	GraphEqSe_L211
-GraphEqSe_L1ec:
+	bra	DrumGraphAmpEnvSe_L211
+DrumGraphAmpEnvSe_L1ec:
 	movhu	(0x46, sp), d1
 	mov	sp, a0
 	movhu	d1, (0x60, sp)
@@ -427364,7 +427363,7 @@ GraphEqSe_L1ec:
 	add	0x64, a1
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
-GraphEqSe_L211:
+DrumGraphAmpEnvSe_L211:
 	movbu	(0x59, sp), d0
 	mov	a2, d1
 	exthu	d1
@@ -427390,18 +427389,18 @@ GraphEqSe_L211:
 	mov	d1, d2
 	exthu	d2
 	cmp	0, d2
-	bne	GraphEqSe_L24b
+	bne	DrumGraphAmpEnvSe_L24b
 	exthu	d0
 	add	0x2710, d0
 	movhu	d0, (0x42, sp)
 	clr	d3
-	bra	GraphEqSe_L257
-GraphEqSe_L24b:
+	bra	DrumGraphAmpEnvSe_L257
+DrumGraphAmpEnvSe_L24b:
 	exthu	d0
 	exthu	d1
 	call	LibDiv32, 0, 0
 	movhu	d0, (0x42, sp)
-GraphEqSe_L257:
+DrumGraphAmpEnvSe_L257:
 	movbu	(a3), d0
 	mov	a2, d1
 	exthu	d0
@@ -427420,15 +427419,15 @@ GraphEqSe_L257:
 	mov	d3, (0x30, sp)
 	mov	d3, d2
 	cmp	d2, d1
-	blt	GraphEqSe_L284
+	blt	DrumGraphAmpEnvSe_L284
 	sub	d2, d1
 	exthu	d0
 	nop
 	nop
 	mul	d0, d1
 	mov	d1, d0
-	bra	GraphEqSe_L28d
-GraphEqSe_L284:
+	bra	DrumGraphAmpEnvSe_L28d
+DrumGraphAmpEnvSe_L284:
 	sub	d1, d2
 	mov	d2, d1
 	exthu	d0
@@ -427436,26 +427435,26 @@ GraphEqSe_L284:
 	nop
 	mul	d0, d1
 	mov	d1, d0
-GraphEqSe_L28d:
+DrumGraphAmpEnvSe_L28d:
 	movbu	(a0), d1
 	mov	0x64, d2
 	sub	d1, d2
 	mov	d2, d1
 	exthu	d1
 	cmp	0, d1
-	bne	GraphEqSe_L2a5
+	bne	DrumGraphAmpEnvSe_L2a5
 	exthu	d0
 	add	0x2710, d0
 	movhu	d0, (0x40, sp)
 	mov	d3, a3
-	bra	GraphEqSe_L2b2
-GraphEqSe_L2a5:
+	bra	DrumGraphAmpEnvSe_L2b2
+DrumGraphAmpEnvSe_L2a5:
 	exthu	d0
 	exthu	d2
 	mov	d2, d1
 	call	LibDiv32, 0, 0
 	movhu	d0, (0x40, sp)
-GraphEqSe_L2b2:
+DrumGraphAmpEnvSe_L2b2:
 	mov	(0x20, sp), a0
 	mov	a2, d1
 	movbu	(a0), d0
@@ -427475,15 +427474,15 @@ GraphEqSe_L2b2:
 	exthu	d2
 	mov	d2, (0x2c, sp)
 	cmp	d2, d1
-	blt	GraphEqSe_L2e0
+	blt	DrumGraphAmpEnvSe_L2e0
 	sub	d2, d1
 	exthu	d0
 	nop
 	nop
 	mul	d0, d1
 	mov	d1, d0
-	bra	GraphEqSe_L2e9
-GraphEqSe_L2e0:
+	bra	DrumGraphAmpEnvSe_L2e9
+DrumGraphAmpEnvSe_L2e0:
 	sub	d1, d2
 	mov	d2, d1
 	exthu	d0
@@ -427491,26 +427490,26 @@ GraphEqSe_L2e0:
 	nop
 	mul	d0, d1
 	mov	d1, d0
-GraphEqSe_L2e9:
+DrumGraphAmpEnvSe_L2e9:
 	movbu	(a0), d1
 	mov	0x64, d2
 	sub	d1, d2
 	mov	d2, d1
 	exthu	d1
 	cmp	0, d1
-	bne	GraphEqSe_L300
+	bne	DrumGraphAmpEnvSe_L300
 	exthu	d0
 	add	0x2710, d0
 	mov	d0, a2
 	mov	a3, d3
-	bra	GraphEqSe_L30c
-GraphEqSe_L300:
+	bra	DrumGraphAmpEnvSe_L30c
+DrumGraphAmpEnvSe_L300:
 	exthu	d0
 	exthu	d2
 	mov	d2, d1
 	call	LibDiv32, 0, 0
 	mov	d0, a2
-GraphEqSe_L30c:
+DrumGraphAmpEnvSe_L30c:
 	mov	(0x38, sp), a0
 	exthu	d3
 	movbu	(a0), d2
@@ -427526,18 +427525,18 @@ GraphEqSe_L30c:
 	mov	d1, d0
 	exthu	d0
 	cmp	0, d0
-	bne	GraphEqSe_L32e
+	bne	DrumGraphAmpEnvSe_L32e
 	mov	d2, d3
 	exthu	d3
 	add	0x2710, d3
-	bra	GraphEqSe_L339
-GraphEqSe_L32e:
+	bra	DrumGraphAmpEnvSe_L339
+DrumGraphAmpEnvSe_L32e:
 	exthu	d2
 	exthu	d1
 	mov	d2, d0
 	call	LibDiv32, 0, 0
 	mov	d0, d3
-GraphEqSe_L339:
+DrumGraphAmpEnvSe_L339:
 	movhu	(0x42, sp), d0
 	exthu	d3
 	mov	d0, a3
@@ -427563,15 +427562,15 @@ GraphEqSe_L339:
 	mov	d3, d1
 	exthu	d1
 	cmp	d1, d2
-	bge	GraphEqSe_L36f
+	bge	DrumGraphAmpEnvSe_L36f
 	mov	d3, d0
-GraphEqSe_L36f:
+DrumGraphAmpEnvSe_L36f:
 	mov	d0, d1
 	extbu	d1
 	cmp	5, d1
-	ble	GraphEqSe_L377
+	ble	DrumGraphAmpEnvSe_L377
 	mov	5, d0
-GraphEqSe_L377:
+DrumGraphAmpEnvSe_L377:
 	extbu	d0
 	inc	d0
 	extbu	d0
@@ -427637,7 +427636,7 @@ GraphEqSe_L377:
 	mov	d0, d1
 	exthu	d0
 	cmp	0, d0
-	bne	GraphEqSe_L456
+	bne	DrumGraphAmpEnvSe_L456
 	mov	(0x24, sp), d0
 	mov	d3, d1
 	mov	d0, (0x10, sp)
@@ -427654,7 +427653,7 @@ GraphEqSe_L377:
 	mov	d0, d1
 	exthu	d0
 	cmp	0, d0
-	bne	GraphEqSe_L456
+	bne	DrumGraphAmpEnvSe_L456
 	movhu	(0x42, sp), d3
 	mov	a2, d1
 	mov	d3, (0x10, sp)
@@ -427669,7 +427668,7 @@ GraphEqSe_L377:
 	mov	d0, d1
 	exthu	d0
 	cmp	0, d0
-	bne	GraphEqSe_L456
+	bne	DrumGraphAmpEnvSe_L456
 	mov	a3, (0x10, sp)
 	mov	d2, (0x14, sp)
 	mov	a3, (0x18, sp)
@@ -427680,7 +427679,7 @@ GraphEqSe_L377:
 	mov	d3, d0
 	call	func_4C0F3F8E_entry, [d2,d3,a2,a3], 0x2c
 	movhu	(0x40, sp), d1
-GraphEqSe_L456:
+DrumGraphAmpEnvSe_L456:
 	mov	(0x38, sp), a0
 	mov	a3, d0
 	inc	d0
@@ -427701,15 +427700,15 @@ GraphEqSe_L456:
 	mov	d1, d2
 	exthu	d2
 	cmp	0, d2
-	bne	GraphEqSe_L47f
+	bne	DrumGraphAmpEnvSe_L47f
 	exthu	d0
 	add	0x2710, d0
-	bra	GraphEqSe_L488
-GraphEqSe_L47f:
+	bra	DrumGraphAmpEnvSe_L488
+DrumGraphAmpEnvSe_L47f:
 	exthu	d0
 	exthu	d1
 	call	LibDiv32, 0, 0
-GraphEqSe_L488:
+DrumGraphAmpEnvSe_L488:
 	exthu	d0
 	mov	(0x28, sp), d1
 	call	LibDiv32, 0, 0
@@ -427729,12 +427728,12 @@ GraphEqSe_L488:
 	exthu	d0
 	call	func_4C0F3F8E_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
-	bra	GraphEqSe_L4b5
-# GraphEqSe + 0x4b2: no traced path reaches what follows (--decode-gaps)
-	bra	GraphEqSe_L4b5
-GraphEqSe_L4b4:
+	bra	DrumGraphAmpEnvSe_L4b5
+# DrumGraphAmpEnvSe + 0x4b2: no traced path reaches what follows (--decode-gaps)
+	bra	DrumGraphAmpEnvSe_L4b5
+DrumGraphAmpEnvSe_L4b4:
 	clr	d0
-GraphEqSe_L4b5:
+DrumGraphAmpEnvSe_L4b5:
 	ret	[d2,d3,a2,a3], 0x78
 
 func_4C0F3F8E:
@@ -427938,17 +427937,17 @@ func_4C0F404A_entry_L9e:
 	mov	a2, d0
 	ret	[d2,d3,a2,a3], 0x30
 
-DrumGraphFltSe:
+GraphPitEnvSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x74, sp
 	cmp	MT_Draw, d1
-	beq	DrumGraphFltSe_L1b
+	beq	GraphPitEnvSe_L1b
 	cmp	0x1800000, d1
-	bne	DrumGraphFltSe_L18
+	bne	GraphPitEnvSe_L18
 	ret	[d2,d3,a2,a3], 0x84
-DrumGraphFltSe_L18:
-	jmp	DrumGraphFltSe_L6b7
-DrumGraphFltSe_L1b:
+GraphPitEnvSe_L18:
+	jmp	GraphPitEnvSe_L6b7
+GraphPitEnvSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
 	add	0x54, a0
@@ -428176,19 +428175,19 @@ DrumGraphFltSe_L1b:
 	mov	d1, d2
 	extbu	d2
 	cmp	0, d2
-	bne	DrumGraphFltSe_L23b
+	bne	GraphPitEnvSe_L23b
 	exth	d0
 	add	0x2710, d0
 	movhu	d0, (0x3e, sp)
 	movhu	(0x4c, sp), d0
 	movhu	d0, (0x46, sp)
-	bra	DrumGraphFltSe_L247
-DrumGraphFltSe_L23b:
+	bra	GraphPitEnvSe_L247
+GraphPitEnvSe_L23b:
 	exth	d0
 	extbu	d1
 	call	LibDiv32, 0, 0
 	movhu	d0, (0x3e, sp)
-DrumGraphFltSe_L247:
+GraphPitEnvSe_L247:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	2, a2
 	add	d3, a2
@@ -428263,19 +428262,19 @@ DrumGraphFltSe_L247:
 	mov	d1, d2
 	extbu	d2
 	cmp	0, d2
-	bne	DrumGraphFltSe_L2f7
+	bne	GraphPitEnvSe_L2f7
 	exth	d0
 	add	0x2710, d0
 	mov	d0, a3
 	movhu	(0x46, sp), d0
 	movhu	d0, (0x44, sp)
-	bra	DrumGraphFltSe_L302
-DrumGraphFltSe_L2f7:
+	bra	GraphPitEnvSe_L302
+GraphPitEnvSe_L2f7:
 	exth	d0
 	extbu	d1
 	call	LibDiv32, 0, 0
 	mov	d0, a3
-DrumGraphFltSe_L302:
+GraphPitEnvSe_L302:
 	mov	3, d0
 	add	d3, d0
 	mov	d0, (0x2c, sp)
@@ -428351,19 +428350,19 @@ DrumGraphFltSe_L302:
 	mov	d1, d2
 	extbu	d2
 	cmp	0, d2
-	bne	DrumGraphFltSe_L3b7
+	bne	GraphPitEnvSe_L3b7
 	exth	d0
 	add	0x2710, d0
 	movhu	d0, (0x3c, sp)
 	movhu	(0x44, sp), d0
 	movhu	d0, (0x40, sp)
-	bra	DrumGraphFltSe_L3c3
-DrumGraphFltSe_L3b7:
+	bra	GraphPitEnvSe_L3c3
+GraphPitEnvSe_L3b7:
 	exth	d0
 	extbu	d1
 	call	LibDiv32, 0, 0
 	movhu	d0, (0x3c, sp)
-DrumGraphFltSe_L3c3:
+GraphPitEnvSe_L3c3:
 	add	4, d3
 	mov	d3, (0x24, sp)
 	movbu	(MdSoundEdit_L132_Var_3), d0
@@ -428443,19 +428442,19 @@ DrumGraphFltSe_L3c3:
 	mov	d1, d2
 	extbu	d2
 	cmp	0, d2
-	bne	DrumGraphFltSe_L47f
+	bne	GraphPitEnvSe_L47f
 	exth	d0
 	mov	0x2710, d3
 	add	d0, d3
 	movhu	(0x40, sp), d0
 	movhu	d0, (0x42, sp)
-	bra	DrumGraphFltSe_L489
-DrumGraphFltSe_L47f:
+	bra	GraphPitEnvSe_L489
+GraphPitEnvSe_L47f:
 	exth	d0
 	extbu	d1
 	call	LibDiv32, 0, 0
 	mov	d0, d3
-DrumGraphFltSe_L489:
+GraphPitEnvSe_L489:
 	movhu	(0x3e, sp), d0
 	exthu	d3
 	exth	d0
@@ -428481,23 +428480,23 @@ DrumGraphFltSe_L489:
 	mov	d2, d1
 	exthu	d1
 	cmp	5, d1
-	ble	DrumGraphFltSe_L4c1
+	ble	GraphPitEnvSe_L4c1
 	mov	5, d2
-DrumGraphFltSe_L4c1:
+GraphPitEnvSe_L4c1:
 	mov	d0, d1
 	exthu	d1
 	cmp	5, d1
-	ble	DrumGraphFltSe_L4c9
+	ble	GraphPitEnvSe_L4c9
 	mov	5, d3
-DrumGraphFltSe_L4c9:
+GraphPitEnvSe_L4c9:
 	mov	d2, d0
 	exthu	d2
 	mov	d3, d1
 	exthu	d1
 	cmp	d1, d2
-	bge	DrumGraphFltSe_L4d1
+	bge	GraphPitEnvSe_L4d1
 	mov	d3, d0
-DrumGraphFltSe_L4d1:
+GraphPitEnvSe_L4d1:
 	extbu	d0
 	inc	d0
 	extbu	d0
@@ -428582,7 +428581,7 @@ DrumGraphFltSe_L4d1:
 	mov	d0, d1
 	exthu	d0
 	cmp	0, d0
-	bne	DrumGraphFltSe_L5e3
+	bne	GraphPitEnvSe_L5e3
 	mov	a2, d0
 	exthu	d0
 	mov	d0, (0x10, sp)
@@ -428602,7 +428601,7 @@ DrumGraphFltSe_L4d1:
 	mov	d0, d1
 	exthu	d0
 	cmp	0, d0
-	bne	DrumGraphFltSe_L5e3
+	bne	GraphPitEnvSe_L5e3
 	movhu	(0x3e, sp), d3
 	mov	a3, d1
 	mov	d3, d0
@@ -428624,7 +428623,7 @@ DrumGraphFltSe_L4d1:
 	mov	d0, d1
 	exthu	d0
 	cmp	0, d0
-	bne	DrumGraphFltSe_L5e3
+	bne	GraphPitEnvSe_L5e3
 	mov	(0x20, sp), d0
 	exthu	d3
 	mov	d0, (0x10, sp)
@@ -428641,7 +428640,7 @@ DrumGraphFltSe_L4d1:
 	mov	d3, d0
 	call	func_4C0F3F8E_entry, [d2,d3,a2,a3], 0x2c
 	mov	d2, d1
-DrumGraphFltSe_L5e3:
+GraphPitEnvSe_L5e3:
 	mov	(0x20, sp), d0
 	mov	(0x2c, sp), a0
 	exthu	d1
@@ -428692,17 +428691,17 @@ DrumGraphFltSe_L5e3:
 	mov	d1, d2
 	extbu	d2
 	cmp	0, d2
-	bne	DrumGraphFltSe_L657
+	bne	GraphPitEnvSe_L657
 	movhu	(0x3c, sp), d1
 	exth	d0
 	add	0x2710, d0
 	movhu	d1, (0x40, sp)
-	bra	DrumGraphFltSe_L660
-DrumGraphFltSe_L657:
+	bra	GraphPitEnvSe_L660
+GraphPitEnvSe_L657:
 	exth	d0
 	extbu	d1
 	call	LibDiv32, 0, 0
-DrumGraphFltSe_L660:
+GraphPitEnvSe_L660:
 	exth	d0
 	mov	(0x28, sp), d1
 	call	LibDiv32, 0, 0
@@ -428728,7 +428727,7 @@ DrumGraphFltSe_L660:
 	call	func_4C0F3F8E_entry, [d2,d3,a2,a3], 0x2c
 	exthu	d0
 	cmp	0, d0
-	bne	DrumGraphFltSe_L6b2
+	bne	GraphPitEnvSe_L6b2
 	movhu	(0x58, sp), d0
 	exth	d3
 	exthu	d0
@@ -428747,14 +428746,14 @@ DrumGraphFltSe_L660:
 	exthu	d0
 	mov	d2, d1
 	call	func_4C0F3F8E_entry, [d2,d3,a2,a3], 0x2c
-DrumGraphFltSe_L6b2:
+GraphPitEnvSe_L6b2:
 	clr	d0
-	bra	DrumGraphFltSe_L6b8
-# DrumGraphFltSe + 0x6b5: no traced path reaches what follows (--decode-gaps)
-	bra	DrumGraphFltSe_L6b8
-DrumGraphFltSe_L6b7:
+	bra	GraphPitEnvSe_L6b8
+# GraphPitEnvSe + 0x6b5: no traced path reaches what follows (--decode-gaps)
+	bra	GraphPitEnvSe_L6b8
+GraphPitEnvSe_L6b7:
 	clr	d0
-DrumGraphFltSe_L6b8:
+GraphPitEnvSe_L6b8:
 	ret	[d2,d3,a2,a3], 0x84
 
 func_4C0F47D6:
@@ -428825,17 +428824,17 @@ func_4C0F47D6_entry_L5f:
 	movbu	d0, (a2)
 	ret	[d2,a2], 0x20
 
-DrumGraphEqSe:
+GraphFltEnvSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x7c, sp
 	cmp	MT_Draw, d1
-	beq	DrumGraphEqSe_L1b
+	beq	GraphFltEnvSe_L1b
 	cmp	0x1800000, d1
-	bne	DrumGraphEqSe_L18
+	bne	GraphFltEnvSe_L18
 	ret	[d2,d3,a2,a3], 0x8c
-DrumGraphEqSe_L18:
-	jmp	DrumGraphEqSe_L5ec
-DrumGraphEqSe_L1b:
+GraphFltEnvSe_L18:
+	jmp	GraphFltEnvSe_L5ec
+GraphFltEnvSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
 	add	0x5c, a0
@@ -429040,19 +429039,19 @@ DrumGraphEqSe_L1b:
 	mov	d1, d2
 	extbu	d2
 	cmp	0, d2
-	bne	DrumGraphEqSe_L1fd
+	bne	GraphFltEnvSe_L1fd
 	exth	d0
 	add	0x2710, d0
 	movhu	d0, (0x4c, sp)
 	movhu	(0x54, sp), d0
 	movhu	d0, (0x4e, sp)
-	bra	DrumGraphEqSe_L209
-DrumGraphEqSe_L1fd:
+	bra	GraphFltEnvSe_L209
+GraphFltEnvSe_L1fd:
 	exth	d0
 	extbu	d1
 	call	LibDiv32, 0, 0
 	movhu	d0, (0x4c, sp)
-DrumGraphEqSe_L209:
+GraphFltEnvSe_L209:
 	mov	(0x28, sp), a2
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	add	2, a2
@@ -429099,21 +429098,21 @@ DrumGraphEqSe_L209:
 	mov	d1, d0
 	extbu	d0
 	cmp	0, d0
-	bne	DrumGraphEqSe_L277
+	bne	GraphFltEnvSe_L277
 	movhu	(0x4e, sp), d0
 	exth	d3
 	movhu	d0, (0x4a, sp)
 	mov	0x2710, d0
 	add	d3, d0
 	mov	d0, a3
-	bra	DrumGraphEqSe_L283
-DrumGraphEqSe_L277:
+	bra	GraphFltEnvSe_L283
+GraphFltEnvSe_L277:
 	exth	d3
 	extbu	d1
 	mov	d3, d0
 	call	LibDiv32, 0, 0
 	mov	d0, a3
-DrumGraphEqSe_L283:
+GraphFltEnvSe_L283:
 	mov	(0x28, sp), d0
 	mov	0x7a, d1
 	add	3, d0
@@ -429163,19 +429162,19 @@ DrumGraphEqSe_L283:
 	mov	d1, d2
 	extbu	d2
 	cmp	0, d2
-	bne	DrumGraphEqSe_L2f9
+	bne	GraphFltEnvSe_L2f9
 	exth	d0
 	add	0x2710, d0
 	movhu	d0, (0x44, sp)
 	movhu	(0x4a, sp), d0
 	movhu	d0, (0x48, sp)
-	bra	DrumGraphEqSe_L305
-DrumGraphEqSe_L2f9:
+	bra	GraphFltEnvSe_L305
+GraphFltEnvSe_L2f9:
 	exth	d0
 	extbu	d1
 	call	LibDiv32, 0, 0
 	movhu	d0, (0x44, sp)
-DrumGraphEqSe_L305:
+GraphFltEnvSe_L305:
 	mov	(0x28, sp), d0
 	mov	0x7a, d1
 	add	4, d0
@@ -429226,19 +429225,19 @@ DrumGraphEqSe_L305:
 	mov	d0, d1
 	extbu	d0
 	cmp	0, d0
-	bne	DrumGraphEqSe_L37a
+	bne	GraphFltEnvSe_L37a
 	movhu	(0x48, sp), d0
 	exth	d3
 	add	0x2710, d3
 	movhu	d0, (0x46, sp)
-	bra	DrumGraphEqSe_L385
-DrumGraphEqSe_L37a:
+	bra	GraphFltEnvSe_L385
+GraphFltEnvSe_L37a:
 	exth	d3
 	extbu	d1
 	mov	d3, d0
 	call	LibDiv32, 0, 0
 	mov	d0, d3
-DrumGraphEqSe_L385:
+GraphFltEnvSe_L385:
 	movhu	(0x4c, sp), d0
 	exthu	d3
 	exth	d0
@@ -429264,23 +429263,23 @@ DrumGraphEqSe_L385:
 	mov	d2, d1
 	exthu	d1
 	cmp	5, d1
-	ble	DrumGraphEqSe_L3bd
+	ble	GraphFltEnvSe_L3bd
 	mov	5, d2
-DrumGraphEqSe_L3bd:
+GraphFltEnvSe_L3bd:
 	mov	d0, d1
 	exthu	d1
 	cmp	5, d1
-	ble	DrumGraphEqSe_L3c5
+	ble	GraphFltEnvSe_L3c5
 	mov	5, d3
-DrumGraphEqSe_L3c5:
+GraphFltEnvSe_L3c5:
 	mov	d2, d0
 	exthu	d2
 	mov	d3, d1
 	exthu	d1
 	cmp	d1, d2
-	bge	DrumGraphEqSe_L3cd
+	bge	GraphFltEnvSe_L3cd
 	mov	d3, d0
-DrumGraphEqSe_L3cd:
+GraphFltEnvSe_L3cd:
 	extbu	d0
 	inc	d0
 	extbu	d0
@@ -429378,9 +429377,9 @@ DrumGraphEqSe_L3cd:
 	mov	d0, d1
 	exthu	d0
 	cmp	0, d0
-	beq	DrumGraphEqSe_L491
-	jmp	DrumGraphEqSe_L528
-DrumGraphEqSe_L491:
+	beq	GraphFltEnvSe_L491
+	jmp	GraphFltEnvSe_L528
+GraphFltEnvSe_L491:
 	exthu	d3
 	mov	d3, (0x24, sp)
 	movhu	(0x44, sp), d3
@@ -429412,7 +429411,7 @@ DrumGraphEqSe_L491:
 	mov	d0, d1
 	exthu	d0
 	cmp	0, d0
-	bne	DrumGraphEqSe_L528
+	bne	GraphFltEnvSe_L528
 	movhu	(0x48, sp), d0
 	exthu	d3
 	mov	d3, (0x24, sp)
@@ -429444,7 +429443,7 @@ DrumGraphEqSe_L491:
 	mov	d0, d1
 	exthu	d0
 	cmp	0, d0
-	bne	DrumGraphEqSe_L528
+	bne	GraphFltEnvSe_L528
 	exthu	d2
 	mov	d2, d0
 	mov	a2, d3
@@ -429469,7 +429468,7 @@ DrumGraphEqSe_L491:
 	mov	d3, d1
 	call	func_4C0F404A_entry, [d2,d3,a2,a3], 0x30
 	mov	a2, d1
-DrumGraphEqSe_L528:
+GraphFltEnvSe_L528:
 	mov	a3, d0
 	inc	d0
 	movhu	d0, (0x44, sp)
@@ -429503,19 +429502,19 @@ DrumGraphEqSe_L528:
 	mov	d0, d1
 	extbu	d0
 	cmp	0, d0
-	bne	DrumGraphEqSe_L573
+	bne	GraphFltEnvSe_L573
 	movhu	(0x48, sp), d1
 	exth	d3
 	movhu	d1, (0x46, sp)
 	mov	0x2710, d0
 	add	d3, d0
-	bra	DrumGraphEqSe_L57d
-DrumGraphEqSe_L573:
+	bra	GraphFltEnvSe_L57d
+GraphFltEnvSe_L573:
 	exth	d3
 	extbu	d1
 	mov	d3, d0
 	call	LibDiv32, 0, 0
-DrumGraphEqSe_L57d:
+GraphFltEnvSe_L57d:
 	exth	d0
 	mov	(0x2c, sp), d1
 	call	LibDiv32, 0, 0
@@ -429549,7 +429548,7 @@ DrumGraphEqSe_L57d:
 	call	func_4C0F404A_entry, [d2,d3,a2,a3], 0x30
 	exthu	d0
 	cmp	0, d0
-	bne	DrumGraphEqSe_L5e7
+	bne	GraphFltEnvSe_L5e7
 	movhu	(0x60, sp), d0
 	exth	d3
 	inc	d3
@@ -429575,14 +429574,14 @@ DrumGraphEqSe_L57d:
 	lne
 	mov	d3, d0
 	call	func_4C0F404A_entry, [d2,d3,a2,a3], 0x30
-DrumGraphEqSe_L5e7:
+GraphFltEnvSe_L5e7:
 	clr	d0
-	bra	DrumGraphEqSe_L5ed
-# DrumGraphEqSe + 0x5ea: no traced path reaches what follows (--decode-gaps)
-	bra	DrumGraphEqSe_L5ed
-DrumGraphEqSe_L5ec:
+	bra	GraphFltEnvSe_L5ed
+# GraphFltEnvSe + 0x5ea: no traced path reaches what follows (--decode-gaps)
+	bra	GraphFltEnvSe_L5ed
+GraphFltEnvSe_L5ec:
 	clr	d0
-DrumGraphEqSe_L5ed:
+GraphFltEnvSe_L5ed:
 	ret	[d2,d3,a2,a3], 0x8c
 
 func_4C0F4E39:
@@ -429942,17 +429941,17 @@ func_4C0F50C0_entry:
 	call	LibDiv32, 0, 0
 	ret	0, 0x10
 
-EnvKfGraphTitleSe:
+GraphFltSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x54, sp
 	cmp	MT_Draw, d1
-	beq	EnvKfGraphTitleSe_L1b
+	beq	GraphFltSe_L1b
 	cmp	0x1800000, d1
-	bne	EnvKfGraphTitleSe_L18
+	bne	GraphFltSe_L18
 	ret	[d2,d3,a2,a3], 0x64
-EnvKfGraphTitleSe_L18:
-	jmp	EnvKfGraphTitleSe_L6a8
-EnvKfGraphTitleSe_L1b:
+GraphFltSe_L18:
+	jmp	GraphFltSe_L6a8
+GraphFltSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
 	add	0x44, a0
@@ -430002,11 +430001,11 @@ EnvKfGraphTitleSe_L1b:
 	extbu	d0
 	mov	d0, a3
 	cmp	0, a3
-	beq	EnvKfGraphTitleSe_Lac
+	beq	GraphFltSe_Lac
 	cmp	7, d0
-	beq	EnvKfGraphTitleSe_Ld4
-	jmp	EnvKfGraphTitleSe_L3ce
-EnvKfGraphTitleSe_Lac:
+	beq	GraphFltSe_Ld4
+	jmp	GraphFltSe_L3ce
+GraphFltSe_Lac:
 	movhu	(0x44, sp), d0
 	mov	sp, a0
 	movhu	d0, (0x4c, sp)
@@ -430020,8 +430019,8 @@ EnvKfGraphTitleSe_Lac:
 	add	0x50, a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-	jmp	EnvKfGraphTitleSe_L6a3
-EnvKfGraphTitleSe_Ld4:
+	jmp	GraphFltSe_L6a3
+GraphFltSe_Ld4:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	sp, a0
 	add	0x40, a0
@@ -430075,12 +430074,12 @@ EnvKfGraphTitleSe_Ld4:
 	movbu	(0x40, sp), d1
 	movbu	(0x42, sp), d0
 	cmp	d0, d1
-	blt	EnvKfGraphTitleSe_L152
+	blt	GraphFltSe_L152
 	mov	0x4f, d0
 	movbu	d0, (0x40, sp)
 	mov	0x50, d0
 	movbu	d0, (0x42, sp)
-EnvKfGraphTitleSe_L152:
+GraphFltSe_L152:
 	movhu	(0x4a, sp), d0
 	mov	0x80, a3
 	movhu	d0, (0x3a, sp)
@@ -430159,10 +430158,10 @@ EnvKfGraphTitleSe_L152:
 	add	d0, d0
 	sub	a3, d1
 	cmp	d0, d1
-	blt	EnvKfGraphTitleSe_L211
+	blt	GraphFltSe_L211
 	clr	d0
 	movbu	d0, (0x28, sp)
-EnvKfGraphTitleSe_L211:
+GraphFltSe_L211:
 	mov	(0x14, sp), d0
 	movhu	(0x2e, sp), d1
 	asl2	d0
@@ -430172,13 +430171,13 @@ EnvKfGraphTitleSe_L211:
 	mov	a3, d0
 	sub	d2, d0
 	cmp	d1, d0
-	blt	EnvKfGraphTitleSe_L22d
+	blt	GraphFltSe_L22d
 	mov	a3, d0
 	sub	d2, d0
 	mov	d0, a2
 	movhu	(0x3a, sp), d0
-	bra	EnvKfGraphTitleSe_L24d
-EnvKfGraphTitleSe_L22d:
+	bra	GraphFltSe_L24d
+GraphFltSe_L22d:
 	movhu	(0x2c, sp), d3
 	movhu	(0x2e, sp), d0
 	movhu	(0x3a, sp), d2
@@ -430193,7 +430192,7 @@ EnvKfGraphTitleSe_L22d:
 	mov	d2, d0
 	call	LibDiv32, 0, 0
 	add	d3, d0
-EnvKfGraphTitleSe_L24d:
+GraphFltSe_L24d:
 	mov	sp, a0
 	mov	a0, d1
 	add	0x4c, d1
@@ -430218,11 +430217,11 @@ EnvKfGraphTitleSe_L24d:
 	call	DrawLine_entry, [d2,a2,a3], 0x20
 	movbu	(0x28, sp), d0
 	cmp	1, d0
-	beq	EnvKfGraphTitleSe_L296
+	beq	GraphFltSe_L296
 	cmp	0, d0
-	beq	EnvKfGraphTitleSe_L2be
-	jmp	EnvKfGraphTitleSe_L32f
-EnvKfGraphTitleSe_L296:
+	beq	GraphFltSe_L2be
+	jmp	GraphFltSe_L32f
+GraphFltSe_L296:
 	movhu	(0x2e, sp), d0
 	movhu	d0, (0x4c, sp)
 	movhu	(0x2c, sp), d0
@@ -430235,8 +430234,8 @@ EnvKfGraphTitleSe_L296:
 	mov	(0x18, sp), a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-	bra	EnvKfGraphTitleSe_L32f
-EnvKfGraphTitleSe_L2be:
+	bra	GraphFltSe_L32f
+GraphFltSe_L2be:
 	movhu	(0x2e, sp), d0
 	movhu	d0, (0x4c, sp)
 	movhu	(0x2c, sp), d0
@@ -430276,20 +430275,20 @@ EnvKfGraphTitleSe_L2be:
 	mov	(0x18, sp), a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-EnvKfGraphTitleSe_L32f:
+GraphFltSe_L32f:
 	mov	(0x20, sp), d2
 	movhu	(0x3c, sp), d0
 	mov	(0x24, sp), d1
 	add	d1, d2
 	cmp	d0, d2
-	bgt	EnvKfGraphTitleSe_L345
+	bgt	GraphFltSe_L345
 	mov	d1, d0
 	mov	(0x20, sp), d1
 	add	d1, d0
 	mov	d0, a2
 	movhu	(0x3a, sp), d0
-	bra	EnvKfGraphTitleSe_L365
-EnvKfGraphTitleSe_L345:
+	bra	GraphFltSe_L365
+GraphFltSe_L345:
 	movhu	(0x30, sp), d3
 	movhu	(0x3c, sp), d1
 	movhu	(0x3a, sp), d2
@@ -430304,7 +430303,7 @@ EnvKfGraphTitleSe_L345:
 	mov	d2, d0
 	call	LibDiv32, 0, 0
 	add	d3, d0
-EnvKfGraphTitleSe_L365:
+GraphFltSe_L365:
 	movhu	(0x34, sp), d3
 	movhu	d3, (0x4c, sp)
 	movhu	(0x30, sp), d1
@@ -430338,8 +430337,8 @@ EnvKfGraphTitleSe_L365:
 	mov	(0x18, sp), a1
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
-	jmp	EnvKfGraphTitleSe_L6a3
-EnvKfGraphTitleSe_L3ce:
+	jmp	GraphFltSe_L6a3
+GraphFltSe_L3ce:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	sp, a0
 	add	0x40, a0
@@ -430388,19 +430387,19 @@ EnvKfGraphTitleSe_L3ce:
 	add	d0, d3
 	movhu	d3, (0x32, sp)
 	cmp	1, a3
-	beq	EnvKfGraphTitleSe_L452
+	beq	GraphFltSe_L452
 	cmp	2, a3
-	beq	EnvKfGraphTitleSe_L452
+	beq	GraphFltSe_L452
 	cmp	4, a3
-	beq	EnvKfGraphTitleSe_L452
+	beq	GraphFltSe_L452
 	cmp	5, a3
-	beq	EnvKfGraphTitleSe_L452
+	beq	GraphFltSe_L452
 	cmp	3, a3
-	beq	EnvKfGraphTitleSe_L480
+	beq	GraphFltSe_L480
 	cmp	6, a3
-	beq	EnvKfGraphTitleSe_L480
-	bra	EnvKfGraphTitleSe_L4ab
-EnvKfGraphTitleSe_L452:
+	beq	GraphFltSe_L480
+	bra	GraphFltSe_L4ab
+GraphFltSe_L452:
 	movhu	(0x3e, sp), d2
 	movbu	(0x41, sp), d3
 	mov	d2, d0
@@ -430418,8 +430417,8 @@ EnvKfGraphTitleSe_L452:
 	add	a2, d0
 	sub	d1, d0
 	movhu	d0, (0x2e, sp)
-	bra	EnvKfGraphTitleSe_L4ab
-EnvKfGraphTitleSe_L480:
+	bra	GraphFltSe_L4ab
+GraphFltSe_L480:
 	movhu	(0x2e, sp), d2
 	movbu	(0x41, sp), d3
 	mov	d2, d0
@@ -430436,27 +430435,27 @@ EnvKfGraphTitleSe_L480:
 	add	a2, d1
 	sub	d0, d1
 	movhu	d1, (0x2e, sp)
-EnvKfGraphTitleSe_L4ab:
+GraphFltSe_L4ab:
 	cmp	1, a3
-	beq	EnvKfGraphTitleSe_L4cf
+	beq	GraphFltSe_L4cf
 	cmp	2, a3
-	beq	EnvKfGraphTitleSe_L4cf
+	beq	GraphFltSe_L4cf
 	cmp	3, a3
-	beq	EnvKfGraphTitleSe_L4cf
+	beq	GraphFltSe_L4cf
 	cmp	4, a3
-	bne	EnvKfGraphTitleSe_L4be
-	jmp	EnvKfGraphTitleSe_L5b1
-EnvKfGraphTitleSe_L4be:
+	bne	GraphFltSe_L4be
+	jmp	GraphFltSe_L5b1
+GraphFltSe_L4be:
 	cmp	5, a3
-	bne	EnvKfGraphTitleSe_L4c5
-	jmp	EnvKfGraphTitleSe_L5b1
-EnvKfGraphTitleSe_L4c5:
+	bne	GraphFltSe_L4c5
+	jmp	GraphFltSe_L5b1
+GraphFltSe_L4c5:
 	cmp	6, a3
-	bne	EnvKfGraphTitleSe_L4cc
-	jmp	EnvKfGraphTitleSe_L5b1
-EnvKfGraphTitleSe_L4cc:
-	jmp	EnvKfGraphTitleSe_L67e
-EnvKfGraphTitleSe_L4cf:
+	bne	GraphFltSe_L4cc
+	jmp	GraphFltSe_L5b1
+GraphFltSe_L4cc:
+	jmp	GraphFltSe_L67e
+GraphFltSe_L4cf:
 	mov	sp, a0
 	mov	a0, d0
 	add	0x4c, d0
@@ -430496,38 +430495,38 @@ EnvKfGraphTitleSe_L4cf:
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
 	cmp	3, a3
-	beq	EnvKfGraphTitleSe_L546
+	beq	GraphFltSe_L546
 	cmp	1, a3
-	beq	EnvKfGraphTitleSe_L54e
+	beq	GraphFltSe_L54e
 	cmp	2, a3
-	beq	EnvKfGraphTitleSe_L551
-	bra	EnvKfGraphTitleSe_L557
-EnvKfGraphTitleSe_L546:
+	beq	GraphFltSe_L551
+	bra	GraphFltSe_L557
+GraphFltSe_L546:
 	mov	d3, a0
 	add	a0, a0
 	mov	a0, d3
-	bra	EnvKfGraphTitleSe_L557
-EnvKfGraphTitleSe_L54e:
+	bra	GraphFltSe_L557
+GraphFltSe_L54e:
 	asl2	d3
-	bra	EnvKfGraphTitleSe_L557
-EnvKfGraphTitleSe_L551:
+	bra	GraphFltSe_L557
+GraphFltSe_L551:
 	mov	6, d0
 	nop
 	nop
 	mul	d0, d3
-EnvKfGraphTitleSe_L557:
+GraphFltSe_L557:
 	mov	(0x14, sp), d1
 	movhu	(0x3a, sp), d2
 	exthu	d3
 	add	d3, d1
 	cmp	d2, d1
-	bgt	EnvKfGraphTitleSe_L56b
+	bgt	GraphFltSe_L56b
 	mov	(0x14, sp), d0
 	add	d3, d0
 	mov	d0, a3
 	movhu	(0x34, sp), d0
-	bra	EnvKfGraphTitleSe_L58c
-EnvKfGraphTitleSe_L56b:
+	bra	GraphFltSe_L58c
+GraphFltSe_L56b:
 	mov	(0x14, sp), d1
 	movhu	(0x3a, sp), d0
 	sub	d1, d2
@@ -430542,7 +430541,7 @@ EnvKfGraphTitleSe_L56b:
 	mul	d2, d0
 	call	LibDiv32, 0, 0
 	add	a2, d0
-EnvKfGraphTitleSe_L58c:
+GraphFltSe_L58c:
 	movhu	(0x30, sp), d1
 	movhu	d1, (0x4c, sp)
 	movhu	(0x2c, sp), d1
@@ -430554,30 +430553,30 @@ EnvKfGraphTitleSe_L58c:
 	mov	(0x18, sp), a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-	jmp	EnvKfGraphTitleSe_L67e
-EnvKfGraphTitleSe_L5b1:
+	jmp	GraphFltSe_L67e
+GraphFltSe_L5b1:
 	cmp	6, a3
-	beq	EnvKfGraphTitleSe_L5bf
+	beq	GraphFltSe_L5bf
 	cmp	4, a3
-	beq	EnvKfGraphTitleSe_L5c5
+	beq	GraphFltSe_L5c5
 	cmp	5, a3
-	beq	EnvKfGraphTitleSe_L5cb
-	bra	EnvKfGraphTitleSe_L5d4
-EnvKfGraphTitleSe_L5bf:
+	beq	GraphFltSe_L5cb
+	bra	GraphFltSe_L5d4
+GraphFltSe_L5bf:
 	movhu	(0x38, sp), d0
 	add	d0, d0
-	bra	EnvKfGraphTitleSe_L5d4
-EnvKfGraphTitleSe_L5c5:
+	bra	GraphFltSe_L5d4
+GraphFltSe_L5c5:
 	movhu	(0x38, sp), d0
 	asl2	d0
-	bra	EnvKfGraphTitleSe_L5d4
-EnvKfGraphTitleSe_L5cb:
+	bra	GraphFltSe_L5d4
+GraphFltSe_L5cb:
 	movhu	(0x38, sp), d0
 	mov	6, d1
 	nop
 	nop
 	mul	d1, d0
-EnvKfGraphTitleSe_L5d4:
+GraphFltSe_L5d4:
 	movhu	(0x32, sp), d1
 	mov	d0, d3
 	mov	d1, (0x14, sp)
@@ -430586,13 +430585,13 @@ EnvKfGraphTitleSe_L5d4:
 	exthu	d3
 	sub	d3, d0
 	cmp	d1, d0
-	blt	EnvKfGraphTitleSe_L5f0
+	blt	GraphFltSe_L5f0
 	mov	(0x14, sp), d0
 	sub	d3, d0
 	mov	d0, a3
 	movhu	(0x34, sp), d0
-	bra	EnvKfGraphTitleSe_L612
-EnvKfGraphTitleSe_L5f0:
+	bra	GraphFltSe_L612
+GraphFltSe_L5f0:
 	movhu	(0x2c, sp), d0
 	movhu	(0x34, sp), d2
 	mov	d0, a3
@@ -430608,7 +430607,7 @@ EnvKfGraphTitleSe_L5f0:
 	mov	d2, d0
 	call	LibDiv32, 0, 0
 	add	a2, d0
-EnvKfGraphTitleSe_L612:
+GraphFltSe_L612:
 	mov	sp, a0
 	mov	a0, d1
 	add	0x4c, d1
@@ -430649,7 +430648,7 @@ EnvKfGraphTitleSe_L612:
 	mov	(0x18, sp), a0
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-EnvKfGraphTitleSe_L67e:
+GraphFltSe_L67e:
 	movhu	(0x32, sp), d0
 	mov	sp, a0
 	movhu	d0, (0x4c, sp)
@@ -430663,27 +430662,27 @@ EnvKfGraphTitleSe_L67e:
 	add	0x50, a1
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
-EnvKfGraphTitleSe_L6a3:
+GraphFltSe_L6a3:
 	clr	d0
-	bra	EnvKfGraphTitleSe_L6a9
-# EnvKfGraphTitleSe + 0x6a6: no traced path reaches what follows (--decode-gaps)
-	bra	EnvKfGraphTitleSe_L6a9
-EnvKfGraphTitleSe_L6a8:
+	bra	GraphFltSe_L6a9
+# GraphFltSe + 0x6a6: no traced path reaches what follows (--decode-gaps)
+	bra	GraphFltSe_L6a9
+GraphFltSe_L6a8:
 	clr	d0
-EnvKfGraphTitleSe_L6a9:
+GraphFltSe_L6a9:
 	ret	[d2,d3,a2,a3], 0x64
 
-FltGraphTitleSe:
+GraphEqSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x40, sp
 	cmp	MT_Draw, d1
-	beq	FltGraphTitleSe_L1b
+	beq	GraphEqSe_L1b
 	cmp	0x1800000, d1
-	bne	FltGraphTitleSe_L18
+	bne	GraphEqSe_L18
 	ret	[d2,d3,a2,a3], 0x50
-FltGraphTitleSe_L18:
-	jmp	FltGraphTitleSe_L29f
-FltGraphTitleSe_L1b:
+GraphEqSe_L18:
+	jmp	GraphEqSe_L29f
+GraphEqSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
 	add	0x28, a0
@@ -430733,15 +430732,15 @@ FltGraphTitleSe_L1b:
 	call	func_4C0FB78D_entry, [d2,a2], 0x20
 	extbu	d0
 	cmp	1, d0
-	beq	FltGraphTitleSe_Lb4
+	beq	GraphEqSe_Lb4
 	cmp	2, d0
-	beq	FltGraphTitleSe_Lb4
+	beq	GraphEqSe_Lb4
 	cmp	4, d0
-	beq	FltGraphTitleSe_Lb4
+	beq	GraphEqSe_Lb4
 	cmp	5, d0
-	beq	FltGraphTitleSe_Lb4
-	jmp	FltGraphTitleSe_L28f
-FltGraphTitleSe_Lb4:
+	beq	GraphEqSe_Lb4
+	jmp	GraphEqSe_L28f
+GraphEqSe_Lb4:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	sp, a0
 	add	0x24, a0
@@ -430823,17 +430822,17 @@ FltGraphTitleSe_Lb4:
 	sub	d0, d1
 	movhu	d1, (0x18, sp)
 	cmp	0, a2
-	bne	FltGraphTitleSe_L175
+	bne	GraphEqSe_L175
 	movhu	(0x22, sp), d0
 	movhu	d0, (0x18, sp)
-FltGraphTitleSe_L175:
+GraphEqSe_L175:
 	movbu	(0x26, sp), d0
 	cmp	1, d0
-	beq	FltGraphTitleSe_L183
+	beq	GraphEqSe_L183
 	cmp	0, d0
-	beq	FltGraphTitleSe_L1f9
-	jmp	FltGraphTitleSe_L268
-FltGraphTitleSe_L183:
+	beq	GraphEqSe_L1f9
+	jmp	GraphEqSe_L268
+GraphEqSe_L183:
 	mov	sp, a0
 	mov	a0, d0
 	add	0x38, d0
@@ -430877,8 +430876,8 @@ FltGraphTitleSe_L183:
 	mov	(0x14, sp), a0
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-	bra	FltGraphTitleSe_L268
-FltGraphTitleSe_L1f9:
+	bra	GraphEqSe_L268
+GraphEqSe_L1f9:
 	mov	sp, a0
 	mov	a0, d0
 	add	0x38, d0
@@ -430920,7 +430919,7 @@ FltGraphTitleSe_L1f9:
 	mov	(0x14, sp), a0
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-FltGraphTitleSe_L268:
+GraphEqSe_L268:
 	movhu	(0x1a, sp), d0
 	mov	sp, a0
 	movhu	d0, (0x38, sp)
@@ -430934,32 +430933,32 @@ FltGraphTitleSe_L268:
 	add	0x3c, a1
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
-	bra	FltGraphTitleSe_L29a
-FltGraphTitleSe_L28f:
+	bra	GraphEqSe_L29a
+GraphEqSe_L28f:
 	mov	0xf5, d0
 	mov	a2, a0
 	call	DrawBox_entry, [d2,a2], 0x18
-FltGraphTitleSe_L29a:
+GraphEqSe_L29a:
 	clr	d0
-	bra	FltGraphTitleSe_L2a0
-# FltGraphTitleSe + 0x29d: no traced path reaches what follows (--decode-gaps)
-	bra	FltGraphTitleSe_L2a0
-FltGraphTitleSe_L29f:
+	bra	GraphEqSe_L2a0
+# GraphEqSe + 0x29d: no traced path reaches what follows (--decode-gaps)
+	bra	GraphEqSe_L2a0
+GraphEqSe_L29f:
 	clr	d0
-FltGraphTitleSe_L2a0:
+GraphEqSe_L2a0:
 	ret	[d2,d3,a2,a3], 0x50
 
-EqGraphTitleSe:
+DrumGraphFltSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x54, sp
 	cmp	MT_Draw, d1
-	beq	EqGraphTitleSe_L1b
+	beq	DrumGraphFltSe_L1b
 	cmp	0x1800000, d1
-	bne	EqGraphTitleSe_L18
+	bne	DrumGraphFltSe_L18
 	ret	[d2,d3,a2,a3], 0x64
-EqGraphTitleSe_L18:
-	jmp	EqGraphTitleSe_L711
-EqGraphTitleSe_L1b:
+DrumGraphFltSe_L18:
+	jmp	DrumGraphFltSe_L711
+DrumGraphFltSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
 	add	0x44, a0
@@ -431007,11 +431006,11 @@ EqGraphTitleSe_L1b:
 	extbu	d0
 	mov	d0, a3
 	cmp	0, a3
-	beq	EqGraphTitleSe_Laa
+	beq	DrumGraphFltSe_Laa
 	cmp	7, d0
-	beq	EqGraphTitleSe_Ld2
-	jmp	EqGraphTitleSe_L417
-EqGraphTitleSe_Laa:
+	beq	DrumGraphFltSe_Ld2
+	jmp	DrumGraphFltSe_L417
+DrumGraphFltSe_Laa:
 	movhu	(0x44, sp), d0
 	mov	sp, a0
 	movhu	d0, (0x4c, sp)
@@ -431025,8 +431024,8 @@ EqGraphTitleSe_Laa:
 	add	0x50, a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-	jmp	EqGraphTitleSe_L70c
-EqGraphTitleSe_Ld2:
+	jmp	DrumGraphFltSe_L70c
+DrumGraphFltSe_Ld2:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	sp, a0
 	add	0x40, a0
@@ -431119,12 +431118,12 @@ EqGraphTitleSe_Ld2:
 	movbu	(0x40, sp), d1
 	movbu	(0x42, sp), d0
 	cmp	d0, d1
-	blt	EqGraphTitleSe_L19c
+	blt	DrumGraphFltSe_L19c
 	mov	0x4f, d0
 	movbu	d0, (0x40, sp)
 	mov	0x50, d0
 	movbu	d0, (0x42, sp)
-EqGraphTitleSe_L19c:
+DrumGraphFltSe_L19c:
 	movhu	(0x4a, sp), d0
 	mov	0x80, a3
 	movhu	d0, (0x34, sp)
@@ -431202,10 +431201,10 @@ EqGraphTitleSe_L19c:
 	add	d0, d0
 	sub	a3, d1
 	cmp	d0, d1
-	blt	EqGraphTitleSe_L25a
+	blt	DrumGraphFltSe_L25a
 	clr	d0
 	movbu	d0, (0x28, sp)
-EqGraphTitleSe_L25a:
+DrumGraphFltSe_L25a:
 	mov	(0x14, sp), d0
 	movhu	(0x32, sp), d1
 	asl2	d0
@@ -431214,14 +431213,14 @@ EqGraphTitleSe_L25a:
 	mov	a3, d2
 	sub	d0, d2
 	cmp	d1, d2
-	blt	EqGraphTitleSe_L276
+	blt	DrumGraphFltSe_L276
 	mov	d0, d1
 	mov	a3, d0
 	sub	d1, d0
 	mov	d0, a2
 	movhu	(0x34, sp), d0
-	bra	EqGraphTitleSe_L296
-EqGraphTitleSe_L276:
+	bra	DrumGraphFltSe_L296
+DrumGraphFltSe_L276:
 	movhu	(0x2c, sp), d3
 	movhu	(0x32, sp), d0
 	movhu	(0x34, sp), d2
@@ -431236,7 +431235,7 @@ EqGraphTitleSe_L276:
 	mov	d2, d0
 	call	LibDiv32, 0, 0
 	add	d3, d0
-EqGraphTitleSe_L296:
+DrumGraphFltSe_L296:
 	mov	sp, a0
 	mov	a0, d1
 	add	0x4c, d1
@@ -431261,11 +431260,11 @@ EqGraphTitleSe_L296:
 	call	DrawLine_entry, [d2,a2,a3], 0x20
 	movbu	(0x28, sp), d0
 	cmp	1, d0
-	beq	EqGraphTitleSe_L2df
+	beq	DrumGraphFltSe_L2df
 	cmp	0, d0
-	beq	EqGraphTitleSe_L307
-	jmp	EqGraphTitleSe_L378
-EqGraphTitleSe_L2df:
+	beq	DrumGraphFltSe_L307
+	jmp	DrumGraphFltSe_L378
+DrumGraphFltSe_L2df:
 	movhu	(0x2e, sp), d0
 	movhu	d0, (0x4c, sp)
 	movhu	(0x2c, sp), d0
@@ -431278,8 +431277,8 @@ EqGraphTitleSe_L2df:
 	mov	(0x18, sp), a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-	bra	EqGraphTitleSe_L378
-EqGraphTitleSe_L307:
+	bra	DrumGraphFltSe_L378
+DrumGraphFltSe_L307:
 	movhu	(0x2e, sp), d0
 	movhu	d0, (0x4c, sp)
 	movhu	(0x2c, sp), d0
@@ -431319,20 +431318,20 @@ EqGraphTitleSe_L307:
 	mov	(0x18, sp), a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-EqGraphTitleSe_L378:
+DrumGraphFltSe_L378:
 	mov	(0x24, sp), d2
 	movhu	(0x3c, sp), d0
 	mov	(0x20, sp), d1
 	add	d1, d2
 	cmp	d0, d2
-	bgt	EqGraphTitleSe_L38e
+	bgt	DrumGraphFltSe_L38e
 	mov	d1, d0
 	mov	(0x24, sp), d1
 	add	d1, d0
 	mov	d0, a2
 	movhu	(0x34, sp), d0
-	bra	EqGraphTitleSe_L3ae
-EqGraphTitleSe_L38e:
+	bra	DrumGraphFltSe_L3ae
+DrumGraphFltSe_L38e:
 	movhu	(0x30, sp), d3
 	movhu	(0x3c, sp), d1
 	movhu	(0x34, sp), d2
@@ -431347,7 +431346,7 @@ EqGraphTitleSe_L38e:
 	mov	d2, d0
 	call	LibDiv32, 0, 0
 	add	d3, d0
-EqGraphTitleSe_L3ae:
+DrumGraphFltSe_L3ae:
 	movhu	(0x36, sp), d3
 	movhu	d3, (0x4c, sp)
 	movhu	(0x30, sp), d1
@@ -431381,8 +431380,8 @@ EqGraphTitleSe_L3ae:
 	mov	(0x18, sp), a1
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
-	jmp	EqGraphTitleSe_L70c
-EqGraphTitleSe_L417:
+	jmp	DrumGraphFltSe_L70c
+DrumGraphFltSe_L417:
 	movbu	(MdSoundEdit_L132_Var_3), d0
 	mov	sp, a0
 	add	0x40, a0
@@ -431450,19 +431449,19 @@ EqGraphTitleSe_L417:
 	add	d3, d0
 	movhu	d0, (0x32, sp)
 	cmp	1, a3
-	beq	EqGraphTitleSe_L4c1
+	beq	DrumGraphFltSe_L4c1
 	cmp	2, a3
-	beq	EqGraphTitleSe_L4c1
+	beq	DrumGraphFltSe_L4c1
 	cmp	4, a3
-	beq	EqGraphTitleSe_L4c1
+	beq	DrumGraphFltSe_L4c1
 	cmp	5, a3
-	beq	EqGraphTitleSe_L4c1
+	beq	DrumGraphFltSe_L4c1
 	cmp	3, a3
-	beq	EqGraphTitleSe_L4ef
+	beq	DrumGraphFltSe_L4ef
 	cmp	6, a3
-	beq	EqGraphTitleSe_L4ef
-	bra	EqGraphTitleSe_L51b
-EqGraphTitleSe_L4c1:
+	beq	DrumGraphFltSe_L4ef
+	bra	DrumGraphFltSe_L51b
+DrumGraphFltSe_L4c1:
 	movhu	(0x2c, sp), d2
 	movbu	(0x41, sp), d3
 	mov	d2, d0
@@ -431480,8 +431479,8 @@ EqGraphTitleSe_L4c1:
 	add	a2, d0
 	sub	d1, d0
 	movhu	d0, (0x2c, sp)
-	bra	EqGraphTitleSe_L51b
-EqGraphTitleSe_L4ef:
+	bra	DrumGraphFltSe_L51b
+DrumGraphFltSe_L4ef:
 	movhu	(0x3c, sp), d2
 	movbu	(0x41, sp), d3
 	mov	d2, d0
@@ -431499,27 +431498,27 @@ EqGraphTitleSe_L4ef:
 	add	a2, d0
 	sub	d1, d0
 	movhu	d0, (0x2c, sp)
-EqGraphTitleSe_L51b:
+DrumGraphFltSe_L51b:
 	cmp	1, a3
-	beq	EqGraphTitleSe_L53f
+	beq	DrumGraphFltSe_L53f
 	cmp	2, a3
-	beq	EqGraphTitleSe_L53f
+	beq	DrumGraphFltSe_L53f
 	cmp	3, a3
-	beq	EqGraphTitleSe_L53f
+	beq	DrumGraphFltSe_L53f
 	cmp	4, a3
-	bne	EqGraphTitleSe_L52e
-	jmp	EqGraphTitleSe_L61d
-EqGraphTitleSe_L52e:
+	bne	DrumGraphFltSe_L52e
+	jmp	DrumGraphFltSe_L61d
+DrumGraphFltSe_L52e:
 	cmp	5, a3
-	bne	EqGraphTitleSe_L535
-	jmp	EqGraphTitleSe_L61d
-EqGraphTitleSe_L535:
+	bne	DrumGraphFltSe_L535
+	jmp	DrumGraphFltSe_L61d
+DrumGraphFltSe_L535:
 	cmp	6, a3
-	bne	EqGraphTitleSe_L53c
-	jmp	EqGraphTitleSe_L61d
-EqGraphTitleSe_L53c:
-	jmp	EqGraphTitleSe_L6e7
-EqGraphTitleSe_L53f:
+	bne	DrumGraphFltSe_L53c
+	jmp	DrumGraphFltSe_L61d
+DrumGraphFltSe_L53c:
+	jmp	DrumGraphFltSe_L6e7
+DrumGraphFltSe_L53f:
 	mov	sp, a0
 	mov	a0, d0
 	add	0x4c, d0
@@ -431559,40 +431558,40 @@ EqGraphTitleSe_L53f:
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
 	cmp	3, a3
-	beq	EqGraphTitleSe_L5b6
+	beq	DrumGraphFltSe_L5b6
 	cmp	1, a3
-	beq	EqGraphTitleSe_L5ba
+	beq	DrumGraphFltSe_L5ba
 	cmp	2, a3
-	beq	EqGraphTitleSe_L5be
-	bra	EqGraphTitleSe_L5c5
-EqGraphTitleSe_L5b6:
+	beq	DrumGraphFltSe_L5be
+	bra	DrumGraphFltSe_L5c5
+DrumGraphFltSe_L5b6:
 	mov	d3, d0
 	add	d3, d0
-	bra	EqGraphTitleSe_L5c5
-EqGraphTitleSe_L5ba:
+	bra	DrumGraphFltSe_L5c5
+DrumGraphFltSe_L5ba:
 	asl2	d3
 	mov	d3, d0
-	bra	EqGraphTitleSe_L5c5
-EqGraphTitleSe_L5be:
+	bra	DrumGraphFltSe_L5c5
+DrumGraphFltSe_L5be:
 	mov	6, d0
 	nop
 	nop
 	mul	d0, d3
 	mov	d3, d0
-EqGraphTitleSe_L5c5:
+DrumGraphFltSe_L5c5:
 	mov	(0x14, sp), d2
 	mov	d0, d1
 	movhu	(0x36, sp), d0
 	exthu	d1
 	add	d1, d2
 	cmp	d0, d2
-	bgt	EqGraphTitleSe_L5da
+	bgt	DrumGraphFltSe_L5da
 	mov	(0x14, sp), d0
 	add	d1, d0
 	mov	d0, a2
 	movhu	(0x34, sp), d0
-	bra	EqGraphTitleSe_L5f8
-EqGraphTitleSe_L5da:
+	bra	DrumGraphFltSe_L5f8
+DrumGraphFltSe_L5da:
 	movhu	(0x2c, sp), d3
 	movhu	(0x36, sp), d2
 	mov	(0x14, sp), a0
@@ -431606,7 +431605,7 @@ EqGraphTitleSe_L5da:
 	mov	d2, d0
 	call	LibDiv32, 0, 0
 	add	d3, d0
-EqGraphTitleSe_L5f8:
+DrumGraphFltSe_L5f8:
 	movhu	(0x30, sp), d1
 	movhu	d1, (0x4c, sp)
 	movhu	(0x2e, sp), d1
@@ -431618,30 +431617,30 @@ EqGraphTitleSe_L5f8:
 	mov	(0x18, sp), a1
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-	jmp	EqGraphTitleSe_L6e7
-EqGraphTitleSe_L61d:
+	jmp	DrumGraphFltSe_L6e7
+DrumGraphFltSe_L61d:
 	cmp	6, a3
-	beq	EqGraphTitleSe_L62b
+	beq	DrumGraphFltSe_L62b
 	cmp	4, a3
-	beq	EqGraphTitleSe_L631
+	beq	DrumGraphFltSe_L631
 	cmp	5, a3
-	beq	EqGraphTitleSe_L637
-	bra	EqGraphTitleSe_L640
-EqGraphTitleSe_L62b:
+	beq	DrumGraphFltSe_L637
+	bra	DrumGraphFltSe_L640
+DrumGraphFltSe_L62b:
 	movhu	(0x3a, sp), d0
 	add	d0, d0
-	bra	EqGraphTitleSe_L640
-EqGraphTitleSe_L631:
+	bra	DrumGraphFltSe_L640
+DrumGraphFltSe_L631:
 	movhu	(0x3a, sp), d0
 	asl2	d0
-	bra	EqGraphTitleSe_L640
-EqGraphTitleSe_L637:
+	bra	DrumGraphFltSe_L640
+DrumGraphFltSe_L637:
 	movhu	(0x3a, sp), d0
 	mov	6, d1
 	nop
 	nop
 	mul	d1, d0
-EqGraphTitleSe_L640:
+DrumGraphFltSe_L640:
 	movhu	(0x32, sp), d1
 	mov	d1, a3
 	mov	d0, d1
@@ -431650,13 +431649,13 @@ EqGraphTitleSe_L640:
 	mov	a3, d2
 	sub	d1, d2
 	cmp	d0, d2
-	blt	EqGraphTitleSe_L65c
+	blt	DrumGraphFltSe_L65c
 	mov	a3, d0
 	sub	d1, d0
 	mov	d0, a2
 	movhu	(0x34, sp), d0
-	bra	EqGraphTitleSe_L67b
-EqGraphTitleSe_L65c:
+	bra	DrumGraphFltSe_L67b
+DrumGraphFltSe_L65c:
 	movhu	(0x2c, sp), d3
 	movhu	(0x2e, sp), d2
 	mov	a3, a0
@@ -431671,7 +431670,7 @@ EqGraphTitleSe_L65c:
 	mov	d2, d0
 	call	LibDiv32, 0, 0
 	add	d3, d0
-EqGraphTitleSe_L67b:
+DrumGraphFltSe_L67b:
 	mov	sp, a0
 	mov	a0, d1
 	add	0x4c, d1
@@ -431712,7 +431711,7 @@ EqGraphTitleSe_L67b:
 	mov	(0x14, sp), a0
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-EqGraphTitleSe_L6e7:
+DrumGraphFltSe_L6e7:
 	movhu	(0x32, sp), d0
 	mov	sp, a0
 	movhu	d0, (0x4c, sp)
@@ -431726,27 +431725,27 @@ EqGraphTitleSe_L6e7:
 	add	0x50, a1
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
-EqGraphTitleSe_L70c:
+DrumGraphFltSe_L70c:
 	clr	d0
-	bra	EqGraphTitleSe_L712
-# EqGraphTitleSe + 0x70f: no traced path reaches what follows (--decode-gaps)
-	bra	EqGraphTitleSe_L712
-EqGraphTitleSe_L711:
+	bra	DrumGraphFltSe_L712
+# DrumGraphFltSe + 0x70f: no traced path reaches what follows (--decode-gaps)
+	bra	DrumGraphFltSe_L712
+DrumGraphFltSe_L711:
 	clr	d0
-EqGraphTitleSe_L712:
+DrumGraphFltSe_L712:
 	ret	[d2,d3,a2,a3], 0x64
 
-EqGraphXSe:
+DrumGraphEqSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x44, sp
 	cmp	MT_Draw, d1
-	beq	EqGraphXSe_L1b
+	beq	DrumGraphEqSe_L1b
 	cmp	0x1800000, d1
-	bne	EqGraphXSe_L18
+	bne	DrumGraphEqSe_L18
 	ret	[d2,d3,a2,a3], 0x54
-EqGraphXSe_L18:
-	jmp	EqGraphXSe_L2d1
-EqGraphXSe_L1b:
+DrumGraphEqSe_L18:
+	jmp	DrumGraphEqSe_L2d1
+DrumGraphEqSe_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	sp, a0
 	add	0x2c, a0
@@ -431794,15 +431793,15 @@ EqGraphXSe_L1b:
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	1, d0
-	beq	EqGraphXSe_Lb2
+	beq	DrumGraphEqSe_Lb2
 	cmp	2, d0
-	beq	EqGraphXSe_Lb2
+	beq	DrumGraphEqSe_Lb2
 	cmp	4, d0
-	beq	EqGraphXSe_Lb2
+	beq	DrumGraphEqSe_Lb2
 	cmp	5, d0
-	beq	EqGraphXSe_Lb2
-	jmp	EqGraphXSe_L2c1
-EqGraphXSe_Lb2:
+	beq	DrumGraphEqSe_Lb2
+	jmp	DrumGraphEqSe_L2c1
+DrumGraphEqSe_Lb2:
 	movbu	(MdSoundEdit_L132_Var_3), d1
 	movbu	(Str_empty_255), d0
 	mov	sp, a0
@@ -431910,17 +431909,17 @@ EqGraphXSe_Lb2:
 	sub	d0, d1
 	movhu	d1, (0x18, sp)
 	cmp	0, a2
-	bne	EqGraphXSe_L1a7
+	bne	DrumGraphEqSe_L1a7
 	movhu	(0x20, sp), d0
 	movhu	d0, (0x18, sp)
-EqGraphXSe_L1a7:
+DrumGraphEqSe_L1a7:
 	movbu	(0x2a, sp), d0
 	cmp	1, d0
-	beq	EqGraphXSe_L1b5
+	beq	DrumGraphEqSe_L1b5
 	cmp	0, d0
-	beq	EqGraphXSe_L22b
-	jmp	EqGraphXSe_L29a
-EqGraphXSe_L1b5:
+	beq	DrumGraphEqSe_L22b
+	jmp	DrumGraphEqSe_L29a
+DrumGraphEqSe_L1b5:
 	mov	sp, a0
 	mov	a0, d0
 	add	0x3c, d0
@@ -431964,8 +431963,8 @@ EqGraphXSe_L1b5:
 	mov	(0x14, sp), a0
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-	bra	EqGraphXSe_L29a
-EqGraphXSe_L22b:
+	bra	DrumGraphEqSe_L29a
+DrumGraphEqSe_L22b:
 	mov	sp, a0
 	mov	a0, d0
 	add	0x3c, d0
@@ -432007,7 +432006,7 @@ EqGraphXSe_L22b:
 	mov	(0x14, sp), a0
 	mov	0xff, d0
 	call	DrawLine_entry, [d2,a2,a3], 0x20
-EqGraphXSe_L29a:
+DrumGraphEqSe_L29a:
 	movhu	(0x1a, sp), d0
 	mov	sp, a0
 	movhu	d0, (0x3c, sp)
@@ -432021,19 +432020,19 @@ EqGraphXSe_L29a:
 	add	0x40, a1
 	mov	0xff, d0
 	call	DrawDottedLine_entry, [d2,a2,a3], 0x20
-	bra	EqGraphXSe_L2cc
-EqGraphXSe_L2c1:
+	bra	DrumGraphEqSe_L2cc
+DrumGraphEqSe_L2c1:
 	mov	0xf5, d0
 	mov	a2, a0
 	call	DrawBox_entry, [d2,a2], 0x18
-EqGraphXSe_L2cc:
+DrumGraphEqSe_L2cc:
 	clr	d0
-	bra	EqGraphXSe_L2d2
-# EqGraphXSe + 0x2cf: no traced path reaches what follows (--decode-gaps)
-	bra	EqGraphXSe_L2d2
-EqGraphXSe_L2d1:
+	bra	DrumGraphEqSe_L2d2
+# DrumGraphEqSe + 0x2cf: no traced path reaches what follows (--decode-gaps)
+	bra	DrumGraphEqSe_L2d2
+DrumGraphEqSe_L2d1:
 	clr	d0
-EqGraphXSe_L2d2:
+DrumGraphEqSe_L2d2:
 	ret	[d2,d3,a2,a3], 0x54
 
 GraphLayerSeProc:
@@ -432070,17 +432069,17 @@ GraphLayerSeProc_L49:
 GraphLayerSeProc_L54:
 	ret	[d2,d3,a2], 0x20
 
-GraphVelLay1Se:
+GraphKeyLay1Se:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x38, sp
 	cmp	MT_Draw, d1
-	beq	GraphVelLay1Se_L1b
+	beq	GraphKeyLay1Se_L1b
 	cmp	0x1800000, d1
-	bne	GraphVelLay1Se_L18
+	bne	GraphKeyLay1Se_L18
 	ret	[d2,d3,a2,a3], 0x48
-GraphVelLay1Se_L18:
-	jmp	GraphVelLay1Se_L37e
-GraphVelLay1Se_L1b:
+GraphKeyLay1Se_L18:
+	jmp	GraphKeyLay1Se_L37e
+GraphKeyLay1Se_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	call	GetViewInstance, 0, 0
 	call	GetFocusObject_entry, 0, 0x10
@@ -432255,57 +432254,57 @@ GraphVelLay1Se_L1b:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	0x14, d0
-	bge	GraphVelLay1Se_L202
+	bge	GraphKeyLay1Se_L202
 	mov	0x14, d0
 	movbu	d0, (0x34, sp)
-	bra	GraphVelLay1Se_L20e
-GraphVelLay1Se_L202:
+	bra	GraphKeyLay1Se_L20e
+GraphKeyLay1Se_L202:
 	movbu	(0x34, sp), d0
 	cmp	0x6d, d0
-	ble	GraphVelLay1Se_L20e
+	ble	GraphKeyLay1Se_L20e
 	mov	0x6d, d0
 	movbu	d0, (0x34, sp)
-GraphVelLay1Se_L20e:
+GraphKeyLay1Se_L20e:
 	movbu	(a3), d0
 	cmp	0x14, d0
-	bge	GraphVelLay1Se_L21a
+	bge	GraphKeyLay1Se_L21a
 	mov	0x14, d0
 	movbu	d0, (a3)
-	bra	GraphVelLay1Se_L224
-GraphVelLay1Se_L21a:
+	bra	GraphKeyLay1Se_L224
+GraphKeyLay1Se_L21a:
 	movbu	(a3), d0
 	cmp	0x6d, d0
-	ble	GraphVelLay1Se_L224
+	ble	GraphKeyLay1Se_L224
 	mov	0x6d, d0
 	movbu	d0, (a3)
-GraphVelLay1Se_L224:
+GraphKeyLay1Se_L224:
 	movbu	(a2), d0
 	cmp	0x14, d0
-	bge	GraphVelLay1Se_L230
+	bge	GraphKeyLay1Se_L230
 	mov	0x14, d0
 	movbu	d0, (a2)
-	bra	GraphVelLay1Se_L23a
-GraphVelLay1Se_L230:
+	bra	GraphKeyLay1Se_L23a
+GraphKeyLay1Se_L230:
 	movbu	(a2), d0
 	cmp	0x6d, d0
-	ble	GraphVelLay1Se_L23a
+	ble	GraphKeyLay1Se_L23a
 	mov	0x6d, d0
 	movbu	d0, (a2)
-GraphVelLay1Se_L23a:
+GraphKeyLay1Se_L23a:
 	mov	d3, a0
 	movbu	(a0), d0
 	cmp	0x14, d0
-	bge	GraphVelLay1Se_L248
+	bge	GraphKeyLay1Se_L248
 	mov	0x14, d0
 	movbu	d0, (a0)
-	bra	GraphVelLay1Se_L252
-GraphVelLay1Se_L248:
+	bra	GraphKeyLay1Se_L252
+GraphKeyLay1Se_L248:
 	movbu	(a0), d0
 	cmp	0x6d, d0
-	ble	GraphVelLay1Se_L252
+	ble	GraphKeyLay1Se_L252
 	mov	0x6d, d0
 	movbu	d0, (a0)
-GraphVelLay1Se_L252:
+GraphKeyLay1Se_L252:
 	movbu	(0x34, sp), d0
 	add	-0x14, d0
 	movbu	d0, (0x34, sp)
@@ -432423,25 +432422,25 @@ GraphVelLay1Se_L252:
 	movbu	(a0), d0
 	movbu	d0, (0x5004d77f)
 	clr	d0
-	bra	GraphVelLay1Se_L37f
-# GraphVelLay1Se + 0x37c: no traced path reaches what follows (--decode-gaps)
-	bra	GraphVelLay1Se_L37f
-GraphVelLay1Se_L37e:
+	bra	GraphKeyLay1Se_L37f
+# GraphKeyLay1Se + 0x37c: no traced path reaches what follows (--decode-gaps)
+	bra	GraphKeyLay1Se_L37f
+GraphKeyLay1Se_L37e:
 	clr	d0
-GraphVelLay1Se_L37f:
+GraphKeyLay1Se_L37f:
 	ret	[d2,d3,a2,a3], 0x48
 
-GraphVelLay2Se:
+GraphKeyLay2Se:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x38, sp
 	cmp	MT_Draw, d1
-	beq	GraphVelLay2Se_L1b
+	beq	GraphKeyLay2Se_L1b
 	cmp	0x1800000, d1
-	bne	GraphVelLay2Se_L18
+	bne	GraphKeyLay2Se_L18
 	ret	[d2,d3,a2,a3], 0x48
-GraphVelLay2Se_L18:
-	jmp	GraphVelLay2Se_L382
-GraphVelLay2Se_L1b:
+GraphKeyLay2Se_L18:
+	jmp	GraphKeyLay2Se_L382
+GraphKeyLay2Se_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	call	GetViewInstance, 0, 0
 	call	GetFocusObject_entry, 0, 0x10
@@ -432616,57 +432615,57 @@ GraphVelLay2Se_L1b:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	0x14, d0
-	bge	GraphVelLay2Se_L206
+	bge	GraphKeyLay2Se_L206
 	mov	0x14, d0
 	movbu	d0, (0x34, sp)
-	bra	GraphVelLay2Se_L212
-GraphVelLay2Se_L206:
+	bra	GraphKeyLay2Se_L212
+GraphKeyLay2Se_L206:
 	movbu	(0x34, sp), d0
 	cmp	0x6d, d0
-	ble	GraphVelLay2Se_L212
+	ble	GraphKeyLay2Se_L212
 	mov	0x6d, d0
 	movbu	d0, (0x34, sp)
-GraphVelLay2Se_L212:
+GraphKeyLay2Se_L212:
 	movbu	(a3), d0
 	cmp	0x14, d0
-	bge	GraphVelLay2Se_L21e
+	bge	GraphKeyLay2Se_L21e
 	mov	0x14, d0
 	movbu	d0, (a3)
-	bra	GraphVelLay2Se_L228
-GraphVelLay2Se_L21e:
+	bra	GraphKeyLay2Se_L228
+GraphKeyLay2Se_L21e:
 	movbu	(a3), d0
 	cmp	0x6d, d0
-	ble	GraphVelLay2Se_L228
+	ble	GraphKeyLay2Se_L228
 	mov	0x6d, d0
 	movbu	d0, (a3)
-GraphVelLay2Se_L228:
+GraphKeyLay2Se_L228:
 	movbu	(a2), d0
 	cmp	0x14, d0
-	bge	GraphVelLay2Se_L234
+	bge	GraphKeyLay2Se_L234
 	mov	0x14, d0
 	movbu	d0, (a2)
-	bra	GraphVelLay2Se_L23e
-GraphVelLay2Se_L234:
+	bra	GraphKeyLay2Se_L23e
+GraphKeyLay2Se_L234:
 	movbu	(a2), d0
 	cmp	0x6d, d0
-	ble	GraphVelLay2Se_L23e
+	ble	GraphKeyLay2Se_L23e
 	mov	0x6d, d0
 	movbu	d0, (a2)
-GraphVelLay2Se_L23e:
+GraphKeyLay2Se_L23e:
 	mov	d3, a0
 	movbu	(a0), d0
 	cmp	0x14, d0
-	bge	GraphVelLay2Se_L24c
+	bge	GraphKeyLay2Se_L24c
 	mov	0x14, d0
 	movbu	d0, (a0)
-	bra	GraphVelLay2Se_L256
-GraphVelLay2Se_L24c:
+	bra	GraphKeyLay2Se_L256
+GraphKeyLay2Se_L24c:
 	movbu	(a0), d0
 	cmp	0x6d, d0
-	ble	GraphVelLay2Se_L256
+	ble	GraphKeyLay2Se_L256
 	mov	0x6d, d0
 	movbu	d0, (a0)
-GraphVelLay2Se_L256:
+GraphKeyLay2Se_L256:
 	movbu	(0x34, sp), d0
 	add	-0x14, d0
 	movbu	d0, (0x34, sp)
@@ -432784,25 +432783,25 @@ GraphVelLay2Se_L256:
 	movbu	(a0), d0
 	movbu	d0, (0x5004d783)
 	clr	d0
-	bra	GraphVelLay2Se_L383
-# GraphVelLay2Se + 0x380: no traced path reaches what follows (--decode-gaps)
-	bra	GraphVelLay2Se_L383
-GraphVelLay2Se_L382:
+	bra	GraphKeyLay2Se_L383
+# GraphKeyLay2Se + 0x380: no traced path reaches what follows (--decode-gaps)
+	bra	GraphKeyLay2Se_L383
+GraphKeyLay2Se_L382:
 	clr	d0
-GraphVelLay2Se_L383:
+GraphKeyLay2Se_L383:
 	ret	[d2,d3,a2,a3], 0x48
 
-GraphVelLay3Se:
+GraphKeyLay3Se:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x38, sp
 	cmp	MT_Draw, d1
-	beq	GraphVelLay3Se_L1b
+	beq	GraphKeyLay3Se_L1b
 	cmp	0x1800000, d1
-	bne	GraphVelLay3Se_L18
+	bne	GraphKeyLay3Se_L18
 	ret	[d2,d3,a2,a3], 0x48
-GraphVelLay3Se_L18:
-	jmp	GraphVelLay3Se_L382
-GraphVelLay3Se_L1b:
+GraphKeyLay3Se_L18:
+	jmp	GraphKeyLay3Se_L382
+GraphKeyLay3Se_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	call	GetViewInstance, 0, 0
 	call	GetFocusObject_entry, 0, 0x10
@@ -432977,57 +432976,57 @@ GraphVelLay3Se_L1b:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	0x14, d0
-	bge	GraphVelLay3Se_L206
+	bge	GraphKeyLay3Se_L206
 	mov	0x14, d0
 	movbu	d0, (0x34, sp)
-	bra	GraphVelLay3Se_L212
-GraphVelLay3Se_L206:
+	bra	GraphKeyLay3Se_L212
+GraphKeyLay3Se_L206:
 	movbu	(0x34, sp), d0
 	cmp	0x6d, d0
-	ble	GraphVelLay3Se_L212
+	ble	GraphKeyLay3Se_L212
 	mov	0x6d, d0
 	movbu	d0, (0x34, sp)
-GraphVelLay3Se_L212:
+GraphKeyLay3Se_L212:
 	movbu	(a3), d0
 	cmp	0x14, d0
-	bge	GraphVelLay3Se_L21e
+	bge	GraphKeyLay3Se_L21e
 	mov	0x14, d0
 	movbu	d0, (a3)
-	bra	GraphVelLay3Se_L228
-GraphVelLay3Se_L21e:
+	bra	GraphKeyLay3Se_L228
+GraphKeyLay3Se_L21e:
 	movbu	(a3), d0
 	cmp	0x6d, d0
-	ble	GraphVelLay3Se_L228
+	ble	GraphKeyLay3Se_L228
 	mov	0x6d, d0
 	movbu	d0, (a3)
-GraphVelLay3Se_L228:
+GraphKeyLay3Se_L228:
 	movbu	(a2), d0
 	cmp	0x14, d0
-	bge	GraphVelLay3Se_L234
+	bge	GraphKeyLay3Se_L234
 	mov	0x14, d0
 	movbu	d0, (a2)
-	bra	GraphVelLay3Se_L23e
-GraphVelLay3Se_L234:
+	bra	GraphKeyLay3Se_L23e
+GraphKeyLay3Se_L234:
 	movbu	(a2), d0
 	cmp	0x6d, d0
-	ble	GraphVelLay3Se_L23e
+	ble	GraphKeyLay3Se_L23e
 	mov	0x6d, d0
 	movbu	d0, (a2)
-GraphVelLay3Se_L23e:
+GraphKeyLay3Se_L23e:
 	mov	d3, a0
 	movbu	(a0), d0
 	cmp	0x14, d0
-	bge	GraphVelLay3Se_L24c
+	bge	GraphKeyLay3Se_L24c
 	mov	0x14, d0
 	movbu	d0, (a0)
-	bra	GraphVelLay3Se_L256
-GraphVelLay3Se_L24c:
+	bra	GraphKeyLay3Se_L256
+GraphKeyLay3Se_L24c:
 	movbu	(a0), d0
 	cmp	0x6d, d0
-	ble	GraphVelLay3Se_L256
+	ble	GraphKeyLay3Se_L256
 	mov	0x6d, d0
 	movbu	d0, (a0)
-GraphVelLay3Se_L256:
+GraphKeyLay3Se_L256:
 	movbu	(0x34, sp), d0
 	add	-0x14, d0
 	movbu	d0, (0x34, sp)
@@ -433145,25 +433144,25 @@ GraphVelLay3Se_L256:
 	movbu	(a0), d0
 	movbu	d0, (0x5004d787)
 	clr	d0
-	bra	GraphVelLay3Se_L383
-# GraphVelLay3Se + 0x380: no traced path reaches what follows (--decode-gaps)
-	bra	GraphVelLay3Se_L383
-GraphVelLay3Se_L382:
+	bra	GraphKeyLay3Se_L383
+# GraphKeyLay3Se + 0x380: no traced path reaches what follows (--decode-gaps)
+	bra	GraphKeyLay3Se_L383
+GraphKeyLay3Se_L382:
 	clr	d0
-GraphVelLay3Se_L383:
+GraphKeyLay3Se_L383:
 	ret	[d2,d3,a2,a3], 0x48
 
-GraphVelLay4Se:
+GraphKeyLay4Se:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x38, sp
 	cmp	MT_Draw, d1
-	beq	GraphVelLay4Se_L1b
+	beq	GraphKeyLay4Se_L1b
 	cmp	0x1800000, d1
-	bne	GraphVelLay4Se_L18
+	bne	GraphKeyLay4Se_L18
 	ret	[d2,d3,a2,a3], 0x48
-GraphVelLay4Se_L18:
-	jmp	GraphVelLay4Se_L382
-GraphVelLay4Se_L1b:
+GraphKeyLay4Se_L18:
+	jmp	GraphKeyLay4Se_L382
+GraphKeyLay4Se_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	call	GetViewInstance, 0, 0
 	call	GetFocusObject_entry, 0, 0x10
@@ -433338,57 +433337,57 @@ GraphVelLay4Se_L1b:
 	call	func_4C0FB5CC_entry, [d2,d3,a2], 0x24
 	movbu	(0x34, sp), d0
 	cmp	0x14, d0
-	bge	GraphVelLay4Se_L206
+	bge	GraphKeyLay4Se_L206
 	mov	0x14, d0
 	movbu	d0, (0x34, sp)
-	bra	GraphVelLay4Se_L212
-GraphVelLay4Se_L206:
+	bra	GraphKeyLay4Se_L212
+GraphKeyLay4Se_L206:
 	movbu	(0x34, sp), d0
 	cmp	0x6d, d0
-	ble	GraphVelLay4Se_L212
+	ble	GraphKeyLay4Se_L212
 	mov	0x6d, d0
 	movbu	d0, (0x34, sp)
-GraphVelLay4Se_L212:
+GraphKeyLay4Se_L212:
 	movbu	(a3), d0
 	cmp	0x14, d0
-	bge	GraphVelLay4Se_L21e
+	bge	GraphKeyLay4Se_L21e
 	mov	0x14, d0
 	movbu	d0, (a3)
-	bra	GraphVelLay4Se_L228
-GraphVelLay4Se_L21e:
+	bra	GraphKeyLay4Se_L228
+GraphKeyLay4Se_L21e:
 	movbu	(a3), d0
 	cmp	0x6d, d0
-	ble	GraphVelLay4Se_L228
+	ble	GraphKeyLay4Se_L228
 	mov	0x6d, d0
 	movbu	d0, (a3)
-GraphVelLay4Se_L228:
+GraphKeyLay4Se_L228:
 	movbu	(a2), d0
 	cmp	0x14, d0
-	bge	GraphVelLay4Se_L234
+	bge	GraphKeyLay4Se_L234
 	mov	0x14, d0
 	movbu	d0, (a2)
-	bra	GraphVelLay4Se_L23e
-GraphVelLay4Se_L234:
+	bra	GraphKeyLay4Se_L23e
+GraphKeyLay4Se_L234:
 	movbu	(a2), d0
 	cmp	0x6d, d0
-	ble	GraphVelLay4Se_L23e
+	ble	GraphKeyLay4Se_L23e
 	mov	0x6d, d0
 	movbu	d0, (a2)
-GraphVelLay4Se_L23e:
+GraphKeyLay4Se_L23e:
 	mov	d3, a0
 	movbu	(a0), d0
 	cmp	0x14, d0
-	bge	GraphVelLay4Se_L24c
+	bge	GraphKeyLay4Se_L24c
 	mov	0x14, d0
 	movbu	d0, (a0)
-	bra	GraphVelLay4Se_L256
-GraphVelLay4Se_L24c:
+	bra	GraphKeyLay4Se_L256
+GraphKeyLay4Se_L24c:
 	movbu	(a0), d0
 	cmp	0x6d, d0
-	ble	GraphVelLay4Se_L256
+	ble	GraphKeyLay4Se_L256
 	mov	0x6d, d0
 	movbu	d0, (a0)
-GraphVelLay4Se_L256:
+GraphKeyLay4Se_L256:
 	movbu	(0x34, sp), d0
 	add	-0x14, d0
 	movbu	d0, (0x34, sp)
@@ -433506,25 +433505,25 @@ GraphVelLay4Se_L256:
 	movbu	(a0), d0
 	movbu	d0, (0x5004d78b)
 	clr	d0
-	bra	GraphVelLay4Se_L383
-# GraphVelLay4Se + 0x380: no traced path reaches what follows (--decode-gaps)
-	bra	GraphVelLay4Se_L383
-GraphVelLay4Se_L382:
+	bra	GraphKeyLay4Se_L383
+# GraphKeyLay4Se + 0x380: no traced path reaches what follows (--decode-gaps)
+	bra	GraphKeyLay4Se_L383
+GraphKeyLay4Se_L382:
 	clr	d0
-GraphVelLay4Se_L383:
+GraphKeyLay4Se_L383:
 	ret	[d2,d3,a2,a3], 0x48
 
-PitchGridSe:
+GraphVelLay1Se:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x3c, sp
 	cmp	MT_Draw, d1
-	beq	PitchGridSe_L1b
+	beq	GraphVelLay1Se_L1b
 	cmp	0x1800000, d1
-	bne	PitchGridSe_L18
+	bne	GraphVelLay1Se_L18
 	ret	[d2,d3,a2,a3], 0x4c
-PitchGridSe_L18:
-	jmp	PitchGridSe_L302
-PitchGridSe_L1b:
+GraphVelLay1Se_L18:
+	jmp	GraphVelLay1Se_L302
+GraphVelLay1Se_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	call	GetViewInstance, 0, 0
 	call	GetFocusObject_entry, 0, 0x10
@@ -433808,25 +433807,25 @@ PitchGridSe_L1b:
 	movbu	(a0), d0
 	movbu	d0, (0x5004d78f)
 	clr	d0
-	bra	PitchGridSe_L303
-# PitchGridSe + 0x300: no traced path reaches what follows (--decode-gaps)
-	bra	PitchGridSe_L303
-PitchGridSe_L302:
+	bra	GraphVelLay1Se_L303
+# GraphVelLay1Se + 0x300: no traced path reaches what follows (--decode-gaps)
+	bra	GraphVelLay1Se_L303
+GraphVelLay1Se_L302:
 	clr	d0
-PitchGridSe_L303:
+GraphVelLay1Se_L303:
 	ret	[d2,d3,a2,a3], 0x4c
 
-PitchGridSe2:
+GraphVelLay2Se:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x3c, sp
 	cmp	MT_Draw, d1
-	beq	PitchGridSe2_L1b
+	beq	GraphVelLay2Se_L1b
 	cmp	0x1800000, d1
-	bne	PitchGridSe2_L18
+	bne	GraphVelLay2Se_L18
 	ret	[d2,d3,a2,a3], 0x4c
-PitchGridSe2_L18:
-	jmp	PitchGridSe2_L306
-PitchGridSe2_L1b:
+GraphVelLay2Se_L18:
+	jmp	GraphVelLay2Se_L306
+GraphVelLay2Se_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	call	GetViewInstance, 0, 0
 	call	GetFocusObject_entry, 0, 0x10
@@ -434110,25 +434109,25 @@ PitchGridSe2_L1b:
 	movbu	(a0), d0
 	movbu	d0, (0x5004d793)
 	clr	d0
-	bra	PitchGridSe2_L307
-# PitchGridSe2 + 0x304: no traced path reaches what follows (--decode-gaps)
-	bra	PitchGridSe2_L307
-PitchGridSe2_L306:
+	bra	GraphVelLay2Se_L307
+# GraphVelLay2Se + 0x304: no traced path reaches what follows (--decode-gaps)
+	bra	GraphVelLay2Se_L307
+GraphVelLay2Se_L306:
 	clr	d0
-PitchGridSe2_L307:
+GraphVelLay2Se_L307:
 	ret	[d2,d3,a2,a3], 0x4c
 
-PitchGridSe3:
+GraphVelLay3Se:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x3c, sp
 	cmp	MT_Draw, d1
-	beq	PitchGridSe3_L1b
+	beq	GraphVelLay3Se_L1b
 	cmp	0x1800000, d1
-	bne	PitchGridSe3_L18
+	bne	GraphVelLay3Se_L18
 	ret	[d2,d3,a2,a3], 0x4c
-PitchGridSe3_L18:
-	jmp	PitchGridSe3_L306
-PitchGridSe3_L1b:
+GraphVelLay3Se_L18:
+	jmp	GraphVelLay3Se_L306
+GraphVelLay3Se_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	call	GetViewInstance, 0, 0
 	call	GetFocusObject_entry, 0, 0x10
@@ -434412,25 +434411,25 @@ PitchGridSe3_L1b:
 	movbu	(a0), d0
 	movbu	d0, (0x5004d797)
 	clr	d0
-	bra	PitchGridSe3_L307
-# PitchGridSe3 + 0x304: no traced path reaches what follows (--decode-gaps)
-	bra	PitchGridSe3_L307
-PitchGridSe3_L306:
+	bra	GraphVelLay3Se_L307
+# GraphVelLay3Se + 0x304: no traced path reaches what follows (--decode-gaps)
+	bra	GraphVelLay3Se_L307
+GraphVelLay3Se_L306:
 	clr	d0
-PitchGridSe3_L307:
+GraphVelLay3Se_L307:
 	ret	[d2,d3,a2,a3], 0x4c
 
-AmpGridSe1:
+GraphVelLay4Se:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x3c, sp
 	cmp	MT_Draw, d1
-	beq	AmpGridSe1_L1b
+	beq	GraphVelLay4Se_L1b
 	cmp	0x1800000, d1
-	bne	AmpGridSe1_L18
+	bne	GraphVelLay4Se_L18
 	ret	[d2,d3,a2,a3], 0x4c
-AmpGridSe1_L18:
-	jmp	AmpGridSe1_L306
-AmpGridSe1_L1b:
+GraphVelLay4Se_L18:
+	jmp	GraphVelLay4Se_L306
+GraphVelLay4Se_L1b:
 	call	GetFocusObject_entry, 0, 0x10
 	call	GetViewInstance, 0, 0
 	call	GetFocusObject_entry, 0, 0x10
@@ -434714,12 +434713,12 @@ AmpGridSe1_L1b:
 	movbu	(a0), d0
 	movbu	d0, (0x5004d79b)
 	clr	d0
-	bra	AmpGridSe1_L307
-# AmpGridSe1 + 0x304: no traced path reaches what follows (--decode-gaps)
-	bra	AmpGridSe1_L307
-AmpGridSe1_L306:
+	bra	GraphVelLay4Se_L307
+# GraphVelLay4Se + 0x304: no traced path reaches what follows (--decode-gaps)
+	bra	GraphVelLay4Se_L307
+GraphVelLay4Se_L306:
 	clr	d0
-AmpGridSe1_L307:
+GraphVelLay4Se_L307:
 	ret	[d2,d3,a2,a3], 0x4c
 
 AcDrumGridBoxSeProc:
@@ -435093,19 +435092,19 @@ AcDrumGridBoxSeProc_L40b:
 AcDrumGridBoxSeProc_L418:
 	ret	[d2,d3,a2], 0x20
 
-DrumGDumpOnSe:
+DrumMainGridSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x74, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	DrumGDumpOnSe_L12
-	jmp	DrumGDumpOnSe_Le33
-DrumGDumpOnSe_L12:
+	bge	DrumMainGridSe_L12
+	jmp	DrumMainGridSe_Le33
+DrumMainGridSe_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	DrumGDumpOnSe_L1d
-	jmp	DrumGDumpOnSe_Le33
-DrumGDumpOnSe_L1d:
+	ble	DrumMainGridSe_L1d
+	jmp	DrumMainGridSe_Le33
+DrumMainGridSe_L1d:
 	add	0xfe800001, d2
 	mov	DrumGDumpOnSe_L1d_Records, a1
 	mov	0xf, d0
@@ -435115,21 +435114,21 @@ DrumGDumpOnSe_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	DrumGDumpOnSe_L4e
+	beq	DrumMainGridSe_L4e
 	setlb
 	cmp	0, d0
-	bne	DrumGDumpOnSe_L40
-	jmp	DrumGDumpOnSe_Le33
-DrumGDumpOnSe_L40:
+	bne	DrumMainGridSe_L40
+	jmp	DrumMainGridSe_Le33
+DrumMainGridSe_L40:
 	add	8, a0
 	cmp	CopyToSe_L9ff_Table, a0
-	bcs	DrumGDumpOnSe_L4b
+	bcs	DrumMainGridSe_L4b
 	mov	a1, a0
-DrumGDumpOnSe_L4b:
+DrumMainGridSe_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-DrumGDumpOnSe_L4e:
+DrumMainGridSe_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0F830E:
@@ -435150,14 +435149,14 @@ loc_4C0F830E:
 	exth	d0
 	mov	d0, (0x2c, sp)
 	cmp	1, d0
-	bge	DrumGDumpOnSe_L8b
-	jmp	DrumGDumpOnSe_L490
-DrumGDumpOnSe_L8b:
+	bge	DrumMainGridSe_L8b
+	jmp	DrumMainGridSe_L490
+DrumMainGridSe_L8b:
 	mov	(0x2c, sp), d0
 	cmp	0xa, d0
-	ble	DrumGDumpOnSe_L94
-	jmp	DrumGDumpOnSe_L490
-DrumGDumpOnSe_L94:
+	ble	DrumMainGridSe_L94
+	jmp	DrumMainGridSe_L490
+DrumMainGridSe_L94:
 	mov	(0x2c, sp), d0
 	mov	DrumGDumpOnSe_L94_Table, a0
 	add	-1, d0
@@ -435168,7 +435167,7 @@ loc_4C0F835E:
 	mov	1, d0
 	extbu	d1
 	call	func_4C0FB3CE_entry, [d2,d3], 0x20
-	jmp	DrumGDumpOnSe_L490
+	jmp	DrumMainGridSe_L490
 loc_4C0F8369:
 	movbu	(Str_empty_255), d3
 	mov	d1, d2
@@ -435254,9 +435253,9 @@ loc_4C0F8369:
 	call	func_4C09C53D_entry, [d2,d3,a2,a3], 0x1c
 	exth	d0
 	cmp	0, d0
-	bne	DrumGDumpOnSe_L159
-	jmp	DrumGDumpOnSe_L490
-DrumGDumpOnSe_L159:
+	bne	DrumMainGridSe_L159
+	jmp	DrumMainGridSe_L490
+DrumMainGridSe_L159:
 	movhu	(0x48, sp), d0
 	mov	d2, d1
 	and	0x7fff, d0
@@ -435302,7 +435301,7 @@ DrumGDumpOnSe_L159:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DrumGDumpOnSe_L490
+	jmp	DrumMainGridSe_L490
 loc_4C0F849D:
 	movbu	(Str_empty_255), d0
 	mov	d1, d2
@@ -435402,9 +435401,9 @@ loc_4C0F849D:
 	call	func_4C09C1AA_entry, [d2,d3,a2,a3], 0x1c
 	exth	d0
 	cmp	0, d0
-	bne	DrumGDumpOnSe_L2a9
-	jmp	DrumGDumpOnSe_L490
-DrumGDumpOnSe_L2a9:
+	bne	DrumMainGridSe_L2a9
+	jmp	DrumMainGridSe_L490
+DrumMainGridSe_L2a9:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	mov	(0x28, sp), d0
@@ -435442,7 +435441,7 @@ DrumGDumpOnSe_L2a9:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DrumGDumpOnSe_L490
+	jmp	DrumMainGridSe_L490
 loc_4C0F85D5:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -435471,7 +435470,7 @@ loc_4C0F85D5:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	DrumGDumpOnSe_L490
+	jmp	DrumMainGridSe_L490
 loc_4C0F860D:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -435500,7 +435499,7 @@ loc_4C0F860D:
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	DrumGDumpOnSe_L490
+	jmp	DrumMainGridSe_L490
 loc_4C0F8648:
 	mov	7, d0
 	mov	d0, (0x10, sp)
@@ -435540,7 +435539,7 @@ loc_4C0F8648:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DrumGDumpOnSe_L490
+	jmp	DrumMainGridSe_L490
 loc_4C0F86A2:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -435570,7 +435569,7 @@ loc_4C0F86A2:
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	DrumGDumpOnSe_L490
+	bra	DrumMainGridSe_L490
 loc_4C0F86DC:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -435601,7 +435600,7 @@ loc_4C0F86DC:
 	mov	d2, d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	DrumGDumpOnSe_L490
+	bra	DrumMainGridSe_L490
 loc_4C0F8718:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
@@ -435630,7 +435629,7 @@ loc_4C0F8718:
 	mov	d2, d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-DrumGDumpOnSe_L490:
+DrumMainGridSe_L490:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x30, sp), d1
 	mov	d1, (0x10, sp)
@@ -435656,14 +435655,14 @@ loc_4C0F8767:
 	exth	d0
 	mov	d0, (0x2c, sp)
 	cmp	1, d0
-	bge	DrumGDumpOnSe_L4e4
-	jmp	DrumGDumpOnSe_L8dc
-DrumGDumpOnSe_L4e4:
+	bge	DrumMainGridSe_L4e4
+	jmp	DrumMainGridSe_L8dc
+DrumMainGridSe_L4e4:
 	mov	(0x2c, sp), d0
 	cmp	0xa, d0
-	ble	DrumGDumpOnSe_L4ed
-	jmp	DrumGDumpOnSe_L8dc
-DrumGDumpOnSe_L4ed:
+	ble	DrumMainGridSe_L4ed
+	jmp	DrumMainGridSe_L8dc
+DrumMainGridSe_L4ed:
 	mov	(0x2c, sp), d0
 	mov	DrumGDumpOnSe_L4ed_Table, a0
 	add	-1, d0
@@ -435674,7 +435673,7 @@ loc_4C0F87B7:
 	clr	d0
 	extbu	d1
 	call	func_4C0FB3CE_entry, [d2,d3], 0x20
-	jmp	DrumGDumpOnSe_L8dc
+	jmp	DrumMainGridSe_L8dc
 loc_4C0F87C1:
 	movbu	(Str_empty_255), d0
 	mov	d1, d2
@@ -435769,9 +435768,9 @@ loc_4C0F87C1:
 	call	func_4C09C53D_entry, [d2,d3,a2,a3], 0x1c
 	exth	d0
 	cmp	0, d0
-	bne	DrumGDumpOnSe_L5bd
-	jmp	DrumGDumpOnSe_L8dc
-DrumGDumpOnSe_L5bd:
+	bne	DrumMainGridSe_L5bd
+	jmp	DrumMainGridSe_L8dc
+DrumMainGridSe_L5bd:
 	movhu	(0x48, sp), d0
 	mov	d2, d1
 	and	0x7fff, d0
@@ -435817,7 +435816,7 @@ DrumGDumpOnSe_L5bd:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DrumGDumpOnSe_L8dc
+	jmp	DrumMainGridSe_L8dc
 loc_4C0F8901:
 	movbu	(Str_empty_255), d3
 	mov	d1, d2
@@ -435908,9 +435907,9 @@ loc_4C0F8901:
 	call	func_4C09C1AA_entry, [d2,d3,a2,a3], 0x1c
 	exth	d0
 	cmp	0, d0
-	bne	DrumGDumpOnSe_L6ff
-	jmp	DrumGDumpOnSe_L8dc
-DrumGDumpOnSe_L6ff:
+	bne	DrumMainGridSe_L6ff
+	jmp	DrumMainGridSe_L8dc
+DrumMainGridSe_L6ff:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	mov	(0x28, sp), d0
@@ -435948,7 +435947,7 @@ DrumGDumpOnSe_L6ff:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DrumGDumpOnSe_L8dc
+	jmp	DrumMainGridSe_L8dc
 loc_4C0F8A2B:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -435977,7 +435976,7 @@ loc_4C0F8A2B:
 	mov	d2, d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	DrumGDumpOnSe_L8dc
+	jmp	DrumMainGridSe_L8dc
 loc_4C0F8A63:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -436007,7 +436006,7 @@ loc_4C0F8A63:
 	mov	d2, d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	DrumGDumpOnSe_L8dc
+	jmp	DrumMainGridSe_L8dc
 loc_4C0F8A9F:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -436046,7 +436045,7 @@ loc_4C0F8A9F:
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DrumGDumpOnSe_L8dc
+	jmp	DrumMainGridSe_L8dc
 loc_4C0F8AF9:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
@@ -436075,7 +436074,7 @@ loc_4C0F8AF9:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	DrumGDumpOnSe_L8dc
+	bra	DrumMainGridSe_L8dc
 loc_4C0F8B30:
 	mov	-0x80, d0
 	mov	d0, (0x10, sp)
@@ -436104,7 +436103,7 @@ loc_4C0F8B30:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	DrumGDumpOnSe_L8dc
+	bra	DrumMainGridSe_L8dc
 loc_4C0F8B69:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -436130,7 +436129,7 @@ loc_4C0F8B69:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-DrumGDumpOnSe_L8dc:
+DrumMainGridSe_L8dc:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x30, sp), d1
 	mov	d1, (0x10, sp)
@@ -436176,13 +436175,13 @@ loc_4C0F8BDD:
 	movhu	(0x58, sp), d0
 	exth	d0
 	cmp	1, d0
-	bge	DrumGDumpOnSe_L956
-	jmp	DrumGDumpOnSe_Le15
-DrumGDumpOnSe_L956:
+	bge	DrumMainGridSe_L956
+	jmp	DrumMainGridSe_Le15
+DrumMainGridSe_L956:
 	cmp	0xa, d0
-	ble	DrumGDumpOnSe_L95d
-	jmp	DrumGDumpOnSe_Le15
-DrumGDumpOnSe_L95d:
+	ble	DrumMainGridSe_L95d
+	jmp	DrumMainGridSe_Le15
+DrumMainGridSe_L95d:
 	add	-1, d0
 	asl2	d0
 	mov	DrumGDumpOnSe_L95d_Table, a0
@@ -436193,7 +436192,7 @@ loc_4C0F8C25:
 	extbu	d2
 	mov	d2, d0
 	call	func_4C0FB47F_entry, [d2,d3,a2], 0x28
-	jmp	DrumGDumpOnSe_Le15
+	jmp	DrumMainGridSe_Le15
 loc_4C0F8C31:
 	movbu	(Str_empty_255), d0
 	extbu	d2
@@ -436270,7 +436269,7 @@ loc_4C0F8C31:
 	movbu	d0, (0x60, sp)
 	clr	d0
 	movbu	d0, (0x61, sp)
-	jmp	DrumGDumpOnSe_Le15
+	jmp	DrumMainGridSe_Le15
 loc_4C0F8CCA:
 	movbu	(Str_empty_255), d3
 	extbu	d2
@@ -436342,7 +436341,7 @@ loc_4C0F8CCA:
 	mov	(0x20, sp), a0
 	mov	(0x38, sp), a1
 	call	strcpy_entry, [a2], 4
-	jmp	DrumGDumpOnSe_Le15
+	jmp	DrumMainGridSe_Le15
 loc_4C0F8D60:
 	movbu	(Str_empty_255), d0
 	extbu	d2
@@ -436511,39 +436510,39 @@ loc_4C0F8D60:
 	movbu	(0x3c, sp), d1
 	movbu	(0x40, sp), d0
 	cmp	d0, d1
-	bne	DrumGDumpOnSe_Lc34
+	bne	DrumMainGridSe_Lc34
 	movbu	(0x3d, sp), d1
 	movbu	(0x41, sp), d0
 	cmp	d0, d1
-	bne	DrumGDumpOnSe_Lc34
+	bne	DrumMainGridSe_Lc34
 	movbu	(0x3e, sp), d1
 	movbu	(0x42, sp), d0
 	cmp	d0, d1
-	bne	DrumGDumpOnSe_Lc34
+	bne	DrumMainGridSe_Lc34
 	movbu	(0x43, sp), d0
 	extb	d0
 	cmp	0, d0
-	bne	DrumGDumpOnSe_Lc34
+	bne	DrumMainGridSe_Lc34
 	movbu	(0x44, sp), d0
 	extb	d0
 	cmp	0, d0
-	bne	DrumGDumpOnSe_Lc34
+	bne	DrumMainGridSe_Lc34
 	movbu	(0x45, sp), d0
 	cmp	0x7f, d0
-	bne	DrumGDumpOnSe_Lc34
+	bne	DrumMainGridSe_Lc34
 	mov	(0x20, sp), d0
 	mov	d0, (8, sp)
 	mov	Str_empty_621, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DrumGDumpOnSe_Le15
-DrumGDumpOnSe_Lc34:
+	jmp	DrumMainGridSe_Le15
+DrumMainGridSe_Lc34:
 	mov	(0x20, sp), d0
 	mov	d0, (8, sp)
 	mov	Str_empty_620, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DrumGDumpOnSe_Le15
+	jmp	DrumMainGridSe_Le15
 loc_4C0F8F05:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
@@ -436571,7 +436570,7 @@ loc_4C0F8F05:
 	clr	d1
 	mov	d2, d0
 	call	func_4C0FB558_entry, [d2,d3,a2,a3], 0x2c
-	jmp	DrumGDumpOnSe_Le15
+	jmp	DrumMainGridSe_Le15
 loc_4C0F8F3F:
 	extbu	d2
 	mov	0x1c, d0
@@ -436606,14 +436605,14 @@ loc_4C0F8F3F:
 	movbu	(0x46, sp), d0
 	extb	d0
 	cmp	4, d0
-	bne	DrumGDumpOnSe_Lcde
+	bne	DrumMainGridSe_Lcde
 	mov	(0x20, sp), d0
 	mov	d0, (8, sp)
 	mov	Str_empty_619, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DrumGDumpOnSe_Le15
-DrumGDumpOnSe_Lcde:
+	jmp	DrumMainGridSe_Le15
+DrumMainGridSe_Lcde:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	add	7, d2
@@ -436632,7 +436631,7 @@ DrumGDumpOnSe_Lcde:
 	mov	Str_3d_35, a1
 	mov	1, d1
 	call	func_4C0FB558_entry, [d2,d3,a2,a3], 0x2c
-	jmp	DrumGDumpOnSe_Le15
+	jmp	DrumMainGridSe_Le15
 loc_4C0F8FC5:
 	extbu	d2
 	mov	sp, a0
@@ -436662,21 +436661,21 @@ loc_4C0F8FC5:
 	movbu	(0x46, sp), d0
 	extb	d0
 	cmp	4, d0
-	bne	DrumGDumpOnSe_Ld5c
+	bne	DrumMainGridSe_Ld5c
 	mov	(0x20, sp), d0
 	mov	d0, (8, sp)
 	mov	Str_GM_2, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DrumGDumpOnSe_Le15
-DrumGDumpOnSe_Ld5c:
+	jmp	DrumMainGridSe_Le15
+DrumMainGridSe_Ld5c:
 	mov	(0x20, sp), d1
 	mov	d1, (8, sp)
 	mov	Str_2d_3, d1
 	mov	d1, (0xc, sp)
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DrumGDumpOnSe_Le15
+	jmp	DrumMainGridSe_Le15
 loc_4C0F902F:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -436701,7 +436700,7 @@ loc_4C0F902F:
 	mov	Str_3d_34, a1
 	mov	1, d1
 	call	func_4C0FB558_entry, [d2,d3,a2,a3], 0x2c
-	bra	DrumGDumpOnSe_Le15
+	bra	DrumMainGridSe_Le15
 loc_4C0F9064:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
@@ -436729,7 +436728,7 @@ loc_4C0F9064:
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C0FB558_entry, [d2,d3,a2,a3], 0x2c
-	bra	DrumGDumpOnSe_Le15
+	bra	DrumMainGridSe_Le15
 loc_4C0F909F:
 	extbu	d2
 	mov	0x1c, d0
@@ -436754,35 +436753,35 @@ loc_4C0F909F:
 	mov	(0x20, sp), a0
 	movbu	(0x46, sp), d0
 	call	func_4C0FCB20_entry, 0, 0x14
-DrumGDumpOnSe_Le15:
+DrumMainGridSe_Le15:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x24, sp), a0
 	mov	MT_GridDraw, d1
 	mov	a0, (0x10, sp)
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	DrumGDumpOnSe_Le34
+	bra	DrumMainGridSe_Le34
 loc_4C0F90EB:
 	mov	d3, d0
-	bra	DrumGDumpOnSe_Le34
-DrumGDumpOnSe_Le33:
+	bra	DrumMainGridSe_Le34
+DrumMainGridSe_Le33:
 	clr	d0
-DrumGDumpOnSe_Le34:
+DrumMainGridSe_Le34:
 	ret	[d2,d3,a2,a3], 0x84
 
-CopyToSe:
+DrumFilterGridSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x3c, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	CopyToSe_L12
-	jmp	CopyToSe_Lf6b
-CopyToSe_L12:
+	bge	DrumFilterGridSe_L12
+	jmp	DrumFilterGridSe_Lf6b
+DrumFilterGridSe_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	CopyToSe_L1d
-	jmp	CopyToSe_Lf6b
-CopyToSe_L1d:
+	ble	DrumFilterGridSe_L1d
+	jmp	DrumFilterGridSe_Lf6b
+DrumFilterGridSe_L1d:
 	add	0xfe800001, d2
 	mov	CopyToSe_L1d_Records, a1
 	mov	a1, a0
@@ -436792,21 +436791,21 @@ CopyToSe_L1d:
 	add	d0, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	CopyToSe_L4d
+	beq	DrumFilterGridSe_L4d
 	setlb
 	cmp	0, d0
-	bne	CopyToSe_L3f
-	jmp	CopyToSe_Lf6b
-CopyToSe_L3f:
+	bne	DrumFilterGridSe_L3f
+	jmp	DrumFilterGridSe_Lf6b
+DrumFilterGridSe_L3f:
 	add	8, a0
 	cmp	AcDrumGridBoxSe2Proc_L1d_Records, a0
-	bcs	CopyToSe_L4a
+	bcs	DrumFilterGridSe_L4a
 	mov	a1, a0
-CopyToSe_L4a:
+DrumFilterGridSe_L4a:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-CopyToSe_L4d:
+DrumFilterGridSe_L4d:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0F9144:
@@ -436828,13 +436827,13 @@ loc_4C0F9144:
 	mov	d0, d3
 	exth	d3
 	cmp	1, d3
-	bge	CopyToSe_L89
-	jmp	CopyToSe_L4fe
-CopyToSe_L89:
+	bge	DrumFilterGridSe_L89
+	jmp	DrumFilterGridSe_L4fe
+DrumFilterGridSe_L89:
 	cmp	0xa, d3
-	ble	CopyToSe_L90
-	jmp	CopyToSe_L4fe
-CopyToSe_L90:
+	ble	DrumFilterGridSe_L90
+	jmp	DrumFilterGridSe_L4fe
+DrumFilterGridSe_L90:
 	mov	-1, d0
 	add	d3, d0
 	asl2	d0
@@ -436851,7 +436850,7 @@ loc_4C0F9190:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_L4fe
+	jmp	DrumFilterGridSe_L4fe
 loc_4C0F91B4:
 	extbu	d2
 	mov	d2, d0
@@ -436863,12 +436862,12 @@ loc_4C0F91B4:
 	mov	d2, d0
 	call	func_4C0FBC48_entry, [d2,d3,a2], 0x34
 	cmp	7, d3
-	ble	CopyToSe_Ldc
-	jmp	CopyToSe_L4fe
-CopyToSe_Ldc:
+	ble	DrumFilterGridSe_Ldc
+	jmp	DrumFilterGridSe_L4fe
+DrumFilterGridSe_Ldc:
 	mov	a3, d2
 	exthu	d2
-CopyToSe_Ldf:
+DrumFilterGridSe_Ldf:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, d1
 	exthu	d1
@@ -436881,19 +436880,19 @@ CopyToSe_Ldf:
 	mov	d3, a2
 	exth	d3
 	cmp	7, d3
-	ble	CopyToSe_Ldf
-	jmp	CopyToSe_L4fe
+	ble	DrumFilterGridSe_Ldf
+	jmp	DrumFilterGridSe_L4fe
 loc_4C0F91F9:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	0, d0
-	bne	CopyToSe_L116
-	jmp	CopyToSe_L1ae
-CopyToSe_L116:
+	bne	DrumFilterGridSe_L116
+	jmp	DrumFilterGridSe_L1ae
+DrumFilterGridSe_L116:
 	cmp	7, d0
-	bne	CopyToSe_L178
+	bne	DrumFilterGridSe_L178
 	movbu	(Str_empty_255), d0
 	extbu	d2
 	mov	sp, a0
@@ -436941,8 +436940,8 @@ CopyToSe_L116:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	CopyToSe_L1ae
-CopyToSe_L178:
+	bra	DrumFilterGridSe_L1ae
+DrumFilterGridSe_L178:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -436971,22 +436970,22 @@ CopyToSe_L178:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-CopyToSe_L1ae:
+DrumFilterGridSe_L1ae:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_L4fe
+	jmp	DrumFilterGridSe_L4fe
 loc_4C0F92BB:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	0, d0
-	beq	CopyToSe_L242
+	beq	DrumFilterGridSe_L242
 	cmp	7, d0
-	bne	CopyToSe_L210
+	bne	DrumFilterGridSe_L210
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -437014,8 +437013,8 @@ loc_4C0F92BB:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	CopyToSe_L242
-CopyToSe_L210:
+	bra	DrumFilterGridSe_L242
+DrumFilterGridSe_L210:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -437042,27 +437041,27 @@ CopyToSe_L210:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-CopyToSe_L242:
+DrumFilterGridSe_L242:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_L4fe
+	jmp	DrumFilterGridSe_L4fe
 loc_4C0F934F:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	1, d0
-	beq	CopyToSe_L275
+	beq	DrumFilterGridSe_L275
 	cmp	2, d0
-	beq	CopyToSe_L275
+	beq	DrumFilterGridSe_L275
 	cmp	4, d0
-	beq	CopyToSe_L275
+	beq	DrumFilterGridSe_L275
 	cmp	5, d0
-	bne	CopyToSe_L2ac
-CopyToSe_L275:
+	bne	DrumFilterGridSe_L2ac
+DrumFilterGridSe_L275:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -437091,30 +437090,30 @@ CopyToSe_L275:
 	mov	d2, d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-CopyToSe_L2ac:
+DrumFilterGridSe_L2ac:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_L4fe
+	jmp	DrumFilterGridSe_L4fe
 loc_4C0F93B9:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	1, d0
-	beq	CopyToSe_L2e5
+	beq	DrumFilterGridSe_L2e5
 	cmp	2, d0
-	beq	CopyToSe_L2e5
+	beq	DrumFilterGridSe_L2e5
 	cmp	4, d0
-	beq	CopyToSe_L2e5
+	beq	DrumFilterGridSe_L2e5
 	cmp	5, d0
-	beq	CopyToSe_L2e5
+	beq	DrumFilterGridSe_L2e5
 	cmp	7, d0
-	beq	CopyToSe_L31c
-	bra	CopyToSe_L351
-CopyToSe_L2e5:
+	beq	DrumFilterGridSe_L31c
+	bra	DrumFilterGridSe_L351
+DrumFilterGridSe_L2e5:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -437142,8 +437141,8 @@ CopyToSe_L2e5:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	CopyToSe_L351
-CopyToSe_L31c:
+	bra	DrumFilterGridSe_L351
+DrumFilterGridSe_L31c:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -437171,30 +437170,30 @@ CopyToSe_L31c:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-CopyToSe_L351:
+DrumFilterGridSe_L351:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_L4fe
+	jmp	DrumFilterGridSe_L4fe
 loc_4C0F945E:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	1, d0
-	beq	CopyToSe_L38a
+	beq	DrumFilterGridSe_L38a
 	cmp	2, d0
-	beq	CopyToSe_L38a
+	beq	DrumFilterGridSe_L38a
 	cmp	4, d0
-	beq	CopyToSe_L38a
+	beq	DrumFilterGridSe_L38a
 	cmp	5, d0
-	beq	CopyToSe_L38a
+	beq	DrumFilterGridSe_L38a
 	cmp	7, d0
-	beq	CopyToSe_L3c0
-	bra	CopyToSe_L3f6
-CopyToSe_L38a:
+	beq	DrumFilterGridSe_L3c0
+	bra	DrumFilterGridSe_L3f6
+DrumFilterGridSe_L38a:
 	mov	0x19, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -437222,8 +437221,8 @@ CopyToSe_L38a:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	CopyToSe_L3f6
-CopyToSe_L3c0:
+	bra	DrumFilterGridSe_L3f6
+DrumFilterGridSe_L3c0:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -437251,13 +437250,13 @@ CopyToSe_L3c0:
 	mov	1, d1
 	mov	d2, d0
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-CopyToSe_L3f6:
+DrumFilterGridSe_L3f6:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_L4fe
+	jmp	DrumFilterGridSe_L4fe
 loc_4C0F9503:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -437291,7 +437290,7 @@ loc_4C0F9503:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_L4fe
+	jmp	DrumFilterGridSe_L4fe
 loc_4C0F9554:
 	mov	6, d0
 	mov	d0, (0x10, sp)
@@ -437326,7 +437325,7 @@ loc_4C0F9554:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	CopyToSe_L4fe
+	bra	DrumFilterGridSe_L4fe
 loc_4C0F95A3:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
@@ -437360,7 +437359,7 @@ loc_4C0F95A3:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-CopyToSe_L4fe:
+DrumFilterGridSe_L4fe:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x4c
 loc_4C0F95F4:
@@ -437382,13 +437381,13 @@ loc_4C0F95F4:
 	mov	d0, d3
 	exth	d3
 	cmp	1, d3
-	bge	CopyToSe_L539
-	jmp	CopyToSe_L99d
-CopyToSe_L539:
+	bge	DrumFilterGridSe_L539
+	jmp	DrumFilterGridSe_L99d
+DrumFilterGridSe_L539:
 	cmp	0xa, d3
-	ble	CopyToSe_L540
-	jmp	CopyToSe_L99d
-CopyToSe_L540:
+	ble	DrumFilterGridSe_L540
+	jmp	DrumFilterGridSe_L99d
+DrumFilterGridSe_L540:
 	mov	-1, d0
 	add	d3, d0
 	asl2	d0
@@ -437405,7 +437404,7 @@ loc_4C0F9640:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_L99d
+	jmp	DrumFilterGridSe_L99d
 loc_4C0F9663:
 	extbu	d2
 	mov	d2, d0
@@ -437417,12 +437416,12 @@ loc_4C0F9663:
 	mov	d2, d0
 	call	func_4C0FBC48_entry, [d2,d3,a2], 0x34
 	cmp	7, d3
-	ble	CopyToSe_L58b
-	jmp	CopyToSe_L99d
-CopyToSe_L58b:
+	ble	DrumFilterGridSe_L58b
+	jmp	DrumFilterGridSe_L99d
+DrumFilterGridSe_L58b:
 	mov	a3, d2
 	exthu	d2
-CopyToSe_L58e:
+DrumFilterGridSe_L58e:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, d1
 	exthu	d1
@@ -437435,17 +437434,17 @@ CopyToSe_L58e:
 	mov	d3, a2
 	exth	d3
 	cmp	7, d3
-	ble	CopyToSe_L58e
-	jmp	CopyToSe_L99d
+	ble	DrumFilterGridSe_L58e
+	jmp	DrumFilterGridSe_L99d
 loc_4C0F96A8:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	0, d0
-	beq	CopyToSe_L630
+	beq	DrumFilterGridSe_L630
 	cmp	7, d0
-	bne	CopyToSe_L5fb
+	bne	DrumFilterGridSe_L5fb
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -437472,8 +437471,8 @@ loc_4C0F96A8:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	CopyToSe_L630
-CopyToSe_L5fb:
+	bra	DrumFilterGridSe_L630
+DrumFilterGridSe_L5fb:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -437501,22 +437500,22 @@ CopyToSe_L5fb:
 	mov	d2, d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-CopyToSe_L630:
+DrumFilterGridSe_L630:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_L99d
+	jmp	DrumFilterGridSe_L99d
 loc_4C0F973D:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	0, d0
-	beq	CopyToSe_L6c3
+	beq	DrumFilterGridSe_L6c3
 	cmp	7, d0
-	bne	CopyToSe_L690
+	bne	DrumFilterGridSe_L690
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -437543,8 +437542,8 @@ loc_4C0F973D:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	CopyToSe_L6c3
-CopyToSe_L690:
+	bra	DrumFilterGridSe_L6c3
+DrumFilterGridSe_L690:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -437571,27 +437570,27 @@ CopyToSe_L690:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-CopyToSe_L6c3:
+DrumFilterGridSe_L6c3:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_L99d
+	jmp	DrumFilterGridSe_L99d
 loc_4C0F97D0:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	1, d0
-	beq	CopyToSe_L6f6
+	beq	DrumFilterGridSe_L6f6
 	cmp	2, d0
-	beq	CopyToSe_L6f6
+	beq	DrumFilterGridSe_L6f6
 	cmp	4, d0
-	beq	CopyToSe_L6f6
+	beq	DrumFilterGridSe_L6f6
 	cmp	5, d0
-	bne	CopyToSe_L726
-CopyToSe_L6f6:
+	bne	DrumFilterGridSe_L726
+DrumFilterGridSe_L6f6:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -437617,30 +437616,30 @@ CopyToSe_L6f6:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-CopyToSe_L726:
+DrumFilterGridSe_L726:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_L99d
+	jmp	DrumFilterGridSe_L99d
 loc_4C0F9833:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	1, d0
-	beq	CopyToSe_L760
+	beq	DrumFilterGridSe_L760
 	cmp	2, d0
-	beq	CopyToSe_L760
+	beq	DrumFilterGridSe_L760
 	cmp	4, d0
-	beq	CopyToSe_L760
+	beq	DrumFilterGridSe_L760
 	cmp	5, d0
-	beq	CopyToSe_L760
+	beq	DrumFilterGridSe_L760
 	cmp	7, d0
-	beq	CopyToSe_L796
-	jmp	CopyToSe_L7f4
-CopyToSe_L760:
+	beq	DrumFilterGridSe_L796
+	jmp	DrumFilterGridSe_L7f4
+DrumFilterGridSe_L760:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -437667,8 +437666,8 @@ CopyToSe_L760:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	CopyToSe_L7f4
-CopyToSe_L796:
+	bra	DrumFilterGridSe_L7f4
+DrumFilterGridSe_L796:
 	extbu	d2
 	mov	0x1c, d0
 	nop
@@ -437718,30 +437717,30 @@ CopyToSe_L796:
 	mov	d2, d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-CopyToSe_L7f4:
+DrumFilterGridSe_L7f4:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_L99d
+	jmp	DrumFilterGridSe_L99d
 loc_4C0F9901:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	1, d0
-	beq	CopyToSe_L82d
+	beq	DrumFilterGridSe_L82d
 	cmp	2, d0
-	beq	CopyToSe_L82d
+	beq	DrumFilterGridSe_L82d
 	cmp	4, d0
-	beq	CopyToSe_L82d
+	beq	DrumFilterGridSe_L82d
 	cmp	5, d0
-	beq	CopyToSe_L82d
+	beq	DrumFilterGridSe_L82d
 	cmp	7, d0
-	beq	CopyToSe_L863
-	bra	CopyToSe_L899
-CopyToSe_L82d:
+	beq	DrumFilterGridSe_L863
+	bra	DrumFilterGridSe_L899
+DrumFilterGridSe_L82d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -437768,8 +437767,8 @@ CopyToSe_L82d:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	CopyToSe_L899
-CopyToSe_L863:
+	bra	DrumFilterGridSe_L899
+DrumFilterGridSe_L863:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -437798,13 +437797,13 @@ CopyToSe_L863:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-CopyToSe_L899:
+DrumFilterGridSe_L899:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	(0x1c, sp), d1
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_L99d
+	jmp	DrumFilterGridSe_L99d
 loc_4C0F99A6:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -437837,7 +437836,7 @@ loc_4C0F99A6:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_L99d
+	jmp	DrumFilterGridSe_L99d
 loc_4C0F99F5:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -437870,7 +437869,7 @@ loc_4C0F99F5:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	CopyToSe_L99d
+	bra	DrumFilterGridSe_L99d
 loc_4C0F9A44:
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -437903,7 +437902,7 @@ loc_4C0F9A44:
 	mov	d1, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-CopyToSe_L99d:
+DrumFilterGridSe_L99d:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x4c
 loc_4C0F9A93:
@@ -437941,13 +437940,13 @@ loc_4C0F9ABD:
 	movhu	(0x28, sp), d0
 	exth	d0
 	cmp	1, d0
-	bge	CopyToSe_L9f8
-	jmp	CopyToSe_Lf4f
-CopyToSe_L9f8:
+	bge	DrumFilterGridSe_L9f8
+	jmp	DrumFilterGridSe_Lf4f
+DrumFilterGridSe_L9f8:
 	cmp	0xa, d0
-	ble	CopyToSe_L9ff
-	jmp	CopyToSe_Lf4f
-CopyToSe_L9ff:
+	ble	DrumFilterGridSe_L9ff
+	jmp	DrumFilterGridSe_Lf4f
+DrumFilterGridSe_L9ff:
 	add	-1, d0
 	asl2	d0
 	mov	CopyToSe_L9ff_Table, a0
@@ -437958,104 +437957,104 @@ loc_4C0F9AFE:
 	mov	d2, d0
 	mov	a2, a0
 	call	func_4C0FB47F_entry, [d2,d3,a2], 0x28
-	jmp	CopyToSe_Lf4f
+	jmp	DrumFilterGridSe_Lf4f
 loc_4C0F9B09:
 	extbu	d2
 	mov	d2, d0
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	0, d0
-	beq	CopyToSe_La48
+	beq	DrumFilterGridSe_La48
 	cmp	1, d0
-	beq	CopyToSe_La5c
+	beq	DrumFilterGridSe_La5c
 	cmp	2, d0
-	beq	CopyToSe_La6f
+	beq	DrumFilterGridSe_La6f
 	cmp	3, d0
-	beq	CopyToSe_La82
+	beq	DrumFilterGridSe_La82
 	cmp	4, d0
-	beq	CopyToSe_La95
+	beq	DrumFilterGridSe_La95
 	cmp	5, d0
-	beq	CopyToSe_Laa8
+	beq	DrumFilterGridSe_Laa8
 	cmp	6, d0
-	bne	CopyToSe_La3e
-	jmp	CopyToSe_Labb
-CopyToSe_La3e:
+	bne	DrumFilterGridSe_La3e
+	jmp	DrumFilterGridSe_Labb
+DrumFilterGridSe_La3e:
 	cmp	7, d0
-	bne	CopyToSe_La45
-	jmp	CopyToSe_Lace
-CopyToSe_La45:
-	jmp	CopyToSe_Ladf
-CopyToSe_La48:
+	bne	DrumFilterGridSe_La45
+	jmp	DrumFilterGridSe_Lace
+DrumFilterGridSe_La45:
+	jmp	DrumFilterGridSe_Ladf
+DrumFilterGridSe_La48:
 	mov	a2, (8, sp)
 	mov	Text_THRU_2, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	CopyToSe_Ladf
-CopyToSe_La5c:
+	jmp	DrumFilterGridSe_Ladf
+DrumFilterGridSe_La5c:
 	mov	a2, (8, sp)
 	mov	Text_THRU_2+8, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	CopyToSe_Ladf
-CopyToSe_La6f:
+	bra	DrumFilterGridSe_Ladf
+DrumFilterGridSe_La6f:
 	mov	a2, (8, sp)
 	mov	Text_THRU_2+16, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	CopyToSe_Ladf
-CopyToSe_La82:
+	bra	DrumFilterGridSe_Ladf
+DrumFilterGridSe_La82:
 	mov	a2, (8, sp)
 	mov	Text_THRU_2+24, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	CopyToSe_Ladf
-CopyToSe_La95:
+	bra	DrumFilterGridSe_Ladf
+DrumFilterGridSe_La95:
 	mov	a2, (8, sp)
 	mov	Text_THRU_2+32, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	CopyToSe_Ladf
-CopyToSe_Laa8:
+	bra	DrumFilterGridSe_Ladf
+DrumFilterGridSe_Laa8:
 	mov	a2, (8, sp)
 	mov	Text_THRU_2+40, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	CopyToSe_Ladf
-CopyToSe_Labb:
+	bra	DrumFilterGridSe_Ladf
+DrumFilterGridSe_Labb:
 	mov	a2, (8, sp)
 	mov	Text_THRU_2+48, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	CopyToSe_Ladf
-CopyToSe_Lace:
+	bra	DrumFilterGridSe_Ladf
+DrumFilterGridSe_Lace:
 	mov	a2, (8, sp)
 	mov	Text_THRU_2+56, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-CopyToSe_Ladf:
+DrumFilterGridSe_Ladf:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_Lf4f
+	jmp	DrumFilterGridSe_Lf4f
 loc_4C0F9BE6:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	0, d0
-	beq	CopyToSe_Lb06
+	beq	DrumFilterGridSe_Lb06
 	cmp	7, d0
-	beq	CopyToSe_Lb19
-	bra	CopyToSe_Lb4f
-CopyToSe_Lb06:
+	beq	DrumFilterGridSe_Lb19
+	bra	DrumFilterGridSe_Lb4f
+DrumFilterGridSe_Lb06:
 	mov	a2, (8, sp)
 	mov	Str_empty_617, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	CopyToSe_Lb87
-CopyToSe_Lb19:
+	bra	DrumFilterGridSe_Lb87
+DrumFilterGridSe_Lb19:
 	extbu	d2
 	mov	0x1c, d0
 	nop
@@ -438082,8 +438081,8 @@ CopyToSe_Lb19:
 	movbu	(0x20, sp), d0
 	mov	a2, a0
 	call	func_4C0FC157_entry, 0, 0x14
-	bra	CopyToSe_Lb87
-CopyToSe_Lb4f:
+	bra	DrumFilterGridSe_Lb87
+DrumFilterGridSe_Lb4f:
 	extbu	d2
 	mov	0x1c, d0
 	nop
@@ -438111,34 +438110,34 @@ CopyToSe_Lb4f:
 	movbu	(0x20, sp), d0
 	mov	a2, a0
 	call	func_4C0FC157_entry, 0, 0x14
-CopyToSe_Lb87:
+DrumFilterGridSe_Lb87:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_Lf4f
+	jmp	DrumFilterGridSe_Lf4f
 loc_4C0F9C8E:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	0, d0
-	beq	CopyToSe_Lbb7
+	beq	DrumFilterGridSe_Lbb7
 	cmp	7, d0
-	beq	CopyToSe_Lbcb
+	beq	DrumFilterGridSe_Lbcb
 	cmp	3, d0
-	beq	CopyToSe_Lc06
+	beq	DrumFilterGridSe_Lc06
 	cmp	6, d0
-	beq	CopyToSe_Lc06
-	jmp	CopyToSe_Lc43
-CopyToSe_Lbb7:
+	beq	DrumFilterGridSe_Lc06
+	jmp	DrumFilterGridSe_Lc43
+DrumFilterGridSe_Lbb7:
 	mov	a2, (8, sp)
 	mov	Str_empty_616, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	CopyToSe_Lc77
-CopyToSe_Lbcb:
+	jmp	DrumFilterGridSe_Lc77
+DrumFilterGridSe_Lbcb:
 	extbu	d2
 	mov	0x1c, d0
 	nop
@@ -438167,8 +438166,8 @@ CopyToSe_Lbcb:
 	mov	a2, a0
 	clr	d1
 	call	func_4C0FC17A_entry, [a2], 0x24
-	bra	CopyToSe_Lc77
-CopyToSe_Lc06:
+	bra	DrumFilterGridSe_Lc77
+DrumFilterGridSe_Lc06:
 	extbu	d2
 	mov	0x1c, d0
 	nop
@@ -438198,8 +438197,8 @@ CopyToSe_Lc06:
 	mov	a2, a0
 	mov	1, d1
 	call	func_4C0FC17A_entry, [a2], 0x24
-	bra	CopyToSe_Lc77
-CopyToSe_Lc43:
+	bra	DrumFilterGridSe_Lc77
+DrumFilterGridSe_Lc43:
 	extbu	d2
 	mov	0x1c, d0
 	nop
@@ -438226,27 +438225,27 @@ CopyToSe_Lc43:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FC17A_entry, [a2], 0x24
-CopyToSe_Lc77:
+DrumFilterGridSe_Lc77:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_Lf4f
+	jmp	DrumFilterGridSe_Lf4f
 loc_4C0F9D7E:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	1, d0
-	beq	CopyToSe_Lca4
+	beq	DrumFilterGridSe_Lca4
 	cmp	2, d0
-	beq	CopyToSe_Lca4
+	beq	DrumFilterGridSe_Lca4
 	cmp	4, d0
-	beq	CopyToSe_Lca4
+	beq	DrumFilterGridSe_Lca4
 	cmp	5, d0
-	bne	CopyToSe_Ld01
-CopyToSe_Lca4:
+	bne	DrumFilterGridSe_Ld01
+DrumFilterGridSe_Lca4:
 	movbu	(Str_empty_255), d0
 	extbu	d2
 	mov	sp, a0
@@ -438271,51 +438270,51 @@ CopyToSe_Lca4:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x20, sp), d0
 	cmp	0, d0
-	beq	CopyToSe_Lcdb
+	beq	DrumFilterGridSe_Lcdb
 	cmp	1, d0
-	beq	CopyToSe_Lcee
-	bra	CopyToSe_Ld12
-CopyToSe_Lcdb:
+	beq	DrumFilterGridSe_Lcee
+	bra	DrumFilterGridSe_Ld12
+DrumFilterGridSe_Lcdb:
 	mov	a2, (8, sp)
 	mov	Str_LOW_3, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	CopyToSe_Ld12
-CopyToSe_Lcee:
+	bra	DrumFilterGridSe_Ld12
+DrumFilterGridSe_Lcee:
 	mov	a2, (8, sp)
 	mov	Str_HIGH_3, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	CopyToSe_Ld12
-CopyToSe_Ld01:
+	bra	DrumFilterGridSe_Ld12
+DrumFilterGridSe_Ld01:
 	mov	a2, (8, sp)
 	mov	Str_empty_615, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-CopyToSe_Ld12:
+DrumFilterGridSe_Ld12:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_Lf4f
+	jmp	DrumFilterGridSe_Lf4f
 loc_4C0F9E19:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	1, d0
-	beq	CopyToSe_Ld45
+	beq	DrumFilterGridSe_Ld45
 	cmp	2, d0
-	beq	CopyToSe_Ld45
+	beq	DrumFilterGridSe_Ld45
 	cmp	4, d0
-	beq	CopyToSe_Ld45
+	beq	DrumFilterGridSe_Ld45
 	cmp	5, d0
-	beq	CopyToSe_Ld45
+	beq	DrumFilterGridSe_Ld45
 	cmp	7, d0
-	beq	CopyToSe_Ld7d
-	bra	CopyToSe_Ldb7
-CopyToSe_Ld45:
+	beq	DrumFilterGridSe_Ld7d
+	bra	DrumFilterGridSe_Ldb7
+DrumFilterGridSe_Ld45:
 	extbu	d2
 	mov	0x1c, d0
 	nop
@@ -438342,8 +438341,8 @@ CopyToSe_Ld45:
 	movbu	(0x20, sp), d0
 	mov	a2, a0
 	call	func_4C0FC157_entry, 0, 0x14
-	bra	CopyToSe_Ldc8
-CopyToSe_Ld7d:
+	bra	DrumFilterGridSe_Ldc8
+DrumFilterGridSe_Ld7d:
 	extbu	d2
 	mov	0x1c, d0
 	nop
@@ -438371,36 +438370,36 @@ CopyToSe_Ld7d:
 	movbu	(0x20, sp), d0
 	mov	a2, a0
 	call	func_4C0FC157_entry, 0, 0x14
-	bra	CopyToSe_Ldc8
-CopyToSe_Ldb7:
+	bra	DrumFilterGridSe_Ldc8
+DrumFilterGridSe_Ldb7:
 	mov	a2, (8, sp)
 	mov	Str_empty_614, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-CopyToSe_Ldc8:
+DrumFilterGridSe_Ldc8:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_Lf4f
+	jmp	DrumFilterGridSe_Lf4f
 loc_4C0F9ECF:
 	mov	d2, d0
 	extbu	d0
 	call	func_4C0FB833_entry, [d2,d3,a2,a3], 0x28
 	extbu	d0
 	cmp	1, d0
-	beq	CopyToSe_Ldfb
+	beq	DrumFilterGridSe_Ldfb
 	cmp	2, d0
-	beq	CopyToSe_Ldfb
+	beq	DrumFilterGridSe_Ldfb
 	cmp	4, d0
-	beq	CopyToSe_Ldfb
+	beq	DrumFilterGridSe_Ldfb
 	cmp	5, d0
-	beq	CopyToSe_Ldfb
+	beq	DrumFilterGridSe_Ldfb
 	cmp	7, d0
-	beq	CopyToSe_Le31
-	bra	CopyToSe_Le6b
-CopyToSe_Ldfb:
+	beq	DrumFilterGridSe_Le31
+	bra	DrumFilterGridSe_Le6b
+DrumFilterGridSe_Ldfb:
 	extbu	d2
 	mov	0x1c, d0
 	nop
@@ -438427,8 +438426,8 @@ CopyToSe_Ldfb:
 	movbu	(0x20, sp), d0
 	mov	a2, a0
 	call	func_4C0FC26E_entry, 0, 0x14
-	bra	CopyToSe_Le7c
-CopyToSe_Le31:
+	bra	DrumFilterGridSe_Le7c
+DrumFilterGridSe_Le31:
 	extbu	d2
 	mov	0x1c, d0
 	nop
@@ -438457,19 +438456,19 @@ CopyToSe_Le31:
 	mov	a2, a0
 	clr	d1
 	call	func_4C0FC17A_entry, [a2], 0x24
-	bra	CopyToSe_Le7c
-CopyToSe_Le6b:
+	bra	DrumFilterGridSe_Le7c
+DrumFilterGridSe_Le6b:
 	mov	a2, (8, sp)
 	mov	Str_empty_613, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-CopyToSe_Le7c:
+DrumFilterGridSe_Le7c:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	CopyToSe_Lf4f
+	jmp	DrumFilterGridSe_Lf4f
 loc_4C0F9F83:
 	mov	0x3f, d0
 	mov	d0, (0x18, sp)
@@ -438497,7 +438496,7 @@ loc_4C0F9F83:
 	mov	Str_3d_33, a1
 	clr	d1
 	call	func_4C0FB558_entry, [d2,d3,a2,a3], 0x2c
-	jmp	CopyToSe_Lf4f
+	jmp	DrumFilterGridSe_Lf4f
 loc_4C0F9FBC:
 	extbu	d2
 	mov	0x1c, d0
@@ -438534,7 +438533,7 @@ loc_4C0F9FBC:
 	extb	d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	CopyToSe_Lf4f
+	bra	DrumFilterGridSe_Lf4f
 loc_4C0FA00D:
 	mov	0x3f, d0
 	mov	d0, (0x18, sp)
@@ -438562,19 +438561,19 @@ loc_4C0FA00D:
 	mov	Str_3d_32, a1
 	clr	d1
 	call	func_4C0FB558_entry, [d2,d3,a2,a3], 0x2c
-CopyToSe_Lf4f:
+DrumFilterGridSe_Lf4f:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	CopyToSe_Lf6c
+	bra	DrumFilterGridSe_Lf6c
 loc_4C0FA05A:
 	mov	d3, d0
-	bra	CopyToSe_Lf6c
-CopyToSe_Lf6b:
+	bra	DrumFilterGridSe_Lf6c
+DrumFilterGridSe_Lf6b:
 	clr	d0
-CopyToSe_Lf6c:
+DrumFilterGridSe_Lf6c:
 	ret	[d2,d3,a2,a3], 0x4c
 
 AcDrumGridBoxSe2Proc:
@@ -438948,19 +438947,19 @@ AcDrumGridBoxSe2Proc_L40b:
 AcDrumGridBoxSe2Proc_L418:
 	ret	[d2,d3,a2], 0x20
 
-DrumGraphKeyOffXSe:
+DrumAmpGridSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x34, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	DrumGraphKeyOffXSe_L12
-	jmp	DrumGraphKeyOffXSe_L7d9
-DrumGraphKeyOffXSe_L12:
+	bge	DrumAmpGridSe_L12
+	jmp	DrumAmpGridSe_L7d9
+DrumAmpGridSe_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	DrumGraphKeyOffXSe_L1d
-	jmp	DrumGraphKeyOffXSe_L7d9
-DrumGraphKeyOffXSe_L1d:
+	ble	DrumAmpGridSe_L1d
+	jmp	DrumAmpGridSe_L7d9
+DrumAmpGridSe_L1d:
 	mov	DrumGraphKeyOffXSe_L1d_Records, a1
 	add	0xfe800001, d2
 	mov	0xf, d0
@@ -438970,21 +438969,21 @@ DrumGraphKeyOffXSe_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	DrumGraphKeyOffXSe_L4e
+	beq	DrumAmpGridSe_L4e
 	setlb
 	cmp	0, d0
-	bne	DrumGraphKeyOffXSe_L40
-	jmp	DrumGraphKeyOffXSe_L7d9
-DrumGraphKeyOffXSe_L40:
+	bne	DrumAmpGridSe_L40
+	jmp	DrumAmpGridSe_L7d9
+DrumAmpGridSe_L40:
 	add	8, a0
 	cmp	CopyFromSe_L1d_Records, a0
-	bcs	DrumGraphKeyOffXSe_L4b
+	bcs	DrumAmpGridSe_L4b
 	mov	a1, a0
-DrumGraphKeyOffXSe_L4b:
+DrumAmpGridSe_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-DrumGraphKeyOffXSe_L4e:
+DrumAmpGridSe_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0FA4CF:
@@ -439002,39 +439001,39 @@ loc_4C0FA4CF:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	DrumGraphKeyOffXSe_Lac
+	beq	DrumAmpGridSe_Lac
 	cmp	2, d0
-	beq	DrumGraphKeyOffXSe_Lb8
+	beq	DrumAmpGridSe_Lb8
 	cmp	3, d0
-	beq	DrumGraphKeyOffXSe_Lf1
+	beq	DrumAmpGridSe_Lf1
 	cmp	4, d0
-	bne	DrumGraphKeyOffXSe_L8d
-	jmp	DrumGraphKeyOffXSe_L12a
-DrumGraphKeyOffXSe_L8d:
+	bne	DrumAmpGridSe_L8d
+	jmp	DrumAmpGridSe_L12a
+DrumAmpGridSe_L8d:
 	cmp	5, d0
-	bne	DrumGraphKeyOffXSe_L94
-	jmp	DrumGraphKeyOffXSe_L161
-DrumGraphKeyOffXSe_L94:
+	bne	DrumAmpGridSe_L94
+	jmp	DrumAmpGridSe_L161
+DrumAmpGridSe_L94:
 	cmp	6, d0
-	bne	DrumGraphKeyOffXSe_L9b
-	jmp	DrumGraphKeyOffXSe_L197
-DrumGraphKeyOffXSe_L9b:
+	bne	DrumAmpGridSe_L9b
+	jmp	DrumAmpGridSe_L197
+DrumAmpGridSe_L9b:
 	cmp	7, d0
-	bne	DrumGraphKeyOffXSe_La2
-	jmp	DrumGraphKeyOffXSe_L1f5
-DrumGraphKeyOffXSe_La2:
+	bne	DrumAmpGridSe_La2
+	jmp	DrumAmpGridSe_L1f5
+DrumAmpGridSe_La2:
 	cmp	8, d0
-	bne	DrumGraphKeyOffXSe_La9
-	jmp	DrumGraphKeyOffXSe_L24c
-DrumGraphKeyOffXSe_La9:
-	jmp	DrumGraphKeyOffXSe_L281
-DrumGraphKeyOffXSe_Lac:
+	bne	DrumAmpGridSe_La9
+	jmp	DrumAmpGridSe_L24c
+DrumAmpGridSe_La9:
+	jmp	DrumAmpGridSe_L281
+DrumAmpGridSe_Lac:
 	mov	1, d0
 	extbu	d2
 	mov	d2, d1
 	call	func_4C0FB3CE_entry, [d2,d3], 0x20
-	jmp	DrumGraphKeyOffXSe_L281
-DrumGraphKeyOffXSe_Lb8:
+	jmp	DrumAmpGridSe_L281
+DrumAmpGridSe_Lb8:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -439062,8 +439061,8 @@ DrumGraphKeyOffXSe_Lb8:
 	mov	d1, d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	DrumGraphKeyOffXSe_L281
-DrumGraphKeyOffXSe_Lf1:
+	jmp	DrumAmpGridSe_L281
+DrumAmpGridSe_Lf1:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -439091,8 +439090,8 @@ DrumGraphKeyOffXSe_Lf1:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	DrumGraphKeyOffXSe_L281
-DrumGraphKeyOffXSe_L12a:
+	jmp	DrumAmpGridSe_L281
+DrumAmpGridSe_L12a:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -439120,8 +439119,8 @@ DrumGraphKeyOffXSe_L12a:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	DrumGraphKeyOffXSe_L281
-DrumGraphKeyOffXSe_L161:
+	jmp	DrumAmpGridSe_L281
+DrumAmpGridSe_L161:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -439148,8 +439147,8 @@ DrumGraphKeyOffXSe_L161:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	DrumGraphKeyOffXSe_L281
-DrumGraphKeyOffXSe_L197:
+	jmp	DrumAmpGridSe_L281
+DrumAmpGridSe_L197:
 	movbu	(Str_empty_255), d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -439165,9 +439164,9 @@ DrumGraphKeyOffXSe_L197:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x1c, sp), d0
 	cmp	1, d0
-	beq	DrumGraphKeyOffXSe_L1bf
-	jmp	DrumGraphKeyOffXSe_L281
-DrumGraphKeyOffXSe_L1bf:
+	beq	DrumAmpGridSe_L1bf
+	jmp	DrumAmpGridSe_L281
+DrumAmpGridSe_L1bf:
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -439195,8 +439194,8 @@ DrumGraphKeyOffXSe_L1bf:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	DrumGraphKeyOffXSe_L281
-DrumGraphKeyOffXSe_L1f5:
+	jmp	DrumAmpGridSe_L281
+DrumAmpGridSe_L1f5:
 	movbu	(Str_empty_255), d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -439212,7 +439211,7 @@ DrumGraphKeyOffXSe_L1f5:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x1c, sp), d0
 	cmp	1, d0
-	bne	DrumGraphKeyOffXSe_L281
+	bne	DrumAmpGridSe_L281
 	mov	0x64, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -439239,8 +439238,8 @@ DrumGraphKeyOffXSe_L1f5:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	DrumGraphKeyOffXSe_L281
-DrumGraphKeyOffXSe_L24c:
+	bra	DrumAmpGridSe_L281
+DrumAmpGridSe_L24c:
 	mov	0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -439268,7 +439267,7 @@ DrumGraphKeyOffXSe_L24c:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-DrumGraphKeyOffXSe_L281:
+DrumAmpGridSe_L281:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -439290,39 +439289,39 @@ loc_4C0FA717:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	DrumGraphKeyOffXSe_L2f4
+	beq	DrumAmpGridSe_L2f4
 	cmp	2, d0
-	beq	DrumGraphKeyOffXSe_L2ff
+	beq	DrumAmpGridSe_L2ff
 	cmp	3, d0
-	beq	DrumGraphKeyOffXSe_L336
+	beq	DrumAmpGridSe_L336
 	cmp	4, d0
-	bne	DrumGraphKeyOffXSe_L2d5
-	jmp	DrumGraphKeyOffXSe_L36a
-DrumGraphKeyOffXSe_L2d5:
+	bne	DrumAmpGridSe_L2d5
+	jmp	DrumAmpGridSe_L36a
+DrumAmpGridSe_L2d5:
 	cmp	5, d0
-	bne	DrumGraphKeyOffXSe_L2dc
-	jmp	DrumGraphKeyOffXSe_L39e
-DrumGraphKeyOffXSe_L2dc:
+	bne	DrumAmpGridSe_L2dc
+	jmp	DrumAmpGridSe_L39e
+DrumAmpGridSe_L2dc:
 	cmp	6, d0
-	bne	DrumGraphKeyOffXSe_L2e3
-	jmp	DrumGraphKeyOffXSe_L3d2
-DrumGraphKeyOffXSe_L2e3:
+	bne	DrumAmpGridSe_L2e3
+	jmp	DrumAmpGridSe_L3d2
+DrumAmpGridSe_L2e3:
 	cmp	7, d0
-	bne	DrumGraphKeyOffXSe_L2ea
-	jmp	DrumGraphKeyOffXSe_L42d
-DrumGraphKeyOffXSe_L2ea:
+	bne	DrumAmpGridSe_L2ea
+	jmp	DrumAmpGridSe_L42d
+DrumAmpGridSe_L2ea:
 	cmp	8, d0
-	bne	DrumGraphKeyOffXSe_L2f1
-	jmp	DrumGraphKeyOffXSe_L485
-DrumGraphKeyOffXSe_L2f1:
-	jmp	DrumGraphKeyOffXSe_L4bb
-DrumGraphKeyOffXSe_L2f4:
+	bne	DrumAmpGridSe_L2f1
+	jmp	DrumAmpGridSe_L485
+DrumAmpGridSe_L2f1:
+	jmp	DrumAmpGridSe_L4bb
+DrumAmpGridSe_L2f4:
 	clr	d0
 	extbu	d2
 	mov	d2, d1
 	call	func_4C0FB3CE_entry, [d2,d3], 0x20
-	jmp	DrumGraphKeyOffXSe_L4bb
-DrumGraphKeyOffXSe_L2ff:
+	jmp	DrumAmpGridSe_L4bb
+DrumAmpGridSe_L2ff:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -439349,8 +439348,8 @@ DrumGraphKeyOffXSe_L2ff:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	DrumGraphKeyOffXSe_L4bb
-DrumGraphKeyOffXSe_L336:
+	jmp	DrumAmpGridSe_L4bb
+DrumAmpGridSe_L336:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -439376,8 +439375,8 @@ DrumGraphKeyOffXSe_L336:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	DrumGraphKeyOffXSe_L4bb
-DrumGraphKeyOffXSe_L36a:
+	jmp	DrumAmpGridSe_L4bb
+DrumAmpGridSe_L36a:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -439403,8 +439402,8 @@ DrumGraphKeyOffXSe_L36a:
 	mov	d1, d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	DrumGraphKeyOffXSe_L4bb
-DrumGraphKeyOffXSe_L39e:
+	jmp	DrumAmpGridSe_L4bb
+DrumAmpGridSe_L39e:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -439430,8 +439429,8 @@ DrumGraphKeyOffXSe_L39e:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	DrumGraphKeyOffXSe_L4bb
-DrumGraphKeyOffXSe_L3d2:
+	jmp	DrumAmpGridSe_L4bb
+DrumAmpGridSe_L3d2:
 	movbu	(Str_empty_255), d0
 	mov	sp, a0
 	mov	d0, d1
@@ -439448,9 +439447,9 @@ DrumGraphKeyOffXSe_L3d2:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x1c, sp), d0
 	cmp	1, d0
-	beq	DrumGraphKeyOffXSe_L3fb
-	jmp	DrumGraphKeyOffXSe_L4bb
-DrumGraphKeyOffXSe_L3fb:
+	beq	DrumAmpGridSe_L3fb
+	jmp	DrumAmpGridSe_L4bb
+DrumAmpGridSe_L3fb:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -439477,8 +439476,8 @@ DrumGraphKeyOffXSe_L3fb:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	DrumGraphKeyOffXSe_L4bb
-DrumGraphKeyOffXSe_L42d:
+	jmp	DrumAmpGridSe_L4bb
+DrumAmpGridSe_L42d:
 	movbu	(Str_empty_255), d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -439494,7 +439493,7 @@ DrumGraphKeyOffXSe_L42d:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x1c, sp), d0
 	cmp	1, d0
-	bne	DrumGraphKeyOffXSe_L4bb
+	bne	DrumAmpGridSe_L4bb
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -439521,8 +439520,8 @@ DrumGraphKeyOffXSe_L42d:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	DrumGraphKeyOffXSe_L4bb
-DrumGraphKeyOffXSe_L485:
+	bra	DrumAmpGridSe_L4bb
+DrumAmpGridSe_L485:
 	mov	-0x32, d0
 	mov	d0, (0x10, sp)
 	mov	1, d0
@@ -439551,7 +439550,7 @@ DrumGraphKeyOffXSe_L485:
 	mov	d1, d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-DrumGraphKeyOffXSe_L4bb:
+DrumAmpGridSe_L4bb:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -439591,39 +439590,39 @@ loc_4C0FA97B:
 	add	-2, d2
 	exth	d0
 	cmp	1, d0
-	beq	DrumGraphKeyOffXSe_L554
+	beq	DrumAmpGridSe_L554
 	cmp	2, d0
-	beq	DrumGraphKeyOffXSe_L55f
+	beq	DrumAmpGridSe_L55f
 	cmp	3, d0
-	beq	DrumGraphKeyOffXSe_L5a6
+	beq	DrumAmpGridSe_L5a6
 	cmp	4, d0
-	bne	DrumGraphKeyOffXSe_L535
-	jmp	DrumGraphKeyOffXSe_L5ee
-DrumGraphKeyOffXSe_L535:
+	bne	DrumAmpGridSe_L535
+	jmp	DrumAmpGridSe_L5ee
+DrumAmpGridSe_L535:
 	cmp	5, d0
-	bne	DrumGraphKeyOffXSe_L53c
-	jmp	DrumGraphKeyOffXSe_L635
-DrumGraphKeyOffXSe_L53c:
+	bne	DrumAmpGridSe_L53c
+	jmp	DrumAmpGridSe_L635
+DrumAmpGridSe_L53c:
 	cmp	6, d0
-	bne	DrumGraphKeyOffXSe_L543
-	jmp	DrumGraphKeyOffXSe_L67f
-DrumGraphKeyOffXSe_L543:
+	bne	DrumAmpGridSe_L543
+	jmp	DrumAmpGridSe_L67f
+DrumAmpGridSe_L543:
 	cmp	7, d0
-	bne	DrumGraphKeyOffXSe_L54a
-	jmp	DrumGraphKeyOffXSe_L706
-DrumGraphKeyOffXSe_L54a:
+	bne	DrumAmpGridSe_L54a
+	jmp	DrumAmpGridSe_L706
+DrumAmpGridSe_L54a:
 	cmp	8, d0
-	bne	DrumGraphKeyOffXSe_L551
-	jmp	DrumGraphKeyOffXSe_L78b
-DrumGraphKeyOffXSe_L551:
-	jmp	DrumGraphKeyOffXSe_L7bd
-DrumGraphKeyOffXSe_L554:
+	bne	DrumAmpGridSe_L551
+	jmp	DrumAmpGridSe_L78b
+DrumAmpGridSe_L551:
+	jmp	DrumAmpGridSe_L7bd
+DrumAmpGridSe_L554:
 	extbu	d2
 	mov	d2, d0
 	mov	a2, a0
 	call	func_4C0FB47F_entry, [d2,d3,a2], 0x28
-	jmp	DrumGraphKeyOffXSe_L7bd
-DrumGraphKeyOffXSe_L55f:
+	jmp	DrumAmpGridSe_L7bd
+DrumAmpGridSe_L55f:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
 	extbu	d2
@@ -439653,8 +439652,8 @@ DrumGraphKeyOffXSe_L55f:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DrumGraphKeyOffXSe_L7bd
-DrumGraphKeyOffXSe_L5a6:
+	jmp	DrumAmpGridSe_L7bd
+DrumAmpGridSe_L5a6:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
 	extbu	d2
@@ -439686,8 +439685,8 @@ DrumGraphKeyOffXSe_L5a6:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DrumGraphKeyOffXSe_L7bd
-DrumGraphKeyOffXSe_L5ee:
+	jmp	DrumAmpGridSe_L7bd
+DrumAmpGridSe_L5ee:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
 	extbu	d2
@@ -439717,8 +439716,8 @@ DrumGraphKeyOffXSe_L5ee:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DrumGraphKeyOffXSe_L7bd
-DrumGraphKeyOffXSe_L635:
+	jmp	DrumAmpGridSe_L7bd
+DrumAmpGridSe_L635:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
 	extbu	d2
@@ -439749,8 +439748,8 @@ DrumGraphKeyOffXSe_L635:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DrumGraphKeyOffXSe_L7bd
-DrumGraphKeyOffXSe_L67f:
+	jmp	DrumAmpGridSe_L7bd
+DrumAmpGridSe_L67f:
 	movbu	(Str_empty_255), d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -439766,17 +439765,17 @@ DrumGraphKeyOffXSe_L67f:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x1c, sp), d0
 	cmp	0, d0
-	beq	DrumGraphKeyOffXSe_L6ab
+	beq	DrumAmpGridSe_L6ab
 	cmp	1, d0
-	beq	DrumGraphKeyOffXSe_L6bf
-	jmp	DrumGraphKeyOffXSe_L7bd
-DrumGraphKeyOffXSe_L6ab:
+	beq	DrumAmpGridSe_L6bf
+	jmp	DrumAmpGridSe_L7bd
+DrumAmpGridSe_L6ab:
 	mov	a2, (8, sp)
 	mov	Str_empty_611, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	DrumGraphKeyOffXSe_L7bd
-DrumGraphKeyOffXSe_L6bf:
+	jmp	DrumAmpGridSe_L7bd
+DrumAmpGridSe_L6bf:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
 	extbu	d2
@@ -439807,8 +439806,8 @@ DrumGraphKeyOffXSe_L6bf:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	jmp	DrumGraphKeyOffXSe_L7bd
-DrumGraphKeyOffXSe_L706:
+	jmp	DrumAmpGridSe_L7bd
+DrumAmpGridSe_L706:
 	movbu	(Str_empty_255), d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -439824,17 +439823,17 @@ DrumGraphKeyOffXSe_L706:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x1c, sp), d0
 	cmp	0, d0
-	beq	DrumGraphKeyOffXSe_L732
+	beq	DrumAmpGridSe_L732
 	cmp	1, d0
-	beq	DrumGraphKeyOffXSe_L745
-	jmp	DrumGraphKeyOffXSe_L7bd
-DrumGraphKeyOffXSe_L732:
+	beq	DrumAmpGridSe_L745
+	jmp	DrumAmpGridSe_L7bd
+DrumAmpGridSe_L732:
 	mov	a2, (8, sp)
 	mov	Str_empty_610, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	DrumGraphKeyOffXSe_L7bd
-DrumGraphKeyOffXSe_L745:
+	bra	DrumAmpGridSe_L7bd
+DrumAmpGridSe_L745:
 	mov	0x7f, d0
 	mov	d0, (0x18, sp)
 	extbu	d2
@@ -439865,8 +439864,8 @@ DrumGraphKeyOffXSe_L745:
 	mov	-1, d0
 	mov	EV_ToneSelected, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	DrumGraphKeyOffXSe_L7bd
-DrumGraphKeyOffXSe_L78b:
+	bra	DrumAmpGridSe_L7bd
+DrumAmpGridSe_L78b:
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	extbu	d2
@@ -439889,34 +439888,34 @@ DrumGraphKeyOffXSe_L78b:
 	mov	1, d1
 	mov	a2, a0
 	call	func_4C0FB558_entry, [d2,d3,a2,a3], 0x2c
-DrumGraphKeyOffXSe_L7bd:
+DrumAmpGridSe_L7bd:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	DrumGraphKeyOffXSe_L7da
+	bra	DrumAmpGridSe_L7da
 loc_4C0FAC52:
 	mov	d3, d0
-	bra	DrumGraphKeyOffXSe_L7da
-DrumGraphKeyOffXSe_L7d9:
+	bra	DrumAmpGridSe_L7da
+DrumAmpGridSe_L7d9:
 	clr	d0
-DrumGraphKeyOffXSe_L7da:
+DrumAmpGridSe_L7da:
 	ret	[d2,d3,a2,a3], 0x44
 
-CopyFromSe:
+DrumLfoGridSe:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x34, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	0x1800000, d2
-	bge	CopyFromSe_L12
-	jmp	CopyFromSe_L54d
-CopyFromSe_L12:
+	bge	DrumLfoGridSe_L12
+	jmp	DrumLfoGridSe_L54d
+DrumLfoGridSe_L12:
 	cmp	MT_RequestGridDraw, d2
-	ble	CopyFromSe_L1d
-	jmp	CopyFromSe_L54d
-CopyFromSe_L1d:
+	ble	DrumLfoGridSe_L1d
+	jmp	DrumLfoGridSe_L54d
+DrumLfoGridSe_L1d:
 	mov	CopyFromSe_L1d_Records, a1
 	add	0xfe800001, d2
 	mov	0xf, d0
@@ -439926,21 +439925,21 @@ CopyFromSe_L1d:
 	add	a1, a0
 	mov	(a0), d0
 	cmp	d2, d0
-	beq	CopyFromSe_L4e
+	beq	DrumLfoGridSe_L4e
 	setlb
 	cmp	0, d0
-	bne	CopyFromSe_L40
-	jmp	CopyFromSe_L54d
-CopyFromSe_L40:
+	bne	DrumLfoGridSe_L40
+	jmp	DrumLfoGridSe_L54d
+DrumLfoGridSe_L40:
 	add	8, a0
 	cmp	func_4C0FC2CA_entry_Led_Table, a0
-	bcs	CopyFromSe_L4b
+	bcs	DrumLfoGridSe_L4b
 	mov	a1, a0
-CopyFromSe_L4b:
+DrumLfoGridSe_L4b:
 	mov	(a0), d0
 	cmp	d2, d0
 	lne
-CopyFromSe_L4e:
+DrumLfoGridSe_L4e:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4C0FACAC:
@@ -439957,30 +439956,30 @@ loc_4C0FACAC:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	CopyFromSe_L9b
+	beq	DrumLfoGridSe_L9b
 	cmp	2, d0
-	beq	CopyFromSe_La6
+	beq	DrumLfoGridSe_La6
 	cmp	3, d0
-	beq	CopyFromSe_Ldf
+	beq	DrumLfoGridSe_Ldf
 	cmp	4, d0
-	bne	CopyFromSe_L8a
-	jmp	CopyFromSe_L117
-CopyFromSe_L8a:
+	bne	DrumLfoGridSe_L8a
+	jmp	DrumLfoGridSe_L117
+DrumLfoGridSe_L8a:
 	cmp	5, d0
-	bne	CopyFromSe_L91
-	jmp	CopyFromSe_L150
-CopyFromSe_L91:
+	bne	DrumLfoGridSe_L91
+	jmp	DrumLfoGridSe_L150
+DrumLfoGridSe_L91:
 	cmp	6, d0
-	bne	CopyFromSe_L98
-	jmp	CopyFromSe_L186
-CopyFromSe_L98:
-	jmp	CopyFromSe_L1ba
-CopyFromSe_L9b:
+	bne	DrumLfoGridSe_L98
+	jmp	DrumLfoGridSe_L186
+DrumLfoGridSe_L98:
+	jmp	DrumLfoGridSe_L1ba
+DrumLfoGridSe_L9b:
 	mov	1, d0
 	extbu	d1
 	call	func_4C0FB3CE_entry, [d2,d3], 0x20
-	jmp	CopyFromSe_L1ba
-CopyFromSe_La6:
+	jmp	DrumLfoGridSe_L1ba
+DrumLfoGridSe_La6:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -440008,8 +440007,8 @@ CopyFromSe_La6:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	CopyFromSe_L1ba
-CopyFromSe_Ldf:
+	jmp	DrumLfoGridSe_L1ba
+DrumLfoGridSe_Ldf:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -440036,8 +440035,8 @@ CopyFromSe_Ldf:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	CopyFromSe_L1ba
-CopyFromSe_L117:
+	jmp	DrumLfoGridSe_L1ba
+DrumLfoGridSe_L117:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -440066,8 +440065,8 @@ CopyFromSe_L117:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	CopyFromSe_L1ba
-CopyFromSe_L150:
+	bra	DrumLfoGridSe_L1ba
+DrumLfoGridSe_L150:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -440094,8 +440093,8 @@ CopyFromSe_L150:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	CopyFromSe_L1ba
-CopyFromSe_L186:
+	bra	DrumLfoGridSe_L1ba
+DrumLfoGridSe_L186:
 	mov	0x7f, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -440123,7 +440122,7 @@ CopyFromSe_L186:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-CopyFromSe_L1ba:
+DrumLfoGridSe_L1ba:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d2, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -440145,30 +440144,30 @@ loc_4C0FAE2D:
 	and	0xffff, d0
 	exth	d0
 	cmp	1, d0
-	beq	CopyFromSe_L21d
+	beq	DrumLfoGridSe_L21d
 	cmp	2, d0
-	beq	CopyFromSe_L227
+	beq	DrumLfoGridSe_L227
 	cmp	3, d0
-	beq	CopyFromSe_L25d
+	beq	DrumLfoGridSe_L25d
 	cmp	4, d0
-	bne	CopyFromSe_L20c
-	jmp	CopyFromSe_L296
-CopyFromSe_L20c:
+	bne	DrumLfoGridSe_L20c
+	jmp	DrumLfoGridSe_L296
+DrumLfoGridSe_L20c:
 	cmp	5, d0
-	bne	CopyFromSe_L213
-	jmp	CopyFromSe_L2c9
-CopyFromSe_L213:
+	bne	DrumLfoGridSe_L213
+	jmp	DrumLfoGridSe_L2c9
+DrumLfoGridSe_L213:
 	cmp	6, d0
-	bne	CopyFromSe_L21a
-	jmp	CopyFromSe_L302
-CopyFromSe_L21a:
-	jmp	CopyFromSe_L337
-CopyFromSe_L21d:
+	bne	DrumLfoGridSe_L21a
+	jmp	DrumLfoGridSe_L302
+DrumLfoGridSe_L21a:
+	jmp	DrumLfoGridSe_L337
+DrumLfoGridSe_L21d:
 	clr	d0
 	extbu	d1
 	call	func_4C0FB3CE_entry, [d2,d3], 0x20
-	jmp	CopyFromSe_L337
-CopyFromSe_L227:
+	jmp	DrumLfoGridSe_L337
+DrumLfoGridSe_L227:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -440195,8 +440194,8 @@ CopyFromSe_L227:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	CopyFromSe_L337
-CopyFromSe_L25d:
+	jmp	DrumLfoGridSe_L337
+DrumLfoGridSe_L25d:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -440224,8 +440223,8 @@ CopyFromSe_L25d:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	jmp	CopyFromSe_L337
-CopyFromSe_L296:
+	jmp	DrumLfoGridSe_L337
+DrumLfoGridSe_L296:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -440251,8 +440250,8 @@ CopyFromSe_L296:
 	mov	-1, d1
 	mov	d2, d0
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	CopyFromSe_L337
-CopyFromSe_L2c9:
+	bra	DrumLfoGridSe_L337
+DrumLfoGridSe_L2c9:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -440281,8 +440280,8 @@ CopyFromSe_L2c9:
 	exthu	d0
 	mov	1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-	bra	CopyFromSe_L337
-CopyFromSe_L302:
+	bra	DrumLfoGridSe_L337
+DrumLfoGridSe_L302:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -440310,7 +440309,7 @@ CopyFromSe_L302:
 	exthu	d0
 	mov	-1, d1
 	call	func_4C0FB298_entry, [d2,d3,a2], 0x2c
-CopyFromSe_L337:
+DrumLfoGridSe_L337:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	d3, (0x10, sp)
 	mov	MT_RequestGridDraw, d1
@@ -440350,30 +440349,30 @@ loc_4C0FAFD4:
 	add	-2, d0
 	exth	d1
 	cmp	1, d1
-	beq	CopyFromSe_L3c2
+	beq	DrumLfoGridSe_L3c2
 	cmp	2, d1
-	beq	CopyFromSe_L3cc
+	beq	DrumLfoGridSe_L3cc
 	cmp	3, d1
-	beq	CopyFromSe_L403
+	beq	DrumLfoGridSe_L403
 	cmp	4, d1
-	bne	CopyFromSe_L3b1
-	jmp	CopyFromSe_L466
-CopyFromSe_L3b1:
+	bne	DrumLfoGridSe_L3b1
+	jmp	DrumLfoGridSe_L466
+DrumLfoGridSe_L3b1:
 	cmp	5, d1
-	bne	CopyFromSe_L3b8
-	jmp	CopyFromSe_L49b
-CopyFromSe_L3b8:
+	bne	DrumLfoGridSe_L3b8
+	jmp	DrumLfoGridSe_L49b
+DrumLfoGridSe_L3b8:
 	cmp	6, d1
-	bne	CopyFromSe_L3bf
-	jmp	CopyFromSe_L4fe
-CopyFromSe_L3bf:
-	jmp	CopyFromSe_L531
-CopyFromSe_L3c2:
+	bne	DrumLfoGridSe_L3bf
+	jmp	DrumLfoGridSe_L4fe
+DrumLfoGridSe_L3bf:
+	jmp	DrumLfoGridSe_L531
+DrumLfoGridSe_L3c2:
 	extbu	d0
 	mov	a2, a0
 	call	func_4C0FB47F_entry, [d2,d3,a2], 0x28
-	jmp	CopyFromSe_L531
-CopyFromSe_L3cc:
+	jmp	DrumLfoGridSe_L531
+DrumLfoGridSe_L3cc:
 	mov	0x7f, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -440399,8 +440398,8 @@ CopyFromSe_L3cc:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB558_entry, [d2,d3,a2,a3], 0x2c
-	jmp	CopyFromSe_L531
-CopyFromSe_L403:
+	jmp	DrumLfoGridSe_L531
+DrumLfoGridSe_L403:
 	extbu	d0
 	mov	sp, a0
 	add	0x1c, a0
@@ -440426,23 +440425,23 @@ CopyFromSe_L403:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x1c, sp), d0
 	cmp	0, d0
-	beq	CopyFromSe_L43e
+	beq	DrumLfoGridSe_L43e
 	cmp	1, d0
-	beq	CopyFromSe_L452
-	jmp	CopyFromSe_L531
-CopyFromSe_L43e:
+	beq	DrumLfoGridSe_L452
+	jmp	DrumLfoGridSe_L531
+DrumLfoGridSe_L43e:
 	mov	a2, (8, sp)
 	mov	Str_empty_608, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	CopyFromSe_L531
-CopyFromSe_L452:
+	jmp	DrumLfoGridSe_L531
+DrumLfoGridSe_L452:
 	mov	a2, (8, sp)
 	mov	Str_empty_607, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	jmp	CopyFromSe_L531
-CopyFromSe_L466:
+	jmp	DrumLfoGridSe_L531
+DrumLfoGridSe_L466:
 	mov	0x7f, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -440467,8 +440466,8 @@ CopyFromSe_L466:
 	clr	d1
 	mov	a2, a0
 	call	func_4C0FB558_entry, [d2,d3,a2,a3], 0x2c
-	jmp	CopyFromSe_L531
-CopyFromSe_L49b:
+	jmp	DrumLfoGridSe_L531
+DrumLfoGridSe_L49b:
 	extbu	d0
 	mov	0x1c, d1
 	mov	0x19, a0
@@ -440495,23 +440494,23 @@ CopyFromSe_L49b:
 	call	func_4C0FB60A_entry, [d2,d3,a2], 0x24
 	movbu	(0x1c, sp), d0
 	cmp	0, d0
-	beq	CopyFromSe_L4d8
+	beq	DrumLfoGridSe_L4d8
 	cmp	1, d0
-	beq	CopyFromSe_L4eb
-	bra	CopyFromSe_L531
-CopyFromSe_L4d8:
+	beq	DrumLfoGridSe_L4eb
+	bra	DrumLfoGridSe_L531
+DrumLfoGridSe_L4d8:
 	mov	a2, (8, sp)
 	mov	Str_empty_606, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	CopyFromSe_L531
-CopyFromSe_L4eb:
+	bra	DrumLfoGridSe_L531
+DrumLfoGridSe_L4eb:
 	mov	a2, (8, sp)
 	mov	Str_empty_605, d0
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
-	bra	CopyFromSe_L531
-CopyFromSe_L4fe:
+	bra	DrumLfoGridSe_L531
+DrumLfoGridSe_L4fe:
 	mov	0x7f, d1
 	mov	d1, (0x18, sp)
 	extbu	d0
@@ -440537,19 +440536,19 @@ CopyFromSe_L4fe:
 	mov	Str_3d_22, a1
 	clr	d1
 	call	func_4C0FB558_entry, [d2,d3,a2,a3], 0x2c
-CopyFromSe_L531:
+DrumLfoGridSe_L531:
 	call	GetFocusObject_entry, 0, 0x10
 	mov	a3, (0x10, sp)
 	mov	MT_GridDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	CopyFromSe_L54e
+	bra	DrumLfoGridSe_L54e
 loc_4C0FB1A3:
 	mov	d3, d0
-	bra	CopyFromSe_L54e
-CopyFromSe_L54d:
+	bra	DrumLfoGridSe_L54e
+DrumLfoGridSe_L54d:
 	clr	d0
-CopyFromSe_L54e:
+DrumLfoGridSe_L54e:
 	ret	[d2,d3,a2,a3], 0x44
 
 func_4C0FB1AA:
@@ -444922,36 +444921,36 @@ VwDottedLineSeProc_Lab:
 VwDottedLineSeProc_Lb6:
 	ret	[d2,a2,a3], 0x30
 
-GraphPenvKfSe:
+BitmapKenbanSe:
 	cmp	MT_GetBitmapData, d1
-	beq	GraphPenvKfSe_L2a
+	beq	BitmapKenbanSe_L2a
 	cmp	MT_GetBitmapWidth, d1
-	beq	GraphPenvKfSe_L32
+	beq	BitmapKenbanSe_L32
 	cmp	MT_GetBitmapHeight, d1
-	beq	GraphPenvKfSe_L37
+	beq	BitmapKenbanSe_L37
 	cmp	MT_GetBitmapPalette, d1
-	beq	GraphPenvKfSe_L3b
+	beq	BitmapKenbanSe_L3b
 	cmp	MT_GetBitCount, d1
-	beq	GraphPenvKfSe_L43
-	bra	GraphPenvKfSe_L47
-GraphPenvKfSe_L2a:
+	beq	BitmapKenbanSe_L43
+	bra	BitmapKenbanSe_L47
+BitmapKenbanSe_L2a:
 	mov	BitmapKenbanSe_Pixels, d0
-	bra	GraphPenvKfSe_L48
-GraphPenvKfSe_L32:
+	bra	BitmapKenbanSe_L48
+BitmapKenbanSe_L32:
 	mov	0xd1, d0
-	bra	GraphPenvKfSe_L48
-GraphPenvKfSe_L37:
+	bra	BitmapKenbanSe_L48
+BitmapKenbanSe_L37:
 	mov	0x10, d0
-	bra	GraphPenvKfSe_L48
-GraphPenvKfSe_L3b:
+	bra	BitmapKenbanSe_L48
+BitmapKenbanSe_L3b:
 	mov	BitmapKenbanSe_Palette, d0
-	bra	GraphPenvKfSe_L48
-GraphPenvKfSe_L43:
+	bra	BitmapKenbanSe_L48
+BitmapKenbanSe_L43:
 	mov	4, d0
-	bra	GraphPenvKfSe_L48
-GraphPenvKfSe_L47:
+	bra	BitmapKenbanSe_L48
+BitmapKenbanSe_L47:
 	clr	d0
-GraphPenvKfSe_L48:
+BitmapKenbanSe_L48:
 	retf	0, 0
 
 InitializeUser18:
@@ -455230,7 +455229,7 @@ loc_4C103F16:
 	and	0xff000000, d0
 	lsr	24, d0
 	extbu	d0
-	call	func_4C03201D_entry, [d2,d3], 8
+	call	PartDspUnitFind_entry, [d2,d3], 8
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
@@ -463286,7 +463285,7 @@ MainSvariIni_L10:
 	movbu	d0, (a2)
 	clr	d0
 	movbu	d0, (5, a2)
-	call	func_4C07C1A6_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(a2), d0
 	clr	d1
 	movbu	d0, (0x50250391)
@@ -463341,7 +463340,7 @@ MainSvariSet_L10:
 	movbu	d0, (a2)
 	clr	d0
 	movbu	d0, (5, a2)
-	call	func_4C07C1A6_entry, [d2,d3,a2,a3], 0x38
+	call	SoundSwFromBank_entry, [d2,d3,a2,a3], 0x38
 	movbu	(a2), d0
 	movbu	d0, (0x50250391)
 	movbu	(0x50250391), d0
@@ -470214,7 +470213,7 @@ DeviceTestFunc_L17:
 	call	ApPostEvent_entry, [d2], 0x1c
 	call	func_4C024339_entry, 0, 8
 	mov	d0, d2
-	call	func_4C158238, 0, 0
+	call	DspHostPortStatus, 0, 0
 	mov	d0, d3
 	call	DspBootProbe_entry, 0, 0x18
 	mov	d0, a3
@@ -472099,7 +472098,7 @@ TestMICFunc_L51:
 	beq	TestMICFunc_L60
 	jmp	TestMICFunc_L168
 TestMICFunc_L60:
-	call	func_4C158354_entry, 0, 0xc
+	call	StrapBit3Debounced_entry, 0, 0xc
 	movhu	d0, (0x20, sp)
 	movhu	(0x20, sp), d1
 	movhu	(0x5004d830), d0
@@ -474351,10 +474350,10 @@ func_4C110B93_L21:
 	ret	0, 0
 
 func_4C110BB7:
-	bclr	0x10, (0x36008004)
+	bclr	0x10, (P04)
 	movbu	(0x98010000), d0
 	movbu	d0, (0x5004d91a)
-	bset	0x10, (0x36008004)
+	bset	0x10, (P04)
 	ret	0, 0
 
 func_4C110BD4:
@@ -474414,87 +474413,87 @@ func_4C110BD4_entry_L68:
 	ret	0, 8
 
 func_4C110C42:
-	mov	(0x32000800), d0
+	mov	(DMAC0_CTR), d0
 	and	0xfffeffff, d0
-	mov	d0, (0x32000800)
+	mov	d0, (DMAC0_CTR)
 	mov	0x98010000, d0
-	mov	d0, (0x32000804)
+	mov	d0, (DMAC0_SRC)
 	mov	(0x5004d888), d0
-	mov	d0, (0x32000808)
+	mov	d0, (DMAC0_DST)
 	mov	(0x5004d844), d0
 	mov	1, d1
 	sub	d1, d0
-	movhu	d0, (0x3200080c)
+	movhu	d0, (DMAC0_CNT)
 	mov	0xf, d0
-	mov	d0, (0x32000800)
-	mov	(0x32000800), d0
+	mov	d0, (DMAC0_CTR)
+	mov	(DMAC0_CTR), d0
 	and	0xffffffdf, d0
-	mov	d0, (0x32000800)
-	mov	(0x32000800), d0
+	mov	d0, (DMAC0_CTR)
+	mov	(DMAC0_CTR), d0
 	and	0xffffff3f, d0
 	or	0x80, d0
-	mov	d0, (0x32000800)
-	mov	(0x32000800), d0
+	mov	d0, (DMAC0_CTR)
+	mov	(DMAC0_CTR), d0
 	and	0xfffffcff, d0
-	mov	d0, (0x32000800)
-	mov	(0x32000800), d0
+	mov	d0, (DMAC0_CTR)
+	mov	(DMAC0_CTR), d0
 	and	0xfffffbff, d0
-	mov	d0, (0x32000800)
-	mov	(0x32000800), d0
+	mov	d0, (DMAC0_CTR)
+	mov	(DMAC0_CTR), d0
 	and	0xffffe7ff, d0
 	or	0x0800, d0
-	mov	d0, (0x32000800)
-	mov	(0x32000800), d0
+	mov	d0, (DMAC0_CTR)
+	mov	(DMAC0_CTR), d0
 	and	0xffff9fff, d0
-	mov	d0, (0x32000800)
-	mov	(0x32000800), d0
+	mov	d0, (DMAC0_CTR)
+	mov	(DMAC0_CTR), d0
 	or	0x8000, d0
-	mov	d0, (0x32000800)
-	mov	(0x32000800), d0
+	mov	d0, (DMAC0_CTR)
+	mov	(DMAC0_CTR), d0
 	or	0x00010000, d0
-	mov	d0, (0x32000800)
+	mov	d0, (DMAC0_CTR)
 	ret	0, 0
 
 func_4C110D1C:
-	mov	(0x32000800), d0
+	mov	(DMAC0_CTR), d0
 	and	0xfffeffff, d0
-	mov	d0, (0x32000800)
+	mov	d0, (DMAC0_CTR)
 	mov	(0x5004d888), d0
-	mov	d0, (0x32000804)
+	mov	d0, (DMAC0_SRC)
 	mov	0x98010000, d0
-	mov	d0, (0x32000808)
+	mov	d0, (DMAC0_DST)
 	mov	(0x5004d844), d0
 	mov	1, d1
 	sub	d1, d0
-	movhu	d0, (0x3200080c)
+	movhu	d0, (DMAC0_CNT)
 	mov	0xf, d0
-	mov	d0, (0x32000800)
-	mov	(0x32000800), d0
+	mov	d0, (DMAC0_CTR)
+	mov	(DMAC0_CTR), d0
 	and	0xffffffdf, d0
-	mov	d0, (0x32000800)
-	mov	(0x32000800), d0
+	mov	d0, (DMAC0_CTR)
+	mov	(DMAC0_CTR), d0
 	and	0xffffff3f, d0
-	mov	d0, (0x32000800)
-	mov	(0x32000800), d0
+	mov	d0, (DMAC0_CTR)
+	mov	(DMAC0_CTR), d0
 	and	0xfffffcff, d0
 	or	0x0200, d0
-	mov	d0, (0x32000800)
-	mov	(0x32000800), d0
+	mov	d0, (DMAC0_CTR)
+	mov	(DMAC0_CTR), d0
 	or	0x0400, d0
-	mov	d0, (0x32000800)
-	mov	(0x32000800), d0
+	mov	d0, (DMAC0_CTR)
+	mov	(DMAC0_CTR), d0
 	and	0xffffe7ff, d0
 	or	0x0800, d0
-	mov	d0, (0x32000800)
-	mov	(0x32000800), d0
+	mov	d0, (DMAC0_CTR)
+	mov	(DMAC0_CTR), d0
 	and	0xffff9fff, d0
-	mov	d0, (0x32000800)
-	mov	(0x32000800), d0
+	mov	d0, (DMAC0_CTR)
+	mov	(DMAC0_CTR), d0
 	or	0x8000, d0
-	mov	d0, (0x32000800)
-	mov	(0x32000800), d0
+	mov	d0, (DMAC0_CTR)
+	mov	(DMAC0_CTR), d0
 	or	0x00010000, d0
-	mov	d0, (0x32000800)
+	mov	d0, (DMAC0_CTR)
 	ret	0, 0
 
 func_4C110DF5:
@@ -476363,15 +476362,15 @@ func_4C112011:
 	add	-0x40, sp
 
 func_4C112011_entry:
-	bset	0x10, (0x36008024)
-	bset	0x10, (0x36008064)
+	bset	0x10, (P24)
+	bset	0x10, (P64)
 	mov	1, d0
 	movhu	d0, (0x18, sp)
 	mov	0x4c1122fe, d0
 	mov	d0, (0x1c, sp)
 	mov	0x19, d0
 	movhu	d0, (0x20, sp)
-	mov	0x34000164, d0
+	mov	G25ICR, d0
 	mov	d0, (0x24, sp)
 	clr	d0
 	movhu	d0, (0x28, sp)
@@ -476385,7 +476384,7 @@ func_4C112011_entry:
 	mov	d0, (0x30, sp)
 	mov	0xf, d0
 	movhu	d0, (0x34, sp)
-	mov	0x3400013c, d0
+	mov	G15ICR, d0
 	mov	d0, (0x38, sp)
 	clr	d0
 	movhu	d0, (0x3c, sp)
@@ -476609,13 +476608,13 @@ func_4C11209D_entry_L227:
 	call	func_4C110BB7, 0, 0
 	clr	d0
 	call	dis_int_entry, [d2], 4
-	movhu	(0x3400013c), d0
+	movhu	(G15ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x3400013c)
+	movhu	d0, (G15ICR)
 	clr	d0
 	call	ena_int_entry, [d2], 4
-	movhu	(0x3400013c), d0
+	movhu	(G15ICR), d0
 	ret	0, 0xc
 
 func_4C1122FE:
@@ -476703,13 +476702,13 @@ func_4C1122FE_Lb1:
 	movbu	d0, (0x5004d8a8)
 	clr	d0
 	call	dis_int_entry, [d2], 4
-	movhu	(0x34000164), d0
+	movhu	(G25ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000164)
+	movhu	d0, (G25ICR)
 	clr	d0
 	call	ena_int_entry, [d2], 4
-	movhu	(0x34000164), d0
+	movhu	(G25ICR), d0
 	ret	0, 0x18
 
 func_4C1123E2:
@@ -476726,7 +476725,7 @@ func_4C1123F6:
 func_4C1123F6_entry:
 	call	loc_cpu_entry, 0, 0x10
 	mov	d3, a1
-	mov	0x20000070, a0
+	mov	CHCTR, a0
 	movhu	(a0), d0
 	btst	0x02, d0
 	beq	func_4C1123F6_entry_L71
@@ -476742,7 +476741,7 @@ func_4C1123F6_entry:
 	bne	func_4C1123F6_entry_L5a
 	btst	0x1000, d0
 	bne	func_4C1123F6_entry_L42
-	mov	0x28400000, a0
+	mov	DCACHE_WAY0, a0
 	mov	0x80, d1
 	setlb
 	nop
@@ -476754,7 +476753,7 @@ func_4C1123F6_entry:
 func_4C1123F6_entry_L42:
 	btst	0x2000, d0
 	bne	func_4C1123F6_entry_L5a
-	mov	0x28401000, a0
+	mov	DCACHE_WAY1, a0
 	mov	0x80, d1
 	setlb
 	nop
@@ -476764,7 +476763,7 @@ func_4C1123F6_entry_L42:
 	nop
 	lne
 func_4C1123F6_entry_L5a:
-	mov	0x20000070, a0
+	mov	CHCTR, a0
 	mov	(a0), d0
 	or	0x00000020:32, d0
 	mov	d0, (a0)
@@ -476887,7 +476886,7 @@ func_4C1125FE_entry:
 	mov	d0, (0x18, sp)
 	mov	0x1e, d0
 	movhu	d0, (0x1c, sp)
-	mov	0x34000178, d0
+	mov	G30ICR, d0
 	mov	d0, (0x20, sp)
 	clr	d0
 	movhu	d0, (0x24, sp)
@@ -476944,10 +476943,10 @@ func_4C1126BA:
 	movbu	d0, (func_4C112682_entry_L1d_Table)
 	clr	d0
 	call	dis_int_entry, [d2], 4
-	movhu	(0x34000178), d0
+	movhu	(G30ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000178)
+	movhu	d0, (G30ICR)
 	clr	d0
 	call	ena_int_entry, [d2], 4
 	ret	0, 0xc
@@ -551666,8 +551665,7 @@ func_4C13A520_entry:
 	movbu	(1, a0), d0
 	movbu	d0, (1, a1)
 	ret	0, 8
-
-InsertOptionText:
+loc_4C13A56F:
 	add	-8, sp
 	clr	d0
 	movbu	d0, (0x50060b18)
@@ -551679,14 +551677,11 @@ InsertOptionText:
 	call	func_4C1505D9, 0, 0
 	call	func_4C14F381, 0, 0
 	ret	0, 8
-
-TypePriorityText:
+loc_4C13A5A8:
 	retf	0, 0
-
-JumpInsertFunc:
+loc_4C13A5AB:
 	retf	0, 0
-
-FilePriorityFunc:
+loc_4C13A5AE:
 	add	-0x14, sp
 	clr	d0
 	movbu	d0, (0x50060b18)
@@ -551700,13 +551695,13 @@ FilePriorityFunc:
 	call	XaprBoardDetect, 0, 0x14
 	extbu	d0
 	cmp	0, d0
-	bne	FilePriorityFunc_L58
+	bne	func_4C13A520_entry_Le3
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	HardDiskMenu_id, d0
 	mov	MT_SetVisible, d1
 	call	ApPostEvent_entry, [d2], 0x1c
-FilePriorityFunc_L58:
+func_4C13A520_entry_Le3:
 	ret	0, 0x14
 
 func_4C13A609:
@@ -561811,7 +561806,7 @@ FmmWallpaperLoadFunc_L3af:
 	call	ApPostEvent_entry, [d2], 0x1c
 	clr	d0
 	call	func_4C13A63C_entry, [d2], 0xc
-	call	LoadHpBmpFile_entry, [d2], 0x14
+	call	func_4C14C86B_entry, [d2], 0x14
 	exth	d0
 	mov	1, d1
 	call	func_4C13AA39_entry, [d2,d3], 8
@@ -579137,34 +579132,34 @@ func_4C14C827_entry_L3b:
 	add	0x11c, sp
 	ret	[d2,a2], 8
 
-LoadHpBmpFile:
+func_4C14C86B:
 	movm	[d2], (sp)
 	add	-0x10, sp
 
-LoadHpBmpFile_entry:
+func_4C14C86B_entry:
 	call	func_4C14F19B_entry, 0, 0xc
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	bge	LoadHpBmpFile_entry_Lf
+	bge	func_4C14C86B_entry_Lf
 	mov	-0x68, d0
-	bra	LoadHpBmpFile_entry_L3a
-LoadHpBmpFile_entry_Lf:
+	bra	func_4C14C86B_entry_L3a
+func_4C14C86B_entry_Lf:
 	exthu	d0
 	call	func_4C14F2E5_entry, [d2], 0x10
 	mov	Str_rb_19, a1
 	call	FileOpen_entry, [a2,a3], 0x98
 	exth	d0
 	cmp	0, d0
-	bge	LoadHpBmpFile_entry_L2c
+	bge	func_4C14C86B_entry_L2c
 	call	func_4C14F38B_entry, 0, 8
-	bra	LoadHpBmpFile_entry_L3a
-LoadHpBmpFile_entry_L2c:
+	bra	func_4C14C86B_entry_L3a
+func_4C14C86B_entry_L2c:
 	call	LoadHpBmp_entry, [d2,a2,a3], 0xc
 	mov	d0, d2
 	call	func_4C14F449_entry, 0, 0xc
 	mov	d2, d0
-LoadHpBmpFile_entry_L3a:
+func_4C14C86B_entry_L3a:
 	ret	[d2], 0x14
 
 func_4C14C8AD:
@@ -584623,34 +584618,34 @@ func_4C14F31A_entry_L41:
 
 SetExtMode:
 	mov	1, d0
-	movbu	d0, (0x50062efe)
+	movbu	d0, (FileExtMode)
 	retf	0, 0
 
 ResetExtMode:
 	clr	d0
-	movbu	d0, (0x50062efe)
+	movbu	d0, (FileExtMode)
 	retf	0, 0
 
 CheckExtMode:
-	movbu	(0x50062efe), d0
+	movbu	(FileExtMode), d0
 	retf	0, 0
 
 func_4C14F381:
 	clr	d0
-	movhu	d0, (0x50062efc)
+	movhu	d0, (FileLastError)
 	retf	0, 0
 
 func_4C14F38B:
 	add	-8, sp
 
 func_4C14F38B_entry:
-	movbu	(0x50062efe), d0
+	movbu	(FileExtMode), d0
 	cmp	0, d0
 	beq	func_4C14F38B_entry_L13
 	call	func_4C1742A4_entry, 0, 8
 	bra	func_4C14F38B_entry_L19
 func_4C14F38B_entry_L13:
-	movhu	(0x50062efc), d0
+	movhu	(FileLastError), d0
 func_4C14F38B_entry_L19:
 	ret	0, 8
 
@@ -584672,7 +584667,7 @@ FileOpen_entry:
 	inc	a1
 	inc	d1
 	lne
-	movbu	(0x50062efe), d0
+	movbu	(FileExtMode), d0
 	cmp	0, d0
 	beq	FileOpen_entry_L2d
 	mov	(0xa4, sp), a1
@@ -584696,35 +584691,35 @@ FileOpen_entry_L2d:
 	cmp	0x72, d0
 	bne	FileOpen_entry_L5e
 	mov	-2, d0
-	movhu	d0, (0x50062efc)
+	movhu	d0, (FileLastError)
 	bra	FileOpen_entry_L90
 FileOpen_entry_L5e:
 	movbu	(a0), d0
 	mov	-1, d1
 	extb	d0
-	movhu	d1, (0x50062efc)
+	movhu	d1, (FileLastError)
 	cmp	0x77, d0
 	bne	FileOpen_entry_L90
 	mov	(0x50200000), d0
 	cmp	0x1f, d0
 	mov	-0xb, d0
-	movhu	d0, (0x50062efc)
+	movhu	d0, (FileLastError)
 	beq	FileOpen_entry_L90
 	mov	-3, d0
-	movhu	d0, (0x50062efc)
+	movhu	d0, (FileLastError)
 	bra	FileOpen_entry_L90
 FileOpen_entry_L89:
 	clr	d0
-	movhu	d0, (0x50062efc)
+	movhu	d0, (FileLastError)
 FileOpen_entry_L90:
-	movhu	(0x50062efc), d0
+	movhu	(FileLastError), d0
 	ret	[a2,a3], 0x98
 
 func_4C14F449:
 	add	-0xc, sp
 
 func_4C14F449_entry:
-	movbu	(0x50062efe), d0
+	movbu	(FileExtMode), d0
 	cmp	0, d0
 	beq	func_4C14F449_entry_L13
 	call	func_4C1742DC_entry, 0, 8
@@ -584758,7 +584753,7 @@ func_4C14F47B_entry:
 	inc	a2
 	inc	d1
 	lne
-	movbu	(0x50062efe), d0
+	movbu	(FileExtMode), d0
 	cmp	0, d0
 	beq	func_4C14F47B_entry_L28
 	call	func_4C1742F7_entry, 0, 0xc
@@ -584844,7 +584839,7 @@ func_4C14F532:
 	add	-0xc, sp
 
 func_4C14F532_entry:
-	movbu	(0x50062efe), d0
+	movbu	(FileExtMode), d0
 	cmp	0, d0
 	beq	func_4C14F532_entry_L13
 	call	func_4C174312_entry, 0, 8
@@ -584865,14 +584860,14 @@ func_4C14F532_entry_L2e:
 	exth	d3
 	cmp	0, d3
 	bge	func_4C14F532_entry_L47
-	movhu	(0x50062efc), d0
+	movhu	(FileLastError), d0
 	exth	d0
 	mov	d0, d1
 	cmp	0, d0
 	blt	func_4C14F532_entry_L41
 	mov	d3, d1
 func_4C14F532_entry_L41:
-	movhu	d1, (0x50062efc)
+	movhu	d1, (FileLastError)
 func_4C14F532_entry_L47:
 	mov	d2, d0
 func_4C14F532_entry_L48:
@@ -584881,7 +584876,7 @@ func_4C14F532_entry_L48:
 func_4C14F582:
 	movm	[d2], (sp)
 	add	-0x10, sp
-	movbu	(0x50062efe), d1
+	movbu	(FileExtMode), d1
 	clr	d2
 	cmp	d2, d1
 	beq	func_4C14F582_L19
@@ -584907,7 +584902,7 @@ func_4C14F582_L19:
 func_4C14F582_L45:
 	mov	-0x64, d2
 func_4C14F582_L47:
-	movhu	(0x50062efc), d1
+	movhu	(FileLastError), d1
 	exth	d1
 	mov	d1, d0
 	cmp	0, d1
@@ -584915,7 +584910,7 @@ func_4C14F582_L47:
 	mov	d2, d0
 	exth	d0
 func_4C14F582_L55:
-	movhu	d0, (0x50062efc)
+	movhu	d0, (FileLastError)
 	mov	d2, d0
 func_4C14F582_L5c:
 	ret	[d2], 0x14
@@ -584929,7 +584924,7 @@ func_4C14F5E1_entry:
 	clr	d1
 	movhu	d1, (0x18, sp)
 	clr	d3
-	movbu	(0x50062efe), d1
+	movbu	(FileExtMode), d1
 	cmp	d3, d1
 	beq	func_4C14F5E1_entry_L19
 	call	func_4C174349_entry, 0, 0x10
@@ -584983,14 +584978,14 @@ func_4C14F5E1_entry_L75:
 	exth	d2
 	cmp	0, d2
 	bge	func_4C14F5E1_entry_L91
-	movhu	(0x50062efc), d1
+	movhu	(FileLastError), d1
 	exth	d1
 	mov	d1, d0
 	cmp	0, d1
 	blt	func_4C14F5E1_entry_L8a
 	mov	d2, d0
 func_4C14F5E1_entry_L8a:
-	movhu	d0, (0x50062efc)
+	movhu	d0, (FileLastError)
 	mov	d2, d3
 func_4C14F5E1_entry_L91:
 	mov	d3, d0
@@ -585002,7 +584997,7 @@ func_4C14F67B:
 
 func_4C14F67B_entry:
 	mov	d0, (0x34, sp)
-	movbu	(0x50062efe), d0
+	movbu	(FileExtMode), d0
 	mov	a0, d3
 	cmp	0, d0
 	mov	0, a3
@@ -585053,14 +585048,14 @@ func_4C14F67B_entry_L79:
 	exth	d2
 	cmp	0, d2
 	bge	func_4C14F67B_entry_L95
-	movhu	(0x50062efc), d1
+	movhu	(FileLastError), d1
 	exth	d1
 	mov	d1, d0
 	cmp	0, d1
 	blt	func_4C14F67B_entry_L8d
 	mov	d2, d0
 func_4C14F67B_entry_L8d:
-	movhu	d0, (0x50062efc)
+	movhu	d0, (FileLastError)
 	mov	d2, (0x34, sp)
 func_4C14F67B_entry_L95:
 	mov	(0x34, sp), d0
@@ -585072,7 +585067,7 @@ func_4C14F71A:
 
 func_4C14F71A_entry:
 	mov	d1, d3
-	movbu	(0x50062efe), d1
+	movbu	(FileExtMode), d1
 	cmp	0, d1
 	beq	func_4C14F71A_entry_L16
 	exth	d3
@@ -585093,7 +585088,7 @@ func_4C14F71A_entry_L16:
 	beq	func_4C14F71A_entry_L33
 	mov	-5, d2
 func_4C14F71A_entry_L33:
-	movhu	(0x50062efc), d0
+	movhu	(FileLastError), d0
 	exth	d0
 	mov	d0, d1
 	cmp	0, d0
@@ -585101,7 +585096,7 @@ func_4C14F71A_entry_L33:
 	mov	d2, d1
 	exth	d1
 func_4C14F71A_entry_L41:
-	movhu	d1, (0x50062efc)
+	movhu	d1, (FileLastError)
 	mov	d2, d0
 func_4C14F71A_entry_L48:
 	ret	[d2,d3], 0x1c
@@ -585111,7 +585106,7 @@ func_4C14F76A:
 	add	-0xc, sp
 
 func_4C14F76A_entry:
-	movbu	(0x50062efe), d1
+	movbu	(FileExtMode), d1
 	clr	d2
 	cmp	d2, d1
 	beq	func_4C14F76A_entry_L13
@@ -585126,7 +585121,7 @@ func_4C14F76A_entry_L13:
 func_4C14F76A_entry_L26:
 	mov	-0x64, d2
 func_4C14F76A_entry_L28:
-	movhu	(0x50062efc), d1
+	movhu	(FileLastError), d1
 	exth	d1
 	mov	d1, d0
 	cmp	0, d1
@@ -585134,7 +585129,7 @@ func_4C14F76A_entry_L28:
 	mov	d2, d0
 	exth	d0
 func_4C14F76A_entry_L36:
-	movhu	d0, (0x50062efc)
+	movhu	d0, (FileLastError)
 	mov	d2, d0
 func_4C14F76A_entry_L3d:
 	ret	[d2], 0x10
@@ -585144,7 +585139,7 @@ func_4C14F7AF:
 	add	-0xc, sp
 
 func_4C14F7AF_entry:
-	movbu	(0x50062efe), d0
+	movbu	(FileExtMode), d0
 	cmp	0, d0
 	beq	func_4C14F7AF_entry_L13
 	call	func_4C1743B1_entry, 0, 8
@@ -585162,7 +585157,7 @@ func_4C14F7AF_entry_L13:
 func_4C14F7AF_entry_L2d:
 	cmp	0, d3
 	bge	func_4C14F7AF_entry_L45
-	movhu	(0x50062efc), d2
+	movhu	(FileLastError), d2
 	exth	d2
 	mov	d2, d1
 	cmp	0, d2
@@ -585170,7 +585165,7 @@ func_4C14F7AF_entry_L2d:
 	mov	d3, d1
 	exth	d1
 func_4C14F7AF_entry_L3f:
-	movhu	d1, (0x50062efc)
+	movhu	d1, (FileLastError)
 func_4C14F7AF_entry_L45:
 	mov	d3, d0
 func_4C14F7AF_entry_L46:
@@ -587501,60 +587496,60 @@ InitializeUser16_entry:
 	call	RegisterTitle_entry, [d2,a2], 8
 	ret	[d2,d3,a2,a3], 0x3c
 
-DPlayCheckAndChangeTitle:
+PasswordText:
 	cmp	MT_GetLanguagePtr, d1
-	bne	DPlayCheckAndChangeTitle_L10
+	bne	PasswordText_L10
 	mov	ptrs_4C263D2C, d0
-	bra	DPlayCheckAndChangeTitle_L11
-DPlayCheckAndChangeTitle_L10:
+	bra	PasswordText_L11
+PasswordText_L10:
 	clr	d0
-DPlayCheckAndChangeTitle_L11:
-	retf	0, 0
-
-CmpOptWinCatch:
-	cmp	MT_GetLanguagePtr, d1
-	bne	CmpOptWinCatch_L30
-	movbu	(0x500b75f0), d0
-	cmp	1, d0
-	beq	CmpOptWinCatch_L18
-	cmp	2, d0
-	beq	CmpOptWinCatch_L20
-	bra	CmpOptWinCatch_L28
-CmpOptWinCatch_L18:
-	mov	ptrs_4C263F6C, d0
-	bra	CmpOptWinCatch_L31
-CmpOptWinCatch_L20:
-	mov	ptrs_4C2640B0, d0
-	bra	CmpOptWinCatch_L31
-CmpOptWinCatch_L28:
-	mov	ptrs_4C263E2C, d0
-	bra	CmpOptWinCatch_L31
-CmpOptWinCatch_L30:
-	clr	d0
-CmpOptWinCatch_L31:
+PasswordText_L11:
 	retf	0, 0
 
 CheckPasswordText:
+	cmp	MT_GetLanguagePtr, d1
+	bne	CheckPasswordText_L30
+	movbu	(0x500b75f0), d0
+	cmp	1, d0
+	beq	CheckPasswordText_L18
+	cmp	2, d0
+	beq	CheckPasswordText_L20
+	bra	CheckPasswordText_L28
+CheckPasswordText_L18:
+	mov	ptrs_4C263F6C, d0
+	bra	CheckPasswordText_L31
+CheckPasswordText_L20:
+	mov	ptrs_4C2640B0, d0
+	bra	CheckPasswordText_L31
+CheckPasswordText_L28:
+	mov	ptrs_4C263E2C, d0
+	bra	CheckPasswordText_L31
+CheckPasswordText_L30:
+	clr	d0
+CheckPasswordText_L31:
+	retf	0, 0
+
+WakeUpPassword:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 	mov	d0, d2
 	cmp	MT_AreYouClassProc, d1
-	beq	CheckPasswordText_L34
+	beq	WakeUpPassword_L34
 	cmp	MT_Draw, d1
-	beq	CheckPasswordText_L39
+	beq	WakeUpPassword_L39
 	cmp	EV_SHOW, d1
-	beq	CheckPasswordText_L5e
+	beq	WakeUpPassword_L5e
 	cmp	EV_SWIN, d1
-	beq	CheckPasswordText_L73
+	beq	WakeUpPassword_L73
 	cmp	EV_WAKEUPPASSWORD, d1
-	bne	CheckPasswordText_L31
-	jmp	CheckPasswordText_Lef
-CheckPasswordText_L31:
-	jmp	CheckPasswordText_L123
-CheckPasswordText_L34:
+	bne	WakeUpPassword_L31
+	jmp	WakeUpPassword_Lef
+WakeUpPassword_L31:
+	jmp	WakeUpPassword_L123
+WakeUpPassword_L34:
 	mov	1, d0
 	ret	[d2,a2], 0x1c
-CheckPasswordText_L39:
+WakeUpPassword_L39:
 	mov	(0x2c, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
@@ -587565,14 +587560,14 @@ CheckPasswordText_L39:
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
 	ret	[d2,a2], 0x1c
-CheckPasswordText_L5e:
+WakeUpPassword_L5e:
 	mov	(0x2c, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
 	movbu	d0, (0x500b753c)
 	ret	[d2,a2], 0x1c
-CheckPasswordText_L73:
+WakeUpPassword_L73:
 	mov	(0x2c, sp), a2
 	mov	a2, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
@@ -587582,20 +587577,20 @@ CheckPasswordText_L73:
 	mov	MT_GetPageNow, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	cmp	3, d0
-	beq	CheckPasswordText_Lec
+	beq	WakeUpPassword_Lec
 	cmp	0x94, a2
-	bne	CheckPasswordText_Lab
+	bne	WakeUpPassword_Lab
 	movbu	(0x500b753c), d0
 	inc	d0
 	movbu	d0, (0x500b753c)
-	bra	CheckPasswordText_Lb2
-CheckPasswordText_Lab:
+	bra	WakeUpPassword_Lb2
+WakeUpPassword_Lab:
 	clr	d0
 	movbu	d0, (0x500b753c)
-CheckPasswordText_Lb2:
+WakeUpPassword_Lb2:
 	movbu	(0x500b753c), d0
 	cmp	7, d0
-	bne	CheckPasswordText_Lec
+	bne	WakeUpPassword_Lec
 	clr	d0
 	movbu	d0, (0x500b753c)
 	mov	1, d0
@@ -587608,10 +587603,10 @@ CheckPasswordText_Lb2:
 	mov	PasswordWin_id, d0
 	mov	EV_SHOW, d1
 	call	PostEvent_entry, [d2,d3], 0x24
-CheckPasswordText_Lec:
+WakeUpPassword_Lec:
 	clr	d0
-	bra	CheckPasswordText_L12e
-CheckPasswordText_Lef:
+	bra	WakeUpPassword_L12e
+WakeUpPassword_Lef:
 	mov	(0x2c, sp), d0
 	mov	0x01900000, d1
 	movbu	d0, (0x500b75f0)
@@ -587625,40 +587620,40 @@ CheckPasswordText_Lef:
 	mov	EV_SHOW, d1
 	call	PostEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	CheckPasswordText_L12e
-CheckPasswordText_L123:
+	bra	WakeUpPassword_L12e
+WakeUpPassword_L123:
 	mov	(0x2c, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
-CheckPasswordText_L12e:
+WakeUpPassword_L12e:
 	ret	[d2,a2], 0x1c
 
-CheckPasswordOk:
+PasswordOk:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 	mov	d0, d2
 	cmp	MT_GetString, d1
-	beq	CheckPasswordOk_L29
+	beq	PasswordOk_L29
 	cmp	MT_GetNamingMode, d1
-	beq	CheckPasswordOk_L3c
+	beq	PasswordOk_L3c
 	cmp	MT_GetStringLength, d1
-	beq	CheckPasswordOk_L40
+	beq	PasswordOk_L40
 	cmp	EV_SWIN, d1
-	beq	CheckPasswordOk_L44
-	jmp	CheckPasswordOk_Lb8
-CheckPasswordOk_L29:
+	beq	PasswordOk_L44
+	jmp	PasswordOk_Lb8
+PasswordOk_L29:
 	mov	Str_empty_550, a1
 	mov	(0x2c, sp), a0
 	call	strcpy_entry, [a2], 4
 	mov	d2, d0
 	ret	[d2,a2], 0x1c
-CheckPasswordOk_L3c:
+PasswordOk_L3c:
 	clr	d0
 	ret	[d2,a2], 0x1c
-CheckPasswordOk_L40:
+PasswordOk_L40:
 	mov	2, d0
-	bra	CheckPasswordOk_Lb9
-CheckPasswordOk_L44:
+	bra	PasswordOk_Lb9
+PasswordOk_L44:
 	call	GetNamingWindowID, 0, 0
 	mov	0x500b7540, d1
 	mov	d1, (0x10, sp)
@@ -587685,38 +587680,38 @@ CheckPasswordOk_L44:
 	mov	FN_FmmPasswordFunc, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
 	clr	d0
-	bra	CheckPasswordOk_Lb9
-CheckPasswordOk_Lb8:
+	bra	PasswordOk_Lb9
+PasswordOk_Lb8:
 	clr	d0
-CheckPasswordOk_Lb9:
+PasswordOk_Lb9:
 	ret	[d2,a2], 0x1c
 
-func_4C1513C8:
+CheckPasswordOk:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	mov	d0, d2
 	cmp	MT_GetString, d1
-	beq	func_4C1513C8_L29
+	beq	CheckPasswordOk_L29
 	cmp	MT_GetNamingMode, d1
-	beq	func_4C1513C8_L3c
+	beq	CheckPasswordOk_L3c
 	cmp	MT_GetStringLength, d1
-	beq	func_4C1513C8_L40
+	beq	CheckPasswordOk_L40
 	cmp	EV_SWIN, d1
-	beq	func_4C1513C8_L45
-	jmp	func_4C1513C8_L116
-func_4C1513C8_L29:
+	beq	CheckPasswordOk_L45
+	jmp	CheckPasswordOk_L116
+CheckPasswordOk_L29:
 	mov	(0x28, sp), a0
 	mov	Str_empty_549, a1
 	call	strcpy_entry, [a2], 4
 	mov	d2, d0
 	ret	[d2], 0x18
-func_4C1513C8_L3c:
+CheckPasswordOk_L3c:
 	clr	d0
 	ret	[d2], 0x18
-func_4C1513C8_L40:
+CheckPasswordOk_L40:
 	mov	2, d0
 	ret	[d2], 0x18
-func_4C1513C8_L45:
+CheckPasswordOk_L45:
 	call	GetNamingWindowID, 0, 0
 	mov	0x500b7548, d1
 	mov	d1, (0x10, sp)
@@ -587744,37 +587739,63 @@ func_4C1513C8_L45:
 	call	SendEvent_entry, [d2,d3], 0x24
 	exthu	d0
 	cmp	1, d0
-	bne	func_4C1513C8_Ld3
+	bne	CheckPasswordOk_Ld3
 	movhu	(0x500b7548), d0
 	mov	MT_CheckPassword, d1
 	mov	d0, (0x10, sp)
 	mov	FN_FmmPasswordFunc, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-	bra	func_4C1513C8_L113
-func_4C1513C8_Ld3:
+	bra	CheckPasswordOk_L113
+CheckPasswordOk_Ld3:
 	cmp	2, d0
-	bne	func_4C1513C8_Lf4
+	bne	CheckPasswordOk_Lf4
 	movhu	(0x500b7548), d0
 	mov	MT_CheckPassword2, d1
 	mov	d0, (0x10, sp)
 	mov	FN_FmmPasswordFunc, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-	bra	func_4C1513C8_L113
-func_4C1513C8_Lf4:
+	bra	CheckPasswordOk_L113
+CheckPasswordOk_Lf4:
 	cmp	3, d0
-	bne	func_4C1513C8_L113
+	bne	CheckPasswordOk_L113
 	movhu	(0x500b7548), d0
 	mov	MT_CheckPassword3, d1
 	mov	d0, (0x10, sp)
 	mov	FN_FmmPasswordFunc, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-func_4C1513C8_L113:
+CheckPasswordOk_L113:
 	clr	d0
-	bra	func_4C1513C8_L117
-func_4C1513C8_L116:
+	bra	CheckPasswordOk_L117
+CheckPasswordOk_L116:
 	clr	d0
-func_4C1513C8_L117:
+CheckPasswordOk_L117:
 	ret	[d2], 0x18
+
+PasswordNo:
+	add	-0x14, sp
+	cmp	EV_SWIN, d1
+	bne	PasswordNo_L48
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	PasswordWin_id, d0
+	mov	EV_HIDE, d1
+	call	SendEvent_entry, [d2,d3], 0x24
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	0x01900000, d1
+	call	PostEvent_entry, [d2,d3], 0x24
+	clr	d0
+	mov	d0, (0x10, sp)
+	mov	-1, d0
+	mov	EV_ALLPAINT, d1
+	call	PostEvent_entry, [d2,d3], 0x24
+	clr	d0
+	bra	PasswordNo_L49
+PasswordNo_L48:
+	clr	d0
+PasswordNo_L49:
+	ret	0, 0x14
 
 CheckPasswordNo:
 	add	-0x14, sp
@@ -587782,7 +587803,7 @@ CheckPasswordNo:
 	bne	CheckPasswordNo_L48
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	PasswordWin_id, d0
+	mov	CheckPasswordWin_id, d0
 	mov	EV_HIDE, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
@@ -587801,76 +587822,51 @@ CheckPasswordNo_L48:
 	clr	d0
 CheckPasswordNo_L49:
 	ret	0, 0x14
-loc_4C15152E:
-	add	-0x14, sp
-	cmp	EV_SWIN, d1
-	bne	CheckPasswordNo_L94
+
+DiskAttention:
+	cmp	MT_GetLanguagePtr, d1
+	bne	DiskAttention_L10
+	mov	ptrs_4C26411C, d0
+	bra	DiskAttention_L11
+DiskAttention_L10:
 	clr	d0
-	mov	d0, (0x10, sp)
-	mov	CheckPasswordWin_id, d0
-	mov	EV_HIDE, d1
-	call	SendEvent_entry, [d2,d3], 0x24
+DiskAttention_L11:
+	retf	0, 0
+
+DiskSure:
+	cmp	MT_GetLanguagePtr, d1
+	bne	DiskSure_L10
+	mov	ptrs_4C26419C, d0
+	bra	DiskSure_L11
+DiskSure_L10:
 	clr	d0
-	mov	d0, (0x10, sp)
-	mov	-1, d0
-	mov	0x01900000, d1
-	call	PostEvent_entry, [d2,d3], 0x24
+DiskSure_L11:
+	retf	0, 0
+
+FormatText:
+	cmp	MT_GetLanguagePtr, d1
+	bne	FormatText_L10
+	mov	ptrs_4C264330, d0
+	bra	FormatText_L11
+FormatText_L10:
 	clr	d0
-	mov	d0, (0x10, sp)
-	mov	-1, d0
-	mov	EV_ALLPAINT, d1
-	call	PostEvent_entry, [d2,d3], 0x24
+FormatText_L11:
+	retf	0, 0
+
+DeleteText:
+	cmp	MT_GetLanguagePtr, d1
+	bne	DeleteText_L10
+	mov	ptrs_4C2645E8, d0
+	bra	DeleteText_L11
+DeleteText_L10:
 	clr	d0
-	bra	CheckPasswordNo_L95
-CheckPasswordNo_L94:
-	clr	d0
-CheckPasswordNo_L95:
-	ret	0, 0x14
+DeleteText_L11:
+	retf	0, 0
 
 DeleteYes:
-	cmp	MT_GetLanguagePtr, d1
-	bne	DeleteYes_L10
-	mov	ptrs_4C26411C, d0
-	bra	DeleteYes_L11
-DeleteYes_L10:
-	clr	d0
-DeleteYes_L11:
-	retf	0, 0
-
-DeleteNo:
-	cmp	MT_GetLanguagePtr, d1
-	bne	DeleteNo_L10
-	mov	ptrs_4C26419C, d0
-	bra	DeleteNo_L11
-DeleteNo_L10:
-	clr	d0
-DeleteNo_L11:
-	retf	0, 0
-
-SaveText:
-	cmp	MT_GetLanguagePtr, d1
-	bne	SaveText_L10
-	mov	ptrs_4C264330, d0
-	bra	SaveText_L11
-SaveText_L10:
-	clr	d0
-SaveText_L11:
-	retf	0, 0
-
-SaveYes:
-	cmp	MT_GetLanguagePtr, d1
-	bne	SaveYes_L10
-	mov	ptrs_4C2645E8, d0
-	bra	SaveYes_L11
-SaveYes_L10:
-	clr	d0
-SaveYes_L11:
-	retf	0, 0
-
-SaveNo:
 	add	-0x14, sp
 	cmp	EV_SWIN, d1
-	bne	SaveNo_L5b
+	bne	DeleteYes_L5b
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	DiskDeleteSureWin_id, d0
@@ -587892,16 +587888,16 @@ SaveNo:
 	mov	EV_INDEXSW_UP, d1
 	call	PostEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	SaveNo_L5c
-SaveNo_L5b:
+	bra	DeleteYes_L5c
+DeleteYes_L5b:
 	clr	d0
-SaveNo_L5c:
+DeleteYes_L5c:
 	ret	0, 0x14
 
-WaitingFunc:
+DeleteNo:
 	add	-0x14, sp
 	cmp	EV_SWIN, d1
-	bne	WaitingFunc_L48
+	bne	DeleteNo_L48
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	DiskDeleteSureWin_id, d0
@@ -587918,26 +587914,26 @@ WaitingFunc:
 	mov	EV_ALLPAINT, d1
 	call	PostEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	WaitingFunc_L49
-WaitingFunc_L48:
+	bra	DeleteNo_L49
+DeleteNo_L48:
 	clr	d0
-WaitingFunc_L49:
+DeleteNo_L49:
 	ret	0, 0x14
 
-TechnicsFileNaming:
+SaveText:
 	cmp	MT_GetLanguagePtr, d1
-	bne	TechnicsFileNaming_L10
+	bne	SaveText_L10
 	mov	ptrs_4C2648F8, d0
-	bra	TechnicsFileNaming_L11
-TechnicsFileNaming_L10:
+	bra	SaveText_L11
+SaveText_L10:
 	clr	d0
-TechnicsFileNaming_L11:
+SaveText_L11:
 	retf	0, 0
 
-TechFileNamingCustom:
+SaveYes:
 	add	-0x14, sp
 	cmp	EV_SWIN, d1
-	bne	TechFileNamingCustom_L5b
+	bne	SaveYes_L5b
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	DiskSaveSureWin_id, d0
@@ -587959,16 +587955,16 @@ TechFileNamingCustom:
 	mov	EV_INDEXSW_UP, d1
 	call	PostEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	TechFileNamingCustom_L5c
-TechFileNamingCustom_L5b:
+	bra	SaveYes_L5c
+SaveYes_L5b:
 	clr	d0
-TechFileNamingCustom_L5c:
+SaveYes_L5c:
 	ret	0, 0x14
 
-TechnicsFileRename:
+SaveNo:
 	add	-0x14, sp
 	cmp	EV_SWIN, d1
-	bne	TechnicsFileRename_L48
+	bne	SaveNo_L48
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	DiskSaveSureWin_id, d0
@@ -587985,52 +587981,52 @@ TechnicsFileRename:
 	mov	EV_ALLPAINT, d1
 	call	PostEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	TechnicsFileRename_L49
-TechnicsFileRename_L48:
+	bra	SaveNo_L49
+SaveNo_L48:
 	clr	d0
-TechnicsFileRename_L49:
+SaveNo_L49:
 	ret	0, 0x14
 
-SetupOkFunc:
+InsertOptionText:
 	cmp	MT_GetLanguagePtr, d1
-	bne	SetupOkFunc_L10
+	bne	InsertOptionText_L10
 	mov	ptrs_4C264A28, d0
-	bra	SetupOkFunc_L11
-SetupOkFunc_L10:
+	bra	InsertOptionText_L11
+InsertOptionText_L10:
 	clr	d0
-SetupOkFunc_L11:
+InsertOptionText_L11:
 	retf	0, 0
 
-SetupExitFunc:
+TypePriorityText:
 	cmp	MT_GetLanguagePtr, d1
-	bne	SetupExitFunc_L10
+	bne	TypePriorityText_L10
 	mov	ptrs_4C264BBC, d0
-	bra	SetupExitFunc_L11
-SetupExitFunc_L10:
+	bra	TypePriorityText_L11
+TypePriorityText_L10:
 	clr	d0
-SetupExitFunc_L11:
+TypePriorityText_L11:
 	retf	0, 0
 
-DiskAttention:
+JumpInsertFunc:
 	movm	[d2,a2], (sp)
 	add	-0x10, sp
 	mov	d0, d2
 	cmp	MT_GetRamString, d1
-	beq	DiskAttention_L40
+	beq	JumpInsertFunc_L40
 	cmp	MT_GetLargeStep, d1
-	beq	DiskAttention_L5c
+	beq	JumpInsertFunc_L5c
 	cmp	MT_GetSmallStep, d1
-	beq	DiskAttention_L60
+	beq	JumpInsertFunc_L60
 	cmp	MT_GetMax, d1
-	beq	DiskAttention_L64
+	beq	JumpInsertFunc_L64
 	cmp	MT_GetMin, d1
-	beq	DiskAttention_L68
+	beq	JumpInsertFunc_L68
 	cmp	MT_GetRamAddress, d1
-	beq	DiskAttention_L6b
+	beq	JumpInsertFunc_L6b
 	cmp	MT_GetRamSize, d1
-	beq	DiskAttention_L73
-	bra	DiskAttention_L77
-DiskAttention_L40:
+	beq	JumpInsertFunc_L73
+	bra	JumpInsertFunc_L77
+JumpInsertFunc_L40:
 	mov	(0x28, sp), a0
 	mov	(0x14, a0), a2
 	mov	(0x10, a0), d0
@@ -588040,50 +588036,50 @@ DiskAttention_L40:
 	mov	a2, a0
 	call	strcpy_entry, [a2], 4
 	mov	d2, d0
-	bra	DiskAttention_L78
-DiskAttention_L5c:
+	bra	JumpInsertFunc_L78
+JumpInsertFunc_L5c:
 	mov	1, d0
-	bra	DiskAttention_L78
-DiskAttention_L60:
+	bra	JumpInsertFunc_L78
+JumpInsertFunc_L60:
 	mov	1, d0
-	bra	DiskAttention_L78
-DiskAttention_L64:
+	bra	JumpInsertFunc_L78
+JumpInsertFunc_L64:
 	mov	4, d0
-	bra	DiskAttention_L78
-DiskAttention_L68:
+	bra	JumpInsertFunc_L78
+JumpInsertFunc_L68:
 	clr	d0
-	bra	DiskAttention_L78
-DiskAttention_L6b:
+	bra	JumpInsertFunc_L78
+JumpInsertFunc_L6b:
 	mov	0x50250306, d0
-	bra	DiskAttention_L78
-DiskAttention_L73:
+	bra	JumpInsertFunc_L78
+JumpInsertFunc_L73:
 	mov	2, d0
-	bra	DiskAttention_L78
-DiskAttention_L77:
+	bra	JumpInsertFunc_L78
+JumpInsertFunc_L77:
 	clr	d0
-DiskAttention_L78:
+JumpInsertFunc_L78:
 	ret	[d2,a2], 0x18
 
-DiskSure:
+FilePriorityFunc:
 	movm	[d2,a2], (sp)
 	add	-0x10, sp
 	mov	d0, d2
 	cmp	MT_GetRamString, d1
-	beq	DiskSure_L40
+	beq	FilePriorityFunc_L40
 	cmp	MT_GetLargeStep, d1
-	beq	DiskSure_L5c
+	beq	FilePriorityFunc_L5c
 	cmp	MT_GetSmallStep, d1
-	beq	DiskSure_L60
+	beq	FilePriorityFunc_L60
 	cmp	MT_GetMax, d1
-	beq	DiskSure_L64
+	beq	FilePriorityFunc_L64
 	cmp	MT_GetMin, d1
-	beq	DiskSure_L68
+	beq	FilePriorityFunc_L68
 	cmp	MT_GetRamAddress, d1
-	beq	DiskSure_L6b
+	beq	FilePriorityFunc_L6b
 	cmp	MT_GetRamSize, d1
-	beq	DiskSure_L73
-	bra	DiskSure_L77
-DiskSure_L40:
+	beq	FilePriorityFunc_L73
+	bra	FilePriorityFunc_L77
+FilePriorityFunc_L40:
 	mov	(0x28, sp), a0
 	mov	(0x14, a0), a2
 	mov	(0x10, a0), d0
@@ -588093,96 +588089,96 @@ DiskSure_L40:
 	mov	a2, a0
 	call	strcpy_entry, [a2], 4
 	mov	d2, d0
-	bra	DiskSure_L78
-DiskSure_L5c:
+	bra	FilePriorityFunc_L78
+FilePriorityFunc_L5c:
 	mov	1, d0
-	bra	DiskSure_L78
-DiskSure_L60:
+	bra	FilePriorityFunc_L78
+FilePriorityFunc_L60:
 	mov	1, d0
-	bra	DiskSure_L78
-DiskSure_L64:
+	bra	FilePriorityFunc_L78
+FilePriorityFunc_L64:
 	mov	2, d0
-	bra	DiskSure_L78
-DiskSure_L68:
+	bra	FilePriorityFunc_L78
+FilePriorityFunc_L68:
 	clr	d0
-	bra	DiskSure_L78
-DiskSure_L6b:
+	bra	FilePriorityFunc_L78
+FilePriorityFunc_L6b:
 	mov	0x50250308, d0
-	bra	DiskSure_L78
-DiskSure_L73:
+	bra	FilePriorityFunc_L78
+FilePriorityFunc_L73:
 	mov	2, d0
-	bra	DiskSure_L78
-DiskSure_L77:
+	bra	FilePriorityFunc_L78
+FilePriorityFunc_L77:
 	clr	d0
-DiskSure_L78:
+FilePriorityFunc_L78:
 	ret	[d2,a2], 0x18
 
-FormatText:
+SetupOkFunc:
 	add	-0x14, sp
 	cmp	EV_SWIN, d1
-	bne	FormatText_L25
+	bne	SetupOkFunc_L25
 	mov	(0x24, sp), a0
 	mov	FN_SetupFlashFunc, d0
 	mov	a0, (0x10, sp)
 	mov	MT_FlashWrite, d1
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
 	clr	d0
-	bra	FormatText_L26
-FormatText_L25:
+	bra	SetupOkFunc_L26
+SetupOkFunc_L25:
 	clr	d0
-FormatText_L26:
+SetupOkFunc_L26:
 	ret	0, 0x14
 
-DeleteText:
+SetupExitFunc:
 	movm	[d2,d3,a2], (sp)
 	add	-0x14, sp
 	mov	d0, d3
 	mov	d1, d2
 	cmp	MT_AreYouClassProc, d2
-	beq	DeleteText_L1a
+	beq	SetupExitFunc_L1a
 	cmp	EV_SWIN, d1
-	beq	DeleteText_L1f
-	jmp	DeleteText_Lb9
-DeleteText_L1a:
+	beq	SetupExitFunc_L1f
+	jmp	SetupExitFunc_Lb9
+SetupExitFunc_L1a:
 	mov	1, d0
 	ret	[d2,d3,a2], 0x20
-DeleteText_L1f:
+SetupExitFunc_L1f:
 	mov	(0x30, sp), a2
 	cmp	0x17, a2
-	beq	DeleteText_L28
-	jmp	DeleteText_Lb9
-DeleteText_L28:
+	beq	SetupExitFunc_L28
+	jmp	SetupExitFunc_Lb9
+SetupExitFunc_L28:
 	mov	7, d0
 	call	func_4C0476C5_entry, [d2,d3,a2,a3], 0x24
 	exth	d0
 	cmp	0, d0
-	beq	DeleteText_L49
+	beq	SetupExitFunc_L49
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	MT_SetNotDrawFlag, d1
 	call	PostEvent_entry, [d2,d3], 0x24
-DeleteText_L49:
+SetupExitFunc_L49:
 	call	GetModeNow_entry, 0, 0x10
 	and	0xff, d0
 	movbu	d0, (0x500b7550)
 	movbu	(0x500b7550), d0
 	cmp	6, d0
-	bne	DeleteText_L6f
+	bne	SetupExitFunc_L6f
 	mov	0x60, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-	bra	DeleteText_L79
-DeleteText_L6f:
+	bra	SetupExitFunc_L79
+SetupExitFunc_L6f:
 	mov	0x30, d0
 	clr	d1
 	call	ChangeTitle_entry, [d2,d3,a2], 0x20
-DeleteText_L79:
+SetupExitFunc_L79:
 	mov	7, d0
 	call	func_4C0476C5_entry, [d2,d3,a2,a3], 0x24
 	exth	d0
 	cmp	0, d0
-	beq	DeleteText_Lb9
+	beq	SetupExitFunc_Lb9
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -588195,7 +588191,7 @@ DeleteText_L79:
 	mov	FN_SetupFlashFunc, d0
 	mov	MT_FlashLoad, d1
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-DeleteText_Lb9:
+SetupExitFunc_Lb9:
 	mov	(0x30, sp), a0
 	mov	d2, d1
 	mov	a0, (0x10, sp)
@@ -588203,20 +588199,20 @@ DeleteText_Lb9:
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 	ret	[d2,d3,a2], 0x20
 
-SmfFileRename:
+TechnicsFileNaming:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 	mov	d0, d2
 	cmp	MT_GetString, d1
-	beq	SmfFileRename_L29
+	beq	TechnicsFileNaming_L29
 	cmp	MT_GetNamingMode, d1
-	beq	SmfFileRename_L53
+	beq	TechnicsFileNaming_L53
 	cmp	MT_GetStringLength, d1
-	beq	SmfFileRename_L57
+	beq	TechnicsFileNaming_L57
 	cmp	EV_SWIN, d1
-	beq	SmfFileRename_L5b
-	jmp	SmfFileRename_La6
-SmfFileRename_L29:
+	beq	TechnicsFileNaming_L5b
+	jmp	TechnicsFileNaming_La6
+TechnicsFileNaming_L29:
 	mov	(0x2c, sp), a2
 	mov	FN_SaveFileNameFunc, d0
 	mov	a2, (0x10, sp)
@@ -588226,14 +588222,14 @@ SmfFileRename_L29:
 	mov	MT_SetString, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	mov	d2, d0
-	bra	SmfFileRename_La7
-SmfFileRename_L53:
+	bra	TechnicsFileNaming_La7
+TechnicsFileNaming_L53:
 	mov	1, d0
-	bra	SmfFileRename_La7
-SmfFileRename_L57:
+	bra	TechnicsFileNaming_La7
+TechnicsFileNaming_L57:
 	mov	6, d0
-	bra	SmfFileRename_La7
-SmfFileRename_L5b:
+	bra	TechnicsFileNaming_La7
+TechnicsFileNaming_L5b:
 	call	GetNamingWindowID, 0, 0
 	mov	0x500b7554, d2
 	mov	d2, (0x10, sp)
@@ -588249,26 +588245,26 @@ SmfFileRename_L5b:
 	mov	EV_CHANGE_TITLE, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	SmfFileRename_La7
-SmfFileRename_La6:
+	bra	TechnicsFileNaming_La7
+TechnicsFileNaming_La6:
 	clr	d0
-SmfFileRename_La7:
+TechnicsFileNaming_La7:
 	ret	[d2,a2], 0x1c
 
-CstFileRename:
+TechFileNamingCustom:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 	mov	d0, d2
 	cmp	MT_GetString, d1
-	beq	CstFileRename_L29
+	beq	TechFileNamingCustom_L29
 	cmp	MT_GetNamingMode, d1
-	beq	CstFileRename_L59
+	beq	TechFileNamingCustom_L59
 	cmp	MT_GetStringLength, d1
-	beq	CstFileRename_L5d
+	beq	TechFileNamingCustom_L5d
 	cmp	EV_SWIN, d1
-	beq	CstFileRename_L61
-	jmp	CstFileRename_Lac
-CstFileRename_L29:
+	beq	TechFileNamingCustom_L61
+	jmp	TechFileNamingCustom_Lac
+TechFileNamingCustom_L29:
 	mov	(0x2c, sp), a2
 	mov	FN_CusLoadSaveSrcDstFunc, d0
 	mov	a2, (0x10, sp)
@@ -588279,14 +588275,14 @@ CstFileRename_L29:
 	mov	MT_SetString, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	mov	d2, d0
-	bra	CstFileRename_Lad
-CstFileRename_L59:
+	bra	TechFileNamingCustom_Lad
+TechFileNamingCustom_L59:
 	mov	1, d0
-	bra	CstFileRename_Lad
-CstFileRename_L5d:
+	bra	TechFileNamingCustom_Lad
+TechFileNamingCustom_L5d:
 	mov	8, d0
-	bra	CstFileRename_Lad
-CstFileRename_L61:
+	bra	TechFileNamingCustom_Lad
+TechFileNamingCustom_L61:
 	call	GetNamingWindowID, 0, 0
 	mov	0x500b7568, d2
 	mov	d2, (0x10, sp)
@@ -588302,26 +588298,26 @@ CstFileRename_L61:
 	mov	EV_CHANGE_TITLE, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	CstFileRename_Lad
-CstFileRename_Lac:
+	bra	TechFileNamingCustom_Lad
+TechFileNamingCustom_Lac:
 	clr	d0
-CstFileRename_Lad:
+TechFileNamingCustom_Lad:
 	ret	[d2,a2], 0x1c
 
-DiskMedleyShowHideFunc:
+SmfFileNaming:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 	mov	d0, d2
 	cmp	MT_GetString, d1
-	beq	DiskMedleyShowHideFunc_L29
+	beq	SmfFileNaming_L29
 	cmp	MT_GetNamingMode, d1
-	beq	DiskMedleyShowHideFunc_L59
+	beq	SmfFileNaming_L59
 	cmp	MT_GetStringLength, d1
-	beq	DiskMedleyShowHideFunc_L5d
+	beq	SmfFileNaming_L5d
 	cmp	EV_SWIN, d1
-	beq	DiskMedleyShowHideFunc_L61
-	jmp	DiskMedleyShowHideFunc_Lac
-DiskMedleyShowHideFunc_L29:
+	beq	SmfFileNaming_L61
+	jmp	SmfFileNaming_Lac
+SmfFileNaming_L29:
 	mov	(0x2c, sp), a2
 	mov	FN_SaveFileNameSmfFunc, d0
 	mov	a2, (0x10, sp)
@@ -588332,14 +588328,14 @@ DiskMedleyShowHideFunc_L29:
 	mov	MT_SetString, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	mov	d2, d0
-	bra	DiskMedleyShowHideFunc_Lad
-DiskMedleyShowHideFunc_L59:
+	bra	SmfFileNaming_Lad
+SmfFileNaming_L59:
 	mov	1, d0
-	bra	DiskMedleyShowHideFunc_Lad
-DiskMedleyShowHideFunc_L5d:
+	bra	SmfFileNaming_Lad
+SmfFileNaming_L5d:
 	mov	8, d0
-	bra	DiskMedleyShowHideFunc_Lad
-DiskMedleyShowHideFunc_L61:
+	bra	SmfFileNaming_Lad
+SmfFileNaming_L61:
 	call	GetNamingWindowID, 0, 0
 	mov	0x500b757c, d2
 	mov	d2, (0x10, sp)
@@ -588355,26 +588351,26 @@ DiskMedleyShowHideFunc_L61:
 	mov	EV_CHANGE_TITLE, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	DiskMedleyShowHideFunc_Lad
-DiskMedleyShowHideFunc_Lac:
+	bra	SmfFileNaming_Lad
+SmfFileNaming_Lac:
 	clr	d0
-DiskMedleyShowHideFunc_Lad:
+SmfFileNaming_Lad:
 	ret	[d2,a2], 0x1c
 
-FormatDiskNaming:
+TechnicsFileRename:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 	mov	d0, d2
 	cmp	MT_GetString, d1
-	beq	FormatDiskNaming_L28
+	beq	TechnicsFileRename_L28
 	cmp	MT_GetNamingMode, d1
-	beq	FormatDiskNaming_L52
+	beq	TechnicsFileRename_L52
 	cmp	MT_GetStringLength, d1
-	beq	FormatDiskNaming_L56
+	beq	TechnicsFileRename_L56
 	cmp	EV_SWIN, d1
-	beq	FormatDiskNaming_L5a
-	bra	FormatDiskNaming_La4
-FormatDiskNaming_L28:
+	beq	TechnicsFileRename_L5a
+	bra	TechnicsFileRename_La4
+TechnicsFileRename_L28:
 	mov	(0x2c, sp), a2
 	mov	FN_FileRenameFunc, d0
 	mov	a2, (0x10, sp)
@@ -588384,14 +588380,14 @@ FormatDiskNaming_L28:
 	mov	MT_SetString, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	mov	d2, d0
-	bra	FormatDiskNaming_La5
-FormatDiskNaming_L52:
+	bra	TechnicsFileRename_La5
+TechnicsFileRename_L52:
 	mov	1, d0
-	bra	FormatDiskNaming_La5
-FormatDiskNaming_L56:
+	bra	TechnicsFileRename_La5
+TechnicsFileRename_L56:
 	mov	6, d0
-	bra	FormatDiskNaming_La5
-FormatDiskNaming_L5a:
+	bra	TechnicsFileRename_La5
+TechnicsFileRename_L5a:
 	call	GetNamingWindowID, 0, 0
 	mov	0x500b7590, d2
 	mov	d2, (0x10, sp)
@@ -588407,26 +588403,26 @@ FormatDiskNaming_L5a:
 	mov	MT_SetString, d1
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
 	clr	d0
-	bra	FormatDiskNaming_La5
-FormatDiskNaming_La4:
+	bra	TechnicsFileRename_La5
+TechnicsFileRename_La4:
 	clr	d0
-FormatDiskNaming_La5:
+TechnicsFileRename_La5:
 	ret	[d2,a2], 0x1c
 
-WakeUpPassword:
+SmfFileRename:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 	mov	d0, d2
 	cmp	MT_GetString, d1
-	beq	WakeUpPassword_L28
+	beq	SmfFileRename_L28
 	cmp	MT_GetNamingMode, d1
-	beq	WakeUpPassword_L52
+	beq	SmfFileRename_L52
 	cmp	MT_GetStringLength, d1
-	beq	WakeUpPassword_L56
+	beq	SmfFileRename_L56
 	cmp	EV_SWIN, d1
-	beq	WakeUpPassword_L5a
-	bra	WakeUpPassword_La4
-WakeUpPassword_L28:
+	beq	SmfFileRename_L5a
+	bra	SmfFileRename_La4
+SmfFileRename_L28:
 	mov	(0x2c, sp), a2
 	mov	FN_FileRenameSmfFunc, d0
 	mov	a2, (0x10, sp)
@@ -588436,14 +588432,14 @@ WakeUpPassword_L28:
 	mov	MT_SetString, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	mov	d2, d0
-	bra	WakeUpPassword_La5
-WakeUpPassword_L52:
+	bra	SmfFileRename_La5
+SmfFileRename_L52:
 	mov	1, d0
-	bra	WakeUpPassword_La5
-WakeUpPassword_L56:
+	bra	SmfFileRename_La5
+SmfFileRename_L56:
 	mov	8, d0
-	bra	WakeUpPassword_La5
-WakeUpPassword_L5a:
+	bra	SmfFileRename_La5
+SmfFileRename_L5a:
 	call	GetNamingWindowID, 0, 0
 	mov	0x500b75a4, d2
 	mov	d2, (0x10, sp)
@@ -588459,26 +588455,26 @@ WakeUpPassword_L5a:
 	mov	MT_SetString, d1
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
 	clr	d0
-	bra	WakeUpPassword_La5
-WakeUpPassword_La4:
+	bra	SmfFileRename_La5
+SmfFileRename_La4:
 	clr	d0
-WakeUpPassword_La5:
+SmfFileRename_La5:
 	ret	[d2,a2], 0x1c
 
-PasswordOk:
+CstFileRename:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 	mov	d0, d2
 	cmp	MT_GetString, d1
-	beq	PasswordOk_L28
+	beq	CstFileRename_L28
 	cmp	MT_GetNamingMode, d1
-	beq	PasswordOk_L52
+	beq	CstFileRename_L52
 	cmp	MT_GetStringLength, d1
-	beq	PasswordOk_L56
+	beq	CstFileRename_L56
 	cmp	EV_SWIN, d1
-	beq	PasswordOk_L5a
-	bra	PasswordOk_La4
-PasswordOk_L28:
+	beq	CstFileRename_L5a
+	bra	CstFileRename_La4
+CstFileRename_L28:
 	mov	(0x2c, sp), a2
 	mov	FN_FileRenameCstFunc, d0
 	mov	a2, (0x10, sp)
@@ -588488,14 +588484,14 @@ PasswordOk_L28:
 	mov	MT_SetString, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	mov	d2, d0
-	bra	PasswordOk_La5
-PasswordOk_L52:
+	bra	CstFileRename_La5
+CstFileRename_L52:
 	mov	1, d0
-	bra	PasswordOk_La5
-PasswordOk_L56:
+	bra	CstFileRename_La5
+CstFileRename_L56:
 	mov	8, d0
-	bra	PasswordOk_La5
-PasswordOk_L5a:
+	bra	CstFileRename_La5
+CstFileRename_L5a:
 	call	GetNamingWindowID, 0, 0
 	mov	0x500b75b8, d2
 	mov	d2, (0x10, sp)
@@ -588511,26 +588507,26 @@ PasswordOk_L5a:
 	mov	MT_SetString, d1
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
 	clr	d0
-	bra	PasswordOk_La5
-PasswordOk_La4:
+	bra	CstFileRename_La5
+CstFileRename_La4:
 	clr	d0
-PasswordOk_La5:
+CstFileRename_La5:
 	ret	[d2,a2], 0x1c
 
-PasswordNo:
+FormatDiskNaming:
 	movm	[d2,a2], (sp)
 	add	-0x14, sp
 	mov	d0, d2
 	cmp	MT_GetString, d1
-	beq	PasswordNo_L28
+	beq	FormatDiskNaming_L28
 	cmp	MT_GetNamingMode, d1
-	beq	PasswordNo_L58
+	beq	FormatDiskNaming_L58
 	cmp	MT_GetStringLength, d1
-	beq	PasswordNo_L5c
+	beq	FormatDiskNaming_L5c
 	cmp	EV_SWIN, d1
-	beq	PasswordNo_L60
-	bra	PasswordNo_L94
-PasswordNo_L28:
+	beq	FormatDiskNaming_L60
+	bra	FormatDiskNaming_L94
+FormatDiskNaming_L28:
 	mov	(0x2c, sp), a2
 	mov	FN_DiskNameFunc, d0
 	mov	a2, (0x10, sp)
@@ -588541,14 +588537,14 @@ PasswordNo_L28:
 	mov	MT_SetString, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	mov	d2, d0
-	bra	PasswordNo_L95
-PasswordNo_L58:
+	bra	FormatDiskNaming_L95
+FormatDiskNaming_L58:
 	mov	1, d0
-	bra	PasswordNo_L95
-PasswordNo_L5c:
+	bra	FormatDiskNaming_L95
+FormatDiskNaming_L5c:
 	mov	0xb, d0
-	bra	PasswordNo_L95
-PasswordNo_L60:
+	bra	FormatDiskNaming_L95
+FormatDiskNaming_L60:
 	call	GetNamingWindowID, 0, 0
 	mov	0x500b75cc, d2
 	mov	d2, (0x10, sp)
@@ -588559,10 +588555,10 @@ PasswordNo_L60:
 	mov	MT_SetString, d1
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
 	clr	d0
-	bra	PasswordNo_L95
-PasswordNo_L94:
+	bra	FormatDiskNaming_L95
+FormatDiskNaming_L94:
 	clr	d0
-PasswordNo_L95:
+FormatDiskNaming_L95:
 	ret	[d2,a2], 0x1c
 
 func_4C151DDE:
@@ -588638,21 +588634,21 @@ func_4C151DDE_entry_L5f:
 func_4C151DDE_entry_L76:
 	ret	[d2,d3,a2,a3], 0x20
 
-SmfFileNaming:
+WaitingFunc:
 	movm	[d2,a2,a3], (sp)
 	add	-0x98, sp
 	cmp	EV_SHOW, d1
-	beq	SmfFileNaming_L19
+	beq	WaitingFunc_L19
 	cmp	EV_PAINT, d1
-	beq	SmfFileNaming_L2b
-	jmp	SmfFileNaming_La3
-SmfFileNaming_L19:
+	beq	WaitingFunc_L2b
+	jmp	WaitingFunc_La3
+WaitingFunc_L19:
 	mov	(0xb4, sp), d0
 	movhu	d0, (0x500b75e4)
 	clr	d0
 	movhu	d0, (0x500b75e6)
 	ret	[d2,a2,a3], 0xa4
-SmfFileNaming_L2b:
+WaitingFunc_L2b:
 	movhu	(0x502502f8), d0
 	mov	sp, a3
 	add	0x18, a3
@@ -588663,14 +588659,14 @@ SmfFileNaming_L2b:
 	call	strcpy_entry, [a2], 4
 	movhu	(0x502502f8), d0
 	cmp	6, d0
-	bne	SmfFileNaming_L62
+	bne	WaitingFunc_L62
 	movhu	(0x502502f8), d0
 	mov	a3, a1
 	asl2	d0
 	mov	(d0, a2), d0
 	mov	d0, a0
 	call	u2d_entry, [d2,d3,a2,a3], 0x10
-SmfFileNaming_L62:
+WaitingFunc_L62:
 	movhu	(0x502502f8), d0
 	mov	sp, a0
 	mov	a0, d2
@@ -588690,52 +588686,52 @@ SmfFileNaming_L62:
 	mov	MT_ParaDraw, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	SmfFileNaming_La4
-SmfFileNaming_La3:
+	bra	WaitingFunc_La4
+WaitingFunc_La3:
 	clr	d0
-SmfFileNaming_La4:
+WaitingFunc_La4:
 	ret	[d2,a2,a3], 0xa4
 
-PasswordText:
+DiskMedleyShowHideFunc:
 	add	-0x14, sp
 	cmp	EV_SHOW, d1
-	beq	PasswordText_L15
+	beq	DiskMedleyShowHideFunc_L15
 	cmp	EV_HIDE, d1
-	beq	PasswordText_L2b
-	bra	PasswordText_L2e
-PasswordText_L15:
+	beq	DiskMedleyShowHideFunc_L2b
+	bra	DiskMedleyShowHideFunc_L2e
+DiskMedleyShowHideFunc_L15:
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	mov	-1, d0
 	mov	MT_SetNotDrawFlag, d1
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	PasswordText_L2f
-PasswordText_L2b:
+	bra	DiskMedleyShowHideFunc_L2f
+DiskMedleyShowHideFunc_L2b:
 	clr	d0
-	bra	PasswordText_L2f
-PasswordText_L2e:
+	bra	DiskMedleyShowHideFunc_L2f
+DiskMedleyShowHideFunc_L2e:
 	clr	d0
-PasswordText_L2f:
+DiskMedleyShowHideFunc_L2f:
 	ret	0, 0x14
 
-func_4C151F35:
+DPlayCheckAndChangeTitle:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	mov	d0, d2
 	cmp	MT_AreYouClassProc, d1
-	beq	func_4C151F35_L28
+	beq	DPlayCheckAndChangeTitle_L28
 	cmp	MT_Draw, d1
-	beq	func_4C151F35_L2c
+	beq	DPlayCheckAndChangeTitle_L2c
 	cmp	EV_SHOW, d1
-	beq	func_4C151F35_L50
+	beq	DPlayCheckAndChangeTitle_L50
 	cmp	EV_DPTTLCALL, d1
-	beq	func_4C151F35_L5e
-	bra	func_4C151F35_L7a
-func_4C151F35_L28:
+	beq	DPlayCheckAndChangeTitle_L5e
+	bra	DPlayCheckAndChangeTitle_L7a
+DPlayCheckAndChangeTitle_L28:
 	mov	1, d0
-	bra	func_4C151F35_L85
-func_4C151F35_L2c:
+	bra	DPlayCheckAndChangeTitle_L85
+DPlayCheckAndChangeTitle_L2c:
 	mov	(0x28, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
@@ -588745,49 +588741,49 @@ func_4C151F35_L2c:
 	mov	d2, d0
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	func_4C151F35_L85
-func_4C151F35_L50:
+	bra	DPlayCheckAndChangeTitle_L85
+DPlayCheckAndChangeTitle_L50:
 	mov	(0x28, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
-	bra	func_4C151F35_L85
-func_4C151F35_L5e:
+	bra	DPlayCheckAndChangeTitle_L85
+DPlayCheckAndChangeTitle_L5e:
 	call	GetModeNow_entry, 0, 0x10
 	and	0xff, d0
 	extbu	d0
 	cmp	6, d0
-	bne	func_4C151F35_L77
+	bne	DPlayCheckAndChangeTitle_L77
 	mov	(0x28, sp), d0
 	clr	d1
 	call	ChangeTitleDirect_entry, [d2,d3], 0x20
-func_4C151F35_L77:
+DPlayCheckAndChangeTitle_L77:
 	clr	d0
-	bra	func_4C151F35_L85
-func_4C151F35_L7a:
+	bra	DPlayCheckAndChangeTitle_L85
+DPlayCheckAndChangeTitle_L7a:
 	mov	(0x28, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
-func_4C151F35_L85:
+DPlayCheckAndChangeTitle_L85:
 	ret	[d2], 0x18
 
-func_4C151FBD:
+CmpOptWinCatch:
 	movm	[d2], (sp)
 	add	-0x14, sp
 	mov	d0, d2
 	cmp	MT_AreYouClassProc, d1
-	beq	func_4C151FBD_L28
+	beq	CmpOptWinCatch_L28
 	cmp	MT_Draw, d1
-	beq	func_4C151FBD_L2d
+	beq	CmpOptWinCatch_L2d
 	cmp	EV_SHOW, d1
-	beq	func_4C151FBD_L51
+	beq	CmpOptWinCatch_L51
 	cmp	EV_WINSHOW, d1
-	beq	func_4C151FBD_L5f
-	bra	func_4C151FBD_L9f
-func_4C151FBD_L28:
+	beq	CmpOptWinCatch_L5f
+	bra	CmpOptWinCatch_L9f
+CmpOptWinCatch_L28:
 	mov	1, d0
 	ret	[d2], 0x18
-func_4C151FBD_L2d:
+CmpOptWinCatch_L2d:
 	mov	(0x28, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
@@ -588797,39 +588793,39 @@ func_4C151FBD_L2d:
 	mov	d2, d0
 	call	SendEvent_entry, [d2,d3], 0x24
 	clr	d0
-	bra	func_4C151FBD_Laa
-func_4C151FBD_L51:
+	bra	CmpOptWinCatch_Laa
+CmpOptWinCatch_L51:
 	mov	(0x28, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
 	clr	d0
-	bra	func_4C151FBD_Laa
-func_4C151FBD_L5f:
+	bra	CmpOptWinCatch_Laa
+CmpOptWinCatch_L5f:
 	call	GetTitleNow_entry, 0, 0x10
 	and	0xff, d0
 	extbu	d0
 	cmp	0x61, d0
-	bne	func_4C151FBD_L86
+	bne	CmpOptWinCatch_L86
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	CmpOptionWin_id, d0
 	mov	EV_SHOW, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-	bra	func_4C151FBD_L9c
-func_4C151FBD_L86:
+	bra	CmpOptWinCatch_L9c
+CmpOptWinCatch_L86:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	CmpOptionWin_id, d0
 	mov	EV_HIDE, d1
 	call	SendEvent_entry, [d2,d3], 0x24
-func_4C151FBD_L9c:
+CmpOptWinCatch_L9c:
 	clr	d0
-	bra	func_4C151FBD_Laa
-func_4C151FBD_L9f:
+	bra	CmpOptWinCatch_Laa
+CmpOptWinCatch_L9f:
 	mov	(0x28, sp), a0
 	mov	a0, (0x10, sp)
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
-func_4C151FBD_Laa:
+CmpOptWinCatch_Laa:
 	ret	[d2], 0x18
 
 PsFileNameBoxProc:
@@ -595920,7 +595916,7 @@ func_4C1560B7_entry_L3d:
 	call	func_4C156EDD_entry, 0, 0x14
 	call	func_4C156ECB_entry, 0, 0x14
 	mov	4, d0
-	call	func_4C157EA3_entry, 0, 0x10
+	call	DspSetIndex_entry, 0, 0x10
 	clr	d0
 	movhu	d0, (0x18, sp)
 	bra	func_4C1560B7_entry_L6f
@@ -596656,7 +596652,7 @@ func_4C15678B:
 	call	func_4C156EDD_entry, 0, 0x14
 	call	func_4C156ECB_entry, 0, 0x14
 	mov	4, d0
-	call	func_4C15813B_entry, 0, 0x18
+	call	DspRegRead_entry, 0, 0x18
 	mov	d0, (0x14, sp)
 	call	func_4C156F11_entry, 0, 0x14
 	mov	(0x14, sp), d0
@@ -596667,7 +596663,7 @@ func_4C1567BC:
 
 func_4C1567BC_entry:
 	mov	0xc, d0
-	call	func_4C15813B_entry, 0, 0x18
+	call	DspRegRead_entry, 0, 0x18
 	mov	d0, (0xc, sp)
 	ret	0, 0x10
 
@@ -597302,9 +597298,9 @@ func_4C156E88_entry:
 	mov	d0, (0x10, sp)
 	clr	d0
 	clr	d1
-	call	func_4C1580A7_entry, 0, 0x10
+	call	DspIndexWriteBytes32Slow_entry, 0, 0x10
 	clr	d0
-	call	func_4C15816C_entry, 0, 0x18
+	call	DspRegReadSlow_entry, 0, 0x18
 	movhu	d0, (0x14, sp)
 	mov	0x410, d0
 	mov	d0, (0x10, sp)
@@ -597312,7 +597308,7 @@ func_4C156E88_entry:
 	clr	d1
 	call	func_4C15811C_entry, 0, 0x10
 	clr	d0
-	call	func_4C15816C_entry, 0, 0x18
+	call	DspRegReadSlow_entry, 0, 0x18
 	movhu	d0, (0x14, sp)
 	ret	0, 0x18
 
@@ -597384,7 +597380,7 @@ func_4C156F29_entry:
 	bra	func_4C156F29_entry_L21
 func_4C156F29_entry_Ld:
 	mov	0x37, d0
-	call	func_4C15813B_entry, 0, 0x18
+	call	DspRegRead_entry, 0, 0x18
 	and	0x80, d0
 	mov	d0, (0xc, sp)
 	mov	(0xc, sp), d0
@@ -597422,7 +597418,7 @@ func_4C156F53_entry:
 	mov	d0, (0x14, sp)
 	mov	4, d0
 	movhu	(0x2c, sp), d1
-	call	func_4C157F02_entry, 0, 0x10
+	call	DspIndexWritePMWord_entry, 0, 0x10
 	call	func_4C156F11_entry, 0, 0x14
 	movhu	(0x18, sp), d0
 	ret	0, 0x1c
@@ -597631,7 +597627,7 @@ func_4C157008_entry_L115:
 	call	func_4C156ECB_entry, 0, 0x14
 func_4C157008_entry_L132:
 	mov	4, d0
-	call	func_4C157EA3_entry, 0, 0x10
+	call	DspSetIndex_entry, 0, 0x10
 	bra	func_4C157008_entry_L1b5
 func_4C157008_entry_L13b:
 	movhu	(0x1c, sp), d0
@@ -598077,7 +598073,7 @@ func_4C1571E9_entry_L2bc:
 	mov	d0, (0x14, sp)
 	mov	4, d0
 	mov	0x6be, d1
-	call	func_4C157F02_entry, 0, 0x10
+	call	DspIndexWritePMWord_entry, 0, 0x10
 	jmp	func_4C1571E9_entry_L396
 func_4C1571E9_entry_L2d3:
 	movhu	(0x50, sp), d0
@@ -598091,7 +598087,7 @@ func_4C1571E9_entry_L2dc:
 	mov	d0, (0x14, sp)
 	mov	4, d0
 	mov	0x6be, d1
-	call	func_4C157F02_entry, 0, 0x10
+	call	DspIndexWritePMWord_entry, 0, 0x10
 	jmp	func_4C1571E9_entry_L396
 func_4C1571E9_entry_L2f6:
 	movhu	(0x48, sp), d0
@@ -598105,7 +598101,7 @@ func_4C1571E9_entry_L2ff:
 	mov	d0, (0x14, sp)
 	mov	4, d0
 	mov	0x6be, d1
-	call	func_4C157F02_entry, 0, 0x10
+	call	DspIndexWritePMWord_entry, 0, 0x10
 	jmp	func_4C1571E9_entry_L396
 func_4C1571E9_entry_L319:
 	movhu	(0x48, sp), d0
@@ -598119,7 +598115,7 @@ func_4C1571E9_entry_L322:
 	mov	d0, (0x14, sp)
 	mov	4, d0
 	mov	0x6be, d1
-	call	func_4C157F02_entry, 0, 0x10
+	call	DspIndexWritePMWord_entry, 0, 0x10
 	bra	func_4C1571E9_entry_L396
 func_4C1571E9_entry_L33b:
 	movhu	(0x50, sp), d0
@@ -598133,7 +598129,7 @@ func_4C1571E9_entry_L344:
 	mov	d0, (0x14, sp)
 	mov	4, d0
 	mov	0x6be, d1
-	call	func_4C157F02_entry, 0, 0x10
+	call	DspIndexWritePMWord_entry, 0, 0x10
 	bra	func_4C1571E9_entry_L396
 func_4C1571E9_entry_L35d:
 	movhu	(0x50, sp), d0
@@ -598147,7 +598143,7 @@ func_4C1571E9_entry_L366:
 	mov	d0, (0x14, sp)
 	mov	4, d0
 	mov	0x6be, d1
-	call	func_4C157F02_entry, 0, 0x10
+	call	DspIndexWritePMWord_entry, 0, 0x10
 	bra	func_4C1571E9_entry_L396
 func_4C1571E9_entry_L37f:
 	mov	0x400, d0
@@ -598156,7 +598152,7 @@ func_4C1571E9_entry_L37f:
 	mov	d0, (0x14, sp)
 	mov	4, d0
 	mov	0x6be, d1
-	call	func_4C157F02_entry, 0, 0x10
+	call	DspIndexWritePMWord_entry, 0, 0x10
 func_4C1571E9_entry_L396:
 	call	func_4C156F11_entry, 0, 0x14
 	movhu	(0x22, sp), d0
@@ -598816,47 +598812,47 @@ func_4C157B75:
 	movbu	d0, (func_4C157B6A_Table)
 	ret	0, 0
 
-func_4C157B7F:
+DspWaitReady:
 	movm	[d2], (sp)
 	add	-4, sp
 
-func_4C157B7F_entry:
+DspWaitReady_entry:
 	mov	0x0003ffff, d0
 	mov	d0, (0, sp)
 	movbu	(func_4C157B6A_Table), d0
 	cmp	0, d0
-	bne	func_4C157B7F_entry_L14
-	bra	func_4C157B7F_entry_L44
-func_4C157B7F_entry_L14:
+	bne	DspWaitReady_entry_L14
+	bra	DspWaitReady_entry_L44
+DspWaitReady_entry_L14:
 	mov	1, d0
-	movhu	d0, (0x3400015c)
-	bra	func_4C157B7F_entry_L37
-func_4C157B7F_entry_L1e:
+	movhu	d0, (G23ICR)
+	bra	DspWaitReady_entry_L37
+DspWaitReady_entry_L1e:
 	mov	(0, sp), d0
 	mov	1, d2
 	mov	d0, d1
 	sub	d2, d1
 	mov	d1, (0, sp)
 	cmp	0, d0
-	beq	func_4C157B7F_entry_L2d
-	bra	func_4C157B7F_entry_L37
-func_4C157B7F_entry_L2d:
+	beq	DspWaitReady_entry_L2d
+	bra	DspWaitReady_entry_L37
+DspWaitReady_entry_L2d:
 	mov	-1, d0
 	movbu	d0, (func_4C15517F_Var)
-	bra	func_4C157B7F_entry_L44
-func_4C157B7F_entry_L37:
-	movhu	(0x3400015c), d0
+	bra	DspWaitReady_entry_L44
+DspWaitReady_entry_L37:
+	movhu	(G23ICR), d0
 	btst	0x10, d0
-	bne	func_4C157B7F_entry_L44
-	bra	func_4C157B7F_entry_L1e
-func_4C157B7F_entry_L44:
+	bne	DspWaitReady_entry_L44
+	bra	DspWaitReady_entry_L1e
+DspWaitReady_entry_L44:
 	ret	[d2], 8
 
 func_4C157BCB:
-	movhu	(0x34000280), d0
+	movhu	(EXTMD), d0
 	and	0xfffc, d0
 	or	0x02, d0
-	movhu	d0, (0x34000280)
+	movhu	d0, (EXTMD)
 	ret	0, 0
 # func_4C157BCB + 0x16: no traced path reaches what follows (--decode-gaps)
 	clr	d0
@@ -598947,7 +598943,7 @@ func_4C157C81_L1a:
 	bra	func_4C157C81_L3e
 func_4C157C81_L22:
 	call	loc_cpu_entry, 0, 0x10
-	call	func_4C157B7F_entry, [d2], 8
+	call	DspWaitReady_entry, [d2], 8
 	movhu	(0x9c000000), d0
 	movhu	d0, (8, sp)
 	call	unl_cpu, 0, 0
@@ -598981,7 +598977,7 @@ func_4C157CC5_entry_L23:
 	bra	func_4C157CC5_entry_L4a
 func_4C157CC5_entry_L2e:
 	call	loc_cpu_entry, 0, 0x10
-	call	func_4C157B7F_entry, [d2], 8
+	call	DspWaitReady_entry, [d2], 8
 	movhu	(0x14, sp), d0
 	movhu	d0, (0x9c000000)
 	call	unl_cpu, 0, 0
@@ -599012,66 +599008,66 @@ func_4C157D39:
 func_4C157D39_entry:
 	movhu	d1, (0x20, sp)
 	movhu	d0, (0x1c, sp)
-	movhu	(0x32000026), d0
+	movhu	(MEMCTR3), d0
 	movhu	d0, (0x10, sp)
-	movhu	(0x3200002e), d0
+	movhu	(MEMCTR7), d0
 	movhu	d0, (0x12, sp)
-	movhu	(0x32000026), d0
+	movhu	(MEMCTR3), d0
 	and	0xe0ff, d0
 	or	0x0f00, d0
-	movhu	d0, (0x32000026)
-	movhu	(0x3200002e), d0
+	movhu	d0, (MEMCTR3)
+	movhu	(MEMCTR7), d0
 	and	0xfffd, d0
-	movhu	d0, (0x3200002e)
+	movhu	d0, (MEMCTR7)
 	movhu	(0x1c, sp), d0
 	movhu	(0x20, sp), d1
 	call	func_4C157CC5_entry, 0, 8
 	movhu	(0x10, sp), d0
-	movhu	d0, (0x32000026)
+	movhu	d0, (MEMCTR3)
 	movhu	(0x12, sp), d0
-	movhu	d0, (0x3200002e)
+	movhu	d0, (MEMCTR7)
 	ret	0, 0x14
 
-func_4C157D98:
+DspPortReadChecked:
 	add	-0xc, sp
 
-func_4C157D98_entry:
+DspPortReadChecked_entry:
 	movbu	(func_4C15517F_Var), d0
 	extb	d0
 	cmp	0, d0
-	bne	func_4C157D98_entry_Ld
-	bra	func_4C157D98_entry_L11
-func_4C157D98_entry_Ld:
+	bne	DspPortReadChecked_entry_Ld
+	bra	DspPortReadChecked_entry_L11
+DspPortReadChecked_entry_Ld:
 	mov	-1, d0
-	bra	func_4C157D98_entry_L19
-func_4C157D98_entry_L11:
+	bra	DspPortReadChecked_entry_L19
+DspPortReadChecked_entry_L11:
 	mov	0x9c4, d0
 	call	func_4C157C81, 0, 0xc
-func_4C157D98_entry_L19:
+DspPortReadChecked_entry_L19:
 	ret	0, 0xc
 
-func_4C157DB7:
+DspPortReadSlow:
 	add	-0x14, sp
 
-func_4C157DB7_entry:
-	movhu	(0x32000026), d0
+DspPortReadSlow_entry:
+	movhu	(MEMCTR3), d0
 	movhu	d0, (0xc, sp)
-	movhu	(0x3200002e), d0
+	movhu	(MEMCTR7), d0
 	movhu	d0, (0xe, sp)
-	movhu	(0x32000026), d0
+	movhu	(MEMCTR3), d0
 	and	0xe0ff, d0
 	or	0x0f00, d0
-	movhu	d0, (0x32000026)
-	movhu	(0x3200002e), d0
+	movhu	d0, (MEMCTR3)
+	movhu	(MEMCTR7), d0
 	and	0xfffd, d0
-	movhu	d0, (0x3200002e)
+	movhu	d0, (MEMCTR7)
 	mov	0x9c4, d0
 	call	func_4C157C81, 0, 0xc
 	movhu	d0, (0x10, sp)
 	movhu	(0xc, sp), d0
-	movhu	d0, (0x32000026)
+	movhu	d0, (MEMCTR3)
 	movhu	(0xe, sp), d0
-	movhu	d0, (0x3200002e)
+	movhu	d0, (MEMCTR7)
 	movhu	(0x10, sp), d0
 	ret	0, 0x14
 
@@ -599079,13 +599075,13 @@ func_4C157E13:
 	add	-0x1c, sp
 
 func_4C157E13_entry:
-	bset	0x80, (0x36008004)
+	bset	0x80, (P04)
 	mov	0xa, d0
 	call	dly_tsk_entry, [d2,a2], 0x18
-	bclr	0x80, (0x36008004)
+	bclr	0x80, (P04)
 	mov	0xa, d0
 	call	dly_tsk_entry, [d2,a2], 0x18
-	bset	0x80, (0x36008004)
+	bset	0x80, (P04)
 	call	func_4C157BCB, 0, 0
 	clr	d0
 	movbu	d0, (0x18, sp)
@@ -599095,17 +599091,17 @@ func_4C157E13_entry_L32:
 	mov	d0, (0x10, sp)
 	clr	d0
 	mov	0x00009191, d1
-	call	func_4C1580A7_entry, 0, 0x10
+	call	DspIndexWriteBytes32Slow_entry, 0, 0x10
 	clr	d0
-	call	func_4C158046_entry, 0, 0x20
+	call	DspIndexReadBytes32Slow_entry, 0, 0x20
 	mov	d0, (0x14, sp)
 	mov	0x20, d0
 	mov	d0, (0x10, sp)
 	clr	d0
 	clr	d1
-	call	func_4C1580A7_entry, 0, 0x10
+	call	DspIndexWriteBytes32Slow_entry, 0, 0x10
 	clr	d0
-	call	func_4C158046_entry, 0, 0x20
+	call	DspIndexReadBytes32Slow_entry, 0, 0x20
 	mov	d0, (0x14, sp)
 	mov	(0x14, sp), d0
 	cmp	0x20, d0
@@ -599130,10 +599126,10 @@ func_4C157E13_entry_L82:
 func_4C157E13_entry_L8a:
 	ret	0, 0x1c
 
-func_4C157EA3:
+DspSetIndex:
 	add	-0x10, sp
 
-func_4C157EA3_entry:
+DspSetIndex_entry:
 	movhu	d0, (0x18, sp)
 	mov	0x9c2, d0
 	movhu	(0x18, sp), d1
@@ -599142,10 +599138,10 @@ func_4C157EA3_entry:
 	call	func_4C157D15_entry, 0, 0x10
 	ret	0, 0x10
 
-func_4C157EBC:
+DspSetIndexSlow:
 	add	-0x10, sp
 
-func_4C157EBC_entry:
+DspSetIndexSlow_entry:
 	movhu	d0, (0x18, sp)
 	mov	0x9c2, d0
 	movhu	(0x18, sp), d1
@@ -599171,15 +599167,15 @@ func_4C157ED5_entry:
 	call	func_4C157D15_entry, 0, 0x10
 	ret	0, 0x10
 
-func_4C157F02:
+DspIndexWritePMWord:
 	add	-0x10, sp
 
-func_4C157F02_entry:
+DspIndexWritePMWord_entry:
 	movhu	d1, (0x1c, sp)
 	mov	d0, (0x18, sp)
 	movhu	(0x18, sp), d0
 	exthu	d0
-	call	func_4C157EA3_entry, 0, 0x10
+	call	DspSetIndex_entry, 0, 0x10
 	mov	0x9c4, d0
 	movhu	(0x24, sp), d1
 	call	func_4C157D15_entry, 0, 0x10
@@ -599209,10 +599205,10 @@ func_4C157F37_entry:
 	call	func_4C157D15_entry, 0, 0x10
 	ret	0, 0x10
 
-func_4C157F63:
+DspWriteDMWordSlow:
 	add	-0x10, sp
 
-func_4C157F63_entry:
+DspWriteDMWordSlow_entry:
 	movhu	d0, (0x18, sp)
 	movhu	d1, (0x1c, sp)
 	mov	0x9c4, d0
@@ -599227,13 +599223,13 @@ func_4C157F63_entry:
 	call	func_4C157D39_entry, 0, 0x14
 	ret	0, 0x10
 
-func_4C157F8F:
+DspIndexWriteBytes32:
 	add	-0x10, sp
 	movhu	d1, (0x1c, sp)
 	mov	d0, (0x18, sp)
 	movhu	(0x18, sp), d0
 	exthu	d0
-	call	func_4C157EA3_entry, 0, 0x10
+	call	DspSetIndex_entry, 0, 0x10
 	mov	0x9c4, d0
 	movhu	(0x20, sp), d1
 	and	0xff, d1
@@ -599258,26 +599254,26 @@ func_4C157F8F:
 	call	func_4C157D15_entry, 0, 0x10
 	ret	0, 0x10
 
-func_4C157FE5:
+DspIndexReadBytes32:
 	add	-0x20, sp
 	mov	d0, (0x28, sp)
 	movhu	(0x28, sp), d0
 	exthu	d0
-	call	func_4C157EA3_entry, 0, 0x10
+	call	DspSetIndex_entry, 0, 0x10
 	mov	0x9c4, d0
-	call	func_4C157D98_entry, 0, 0xc
+	call	DspPortReadChecked_entry, 0, 0xc
 	exth	d0
 	mov	d0, (0xc, sp)
 	mov	0x9c4, d0
-	call	func_4C157D98_entry, 0, 0xc
+	call	DspPortReadChecked_entry, 0, 0xc
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	0x9c4, d0
-	call	func_4C157D98_entry, 0, 0xc
+	call	DspPortReadChecked_entry, 0, 0xc
 	exth	d0
 	mov	d0, (0x14, sp)
 	mov	0x9c4, d0
-	call	func_4C157D98_entry, 0, 0xc
+	call	DspPortReadChecked_entry, 0, 0xc
 	exth	d0
 	mov	d0, (0x18, sp)
 	mov	(0x10, sp), d1
@@ -599297,28 +599293,28 @@ func_4C157FE5:
 	mov	d0, (0x1c, sp)
 	ret	0, 0x20
 
-func_4C158046:
+DspIndexReadBytes32Slow:
 	add	-0x20, sp
 
-func_4C158046_entry:
+DspIndexReadBytes32Slow_entry:
 	mov	d0, (0x28, sp)
 	movhu	(0x28, sp), d0
 	exthu	d0
-	call	func_4C157EA3_entry, 0, 0x10
+	call	DspSetIndex_entry, 0, 0x10
 	mov	0x9c4, d0
-	call	func_4C157DB7_entry, 0, 0x14
+	call	DspPortReadSlow_entry, 0, 0x14
 	exth	d0
 	mov	d0, (0xc, sp)
 	mov	0x9c4, d0
-	call	func_4C157DB7_entry, 0, 0x14
+	call	DspPortReadSlow_entry, 0, 0x14
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	0x9c4, d0
-	call	func_4C157DB7_entry, 0, 0x14
+	call	DspPortReadSlow_entry, 0, 0x14
 	exth	d0
 	mov	d0, (0x14, sp)
 	mov	0x9c4, d0
-	call	func_4C157DB7_entry, 0, 0x14
+	call	DspPortReadSlow_entry, 0, 0x14
 	exth	d0
 	mov	d0, (0x18, sp)
 	mov	(0x10, sp), d1
@@ -599338,15 +599334,15 @@ func_4C158046_entry:
 	mov	d0, (0x1c, sp)
 	ret	0, 0x20
 
-func_4C1580A7:
+DspIndexWriteBytes32Slow:
 	add	-0x10, sp
 
-func_4C1580A7_entry:
+DspIndexWriteBytes32Slow_entry:
 	movhu	d1, (0x1c, sp)
 	mov	d0, (0x18, sp)
 	movhu	(0x18, sp), d0
 	exthu	d0
-	call	func_4C157EBC_entry, 0, 0x10
+	call	DspSetIndexSlow_entry, 0, 0x10
 	mov	0x9c4, d0
 	movhu	(0x20, sp), d1
 	and	0xff, d1
@@ -599379,7 +599375,7 @@ func_4C1580FD_entry:
 	mov	d0, (0x18, sp)
 	movhu	(0x18, sp), d0
 	exthu	d0
-	call	func_4C157EA3_entry, 0, 0x10
+	call	DspSetIndex_entry, 0, 0x10
 	movhu	(0x1c, sp), d0
 	movhu	(0x20, sp), d1
 	call	func_4C157F37_entry, 0, 0x10
@@ -599393,26 +599389,26 @@ func_4C15811C_entry:
 	mov	d0, (0x18, sp)
 	movhu	(0x18, sp), d0
 	exthu	d0
-	call	func_4C157EBC_entry, 0, 0x10
+	call	DspSetIndexSlow_entry, 0, 0x10
 	movhu	(0x1c, sp), d0
 	movhu	(0x20, sp), d1
-	call	func_4C157F63_entry, 0, 0x10
+	call	DspWriteDMWordSlow_entry, 0, 0x10
 	ret	0, 0x10
 
-func_4C15813B:
+DspRegRead:
 	add	-0x18, sp
 
-func_4C15813B_entry:
+DspRegRead_entry:
 	mov	d0, (0x20, sp)
 	movhu	(0x20, sp), d0
 	exthu	d0
-	call	func_4C157EA3_entry, 0, 0x10
+	call	DspSetIndex_entry, 0, 0x10
 	mov	0x9c4, d0
-	call	func_4C157D98_entry, 0, 0xc
+	call	DspPortReadChecked_entry, 0, 0xc
 	exth	d0
 	mov	d0, (0xc, sp)
 	mov	0x9c4, d0
-	call	func_4C157D98_entry, 0, 0xc
+	call	DspPortReadChecked_entry, 0, 0xc
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x10, sp), d0
@@ -599422,20 +599418,20 @@ func_4C15813B_entry:
 	mov	d0, (0x14, sp)
 	ret	0, 0x18
 
-func_4C15816C:
+DspRegReadSlow:
 	add	-0x18, sp
 
-func_4C15816C_entry:
+DspRegReadSlow_entry:
 	mov	d0, (0x20, sp)
 	movhu	(0x20, sp), d0
 	exthu	d0
-	call	func_4C157EBC_entry, 0, 0x10
+	call	DspSetIndexSlow_entry, 0, 0x10
 	mov	0x9c4, d0
-	call	func_4C157DB7_entry, 0, 0x14
+	call	DspPortReadSlow_entry, 0, 0x14
 	exth	d0
 	mov	d0, (0xc, sp)
 	mov	0x9c4, d0
-	call	func_4C157DB7_entry, 0, 0x14
+	call	DspPortReadSlow_entry, 0, 0x14
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	(0x10, sp), d0
@@ -599495,24 +599491,24 @@ DspBootDefaultEffects_L2a:
 DspBootDefaultEffects_L98:
 	ret	0, 0x14
 
-func_4C158238:
+DspHostPortStatus:
 	movbu	(func_4C15517F_Var), d0
 	extb	d0
 	cmp	0, d0
-	beq	func_4C158238_Ld
-	bra	func_4C158238_L10
-func_4C158238_Ld:
+	beq	DspHostPortStatus_Ld
+	bra	DspHostPortStatus_L10
+DspHostPortStatus_Ld:
 	clr	d0
-	bra	func_4C158238_L12
-func_4C158238_L10:
+	bra	DspHostPortStatus_L12
+DspHostPortStatus_L10:
 	mov	-1, d0
-func_4C158238_L12:
+DspHostPortStatus_L12:
 	ret	0, 0
 
-func_4C15824D:
+DspBootRunTestRecord:
 	add	-0x18, sp
 
-func_4C15824D_entry:
+DspBootRunTestRecord_entry:
 	mov	a0, (0x20, sp)
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -599537,7 +599533,7 @@ func_4C15827D:
 func_4C15827D_entry:
 	mov	0xb, d0
 	mov	d0, (0xc, sp)
-	call	func_4C15813B_entry, 0, 0x18
+	call	DspRegRead_entry, 0, 0x18
 	mov	d0, (0x10, sp)
 	mov	(0x10, sp), d0
 	ret	0, 0x14
@@ -599554,7 +599550,7 @@ DspBootProbe_entry:
 	call	func_4C157008_entry, [d2], 0x34
 	call	func_4C157B75, 0, 0
 	mov	DspRecord_4C3128E8, a0
-	call	func_4C15824D_entry, 0, 0x18
+	call	DspBootRunTestRecord_entry, 0, 0x18
 	call	func_4C15827D_entry, 0, 0x14
 	mov	d0, (0x14, sp)
 	cmp	0, d0
@@ -599562,7 +599558,7 @@ DspBootProbe_entry:
 	bra	DspBootProbe_entry_L99
 DspBootProbe_entry_L2e:
 	mov	DspRecord_4C312BA1, a0
-	call	func_4C15824D_entry, 0, 0x18
+	call	DspBootRunTestRecord_entry, 0, 0x18
 	call	func_4C15827D_entry, 0, 0x14
 	mov	d0, (0x14, sp)
 	cmp	0, d0
@@ -599570,7 +599566,7 @@ DspBootProbe_entry_L2e:
 	bra	DspBootProbe_entry_L99
 DspBootProbe_entry_L46:
 	mov	DspRecord_4C312E5A, a0
-	call	func_4C15824D_entry, 0, 0x18
+	call	DspBootRunTestRecord_entry, 0, 0x18
 	call	func_4C15827D_entry, 0, 0x14
 	mov	d0, (0x14, sp)
 	cmp	0, d0
@@ -599578,7 +599574,7 @@ DspBootProbe_entry_L46:
 	bra	DspBootProbe_entry_L99
 DspBootProbe_entry_L5e:
 	mov	DspRecord_4C313113, a0
-	call	func_4C15824D_entry, 0, 0x18
+	call	DspBootRunTestRecord_entry, 0, 0x18
 	call	func_4C15827D_entry, 0, 0x14
 	mov	d0, (0x14, sp)
 	cmp	0, d0
@@ -599613,10 +599609,10 @@ DspBootProbe_entry_Lbb:
 func_4C158351:
 	ret	0, 0
 
-func_4C158354:
+StrapBit3Debounced:
 	add	-0xc, sp
 
-func_4C158354_entry:
+StrapBit3Debounced_entry:
 	movhu	(0x98070000), d0
 	mov	3, d1
 	exthu	d1
@@ -599635,12 +599631,12 @@ func_4C158354_entry:
 	movbu	(9, sp), d0
 	extb	d0
 	cmp	d0, d1
-	beq	func_4C158354_entry_L34
-	bra	func_4C158354_entry_L3d
-func_4C158354_entry_L34:
+	beq	StrapBit3Debounced_entry_L34
+	bra	StrapBit3Debounced_entry_L3d
+StrapBit3Debounced_entry_L34:
 	movbu	(8, sp), d0
 	movbu	d0, (func_4C158354_entry_L34_Table)
-func_4C158354_entry_L3d:
+StrapBit3Debounced_entry_L3d:
 	movbu	(func_4C158354_entry_L34_Table), d0
 	extb	d0
 	ret	0, 0xc
@@ -606666,7 +606662,7 @@ SndUnitSettingApplyFull_entry:
 	mov	d1, (0x38, sp)
 	mov	d1, (0x2c, sp)
 	mov	d3, d0
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	0, d0
 	bge	SndUnitSettingApplyFull_entry_L1a
@@ -606700,7 +606696,7 @@ loc_4C15D2A6:
 	or	0x80, d1
 	mov	d1, (0x20, sp)
 	mov	d3, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	mov	d0, d1
 	mov	(0x24, sp), d0
 	exthu	d1
@@ -606712,10 +606708,10 @@ loc_4C15D2D4:
 	ret	[d2,d3,a2,a3], 0x7c
 SndUnitSettingApplyFull_entry_L68:
 	mov	d3, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	mov	d0, d2
 	mov	(0x20, sp), d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exthu	d2
 	mov	d2, (0x34, sp)
 	exth	d0
@@ -607115,7 +607111,7 @@ func_4C15D51B_entry_L102:
 	mov	0xc, d1
 	call	memset_entry, [a2], 4
 	mov	a3, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	movhu	d0, (0x2e, sp)
 	mov	a3, d0
 	movbu	(0x29, sp), d1
@@ -607386,7 +607382,7 @@ func_4C15D761_entry_L102:
 	mov	0xc, d1
 	call	memset_entry, [a2], 4
 	mov	a2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	mov	d0, d2
 	mov	a2, d0
 	movbu	(0x29, sp), d1
@@ -607644,7 +607640,7 @@ SndSetupBroadcastAll_entry_L4e:
 	mov	d0, (0x24, sp)
 SndSetupBroadcastAll_entry_L51:
 	mov	0x180, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	movhu	d0, (0x28, sp)
 	exthu	d0
 	cmp	0x7c, d0
@@ -607780,7 +607776,7 @@ SndSetupBroadcastOne_entry:
 	cmp	0, d0
 	beq	SndSetupBroadcastOne_entry_L66
 	mov	0x180, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	mov	d0, d2
 	mov	d2, d1
 	exthu	d1
@@ -608169,7 +608165,7 @@ SndUnitRecApply_entry_Lc8:
 	mov	d1, d2
 	exth	d2
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	movhu	d0, (0x24, sp)
 	mov	d2, d0
 	call	func_4C15ECE3_entry, [d2], 0x10
@@ -608323,7 +608319,7 @@ SndUnitRecApplyShort_entry_Lc7:
 	or	0x80, d2
 	exthu	d2
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	mov	d2, d0
 	call	func_4C15ECE3_entry, [d2], 0x10
 	exth	d0
@@ -608438,7 +608434,7 @@ SndUnitRecApplyAlt_entry_Lc8:
 	or	d1, d2
 	or	0x80, d2
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	mov	d2, d0
 	call	func_4C15ECE3_entry, [d2], 0x10
 	mov	d0, d3
@@ -608471,7 +608467,7 @@ SndUnitRecApplyAlt_entry_Lc8:
 	cmp	0, d0
 	beq	SndUnitRecApplyAlt_entry_L142
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exthu	d3
 	mov	d3, (0x10, sp)
 	mov	d0, d1
@@ -608800,7 +608796,7 @@ SndUnitSettingApply3_entry_Ld5:
 SndUnitSettingApply3_entry_Lf2:
 	mov	sp, a2
 	mov	a3, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	movhu	d0, (0x2a, sp)
 	add	0x30, a2
 	mov	a2, a0
@@ -608963,7 +608959,7 @@ SndUnitSettingApply4_entry_Laa:
 	jmp	SndUnitSettingApply4_entry_L1d5
 SndUnitSettingApply4_entry_Ld3:
 	mov	(0x20, sp), d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	mov	d0, d2
 	mov	sp, a0
 	mov	a0, d0
@@ -609217,7 +609213,7 @@ SndRecTriFieldGet:
 
 SndRecTriFieldGet_entry:
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	mov	d0, d1
 	exthu	d1
 	cmp	0, d1
@@ -609275,7 +609271,7 @@ loc_4C15E8C0:
 	bra	SndRecTriFieldGet_entry_Lba
 SndRecTriFieldGet_entry_L7c:
 	mov	d2, d0
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exthu	d0
 	cmp	8, d0
 	beq	SndRecTriFieldGet_entry_L95
@@ -609409,7 +609405,7 @@ SndRecByteFieldGetA:
 SndRecByteFieldGetA_entry:
 	mov	d1, a2
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	mov	d0, d1
 	exthu	d1
 	cmp	1, d1
@@ -609460,7 +609456,7 @@ SndRecTriFieldGet2:
 
 SndRecTriFieldGet2_entry:
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	mov	d0, d1
 	exthu	d1
 	cmp	0, d1
@@ -609509,7 +609505,7 @@ loc_4C15EA7E:
 	ret	[d2], 0x14
 SndRecTriFieldGet2_entry_L6a:
 	mov	d2, d0
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exthu	d0
 	cmp	8, d0
 	beq	SndRecTriFieldGet2_entry_L83
@@ -609567,7 +609563,7 @@ SndRecByteFieldGetB:
 SndRecByteFieldGetB_entry:
 	mov	a0, a2
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	mov	d0, d1
 	exthu	d1
 	cmp	1, d1
@@ -609608,7 +609604,7 @@ SndRecCountGet:
 
 SndRecCountGet_entry:
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	mov	d0, d1
 	exthu	d1
 	cmp	0, d1
@@ -609663,7 +609659,7 @@ loc_4C15EBAB:
 	ret	[d2], 0x14
 SndRecCountGet_entry_L78:
 	mov	d2, d0
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exthu	d0
 	cmp	8, d0
 	beq	SndRecCountGet_entry_L91
@@ -609723,7 +609719,7 @@ SndRecByteFieldGetC:
 SndRecByteFieldGetC_entry:
 	mov	d1, d3
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	mov	d0, d1
 	exthu	d1
 	cmp	1, d1
@@ -609797,7 +609793,7 @@ func_4C15ECAA:
 	movm	[d2], (sp)
 	add	-0xc, sp
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	0, d0
 	blt	func_4C15ECAA_L34
@@ -609809,7 +609805,7 @@ func_4C15ECAA:
 	jmp	(a0)
 loc_4C15ECC9:
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	asl2	d0
 	mov	func_4C15ECAA_Table_2, a0
@@ -609827,7 +609823,7 @@ func_4C15ECE3:
 
 func_4C15ECE3_entry:
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	0, d0
 	blt	func_4C15ECE3_entry_L30
@@ -609839,7 +609835,7 @@ func_4C15ECE3_entry:
 	jmp	(a0)
 loc_4C15ED02:
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	asl2	d0
 	mov	func_4C15ECAA_Table_2, a0
@@ -609858,7 +609854,7 @@ func_4C15ED1D:
 
 func_4C15ED1D_entry:
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	0, d0
 	blt	func_4C15ED1D_entry_L30
@@ -609870,7 +609866,7 @@ func_4C15ED1D_entry:
 	jmp	(a0)
 loc_4C15ED3C:
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	asl2	d0
 	mov	func_4C15ECAA_Table_2, a0
@@ -609889,7 +609885,7 @@ func_4C15ED57:
 
 func_4C15ED57_entry:
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	0, d0
 	blt	func_4C15ED57_entry_L30
@@ -609901,7 +609897,7 @@ func_4C15ED57_entry:
 	jmp	(a0)
 loc_4C15ED76:
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	asl2	d0
 	mov	func_4C15ECAA_Table_2, a0
@@ -609920,7 +609916,7 @@ func_4C15ED91:
 
 func_4C15ED91_entry:
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	0, d0
 	blt	func_4C15ED91_entry_L30
@@ -609932,7 +609928,7 @@ func_4C15ED91_entry:
 	jmp	(a0)
 loc_4C15EDB0:
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	asl2	d0
 	mov	func_4C15ECAA_Table_2, a0
@@ -609951,7 +609947,7 @@ func_4C15EDCB:
 
 func_4C15EDCB_entry:
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	0, d0
 	blt	func_4C15EDCB_entry_L30
@@ -609963,7 +609959,7 @@ func_4C15EDCB_entry:
 	jmp	(a0)
 loc_4C15EDEA:
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	asl2	d0
 	mov	func_4C15ECAA_Table_2, a0
@@ -609976,23 +609972,23 @@ func_4C15EDCB_entry_L30:
 func_4C15EDCB_entry_L32:
 	ret	[d2], 0x10
 
-func_4C15EE05:
+DspPresetEffectTypeGet:
 	movm	[d2], (sp)
 	add	-0x10, sp
 
-func_4C15EE05_entry:
+DspPresetEffectTypeGet_entry:
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	mov	d0, d1
 	exthu	d1
 	cmp	0, d1
-	bge	func_4C15EE05_entry_Lf
-	jmp	func_4C15EE05_entry_Ldd
-func_4C15EE05_entry_Lf:
+	bge	DspPresetEffectTypeGet_entry_Lf
+	jmp	DspPresetEffectTypeGet_entry_Ldd
+DspPresetEffectTypeGet_entry_Lf:
 	cmp	0xc, d1
-	ble	func_4C15EE05_entry_L16
-	jmp	func_4C15EE05_entry_Ldd
-func_4C15EE05_entry_L16:
+	ble	DspPresetEffectTypeGet_entry_L16
+	jmp	DspPresetEffectTypeGet_entry_Ldd
+DspPresetEffectTypeGet_entry_L16:
 	asl2	d1
 	mov	func_4C15EE05_entry_L16_Table, a0
 	mov	(d1, a0), a0
@@ -610022,52 +610018,52 @@ loc_4C15EE51:
 	exthu	d1
 	call	func_4C15F8A3, 0, 0
 	cmp	0, a0
-	beq	func_4C15EE05_entry_L61
+	beq	DspPresetEffectTypeGet_entry_L61
 	movhu	(0x12, a0), d0
 	ret	[d2], 0x14
-func_4C15EE05_entry_L61:
+DspPresetEffectTypeGet_entry_L61:
 	mov	-1, d0
 	ret	[d2], 0x14
 loc_4C15EE70:
 	mov	d2, d0
 	call	func_4C16CDF9_entry, [d2,d3,a2], 0x18
 	cmp	0, a0
-	beq	func_4C15EE05_entry_L78
+	beq	DspPresetEffectTypeGet_entry_L78
 	movhu	(0x12, a0), d0
 	ret	[d2], 0x14
-func_4C15EE05_entry_L78:
+DspPresetEffectTypeGet_entry_L78:
 	mov	d2, d0
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exthu	d0
 	cmp	8, d0
-	beq	func_4C15EE05_entry_L91
+	beq	DspPresetEffectTypeGet_entry_L91
 	cmp	0xa, d0
-	beq	func_4C15EE05_entry_L9a
+	beq	DspPresetEffectTypeGet_entry_L9a
 	cmp	0xb, d0
-	beq	func_4C15EE05_entry_La4
+	beq	DspPresetEffectTypeGet_entry_La4
 	cmp	0xc, d0
-	beq	func_4C15EE05_entry_Lae
-	bra	func_4C15EE05_entry_Lb6
-func_4C15EE05_entry_L91:
+	beq	DspPresetEffectTypeGet_entry_Lae
+	bra	DspPresetEffectTypeGet_entry_Lb6
+DspPresetEffectTypeGet_entry_L91:
 	clr	d0
 	call	func_4C15D1A8_entry, [d2,d3], 0x50
 	mov	d0, d2
-	bra	func_4C15EE05_entry_Lb6
-func_4C15EE05_entry_L9a:
+	bra	DspPresetEffectTypeGet_entry_Lb6
+DspPresetEffectTypeGet_entry_L9a:
 	mov	2, d0
 	call	func_4C15D1A8_entry, [d2,d3], 0x50
 	mov	d0, d2
-	bra	func_4C15EE05_entry_Lb6
-func_4C15EE05_entry_La4:
+	bra	DspPresetEffectTypeGet_entry_Lb6
+DspPresetEffectTypeGet_entry_La4:
 	mov	1, d0
 	call	func_4C15D1A8_entry, [d2,d3], 0x50
 	mov	d0, d2
-	bra	func_4C15EE05_entry_Lb6
-func_4C15EE05_entry_Lae:
+	bra	DspPresetEffectTypeGet_entry_Lb6
+DspPresetEffectTypeGet_entry_Lae:
 	mov	9, d0
 	call	func_4C15D1A8_entry, [d2,d3], 0x50
 	mov	d0, d2
-func_4C15EE05_entry_Lb6:
+DspPresetEffectTypeGet_entry_Lb6:
 	mov	0xff, d0
 	and	d2, d0
 	mov	d0, d1
@@ -610084,10 +610080,10 @@ func_4C15EE05_entry_Lb6:
 	mov	SndRecTriFieldGet2_entry_L16_Table_2, a0
 	mov	(d0, a0), a0
 	movhu	(0x12, a0), d0
-	bra	func_4C15EE05_entry_Ldf
-func_4C15EE05_entry_Ldd:
+	bra	DspPresetEffectTypeGet_entry_Ldf
+DspPresetEffectTypeGet_entry_Ldd:
 	mov	-1, d0
-func_4C15EE05_entry_Ldf:
+DspPresetEffectTypeGet_entry_Ldf:
 	ret	[d2], 0x14
 
 func_4C15EEEC:
@@ -610097,7 +610093,7 @@ func_4C15EEEC:
 func_4C15EEEC_entry:
 	mov	d1, d3
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	mov	d0, d1
 	exthu	d1
 	cmp	1, d1
@@ -610139,7 +610135,7 @@ func_4C15EF34:
 func_4C15EF34_entry:
 	movbu	d1, (0x24, sp)
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	mov	d0, d1
 	exthu	d1
 	cmp	0, d1
@@ -610206,7 +610202,7 @@ loc_4C15EFB3:
 	ret	[d2,d3], 0x18
 func_4C15EF34_entry_L91:
 	mov	d2, d0
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exthu	d0
 	cmp	8, d0
 	beq	func_4C15EF34_entry_Laa
@@ -610487,7 +610483,7 @@ func_4C15F1D3:
 func_4C15F1D3_entry:
 	mov	d1, d3
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	0, d0
 	blt	func_4C15F1D3_entry_L3b
@@ -610499,7 +610495,7 @@ func_4C15F1D3_entry:
 	jmp	(a0)
 loc_4C15F1F3:
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	asl2	d0
 	mov	func_4C15ECAA_Table_2, a0
@@ -610525,7 +610521,7 @@ func_4C15F218:
 func_4C15F218_entry:
 	mov	d1, d3
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	0, d0
 	blt	func_4C15F218_entry_L3c
@@ -610537,7 +610533,7 @@ func_4C15F218_entry:
 	jmp	(a0)
 loc_4C15F238:
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	asl2	d0
 	mov	func_4C15ECAA_Table_2, a0
@@ -610563,7 +610559,7 @@ func_4C15F25E:
 func_4C15F25E_entry:
 	mov	d1, d3
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	0, d0
 	blt	func_4C15F25E_entry_L3c
@@ -610575,7 +610571,7 @@ func_4C15F25E_entry:
 	jmp	(a0)
 loc_4C15F27E:
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	asl2	d0
 	mov	func_4C15ECAA_Table_2, a0
@@ -610601,7 +610597,7 @@ func_4C15F2A4:
 func_4C15F2A4_entry:
 	mov	d1, d3
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	0, d0
 	blt	func_4C15F2A4_entry_L3c
@@ -610613,7 +610609,7 @@ func_4C15F2A4_entry:
 	jmp	(a0)
 loc_4C15F2C4:
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	asl2	d0
 	mov	func_4C15ECAA_Table_2, a0
@@ -610639,7 +610635,7 @@ func_4C15F2EA:
 func_4C15F2EA_entry:
 	mov	d1, d3
 	mov	d0, a2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	0, d0
 	bge	func_4C15F2EA_entry_L10
@@ -610680,7 +610676,7 @@ func_4C15F2EA_entry_L47:
 	cmp	-1, d1
 	bne	func_4C15F2EA_entry_L77
 	mov	a2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	asl2	d0
 	mov	(d0, a3), a0
@@ -610702,7 +610698,7 @@ func_4C15F2EA_entry_L77:
 	cmp	d0, d1
 	bne	func_4C15F2EA_entry_L9e
 	mov	a2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	asl2	d0
 	mov	(d0, a3), a0
@@ -610743,7 +610739,7 @@ func_4C15F3A5:
 func_4C15F3A5_entry:
 	mov	d1, d3
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	0, d0
 	blt	func_4C15F3A5_entry_L3d
@@ -610755,7 +610751,7 @@ func_4C15F3A5_entry:
 	jmp	(a0)
 loc_4C15F3C5:
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	asl2	d0
 	mov	func_4C15ECAA_Table_2, a0
@@ -610782,7 +610778,7 @@ func_4C15F3EC:
 func_4C15F3EC_entry:
 	mov	d1, d3
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	0, d0
 	blt	func_4C15F3EC_entry_L3d
@@ -610794,7 +610790,7 @@ func_4C15F3EC_entry:
 	jmp	(a0)
 loc_4C15F40C:
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	asl2	d0
 	mov	func_4C15ECAA_Table_2, a0
@@ -610821,7 +610817,7 @@ func_4C15F433:
 func_4C15F433_entry:
 	mov	d1, d3
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	0, d0
 	blt	func_4C15F433_entry_L3d
@@ -610833,7 +610829,7 @@ func_4C15F433_entry:
 	jmp	(a0)
 loc_4C15F453:
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	asl2	d0
 	mov	func_4C15ECAA_Table_2, a0
@@ -610860,7 +610856,7 @@ func_4C15F47A:
 func_4C15F47A_entry:
 	mov	d1, d3
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	0, d0
 	blt	func_4C15F47A_entry_L3c
@@ -610872,7 +610868,7 @@ func_4C15F47A_entry:
 	jmp	(a0)
 loc_4C15F49A:
 	mov	d2, d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	exth	d0
 	asl2	d0
 	mov	func_4C15ECAA_Table_2, a0
@@ -610898,7 +610894,7 @@ func_4C15F4C0:
 func_4C15F4C0_entry:
 	mov	d1, d3
 	mov	d0, d2
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	mov	d0, d1
 	exthu	d1
 	cmp	1, d1
@@ -610946,7 +610942,7 @@ func_4C15F513:
 func_4C15F513_entry:
 	mov	d1, (0x30, sp)
 	mov	d0, a3
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exth	d0
 	cmp	1, d0
 	bge	func_4C15F513_entry_L11
@@ -610976,7 +610972,7 @@ loc_4C15F53D:
 	mov	a2, a1
 	call	memcpy_entry, [a2,a3], 8
 	mov	(0x30, sp), d0
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	mov	d0, d1
 	mov	a3, d0
 	exth	d1
@@ -611370,20 +611366,20 @@ func_4C15F7ED_L64:
 func_4C15F7ED_L66:
 	retf	0, 0
 
-func_4C15F856:
+DspPresetKeyKind:
 	and	0xff, d0
 	mov	d0, d1
 	extbu	d1
 	cmp	0x6f, d1
-	bgt	func_4C15F856_Lc
+	bgt	DspPresetKeyKind_Lc
 	clr	d0
-	bra	func_4C15F856_L4a
-func_4C15F856_Lc:
+	bra	DspPresetKeyKind_L4a
+DspPresetKeyKind_Lc:
 	extbu	d0
 	cmp	0x70, d0
-	blt	func_4C15F856_L48
+	blt	DspPresetKeyKind_L48
 	cmp	0x80, d0
-	bgt	func_4C15F856_L48
+	bgt	DspPresetKeyKind_L48
 	add	-0x70, d0
 	asl2	d0
 	mov	func_4C15F856_Lc_Table, a0
@@ -611391,34 +611387,34 @@ func_4C15F856_Lc:
 	jmp	(a0)
 loc_4C15F87A:
 	mov	1, d0
-	bra	func_4C15F856_L4a
+	bra	DspPresetKeyKind_L4a
 loc_4C15F87E:
 	mov	2, d0
-	bra	func_4C15F856_L4a
+	bra	DspPresetKeyKind_L4a
 loc_4C15F882:
 	mov	4, d0
-	bra	func_4C15F856_L4a
+	bra	DspPresetKeyKind_L4a
 loc_4C15F886:
 	mov	5, d0
-	bra	func_4C15F856_L4a
+	bra	DspPresetKeyKind_L4a
 loc_4C15F88A:
 	mov	6, d0
-	bra	func_4C15F856_L4a
+	bra	DspPresetKeyKind_L4a
 loc_4C15F88E:
 	mov	8, d0
-	bra	func_4C15F856_L4a
+	bra	DspPresetKeyKind_L4a
 loc_4C15F892:
 	mov	0xa, d0
-	bra	func_4C15F856_L4a
+	bra	DspPresetKeyKind_L4a
 loc_4C15F896:
 	mov	0xb, d0
-	bra	func_4C15F856_L4a
+	bra	DspPresetKeyKind_L4a
 loc_4C15F89A:
 	mov	0xc, d0
-	bra	func_4C15F856_L4a
-func_4C15F856_L48:
+	bra	DspPresetKeyKind_L4a
+DspPresetKeyKind_L48:
 	mov	-1, d0
-func_4C15F856_L4a:
+DspPresetKeyKind_L4a:
 	retf	0, 0
 
 func_4C15F8A3:
@@ -611664,7 +611660,7 @@ func_4C15FA76_entry:
 	asl	8, d0
 	or	0x80, d0
 	mov	d0, a3
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	mov	d0, d1
 	exthu	d1
 	cmp	0, d1
@@ -611789,7 +611785,7 @@ func_4C15FA76_entry_Lec:
 	ret	[d2,d3,a2,a3], 0x20
 func_4C15FA76_entry_Lf0:
 	mov	a3, d0
-	call	func_4C15F856, 0, 0
+	call	DspPresetKeyKind, 0, 0
 	exthu	d0
 	cmp	8, d0
 	beq	func_4C15FA76_entry_L10a
@@ -613888,7 +613884,7 @@ func_4C160C53:
 
 func_4C160C53_entry:
 	mov	d1, d2
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	mov	d0, d1
 	exthu	d1
 	cmp	0x10, d1
@@ -613952,7 +613948,7 @@ func_4C160CB6:
 
 func_4C160CB6_entry:
 	mov	d1, d2
-	call	func_4C15EE05_entry, [d2], 0x14
+	call	DspPresetEffectTypeGet_entry, [d2], 0x14
 	mov	d0, d1
 	exthu	d1
 	cmp	0x52, d1
@@ -645345,10 +645341,10 @@ func_4C172408:
 	and	0xf7ff, psw
 	nop
 	nop
-	movhu	(0x34000118), d0
+	movhu	(G6ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000118)
+	movhu	d0, (G6ICR)
 	or	0x0800, psw
 	nop
 	nop
@@ -645419,7 +645415,7 @@ func_4C172408_Lca:
 	bne	func_4C172408_Le3
 	call	func_4C0066C1, 0, 0x10
 func_4C172408_Le3:
-	movhu	(0x34000118), d0
+	movhu	(G6ICR), d0
 	ret	[d2], 0x14
 
 InitializeUser07:
@@ -645692,7 +645688,7 @@ func_4C1727CA_entry_L61:
 	call	func_4C1729B9_entry, [a2,a3], 0x1c
 	mov	0x97000000, d0
 	mov	d0, (func_4C1727CA_entry_L61_Var)
-	call	func_4C172A54_entry, [d2,d3,a2], 0xc
+	call	HddTestFlashIdCheck_entry, [d2,d3,a2], 0xc
 	mov	Str_EXPANSION_SLOT_2_Check, a0
 	call	func_4C1729B9_entry, [a2,a3], 0x1c
 	mov	Str_EX21, a0
@@ -645718,7 +645714,7 @@ func_4C1727CA_entry_Ld1:
 	call	func_4C1729B9_entry, [a2,a3], 0x1c
 	mov	0x96000000, d0
 	mov	d0, (func_4C1727CA_entry_L61_Var)
-	call	func_4C172A54_entry, [d2,d3,a2], 0xc
+	call	HddTestFlashIdCheck_entry, [d2,d3,a2], 0xc
 	clr	d0
 	call	func_4C172727_entry, 0, 0xc
 	ret	[a2], 0x18
@@ -645736,7 +645732,7 @@ XaprInstallIsrs_entry:
 	mov	d0, (0x14, sp)
 	mov	0x18, d0
 	movhu	d0, (0x18, sp)
-	mov	0x34000160, d0
+	mov	G24ICR, d0
 	mov	d0, (0x1c, sp)
 	clr	d0
 	movhu	d0, (0x20, sp)
@@ -645753,7 +645749,7 @@ XaprInstallIsrs_entry:
 	mov	d0, (0x28, sp)
 	mov	0x1b, d0
 	movhu	d0, (0x2c, sp)
-	mov	0x3400016c, d0
+	mov	G27ICR, d0
 	mov	d0, (0x30, sp)
 	clr	d0
 	movhu	d0, (0x34, sp)
@@ -645844,10 +645840,10 @@ func_4C172A1A_entry:
 	call	unl_cpu, 0, 0
 	ret	[a2], 0x10
 
-func_4C172A54:
+HddTestFlashIdCheck:
 	movm	[d2,d3,a2], (sp)
 
-func_4C172A54_entry:
+HddTestFlashIdCheck_entry:
 	add	-0x118, sp
 	mov	(func_4C1727CA_entry_L61_Var), a2
 	call	loc_cpu_entry, 0, 0x10
@@ -645875,14 +645871,14 @@ func_4C172A54_entry:
 	asl	5, d0
 	movhu	(d0, a0), d0
 	cmp	d0, a1
-	bne	func_4C172A54_entry_L8a
+	bne	HddTestFlashIdCheck_entry_L8a
 	mov	d1, d0
 	asl	5, d0
 	add	a0, d0
 	mov	d0, a2
 	movhu	(2, a2), d0
 	cmp	d0, d2
-	bne	func_4C172A54_entry_L8a
+	bne	HddTestFlashIdCheck_entry_L8a
 	mov	sp, a2
 	add	0x18, a2
 	mov	a2, (8, sp)
@@ -645897,8 +645893,8 @@ func_4C172A54_entry:
 	mov	a2, a0
 	call	func_4C1729B9_entry, [a2,a3], 0x1c
 	mov	d3, d0
-	bra	func_4C172A54_entry_L9e
-func_4C172A54_entry_L8a:
+	bra	HddTestFlashIdCheck_entry_L9e
+HddTestFlashIdCheck_entry_L8a:
 	mov	d1, d3
 	inc	d3
 	mov	d3, d1
@@ -645908,7 +645904,7 @@ func_4C172A54_entry_L8a:
 	mov	Str_Not_Good, a0
 	call	func_4C1729B9_entry, [a2,a3], 0x1c
 	mov	-1, d0
-func_4C172A54_entry_L9e:
+HddTestFlashIdCheck_entry_L9e:
 	add	0x118, sp
 	ret	[d2,d3,a2], 0xc
 
@@ -646394,7 +646390,7 @@ loc_4C172FCF:
 	call	func_4C1729B9_entry, [a2,a3], 0x1c
 	mov	0x97800000, d0
 	mov	d0, (func_4C1727CA_entry_L61_Var)
-	call	func_4C172A54_entry, [d2,d3,a2], 0xc
+	call	HddTestFlashIdCheck_entry, [d2,d3,a2], 0xc
 	mov	Str_HDD_SRAM_Check_2, a0
 	call	func_4C1729B9_entry, [a2,a3], 0x1c
 	call	func_4C172B33_entry, [d2,a2], 0xa0
@@ -646413,17 +646409,17 @@ loc_4C173062:
 	call	func_4C1729B9_entry, [a2,a3], 0x1c
 	mov	0x97800000, d0
 	mov	d0, (func_4C1727CA_entry_L61_Var)
-	call	func_4C172A54_entry, [d2,d3,a2], 0xc
+	call	HddTestFlashIdCheck_entry, [d2,d3,a2], 0xc
 	mov	Str_EXP1_Flash_ROM_Check, a0
 	call	func_4C1729B9_entry, [a2,a3], 0x1c
 	mov	0x97000000, d0
 	mov	d0, (func_4C1727CA_entry_L61_Var)
-	call	func_4C172A54_entry, [d2,d3,a2], 0xc
+	call	HddTestFlashIdCheck_entry, [d2,d3,a2], 0xc
 	mov	Str_EXP2_Flash_ROM_Check, a0
 	call	func_4C1729B9_entry, [a2,a3], 0x1c
 	mov	0x96000000, d0
 	mov	d0, (func_4C1727CA_entry_L61_Var)
-	call	func_4C172A54_entry, [d2,d3,a2], 0xc
+	call	HddTestFlashIdCheck_entry, [d2,d3,a2], 0xc
 	mov	LibStrlen_Var_2, a0
 	call	func_4C1729B9_entry, [a2,a3], 0x1c
 	jmp	HDDTestProc_L1fe
@@ -646596,10 +646592,10 @@ XaprIsrGroup24:
 XaprIsrGroup24_L15:
 	clr	d0
 	call	dis_int_entry, [d2], 4
-	movhu	(0x34000160), d0
+	movhu	(G24ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x34000160)
+	movhu	d0, (G24ICR)
 	clr	d0
 	call	ena_int_entry, [d2], 4
 	ret	0, 0xc
@@ -646614,10 +646610,10 @@ XaprIsrGroup27:
 XaprIsrGroup27_L15:
 	clr	d0
 	call	dis_int_entry, [d2], 4
-	movhu	(0x3400016c), d0
+	movhu	(G27ICR), d0
 	and	0xff00, d0
 	or	0x01, d0
-	movhu	d0, (0x3400016c)
+	movhu	d0, (G27ICR)
 	clr	d0
 	call	ena_int_entry, [d2], 4
 	ret	0, 0xc
@@ -650092,7 +650088,7 @@ func_4C1751CB_L5d9:
 	btst	0x04, d0
 	beq	func_4C1751CB_L5f2
 	mov	(0x5029e71c), d0
-	add	0x20000000, d0
+	add	IVAR0, d0
 	mov	d0, (0x5029e71c)
 func_4C1751CB_L5f2:
 	movbu	(a0), d0
@@ -657230,9 +657226,9 @@ KernelInitHook:
 	ret	0, 0
 
 KernelTickIsrDefault:
-	movhu	(0x34000118), d0
+	movhu	(G6ICR), d0
 	and	0xff0f, d0
-	movhu	d0, (0x34000118)
+	movhu	d0, (G6ICR)
 	add	-4, sp
 	call	func_4C380ED2_entry, 0, 0xc
 	add	4, sp
@@ -657325,11 +657321,11 @@ KernelGroup0IntDispatch:
 	movhu	(0x50180ccc), d3
 	add	1, d3
 	movhu	d3, (0x50180ccc)
-	mov	0x34000100, a2
+	mov	G0ICR, a2
 	movhu	(a2), d3
 	cmp	0, d3
 	bne	KernelGroup0IntDispatch_L3b
-	mov	0x34000104, a2
+	mov	G1ICR, a2
 	movhu	(a2), d3
 	add	8, d3
 KernelGroup0IntDispatch_L3b:
@@ -657384,8 +657380,8 @@ KernelIntDispatch_L32:
 	movhu	(0x50180ccc), d3
 	add	1, d3
 	movhu	d3, (0x50180ccc)
-	movhu	(0x34000200), d3
-	mov	0x34000100, a2
+	movhu	(IAGR), d3
+	mov	G0ICR, a2
 	movhu	(d3, a2), d2
 	lsr	1, d2
 	bcs	KernelIntDispatch_L63

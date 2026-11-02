@@ -200,7 +200,7 @@
 0x4C003970  strcat	; exported to plug-ins (lib)
 0x4C00399E  memmove	; exported to plug-ins (lib)
 0x4C0039D4  strncpy	; exported to plug-ins (lib)
-; 0x4C003ABA  TgcBufWrite	; alias of SndCmdStreamWrite (lib)
+; 0x4C003ABA  TgcBufWrite	; alias of TgcBufWrite (lib)
 0x4C01492E  GetM3Em	; exported to plug-ins (lib)
 0x4C01496F  GetM3Sqf	; exported to plug-ins (lib)
 0x4C0149B1  GetM3Init	; exported to plug-ins (lib)

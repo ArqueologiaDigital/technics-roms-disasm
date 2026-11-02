@@ -32,7 +32,9 @@ for round in 1 2 3 4 5 6; do
         echo "round $round $b: $n lines of labels / code refs / ids changed"
         [ "$n" -gt 0 ] && changed=1
     done
-    if [ $changed = 0 ]; then echo "fixpoint after $round rounds"; rm -r -- "${TMP:?}"; exit 0; fi
+    # (round 1 always regenerates the code too: a symbol-file change moves no data label, but
+    # the code must be spelled with it -- as regen_sibling_data_and_code.sh does)
+    if [ $changed = 0 ] && [ $round -gt 1 ]; then echo "fixpoint after $round rounds"; rm -r -- "${TMP:?}"; exit 0; fi
     for b in $BUILDS; do python3 tools/gen_program_s.py --profile "$b" | sed -n 1p; done
 done
 rm -r -- "${TMP:?}"

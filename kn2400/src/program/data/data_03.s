@@ -335,7 +335,7 @@ func_486417BB_entry_L1e_Var:	# u16, a constant; read / written by func_486417BB_
 AcRvariScreenProc_L88_Var:	# u16, a constant; read / written by AcRvariScreenProc_L88 0x48658E55: `movhu (AcRvariScreenProc_L88_Var), d0`; AcRhyVariProc_L2ce 0x4865920A: `movhu (AcRvariScreenProc_L88_Var), d0` ...
 	.word	0
 
-func_50173E4E_Table:	# 3 x u16, 0..65535; read by func_50173E4E 0x50173E4E: `movhu (func_50173E4E_Table), d1`; func_5017CF19_entry_L3b 0x5017CF59: `movhu (func_50173E4E_Table), d1`
+func_50173E4E_Table:	# 3 x u16, 0..65535; read by func_50173E4E 0x50173E4E: `movhu (func_50173E4E_Table), d1`; StyleIdToPresetOrdinal_entry_L3b 0x5017CF59: `movhu (func_50173E4E_Table), d1`
 	tab_u16	65535, 0, 65535
 
 StyleVariationNameGet_entry_L25_Table:
@@ -377,7 +377,7 @@ func_48631AF5_entry_L9e_Block:	# 3 bytes, copied whole by func_48631AF5_entry_L9
 	tab_u8	240, 255, 255	# [0]
 	.align	4, 0xFF	# pad after func_48631AF5_entry_L9e_Block
 
-NoteConvRules:	# 128 x NoteConvRule (8 bytes each); read by func_50173EF8_L9 0x50173F01 `movbu (1, a0), d0`; func_50173F13_L9 0x50173F1C `movbu (2, a0), d0`; func_50173F2E_L9 0x50173F37 `movbu (3, a0), d0` (+12)
+NoteConvRules:	# 128 x NoteConvRule (8 bytes each); read by NoteConvRuleByte1Get_L9 0x50173F01 `movbu (1, a0), d0`; NoteConvRuleByte2Get_L9 0x50173F1C `movbu (2, a0), d0`; NoteConvRuleByte3Get_L9 0x50173F37 `movbu (3, a0), d0` (+12)
 	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1	# [0]
 	NoteConvRule	is_melody=1, no_third_adj=1, table=NoteConvRules_p4_0
 	NoteConvRule	is_melody=1, alt_chord=1, no_third_adj=1, table=NoteConvRules_p4_0

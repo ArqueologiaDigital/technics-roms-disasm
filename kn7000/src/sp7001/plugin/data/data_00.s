@@ -2886,7 +2886,7 @@ Str_73298125:	.asciz "73298125"
 
 	.space	3, 0xFF
 
-func_483ECCFF_Table:	# 16 x u8, 255..255; read by func_483ECCFF 0x483ECCFF: `movbu  (a1), d0`
+func_483ECCFF_Table:	# 16 x u8, 255..255; read by KssSdCardCheck 0x483ECCFF: `movbu  (a1), d0`
 	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
 
 Str_StrList:	.asciz "StrList"
@@ -5075,9 +5075,9 @@ ptrs_502990C0:
 	.long	loc_483ED4EE
 	.long	loc_483ED7B5
 	.long	loc_483ED7D3
-	.long	loc_483ED51F
+	.long	PtrStrListCount
 	.long	loc_483ED797
-	.long	loc_483ED553
+	.long	PtrStrListClear
 	.long	loc_483ED524
 ptrs_502990F0:
 	.long	loc_483ED5C9
@@ -5241,7 +5241,7 @@ ptr_502992E4:
 	.long	KssWorkRam+0x968	# a pointer into the cleared work RAM
 	.long	loc_483EB967
 	.long	loc_483EBE1E
-	.long	loc_483EBCC9
+	.long	KssUnhandledException
 	.long	loc_483EBBA6
 	.long	loc_483EBC0D
 	.long	loc_483EBD8D
@@ -5263,7 +5263,7 @@ ptr_502992E4:
 	.long	loc_483EBF24
 	.long	loc_483EBFC0
 	.long	loc_483EC077
-	.long	loc_483EC03A
+	.long	KssTraceForward
 	.long	loc_483EE296
 	.long	loc_483EE3CB
 	.long	loc_483EE2F9
@@ -5288,7 +5288,7 @@ ptr_502992E4:
 	.long	loc_483ECC8C
 	.long	loc_483EC9BB
 	.long	loc_483ECA04
-	.long	loc_483ECCDC
+	.long	KssStrUpper
 	.long	loc_483ECC07
 	.long	loc_483ECA4D
 	.long	loc_483ECD83
