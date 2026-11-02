@@ -95,7 +95,7 @@ def readers(g, labels_path, src_glob):
                      array_end=getattr(g, "array_end", False), mem_ptrs=getattr(g, "mem_ptrs", False),
                      loop_index=getattr(g, "loop_index", False), chains=getattr(g, "deep_records", False),
                      word=getattr(g, "init_word", None), top_tested=getattr(g, "top_tested", False),
-                     fld_slots=getattr(g, "fld_slots", False))
+                     fld_slots=getattr(g, "fld_slots", False), sib_rules=getattr(g, "sib_rules", ()))
 
 
 def groups(dr):

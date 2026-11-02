@@ -136,6 +136,8 @@ PROFILES["kn2400"] = dict(root="../kn2400", rom="baserom/kn2400_program.rom", sr
                           # lane mn10300-rest: the effect DSP's programs, scripts and maps for the 208 DSP types
                           # (FxTypeProgramTable, kn2400_manual.sym; FxDspProgramLoad checks `cmp 0xcf, d0`)
                           fx_streams=208,
+                          # lane mn10300-data: the DSP effect presets FxPresetGet / FxPresetVarGet return
+                          fx_presets=("FxPresetTable", 8192, "FxPresetVarTable", 64),
                           # the application's code is after the data (Makefile CODE: file 0x1E427C..0x3285BE),
                           # and the part linked for RAM 0x50120000 (file 0x3285BE..0x3965B8)
                           code_cpu=[(0x485E427C, 0x487285BE), (0x50120000, 0x5018DFFA)])
@@ -180,6 +182,10 @@ PROFILES["sp7001plugin"] = dict(rom="baserom/kn7000_table_sp7001.rom", src="src/
 # (reader_rows), not a generic .incbin_range, in the program builds and the siblings
 for _m in ("941", "b935", "b893", "sp7001", "kn6000", "kn6500", "kn2400", "hdsx3"):
     PROFILES[_m]["reader_rows"] = True
+# lane mn10300-data: the single rules of the KN7000's `readers_ext` walk the siblings take (data_readers
+# Reader(sib_rules=); each measured alone on the KN6000 and the KN2400, kn7000/notes/mn10300-data/README.md)
+for _m in ("kn6000", "kn6500", "kn2400", "hdsx3"):
+    PROFILES[_m]["sib_rules"] = ("fieldret", "loopslots", "reloadbound", "setlb")
 # lane callee-walk: a block whose address is passed to a routine is a record of what the routine reads
 # through that argument (data_readers.Reader(callee=): register and stack arguments, arg_layout)
 for _m in ("941", "b935", "b893", "sp7001", "kn6000", "kn6500", "kn2400", "hdsx3"):
@@ -203,11 +209,22 @@ PROFILE = "941"
 #   euc_text     a pointed-at NUL-terminated EUC-JP string is a string (the language tables' Japanese entries)
 #   pow10_table  the C library's powers of ten (309 doubles), found by their contents in every tree
 #   fx_streams   the KN2400's effect-DSP programs, parameter scripts and address maps (profile `fx_streams`)
+# (lane mn10300-data, 2026-11-02; kn7000/notes/mn10300-data/README.md)
+#   widget_vars  a widget's RAM state variable (its l / m / q / r field's target) typed at the width the
+#                class chain's procedure reads it through the field
+#   sentinel_lists  the lists a loop walks until a record's field holds an end marker (-1, 0xff, 0xffff, 0)
+#   chord_voicings  the chord voicing blocks (12 x 8) and inversion lists the memcpy-8 routine reads
+#   index_bounds a table indexed right after an `and 2^k-1` / `cmp N` + branch of its index has that many
+#                records: struct_arrays and reader_tables type up to it (the bytes free)
+#   fx_presets   the KN2400's DSP effect presets (profile `fx_presets`): name, descriptor, parameters, key
+#   table_terminators  the all-ones end word after a typed table whose reader compares with -1
+#   msg_readers  a {key, code} dispatch table is named after the routine that reads its keys
+#   maps128      the 128 x 64 maps of two-byte entries (`cmp 0x7f` row, `and 0x3f` column, `asl 7`)
 #   field_*      (tools/data_field_uses.py, read there) the field-use walk's new rules: field_pos,
 #                field_slots, field_bra, field_keyloop, field_merge, field_screen
 FEATURES = {k: True for k in ("ptr_starts", "array_end", "mem_ptrs", "loop_index", "step_arrays", "deep_records",
                               "top_tested", "fld_slots", "fx_streams", "pow10_table", "euc_text",
-                              "sibling_trie", "builtin_pads")}
+                              "sibling_trie", "builtin_pads", "widget_vars", "maps128", "sentinel_lists", "chord_voicings", "index_bounds", "fx_presets", "table_terminators", "msg_readers")}
 for _k in os.environ.get("GEN_DATA_S_OFF", "").split(","):
     if _k.strip():
         FEATURES[_k.strip()] = False
@@ -397,6 +414,10 @@ class Gen:
         self.loop_index = FEATURES["loop_index"]              # Reader(loop_index=)
         self.deep_records = FEATURES["deep_records"]          # Reader(chains=), field_targets' closure
         self.step_arrays = FEATURES["step_arrays"]            # arg_kinds' arrays of stepped records
+        # (lane mn10300-data) the single ext rules the siblings' walk takes (data_readers Reader(sib_rules=)):
+        # FEATURES sib_fieldret, sib_loopslots, sib_reloadbound, sib_setlb; a profile's `sib_rules` lists
+        # which of them it uses (measured one by one, kn7000/notes/mn10300-data/README.md)
+        self.sib_rules = tuple(r for r in P.get("sib_rules", ()) if FEATURES.get("sib_" + r, True))
 
     def host_id_names(self):
         """(a plug-in) {id: name} of the host firmware's titles, modes and Function /
@@ -1359,6 +1380,12 @@ class Gen:
             while e < end and not self.claimed[e]:
                 e += 1
             n = (e - o) // w
+            ixb = self.index_bounds().get(a)
+            note = ""
+            if ixb and ixb[1] == w and ixb[0] > n and self.free(a, ixb[0] * w) and \
+                    not any(self.fixed.get(self.addr_of(q)) for q in range(o + 1, o + ixb[0] * w)):
+                # (index_bounds) past a generated label: the routine bounds the index
+                n, note = ixb[0], f"; {ixb[0]} entries: the index is bounded by {ixb[2]}"
             if n < 1 or o % w:
                 continue
             if self.in_arg_span(a, w * n):
@@ -1372,7 +1399,8 @@ class Gen:
             fn = next((r[0] for r in sorted(rd, key=lambda r: r[1] or 0) if r[0]), None)
             base = (re.sub(r"_entry$", "", fn) + "_Table") if fn else f"tab_{a:08X}"
             self.add(a, w * n, self.name_at(a, base), "reader table",
-                     lambda g, it, vals=vals, kind=kind, readers=readers, w=w: g.render_table(it, vals, kind, readers, w))
+                     lambda g, it, vals=vals, kind=kind, readers=readers, w=w, note=note:
+                     g.render_table(it, vals, kind, readers, w, note))
 
     def render_table(self, it, vals, kind, readers, w, note=""):
         ones = (1 << (8 * w)) - 1
@@ -1574,6 +1602,15 @@ class Gen:
             bounds = [x.bound for _o, x in g.accs if getattr(x, "bound", None) and x.inner != -1]
             if bounds and n > max(bounds):
                 n = max(bounds)        # [INFERENCE] the index is checked (or is a byte) below this
+            ixb = self.index_bounds().get(a)
+            ix_note = ""
+            if ixb and ixb[1] == s and ixb[0] > n:
+                # (index_bounds) the routine bounds the record number: the records up to it, while free
+                m_ = n
+                while m_ < ixb[0] and self.free(a + m_ * s, s) and not any(x in hard for x in range(a + m_ * s, a + m_ * s + s)):
+                    m_ += 1
+                if m_ == ixb[0]:
+                    n, ix_note = m_, f"; {m_} records: the index is bounded by {ixb[2]}"
             end_note = ""
             lb = self.loop_end(a, s, n)
             if lb is not None:
@@ -1583,6 +1620,9 @@ class Gen:
                 g.evidence = [end_note[2:]]
             if n < 1:
                 continue
+            if ix_note and not end_note:
+                end_note = ix_note
+                g.evidence = [ix_note[2:]]
             g.count = n
             g.fields = DS.layout(g, self, o, n)
             nm = self.label_at.get(a) or self.fixed.get(a)
@@ -2949,9 +2989,18 @@ class Gen:
                 ents = [(int.from_bytes(self.rom[o + 8 * k:o + 8 * k + 4], "little"),
                          int.from_bytes(self.rom[o + 8 * k + 4:o + 8 * k + 8], "little")) for k in range(n)]
                 rd = [x for x in self.dr.accesses if x.key == ("abs", a) or (x.key[0] == "rec" and x.key[1] == a)]
+                if not rd and FEATURES.get("msg_readers", True):
+                    # (lane mn10300-data) a table handed to a routine: the accesses through the argument
+                    rd = [x for x in self.dr.accesses if x.key[0] == "ptr" and x.key[1][0] == "arg"
+                          and a in self.arg_kinds().get(x.key[1], ((),))[0]]
                 nm = self.label_at.get(a) or self.fixed.get(a)
                 if nm is None or (a in self.fixed_by_code and self.GUESSED.match(nm)):
-                    lab = self.rename_at(a, f"MsgTable_{a:08X}")
+                    # (msg_readers, lane mn10300-data) named after the routine that reads the keys (not the
+                    # caller that only passes the table on)
+                    fr = sorted({re.sub(r"(_entry)?(_L[0-9a-f]+_*)?$", "", x.func) for x in rd
+                                 if x.func and not x.insn.split()[0].startswith("call")})
+                    base = f"{fr[0]}_MsgTable" if fr and FEATURES.get("msg_readers", True) else f"MsgTable_{a:08X}"
+                    lab = self.rename_at(a, base)
                 else:
                     lab = self.name_at(a, nm)
 
@@ -3119,6 +3168,804 @@ class Gen:
                 lab = self.name_at(a, nm)
             self.add(a, w * n, lab, "variable" if n == 1 else "reader table",
                      lambda g, it, vals=vals, kind=kind, rd=rd, w=w, ram=ram: g.render_variable(it, vals, kind, rd, w, ram))
+
+    # -- (lane mn10300-data) the widgets' RAM state variables -------------------------------------
+    def code_bodies(self):
+        """{function name: (CPU address or None, [instruction text, whitespace folded])} of the converted
+        code: a function runs from a column-0 label that is no local label (data_readers.LOCAL:
+        loc_<ADDR>, <function>_L<hex>) to the next such label."""
+        if hasattr(self, "_bodies"):
+            return self._bodies
+        import glob as _glob
+        import data_readers as DR
+        body, cur = {}, None
+        for f in sorted(_glob.glob(code_glob())):
+            for ln in open(f, encoding="latin-1"):
+                code = ln.split("#", 1)[0].rstrip()
+                if not code.strip():
+                    continue
+                mo = re.match(r"^([A-Za-z_][\w.$]*):", code)
+                if mo:
+                    n = mo.group(1)
+                    if not DR.LOCAL.search(n):
+                        cur = n
+                        body.setdefault(cur, (self.code_labels.get(n), []))
+                    rest = code[mo.end():].strip()
+                    if rest and cur:
+                        body[cur][1].append(" ".join(rest.split()))
+                    continue
+                if cur and code[:1] in " \t":
+                    body[cur][1].append(" ".join(code.split()))
+        self._bodies = body
+        return body
+
+    def data_label_addr(self, name):
+        """The data-region CPU address the code's name `name` stands for, or None."""
+        a = self.prev_data_label.get(name)
+        if a is None:
+            a = self.code_labels.get(name)
+        return a if a is not None and self.in_data(a) else None
+
+    def code_funcs(self):
+        """code_bodies() with a function's `<name>_entry` label (the KN7000's and the siblings'
+        second entry after the prologue) folded into it: [(name, CPU, [instructions])]."""
+        if hasattr(self, "_funcs"):
+            return self._funcs
+        out = []
+        for n, (cpu, body) in self.code_bodies().items():
+            if n.endswith("_entry") and out and out[-1][0] == n[:-6]:
+                out[-1][2].extend(body)
+                continue
+            out.append((n, cpu, list(body)))
+        self._funcs = out
+        return out
+
+    NUM = r"(-?0x[0-9a-f]+|-?\d+)"
+
+    def maps128(self):
+        """(FEATURES["maps128"], lane mn10300-data) The 128 x 64 maps of two-byte entries: a routine
+        builds the row from a byte it checks against 0x7F (`cmp 0x7f, dN`) and the column from the
+        next byte masked to 6 bits (`and 0x3f, dM`), then addresses Table + row * 128 (`asl 7, dR` and
+        `add Table, dR` or `mov Table, dR` / `add dR, ...`) + column * 2 (`add dC, dC`) and reads the
+        entry's two bytes (KN7000 func_48412A17, KN6000 func_4C15F0D9, KN2400 func_4863D95A).  Each map
+        is 16,384 bytes; it is typed only when all of it is still free."""
+        if not FEATURES.get("maps128", True):
+            return
+        found = collections.OrderedDict()
+        for fn, cpu, L in self.code_funcs():
+            if not any(re.fullmatch(r"cmp 0x7f, d\d", x) for x in L) or \
+                    not any(re.fullmatch(r"and 0x3f, d\d", x) for x in L):
+                continue
+            for i, ins in enumerate(L):
+                if not re.fullmatch(r"asl 7, d\d", ins):
+                    continue
+                win = L[max(0, i - 3):i + 5]
+                if not any(re.fullmatch(r"add (d\d), \1", x) for x in win):
+                    continue
+                for x in win:
+                    mo = re.fullmatch(r"(?:add|mov) ([A-Za-z_]\w*), d\d", x)
+                    a = self.data_label_addr(mo.group(1)) if mo else None
+                    if a is not None and a not in found:
+                        found[a] = (fn, cpu, ins, x)
+        tabs = sorted(found)
+        for a in tabs:
+            n = 128 * 128
+            if not self.free(a, n) or any(a < b < a + n for b in tabs):
+                continue
+            fn, cpu, ins, x = found[a]
+            lab = self.name_at(a, f"{fn}_Map")
+            o = self.off(a)
+            cite = f"{fn}{(' 0x%08X' % cpu) if cpu else ''}: `cmp 0x7f` (row), `and 0x3f` (column), `{ins}` / `{x}`"
+
+            def render(g, it, o=o, cite=cite):
+                out = [f"# 128 rows x 64 entries of two bytes, entry = row * 128 + column * 2, read as"
+                       f" {{u8 lo, u8 hi}} and combined hi << 8 | lo ({cite}); 0xFFFF: no entry",
+                       f"{it.label}:"]
+                r = 0
+                while r < 128:
+                    row = g.rom[o + 128 * r:o + 128 * r + 128]
+                    if row == b"\xff" * 128:
+                        k = r
+                        while k < 128 and g.rom[o + 128 * k:o + 128 * k + 128] == b"\xff" * 128:
+                            k += 1
+                        out.append(f"\t.space\t{128 * (k - r)}, 0xFF\t# row{'s' if k - r > 1 else ''} {r}"
+                                   + (f"..{k - 1}" if k - r > 1 else "") + ": no entry")
+                        r = k
+                        continue
+                    vals = [int.from_bytes(row[2 * c:2 * c + 2], "little") for c in range(64)]
+                    out.append("\t.short\t" + ", ".join(f"0x{v:04x}" for v in vals) + f"\t# row {r}")
+                    r += 1
+                return out
+            self.add(a, n, lab, "code map", render)
+
+    SENTINELS = {1: (0xFF, 0), 2: (0xFFFF, 0), 4: (0xFFFFFFFF, 0)}
+
+    def code_files(self):
+        """The converted code's files as lines (data_readers' order: the sorted code glob), for an
+        access's `pos` (file index, line index)."""
+        if not hasattr(self, "_cfiles"):
+            import glob as _glob
+            self._cfiles = [open(f, encoding="latin-1").read().split("\n") for f in sorted(_glob.glob(code_glob()))]
+        return self._cfiles
+
+    @staticmethod
+    def _ins(ln):
+        c = ln.split("#", 1)[0].strip()
+        mo = re.match(r"^[A-Za-z_][\w.$]*:\s*", c)
+        if mo:
+            return c[:mo.end()].strip()[:-1], " ".join(c[mo.end():].split())
+        return None, " ".join(c.split())
+
+    def sentinel_loop(self, x):
+        """(sentinel_lists) The loop an access x reads a list's end marker in: x is a load `mov|movhu|movbu
+        (OFF, aN), dX` (OFF 0 or absent), the next instruction is `cmp T, dX` with T the width's all-ones
+        value (-1, 0xff, 0xffff) or 0, and a branch follows; the loop is a label L above x (or a `setlb`)
+        with a branch back to it below x, and between them aN is stepped by S >= the load's width
+        (`add S, aN`, `inc4 aN`, `inc aN`).  (S, T, the cmp, the step) or None."""
+        if not x.pos or x.rw != "ld" or not x.width:
+            return None
+        fs = self.code_files()
+        if x.pos[0] >= len(fs):
+            return None
+        return self.sentinel_core(fs[x.pos[0]], x.pos[1], x.width)
+
+    def sentinel_core(self, L, i, width):
+        """sentinel_loop() on the code lines L at line i (a load of `width` bytes): (S, T, cmp, step, OFF,
+        the address register, the loop head's line) or None."""
+        _l, ins = self._ins(L[i])
+        mo = re.fullmatch(r"(mov|movhu|movbu) \((?:(0x[0-9a-f]+|\d+), )?(a\d)\), (d\d)", ins)
+        if not mo:
+            return None
+        foff, ar, dr = int(mo.group(2) or "0", 0), mo.group(3), mo.group(4)
+        # (unoptimised code) the pointer lives in a stack slot: `mov (K, sp), aN` right before the load,
+        # stepped as `mov (K, sp), dY` / `add S, dY` / `mov dY, (K, sp)`
+        slot = None
+        if i > 0:
+            ms0 = re.fullmatch(r"mov \((0x[0-9a-f]+|\d+), sp\), %s" % ar, self._ins(L[i - 1])[1])
+            if ms0:
+                slot = int(ms0.group(1), 0)
+        j, nxt = i + 1, []
+        while j < len(L) and len(nxt) < 3:
+            lab, t = self._ins(L[j])
+            if lab and not t:
+                break
+            if t and not re.fullmatch(r"ext[bh]u? %s" % dr, t):
+                nxt.append(t)
+            j += 1
+        if len(nxt) < 2:
+            return None
+        mc = re.fullmatch(r"cmp %s, %s" % (self.NUM, dr), nxt[0])
+        if not mc:
+            # the marker in a register: `mov T, dS` right before (or earlier in the function) and `cmp dS, dX`
+            mr = re.fullmatch(r"cmp (d\d), %s|cmp %s, (d\d)" % (dr, dr), nxt[1] if re.match(r"mov ", nxt[0]) else nxt[0])
+            if mr:
+                dS = mr.group(1) or mr.group(2)
+                cand = [nxt[0]] if re.match(r"mov ", nxt[0]) else []
+                cand += [self._ins(L[q])[1] for q in range(i - 1, max(-1, i - 40), -1)]
+                for c in cand:
+                    mv = re.fullmatch(r"mov %s, %s" % (self.NUM, dS), c or "")
+                    if mv:
+                        mc = mv
+                        break
+                    if c and c.split(" ")[-1] == dS and not c.startswith("cmp"):
+                        break
+                if mc is not None and re.match(r"mov ", nxt[0]):
+                    nxt = nxt[1:]
+        if not mc or not re.match(r"b(eq|ne|lt|le|gt|ge|cs|cc|hi|ls) ", nxt[1] if len(nxt) > 1 else ""):
+            return None
+        t = int(mc.group(1), 0) & ((1 << (8 * width)) - 1)
+        if {"mov": 4, "movhu": 2, "movbu": 1}[mo.group(1)] != width or t not in self.SENTINELS[width]:
+            return None
+        # the loop head: a label or setlb above x, at most 60 lines up, inside the function
+        heads = []
+        for k in range(i, max(-1, i - 60), -1):
+            lab, t2 = self._ins(L[k])
+            if lab:
+                heads.append((k, lab))
+                if not re.search(r"^loc_|_L[0-9a-f]+_*$", lab):
+                    break
+            elif t2 == "setlb":
+                heads.append((k, "#setlb"))
+        for k, lab in heads:
+            for e in range(i + 1, min(len(L), i + 120)):
+                lab2, t3 = self._ins(L[e])
+                if lab2 and not re.search(r"^loc_|_L[0-9a-f]+_*$", lab2):
+                    break
+                back = (lab == "#setlb" and re.fullmatch(r"l(eq|ne|lt|le|gt|ge|cs|cc|hi|ls|ra)", t3 or "")) or \
+                    (lab != "#setlb" and re.fullmatch(r"(bra|jmp|b(eq|ne|lt|le|gt|ge|cs|cc|hi|ls)) %s" % re.escape(lab), t3 or ""))
+                if not back:
+                    continue
+                step = None
+                for q in range(k + 1, e):
+                    _x, t4 = self._ins(L[q])
+                    if slot is not None and q + 2 < e:
+                        s1 = re.fullmatch(r"mov \((0x[0-9a-f]+|\d+), sp\), (d\d)", t4)
+                        if s1 and int(s1.group(1), 0) == slot:
+                            s2 = re.fullmatch(r"add %s, %s" % (self.NUM, s1.group(2)), self._ins(L[q + 1])[1])
+                            s3 = re.fullmatch(r"mov %s, \((0x[0-9a-f]+|\d+), sp\)" % s1.group(2), self._ins(L[q + 2])[1])
+                            if s2 and s3 and int(s3.group(1), 0) == slot and int(s2.group(1), 0) > 0:
+                                step = (int(s2.group(1), 0), f"{t4} / {self._ins(L[q + 1])[1]} / {self._ins(L[q + 2])[1]}")
+                                continue
+                    if slot is not None and re.fullmatch(r"mov \((0x[0-9a-f]+|\d+), sp\), %s" % ar, t4 or ""):
+                        continue
+                    ms = re.fullmatch(r"add %s, %s" % (self.NUM, ar), t4)
+                    if ms and int(ms.group(1), 0) > 0:
+                        step = (int(ms.group(1), 0), t4)
+                    elif t4 in (f"inc4 {ar}", f"inc {ar}"):
+                        step = (4 if t4.startswith("inc4") else 1, t4)
+                    elif re.fullmatch(r"(mov|movhu|movbu) [^,]*, %s|mov [ad]\d, %s" % (ar, ar), t4 or "") and q > i:
+                        step = None      # aN reloaded in the loop: not a stepped pointer
+                        break
+                if step and step[0] >= width and foff + width <= step[0]:
+                    return step[0], int(mc.group(1), 0), nxt[0], step[1], foff, (ar if slot is None else f"sp{slot}"), k
+                break
+        return None
+
+    def sentinel_lists(self):
+        """(FEATURES["sentinel_lists"], lane mn10300-data) The lists a loop walks until a record's field
+        holds an end marker (sentinel_loop: KN7000 PanelButtonDispatch `mov (a2), d0` / `cmp -1, d0` /
+        `add 0xc, a2`; func_484061F9 `cmp 0xff` / `add 0xd`; the u16 style lists `cmp 0xffff`): each list
+        the loop's pointer starts at (a fixed address, or every target of the pointer field it was
+        loaded from: field_targets) is typed as its records up to and including the marker's field
+        (rows of the records' width when they divide it, else bytes), the loop cited.  A list is typed
+        only when every byte of it is free and the marker is reached within 4,096 records."""
+        if not FEATURES.get("sentinel_lists", True) or getattr(self, "dr", None) is None:
+            return
+        self._lmemo, self._tmemo = {}, {}
+        lists = collections.OrderedDict()
+        for x in self.dr.accesses:
+            k = x.key
+            if k[0] not in ("abs", "ptr"):
+                continue
+            r = self.sentinel_loop(x)
+            if not r or (k[0] == "ptr" and x.off != r[4]):
+                continue
+            if k[0] == "abs":
+                starts = {k[1] - r[4]} if self.in_data(k[1] - r[4]) else set()
+            elif k[1][0] in ("fld", "tgt"):
+                starts = set(self.field_targets(k[1]))
+            else:
+                continue
+            if r[0] == x.width and len(starts) < 2:
+                continue        # one array scanned for a marker: reader_tables types it as a table
+            for a in sorted(starts):
+                lists.setdefault(a, (x, r))
+        # the loops the walk lost the pointer of (a label two paths reach with different tables:
+        # PanelButtonDispatch's PanelButtonDescPtrTable[i] / PanelButtonDispatch_Table[i]): the pointer's
+        # sources are read from the code above the loop head, `mov Table, aT` / `mov (dI, aT), aN` (each
+        # entry of the pointer table typed at Table) or `mov Label, aN`
+        X = collections.namedtuple("X", "func cpu insn width")
+        for fi, L in enumerate(self.code_files()):
+            func, fcpu = None, None
+            for i, ln in enumerate(L):
+                lab, ins = self._ins(ln)
+                mh = re.match(r"# (\S+)\s+\((?:lib )?CPU (0x[0-9a-fA-F]+)", ln)
+                if mh:
+                    fcpu = int(mh.group(2), 16)
+                if lab and not re.search(r"^loc_|_L[0-9a-f]+_*$|_entry$", lab):
+                    func, fcpu = lab, self.code_labels.get(lab, fcpu)
+                mo = re.fullmatch(r"(mov|movhu|movbu) \((?:(?:0x[0-9a-f]+|\d+), )?a\d\), d\d", ins)
+                if not mo:
+                    continue
+                w = {"mov": 4, "movhu": 2, "movbu": 1}[mo.group(1)]
+                r = self.sentinel_core(L, i, w)
+                if not r:
+                    continue
+                ar, head = r[5], r[6]
+                starts = set()
+                for k in range(head - 1, max(-1, head - 80), -1):
+                    lb, t = self._ins(L[k])
+                    if lb and not re.search(r"^loc_|_L[0-9a-f]+_*$|_entry$", lb):
+                        break
+                    if ar.startswith("sp"):
+                        # (a stack slot) what was stored there: `mov rZ, (K, sp)`, rZ then the register
+                        mz = re.fullmatch(r"mov ([ad]\d), \((0x[0-9a-f]+|\d+), sp\)", t)
+                        if mz and int(mz.group(2), 0) == int(ar[2:]):
+                            ar = mz.group(1)
+                        continue
+                    m1 = re.fullmatch(r"mov \((d\d), (a\d)\), %s" % ar, t)
+                    m2 = re.fullmatch(r"mov ([A-Za-z_]\w*), %s" % ar, t)
+                    if m2 and self.data_label_addr(m2.group(1)) is not None:
+                        starts.add(self.data_label_addr(m2.group(1)))
+                    elif m1:
+                        for q in range(k - 1, max(-1, k - 5), -1):
+                            _b, t2 = self._ins(L[q])
+                            m3 = re.fullmatch(r"mov ([A-Za-z_]\w*), %s" % m1.group(2), t2)
+                            if m3:
+                                ta = self.data_label_addr(m3.group(1))
+                                it = self.items.get(self.off(ta)) if ta is not None else None
+                                if it is not None and it.kind == "pointer table" and it.start == ta:
+                                    starts |= {v for v in (self.m.u32(ta + 4 * e) for e in range(it.size // 4))
+                                               if self.in_data(v)}
+                                break
+                    elif re.fullmatch(r"(mov|movhu|movbu) [^,]*, %s" % ar, t or ""):
+                        break        # set some other way: stop
+                if r[0] == w and len(starts) < 2:
+                    starts = set()
+                if starts:
+                    x = X(func, fcpu, ins, w)
+                    for a in sorted(starts):
+                        lists.setdefault(a, (x, r))
+        named = sorted({self.off(a) for a in self.label_at if self.in_data(a)} | {self.off(a) for a in self.refs if self.in_data(a)}
+                       | {self.off(a) for a in lists if self.in_data(a)})
+        import bisect
+        for a, (x, (S, T, cmp_i, step_i, foff, _ar, _hd)) in sorted(lists.items()):
+            w = x.width
+            o = self.off(a)
+            n = 0
+            while n < 4096:
+                q = o + n * S + foff
+                if q + w > DATA_END:
+                    n = None
+                    break
+                v = int.from_bytes(self.rom[q:q + w], "little")
+                if v == T & ((1 << (8 * w)) - 1):
+                    break
+                n += 1
+            if n is None or n == 4096:
+                continue
+            size = n * S + foff + w
+            # the marker record's other bytes belong to the list when nothing is named inside them
+            full = n * S + S
+            kx = bisect.bisect_right(named, o)
+            nxt = named[kx] if kx < len(named) else DATA_END
+            if nxt < o + size:
+                continue        # another list or a named address inside: not one list
+            if nxt >= o + full and self.free(a, full) and S > foff + w:
+                size = full
+            if not self.free(a, size):
+                continue
+            fn = re.sub(r"_entry$", "", x.func or "?")
+            cite = f"{fn} 0x{x.cpu or 0:08X}: `{' '.join(x.insn.split())}` / `{cmp_i}`, `{step_i}`"
+            lab = self.name_at(a, f"{fn}_List")
+            unit = next((u for u in (4, 2) if S % u == 0 and (a % u == 0) and size % u == 0), 1)
+
+            def render(g, it, o=o, n=n, S=S, w=w, unit=unit, cite=cite, size=size, foff=foff):
+                d = {1: ".byte", 2: ".short", 4: ".long"}[unit]
+
+                def word(v):
+                    if unit == 4 and v and (g.in_data(v) or (g.in_code(v) and g.code_ptr_ok(v))):
+                        return g.ref(v)
+                    return f"0x{v:x}" if unit > 1 else str(v)
+                if S == w:
+                    vals = [int.from_bytes(g.rom[q:q + w], "little") for q in range(o, o + size, w)]
+                    return [f"# {n} entries of {8 * w} bits up to the end marker that {cite} stops at, then the marker",
+                            f"{it.label}:", f"\t{d}\t" + ", ".join(word(v) for v in vals)]
+                out = [f"# {n} records of {S} bytes up to the end marker (+{foff}, {8 * w} bits) that {cite} stops at"
+                       + (", then the marker record" if size > n * S + foff + w else ", then the marker"), f"{it.label}:"]
+                for r_ in range(n + 1):
+                    lo, hi = o + r_ * S, min(o + r_ * S + S, o + size)
+                    if lo >= o + size:
+                        break
+                    vals = [int.from_bytes(g.rom[q:q + unit], "little") for q in range(lo, hi - unit + 1, unit)]
+                    tail = g.rom[lo + unit * len(vals):hi]
+                    line = (f"\t{d}\t" + ", ".join(word(v) for v in vals)) if vals else ""
+                    if tail:
+                        line = (line + "\n" if line else "") + "\t.byte\t" + ", ".join(str(c) for c in tail)
+                    out.append(line + (f"\t# end" if r_ == n else ""))
+                return out
+            self.add(a, size, lab, "sentinel list", render)
+
+    def chord_voicings(self):
+        """(FEATURES["chord_voicings"], lane mn10300-data) The chord voicings and their inversions.  A
+        routine checks a key below 12 (`cmp 0xb, dK`), takes chord type i's block from one pointer table
+        (`mov Table, aR` / `mov (dI, aR), a1`) and copies its row `asl 3, dK` / `add dK, a1` / `mov 8, d0`
+        / `call memcpy` (KN7000 func_4856DC66, KN6000 func_4C0FE8A1, KN2400 func_486F84EC); for an
+        inversion n > 0 it reads the other table's list instead (`mov (dI, aR), d0`, then row base +
+        8n - 7: its head byte and 7 notes, transposed by the key).  The index i is checked against the
+        table's entry count (`cmp 0x15` 22, `cmp 0x26` 39).  So: a voicing block is 12 rows {u8 count;
+        u8 note[7]} (one per key), an inversion list {u8 count; max(count, 1) rows {u8 head; u8
+        note[7]}}.  Each is typed when its bytes are free and its rows parse (the count 1..7 and 0xFF
+        past the notes; an inversion head's bits 3..5 numbering it)."""
+        if not FEATURES.get("chord_voicings", True):
+            return
+        tabs = collections.OrderedDict()      # table address -> (kind, count, function, cpu, evidence)
+        for fn, cpu, L in self.code_funcs():
+            if not any(re.fullmatch(r"cmp 0xb, d\d", x) for x in L) or not any(x == "mov 8, d0" for x in L) \
+                    or not any(re.match(r"call memcpy", x) for x in L):
+                continue
+            for i, ins in enumerate(L):
+                mo = re.fullmatch(r"mov ([A-Za-z_]\w*), (a\d)", ins)
+                a = self.data_label_addr(mo.group(1)) if mo else None
+                if a is None:
+                    continue
+                for j in range(i + 1, min(i + 3, len(L))):
+                    ml = re.fullmatch(r"mov \((d\d), %s\), ([ad]\d)" % mo.group(2), L[j])
+                    if ml:
+                        cnt = None
+                        for k in range(i - 1, max(-1, i - 12), -1):
+                            mc = re.fullmatch(r"cmp %s, d\d" % self.NUM, L[k])
+                            if mc and k + 1 < len(L) and L[k + 1].startswith("ble "):
+                                cnt = int(mc.group(1), 0) + 1
+                                break
+                        kind = "voicing" if ml.group(2) == "a1" else "inversion" if ml.group(2)[0] == "d" else None
+                        if cnt and kind and a not in tabs:
+                            tabs[a] = (kind, cnt, fn, cpu, f"`{ins}` / `{L[j]}`")
+                        break
+        blocks = collections.OrderedDict()
+        for t, (kind, cnt, fn, cpu, ev) in tabs.items():
+            for i in range(cnt):
+                if not self.in_data(t + 4 * i):
+                    break
+                p = self.m.u32(t + 4 * i)
+                if self.in_data(p):
+                    blocks.setdefault(p, (kind, t, fn, cpu, ev))
+        for p, (kind, t, fn, cpu, ev) in sorted(blocks.items()):
+            o = self.off(p)
+            if kind == "voicing":
+                rows = [self.rom[o + 8 * r:o + 8 * r + 8] for r in range(12)]
+                if not all(1 <= rw[0] <= 7 and all(c == 0xFF for c in rw[1 + rw[0]:]) for rw in rows):
+                    continue
+                size = 96
+            else:
+                n = self.rom[o]
+                size = 1 + 8 * max(n, 1)
+                if n > 7 or not (all(1 <= ((self.rom[o + 1 + 8 * k] >> 3) & 7) <= 5 for k in range(n))
+                                 and (n > 0 or self.rom[o + 1] >> 3 == 0)):
+                    continue
+            if not self.free(p, size):
+                continue
+            lab = self.name_at(p, f"{fn}_{'Voicing' if kind == 'voicing' else 'Inversions'}")
+            cite = (f"{fn}{(' 0x%08X' % cpu) if cpu else ''} {ev} ({self.label_at.get(t) or self.fixed.get(t) or hex(t)})")
+
+            def render(g, it, o=o, kind=kind, size=size, cite=cite):
+                if kind == "voicing":
+                    out = [f"# 12 rows {{u8 count; u8 note[7]}}, one per key (row = key * 8, copied by memcpy 8): {cite}",
+                           f"{it.label}:"]
+                    for r_ in range(12):
+                        rw = g.rom[o + 8 * r_:o + 8 * r_ + 8]
+                        out.append(f"\t.byte\t{rw[0]}, " + ", ".join(str(c) if c != 0xFF else "0xff" for c in rw[1:])
+                                   + f"\t# key {r_}")
+                    return out
+                n = g.rom[o]
+                out = [f"# {n} inversions: u8 count, then max(count, 1) rows {{u8 head (bits 3..5: the inversion, 1..5);"
+                       f" u8 note[7]}} (row base + 8n - 7): {cite}", f"{it.label}:", f"\t.byte\t{n}\t# count"]
+                for r_ in range(max(n, 1)):
+                    rw = g.rom[o + 1 + 8 * r_:o + 9 + 8 * r_]
+                    out.append(f"\t.byte\t0x{rw[0]:02x}, " + ", ".join(str(c) if c != 0xFF else "0xff" for c in rw[1:])
+                               + f"\t# inversion {(rw[0] >> 3) & 7}")
+                return out
+            self.add(p, size, lab, "chord voicing", render)
+
+    def index_bounds(self):
+        """(FEATURES["index_bounds"], lane mn10300-data) {table CPU address: (entries, stride, citation)}:
+        the tables a routine indexes with an index it has bounded just before, as the code shows it:
+        `and M, dI` with M = 2^k - 1 (M + 1 entries: KN7000 func_48466F2F's `and 0x1f, d1`, 32 hash
+        slots), or `cmp N, dI` and a branch that goes on only below or at N (`ble` / `bls`: N + 1
+        entries; `blt` / `bcs`: N; `bgt` / `bhi` / `bge` / `bcc` the same, as the exit), then within 8
+        instructions the index scaled (`asl K`, `asl2`, `add dI, dI`: the stride) and added to the table's
+        address (`add Table, dX`; `add dX, aY` or `(dX, aY)` with `mov Table, aY` within the 10
+        instructions before).  The index is the record number, so the table has that many records of
+        the stride (struct_arrays and reader_tables type up to it when the bytes are free)."""
+        if hasattr(self, "_ixb"):
+            return self._ixb
+        out = {}
+        if not FEATURES.get("index_bounds", True):
+            self._ixb = out
+            return out
+        for fn, cpu, L in self.code_funcs():
+            for i, ins in enumerate(L):
+                if ins == "setlb":
+                    # a counted hardware loop: `mov -N, dC` / setlb / ... (aR) ... step aR ... / `inc dC` / `lne`
+                    # (KN6000 HpFlashWriteDefaults: 99 words) reads N records of the step from aR's table
+                    mn = next((re.fullmatch(r"mov -(0x[0-9a-f]+|\d+), (d\d)", L[q]) for q in range(max(0, i - 4), i)
+                               if re.fullmatch(r"mov -(0x[0-9a-f]+|\d+), (d\d)", L[q])), None)
+                    if not mn:
+                        continue
+                    N, dC = int(mn.group(1), 0), mn.group(2)
+                    tabs = {}
+                    for q in range(max(0, i - 8), i):
+                        mt = re.fullmatch(r"mov ([A-Za-z_]\w*), (a\d)", L[q])
+                        if mt and self.data_label_addr(mt.group(1)) is not None:
+                            tabs[mt.group(2)] = self.data_label_addr(mt.group(1))
+                    body, e = [], None
+                    for q in range(i + 1, min(len(L), i + 24)):
+                        if re.fullmatch(r"l[a-z]+", L[q]):
+                            e = q
+                            break
+                        body.append(L[q])
+                    if e is None or N < 2 or not body or body[-1] != f"inc {dC}" or L[e] != "lne":
+                        continue
+                    for aR, ta in tabs.items():
+                        ld = next((b for b in body if re.fullmatch(r"(mov|movhu|movbu) \(%s\), [ad]\d" % aR, b)), None)
+                        stp = [b for b in body if b in (f"inc4 {aR}", f"inc {aR}") or re.fullmatch(r"add %s, %s" % (self.NUM, aR), b)]
+                        if not ld or len(stp) != 1:
+                            continue
+                        S = 4 if stp[0].startswith("inc4") else 1 if stp[0].startswith("inc ") else int(stp[0].split()[1].rstrip(","), 0)
+                        cite = f"{fn}{(' 0x%08X' % cpu) if cpu else ''}: `{L[i - 1] if L[i - 1].startswith('mov -') else mn.group(0)}` / setlb / `{ld}` / `{stp[0]}` / `inc {dC}` / lne ({N} passes)"
+                        if ta not in out or out[ta][0] < N:
+                            out[ta] = (N, S, cite)
+                    continue
+                cnt = None
+                ma = re.fullmatch(r"and (0x[0-9a-f]+), (d\d)", ins)
+                mc = re.fullmatch(r"cmp %s, (d\d)" % self.NUM, ins)
+                if ma:
+                    M = int(ma.group(1), 16)
+                    if M >= 3 and (M & (M + 1)) == 0:
+                        cnt, dI = M + 1, ma.group(2)
+                elif mc and i + 1 < len(L):
+                    N = int(mc.group(1), 0)
+                    mb = re.match(r"b(le|ls|lt|cs|gt|hi|ge|cc) ", L[i + 1])
+                    if mb and 2 <= N < 65536:
+                        cnt, dI = (N + 1 if mb.group(1) in ("le", "ls", "gt", "hi") else N), mc.group(2)
+                if not cnt:
+                    continue
+                regs = {dI: 1}            # register -> the index times this
+                tabs = {}                 # address register -> table address
+                for q in range(max(0, i - 10), i):
+                    mt = re.fullmatch(r"mov ([A-Za-z_]\w*), (a\d)", L[q])
+                    if mt and self.data_label_addr(mt.group(1)) is not None:
+                        tabs[mt.group(2)] = self.data_label_addr(mt.group(1))
+                    mq = re.fullmatch(r"mov ([ad]\d), ([ad]\d)", L[q])
+                    if mq and mq.group(1) == dI and q >= i - 3:
+                        regs[mq.group(2)] = 1          # a copy made just before the compare
+                    elif mq and mq.group(2) == dI and q >= i - 3:
+                        regs[mq.group(1)] = 1
+                hit = None
+                for j in range(i + 1, min(len(L), i + 16)):
+                    t = L[j]
+                    if re.match(r"bra |jmp|ret|call|l[a-z]+$", t):
+                        break                  # (a conditional branch skips a clamp: the scan goes on)
+                    if re.match(r"b[a-z]+ ", t):
+                        continue
+                    mk = re.fullmatch(r"mov %s, ([ad]\d)" % self.NUM, t)
+                    if mk and mk.group(2) in regs and int(mk.group(1), 0) in (0, cnt - 1):
+                        continue               # the clamp: the index set to its bound or 0
+                    mt = re.fullmatch(r"mov ([A-Za-z_]\w*), (a\d)", t)
+                    if mt and self.data_label_addr(mt.group(1)) is not None:
+                        tabs[mt.group(2)] = self.data_label_addr(mt.group(1))
+                        continue
+                    m1 = re.fullmatch(r"asl (\d+), (d\d)", t)
+                    m2 = re.fullmatch(r"asl2 (d\d)", t)
+                    m3 = re.fullmatch(r"add (d\d), \1", t)
+                    m4 = re.fullmatch(r"mov ([ad]\d), ([ad]\d)", t)
+                    m5 = re.fullmatch(r"add ([A-Za-z_]\w*), ([ad]\d)", t)
+                    m6 = re.fullmatch(r"add ([ad]\d), (a\d)", t)
+                    m7 = re.fullmatch(r"(?:mov|movhu|movbu) \(([ad]\d), (a\d)\), [ad]\d", t)
+                    m8 = re.fullmatch(r"ext[bh]u? (d\d)", t)
+                    if m1 and m1.group(2) in regs:
+                        regs[m1.group(2)] *= 1 << int(m1.group(1))
+                    elif m2 and m2.group(1) in regs:
+                        regs[m2.group(1)] *= 4
+                    elif m3 and m3.group(1) in regs:
+                        regs[m3.group(1)] *= 2
+                    elif m4 and m4.group(1) in regs:
+                        regs[m4.group(2)] = regs[m4.group(1)]
+                        tabs.pop(m4.group(2), None)
+                    elif m4 and m4.group(1) in tabs:
+                        tabs[m4.group(2)] = tabs[m4.group(1)]
+                        regs.pop(m4.group(2), None)
+                    elif m5 and m5.group(2) in regs and self.data_label_addr(m5.group(1)) is not None:
+                        hit = (self.data_label_addr(m5.group(1)), regs[m5.group(2)], t)
+                    elif m6 and m6.group(1) in regs and m6.group(2) in tabs:
+                        hit = (tabs[m6.group(2)], regs[m6.group(1)], t)
+                    elif m6 and m6.group(1) in tabs and m6.group(2) in regs:
+                        hit = (tabs[m6.group(1)], regs[m6.group(2)], t)
+                    elif m7 and m7.group(1) in regs and m7.group(2) in tabs:
+                        hit = (tabs[m7.group(2)], regs[m7.group(1)], t)
+                    elif m8 and m8.group(1) in regs:
+                        continue
+                    elif t.split(" ")[-1] in regs or (t.split(" ")[-1] in tabs and not t.startswith("cmp")):
+                        regs.pop(t.split(" ")[-1], None)
+                        tabs.pop(t.split(" ")[-1], None)
+                    if hit:
+                        break
+                if hit:
+                    a, st, use = hit
+                    cite = f"{fn}{(' 0x%08X' % cpu) if cpu else ''}: `{ins}` ... `{use}`"
+                    if a not in out or out[a][0] < cnt:
+                        out[a] = (cnt, st, cite)
+        self._ixb = out
+        return out
+
+    def fx_presets(self):
+        """(profile `fx_presets` = (table, entries, variation table, entries), FEATURES["fx_presets"], lane
+        mn10300-data; the KN2400) The DSP effect presets.  FxPresetGet 0x4863CDB5 returns
+        FxPresetTable[(key & 0xFF) << 6 | (key >> 8) & 0x3F], FxPresetVarGet FxPresetVarTable[(key >> 8) &
+        0x3F]; the record is 0x20 bytes: +0x00 the 16-character name, NUL-padded to 18 bytes; +0x12 u16 the
+        effect descriptor's index (FxDescIndexGet `movhu (0x12, a0)`, an index into FxDescTable); +0x14 u16
+        the parameter count (`movhu (0x14, a0)` after FxPresetGet / FxPresetVarGet); +0x16 u16 0; +0x18 the
+        parameters' address (`mov (0x18, a0), a0`), n x u16 right before the record (0xFFFF to a 4-byte
+        boundary); +0x1C the preset's own key (for every record of FxPresetTable, FxPresetTable[key] is
+        the record [checked by the generator])."""
+        spec = P.get("fx_presets")
+        if not spec or not FEATURES.get("fx_presets", True):
+            return
+        tn, cnt, vn, vcnt = spec
+        t, tv = self.data_label_addr(tn), self.data_label_addr(vn)
+        if t is None or tv is None:
+            return
+        u16 = lambda a: int.from_bytes(self.rom[self.off(a):self.off(a) + 2], "little")   # noqa: E731
+        recs = collections.OrderedDict()
+        for base, n, var in ((t, cnt, False), (tv, vcnt, True)):
+            for i in range(n):
+                p = self.m.u32(base + 4 * i)
+                if self.in_data(p):
+                    recs.setdefault(p, var)
+        desc_t = self.data_label_addr("FxDescTable")
+        for p, var in sorted(recs.items()):
+            o = self.off(p)
+            n, par, key = u16(p + 0x14), self.m.u32(p + 0x18), self.m.u32(p + 0x1C)
+            name = self.rom[o:o + 18]
+            if u16(p + 0x16) != 0 or not self.in_data(par) or name[16:] != b"\0\0" or not is_text(name[:16].rstrip(b"\0")):
+                continue
+            plen = p - par
+            if plen != ((2 * n + 3) & ~3) and not (n == 0 and plen == 4):
+                continue
+            if not self.free(par, plen + 0x20):
+                continue
+            own = (not var and self.m.u32(t + 4 * ((key & 0xFF) << 6 | (key >> 8) & 0x3F)) == p) or \
+                (var and self.m.u32(tv + 4 * ((key >> 8) & 0x3F)) == p)
+            nm = sanitize(name[:16].decode("latin-1").strip(), 24) or f"{p:08X}"
+            lab = self.name_at(p, f"FxPreset_{nm}")
+            plab = self.name_at(par, f"{lab}_Params")
+            d = u16(p + 0x12)
+            dref = self.ref(self.m.u32(desc_t + 4 * d)) if desc_t is not None and self.in_data(desc_t + 4 * d) else None
+
+            def rpar(g, it, o=self.off(par), n=n, plen=plen):
+                vals = [int.from_bytes(g.rom[o + 2 * k:o + 2 * k + 2], "little") for k in range(plen // 2)]
+                return [f"{it.label}:\t# the parameters (u16 x {n}) of the preset after them; 0xFFFF pads to 4 bytes",
+                        "\t.short\t" + ", ".join(f"0x{v:x}" if v >= 0x8000 else str(v) for v in vals)]
+
+            def rrec(g, it, o=o, n=n, d=d, dref=dref, key=key, own=own, plab=plab, var=var):
+                nm_ = g.rom[o:o + 16]
+                return [f"{it.label}:\t# FX preset record (FxPresetGet{'' if not var else ' / FxPresetVarGet'}): "
+                        f"name, descriptor index, parameter count, parameters, key",
+                        f'\t.ascii\t"{c_escape(nm_)}"', "\t.byte\t0, 0",
+                        f"\t.short\t{d}, {n}, 0\t# descriptor index" + (f" ({dref}, FxDescTable[{d}])" if dref else "")
+                        + "; parameter count",
+                        f"\t.long\t{plab}", f"\t.long\t0x{key:x}\t# key" + (" (FxPreset" + ("Var" if var else "")
+                                                                          + "Table[key] is this record)" if own else "")]
+            self.add(par, plen, plab, "fx preset params", rpar)
+            self.add(p, 0x20, lab, "fx preset", rrec)
+
+    def table_terminators(self):
+        """(FEATURES["table_terminators"], lane mn10300-data) The end marker after a typed table: the
+        all-ones word of the table's width right after it, still free, where a reader of the table compares
+        the entry it loads with -1 (`cmp -1, dX`, or `cmp dS, dX` with `mov -1, dS` earlier in the function)
+        and goes on otherwise (KN7000 PartHasDspUnit: `mov (d0, a2), d0` / `cmp d3, d0` / `bne`, d3 = -1).
+        The loop stops at it, so it is the table's last entry (an item of its own after the table)."""
+        if not FEATURES.get("table_terminators", True) or getattr(self, "dr", None) is None:
+            return
+        fs = self.code_files()
+        by_tab = collections.defaultdict(list)
+        for x in self.dr.accesses:
+            if x.key[0] == "rec" and x.rw == "ld" and x.width and x.pos and x.key[2] == x.width:
+                by_tab[x.key[1]].append(x)
+        for o, it in sorted(self.items.items()):
+            if it.kind not in ("reader table", "pointer table", "struct array") or it.start not in by_tab:
+                continue
+            xs = by_tab[it.start]
+            w = xs[0].width
+            e = it.start + it.size
+            eo = self.off(e)
+            if it.size % w or eo + w > DATA_END or self.rom[eo:eo + w] != b"\xff" * w or not self.free(e, w):
+                continue
+            hit = None
+            for x in xs:
+                L, i = fs[x.pos[0]], x.pos[1]
+                _l, ins = self._ins(L[i])
+                md = re.search(r", (d\d)$", ins)
+                if not md:
+                    continue
+                dX = md.group(1)
+                for j in range(i + 1, min(len(L), i + 3)):
+                    _l2, t = self._ins(L[j])
+                    mc = re.fullmatch(r"cmp (-1|0xff|0xffff|0xffffffff|d\d), %s" % dX, t)
+                    if not mc:
+                        continue
+                    ok = not mc.group(1).startswith("d")
+                    if not ok:
+                        for q in range(i - 1, max(-1, i - 40), -1):
+                            _l3, t3 = self._ins(L[q])
+                            if t3 == f"mov -1, {mc.group(1)}":
+                                ok = True
+                                break
+                    if ok and j + 1 < len(L) and re.match(r"b(ne|eq) ", self._ins(L[j + 1])[1]):
+                        hit = (x, t)
+                    break
+                if hit:
+                    break
+            if not hit:
+                continue
+            x, t = hit
+            cite = f"{re.sub(r'_entry$', '', x.func or '?')} 0x{x.cpu or 0:08X}: `{' '.join(x.insn.split())}` / `{t}`"
+            d = {1: ".byte", 2: ".short", 4: ".long"}[w]
+
+            def render(g, it2, w=w, d=d, cite=cite, tab=it.label):
+                return [f"\t{d}\t0x{(1 << 8 * w) - 1:x}\t# the end marker of {tab}: {cite} stops at it"]
+            self.add(e, w, None, "table end", render)
+
+    def field_deref(self, proc, off):
+        """(widget_vars) How `proc` reads the variable a widget's field at +off points at: the field load
+        (`mov (off, aR), aS`, or `add off, aR` then `mov (aR), aS`) and, within the next 8 instructions,
+        a load or store through aS: (CPU, field instruction, access instruction, width), or None."""
+        b = self.code_bodies().get(proc)
+        if not b:
+            return None
+        L = b[1]
+        num = r"(0x[0-9a-f]+|\d+)"
+        for i, ins in enumerate(L):
+            m1 = re.fullmatch(r"mov \(%s, (a\d)\), (a\d)" % num, ins)
+            m2 = re.fullmatch(r"add %s, (a\d)" % num, ins)
+            tgt, at = None, i
+            if m1 and int(m1.group(1), 0) == off:
+                tgt = m1.group(3)
+            elif m2 and int(m2.group(1), 0) == off:
+                for j in range(i + 1, min(i + 3, len(L))):
+                    mm = re.fullmatch(r"mov \(%s\), (a\d)" % m2.group(2), L[j])
+                    if mm:
+                        tgt, at = mm.group(1), j
+                        break
+            if not tgt:
+                continue
+            for j in range(at + 1, min(at + 8, len(L))):
+                mm = re.fullmatch(r"(mov|movhu|movbu) (?:\((?:0, )?%s\), [ad]\d|[ad]\d, \((?:0, )?%s\))" % (tgt, tgt), L[j])
+                if mm:
+                    return (b[0], ins if at == i else ins + " / " + L[at], L[j], {"mov": 4, "movhu": 2, "movbu": 1}[mm.group(1)])
+                if re.search(r"\b%s\b" % tgt, L[j].split(" ", 1)[-1].split(",")[-1]) and not L[j].startswith(("cmp", "btst")):
+                    break           # aS overwritten
+        return None
+
+    def widget_vars(self):
+        """(FEATURES["widget_vars"], lane mn10300-data) The RAM state variables the widget records point at
+        (their `l` / `m` / `q` / `r` fields: `<object>_<field>`, gui_objects) that no other pass typed:
+        a variable of the width the class's procedure reads it at.  Evidence per (class, field): a
+        procedure of the class chain (the class's own first, then its ancestors') loads the field from
+        the instance and loads or stores through it (field_deref); the variable is typed only when that
+        width fits the bytes up to the next label.  The value is the variable's initial value (these
+        records and their variables are in the initialised-RAM image)."""
+        if not FEATURES.get("widget_vars", True):
+            return
+        m = self.m
+        by_addr = {}
+        for a, n in self.code_labels.items():
+            by_addr.setdefault(a, n)
+        memo = {}
+
+        def reader(k, off):
+            key = (k.id, off)
+            if key not in memo:
+                memo[key] = None
+                for c in reversed(m.chain(k.id)):
+                    pn = by_addr.get(c.proc) or self.extern.get(c.proc)
+                    r = self.field_deref(pn, off) if pn else None
+                    if r:
+                        memo[key] = (c.name, pn) + r
+                        break
+            return memo[key]
+        import bisect
+        named = sorted({self.off(a) for a in self.label_at if self.in_data(a)}
+                       | {self.off(a) for a in self.refs if self.in_data(a)})
+        done = set()
+        for slot, b in sorted(m.blocks.items()):
+            for i, o in enumerate(b["objects"]):
+                for f in m.layout[o.klass.id]:
+                    v = o.fvalues[f.off]
+                    if f.sig not in "lmqr" or not v or not self.in_data(v) or v in done:
+                        continue
+                    r = reader(o.klass, f.off)
+                    if not r:
+                        continue
+                    w = r[5]
+                    oo = self.off(v)
+                    k = bisect.bisect_right(named, oo)
+                    end = named[k] if k < len(named) else DATA_END
+                    if oo % w or end - oo < w or not self.free(v, w):
+                        continue
+                    done.add(v)
+                    signed = False
+                    val = int.from_bytes(self.rom[oo:oo + w], "little")
+                    lab = self.name_at(v, f"{self.obj_label[(slot, i)]}_{sanitize(f.name)}")
+                    cite = (f"the {o.klass.name} {self.obj_label[(slot, i)]}'s `{f.name}` (+0x{f.off:X}), loaded and"
+                            f" dereferenced by {r[1]}{(' 0x%08X' % r[2]) if r[2] else ''}: `{r[3]}` -> `{r[4]}`")
+                    kind = ("s" if signed else "u") + str(8 * w)
+
+                    def render(g, it, w=w, val=val, kind=kind, cite=cite):
+                        return [f"{it.label}:\t# {kind}, initial value of a RAM variable: {cite}",
+                                f"\t{ {1: '.byte', 2: '.word', 4: '.long'}[w]}\t"
+                                f"{val if w < 4 or val < 0x10000 else hex(val)}"]
+                    self.add(v, w, lab, "widget variable", render)
 
     def render_variable(self, it, vals, kind, rd, w, ram):
         if len(vals) > 1:
@@ -4883,6 +5730,9 @@ class Gen:
             self.fx_descriptors()
             self.fx_streams()
             self.pow10_table()
+            self.maps128()
+            self.chord_voicings()
+            self.fx_presets()
             self.zlib_tables()
             self.hash_tables()
             self.name_value_tables()
@@ -4896,6 +5746,7 @@ class Gen:
             self.message_tables()
             self.drawn_bitmaps()
             self.named_glyphs()
+            self.sentinel_lists()
             self.ptr_records()
             if P.get("readers_ext"):
                 self.sysex_strings()
@@ -4931,6 +5782,9 @@ class Gen:
             self.reader_tables()
             if P.get("structs"):
                 self.variables()
+        if P.get("structs"):
+            self.widget_vars()
+            self.table_terminators()
         self.short_strings()
         self.zlib_kinds()
         if P.get("residue"):
