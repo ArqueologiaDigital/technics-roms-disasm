@@ -121,13 +121,21 @@ v5 as numeric (unframed_not_used 0 -> 1 in each).
 
 - The message of 0c9eb932d says "652 of the 1,300 cells move": the header has 1,892 cells (652 move).
 
-## Ledgers (read-only, after the merge, at the last commit)
+## Ledgers (read-only)
+
+Before merging main 6da8e5593 (lane branch at c896c0532, main b71d87c75 merged):
 
 - `make gate`: exit 0.
-- `census.py --compare docs/coverage/dispatch-census-2026-10-31-03.json`: nothing rose.
-- `doc_quality_census.py --compare` (doc-quality-2026-10-31-03): nothing rose ((b) numeric operands fell by 44 in
-  v10 / v9 / v8 / v7: the quantize names).
-- `data_incbin_census.py --compare` (newest data-incbin snapshot): exit 0, nothing rose.
+- `census.py --compare docs/coverage/dispatch-census-2026-10-31-03.json`: nothing rose (it had risen by 1
+  unframed_not_used in v7 / v6 / v5 until the labels took the trees' own addresses, c896c0532).
+- `doc_quality_census.py --compare` (doc-quality-2026-10-31-03): nothing rose; (b) numeric operands fell by 44
+  in v10 / v9 / v8 / v7 (the quantize names).
+- `data_incbin_census.py --compare`: exit 0, nothing rose.
+
+After merging main 6da8e5593 (open6/kn5000-d; 55d4980a8): `make gate` exit 0; dispatch census nothing rose
+(wsa1 rebuilt first); doc-quality: (d) `.byte` runs after a terminator rose by 1 run / 30 B in each of v10 v9
+v8 v7 v6 v5.  The run is `Scoop_GridDividerData` (display/scoop_display.s, a 30-byte UIRender display list),
+in a file main's 5a5311c56 / 8f576f2ea changed and this lane did not; before that merge nothing rose.
 
 ## Website page draft (for `rom-reconstruction.md`, the v6 / v5 rows)
 
