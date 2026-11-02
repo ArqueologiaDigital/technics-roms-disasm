@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 54,032
-#   semantic names ........... 53,711 (99.4%)
+#   symbols .................. 54,061
+#   semantic names ........... 53,740 (99.4%)
 #   positional names ......... 321
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -4332,26 +4332,30 @@ NakaInst_AcIndexWideToggle 00E27492
 NakaInst_MsgToTtl 00E274A8
 NakaInst_EqOnOffFuncToggle 00E274B4
 NakaInst_NoteEditBox 00E274C8
-NakaInst_SngSel2 00E274D8
+ClassPropdata_SngSel2 00E274D8
 ClassName_SngSel2 00E274DA
-NakaInst_SngSel 00E274E2
+ClassPropdata_SngSel 00E274E2
 ClassName_SngSel 00E274E8
-NakaInst_AcEntertainerGridBox 00E274F0
+ClassPropdata_AcEntertainerGridBox 00E274F0
 ClassName_AcEntertainerGridBox 00E274F4
-NakaInst_AccIll 00E2750A
+ClassPropdata_AccIll 00E2750A
 ClassName_AccIll 00E27510
-NakaInst_SqedtVal3 00E27518
+ClassPropdata_SqedtVal3 00E27518
 ClassName_SqedtVal3 00E2751C
-NakaInst_SqplyVal 00E27526
+ClassPropdata_SqplyVal 00E27526
 ClassName_SqplyVal 00E2752C
-NakaInst_IvSongCopyExit 00E27536
+ClassPropdata_IvSongCopyExit 00E27536
 ClassName_IvSongCopyExit 00E27538
-NakaInst_SqedtFix 00E27548
+ClassPropdata_SqedtFix 00E27548
 ClassName_SqedtFix 00E2754C
-NakaInst_SqedtVal2_End 00E27556
-NakaInst_SqedtVal 00E27564
-NakaInst_SqedtVal_B 00E27574
-NakaInst_EqualizerBox 00E27586
+ClassPropdata_SqedtVal2 00E27556
+ClassName_SqedtVal2 00E2755A
+ClassPropdata_SqedtVal 00E27564
+ClassName_SqedtVal 00E2756A
+ClassPropdata_EqualizerBox 00E27574
+ClassName_EqualizerBox 00E27578
+ClassPropdata_EffectBox 00E27586
+ClassName_EffectBox 00E2758C
 Kubo_ClassCount_168 00E27596
 EvtEffDraw_PtrTable 00E27598
 EvtName_GraphDraw 00E275B0
@@ -6084,6 +6088,31 @@ East_ClassDesc14_Name 00E55BA0
 East_ClassDesc13_Sig 00E55BB0
 East_ClassDesc13_Name 00E55BB4
 East_ClassDesc12_Sig 00E55BC6
+ClassName_AcPmemOutLGridBox 00E55BCA
+ClassPropdata_AcPcgOutGridBox 00E55BDC
+ClassName_AcPcgOutGridBox 00E55BE0
+ClassPropdata_AcParaLoadOptGridBox 00E55BF0
+ClassName_AcParaLoadOptGridBox 00E55BF4
+ClassPropdata_AcInOutGridBox 00E55C0A
+ClassName_AcInOutGridBox 00E55C0E
+ClassPropdata_AcVocalGridBox 00E55C1E
+ClassName_AcVocalGridBox 00E55C22
+ClassPropdata_AcFadeSetGridBox 00E55C32
+ClassName_AcFadeSetGridBox 00E55C36
+ClassPropdata_AcLswFuncBox 00E55C48
+ClassName_AcLswFuncBox 00E55C4E
+ClassPropdata_AcLswFuncEditBox 00E55C5C
+ClassName_AcLswFuncEditBox 00E55C62
+ClassPropdata_AcGMOnOffBox 00E55C74
+ClassName_AcGMOnOffBox 00E55C76
+ClassPropdata_AcSendEditSw 00E55C84
+ClassName_AcSendEditSw 00E55C8A
+ClassPropdata_IvMpstPageControl 00E55C98
+ClassName_IvMpstPageControl 00E55C9C
+ClassPropdata_AcVocalistListBox 00E55CAE
+ClassName_AcVocalistListBox 00E55CB0
+ClassPropdata_PsHarmOnOffBox 00E55CC2
+ClassName_PsHarmOnOffBox 00E55CC4
 MidiMenu_WidgetCount 00E55CD4
 MidiMenu_ResEventTable 00E55CD6
 MidiMenu_ResEventCount 00E55CDA

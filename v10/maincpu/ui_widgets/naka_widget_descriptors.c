@@ -126,6 +126,31 @@ extern const char CmpStepTitle_Method3Nop;
 extern const char CmpStepTitle_OnHide;
 extern const char CmpStepTitle_OnPaint;
 extern const char CmpStepTitle_OnSwitchIn;
+extern const char ClassName_AcFadeSetGridBox;
+extern const char ClassName_AcGMOnOffBox;
+extern const char ClassName_AcInOutGridBox;
+extern const char ClassName_AcLswFuncBox;
+extern const char ClassName_AcLswFuncEditBox;
+extern const char ClassName_AcParaLoadOptGridBox;
+extern const char ClassName_AcPcgOutGridBox;
+extern const char ClassName_AcPmemOutLGridBox;
+extern const char ClassName_AcSendEditSw;
+extern const char ClassName_AcVocalGridBox;
+extern const char ClassName_AcVocalistListBox;
+extern const char ClassName_IvMpstPageControl;
+extern const char ClassName_PsHarmOnOffBox;
+extern const char ClassPropdata_AcFadeSetGridBox;
+extern const char ClassPropdata_AcGMOnOffBox;
+extern const char ClassPropdata_AcInOutGridBox;
+extern const char ClassPropdata_AcLswFuncBox;
+extern const char ClassPropdata_AcLswFuncEditBox;
+extern const char ClassPropdata_AcParaLoadOptGridBox;
+extern const char ClassPropdata_AcPcgOutGridBox;
+extern const char ClassPropdata_AcSendEditSw;
+extern const char ClassPropdata_AcVocalGridBox;
+extern const char ClassPropdata_AcVocalistListBox;
+extern const char ClassPropdata_IvMpstPageControl;
+extern const char ClassPropdata_PsHarmOnOffBox;
 
 #define BASE  0x00E30E60u
 
@@ -513,12 +538,15 @@ typedef struct __attribute__((packed)) {
      * AttAreYouSureCheck_PtrTable points at (NUL-terminated, 0xFF pad to
      * even length), 158 bytes.
      * --------------------------------------------------------------------- */
-    char AttAreYouSureCheck_Strings[158];
+    char AttAreYouSureCheck_Strings[8];
+    char Str_ATTENTION[122];
+    char Str_Apakahyakinakandihapus[28];
     /* ---------------------------------------------------------------------
      * StsSeqMenu1Check_Strings -- the 2 strings StsSeqMenu1Check_PtrTable
      * points at (NUL-terminated, 0xFF pad to even length), 70 bytes.
      * --------------------------------------------------------------------- */
-    char StsSeqMenu1Check_Strings[70];
+    char StsSeqMenu1Check_Strings[32];
+    char LongStr_Funktionen_zur_Erstellung[38];
     /* ---------------------------------------------------------------------
      * StsSeqMenu2Check_Strings -- the 2 strings StsSeqMenu2Check_PtrTable
      * points at (NUL-terminated, 0xFF pad to even length), 70 bytes.
@@ -558,12 +586,17 @@ typedef struct __attribute__((packed)) {
      * AttSongClrCheck_Strings -- the 5 strings AttSongClrCheck_PtrTable
      * points at (NUL-terminated, 0xFF pad to even length), 358 bytes.
      * --------------------------------------------------------------------- */
-    char AttSongClrCheck_Strings[358];
+    char AttSongClrCheck_Strings[218];
+    char LongStr_SongClear_Spanish[62];
+    char LongStr_Gunakan_SONG_CLEAR[78];
     /* ---------------------------------------------------------------------
      * AttTrkClrCheck_Strings -- the 5 strings AttTrkClrCheck_PtrTable points
      * at (NUL-terminated, 0xFF pad to even length), 404 bytes.
      * --------------------------------------------------------------------- */
-    char AttTrkClrCheck_Strings[404];
+    char AttTrkClrCheck_Strings[138];
+    char NakaInst_anular_la_pista_se_borra_la_grabaci_n_de_las[100];
+    char LongStr_TrackClear_Spanish[72];
+    char LongStr_Gunakan_TRACK_CLEAR[94];
     /* ---------------------------------------------------------------------
      * StsAtPunchCheck_Strings -- the 2 strings StsAtPunchCheck_PtrTable
      * points at (NUL-terminated, 0xFF pad to even length), 102 bytes.
@@ -591,7 +624,12 @@ typedef struct __attribute__((packed)) {
      * strings after HelpTtlFunc_LookupSlide_PtrTable; that code DOES reach (readers: the .s
      * header, which also labels each string)
      * --------------------------------------------------------------------- */
-    char HelpTtlFunc_LookupSlide_PtrTable_Strings[30];
+    char HelpTtlFunc_LookupSlide_PtrTable_Strings[4];
+    char IvSddsp_CopyString_Str_Dsp[4];
+    char IvSdacc_CopyString_Str_Acc[4];
+    char IvPlayExit_CopyString_Str_ExMD[6];
+    char IvPunchExit_CopyString_Str_ExPR[6];
+    char IvAutoPunchExit_CopyString_Str_ExAP[6];
     /* ---------------------------------------------------------------------
      * AttAreYouSureCheck_PtrTable -- 6 u32 addresses, read by
      * AttAreYouSureCheck (v10/v9 0xF2EF1D, v7 0xF2EEF3) (`lda xhl,
@@ -675,13 +713,16 @@ typedef struct __attribute__((packed)) {
      * after StsAtPunchCheck_PtrTable; that code DOES reach (readers: the .s header, which also
      * labels each string)
      * --------------------------------------------------------------------- */
-    char StsAtPunchCheck_PtrTable_Strings[12];
+    char StsAtPunchCheck_PtrTable_Strings[4];
+    char NoteEditBox_EventDispatch2_Str_N81[4];
+    char FmtStr_pct3d[4];
     /* ---------------------------------------------------------------------
      * NoteEditBox_EventDispatch2_Str -- NUL-terminated string(s), 8 bytes,
      * used by NoteEditBox_EventDispatch2 (v10/v9 0xF2F2A0, v7 0xF2F276) (`ld
      * xwa, NoteEditBox_EventDispatch2_Str`).
      * --------------------------------------------------------------------- */
-    char NoteEditBox_EventDispatch2_Str[8];
+    char NoteEditBox_EventDispatch2_Str[4];
+    char NoteEditBox_EventDispatch2_Str_Fmt2d[4];
     /* ---------------------------------------------------------------------
      * NoteEditBox_EventDispatch2_Str_2 -- NUL-terminated string(s), 4 bytes,
      * used by NoteEditBox_EventDispatch2 (v10/v9 0xF2F2A0, v7 0xF2F276) (`ld
@@ -693,7 +734,8 @@ typedef struct __attribute__((packed)) {
      * used by NoteEditBox_EventDispatch2 (v10/v9 0xF2F2A0, v7 0xF2F276) (`ld
      * xwa, NoteEditBox_EventDispatch2_Str_3`).
      * --------------------------------------------------------------------- */
-    char NoteEditBox_EventDispatch2_Str_3[8];
+    char NoteEditBox_EventDispatch2_Str_3[4];
+    char NoteEditBox_EventDispatch2_Str_Fmt2d_2[4];
     /* ---------------------------------------------------------------------
      * NoteEdit_FormatEntry_Table -- read by NoteEdit_FormatEntry (v10/v9
      * 0xF2FA09, v7 0xF2F9DF) (`add xwa,
@@ -727,7 +769,8 @@ typedef struct __attribute__((packed)) {
      * strings after NoteEditBox_SetupGrid_CaseTable; that code DOES reach (readers: the .s header,
      * which also labels each string)
      * --------------------------------------------------------------------- */
-    char NoteEditBox_SetupGrid_CaseTable_Strings[12];
+    char NoteEditBox_SetupGrid_CaseTable_Strings[6];
+    char NoteEdit_FormatTempoString_Str_Star_Star_Star_Dot[6];
     /* ---------------------------------------------------------------------
      * NoteEdit_FormatTempoString_Str -- NUL-terminated string(s), 6 bytes,
      * used by NoteEdit_FormatTempoString (v10/v9 0xF2FAF2, v7 0xF2FAC8) (`ld
@@ -769,7 +812,8 @@ typedef struct __attribute__((packed)) {
      * used by NoteEdit_FormatNoteOther (v10/v9 0xF2FB54, v7 0xF2FB2A) (`ld
      * xwa, NoteEdit_FormatNoteOther_Str_5`).
      * --------------------------------------------------------------------- */
-    char NoteEdit_FormatNoteOther_Str_5[12];
+    char NoteEdit_FormatNoteOther_Str_5[4];
+    char NoteEdit_FormatNoteOther_Str_ad_b8[8];
     /* ---------------------------------------------------------------------
      * NoteEdit_GateTime0C_Str -- NUL-terminated string(s), 8 bytes, used by
      * NoteEdit_GateTime0C (v10/v9 0xF2FBD9, v7 0xF2FBAF) (`ld xwa,
@@ -805,7 +849,8 @@ typedef struct __attribute__((packed)) {
      * NoteEdit_GateTime60 (v10/v9 0xF2FC00, v7 0xF2FBD6) (`ld xwa,
      * NoteEdit_GateTime60_Str`).
      * --------------------------------------------------------------------- */
-    char NoteEdit_GateTime60_Str[12];
+    char NoteEdit_GateTime60_Str[8];
+    char NoteEdit_GateTimeNumeric_Str_Fmt2d[4];
     /* ---------------------------------------------------------------------
      * NoteEdit_FormatChordType_Str -- NUL-terminated string(s), 4 bytes,
      * used by NoteEdit_FormatChordType (v10/v9 0xF2FC1D, v7 0xF2FBF3) (`ld
@@ -830,7 +875,8 @@ typedef struct __attribute__((packed)) {
      * NoteEditFunc_CaseTable_Strings -- 10 bytes of NUL-terminated strings
      * after NoteEditFunc_CaseTable; that code DOES reach (readers: the .s header)
      * --------------------------------------------------------------------- */
-    char NoteEditFunc_CaseTable_Strings[10];
+    char NoteEditFunc_CaseTable_Strings[6];
+    char SngSelFunc_OnGetRamString_Str_Fmt2d[4];
     /* ---------------------------------------------------------------------
      * EntGrid_PostMainEvent_Table -- read by EntGrid_PostMainEvent (v10/v9
      * 0xF300EC, v7 0xF300C2) (`lda xbc,
@@ -889,7 +935,8 @@ typedef struct __attribute__((packed)) {
      * SndParam_Dispatch (v10/v9 0xF303D6, v7 0xF303AC) (`ld xwa,
      * SndParam_Dispatch_Str_2`).
      * --------------------------------------------------------------------- */
-    char SndParam_Dispatch_Str_2[20];
+    char SndParam_Dispatch_Str_2[10];
+    char EntGridCheck_Handler_Str_Fmt3d[10];
     /* ---------------------------------------------------------------------
      * EntGridCheck_Handle4140_Str -- NUL-terminated string(s), 10 bytes,
      * used by EntGridCheck_Handle4140 (v10/v9 0xF30678, v7 0xF3064E) (`ld
@@ -901,7 +948,9 @@ typedef struct __attribute__((packed)) {
      * used by EntGridCheck_Handle4140 (v10/v9 0xF30678, v7 0xF3064E) (`ld
      * xwa, EntGridCheck_Handle4140_Str_2`).
      * --------------------------------------------------------------------- */
-    char EntGridCheck_Handle4140_Str_2[30];
+    char EntGridCheck_Handle4140_Str_2[10];
+    char EntGridCheck_Handle4E13_Str_Fmt3d[10];
+    char EntGridCheck_SendAudioCommand_Str_Fmt3d[10];
     /* ---------------------------------------------------------------------
      * SndParam_Dispatch_PtrTable -- 2 u32 ROM addresses (or 0), read by
      * SndParam_Dispatch (v10/v9 0xF303D6, v7 0xF303AC) (`lda xix,
@@ -940,7 +989,8 @@ typedef struct __attribute__((packed)) {
      * strings after EntertainerGridCheck_CaseTable; that code DOES reach (readers: the .s header,
      * which also labels each string)
      * --------------------------------------------------------------------- */
-    char EntertainerGridCheck_CaseTable_Strings[12];
+    char EntertainerGridCheck_CaseTable_Strings[6];
+    char IvPnlWrExit_CopyString_Str_ExMD[6];
     /* ---------------------------------------------------------------------
      * SqplyVal_HandleExtraParams_CaseTable -- jump table of a compiled
      * `switch` in SqplyVal_HandleExtraParams (v10/v9 0xF30CBF, v7 0xF30C95)
@@ -1286,7 +1336,8 @@ typedef struct __attribute__((packed)) {
      * bytes, used by SqplyFunc_FormatRhythmPattern (v10/v9 0xF34801, v7
      * 0xF347D7) (`ld xwa, SqplyFunc_FormatRhythmPattern_Str_2`).
      * --------------------------------------------------------------------- */
-    char SqplyFunc_FormatRhythmPattern_Str_2[12];
+    char SqplyFunc_FormatRhythmPattern_Str_2[6];
+    char SqplyFunc_FormatPatternNumeric_Str_Fmt3d[6];
     /* ---------------------------------------------------------------------
      * SqplyFunc_FormatPunchIn_Str -- NUL-terminated string(s), 6 bytes, used
      * by SqplyFunc_FormatPunchIn (v10/v9 0xF3483A, v7 0xF34810) (`ld xwa,
@@ -1343,7 +1394,9 @@ typedef struct __attribute__((packed)) {
      * by Sqedt_ParamDispatch (v10/v9 0xF34A5C, v7 0xF34A32) (`ld xwa,
      * Sqedt_ParamDispatch_Str_3`).
      * --------------------------------------------------------------------- */
-    char Sqedt_ParamDispatch_Str_3[18];
+    char Sqedt_ParamDispatch_Str_3[6];
+    char FmtStr_pct3d_4B5E[6];
+    char Sqedt_ParamDispatch_Str_Fmt3d[6];
     /* ---------------------------------------------------------------------
      * Sqedt_ParamDispatch_Str_4 -- NUL-terminated string(s), 6 bytes, used
      * by Sqedt_ParamDispatch (v10/v9 0xF34A5C, v7 0xF34A32) (`ld xwa,
@@ -1397,7 +1450,12 @@ typedef struct __attribute__((packed)) {
      * by Sqedt_ParamDispatch (v10/v9 0xF34A5C, v7 0xF34A32) (`ld xwa,
      * Sqedt_ParamDispatch_Str_11`).
      * --------------------------------------------------------------------- */
-    char Sqedt_ParamDispatch_Str_11[44];
+    char Sqedt_ParamDispatch_Str_11[6];
+    char Sqedt_ParamDispatch_Entry2_Str_Fmt2d[8];
+    char Sqedt_ParamDispatch_Entry2_Str_Fmt2d_2[8];
+    char Sqedt_ParamDispatch_Entry2_Str_Fmt3d[6];
+    char FmtStr_pluspct3d[8];
+    char FmtStr_minuspct3d[8];
     /* ---------------------------------------------------------------------
      * Sqedt_ParamDispatch_Str_12 -- NUL-terminated string(s), 6 bytes, used
      * by Sqedt_ParamDispatch (v10/v9 0xF34A5C, v7 0xF34A32) (`ld xwa,
@@ -1511,7 +1569,8 @@ typedef struct __attribute__((packed)) {
      * by Sqedt_ParamDispatch (v10/v9 0xF34A5C, v7 0xF34A32) (`ld xwa,
      * Sqedt_ParamDispatch_Str_30`).
      * --------------------------------------------------------------------- */
-    char Sqedt_ParamDispatch_Str_30[12];
+    char Sqedt_ParamDispatch_Str_30[6];
+    char Sqedt_ParamDispatch_Entry2_Str_Fmt3d_2[6];
     /* ---------------------------------------------------------------------
      * Sqedt_ParamDispatch_Str_31 -- NUL-terminated string(s), 6 bytes, used
      * by Sqedt_ParamDispatch (v10/v9 0xF34A5C, v7 0xF34A32) (`ld xwa,
@@ -1529,13 +1588,15 @@ typedef struct __attribute__((packed)) {
      * by Sqedt_ParamDispatch (v10/v9 0xF34A5C, v7 0xF34A32) (`ld xwa,
      * Sqedt_ParamDispatch_Str_32`).
      * --------------------------------------------------------------------- */
-    char Sqedt_ParamDispatch_Str_32[12];
+    char Sqedt_ParamDispatch_Str_32[6];
+    char Sqedt_ParamDispatch_Entry2_Str_Blank5[6];
     /* ---------------------------------------------------------------------
      * Sqedt_ParamDispatch_Str_33 -- NUL-terminated string(s), 10 bytes, used
      * by Sqedt_ParamDispatch (v10/v9 0xF34A5C, v7 0xF34A32) (`ld xwa,
      * Sqedt_ParamDispatch_Str_33`).
      * --------------------------------------------------------------------- */
-    char Sqedt_ParamDispatch_Str_33[10];
+    char Sqedt_ParamDispatch_Str_33[6];
+    char SqedtFunc_CheckMode_Str_N100[4];
     /* ---------------------------------------------------------------------
      * Sqedt_ParamDispatch_Str_34 -- NUL-terminated string(s), 4 bytes, used
      * by Sqedt_ParamDispatch (v10/v9 0xF34A5C, v7 0xF34A32) (`ld xwa,
@@ -5090,20 +5151,15 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
         0x33, 0x38,
     },
 
-    .AttAreYouSureCheck_Strings = "ITALIAN\0"
-        "ATTENTION!\0\xFF"
-        "ACHTUNG !\0"
-        "ATTENTION!\0\xFF"
-        "\xA1" "ATENCI\xD3N!\0\xFF"
-        "Perhatian !\0"
-        "Are You Sure?\0"
-        "Sind Sie sicher ?\0"
-        "Etes-vous s\x95\xD3? \0"
-        "\xBF" "Est\xE1 seguro? \0\xFF"
-        "Apakah yakin akan dihapus ?",
+    .AttAreYouSureCheck_Strings = "ITALIAN",
 
-    .StsSeqMenu1Check_Strings = "Features for creating a song. \0\xFF"
-        "Funktionen zur Erstellung eines Songs",
+    .Str_ATTENTION = "ATTENTION!\x00\xFF" "ACHTUNG !\x00" "ATTENTION!\x00\xFF\xA1" "ATENCI\xD3N!\x00\xFFPerhatian !\x00" "Are You Sure?\x00Sind Sie sicher ?\x00" "Etes-vous s\x95\xD3? \x00\xBF" "Est\xE1 seguro? \x00\xFF",
+
+    .Str_Apakahyakinakandihapus = "Apakah yakin akan dihapus ?",
+
+    .StsSeqMenu1Check_Strings = "Features for creating a song. \x00\xFF",
+
+    .LongStr_Funktionen_zur_Erstellung = "Funktionen zur Erstellung eines Songs",
 
     .StsSeqMenu2Check_Strings = "Features for editing a song.\0\xFF"
         "Funktionen zur Bearbeitung eines Songs.",
@@ -5126,17 +5182,19 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
     .StsNtDrEditCheck_Strings = "Press the up/down button under the screen corresponding to the track that you want to edit.\0"
         "Dr\xFC" "cken Sie eine der Doppeltasten unter dem Display, entsprechend der Spur, die Sie editieren m\xF6" "chten \0\xFF",
 
-    .AttSongClrCheck_Strings = "Using SONG CLEAR will erase any existing recording in the Sequencer.\0\xFF"
-        "SONG CLEAR l\xF6scht alle aufgenommenen Daten in diesem Song. \0"
-        "L'utilisation de SONG CLEAR effacera tout enregistrement pr\xE9" "c\xE9" "dent dans le s\xE9quenceur. \0"
-        "Al anular la canci\xF3n se borra la grabaci\xF3n del secuenciador. \0"
-        "Gunakan SONG CLEAR untuk menghapus suatu rekaman yang ada didalam Sequencer.\0\xFF",
+    .AttSongClrCheck_Strings = "Using SONG CLEAR will erase any existing recording in the Sequencer.\x00\xFFSONG CLEAR l\xF6scht alle aufgenommenen Daten in diesem Song. \x00L'utilisation de SONG CLEAR effacera tout enregistrement pr\xE9" "c\xE9" "dent dans le s\xE9quenceur. ",
 
-    .AttTrkClrCheck_Strings = "Using TRACK CLEAR will erase any existing recordings in the selected Tracks.\0\xFF"
-        "TRACK CLEAR l\xF6scht alle Daten in den ausgew\xE4hlten Spuren. \0\xFF"
-        "L'utilisation de TRACK CLEAR effacera tout enregistrement pr\xE9" "c\xE9" "dent dans les pistes s\xE9lectionn\xE9" "es. \0"
-        "Al anular la pista se borra la grabaci\xF3n de las pistas seleccionadas. \0\xFF"
-        "Gunakan TRACK CLEAR bila akan menghapus suatu rekaman yang ada didalam Track yang terseleksi.",
+    .LongStr_SongClear_Spanish = "Al anular la canci\xF3n se borra la grabaci\xF3n del secuenciador. ",
+
+    .LongStr_Gunakan_SONG_CLEAR = "Gunakan SONG CLEAR untuk menghapus suatu rekaman yang ada didalam Sequencer.\x00\xFF",
+
+    .AttTrkClrCheck_Strings = "Using TRACK CLEAR will erase any existing recordings in the selected Tracks.\x00\xFFTRACK CLEAR l\xF6scht alle Daten in den ausgew\xE4hlten Spuren. \x00\xFF",
+
+    .NakaInst_anular_la_pista_se_borra_la_grabaci_n_de_las = "L'utilisation de TRACK CLEAR effacera tout enregistrement pr\xE9" "c\xE9" "dent dans les pistes s\xE9lectionn\xE9" "es. ",
+
+    .LongStr_TrackClear_Spanish = "Al anular la pista se borra la grabaci\xF3n de las pistas seleccionadas. \x00\xFF",
+
+    .LongStr_Gunakan_TRACK_CLEAR = "Gunakan TRACK CLEAR bila akan menghapus suatu rekaman yang ada didalam Track yang terseleksi.",
 
     .StsAtPunchCheck_Strings = "Press the START/STOP button to begin.\0"
         "Bet\xE4tigen Sie die START/STOP-Taste um den Vorgang zu beginnen.\0\xFF",
@@ -5247,34 +5305,39 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
         SELF(HelpTtlFunc_LookupSlide_Strings[632]),
     },
 
-    .HelpTtlFunc_LookupSlide_PtrTable_Strings = "Rev\0"
-        "Dsp\0"
-        "Acc\0"
-        "ExMD\0\xFF"
-        "ExPR\0\xFF"
-        "ExAP\0\xFF",
+    .HelpTtlFunc_LookupSlide_PtrTable_Strings = "Rev",
+
+    .IvSddsp_CopyString_Str_Dsp = "Dsp",
+
+    .IvSdacc_CopyString_Str_Acc = "Acc",
+
+    .IvPlayExit_CopyString_Str_ExMD = "ExMD\x00\xFF",
+
+    .IvPunchExit_CopyString_Str_ExPR = "ExPR\x00\xFF",
+
+    .IvAutoPunchExit_CopyString_Str_ExAP = "ExAP\x00\xFF",
 
     .AttAreYouSureCheck_PtrTable = {
-        SELF(AttAreYouSureCheck_Strings[66]),
-        SELF(AttAreYouSureCheck_Strings[80]),
-        SELF(AttAreYouSureCheck_Strings[98]),
-        SELF(AttAreYouSureCheck_Strings[114]),
+        SELF(Str_ATTENTION[58]),
+        SELF(Str_ATTENTION[72]),
+        SELF(Str_ATTENTION[90]),
+        SELF(Str_ATTENTION[106]),
         NAKA_ADDR(AttAreYouSureCheck_Strings),
-        SELF(AttAreYouSureCheck_Strings[130]),
+        SELF(Str_Apakahyakinakandihapus),
     },
 
     .AttAttentionCheck_PtrTable = {
-        SELF(AttAreYouSureCheck_Strings[8]),
-        SELF(AttAreYouSureCheck_Strings[20]),
-        SELF(AttAreYouSureCheck_Strings[30]),
-        SELF(AttAreYouSureCheck_Strings[42]),
+        SELF(Str_ATTENTION),
+        SELF(Str_ATTENTION[12]),
+        SELF(Str_ATTENTION[22]),
+        SELF(Str_ATTENTION[34]),
         NAKA_ADDR(AttAreYouSureCheck_Strings),
-        SELF(AttAreYouSureCheck_Strings[54]),
+        SELF(Str_ATTENTION[46]),
     },
 
     .StsSeqMenu1Check_PtrTable = {
         SELF(StsSeqMenu1Check_Strings),
-        SELF(StsSeqMenu1Check_Strings[32]),
+        SELF(LongStr_Funktionen_zur_Erstellung),
         SELF(StsSeqMenu1Check_Strings),
         SELF(StsSeqMenu1Check_Strings),
         NAKA_ADDR(AttAreYouSureCheck_Strings),
@@ -5347,19 +5410,19 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
     .AttTrkClrCheck_PtrTable = {
         SELF(AttTrkClrCheck_Strings),
         SELF(AttTrkClrCheck_Strings[78]),
-        SELF(AttTrkClrCheck_Strings[138]),
-        SELF(AttTrkClrCheck_Strings[238]),
+        SELF(NakaInst_anular_la_pista_se_borra_la_grabaci_n_de_las),
+        SELF(LongStr_TrackClear_Spanish),
         NAKA_ADDR(AttAreYouSureCheck_Strings),
-        SELF(AttTrkClrCheck_Strings[310]),
+        SELF(LongStr_Gunakan_TRACK_CLEAR),
     },
 
     .AttSongClrCheck_PtrTable = {
         SELF(AttSongClrCheck_Strings),
         SELF(AttSongClrCheck_Strings[70]),
         SELF(AttSongClrCheck_Strings[130]),
-        SELF(AttSongClrCheck_Strings[218]),
+        SELF(LongStr_SongClear_Spanish),
         NAKA_ADDR(AttAreYouSureCheck_Strings),
-        SELF(AttSongClrCheck_Strings[280]),
+        SELF(LongStr_Gunakan_SONG_CLEAR),
     },
 
     .StsAtPunchCheck_PtrTable = {
@@ -5371,17 +5434,21 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
         SELF(StsAtPunchCheck_Strings),
     },
 
-    .StsAtPunchCheck_PtrTable_Strings = "~af\0"
-        "~81\0"
-        "%3d",
+    .StsAtPunchCheck_PtrTable_Strings = "~af",
 
-    .NoteEditBox_EventDispatch2_Str = "%2d\0"
-        "%2d",
+    .NoteEditBox_EventDispatch2_Str_N81 = "~81",
+
+    .FmtStr_pct3d = "%3d",
+
+    .NoteEditBox_EventDispatch2_Str = "%2d",
+
+    .NoteEditBox_EventDispatch2_Str_Fmt2d = "%2d",
 
     .NoteEditBox_EventDispatch2_Str_2 = "%3d",
 
-    .NoteEditBox_EventDispatch2_Str_3 = "%2d\0"
-        "%2d",
+    .NoteEditBox_EventDispatch2_Str_3 = "%2d",
+
+    .NoteEditBox_EventDispatch2_Str_Fmt2d_2 = "%2d",
 
     .NoteEdit_FormatEntry_Table = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00 },
 
@@ -5397,8 +5464,9 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
         0x002D, 0x0047,
     },
 
-    .NoteEditBox_SetupGrid_CaseTable_Strings = "%3d.\0\xFF"
-        "***.\0\xFF",
+    .NoteEditBox_SetupGrid_CaseTable_Strings = "%3d.\x00\xFF",
+
+    .NoteEdit_FormatTempoString_Str_Star_Star_Star_Dot = "***.\x00\xFF",
 
     .NoteEdit_FormatTempoString_Str = "%2d.\0\xFF",
 
@@ -5412,8 +5480,9 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
 
     .NoteEdit_FormatNoteOther_Str_4 = "%5d",
 
-    .NoteEdit_FormatNoteOther_Str_5 = "%5d\0"
-        "~ad~b8\0\xFF",
+    .NoteEdit_FormatNoteOther_Str_5 = "%5d",
+
+    .NoteEdit_FormatNoteOther_Str_ad_b8 = "~ad~b8\x00\xFF",
 
     .NoteEdit_GateTime0C_Str = "~ad~20\0\xFF",
 
@@ -5425,8 +5494,9 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
 
     .NoteEdit_GateTime30_Str = "~ab~20\0\xFF",
 
-    .NoteEdit_GateTime60_Str = "~aa~20\0\xFF"
-        "%2d",
+    .NoteEdit_GateTime60_Str = "~aa~20\x00\xFF",
+
+    .NoteEdit_GateTimeNumeric_Str_Fmt2d = "%2d",
 
     .NoteEdit_FormatChordType_Str = "%3d",
 
@@ -5440,8 +5510,9 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
         0x009D, 0x00AE, 0x00BC, 0x020F, 0x0217, 0x0227, 0x022C, 0x0231,
     },
 
-    .NoteEditFunc_CaseTable_Strings = "SONG\0\xFF"
-        "%2d",
+    .NoteEditFunc_CaseTable_Strings = "SONG\x00\xFF",
+
+    .SngSelFunc_OnGetRamString_Str_Fmt2d = "%2d",
 
     .EntGrid_PostMainEvent_Table = {
         0x01, 0x00, 0x01, 0x00, 0x02, 0x00, 0x03, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00,
@@ -5467,14 +5538,17 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
 
     .SndParam_Dispatch_Str = "      ON ",
 
-    .SndParam_Dispatch_Str_2 = "     OFF \0"
-        "     %3d ",
+    .SndParam_Dispatch_Str_2 = "     OFF ",
+
+    .EntGridCheck_Handler_Str_Fmt3d = "     %3d ",
 
     .EntGridCheck_Handle4140_Str = "      ON ",
 
-    .EntGridCheck_Handle4140_Str_2 = "     OFF \0"
-        "     %3d \0"
-        "     %3d ",
+    .EntGridCheck_Handle4140_Str_2 = "     OFF ",
+
+    .EntGridCheck_Handle4E13_Str_Fmt3d = "     %3d ",
+
+    .EntGridCheck_SendAudioCommand_Str_Fmt3d = "     %3d ",
 
     .SndParam_Dispatch_PtrTable = { 0x00000000, 0x00000000 },
 
@@ -5494,8 +5568,9 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
 
     .EntertainerGridCheck_CaseTable = { 0x0000, 0x00AC, 0x0000, 0x00AC, 0x0562, 0x0158, 0x0158 },
 
-    .EntertainerGridCheck_CaseTable_Strings = "ExMD\0\xFF"
-        "ExMD\0\xFF",
+    .EntertainerGridCheck_CaseTable_Strings = "ExMD\x00\xFF",
+
+    .IvPnlWrExit_CopyString_Str_ExMD = "ExMD\x00\xFF",
 
     .SqplyVal_HandleExtraParams_CaseTable = { 0x0000, 0x0035, 0x003E, 0x037A, 0x0047, 0x0050, 0x0059, 0x0062 },
 
@@ -5640,8 +5715,9 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
 
     .SqplyFunc_FormatRhythmPattern_Str = "  -2 ",
 
-    .SqplyFunc_FormatRhythmPattern_Str_2 = "  -1 \0"
-        " %3d ",
+    .SqplyFunc_FormatRhythmPattern_Str_2 = "  -1 ",
+
+    .SqplyFunc_FormatPatternNumeric_Str_Fmt3d = " %3d ",
 
     .SqplyFunc_FormatPunchIn_Str = " %3d ",
 
@@ -5665,9 +5741,11 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
 
     .Sqedt_ParamDispatch_Str_2 = " %3d ",
 
-    .Sqedt_ParamDispatch_Str_3 = " %3d \0"
-        " %3d \0"
-        " %3d ",
+    .Sqedt_ParamDispatch_Str_3 = " %3d ",
+
+    .FmtStr_pct3d_4B5E = " %3d ",
+
+    .Sqedt_ParamDispatch_Str_Fmt3d = " %3d ",
 
     .Sqedt_ParamDispatch_Str_4 = " %3d ",
 
@@ -5685,12 +5763,17 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
 
     .Sqedt_ParamDispatch_Str_10 = " %3d ",
 
-    .Sqedt_ParamDispatch_Str_11 = " %3d \0"
-        " +%2d \0\xFF"
-        " -%2d \0\xFF"
-        " %3d \0"
-        " +%3d \0\xFF"
-        " -%3d \0\xFF",
+    .Sqedt_ParamDispatch_Str_11 = " %3d ",
+
+    .Sqedt_ParamDispatch_Entry2_Str_Fmt2d = " +%2d \x00\xFF",
+
+    .Sqedt_ParamDispatch_Entry2_Str_Fmt2d_2 = " -%2d \x00\xFF",
+
+    .Sqedt_ParamDispatch_Entry2_Str_Fmt3d = " %3d ",
+
+    .FmtStr_pluspct3d = " +%3d \x00\xFF",
+
+    .FmtStr_minuspct3d = " -%3d \x00\xFF",
 
     .Sqedt_ParamDispatch_Str_12 = " %4d ",
 
@@ -5728,18 +5811,21 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
 
     .Sqedt_ParamDispatch_Str_29 = " %3d ",
 
-    .Sqedt_ParamDispatch_Str_30 = " %3d \0"
-        " %3d ",
+    .Sqedt_ParamDispatch_Str_30 = " %3d ",
+
+    .Sqedt_ParamDispatch_Entry2_Str_Fmt3d_2 = " %3d ",
 
     .Sqedt_ParamDispatch_Str_31 = " %3d ",
 
     .NakaInst_2d = " %2d ",
 
-    .Sqedt_ParamDispatch_Str_32 = " %2d \0"
-        "     ",
+    .Sqedt_ParamDispatch_Str_32 = " %2d ",
 
-    .Sqedt_ParamDispatch_Str_33 = "%3dKB\0"
-        "100",
+    .Sqedt_ParamDispatch_Entry2_Str_Blank5 = "     ",
+
+    .Sqedt_ParamDispatch_Str_33 = "%3dKB",
+
+    .SqedtFunc_CheckMode_Str_N100 = "100",
 
     .Sqedt_ParamDispatch_Str_34 = "%3d",
 
@@ -13016,19 +13102,19 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
         "fixedcol\0\xFF",
 
     .East_ClassTable_163 = {
-        { NAKA_ADDR(PsHarmOnOffBoxProc), NAKA_CLASS(AcFuncToggle), 44, 0, 0x00E55CC4, 0x00E55CC2, SELF(ClassProps_PsHarmOnOffBox) },
-        { NAKA_ADDR(AcVocalistListBoxProc), NAKA_CLASS(AcListBox), 48, 0, 0x00E55CB0, 0x00E55CAE, SELF(ClassProps_AcVocalistListBox) },
-        { NAKA_ADDR(IvMpstPageControlProc), NAKA_CLASS(PsInvisibleBox), 32, 10, 0x00E55C9C, 0x00E55C98, SELF(ClassProps_IvMpstPageControl) },
-        { NAKA_ADDR(AcSendEditSwProc), NAKA_CLASS(PsEditSwBox), 52, 14, 0x00E55C8A, 0x00E55C84, SELF(ClassProps_AcSendEditSw) },
-        { NAKA_ADDR(AcGMOnOffBoxProc), NAKA_CLASS(AcOnOffBox), 54, 0, 0x00E55C76, 0x00E55C74, SELF(ClassProps_AcGMOnOffBox) },
-        { NAKA_ADDR(AcLswFuncEditBoxProc), NAKA_CLASS(PsEditBox), 68, 18, 0x00E55C62, 0x00E55C5C, SELF(ClassProps_AcLswFuncEditBox) },
-        { NAKA_ADDR(AcLswFuncBoxProc), NAKA_CLASS(PsParaBox), 54, 18, 0x00E55C4E, 0x00E55C48, SELF(ClassProps_AcLswFuncBox) },
-        { NAKA_ADDR(AcFadeSetGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, 0x00E55C36, 0x00E55C32, SELF(ClassProps_AcFadeSetGridBox) },
-        { NAKA_ADDR(AcVocalGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, 0x00E55C22, 0x00E55C1E, SELF(ClassProps_AcVocalGridBox) },
-        { NAKA_ADDR(AcInOutGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, 0x00E55C0E, 0x00E55C0A, SELF(ClassProps_AcInOutGridBox) },
-        { NAKA_ADDR(AcParaLoadOptGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, 0x00E55BF4, 0x00E55BF0, SELF(ClassProps_AcParaLoadOptGridBox) },
-        { NAKA_ADDR(AcPcgOutGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, 0x00E55BE0, 0x00E55BDC, SELF(ClassProps_AcPcgOutGridBox) },
-        { NAKA_ADDR(AcPmemOutLGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, 0x00E55BCA, SELF(East_ClassTable_163_Tail[92]), SELF(ClassProps_AcPmemOutLGridBox) },
+        { NAKA_ADDR(PsHarmOnOffBoxProc), NAKA_CLASS(AcFuncToggle), 44, 0, NAKA_ADDR(ClassName_PsHarmOnOffBox), NAKA_ADDR(ClassPropdata_PsHarmOnOffBox), SELF(ClassProps_PsHarmOnOffBox) },
+        { NAKA_ADDR(AcVocalistListBoxProc), NAKA_CLASS(AcListBox), 48, 0, NAKA_ADDR(ClassName_AcVocalistListBox), NAKA_ADDR(ClassPropdata_AcVocalistListBox), SELF(ClassProps_AcVocalistListBox) },
+        { NAKA_ADDR(IvMpstPageControlProc), NAKA_CLASS(PsInvisibleBox), 32, 10, NAKA_ADDR(ClassName_IvMpstPageControl), NAKA_ADDR(ClassPropdata_IvMpstPageControl), SELF(ClassProps_IvMpstPageControl) },
+        { NAKA_ADDR(AcSendEditSwProc), NAKA_CLASS(PsEditSwBox), 52, 14, NAKA_ADDR(ClassName_AcSendEditSw), NAKA_ADDR(ClassPropdata_AcSendEditSw), SELF(ClassProps_AcSendEditSw) },
+        { NAKA_ADDR(AcGMOnOffBoxProc), NAKA_CLASS(AcOnOffBox), 54, 0, NAKA_ADDR(ClassName_AcGMOnOffBox), NAKA_ADDR(ClassPropdata_AcGMOnOffBox), SELF(ClassProps_AcGMOnOffBox) },
+        { NAKA_ADDR(AcLswFuncEditBoxProc), NAKA_CLASS(PsEditBox), 68, 18, NAKA_ADDR(ClassName_AcLswFuncEditBox), NAKA_ADDR(ClassPropdata_AcLswFuncEditBox), SELF(ClassProps_AcLswFuncEditBox) },
+        { NAKA_ADDR(AcLswFuncBoxProc), NAKA_CLASS(PsParaBox), 54, 18, NAKA_ADDR(ClassName_AcLswFuncBox), NAKA_ADDR(ClassPropdata_AcLswFuncBox), SELF(ClassProps_AcLswFuncBox) },
+        { NAKA_ADDR(AcFadeSetGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, NAKA_ADDR(ClassName_AcFadeSetGridBox), NAKA_ADDR(ClassPropdata_AcFadeSetGridBox), SELF(ClassProps_AcFadeSetGridBox) },
+        { NAKA_ADDR(AcVocalGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, NAKA_ADDR(ClassName_AcVocalGridBox), NAKA_ADDR(ClassPropdata_AcVocalGridBox), SELF(ClassProps_AcVocalGridBox) },
+        { NAKA_ADDR(AcInOutGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, NAKA_ADDR(ClassName_AcInOutGridBox), NAKA_ADDR(ClassPropdata_AcInOutGridBox), SELF(ClassProps_AcInOutGridBox) },
+        { NAKA_ADDR(AcParaLoadOptGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, NAKA_ADDR(ClassName_AcParaLoadOptGridBox), NAKA_ADDR(ClassPropdata_AcParaLoadOptGridBox), SELF(ClassProps_AcParaLoadOptGridBox) },
+        { NAKA_ADDR(AcPcgOutGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, NAKA_ADDR(ClassName_AcPcgOutGridBox), NAKA_ADDR(ClassPropdata_AcPcgOutGridBox), SELF(ClassProps_AcPcgOutGridBox) },
+        { NAKA_ADDR(AcPmemOutLGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, NAKA_ADDR(ClassName_AcPmemOutLGridBox), SELF(East_ClassTable_163_Tail[92]), SELF(ClassProps_AcPmemOutLGridBox) },
         { NAKA_ADDR(AcPmemOutRGridBoxProc), NAKA_CLASS(PsGridBox), 74, 12, SELF(East_ClassTable_163_Tail[74]), SELF(East_ClassTable_163_Tail[70]), SELF(ClassProps_AcPmemOutRGridBox) },
         { NAKA_ADDR(AcCtlMsgGridBoxProc), NAKA_CLASS(PsGridBox), 78, 16, SELF(East_ClassTable_163_Tail[54]), SELF(East_ClassTable_163_Tail[48]), SELF(ClassProps_AcCtlMsgGridBox) },
         { NAKA_ADDR(AcMidiPartGridBoxProc), NAKA_CLASS(PsGridBox), 78, 16, SELF(East_ClassTable_163_Tail[30]), SELF(East_ClassTable_163_Tail[24]), SELF(ClassProps_AcMidiPartGridBox) },

@@ -279,35 +279,35 @@ const naka_sequencer_exit_t naka_sequencer_exit_data
     .NoteEditBox_code = ALIGNED_STRING("jC"),
     .NoteEditBox_name = "NoteEditBox",
 
-    /* NakaInst_SngSel2 */
+    /* ClassPropdata_SngSel2 */
     .SngSel2_code = ALIGNED_STRING(""),
     .SngSel2_name = "SngSel2",
 
-    /* NakaInst_SngSel */
+    /* ClassPropdata_SngSel */
     .SngSel_code = "c^^jC",
     .SngSel_name = ALIGNED_STRING("SngSel"),
 
-    /* NakaInst_AcEntertainerGridBox */
+    /* ClassPropdata_AcEntertainerGridBox */
     .AcEntertainerGridBox_code = "XXj",
     .AcEntertainerGridBox_name = ALIGNED_STRING("AcEntertainerGridBox"),
 
-    /* NakaInst_AccIll */
+    /* ClassPropdata_AccIll */
     .AccIll_code = ALIGNED_STRING("^^jC"),
     .AccIll_name = ALIGNED_STRING("AccIll"),
 
-    /* NakaInst_SqedtVal3 */
+    /* ClassPropdata_SqedtVal3 */
     .SqedtVal3_code = "^^j",
     .SqedtVal3_name = "SqedtVal3",
 
-    /* NakaInst_SqplyVal */
+    /* ClassPropdata_SqplyVal */
     .SqplyVal_code = ALIGNED_STRING("^^jC"),
     .SqplyVal_name = ALIGNED_STRING("SqplyVal"),
 
-    /* NakaInst_IvSongCopyExit */
+    /* ClassPropdata_IvSongCopyExit */
     .IvSongCopyExit_code = ALIGNED_STRING(""),
     .IvSongCopyExit_name = ALIGNED_STRING("IvSongCopyExit"),
 
-    /* NakaInst_SqedtFix */
+    /* ClassPropdata_SqedtFix */
     .SqedtFix_code = "^^_",
     .SqedtFix_name = ALIGNED_STRING("SqedtFix"),
 

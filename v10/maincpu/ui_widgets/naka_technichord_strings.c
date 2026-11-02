@@ -8,6 +8,10 @@
 
 #include "naka_types.h"
 
+/* Viewable table Murai_ViewableTable_0EE (registry slot 0xEE, InitializeMurai); its elements are the
+ * OBJ_* constants of naka_technichord_part.c, which holds the records. */
+#define Murai_ViewableTable_0EE_SLOT 0x0EEu
+
 /* ── External symbols (resolved by linker script) ── */
 
 extern const char AcFileSfxBoxProc;
@@ -5078,7 +5082,14 @@ const naka_technichord_strings_t naka_technichord_strings_data
         /* 80 */ { 0, 0xFFFFFFFF, 0x00000000, 0x00000000 },
     },
 
-    .IvMesage_Windows = { 0x00EE0014, 0x00EE0002, 0x00EE0005, 0x00EE0009, 0x00EE000D, 0x00EE0016 },
+    .IvMesage_Windows = {
+        NAKA_VIEW_ID(Murai_ViewableTable_0EE, 20), /* OBJ_NoMessage (naka_technichord_part.c) */
+        NAKA_VIEW_ID(Murai_ViewableTable_0EE, 2),  /* OBJ_Completed (naka_technichord_part.c) */
+        NAKA_VIEW_ID(Murai_ViewableTable_0EE, 5),  /* OBJ_Reminder (naka_technichord_part.c) */
+        NAKA_VIEW_ID(Murai_ViewableTable_0EE, 9),  /* OBJ_Error (naka_technichord_part.c) */
+        NAKA_VIEW_ID(Murai_ViewableTable_0EE, 13), /* OBJ_Other (naka_technichord_part.c) */
+        NAKA_VIEW_ID(Murai_ViewableTable_0EE, 22), /* OBJ_PleaseWait (naka_technichord_part.c) */
+    },
 
     .Msg_str = "Msg",
 
