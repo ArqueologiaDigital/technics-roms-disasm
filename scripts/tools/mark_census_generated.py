@@ -29,7 +29,7 @@ RULES = [
     (rb'(v10/maincpu/images/Bitmap\w+|images/Wallpaper_\d)\.bin$',
      b'scripts/build/indexed_images.py, from the .png beside it'),
     (rb'includes/demo_presets/demo_preset_(\d\d)_compressed\.bin$',
-     b'midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)'),
+     b'midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi + sidecar'),
     (rb'includes/help_databases/help_db_\w+_compressed\.bin$',
      b'help_db_text.py + compress_slide8k.py (lzss_j.encode, the factory encoder), from help_db_<lang>.txt'),
     (rb'includes/help_databases/stale_\w+\.bin$',

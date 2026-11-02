@@ -42,7 +42,9 @@ Also measured (a finding, no build change): **SLIDE4K is the same encoder with N
 slices carry bytes past the end of their stream: `demo_preset_17_compressed.original.bin` is 19,314 B but its
 stream (header size 0x1700) is 3,357 B, and preset 18's is 27,956 B for a 27,881-byte stream.
 `scripts/build/compress_lzss.py` could therefore also drop its reference for the stream part; the slices'
-tails would still need a source of their own.  Not done here: listed as a follow-up below.
+tails would still need a source of their own.  Not done here: listed as a follow-up below.  (Done
+2026-11-02, lane open6/misc2, `notes/misc2-2026-11-02/README.md`: compress_lzss.py runs lzss_j.encode, six
+blocks' pad byte is in the Makefile, and the two tails are declared in `table_data/kn5000_table_data.s`.)
 
 ## N-77efbd0e: the semantic score and the doc-quality census rate KN7000 builds 935 and 893
 
@@ -201,8 +203,9 @@ include comments that said the two assemblers disagree (`voice_record.inc`, `pan
 
 - Move the shared callers to name-carrying macros (VOICE_HEAD, and SOUND_HEAD / PMR_NAME with a name
   parameter): a regeneration of the trees listed under N-a23b8d58.
-- `scripts/build/compress_lzss.py` could build the SLIDE4K streams with `lzss_j.encode` (N = 4096, F = 18)
-  too; the two preset slices with bytes past their stream (presets 17 and 18) need those tails from a
-  source of their own first.
-- The repo-root CLAUDE.md Architecture table's v6 / v5 verbatim figures (now 13,756 B / 15,910 B), and the
-  Mines CLAUDE.md "LLVM Backend Bugs (Active Workarounds)" section (both resolved), for whoever edits CLAUDE.md.
+- DONE 2026-11-02 (lane open6/misc2, `notes/misc2-2026-11-02/README.md`): `scripts/build/compress_lzss.py`
+  builds the SLIDE4K streams with `lzss_j.encode` (N = 4096, F = 18), no reference; the tails of presets 17
+  and 18 are declared in the source.
+- DONE: the repo-root CLAUDE.md Architecture table's v6 / v5 verbatim figures (13,756 B / 15,910 B; already
+  on main, 50ce7e5f2), and the Mines CLAUDE.md "LLVM Backend Bugs (Active Workarounds)" section (Mines
+  301557d, 2026-11-02, which also retires its stale "Assembler Limitations").
