@@ -3068,7 +3068,7 @@
 0x484439EB  RhythmEndingSelect         ; ENDING k: slot 14 + 4k
 0x484439F0  RhythmEndingSelect_entry
 0x48440533  PartEventToParam           ; a style part's CC -> part parameter 0xB000cc (CC 0x60 -> 0xB08000, BEND SENS)
-0x48440538  PartEventToParam_entry
+0x48440535  PartEventToParam_entry
 0x48440662  PartFieldCcSend            ; one part-field-table entry as a controller; skips cc > 0x7F (the CC97 fold-root field is never sent)
 0x48440667  PartFieldCcSend_entry
 0x484419BB  StylePartFoldRootGet       ; -> a style part's field 0 (CC97), the octave fold point of chord transposition (NoteConvApply)
