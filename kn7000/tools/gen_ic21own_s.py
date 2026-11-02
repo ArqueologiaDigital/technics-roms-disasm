@@ -153,9 +153,7 @@ def gen_midi(d):
             whole = p[r:r + 2 + n]
             v = ", ".join(str(x) for x in pay)
             if t == 0x40 and n == 18:
-                o.emit("PMR_NAME_HEAD", whole[:2])
-                o.emit(f".ascii {qstr(pay[:16])}", pay[:16], "the memory's name")
-                o.emit(f"PMR_NAME_TAIL {pay[16]}, {pay[17]}", pay[16:18])
+                o.emit(f"PMR_NAME {qstr(pay[:16])}, {pay[16]}, {pay[17]}", whole, "the memory's name")
             elif t in kn_panel.PARTS and n == 72:
                 o.emit(f"PMR_PART {t:#04x}, {v}", whole)
             elif 0x13 <= t <= 0x1A and n == 4:

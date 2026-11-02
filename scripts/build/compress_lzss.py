@@ -3,11 +3,24 @@
 Compress data using SLIDE4K (LZSS) algorithm for KN5000 ROMs.
 
 Usage:
-    python scripts/compress_lzss.py <input_file> <output_file> [--reference <ref_compressed>]
+    python scripts/build/compress_lzss.py <input_file> <output_file>
+        [--pad BYTE] [--with-header] [--strict] [--reference <ref_compressed>]
 
 This produces LZSS compressed data compatible with the KN5000's SLIDE4K format.
 By default the output does NOT include the header - that should be added
 separately in assembly.
+
+Without a reference the stream is made by floppy/tools/kd/lzss_j.py's encode(),
+H. Okumura's LZSS.C binary-tree encoder, here with N = 4096, F = 18 and a 4-bit
+length field (lzss_j's own defaults are SLIDE8K's N = 8192, F = 10).  It is the
+factory SLIDE4K encoder: re-encoding the 19 demo presets and the three Sub-CPU
+update images (v1.40/v1.41/v1.42) reproduces every stream byte the decoder
+reads (notes/misc-2026-10-31/probes/slide4k_vs_okumura.py for the decisions,
+notes/misc2-2026-11-02/probes/slide4k_encode_exact.py for the bytes).  So the
+build reads no reference.  --pad BYTE appends the one alignment byte that six
+of the in-ROM demo blocks carry after their stream (every block ends on an
+even address; the decoder never reads the byte, so its value is recorded in
+the Makefile, DEMO_PRESET_PAD_NN).
 
 With --with-header the output is a whole-file SLIDE4K image: an 11-byte header
 ("SLIDE4K\\0" magic + 24-bit BIG-endian decompressed size) followed by the
@@ -16,8 +29,10 @@ File Type 007, e.g. original_ROMs/kn5000_subprogram_v142_compressed.rom); in
 that mode a --reference file is expected to carry the same 11-byte header,
 which is validated and stripped before decision replay.
 
-If a reference compressed file is provided, the compressor will attempt to match
-the original compression decisions for byte-identical output.
+If a reference compressed file is provided, the compressor replays the
+reference's decisions instead, and carries over any bytes past them.  The
+build no longer does that; it is kept for checking a stream against a factory
+slice.  The earlier greedy coder is kept as compress_slide4k_greedy().
 """
 
 import sys
@@ -194,7 +209,23 @@ def find_longest_match(data, pos, window, window_pos):
 
 def compress_slide4k(data):
     """
-    Compress data using SLIDE4K (LZSS) algorithm.
+    Compress data with the factory SLIDE4K encoder: lzss_j.encode, Okumura's
+    LZSS.C, with N = 4096, F = 18, a 4-bit length (see the module docstring).
+    """
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
+        os.path.abspath(__file__)))), "floppy", "tools", "kd"))
+    import lzss_j
+    # lzss_j keeps its parameters as module globals (SLIDE8K's by default); this
+    # process encodes SLIDE4K only.
+    lzss_j.N, lzss_j.F, lzss_j.LENBITS = WINDOW_SIZE, MAX_MATCH_LENGTH, 4
+    assert PREFILL_SIZE == lzss_j.N - lzss_j.F and lzss_j.THRESHOLD == MIN_MATCH_LENGTH - 1
+    return lzss_j.encode(bytes(data))
+
+
+def compress_slide4k_greedy(data):
+    """
+    The earlier greedy coder (longest match, first offset found).  It does not
+    make the factory decisions; kept for reference only.
     """
     window = bytearray(WINDOW_SIZE)
     window_pos = PREFILL_SIZE
@@ -272,10 +303,12 @@ def make_header(size):
 
 def main():
     if len(sys.argv) < 3:
-        print(f"Usage: {sys.argv[0]} <input_file> <output_file> [--strict] [--with-header] [--reference <ref_compressed>]")
+        print(f"Usage: {sys.argv[0]} <input_file> <output_file> [--pad BYTE] [--strict] [--with-header] [--reference <ref_compressed>]")
         print("\nCompresses data using SLIDE4K (LZSS) algorithm.")
         print("Output does not include header - add 'SLIDE4K' header in assembly.")
+        print("Without --reference it runs the factory encoder (lzss_j.encode, N=4096, F=18).")
         print("\nOptions:")
+        print("  --pad BYTE          Append one alignment byte after the stream")
         print("  --reference <file>  Use compression decisions from reference file")
         print("                      for byte-identical output (if input matches)")
         print("  --strict            Abort instead of falling back to fresh compression")
@@ -298,6 +331,14 @@ def main():
     if '--with-header' in sys.argv:
         with_header = True
         sys.argv.remove('--with-header')
+
+    pad = None
+    if '--pad' in sys.argv:
+        i = sys.argv.index('--pad')
+        pad = int(sys.argv[i + 1], 0)
+        if not 0 <= pad <= 0xFF:
+            raise SystemExit("ERROR: --pad takes one byte value")
+        del sys.argv[i:i + 2]
 
     # Check for reference file option
     reference_file = None
@@ -326,6 +367,9 @@ def main():
         compressed = compress_with_reference(data, ref_data)
     else:
         compressed = compress_slide4k(data)
+
+    if pad is not None:
+        compressed = bytes(compressed) + bytes([pad])
 
     if with_header:
         compressed = make_header(len(data)) + compressed

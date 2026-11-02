@@ -356,7 +356,7 @@ Compressed_Preset_Data_LZSS:
 	;
 	; Files:
 	;   includes/demo_presets/demo_preset_18.bin            - decompressed source (38,144 bytes)
-	;   includes/demo_presets/demo_preset_18_compressed.bin - LZSS payload (27,956 bytes)
+	;   includes/demo_presets/demo_preset_18_compressed.bin - LZSS payload (27,881 bytes)
 	;
 	; The header is 11 bytes: 8-byte "SLIDE4K\0" magic + 24-bit BIG-ENDIAN uncompressed
 	; size (evidence: the v142 SubCPU update image's size field 03 00 00 = 0x030000 = 196,608).
@@ -366,11 +366,19 @@ Compressed_Preset_Data_LZSS:
 	;
 	; Tools:
 	;   Decompress: make decompress-demo-presets
-	;   Compress:   make rebuild-demo-presets (byte-identical, via --reference)
+	;   Compress:   make rebuild-demo-presets (byte-identical: the factory encoder, no reference)
 DemoSongPreset18:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x95, 0x00	; uncompressed size = 38144 bytes
-	.incbin "includes/demo_presets/demo_preset_18_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_18.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_18_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_18.mid + sidecar
+; The 75 bytes after the stream are the last 75 bytes of an older SLIDE4K stream
+; that this block's stream overwrote: the same 75 bytes end DemoSongPreset17's
+; stale tail (below), whose last 15,559 bytes are the end of that older stream; it
+; parses as SLIDE4K items and its runs match the end of the current Feature Demo
+; stream (notes/misc2-2026-11-02/probes/slide4k_stale_tails.py).  [INFERENCE] an
+; earlier Feature Demo.  Its window (the older stream's start) is overwritten, so
+; no source can regenerate these bytes; the decoder never reads them.
+DemoSongPreset18_StaleStreamTail:	.incbin "original_ROMs/kn5000_table_data.rom", 0xe6cf4, 75	; census: opaque -- compressed: the end of an older SLIDE4K stream whose start is overwritten
 
 	; Unused space after compressed data
 	.fill 25281, 1, 0xff
@@ -1087,10 +1095,14 @@ Composer_FactoryMemoryImage:	.incbin	"includes/generated/Composer_FactoryMemoryI
 ; SLIDE4K-compressed demo song presets, entries 0-17 (entry 18 is at 0x8E0000).
 ; Each block: 8-byte "SLIDE4K\0" magic + 24-bit BIG-ENDIAN uncompressed size
 ; (see the Makefile's demo-preset section for the endianness evidence), then
-; the LZSS payload, which the Makefile regenerates from the decompressed source
-; in includes/demo_presets/ (byte-identical via compress_lzss.py --reference).
-; The blocks run end to end from 0x9C4050 to 0x9F94CA, with one 0xFF alignment
-; byte at 0x9C9017 and 2,869 bytes of 0xFF fill from 0x9F94CB to 0x9F9FFF.
+; the LZSS payload, which the Makefile encodes from the decompressed source in
+; includes/demo_presets/ with the factory encoder (compress_lzss.py: lzss_j.encode,
+; N = 4096, F = 18), reading no reference stream.  The blocks run end to end from
+; 0x9C4050 to 0x9F94CA, each starting on an even address: block 00 is followed by
+; one 0xFF alignment byte at 0x9C9017 (the .org below), blocks 01, 06, 07, 08, 10
+; and 12 by one pad byte of their own (the Makefile's DEMO_PRESET_PAD_NN, appended
+; to the payload), and block 17 by the stale bytes declared after it; then 2,869
+; bytes of 0xFF fill from 0x9F94CB to 0x9F9FFF.
 ;
 ; The same bytes also survived verbatim in the dead tail of the deleted
 ; includes/icons_to_strings.bin (file offsets 0x7F2D8-0xB5287): a pre-conversion
@@ -1107,7 +1119,7 @@ Composer_FactoryMemoryImage:	.incbin	"includes/generated/Composer_FactoryMemoryI
 DemoSongPreset00:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x69, 0x00	; uncompressed size = 26880 bytes
-	.incbin "includes/demo_presets/demo_preset_00_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_00.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_00_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_00.mid + sidecar
 
 	.org 0x9C9018 - 0x800000, 0xFF
 ; Demo song 01 (pointer-table slot 1): Demo_ParseSlideHeader (0xF87189)
@@ -1118,7 +1130,7 @@ DemoSongPreset00:
 DemoSongPreset01:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x71, 0x00	; uncompressed size = 28928 bytes
-	.incbin "includes/demo_presets/demo_preset_01_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_01.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_01_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_01.mid + sidecar
 
 	.org 0x9CE17C - 0x800000, 0xFF
 ; Demo song 02 (pointer-table slot 2): Demo_ParseSlideHeader (0xF87189)
@@ -1129,7 +1141,7 @@ DemoSongPreset01:
 DemoSongPreset02:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x4A, 0x00	; uncompressed size = 18944 bytes
-	.incbin "includes/demo_presets/demo_preset_02_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_02.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_02_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_02.mid + sidecar
 
 	.org 0x9D16F2 - 0x800000, 0xFF
 ; Demo song 03 (pointer-table slot 3): Demo_ParseSlideHeader (0xF87189)
@@ -1140,7 +1152,7 @@ DemoSongPreset02:
 DemoSongPreset03:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x6B, 0x00	; uncompressed size = 27392 bytes
-	.incbin "includes/demo_presets/demo_preset_03_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_03.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_03_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_03.mid + sidecar
 
 	.org 0x9D645C - 0x800000, 0xFF
 ; Demo song 04 (pointer-table slot 4): Demo_ParseSlideHeader (0xF87189)
@@ -1151,7 +1163,7 @@ DemoSongPreset03:
 DemoSongPreset04:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x56, 0x00	; uncompressed size = 22016 bytes
-	.incbin "includes/demo_presets/demo_preset_04_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_04.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_04_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_04.mid + sidecar
 
 	.org 0x9DA016 - 0x800000, 0xFF
 ; Demo song 05 (pointer-table slot 5): Demo_ParseSlideHeader (0xF87189)
@@ -1162,7 +1174,7 @@ DemoSongPreset04:
 DemoSongPreset05:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x62, 0x00	; uncompressed size = 25088 bytes
-	.incbin "includes/demo_presets/demo_preset_05_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_05.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_05_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_05.mid + sidecar
 
 	.org 0x9DE072 - 0x800000, 0xFF
 ; Demo song 06 (pointer-table slot 6): Demo_ParseSlideHeader (0xF87189)
@@ -1173,7 +1185,7 @@ DemoSongPreset05:
 DemoSongPreset06:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x44, 0x00	; uncompressed size = 17408 bytes
-	.incbin "includes/demo_presets/demo_preset_06_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_06.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_06_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_06.mid + sidecar
 
 	.org 0x9E0CE2 - 0x800000, 0xFF
 ; Demo song 07 (pointer-table slot 7): Demo_ParseSlideHeader (0xF87189)
@@ -1184,7 +1196,7 @@ DemoSongPreset06:
 DemoSongPreset07:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x21, 0x00	; uncompressed size = 8448 bytes
-	.incbin "includes/demo_presets/demo_preset_07_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_07.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_07_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_07.mid + sidecar
 
 	.org 0x9E2358 - 0x800000, 0xFF
 ; Demo song 08 (pointer-table slot 8): Demo_ParseSlideHeader (0xF87189)
@@ -1195,7 +1207,7 @@ DemoSongPreset07:
 DemoSongPreset08:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x5A, 0x00	; uncompressed size = 23040 bytes
-	.incbin "includes/demo_presets/demo_preset_08_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_08.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_08_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_08.mid + sidecar
 
 	.org 0x9E61C2 - 0x800000, 0xFF
 ; Demo song 09 (pointer-table slot 9): Demo_ParseSlideHeader (0xF87189)
@@ -1206,7 +1218,7 @@ DemoSongPreset08:
 DemoSongPreset09:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x1B, 0x00	; uncompressed size = 6912 bytes
-	.incbin "includes/demo_presets/demo_preset_09_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_09.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_09_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_09.mid + sidecar
 
 	.org 0x9E72E8 - 0x800000, 0xFF
 ; Demo song 10 (pointer-table slot 10): Demo_ParseSlideHeader (0xF87189)
@@ -1217,7 +1229,7 @@ DemoSongPreset09:
 DemoSongPreset10:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x44, 0x00	; uncompressed size = 17408 bytes
-	.incbin "includes/demo_presets/demo_preset_10_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_10.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_10_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_10.mid + sidecar
 
 	.org 0x9EA1F2 - 0x800000, 0xFF
 ; Demo song 11 (pointer-table slot 11): Demo_ParseSlideHeader (0xF87189)
@@ -1228,7 +1240,7 @@ DemoSongPreset10:
 DemoSongPreset11:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x5B, 0x00	; uncompressed size = 23296 bytes
-	.incbin "includes/demo_presets/demo_preset_11_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_11.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_11_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_11.mid + sidecar
 
 	.org 0x9EDFFC - 0x800000, 0xFF
 ; Demo song 12 (pointer-table slot 12): Demo_ParseSlideHeader (0xF87189)
@@ -1239,7 +1251,7 @@ DemoSongPreset11:
 DemoSongPreset12:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x1B, 0x00	; uncompressed size = 6912 bytes
-	.incbin "includes/demo_presets/demo_preset_12_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_12.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_12_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_12.mid + sidecar
 
 	.org 0x9EEC62 - 0x800000, 0xFF
 ; Demo song 13 (pointer-table slot 13): Demo_ParseSlideHeader (0xF87189)
@@ -1250,7 +1262,7 @@ DemoSongPreset12:
 DemoSongPreset13:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x2C, 0x00	; uncompressed size = 11264 bytes
-	.incbin "includes/demo_presets/demo_preset_13_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_13.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_13_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_13.mid + sidecar
 
 	.org 0x9F0E72 - 0x800000, 0xFF
 ; Demo song 14 (pointer-table slot 14): Demo_ParseSlideHeader (0xF87189)
@@ -1261,7 +1273,7 @@ DemoSongPreset13:
 DemoSongPreset14:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x1A, 0x00	; uncompressed size = 6656 bytes
-	.incbin "includes/demo_presets/demo_preset_14_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_14.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_14_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_14.mid + sidecar
 
 	.org 0x9F1C70 - 0x800000, 0xFF
 ; Demo song 15 (pointer-table slot 15): Demo_ParseSlideHeader (0xF87189)
@@ -1272,7 +1284,7 @@ DemoSongPreset14:
 DemoSongPreset15:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x2D, 0x00	; uncompressed size = 11520 bytes
-	.incbin "includes/demo_presets/demo_preset_15_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_15.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_15_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_15.mid + sidecar
 
 	.org 0x9F3B52 - 0x800000, 0xFF
 ; Demo song 16 (pointer-table slot 16): Demo_ParseSlideHeader (0xF87189)
@@ -1283,7 +1295,7 @@ DemoSongPreset15:
 DemoSongPreset16:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x1A, 0x00	; uncompressed size = 6656 bytes
-	.incbin "includes/demo_presets/demo_preset_16_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_16.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_16_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_16.mid + sidecar
 
 	.org 0x9F494E - 0x800000, 0xFF
 ; Demo song 17 (pointer-table slot 17): Demo_ParseSlideHeader (0xF87189)
@@ -1294,7 +1306,18 @@ DemoSongPreset16:
 DemoSongPreset17:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x17, 0x00	; uncompressed size = 5888 bytes
-	.incbin "includes/demo_presets/demo_preset_17_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_17.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_17_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py (lzss_j.encode, the factory encoder), from demo_presets/midi/demo_preset_17.mid + sidecar
+; 15,957 bytes follow the stream (to 0x9F94CA), none of which the decoder reads.
+; The first 398 repeat the stream's own last 398 bytes (0x9F54E8..0x9F5675).  The
+; other 15,559 are the end of an older SLIDE4K stream: they parse as SLIDE4K items
+; ending on the slice's last byte, runs of up to 199 bytes equal the end of the
+; current Feature Demo stream (DemoSongPreset18), and their last 75 bytes are
+; DemoSongPreset18_StaleStreamTail's (notes/misc2-2026-11-02/probes/
+; slide4k_stale_tails.py).  [INFERENCE] an earlier Feature Demo stream, overwritten
+; here by demo songs 16 and 17.  Its window (the older stream's start) is gone, so
+; no source can regenerate those bytes.
+DemoSongPreset17_StreamEndCopy:		.incbin "includes/demo_presets/demo_preset_17_compressed.bin", 2959, 398	; census: generated -- compress_lzss.py: a second copy of the stream's last 398 bytes (stream 3,357 B)
+DemoSongPreset17_StaleStreamTail:	.incbin "original_ROMs/kn5000_table_data.rom", 0x1f5804, 15559	; census: opaque -- compressed: the end of an older SLIDE4K stream whose start is overwritten
 
 	.org 0x9FA000 - 0x800000, 0xFF
 FileIdentifierStringsTable:

@@ -335,8 +335,11 @@ placed after "## Chord Recognition" (the engine sub-lane's draft):
 > (`ACC_TRANSPORT_STATE` 128 / 134) and `INTTR4_SeqAutoStart` starts it at the end of a bar of the
 > accompaniment clock.
 
-Also correct the "Overview" sentence that says the engine does "variation/fill switching" in the chord
-detector, and add the renamed routines to the page's code references.
+Also add the renamed routines to the page's code references.  (Corrected 2026-11-02: this used to ask to
+correct an "Overview" sentence placing variation/fill switching in the chord detector.  The page has no such
+sentence: its Overview lists "variation/fill switching" among the subsystem's parts, which is right.  The
+open item there is the checklist line "Document the variation/fill-in switching state machine", which this
+draft answers.)
 
 ## Evidence
 

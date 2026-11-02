@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 4,759
-#   semantic names ........... 4,757 (100.0%)
+#   symbols .................. 4,762
+#   semantic names ........... 4,760 (100.0%)
 #   positional names ......... 2
 #
 SectionDirectory_Table 00800000
@@ -2407,6 +2407,7 @@ FeatureDemo_FileEntry5 008CE07C
 FeatureDemo_FileEntry6 008CE094
 Compressed_Preset_Data_LZSS 008E0000
 DemoSongPreset18 008E0000
+DemoSongPreset18_StaleStreamTail 008E6CF4
 Wallpaper_0 008ED000
 Wallpaper0_ShadeRamp 008FFF80
 Wallpaper_1 00900000
@@ -3996,6 +3997,8 @@ DemoSongPreset14 009F0E72
 DemoSongPreset15 009F1C70
 DemoSongPreset16 009F3B52
 DemoSongPreset17 009F494E
+DemoSongPreset17_StreamEndCopy 009F5676
+DemoSongPreset17_StaleStreamTail 009F5804
 FileIdentifierStringsTable 009FA000
 Boot_LoadDiskData_JumpOffsets 009FA140
 LZSS_SlideSignature 009FA150

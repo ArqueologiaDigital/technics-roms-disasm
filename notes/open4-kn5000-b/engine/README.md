@@ -308,6 +308,14 @@ have identical interval rows in the ROM, but they are different chords: 29 is "9
 Types 31-39 (no voicing row; LCD names in quotes): 31 7(#9,13) "#9 13", 32 7(b13) "b13", 33 7(b9,b13) "b9b13",
 34 7(#9,b13) "#9b13", 35 M7(13) "13", 36 M7(b13) "b13", 37 7(#11) "7 #11", 38 m7(11) "m7 11", 39 aug7(#11) "+7#11".
 
+Types 29 and 30 have the same voicing rows as 12 and 28 (checked against the ROM: the records at
+`ChordTables_TypeIntervals` + 4 x 28 and + 4 x 29 are `00 04 08 0A` and `00 04 09 0A`).  What tells them apart
+is recognition: `ChordRecog_IntervalMaskTable` gives type 29 for held sets with a 9th, e.g. 0 2 4 8 10, and
+type 30 for held sets with a flat 9th, e.g. 0 1 4 9 10 (`probes/chord_table_check.py`; every entry of the four types is listed by
+`notes/misc2-2026-11-02/probes/chord_types_29_30.py`).  A four-note record has no room for the fifth tone, so the
+names are the recognised chords, voiced as 7(#5) and 7(13).  (Corrected 2026-11-02: this table named them
+7(#5) and 7(13), the same as 12 and 28.)
+
 Types 15-18, 21, 22 and 24 are voiced without the root (four tension notes).  Types 31-39 are recognized
 (103 table entries, e.g. held 0 5 6 11) but their voicing rows are zero.  **Answered 2026-11-02**
 (`notes/open6-kn5000-d/accomp/README.md` A5, A6, kn5000-3qp): the accompaniment does not use these rows; it

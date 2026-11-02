@@ -259,7 +259,8 @@ before. So:
   e.g. "Revival Rock" (in 7 sets) and "Soloist Sounds" (4).
 - The 80 "Blank" slots of the eight custom1/custom2 sets are each 0x237F bytes.
 
-The KN6000 bank has no stale records and no residue.
+The KN6000 / KN6500 factory bank (`01ctmini.ic18`) has no stale records and no residue.  (Clarified
+2026-11-02: the three KN6000-layout records above are in Felipe's KN7000 bank, not in this one.)
 
 **How the residue is typed** (third round, extended by lane ic21-rest on 2026-10-31; `gen_customdata_s.py`,
 class `Cover`; each run is an include file `<image>/SlotNN_Residue.inc`, `StaleNN_Residue.inc` or
