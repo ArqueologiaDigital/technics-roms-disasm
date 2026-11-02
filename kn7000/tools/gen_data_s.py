@@ -3051,13 +3051,19 @@ class Gen:
                     rd = [x for x in self.dr.accesses if x.key[0] == "ptr" and x.key[1][0] == "arg"
                           and a in self.arg_kinds().get(x.key[1], ((),))[0]]
                 nm = self.label_at.get(a) or self.fixed.get(a)
-                if nm is None or (a in self.fixed_by_code and self.GUESSED.match(nm)):
+                guessed = nm is not None and a in self.fixed_by_code and (
+                    self.GUESSED.match(nm) or (FEATURES.get("msg_readers", True) and re.fullmatch(r"MsgTable_[0-9A-F]{8}", nm)))
+                if nm is None or guessed:
                     # (msg_readers, lane mn10300-data) named after the routine that reads the keys (not the
-                    # caller that only passes the table on)
+                    # caller that only passes the table on); the shape name an earlier generation gave is a guess
                     fr = sorted({re.sub(r"(_entry)?(_L[0-9a-f]+_*)?$", "", x.func) for x in rd
                                  if x.func and not x.insn.split()[0].startswith("call")})
                     base = f"{fr[0]}_MsgTable" if fr and FEATURES.get("msg_readers", True) else f"MsgTable_{a:08X}"
-                    lab = self.rename_at(a, base)
+                    if nm is not None and ((not fr and re.fullmatch(r"MsgTable_[0-9A-F]{8}", nm))
+                                           or re.fullmatch(re.escape(base) + r"(_\d+)?", nm)):
+                        lab = self.name_at(a, nm)       # (no reader to name it after, or named so already)
+                    else:
+                        lab = self.rename_at(a, base)
                 else:
                     lab = self.name_at(a, nm)
 
