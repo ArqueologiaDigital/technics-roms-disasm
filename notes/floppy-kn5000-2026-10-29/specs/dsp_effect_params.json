@@ -1,4602 +1,5782 @@
 {
-"0": {
-"name": "  NO OPERATION",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 7,
-"records_in_range": 0
-},
-"1": {
-"name": "     CHORUS",
-"params": [
-{
-"name": "DEPTH",
-"pid": 7,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO SPEED",
-"pid": 8,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO WAVEFORM",
-"pid": 49,
-"min": 0,
-"max": 2
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 1680,
-"records_in_range": 1640
-},
-"2": {
-"name": "MODULATED CHORUS",
-"params": [
-{
-"name": "DEPTH",
-"pid": 7,
-"min": 0,
-"max": 99
-},
-{
-"name": "SLOW LFO SPEED",
-"pid": 9,
-"min": 0,
-"max": 99
-},
-{
-"name": "FAST LFO SPEED",
-"pid": 71,
-"min": 0,
-"max": 99
-},
-{
-"name": "FAST LFO BALANCE",
-"pid": 10,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO WAVEFORM",
-"pid": 49,
-"min": 0,
-"max": 2
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 384,
-"records_in_range": 384
-},
-"3": {
-"name": "    ENHANCER",
-"params": [
-{
-"name": "MANUAL",
-"pid": 12,
-"min": 0,
-"max": 99
-},
-{
-"name": "LOW MIX",
-"pid": 54,
-"min": 0,
-"max": 99
-},
-{
-"name": "HIGH MIX",
-"pid": 55,
-"min": 0,
-"max": 99
-},
-{
-"name": "DELAY L",
-"pid": 22,
-"min": 0,
-"max": 350
-},
-{
-"name": "DELAY R",
-"pid": 23,
-"min": 0,
-"max": 350
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 161,
-"records_in_range": 161
-},
-"4": {
-"name": "    FLANGER",
-"params": [
-{
-"name": "DEPTH",
-"pid": 7,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO SPEED",
-"pid": 8,
-"min": 0,
-"max": 99
-},
-{
-"name": "RESONANCE",
-"pid": 11,
-"min": 65437,
-"max": 99
-},
-{
-"name": "MANUAL",
-"pid": 12,
-"min": 0,
-"max": 99
-},
-{
-"name": "PHASE",
-"pid": 56,
-"min": 0,
-"max": 180
-},
-{
-"name": "LFO WAVEFORM",
-"pid": 49,
-"min": 0,
-"max": 2
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 219,
-"records_in_range": 219
-},
-"5": {
-"name": "     PHASER",
-"params": [
-{
-"name": "DEPTH",
-"pid": 7,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO SPEED",
-"pid": 8,
-"min": 0,
-"max": 99
-},
-{
-"name": "RESONANCE",
-"pid": 11,
-"min": 65437,
-"max": 99
-},
-{
-"name": "MANUAL",
-"pid": 12,
-"min": 0,
-"max": 99
-},
-{
-"name": "PHASE",
-"pid": 56,
-"min": 0,
-"max": 180
-},
-{
-"name": "LFO WAVEFORM",
-"pid": 49,
-"min": 0,
-"max": 2
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 65,
-"records_in_range": 65
-},
-"6": {
-"name": "    ENSEMBLE",
-"params": [
-{
-"name": "DEPTH",
-"pid": 7,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO SPEED",
-"pid": 8,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO WAVEFORM",
-"pid": 49,
-"min": 0,
-"max": 2
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 93,
-"records_in_range": 93
-},
-"7": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"8": {
-"name": "  GATED REVERB",
-"params": [
-{
-"name": "GATE TIME",
-"pid": 46,
-"min": 0,
-"max": 99
-},
-{
-"name": "HIGH DAMP GAIN",
-"pid": 36,
-"min": 0,
-"max": 24
-},
-{
-"name": "THRESHOLD",
-"pid": 40,
-"min": 0,
-"max": 99
-},
-{
-"name": "MASK TIME",
-"pid": 47,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 10,
-"records_in_range": 10
-},
-"9": {
-"name": "  SINGLE DELAY",
-"params": [
-{
-"name": "DELAY L",
-"pid": 22,
-"min": 0,
-"max": 350
-},
-{
-"name": "DELAY R",
-"pid": 23,
-"min": 0,
-"max": 350
-},
-{
-"name": "FEEDBACK L",
-"pid": 24,
-"min": 65437,
-"max": 99
-},
-{
-"name": "FEEDBACK R",
-"pid": 25,
-"min": 65437,
-"max": 99
-},
-{
-"name": "HIGH DAMP GAIN",
-"pid": 36,
-"min": 0,
-"max": 24
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 679,
-"records_in_range": 679
-},
-"10": {
-"name": "MULTI TAP DELAY",
-"params": [
-{
-"name": "DELAY 1",
-"pid": 75,
-"min": 0,
-"max": 700
-},
-{
-"name": "DELAY 2",
-"pid": 76,
-"min": 0,
-"max": 700
-},
-{
-"name": "DELAY 3",
-"pid": 77,
-"min": 0,
-"max": 700
-},
-{
-"name": "DELAY 4",
-"pid": 78,
-"min": 0,
-"max": 700
-},
-{
-"name": "PAN   1",
-"pid": 79,
-"min": 0,
-"max": 99
-},
-{
-"name": "PAN   2",
-"pid": 80,
-"min": 0,
-"max": 99
-},
-{
-"name": "PAN   3",
-"pid": 81,
-"min": 0,
-"max": 99
-},
-{
-"name": "PAN   4",
-"pid": 82,
-"min": 0,
-"max": 99
-},
-{
-"name": "FEEDBACK",
-"pid": 57,
-"min": 65437,
-"max": 99
-},
-{
-"name": "HIGH DAMP GAIN",
-"pid": 36,
-"min": 0,
-"max": 24
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 134,
-"records_in_range": 134
-},
-"11": {
-"name": "MODULATION DELAY",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"12": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"13": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"14": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"15": {
-"name": "  ROCK ROTARY",
-"params": [
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME ADJUST",
-"pid": 20,
-"min": 0,
-"max": 99
-},
-{
-"name": "TREBLE DEPTH",
-"pid": 72,
-"min": 0,
-"max": 99
-},
-{
-"name": "       FAST",
-"pid": 73,
-"min": 0,
-"max": 99
-},
-{
-"name": "       SLOW",
-"pid": 15,
-"min": 0,
-"max": 99
-},
-{
-"name": "       WIND UP",
-"pid": 16,
-"min": 0,
-"max": 99
-},
-{
-"name": "       WIND DOWN",
-"pid": 17,
-"min": 0,
-"max": 99
-},
-{
-"name": "BASS DEPTH",
-"pid": 74,
-"min": 0,
-"max": 99
-},
-{
-"name": "BASS   FAST",
-"pid": 18,
-"min": 0,
-"max": 99
-},
-{
-"name": "BASS   SLOW",
-"pid": 19,
-"min": 0,
-"max": 99
-},
-{
-"name": "       WIND UP",
-"pid": 16,
-"min": 0,
-"max": 99
-},
-{
-"name": "       WIND DOWN",
-"pid": 17,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "SLOW/FAST",
-"pid": 13,
-"min": 0,
-"max": 1
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 99
-}
-],
-"records": 159,
-"records_in_range": 159
-},
-"16": {
-"name": " ROOM REVERB 1",
-"params": [
-{
-"name": "REVERB TIME",
-"pid": 34,
-"min": 0,
-"max": 77
-},
-{
-"name": "PRE DELAY",
-"pid": 35,
-"min": 0,
-"max": 200
-},
-{
-"name": "HIGH DAMP GAIN",
-"pid": 36,
-"min": 0,
-"max": 24
-},
-{
-"name": "ER.LEVEL",
-"pid": 37,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 2,
-"min": 0,
-"max": 127
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"17": {
-"name": " ROOM REVERB 2",
-"params": [
-{
-"name": "REVERB TIME",
-"pid": 34,
-"min": 0,
-"max": 77
-},
-{
-"name": "PRE DELAY",
-"pid": 35,
-"min": 0,
-"max": 200
-},
-{
-"name": "HIGH DAMP GAIN",
-"pid": 36,
-"min": 0,
-"max": 24
-},
-{
-"name": "ER.LEVEL",
-"pid": 37,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 2,
-"min": 0,
-"max": 127
-}
-],
-"records": 121,
-"records_in_range": 121
-},
-"18": {
-"name": " PLATE REVERB 1",
-"params": [
-{
-"name": "REVERB TIME",
-"pid": 34,
-"min": 0,
-"max": 77
-},
-{
-"name": "PRE DELAY",
-"pid": 35,
-"min": 0,
-"max": 200
-},
-{
-"name": "HIGH DAMP GAIN",
-"pid": 36,
-"min": 0,
-"max": 24
-},
-{
-"name": "ER.LEVEL",
-"pid": 37,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 2,
-"min": 0,
-"max": 127
-}
-],
-"records": 348,
-"records_in_range": 0
-},
-"19": {
-"name": " PLATE REVERB 2",
-"params": [
-{
-"name": "REVERB TIME",
-"pid": 34,
-"min": 0,
-"max": 77
-},
-{
-"name": "PRE DELAY",
-"pid": 35,
-"min": 0,
-"max": 200
-},
-{
-"name": "HIGH DAMP GAIN",
-"pid": 36,
-"min": 0,
-"max": 24
-},
-{
-"name": "ER.LEVEL",
-"pid": 37,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 2,
-"min": 0,
-"max": 127
-}
-],
-"records": 233,
-"records_in_range": 0
-},
-"20": {
-"name": "CONCERT REVERB 1",
-"params": [
-{
-"name": "REVERB TIME",
-"pid": 34,
-"min": 15,
-"max": 97
-},
-{
-"name": "PRE DELAY",
-"pid": 35,
-"min": 0,
-"max": 200
-},
-{
-"name": "HIGH DAMP GAIN",
-"pid": 36,
-"min": 0,
-"max": 24
-},
-{
-"name": "ER.LEVEL",
-"pid": 37,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 2,
-"min": 0,
-"max": 127
-}
-],
-"records": 1719,
-"records_in_range": 1613
-},
-"21": {
-"name": "CONCERT REVERB 2",
-"params": [
-{
-"name": "REVERB TIME",
-"pid": 34,
-"min": 15,
-"max": 97
-},
-{
-"name": "PRE DELAY",
-"pid": 35,
-"min": 0,
-"max": 200
-},
-{
-"name": "HIGH DAMP GAIN",
-"pid": 36,
-"min": 0,
-"max": 24
-},
-{
-"name": "ER.LEVEL",
-"pid": 37,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 2,
-"min": 0,
-"max": 127
-}
-],
-"records": 1710,
-"records_in_range": 0
-},
-"22": {
-"name": " DARK REVERB 1",
-"params": [
-{
-"name": "REVERB TIME",
-"pid": 34,
-"min": 15,
-"max": 97
-},
-{
-"name": "PRE DELAY",
-"pid": 35,
-"min": 0,
-"max": 200
-},
-{
-"name": "HIGH DAMP GAIN",
-"pid": 36,
-"min": 0,
-"max": 24
-},
-{
-"name": "ER.LEVEL",
-"pid": 37,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 2,
-"min": 0,
-"max": 127
-}
-],
-"records": 8,
-"records_in_range": 0
-},
-"23": {
-"name": " DARK REVERB 2",
-"params": [
-{
-"name": "REVERB TIME",
-"pid": 34,
-"min": 15,
-"max": 97
-},
-{
-"name": "PRE DELAY",
-"pid": 35,
-"min": 0,
-"max": 200
-},
-{
-"name": "HIGH DAMP GAIN",
-"pid": 36,
-"min": 0,
-"max": 24
-},
-{
-"name": "ER.LEVEL",
-"pid": 37,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 2,
-"min": 0,
-"max": 127
-}
-],
-"records": 68,
-"records_in_range": 0
-},
-"24": {
-"name": "BRIGHT REVERB 1",
-"params": [
-{
-"name": "REVERB TIME",
-"pid": 34,
-"min": 15,
-"max": 97
-},
-{
-"name": "PRE DELAY",
-"pid": 35,
-"min": 0,
-"max": 200
-},
-{
-"name": "HIGH DAMP GAIN",
-"pid": 36,
-"min": 0,
-"max": 24
-},
-{
-"name": "ER.LEVEL",
-"pid": 37,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 2,
-"min": 0,
-"max": 127
-}
-],
-"records": 134,
-"records_in_range": 0
-},
-"25": {
-"name": "BRIGHT REVERB 2",
-"params": [
-{
-"name": "REVERB TIME",
-"pid": 34,
-"min": 15,
-"max": 97
-},
-{
-"name": "PRE DELAY",
-"pid": 35,
-"min": 0,
-"max": 200
-},
-{
-"name": "HIGH DAMP GAIN",
-"pid": 36,
-"min": 0,
-"max": 24
-},
-{
-"name": "ER.LEVEL",
-"pid": 37,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 2,
-"min": 0,
-"max": 127
-}
-],
-"records": 126,
-"records_in_range": 0
-},
-"26": {
-"name": " WAVE REVERB 1",
-"params": [
-{
-"name": "REVERB TIME",
-"pid": 34,
-"min": 15,
-"max": 97
-},
-{
-"name": "PRE DELAY",
-"pid": 35,
-"min": 0,
-"max": 200
-},
-{
-"name": "HIGH DAMP GAIN",
-"pid": 36,
-"min": 0,
-"max": 24
-},
-{
-"name": "ER.LEVEL",
-"pid": 37,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 2,
-"min": 0,
-"max": 127
-}
-],
-"records": 53,
-"records_in_range": 0
-},
-"27": {
-"name": " WAVE REVERB 2",
-"params": [
-{
-"name": "REVERB TIME",
-"pid": 34,
-"min": 15,
-"max": 97
-},
-{
-"name": "PRE DELAY",
-"pid": 35,
-"min": 0,
-"max": 200
-},
-{
-"name": "HIGH DAMP GAIN",
-"pid": 36,
-"min": 0,
-"max": 24
-},
-{
-"name": "ER.LEVEL",
-"pid": 37,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 2,
-"min": 0,
-"max": 127
-}
-],
-"records": 115,
-"records_in_range": 106
-},
-"28": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"29": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"30": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"31": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"32": {
-"name": "   DISTORTION",
-"params": [
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 99
-}
-],
-"records": 1,
-"records_in_range": 1
-},
-"33": {
-"name": "   OVERDRIVE",
-"params": [
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 99
-}
-],
-"records": 13,
-"records_in_range": 13
-},
-"34": {
-"name": "      FUZZ",
-"params": [
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 99
-}
-],
-"records": 53,
-"records_in_range": 53
-},
-"35": {
-"name": "    EXCITER",
-"params": [
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "HIGH EMPHASIS FC",
-"pid": 32,
-"min": 1,
-"max": 26
-},
-{
-"name": "EMPHASIS GAIN",
-"pid": 6,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 99
-}
-],
-"records": 289,
-"records_in_range": 262
-},
-"36": {
-"name": "   COMPRESSOR",
-"params": [
-{
-"name": "THRESHOLD",
-"pid": 40,
-"min": 0,
-"max": 99
-},
-{
-"name": "RATIO",
-"pid": 41,
-"min": 0,
-"max": 99
-},
-{
-"name": "ATTACK SENS.",
-"pid": 42,
-"min": 0,
-"max": 90
-},
-{
-"name": "RELEASE SENS.",
-"pid": 43,
-"min": 0,
-"max": 90
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 8,
-"records_in_range": 8
-},
-"37": {
-"name": " SLOW ATTACKER",
-"params": [
-{
-"name": "THRESHOLD",
-"pid": 40,
-"min": 0,
-"max": 99
-},
-{
-"name": "ATTACK RATE",
-"pid": 44,
-"min": 0,
-"max": 99
-},
-{
-"name": "RELEASE RATE",
-"pid": 45,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"38": {
-"name": " NOISE FLANGER",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"39": {
-"name": " PARAMETRIC EQ",
-"params": [
-{
-"name": "BAND EMPHASIS FC",
-"pid": 51,
-"min": 1,
-"max": 26
-},
-{
-"name": "BAND EMPHASIS  Q",
-"pid": 52,
-"min": 0,
-"max": 31
-},
-{
-"name": "BAND EMPHASIS  G",
-"pid": 53,
-"min": 0,
-"max": 48
-},
-{
-"name": "BAND EMPHASIS FC",
-"pid": 51,
-"min": 1,
-"max": 26
-},
-{
-"name": "BAND EMPHASIS  Q",
-"pid": 52,
-"min": 0,
-"max": 31
-},
-{
-"name": "BAND EMPHASIS  G",
-"pid": 53,
-"min": 0,
-"max": 48
-},
-{
-"name": "BAND EMPHASIS FC",
-"pid": 51,
-"min": 1,
-"max": 26
-},
-{
-"name": "BAND EMPHASIS  Q",
-"pid": 52,
-"min": 0,
-"max": 31
-},
-{
-"name": "BAND EMPHASIS  G",
-"pid": 53,
-"min": 0,
-"max": 48
-},
-{
-"name": "BAND EMPHASIS FC",
-"pid": 51,
-"min": 1,
-"max": 26
-},
-{
-"name": "BAND EMPHASIS  Q",
-"pid": 52,
-"min": 0,
-"max": 31
-},
-{
-"name": "BAND EMPHASIS  G",
-"pid": 53,
-"min": 0,
-"max": 48
-},
-{
-"name": "BAND EMPHASIS FC",
-"pid": 51,
-"min": 1,
-"max": 26
-},
-{
-"name": "BAND EMPHASIS  Q",
-"pid": 52,
-"min": 0,
-"max": 31
-},
-{
-"name": "BAND EMPHASIS  G",
-"pid": 53,
-"min": 0,
-"max": 48
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"40": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"41": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"42": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"43": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"44": {
-"name": "      CEL",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"45": {
-"name": "     CELM",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"46": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"47": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"48": {
-"name": "    AUTO PAN",
-"params": [
-{
-"name": "DEPTH",
-"pid": 7,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO SPEED",
-"pid": 8,
-"min": 0,
-"max": 99
-},
-{
-"name": "PHASE",
-"pid": 56,
-"min": 0,
-"max": 180
-},
-{
-"name": "LFO WAVEFORM",
-"pid": 49,
-"min": 0,
-"max": 2
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 2,
-"records_in_range": 2
-},
-"49": {
-"name": " PITCH SHIFTER",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"50": {
-"name": "    VIBRATO",
-"params": [
-{
-"name": "DEPTH",
-"pid": 7,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO SPEED",
-"pid": 8,
-"min": 0,
-"max": 99
-},
-{
-"name": "PHASE",
-"pid": 56,
-"min": 0,
-"max": 180
-},
-{
-"name": "LFO WAVEFORM",
-"pid": 49,
-"min": 0,
-"max": 2
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 1,
-"records_in_range": 1
-},
-"51": {
-"name": "   PEDAL WAH",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"52": {
-"name": "    AUTO WAH",
-"params": [
-{
-"name": "RESONANCE",
-"pid": 11,
-"min": 0,
-"max": 2
-},
-{
-"name": "MANUAL",
-"pid": 12,
-"min": 0,
-"max": 99
-},
-{
-"name": "SWEEP RANGE",
-"pid": 58,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 15,
-"records_in_range": 15
-},
-"53": {
-"name": " ROTARY SPEAKER",
-"params": [
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME ADJUST",
-"pid": 20,
-"min": 0,
-"max": 99
-},
-{
-"name": "TREBLE DEPTH",
-"pid": 72,
-"min": 0,
-"max": 99
-},
-{
-"name": "       FAST",
-"pid": 73,
-"min": 0,
-"max": 99
-},
-{
-"name": "       SLOW",
-"pid": 15,
-"min": 0,
-"max": 99
-},
-{
-"name": "       WIND UP",
-"pid": 16,
-"min": 0,
-"max": 99
-},
-{
-"name": "       WIND DOWN",
-"pid": 17,
-"min": 0,
-"max": 99
-},
-{
-"name": "BASS DEPTH",
-"pid": 74,
-"min": 0,
-"max": 99
-},
-{
-"name": "BASS   FAST",
-"pid": 18,
-"min": 0,
-"max": 99
-},
-{
-"name": "BASS   SLOW",
-"pid": 19,
-"min": 0,
-"max": 99
-},
-{
-"name": "       WIND UP",
-"pid": 16,
-"min": 0,
-"max": 99
-},
-{
-"name": "       WIND DOWN",
-"pid": 17,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "SLOW/FAST",
-"pid": 13,
-"min": 0,
-"max": 1
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 99
-}
-],
-"records": 303,
-"records_in_range": 303
-},
-"54": {
-"name": " RING MODULATOR",
-"params": [
-{
-"name": "OSC SPEED",
-"pid": 21,
-"min": 0,
-"max": 99
-},
-{
-"name": "PHASE",
-"pid": 56,
-"min": 0,
-"max": 180
-},
-{
-"name": "LFO WAVEFORM",
-"pid": 49,
-"min": 0,
-"max": 2
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 53,
-"records_in_range": 53
-},
-"55": {
-"name": "  HARS EFFECT",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"56": {
-"name": "     MIX UP",
-"params": [
-{
-"name": "DEPTH",
-"pid": 7,
-"min": 0,
-"max": 99
-},
-{
-"name": "SLOW LFO SPEED",
-"pid": 9,
-"min": 0,
-"max": 99
-},
-{
-"name": "FAST LFO SPEED L",
-"pid": 64,
-"min": 0,
-"max": 99
-},
-{
-"name": "FAST LFO SPEED R",
-"pid": 65,
-"min": 0,
-"max": 99
-},
-{
-"name": "PHASE",
-"pid": 56,
-"min": 0,
-"max": 180
-},
-{
-"name": "LFO WAVEFORM",
-"pid": 49,
-"min": 0,
-"max": 2
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 53,
-"records_in_range": 53
-},
-"57": {
-"name": "    STANDARD",
-"params": [
-{
-"name": "INTENSITY",
-"pid": 83,
-"min": 1,
-"max": 99
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 99
-}
-],
-"records": 3306,
-"records_in_range": 3306
-},
-"58": {
-"name": "   PERCUSSIVE",
-"params": [
-{
-"name": "INTENSITY",
-"pid": 83,
-"min": 1,
-"max": 99
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"59": {
-"name": "   SYMPHONIC",
-"params": [
-{
-"name": "INTENSITY",
-"pid": 83,
-"min": 1,
-"max": 99
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 99
-}
-],
-"records": 1223,
-"records_in_range": 1223
-},
-"60": {
-"name": "   DEEP SPACE",
-"params": [
-{
-"name": "INTENSITY",
-"pid": 83,
-"min": 1,
-"max": 99
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 99
-}
-],
-"records": 159,
-"records_in_range": 159
-},
-"61": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"62": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"63": {
-"name": "     STRING",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"64": {
-"name": "S.DELAY+CHORUS",
-"params": [
-{
-"name": "DELAY DRY/WET",
-"pid": 26,
-"min": 0,
-"max": 99
-},
-{
-"name": "DELAY L",
-"pid": 22,
-"min": 0,
-"max": 300
-},
-{
-"name": "DELAY R",
-"pid": 23,
-"min": 0,
-"max": 300
-},
-{
-"name": "FEEDBACK L",
-"pid": 24,
-"min": 65437,
-"max": 99
-},
-{
-"name": "FEEDBACK R",
-"pid": 25,
-"min": 65437,
-"max": 99
-},
-{
-"name": "CHORUS DRY/WET",
-"pid": 27,
-"min": 0,
-"max": 99
-},
-{
-"name": "DEPTH",
-"pid": 7,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO SPEED",
-"pid": 8,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO WAVEFORM",
-"pid": 49,
-"min": 0,
-"max": 2
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 131,
-"records_in_range": 131
-},
-"65": {
-"name": "S.DELAY+S.DELAY",
-"params": [
-{
-"name": "DELAY1 DRY/WET",
-"pid": 67,
-"min": 0,
-"max": 99
-},
-{
-"name": "DELAY L",
-"pid": 22,
-"min": 0,
-"max": 180
-},
-{
-"name": "DELAY R",
-"pid": 23,
-"min": 0,
-"max": 180
-},
-{
-"name": "FEEDBACK L",
-"pid": 24,
-"min": 65437,
-"max": 99
-},
-{
-"name": "FEEDBACK R",
-"pid": 25,
-"min": 65437,
-"max": 99
-},
-{
-"name": "DELAY2 DRY/WET",
-"pid": 68,
-"min": 0,
-"max": 99
-},
-{
-"name": "DELAY L",
-"pid": 22,
-"min": 0,
-"max": 180
-},
-{
-"name": "DELAY R",
-"pid": 23,
-"min": 0,
-"max": 180
-},
-{
-"name": "FEEDBACK L",
-"pid": 24,
-"min": 65437,
-"max": 99
-},
-{
-"name": "FEEDBACK R",
-"pid": 25,
-"min": 65437,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"66": {
-"name": "S.DELAY+FLANGER",
-"params": [
-{
-"name": "DELAY DRY/WET",
-"pid": 26,
-"min": 0,
-"max": 99
-},
-{
-"name": "DELAY L",
-"pid": 22,
-"min": 0,
-"max": 300
-},
-{
-"name": "DELAY R",
-"pid": 23,
-"min": 0,
-"max": 300
-},
-{
-"name": "FEEDBACK L",
-"pid": 24,
-"min": 65437,
-"max": 99
-},
-{
-"name": "FEEDBACK R",
-"pid": 25,
-"min": 65437,
-"max": 99
-},
-{
-"name": "FLANGER DRY/WET",
-"pid": 28,
-"min": 0,
-"max": 99
-},
-{
-"name": "DEPTH",
-"pid": 7,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO SPEED",
-"pid": 8,
-"min": 0,
-"max": 99
-},
-{
-"name": "RESONANCE",
-"pid": 11,
-"min": 65437,
-"max": 99
-},
-{
-"name": "MANUAL",
-"pid": 12,
-"min": 0,
-"max": 99
-},
-{
-"name": "PHASE",
-"pid": 56,
-"min": 0,
-"max": 180
-},
-{
-"name": "LFO WAVEFORM",
-"pid": 49,
-"min": 0,
-"max": 2
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 53,
-"records_in_range": 53
-},
-"67": {
-"name": "S.DELAY+VIBRATO",
-"params": [
-{
-"name": "DELAY DRY/WET",
-"pid": 26,
-"min": 0,
-"max": 99
-},
-{
-"name": "DELAY L",
-"pid": 22,
-"min": 0,
-"max": 300
-},
-{
-"name": "DELAY R",
-"pid": 23,
-"min": 0,
-"max": 300
-},
-{
-"name": "FEEDBACK L",
-"pid": 24,
-"min": 65437,
-"max": 99
-},
-{
-"name": "FEEDBACK R",
-"pid": 25,
-"min": 65437,
-"max": 99
-},
-{
-"name": "DEPTH",
-"pid": 7,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO SPEED",
-"pid": 8,
-"min": 0,
-"max": 99
-},
-{
-"name": "PHASE",
-"pid": 56,
-"min": 0,
-"max": 180
-},
-{
-"name": "LFO WAVEFORM",
-"pid": 49,
-"min": 0,
-"max": 2
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 53,
-"records_in_range": 53
-},
-"68": {
-"name": " S.DELAY+PHASER",
-"params": [
-{
-"name": "DELAY DRY/WET",
-"pid": 26,
-"min": 0,
-"max": 99
-},
-{
-"name": "DELAY L",
-"pid": 22,
-"min": 0,
-"max": 300
-},
-{
-"name": "DELAY R",
-"pid": 23,
-"min": 0,
-"max": 300
-},
-{
-"name": "FEEDBACK L",
-"pid": 24,
-"min": 65437,
-"max": 99
-},
-{
-"name": "FEEDBACK R",
-"pid": 25,
-"min": 65437,
-"max": 99
-},
-{
-"name": "PHASER DRY/WET",
-"pid": 29,
-"min": 0,
-"max": 99
-},
-{
-"name": "DEPTH",
-"pid": 7,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO SPEED",
-"pid": 8,
-"min": 0,
-"max": 99
-},
-{
-"name": "RESONANCE",
-"pid": 11,
-"min": 65437,
-"max": 99
-},
-{
-"name": "MANUAL",
-"pid": 12,
-"min": 0,
-"max": 99
-},
-{
-"name": "PHASE",
-"pid": 56,
-"min": 0,
-"max": 180
-},
-{
-"name": "LFO WAVEFORM",
-"pid": 49,
-"min": 0,
-"max": 2
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 9,
-"records_in_range": 9
-},
-"69": {
-"name": "PEDAL WAH+DELAY",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"70": {
-"name": "AUTO WAH+S.DELAY",
-"params": [
-{
-"name": "RESONANCE",
-"pid": 11,
-"min": 0,
-"max": 2
-},
-{
-"name": "MANUAL",
-"pid": 12,
-"min": 0,
-"max": 99
-},
-{
-"name": "SWEEP RANGE",
-"pid": 58,
-"min": 0,
-"max": 99
-},
-{
-"name": "DELAY DRY/WET",
-"pid": 26,
-"min": 0,
-"max": 99
-},
-{
-"name": "DELAY L",
-"pid": 22,
-"min": 0,
-"max": 300
-},
-{
-"name": "DELAY R",
-"pid": 23,
-"min": 0,
-"max": 300
-},
-{
-"name": "FEEDBACK L",
-"pid": 24,
-"min": 65437,
-"max": 99
-},
-{
-"name": "FEEDBACK R",
-"pid": 25,
-"min": 65437,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 159,
-"records_in_range": 159
-},
-"71": {
-"name": "   PEQ+CHORUS",
-"params": [
-{
-"name": "BAND EMPHASIS FC",
-"pid": 51,
-"min": 1,
-"max": 26
-},
-{
-"name": "BAND EMPHASIS  Q",
-"pid": 52,
-"min": 0,
-"max": 31
-},
-{
-"name": "BAND EMPHASIS  G",
-"pid": 53,
-"min": 0,
-"max": 48
-},
-{
-"name": "CHORUS DRY/WET",
-"pid": 27,
-"min": 0,
-"max": 99
-},
-{
-"name": "DEPTH",
-"pid": 7,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO SPEED",
-"pid": 8,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO WAVEFORM",
-"pid": 49,
-"min": 0,
-"max": 2
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"72": {
-"name": "  PEQ+S.DELAY",
-"params": [
-{
-"name": "BAND EMPHASIS FC",
-"pid": 51,
-"min": 1,
-"max": 26
-},
-{
-"name": "BAND EMPHASIS  Q",
-"pid": 52,
-"min": 0,
-"max": 31
-},
-{
-"name": "BAND EMPHASIS  G",
-"pid": 53,
-"min": 0,
-"max": 48
-},
-{
-"name": "DELAY DRY/WET",
-"pid": 26,
-"min": 0,
-"max": 99
-},
-{
-"name": "DELAY L",
-"pid": 22,
-"min": 0,
-"max": 300
-},
-{
-"name": "DELAY R",
-"pid": 23,
-"min": 0,
-"max": 300
-},
-{
-"name": "FEEDBACK L",
-"pid": 24,
-"min": 65437,
-"max": 99
-},
-{
-"name": "FEEDBACK R",
-"pid": 25,
-"min": 65437,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 1,
-"records_in_range": 0
-},
-"73": {
-"name": "  PEQ+FLANGER",
-"params": [
-{
-"name": "BAND EMPHASIS FC",
-"pid": 51,
-"min": 1,
-"max": 26
-},
-{
-"name": "BAND EMPHASIS  Q",
-"pid": 52,
-"min": 0,
-"max": 31
-},
-{
-"name": "BAND EMPHASIS  G",
-"pid": 53,
-"min": 0,
-"max": 48
-},
-{
-"name": "FLANGER DRY/WET",
-"pid": 28,
-"min": 0,
-"max": 99
-},
-{
-"name": "DEPTH",
-"pid": 7,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO SPEED",
-"pid": 8,
-"min": 0,
-"max": 99
-},
-{
-"name": "RESONANCE",
-"pid": 11,
-"min": 65437,
-"max": 99
-},
-{
-"name": "MANUAL",
-"pid": 12,
-"min": 0,
-"max": 99
-},
-{
-"name": "PHASE",
-"pid": 56,
-"min": 0,
-"max": 180
-},
-{
-"name": "LFO WAVEFORM",
-"pid": 49,
-"min": 0,
-"max": 2
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"74": {
-"name": "  PEQ+VIBRATO",
-"params": [
-{
-"name": "BAND EMPHASIS FC",
-"pid": 51,
-"min": 1,
-"max": 26
-},
-{
-"name": "BAND EMPHASIS  Q",
-"pid": 52,
-"min": 0,
-"max": 31
-},
-{
-"name": "BAND EMPHASIS  G",
-"pid": 53,
-"min": 0,
-"max": 48
-},
-{
-"name": "DEPTH",
-"pid": 7,
-"min": 0,
-"max": 99
-},
-{
-"name": "LFO SPEED",
-"pid": 8,
-"min": 0,
-"max": 99
-},
-{
-"name": "PHASE",
-"pid": 56,
-"min": 0,
-"max": 180
-},
-{
-"name": "LFO WAVEFORM",
-"pid": 49,
-"min": 0,
-"max": 2
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"75": {
-"name": " PEQ+COMPRESSOR",
-"params": [
-{
-"name": "BAND EMPHASIS FC",
-"pid": 51,
-"min": 1,
-"max": 26
-},
-{
-"name": "BAND EMPHASIS  Q",
-"pid": 52,
-"min": 0,
-"max": 31
-},
-{
-"name": "BAND EMPHASIS  G",
-"pid": 53,
-"min": 0,
-"max": 48
-},
-{
-"name": "THRESHOLD",
-"pid": 40,
-"min": 0,
-"max": 99
-},
-{
-"name": "RATIO",
-"pid": 41,
-"min": 0,
-"max": 99
-},
-{
-"name": "ATTACK SENS.",
-"pid": 42,
-"min": 0,
-"max": 90
-},
-{
-"name": "RELEASE SENS.",
-"pid": 43,
-"min": 0,
-"max": 90
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"76": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"77": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"78": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"79": {
-"name": "      GEQ",
-"params": [
-{
-"name": "LOW  EMPHASIS FC",
-"pid": 30,
-"min": 0,
-"max": 22
-},
-{
-"name": "LOW  EMPHASIS  G",
-"pid": 31,
-"min": 0,
-"max": 48
-},
-{
-"name": "BAND EMPHASIS FC",
-"pid": 51,
-"min": 4,
-"max": 26
-},
-{
-"name": "BAND EMPHASIS  G",
-"pid": 53,
-"min": 0,
-"max": 48
-},
-{
-"name": "BAND EMPHASIS FC",
-"pid": 51,
-"min": 4,
-"max": 26
-},
-{
-"name": "BAND EMPHASIS  G",
-"pid": 53,
-"min": 0,
-"max": 48
-},
-{
-"name": "HIGH EMPHASIS FC",
-"pid": 32,
-"min": 8,
-"max": 26
-},
-{
-"name": "HIGH EMPHASIS  G",
-"pid": 33,
-"min": 0,
-"max": 48
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 99
-}
-],
-"records": 4688,
-"records_in_range": 0
-},
-"80": {
-"name": "      DS_D",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"81": {
-"name": "     OVER_D",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"82": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"83": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"84": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"85": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"86": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"87": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"88": {
-"name": "  ROOM",
-"params": [
-{
-"name": "REVERB TIME",
-"pid": 34,
-"min": 15,
-"max": 97
-},
-{
-"name": "HIGH EMPHASIS FC",
-"pid": 32,
-"min": 4,
-"max": 23
-},
-{
-"name": "EMPHASIS GAIN",
-"pid": 6,
-"min": 12,
-"max": 36
-},
-{
-"name": "VOLUME",
-"pid": 2,
-"min": 0,
-"max": 127
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 127
-}
-],
-"records": 4688,
-"records_in_range": 0
-},
-"89": {
-"name": " KARAOKE",
-"params": [
-{
-"name": "REVERB TIME",
-"pid": 34,
-"min": 15,
-"max": 97
-},
-{
-"name": "HIGH EMPHASIS FC",
-"pid": 32,
-"min": 4,
-"max": 23
-},
-{
-"name": "EMPHASIS GAIN",
-"pid": 6,
-"min": 12,
-"max": 36
-},
-{
-"name": "VOLUME",
-"pid": 2,
-"min": 0,
-"max": 127
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 127
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"90": {
-"name": "BATH ROOM",
-"params": [
-{
-"name": "REVERB TIME",
-"pid": 34,
-"min": 15,
-"max": 97
-},
-{
-"name": "HIGH EMPHASIS FC",
-"pid": 32,
-"min": 4,
-"max": 23
-},
-{
-"name": "EMPHASIS GAIN",
-"pid": 6,
-"min": 12,
-"max": 36
-},
-{
-"name": "VOLUME",
-"pid": 2,
-"min": 0,
-"max": 127
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 127
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"91": {
-"name": "  STAGE",
-"params": [
-{
-"name": "REVERB TIME",
-"pid": 34,
-"min": 15,
-"max": 97
-},
-{
-"name": "HIGH EMPHASIS FC",
-"pid": 32,
-"min": 4,
-"max": 23
-},
-{
-"name": "EMPHASIS GAIN",
-"pid": 6,
-"min": 12,
-"max": 36
-},
-{
-"name": "VOLUME",
-"pid": 2,
-"min": 0,
-"max": 127
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 127
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"92": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"93": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"94": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"95": {
-"name": "   ----------",
-"params": [
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"96": {
-"name": " PEQ+COMPR+DIST",
-"params": [
-{
-"name": "BAND EMPHASIS FC",
-"pid": 51,
-"min": 1,
-"max": 26
-},
-{
-"name": "BAND EMPHASIS  Q",
-"pid": 52,
-"min": 0,
-"max": 31
-},
-{
-"name": "BAND EMPHASIS  G",
-"pid": 53,
-"min": 0,
-"max": 48
-},
-{
-"name": "THRESHOLD",
-"pid": 40,
-"min": 0,
-"max": 99
-},
-{
-"name": "RATIO",
-"pid": 41,
-"min": 0,
-"max": 99
-},
-{
-"name": "ATTACK SENS.",
-"pid": 42,
-"min": 0,
-"max": 90
-},
-{
-"name": "RELEASE SENS.",
-"pid": 43,
-"min": 0,
-"max": 90
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"97": {
-"name": "PEQ+COMPR+OVERDR",
-"params": [
-{
-"name": "BAND EMPHASIS FC",
-"pid": 51,
-"min": 1,
-"max": 26
-},
-{
-"name": "BAND EMPHASIS  Q",
-"pid": 52,
-"min": 0,
-"max": 31
-},
-{
-"name": "BAND EMPHASIS  G",
-"pid": 53,
-"min": 0,
-"max": 48
-},
-{
-"name": "THRESHOLD",
-"pid": 40,
-"min": 0,
-"max": 99
-},
-{
-"name": "RATIO",
-"pid": 41,
-"min": 0,
-"max": 99
-},
-{
-"name": "ATTACK SENS.",
-"pid": 42,
-"min": 0,
-"max": 90
-},
-{
-"name": "RELEASE SENS.",
-"pid": 43,
-"min": 0,
-"max": 90
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"98": {
-"name": " PEQ+DIST+DELAY",
-"params": [
-{
-"name": "BAND EMPHASIS FC",
-"pid": 51,
-"min": 1,
-"max": 26
-},
-{
-"name": "BAND EMPHASIS  Q",
-"pid": 52,
-"min": 0,
-"max": 31
-},
-{
-"name": "BAND EMPHASIS  G",
-"pid": 53,
-"min": 0,
-"max": 48
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "DELAY DRY/WET",
-"pid": 26,
-"min": 0,
-"max": 99
-},
-{
-"name": "DELAY L",
-"pid": 22,
-"min": 0,
-"max": 300
-},
-{
-"name": "DELAY R",
-"pid": 23,
-"min": 0,
-"max": 300
-},
-{
-"name": "FEEDBACK L",
-"pid": 24,
-"min": 65437,
-"max": 99
-},
-{
-"name": "FEEDBACK R",
-"pid": 25,
-"min": 65437,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-},
-"99": {
-"name": "PEQ+OVERDR+DELAY",
-"params": [
-{
-"name": "BAND EMPHASIS FC",
-"pid": 51,
-"min": 1,
-"max": 26
-},
-{
-"name": "BAND EMPHASIS  Q",
-"pid": 52,
-"min": 0,
-"max": 31
-},
-{
-"name": "BAND EMPHASIS  G",
-"pid": 53,
-"min": 0,
-"max": 48
-},
-{
-"name": "DRIVE",
-"pid": 4,
-"min": 0,
-"max": 99
-},
-{
-"name": "ADJUST",
-"pid": 5,
-"min": 0,
-"max": 99
-},
-{
-"name": "DELAY DRY/WET",
-"pid": 26,
-"min": 0,
-"max": 99
-},
-{
-"name": "DELAY L",
-"pid": 22,
-"min": 0,
-"max": 300
-},
-{
-"name": "DELAY R",
-"pid": 23,
-"min": 0,
-"max": 300
-},
-{
-"name": "FEEDBACK L",
-"pid": 24,
-"min": 65437,
-"max": 99
-},
-{
-"name": "FEEDBACK R",
-"pid": 25,
-"min": 65437,
-"max": 99
-},
-{
-"name": "VOLUME",
-"pid": 1,
-"min": 0,
-"max": 99
-},
-{
-"name": "REV SEND",
-"pid": 3,
-"min": 0,
-"max": 99
-},
-{
-"name": "",
-"pid": 85,
-"min": 0,
-"max": 99
-}
-],
-"records": 0,
-"records_in_range": 0
-}
+ "1": {
+  "name": "CHORUS",
+  "params": [
+   {
+    "name": "DEPTH",
+    "pid": 7,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO SPEED",
+    "pid": 8,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO WAVEFORM",
+    "pid": 49,
+    "min": 0,
+    "max": 2,
+    "op": "t",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 5,
+  "records": 1640,
+  "records_in_range": 1640
+ },
+ "2": {
+  "name": "MODULATED CHORUS",
+  "params": [
+   {
+    "name": "DEPTH",
+    "pid": 7,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "SLOW LFO SPEED",
+    "pid": 9,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FAST LFO SPEED",
+    "pid": 71,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FAST LFO BALANCE",
+    "pid": 10,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO WAVEFORM",
+    "pid": 49,
+    "min": 0,
+    "max": 2,
+    "op": "t",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 7,
+  "records": 384,
+  "records_in_range": 384
+ },
+ "3": {
+  "name": "ENHANCER",
+  "params": [
+   {
+    "name": "MANUAL",
+    "pid": 12,
+    "min": 0,
+    "max": 99,
+    "op": "k",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LOW MIX",
+    "pid": 54,
+    "min": 0,
+    "max": 99,
+    "op": "b",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "HIGH MIX",
+    "pid": 55,
+    "min": 0,
+    "max": 99,
+    "op": "b",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DELAY L",
+    "pid": 22,
+    "min": 0,
+    "max": 350,
+    "op": "d",
+    "off": 4,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "DELAY R",
+    "pid": 23,
+    "min": 0,
+    "max": 350,
+    "op": "d",
+    "off": 6,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 9,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 9,
+  "records": 161,
+  "records_in_range": 161
+ },
+ "4": {
+  "name": "FLANGER",
+  "params": [
+   {
+    "name": "DEPTH",
+    "pid": 7,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO SPEED",
+    "pid": 8,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "RESONANCE",
+    "pid": 11,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "MANUAL",
+    "pid": 12,
+    "min": 0,
+    "max": 99,
+    "op": "l",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PHASE",
+    "pid": 56,
+    "min": 0,
+    "max": 180,
+    "op": "h",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": false
+   },
+   {
+    "name": "LFO WAVEFORM",
+    "pid": 49,
+    "min": 0,
+    "max": 2,
+    "op": "t",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 8,
+  "records": 219,
+  "records_in_range": 219
+ },
+ "5": {
+  "name": "PHASER",
+  "params": [
+   {
+    "name": "DEPTH",
+    "pid": 7,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO SPEED",
+    "pid": 8,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "RESONANCE",
+    "pid": 11,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "MANUAL",
+    "pid": 12,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PHASE",
+    "pid": 56,
+    "min": 0,
+    "max": 180,
+    "op": "h",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": false
+   },
+   {
+    "name": "LFO WAVEFORM",
+    "pid": 49,
+    "min": 0,
+    "max": 2,
+    "op": "t",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 8,
+  "records": 65,
+  "records_in_range": 65
+ },
+ "6": {
+  "name": "ENSEMBLE",
+  "params": [
+   {
+    "name": "DEPTH",
+    "pid": 7,
+    "min": 0,
+    "max": 99,
+    "op": "w",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO SPEED",
+    "pid": 8,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO WAVEFORM",
+    "pid": 49,
+    "min": 0,
+    "max": 2,
+    "op": "t",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 5,
+  "records": 93,
+  "records_in_range": 93
+ },
+ "8": {
+  "name": "GATED REVERB",
+  "params": [
+   {
+    "name": "GATE TIME",
+    "pid": 46,
+    "min": 0,
+    "max": 99,
+    "op": "o",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "HIGH DAMP GAIN",
+    "pid": 36,
+    "min": 0,
+    "max": 24,
+    "op": "v",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "THRESHOLD",
+    "pid": 40,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "MASK TIME",
+    "pid": 47,
+    "min": 0,
+    "max": 99,
+    "op": "o",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 6,
+  "records": 10,
+  "records_in_range": 10
+ },
+ "9": {
+  "name": "SINGLE DELAY",
+  "params": [
+   {
+    "name": "DELAY L",
+    "pid": 22,
+    "min": 0,
+    "max": 350,
+    "op": "g",
+    "off": 1,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "DELAY R",
+    "pid": 23,
+    "min": 0,
+    "max": 350,
+    "op": "g",
+    "off": 3,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "FEEDBACK L",
+    "pid": 24,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FEEDBACK R",
+    "pid": 25,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "HIGH DAMP GAIN",
+    "pid": 36,
+    "min": 0,
+    "max": 24,
+    "op": "v",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 9,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 9,
+  "records": 679,
+  "records_in_range": 679
+ },
+ "10": {
+  "name": "MULTI TAP DELAY",
+  "params": [
+   {
+    "name": "DELAY 1",
+    "pid": 75,
+    "min": 0,
+    "max": 700,
+    "op": "g",
+    "off": 1,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "DELAY 2",
+    "pid": 76,
+    "min": 0,
+    "max": 700,
+    "op": "g",
+    "off": 3,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "DELAY 3",
+    "pid": 77,
+    "min": 0,
+    "max": 700,
+    "op": "g",
+    "off": 5,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "DELAY 4",
+    "pid": 78,
+    "min": 0,
+    "max": 700,
+    "op": "g",
+    "off": 7,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "PAN   1",
+    "pid": 79,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 9,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PAN   2",
+    "pid": 80,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 10,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PAN   3",
+    "pid": 81,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 11,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PAN   4",
+    "pid": 82,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 12,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FEEDBACK",
+    "pid": 57,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 13,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "HIGH DAMP GAIN",
+    "pid": 36,
+    "min": 0,
+    "max": 24,
+    "op": "v",
+    "off": 14,
+    "width": 1,
+    "shift": 8,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 15,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 16,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 16,
+  "records": 134,
+  "records_in_range": 134
+ },
+ "15": {
+  "name": "ROCK ROTARY",
+  "params": [
+   {
+    "name": "DRIVE",
+    "pid": 4,
+    "min": 0,
+    "max": 99,
+    "op": "a",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME ADJUST",
+    "pid": 20,
+    "min": 0,
+    "max": 99,
+    "op": "b",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "TREBLE DEPTH",
+    "pid": 72,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FAST",
+    "pid": 73,
+    "min": 0,
+    "max": 99,
+    "op": "j",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "SLOW",
+    "pid": 15,
+    "min": 0,
+    "max": 99,
+    "op": "j",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "WIND UP",
+    "pid": 16,
+    "min": 0,
+    "max": 99,
+    "op": "i",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "WIND DOWN",
+    "pid": 17,
+    "min": 0,
+    "max": 99,
+    "op": "i",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "BASS DEPTH",
+    "pid": 74,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "BASS   FAST",
+    "pid": 18,
+    "min": 0,
+    "max": 99,
+    "op": "j",
+    "off": 9,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "BASS   SLOW",
+    "pid": 19,
+    "min": 0,
+    "max": 99,
+    "op": "j",
+    "off": 10,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "WIND UP",
+    "pid": 16,
+    "min": 0,
+    "max": 99,
+    "op": "i",
+    "off": 11,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "WIND DOWN",
+    "pid": 17,
+    "min": 0,
+    "max": 99,
+    "op": "i",
+    "off": 12,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 13,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "SLOW/FAST",
+    "pid": 13,
+    "min": 0,
+    "max": 1,
+    "op": "f",
+    "off": 14,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 15,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 99,
+    "op": "t",
+    "off": 16,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 16,
+  "records": 159,
+  "records_in_range": 159
+ },
+ "16": {
+  "name": "ROOM REVERB 1",
+  "params": [
+   {
+    "name": "REVERB TIME",
+    "pid": 34,
+    "min": 0,
+    "max": 77,
+    "op": "u",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PRE DELAY",
+    "pid": 35,
+    "min": 0,
+    "max": 200,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "HIGH DAMP GAIN",
+    "pid": 36,
+    "min": 0,
+    "max": 24,
+    "op": "v",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "ER.LEVEL",
+    "pid": 37,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 2,
+    "min": 0,
+    "max": 127,
+    "op": "c",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 6
+ },
+ "17": {
+  "name": "ROOM REVERB 2",
+  "params": [
+   {
+    "name": "REVERB TIME",
+    "pid": 34,
+    "min": 0,
+    "max": 77,
+    "op": "u",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PRE DELAY",
+    "pid": 35,
+    "min": 0,
+    "max": 200,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "HIGH DAMP GAIN",
+    "pid": 36,
+    "min": 0,
+    "max": 24,
+    "op": "v",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "ER.LEVEL",
+    "pid": 37,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 2,
+    "min": 0,
+    "max": 127,
+    "op": "c",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 6,
+  "records": 121,
+  "records_in_range": 121
+ },
+ "18": {
+  "name": "PLATE REVERB 1",
+  "params": [
+   {
+    "name": "REVERB TIME",
+    "pid": 34,
+    "min": 0,
+    "max": 77,
+    "op": "u",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PRE DELAY",
+    "pid": 35,
+    "min": 0,
+    "max": 200,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "HIGH DAMP GAIN",
+    "pid": 36,
+    "min": 0,
+    "max": 24,
+    "op": "v",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "ER.LEVEL",
+    "pid": 37,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 2,
+    "min": 0,
+    "max": 127,
+    "op": "c",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 6,
+  "records": 348,
+  "records_in_range": 348
+ },
+ "19": {
+  "name": "PLATE REVERB 2",
+  "params": [
+   {
+    "name": "REVERB TIME",
+    "pid": 34,
+    "min": 0,
+    "max": 77,
+    "op": "u",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PRE DELAY",
+    "pid": 35,
+    "min": 0,
+    "max": 200,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "HIGH DAMP GAIN",
+    "pid": 36,
+    "min": 0,
+    "max": 24,
+    "op": "v",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "ER.LEVEL",
+    "pid": 37,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 2,
+    "min": 0,
+    "max": 127,
+    "op": "c",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 6,
+  "records": 233,
+  "records_in_range": 233
+ },
+ "20": {
+  "name": "CONCERT REVERB 1",
+  "params": [
+   {
+    "name": "REVERB TIME",
+    "pid": 34,
+    "min": 15,
+    "max": 97,
+    "op": "u",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PRE DELAY",
+    "pid": 35,
+    "min": 0,
+    "max": 200,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "HIGH DAMP GAIN",
+    "pid": 36,
+    "min": 0,
+    "max": 24,
+    "op": "v",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "ER.LEVEL",
+    "pid": 37,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 2,
+    "min": 0,
+    "max": 127,
+    "op": "c",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 6,
+  "records": 1719,
+  "records_in_range": 1719
+ },
+ "21": {
+  "name": "CONCERT REVERB 2",
+  "params": [
+   {
+    "name": "REVERB TIME",
+    "pid": 34,
+    "min": 15,
+    "max": 97,
+    "op": "u",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PRE DELAY",
+    "pid": 35,
+    "min": 0,
+    "max": 200,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "HIGH DAMP GAIN",
+    "pid": 36,
+    "min": 0,
+    "max": 24,
+    "op": "v",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "ER.LEVEL",
+    "pid": 37,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 2,
+    "min": 0,
+    "max": 127,
+    "op": "c",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 6,
+  "records": 1710,
+  "records_in_range": 1710
+ },
+ "22": {
+  "name": "DARK REVERB 1",
+  "params": [
+   {
+    "name": "REVERB TIME",
+    "pid": 34,
+    "min": 15,
+    "max": 97,
+    "op": "u",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PRE DELAY",
+    "pid": 35,
+    "min": 0,
+    "max": 200,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "HIGH DAMP GAIN",
+    "pid": 36,
+    "min": 0,
+    "max": 24,
+    "op": "v",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "ER.LEVEL",
+    "pid": 37,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 2,
+    "min": 0,
+    "max": 127,
+    "op": "c",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 6,
+  "records": 8,
+  "records_in_range": 8
+ },
+ "23": {
+  "name": "DARK REVERB 2",
+  "params": [
+   {
+    "name": "REVERB TIME",
+    "pid": 34,
+    "min": 15,
+    "max": 97,
+    "op": "u",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PRE DELAY",
+    "pid": 35,
+    "min": 0,
+    "max": 200,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "HIGH DAMP GAIN",
+    "pid": 36,
+    "min": 0,
+    "max": 24,
+    "op": "v",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "ER.LEVEL",
+    "pid": 37,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 2,
+    "min": 0,
+    "max": 127,
+    "op": "c",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 6,
+  "records": 68,
+  "records_in_range": 68
+ },
+ "24": {
+  "name": "BRIGHT REVERB 1",
+  "params": [
+   {
+    "name": "REVERB TIME",
+    "pid": 34,
+    "min": 15,
+    "max": 97,
+    "op": "u",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PRE DELAY",
+    "pid": 35,
+    "min": 0,
+    "max": 200,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "HIGH DAMP GAIN",
+    "pid": 36,
+    "min": 0,
+    "max": 24,
+    "op": "v",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "ER.LEVEL",
+    "pid": 37,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 2,
+    "min": 0,
+    "max": 127,
+    "op": "c",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 6,
+  "records": 134,
+  "records_in_range": 134
+ },
+ "25": {
+  "name": "BRIGHT REVERB 2",
+  "params": [
+   {
+    "name": "REVERB TIME",
+    "pid": 34,
+    "min": 15,
+    "max": 97,
+    "op": "u",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PRE DELAY",
+    "pid": 35,
+    "min": 0,
+    "max": 200,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "HIGH DAMP GAIN",
+    "pid": 36,
+    "min": 0,
+    "max": 24,
+    "op": "v",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "ER.LEVEL",
+    "pid": 37,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 2,
+    "min": 0,
+    "max": 127,
+    "op": "c",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 6,
+  "records": 126,
+  "records_in_range": 126
+ },
+ "26": {
+  "name": "WAVE REVERB 1",
+  "params": [
+   {
+    "name": "REVERB TIME",
+    "pid": 34,
+    "min": 15,
+    "max": 97,
+    "op": "u",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PRE DELAY",
+    "pid": 35,
+    "min": 0,
+    "max": 200,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "HIGH DAMP GAIN",
+    "pid": 36,
+    "min": 0,
+    "max": 24,
+    "op": "v",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "ER.LEVEL",
+    "pid": 37,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 2,
+    "min": 0,
+    "max": 127,
+    "op": "c",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 6,
+  "records": 53,
+  "records_in_range": 53
+ },
+ "27": {
+  "name": "WAVE REVERB 2",
+  "params": [
+   {
+    "name": "REVERB TIME",
+    "pid": 34,
+    "min": 15,
+    "max": 97,
+    "op": "u",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PRE DELAY",
+    "pid": 35,
+    "min": 0,
+    "max": 200,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "HIGH DAMP GAIN",
+    "pid": 36,
+    "min": 0,
+    "max": 24,
+    "op": "v",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "ER.LEVEL",
+    "pid": 37,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 2,
+    "min": 0,
+    "max": 127,
+    "op": "c",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 6,
+  "records": 115,
+  "records_in_range": 115
+ },
+ "32": {
+  "name": "DISTORTION",
+  "params": [
+   {
+    "name": "DRIVE",
+    "pid": 4,
+    "min": 0,
+    "max": 99,
+    "op": "a",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "ADJUST",
+    "pid": 5,
+    "min": 0,
+    "max": 99,
+    "op": "b",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 99,
+    "op": "t",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 5,
+  "records": 1,
+  "records_in_range": 1
+ },
+ "33": {
+  "name": "OVERDRIVE",
+  "params": [
+   {
+    "name": "DRIVE",
+    "pid": 4,
+    "min": 0,
+    "max": 99,
+    "op": "a",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "ADJUST",
+    "pid": 5,
+    "min": 0,
+    "max": 99,
+    "op": "b",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 99,
+    "op": "t",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 5,
+  "records": 13,
+  "records_in_range": 13
+ },
+ "34": {
+  "name": "FUZZ",
+  "params": [
+   {
+    "name": "DRIVE",
+    "pid": 4,
+    "min": 0,
+    "max": 99,
+    "op": "a",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "ADJUST",
+    "pid": 5,
+    "min": 0,
+    "max": 99,
+    "op": "b",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 99,
+    "op": "t",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 5,
+  "records": 53,
+  "records_in_range": 53
+ },
+ "35": {
+  "name": "EXCITER",
+  "params": [
+   {
+    "name": "DRIVE",
+    "pid": 4,
+    "min": 0,
+    "max": 99,
+    "op": "a",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "ADJUST",
+    "pid": 5,
+    "min": 0,
+    "max": 99,
+    "op": "b",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "HIGH EMPHASIS FC",
+    "pid": 32,
+    "min": 1,
+    "max": 26,
+    "op": "p",
+    "off": 3,
+    "width": 2,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "EMPHASIS GAIN",
+    "pid": 6,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 99,
+    "op": "t",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 8,
+  "records": 289,
+  "records_in_range": 289
+ },
+ "36": {
+  "name": "COMPRESSOR",
+  "params": [
+   {
+    "name": "THRESHOLD",
+    "pid": 40,
+    "min": 0,
+    "max": 99,
+    "op": "r",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "RATIO",
+    "pid": 41,
+    "min": 0,
+    "max": 99,
+    "op": "r",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "ATTACK SENS.",
+    "pid": 42,
+    "min": 0,
+    "max": 90,
+    "op": "m",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "RELEASE SENS.",
+    "pid": 43,
+    "min": 0,
+    "max": 90,
+    "op": "m",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 6,
+  "records": 8,
+  "records_in_range": 8
+ },
+ "37": {
+  "name": "SLOW ATTACKER",
+  "params": [
+   {
+    "name": "THRESHOLD",
+    "pid": 40,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "ATTACK RATE",
+    "pid": 44,
+    "min": 0,
+    "max": 99,
+    "op": "n",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "RELEASE RATE",
+    "pid": 45,
+    "min": 0,
+    "max": 99,
+    "op": "n",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 5
+ },
+ "39": {
+  "name": "PARAMETRIC EQ",
+  "params": [
+   {
+    "name": "BAND EMPHASIS FC",
+    "pid": 51,
+    "min": 1,
+    "max": 26,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  Q",
+    "pid": 52,
+    "min": 0,
+    "max": 31,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 11,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  G",
+    "pid": 53,
+    "min": 0,
+    "max": 48,
+    "op": "p",
+    "off": 1,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS FC",
+    "pid": 51,
+    "min": 1,
+    "max": 26,
+    "op": "p",
+    "off": 3,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  Q",
+    "pid": 52,
+    "min": 0,
+    "max": 31,
+    "op": "p",
+    "off": 3,
+    "width": 0,
+    "shift": 11,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  G",
+    "pid": 53,
+    "min": 0,
+    "max": 48,
+    "op": "p",
+    "off": 3,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS FC",
+    "pid": 51,
+    "min": 1,
+    "max": 26,
+    "op": "p",
+    "off": 5,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  Q",
+    "pid": 52,
+    "min": 0,
+    "max": 31,
+    "op": "p",
+    "off": 5,
+    "width": 0,
+    "shift": 11,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  G",
+    "pid": 53,
+    "min": 0,
+    "max": 48,
+    "op": "p",
+    "off": 5,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS FC",
+    "pid": 51,
+    "min": 1,
+    "max": 26,
+    "op": "p",
+    "off": 7,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  Q",
+    "pid": 52,
+    "min": 0,
+    "max": 31,
+    "op": "p",
+    "off": 7,
+    "width": 0,
+    "shift": 11,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  G",
+    "pid": 53,
+    "min": 0,
+    "max": 48,
+    "op": "p",
+    "off": 7,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS FC",
+    "pid": 51,
+    "min": 1,
+    "max": 26,
+    "op": "p",
+    "off": 9,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  Q",
+    "pid": 52,
+    "min": 0,
+    "max": 31,
+    "op": "p",
+    "off": 9,
+    "width": 0,
+    "shift": 11,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  G",
+    "pid": 53,
+    "min": 0,
+    "max": 48,
+    "op": "p",
+    "off": 9,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 11,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 12,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 12
+ },
+ "48": {
+  "name": "AUTO PAN",
+  "params": [
+   {
+    "name": "DEPTH",
+    "pid": 7,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO SPEED",
+    "pid": 8,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PHASE",
+    "pid": 56,
+    "min": 0,
+    "max": 180,
+    "op": "h",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": false
+   },
+   {
+    "name": "LFO WAVEFORM",
+    "pid": 49,
+    "min": 0,
+    "max": 2,
+    "op": "t",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 6,
+  "records": 2,
+  "records_in_range": 2
+ },
+ "50": {
+  "name": "VIBRATO",
+  "params": [
+   {
+    "name": "DEPTH",
+    "pid": 7,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO SPEED",
+    "pid": 8,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PHASE",
+    "pid": 56,
+    "min": 0,
+    "max": 180,
+    "op": "h",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": false
+   },
+   {
+    "name": "LFO WAVEFORM",
+    "pid": 49,
+    "min": 0,
+    "max": 2,
+    "op": "t",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 6,
+  "records": 1,
+  "records_in_range": 1
+ },
+ "52": {
+  "name": "AUTO WAH",
+  "params": [
+   {
+    "name": "RESONANCE",
+    "pid": 11,
+    "min": 0,
+    "max": 2,
+    "op": "$",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "MANUAL",
+    "pid": 12,
+    "min": 0,
+    "max": 99,
+    "op": "$",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "SWEEP RANGE",
+    "pid": 58,
+    "min": 0,
+    "max": 99,
+    "op": "$",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 5,
+  "records": 15,
+  "records_in_range": 15
+ },
+ "53": {
+  "name": "ROTARY SPEAKER",
+  "params": [
+   {
+    "name": "DRIVE",
+    "pid": 4,
+    "min": 0,
+    "max": 99,
+    "op": "a",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME ADJUST",
+    "pid": 20,
+    "min": 0,
+    "max": 99,
+    "op": "b",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "TREBLE DEPTH",
+    "pid": 72,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FAST",
+    "pid": 73,
+    "min": 0,
+    "max": 99,
+    "op": "j",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "SLOW",
+    "pid": 15,
+    "min": 0,
+    "max": 99,
+    "op": "j",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "WIND UP",
+    "pid": 16,
+    "min": 0,
+    "max": 99,
+    "op": "i",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "WIND DOWN",
+    "pid": 17,
+    "min": 0,
+    "max": 99,
+    "op": "i",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "BASS DEPTH",
+    "pid": 74,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "BASS   FAST",
+    "pid": 18,
+    "min": 0,
+    "max": 99,
+    "op": "j",
+    "off": 9,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "BASS   SLOW",
+    "pid": 19,
+    "min": 0,
+    "max": 99,
+    "op": "j",
+    "off": 10,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "WIND UP",
+    "pid": 16,
+    "min": 0,
+    "max": 99,
+    "op": "i",
+    "off": 11,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "WIND DOWN",
+    "pid": 17,
+    "min": 0,
+    "max": 99,
+    "op": "i",
+    "off": 12,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 13,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "SLOW/FAST",
+    "pid": 13,
+    "min": 0,
+    "max": 1,
+    "op": "f",
+    "off": 14,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 15,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 99,
+    "op": "t",
+    "off": 16,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 16,
+  "records": 303,
+  "records_in_range": 303
+ },
+ "54": {
+  "name": "RING MODULATOR",
+  "params": [
+   {
+    "name": "OSC SPEED",
+    "pid": 21,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PHASE",
+    "pid": 56,
+    "min": 0,
+    "max": 180,
+    "op": "h",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": false
+   },
+   {
+    "name": "LFO WAVEFORM",
+    "pid": 49,
+    "min": 0,
+    "max": 2,
+    "op": "t",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 5,
+  "records": 53,
+  "records_in_range": 53
+ },
+ "56": {
+  "name": "MIX UP",
+  "params": [
+   {
+    "name": "DEPTH",
+    "pid": 7,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "SLOW LFO SPEED",
+    "pid": 9,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FAST LFO SPEED L",
+    "pid": 64,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FAST LFO SPEED R",
+    "pid": 65,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PHASE",
+    "pid": 56,
+    "min": 0,
+    "max": 180,
+    "op": "h",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": false
+   },
+   {
+    "name": "LFO WAVEFORM",
+    "pid": 49,
+    "min": 0,
+    "max": 2,
+    "op": "t",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 8,
+  "records": 53,
+  "records_in_range": 53
+ },
+ "57": {
+  "name": "STANDARD",
+  "params": [
+   {
+    "name": "INTENSITY",
+    "pid": 83,
+    "min": 1,
+    "max": 99,
+    "op": "l",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 2,
+  "records": 3306,
+  "records_in_range": 3306
+ },
+ "58": {
+  "name": "PERCUSSIVE",
+  "params": [
+   {
+    "name": "INTENSITY",
+    "pid": 83,
+    "min": 1,
+    "max": 99,
+    "op": "l",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 2
+ },
+ "59": {
+  "name": "SYMPHONIC",
+  "params": [
+   {
+    "name": "INTENSITY",
+    "pid": 83,
+    "min": 1,
+    "max": 99,
+    "op": "l",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 2,
+  "records": 1223,
+  "records_in_range": 1223
+ },
+ "60": {
+  "name": "DEEP SPACE",
+  "params": [
+   {
+    "name": "INTENSITY",
+    "pid": 83,
+    "min": 1,
+    "max": 99,
+    "op": "l",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 2,
+  "records": 159,
+  "records_in_range": 159
+ },
+ "64": {
+  "name": "S.DELAY+CHORUS",
+  "params": [
+   {
+    "name": "DELAY DRY/WET",
+    "pid": 26,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DELAY L",
+    "pid": 22,
+    "min": 0,
+    "max": 300,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "DELAY R",
+    "pid": 23,
+    "min": 0,
+    "max": 300,
+    "op": "g",
+    "off": 4,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "FEEDBACK L",
+    "pid": 24,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FEEDBACK R",
+    "pid": 25,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "CHORUS DRY/WET",
+    "pid": 27,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DEPTH",
+    "pid": 7,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 9,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO SPEED",
+    "pid": 8,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 10,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO WAVEFORM",
+    "pid": 49,
+    "min": 0,
+    "max": 2,
+    "op": "t",
+    "off": 11,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 12,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 13,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 13,
+  "records": 131,
+  "records_in_range": 131
+ },
+ "65": {
+  "name": "S.DELAY+S.DELAY",
+  "params": [
+   {
+    "name": "DELAY1 DRY/WET",
+    "pid": 67,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DELAY L",
+    "pid": 22,
+    "min": 0,
+    "max": 180,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "DELAY R",
+    "pid": 23,
+    "min": 0,
+    "max": 180,
+    "op": "g",
+    "off": 4,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "FEEDBACK L",
+    "pid": 24,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FEEDBACK R",
+    "pid": 25,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DELAY2 DRY/WET",
+    "pid": 68,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DELAY L",
+    "pid": 22,
+    "min": 0,
+    "max": 180,
+    "op": "g",
+    "off": 9,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "DELAY R",
+    "pid": 23,
+    "min": 0,
+    "max": 180,
+    "op": "g",
+    "off": 11,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "FEEDBACK L",
+    "pid": 24,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 13,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FEEDBACK R",
+    "pid": 25,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 14,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 15,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 16,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 16
+ },
+ "66": {
+  "name": "S.DELAY+FLANGER",
+  "params": [
+   {
+    "name": "DELAY DRY/WET",
+    "pid": 26,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DELAY L",
+    "pid": 22,
+    "min": 0,
+    "max": 300,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "DELAY R",
+    "pid": 23,
+    "min": 0,
+    "max": 300,
+    "op": "g",
+    "off": 4,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "FEEDBACK L",
+    "pid": 24,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FEEDBACK R",
+    "pid": 25,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FLANGER DRY/WET",
+    "pid": 28,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DEPTH",
+    "pid": 7,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 9,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO SPEED",
+    "pid": 8,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 10,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "RESONANCE",
+    "pid": 11,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 11,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "MANUAL",
+    "pid": 12,
+    "min": 0,
+    "max": 99,
+    "op": "l",
+    "off": 12,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PHASE",
+    "pid": 56,
+    "min": 0,
+    "max": 180,
+    "op": "h",
+    "off": 13,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": false
+   },
+   {
+    "name": "LFO WAVEFORM",
+    "pid": 49,
+    "min": 0,
+    "max": 2,
+    "op": "t",
+    "off": 14,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 15,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 16,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 16,
+  "records": 53,
+  "records_in_range": 53
+ },
+ "67": {
+  "name": "S.DELAY+VIBRATO",
+  "params": [
+   {
+    "name": "DELAY DRY/WET",
+    "pid": 26,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DELAY L",
+    "pid": 22,
+    "min": 0,
+    "max": 300,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "DELAY R",
+    "pid": 23,
+    "min": 0,
+    "max": 300,
+    "op": "g",
+    "off": 4,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "FEEDBACK L",
+    "pid": 24,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FEEDBACK R",
+    "pid": 25,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DEPTH",
+    "pid": 7,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO SPEED",
+    "pid": 8,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 9,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PHASE",
+    "pid": 56,
+    "min": 0,
+    "max": 180,
+    "op": "h",
+    "off": 10,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": false
+   },
+   {
+    "name": "LFO WAVEFORM",
+    "pid": 49,
+    "min": 0,
+    "max": 2,
+    "op": "t",
+    "off": 11,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 12,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 13,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 13,
+  "records": 53,
+  "records_in_range": 53
+ },
+ "68": {
+  "name": "S.DELAY+PHASER",
+  "params": [
+   {
+    "name": "DELAY DRY/WET",
+    "pid": 26,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DELAY L",
+    "pid": 22,
+    "min": 0,
+    "max": 300,
+    "op": "g",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "DELAY R",
+    "pid": 23,
+    "min": 0,
+    "max": 300,
+    "op": "g",
+    "off": 4,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "FEEDBACK L",
+    "pid": 24,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FEEDBACK R",
+    "pid": 25,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PHASER DRY/WET",
+    "pid": 29,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DEPTH",
+    "pid": 7,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 9,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO SPEED",
+    "pid": 8,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 10,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "RESONANCE",
+    "pid": 11,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 11,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "MANUAL",
+    "pid": 12,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 12,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PHASE",
+    "pid": 56,
+    "min": 0,
+    "max": 180,
+    "op": "h",
+    "off": 13,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": false
+   },
+   {
+    "name": "LFO WAVEFORM",
+    "pid": 49,
+    "min": 0,
+    "max": 2,
+    "op": "t",
+    "off": 14,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 15,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 16,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 16,
+  "records": 9,
+  "records_in_range": 9
+ },
+ "70": {
+  "name": "AUTO WAH+S.DELAY",
+  "params": [
+   {
+    "name": "RESONANCE",
+    "pid": 11,
+    "min": 0,
+    "max": 2,
+    "op": "$",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "MANUAL",
+    "pid": 12,
+    "min": 0,
+    "max": 99,
+    "op": "$",
+    "off": 2,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "SWEEP RANGE",
+    "pid": 58,
+    "min": 0,
+    "max": 99,
+    "op": "$",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DELAY DRY/WET",
+    "pid": 26,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DELAY L",
+    "pid": 22,
+    "min": 0,
+    "max": 300,
+    "op": "g",
+    "off": 5,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "DELAY R",
+    "pid": 23,
+    "min": 0,
+    "max": 300,
+    "op": "g",
+    "off": 7,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "FEEDBACK L",
+    "pid": 24,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 9,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FEEDBACK R",
+    "pid": 25,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 10,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 11,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 12,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 12,
+  "records": 159,
+  "records_in_range": 159
+ },
+ "71": {
+  "name": "PEQ+CHORUS",
+  "params": [
+   {
+    "name": "BAND EMPHASIS FC",
+    "pid": 51,
+    "min": 1,
+    "max": 26,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  Q",
+    "pid": 52,
+    "min": 0,
+    "max": 31,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 11,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  G",
+    "pid": 53,
+    "min": 0,
+    "max": 48,
+    "op": "p",
+    "off": 1,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "CHORUS DRY/WET",
+    "pid": 27,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DEPTH",
+    "pid": 7,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO SPEED",
+    "pid": 8,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO WAVEFORM",
+    "pid": 49,
+    "min": 0,
+    "max": 2,
+    "op": "t",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 8
+ },
+ "72": {
+  "name": "PEQ+S.DELAY",
+  "params": [
+   {
+    "name": "BAND EMPHASIS FC",
+    "pid": 51,
+    "min": 1,
+    "max": 26,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  Q",
+    "pid": 52,
+    "min": 0,
+    "max": 31,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 11,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  G",
+    "pid": 53,
+    "min": 0,
+    "max": 48,
+    "op": "p",
+    "off": 1,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "DELAY DRY/WET",
+    "pid": 26,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DELAY L",
+    "pid": 22,
+    "min": 0,
+    "max": 300,
+    "op": "g",
+    "off": 4,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "DELAY R",
+    "pid": 23,
+    "min": 0,
+    "max": 300,
+    "op": "g",
+    "off": 6,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "FEEDBACK L",
+    "pid": 24,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FEEDBACK R",
+    "pid": 25,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 9,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 10,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 11,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 11,
+  "records": 1,
+  "records_in_range": 1
+ },
+ "73": {
+  "name": "PEQ+FLANGER",
+  "params": [
+   {
+    "name": "BAND EMPHASIS FC",
+    "pid": 51,
+    "min": 1,
+    "max": 26,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  Q",
+    "pid": 52,
+    "min": 0,
+    "max": 31,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 11,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  G",
+    "pid": 53,
+    "min": 0,
+    "max": 48,
+    "op": "p",
+    "off": 1,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "FLANGER DRY/WET",
+    "pid": 28,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DEPTH",
+    "pid": 7,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO SPEED",
+    "pid": 8,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "RESONANCE",
+    "pid": 11,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "MANUAL",
+    "pid": 12,
+    "min": 0,
+    "max": 99,
+    "op": "l",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PHASE",
+    "pid": 56,
+    "min": 0,
+    "max": 180,
+    "op": "h",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": false
+   },
+   {
+    "name": "LFO WAVEFORM",
+    "pid": 49,
+    "min": 0,
+    "max": 2,
+    "op": "t",
+    "off": 9,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 10,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 11,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 11
+ },
+ "74": {
+  "name": "PEQ+VIBRATO",
+  "params": [
+   {
+    "name": "BAND EMPHASIS FC",
+    "pid": 51,
+    "min": 1,
+    "max": 26,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  Q",
+    "pid": 52,
+    "min": 0,
+    "max": 31,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 11,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  G",
+    "pid": 53,
+    "min": 0,
+    "max": 48,
+    "op": "p",
+    "off": 1,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "DEPTH",
+    "pid": 7,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "LFO SPEED",
+    "pid": 8,
+    "min": 0,
+    "max": 99,
+    "op": "e",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "PHASE",
+    "pid": 56,
+    "min": 0,
+    "max": 180,
+    "op": "h",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": false
+   },
+   {
+    "name": "LFO WAVEFORM",
+    "pid": 49,
+    "min": 0,
+    "max": 2,
+    "op": "t",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 8
+ },
+ "75": {
+  "name": "PEQ+COMPRESSOR",
+  "params": [
+   {
+    "name": "BAND EMPHASIS FC",
+    "pid": 51,
+    "min": 1,
+    "max": 26,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  Q",
+    "pid": 52,
+    "min": 0,
+    "max": 31,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 11,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  G",
+    "pid": 53,
+    "min": 0,
+    "max": 48,
+    "op": "p",
+    "off": 1,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "THRESHOLD",
+    "pid": 40,
+    "min": 0,
+    "max": 99,
+    "op": "r",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "RATIO",
+    "pid": 41,
+    "min": 0,
+    "max": 99,
+    "op": "r",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "ATTACK SENS.",
+    "pid": 42,
+    "min": 0,
+    "max": 90,
+    "op": "m",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "RELEASE SENS.",
+    "pid": 43,
+    "min": 0,
+    "max": 90,
+    "op": "m",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 8
+ },
+ "79": {
+  "name": "GEQ",
+  "params": [
+   {
+    "name": "LOW  EMPHASIS FC",
+    "pid": 30,
+    "min": 0,
+    "max": 22,
+    "op": "v",
+    "off": 1,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "LOW  EMPHASIS  G",
+    "pid": 31,
+    "min": 0,
+    "max": 48,
+    "op": "v",
+    "off": 1,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS FC",
+    "pid": 51,
+    "min": 4,
+    "max": 26,
+    "op": "p",
+    "off": 3,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  G",
+    "pid": 53,
+    "min": 0,
+    "max": 48,
+    "op": "p",
+    "off": 3,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS FC",
+    "pid": 51,
+    "min": 4,
+    "max": 26,
+    "op": "p",
+    "off": 5,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  G",
+    "pid": 53,
+    "min": 0,
+    "max": 48,
+    "op": "p",
+    "off": 5,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "HIGH EMPHASIS FC",
+    "pid": 32,
+    "min": 8,
+    "max": 26,
+    "op": "v",
+    "off": 7,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "HIGH EMPHASIS  G",
+    "pid": 33,
+    "min": 0,
+    "max": 48,
+    "op": "v",
+    "off": 7,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 9,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 9,
+  "records": 4688,
+  "records_in_range": 4688
+ },
+ "88": {
+  "name": "ROOM",
+  "params": [
+   {
+    "name": "REVERB TIME",
+    "pid": 34,
+    "min": 15,
+    "max": 97,
+    "op": "u",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "HIGH EMPHASIS FC",
+    "pid": 32,
+    "min": 4,
+    "max": 23,
+    "op": "v",
+    "off": 2,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "EMPHASIS GAIN",
+    "pid": 6,
+    "min": 12,
+    "max": 36,
+    "op": "v",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "VOLUME",
+    "pid": 2,
+    "min": 0,
+    "max": 127,
+    "op": "c",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 127,
+    "op": "y",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 5,
+  "records": 4688,
+  "records_in_range": 4688
+ },
+ "89": {
+  "name": "KARAOKE",
+  "params": [
+   {
+    "name": "REVERB TIME",
+    "pid": 34,
+    "min": 15,
+    "max": 97,
+    "op": "u",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "HIGH EMPHASIS FC",
+    "pid": 32,
+    "min": 4,
+    "max": 23,
+    "op": "v",
+    "off": 2,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "EMPHASIS GAIN",
+    "pid": 6,
+    "min": 12,
+    "max": 36,
+    "op": "v",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "VOLUME",
+    "pid": 2,
+    "min": 0,
+    "max": 127,
+    "op": "c",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 127,
+    "op": "y",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 5
+ },
+ "90": {
+  "name": "BATH ROOM",
+  "params": [
+   {
+    "name": "REVERB TIME",
+    "pid": 34,
+    "min": 15,
+    "max": 97,
+    "op": "u",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "HIGH EMPHASIS FC",
+    "pid": 32,
+    "min": 4,
+    "max": 23,
+    "op": "v",
+    "off": 2,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "EMPHASIS GAIN",
+    "pid": 6,
+    "min": 12,
+    "max": 36,
+    "op": "v",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "VOLUME",
+    "pid": 2,
+    "min": 0,
+    "max": 127,
+    "op": "c",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 127,
+    "op": "y",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 5
+ },
+ "91": {
+  "name": "STAGE",
+  "params": [
+   {
+    "name": "REVERB TIME",
+    "pid": 34,
+    "min": 15,
+    "max": 97,
+    "op": "u",
+    "off": 1,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "HIGH EMPHASIS FC",
+    "pid": 32,
+    "min": 4,
+    "max": 23,
+    "op": "v",
+    "off": 2,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "EMPHASIS GAIN",
+    "pid": 6,
+    "min": 12,
+    "max": 36,
+    "op": "v",
+    "off": 2,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "VOLUME",
+    "pid": 2,
+    "min": 0,
+    "max": 127,
+    "op": "c",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 127,
+    "op": "y",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 5
+ },
+ "96": {
+  "name": "PEQ+COMPR+DIST",
+  "params": [
+   {
+    "name": "BAND EMPHASIS FC",
+    "pid": 51,
+    "min": 1,
+    "max": 26,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  Q",
+    "pid": 52,
+    "min": 0,
+    "max": 31,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 11,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  G",
+    "pid": 53,
+    "min": 0,
+    "max": 48,
+    "op": "p",
+    "off": 1,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "THRESHOLD",
+    "pid": 40,
+    "min": 0,
+    "max": 99,
+    "op": "r",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "RATIO",
+    "pid": 41,
+    "min": 0,
+    "max": 99,
+    "op": "r",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "ATTACK SENS.",
+    "pid": 42,
+    "min": 0,
+    "max": 90,
+    "op": "m",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "RELEASE SENS.",
+    "pid": 43,
+    "min": 0,
+    "max": 90,
+    "op": "m",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DRIVE",
+    "pid": 4,
+    "min": 0,
+    "max": 99,
+    "op": "a",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "ADJUST",
+    "pid": 5,
+    "min": 0,
+    "max": 99,
+    "op": "b",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 9,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 10,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 99,
+    "op": "t",
+    "off": 11,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 11
+ },
+ "97": {
+  "name": "PEQ+COMPR+OVERDR",
+  "params": [
+   {
+    "name": "BAND EMPHASIS FC",
+    "pid": 51,
+    "min": 1,
+    "max": 26,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  Q",
+    "pid": 52,
+    "min": 0,
+    "max": 31,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 11,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  G",
+    "pid": 53,
+    "min": 0,
+    "max": 48,
+    "op": "p",
+    "off": 1,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "THRESHOLD",
+    "pid": 40,
+    "min": 0,
+    "max": 99,
+    "op": "r",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "RATIO",
+    "pid": 41,
+    "min": 0,
+    "max": 99,
+    "op": "r",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "ATTACK SENS.",
+    "pid": 42,
+    "min": 0,
+    "max": 90,
+    "op": "m",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "RELEASE SENS.",
+    "pid": 43,
+    "min": 0,
+    "max": 90,
+    "op": "m",
+    "off": 6,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DRIVE",
+    "pid": 4,
+    "min": 0,
+    "max": 99,
+    "op": "a",
+    "off": 7,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "ADJUST",
+    "pid": 5,
+    "min": 0,
+    "max": 99,
+    "op": "b",
+    "off": 8,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 9,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 10,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 99,
+    "op": "t",
+    "off": 11,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 11
+ },
+ "98": {
+  "name": "PEQ+DIST+DELAY",
+  "params": [
+   {
+    "name": "BAND EMPHASIS FC",
+    "pid": 51,
+    "min": 1,
+    "max": 26,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  Q",
+    "pid": 52,
+    "min": 0,
+    "max": 31,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 11,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  G",
+    "pid": 53,
+    "min": 0,
+    "max": 48,
+    "op": "p",
+    "off": 1,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "DRIVE",
+    "pid": 4,
+    "min": 0,
+    "max": 99,
+    "op": "a",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "ADJUST",
+    "pid": 5,
+    "min": 0,
+    "max": 99,
+    "op": "b",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DELAY DRY/WET",
+    "pid": 26,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DELAY L",
+    "pid": 22,
+    "min": 0,
+    "max": 300,
+    "op": "g",
+    "off": 6,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "DELAY R",
+    "pid": 23,
+    "min": 0,
+    "max": 300,
+    "op": "g",
+    "off": 8,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "FEEDBACK L",
+    "pid": 24,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 10,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FEEDBACK R",
+    "pid": 25,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 11,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 12,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 13,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 99,
+    "op": "t",
+    "off": 14,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 14
+ },
+ "99": {
+  "name": "PEQ+OVERDR+DELAY",
+  "params": [
+   {
+    "name": "BAND EMPHASIS FC",
+    "pid": 51,
+    "min": 1,
+    "max": 26,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 6,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  Q",
+    "pid": 52,
+    "min": 0,
+    "max": 31,
+    "op": "p",
+    "off": 1,
+    "width": 0,
+    "shift": 11,
+    "mask": 31,
+    "signed": false
+   },
+   {
+    "name": "BAND EMPHASIS  G",
+    "pid": 53,
+    "min": 0,
+    "max": 48,
+    "op": "p",
+    "off": 1,
+    "width": 2,
+    "shift": 0,
+    "mask": 63,
+    "signed": false
+   },
+   {
+    "name": "DRIVE",
+    "pid": 4,
+    "min": 0,
+    "max": 99,
+    "op": "a",
+    "off": 3,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "ADJUST",
+    "pid": 5,
+    "min": 0,
+    "max": 99,
+    "op": "b",
+    "off": 4,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DELAY DRY/WET",
+    "pid": 26,
+    "min": 0,
+    "max": 99,
+    "op": "f",
+    "off": 5,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "DELAY L",
+    "pid": 22,
+    "min": 0,
+    "max": 300,
+    "op": "g",
+    "off": 6,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "DELAY R",
+    "pid": 23,
+    "min": 0,
+    "max": 300,
+    "op": "g",
+    "off": 8,
+    "width": 2,
+    "shift": 0,
+    "mask": 65535,
+    "signed": false
+   },
+   {
+    "name": "FEEDBACK L",
+    "pid": 24,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 10,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "FEEDBACK R",
+    "pid": 25,
+    "min": -99,
+    "max": 99,
+    "op": "s",
+    "off": 11,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "VOLUME",
+    "pid": 1,
+    "min": 0,
+    "max": 99,
+    "op": "c",
+    "off": 12,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "REV SEND",
+    "pid": 3,
+    "min": 0,
+    "max": 99,
+    "op": "!",
+    "off": 13,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   },
+   {
+    "name": "",
+    "pid": 85,
+    "min": 0,
+    "max": 99,
+    "op": "t",
+    "off": 14,
+    "width": 1,
+    "shift": 8,
+    "mask": 255,
+    "signed": true
+   }
+  ],
+  "bytes": 14
+ }
 }

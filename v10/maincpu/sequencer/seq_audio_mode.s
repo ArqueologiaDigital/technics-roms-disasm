@@ -623,18 +623,18 @@ AccChord_NullRet:
 ; Sets bit 5 of 0x32f3 when the chord bytes 0x32d8 / 0x32da differ from 0x32dc / 0x32de; clears it
 ; again when 0x32dc is 0.
 AccChord_CompareAndSetDirty:
-	ld a, (0x32d8:16)
-	cp a, (0x32dc:16)
+	ld a, (ACC_CHORD_TYPE:16)
+	cp a, (ACC_CHORD_PREV_TYPE:16)
 	jr nz, AccChord_SetDirtyBit5
-	ld a, (0x32da:16)
-	cp a, (0x32de:16)
+	ld a, (ACC_CHORD_BASS:16)
+	cp a, (ACC_CHORD_PREV_BASS:16)
 	jr z, AccChord_CheckZeroChord
 
 AccChord_SetDirtyBit5:
 	or (0x32f3:16), 32
 
 AccChord_CheckZeroChord:
-	cp (0x32dc:16), 0
+	cp (ACC_CHORD_PREV_TYPE:16), 0
 	jr nz, AccChord_CompareDone
 	and (0x32f3:16), 223
 

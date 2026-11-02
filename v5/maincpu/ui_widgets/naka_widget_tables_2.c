@@ -899,10 +899,10 @@ typedef struct __attribute__((packed)) {
     uint8_t Bitmap_Bmphk[120][100];
     /* ---------------------------------------------------------------------
      * [typed] by span_t2b
-     * MidiPart_PageDisplay_Data -- read by AcCtlMsgGrid_Show (v10/v9
-     * 0xF79BD8, v7 0xF797D4) (`ld xwa, MidiPart_PageDisplay_Data`),
+     * MidiSetup_PageIndicatorRect -- read by AcCtlMsgGrid_Show (v10/v9
+     * 0xF79BD8, v7 0xF797D4) (`ld xwa, MidiSetup_PageIndicatorRect`),
      * MidiSetup_TtlCase4 (v10/v9 0xF7A2F0, v7 0xF79EEC) (`ld xwa,
-     * MidiPart_PageDisplay_Data`). 8 bytes to the next object; the layout
+     * MidiSetup_PageIndicatorRect`). 8 bytes to the next object; the layout
      * beyond that access is not established.
      * --------------------------------------------------------------------- */
     uint8_t MidiSetup_PageIndicatorRect[8];
@@ -1915,11 +1915,11 @@ typedef struct __attribute__((packed)) {
      * --------------------------------------------------------------------- */
     uint16_t ComSetGridCheck_LocalInit_2[3];
     /* ---------------------------------------------------------------------
-     * NakaToggle_OnOff_Data -- NUL-terminated string(s), 4 bytes, used by
+     * FDTest_Group_OnOff_EmptyText -- NUL-terminated string(s), 4 bytes, used by
      * FDTest_Group_OnOff (0xE1F8D8 in v10/v9/v7) (`.long
-     * NakaToggle_OnOff_Data`).
+     * FDTest_Group_OnOff_EmptyText`).
      * --------------------------------------------------------------------- */
-    char NakaToggle_OnOff_Data[4];
+    char FDTest_Group_OnOff_EmptyText[4];
     /* ---------------------------------------------------------------------
      * ComSetGridCheck_JumpTable_Table_2 -- read by ComSetGridCheck_OnIndexswUp
      * (v10/v9 0xF77FC4, v7 0xF77BC0) (`ld xbc, ComSetGridCheck_JumpTable_Table_2`).
@@ -4043,7 +4043,7 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
 
     .ComSetGridCheck_LocalInit_2 = { 0x0000, 0x0000, 0x0000 },
 
-    .NakaToggle_OnOff_Data = "\0"
+    .FDTest_Group_OnOff_EmptyText = "\0"
         "\0"
         "\0"
         "",

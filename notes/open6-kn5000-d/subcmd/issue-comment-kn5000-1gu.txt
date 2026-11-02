@@ -1,0 +1,13 @@
+[open6/kn5000-d-subcmd] 2026-11-02: traced. Sub-command 0x09 is General MIDI mode. The sub-CPU record is F0 7F 09 <mode>. Voice_SystemMsg (0x02A7AF) reads only bytes +2/+3 and ignores byte +1. Voice_SetPolyphonyMode (0x028ADC) treats mode 1 as Voice_Reset_Engine(1), which is mode B: 16 pools, one per MIDI channel. Any other value gives mode A, the keyboard's 32/16/4/12 pools. The routine also drops every sounding voice (VoiceSlot_ClearAll).
+
+Main CPU (v10): all system records are built by SeqVoice_CheckAndRet_Prologue (0xFEBC36; proposed name SubCPU_SendSystemRecord) as {4, F0, A, C, E} -> MIDI_SendCmdPacket. Two calls send 0x09:
+(1) COMM_WriteAndCheck (0xFEBDD2): 1 if A != 0, else 2; it then re-sends CC7 to parts 0-0x18. It is reached from MidiCtrl_Bit2ToChannel (0xFD8BE9), which tests bit 2 of PANEL_GM+3. That routine is called by the two panel-code-0x91 listeners, MidiCtrl_ModeSwitchHandler (bank 1, 0xFD86AC; it also stops play) and MidiCtrl_ModeSwitch_Data (bank 2, 0xFD8BCC).
+(2) SndParam_ApplySystemParam (0xFEB2C3), system parameter 0x00C0: 1 if the value != 0, else 2. SndParam_Registry defines key 0xC0 as record 0x91 field 3 mask 0x04 (GmOnOffFunc). [INFERENCE] This case looks dormant in v10, because the 0x91 listener feeding SndParam_ApplyEventField forwards only bit 0.
+
+PANEL_GM+3 bit 2 is GM ON/OFF. It is set or cleared by GM System On/Off SysEx (SysEx_OnGmSystemOn/Off), by selecting a song whose record +0xBD is 0xFF (SongBank_CheckAccompanimentMode, misnamed; SMF playback writes the flag in FloppyIO_ConfigureSwitchboard), by the disk-file playback set-up (SoundParam_InitDefaultBanks), and at power-on. At power-on GM is set off unless NMI_HANDLER stored 0x5A5A at 0xFFCC, meaning GM was on at power-off.
+
+So: GM on -> 01 -> mode B; GM off -> 02 -> mode A. The sub CPU boots in mode A.
+
+Notes and probe: notes/open6-kn5000-d/subcmd/README.md section kn5000-1gu, probes/subcmd_probe.py (registry, syssenders). Website draft: audio-subsystem.md "Voice allocation" (new "Mode A and mode B: General MIDI") and inter-cpu-protocol.md (system records). Renames proposed in notes/open6-kn5000-d/subcmd/rename_subcmd.sed: 12 main-CPU labels.
+
+Caveats: how SoundParam_InitDefaultBanks' A = 0/1/2 map to GM is read with BC = new value (A = 0 -> off, A = 1 -> on), and the file types behind A are not identified. The meaning of PANEL_GM+3 bit 0 (key 0xC1 -> sub-command 0x99) is open. Only v10 was read. Related: kn5000-rlb (allocator), kn5000-061 (protocol), kn5000-a1f.

@@ -162,7 +162,7 @@ extern const char SupportClass_UwordValueNames;
  * Readers (ui/ui_mode_handlers.s): the MasterSetup dial handlers index the
  * table with 6*k (muls wa, 0x6), load +0 and Strcpy the title into the view;
  * the cell-select paths of MasterSetup and MstStyleAlp load the u16 at +4
- * (MasterSetup_EventDispatch_Data = table + 4, same 6*k index) and pass it as xde
+ * (StyleSong_MasterTable_IdColumn = table + 4, same 6*k index) and pass it as xde
  * to MainFuncCall(0x142000D, 0x1E20018). */
 /* StyleNameOverride_*'s record (scripts/converters/style_name_override_retype.py). */
 /* PanelTlv_PartResolveRecsTail's element (scripts/converters/nakarest_reviewed_slices.py). */
@@ -556,7 +556,7 @@ typedef struct __attribute__((packed)) {
     uint16_t field_073c;
     uint8_t bytes_073e[3];
     /* 4 pointers */
-    /* top byte (0x00) of the prop pointer of SupportClass record 51 (WindowIDProc -> NakaInst_WindowID_EnumTable); its other three bytes end ExitWindow_OK_Data_2 */
+    /* top byte (0x00) of the prop pointer of SupportClass record 51 (WindowIDProc -> NakaInst_WindowID_EnumTable); its other three bytes end SupportClass_PropTypeRecords */
     uint8_t SupportClass_WindowIDPropTopByte[1];
     /* SupportClass records 52-54 {proc, count, size, prop}: PartIDProc 29 x 2 B, TrackIDProc 17 x 2 B, IntTimeIDProc 13 x 2 B, each with its value-name table */
     SupportClass_PartTrackIntTimeRecords_t SupportClass_PartTrackIntTimeRecords[3];
@@ -845,11 +845,11 @@ typedef struct __attribute__((packed)) {
      * MasterSetup_DialDown_*) index it with 6*k (`muls wa, 0x6`), load +0
      * and Strcpy the title into the view, and search it with String_Compare;
      * their bounds are 0x3E8 (1000) -- an index of 1000 wraps to 0 and an
-     * underflow reads entry 999 through MasterSetup_DialTurn_Underflow_Data (=
+     * underflow reads entry 999 through StyleSong_MasterTable_LastEntry (=
      * +999*6, .set in shared/positional_labels.s), which is how the count is
      * pinned. The cell-select paths of MasterSetup and
      * MstStyleAlp_EventDispatch load the u16 at +4 of entry 9*(page-1) +
-     * scroll + row (MasterSetup_EventDispatch_Data, 9 rows per page) and hand it
+     * scroll + row (StyleSong_MasterTable_IdColumn, 9 rows per page) and hand it
      * to MainFuncCall with 0x142000D / 0x1E20018. Checked here: the 1000
      * title pointers are exactly the 1000 entries of StyleSong_Titles (entry
      * k of this table -> title 999-k), and the ids are 0..999, each once.

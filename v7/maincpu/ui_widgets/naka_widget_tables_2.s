@@ -2754,14 +2754,14 @@ ComSetGridCheck_JumpTable_Table:	.incbin "includes/generated/naka_widget_tables_
 ; -----------------------------------------------------------------------------
 ComSetGridCheck_LocalInit_2:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25C9C, 0x6
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] NakaToggle_OnOff_Data
-; NakaToggle_OnOff_Data -- NUL-terminated string(s), 4 bytes, used by
+; [naka_s_headers] FDTest_Group_OnOff_EmptyText
+; FDTest_Group_OnOff_EmptyText -- NUL-terminated string(s), 4 bytes, used by
 ; FDTest_Group_OnOff (0xe1f8d8 in v10/v9/v7) (`.long
-; NakaToggle_OnOff_Data`).
+; FDTest_Group_OnOff_EmptyText`).
 ;
-; Typed in naka_widget_tables_2.c as char NakaToggle_OnOff_Data[4].
+; Typed in naka_widget_tables_2.c as char FDTest_Group_OnOff_EmptyText[4].
 ; -----------------------------------------------------------------------------
-NakaToggle_OnOff_Data:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25CA2, 0x4
+FDTest_Group_OnOff_EmptyText:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x25CA2, 0x4
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] ComSetGridCheck_JumpTable_Table_2
 ; ComSetGridCheck_JumpTable_Table_2 -- read by ComSetGridCheck_OnIndexswUp

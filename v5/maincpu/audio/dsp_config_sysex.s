@@ -1267,7 +1267,7 @@ Fade_Tick:
 Fade_Tick_BothPlaying_RhythmStop:
 	bit	4, (0xc130:16)
 	jr	z, Fade_Tick_BothPlaying_SeqStop
-	call	AccWrap_PlayModeStartPlay
+	call	AccWrap_PlayModeStopAcc
 	set	7, (0x3415:16)
 	jr	Fade_Tick_AutoReset
 Fade_Tick_BothPlaying_SeqStop:
@@ -4892,7 +4892,7 @@ AudioDispatch_ClearAccFlags:
 	jr	AudioDispatch_CheckStereoMode
 AudioDispatch_SetAccMode:
 	orw	(0xc4d6:16), 512
-	call	AccAutoPlay_PeriodicCheck
+	call	AccSynchro_PeriodicCheck
 	ld	wa, (0xc4d6:16)
 	and	wa, 0x7
 	jr	z, AudioDispatch_SetTimerBase

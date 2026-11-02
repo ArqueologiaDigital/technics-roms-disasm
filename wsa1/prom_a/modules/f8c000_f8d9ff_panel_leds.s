@@ -828,14 +828,14 @@ PanelLed_ShowBlinkEnable:   ; entry: DispatchTable_F8C2B2 id=0x0200
 	jr z, .LF8C7C7                                ; F8C7B0  66 15
 	ld XIX,PanelLed_Shadow                             ; F8C7B2  44 d0 20 00 00
 	and (XIX+0x07),0xfd                           ; F8C7B7  8c 07 3c fd
-	bit	0, (0x216e:16)                       ; F8C7BB  f1 6e 21 c8
+	bit	0, (PanelLed_CompareFlag:16)                       ; F8C7BB  f1 6e 21 c8
 	jr z, .LF8C7DA                                ; F8C7BF  66 19
 	or (XIX+0x07),0x02                            ; F8C7C1  8c 07 3e 02
 	jr .LF8C7DA                                   ; F8C7C5  68 13
 .LF8C7C7:
 	ld XIX,PanelLed_Shadow                             ; F8C7C7  44 d0 20 00 00
 	and (XIX+0x06),0xfb                           ; F8C7CC  8c 06 3c fb
-	bit	0, (0x216e:16)                       ; F8C7D0  f1 6e 21 c8
+	bit	0, (PanelLed_CompareFlag:16)                       ; F8C7D0  f1 6e 21 c8
 	jr z, .LF8C7DA                                ; F8C7D4  66 04
 	or (XIX+0x06),0x04                            ; F8C7D6  8c 06 3e 04
 .LF8C7DA:

@@ -2107,12 +2107,12 @@ typedef struct __attribute__((packed)) {
      * --------------------------------------------------------------------- */
     uint32_t SeqInit_InitFuncTable[4];
     /* ---------------------------------------------------------------------
-     * Part_InitFromPreset_LocalInit -- initializer of a local array:
-     * Part_InitFromPreset (v10/v9 0xF42EA4, v7 0xF42E96) (`ld xiy,
-     * Part_InitFromPreset_LocalInit`); `lda xix, (xsp + 4); ldw bc,
+     * SeqSong_ResetAll_LocalInit -- initializer of a local array:
+     * SeqSong_ResetAll (v10/v9 0xF42EA4, v7 0xF42E96) (`ld xiy,
+     * SeqSong_ResetAll_LocalInit`); `lda xix, (xsp + 4); ldw bc,
      * 0x8; ldirw` copies 16 bytes into the routine's stack frame.
      * --------------------------------------------------------------------- */
-    uint16_t Part_InitFromPreset_LocalInit[8];
+    uint16_t SeqSong_ResetAll_LocalInit[8];
     /* ---------------------------------------------------------------------
      * SeqData_SendVoiceTableBlock_LocalInit -- initializer of a local array:
      * SeqData_SendVoiceTableBlock (v10/v9 0xF43A59, v7 0xF43A4B) (`ld xiy,
@@ -2716,7 +2716,7 @@ typedef struct __attribute__((packed)) {
      * lo}. AccVoice_ComputeChannelIndex (v10/v9 0xF53D77, v7 0xF53973) shows
      * the index: hl = (h & 7) * 512 + a * 4, then `ld wa,(xiy+hl)`, `add
      * hl,2`, `ld iy,(xiy+hl)`; RhythmROM_PatternDispatcher (v10/v9 0xF634F3,
-     * v7 0xF630EF) stores the two words at 0x355A/0x355C, DrumVoice_Handler7
+     * v7 0xF630EF) stores the two words at 0x355A/0x355C, CmpRecSet_OnRhythmBank
      * (v10/v9 0xF654B0, v7 0xF650AC) and VoiceAssign_ProcessRequest (v10/v9
      * 0xF67128, v7 0xF66D24) read them the same way. Measured: every
      * non-zero pair forms hi:lo = a multiple of 0x800 below 0x70000; zero
@@ -2735,9 +2735,9 @@ typedef struct __attribute__((packed)) {
      * AccPatch_Transpose_LookupTable_Data`), ToneGen_CompareVoiceBlocks_Helper3 (v10/v9 0xF62B29, v7
      * 0xF62725) (`ld xix, AccPatch_Transpose_LookupTable_Data`),
      * Rhythm_CrossVoice_Apply (v10/v9 0xF54FFE, v7 0xF54BFA) (`ld xiy,
-     * AccPatch_Transpose_LookupTable_Data`), Rhythm_NoteRangeCheck (v10/v9
+     * AccPatch_Transpose_LookupTable_Data`), Rhythm_RootOnlyNote (v10/v9
      * 0xF55030, v7 0xF54C2C) (`ld xiy, AccPatch_Transpose_LookupTable_Data`),
-     * Rhythm_InstrBaseLookup (v10/v9 0xF550BB, v7 0xF54CB7) (`ld xiy,
+     * Rhythm_NotePitchClass (v10/v9 0xF550BB, v7 0xF54CB7) (`ld xiy,
      * AccPatch_Transpose_LookupTable_Data`), Rhythm_TranspMod_BaseApply (v10/v9
      * 0xF55B44, v7 0xF55740) (`ld xiy, AccPatch_Transpose_LookupTable_Data`),
      * AccPlay_NoteAllocAndWrite (v10/v9 0xF722AB, v7 0xF71EA7) (`ld xix,
@@ -2746,17 +2746,17 @@ typedef struct __attribute__((packed)) {
      * --------------------------------------------------------------------- */
     uint8_t Note_PitchClassTable[128];
     /* ---------------------------------------------------------------------
-     * Rhythm_VelLookA_TableLookup_Table -- read by
+     * Rhythm_ChordNoteDeltaRows -- read by
      * Rhythm_VelLookA_TableLookup (v10/v9 0xF5509A, v7 0xF54C96) (`ld xiy,
-     * Rhythm_VelLookA_TableLookup_Table`), Rhythm_VoiceMap_Inst2Bit3 (v10/v9
-     * 0xF5524E, v7 0xF54E4A) (`ld xiy, Rhythm_VelLookA_TableLookup_Table`),
+     * Rhythm_ChordNoteDeltaRows`), Rhythm_VoiceMap_Inst2Bit3 (v10/v9
+     * 0xF5524E, v7 0xF54E4A) (`ld xiy, Rhythm_ChordNoteDeltaRows`),
      * Rhythm_VelComp_Lookup (v10/v9 0xF5530D, v7 0xF54F09) (`ld xiy,
-     * Rhythm_VelLookA_TableLookup_Table`), Rhythm_TranspMod_BaseLookup
+     * Rhythm_ChordNoteDeltaRows`), Rhythm_TranspMod_BaseLookup
      * (v10/v9 0xF55B5B, v7 0xF55757) (`ld xiy,
-     * Rhythm_VelLookA_TableLookup_Table`). 456 bytes to the next referenced
+     * Rhythm_ChordNoteDeltaRows`). 456 bytes to the next referenced
      * object; the layout beyond that access is not established.
      * --------------------------------------------------------------------- */
-    uint8_t Rhythm_VelLookA_TableLookup_Table[456];
+    uint8_t Rhythm_ChordNoteDeltaRows[456];
     /* ---------------------------------------------------------------------
      * VoiceParam_BankProgramWords -- 8 x 128 u16.
      * VoiceParam_Clamp_LookupTable (v10/v9 0xF5345A, v7 0xF53056): `ld
@@ -2951,12 +2951,12 @@ typedef struct __attribute__((packed)) {
      * --------------------------------------------------------------------- */
     uint8_t AccTone_LookupByProgram_Table_2[20];
     /* ---------------------------------------------------------------------
-     * AccTuning_ReadAndApplyOffset_Table -- read by
-     * AccTuning_ReadAndApplyOffset (v10/v9 0xF5E393, v7 0xF5DF8F) (`lda xbc,
-     * (AccTuning_ReadAndApplyOffset_Table:24)`). 116 bytes to the next
+     * Chord_TypeFamilyTable -- read by
+     * Chord_LookupTypeFamily (v10/v9 0xF5E393, v7 0xF5DF8F) (`lda xbc,
+     * (Chord_TypeFamilyTable:24)`). 116 bytes to the next
      * referenced object; the layout beyond that access is not established.
      * --------------------------------------------------------------------- */
-    uint8_t AccTuning_ReadAndApplyOffset_Table[116];
+    uint8_t Chord_TypeFamilyTable[116];
     /* ---------------------------------------------------------------------
      * AccTone_ExtendAndDispatch_Body_Table_3 -- read by
      * AccTone_ExtendAndDispatch_Body (v10/v9 0xF5D740, v7 0xF5D33C) (`lda
@@ -6024,7 +6024,7 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
         NAKA_ADDR(SeqInit_FullReset),
     },
 
-    .Part_InitFromPreset_LocalInit = { 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F },
+    .SeqSong_ResetAll_LocalInit = { 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F, 0x5F5F },
 
     .SeqData_SendVoiceTableBlock_LocalInit = { 0xF0, 0x50, 0xA3, 0x00, 0x00 },
 
@@ -7504,7 +7504,7 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
         0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
     },
 
-    .Rhythm_VelLookA_TableLookup_Table = {
+    .Rhythm_ChordNoteDeltaRows = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -8629,7 +8629,7 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
         0x20, 0x54, 0x09, 0x00,
     },
 
-    .AccTuning_ReadAndApplyOffset_Table = {
+    .Chord_TypeFamilyTable = {
         0x00, 0x00, 0x02, 0x02, 0x00, 0x01, 0x02, 0x03, 0x01, 0x02, 0x02, 0x02, 0x02, 0x00, 0x02, 0x02,
         0x02, 0x02, 0x02, 0x02, 0x01, 0x02, 0x02, 0x00, 0x02, 0x02, 0x02, 0x02, 0x02, 0x00, 0x02, 0x02,
         0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,

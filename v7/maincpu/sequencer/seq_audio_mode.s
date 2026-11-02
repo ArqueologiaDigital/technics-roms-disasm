@@ -573,18 +573,18 @@ AccChord_NullRet:
 	ret
 
 AccChord_CompareAndSetDirty:
-	ld a, (0x323c:16)
-	cp a, (0x3240:16)
+	ld a, (ACC_CHORD_TYPE:16)
+	cp a, (ACC_CHORD_PREV_TYPE:16)
 	jr nz, .Lc_f538b4
-	ld a, (0x323e:16)
-	cp a, (0x3242:16)
+	ld a, (ACC_CHORD_BASS:16)
+	cp a, (ACC_CHORD_PREV_BASS:16)
 	jr z, .Lc_f538b9
 AccChord_SetDirtyBit5:
 .Lc_f538b4:
 	or (0x3257:16), 0x20
 AccChord_CheckZeroChord:
 .Lc_f538b9:
-	cp (0x3240:16), 0x00
+	cp (ACC_CHORD_PREV_TYPE:16), 0x00
 	jr nz, AccChord_CompareDone
 	and (0x3257:16), 0xdf
 AccChord_CompareDone:

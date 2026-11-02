@@ -1,0 +1,33 @@
+1. entries no factory selector names (walk of notes/waveform-ic307-2026-10-29):
+   class 4 (page 0): 3 entries: [0, 152, 159]
+   class 5 (page 1): 4 entries: [77, 80, 83, 85]
+   class 6 (page 2): 65 entries: [0, 24, 41, 42, 43, 44, 45, 46, 47, 49, 50, 51, 52, 53, 54, 55, 57, 58, 59, 60, 61, 62, 63, 65, 66, 67, 68, 69, 70, 71, 73, 74, 75, 76, 77, 78, 79, 81, 82, 83, 84, 85, 86, 87, 89, 90, 91, 92, 93, 94, 95, 97, 98, 99, 100, 101, 102, 103, 105, 106, 107, 108, 109, 110, 111]
+   class 7 (page 3): 0 entries: []
+   SETs whose zone records the walk does not reach: [116, 117, 459, 460, 461]
+   unselected entries named by ANY of the 487 SETs' zone records or the drawbar records: 0 []
+
+2. patch records (dir +0x08 table, 607 distinct) with (+0x10 & 0xC0) == 0x40, the guard of Voice_SetPitch / Voice_NoteOff, the only callers of Voice_Init_Type1:
+   0x8706BD '<Jazz Drawbars>'  +0x10 = 0x60
+   0x870867 '<Rock Drawbars>'  +0x10 = 0x60
+   unselected entries e with a used entry s = 8k, s < e <= s + 7 (so s + (tick & 7) reaches e):
+     class 6: s =   40 (0x6028: sources ['Organ Click']; tones ['Accomp Drawbars', 'Pop Organ', 'Rock Organ', 'Soul Organ']; drum instruments ['Organ Click']): [41, 42, 43, 44, 45, 46, 47]
+     class 6: s =   48 (0x6030: sources ['Organ Click']; tones ['Accomp Drawbars', 'Pop Organ', 'Rock Organ', 'Soul Organ']; drum instruments ['Organ Click']): [49, 50, 51, 52, 53, 54, 55]
+     class 6: s =   56 (0x6038: sources ['Organ Click']; tones ['Accomp Drawbars', 'Pop Organ', 'Rock Organ', 'Soul Organ']; drum instruments ['Organ Click']): [57, 58, 59, 60, 61, 62, 63]
+     class 6: s =   64 (0x6040: sources ['Organ Click']; tones ['Accomp Drawbars', 'Pop Organ', 'Rock Organ', 'Soul Organ']; drum instruments ['Organ Click']): [65, 66, 67, 68, 69, 70, 71]
+     class 6: s =   72 (0x6048: sources ['Organ Click']; tones ['Accomp Drawbars', 'Pop Organ', 'Rock Organ', 'Soul Organ']; drum instruments ['Organ Click']): [73, 74, 75, 76, 77, 78, 79]
+     class 6: s =   80 (0x6050: sources ['Organ Click']; tones ['Accomp Drawbars', 'Pop Organ', 'Rock Organ', 'Soul Organ']; drum instruments ['Organ Click']): [81, 82, 83, 84, 85, 86, 87]
+     class 6: s =   88 (0x6058: sources ['Organ Click']; tones ['Accomp Drawbars', 'Pop Organ', 'Rock Organ', 'Soul Organ']; drum instruments ['Organ Click']): [89, 90, 91, 92, 93, 94, 95]
+     class 6: s =   96 (0x6060: sources ['Organ Click']; tones ['Accomp Drawbars', 'Pop Organ', 'Rock Organ', 'Soul Organ']; drum instruments ['Organ Click']): [97, 98, 99, 100, 101, 102, 103]
+     class 6: s =  104 (0x6068: sources ['Organ Click']; tones ['Accomp Drawbars', 'Pop Organ', 'Rock Organ', 'Soul Organ']; drum instruments ['Organ Click']): [105, 106, 107, 108, 109, 110, 111]
+     class 6 total: 63 entries
+
+3. the rest (KN7000 twin: the KN7000 recording that starts with the same Y-chip bytes, and how many KN7000 directory entries play it):
+   page 0 entry    0: wave   419 (512 B),  0 record words ; shares its wave with none; entry -1's wave -; KN7000 twin: main page 0x00 B 290 (1 entries)
+   page 0 entry  152: wave 54319 (7680 B),  4 record words 0040 0030 0020 c000; shares its wave with none; entry 151's wave 53839; KN7000 twin: none
+   page 0 entry  159: wave 56408 (5424 B), 36 record words 08fe 08fa 08ff 08fd ...; shares its wave with none; entry 158's wave 56156; KN7000 twin: main page 0x05 B 62424 (1 entries)
+   page 1 entry   77: wave 38242 (64 B),  0 record words ; shares its wave with none; entry 76's wave 37936; KN7000 twin: main page 0x01 B 25204 (0 entries)
+   page 1 entry   80: wave 39149 (64 B),  0 record words ; shares its wave with none; entry 79's wave 26391; KN7000 twin: main page 0x01 B 25204 (0 entries)
+   page 1 entry   83: wave 40120 (64 B),  0 record words ; shares its wave with none; entry 82's wave 25420; KN7000 twin: main page 0x01 B 25204 (0 entries)
+   page 1 entry   85: wave 24105 (6144 B),  3 record words 0080 009e 00d4; shares its wave with none; entry 84's wave 40124; KN7000 twin: none
+   page 2 entry    0: wave   618 (512 B),  0 record words ; shares its wave with none; entry -1's wave -; KN7000 twin: main page 0x00 B 290 (1 entries)
+   page 2 entry   24: wave 50913 (5632 B),  4 record words 0038 0028 0018 c000; shares its wave with [23]; entry 23's wave 50913; KN7000 twin: none

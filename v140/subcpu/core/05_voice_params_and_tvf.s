@@ -3395,7 +3395,7 @@ WaveSel_Emit_ZoneRecord_S6:
 ; itself against the wave ROM's own per-page directory; no CPU here can read that ROM.
 ; The firmware never range-checks the entry and never dereferences it, but it does modify it
 ; downstream: WaveSel_StageB_Store_Reg040 doubles the top nibble when bit 2 of 0x041343 is
-; set, and Voice_Init_Type1 adds (tick & 7) through Voice_Slot_ApplyPitchJitter. See
+; set, and Voice_Init_Type1 adds (tick & 7) through WaveSel_AddRandomEntryOffset. See
 ; "WHAT +0x040 SELECTS" in the staging-block header for the format and the open questions.
 WaveSel_Emit_ZoneRecord_S4:
 	extz de
@@ -4594,14 +4594,14 @@ Voice_Clamp_Byte_WA_Return:
 ; WaveSel_StageB_Store_Reg040, each copying word 0 of a zone record verbatim, plus
 ; Voice_InitVoiceState storing 0), the read half of WaveSel_StageB_Store_Reg040's
 ; read-modify-write, and the `lda_24 xwa, 0x0451ce` that hands the word to
-; Voice_Slot_ApplyPitchJitter. Nothing splits the word, range-checks the entry against a
+; WaveSel_AddRandomEntryOffset. Nothing splits the word, range-checks the entry against a
 ; count, or dereferences anything with it.
 ;
 ; * BUT IT IS NOT ALWAYS EMITTED AS STORED, AND THAT IS AN OPEN PROBLEM. Two sites change
 ; it after the zone record has been copied in:
 ;   - WaveSel_StageB_Store_Reg040 DOUBLES the top nibble in place when bit 2 of the global
 ;     audio-mode word 0x041343 is set -- class *= 2, i.e. a page/bank re-select;
-;   - Voice_Init_Type1 calls Voice_Slot_ApplyPitchJitter(0x0451CE) immediately after
+;   - Voice_Init_Type1 calls WaveSel_AddRandomEntryOffset(0x0451CE) immediately after
 ;     WaveSel_StageB_Build_Reg040, and that adds (tick & 7) to the WHOLE word.
 ; Under entry = bits[11:0] the second one picks a DIFFERENT directory entry on every note
 ; that goes through Voice_Init_Type1. On page 0 the consecutive entries of a shared-wave
@@ -7131,11 +7131,11 @@ TVF_Emit_Registers_Mode5_OffsetEachWord:
 	ld xwa, (xiz + 39)
 	ld wa, (xwa + 24)
 	bit 6, wa
-	jrl z, Voice_PanReg_Dispatch_Mode5_AsIs
+	jrl z, TVF_Emit_Registers_Mode5_AsIs
 	ld xwa, (xiz + 39)
 	ld wa, (xwa + 24)
 	bit 7, wa
-	jr z, Voice_PanReg_Dispatch_Mode5_Positive
+	jr z, TVF_Emit_Registers_Mode5_Positive
 	ld xwa, (xiz + 35)
 	ld a, (xwa + 31)
 	exts wa
@@ -7150,11 +7150,11 @@ TVF_Emit_Registers_Mode5_OffsetEachWord:
 	and bc, 0x7F
 	sub bc, wa
 	ld (xsp + 4), bc
-	jr Voice_PanReg_Dispatch_Mode5_Finalize
+	jr TVF_Emit_Registers_Mode5_Finalize
 
 ; Case-5 additive arm: (voice+66 & 0x7F) + s8(patch+0x1F) into DE, (voice+68 & 0x7F) +
 ; s8(patch+0x1F) into (xsp+4).
-Voice_PanReg_Dispatch_Mode5_Positive:
+TVF_Emit_Registers_Mode5_Positive:
 	ld xwa, (xiz + 35)
 	ld a, (xwa + 31)
 	exts wa
@@ -7172,7 +7172,7 @@ Voice_PanReg_Dispatch_Mode5_Positive:
 
 ; Clamps both offsets to 0..120 independently, merges each under 0xFF80 and stores to
 ; 0x0451D4 / 0x0451D6.
-Voice_PanReg_Dispatch_Mode5_Finalize:
+TVF_Emit_Registers_Mode5_Finalize:
 	ld wa, de
 	calr TVF_Clamp_Cutoff
 	ld wa, (xiz + 66)
@@ -7188,7 +7188,7 @@ Voice_PanReg_Dispatch_Mode5_Finalize:
 	jr TVF_Emit_Registers_Return
 
 ; Case-5 with the offset disabled (bit 6 of ((voice+39)+0x18) clear): verbatim copy.
-Voice_PanReg_Dispatch_Mode5_AsIs:
+TVF_Emit_Registers_Mode5_AsIs:
 	ld wa, (xiz + 66)
 	ld (Payload_Bss_Start+0x635e:24), wa
 	ld wa, (xiz + 68)
@@ -7200,13 +7200,14 @@ TVF_Emit_Registers_Return:
 	inc 2, xsp
 	ret
 
-; Second copy of TVF_Emit_Registers (0x024444), instruction-for-instruction
-; identical except that the mode nibble comes from (tonerec+0x0F)&7 instead of
-; (tonerec+0x36)&7 and the offset table is 0x00F6CB instead of 0x00F6BF.
-; In: XWA = per-voice record. Out: 0x0451D4 (TG reg 0x100), 0x0451D6 (TG reg 0x140).
-; The A/B pair mirrors the two independent parameter groups in the tone record
-; (cluster {0x0F..0x16} vs cluster {0x36..0x3C,0x4D..0x50}) -- i.e. the two layers/oscillators.
-Voice_PanReg_WriteDispatchB:
+; TVF_Emit_Registers_Type2: TVF_Emit_Registers for the type-2 voices (class (voice+1) & 0x3C = 0x10): the same six cases, with
+;   the mode from (tonerec+0x0F) & 7 instead of (tonerec+0x36) & 7 and the offsets in
+;   TVF_Emit_Registers_Type2_CaseOffsets; it writes the same staging words 0x0451D4 / 0x0451D6, which
+;   ToneGen_WriteVoice_TvfPair sends to TG registers 0x100 / 0x140 (the TVF pair).  In: XWA = per-voice record.
+;   The A/B pair mirrors the two parameter groups of the tone record (cluster 0x0F..0x16 vs 0x36..0x3C,
+;   0x4D..0x50).  Basis: callers + body -- TVF_Refresh_Sounding_Voices calls it for class 0x10 and
+;   TVF_Emit_Registers for 4 / 0x20; Voice_Init_Type2 calls it.  (Was Voice_PanReg_WriteDispatchB.)
+TVF_Emit_Registers_Type2:
 	dec 2, xsp
 	push xiz
 	ld xiz, xwa
@@ -7215,56 +7216,56 @@ Voice_PanReg_WriteDispatchB:
 	and a, 0x7
 	extz wa
 	cp wa, 0:i3
-	jr mi, Voice_PanReg_WriteDispatchB_Table
+	jr mi, TVF_Emit_Registers_Type2_Table
 	cp wa, 5:i3
-	jr gt, Voice_PanReg_WriteDispatchB_Table
+	jr gt, TVF_Emit_Registers_Type2_Table
 	add wa, wa
-	lda xix, (Voice_PanReg_WriteDispatchB_CaseOffsets:24)
+	lda xix, (TVF_Emit_Registers_Type2_CaseOffsets:24)
 	ld	wa, (xix+wa)
-	lda xix, (Voice_PanReg_WriteDispatchB_Table:24)
+	lda xix, (TVF_Emit_Registers_Type2_Table:24)
 	jp	t, (xix+wa)
 
 ; Landing pad for dispatch B; same six cases as 0x024472.
-Voice_PanReg_WriteDispatchB_Table:
+TVF_Emit_Registers_Type2_Table:
 	ld wa, (xiz + 66)
 	ld (Payload_Bss_Start+0x635e:24), wa
 	ld wa, (xiz + 68)
 	ld (Payload_Bss_Start+0x6360:24), wa
-	jrl Voice_PanReg_WriteDispatchB_Return
-; Voice_PanReg_WriteDispatchB_Mode1Or2_OffsetCutoffWord: Modes 1 and 2 (single cutoff): the part offset is applied to
+	jrl TVF_Emit_Registers_Type2_Return
+; TVF_Emit_Registers_Type2_Mode1Or2_OffsetCutoffWord: Modes 1 and 2 (single cutoff): the part offset is applied to
 ;   the +0x100 word only.
-Voice_PanReg_WriteDispatchB_Mode1Or2_OffsetCutoffWord:
+TVF_Emit_Registers_Type2_Mode1Or2_OffsetCutoffWord:
 	ld xwa, xiz
 	calr TVF_Emit_Offset_Reg100
-	jrl Voice_PanReg_WriteDispatchB_Return
-Voice_PanReg_WriteDispatchB_Mode3_OffsetOneOrBothWords:
+	jrl TVF_Emit_Registers_Type2_Return
+TVF_Emit_Registers_Type2_Mode3_OffsetOneOrBothWords:
 	ld xwa, (xiz + 35)
 	ld wa, (xwa + 2)
 	bit 9, wa
-	jr z, Voice_PanReg_WriteDispatchB_Case3_Bit9Clear
+	jr z, TVF_Emit_Registers_Type2_Case3_Bit9Clear
 	ld xwa, xiz
 	calr TVF_Emit_Offset_Reg100
-	jrl Voice_PanReg_WriteDispatchB_Return
+	jrl TVF_Emit_Registers_Type2_Return
 
 ; Bit-9-clear arm of case 3 in dispatch B (was "case 2": entries 1 and 2 of
-; Voice_PanReg_WriteDispatchB_CaseOffsets are both +0x13, entry 3 is this gated body).
-Voice_PanReg_WriteDispatchB_Case3_Bit9Clear:
+; TVF_Emit_Registers_Type2_CaseOffsets are both +0x13, entry 3 is this gated body).
+TVF_Emit_Registers_Type2_Case3_Bit9Clear:
 	ld xwa, xiz
 	calr TVF_Emit_Offset_Both
-	jrl Voice_PanReg_WriteDispatchB_Return
-Voice_PanReg_WriteDispatchB_Mode4_OffsetBothWords:
+	jrl TVF_Emit_Registers_Type2_Return
+TVF_Emit_Registers_Type2_Mode4_OffsetBothWords:
 	ld xwa, xiz
 	calr TVF_Emit_Offset_Both
-	jrl Voice_PanReg_WriteDispatchB_Return
-Voice_PanReg_WriteDispatchB_Mode5_OffsetEachWord:
+	jrl TVF_Emit_Registers_Type2_Return
+TVF_Emit_Registers_Type2_Mode5_OffsetEachWord:
 	ld xwa, (xiz + 39)
 	ld wa, (xwa + 24)
 	bit 6, wa
-	jrl z, Voice_PanReg_DispatchB_Mode5_AsIs
+	jrl z, TVF_Emit_Registers_Type2_Mode5_AsIs
 	ld xwa, (xiz + 39)
 	ld wa, (xwa + 24)
 	bit 7, wa
-	jr z, Voice_PanReg_DispatchB_Mode5_Positive
+	jr z, TVF_Emit_Registers_Type2_Mode5_Positive
 	ld xwa, (xiz + 35)
 	ld a, (xwa + 31)
 	exts wa
@@ -7279,10 +7280,10 @@ Voice_PanReg_WriteDispatchB_Mode5_OffsetEachWord:
 	and bc, 0x7F
 	sub bc, wa
 	ld (xsp + 4), bc
-	jr Voice_PanReg_DispatchB_Mode5_Finalize
+	jr TVF_Emit_Registers_Type2_Mode5_Finalize
 
 ; Case-5 additive arm in dispatch B.
-Voice_PanReg_DispatchB_Mode5_Positive:
+TVF_Emit_Registers_Type2_Mode5_Positive:
 	ld xwa, (xiz + 35)
 	ld a, (xwa + 31)
 	exts wa
@@ -7299,7 +7300,7 @@ Voice_PanReg_DispatchB_Mode5_Positive:
 	ld (xsp + 4), bc
 
 ; Case-5 clamp-and-emit in dispatch B.
-Voice_PanReg_DispatchB_Mode5_Finalize:
+TVF_Emit_Registers_Type2_Mode5_Finalize:
 	ld wa, de
 	calr TVF_Clamp_Cutoff
 	ld wa, (xiz + 66)
@@ -7312,17 +7313,17 @@ Voice_PanReg_DispatchB_Mode5_Finalize:
 	and wa, 0xFF80
 	or wa, hl
 	ld (Payload_Bss_Start+0x6360:24), wa
-	jr Voice_PanReg_WriteDispatchB_Return
+	jr TVF_Emit_Registers_Type2_Return
 
 ; Case-5 verbatim copy in dispatch B.
-Voice_PanReg_DispatchB_Mode5_AsIs:
+TVF_Emit_Registers_Type2_Mode5_AsIs:
 	ld wa, (xiz + 66)
 	ld (Payload_Bss_Start+0x635e:24), wa
 	ld wa, (xiz + 68)
 	ld (Payload_Bss_Start+0x6360:24), wa
 
 ; pop XIZ, inc 2 xsp, ret.
-Voice_PanReg_WriteDispatchB_Return:
+TVF_Emit_Registers_Type2_Return:
 	pop xiz
 	inc 2, xsp
 	ret

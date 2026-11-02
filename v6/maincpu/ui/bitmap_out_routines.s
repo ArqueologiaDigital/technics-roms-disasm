@@ -3579,7 +3579,7 @@ PanelMemory_PreSlotLoad:
 PanelMemory_PostSlotLoad:
 	extz	wa
 	cp	bc, 0:i3
-	jp	lt, (VoiceData_InitAndCopyParams:24)
+	jp	lt, (PanelMem_InitFromFactory:24)
 	jp	PanelTlv_ValidatePanelMemory
 ; PanelMemory_PreBankLoad: Empty hook (ret) run before one panel-memory bank (16-byte bank name + 8 memories) is read
 ;   from a .PMT file; WA = destination bank. Basis: callers + body -- FileIO_LoadRegion1_VRAM (bank 0 of a one-bank

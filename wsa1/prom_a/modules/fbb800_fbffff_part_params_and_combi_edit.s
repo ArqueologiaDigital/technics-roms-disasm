@@ -4271,7 +4271,7 @@ ScreenEnterBody_CombiEditMixer_Skip:
 	jr z, .LFBDCBF                                       ; FBDCA1  66 1c
 	call T_CallbackQueue_ResetAndRestartTask2            ; FBDCA3  1d 80 2e f4
 	ld (0x277e:16), 0x00                                 ; FBDCA7  f1 7e 27 00 00
-	lda xbc, (.LFBE135:24)                               ; FBDCAC  f2 35 e1 fb 31
+	lda xbc, (CombiEditMixer_PaintPageFrame:24)                               ; FBDCAC  f2 35 e1 fb 31
 	push XBC                                             ; FBDCB1  39
 	call T_CallbackQueue_Post                            ; FBDCB2  1d 84 2e f4
 	pushw 0x01                                           ; FBDCB6  0b 01 00
@@ -4840,7 +4840,20 @@ CombiEditMixer_ShowOtherParts:
 	popw hl                                              ; FBE132  4b
 	ret                                                  ; FBE133  0e
 	ret                                                  ; FBE134  0e
-.LFBE135:
+; CombiEditMixer_PaintPageFrame: the MIXER screen's page painter, a callback: ScreenEnterBody_CombiEditMixer posts it
+;   (T_CallbackQueue_Post, then T_Kernel_SemaSignal_StackArg(1)) whenever CombiEdit_Page differs from CombiEdit_DrawnPage.
+;   CombiEdit_DrawnPage := CombiEdit_Page; blank and set the panel-3 layer, the page-label backdrop, layer 0; the lists
+;   from DL_Mixer ("MIXER", "SOUND:"); then by CombiEdit_Page (lists are [start, end) pairs):
+;     page 0: in panel-mode group 0x16 DL_Sound ("PAGE1/3" SOUND / PAN / VOL), a CombiEditMixer_DrawPartBoxRow at
+;             y 0x2E and a CombiEditMixer_DrawPartIconRow at 0x55; in any other group only the box list before INT;
+;     page 1: DL_KeyShift ("PAGE2/3" REV / EFF1 / EFF2 / MAIN / KEY SHIFT), icon rows 0x7C / 0xA7, box row 0xCA;
+;     page 2: DL_Midiout ("PAGE3/3" MIDI OUT / MIDI IN / MIDI CH / SUB), icon rows 0x2D (outside group 0x16 only),
+;             0x55 / 0x7C, box rows 0xA7 / 0xCA;
+;   last the right-hand caption: "OTHER PARTS" outside group 0x16 (the key CombiEditMixer_ShowOtherParts serves),
+;   "SOLO" in it.  Was the local .LFBE135 of CombiEditMixer_ShowOtherParts (kn5000-wxn).  The byte before it,
+;   0xFBE134, is a second `ret` that nothing reaches: no call, calr, jp, jr or 24-bit operand in prom_a or prom_b
+;   names it (notes/open6-kn5000-d/wsa1/probes/wsa1_wxn_refs.py).
+CombiEditMixer_PaintPageFrame:
 	push XIX                                             ; FBE135  3c
 	lda xix, (T_DisplayList_Run_Stack:24)                ; FBE136  f2 00 2e f4 34
 	ld	(CombiEdit_DrawnPage:16), (CombiEdit_Page:16)             ; FBE13B  c1 67 27 19 68 27
@@ -4971,7 +4984,7 @@ CombiEditMixer_ShowOtherParts:
 	ret                                                  ; FBE26A  0e
 ; CombiEditMixer_DrawPartIconRow: (y): copies Record_F1AAA9 (an op-03 record blitting Bitmap_F17C59_24x17, BC = 3
 ;   bytes, HL = 17 rows) to its frame and blits it 8 times at byte offset 40*y + 1 + 5i -- one 24x17 frame per part
-;   column (x = 8 + 40i). The MIXER page-frame painter at 0xFBE135 (posted by ScreenEnterBody_CombiEditMixer) draws
+;   column (x = 8 + 40i). The MIXER page-frame painter CombiEditMixer_PaintPageFrame (posted by ScreenEnterBody_CombiEditMixer) draws
 ;   such rows at y 0x55 / 0x7C / 0xA7 / 0x2D by CombiEdit_Page. Basis: caller + body + record. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave10_a10.json)
 CombiEditMixer_DrawPartIconRow:
@@ -5003,7 +5016,7 @@ CombiEditMixer_DrawPartIconRow:
 	unlk XIZ                                             ; FBE2A1  ee 0d
 	ret                                                  ; FBE2A3  0e
 ; CombiEditMixer_DrawPartBoxRow: (y): copies Record_F1AAB5 (an op-09 record, LCD_Svc_09_DrawBox) to its frame and
-;   draws 8 boxes (4 + 40i, y)-(34 + 40i, y + 20), one per part column. The MIXER page-frame painter at 0xFBE135
+;   draws 8 boxes (4 + 40i, y)-(34 + 40i, y + 20), one per part column. The MIXER page-frame painter CombiEditMixer_PaintPageFrame
 ;   (posted by ScreenEnterBody_CombiEditMixer) draws such rows at y 0x2E / 0xA7 / 0xCA by CombiEdit_Page. Basis:
 ;   caller + body + record. (notes/naming-pilot-2026-10-06/proposals_wave10_a10.json)
 CombiEditMixer_DrawPartBoxRow:
@@ -6261,7 +6274,7 @@ CombiEdit_SaveOriginalForCompare:
 	pushw de                                             ; FBED26  2a
 	push XIX                                             ; FBED27  3c
 	ld (CombiEdit_Comparing:16), 0x00                                 ; FBED28  f1 7f 27 00 00
-	ld (0x216e:16), 0x00                                 ; FBED2D  f1 6e 21 00 00
+	ld (PanelLed_CompareFlag:16), 0x00                                 ; FBED2D  f1 6e 21 00 00
 	set	2, (0x213b:16)                               ; FBED32  f1 3b 21 ba
 	lda xbc, (Combination_Current:16)                                ; FBED36  f1 20 76 31
 	ld (xiz-4), xbc                                      ; FBED3A  be fc 61
@@ -6299,7 +6312,7 @@ CombiEdit_CompareOff:
 	cp	(CombiEdit_Comparing:16), 0x01                            ; FBED77  c1 7f 27 3f 01
 	jr nz, .LFBED93                                      ; FBED7C  6e 15
 	ld (CombiEdit_Comparing:16), 0x00                                 ; FBED7E  f1 7f 27 00 00
-	ld (0x216e:16), 0x00                                 ; FBED83  f1 6e 21 00 00
+	ld (PanelLed_CompareFlag:16), 0x00                                 ; FBED83  f1 6e 21 00 00
 	set	2, (0x213b:16)                               ; FBED88  f1 3b 21 ba
 	calr CombiEdit_SwapForCompare                                      ; FBED8C  1e 46 00
 	set	4, (UI_ScreenFlags:16)                               ; FBED8F  f1 95 20 bc
@@ -6310,7 +6323,7 @@ CombiEdit_CompareOn:
 	cp	(CombiEdit_Comparing:16), 0x00                            ; FBED94  c1 7f 27 3f 00
 	jr nz, .LFBEDBD                                      ; FBED99  6e 22
 	ld (CombiEdit_Comparing:16), 0x01                                 ; FBED9B  f1 7f 27 00 01
-	ld (0x216e:16), 0x01                                 ; FBEDA0  f1 6e 21 00 01
+	ld (PanelLed_CompareFlag:16), 0x01                                 ; FBEDA0  f1 6e 21 00 01
 	set	2, (0x213b:16)                               ; FBEDA5  f1 3b 21 ba
 	calr CombiEdit_SwapForCompare                                      ; FBEDA9  1e 29 00
 	pushw 0x00                                           ; FBEDAC  0b 00 00

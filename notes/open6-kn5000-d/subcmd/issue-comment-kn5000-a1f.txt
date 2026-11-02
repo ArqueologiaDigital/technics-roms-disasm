@@ -1,0 +1,13 @@
+[open6/kn5000-d-subcmd] 2026-11-02: traced end to end. The song controller events are 0xD0 = channel pressure (aftertouch), 0xD1 = modulation, 0xD2 = pitch bend, 0xD3 = expression; on a CONTROL track, 0xD3 is the expression pedal.
+
+Playback (v10): the player appends the track's part (SeqNote_SendNoteOff 0xF3B1F3 / SeqNote_NoteOff_WritePart 0xF3B225; both misnamed, no note-off) and queues the event with SeqBuf_WriteMidiEvent. Audio_ReinitAndProcessEvents -> VoiceMode_ParamDispatch (class 0xDn -> VoiceParam_DispatchByMode) checks the track's TRACK ASSIGN (MidiVoiceNote_Dispatch). It then stores the value as "pending" in the per-track arrays that MIDI IN also uses: 0x94D2 for D0, 0x9452 for D1 (also CC1), 0x9472 for D2 (also pitch bend), 0x9432 for D3 (also CC11). PendingParam_ScanAllTables posts them as panel events {0xB4 / 0xB2 / 0xB1 / 0xB3, part tag, value, 0x7F}, or {0xB0, 1} for the expression pedal. The bank-2 listeners HdaeRom_AltTableEntry2..5 -> SndParam_ApplyEventField -> SndPart_SetParam turn these into the sub-CPU records D0 part 00 value (Voice_ChanPressure, value at +3), B0 part 01 value, E0 part lsb msb and B0 part 0B value. Lsw numbers: 0x1B2, 0x001, 0x1B0, 0x00B.
+
+The recorder uses the same mapping in reverse: SeqTrackAssign_RecordMapTable sends {0xB4} to MIDI_EmitRecord_D0, {0xB2} to D1, {0xB1} to D2 and {0xB3} or {0xB0,1} to D3 (probes/subcmd_probe.py recordmap).
+
+Value bytes, settled from MIDI_EmitRecord_B0 / VoiceMode3_InitChannelMatch and TempoCC_TransmitBytecodeBlock / VoiceMode_CheckPendingFlags:
+- 0xBn = {Bn, tick, record, field, value, write mask}, low 7 bits each; n bits 0/1/2 carry bit 7 of value / mask / record. On playback the record is matched against SeqTrackAssign_PlaybackMapTable and the mask is ANDed with the entry's.
+- 0xCn = {Cn, tick, part tag, 0, part record +0 (panel sound number), +1 (variation bank)}; n bits 0/1 carry their bit 7.
+
+Notes: notes/open6-kn5000-d/subcmd/README.md section kn5000-a1f. Website draft: sequencer.md "Events" (rows 0xBn/0xCn/0xD0-0xD3, new "Controller events on playback"), plus one line for inter-cpu-protocol.md. Renames in notes/open6-kn5000-d/subcmd/rename_subcmd.sed: 16 labels (ChanPressure, Expression, MIDI_EmitRecord_C0, ...). One sub-CPU header comment needs fixing: Voice_ChanPressure reads the value at +3, not +2.
+
+Caveats: D0 is recorded only while RAM 0xFFC2 bit 0 is set (what sets it is not traced). The MIDI_DispatchCC_Guarded side call is taken to be the MIDI OUT echo [INFERENCE]. Only v10 was read. Related: kn5000-wgc, kn5000-1gu, kn5000-061.

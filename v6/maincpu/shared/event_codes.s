@@ -483,9 +483,9 @@
 .equ EVT_SET_MEMORY_DRAWBAR, 0x1e1000a	; Firmware method MT_SetMemoryDrawbar: store one memory-drawbar item (XDE = item<<16 | value) and send it to the tone generator
 .equ EVT_EXIST_PRESENTATION, 0x1e1000b	; Firmware method MT_ExistPresentation: query whether a presentation is loaded; MainPreControl returns the word at 0x0251D8
 .equ EVT_INIT_PRESENTATION, 0x1e1000c	; Firmware method MT_InitPresentation: clear the presentation-loaded flag (word 0x0251D8 := 0)
-.equ EVT_EXIT_PRESENTATION, 0x1e1000d	; Firmware method MT_ExitPresentation: leave the presentation: if one is loaded (0x0251D8 != 0) call Part_InitFromPreset, then clear the flag
+.equ EVT_EXIT_PRESENTATION, 0x1e1000d	; Firmware method MT_ExitPresentation: leave the presentation: if one is loaded (0x0251D8 != 0) call SeqSong_ResetAll, then clear the flag
 .equ EVT_GET_TONE_MODE, 0x1e1000e	; Firmware method MT_GetToneMode: query the voice/tone mode of drawbar part XDE; the answer is posted as 0x01C10008
-.equ EVT_VARI_WRITE, 0x1e20000	; Firmware method MT_VariWrite (slot 0x1E2, Toshi): write a variation parameter block (XDE) to the channels (MIDI_DistributeParamToChannels, SwbtWr ...
+.equ EVT_VARI_WRITE, 0x1e20000	; Firmware method MT_VariWrite (slot 0x1E2, Toshi): write a variation parameter block (XDE) to the channels (PanelVari_SetGroupSlot, SwbtWr ...
 .equ EVT_SVARI_INI, 0x1e20001	; Firmware method MT_SvariIni: build the current sound-variation parameter block and broadcast it as MT_SvariSet (0x01E20002), then MT_AutoFree
 .equ EVT_SVARI_SET, 0x1e20002	; Firmware method MT_SvariSet: broadcast notification carrying the 6-byte sound-variation block built by MT_SvariIni
 .equ EVT_GET_SND_NAME, 0x1e20003	; Firmware method MT_GetSndName: request the current sound name; answered by broadcasting MT_SOUNDNAME (0x01E20005)
@@ -533,7 +533,7 @@
 .equ EVT_CMP_CLR_NO, 0x1e40007	; Firmware method MT_CmpClrNo: composer clear cancelled (close the dialog)
 .equ EVT_PAN_DN, 0x1e40009	; Firmware method MT_PanDn: composer-set grid: decrement the pan byte (min 0) of part XDE, then MT_RequestGridDraw
 .equ EVT_RLMT_DN, 0x1e4000b	; Firmware method MT_RLmtDn: composer-set grid: decrement the range-limit byte (min 0) of part XDE
-.equ EVT_CMP_SET_P1_UP, 0x1e4000e	; Firmware method MT_CmpSetP1Up: composer-set page 1 value up ((0x3540) := value, DrumVoice_Select, then MT_RequestGridDraw to 0xB40007)
+.equ EVT_CMP_SET_P1_UP, 0x1e4000e	; Firmware method MT_CmpSetP1Up: composer-set page 1 value up ((0x3540) := value, CmpRecSet_DispatchCursorRow, then MT_RequestGridDraw to 0xB40007)
 .equ EVT_CMP_SET_P1_DN, 0x1e4000f	; Firmware method MT_CmpSetP1Dn: composer-set page 1 value down
 .equ EVT_S2C_TR_UP, 0x1e40010	; Firmware method MT_S2cTrUp: S2c grid: value up for row XDE ((0x3990) := row, Tempo_AdjustEffect(0)), then redraw the cell and refresh 0xB9001C/1F/18
 .equ EVT_S2C_TR_DN, 0x1e40011	; Firmware method MT_S2cTrDn: S2c grid: value down for row XDE (Tempo_AdjustEffect(1))

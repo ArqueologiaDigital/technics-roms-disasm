@@ -133,9 +133,20 @@
 	.equ ACC_LANE_BAR,			0x32b5	; [6 bytes] per part (bit 1..32): its bar counter; AccVoice_SavePartStateN copies it to ACC_CUR_BAR and back, AccVoice_HandleBarEndEvent increments the working copy when the beat position wraps
 	.equ ACC_CH_TURNOVER,			0x32c3	; [4 bytes] per rhythm channel D7 / D4 / D5 / D6: the part sound's turnover byte (IC14 part_sound +5), RhythmPartN_LoadAndStore; Rhythm_SetupChannel_Dn copies it to ACC_CUR_TURNOVER
 	.equ ACC_CH_CEILING,			0x32c7	; [4 bytes] per rhythm channel D7 / D4 / D5 / D6: the part sound's note ceiling (IC14 part_sound +6); Rhythm_SetupChannel_Dn copies it to ACC_CUR_CEILING
-	.equ ACC_CUR_TURNOVER,			0x32cb	; the working channel's turnover: Rhythm_TransposeNote moves a transposition above it an octave down; Rhythm_CrossVoiceCorrect bases 0x332e on it
+	.equ ACC_CUR_TURNOVER,			0x32cb	; the working channel's turnover: Rhythm_TransposeNote moves a transposition above it an octave down; Rhythm_BassToRoot bases 0x332e on it
 	.equ ACC_CUR_CEILING,			0x32cc	; the working channel's note ceiling: Rhythm_TransposeNote folds notes at or above it down by octaves (when it is 12 or more)
 	.equ ACC_STYLE_RECORD,			0x32ce	; the current style record in the rhythm ROM (AccStyle_ApplyExtendedStyle stores it)
+	.equ ACC_CHORD_FLAGS,			0x32d7	; the accompaniment's copy of CHORD_FLAGS (AccChord_ReadAndStoreKeys; from 0x2306 instead while 0x2308 is set by AccompValidate_StoreResult, [INFERENCE] a song chord track): bit 1 = on-bass chord (bass plays ACC_CHORD_BASS, Rhythm_BassToRoot), bit 0 = every converted note becomes the C of its octave (Rhythm_RootOnlyNote)
+	.equ ACC_CHORD_TYPE,			0x32d8	; chord type 1..41 the patterns are converted for (AccChord_ReadAndStoreKeys from CHORD_TYPE or 0x2300); 0 = no chord: converted notes become 0; indexes Rhythm_InstrMapTable_* / Rhythm_PitchShiftTable_* (clamped below 0x30)
+	.equ ACC_CHORD_ROOT,			0x32d9	; chord root 1 = C .. 12 = B; Rhythm_TransposeNote adds root - 1 (minus 12 above the part's turnover)
+	.equ ACC_CHORD_BASS,			0x32da	; bass root 1..12, = ACC_CHORD_ROOT unless ACC_CHORD_FLAGS bit 1 (AccChord_ReadAndStoreKeys); Rhythm_TransposeNote uses it for the BASS part (0x32f4 bit 3)
+	.equ ACC_CHORD_PREV_FLAGS,		0x32db	; ACC_CHORD_FLAGS of the previous tick (Rhythm_CompareAndTrigger / Rhythm_SaveNoteState)
+	.equ ACC_CHORD_PREV_TYPE,		0x32dc	; ACC_CHORD_TYPE of the previous tick; AccChord_CompareAndSetDirty raises 0x32f3 bit 5 when the type or bass changed; during an ending a released chord (type 0) is replaced by it (AccChord_ReadAndStoreKeys)
+	.equ ACC_CHORD_PREV_ROOT,		0x32dd	; ACC_CHORD_ROOT of the previous tick
+	.equ ACC_CHORD_PREV_BASS,		0x32de	; ACC_CHORD_BASS of the previous tick
+	.equ ACC_CHORD_VOICED_TYPE,		0x32df	; the chord the buffered notes were last converted for: Rhythm_CompareAndTrigger re-converts the ring buffers and sounding notes (Rhythm_NoteOnAfterSetup_A/B/C) when ACC_CHORD_TYPE / _ROOT / _BASS differ from it
+	.equ ACC_CHORD_VOICED_ROOT,		0x32e0	; root of ACC_CHORD_VOICED_TYPE
+	.equ ACC_CHORD_VOICED_BASS,		0x32e1	; bass root of ACC_CHORD_VOICED_TYPE
 	.equ ACC_STYLE_NUMBER,			0x32e5	; the style playing, 0..127 within ACC_STYLE_GROUP (below 0x80 a rhythm-ROM style; committed from ACC_PENDING_STYLE by AccStyle_ApplyChanges)
 	.equ ACC_STYLE_GROUP,			0x32e6	; its group, 0..6 (the directory has 8 groups x 128 styles)
 	.equ ACC_BAD_EVENT_COUNT,		0x32ed	; unknown pattern bytes the lane reader skipped; at 32 AccVoice_AdvanceAndCheckEnd stops the accompaniment
@@ -163,6 +174,9 @@
 	.equ ACC_LANES_INTRO2,			0x3318	; the lanes still playing INTRO 2
 	.equ ACC_DEFER_ENDING_LANES,		0x3326	; lanes whose pending ending (or style change) waits for their bar line: AccSection_DeferToBarUnlessFirstBeat sets bits 0-5 unless the engine beat is 0; AccSection_SwitchAtBarLine clears it
 	.equ ACC_DEFER_SECTION_LANES,		0x3327	; lanes whose pending intro / fill-in waits for their bar line: AccSection_DeferToBarIfLastBeat sets bits 0-5 when the press comes on the last beat; AccSection_SwitchAtBarLine clears it
+	.equ ACC_LANES_PARKED,			0x332a	; lanes (bits 0-5) parked at their 0x83 end marker during an ending (AccVoice_ParkLaneAtEnd); all six -> 0x3283 bit 2 and the byte is cleared
+	.equ ACC_BASS_FLOOR_ON,			0x332d	; bit 0: Rhythm_BassToRoot set a floor for the next Rhythm_TransposeNote (cleared by it)
+	.equ ACC_BASS_FLOOR,			0x332e	; lowest note the BASS root note may take: pattern note + turnover + 1 - 12 (Rhythm_BassToRoot); Rhythm_TransposeNote adds 12 below it
 	.equ ACC_CH_CC3,			0x332f	; [4 bytes] per rhythm channel D7 / D4 / D5 / D6: the last controller-3 value sent (0xdn 0x03 v, AccVoice_SendProgChange from ACC_CUR_CC3); Rhythm_SendVolume_Dn re-sends it, Rhythm_AllNotesOff_Dn sends 0 when it is set
 	.equ ACC_CUR_CC3,			0x3333	; the last 0xd3 (controller selector 3) value AccVoice_ScanInstruments / AccSeq_Scanner_D3Voice found in the working part's pattern, 0 when none
 	.equ ACC_VARIATION_NEXT,		0x333a	; the variation index 0..3 to load: ACC_VARIATION_REQUEST & 3 (AccentVoice_DetectAndMarkChange), stepped -1 / +1 (clamped) by FILL IN 1 / 2 under the arranger (AccSection_SwitchNow)
@@ -177,12 +191,21 @@
 	.equ ACC_CUR_MEASURE,			0x33ea	; the working part's measure counter (copy of ACC_LANE_MEASURE[part]); AccVoice_IncrementBarCounter wraps it past byte +13 of the record at (0x3426)
 	.equ ACC_LANE_MEASURE,			0x33eb	; [6 bytes] per part: its measure counter; AccVoice_ClearChannelStates clears all six
 	.equ ACC_EVENT,				0x342d	; [6 bytes] the pattern event being decoded or built (docs/accompaniment-style-reader.md): +0 status, +1 position in the beat, +2 note, +3 velocity, +4/+5 duration; AccBuf_WriteNoteEvent copies all but +1 into a ring buffer, a zero duration as 1.  SqStep_ComputeStepAndGateTime keeps the step and gate lengths in +0..+3
+	.equ ACC_EVENT_EXT1,			0x3433	; byte 6 of a 0x91 pattern note (AccMidi_ParseNoteOn): its shift for seventh-family chords (Rhythm_ChordExtSelect selector 1): low nibble = semitones, bit 4 = down, bit 5 = drop the note
+	.equ ACC_EVENT_EXT2,			0x3434	; byte 7 of a 0x91 pattern note: its shift for minor-family chords (selector 2), coded as ACC_EVENT_EXT1
+	.equ ACC_EVENT_PATTERN_NOTE,		0x3435	; the pattern note before conversion (AccBuf_WriteExtendedEvent), kept as the ring record's last byte so a chord change can convert it again
 	.equ ACC_READ_OFFSET,			0x3449	; word: offset in ACC_READ_BLOCK
 	.equ ACC_READ_BLOCK,			0x346b	; word: block of the pattern read position (AccPlayback_SaveReadPosition saves it with ACC_READ_OFFSET)
+	.equ ACC_SYNCHRO_STATE,			0x346d	; bit 7 = synchro allowed (AccSynchro_UpdateArmed), bit 2 = start requested now, bit 0 / 1 = start deferred to the main loop (AccAutoPlay_DeferredAction), bit 3 = started / stop cancelled, bit 4 = stopped by chord release (AccSynchro_StopOnChordRelease)
+	.equ ACC_SYNCHRO_ACTION,		0x346e	; bits 5-7 = the transport action AccAutoPlay_ActionDispatch performs (0xa0 = AccPlayMode_StartAccPlayFull), set by AccAutoPlay_Configure / _ModeDecode; bit 2 = re-check pending (AccSynchro_PeriodicCheck)
 	.equ ACC_SECTION_BUTTONS_HELD,		0x3470	; section buttons held: bit 0 INTRO 2, 2 INTRO 1, 3 COUNT IN, 4 ENDING 1, 5 ENDING 2, 6 FILL IN 1, 7 FILL IN 2 (AccSection_Request* set them, AccSection_Release* clear them); a held FILL IN restarts the fill at an arranger step
 	.equ ACC_CTL_EVENT_VALUE,		0x347e	; new value of the style-record (0x48) field-5 / 6 switch event being handled (AccStyleCtl_OnSwitchEvent)
 	.equ ACC_CTL_EVENT_MASK,		0x347f	; its mask of changed bits (0xff read as 0); a button is pressed when its bit is set in both, released when set only here
 	.equ ACC_CTL_EVENT_FIELD,		0x348a	; its field of record 0x48: 5 or 6 (AccStyleCtl_OnSwitchEvent; AccPedal_RawHandler stores 3)
+	.equ ACC_SYNCHRO_KEY_EVENT,		0x3498	; bit 0 = a chord-zone key went down (AccAutoPlay_NoteDispatch / AccAutoPlay_SplitDetect), bit 7 = a key went down in this pass; read by AccSynchro_OnChordKeyEvent
+	.equ ACC_SYNCHRO_TRIGGERED,		0x3499	; bit 0: the chord-zone key event has been handled (AccAutoPlay_Trigger_Process); cleared when the keys are released
+	.equ ACC_CHORD_KEYS_PREV,		0x349a	; word: chord-zone keys held before the last key event (AccAutoPlay_ZoneTrack)
+	.equ ACC_CHORD_KEYS_NOW,		0x349c	; word: chord-zone keys held now (AccAutoPlay_ZoneTrack_Apply); 0 after non-zero with SYNCHRO armed = synchro stop (AccAutoPlay_Trigger_Activate)
 	.equ STYLE_FREE_BLOCKS,			0x34d4	; word: free pattern blocks of the style image (190 when AccDemo_Init starts it; AccPatch_LinkNewPatternBlock takes one)
 	.equ STYLE_SECTION,			0x34d6	; the style section being played or edited, 0..29 (variations 0-11, intros / fill-ins / endings 12-29); its 0x60-byte record is RHYTHM_PATTERN_BUF_A + 0x60 + 0x60 * n (AccPatch_GetCurrentSlotAddr)
 	.equ STYLE_SECTION_LAST_MEASURE,	0x34d7	; last measure index of STYLE_SECTION (its record's +13, RhythmPatInit_LoadParams)

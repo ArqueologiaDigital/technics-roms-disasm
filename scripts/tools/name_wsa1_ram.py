@@ -459,6 +459,9 @@ GROUPS = [
     ("wsa1/notes/prom_ab_read_names_2026_10_04.py", "CompareKey_CombiEdit / CombiEdit_CompareOn / _CompareOff (2026-10-04)", {
         0x277F: ("CombiEdit_Comparing", "1 while COMBINATION EDIT compares (the COMPARE key toggles it)", "CombiEdit_CompareOn sets it, CombiEdit_CompareOff clears it"),
     }),
+    ("notes/open6-kn5000-d/wsa1/README.md", "Lead 4: 0x216E, the COMPARE LED flag (kn5000-wxn, 2026-11-02)", {
+        0x216E: ("PanelLed_CompareFlag", "bit 0: the COMPARE LED, 1 = lit (COMBINATION EDIT holds 1 while it compares; SOUND EDIT sets it from CPU 2's staging flags)", "PanelLed_SetCompareFlag, CombiEdit_CompareOn / _CompareOff write it; LED request 0x0400's handler at 0xF8C7AC reads it"),
+    }),
     ("wsa1/notes/FINDINGS-prom_a-seqbuf-and-timed-events.md", "2. The MIDI-in rings", {
         0x600C1E: ("MidiIn_PortARing", "MIDI port A's received-byte ring (0x400)", "MidiIn_PumpPortA, MidiIn_RoutePortA"),
         0x601028: ("MidiIn_PortBRing", "MIDI port B's received-byte ring (0x400)", "MidiIn_PumpPortB, MidiIn_RoutePortB"),

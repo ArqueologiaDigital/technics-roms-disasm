@@ -100,7 +100,7 @@ Sound_SetSelection:
 	ld	b, 0:opc
 	extz	bc
 	extz	de
-	call	MIDI_DistributeParamToChannels
+	call	PanelVari_SetGroupSlot
 	ld	xwa, (xsp+20)
 	extz	wa
 	ld	xbc, (xsp+20)
@@ -295,7 +295,7 @@ Sound_Navigate_ApplyChange:
 
 	extz de
 
-	call	MIDI_DistributeParamToChannels
+	call	PanelVari_SetGroupSlot
 
 	ld wa, (xsp + 4)
 

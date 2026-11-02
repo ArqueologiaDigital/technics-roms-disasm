@@ -350,6 +350,13 @@ laws pin the scales, then stability or a response picks the order. `host_side.py
    shape is a register-file access aimed at the table its largest shape's idiom reads. Its other two
    forms carry `class4 = 0, addr8 = 0x00` exactly like `C63`. ⇒ a relocation-style test (the method
    that paid in §122 and §128) has a target.
+   ⛔ **RUN 2026-11-02, AND IT IS SPENT** (`bit11-xprod-2026-11-02.md`, `tools/bit11_xprod.py`). The
+   KN5000 bodies load at I-RAM 84, the SX-WSA1R ones at 110, and 62 of 62 aligned bit-11 words are
+   byte-identical after that 26-word move (`C63` also moved inside its body in 41 of 44): **no bit-11
+   field is an I-RAM address**. That is all the test can say about `8BC`: its `lo12` is constant over
+   49 of 49 pooled occurrences and the fused form's `addr8` is `0x30` in 37 of 37, so no field varies
+   for a relocation to move. Worth zero words. ⇒ step 1 of the cascade is BLOCKED on an observable
+   (CDJ-500 firmware, or the chip's emulator mode), not OPEN.
 
    ⚠ **The live upstream question, if someone wants the LFO rather than the encoding:** what writes
    cell `0x07` 1 570 842 times? §199 attributes only **12 442** writes to `store_mode()`, all with

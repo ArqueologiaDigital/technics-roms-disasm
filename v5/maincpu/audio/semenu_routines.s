@@ -1469,7 +1469,7 @@ SeMenu_SetFilterType_Join:
 	inc	6, xsp
 	ret
 
-SeMenu_TransferPartValues:
+SeLfo_GetEntryElement:
 	cp c, 0:i3
 	jr z, SeMenu_TransferPartValues_Loop
 	cp c, 4:i3
@@ -1539,7 +1539,7 @@ SeMenu_TransferPartValues_End2:
 	ldw hl, 0xffff
 	ret
 
-SeMenu_TransferPartValues_EndData:
+SeLfo_GetSelectedLfo:
 	cp	a, 1:i3
 	jr	nz, SeMenu_TransferPartValues_EndData_Skip3
 	ld	a, (1678:16)
@@ -1617,7 +1617,7 @@ SeMenu_TransferPartValues_EndData_Skip27:
 	ret	nz
 	ld	(xwa), 1
 	ret
-UpdSeSel_DetailedUpdate_SetDisplayState_Helper:
+SeCtr2_GetSelection:
 	ld	c, (1685:16)
 	cp	c, 1:i3
 	jr	c, SeMenu_TransferPartValues_EndData_Skip28
@@ -1845,7 +1845,7 @@ SeMenu_CyclePartLfoState:
 	ld	a, (xsp+12)
 	extz	wa
 	lda	xbc, (xsp+4)
-	calr	SeMenu_TransferPartValues_EndData
+	calr	SeLfo_GetSelectedLfo
 	lda	xde, (xsp+6)
 	ld	c, (xde)
 	and	c, 63
@@ -2691,13 +2691,13 @@ SeMenu_ApplyPartEdit_AltStore_Join:
 	ld	a, (xsp+16)
 	extz	wa
 	lda	xbc, (xsp+14)
-	calr	SeMenu_TransferPartValues_EndData
+	calr	SeLfo_GetSelectedLfo
 	ld	a, (xsp+16)
 	extz	wa
 	ld	c, (xsp+14)
 	extz	bc
 	lda	xde, (xsp+12)
-	calr	SeMenu_TransferPartValues
+	calr	SeLfo_GetEntryElement
 	lda	xbc, (xsp)
 	ld	wa, 4:i3
 	calr	SeMenu_LoadPartParam
@@ -2740,13 +2740,13 @@ SeMenu_ApplyPartEdit_AltStore_Join2:
 	ld	a, (xsp+16)
 	extz	wa
 	lda	xbc, (xsp+14)
-	calr	SeMenu_TransferPartValues_EndData
+	calr	SeLfo_GetSelectedLfo
 	ld	a, (xsp+16)
 	extz	wa
 	ld	c, (xsp+14)
 	extz	bc
 	lda	xde, (xsp+12)
-	calr	SeMenu_TransferPartValues
+	calr	SeLfo_GetEntryElement
 	lda	xbc, (xsp)
 	ld	wa, 4:i3
 	calr	SeMenu_LoadPartParam
@@ -2789,13 +2789,13 @@ SeMenu_ApplyPartEdit_AltStore_Join3:
 	ld	a, (xsp+16)
 	extz	wa
 	lda	xbc, (xsp+14)
-	calr	SeMenu_TransferPartValues_EndData
+	calr	SeLfo_GetSelectedLfo
 	ld	a, (xsp+16)
 	extz	wa
 	ld	c, (xsp+14)
 	extz	bc
 	lda	xde, (xsp+12)
-	calr	SeMenu_TransferPartValues
+	calr	SeLfo_GetEntryElement
 	lda	xbc, (xsp)
 	ld	wa, 2:i3
 	calr	SeMenu_LoadPartParam
@@ -2838,13 +2838,13 @@ SeMenu_ApplyPartEdit_AltStore_Join4:
 	ld	a, (xsp+16)
 	extz	wa
 	lda	xbc, (xsp+14)
-	calr	SeMenu_TransferPartValues_EndData
+	calr	SeLfo_GetSelectedLfo
 	ld	a, (xsp+16)
 	extz	wa
 	ld	c, (xsp+14)
 	extz	bc
 	lda	xde, (xsp+12)
-	calr	SeMenu_TransferPartValues
+	calr	SeLfo_GetEntryElement
 	lda	xbc, (xsp)
 	ld	wa, 1:i3
 	calr	SeMenu_LoadPartParam
@@ -2886,13 +2886,13 @@ SeMenu_ApplyPartEdit_AltStore_Join5:
 	ld	a, (xsp+16)
 	extz	wa
 	lda	xbc, (xsp+14)
-	calr	SeMenu_TransferPartValues_EndData
+	calr	SeLfo_GetSelectedLfo
 	ld	a, (xsp+16)
 	extz	wa
 	ld	c, (xsp+14)
 	extz	bc
 	lda	xde, (xsp+12)
-	calr	SeMenu_TransferPartValues
+	calr	SeLfo_GetEntryElement
 	lda	xbc, (xsp)
 	ld	wa, 3:i3
 	calr	SeMenu_LoadPartParam
@@ -2926,13 +2926,13 @@ SeMenu_ApplyPartEdit_AltStore_Join6:
 	ld	a, (xsp+16)
 	extz	wa
 	lda	xbc, (xsp+14)
-	calr	SeMenu_TransferPartValues_EndData
+	calr	SeLfo_GetSelectedLfo
 	ld	a, (xsp+16)
 	extz	wa
 	ld	c, (xsp+14)
 	extz	bc
 	lda	xde, (xsp+12)
-	calr	SeMenu_TransferPartValues
+	calr	SeLfo_GetEntryElement
 	lda	xbc, (xsp)
 	ld	wa, 3:i3
 	calr	SeMenu_LoadPartParam
@@ -6457,7 +6457,7 @@ SeMenu_StoreEffectCoeff_Data_Join:
 	lda	xde, (xsp+38)
 	ld	wa, 0:i3
 	ld	bc, 1:i3
-	calr	SeMenu_TransferPartValues
+	calr	SeLfo_GetEntryElement
 	ld	(xsp), 0
 SeMenu_StoreEffectCoeff_Data_Loop3:
 	ld	e, (xsp)

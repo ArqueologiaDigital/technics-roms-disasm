@@ -55,17 +55,17 @@ F_02LSTMIX_PMT_Memory_1_1:
 	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
 	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
-	ptlv_style_select	0x48, 132, 0, 0, 2, 1, 0xe, 0, 0, 0, 0, 0, 2, 0, 0, 0, 100
+	ptlv_style_select	0x48, 132, 0, 0, 2, 1, 0xe, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 100
 	ptlv_tag90	0x90, 1, 0, 0, 0x67, 0, 0, 0, 64, 0
 	ptlv_tag60	0x60, 0, 0, 1, 1, 0, 0, 0
-	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; CHORUS: p1 DEPTH, p2 LFO SPEED, p3 LFO WAVEFORM, p4 VOLUME, p5 REV SEND [byte packing not established for this effect: 1640 of 1680 saved records decode in range]
-	ptlv_dsp_slot	0x63, 23, 55, 0, 90, 12, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; DARK REVERB 2: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 0 of 68 saved records decode in range]
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
-	ptlv_dsp_slot	0x65, 59, 7, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; SYMPHONIC: p1 INTENSITY, p2 (no name)
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp1_chorus	0x61, 30, 6, 0, 84, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp23_dark_reverb_2	0x63, 55, 90, 12, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp79_geq	0x64, 7, 24, 14, 24, 20, 24, 23, 24, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp59_symphonic	0x65, 7, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp88_room	0x66, 35, 14, 28, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag70	0x70, 1, 1, 0, 60, 3, 1, 0xd, 0, 2, 4, 1, 1, 1, 0
-	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x5a, 0, 0x1d, 0x45, 0x1d, 0, 0x33, 0, 0, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0, 90, 0, 0x1d, 0, 0x45, 0, 0x1d, 0, 0x33, 0, 0, 0, 0
 	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
 	.byte	0x00, 0x00, 0x00, 0x00, 0xb6, 0x00, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0x00, 0x00, 0x00, 0x00	; rest of the block
@@ -105,17 +105,17 @@ F_02LSTMIX_PMT_Memory_1_2:
 	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
 	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
-	ptlv_style_select	0x48, 133, 0, 0, 2, 1, 0xe, 1, 0, 0, 0, 0, 2, 0, 0, 0, 100
+	ptlv_style_select	0x48, 133, 0, 0, 2, 1, 0xe, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 100
 	ptlv_tag90	0x90, 3, 0, 0, 0x67, 0, 0, 0, 64, 0
 	ptlv_tag60	0x60, 0, 0, 1, 1, 0, 0, 0
-	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; CHORUS: p1 DEPTH, p2 LFO SPEED, p3 LFO WAVEFORM, p4 VOLUME, p5 REV SEND [byte packing not established for this effect: 1640 of 1680 saved records decode in range]
-	ptlv_dsp_slot	0x63, 23, 55, 0, 90, 12, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; DARK REVERB 2: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 0 of 68 saved records decode in range]
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
-	ptlv_dsp_slot	0x65, 59, 7, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; SYMPHONIC: p1 INTENSITY, p2 (no name)
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp1_chorus	0x61, 30, 6, 0, 84, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp23_dark_reverb_2	0x63, 55, 90, 12, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp79_geq	0x64, 7, 24, 14, 24, 20, 24, 23, 24, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp59_symphonic	0x65, 7, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp88_room	0x66, 35, 14, 28, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag70	0x70, 1, 1, 0, 60, 3, 1, 0xd, 0, 2, 4, 1, 1, 1, 0
-	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x5a, 0, 0x1d, 0x45, 0x1d, 0, 0x33, 0, 0, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0, 90, 0, 0x1d, 0, 0x45, 0, 0x1d, 0, 0x33, 0, 0, 0, 0
 	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
 	.byte	0x00, 0x00, 0x00, 0x00, 0xb6, 0x00, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0x00, 0x00, 0x00, 0x00	; rest of the block
@@ -155,17 +155,17 @@ F_02LSTMIX_PMT_Memory_1_3:
 	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
 	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
-	ptlv_style_select	0x48, 134, 0, 0, 2, 1, 0xe, 1, 0, 0, 0, 0, 2, 0, 0, 0, 100
+	ptlv_style_select	0x48, 134, 0, 0, 2, 1, 0xe, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 100
 	ptlv_tag90	0x90, 1, 0, 0, 0x67, 0, 0, 0, 64, 0
 	ptlv_tag60	0x60, 0, 0, 1, 1, 0, 0, 0
-	ptlv_dsp_slot	0x61, 9, 1, 24, 0, 250, 246, 244, 18, 84, 70, 30, 60, 99, 196, 18, 84, 70, 0, 0, 0, 0, 0, 99, 0	; SINGLE DELAY: p1-2 DELAY L, p3-4 DELAY R, p5 FEEDBACK L, p6 FEEDBACK R, p7 HIGH DAMP GAIN, p8 VOLUME, p9 REV SEND
-	ptlv_dsp_slot	0x63, 23, 55, 0, 90, 12, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; DARK REVERB 2: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 0 of 68 saved records decode in range]
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
-	ptlv_dsp_slot	0x65, 59, 7, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; SYMPHONIC: p1 INTENSITY, p2 (no name)
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp9_single_delay	0x61, 280, 250, -10, -12, 18, 84, 70, 30, 60, 99, 196, 18, 84, 70, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp23_dark_reverb_2	0x63, 55, 90, 12, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp79_geq	0x64, 7, 24, 14, 24, 20, 24, 23, 24, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp59_symphonic	0x65, 7, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp88_room	0x66, 35, 14, 28, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag70	0x70, 1, 1, 0, 60, 3, 1, 3, 0, 2, 4, 1, 1, 1, 0
-	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x5a, 0, 0x1d, 0x45, 0x1d, 0, 0x33, 0, 0, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0, 90, 0, 0x1d, 0, 0x45, 0, 0x1d, 0, 0x33, 0, 0, 0, 0
 	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
 	.byte	0x00, 0x00, 0x00, 0x00, 0xb6, 0x00, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0x00, 0x00, 0x00, 0x00	; rest of the block
@@ -205,17 +205,17 @@ F_02LSTMIX_PMT_Memory_1_4:
 	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
 	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
-	ptlv_style_select	0x48, 135, 0, 0, 2, 1, 0xe, 1, 0, 0, 0, 0, 2, 0, 0, 0, 100
+	ptlv_style_select	0x48, 135, 0, 0, 2, 1, 0xe, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 100
 	ptlv_tag90	0x90, 1, 0, 0, 0x67, 0, 0, 0, 64, 0
 	ptlv_tag60	0x60, 0, 0, 1, 1, 0, 0, 0
-	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; CHORUS: p1 DEPTH, p2 LFO SPEED, p3 LFO WAVEFORM, p4 VOLUME, p5 REV SEND [byte packing not established for this effect: 1640 of 1680 saved records decode in range]
-	ptlv_dsp_slot	0x63, 23, 55, 0, 90, 12, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; DARK REVERB 2: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 0 of 68 saved records decode in range]
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
-	ptlv_dsp_slot	0x65, 59, 7, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; SYMPHONIC: p1 INTENSITY, p2 (no name)
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp1_chorus	0x61, 30, 6, 0, 84, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp23_dark_reverb_2	0x63, 55, 90, 12, 50, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp79_geq	0x64, 7, 24, 14, 24, 20, 24, 23, 24, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp59_symphonic	0x65, 7, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp88_room	0x66, 35, 14, 28, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag70	0x70, 1, 1, 0, 60, 3, 1, 0xd, 0, 2, 4, 1, 1, 1, 0
-	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x5a, 0, 0x1d, 0x45, 0x1d, 0, 0x33, 0, 0, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0, 90, 0, 0x1d, 0, 0x45, 0, 0x1d, 0, 0x33, 0, 0, 0, 0
 	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
 	.byte	0x00, 0x00, 0x00, 0x00, 0xb6, 0x00, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0x00, 0x00, 0x00, 0x00	; rest of the block
@@ -255,17 +255,17 @@ F_02LSTMIX_PMT_Memory_1_5:
 	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 8, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
 	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
-	ptlv_style_select	0x48, 130, 0, 0, 2, 1, 0xe, 0, 0, 0, 0, 0, 2, 0, 0, 0, 160
+	ptlv_style_select	0x48, 130, 0, 0, 2, 1, 0xe, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 160
 	ptlv_tag90	0x90, 1, 0, 0, 0x67, 0, 0, 0, 64, 0
 	ptlv_tag60	0x60, 0, 0, 1, 1, 0, 0, 0
-	ptlv_dsp_slot	0x61, 1, 30, 6, 0, 84, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; CHORUS: p1 DEPTH, p2 LFO SPEED, p3 LFO WAVEFORM, p4 VOLUME, p5 REV SEND [byte packing not established for this effect: 1640 of 1680 saved records decode in range]
-	ptlv_dsp_slot	0x63, 25, 45, 0, 30, 6, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; BRIGHT REVERB 2: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 0 of 126 saved records decode in range]
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
-	ptlv_dsp_slot	0x65, 57, 20, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; STANDARD: p1 INTENSITY, p2 (no name)
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp1_chorus	0x61, 30, 6, 0, 84, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp25_bright_reverb_2	0x63, 45, 30, 6, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp79_geq	0x64, 7, 24, 14, 24, 20, 24, 23, 24, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp57_standard	0x65, 20, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp88_room	0x66, 35, 14, 28, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag70	0x70, 1, 1, 0, 60, 3, 255, 7, 0, 2, 4, 1, 1, 1, 0
-	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x5a, 0, 0x1d, 0x45, 0x1d, 0, 0x33, 0, 0, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0, 90, 0, 0x1d, 0, 0x45, 0, 0x1d, 0, 0x33, 0, 0, 0, 0
 	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
 	.byte	0x00, 0x00, 0x00, 0x00, 0xb6, 0x00, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0x00, 0x00, 0x00, 0x00	; rest of the block
@@ -305,17 +305,17 @@ F_02LSTMIX_PMT_Memory_1_6:
 	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
 	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
-	ptlv_style_select	0x48, 136, 0, 0, 2, 1, 0xe, 0, 2, 0, 0, 0, 0, 0x04, 1, 0, 103
+	ptlv_style_select	0x48, 136, 0, 0, 2, 1, 0xe, 2, 0, 0, 0, 0, 0, 0, 0, 0x04, 1, 0, 103
 	ptlv_tag90	0x90, 2, 0, 0, 0x67, 0, 0, 0, 64, 0
 	ptlv_tag60	0x60, 0, 0, 1, 1, 0, 0, 0
-	ptlv_dsp_slot	0x61, 64, 10, 1, 44, 1, 44, 216, 216, 50, 65, 6, 0, 99, 41, 0, 0, 0, 0, 0, 0, 0, 41, 0, 0	; S.DELAY+CHORUS: p1 DELAY DRY/WET, p2-3 DELAY L, p4-5 DELAY R, p6 FEEDBACK L, p7 FEEDBACK R, p8 CHORUS DRY/WET, p9 DEPTH, p10 LFO SPEED, p11 LFO WAVEFORM, p12 VOLUME, p13 REV SEND
-	ptlv_dsp_slot	0x63, 24, 46, 0, 25, 20, 50, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; BRIGHT REVERB 1: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 0 of 134 saved records decode in range]
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
-	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; STANDARD: p1 INTENSITY, p2 (no name)
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp64_s_delay_chorus	0x61, 10, 300, 300, -40, -40, 50, 65, 6, 0, 99, 41, 0, 0, 0, 0, 0, 0, 0, 41, 0, 0
+	ptlv_dsp24_bright_reverb_1	0x63, 46, 25, 20, 50, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_dsp79_geq	0x64, 7, 24, 14, 24, 20, 24, 23, 24, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp57_standard	0x65, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp88_room	0x66, 35, 14, 28, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag70	0x70, 1, 1, 0, 60, 5, 255, 7, 0, 2, 4, 1, 1, 1, 0
-	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0, 0x45, 0x1d, 0x33, 0, 0, 0, 0, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0, 64, 0, 0x45, 0, 0x1d, 0, 0x33, 0, 0, 0, 0, 0, 0
 	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128
 	ptlv_tag71	0x71, 0, 0
 	.byte	0x00, 0x00, 0x00, 0x00, 0xb6, 0x00, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0x00, 0x00, 0x00, 0x00	; rest of the block
@@ -355,17 +355,17 @@ F_02LSTMIX_PMT_Memory_1_7:
 	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
 	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
-	ptlv_style_select	0x48, 131, 0, 0, 2, 1, 0xe, 0, 2, 0, 0, 0, 0, 0, 1, 0, 98
+	ptlv_style_select	0x48, 131, 0, 0, 2, 1, 0xe, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 98
 	ptlv_tag90	0x90, 3, 0, 0, 0x67, 0, 0, 0, 64, 0
 	ptlv_tag60	0x60, 0, 0, 0, 1, 0, 0, 0
-	ptlv_dsp_slot	0x61, 64, 10, 1, 44, 1, 44, 216, 216, 50, 65, 6, 0, 99, 41, 0, 0, 0, 0, 0, 0, 0, 41, 0, 0	; S.DELAY+CHORUS: p1 DELAY DRY/WET, p2-3 DELAY L, p4-5 DELAY R, p6 FEEDBACK L, p7 FEEDBACK R, p8 CHORUS DRY/WET, p9 DEPTH, p10 LFO SPEED, p11 LFO WAVEFORM, p12 VOLUME, p13 REV SEND
-	ptlv_dsp_slot	0x63, 24, 46, 0, 25, 20, 50, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; BRIGHT REVERB 1: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 0 of 134 saved records decode in range]
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
-	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; STANDARD: p1 INTENSITY, p2 (no name)
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp64_s_delay_chorus	0x61, 10, 300, 300, -40, -40, 50, 65, 6, 0, 99, 41, 0, 0, 0, 0, 0, 0, 0, 41, 0, 0
+	ptlv_dsp24_bright_reverb_1	0x63, 46, 25, 20, 50, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_dsp79_geq	0x64, 7, 24, 14, 24, 20, 24, 23, 24, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp57_standard	0x65, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp88_room	0x66, 35, 14, 28, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag70	0x70, 1, 1, 0, 60, 5, 255, 7, 0, 2, 4, 1, 1, 1, 0
-	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0, 0x45, 0x1d, 0x33, 0, 0, 0, 0, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0, 64, 0, 0x45, 0, 0x1d, 0, 0x33, 0, 0, 0, 0, 0, 0
 	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 1, 188
 	ptlv_tag71	0x71, 0, 0
 	.byte	0x00, 0x00, 0x00, 0x00, 0xb6, 0x00, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0x00, 0x00, 0x00, 0x00	; rest of the block
@@ -405,17 +405,17 @@ F_02LSTMIX_PMT_Memory_1_8:
 	ptlv_drawbar	0x46, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag47	0x47, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 255, 255
 	ptlv_tag43	0x43, 1, 0, 0x3c, 0, 0, 0
-	ptlv_style_select	0x48, 131, 0, 0, 2, 1, 0xe, 0, 2, 0, 0, 0, 0, 0, 1, 0, 98
+	ptlv_style_select	0x48, 131, 0, 0, 2, 1, 0xe, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 98
 	ptlv_tag90	0x90, 3, 0, 0, 0x67, 0, 0, 0, 64, 0
 	ptlv_tag60	0x60, 0, 0, 0, 1, 0, 0, 0
-	ptlv_dsp_slot	0x61, 64, 10, 1, 44, 1, 44, 216, 216, 50, 50, 3, 0, 78, 56, 0, 0, 0, 0, 0, 0, 0, 56, 0, 0	; S.DELAY+CHORUS: p1 DELAY DRY/WET, p2-3 DELAY L, p4-5 DELAY R, p6 FEEDBACK L, p7 FEEDBACK R, p8 CHORUS DRY/WET, p9 DEPTH, p10 LFO SPEED, p11 LFO WAVEFORM, p12 VOLUME, p13 REV SEND
-	ptlv_dsp_slot	0x63, 24, 46, 0, 25, 20, 50, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; BRIGHT REVERB 1: p1 REVERB TIME, p2 PRE DELAY, p3 HIGH DAMP GAIN, p4 ER.LEVEL, p5 VOLUME [byte packing not established for this effect: 0 of 134 saved records decode in range]
-	ptlv_dsp_slot	0x64, 79, 1, 216, 3, 152, 5, 24, 5, 216, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; GEQ: p1 LOW  EMPHASIS FC, p2 LOW  EMPHASIS  G, p3 BAND EMPHASIS FC, p4 BAND EMPHASIS  G, p5 BAND EMPHASIS FC, p6 BAND EMPHASIS  G, p7 HIGH EMPHASIS FC, p8 HIGH EMPHASIS  G, p9 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
-	ptlv_dsp_slot	0x65, 57, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; STANDARD: p1 INTENSITY, p2 (no name)
-	ptlv_dsp_slot	0x66, 88, 35, 3, 156, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0	; ROOM: p1 REVERB TIME, p2 HIGH EMPHASIS FC, p3 EMPHASIS GAIN, p4 VOLUME, p5 (no name) [byte packing not established for this effect: 0 of 4688 saved records decode in range]
+	ptlv_dsp64_s_delay_chorus	0x61, 10, 300, 300, -40, -40, 50, 50, 3, 0, 78, 56, 0, 0, 0, 0, 0, 0, 0, 56, 0, 0
+	ptlv_dsp24_bright_reverb_1	0x63, 46, 25, 20, 50, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	ptlv_dsp79_geq	0x64, 7, 24, 14, 24, 20, 24, 23, 24, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp57_standard	0x65, 50, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
+	ptlv_dsp88_room	0x66, 35, 14, 28, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0
 	ptlv_tag68	0x68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	ptlv_tag70	0x70, 1, 1, 0, 60, 5, 255, 7, 0, 2, 4, 1, 1, 1, 0
-	ptlv_tag72	0x72, 0, 0, 0, 0, 0x76, 0, 0, 0, 0x40, 0, 0x45, 0x1d, 0x33, 0, 0, 0, 0, 0
+	ptlv_tag72	0x72, 0, 0, 0, 0x76, 0, 0, 0, 0, 64, 0, 0x45, 0, 0x1d, 0, 0x33, 0, 0, 0, 0, 0, 0
 	ptlv_tag92	0x92, 0, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 1, 188
 	ptlv_tag71	0x71, 0, 0
 	.byte	0x00, 0x00, 0x00, 0x00, 0xb6, 0x00, 0x40, 0x96, 0x88, 0x90, 0x91, 0xb3, 0x00, 0x00, 0x00, 0x00	; rest of the block

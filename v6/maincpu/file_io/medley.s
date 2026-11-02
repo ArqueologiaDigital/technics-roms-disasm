@@ -3931,25 +3931,33 @@ CheckAnySlotHasData:
 	scc16 nz, hl
 	ret
 
-SetCurrentSlotIndex:
+; Composer_SetPassword: Stores WA as the Composer password, word +0x0E of the style image (0x9480E).  Basis: callers + body --
+;   Password_ClearAndSetSlot (EVT_SET_PASSWORD, FmmPasswordFunc) stores the entered password with it after
+;   ClearAllSongSlots (notes/kn5000-style-2026-10-31/README.md, hdr +0x0e).
+Composer_SetPassword:
 	ld (0x09480e:24), wa
 	ret
 
-GetCurrentSlotIndex:
+; Composer_GetPassword: HL = the Composer password, word +0x0E of the style image (0x9480E).  Basis: body + Composer_SetPassword.
+Composer_GetPassword:
 	ld hl, (0x09480e:24)
 	ret
 
-CheckIsCurrentSlot:
+; Composer_IsPassword: HL = 1 when WA equals the Composer password (Composer_GetPassword), else 0.  Basis: callers + body -- the
+;   password delete / save handlers compare the entered value with it.
+Composer_IsPassword:
 	pushw iz
 	ld iz, wa
-	calr GetCurrentSlotIndex
+	calr Composer_GetPassword
 	cp hl, iz
 	scc16 z, hl
 	popw iz
 	ret
 
-CheckSlotIndexValid:
-	calr GetCurrentSlotIndex
+; Composer_HasPassword: HL = 1 when a Composer password is set (Composer_GetPassword non-zero), else 0.  Basis: body -- the
+;   EVT_SET_PASSWORD handler refuses a new password while one is set.
+Composer_HasPassword:
+	calr Composer_GetPassword
 	cp hl, 0:i3
 	scc16 nz, hl
 	ret

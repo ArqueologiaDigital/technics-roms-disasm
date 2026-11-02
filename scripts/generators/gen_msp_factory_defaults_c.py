@@ -13,7 +13,7 @@ RUN
 
 WHAT IT VERIFIES (asserts; the script refuses to write if any fails)
   * the region is 21 x 256 bytes, matching `ldw bc, 0xa80` (= 0xA80 words)
-    in Voice_InitBankData;
+    in MspUser_InitFromFactory;
   * the same 5,376 bytes appear in v7, v9 and v10 at the addresses below --
     so ONE struct definition may be shared by all three images, unlike the
     SE_NAMES case where a v10-derived descriptor was meaningless elsewhere;
@@ -136,7 +136,7 @@ HEADER = '''/**
  *              BYTE-IDENTICAL in all three images (md5 %(md5)s),
  *              which is why one struct definition is shared by v7/v9/v10.
  *
- * WHAT THIS IS.  `Voice_InitBankData` (kn5000_v10_program.s) does
+ * WHAT THIS IS.  `MspUser_InitFromFactory` (kn5000_v10_program.s) does
  *
  *     ld  xix, 0x1e8b00
  *     ld  xiy, MSP_FACTORY_DEFAULTS

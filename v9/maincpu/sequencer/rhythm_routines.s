@@ -21,56 +21,56 @@ Rhythm_CompareAndTrigger:
 	jrl Rhythm_SaveNoteState
 
 Rhythm_CompareAndTriggerNotes:
-	bit 1, (0x32d7:16)
+	bit 1, (ACC_CHORD_FLAGS:16)
 	jr nz, Rhythm_CompareNoteA_Only
-	ld a, (0x32d8:16)
-	ld w, (0x32d9:16)
-	ld l, (0x32df:16)
-	ld h, (0x32e0:16)
+	ld a, (ACC_CHORD_TYPE:16)
+	ld w, (ACC_CHORD_ROOT:16)
+	ld l, (ACC_CHORD_VOICED_TYPE:16)
+	ld h, (ACC_CHORD_VOICED_ROOT:16)
 	cp wa, hl
 	jr z, Rhythm_SaveCurrentNoteState
 	calr Rhythm_NoteOnAfterSetup_A
 	jr Rhythm_SaveCurrentNoteState
 
 Rhythm_CompareNoteA_Only:
-	ld a, (0x32d8:16)
-	ld w, (0x32df:16)
+	ld a, (ACC_CHORD_TYPE:16)
+	ld w, (ACC_CHORD_VOICED_TYPE:16)
 	cp a, w
 	jr z, Rhythm_CompareNoteB
 	calr Rhythm_NoteOnAfterSetup_A
 	jr Rhythm_SaveCurrentNoteState
 
 Rhythm_CompareNoteB:
-	ld a, (0x32d9:16)
-	ld w, (0x32e0:16)
+	ld a, (ACC_CHORD_ROOT:16)
+	ld w, (ACC_CHORD_VOICED_ROOT:16)
 	cp a, w
 	jr z, Rhythm_CompareNoteC
 	calr Rhythm_NoteOnAfterSetup_B
 
 Rhythm_CompareNoteC:
-	ld a, (0x32da:16)
-	ld w, (0x32e1:16)
+	ld a, (ACC_CHORD_BASS:16)
+	ld w, (ACC_CHORD_VOICED_BASS:16)
 	cp a, w
 	jr z, Rhythm_SaveCurrentNoteState
 	calr Rhythm_NoteOnAfterSetup_C
 
 Rhythm_SaveCurrentNoteState:
-	ld a, (0x32d8:16)
-	ld (0x32df:16), a
-	ld a, (0x32d9:16)
-	ld (0x32e0:16), a
-	ld a, (0x32da:16)
-	ld (0x32e1:16), a
+	ld a, (ACC_CHORD_TYPE:16)
+	ld (ACC_CHORD_VOICED_TYPE:16), a
+	ld a, (ACC_CHORD_ROOT:16)
+	ld (ACC_CHORD_VOICED_ROOT:16), a
+	ld a, (ACC_CHORD_BASS:16)
+	ld (ACC_CHORD_VOICED_BASS:16), a
 
 Rhythm_SaveNoteState:
-	ld a, (0x32d8:16)
-	ld (0x32dc:16), a
-	ld a, (0x32d9:16)
-	ld (0x32dd:16), a
-	ld a, (0x32da:16)
-	ld (0x32de:16), a
-	ld a, (0x32d7:16)
-	ld (0x32db:16), a
+	ld a, (ACC_CHORD_TYPE:16)
+	ld (ACC_CHORD_PREV_TYPE:16), a
+	ld a, (ACC_CHORD_ROOT:16)
+	ld (ACC_CHORD_PREV_ROOT:16), a
+	ld a, (ACC_CHORD_BASS:16)
+	ld (ACC_CHORD_PREV_BASS:16), a
+	ld a, (ACC_CHORD_FLAGS:16)
+	ld (ACC_CHORD_PREV_FLAGS:16), a
 	ret
 
 Rhythm_NoteOnAfterSetup_A:
@@ -195,14 +195,14 @@ RhythmEvt_ProcessNote:
 	or a, (ACC_LANES_ENDING2:16)
 	and a, (ACC_PART_BIT:16)
 	jr nz, RhythmEvt_AlternateProcess
-	ld a, (0x32df:16)
+	ld a, (ACC_CHORD_VOICED_TYPE:16)
 	ld (0x3423:16), a
-	call AccTuning_CallWithSaveRestore
+	call Chord_LookupTypeFamily_Saved
 	ld a, (0x3422:16)
 	ld (0x3424:16), a
-	ld a, (0x32d8:16)
+	ld a, (ACC_CHORD_TYPE:16)
 	ld (0x3423:16), a
-	call AccTuning_CallWithSaveRestore
+	call Chord_LookupTypeFamily_Saved
 	ld a, (0x3422:16)
 	cp (0x3424:16), a
 	jr nz, RhythmEvt_AlternateProcess
@@ -244,18 +244,18 @@ RhythmEvt_NoteOn91:
 
 RhythmEvt_ApplyTranspose:
 	ld	a, (xhl+iy)
-	calr Rhythm_CheckVelocityThreshold
+	calr Rhythm_CheckFixedNote
 	bit 4, (0x32f4:16)
 	jr nz, RhythmEvt_PostProcess
 	bit 3, (0x32f4:16)
 	jr z, RhythmEvt_ApplyNoteRange
-	calr Rhythm_CrossVoiceCorrect
+	calr Rhythm_BassToRoot
 
 RhythmEvt_ApplyNoteRange:
-	calr Rhythm_NoteRangeCheck
+	calr Rhythm_RootOnlyNote
 
 RhythmEvt_PostProcess:
-	calr Rhythm_VelocityCompute
+	calr Rhythm_ChordConvertNoteFast
 	popw iy
 	ld	(xhl+iy), a
 	calr Rhythm_AdvancePosition
@@ -288,18 +288,18 @@ RhythmEvt_FullLoop:
 	calr Rhythm_AdvancePosition
 	call RingBuf_AdvanceIndex
 	ld	a, (xhl+iy)
-	calr Rhythm_CheckVelocityThreshold
+	calr Rhythm_CheckFixedNote
 	bit 4, (0x32f4:16)
 	jr nz, RhythmEvt_Full90_PostTransp
 	bit 3, (0x32f4:16)
 	jr z, RhythmEvt_Full90_PostRange
-	calr Rhythm_CrossVoiceCorrect
+	calr Rhythm_BassToRoot
 
 RhythmEvt_Full90_PostRange:
-	calr Rhythm_NoteRangeCheck
+	calr Rhythm_RootOnlyNote
 
 RhythmEvt_Full90_PostTransp:
-	calr Rhythm_VelocityLookup_A
+	calr Rhythm_ChordConvertNote90
 	popw iy
 	ld	(xhl+iy), a
 	calr Rhythm_AdvancePosition
@@ -318,24 +318,24 @@ RhythmEvt_Full91:
 	ld (ACC_EVENT+3:16), a
 	calr Rhythm_AdvancePosition
 	ld	a, (xhl+iy)
-	ld (0x3433:16), a
+	ld (ACC_EVENT_EXT1:16), a
 	call RingBuf_AdvanceIndex
 	ld	a, (xhl+iy)
-	ld (0x3434:16), a
+	ld (ACC_EVENT_EXT2:16), a
 	call RingBuf_AdvanceIndex
 	ld	a, (xhl+iy)
-	calr Rhythm_CheckVelocityThreshold
+	calr Rhythm_CheckFixedNote
 	bit 4, (0x32f4:16)
 	jr nz, RhythmEvt_Full91_PostTransp
 	bit 3, (0x32f4:16)
 	jr z, RhythmEvt_Full91_PostRange
-	calr Rhythm_CrossVoiceCorrect
+	calr Rhythm_BassToRoot
 
 RhythmEvt_Full91_PostRange:
-	calr Rhythm_NoteRangeCheck
+	calr Rhythm_RootOnlyNote
 
 RhythmEvt_Full91_PostTransp:
-	calr Rhythm_VoiceMapLookup
+	calr Rhythm_ChordConvertNote91
 	popw iy
 	ld	(xhl+iy), a
 	call RingBuf_AdvanceIndex
@@ -352,7 +352,7 @@ RhythmEvt_FullSkip:
 RhythmEvt_FullDone:
 	ret
 
-Rhythm_CheckVelocityThreshold:
+Rhythm_CheckFixedNote:
 	and (0x32f4:16), 239
 	cp a, 0x78
 	jr c, Rhythm_VelThreshReturn
@@ -386,10 +386,10 @@ Rhythm_AdvancePos_Step3:
 Rhythm_AdvanceDone:
 	ret
 
-Rhythm_CrossVoiceCorrect:
-	bit 0, (0x32d7:16)
+Rhythm_BassToRoot:
+	bit 0, (ACC_CHORD_FLAGS:16)
 	jr nz, Rhythm_CrossVoice_Apply
-	bit 1, (0x32d7:16)
+	bit 1, (ACC_CHORD_FLAGS:16)
 	jr nz, Rhythm_CrossVoice_Apply
 	ld w, (ACC_LANES_INTRO1:16)
 	or w, (ACC_LANES_COUNTIN:16)
@@ -405,21 +405,21 @@ Rhythm_CrossVoice_Apply:
 	add w, (ACC_CUR_TURNOVER:16)
 	inc 1, w
 	sub w, 0xc
-	ld (0x332e:16), w
-	or (0x332d:16), 1
+	ld (ACC_BASS_FLOOR:16), w
+	or (ACC_BASS_FLOOR_ON:16), 1
 	ld xiy, Note_PitchClassTable
 	ld	w, (xiy+a)
 	sub a, w
 	pop xiy
-	ld (0x3433:16), 0
-	ld (0x3434:16), 0
+	ld (ACC_EVENT_EXT1:16), 0
+	ld (ACC_EVENT_EXT2:16), 0
 
 Rhythm_CrossVoice_ClearFlag:
 	and (0x32f3:16), 223
 	ret
 
-Rhythm_NoteRangeCheck:
-	bit 0, (0x32d7:16)
+Rhythm_RootOnlyNote:
+	bit 0, (ACC_CHORD_FLAGS:16)
 	jr z, Rhythm_NoteRangeReturn
 	push xiy
 	ld w, a
@@ -427,25 +427,25 @@ Rhythm_NoteRangeCheck:
 	ld	w, (xiy+a)
 	sub a, w
 	pop xiy
-	ld (0x3433:16), 0
-	ld (0x3434:16), 0
+	ld (ACC_EVENT_EXT1:16), 0
+	ld (ACC_EVENT_EXT2:16), 0
 
 Rhythm_NoteRangeReturn:
 	ret
 
-; Two zero bytes between Rhythm_NoteRangeCheck's `ret` and the called routine
-; Rhythm_VelocityLookup_A.  No reference found (scripts/analysis/
+; Two zero bytes between Rhythm_RootOnlyNote's `ret` and the called routine
+; Rhythm_ChordConvertNote90.  No reference found (scripts/analysis/
 ; sequi_find_refs.py v10 0xF55051 0xF55052 -> none); inter-routine padding by
 ; position, nothing established beyond that.  Was `nop / nop` until 2026-09-25.
 Rhythm_NoteRangeData:
 	.byte 0x00, 0x00
 
-Rhythm_VelocityLookup_A:
+Rhythm_ChordConvertNote90:
 	push xiy
 	push xhl
 	ld w, a
-	calr Rhythm_InstrBaseLookup
-	cp (0x32d8:16), 0
+	calr Rhythm_NotePitchClass
+	cp (ACC_CHORD_TYPE:16), 0
 	jr nz, Rhythm_VelLookA_CheckEmpty
 	ld a, 0x0:opc
 	jr Rhythm_VelLookA_Done
@@ -458,27 +458,27 @@ Rhythm_VelLookA_CheckEmpty:
 	jr Rhythm_VelLookA_Done
 
 Rhythm_VelLookA_CheckRange:
-	ld l, (0x32d8:16)
+	ld l, (ACC_CHORD_TYPE:16)
 	cp l, 0x30
 	jr c, Rhythm_VelLookA_SelectTable
 	xor l, l
 
 Rhythm_VelLookA_SelectTable:
-	ld xiy, Rhythm_InstrMapTable_Default
+	ld xiy, Rhythm_ChordRowMap
 	bit 2, (0x32f4:16)
 	jr z, Rhythm_VelLookA_CheckBit3
-	ld xiy, Rhythm_InstrMapTable_D4
+	ld xiy, Rhythm_ChordRowMap_Acc1
 
 Rhythm_VelLookA_CheckBit3:
 	bit 3, (0x32f4:16)
 	jr z, Rhythm_VelLookA_TableLookup
-	ld xiy, Rhythm_VelLookA_CheckBit3_Data
+	ld xiy, Rhythm_ChordRowMap_Bass
 
 Rhythm_VelLookA_TableLookup:
 	ld	l, (xiy+l)
 	extz hl
 	sla hl, 4
-	ld xiy, Rhythm_VelLookA_TableLookup_Table
+	ld xiy, Rhythm_ChordNoteDeltaRows
 	lda	xiy, (xiy+hl)
 	ld	a, (xiy+a)
 	add w, a
@@ -489,7 +489,7 @@ Rhythm_VelLookA_Done:
 	pop xiy
 	ret
 
-Rhythm_InstrBaseLookup:
+Rhythm_NotePitchClass:
 	push xiy
 	ld xiy, Note_PitchClassTable
 	lda	xiy, (xiy+a)
@@ -498,52 +498,52 @@ Rhythm_InstrBaseLookup:
 	ret
 
 ; -----------------------------------------------------------------------------
-; Rhythm_InstrMapTable_Default -- 3 variants x 49 bytes.  Each maps the RAM
+; Rhythm_ChordRowMap -- 3 variants x 49 bytes.  Each maps the RAM
 ; byte 0x32D8 (index clamped to 0..0x2F, anything larger reads entry 0) to a
-; ROW NUMBER of the 16-byte-row table at Rhythm_VelLookA_TableLookup_Table.
-; Readers (all the same pattern): Rhythm_VelocityLookup_A, Rhythm_VoiceMapLookup
+; ROW NUMBER of the 16-byte-row table at Rhythm_ChordNoteDeltaRows.
+; Readers (all the same pattern): Rhythm_ChordConvertNote90, Rhythm_ChordConvertNote91
 ; (second half) and Rhythm_TranspMod_BaseApply:
 ;     ld xiy, <variant> / ldb_sri L, ..., 0xf4, 0xec     ; L := variant[L]
-;     sla hl, 4 / ld xiy, Rhythm_VelLookA_TableLookup_Table
+;     sla hl, 4 / ld xiy, Rhythm_ChordNoteDeltaRows
 ;     lda_dri XIY, ...  ; xiy += row*16  /  ldb_sri A, ... ; A := row[A]
 ;     add w, a                                           ; note += row[col]
-; where the column A came from Rhythm_InstrBaseLookup (a byte of
+; where the column A came from Rhythm_NotePitchClass (a byte of
 ; Note_PitchClassTable indexed by the note).
 ; Variant choice: bit 2 of RAM 0x32F4 selects +0x31 (the positional alias
-; Rhythm_InstrMapTable_D4), bit 3 selects +0x62 (..._0x62) and,
+; Rhythm_ChordRowMap_Acc1), bit 3 selects +0x62 (..._0x62) and,
 ; being tested second, wins over bit 2;
 ; Rhythm_TranspMod_BaseApply always uses +0x31.  Stride 0x31 = 49 is pinned by
 ; those two aliases; the tables end exactly at Rhythm_TransposeNote (147 B).
 ; Values 0..20 = row numbers.  What each 16-byte row holds belongs to the
-; documentation of Rhythm_VelLookA_TableLookup_Table (C data, another file).
+; documentation of Rhythm_ChordNoteDeltaRows (C data, another file).
 ; -----------------------------------------------------------------------------
-Rhythm_InstrMapTable_Default:
+Rhythm_ChordRowMap:
 	; +0x00: default (bits 2 and 3 of 0x32F4 clear)
 	.byte 0, 0, 0, 1, 5, 0, 3, 9, 10, 7, 4, 2, 5, 6, 6, 0
 	.byte 0, 1, 2, 8, 10, 3, 8, 4, 0, 18, 19, 20, 0, 5, 0, 0
 	.byte 5, 0, 0, 1, 1, 6, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte 0	; entry 48: past the 0..0x2F index clamp, never read
 	; +0x31: bit 2 of 0x32F4 set; always used by Rhythm_TranspMod_BaseApply
-; Rhythm_InstrMapTable_D4: Second 49-byte variant of Rhythm_InstrMapTable_Default (RAM 0x32D8, clamped 0..0x2F -> row
-;   of Rhythm_VelLookA_TableLookup_Table), used while bit 2 of 0x32F4 is set, i.e. for the D4 (status 0x94) channel;
+; Rhythm_ChordRowMap_Acc1: Second 49-byte variant of Rhythm_ChordRowMap (RAM 0x32D8, clamped 0..0x2F -> row
+;   of Rhythm_ChordNoteDeltaRows), used while bit 2 of 0x32F4 is set, i.e. for the D4 (status 0x94) channel;
 ;   Rhythm_TranspMod_BaseApply always uses it. Basis: readers + bytes.
-Rhythm_InstrMapTable_D4:
+Rhythm_ChordRowMap_Acc1:
 	.byte 0, 0, 0, 1, 5, 0, 3, 9, 10, 7, 4, 2, 5, 6, 6, 11
 	.byte 12, 14, 15, 8, 10, 16, 17, 4, 13, 18, 19, 20, 0, 5, 12, 13
 	.byte 5, 12, 13, 1, 1, 6, 4, 5, 11, 16, 0, 0, 0, 0, 0, 0
 	.byte 0	; entry 48: past the 0..0x2F index clamp, never read
 	; +0x62: bit 3 of 0x32F4 set (tested after bit 2, so it wins)
-Rhythm_VelLookA_CheckBit3_Data:
+Rhythm_ChordRowMap_Bass:
 	.byte 0, 0, 0, 1, 5, 0, 3, 9, 10, 7, 4, 2, 5, 6, 6, 0
 	.byte 0, 1, 2, 8, 10, 3, 8, 4, 0, 18, 19, 20, 0, 5, 0, 0
 	.byte 5, 0, 0, 1, 1, 6, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte 0	; entry 48: past the 0..0x2F index clamp, never read
 
 Rhythm_TransposeNote:
-	ld a, (0x32d9:16)
+	ld a, (ACC_CHORD_ROOT:16)
 	bit 3, (0x32f4:16)
 	jr z, Rhythm_Transp_CheckZero
-	ld a, (0x32da:16)
+	ld a, (ACC_CHORD_BASS:16)
 
 Rhythm_Transp_CheckZero:
 	cp a, 0:i3
@@ -582,20 +582,20 @@ Rhythm_Transp_WrapLoop:
 
 Rhythm_Transp_FinalCheck:
 	ld a, w
-	bit 0, (0x332d:16)
+	bit 0, (ACC_BASS_FLOOR_ON:16)
 	jr z, Rhythm_Transp_Done
-	cp a, (0x332e:16)
+	cp a, (ACC_BASS_FLOOR:16)
 	jr nc, Rhythm_Transp_Done
 	add a, 0xc
 
 Rhythm_Transp_Done:
-	and (0x332d:16), 254
+	and (ACC_BASS_FLOOR_ON:16), 254
 	ret
 
-Rhythm_VoiceMapLookup:
+Rhythm_ChordConvertNote91:
 	push xiy
 	push xhl
-	cp (0x32d8:16), 0
+	cp (ACC_CHORD_TYPE:16), 0
 	jr nz, Rhythm_VoiceMap_CheckInstr
 	ld a, 0x0:opc
 	jrl Rhythm_VoiceMap_Done
@@ -607,25 +607,25 @@ Rhythm_VoiceMap_CheckInstr:
 	jrl Rhythm_VoiceMap_Done
 
 Rhythm_VoiceMap_CheckBit4:
-	ld l, (0x32d8:16)
+	ld l, (ACC_CHORD_TYPE:16)
 	cp l, 0x30
 	jr c, Rhythm_VoiceMap_ClampInstr
 	xor l, l
 
 Rhythm_VoiceMap_ClampInstr:
-	ld xiy, Rhythm_PitchShiftTable_Default
+	ld xiy, Rhythm_ChordExtSelect
 	bit 3, (0x32f4:16)
 	jr z, Rhythm_VoiceMap_SelectTable
-	ld xiy, Rhythm_VoiceMap_ClampInstr_Data
+	ld xiy, Rhythm_ChordExtSelect_Bass
 
 Rhythm_VoiceMap_SelectTable:
 	ld	l, (xiy+l)
 	cp l, 0:i3
 	jr z, Rhythm_VoiceMap_ApplyBase
-	ld h, (0x3433:16)
+	ld h, (ACC_EVENT_EXT1:16)
 	cp l, 1:i3
 	jr z, Rhythm_VoiceMap_CheckMute
-	ld h, (0x3434:16)
+	ld h, (ACC_EVENT_EXT2:16)
 
 Rhythm_VoiceMap_CheckMute:
 	bit 5, h
@@ -646,28 +646,28 @@ Rhythm_VoiceMap_SubShift:
 
 Rhythm_VoiceMap_ApplyBase:
 	ld w, a
-	calr Rhythm_InstrBaseLookup
-	ld l, (0x32d8:16)
+	calr Rhythm_NotePitchClass
+	ld l, (ACC_CHORD_TYPE:16)
 	cp l, 0x30
 	jr c, Rhythm_VoiceMap_Inst2Clamp
 	xor l, l
 
 Rhythm_VoiceMap_Inst2Clamp:
-	ld xiy, Rhythm_InstrMapTable_Default
+	ld xiy, Rhythm_ChordRowMap
 	bit 2, (0x32f4:16)
 	jr z, Rhythm_VoiceMap_Inst2Bit2
-	ld xiy, Rhythm_InstrMapTable_D4
+	ld xiy, Rhythm_ChordRowMap_Acc1
 
 Rhythm_VoiceMap_Inst2Bit2:
 	bit 3, (0x32f4:16)
 	jr z, Rhythm_VoiceMap_Inst2Bit3
-	ld xiy, Rhythm_VelLookA_CheckBit3_Data
+	ld xiy, Rhythm_ChordRowMap_Bass
 
 Rhythm_VoiceMap_Inst2Bit3:
 	ld	l, (xiy+l)
 	extz hl
 	sla hl, 4
-	ld xiy, Rhythm_VelLookA_TableLookup_Table
+	ld xiy, Rhythm_ChordNoteDeltaRows
 	lda	xiy, (xiy+hl)
 	ld	a, (xiy+a)
 	add w, a
@@ -679,37 +679,37 @@ Rhythm_VoiceMap_Done:
 	ret
 
 ; -----------------------------------------------------------------------------
-; Rhythm_PitchShiftTable_Default -- 2 variants x 49 bytes of SHIFT SELECTORS,
-; indexed like Rhythm_InstrMapTable_Default by RAM 0x32D8 (clamped 0..0x2F).
-; Reader: Rhythm_VoiceMapLookup, first half: `ld xiy, <variant>`,
+; Rhythm_ChordExtSelect -- 2 variants x 49 bytes of SHIFT SELECTORS,
+; indexed like Rhythm_ChordRowMap by RAM 0x32D8 (clamped 0..0x2F).
+; Reader: Rhythm_ChordConvertNote91, first half: `ld xiy, <variant>`,
 ; `ld l, (xiy+hl)` (L := variant[L]); then
 ;     0 -> no shift;  1 -> shift byte RAM 0x3433;  2 -> shift byte RAM 0x3434,
 ; where a shift byte with bit 5 set returns 0 (muted), bit 4 set subtracts and
-; clear adds its low nibble to A.  Rhythm_NoteRangeCheck clears both bytes.
+; clear adds its low nibble to A.  Rhythm_RootOnlyNote clears both bytes.
 ; Variant: bit 3 of RAM 0x32F4 selects +0x31 (alias
-; Rhythm_VoiceMap_ClampInstr_Data).  98 bytes = 2 x 49, to
-; Rhythm_VelocityCompute.  Was framed as `nop` / `normal` / `push sr`
+; Rhythm_ChordExtSelect_Bass).  98 bytes = 2 x 49, to
+; Rhythm_ChordConvertNoteFast.  Was framed as `nop` / `normal` / `push sr`
 ; (0x00 / 0x01 / 0x02) until 2026-09-25.
 ; -----------------------------------------------------------------------------
-Rhythm_PitchShiftTable_Default:
+Rhythm_ChordExtSelect:
 	; +0x00: default (bit 3 of 0x32F4 clear)
 	.byte 0, 0, 1, 1, 0, 2, 1, 1, 2, 1, 1, 1, 1, 0, 1, 1
 	.byte 1, 1, 1, 1, 2, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1
 	.byte 1, 1, 1, 1, 1, 1, 1, 1, 0, 2, 0, 0, 0, 0, 0, 0
 	.byte 0	; entry 48: past the 0..0x2F index clamp, never read
 	; +0x31: bit 3 of 0x32F4 set
-Rhythm_VoiceMap_ClampInstr_Data:
+Rhythm_ChordExtSelect_Bass:
 	.byte 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 0, 1, 1
 	.byte 1, 1, 1, 1, 2, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1
 	.byte 1, 1, 1, 1, 1, 1, 1, 1, 0, 2, 0, 0, 0, 0, 0, 0
 	.byte 0	; entry 48: past the 0..0x2F index clamp, never read
 
-Rhythm_VelocityCompute:
+Rhythm_ChordConvertNoteFast:
 	push xiy
 	push xhl
 	ld w, a
-	calr Rhythm_InstrBaseLookup
-	cp (0x32d8:16), 0
+	calr Rhythm_NotePitchClass
+	cp (ACC_CHORD_TYPE:16), 0
 	jr nz, Rhythm_VelComp_CheckBit4
 	ld a, 0x0:opc
 	jr Rhythm_VelComp_Done
@@ -722,22 +722,22 @@ Rhythm_VelComp_CheckBit4:
 	jr Rhythm_VelComp_Done
 
 Rhythm_VelComp_ClampInstr:
-	ld l, (0x32d8:16)
+	ld l, (ACC_CHORD_TYPE:16)
 	cp l, 0x30
 	jr c, Rhythm_VelComp_SelectTable
 	xor l, l
 
 Rhythm_VelComp_SelectTable:
-	ld xiy, Rhythm_VelocityTable_A
+	ld xiy, Rhythm_ChordRowMapFast
 	bit 2, (0x32f4:16)
 	jr z, Rhythm_VelComp_Lookup
-	ld xiy, Rhythm_VelComp_SelectTable_Data
+	ld xiy, Rhythm_ChordRowMapFast_Acc1
 
 Rhythm_VelComp_Lookup:
 	ld	l, (xiy+l)
 	extz hl
 	sla hl, 4
-	ld xiy, Rhythm_VelLookA_TableLookup_Table
+	ld xiy, Rhythm_ChordNoteDeltaRows
 	lda	xiy, (xiy+hl)
 	ld	a, (xiy+a)
 	add w, a
@@ -749,26 +749,26 @@ Rhythm_VelComp_Done:
 	ret
 
 ; -----------------------------------------------------------------------------
-; Rhythm_VelocityTable_A -- 2 variants x 49 bytes, the same kind of table as
-; Rhythm_InstrMapTable_Default (row numbers into the 16-byte rows at
-; Rhythm_VelLookA_TableLookup_Table), for a different reader.
-; Reader: Rhythm_VelocityCompute -- `ld xiy, <variant>`, L := variant[L]
+; Rhythm_ChordRowMapFast -- 2 variants x 49 bytes, the same kind of table as
+; Rhythm_ChordRowMap (row numbers into the 16-byte rows at
+; Rhythm_ChordNoteDeltaRows), for a different reader.
+; Reader: Rhythm_ChordConvertNoteFast -- `ld xiy, <variant>`, L := variant[L]
 ; (L = RAM 0x32D8 clamped 0..0x2F), `sla hl, 4`, row lookup, `add w, a`,
-; `calr Rhythm_TransposeNote`: identical to Rhythm_VelocityLookup_A.
-; Variant: bit 2 of RAM 0x32F4 selects +0x31 (alias Rhythm_VelComp_SelectTable_Data).
+; `calr Rhythm_TransposeNote`: identical to Rhythm_ChordConvertNote90.
+; Variant: bit 2 of RAM 0x32F4 selects +0x31 (alias Rhythm_ChordRowMapFast_Acc1).
 ; 98 bytes = 2 x 49, to Rhythm_FourChannelDispatch.  The two variants differ
-; from Rhythm_InstrMapTable_Default's first two only at entry 7 (0 here, 9
+; from Rhythm_ChordRowMap's first two only at entry 7 (0 here, 9
 ; there).  The "Velocity" in the name is not supported by the reader, which
 ; adds the row value to the NOTE in W.
 ; -----------------------------------------------------------------------------
-Rhythm_VelocityTable_A:
+Rhythm_ChordRowMapFast:
 	; +0x00: default (bit 2 of 0x32F4 clear)
 	.byte 0, 0, 0, 1, 5, 0, 3, 0, 10, 7, 4, 2, 5, 6, 6, 0
 	.byte 0, 1, 2, 8, 10, 3, 8, 4, 0, 18, 19, 20, 0, 5, 0, 0
 	.byte 5, 0, 0, 1, 1, 6, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte 0	; entry 48: past the 0..0x2F index clamp, never read
 	; +0x31: bit 2 of 0x32F4 set
-Rhythm_VelComp_SelectTable_Data:
+Rhythm_ChordRowMapFast_Acc1:
 	.byte 0, 0, 0, 1, 5, 0, 3, 0, 10, 7, 4, 2, 5, 6, 6, 11
 	.byte 12, 14, 15, 8, 10, 16, 17, 4, 13, 18, 19, 20, 0, 5, 12, 13
 	.byte 5, 12, 13, 1, 1, 6, 4, 5, 11, 16, 0, 0, 0, 0, 0, 0
@@ -904,14 +904,14 @@ Rhythm_ValidateAndSend:
 	or a, (ACC_LANES_ENDING2:16)
 	and a, (ACC_PART_BIT:16)
 	jr nz, Rhythm_Validate_Mismatch
-	ld a, (0x32df:16)
+	ld a, (ACC_CHORD_VOICED_TYPE:16)
 	ld (0x3423:16), a
-	call AccTuning_CallWithSaveRestore
+	call Chord_LookupTypeFamily_Saved
 	ld a, (0x3422:16)
 	ld (0x3424:16), a
-	ld a, (0x32d8:16)
+	ld a, (ACC_CHORD_TYPE:16)
 	ld (0x3423:16), a
-	call AccTuning_CallWithSaveRestore
+	call Chord_LookupTypeFamily_Saved
 	ld a, (0x3422:16)
 	cp (0x3424:16), a
 	jr nz, Rhythm_Validate_Mismatch
@@ -936,18 +936,18 @@ Rhythm_MatchedPhrase_NonNote:
 	ld a, (xix + 8)
 
 Rhythm_MatchedPhrase_Process:
-	calr Rhythm_CheckVelocityThreshold
+	calr Rhythm_CheckFixedNote
 	bit 4, (0x32f4:16)
 	jr nz, Rhythm_MatchedPhrase_Output
 	bit 3, (0x32f4:16)
 	jr z, Rhythm_MatchedPhrase_PostRange
-	calr Rhythm_CrossVoiceCorrect
+	calr Rhythm_BassToRoot
 
 Rhythm_MatchedPhrase_PostRange:
-	calr Rhythm_NoteRangeCheck
+	calr Rhythm_RootOnlyNote
 
 Rhythm_MatchedPhrase_Output:
-	calr Rhythm_VelocityCompute
+	calr Rhythm_ChordConvertNoteFast
 	ld (xix + 2), a
 	popw wa
 	ret
@@ -958,18 +958,18 @@ Rhythm_MismatchedPhrase:
 	jr nz, Rhythm_MismatchOther
 	pushw wa
 	ld a, (xix + 6)
-	calr Rhythm_CheckVelocityThreshold
+	calr Rhythm_CheckFixedNote
 	bit 4, (0x32f4:16)
 	jr nz, Rhythm_Mismatch90_Output
 	bit 3, (0x32f4:16)
 	jr z, Rhythm_Mismatch90_PostRange
-	calr Rhythm_CrossVoiceCorrect
+	calr Rhythm_BassToRoot
 
 Rhythm_Mismatch90_PostRange:
-	calr Rhythm_NoteRangeCheck
+	calr Rhythm_RootOnlyNote
 
 Rhythm_Mismatch90_Output:
-	calr Rhythm_VelocityLookup_A
+	calr Rhythm_ChordConvertNote90
 	ld (xix + 2), a
 	popw wa
 	jr Rhythm_MismatchOther_Return
@@ -979,22 +979,22 @@ Rhythm_MismatchOther:
 	ld a, (xix + 3)
 	ld (ACC_EVENT+3:16), a
 	ld a, (xix + 6)
-	ld (0x3433:16), a
+	ld (ACC_EVENT_EXT1:16), a
 	ld a, (xix + 7)
-	ld (0x3434:16), a
+	ld (ACC_EVENT_EXT2:16), a
 	ld a, (xix + 8)
-	calr Rhythm_CheckVelocityThreshold
+	calr Rhythm_CheckFixedNote
 	bit 4, (0x32f4:16)
 	jr nz, Rhythm_MismatchOther_Output
 	bit 3, (0x32f4:16)
 	jr z, Rhythm_MismatchOther_PostRange
-	calr Rhythm_CrossVoiceCorrect
+	calr Rhythm_BassToRoot
 
 Rhythm_MismatchOther_PostRange:
-	calr Rhythm_NoteRangeCheck
+	calr Rhythm_RootOnlyNote
 
 Rhythm_MismatchOther_Output:
-	calr Rhythm_VoiceMapLookup
+	calr Rhythm_ChordConvertNote91
 	ld (xix + 2), a
 	ld a, (ACC_EVENT+3:16)
 	ld (xix + 3), a
@@ -1544,9 +1544,9 @@ Rhythm_SeqResetTable:
 	.long 0x00002a94	; [16]
 
 Rhythm_TransposeWithMod:
-	cp (0x32d8:16), 0
+	cp (ACC_CHORD_TYPE:16), 0
 	jr z, Rhythm_TranspMod_Return
-	cp (0x32d9:16), 0
+	cp (ACC_CHORD_ROOT:16), 0
 	jr z, Rhythm_TranspMod_Return
 	bit 2, (0x33e5:16)
 	jr nz, Rhythm_TranspMod_Return
@@ -1565,13 +1565,13 @@ Rhythm_TranspMod_Return:
 
 Rhythm_TranspMod_ModCheck:
 	and (0x33e5:16), 254
-	ld l, (0x32d8:16)
+	ld l, (ACC_CHORD_TYPE:16)
 	cp l, 0x30
 	jr c, Rhythm_TranspMod_LookupTable
 	xor l, l
 
 Rhythm_TranspMod_LookupTable:
-	ld xiy, Rhythm_PitchShiftTable_Default
+	ld xiy, Rhythm_ChordExtSelect
 	ld	l, (xiy+l)
 	cp l, 0:i3
 	jr z, Rhythm_TranspMod_Done
@@ -1605,25 +1605,25 @@ Rhythm_TranspMod_BaseApply:
 	ld w, a
 	ld xiy, Note_PitchClassTable
 	ld	a, (xiy+a)
-	ld l, (0x32d8:16)
+	ld l, (ACC_CHORD_TYPE:16)
 	cp l, 0x30
 	jr c, Rhythm_TranspMod_BaseLookup
 	xor l, l
 
 Rhythm_TranspMod_BaseLookup:
 	extz hl
-	ld xiy, Rhythm_InstrMapTable_D4
+	ld xiy, Rhythm_ChordRowMap_Acc1
 	ld	l, (xiy+hl)
 	extz hl
 	sla hl, 4
-	ld xiy, Rhythm_VelLookA_TableLookup_Table
+	ld xiy, Rhythm_ChordNoteDeltaRows
 	lda	xiy, (xiy+hl)
 	ld	a, (xiy+a)
 	add w, a
 	ret
 
 Rhythm_TranspMod_OctaveWrap:
-	ld a, (0x32d9:16)
+	ld a, (ACC_CHORD_ROOT:16)
 	dec 1, a
 	cp a, 7:i3
 	jr nc, Rhythm_TranspMod_WrapNeg

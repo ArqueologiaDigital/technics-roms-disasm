@@ -26,7 +26,7 @@ FmmPasswordFunc:
 	call	CheckAnySlotHasData
 	cp	l, 0:i3
 	jr	nz, Password_ShowError
-	call	CheckSlotIndexValid
+	call	Composer_HasPassword
 	cp	l, 0:i3
 	jr	z, Password_ClearAndSetSlot
 Password_ShowError:
@@ -38,7 +38,7 @@ Password_ClearAndSetSlot:
 	ld	wa, iz
 	call	ClearAllSongSlots
 	ld	wa, iz
-	call	SetCurrentSlotIndex
+	call	Composer_SetPassword
 	lda	xwa, (PASSWORD_STATE+1:16)
 	setm	7, (xwa)
 	setm	6, (xwa)
@@ -50,7 +50,7 @@ Password_HandleDeleteEvent:
 	cp	l, 0:i3
 	jr	z, Password_Delete_CheckLoadOnly
 	ld	wa, iz
-	call	CheckIsCurrentSlot
+	call	Composer_IsPassword
 	cp	l, 0:i3
 	jr	z, Password_Delete_CheckLoadOnly
 	lda	xwa, (PASSWORD_STATE+1:16)
@@ -76,7 +76,7 @@ Password_Delete_CheckSaveOnly:
 	cp	(PASSWORD_STATE:16), 2
 	jr	nz, Password_ShowErrorStatus
 	ld	wa, iz
-	call	CheckIsCurrentSlot
+	call	Composer_IsPassword
 	cp	l, 0:i3
 	jr	z, Password_ShowErrorStatus
 	set	6, (PASSWORD_STATE+1:16)
@@ -98,7 +98,7 @@ Password_HandleSaveEvent:
 	cp l, 0:i3
 	jr z, .Lc_f8c61d
 	ld WA,IZ
-	call CheckIsCurrentSlot
+	call Composer_IsPassword
 	cp l, 0:i3
 	jr z, .Lc_f8c61d
 	lda xwa, (PASSWORD_STATE+1:16)
@@ -126,7 +126,7 @@ Password_Save_CheckSaveOnly:
 	cp (PASSWORD_STATE:16), 0x02
 	jr nz, Password_SaveErrorStatus
 	ld WA,IZ
-	call CheckIsCurrentSlot
+	call Composer_IsPassword
 	cp l, 0:i3
 	jr z, Password_SaveErrorStatus
 	set 6, (PASSWORD_STATE+1:16)
@@ -183,7 +183,7 @@ SelectMode_CheckSaveAvail:
 	call FileIO_FormatName_Return
 	cp l, 0:i3
 	jr z, SelectMode_DetermineMode
-	call CheckSlotIndexValid
+	call Composer_HasPassword
 	cp l, 0:i3
 	jr z, SelectMode_DetermineMode
 	bit 6, (PASSWORD_STATE+1:16)
@@ -194,7 +194,7 @@ SelectMode_DetermineMode:
 	jr z, SelectMode_SingleMode
 	cpib_erp 0xfb, 0
 	jr z, SelectMode_SingleMode
-	call GetCurrentSlotIndex
+	call Composer_GetPassword
 	ld iz, hl
 	call FindFirstEmptySlot
 	ld a, 0x1:opc
