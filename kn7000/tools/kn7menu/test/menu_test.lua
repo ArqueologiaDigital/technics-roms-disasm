@@ -18,6 +18,9 @@
 --             APP_BASE, the converter calls going to it; with MT_DONE ("addr=value", the program's own
 --             "finished" word) wait for it to finish and end (its hold, 0xFE, EXIT, "Continue Next?" YES):
 --             the menu is back; then LEAVE and NO.
+--   leave     MT_PROGRAM (a program that goes back to the menu at its quit: Another World) started from the menu
+--             and quit with EXIT held gives the menu back with no firmware message and no "Continue Next?"
+--             (MT_GAME_UP "addr=value": the program's word that says it runs).
 --   buttons   a menu that reads no button (-D BUTTONS_USED=0): each candidate button is pressed in turn;
 --             what each changed in IC23 (the panel settings), whether the firmware drew on the LCD, and
 --             whether the converter went on being called.
@@ -461,6 +464,48 @@ local function run()
   phase = "after"
 end
 
+-- leave (Felipe 2026-11-02): a program started from the menu that goes back to it by itself at its quit (Another World:
+-- technics-anotherworld kn7000/src/chain.s) gives the menu back with no firmware message and no "Continue Next?".
+-- MT_PROGRAM is started with RUN (MT_GAME_UP "addr=value": its word that says it runs) and quit with EXIT held: the
+-- menu must be back, its list shown, and the firmware's titles never "Continue Next?" (0x000F004C) nor its message
+-- (0x000F0003). Every title the firmware takes is logged with its time; snapshots 0.2, 0.5, 1, 2 and 4 s after EXIT.
+-- (Leaving the menu itself is the firmware's own end of a conversion: its message, then "Continue Next?"; a converter
+-- cannot skip it: whatever it asks for on its last call, the firmware then opens that title. card() checks it.)
+local function leave()
+  local seen, watch = {}, false
+  MT_TITLES = emu.add_machine_frame_notifier(function()
+    if not watch then return end
+    local t = u32(TITLE)
+    if t ~= seen.last then seen[#seen + 1] = string.format("%05X@%.2f", t, now() - seen.t0); seen.last = t end
+  end)
+  local function bad() for _, x in ipairs(seen) do if x:match("^F004C@") or x:match("^F0003@") then return true end end; return false end
+  local ok = to_menu()
+  result("menu", ok, string.format("menu state %d, %d programs", mstate(), u32(S.V_NPROG)))
+  if not ok then return end
+  wait(3)
+  local want = os.getenv("MT_PROGRAM") or "Another World"
+  local i = open_to(want)
+  if i == nil then result("game", false, "no program named " .. want); return end
+  select(i)
+  btn("R5")                           -- RUN
+  local ga, gv = (os.getenv("MT_GAME_UP") or ""):match("(%w+)=(%w+)")
+  ga, gv = tonumber(ga), tonumber(gv)
+  ok = wait_until(function() return not menu_up() end, 30) and (not ga or wait_until(function() return u32(ga) == gv end, 120))
+  result("game", ok, string.format("RUN on %q: %q runs (word %s = %s)", want, appname(), tostring(ga), ga and u32(ga) or "-"))
+  wait(5)
+  seen = { t0 = now(), last = u32(TITLE) }; watch = true
+  local t0 = now()
+  press("CPC_SEG11", 0x80, 2.0)       -- EXIT held: the program quits
+  ok = wait_until(function() return menu_up() and mstate() == S.ST_MENU end, 60)
+  local dt = now() - t0
+  for _, d in ipairs({ 0.2, 0.3, 0.5, 1, 2 }) do wait(d); M.video:snapshot() end
+  wait(2)
+  watch = false
+  result("back", ok and not bad() and u32(S.V_NPROG) > 0, string.format("EXIT held in %q: the menu %s %.1f s after the press, %d programs; the firmware's titles %s",
+    want, ok and "up" or "NOT up", dt, u32(S.V_NPROG), #seen > 0 and table.concat(seen, " ") or "unchanged"))
+  phase = "after"
+end
+
 local function buttons()
   local ok = to_menu()
   result("menu", ok, string.format("menu state %d (it reads no button: BUTTONS_USED %d)", mstate(), S.BUTTONS_USED or -1))
@@ -503,7 +548,7 @@ end
 
 local co = coroutine.create(function()
   if MODE == "card" then card() elseif MODE == "fallback" then fallback() elseif MODE == "run" then run()
-  elseif MODE == "buttons" then buttons() end
+  elseif MODE == "buttons" then buttons() elseif MODE == "leave" then leave() end
   finish()
   while true do coroutine.yield() end
 end)

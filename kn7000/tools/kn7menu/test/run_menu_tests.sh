@@ -17,6 +17,9 @@
 #   tree       the card tree TREE names, as it is (KN7000's tools/sdcard/stage.sh: ~/compartilhado/sdcard-stage/card,
 #              the owner's whole card), with menu_test.lua's card checks (MT_MODE=card); its root KN7APP.BIN must be
 #              this build of the menu
+#   leave      TREE as for `tree`: MT_PROGRAM (env; a program that goes back to the menu at its quit, Another World)
+#              started and quit with EXIT held gives the menu back with no firmware message and no "Continue Next?"
+#              (MT_GAME_UP: its "running" word; menu_test.lua MT_MODE=leave)
 #   cputime    pass 9 started from its folder (CPUTIME): its file written to the card's root, checked by the
 #              release's verifier (verify_dump.py --cputime with cpu_tap.lua's account, check_cpu_probe.py);
 #              then "Continue Next?" YES brings the menu back
@@ -84,6 +87,11 @@ while [ $# -gt 0 ]; do
     say "card tree $TREE ($(find "$TREE" -type f | wc -l) files)"
     mame "$OUT/tree" "$TREE" card
     rm -f -- "$OUT/tree/sd.img" "$OUT/tree/floppy.img"
+    ;;
+  leave)                              # TREE (its root KN7APP.BIN this menu), MT_PROGRAM, MT_GAME_UP: menu_test.lua MT_MODE=leave
+    [ -n "${TREE:-}" ] && cmp -s "$TREE/KN7APP.BIN" "$OUT/build/KN7APP.BIN" || { say "leave FAIL: TREE unset, or its KN7APP.BIN is not this menu"; continue; }
+    mame "$OUT/leave" "$TREE" leave
+    rm -f -- "$OUT/leave/sd.img" "$OUT/leave/floppy.img"
     ;;
   fallback)
     python3 -I "$HERE/mkfallback.py" "$OUT/fallback-tree" "$OUT/build/KN7APP.BIN" "$LOADER/releases" > /dev/null
