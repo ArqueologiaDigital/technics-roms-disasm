@@ -83,6 +83,50 @@ CURATED['tag71'] = [(0, 'pmemout_l_flags', 'hex', 'the PANEL MEMORY page grid Pm
 CURATED['tag98'] = [(12, 'reserved_12', 'hex', 'no reader: the 25 references to 0xfda2 (PANEL_PMEM_SETTINGS+12) are the '
                      'END bound of the 0xf980..0xfda1 block copies (BitMapOut_ComputeRegionDelta, '
                      'ToneGen_FileIO_SaveAndSync), not accesses of this byte; the load rule zeroes it')]
+# The bytes that kept f<offset> after the descriptors and the curated studies (2026-11-02, sub-lane
+# open6-kn5000-d/panel): notes/open6-kn5000-d/panel/probes/panel_f_readers.py lists every v5..v10 instruction that names
+# each one (absolute operand or base register).  A byte that no instruction reads is reserved_<off>; the hits of the
+# others are given here.  (kind, offset) -> (name, kind, note).
+_NOREAD = 'no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor'
+_PTRS = 'its only v5..v10 references are the record-pointer tables (SndParam_BlockRamPtrs) and the record base load'
+VERDICT = {}
+for _o in range(10):
+    VERDICT[('tag68', _o)] = ('reserved_%d' % _o, 'hex', _NOREAD + '; 0 in every save; ' + (_PTRS if _o == 0 else
+                              'no rule'))
+VERDICT[('tag60', 0)] = ('reserved_0', 'hex', _NOREAD + '; ' + _PTRS + ' and the PANEL MEMORY recall copy '
+                         '(bitmap_out_routines.s) moves it with the record; 0 in every save')
+VERDICT[('tag72', 0)] = ('reserved_0', 'dec', _NOREAD + '; ' + _PTRS + '; BitMapOut_RestoreFields clears bit 7 and the '
+                         'recall copy moves it; the load rule ranges it 0..15; 1 or 13 in 77 of 4,688 saves')
+VERDICT[('tag72', 1)] = ('reserved_1', 'hex', _NOREAD + '; BitMapOut_RestoreFields clears bit 7; 0 in every save')
+for _o in (4, 5):
+    VERDICT[('tag72', _o)] = ('reserved_%d' % _o, 'hex', _NOREAD + '; 0 in every save')
+VERDICT[('tag80', 4)] = ('f4', 'hex', 'BLOCKED: no reader of its value: ToneGen_FileIO_SaveAndSync keeps it (with +0 and +2) '
+                         'across a demo preset load and the 25 MIDI preset banks (sound_config_lookup.c) store 0 in it, '
+                         'but no instruction tests it; 0 in every save. A MIDI capture from an instrument with the byte set '
+                         'would show what it does')
+VERDICT[('tag80', 5)] = ('reserved_5', 'hex', _NOREAD + '; the MIDI preset banks (sound_config_lookup.c) store its low 6 '
+                         'bits (6, 3 ...); 0x20 in most saves')
+VERDICT[('tag90', 1)] = ('conductor_flags', 'hex', 'read with +0 as the word 0x9163 (ExtData_ToneParam_MultiChannel); bit 1 '
+                         'gates AudioInit_ProcessModeChange / AudioMode_ConfigExternal_MergeFlags (0xc1fe bit 2); '
+                         'MIDI_WriteResetSequence sends it as the change event (0x90, 1); 0 or 2 in the saves. [INFERENCE: '
+                         'what bit 1 selects was not traced]')
+VERDICT[('tag90', 2)] = ('reserved_2', 'hex', _NOREAD + '; only the recall copies (bitmap_out_routines.s) move it; '
+                         '0x67 in every save')
+VERDICT[('tag91', 2)] = ('reserved_2', 'hex', _NOREAD + '; the load rule allows 0 or 1; 0 in every save')
+for _o in (1, 2, 3, 7, 8) + tuple(range(25, 34)):
+    VERDICT[('tag93', _o)] = ('reserved_%d' % _o, 'dec' if _o in (2, 3, 7, 8) else 'hex', _NOREAD +
+                              ('; validated by the load rule only' if _o in (1, 2, 3, 7, 8) else '; no rule') +
+                              '; the same value in all 63 saves')
+VERDICT[('tag98', 10)] = ('reserved_10', 'dec', _NOREAD + '; the load rule ranges it 0..99 (default 90); 90 or 0 in the saves')
+for _o in range(16, 27):
+    VERDICT[('tag99', _o)] = ('reserved_%d' % _o, 'hex', _NOREAD + '; no rule; the same 11 bytes in all 4,328 saves '
+                              '(82 01 02 81 00 10 11 12 13 00 00)')
+VERDICT[('tag9a', 0)] = ('reserved_0', 'hex', _NOREAD + '; ' + _PTRS + '; the load rule zeroes it')
+for _o in range(4, 20):
+    VERDICT[('tag9a', _o)] = ('reserved_%d' % _o, 'hex', _NOREAD + '; no rule; ' + (
+        'values 2..0x13 in some of the 45 saves' if _o in (4, 5, 6, 8) else '0 in every save'))
+for (_k, _o), (_n, _t, _note) in VERDICT.items():
+    CURATED.setdefault(_k, []).append((_o, _n, _t, _note))
 # Descriptors whose label is a placeholder, named from the code that reads the key.
 KEY_NAMES = {
     0x28800: ('msp_bank', 'MSP BANK (0..18): PanelButton_MspNumber turns MSP 1-6 into pedal functions when '

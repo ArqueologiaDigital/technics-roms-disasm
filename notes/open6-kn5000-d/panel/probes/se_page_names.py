@@ -94,6 +94,16 @@ PAGES = [
     ('* LFO1', 'col 8', 0x663, 'KEYSYNC (bit 7)', 'base+2', 'OFF/ON', 'C'),
     ('* LFO1', 'col 3', 0x664, 'WAVE (bits 7:6)', 'base+3', 'SIN TRI SQR SAW', 'C'),
     ('* LFO1', 'col 4', 0x664, 'DELAY (bits 4:0)', 'base+3', '0..30', 'C'),
+    # CONTROLLER (TT_SECTR2), common: UpdSeSel_DetailedUpdate_Helper5 requests the six FUNCTION bytes 0x18 + 3 k
+    # (k = 0..5, cache 1..6, SeCtr2_FunctionNameFields shows 1, 2, 5, 6) and, for the selection s in RAM 0x695
+    # (SeCtr2_SetSelection; side rows choose 1, 2 / 5, 6), the group base g = 0x17 / 0x1A / 0x23 / 0x26
+    # (UpdSeSel_DetailedUpdate_SetDisplayState_Helper2) into cache 13, its +2 into cache 11 and +0 into cache 12.
+    ('CONTROLLER', 'col 2 / 3', 0x661, 'FUNCTION (SeValText_CtrlDestinations)', 'g+1', '0..27', 'C'),
+    ('CONTROLLER', 'col 4', 0x66B, 'DEPTH (SeCtr2_StepDepth)', 'g+2', '0..127', 'C'),
+    ('CONTROLLER', 'cols 5..8', 0x66C, '1ST..4TH OFF / ON / INV (SeCtr2_StepPartField)', 'g+0', '2 bits per tone', 'C'),
+    # CONTROLLER page 2 (TT_SECTR3): SeCtr3_OnColumn3 / 6 send record +0x10 with mask 1 << 4 / 1 << 5.
+    ('CONTROLLER 2', 'col 3', 0x660, 'SUSTAIN PEDAL MODE (bit 4)', 16, '0..1', 'C'),
+    ('CONTROLLER 2', 'col 6', 0x660, 'GLIDE (bit 5)', 16, '0..1', 'C'),
 ]
 
 # partial-block offset -> (new name, size, kind, caption evidence, old name)
@@ -161,6 +171,18 @@ _LFO = {
     0x2D: ('lfo_touch_keysync', 'LFO TOUCH (bits 5:0, 0..50) and KEYSYNC (bit 7)', 'lfo_b2_onoff'),
     0x2E: ('lfo_wave_delay', 'LFO WAVE (bits 7:6: SIN TRI SQR SAW) and DELAY (bits 4:0, 0..30)', 'lfo_b3_wave'),
 }
+# controller groups: record offset of the group's first field -> (new name, caption evidence, old name)
+_CTRL = {
+    0x14: ('ctrl_tone_switches', 'CONTROLLER 1ST..4TH: four 2-bit fields, tone 1 in bits 1:0 .. tone 4 in bits 7:6, '
+           '0 OFF, 1 ON, 3 INV (SeCtr2_StepPartField; SeValText_Off_On_Dash_Inv)', 'ctrl_part_switches'),
+    0x15: ('ctrl_function', 'CONTROLLER FUNCTION: bits 6:0 index SeValText_CtrlDestinations ("PITCH BEND", "AMP ENV SUST", '
+           '"FILTER CUTOFF", "PTCH LFO1 DEP", ...; the page shows & 0x3F); bit 7 a flag', 'ctrl_b1'),
+    0x16: ('ctrl_depth', 'CONTROLLER DEPTH, 0..127 (SeCtr2_StepDepth)', 'ctrl_b2'),
+}
+CTRL_ORDER = ('7 groups of 3: group 0 (+0x14) is not on the CONTROLLER page (its FUNCTION is 0x81 = flag + PITCH BEND '
+              'in every record; subcpu Voice_PitchBend_BranchA takes its address), groups 1..6 (+0x17 + 3 (k - 1)) are '
+              'the page\'s FUNCTION selections 1..6 (UpdSeSel_DetailedUpdate_Helper5 / _SetDisplayState_Helper2; the page '
+              'offers 1, 2 in its first row and 5, 6 in its second row; 3 and 4 no side row selects, their row label was not read: the rows carry icons, op-23 styles 0x60 and 0x39)')
 PB = 0x66
 EV = ('SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends '
       'for it is this offset)')
@@ -192,6 +214,19 @@ def apply(fields):
                         g['observed'] = f['observed']
                     out.append(g)
                 continue
+        if f.get('repeat', {}).get('stride') == 3 and o in _CTRL:
+            nm, cap, old = _CTRL[o]
+            g = {k: v for k, v in f.items() if k != 'todo'}
+            g.update(name=nm, inference=False, evidence=cap + ' (' + EV + '); ' + CTRL_ORDER + '; was ' + old + ': ' +
+                     f['evidence'])
+            out.append(g)
+            continue
+        if o == 0x10 and f['name'] == 'part_mode':
+            g = dict(f)
+            g['evidence'] = (f['evidence'] + '; bit 4 = SUSTAIN PEDAL MODE and bit 5 = GLIDE (CONTROLLER page 2, '
+                             'SeCtr3_OnColumn3 / 6 send element 16 with mask 0x10 / 0x20)')
+            out.append(g)
+            continue
         if f.get('repeat', {}).get('stride') == 4 and o in _LFO:
             nm, cap, old = _LFO[o]
             g = {k: v for k, v in f.items() if k != 'todo'}
@@ -210,6 +245,10 @@ def table():
             where = 'partial +0x%02x (record +0x%02x + 0x51 p)' % (el, PB + el)
         elif blk == 'P':
             where = 'partial +0x06 / +0x26 / +0x38'
+        elif isinstance(el, int):
+            where = 'record +0x%02x' % el
+        elif el.startswith('g+'):
+            where = 'controller group g +%s (g = 0x17 + 3 (s - 1))' % el[2:]
         else:
             where = 'LFO entry +%s (record +0x2B / 0x3B / 0x4B + 4 (n-1))' % el.split('+')[1]
         rows.append((pg, col, '0x%03x' % c, cap, str(el), rg, where))

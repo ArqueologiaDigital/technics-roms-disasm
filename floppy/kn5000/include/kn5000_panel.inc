@@ -368,7 +368,7 @@
 	.endm
 
 ; tag60: tags 0x60, 4 payload bytes; rule list PanelTlv_Rules_Tag60.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 15 direct references in v5..v10 (panel_field_refs.json) [no rule]
+;   +0  reserved_0             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; its only v5..v10 references are the record-pointer tables (SndParam_BlockRamPtrs) and the record base load and the PANEL MEMORY recall copy (bitmap_out_routines.s) moves it with the record; 0 in every save [no rule]
 ;   +1  byte1                  bits    SndParam bit fields [keep bits 0xE0]
 ;       equalizer_on_off       0x20    SndParam_EqualizerOnOff (key 0x04006, mask 0x20, 0..1)
 ;       acoustic_illusion_on_off 0x40    SndParam_AcousticIllusionOnOff (key 0x04004, mask 0x40, 0..1)
@@ -376,37 +376,37 @@
 ;       bits1_other            0x1f    bits no descriptor names
 ;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tag60 tag, f0, equalizer_on_off, acoustic_illusion_on_off, reverb_on_off, bits1_other, reserved_2, reserved_3
+	.macro	ptlv_tag60 tag, reserved_0, equalizer_on_off, acoustic_illusion_on_off, reverb_on_off, bits1_other, reserved_2, reserved_3
 	.byte	\tag, 4
-	.byte	\f0
+	.byte	\reserved_0
 	.byte	((\equalizer_on_off) << 5) | ((\acoustic_illusion_on_off) << 6) | ((\reverb_on_off) << 7) | ((\bits1_other) << 0)
 	.byte	\reserved_2
 	.byte	\reserved_3
 	.endm
 
 ; tag68: tags 0x68, 10 payload bytes; rule list PanelTlv_Rules_Tag68.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 14 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +1  f1                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +2  f2                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +3  f3                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +4  f4                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +5  f5                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +6  f6                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +7  f7                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +8  f8                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +9  f9                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-	.macro	ptlv_tag68 tag, f0, f1, f2, f3, f4, f5, f6, f7, f8, f9
+;   +0  reserved_0             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; 0 in every save; its only v5..v10 references are the record-pointer tables (SndParam_BlockRamPtrs) and the record base load [no rule]
+;   +1  reserved_1             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; 0 in every save; no rule [no rule]
+;   +2  reserved_2             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; 0 in every save; no rule [no rule]
+;   +3  reserved_3             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; 0 in every save; no rule [no rule]
+;   +4  reserved_4             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; 0 in every save; no rule [no rule]
+;   +5  reserved_5             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; 0 in every save; no rule [no rule]
+;   +6  reserved_6             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; 0 in every save; no rule [no rule]
+;   +7  reserved_7             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; 0 in every save; no rule [no rule]
+;   +8  reserved_8             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; 0 in every save; no rule [no rule]
+;   +9  reserved_9             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; 0 in every save; no rule [no rule]
+	.macro	ptlv_tag68 tag, reserved_0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9
 	.byte	\tag, 10
-	.byte	\f0
-	.byte	\f1
-	.byte	\f2
-	.byte	\f3
-	.byte	\f4
-	.byte	\f5
-	.byte	\f6
-	.byte	\f7
-	.byte	\f8
-	.byte	\f9
+	.byte	\reserved_0
+	.byte	\reserved_1
+	.byte	\reserved_2
+	.byte	\reserved_3
+	.byte	\reserved_4
+	.byte	\reserved_5
+	.byte	\reserved_6
+	.byte	\reserved_7
+	.byte	\reserved_8
+	.byte	\reserved_9
 	.endm
 
 ; tag70: tags 0x70, 8 payload bytes; rule list PanelTlv_Rules_Tag70.
@@ -449,14 +449,14 @@
 	.endm
 
 ; tag72: tags 0x72, 14 payload bytes; rule list PanelTlv_Rules_Tag72.
-;   +0  f0                     dec     TODO: not named; no SndParam descriptor, 25 direct references in v5..v10 (panel_field_refs.json) [range 0xFF/0/15/0]
-;   +1  f1                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [keep bits 0x7F]
+;   +0  reserved_0             dec     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; its only v5..v10 references are the record-pointer tables (SndParam_BlockRamPtrs) and the record base load; BitMapOut_RestoreFields clears bit 7 and the recall copy moves it; the load rule ranges it 0..15; 1 or 13 in 77 of 4,688 saves [range 0xFF/0/15/0]
+;   +1  reserved_1             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; BitMapOut_RestoreFields clears bit 7; 0 in every save [keep bits 0x7F]
 ;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +3  byte3                  bits    SndParam bit fields [no rule]
 ;       msp_volume             0x7f    SndParam_Msp_Volume (key 0x28801, mask 0x7f, 0..127)
 ;       msp_mute               0x80    SndParam_Msp_Mute (key 0x2880b, mask 0x80, 0..1)
-;   +4  f4                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [keep bits 0x40]
-;   +5  f5                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [keep bits 0x7F]
+;   +4  reserved_4             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; 0 in every save [keep bits 0x40]
+;   +5  reserved_5             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; 0 in every save [keep bits 0x7F]
 ;   +6  msp_bank               dec     SndParam NakaInst_Param_Term00 (key 0x28800, mask 0xff, 0..255; named from its readers: MSP BANK (0..18): PanelButton_MspNumber turns MSP 1-6 into pedal functions when SndParam_LookupReadOnly(0x28800) is 17 or 18 (PanelButton_MspBank17FuncCodes / _MspBank18FuncCodes); VwVariBox_Init / _Match compare it with the box index; AccompSeq_HandleSpecialMode tests 13 / 14) [no rule]
 ;   +7  msp_reverb             dec     SndParam SndParam_Msp_Reverb (key 0x28802, mask 0x7f, 0..127) [keep bits 0x7F]
 ;   +8  byte8                  bits    SndParam bit fields [clear bits 0x80]
@@ -477,14 +477,14 @@
 ;   +13 byte13                 bits    SndParam bit fields [clear bits 0x80]
 ;       key_28808              0x80    NakaInst_Param_Idx08_88 (key 0x28808, mask 0x80, 0..1)
 ;       bits13_other           0x7f    bits no descriptor names
-	.macro	ptlv_tag72 tag, f0, f1, reserved_2, msp_volume, msp_mute, f4, f5, msp_bank, msp_reverb, key_28803, bits8_other, key_28804, bits9_other, key_28805, bits10_other, key_28806, bits11_other, key_28807, bits12_other, key_28808, bits13_other
+	.macro	ptlv_tag72 tag, reserved_0, reserved_1, reserved_2, msp_volume, msp_mute, reserved_4, reserved_5, msp_bank, msp_reverb, key_28803, bits8_other, key_28804, bits9_other, key_28805, bits10_other, key_28806, bits11_other, key_28807, bits12_other, key_28808, bits13_other
 	.byte	\tag, 14
-	.byte	\f0
-	.byte	\f1
+	.byte	\reserved_0
+	.byte	\reserved_1
 	.byte	\reserved_2
 	.byte	((\msp_volume) << 0) | ((\msp_mute) << 7)
-	.byte	\f4
-	.byte	\f5
+	.byte	\reserved_4
+	.byte	\reserved_5
 	.byte	\msp_bank
 	.byte	\msp_reverb
 	.byte	((\key_28803) << 7) | ((\bits8_other) << 0)
@@ -518,8 +518,8 @@
 ;       midi_out_auto_play_chord 0x40    SndParam_MidiOut_AutoPlayChord (key 0x02183, mask 0x40, 0..1)
 ;       midi_out_techni_chord  0x80    SndParam_MidiOut_TechniChord (key 0x02181, mask 0x80, 0..1)
 ;       bits3_other            0x3a    bits no descriptor names
-;   +4  f4                     hex     TODO: not named; no SndParam descriptor, 5 direct references in v5..v10 (panel_field_refs.json) [clear bits 0x3F]
-;   +5  f5                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [keep bits 0x3F]
+;   +4  f4                     hex     BLOCKED: no reader of its value: ToneGen_FileIO_SaveAndSync keeps it (with +0 and +2) across a demo preset load and the 25 MIDI preset banks (sound_config_lookup.c) store 0 in it, but no instruction tests it; 0 in every save. A MIDI capture from an instrument with the byte set would show what it does [clear bits 0x3F]
+;   +5  reserved_5             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; the MIDI preset banks (sound_config_lookup.c) store its low 6 bits (6, 3 ...); 0x20 in most saves [keep bits 0x3F]
 ;   +6  byte6                  bits    SndParam bit fields [no rule]
 ;       midi_common_realtime_sysex 0x08    SndParam_MidiCommon_RealtimeSysex (key 0x02282, mask 0x08, 0..1)
 ;       bits6_other            0xf7    bits no descriptor names
@@ -549,14 +549,14 @@
 ;   +11 midi_in_velocity_offset dec     SndParam SndParam_MidiIn_VelocityOffset (key 0x05001, mask 0xff, 0..255) [no rule]
 ;   +12 midi_in_velocity_fixed dec     SndParam SndParam_MidiIn_VelocityFixed (key 0x05002, mask 0xff, 1..127) [range 0xFF/1/127/80]
 ;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tag80 tag, midi_common_program_change_mode, midi_realtime_clock, midi_common_prg_change_to_pmem, midi_common_note_only, midi_out_transpose, midi_out_drum_pattern, bits0_other, midi_common_fade_in_out, midi_common_song_select, bits1_other, midi_realtime_commands, midi_common_drums_type, bits2_other, midi_in_right1_input, midi_in_auto_play_chord, midi_out_auto_play_chord, midi_out_techni_chord, bits3_other, f4, f5, midi_common_realtime_sysex, bits6_other, midi_ctl_msg_bend_range, midi_ctl_msg_tuning, midi_ctl_msg_program_change, midi_ctl_msg_after_touch, midi_ctl_msg_pitch_bend, bits7_other, midi_ctl_msg_sustain, midi_ctl_msg_modulation, midi_ctl_msg_volume, midi_ctl_msg_expression, midi_ctl_msg_pan, midi_ctl_msg_effect_reverb, midi_ctl_msg_bank_select, bits8_other, midi_ctl_msg_reset_all_controllers, midi_common_apc_control, bits9_other, midi_in_velocity_mode, bits10_other, midi_in_velocity_offset, midi_in_velocity_fixed, reserved_13
+	.macro	ptlv_tag80 tag, midi_common_program_change_mode, midi_realtime_clock, midi_common_prg_change_to_pmem, midi_common_note_only, midi_out_transpose, midi_out_drum_pattern, bits0_other, midi_common_fade_in_out, midi_common_song_select, bits1_other, midi_realtime_commands, midi_common_drums_type, bits2_other, midi_in_right1_input, midi_in_auto_play_chord, midi_out_auto_play_chord, midi_out_techni_chord, bits3_other, f4, reserved_5, midi_common_realtime_sysex, bits6_other, midi_ctl_msg_bend_range, midi_ctl_msg_tuning, midi_ctl_msg_program_change, midi_ctl_msg_after_touch, midi_ctl_msg_pitch_bend, bits7_other, midi_ctl_msg_sustain, midi_ctl_msg_modulation, midi_ctl_msg_volume, midi_ctl_msg_expression, midi_ctl_msg_pan, midi_ctl_msg_effect_reverb, midi_ctl_msg_bank_select, bits8_other, midi_ctl_msg_reset_all_controllers, midi_common_apc_control, bits9_other, midi_in_velocity_mode, bits10_other, midi_in_velocity_offset, midi_in_velocity_fixed, reserved_13
 	.byte	\tag, 14
 	.byte	((\midi_common_program_change_mode) << 0) | ((\midi_realtime_clock) << 2) | ((\midi_common_prg_change_to_pmem) << 3) | ((\midi_common_note_only) << 4) | ((\midi_out_transpose) << 5) | ((\midi_out_drum_pattern) << 6) | ((\bits0_other) << 7)
 	.byte	((\midi_common_fade_in_out) << 2) | ((\midi_common_song_select) << 3) | ((\bits1_other) << 0)
 	.byte	((\midi_realtime_commands) << 2) | ((\midi_common_drums_type) << 3) | ((\bits2_other) << 0)
 	.byte	((\midi_in_right1_input) << 0) | ((\midi_in_auto_play_chord) << 2) | ((\midi_out_auto_play_chord) << 6) | ((\midi_out_techni_chord) << 7) | ((\bits3_other) << 1)
 	.byte	\f4
-	.byte	\f5
+	.byte	\reserved_5
 	.byte	((\midi_common_realtime_sysex) << 3) | ((\bits6_other) << 0)
 	.byte	((\midi_ctl_msg_bend_range) << 0) | ((\midi_ctl_msg_tuning) << 1) | ((\midi_ctl_msg_program_change) << 4) | ((\midi_ctl_msg_after_touch) << 5) | ((\midi_ctl_msg_pitch_bend) << 6) | ((\bits7_other) << 2)
 	.byte	((\midi_ctl_msg_sustain) << 0) | ((\midi_ctl_msg_modulation) << 1) | ((\midi_ctl_msg_volume) << 2) | ((\midi_ctl_msg_expression) << 3) | ((\midi_ctl_msg_pan) << 4) | ((\midi_ctl_msg_effect_reverb) << 5) | ((\midi_ctl_msg_bank_select) << 7) | ((\bits8_other) << 6)
@@ -571,19 +571,19 @@
 ;   +0  byte0                  bits    SndParam bit fields [keep bits 0x03]
 ;       conductor              0x1f    SndParam_Conductor (key 0x04100, mask 0x1f, 0..5)
 ;       bits0_other            0xe0    bits no descriptor names
-;   +1  f1                     hex     TODO: not named; no SndParam descriptor, 27 direct references in v5..v10 (panel_field_refs.json) [keep bits 0x02]
-;   +2  f2                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [keep bits 0x67]
+;   +1  conductor_flags        hex     read with +0 as the word 0x9163 (ExtData_ToneParam_MultiChannel); bit 1 gates AudioInit_ProcessModeChange / AudioMode_ConfigExternal_MergeFlags (0xc1fe bit 2); MIDI_WriteResetSequence sends it as the change event (0x90, 1); 0 or 2 in the saves. [INFERENCE: what bit 1 selects was not traced] [keep bits 0x02]
+;   +2  reserved_2             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; only the recall copies (bitmap_out_routines.s) move it; 0x67 in every save [keep bits 0x67]
 ;   +3  byte3                  bits    SndParam bit fields [keep bits 0x03]
 ;       left_hold              0x01    SndParam_LeftHold (key 0x28082, mask 0x01, 0..1)
 ;       apc_on_bass            0x02    SndParam_Apc_OnBass (key 0x28083, mask 0x02, 0..1)
 ;       bits3_other            0xfc    bits no descriptor names
 ;   +4  r1_r2_octave           dec     SndParam SndParam_R1R2Octave (key 0x040e0, mask 0xff, 40..88) [one of 0xFF/5/64/40/52/64/76/88]
 ;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tag90 tag, conductor, bits0_other, f1, f2, left_hold, apc_on_bass, bits3_other, r1_r2_octave, reserved_5
+	.macro	ptlv_tag90 tag, conductor, bits0_other, conductor_flags, reserved_2, left_hold, apc_on_bass, bits3_other, r1_r2_octave, reserved_5
 	.byte	\tag, 6
 	.byte	((\conductor) << 0) | ((\bits0_other) << 5)
-	.byte	\f1
-	.byte	\f2
+	.byte	\conductor_flags
+	.byte	\reserved_2
 	.byte	((\left_hold) << 0) | ((\apc_on_bass) << 1) | ((\bits3_other) << 2)
 	.byte	\r1_r2_octave
 	.byte	\reserved_5
@@ -592,7 +592,7 @@
 ; tag91: tags 0x91, 10 payload bytes; rule list PanelTlv_Rules_Tag91.
 ;   +0  key_00000              dec     SndParam WidgetParam_TestMode_Entry (key 0x00000, mask 0xff, 0..255) [no rule]
 ;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  f2                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [one of 0xFF/2/0/0/1]
+;   +2  reserved_2             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; the load rule allows 0 or 1; 0 in every save [one of 0xFF/2/0/0/1]
 ;   +3  byte3                  bits    SndParam bit fields [keep bits 0x07]
 ;       key_000c1              0x01    VoiceCtrlR1_Entry_005 (key 0x000c1, mask 0x01, 0..1)
 ;       gm_on_off              0x04    SndParam_GmOnOff (key 0x000c0, mask 0x04, 0..1)
@@ -603,11 +603,11 @@
 ;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tag91 tag, key_00000, reserved_1, f2, key_000c1, gm_on_off, bits3_other, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9
+	.macro	ptlv_tag91 tag, key_00000, reserved_1, reserved_2, key_000c1, gm_on_off, bits3_other, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9
 	.byte	\tag, 10
 	.byte	\key_00000
 	.byte	\reserved_1
-	.byte	\f2
+	.byte	\reserved_2
 	.byte	((\key_000c1) << 0) | ((\gm_on_off) << 2) | ((\bits3_other) << 1)
 	.byte	\reserved_4
 	.byte	\reserved_5
@@ -657,9 +657,9 @@
 ;   +0  byte0                  bits    SndParam bit fields [keep bits 0x0F; range 0x0F/0/9/6]
 ;       initial_touch_velocity_sense 0x0f    SndParam_InitialTouch_VelocitySense (key 0x00100, mask 0x0f, 0..9)
 ;       bits0_other            0xf0    bits no descriptor names
-;   +1  f1                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [keep bits 0xF0]
-;   +2  f2                     dec     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [keep bits 0x7F; range 0x7F/0/127/127]
-;   +3  f3                     dec     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [keep bits 0x7F; range 0x7F/0/127/127]
+;   +1  reserved_1             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; validated by the load rule only; the same value in all 63 saves [keep bits 0xF0]
+;   +2  reserved_2             dec     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; validated by the load rule only; the same value in all 63 saves [keep bits 0x7F; range 0x7F/0/127/127]
+;   +3  reserved_3             dec     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; validated by the load rule only; the same value in all 63 saves [keep bits 0x7F; range 0x7F/0/127/127]
 ;   +4  byte4                  bits    SndParam bit fields [keep bits 0x0F; range 0x0F/0/12/2]
 ;       composer_bend_range    0x0f    NakaInst_Param_Field84 (key 0x28403, mask 0x0f, 0..12; named from its readers: the Composer RECORD SETTING page: CmpBndRng returns this key; DrumVoice_Handler7 steps it 0..12 (PANEL_TOUCH+4))
 ;       bits4_other            0xf0    bits no descriptor names
@@ -667,8 +667,8 @@
 ;   +6  byte6                  bits    SndParam bit fields [range 0x7F/1/127/1]
 ;       after_touch_threshold  0x7f    SndParam_AfterTouch_Threshold (key 0x00103, mask 0x7f, 1..127)
 ;       after_touch_on_off     0x80    SndParam_AfterTouch_OnOff (key 0x00104, mask 0x80, 0..1)
-;   +7  f7                     dec     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [range 0xFF/0/3/0]
-;   +8  f8                     dec     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [range 0x7F/1/127/1]
+;   +7  reserved_7             dec     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; validated by the load rule only; the same value in all 63 saves [range 0xFF/0/3/0]
+;   +8  reserved_8             dec     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; validated by the load rule only; the same value in all 63 saves [range 0x7F/1/127/1]
 ;   +9  reserved_9             hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
 ;   +10 reserved_10            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
 ;   +11 reserved_11            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
@@ -685,26 +685,26 @@
 ;   +22 reserved_22            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
 ;   +23 reserved_23            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
 ;   +24 reserved_24            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
-;   +25 f25                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +26 f26                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +27 f27                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +28 f28                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +29 f29                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +30 f30                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +31 f31                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +32 f32                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +33 f33                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-	.macro	ptlv_tag93 tag, initial_touch_velocity_sense, bits0_other, f1, f2, f3, composer_bend_range, bits4_other, after_touch_curve, after_touch_threshold, after_touch_on_off, f7, f8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17, reserved_18, reserved_19, reserved_20, reserved_21, reserved_22, reserved_23, reserved_24, f25, f26, f27, f28, f29, f30, f31, f32, f33
+;   +25 reserved_25            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same value in all 63 saves [no rule]
+;   +26 reserved_26            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same value in all 63 saves [no rule]
+;   +27 reserved_27            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same value in all 63 saves [no rule]
+;   +28 reserved_28            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same value in all 63 saves [no rule]
+;   +29 reserved_29            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same value in all 63 saves [no rule]
+;   +30 reserved_30            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same value in all 63 saves [no rule]
+;   +31 reserved_31            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same value in all 63 saves [no rule]
+;   +32 reserved_32            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same value in all 63 saves [no rule]
+;   +33 reserved_33            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same value in all 63 saves [no rule]
+	.macro	ptlv_tag93 tag, initial_touch_velocity_sense, bits0_other, reserved_1, reserved_2, reserved_3, composer_bend_range, bits4_other, after_touch_curve, after_touch_threshold, after_touch_on_off, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17, reserved_18, reserved_19, reserved_20, reserved_21, reserved_22, reserved_23, reserved_24, reserved_25, reserved_26, reserved_27, reserved_28, reserved_29, reserved_30, reserved_31, reserved_32, reserved_33
 	.byte	\tag, 34
 	.byte	((\initial_touch_velocity_sense) << 0) | ((\bits0_other) << 4)
-	.byte	\f1
-	.byte	\f2
-	.byte	\f3
+	.byte	\reserved_1
+	.byte	\reserved_2
+	.byte	\reserved_3
 	.byte	((\composer_bend_range) << 0) | ((\bits4_other) << 4)
 	.byte	\after_touch_curve
 	.byte	((\after_touch_threshold) << 0) | ((\after_touch_on_off) << 7)
-	.byte	\f7
-	.byte	\f8
+	.byte	\reserved_7
+	.byte	\reserved_8
 	.byte	\reserved_9
 	.byte	\reserved_10
 	.byte	\reserved_11
@@ -721,15 +721,15 @@
 	.byte	\reserved_22
 	.byte	\reserved_23
 	.byte	\reserved_24
-	.byte	\f25
-	.byte	\f26
-	.byte	\f27
-	.byte	\f28
-	.byte	\f29
-	.byte	\f30
-	.byte	\f31
-	.byte	\f32
-	.byte	\f33
+	.byte	\reserved_25
+	.byte	\reserved_26
+	.byte	\reserved_27
+	.byte	\reserved_28
+	.byte	\reserved_29
+	.byte	\reserved_30
+	.byte	\reserved_31
+	.byte	\reserved_32
+	.byte	\reserved_33
 	.endm
 
 ; tag98: tags 0x98, 18 payload bytes; rule list PanelTlv_Rules_Tag98.
@@ -774,7 +774,7 @@
 ;       pmem_filter_equalizer  0x01    SndParam_PmemFilter_Equalizer (key 0x02910, mask 0x01, 0..1)
 ;       pmem_filter_msp_bank   0x02    SndParam_PmemFilter_MspBank (key 0x02911, mask 0x02, 0..1)
 ;       bits9_other            0xfc    bits no descriptor names
-;   +10 f10                    dec     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [range 0xFF/0/99/90]
+;   +10 reserved_10            dec     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; the load rule ranges it 0..99 (default 90); 90 or 0 in the saves [range 0xFF/0/99/90]
 ;   +11 byte11                 bits    SndParam bit fields [keep bits 0xC0]
 ;       fade_out_on_off        0x40    SndParam_FadeOut_OnOff (key 0x040c1, mask 0x40, 0..1)
 ;       fade_in_on_off         0x80    SndParam_FadeIn_OnOff (key 0x040c0, mask 0x80, 0..1)
@@ -787,7 +787,7 @@
 ;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tag98 tag, panel_memory_mode, bits0_other, panel_memory_number, key_00301, key_04081, key_04080, bits2_other, music_style_arranger_on_off, music_style_arranger_mode, bits3_other, metronome_volume, metronome_mute, reserved_5, reserved_6, pmem_filter_rhythm_selection, pmem_filter_tempo, pmem_filter_split_point, pmem_filter_transpose, pmem_filter_apc_memory, pmem_filter_midi, pmem_filter_key_scale, pmem_filter_reverb, pmem_filter_dsp_effect, pmem_filter_part4_to16, pmem_filter_foot_ctrl, pmem_filter_mic_level_reverb, pmem_filter_fade_in_out, pmem_filter_r1_r2_octave, pmem_filter_vocalist, pmem_filter_acoustic_illusion, pmem_filter_equalizer, pmem_filter_msp_bank, bits9_other, f10, fade_out_on_off, fade_in_on_off, bits11_other, reserved_12, reserved_13, computer_connect_mode, bits14_other, reserved_15, reserved_16, reserved_17
+	.macro	ptlv_tag98 tag, panel_memory_mode, bits0_other, panel_memory_number, key_00301, key_04081, key_04080, bits2_other, music_style_arranger_on_off, music_style_arranger_mode, bits3_other, metronome_volume, metronome_mute, reserved_5, reserved_6, pmem_filter_rhythm_selection, pmem_filter_tempo, pmem_filter_split_point, pmem_filter_transpose, pmem_filter_apc_memory, pmem_filter_midi, pmem_filter_key_scale, pmem_filter_reverb, pmem_filter_dsp_effect, pmem_filter_part4_to16, pmem_filter_foot_ctrl, pmem_filter_mic_level_reverb, pmem_filter_fade_in_out, pmem_filter_r1_r2_octave, pmem_filter_vocalist, pmem_filter_acoustic_illusion, pmem_filter_equalizer, pmem_filter_msp_bank, bits9_other, reserved_10, fade_out_on_off, fade_in_on_off, bits11_other, reserved_12, reserved_13, computer_connect_mode, bits14_other, reserved_15, reserved_16, reserved_17
 	.byte	\tag, 18
 	.byte	((\panel_memory_mode) << 6) | ((\bits0_other) << 0)
 	.byte	((\panel_memory_number) << 0) | ((\key_00301) << 7)
@@ -799,7 +799,7 @@
 	.byte	((\pmem_filter_rhythm_selection) << 0) | ((\pmem_filter_tempo) << 1) | ((\pmem_filter_split_point) << 2) | ((\pmem_filter_transpose) << 3) | ((\pmem_filter_apc_memory) << 4) | ((\pmem_filter_midi) << 5) | ((\pmem_filter_key_scale) << 6) | ((\pmem_filter_reverb) << 7)
 	.byte	((\pmem_filter_dsp_effect) << 0) | ((\pmem_filter_part4_to16) << 1) | ((\pmem_filter_foot_ctrl) << 2) | ((\pmem_filter_mic_level_reverb) << 3) | ((\pmem_filter_fade_in_out) << 4) | ((\pmem_filter_r1_r2_octave) << 5) | ((\pmem_filter_vocalist) << 6) | ((\pmem_filter_acoustic_illusion) << 7)
 	.byte	((\pmem_filter_equalizer) << 0) | ((\pmem_filter_msp_bank) << 1) | ((\bits9_other) << 2)
-	.byte	\f10
+	.byte	\reserved_10
 	.byte	((\fade_out_on_off) << 6) | ((\fade_in_on_off) << 7) | ((\bits11_other) << 0)
 	.byte	\reserved_12
 	.byte	\reserved_13
@@ -840,21 +840,21 @@
 ;   +13 key_02898              dec     SndParam VoiceCtrlR1_Entry_065 (key 0x02898, mask 0xff, 0..199) [no rule]
 ;   +14 key_0289a              dec     SndParam VoiceCtrlR1_Entry_067 (key 0x0289a, mask 0xff, 0..199) [no rule]
 ;   +15 key_0289c              dec     SndParam VoiceCtrlR1_Entry_069 (key 0x0289c, mask 0xff, 0..199) [no rule]
-;   +16 f16                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +17 f17                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +18 f18                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +19 f19                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +20 f20                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +21 f21                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +22 f22                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +23 f23                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +24 f24                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +25 f25                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +26 f26                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
+;   +16 reserved_16            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same 11 bytes in all 4,328 saves (82 01 02 81 00 10 11 12 13 00 00) [no rule]
+;   +17 reserved_17            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same 11 bytes in all 4,328 saves (82 01 02 81 00 10 11 12 13 00 00) [no rule]
+;   +18 reserved_18            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same 11 bytes in all 4,328 saves (82 01 02 81 00 10 11 12 13 00 00) [no rule]
+;   +19 reserved_19            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same 11 bytes in all 4,328 saves (82 01 02 81 00 10 11 12 13 00 00) [no rule]
+;   +20 reserved_20            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same 11 bytes in all 4,328 saves (82 01 02 81 00 10 11 12 13 00 00) [no rule]
+;   +21 reserved_21            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same 11 bytes in all 4,328 saves (82 01 02 81 00 10 11 12 13 00 00) [no rule]
+;   +22 reserved_22            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same 11 bytes in all 4,328 saves (82 01 02 81 00 10 11 12 13 00 00) [no rule]
+;   +23 reserved_23            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same 11 bytes in all 4,328 saves (82 01 02 81 00 10 11 12 13 00 00) [no rule]
+;   +24 reserved_24            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same 11 bytes in all 4,328 saves (82 01 02 81 00 10 11 12 13 00 00) [no rule]
+;   +25 reserved_25            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same 11 bytes in all 4,328 saves (82 01 02 81 00 10 11 12 13 00 00) [no rule]
+;   +26 reserved_26            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; the same 11 bytes in all 4,328 saves (82 01 02 81 00 10 11 12 13 00 00) [no rule]
 ;   +27 reserved_27            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +28 reserved_28            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +29 reserved_29            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tag99 tag, key_02887, key_02889, key_0288b, key_0288d, key_0288f, key_02891, key_02893, key_02895, key_02897, key_02899, key_0289b, key_0289d, key_02882, bits1_other, foot_ctrl_expression_pedal, key_02881, foot_ctrl_foot_switch1, foot_ctrl_foot_switch2, foot_ctrl_foot_cont_sw1, foot_ctrl_foot_cont_sw2, foot_ctrl_foot_cont_sw3, foot_ctrl_foot_cont_sw4, key_02892, key_02894, key_02896, key_02898, key_0289a, key_0289c, f16, f17, f18, f19, f20, f21, f22, f23, f24, f25, f26, reserved_27, reserved_28, reserved_29
+	.macro	ptlv_tag99 tag, key_02887, key_02889, key_0288b, key_0288d, key_0288f, key_02891, key_02893, key_02895, key_02897, key_02899, key_0289b, key_0289d, key_02882, bits1_other, foot_ctrl_expression_pedal, key_02881, foot_ctrl_foot_switch1, foot_ctrl_foot_switch2, foot_ctrl_foot_cont_sw1, foot_ctrl_foot_cont_sw2, foot_ctrl_foot_cont_sw3, foot_ctrl_foot_cont_sw4, key_02892, key_02894, key_02896, key_02898, key_0289a, key_0289c, reserved_16, reserved_17, reserved_18, reserved_19, reserved_20, reserved_21, reserved_22, reserved_23, reserved_24, reserved_25, reserved_26, reserved_27, reserved_28, reserved_29
 	.byte	\tag, 30
 	.byte	((\key_02887) << 0) | ((\key_02889) << 1) | ((\key_0288b) << 2) | ((\key_0288d) << 3) | ((\key_0288f) << 4) | ((\key_02891) << 5) | ((\key_02893) << 6) | ((\key_02895) << 7)
 	.byte	((\key_02897) << 0) | ((\key_02899) << 1) | ((\key_0289b) << 2) | ((\key_0289d) << 3) | ((\key_02882) << 4) | ((\bits1_other) << 5)
@@ -872,71 +872,71 @@
 	.byte	\key_02898
 	.byte	\key_0289a
 	.byte	\key_0289c
-	.byte	\f16
-	.byte	\f17
-	.byte	\f18
-	.byte	\f19
-	.byte	\f20
-	.byte	\f21
-	.byte	\f22
-	.byte	\f23
-	.byte	\f24
-	.byte	\f25
-	.byte	\f26
+	.byte	\reserved_16
+	.byte	\reserved_17
+	.byte	\reserved_18
+	.byte	\reserved_19
+	.byte	\reserved_20
+	.byte	\reserved_21
+	.byte	\reserved_22
+	.byte	\reserved_23
+	.byte	\reserved_24
+	.byte	\reserved_25
+	.byte	\reserved_26
 	.byte	\reserved_27
 	.byte	\reserved_28
 	.byte	\reserved_29
 	.endm
 
 ; tag9a: tags 0x9a, 26 payload bytes; rule list PanelTlv_Rules_Tag9A.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 10 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
+;   +0  reserved_0             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; its only v5..v10 references are the record-pointer tables (SndParam_BlockRamPtrs) and the record base load; the load rule zeroes it [zeroed ]
 ;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  f4                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +5  f5                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +6  f6                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +7  f7                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +8  f8                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +9  f9                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +10 f10                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +11 f11                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +12 f12                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +13 f13                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +14 f14                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +15 f15                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +16 f16                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +17 f17                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +18 f18                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +19 f19                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
+;   +4  reserved_4             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; values 2..0x13 in some of the 45 saves [no rule]
+;   +5  reserved_5             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; values 2..0x13 in some of the 45 saves [no rule]
+;   +6  reserved_6             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; values 2..0x13 in some of the 45 saves [no rule]
+;   +7  reserved_7             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; 0 in every save [no rule]
+;   +8  reserved_8             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; values 2..0x13 in some of the 45 saves [no rule]
+;   +9  reserved_9             hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; 0 in every save [no rule]
+;   +10 reserved_10            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; 0 in every save [no rule]
+;   +11 reserved_11            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; 0 in every save [no rule]
+;   +12 reserved_12            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; 0 in every save [no rule]
+;   +13 reserved_13            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; 0 in every save [no rule]
+;   +14 reserved_14            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; 0 in every save [no rule]
+;   +15 reserved_15            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; 0 in every save [no rule]
+;   +16 reserved_16            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; 0 in every save [no rule]
+;   +17 reserved_17            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; 0 in every save [no rule]
+;   +18 reserved_18            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; 0 in every save [no rule]
+;   +19 reserved_19            hex     no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor; no rule; 0 in every save [no rule]
 ;   +20 reserved_20            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +21 reserved_21            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +22 reserved_22            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +23 reserved_23            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +24 reserved_24            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +25 reserved_25            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tag9a tag, f0, reserved_1, reserved_2, reserved_3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, reserved_20, reserved_21, reserved_22, reserved_23, reserved_24, reserved_25
+	.macro	ptlv_tag9a tag, reserved_0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17, reserved_18, reserved_19, reserved_20, reserved_21, reserved_22, reserved_23, reserved_24, reserved_25
 	.byte	\tag, 26
-	.byte	\f0
+	.byte	\reserved_0
 	.byte	\reserved_1
 	.byte	\reserved_2
 	.byte	\reserved_3
-	.byte	\f4
-	.byte	\f5
-	.byte	\f6
-	.byte	\f7
-	.byte	\f8
-	.byte	\f9
-	.byte	\f10
-	.byte	\f11
-	.byte	\f12
-	.byte	\f13
-	.byte	\f14
-	.byte	\f15
-	.byte	\f16
-	.byte	\f17
-	.byte	\f18
-	.byte	\f19
+	.byte	\reserved_4
+	.byte	\reserved_5
+	.byte	\reserved_6
+	.byte	\reserved_7
+	.byte	\reserved_8
+	.byte	\reserved_9
+	.byte	\reserved_10
+	.byte	\reserved_11
+	.byte	\reserved_12
+	.byte	\reserved_13
+	.byte	\reserved_14
+	.byte	\reserved_15
+	.byte	\reserved_16
+	.byte	\reserved_17
+	.byte	\reserved_18
+	.byte	\reserved_19
 	.byte	\reserved_20
 	.byte	\reserved_21
 	.byte	\reserved_22

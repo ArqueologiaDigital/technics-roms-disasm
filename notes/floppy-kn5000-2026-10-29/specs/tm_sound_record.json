@@ -42,7 +42,7 @@
    "size": 1,
    "name": "part_mode",
    "kind": "bits",
-   "evidence": "subcpu v1.42 Voice_SetVelocity 0x02C8E4 switches on &0xC0 (0x00 melodic, 0x40 drawbar, 0x80 drum kit, 0xC0 silent); bit 4 via Voice_Calc_LevelPair_PatchAtk 0x025636; table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)",
+   "evidence": "subcpu v1.42 Voice_SetVelocity 0x02C8E4 switches on &0xC0 (0x00 melodic, 0x40 drawbar, 0x80 drum kit, 0xC0 silent); bit 4 via Voice_Calc_LevelPair_PatchAtk 0x025636; table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); bit 4 = SUSTAIN PEDAL MODE and bit 5 = GLIDE (CONTROLLER page 2, SeCtr3_OnColumn3 / 6 send element 16 with mask 0x10 / 0x20)",
    "inference": false,
    "clamp": "none",
    "observed": {
@@ -153,11 +153,10 @@
   {
    "off": 20,
    "size": 1,
-   "name": "ctrl_part_switches",
+   "name": "ctrl_tone_switches",
    "kind": "bits",
-   "evidence": "byte 0 of each 3-byte group is unclamped; 0x55 = four 2-bit fields 01, the partial-mask pattern; subcpu v1.42 Voice_PitchBend_BranchA 0x02A62E takes the address of group 0 (+0x14). Seven groups of 3 at +0x14..+0x28, shown by the clamp's period-3 ranges over offsets 20..40",
-   "inference": true,
-   "todo": "per-tone (1ST..4TH) switch reading of the 2-bit fields is an inference from the 0x55 pattern and the SeCtr2/SeCtr3 \"1ST 2ND 3RD 4TH\" captions",
+   "evidence": "CONTROLLER 1ST..4TH: four 2-bit fields, tone 1 in bits 1:0 .. tone 4 in bits 7:6, 0 OFF, 1 ON, 3 INV (SeCtr2_StepPartField; SeValText_Off_On_Dash_Inv) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 7 groups of 3: group 0 (+0x14) is not on the CONTROLLER page (its FUNCTION is 0x81 = flag + PITCH BEND in every record; subcpu Voice_PitchBend_BranchA takes its address), groups 1..6 (+0x17 + 3 (k - 1)) are the page's FUNCTION selections 1..6 (UpdSeSel_DetailedUpdate_Helper5 / _SetDisplayState_Helper2; the page offers 1, 2 in its first row and 5, 6 in its second row; 3 and 4 no side row selects, their row label was not read: the rows carry icons, op-23 styles 0x60 and 0x39); was ctrl_part_switches: byte 0 of each 3-byte group is unclamped; 0x55 = four 2-bit fields 01, the partial-mask pattern; subcpu v1.42 Voice_PitchBend_BranchA 0x02A62E takes the address of group 0 (+0x14). Seven groups of 3 at +0x14..+0x28, shown by the clamp's period-3 ranges over offsets 20..40",
+   "inference": false,
    "repeat": {
     "count": 7,
     "stride": 3
@@ -191,11 +190,10 @@
   {
    "off": 21,
    "size": 1,
-   "name": "ctrl_b1",
+   "name": "ctrl_function",
    "kind": "bits",
-   "evidence": "clamp 0..49 on bits 6:0 (value mask 0x7f, bit 7 kept): maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). Seven groups of 3 at +0x14..+0x28, shown by the clamp's period-3 ranges over offsets 20..40",
+   "evidence": "CONTROLLER FUNCTION: bits 6:0 index SeValText_CtrlDestinations (\"PITCH BEND\", \"AMP ENV SUST\", \"FILTER CUTOFF\", \"PTCH LFO1 DEP\", ...; the page shows & 0x3F); bit 7 a flag (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 7 groups of 3: group 0 (+0x14) is not on the CONTROLLER page (its FUNCTION is 0x81 = flag + PITCH BEND in every record; subcpu Voice_PitchBend_BranchA takes its address), groups 1..6 (+0x17 + 3 (k - 1)) are the page's FUNCTION selections 1..6 (UpdSeSel_DetailedUpdate_Helper5 / _SetDisplayState_Helper2; the page offers 1, 2 in its first row and 5, 6 in its second row; 3 and 4 no side row selects, their row label was not read: the rows carry icons, op-23 styles 0x60 and 0x39); was ctrl_b1: clamp 0..49 on bits 6:0 (value mask 0x7f, bit 7 kept): maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). Seven groups of 3 at +0x14..+0x28, shown by the clamp's period-3 ranges over offsets 20..40",
    "inference": false,
-   "todo": "no subcpu reader identified; bit 7 is a flag (0x81 in group 0 of every record)",
    "repeat": {
     "count": 7,
     "stride": 3
@@ -234,11 +232,10 @@
   {
    "off": 22,
    "size": 1,
-   "name": "ctrl_b2",
+   "name": "ctrl_depth",
    "kind": "dec",
-   "evidence": "clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). Seven groups of 3 at +0x14..+0x28, shown by the clamp's period-3 ranges over offsets 20..40",
+   "evidence": "CONTROLLER DEPTH, 0..127 (SeCtr2_StepDepth) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 7 groups of 3: group 0 (+0x14) is not on the CONTROLLER page (its FUNCTION is 0x81 = flag + PITCH BEND in every record; subcpu Voice_PitchBend_BranchA takes its address), groups 1..6 (+0x17 + 3 (k - 1)) are the page's FUNCTION selections 1..6 (UpdSeSel_DetailedUpdate_Helper5 / _SetDisplayState_Helper2; the page offers 1, 2 in its first row and 5, 6 in its second row; 3 and 4 no side row selects, their row label was not read: the rows carry icons, op-23 styles 0x60 and 0x39); was ctrl_b2: clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). Seven groups of 3 at +0x14..+0x28, shown by the clamp's period-3 ranges over offsets 20..40",
    "inference": false,
-   "todo": "no subcpu reader identified; 0x40 in most records",
    "repeat": {
     "count": 7,
     "stride": 3

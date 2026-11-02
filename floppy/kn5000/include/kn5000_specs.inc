@@ -8,27 +8,27 @@
 ;   +0x011 partial_mask             bits   subcpu v1.42 mask table 0x00FB4E {0x01,0x04,0x10,0x40} = partial 0..3 present; EFFSlotScan_AssignPath 0x032295; table_data/tone_database_records.s header (RECOR
 ;   +0x012 partial_flag_codes       bits   [INFERENCE] subcpu v1.42 Partial_Build_Present_Word 0x032B1E: four 2-bit codes, one per partial in the order of the +0x11 partial mask (bits 1:0 partial 0 .. 7:
 ;   +0x013 bend_type                dec    subcpu v1.42 Voice_Pitch_Compute_Inactive 0x023698 (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)); clamp 0..66
-;   +0x014 ctrl_part_switches_0     bits   [INFERENCE] byte 0 of each 3-byte group is unclamped; 0x55 = four 2-bit fields 01, the partial-mask pattern; subcpu v1.42 Voice_PitchBend_BranchA 0x02A62E takes
-;   +0x015 ctrl_b1_0                bits   clamp 0..49 on bits 6:0 (value mask 0x7f, bit 7 kept): maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, Switc
-;   +0x016 ctrl_b2_0                dec    clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). Seven groups of 3 at +0x14..+0x2
-;   +0x017 ctrl_part_switches_1     bits   [INFERENCE] byte 0 of each 3-byte group is unclamped; 0x55 = four 2-bit fields 01, the partial-mask pattern; subcpu v1.42 Voice_PitchBend_BranchA 0x02A62E takes
-;   +0x018 ctrl_b1_1                bits   clamp 0..49 on bits 6:0 (value mask 0x7f, bit 7 kept): maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, Switc
-;   +0x019 ctrl_b2_1                dec    clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). Seven groups of 3 at +0x14..+0x2
-;   +0x01a ctrl_part_switches_2     bits   [INFERENCE] byte 0 of each 3-byte group is unclamped; 0x55 = four 2-bit fields 01, the partial-mask pattern; subcpu v1.42 Voice_PitchBend_BranchA 0x02A62E takes
-;   +0x01b ctrl_b1_2                bits   clamp 0..49 on bits 6:0 (value mask 0x7f, bit 7 kept): maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, Switc
-;   +0x01c ctrl_b2_2                dec    clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). Seven groups of 3 at +0x14..+0x2
-;   +0x01d ctrl_part_switches_3     bits   [INFERENCE] byte 0 of each 3-byte group is unclamped; 0x55 = four 2-bit fields 01, the partial-mask pattern; subcpu v1.42 Voice_PitchBend_BranchA 0x02A62E takes
-;   +0x01e ctrl_b1_3                bits   clamp 0..49 on bits 6:0 (value mask 0x7f, bit 7 kept): maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, Switc
-;   +0x01f ctrl_b2_3                dec    clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). Seven groups of 3 at +0x14..+0x2
-;   +0x020 ctrl_part_switches_4     bits   [INFERENCE] byte 0 of each 3-byte group is unclamped; 0x55 = four 2-bit fields 01, the partial-mask pattern; subcpu v1.42 Voice_PitchBend_BranchA 0x02A62E takes
-;   +0x021 ctrl_b1_4                bits   clamp 0..49 on bits 6:0 (value mask 0x7f, bit 7 kept): maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, Switc
-;   +0x022 ctrl_b2_4                dec    clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). Seven groups of 3 at +0x14..+0x2
-;   +0x023 ctrl_part_switches_5     bits   [INFERENCE] byte 0 of each 3-byte group is unclamped; 0x55 = four 2-bit fields 01, the partial-mask pattern; subcpu v1.42 Voice_PitchBend_BranchA 0x02A62E takes
-;   +0x024 ctrl_b1_5                bits   clamp 0..49 on bits 6:0 (value mask 0x7f, bit 7 kept): maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, Switc
-;   +0x025 ctrl_b2_5                dec    clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). Seven groups of 3 at +0x14..+0x2
-;   +0x026 ctrl_part_switches_6     bits   [INFERENCE] byte 0 of each 3-byte group is unclamped; 0x55 = four 2-bit fields 01, the partial-mask pattern; subcpu v1.42 Voice_PitchBend_BranchA 0x02A62E takes
-;   +0x027 ctrl_b1_6                bits   clamp 0..49 on bits 6:0 (value mask 0x7f, bit 7 kept): maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, Switc
-;   +0x028 ctrl_b2_6                dec    clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). Seven groups of 3 at +0x14..+0x2
+;   +0x014 ctrl_tone_switches_0     bits   CONTROLLER 1ST..4TH: four 2-bit fields, tone 1 in bits 1:0 .. tone 4 in bits 7:6, 0 OFF, 1 ON, 3 INV (SeCtr2_StepPartField; SeValText_Off_On_Dash_Inv) (SOUND ED
+;   +0x015 ctrl_function_0          bits   CONTROLLER FUNCTION: bits 6:0 index SeValText_CtrlDestinations ("PITCH BEND", "AMP ENV SUST", "FILTER CUTOFF", "PTCH LFO1 DEP", ...; the page shows & 0x3F); bit
+;   +0x016 ctrl_depth_0             dec    CONTROLLER DEPTH, 0..127 (SeCtr2_StepDepth) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for
+;   +0x017 ctrl_tone_switches_1     bits   CONTROLLER 1ST..4TH: four 2-bit fields, tone 1 in bits 1:0 .. tone 4 in bits 7:6, 0 OFF, 1 ON, 3 INV (SeCtr2_StepPartField; SeValText_Off_On_Dash_Inv) (SOUND ED
+;   +0x018 ctrl_function_1          bits   CONTROLLER FUNCTION: bits 6:0 index SeValText_CtrlDestinations ("PITCH BEND", "AMP ENV SUST", "FILTER CUTOFF", "PTCH LFO1 DEP", ...; the page shows & 0x3F); bit
+;   +0x019 ctrl_depth_1             dec    CONTROLLER DEPTH, 0..127 (SeCtr2_StepDepth) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for
+;   +0x01a ctrl_tone_switches_2     bits   CONTROLLER 1ST..4TH: four 2-bit fields, tone 1 in bits 1:0 .. tone 4 in bits 7:6, 0 OFF, 1 ON, 3 INV (SeCtr2_StepPartField; SeValText_Off_On_Dash_Inv) (SOUND ED
+;   +0x01b ctrl_function_2          bits   CONTROLLER FUNCTION: bits 6:0 index SeValText_CtrlDestinations ("PITCH BEND", "AMP ENV SUST", "FILTER CUTOFF", "PTCH LFO1 DEP", ...; the page shows & 0x3F); bit
+;   +0x01c ctrl_depth_2             dec    CONTROLLER DEPTH, 0..127 (SeCtr2_StepDepth) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for
+;   +0x01d ctrl_tone_switches_3     bits   CONTROLLER 1ST..4TH: four 2-bit fields, tone 1 in bits 1:0 .. tone 4 in bits 7:6, 0 OFF, 1 ON, 3 INV (SeCtr2_StepPartField; SeValText_Off_On_Dash_Inv) (SOUND ED
+;   +0x01e ctrl_function_3          bits   CONTROLLER FUNCTION: bits 6:0 index SeValText_CtrlDestinations ("PITCH BEND", "AMP ENV SUST", "FILTER CUTOFF", "PTCH LFO1 DEP", ...; the page shows & 0x3F); bit
+;   +0x01f ctrl_depth_3             dec    CONTROLLER DEPTH, 0..127 (SeCtr2_StepDepth) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for
+;   +0x020 ctrl_tone_switches_4     bits   CONTROLLER 1ST..4TH: four 2-bit fields, tone 1 in bits 1:0 .. tone 4 in bits 7:6, 0 OFF, 1 ON, 3 INV (SeCtr2_StepPartField; SeValText_Off_On_Dash_Inv) (SOUND ED
+;   +0x021 ctrl_function_4          bits   CONTROLLER FUNCTION: bits 6:0 index SeValText_CtrlDestinations ("PITCH BEND", "AMP ENV SUST", "FILTER CUTOFF", "PTCH LFO1 DEP", ...; the page shows & 0x3F); bit
+;   +0x022 ctrl_depth_4             dec    CONTROLLER DEPTH, 0..127 (SeCtr2_StepDepth) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for
+;   +0x023 ctrl_tone_switches_5     bits   CONTROLLER 1ST..4TH: four 2-bit fields, tone 1 in bits 1:0 .. tone 4 in bits 7:6, 0 OFF, 1 ON, 3 INV (SeCtr2_StepPartField; SeValText_Off_On_Dash_Inv) (SOUND ED
+;   +0x024 ctrl_function_5          bits   CONTROLLER FUNCTION: bits 6:0 index SeValText_CtrlDestinations ("PITCH BEND", "AMP ENV SUST", "FILTER CUTOFF", "PTCH LFO1 DEP", ...; the page shows & 0x3F); bit
+;   +0x025 ctrl_depth_5             dec    CONTROLLER DEPTH, 0..127 (SeCtr2_StepDepth) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for
+;   +0x026 ctrl_tone_switches_6     bits   CONTROLLER 1ST..4TH: four 2-bit fields, tone 1 in bits 1:0 .. tone 4 in bits 7:6, 0 OFF, 1 ON, 3 INV (SeCtr2_StepPartField; SeValText_Off_On_Dash_Inv) (SOUND ED
+;   +0x027 ctrl_function_6          bits   CONTROLLER FUNCTION: bits 6:0 index SeValText_CtrlDestinations ("PITCH BEND", "AMP ENV SUST", "FILTER CUTOFF", "PTCH LFO1 DEP", ...; the page shows & 0x3F); bit
+;   +0x028 ctrl_depth_6             dec    CONTROLLER DEPTH, 0..127 (SeCtr2_StepDepth) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for
 ;   +0x029 octave_shift             dec    subcpu v1.42 Voice_Pitch_Compute 0x023584 -> Pitch_Get_Patch_Octave_Shift (low nibble); clamp 6..10, 8 = no shift (maincpu v10 Param_SignExtendReturn_Helper3 0x
 ;   +0x02a program_lookup_nibbles   bits   subcpu v1.42 Instrument_LookupProgram_HiNibble 0x02289D / _LoNibble 0x0228D9 index byte table 0x011ACF with each nibble
 ;   +0x02b lfo_depth_0              dec    LFO DEPTH (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
@@ -67,7 +67,7 @@
 ;   +0x04c lfo_speed_8              dec    LFO SPEED (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
 ;   +0x04d lfo_touch_keysync_8      bits   LFO TOUCH (bits 5:0, 0..50) and KEYSYNC (bit 7) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends
 ;   +0x04e lfo_wave_delay_8         bits   LFO WAVE (bits 7:6: SIN TRI SQR SAW) and DELAY (bits 4:0, 0..30) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the p
-	.macro	tm_sound_0 name, part_mode, partial_mask, partial_flag_codes, bend_type, ctrl_part_switches_0, ctrl_b1_0, ctrl_b2_0, ctrl_part_switches_1, ctrl_b1_1, ctrl_b2_1, ctrl_part_switches_2, ctrl_b1_2, ctrl_b2_2, ctrl_part_switches_3, ctrl_b1_3, ctrl_b2_3, ctrl_part_switches_4, ctrl_b1_4, ctrl_b2_4, ctrl_part_switches_5, ctrl_b1_5, ctrl_b2_5, ctrl_part_switches_6, ctrl_b1_6, ctrl_b2_6, octave_shift, program_lookup_nibbles, lfo_depth_0, lfo_speed_0, lfo_touch_keysync_0, lfo_wave_delay_0, lfo_depth_1, lfo_speed_1, lfo_touch_keysync_1, lfo_wave_delay_1, lfo_depth_2, lfo_speed_2, lfo_touch_keysync_2, lfo_wave_delay_2, lfo_depth_3, lfo_speed_3, lfo_touch_keysync_3, lfo_wave_delay_3, lfo_depth_4, lfo_speed_4, lfo_touch_keysync_4, lfo_wave_delay_4, lfo_depth_5, lfo_speed_5, lfo_touch_keysync_5, lfo_wave_delay_5, lfo_depth_6, lfo_speed_6, lfo_touch_keysync_6, lfo_wave_delay_6, lfo_depth_7, lfo_speed_7, lfo_touch_keysync_7, lfo_wave_delay_7, lfo_depth_8, lfo_speed_8, lfo_touch_keysync_8, lfo_wave_delay_8
+	.macro	tm_sound_0 name, part_mode, partial_mask, partial_flag_codes, bend_type, ctrl_tone_switches_0, ctrl_function_0, ctrl_depth_0, ctrl_tone_switches_1, ctrl_function_1, ctrl_depth_1, ctrl_tone_switches_2, ctrl_function_2, ctrl_depth_2, ctrl_tone_switches_3, ctrl_function_3, ctrl_depth_3, ctrl_tone_switches_4, ctrl_function_4, ctrl_depth_4, ctrl_tone_switches_5, ctrl_function_5, ctrl_depth_5, ctrl_tone_switches_6, ctrl_function_6, ctrl_depth_6, octave_shift, program_lookup_nibbles, lfo_depth_0, lfo_speed_0, lfo_touch_keysync_0, lfo_wave_delay_0, lfo_depth_1, lfo_speed_1, lfo_touch_keysync_1, lfo_wave_delay_1, lfo_depth_2, lfo_speed_2, lfo_touch_keysync_2, lfo_wave_delay_2, lfo_depth_3, lfo_speed_3, lfo_touch_keysync_3, lfo_wave_delay_3, lfo_depth_4, lfo_speed_4, lfo_touch_keysync_4, lfo_wave_delay_4, lfo_depth_5, lfo_speed_5, lfo_touch_keysync_5, lfo_wave_delay_5, lfo_depth_6, lfo_speed_6, lfo_touch_keysync_6, lfo_wave_delay_6, lfo_depth_7, lfo_speed_7, lfo_touch_keysync_7, lfo_wave_delay_7, lfo_depth_8, lfo_speed_8, lfo_touch_keysync_8, lfo_wave_delay_8
 .Lsa\@_name:
 	.ascii	"\name"
 .Lsb\@_name:
@@ -78,27 +78,27 @@
 	.byte	\partial_mask
 	.byte	\partial_flag_codes
 	.byte	\bend_type
-	.byte	\ctrl_part_switches_0
-	.byte	\ctrl_b1_0
-	.byte	\ctrl_b2_0
-	.byte	\ctrl_part_switches_1
-	.byte	\ctrl_b1_1
-	.byte	\ctrl_b2_1
-	.byte	\ctrl_part_switches_2
-	.byte	\ctrl_b1_2
-	.byte	\ctrl_b2_2
-	.byte	\ctrl_part_switches_3
-	.byte	\ctrl_b1_3
-	.byte	\ctrl_b2_3
-	.byte	\ctrl_part_switches_4
-	.byte	\ctrl_b1_4
-	.byte	\ctrl_b2_4
-	.byte	\ctrl_part_switches_5
-	.byte	\ctrl_b1_5
-	.byte	\ctrl_b2_5
-	.byte	\ctrl_part_switches_6
-	.byte	\ctrl_b1_6
-	.byte	\ctrl_b2_6
+	.byte	\ctrl_tone_switches_0
+	.byte	\ctrl_function_0
+	.byte	\ctrl_depth_0
+	.byte	\ctrl_tone_switches_1
+	.byte	\ctrl_function_1
+	.byte	\ctrl_depth_1
+	.byte	\ctrl_tone_switches_2
+	.byte	\ctrl_function_2
+	.byte	\ctrl_depth_2
+	.byte	\ctrl_tone_switches_3
+	.byte	\ctrl_function_3
+	.byte	\ctrl_depth_3
+	.byte	\ctrl_tone_switches_4
+	.byte	\ctrl_function_4
+	.byte	\ctrl_depth_4
+	.byte	\ctrl_tone_switches_5
+	.byte	\ctrl_function_5
+	.byte	\ctrl_depth_5
+	.byte	\ctrl_tone_switches_6
+	.byte	\ctrl_function_6
+	.byte	\ctrl_depth_6
 	.byte	\octave_shift
 	.byte	\program_lookup_nibbles
 	.byte	\lfo_depth_0
