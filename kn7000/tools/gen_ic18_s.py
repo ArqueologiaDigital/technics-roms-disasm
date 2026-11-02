@@ -437,8 +437,10 @@ HW = {
     0x32000804: ("DMAC0_SRC", "DMA channel 0: source address"),
     0x32000808: ("DMAC0_DST", "DMA channel 0: destination address"),
     0x3200080C: ("DMAC0_CNT", "DMA channel 0: byte count"),
-    0x34000100: ("IAGR", "interrupt accepted group"),
-    0x34000200: ("INTC_GROUP_VECTOR", "read by the dispatcher as a byte offset into the handler table"),
+    # IAGR and G0ICR: the MN10300 instruction manual's interrupt example (IAGR 0x34000200,
+    # G0ICR 0x34000100, G3ICR 0x3400010C)
+    0x34000100: ("G0ICR", "interrupt group 0 control (the non-maskable sources)"),
+    0x34000200: ("IAGR", "interrupt accept group: IrqDispatch reads it as a byte offset into IrqHandlerTable"),
     0x34000280: ("EXTMD", "external interrupt pin modes, 2 bits per pin"),
     0x34000800: ("SC0CTR", "serial 0: configuration"), 0x34000804: ("SC0ICR", "serial 0: control"),
     0x34000808: ("SC0TXB", "serial 0: transmit byte"), 0x34000809: ("SC0RXB", "serial 0: receive byte"),
@@ -475,9 +477,12 @@ HW = {
     0x34001010: ("TM0BR", "[INFERENCE] timer 0 base (reload) value: PanelLinkInit 0x0A, the panel link's "
                           "transmit states rewrite it"),
     0x34001071: ("TMPSCNT", "[INFERENCE] timer prescaler control: bit 7 enables it (TickStart)"),
-    0x34004002: ("UNKNOWN_34004002", "TODO: only the older link's reset writes it (0); not identified"),
-    0x32000010: ("UNKNOWN_32000010", "TODO: memory-controller block; Reset's second path writes 0x400 before "
-                                     "MEMCTR0; not identified"),
+    0x34004002: ("UNKNOWN_34004002", "TODO: the older link's reset writes it 0, as program 941's ResetEntry does "
+                                     "right after MEMCTR0; not in any manual held here (the MN103002A LSI manual "
+                                     "would name it)"),
+    0x32000010: ("UNKNOWN_32000010", "TODO: bus controller; Reset's second path writes 0x400 before MEMCTR0, as "
+                                     "program 941 does first in its bus set-up (0x484D710E); not in any manual held "
+                                     "here (the MN103002A LSI manual would name it)"),
     0x32000040: ("SDRAM_CTRL", "[INFERENCE] SDRAM control: Reset pulses bit 2 eight times, the auto-refresh "
                                "cycles an SDRAM wants before its first use"),
     0x32000042: ("SDRAM_REFRESH", "[INFERENCE] the SDRAM refresh interval (0xEA6, then 0x3E8)"),
@@ -490,13 +495,16 @@ HW = {
     0x9802000E: ("FDC_DIR_CCR", "digital input register when read (bit 7 disk changed), configuration "
                                 "control when written"),
     # the SD card's SPI port, inside the tone generator A chip (0x98050000)
-    0x98050004: ("TGA_04", "TODO: SdSpiPortSetup writes 0xFFFF (twice on subtype 4); the firmware's tone "
-                           "generator bring-up writes 3"),
+    0x98050004: ("TGA_KEY_FIFO", "tone generator A's key-event FIFO: program 941 reads it as {key, velocity} "
+                                 "words, 0xFFFF when empty (0x484480A2), and its TgChipResetSideA writes 3 three "
+                                 "times; SdSpiPortSetup writes 0xFFFF ([INFERENCE] a flush; the second write, on "
+                                 "subtype 4, never runs here)"),
     0x9805000C: ("SD_SPI_DATA", "the SPI shift register: a byte written goes out, the byte that came in "
                                 "is read back"),
     0x9805000E: ("SD_SPI_CLOCK", "the SPI clock-rate latch: rate | 0x80"),
-    0x98050010: ("TGA_10", "TODO: SdSpiPortSetup writes 1 first; the firmware's tone generator bring-up "
-                           "pulses it with 1"),
+    0x98050010: ("TGA_INIT", "[INFERENCE] tone generator A's start-up strobe: program 941's TgChipResetSideA "
+                             "writes 1 three times before it sets the key FIFO; SdSpiPortSetup writes 1 once, "
+                             "this ROM having no tone generator bring-up of its own"),
     0x98060000: ("SD_POWER_CTRL", "the power controller's port (SdPowerShadow keeps the last byte): bit 2 "
                                   "the SD card's supply"),
     0x4840000F: ("PROGRAM_FLASH_VERSION", "a byte of the program flash's header: the firmware release, "
@@ -1476,7 +1484,7 @@ class Emitter:
         if kind == "fontdesc":
             for k in range(o, o + n, 12):
                 w, h, a, b, ptr = struct.unpack_from("<HHHHI", d, k)
-                L.append(f"    .word   {w}, {h}, {a}, {b}               # width, height, TODO: two more fields")
+                L.append(f"    .word   {w}, {h}, {a}, {b}               # width, height, descent, byte columns")
                 L.append(f"    .long   {self.sym_or_hex(ptr)}")
             return L
         if kind == "font":
@@ -1538,7 +1546,7 @@ class Emitter:
               "# +8 (written through the uncached view, run address + 0x40000000).",
               "ImageCopyDescriptor:",
               f"    .word   0x{struct.unpack_from('<H', im.d, im.desc)[0]:04X}"
-              "                    # TODO: not read by the reset code",
+              "                    # read by nothing: Reset and OldReset read from +2, no program build holds this address",
               "    .word   IMAGE_SIZE",
               "    .long   __image_load",
               "    .long   __image_start"]
