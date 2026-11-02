@@ -485,7 +485,7 @@
 .equ EVT_INIT_PRESENTATION, 0x1e1000c	; Firmware method MT_InitPresentation: clear the presentation-loaded flag (word 0x0251D8 := 0)
 .equ EVT_EXIT_PRESENTATION, 0x1e1000d	; Firmware method MT_ExitPresentation: leave the presentation: if one is loaded (0x0251D8 != 0) call SeqSong_ResetAll, then clear the flag
 .equ EVT_GET_TONE_MODE, 0x1e1000e	; Firmware method MT_GetToneMode: query the voice/tone mode of drawbar part XDE; the answer is posted as 0x01C10008
-.equ EVT_VARI_WRITE, 0x1e20000	; Firmware method MT_VariWrite (slot 0x1E2, Toshi): write a variation parameter block (XDE) to the channels (MIDI_DistributeParamToChannels, SwbtWr ...
+.equ EVT_VARI_WRITE, 0x1e20000	; Firmware method MT_VariWrite (slot 0x1E2, Toshi): write a variation parameter block (XDE) to the channels (PanelVari_SetGroupSlot, SwbtWr ...
 .equ EVT_SVARI_INI, 0x1e20001	; Firmware method MT_SvariIni: build the current sound-variation parameter block and broadcast it as MT_SvariSet (0x01E20002), then MT_AutoFree
 .equ EVT_SVARI_SET, 0x1e20002	; Firmware method MT_SvariSet: broadcast notification carrying the 6-byte sound-variation block built by MT_SvariIni
 .equ EVT_GET_SND_NAME, 0x1e20003	; Firmware method MT_GetSndName: request the current sound name; answered by broadcasting MT_SOUNDNAME (0x01E20005)

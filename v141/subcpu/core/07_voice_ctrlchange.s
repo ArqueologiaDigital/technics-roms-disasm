@@ -317,7 +317,7 @@ Voice_CC_Exit:
 	pop xiz
 	ret
 
-; MIDI 0xD0 channel pressure.  XWA -> message (+1 part, +2 value).  Rejects part >= 0x1A,
+; MIDI 0xD0 channel pressure.  XWA -> message (+1 part, +2 = 0, +3 value; MIDI_SendChannelPressure on the main CPU).  Rejects part >= 0x1A,
 ; follows the patch pointer at part+0x06 and switches on (patch+0x10) & 0xC0 exactly as
 ; Voice_ModWheel_Apply does, then runs two descriptor loops (0x02A530 stereo, 0x02A589 mono)
 ; that each call AudioChannel_Dispatch twice.
@@ -2202,7 +2202,7 @@ Voice_Slot_ApplyPortamentoDelta_Exit:
 ; (tick & 7) -- a cheap dither, not a real PRNG. (XWA) += that.
 ; Only caller: Voice_Init_Type1 (0x02C3F0), where XWA = 0x0451CE, i.e. the WAVEFORM/
 ; multisample word of the tone-generator parameter staging block. Touches no hardware.
-Voice_Slot_ApplyPitchJitter:
+WaveSel_AddRandomEntryOffset:
 	dec 4, xsp
 	pushw iz
 	ld (xsp + 2), xwa
@@ -3961,7 +3961,7 @@ Voice_NoteOn_Type1_Exit:
 
 ; Parameter rebuild + emit for one physical TG slot, type-1 flavour. IN: A = slot.
 ; Identical to Voice_Init_Type2 except that (a) right after WaveSel_StageB_Build_Reg040 it
-; calls Voice_Slot_ApplyPitchJitter(0x0451CE), dithering the staged waveform word by
+; calls WaveSel_AddRandomEntryOffset(0x0451CE), dithering the staged waveform word by
 ; (tick & 7), and (b) it uses Voice_Slot_LoadPitchOffset_B instead of the mono pitch step.
 ; Ends with ToneGen_WriteVoiceParams(slot, 0x0451CC). Callers: the tails of Voice_SetPitch
 ; and Voice_NoteOff.
@@ -3977,7 +3977,7 @@ Voice_Init_Type1:
 	ld xwa, xiz
 	call WaveSel_StageB_Build_Reg040
 	lda xwa, (Payload_Bss_Start+0x6358:24)
-	call Voice_Slot_ApplyPitchJitter
+	call WaveSel_AddRandomEntryOffset
 	ld xwa, xiz
 	call Pitch_Apply_Zone_Trim
 	ld xwa, xiz

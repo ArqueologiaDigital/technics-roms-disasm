@@ -55,27 +55,27 @@
 	.equ PANEL_PMEM_SETTINGS,	0xfd96	; tag 0x98, 18 bytes: panel memory mode / number (+0/+1), music style arranger (+3), metronome mute / volume (+4), panel memory filter (+7)
 	.equ PANEL_GM,			0xfdaa	; tag 0x91, 10 bytes: GM on/off (+3)
 	.equ PANEL_TOUCH,		0xfdb6	; tag 0x93, 34 bytes: initial touch velocity sense (+0), after touch curve (+5), on/off and threshold (+6)
-	.equ PANEL_VARI_RT1,		0xfdda	; tag 0xc0, 18 bytes: companion block of part record 0x00 (RT1): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_RT2,		0xfdee	; tag 0xc1, 18 bytes: companion block of part record 0x01 (RT2): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_LEFT,		0xfe02	; tag 0xc2, 18 bytes: companion block of part record 0x02 (LEFT): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_PT4,		0xfe16	; tag 0xc3, 18 bytes: companion block of part record 0x03 (PT4): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_PT5,		0xfe2a	; tag 0xc4, 18 bytes: companion block of part record 0x04 (PT5): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_PT6,		0xfe3e	; tag 0xc5, 18 bytes: companion block of part record 0x05 (PT6): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_PT7,		0xfe52	; tag 0xc6, 18 bytes: companion block of part record 0x06 (PT7): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_PT8,		0xfe66	; tag 0xc7, 18 bytes: companion block of part record 0x07 (PT8): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_PT9,		0xfe7a	; tag 0xc8, 18 bytes: companion block of part record 0x08 (PT9): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_PT10,		0xfe8e	; tag 0xc9, 18 bytes: companion block of part record 0x09 (PT10): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_PT11,		0xfea2	; tag 0xca, 18 bytes: companion block of part record 0x0a (PT11): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_PT12,		0xfeb6	; tag 0xcb, 18 bytes: companion block of part record 0x0b (PT12): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_PT13,		0xfeca	; tag 0xcc, 18 bytes: companion block of part record 0x0c (PT13): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_PT14,		0xfede	; tag 0xcd, 18 bytes: companion block of part record 0x0d (PT14): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_PT15,		0xfef2	; tag 0xce, 18 bytes: companion block of part record 0x0e (PT15): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_PT16,		0xff06	; tag 0xcf, 18 bytes: companion block of part record 0x0f (PT16): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_ACP1,		0xff1a	; tag 0xd0, 18 bytes: companion block of part record 0x10 (ACP1): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_ACP2,		0xff2e	; tag 0xd1, 18 bytes: companion block of part record 0x11 (ACP2): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_ACP3,		0xff42	; tag 0xd2, 18 bytes: companion block of part record 0x12 (ACP3): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_BASS,		0xff56	; tag 0xd3, 18 bytes: companion block of part record 0x13 (BASS): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_DRUM,		0xff6a	; tag 0xd4, 18 bytes: companion block of part record 0x14 (DRUM): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
-	.equ PANEL_VARI_MSP,		0xff7e	; tag 0xd7, 18 bytes: companion block of part record 0x17 (MSP): PanelTlv_CompanionOfPart, written by MainVariSet's MIDI_DistributeParamToChannels, read by VoiceData_DistributeToChannels
+	.equ PANEL_VARI_RT1,		0xfdda	; tag 0xc0, 18 bytes: companion block of part record 0x00 (RT1): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_RT2,		0xfdee	; tag 0xc1, 18 bytes: companion block of part record 0x01 (RT2): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_LEFT,		0xfe02	; tag 0xc2, 18 bytes: companion block of part record 0x02 (LEFT): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_PT4,		0xfe16	; tag 0xc3, 18 bytes: companion block of part record 0x03 (PT4): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_PT5,		0xfe2a	; tag 0xc4, 18 bytes: companion block of part record 0x04 (PT5): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_PT6,		0xfe3e	; tag 0xc5, 18 bytes: companion block of part record 0x05 (PT6): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_PT7,		0xfe52	; tag 0xc6, 18 bytes: companion block of part record 0x06 (PT7): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_PT8,		0xfe66	; tag 0xc7, 18 bytes: companion block of part record 0x07 (PT8): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_PT9,		0xfe7a	; tag 0xc8, 18 bytes: companion block of part record 0x08 (PT9): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_PT10,		0xfe8e	; tag 0xc9, 18 bytes: companion block of part record 0x09 (PT10): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_PT11,		0xfea2	; tag 0xca, 18 bytes: companion block of part record 0x0a (PT11): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_PT12,		0xfeb6	; tag 0xcb, 18 bytes: companion block of part record 0x0b (PT12): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_PT13,		0xfeca	; tag 0xcc, 18 bytes: companion block of part record 0x0c (PT13): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_PT14,		0xfede	; tag 0xcd, 18 bytes: companion block of part record 0x0d (PT14): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_PT15,		0xfef2	; tag 0xce, 18 bytes: companion block of part record 0x0e (PT15): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_PT16,		0xff06	; tag 0xcf, 18 bytes: companion block of part record 0x0f (PT16): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_ACP1,		0xff1a	; tag 0xd0, 18 bytes: companion block of part record 0x10 (ACP1): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_ACP2,		0xff2e	; tag 0xd1, 18 bytes: companion block of part record 0x11 (ACP2): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_ACP3,		0xff42	; tag 0xd2, 18 bytes: companion block of part record 0x12 (ACP3): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_BASS,		0xff56	; tag 0xd3, 18 bytes: companion block of part record 0x13 (BASS): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_DRUM,		0xff6a	; tag 0xd4, 18 bytes: companion block of part record 0x14 (DRUM): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
+	.equ PANEL_VARI_MSP,		0xff7e	; tag 0xd7, 18 bytes: companion block of part record 0x17 (MSP): PanelTlv_CompanionOfPart, written by MainVariSet's PanelVari_SetGroupSlot, read by PanelVari_GetGroupSlot
 	.equ PANEL_VARI_STYLE,		0xff92	; tag 0x49, 16 bytes: the style record's companion block, 16 slots (PanelTlv_CompanionOfPart_Style; MainVariSet writes it)
 	.equ PANEL_REC_9A,		0xffa4	; tag 0x9a, 26 bytes: keys not identified

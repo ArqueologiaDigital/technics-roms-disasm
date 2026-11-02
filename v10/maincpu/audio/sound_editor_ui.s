@@ -177,7 +177,7 @@ UpdSeSel_SimpleUpdate_Step4:
 	lda xde, (xsp + 2)
 	ld wa, 0:i3
 	ld bc, 1:i3
-	call SeMenu_TransferPartValues
+	call SeLfo_GetEntryElement
 	ld c, (xsp + 2)
 	extz bc
 	pushw 0x20
@@ -913,13 +913,13 @@ UpdSeSel_DetailedUpdate_Join3:
 	ldto_berp a, 251
 	extz	wa
 	lda	xbc, (xsp+4)
-	call	SeMenu_TransferPartValues_EndData
+	call	SeLfo_GetSelectedLfo
 	ldto_berp a, 251
 	extz	wa
 	ld	c, (xsp+4)
 	extz	bc
 	lda	xde, (xsp+2)
-	call	SeMenu_TransferPartValues
+	call	SeLfo_GetEntryElement
 	ldib_erp 250, 0
 SeEasy_DrawPage_Loop4:
 	ld	c, (xsp+2)
@@ -1365,10 +1365,10 @@ UpdSeSel_DetailedUpdate_SetDisplayState_Join10:
 	jr	nz, UpdSeSel_DetailedUpdate_Skip9
 	cp	(xsp), 0
 	jr	nz, UpdSeSel_DetailedUpdate_Skip8
-	calr	UpdSeSel_DetailedUpdate_Helper5
+	calr	SeCtr2_RequestGroupValues
 	jr	UpdSeSel_DetailedUpdate_Join6
 UpdSeSel_DetailedUpdate_Skip8:
-	calr	UpdSeSel_DetailedUpdate_Helper6
+	calr	SeCtr2_RequestKitGroupValues
 UpdSeSel_DetailedUpdate_Join6:
 	ld	wa, 1:i3
 	call	SeMenu_SetCurrentStep
@@ -1409,11 +1409,11 @@ UpdSeSel_DetailedUpdate_Skip9:
 UpdSeSel_DetailedUpdate_Epilogue10:
 	lda	xsp, (xsp+10)
 	ret
-UpdSeSel_DetailedUpdate_Helper5:
+SeCtr2_RequestGroupValues:
 	dec	4, xsp
 	push	qiz
 	ldib_erp	251, 0
-UpdSeSel_DetailedUpdate_Helper5_Loop:
+SeCtr2_RequestGroupValues_Loop:
 	ldto_berp	a, 251
 	mul	a, 3
 	add	a, 24
@@ -1424,13 +1424,13 @@ UpdSeSel_DetailedUpdate_Helper5_Loop:
 	call	SeMenu_RegisterElement_Type1
 	inc1b_erp 251
 	cpib_erp 251, 6
-	jr c, UpdSeSel_DetailedUpdate_Helper5_Loop
+	jr c, SeCtr2_RequestGroupValues_Loop
 	lda	xwa, (xsp+4)
-	call	UpdSeSel_DetailedUpdate_SetDisplayState_Helper
+	call	SeCtr2_GetSelection
 	ld	a, (xsp+4)
 	extz	wa
 	lda	xbc, (xsp+2)
-	call	UpdSeSel_DetailedUpdate_SetDisplayState_Helper2
+	call	SeCtr2_GetGroupBase
 	ld	c, (xsp+2)
 	inc	2, c
 	extz	bc
@@ -1456,11 +1456,11 @@ UpdSeSel_DetailedUpdate_Helper5_Loop:
 	pop qiz
 	inc	4, xsp
 	ret
-UpdSeSel_DetailedUpdate_Helper6:
+SeCtr2_RequestKitGroupValues:
 	dec	4, xsp
 	push	qiz
 	ldib_erp	251, 0
-UpdSeSel_DetailedUpdate_Helper6_Loop:
+SeCtr2_RequestKitGroupValues_Loop:
 	ldto_berp	a, 251
 	mul	a, 3
 	add	a, 22
@@ -1471,13 +1471,13 @@ UpdSeSel_DetailedUpdate_Helper6_Loop:
 	call	SeMenu_RegisterElement_Type2
 	inc1b_erp 251
 	cpib_erp 251, 6
-	jr c, UpdSeSel_DetailedUpdate_Helper6_Loop
+	jr c, SeCtr2_RequestKitGroupValues_Loop
 	lda	xwa, (xsp+4)
-	call	UpdSeSel_DetailedUpdate_SetDisplayState_Helper
+	call	SeCtr2_GetSelection
 	ld	a, (xsp+4)
 	extz	wa
 	lda	xbc, (xsp+2)
-	call	UpdSeSel_DetailedUpdate_SetDisplayState_Helper3
+	call	SeCtr2_GetKitGroupBase
 	ld	c, (xsp+2)
 	inc	2, c
 	extz	bc

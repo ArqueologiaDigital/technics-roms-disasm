@@ -4536,7 +4536,7 @@ MainVariSet:
 	extz	bc
 	ld	e, (xiz+3)
 	extz	de
-	call	MIDI_DistributeParamToChannels
+	call	PanelVari_SetGroupSlot
 	ld	a, (xiz)
 	extz	wa
 	ld	e, (xiz+2)

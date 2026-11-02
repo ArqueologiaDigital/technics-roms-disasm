@@ -692,7 +692,7 @@ Rhythm_SendResetMsg:
 	ret
 
 Rhythm_UpdateTuningConfig:
-	ld	w, (12860:16)
+	ld	w, (ACC_CHORD_TYPE:16)
 	ld	a, (12956:16)
 	calr	Rhythm_LookupTuningByStyle
 	ld	(ACC_LANE_SECTION:16), a
@@ -701,7 +701,7 @@ Rhythm_UpdateTuningConfig:
 	ld	(ACC_LANE_SECTION+3:16), a
 	ld	(ACC_LANE_SECTION+4:16), a
 	ld	(ACC_LANE_SECTION+5:16), a
-	ld	w, (12860:16)
+	ld	w, (ACC_CHORD_TYPE:16)
 	ld	a, (12956:16)
 	calr	Rhythm_LookupTuningRange
 	ret
@@ -1362,7 +1362,7 @@ AccVoice_HandleMarker83:
 	and	a, (12940:16)
 	jr	z, AccVoice_Marker83_CheckDeact
 AccVoice_Marker83_Activate:
-	calr AccVoice_ActivatePart
+	calr AccVoice_ParkLaneAtEnd
 	jr AccVoice_Marker83_Return
 
 AccVoice_Marker83_CheckDeact:
@@ -1377,18 +1377,18 @@ AccVoice_Marker83_NextPart:
 AccVoice_Marker83_Return:
 	ret
 
-AccVoice_ActivatePart:
+AccVoice_ParkLaneAtEnd:
 	ld a, (ACC_PART_BIT:16)
-	or (0x328e:16), a
+	or (ACC_LANES_PARKED:16), a
 	or (0x328c:16), a
 	or (0x3258:16), 0x01
-	ld a, (0x328e:16)
+	ld a, (ACC_LANES_PARKED:16)
 	and A,0x3f
 	cp A,0x3f
-	jr nz, AccVoice_ActivatePart_Return
+	jr nz, AccVoice_ParkLaneAtEnd_Return
 	or (0x31e7:16), 0x04
-	and (0x328e:16), 0xc0
-AccVoice_ActivatePart_Return:
+	and (ACC_LANES_PARKED:16), 0xc0
+AccVoice_ParkLaneAtEnd_Return:
 	ret
 
 AccVoice_ActivateByteData:
@@ -1845,10 +1845,10 @@ AccMidi_ParseNoteOn:
 	cp (ACC_EVENT:16), 0x91
 	jr nz, AccMidi_ParseNoteOn_StorePos
 	ld	a, (xhl+iy)
-	ld (0x3397:16), a
+	ld (ACC_EVENT_EXT1:16), a
 	call AccBuf_Advance
 	ld	a, (xhl+iy)
-	ld (0x3398:16), a
+	ld (ACC_EVENT_EXT2:16), a
 	call AccBuf_Advance
 AccMidi_ParseNoteOn_StorePos:
 	ld	(ACC_CUR_READ_POS:16), iy
@@ -1865,7 +1865,7 @@ AccMidi_ParseCommon:
 	jr z, .Lc_f56b14
 	cp (ACC_PART_BIT:16), 0x02
 	jr z, .Lc_f56b14
-	call Rhythm_CheckVelocityThreshold
+	call Rhythm_CheckFixedNote
 AccMidi_ParseCommon_ExtraFields:
 .Lc_f56b14:
 	call AccBuf_Advance
@@ -2234,7 +2234,7 @@ AccKbd2_CheckActive:
 	or	w, (ACC_LANES_ENDING2:16)
 	and	w, a
 	jr	z, AccKbd2_CheckActive_Skip
-	or	(12942:16), a
+	or	(ACC_LANES_PARKED:16), a
 	or	(12940:16), a
 	jr	AccKbd2_CheckActive_Return
 AccKbd2_CheckActive_Skip:
@@ -2677,16 +2677,16 @@ AccCh1_CheckReturn:
 	ret
 
 AccBuf_WriteExtendedEvent:
-	ld a, (0x3397:16)
+	ld a, (ACC_EVENT_EXT1:16)
 	ld (0x329a:16), a
-	ld a, (0x3398:16)
+	ld a, (ACC_EVENT_EXT2:16)
 	ld (0x329b:16), a
 	ld a, (ACC_EVENT:16)
 	ld	(xhl+iy), a
 	call RingBuf_AdvanceIndex
 	call RhythmAccent_UpdateRingBufPosition
 	ld a, (ACC_EVENT+2:16)
-	ld (0x3399:16), a
+	ld (ACC_EVENT_PATTERN_NOTE:16), a
 	calr AccVoice_CheckStyle
 	ld	(xhl+iy), a
 	call RingBuf_AdvanceIndex
@@ -2705,7 +2705,7 @@ AccBuf_ExtEvt_VelNonZero:
 	ld	(xhl+iy), a
 	call RingBuf_AdvanceIndex
 	calr AccBuf_ExtEvt_WriteExtra
-	ld a, (0x3399:16)
+	ld a, (ACC_EVENT_PATTERN_NOTE:16)
 	ld	(xhl+iy), a
 	call RingBuf_AdvanceIndex
 	ld (XHL+0x04),IY
@@ -2726,7 +2726,7 @@ AccVoice_CheckStyle:
 	cp	(ACC_STYLE_NUMBER:16), 240
 	jr	c, AccVoice_CallCorrection
 AccVoice_CallCorrection:
-	call AccVoice_CorrectNote
+	call AccVoice_ConvertNoteForChord
 	ret
 
 AccVoice_CorrectionData:
@@ -2737,15 +2737,15 @@ AccVoice_CorrectionData:
 	jr	nz, AccVoice_CorrectionData_Skip2
 	bit	3, (0x3258:16)
 	jr	z, AccVoice_CorrectionData_Skip
-	call	Rhythm_CrossVoiceCorrect
+	call	Rhythm_BassToRoot
 AccVoice_CorrectionData_Skip:
-	call	Rhythm_NoteRangeCheck
+	call	Rhythm_RootOnlyNote
 AccVoice_CorrectionData_Skip2:
-	call	Rhythm_VelocityCompute
+	call	Rhythm_ChordConvertNoteFast
 	popw	iy
 	pop	xhl
 	ret
-AccVoice_CorrectNote:
+AccVoice_ConvertNoteForChord:
 	push	xhl
 	pushw	iy
 	ld	a, (ACC_EVENT+2:16)
@@ -2753,17 +2753,17 @@ AccVoice_CorrectNote:
 	jr	nz, AccVoice_VelocityLookup
 	bit	3, (0x3258:16)
 	jr	z, AccVoice_NoteRangeCheck
-	call	Rhythm_CrossVoiceCorrect
+	call	Rhythm_BassToRoot
 AccVoice_NoteRangeCheck:
-	call Rhythm_NoteRangeCheck
+	call Rhythm_RootOnlyNote
 
 AccVoice_VelocityLookup:
 	cp	(ACC_EVENT:16), 145
 	jr	z, AccVoice_UseVoiceMap
-	call	Rhythm_VelocityLookup_A
+	call	Rhythm_ChordConvertNote90
 	jr	AccVoice_CorrectReturn
 AccVoice_UseVoiceMap:
-	call Rhythm_VoiceMapLookup
+	call Rhythm_ChordConvertNote91
 
 AccVoice_CorrectReturn:
 	popw iy
@@ -3537,7 +3537,7 @@ AccPart_Reactivate:
 	or	w, (ACC_LANES_ENDING2:16)
 	and	w, a
 	jr	z, AccPart_Reactivate_Inactive
-	or	(12942:16), a
+	or	(ACC_LANES_PARKED:16), a
 	or	(12940:16), a
 	ld	(ACC_CUR_BLOCK:16), 254
 	ld	(ACC_CUR_READ_POS:16), 6
@@ -3624,7 +3624,7 @@ AccTick_FlushAndRepeat:
 AccTick_CheckCollect:
 	bit 2, (0x31e7:16)
 	jr z, AccTick_Return
-	call AccState_CollectAll
+	call AccEnding_StopWhenSilent
 AccTick_Return:
 	ret
 
@@ -4468,7 +4468,7 @@ AccSection_StartIntro_SetMasks:
 	ld	(ACC_LANES_ENDING2:16), a
 	ld	(0x32c1:16), a
 	ld	(0x328c:16), a
-	ld	(0x328e:16), a
+	ld	(ACC_LANES_PARKED:16), a
 	and	(0x31e7:16), 251
 	jrl	AccSection_StartIntro_Return
 AccSection_StartIntro_Mode2:
@@ -4483,7 +4483,7 @@ AccSection_StartIntro_Mode2:
 	ld	(ACC_LANES_ENDING2:16), a
 	ld	(0x32c1:16), a
 	ld	(0x328c:16), a
-	ld	(0x328e:16), a
+	ld	(ACC_LANES_PARKED:16), a
 	and	(0x31e7:16), 251
 	jr	AccSection_StartIntro_Return
 AccSection_StartIntro_Mode3:
@@ -4498,7 +4498,7 @@ AccSection_StartIntro_Mode3:
 	ld	(ACC_LANES_ENDING2:16), a
 	ld	(0x32c1:16), a
 	ld	(0x328c:16), a
-	ld	(0x328e:16), a
+	ld	(ACC_LANES_PARKED:16), a
 	and	(0x31e7:16), 251
 AccSection_StartIntro_Return:
 	ret
@@ -4631,7 +4631,7 @@ AccSection_StartFillIn_SetForward:
 	ld	(ACC_LANES_ENDING2:16), a
 	ld	(0x32c1:16), a
 	ld	(0x328c:16), a
-	ld	(0x328e:16), a
+	ld	(ACC_LANES_PARKED:16), a
 	and	(0x31e7:16), 251
 	jr	AccSection_StartFillIn_Return
 AccSection_StartFillIn_SetReverse:
@@ -4646,7 +4646,7 @@ AccSection_StartFillIn_SetReverse:
 	ld	(ACC_LANES_ENDING2:16), a
 	ld	(0x32c1:16), a
 	ld	(0x328c:16), a
-	ld	(0x328e:16), a
+	ld	(ACC_LANES_PARKED:16), a
 	and	(0x31e7:16), 251
 AccSection_StartFillIn_Return:
 	ret
@@ -5082,7 +5082,7 @@ AccVoice_OffsetTable:
 	.byte 0x00, 0x00, 0x7c, 0x00, 0x00, 0x00, 0x7d, 0x00
 	.byte 0x00, 0x00, 0x7e, 0x00, 0x00, 0x00, 0x7f, 0x00
 
-AccState_CollectAll:
+AccEnding_StopWhenSilent:
 	bit 3, (ACC_TRANSPORT_STATE:16)
 
 	jrl nz, AccState_CollectReturn
@@ -5145,11 +5145,11 @@ AccState_CollectAcc4_Loop:
 	jr nz, AccState_CollectAcc4_Active
 	cpw (SEQ_REC_TRACKS:16), 0
 	jr nz, AccState_CollectAcc4_Active
-	call AccWrap_PlayModeStopSync
+	call AccWrap_PlayModeStopPlayAndAcc
 	jr AccState_Apply
 
 AccState_CollectAcc4_Active:
-	call AccWrap_PlayModeStartPlay
+	call AccWrap_PlayModeStopAcc
 
 AccState_Apply:
 	call	AccInit_SendNoteOffAndFlush
@@ -5971,8 +5971,8 @@ AccWrap_PlayModeStopData:
 AccWrap_PlayModeStartAccPlay:
 	jp AccPlayMode_StartAccPlayFull
 
-AccWrap_PlayModeStopSync:
-	jp AccPlayMode_StopToSync2
+AccWrap_PlayModeStopPlayAndAcc:
+	jp AccPlayMode_StopPlayAndAcc
 
 AccWrap_PlayModeStopExpr:
 	push xiz
@@ -5980,9 +5980,9 @@ AccWrap_PlayModeStopExpr:
 	pop xiz
 	ret
 
-AccWrap_PlayModeStartPlay:
+AccWrap_PlayModeStopAcc:
 	push xiz
-	call AccPlayMode_StartPlay2
+	call AccPlayMode_StopAcc
 	pop xiz
 	ret
 
@@ -6025,9 +6025,9 @@ AccWrap_AutoPlayZoneTrack:
 	ret
 
 AccWrap_AutoPlayByteData:
-	jp	AccAutoPlay_PeriodicCheck
+	jp	AccSynchro_PeriodicCheck
 	push	xiz
-	calr	AccPlayMode_StopToSync2
+	calr	AccPlayMode_StopPlayAndAcc
 	pop	xiz
 	ret
 	push	xiz
@@ -7371,10 +7371,10 @@ AccAutoPlay_NoteDispatch:
 	calr AccAutoPlay_SplitDetect
 	cp c, 0:i3
 	jr z, .Lc_f5a45e
-	or (0x33fc:16), 0x01
+	or (ACC_SYNCHRO_KEY_EVENT:16), 0x01
 AccAutoPlay_NoteDispatch_Check:
 .Lc_f5a45e:
-	or (0x33fc:16), 0x80
+	or (ACC_SYNCHRO_KEY_EVENT:16), 0x80
 AccAutoPlay_NoteDispatch_Process:
 .Lc_f5a463:
 	cpw (SEQ_REC_TRACKS:16), 0x0000
@@ -7389,7 +7389,7 @@ AccAutoPlay_NoteDispatch_Process:
 	jr nz, AccAutoPlay_NoteDispatch_Return
 	bit 2, (SEQ_CYCLE_FLAGS:16)
 	jr nz, AccAutoPlay_NoteDispatch_Return
-	bit 0, (0x33fc:16)
+	bit 0, (ACC_SYNCHRO_KEY_EVENT:16)
 	jr z, AccAutoPlay_NoteDispatch_Return
 	and (0x28b3:16), 0xf7
 	call Audio_CheckSubsystemReady
@@ -7486,9 +7486,9 @@ AccAutoPlay_ZoneTrack:
 	bit 2, (SEQ_RTMCFG:16)
 	jr nz, AccAutoPlay_ZoneTrack_Update
 	calr AccAutoPlay_ZoneTrack_Apply
-	ld hl, (0x3400:16)
-	ld (0x33fe:16), hl
-	ld (0x3400:16), wa
+	ld hl, (ACC_CHORD_KEYS_NOW:16)
+	ld (ACC_CHORD_KEYS_PREV:16), hl
+	ld (ACC_CHORD_KEYS_NOW:16), wa
 AccAutoPlay_ZoneTrack_Update:
 	ret
 
@@ -7559,17 +7559,17 @@ AccAutoPlay_ZoneTrack_Return:
 	ret
 
 AccAutoPlay_StateMachine:
-	calr AccAutoPlay_TriggerCheck
-	bit 6, (0x33d2:16)
+	calr AccSynchro_OnChordKeyEvent
+	bit 6, (ACC_SYNCHRO_ACTION:16)
 	jr z, .Lc_f5a5da
 	cpw (SEQ_TRACK_MASK:16), 0x0000
 	jr z, .Lc_f5a5da
 	cpw (SEQ_REC_TRACKS:16), 0x0000
 	jr nz, .Lc_f5a5da
-	calr AccAutoPlay_SetConfig
-	bit 7, (0x33d1:16)
+	calr AccSynchro_UpdateArmed
+	bit 7, (ACC_SYNCHRO_STATE:16)
 	jr nz, .Lc_f5a5da
-	calr AccAutoPlay_Disable
+	calr AccSynchro_Disarm
 AccAutoPlay_SM_CheckEligible:
 .Lc_f5a5da:
 	ld (0x33d8:16), 0x00
@@ -7577,7 +7577,7 @@ AccAutoPlay_SM_CheckEligible:
 	bit 0, (0x33d8:16)
 	jr z, AccAutoPlay_SM_Return
 	ld (0x33d8:16), 0x00
-	or (0x33d2:16), 0x04
+	or (ACC_SYNCHRO_ACTION:16), 0x04
 	calr AccReplay_FullRestart
 AccAutoPlay_SM_Return:
 	ret
@@ -7586,15 +7586,15 @@ AccAutoPlay_SM_Padding:
 	nop
 	nop
 
-AccAutoPlay_TriggerCheck:
+AccSynchro_OnChordKeyEvent:
 	bit 2, (SEQ_RTMCFG:16)
 	jrl nz, AccAutoPlay_ModeAvail_Padding2
-	calr AccAutoPlay_SetConfig
-	bit 0, (0x33fc:16)
+	calr AccSynchro_UpdateArmed
+	bit 0, (ACC_SYNCHRO_KEY_EVENT:16)
 	jrl z, AccAutoPlay_ModeAvail_Padding2
-	bit 0, (0x33fd:16)
+	bit 0, (ACC_SYNCHRO_TRIGGERED:16)
 	jrl nz, AccAutoPlay_Trigger_Activate
-	bit 7, (0x33d1:16)
+	bit 7, (ACC_SYNCHRO_STATE:16)
 	jr nz, AccAutoPlay_Trigger_Evaluate
 	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, AccAutoPlay_Trigger_Process
@@ -7604,41 +7604,41 @@ AccAutoPlay_Trigger_Evaluate:
 	calr AccAutoPlay_Configure
 
 AccAutoPlay_Trigger_Process:
-	or	(0x33fc:16), 1
-	or	(0x33fd:16), 1
+	or	(ACC_SYNCHRO_KEY_EVENT:16), 1
+	or	(ACC_SYNCHRO_TRIGGERED:16), 1
 	jr	AccAutoPlay_ModeAvail_Padding
 AccAutoPlay_Trigger_Activate:
-	bit 7, (0x33fc:16)
+	bit 7, (ACC_SYNCHRO_KEY_EVENT:16)
 	jr nz, AccAutoPlay_ModeAvail_Padding
-	bit 7, (0x33d1:16)
+	bit 7, (ACC_SYNCHRO_STATE:16)
 	jr z, AccAutoPlay_Trigger_Return
-	cpw (0x3400:16), 0x0000
+	cpw (ACC_CHORD_KEYS_NOW:16), 0x0000
 	jr nz, .Lc_f5a662
-	cpw (0x33fe:16), 0x0000
+	cpw (ACC_CHORD_KEYS_PREV:16), 0x0000
 	jr z, .Lc_f5a662
-	calr AccAutoPlay_SeqHandoff
-	and (0x33fc:16), 0xfe
-	and (0x33fd:16), 0xfe
-	ldw (0x33fe:16), 0x0000
+	calr AccSynchro_StopOnChordRelease
+	and (ACC_SYNCHRO_KEY_EVENT:16), 0xfe
+	and (ACC_SYNCHRO_TRIGGERED:16), 0xfe
+	ldw (ACC_CHORD_KEYS_PREV:16), 0x0000
 	jr t, AccAutoPlay_ModeAvail_Padding
 AccAutoPlay_Trigger_Configure:
 .Lc_f5a662:
-	cpw (0x3400:16), 0x0000
+	cpw (ACC_CHORD_KEYS_NOW:16), 0x0000
 	jr nz, AccAutoPlay_Trigger_Finalize
-	cpw (0x33fe:16), 0x0000
+	cpw (ACC_CHORD_KEYS_PREV:16), 0x0000
 	jr nz, AccAutoPlay_Trigger_Finalize
-	ld (0x33fc:16), 0x00
-	ld (0x33fd:16), 0x00
+	ld (ACC_SYNCHRO_KEY_EVENT:16), 0x00
+	ld (ACC_SYNCHRO_TRIGGERED:16), 0x00
 AccAutoPlay_Trigger_Finalize:
 	jr AccAutoPlay_ModeAvail_Padding
 
 AccAutoPlay_Trigger_Return:
-	and	(0x33fc:16), 254
-	and	(0x33fd:16), 254
+	and	(ACC_SYNCHRO_KEY_EVENT:16), 254
+	and	(ACC_SYNCHRO_TRIGGERED:16), 254
 	jr	AccAutoPlay_ModeAvail_Padding
 AccAutoPlay_ModeAvail_Padding:
 	; anddi8 (0x3498), 127 (v7 patched)
-	and	(0x33fc:16), 127
+	and	(ACC_SYNCHRO_KEY_EVENT:16), 127
 AccAutoPlay_ModeAvail_Padding2:
 	ret
 
@@ -7686,42 +7686,42 @@ AccAutoPlay_ModeAvail_Values:
 AccAutoPlay_ConfigureIfPending:
 	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, AccAutoPlay_ConfigureIfPending_Return
-	bit	1, (0x33d2:16)
+	bit	1, (ACC_SYNCHRO_ACTION:16)
 	jr	z, AccAutoPlay_ConfigureIfPending_Return
-	bit	0, (0x33fc:16)
+	bit	0, (ACC_SYNCHRO_KEY_EVENT:16)
 	jr	z, AccAutoPlay_ConfigureIfPending_Return
-	bit	0, (0x33fd:16)
+	bit	0, (ACC_SYNCHRO_TRIGGERED:16)
 	jr	nz, AccAutoPlay_ConfigureIfPending_Return
 	calr	AccAutoPlay_Configure
-	ld	a, (0x33fc:16)
-	ld	(0x33fd:16), a
-	or	(0x33fc:16), 1
+	ld	a, (ACC_SYNCHRO_KEY_EVENT:16)
+	ld	(ACC_SYNCHRO_TRIGGERED:16), a
+	or	(ACC_SYNCHRO_KEY_EVENT:16), 1
 AccAutoPlay_ConfigureIfPending_Return:
 	ret
-AccAutoPlay_SetConfig:
+AccSynchro_UpdateArmed:
 	cpw (SEQ_REC_TRACKS:16), 0x0000
-	jr nz, AccAutoPlay_SetConfig_Apply
+	jr nz, AccSynchro_UpdateArmed_Off
 	cpw (SEQ_TRACK_MASK:16), 0x0000
-	jr nz, AccAutoPlay_SetConfig_Apply
+	jr nz, AccSynchro_UpdateArmed_Off
 	cp (CMP_RECORD_PART:16), 0x00
-	jr nz, AccAutoPlay_SetConfig_Apply
+	jr nz, AccSynchro_UpdateArmed_Off
 	ld a, (PANEL_STYLE+3:16)
 	bit 0x03,A
-	jr nz, AccAutoPlay_SetConfig_Apply
+	jr nz, AccSynchro_UpdateArmed_Off
 	and A,0x07
 	cp a, 0:i3
-	jr z, AccAutoPlay_SetConfig_Apply
+	jr z, AccSynchro_UpdateArmed_Off
 	bit 1, (PANEL_STYLE+5:16)
-	jr z, AccAutoPlay_SetConfig_Apply
-	or (0x33d1:16), 0x80
-	jr t, AccAutoPlay_SetConfig_Return
-AccAutoPlay_SetConfig_Apply:
-	ld	(13265:16), 0
-AccAutoPlay_SetConfig_Return:
+	jr z, AccSynchro_UpdateArmed_Off
+	or (ACC_SYNCHRO_STATE:16), 0x80
+	jr t, AccSynchro_UpdateArmed_Return
+AccSynchro_UpdateArmed_Off:
+	ld	(ACC_SYNCHRO_STATE:16), 0
+AccSynchro_UpdateArmed_Return:
 	ret
 
 AccAutoPlay_Configure:
-	and (0x33d2:16), 0x1f
+	and (ACC_SYNCHRO_ACTION:16), 0x1f
 	cp (CMP_RECORD_PART:16), 0x00
 	jr nz, .Lc_f5a74f
 	cpw (SEQ_REC_TRACKS:16), 0x0000
@@ -7731,8 +7731,8 @@ AccAutoPlay_Configure:
 	jr t, AccAutoPlay_Configure_Store
 AccAutoPlay_Configure_Mode1:
 .Lc_f5a74f:
-	or (0x33d2:16), 0xa0
-	calr AccAutoPlay_SubModeA
+	or (ACC_SYNCHRO_ACTION:16), 0xa0
+	calr AccSynchro_StartOrCancelStop
 	jr t, AccAutoPlay_Configure_Return
 AccAutoPlay_Configure_Mode2:
 .Lc_f5a759:
@@ -7740,11 +7740,11 @@ AccAutoPlay_Configure_Mode2:
 	jr nz, AccAutoPlay_Configure_Store
 	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, .Lc_f5a76e
-	or (0x33d2:16), 0x80
+	or (ACC_SYNCHRO_ACTION:16), 0x80
 	jr t, AccAutoPlay_Configure_Check
 AccAutoPlay_Configure_Apply:
 .Lc_f5a76e:
-	or (0x33d2:16), 0xe0
+	or (ACC_SYNCHRO_ACTION:16), 0xe0
 
 
 
@@ -7755,7 +7755,7 @@ AccAutoPlay_Configure_Store:
 	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccAutoPlay_Configure_Return
 	calr AccAutoPlay_ModeDecode
-	calr AccAutoPlay_SubModeB
+	calr AccSynchro_StartOrCancelStopSong
 
 AccAutoPlay_Configure_Return:
 	ret
@@ -7763,43 +7763,43 @@ AccAutoPlay_Configure_Return:
 AccAutoPlay_Configure_Extended:
 	nop
 	nop
-	bit	1, (0x33d2:16)
+	bit	1, (ACC_SYNCHRO_ACTION:16)
 	jr	nz, AccAutoPlay_Configure_Final
-	and	(0x33fd:16), 254
-	and	(0x33fc:16), 254
+	and	(ACC_SYNCHRO_TRIGGERED:16), 254
+	and	(ACC_SYNCHRO_KEY_EVENT:16), 254
 	jr	AccAutoPlay_Configure_Return2
 AccAutoPlay_Configure_Final:
-	bit	0, (0x33fc:16)
+	bit	0, (ACC_SYNCHRO_KEY_EVENT:16)
 	jr	nz, AccAutoPlay_Configure_Return2
-	bit	0, (0x33fd:16)
+	bit	0, (ACC_SYNCHRO_TRIGGERED:16)
 	jr	z, AccAutoPlay_Configure_Return2
-	bit	7, (0x33d1:16)
+	bit	7, (ACC_SYNCHRO_STATE:16)
 	jr	z, AccAutoPlay_Configure_Done
-	calr	AccAutoPlay_SeqHandoff
+	calr	AccSynchro_StopOnChordRelease
 AccAutoPlay_Configure_Done:
-	and	(0x33fd:16), 254
-	and	(0x33fc:16), 254
+	and	(ACC_SYNCHRO_TRIGGERED:16), 254
+	and	(ACC_SYNCHRO_KEY_EVENT:16), 254
 AccAutoPlay_Configure_Return2:
 	ret
 	nop
 	nop
 
 
-AccAutoPlay_PeriodicCheck:
+AccSynchro_PeriodicCheck:
 	bit 1, (PANEL_STYLE+5:16)
 	jr nz, AccAutoPlay_Periodic_Evaluate
 	jr AccAutoPlay_Periodic_Return
 
 AccAutoPlay_Periodic_Evaluate:
-	bit	2, (0x33d2:16)
+	bit	2, (ACC_SYNCHRO_ACTION:16)
 	jr	z, AccAutoPlay_Periodic_Process
-	calr	AccAutoPlay_SetConfig
-	bit	7, (0x33d1:16)
+	calr	AccSynchro_UpdateArmed
+	bit	7, (ACC_SYNCHRO_STATE:16)
 	jr	nz, AccAutoPlay_Periodic_Padding
-	calr	AccAutoPlay_Disable
+	calr	AccSynchro_Disarm
 	jr	AccAutoPlay_Periodic_Padding
 AccAutoPlay_Periodic_Padding:
-	and	(0x33d2:16), 251
+	and	(ACC_SYNCHRO_ACTION:16), 251
 	jr	AccAutoPlay_Periodic_Return
 AccAutoPlay_Periodic_Process:
 	cpw (SEQ_TRACK_MASK:16), 0
@@ -7808,12 +7808,12 @@ AccAutoPlay_Periodic_Process:
 	jr z, AccAutoPlay_Periodic_Return
 
 AccAutoPlay_Periodic_Toggle:
-	calr AccAutoPlay_Disable
+	calr AccSynchro_Disarm
 
 AccAutoPlay_Periodic_Return:
 	ret
 
-AccAutoPlay_Disable:
+AccSynchro_Disarm:
 	and (PANEL_STYLE+5:16), 253
 
 	ld w, 0x2:opc
@@ -7830,117 +7830,117 @@ call	SwbtWr_QueuePostEvent
 
 
 
-AccAutoPlay_Disable_Return:
+AccSynchro_Disarm_Padding:
 	nop
 	nop
 
-AccAutoPlay_SubModeA:
-	bit 7, (0x33d1:16)
-	jr z, AccAutoPlay_SubModeA_Return
+AccSynchro_StartOrCancelStop:
+	bit 7, (ACC_SYNCHRO_STATE:16)
+	jr z, AccSynchro_StartOrCancelStop_Return
 	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, .Lc_f5a833
 	bit 0, (0x31e7:16)
 	jr z, .Lc_f5a827
 	bit 1, (0x31e7:16)
 	jr z, .Lc_f5a827
-	and (0x33d1:16), 0xef
-	or (0x33d1:16), 0x01
-	jr t, AccAutoPlay_SubModeA_Return
-AccAutoPlay_SubModeA_Check:
+	and (ACC_SYNCHRO_STATE:16), 0xef
+	or (ACC_SYNCHRO_STATE:16), 0x01
+	jr t, AccSynchro_StartOrCancelStop_Return
+AccSynchro_StartOrCancelStop_Now:
 .Lc_f5a827:
-	and (0x33d1:16), 0xef
-	or (0x33d1:16), 0x04
-	jr t, AccAutoPlay_SubModeA_Return
-AccAutoPlay_SubModeA_Apply:
+	and (ACC_SYNCHRO_STATE:16), 0xef
+	or (ACC_SYNCHRO_STATE:16), 0x04
+	jr t, AccSynchro_StartOrCancelStop_Return
+AccSynchro_StartOrCancelStop_Running:
 .Lc_f5a833:
 	ld a, (PLAY_TRANSPORT_STATE:16)
 	bit 0x02,A
-	jr z, AccAutoPlay_SubModeA_Return
+	jr z, AccSynchro_StartOrCancelStop_Return
 	bit 0x03,A
-	jr z, AccAutoPlay_SubModeA_Return
+	jr z, AccSynchro_StartOrCancelStop_Return
 	and (PLAY_TRANSPORT_STATE:16), 0xf7
 	and (ACC_TRANSPORT_STATE:16), 0xf7
-	and (0x33d1:16), 0xef
-	or (0x33d1:16), 0x08
-AccAutoPlay_SubModeA_Return:
+	and (ACC_SYNCHRO_STATE:16), 0xef
+	or (ACC_SYNCHRO_STATE:16), 0x08
+AccSynchro_StartOrCancelStop_Return:
 	ret
 
-AccAutoPlay_SubModeA_Padding:
+AccSynchro_StartOrCancelStop_Padding:
 	nop
 	nop
 
-AccAutoPlay_SubModeB:
-	bit 7, (0x33d1:16)
-	jr z, AccAutoPlay_SubModeB_Return
+AccSynchro_StartOrCancelStopSong:
+	bit 7, (ACC_SYNCHRO_STATE:16)
+	jr z, AccSynchro_StartOrCancelStopSong_Return
 	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, .Lc_f5a888
 	bit 0, (0x31e7:16)
 	jr z, .Lc_f5a87c
 	bit 1, (0x31e7:16)
 	jr z, .Lc_f5a87c
-	and (0x33d1:16), 0xef
-	or (0x33d1:16), 0x02
-	jr t, AccAutoPlay_SubModeB_Return
-AccAutoPlay_SubModeB_Check:
+	and (ACC_SYNCHRO_STATE:16), 0xef
+	or (ACC_SYNCHRO_STATE:16), 0x02
+	jr t, AccSynchro_StartOrCancelStopSong_Return
+AccSynchro_StartOrCancelStopSong_Now:
 .Lc_f5a87c:
-	and (0x33d1:16), 0xef
-	or (0x33d1:16), 0x04
-	jr t, AccAutoPlay_SubModeB_Return
-AccAutoPlay_SubModeB_Apply:
+	and (ACC_SYNCHRO_STATE:16), 0xef
+	or (ACC_SYNCHRO_STATE:16), 0x04
+	jr t, AccSynchro_StartOrCancelStopSong_Return
+AccSynchro_StartOrCancelStopSong_Running:
 .Lc_f5a888:
 	ld a, (PLAY_TRANSPORT_STATE:16)
 	bit 0x02,A
-	jr z, AccAutoPlay_SubModeB_Return
+	jr z, AccSynchro_StartOrCancelStopSong_Return
 	bit 0x03,A
-	jr z, AccAutoPlay_SubModeB_Return
+	jr z, AccSynchro_StartOrCancelStopSong_Return
 	and (PLAY_TRANSPORT_STATE:16), 0xf7
 	and (ACC_TRANSPORT_STATE:16), 0xf7
 	and (SEQ_TRANSPORT_STATE:16), 0xf7
-	and (0x33d1:16), 0xef
-	or (0x33d1:16), 0x08
-AccAutoPlay_SubModeB_Return:
+	and (ACC_SYNCHRO_STATE:16), 0xef
+	or (ACC_SYNCHRO_STATE:16), 0x08
+AccSynchro_StartOrCancelStopSong_Return:
 	ret
 
-AccAutoPlay_SubModeB_Padding:
+AccSynchro_StartOrCancelStopSong_Padding:
 	nop
 	nop
 
-AccAutoPlay_SeqHandoff:
+AccSynchro_StopOnChordRelease:
 	cp (CMP_RECORD_PART:16), 0x00
-	jr nz, AccAutoPlay_SeqHandoff_Return
+	jr nz, AccSynchro_StopOnChordRelease_Return
 	cpw (SEQ_RECORDING_TRACKS:16), 0x0000
-	jr nz, AccAutoPlay_SeqHandoff_Return
+	jr nz, AccSynchro_StopOnChordRelease_Return
 	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr z, AccAutoPlay_SeqHandoff_Return
-	and (0x33d1:16), 0xf7
-	or (0x33d1:16), 0x10
+	jr z, AccSynchro_StopOnChordRelease_Return
+	and (ACC_SYNCHRO_STATE:16), 0xf7
+	or (ACC_SYNCHRO_STATE:16), 0x10
 	cpw (SEQ_TRACK_MASK:16), 0x0000
-	jr nz, AccAutoPlay_SeqHandoff_Process
+	jr nz, AccSynchro_StopOnChordRelease_Song
 	bit 2, (PLAY_TRANSPORT_STATE:16)
-	jr z, AccAutoPlay_SeqHandoff_Return
+	jr z, AccSynchro_StopOnChordRelease_Return
 	ei 0x06
-	calr AccPlayMode_StopToSync2
+	calr AccPlayMode_StopPlayAndAcc
 	ei 0x00
-	jr t, AccAutoPlay_SeqHandoff_Return
-AccAutoPlay_SeqHandoff_Process:
+	jr t, AccSynchro_StopOnChordRelease_Return
+AccSynchro_StopOnChordRelease_Song:
 	bit 2, (SEQ_TRANSPORT_STATE:16)
-	jr z, AccAutoPlay_SeqHandoff_Return
+	jr z, AccSynchro_StopOnChordRelease_Return
 	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr z, AccAutoPlay_SeqHandoff_Finalize
+	jr z, AccSynchro_StopOnChordRelease_SongStopped
 	ei 6
 	calr AccPlayMode_StopExprFull
 	ei 0
-	jr AccAutoPlay_SeqHandoff_Return
+	jr AccSynchro_StopOnChordRelease_Return
 
-AccAutoPlay_SeqHandoff_Finalize:
+AccSynchro_StopOnChordRelease_SongStopped:
 	ei 6
 	calr AccPlayMode_StopExprC
 	ei 0
 
-AccAutoPlay_SeqHandoff_Return:
+AccSynchro_StopOnChordRelease_Return:
 	ret
 
-AccAutoPlay_SeqHandoff_Padding:
+AccSynchro_StopOnChordRelease_Padding:
 	nop
 	nop
 
@@ -7949,19 +7949,19 @@ AccAutoPlay_ModeDecode:
 	and A,0x03
 	cp a, 2:i3
 	jr nz, .Lc_f5a919
-	or (0x33d2:16), 0xa0
+	or (ACC_SYNCHRO_ACTION:16), 0xa0
 	jr t, AccAutoPlay_ModeDecode_Return
 AccAutoPlay_ModeDecode_Process:
 .Lc_f5a919:
 	cp a, 1:i3
 	jr nz, .Lc_f5a924
-	or (0x33d2:16), 0x60
+	or (ACC_SYNCHRO_ACTION:16), 0x60
 	jr t, AccAutoPlay_ModeDecode_Return
 AccAutoPlay_ModeDecode_Apply:
 .Lc_f5a924:
 	cp a, 3:i3
 	jr nz, AccAutoPlay_ModeDecode_Return
-	or (0x33d2:16), 0xe0
+	or (ACC_SYNCHRO_ACTION:16), 0xe0
 AccAutoPlay_ModeDecode_Return:
 	ret
 
@@ -7970,16 +7970,16 @@ AccAutoPlay_ModeDecode_Padding:
 	nop
 
 AccAutoPlay_ActionDispatch:
-	ld a, (0x33d1:16)
+	ld a, (ACC_SYNCHRO_STATE:16)
 	bit 0x07,A
 	jr z, AccAutoPlay_Action_Check
-	bit 2, (0x33d1:16)
+	bit 2, (ACC_SYNCHRO_STATE:16)
 	jr z, AccAutoPlay_Action_Finalize
 	and A,0xfb
 	or A,0x08
-	ld (0x33d1:16), a
+	ld (ACC_SYNCHRO_STATE:16), a
 AccAutoPlay_Action_Check:
-	ld	a, (13266:16)
+	ld	a, (ACC_SYNCHRO_ACTION:16)
 	ld	b, a
 	and	a, 224
 	cp	a, 0:i3
@@ -8005,10 +8005,10 @@ AccAutoPlay_Action_Deactivate:
 	calr AccPlayMode_StartAccPlayFull
 
 AccAutoPlay_Action_Apply:
-	bit	3, (0x33d1:16)
+	bit	3, (ACC_SYNCHRO_STATE:16)
 	jr	nz, AccAutoPlay_Action_Finalize
 AccAutoPlay_Action_Finalize:
-	and	(0x33d2:16), 31
+	and	(ACC_SYNCHRO_ACTION:16), 31
 
 
 
@@ -8020,12 +8020,12 @@ AccAutoPlay_Action_Padding:
 	nop
 
 AccAutoPlay_DeferredAction:
-	bit 7, (0x33d1:16)
+	bit 7, (ACC_SYNCHRO_STATE:16)
 	jr z, AccAutoPlay_Deferred_Return
-	bit 0, (0x33d1:16)
+	bit 0, (ACC_SYNCHRO_STATE:16)
 	jr z, .Lc_f5a9a9
-	and (0x33d1:16), 0xee
-	or (0x33d1:16), 0x08
+	and (ACC_SYNCHRO_STATE:16), 0xee
+	or (ACC_SYNCHRO_STATE:16), 0x08
 	ei 0x06
 	calr AccPlayMode_StartAccPlayFull
 	ei 0x00
@@ -8033,10 +8033,10 @@ AccAutoPlay_DeferredAction:
 	jr t, AccAutoPlay_Deferred_Return
 AccAutoPlay_Deferred_Process:
 .Lc_f5a9a9:
-	bit 1, (0x33d1:16)
+	bit 1, (ACC_SYNCHRO_STATE:16)
 	jr z, AccAutoPlay_Deferred_Return
-	and (0x33d1:16), 0xed
-	or (0x33d1:16), 0x08
+	and (ACC_SYNCHRO_STATE:16), 0xed
+	or (ACC_SYNCHRO_STATE:16), 0x08
 	ei 0x06
 	calr AccPlayMode_StartPlay
 	ei 0x00
@@ -8077,11 +8077,11 @@ AccPlayMode_Dispatch_Table:
 	.byte	0x00, 0x00
 AccPlayMode_Dispatch_Execute_Data:
 	.long	AccPlayMode_OnMask0_Nop
-	.long	AccPlayMode_StartPlay2
+	.long	AccPlayMode_StopAcc
 	.long	AccPlayMode_StopExprD
 	.long	AccPlayMode_OnMask3
 	.long	AccPlayMode_OnMask4
-	.long	AccPlayMode_StopToSync2
+	.long	AccPlayMode_StopPlayAndAcc
 	.long	AccPlayMode_StopExprC
 	.long	AccPlayMode_StopExprFull
 AccPlayMode_OnMask0_Nop:
@@ -8189,7 +8189,7 @@ AccPlayMode_StopToSync:
 
 AccPlayMode_StopToSync_Process:
 	ei 6
-	calr AccPlayMode_StopToSync2
+	calr AccPlayMode_StopPlayAndAcc
 	ei 0
 
 AccPlayMode_StopToSync_Return:
@@ -8231,7 +8231,7 @@ AccPlayMode_StopExprA:
 
 AccPlayMode_StopExprA_Process:
 	ei 6
-	calr AccPlayMode_StartPlay2
+	calr AccPlayMode_StopAcc
 	ei 0
 
 AccPlayMode_StopExprA_Return:
@@ -8282,20 +8282,20 @@ AccPlayMode_StartAccPlay_Padding:
 	nop
 	nop
 
-AccPlayMode_StopToSync2:
+AccPlayMode_StopPlayAndAcc:
 	bit 3, (PLAY_TRANSPORT_STATE:16)
-	jr nz, AccPlayMode_StartPlay2
+	jr nz, AccPlayMode_StopAcc
 	bit 2, (PLAY_TRANSPORT_STATE:16)
-	jr z, AccPlayMode_StartPlay2
+	jr z, AccPlayMode_StopAcc
 	ld (PLAY_TRANSPORT_STATE:16), 12
 
-AccPlayMode_StartPlay2:
+AccPlayMode_StopAcc:
 	ld	(ACC_TRANSPORT_STATE:16), 12
 	ld	(ACC_SECTION_BUTTONS_HELD:16), 0
 	ld	a, 134:opc
 	calr	AccTempo_WriteStartMarker
 	ret
-AccPlayMode_StartPlay2_Padding:
+AccPlayMode_StopAcc_Padding:
 	nop
 	nop
 
@@ -11967,9 +11967,9 @@ AccTone_InlineBytecodeData_Skip2:
 	ldmm8	13188, 13199
 	ret
 AccTone_InlineBytecodeData_Code_Helper:
-	ld	a, (0x323c:16)
+	ld	a, (ACC_CHORD_TYPE:16)
 	extz	wa
-	lda	xbc, (AccTuning_ReadAndApplyOffset_Table:24)
+	lda	xbc, (Chord_TypeFamilyTable:24)
 	ld	a, (xbc+wa)
 	ld	(0x338f:16), a
 	ld	xbc, (ACC_STYLE_RECORD:16)
@@ -11998,9 +11998,9 @@ AccSection_ApplyPendingChange:
 	or	(0x3290:16), 63
 	set	7, (0x3290:16)
 	calr	AccTone_ExtendAndDispatch_Helper2
-	ldmm8	12867, 12860
-	ldmm8	12868, 12861
-	ldmm8	12869, 12862
+	ldmm8	ACC_CHORD_VOICED_TYPE, ACC_CHORD_TYPE
+	ldmm8	ACC_CHORD_VOICED_ROOT, ACC_CHORD_ROOT
+	ldmm8	ACC_CHORD_VOICED_BASS, ACC_CHORD_BASS
 	res	0, (0x3383:16)
 	ret
 AccTone_ExtendAndDispatch_Helper2:
@@ -12896,10 +12896,10 @@ AccVoice_BarCounterBytecodeData_Join6:
 	pop	xiz
 	inc	2, xsp
 	ret
-AccTuning_ReadAndApplyOffset:
+Chord_LookupTypeFamily:
 	ld a, (0x3387:16)
 	extz WA
-	lda xbc, (AccTuning_ReadAndApplyOffset_Table:24)
+	lda xbc, (Chord_TypeFamilyTable:24)
 	ld	(13190), (xbc+wa)
 	ret
 AccTuning_ComplexBytecodeData:
@@ -13484,7 +13484,7 @@ AccStyle_TempoLookupData_Helper:
 	pop	xix
 	ret
 
-AccTuning_CallWithSaveRestore:
+Chord_LookupTypeFamily_Saved:
 	push xix
 	push xiy
 	push xiz
@@ -13492,7 +13492,7 @@ AccTuning_CallWithSaveRestore:
 	push xbc
 	push xde
 	push xhl
-	call AccTuning_ReadAndApplyOffset
+	call Chord_LookupTypeFamily
 	pop xhl
 	pop xde
 	pop xbc
@@ -19157,7 +19157,7 @@ ToneGen_RestoreFromSavedPos:
 	ld	wa, (PATTERN_CURSOR_BLOCK:16)
 	ld	(ACC_READ_BLOCK:16), wa
 	ld	a, 0:opc
-	ld	(0x3399:16), a
+	ld	(ACC_EVENT_PATTERN_NOTE:16), a
 	and	(0x3486:16), 253
 	ld	hl, (ACC_READ_BLOCK:16)
 	calr	ToneGen_CalcBufferAddr
@@ -19203,7 +19203,7 @@ ToneGen_EventDisp_EndOfBlock:
 	calr	ToneGen_CalcBufferAddr
 	ld	ix, 6:i3
 	ld	(ACC_READ_OFFSET:16), ix
-	ld	(13209:16), 6
+	ld	(ACC_EVENT_PATTERN_NOTE:16), 6
 	jr	ToneGen_EventDispatchLoop
 ToneGen_CalcEventVelocity_WithFlags:
 	calr	AccVoice_ReadCurrentToneType
@@ -19341,7 +19341,7 @@ ToneGen_ScanRestoredVoiceEvents:
 	ld	wa, (PATTERN_CURSOR_BLOCK:16)
 	ld	(ACC_READ_BLOCK:16), wa
 	ld	a, 0:opc
-	ld	(13209:16), a
+	ld	(ACC_EVENT_PATTERN_NOTE:16), a
 ToneGen_ScanRestored_Loop:
 	calr	ToneGen_StepToNextVoiceSlot
 	ld	hl, (ACC_READ_BLOCK:16)
@@ -19376,7 +19376,7 @@ ToneGen_ScanRestored_EndBlock:
 	calr	ToneGen_CalcBufferAddr
 	ld	ix, 6:i3
 	ld	(ACC_READ_OFFSET:16), ix
-	ld	(13209:16), 6
+	ld	(ACC_EVENT_PATTERN_NOTE:16), 6
 	jr	ToneGen_ScanRestored_Loop
 ToneGen_CalcEventVelocity_Restored:
 	calr	AccVoice_ReadCurrentToneType
@@ -19866,7 +19866,7 @@ AccPlayback_AdvPattern_Check90:
 
 	inc 1, xiy
 
-	ld a, (13207:16)
+	ld a, (ACC_EVENT_EXT1:16)
 
 	ld (xiy), a
 
@@ -19945,7 +19945,7 @@ AccPlayback_TrackPos_WrapDone:
 	jr	nz, ToneGen_LoadRhythmPatternParams
 	ld	(ACC_EVENT+4:16), 1
 	ld	(ACC_EVENT+5:16), 3
-	ld	(13207:16), 0
+	ld	(ACC_EVENT_EXT1:16), 0
 	jr	AccPlayback_StyleRecalc_Return
 ToneGen_LoadRhythmPatternParams:
 	xor	xbc, xbc
@@ -19960,7 +19960,7 @@ ToneGen_LoadRhythmPatternParams:
 	ld	a, (xix+1)
 	ld	(ACC_EVENT+5:16), a
 	ld	a, (xix+2)
-	ld	(13207:16), a
+	ld	(ACC_EVENT_EXT1:16), a
 	pop	xix
 AccPlayback_StyleRecalc_Return:
 	ret
@@ -20015,7 +20015,7 @@ AccPlayback_ProcessOngoingEvents:
 	ld	wa, (ACC_READ_BLOCK:16)
 	ld	(13670:16), wa
 	xor	w, w
-	ld	a, (13209:16)
+	ld	a, (ACC_EVENT_PATTERN_NOTE:16)
 	ld	(13672:16), wa
 	ld	(13225:16), wa
 	ld	wa, (13670:16)
@@ -20056,7 +20056,7 @@ ToneGen_ProcessVoiceSlots:
 	ld	e, (0x3460:16)
 	and	(0x3258:16), 254
 	xor	bc, bc
-	ld	(0x3399:16), 6
+	ld	(ACC_EVENT_PATTERN_NOTE:16), 6
 AccPlayback_Ongoing_NoteOff:
 	bit 0, (0x3258:16)
 	jr z, .Lc_f61cca
@@ -20177,7 +20177,7 @@ AccPlayback_Ongoing_AdvDone:
 AccPlayback_SaveReadPosition:
 	ld	wa, (ACC_READ_BLOCK:16)
 	ld	(13438:16), wa
-	ld	a, (13209:16)
+	ld	a, (ACC_EVENT_PATTERN_NOTE:16)
 	ld	(13440:16), a
 	ld	wa, (ACC_READ_OFFSET:16)
 	ld	(13442:16), wa
@@ -20321,7 +20321,7 @@ AccBit5_InitAndScan:
 	ld (ACC_READ_OFFSET:16), iy
 	ld (0x35c4:16), iy
 	ld WA,IY
-	ld (0x3399:16), a
+	ld (ACC_EVENT_PATTERN_NOTE:16), a
 	ld iy, (PATTERN_CURSOR_OFFSET:16)
 	ld hl, (ACC_READ_BLOCK:16)
 	calr ToneGen_CalcBufferAddr
@@ -20362,7 +20362,7 @@ AccVoice_InitPlaybackState:
 	ld	(13756:16), wa
 	ld	(13462:16), wa
 	xor	w, w
-	ld	a, (13209:16)
+	ld	a, (ACC_EVENT_PATTERN_NOTE:16)
 	ld	(13762:16), wa
 	calr	ToneGen_ScanVoicePosition
 	call	AccPatch_CopySequenceEntry
@@ -20425,7 +20425,7 @@ ToneGen_ScanPos_ProcessFlags:
 	ld	(xix), iy
 	ld	xix, (0x34ac:16)
 	ld	(xix), de
-	ld	(0x3399:16), c
+	ld	(ACC_EVENT_PATTERN_NOTE:16), c
 	jr	PlaybackState_InitDone
 ToneGen_ScanPos_AdjustBit1:
 	ld	iy, (13233:16)
@@ -20435,7 +20435,7 @@ ToneGen_ScanPos_AdjustBit1:
 	jr	c, ToneGen_ScanPos_WrapBlock
 	cp	c, 6:i3
 	jr	c, ToneGen_ScanPos_WrapBlock
-	ld	(13209:16), c
+	ld	(ACC_EVENT_PATTERN_NOTE:16), c
 	ld	xix, (13488:16)
 	ld	wa, (xix)
 	sub	wa, iy
@@ -20445,7 +20445,7 @@ ToneGen_ScanPos_AdjustBit1:
 	jr	PlaybackState_InitDone
 ToneGen_ScanPos_WrapBlock:
 	sub	c, 7
-	ld	(13209:16), c
+	ld	(ACC_EVENT_PATTERN_NOTE:16), c
 	ld	hl, de
 	calr	ToneGen_CalcBufferAddr
 	ld	wa, (xhl+1)
@@ -20701,7 +20701,7 @@ ToneGen_AdjustVoiceVelocity:
 	ld	(ACC_READ_OFFSET:16), wa
 	ld	wa, (PATTERN_CURSOR_BLOCK:16)
 	ld	(ACC_READ_BLOCK:16), wa
-	ld	(0x3399:16), 0
+	ld	(ACC_EVENT_PATTERN_NOTE:16), 0
 	ld	hl, (ACC_READ_BLOCK:16)
 	calr	ToneGen_CalcBufferAddr
 	ld	wa, (ACC_READ_OFFSET:16)
@@ -20799,7 +20799,7 @@ ToneGen_AdjustVolumePan:
 	ld (ACC_READ_OFFSET:16), wa
 	ld wa, (PATTERN_CURSOR_BLOCK:16)
 	ld (ACC_READ_BLOCK:16), wa
-	ld (0x3399:16), 0x00
+	ld (ACC_EVENT_PATTERN_NOTE:16), 0x00
 	ld hl, (ACC_READ_BLOCK:16)
 	calr ToneGen_CalcBufferAddr
 	ld wa, (ACC_READ_OFFSET:16)
@@ -20853,7 +20853,7 @@ ToneGen_ProcessStereoType:
 	ld	(ACC_READ_OFFSET:16), wa
 	ld	wa, (PATTERN_CURSOR_BLOCK:16)
 	ld	(ACC_READ_BLOCK:16), wa
-	ld	(0x3399:16), 0
+	ld	(ACC_EVENT_PATTERN_NOTE:16), 0
 	ld	hl, (ACC_READ_BLOCK:16)
 	calr	ToneGen_CalcBufferAddr
 	ld	wa, (ACC_READ_OFFSET:16)
@@ -21024,7 +21024,7 @@ ToneGen_SaveCursorEventBytes:
 	ld (ACC_READ_OFFSET:16), wa
 	ld wa, (PATTERN_CURSOR_BLOCK:16)
 	ld (ACC_READ_BLOCK:16), wa
-	ld (0x3399:16), 0x00
+	ld (ACC_EVENT_PATTERN_NOTE:16), 0x00
 	ld iy, (ACC_READ_OFFSET:16)
 	ld hl, (ACC_READ_BLOCK:16)
 	calr ToneGen_CalcBufferAddr
@@ -21075,7 +21075,7 @@ ToneGen_DeleteEventAtCursor:
 	ld (ACC_READ_OFFSET:16), iy
 	ld (0x35c4:16), iy
 	ld WA,IY
-	ld (0x3399:16), a
+	ld (ACC_EVENT_PATTERN_NOTE:16), a
 	ld (0x33b1:16), 0x06
 	ld iy, (PATTERN_CURSOR_OFFSET:16)
 	ld hl, (ACC_READ_BLOCK:16)
@@ -21097,7 +21097,7 @@ ToneGen_CalcBeatSubdivision:
 	ld	(13756:16), wa
 	ld	(13462:16), wa
 	xor	w, w
-	ld	a, (13209:16)
+	ld	a, (ACC_EVENT_PATTERN_NOTE:16)
 	ld	(13762:16), wa
 	calr	ToneGen_ScanVoicePosition
 	call	AccPatch_CopySequenceEntry
@@ -21194,11 +21194,11 @@ ToneGen_StepBounds_Return:
 	ld	(ACC_READ_BLOCK:16), wa
 	ld	iy, (PATTERN_CURSOR_OFFSET:16)
 	ld	wa, iy
-	ld	(13209:16), a
+	ld	(ACC_EVENT_PATTERN_NOTE:16), a
 	ld	wa, (ACC_READ_BLOCK:16)
 	ld	(13670:16), wa
 	xor	w, w
-	ld	a, (13209:16)
+	ld	a, (ACC_EVENT_PATTERN_NOTE:16)
 	ld	(13672:16), wa
 	ld	wa, (13672:16)
 	ld	(13225:16), wa
@@ -21252,7 +21252,7 @@ ToneGen_StepToNextVoiceSlot:
 	push XHL
 	ld iy, (ACC_READ_OFFSET:16)
 	inc 1,IY
-	inc	1, (13209:16)
+	inc	1, (ACC_EVENT_PATTERN_NOTE:16)
 	ld	hl, (ACC_READ_BLOCK:16)
 	calr	ToneGen_CalcBufferAddr
 	ld	a, (xhl+iy)
@@ -21268,7 +21268,7 @@ ToneGen_Interp_StoreResult:
 	ld	(ACC_READ_BLOCK:16), hl
 	calr	ToneGen_CalcBufferAddr
 	ld	iy, 6:i3
-	ld	(13209:16), 6
+	ld	(ACC_EVENT_PATTERN_NOTE:16), 6
 	jr	ToneGen_Interp_WrapPoint
 ToneGen_Interp_CheckExit:
 	call	AccPatch_GetCurrentSlotAddr
@@ -21276,7 +21276,7 @@ ToneGen_Interp_CheckExit:
 	ld	(ACC_READ_BLOCK:16), hl
 	calr	ToneGen_CalcBufferAddr
 	ld	iy, 6:i3
-	ld	(13209:16), 6
+	ld	(ACC_EVENT_PATTERN_NOTE:16), 6
 ToneGen_Interp_WrapPoint:
 	ld	(ACC_READ_OFFSET:16), iy
 	pop	xhl
@@ -21291,7 +21291,7 @@ ToneGen_StepToNextStereoSlot:
 	push XHL
 	ld iy, (ACC_READ_OFFSET:16)
 	inc 1,IY
-	inc	1, (0x3399:16)
+	inc	1, (ACC_EVENT_PATTERN_NOTE:16)
 	ld	hl, (ACC_READ_BLOCK:16)
 	calr	ToneGen_CalcBufferAddr
 	ld	a, (xhl+iy)
@@ -21300,7 +21300,7 @@ ToneGen_StepToNextStereoSlot:
 	calr	ToneGen_StepToNextBuffer
 ToneGen_Interp_Return:
 	inc	1, iy
-	inc	1, (13209:16)
+	inc	1, (ACC_EVENT_PATTERN_NOTE:16)
 	ld	hl, (ACC_READ_BLOCK:16)
 	calr	ToneGen_CalcBufferAddr
 	ld	a, (xhl+iy)
@@ -21324,7 +21324,7 @@ ToneGen_StepToNextBuffer:
 	ld	(ACC_READ_BLOCK:16), hl
 	calr	ToneGen_CalcBufferAddr
 	ld	iy, 6:i3
-	ld	(13209:16), 6
+	ld	(ACC_EVENT_PATTERN_NOTE:16), 6
 	ret
 ToneGen_AdvanceBeatCounter:
 	nop
@@ -21365,7 +21365,7 @@ ToneGen_StepVoiceForward:
 	push	xhl
 	ld	iy, (ACC_READ_OFFSET:16)
 	dec	1, iy
-	dec	1, (13209:16)
+	dec	1, (ACC_EVENT_PATTERN_NOTE:16)
 	ld	hl, (ACC_READ_BLOCK:16)
 	calr	ToneGen_CalcBufferAddr
 	ld	a, (xhl+iy)
@@ -21377,7 +21377,7 @@ ToneGen_StepVoiceForward:
 	ld	(ACC_READ_BLOCK:16), hl
 	calr	ToneGen_CalcBufferAddr
 	ldw	iy, 254
-	ld	(13209:16), 254
+	ld	(ACC_EVENT_PATTERN_NOTE:16), 254
 	jr	ToneGen_StepFwd_WrapDone
 ToneGen_StepFwd_CheckWrap:
 	ld	hl, (13674:16)
@@ -21386,7 +21386,7 @@ ToneGen_StepFwd_CheckWrap:
 	ld	hl, (13676:16)
 	dec	1, hl
 	ld	iy, hl
-	ld	(13209:16), l
+	ld	(ACC_EVENT_PATTERN_NOTE:16), l
 ToneGen_StepFwd_WrapDone:
 	ld	(ACC_READ_OFFSET:16), iy
 	pop	xhl

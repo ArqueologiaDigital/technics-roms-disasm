@@ -13271,7 +13271,7 @@ MidiCtrl_ModeSwitchHandler:
 MidiCtrl_ApplyModeSwitch:
 	ld a, (SWBTWR_PAYLOAD_2:16)
 	extz wa
-	calr MidiCtrl_Bit2ToChannel
+	calr MidiCtrl_GmBitToPolyphonyMode
 	ld a, (SWBTWR_PAYLOAD_2:16)
 	extz wa
 	calr MidiCtrl_SendControlPacket
@@ -13679,7 +13679,7 @@ SoundMode_ChorusSyncAndRet:
 	jp SndParam_ApplyAndSync
 
 VoiceData_ZeroFillAll:
-	lda xbc, (VoiceData_RamBlockPtrs:24)
+	lda xbc, (PanelVari_PartRecordPtrs:24)
 	ld xwa, xbc
 	lda xbc, (xbc + 64)
 
@@ -13876,7 +13876,7 @@ MidiBuf_FillLoop:
 	jr nz, MidiBuf_FillLoop
 	ret
 
-MidiCtrl_ModeSwitch_Data:
+MidiCtrl_GmSwitchListener:
 	bit	0, (0xb7ee:16)
 	ret	nz
 	cp	(SWBTWR_PAYLOAD_1:16), 3
@@ -13885,19 +13885,19 @@ MidiCtrl_ModeSwitch_Data:
 	ret	z
 	ld	a, (SWBTWR_PAYLOAD_2:16)
 	extz	wa
-	calr	MidiCtrl_Bit2ToChannel
+	calr	MidiCtrl_GmBitToPolyphonyMode
 	ret
 
-MidiCtrl_Bit2ToChannel:
+MidiCtrl_GmBitToPolyphonyMode:
 	ld c, 0x0:opc
 	bit 2, a
-	jr z, MidiCtrl_Bit2ToChannel_Store
+	jr z, MidiCtrl_GmBitToPolyphonyMode_Send
 	ld c, 0x1:opc
 
-MidiCtrl_Bit2ToChannel_Store:
+MidiCtrl_GmBitToPolyphonyMode_Send:
 	extz bc
 	ld wa, bc
-	jp COMM_WriteAndCheck
+	jp SubCPU_SetPolyphonyModeAndResendVolumes
 
 MidiCtrl_SendControlPacket:
 	dec 4, xsp

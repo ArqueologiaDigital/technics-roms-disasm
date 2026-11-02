@@ -5172,9 +5172,9 @@ RhythmROM_BankProgramLocators:	.incbin "includes/generated/naka_widget_descripto
 ; Note_PitchClassTable`), ToneGen_BuildConvertedNoteEvent (v10/v9 0xf62b29, v7
 ; 0xf62725) (`ld xix, Note_PitchClassTable`),
 ; Rhythm_CrossVoice_Apply (v10/v9 0xf54ffe, v7 0xf54bfa) (`ld xiy,
-; Note_PitchClassTable`), Rhythm_NoteRangeCheck (v10/v9
+; Note_PitchClassTable`), Rhythm_RootOnlyNote (v10/v9
 ; 0xf55030, v7 0xf54c2c) (`ld xiy, Note_PitchClassTable`),
-; Rhythm_InstrBaseLookup (v10/v9 0xf550bb, v7 0xf54cb7) (`ld xiy,
+; Rhythm_NotePitchClass (v10/v9 0xf550bb, v7 0xf54cb7) (`ld xiy,
 ; Note_PitchClassTable`), Rhythm_TranspMod_BaseApply (v10/v9
 ; 0xf55b44, v7 0xf55740) (`ld xiy, Note_PitchClassTable`),
 ; AccPlay_NoteAllocAndWrite (v10/v9 0xf722ab, v7 0xf71ea7) (`ld xix,
@@ -5186,21 +5186,21 @@ RhythmROM_BankProgramLocators:	.incbin "includes/generated/naka_widget_descripto
 ; -----------------------------------------------------------------------------
 Note_PitchClassTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x152E2, 0x80
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] Rhythm_VelLookA_TableLookup_Table
-; Rhythm_VelLookA_TableLookup_Table -- read by
+; [naka_s_headers] Rhythm_ChordNoteDeltaRows
+; Rhythm_ChordNoteDeltaRows -- read by
 ; Rhythm_VelLookA_TableLookup (v10/v9 0xf5509a, v7 0xf54c96) (`ld xiy,
-; Rhythm_VelLookA_TableLookup_Table`), Rhythm_VoiceMap_Inst2Bit3 (v10/v9
-; 0xf5524e, v7 0xf54e4a) (`ld xiy, Rhythm_VelLookA_TableLookup_Table`),
+; Rhythm_ChordNoteDeltaRows`), Rhythm_VoiceMap_Inst2Bit3 (v10/v9
+; 0xf5524e, v7 0xf54e4a) (`ld xiy, Rhythm_ChordNoteDeltaRows`),
 ; Rhythm_VelComp_Lookup (v10/v9 0xf5530d, v7 0xf54f09) (`ld xiy,
-; Rhythm_VelLookA_TableLookup_Table`), Rhythm_TranspMod_BaseLookup
+; Rhythm_ChordNoteDeltaRows`), Rhythm_TranspMod_BaseLookup
 ; (v10/v9 0xf55b5b, v7 0xf55757) (`ld xiy,
-; Rhythm_VelLookA_TableLookup_Table`). 456 bytes to the next referenced
+; Rhythm_ChordNoteDeltaRows`). 456 bytes to the next referenced
 ; object; the layout beyond that access is not established.
 ;
 ; Typed in naka_widget_descriptors.c as uint8_t
-; Rhythm_VelLookA_TableLookup_Table[456].
+; Rhythm_ChordNoteDeltaRows[456].
 ; -----------------------------------------------------------------------------
-Rhythm_VelLookA_TableLookup_Table:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x15362, 0x150
+Rhythm_ChordNoteDeltaRows:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x15362, 0x150
 RhythmTiming_OffsetTable:		.incbin "includes/generated/naka_widget_descriptors.bin", 0x154B2, 0x78
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] VoiceParam_BankProgramWords
@@ -5475,16 +5475,16 @@ AccTone_ExtendAndDispatch_Body_Table_2:	.incbin "includes/generated/naka_widget_
 ; -----------------------------------------------------------------------------
 AccTone_LookupByProgram_Table_2:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x19154, 0x14
 ; -----------------------------------------------------------------------------
-; [naka_s_headers] AccTuning_ReadAndApplyOffset_Table
-; AccTuning_ReadAndApplyOffset_Table -- read by
-; AccTuning_ReadAndApplyOffset (v10/v9 0xf5e393, v7 0xf5df8f) (`lda xbc,
-; (AccTuning_ReadAndApplyOffset_Table:24)`). 116 bytes to the next
+; [naka_s_headers] Chord_TypeFamilyTable
+; Chord_TypeFamilyTable -- read by
+; Chord_LookupTypeFamily (v10/v9 0xf5e393, v7 0xf5df8f) (`lda xbc,
+; (Chord_TypeFamilyTable:24)`). 116 bytes to the next
 ; referenced object; the layout beyond that access is not established.
 ;
 ; Typed in naka_widget_descriptors.c as uint8_t
-; AccTuning_ReadAndApplyOffset_Table[116].
+; Chord_TypeFamilyTable[116].
 ; -----------------------------------------------------------------------------
-AccTuning_ReadAndApplyOffset_Table:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x19168, 0x30
+Chord_TypeFamilyTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 0x19168, 0x30
 ; AccPart_BitToIndexTable: 34 x u8: the one-hot accompaniment-part bit (RAM 0x3338: 1, 2, 4, 8, 16, 32) -> part index
 ;   0..5 (other entries 0, the last 0xFF). Basis: readers + bytes -- both readers index it with the byte at RAM 0x3338
 ;   and use the result to index a per-part word table; AccStyle_SetupPartAddresses sets 0x3338 to 1, 2, 4, 8, 16, 32

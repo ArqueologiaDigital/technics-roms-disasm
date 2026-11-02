@@ -2217,26 +2217,26 @@ SetWall_SyncToneGenToDRAM:
 	ld (SEQ_TRACK_MASK_COPY:24), wa
 	and (0x28a5:16), 254
 	cp wa, 0:i3
-	jr z, SetWall_Sync_CheckPanelBit
+	jr z, SetWall_Sync_ApplySongGmFlag
 	or (0x28a5:16), 1
 
-SetWall_Sync_CheckPanelBit:
+SetWall_Sync_ApplySongGmFlag:
 	call SeqTimer_PostTempoUpdate
 	cp (SEQ_SONG_RECORD+189:16), 255
-	jr z, SetWall_Sync_PanelOff
+	jr z, SetWall_Sync_SetGmOn
 	bit 2, (PANEL_GM+3:16)
 	jr z, SetWall_Sync_FinalUpdate
 	and (PANEL_GM+3:16), 251
 	xor a, a
-	jr SetWall_Sync_PostEvent
+	jr SetWall_Sync_PostGmEvent
 
-SetWall_Sync_PanelOff:
+SetWall_Sync_SetGmOn:
 	bit 2, (PANEL_GM+3:16)
 	jr nz, SetWall_Sync_FinalUpdate
 	or (PANEL_GM+3:16), 4
 	ld a, 0x4:opc
 
-SetWall_Sync_PostEvent:
+SetWall_Sync_PostGmEvent:
 	ld	(4330:16), 1
 	ld	e, 145:opc
 	ld	d, 3:opc

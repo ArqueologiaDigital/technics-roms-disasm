@@ -7283,7 +7283,7 @@ SerialPort_ModeHandler_0_Join3:
 	jrl	z, SqStep_SetupCursorTrack_Join
 	call	Demo_PreSetupAndScan
 SqStep_SetupCursorTrack_Join:
-	and	(0x346e:16), 239
+	and	(ACC_SYNCHRO_ACTION:16), 239
 	and	(0x045b:16), 252
 	call	SqStep_FindRhythmTrack
 	or	(SEQ_RTMCFG:16), 4

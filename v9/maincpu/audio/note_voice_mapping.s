@@ -18472,7 +18472,7 @@ SndParam_ApplySystemParam:
 	ld	de, wa
 	ldw	wa, 80
 	ldw	bc, 130
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 SndParam_ApplySystemParam_Skip:
 	dec	5, iz
@@ -18481,7 +18481,7 @@ SndParam_ApplySystemParam_Skip:
 	ld	de, wa
 	ldw	wa, 80
 	ldw	bc, 131
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	ldto_berp a, 248
 	cp a, (59842:16)
 	jrl z, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
@@ -18517,7 +18517,7 @@ SndParam_ApplySystemParam_Skip4:
 	ld	de, wa
 	ldw	wa, 127
 	ldw	bc, 9
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 SndParam_ApplySystemParam_Skip5:
 	ldw	wa, 127
@@ -18531,7 +18531,7 @@ SndParam_ApplySystemParam_Skip6:
 	ld	de, wa
 	ldw	wa, 80
 	ldw	bc, 153
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 SndParam_ApplySystemParam_Skip7:
 	ld	wa, de
@@ -18594,7 +18594,7 @@ SndParam_ApplySystemParam_SendGlide:
 	ld	de, wa
 	ldw	wa, 80
 	ldw	bc, 133
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 SndParam_ApplySystemParam_SendEqualizerOnOff_Skip9:
 	ld	wa, de
@@ -18658,7 +18658,7 @@ SndParam_ApplySystemParam_ScaleTuneOnOff_Skip15:
 	ld	de, wa
 	ldw	wa, 80
 	ldw	bc, 177
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 ; SndParam_ApplySystemParam_ScaleTuneType: Id 0x4281 (record 0x92 +0, scale-tune type): sends F0 50 86 <mode> and,
 ;   unless the mode's high byte is set (types 64-66), the type's 12 offsets rotated by the key to F0 50 A4..AF.
@@ -18671,7 +18671,7 @@ SndParam_ApplySystemParam_ScaleTuneType:
 	ld	d, 0:opc
 	ldw	wa, 80
 	ldw	bc, 134
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	ld wa, qiz
 	and wa, 65280
 	jrl	nz, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
@@ -18701,7 +18701,7 @@ SndParam_ApplySystemParam_ScaleTuneType_Skip16:
 	extz wa
 	ld	de, wa
 	ldw	wa, 80
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	inc	1, iz
 	cp	iz, 12
 	jr	lt, SndParam_ApplySystemParam_ScaleTuneType_Loop
@@ -18746,7 +18746,7 @@ SndParam_ApplySystemParam_ScaleTuneKey_Skip17:
 	extz wa
 	ld	de, wa
 	ldw	wa, 80
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	inc	1, iz
 	cp	iz, 12
 	jr	lt, SndParam_ApplySystemParam_ScaleTuneKey_Loop2
@@ -18774,7 +18774,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote0_Skip18:
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 ; SndParam_ApplySystemParam_ScaleTuneUserNote1: Id 0x4284 (record 0x92 +3, RAM 0xFD1F): user scale-tune offset of the
 ;   note 1 semitone above the key; sent only when the type is 128 (user).
@@ -18800,7 +18800,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote1_Skip19:
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 ; SndParam_ApplySystemParam_ScaleTuneUserNote2: Id 0x4285 (record 0x92 +4, RAM 0xFD20): user scale-tune offset of the
 ;   note 2 semitones above the key; sent only when the type is 128 (user).
@@ -18826,7 +18826,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote2_Skip20:
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 ; SndParam_ApplySystemParam_ScaleTuneUserNote3: Id 0x4286 (record 0x92 +5, RAM 0xFD21): user scale-tune offset of the
 ;   note 3 semitones above the key; sent only when the type is 128 (user).
@@ -18852,7 +18852,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote3_Skip21:
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 ; SndParam_ApplySystemParam_ScaleTuneUserNote4: Id 0x4287 (record 0x92 +6, RAM 0xFD22): user scale-tune offset of the
 ;   note 4 semitones above the key; sent only when the type is 128 (user).
@@ -18878,7 +18878,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote4_Skip22:
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 ; SndParam_ApplySystemParam_ScaleTuneUserNote5: Id 0x4288 (record 0x92 +7, RAM 0xFD23): user scale-tune offset of the
 ;   note 5 semitones above the key; sent only when the type is 128 (user).
@@ -18904,7 +18904,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote5_Skip23:
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 ; SndParam_ApplySystemParam_ScaleTuneUserNote6: Id 0x4289 (record 0x92 +8, RAM 0xFD24): user scale-tune offset of the
 ;   note 6 semitones above the key; sent only when the type is 128 (user).
@@ -18930,7 +18930,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote6_Skip24:
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 ; SndParam_ApplySystemParam_ScaleTuneUserNote7: Id 0x428A (record 0x92 +9, RAM 0xFD25): user scale-tune offset of the
 ;   note 7 semitones above the key; sent only when the type is 128 (user).
@@ -18956,7 +18956,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote7_Skip25:
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 ; SndParam_ApplySystemParam_ScaleTuneUserNote8: Id 0x428B (record 0x92 +10, RAM 0xFD26): user scale-tune offset of the
 ;   note 8 semitones above the key; sent only when the type is 128 (user).
@@ -18982,7 +18982,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote8_Skip26:
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 ; SndParam_ApplySystemParam_ScaleTuneUserNote9: Id 0x428C (record 0x92 +11, RAM 0xFD27): user scale-tune offset of the
 ;   note 9 semitones above the key; sent only when the type is 128 (user).
@@ -19008,7 +19008,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote9_Skip27:
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jrl	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 ; SndParam_ApplySystemParam_ScaleTuneUserNote10: Id 0x428D (record 0x92 +12, RAM 0xFD28): user scale-tune offset of
 ;   the note 10 semitones above the key; sent only when the type is 128 (user).
@@ -19034,7 +19034,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote10_Skip28:
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jr	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 ; SndParam_ApplySystemParam_ScaleTuneUserNote11: Id 0x428E (record 0x92 +13, RAM 0xFD29): user scale-tune offset of
 ;   the note 11 semitones above the key; sent only when the type is 128 (user).
@@ -19060,7 +19060,7 @@ SndParam_ApplySystemParam_ScaleTuneUserNote11_Skip29:
 	extz	wa
 	ld	de, wa
 	ldw	wa, 80
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jr	SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
 SndParam_ApplySystemParam_ScaleTuneUserNote11_Skip30:
 	ld	(0xcfb4:16), xwa
@@ -19410,7 +19410,7 @@ SeqVoice_CheckAndRet_RestoreReg:
 	lda xsp, (xsp + 12)
 	retd 0x2
 
-SeqVoice_CheckAndRet_Prologue:
+SubCPU_SendSystemRecord:
 	dec 6, xsp
 	ld (xsp + 0:8), 0x4
 	ld (xsp + 1), 0xf0
@@ -19600,24 +19600,24 @@ SendSysExCmd_Data:
 	ldw	wa, 80
 	ldw	bc, 133
 	ld	de, 0:i3
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jp	MIDI_PostSendStub
 
-COMM_WriteAndCheck:
+SubCPU_SetPolyphonyModeAndResendVolumes:
 	dec 4, xsp
 	ld (xsp + 2), a
 	ld a, 0x1:opc
 	cp (xsp + 2), 0x0
-	jr nz, WriteAndCheck_LoadParam
+	jr nz, SubCPU_SetPolyphonyMode_Send
 	ld a, 0x2:opc
 
-WriteAndCheck_LoadParam:
+SubCPU_SetPolyphonyMode_Send:
 	ld (xsp + 2), a
 	extz wa
 	ld de, wa
 	ldw wa, 0x7f
 	ldw bc, 0x9
-	calr SeqVoice_CheckAndRet_Prologue
+	calr SubCPU_SendSystemRecord
 	ldw (xsp), 0x0
 	cpw (xsp), 0x16
 	jr gt, MIDI_SendPartVol_ExtraParts
@@ -19741,7 +19741,7 @@ MIDI_SendAllVoicesPitchUpdate:
 	ldw	wa, 80
 	ldw	bc, 146
 	ld	de, 0:i3
-	calr	SeqVoice_CheckAndRet_Prologue
+	calr	SubCPU_SendSystemRecord
 	jp	MIDI_PostSendStub
 
 MIDI_SendAllSoundOff:

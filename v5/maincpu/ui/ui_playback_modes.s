@@ -1019,7 +1019,7 @@ SongBank_SaveAndReload:
 	ld wa, (0xf231:16)
 	ld	(0x2855:16), wa
 	call SongBank_LoadToWorkArea
-	call SongBank_CheckAccompanimentMode
+	call SongBank_ApplySongGmFlag
 	and	(0x2895:16), 254
 	ret
 
@@ -1040,22 +1040,22 @@ SongBank_LoadToWorkArea:
 	ld (0xf231:16), wa
 	ret
 
-SongBank_CheckAccompanimentMode:
+SongBank_ApplySongGmFlag:
 	cp (0xf23d:16), 255
-	jr z, SongBank_EnableAccompaniment
+	jr z, SongBank_SetGmOn
 	bit 2, (PANEL_GM+3:16)
 	jr z, SongBank_CheckBassMode
 	and (PANEL_GM+3:16), 251
 	xor a, a
-	jr SongBank_SendAccompEvent
+	jr SongBank_PostGmEvent
 
-SongBank_EnableAccompaniment:
+SongBank_SetGmOn:
 	bit 2, (PANEL_GM+3:16)
 	jr nz, SongBank_CheckBassMode
 	or (PANEL_GM+3:16), 4
 	ld a, 0x4:opc
 
-SongBank_SendAccompEvent:
+SongBank_PostGmEvent:
 	ld	(4330:16), 1
 	ld	e, 145:opc
 	ld	d, 3:opc

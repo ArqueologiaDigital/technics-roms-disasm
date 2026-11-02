@@ -4235,7 +4235,7 @@ SeqNote_HandleAccompChannel:
 	extz wa
 	calr Chan_IsActive
 	cp l, 1:i3
-	jrl z, SeqNote_NoteOff_WritePart
+	jrl z, SeqNoteCh_SendPitchBendEvent
 	jrl SeqNote_ConditionalWriteToBuffer
 
 SeqNoteCh_ClearAndRetStatus:
@@ -4318,14 +4318,14 @@ SeqNoteCh_HandleEventD0:
 	ld wa, bc
 	calr Chan_IsActive
 	cp l, 1:i3
-	jr z, SeqNote_SendNoteOff
+	jr z, SeqNoteCh_SendControllerEvent
 	jrl SeqNote_ConditionalWriteToBuffer
 
 SeqNoteCh_HandleEventD1:
 	ld wa, bc
 	calr Chan_IsActive
 	cp l, 1:i3
-	jr z, SeqNote_SendNoteOff
+	jr z, SeqNoteCh_SendControllerEvent
 	jrl SeqNote_ConditionalWriteToBuffer
 
 SeqNoteCh_HandleEventD3:
@@ -4334,7 +4334,7 @@ SeqNoteCh_HandleEventD3:
 	cp l, 1:i3
 	jrl nz, SeqNote_ConditionalWriteToBuffer
 
-SeqNote_SendNoteOff:
+SeqNoteCh_SendControllerEvent:
 	ld	a, (xsp + 18)
 	dec 1, a
 	ld	(xsp + 11), a
@@ -4359,7 +4359,7 @@ SeqNoteCh_HandleEventD2:
 	cp l, 1:i3
 	jr nz, SeqNote_ConditionalWriteToBuffer
 
-SeqNote_NoteOff_WritePart:
+SeqNoteCh_SendPitchBendEvent:
 	ld	a, (xsp + 18)
 	dec 1, a
 	ld	(xsp + 12), a
@@ -6703,7 +6703,7 @@ SeqCh_ClearActive_DrumShiftDone:
 	ret z
 	bit 2, (1054:16)
 	ret z
-	jp AccWrap_PlayModeStartPlay
+	jp AccWrap_PlayModeStopAcc
 
 NotePool_InsertEntry:
 	dec 8, xsp

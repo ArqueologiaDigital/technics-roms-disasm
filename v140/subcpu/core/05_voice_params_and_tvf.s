@@ -3395,7 +3395,7 @@ WaveSel_Emit_ZoneRecord_S6:
 ; itself against the wave ROM's own per-page directory; no CPU here can read that ROM.
 ; The firmware never range-checks the entry and never dereferences it, but it does modify it
 ; downstream: WaveSel_StageB_Store_Reg040 doubles the top nibble when bit 2 of 0x041343 is
-; set, and Voice_Init_Type1 adds (tick & 7) through Voice_Slot_ApplyPitchJitter. See
+; set, and Voice_Init_Type1 adds (tick & 7) through WaveSel_AddRandomEntryOffset. See
 ; "WHAT +0x040 SELECTS" in the staging-block header for the format and the open questions.
 WaveSel_Emit_ZoneRecord_S4:
 	extz de
@@ -4594,14 +4594,14 @@ Voice_Clamp_Byte_WA_Return:
 ; WaveSel_StageB_Store_Reg040, each copying word 0 of a zone record verbatim, plus
 ; Voice_InitVoiceState storing 0), the read half of WaveSel_StageB_Store_Reg040's
 ; read-modify-write, and the `lda_24 xwa, 0x0451ce` that hands the word to
-; Voice_Slot_ApplyPitchJitter. Nothing splits the word, range-checks the entry against a
+; WaveSel_AddRandomEntryOffset. Nothing splits the word, range-checks the entry against a
 ; count, or dereferences anything with it.
 ;
 ; * BUT IT IS NOT ALWAYS EMITTED AS STORED, AND THAT IS AN OPEN PROBLEM. Two sites change
 ; it after the zone record has been copied in:
 ;   - WaveSel_StageB_Store_Reg040 DOUBLES the top nibble in place when bit 2 of the global
 ;     audio-mode word 0x041343 is set -- class *= 2, i.e. a page/bank re-select;
-;   - Voice_Init_Type1 calls Voice_Slot_ApplyPitchJitter(0x0451CE) immediately after
+;   - Voice_Init_Type1 calls WaveSel_AddRandomEntryOffset(0x0451CE) immediately after
 ;     WaveSel_StageB_Build_Reg040, and that adds (tick & 7) to the WHOLE word.
 ; Under entry = bits[11:0] the second one picks a DIFFERENT directory entry on every note
 ; that goes through Voice_Init_Type1. On page 0 the consecutive entries of a shared-wave

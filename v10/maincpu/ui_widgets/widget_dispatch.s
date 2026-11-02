@@ -1461,7 +1461,7 @@ SoundMode_InitFuncTable:
 ; 16 x u32 RAM addresses 0xFDDA + 0x14*i.  VoiceData_ZeroFillAll (0xFD8A4E):
 ; `lda xbc,(<this>); ld xwa,xbc; lda xbc,(xbc+64)` -- walks the 16 entries
 ; (end = <this>+64) and clears each block.
-VoiceData_RamBlockPtrs:
+PanelVari_PartRecordPtrs:
 	.long 0x0000fdda, 0x0000fdee, 0x0000fe02, 0x0000fe16
 	.long 0x0000fe2a, 0x0000fe3e, 0x0000fe52, 0x0000fe66
 	.long 0x0000fe7a, 0x0000fe8e, 0x0000fea2, 0x0000feb6
@@ -6563,7 +6563,7 @@ SwbtB2_Code90_Listeners:
 	.long 0xffffffff
 ; code 0x91: callbacks SwbtWr_DispatchLoop calls for it
 SwbtB2_Code91_Listeners:
-	.long MidiCtrl_ModeSwitch_Data
+	.long MidiCtrl_GmSwitchListener
 	.long UIStateEvt_ProcessHandler
 	.long UIStateEvt_StubReturn
 	.long UIStateEvt_NullHandler

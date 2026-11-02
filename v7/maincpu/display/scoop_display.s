@@ -7244,7 +7244,7 @@ PerfMode_Handler_EvtB_Helper2_Join:
 	jrl	z, PerfMode_Handler_EvtB_Helper2_Skip2
 	call	Demo_PreSetupAndScan
 PerfMode_Handler_EvtB_Helper2_Skip2:
-	and	(0x33d2:16), 239
+	and	(ACC_SYNCHRO_ACTION:16), 239
 	and	(0x045b:16), 252
 	call	PerfMode_Handler_EvtB_Helper2_Helper10
 	or	(SEQ_RTMCFG:16), 4
