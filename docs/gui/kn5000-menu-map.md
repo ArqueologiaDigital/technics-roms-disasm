@@ -2437,7 +2437,7 @@ the sequencer punch-in record page.
     - `OBJ_PunchRecord_TrChordBox` TrChordBox [95,124 130x20]
     - `OBJ_PunchRecord_Label` Label "%" [215,88 12x19]
     - `OBJ_PunchRecord_SngSel` SngSel [62,33 200x48]
-    - `OBJ_MetPunchSw` AcFuncToggle [271,34 41x18]
+    - `OBJ_MetPunchSw` AcFuncToggle "~a4ON" [271,34 41x18]
     - `OBJ_PunchInOutSw` AcFuncToggle "PUNCH OUT" [234,118 78x18]
     - `OBJ_Meas_Label_2` Label "MEAS" [6,56 36x19]
     - `OBJ_PunchRecord_AcIndexEditSw` AcIndexEditSw [8,34 31x18]

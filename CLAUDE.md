@@ -1377,8 +1377,8 @@ delivers to Sub CPU `0x400` / `0xF000+` (`../technics-docs/subcpu-payload-proven
 | maincpu v9          | `v9/maincpu/kn5000_v9_program.s`                                 | 100.00%    | 100.0%                | 0 B           |
 | maincpu v8          | v9 source, `--defsym FW_VERSION_BYTE=0x08`                       | 100.00%    | as v9                 | as v9         |
 | maincpu v7          | `v7/maincpu/kn5000_v7_program.s`                                 | 100.00%    | 100.0%                | 0 B           |
-| maincpu v6          | `v6/maincpu/kn5000_v6_program.s` (ported from v7)                | 100.00%    | 99.3%                 | 13,756 B      |
-| maincpu v5          | `v5/maincpu/kn5000_v5_program.s` (ported from v6)                | 100.00%    | 99.2%                 | 15,910 B      |
+| maincpu v6          | `v6/maincpu/kn5000_v6_program.s` (ported from v7)                | 100.00%    | 99.8%                 | 3,640 B       |
+| maincpu v5          | `v5/maincpu/kn5000_v5_program.s` (ported from v6)                | 100.00%    | 99.8%                 | 4,537 B       |
 | subcpu payload v142 | `v142/subcpu/kn5000_subprogram_v142.s`                           | 100.00%    | 100.0%                | 0 B           |
 | subcpu payload v141 | `v141/subcpu/kn5000_subprogram_v141.s` (generated: v142 + EDITS) | 100.00%    | not measured          | 0 B           |
 | subcpu payload v140 | `v140/subcpu/kn5000_subprogram_v140.s` (generated: v141 + EDITS) | 100.00%    | not measured          | 0 B           |
@@ -1430,8 +1430,8 @@ in `make gate`. **maincpu v5** was made the same way from `v6/maincpu`
 
 **Source** and **Verbatim blob** are `python3 scripts/analysis/kn5000_source_coverage.py`,
 measured 2026-10-24 (the v7 row re-measured 2026-10-29, after the data-semantics lane
-kn5000-existing; the v6 and v5 rows 2026-10-31, lane open3/kn5000-ports, after
-`scripts/converters/port_todo_typed.py`; the table_data row 2026-11-02, lane open6/misc2): the script splits every ROM byte into assembly, typed data (including
+kn5000-existing; the v6 and v5 rows 2026-11-02, lane open6/kn5000-c, after
+`scripts/converters/ported_c_rebase.py` gave them their own C (13,756 / 15,910 B before); the table_data row 2026-11-02, lane open6/misc2): the script splits every ROM byte into assembly, typed data (including
 `.incbin`s that a committed generator rebuilds from checked-in source), clang-compiled C and
 verbatim blob (an `.incbin` nothing regenerates); "source" is everything but the blob.
 The table_data row's 15,634 B are the stale ends of an older SLIDE4K stream after demo songs 17 and 18

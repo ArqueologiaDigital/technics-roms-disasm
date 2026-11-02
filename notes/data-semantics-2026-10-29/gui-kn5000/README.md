@@ -224,10 +224,15 @@ ids are named in every GUI C file.
   after the record. The enums and the menu map name all of them.
 - **73 numeric ROM addresses** (75 in v6/v5): 25 in `naka_widget_descriptors.c`, 19 in `naka_block_007.c`, 15 in
   `naka_technichord_strings.c`, and a few handler words. They point at string or record interiors with no slice of
-  their own, and need a label split first.
+  their own, and need a label split first.  (2026-11-02, lane kn5000-c: 73 -> 9 per tree, 75 -> 11 in v6 / v5.  The class
+  descriptors' string pointers are ClassName_ / ClassPropdata_ labels, IvMesage_Windows are view ids, the
+  markup-tag handler words are FDemoText_Tag_* routines, MetPunchSw's texts are two strings.  The 9 left are fields
+  of records typed with the wrong layout, the population of the first bullet:
+  `notes/kn5000-c-2026-11-02/README.md`.)
 - **525 `field_XX` members** (533 in v7/v6/v5). 291 are in `naka_sequencer_channels.c`; none of those is read by its
   RAM address in the asm (checked: one direct `(0xADDR)` use among them), and none is a widget's cell. Naming them
-  needs the routines that reach them through a base pointer. The rest are spread over 15 files.
+  needs the routines that reach them through a base pointer. The rest are spread over 15 files.  (2026-11-02: 523 /
+  531, MetPunchSw's two strings retyped; still open, lane kn5000-c README has the next step.)
 - **1 property value has no name**: `TEST3.fontcolor = 0x0043`.  (Settled 2026-10-31, lane kn5000-a: it cannot have a
   firmware name.  ColorIDProc's name table names no 0x43, the boot palette's entry 0x43 is 0x000000, and
   `SineWaveScreenProc` never reads its fontcolor field, +42: it draws with the fixed colours 0xff / 0xf5.  (A comment in
