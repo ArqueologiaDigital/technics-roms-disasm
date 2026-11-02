@@ -28,3 +28,14 @@ table's 3..6 row is wrong; draft in `notes/open4-kn5000-b/cpanel/README.md`) and
 | 17  | (site, now fixed)                             | the wave-ROM part numbers of IC305 / IC306 were swapped on the site; the pages now follow `notes/sound-2026-10-31/README.md`                                                                                                                   | no notes change needed       |
 
 Also: technics-docs `tools/sound_categories_counts.py` still counts the string-scan lists that the cox catalogue replaced.
+
+## Found 2026-11-02 (docs-publish2, wave 6), not yet corrected
+
+| #  | note                                                                 | error                                                                                                                                                          |
+|----|----------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 18 | `kn7000/notes/ic18-rhythm-rom.md`, `table-semantics-2026-10-29.md`   | still use `func_<addr>` names the same lane renamed in `kn7000_manual.sym` (e.g. `func_48436229` = `NoteConvApply`, `func_48441DEB` = `StyleTemplateRebuild`, `func_484420EF` = `StyleDspUnitsApply`) |
+| 19 | `kn7000_manual.sym`, `kn6000_manual.sym` comments                    | the `StyleCountInBoundGet` and `NoteConvRules` comments still quote old `func_` names                                                                         |
+| 20 | `notes/open6-kn5000-d/accomp/README.md`                              | says its renames are "not applied" and quotes the old names; `rename_accomp.sed` was applied in 5a5311c56                                                     |
+| 21 | `notes/open6-kn5000-d/panel/README.md`                               | counts 23,434 typed DSP slot records; the 2026-10-31 note gave 23,487; neither reconciles the two                                                              |
+
+Also open from the same pass: the WAV counts on technics-docs `kn7000-wave-rom-format.md` / `media-files.md` (2,251 MAIN / 3,682) predate 6cd18610c, which merged two WAVs (the notes say 2,250); re-count with `pcm_wav.py verify` before changing them.
