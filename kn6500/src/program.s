@@ -142806,6 +142806,7 @@ func_4C04E0E5:
 	call	func_4C04E324_entry, [d2,d3,a2], 0x1c
 func_4C04E0E5_L1e:
 	ret	[a2], 0x14
+loc_4C04E106:
 	add	-0x10, sp
 	clr	d0
 	call	func_4C04E324_entry, [d2,d3,a2], 0x1c
@@ -144526,6 +144527,7 @@ func_4C04EFAD_entry_L114:
 	movbu	d1, (0x50250355)
 func_4C04EFAD_entry_L14b:
 	ret	[d2,d3], 0x24
+loc_4C04F100:
 	add	-0x10, sp
 	mov	0x00008040, d0
 	clr	d1
@@ -144568,6 +144570,7 @@ func_4C04F13B_L32:
 	bclr	0x02, (0x50250354)
 func_4C04F13B_L39:
 	ret	[d2], 0x14
+loc_4C04F177:
 	add	-0x10, sp
 	mov	0x00008041, d0
 	clr	d1
@@ -144606,6 +144609,7 @@ func_4C04F13B_La7:
 	bclr	0x1c, (0x5025035d)
 func_4C04F13B_Lae:
 	ret	0, 0x10
+loc_4C04F1EC:
 	add	-0x10, sp
 	mov	0x00008020, d0
 	clr	d1
@@ -144623,6 +144627,7 @@ func_4C04F13B_Ld6:
 	bclr	0x10, (0x5025035b)
 func_4C04F13B_Ldd:
 	ret	0, 0x10
+loc_4C04F21B:
 	add	-0x10, sp
 	mov	0x0000802a, d0
 	clr	d1
@@ -144932,6 +144937,7 @@ loc_4C04F5C5:
 	movbu	d0, (0x5025034f)
 func_4C04F3C9_L211:
 	ret	0, 0x1c
+loc_4C04F5DD:
 	add	-0x10, sp
 	mov	0x0000c004, d0
 	clr	d1
@@ -144981,6 +144987,7 @@ func_4C04F3C9_L29c:
 	movbu	d0, (0x50250357)
 func_4C04F3C9_L2b8:
 	ret	0, 0x10
+loc_4C04F684:
 	add	-0x10, sp
 	mov	0x0000d000, d0
 	clr	d1
@@ -145052,6 +145059,7 @@ func_4C04F6F7_L3a:
 	bclr	0x02, (0x5025035c)
 func_4C04F6F7_L41:
 	ret	[d2], 0x14
+loc_4C04F73B:
 	add	-0x10, sp
 	mov	0x0000d002, d0
 	clr	d1
@@ -145096,6 +145104,7 @@ func_4C04F76A_L3a:
 	bclr	0x80, (0x50250357)
 func_4C04F76A_L41:
 	ret	[d2], 0x14
+loc_4C04F7AE:
 	add	-0x10, sp
 	mov	0x0000c080, d0
 	clr	d1
@@ -145210,6 +145219,7 @@ func_4C04F76A_L173:
 	movbu	d0, (0x50250353)
 func_4C04F76A_L188:
 	ret	0, 0x10
+loc_4C04F8F5:
 	add	-0x10, sp
 	mov	0xa0, d0
 	clr	d1
@@ -145227,6 +145237,7 @@ func_4C04F76A_L1ad:
 	bclr	0x20, (0x5025034d)
 func_4C04F76A_L1b4:
 	ret	0, 0x10
+loc_4C04F921:
 	add	-0x10, sp
 	mov	0x00008080, d0
 	clr	d1
@@ -145244,6 +145255,7 @@ func_4C04F76A_L1dc:
 	bclr	0x02, (0x50250359)
 func_4C04F76A_L1e3:
 	ret	0, 0x10
+loc_4C04F950:
 	add	-8, sp
 	bclr	0x70, (0x50250355)
 	call	func_4C02F5E9, 0, 0
@@ -145378,7 +145390,9 @@ func_4C04FAA6:
 func_4C04FAB0:
 	bclr	0x04, (0x5025035a)
 	retf	0, 0
+loc_4C04FABA:
 	retf	0, 0
+loc_4C04FABD:
 	add	-0x10, sp
 	mov	0xb0, d0
 	clr	d1
@@ -145396,7 +145410,9 @@ func_4C04FAB0_L2f:
 	bclr	0x04, (0x50250350)
 func_4C04FAB0_L36:
 	ret	0, 0x10
+loc_4C04FAE9:
 	retf	0, 0
+loc_4C04FAEC:
 	add	-0x10, sp
 	mov	0x00008033, d0
 	clr	d1
@@ -145414,6 +145430,7 @@ func_4C04FAB0_L61:
 	bclr	0x40, (0x50250358)
 func_4C04FAB0_L68:
 	ret	0, 0x10
+loc_4C04FB1B:
 	add	-0x10, sp
 	mov	0x00008033, d0
 	clr	d1
@@ -145431,6 +145448,7 @@ func_4C04FAB0_L90:
 	bclr	0x80, (0x50250358)
 func_4C04FAB0_L97:
 	ret	0, 0x10
+loc_4C04FB4A:
 	add	-0x10, sp
 	mov	0x00008038, d0
 	clr	d1
@@ -145469,6 +145487,7 @@ func_4C04FAB0_Lfd:
 	ret	0, 0x10
 loc_4C04FBB0:
 	retf	0, 0
+loc_4C04FBB3:
 	add	-0x10, sp
 	mov	0x0000e004, d0
 	clr	d1
@@ -145486,6 +145505,7 @@ func_4C04FAB0_L128:
 	bclr	0x10, (0x5025034d)
 func_4C04FAB0_L12f:
 	ret	0, 0x10
+loc_4C04FBE2:
 	add	-0x10, sp
 	mov	3, d0
 	clr	d1
@@ -145597,6 +145617,7 @@ func_4C04FC3A_Ld9:
 	ret	[d2,d3,a2], 0x20
 # func_4C04FC3A + 0xdc: no traced path reaches what follows (--decode-gaps)
 	retf	0, 0
+loc_4C04FD19:
 	add	-0x10, sp
 	call	func_4C0524CA, 0, 0
 	extbu	d0
@@ -145727,6 +145748,7 @@ func_4C04FDF9_entry_L78:
 	bclr	0x20, (0x5025034c)
 func_4C04FDF9_entry_L7f:
 	ret	0, 0xc
+loc_4C04FE7E:
 	add	-0xc, sp
 	movbu	(0x5002dc75), d0
 	call	func_4C04FED6, 0, 0
@@ -145740,6 +145762,7 @@ func_4C04FDF9_entry_La4:
 	bclr	0x40, (0x50250358)
 func_4C04FDF9_entry_Lab:
 	ret	0, 0xc
+loc_4C04FEAA:
 	add	-0xc, sp
 	movbu	(0x5002dc75), d0
 	call	func_4C04FED6, 0, 0
@@ -279588,7 +279611,7 @@ TgVoiceEgSegParamGet_entry:
 	add	d1, a0
 	movbu	(0x24, sp), d1
 	movbu	(d0, a0), d2
-	mov	TgVoiceEgSegParamGet_Table, a0
+	mov	func_4C098DE3_entry_L1ae_Table+24, a0
 	movbu	(d1, a0), d0
 	clr	d3
 	and	d0, d2
@@ -279675,7 +279698,7 @@ TgVoiceEgSegFlagTest_entry:
 	asl2	d1
 	add	d2, d1
 	movbu	(d1, a0), d1
-	mov	TgVoiceEgSegFlagTest_Table, a0
+	mov	func_4C098DE3_entry_L1ae_Table+28, a0
 	movbu	(d0, a0), d0
 	and	d0, d1
 	beq	TgVoiceEgSegFlagTest_entry_L4d
@@ -445701,7 +445724,7 @@ R12OctaveFunc_L1c:
 	jmp	R12OctaveFunc_L12d
 R12OctaveFunc_L3f:
 	add	8, a0
-	cmp	data_4C236048, a0
+	cmp	func_4C0FE647_Voicing, a0
 	bcs	R12OctaveFunc_L4a
 	mov	a1, a0
 R12OctaveFunc_L4a:
@@ -519347,6 +519370,7 @@ loc_4C129F0F:
 	add	d0, d1
 	mov	d1, d0
 	bra	func_4C129EC4_entry_L6e
+loc_4C129F2B:
 	and	0xffff, d3
 	mov	d3, d0
 	bra	func_4C129EC4_entry_L6e
@@ -519420,6 +519444,7 @@ loc_4C129F94:
 	or	d0, d1
 	mov	d1, (a2)
 	bra	func_4C129F37_entry_L7b
+loc_4C129FAD:
 	exth	d3
 	mov	d3, (a2)
 	bra	func_4C129F37_entry_L7b

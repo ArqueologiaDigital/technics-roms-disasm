@@ -24090,7 +24090,7 @@ func_4852FDCA:
     add     -8, sp
 func_4852FDCA_entry:
     movbu   (0x5006f595), d1
-    movbu   (func_4852FDCA_Table), d0
+    movbu   (func_4852FD0A_Table+73), d0
     cmp     d0, d1
     bne     loc_4852FDE9
     call    GetMediaType_entry, [d2,a2,a3], 0x34
@@ -24147,7 +24147,7 @@ func_4852FE80:
     add     -0x10, sp
 func_4852FE80_entry:
     mov     0x5006f554, d2
-    mov     func_4852F7D7_Var, a3
+    mov     func_4852FD0A_Table+8, a3
     mov     d2, a0
     mov     a3, a1
     call    func_4852F7D7, 0, 0

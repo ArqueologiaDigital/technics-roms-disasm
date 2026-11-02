@@ -237,6 +237,10 @@ the next lane's work list (bytes per tree):
 | fixed-count tables past their typed part      | 4,663      | 5,244                    | 896    | ChordRecogTable2 (2048 x 2), the 32-slot hash tables, the 101-entry clamp, HpFlashWriteDefaults (99 words), the mixer pages, the CRC-7 table, the KN6000 constant-length copies |
 | copies into RAM of a constant length          | -          | 1,182 (in the row above) | -      | HpFlashWriteDefaults, MemStyleRecInit (128), func_4C02F9BB (memcpy 1,984)                                                                                                       |
 
+(Typed 2026-11-02 by lane mn10300-data, `../mn10300-data/README.md` section 1: `widget_vars`, `maps128`,
+`chord_voicings`, `sentinel_lists` (the terminator-ended and style lists), `fx_presets`, `index_bounds` and
+`table_terminators` (the fixed-count tables); what is still left is that note's section 4.)
+
 **Stays opaque, by group, and why**: alignment padding and record tails no reader reaches (941 443 B, the
 107 x `01 00` after the switch descriptors), IvCustomizeBase's x / y (no Hp* or Customize routine reads +0x30
 / +0x34), the reflection tables' second halves (the file-name slots: only the slot after the last name is

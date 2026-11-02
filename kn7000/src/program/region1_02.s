@@ -70383,6 +70383,7 @@ loc_48466F7A:
     add     d0, d1
     mov     d1, d0
     bra     loc_48466F9F
+loc_48466F96:
     and     0xffff, d3
     mov     d3, d0
     bra     loc_48466F9F
@@ -70455,6 +70456,7 @@ loc_48466FFF:
     or      d0, d1
     mov     d1, (a2)
     bra     loc_48467022
+loc_48467018:
     exth    d3
     mov     d3, (a2)
     bra     loc_48467022

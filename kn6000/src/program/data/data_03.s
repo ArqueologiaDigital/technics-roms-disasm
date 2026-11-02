@@ -9,7 +9,7 @@ func_4C001885_Var:	# u32, a constant; read / written by func_4C001885 0x4C001885
 localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x4C00246C `mov (0x10, a1), a0`; localeconv 0x4C00246C `mov (0x14, a1), a0`; localeconv 0x4C00246C `mov (0x18, a1), a0` (+12)
 	REC_localeconv_Records	text=Str_C_19, p4=data_4C17627E, p8=data_4C17627F, p12=data_4C176280, p16=data_4C176281, p20=data_4C176282, p24=data_4C176283, p28=data_4C176284, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
 localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x4C00246C `mov (0xc, a1), a0`; localeconv 0x4C00246C `mov (4, a1), a0`; localeconv 0x4C00246C `mov (8, a1), a0`
-	REC_localeconv_Records_2	text=Str_C_18, text_=Str_empty_977, p8=data_4C17628C, p12=data_4C17628D
+	REC_localeconv_Records_2	text=Str_C_18, text_=Str_empty_950, p8=data_4C17628C, p12=data_4C17628D
 	REC_localeconv_Records_2	
 
 localeconv_Table:	# 4 x u32, 0..2576980378; read by localeconv 0x4C00246C: `mov (localeconv_Table), d0`
@@ -7802,8 +7802,9 @@ func_4C05A1F2_Block:	# 3 bytes, copied whole by func_4C05A1F2 0x4C05A1F2: memcpy
 func_4C05A1F2_Block_2:	# 26 bytes, copied whole by func_4C05A1F2 0x4C05A1F2: memcpy(.., 26)
 	tab_u8	0, 3, 0, 96, 16, 6, 16, 2, 0, 2, 0, 15, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
-	.space	64, 0x20
 
+text_4C3599C0:	# 64 printable bytes with no NUL; no instruction reads them [INFERENCE: text]
+	.ascii	"                                                                "
 Str_compile_bank_0:	.asciz " compile bank 0 "
 # census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x359A11, 0x359A30
@@ -15958,8 +15959,9 @@ MemStyleAreaHeaderRestamp_Block:	# 3 bytes, copied whole by MemStyleAreaHeaderRe
 MemStyleAreaHeaderRestamp_Block_2:	# 26 bytes, copied whole by MemStyleAreaHeaderRestamp 0x4C057310: memcpy(.., 26)
 	tab_u8	0, 3, 0, 96, 13, 8, 4, 2, 2, 1, 2, 15, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
-	.space	64, 0x20
 
+text_4C361450:	# 64 printable bytes with no NUL; no instruction reads them [INFERENCE: text]
+	.ascii	"                                                                "
 Str_clear:	.asciz "    clear    "
 # census: opaque -- unknown-dump: 98 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x36149E, 0x361500
@@ -19217,10 +19219,16 @@ TgPartDrawbarLevelsDerive_Table_4:	# 10 x s16, -128..0; read by TgPartDrawbarLev
 	tab_s16	-128, -67, -51, -39, -27, -19, -11, -5, 0, 0
 TgPartDrawbarLevelsDerive_Table_5:	# 10 x s16, 0..16; read by TgPartDrawbarLevelsDerive 0x4C0898FB: `movhu	(d2, a0), d0`
 	tab_s16	0, 0, 2, 4, 6, 8, 10, 12, 14, 16
-func_4C08A2A3_entry_L91_Table:	# 1 x u16, 65535..65535; read by func_4C08A2A3_entry_L91 0x4C08A336: `movhu	(d0, a0), d0`
-	tab_u16	65535
-# census: opaque -- unknown-dump: 200 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3699B4, 0x369A7C
+func_4C08A2A3_entry_L91_Table:	# 101 x u16, 1..65535; read by func_4C08A2A3_entry_L91 0x4C08A336: `movhu	(d0, a0), d0`; 101 records: the index is bounded by func_4C08A2A3 0x4C08A2A3: `cmp 0x64, d0` ... `movhu (d0, a0), d0`
+	tab_u16	65535, 65535, 65535, 65535, 50803, 42336, 36691, 31046, 25401, 21168, 18345, 15523	# [0]
+	tab_u16	12700, 11289, 10584, 9878, 9172, 8467, 7761, 7056, 6350, 5644, 5292, 4939	# [12]
+	tab_u16	4586, 4233, 3880, 3528, 3175, 2822, 2646, 2469, 2293, 2116, 1940, 1764	# [24]
+	tab_u16	1587, 1411, 1323, 1234, 1146, 1058, 970, 882, 793, 705, 661, 617	# [36]
+	tab_u16	573, 529, 485, 441, 396, 352, 330, 308, 286, 264, 242, 220	# [48]
+	tab_u16	198, 176, 165, 154, 143, 132, 121, 110, 99, 88, 82, 77	# [60]
+	tab_u16	71, 66, 60, 55, 49, 44, 41, 38, 35, 33, 30, 27	# [72]
+	tab_u16	24, 22, 20, 19, 17, 16, 15, 13, 12, 11, 10, 8	# [84]
+	tab_u16	7, 5, 3, 2, 1	# [96]
 func_4C0801DE_entry_L1d_Table:	# 128 x u16, 0..7; read by func_4C0801DE_entry_L1d 0x4C0801FD: `movhu	(d0, a0), d0`
 	tab_u16	0, 0, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7	# [0]
 	tab_u16	0, 0, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7	# [12]
@@ -31558,32 +31566,32 @@ V_SeqIntTest_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x377270, 0x377274
 data_4C377274:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterMode_entry, [a2], 4` (+0, arg sp40); InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `call RegisterTitle_entry, [d2,a2], 8` (+0, arg sp40) (+1 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterMode (sp40): RegisterMode reads nothing through it at a fixed offset (it stores it, or keeps it for later); RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later); RegisterTitle (sp40): RegisterTitle reads nothing through it at a fixed offset (it stores it, or keeps it for later)
-	.long	data_4C2008CC	# +0
-data_4C377278:
-	# 208 bytes of text with no NUL, 16 characters a row [INFERENCE: fixed-width names]; no instruction reads them (tools/data_readers.py)
-	.ascii	"<ACT NO=1><SHOW "
-	.ascii	"OBJ=\"fdemo_a1\"><"
-	.ascii	"/ACT><ACT NO=2><"
-	.ascii	"SHOW OBJ=\"fdemo_"
-	.ascii	"a2\"></ACT><ACT N"
-	.ascii	"O=3><SHOW OBJ=\"f"
-	.ascii	"demo_a3\"></ACT><"
-	.ascii	"ACT NO=4><SHOW O"
-	.ascii	"BJ=\"fdemo_a4\"></"
-	.ascii	"ACT><ACT NO=5><S"
-	.ascii	"HOW OBJ=\"fdemo_a"
-	.ascii	"5\"></ACT><ACT NO"
-	.ascii	"=6><SHOW OBJ=\"fd"
+	# 2 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterMode_entry, [a2], 4` (+0, arg sp40); InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `call RegisterTitle_entry, [d2,a2], 8` (+0, arg sp40) (+1 more); byte rows (u8); the callee walk: RegisterMode (sp40): RegisterMode reads nothing through it at a fixed offset (it stores it, or keeps it for later); RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later); RegisterTitle (sp40): RegisterTitle reads nothing through it at a fixed offset (it stores it, or keeps it for later)
+	tab_u8	204, 8	# +0
 
-doubles_4C377348:	# IEEE-754 doubles (lo word, hi word)
-	.long	0x5F6F6D65, 0x3E223661	# 1850964.26
-	.long	0x43412F3C, 0x413C3E54	# 5.41086573e-09
-	.long	0x4E205443, 0x3E373D4F	# 2.67373158e+11
-	.long	0x4F48533C, 0x424F2057	# 5.57103515e+228
-# census: opaque -- unknown-dump: 1082 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x377368, 0x3777A2
-
+text_4C377276:	# 1323 printable bytes with no NUL; no instruction reads them [INFERENCE: text]
+	.ascii	" L<ACT NO=1><SHOW OBJ=\"fdemo_a1\"></ACT><ACT NO=2><SHOW OBJ=\"fdem"
+	.ascii	"o_a2\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_a3\"></ACT><ACT NO=4><SHOW"
+	.ascii	" OBJ=\"fdemo_a4\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_a5\"></ACT><ACT "
+	.ascii	"NO=6><SHOW OBJ=\"fdemo_a6\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_a7\"><"
+	.ascii	"/ACT><ACT NO=8><SHOW OBJ=\"fdemo_a8\"></ACT><ACT NO=9><SHOW OBJ=\"f"
+	.ascii	"demo_a9\"></ACT><ACT NO=10><SHOW OBJ=\"fdemo_aa\"></ACT><ACT NO=11>"
+	.ascii	"<SHOW OBJ=\"fdemo_ab\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_ac\"></ACT"
+	.ascii	"><ACT NO=13><SHOW OBJ=\"fdemo_ad\"></ACT><ACT NO=14><SHOW OBJ=\"fde"
+	.ascii	"mo_ae\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_af\"></ACT><ACT NO=16><S"
+	.ascii	"HOW OBJ=\"fdemo_ag\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_ah\"></ACT><"
+	.ascii	"ACT NO=18><SHOW OBJ=\"fdemo_ai\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo"
+	.ascii	"_aj\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_ak\"></ACT><ACT NO=21><SHO"
+	.ascii	"W OBJ=\"fdemo_al\"></ACT><ACT NO=22><SHOW OBJ=\"fdemo_am\"></ACT><AC"
+	.ascii	"T NO=23><SHOW OBJ=\"fdemo_an\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_a"
+	.ascii	"o\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_ap\"></ACT><ACT NO=26><SHOW "
+	.ascii	"OBJ=\"fdemo_aq\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_ar\"></ACT><ACT "
+	.ascii	"NO=28><SHOW OBJ=\"fdemo_as\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_at\""
+	.ascii	"></ACT><ACT NO=30><SHOW OBJ=\"fdemo_au\"></ACT><ACT NO=31><SHOW OB"
+	.ascii	"J=\"fdemo_av\"></ACT><ACT NO=32><SHOW OBJ=\"fdemo_aw\"></ACT><ACT NO"
+	.ascii	"=33><SHOW OBJ=\"fdemo_ax\"></ACT><ACT NO=34><SHOW OBJ=\"fdemo_ay\"><"
+	.ascii	"/ACT><ACT NO=35><SHOW OBJ=\"fdemo_az\"></ACT>"
+	.space	1, 0x00
 Str_ACT_NO_1_SHOW_OBJ_fdemo_b1_ACT_ACT_NO_2:	.asciz "<ACT NO=1><SHOW OBJ=\"fdemo_b1\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_b2\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_b3\"></ACT><ACT NO=4><SHOW OBJ=\"fdemo_b4\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_b5\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_b6\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_b7\"></ACT><ACT NO=8><SHOW OBJ=\"fdemo_b8\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_b9\"></ACT><ACT NO=10><SHOW OBJ=\"fdemo_ba\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_bb\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_bc\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_bd\"></ACT><ACT NO=14><SHOW OBJ=\"fdemo_be\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_bf\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_bg\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_bh\"></ACT><ACT NO=18><SHOW OBJ=\"fdemo_bi\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_bj\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_bk\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_bl\"></ACT><ACT NO=22><SHOW OBJ=\"fdemo_bm\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_bn\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_bo\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_bp\"></ACT><ACT NO=26><SHOW OBJ=\"fdemo_bq\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_br\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_bs\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_bt\"></ACT><ACT NO=30><SHOW OBJ=\"fdemo_bu\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_bv\"></ACT><ACT NO=32><SHOW OBJ=\"fdemo_bw\"></ACT><ACT NO=33><SHOW OBJ=\"fdemo_bx\"></ACT><ACT NO=34><SHOW OBJ=\"fdemo_by\"></ACT><ACT NO=35><SHOW OBJ=\"fdemo_bz\"></ACT>"
 Str_ACT_NO_1_SHOW_OBJ_fdemo_c1_ACT_ACT_NO_2:	.asciz "<ACT NO=1><SHOW OBJ=\"fdemo_c1\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_c2\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_c3\"></ACT><ACT NO=4><SHOW OBJ=\"fdemo_c4\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_c5\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_c6\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_c7\"></ACT><ACT NO=8><SHOW OBJ=\"fdemo_c8\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_c9\"></ACT><ACT NO=10><SHOW OBJ=\"fdemo_ca\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_cb\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_cc\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_cd\"></ACT><ACT NO=14><SHOW OBJ=\"fdemo_ce\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_cf\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_cg\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_ch\"></ACT><ACT NO=18><SHOW OBJ=\"fdemo_ci\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_cj\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_ck\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_cl\"></ACT><ACT NO=22><SHOW OBJ=\"fdemo_cm\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_cn\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_co\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_cp\"></ACT><ACT NO=26><SHOW OBJ=\"fdemo_cq\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_cr\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_cs\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_ct\"></ACT><ACT NO=30><SHOW OBJ=\"fdemo_cu\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_cv\"></ACT><ACT NO=32><SHOW OBJ=\"fdemo_cw\"></ACT><ACT NO=33><SHOW OBJ=\"fdemo_cx\"></ACT><ACT NO=34><SHOW OBJ=\"fdemo_cy\"></ACT><ACT NO=35><SHOW OBJ=\"fdemo_cz\"></ACT>"
 Str_ACT_NO_1_SHOW_OBJ_fdemo_d1_ACT_ACT_NO_2:	.asciz "<ACT NO=1><SHOW OBJ=\"fdemo_d1\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_d2\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_d3\"></ACT><ACT NO=4><SHOW OBJ=\"fdemo_d4\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_d5\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_d6\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_d7\"></ACT><ACT NO=8><SHOW OBJ=\"fdemo_d8\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_d9\"></ACT><ACT NO=10><SHOW OBJ=\"fdemo_da\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_db\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_dc\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_dd\"></ACT><ACT NO=14><SHOW OBJ=\"fdemo_de\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_df\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_dg\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_dh\"></ACT><ACT NO=18><SHOW OBJ=\"fdemo_di\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_dj\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_dk\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_dl\"></ACT><ACT NO=22><SHOW OBJ=\"fdemo_dm\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_dn\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_do\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_dp\"></ACT><ACT NO=26><SHOW OBJ=\"fdemo_dq\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_dr\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_ds\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_dt\"></ACT><ACT NO=30><SHOW OBJ=\"fdemo_du\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_dv\"></ACT><ACT NO=32><SHOW OBJ=\"fdemo_dw\"></ACT><ACT NO=33><SHOW OBJ=\"fdemo_dx\"></ACT><ACT NO=34><SHOW OBJ=\"fdemo_dy\"></ACT><ACT NO=35><SHOW OBJ=\"fdemo_dz\"></ACT>"
@@ -31600,7 +31608,7 @@ data_4C37B070:
 
 ptrs_4C37B088:
 	.long	data_4C200FD0
-	.long	data_4C377278
+	.long	text_4C377276+2
 	.long	data_4C37B070
 	.long	data_4C200FD1
 	.long	Str_ACT_NO_1_SHOW_OBJ_fdemo_b1_ACT_ACT_NO_2
@@ -37706,131 +37714,131 @@ V_SdOct_ResNames:
 .incbin_range "baserom/kn6000_program.rom", 0x382E3C, 0x382E40
 
 func_4C0FE816_entry_L18_Table:
-	.long	data_4C2354E4
-	.long	doubles_4C2354E8+92
-	.long	doubles_4C2354E8+188
-	.long	doubles_4C2355F0+20
-	.long	data_4C235664
-	.long	data_4C2356C4
-	.long	data_4C235724
-	.long	data_4C235784
-	.long	data_4C2357E4
-	.long	data_4C235844
-	.long	doubles_4C2358A0+4
-	.long	data_4C235904
-	.long	data_4C235964
-	.long	data_4C2359C4
-	.long	doubles_4C235A00+36
-	.long	doubles_4C235A60+36
-	.long	data_4C235AE4
-	.long	data_4C235B44
-	.long	data_4C235BA4
-	.long	data_4C235C04
-	.long	data_4C235C64
-	.long	doubles_4C235CB0+20
+	.long	func_4C0FE8A1_Voicing
+	.long	func_4C0FE8A1_Voicing_2
+	.long	func_4C0FE8A1_Voicing_3
+	.long	func_4C0FE8A1_Voicing_4
+	.long	func_4C0FE8A1_Voicing_5
+	.long	func_4C0FE8A1_Voicing_6
+	.long	func_4C0FE8A1_Voicing_7
+	.long	func_4C0FE8A1_Voicing_8
+	.long	func_4C0FE8A1_Voicing_9
+	.long	func_4C0FE8A1_Voicing_10
+	.long	func_4C0FE8A1_Voicing_11
+	.long	func_4C0FE8A1_Voicing_12
+	.long	func_4C0FE8A1_Voicing_13
+	.long	func_4C0FE8A1_Voicing_14
+	.long	func_4C0FE8A1_Voicing_15
+	.long	func_4C0FE8A1_Voicing_16
+	.long	func_4C0FE8A1_Voicing_17
+	.long	func_4C0FE8A1_Voicing_18
+	.long	func_4C0FE8A1_Voicing_19
+	.long	func_4C0FE8A1_Voicing_20
+	.long	func_4C0FE8A1_Voicing_21
+	.long	func_4C0FE8A1_Voicing_22
 func_4C0FE816_entry_L36_Table:
-	.long	data_4C2354E4
-	.long	doubles_4C2354E8+92
-	.long	doubles_4C2354E8+188
-	.long	doubles_4C2355F0+20
-	.long	data_4C235664
-	.long	data_4C2356C4
-	.long	data_4C235724
-	.long	data_4C235784
-	.long	data_4C2357E4
-	.long	data_4C235844
-	.long	data_4C235D24
-	.long	data_4C235904
-	.long	data_4C235D84
-	.long	data_4C2359C4
-	.long	data_4C235DE4
-	.long	doubles_4C235A60+36
-	.long	data_4C235AE4
-	.long	data_4C235E44
-	.long	data_4C235BA4
-	.long	data_4C235EA4
-	.long	data_4C235C64
-	.long	doubles_4C235CB0+20
-	.long	doubles_4C235EE0+36
-	.long	data_4C235F64
-	.long	doubles_4C235FB8+12
-	.long	data_4C236024
-	.long	doubles_4C236080+4
-	.long	data_4C2360E4
-	.long	data_4C236144
-	.long	doubles_4C236190+20
-	.long	data_4C236204
-	.long	data_4C236264
-	.long	data_4C2362C4
-	.long	data_4C236324
-	.long	data_4C236384
-	.long	data_4C2363E4
-	.long	data_4C236444
-	.long	data_4C2364A4
-	.long	data_4C236504
+	.long	func_4C0FE8A1_Voicing
+	.long	func_4C0FE8A1_Voicing_2
+	.long	func_4C0FE8A1_Voicing_3
+	.long	func_4C0FE8A1_Voicing_4
+	.long	func_4C0FE8A1_Voicing_5
+	.long	func_4C0FE8A1_Voicing_6
+	.long	func_4C0FE8A1_Voicing_7
+	.long	func_4C0FE8A1_Voicing_8
+	.long	func_4C0FE8A1_Voicing_9
+	.long	func_4C0FE8A1_Voicing_10
+	.long	func_4C0FE8A1_Voicing_23
+	.long	func_4C0FE8A1_Voicing_12
+	.long	func_4C0FE8A1_Voicing_24
+	.long	func_4C0FE8A1_Voicing_14
+	.long	func_4C0FE8A1_Voicing_25
+	.long	func_4C0FE8A1_Voicing_16
+	.long	func_4C0FE8A1_Voicing_17
+	.long	func_4C0FE8A1_Voicing_26
+	.long	func_4C0FE8A1_Voicing_19
+	.long	func_4C0FE8A1_Voicing_27
+	.long	func_4C0FE8A1_Voicing_21
+	.long	func_4C0FE8A1_Voicing_22
+	.long	func_4C0FE8A1_Voicing_28
+	.long	func_4C0FE8A1_Voicing_29
+	.long	func_4C0FE8A1_Voicing_30
+	.long	func_4C0FE8A1_Voicing_31
+	.long	func_4C0FE8A1_Voicing_32
+	.long	func_4C0FE8A1_Voicing_33
+	.long	func_4C0FE8A1_Voicing_34
+	.long	func_4C0FE8A1_Voicing_35
+	.long	func_4C0FE8A1_Voicing_36
+	.long	func_4C0FE8A1_Voicing_37
+	.long	func_4C0FE8A1_Voicing_38
+	.long	func_4C0FE8A1_Voicing_39
+	.long	func_4C0FE8A1_Voicing_40
+	.long	func_4C0FE8A1_Voicing_41
+	.long	func_4C0FE8A1_Voicing_42
+	.long	func_4C0FE8A1_Voicing_43
+	.long	func_4C0FE8A1_Voicing_44
 func_4C0FE816_entry_L18_Table_2:
-	.long	data_4C236564
-	.long	data_4C23657D
-	.long	data_4C236596
-	.long	data_4C2365B7
-	.long	data_4C2365D0
-	.long	data_4C2365E9
-	.long	data_4C2365F2
-	.long	data_4C2365FB
-	.long	data_4C23661C
-	.long	data_4C236625
-	.long	data_4C23662E
-	.long	data_4C236647
-	.long	data_4C236668
-	.long	data_4C236689
-	.long	data_4C236692
-	.long	data_4C2366AB
-	.long	data_4C2366BC
-	.long	data_4C2366DD
-	.long	data_4C2366FE
-	.long	data_4C23671F
-	.long	data_4C236740
-	.long	data_4C236749
+	.long	func_4C0FE8A1_Inversions
+	.long	func_4C0FE8A1_Inversions_2
+	.long	func_4C0FE8A1_Inversions_3
+	.long	func_4C0FE8A1_Inversions_4
+	.long	func_4C0FE8A1_Inversions_5
+	.long	func_4C0FE8A1_Inversions_6
+	.long	func_4C0FE8A1_Inversions_7
+	.long	func_4C0FE8A1_Inversions_8
+	.long	func_4C0FE8A1_Inversions_9
+	.long	func_4C0FE8A1_Inversions_10
+	.long	func_4C0FE8A1_Inversions_11
+	.long	func_4C0FE8A1_Inversions_12
+	.long	func_4C0FE8A1_Inversions_13
+	.long	func_4C0FE8A1_Inversions_14
+	.long	func_4C0FE8A1_Inversions_15
+	.long	func_4C0FE8A1_Inversions_16
+	.long	func_4C0FE8A1_Inversions_17
+	.long	func_4C0FE8A1_Inversions_18
+	.long	func_4C0FE8A1_Inversions_19
+	.long	func_4C0FE8A1_Inversions_20
+	.long	func_4C0FE8A1_Inversions_21
+	.long	func_4C0FE8A1_Inversions_22
 func_4C0FE816_entry_L36_Table_2:
-	.long	data_4C236564
-	.long	data_4C23657D
-	.long	data_4C236596
-	.long	data_4C2365B7
-	.long	data_4C2365D0
-	.long	data_4C2365E9
-	.long	data_4C2365F2
-	.long	data_4C2365FB
-	.long	data_4C236754
-	.long	data_4C236625
-	.long	data_4C236765
-	.long	data_4C236647
-	.long	data_4C23676E
-	.long	data_4C236689
-	.long	data_4C236787
-	.long	data_4C2366AB
-	.long	data_4C2366BC
-	.long	data_4C236798
-	.long	data_4C2366FE
-	.long	data_4C2367A1
-	.long	data_4C2367AA
-	.long	data_4C2367BB
-	.long	data_4C2367D4
-	.long	data_4C2367ED
-	.long	data_4C236816
-	.long	data_4C23683F
-	.long	data_4C236868
-	.long	data_4C236891
-	.long	data_4C2368AA
-	.long	data_4C2368C3
-	.long	data_4C2368CC
-	.long	data_4C2368D5
-	.long	data_4C2368DE
-	.long	data_4C2368E7
-	.long	data_4C2368F0
-	.long	data_4C2368F9
-	.long	data_4C236902
-	.long	data_4C23690B
-	.long	data_4C236914
+	.long	func_4C0FE8A1_Inversions
+	.long	func_4C0FE8A1_Inversions_2
+	.long	func_4C0FE8A1_Inversions_3
+	.long	func_4C0FE8A1_Inversions_4
+	.long	func_4C0FE8A1_Inversions_5
+	.long	func_4C0FE8A1_Inversions_6
+	.long	func_4C0FE8A1_Inversions_7
+	.long	func_4C0FE8A1_Inversions_8
+	.long	func_4C0FE8A1_Inversions_23
+	.long	func_4C0FE8A1_Inversions_10
+	.long	func_4C0FE8A1_Inversions_24
+	.long	func_4C0FE8A1_Inversions_12
+	.long	func_4C0FE8A1_Inversions_25
+	.long	func_4C0FE8A1_Inversions_14
+	.long	func_4C0FE8A1_Inversions_26
+	.long	func_4C0FE8A1_Inversions_16
+	.long	func_4C0FE8A1_Inversions_17
+	.long	func_4C0FE8A1_Inversions_27
+	.long	func_4C0FE8A1_Inversions_19
+	.long	func_4C0FE8A1_Inversions_28
+	.long	func_4C0FE8A1_Inversions_29
+	.long	func_4C0FE8A1_Inversions_30
+	.long	func_4C0FE8A1_Inversions_31
+	.long	func_4C0FE8A1_Inversions_32
+	.long	func_4C0FE8A1_Inversions_33
+	.long	func_4C0FE8A1_Inversions_34
+	.long	func_4C0FE8A1_Inversions_35
+	.long	func_4C0FE8A1_Inversions_36
+	.long	func_4C0FE8A1_Inversions_37
+	.long	func_4C0FE8A1_Inversions_38
+	.long	func_4C0FE8A1_Inversions_39
+	.long	func_4C0FE8A1_Inversions_40
+	.long	func_4C0FE8A1_Inversions_41
+	.long	func_4C0FE8A1_Inversions_42
+	.long	func_4C0FE8A1_Inversions_43
+	.long	func_4C0FE8A1_Inversions_44
+	.long	func_4C0FE8A1_Inversions_45
+	.long	func_4C0FE8A1_Inversions_46
+	.long	func_4C0FE8A1_Inversions_47
 	.long	loc_4C100603
 	.long	loc_4C100606
 	.long	loc_4C100609

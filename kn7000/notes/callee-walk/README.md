@@ -199,11 +199,14 @@ the new records' pointer fields name 6 more code addresses (`code_refs.txt`: +6,
   address in memory, and whoever loads it from there later reads the block.  Lane mn10300-typer's `mem_ptrs`
   follows a store to memory and a load back (`../mn10300-typer/README.md`, 3a); it finds SetApTimer's message
   field, but the only load of it, in ApTimer, hands it to ProcCall, a dispatch through a function pointer, so
-  these blocks still stay rows, with the reason in their header.  (Lane mn10300-rest,
+  these blocks still stay rows, with the reason in their header.  (BLOCKED, lane mn10300-data 2026-11-02: a
+run-time dispatch, see `../mn10300-data/README.md` section 3.)  (Lane mn10300-rest,
   `../mn10300-rest/README.md` section 3: ProcCall takes the procedure from the RAM table 0x5011FAAC that a
   window fills when it registers: a run-time dispatch, so this stays.)
 - **Library routines.**  memcpy / strcpy / LibStrlen and the like: the bytes are copied or measured, the
-  layout is the copy's reader's.  Kept as rows (or `copied_blocks()`'s typed copies).
+  layout is the copy's reader's.  Kept as rows (or `copied_blocks()`'s typed copies).  (Lane mn10300-data,
+  2026-11-02: the strcpy / LibStrlen arguments are strings already; what is left handed only to memcpy is
+  listed in `../mn10300-data/README.md` section 3.)
 - ~~**Arrays indexed by a loop counter.**~~ (resolved by lane mn10300-typer, `loop_index`: the counter is an
   induction variable at the loop head, its start kept.)  The linear walk takes a counter's first value as a constant
   (DrawBitmapSPFast16_Impl's palette loop starts at index 0x20), so such a callee shows one field at +0;
@@ -219,7 +222,8 @@ the new records' pointer fields name 6 more code addresses (`code_refs.txt`: +6,
   counts before and after are `../mn10300-formats-probes/field_names_census.py`'s.
 - **The siblings' walk** now has ext's slots (narrowed), joins and return sets, not its other rules
   (pointer-from-a-field returns, loop bodies keeping slots, bounds); `readers_ext` itself made the KN2400
-  worse (`../../../kn6000/notes/siblings-data-final/README.md`).
+  worse (`../../../kn6000/notes/siblings-data-final/README.md`).  (Resolved 2026-11-02, lane mn10300-data:
+  four of ext's rules ported one at a time, `sib_rules`, each measured; `../mn10300-data/README.md` section 2.)
 - A handful of bytes per sibling that a reader table or a record's head held are now in reader rows,
   because a record the new joins find claims a different extent (KN6000 / KN6500: 29 bytes, KN2400: 8;
   `callee_off_on.py` lists them).

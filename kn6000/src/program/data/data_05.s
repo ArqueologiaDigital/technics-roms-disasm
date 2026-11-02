@@ -37780,7 +37780,7 @@ Str_empty_263:	.asciz "("
 Str_empty_262:	.asciz ","
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DD72A, 0x3DD732
-Str_0_8:	.asciz "0"
+Str_0_15:	.asciz "0"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DD734, 0x3DD73C
 Str_empty_261:	.asciz "@"
@@ -37996,7 +37996,7 @@ data_4C3DD9EE:
 data_4C3DD9F8:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x3DD9F8, 0x3DDA02
-Str_8_5:	.asciz "8"
+Str_8_11:	.asciz "8"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DDA04, 0x3DDA0C
 Str_H:	.asciz "H"
@@ -38041,7 +38041,7 @@ data_4C3DDA84:
 data_4C3DDA8E:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x3DDA8E, 0x3DDA98
-Str_D:	.asciz "D"
+Str_D_9:	.asciz "D"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DDA9A, 0x3DDAA2
 data_4C3DDAA2:
@@ -38265,7 +38265,7 @@ ptrs_4C3DE09C:
 	.long	Text_Italian_Pop+136
 	.long	Str_empty_262
 	.long	Text_Italian_Pop+153
-	.long	Str_0_8
+	.long	Str_0_15
 	.long	Text_Italian_Pop+170
 	.long	Str_empty_261
 	.long	Text_Italian_Pop+187
@@ -38415,7 +38415,7 @@ ptrs_4C3DE32C:
 	.long	Text_Italian_Pop+1360
 	.long	data_4C3DD9F8
 	.long	Text_Italian_Pop+1377
-	.long	Str_8_5
+	.long	Str_8_11
 	.long	Text_Italian_Pop+1394
 	.long	Str_H
 	.long	Text_Italian_Pop+1411
@@ -38448,7 +38448,7 @@ ptrs_4C3DE3AC:
 	.long	Text_90_s_Boy_Groups
 	.long	data_4C3DDA8E
 	.long	Text_90_s_Boy_Groups+17
-	.long	Str_D
+	.long	Str_D_9
 	.long	Text_90_s_Boy_Groups+34
 	.long	data_4C3DDAA2
 	.long	Text_90_s_Boy_Groups+51
@@ -38812,7 +38812,7 @@ StyleAlphabetTable_p4_6:	# REC_StyleAlphabetTable_p4 (6 bytes)
 
 Str_X_4:	.asciz "X"
 	.space	2, 0xFF
-Str_3_17:	.asciz "3"
+Str_3_25:	.asciz "3"
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DE958, 0x3DE95C
 
@@ -38919,21 +38919,21 @@ StyleAlphabetTable_p4_27:	# REC_StyleAlphabetTable_p4 (6 bytes)
 	REC_StyleAlphabetTable_p4	f0=573, x2="\xFF\xFF\xFF\xFF"
 
 StyleAlphabetTable:	# 34 x StyleLetter (8 bytes each); read by func_4C164F3F 0x4C164F3F `mov (4, a0), a0`; func_4C164F3F 0x4C164F3F `mov (d2, a2), a1`; func_4C165012 0x4C165012 `mov (d1, a0), d1` (+7)
-	StyleLetter	letter=Str_1_17, setups=StyleAlphabetTable_p4_0	# [0]
-	StyleLetter	letter=Str_2_19, setups=StyleAlphabetTable_p4_1
-	StyleLetter	letter=Str_4_18, setups=StyleAlphabetTable_p4_2
-	StyleLetter	letter=Str_5_14, setups=StyleAlphabetTable_p4_3
-	StyleLetter	letter=Str_6_14, setups=StyleAlphabetTable_p4_4
-	StyleLetter	letter=Str_7_5, setups=StyleAlphabetTable_p4_5
-	StyleLetter	letter=Str_8_6, setups=StyleAlphabetTable_p4_6
-	StyleLetter	letter=Str_9_5, setups=Str_3_17
-	StyleLetter	letter=Str_A_3, setups=StyleAlphabetTable_p4_7	# [8]
-	StyleLetter	letter=Str_B_3, setups=StyleAlphabetTable_p4_8
-	StyleLetter	letter=Str_C_3, setups=StyleAlphabetTable_p4_9
-	StyleLetter	letter=Str_D_2, setups=StyleAlphabetTable_p4_10
-	StyleLetter	letter=Str_E, setups=StyleAlphabetTable_p4_11
-	StyleLetter	letter=Str_F, setups=Str_R
-	StyleLetter	letter=Str_G, setups=StyleAlphabetTable_p4_12
+	StyleLetter	letter=Str_1_28, setups=StyleAlphabetTable_p4_0	# [0]
+	StyleLetter	letter=Str_2_30, setups=StyleAlphabetTable_p4_1
+	StyleLetter	letter=Str_4_24, setups=StyleAlphabetTable_p4_2
+	StyleLetter	letter=Str_5_20, setups=StyleAlphabetTable_p4_3
+	StyleLetter	letter=Str_6_20, setups=StyleAlphabetTable_p4_4
+	StyleLetter	letter=Str_7_11, setups=StyleAlphabetTable_p4_5
+	StyleLetter	letter=Str_8_12, setups=StyleAlphabetTable_p4_6
+	StyleLetter	letter=Str_9_10, setups=Str_3_25
+	StyleLetter	letter=Str_A_26, setups=StyleAlphabetTable_p4_7	# [8]
+	StyleLetter	letter=Str_B_13, setups=StyleAlphabetTable_p4_8
+	StyleLetter	letter=Str_C_14, setups=StyleAlphabetTable_p4_9
+	StyleLetter	letter=Str_D_10, setups=StyleAlphabetTable_p4_10
+	StyleLetter	letter=Str_E_8, setups=StyleAlphabetTable_p4_11
+	StyleLetter	letter=Str_F_10, setups=Str_R
+	StyleLetter	letter=Str_G_9, setups=StyleAlphabetTable_p4_12
 	StyleLetter	letter=Str_H_2, setups=StyleAlphabetTable_p4_13
 	StyleLetter	letter=Str_I, setups=StyleAlphabetTable_p4_14	# [16]
 	StyleLetter	letter=Str_J, setups=StyleAlphabetTable_p4_15
@@ -38942,7 +38942,7 @@ StyleAlphabetTable:	# 34 x StyleLetter (8 bytes each); read by func_4C164F3F 0x4
 	StyleLetter	letter=Str_M, setups=StyleAlphabetTable_p4_18
 	StyleLetter	letter=Str_N_2, setups=StyleAlphabetTable_p4_19
 	StyleLetter	letter=Str_O, setups=Str_N
-	StyleLetter	letter=Str_P_2, setups=StyleAlphabetTable_p4_20
+	StyleLetter	letter=Str_P_10, setups=StyleAlphabetTable_p4_20
 	StyleLetter	letter=Str_Q_2, setups=StyleAlphabetTable_p4_21	# [24]
 	StyleLetter	letter=Str_R_2, setups=StyleAlphabetTable_p4_22
 	StyleLetter	letter=Str_S, setups=StyleAlphabetTable_p4_23

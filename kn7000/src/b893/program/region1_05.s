@@ -21914,7 +21914,7 @@ func_484AE4D2_entry:
     cmp     0, d1
     beq     loc_484AE500
     exthu   d0
-    mov     MsgTable_48613AE0, a0
+    mov     func_484AE5C0_MsgTable, a0
     call    func_484AE5C0_entry, [d2,a2], 0x10
     clr     d0
     movhu   d0, (0x5006bfb8)
@@ -21929,7 +21929,7 @@ loc_484AE500:
     beq     loc_484AE52A
     mov     d2, d0
     exthu   d0
-    mov     MsgTable_48613B50, a0
+    mov     func_484AE5C0_MsgTable_2, a0
     call    func_484AE5C0_entry, [d2,a2], 0x10
     clr     d0
     movhu   d0, (0x5006bfbc)
@@ -21943,7 +21943,7 @@ loc_484AE52A:
     cmp     0, d1
     beq     loc_484AE553
     exthu   d0
-    mov     MsgTable_48613B98, a0
+    mov     func_484AE5C0_MsgTable_3, a0
     call    func_484AE5C0_entry, [d2,a2], 0x10
     clr     d0
     movhu   d0, (0x5006bfc0)
@@ -21957,7 +21957,7 @@ loc_484AE553:
     cmp     0, d1
     beq     loc_484AE57C
     exthu   d0
-    mov     MsgTable_48613BE8, a0
+    mov     func_484AE5C0_MsgTable_4, a0
     call    func_484AE5C0_entry, [d2,a2], 0x10
     clr     d0
     movhu   d0, (0x5006bfc4)
@@ -21978,7 +21978,7 @@ loc_484AE59D:
     cmp     0, d0
     beq     loc_484AE5B8
     movhu   (0x5006bfc2), d0
-    mov     MsgTable_48613C18, a0
+    mov     func_484AE5C0_MsgTable_5, a0
     call    func_484AE5C0_entry, [d2,a2], 0x10
 loc_484AE5B8:
     call    func_484B14D5_entry, 0, 8
