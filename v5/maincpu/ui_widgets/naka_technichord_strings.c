@@ -119,6 +119,15 @@ extern const char SingleLoadSrc_ComposerListProc;
 extern const char SingleLoadSrc_PanelMemListProc;
 extern const char SingleLoadSrc_SequencerListProc;
 extern const char SingleLoadSrc_SoundMemListProc;
+extern const char FDemoText_Tag_ACT;
+extern const char FDemoText_Tag_BR;
+extern const char FDemoText_Tag_CENTER;
+extern const char FDemoText_Tag_EndACT;
+extern const char FDemoText_Tag_EndCENTER;
+extern const char FDemoText_Tag_EndFONT;
+extern const char FDemoText_Tag_FONT;
+extern const char FDemoText_Tag_IMG;
+extern const char FDemoText_Tag_SHOW;
 
 #define BASE  0x00E85E6Au
 
@@ -6461,25 +6470,25 @@ const naka_technichord_strings_t naka_technichord_strings_data
     },
 
     .FDemoText_MarkupTag_HandlerColumn = {
-        0x00F85A28,
+        NAKA_ADDR(FDemoText_Tag_BR),
         SELF(CENTER_str),
-        0x00F85A36,
+        NAKA_ADDR(FDemoText_Tag_CENTER),
         SELF(Center_str),
-        0x00F85A61,
+        NAKA_ADDR(FDemoText_Tag_EndCENTER),
         SELF(FONT_str),
-        0x00F85A96,
+        NAKA_ADDR(FDemoText_Tag_FONT),
         SELF(Font_str),
-        0x00F85BCC,
+        NAKA_ADDR(FDemoText_Tag_EndFONT),
         SELF(IMG_str),
-        0x00F85C22,
+        NAKA_ADDR(FDemoText_Tag_IMG),
         SELF(SHOW_str),
-        0x00F85D0F,
+        NAKA_ADDR(FDemoText_Tag_SHOW),
         SELF(EXEC_str),
         NAKA_ADDR(FDemoText_ByteData_LayoutEngine),
         SELF(ACT_str),
-        0x00F858D5,
+        NAKA_ADDR(FDemoText_Tag_ACT),
         SELF(Act_str),
-        0x00F85A1C,
+        NAKA_ADDR(FDemoText_Tag_EndACT),
         SELF(PRESENTATION_str),
         0x00000000,
         SELF(Presentation_str),

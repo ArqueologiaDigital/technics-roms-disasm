@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 54,055
-#   semantic names ........... 53,763 (99.5%)
+#   symbols .................. 54,064
+#   semantic names ........... 53,772 (99.5%)
 #   positional names ......... 292
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -39112,6 +39112,7 @@ FDemoText_TextDispatch_Join 00F857C0
 FDemoText_TextDispatch_Join2 00F857C3
 FDemoText_TextDispatch_Skip3 00F857E1
 FDemoText_TextDispatch_Skip4 00F858CC
+FDemoText_Tag_ACT 00F858D5
 FDemoText_TextDispatch_Loop6 00F858F9
 FDemoText_TextDispatch_Loop7 00F85910
 FDemoText_TextDispatch_Skip5 00F85939
@@ -39122,11 +39123,16 @@ FDemoText_TextDispatch_Join7 00F8596E
 FDemoText_TextDispatch_Skip13 00F85991
 FDemoText_TextDispatch_Skip14 00F859F5
 FDemoText_TextDispatch_Join4 00F85A13
+FDemoText_Tag_EndACT 00F85A1C
 FDemoText_TextDispatch_Skip15 00F85A25
+FDemoText_Tag_BR 00F85A28
 FDemoText_TextDispatch_Skip16 00F85A33
+FDemoText_Tag_CENTER 00F85A36
 FDemoText_TextDispatch_Skip17 00F85A5E
+FDemoText_Tag_EndCENTER 00F85A61
 FDemoText_TextDispatch_Skip18 00F85A83
 FDemoText_TextDispatch_Skip19 00F85A93
+FDemoText_Tag_FONT 00F85A96
 FDemoText_TextDispatch_Loop8 00F85AE1
 FDemoText_TextDispatch_Loop9 00F85AF7
 FDemoText_TextDispatch_Skip20 00F85B38
@@ -39134,8 +39140,10 @@ FDemoText_TextDispatch_Skip8 00F85B4C
 FDemoText_TextDispatch_Join8 00F85B4F
 FDemoText_TextDispatch_Skip21 00F85B6E
 FDemoText_TextDispatch_Skip22 00F85BC3
+FDemoText_Tag_EndFONT 00F85BCC
 FDemoText_TextDispatch_Skip23 00F85BF7
 FDemoText_TextDispatch_Skip9 00F85C1F
+FDemoText_Tag_IMG 00F85C22
 FDemoText_TextDispatch_Loop12 00F85C60
 FDemoText_TextDispatch_Loop13 00F85C7A
 FDemoText_TextDispatch_Skip26 00F85CA8
@@ -39146,6 +39154,7 @@ FDemoText_TextDispatch_Join9 00F85CBD
 FDemoText_TextDispatch_Skip25 00F85CDB
 FDemoText_TextDispatch_Skip28 00F85CFC
 FDemoText_TextDispatch_Join10 00F85D06
+FDemoText_Tag_SHOW 00F85D0F
 FDemoText_TextDispatch_Loop10 00F85D3E
 FDemoText_TextDispatch_Loop11 00F85D56
 FDemoText_TextDispatch_Skip10 00F85D7A
