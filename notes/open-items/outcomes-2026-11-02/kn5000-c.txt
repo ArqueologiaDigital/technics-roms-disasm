@@ -1,0 +1,9 @@
+T-kn5000-v6-todo-port  OPEN     13,756 -> 3,615 B (1becec8c9, 0c9eb932d, 3f4df7a2e, c896c0532); next: the 3,403 B TODO(port) .byte rows and 212 json raw bytes (notes/kn5000-c-2026-11-02/README.md)
+T-kn5000-v5-todo-port  OPEN     15,910 -> 4,504 B (same commits); next: the 4,284 B TODO(port) rows and 220 json raw bytes
+N-45db7885             OPEN     73 -> 9 (v6/v5 75 -> 11); next: retype the records with the wrong layout by class (N-2f640c1d)
+N-c49a6232             CLOSED   ee860bd58 (split_c_string_runs.py: 49 members per tree)
+N-e40b7174             CLOSED   2bd7dcbfe (RamPtrs by SQEDT_* name; quantize cells named); quantize working values 0x263a/c/e split off
+N-2f640c1d             OPEN     next: retype the straddling naka_dispatch_t / EditSw overlays as naka_cls_<Class>_t
+N-d8cf1242             OPEN     525 -> 523; next: trace the base-pointer readers of naka_sequencer_channels.c's 291 field_XX members
+N-7c99f0f2             OPEN     next: trace the Scoop sound-editor openers of the TITLE_SE* pages
+N-51b2e19c             OPEN     next: per-bit analysis with kn5000_ram_bit_usage.py of the listed flag bytes

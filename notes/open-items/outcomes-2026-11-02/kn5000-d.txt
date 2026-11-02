@@ -1,0 +1,19 @@
+kn5000-1gu  CLOSED   notes/open6-kn5000-d/subcmd/README.md (sub-command 0x09 = GM mode)
+kn5000-a1f  CLOSED   notes/open6-kn5000-d/subcmd/README.md (D0 pressure, D1 mod, D2 bend, D3 expression)
+kn5000-3qp  CLOSED   notes/open6-kn5000-d/accomp/README.md section A + probes/pattern_transpose.py
+kn5000-rzg  CLOSED   notes/open6-kn5000-d/accomp/README.md section B
+kn5000-j8z  CLOSED   c6f5dd2ad; notes/open6-kn5000-d/naming/README.md
+kn5000-rld  CLOSED   3439c8ba5; notes/open6-kn5000-d/naming/rld-verdicts.md
+kn5000-zc1  CLOSED   8f576f2ea; notes/open6-kn5000-d/naming/README.md
+kn5000-wxn  CLOSED   e4917b178..a5fbd2ce3; notes/open6-kn5000-d/wsa1/README.md
+kn5000-ax7  BLOCKED  bit-11 needs another uPD6383 host's firmware dump or a chip PC trace; ACT 0x0B / f31 3..7 need an EFFECT OUT recording from a real KN5000 (dsp/analysis/bit11-xprod-2026-11-02.md)
+kn5000-i2m  BLOCKED  needs an impulse response of a real KN5000 on ROOM REVERB 1 at EFFECT OUT
+N-edb08959  CLOSED   15c8ef88e
+N-0b145a01  CLOSED   notes/open6-kn5000-d/panel/README.md s1 (byte 0x80 +4 needs a MIDI capture from hardware)
+N-583fb77c  CLOSED   notes/open6-kn5000-d/panel/README.md s2 + probes/dsp_slot_packing.py
+N-10dad9c5  CLOSED   notes/open6-kn5000-d/panel/README.md s3 + probes/se_page_names.py
+N-b64487fc  CLOSED   same as N-10dad9c5
+N-1fe9a5df  CLOSED   notes/open6-kn5000-d/misc/README.md s2 (0x09 draws as a blank)
+N-29e0f8b4  CLOSED   notes/open6-kn5000-d/misc/README.md s1 + probes/faj_eq_response.py
+N-52dcf02a  CLOSED   notes/open6-kn5000-d/misc/README.md s3 (remainder blocked on IC306)
+N-d352b868  CLOSED   notes/open6-kn5000-d/misc/README.md s4

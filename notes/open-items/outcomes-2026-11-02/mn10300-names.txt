@@ -1,0 +1,69 @@
+N-01128b1c  CLOSED   4fd8eff85, c7a16f911
+N-1666f99a  CLOSED   5db8a341c
+N-1af8fb95  CLOSED   acd3400ce (StyleCountInRecordGet / StyleCountInBoundGet)
+N-44a0a9c3  CLOSED   f65aad77a, 6cd18610c
+N-652c2321  CLOSED   9acdca7ee
+N-68397a99  CLOSED   9acdca7ee, acd3400ce
+N-716ca83b  CLOSED   9acdca7ee
+N-79b9c8d3  CLOSED   f65aad77a, 6cd18610c
+N-8b2b22bb  CLOSED   bc9e1eb0c (the why is [INFERENCE])
+N-8ef7dde2  CLOSED   bc9e1eb0c
+N-a39cce89  CLOSED   9acdca7ee
+N-b68f78f0  CLOSED   5db8a341c, 9acdca7ee
+N-c62a74fa  CLOSED   9acdca7ee
+N-c7bd31b3  CLOSED   9acdca7ee
+N-c94956b2  CLOSED   9acdca7ee
+N-cc575880  BLOCKED  the tone-generator chip's datasheet (P bit 12 set in all 3,974 entries, read by no code)
+N-cc77e1d6  CLOSED   9acdca7ee
+N-ccdc980d  CLOSED   3afef7636 (TgcBufWrite)
+N-fb88572c  OPEN     design in kn7000/notes/gui-data-region/README.md; next: implement gui_object_names.tsv in gen_data_s.py obj_names()
+N-1ad3d4d4  CLOSED   5db8a341c, acd3400ce
+N-271d0bab  CLOSED   5db8a341c, 9fdc935e8
+N-34fa7d2c  OPEN     next: a MAME write-watch on pad +0x13..15, TPAD +0x14/15, TCMP bytes
+N-3d2fa559  CLOSED   bc9e1eb0c (SOUND ARRANGER factory settings)
+N-44e56012  OPEN     next: trace the key-event path into TgcBufWrite / TgPartKeyEvent for the PICTURE LOAD gate
+N-564dcd72  CLOSED   f65aad77a
+N-719cf65f  CLOSED   5db8a341c, 9fdc935e8
+N-71feb370  CLOSED   5db8a341c, acd3400ce
+N-8af92404  OPEN     next: trace func_484C34ED / 484C1B1A / 484C3A03 / 484C356A / 484C364E for the payload formats
+N-a0f81837  BLOCKED  the TG datasheet or a line-out recording (two keys an octave apart)
+N-a504af0f  CLOSED   5db8a341c
+N-a883f3f0  CLOSED   5db8a341c
+N-b562cfc1  CLOSED   bc9e1eb0c
+N-cbaf135a  CLOSED   f65aad77a
+N-f5cfab22  CLOSED   5db8a341c, acd3400ce
+N-f839ba10  OPEN     next: the remaining ids' subscribing widgets (SetMmmFilter) or the MIDI implementation chart
+T-kn7000-todo  CLOSED   5db8a341c, cf427aa58
+T-kn7000-todo-what-the  CLOSED   bc9e1eb0c
+T-kn7000-todo-after-the  CLOSED   bc9e1eb0c, e0d08ce16
+T-kn7000-todo-its-unit  CLOSED   cf427aa58
+T-kn7000-todo-memory  BLOCKED  the MN103002A LSI register manual
+T-kn7000-todo-not-read  CLOSED   cf427aa58
+T-kn7000-todo-nothing-in  CLOSED   cf427aa58
+T-kn7000-todo-only-the  BLOCKED  the MN103002A LSI register manual (0x34004002)
+T-kn7000-todo-purpose-unknown  CLOSED   5db8a341c
+T-kn7000-todo-sdspiportsetup-writes  CLOSED   cf427aa58
+T-kn7000-todo-the-numbers  CLOSED   cf427aa58
+T-kn7000-todo-their-consumers  CLOSED   cf427aa58
+T-kn7000-todo-their-roles  CLOSED   cf427aa58
+T-kn7000-todo-two-more  CLOSED   cf427aa58
+T-kn7000-todo-whether-the  CLOSED   bc9e1eb0c
+T-kn7000-todo-which-device  BLOCKED  hardware: the factory jig on CN106 or a trace of CN106
+T-kn7000-todo-who-sets  CLOSED   cf427aa58
+N-90175c82  OPEN     next: 7 of 893's 40 own routines; name their 941 counterparts first
+N-d753af29  OPEN     1,316 of 1,340 resolved; next: the 24 listed in sp7001-build-diff.md
+N-345ce6f1  CLOSED   a19176de0 (RamSectionsCopy)
+N-439d5da2  CLOSED   a19176de0
+N-986ec818  CLOSED   a19176de0
+N-0a03a134  CLOSED   a19176de0
+N-9eca4678  CLOSED   019e7a8a1, 3d870c7b5, 397b30e0d
+N-f3294592  CLOSED   019e7a8a1, 3d870c7b5, 397b30e0d
+N-be2b9da5  OPEN     next: per-subsystem naming of the remaining 11,678 func_ entries
+N-b318c54c  OPEN     next: PM_SET88's m008008, from latched panel control 0xC6
+N-e7ed1928  CLOSED   5f4195da9
+T-kn2400-todo  CLOSED   5db8a341c
+T-kn6000-todo  CLOSED   5db8a341c
+T-kn6500-todo  CLOSED   5db8a341c
+N-4a4e97bc  OPEN     I/O named (3d870c7b5); next: name KN7000 RAM variables per subsystem, carry along matched routines
+N-5cad02df  OPEN     same as N-4a4e97bc (KN2400)
+N-82a73a67  OPEN     same as N-4a4e97bc (KN6500)

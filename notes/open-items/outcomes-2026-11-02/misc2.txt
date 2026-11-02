@@ -1,0 +1,9 @@
+N-391cb1d1                           CLOSED   c549279d2 (probes/wsa1_f7df_runs.py; block 838 = DF F7 x125 as .rept)
+O-wsa1-floppy-unknown-dump-66b9a5    CLOSED   c549279d2 (wsa1-floppy opaque 1/250 -> 0)
+N-4c66be6c                           BLOCKED  stale words proven carried over (e0dc96843); needs an older KN6000 program or the KN6000 table flash
+N-e140c8dc                           OPEN     next: kn_sqt.stale_tokens restarts at 0x81 / 0x9n inside cut fragments, then the KN6000's 7 large runs (1,270 B)
+O-kn7000-floppy-unknown-dump-397763  CLOSED   e0dc96843 (4,997 B RAM bit-bias, opaque is final)
+O-kn6000-floppy-unknown-dump-397763  OPEN     498 B cut event fragments + 1,270 B in 7 runs; next step as N-e140c8dc
+N-700df83b                           CLOSED   e90bafdef + f6d95e661
+N-f67b155c                           OPEN     next: make gen_data_s.py emit SOUND_NAME_HEAD / VOICE_HEAD / PMR_NAME, regenerate, delete the old macros
+N-3a365d90                           CLOSED   Mines 301557d; CLAUDE.md rows (50ce7e5f2, e90bafdef)

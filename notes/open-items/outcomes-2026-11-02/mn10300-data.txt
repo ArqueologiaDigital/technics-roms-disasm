@@ -1,0 +1,13 @@
+N-ff12bec3  CLOSED   4744f9350 + kn7000/notes/mn10300-data/README.md s.3
+N-044cdbc6  OPEN     left: memcpy-only blocks (941 FAT BPB template, KN6000/6500 memcpy-loop records, KN2400 data_4841E3E4); next: memcpy-loop rule + BPB record type
+N-ad82330c  BLOCKED  run-time dispatch through RAM table 0x5011FAAC filled at window registration; needs a run-time trace (KN7000 MAME driver, another repository)
+N-027de254  OPEN     MILK support-class value descriptors; next: read the support-class procs, then a record macro
+N-92b0bf4c  CLOSED   5a7f0bd5b (index_bounds + count_notes; array_counts.py)
+N-d8d7954f  CLOSED   4dfc4c32f, 64787c9eb, 4744f9350 (msg_readers)
+N-2468beef  OPEN     941 256->255, KN2400 208->200; next: hand names in data_struct_names.py
+N-1f66216a  CLOSED   sib_rules ported (kn7000/notes/mn10300-data/README.md s.2)
+N-61c32961  OPEN     callee walk loses KN6000 21 B / KN2400 4 B; next: indexed sentinel_lists for func_4C11B347 / func_4861CCC5
+N-44fb32d4  CLOSED   tables extend to their index bound; split_tables.py lists the rest
+N-05cd19fe  OPEN     KN6500 opaque 44,212 -> 27,134 B; next steps per group in kn7000/notes/mn10300-data/README.md s.4
+N-afa3d40e  OPEN     KN6000 opaque 39,985 -> 24,654 B; README s.4
+N-cf9c7754  OPEN     KN2400 opaque 61,226 -> 27,313 B; README s.4
