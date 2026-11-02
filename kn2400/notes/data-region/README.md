@@ -112,7 +112,8 @@ Before: e12c2c693 (this lane's start); after: this branch.
 | after, kn2400  | 7322          | 0                | 3       | 0             | 3                 | 2                 | 0              |
 | after, hdsx3   | 999           | 0                | 0       | 0             | 3                 | 1                 | 0              |
 
-The 3 raw ids in kn2400 are title ids no RegisterTitle call registers (0x000F000F, 0x000F0102);
+The 3 raw ids in kn2400 are title ids no RegisterTitle call registers (0x000F000F, 0x000F0102; the
+firmware's own names "_TT_CTHOMEPAGE" / "_TT_VDOUT", `TitleNameTable`, resolved 2026-11-02 below);
 the numeric addresses are Function-table entries that point at code no label names, and a
 `.mnbase` line.
 
@@ -154,7 +155,25 @@ extensions and fonts beside their strings, and RAM-image variables.
 
 - [INFERENCE] RamCodeTrailer is a copy descriptor; func_4870587E reads it (see above), but what it does with
   the three words of each record was not traced.
+  (Resolved 2026-11-02, lane mn10300-names: func_4870587E is `RamSectionsCopy`, crt0_start's last call
+  before KernelStart.  From RamCodeTrailer+3 it walks 12-byte records {u16 flags, bit 15 = last; u16 length,
+  used by the last record only; u32 source; u32 dest}; every other record's length is the next record's
+  source minus its own; a dest below 0x80000000 is written at dest + 0x40000000, the uncached view; the copy is
+  `setlb / movbu (a0), d0 / inc a0 / movbu d0, (a1) / inc a1 / cmp a2, a0 / lcs`.  The two records:
+  flash 0x487285BE -> link 0x50120000, 0x6DFFA bytes (file 0x3285BE..0x3965B8, the RAM-linked code,
+  0x50120000..0x5018DFFA), and flash 0x487965B8 -> 0x5018FFF0, 3 bytes (RamCodeTrailer's own first bytes,
+  `de 00 00` = `retf [], 0`; no word or PC-relative branch of the image names 0x5018FFF0..2).  Probe
+  `../../../kn7000/notes/mn10300-names-probes/siblings_kn2400_ram_copy_table.py`; names in `kn2400_manual.sym`.)
 - The KN2400 title ids 0x000F000F / 0x000F0102 that records name but no RegisterTitle registers.
+  (Resolved 2026-11-02, lane mn10300-names: they are titles this image never registers.  All 287
+  RegisterTitle calls take an immediate index (278 distinct, none computed and none model-dependent), and
+  none is 0x0F or 0x102; no other code writes the title table 0x50037260.  InitModeTitleTable fills all 320
+  title records with `TitleDefaultRecord` (function 0x00020000, screen -1, OT block -1) and stores the
+  firmware's own name from `TitleNameTable` (0x48414BD8) at +0xC: 0x0F is "_TT_CTHOMEPAGE" and 0x102 is
+  "_TT_VDOUT".  The KN7000 registers both (index 0xF with OTB_HOMEPAGE / FN_TtCtHomepage, 0x102 with
+  OTB_VDOUT), the KN6000 / KN6500 the first; the KN2400 image keeps the records that name them (WallpaperLoad's
+  `exit`, the CUSTOMIZE MENU's "VIDEO OUT SETTING" entries) without the modules.  42 of the 320 titles are
+  unregistered here.  The generator could spell them TT_CTHOMEPAGE / TT_VDOUT from TitleNameTable.)
 - `gen_symbols.py`'s start-alignment rule would change `kn6000.sym` in 330 lines: not applied
   there (lane sib-kn6000's tree). (Resolved: 66126698c, start-aligned pairing by default reproduces
   kn6000.sym, see the corrected item below; open-items register 2026-10-31.)

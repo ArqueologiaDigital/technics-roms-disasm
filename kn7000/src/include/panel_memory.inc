@@ -67,10 +67,18 @@
 	.byte	(\rhythm) & 0xff, ((\rhythm) >> 8) & 0xff, ((\rhythm) >> 16) & 0xff, \tchord_on, (\variation) * 16
 	.byte	(\tempo) & 0xff, (\tempo) >> 8
 .endm
-# +0x77..+0x79 (table 0x4858E202, source +0x6C6 / +0x67C = tag 0x41): m008040 mask 0x07 (parameter
-# 0x008040), m00c084 mask 0x01 (0x00C084, ApcSelFunc), r_octave (0x008038, AcRightOctProc).
-.macro PM_SET77 m008040, m00c084, r_octave
-	.byte	\m008040, \m00c084, \r_octave
+# +0x77..+0x79 (table 0x4858E202, source +0x6C6 / +0x67C = tag 0x41): conductor mask 0x07, left_hold
+# mask 0x01, r_octave (0x008038, AcRightOctProc).  (Named 2026-11-02, lane mn10300-names, from the
+# KN6000 merge tables 0x4C19AB6A {00 00 07, 03 01 01, 04 02 ff}.)
+#   conductor  parameter 0x008040, 0..5: the CONDUCTOR (part-select) state.  KN6000 func_4C02EDD9 plays
+#              a note above the split on RIGHT2 (part 0x11) for 1 and 5 and on RIGHT1 (0x10) for 0, 2,
+#              3, 4; func_4C02F302 gives the left zone a part for 3..5; the KN5000's same record (panel
+#              tag 0x90, floppy/kn5000/include/kn5000_panel.inc) names its byte 0 SndParam_Conductor, 0..5
+#   left_hold  bit 0 of the source byte, parameter 0x00C084 LEFT HOLD: LeftholdToggleFunc (KN6000
+#              0x4C0FE257, KN7000 0x4856D61C) writes 0x00C084 with MainPutM3Em, ApcSelFunc sends it to
+#              ApcLefthold; the mask drops bit 1, 0x00C083 ON BASS (OnbassToggleFunc)
+.macro PM_SET77 conductor, left_hold, r_octave
+	.byte	\conductor, \left_hold, \r_octave
 .endm
 # +0x7A..+0x87 (table 0x4858E20B, source +0x6D0 / +0x686 = tag 0x4C): eff_bits mask 0x88 (bit 3
 # 0x008024, bit 7 0x008020), m008010, then the 14-bit effect ids 0x00A000, 0x00A100, 0x00A200 and
@@ -83,15 +91,19 @@
 # +0x88..+0x8B (table 0x4858E235, source +0x700 / +0x6B6 = tag 0x44): tremolo mask 0x04 (parameter
 # 0x008030, AcTremoloProc), tc_orchestrator (+3, 0x008082, TechniChordOrchestratorPart),
 # techni_chord mask 0x0F (+4, 0x008081 TECHNI-CHORD type, AcTechniChordProc), m008008 (+8: 0x008008
-# bits 0-6, 0x008009 bit 7).
+# bits 0-6, 0x008009 bit 7; meaning not traced: KN6000 func_4C114253 sets 0x008008 from latched panel
+# control 0xC6, as func_4C114234 sets 0x008006, and the KN5000's tag 0x70 has no byte +8).
 .macro PM_SET88 tremolo, tc_orchestrator, techni_chord, m008008
 	.byte	\tremolo, \tc_orchestrator, \techni_chord, \m008008
 .endm
-# +0x8C..+0x8D (table 0x4858E241, source +0x716 / +0x6C6 = tag 0x46): m00e001 (0x00E001 bits 0-6,
+# +0x8C..+0x8D (table 0x4858E241, source +0x716 / +0x6C6 = tag 0x46): pad_volume (0x00E001 bits 0-6,
 # 0x00E002 bit 7), pad_bank (0x00E005, AcPadBankProc); pad_bank is then passed through func_484417B9
-# (KN6000 func_4C063396), which re-maps a user pad bank to the CUSTOM copy.
-.macro PM_SET8C m00e001, pad_bank
-	.byte	\m00e001, \pad_bank
+# (KN6000 func_4C063396), which re-maps a user pad bank to the CUSTOM copy.  pad_volume (named
+# 2026-11-02, lane mn10300-names): the parameter-change dispatcher (KN6000 func_4C0484C7, its case at
+# 0x4C048AAC; KN7000 lib func_4C024DD8) sends 0x00E001 as controller 7 (volume) and 0x00E002 as code 0x90 to parts
+# 0x1D and 0x1E, which ApcToSMFConvGrid (KN6000 0x4C0CB01B) names "PAD PART1" / "PAD PART2".
+.macro PM_SET8C pad_volume, pad_bank
+	.byte	\pad_volume, \pad_bank
 .endm
 # KN7000 only, +0x8F..+0x9A: three more bytes of each of the four parts (table 0x4858E24A):
 # tremulant (part +0x23 mask 0x07, parameter 0x2000A2), m2000b0 (+0x38: 0x2000B0-B7), m2000b8

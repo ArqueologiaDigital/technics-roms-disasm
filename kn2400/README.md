@@ -42,8 +42,9 @@ run time; see the documentation site's `kn2400-kn2600` page.
 | `0x000000`-`0x000010` | `0x48400000`            | boot header: `_reset` (jmp to `crt0_start`), 5 nops, `_vector_0a`, one data byte |
 | `0x000010`-`0x1e427c` | `0x48400000`            | data: names, styles, bitmaps, tables, the `MILK MN10300 Ver1.0R1` banner         |
 | `0x1e427c`-`0x3285be` | `0x48400000`            | code linked for flash: the MILK kernel and application                           |
-| `0x3285be`-`0x3965bb` | `0x50120000` (work RAM) | code linked for work RAM                                                         |
-| `0x3965bb`-`0x3965d3` | none                    | 24 bytes after the last instruction (see below)                                  |
+| `0x3285be`-`0x3965b8` | `0x50120000` (work RAM) | code linked for work RAM (RamSectionsCopy's first record)                        |
+| `0x3965b8`-`0x3965bb` | `0x5018fff0` (work RAM) | a 3-byte `retf` stub nothing calls (RamSectionsCopy's second record)             |
+| `0x3965bb`-`0x3965d3` | none                    | RamSectionsCopy's table: two 12-byte records (see below)                         |
 
 The data comes first and the code after it: the reverse of the KN7000's program image.
 
@@ -68,9 +69,11 @@ those of them whose KN7000 address is `0x4C000000` or above).
 `src/program.s` assembles that range under `.mnbase 0x4fdf7a42`, so its PC-relative encodings
 are reproduced exactly. The 24 bytes after it hold, among others, `0x487285be` (the flash
 address of the RAM-linked range), `0x50120000` (its link address) and `0x487965b8`. Those values
-fit a copy descriptor. No code in this image reads them, and the routine that copies the range
-to RAM has not been found: crt0 copies only `.data`, `0x6e78` bytes from `0x485dd334` to
-`0x50000010`. Both points are open.
+are a copy table. crt0 copies `.data` itself (`0x6e78` bytes from `0x485dd334` to `0x50000010`) and
+then calls `RamSectionsCopy` (0x4870587e), which walks the table from `0x487965bb`: 12-byte records
+{u16 flags, u16 length, u32 source, u32 dest}. It copies `0x487285be` -> `0x50120000`, `0x6dffa` bytes,
+and the trailer's first 3 bytes (`retf [], 0`) to `0x5018fff0`, through the uncached view (dest +
+`0x40000000`) (`notes/data-region/README.md`, resolved 2026-11-02).
 
 ## Symbols
 

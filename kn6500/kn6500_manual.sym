@@ -86,3 +86,16 @@
 ;      probes kn7000/notes/mn10300-rest-probes/kn6000_opaque.py / kn2400_opaque.py, group "trie") ----------
 0x4C193FF8  ResourceIdTrie             ; the root of the parameter-id trie, 16 entries of {u32 target, u8 inner, u8 count, u16 0}: ResourceIdFind takes the 24-bit id's nibbles from bit 20 down; a leaf's +0 u32 is the id, +4 u16 its type (GetM3Em's records)
 0x4C02CBDA  ResourceIdFind             ; (d0 = 24-bit id) walks ResourceIdTrie by the id's nibbles (lsr / and 0x0f / asl 3; `mov (a1), d1`, `movbu (4, a1)`, `movbu (5, a1)`) and answers the leaf whose +0 is the id, else 0
+;
+; ---- the COMPUTER CONNECTION screen's pictures (lane mn10300-names, 2026-11-02; the KN6000's twins, same
+;      code and the same pixel bytes: kn7000/notes/mn10300-names-probes/siblings_kn6000_compconn_bitmaps.py) --
+0x4C09FD93  BitmapCompConnDiagram      ; 296 x 108, 1 bit: the MIDI connection diagram ComputerConnection draws in all three modes (KN6000 0x4C0A0012)
+0x4C09FDCE  BitmapCompConnMaster       ; 17 x 19, 1 bit: drawn for "KN as master" only (KN6000 0x4C0A004D)
+0x4C09FE08  BitmapCompConnSlaveArrow   ; 10 x 12, 1 bit: MASTER KEYBOARD -> MIDI IN, "KN as slave" only (KN6000 0x4C0A0087)
+0x4C09FE42  BitmapCompConnSlaveWire    ; 253 x 24, 1 bit: MIDI IN -> COMPUTER, "KN as slave" only (KN6000 0x4C0A00C1)
+0x4C1D74C0  BitmapCompConnDiagram_Pixels    ; the pixels BitmapCompConnDiagram answers
+0x4C1D84C8  BitmapCompConnMaster_Pixels     ; the pixels BitmapCompConnMaster answers
+0x4C1D8514  BitmapCompConnSlaveArrow_Pixels ; the pixels BitmapCompConnSlaveArrow answers
+0x4C1D852C  BitmapCompConnSlaveWire_Pixels  ; the pixels BitmapCompConnSlaveWire answers (was Bitmap_4C09FE42_Pixels_2)
+0x4C1D882C  BitmapKn6000_Palette       ; BitmapKn6000's 16 colours (MT_GetBitmapPalette); labels.sym called it Bitmap_4C09FE42_Palette, a name gen_data_s.py kept from an earlier run
+0x4C1DD70C  BitmapGm2_Pixels           ; the pixels BitmapGm2 answers (200 x 100, 1 bit); labels.sym called them Bitmap_4C09FE42_Pixels, kept from an earlier run
