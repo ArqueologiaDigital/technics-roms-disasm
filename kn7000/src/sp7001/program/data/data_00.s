@@ -421,10 +421,9 @@ TgDrawbarToneRecInit_Table:	# 36 x u8, 0..255; read by TgDrawbarToneRecInit_entr
 	tab_u8	127, 127, 127, 127, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 255	# [32]
-TgPartDrawbarAtkRlsSet_Table:	# 15 x u16, 0..65534; read by TgPartDrawbarAtkRlsSet 0x4C00A7A7: `movhu  (d0, a0), d0`; TgPartDrawbarAtkRlsSet 0x4C00A7A7: `movhu  (d3, a0), d0` ...
+TgPartDrawbarAtkRlsSet_Table:	# 16 x u16, 0..65535; read by TgPartDrawbarAtkRlsSet 0x4C00A7A7: `movhu  (d0, a0), d0`; TgPartDrawbarAtkRlsSet 0x4C00A7A7: `movhu  (d3, a0), d0` ...; 16 records: the index is bounded by TgPartDrawbarAtkRlsSet 0x4C00A7A7: `and 0x0f, d3` ... `movhu (d3, a0), d0`
 	tab_u16	0, 1, 2, 3, 4, 5, 6, 7, 65528, 65529, 65530, 65531	# [0]
-	tab_u16	65532, 65533, 65534	# [12]
-	.align	4, 0xFF	# pad after TgPartDrawbarAtkRlsSet_Table
+	tab_u16	65532, 65533, 65534, 65535	# [12]
 TgExclGroupChoke_Table:	# 128 x u8, 136..150; read by TgExclGroupChoke_entry 0x4C0309F9: `movbu  (d0, a0), d1`
 	tab_u8	150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150	# [0]
 	tab_u8	150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150	# [16]
@@ -674,8 +673,12 @@ TgSlotAllocate_Records:	# 16 x REC_TgSlotAllocate_Records (8 bytes each); read b
 	REC_TgSlotAllocate_Records	TgVoiceNodePick_a1=TgSlotAllocate_Records_p0_s11_0, TgVoiceNodeToClassRing_d0=2, f5=6, x6="\x00\x00"
 	REC_TgSlotAllocate_Records	TgVoiceNodePick_a1=TgSlotAllocate_Records_p0_s11_0, TgVoiceNodeToClassRing_d0=2, f5=6, x6="\x00\x00"
 	REC_TgSlotAllocate_Records	TgVoiceNodePick_a1=TgSlotAllocate_Records_p0_s11_0, TgVoiceNodeToClassRing_d0=2, f5=6, x6="\x00\x00"
-# census: opaque -- unknown-dump: 132 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x187F4C, 0x187FD0
+# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn7000_program_sp7001.rom", 0x187F4C, 0x187FAC
+
+text_48587FAC:	# 33 printable bytes with no NUL; no instruction reads them [INFERENCE: text]
+	.ascii	" !\"#$%&'()*+,-./0123456789:;<=>?@"
+	.align	4, 0xFF	# pad after text_48587FAC
 
 ResourceIdTrieNode_48589CB0_p0_0:	# REC_ResourceIdTrieNode_48589CB0_p0 (20 bytes)
 	REC_ResourceIdTrieNode_48589CB0_p0	index=2, index__=255, index___=80, f14=255, f16=32588, f18=88, f19=72
@@ -12019,7 +12022,9 @@ Str_BM:	.asciz "BM"
 
 func_484161BE_Table:	# 5 x u32, 45072..45136; read by PartHasDspUnit 0x484161BE: `mov   (d0, a2), d0`; PartHasDspUnit 0x484161BE: `mov   (d1, a2), d0`
 	tab_u32	45136, 45120, 45104, 45088, 45072
-	.space	4, 0xFF
+
+func_484161BE_Table_End:	.long	0xffffffff	# the end marker of func_484161BE_Table: PartHasDspUnit 0x484161BE: `mov (d0, a2), d0` / `cmp d3, d0` stops at it
+
 SetModeLed_Table:	# 16 x u8, 2..255; read by SetModeLed_entry 0x48416590: `movbu  (d3, a0), d0`
 	tab_u8	255, 7, 6, 8, 255, 3, 2, 255, 17, 18, 14, 19, 255, 255, 255, 255
 
@@ -12481,15 +12486,15 @@ Str_APC_7:	.asciz "APC"
 Str_RT1_2:	.asciz "RT1"
 Str_LFT_2:	.asciz "LFT"
 Str_RT2_3:	.asciz "RT2"
-Str_P_8_2:	.asciz "P 8"
-Str_P_9_2:	.asciz "P 9"
+Str_P_8:	.asciz "P 8"
+Str_P_9:	.asciz "P 9"
 Str_P10:	.asciz "P10"
 Str_P11:	.asciz "P11"
 Str_P12_2:	.asciz "P12"
-Str_P_5_2:	.asciz "P 5"
-Str_P_6_2:	.asciz "P 6"
-Str_P_7_2:	.asciz "P 7"
-Str_P_4_3:	.asciz "P 4"
+Str_P_5:	.asciz "P 5"
+Str_P_6:	.asciz "P 6"
+Str_P_7:	.asciz "P 7"
+Str_P_4_2:	.asciz "P 4"
 Str_DRM:	.asciz "DRM"
 Str_CHD_2:	.asciz "CHD"
 Str_APC_2:	.asciz "APC"
@@ -12505,15 +12510,15 @@ PsTrackSwitchProc_Table_3:
 	.long	Str_RT1_2
 	.long	Str_LFT_2
 	.long	Str_RT2_3
-	.long	Str_P_8_2
-	.long	Str_P_9_2
+	.long	Str_P_8
+	.long	Str_P_9
 	.long	Str_P10
 	.long	Str_P11
 	.long	Str_P12_2
-	.long	Str_P_5_2
-	.long	Str_P_6_2
-	.long	Str_P_7_2
-	.long	Str_P_4_3
+	.long	Str_P_5
+	.long	Str_P_6
+	.long	Str_P_7
+	.long	Str_P_4_2
 
 names_485A106C:
 	.long	Str_DRM, Str_CHD_2
@@ -12521,27 +12526,22 @@ names_485A106C:
 	.long	Str_RHY, Str_P13
 	.long	Str_P14, Str_P15
 	.long	Str_RKB, Str_LKB
-data_485A1094:
-	.space	1, 0x00
 
-Str_REC_9:	.asciz "REC"
-Str_PLAY_7:	.asciz "PLAY"
-Str_MUTE_5:	.asciz "MUTE"
-Str_CLR_7:	.asciz "CLR"
-
-PsTrackSwitchProc_Table_4_p0_0:	# REC_PsTrackSwitchProc_Table_4_p0 (3 bytes)
-	REC_PsTrackSwitchProc_Table_4_p0	index=80, f1=85, f2=78
-
-Str_CH:	.asciz "CH"
-	.align	4, 0xFF	# pad after Str_CH
+Str_text_9:	.asciz ""
+Str_REC_7:	.asciz "REC"
+Str_PLAY_3:	.asciz "PLAY"
+Str_MUTE_2:	.asciz "MUTE"
+Str_CLR_6:	.asciz "CLR"
+Str_PUNCH:	.asciz "PUNCH"
+	.align	4, 0xFF	# pad after Str_PUNCH
 
 PsTrackSwitchProc_Table_4:
-	.long	data_485A1094
-	.long	Str_REC_9
-	.long	Str_PLAY_7
-	.long	Str_MUTE_5
-	.long	Str_CLR_7
-	.long	PsTrackSwitchProc_Table_4_p0_0
+	.long	Str_text_9
+	.long	Str_REC_7
+	.long	Str_PLAY_3
+	.long	Str_MUTE_2
+	.long	Str_CLR_6
+	.long	Str_PUNCH
 
 PsTrackSwitchProc_Table:	# 6 x s16, 10..255; read by PsTrackSwitchProc 0x4842012F: `movhu  (d0, a0), d0`
 	tab_s16	245, 10, 12, 255, 255, 10
@@ -14960,17 +14960,12 @@ ptrs_485B0850:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1B0858, 0x1B085C
 
-InitModeTitleTable_Table:	# 2 x u32, 131072..983040; read by InitModeTitleTable 0x48431692: `mov   (a1), d0`
-	tab_u32	131072, 983040
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x1B0864, 0x1B086C
-data_485B086C:
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+InitModeTitleTable_Table:	# 4 x u32, 131072..4294967295; read by InitModeTitleTable 0x48431692: `mov   (a1), d0`; 4 records: the index is bounded by InitModeTitleTable 0x48431692: `mov -4, d1` / setlb / `mov (a1), d0` / `inc4 a1` / `inc d1` / lne (4 passes)
+	tab_u32	131072, 983040, 4294967295, 1213925464
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1B086C, 0x1B0870
-InitModeTitleTable_Table_2:	# 1 x u32, 131072..131072; read by InitModeTitleTable 0x48431692: `mov   (a1), d0`
-	tab_u32	131072
-# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x1B0874, 0x1B088C
+InitModeTitleTable_Table_2:	# 7 x u32, 0..4294967295; read by InitModeTitleTable 0x48431692: `mov   (a1), d0`; 7 records: the index is bounded by InitModeTitleTable 0x48431692: `mov -7, d1` / setlb / `mov (a1), d0` / `inc4 a1` / `inc d1` / lne (7 passes)
+	tab_u32	131072, 4294967295, 4294967295, 1213925484, 0, 0, 0
 data_485B088C:
 	# a string, 4 bytes with its pad, read by UnregisteredMode 0x4843180C `mov data_485B088C, d0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
@@ -19803,13 +19798,23 @@ func_484582BF_Records:	# 16 x REC_func_484582BF_Records (8 bytes each); read by 
 	REC_func_484582BF_Records	proc=loc_484583A9
 	REC_func_484582BF_Records	proc=loc_484583A9
 	REC_func_484582BF_Records	proc=loc_484583A9
-func_48458AB6_Records:	# 4 x REC_func_48458AB6_Records (8 bytes each); read by func_48458AB6 0x48458AB6 `mov (a0), d1`
-	REC_func_48458AB6_Records	key=0x702020, proc=loc_48458AF8
+func_48458AB6_Records:	# 16 x REC_func_48458AB6_Records (8 bytes each); read by func_48458AB6 0x48458AB6 `mov (a0), d1`
+	REC_func_48458AB6_Records	key=0x702020, proc=loc_48458AF8	# [0]
 	REC_func_48458AB6_Records	key=45073, proc=loc_48458AF4
 	REC_func_48458AB6_Records	key=45089, proc=loc_48458AF4
 	REC_func_48458AB6_Records	key=45105, proc=loc_48458AF4
-# census: opaque -- unknown-dump: 96 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x1B97BC, 0x1B981C
+	REC_func_48458AB6_Records	key=45121, proc=loc_48458AF4
+	REC_func_48458AB6_Records	key=45137, proc=loc_48458AF4
+	REC_func_48458AB6_Records	key=1, proc=loc_48458AF8
+	REC_func_48458AB6_Records	proc=loc_48458AFC
+	REC_func_48458AB6_Records	proc=loc_48458AFC	# [8]
+	REC_func_48458AB6_Records	proc=loc_48458AFC
+	REC_func_48458AB6_Records	proc=loc_48458AFC
+	REC_func_48458AB6_Records	proc=loc_48458AFC
+	REC_func_48458AB6_Records	proc=loc_48458AFC
+	REC_func_48458AB6_Records	key=49149, proc=loc_48458AF4
+	REC_func_48458AB6_Records	key=57341, proc=loc_48458AF4
+	REC_func_48458AB6_Records	proc=loc_48458AFC
 
 func_4845BC4A_Table:	# 256 x s8, a sparse map by index: 34 entries set, the rest 0xFF (none); read by func_4845BC4A 0x48457D19: `movbu  (d0, a0), d0`
 	map_none8	128	# [0..127]
@@ -20189,149 +20194,138 @@ func_48466E1F_Records:	# 32 x REC_func_48466E1F_Records (8 bytes each); read by 
 	REC_func_48466E1F_Records	key=0xB07FFD, proc=loc_48466EA0
 	REC_func_48466E1F_Records	key=0xB07FFE, proc=loc_48466E96
 	REC_func_48466E1F_Records	key=0xB07FFF, proc=loc_48466E8B
-func_48466F1E_Records:	# 4 x REC_func_48466F1E_Records (8 bytes each); read by func_48466F1E 0x48466F1E `mov (a0), d1`
-	REC_func_48466F1E_Records	key=0xAFFFFE, proc=loc_48466F62
+func_48466F1E_Records:	# 32 x REC_func_48466F1E_Records (8 bytes each); read by func_48466F1E 0x48466F1E `mov (a0), d1`
+	REC_func_48466F1E_Records	key=0xAFFFFE, proc=loc_48466F62	# [0]
 	REC_func_48466F1E_Records	key=32767, proc=loc_48466F62
 	REC_func_48466F1E_Records	key=0xDFFFFD, proc=loc_48466F69
 	REC_func_48466F1E_Records	key=32771, proc=loc_48466F62
-
-MsgTable_485BA438:	# 28 x {u32 key, code address}: a dispatch table
-	.long	0xB00004, loc_48466F62
-	.long	0xB00044, loc_48466F62
-	.long	0xB00045, loc_48466F62
-	.long	0xB00007, loc_48466F62
-	.long	0xB00047, loc_48466F62
-	.long	0xB00046, loc_48466F62
-	.long	0xB00008, loc_48466F62
-	.long	32773, loc_48466F62
-	.long	1, loc_48466F85
-	.long	0, loc_48466F8C
-	.long	0, loc_48466F8C
-	.long	0, loc_48466F8C
-	.long	0, loc_48466F8C
-	.long	0, loc_48466F8C
-	.long	0, loc_48466F8C
-	.long	0, loc_48466F8C
-	.long	0, loc_48466F8C
-	.long	0, loc_48466F8C
-	.long	0, loc_48466F8C
-	.long	0, loc_48466F8C
-	.long	0xB00058, loc_48466F62
-	.long	0, loc_48466F8C
-	.long	0xB0005A, loc_48466F62
-	.long	0, loc_48466F8C
-	.long	0, loc_48466F8C
-	.long	0xB07FFD, loc_48466F62
-	.long	0xB07FFE, loc_48466F62
-	.long	0xB07FFF, loc_48466F62
-
-func_48466F91_Records:	# 4 x REC_func_48466F91_Records (8 bytes each); read by func_48466F91 0x48466F91 `mov (a0), d0`
-	REC_func_48466F91_Records	key=0xAFFFFE, proc=loc_48466FE5
+	REC_func_48466F1E_Records	key=0xB00004, proc=loc_48466F62
+	REC_func_48466F1E_Records	key=0xB00044, proc=loc_48466F62
+	REC_func_48466F1E_Records	key=0xB00045, proc=loc_48466F62
+	REC_func_48466F1E_Records	key=0xB00007, proc=loc_48466F62
+	REC_func_48466F1E_Records	key=0xB00047, proc=loc_48466F62	# [8]
+	REC_func_48466F1E_Records	key=0xB00046, proc=loc_48466F62
+	REC_func_48466F1E_Records	key=0xB00008, proc=loc_48466F62
+	REC_func_48466F1E_Records	key=32773, proc=loc_48466F62
+	REC_func_48466F1E_Records	key=1, proc=loc_48466F85
+	REC_func_48466F1E_Records	proc=loc_48466F8C
+	REC_func_48466F1E_Records	proc=loc_48466F8C
+	REC_func_48466F1E_Records	proc=loc_48466F8C
+	REC_func_48466F1E_Records	proc=loc_48466F8C	# [16]
+	REC_func_48466F1E_Records	proc=loc_48466F8C
+	REC_func_48466F1E_Records	proc=loc_48466F8C
+	REC_func_48466F1E_Records	proc=loc_48466F8C
+	REC_func_48466F1E_Records	proc=loc_48466F8C
+	REC_func_48466F1E_Records	proc=loc_48466F8C
+	REC_func_48466F1E_Records	proc=loc_48466F8C
+	REC_func_48466F1E_Records	proc=loc_48466F8C
+	REC_func_48466F1E_Records	key=0xB00058, proc=loc_48466F62	# [24]
+	REC_func_48466F1E_Records	proc=loc_48466F8C
+	REC_func_48466F1E_Records	key=0xB0005A, proc=loc_48466F62
+	REC_func_48466F1E_Records	proc=loc_48466F8C
+	REC_func_48466F1E_Records	proc=loc_48466F8C
+	REC_func_48466F1E_Records	key=0xB07FFD, proc=loc_48466F62
+	REC_func_48466F1E_Records	key=0xB07FFE, proc=loc_48466F62
+	REC_func_48466F1E_Records	key=0xB07FFF, proc=loc_48466F62
+func_48466F91_Records:	# 32 x REC_func_48466F91_Records (8 bytes each); read by func_48466F91 0x48466F91 `mov (a0), d0`
+	REC_func_48466F91_Records	key=0xAFFFFE, proc=loc_48466FE5	# [0]
 	REC_func_48466F91_Records	key=32767, proc=loc_48466FE5
 	REC_func_48466F91_Records	key=0xDFFFFD, proc=loc_48466FEE
 	REC_func_48466F91_Records	key=32771, proc=loc_48466FE5
-
-MsgTable_485BA538:	# 28 x {u32 key, code address}: a dispatch table
-	.long	0xB00004, loc_48466FE5
-	.long	0xB00044, loc_48466FE5
-	.long	0xB00045, loc_48466FE5
-	.long	0xB00007, loc_48466FE5
-	.long	0xB00047, loc_48466FE5
-	.long	0xB00046, loc_48466FE5
-	.long	0xB00008, loc_48466FE5
-	.long	32773, loc_48466FE5
-	.long	1, loc_48467007
-	.long	0, loc_4846700B
-	.long	0, loc_4846700B
-	.long	0, loc_4846700B
-	.long	0, loc_4846700B
-	.long	0, loc_4846700B
-	.long	0, loc_4846700B
-	.long	0, loc_4846700B
-	.long	0, loc_4846700B
-	.long	0, loc_4846700B
-	.long	0, loc_4846700B
-	.long	0, loc_4846700B
-	.long	0xB00058, loc_48466FE5
-	.long	0, loc_4846700B
-	.long	0xB0005A, loc_48466FE5
-	.long	0, loc_4846700B
-	.long	0, loc_4846700B
-	.long	0xB07FFD, loc_48466FE5
-	.long	0xB07FFE, loc_48466FE5
-	.long	0xB07FFF, loc_48466FE5
-
-func_48467016_Records:	# 4 x REC_func_48467016_Records (8 bytes each); read by func_48467016 0x48467016 `mov (a0), d1`
-	REC_func_48467016_Records	key=0xAFFFFE, proc=loc_4846705A
+	REC_func_48466F91_Records	key=0xB00004, proc=loc_48466FE5
+	REC_func_48466F91_Records	key=0xB00044, proc=loc_48466FE5
+	REC_func_48466F91_Records	key=0xB00045, proc=loc_48466FE5
+	REC_func_48466F91_Records	key=0xB00007, proc=loc_48466FE5
+	REC_func_48466F91_Records	key=0xB00047, proc=loc_48466FE5	# [8]
+	REC_func_48466F91_Records	key=0xB00046, proc=loc_48466FE5
+	REC_func_48466F91_Records	key=0xB00008, proc=loc_48466FE5
+	REC_func_48466F91_Records	key=32773, proc=loc_48466FE5
+	REC_func_48466F91_Records	key=1, proc=loc_48467007
+	REC_func_48466F91_Records	proc=loc_4846700B
+	REC_func_48466F91_Records	proc=loc_4846700B
+	REC_func_48466F91_Records	proc=loc_4846700B
+	REC_func_48466F91_Records	proc=loc_4846700B	# [16]
+	REC_func_48466F91_Records	proc=loc_4846700B
+	REC_func_48466F91_Records	proc=loc_4846700B
+	REC_func_48466F91_Records	proc=loc_4846700B
+	REC_func_48466F91_Records	proc=loc_4846700B
+	REC_func_48466F91_Records	proc=loc_4846700B
+	REC_func_48466F91_Records	proc=loc_4846700B
+	REC_func_48466F91_Records	proc=loc_4846700B
+	REC_func_48466F91_Records	key=0xB00058, proc=loc_48466FE5	# [24]
+	REC_func_48466F91_Records	proc=loc_4846700B
+	REC_func_48466F91_Records	key=0xB0005A, proc=loc_48466FE5
+	REC_func_48466F91_Records	proc=loc_4846700B
+	REC_func_48466F91_Records	proc=loc_4846700B
+	REC_func_48466F91_Records	key=0xB07FFD, proc=loc_48466FE5
+	REC_func_48466F91_Records	key=0xB07FFE, proc=loc_48466FE5
+	REC_func_48466F91_Records	key=0xB07FFF, proc=loc_48466FE5
+func_48467016_Records:	# 32 x REC_func_48467016_Records (8 bytes each); read by func_48467016 0x48467016 `mov (a0), d1`
+	REC_func_48467016_Records	key=0xAFFFFE, proc=loc_4846705A	# [0]
 	REC_func_48467016_Records	key=1, proc=loc_4846705A
 	REC_func_48467016_Records	key=32767, proc=loc_4846705A
 	REC_func_48467016_Records	key=32771, proc=loc_4846705A
-
-MsgTable_485BA638:	# 28 x {u32 key, code address}: a dispatch table
-	.long	0xB00004, loc_4846705A
-	.long	0xB00044, loc_4846705A
-	.long	0xB00045, loc_4846705A
-	.long	0xB00007, loc_4846705A
-	.long	0xB00047, loc_4846705A
-	.long	0xB00046, loc_4846705A
-	.long	0xB00008, loc_4846705A
-	.long	32773, loc_4846705A
-	.long	0, loc_4846705D
-	.long	0, loc_4846705D
-	.long	0, loc_4846705D
-	.long	0, loc_4846705D
-	.long	0, loc_4846705D
-	.long	0, loc_4846705D
-	.long	0, loc_4846705D
-	.long	0, loc_4846705D
-	.long	0, loc_4846705D
-	.long	0, loc_4846705D
-	.long	0, loc_4846705D
-	.long	0, loc_4846705D
-	.long	0xB00058, loc_4846705A
-	.long	0, loc_4846705D
-	.long	0xB0005A, loc_4846705A
-	.long	0, loc_4846705D
-	.long	0, loc_4846705D
-	.long	0xB07FFD, loc_4846705A
-	.long	0xB07FFE, loc_4846705A
-	.long	0xB07FFF, loc_4846705A
-
-func_4846819E_Records:	# 4 x REC_func_4846819E_Records (8 bytes each); read by func_4846819E 0x4846819E `mov (a0), d0`
-	REC_func_4846819E_Records	key=0x8FFFFD, proc=loc_4846821D
+	REC_func_48467016_Records	key=0xB00004, proc=loc_4846705A
+	REC_func_48467016_Records	key=0xB00044, proc=loc_4846705A
+	REC_func_48467016_Records	key=0xB00045, proc=loc_4846705A
+	REC_func_48467016_Records	key=0xB00007, proc=loc_4846705A
+	REC_func_48467016_Records	key=0xB00047, proc=loc_4846705A	# [8]
+	REC_func_48467016_Records	key=0xB00046, proc=loc_4846705A
+	REC_func_48467016_Records	key=0xB00008, proc=loc_4846705A
+	REC_func_48467016_Records	key=32773, proc=loc_4846705A
+	REC_func_48467016_Records	proc=loc_4846705D
+	REC_func_48467016_Records	proc=loc_4846705D
+	REC_func_48467016_Records	proc=loc_4846705D
+	REC_func_48467016_Records	proc=loc_4846705D
+	REC_func_48467016_Records	proc=loc_4846705D	# [16]
+	REC_func_48467016_Records	proc=loc_4846705D
+	REC_func_48467016_Records	proc=loc_4846705D
+	REC_func_48467016_Records	proc=loc_4846705D
+	REC_func_48467016_Records	proc=loc_4846705D
+	REC_func_48467016_Records	proc=loc_4846705D
+	REC_func_48467016_Records	proc=loc_4846705D
+	REC_func_48467016_Records	proc=loc_4846705D
+	REC_func_48467016_Records	key=0xB00058, proc=loc_4846705A	# [24]
+	REC_func_48467016_Records	proc=loc_4846705D
+	REC_func_48467016_Records	key=0xB0005A, proc=loc_4846705A
+	REC_func_48467016_Records	proc=loc_4846705D
+	REC_func_48467016_Records	proc=loc_4846705D
+	REC_func_48467016_Records	key=0xB07FFD, proc=loc_4846705A
+	REC_func_48467016_Records	key=0xB07FFE, proc=loc_4846705A
+	REC_func_48467016_Records	key=0xB07FFF, proc=loc_4846705A
+func_4846819E_Records:	# 32 x REC_func_4846819E_Records (8 bytes each); read by func_4846819E 0x4846819E `mov (a0), d0`
+	REC_func_4846819E_Records	key=0x8FFFFD, proc=loc_4846821D	# [0]
 	REC_func_4846819E_Records	key=1, proc=loc_48468209
 	REC_func_4846819E_Records	key=0xBFFFFD, proc=loc_48468226
 	REC_func_4846819E_Records	key=32771, proc=loc_48468209
-
-MsgTable_485BA738:	# 28 x {u32 key, code address}: a dispatch table
-	.long	0xB00044, loc_48468209
-	.long	0xB00045, loc_48468209
-	.long	0xB00046, loc_48468209
-	.long	0xB00007, loc_48468209
-	.long	0xB00047, loc_48468209
-	.long	0xB00008, loc_48468209
-	.long	32773, loc_48468209
-	.long	49149, loc_48468226
-	.long	49153, loc_48468226
-	.long	0, loc_48468230
-	.long	0, loc_48468230
-	.long	0, loc_48468230
-	.long	0, loc_48468230
-	.long	0, loc_48468230
-	.long	0, loc_48468230
-	.long	0, loc_48468230
-	.long	0, loc_48468230
-	.long	0, loc_48468230
-	.long	0, loc_48468230
-	.long	0, loc_48468230
-	.long	0xB00058, loc_48468209
-	.long	0, loc_48468230
-	.long	0xB0005A, loc_48468209
-	.long	0, loc_48468230
-	.long	0, loc_48468230
-	.long	0xDFFFFD, loc_48468209
-	.long	0xAFFFFE, loc_48468209
-	.long	32767, loc_48468209
+	REC_func_4846819E_Records	key=0xB00044, proc=loc_48468209
+	REC_func_4846819E_Records	key=0xB00045, proc=loc_48468209
+	REC_func_4846819E_Records	key=0xB00046, proc=loc_48468209
+	REC_func_4846819E_Records	key=0xB00007, proc=loc_48468209
+	REC_func_4846819E_Records	key=0xB00047, proc=loc_48468209	# [8]
+	REC_func_4846819E_Records	key=0xB00008, proc=loc_48468209
+	REC_func_4846819E_Records	key=32773, proc=loc_48468209
+	REC_func_4846819E_Records	key=49149, proc=loc_48468226
+	REC_func_4846819E_Records	key=49153, proc=loc_48468226
+	REC_func_4846819E_Records	proc=loc_48468230
+	REC_func_4846819E_Records	proc=loc_48468230
+	REC_func_4846819E_Records	proc=loc_48468230
+	REC_func_4846819E_Records	proc=loc_48468230	# [16]
+	REC_func_4846819E_Records	proc=loc_48468230
+	REC_func_4846819E_Records	proc=loc_48468230
+	REC_func_4846819E_Records	proc=loc_48468230
+	REC_func_4846819E_Records	proc=loc_48468230
+	REC_func_4846819E_Records	proc=loc_48468230
+	REC_func_4846819E_Records	proc=loc_48468230
+	REC_func_4846819E_Records	proc=loc_48468230
+	REC_func_4846819E_Records	key=0xB00058, proc=loc_48468209	# [24]
+	REC_func_4846819E_Records	proc=loc_48468230
+	REC_func_4846819E_Records	key=0xB0005A, proc=loc_48468209
+	REC_func_4846819E_Records	proc=loc_48468230
+	REC_func_4846819E_Records	proc=loc_48468230
+	REC_func_4846819E_Records	key=0xDFFFFD, proc=loc_48468209
+	REC_func_4846819E_Records	key=0xAFFFFE, proc=loc_48468209
+	REC_func_4846819E_Records	key=32767, proc=loc_48468209
 
 func_4846AC78_Table:
 	.long	loc_4846AD26
@@ -29270,7 +29264,7 @@ Str_TT_NAMING:	.asciz "TT_NAMING"
 data_485D7778:
 # census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1D7778, 0x1D777A
-Str_empty_1150:	.asciz "_"
+Str_empty_1113:	.asciz "_"
 Str_0_24:	.asciz "0"
 Str_1_37:	.asciz "1"
 Str_2_41:	.asciz "2"
@@ -29333,42 +29327,42 @@ Str_w_2:	.asciz "w"
 Str_x_7:	.asciz "x"
 Str_y_4:	.asciz "y"
 Str_z_2:	.asciz "z"
-Str_empty_1149:	.asciz "!"
-Str_empty_1148:	.asciz "#"
-Str_empty_1147:	.asciz "$"
-Str_empty_1146:	.asciz "%"
-Str_empty_1145:	.asciz "&"
-Str_empty_1144:	.asciz "?"
+Str_empty_1111:	.asciz "!"
+Str_empty_1101:	.asciz "#"
+Str_empty_1099:	.asciz "$"
+Str_empty_1098:	.asciz "%"
+Str_empty_1097:	.asciz "&"
+Str_empty_1096:	.asciz "?"
 Str_40_3:	.asciz "~40"
 Str_5c_2:	.asciz "~5c"
-Str_empty_1143:	.asciz "^"
+Str_empty_1095:	.asciz "^"
 Str_22_2:	.asciz "~22"
 Str_27_2:	.asciz "~27"
-Str_empty_1142:	.asciz "`"
-Str_empty_1141:	.asciz ","
-Str_empty_1140:	.asciz "."
-Str_empty_1139:	.asciz ":"
-Str_empty_1138:	.asciz ";"
-Str_empty_1137:	.asciz "+"
-Str_empty_1136:	.asciz "-"
-Str_empty_1124:	.asciz "*"
-Str_empty_1118:	.asciz "/"
-Str_empty_1117:	.asciz "="
+Str_empty_1094:	.asciz "`"
+Str_empty_1093:	.asciz ","
+Str_empty_1092:	.asciz "."
+Str_empty_1091:	.asciz ":"
+Str_empty_1090:	.asciz ";"
+Str_empty_1089:	.asciz "+"
+Str_empty_1088:	.asciz "-"
+Str_empty_1087:	.asciz "*"
+Str_empty_1086:	.asciz "/"
+Str_empty_1085:	.asciz "="
 Str_8b_2:	.asciz "~8b"
 Str_8d_2:	.asciz "~8d"
-Str_empty_1115:	.asciz "("
-Str_empty_1114:	.asciz ")"
-Str_empty_1113:	.asciz "<"
-Str_empty_1111:	.asciz ">"
-Str_empty_1101:	.asciz "["
-Str_empty_1099:	.asciz "]"
-Str_empty_1098:	.asciz "{"
-Str_empty_1097:	.asciz "}"
-Str_empty_1096:	.asciz "|"
+Str_empty_1084:	.asciz "("
+Str_empty_1083:	.asciz ")"
+Str_empty_1082:	.asciz "<"
+Str_empty_1081:	.asciz ">"
+Str_empty_1080:	.asciz "["
+Str_empty_1079:	.asciz "]"
+Str_empty_1078:	.asciz "{"
+Str_empty_1077:	.asciz "}"
+Str_empty_1076:	.asciz "|"
 
 ptrs_485D7844:
 	.long	data_485D7778
-	.long	Str_empty_1150
+	.long	Str_empty_1113
 	.long	Str_0_24
 	.long	Str_1_37
 	.long	Str_2_41
@@ -29431,41 +29425,41 @@ ptrs_485D7844:
 	.long	Str_x_7
 	.long	Str_y_4
 	.long	Str_z_2
-	.long	Str_empty_1149
-	.long	Str_empty_1148
-	.long	Str_empty_1147
-	.long	Str_empty_1146
-	.long	Str_empty_1145
-	.long	Str_empty_1144
-	.long	Str_40_3
-	.long	Str_5c_2
-	.long	Str_empty_1143
-	.long	Str_22_2
-	.long	Str_27_2
-	.long	Str_empty_1142
-	.long	Str_empty_1141
-	.long	Str_empty_1140
-	.long	Str_empty_1139
-	.long	Str_empty_1138
-	.long	Str_empty_1137
-	.long	Str_empty_1136
-	.long	Str_empty_1124
-	.long	Str_empty_1118
-	.long	Str_empty_1117
-	.long	Str_8b_2
-	.long	Str_8d_2
-	.long	Str_empty_1115
-	.long	Str_empty_1114
-	.long	Str_empty_1113
 	.long	Str_empty_1111
 	.long	Str_empty_1101
 	.long	Str_empty_1099
 	.long	Str_empty_1098
 	.long	Str_empty_1097
 	.long	Str_empty_1096
+	.long	Str_40_3
+	.long	Str_5c_2
+	.long	Str_empty_1095
+	.long	Str_22_2
+	.long	Str_27_2
+	.long	Str_empty_1094
+	.long	Str_empty_1093
+	.long	Str_empty_1092
+	.long	Str_empty_1091
+	.long	Str_empty_1090
+	.long	Str_empty_1089
+	.long	Str_empty_1088
+	.long	Str_empty_1087
+	.long	Str_empty_1086
+	.long	Str_empty_1085
+	.long	Str_8b_2
+	.long	Str_8d_2
+	.long	Str_empty_1084
+	.long	Str_empty_1083
+	.long	Str_empty_1082
+	.long	Str_empty_1081
+	.long	Str_empty_1080
+	.long	Str_empty_1079
+	.long	Str_empty_1078
+	.long	Str_empty_1077
+	.long	Str_empty_1076
 	.long	0
 
-Str_text_43:	.asciz "_"
+Str_text_66:	.asciz "_"
 Str_0_23:	.asciz "0"
 Str_1_36:	.asciz "1"
 Str_2_40:	.asciz "2"
@@ -29505,7 +29499,7 @@ Str_Z_3:	.asciz "Z"
 	.align	4, 0xFF	# pad after Str_Z_3
 
 ptrs_485D7A14:
-	.long	Str_text_43
+	.long	Str_text_66
 	.long	Str_0_23
 	.long	Str_1_36
 	.long	Str_2_40
@@ -29547,12 +29541,12 @@ AcNamingWindowProc_Table:
 	.long	ptrs_485D7844
 	.long	ptrs_485D7A14
 
-Str_empty_1095:	.asciz " "
-Str_empty_1094:	.asciz "_"
+Str_empty_1075:	.asciz " "
+Str_empty_1074:	.asciz "_"
 
 AcNamingWindowProc_Table_2:
-	.long	Str_empty_1095
-	.long	Str_empty_1094
+	.long	Str_empty_1075
+	.long	Str_empty_1074
 
 Str_7f_3:	.asciz "~7f"
 Str_empty_1167:	.asciz " "
@@ -29759,7 +29753,7 @@ data_485D7CB4:
 data_485D7CB5:
 	.space	1, 0x00
 
-Str_empty_1093:	.asciz "_"
+Str_empty_1073:	.asciz "_"
 Str_0_22:	.asciz "0"
 Str_1_35:	.asciz "1"
 Str_2_39:	.asciz "2"
@@ -29789,7 +29783,7 @@ ptrs_485D7CD0:
 	.long	data_485D7CB3
 	.long	data_485D7CB4
 	.long	data_485D7CB5
-	.long	Str_empty_1093
+	.long	Str_empty_1073
 	.long	Str_0_22
 	.long	Str_1_35
 	.long	Str_2_39
@@ -29802,22 +29796,22 @@ ptrs_485D7CD0:
 	.long	Str_9_13
 	.long	data_485D7CCC
 
-Str_empty_1092:	.asciz "!"
-Str_empty_1091:	.asciz "#"
-Str_empty_1090:	.asciz "$"
-Str_empty_1089:	.asciz "%"
-Str_empty_1088:	.asciz "&"
-Str_empty_1087:	.asciz "?"
+Str_empty_1072:	.asciz "!"
+Str_empty_1071:	.asciz "#"
+Str_empty_1070:	.asciz "$"
+Str_empty_1069:	.asciz "%"
+Str_empty_1068:	.asciz "&"
+Str_empty_1067:	.asciz "?"
 Str_40_2:	.asciz "~40"
 Str_5c:	.asciz "~5c"
-Str_empty_1086:	.asciz "^"
+Str_empty_1066:	.asciz "^"
 Str_22:	.asciz "~22"
 Str_27:	.asciz "~27"
-Str_empty_1085:	.asciz "`"
+Str_empty_1063:	.asciz "`"
 data_485D7D58:
 	.space	1, 0x00
-Str_empty_1084:	.asciz " "
-Str_empty_1083:	.asciz "_"
+Str_empty_1062:	.asciz " "
+Str_empty_1060:	.asciz "_"
 Str_0_21:	.asciz "0"
 Str_1_34:	.asciz "1"
 Str_2_38:	.asciz "2"
@@ -29835,21 +29829,21 @@ data_485D7D72:
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1D7D72, 0x1D7D74
 
 ptrs_485D7D74:
-	.long	Str_empty_1092
-	.long	Str_empty_1091
-	.long	Str_empty_1090
-	.long	Str_empty_1089
-	.long	Str_empty_1088
-	.long	Str_empty_1087
+	.long	Str_empty_1072
+	.long	Str_empty_1071
+	.long	Str_empty_1070
+	.long	Str_empty_1069
+	.long	Str_empty_1068
+	.long	Str_empty_1067
 	.long	Str_40_2
 	.long	Str_5c
-	.long	Str_empty_1086
+	.long	Str_empty_1066
 	.long	Str_22
 	.long	Str_27
-	.long	Str_empty_1085
+	.long	Str_empty_1063
 	.long	data_485D7D58
-	.long	Str_empty_1084
-	.long	Str_empty_1083
+	.long	Str_empty_1062
+	.long	Str_empty_1060
 	.long	Str_0_21
 	.long	Str_1_34
 	.long	Str_2_38
@@ -29863,15 +29857,15 @@ ptrs_485D7D74:
 	.long	data_485D7D71
 	.long	data_485D7D72
 
-Str_empty_1082:	.asciz "("
-Str_empty_1081:	.asciz ")"
-Str_empty_1080:	.asciz "<"
-Str_empty_1079:	.asciz ">"
-Str_empty_1078:	.asciz "["
-Str_empty_1077:	.asciz "]"
-Str_empty_1076:	.asciz "{"
-Str_empty_1075:	.asciz "}"
-Str_empty_1074:	.asciz "|"
+Str_empty_1059:	.asciz "("
+Str_empty_1057:	.asciz ")"
+Str_empty_1056:	.asciz "<"
+Str_empty_1055:	.asciz ">"
+Str_empty_1054:	.asciz "["
+Str_empty_1053:	.asciz "]"
+Str_empty_1052:	.asciz "{"
+Str_empty_1051:	.asciz "}"
+Str_empty_1050:	.asciz "|"
 data_485D7DF2:
 	.space	1, 0x00
 data_485D7DF3:
@@ -29880,15 +29874,15 @@ data_485D7DF4:
 	.space	1, 0x00
 data_485D7DF5:
 	.space	1, 0x00
-Str_empty_1073:	.asciz ","
-Str_empty_1072:	.asciz "."
-Str_empty_1071:	.asciz ":"
-Str_empty_1070:	.asciz ";"
-Str_empty_1069:	.asciz "+"
-Str_empty_1068:	.asciz "-"
-Str_empty_1067:	.asciz "*"
-Str_empty_1066:	.asciz "/"
-Str_empty_1063:	.asciz "="
+Str_empty_1049:	.asciz ","
+Str_empty_1048:	.asciz "."
+Str_empty_1047:	.asciz ":"
+Str_empty_1046:	.asciz ";"
+Str_empty_1043:	.asciz "+"
+Str_empty_1038:	.asciz "-"
+Str_empty_1037:	.asciz "*"
+Str_empty_1036:	.asciz "/"
+Str_empty_1035:	.asciz "="
 Str_8b:	.asciz "~8b"
 Str_8d:	.asciz "~8d"
 data_485D7E10:
@@ -29898,28 +29892,28 @@ data_485D7E11:
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1D7E11, 0x1D7E14
 
 ptrs_485D7E14:
-	.long	Str_empty_1082
-	.long	Str_empty_1081
-	.long	Str_empty_1080
-	.long	Str_empty_1079
-	.long	Str_empty_1078
-	.long	Str_empty_1077
-	.long	Str_empty_1076
-	.long	Str_empty_1075
-	.long	Str_empty_1074
+	.long	Str_empty_1059
+	.long	Str_empty_1057
+	.long	Str_empty_1056
+	.long	Str_empty_1055
+	.long	Str_empty_1054
+	.long	Str_empty_1053
+	.long	Str_empty_1052
+	.long	Str_empty_1051
+	.long	Str_empty_1050
 	.long	data_485D7DF2
 	.long	data_485D7DF3
 	.long	data_485D7DF4
 	.long	data_485D7DF5
-	.long	Str_empty_1073
-	.long	Str_empty_1072
-	.long	Str_empty_1071
-	.long	Str_empty_1070
-	.long	Str_empty_1069
-	.long	Str_empty_1068
-	.long	Str_empty_1067
-	.long	Str_empty_1066
-	.long	Str_empty_1063
+	.long	Str_empty_1049
+	.long	Str_empty_1048
+	.long	Str_empty_1047
+	.long	Str_empty_1046
+	.long	Str_empty_1043
+	.long	Str_empty_1038
+	.long	Str_empty_1037
+	.long	Str_empty_1036
+	.long	Str_empty_1035
 	.long	Str_8b
 	.long	Str_8d
 	.long	data_485D7E10
@@ -33643,7 +33637,8 @@ AcSpsMmmEditProc_Table:	# 8 x s16, 19..255; read by AcSpsMmmEditProc 0x4848D2C6:
 	tab_s16	255, 19, 20, 21, 22, 255, 255, 255
 func_4848AD5D_Table:	# 5 x u32, 45072..45136; read by func_4848AD5D 0x4848AD5D: `mov   (d0, a2), d0`; func_4848AD5D 0x4848AD5D: `mov   (d1, a2), d0`
 	tab_u32	45136, 45120, 45104, 45088, 45072
-	.space	4, 0xFF
+
+func_4848AD5D_Table_End:	.long	0xffffffff	# the end marker of func_4848AD5D_Table: func_4848AD5D 0x4848AD5D: `mov (d0, a2), d0` / `cmp d3, d0` stops at it
 
 Str_OtPt_2:	.asciz "OtPt"
 	.align	4, 0xFF	# pad after Str_OtPt_2
@@ -33683,8 +33678,8 @@ Text_PART_1:	# 33 strings of 10 characters, NUL-terminated
 	.asciz	"BASS PEDAL"
 	.asciz	"METRONOME "
 
-Str_CHORDFINDER_2:	.asciz "CHORDFINDER"
-	.align	4, 0xFF	# pad after Str_CHORDFINDER_2
+Str_CHORDFINDER:	.asciz "CHORDFINDER"
+	.align	4, 0xFF	# pad after Str_CHORDFINDER
 
 AcSpsPartProc_Table:
 	.long	Text_PART_1
@@ -33720,7 +33715,7 @@ AcSpsPartProc_Table:
 	.long	Text_PART_1+330
 	.long	Text_PART_1+341
 	.long	Text_PART_1+352
-	.long	Str_CHORDFINDER_2
+	.long	Str_CHORDFINDER
 data_485EB9FC:
 # census: opaque -- unknown-dump: 34 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1EB9FC, 0x1EBA1E
@@ -33968,7 +33963,7 @@ Str_10k:	.asciz "  10k"
 Str_12_5k:	.asciz "12.5k"
 Str_16k:	.asciz "  16k"
 Str_20k:	.asciz "  20k"
-Str_empty_1062:	.asciz "     "
+Str_text_10:	.asciz "     "
 
 func_4848BC89_Table:
 	.long	Str_20
@@ -34002,7 +33997,7 @@ func_4848BC89_Table:
 	.long	Str_12_5k
 	.long	Str_16k
 	.long	Str_20k
-	.long	Str_empty_1062
+	.long	Str_text_10
 
 Str_empty_1123:	.asciz "  -- "
 	.align	4, 0xFF	# pad after Str_empty_1123
@@ -34094,8 +34089,8 @@ Str_439_2:	.asciz "439.2"
 Str_439_4:	.asciz "439.4"
 Str_439_6:	.asciz "439.6"
 Str_439_8:	.asciz "439.8"
-Str_440_0_3:	.asciz "440.0"
-	.align	4, 0xFF	# pad after Str_440_0_3
+Str_440_0:	.asciz "440.0"
+	.align	4, 0xFF	# pad after Str_440_0
 
 MmmMtune_Table:
 	.long	Str_427_5
@@ -34162,7 +34157,7 @@ MmmMtune_Table:
 	.long	Str_439_4
 	.long	Str_439_6
 	.long	Str_439_8
-	.long	Str_440_0_3
+	.long	Str_440_0
 
 Str_440_0_2:	.asciz "440.0"
 Str_440_2:	.asciz "440.2"
@@ -34335,7 +34330,7 @@ AcTechniChordProc_Table_2:
 	.long	Str_HARDROCK
 	.long	Str_FANFARE
 
-Str_PART_1_3:	.asciz " PART 1  "
+Str_PART_1:	.asciz " PART 1  "
 
 Text_PART_2:	# 19 strings of 9 characters, NUL-terminated
 	.asciz	" PART 2  "
@@ -34359,7 +34354,7 @@ Text_PART_2:	# 19 strings of 9 characters, NUL-terminated
 	.asciz	"CONDUCTOR"
 
 MmmOrchestrator_Table:
-	.long	Str_PART_1_3
+	.long	Str_PART_1
 	.long	Text_PART_2
 	.long	Text_PART_2+10
 	.long	Text_PART_2+20
@@ -34387,7 +34382,8 @@ IvSdpartProc_Table_2:	# 32 x s16, 0..31; read by IvSdpartProc 0x4848CCF0: `movhu
 	tab_s16	16, 17, 18, 0, 1, 2, 3, 4, 5, 6, 7, 8	# [0]
 	tab_s16	9, 10, 11, 12, 13, 14, 15, 31, 27, 28, 19, 20	# [12]
 	tab_s16	21, 22, 23, 24, 25, 26, 29, 30	# [24]
-	.space	2, 0xFF
+
+IvSdpartProc_Table_2_End:	.word	0xffff	# the end marker of IvSdpartProc_Table_2: IvSdpartProc 0x4848CCF0: `movhu (d1, a3), d1` / `cmp -1, d1` stops at it
 
 AcSpsMmmEditProc_Records:	# 7 x REC_AcSpsMmmEditProc_Records (32 bytes each); read by AcSpsMmmEditProc 0x4848D2C6 `movhu (d1, a0), d0`
 	REC_AcSpsMmmEditProc_Records	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -34483,7 +34479,7 @@ Str_DECAY_TIME_2:	.asciz "DECAY TIME"
 Str_RELEASE_TIME_4:	.asciz "RELEASE TIME"
 # census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1ED70A, 0x1ED70C
-Str_empty_1060:	.asciz "%"
+Str_empty_1032:	.asciz "%"
 # census: opaque -- unknown-dump: 154 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1ED70E, 0x1ED7A8
 Str_HVIBRATO_RATE_2:	.asciz "\n\xD7^HVIBRATO RATE"
@@ -34497,15 +34493,15 @@ Str_DECAY_TIME_3:	.asciz "DECAY TIME"
 Str_RELEASE_TIME_6:	.asciz "RELEASE TIME"
 # census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1ED816, 0x1ED818
-Str_empty_1059:	.asciz "%"
+Str_empty_1029:	.asciz "%"
 # census: opaque -- unknown-dump: 158 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1ED81A, 0x1ED8B8
 
 AcMixerScreenProc_Table:
 	.long	data_485ED294
-	.long	Str_empty_1060
+	.long	Str_empty_1032
 	.long	data_485ED510
-	.long	Str_empty_1059
+	.long	Str_empty_1029
 
 data_50001858_p0_0:	# REC_data_50001858_p0 (1 bytes), then 63 x u16 the code indexes from +0 (read by func_4848DF80 0x4848DF80 `movhu (d0, a0), d0`)
 	REC_data_50001858_p0	x0="\x10"
@@ -34521,7 +34517,7 @@ AcMixerScreenProc_Table_2:
 	.long	TtSqmixer_Table
 	.long	TtSqmixer_Table
 
-Str_PART_1_2:	.asciz "PART  1"
+Str_PART_1_3:	.asciz "PART  1"
 
 Text_PART_2_2:	# 36 strings of 7 characters, NUL-terminated
 	.asciz	"PART  2"
@@ -34598,11 +34594,11 @@ Str_R_BA:	.asciz "R.BA"
 Str_PADS_13:	.asciz "PADS"
 Str_PADS_14:	.asciz "PADS"
 Str_B_PD:	.asciz "B.PD"
-Str_text_9:	.asciz "    "
-Str_text_10:	.asciz "    "
-Str_text_11:	.asciz "    "
-Str_text_12:	.asciz "    "
-Str_text_13:	.asciz "    "
+Str_text_32:	.asciz "    "
+Str_text_33:	.asciz "    "
+Str_text_34:	.asciz "    "
+Str_text_35:	.asciz "    "
+Str_text_36:	.asciz "    "
 Str_TRACK_1:	.asciz "TRACK 1"
 Str_TRACK_2_2:	.asciz "TRACK 2"
 Str_TRACK_3_2:	.asciz "TRACK 3"
@@ -34708,7 +34704,9 @@ AcSpsKsclPartProc_Table:	# 28 x s16, 0..31; read by AcSpsKsclPartProc 0x48490BDE
 	tab_s16	16, 17, 18, 0, 1, 2, 3, 4, 5, 6, 7, 8	# [0]
 	tab_s16	9, 10, 11, 12, 13, 14, 15, 31, 27, 28, 19, 20	# [12]
 	tab_s16	21, 22, 23, 24	# [24]
-	.space	2, 0xFF
+
+AcSpsKsclPartProc_Table_End:	.word	0xffff	# the end marker of AcSpsKsclPartProc_Table: AcSpsKsclPartProc 0x48490BDE: `movhu (d1, a2), d1` / `cmp -1, d1` stops at it
+
 AcSpsKsclEditProc_Table:	# 14 x s16, 0..51; read by AcSpsKsclEditProc 0x48490BA8: `movhu  (d0, a0), d0`
 	tab_s16	15, 0, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49	# [0]
 	tab_s16	50, 51	# [12]
@@ -34800,9 +34798,9 @@ Text_FLAT:	# 10 strings of 12 characters, NUL-terminated
 	.asciz	"  ARABIC 5  "
 	.asciz	"  SLENDRO   "
 	.asciz	"   PELOG    "
-data_485EDFAA:
-# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x1EDFAA, 0x1EDFAC
+
+Str_text_11:	.asciz ""
+	.align	4, 0xFF	# pad after Str_text_11
 
 AcKsclTypeEditProc_Table:
 	.long	Text_FLAT
@@ -34815,33 +34813,33 @@ AcKsclTypeEditProc_Table:
 	.long	Text_FLAT+91
 	.long	Text_FLAT+104
 	.long	Text_FLAT+117
-	.long	data_485EDFAA
+	.long	Str_text_11
 
-Str_0_15:	.asciz "  0"
-Str_1_33:	.asciz " +1"
-Str_2_37:	.asciz " +2"
-Str_3_27:	.asciz " +3"
-Str_4_31:	.asciz " +4"
-Str_5_22:	.asciz " +5"
-Str_6_20:	.asciz " +6"
-Str_7_10:	.asciz " +7"
-Str_8_11:	.asciz " +8"
-Str_9_11:	.asciz " +9"
-Str_10_8:	.asciz "+10"
+Str_0_9:	.asciz "  0"
+Str_1_18:	.asciz " +1"
+Str_2_24:	.asciz " +2"
+Str_3_18:	.asciz " +3"
+Str_4_23:	.asciz " +4"
+Str_5_15:	.asciz " +5"
+Str_6_15:	.asciz " +6"
+Str_7_6:	.asciz " +7"
+Str_8_6:	.asciz " +8"
+Str_9_6:	.asciz " +9"
+Str_10_5:	.asciz "+10"
 Str_11_5:	.asciz "+11"
 
 AcKsclShiftEditProc_Table:
-	.long	Str_0_15
-	.long	Str_1_33
-	.long	Str_2_37
-	.long	Str_3_27
-	.long	Str_4_31
-	.long	Str_5_22
-	.long	Str_6_20
-	.long	Str_7_10
-	.long	Str_8_11
-	.long	Str_9_11
-	.long	Str_10_8
+	.long	Str_0_9
+	.long	Str_1_18
+	.long	Str_2_24
+	.long	Str_3_18
+	.long	Str_4_23
+	.long	Str_5_15
+	.long	Str_6_15
+	.long	Str_7_6
+	.long	Str_8_6
+	.long	Str_9_6
+	.long	Str_10_5
 	.long	Str_11_5
 
 Str_KEY_C:	.asciz "[KEY=C ]"
@@ -37903,12 +37901,20 @@ TtNormal_Records_p0_3:	# REC_TtNormal_Records_p0 (4 bytes), then 41 x s16 the co
 	tab_s16	13, 8, 4, 34, 0, 4, 27, 1, 5, 29, 4, 5, 31, 0, 7, 32	# [16]
 	tab_s16	2, 7, 33, 5, 7, 49, -1, -1, -1	# [32]
 
-HpFlashWriteDefaults_Table:	# 23 x u32, 0..4294901809; read by HpFlashWriteDefaults 0x48496F82: `mov   (a1), d0`; HpRecordLoad 0x48497033: `mov   (a1), d0`
+HpFlashWriteDefaults_Table:	# 99 x u32, 0..4294967295; read by HpFlashWriteDefaults 0x48496F82: `mov   (a1), d0`; HpRecordLoad 0x48497033: `mov   (a1), d0`; 99 records: the index is bounded by HpFlashWriteDefaults 0x48496F82: `mov -0x63, d1` / setlb / `mov (a1), d0` / `inc4 a1` / `inc d1` / lne (99 passes)
 	tab_u32	2116426, 255, 0, 458771, 1376256, 65543, 24, 1703936	# [0]
 	tab_u32	65536, 4, 2490367, 327688, 12, 2555909, 131072, 42	# [8]
-	tab_u32	2228227, 131080, 589851, 1900547, 196620, 4294901809, 3276799	# [16]
-# census: opaque -- unknown-dump: 304 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x1F9AD4, 0x1F9C04
+	tab_u32	2228227, 131080, 589851, 1900547, 196620, 4294901809, 3276799, 4294967295	# [16]
+	tab_u32	4294901809, 3276799, 4294967295, 4294901809, 3276799, 4294967295, 4294901809, 3276799	# [24]
+	tab_u32	4294967295, 4294901809, 3276799, 4294967295, 4294901809, 3276799, 4294967295, 4294901809	# [32]
+	tab_u32	3276799, 4294967295, 4294901809, 3276799, 4294967295, 4294901809, 3276799, 4294967295	# [40]
+	tab_u32	4294901809, 3276799, 4294967295, 4294901809, 3276799, 4294967295, 4294901809, 3276799	# [48]
+	tab_u32	4294967295, 4294901809, 3276799, 4294967295, 4294901809, 3276799, 4294967295, 4294901809	# [56]
+	tab_u32	3276799, 4294967295, 4294901809, 3276799, 4294967295, 4294901809, 3276799, 4294967295	# [64]
+	tab_u32	4294901809, 3276799, 4294967295, 4294901809, 3276799, 4294967295, 4294901809, 3276799	# [72]
+	tab_u32	4294967295, 4294901809, 3276799, 4294967295, 4294901809, 3276799, 4294967295, 4294901809	# [80]
+	tab_u32	3276799, 4294967295, 4294901809, 3276799, 4294967295, 4294901809, 3276799, 4294967295	# [88]
+	tab_u32	4294901809, 3276799, 4294967295	# [96]
 
 Str_DEFAULT:	.asciz "      DEFAULT       "
 Str_DEFAULT_WITH_PICTURE:	.asciz "DEFAULT WITH PICTURE"
@@ -37933,44 +37939,44 @@ Bitmap_AcHpScreenProc:	# 24 x 24, 1 bit(s) a pixel: AcHpScreenProc 0x48493C1F dr
 IsPointOnScreen_Var:	# REC_DrawBitmapSP2_ArgA0 (4 bytes): the layout DrawBitmapSP2 0x484248DE reads through its argument a0 (passed by AcHpScreenProc 0x48493C1F `call DrawBitmapSP2_entry, [d2,d3,a2,a3], 0x30`); the layout DrawBitmapSP2_Impl 0x48424981 reads through its argument a0 (passed by DrawBitmapSP2 0x484248DE `call DrawBitmapSP2_Impl_entry, [d2,d3,a2,a3], 0x44`); +3 more routines
 	REC_DrawBitmapSP2_ArgA0	f0=2, SetChangeRect_d0=2
 
-Str_C_22:	.asciz "C"
-Str_D_a0_5:	.asciz "D~a0"
-Str_D_10:	.asciz "D"
-Str_E_a0_5:	.asciz "E~a0"
-Str_E_9:	.asciz "E"
-Str_F_13:	.asciz "F"
-Str_F_9e_5:	.asciz "F~9e"
-Str_G_9:	.asciz "G"
-Str_A_a0_5:	.asciz "A~a0"
-Str_A_25:	.asciz "A"
-Str_B_a0_5:	.asciz "B~a0"
-Str_B_13:	.asciz "B"
-	.align	4, 0xFF	# pad after Str_B_13
+Str_C_4:	.asciz "C"
+Str_D_a0:	.asciz "D~a0"
+Str_D:	.asciz "D"
+Str_E_a0:	.asciz "E~a0"
+Str_E:	.asciz "E"
+Str_F_3:	.asciz "F"
+Str_F_9e:	.asciz "F~9e"
+Str_G:	.asciz "G"
+Str_A_a0:	.asciz "A~a0"
+Str_A_3:	.asciz "A"
+Str_B_a0:	.asciz "B~a0"
+Str_B_3:	.asciz "B"
+	.align	4, 0xFF	# pad after Str_B_3
 
 AcSplitBoxProc_Table:
-	.long	Str_C_22
-	.long	Str_D_a0_5
-	.long	Str_D_10
-	.long	Str_E_a0_5
-	.long	Str_E_9
-	.long	Str_F_13
-	.long	Str_F_9e_5
-	.long	Str_G_9
-	.long	Str_A_a0_5
-	.long	Str_A_25
-	.long	Str_B_a0_5
-	.long	Str_B_13
+	.long	Str_C_4
+	.long	Str_D_a0
+	.long	Str_D
+	.long	Str_E_a0
+	.long	Str_E
+	.long	Str_F_3
+	.long	Str_F_9e
+	.long	Str_G
+	.long	Str_A_a0
+	.long	Str_A_3
+	.long	Str_B_a0
+	.long	Str_B_3
 
 Str_SPLIT_s_d:	.asciz "SPLIT:%s%d"
 	.align	4, 0xFF	# pad after Str_SPLIT_s_d
 Str_empty_1112:	.asciz "           "
-Str_empty_1057:	.asciz "        "
+Str_empty_1026:	.asciz "        "
 Str_FADE_IN_3:	.asciz "FADE IN "
 Str_FADE_OUT_2:	.asciz "FADE OUT"
 	.align	4, 0xFF	# pad after Str_FADE_OUT_2
 
 AcFadeBoxProc_Table:
-	.long	Str_empty_1057
+	.long	Str_empty_1026
 	.long	Str_FADE_IN_3
 	.long	Str_FADE_OUT_2
 
@@ -38051,35 +38057,35 @@ Str_empty_1106:	.asciz "-----------------"
 	.align	4, 0xFF	# pad after Str_empty_1106
 Str_X_s:	.asciz "X : %s"
 	.align	4, 0xFF	# pad after Str_X_s
-Str_A_24:	.asciz "A "
-Str_B_12:	.asciz "B "
-Str_C_21:	.asciz "C "
-Str_1_31:	.asciz "1 "
-Str_2_36:	.asciz "2 "
-Str_3_26:	.asciz "3 "
-Str_4_30:	.asciz "4 "
-Str_5_20:	.asciz "5 "
-Str_6_19:	.asciz "6 "
-Str_7_9:	.asciz "7 "
-Str_8_10:	.asciz "8 "
-Str_9_9:	.asciz "9 "
-Str_10_7:	.asciz "10"
-	.align	4, 0xFF	# pad after Str_10_7
+Str_A_4:	.asciz "A "
+Str_B_4:	.asciz "B "
+Str_C_5:	.asciz "C "
+Str_1_21:	.asciz "1 "
+Str_2_27:	.asciz "2 "
+Str_3_19:	.asciz "3 "
+Str_4_24:	.asciz "4 "
+Str_5_17:	.asciz "5 "
+Str_6_16:	.asciz "6 "
+Str_7_7:	.asciz "7 "
+Str_8_7:	.asciz "8 "
+Str_9_7:	.asciz "9 "
+Str_10_6:	.asciz "10"
+	.align	4, 0xFF	# pad after Str_10_6
 
 AcPmemBankNameProc_Table:
-	.long	Str_A_24
-	.long	Str_B_12
-	.long	Str_C_21
-	.long	Str_1_31
-	.long	Str_2_36
-	.long	Str_3_26
-	.long	Str_4_30
-	.long	Str_5_20
-	.long	Str_6_19
-	.long	Str_7_9
-	.long	Str_8_10
-	.long	Str_9_9
-	.long	Str_10_7
+	.long	Str_A_4
+	.long	Str_B_4
+	.long	Str_C_5
+	.long	Str_1_21
+	.long	Str_2_27
+	.long	Str_3_19
+	.long	Str_4_24
+	.long	Str_5_17
+	.long	Str_6_16
+	.long	Str_7_7
+	.long	Str_8_7
+	.long	Str_9_7
+	.long	Str_10_6
 
 Str_BANK_s_s:	.asciz "BANK %s: %s"
 Str_1d_s_2:	.asciz "%1d : %s"
@@ -38176,23 +38182,23 @@ AcFootSwProc_Table:	# 43 x REC_AcFootSwProc_Table (8 bytes each); read by AcFoot
 	REC_AcFootSwProc_Table	key=183, x2="\x00\x00", text=Text_OFF+697
 	REC_AcFootSwProc_Table	key=-1, x2="\x00\x00", text=Text_OFF+714
 
-Str_1_30:	.asciz "1 "
-Str_2_35:	.asciz "2 "
-Str_1_29:	.asciz "1 "
-Str_2_34:	.asciz "2 "
-Str_3_24:	.asciz "3 "
-Str_4_28:	.asciz "4 "
-Str_E_8:	.asciz "E "
-	.align	4, 0xFF	# pad after Str_E_8
+Str_1_33:	.asciz "1 "
+Str_2_37:	.asciz "2 "
+Str_1_31:	.asciz "1 "
+Str_2_36:	.asciz "2 "
+Str_3_27:	.asciz "3 "
+Str_4_31:	.asciz "4 "
+Str_E_9:	.asciz "E "
+	.align	4, 0xFF	# pad after Str_E_9
 
 AcFootSwProc_Table_2:	# 7 x REC_AcFootSwProc_Table_2 (8 bytes each); read by AcFootSwProc 0x48494F93 `mov (4, a3), a0`; AcFootSwProc 0x48494F93 `mov (d0, a0), d0`; AcFootSwProc 0x48494F93 `mov (d0, a3), d0`
-	REC_AcFootSwProc_Table_2	param_key=16386, text=Str_1_30
-	REC_AcFootSwProc_Table_2	param_key=16387, text=Str_2_35
-	REC_AcFootSwProc_Table_2	param_key=16388, text=Str_1_29
-	REC_AcFootSwProc_Table_2	param_key=16389, text=Str_2_34
-	REC_AcFootSwProc_Table_2	param_key=16390, text=Str_3_24
-	REC_AcFootSwProc_Table_2	param_key=16391, text=Str_4_28
-	REC_AcFootSwProc_Table_2	param_key=16384, text=Str_E_8
+	REC_AcFootSwProc_Table_2	param_key=16386, text=Str_1_33
+	REC_AcFootSwProc_Table_2	param_key=16387, text=Str_2_37
+	REC_AcFootSwProc_Table_2	param_key=16388, text=Str_1_31
+	REC_AcFootSwProc_Table_2	param_key=16389, text=Str_2_36
+	REC_AcFootSwProc_Table_2	param_key=16390, text=Str_3_27
+	REC_AcFootSwProc_Table_2	param_key=16391, text=Str_4_31
+	REC_AcFootSwProc_Table_2	param_key=16384, text=Str_E_9
 
 Str_s_s_6:	.asciz "%s: %s"
 	.align	4, 0xFF	# pad after Str_s_s_6
@@ -38233,21 +38239,21 @@ AcSndDspAllocProc_Table:
 	.long	Str_SEQUENCER_16
 
 Str_ALLOCATION_MODE_s:	.asciz "ALLOCATION MODE: %s"
-Str_1_26:	.asciz "1 "
-Str_2_32:	.asciz "2 "
-Str_3_23:	.asciz "3 "
-Str_4_27:	.asciz "4 "
-Str_5_19:	.asciz "5 "
+Str_1_30:	.asciz "1 "
+Str_2_35:	.asciz "2 "
+Str_3_26:	.asciz "3 "
+Str_4_30:	.asciz "4 "
+Str_5_22:	.asciz "5 "
 Str_CHORUS_10:	.asciz "CHORUS"
 Str_MULTI_4:	.asciz "MULTI "
 Str_REVERB_9:	.asciz "REVERB"
 
 AcEffectTypeProc_Table:	# 8 x REC_AcEffectTypeProc_Table (12 bytes each); read by func_48412A17 0x48412A17 `call func_484129B7, 0, 0`; func_4841419F 0x4841419F `call func_48412A17_entry, [d2,d3], 0x18`; AcEffectTypeProc 0x48495536 `call func_4841419F_entry, [d2], 0x18` (+5)
-	REC_AcEffectTypeProc_Table	param_key=45076, kind=2, x6="\x00\x00", text=Str_1_26
-	REC_AcEffectTypeProc_Table	param_key=45092, kind=3, x6="\x00\x00", text=Str_2_32
-	REC_AcEffectTypeProc_Table	param_key=45108, kind=4, x6="\x00\x00", text=Str_3_23
-	REC_AcEffectTypeProc_Table	param_key=45124, kind=5, x6="\x00\x00", text=Str_4_27
-	REC_AcEffectTypeProc_Table	param_key=45140, kind=6, x6="\x00\x00", text=Str_5_19
+	REC_AcEffectTypeProc_Table	param_key=45076, kind=2, x6="\x00\x00", text=Str_1_30
+	REC_AcEffectTypeProc_Table	param_key=45092, kind=3, x6="\x00\x00", text=Str_2_35
+	REC_AcEffectTypeProc_Table	param_key=45108, kind=4, x6="\x00\x00", text=Str_3_26
+	REC_AcEffectTypeProc_Table	param_key=45124, kind=5, x6="\x00\x00", text=Str_4_30
+	REC_AcEffectTypeProc_Table	param_key=45140, kind=6, x6="\x00\x00", text=Str_5_22
 	REC_AcEffectTypeProc_Table	param_key=41216, kind=9, x6="\x00\x00", text=Str_CHORUS_10
 	REC_AcEffectTypeProc_Table	param_key=41472, kind=1, x6="\x00\x00", text=Str_MULTI_4
 	REC_AcEffectTypeProc_Table	param_key=40960, x6="\x00\x00", text=Str_REVERB_9
@@ -38276,9 +38282,9 @@ AcHpPartsSetProc_Table:
 	.long	Str_SET_9
 	.long	Str_CLEAR_2
 
-AcUserHpMenuProc_Table:	# 1 x u16, 49..49; read by AcUserHpMenuProc 0x4849680D: `movhu  (a1), d0`
-	tab_u16	49
-	.space	6, 0xFF
+AcUserHpMenuProc_Table:	# 3 x u16, 49..65535; read by AcUserHpMenuProc 0x4849680D: `movhu  (a1), d0`; 3 records: the index is bounded by AcUserHpMenuProc 0x4849680D: `mov -3, d1` / setlb / `movhu (a1), d0` / `add 2, a1` / `inc d1` / lne (3 passes)
+	tab_u16	49, 65535, 65535
+	.align	4, 0xFF	# pad after AcUserHpMenuProc_Table
 DrawBitmapSPFast4_Impl_Table:	# 4 x u32, 0..12632256; read by DrawBitmapSPFast4_Impl 0x4842446C: `mov (d1, a0), a2`
 	tab_u32	12632256, 8421504, 4210752, 0
 
@@ -39589,7 +39595,8 @@ Str_TT_SEORGAN:	.asciz "TT_SEORGAN"
 
 func_48497493_Table:	# 5 x u32, 45072..45136; read by func_48497493 0x48497493: `mov   (d0, a2), d0`; func_48497493 0x48497493: `mov   (d1, a2), d0`
 	tab_u32	45136, 45120, 45104, 45088, 45072
-	.space	4, 0xFF
+
+func_48497493_Table_End:	.long	0xffffffff	# the end marker of func_48497493_Table: func_48497493 0x48497493: `mov (d0, a2), d0` / `cmp d3, d0` stops at it
 
 Str_d_10:	.asciz "%d:"
 Str_empty_1100:	.asciz "             "
@@ -39630,7 +39637,7 @@ Text_PART_10:	# 9 strings of 7 characters, NUL-terminated
 	.asciz	"RIGHT 1"
 	.asciz	"RIGHT 2"
 
-Str_LEFT_8:	.asciz "LEFT"
+Str_LEFT_7:	.asciz "LEFT"
 Str_ACCOMP_1:	.asciz "ACCOMP 1"
 Str_ACCOMP_2:	.asciz "ACCOMP 2"
 Str_ACCOMP_3:	.asciz "ACCOMP 3"
@@ -39641,10 +39648,10 @@ Str_DRUM_1:	.asciz "DRUM 1"
 Str_DRUM_2:	.asciz "DRUM 2"
 Str_CHORD_4:	.asciz "CHORD"
 Str_R_BASS:	.asciz "R.BASS"
-Str_PADS_9:	.asciz "PADS"
 Str_PADS_8:	.asciz "PADS"
+Str_PADS_9:	.asciz "PADS"
 Str_BASS_PEDAL:	.asciz "BASS PEDAL"
-Str_CHORDFINDER:	.asciz "CHORDFINDER"
+Str_CHORDFINDER_2:	.asciz "CHORDFINDER"
 Str_MICROPHONE:	.asciz "MICROPHONE"
 Str_APC_3:	.asciz "APC"
 Str_CONTROL_3:	.asciz "CONTROL"
@@ -39669,7 +39676,7 @@ AcPartSelectProc_Table:
 	.long	Text_PART_10+48
 	.long	Text_PART_10+56
 	.long	Text_PART_10+64
-	.long	Str_LEFT_8
+	.long	Str_LEFT_7
 	.long	Str_ACCOMP_1
 	.long	Str_ACCOMP_2
 	.long	Str_ACCOMP_3
@@ -39680,36 +39687,36 @@ AcPartSelectProc_Table:
 	.long	Str_DRUM_2
 	.long	Str_CHORD_4
 	.long	Str_R_BASS
-	.long	Str_PADS_9
 	.long	Str_PADS_8
+	.long	Str_PADS_9
 	.long	Str_BASS_PEDAL
-	.long	Str_CHORDFINDER
+	.long	Str_CHORDFINDER_2
 	.long	Str_MICROPHONE
 	.long	Str_APC_3
 	.long	Str_CONTROL_3
 
-Str_empty_1056:	.asciz "     "
+Str_empty_1025:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE3FA, 0x1FE406
-Str_empty_1055:	.asciz "  \x95  "
+Str_empty_883:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE40C, 0x1FE418
-Str_empty_1054:	.asciz "  \x95  "
+Str_empty_872:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE41E, 0x1FE42A
-Str_empty_1053:	.asciz "  \x95  "
+Str_empty_871:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE430, 0x1FE43C
-Str_empty_1052:	.asciz "  \x95  "
+Str_empty_870:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE442, 0x1FE44E
-Str_empty_1051:	.asciz "     "
+Str_empty_869:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE454, 0x1FE460
-Str_empty_1050:	.asciz "  \x95  "
+Str_empty_868:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE466, 0x1FE472
-Str_empty_1049:	.asciz "     "
+Str_empty_867:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE478, 0x1FE484
 
@@ -39720,28 +39727,28 @@ AcAcdnTabProc_Block_2:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849988B: mem
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 50, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
 
-Str_empty_1048:	.asciz "     "
+Str_empty_866:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE4AE, 0x1FE4BA
-Str_empty_1047:	.asciz "     "
+Str_empty_853:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE4C0, 0x1FE4CC
-Str_empty_1046:	.asciz "  \x95  "
+Str_empty_842:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE4D2, 0x1FE4DE
-Str_empty_1043:	.asciz "     "
+Str_empty_841:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE4E4, 0x1FE4F0
-Str_empty_1038:	.asciz "  \x95  "
+Str_empty_839:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE4F6, 0x1FE502
-Str_empty_1037:	.asciz "     "
+Str_empty_837:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE508, 0x1FE514
-Str_empty_1036:	.asciz "  \x95  "
+Str_empty_836:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE51A, 0x1FE526
-Str_empty_1035:	.asciz "     "
+Str_empty_835:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE52C, 0x1FE538
 
@@ -39752,28 +39759,28 @@ AcAcdnTabProc_Block_4:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849988B: mem
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 50, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
 
-Str_empty_1032:	.asciz "     "
+Str_empty_834:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE562, 0x1FE56E
-Str_empty_1029:	.asciz "     "
+Str_empty_831:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE574, 0x1FE580
-Str_empty_1026:	.asciz "  \x95  "
+Str_empty_830:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE586, 0x1FE592
-Str_empty_1025:	.asciz "  \x95  "
+Str_empty_829:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE598, 0x1FE5A4
-Str_empty_883:	.asciz "  \x95  "
+Str_empty_828:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE5AA, 0x1FE5B6
-Str_empty_872:	.asciz "     "
+Str_empty_827:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE5BC, 0x1FE5C8
-Str_empty_871:	.asciz "  \x95  "
+Str_empty_811:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE5CE, 0x1FE5DA
-Str_empty_870:	.asciz "     "
+Str_empty_810:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE5E0, 0x1FE5EC
 
@@ -39784,71 +39791,48 @@ AcAcdnTabProc_Block_6:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849988B: mem
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 50, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
 
-Str_empty_869:	.asciz "     "
+Str_empty_809:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE616, 0x1FE622
-Str_empty_868:	.asciz "     "
+Str_empty_808:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE628, 0x1FE634
-Str_empty_867:	.asciz "     "
+Str_empty_789:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE63A, 0x1FE646
-Str_empty_866:	.asciz "     "
+Str_empty_753:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE64C, 0x1FE658
-Str_empty_853:	.asciz "     "
+Str_empty_752:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE65E, 0x1FE66A
-Str_empty_842:	.asciz "     "
+Str_empty_751:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE670, 0x1FE67C
-Str_empty_841:	.asciz "     "
+Str_empty_750:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE682, 0x1FE68E
-Str_empty_839:	.asciz "     "
+Str_empty_749:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE694, 0x1FE6A0
-Str_empty_837:	.asciz "     "
+Str_empty_748:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE6A6, 0x1FE6B2
-Str_empty_836:	.asciz "     "
+Str_empty_747:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1FE6B8, 0x1FE6C4
 
 AcAcdnTabProc_Table:
-	.long	Str_empty_1056
-	.long	Str_empty_1055
-	.long	Str_empty_1054
-	.long	Str_empty_1053
-	.long	Str_empty_1052
-	.long	Str_empty_1051
-	.long	Str_empty_1050
-	.long	Str_empty_1049
-	.long	AcAcdnTabProc_Block
-	.long	AcAcdnTabProc_Block_2
-	.long	Str_empty_1048
-	.long	Str_empty_1047
-	.long	Str_empty_1046
-	.long	Str_empty_1043
-	.long	Str_empty_1038
-	.long	Str_empty_1037
-	.long	Str_empty_1036
-	.long	Str_empty_1035
-	.long	AcAcdnTabProc_Block_3
-	.long	AcAcdnTabProc_Block_4
-	.long	Str_empty_1032
-	.long	Str_empty_1029
-	.long	Str_empty_1026
 	.long	Str_empty_1025
 	.long	Str_empty_883
 	.long	Str_empty_872
 	.long	Str_empty_871
 	.long	Str_empty_870
-	.long	AcAcdnTabProc_Block_5
-	.long	AcAcdnTabProc_Block_6
 	.long	Str_empty_869
 	.long	Str_empty_868
 	.long	Str_empty_867
+	.long	AcAcdnTabProc_Block
+	.long	AcAcdnTabProc_Block_2
 	.long	Str_empty_866
 	.long	Str_empty_853
 	.long	Str_empty_842
@@ -39856,6 +39840,29 @@ AcAcdnTabProc_Table:
 	.long	Str_empty_839
 	.long	Str_empty_837
 	.long	Str_empty_836
+	.long	Str_empty_835
+	.long	AcAcdnTabProc_Block_3
+	.long	AcAcdnTabProc_Block_4
+	.long	Str_empty_834
+	.long	Str_empty_831
+	.long	Str_empty_830
+	.long	Str_empty_829
+	.long	Str_empty_828
+	.long	Str_empty_827
+	.long	Str_empty_811
+	.long	Str_empty_810
+	.long	AcAcdnTabProc_Block_5
+	.long	AcAcdnTabProc_Block_6
+	.long	Str_empty_809
+	.long	Str_empty_808
+	.long	Str_empty_789
+	.long	Str_empty_753
+	.long	Str_empty_752
+	.long	Str_empty_751
+	.long	Str_empty_750
+	.long	Str_empty_749
+	.long	Str_empty_748
+	.long	Str_empty_747
 
 Str_GERMAN_7:	.asciz "GERMAN "
 Str_FRENCH_7:	.asciz "FRENCH "
@@ -39998,9 +40005,3 @@ PsDrawEditProc_Records:	# 32 x REC_PsDrawEditProc_Records (8 bytes each); read b
 	REC_PsDrawEditProc_Records	key=0x1003D, proc=loc_4849A69E
 	REC_PsDrawEditProc_Records	key=0x1003E, proc=loc_4849A839
 	REC_PsDrawEditProc_Records	key=0x1003F, proc=loc_4849A83D
-
-Field_AcFavorite_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcFavorite_end
-
-ClassFields_AcFavorite:
-	.long	Field_AcFavorite_end

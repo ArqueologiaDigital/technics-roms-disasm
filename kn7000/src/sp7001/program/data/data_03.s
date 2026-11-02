@@ -10,19 +10,20 @@ func_48412CA5_Result_0:	# REC_func_48412CA5_Result (20 bytes), then 13 x u32 the
 func_484129B7_Var:	# u16, a constant; read / written by func_484129B7 0x484129B7: `movhu (func_484129B7_Var), d0`; func_48414038 0x48414038: `movhu (func_484129B7_Var), d0`
 	.word	2
 
-func_48412A17_Records:	# 8 x REC_func_48412A17_Records (128 bytes each); read by func_48412A17 0x48412A17 `movbu (1, a0), d0`; func_48412A17 0x48412A17 `movbu (a0), d1`
-	REC_func_48412A17_Records	0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 1, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	REC_func_48412A17_Records	0, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 3, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	REC_func_48412A17_Records	0, 4, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 5, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	REC_func_48412A17_Records	0, 6, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 7, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	REC_func_48412A17_Records	0, 8, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 9, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	REC_func_48412A17_Records	0, 10, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 11, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	REC_func_48412A17_Records	0, 12, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 13, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	REC_func_48412A17_Records	0, 14, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 15, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.space	13312, 0xFF
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x30FE06, 0x30FE1A
-	.space	2030, 0xFF
+# 128 rows x 64 entries of two bytes, entry = row * 128 + column * 2, read as {u8 lo, u8 hi} and combined hi << 8 | lo (func_48412A17 0x48412A17: `cmp 0x7f` (row), `and 0x3f` (column), `asl 7, d0` / `add func_48412A17_Records, d0`); 0xFFFF: no entry
+func_48412A17_Records:
+	.word	0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0100, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 0
+	.word	0x0200, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0300, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 1
+	.word	0x0400, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0500, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 2
+	.word	0x0600, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0700, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 3
+	.word	0x0800, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0900, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 4
+	.word	0x0a00, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0b00, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 5
+	.word	0x0c00, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0d00, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 6
+	.word	0x0e00, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0f00, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 7
+	.space	13312, 0xFF	# rows 8..111: no entry
+	.word	0x0001, 0x0101, 0x0201, 0x0301, 0x0401, 0x0501, 0x0601, 0x0701, 0x0801, 0x0901, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 112
+	.space	1920, 0xFF	# rows 113..127: no entry
+	.align	4, 0xFF	# pad after func_48412A17_Records
 
 func_48412CA5_Result_p20_0:	# REC_func_48412CA5_Result_p20 (1 bytes), then 515 x u32 the code indexes from +0 (read by func_48412A17 0x48412A17 `mov (d0, a0), a0`)
 	REC_func_48412CA5_Result_p20	x0="L"
@@ -80,90 +81,67 @@ func_48412CA5_Result_1:	# REC_func_48412CA5_Result (20 bytes), then 223 x u32 th
 
 Str_empty_309:	.asciz "%"
 
-func_48412A17_Records_2:	# 1 x REC_func_48412A17_Records_2 (128 bytes each); read by func_48412A17 0x48412A17 `movbu (1, a0), d0`; func_48412A17 0x48412A17 `movbu (a0), d1`
-	REC_func_48412A17_Records_2	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.space	1088, 0xFF
-# census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31166A, 0x311670
-	.space	826, 0xFF
-# census: opaque -- unknown-dump: 176 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3119AA, 0x311A5A
-	.space	80, 0xFF
-# census: opaque -- unknown-dump: 106 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x311AAA, 0x311B14
-	.space	150, 0xFF
-# census: opaque -- unknown-dump: 106 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x311BAA, 0x311C14
-	.space	534, 0xFF
-# census: opaque -- unknown-dump: 74 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x311E2A, 0x311E74
-	.space	182, 0xFF
-# census: opaque -- unknown-dump: 74 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x311F2A, 0x311F74
-	.space	566, 0xFF
-# census: opaque -- unknown-dump: 108 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3121AA, 0x312216
-	.space	148, 0xFF
-# census: opaque -- unknown-dump: 236 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3122AA, 0x312396
-	.space	148, 0xFF
-# census: opaque -- unknown-dump: 78 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31242A, 0x312478
-	.space	178, 0xFF
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31252A, 0x31253A
-	.space	240, 0xFF
-# census: opaque -- unknown-dump: 72 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31262A, 0x312672
-	.space	824, 0xFF
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3129AA, 0x3129BA
-	.space	368, 0xFF
-# census: opaque -- unknown-dump: 68 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x312B2A, 0x312B6E
-	.space	252, 0xFF
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x312C6A, 0x312C76
-	.space	180, 0xFF
-# census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x312D2A, 0x312D30
-	.space	186, 0xFF
-# census: opaque -- unknown-dump: 208 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x312DEA, 0x312EBA
-	.space	752, 0xFF
-# census: opaque -- unknown-dump: 232 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3131AA, 0x313292
-	.space	280, 0xFF
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3133AA, 0x3133B2
-	.space	120, 0xFF
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31342A, 0x313432
-	.space	120, 0xFF
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3134AA, 0x3134B2
-	.space	248, 0xFF
-# census: opaque -- unknown-dump: 168 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3135AA, 0x313652
-	.space	344, 0xFF
-# census: opaque -- unknown-dump: 168 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3137AA, 0x313852
-	.space	472, 0xFF
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x313A2A, 0x313A3A
-	.space	112, 0xFF
-# census: opaque -- unknown-dump: 258 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x313AAA, 0x313BAC
-	.space	126, 0xFF
-# census: opaque -- unknown-dump: 66 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x313C2A, 0x313C6C
-	.space	574, 0xFF
-# census: opaque -- unknown-dump: 72 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x313EAA, 0x313EF2
-	.space	3128, 0xFF
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x314B2A, 0x314B3E
-	.space	1646, 0xFF
+# 128 rows x 64 entries of two bytes, entry = row * 128 + column * 2, read as {u8 lo, u8 hi} and combined hi << 8 | lo (func_48412A17 0x48412A17: `cmp 0x7f` (row), `and 0x3f` (column), `asl 7, d2` / `add func_48412A17_Records_2, d2`); 0xFFFF: no entry
+func_48412A17_Records_2:
+	.space	1152, 0xFF	# rows 0..8: no entry
+	.word	0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0000, 0x0100, 0x0200, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 9
+	.space	768, 0xFF	# rows 10..15: no entry
+	.word	0x0001, 0x0101, 0x0201, 0x0301, 0x0401, 0x0501, 0x0601, 0x0701, 0x0d01, 0x0e01, 0x0f01, 0x1001, 0x1101, 0x1201, 0x1301, 0x1401, 0x1a01, 0x1b01, 0x1c01, 0x1d01, 0x1e01, 0x1f01, 0x2001, 0x2101, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0801, 0x0901, 0x0a01, 0x0b01, 0x0c01, 0xffff, 0xffff, 0xffff, 0x1501, 0x1601, 0x1701, 0x1801, 0x1901, 0xffff, 0xffff, 0xffff, 0x2201, 0x2301, 0x2401, 0x2501, 0x2601, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 16
+	.word	0x0002, 0x0102, 0x0202, 0x0302, 0x0402, 0x0502, 0x0602, 0x0702, 0x0802, 0x0902, 0x0a02, 0x0b02, 0x0c02, 0x0d02, 0x0e02, 0x0f02, 0x1002, 0x1102, 0x1202, 0x1302, 0x1402, 0x1502, 0x1602, 0x1702, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 17
+	.word	0x0003, 0x0103, 0x0203, 0x0303, 0x0403, 0x0503, 0x0603, 0x0703, 0x0d03, 0x0e03, 0x0f03, 0x1003, 0x1103, 0x1203, 0x1303, 0x1403, 0x1a03, 0x1b03, 0x1c03, 0x1d03, 0x1e03, 0x1f03, 0x2003, 0x2103, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0803, 0x0903, 0x0a03, 0x0b03, 0x0c03, 0xffff, 0xffff, 0xffff, 0x1503, 0x1603, 0x1703, 0x1803, 0x1903, 0xffff, 0xffff, 0xffff, 0x2203, 0x2303, 0x2403, 0x2503, 0x2603, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 18
+	.space	128, 0xFF	# row 19: no entry
+	.word	0x0004, 0x0104, 0x0204, 0x0304, 0x0404, 0x0504, 0x0604, 0x0704, 0x0d04, 0x0e04, 0x0f04, 0x1004, 0x1104, 0x1204, 0x1304, 0x1404, 0x1a04, 0x1b04, 0x1c04, 0x1d04, 0x1e04, 0x1f04, 0x2004, 0x2104, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0804, 0x0904, 0x0a04, 0x0b04, 0x0c04, 0xffff, 0xffff, 0xffff, 0x1504, 0x1604, 0x1704, 0x1804, 0x1904, 0xffff, 0xffff, 0xffff, 0x2204, 0x2304, 0x2404, 0x2504, 0x2604, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 20
+	.space	512, 0xFF	# rows 21..24: no entry
+	.word	0x0005, 0x0105, 0x0205, 0x0305, 0x0405, 0x0505, 0x0605, 0x0705, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0805, 0x0905, 0x0a05, 0x0b05, 0x0c05, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 25
+	.space	128, 0xFF	# row 26: no entry
+	.word	0x0006, 0x0106, 0x0206, 0x0306, 0x0406, 0x0506, 0x0606, 0x0706, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0806, 0x0906, 0x0a06, 0x0b06, 0x0c06, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 27
+	.space	512, 0xFF	# rows 28..31: no entry
+	.word	0x0007, 0x0107, 0x0207, 0x0307, 0x0407, 0x0507, 0x0607, 0xffff, 0x0d07, 0x0e07, 0x0f07, 0x1007, 0x1107, 0x1207, 0x1307, 0xffff, 0x1a07, 0x1b07, 0x1c07, 0x1d07, 0x1e07, 0x1f07, 0x2007, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0707, 0x0807, 0x0907, 0x0a07, 0x0b07, 0x0c07, 0xffff, 0xffff, 0x1407, 0x1507, 0x1607, 0x1707, 0x1807, 0x1907, 0xffff, 0xffff, 0x2107, 0x2207, 0x2307, 0x2407, 0x2507, 0x2607, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 32
+	.space	128, 0xFF	# row 33: no entry
+	.word	0x0009, 0x0109, 0x0209, 0x0309, 0x0409, 0x0509, 0x0609, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x000a, 0x010a, 0x020a, 0x030a, 0x040a, 0x050a, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 34
+	.word	0x0008, 0x0108, 0x0208, 0x0308, 0x0408, 0x0508, 0x0608, 0xffff, 0x0d08, 0x0e08, 0x0f08, 0x1008, 0x1108, 0x1208, 0x1308, 0xffff, 0x1a08, 0x1b08, 0x1c08, 0x1d08, 0x1e08, 0x1f08, 0x2008, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0708, 0x0808, 0x0908, 0x0a08, 0x0b08, 0x0c08, 0xffff, 0xffff, 0x1408, 0x1508, 0x1608, 0x1708, 0x1808, 0x1908, 0xffff, 0xffff, 0x2108, 0x2208, 0x2308, 0x2408, 0x2508, 0x2608, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 35
+	.space	128, 0xFF	# row 36: no entry
+	.word	0x000b, 0x010b, 0x020b, 0x030b, 0x040b, 0x050b, 0x060b, 0x070b, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x000c, 0x010c, 0x020c, 0x030c, 0x040c, 0x050c, 0x060c, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 37
+	.space	128, 0xFF	# row 38: no entry
+	.word	0x000d, 0x010d, 0x020d, 0x030d, 0x040d, 0x050d, 0x060d, 0x070d, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 39
+	.space	128, 0xFF	# row 40: no entry
+	.word	0x000e, 0x010e, 0x020e, 0x030e, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x000f, 0x010f, 0x020f, 0x030f, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 41
+	.space	768, 0xFF	# rows 42..47: no entry
+	.word	0x0010, 0x0110, 0x0210, 0x0310, 0x0410, 0x0510, 0x0610, 0x0710, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 48
+	.space	256, 0xFF	# rows 49..50: no entry
+	.word	0x0017, 0x0117, 0xffff, 0xffff, 0x0217, 0x0317, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0417, 0x0517, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 51
+	.space	128, 0xFF	# row 52: no entry
+	.word	0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0011, 0x0111, 0x0211, 0x0311, 0x0411, 0x0511, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 53
+	.space	128, 0xFF	# row 54: no entry
+	.word	0x0012, 0x0112, 0x0212, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 55
+	.word	0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0013, 0x0113, 0x0213, 0x0313, 0x0413, 0x0014, 0x0114, 0x0214, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 56
+	.word	0x0015, 0x0115, 0xffff, 0xffff, 0x0215, 0x0315, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0415, 0x0515, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 57
+	.word	0x0016, 0x0116, 0x0216, 0x0316, 0x0416, 0x0516, 0x0616, 0x0716, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 58
+	.space	640, 0xFF	# rows 59..63: no entry
+	.word	0x0018, 0x0118, 0x0218, 0x0318, 0x0418, 0x0518, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0019, 0x0119, 0x0219, 0x0319, 0x0419, 0x0519, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 64
+	.word	0x001a, 0x011a, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x001b, 0x011b, 0x021b, 0x031b, 0xffff, 0xffff, 0xffff, 0xffff, 0x041b, 0x051b, 0x061b, 0x071b, 0xffff, 0xffff, 0xffff, 0xffff, 0x081b, 0x091b, 0x0a1b, 0x0b1b, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 65
+	.space	256, 0xFF	# rows 66..67: no entry
+	.word	0x001c, 0x011c, 0x021c, 0x031c, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 68
+	.word	0x001d, 0x011d, 0x021d, 0x031d, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 69
+	.word	0x001e, 0x011e, 0x021e, 0x031e, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 70
+	.space	128, 0xFF	# row 71: no entry
+	.word	0x001f, 0x011f, 0x021f, 0x031f, 0x041f, 0x051f, 0x061f, 0x071f, 0x141f, 0x151f, 0x161f, 0x171f, 0x181f, 0x191f, 0x1a1f, 0x1b1f, 0x281f, 0x291f, 0x2a1f, 0x2b1f, 0x2c1f, 0x2d1f, 0x2e1f, 0x2f1f, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x081f, 0x091f, 0x0a1f, 0x0b1f, 0x0c1f, 0x0d1f, 0x0e1f, 0x0f1f, 0x1c1f, 0x1d1f, 0x1e1f, 0x1f1f, 0x201f, 0x211f, 0x221f, 0x231f, 0x301f, 0x311f, 0x321f, 0x331f, 0x341f, 0x351f, 0x361f, 0x371f, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 72
+	.word	0x101f, 0x111f, 0x121f, 0x131f, 0xffff, 0xffff, 0xffff, 0xffff, 0x241f, 0x251f, 0x261f, 0x271f, 0xffff, 0xffff, 0xffff, 0xffff, 0x381f, 0x391f, 0x3a1f, 0x3b1f, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 73
+	.space	256, 0xFF	# rows 74..75: no entry
+	.word	0x0020, 0x0120, 0x0220, 0x0320, 0x0420, 0x0520, 0x0620, 0x0720, 0x1420, 0x1520, 0x1620, 0x1720, 0x1820, 0x1920, 0x1a20, 0x1b20, 0x2820, 0x2920, 0x2a20, 0x2b20, 0x2c20, 0x2d20, 0x2e20, 0x2f20, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0820, 0x0920, 0x0a20, 0x0b20, 0x0c20, 0x0d20, 0x0e20, 0x0f20, 0x1c20, 0x1d20, 0x1e20, 0x1f20, 0x2020, 0x2120, 0x2220, 0x2320, 0x3020, 0x3120, 0x3220, 0x3320, 0x3420, 0x3520, 0x3620, 0x3720, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 76
+	.word	0x1020, 0x1120, 0x1220, 0x1320, 0xffff, 0xffff, 0xffff, 0xffff, 0x2420, 0x2520, 0x2620, 0x2720, 0xffff, 0xffff, 0xffff, 0xffff, 0x3820, 0x3920, 0x3a20, 0x3b20, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 77
+	.space	384, 0xFF	# rows 78..80: no entry
+	.word	0x0021, 0x0121, 0x0221, 0x0321, 0x0421, 0x0521, 0x0621, 0x0721, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 81
+	.word	0x0022, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0122, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 82
+	.word	0x0222, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0322, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 83
+	.word	0x0422, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 84
+	.word	0x0522, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0622, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 85
+	.space	512, 0xFF	# rows 86..89: no entry
+	.word	0x0023, 0xffff, 0xffff, 0xffff, 0x0123, 0x0223, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0323, 0x0423, 0x0523, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 90
+	.space	3072, 0xFF	# rows 91..114: no entry
+	.word	0x0024, 0x0124, 0x0224, 0x0324, 0x0424, 0x0524, 0x0624, 0x0724, 0x0824, 0x0924, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 115
+	.space	1536, 0xFF	# rows 116..127: no entry
+	.align	4, 0xFF	# pad after func_48412A17_Records_2
 
 func_48412CA5_Result_p20_1:	# REC_func_48412CA5_Result_p20 (1 bytes), then 562 x u32 the code indexes from +0 (read by func_48412A17 0x48412A17 `mov (d0, a0), a0`)
 	REC_func_48412CA5_Result_p20	x0="L"
@@ -226,90 +204,70 @@ func_48412CA5_Result_2:	# REC_func_48412CA5_Result (20 bytes), then 247 x u32 th
 
 Str_empty_308:	.asciz ")"
 
-func_48412A17_Records_3:	# 1 x REC_func_48412A17_Records_3 (128 bytes each); read by func_48412A17 0x48412A17 `movbu (1, a0), d0`; func_48412A17 0x48412A17 `movbu (a0), d1`
-	REC_func_48412A17_Records_3	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.space	1088, 0xFF
-# census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31632A, 0x316330
-	.space	826, 0xFF
-# census: opaque -- unknown-dump: 176 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31666A, 0x31671A
-	.space	80, 0xFF
-# census: opaque -- unknown-dump: 458 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31676A, 0x316934
-	.space	438, 0xFF
-# census: opaque -- unknown-dump: 74 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x316AEA, 0x316B34
-	.space	182, 0xFF
-# census: opaque -- unknown-dump: 74 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x316BEA, 0x316C34
-	.space	566, 0xFF
-# census: opaque -- unknown-dump: 108 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x316E6A, 0x316ED6
-	.space	148, 0xFF
-# census: opaque -- unknown-dump: 236 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x316F6A, 0x317056
-	.space	148, 0xFF
-# census: opaque -- unknown-dump: 78 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3170EA, 0x317138
-	.space	178, 0xFF
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3171EA, 0x3171FA
-	.space	240, 0xFF
-# census: opaque -- unknown-dump: 332 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3172EA, 0x317436
-	.space	564, 0xFF
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31766A, 0x31767A
-	.space	368, 0xFF
-# census: opaque -- unknown-dump: 68 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3177EA, 0x31782E
-	.space	252, 0xFF
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31792A, 0x317936
-	.space	180, 0xFF
-# census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3179EA, 0x3179F0
-	.space	186, 0xFF
-# census: opaque -- unknown-dump: 208 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x317AAA, 0x317B7A
-	.space	752, 0xFF
-# census: opaque -- unknown-dump: 214 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x317E6A, 0x317F40
-data_48717F40:
-# census: opaque -- unknown-dump: 18 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x317F40, 0x317F52
-	.space	280, 0xFF
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31806A, 0x318072
-	.space	120, 0xFF
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3180EA, 0x3180F2
-	.space	120, 0xFF
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31816A, 0x318172
-	.space	248, 0xFF
-# census: opaque -- unknown-dump: 168 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31826A, 0x318312
-	.space	344, 0xFF
-# census: opaque -- unknown-dump: 168 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31846A, 0x318512
-	.space	472, 0xFF
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3186EA, 0x3186FA
-	.space	112, 0xFF
-# census: opaque -- unknown-dump: 258 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31876A, 0x31886C
-	.space	126, 0xFF
-# census: opaque -- unknown-dump: 66 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x3188EA, 0x31892C
-	.space	1862, 0xFF
-# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x319072, 0x319074
-	.space	1782, 0xFF
-# census: opaque -- unknown-dump: 40 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31976A, 0x319792
-	.space	1754, 0xFF
+# 128 rows x 64 entries of two bytes, entry = row * 128 + column * 2, read as {u8 lo, u8 hi} and combined hi << 8 | lo (func_48412A17 0x48412A17: `cmp 0x7f` (row), `and 0x3f` (column), `asl 7, d2` / `add func_48412A17_Records_3, d2`); 0xFFFF: no entry
+func_48412A17_Records_3:
+	.space	1152, 0xFF	# rows 0..8: no entry
+	.word	0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0000, 0x0100, 0x0200, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 9
+	.space	768, 0xFF	# rows 10..15: no entry
+	.word	0x0001, 0x0101, 0x0201, 0x0301, 0x0401, 0x0501, 0x0601, 0x0701, 0x0d01, 0x0e01, 0x0f01, 0x1001, 0x1101, 0x1201, 0x1301, 0x1401, 0x1a01, 0x1b01, 0x1c01, 0x1d01, 0x1e01, 0x1f01, 0x2001, 0x2101, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0801, 0x0901, 0x0a01, 0x0b01, 0x0c01, 0xffff, 0xffff, 0xffff, 0x1501, 0x1601, 0x1701, 0x1801, 0x1901, 0xffff, 0xffff, 0xffff, 0x2201, 0x2301, 0x2401, 0x2501, 0x2601, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 16
+	.word	0x0002, 0x0102, 0x0202, 0x0302, 0x0402, 0x0502, 0x0602, 0x0702, 0x0802, 0x0902, 0x0a02, 0x0b02, 0x0c02, 0x0d02, 0x0e02, 0x0f02, 0x1002, 0x1102, 0x1202, 0x1302, 0x1402, 0x1502, 0x1602, 0x1702, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 17
+	.word	0x0003, 0x0103, 0x0203, 0x0303, 0x0403, 0x0503, 0x0603, 0x0703, 0x0d03, 0x0e03, 0x0f03, 0x1003, 0x1103, 0x1203, 0x1303, 0x1403, 0x1a03, 0x1b03, 0x1c03, 0x1d03, 0x1e03, 0x1f03, 0x2003, 0x2103, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0803, 0x0903, 0x0a03, 0x0b03, 0x0c03, 0xffff, 0xffff, 0xffff, 0x1503, 0x1603, 0x1703, 0x1803, 0x1903, 0xffff, 0xffff, 0xffff, 0x2203, 0x2303, 0x2403, 0x2503, 0x2603, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 18
+	.word	0x0004, 0x0104, 0x0204, 0x0304, 0x0404, 0x0504, 0x0604, 0x0704, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0804, 0x0904, 0x0a04, 0x0b04, 0x0c04, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 19
+	.word	0x0005, 0x0105, 0x0205, 0x0305, 0x0405, 0x0505, 0x0605, 0x0705, 0x0d05, 0x0e05, 0x0f05, 0x1005, 0x1105, 0x1205, 0x1305, 0x1405, 0x1a05, 0x1b05, 0x1c05, 0x1d05, 0x1e05, 0x1f05, 0x2005, 0x2105, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0805, 0x0905, 0x0a05, 0x0b05, 0x0c05, 0xffff, 0xffff, 0xffff, 0x1505, 0x1605, 0x1705, 0x1805, 0x1905, 0xffff, 0xffff, 0xffff, 0x2205, 0x2305, 0x2405, 0x2505, 0x2605, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 20
+	.word	0x0006, 0x0106, 0x0206, 0x0306, 0x0406, 0x0506, 0x0606, 0x0706, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0806, 0x0906, 0x0a06, 0x0b06, 0x0c06, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 21
+	.space	384, 0xFF	# rows 22..24: no entry
+	.word	0x0007, 0x0107, 0x0207, 0x0307, 0x0407, 0x0507, 0x0607, 0x0707, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0807, 0x0907, 0x0a07, 0x0b07, 0x0c07, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 25
+	.space	128, 0xFF	# row 26: no entry
+	.word	0x0008, 0x0108, 0x0208, 0x0308, 0x0408, 0x0508, 0x0608, 0x0708, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0808, 0x0908, 0x0a08, 0x0b08, 0x0c08, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 27
+	.space	512, 0xFF	# rows 28..31: no entry
+	.word	0x0009, 0x0109, 0x0209, 0x0309, 0x0409, 0x0509, 0x0609, 0xffff, 0x0d09, 0x0e09, 0x0f09, 0x1009, 0x1109, 0x1209, 0x1309, 0xffff, 0x1a09, 0x1b09, 0x1c09, 0x1d09, 0x1e09, 0x1f09, 0x2009, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0709, 0x0809, 0x0909, 0x0a09, 0x0b09, 0x0c09, 0xffff, 0xffff, 0x1409, 0x1509, 0x1609, 0x1709, 0x1809, 0x1909, 0xffff, 0xffff, 0x2109, 0x2209, 0x2309, 0x2409, 0x2509, 0x2609, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 32
+	.space	128, 0xFF	# row 33: no entry
+	.word	0x000d, 0x010d, 0x020d, 0x030d, 0x040d, 0x050d, 0x060d, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x000e, 0x010e, 0x020e, 0x030e, 0x040e, 0x050e, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 34
+	.word	0x000b, 0x010b, 0x020b, 0x030b, 0x040b, 0x050b, 0x060b, 0xffff, 0x0d0b, 0x0e0b, 0x0f0b, 0x100b, 0x110b, 0x120b, 0x130b, 0xffff, 0x1a0b, 0x1b0b, 0x1c0b, 0x1d0b, 0x1e0b, 0x1f0b, 0x200b, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x070b, 0x080b, 0x090b, 0x0a0b, 0x0b0b, 0x0c0b, 0xffff, 0xffff, 0x140b, 0x150b, 0x160b, 0x170b, 0x180b, 0x190b, 0xffff, 0xffff, 0x210b, 0x220b, 0x230b, 0x240b, 0x250b, 0x260b, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 35
+	.space	128, 0xFF	# row 36: no entry
+	.word	0x000f, 0x010f, 0x020f, 0x030f, 0x040f, 0x050f, 0x060f, 0x070f, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0010, 0x0110, 0x0210, 0x0310, 0x0410, 0x0510, 0x0610, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 37
+	.space	128, 0xFF	# row 38: no entry
+	.word	0x0011, 0x0111, 0x0211, 0x0311, 0x0411, 0x0511, 0x0611, 0x0711, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 39
+	.space	128, 0xFF	# row 40: no entry
+	.word	0x0012, 0x0112, 0x0212, 0x0312, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0013, 0x0113, 0x0213, 0x0313, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 41
+	.word	0x000a, 0x010a, 0x020a, 0x030a, 0x040a, 0x050a, 0x060a, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x070a, 0x080a, 0x090a, 0x0a0a, 0x0b0a, 0x0c0a, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 42
+	.word	0x000c, 0x010c, 0x020c, 0x030c, 0x040c, 0x050c, 0x060c, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x070c, 0x080c, 0x090c, 0x0a0c, 0x0b0c, 0x0c0c, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 43
+	.space	512, 0xFF	# rows 44..47: no entry
+	.word	0x0014, 0x0114, 0x0214, 0x0314, 0x0414, 0x0514, 0x0614, 0x0714, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 48
+	.space	256, 0xFF	# rows 49..50: no entry
+	.word	0x001b, 0x011b, 0xffff, 0xffff, 0x021b, 0x031b, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x041b, 0x051b, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 51
+	.space	128, 0xFF	# row 52: no entry
+	.word	0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0015, 0x0115, 0x0215, 0x0315, 0x0415, 0x0515, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 53
+	.space	128, 0xFF	# row 54: no entry
+	.word	0x0016, 0x0116, 0x0216, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 55
+	.word	0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0017, 0x0117, 0x0217, 0x0317, 0x0417, 0x0018, 0x0118, 0x0218, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 56
+	.word	0x0019, 0x0119, 0xffff, 0xffff, 0x0219, 0x0319, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0419, 0x0519, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 57
+	.word	0x001a, 0x011a, 0x021a, 0x031a, 0x041a, 0x051a, 0x061a, 0x071a, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 58
+	.space	640, 0xFF	# rows 59..63: no entry
+	.word	0x001c, 0x011c, 0x021c, 0x031c, 0x041c, 0x051c, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x001d, 0x011d, 0x021d, 0x031d, 0x041d, 0x051d, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 64
+	.word	0x001e, 0x011e, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x001f, 0x011f, 0x021f, 0x031f, 0xffff, 0xffff, 0xffff, 0xffff, 0x041f, 0x051f, 0x061f, 0x071f, 0xffff, 0xffff, 0xffff, 0xffff, 0x081f, 0x091f, 0x0a1f, 0x0b1f, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 65
+	.space	256, 0xFF	# rows 66..67: no entry
+	.word	0x0020, 0x0120, 0x0220, 0x0320, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 68
+	.word	0x0021, 0x0121, 0x0221, 0x0321, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 69
+	.word	0x0022, 0x0122, 0x0222, 0x0322, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 70
+	.space	128, 0xFF	# row 71: no entry
+	.word	0x0023, 0x0123, 0x0223, 0x0323, 0x0423, 0x0523, 0x0623, 0x0723, 0x1423, 0x1523, 0x1623, 0x1723, 0x1823, 0x1923, 0x1a23, 0x1b23, 0x2823, 0x2923, 0x2a23, 0x2b23, 0x2c23, 0x2d23, 0x2e23, 0x2f23, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0823, 0x0923, 0x0a23, 0x0b23, 0x0c23, 0x0d23, 0x0e23, 0x0f23, 0x1c23, 0x1d23, 0x1e23, 0x1f23, 0x2023, 0x2123, 0x2223, 0x2323, 0x3023, 0x3123, 0x3223, 0x3323, 0x3423, 0x3523, 0x3623, 0x3723, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 72
+	.word	0x1023, 0x1123, 0x1223, 0x1323, 0xffff, 0xffff, 0xffff, 0xffff, 0x2423, 0x2523, 0x2623, 0x2723, 0xffff, 0xffff, 0xffff, 0xffff, 0x3823, 0x3923, 0x3a23, 0x3b23, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 73
+	.space	256, 0xFF	# rows 74..75: no entry
+	.word	0x0024, 0x0124, 0x0224, 0x0324, 0x0424, 0x0524, 0x0624, 0x0724, 0x1424, 0x1524, 0x1624, 0x1724, 0x1824, 0x1924, 0x1a24, 0x1b24, 0x2824, 0x2924, 0x2a24, 0x2b24, 0x2c24, 0x2d24, 0x2e24, 0x2f24, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0824, 0x0924, 0x0a24, 0x0b24, 0x0c24, 0x0d24, 0x0e24, 0x0f24, 0x1c24, 0x1d24, 0x1e24, 0x1f24, 0x2024, 0x2124, 0x2224, 0x2324, 0x3024, 0x3124, 0x3224, 0x3324, 0x3424, 0x3524, 0x3624, 0x3724, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 76
+	.word	0x1024, 0x1124, 0x1224, 0x1324, 0xffff, 0xffff, 0xffff, 0xffff, 0x2424, 0x2524, 0x2624, 0x2724, 0xffff, 0xffff, 0xffff, 0xffff, 0x3824, 0x3924, 0x3a24, 0x3b24, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 77
+	.space	384, 0xFF	# rows 78..80: no entry
+	.word	0x0025, 0x0125, 0x0225, 0x0325, 0x0425, 0x0525, 0x0625, 0x0725, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 81
+	.word	0x0026, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0126, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 82
+	.word	0x0226, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0326, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 83
+	.word	0x0426, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 84
+	.word	0x0526, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0626, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 85
+	.space	1792, 0xFF	# rows 86..99: no entry
+	.word	0xffff, 0xffff, 0xffff, 0xffff, 0x0027, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 100
+	.space	1664, 0xFF	# rows 101..113: no entry
+	.word	0x0028, 0x0128, 0x0228, 0x0328, 0x0428, 0x0528, 0x0628, 0x0728, 0x0828, 0x0928, 0x0a28, 0x0b28, 0x0c28, 0x0d28, 0x0e28, 0x0f28, 0x1028, 0x1128, 0x1228, 0x1328, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 114
+	.space	1664, 0xFF	# rows 115..127: no entry
+	.align	4, 0xFF	# pad after func_48412A17_Records_3
 
 func_48412CA5_Result_p20_2:	# REC_func_48412CA5_Result_p20 (1 bytes), then 9 x u32 the code indexes from +0 (read by func_48412A17 0x48412A17 `mov (d0, a0), a0`)
 	REC_func_48412CA5_Result_p20	x0="("
@@ -323,15 +281,14 @@ func_48412CA5_Result_3:	# REC_func_48412CA5_Result (20 bytes), then 13 x u32 the
 func_484129B7_Var_2:	# u16, a constant; read / written by func_484129B7 0x484129B7: `movhu (func_484129B7_Var_2), d0`; func_48414038 0x48414038: `movhu (func_484129B7_Var_2), d0`
 	.word	2
 
-func_48412A17_Records_4:	# 1 x REC_func_48412A17_Records_4 (128 bytes each); read by func_48412A17 0x48412A17 `movbu (1, a0), d0`; func_48412A17 0x48412A17 `movbu (a0), d1`
-	REC_func_48412A17_Records_4	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.space	2688, 0xFF
-# census: opaque -- unknown-dump: 76 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31A9DE, 0x31AA2A
-	.space	11956, 0xFF
-# census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x31D8DE, 0x31D8F2
-	.space	1518, 0xFF
+# 128 rows x 64 entries of two bytes, entry = row * 128 + column * 2, read as {u8 lo, u8 hi} and combined hi << 8 | lo (func_48412A17 0x48412A17: `cmp 0x7f` (row), `and 0x3f` (column), `asl 7, d0` / `add func_48412A17_Records_4, d0`); 0xFFFF: no entry
+func_48412A17_Records_4:
+	.space	2816, 0xFF	# rows 0..21: no entry
+	.word	0x0000, 0x0100, 0x0200, 0x0300, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0400, 0x0500, 0x0600, 0x0700, 0x0800, 0x0900, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 22
+	.space	11904, 0xFF	# rows 23..115: no entry
+	.word	0x0001, 0x0101, 0x0201, 0x0301, 0x0401, 0x0501, 0x0601, 0x0701, 0x0801, 0x0901, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 116
+	.space	1408, 0xFF	# rows 117..127: no entry
+	.align	4, 0xFF	# pad after func_48412A17_Records_4
 
 func_48412CA5_Result_p20_3:	# REC_func_48412CA5_Result_p20 (1 bytes), then 3 x u32 the code indexes from +0 (read by func_48412A17 0x48412A17 `mov (d0, a0), a0`)
 	REC_func_48412CA5_Result_p20	x0="("
@@ -345,12 +302,12 @@ func_48412CA5_Result_4:	# REC_func_48412CA5_Result (20 bytes), then 7 x u32 the 
 func_484129B7_Var_3:	# u16, a constant; read / written by func_484129B7 0x484129B7: `movhu (func_484129B7_Var_3), d0`; func_48414038 0x48414038: `movhu (func_484129B7_Var_3), d0`
 	.word	1
 
-func_48412A17_Records_5:	# 1 x REC_func_48412A17_Records_5 (128 bytes each); read by func_48412A17 0x48412A17 `movbu (1, a0), d0`; func_48412A17 0x48412A17 `movbu (a0), d1`
-	REC_func_48412A17_Records_5	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.space	11520, 0xFF
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x320CA2, 0x320CAA
-	.space	4730, 0xFF
+# 128 rows x 64 entries of two bytes, entry = row * 128 + column * 2, read as {u8 lo, u8 hi} and combined hi << 8 | lo (func_48412A17 0x48412A17: `cmp 0x7f` (row), `and 0x3f` (column), `asl 7, d2` / `add func_48412A17_Records_5, d2`); 0xFFFF: no entry
+func_48412A17_Records_5:
+	.space	11648, 0xFF	# rows 0..90: no entry
+	.word	0x0000, 0x0100, 0x0200, 0x0300, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff	# row 91
+	.space	4608, 0xFF	# rows 92..127: no entry
+	.align	4, 0xFF	# pad after func_48412A17_Records_5
 
 func_4841202C_Table_2:
 	.long	func_4841202C_Table_2_p0_0
@@ -5136,8 +5093,9 @@ func_48438492_Block:	# 3 bytes, copied whole by func_48438492 0x48438492: memcpy
 func_48438492_Block_2:	# 26 bytes, copied whole by func_48438492 0x48438492: memcpy(.., 26)
 	tab_u8	0, 3, 0, 96, 16, 6, 16, 2, 0, 2, 0, 15, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
-	.space	64, 0x20
 
+text_4872A8AC:	# 64 printable bytes with no NUL; no instruction reads them [INFERENCE: text]
+	.ascii	"                                                                "
 Str_compile_bank_0:	.asciz " compile bank 0 "
 # census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x32A8FD, 0x32A91C
@@ -13292,8 +13250,9 @@ MemStyleAreaHeaderRestamp_Block:	# 3 bytes, copied whole by MemStyleAreaHeaderRe
 MemStyleAreaHeaderRestamp_Block_2:	# 26 bytes, copied whole by MemStyleAreaHeaderRestamp 0x48435325: memcpy(.., 26)
 	tab_u8	0, 3, 0, 96, 13, 8, 4, 2, 2, 1, 2, 15, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
-	.space	64, 0x20
 
+text_4873233C:	# 64 printable bytes with no NUL; no instruction reads them [INFERENCE: text]
+	.ascii	"                                                                "
 Str_clear:	.asciz "    clear    "
 # census: opaque -- unknown-dump: 98 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33238A, 0x3323EC
@@ -16764,16 +16723,16 @@ Str_empty_281:	.asciz "$"
 Str_empty_280:	.asciz "("
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33A9EC, 0x33A9F4
-Str_0_9:	.asciz "0"
+Str_0_15:	.asciz "0"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33A9F6, 0x33A9FE
-Str_4_23:	.asciz "4"
+Str_4_28:	.asciz "4"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33AA00, 0x33AA08
 Str_empty_279:	.asciz "@"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33AA0A, 0x33AA12
-Str_D:	.asciz "D"
+Str_D_10:	.asciz "D"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33AA14, 0x33AA1C
 Str_L:	.asciz "L"
@@ -16782,7 +16741,7 @@ Str_L:	.asciz "L"
 Str_T:	.asciz "T"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33AA28, 0x33AA30
-Str_X_2:	.asciz "X"
+Str_X_3:	.asciz "X"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33AA32, 0x33AA3A
 Str_empty_278:	.asciz "\\"
@@ -16913,7 +16872,7 @@ StyleGenreTable_p4_p4_0:	# REC_StyleGenreTable_p4_p4 (8 bytes)
 	REC_StyleGenreTable_p4_p4	f0=20, x2="\x15\x00\x16\x00", f6=23
 	.space	2, 0xFF
 
-Str_8_6:	.asciz "8"
+Str_8_11:	.asciz "8"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33ABE0, 0x33ABE8
 Str_empty_275:	.asciz "<"
@@ -17123,19 +17082,19 @@ ptrs_4873B41C:
 	.long	Text_Disco_Orchestra+153
 	.long	Str_empty_280
 	.long	Text_Disco_Orchestra+170
-	.long	Str_0_9
+	.long	Str_0_15
 	.long	Text_Disco_Orchestra+187
-	.long	Str_4_23
+	.long	Str_4_28
 	.long	Text_Disco_Orchestra+204
 	.long	Str_empty_279
 	.long	Text_Disco_Orchestra+221
-	.long	Str_D
+	.long	Str_D_10
 	.long	Text_Disco_Orchestra+238
 	.long	Str_L
 	.long	Text_Disco_Orchestra+255
 	.long	Str_T
 	.long	Text_Disco_Orchestra+272
-	.long	Str_X_2
+	.long	Str_X_3
 	.long	Text_Disco_Orchestra+289
 	.long	Str_empty_278
 	.long	Text_Disco_Orchestra+306
@@ -17224,7 +17183,7 @@ ptrs_4873B5F4:
 	.long	Text_Sweet_Pop
 	.long	StyleGenreTable_p4_p4_0
 	.long	Text_Sweet_Pop+17
-	.long	Str_8_6
+	.long	Str_8_11
 	.long	Text_Sweet_Pop+34
 	.long	Str_empty_275
 	.long	Text_Sweet_Pop+51
@@ -17689,195 +17648,149 @@ StyleGenreTable:	# 12 x StyleGenre (8 bytes each); read by func_4847B60C 0x4847B
 	StyleGenre	name=Text_Rock_Pop+170, styles=ptrs_4873BC04
 	StyleGenre	
 
-func_4847C996_Records_p4_0:	# REC_func_4847C996_Records_p4 (2 bytes), then 4 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=589
-	tab_u16	78, 974, 965, 65535	# [0]
-func_4847C996_Records_p4_1:	# REC_func_4847C996_Records_p4 (2 bytes), then 2 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=234
-	tab_u16	692, 65535	# [0]
-func_4847C996_Records_p4_2:	# REC_func_4847C996_Records_p4 (2 bytes), then 2 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=338
-	tab_u16	1040, 65535	# [0]
-func_4847C996_Records_p4_3:	# REC_func_4847C996_Records_p4 (2 bytes), then 4 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=210
-	tab_u16	457, 94, 209, 65535	# [0]
-func_4847C996_Records_p4_4:	# REC_func_4847C996_Records_p4 (2 bytes), then 5 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=268
-	tab_u16	916, 322, 106, 5, 65535	# [0]
-func_4847C996_Records_p4_5:	# REC_func_4847C996_Records_p4 (2 bytes), then 5 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=576
-	tab_u16	50, 3, 126, 886, 65535	# [0]
+# 4 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List:
+	.word	0x24d, 0x4e, 0x3ce, 0x3c5, 0xffff
+# 2 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_2:
+	.word	0xea, 0x2b4, 0xffff
+# 2 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_3:
+	.word	0x152, 0x410, 0xffff
+# 4 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_4:
+	.word	0xd2, 0x1c9, 0x5e, 0xd1, 0xffff
+# 5 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_5:
+	.word	0x10c, 0x394, 0x142, 0x6a, 0x5, 0xffff
+# 5 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_6:
+	.word	0x240, 0x32, 0x3, 0x7e, 0x376, 0xffff
 
-Str_9_6:	.asciz "9"
+Str_9_11:	.asciz "9"
 # census: opaque -- unknown-dump: 18 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33BD7E, 0x33BD90
 
-func_4847C996_Records_p4_6:	# REC_func_4847C996_Records_p4 (2 bytes), then 3 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=135
-	tab_u16	590, 90, 65535	# [0]
-func_4847C996_Records_p4_7:	# REC_func_4847C996_Records_p4 (2 bytes), then 27 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=761
-	tab_u16	727, 278, 462, 571, 390, 218, 170, 831, 347, 821, 764, 742, 478, 898, 848, 668	# [0]
-	tab_u16	103, 598, 958, 372, 776, 763, 1042, 1073, 879, 1014, 65535	# [16]
+# 3 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_7:
+	.word	0x87, 0x24e, 0x5a, 0xffff
+# 27 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_8:
+	.word	0x2f9, 0x2d7, 0x116, 0x1ce, 0x23b, 0x186, 0xda, 0xaa, 0x33f, 0x15b, 0x335, 0x2fc, 0x2e6, 0x1de, 0x382, 0x350, 0x29c, 0x67, 0x256, 0x3be, 0x174, 0x308, 0x2fb, 0x412, 0x431, 0x36f, 0x3f6, 0xffff
 
 Str_empty_273:	.asciz "\\"
 # census: opaque -- unknown-dump: 224 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33BDD2, 0x33BEB2
 
-func_4847C996_Records_p4_8:	# REC_func_4847C996_Records_p4 (2 bytes), then 83 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=290
-	tab_u16	854, 436, 691, 905, 437, 594, 847, 802, 796, 917, 926, 414, 439, 1021, 425, 799	# [0]
-	tab_u16	797, 357, 768, 987, 376, 791, 700, 119, 908, 411, 1031, 947, 440, 902, 264, 256	# [16]
-	tab_u16	181, 505, 194, 354, 217, 216, 465, 21, 986, 149, 785, 1063, 400, 728, 1047, 750	# [32]
-	tab_u16	377, 401, 983, 652, 617, 955, 184, 860, 956, 909, 279, 609, 807, 779, 1015, 719	# [48]
-	tab_u16	888, 676, 697, 685, 686, 684, 687, 996, 724, 535, 407, 531, 669, 789, 788, 857	# [64]
-	tab_u16	858, 424, 65535	# [80]
-func_4847C996_Records_p4_9:	# REC_func_4847C996_Records_p4 (2 bytes), then 47 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=258
-	tab_u16	595, 549, 849, 326, 832, 843, 251, 873, 872, 874, 249, 642, 180, 35, 188, 98	# [0]
-	tab_u16	1058, 805, 584, 0, 434, 295, 294, 373, 225, 321, 743, 1061, 563, 191, 233, 254	# [16]
-	tab_u16	682, 177, 369, 1016, 1019, 1018, 1017, 562, 793, 954, 33, 836, 52, 165, 65535	# [32]
-func_4847C996_Records_p4_10:	# REC_func_4847C996_Records_p4 (2 bytes), then 20 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=456
-	tab_u16	72, 516, 744, 178, 838, 932, 837, 528, 1036, 994, 415, 997, 754, 363, 520, 523	# [0]
-	tab_u16	350, 1037, 151, 65535	# [16]
-func_4847C996_Records_p4_11:	# REC_func_4847C996_Records_p4 (2 bytes), then 66 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=12
-	tab_u16	1020, 533, 545, 389, 380, 460, 386, 721, 344, 122, 970, 547, 39, 830, 423, 723	# [0]
-	tab_u16	694, 896, 587, 803, 605, 430, 288, 882, 19, 702, 274, 964, 658, 1044, 889, 690	# [16]
-	tab_u16	689, 205, 989, 988, 990, 991, 1030, 1053, 307, 314, 280, 394, 760, 351, 187, 775	# [32]
-	tab_u16	871, 1039, 1023, 646, 276, 900, 641, 654, 903, 558, 662, 603, 650, 651, 670, 152	# [48]
-	tab_u16	648, 65535	# [64]
-func_4847C996_Records_p4_12:	# REC_func_4847C996_Records_p4 (2 bytes), then 41 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=865
-	tab_u16	894, 572, 921, 963, 300, 966, 928, 485, 472, 336, 580, 129, 131, 745, 931, 853	# [0]
-	tab_u16	318, 141, 622, 113, 627, 620, 674, 624, 626, 968, 341, 625, 49, 995, 774, 638	# [16]
-	tab_u16	953, 759, 647, 911, 10, 159, 281, 829, 65535	# [32]
-func_4847C996_Records_p4_13:	# REC_func_4847C996_Records_p4 (2 bytes), then 60 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=913
-	tab_u16	467, 1078, 473, 494, 100, 399, 722, 827, 255, 809, 817, 1065	# [0]
-	tab_u16	696, 123, 709, 489, 875, 841, 199, 198, 120, 197, 604, 716	# [12]
-	tab_u16	717, 959, 88, 559, 979, 132, 952, 688, 1051, 8, 933, 508	# [24]
-	tab_u16	500, 842, 751, 266, 631, 675, 705, 529, 1010, 1005, 4, 773	# [36]
-	tab_u16	610, 1074, 297, 808, 286, 567, 565, 564, 566, 235, 820, 65535	# [48]
+# 83 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_9:
+	.word	0x122, 0x356, 0x1b4, 0x2b3, 0x389, 0x1b5, 0x252, 0x34f, 0x322, 0x31c, 0x395, 0x39e, 0x19e, 0x1b7, 0x3fd, 0x1a9, 0x31f, 0x31d, 0x165, 0x300, 0x3db, 0x178, 0x317, 0x2bc, 0x77, 0x38c, 0x19b, 0x407, 0x3b3, 0x1b8, 0x386, 0x108, 0x100, 0xb5, 0x1f9, 0xc2, 0x162, 0xd9, 0xd8, 0x1d1, 0x15, 0x3da, 0x95, 0x311, 0x427, 0x190, 0x2d8, 0x417, 0x2ee, 0x179, 0x191, 0x3d7, 0x28c, 0x269, 0x3bb, 0xb8, 0x35c, 0x3bc, 0x38d, 0x117, 0x261, 0x327, 0x30b, 0x3f7, 0x2cf, 0x378, 0x2a4, 0x2b9, 0x2ad, 0x2ae, 0x2ac, 0x2af, 0x3e4, 0x2d4, 0x217, 0x197, 0x213, 0x29d, 0x315, 0x314, 0x359, 0x35a, 0x1a8, 0xffff
+# 47 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_10:
+	.word	0x102, 0x253, 0x225, 0x351, 0x146, 0x340, 0x34b, 0xfb, 0x369, 0x368, 0x36a, 0xf9, 0x282, 0xb4, 0x23, 0xbc, 0x62, 0x422, 0x325, 0x248, 0x0, 0x1b2, 0x127, 0x126, 0x175, 0xe1, 0x141, 0x2e7, 0x425, 0x233, 0xbf, 0xe9, 0xfe, 0x2aa, 0xb1, 0x171, 0x3f8, 0x3fb, 0x3fa, 0x3f9, 0x232, 0x319, 0x3ba, 0x21, 0x344, 0x34, 0xa5, 0xffff
+# 20 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_11:
+	.word	0x1c8, 0x48, 0x204, 0x2e8, 0xb2, 0x346, 0x3a4, 0x345, 0x210, 0x40c, 0x3e2, 0x19f, 0x3e5, 0x2f2, 0x16b, 0x208, 0x20b, 0x15e, 0x40d, 0x97, 0xffff
+# 66 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_12:
+	.word	0xc, 0x3fc, 0x215, 0x221, 0x185, 0x17c, 0x1cc, 0x182, 0x2d1, 0x158, 0x7a, 0x3ca, 0x223, 0x27, 0x33e, 0x1a7, 0x2d3, 0x2b6, 0x380, 0x24b, 0x323, 0x25d, 0x1ae, 0x120, 0x372, 0x13, 0x2be, 0x112, 0x3c4, 0x292, 0x414, 0x379, 0x2b2, 0x2b1, 0xcd, 0x3dd, 0x3dc, 0x3de, 0x3df, 0x406, 0x41d, 0x133, 0x13a, 0x118, 0x18a, 0x2f8, 0x15f, 0xbb, 0x307, 0x367, 0x40f, 0x3ff, 0x286, 0x114, 0x384, 0x281, 0x28e, 0x387, 0x22e, 0x296, 0x25b, 0x28a, 0x28b, 0x29e, 0x98, 0x288, 0xffff
+# 41 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_13:
+	.word	0x361, 0x37e, 0x23c, 0x399, 0x3c3, 0x12c, 0x3c6, 0x3a0, 0x1e5, 0x1d8, 0x150, 0x244, 0x81, 0x83, 0x2e9, 0x3a3, 0x355, 0x13e, 0x8d, 0x26e, 0x71, 0x273, 0x26c, 0x2a2, 0x270, 0x272, 0x3c8, 0x155, 0x271, 0x31, 0x3e3, 0x306, 0x27e, 0x3b9, 0x2f7, 0x287, 0x38f, 0xa, 0x9f, 0x119, 0x33d, 0xffff
+# 60 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_14:
+	.word	0x391, 0x1d3, 0x436, 0x1d9, 0x1ee, 0x64, 0x18f, 0x2d2, 0x33b, 0xff, 0x329, 0x331, 0x429, 0x2b8, 0x7b, 0x2c5, 0x1e9, 0x36b, 0x349, 0xc7, 0xc6, 0x78, 0xc5, 0x25c, 0x2cc, 0x2cd, 0x3bf, 0x58, 0x22f, 0x3d3, 0x84, 0x3b8, 0x2b0, 0x41b, 0x8, 0x3a5, 0x1fc, 0x1f4, 0x34a, 0x2ef, 0x10a, 0x277, 0x2a3, 0x2c1, 0x211, 0x3f2, 0x3ed, 0x4, 0x305, 0x262, 0x432, 0x129, 0x328, 0x11e, 0x237, 0x235, 0x234, 0x236, 0xeb, 0x334, 0xffff
 
 Str_t:	.asciz "t"
 # census: opaque -- unknown-dump: 18 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33C13A, 0x33C14C
 
-func_4847C996_Records_p4_14:	# REC_func_4847C996_Records_p4 (2 bytes), then 19 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=859
-	tab_u16	844, 828, 1001, 262, 1075, 222, 223, 221, 275, 356, 977, 453, 144, 530, 435, 346	# [0]
-	tab_u16	643, 906, 65535	# [16]
-func_4847C996_Records_p4_15:	# REC_func_4847C996_Records_p4 (2 bytes), then 12 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=28
-	tab_u16	550, 698, 876, 699, 561, 542, 767, 1029, 924, 538, 36, 65535	# [0]
-func_4847C996_Records_p4_16:	# REC_func_4847C996_Records_p4 (2 bytes), then 44 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=162
-	tab_u16	961, 671, 611, 238, 619, 726, 840, 211, 323, 1041, 214, 895, 229, 784, 786, 519	# [0]
-	tab_u16	324, 591, 329, 361, 140, 331, 438, 973, 738, 629, 367, 592, 226, 293, 484, 887	# [16]
-	tab_u16	37, 569, 725, 448, 20, 179, 393, 1, 949, 458, 244, 65535	# [32]
-func_4847C996_Records_p4_17:	# REC_func_4847C996_Records_p4 (2 bytes), then 49 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=593
-	tab_u16	449, 16, 498, 447, 731, 729, 733, 824, 819, 285, 884, 753, 102, 825, 856, 143	# [0]
-	tab_u16	811, 263, 384, 730, 257, 866, 108, 560, 578, 798, 461, 897, 915, 195, 26, 34	# [16]
-	tab_u16	366, 395, 413, 403, 660, 557, 328, 740, 918, 656, 893, 938, 82, 881, 935, 27	# [32]
-	tab_u16	65535	# [48]
+# 19 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_15:
+	.word	0x35b, 0x34c, 0x33c, 0x3e9, 0x106, 0x433, 0xde, 0xdf, 0xdd, 0x113, 0x164, 0x3d1, 0x1c5, 0x90, 0x212, 0x1b3, 0x15a, 0x283, 0x38a, 0xffff
+# 12 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_16:
+	.word	0x1c, 0x226, 0x2ba, 0x36c, 0x2bb, 0x231, 0x21e, 0x2ff, 0x405, 0x39c, 0x21a, 0x24, 0xffff
+# 44 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_17:
+	.word	0xa2, 0x3c1, 0x29f, 0x263, 0xee, 0x26b, 0x2d6, 0x348, 0xd3, 0x143, 0x411, 0xd6, 0x37f, 0xe5, 0x310, 0x312, 0x207, 0x144, 0x24f, 0x149, 0x169, 0x8c, 0x14b, 0x1b6, 0x3cd, 0x2e2, 0x275, 0x16f, 0x250, 0xe2, 0x125, 0x1e4, 0x377, 0x25, 0x239, 0x2d5, 0x1c0, 0x14, 0xb3, 0x189, 0x1, 0x3b5, 0x1ca, 0xf4, 0xffff
+# 49 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_18:
+	.word	0x251, 0x1c1, 0x10, 0x1f2, 0x1bf, 0x2db, 0x2d9, 0x2dd, 0x338, 0x333, 0x11d, 0x374, 0x2f1, 0x66, 0x339, 0x358, 0x8f, 0x32b, 0x107, 0x180, 0x2da, 0x101, 0x362, 0x6c, 0x230, 0x242, 0x31e, 0x1cd, 0x381, 0x393, 0xc3, 0x1a, 0x22, 0x16e, 0x18b, 0x19d, 0x193, 0x294, 0x22d, 0x148, 0x2e4, 0x396, 0x290, 0x37d, 0x3aa, 0x52, 0x371, 0x3a7, 0x1b, 0xffff
 
-Str_6_15:	.asciz "6"
+Str_6_20:	.asciz "6"
 # census: opaque -- unknown-dump: 42 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33C24E, 0x33C278
 
-func_4847C996_Records_p4_18:	# REC_func_4847C996_Records_p4 (2 bytes), then 26 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=812
-	tab_u16	368, 491, 960, 416, 230, 443, 420, 193, 370, 1022, 1064, 2, 426, 397, 163, 421	# [0]
-	tab_u16	374, 861, 291, 479, 101, 509, 517, 1057, 907, 65535	# [16]
-func_4847C996_Records_p4_19:	# REC_func_4847C996_Records_p4 (2 bytes), then 51 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=663
-	tab_u16	878, 867, 920, 40, 471, 327, 412, 816, 492, 474, 869, 510, 912, 499, 463, 360	# [0]
-	tab_u16	310, 885, 711, 1013, 382, 410, 1025, 852, 158, 628, 125, 104, 51, 851, 899, 910	# [16]
-	tab_u16	544, 602, 133, 967, 67, 25, 982, 942, 85, 87, 44, 46, 79, 64, 89, 83	# [32]
-	tab_u16	765, 890, 65535	# [48]
-func_4847C996_Records_p4_20:	# REC_func_4847C996_Records_p4 (2 bytes), then 4 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=441
-	tab_u16	316, 1060, 1026, 65535	# [0]
-func_4847C996_Records_p4_21:	# REC_func_4847C996_Records_p4 (2 bytes), then 46 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=644
-	tab_u16	655, 659, 455, 168, 124, 253, 23, 1049, 201, 634, 582, 845, 208, 482, 60, 1066	# [0]
-	tab_u16	880, 922, 901, 65, 623, 632, 981, 1027, 335, 1054, 732, 153, 96, 940, 183, 38	# [16]
-	tab_u16	681, 383, 114, 112, 459, 1004, 150, 81, 282, 948, 771, 762, 541, 65535	# [32]
-func_4847C996_Records_p4_22:	# REC_func_4847C996_Records_p4 (2 bytes), then 201 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=304
-	tab_u16	801, 333, 522, 927, 497, 800, 870, 579, 1048, 428, 398, 206, 490, 115, 227, 657	# [0]
-	tab_u16	939, 1009, 171, 287, 487, 248, 553, 317, 1052, 62, 261, 586, 41, 431, 97, 265	# [16]
-	tab_u16	273, 396, 109, 606, 422, 527, 525, 524, 121, 99, 466, 337, 444, 941, 340, 53	# [32]
-	tab_u16	945, 621, 391, 320, 56, 850, 630, 782, 1006, 468, 891, 923, 202, 969, 951, 477	# [48]
-	tab_u16	950, 343, 1043, 892, 63, 260, 1045, 308, 618, 147, 212, 883, 978, 946, 76, 58	# [64]
-	tab_u16	957, 904, 972, 303, 515, 166, 640, 174, 1050, 548, 810, 666, 615, 47, 213, 186	# [80]
-	tab_u16	667, 613, 664, 601, 215, 653, 32, 600, 185, 614, 608, 746, 678, 680, 575, 551	# [96]
-	tab_u16	588, 348, 450, 993, 713, 833, 175, 42, 1077, 635, 138, 539, 636, 1072, 480, 207	# [112]
-	tab_u16	196, 757, 148, 378, 645, 69, 418, 962, 220, 464, 507, 284, 806, 532, 1028, 362	# [128]
-	tab_u16	371, 306, 419, 585, 770, 128, 13, 29, 577, 75, 976, 452, 22, 612, 157, 388	# [144]
-	tab_u16	846, 637, 481, 408, 469, 45, 930, 6, 17, 156, 766, 703, 61, 1012, 73, 127	# [160]
-	tab_u16	748, 607, 252, 243, 406, 504, 66, 245, 241, 936, 247, 752, 755, 756, 9, 59	# [176]
-	tab_u16	787, 219, 649, 84, 943, 68, 130, 146, 65535	# [192]
-func_4847C996_Records_p4_23:	# REC_func_4847C996_Records_p4 (2 bytes), then 50 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=914
-	tab_u16	570, 673, 110, 720, 864, 813, 814, 349, 815, 835, 313, 190, 139, 111, 683, 826	# [0]
-	tab_u16	427, 315, 311, 495, 672, 1002, 1067, 232, 521, 661, 267, 365, 1007, 511, 1076, 442	# [16]
-	tab_u16	476, 758, 283, 735, 385, 192, 998, 432, 292, 737, 1011, 48, 375, 583, 1038, 769	# [32]
-	tab_u16	231, 65535	# [48]
-func_4847C996_Records_p4_24:	# REC_func_4847C996_Records_p4 (2 bytes), then 10 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=555
-	tab_u16	405, 239, 11, 1070, 345, 454, 242, 154, 975, 65535	# [0]
-func_4847C996_Records_p4_25:	# REC_func_4847C996_Records_p4 (2 bytes), then 11 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=712
-	tab_u16	250, 868, 43, 325, 772, 352, 272, 616, 985, 540, 65535	# [0]
-func_4847C996_Records_p4_26:	# REC_func_4847C996_Records_p4 (2 bytes), then 31 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=818
-	tab_u16	433, 536, 342, 402, 1024, 339, 512, 1008, 1000, 513, 379, 1071, 15, 173, 409, 984	# [0]
-	tab_u16	665, 704, 31, 155, 355, 739, 301, 70, 305, 392, 999, 749, 1068, 137, 65535	# [16]
-func_4847C996_Records_p4_27:	# REC_func_4847C996_Records_p4 (2 bytes), then 5 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=679
-	tab_u16	501, 488, 14, 134, 65535	# [0]
-func_4847C996_Records_p4_28:	# REC_func_4847C996_Records_p4 (2 bytes), then 2 x u16 the code indexes from +0 (read by func_4847C966 0x4847C966 `movhu (d1, a0), d1`; func_4847D072 0x4847D072 `movhu (a2), d0` (+1))
-	REC_func_4847C996_Records_p4	f0=741
-	tab_u16	65535, 65535	# [0]
+# 26 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_19:
+	.word	0x32c, 0x170, 0x1eb, 0x3c0, 0x1a0, 0xe6, 0x1bb, 0x1a4, 0xc1, 0x172, 0x3fe, 0x428, 0x2, 0x1aa, 0x18d, 0xa3, 0x1a5, 0x176, 0x35d, 0x123, 0x1df, 0x65, 0x1fd, 0x205, 0x421, 0x38b, 0xffff
+# 51 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_20:
+	.word	0x297, 0x36e, 0x363, 0x398, 0x28, 0x1d7, 0x147, 0x19c, 0x330, 0x1ec, 0x1da, 0x365, 0x1fe, 0x390, 0x1f3, 0x1cf, 0x168, 0x136, 0x375, 0x2c7, 0x3f5, 0x17e, 0x19a, 0x401, 0x354, 0x9e, 0x274, 0x7d, 0x68, 0x33, 0x353, 0x383, 0x38e, 0x220, 0x25a, 0x85, 0x3c7, 0x43, 0x19, 0x3d6, 0x3ae, 0x55, 0x57, 0x2c, 0x2e, 0x4f, 0x40, 0x59, 0x53, 0x2fd, 0x37a, 0xffff
+# 4 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_21:
+	.word	0x1b9, 0x13c, 0x424, 0x402, 0xffff
+# 46 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_22:
+	.word	0x284, 0x28f, 0x293, 0x1c7, 0xa8, 0x7c, 0xfd, 0x17, 0x419, 0xc9, 0x27a, 0x246, 0x34d, 0xd0, 0x1e2, 0x3c, 0x42a, 0x370, 0x39a, 0x385, 0x41, 0x26f, 0x278, 0x3d5, 0x403, 0x14f, 0x41e, 0x2dc, 0x99, 0x60, 0x3ac, 0xb7, 0x26, 0x2a9, 0x17f, 0x72, 0x70, 0x1cb, 0x3ec, 0x96, 0x51, 0x11a, 0x3b4, 0x303, 0x2fa, 0x21d, 0xffff
+# 201 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_23:
+	.word	0x130, 0x321, 0x14d, 0x20a, 0x39f, 0x1f1, 0x320, 0x366, 0x243, 0x418, 0x1ac, 0x18e, 0xce, 0x1ea, 0x73, 0xe3, 0x291, 0x3ab, 0x3f1, 0xab, 0x11f, 0x1e7, 0xf8, 0x229, 0x13d, 0x41c, 0x3e, 0x105, 0x24a, 0x29, 0x1af, 0x61, 0x109, 0x111, 0x18c, 0x6d, 0x25e, 0x1a6, 0x20f, 0x20d, 0x20c, 0x79, 0x63, 0x1d2, 0x151, 0x1bc, 0x3ad, 0x154, 0x35, 0x3b1, 0x26d, 0x187, 0x140, 0x38, 0x352, 0x276, 0x30e, 0x3ee, 0x1d4, 0x37b, 0x39b, 0xca, 0x3c9, 0x3b7, 0x1dd, 0x3b6, 0x157, 0x413, 0x37c, 0x3f, 0x104, 0x415, 0x134, 0x26a, 0x93, 0xd4, 0x373, 0x3d2, 0x3b2, 0x4c, 0x3a, 0x3bd, 0x388, 0x3cc, 0x12f, 0x203, 0xa6, 0x280, 0xae, 0x41a, 0x224, 0x32a, 0x29a, 0x267, 0x2f, 0xd5, 0xba, 0x29b, 0x265, 0x298, 0x259, 0xd7, 0x28d, 0x20, 0x258, 0xb9, 0x266, 0x260, 0x2ea, 0x2a6, 0x2a8, 0x23f, 0x227, 0x24c, 0x15c, 0x1c2, 0x3e1, 0x2c9, 0x341, 0xaf, 0x2a, 0x435, 0x27b, 0x8a, 0x21b, 0x27c, 0x430, 0x1e0, 0xcf, 0xc4, 0x2f5, 0x94, 0x17a, 0x285, 0x45, 0x1a2, 0x3c2, 0xdc, 0x1d0, 0x1fb, 0x11c, 0x326, 0x214, 0x404, 0x16a, 0x173, 0x132, 0x1a3, 0x249, 0x302, 0x80, 0xd, 0x1d, 0x241, 0x4b, 0x3d0, 0x1c4, 0x16, 0x264, 0x9d, 0x184, 0x34e, 0x27d, 0x1e1, 0x198, 0x1d5, 0x2d, 0x3a2, 0x6, 0x11, 0x9c, 0x2fe, 0x2bf, 0x3d, 0x3f4, 0x49, 0x7f, 0x2ec, 0x25f, 0xfc, 0xf3, 0x196, 0x1f8, 0x42, 0xf5, 0xf1, 0x3a8, 0xf7, 0x2f0, 0x2f3, 0x2f4, 0x9, 0x3b, 0x313, 0xdb, 0x289, 0x54, 0x3af, 0x44, 0x82, 0x92, 0xffff
+# 50 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_24:
+	.word	0x392, 0x23a, 0x2a1, 0x6e, 0x2d0, 0x360, 0x32d, 0x32e, 0x15d, 0x32f, 0x343, 0x139, 0xbe, 0x8b, 0x6f, 0x2ab, 0x33a, 0x1ab, 0x13b, 0x137, 0x1ef, 0x2a0, 0x3ea, 0x42b, 0xe8, 0x209, 0x295, 0x10b, 0x16d, 0x3ef, 0x1ff, 0x434, 0x1ba, 0x1dc, 0x2f6, 0x11b, 0x2df, 0x181, 0xc0, 0x3e6, 0x1b0, 0x124, 0x2e1, 0x3f3, 0x30, 0x177, 0x247, 0x40e, 0x301, 0xe7, 0xffff
+# 10 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_25:
+	.word	0x22b, 0x195, 0xef, 0xb, 0x42e, 0x159, 0x1c6, 0xf2, 0x9a, 0x3cf, 0xffff
+# 11 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_26:
+	.word	0x2c8, 0xfa, 0x364, 0x2b, 0x145, 0x304, 0x160, 0x110, 0x268, 0x3d9, 0x21c, 0xffff
+# 31 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_27:
+	.word	0x332, 0x1b1, 0x218, 0x156, 0x192, 0x400, 0x153, 0x200, 0x3f0, 0x3e8, 0x201, 0x17b, 0x42f, 0xf, 0xad, 0x199, 0x3d8, 0x299, 0x2c0, 0x1f, 0x9b, 0x163, 0x2e3, 0x12d, 0x46, 0x131, 0x188, 0x3e7, 0x2ed, 0x42c, 0x89, 0xffff
+# 5 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_28:
+	.word	0x2a7, 0x1f5, 0x1e8, 0xe, 0x86, 0xffff
+# 1 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847D072_List_29:
+	.word	0x2e5, 0xffff
+	.byte	0xff, 0xff	# the marker's fill to a 4-byte boundary
 
 func_4847C996_Records:	# 34 x REC_func_4847C996_Records (8 bytes each); read by func_4847C996 0x4847C996 `call func_4847C966, 0, 0`; func_4847C996 0x4847C996 `mov (4, a0), a0`; func_4847C996 0x4847C996 `mov (d2, a2), a1` (+6)
-	REC_func_4847C996_Records	text=Str_1_38, index=func_4847C996_Records_p4_0	# [0]
-	REC_func_4847C996_Records	text=Str_2_42, index=func_4847C996_Records_p4_1
-	REC_func_4847C996_Records	text=Str_3_32, index=func_4847C996_Records_p4_2
-	REC_func_4847C996_Records	text=Str_5_29, index=func_4847C996_Records_p4_3
-	REC_func_4847C996_Records	text=Str_6_26, index=func_4847C996_Records_p4_4
-	REC_func_4847C996_Records	text=Str_7_16, index=func_4847C996_Records_p4_5
-	REC_func_4847C996_Records	text=Str_8_17, index=Str_9_6
-	REC_func_4847C996_Records	text=Str_9_16, index=func_4847C996_Records_p4_6
-	REC_func_4847C996_Records	text=Str_A_30, index=func_4847C996_Records_p4_7	# [8]
+	REC_func_4847C996_Records	text=Str_1_38, index=func_4847D072_List	# [0]
+	REC_func_4847C996_Records	text=Str_2_42, index=func_4847D072_List_2
+	REC_func_4847C996_Records	text=Str_3_32, index=func_4847D072_List_3
+	REC_func_4847C996_Records	text=Str_5_29, index=func_4847D072_List_4
+	REC_func_4847C996_Records	text=Str_6_26, index=func_4847D072_List_5
+	REC_func_4847C996_Records	text=Str_7_16, index=func_4847D072_List_6
+	REC_func_4847C996_Records	text=Str_8_17, index=Str_9_11
+	REC_func_4847C996_Records	text=Str_9_16, index=func_4847D072_List_7
+	REC_func_4847C996_Records	text=Str_A_30, index=func_4847D072_List_8	# [8]
 	REC_func_4847C996_Records	text=Str_B_18, index=Str_empty_273
-	REC_func_4847C996_Records	text=Str_C_27, index=func_4847C996_Records_p4_8
-	REC_func_4847C996_Records	text=Str_D_15, index=func_4847C996_Records_p4_9
-	REC_func_4847C996_Records	text=Str_E_14, index=func_4847C996_Records_p4_10
-	REC_func_4847C996_Records	text=Str_F_19, index=func_4847C996_Records_p4_11
-	REC_func_4847C996_Records	text=Str_G_14, index=func_4847C996_Records_p4_12
-	REC_func_4847C996_Records	text=Str_H_6, index=func_4847C996_Records_p4_13
+	REC_func_4847C996_Records	text=Str_C_27, index=func_4847D072_List_9
+	REC_func_4847C996_Records	text=Str_D_15, index=func_4847D072_List_10
+	REC_func_4847C996_Records	text=Str_E_14, index=func_4847D072_List_11
+	REC_func_4847C996_Records	text=Str_F_19, index=func_4847D072_List_12
+	REC_func_4847C996_Records	text=Str_G_14, index=func_4847D072_List_13
+	REC_func_4847C996_Records	text=Str_H_6, index=func_4847D072_List_14
 	REC_func_4847C996_Records	text=Str_I_6, index=Str_t	# [16]
-	REC_func_4847C996_Records	text=Str_J_5, index=func_4847C996_Records_p4_14
-	REC_func_4847C996_Records	text=Str_K_5, index=func_4847C996_Records_p4_15
-	REC_func_4847C996_Records	text=Str_L_6, index=func_4847C996_Records_p4_16
-	REC_func_4847C996_Records	text=Str_M_5, index=func_4847C996_Records_p4_17
-	REC_func_4847C996_Records	text=Str_N_6, index=Str_6_15
-	REC_func_4847C996_Records	text=Str_O_5, index=func_4847C996_Records_p4_18
-	REC_func_4847C996_Records	text=Str_P_14, index=func_4847C996_Records_p4_19
-	REC_func_4847C996_Records	text=Str_Q_8, index=func_4847C996_Records_p4_20	# [24]
-	REC_func_4847C996_Records	text=Str_R_5, index=func_4847C996_Records_p4_21
-	REC_func_4847C996_Records	text=Str_S_6, index=func_4847C996_Records_p4_22
-	REC_func_4847C996_Records	text=Str_T_6, index=func_4847C996_Records_p4_23
-	REC_func_4847C996_Records	text=Str_U_5, index=func_4847C996_Records_p4_24
-	REC_func_4847C996_Records	text=Str_V_5, index=func_4847C996_Records_p4_25
-	REC_func_4847C996_Records	text=Str_W_5, index=func_4847C996_Records_p4_26
-	REC_func_4847C996_Records	text=Str_Y_6, index=func_4847C996_Records_p4_27
-	REC_func_4847C996_Records	text=Str_Z_5, index=func_4847C996_Records_p4_28	# [32]
+	REC_func_4847C996_Records	text=Str_J_5, index=func_4847D072_List_15
+	REC_func_4847C996_Records	text=Str_K_5, index=func_4847D072_List_16
+	REC_func_4847C996_Records	text=Str_L_6, index=func_4847D072_List_17
+	REC_func_4847C996_Records	text=Str_M_5, index=func_4847D072_List_18
+	REC_func_4847C996_Records	text=Str_N_6, index=Str_6_20
+	REC_func_4847C996_Records	text=Str_O_5, index=func_4847D072_List_19
+	REC_func_4847C996_Records	text=Str_P_14, index=func_4847D072_List_20
+	REC_func_4847C996_Records	text=Str_Q_8, index=func_4847D072_List_21	# [24]
+	REC_func_4847C996_Records	text=Str_R_5, index=func_4847D072_List_22
+	REC_func_4847C996_Records	text=Str_S_6, index=func_4847D072_List_23
+	REC_func_4847C996_Records	text=Str_T_6, index=func_4847D072_List_24
+	REC_func_4847C996_Records	text=Str_U_5, index=func_4847D072_List_25
+	REC_func_4847C996_Records	text=Str_V_5, index=func_4847D072_List_26
+	REC_func_4847C996_Records	text=Str_W_5, index=func_4847D072_List_27
+	REC_func_4847C996_Records	text=Str_Y_6, index=func_4847D072_List_28
+	REC_func_4847C996_Records	text=Str_Z_5, index=func_4847D072_List_29	# [32]
 	REC_func_4847C996_Records	
 
 PostEvent_Records_p4_0:	# REC_PostEvent_Records_p4 (410 bytes)
@@ -28755,12 +28668,12 @@ func_48500C60_Table:
 	.long	Str_P_1
 	.long	Str_P_2
 	.long	Str_P_3
-	.long	Str_P_4_2
-	.long	Str_P_5
-	.long	Str_P_6
-	.long	Str_P_7
-	.long	Str_P_8
-	.long	Str_P_9
+	.long	Str_P_4_3
+	.long	Str_P_5_2
+	.long	Str_P_6_2
+	.long	Str_P_7_2
+	.long	Str_P_8_2
+	.long	Str_P_9_2
 
 names_48752084:
 	.long	Str_DRM_2, Str_P11_2
@@ -28775,38 +28688,38 @@ names_48752084:
 	.long	Str_CHD, Str_RTB
 	.long	Str_PD1, Str_PD2
 	.long	Str_BPD, Str_MET
-	.long	Str_CDF, Str_text_44
+	.long	Str_CDF, Str_text_67
 
 ptrs_487520EC:	# 32 pointers, typed by value (every word 0 or an address of this region); reader not traced
-	.long	Str_text_14
-	.long	Str_text_15
-	.long	Str_text_16
-	.long	Str_text_17
-	.long	Str_text_18
-	.long	Str_text_19
-	.long	Str_text_20
-	.long	Str_text_21
-	.long	Str_text_22
-	.long	Str_text_23
-	.long	Str_text_24
-	.long	Str_text_25
-	.long	Str_text_26
-	.long	Str_text_27
-	.long	Str_text_28
-	.long	Str_text_29
-	.long	Str_text_30
-	.long	Str_text_31
-	.long	Str_text_32
-	.long	Str_text_33
-	.long	Str_text_34
-	.long	Str_text_35
-	.long	Str_text_36
 	.long	Str_text_37
 	.long	Str_text_38
 	.long	Str_text_39
 	.long	Str_text_40
 	.long	Str_text_41
 	.long	Str_text_42
+	.long	Str_text_43
+	.long	Str_text_44
+	.long	Str_text_45
+	.long	Str_text_46
+	.long	Str_text_47
+	.long	Str_text_48
+	.long	Str_text_49
+	.long	Str_text_50
+	.long	Str_text_51
+	.long	Str_text_52
+	.long	Str_text_53
+	.long	Str_text_54
+	.long	Str_text_55
+	.long	Str_text_56
+	.long	Str_text_57
+	.long	Str_text_58
+	.long	Str_text_59
+	.long	Str_text_60
+	.long	Str_text_61
+	.long	Str_text_62
+	.long	Str_text_63
+	.long	Str_text_64
+	.long	Str_text_65
 	.long	Str_APC_8
 	.long	Str_CTL_4
 	.long	Str_RHY_3
@@ -39908,132 +39821,510 @@ APC_ResNames:
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x3647B4, 0x3647B8
 
 func_4856DBCA_Table:
-	.long	data_486A1714
-	.long	doubles_486A1718+92
-	.long	doubles_486A1718+188
-	.long	doubles_486A1820+20
-	.long	data_486A1894
-	.long	data_486A18F4
-	.long	data_486A1954
-	.long	data_486A19B4
-	.long	data_486A1A14
-	.long	data_486A1A74
-	.long	doubles_486A1AD0+4
-	.long	data_486A1B34
-	.long	data_486A1B94
-	.long	data_486A1BF4
-	.long	doubles_486A1C30+36
-	.long	doubles_486A1C90+36
-	.long	data_486A1D14
-	.long	data_486A1D74
-	.long	data_486A1DD4
-	.long	data_486A1E34
-	.long	data_486A1E94
-	.long	doubles_486A1EE0+20
+	.long	func_4856DC55_Voicing
+	.long	func_4856DC55_Voicing_2
+	.long	func_4856DC55_Voicing_3
+	.long	func_4856DC55_Voicing_4
+	.long	func_4856DC55_Voicing_5
+	.long	func_4856DC55_Voicing_6
+	.long	func_4856DC55_Voicing_7
+	.long	func_4856DC55_Voicing_8
+	.long	func_4856DC55_Voicing_9
+	.long	func_4856DC55_Voicing_10
+	.long	func_4856DC55_Voicing_11
+	.long	func_4856DC55_Voicing_12
+	.long	func_4856DC55_Voicing_13
+	.long	func_4856DC55_Voicing_14
+	.long	func_4856DC55_Voicing_15
+	.long	func_4856DC55_Voicing_16
+	.long	func_4856DC55_Voicing_17
+	.long	func_4856DC55_Voicing_18
+	.long	func_4856DC55_Voicing_19
+	.long	func_4856DC55_Voicing_20
+	.long	func_4856DC55_Voicing_21
+	.long	func_4856DC55_Voicing_22
 func_4856DBCA_Table_2:
-	.long	data_486A1714
-	.long	doubles_486A1718+92
-	.long	doubles_486A1718+188
-	.long	doubles_486A1820+20
-	.long	data_486A1894
-	.long	data_486A18F4
-	.long	data_486A1954
-	.long	data_486A19B4
-	.long	data_486A1A14
-	.long	data_486A1A74
-	.long	data_486A1F54
-	.long	data_486A1B34
-	.long	data_486A1FB4
-	.long	data_486A1BF4
-	.long	data_486A2014
-	.long	doubles_486A1C90+36
-	.long	data_486A1D14
-	.long	data_486A2074
-	.long	data_486A1DD4
-	.long	data_486A20D4
-	.long	data_486A1E94
-	.long	doubles_486A1EE0+20
-	.long	doubles_486A2110+36
-	.long	data_486A2194
-	.long	doubles_486A21E8+12
-	.long	data_486A2254
-	.long	doubles_486A22B0+4
-	.long	data_486A2314
-	.long	data_486A2374
-	.long	doubles_486A23C0+20
-	.long	data_486A2434
-	.long	data_486A2494
-	.long	data_486A24F4
-	.long	data_486A2554
-	.long	data_486A25B4
-	.long	data_486A2614
-	.long	data_486A2674
-	.long	data_486A26D4
-	.long	data_486A2734
+	.long	func_4856DC55_Voicing
+	.long	func_4856DC55_Voicing_2
+	.long	func_4856DC55_Voicing_3
+	.long	func_4856DC55_Voicing_4
+	.long	func_4856DC55_Voicing_5
+	.long	func_4856DC55_Voicing_6
+	.long	func_4856DC55_Voicing_7
+	.long	func_4856DC55_Voicing_8
+	.long	func_4856DC55_Voicing_9
+	.long	func_4856DC55_Voicing_10
+	.long	func_4856DC55_Voicing_23
+	.long	func_4856DC55_Voicing_12
+	.long	func_4856DC55_Voicing_24
+	.long	func_4856DC55_Voicing_14
+	.long	func_4856DC55_Voicing_25
+	.long	func_4856DC55_Voicing_16
+	.long	func_4856DC55_Voicing_17
+	.long	func_4856DC55_Voicing_26
+	.long	func_4856DC55_Voicing_19
+	.long	func_4856DC55_Voicing_27
+	.long	func_4856DC55_Voicing_21
+	.long	func_4856DC55_Voicing_22
+	.long	func_4856DC55_Voicing_28
+	.long	func_4856DC55_Voicing_29
+	.long	func_4856DC55_Voicing_30
+	.long	func_4856DC55_Voicing_31
+	.long	func_4856DC55_Voicing_32
+	.long	func_4856DC55_Voicing_33
+	.long	func_4856DC55_Voicing_34
+	.long	func_4856DC55_Voicing_35
+	.long	func_4856DC55_Voicing_36
+	.long	func_4856DC55_Voicing_37
+	.long	func_4856DC55_Voicing_38
+	.long	func_4856DC55_Voicing_39
+	.long	func_4856DC55_Voicing_40
+	.long	func_4856DC55_Voicing_41
+	.long	func_4856DC55_Voicing_42
+	.long	func_4856DC55_Voicing_43
+	.long	func_4856DC55_Voicing_44
 func_4856DBCA_Table_3:
-	.long	data_486A2794
-	.long	data_486A27AD
-	.long	data_486A27C6
-	.long	data_486A27E7
-	.long	data_486A2800
-	.long	data_486A2819
-	.long	data_486A2822
-	.long	data_486A282B
-	.long	data_486A284C
-	.long	data_486A2855
-	.long	data_486A285E
-	.long	data_486A2877
-	.long	data_486A2898
-	.long	data_486A28B9
-	.long	data_486A28C2
-	.long	data_486A28DB
-	.long	data_486A28EC
-	.long	data_486A290D
-	.long	data_486A292E
-	.long	data_486A294F
-	.long	data_486A2970
-	.long	data_486A2979
+	.long	func_4856DC55_Inversions
+	.long	func_4856DC55_Inversions_2
+	.long	func_4856DC55_Inversions_3
+	.long	func_4856DC55_Inversions_4
+	.long	func_4856DC55_Inversions_5
+	.long	func_4856DC55_Inversions_6
+	.long	func_4856DC55_Inversions_7
+	.long	func_4856DC55_Inversions_8
+	.long	func_4856DC55_Inversions_9
+	.long	func_4856DC55_Inversions_10
+	.long	func_4856DC55_Inversions_11
+	.long	func_4856DC55_Inversions_12
+	.long	func_4856DC55_Inversions_13
+	.long	func_4856DC55_Inversions_14
+	.long	func_4856DC55_Inversions_15
+	.long	func_4856DC55_Inversions_16
+	.long	func_4856DC55_Inversions_17
+	.long	func_4856DC55_Inversions_18
+	.long	func_4856DC55_Inversions_19
+	.long	func_4856DC55_Inversions_20
+	.long	func_4856DC55_Inversions_21
+	.long	func_4856DC55_Inversions_22
 func_4856DBCA_Table_4:
-	.long	data_486A2794
-	.long	data_486A27AD
-	.long	data_486A27C6
-	.long	data_486A27E7
-	.long	data_486A2800
-	.long	data_486A2819
-	.long	data_486A2822
-	.long	data_486A282B
-	.long	data_486A2984
-	.long	data_486A2855
-	.long	data_486A2995
-	.long	data_486A2877
-	.long	data_486A299E
-	.long	data_486A28B9
-	.long	data_486A29B7
-	.long	data_486A28DB
-	.long	data_486A28EC
-	.long	data_486A29C8
-	.long	data_486A292E
-	.long	data_486A29D1
-	.long	data_486A29DA
-	.long	data_486A29EB
-	.long	data_486A2A04
-	.long	data_486A2A1D
-	.long	data_486A2A46
-	.long	data_486A2A6F
-	.long	data_486A2A98
-	.long	data_486A2AC1
-	.long	data_486A2ADA
-	.long	data_486A2AF3
-	.long	data_486A2AFC
-	.long	data_486A2B05
-	.long	data_486A2B0E
-	.long	data_486A2B17
-	.long	data_486A2B20
-	.long	data_486A2B29
-	.long	data_486A2B32
-	.long	data_486A2B3B
-	.long	data_486A2B44
+	.long	func_4856DC55_Inversions
+	.long	func_4856DC55_Inversions_2
+	.long	func_4856DC55_Inversions_3
+	.long	func_4856DC55_Inversions_4
+	.long	func_4856DC55_Inversions_5
+	.long	func_4856DC55_Inversions_6
+	.long	func_4856DC55_Inversions_7
+	.long	func_4856DC55_Inversions_8
+	.long	func_4856DC55_Inversions_23
+	.long	func_4856DC55_Inversions_10
+	.long	func_4856DC55_Inversions_24
+	.long	func_4856DC55_Inversions_12
+	.long	func_4856DC55_Inversions_25
+	.long	func_4856DC55_Inversions_14
+	.long	func_4856DC55_Inversions_26
+	.long	func_4856DC55_Inversions_16
+	.long	func_4856DC55_Inversions_17
+	.long	func_4856DC55_Inversions_27
+	.long	func_4856DC55_Inversions_19
+	.long	func_4856DC55_Inversions_28
+	.long	func_4856DC55_Inversions_29
+	.long	func_4856DC55_Inversions_30
+	.long	func_4856DC55_Inversions_31
+	.long	func_4856DC55_Inversions_32
+	.long	func_4856DC55_Inversions_33
+	.long	func_4856DC55_Inversions_34
+	.long	func_4856DC55_Inversions_35
+	.long	func_4856DC55_Inversions_36
+	.long	func_4856DC55_Inversions_37
+	.long	func_4856DC55_Inversions_38
+	.long	func_4856DC55_Inversions_39
+	.long	func_4856DC55_Inversions_40
+	.long	func_4856DC55_Inversions_41
+	.long	func_4856DC55_Inversions_42
+	.long	func_4856DC55_Inversions_43
+	.long	func_4856DC55_Inversions_44
+	.long	func_4856DC55_Inversions_45
+	.long	func_4856DC55_Inversions_46
+	.long	func_4856DC55_Inversions_47
 	.long	loc_4856FC2C
 	.long	loc_4856FC2F
 	.long	loc_4856FC32
 	.long	func_4856FC35
+
+VoiceDirRemapFind_Var:	# u16, a constant; read / written by VoiceDirRemapFind 0x4857266A: `movhu (VoiceDirRemapFind_Var), d1`
+	.word	1
+VoiceDirRemapFind_Var_2:	# u16, a constant; read / written by VoiceDirRemapFind 0x4857266A: `movhu (VoiceDirRemapFind_Var_2), d0`
+	.word	371
+
+VoiceDirRemapFind_Table:
+	.long	VoiceDirRemapFind_Table_p0_975
+	.long	VoiceDirRemapFind_Table_p0_501
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_380
+	.long	VoiceDirRemapFind_Table_p0_62
+	.long	VoiceDirRemapFind_Table_p0_714
+	.long	VoiceDirRemapFind_Table_p0_715
+	.long	VoiceDirRemapFind_Table_p0_716
+	.long	VoiceDirRemapFind_Table_p0_717
+	.long	VoiceDirRemapFind_Table_p0_966
+	.long	VoiceDirRemapFind_Table_p0_935
+	.long	VoiceDirRemapFind_Table_p0_558
+	.long	VoiceDirRemapFind_Table_p0_559
+	.long	VoiceDirRemapFind_Table_p0_560
+	.long	VoiceDirRemapFind_Table_p0_437
+	.long	VoiceDirRemapFind_Table_p0_438
+	.long	VoiceDirRemapFind_Table_p0_551
+	.long	VoiceDirRemapFind_Table_p0_864
+	.long	VoiceDirRemapFind_Table_p0_865
+	.long	VoiceDirRemapFind_Table_p0_866
+	.long	VoiceDirRemapFind_Table_p0_867
+	.long	VoiceDirRemapFind_Table_p0_909
+	.long	VoiceDirRemapFind_Table_p0_869
+	.long	VoiceDirRemapFind_Table_p0_870
+	.long	VoiceDirRemapFind_Table_p0_948
+	.long	VoiceDirRemapFind_Table_p0_943
+	.long	VoiceDirRemapFind_Table_p0_5
+	.long	VoiceDirRemapFind_Table_p0_504
+	.long	VoiceDirRemapFind_Table_p0_681
+	.long	VoiceDirRemapFind_Table_p0_391
+	.long	VoiceDirRemapFind_Table_p0_76
+	.long	VoiceDirRemapFind_Table_p0_590
+	.long	VoiceDirRemapFind_Table_p0_566
+	.long	VoiceDirRemapFind_Table_p0_582
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_931
+	.long	VoiceDirRemapFind_Table_p0_949
+	.long	VoiceDirRemapFind_Table_p0_933
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_293
+	.long	VoiceDirRemapFind_Table_p0_427
+	.long	VoiceDirRemapFind_Table_p0_428
+	.long	VoiceDirRemapFind_Table_p0_913
+	.long	VoiceDirRemapFind_Table_p0_982
+	.long	VoiceDirRemapFind_Table_p0_907
+	.long	VoiceDirRemapFind_Table_p0_768
+	.long	VoiceDirRemapFind_Table_p0_769
+	.long	VoiceDirRemapFind_Table_p0_770
+	.long	VoiceDirRemapFind_Table_p0_771
+	.long	VoiceDirRemapFind_Table_p0_772
+	.long	VoiceDirRemapFind_Table_p0_955
+	.long	VoiceDirRemapFind_Table_p0_939
+	.long	VoiceDirRemapFind_Table_p0_910
+	.long	VoiceDirRemapFind_Table_p0_956
+	.long	VoiceDirRemapFind_Table_p0_916
+	.long	VoiceDirRemapFind_Table_p0_974
+	.long	VoiceDirRemapFind_Table_p0_317
+	.long	VoiceDirRemapFind_Table_p0_577
+	.long	VoiceDirRemapFind_Table_p0_396
+	.long	VoiceDirRemapFind_Table_p0_534
+	.long	VoiceDirRemapFind_Table_p0_535
+	.long	VoiceDirRemapFind_Table_p0_895
+	.long	VoiceDirRemapFind_Table_p0_925
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_963
+	.long	VoiceDirRemapFind_Table_p0_307
+	.long	VoiceDirRemapFind_Table_p0_733
+	.long	VoiceDirRemapFind_Table_p0_324
+	.long	VoiceDirRemapFind_Table_p0_607
+	.long	VoiceDirRemapFind_Table_p0_702
+	.long	VoiceDirRemapFind_Table_p0_706
+	.long	VoiceDirRemapFind_Table_p0_327
+	.long	VoiceDirRemapFind_Table_p0_652
+	.long	VoiceDirRemapFind_Table_p0_811
+	.long	VoiceDirRemapFind_Table_p0_823
+	.long	VoiceDirRemapFind_Table_p0_979
+	.long	VoiceDirRemapFind_Table_p0_301
+	.long	VoiceDirRemapFind_Table_p0_923
+	.long	VoiceDirRemapFind_Table_p0_824
+	.long	VoiceDirRemapFind_Table_p0_836
+	.long	VoiceDirRemapFind_Table_p0_906
+	.long	VoiceDirRemapFind_Table_p0_742
+	.long	VoiceDirRemapFind_Table_p0_743
+	.long	VoiceDirRemapFind_Table_p0_744
+	.long	VoiceDirRemapFind_Table_p0_957
+	.long	VoiceDirRemapFind_Table_p0_746
+	.long	VoiceDirRemapFind_Table_p0_747
+	.long	VoiceDirRemapFind_Table_p0_920
+	.long	VoiceDirRemapFind_Table_p0_918
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_497
+	.long	VoiceDirRemapFind_Table_p0_108
+	.long	VoiceDirRemapFind_Table_p0_813
+	.long	VoiceDirRemapFind_Table_p0_814
+	.long	VoiceDirRemapFind_Table_p0_815
+	.long	VoiceDirRemapFind_Table_p0_816
+	.long	VoiceDirRemapFind_Table_p0_817
+	.long	VoiceDirRemapFind_Table_p0_818
+	.long	VoiceDirRemapFind_Table_p0_819
+	.long	VoiceDirRemapFind_Table_p0_934
+	.long	VoiceDirRemapFind_Table_p0_526
+	.long	VoiceDirRemapFind_Table_p0_527
+	.long	VoiceDirRemapFind_Table_p0_529
+	.long	VoiceDirRemapFind_Table_p0_684
+	.long	VoiceDirRemapFind_Table_p0_364
+	.long	VoiceDirRemapFind_Table_p0_967
+	.long	VoiceDirRemapFind_Table_p0_781
+	.long	VoiceDirRemapFind_Table_p0_782
+	.long	VoiceDirRemapFind_Table_p0_783
+	.long	VoiceDirRemapFind_Table_p0_784
+	.long	VoiceDirRemapFind_Table_p0_619
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_233
+	.long	VoiceDirRemapFind_Table_p0_924
+	.long	VoiceDirRemapFind_Table_p0_898
+	.long	VoiceDirRemapFind_Table_p0_616
+	.long	VoiceDirRemapFind_Table_p0_500
+	.long	VoiceDirRemapFind_Table_p0_350
+	.long	VoiceDirRemapFind_Table_p0_825
+	.long	VoiceDirRemapFind_Table_p0_826
+	.long	VoiceDirRemapFind_Table_p0_827
+	.long	VoiceDirRemapFind_Table_p0_828
+	.long	VoiceDirRemapFind_Table_p0_829
+	.long	VoiceDirRemapFind_Table_p0_830
+	.long	VoiceDirRemapFind_Table_p0_968
+	.long	VoiceDirRemapFind_Table_p0_965
+	.long	VoiceDirRemapFind_Table_p0_583
+	.long	VoiceDirRemapFind_Table_p0_570
+	.long	VoiceDirRemapFind_Table_p0_404
+	.long	VoiceDirRemapFind_Table_p0_388
+	.long	VoiceDirRemapFind_Table_p0_30
+	.long	VoiceDirRemapFind_Table_p0_549
+	.long	VoiceDirRemapFind_Table_p0_852
+	.long	VoiceDirRemapFind_Table_p0_853
+	.long	VoiceDirRemapFind_Table_p0_854
+	.long	VoiceDirRemapFind_Table_p0_855
+	.long	VoiceDirRemapFind_Table_p0_856
+	.long	VoiceDirRemapFind_Table_p0_857
+	.long	VoiceDirRemapFind_Table_p0_858
+	.long	VoiceDirRemapFind_Table_p0_915
+	.long	VoiceDirRemapFind_Table_p0_944
+	.long	VoiceDirRemapFind_Table_p0_658
+	.long	VoiceDirRemapFind_Table_p0_665
+	.long	VoiceDirRemapFind_Table_p0_958
+	.long	VoiceDirRemapFind_Table_p0_383
+	.long	VoiceDirRemapFind_Table_p0_72
+	.long	VoiceDirRemapFind_Table_p0_575
+	.long	VoiceDirRemapFind_Table_p0_564
+	.long	VoiceDirRemapFind_Table_p0_675
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_980
+	.long	VoiceDirRemapFind_Table_p0_892
+	.long	VoiceDirRemapFind_Table_p0_177
+	.long	VoiceDirRemapFind_Table_p0_127
+	.long	VoiceDirRemapFind_Table_p0_964
+	.long	VoiceDirRemapFind_Table_p0_850
+	.long	VoiceDirRemapFind_Table_p0_420
+	.long	VoiceDirRemapFind_Table_p0_542
+	.long	VoiceDirRemapFind_Table_p0_872
+	.long	VoiceDirRemapFind_Table_p0_873
+	.long	VoiceDirRemapFind_Table_p0_874
+	.long	VoiceDirRemapFind_Table_p0_914
+	.long	VoiceDirRemapFind_Table_p0_884
+	.long	VoiceDirRemapFind_Table_p0_885
+	.long	VoiceDirRemapFind_Table_p0_886
+	.long	VoiceDirRemapFind_Table_p0_954
+	.long	VoiceDirRemapFind_Table_p0_729
+	.long	VoiceDirRemapFind_Table_p0_7
+	.long	VoiceDirRemapFind_Table_p0_912
+	.long	VoiceDirRemapFind_Table_p0_741
+	.long	VoiceDirRemapFind_Table_p0_930
+	.long	VoiceDirRemapFind_Table_p0_8
+	.long	VoiceDirRemapFind_Table_p0_973
+	.long	VoiceDirRemapFind_Table_p0_672
+	.long	VoiceDirRemapFind_Table_p0_972
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_80
+	.long	VoiceDirRemapFind_Table_p0_950
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_132
+	.long	VoiceDirRemapFind_Table_p0_55
+	.long	VoiceDirRemapFind_Table_p0_888
+	.long	VoiceDirRemapFind_Table_p0_889
+	.long	VoiceDirRemapFind_Table_p0_890
+	.long	VoiceDirRemapFind_Table_p0_485
+	.long	VoiceDirRemapFind_Table_p0_703
+	.long	VoiceDirRemapFind_Table_p0_163
+	.long	VoiceDirRemapFind_Table_p0_653
+	.long	VoiceDirRemapFind_Table_p0_809
+	.long	VoiceDirRemapFind_Table_p0_821
+	.long	VoiceDirRemapFind_Table_p0_833
+	.long	VoiceDirRemapFind_Table_p0_694
+	.long	VoiceDirRemapFind_Table_p0_947
+	.long	VoiceDirRemapFind_Table_p0_822
+	.long	VoiceDirRemapFind_Table_p0_834
+	.long	VoiceDirRemapFind_Table_p0_545
+	.long	VoiceDirRemapFind_Table_p0_456
+	.long	VoiceDirRemapFind_Table_p0_457
+	.long	VoiceDirRemapFind_Table_p0_683
+	.long	VoiceDirRemapFind_Table_p0_595
+	.long	VoiceDirRemapFind_Table_p0_591
+	.long	VoiceDirRemapFind_Table_p0_981
+	.long	VoiceDirRemapFind_Table_p0_904
+	.long	VoiceDirRemapFind_Table_p0_919
+	.long	VoiceDirRemapFind_Table_p0_594
+	.long	VoiceDirRemapFind_Table_p0_495
+	.long	VoiceDirRemapFind_Table_p0_674
+	.long	VoiceDirRemapFind_Table_p0_801
+	.long	VoiceDirRemapFind_Table_p0_802
+	.long	VoiceDirRemapFind_Table_p0_803
+	.long	VoiceDirRemapFind_Table_p0_804
+	.long	VoiceDirRemapFind_Table_p0_908
+	.long	VoiceDirRemapFind_Table_p0_806
+	.long	VoiceDirRemapFind_Table_p0_807
+	.long	VoiceDirRemapFind_Table_p0_808
+	.long	VoiceDirRemapFind_Table_p0_763
+	.long	VoiceDirRemapFind_Table_p0_764
+	.long	VoiceDirRemapFind_Table_p0_765
+	.long	VoiceDirRemapFind_Table_p0_363
+	.long	VoiceDirRemapFind_Table_p0_361
+	.long	VoiceDirRemapFind_Table_p0_548
+	.long	VoiceDirRemapFind_Table_p0_471
+	.long	VoiceDirRemapFind_Table_p0_472
+	.long	VoiceDirRemapFind_Table_p0_473
+	.long	VoiceDirRemapFind_Table_p0_682
+	.long	VoiceDirRemapFind_Table_p0_336
+	.long	VoiceDirRemapFind_Table_p0_671
+	.long	VoiceDirRemapFind_Table_p0_678
+	.long	VoiceDirRemapFind_Table_p0_922
+	.long	VoiceDirRemapFind_Table_p0_728
+	.long	VoiceDirRemapFind_Table_p0_612
+	.long	VoiceDirRemapFind_Table_p0_613
+	.long	VoiceDirRemapFind_Table_p0_614
+	.long	VoiceDirRemapFind_Table_p0_686
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_573
+	.long	VoiceDirRemapFind_Table_p0_519
+	.long	VoiceDirRemapFind_Table_p0_711
+	.long	VoiceDirRemapFind_Table_p0_713
+	.long	VoiceDirRemapFind_Table_p0_945
+	.long	VoiceDirRemapFind_Table_p0_946
+	.long	VoiceDirRemapFind_Table_p0_585
+	.long	VoiceDirRemapFind_Table_p0_586
+	.long	VoiceDirRemapFind_Table_p0_402
+	.long	VoiceDirRemapFind_Table_p0_929
+	.long	VoiceDirRemapFind_Table_p0_32
+	.long	VoiceDirRemapFind_Table_p0_553
+	.long	VoiceDirRemapFind_Table_p0_840
+	.long	VoiceDirRemapFind_Table_p0_841
+	.long	VoiceDirRemapFind_Table_p0_842
+	.long	VoiceDirRemapFind_Table_p0_843
+	.long	VoiceDirRemapFind_Table_p0_844
+	.long	VoiceDirRemapFind_Table_p0_845
+	.long	VoiceDirRemapFind_Table_p0_846
+	.long	VoiceDirRemapFind_Table_p0_941
+	.long	VoiceDirRemapFind_Table_p0_942
+	.long	VoiceDirRemapFind_Table_p0_894
+	.long	VoiceDirRemapFind_Table_p0_502
+	.long	VoiceDirRemapFind_Table_p0_309
+	.long	VoiceDirRemapFind_Table_p0_389
+	.long	VoiceDirRemapFind_Table_p0_390
+	.long	VoiceDirRemapFind_Table_p0_718
+	.long	VoiceDirRemapFind_Table_p0_719
+	.long	VoiceDirRemapFind_Table_p0_700
+	.long	VoiceDirRemapFind_Table_p0_154
+	.long	VoiceDirRemapFind_Table_p0_787
+	.long	VoiceDirRemapFind_Table_p0_936
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_785
+	.long	VoiceDirRemapFind_Table_p0_969
+	.long	VoiceDirRemapFind_Table_p0_415
+	.long	VoiceDirRemapFind_Table_p0_418
+	.long	VoiceDirRemapFind_Table_p0_696
+	.long	VoiceDirRemapFind_Table_p0_876
+	.long	VoiceDirRemapFind_Table_p0_877
+	.long	VoiceDirRemapFind_Table_p0_878
+	.long	VoiceDirRemapFind_Table_p0_983
+	.long	VoiceDirRemapFind_Table_p0_880
+	.long	VoiceDirRemapFind_Table_p0_881
+	.long	VoiceDirRemapFind_Table_p0_882
+	.long	VoiceDirRemapFind_Table_p0_953
+	.long	VoiceDirRemapFind_Table_p0_727
+	.long	VoiceDirRemapFind_Table_p0_636
+	.long	VoiceDirRemapFind_Table_p0_505
+	.long	VoiceDirRemapFind_Table_p0_961
+	.long	VoiceDirRemapFind_Table_p0_962
+	.long	VoiceDirRemapFind_Table_p0_376
+	.long	VoiceDirRemapFind_Table_p0_576
+	.long	VoiceDirRemapFind_Table_p0_687
+	.long	VoiceDirRemapFind_Table_p0_971
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_303
+	.long	VoiceDirRemapFind_Table_p0_951
+	.long	VoiceDirRemapFind_Table_p0_860
+	.long	VoiceDirRemapFind_Table_p0_848
+	.long	VoiceDirRemapFind_Table_p0_861
+	.long	VoiceDirRemapFind_Table_p0_862
+	.long	VoiceDirRemapFind_Table_p0_851
+	.long	VoiceDirRemapFind_Table_p0_863
+	.long	ptrs_486A4B74
+	.long	VoiceDirRemapFind_Table_p0_774
+	.long	VoiceDirRemapFind_Table_p0_775
+	.long	VoiceDirRemapFind_Table_p0_776
+	.long	VoiceDirRemapFind_Table_p0_777
+	.long	VoiceDirRemapFind_Table_p0_778
+	.long	VoiceDirRemapFind_Table_p0_779
+	.long	VoiceDirRemapFind_Table_p0_926
+	.long	VoiceDirRemapFind_Table_p0_952
+	.long	VoiceDirRemapFind_Table_p0_81
+	.long	VoiceDirRemapFind_Table_p0_541
+	.long	VoiceDirRemapFind_Table_p0_447
+	.long	VoiceDirRemapFind_Table_p0_448
+	.long	VoiceDirRemapFind_Table_p0_449
+	.long	VoiceDirRemapFind_Table_p0_629
+	.long	VoiceDirRemapFind_Table_p0_451
+	.long	VoiceDirRemapFind_Table_p0_621
+	.long	VoiceDirRemapFind_Table_p0_622
+	.long	VoiceDirRemapFind_Table_p0_899
+	.long	VoiceDirRemapFind_Table_p0_901
+	.long	VoiceDirRemapFind_Table_p0_902
+	.long	VoiceDirRemapFind_Table_p0_491
+	.long	VoiceDirRemapFind_Table_p0_695
+	.long	VoiceDirRemapFind_Table_p0_903
+	.long	VoiceDirRemapFind_Table_p0_790
+	.long	VoiceDirRemapFind_Table_p0_791
+	.long	VoiceDirRemapFind_Table_p0_792
+	.long	VoiceDirRemapFind_Table_p0_793
+	.long	VoiceDirRemapFind_Table_p0_794
+	.long	VoiceDirRemapFind_Table_p0_795
+	.long	VoiceDirRemapFind_Table_p0_797
+	.long	VoiceDirRemapFind_Table_p0_798
+	.long	VoiceDirRemapFind_Table_p0_799
+	.long	VoiceDirRemapFind_Table_p0_800
+	.long	VoiceDirRemapFind_Table_p0_837
+	.long	VoiceDirRemapFind_Table_p0_970
+	.long	VoiceDirRemapFind_Table_p0_839
+	.long	VoiceDirRemapFind_Table_p0_463
+	.long	VoiceDirRemapFind_Table_p0_911
+	.long	VoiceDirRemapFind_Table_p0_751
+	.long	VoiceDirRemapFind_Table_p0_752
+	.long	VoiceDirRemapFind_Table_p0_753
+	.long	VoiceDirRemapFind_Table_p0_754
+	.long	VoiceDirRemapFind_Table_p0_755
+	.long	VoiceDirRemapFind_Table_p0_921
+	.long	VoiceDirRemapFind_Table_p0_917
+	.long	0
+	.long	VoiceDirRemapFind_Table_p0_498
+	.long	VoiceDirRemapFind_Table_p0_109
+	.long	VoiceDirRemapFind_Table_p0_384
+	.long	VoiceDirRemapFind_Table_p0_978
+	.long	VoiceDirRemapFind_Table_p0_604
+	.long	VoiceDirRemapFind_Table_p0_676
+	.long	VoiceDirRemapFind_Table_p0_518
+	.long	VoiceDirRemapFind_Table_p0_677
+	.long	VoiceDirRemapFind_Table_p0_738
+	.long	VoiceDirRemapFind_Table_p0_927
+	.long	VoiceDirRemapFind_Table_p0_740
+	.long	VoiceDirRemapFind_Table_p0_709
+	.long	VoiceDirRemapFind_Table_p0_403
+	.long	VoiceDirRemapFind_Table_p0_734
+	.long	VoiceDirRemapFind_Table_p0_33
+	.long	VoiceDirRemapFind_Table_p0_554
+	.long	VoiceDirRemapFind_Table_p0_406
+	.long	VoiceDirRemapFind_Table_p0_959
+	.long	VoiceDirRemapFind_Table_p0_960
+	.long	VoiceDirRemapFind_Table_p0_720
+	.long	VoiceDirRemapFind_Table_p0_721
+	.long	VoiceDirRemapFind_Table_p0_758
+	.long	VoiceDirRemapFind_Table_p0_759
+	.long	VoiceDirRemapFind_Table_p0_976
+	.long	VoiceDirRemapFind_Table_p0_938
