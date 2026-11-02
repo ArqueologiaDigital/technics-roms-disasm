@@ -238,7 +238,7 @@ Renames (v10/v9/v7/v6/v5): `AccPedalConfig_ApplyTempo` -> `SeqEvt_ApplyTempoEven
 > blocks whose first block is in the song record's track table (+0xD0, 16 x {flags, u16 block}).  The
 > record also keeps each track's tail block (+0x78) and write offset there (+0x98), the free-block list
 > (+0xAF) and the free count (+0xB1).  An .SQT file is these records and blocks
-> ([Floppy Disk Formats]({{ site.baseurl }}/floppy-disk-formats/#songs-sqt)).
+> ([Floppy Disk Formats]({{ site.baseurl }}/floppy-disk-formats/#kn5000-disk-files)).
 >
 > ## Events
 >
@@ -281,32 +281,45 @@ state.  The recognizer is the `Chord_*` group in `audio/note_voice_mapping.s`:
    G3 and F#4 (`ChordTables_PitchMask`), and the bass note A1..G#2 (the 12 bytes after the first), and posts the chord to
    the display (0x8D40 / 0x8D42 / 0x8D44).
 
-The 41 chord types (`ChordTables_TypeIntervals`, row names now in the source; the firmware stores no names):
+The 41 chord types (`ChordTables_TypeIntervals`, row names now in the source).  **Corrected 2026-11-02**
+(notes/open-items/notes-errors-2026-10-31.md row 10; lane kn5000-d sub-lane accomp,
+`notes/open6-kn5000-d/accomp/README.md` A3): the firmware does store names, `Tbl_ChordTypeNames` (0xEFF5B9,
+64 x 5 LCD characters); the name column below now follows it, written conventionally.  Types 12 / 29 and 28 / 30 do
+have identical interval rows in the ROM, but they are different chords: 29 is "9#5" and 30 "b9 13", recognized from
+0,2,4,8,10 and 0,1,4,7,9,10; their rows are four-note subsets.  31-39 are named too:
 
-| type | intervals | name   | type | intervals | name    | type  | intervals | name       |
-|------|-----------|--------|------|-----------|---------|-------|-----------|------------|
-| 1    | 0 4 7     | M      | 15   | 4 7 10 2  | 9       | 29    | 0 4 8 10  | 7(#5)      |
-| 2    | 0 4 7 10  | 7      | 16   | 4 7 10 1  | 7(b9)   | 30    | 0 4 9 10  | 7(13)      |
-| 3    | 0 4 7 11  | M7     | 17   | 4 7 11 2  | M7(9)   | 31-39 | (zero)    | no voicing |
-| 4    | 0 4 8     | aug    | 18   | 4 7 9 2   | 6(9)    | 40    | 0 4 7 2   | add9       |
-| 5    | 0 3 7     | m      | 19   | 0 3 7 9   | m6      | 41    | 0 3 7 2   | madd9      |
-| 6    | 0 3 7 10  | m7     | 20   | 0 3 6     | dim     |       |           |            |
-| 7    | 0 3 6 9   | dim7   | 21   | 3 7 10 2  | m7(9)   |       |           |            |
-| 8    | 0 3 6 10  | m7(b5) | 22   | 3 9 2 7   | m6(9)   |       |           |            |
-| 9    | 0 3 7 11  | mM7    | 23   | 0 5 7     | sus4    |       |           |            |
-| 10   | 0 5 7 10  | 7sus4  | 24   | 4 7 10 3  | 7(#9)   |       |           |            |
-| 11   | 0 4 7 9   | 6      | 25   | 0 4 6 11  | M7(b5)  |       |           |            |
-| 12   | 0 4 8 10  | 7(#5)  | 26   | 0 4 8 11  | M7(#5)  |       |           |            |
-| 13   | 0 4 6     | (b5)   | 27   | 0 3 6 11  | mM7(b5) |       |           |            |
-| 14   | 0 4 6 10  | 7(b5)  | 28   | 0 4 9 10  | 7(13)   |       |           |            |
+| type | intervals | name   | type | intervals | name    | type  | intervals | name      |
+|------|-----------|--------|------|-----------|---------|-------|-----------|-----------|
+| 1    | 0 4 7     | M      | 15   | 4 7 10 2  | 9       | 29    | 0 4 8 10  | 9(#5)     |
+| 2    | 0 4 7 10  | 7      | 16   | 4 7 10 1  | 7(b9)   | 30    | 0 4 9 10  | 7(b9,13)  |
+| 3    | 0 4 7 11  | M7     | 17   | 4 7 11 2  | M7(9)   | 31-39 | (zero)    | see below |
+| 4    | 0 4 8     | aug    | 18   | 4 7 9 2   | 6(9)    | 40    | 0 4 7 2   | add9      |
+| 5    | 0 3 7     | m      | 19   | 0 3 7 9   | m6      | 41    | 0 3 7 2   | madd9     |
+| 6    | 0 3 7 10  | m7     | 20   | 0 3 6     | dim     |       |           |           |
+| 7    | 0 3 6 9   | dim7   | 21   | 3 7 10 2  | m7(9)   |       |           |           |
+| 8    | 0 3 6 10  | m7(b5) | 22   | 3 9 2 7   | m6(9)   |       |           |           |
+| 9    | 0 3 7 11  | mM7    | 23   | 0 5 7     | sus4    |       |           |           |
+| 10   | 0 5 7 10  | 7sus4  | 24   | 4 7 10 3  | 7(#9)   |       |           |           |
+| 11   | 0 4 7 9   | 6      | 25   | 0 4 6 11  | M7(b5)  |       |           |           |
+| 12   | 0 4 8 10  | 7(#5)  | 26   | 0 4 8 11  | M7(#5)  |       |           |           |
+| 13   | 0 4 6     | (b5)   | 27   | 0 3 6 11  | mM7(b5) |       |           |           |
+| 14   | 0 4 6 10  | 7(b5)  | 28   | 0 4 9 10  | 7(13)   |       |           |           |
+
+Types 31-39 (no voicing row; LCD names in quotes): 31 7(#9,13) "#9 13", 32 7(b13) "b13", 33 7(b9,b13) "b9b13",
+34 7(#9,b13) "#9b13", 35 M7(13) "13", 36 M7(b13) "b13", 37 7(#11) "7 #11", 38 m7(11) "m7 11", 39 aug7(#11) "+7#11".
 
 Types 15-18, 21, 22 and 24 are voiced without the root (four tension notes).  Types 31-39 are recognized
-(103 table entries, e.g. held 0 5 6 11) but their voicing rows are zero; where they get their notes was
-not traced.  `NoteMask9_ClassTable` (512 bytes at 0xEEBE44, values 1..27) is a second, 9-bit lookup used
-by `ComputeNoteBitPositi_StoreDRAM` / `Voice_UpdateNoteBitmap`; its index and the chord mode that uses it
-were not settled.
+(103 table entries, e.g. held 0 5 6 11) but their voicing rows are zero.  **Answered 2026-11-02**
+(`notes/open6-kn5000-d/accomp/README.md` A5, A6, kn5000-3qp): the accompaniment does not use these rows; it
+converts its patterns for every type, 31-39 included, through `Rhythm_InstrMapTable_*` and the ext bytes.  The rows
+are read only by the `Chord_Tables` voicing builders, whose traced consumer is the sequencer's step entry.
+`NoteMask9_ClassTable` is the FINGERED mode's recognizer (a root-rotation search, types 1-27 plus add9 / madd9);
+`ChordRecog_IntervalMaskTable` is the PIANIST mode's.
 
 ### Variation / fill switching and bass/chord transposition (not done here)
+
+**Answered since**: section switching in `notes/open4-kn5000-b/accvar/README.md`; the transposition (kn5000-3qp) and
+SYNCHRO / the end of an ending (kn5000-rzg) in `notes/open6-kn5000-d/accomp/README.md` (2026-11-02).
 
 Variation stepping is already on the site (`AccDir_TickVector`).  The playback-time section switching
 (intro -> variation -> fill-in -> variation / ending, `STYLE_SECTION` 0..29) and the transposition of the
