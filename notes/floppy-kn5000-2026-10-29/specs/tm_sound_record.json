@@ -348,11 +348,10 @@
   {
    "off": 43,
    "size": 1,
-   "name": "lfo_b0",
+   "name": "lfo_depth",
    "kind": "dec",
-   "evidence": "12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVoice_Build_SlotRegisters 0x024BE3 tests byte +2 bit 7 of entries 0-3). LFO reading: clamp ranges 0..127 / 0..127 / bit7 + 0..50 / bits7:6 + 0..30 (maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C)) match the LFO page fields of maincpu v10 SePitAmpFilLfo1_DrawField 0xF102FC (shared by TT_SEPITLFO1 / TT_SEAMPLFO1 / TT_SEFILLFO1): two 0..127 numbers, a 0..63 number + OFF/ON bit 7 (SePitAmpFilLfo1_DrawField_Records2), wave SIN/TRI/SQR/SAW in bits 7:6 + a 0..31 number (SeScreenData_0x287D); 3 pages x LFO1..LFO4 = 12",
-   "inference": true,
-   "todo": "which UI caption (speed/delay/depth) is this byte not traced: the page params 0x661..0x664 arrive from the subcpu, not read from the record",
+   "evidence": "LFO DEPTH (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 entries: PITCH LFO1-4 (+0x2B), AMPLITUDE LFO1-4 (+0x3B), FILTER LFO1-4 (+0x4B), entry k at +0x2B + 4 k (SeMenu_TransferPartValues); was lfo_b0: 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVoice_Build_SlotRegisters 0x024BE3 tests byte +2 bit 7 of entries 0-3). LFO reading: clamp ranges 0..127 / 0..127 / bit7 + 0..50 / bits7:6 + 0..30 (maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C)) match the LFO page fields of maincpu v10 SePitAmpFilLfo1_DrawField 0xF102FC (shared by TT_SEPITLFO1 / TT_SEAMPLFO1 / TT_SEFILLFO1): two 0..127 numbers, a 0..63 number + OFF/ON bit 7 (SePitAmpFilLfo1_DrawField_Records2), wave SIN/TRI/SQR/SAW in bits 7:6 + a 0..31 number (SeScreenData_0x287D); 3 pages x LFO1..LFO4 = 12",
+   "inference": false,
    "repeat": {
     "count": 12,
     "stride": 4
@@ -391,11 +390,10 @@
   {
    "off": 44,
    "size": 1,
-   "name": "lfo_b1",
+   "name": "lfo_speed",
    "kind": "dec",
-   "evidence": "12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVoice_Build_SlotRegisters 0x024BE3 tests byte +2 bit 7 of entries 0-3). LFO reading: clamp ranges 0..127 / 0..127 / bit7 + 0..50 / bits7:6 + 0..30 (maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C)) match the LFO page fields of maincpu v10 SePitAmpFilLfo1_DrawField 0xF102FC (shared by TT_SEPITLFO1 / TT_SEAMPLFO1 / TT_SEFILLFO1): two 0..127 numbers, a 0..63 number + OFF/ON bit 7 (SePitAmpFilLfo1_DrawField_Records2), wave SIN/TRI/SQR/SAW in bits 7:6 + a 0..31 number (SeScreenData_0x287D); 3 pages x LFO1..LFO4 = 12",
-   "inference": true,
-   "todo": "caption not traced",
+   "evidence": "LFO SPEED (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 entries: PITCH LFO1-4 (+0x2B), AMPLITUDE LFO1-4 (+0x3B), FILTER LFO1-4 (+0x4B), entry k at +0x2B + 4 k (SeMenu_TransferPartValues); was lfo_b1: 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVoice_Build_SlotRegisters 0x024BE3 tests byte +2 bit 7 of entries 0-3). LFO reading: clamp ranges 0..127 / 0..127 / bit7 + 0..50 / bits7:6 + 0..30 (maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C)) match the LFO page fields of maincpu v10 SePitAmpFilLfo1_DrawField 0xF102FC (shared by TT_SEPITLFO1 / TT_SEAMPLFO1 / TT_SEFILLFO1): two 0..127 numbers, a 0..63 number + OFF/ON bit 7 (SePitAmpFilLfo1_DrawField_Records2), wave SIN/TRI/SQR/SAW in bits 7:6 + a 0..31 number (SeScreenData_0x287D); 3 pages x LFO1..LFO4 = 12",
+   "inference": false,
    "repeat": {
     "count": 12,
     "stride": 4
@@ -434,10 +432,10 @@
   {
    "off": 45,
    "size": 1,
-   "name": "lfo_b2_onoff",
+   "name": "lfo_touch_keysync",
    "kind": "bits",
-   "evidence": "12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVoice_Build_SlotRegisters 0x024BE3 tests byte +2 bit 7 of entries 0-3). LFO reading: clamp ranges 0..127 / 0..127 / bit7 + 0..50 / bits7:6 + 0..30 (maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C)) match the LFO page fields of maincpu v10 SePitAmpFilLfo1_DrawField 0xF102FC (shared by TT_SEPITLFO1 / TT_SEAMPLFO1 / TT_SEFILLFO1): two 0..127 numbers, a 0..63 number + OFF/ON bit 7 (SePitAmpFilLfo1_DrawField_Records2), wave SIN/TRI/SQR/SAW in bits 7:6 + a 0..31 number (SeScreenData_0x287D); 3 pages x LFO1..LFO4 = 12; bit 7 = ON/OFF, bits 6:0 = 0..50",
-   "inference": true,
+   "evidence": "LFO TOUCH (bits 5:0, 0..50) and KEYSYNC (bit 7) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 entries: PITCH LFO1-4 (+0x2B), AMPLITUDE LFO1-4 (+0x3B), FILTER LFO1-4 (+0x4B), entry k at +0x2B + 4 k (SeMenu_TransferPartValues); was lfo_b2_onoff: 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVoice_Build_SlotRegisters 0x024BE3 tests byte +2 bit 7 of entries 0-3). LFO reading: clamp ranges 0..127 / 0..127 / bit7 + 0..50 / bits7:6 + 0..30 (maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C)) match the LFO page fields of maincpu v10 SePitAmpFilLfo1_DrawField 0xF102FC (shared by TT_SEPITLFO1 / TT_SEAMPLFO1 / TT_SEFILLFO1): two 0..127 numbers, a 0..63 number + OFF/ON bit 7 (SePitAmpFilLfo1_DrawField_Records2), wave SIN/TRI/SQR/SAW in bits 7:6 + a 0..31 number (SeScreenData_0x287D); 3 pages x LFO1..LFO4 = 12; bit 7 = ON/OFF, bits 6:0 = 0..50",
+   "inference": false,
    "repeat": {
     "count": 12,
     "stride": 4
@@ -476,10 +474,10 @@
   {
    "off": 46,
    "size": 1,
-   "name": "lfo_b3_wave",
+   "name": "lfo_wave_delay",
    "kind": "bits",
-   "evidence": "12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVoice_Build_SlotRegisters 0x024BE3 tests byte +2 bit 7 of entries 0-3). LFO reading: clamp ranges 0..127 / 0..127 / bit7 + 0..50 / bits7:6 + 0..30 (maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C)) match the LFO page fields of maincpu v10 SePitAmpFilLfo1_DrawField 0xF102FC (shared by TT_SEPITLFO1 / TT_SEAMPLFO1 / TT_SEFILLFO1): two 0..127 numbers, a 0..63 number + OFF/ON bit 7 (SePitAmpFilLfo1_DrawField_Records2), wave SIN/TRI/SQR/SAW in bits 7:6 + a 0..31 number (SeScreenData_0x287D); 3 pages x LFO1..LFO4 = 12; bits 7:6 = wave (SIN TRI SQR SAW, inference), bits 5:0 = 0..30",
-   "inference": true,
+   "evidence": "LFO WAVE (bits 7:6: SIN TRI SQR SAW) and DELAY (bits 4:0, 0..30) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 entries: PITCH LFO1-4 (+0x2B), AMPLITUDE LFO1-4 (+0x3B), FILTER LFO1-4 (+0x4B), entry k at +0x2B + 4 k (SeMenu_TransferPartValues); was lfo_b3_wave: 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVoice_Build_SlotRegisters 0x024BE3 tests byte +2 bit 7 of entries 0-3). LFO reading: clamp ranges 0..127 / 0..127 / bit7 + 0..50 / bits7:6 + 0..30 (maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C)) match the LFO page fields of maincpu v10 SePitAmpFilLfo1_DrawField 0xF102FC (shared by TT_SEPITLFO1 / TT_SEAMPLFO1 / TT_SEFILLFO1): two 0..127 numbers, a 0..63 number + OFF/ON bit 7 (SePitAmpFilLfo1_DrawField_Records2), wave SIN/TRI/SQR/SAW in bits 7:6 + a 0..31 number (SeScreenData_0x287D); 3 pages x LFO1..LFO4 = 12; bits 7:6 = wave (SIN TRI SQR SAW, inference), bits 5:0 = 0..30",
+   "inference": false,
    "repeat": {
     "count": 12,
     "stride": 4
@@ -994,10 +992,10 @@
   {
    "off": 108,
    "size": 1,
-   "name": "partial_porta_sel",
-   "kind": "hex",
-   "evidence": "unclamped; subcpu v1.42 Voice_Pitch_ApplyPortamento reads it through the voice slot's paramA (slot +0x17) and keeps bits 2:0 (found by notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py, BLK +0x06) [INFERENCE: the role of the 3-bit value was not traced] [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
-   "inference": true,
+   "name": "partial_pitch_lfo_switch",
+   "kind": "bits",
+   "evidence": "PITCH LFO switch of the tone (bit 5 on, bits 7:6 LFO number - 1, bit 4 sign); subcpu Voice_Pitch_ApplyPortamento also keeps bits 2:0 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was porta_sel: unclamped; subcpu v1.42 Voice_Pitch_ApplyPortamento reads it through the voice slot's paramA (slot +0x17) and keeps bits 2:0 (found by notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py, BLK +0x06) [INFERENCE: the role of the 3-bit value was not traced] [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
    "repeat": {
     "count": 4,
     "stride": 81
@@ -1031,12 +1029,11 @@
   {
    "off": 109,
    "size": 1,
-   "name": "partial_env2_start_level",
+   "name": "partial_pitch_env_total_depth",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (read as a sign flag in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)); clamp -50..50 and corpus values 0/+50/+30/-20 show a signed level; SePitEnv1 / SeFilEnv1 captions START PITCH / START [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
-   "inference": true,
+   "evidence": "PITCH ENV1 TOTAL DEPTH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env2_start_level: subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (read as a sign flag in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)); clamp -50..50 and corpus values 0/+50/+30/-20 show a signed level; SePitEnv1 / SeFilEnv1 captions START PITCH / START [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
    "bias": 0,
-   "todo": "start-level reading is an inference; the header calls it a sign flag",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -1075,9 +1072,9 @@
   {
    "off": 110,
    "size": 1,
-   "name": "partial_env2_porta_level",
+   "name": "partial_pitch_env_start",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "PITCH ENV1 START PITCH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env2_porta_level: subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
    "repeat": {
@@ -1118,11 +1115,10 @@
   {
    "off": 111,
    "size": 1,
-   "name": "partial_env2_seg1_a",
+   "name": "partial_pitch_env_attack",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls the odd bytes targets) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "PITCH ENV1 ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env2_seg1_a: subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls the odd bytes targets) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
-   "todo": "target vs rate of the (0..100, -50..50) pair not settled",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -1161,12 +1157,11 @@
   {
    "off": 112,
    "size": 1,
-   "name": "partial_env2_seg1_b",
+   "name": "partial_pitch_env_peak",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "PITCH ENV1 PEAK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env2_seg1_b: subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
-   "todo": "target vs rate not settled",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -1205,11 +1200,10 @@
   {
    "off": 113,
    "size": 1,
-   "name": "partial_env2_seg2_a",
+   "name": "partial_pitch_env_decay1",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls the odd bytes targets) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "PITCH ENV1 DECAY1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env2_seg2_a: subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls the odd bytes targets) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
-   "todo": "target vs rate of the (0..100, -50..50) pair not settled",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -1248,12 +1242,11 @@
   {
    "off": 114,
    "size": 1,
-   "name": "partial_env2_seg2_b",
+   "name": "partial_pitch_env_sustain1",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "PITCH ENV1 SUST1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env2_seg2_b: subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
-   "todo": "target vs rate not settled",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -1292,11 +1285,10 @@
   {
    "off": 115,
    "size": 1,
-   "name": "partial_env2_seg3_a",
+   "name": "partial_pitch_env_decay2",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls the odd bytes targets) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "PITCH ENV1 DECAY2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env2_seg3_a: subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls the odd bytes targets) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
-   "todo": "target vs rate of the (0..100, -50..50) pair not settled",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -1335,12 +1327,11 @@
   {
    "off": 116,
    "size": 1,
-   "name": "partial_env2_seg3_b",
+   "name": "partial_pitch_env_sustain2",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "PITCH ENV1 SUST2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env2_seg3_b: subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
-   "todo": "target vs rate not settled",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -1375,11 +1366,10 @@
   {
    "off": 117,
    "size": 1,
-   "name": "partial_env2_seg4_a",
+   "name": "partial_pitch_env_release",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls the odd bytes targets) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "PITCH ENV1 RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env2_seg4_a: subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls the odd bytes targets) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
-   "todo": "target vs rate of the (0..100, -50..50) pair not settled",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -1418,12 +1408,11 @@
   {
    "off": 118,
    "size": 1,
-   "name": "partial_env2_seg4_b",
+   "name": "partial_pitch_env_stop",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "PITCH ENV1 STOP PITCH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env2_seg4_b: subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
-   "todo": "target vs rate not settled",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -1458,9 +1447,9 @@
   {
    "off": 119,
    "size": 1,
-   "name": "partial_env2_key_scale",
+   "name": "partial_pitch_env_touch_adr_time",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "PITCH ENV2 TOUCH ADR-TIME (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env2_key_scale: subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
    "repeat": {
@@ -1489,10 +1478,10 @@
   {
    "off": 120,
    "size": 1,
-   "name": "partial_filter_b12",
+   "name": "partial_pitch_env_touch_depth",
    "kind": "signed",
-   "evidence": "clamp -50..50; subcpu v1.42 TVF_Build_Short 0x02413E and Voice_PitchPack_RouteB/C/D read it through paramA (slot +0x17) and shift it into bits 15:13 of the filter word beside the cutoff from +0x11 (found by notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py, BLK +0x12) [INFERENCE: what the field selects in the filter was not traced] [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
-   "inference": true,
+   "evidence": "PITCH ENV2 TOUCH DEPTH; subcpu TVF_Build_Short / Voice_PitchPack_RouteB..D also read it through paramA (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was filter_b12: clamp -50..50; subcpu v1.42 TVF_Build_Short 0x02413E and Voice_PitchPack_RouteB/C/D read it through paramA (slot +0x17) and shift it into bits 15:13 of the filter word beside the cutoff from +0x11 (found by notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py, BLK +0x12) [INFERENCE: what the field selects in the filter was not traced] [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
    "bias": 0,
    "repeat": {
     "count": 4,
@@ -1532,9 +1521,9 @@
   {
    "off": 121,
    "size": 1,
-   "name": "partial_env2_velocity_base",
+   "name": "partial_pitch_env_key_follow_center",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "PITCH ENV2 KEY FOLLOW CENTER (a note, SeValText_NoteNames) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env2_velocity_base: subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "repeat": {
     "count": 4,
@@ -1573,13 +1562,12 @@
   },
   {
    "off": 122,
-   "size": 2,
-   "name": "partial_env2_velocity_depth",
+   "size": 1,
+   "name": "partial_pitch_env_key_follow_attack",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (two depth bytes, each signed); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "PITCH ENV2 KEY FOLLOW ATTACK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env2_velocity_depth: subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (two depth bytes, each signed); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
-   "todo": "two int8, not one int16",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -1588,37 +1576,32 @@
     "min": -50,
     "max": 50,
     "value_mask": null
+   }
+  },
+  {
+   "off": 123,
+   "size": 1,
+   "name": "partial_pitch_env_key_follow_decay",
+   "kind": "signed",
+   "evidence": "PITCH ENV2 KEY FOLLOW DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env2_velocity_depth: subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (two depth bytes, each signed); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "repeat": {
+    "count": 4,
+    "stride": 81
    },
-   "observed": {
-    "samples": 2892,
-    "distinct": 4,
-    "top": [
-     [
-      "0000",
-      2875
-     ],
-     [
-      "fb01",
-      12
-     ],
-     [
-      "0014",
-      4
-     ],
-     [
-      "000b",
-      1
-     ]
-    ],
-    "in_clamp_range": 1.0
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
    }
   },
   {
    "off": 124,
    "size": 1,
-   "name": "partial_env2_egb_0x16",
+   "name": "partial_pitch_env_key_follow_release",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "PITCH ENV2 KEY FOLLOW RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env2_egb_0x16: subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
    "repeat": {
@@ -1893,9 +1876,9 @@
   {
    "off": 140,
    "size": 1,
-   "name": "partial_unread_26",
-   "kind": "hex",
-   "evidence": "unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x26: none) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "name": "partial_amp_lfo_switch",
+   "kind": "bits",
+   "evidence": "AMPLITUDE LFO switch of the tone (bit 5 on, bits 7:6 LFO number - 1, bit 4 sign) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was unread_26: unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x26: none) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "repeat": {
     "count": 4,
@@ -1926,9 +1909,9 @@
   {
    "off": 141,
    "size": 1,
-   "name": "partial_env1_seg1_target",
+   "name": "partial_amp_env_attack",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "AMPLITUDE ENV1 ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env1_seg1_target: subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "repeat": {
     "count": 4,
@@ -1968,9 +1951,9 @@
   {
    "off": 142,
    "size": 1,
-   "name": "partial_env1_seg1_rate",
+   "name": "partial_amp_env_peak",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "AMPLITUDE ENV1 PEAK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env1_seg1_rate: subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "repeat": {
     "count": 4,
@@ -2010,9 +1993,9 @@
   {
    "off": 143,
    "size": 1,
-   "name": "partial_env1_seg2_target",
+   "name": "partial_amp_env_decay1",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "AMPLITUDE ENV1 DECAY1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env1_seg2_target: subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "repeat": {
     "count": 4,
@@ -2052,9 +2035,9 @@
   {
    "off": 144,
    "size": 1,
-   "name": "partial_env1_seg2_rate",
+   "name": "partial_amp_env_sustain1",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "AMPLITUDE ENV1 SUST1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env1_seg2_rate: subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "repeat": {
     "count": 4,
@@ -2094,9 +2077,9 @@
   {
    "off": 145,
    "size": 1,
-   "name": "partial_env1_seg3_target",
+   "name": "partial_amp_env_decay2",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "AMPLITUDE ENV1 DECAY2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env1_seg3_target: subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "repeat": {
     "count": 4,
@@ -2136,9 +2119,9 @@
   {
    "off": 146,
    "size": 1,
-   "name": "partial_env1_seg3_rate",
+   "name": "partial_amp_env_sustain2",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "AMPLITUDE ENV1 SUST2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env1_seg3_rate: subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "repeat": {
     "count": 4,
@@ -2178,9 +2161,9 @@
   {
    "off": 147,
    "size": 1,
-   "name": "partial_env1_level",
+   "name": "partial_amp_env_release",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "AMPLITUDE ENV1 RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env1_level: subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "repeat": {
     "count": 4,
@@ -2219,13 +2202,12 @@
   },
   {
    "off": 148,
-   "size": 2,
-   "name": "partial_env1_key_scale",
+   "size": 1,
+   "name": "partial_amp_env_touch_attack",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (two key-scale bytes); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "AMPLITUDE ENV2 TOUCH ATTACK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env1_key_scale: subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (two key-scale bytes); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
-   "todo": "two int8",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -2234,39 +2216,33 @@
     "min": -50,
     "max": 50,
     "value_mask": null
+   }
+  },
+  {
+   "off": 149,
+   "size": 1,
+   "name": "partial_amp_env_touch_decay",
+   "kind": "signed",
+   "evidence": "AMPLITUDE ENV2 TOUCH DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env1_key_scale: subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (two key-scale bytes); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "repeat": {
+    "count": 4,
+    "stride": 81
    },
-   "observed": {
-    "samples": 2892,
-    "distinct": 27,
-    "top": [
-     [
-      "0400",
-      718
-     ],
-     [
-      "0800",
-      617
-     ],
-     [
-      "0f06",
-      568
-     ],
-     [
-      "0000",
-      514
-     ]
-    ],
-    "in_clamp_range": 0.9993
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
    }
   },
   {
    "off": 150,
-   "size": 3,
-   "name": "partial_env1_velocity_ctl",
+   "size": 1,
+   "name": "partial_amp_env_key_follow_range_mid",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (velocity control triple); clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "AMPLITUDE ENV2 KEY FOLLOW RANGE middle note (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env1_velocity_ctl: subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (velocity control triple); clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
-   "todo": "three bytes",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -2275,40 +2251,50 @@
     "min": 0,
     "max": 127,
     "value_mask": null
+   }
+  },
+  {
+   "off": 151,
+   "size": 1,
+   "name": "partial_amp_env_key_follow_range_low",
+   "kind": "dec",
+   "evidence": "AMPLITUDE ENV2 KEY FOLLOW RANGE low note (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env1_velocity_ctl: subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (velocity control triple); clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
    },
-   "observed": {
-    "samples": 2892,
-    "distinct": 40,
-    "top": [
-     [
-      "421860",
-      1326
-     ],
-     [
-      "42187f",
-      833
-     ],
-     [
-      "422870",
-      583
-     ],
-     [
-      "42346e",
-      22
-     ]
-    ],
-    "in_clamp_range": 1.0
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
+   }
+  },
+  {
+   "off": 152,
+   "size": 1,
+   "name": "partial_amp_env_key_follow_range_high",
+   "kind": "dec",
+   "evidence": "AMPLITUDE ENV2 KEY FOLLOW RANGE high note (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env1_velocity_ctl: subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (velocity control triple); clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "repeat": {
+    "count": 4,
+    "stride": 81
+   },
+   "clamp": {
+    "min": 0,
+    "max": 127,
+    "value_mask": null
    }
   },
   {
    "off": 153,
-   "size": 2,
-   "name": "partial_env1_depth",
+   "size": 1,
+   "name": "partial_amp_env_key_follow_attack",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (depths); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "AMPLITUDE ENV2 KEY FOLLOW ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env1_depth: subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (depths); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
-   "todo": "two int8",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -2317,37 +2303,32 @@
     "min": -50,
     "max": 50,
     "value_mask": null
+   }
+  },
+  {
+   "off": 154,
+   "size": 1,
+   "name": "partial_amp_env_key_follow_decay",
+   "kind": "signed",
+   "evidence": "AMPLITUDE ENV2 KEY FOLLOW DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env1_depth: subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (depths); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "repeat": {
+    "count": 4,
+    "stride": 81
    },
-   "observed": {
-    "samples": 2892,
-    "distinct": 32,
-    "top": [
-     [
-      "0000",
-      2165
-     ],
-     [
-      "000f",
-      578
-     ],
-     [
-      "0015",
-      27
-     ],
-     [
-      "0019",
-      15
-     ]
-    ],
-    "in_clamp_range": 0.9997
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
    }
   },
   {
    "off": 155,
    "size": 1,
-   "name": "partial_env1_ega_0x35",
+   "name": "partial_amp_env_key_follow_release",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "AMPLITUDE ENV2 KEY FOLLOW RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env1_ega_0x35: subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
    "repeat": {
@@ -2467,9 +2448,9 @@
   {
    "off": 158,
    "size": 1,
-   "name": "partial_unread_38",
-   "kind": "hex",
-   "evidence": "unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x38: none) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "name": "partial_filter_lfo_switch",
+   "kind": "bits",
+   "evidence": "FILTER LFO switch of the tone (bit 5 on, bits 7:6 LFO number - 1, bit 4 sign) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was unread_38: unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x38: none) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "repeat": {
     "count": 4,
@@ -2665,12 +2646,11 @@
   {
    "off": 163,
    "size": 1,
-   "name": "partial_env3_start_level",
+   "name": "partial_filter_env_cutoff_adjust",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664 (shared bias in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); twin of env2 +0x07); clamp -50..50, corpus 0/-30/-40/-20 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
-   "inference": true,
+   "evidence": "FILTER ENV1 CUTOFF ADJUST (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env3_start_level: subcpu v1.42 Voice_StereoLevel_Compute 0x024664 (shared bias in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); twin of env2 +0x07); clamp -50..50, corpus 0/-30/-40/-20 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
    "bias": 0,
-   "todo": "start-level reading is an inference from the env2 twin",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -2709,9 +2689,9 @@
   {
    "off": 164,
    "size": 1,
-   "name": "partial_env3_porta_level",
+   "name": "partial_filter_env_start_point",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "FILTER ENV1 START POINT (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env3_porta_level: subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
    "repeat": {
@@ -2752,11 +2732,10 @@
   {
    "off": 165,
    "size": 1,
-   "name": "partial_env3_seg1_a",
+   "name": "partial_filter_env_attack",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "FILTER ENV1 ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env3_seg1_a: subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
-   "todo": "target vs rate not settled",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -2795,12 +2774,11 @@
   {
    "off": 166,
    "size": 1,
-   "name": "partial_env3_seg1_b",
+   "name": "partial_filter_env_peak",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "FILTER ENV1 PEAK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env3_seg1_b: subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
-   "todo": "target vs rate not settled",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -2839,11 +2817,10 @@
   {
    "off": 167,
    "size": 1,
-   "name": "partial_env3_seg2_a",
+   "name": "partial_filter_env_decay1",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "FILTER ENV1 DECAY1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env3_seg2_a: subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
-   "todo": "target vs rate not settled",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -2882,12 +2859,11 @@
   {
    "off": 168,
    "size": 1,
-   "name": "partial_env3_seg2_b",
+   "name": "partial_filter_env_sustain1",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "FILTER ENV1 SUST1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env3_seg2_b: subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
-   "todo": "target vs rate not settled",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -2926,11 +2902,10 @@
   {
    "off": 169,
    "size": 1,
-   "name": "partial_env3_seg3_a",
+   "name": "partial_filter_env_decay2",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "FILTER ENV1 DECAY2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env3_seg3_a: subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
-   "todo": "target vs rate not settled",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -2969,12 +2944,11 @@
   {
    "off": 170,
    "size": 1,
-   "name": "partial_env3_seg3_b",
+   "name": "partial_filter_env_sustain2",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "FILTER ENV1 SUST2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env3_seg3_b: subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
-   "todo": "target vs rate not settled",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -3013,11 +2987,10 @@
   {
    "off": 171,
    "size": 1,
-   "name": "partial_env3_seg4_a",
+   "name": "partial_filter_env_release",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "FILTER ENV1 RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env3_seg4_a: subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
-   "todo": "target vs rate not settled",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -3056,12 +3029,11 @@
   {
    "off": 172,
    "size": 1,
-   "name": "partial_env3_seg4_b",
+   "name": "partial_filter_env_stop_point",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "FILTER ENV1 STOP POINT (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env3_seg4_b: subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
-   "todo": "target vs rate not settled",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -3100,9 +3072,9 @@
   {
    "off": 173,
    "size": 1,
-   "name": "partial_env3_key_scale",
+   "name": "partial_filter_env_touch_adr_time",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "FILTER ENV2 TOUCH ADR-TIME (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env3_key_scale: subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
    "repeat": {
@@ -3143,9 +3115,9 @@
   {
    "off": 174,
    "size": 1,
-   "name": "partial_unread_48",
+   "name": "partial_filter_env_touch_depth",
    "kind": "signed",
-   "evidence": "clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x48: none) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "FILTER ENV2 TOUCH DEPTH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was unread_48: clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py BLK +0x48: none) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
    "repeat": {
@@ -3186,9 +3158,9 @@
   {
    "off": 175,
    "size": 1,
-   "name": "partial_env3_velocity_base",
+   "name": "partial_filter_env_key_follow_center",
    "kind": "dec",
-   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "FILTER ENV2 KEY FOLLOW CENTER (a note) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env3_velocity_base: subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "repeat": {
     "count": 4,
@@ -3227,13 +3199,12 @@
   },
   {
    "off": 176,
-   "size": 2,
-   "name": "partial_env3_velocity_depth",
+   "size": 1,
+   "name": "partial_filter_env_key_follow_attack",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "FILTER ENV2 KEY FOLLOW ATTACK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env3_velocity_depth: subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
-   "todo": "two int8",
    "repeat": {
     "count": 4,
     "stride": 81
@@ -3242,37 +3213,32 @@
     "min": -50,
     "max": 50,
     "value_mask": null
+   }
+  },
+  {
+   "off": 177,
+   "size": 1,
+   "name": "partial_filter_env_key_follow_decay",
+   "kind": "signed",
+   "evidence": "FILTER ENV2 KEY FOLLOW DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env3_velocity_depth: subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "inference": false,
+   "bias": 0,
+   "repeat": {
+    "count": 4,
+    "stride": 81
    },
-   "observed": {
-    "samples": 2892,
-    "distinct": 5,
-    "top": [
-     [
-      "00f1",
-      2259
-     ],
-     [
-      "0000",
-      628
-     ],
-     [
-      "f9fb",
-      2
-     ],
-     [
-      "01fb",
-      2
-     ]
-    ],
-    "in_clamp_range": 1.0
+   "clamp": {
+    "min": -50,
+    "max": 50,
+    "value_mask": null
    }
   },
   {
    "off": 178,
    "size": 1,
-   "name": "partial_env3_egc_0x4c",
+   "name": "partial_filter_env_key_follow_release",
    "kind": "signed",
-   "evidence": "subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
+   "evidence": "FILTER ENV2 KEY FOLLOW RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env3_egc_0x4c: subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; maincpu v10 SoundRam_FillDefaultRecord 0xFEFD28 copies block 0 to +183/+264/+345]",
    "inference": false,
    "bias": 0,
    "repeat": {

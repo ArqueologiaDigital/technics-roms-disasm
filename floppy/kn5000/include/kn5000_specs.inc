@@ -31,43 +31,43 @@
 ;   +0x028 ctrl_b2_6                dec    clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). Seven groups of 3 at +0x14..+0x2
 ;   +0x029 octave_shift             dec    subcpu v1.42 Voice_Pitch_Compute 0x023584 -> Pitch_Get_Patch_Octave_Shift (low nibble); clamp 6..10, 8 = no shift (maincpu v10 Param_SignExtendReturn_Helper3 0x
 ;   +0x02a program_lookup_nibbles   bits   subcpu v1.42 Instrument_LookupProgram_HiNibble 0x02289D / _LoNibble 0x0228D9 index byte table 0x011ACF with each nibble
-;   +0x02b lfo_b0_0                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x02c lfo_b1_0                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x02d lfo_b2_onoff_0           bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x02e lfo_b3_wave_0            bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x02f lfo_b0_1                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x030 lfo_b1_1                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x031 lfo_b2_onoff_1           bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x032 lfo_b3_wave_1            bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x033 lfo_b0_2                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x034 lfo_b1_2                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x035 lfo_b2_onoff_2           bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x036 lfo_b3_wave_2            bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x037 lfo_b0_3                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x038 lfo_b1_3                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x039 lfo_b2_onoff_3           bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x03a lfo_b3_wave_3            bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x03b lfo_b0_4                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x03c lfo_b1_4                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x03d lfo_b2_onoff_4           bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x03e lfo_b3_wave_4            bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x03f lfo_b0_5                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x040 lfo_b1_5                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x041 lfo_b2_onoff_5           bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x042 lfo_b3_wave_5            bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x043 lfo_b0_6                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x044 lfo_b1_6                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x045 lfo_b2_onoff_6           bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x046 lfo_b3_wave_6            bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x047 lfo_b0_7                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x048 lfo_b1_7                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x049 lfo_b2_onoff_7           bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x04a lfo_b3_wave_7            bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x04b lfo_b0_8                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x04c lfo_b1_8                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x04d lfo_b2_onoff_8           bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x04e lfo_b3_wave_8            bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-	.macro	tm_sound_0 name, part_mode, partial_mask, partial_flag_codes, bend_type, ctrl_part_switches_0, ctrl_b1_0, ctrl_b2_0, ctrl_part_switches_1, ctrl_b1_1, ctrl_b2_1, ctrl_part_switches_2, ctrl_b1_2, ctrl_b2_2, ctrl_part_switches_3, ctrl_b1_3, ctrl_b2_3, ctrl_part_switches_4, ctrl_b1_4, ctrl_b2_4, ctrl_part_switches_5, ctrl_b1_5, ctrl_b2_5, ctrl_part_switches_6, ctrl_b1_6, ctrl_b2_6, octave_shift, program_lookup_nibbles, lfo_b0_0, lfo_b1_0, lfo_b2_onoff_0, lfo_b3_wave_0, lfo_b0_1, lfo_b1_1, lfo_b2_onoff_1, lfo_b3_wave_1, lfo_b0_2, lfo_b1_2, lfo_b2_onoff_2, lfo_b3_wave_2, lfo_b0_3, lfo_b1_3, lfo_b2_onoff_3, lfo_b3_wave_3, lfo_b0_4, lfo_b1_4, lfo_b2_onoff_4, lfo_b3_wave_4, lfo_b0_5, lfo_b1_5, lfo_b2_onoff_5, lfo_b3_wave_5, lfo_b0_6, lfo_b1_6, lfo_b2_onoff_6, lfo_b3_wave_6, lfo_b0_7, lfo_b1_7, lfo_b2_onoff_7, lfo_b3_wave_7, lfo_b0_8, lfo_b1_8, lfo_b2_onoff_8, lfo_b3_wave_8
+;   +0x02b lfo_depth_0              dec    LFO DEPTH (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x02c lfo_speed_0              dec    LFO SPEED (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x02d lfo_touch_keysync_0      bits   LFO TOUCH (bits 5:0, 0..50) and KEYSYNC (bit 7) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends
+;   +0x02e lfo_wave_delay_0         bits   LFO WAVE (bits 7:6: SIN TRI SQR SAW) and DELAY (bits 4:0, 0..30) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the p
+;   +0x02f lfo_depth_1              dec    LFO DEPTH (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x030 lfo_speed_1              dec    LFO SPEED (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x031 lfo_touch_keysync_1      bits   LFO TOUCH (bits 5:0, 0..50) and KEYSYNC (bit 7) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends
+;   +0x032 lfo_wave_delay_1         bits   LFO WAVE (bits 7:6: SIN TRI SQR SAW) and DELAY (bits 4:0, 0..30) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the p
+;   +0x033 lfo_depth_2              dec    LFO DEPTH (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x034 lfo_speed_2              dec    LFO SPEED (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x035 lfo_touch_keysync_2      bits   LFO TOUCH (bits 5:0, 0..50) and KEYSYNC (bit 7) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends
+;   +0x036 lfo_wave_delay_2         bits   LFO WAVE (bits 7:6: SIN TRI SQR SAW) and DELAY (bits 4:0, 0..30) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the p
+;   +0x037 lfo_depth_3              dec    LFO DEPTH (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x038 lfo_speed_3              dec    LFO SPEED (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x039 lfo_touch_keysync_3      bits   LFO TOUCH (bits 5:0, 0..50) and KEYSYNC (bit 7) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends
+;   +0x03a lfo_wave_delay_3         bits   LFO WAVE (bits 7:6: SIN TRI SQR SAW) and DELAY (bits 4:0, 0..30) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the p
+;   +0x03b lfo_depth_4              dec    LFO DEPTH (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x03c lfo_speed_4              dec    LFO SPEED (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x03d lfo_touch_keysync_4      bits   LFO TOUCH (bits 5:0, 0..50) and KEYSYNC (bit 7) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends
+;   +0x03e lfo_wave_delay_4         bits   LFO WAVE (bits 7:6: SIN TRI SQR SAW) and DELAY (bits 4:0, 0..30) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the p
+;   +0x03f lfo_depth_5              dec    LFO DEPTH (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x040 lfo_speed_5              dec    LFO SPEED (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x041 lfo_touch_keysync_5      bits   LFO TOUCH (bits 5:0, 0..50) and KEYSYNC (bit 7) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends
+;   +0x042 lfo_wave_delay_5         bits   LFO WAVE (bits 7:6: SIN TRI SQR SAW) and DELAY (bits 4:0, 0..30) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the p
+;   +0x043 lfo_depth_6              dec    LFO DEPTH (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x044 lfo_speed_6              dec    LFO SPEED (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x045 lfo_touch_keysync_6      bits   LFO TOUCH (bits 5:0, 0..50) and KEYSYNC (bit 7) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends
+;   +0x046 lfo_wave_delay_6         bits   LFO WAVE (bits 7:6: SIN TRI SQR SAW) and DELAY (bits 4:0, 0..30) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the p
+;   +0x047 lfo_depth_7              dec    LFO DEPTH (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x048 lfo_speed_7              dec    LFO SPEED (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x049 lfo_touch_keysync_7      bits   LFO TOUCH (bits 5:0, 0..50) and KEYSYNC (bit 7) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends
+;   +0x04a lfo_wave_delay_7         bits   LFO WAVE (bits 7:6: SIN TRI SQR SAW) and DELAY (bits 4:0, 0..30) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the p
+;   +0x04b lfo_depth_8              dec    LFO DEPTH (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x04c lfo_speed_8              dec    LFO SPEED (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x04d lfo_touch_keysync_8      bits   LFO TOUCH (bits 5:0, 0..50) and KEYSYNC (bit 7) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends
+;   +0x04e lfo_wave_delay_8         bits   LFO WAVE (bits 7:6: SIN TRI SQR SAW) and DELAY (bits 4:0, 0..30) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the p
+	.macro	tm_sound_0 name, part_mode, partial_mask, partial_flag_codes, bend_type, ctrl_part_switches_0, ctrl_b1_0, ctrl_b2_0, ctrl_part_switches_1, ctrl_b1_1, ctrl_b2_1, ctrl_part_switches_2, ctrl_b1_2, ctrl_b2_2, ctrl_part_switches_3, ctrl_b1_3, ctrl_b2_3, ctrl_part_switches_4, ctrl_b1_4, ctrl_b2_4, ctrl_part_switches_5, ctrl_b1_5, ctrl_b2_5, ctrl_part_switches_6, ctrl_b1_6, ctrl_b2_6, octave_shift, program_lookup_nibbles, lfo_depth_0, lfo_speed_0, lfo_touch_keysync_0, lfo_wave_delay_0, lfo_depth_1, lfo_speed_1, lfo_touch_keysync_1, lfo_wave_delay_1, lfo_depth_2, lfo_speed_2, lfo_touch_keysync_2, lfo_wave_delay_2, lfo_depth_3, lfo_speed_3, lfo_touch_keysync_3, lfo_wave_delay_3, lfo_depth_4, lfo_speed_4, lfo_touch_keysync_4, lfo_wave_delay_4, lfo_depth_5, lfo_speed_5, lfo_touch_keysync_5, lfo_wave_delay_5, lfo_depth_6, lfo_speed_6, lfo_touch_keysync_6, lfo_wave_delay_6, lfo_depth_7, lfo_speed_7, lfo_touch_keysync_7, lfo_wave_delay_7, lfo_depth_8, lfo_speed_8, lfo_touch_keysync_8, lfo_wave_delay_8
 .Lsa\@_name:
 	.ascii	"\name"
 .Lsb\@_name:
@@ -101,57 +101,57 @@
 	.byte	\ctrl_b2_6
 	.byte	\octave_shift
 	.byte	\program_lookup_nibbles
-	.byte	\lfo_b0_0
-	.byte	\lfo_b1_0
-	.byte	\lfo_b2_onoff_0
-	.byte	\lfo_b3_wave_0
-	.byte	\lfo_b0_1
-	.byte	\lfo_b1_1
-	.byte	\lfo_b2_onoff_1
-	.byte	\lfo_b3_wave_1
-	.byte	\lfo_b0_2
-	.byte	\lfo_b1_2
-	.byte	\lfo_b2_onoff_2
-	.byte	\lfo_b3_wave_2
-	.byte	\lfo_b0_3
-	.byte	\lfo_b1_3
-	.byte	\lfo_b2_onoff_3
-	.byte	\lfo_b3_wave_3
-	.byte	\lfo_b0_4
-	.byte	\lfo_b1_4
-	.byte	\lfo_b2_onoff_4
-	.byte	\lfo_b3_wave_4
-	.byte	\lfo_b0_5
-	.byte	\lfo_b1_5
-	.byte	\lfo_b2_onoff_5
-	.byte	\lfo_b3_wave_5
-	.byte	\lfo_b0_6
-	.byte	\lfo_b1_6
-	.byte	\lfo_b2_onoff_6
-	.byte	\lfo_b3_wave_6
-	.byte	\lfo_b0_7
-	.byte	\lfo_b1_7
-	.byte	\lfo_b2_onoff_7
-	.byte	\lfo_b3_wave_7
-	.byte	\lfo_b0_8
-	.byte	\lfo_b1_8
-	.byte	\lfo_b2_onoff_8
-	.byte	\lfo_b3_wave_8
+	.byte	\lfo_depth_0
+	.byte	\lfo_speed_0
+	.byte	\lfo_touch_keysync_0
+	.byte	\lfo_wave_delay_0
+	.byte	\lfo_depth_1
+	.byte	\lfo_speed_1
+	.byte	\lfo_touch_keysync_1
+	.byte	\lfo_wave_delay_1
+	.byte	\lfo_depth_2
+	.byte	\lfo_speed_2
+	.byte	\lfo_touch_keysync_2
+	.byte	\lfo_wave_delay_2
+	.byte	\lfo_depth_3
+	.byte	\lfo_speed_3
+	.byte	\lfo_touch_keysync_3
+	.byte	\lfo_wave_delay_3
+	.byte	\lfo_depth_4
+	.byte	\lfo_speed_4
+	.byte	\lfo_touch_keysync_4
+	.byte	\lfo_wave_delay_4
+	.byte	\lfo_depth_5
+	.byte	\lfo_speed_5
+	.byte	\lfo_touch_keysync_5
+	.byte	\lfo_wave_delay_5
+	.byte	\lfo_depth_6
+	.byte	\lfo_speed_6
+	.byte	\lfo_touch_keysync_6
+	.byte	\lfo_wave_delay_6
+	.byte	\lfo_depth_7
+	.byte	\lfo_speed_7
+	.byte	\lfo_touch_keysync_7
+	.byte	\lfo_wave_delay_7
+	.byte	\lfo_depth_8
+	.byte	\lfo_speed_8
+	.byte	\lfo_touch_keysync_8
+	.byte	\lfo_wave_delay_8
 	.endm
 
 ; SOUND MEMORY record (470 B), fields +0x4f..+0x8e
-;   +0x04f lfo_b0_9                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x050 lfo_b1_9                 dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x051 lfo_b2_onoff_9           bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x052 lfo_b3_wave_9            bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x053 lfo_b0_10                dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x054 lfo_b1_10                dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x055 lfo_b2_onoff_10          bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x056 lfo_b3_wave_10           bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x057 lfo_b0_11                dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x058 lfo_b1_11                dec    [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x059 lfo_b2_onoff_11          bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
-;   +0x05a lfo_b3_wave_11           bits   [INFERENCE] 12 x 4-byte entries +0x2B..+0x5A (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS): three runs of four; subcpu v1.42 ExtVo
+;   +0x04f lfo_depth_9              dec    LFO DEPTH (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x050 lfo_speed_9              dec    LFO SPEED (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x051 lfo_touch_keysync_9      bits   LFO TOUCH (bits 5:0, 0..50) and KEYSYNC (bit 7) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends
+;   +0x052 lfo_wave_delay_9         bits   LFO WAVE (bits 7:6: SIN TRI SQR SAW) and DELAY (bits 4:0, 0..30) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the p
+;   +0x053 lfo_depth_10             dec    LFO DEPTH (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x054 lfo_speed_10             dec    LFO SPEED (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x055 lfo_touch_keysync_10     bits   LFO TOUCH (bits 5:0, 0..50) and KEYSYNC (bit 7) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends
+;   +0x056 lfo_wave_delay_10        bits   LFO WAVE (bits 7:6: SIN TRI SQR SAW) and DELAY (bits 4:0, 0..30) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the p
+;   +0x057 lfo_depth_11             dec    LFO DEPTH (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x058 lfo_speed_11             dec    LFO SPEED (0..127) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 12 
+;   +0x059 lfo_touch_keysync_11     bits   LFO TOUCH (bits 5:0, 0..50) and KEYSYNC (bit 7) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends
+;   +0x05a lfo_wave_delay_11        bits   LFO WAVE (bits 7:6: SIN TRI SQR SAW) and DELAY (bits 4:0, 0..30) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the p
 ;   +0x05b unread_5b                dec    clamp 0..127: maincpu v10 Param_SignExtendReturn_Helper3 0xFEEC48 (per-offset range args, via ParamSx_CaseMapA/B, SwitchA/B/C). No sub-CPU reader: none in table
 ;   +0x05c level_offset             signed+64 subcpu v1.42 Level_Build_Reg0C0 0x0253FE: level offset centred on 0x40 (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS)); clamp 0..12
 ;   +0x05d algorithm_type           bits   subcpu v1.42 AlgoType_StateWrite 0x033557 and Partial_Build_Present_Word 0x032B1E read the low nibble
@@ -165,44 +165,45 @@
 ;   +0x069 partial_wave_family_0    hex    subcpu v1.42 WaveSel_StageA1_FromPatchBlock 0x0325FC: family/sub-bank byte (0x00 / 0x80); DSP_WriteAlgoBuffer 0x03522E forces bits 5:4 [partial block p at +0x66
 ;   +0x06a partial_coarse_tune_0    signed [INFERENCE] clamp -24..+24 (two's complement); corpus values cluster on 0, +-12, +-24 (2457 / 145+101 / 49+42 of 2892 blocks) = semitones; no subcpu reader in t
 ;   +0x06b partial_partial_detune_0 dec    subcpu v1.42 Pitch_Apply_Partial_Detune 0x023A05 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; 
-;   +0x06c partial_porta_sel_0      hex    [INFERENCE] unclamped; subcpu v1.42 Voice_Pitch_ApplyPortamento reads it through the voice slot's paramA (slot +0x17) and keeps bits 2:0 (found by notes/kn5000-
-;   +0x06d partial_env2_start_level_0 signed [INFERENCE] subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (read as a sign flag in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS))
-;   +0x06e partial_env2_porta_level_0 signed subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x06f partial_env2_seg1_a_0    dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls 
-;   +0x070 partial_env2_seg1_b_0    signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x071 partial_env2_seg2_a_0    dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls 
-;   +0x072 partial_env2_seg2_b_0    signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x073 partial_env2_seg3_a_0    dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls 
-;   +0x074 partial_env2_seg3_b_0    signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x075 partial_env2_seg4_a_0    dec    subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls th
-;   +0x076 partial_env2_seg4_b_0    signed subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x077 partial_env2_key_scale_0 signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x078 partial_filter_b12_0     signed [INFERENCE] clamp -50..50; subcpu v1.42 TVF_Build_Short 0x02413E and Voice_PitchPack_RouteB/C/D read it through paramA (slot +0x17) and shift it into bits 15:13
-;   +0x079 partial_env2_velocity_base_0 dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x07a partial_env2_velocity_depth_0 signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (two depth bytes, each signed); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan
-;   +0x07c partial_env2_egb_0x16_0  signed subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
+;   +0x06c partial_pitch_lfo_switch_0 bits   PITCH LFO switch of the tone (bit 5 on, bits 7:6 LFO number - 1, bit 4 sign); subcpu Voice_Pitch_ApplyPortamento also keeps bits 2:0 (SOUND EDIT page caption, n
+;   +0x06d partial_pitch_env_total_depth_0 signed PITCH ENV1 TOTAL DEPTH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset));
+;   +0x06e partial_pitch_env_start_0 signed PITCH ENV1 START PITCH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset));
+;   +0x06f partial_pitch_env_attack_0 dec    PITCH ENV1 ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env
+;   +0x070 partial_pitch_env_peak_0 signed PITCH ENV1 PEAK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was en
+;   +0x071 partial_pitch_env_decay1_0 dec    PITCH ENV1 DECAY1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was 
+;   +0x072 partial_pitch_env_sustain1_0 signed PITCH ENV1 SUST1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was e
+;   +0x073 partial_pitch_env_decay2_0 dec    PITCH ENV1 DECAY2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was 
+;   +0x074 partial_pitch_env_sustain2_0 signed PITCH ENV1 SUST2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was e
+;   +0x075 partial_pitch_env_release_0 dec    PITCH ENV1 RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was
+;   +0x076 partial_pitch_env_stop_0 signed PITCH ENV1 STOP PITCH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 
+;   +0x077 partial_pitch_env_touch_adr_time_0 signed PITCH ENV2 TOUCH ADR-TIME (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset
+;   +0x078 partial_pitch_env_touch_depth_0 signed PITCH ENV2 TOUCH DEPTH; subcpu TVF_Build_Short / Voice_PitchPack_RouteB..D also read it through paramA (SOUND EDIT page caption, notes/open6-kn5000-d/panel/prob
+;   +0x079 partial_pitch_env_key_follow_center_0 dec    PITCH ENV2 KEY FOLLOW CENTER (a note, SeValText_NoteNames) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page ha
+;   +0x07a partial_pitch_env_key_follow_attack_0 signed PITCH ENV2 KEY FOLLOW ATTACK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this off
+;   +0x07b partial_pitch_env_key_follow_decay_0 signed PITCH ENV2 KEY FOLLOW DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offs
+;   +0x07c partial_pitch_env_key_follow_release_0 signed PITCH ENV2 KEY FOLLOW RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this of
 ;   +0x07d partial_channel_detune_0 dec    subcpu v1.42 Voice_ApplyPortamento 0x026637; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x
 ;   +0x07e partial_fine_detune_0    signed subcpu v1.42 Voice_ComputePitch 0x026396 (signed detune); clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds r
 ;   +0x07f partial_pitch_curve_0    hex    subcpu v1.42 Voice_ComputePitch 0x026396: curve selector, 0xE0 = the direct note table [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
 ;   +0x080 partial_pitch_params_0   dec    subcpu v1.42 Voice_ComputePitch 0x026396 reads +0x1A..+0x1C; clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 
 ;   +0x083 partial_unread_1d_0      signed clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
 ;   +0x084 partial_unread_1e_0      dec    clamp 0..127 each; no subcpu reader for +0x1D..+0x26 (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/
-;   +0x08c partial_unread_26_0      hex    unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py 
-;   +0x08d partial_env1_seg1_target_0 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
-;   +0x08e partial_env1_seg1_rate_0 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
-	.macro	tm_sound_1 lfo_b0_9, lfo_b1_9, lfo_b2_onoff_9, lfo_b3_wave_9, lfo_b0_10, lfo_b1_10, lfo_b2_onoff_10, lfo_b3_wave_10, lfo_b0_11, lfo_b1_11, lfo_b2_onoff_11, lfo_b3_wave_11, unread_5b, level_offset, algorithm_type, partial_descriptor_0, partial_descriptor_1, partial_descriptor_2, partial_descriptor_3, algo45_params_0, algo45_params_1, secondary_param_a, secondary_param_b, partial_gate_ctl_0, partial_unread_01_0, partial_wave_0, partial_wave_family_0, partial_coarse_tune_0, partial_partial_detune_0, partial_porta_sel_0, partial_env2_start_level_0, partial_env2_porta_level_0, partial_env2_seg1_a_0, partial_env2_seg1_b_0, partial_env2_seg2_a_0, partial_env2_seg2_b_0, partial_env2_seg3_a_0, partial_env2_seg3_b_0, partial_env2_seg4_a_0, partial_env2_seg4_b_0, partial_env2_key_scale_0, partial_filter_b12_0, partial_env2_velocity_base_0, partial_env2_velocity_depth_0_0, partial_env2_velocity_depth_0_1, partial_env2_egb_0x16_0, partial_channel_detune_0, partial_fine_detune_0, partial_pitch_curve_0, partial_pitch_params_0_0, partial_pitch_params_0_1, partial_pitch_params_0_2, partial_unread_1d_0, partial_unread_1e_0_0, partial_unread_1e_0_1, partial_unread_1e_0_2, partial_unread_1e_0_3, partial_unread_1e_0_4, partial_unread_1e_0_5, partial_unread_1e_0_6, partial_unread_1e_0_7, partial_unread_26_0, partial_env1_seg1_target_0, partial_env1_seg1_rate_0
-	.byte	\lfo_b0_9
-	.byte	\lfo_b1_9
-	.byte	\lfo_b2_onoff_9
-	.byte	\lfo_b3_wave_9
-	.byte	\lfo_b0_10
-	.byte	\lfo_b1_10
-	.byte	\lfo_b2_onoff_10
-	.byte	\lfo_b3_wave_10
-	.byte	\lfo_b0_11
-	.byte	\lfo_b1_11
-	.byte	\lfo_b2_onoff_11
-	.byte	\lfo_b3_wave_11
+;   +0x08c partial_amp_lfo_switch_0 bits   AMPLITUDE LFO switch of the tone (bit 5 on, bits 7:6 LFO number - 1, bit 4 sign) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (t
+;   +0x08d partial_amp_env_attack_0 dec    AMPLITUDE ENV1 ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was
+;   +0x08e partial_amp_env_peak_0   dec    AMPLITUDE ENV1 PEAK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); wa
+	.macro	tm_sound_1 lfo_depth_9, lfo_speed_9, lfo_touch_keysync_9, lfo_wave_delay_9, lfo_depth_10, lfo_speed_10, lfo_touch_keysync_10, lfo_wave_delay_10, lfo_depth_11, lfo_speed_11, lfo_touch_keysync_11, lfo_wave_delay_11, unread_5b, level_offset, algorithm_type, partial_descriptor_0, partial_descriptor_1, partial_descriptor_2, partial_descriptor_3, algo45_params_0, algo45_params_1, secondary_param_a, secondary_param_b, partial_gate_ctl_0, partial_unread_01_0, partial_wave_0, partial_wave_family_0, partial_coarse_tune_0, partial_partial_detune_0, partial_pitch_lfo_switch_0, partial_pitch_env_total_depth_0, partial_pitch_env_start_0, partial_pitch_env_attack_0, partial_pitch_env_peak_0, partial_pitch_env_decay1_0, partial_pitch_env_sustain1_0, partial_pitch_env_decay2_0, partial_pitch_env_sustain2_0, partial_pitch_env_release_0, partial_pitch_env_stop_0, partial_pitch_env_touch_adr_time_0, partial_pitch_env_touch_depth_0, partial_pitch_env_key_follow_center_0, partial_pitch_env_key_follow_attack_0, partial_pitch_env_key_follow_decay_0, partial_pitch_env_key_follow_release_0, partial_channel_detune_0, partial_fine_detune_0, partial_pitch_curve_0, partial_pitch_params_0_0, partial_pitch_params_0_1, partial_pitch_params_0_2, partial_unread_1d_0, partial_unread_1e_0_0, partial_unread_1e_0_1, partial_unread_1e_0_2, partial_unread_1e_0_3, partial_unread_1e_0_4, partial_unread_1e_0_5, partial_unread_1e_0_6, partial_unread_1e_0_7, partial_amp_lfo_switch_0, partial_amp_env_attack_0, partial_amp_env_peak_0
+	.byte	\lfo_depth_9
+	.byte	\lfo_speed_9
+	.byte	\lfo_touch_keysync_9
+	.byte	\lfo_wave_delay_9
+	.byte	\lfo_depth_10
+	.byte	\lfo_speed_10
+	.byte	\lfo_touch_keysync_10
+	.byte	\lfo_wave_delay_10
+	.byte	\lfo_depth_11
+	.byte	\lfo_speed_11
+	.byte	\lfo_touch_keysync_11
+	.byte	\lfo_wave_delay_11
 	.byte	\unread_5b
 	.byte	64 + (\level_offset)
 	.byte	\algorithm_type
@@ -216,65 +217,71 @@
 	.byte	\partial_wave_family_0
 	.byte	(\partial_coarse_tune_0) & 0xff
 	.byte	\partial_partial_detune_0
-	.byte	\partial_porta_sel_0
-	.byte	(\partial_env2_start_level_0) & 0xff
-	.byte	(\partial_env2_porta_level_0) & 0xff
-	.byte	\partial_env2_seg1_a_0
-	.byte	(\partial_env2_seg1_b_0) & 0xff
-	.byte	\partial_env2_seg2_a_0
-	.byte	(\partial_env2_seg2_b_0) & 0xff
-	.byte	\partial_env2_seg3_a_0
-	.byte	(\partial_env2_seg3_b_0) & 0xff
-	.byte	\partial_env2_seg4_a_0
-	.byte	(\partial_env2_seg4_b_0) & 0xff
-	.byte	(\partial_env2_key_scale_0) & 0xff
-	.byte	(\partial_filter_b12_0) & 0xff
-	.byte	\partial_env2_velocity_base_0
-	.byte	\partial_env2_velocity_depth_0_0, \partial_env2_velocity_depth_0_1
-	.byte	(\partial_env2_egb_0x16_0) & 0xff
+	.byte	\partial_pitch_lfo_switch_0
+	.byte	(\partial_pitch_env_total_depth_0) & 0xff
+	.byte	(\partial_pitch_env_start_0) & 0xff
+	.byte	\partial_pitch_env_attack_0
+	.byte	(\partial_pitch_env_peak_0) & 0xff
+	.byte	\partial_pitch_env_decay1_0
+	.byte	(\partial_pitch_env_sustain1_0) & 0xff
+	.byte	\partial_pitch_env_decay2_0
+	.byte	(\partial_pitch_env_sustain2_0) & 0xff
+	.byte	\partial_pitch_env_release_0
+	.byte	(\partial_pitch_env_stop_0) & 0xff
+	.byte	(\partial_pitch_env_touch_adr_time_0) & 0xff
+	.byte	(\partial_pitch_env_touch_depth_0) & 0xff
+	.byte	\partial_pitch_env_key_follow_center_0
+	.byte	(\partial_pitch_env_key_follow_attack_0) & 0xff
+	.byte	(\partial_pitch_env_key_follow_decay_0) & 0xff
+	.byte	(\partial_pitch_env_key_follow_release_0) & 0xff
 	.byte	\partial_channel_detune_0
 	.byte	(\partial_fine_detune_0) & 0xff
 	.byte	\partial_pitch_curve_0
 	.byte	\partial_pitch_params_0_0, \partial_pitch_params_0_1, \partial_pitch_params_0_2
 	.byte	(\partial_unread_1d_0) & 0xff
 	.byte	\partial_unread_1e_0_0, \partial_unread_1e_0_1, \partial_unread_1e_0_2, \partial_unread_1e_0_3, \partial_unread_1e_0_4, \partial_unread_1e_0_5, \partial_unread_1e_0_6, \partial_unread_1e_0_7
-	.byte	\partial_unread_26_0
-	.byte	\partial_env1_seg1_target_0
-	.byte	\partial_env1_seg1_rate_0
+	.byte	\partial_amp_lfo_switch_0
+	.byte	\partial_amp_env_attack_0
+	.byte	\partial_amp_env_peak_0
 	.endm
 
 ; SOUND MEMORY record (470 B), fields +0x8f..+0xce
-;   +0x08f partial_env1_seg2_target_0 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
-;   +0x090 partial_env1_seg2_rate_0 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
-;   +0x091 partial_env1_seg3_target_0 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
-;   +0x092 partial_env1_seg3_rate_0 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
-;   +0x093 partial_env1_level_0     dec    subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 +
-;   +0x094 partial_env1_key_scale_0 signed subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (two key-scale bytes); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_Assig
-;   +0x096 partial_env1_velocity_ctl_0 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (velocity control triple); clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_As
-;   +0x099 partial_env1_depth_0     signed subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (depths); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x03229
-;   +0x09b partial_env1_ega_0x35_0  signed subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
+;   +0x08f partial_amp_env_decay1_0 dec    AMPLITUDE ENV1 DECAY1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 
+;   +0x090 partial_amp_env_sustain1_0 dec    AMPLITUDE ENV1 SUST1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); w
+;   +0x091 partial_amp_env_decay2_0 dec    AMPLITUDE ENV1 DECAY2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 
+;   +0x092 partial_amp_env_sustain2_0 dec    AMPLITUDE ENV1 SUST2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); w
+;   +0x093 partial_amp_env_release_0 dec    AMPLITUDE ENV1 RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset));
+;   +0x094 partial_amp_env_touch_attack_0 signed AMPLITUDE ENV2 TOUCH ATTACK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offs
+;   +0x095 partial_amp_env_touch_decay_0 signed AMPLITUDE ENV2 TOUCH DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offse
+;   +0x096 partial_amp_env_key_follow_range_mid_0 dec    AMPLITUDE ENV2 KEY FOLLOW RANGE middle note (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for
+;   +0x097 partial_amp_env_key_follow_range_low_0 dec    AMPLITUDE ENV2 KEY FOLLOW RANGE low note (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it
+;   +0x098 partial_amp_env_key_follow_range_high_0 dec    AMPLITUDE ENV2 KEY FOLLOW RANGE high note (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for i
+;   +0x099 partial_amp_env_key_follow_attack_0 signed AMPLITUDE ENV2 KEY FOLLOW ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this of
+;   +0x09a partial_amp_env_key_follow_decay_0 signed AMPLITUDE ENV2 KEY FOLLOW DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this 
+;   +0x09b partial_amp_env_key_follow_release_0 signed AMPLITUDE ENV2 KEY FOLLOW RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is thi
 ;   +0x09c partial_filter_type_0    bits   subcpu v1.42 TVF_Build_Dispatch 0x024102: bits 2:0 = filter builder, bits 7:5 = key-follow curve [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_As
 ;   +0x09d partial_filter_key_follow_depth_0 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank
-;   +0x09e partial_unread_38_0      hex    unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py 
+;   +0x09e partial_filter_lfo_switch_0 bits   FILTER LFO switch of the tone (bit 5 on, bits 7:6 LFO number - 1, bit 4 sign) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the 
 ;   +0x09f partial_level_scale_offset_0 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x0a0 partial_level_scale_low_0 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x0a1 partial_level_scale_high_0 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x0a2 partial_level_scale_depth_0 signed subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ra
-;   +0x0a3 partial_env3_start_level_0 signed [INFERENCE] subcpu v1.42 Voice_StereoLevel_Compute 0x024664 (shared bias in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); twin of 
-;   +0x0a4 partial_env3_porta_level_0 signed subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x0a5 partial_env3_seg1_a_0    dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFS
-;   +0x0a6 partial_env3_seg1_b_0    signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x0a7 partial_env3_seg2_a_0    dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFS
-;   +0x0a8 partial_env3_seg2_b_0    signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x0a9 partial_env3_seg3_a_0    dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFS
-;   +0x0aa partial_env3_seg3_b_0    signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x0ab partial_env3_seg4_a_0    dec    subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSl
-;   +0x0ac partial_env3_seg4_b_0    signed subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x0ad partial_env3_key_scale_0 signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x0ae partial_unread_48_0      signed clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
-;   +0x0af partial_env3_velocity_base_0 dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x0b0 partial_env3_velocity_depth_0 signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec +
-;   +0x0b2 partial_env3_egc_0x4c_0  signed subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
+;   +0x0a3 partial_filter_env_cutoff_adjust_0 signed FILTER ENV1 CUTOFF ADJUST (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset
+;   +0x0a4 partial_filter_env_start_point_0 signed FILTER ENV1 START POINT (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset))
+;   +0x0a5 partial_filter_env_attack_0 dec    FILTER ENV1 ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was en
+;   +0x0a6 partial_filter_env_peak_0 signed FILTER ENV1 PEAK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was e
+;   +0x0a7 partial_filter_env_decay1_0 dec    FILTER ENV1 DECAY1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was
+;   +0x0a8 partial_filter_env_sustain1_0 signed FILTER ENV1 SUST1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was 
+;   +0x0a9 partial_filter_env_decay2_0 dec    FILTER ENV1 DECAY2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was
+;   +0x0aa partial_filter_env_sustain2_0 signed FILTER ENV1 SUST2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was 
+;   +0x0ab partial_filter_env_release_0 dec    FILTER ENV1 RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); wa
+;   +0x0ac partial_filter_env_stop_point_0 signed FILTER ENV1 STOP POINT (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset));
+;   +0x0ad partial_filter_env_touch_adr_time_0 signed FILTER ENV2 TOUCH ADR-TIME (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offse
+;   +0x0ae partial_filter_env_touch_depth_0 signed FILTER ENV2 TOUCH DEPTH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset))
+;   +0x0af partial_filter_env_key_follow_center_0 dec    FILTER ENV2 KEY FOLLOW CENTER (a note) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it i
+;   +0x0b0 partial_filter_env_key_follow_attack_0 signed FILTER ENV2 KEY FOLLOW ATTACK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this of
+;   +0x0b1 partial_filter_env_key_follow_decay_0 signed FILTER ENV2 KEY FOLLOW DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this off
+;   +0x0b2 partial_filter_env_key_follow_release_0 signed FILTER ENV2 KEY FOLLOW RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this o
 ;   +0x0b3 partial_filter_cutoff_0  dec    subcpu v1.42 TVF_Build_Full 0x023D01 (cutoff seed); unclamped [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x0b4 partial_filter_slope_mode_0 hex    subcpu v1.42 TVF_Build_Full 0x023D01 (slope/mode); unclamped [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 +
 ;   +0x0b5 partial_filter_pair_0    hex    subcpu v1.42 TVF_Build_Full 0x023D01 / Voice_PitchPack_Mode2 0x023DB5.._Mode5_Dual 0x02403D: resonance/depth pair, or a second cutoff in mode 5 [partial block p
@@ -284,55 +291,61 @@
 ;   +0x0ba partial_wave_family_1    hex    subcpu v1.42 WaveSel_StageA1_FromPatchBlock 0x0325FC: family/sub-bank byte (0x00 / 0x80); DSP_WriteAlgoBuffer 0x03522E forces bits 5:4 [partial block p at +0x66
 ;   +0x0bb partial_coarse_tune_1    signed [INFERENCE] clamp -24..+24 (two's complement); corpus values cluster on 0, +-12, +-24 (2457 / 145+101 / 49+42 of 2892 blocks) = semitones; no subcpu reader in t
 ;   +0x0bc partial_partial_detune_1 dec    subcpu v1.42 Pitch_Apply_Partial_Detune 0x023A05 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; 
-;   +0x0bd partial_porta_sel_1      hex    [INFERENCE] unclamped; subcpu v1.42 Voice_Pitch_ApplyPortamento reads it through the voice slot's paramA (slot +0x17) and keeps bits 2:0 (found by notes/kn5000-
-;   +0x0be partial_env2_start_level_1 signed [INFERENCE] subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (read as a sign flag in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS))
-;   +0x0bf partial_env2_porta_level_1 signed subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x0c0 partial_env2_seg1_a_1    dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls 
-;   +0x0c1 partial_env2_seg1_b_1    signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x0c2 partial_env2_seg2_a_1    dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls 
-;   +0x0c3 partial_env2_seg2_b_1    signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x0c4 partial_env2_seg3_a_1    dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls 
-;   +0x0c5 partial_env2_seg3_b_1    signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x0c6 partial_env2_seg4_a_1    dec    subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls th
-;   +0x0c7 partial_env2_seg4_b_1    signed subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x0c8 partial_env2_key_scale_1 signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x0c9 partial_filter_b12_1     signed [INFERENCE] clamp -50..50; subcpu v1.42 TVF_Build_Short 0x02413E and Voice_PitchPack_RouteB/C/D read it through paramA (slot +0x17) and shift it into bits 15:13
-;   +0x0ca partial_env2_velocity_base_1 dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x0cb partial_env2_velocity_depth_1 signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (two depth bytes, each signed); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan
-;   +0x0cd partial_env2_egb_0x16_1  signed subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
+;   +0x0bd partial_pitch_lfo_switch_1 bits   PITCH LFO switch of the tone (bit 5 on, bits 7:6 LFO number - 1, bit 4 sign); subcpu Voice_Pitch_ApplyPortamento also keeps bits 2:0 (SOUND EDIT page caption, n
+;   +0x0be partial_pitch_env_total_depth_1 signed PITCH ENV1 TOTAL DEPTH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset));
+;   +0x0bf partial_pitch_env_start_1 signed PITCH ENV1 START PITCH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset));
+;   +0x0c0 partial_pitch_env_attack_1 dec    PITCH ENV1 ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env
+;   +0x0c1 partial_pitch_env_peak_1 signed PITCH ENV1 PEAK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was en
+;   +0x0c2 partial_pitch_env_decay1_1 dec    PITCH ENV1 DECAY1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was 
+;   +0x0c3 partial_pitch_env_sustain1_1 signed PITCH ENV1 SUST1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was e
+;   +0x0c4 partial_pitch_env_decay2_1 dec    PITCH ENV1 DECAY2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was 
+;   +0x0c5 partial_pitch_env_sustain2_1 signed PITCH ENV1 SUST2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was e
+;   +0x0c6 partial_pitch_env_release_1 dec    PITCH ENV1 RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was
+;   +0x0c7 partial_pitch_env_stop_1 signed PITCH ENV1 STOP PITCH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 
+;   +0x0c8 partial_pitch_env_touch_adr_time_1 signed PITCH ENV2 TOUCH ADR-TIME (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset
+;   +0x0c9 partial_pitch_env_touch_depth_1 signed PITCH ENV2 TOUCH DEPTH; subcpu TVF_Build_Short / Voice_PitchPack_RouteB..D also read it through paramA (SOUND EDIT page caption, notes/open6-kn5000-d/panel/prob
+;   +0x0ca partial_pitch_env_key_follow_center_1 dec    PITCH ENV2 KEY FOLLOW CENTER (a note, SeValText_NoteNames) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page ha
+;   +0x0cb partial_pitch_env_key_follow_attack_1 signed PITCH ENV2 KEY FOLLOW ATTACK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this off
+;   +0x0cc partial_pitch_env_key_follow_decay_1 signed PITCH ENV2 KEY FOLLOW DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offs
+;   +0x0cd partial_pitch_env_key_follow_release_1 signed PITCH ENV2 KEY FOLLOW RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this of
 ;   +0x0ce partial_channel_detune_1 dec    subcpu v1.42 Voice_ApplyPortamento 0x026637; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x
-	.macro	tm_sound_2 partial_env1_seg2_target_0, partial_env1_seg2_rate_0, partial_env1_seg3_target_0, partial_env1_seg3_rate_0, partial_env1_level_0, partial_env1_key_scale_0_0, partial_env1_key_scale_0_1, partial_env1_velocity_ctl_0_0, partial_env1_velocity_ctl_0_1, partial_env1_velocity_ctl_0_2, partial_env1_depth_0_0, partial_env1_depth_0_1, partial_env1_ega_0x35_0, partial_filter_type_0, partial_filter_key_follow_depth_0, partial_unread_38_0, partial_level_scale_offset_0, partial_level_scale_low_0, partial_level_scale_high_0, partial_level_scale_depth_0, partial_env3_start_level_0, partial_env3_porta_level_0, partial_env3_seg1_a_0, partial_env3_seg1_b_0, partial_env3_seg2_a_0, partial_env3_seg2_b_0, partial_env3_seg3_a_0, partial_env3_seg3_b_0, partial_env3_seg4_a_0, partial_env3_seg4_b_0, partial_env3_key_scale_0, partial_unread_48_0, partial_env3_velocity_base_0, partial_env3_velocity_depth_0_0, partial_env3_velocity_depth_0_1, partial_env3_egc_0x4c_0, partial_filter_cutoff_0, partial_filter_slope_mode_0, partial_filter_pair_0_0, partial_filter_pair_0_1, partial_gate_ctl_1, partial_unread_01_1, partial_wave_1, partial_wave_family_1, partial_coarse_tune_1, partial_partial_detune_1, partial_porta_sel_1, partial_env2_start_level_1, partial_env2_porta_level_1, partial_env2_seg1_a_1, partial_env2_seg1_b_1, partial_env2_seg2_a_1, partial_env2_seg2_b_1, partial_env2_seg3_a_1, partial_env2_seg3_b_1, partial_env2_seg4_a_1, partial_env2_seg4_b_1, partial_env2_key_scale_1, partial_filter_b12_1, partial_env2_velocity_base_1, partial_env2_velocity_depth_1_0, partial_env2_velocity_depth_1_1, partial_env2_egb_0x16_1, partial_channel_detune_1
-	.byte	\partial_env1_seg2_target_0
-	.byte	\partial_env1_seg2_rate_0
-	.byte	\partial_env1_seg3_target_0
-	.byte	\partial_env1_seg3_rate_0
-	.byte	\partial_env1_level_0
-	.byte	\partial_env1_key_scale_0_0, \partial_env1_key_scale_0_1
-	.byte	\partial_env1_velocity_ctl_0_0, \partial_env1_velocity_ctl_0_1, \partial_env1_velocity_ctl_0_2
-	.byte	\partial_env1_depth_0_0, \partial_env1_depth_0_1
-	.byte	(\partial_env1_ega_0x35_0) & 0xff
+	.macro	tm_sound_2 partial_amp_env_decay1_0, partial_amp_env_sustain1_0, partial_amp_env_decay2_0, partial_amp_env_sustain2_0, partial_amp_env_release_0, partial_amp_env_touch_attack_0, partial_amp_env_touch_decay_0, partial_amp_env_key_follow_range_mid_0, partial_amp_env_key_follow_range_low_0, partial_amp_env_key_follow_range_high_0, partial_amp_env_key_follow_attack_0, partial_amp_env_key_follow_decay_0, partial_amp_env_key_follow_release_0, partial_filter_type_0, partial_filter_key_follow_depth_0, partial_filter_lfo_switch_0, partial_level_scale_offset_0, partial_level_scale_low_0, partial_level_scale_high_0, partial_level_scale_depth_0, partial_filter_env_cutoff_adjust_0, partial_filter_env_start_point_0, partial_filter_env_attack_0, partial_filter_env_peak_0, partial_filter_env_decay1_0, partial_filter_env_sustain1_0, partial_filter_env_decay2_0, partial_filter_env_sustain2_0, partial_filter_env_release_0, partial_filter_env_stop_point_0, partial_filter_env_touch_adr_time_0, partial_filter_env_touch_depth_0, partial_filter_env_key_follow_center_0, partial_filter_env_key_follow_attack_0, partial_filter_env_key_follow_decay_0, partial_filter_env_key_follow_release_0, partial_filter_cutoff_0, partial_filter_slope_mode_0, partial_filter_pair_0_0, partial_filter_pair_0_1, partial_gate_ctl_1, partial_unread_01_1, partial_wave_1, partial_wave_family_1, partial_coarse_tune_1, partial_partial_detune_1, partial_pitch_lfo_switch_1, partial_pitch_env_total_depth_1, partial_pitch_env_start_1, partial_pitch_env_attack_1, partial_pitch_env_peak_1, partial_pitch_env_decay1_1, partial_pitch_env_sustain1_1, partial_pitch_env_decay2_1, partial_pitch_env_sustain2_1, partial_pitch_env_release_1, partial_pitch_env_stop_1, partial_pitch_env_touch_adr_time_1, partial_pitch_env_touch_depth_1, partial_pitch_env_key_follow_center_1, partial_pitch_env_key_follow_attack_1, partial_pitch_env_key_follow_decay_1, partial_pitch_env_key_follow_release_1, partial_channel_detune_1
+	.byte	\partial_amp_env_decay1_0
+	.byte	\partial_amp_env_sustain1_0
+	.byte	\partial_amp_env_decay2_0
+	.byte	\partial_amp_env_sustain2_0
+	.byte	\partial_amp_env_release_0
+	.byte	(\partial_amp_env_touch_attack_0) & 0xff
+	.byte	(\partial_amp_env_touch_decay_0) & 0xff
+	.byte	\partial_amp_env_key_follow_range_mid_0
+	.byte	\partial_amp_env_key_follow_range_low_0
+	.byte	\partial_amp_env_key_follow_range_high_0
+	.byte	(\partial_amp_env_key_follow_attack_0) & 0xff
+	.byte	(\partial_amp_env_key_follow_decay_0) & 0xff
+	.byte	(\partial_amp_env_key_follow_release_0) & 0xff
 	.byte	\partial_filter_type_0
 	.byte	\partial_filter_key_follow_depth_0
-	.byte	\partial_unread_38_0
+	.byte	\partial_filter_lfo_switch_0
 	.byte	\partial_level_scale_offset_0
 	.byte	\partial_level_scale_low_0
 	.byte	\partial_level_scale_high_0
 	.byte	(\partial_level_scale_depth_0) & 0xff
-	.byte	(\partial_env3_start_level_0) & 0xff
-	.byte	(\partial_env3_porta_level_0) & 0xff
-	.byte	\partial_env3_seg1_a_0
-	.byte	(\partial_env3_seg1_b_0) & 0xff
-	.byte	\partial_env3_seg2_a_0
-	.byte	(\partial_env3_seg2_b_0) & 0xff
-	.byte	\partial_env3_seg3_a_0
-	.byte	(\partial_env3_seg3_b_0) & 0xff
-	.byte	\partial_env3_seg4_a_0
-	.byte	(\partial_env3_seg4_b_0) & 0xff
-	.byte	(\partial_env3_key_scale_0) & 0xff
-	.byte	(\partial_unread_48_0) & 0xff
-	.byte	\partial_env3_velocity_base_0
-	.byte	\partial_env3_velocity_depth_0_0, \partial_env3_velocity_depth_0_1
-	.byte	(\partial_env3_egc_0x4c_0) & 0xff
+	.byte	(\partial_filter_env_cutoff_adjust_0) & 0xff
+	.byte	(\partial_filter_env_start_point_0) & 0xff
+	.byte	\partial_filter_env_attack_0
+	.byte	(\partial_filter_env_peak_0) & 0xff
+	.byte	\partial_filter_env_decay1_0
+	.byte	(\partial_filter_env_sustain1_0) & 0xff
+	.byte	\partial_filter_env_decay2_0
+	.byte	(\partial_filter_env_sustain2_0) & 0xff
+	.byte	\partial_filter_env_release_0
+	.byte	(\partial_filter_env_stop_point_0) & 0xff
+	.byte	(\partial_filter_env_touch_adr_time_0) & 0xff
+	.byte	(\partial_filter_env_touch_depth_0) & 0xff
+	.byte	\partial_filter_env_key_follow_center_0
+	.byte	(\partial_filter_env_key_follow_attack_0) & 0xff
+	.byte	(\partial_filter_env_key_follow_decay_0) & 0xff
+	.byte	(\partial_filter_env_key_follow_release_0) & 0xff
 	.byte	\partial_filter_cutoff_0
 	.byte	\partial_filter_slope_mode_0
 	.byte	\partial_filter_pair_0_0, \partial_filter_pair_0_1
@@ -342,22 +355,23 @@
 	.byte	\partial_wave_family_1
 	.byte	(\partial_coarse_tune_1) & 0xff
 	.byte	\partial_partial_detune_1
-	.byte	\partial_porta_sel_1
-	.byte	(\partial_env2_start_level_1) & 0xff
-	.byte	(\partial_env2_porta_level_1) & 0xff
-	.byte	\partial_env2_seg1_a_1
-	.byte	(\partial_env2_seg1_b_1) & 0xff
-	.byte	\partial_env2_seg2_a_1
-	.byte	(\partial_env2_seg2_b_1) & 0xff
-	.byte	\partial_env2_seg3_a_1
-	.byte	(\partial_env2_seg3_b_1) & 0xff
-	.byte	\partial_env2_seg4_a_1
-	.byte	(\partial_env2_seg4_b_1) & 0xff
-	.byte	(\partial_env2_key_scale_1) & 0xff
-	.byte	(\partial_filter_b12_1) & 0xff
-	.byte	\partial_env2_velocity_base_1
-	.byte	\partial_env2_velocity_depth_1_0, \partial_env2_velocity_depth_1_1
-	.byte	(\partial_env2_egb_0x16_1) & 0xff
+	.byte	\partial_pitch_lfo_switch_1
+	.byte	(\partial_pitch_env_total_depth_1) & 0xff
+	.byte	(\partial_pitch_env_start_1) & 0xff
+	.byte	\partial_pitch_env_attack_1
+	.byte	(\partial_pitch_env_peak_1) & 0xff
+	.byte	\partial_pitch_env_decay1_1
+	.byte	(\partial_pitch_env_sustain1_1) & 0xff
+	.byte	\partial_pitch_env_decay2_1
+	.byte	(\partial_pitch_env_sustain2_1) & 0xff
+	.byte	\partial_pitch_env_release_1
+	.byte	(\partial_pitch_env_stop_1) & 0xff
+	.byte	(\partial_pitch_env_touch_adr_time_1) & 0xff
+	.byte	(\partial_pitch_env_touch_depth_1) & 0xff
+	.byte	\partial_pitch_env_key_follow_center_1
+	.byte	(\partial_pitch_env_key_follow_attack_1) & 0xff
+	.byte	(\partial_pitch_env_key_follow_decay_1) & 0xff
+	.byte	(\partial_pitch_env_key_follow_release_1) & 0xff
 	.byte	\partial_channel_detune_1
 	.endm
 
@@ -367,40 +381,45 @@
 ;   +0x0d1 partial_pitch_params_1   dec    subcpu v1.42 Voice_ComputePitch 0x026396 reads +0x1A..+0x1C; clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 
 ;   +0x0d4 partial_unread_1d_1      signed clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
 ;   +0x0d5 partial_unread_1e_1      dec    clamp 0..127 each; no subcpu reader for +0x1D..+0x26 (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/
-;   +0x0dd partial_unread_26_1      hex    unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py 
-;   +0x0de partial_env1_seg1_target_1 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
-;   +0x0df partial_env1_seg1_rate_1 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
-;   +0x0e0 partial_env1_seg2_target_1 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
-;   +0x0e1 partial_env1_seg2_rate_1 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
-;   +0x0e2 partial_env1_seg3_target_1 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
-;   +0x0e3 partial_env1_seg3_rate_1 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
-;   +0x0e4 partial_env1_level_1     dec    subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 +
-;   +0x0e5 partial_env1_key_scale_1 signed subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (two key-scale bytes); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_Assig
-;   +0x0e7 partial_env1_velocity_ctl_1 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (velocity control triple); clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_As
-;   +0x0ea partial_env1_depth_1     signed subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (depths); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x03229
-;   +0x0ec partial_env1_ega_0x35_1  signed subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
+;   +0x0dd partial_amp_lfo_switch_1 bits   AMPLITUDE LFO switch of the tone (bit 5 on, bits 7:6 LFO number - 1, bit 4 sign) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (t
+;   +0x0de partial_amp_env_attack_1 dec    AMPLITUDE ENV1 ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was
+;   +0x0df partial_amp_env_peak_1   dec    AMPLITUDE ENV1 PEAK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); wa
+;   +0x0e0 partial_amp_env_decay1_1 dec    AMPLITUDE ENV1 DECAY1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 
+;   +0x0e1 partial_amp_env_sustain1_1 dec    AMPLITUDE ENV1 SUST1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); w
+;   +0x0e2 partial_amp_env_decay2_1 dec    AMPLITUDE ENV1 DECAY2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 
+;   +0x0e3 partial_amp_env_sustain2_1 dec    AMPLITUDE ENV1 SUST2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); w
+;   +0x0e4 partial_amp_env_release_1 dec    AMPLITUDE ENV1 RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset));
+;   +0x0e5 partial_amp_env_touch_attack_1 signed AMPLITUDE ENV2 TOUCH ATTACK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offs
+;   +0x0e6 partial_amp_env_touch_decay_1 signed AMPLITUDE ENV2 TOUCH DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offse
+;   +0x0e7 partial_amp_env_key_follow_range_mid_1 dec    AMPLITUDE ENV2 KEY FOLLOW RANGE middle note (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for
+;   +0x0e8 partial_amp_env_key_follow_range_low_1 dec    AMPLITUDE ENV2 KEY FOLLOW RANGE low note (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it
+;   +0x0e9 partial_amp_env_key_follow_range_high_1 dec    AMPLITUDE ENV2 KEY FOLLOW RANGE high note (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for i
+;   +0x0ea partial_amp_env_key_follow_attack_1 signed AMPLITUDE ENV2 KEY FOLLOW ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this of
+;   +0x0eb partial_amp_env_key_follow_decay_1 signed AMPLITUDE ENV2 KEY FOLLOW DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this 
+;   +0x0ec partial_amp_env_key_follow_release_1 signed AMPLITUDE ENV2 KEY FOLLOW RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is thi
 ;   +0x0ed partial_filter_type_1    bits   subcpu v1.42 TVF_Build_Dispatch 0x024102: bits 2:0 = filter builder, bits 7:5 = key-follow curve [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_As
 ;   +0x0ee partial_filter_key_follow_depth_1 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank
-;   +0x0ef partial_unread_38_1      hex    unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py 
+;   +0x0ef partial_filter_lfo_switch_1 bits   FILTER LFO switch of the tone (bit 5 on, bits 7:6 LFO number - 1, bit 4 sign) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the 
 ;   +0x0f0 partial_level_scale_offset_1 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x0f1 partial_level_scale_low_1 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x0f2 partial_level_scale_high_1 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x0f3 partial_level_scale_depth_1 signed subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ra
-;   +0x0f4 partial_env3_start_level_1 signed [INFERENCE] subcpu v1.42 Voice_StereoLevel_Compute 0x024664 (shared bias in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); twin of 
-;   +0x0f5 partial_env3_porta_level_1 signed subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x0f6 partial_env3_seg1_a_1    dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFS
-;   +0x0f7 partial_env3_seg1_b_1    signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x0f8 partial_env3_seg2_a_1    dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFS
-;   +0x0f9 partial_env3_seg2_b_1    signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x0fa partial_env3_seg3_a_1    dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFS
-;   +0x0fb partial_env3_seg3_b_1    signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x0fc partial_env3_seg4_a_1    dec    subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSl
-;   +0x0fd partial_env3_seg4_b_1    signed subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x0fe partial_env3_key_scale_1 signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x0ff partial_unread_48_1      signed clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
-;   +0x100 partial_env3_velocity_base_1 dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x101 partial_env3_velocity_depth_1 signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec +
-;   +0x103 partial_env3_egc_0x4c_1  signed subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
+;   +0x0f4 partial_filter_env_cutoff_adjust_1 signed FILTER ENV1 CUTOFF ADJUST (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset
+;   +0x0f5 partial_filter_env_start_point_1 signed FILTER ENV1 START POINT (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset))
+;   +0x0f6 partial_filter_env_attack_1 dec    FILTER ENV1 ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was en
+;   +0x0f7 partial_filter_env_peak_1 signed FILTER ENV1 PEAK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was e
+;   +0x0f8 partial_filter_env_decay1_1 dec    FILTER ENV1 DECAY1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was
+;   +0x0f9 partial_filter_env_sustain1_1 signed FILTER ENV1 SUST1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was 
+;   +0x0fa partial_filter_env_decay2_1 dec    FILTER ENV1 DECAY2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was
+;   +0x0fb partial_filter_env_sustain2_1 signed FILTER ENV1 SUST2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was 
+;   +0x0fc partial_filter_env_release_1 dec    FILTER ENV1 RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); wa
+;   +0x0fd partial_filter_env_stop_point_1 signed FILTER ENV1 STOP POINT (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset));
+;   +0x0fe partial_filter_env_touch_adr_time_1 signed FILTER ENV2 TOUCH ADR-TIME (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offse
+;   +0x0ff partial_filter_env_touch_depth_1 signed FILTER ENV2 TOUCH DEPTH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset))
+;   +0x100 partial_filter_env_key_follow_center_1 dec    FILTER ENV2 KEY FOLLOW CENTER (a note) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it i
+;   +0x101 partial_filter_env_key_follow_attack_1 signed FILTER ENV2 KEY FOLLOW ATTACK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this of
+;   +0x102 partial_filter_env_key_follow_decay_1 signed FILTER ENV2 KEY FOLLOW DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this off
+;   +0x103 partial_filter_env_key_follow_release_1 signed FILTER ENV2 KEY FOLLOW RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this o
 ;   +0x104 partial_filter_cutoff_1  dec    subcpu v1.42 TVF_Build_Full 0x023D01 (cutoff seed); unclamped [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x105 partial_filter_slope_mode_1 hex    subcpu v1.42 TVF_Build_Full 0x023D01 (slope/mode); unclamped [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 +
 ;   +0x106 partial_filter_pair_1    hex    subcpu v1.42 TVF_Build_Full 0x023D01 / Voice_PitchPack_Mode2 0x023DB5.._Mode5_Dual 0x02403D: resonance/depth pair, or a second cutoff in mode 5 [partial block p
@@ -410,47 +429,52 @@
 ;   +0x10b partial_wave_family_2    hex    subcpu v1.42 WaveSel_StageA1_FromPatchBlock 0x0325FC: family/sub-bank byte (0x00 / 0x80); DSP_WriteAlgoBuffer 0x03522E forces bits 5:4 [partial block p at +0x66
 ;   +0x10c partial_coarse_tune_2    signed [INFERENCE] clamp -24..+24 (two's complement); corpus values cluster on 0, +-12, +-24 (2457 / 145+101 / 49+42 of 2892 blocks) = semitones; no subcpu reader in t
 ;   +0x10d partial_partial_detune_2 dec    subcpu v1.42 Pitch_Apply_Partial_Detune 0x023A05 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; 
-;   +0x10e partial_porta_sel_2      hex    [INFERENCE] unclamped; subcpu v1.42 Voice_Pitch_ApplyPortamento reads it through the voice slot's paramA (slot +0x17) and keeps bits 2:0 (found by notes/kn5000-
-	.macro	tm_sound_3 partial_fine_detune_1, partial_pitch_curve_1, partial_pitch_params_1_0, partial_pitch_params_1_1, partial_pitch_params_1_2, partial_unread_1d_1, partial_unread_1e_1_0, partial_unread_1e_1_1, partial_unread_1e_1_2, partial_unread_1e_1_3, partial_unread_1e_1_4, partial_unread_1e_1_5, partial_unread_1e_1_6, partial_unread_1e_1_7, partial_unread_26_1, partial_env1_seg1_target_1, partial_env1_seg1_rate_1, partial_env1_seg2_target_1, partial_env1_seg2_rate_1, partial_env1_seg3_target_1, partial_env1_seg3_rate_1, partial_env1_level_1, partial_env1_key_scale_1_0, partial_env1_key_scale_1_1, partial_env1_velocity_ctl_1_0, partial_env1_velocity_ctl_1_1, partial_env1_velocity_ctl_1_2, partial_env1_depth_1_0, partial_env1_depth_1_1, partial_env1_ega_0x35_1, partial_filter_type_1, partial_filter_key_follow_depth_1, partial_unread_38_1, partial_level_scale_offset_1, partial_level_scale_low_1, partial_level_scale_high_1, partial_level_scale_depth_1, partial_env3_start_level_1, partial_env3_porta_level_1, partial_env3_seg1_a_1, partial_env3_seg1_b_1, partial_env3_seg2_a_1, partial_env3_seg2_b_1, partial_env3_seg3_a_1, partial_env3_seg3_b_1, partial_env3_seg4_a_1, partial_env3_seg4_b_1, partial_env3_key_scale_1, partial_unread_48_1, partial_env3_velocity_base_1, partial_env3_velocity_depth_1_0, partial_env3_velocity_depth_1_1, partial_env3_egc_0x4c_1, partial_filter_cutoff_1, partial_filter_slope_mode_1, partial_filter_pair_1_0, partial_filter_pair_1_1, partial_gate_ctl_2, partial_unread_01_2, partial_wave_2, partial_wave_family_2, partial_coarse_tune_2, partial_partial_detune_2, partial_porta_sel_2
+;   +0x10e partial_pitch_lfo_switch_2 bits   PITCH LFO switch of the tone (bit 5 on, bits 7:6 LFO number - 1, bit 4 sign); subcpu Voice_Pitch_ApplyPortamento also keeps bits 2:0 (SOUND EDIT page caption, n
+	.macro	tm_sound_3 partial_fine_detune_1, partial_pitch_curve_1, partial_pitch_params_1_0, partial_pitch_params_1_1, partial_pitch_params_1_2, partial_unread_1d_1, partial_unread_1e_1_0, partial_unread_1e_1_1, partial_unread_1e_1_2, partial_unread_1e_1_3, partial_unread_1e_1_4, partial_unread_1e_1_5, partial_unread_1e_1_6, partial_unread_1e_1_7, partial_amp_lfo_switch_1, partial_amp_env_attack_1, partial_amp_env_peak_1, partial_amp_env_decay1_1, partial_amp_env_sustain1_1, partial_amp_env_decay2_1, partial_amp_env_sustain2_1, partial_amp_env_release_1, partial_amp_env_touch_attack_1, partial_amp_env_touch_decay_1, partial_amp_env_key_follow_range_mid_1, partial_amp_env_key_follow_range_low_1, partial_amp_env_key_follow_range_high_1, partial_amp_env_key_follow_attack_1, partial_amp_env_key_follow_decay_1, partial_amp_env_key_follow_release_1, partial_filter_type_1, partial_filter_key_follow_depth_1, partial_filter_lfo_switch_1, partial_level_scale_offset_1, partial_level_scale_low_1, partial_level_scale_high_1, partial_level_scale_depth_1, partial_filter_env_cutoff_adjust_1, partial_filter_env_start_point_1, partial_filter_env_attack_1, partial_filter_env_peak_1, partial_filter_env_decay1_1, partial_filter_env_sustain1_1, partial_filter_env_decay2_1, partial_filter_env_sustain2_1, partial_filter_env_release_1, partial_filter_env_stop_point_1, partial_filter_env_touch_adr_time_1, partial_filter_env_touch_depth_1, partial_filter_env_key_follow_center_1, partial_filter_env_key_follow_attack_1, partial_filter_env_key_follow_decay_1, partial_filter_env_key_follow_release_1, partial_filter_cutoff_1, partial_filter_slope_mode_1, partial_filter_pair_1_0, partial_filter_pair_1_1, partial_gate_ctl_2, partial_unread_01_2, partial_wave_2, partial_wave_family_2, partial_coarse_tune_2, partial_partial_detune_2, partial_pitch_lfo_switch_2
 	.byte	(\partial_fine_detune_1) & 0xff
 	.byte	\partial_pitch_curve_1
 	.byte	\partial_pitch_params_1_0, \partial_pitch_params_1_1, \partial_pitch_params_1_2
 	.byte	(\partial_unread_1d_1) & 0xff
 	.byte	\partial_unread_1e_1_0, \partial_unread_1e_1_1, \partial_unread_1e_1_2, \partial_unread_1e_1_3, \partial_unread_1e_1_4, \partial_unread_1e_1_5, \partial_unread_1e_1_6, \partial_unread_1e_1_7
-	.byte	\partial_unread_26_1
-	.byte	\partial_env1_seg1_target_1
-	.byte	\partial_env1_seg1_rate_1
-	.byte	\partial_env1_seg2_target_1
-	.byte	\partial_env1_seg2_rate_1
-	.byte	\partial_env1_seg3_target_1
-	.byte	\partial_env1_seg3_rate_1
-	.byte	\partial_env1_level_1
-	.byte	\partial_env1_key_scale_1_0, \partial_env1_key_scale_1_1
-	.byte	\partial_env1_velocity_ctl_1_0, \partial_env1_velocity_ctl_1_1, \partial_env1_velocity_ctl_1_2
-	.byte	\partial_env1_depth_1_0, \partial_env1_depth_1_1
-	.byte	(\partial_env1_ega_0x35_1) & 0xff
+	.byte	\partial_amp_lfo_switch_1
+	.byte	\partial_amp_env_attack_1
+	.byte	\partial_amp_env_peak_1
+	.byte	\partial_amp_env_decay1_1
+	.byte	\partial_amp_env_sustain1_1
+	.byte	\partial_amp_env_decay2_1
+	.byte	\partial_amp_env_sustain2_1
+	.byte	\partial_amp_env_release_1
+	.byte	(\partial_amp_env_touch_attack_1) & 0xff
+	.byte	(\partial_amp_env_touch_decay_1) & 0xff
+	.byte	\partial_amp_env_key_follow_range_mid_1
+	.byte	\partial_amp_env_key_follow_range_low_1
+	.byte	\partial_amp_env_key_follow_range_high_1
+	.byte	(\partial_amp_env_key_follow_attack_1) & 0xff
+	.byte	(\partial_amp_env_key_follow_decay_1) & 0xff
+	.byte	(\partial_amp_env_key_follow_release_1) & 0xff
 	.byte	\partial_filter_type_1
 	.byte	\partial_filter_key_follow_depth_1
-	.byte	\partial_unread_38_1
+	.byte	\partial_filter_lfo_switch_1
 	.byte	\partial_level_scale_offset_1
 	.byte	\partial_level_scale_low_1
 	.byte	\partial_level_scale_high_1
 	.byte	(\partial_level_scale_depth_1) & 0xff
-	.byte	(\partial_env3_start_level_1) & 0xff
-	.byte	(\partial_env3_porta_level_1) & 0xff
-	.byte	\partial_env3_seg1_a_1
-	.byte	(\partial_env3_seg1_b_1) & 0xff
-	.byte	\partial_env3_seg2_a_1
-	.byte	(\partial_env3_seg2_b_1) & 0xff
-	.byte	\partial_env3_seg3_a_1
-	.byte	(\partial_env3_seg3_b_1) & 0xff
-	.byte	\partial_env3_seg4_a_1
-	.byte	(\partial_env3_seg4_b_1) & 0xff
-	.byte	(\partial_env3_key_scale_1) & 0xff
-	.byte	(\partial_unread_48_1) & 0xff
-	.byte	\partial_env3_velocity_base_1
-	.byte	\partial_env3_velocity_depth_1_0, \partial_env3_velocity_depth_1_1
-	.byte	(\partial_env3_egc_0x4c_1) & 0xff
+	.byte	(\partial_filter_env_cutoff_adjust_1) & 0xff
+	.byte	(\partial_filter_env_start_point_1) & 0xff
+	.byte	\partial_filter_env_attack_1
+	.byte	(\partial_filter_env_peak_1) & 0xff
+	.byte	\partial_filter_env_decay1_1
+	.byte	(\partial_filter_env_sustain1_1) & 0xff
+	.byte	\partial_filter_env_decay2_1
+	.byte	(\partial_filter_env_sustain2_1) & 0xff
+	.byte	\partial_filter_env_release_1
+	.byte	(\partial_filter_env_stop_point_1) & 0xff
+	.byte	(\partial_filter_env_touch_adr_time_1) & 0xff
+	.byte	(\partial_filter_env_touch_depth_1) & 0xff
+	.byte	\partial_filter_env_key_follow_center_1
+	.byte	(\partial_filter_env_key_follow_attack_1) & 0xff
+	.byte	(\partial_filter_env_key_follow_decay_1) & 0xff
+	.byte	(\partial_filter_env_key_follow_release_1) & 0xff
 	.byte	\partial_filter_cutoff_1
 	.byte	\partial_filter_slope_mode_1
 	.byte	\partial_filter_pair_1_0, \partial_filter_pair_1_1
@@ -460,119 +484,130 @@
 	.byte	\partial_wave_family_2
 	.byte	(\partial_coarse_tune_2) & 0xff
 	.byte	\partial_partial_detune_2
-	.byte	\partial_porta_sel_2
+	.byte	\partial_pitch_lfo_switch_2
 	.endm
 
 ; SOUND MEMORY record (470 B), fields +0x10f..+0x14e
-;   +0x10f partial_env2_start_level_2 signed [INFERENCE] subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (read as a sign flag in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS))
-;   +0x110 partial_env2_porta_level_2 signed subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x111 partial_env2_seg1_a_2    dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls 
-;   +0x112 partial_env2_seg1_b_2    signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x113 partial_env2_seg2_a_2    dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls 
-;   +0x114 partial_env2_seg2_b_2    signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x115 partial_env2_seg3_a_2    dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls 
-;   +0x116 partial_env2_seg3_b_2    signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x117 partial_env2_seg4_a_2    dec    subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls th
-;   +0x118 partial_env2_seg4_b_2    signed subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x119 partial_env2_key_scale_2 signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x11a partial_filter_b12_2     signed [INFERENCE] clamp -50..50; subcpu v1.42 TVF_Build_Short 0x02413E and Voice_PitchPack_RouteB/C/D read it through paramA (slot +0x17) and shift it into bits 15:13
-;   +0x11b partial_env2_velocity_base_2 dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x11c partial_env2_velocity_depth_2 signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (two depth bytes, each signed); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan
-;   +0x11e partial_env2_egb_0x16_2  signed subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
+;   +0x10f partial_pitch_env_total_depth_2 signed PITCH ENV1 TOTAL DEPTH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset));
+;   +0x110 partial_pitch_env_start_2 signed PITCH ENV1 START PITCH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset));
+;   +0x111 partial_pitch_env_attack_2 dec    PITCH ENV1 ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env
+;   +0x112 partial_pitch_env_peak_2 signed PITCH ENV1 PEAK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was en
+;   +0x113 partial_pitch_env_decay1_2 dec    PITCH ENV1 DECAY1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was 
+;   +0x114 partial_pitch_env_sustain1_2 signed PITCH ENV1 SUST1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was e
+;   +0x115 partial_pitch_env_decay2_2 dec    PITCH ENV1 DECAY2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was 
+;   +0x116 partial_pitch_env_sustain2_2 signed PITCH ENV1 SUST2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was e
+;   +0x117 partial_pitch_env_release_2 dec    PITCH ENV1 RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was
+;   +0x118 partial_pitch_env_stop_2 signed PITCH ENV1 STOP PITCH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 
+;   +0x119 partial_pitch_env_touch_adr_time_2 signed PITCH ENV2 TOUCH ADR-TIME (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset
+;   +0x11a partial_pitch_env_touch_depth_2 signed PITCH ENV2 TOUCH DEPTH; subcpu TVF_Build_Short / Voice_PitchPack_RouteB..D also read it through paramA (SOUND EDIT page caption, notes/open6-kn5000-d/panel/prob
+;   +0x11b partial_pitch_env_key_follow_center_2 dec    PITCH ENV2 KEY FOLLOW CENTER (a note, SeValText_NoteNames) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page ha
+;   +0x11c partial_pitch_env_key_follow_attack_2 signed PITCH ENV2 KEY FOLLOW ATTACK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this off
+;   +0x11d partial_pitch_env_key_follow_decay_2 signed PITCH ENV2 KEY FOLLOW DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offs
+;   +0x11e partial_pitch_env_key_follow_release_2 signed PITCH ENV2 KEY FOLLOW RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this of
 ;   +0x11f partial_channel_detune_2 dec    subcpu v1.42 Voice_ApplyPortamento 0x026637; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x
 ;   +0x120 partial_fine_detune_2    signed subcpu v1.42 Voice_ComputePitch 0x026396 (signed detune); clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds r
 ;   +0x121 partial_pitch_curve_2    hex    subcpu v1.42 Voice_ComputePitch 0x026396: curve selector, 0xE0 = the direct note table [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
 ;   +0x122 partial_pitch_params_2   dec    subcpu v1.42 Voice_ComputePitch 0x026396 reads +0x1A..+0x1C; clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 
 ;   +0x125 partial_unread_1d_2      signed clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
 ;   +0x126 partial_unread_1e_2      dec    clamp 0..127 each; no subcpu reader for +0x1D..+0x26 (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/
-;   +0x12e partial_unread_26_2      hex    unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py 
-;   +0x12f partial_env1_seg1_target_2 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
-;   +0x130 partial_env1_seg1_rate_2 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
-;   +0x131 partial_env1_seg2_target_2 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
-;   +0x132 partial_env1_seg2_rate_2 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
-;   +0x133 partial_env1_seg3_target_2 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
-;   +0x134 partial_env1_seg3_rate_2 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
-;   +0x135 partial_env1_level_2     dec    subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 +
-;   +0x136 partial_env1_key_scale_2 signed subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (two key-scale bytes); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_Assig
-;   +0x138 partial_env1_velocity_ctl_2 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (velocity control triple); clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_As
-;   +0x13b partial_env1_depth_2     signed subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (depths); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x03229
-;   +0x13d partial_env1_ega_0x35_2  signed subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
+;   +0x12e partial_amp_lfo_switch_2 bits   AMPLITUDE LFO switch of the tone (bit 5 on, bits 7:6 LFO number - 1, bit 4 sign) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (t
+;   +0x12f partial_amp_env_attack_2 dec    AMPLITUDE ENV1 ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was
+;   +0x130 partial_amp_env_peak_2   dec    AMPLITUDE ENV1 PEAK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); wa
+;   +0x131 partial_amp_env_decay1_2 dec    AMPLITUDE ENV1 DECAY1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 
+;   +0x132 partial_amp_env_sustain1_2 dec    AMPLITUDE ENV1 SUST1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); w
+;   +0x133 partial_amp_env_decay2_2 dec    AMPLITUDE ENV1 DECAY2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 
+;   +0x134 partial_amp_env_sustain2_2 dec    AMPLITUDE ENV1 SUST2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); w
+;   +0x135 partial_amp_env_release_2 dec    AMPLITUDE ENV1 RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset));
+;   +0x136 partial_amp_env_touch_attack_2 signed AMPLITUDE ENV2 TOUCH ATTACK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offs
+;   +0x137 partial_amp_env_touch_decay_2 signed AMPLITUDE ENV2 TOUCH DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offse
+;   +0x138 partial_amp_env_key_follow_range_mid_2 dec    AMPLITUDE ENV2 KEY FOLLOW RANGE middle note (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for
+;   +0x139 partial_amp_env_key_follow_range_low_2 dec    AMPLITUDE ENV2 KEY FOLLOW RANGE low note (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it
+;   +0x13a partial_amp_env_key_follow_range_high_2 dec    AMPLITUDE ENV2 KEY FOLLOW RANGE high note (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for i
+;   +0x13b partial_amp_env_key_follow_attack_2 signed AMPLITUDE ENV2 KEY FOLLOW ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this of
+;   +0x13c partial_amp_env_key_follow_decay_2 signed AMPLITUDE ENV2 KEY FOLLOW DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this 
+;   +0x13d partial_amp_env_key_follow_release_2 signed AMPLITUDE ENV2 KEY FOLLOW RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is thi
 ;   +0x13e partial_filter_type_2    bits   subcpu v1.42 TVF_Build_Dispatch 0x024102: bits 2:0 = filter builder, bits 7:5 = key-follow curve [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_As
 ;   +0x13f partial_filter_key_follow_depth_2 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank
-;   +0x140 partial_unread_38_2      hex    unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py 
+;   +0x140 partial_filter_lfo_switch_2 bits   FILTER LFO switch of the tone (bit 5 on, bits 7:6 LFO number - 1, bit 4 sign) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the 
 ;   +0x141 partial_level_scale_offset_2 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x142 partial_level_scale_low_2 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x143 partial_level_scale_high_2 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x144 partial_level_scale_depth_2 signed subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ra
-;   +0x145 partial_env3_start_level_2 signed [INFERENCE] subcpu v1.42 Voice_StereoLevel_Compute 0x024664 (shared bias in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); twin of 
-;   +0x146 partial_env3_porta_level_2 signed subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x147 partial_env3_seg1_a_2    dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFS
-;   +0x148 partial_env3_seg1_b_2    signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x149 partial_env3_seg2_a_2    dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFS
-;   +0x14a partial_env3_seg2_b_2    signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x14b partial_env3_seg3_a_2    dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFS
-;   +0x14c partial_env3_seg3_b_2    signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x14d partial_env3_seg4_a_2    dec    subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSl
-;   +0x14e partial_env3_seg4_b_2    signed subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-	.macro	tm_sound_4 partial_env2_start_level_2, partial_env2_porta_level_2, partial_env2_seg1_a_2, partial_env2_seg1_b_2, partial_env2_seg2_a_2, partial_env2_seg2_b_2, partial_env2_seg3_a_2, partial_env2_seg3_b_2, partial_env2_seg4_a_2, partial_env2_seg4_b_2, partial_env2_key_scale_2, partial_filter_b12_2, partial_env2_velocity_base_2, partial_env2_velocity_depth_2_0, partial_env2_velocity_depth_2_1, partial_env2_egb_0x16_2, partial_channel_detune_2, partial_fine_detune_2, partial_pitch_curve_2, partial_pitch_params_2_0, partial_pitch_params_2_1, partial_pitch_params_2_2, partial_unread_1d_2, partial_unread_1e_2_0, partial_unread_1e_2_1, partial_unread_1e_2_2, partial_unread_1e_2_3, partial_unread_1e_2_4, partial_unread_1e_2_5, partial_unread_1e_2_6, partial_unread_1e_2_7, partial_unread_26_2, partial_env1_seg1_target_2, partial_env1_seg1_rate_2, partial_env1_seg2_target_2, partial_env1_seg2_rate_2, partial_env1_seg3_target_2, partial_env1_seg3_rate_2, partial_env1_level_2, partial_env1_key_scale_2_0, partial_env1_key_scale_2_1, partial_env1_velocity_ctl_2_0, partial_env1_velocity_ctl_2_1, partial_env1_velocity_ctl_2_2, partial_env1_depth_2_0, partial_env1_depth_2_1, partial_env1_ega_0x35_2, partial_filter_type_2, partial_filter_key_follow_depth_2, partial_unread_38_2, partial_level_scale_offset_2, partial_level_scale_low_2, partial_level_scale_high_2, partial_level_scale_depth_2, partial_env3_start_level_2, partial_env3_porta_level_2, partial_env3_seg1_a_2, partial_env3_seg1_b_2, partial_env3_seg2_a_2, partial_env3_seg2_b_2, partial_env3_seg3_a_2, partial_env3_seg3_b_2, partial_env3_seg4_a_2, partial_env3_seg4_b_2
-	.byte	(\partial_env2_start_level_2) & 0xff
-	.byte	(\partial_env2_porta_level_2) & 0xff
-	.byte	\partial_env2_seg1_a_2
-	.byte	(\partial_env2_seg1_b_2) & 0xff
-	.byte	\partial_env2_seg2_a_2
-	.byte	(\partial_env2_seg2_b_2) & 0xff
-	.byte	\partial_env2_seg3_a_2
-	.byte	(\partial_env2_seg3_b_2) & 0xff
-	.byte	\partial_env2_seg4_a_2
-	.byte	(\partial_env2_seg4_b_2) & 0xff
-	.byte	(\partial_env2_key_scale_2) & 0xff
-	.byte	(\partial_filter_b12_2) & 0xff
-	.byte	\partial_env2_velocity_base_2
-	.byte	\partial_env2_velocity_depth_2_0, \partial_env2_velocity_depth_2_1
-	.byte	(\partial_env2_egb_0x16_2) & 0xff
+;   +0x145 partial_filter_env_cutoff_adjust_2 signed FILTER ENV1 CUTOFF ADJUST (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset
+;   +0x146 partial_filter_env_start_point_2 signed FILTER ENV1 START POINT (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset))
+;   +0x147 partial_filter_env_attack_2 dec    FILTER ENV1 ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was en
+;   +0x148 partial_filter_env_peak_2 signed FILTER ENV1 PEAK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was e
+;   +0x149 partial_filter_env_decay1_2 dec    FILTER ENV1 DECAY1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was
+;   +0x14a partial_filter_env_sustain1_2 signed FILTER ENV1 SUST1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was 
+;   +0x14b partial_filter_env_decay2_2 dec    FILTER ENV1 DECAY2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was
+;   +0x14c partial_filter_env_sustain2_2 signed FILTER ENV1 SUST2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was 
+;   +0x14d partial_filter_env_release_2 dec    FILTER ENV1 RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); wa
+;   +0x14e partial_filter_env_stop_point_2 signed FILTER ENV1 STOP POINT (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset));
+	.macro	tm_sound_4 partial_pitch_env_total_depth_2, partial_pitch_env_start_2, partial_pitch_env_attack_2, partial_pitch_env_peak_2, partial_pitch_env_decay1_2, partial_pitch_env_sustain1_2, partial_pitch_env_decay2_2, partial_pitch_env_sustain2_2, partial_pitch_env_release_2, partial_pitch_env_stop_2, partial_pitch_env_touch_adr_time_2, partial_pitch_env_touch_depth_2, partial_pitch_env_key_follow_center_2, partial_pitch_env_key_follow_attack_2, partial_pitch_env_key_follow_decay_2, partial_pitch_env_key_follow_release_2, partial_channel_detune_2, partial_fine_detune_2, partial_pitch_curve_2, partial_pitch_params_2_0, partial_pitch_params_2_1, partial_pitch_params_2_2, partial_unread_1d_2, partial_unread_1e_2_0, partial_unread_1e_2_1, partial_unread_1e_2_2, partial_unread_1e_2_3, partial_unread_1e_2_4, partial_unread_1e_2_5, partial_unread_1e_2_6, partial_unread_1e_2_7, partial_amp_lfo_switch_2, partial_amp_env_attack_2, partial_amp_env_peak_2, partial_amp_env_decay1_2, partial_amp_env_sustain1_2, partial_amp_env_decay2_2, partial_amp_env_sustain2_2, partial_amp_env_release_2, partial_amp_env_touch_attack_2, partial_amp_env_touch_decay_2, partial_amp_env_key_follow_range_mid_2, partial_amp_env_key_follow_range_low_2, partial_amp_env_key_follow_range_high_2, partial_amp_env_key_follow_attack_2, partial_amp_env_key_follow_decay_2, partial_amp_env_key_follow_release_2, partial_filter_type_2, partial_filter_key_follow_depth_2, partial_filter_lfo_switch_2, partial_level_scale_offset_2, partial_level_scale_low_2, partial_level_scale_high_2, partial_level_scale_depth_2, partial_filter_env_cutoff_adjust_2, partial_filter_env_start_point_2, partial_filter_env_attack_2, partial_filter_env_peak_2, partial_filter_env_decay1_2, partial_filter_env_sustain1_2, partial_filter_env_decay2_2, partial_filter_env_sustain2_2, partial_filter_env_release_2, partial_filter_env_stop_point_2
+	.byte	(\partial_pitch_env_total_depth_2) & 0xff
+	.byte	(\partial_pitch_env_start_2) & 0xff
+	.byte	\partial_pitch_env_attack_2
+	.byte	(\partial_pitch_env_peak_2) & 0xff
+	.byte	\partial_pitch_env_decay1_2
+	.byte	(\partial_pitch_env_sustain1_2) & 0xff
+	.byte	\partial_pitch_env_decay2_2
+	.byte	(\partial_pitch_env_sustain2_2) & 0xff
+	.byte	\partial_pitch_env_release_2
+	.byte	(\partial_pitch_env_stop_2) & 0xff
+	.byte	(\partial_pitch_env_touch_adr_time_2) & 0xff
+	.byte	(\partial_pitch_env_touch_depth_2) & 0xff
+	.byte	\partial_pitch_env_key_follow_center_2
+	.byte	(\partial_pitch_env_key_follow_attack_2) & 0xff
+	.byte	(\partial_pitch_env_key_follow_decay_2) & 0xff
+	.byte	(\partial_pitch_env_key_follow_release_2) & 0xff
 	.byte	\partial_channel_detune_2
 	.byte	(\partial_fine_detune_2) & 0xff
 	.byte	\partial_pitch_curve_2
 	.byte	\partial_pitch_params_2_0, \partial_pitch_params_2_1, \partial_pitch_params_2_2
 	.byte	(\partial_unread_1d_2) & 0xff
 	.byte	\partial_unread_1e_2_0, \partial_unread_1e_2_1, \partial_unread_1e_2_2, \partial_unread_1e_2_3, \partial_unread_1e_2_4, \partial_unread_1e_2_5, \partial_unread_1e_2_6, \partial_unread_1e_2_7
-	.byte	\partial_unread_26_2
-	.byte	\partial_env1_seg1_target_2
-	.byte	\partial_env1_seg1_rate_2
-	.byte	\partial_env1_seg2_target_2
-	.byte	\partial_env1_seg2_rate_2
-	.byte	\partial_env1_seg3_target_2
-	.byte	\partial_env1_seg3_rate_2
-	.byte	\partial_env1_level_2
-	.byte	\partial_env1_key_scale_2_0, \partial_env1_key_scale_2_1
-	.byte	\partial_env1_velocity_ctl_2_0, \partial_env1_velocity_ctl_2_1, \partial_env1_velocity_ctl_2_2
-	.byte	\partial_env1_depth_2_0, \partial_env1_depth_2_1
-	.byte	(\partial_env1_ega_0x35_2) & 0xff
+	.byte	\partial_amp_lfo_switch_2
+	.byte	\partial_amp_env_attack_2
+	.byte	\partial_amp_env_peak_2
+	.byte	\partial_amp_env_decay1_2
+	.byte	\partial_amp_env_sustain1_2
+	.byte	\partial_amp_env_decay2_2
+	.byte	\partial_amp_env_sustain2_2
+	.byte	\partial_amp_env_release_2
+	.byte	(\partial_amp_env_touch_attack_2) & 0xff
+	.byte	(\partial_amp_env_touch_decay_2) & 0xff
+	.byte	\partial_amp_env_key_follow_range_mid_2
+	.byte	\partial_amp_env_key_follow_range_low_2
+	.byte	\partial_amp_env_key_follow_range_high_2
+	.byte	(\partial_amp_env_key_follow_attack_2) & 0xff
+	.byte	(\partial_amp_env_key_follow_decay_2) & 0xff
+	.byte	(\partial_amp_env_key_follow_release_2) & 0xff
 	.byte	\partial_filter_type_2
 	.byte	\partial_filter_key_follow_depth_2
-	.byte	\partial_unread_38_2
+	.byte	\partial_filter_lfo_switch_2
 	.byte	\partial_level_scale_offset_2
 	.byte	\partial_level_scale_low_2
 	.byte	\partial_level_scale_high_2
 	.byte	(\partial_level_scale_depth_2) & 0xff
-	.byte	(\partial_env3_start_level_2) & 0xff
-	.byte	(\partial_env3_porta_level_2) & 0xff
-	.byte	\partial_env3_seg1_a_2
-	.byte	(\partial_env3_seg1_b_2) & 0xff
-	.byte	\partial_env3_seg2_a_2
-	.byte	(\partial_env3_seg2_b_2) & 0xff
-	.byte	\partial_env3_seg3_a_2
-	.byte	(\partial_env3_seg3_b_2) & 0xff
-	.byte	\partial_env3_seg4_a_2
-	.byte	(\partial_env3_seg4_b_2) & 0xff
+	.byte	(\partial_filter_env_cutoff_adjust_2) & 0xff
+	.byte	(\partial_filter_env_start_point_2) & 0xff
+	.byte	\partial_filter_env_attack_2
+	.byte	(\partial_filter_env_peak_2) & 0xff
+	.byte	\partial_filter_env_decay1_2
+	.byte	(\partial_filter_env_sustain1_2) & 0xff
+	.byte	\partial_filter_env_decay2_2
+	.byte	(\partial_filter_env_sustain2_2) & 0xff
+	.byte	\partial_filter_env_release_2
+	.byte	(\partial_filter_env_stop_point_2) & 0xff
 	.endm
 
 ; SOUND MEMORY record (470 B), fields +0x14f..+0x18e
-;   +0x14f partial_env3_key_scale_2 signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x150 partial_unread_48_2      signed clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
-;   +0x151 partial_env3_velocity_base_2 dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x152 partial_env3_velocity_depth_2 signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec +
-;   +0x154 partial_env3_egc_0x4c_2  signed subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
+;   +0x14f partial_filter_env_touch_adr_time_2 signed FILTER ENV2 TOUCH ADR-TIME (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offse
+;   +0x150 partial_filter_env_touch_depth_2 signed FILTER ENV2 TOUCH DEPTH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset))
+;   +0x151 partial_filter_env_key_follow_center_2 dec    FILTER ENV2 KEY FOLLOW CENTER (a note) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it i
+;   +0x152 partial_filter_env_key_follow_attack_2 signed FILTER ENV2 KEY FOLLOW ATTACK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this of
+;   +0x153 partial_filter_env_key_follow_decay_2 signed FILTER ENV2 KEY FOLLOW DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this off
+;   +0x154 partial_filter_env_key_follow_release_2 signed FILTER ENV2 KEY FOLLOW RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this o
 ;   +0x155 partial_filter_cutoff_2  dec    subcpu v1.42 TVF_Build_Full 0x023D01 (cutoff seed); unclamped [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x156 partial_filter_slope_mode_2 hex    subcpu v1.42 TVF_Build_Full 0x023D01 (slope/mode); unclamped [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 +
 ;   +0x157 partial_filter_pair_2    hex    subcpu v1.42 TVF_Build_Full 0x023D01 / Voice_PitchPack_Mode2 0x023DB5.._Mode5_Dual 0x02403D: resonance/depth pair, or a second cutoff in mode 5 [partial block p
@@ -582,46 +617,52 @@
 ;   +0x15c partial_wave_family_3    hex    subcpu v1.42 WaveSel_StageA1_FromPatchBlock 0x0325FC: family/sub-bank byte (0x00 / 0x80); DSP_WriteAlgoBuffer 0x03522E forces bits 5:4 [partial block p at +0x66
 ;   +0x15d partial_coarse_tune_3    signed [INFERENCE] clamp -24..+24 (two's complement); corpus values cluster on 0, +-12, +-24 (2457 / 145+101 / 49+42 of 2892 blocks) = semitones; no subcpu reader in t
 ;   +0x15e partial_partial_detune_3 dec    subcpu v1.42 Pitch_Apply_Partial_Detune 0x023A05 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank; 
-;   +0x15f partial_porta_sel_3      hex    [INFERENCE] unclamped; subcpu v1.42 Voice_Pitch_ApplyPortamento reads it through the voice slot's paramA (slot +0x17) and keeps bits 2:0 (found by notes/kn5000-
-;   +0x160 partial_env2_start_level_3 signed [INFERENCE] subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (read as a sign flag in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS))
-;   +0x161 partial_env2_porta_level_3 signed subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x162 partial_env2_seg1_a_3    dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls 
-;   +0x163 partial_env2_seg1_b_3    signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x164 partial_env2_seg2_a_3    dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls 
-;   +0x165 partial_env2_seg2_b_3    signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x166 partial_env2_seg3_a_3    dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls 
-;   +0x167 partial_env2_seg3_b_3    signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x168 partial_env2_seg4_a_3    dec    subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp 0..100 (segment pairs: table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS) calls th
-;   +0x169 partial_env2_seg4_b_3    signed subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x16a partial_env2_key_scale_3 signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x6
-;   +0x16b partial_filter_b12_3     signed [INFERENCE] clamp -50..50; subcpu v1.42 TVF_Build_Short 0x02413E and Voice_PitchPack_RouteB/C/D read it through paramA (slot +0x17) and shift it into bits 15:13
-;   +0x16c partial_env2_velocity_base_3 dec    subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x16d partial_env2_velocity_depth_3 signed subcpu v1.42 Voice_Level_ComputeTriplet 0x023AD0 (two depth bytes, each signed); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan
-;   +0x16f partial_env2_egb_0x16_3  signed subcpu v1.42 Voice_Calc_LevelPair_EGB 0x026975; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
+;   +0x15f partial_pitch_lfo_switch_3 bits   PITCH LFO switch of the tone (bit 5 on, bits 7:6 LFO number - 1, bit 4 sign); subcpu Voice_Pitch_ApplyPortamento also keeps bits 2:0 (SOUND EDIT page caption, n
+;   +0x160 partial_pitch_env_total_depth_3 signed PITCH ENV1 TOTAL DEPTH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset));
+;   +0x161 partial_pitch_env_start_3 signed PITCH ENV1 START PITCH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset));
+;   +0x162 partial_pitch_env_attack_3 dec    PITCH ENV1 ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was env
+;   +0x163 partial_pitch_env_peak_3 signed PITCH ENV1 PEAK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was en
+;   +0x164 partial_pitch_env_decay1_3 dec    PITCH ENV1 DECAY1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was 
+;   +0x165 partial_pitch_env_sustain1_3 signed PITCH ENV1 SUST1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was e
+;   +0x166 partial_pitch_env_decay2_3 dec    PITCH ENV1 DECAY2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was 
+;   +0x167 partial_pitch_env_sustain2_3 signed PITCH ENV1 SUST2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was e
+;   +0x168 partial_pitch_env_release_3 dec    PITCH ENV1 RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was
+;   +0x169 partial_pitch_env_stop_3 signed PITCH ENV1 STOP PITCH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 
+;   +0x16a partial_pitch_env_touch_adr_time_3 signed PITCH ENV2 TOUCH ADR-TIME (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset
+;   +0x16b partial_pitch_env_touch_depth_3 signed PITCH ENV2 TOUCH DEPTH; subcpu TVF_Build_Short / Voice_PitchPack_RouteB..D also read it through paramA (SOUND EDIT page caption, notes/open6-kn5000-d/panel/prob
+;   +0x16c partial_pitch_env_key_follow_center_3 dec    PITCH ENV2 KEY FOLLOW CENTER (a note, SeValText_NoteNames) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page ha
+;   +0x16d partial_pitch_env_key_follow_attack_3 signed PITCH ENV2 KEY FOLLOW ATTACK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this off
+;   +0x16e partial_pitch_env_key_follow_decay_3 signed PITCH ENV2 KEY FOLLOW DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offs
+;   +0x16f partial_pitch_env_key_follow_release_3 signed PITCH ENV2 KEY FOLLOW RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this of
 ;   +0x170 partial_channel_detune_3 dec    subcpu v1.42 Voice_ApplyPortamento 0x026637; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x
 ;   +0x171 partial_fine_detune_3    signed subcpu v1.42 Voice_ComputePitch 0x026396 (signed detune); clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds r
 ;   +0x172 partial_pitch_curve_3    hex    subcpu v1.42 Voice_ComputePitch 0x026396: curve selector, 0xE0 = the direct note table [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
 ;   +0x173 partial_pitch_params_3   dec    subcpu v1.42 Voice_ComputePitch 0x026396 reads +0x1A..+0x1C; clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 
 ;   +0x176 partial_unread_1d_3      signed clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
 ;   +0x177 partial_unread_1e_3      dec    clamp 0..127 each; no subcpu reader for +0x1D..+0x26 (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/
-;   +0x17f partial_unread_26_3      hex    unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py 
-;   +0x180 partial_env1_seg1_target_3 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
-;   +0x181 partial_env1_seg1_rate_3 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
-;   +0x182 partial_env1_seg2_target_3 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
-;   +0x183 partial_env1_seg2_rate_3 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
-;   +0x184 partial_env1_seg3_target_3 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 / _Full 0x025C87 / _Mono 0x025F7F (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: sub
-;   +0x185 partial_env1_seg3_rate_3 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (amplitude envelope); clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0
-;   +0x186 partial_env1_level_3     dec    subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp 0..100 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 +
-;   +0x187 partial_env1_key_scale_3 signed subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (two key-scale bytes); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_Assig
-;   +0x189 partial_env1_velocity_ctl_3 dec    subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (velocity control triple); clamp 0..127 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_As
-;   +0x18c partial_env1_depth_3     signed subcpu v1.42 Voice_Calc_LevelPair_PatchAtk 0x025636 (depths); clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x03229
-;   +0x18e partial_env1_ega_0x35_3  signed subcpu v1.42 Voice_Calc_LevelPair_EGA 0x026769; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-	.macro	tm_sound_5 partial_env3_key_scale_2, partial_unread_48_2, partial_env3_velocity_base_2, partial_env3_velocity_depth_2_0, partial_env3_velocity_depth_2_1, partial_env3_egc_0x4c_2, partial_filter_cutoff_2, partial_filter_slope_mode_2, partial_filter_pair_2_0, partial_filter_pair_2_1, partial_gate_ctl_3, partial_unread_01_3, partial_wave_3, partial_wave_family_3, partial_coarse_tune_3, partial_partial_detune_3, partial_porta_sel_3, partial_env2_start_level_3, partial_env2_porta_level_3, partial_env2_seg1_a_3, partial_env2_seg1_b_3, partial_env2_seg2_a_3, partial_env2_seg2_b_3, partial_env2_seg3_a_3, partial_env2_seg3_b_3, partial_env2_seg4_a_3, partial_env2_seg4_b_3, partial_env2_key_scale_3, partial_filter_b12_3, partial_env2_velocity_base_3, partial_env2_velocity_depth_3_0, partial_env2_velocity_depth_3_1, partial_env2_egb_0x16_3, partial_channel_detune_3, partial_fine_detune_3, partial_pitch_curve_3, partial_pitch_params_3_0, partial_pitch_params_3_1, partial_pitch_params_3_2, partial_unread_1d_3, partial_unread_1e_3_0, partial_unread_1e_3_1, partial_unread_1e_3_2, partial_unread_1e_3_3, partial_unread_1e_3_4, partial_unread_1e_3_5, partial_unread_1e_3_6, partial_unread_1e_3_7, partial_unread_26_3, partial_env1_seg1_target_3, partial_env1_seg1_rate_3, partial_env1_seg2_target_3, partial_env1_seg2_rate_3, partial_env1_seg3_target_3, partial_env1_seg3_rate_3, partial_env1_level_3, partial_env1_key_scale_3_0, partial_env1_key_scale_3_1, partial_env1_velocity_ctl_3_0, partial_env1_velocity_ctl_3_1, partial_env1_velocity_ctl_3_2, partial_env1_depth_3_0, partial_env1_depth_3_1, partial_env1_ega_0x35_3
-	.byte	(\partial_env3_key_scale_2) & 0xff
-	.byte	(\partial_unread_48_2) & 0xff
-	.byte	\partial_env3_velocity_base_2
-	.byte	\partial_env3_velocity_depth_2_0, \partial_env3_velocity_depth_2_1
-	.byte	(\partial_env3_egc_0x4c_2) & 0xff
+;   +0x17f partial_amp_lfo_switch_3 bits   AMPLITUDE LFO switch of the tone (bit 5 on, bits 7:6 LFO number - 1, bit 4 sign) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (t
+;   +0x180 partial_amp_env_attack_3 dec    AMPLITUDE ENV1 ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was
+;   +0x181 partial_amp_env_peak_3   dec    AMPLITUDE ENV1 PEAK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); wa
+;   +0x182 partial_amp_env_decay1_3 dec    AMPLITUDE ENV1 DECAY1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 
+;   +0x183 partial_amp_env_sustain1_3 dec    AMPLITUDE ENV1 SUST1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); w
+;   +0x184 partial_amp_env_decay2_3 dec    AMPLITUDE ENV1 DECAY2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); 
+;   +0x185 partial_amp_env_sustain2_3 dec    AMPLITUDE ENV1 SUST2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); w
+;   +0x186 partial_amp_env_release_3 dec    AMPLITUDE ENV1 RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset));
+;   +0x187 partial_amp_env_touch_attack_3 signed AMPLITUDE ENV2 TOUCH ATTACK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offs
+;   +0x188 partial_amp_env_touch_decay_3 signed AMPLITUDE ENV2 TOUCH DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offse
+;   +0x189 partial_amp_env_key_follow_range_mid_3 dec    AMPLITUDE ENV2 KEY FOLLOW RANGE middle note (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for
+;   +0x18a partial_amp_env_key_follow_range_low_3 dec    AMPLITUDE ENV2 KEY FOLLOW RANGE low note (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it
+;   +0x18b partial_amp_env_key_follow_range_high_3 dec    AMPLITUDE ENV2 KEY FOLLOW RANGE high note (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for i
+;   +0x18c partial_amp_env_key_follow_attack_3 signed AMPLITUDE ENV2 KEY FOLLOW ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this of
+;   +0x18d partial_amp_env_key_follow_decay_3 signed AMPLITUDE ENV2 KEY FOLLOW DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this 
+;   +0x18e partial_amp_env_key_follow_release_3 signed AMPLITUDE ENV2 KEY FOLLOW RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is thi
+	.macro	tm_sound_5 partial_filter_env_touch_adr_time_2, partial_filter_env_touch_depth_2, partial_filter_env_key_follow_center_2, partial_filter_env_key_follow_attack_2, partial_filter_env_key_follow_decay_2, partial_filter_env_key_follow_release_2, partial_filter_cutoff_2, partial_filter_slope_mode_2, partial_filter_pair_2_0, partial_filter_pair_2_1, partial_gate_ctl_3, partial_unread_01_3, partial_wave_3, partial_wave_family_3, partial_coarse_tune_3, partial_partial_detune_3, partial_pitch_lfo_switch_3, partial_pitch_env_total_depth_3, partial_pitch_env_start_3, partial_pitch_env_attack_3, partial_pitch_env_peak_3, partial_pitch_env_decay1_3, partial_pitch_env_sustain1_3, partial_pitch_env_decay2_3, partial_pitch_env_sustain2_3, partial_pitch_env_release_3, partial_pitch_env_stop_3, partial_pitch_env_touch_adr_time_3, partial_pitch_env_touch_depth_3, partial_pitch_env_key_follow_center_3, partial_pitch_env_key_follow_attack_3, partial_pitch_env_key_follow_decay_3, partial_pitch_env_key_follow_release_3, partial_channel_detune_3, partial_fine_detune_3, partial_pitch_curve_3, partial_pitch_params_3_0, partial_pitch_params_3_1, partial_pitch_params_3_2, partial_unread_1d_3, partial_unread_1e_3_0, partial_unread_1e_3_1, partial_unread_1e_3_2, partial_unread_1e_3_3, partial_unread_1e_3_4, partial_unread_1e_3_5, partial_unread_1e_3_6, partial_unread_1e_3_7, partial_amp_lfo_switch_3, partial_amp_env_attack_3, partial_amp_env_peak_3, partial_amp_env_decay1_3, partial_amp_env_sustain1_3, partial_amp_env_decay2_3, partial_amp_env_sustain2_3, partial_amp_env_release_3, partial_amp_env_touch_attack_3, partial_amp_env_touch_decay_3, partial_amp_env_key_follow_range_mid_3, partial_amp_env_key_follow_range_low_3, partial_amp_env_key_follow_range_high_3, partial_amp_env_key_follow_attack_3, partial_amp_env_key_follow_decay_3, partial_amp_env_key_follow_release_3
+	.byte	(\partial_filter_env_touch_adr_time_2) & 0xff
+	.byte	(\partial_filter_env_touch_depth_2) & 0xff
+	.byte	\partial_filter_env_key_follow_center_2
+	.byte	(\partial_filter_env_key_follow_attack_2) & 0xff
+	.byte	(\partial_filter_env_key_follow_decay_2) & 0xff
+	.byte	(\partial_filter_env_key_follow_release_2) & 0xff
 	.byte	\partial_filter_cutoff_2
 	.byte	\partial_filter_slope_mode_2
 	.byte	\partial_filter_pair_2_0, \partial_filter_pair_2_1
@@ -631,65 +672,71 @@
 	.byte	\partial_wave_family_3
 	.byte	(\partial_coarse_tune_3) & 0xff
 	.byte	\partial_partial_detune_3
-	.byte	\partial_porta_sel_3
-	.byte	(\partial_env2_start_level_3) & 0xff
-	.byte	(\partial_env2_porta_level_3) & 0xff
-	.byte	\partial_env2_seg1_a_3
-	.byte	(\partial_env2_seg1_b_3) & 0xff
-	.byte	\partial_env2_seg2_a_3
-	.byte	(\partial_env2_seg2_b_3) & 0xff
-	.byte	\partial_env2_seg3_a_3
-	.byte	(\partial_env2_seg3_b_3) & 0xff
-	.byte	\partial_env2_seg4_a_3
-	.byte	(\partial_env2_seg4_b_3) & 0xff
-	.byte	(\partial_env2_key_scale_3) & 0xff
-	.byte	(\partial_filter_b12_3) & 0xff
-	.byte	\partial_env2_velocity_base_3
-	.byte	\partial_env2_velocity_depth_3_0, \partial_env2_velocity_depth_3_1
-	.byte	(\partial_env2_egb_0x16_3) & 0xff
+	.byte	\partial_pitch_lfo_switch_3
+	.byte	(\partial_pitch_env_total_depth_3) & 0xff
+	.byte	(\partial_pitch_env_start_3) & 0xff
+	.byte	\partial_pitch_env_attack_3
+	.byte	(\partial_pitch_env_peak_3) & 0xff
+	.byte	\partial_pitch_env_decay1_3
+	.byte	(\partial_pitch_env_sustain1_3) & 0xff
+	.byte	\partial_pitch_env_decay2_3
+	.byte	(\partial_pitch_env_sustain2_3) & 0xff
+	.byte	\partial_pitch_env_release_3
+	.byte	(\partial_pitch_env_stop_3) & 0xff
+	.byte	(\partial_pitch_env_touch_adr_time_3) & 0xff
+	.byte	(\partial_pitch_env_touch_depth_3) & 0xff
+	.byte	\partial_pitch_env_key_follow_center_3
+	.byte	(\partial_pitch_env_key_follow_attack_3) & 0xff
+	.byte	(\partial_pitch_env_key_follow_decay_3) & 0xff
+	.byte	(\partial_pitch_env_key_follow_release_3) & 0xff
 	.byte	\partial_channel_detune_3
 	.byte	(\partial_fine_detune_3) & 0xff
 	.byte	\partial_pitch_curve_3
 	.byte	\partial_pitch_params_3_0, \partial_pitch_params_3_1, \partial_pitch_params_3_2
 	.byte	(\partial_unread_1d_3) & 0xff
 	.byte	\partial_unread_1e_3_0, \partial_unread_1e_3_1, \partial_unread_1e_3_2, \partial_unread_1e_3_3, \partial_unread_1e_3_4, \partial_unread_1e_3_5, \partial_unread_1e_3_6, \partial_unread_1e_3_7
-	.byte	\partial_unread_26_3
-	.byte	\partial_env1_seg1_target_3
-	.byte	\partial_env1_seg1_rate_3
-	.byte	\partial_env1_seg2_target_3
-	.byte	\partial_env1_seg2_rate_3
-	.byte	\partial_env1_seg3_target_3
-	.byte	\partial_env1_seg3_rate_3
-	.byte	\partial_env1_level_3
-	.byte	\partial_env1_key_scale_3_0, \partial_env1_key_scale_3_1
-	.byte	\partial_env1_velocity_ctl_3_0, \partial_env1_velocity_ctl_3_1, \partial_env1_velocity_ctl_3_2
-	.byte	\partial_env1_depth_3_0, \partial_env1_depth_3_1
-	.byte	(\partial_env1_ega_0x35_3) & 0xff
+	.byte	\partial_amp_lfo_switch_3
+	.byte	\partial_amp_env_attack_3
+	.byte	\partial_amp_env_peak_3
+	.byte	\partial_amp_env_decay1_3
+	.byte	\partial_amp_env_sustain1_3
+	.byte	\partial_amp_env_decay2_3
+	.byte	\partial_amp_env_sustain2_3
+	.byte	\partial_amp_env_release_3
+	.byte	(\partial_amp_env_touch_attack_3) & 0xff
+	.byte	(\partial_amp_env_touch_decay_3) & 0xff
+	.byte	\partial_amp_env_key_follow_range_mid_3
+	.byte	\partial_amp_env_key_follow_range_low_3
+	.byte	\partial_amp_env_key_follow_range_high_3
+	.byte	(\partial_amp_env_key_follow_attack_3) & 0xff
+	.byte	(\partial_amp_env_key_follow_decay_3) & 0xff
+	.byte	(\partial_amp_env_key_follow_release_3) & 0xff
 	.endm
 
 ; SOUND MEMORY record (470 B), fields +0x18f..+0x1ce
 ;   +0x18f partial_filter_type_3    bits   subcpu v1.42 TVF_Build_Dispatch 0x024102: bits 2:0 = filter builder, bits 7:5 = key-follow curve [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_As
 ;   +0x190 partial_filter_key_follow_depth_3 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*rank
-;   +0x191 partial_unread_38_3      hex    unclamped; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs.py 
+;   +0x191 partial_filter_lfo_switch_3 bits   FILTER LFO switch of the tone (bit 5 on, bits 7:6 LFO number - 1, bit 4 sign) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the 
 ;   +0x192 partial_level_scale_offset_3 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x193 partial_level_scale_low_3 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x194 partial_level_scale_high_3 dec    subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ran
 ;   +0x195 partial_level_scale_depth_3 signed subcpu v1.42 TVF_Calc_Cutoff 0x022C06; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 + 0x51*ra
-;   +0x196 partial_env3_start_level_3 signed [INFERENCE] subcpu v1.42 Voice_StereoLevel_Compute 0x024664 (shared bias in table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); twin of 
-;   +0x197 partial_env3_porta_level_3 signed subcpu v1.42 Voice_PortaLevel_Compute 0x0248D5; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x198 partial_env3_seg1_a_3    dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFS
-;   +0x199 partial_env3_seg1_b_3    signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x19a partial_env3_seg2_a_3    dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFS
-;   +0x19b partial_env3_seg2_b_3    signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x19c partial_env3_seg3_a_3    dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFS
-;   +0x19d partial_env3_seg3_b_3    signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x19e partial_env3_seg4_a_3    dec    subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp 0..100 (same 16-byte structure as env2, 0x36 later) [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSl
-;   +0x19f partial_env3_seg4_b_3    signed subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x1a0 partial_env3_key_scale_3 signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66
-;   +0x1a1 partial_unread_48_3      signed clamp -50..50; no subcpu reader (table_data/tone_database_records.s header (RECORD LAYOUT FROM THE READERS); notes/kn5000-style-2026-10-31/probes/tm_subcpu_refs
-;   +0x1a2 partial_env3_velocity_base_3 dec    subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp 0..127 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
-;   +0x1a3 partial_env3_velocity_depth_3 signed subcpu v1.42 Voice_StereoLevel_Compute 0x024664; clamp -50..50 each [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec +
-;   +0x1a5 partial_env3_egc_0x4c_3  signed subcpu v1.42 Voice_Calc_LevelPair_EGC 0x026AAA; clamp -50..50 [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
+;   +0x196 partial_filter_env_cutoff_adjust_3 signed FILTER ENV1 CUTOFF ADJUST (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset
+;   +0x197 partial_filter_env_start_point_3 signed FILTER ENV1 START POINT (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset))
+;   +0x198 partial_filter_env_attack_3 dec    FILTER ENV1 ATK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was en
+;   +0x199 partial_filter_env_peak_3 signed FILTER ENV1 PEAK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was e
+;   +0x19a partial_filter_env_decay1_3 dec    FILTER ENV1 DECAY1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was
+;   +0x19b partial_filter_env_sustain1_3 signed FILTER ENV1 SUST1 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was 
+;   +0x19c partial_filter_env_decay2_3 dec    FILTER ENV1 DECAY2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was
+;   +0x19d partial_filter_env_sustain2_3 signed FILTER ENV1 SUST2 (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); was 
+;   +0x19e partial_filter_env_release_3 dec    FILTER ENV1 RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset)); wa
+;   +0x19f partial_filter_env_stop_point_3 signed FILTER ENV1 STOP POINT (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset));
+;   +0x1a0 partial_filter_env_touch_adr_time_3 signed FILTER ENV2 TOUCH ADR-TIME (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offse
+;   +0x1a1 partial_filter_env_touch_depth_3 signed FILTER ENV2 TOUCH DEPTH (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this offset))
+;   +0x1a2 partial_filter_env_key_follow_center_3 dec    FILTER ENV2 KEY FOLLOW CENTER (a note) (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it i
+;   +0x1a3 partial_filter_env_key_follow_attack_3 signed FILTER ENV2 KEY FOLLOW ATTACK (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this of
+;   +0x1a4 partial_filter_env_key_follow_decay_3 signed FILTER ENV2 KEY FOLLOW DECAY (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this off
+;   +0x1a5 partial_filter_env_key_follow_release_3 signed FILTER ENV2 KEY FOLLOW RELEASE (SOUND EDIT page caption, notes/open6-kn5000-d/panel/probes/se_page_names.py (the element the page handler sends for it is this o
 ;   +0x1a6 partial_filter_cutoff_3  dec    subcpu v1.42 TVF_Build_Full 0x023D01 (cutoff seed); unclamped [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 
 ;   +0x1a7 partial_filter_slope_mode_3 hex    subcpu v1.42 TVF_Build_Full 0x023D01 (slope/mode); unclamped [partial block p at +0x66 + 0x51*p: subcpu v1.42 EFFSlotScan_AssignPath 0x032295 binds rec + 0x66 +
 ;   +0x1a8 partial_filter_pair_3    hex    subcpu v1.42 TVF_Build_Full 0x023D01 / Voice_PitchPack_Mode2 0x023DB5.._Mode5_Dual 0x02403D: resonance/depth pair, or a second cutoff in mode 5 [partial block p
@@ -722,29 +769,30 @@
 ;   +0x1ca vsel_zone3_family_2      hex    subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5: zone family/sub-bank byte; unclamped [4 x 11-byte velocity-split record at +0x1AA + 11*p, one per partial: su
 ;   +0x1cb vsel_thresholds_3        dec    subcpu v1.42 Velocity_Select_Split_Zone 0x022824: three ascending velocity thresholds -> zone 0..3; clamp 0..127 [4 x 11-byte velocity-split record at +0x1AA + 
 ;   +0x1ce vsel_zone0_wave_3        dec    subcpu v1.42 WaveSel_StageA2_FromVelZone 0x0328B5: zone wave byte; clamp 0..127 [4 x 11-byte velocity-split record at +0x1AA + 11*p, one per partial: subcpu v1.
-	.macro	tm_sound_6 partial_filter_type_3, partial_filter_key_follow_depth_3, partial_unread_38_3, partial_level_scale_offset_3, partial_level_scale_low_3, partial_level_scale_high_3, partial_level_scale_depth_3, partial_env3_start_level_3, partial_env3_porta_level_3, partial_env3_seg1_a_3, partial_env3_seg1_b_3, partial_env3_seg2_a_3, partial_env3_seg2_b_3, partial_env3_seg3_a_3, partial_env3_seg3_b_3, partial_env3_seg4_a_3, partial_env3_seg4_b_3, partial_env3_key_scale_3, partial_unread_48_3, partial_env3_velocity_base_3, partial_env3_velocity_depth_3_0, partial_env3_velocity_depth_3_1, partial_env3_egc_0x4c_3, partial_filter_cutoff_3, partial_filter_slope_mode_3, partial_filter_pair_3_0, partial_filter_pair_3_1, vsel_thresholds_0_0, vsel_thresholds_0_1, vsel_thresholds_0_2, vsel_zone0_wave_0, vsel_zone0_family_0, vsel_zone1_wave_0, vsel_zone1_family_0, vsel_zone2_wave_0, vsel_zone2_family_0, vsel_zone3_wave_0, vsel_zone3_family_0, vsel_thresholds_1_0, vsel_thresholds_1_1, vsel_thresholds_1_2, vsel_zone0_wave_1, vsel_zone0_family_1, vsel_zone1_wave_1, vsel_zone1_family_1, vsel_zone2_wave_1, vsel_zone2_family_1, vsel_zone3_wave_1, vsel_zone3_family_1, vsel_thresholds_2_0, vsel_thresholds_2_1, vsel_thresholds_2_2, vsel_zone0_wave_2, vsel_zone0_family_2, vsel_zone1_wave_2, vsel_zone1_family_2, vsel_zone2_wave_2, vsel_zone2_family_2, vsel_zone3_wave_2, vsel_zone3_family_2, vsel_thresholds_3_0, vsel_thresholds_3_1, vsel_thresholds_3_2, vsel_zone0_wave_3
+	.macro	tm_sound_6 partial_filter_type_3, partial_filter_key_follow_depth_3, partial_filter_lfo_switch_3, partial_level_scale_offset_3, partial_level_scale_low_3, partial_level_scale_high_3, partial_level_scale_depth_3, partial_filter_env_cutoff_adjust_3, partial_filter_env_start_point_3, partial_filter_env_attack_3, partial_filter_env_peak_3, partial_filter_env_decay1_3, partial_filter_env_sustain1_3, partial_filter_env_decay2_3, partial_filter_env_sustain2_3, partial_filter_env_release_3, partial_filter_env_stop_point_3, partial_filter_env_touch_adr_time_3, partial_filter_env_touch_depth_3, partial_filter_env_key_follow_center_3, partial_filter_env_key_follow_attack_3, partial_filter_env_key_follow_decay_3, partial_filter_env_key_follow_release_3, partial_filter_cutoff_3, partial_filter_slope_mode_3, partial_filter_pair_3_0, partial_filter_pair_3_1, vsel_thresholds_0_0, vsel_thresholds_0_1, vsel_thresholds_0_2, vsel_zone0_wave_0, vsel_zone0_family_0, vsel_zone1_wave_0, vsel_zone1_family_0, vsel_zone2_wave_0, vsel_zone2_family_0, vsel_zone3_wave_0, vsel_zone3_family_0, vsel_thresholds_1_0, vsel_thresholds_1_1, vsel_thresholds_1_2, vsel_zone0_wave_1, vsel_zone0_family_1, vsel_zone1_wave_1, vsel_zone1_family_1, vsel_zone2_wave_1, vsel_zone2_family_1, vsel_zone3_wave_1, vsel_zone3_family_1, vsel_thresholds_2_0, vsel_thresholds_2_1, vsel_thresholds_2_2, vsel_zone0_wave_2, vsel_zone0_family_2, vsel_zone1_wave_2, vsel_zone1_family_2, vsel_zone2_wave_2, vsel_zone2_family_2, vsel_zone3_wave_2, vsel_zone3_family_2, vsel_thresholds_3_0, vsel_thresholds_3_1, vsel_thresholds_3_2, vsel_zone0_wave_3
 	.byte	\partial_filter_type_3
 	.byte	\partial_filter_key_follow_depth_3
-	.byte	\partial_unread_38_3
+	.byte	\partial_filter_lfo_switch_3
 	.byte	\partial_level_scale_offset_3
 	.byte	\partial_level_scale_low_3
 	.byte	\partial_level_scale_high_3
 	.byte	(\partial_level_scale_depth_3) & 0xff
-	.byte	(\partial_env3_start_level_3) & 0xff
-	.byte	(\partial_env3_porta_level_3) & 0xff
-	.byte	\partial_env3_seg1_a_3
-	.byte	(\partial_env3_seg1_b_3) & 0xff
-	.byte	\partial_env3_seg2_a_3
-	.byte	(\partial_env3_seg2_b_3) & 0xff
-	.byte	\partial_env3_seg3_a_3
-	.byte	(\partial_env3_seg3_b_3) & 0xff
-	.byte	\partial_env3_seg4_a_3
-	.byte	(\partial_env3_seg4_b_3) & 0xff
-	.byte	(\partial_env3_key_scale_3) & 0xff
-	.byte	(\partial_unread_48_3) & 0xff
-	.byte	\partial_env3_velocity_base_3
-	.byte	\partial_env3_velocity_depth_3_0, \partial_env3_velocity_depth_3_1
-	.byte	(\partial_env3_egc_0x4c_3) & 0xff
+	.byte	(\partial_filter_env_cutoff_adjust_3) & 0xff
+	.byte	(\partial_filter_env_start_point_3) & 0xff
+	.byte	\partial_filter_env_attack_3
+	.byte	(\partial_filter_env_peak_3) & 0xff
+	.byte	\partial_filter_env_decay1_3
+	.byte	(\partial_filter_env_sustain1_3) & 0xff
+	.byte	\partial_filter_env_decay2_3
+	.byte	(\partial_filter_env_sustain2_3) & 0xff
+	.byte	\partial_filter_env_release_3
+	.byte	(\partial_filter_env_stop_point_3) & 0xff
+	.byte	(\partial_filter_env_touch_adr_time_3) & 0xff
+	.byte	(\partial_filter_env_touch_depth_3) & 0xff
+	.byte	\partial_filter_env_key_follow_center_3
+	.byte	(\partial_filter_env_key_follow_attack_3) & 0xff
+	.byte	(\partial_filter_env_key_follow_decay_3) & 0xff
+	.byte	(\partial_filter_env_key_follow_release_3) & 0xff
 	.byte	\partial_filter_cutoff_3
 	.byte	\partial_filter_slope_mode_3
 	.byte	\partial_filter_pair_3_0, \partial_filter_pair_3_1
