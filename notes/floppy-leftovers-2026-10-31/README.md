@@ -18,8 +18,14 @@ Probes: `probes/README.md`.
 | .SEQ blocks in no chain, 145 (36,395 B) | the file is a whole number of KB: it ends with the first blocks of the free chain, the .SQF's +0xB8 free head first (7 files); `01E_TEC1` and `01220497` also hold blocks on neither list (used + free < 1292). 118 of `01220497`'s repeat a chained block (k = k - 139). `probes/seq_layout.py`, `seq_orphans.py`                              | the chained block's own lines; `cmb_*` records (`02SD_CMB`); else song events where the grammar parses them |
 | sound bank +0x10..+0x8F (N-336ff4a8)    | the USER 1 / USER 2 sound-group names: `UserSoundBank_RemoteGroupNameAddr` (prom_a 0xF9F7F6) and `SoundGroupName_Lookup` (prom_a 0xFC2035) read group H at 0xE80010 / 0xEA0010 + 16*H (H 0-7) and 0xE90010 / 0xEB0010 + 16*(H-8)                                                                                                                | `.ascii` lines under `<file>_Bank<n>_GroupNames`, each with its USER and group number                       |
 
-What stays opaque: 1 declaration in `floppy/wsa1`, `qsdisk/01WORKS_.SEQ` block 838 after its 0x82: 250 bytes
-of 0xDF 0xF7 pairs, which no grammar explains (the other two free blocks of that file are 0xFF fill).
+Nothing stays opaque in `floppy/wsa1` since 2026-11-02 (lane open6/misc2).  `qsdisk/01WORKS_.SEQ` block 838's
+250 bytes after its 0x82 are exactly `DF F7` 125 times (DF at even file offsets), now spelled `.rept 125` /
+`.byte 0xdf, 0xf7` (`floppy/wsa1/formats.py`).  The same two values, 0xFF with bit 3 and / or bit 5 cleared, fill
+the tails after the 0x82 of blocks 837 (249 B, with some 0xFF) and 245 (188 B, `FF FF FF F7`), the last blocks
+of two live chains; no other WSA1R disk has such a run, and no WSA1R source holds 0xF7DF / 0xDFF7 as a constant
+(`notes/misc2-2026-11-02/probes/wsa1_f7df_runs.py`).  [INFERENCE] RAM of the block store that nothing wrote
+after the blocks' end of track (power-on contents), not song data.  (The other two free blocks of that file
+are 0xFF fill.)
 
 ## KN6000 / KN7000 .SQT
 
@@ -73,6 +79,7 @@ list (its own register rows).
 | tree          | opaque before | opaque after | generated after | media after    |
 |---------------|---------------|--------------|-----------------|----------------|
 | wsa1-floppy   | 180 / 50,503  | 1 / 250      | 9 / 4,032       | 29 / 620,454   |
+| (2026-11-02)  |               | 0 / 0        |                 |                |
 | kn6000-floppy | 238 / 32,861  | 126 / 1,768  | 494 / 2,906,247 | 85 / 2,126,762 |
 | kn7000-floppy | 90 / 11,122   | 96 / 5,270   | 111 / 4,152,022 | 1 / 17,078     |
 
@@ -85,7 +92,7 @@ unsized).
 
 - KN6000 / KN7000: the 1,768 + 5,270 stale bytes no event order explains (declared opaque; not copies of
   any cell, `probes/sqt_residue.py`).
-- WSA1R: block 838's 0xDF 0xF7 run.
+- ~~WSA1R: block 838's 0xDF 0xF7 run.~~ CLOSED 2026-11-02 (above).
 - Which firmware path changes a KN6000 sound without recomputing the checksum (the 38 stale words).
 
 ## Website page draft (for the floppy formats page)
