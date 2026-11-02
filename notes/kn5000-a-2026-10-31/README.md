@@ -216,7 +216,7 @@ these items of its list were not worked; nothing in this branch changes them:
 | N-52dcf02a, N-d352b868 | IC307 sequence words / unselected entries; owned in effect by kn5000-b (tracker kn5000-d38)                                                                                                                                                                                                                                                                          |
 
 (2026-11-02: lane kn5000-c took the nine rows above the last one; `notes/kn5000-c-2026-11-02/README.md` says what it
-did and what remains: v6 / v5 debt 13,756 / 15,910 B -> 3,640 / 4,537 B, numeric ROM addresses 73 -> 9, the string runs
+did and what remains: v6 / v5 debt 13,756 / 15,910 B -> 3,615 / 4,504 B, numeric ROM addresses 73 -> 9, the string runs
 split, the sequencer RAM tables named.)
 
 ## Merge of main 37ecc2a2b (kn5000-b, kn5000-style, misc, wsa1)

@@ -9,6 +9,10 @@ a compiled-C routine that FDemoText_ProcessMarkup calls for the tag whose name p
 {name, handler} records.  The routine gets `FDemoText_Tag_<TAG>:` and a header; v9 / v7 / v6 / v5 are
 labelled at the line with the same text at the same distance from the same preceding label (and after a
 `ret`).  The C words become NAKA_ADDR(FDemoText_Tag_<TAG>) with the word's own value in the link script.
+v7 / v6 / v5 afterwards: the link scripts take each label's address in that tree (its symbols file), as
+generate_v7_naka_link_scripts.py does for v7, and the C-divergence jsons are recomputed
+(scripts/build/regenerate_v7_c_divergence.py --apply; ported_c_rebase.py --regen for v6 / v5).  With v10's
+value there, the dispatch census reads a code pointer of v7 / v6 / v5 as numeric (it rose 0 -> 1 until then).
 
 RUN (repository root):  python3 scripts/converters/label_fdemo_markup_tag_handlers.py v10 v9 v7 v6 v5
 """

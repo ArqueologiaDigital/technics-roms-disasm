@@ -36,6 +36,7 @@ steps.
 | own BASE (1becec8c9)                                    | 3,403   | 2,528  | 5,931   | 4,284   | 2,704  | 6,988   |
 | PORT_BASE, own RAM cells, placed bytes only (0c9eb932d) | 3,403   | 804    | 4,207   | 4,284   | 778    | 5,062   |
 | name tables by label (3f4df7a2e)                        | 3,403   | 237    | 3,640   | 4,284   | 253    | 4,537   |
+| new labels at each tree's own address (after the merge) | 3,403   | 212    | 3,615   | 4,284   | 220    | 4,504   |
 
 Source share 99.3 % -> 99.8 % (v6), 99.2 % -> 99.8 % (v5).  Relocations rose (they are not debt): a moved
 SELF pointer that was raw bytes is now a relocation where it is aligned, or exact.
@@ -46,7 +47,7 @@ What remains (the items stay OPEN):
   maps to (mostly data beside v7's C data and pointer tables, `v6/maincpu/README.md`).  Next step: type
   them per blob (records the newer tree lacks), or disassemble the code rows `disassemble_port_todo.py`
   did not reach.
-- the json raw bytes, 237 / 253 (`cdiv_kinds.py`: v6 106 in pointers, 74 in work-RAM pointers, 57 other):
+- the json raw bytes, 212 / 220 (237 / 253 before the last step; `cdiv_kinds.py`, at 237: v6 106 in pointers, 74 in work-RAM pointers, 57 other):
   `naka_sequencer_channels` 64 (32-bit RAM pointers typed as two uint16_t field_XXXX each, offsets
   0x1624-0x1720: type them as RAM_ cells and the header fixes them), `naka_widget_descriptors` 67 (the
   SQEDT RamPtrs tables, 18 B, which v6 / v5 cannot name until they have RAM names, and East_ClassTable_163),
@@ -109,18 +110,29 @@ names exactly what the assembly names.
 | N-7c99f0f2 | OPEN  | 81 titles; trace the Scoop sound-editor openers of TITLE_SE* (no traced code opens them yet)                                                                                                                              |
 | N-51b2e19c | OPEN  | per-bit analysis with kn5000_ram_bit_usage.py of 0xC1FE / 0xC594-0xC59C, 0x28B2 / 0x28B3, 0x32F4 ..., 0xE3E2                                                                                                              |
 
+The last step: the ClassName_ / ClassPropdata_ / FDemoText_Tag_ labels this lane added first carried v10's
+value in every tree's link script (so no compiled byte changed).  For v7 / v6 / v5 they now carry the tree's
+own address, as generate_v7_naka_link_scripts.py does for v7, and the jsons were recomputed
+(`regenerate_v7_c_divergence.py --apply`: v7 patch bytes 3,237 -> 3,201; `ported_c_rebase.py --regen`).
+Until then the dispatch census read the nine handler words of FDemoText_MarkupTag_HandlerColumn in v7 / v6 /
+v5 as numeric (unframed_not_used 0 -> 1 in each).
+
 ## Corrections
 
 - The message of 0c9eb932d says "652 of the 1,300 cells move": the header has 1,892 cells (652 move).
 
-## Ledgers (read-only, after the merge)
+## Ledgers (read-only, after the merge, at the last commit)
 
-See the lane report; the integrator writes the snapshots.
+- `make gate`: exit 0.
+- `census.py --compare docs/coverage/dispatch-census-2026-10-31-03.json`: nothing rose.
+- `doc_quality_census.py --compare` (doc-quality-2026-10-31-03): nothing rose ((b) numeric operands fell by 44 in
+  v10 / v9 / v8 / v7: the quantize names).
+- `data_incbin_census.py --compare` (newest data-incbin snapshot): exit 0, nothing rose.
 
 ## Website page draft (for `rom-reconstruction.md`, the v6 / v5 rows)
 
 > Since 2026-11-02 the v6 and v5 trees compile their own C: each NAKA blob takes its own address
 > (`#define BASE`, or a `PORT_BASE(off)` chain where the port moved parts of it), the work-RAM cell
 > header carries their own addresses, and the re-ordered name tables name their strings.  The C-divergence
-> patch shrank from 10,353 to 237 raw bytes (v6) and from 11,626 to 253 (v5); verbatim debt is now
-> 3,640 B (v6, 99.8 % source) and 4,537 B (v5, 99.8 %), most of it TODO(port) rows.
+> patch shrank from 10,353 to 212 raw bytes (v6) and from 11,626 to 220 (v5); verbatim debt is now
+> 3,615 B (v6, 99.8 % source) and 4,504 B (v5, 99.8 %), most of it TODO(port) rows.

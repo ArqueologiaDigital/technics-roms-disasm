@@ -1377,8 +1377,8 @@ delivers to Sub CPU `0x400` / `0xF000+` (`../technics-docs/subcpu-payload-proven
 | maincpu v9          | `v9/maincpu/kn5000_v9_program.s`                                 | 100.00%    | 100.0%                | 0 B           |
 | maincpu v8          | v9 source, `--defsym FW_VERSION_BYTE=0x08`                       | 100.00%    | as v9                 | as v9         |
 | maincpu v7          | `v7/maincpu/kn5000_v7_program.s`                                 | 100.00%    | 100.0%                | 0 B           |
-| maincpu v6          | `v6/maincpu/kn5000_v6_program.s` (ported from v7)                | 100.00%    | 99.8%                 | 3,640 B       |
-| maincpu v5          | `v5/maincpu/kn5000_v5_program.s` (ported from v6)                | 100.00%    | 99.8%                 | 4,537 B       |
+| maincpu v6          | `v6/maincpu/kn5000_v6_program.s` (ported from v7)                | 100.00%    | 99.8%                 | 3,615 B       |
+| maincpu v5          | `v5/maincpu/kn5000_v5_program.s` (ported from v6)                | 100.00%    | 99.8%                 | 4,504 B       |
 | subcpu payload v142 | `v142/subcpu/kn5000_subprogram_v142.s`                           | 100.00%    | 100.0%                | 0 B           |
 | subcpu payload v141 | `v141/subcpu/kn5000_subprogram_v141.s` (generated: v142 + EDITS) | 100.00%    | not measured          | 0 B           |
 | subcpu payload v140 | `v140/subcpu/kn5000_subprogram_v140.s` (generated: v141 + EDITS) | 100.00%    | not measured          | 0 B           |

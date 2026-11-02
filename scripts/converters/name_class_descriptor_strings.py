@@ -23,6 +23,10 @@ or `.proc = NAKA_ADDR(<Class>Proc), ... .name = NAME, .propdata = PROPDATA` -- t
     script, so every tree's compiled blob is unchanged (v7/v6/v5 patch it as before).
 Any other literal of the tree's C with the same value (naka_block_007.c's split descriptor fields)
 takes the same label.
+v7 / v6 / v5 afterwards: the link scripts take each label's address in that tree (its symbols file), as
+generate_v7_naka_link_scripts.py does for v7, and the C-divergence jsons are recomputed
+(scripts/build/regenerate_v7_c_divergence.py --apply; ported_c_rebase.py --regen for v6 / v5).  With v10's
+value there, the dispatch census reads a code pointer of v7 / v6 / v5 as numeric (it rose 0 -> 1 until then).
 
 v9 is labelled at its own addresses (they equal v10's).  v7, v6 and v5 compile v10's literals, so their
 label goes where the walk from THE SAME anchor label by the same distance lands in their assembly, and
