@@ -24,6 +24,16 @@
 ; 0x5006BE12, wrap 0x3C).
 0x484ABAF4  PanelModeFlagSet        ; write panel wiring-mode flag 0x5006BE94 (0 = mode A, else mode B; boot derives it from strap probe 0x484D7713==3)
 0x484ABAFD  PanelModeFlagGet        ; read 0x5006BE94 (selects LED addr tables, norm tables, GPIO strobes)
+; (lane mn10300-names, 2026-11-02, from the IC18 boot ROM's twins: kn7000/notes/ic18-boot-rom.md "The tick.")
+0x484ABB58  PanelService            ; = IC18 PanelService 0x50002682: in a status-poll phase (0x5006BDA2 & 0xC0) re-initialise the event FIFO and empty the RX ring, else PanelRxDecodeQuiet; TickJobsTask calls it on TickJobs (0x50151C00) bit 0x08, every 6 ms
+0x484ABB5B  PanelService_entry
+0x484ABB95  PanelPump               ; = IC18 PanelPump 0x500026BB: PanelTxPump, then PanelErrorRecovery; TickJobsTask calls it on TickJobs bits 0x80 and 0x20, every 48 ms; polling loops call it directly.  20 pump calls that find the link busy (0x5006BDAA) set the time-out bit 0x80 of 0x5006BDA4 (~0.96 s here)
+0x484ABB98  PanelPump_entry
+0x484ABA68  TickHookPass            ; = IC18 TickHookPass 0x500025C6: passes each of four ROM words (0x4874D11C..28, all 0x50151BFC, the time base's address) with its index 0..3 to TickHookStub; the first call of every pass of TickJobsTask [INFERENCE: a debug hook]
+0x484ABA6B  TickHookPass_entry
+0x48431D04  TickHookStub            ; does nothing (clears a local and returns); TickHookPass's callee
+0x48431D07  TickHookStub_entry
+0x4C02BBCD  TickJobsTask            ; the periodic task loop: waits on event flag 0xC (set every 4 ms by the kernel tick), TickHookPass, then the jobs requested in TickJobs 0x50151C00/01 (0x08 PanelService + the panel poll + switch events; 0x02 0x48402703; 0x80/0x20 PanelPump; 0x80 also inverts IOLATCH_04 bit 5; 0x40/0x10 0x484AE78C), then a fixed service list
 0x484AC0AC  PanelBusyWait3000       ; counted busy loop (0xBB8 iterations)
 0x484AC0C8  PanelBusyWait6000       ; counted busy loop (0x1770 iterations)
 0x484AC0E7  PanelTickWait2          ; wait ~2 ticks of counter 0x50151BFC (tick noted at 0x5006BDAC)
@@ -289,7 +299,7 @@
 0x487F6EE6  LibLoadSentinel        ; InitializeBlock27 descriptor's last-record payload `retf 0, 0` (de 00 00): copied to 0x4C03FFF0, the end of the library window
 0x487F6EE9  LibLoadDescriptor      ; InitializeBlock27's copy descriptor at the end of the image: 12-byte records {u16 flags, u16 len, u32 src, u32 dest}, flags bit15 = last; one record copies LibRomImageBase.. to 0x4C000000 (kn7000_mame notes/kn2400-boot.md)
 0x4C003051  strcpy_entry           ; the runtime address callers `call` (after strcpy's movm at 0x4C00304F, named by the 942 export table): strcpy(a0 = dst, a1 = src) -> a0 = dst
-0x4C03DDA0  LibIrqQuickDispatch    ; (flash copy 0x487F6D71) AM33 maskable-IRQ quick handler -- F6/udf context save, increments IRQ counter 0x50380D0C, reads IAGR 0x34000100 (used by high-priority device levels)
+0x4C03DDA0  LibIrqQuickDispatch    ; (flash copy 0x487F6D71) AM33 maskable-IRQ quick handler -- F6/udf context save, increments IRQ counter 0x50380D0C, reads 0x34000100 and 0x34000104 as 16-bit group numbers (G0ICR / G1ICR by the instruction manual's layout, IAGR is 0x34000200; why they hold group numbers here is not explained) (used by high-priority device levels)
 0x4C03DE26  LibIrqScheduler        ; (flash copy 0x487F6DF7) RTOS scheduler entry (level-6 system tick) -- saves the interrupted task's SP into its TCB *0x5038002C, switches to the scheduler stack *0x50380CBC, dispatches, reloads SP from the chosen TCB
 0x4C003024  memset_entry           ; (flash copy 0x487BBFF5) memset(dest=a0, val=d0, len=d1) -- hardware-loop (setlb)
 0x4C003039  memcpy_entry           ; the runtime address callers `call ..., [a2,a3], 8` (after memcpy's movm at 0x4C003037, named by the 942 export table): memcpy(a0 = dest, a1 = src, d0 = len) -> a0 = dest
@@ -425,7 +435,8 @@
 ; Command-frame struct {clockMode u16, respType u16 (2=R2,3=R1b,else R1),
 ; cmd[6]} -- clockMode doubles as the SdSpiClockSet arg (2=forced slow).
 ; RAM frames: 0x50007ec6 CMD0, 0x50007ed0 CMD59(good CRC), 0x50007eda CMD1,
-; 0x50007e8a park-CMD0, 0x50007e94 CMD9 (drive-ctrl '@'), 0x50007ee4 CMD17
+; 0x50007e8a park-CMD0, 0x50007e94 mode-2 frame 0x40 arg 0x00000F00 (drive-ctrl '@'; not an SD
+; command: its byte is 0x40 and it reads 15 bytes into the CSD record; IC18 SdFrameR2Cmd0), 0x50007ee4 CMD17
 ; read frame / 0x50007eee CMD24 write frame (byte address big-endian @+5..+8).
 ; ROM frames: 0x4867b9cc CMD10(CID), 0x4867b9d8 CMD9(CSD), 0x4867b9e4
 ; CMD16(0x200), 0x4867ba64 CMD59 arg=1 (deliberately WRONG CRC self-test).
@@ -457,7 +468,7 @@
 0x4854AF8A  DiskCmdPostAsync_entry
 0x4854AFE9  SdWorkerCmdHandler      ; worker message TYPE 3 = SD media commands. msg: {+0 cmd u16, +4 sector u32, +8 count u32, +0xc buffer}. Gate: state==3 or cmd==0 else 0x40. In-use LED on. cmd 0 = init/mount ladder (state 2: park frame 0x50007e8a, power line+rail on, SdCardInitFull; state 0: rails off + SdSlotDrainWait -> probe flag 0x50160644; then power on + SdCardInitFull -> state 3, fail 0xFD); 3 = read (initflag else 0x30, range vs 0x50160664 else 2, per sector: byteaddr=sector*mult -> CMD17 frame 0x50007ee4, SdReadBlockCmd x4 retries); 4 = write (WP -> 0x2F, CMD24 frame 0x50007eee, SdWriteBlockCmd, err 3); 8 = last error 0x5016064e; 0xA = init check; 0xB = nop; 0xC = total bytes 0x5016065c LE -> buffer; else 7. Error -> 0x5016064e, LED off
 0x4854AFEE  SdWorkerCmdHandler_entry
-0x4854B32B  DiskDriveCtrlHandler    ; worker message TYPE 2 = drive control, keyed by drive letter 0x40..0x4E via jump table 0x4867b9f0 (gate: state==2 or cmd 0x40 else 0x8003; probe flag else 0x8004; phase==3 -> 0x8002). '@' = attach: park frame, SdSlotDischarge, SdSlotDrainWait, probe flag:=1, read the CSD into record 0x5016066c (CMD9 frame 0x50007e94). Reply {2, cmd, 4 arg bytes}; class from DriveLetterClass
+0x4854B32B  DiskDriveCtrlHandler    ; worker message TYPE 2 = drive control, keyed by drive letter 0x40..0x4E via jump table 0x4867b9f0 (gate: state==2 or cmd 0x40 else 0x8003; probe flag else 0x8004; phase==3 -> 0x8002). '@' = attach: park frame, SdSlotDischarge, SdSlotDrainWait, probe flag:=1, read 15 bytes into the CSD record 0x5016066c (mode-2 frame 0x50007e94: byte 0x40, argument 0x00000F00, not an SD CMD9; = IC18 SdFrameR2Cmd0, the only one of its five frames either image uses). Reply {2, cmd, 4 arg bytes}; class from DriveLetterClass
 0x4854B330  DiskDriveCtrlHandler_entry
 0x4854B51F  SdMediaStateGet         ; read media state 0x50160646 (0..3, 3 = ready)
 0x4854B528  SdMediaStateSet         ; validate {0,1,2,3} -> 0x50160646 (else -1)
@@ -1988,8 +1999,8 @@
 ;      Region-1 code PRODUCES those messages by building a length-prefixed
 ;      byte buffer and handing it to the stream writer 0x4C003A65.
 ;      Bit map of the parameters they reach: kn7000_mame/notes/effect-enable-bits.md
-0x4C003A60  SndCmdStreamWrite       ; (a0 = length-prefixed message buffer) append a sound-command message to the 0x200-byte stream ring 0x500AD3A0/0x500082A2; the 32 region-1 call sites are the message PRODUCERS
-0x4C003A65  SndCmdStreamWrite_entry
+0x4C003A60  TgcBufWrite             ; the firmware's name (942's plug-in export table IDNAME FN_TgcBufWrite; the KN6000 / KN6500 reflection tables; was SndCmdStreamWrite until 2026-11-02): (a0 = length-prefixed message buffer) append a sound-command message to the 0x200-byte stream ring 0x500AD3A0/0x500082A2; the 32 region-1 call sites are the message PRODUCERS
+0x4C003A65  TgcBufWrite_entry
 0x4C003A15  SndCmdStreamGetByte     ; (a0 = stream object) pop one byte: count at +4, read index at +2 masked 0x1FF, data at +6; returns -1 when empty
 0x4C003A17  SndCmdStreamGetByte_entry
 0x4C003A3D  SndCmdStreamSkipToStatus ; skip data bytes until the next status byte (bit7 set), then rewind the read index
