@@ -191,8 +191,18 @@ def orphan_lines(d, n, c, body, owner, plan, chained_body, ref, base):
         p = toks[-1][0]
         rest = body[p:]
         toks = toks[:-1]
+        unit = next((rest[:u] for u in (2, 4) if len(rest) % u == 0 and rest == rest[:u] * (len(rest) // u)), None)
         if len(set(rest)) == 1:
             tail = ['\t.fill\t%d, 1, 0x%02x\t; not events: left over' % (len(rest), rest[0])]
+        elif unit:
+            # 01WORKS_.SEQ block 838: 250 bytes of DF F7 (notes/misc2-2026-11-02/probes/wsa1_f7df_runs.py).
+            # [INFERENCE] RAM of the block store that nothing wrote after the block's 0x82
+            tail = ['; the rest (%d bytes) is the %d-byte pattern %s repeated, not events: [INFERENCE] RAM nothing wrote'
+                    % (len(rest), len(unit), ' '.join('%02X' % x for x in unit)),
+                    '; after the 0x82 (notes/misc2-2026-11-02/probes/wsa1_f7df_runs.py)',
+                    '\t.rept\t%d' % (len(rest) // len(unit)),
+                    '\t.byte\t' + ', '.join('0x%02x' % x for x in unit),
+                    '\t.endr']
         else:
             tail = ['; the rest (%d bytes) does not parse as events of the song grammar (stopped at status 0x%02x)' % (len(rest), rest[0]),
                     '\t; census: opaque -- unknown-dump: free-block bytes that are not song events (left over in the store)',

@@ -135,9 +135,11 @@ with headers saying so (`rename_fdc_pulse_reset_line.sed`).
 
 For the docs lane (technics-docs is not edited here):
 
-- `memory-map.md`, I/O table, row `0x34 PD`: "bit 0=sub ready" is wrong for the main CPU.  Port D bit 0 is FDCRST
-  (the floppy controller's hardware reset, pulsed by `FDC_PulseResetLine`), bit 6 is FD.I/O (disk change); INT4
-  is FDCINT and INT5 FDCDRQ (service manual p. 32).
+- `memory-map.md`, I/O table, row `0x34 PD`: add the main CPU's use of Port D.  (Corrected 2026-11-02: this
+  draft used to call the row's "bit 0=sub ready" wrong; the row is in the sub-CPU SFR table, where it is right.
+  The docs lane added a main-CPU note to it instead.)  On the main CPU, Port D bit 0 is FDCRST (the floppy
+  controller's hardware reset, pulsed by `FDC_PulseResetLine`), bit 6 is FD.I/O (disk change); INT4 is FDCINT
+  and INT5 FDCDRQ (service manual p. 32).
 - `fdc-subsystem.md`: replace "the neighbouring `Boot_PulsePD0` ..., whose Port D bit 0 line is not yet
   identified" with "`FDC_PulseResetLine` pulses FDCRST (Port D bit 0) for 10 ticks"; command 11 is
   `FDC_CmdSenseDriveStatus` in both images.
@@ -167,7 +169,7 @@ it for.
 reproduces it) says them per field:
 
 - part_sound +4 `voice4`: byte 4 of the part's voice record and of the 0xC0 ring-buffer record, never read alone;
-  +5 `turnover` (-> 0x32c3+n -> 0x32cb, Rhythm_TransposeNote / Rhythm_CrossVoiceCorrect); +6 `ceiling`
+  +5 `turnover` (-> 0x32c3+n -> 0x32cb, Rhythm_TransposeNote / Rhythm_BassToRoot); +6 `ceiling`
   (-> 0x32c7+n -> 0x32cc, the octave-folding limit).
 - slots 8..11: no caller of AccPart_GetParamAddr passes their offsets; leftover bars.
 - +0x3e3..+0x3f2: no reader anywhere in v10; declared authoring metadata.

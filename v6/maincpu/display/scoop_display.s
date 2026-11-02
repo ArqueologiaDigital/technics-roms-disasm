@@ -842,7 +842,7 @@ SoundEvt_LongPacketHandler_Join:
 	jp	SoundEvt_Mode1_StepAndRefresh_Join
 SoundEvt_LongPacketHandler_Entry:
 	or	(0x0dd3:16), 1
-	call	VoiceSlot_TableSetup
+	call	SqStep_RebuildGridRows
 SoundEvt_Mode1_StepAndRefresh_Join:
 	call	SoundEvt_Mode1_StepAndRefresh_Helper
 	ret
@@ -892,7 +892,7 @@ SoundEvt_Mode2_StepAndRefresh_Join:
 	jp	SoundEvt_Mode2_StepAndRefresh_Return
 SoundEvt_Mode2_StepAndRefresh_Skip2:
 	or	(0x0dd3:16), 1
-	call	VoiceSlot_TableSetup
+	call	SqStep_RebuildGridRows
 SoundEvt_Mode2_StepAndRefresh_Return:
 	ret
 	; Handler dispatch table, 16 B.  Read by SoundEvt_Mode2_StepAndRefresh (0xEF613F): `ld xhl, SoundEvt_LongPacketHandler_DispatchTbl2`
@@ -1086,7 +1086,7 @@ DisplayMode_Dispatch_Mode1_Skip4:
 DisplayMode_Dispatch_Mode1_Skip5:
 	and	(0x0dd3:16), 254
 DisplayMode_Dispatch_Mode1_Skip6:
-	call	VoiceSlot_TableSetup
+	call	SqStep_RebuildGridRows
 	call	DisplayMode_Dispatch_Mode1_Helper
 DisplayMode_Dispatch_Mode1_Return2:
 	ret
@@ -1953,7 +1953,7 @@ VoiceParam_MultiDispatch:
 	call PerfMode_StepValueInRange
 	ld	(4339:16), a
 	ld	(3571:16), 4
-	call VoiceSlot_ReadParamsWithSaveRestore
+	call SqStep_WritePopupValueToEvent
 	call ParamPopup_PartKeyShift
 	jp VoiceParam_CommonTail
 ; VoiceParam_MultiDispatch_StepVolume: Selector 3 (volume): steps the value within 0..127, writes it to the part and
@@ -1966,7 +1966,7 @@ VoiceParam_MultiDispatch_StepVolume:
 	call PerfMode_StepValueInRange
 	ld	(4339:16), a
 	ld	(3571:16), 4
-	call VoiceSlot_ReadParamsWithSaveRestore
+	call SqStep_WritePopupValueToEvent
 	call ParamPopup_PartVolume
 	jp VoiceParam_CommonTail
 ; VoiceParam_MultiDispatch_StepPanpot: Selector 8 (panpot): steps the value within 0..127, writes it to the part and
@@ -1979,7 +1979,7 @@ VoiceParam_MultiDispatch_StepPanpot:
 	call PerfMode_StepValueInRange
 	ld	(4339:16), a
 	ld	(3571:16), 4
-	call VoiceSlot_ReadParamsWithSaveRestore
+	call SqStep_WritePopupValueToEvent
 	call ParamPopup_PartPanpot
 	jp VoiceParam_CommonTail
 VoiceParam_Case0A:
@@ -2001,7 +2001,7 @@ VoiceParam_Case0B:
 	call PerfMode_StepValueInRange
 	ld	(4339:16), a
 	ld	(3571:16), 4
-	call VoiceSlot_ReadParamsWithSaveRestore
+	call SqStep_WritePopupValueToEvent
 	call ParamPopup_PartBendSense
 VoiceParam_CommonTail:
 	; call Display_UpdateRegion3 (v7 addr)
@@ -2011,21 +2011,24 @@ VoiceParam_CommonTail:
 
 	ret
 
-VoiceSlot_ReadParamsWithSaveRestore:
+; SqStep_WritePopupValueToEvent: When SeqTrack_CheckEventFollows allows it: saves the cursor (slot 0), moves it (PERF_STEP_FIELD) bytes on,
+;   writes (POPUP_VALUE) there (SeqTrack_WriteCursorByte) and restores the cursor.  Basis: callers + body -- the
+;   VoiceParam_Case* pop-up handlers call it after storing the edited value.
+SqStep_WritePopupValueToEvent:
 	; --- Helper 1: guard on W, parameter setup + calls (44 bytes) ---
 	call ToneParam_ModeGuardEntry_Helper4
 	cp	w, 0:i3
 	jrl z, VoiceParam_SaveRestore_Ret
 	xor	a, a
-	call VoiceSlot_SaveState
+	call SeqCursor_Save
 	ld	e, (3571:16)
 	xor d, d
 	call Timer_ModeHandler_0_Helper6
-	call VoiceSlot_ReadCurrentParams
+	call SeqTrack_ReadCursorByte
 	ld	w, (4339:16)
-	call VoiceSlot_WriteCurrentParam
+	call SeqTrack_WriteCursorByte
 	xor	a, a
-	call VoiceSlot_RestoreState
+	call SeqCursor_Restore
 VoiceParam_SaveRestore_Ret:
 	ret
 VoiceParam_BitManipHelper:
@@ -2034,23 +2037,23 @@ VoiceParam_BitManipHelper:
 	cp	w, 0:i3
 	jrl z, VoiceParam_BitManip_Ret
 	xor	a, a
-	call VoiceSlot_SaveState
-	call VoiceSlot_ReadCurrentParams
+	call SeqCursor_Save
+	call SeqTrack_ReadCursorByte
 	ld	w, (4339:16)
 	and w, 0x80
 	rlc	w
 	and a, 0xfe
 	or w, a
-	call VoiceSlot_WriteCurrentParam
+	call SeqTrack_WriteCursorByte
 	ld	e, (3571:16)
 	xor d, d
 	call Timer_ModeHandler_0_Helper6
-	call VoiceSlot_ReadCurrentParams
+	call SeqTrack_ReadCursorByte
 	ld	w, (4339:16)
 	and w, 0x7f
-	call VoiceSlot_WriteCurrentParam
+	call SeqTrack_WriteCursorByte
 	xor	a, a
-	call VoiceSlot_RestoreState
+	call SeqCursor_Restore
 VoiceParam_BitManip_Ret:
 	ret
 
@@ -2986,7 +2989,7 @@ Timer_ModeHandler_1:
 	jrl z, Timer_GuardCallSetup
 	and	(3927:16), 254
 Timer_GuardCallSetup:
-	call VoiceSlot_TableSetup
+	call SqStep_RebuildGridRows
 	call DisplayMode_Dispatch_Mode1_Helper
 	call Display_UpdateRegion5
 	call Display_UpdateRegion3
@@ -3048,13 +3051,16 @@ Timer_ModeHandler_0_Join3:
 	call	Display_UpdateRegion4
 Timer_ModeHandler_0_Return2:
 	ret
-VoiceSlot_StatusRet_Helper:
-	call	VoiceSlot_ReadCurrentParams
+; SqStep_AuditionCursorNotes: When the cursor event is a note (0x90): saves the cursor (slot 1), flushes SeqBuf and sends note-offs, then
+;   writes the notes that start at the same clock into SeqBuf (status, note, velocity 64, track) so they sound;
+;   restores the cursor.  Basis: body.
+SqStep_AuditionCursorNotes:
+	call	SeqTrack_ReadCursorByte
 	cp	a, 144
 	jrl	nz, Timer_ModeHandler_0_Skip2
 	or	(0x2897:16), 64
 	ld	a, 1:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 Timer_ModeHandler_0_Loop:
 	call	SeqBuf_ReadByte
 	ld	wa, hl
@@ -3123,20 +3129,20 @@ Timer_ModeHandler_0_Join2:
 	call	VoiceAlloc_ScoopDisplayProcess
 Timer_ModeHandler_0_Skip2:
 	ld	a, 1:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	ret
 SoundEvt_Mode1_StepAndRefresh_Helper:
 	ld	xhl, 3412
 	bitm	2, (xhl)
 	jrl	z, Timer_ModeHandler_0_Return3
 	resm	2, (xhl)
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	and	a, 240
 	cp	a, 144
 	jrl	nz, Timer_ModeHandler_0_Return3
 	call	VoiceCtrl_SendNoteOffSequence
 	xor	a, a
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	call	Timer_ModeHandler_0_Helper
 	ld	hl, wa
 	pushw	hl
@@ -3165,7 +3171,7 @@ SoundEvt_Mode1_StepAndRefresh_Helper:
 	call	SeqBuf_WriteByte
 	inc	2, xsp
 	xor	a, a
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	or	(0x2897:16), 64
 	or	(0x0f54:16), 1
 	ld	(3431:16), 0
@@ -3223,7 +3229,7 @@ Timer_ParamCompareAlt_Return4:
 Timer_ParamLoadAndCompare_Helper:
 	call	SqStep_FlushPendingParamEvents
 	xor	a, a
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	pushdi_w	(0x3662)
 	pushdi_w	(0x0d5c)
 	ld	(3522:16), 0
@@ -3237,7 +3243,7 @@ Timer_ParamLoadAndCompare_Helper:
 Timer_ParamCompareAlt_Skip:
 	cp	(3522:16), 0
 	jrl	nz, Timer_ParamCompareAlt_Join
-	call	VoiceSlot_StepCursorBack
+	call	SeqTrack_PrevEventKeepWrapCount
 	cp	w, 255
 	jrl	nz, Timer_ParamCompareAlt_Skip3
 	cp	(3415:16), 0
@@ -3250,7 +3256,7 @@ Timer_ParamCompareAlt_Skip2:
 	call	MIDI_SendSysExFromW
 	jp	Timer_ParamCompareAlt_Return
 Timer_ParamCompareAlt_Skip3:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	nz, Timer_ParamCompareAlt_Join
 	inc	1, (3522:16)
@@ -3279,14 +3285,14 @@ Timer_ParamCompareAlt_Skip7:
 	call	AccPedal_CheckBitAndUpdate
 	popw	de
 	xor	a, a
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	pushdi_w	(0x3662)
 	pushdi_w	(0x0d5c)
-	call	VoiceSlot_StepCursorBack
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_PrevEventKeepWrapCount
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, Timer_ParamCompareAlt_Skip8
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 83
 	jrl	le, Timer_ParamCompareAlt_Skip8
 	cp	a, 95
@@ -3298,7 +3304,7 @@ Timer_ParamCompareAlt_Skip8:
 	popw (0x0d5c:16)	; popw (0x0d5c)
 	popw	(0x3662:16)	; popw (0x367e)
 	xor	a, a
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	call	Timer_ParamCompareAlt_Helper6
 	jp	Timer_ParamCompareAlt_Return
 Timer_ParamCompareAlt_Skip9:
@@ -3330,7 +3336,7 @@ Timer_ParamCompareAlt_Join2:
 	push	xix
 	push	xiy
 	push	xiz
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	ld	(3392:16), w
 	pop	xiz
 	pop	xiy
@@ -3389,7 +3395,7 @@ Timer_ParamCompareAlt_Skip13:
 	push	xix
 	push	xiy
 	push	xiz
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	pop	xiz
 	pop	xiy
 	pop	xix
@@ -3397,7 +3403,7 @@ Timer_ParamCompareAlt_Skip13:
 	pop	xbc
 	pop	xhl
 	pop	xwa
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, Timer_ParamCompareAlt_Skip15
 	call	Timer_ParamCompareAlt_Helper3
@@ -3421,7 +3427,7 @@ Timer_ParamCompareAlt_Join3:
 	popw (0x0d5c:16)	; popw (0x0d5c)
 	popw	(0x3662:16)	; popw (0x367e)
 	xor	a, a
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	call	Timer_ParamCompareAlt_Helper6
 	ret
 Timer_ParamCompareAlt_Join4:
@@ -3477,7 +3483,7 @@ Timer_ParamCompareAlt_Helper3:
 	push	xix
 	push	xiy
 	push	xiz
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	pop	xiz
 	pop	xiy
@@ -3488,7 +3494,7 @@ Timer_ParamCompareAlt_Helper3:
 	pop	xwa
 	jrl	z, Timer_ParamCompareAlt_Skip21
 	pushw	wa
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	ld	l, a
 	popw	wa
 	ld	a, l
@@ -3517,14 +3523,14 @@ ToneParam_ModeGuardEntry_Skip:
 	res	2, (0x0d54:16)
 ToneParam_ModeGuardEntry_Join:
 	or	(0x0dd3:16), 1
-	call	VoiceSlot_TableSetup
+	call	SqStep_RebuildGridRows
 	call	Display_UpdateRegion5
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, ToneParam_ModeGuardEntry_Skip2
 	cp	a, 130
 	jrl	z, ToneParam_ModeGuardEntry_Skip2
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, (3415:16)
 	jrl	ugt, ToneParam_ModeGuardEntry_Skip2
 	call	DMA_FlagCheckWithCalls
@@ -3540,12 +3546,12 @@ ToneParam_ModeGuardEntry_Return:
 	jrl	nz, MemConfig_Handler_5_Skip14
 MemConfig_Handler_5:
 	set	3, (0x0d54:16)
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 130
 	jrl	z, MemConfig_Handler_5_Skip14
 	cp	a, 132
 	jrl	z, MemConfig_Handler_5_Skip14
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	ld	w, a
 	and	w, 240
 	ld	(3572:16), w
@@ -3561,7 +3567,7 @@ MemConfig_Handler_5_Code_Loop:
 	call	MemConfig_Handler_5_Helper2
 MemConfig_Handler_5_Join3:
 	or	(0x8cc8:16), 1
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 144
 	jr	nz, MemConfig_Handler_5_Skip13
 	call	MemConfig_Handler_5_Code_Helper10
@@ -3578,7 +3584,7 @@ MemConfig_Handler_5_Skip15:
 	call	MemConfig_Handler_5_0x83
 	jp	MemConfig_Handler_5_Join3
 MemConfig_Handler_5_Code_Skip4:
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 48
 	jrl	nz, MemConfig_Handler_5_Code_Loop
 	call	MemConfig_Handler_5_Helper6
@@ -3591,7 +3597,7 @@ MemConfig_Handler_5_Loop:
 	or	(0x8cc8:16), 1
 	jp	MemConfig_Handler_5_Code_Return
 MemConfig_Handler_5_Skip17:
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 130
 	jrl	z, MemConfig_Handler_5_Loop
 	cp	a, 132
@@ -3602,7 +3608,7 @@ MemConfig_Handler_5_Skip17:
 	jp	MemConfig_Handler_5_Loop
 MemConfig_Handler_5_Skip18:
 	call	MemConfig_Handler_5_Helper3
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 48
 	jrl	z, MemConfig_Handler_5_Loop
 	call	MemConfig_Handler_5_Helper6
@@ -3617,19 +3623,19 @@ MemConfig_Handler_5_Code_Skip7:
 	jp	MemConfig_Handler_5_Code_Return
 MemConfig_Handler_5_Helper3:
 	ld	w, 1:opc
-	call	VoiceSlot_RetZ
+	call	SeqTrack_DeleteBytesAtCursor
 	jp	MemConfig_Handler_5_Code_Return
 MemConfig_Handler_5_Helper4:
 	xor	a, a
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	ld	de, 4:i3
 	call	Timer_ModeHandler_0_Helper6
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	ld	(3575:16), a
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	ld	(3576:16), a
 	xor	a, a
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	call	MemConfig_Handler_5_Helper5
 	ld	c, (3576:16)
 	xor	b, b
@@ -3637,7 +3643,7 @@ MemConfig_Handler_5_Helper4:
 	jrl	z, MemConfig_Handler_5_Skip
 MemConfig_Handler_5_Join:
 	pushw	bc
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	popw	bc
 	cp	a, 129
 	jrl	z, MemConfig_Handler_5_Skip21
@@ -3651,7 +3657,7 @@ MemConfig_Handler_5_Join:
 	jp	MemConfig_Handler_5_Join2
 MemConfig_Handler_5_Skip20:
 	pushdi_w	(0x0d58)
-	call	VoiceSlot_LoadAndDispatch
+	call	SeqTrack_NextEvent
 	popw_dd16 0x58, 0x0d	; popw (0x0d58)
 	popw	bc
 	jp	MemConfig_Handler_5_Join
@@ -3671,7 +3677,7 @@ MemConfig_Handler_5_Skip:
 MemConfig_Handler_5_Skip22:
 	cp	a, 48
 	jrl	nz, MemConfig_Handler_5_Code_Return
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	nz, MemConfig_Handler_5_Code_Return
 	call	MemConfig_Handler_5_Helper3
@@ -3682,15 +3688,15 @@ MemConfig_Handler_5_Join2:
 MemConfig_Handler_5_Code_Return:
 	ret
 MemConfig_Handler_5_Helper5:
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	ld	(3523:16), a
 MemConfig_Handler_5_Loop3:
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, (3523:16)
 	jrl	nz, MemConfig_Handler_5_Return2
 	ld	w, 6:opc
-	call	VoiceSlot_RetZ
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_DeleteBytesAtCursor
+	call	SeqTrack_ReadCursorByte
 	and	a, 240
 	cp	a, 144
 	jrl	z, MemConfig_Handler_5_Loop3
@@ -3698,7 +3704,7 @@ MemConfig_Handler_5_Return2:
 	ret
 MemConfig_Handler_5_Helper6:
 	xor	a, a
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	ld	xiy, 3577
 	cp	(3415:16), 48
 	jrl	nz, MemConfig_Handler_5_Skip23
@@ -3707,7 +3713,7 @@ MemConfig_Handler_5_Helper6:
 MemConfig_Handler_5_Skip23:
 	ld	(xiy), 1
 MemConfig_Handler_5_Loop4:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 132
 	jrl	z, MemConfig_Handler_5_Code_Join2
 	cp	a, 130
@@ -3719,7 +3725,7 @@ MemConfig_Handler_5_Loop4:
 	jrl	nz, MemConfig_Handler_5_Loop4
 MemConfig_Handler_5_Code_Join2:
 	xor	a, a
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	jp	MemConfig_Handler_5_Return3
 MemConfig_Handler_5_Code_Skip12:
 	call	MemConfig_Handler_5_Helper7
@@ -3731,7 +3737,7 @@ MemConfig_Handler_5_Helper7:
 	jrl	z, MemConfig_Handler_5_Skip2
 	bit	7, a
 	jrl	z, MemConfig_Handler_5_Skip2
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 48
 	jrl	z, MemConfig_Handler_5_Skip3
 	cp	a, 47
@@ -3741,7 +3747,7 @@ MemConfig_Handler_5_Helper7:
 	cp	a, 0:i3
 	jrl	z, MemConfig_Handler_5_Skip6
 MemConfig_Handler_5_Skip2:
-	call	VoiceSlot_LoadAndDispatch
+	call	SeqTrack_NextEvent
 	jp	MemConfig_Handler_5_Return3
 MemConfig_Handler_5_Skip3:
 	xor	w, w
@@ -3758,12 +3764,12 @@ MemConfig_Handler_5_Skip5:
 MemConfig_Handler_5_Skip6:
 	ld	(3577:16), 2
 	ld	a, 1:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	ld	w, 48:opc
 	call	MemConfig_Handler_5_Helper9
 	ld	a, 1:opc
-	call	VoiceSlot_RestoreState
-	call	VoiceSlot_CompareAndBranch
+	call	SeqCursor_Restore
+	call	SeqTrack_PrevEvent
 	call	MemConfig_Handler_5_Helper3
 	jp	MemConfig_Handler_5_Skip2
 MemConfig_Handler_5_Helper8:
@@ -3771,7 +3777,7 @@ MemConfig_Handler_5_Helper8:
 	jrl	z, MemConfig_Handler_5_Code_Join4
 	bit	7, a
 	jrl	z, MemConfig_Handler_5_Code_Join4
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 0:i3
 	jrl	z, MemConfig_Handler_5_Skip8
 	cp	a, 47
@@ -3781,7 +3787,7 @@ MemConfig_Handler_5_Helper8:
 	cp	a, 48
 	jrl	z, MemConfig_Handler_5_Skip11
 MemConfig_Handler_5_Code_Join4:
-	call	VoiceSlot_LoadAndDispatch
+	call	SeqTrack_NextEvent
 	jp	MemConfig_Handler_5_Return3
 MemConfig_Handler_5_Skip8:
 	ld	w, 48:opc
@@ -3805,7 +3811,7 @@ MemConfig_Handler_5_Helper9:
 	pushw	wa
 	call	SeqTrack_ReadByteAndAdvance
 	popw	wa
-	call	VoiceSlot_WriteCurrentParam
+	call	SeqTrack_WriteCursorByte
 MemConfig_Handler_5_Return3:
 	ret
 ToneParam_ShortCallHandler:
@@ -3827,7 +3833,7 @@ ToneParam_Evt09_BytecodeHandler_Sub:
 	jrl nz, .Lc_ef80ea
 .Lc_ef80a7:
 ToneParam_Evt09_BytecodeHandler_Loop2:
-	call VoiceSlot_FlagCheck
+	call SeqTrack_PeekNextByte
 	cp a, (0x0d57:16)
 	jrl nz, .Lc_ef80e6
 	call VoiceState_DataBlock2_Helper2
@@ -3851,7 +3857,7 @@ ToneParam_Evt09_BytecodeHandler_Loop3:
 	jp ToneParam_Evt09_BytecodeHandler_Return2
 .Lc_ef80ea:
 ToneParam_Evt09_BytecodeHandler_Skip3:
-	call VoiceSlot_FlagCheck
+	call SeqTrack_PeekNextByte
 	cp a, (0x0d57:16)
 	jrl nz, .Lc_ef80e6
 	ld A,B
@@ -3861,7 +3867,7 @@ ToneParam_Evt09_BytecodeHandler_Skip3:
 	or B,0x10
 	ld (0x0dca:16), b
 	ld A, 0x01:opc
-	call VoiceSlot_SaveState
+	call SeqCursor_Save
 	call VoiceState_DataBlock2_Helper2
 	ld (GLOBAL_ERROR_CODE:16), 0xff
 .Lc_ef8115:
@@ -3869,20 +3875,20 @@ ToneParam_Evt09_BytecodeHandler_Loop:
 	call VoiceCtrl_BytecodeHandler
 	pushw bc
 	xor A,A
-	call VoiceSlot_SaveState
-	call VoiceSlot_DispatchRet
+	call SeqCursor_Save
+	call SeqTrack_NextEventKeepWrapCount
 	cp W,0xff
 	jrl z, .Lc_ef814a
 	popw bc
 	cp (0x0dca:16), b
 	jrl nz, .Lc_ef8115
 	xor A,A
-	call VoiceSlot_RestoreState
+	call SeqCursor_Restore
 	ld w, (0x0dcc:16)
-	call VoiceSlot_RetZ
+	call SeqTrack_DeleteBytesAtCursor
 ToneParam_Evt09_BytecodeHandler_Join:
 	ld A, 0x01:opc
-	call VoiceSlot_RestoreState
+	call SeqCursor_Restore
 	jp ToneParam_Evt09_BytecodeHandler_Skip2
 .Lc_ef814a:
 	add XSP,0x00000002
@@ -3893,8 +3899,8 @@ ToneParam_Evt09_BytecodeHandler_Return2:
 	; indexed with stride 1 (`sla HL, 0x02`), index from `ld l, (0x0d65:16)`
 ToneParam_HandlerTable_BC:
 	.long	DefaultHandler_Ret
-	.long	VoiceSlot_TableSetup
-	.long	VoiceSlot_TableSetup
+	.long	SqStep_RebuildGridRows
+	.long	SqStep_RebuildGridRows
 	.long	DefaultHandler_Ret
 ToneParam_Evt09_BytecodeHandler_Helper:
 	cp (0x0d65:16), 0x03
@@ -4039,9 +4045,9 @@ ToneParam_HandlerTable_BC_Return3:
 	ret
 ToneParam_HandlerTable_BC_Helper3:
 	ld A, 0x03:opc
-	call VoiceSlot_SaveState
+	call SeqCursor_Save
 .Lc_ef82fd:
-	call VoiceSlot_StepCursorBack
+	call SeqTrack_PrevEventKeepWrapCount
 	cp W,0xff
 	jrl z, .Lc_ef8314
 	call ToneParam_HandlerTable_BC_Helper5
@@ -4052,37 +4058,37 @@ ToneParam_HandlerTable_BC_Helper3:
 	ld (0x0e3f:16), 0x04
 ToneParam_HandlerTable_BC_Join6:
 	ld A, 0x03:opc
-	call VoiceSlot_RestoreState
+	call SeqCursor_Restore
 	ret
 ToneParam_HandlerTable_BC_Helper4:
 	ld	a, 3:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 VoiceCtrl_ParamSetupBytecode_Helper_Loop:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, VoiceCtrl_ParamSetupBytecode_Helper_Loop2
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	cp	w, 255
 	jrl	nz, VoiceCtrl_ParamSetupBytecode_Helper_Loop
 VoiceCtrl_ParamSetupBytecode_Helper_Loop2:
-	call	VoiceSlot_StepCursorBack
+	call	SeqTrack_PrevEventKeepWrapCount
 	cp	w, 255
 	jrl	z, VoiceCtrl_ParamSetupBytecode_Helper_Skip11
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, VoiceCtrl_ParamSetupBytecode_Helper_Skip11
 	call	ToneParam_HandlerTable_BC_Helper5
 	cp	w, 0:i3
 	jrl	nz, VoiceCtrl_ParamSetupBytecode_Helper_Loop2
 	ld	a, 4:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	ldb_d8	a, (0x0e3f)
 	stb_d8	(0x0e42), a
 ToneParam_HandlerTable_BC_Loop:
-	call	VoiceSlot_StepCursorBack
+	call	SeqTrack_PrevEventKeepWrapCount
 	cp	w, 255
 	jrl	z, ToneParam_Evt09_BytecodeHandler_Skip15
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, ToneParam_Evt09_BytecodeHandler_Loop9
 	call	ToneParam_HandlerTable_BC_Helper5
@@ -4091,10 +4097,10 @@ ToneParam_HandlerTable_BC_Loop:
 	call	VoiceState_DataBlock2_Helper2
 	jp	ToneParam_HandlerTable_BC_Loop
 ToneParam_Evt09_BytecodeHandler_Loop9:
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	cp	w, 255
 	jrl	z, ToneParam_Evt09_BytecodeHandler_Skip16
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, ToneParam_Evt09_BytecodeHandler_Skip16
 ToneParam_Evt09_BytecodeHandler_Skip15:
@@ -4108,20 +4114,20 @@ ToneParam_Evt09_BytecodeHandler_Skip16:
 	jp	ToneParam_HandlerTable_BC_Return4
 VoiceCtrl_ParamSetupBytecode_Helper_Skip11:
 	ld	a, 3:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	ld	w, 255:opc
 ToneParam_HandlerTable_BC_Return4:
 	ret
 ToneParam_HandlerTable_BC_Helper5:
 	push	xiy
 	ld	a, 2:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	call	SeqTrack_ReadByteAndAdvance
 	stb_d8	(0x0dc8), a
 	and	a, 240
 	cp	a, 192
 	jrl	nz, ToneParam_Evt09_BytecodeHandler_Skip19
-	call	VoiceSlot_SkipByteAndRead
+	call	SeqTrack_SkipByteAndRead
 	cp	a, 72
 	jrl	nz, ToneParam_Evt09_BytecodeHandler_Skip19
 	call	SeqTrack_ReadByteAndAdvance
@@ -4136,7 +4142,7 @@ ToneParam_HandlerTable_BC_Helper5:
 	and	e, 12
 	or	d, e
 	pushw	de
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	popw	de
 	bit	0, (0x0dc8:16)
 	jrl	z, VoiceCtrl_ParamSetupBytecode_Helper_Skip12
@@ -4150,7 +4156,7 @@ ToneParam_Evt09_BytecodeHandler_Skip19:
 	ld	w, 255:opc
 ToneParam_HandlerTable_BC_Join7:
 	ld	a, 2:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	pop	xiy
 	ret
 VoiceState_DataBlock2_Helper:
@@ -4174,16 +4180,16 @@ ToneParam_HandlerTable_BC_Helper6:
 	push XIY
 	push XIZ
 	ld A, 0x01:opc
-	call VoiceSlot_SaveState
+	call SeqCursor_Save
 ToneParam_HandlerTable_BC_Join8:
 	xor A,A
 	ld (0x0e43:16), a
 .Lc_ef8453:
-	call VoiceSlot_ReadCurrentParams
+	call SeqTrack_ReadCursorByte
 	cp A,0x81
 	jrl nz, .Lc_ef848b
 	inc 1, (0x0e43:16)
-	call VoiceSlot_DispatchRet
+	call SeqTrack_NextEventKeepWrapCount
 	cp W,0xff
 	jrl z, .Lc_ef849e
 	ld a, (0x0e43:16)
@@ -4200,12 +4206,12 @@ ToneParam_HandlerTable_BC_Join8:
 	and A,0xf0
 	cp A,0xc0
 	jrl z, .Lc_ef849e
-	call VoiceSlot_DispatchRet
+	call SeqTrack_NextEventKeepWrapCount
 	cp W,0xff
 	jrl nz, .Lc_ef8453
 .Lc_ef849e:
 	ld A, 0x01:opc
-	call VoiceSlot_RestoreState
+	call SeqCursor_Restore
 	pop XIZ
 	pop XIY
 	pop XIX
@@ -4223,16 +4229,16 @@ ToneParam_HandlerTable_BC_Helper7:
 	push XIY
 	push XIZ
 	ld A, 0x01:opc
-	call VoiceSlot_SaveState
+	call SeqCursor_Save
 ToneParam_HandlerTable_BC_Join9:
 	xor A,A
 	ld (0x0e43:16), a
 .Lc_ef84bf:
 ToneParam_HandlerTable_BC_Join10:
-	call VoiceSlot_FlagCheck
+	call SeqTrack_PeekNextByte
 	cp A,0x82
 	jrl z, .Lc_ef8549
-	call VoiceSlot_ReadCurrentParams
+	call SeqTrack_ReadCursorByte
 	cp A,0x84
 	jrl z, .Lc_ef8549
 	cp A,0x81
@@ -4240,7 +4246,7 @@ ToneParam_HandlerTable_BC_Join10:
 	and A,0xf0
 	cp A,0xc0
 	jrl z, .Lc_ef8549
-	call VoiceSlot_DispatchRet
+	call SeqTrack_NextEventKeepWrapCount
 	cp W,0xff
 	jrl z, .Lc_ef8549
 	jp ToneParam_HandlerTable_BC_Join10
@@ -4255,7 +4261,7 @@ ToneParam_HandlerTable_BC_Join10:
 	ld c, (0x0e40:16)
 .Lc_ef850d:
 ToneParam_HandlerTable_BC_Join11:
-	call VoiceSlot_ReadCurrentParams
+	call SeqTrack_ReadCursorByte
 	cp A,0x82
 	jrl z, .Lc_ef8549
 	cp A,0x84
@@ -4263,7 +4269,7 @@ ToneParam_HandlerTable_BC_Join11:
 	cp A,0x81
 	jrl nz, .Lc_ef8536
 	pushw bc
-	call VoiceSlot_DispatchRet
+	call SeqTrack_NextEventKeepWrapCount
 	popw bc
 	cp W,0xff
 	jrl z, .Lc_ef8549
@@ -4274,12 +4280,12 @@ ToneParam_HandlerTable_BC_Join11:
 	cp A,0xc0
 	jrl z, .Lc_ef8549
 	pushw bc
-	call VoiceSlot_DispatchRet
+	call SeqTrack_NextEventKeepWrapCount
 	popw bc
 	jp ToneParam_HandlerTable_BC_Join11
 .Lc_ef8549:
 	ld A, 0x01:opc
-	call VoiceSlot_RestoreState
+	call SeqCursor_Restore
 	pop XIZ
 	pop XIY
 	pop XIX
@@ -4302,7 +4308,7 @@ ToneParam_HandlerTable_BC_Loop2:
 	cp	a, 16
 	jrl	ugt, VoiceState_DataBlock2_Helper_Skip3
 	stb_d8	(0x0eee), a
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	srl	xiz, 1
 	push	xix
 	ld	xix, 0xf1a0
@@ -4338,15 +4344,15 @@ ToneParam_HandlerTable_BC_Loop2:
 	pop	xhl
 	pop	xde
 VoiceState_DataBlock2_Helper_Loop:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	nz, VoiceState_DataBlock2_Helper_Skip
 	incw	1, (0x0e44:16)
 VoiceState_DataBlock2_Helper_Skip:
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	cp	w, 255
 	jrl	nz, VoiceState_DataBlock2_Helper_Loop
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 132
 	jrl	z, VoiceState_DataBlock2_Helper_Skip2
 	ldw_d16	wa, (0x0e44)
@@ -4363,12 +4369,12 @@ VoiceState_DataBlock2_Helper_Skip3:
 	ret
 VoiceState_DataBlock2_Helper2:
 	xor A,A
-	call VoiceSlot_SaveState
-	call VoiceSlot_DispatchRet
+	call SeqCursor_Save
+	call SeqTrack_NextEventKeepWrapCount
 	xor A,A
-	call VoiceSlot_RestoreState
+	call SeqCursor_Restore
 	ld w, (0x0dcc:16)
-	call VoiceSlot_RetZ
+	call SeqTrack_DeleteBytesAtCursor
 	ret
 VoiceState_DataBlock2_Helper3:
 	or	(0xe2f8:16), 0x08
@@ -4415,26 +4421,26 @@ Display_UpdateRegions0To4:
 	call Display_UpdateRegion3
 	call Display_UpdateRegion2
 	ret
-VoiceSlot_TableSetup_Helper:
+SeqTrack_SkipWrapMarkers:
 	cp c, 0:i3
 	jrl z, .Lc_ef870f
 .Lc_ef86d6:
 	pushw bc
-	call VoiceSlot_ReadCurrentParams
+	call SeqTrack_ReadCursorByte
 	cp A,0x82
 	jrl z, .Lc_ef8715
 	cp A,0x84
 	jrl z, .Lc_ef8715
 	cp (0x0dcf:16), 0x00
 	jrl z, .Lc_ef86f7
-	call VoiceSlot_StepCursorBack
+	call SeqTrack_PrevEventKeepWrapCount
 	jp ToneParam_HandlerTable_BC_Join12
 .Lc_ef86f7:
-	call VoiceSlot_DispatchRet
+	call SeqTrack_NextEventKeepWrapCount
 ToneParam_HandlerTable_BC_Join12:
 	cp W,0xff
 	jrl z, .Lc_ef8717
-	call VoiceSlot_ReadCurrentParams
+	call SeqTrack_ReadCursorByte
 	popw bc
 	cp A,0x81
 	jrl nz, .Lc_ef86d6
@@ -4534,12 +4540,12 @@ DisplayMode_Handler_3:
 	call	DisplayStr_StyleSectionInit
 	ret
 DisplayMode_Handler_3_Skip:
-	call VoiceSlot_ReadCurrentParams
+	call SeqTrack_ReadCursorByte
 	cp A,0x81
 	jrl z, .Lc_ef8807
 	cp A,0x82
 	jrl z, .Lc_ef8807
-	call VoiceSlot_FlagCheck
+	call SeqTrack_PeekNextByte
 	cp a, (0x0d57:16)
 	jrl ugt, .Lc_ef8807
 	call DMA_FlagCheckWithCalls
@@ -4570,7 +4576,7 @@ ToneEvt_Handler_Mode9_Helper:
 ;   it.
 TempoRingBuf_DispatchEvents:
 	or	(0x0dd3:16), 1
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	ld	w, a
 	and	w, 240
 	cp	w, 128
@@ -4692,7 +4698,7 @@ TempoRingBuf_OnNoteEvent_Loop2:
 	ld	a, (xiy+hl)
 	ld	(xix+2), a
 	pushw	wa
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	srl	xiz, 1
 	popw	wa
 	push	xix
@@ -4853,7 +4859,7 @@ SqStep_SeekForwardByDistance_Skip25:
 	jrl	nz, SqStep_SeekForwardByDistance_Skip26
 	decw	1, (3418:16)
 	push	xhl
-	call	VoiceSlot_StepCursorBack
+	call	SeqTrack_PrevEventKeepWrapCount
 	call	AccPedal_CheckBitAndUpdate
 	pop	xhl
 SqStep_SeekForwardByDistance_Skip26:
@@ -4883,18 +4889,18 @@ DisplayMode_Handler_3_Helper7:
 	jrl	z, DisplayMode_Handler_3_Return4
 	cp	(3429:16), 1
 	jrl	nz, DisplayMode_Handler_3_Return4
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	and	a, 240
 	cp	a, 144
 	jrl	nz, DisplayMode_Handler_3_Return4
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, (3415:16)
 	jrl	nz, DisplayMode_Handler_3_Return4
 	xor	a, a
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	ld	de, 2:i3
 	call	Timer_ModeHandler_0_Helper6
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	call	DisplayMode_Handler_3_Helper8
 	ld	w, a
 	ld	l, w
@@ -4907,7 +4913,7 @@ DisplayMode_Handler_3_Skip18:
 	pushw	hl
 	call	PerfMode_MapDisplayNoteToEvent
 	popw	hl
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	sra	iz, 1
 	push	xde
 	ld	xde, 61856
@@ -4922,10 +4928,10 @@ DisplayMode_Handler_3_Skip18:
 	jp	DisplayMode_Handler_3_Join6
 DisplayMode_Handler_3_Skip19:
 	ld	w, a
-	call	VoiceSlot_WriteCurrentParam
+	call	SeqTrack_WriteCursorByte
 DisplayMode_Handler_3_Join6:
 	xor	a, a
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	call	Disp_ShowNoteNameAndVelocity
 	or	(0xe2f8:16), 8
 	call	Display_UpdateRegion3
@@ -4933,7 +4939,7 @@ DisplayMode_Handler_3_Return4:
 	ret
 DisplayMode_Handler_3_Helper8:
 	pushw	wa
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	srl	xiz, 1
 	popw	wa
 	push	xix
@@ -4951,7 +4957,7 @@ DisplayMode_Handler_3_Return5:
 	ret
 PerfMode_MapDisplayNoteToEvent:
 	pushw	wa
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	srl	xiz, 1
 	popw	wa
 	push	xix
@@ -4987,19 +4993,19 @@ PerfMode_Evt01_NoteNumberDial_Helper:
 	call	ToneParam_ModeGuardEntry_Helper4
 	cp	w, 0:i3
 	jrl	z, PerfMode_Evt01_NoteNumberDial_Helper_Return
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	and	a, 240
 	cp	a, 128
 	jrl	nz, PerfMode_Evt01_NoteNumberDial_Helper_Return
 	xor	a, a
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	ldb_d8	e, (0x0df3)
 	xor	d, d
 	call	Timer_ModeHandler_0_Helper6
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	ld	c, a
 	pushw	bc
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	ld	l, a
 	rrc	a
 	and	a, 129
@@ -5025,7 +5031,7 @@ PerfMode_Evt01_NoteNumberDial_Join:
 	and	a, 127
 	ld	w, a
 	pushw	bc
-	call	VoiceSlot_WriteCurrentParam
+	call	SeqTrack_WriteCursorByte
 	call	SeqTrack_ReadByteAndAdvance
 	popw	bc
 	ld	a, c
@@ -5035,21 +5041,21 @@ PerfMode_Evt01_NoteNumberDial_Join:
 	sla	b, 1
 	or	a, b
 	ld	w, a
-	call	VoiceSlot_WriteCurrentParam
+	call	SeqTrack_WriteCursorByte
 	xor	a, a
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 PerfMode_Evt01_NoteNumberDial_Helper_Return:
 	ret
 PerfMode_ParamHandler_3_Helper:
 	ld	(0x0df2:16), 1
 	ld	(0x0df3:16), 2
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	ld	l, a
 	and	a, 240
 	cp	a, 208
 	jrl	nz, PerfMode_ParamHandler_3_Helper_Return2
 	pushw	hl
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	popw	hl
 	cp	a, (0x0d57:16)
 	jrl	nz, PerfMode_ParamHandler_3_Helper_Return2
@@ -5072,13 +5078,13 @@ PerfMode_ParamHandler_3_Helper_Return2:
 PerfMode_ParamHandler_3_Helper2:
 	ld	(0x0df2:16), 255
 	ld	(0x0df3:16), 2
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	ld	l, a
 	and	a, 240
 	cp	a, 208
 	jrl	nz, PerfMode_ParamHandler_3_Helper2_Return3
 	pushw	hl
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	popw	hl
 	cp	a, (0x0d57:16)
 	jrl	nz, PerfMode_ParamHandler_3_Helper2_Return3
@@ -5113,11 +5119,11 @@ PerfMode_IncNoteVelocity:
 	ld	(0x0df3:16), 3
 	cp	(0x0d65:16), 1
 	jrl	nz, PerfMode_IncNoteVelocity_Return4
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	and	a, 240
 	cp	a, 144
 	jrl	nz, PerfMode_IncNoteVelocity_Return4
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, (0x0d57:16)
 	jrl	nz, PerfMode_IncNoteVelocity_Return4
 	push	xhl
@@ -5135,11 +5141,11 @@ PerfMode_DecNoteVelocity:
 	ld	(0x0df3:16), 3
 	cp	(0x0d65:16), 1
 	jrl	nz, PerfMode_Evt02_NoteVelocityDial_Helper_Return5
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	and	a, 240
 	cp	a, 144
 	jrl	nz, PerfMode_Evt02_NoteVelocityDial_Helper_Return5
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, (0x0d57:16)
 	jrl	nz, PerfMode_Evt02_NoteVelocityDial_Helper_Return5
 	push	xhl
@@ -5157,11 +5163,11 @@ PerfMode_Evt01_NoteNumberDial_Helper2:
 	cp	w, 0:i3
 	jrl	z, PerfMode_Evt01_NoteNumberDial_Helper2_Return6
 	xor	a, a
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	ldb_d8	e, (0x0df3)
 	xor	d, d
 	call	Timer_ModeHandler_0_Helper6
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	ld	w, a
 	add	a, (0x0df2:16)
 	bit	7, a
@@ -5171,9 +5177,9 @@ PerfMode_Evt01_NoteNumberDial_Helper2_Skip4:
 	ld	xhl, (0x110e:16)
 	ld	(xhl), a
 	ld	w, a
-	call	VoiceSlot_WriteCurrentParam
+	call	SeqTrack_WriteCursorByte
 	xor	a, a
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 PerfMode_Evt01_NoteNumberDial_Helper2_Return6:
 	ret
 PerfMode_Evt01_NoteNumberDial_Helper3:
@@ -5181,13 +5187,13 @@ PerfMode_Evt01_NoteNumberDial_Helper3:
 	cp	w, 0:i3
 	jrl	z, PerfMode_Evt01_NoteNumberDial_Helper3_Return7
 	xor	a, a
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	ldb_d8	e, (0x0df3)
 	xor	d, d
 	call	Timer_ModeHandler_0_Helper6
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	stb_d8	(0x3669), a
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	stb_d8	(0x1112), a
 	ld	w, a
 	ldb_d8	a, (0x3669)
@@ -5222,14 +5228,14 @@ PerfMode_Evt01_NoteNumberDial_Helper3_Skip:
 	stb_d8	(0x1112), c
 	ld	w, a
 	pushw	bc
-	call	VoiceSlot_WriteCurrentParam
+	call	SeqTrack_WriteCursorByte
 	call	SeqTrack_ReadByteAndAdvance
 	popw	bc
 	ld	w, c
-	call	VoiceSlot_WriteCurrentParam
+	call	SeqTrack_WriteCursorByte
 PerfMode_Evt01_NoteNumberDial_Helper3_Skip2:
 	xor	a, a
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 PerfMode_Evt01_NoteNumberDial_Helper3_Return7:
 	ret
 Timer_ParamCompareAlt_Helper6:
@@ -5293,11 +5299,11 @@ DMA_Channel3_CallAndInit:
 DMA_FlagCheckWithCalls:
 	; --- Flag-check with calls (42 bytes) ---
 	xor	a, a
-	call VoiceSlot_SaveState
-	call VoiceSlot_StatusRet
+	call SeqCursor_Save
+	call SqStep_ShowCursorEventPopup
 	xor	a, a
-	call VoiceSlot_RestoreState
-	call VoiceSlot_ReadCurrentParams
+	call SeqCursor_Restore
+	call SeqTrack_ReadCursorByte
 	ld xhl, 0x00000d54
 	and a, 0xf0
 	cp a, 0x90
@@ -5308,40 +5314,44 @@ DMA_StoreFlagAndReturn:
 	ret
 
 
-VoiceSlot_TableSetup:
+; SqStep_RebuildGridRows: When bit 0 of 0x0DD3 is set (clears it): rebuilds the step-edit grid around the cursor -- backs up to the
+;   start of the displayed row (SqStep_GetBeatInGridRow, SeqTrack_SkipWrapMarkers), finds its end, builds the row
+;   bitmap (SqStep_BuildCurrentRowBitmap) and the rows above and below (SqStep_SetupPrevGridRow /
+;   SqStep_SetupNextGridRow), and redraws regions 1, 2, 4 and 5; the cursor is restored.  Basis: callers + body.
+SqStep_RebuildGridRows:
 	bit 0, (0x0dd3:16)
 	jrl z, .Lc_ef900f
-	jp VoiceSlot_TableSetup_Join
+	jp SqStep_RebuildGridRows_Join
 .Lc_ef900f:
-	jp VoiceSlot_TableSetup_Return
-VoiceSlot_TableSetup_Join:
+	jp SqStep_RebuildGridRows_Return
+SqStep_RebuildGridRows_Join:
 	and (0x0dd3:16), 0xfe
 	call AccPedal_CheckBitAndUpdate
 	call SoundEvt_LongPacketHandler_Helper2
 	xor A,A
-	call VoiceSlot_SaveState
+	call SeqCursor_Save
 	call SqStep_GetBeatInGridRow
 	ld (0x0dcf:16), 0x01
-	call VoiceSlot_TableSetup_Helper
-	call VoiceSlot_CheckCursorAtTrackStart
+	call SeqTrack_SkipWrapMarkers
+	call SeqTrack_CheckCursorAtStart
 	cp w, 0:i3
 	jrl nz, .Lc_ef904e
-	call VoiceSlot_ReadCurrentParams
+	call SeqTrack_ReadCursorByte
 	cp A,0x81
 	jrl nz, .Lc_ef906a
 	dec 1, (0x0de7:16)
-	jp VoiceSlot_TableSetup_Code_Skip
+	jp SqStep_RebuildGridRows_Skip
 .Lc_ef904e:
-	call VoiceSlot_ReadCurrentParams
+	call SeqTrack_ReadCursorByte
 	cp A,0x81
 	jrl nz, .Lc_ef906a
-	call VoiceSlot_DispatchRet
-	call VoiceSlot_ReadCurrentParams
+	call SeqTrack_NextEventKeepWrapCount
+	call SeqTrack_ReadCursorByte
 	cp A,0x81
 	jrl nz, .Lc_ef906a
 	dec 1, (0x0de7:16)
 .Lc_ef906a:
-VoiceSlot_TableSetup_Code_Skip:
+SqStep_RebuildGridRows_Skip:
 	ld a, (0x0eee:16)
 	dec 1,A
 	xor W,W
@@ -5358,7 +5368,7 @@ VoiceSlot_TableSetup_Code_Skip:
 	ld c, (0x0de7:16)
 	xor B,B
 	ld (0x0dcf:16), 0x00
-	call VoiceSlot_TableSetup_Helper
+	call SeqTrack_SkipWrapMarkers
 	ld a, (0x0eee:16)
 	dec 1,A
 	xor W,W
@@ -5382,7 +5392,7 @@ VoiceSlot_TableSetup_Code_Skip:
 .Lc_ef90e9:
 	ld (0x0e4e:16), wa
 	xor A,A
-	call VoiceSlot_RestoreState
+	call SeqCursor_Restore
 	call SqStep_SetupPrevGridRow
 	call SqStep_SetupNextGridRow
 	call Display_UpdateRegion1
@@ -5390,7 +5400,7 @@ VoiceSlot_TableSetup_Code_Skip:
 	jrl nz, .Lc_ef910a
 	call Display_UpdateRegion4
 .Lc_ef910a:
-VoiceSlot_TableSetup_Return:
+SqStep_RebuildGridRows_Return:
 	ret
 SqStep_GetBeatInGridRow:
 	ld c, (0x0d5c:16)
@@ -5415,7 +5425,7 @@ SqStep_GetBeatInGridRow_Join2:
 ;   start ((0x0DE8)/(0x0DEC)), clears 0x3692-0x369D and walks the events to the row end ((0x0DEA)/(0x0DED)); each
 ;   event sets bit clock/12 in the byte of its beat (0x3696 + beat, advanced at each 0x81 marker), an END marker 0x82
 ;   records its column in 0x0F5B with 0x0F5A = 2, and 0x84 stops the walk. Basis: callers + body --
-;   VoiceSlot_TableSetup calls it once it has found the row's start and end; 0x3696 is the 32-bit step bitmap whose
+;   SqStep_RebuildGridRows calls it once it has found the row's start and end; 0x3696 is the 32-bit step bitmap whose
 ;   bit (0x3673) - 1 marks the cursor step.
 SqStep_BuildCurrentRowBitmap:
 	ldw_d16	wa, (0x0de8)
@@ -5444,9 +5454,9 @@ SqStep_BuildCurrentRowBitmap:
 	stb_d8	(0x0f5a), a
 	stb_d8	(0x0f5b), a
 	add	xix, 4
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
-	jrl	nz, VoiceSlot_TableSetup_Skip4
+	jrl	nz, SqStep_BuildCurrentRowBitmap_Skip4
 	ldb_d8	l, (0x0eee)
 	dec	1, l
 	xor	h, h
@@ -5456,17 +5466,17 @@ SqStep_BuildCurrentRowBitmap:
 	ld	wa, (xde+hl)
 	pop	xde
 	cp	wa, (0x0dea:16)
-	jrl	nz, VoiceSlot_TableSetup_Skip4
+	jrl	nz, SqStep_BuildCurrentRowBitmap_Skip4
 	srl	hl, 1
 	push	xde
 	ld	xde, 0x0cbe
 	ld	a, (xde+hl)
 	pop	xde
 	cp	a, (0x0ded:16)
-	jrl	nz, VoiceSlot_TableSetup_Skip4
-	call	VoiceSlot_FlagCheck
+	jrl	nz, SqStep_BuildCurrentRowBitmap_Skip4
+	call	SeqTrack_PeekNextByte
 	cp	a, 130
-	jrl	nz, VoiceSlot_TableSetup_Code_Epilogue
+	jrl	nz, SqStep_BuildCurrentRowBitmap_Epilogue
 	ld	xwa, xix
 	sub	xwa, 13946
 	cp	wa, 1:i3
@@ -5480,19 +5490,19 @@ SqStep_BuildCurrentRowBitmap_Skip6:
 SqStep_BuildCurrentRowBitmap_Skip7:
 	stb_d8	(0x0f5b), a
 	ld	(0x0f5a:16), 2
-	jp	VoiceSlot_TableSetup_Code_Epilogue
-VoiceSlot_TableSetup_Code_Loop:
-	call	VoiceSlot_ComputeWordIndex
+	jp	SqStep_BuildCurrentRowBitmap_Epilogue
+SqStep_BuildCurrentRowBitmap_Loop:
+	call	SeqTrack_WordIndex
 	srl	xiz, 1
 	push	xde
 	ld	xde, 0x0cbe
 	ld	a, (xde+iz)
 	pop	xde
 	push	xix
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	pop	xix
 	cp	w, 0:i3
-	jrl	nz, VoiceSlot_TableSetup_Code_Epilogue
+	jrl	nz, SqStep_BuildCurrentRowBitmap_Epilogue
 	ldb_d8	l, (0x0eee)
 	dec	1, l
 	xor	h, h
@@ -5502,17 +5512,17 @@ VoiceSlot_TableSetup_Code_Loop:
 	ld	wa, (xde+hl)
 	pop	xde
 	cp	wa, (0x0dea:16)
-	jrl	nz, VoiceSlot_TableSetup_Skip4
+	jrl	nz, SqStep_BuildCurrentRowBitmap_Skip4
 	srl	hl, 1
 	push	xde
 	ld	xde, 0x0cbe
 	ld	a, (xde+hl)
 	pop	xde
 	cp	a, (0x0ded:16)
-	jrl	nz, VoiceSlot_TableSetup_Skip4
-	call	VoiceSlot_FlagCheck
+	jrl	nz, SqStep_BuildCurrentRowBitmap_Skip4
+	call	SeqTrack_PeekNextByte
 	cp	a, 130
-	jrl	nz, VoiceSlot_TableSetup_Code_Epilogue
+	jrl	nz, SqStep_BuildCurrentRowBitmap_Epilogue
 	ld	xwa, xix
 	sub	xwa, 13946
 	push	xwa
@@ -5523,36 +5533,36 @@ VoiceSlot_TableSetup_Code_Loop:
 	popw	bc
 	pop	xwa
 	cp	h, 255
-	jrl	z, VoiceSlot_TableSetup_Code_Epilogue
+	jrl	z, SqStep_BuildCurrentRowBitmap_Epilogue
 	cp	l, 2:i3
-	jrl	nz, VoiceSlot_TableSetup_Code_Skip2
+	jrl	nz, SqStep_BuildCurrentRowBitmap_Skip2
 	inc	1, wa
-VoiceSlot_TableSetup_Code_Skip2:
+SqStep_BuildCurrentRowBitmap_Skip2:
 	sla	wa, 3
 	inc	1, a
 	stb_d8	(0x0f5b), a
 	ld	(0x0f5a:16), 2
-	jp	VoiceSlot_TableSetup_Code_Epilogue
-VoiceSlot_TableSetup_Skip4:
-	call	VoiceSlot_ReadCurrentParams
+	jp	SqStep_BuildCurrentRowBitmap_Epilogue
+SqStep_BuildCurrentRowBitmap_Skip4:
+	call	SeqTrack_ReadCursorByte
 	cp	w, 0:i3
-	jrl	nz, VoiceSlot_TableSetup_Code_Epilogue
-	call	VoiceSlot_StatusCheck
+	jrl	nz, SqStep_BuildCurrentRowBitmap_Epilogue
+	call	SeqEvent_CheckStatusByte
 	cp	w, 0:i3
-	jrl	nz, VoiceSlot_TableSetup_Code_Loop
+	jrl	nz, SqStep_BuildCurrentRowBitmap_Loop
 	cp	a, 130
-	jrl	nz, VoiceSlot_TableSetup_Code_Skip4
+	jrl	nz, SqStep_BuildCurrentRowBitmap_Code_Skip4
 	ld	xwa, xix
 	sub	xwa, 13946
 	sla	wa, 3
 	stb_d8	(0x0f5b), a
 	ld	(0x0f5a:16), 2
-VoiceSlot_TableSetup_Code_Skip4:
+SqStep_BuildCurrentRowBitmap_Code_Skip4:
 	cp	a, 132
-	jrl	z, VoiceSlot_TableSetup_Code_Epilogue
+	jrl	z, SqStep_BuildCurrentRowBitmap_Epilogue
 	cp	a, 129
-	jrl	z, VoiceSlot_TableSetup_Code_Skip5
-	call	VoiceSlot_FlagCheck
+	jrl	z, SqStep_BuildCurrentRowBitmap_Skip5
+	call	SeqTrack_PeekNextByte
 	xor	w, w
 	ld	l, 12:opc
 	div	wa, l
@@ -5564,20 +5574,20 @@ VoiceSlot_TableSetup_Code_Skip4:
 	stcf	a, (xix)
 	ldto_berp	a, 60
 	push	xix
-	jp	VoiceSlot_TableSetup_Code_Loop
-VoiceSlot_TableSetup_Code_Skip5:
+	jp	SqStep_BuildCurrentRowBitmap_Loop
+SqStep_BuildCurrentRowBitmap_Skip5:
 	pop	xix
 	inc	1, xix
 	push	xix
-	jp	VoiceSlot_TableSetup_Code_Loop
-VoiceSlot_TableSetup_Code_Epilogue:
+	jp	SqStep_BuildCurrentRowBitmap_Loop
+SqStep_BuildCurrentRowBitmap_Epilogue:
 	pop	xix
 	ret
 ; SqStep_SetupPrevGridRow: Sets up the grid row above the current one: its measure number (0x0E4C, capped at 1000) and
 ;   beat count (0x0E52), then its bitmap at 0x3692 (SqStep_BuildAdjacentRowBitmap with 0x0EC1 = the beat count). The
 ;   row above is row 1 of the same measure when the cursor is on a second row (beat >= 4), else the last row of the
 ;   previous measure; it is empty in measure 1 row 1 or when the selected track's flag 0xF250[3*(0x0D60 - 1)] bit 7 is
-;   clear. Basis: callers + body -- VoiceSlot_TableSetup calls it right after storing the current row's measure in
+;   clear. Basis: callers + body -- SqStep_RebuildGridRows calls it right after storing the current row's measure in
 ;   0x0E4E.
 SqStep_SetupPrevGridRow:
 	ld l, (0x0d60:16)
@@ -5590,35 +5600,35 @@ SqStep_SetupPrevGridRow:
 	ld XDE,0x0000f250
 	bit	7, (xde+hl)
 	pop	xde
-	jrl	nz, VoiceSlot_TableSetup_Skip7
+	jrl	nz, SqStep_SetupPrevGridRow_Skip7
 	xor	wa, wa
 	ld	(0x0e4c:16), wa
 	stb_d8	(0x0e52), a
-	jp	VoiceSlot_TableSetup_Code_Return
-VoiceSlot_TableSetup_Skip7:
+	jp	SqStep_SetupPrevGridRow_Return
+SqStep_SetupPrevGridRow_Skip7:
 	cpw	(0x3662:16), 1
 	jrl	z, SqStep_SetupPrevGridRow_Skip11
 	cp	(0x0d5c:16), 4
-	jrl	c, VoiceSlot_TableSetup_Skip9
+	jrl	c, SqStep_SetupPrevGridRow_Skip9
 	ldw_d16	wa, (0x3662)
 	ld	(0x2863:16), wa
 	call	SqStep_GetRhythmTrackForMeasures
 	ldb_d8	a, (0x0d60)
 	call	SetWall_SlotResolve
 	cp	(SEQ_ERROR_CODE:16), 0
-	jrl	nz, VoiceSlot_TableSetup_Code_Return
+	jrl	nz, SqStep_SetupPrevGridRow_Return
 	ld	(0x0e52:16), 4
 	ld	(0x28a5:16), iy
 	ldw_d16	iy, (0x2893)
 	ld	(0x28a3:16), iy
 	ldw_d16	iy, (0x3662)
 	cp	iy, 1000
-	jrl	c, VoiceSlot_TableSetup_Skip8
+	jrl	c, SqStep_SetupPrevGridRow_Skip8
 	ldw	iy, 1000
-VoiceSlot_TableSetup_Skip8:
+SqStep_SetupPrevGridRow_Skip8:
 	ld	(0x0e4c:16), iy
-	jp	VoiceSlot_TableSetup_Skip13
-VoiceSlot_TableSetup_Skip9:
+	jp	SqStep_SetupPrevGridRow_Skip13
+SqStep_SetupPrevGridRow_Skip9:
 	ldw_d16	wa, (0x3662)
 	dec	1, wa
 	ld	(0x2863:16), wa
@@ -5636,17 +5646,17 @@ SqStep_SetupPrevGridRow_Skip10:
 	ld	(0x0e4c:16), iy
 	stb_d8	(0x0e52), a
 	cp	a, 5:i3
-	jrl	c, VoiceSlot_TableSetup_Skip13
+	jrl	c, SqStep_SetupPrevGridRow_Skip13
 	sub	a, 4
 	stb_d8	(0x0e52), a
 	call	SqStep_SeekSecondGridRow
-	jp	VoiceSlot_TableSetup_Skip13
+	jp	SqStep_SetupPrevGridRow_Skip13
 SqStep_SetupPrevGridRow_Skip11:
 	cp	(0x0d5c:16), 3
-	jrl	ugt, VoiceSlot_TableSetup_Skip12
+	jrl	ugt, SqStep_SetupPrevGridRow_Skip12
 	ldw	(0x0e4c:16), 0
-	jp	VoiceSlot_TableSetup_Code_Return
-VoiceSlot_TableSetup_Skip12:
+	jp	SqStep_SetupPrevGridRow_Return
+SqStep_SetupPrevGridRow_Skip12:
 	ld	(0x0e52:16), 4
 	ldw_d16	wa, (0x3662)
 	ld	(0x2863:16), wa
@@ -5654,28 +5664,28 @@ VoiceSlot_TableSetup_Skip12:
 	ldb_d8	a, (0x0d60)
 	call	SetWall_SlotResolve
 	cp	(SEQ_ERROR_CODE:16), 0
-	jrl	nz, VoiceSlot_TableSetup_Code_Return
+	jrl	nz, SqStep_SetupPrevGridRow_Return
 	ld	(0x28a5:16), iy
 	ldw_d16	iy, (0x2893)
 	ld	(0x28a3:16), iy
 	ldw_d16	iy, (0x3662)
 	cp	iy, 1000
-	jrl	c, VoiceSlot_TableSetup_Skip5
+	jrl	c, SqStep_SetupPrevGridRow_Skip5
 	ldw	iy, 1000
-VoiceSlot_TableSetup_Skip5:
+SqStep_SetupPrevGridRow_Skip5:
 	ld	(0x0e4c:16), iy
-VoiceSlot_TableSetup_Skip13:
+SqStep_SetupPrevGridRow_Skip13:
 	ld	xix, 0x3676
 	ldb_d8	a, (0x0e52)
 	stb_d8	(0x0ec1), a
 	call	SqStep_BuildAdjacentRowBitmap
-VoiceSlot_TableSetup_Code_Return:
+SqStep_SetupPrevGridRow_Return:
 	ret
 ; SqStep_SetupNextGridRow: Sets up the grid row below the current one: its measure number (0x0E50, capped at 1000) and
 ;   beat count (0x0E54), then its bitmap at 0x369A (SqStep_BuildAdjacentRowBitmap with 0x0EC1 = the beat count). The
 ;   row below is row 2 of the same measure (beats - 4) when the cursor is on row 1 of a measure longer than 4 beats,
 ;   else row 1 of the next measure (at most 4 beats); it is empty when the selected track's flag 0xF250[3*(0x0D60 -
-;   1)] bit 7 is clear. Basis: callers + body -- VoiceSlot_TableSetup calls it after SqStep_SetupPrevGridRow; it is
+;   1)] bit 7 is clear. Basis: callers + body -- SqStep_RebuildGridRows calls it after SqStep_SetupPrevGridRow; it is
 ;   the mirror image.
 SqStep_SetupNextGridRow:
 	ld l, (0x0d60:16)
@@ -5692,13 +5702,13 @@ SqStep_SetupNextGridRow:
 	xor	wa, wa
 	ld	(0x0e50:16), wa
 	stb_d8	(0x0e54), a
-	jp	VoiceSlot_TableSetup_Code_Return2
+	jp	SqStep_SetupNextGridRow_Return2
 SqStep_SetupNextGridRow_Skip14:
 	cp	(0x0d5c:16), 3
-	jrl	ugt, VoiceSlot_TableSetup_Skip15
+	jrl	ugt, SqStep_SetupNextGridRow_Skip15
 	cp	(0x0d5d:16), 4
 	jrl	ugt, SqStep_SetupNextGridRow_Skip20
-VoiceSlot_TableSetup_Skip15:
+SqStep_SetupNextGridRow_Skip15:
 	ldw_d16	wa, (0x3662)
 	inc	1, wa
 	ld	(0x2863:16), wa
@@ -5711,7 +5721,7 @@ SqStep_SetupNextGridRow_Skip16:
 	ldb_d8	a, (0x0eee)
 	call	SetWall_SlotResolve
 	cp	(SEQ_ERROR_CODE:16), 0
-	jrl	z, VoiceSlot_TableSetup_Code_Skip7
+	jrl	z, SqStep_SetupNextGridRow_Skip7
 	call	SqStep_GetRhythmTrackForMeasures
 	cp	w, 0:i3
 	jrl	z, SqStep_SetupNextGridRow_Skip17
@@ -5730,8 +5740,8 @@ SqStep_SetupNextGridRow_Skip17:
 	ld	a, 4:opc
 SqStep_SetupNextGridRow_Skip18:
 	stb_d8	(0x0e54), a
-	jp	VoiceSlot_TableSetup_Code_Return2
-VoiceSlot_TableSetup_Code_Skip7:
+	jp	SqStep_SetupNextGridRow_Return2
+SqStep_SetupNextGridRow_Skip7:
 	ld	(0x28a5:16), iy
 	ldw_d16	iy, (0x2893)
 	ld	(0x28a3:16), iy
@@ -5740,7 +5750,7 @@ VoiceSlot_TableSetup_Code_Skip7:
 	ld	a, 4:opc
 SqStep_SetupNextGridRow_Skip19:
 	stb_d8	(0x0e54), a
-	jp	VoiceSlot_TableSetup_Join6
+	jp	SqStep_SetupNextGridRow_Join6
 SqStep_SetupNextGridRow_Skip20:
 	ldb_d8	a, (0x0d5d)
 	sub	a, 4
@@ -5748,27 +5758,27 @@ SqStep_SetupNextGridRow_Skip20:
 	ldw_d16	wa, (0x3662)
 	ld	(0x2863:16), wa
 	cp	wa, 1000
-	jrl	c, VoiceSlot_TableSetup_Code_Skip8
+	jrl	c, SqStep_SetupNextGridRow_Skip8
 	ldw	wa, 1000
-VoiceSlot_TableSetup_Code_Skip8:
+SqStep_SetupNextGridRow_Skip8:
 	ld	(0x0e50:16), wa
 	call	SqStep_GetRhythmTrackForMeasures
 	ldb_d8	a, (0x0d60)
 	call	SetWall_SlotResolve
 	cp	(SEQ_ERROR_CODE:16), 0
-	jrl	nz, VoiceSlot_TableSetup_Code_Return2
+	jrl	nz, SqStep_SetupNextGridRow_Return2
 	ld	(0x28a5:16), iy
 	ldw_d16	iy, (0x2893)
 	ld	(0x28a3:16), iy
 	call	SqStep_SeekSecondGridRow
 	cp	c, 4:i3
-	jrl	nz, VoiceSlot_TableSetup_Code_Return2
-VoiceSlot_TableSetup_Join6:
+	jrl	nz, SqStep_SetupNextGridRow_Return2
+SqStep_SetupNextGridRow_Join6:
 	ldb_d8	a, (0x0e54)
 	stb_d8	(0x0ec1), a
 	ld	xix, 0x367e
 	call	SqStep_BuildAdjacentRowBitmap
-VoiceSlot_TableSetup_Code_Return2:
+SqStep_SetupNextGridRow_Return2:
 	ret
 	; Entry 6 of UIState_EventTable (a code pointer the table holds).
 UIState_Evt06_MemConfig0ThenSeqPlay:
@@ -5791,7 +5801,7 @@ UIState_DispatchHandler_Helper:
 	cp	(0x0d5c:16), a
 	jrl	nz, .Lc_ef9545
 	call	DMA_ChannelHandler_3_Helper
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 132
 	jrl	nz, UIState_DispatchHandler_Helper_Return
 	ld	(0x3670:16), 9
@@ -5868,18 +5878,18 @@ AccPedal_ScanVoiceSlots:
 	push xiz
 	and (3411:16), 253
 	xor a, a
-	call VoiceSlot_SaveState
+	call SeqCursor_Save
 	call MemConfig_VoiceSlotLookup
-	call VoiceSlot_ReadCurrentParams
+	call SeqTrack_ReadCursorByte
 	cp a, 0x81
 	jrl nz, AccPedal_CompareMode85
 	jp AccPedal_ClearBit2Flag
 
-VoiceSlot_ProcessedWordRet:
-	call VoiceSlot_DispatchRet
+AccPedal_ScanVoiceSlots_ProcessedWordRet:
+	call SeqTrack_NextEventKeepWrapCount
 	cp w, 0xff
 	jrl z, AccPedal_RestoreAndReturn
-	call VoiceSlot_ComputeWordIndex
+	call SeqTrack_WordIndex
 	push xix
 	ld xix, 0xc9e
 	ld	iy, (xix+iz)
@@ -5893,26 +5903,26 @@ VoiceSlot_ProcessedWordRet:
 	jrl nc, AccPedal_RestoreAndReturn
 
 AccPedal_RereadParams:
-	call VoiceSlot_ReadCurrentParams
+	call SeqTrack_ReadCursorByte
 
 AccPedal_CompareMode85:
 	cp a, 0x85
 	jrl z, AccPedal_SetBit2Flag
 	cp a, 0x86
 	jrl z, AccPedal_ClearBit2Flag
-	jp VoiceSlot_ProcessedWordRet
+	jp AccPedal_ScanVoiceSlots_ProcessedWordRet
 
 AccPedal_SetBit2Flag:
 	or (3411:16), 2
-	jp VoiceSlot_ProcessedWordRet
+	jp AccPedal_ScanVoiceSlots_ProcessedWordRet
 
 AccPedal_ClearBit2Flag:
 	and (3411:16), 253
-	jp VoiceSlot_ProcessedWordRet
+	jp AccPedal_ScanVoiceSlots_ProcessedWordRet
 
 AccPedal_RestoreAndReturn:
 	xor a, a
-	call VoiceSlot_RestoreState
+	call SeqCursor_Restore
 	pop xiz
 	pop xiy
 	pop xix
@@ -5929,8 +5939,8 @@ AccPedal_RestoreAndReturn:
 
 VoiceCtrl_BytecodeHandler:
 	ld	a, 2:opc
-	call	VoiceSlot_SaveState
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqCursor_Save
+	call	SeqTrack_ReadCursorByte
 	and	a, 240
 	cp	a, 176
 	jrl	nz, VoiceCtrl_BytecodeHandler_Skip
@@ -5976,7 +5986,7 @@ VoiceCtrl_BytecodeHandler_Skip:
 	ld	b, 255:opc
 VoiceCtrl_BytecodeHandler_Loop:
 	ld	a, 2:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	jp	VoiceCtrl_BytecodeHandler_Return
 VoiceCtrl_BytecodeHandler_Skip5:
 	ld	b, c
@@ -6242,7 +6252,7 @@ VoiceCtrl_ParamSetupBytecode_Tbl3:	.byte	0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x0
 ;   shows its variation (value byte +4, bits 4-5): with DisplayStr_ShowRhythmVariationLine on the CONTROL track
 ;   (display mode 2) or DisplayStr_ShowMeasureAndVariation on the RHYTHM track (mode 3); all registers kept. Basis:
 ;   callers + body -- VoiceCtrl_ParamSetupBytecode (the 0xBn handler of TempoRingBuf_DispatchEvents) calls it last;
-;   VoiceSlot_StatusRet shows a stored tag-72 offset-7 event with the same two routines per mode.
+;   SqStep_ShowCursorEventPopup shows a stored tag-72 offset-7 event with the same two routines per mode.
 SqStep_ShowRhythmVariationEvent:
 	push	xwa
 	push	xhl
@@ -6349,7 +6359,7 @@ SqStep_ShowRhythmSectionEvent_Epilogue3:
 	ret
 VoiceCtrl_ParamSetupBytecode_Helper5:
 	ld	a, 1:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	pushdi_w	(0x0d5a)
 	pushdi_w	(0x3662)
 	pushdi_w	(0x0d5c)
@@ -6391,7 +6401,7 @@ VoiceCtrl_ParamSetupBytecode_Skip19:
 	popw	(0x3662:16)	; popw (0x367e)
 	popw (0x0d5a:16)	; popw (0x0d5a)
 	ld	a, 1:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	ret
 TempoRingBuf_OnProgramChangeEvent:
 	cp	(3429:16), 0
@@ -6667,7 +6677,7 @@ SerialPort_ModeHandler_0:
 ; TempoRingBuf_OnModulationEvent: Modulation event (status 0xD1) from TempoRingBuf: except in display mode 3 (then it
 ;   only consumes one byte), consumes the event into 0x0D8F, value byte +2 -> 0x3685, record length (0x0DD2) = 3,
 ;   control-name index (0x3684) = 2 ("MOD. =" in Str_PBendModExpEq) and shows the CONTROL line with the value (pop-up
-;   2). Basis: callers + body -- TempoRingBuf_DispatchEvents sends status 0xD1 here; VoiceSlot_StatusRet's display of
+;   2). Basis: callers + body -- TempoRingBuf_DispatchEvents sends status 0xD1 here; SqStep_ShowCursorEventPopup's display of
 ;   a stored event maps 0xD1 to the same index 2 (0xD0 -> 5 AFT., 0xD2 -> 1 P.BEND, 0xD3 -> 3 EXP.).
 TempoRingBuf_OnModulationEvent:
 	cp	(3429:16), 3
@@ -7097,7 +7107,7 @@ PerfMode_Handler_EvtB_Helper2:
 	cp	w, 0:i3
 	jrl	z, PerfMode_Handler_EvtB_Helper2_Skip
 	call	ToneParam_ModeGuardEntry_Helper2_Helper
-	call	VoiceSlot_CompareAndBranch
+	call	SeqTrack_PrevEvent
 	call	PerfMode_Handler_EvtB_Helper2_Helper8
 	jp	PerfMode_Handler_EvtB_Helper2_Join
 PerfMode_Handler_EvtB_Helper2_Skip:
@@ -7330,7 +7340,7 @@ Display_RegionUpdateFromHW:
 	ret
 PortConfig_SetupBytecode:
 	ld	(0x28a2:16), 255
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	srl	xiz, 1
 	push	xix
 	ld	xix, 0xf1a0
@@ -7367,7 +7377,7 @@ PortConfig_Select_Table:
 	.long	PortConfig_Handler_3
 PortConfig_Handler_1:
 	or	(0x0dd3:16), 1
-	call	VoiceSlot_TableSetup
+	call	SqStep_RebuildGridRows
 	call	DisplayMode_Dispatch_Mode1_Helper
 	call	PortConfig_Handler_0_Helper2
 	call	Display_UpdateRegions0To4
@@ -7458,12 +7468,12 @@ PortConfig_Handler_0_Helper6_Loop:
 	popw	wa
 	ret
 PortConfig_Handler_0_Helper2:
-	call VoiceSlot_ReadCurrentParams
+	call SeqTrack_ReadCursorByte
 	cp A,0x84
 	jrl z, .Lc_efa641
 	cp A,0x82
 	jrl z, .Lc_efa641
-	call VoiceSlot_FlagCheck
+	call SeqTrack_PeekNextByte
 	cp A,0x84
 	jrl z, .Lc_efa641
 	cp A,0x82
@@ -7481,16 +7491,16 @@ PortConfig_Handler_0_Return2:
 ;   block word (0x0C9E)[track] = the start block from the track's 3-byte entry in the track directory 0xF250 (+1), or
 ;   0xFFFF when the entry's bit 7 (track present) is clear; offset byte (0x0CBE)[track] = 5, the first event after the
 ;   5-byte block header. Basis: callers + body -- SqStep_SetupCursorTrack calls it right after SeqBuf_Init in its
-;   cursor set-up; VoiceSlot_CheckCursorAtTrackStart's header defines 'track start' by exactly this block/offset pair,
+;   cursor set-up; SeqTrack_CheckCursorAtStart's header defines 'track start' by exactly this block/offset pair,
 ;   and SerialPort_ModeHandler_0_Helper inlines the same rewind before walking each track.
 SqStep_RewindCursorToTrackStart:
-	call	VoiceSlot_ComputeIndex
+	call	SeqTrack_TripleIndex
 	push	xde
 	ld	xde, 62032
 	bit	7, (xde+iz)
 	pop	xde
 	jrl	nz, PortConfig_Handler_0_Helper_Skip
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	push	xix
 	ld	xix, 3230
 	ldw	(xix+iz), 0xffff	; ld (XIX+IZ),0xffff
@@ -7505,7 +7515,7 @@ PortConfig_Handler_0_Helper_Skip:
 	ld	xix, 62032
 	inc	1, iz
 	ld	de, (xix+iz)
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	ld	xix, 3230
 	ld	(xix+iz), de
 	srl	iz, 1
@@ -7518,7 +7528,7 @@ PortConfig_Handler_0_Return:
 SqStep_SetDisplayModeFromTrack:
 	ld	a, (3424:16)
 	ld	(3822:16), a
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	srl	xiz, 1
 	push	xix
 	ld	xix, 61856
@@ -7534,7 +7544,7 @@ PortConfig_DataTable_A:
 	.byte	0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x02
 	.byte	0x03, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01
 PerfMode_Handler_EvtB_Helper2_Helper3:
-	call VoiceSlot_ComputeWordIndex
+	call SeqTrack_WordIndex
 	srl XIZ, 0x01
 	push XIX
 	ld XIX,0x0000f1a0
@@ -7793,7 +7803,7 @@ ClockConfig_Handler_0_Tbl2_Return:
 SqStep_RestoreTrackType:
 	cp	(0x28a2:16), 255
 	jrl	z, SqStep_RestoreTrackType_Return3
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	sra	iz, 1
 	push	xix
 	ld	xix, 0xf1a0
@@ -8089,7 +8099,7 @@ MemConfig_Handler_2_Join:
 	cp	(0x0d65:16), 0
 	jrl	nz, MemConfig_Handler_2_Join2
 	ld	(0x0d6a:16), 0
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 144
 	jr	nz, MemConfig_Handler_2_Sub_Skip
 	call	MemConfig_Handler_5_Code_Helper10
@@ -8101,7 +8111,7 @@ MemConfig_Handler_2_Join2:
 	ld	w, 0:opc
 	ret
 MemConfig_VoiceSlotLookup:
-	call VoiceSlot_ComputeIndex
+	call SeqTrack_TripleIndex
 	push xde
 	ld xde, 0xf250
 	add xde, xiz
@@ -8110,7 +8120,7 @@ MemConfig_VoiceSlotLookup:
 	cp wa, 0xffff
 	jrl z, MemConfig_VoiceSlotSkip
 	pushw wa
-	call VoiceSlot_ComputeWordIndex
+	call SeqTrack_WordIndex
 	popw wa
 	push xix
 	ld xix, 0xc9e
@@ -8126,7 +8136,7 @@ MemConfig_VoiceSlotCompare:
 	jp MemConfig_VoiceSlotRet
 
 MemConfig_VoiceSlotSkip:
-	call VoiceSlot_ComputeWordIndex
+	call SeqTrack_WordIndex
 	jp MemConfig_VoiceSlotCompare
 
 MemConfig_VoiceSlotRet:
@@ -8147,19 +8157,19 @@ MemConfig_Handler_0_Skip3:
 	cp B,0x17
 	jrl z, .Lc_efadc5
 MemConfig_Handler_0_Join:
-	call VoiceSlot_FlagCheck
+	call SeqTrack_PeekNextByte
 	cp W,0xff
 	jrl z, .Lc_efadba
 	xor A,A
-	call VoiceSlot_SaveState
+	call SeqCursor_Save
 	ld W, 0x81:opc
-	call VoiceSlot_WriteCurrentParam
+	call SeqTrack_WriteCursorByte
 	ld de, 1:i3
 	call Timer_ModeHandler_0_Helper6
 	ld W, 0x82:opc
-	call VoiceSlot_WriteCurrentParam
+	call SeqTrack_WriteCursorByte
 	xor A,A
-	call VoiceSlot_RestoreState
+	call SeqCursor_Restore
 	call MemConfig_Handler_0_Helper
 .Lc_efadba:
 	ld W, 0xff:opc
@@ -8167,7 +8177,7 @@ MemConfig_Handler_0_Join:
 	jp MemConfig_Handler_0_Return
 .Lc_efadc5:
 MemConfig_Handler_0_Skip2:
-	call VoiceSlot_LoadAndDispatch
+	call SeqTrack_NextEvent
 	jp MemConfig_Handler_0_Join
 MemConfig_Handler_0_Return:
 	ret
@@ -8180,15 +8190,15 @@ MemConfig_Handler_1:
 	jrl	z, MemConfig_Handler_1_Skip2
 MemConfig_Handler_1_Join:
 	xor	a, a
-	call	VoiceSlot_SaveState
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqCursor_Save
+	call	SeqTrack_ReadCursorByte
 	cp	a, 132
 	jrl	z, MemConfig_Handler_1_Skip5
 MemConfig_Handler_1_Loop:
-	call	VoiceSlot_CompareAndBranch
+	call	SeqTrack_PrevEvent
 	cp	w, 255
 	jrl	z, MemConfig_Handler_1_Skip5
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, MemConfig_Handler_1_Code_Skip
 	and	a, 240
@@ -8199,19 +8209,19 @@ MemConfig_Handler_1_Loop:
 MemConfig_Handler_1_Code_Skip:
 	pushw	wa
 	xor	a, a
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	popw	wa
 	cp	a, 129
 	jrl	nz, MemConfig_Handler_1_Skip
 	ld	w, 132:opc
 MemConfig_Handler_1_Join3:
-	call	VoiceSlot_WriteCurrentParam
+	call	SeqTrack_WriteCursorByte
 	ld	de, 1:i3
 	call	Timer_ModeHandler_0_Helper6
 	ld	w, 132:opc
-	call	VoiceSlot_WriteCurrentParam
+	call	SeqTrack_WriteCursorByte
 	xor	a, a
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	call	MemConfig_Handler_0_Helper
 MemConfig_Handler_1_Skip5:
 	ld	w, 255:opc
@@ -8221,12 +8231,12 @@ MemConfig_Handler_1_Skip:
 	ld	w, 129:opc
 	jp	MemConfig_Handler_1_Join3
 MemConfig_Handler_1_Skip2:
-	call	VoiceSlot_LoadAndDispatch
+	call	SeqTrack_NextEvent
 	jp	MemConfig_Handler_1_Join
 MemConfig_Handler_1_Return3:
 	ret
 MemConfig_Handler_0_Helper:
-	call VoiceSlot_ComputeWordIndex
+	call SeqTrack_WordIndex
 	push XIX
 	ld XIX,0x00000c9e
 	ld	iy, (xix+iz)
@@ -8252,7 +8262,7 @@ MemConfig_Handler_1_Code_Skip3:
 	ld XIX,0x00000c9e
 	ld	iy, (xix+iz)
 	pop XIX
-	call VoiceSlot_UpdateCurrentPointer
+	call SeqBlock_Select
 	ld xhl, (0x10fd:16)
 	ld IY,(XHL+0x03)
 	push XIX
@@ -8262,7 +8272,7 @@ MemConfig_Handler_1_Code_Skip3:
 	cp IY,0xffff
 	jrl z, .Lc_efaf0b
 MemConfig_Handler_1_Join4:
-	call VoiceSlot_UpdateCurrentPointer
+	call SeqBlock_Select
 	ld xhl, (0x10fd:16)
 	ld IY,(XHL+0x03)
 	cp IY,0xffff
@@ -8285,26 +8295,26 @@ MemConfig_Handler_1_Join4:
 MemConfig_Handler_1_Return:
 	ret
 ScoopDisp_StepMeasureForward:
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 130
 	jrl	z, ScoopDisp_StepMeasureForward_Skip5
 	cp	a, 132
 	jrl	z, ScoopDisp_StepMeasureForward_Skip5
 	ld	a, 3:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	ldb_d8	a, (0x0d5d)
 	sub	a, (0x0d5c:16)
 	call	ScoopDisp_SkipForwardWrapMarkers
 	ld	a, 4:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	ld	a, 3:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 ScoopDisp_StepMeasureForward_Loop:
 	call	MemConfig_Handler_4_Helper2
 	cp	(0x0d6a:16), 0
 	jrl	nz, ScoopDisp_StepMeasureForward_Skip4
 	ld	a, 4:opc
-	call	VoiceSlot_CompareSavedMarkerCount
+	call	SeqCursor_CompareSavedWrapCount
 	cp	w, 1:i3
 	jrl	z, ScoopDisp_StepMeasureForward_Skip4
 	cp	w, 2:i3
@@ -8312,7 +8322,7 @@ ScoopDisp_StepMeasureForward_Loop:
 	bit	7, (0x0d53:16)
 	jrl	nz, ScoopDisp_StepMeasureForward_Skip4
 	ld	a, 4:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 ScoopDisp_StepMeasureForward_Skip4:
 	call	AccPedal_CheckBitAndUpdate
 	ld	(0x0d6a:16), 0
@@ -8329,7 +8339,7 @@ ScoopDisp_StepMeasureForward_Skip5:
 	stb_d8	(0x3661), a
 	ret
 ; ScoopDisp_SkipForwardWrapMarkers: Steps the song-data cursor forward until it has passed A 0x81 events (count kept
-;   in 0x0DFE), adding 1 to the marker counter 0x0D58 for each; the steps go through VoiceSlot_DispatchRet, which
+;   in 0x0DFE), adding 1 to the marker counter 0x0D58 for each; the steps go through SeqTrack_NextEventKeepWrapCount, which
 ;   preserves 0x0D58 and returns W = 255 at an end marker (0x82/0x84), which ends the walk early. Basis: callers +
 ;   body -- ScoopDisp_StepMeasureForward calls it with A = (0x0D5D) - (0x0D5C) to reach the next measure; its header
 ;   calls this walking forward over that many 0x81 events. 0x81 is the 96-clock unit marker
@@ -8337,13 +8347,13 @@ ScoopDisp_StepMeasureForward_Skip5:
 ScoopDisp_SkipForwardWrapMarkers:
 	stb_d8	(0x0dfe), a
 ScoopDisp_SkipForwardWrapMarkers_Loop2:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	nz, ScoopDisp_SkipForwardWrapMarkers_Skip6
 	incw	1, (0x0d58:16)
 	dec	1, (0x0dfe:16)
 ScoopDisp_SkipForwardWrapMarkers_Skip6:
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	cp	w, 255
 	jrl	z, ScoopDisp_SkipForwardWrapMarkers_Return2
 	cp	(0x0dfe:16), 0
@@ -8352,7 +8362,7 @@ ScoopDisp_SkipForwardWrapMarkers_Return2:
 	ret
 ScoopDisp_StepMeasureBack:
 	ld	a, 3:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	ldb_d8	a, (0x0d5c)
 	add	a, (0x0d5d:16)
 	call	ScoopDisp_SeekBackWrapMarkers
@@ -8363,18 +8373,18 @@ ScoopDisp_StepMeasureBack:
 	call	ScoopDisp_SeekBackWrapMarkers
 ScoopDisp_StepMeasureBack_Skip7:
 	ld	a, 4:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	call	MemConfig_Handler_4_Helper4
 	ld	a, 5:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 ScoopDisp_StepMeasureBack_Loop3:
 	ld	a, 6:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	call	MemConfig_Handler_4_Helper2
 	cp	(0x0d6a:16), 0
 	jrl	nz, ScoopDisp_StepMeasureBack_Skip9
 	ld	a, 4:opc
-	call	VoiceSlot_CompareSavedMarkerCount
+	call	SeqCursor_CompareSavedWrapCount
 	cp	w, 1:i3
 	jrl	z, ScoopDisp_StepMeasureBack_Skip5
 	cp	w, 2:i3
@@ -8386,10 +8396,10 @@ ScoopDisp_StepMeasureBack_Loop3:
 ScoopDisp_StepMeasureBack_Skip5:
 	ld	a, 4:opc
 ScoopDisp_StepMeasureBack_Join4:
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 ScoopDisp_StepMeasureBack_Skip9:
 	call	AccPedal_CheckBitAndUpdate
-	call	VoiceSlot_CheckCursorAtTrackStart
+	call	SeqTrack_CheckCursorAtStart
 	cp	w, 255
 	jrl	z, ScoopDisp_StepMeasureBack_Skip10
 	xor	a, a
@@ -8407,17 +8417,17 @@ ScoopDisp_StepMeasureBack_Skip10:
 	stb_d8	(0x3661), a
 	ret
 ; ScoopDisp_SeekBackWrapMarkers: Steps the song-data cursor back over A 0x81 events (count in 0x0DFE; each backward
-;   step onto a 0x81 takes 1 from 0x0D58 through VoiceSlot_SubrRetZ), then on back to the preceding 0x81 without
+;   step onto a 0x81 takes 1 from 0x0D58 through SeqTrack_DecWrapCount), then on back to the preceding 0x81 without
 ;   counting, leaving the cursor on the event just after it (snapshot slot 6); it stops at the start of the track (W =
 ;   255). Basis: callers + body -- ScoopDisp_StepMeasureBack calls it with A = (0x0D5C) + (0x0D5D) and, when (0x0D5C)
 ;   != 0, again with A = (0x0D5C); its header describes this walk back.
 ScoopDisp_SeekBackWrapMarkers:
 	stb_d8	(0x0dfe), a
 ScoopDisp_SeekBackWrapMarkers_Loop5:
-	call	VoiceSlot_CompareAndBranch
+	call	SeqTrack_PrevEvent
 	cp	w, 255
 	jrl	z, ScoopDisp_SeekBackWrapMarkers_Return2
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	nz, ScoopDisp_SeekBackWrapMarkers_Loop5
 	ld	xiy, 0x0dfe
@@ -8426,15 +8436,15 @@ ScoopDisp_SeekBackWrapMarkers_Loop5:
 	jrl	nz, ScoopDisp_SeekBackWrapMarkers_Loop5
 ScoopDisp_SeekBackWrapMarkers_Loop4:
 	ld	a, 6:opc
-	call	VoiceSlot_SaveState
-	call	VoiceSlot_StepCursorBack
+	call	SeqCursor_Save
+	call	SeqTrack_PrevEventKeepWrapCount
 	cp	w, 255
 	jrl	z, ScoopDisp_SeekBackWrapMarkers_Return2
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	nz, ScoopDisp_SeekBackWrapMarkers_Loop4
 	ld	a, 6:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 ScoopDisp_SeekBackWrapMarkers_Return2:
 	ret
 MemConfig_Handler_3:
@@ -8665,7 +8675,7 @@ SndDispatch_SubTable_5:
 	.long	SndDispatch_SetFlag30
 	.long	DefaultHandler_Ret
 SndDispatch_CallAndInit:
-	call	VoiceSlot_SubrRetZ
+	call	SeqTrack_DecWrapCount
 	call	SndDispatch_InitHandler
 	ret
 SndDispatch_InitHandler:
@@ -8678,7 +8688,7 @@ SndDispatch_SetFlag30:
 	ld	(3415:16), 48
 	ret
 SndDispatch_ProcessCommand:
-	call VoiceSlot_FlagCheck
+	call SeqTrack_PeekNextByte
 	bit 0x07,A
 	jrl nz, .Lc_efb309
 	ld (0x0d57:16), a
@@ -8686,7 +8696,7 @@ SndDispatch_ProcessCommand:
 SndDispatch_ProcessCommand_Return:
 	ret
 SndDispatch_ProcessCommand_0xF:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	ld	xiy, 3415
 	xor	w, w
 	cp	a, 129
@@ -8701,7 +8711,7 @@ SndDispatch_ProcessCommand_Skip:
 SndDispatch_ProcessCommand_Skip2:
 	push	xiy
 	pushw	wa
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	ld	(3526:16), a
 	popw	wa
 	pop	xiy
@@ -8750,7 +8760,7 @@ SndDispatch_ProcessCommand_Skip10:
 SndDispatch_ProcessCommand_0xA4:
 	ret
 SndDispatch_Handler_1_Helper:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 132
 	jrl	nz, SndDispatch_ProcessCommand_Skip11
 	ld	a, 6:opc
@@ -8761,7 +8771,7 @@ SndDispatch_ProcessCommand_Skip11:
 	ld	a, 1:opc
 	jp	SndDispatch_ProcessCommand_Return5
 SndDispatch_ProcessCommand_Skip12:
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	ld	(3526:16), a
 	ld	xiy, 3526
 	ld	xix, 3580
@@ -8790,33 +8800,33 @@ SndDispatch_Handler_1_Helper2:
 	ld	(3581:16), a
 	ld	(3434:16), a
 	and	(0x0d53:16), 127
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 130
 	jrl	z, SndDispatch_ProcessCommand_Skip19
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	ld	(3581:16), a
 	cp	a, 129
 	jrl	nz, SndDispatch_ProcessCommand_Loop
 	incw	1, (3416:16)
 	ld	(3580:16), 1
 SndDispatch_ProcessCommand_Loop:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, SndDispatch_ProcessCommand_Skip16
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	jp	SndDispatch_ProcessCommand_Join
 SndDispatch_ProcessCommand_Skip16:
-	call	VoiceSlot_LoadAndDispatch
+	call	SeqTrack_NextEvent
 SndDispatch_ProcessCommand_Join:
 	cp	w, 255
 	jrl	z, SndDispatch_ProcessCommand_Return2
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 144
 	jrl	z, SndDispatch_ProcessCommand_Skip20
 	cp	a, 129
 	jrl	z, SndDispatch_ProcessCommand_Skip18
 SndDispatch_ProcessCommand_Loop2:
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 130
 	jrl	z, SndDispatch_ProcessCommand_Skip19
 	cp	a, 132
@@ -8826,10 +8836,10 @@ SndDispatch_ProcessCommand_Loop2:
 	cp	a, 95
 	jrl	nz, SndDispatch_ProcessCommand_Return2
 SndDispatch_ProcessCommand_Skip17:
-	call	VoiceSlot_LoadAndDispatch
+	call	SeqTrack_NextEvent
 	cp	w, 255
 	jrl	z, SndDispatch_ProcessCommand_Return2
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 144
 	jrl	z, SndDispatch_ProcessCommand_Return2
 	cp	a, 129
@@ -8852,27 +8862,27 @@ SndDispatch_ProcessCommand_Skip20:
 	jrl	z, SndDispatch_ProcessCommand_Return2
 	call	SndDispatch_ProcessCommand_Helper
 	call	SndDispatch_ProcessCommand_Helper2
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	ld	(3526:16), a
 SndDispatch_ProcessCommand_Loop3:
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	cp	w, 255
 	jrl	z, SndDispatch_ProcessCommand_Return2
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 144
 	jrl	nz, SndDispatch_ProcessCommand_Skip21
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, (3526:16)
 	jrl	z, SndDispatch_ProcessCommand_Loop3
 	ld	(3415:16), 0
 	jp	SndDispatch_ProcessCommand_Return2
 SndDispatch_ProcessCommand_Skip21:
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 47
 	jrl	z, SndDispatch_ProcessCommand_Loop3
 	cp	a, 95
 	jrl	z, SndDispatch_ProcessCommand_Loop3
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	nz, SndDispatch_ProcessCommand_Return2
 	or	(0x0d53:16), 128
@@ -8882,7 +8892,7 @@ SndDispatch_ProcessCommand_Skip21:
 	add (3416:16), wa
 	ld	de, wa
 	call	Timer_ModeHandler_0_Helper6
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 130
 	jrl	z, SndDispatch_ProcessCommand_Skip23
 	and	a, 240
@@ -8892,19 +8902,19 @@ SndDispatch_ProcessCommand_Skip21:
 	jrl	z, SndDispatch_ProcessCommand_Return2
 	bit	7, a
 	jrl	nz, SndDispatch_ProcessCommand_Skip22
-	call	VoiceSlot_LoadAndDispatch
+	call	SeqTrack_NextEvent
 SndDispatch_ProcessCommand_Skip22:
 	jp	SndDispatch_ProcessCommand_Return2
 SndDispatch_ProcessCommand_Skip23:
 	ld	a, 1:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	call	MemConfig_Handler_5_Code_Helper12
 	ld	a, 1:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 SndDispatch_ProcessCommand_Return2:
 	ret
 PortConfig_Handler_0_Helper5:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 144
 	jr	nz, SndDispatch_ProcessCommand_Skip24
 	call	MemConfig_Handler_5_Code_Helper10
@@ -8913,7 +8923,7 @@ SndDispatch_ProcessCommand_Skip24:
 	ret
 MemConfig_Handler_4_Helper6:
 	call	DMA_FlagCheckWithCalls
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 144
 	jrl	nz, SndDispatch_ProcessCommand_Return4
 	call	Interrupt_SetFlagBytecode
@@ -8929,15 +8939,15 @@ MemConfig_Handler_5_Code_Helper11:
 	ret
 SndDispatch_ProcessCommand_Helper:
 	xor	a, a
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	ld	de, 4:i3
 	call	Timer_ModeHandler_0_Helper6
 	call	SeqTrack_ReadByteAndAdvance
 	ld	(3575:16), a
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	ld	(3576:16), a
 	xor	a, a
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	ret
 SndDispatch_ProcessCommand_Helper2:
 	ld	a, (3576:16)
@@ -8970,8 +8980,8 @@ MemConfig_Handler_4_Return:
 	ret
 MemConfig_Handler_4_Helper4:
 	ld	a, 1:opc
-	call	VoiceSlot_SaveState
-	call	VoiceSlot_CheckCursorAtTrackStart
+	call	SeqCursor_Save
+	call	SeqTrack_CheckCursorAtStart
 	cp	w, 0:i3
 	jrl	z, MemConfig_Handler_4_Skip3
 	ld	a, (3415:16)
@@ -8981,7 +8991,7 @@ MemConfig_Handler_4_Helper4:
 	ld	(3415:16), 0
 MemConfig_Handler_4_Loop:
 	ld	a, 2:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	call	MemConfig_Handler_4_Helper2
 	ld	a, 1:opc
 	call	VoiceState_DataBlock2
@@ -9006,40 +9016,40 @@ MemConfig_Handler_4_Return2:
 	ret
 MemConfig_Handler_4_Helper5:
 	ld	(3434:16), 0
-	call	VoiceSlot_CompareAndBranch
+	call	SeqTrack_PrevEvent
 	cp	w, 255
 	jrl	z, MemConfig_Handler_4_Skip9
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 144
 	jrl	z, MemConfig_Handler_4_Skip5
 	cp	a, 129
 	jrl	z, MemConfig_Handler_4_Helper5
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 47
 	jrl	z, MemConfig_Handler_4_Skip4
 	cp	a, 95
 	jrl	nz, MemConfig_Handler_4_Join3
 MemConfig_Handler_4_Skip4:
-	call	VoiceSlot_CompareAndBranch
+	call	SeqTrack_PrevEvent
 	cp	w, 255
 	jrl	z, MemConfig_Handler_4_Skip9
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 144
 	jrl	z, MemConfig_Handler_4_Skip5
 	cp	a, 129
 	jrl	z, MemConfig_Handler_4_Helper5
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 47
 	jrl	z, MemConfig_Handler_4_Helper5
 	cp	a, 95
 	jrl	z, MemConfig_Handler_4_Helper5
 	jp	MemConfig_Handler_4_Join3
 MemConfig_Handler_4_Skip5:
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	ld	(3522:16), a
 	ld	(13936:16), 0
 MemConfig_Handler_4_Loop2:
-	call	VoiceSlot_CompareAndBranch
+	call	SeqTrack_PrevEvent
 	cp	w, 255
 	jrl	nz, MemConfig_Handler_4_Skip6
 	call	MemConfig_VoiceSlotLookup
@@ -9049,14 +9059,14 @@ MemConfig_Handler_4_Loop2:
 	ld	(3415:16), a
 	jp	MemConfig_Handler_4_Join3
 MemConfig_Handler_4_Skip6:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 144
 	jrl	nz, MemConfig_Handler_4_Skip7
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, (3522:16)
 	jrl	z, MemConfig_Handler_4_Loop2
 MemConfig_Handler_4_Join2:
-	call	VoiceSlot_LoadAndDispatch
+	call	SeqTrack_NextEvent
 	jp	MemConfig_Handler_4_Join3
 MemConfig_Handler_4_Skip7:
 	cp	a, 129
@@ -9280,7 +9290,7 @@ SqStep_PanelButtonDispatch_Helper3:
 	call DisplayMode_Handler_3_Helper16
 	ret
 SqStep_PanelButtonDispatch_Helper3_Loop:
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	cp	w, 255
 	jrl	z, SqStep_PanelButtonDispatch_Helper3_Skip
 SqStep_PanelButtonDispatch_Helper3_Sub:
@@ -9334,27 +9344,27 @@ SysInit_BytecodeBlock_Join:
 	cp	c, 2:i3
 	jrl	ule, SqStep_PanelButtonDispatch_Helper3_Return2
 SqStep_PanelButtonDispatch_Helper3_Skip3:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	nz, SqStep_PanelButtonDispatch_Helper3_Return2
-	call	VoiceSlot_LoadAndDispatch
+	call	SeqTrack_NextEvent
 	jp	SysInit_BytecodeBlock_Join
 SqStep_PanelButtonDispatch_Helper3_Return2:
 	ret
 SqStep_WriteWrapMarkerAtCursor:
 	xor A,A
-	call VoiceSlot_SaveState
-	call VoiceSlot_FlagCheck
+	call SeqCursor_Save
+	call SeqTrack_PeekNextByte
 	cp A,0x84
 	jrl nz, .Lc_efb9fd
 	set 7, (0x0d54:16)
 .Lc_efb9fd:
 	call MemConfig_Handler_5_Code_Helper12
 	xor A,A
-	call VoiceSlot_RestoreState
+	call SeqCursor_Restore
 	ret
 Timer_ParamCompareAlt_Helper4:
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 132
 	jrl	nz, Timer_ParamCompareAlt_Helper4_Skip
 	set	7, (0x0d54:16)
@@ -9390,7 +9400,7 @@ SqStep_PanelButtonDispatch_Helper4:
 	jrl	nz, SysInit_BytecodeBlock_Return
 SqStep_PanelButtonDispatch_Helper4_Skip:
 	pushw	hl
-	call	VoiceSlot_CheckCursorAtTrackStart
+	call	SeqTrack_CheckCursorAtStart
 	popw	hl
 	cp	w, 255
 	jrl	z, SqStep_PanelButtonDispatch_Helper4_Skip2
@@ -9413,7 +9423,7 @@ SysInit_BytecodeBlock_Return:
 SqStep_PanelButtonDispatch_Helper6:
 	cp	l, 7:i3
 	jrl	nz, SystemInit_StepHandler_0_Return5
-	call	VoiceSlot_CheckCursorAtTrackStart
+	call	SeqTrack_CheckCursorAtStart
 	cp	w, 0:i3
 	jrl	z, SystemInit_StepHandler_0_Skip12
 	jp	SystemInit_StepHandler_0_Return5
@@ -9429,7 +9439,7 @@ SystemInit_StepHandler_0_Return5:
 SqStep_PanelButtonDispatch_Helper7:
 	cp	l, 10
 	jrl	nz, SystemInit_StepHandler_0_Return6
-	call	VoiceSlot_CheckCursorAtTrackStart
+	call	SeqTrack_CheckCursorAtStart
 	cp	w, 255
 	jrl	z, SystemInit_StepHandler_0_Skip13
 	jp	SystemInit_StepHandler_0_Return6
@@ -9450,7 +9460,7 @@ ClockConfig_Handler_0_Tbl2_Helper2:
 	call	SqStep_CheckCursorTrackUsed
 	cp	w, 0:i3
 	jrl	nz, ClockConfig_Handler_0_Tbl2_Helper2_Return
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	push	xix
 	ld	xix, 0xf1f8
 	ld	wa, (xix+iz)
@@ -9463,10 +9473,10 @@ ClockConfig_Handler_0_Tbl2_Helper2:
 	ld	(xix+iz), a
 	pop	xix
 SysInit_BytecodeBlock_Join2:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 132
 	jrl	nz, SqStep_PanelButtonDispatch_Helper4_Skip7
-	call	VoiceSlot_StepCursorBack
+	call	SeqTrack_PrevEventKeepWrapCount
 	cp	w, 255
 	jrl	z, ClockConfig_Handler_0_Tbl2_Helper2_Return
 	jp	SysInit_BytecodeBlock_Join2
@@ -9474,15 +9484,15 @@ SqStep_PanelButtonDispatch_Helper4_Skip7:
 	cp	a, 129
 	jrl	nz, ClockConfig_Handler_0_Tbl2_Helper2_Return
 	xor	a, a
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	ld	w, 132:opc
-	call	VoiceSlot_WriteCurrentParam
+	call	SeqTrack_WriteCursorByte
 	ld	de, 1:i3
 	call	Timer_ModeHandler_0_Helper6
 	ld	w, 132:opc
-	call	VoiceSlot_WriteCurrentParam
+	call	SeqTrack_WriteCursorByte
 	xor	a, a
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	call	MemConfig_Handler_0_Helper
 ClockConfig_Handler_0_Tbl2_Helper2_Return:
 	ret
@@ -9494,7 +9504,7 @@ SqStep_PanelButtonDispatch_Helper4_Loop:
 	cp	a, 15
 	jrl	ugt, SystemInit_StepHandler_0_Return7
 	stb_d8	(0x0eee), a
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	srl	xiz, 1
 	push	xix
 	ld	xix, 0xf1a0
@@ -9505,13 +9515,13 @@ SysInit_BytecodeBlock_Sub:
 	call	SqStep_CheckCursorTrackUsed
 	cp	w, 0:i3
 	jrl	nz, SystemInit_StepHandler_0_Return7
-	call	VoiceSlot_ComputeIndex
+	call	SeqTrack_TripleIndex
 	push	xix
 	ld	xix, 0xf250
 	add	xix, xiz
 	ld	de, (xix+1)
 	pop	xix
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	push	xix
 	ld	xix, 0x0c9e
 	ld	(xix+iz), de
@@ -9521,18 +9531,18 @@ SysInit_BytecodeBlock_Sub:
 	pop	xix
 SysInit_BytecodeBlock_Join3:
 	ld	a, 1:opc
-	call	VoiceSlot_SaveState
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqCursor_Save
+	call	SeqTrack_ReadCursorByte
 	ld	w, a
 	and	a, 240
 	cp	a, 176
 	jrl	z, SqStep_PanelButtonDispatch_Helper4_Skip8
 SysInit_BytecodeBlock_Join4:
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	cp	w, 255
 	jrl	z, SystemInit_StepHandler_0_Return7
 SysInit_BytecodeBlock_Join5:
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 130
 	jrl	z, SystemInit_StepHandler_0_Return7
 	cp	a, 132
@@ -9545,67 +9555,67 @@ SqStep_PanelButtonDispatch_Helper4_Skip8:
 	stb_d8	(0x0dc8), w
 	cp	a, 176
 	jrl	nz, SqStep_PanelButtonDispatch_Helper4_Skip11
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 48
 	jrl	z, SqStep_PanelButtonDispatch_Helper4_Skip9
 	cp	a, 96
 	jrl	nz, SqStep_PanelButtonDispatch_Helper4_Skip11
 SqStep_PanelButtonDispatch_Helper4_Skip9:
 	ld	a, 2:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	ld	de, 4:i3
 	call	Timer_ModeHandler_0_Helper6
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	or	a, (0x0dc8:16)
 	cp	a, 0:i3
 	jrl	nz, SqStep_PanelButtonDispatch_Helper4_Skip10
 	ld	a, 2:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	ld	de, 1:i3
 	call	Timer_ModeHandler_0_Helper6
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	dec	1, a
 	ld	w, a
-	call	VoiceSlot_WriteCurrentParam
+	call	SeqTrack_WriteCursorByte
 SqStep_PanelButtonDispatch_Helper4_Skip10:
 	ld	a, 2:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 SqStep_PanelButtonDispatch_Helper4_Skip11:
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	stb_d8	(0x0e4a), a
 	xor	a, a
 	stb_d8	(0x0e49), a
 SqStep_PanelButtonDispatch_Helper4_Loop2:
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	inc	1, (0x0e49:16)
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 132
 	jrl	z, SqStep_PanelButtonDispatch_Helper4_Skip12
 	cp	a, 129
 	jrl	nz, SqStep_PanelButtonDispatch_Helper4_Skip13
 SqStep_PanelButtonDispatch_Helper4_Skip12:
 	ld	a, 1:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	jp	SysInit_BytecodeBlock_Join4
 SqStep_PanelButtonDispatch_Helper4_Skip13:
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	(0x0e4a:16), a
 	jrl	ule, SqStep_PanelButtonDispatch_Helper4_Loop2
 SqStep_PanelButtonDispatch_Helper4_Loop3:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, SqStep_PanelButtonDispatch_Helper4_Skip14
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	(0x0e4a:16), a
 	jrl	ugt, SqStep_PanelButtonDispatch_Helper4_Skip14
 	inc	1, (0x0e49:16)
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	cp	w, 255
 	jrl	nz, SqStep_PanelButtonDispatch_Helper4_Loop3
 	dec	1, (0x0e49:16)
 SqStep_PanelButtonDispatch_Helper4_Skip14:
 	ld	a, 1:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	call	SeqTrack_ReadByteAndAdvance
 	ld	xiy, 0x0d8f
 	ld	(0x0dd2:16), 0
@@ -9622,20 +9632,20 @@ SysInit_BytecodeBlock_Join6:
 	jp	SysInit_BytecodeBlock_Join6
 SqStep_PanelButtonDispatch_Helper4_Skip15:
 	ld	a, 1:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	call	VoiceState_DataBlock2_Helper2
 	ldb_d8	c, (0x0e49)
 	xor	b, b
 SqStep_PanelButtonDispatch_Helper4_Loop4:
 	pushw	bc
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	popw	bc
 	djnz16	bc, SqStep_PanelButtonDispatch_Helper4_Loop4
 	ld	xiy, 0x0d8f
 	ldb_d8	w, (0x0dd2)
 	call	DisplayMode_Handler_3_Helper16
 	ld	a, 1:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	jp	SysInit_BytecodeBlock_Join5
 SystemInit_StepHandler_0_Return7:
 	ret
@@ -9735,7 +9745,7 @@ SysInit_BytecodeBlock_Helper:
 	ld	(0x1101:16), xiy
 	stb_d8	(0x0eee), a
 	ld	c, w
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	ld	xix, 0xf1f8
 	xor	b, b
 SysInit_BytecodeBlock_Join9:
@@ -9808,7 +9818,7 @@ DisplayMode_Handler_3_Helper16_Skip:
 	pop	xbc
 	pop	xhl
 	pop	xwa
-	call	VoiceSlot_InitAndProcess
+	call	SeqTrack_WriteBytesAtCursor
 	xor	w, w
 	popw	bc
 	jp	SysInit_BytecodeBlock_Return7
@@ -9829,7 +9839,7 @@ DisplayMode_Handler_3_Helper16_Skip2:
 	ld	(xix+32), a
 	ldto_lerp	xix, 56
 	sla	iz, 1
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	ld	xhl, (0x10fd:16)
 	ldw	(xhl+3), 65535
 	ld	(0x2883:16), iy
@@ -9840,7 +9850,7 @@ DisplayMode_Handler_3_Helper16_Skip2:
 	ld	(xhl+1), de
 	ld	(xix+iz), wa
 	ld	iy, de
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	ld	xhl, (0x10fd:16)
 	ld	(xhl+3), wa
 	popw	de
@@ -9853,7 +9863,7 @@ DisplayMode_Handler_3_Helper16_Skip2:
 	pop	xhl
 	popw	bc
 	popw	de
-	call	VoiceSlot_InitAndProcess
+	call	SeqTrack_WriteBytesAtCursor
 	xor	w, w
 	popw	bc
 	jp	SysInit_BytecodeBlock_Return7
@@ -9902,19 +9912,23 @@ SqStep_PanelButtonDispatch_Tbl2_Helper_Skip3:
 	pop	xix
 	pop	xiz
 	popw	wa
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	ld	xhl, (0x10fd:16)
 	ldw	(xhl+1), 0
 	ldw	(xhl+3), 65535
 	jp	SysInit_BytecodeBlock_Join9
 SysInit_BytecodeBlock_Return7:
 	ret
-VoiceSlot_InitAndProcess:
+; SeqTrack_WriteBytesAtCursor: Copies BC bytes from the pointer at 0x1101 to the song-data cursor and advances the cursor past them,
+;   continuing at byte 5 of the next block (link +3) when the block is full; BC = 0 does nothing.  Basis: callers +
+;   body -- the step-edit insert paths (and demo/demo_seq_bridge.s) call Scoop_EventHandler_Scroll first to open
+;   the gap.
+SeqTrack_WriteBytesAtCursor:
 	cp bc, 0:i3
-	jrl nz, VoiceSlot_InitLoop
-	jp VoiceSlot_RetNZ
+	jrl nz, SeqTrack_WriteBytesAtCursor_FitsBlock
+	jp SeqTrack_WriteBytesAtCursor_Return
 
-VoiceSlot_InitLoop:
+SeqTrack_WriteBytesAtCursor_FitsBlock:
 	ld xix, 0xc9e
 	srl iz, 1
 	ldfr_lerp XIX, 0x38
@@ -9926,7 +9940,7 @@ VoiceSlot_InitLoop:
 	pushw bc
 	add bc, iy
 	cp bc, 0xff
-	jrl ugt, VoiceSlot_ProcessEntry
+	jrl ugt, SeqTrack_WriteBytesAtCursor_SpillsOver
 	srl iz, 1
 	ldfr_lerp XIX, 0x38
 	lda	xix, (xix+iz)
@@ -9935,7 +9949,7 @@ VoiceSlot_InitLoop:
 	sla iz, 1
 	pushw iy
 	ld	iy, (xix+iz)
-	call VoiceSlot_UpdateCurrentPointer
+	call SeqBlock_Select
 	popw iy
 	ld xhl, (4349:16)
 	extz xiy
@@ -9944,9 +9958,9 @@ VoiceSlot_InitLoop:
 	ld xix, xhl
 	ld xiy, (4353:16)
 	ldir85
-	jp VoiceSlot_RetNZ
+	jp SeqTrack_WriteBytesAtCursor_Return
 
-VoiceSlot_ProcessEntry:
+SeqTrack_WriteBytesAtCursor_SpillsOver:
 	ld de, bc
 	ldw wa, 0x100
 	ld	iy, (xix+iz)
@@ -9956,7 +9970,7 @@ VoiceSlot_ProcessEntry:
 	and ix, 0xff
 	sub wa, ix
 	ld bc, wa
-	call VoiceSlot_UpdateCurrentPointer
+	call SeqBlock_Select
 	ld xhl, (4349:16)
 	extz xix
 	add xhl, xix
@@ -9974,28 +9988,32 @@ VoiceSlot_ProcessEntry:
 	sla iz, 1
 	sub c, 0x5
 	ld	iy, (xix+iz)
-	call VoiceSlot_UpdateCurrentPointer
+	call SeqBlock_Select
 	ld xhl, (4349:16)
 	ld iy, (xhl + 3)
-	call VoiceSlot_UpdateCurrentPointer
+	call SeqBlock_Select
 	ld xhl, (4349:16)
 	ld	(xix+iz), iy
 	ld xix, xhl
 	add xix, 0x5
 	ld xiy, (4353:16)
 	cp bc, 0:i3
-	jrl z, VoiceSlot_CheckDone
+	jrl z, SeqTrack_WriteBytesAtCursor_Done
 	ldir85
 
-VoiceSlot_CheckDone:
+SeqTrack_WriteBytesAtCursor_Done:
 	popw bc
 
-VoiceSlot_RetNZ:
+SeqTrack_WriteBytesAtCursor_Return:
 	ret
 
-VoiceSlot_RetZ:
+; SeqTrack_DeleteBytesAtCursor: Deletes W bytes at the song-data cursor: computes the span's end (0x28BA block, 0x28BC offset), moves the rest
+;   of the track down (Scoop_EventHandler_SpecialMode) [INFERENCE] and frees the blocks that become empty
+;   (MemConfig_Handler_1_Helper5).  Basis: callers + body -- SqStep_DeleteEventAtCursor passes the event length
+;   SeqTrack_StepEvent measured (0x0DCC).
+SeqTrack_DeleteBytesAtCursor:
 	ld	c, w
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	ld	xix, 3230
 	ld	iy, (xix+iz)
 	ld	(10371:16), iy
@@ -10010,18 +10028,18 @@ VoiceSlot_RetZ:
 	xor	b, b
 	add	wa, bc
 	cp	wa, 255
-	jrl	ugt, VoiceSlot_RetZ_Skip
-VoiceSlot_RetZ_Join:
+	jrl	ugt, SeqTrack_DeleteBytesAtCursor_Skip
+SeqTrack_DeleteBytesAtCursor_Join:
 	ld	(0x289e:16), iy
 	ld	(0x28a0:16), wa
-	jp	VoiceSlot_RetZ_Join2
-VoiceSlot_RetZ_Skip:
-	call	VoiceSlot_UpdateCurrentPointer
+	jp	SeqTrack_DeleteBytesAtCursor_Join2
+SeqTrack_DeleteBytesAtCursor_Skip:
+	call	SeqBlock_Select
 	ld	xhl, (4349:16)
 	ld	iy, (xhl+3)
 	sub	wa, 251
-	jp	VoiceSlot_RetZ_Join
-VoiceSlot_RetZ_Join2:
+	jp	SeqTrack_DeleteBytesAtCursor_Join
+SeqTrack_DeleteBytesAtCursor_Join2:
 	ld	xix, 0xf1f8
 	ld	de, (xix+iz)
 	srl	iz, 1
@@ -10049,29 +10067,29 @@ VoiceSlot_RetZ_Join2:
 	pop	xwa
 	sub	wa, bc
 	cp	wa, 4:i3
-	jrl	le, VoiceSlot_RetZ_Skip2
+	jrl	le, SeqTrack_DeleteBytesAtCursor_Skip2
 	srl	iz, 1
 	ldfr_lerp	xix, 56
 	lda	xix, (xix+iz)
 	ld	(xix+32), a
 	ldto_lerp	xix, 56
 	sla	iz, 1
-	jp	VoiceSlot_RetZ_Return
-VoiceSlot_RetZ_Skip2:
+	jp	SeqTrack_DeleteBytesAtCursor_Return
+SeqTrack_DeleteBytesAtCursor_Skip2:
 	cp	wa, 0xffff
-	jrl	le, VoiceSlot_RetZ_Skip3
+	jrl	le, SeqTrack_DeleteBytesAtCursor_Skip3
 	add	a, 251
-	jp	VoiceSlot_RetZ_Join3
-VoiceSlot_RetZ_Skip3:
+	jp	SeqTrack_DeleteBytesAtCursor_Join3
+SeqTrack_DeleteBytesAtCursor_Skip3:
 	sub	wa, 5
-VoiceSlot_RetZ_Join3:
+SeqTrack_DeleteBytesAtCursor_Join3:
 	ld	iy, de
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	ld	xhl, (4349:16)
 	ld	de, (xhl+1)
 	ld	(xix+iz), de
 	ld	iy, de
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	ld	xhl, (4349:16)
 	srl	iz, 1
 	ldfr_lerp	xix, 56
@@ -10082,52 +10100,60 @@ VoiceSlot_RetZ_Join3:
 	ld	iy, (xhl+3)
 	ld	wa, 1:i3
 	call	MemConfig_Handler_1_Helper3
-VoiceSlot_RetZ_Return:
+SeqTrack_DeleteBytesAtCursor_Return:
 	ret
 
-VoiceSlot_LoadAndDispatch:
-	call VoiceSlot_FlagCheck
+; SeqTrack_NextEvent: SeqTrack_StepEvent forward, unless the cursor is at the end: W = 0xFF when the next byte is past the block
+;   chain (SeqTrack_PeekNextByte) or is 0x82, or when the cursor byte is 0x84; otherwise W = 0 and the cursor
+;   moved.  Basis: body.
+SeqTrack_NextEvent:
+	call SeqTrack_PeekNextByte
 	cp w, 0xff
-	jrl z, VoiceSlot_ReadParamsErrExit
+	jrl z, SeqTrack_NextEvent_AtEnd
 	cp a, 0x82
-	jrl z, VoiceSlot_ReadParamsErrExit
-	call VoiceSlot_ReadCurrentParams
+	jrl z, SeqTrack_NextEvent_AtEnd
+	call SeqTrack_ReadCursorByte
 	cp a, 0x84
-	jrl z, VoiceSlot_ReadParamsErrExit
+	jrl z, SeqTrack_NextEvent_AtEnd
 	ld w, 0x0:opc
-	call VoiceSlot_CompareRet
-	jp VoiceSlot_DispatchDone
+	call SeqTrack_StepEvent
+	jp SeqTrack_NextEvent_Return
 
-VoiceSlot_ReadParamsErrExit:
+SeqTrack_NextEvent_AtEnd:
 	ld w, 0xff:opc
 
-VoiceSlot_DispatchDone:
+SeqTrack_NextEvent_Return:
 	ret
 
-VoiceSlot_DispatchRet:
+; SeqTrack_NextEventKeepWrapCount: SeqTrack_NextEvent with SQSTEP_WRAP_COUNT (0x0D58) saved and restored around it.  Basis: body.
+SeqTrack_NextEventKeepWrapCount:
 	push_sd16w 0x58, 0x0d
-	call VoiceSlot_LoadAndDispatch
+	call SeqTrack_NextEvent
 	popw_dd16 0x58, 0x0d
 	ret
 
-VoiceSlot_CompareAndBranch:
+; SeqTrack_PrevEvent: SeqTrack_StepEvent with W = 1: one event back.  Basis: body.
+SeqTrack_PrevEvent:
 	ld	w, 1:opc
-	call	VoiceSlot_CompareRet
+	call	SeqTrack_StepEvent
 	ret
-; VoiceSlot_StepCursorBack: Steps the song-data cursor back one event (VoiceSlot_CompareAndBranch:
-;   VoiceSlot_CompareRet with W = 1) while keeping the 0x81-marker counter 0x0D58 unchanged (pushed and popped around
-;   the step); W = 255 at the start of the track. Backward twin of VoiceSlot_DispatchRet. Basis: callers + body --
-;   ScoopDisp_SeekBackWrapMarkers walks back to the preceding 0x81 with it and stops on W = 255 ('it stops at the
-;   start of the track'); 12 other scoop-display sites use it the same way.
-VoiceSlot_StepCursorBack:
+; SeqTrack_PrevEventKeepWrapCount: SeqTrack_PrevEvent with SQSTEP_WRAP_COUNT (0x0D58) saved and restored; W = 255 at the start of the track.
+;   Backward twin of SeqTrack_NextEventKeepWrapCount.  Basis: callers + body -- ScoopDisp_SeekBackWrapMarkers
+;   walks back to the preceding 0x81 with it.
+SeqTrack_PrevEventKeepWrapCount:
 	pushdi_w	(0x0d58)
-	call	VoiceSlot_CompareAndBranch
+	call	SeqTrack_PrevEvent
 	popw_dd16 0x58, 0x0d	; popw (0x0d58)
 	ret
 
-VoiceSlot_CompareRet:
+; SeqTrack_StepEvent: Moves the song-data cursor to the next event (W = 0) or the previous one (W = 1): walks the bytes, following
+;   the block links (+3 forward, +1 back), until SeqEvent_CheckStatusByte accepts one; each 0x81 marker passed
+;   adjusts SQSTEP_WRAP_COUNT (+1 forward unless a peek finds the chain end or 0x82; SeqTrack_DecWrapCount back).
+;   Stores the new cursor and the number of bytes moved in 0x0DCC.  Out: W = 0 moved, 0xFF at the end / start of
+;   the track.  Basis: body.
+SeqTrack_StepEvent:
 	ld h, w
-	call VoiceSlot_ComputeWordIndex
+	call SeqTrack_WordIndex
 	pushw bc
 	xor c, c
 	ld b, h
@@ -10135,7 +10161,7 @@ VoiceSlot_CompareRet:
 	ld xix, 0xc9e
 	ld	iy, (xix+iz)
 	pop xix
-	call VoiceSlot_UpdateCurrentPointer
+	call SeqBlock_Select
 	ld xhl, (4349:16)
 	srl iz, 1
 	push xde
@@ -10145,21 +10171,21 @@ VoiceSlot_CompareRet:
 	and ix, 0xff
 	sla iz, 1
 	cp b, 0:i3
-	jrl nz, VoiceSlot_DecCountLoop
+	jrl nz, SeqTrack_StepEvent_BackLoop
 
-VoiceSlot_StoreAndAdvance:
+SeqTrack_StepEvent_FwdLoop:
 	inc 1, ix
 	cp ix, 0xff
-	jrl ugt, VoiceSlot_LoadFromTableBody
+	jrl ugt, SeqTrack_StepEvent_FwdNextBlock
 	ld	a, (xhl+ix)
 	inc 1, c
 	cp a, 0x81
-	jrl z, VoiceSlot_CopyBlockDone
-	call VoiceSlot_StatusCheck
+	jrl z, SeqTrack_StepEvent_FwdWrapMarker
+	call SeqEvent_CheckStatusByte
 	cp w, 0xff
-	jrl z, VoiceSlot_StoreAndAdvance
+	jrl z, SeqTrack_StepEvent_FwdLoop
 
-VoiceSlot_CopyBlock:
+SeqTrack_StepEvent_FwdStore:
 	ld wa, ix
 	push xde
 	ld xde, 0xc9e
@@ -10172,59 +10198,59 @@ VoiceSlot_CopyBlock:
 	xor w, w
 	ld (3532:16), c
 	popw bc
-	jp VoiceSlot_SubrRetNZ
+	jp SeqTrack_StepEvent_Return
 
-VoiceSlot_CopyBlockDone:
+SeqTrack_StepEvent_FwdWrapMarker:
 	pushw wa
 	pushw bc
 	push xhl
 	push xix
 	push xiy
 	push xiz
-	call VoiceSlot_FlagCheckBody
+	call SeqTrack_PeekSecondByte
 	cp w, 0xff
-	jrl z, VoiceSlot_LoadFromTable
+	jrl z, SeqTrack_StepEvent_FwdWrapJoin
 	cp a, 0x82
-	jrl z, VoiceSlot_LoadFromTable
+	jrl z, SeqTrack_StepEvent_FwdWrapJoin
 	incw 1, (3416:16)
 
-VoiceSlot_LoadFromTable:
+SeqTrack_StepEvent_FwdWrapJoin:
 	pop xiz
 	pop xiy
 	pop xix
 	pop xhl
 	popw bc
 	popw wa
-	jp VoiceSlot_CopyBlock
+	jp SeqTrack_StepEvent_FwdStore
 
-VoiceSlot_LoadFromTableBody:
+SeqTrack_StepEvent_FwdNextBlock:
 	push xde
 	ld xde, 0xc9e
 	ld	iy, (xde+iz)
 	pop xde
-	call VoiceSlot_UpdateCurrentPointer
+	call SeqBlock_Select
 	ld xhl, (4349:16)
 	ld iy, (xhl + 3)
 	cp iy, 0xffff
-	jrl z, VoiceSlot_SubrDone
-	call VoiceSlot_UpdateCurrentPointer
+	jrl z, SeqTrack_StepEvent_AtEnd
+	call SeqBlock_Select
 	ld xhl, (4349:16)
 	ld ix, 4:i3
-	jp VoiceSlot_StoreAndAdvance
+	jp SeqTrack_StepEvent_FwdLoop
 
-VoiceSlot_DecCountLoop:
+SeqTrack_StepEvent_BackLoop:
 	dec 1, ix
 	cp ix, 4:i3
-	jrl le, VoiceSlot_SubroutineBody
+	jrl le, SeqTrack_StepEvent_BackPrevBlock
 	ld	a, (xhl+ix)
 	inc 1, c
 	cp a, 0x81
-	jrl z, VoiceSlot_SubroutineTable
-	call VoiceSlot_StatusCheck
+	jrl z, SeqTrack_StepEvent_BackWrapMarker
+	call SeqEvent_CheckStatusByte
 	cp w, 0xff
-	jrl z, VoiceSlot_DecCountLoop
+	jrl z, SeqTrack_StepEvent_BackLoop
 
-VoiceSlot_CallSubroutine:
+SeqTrack_StepEvent_BackStore:
 	ld wa, ix
 	push xde
 	ld xde, 0xc9e
@@ -10237,52 +10263,56 @@ VoiceSlot_CallSubroutine:
 	xor w, w
 	ld (3532:16), c
 	popw bc
-	jp VoiceSlot_SubrRetNZ
+	jp SeqTrack_StepEvent_Return
 
-VoiceSlot_SubroutineTable:
-	call VoiceSlot_SubrRetZ
-	jp VoiceSlot_CallSubroutine
+SeqTrack_StepEvent_BackWrapMarker:
+	call SeqTrack_DecWrapCount
+	jp SeqTrack_StepEvent_BackStore
 
-VoiceSlot_SubroutineBody:
+SeqTrack_StepEvent_BackPrevBlock:
 	push xde
 	ld xde, 0xc9e
 	ld	iy, (xde+iz)
 	pop xde
-	call VoiceSlot_UpdateCurrentPointer
+	call SeqBlock_Select
 	ld xhl, (4349:16)
 	ld iy, (xhl + 1)
 	cp iy, 0:i3
-	jrl z, VoiceSlot_SubrDone
-	call VoiceSlot_UpdateCurrentPointer
+	jrl z, SeqTrack_StepEvent_AtEnd
+	call SeqBlock_Select
 	ld xhl, (4349:16)
 	ldw ix, 0x100
-	jp VoiceSlot_DecCountLoop
+	jp SeqTrack_StepEvent_BackLoop
 
-VoiceSlot_SubrDone:
+SeqTrack_StepEvent_AtEnd:
 	ld w, 0xff:opc
 	popw bc
 
-VoiceSlot_SubrRetNZ:
+SeqTrack_StepEvent_Return:
 	ret
 
-VoiceSlot_SubrRetZ:
+; SeqTrack_DecWrapCount: SQSTEP_WRAP_COUNT - 1, not below 0; XIY preserved.  Basis: body (SeqTrack_StepEvent's backward 0x81 case).
+SeqTrack_DecWrapCount:
 	push xiy
 	ld xiy, 0xd58
 	cpw (xiy), 0x0
-	jrl z, VoiceSlot_AdvancePointer
+	jrl z, SeqTrack_DecWrapCount_Done
 	decm 1, (xiy)
 
-VoiceSlot_AdvancePointer:
+SeqTrack_DecWrapCount_Done:
 	pop xiy
 	ret
 
-VoiceSlot_ReadCurrentParams:
-	call VoiceSlot_ComputeWordIndex
+; SeqTrack_ReadCursorByte: Reads the byte at the cursor track's song-data cursor: block (0x0C9E)[track] (SeqBlock_Select), offset
+;   (0x0CBE)[track].  Out: WA = the byte (W = 0), XHL = the block, IZ = SeqTrack_WordIndex.  Basis: body;
+;   SeqTrack_WriteCursorByte is its write twin.
+SeqTrack_ReadCursorByte:
+	call SeqTrack_WordIndex
 	push xde
 	ld xde, 0xc9e
 	ld	iy, (xde+iz)
 	pop xde
-	call VoiceSlot_UpdateCurrentPointer
+	call SeqBlock_Select
 	ld xhl, (4349:16)
 	srl iz, 1
 	push xde
@@ -10295,24 +10325,27 @@ VoiceSlot_ReadCurrentParams:
 	xor w, w
 	ret
 
-VoiceSlot_FlagCheck:
+SeqTrack_PeekNextByte:
 	ldw (3573:16), 1
-	call VoiceSlot_FlagCheckDone
+	call SeqTrack_PeekAhead
 	ret
 
-VoiceSlot_FlagCheckBody:
+SeqTrack_PeekSecondByte:
 	ldw (3573:16), 2
-	call VoiceSlot_FlagCheckDone
+	call SeqTrack_PeekAhead
 	ret
 
-VoiceSlot_FlagCheckDone:
-	call VoiceSlot_ComputeWordIndex
+; SeqTrack_PeekAhead: Reads the byte (0x0DF5) bytes past the cursor without moving it: in the cursor block, or byte 5 of the next
+;   block (link +3) past offset 255.  Out: A = the byte, W = 0xFF when there is no next block.  Basis: body;
+;   SeqTrack_PeekNextByte / SeqTrack_PeekSecondByte set 0x0DF5 = 1 / 2.
+SeqTrack_PeekAhead:
+	call SeqTrack_WordIndex
 	xor w, w
 	push xde
 	ld xde, 0xc9e
 	ld	iy, (xde+iz)
 	pop xde
-	call VoiceSlot_UpdateCurrentPointer
+	call SeqBlock_Select
 	ld xhl, (4349:16)
 	srl iz, 1
 	push xde
@@ -10323,32 +10356,32 @@ VoiceSlot_FlagCheckDone:
 	and iy, 0xff
 	add iy, (3573:16)
 	cp iy, 0xff
-	jrl ugt, VoiceSlot_FinalCheck
+	jrl ugt, SeqTrack_PeekAhead_NextBlock
 	ld	a, (xhl+iy)
-	jp VoiceSlot_FinalRetNZ
+	jp SeqTrack_PeekAhead_Return
 
-VoiceSlot_FinalCheck:
+SeqTrack_PeekAhead_NextBlock:
 	ld iy, (xhl + 3)
 	cp iy, 0xffff
-	jrl z, VoiceSlot_FinalDone
-	call VoiceSlot_UpdateCurrentPointer
+	jrl z, SeqTrack_PeekAhead_AtEnd
+	call SeqBlock_Select
 	ld xhl, (4349:16)
 	ld iy, 5:i3
 	ld	a, (xhl+iy)
-	jp VoiceSlot_FinalRetNZ
+	jp SeqTrack_PeekAhead_Return
 
-VoiceSlot_FinalDone:
+SeqTrack_PeekAhead_AtEnd:
 	ld w, 0xff:opc
 
-VoiceSlot_FinalRetNZ:
+SeqTrack_PeekAhead_Return:
 	ret
 
 ; SeqTrack_ReadByteAndAdvance: reads the byte at the current track's song-data cursor
-;   (VoiceSlot_ReadCurrentParams) and moves the cursor one byte on (SeqTrack_AdvanceCursor, DE = 1).
+;   (SeqTrack_ReadCursorByte) and moves the cursor one byte on (SeqTrack_AdvanceCursor, DE = 1).
 ;   Out: A = the byte, W = 0 when the cursor moved, 0xff when it was at the end of the track.
 ;   Basis: body + SeqTrack_AdvanceCursor.
 SeqTrack_ReadByteAndAdvance:
-	call VoiceSlot_ReadCurrentParams
+	call SeqTrack_ReadCursorByte
 	pushw WA
 	ld de, 1:i3
 	call Timer_ModeHandler_0_Helper6
@@ -10361,7 +10394,7 @@ SeqBlockChain_0x11:
 	push	xiy
 	push	xiz
 	push	xhl
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	pop	xhl
 	pop	xiz
 	pop	xiy
@@ -10378,7 +10411,7 @@ SeqBlockChain_0x1E:
 	ld	xix, 3230
 	ld	iy, (xix+iz)
 	pop	xix
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	srl	iz, 1
 	push	xix
 	ld	xix, 3262
@@ -10400,7 +10433,7 @@ Timer_ModeHandler_0_Helper5:
 	push	xix
 	push	xiy
 	push	xiz
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	ld	(3524:16), a
 	ld	w, d
 	ld	a, e
@@ -10415,16 +10448,16 @@ Timer_ModeHandler_0_Helper5:
 	pop	xwa
 	ld	a, (3524:16)
 	ret
-; VoiceSlot_WriteCurrentParam: Stores W at the current song-data cursor: block (0x0C9E)[track] (via
-;   VoiceSlot_UpdateCurrentPointer), offset (0x0CBE)[track], track = (0x0EEE). Basis: callers + body -- the write twin
-;   of VoiceSlot_ReadCurrentParams; callers read, modify W and write back, or write marker bytes.
-VoiceSlot_WriteCurrentParam:
-	call	VoiceSlot_ComputeWordIndex
+; SeqTrack_WriteCursorByte: Stores W at the current song-data cursor: block (0x0C9E)[track] (via
+;   SeqBlock_Select), offset (0x0CBE)[track], track = (0x0EEE). Basis: callers + body -- the write twin
+;   of SeqTrack_ReadCursorByte; callers read, modify W and write back, or write marker bytes.
+SeqTrack_WriteCursorByte:
+	call	SeqTrack_WordIndex
 	push	xde
 	ld	xde, 3230
 	ld	iy, (xde+iz)
 	pop	xde
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	srl	iz, 1
 	push	xde
 	ld	xde, 3262
@@ -10484,7 +10517,7 @@ SeqBlockChain_Skip2:
 	ld	bc, wa
 	ld	iy, (xix+iz)
 SeqBlockChain_Loop5:
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	ld	xhl, (4349:16)
 	ld	iy, (xhl+3)
 	ld	l, (3566:16)
@@ -10496,7 +10529,7 @@ SeqBlockChain_Loop2:
 	add	de, 5
 	ld	xix, 61944
 	cp	iy, (xix+iz)
-	jrl	z, VoiceSlot_WriteCurrentParam_Skip
+	jrl	z, Timer_ModeHandler_0_Helper6_Skip
 SeqBlockChain_Loop3:
 	ld	xix, 3230
 	ld	(xix+iz), iy
@@ -10513,7 +10546,7 @@ SeqBlockChain_Skip3:
 	jrl	z, SeqBlockChain_Loop2
 	ld	w, 255:opc
 	jp	SeqBlockChain_Return
-VoiceSlot_WriteCurrentParam_Skip:
+Timer_ModeHandler_0_Helper6_Skip:
 	cp	wa, (xix+hl)
 	jrl	ule, SeqBlockChain_Loop3
 	ld	w, 255:opc
@@ -10533,7 +10566,7 @@ MemConfig_Handler_1_Helper3:
 	ld	bc, (61999:16)
 	ld	(61999:16), iy
 	xor	wa, wa
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	ld	xhl, (4349:16)
 	ld	ix, (xhl+1)
 	ld	de, ix
@@ -10541,18 +10574,18 @@ MemConfig_Handler_1_Helper3:
 	jrl	z, SeqBlockChain_Skip6
 	ld	iy, ix
 	ldw	(xhl+1), 0
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	ld	xhl, (4349:16)
 	ld	ix, iy
 	ld	iy, (xhl+3)
 SeqBlockChain_Loop4:
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	ld	xhl, (4349:16)
 	ld	ix, iy
 	ld	iy, (xhl+3)
 	cp	iy, 65535
 	jrl	z, SeqBlockChain_Skip4
-VoiceSlot_WriteCurrentParam_Loop:
+MemConfig_Handler_1_Helper3_Loop:
 	andmi8	(xhl), 127
 	ld	(xhl+5), 130
 	inc	1, wa
@@ -10560,7 +10593,7 @@ VoiceSlot_WriteCurrentParam_Loop:
 	jrl	nz, SeqBlockChain_Loop4
 	dec	1, wa
 SeqBlockChain_Join:
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	ld	xhl, (4349:16)
 	ld	(xhl+1), de
 SeqBlockChain_Skip4:
@@ -10568,38 +10601,40 @@ SeqBlockChain_Skip4:
 	jrl	z, SeqBlockChain_Skip5
 	push	xiy
 	ld	iy, de
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	pop	xiy
 	ld	xhl, (4349:16)
 	ld	(xhl+3), iy
 SeqBlockChain_Skip5:
 	ld	iy, ix
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	ld	xhl, (4349:16)
 	andmi8	(xhl), 127
 	ld	(xhl+5), 130
 	ld	(xhl+3), bc
 	ld	iy, bc
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	ld	xhl, (4349:16)
 	ld	(xhl+1), ix
 	inc	1, wa
 	add (62001:16), wa
 	jp	SeqBlockChain_Return2
 SeqBlockChain_Skip6:
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	ld	ix, iy
 	ld	xhl, (4349:16)
 	ld	iy, (xhl+3)
 	cp	iy, 65535
-	jrl	nz, VoiceSlot_WriteCurrentParam_Loop
+	jrl	nz, MemConfig_Handler_1_Helper3_Loop
 	ldw	(3302:16), 0
 	ld	iy, ix
 	andmi8	(xhl), 127
 	jp	SeqBlockChain_Join
 SeqBlockChain_Return2:
 	ret
-VoiceSlot_UpdateCurrentPointer:
+; SeqBlock_Select: SEQ_BLOCK_PTR = (SEQ_BLOCK_POOL) + 256 * (IY - 1): selects song block IY (1-based).  Out: XHL = 0.
+;   Basis: body; every song-data routine calls it before reading (SEQ_BLOCK_PTR).
+SeqBlock_Select:
 	ld hl, iy
 	dec 1, hl
 	extz xhl
@@ -10609,7 +10644,9 @@ VoiceSlot_UpdateCurrentPointer:
 	xor xhl, xhl
 	ret
 
-VoiceSlot_ComputeWordIndex:
+; SeqTrack_WordIndex: IZ = 2 * ((SEQ_CURSOR_TRACK) - 1), the index of the cursor track's word in the cursor block table 0x0C9E
+;   (IZ / 2 indexes the offset table 0x0CBE).  Preserves WA.  Basis: body.
+SeqTrack_WordIndex:
 	pushw wa
 	ld a, (3822:16)
 	dec 1, a
@@ -10620,7 +10657,9 @@ VoiceSlot_ComputeWordIndex:
 	popw wa
 	ret
 
-VoiceSlot_ComputeIndex:
+; SeqTrack_TripleIndex: IZ = 3 * ((SEQ_CURSOR_TRACK) - 1), the index of the cursor track's 3-byte entry (track table 0xF250).
+;   Preserves WA.  Basis: body.
+SeqTrack_TripleIndex:
 	pushw wa
 	ld a, (3822:16)
 	dec 1, a
@@ -10632,106 +10671,114 @@ VoiceSlot_ComputeIndex:
 	extz xiz
 	popw wa
 	ret
-VoiceSlot_IndexDone:
+; SqStep_ShowCursorMarkerPopup: Counts the 0x81 markers at the cursor (stepping over them, 0x0D62) and shows the beat count
+;   (DisplayStr_ShowBeatCount), or at a 0x82 / 0x84 marker the section name (SQSTEP_STYLE_SECTION = 8 / 9,
+;   DisplayStr_CopyStyleSectionName).  Basis: body.
+SqStep_ShowCursorMarkerPopup:
 	xor	wa, wa
 	ld	(3428:16), a
 	ld	(3426:16), wa
-VoiceSlot_IndexDone_Join:
-	call	VoiceSlot_ReadCurrentParams
+SqStep_ShowCursorMarkerPopup_Join:
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
-	jrl	nz, VoiceSlot_ComputeIndex_Skip
+	jrl	nz, SqStep_ShowCursorMarkerPopup_Skip_2
 	ld	de, 1:i3
 	call	Timer_ModeHandler_0_Helper6
 	incw	1, (3426:16)
-	jp	VoiceSlot_IndexDone_Join
-VoiceSlot_ComputeIndex_Skip:
+	jp	SqStep_ShowCursorMarkerPopup_Join
+SqStep_ShowCursorMarkerPopup_Skip_2:
 	ld	xiy, 3426
 	ld	xix, 13936
 	cp	a, 130
-	jrl	z, VoiceSlot_IndexDone_Skip5
+	jrl	z, SqStep_ShowCursorMarkerPopup_Skip5
 	cp	a, 132
-	jrl	z, VoiceSlot_IndexDone_Skip
-	call	VoiceSlot_FlagCheck
+	jrl	z, SqStep_ShowCursorMarkerPopup_Skip
+	call	SeqTrack_PeekNextByte
 	ld	xiy, 3428
 	cp	a, 0:i3
-	jrl	z, VoiceSlot_IndexDone_Skip2
+	jrl	z, SqStep_ShowCursorMarkerPopup_Skip2
 	ld	(xiy), 128
-VoiceSlot_IndexDone_Skip2:
+SqStep_ShowCursorMarkerPopup_Skip2:
 	cp	(3415:16), 48
-	jrl	nz, VoiceSlot_IndexDone_Loop
+	jrl	nz, SqStep_ShowCursorMarkerPopup_Loop
 	cp	(xiy), 128
-	jrl	nz, VoiceSlot_IndexDone_Skip3
+	jrl	nz, SqStep_ShowCursorMarkerPopup_Skip3
 	ld	(xiy), 0
-	jp	VoiceSlot_IndexDone_Loop
-VoiceSlot_IndexDone_Skip3:
+	jp	SqStep_ShowCursorMarkerPopup_Loop
+SqStep_ShowCursorMarkerPopup_Skip3:
 	ld	(xiy), 128
 	ld	wa, (3426:16)
 	sub	wa, 1
-	jrl	nc, VoiceSlot_IndexDone_Skip4
+	jrl	nc, SqStep_ShowCursorMarkerPopup_Skip4
 	xor	wa, wa
-VoiceSlot_IndexDone_Skip4:
+SqStep_ShowCursorMarkerPopup_Skip4:
 	ld	(3426:16), wa
-VoiceSlot_IndexDone_Loop:
+SqStep_ShowCursorMarkerPopup_Loop:
 	call	DisplayStr_ShowBeatCount
-	jp	VoiceSlot_IndexDone_Return
-VoiceSlot_IndexDone_Skip5:
+	jp	SqStep_ShowCursorMarkerPopup_Return
+SqStep_ShowCursorMarkerPopup_Skip5:
 	cpw	(xiy), 1
-	jrl	z, VoiceSlot_IndexDone_Skip6
+	jrl	z, SqStep_ShowCursorMarkerPopup_Skip6
 	cpw	(xiy), 0
-	jrl	z, VoiceSlot_IndexDone_Skip6
+	jrl	z, SqStep_ShowCursorMarkerPopup_Skip6
 	decm	1, (xiy)
-	jp	VoiceSlot_IndexDone_Loop
-VoiceSlot_IndexDone_Skip6:
+	jp	SqStep_ShowCursorMarkerPopup_Loop
+SqStep_ShowCursorMarkerPopup_Skip6:
 	ld	(xix), 8
-	jp	VoiceSlot_IndexDone_Join2
-VoiceSlot_IndexDone_Skip:
+	jp	SqStep_ShowCursorMarkerPopup_Join2
+SqStep_ShowCursorMarkerPopup_Skip:
 	cpw	(xiy), 0
-	jrl	nz, VoiceSlot_IndexDone_Loop
+	jrl	nz, SqStep_ShowCursorMarkerPopup_Loop
 	ld	(xix), 9
-VoiceSlot_IndexDone_Join2:
+SqStep_ShowCursorMarkerPopup_Join2:
 	call	DisplayStr_CopyStyleSectionName
-VoiceSlot_IndexDone_Return:
+SqStep_ShowCursorMarkerPopup_Return:
 	ret
-VoiceSlot_StatusCheck:
+; SeqEvent_CheckStatusByte: W = 0 when A can start a stored event -- 0x80..0x86 except 0x83, or 0x90..0xD3 except 0xA0..0xAF -- else W =
+;   0xFF.  Basis: body; SeqTrack_StepEvent skips bytes while it returns 0xFF.
+SeqEvent_CheckStatusByte:
 	bit 7, a
-	jrl z, VoiceSlot_SetFFAndContinue
+	jrl z, SeqEvent_CheckStatusByte_No
 	cp a, 0x83
-	jrl z, VoiceSlot_SetFFAndContinue
+	jrl z, SeqEvent_CheckStatusByte_No
 	cp a, 0x90
-	jrl nc, VoiceSlot_StatusActive
+	jrl nc, SeqEvent_CheckStatusByte_InRange
 	cp a, 0x86
-	jrl ugt, VoiceSlot_SetFFAndContinue
+	jrl ugt, SeqEvent_CheckStatusByte_No
 
-VoiceSlot_StatusActive:
+SeqEvent_CheckStatusByte_InRange:
 	cp a, 0xd3
-	jrl ugt, VoiceSlot_SetFFAndContinue
+	jrl ugt, SeqEvent_CheckStatusByte_No
 	ld w, a
 	and w, 0xf0
 	cp w, 0xa0
-	jrl z, VoiceSlot_SetFFAndContinue
+	jrl z, SeqEvent_CheckStatusByte_No
 	ld w, 0x0:opc
-	jp VoiceSlot_StatusDone
+	jp SeqEvent_CheckStatusByte_Return
 
-VoiceSlot_SetFFAndContinue:
+SeqEvent_CheckStatusByte_No:
 	ld w, 0xff:opc
 
-VoiceSlot_StatusDone:
+SeqEvent_CheckStatusByte_Return:
 	ret
 
-VoiceSlot_StatusRet:
+; SqStep_ShowCursorEventPopup: Shows the pop-up for the event at the song-data cursor, by its status byte: 0x9n note (SqStep_AuditionCursorNotes
+;   too), 0xBn control (ParamPopup_* per controller), 0xCn program, 0x8n markers, 0xDn; the 0x81 / clock cases go to
+;   SqStep_ShowCursorMarkerPopup.  Basis: body.
+SqStep_ShowCursorEventPopup:
 	cp	(0x0d65:16), 0
-	jrl	nz, VoiceSlot_StatusRet_Skip2
-	call	VoiceSlot_ReadCurrentParams
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip2
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
-	jrl	z, VoiceSlot_StatusRet_Skip
-	call	VoiceSlot_FlagCheck
+	jrl	z, SqStep_ShowCursorEventPopup_Skip
+	call	SeqTrack_PeekNextByte
 	cp	a, (0x0d57:16)
-	jrl	z, VoiceSlot_StatusRet_Skip2
-VoiceSlot_StatusRet_Skip:
-	call	VoiceSlot_IndexDone
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip2:
-	call	VoiceSlot_ReadCurrentParams
+	jrl	z, SqStep_ShowCursorEventPopup_Skip2
+SqStep_ShowCursorEventPopup_Skip:
+	call	SqStep_ShowCursorMarkerPopup
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip2:
+	call	SeqTrack_ReadCursorByte
 	ld	w, a
 	and	w, 6
 	stb_d8	(0x0ef4), w
@@ -10740,81 +10787,81 @@ VoiceSlot_StatusRet_Skip2:
 	stb_d8	(0x0dc8), w
 	and	a, 240
 	cp	a, 144
-	jrl	z, VoiceSlot_StatusRet_Skip4
+	jrl	z, SqStep_ShowCursorEventPopup_Skip4
 	cp	a, 176
-	jrl	z, VoiceSlot_StatusRet_Skip14
+	jrl	z, SqStep_ShowCursorEventPopup_Skip14
 	cp	a, 192
-	jrl	z, VoiceSlot_StatusRet_Skip8
+	jrl	z, SqStep_ShowCursorEventPopup_Skip8
 	cp	a, 128
-	jrl	z, VoiceSlot_StatusRet_Skip72
+	jrl	z, SqStep_ShowCursorEventPopup_Skip72
 	cp	a, 208
-	jrl	nz, VoiceSlot_StatusRet_Loop2
-	jp	VoiceSlot_StatusRet_Join5
-VoiceSlot_StatusRet_Loop2:
+	jrl	nz, SqStep_ShowCursorEventPopup_Loop2
+	jp	SqStep_ShowCursorEventPopup_Join5
+SqStep_ShowCursorEventPopup_Loop2:
 	ld	(0x3668:16), 0
 	cp	(0x0def:16), 1
-	jrl	nz, VoiceSlot_StatusRet_Skip3
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip3
 	call	DisplayStr_WriteStoredControlLine
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip3:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip3:
 	ld	(0x0def:16), 1
 	call	DisplayStr_BytecodeBlock_B
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip4:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip4:
 	cp	(0x0d65:16), 0
-	jrl	z, VoiceSlot_StatusRet_Skip7
+	jrl	z, SqStep_ShowCursorEventPopup_Skip7
 	call	SeqTrack_ReadByteAndAdvance
-	call	VoiceSlot_SkipByteAndRead
+	call	SeqTrack_SkipByteAndRead
 	pushw	wa
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	srl	iz, 1
 	popw	wa
 	push	xix
 	ld	xix, 0xf1a0
 	cp	(xix+iz), 0x0c
 	pop	xix
-	jrl	nz, VoiceSlot_StatusRet_Join
+	jrl	nz, SqStep_ShowCursorEventPopup_Join
 	bit	2, (PANEL_GM+3:16)
-	jrl	z, VoiceSlot_StatusRet_Skip5
-	jp	VoiceSlot_StatusRet_Join
-VoiceSlot_StatusRet_Skip5:
+	jrl	z, SqStep_ShowCursorEventPopup_Skip5
+	jp	SqStep_ShowCursorEventPopup_Join
+SqStep_ShowCursorEventPopup_Skip5:
 	ldb_d8	w, (PANEL_PART_PT16)
 	call	ScoopDisp_BytecodeBlock1_0x32
-VoiceSlot_StatusRet_Join:
+SqStep_ShowCursorEventPopup_Join:
 	stb_d8	(0x3660), a
 	call	SeqTrack_ReadByteAndAdvance
 	stb_d8	(0x365f), a
 	cp	(0x0def:16), 0
-	jrl	nz, VoiceSlot_StatusRet_Skip6
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip6
 	call	DisplayStr_WriteNoteLine
-	jp	VoiceSlot_StatusRet_Join2
-VoiceSlot_StatusRet_Skip6:
+	jp	SqStep_ShowCursorEventPopup_Join2
+SqStep_ShowCursorEventPopup_Skip6:
 	ld	(0x0def:16), 0
 	call	Display_BytecodeBlock_F
-VoiceSlot_StatusRet_Join2:
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip7:
-	call	VoiceSlot_StatusRet_Helper
+SqStep_ShowCursorEventPopup_Join2:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip7:
+	call	SqStep_AuditionCursorNotes
 	call	SeqTrack_ReadByteAndAdvance
-	call	VoiceSlot_SkipByteAndRead
-	call	VoiceSlot_SkipByteAndRead
+	call	SeqTrack_SkipByteAndRead
+	call	SeqTrack_SkipByteAndRead
 	and	a, 32
 	rlc a, 3	; rlc 0x03,A
 	ld	e, a
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	and	a, 7
 	sla	a, 1
 	or	a, e
-	ld	xhl, VoiceSlot_StatusRet_Tbl2
+	ld	xhl, SqStep_ShowCursorEventPopup_NoteCodeMap
 	ld	a, (xhl+a)
 	stb_d8	(0x0d61), a
 	call	SNS_Init_Startup
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip8:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip8:
 	call	SeqTrack_ReadByteAndAdvance
-	call	VoiceSlot_SkipByteAndRead
+	call	SeqTrack_SkipByteAndRead
 	cp	a, 72
-	jrl	z, VoiceSlot_StatusRet_Skip10
+	jrl	z, SqStep_ShowCursorEventPopup_Skip10
 	stb_d8	(0x11bb), a
 	stb_d8	(0x9037), a
 	call	SeqTrack_ReadByteAndAdvance
@@ -10822,9 +10869,9 @@ VoiceSlot_StatusRet_Skip8:
 	push	xhl
 	call	SeqTrack_ReadByteAndAdvance
 	bit	0, (0x0dc8:16)
-	jrl	z, VoiceSlot_StatusRet_Skip9
+	jrl	z, SqStep_ShowCursorEventPopup_Skip9
 	or	a, 128
-VoiceSlot_StatusRet_Skip9:
+SqStep_ShowCursorEventPopup_Skip9:
 	pop	xhl
 	stb_d8	(0x11bd), a
 	ld	l, a
@@ -10835,38 +10882,38 @@ VoiceSlot_StatusRet_Skip9:
 	stb_d8	(0x11be), h
 	ld	(0x0def:16), 1
 	call	DisplayStr_ShowPartSoundLine
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip10:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip10:
 	call	SeqTrack_ReadByteAndAdvance
 	cp	a, 0:i3
-	jrl	nz, VoiceSlot_StatusRet_Loop2
+	jrl	nz, SqStep_ShowCursorEventPopup_Loop2
 	call	SeqTrack_ReadByteAndAdvance
 	bit	0, (0x0dc8:16)
-	jrl	z, VoiceSlot_StatusRet_Skip11
+	jrl	z, SqStep_ShowCursorEventPopup_Skip11
 	or	a, 128
-VoiceSlot_StatusRet_Skip11:
+SqStep_ShowCursorEventPopup_Skip11:
 	stb_d8	(0x366a), a
 	call	SeqTrack_ReadByteAndAdvance
 	stb_d8	(0x366b), a
 	bit	1, (0x0ef4:16)
-	jrl	z, VoiceSlot_StatusRet_Skip12
+	jrl	z, SqStep_ShowCursorEventPopup_Skip12
 	or	a, 128
-VoiceSlot_StatusRet_Skip12:
+SqStep_ShowCursorEventPopup_Skip12:
 	stb_d8	(0x0ef5), a
 	cp	(0x0d65:16), 3
-	jrl	z, VoiceSlot_StatusRet_Skip13
+	jrl	z, SqStep_ShowCursorEventPopup_Skip13
 	ld	(0x0def:16), 4
 	call	DisplayStr_ShowRhythmLine
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip13:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip13:
 	ld	(0x0def:16), 12
 	call	DisplayStr_BytecodeBlock_D
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Loop3:
-	jp	VoiceSlot_StatusRet_Loop2
-VoiceSlot_StatusRet_Skip14:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Loop3:
+	jp	SqStep_ShowCursorEventPopup_Loop2
+SqStep_ShowCursorEventPopup_Skip14:
 	call	SeqTrack_ReadByteAndAdvance
-	call	VoiceSlot_SkipByteAndRead
+	call	SeqTrack_SkipByteAndRead
 	and	a, 127
 	ldb_d8	h, (0x0dc8)
 	and	h, 4
@@ -10874,20 +10921,20 @@ VoiceSlot_StatusRet_Skip14:
 	or	a, h
 	stb_d8	(0x10f1), a
 	cp	a, 72
-	jrl	nz, VoiceSlot_StatusRet_Skip35
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip35
 	call	SeqTrack_ReadByteAndAdvance
 	cp	a, 5:i3
-	jrl	z, VoiceSlot_StatusRet_Skip25
+	jrl	z, SqStep_ShowCursorEventPopup_Skip25
 	cp	a, 6:i3
-	jrl	z, VoiceSlot_StatusRet_Skip25
+	jrl	z, SqStep_ShowCursorEventPopup_Skip25
 	cp	a, 7:i3
-	jrl	z, VoiceSlot_StatusRet_Code_Skip2
+	jrl	z, SqStep_ShowCursorEventPopup_Code_Skip2
 	cp	a, 3:i3
-	jrl	z, VoiceSlot_StatusRet_Skip18
+	jrl	z, SqStep_ShowCursorEventPopup_Skip18
 	cp	a, 4:i3
-	jrl	z, VoiceSlot_StatusRet_Skip22
-	jp	VoiceSlot_StatusRet_Loop3
-VoiceSlot_StatusRet_Code_Skip2:
+	jrl	z, SqStep_ShowCursorEventPopup_Skip22
+	jp	SqStep_ShowCursorEventPopup_Loop3
+SqStep_ShowCursorEventPopup_Code_Skip2:
 	call	SeqTrack_ReadByteAndAdvance
 	ld	c, a
 	pushw	bc
@@ -10895,25 +10942,25 @@ VoiceSlot_StatusRet_Code_Skip2:
 	popw	bc
 	ldb_d8	a, (0x0d65)
 	cp	a, 3:i3
-	jrl	z, VoiceSlot_StatusRet_Code_Skip3
+	jrl	z, SqStep_ShowCursorEventPopup_Code_Skip3
 	cp	a, 2:i3
-	jrl	z, VoiceSlot_StatusRet_Code_Skip4
-	jp	VoiceSlot_StatusRet_Loop3
-VoiceSlot_StatusRet_Code_Skip3:
+	jrl	z, SqStep_ShowCursorEventPopup_Code_Skip4
+	jp	SqStep_ShowCursorEventPopup_Loop3
+SqStep_ShowCursorEventPopup_Code_Skip3:
 	ld	(0x0def:16), 15
 	pushw	bc
 	call	Display_UpdateRegion0
 	popw	bc
 	call	DisplayStr_ShowMeasureAndVariation
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Code_Skip4:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Code_Skip4:
 	ld	(0x0def:16), 4
 	pushw	bc
 	call	Display_UpdateRegion0
 	popw	bc
 	call	DisplayStr_ShowRhythmVariationLine
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip18:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip18:
 	call	SeqTrack_ReadByteAndAdvance
 	stb_d8	(0x10f3), a
 	call	SeqTrack_ReadByteAndAdvance
@@ -10931,23 +10978,23 @@ VoiceSlot_StatusRet_Skip18:
 	ldfr_berp	a, 60
 	and	a, 7
 	ldto_berp	a, 60
-	jrl	z, VoiceSlot_StatusRet_Skip19
+	jrl	z, SqStep_ShowCursorEventPopup_Skip19
 	call	ParamPopup_ApcMode
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip19:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip19:
 	bit	3, a
-	jrl	z, VoiceSlot_StatusRet_Skip88
+	jrl	z, SqStep_ShowCursorEventPopup_Skip88
 	call	ParamPopup_ApcMemory
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip88:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip88:
 	ldfr_berp	a, 60
 	and	a, 224
 	ldto_berp	a, 60
-	jrl	z, VoiceSlot_StatusRet_Skip21
+	jrl	z, SqStep_ShowCursorEventPopup_Skip21
 	call	ParamPopup_AccompPart
-VoiceSlot_StatusRet_Skip21:
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip22:
+SqStep_ShowCursorEventPopup_Skip21:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip22:
 	call	SeqTrack_ReadByteAndAdvance
 	stb_d8	(0x10f3), a
 	call	SeqTrack_ReadByteAndAdvance
@@ -10963,88 +11010,88 @@ VoiceSlot_StatusRet_Skip22:
 	or	a, h
 	stb_d8	(0x10f5), a
 	bit	4, a
-	jrl	z, VoiceSlot_StatusRet_Skip23
+	jrl	z, SqStep_ShowCursorEventPopup_Skip23
 	call	ParamPopup_DynamicAccomp
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip23:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip23:
 	bit	6, a
-	jrl	z, VoiceSlot_StatusRet_Skip52
+	jrl	z, SqStep_ShowCursorEventPopup_Skip52
 	call	ParamPopup_TechniChord
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip52:
-	jp	VoiceSlot_StatusRet_Loop3
-VoiceSlot_StatusRet_Skip25:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip52:
+	jp	SqStep_ShowCursorEventPopup_Loop3
+SqStep_ShowCursorEventPopup_Skip25:
 	ldfr_berp	a, 56
 	stb_d8	(0x10f2), a
 	call	SeqTrack_ReadByteAndAdvance
 	ld	c, a
 	bit	0, (0x0dc8:16)
-	jrl	z, VoiceSlot_StatusRet_Skip26
+	jrl	z, SqStep_ShowCursorEventPopup_Skip26
 	or	c, 128
-VoiceSlot_StatusRet_Skip26:
+SqStep_ShowCursorEventPopup_Skip26:
 	pushw	bc
 	call	SeqTrack_ReadByteAndAdvance
 	popw	bc
 	bit	1, (0x0dc8:16)
-	jrl	z, VoiceSlot_StatusRet_Skip27
+	jrl	z, SqStep_ShowCursorEventPopup_Skip27
 	or	a, 128
-VoiceSlot_StatusRet_Skip27:
+SqStep_ShowCursorEventPopup_Skip27:
 	ld	xiy, 0x3670
 	ldfr_berp	a, 60
 	and	a, 192
 	ldto_berp	a, 60
-	jrl	nz, VoiceSlot_StatusRet_Skip28
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip28
 	ldfr_berp	a, 60
 	and	a, 48
 	ldto_berp	a, 60
-	jrl	nz, VoiceSlot_StatusRet_Skip30
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip30
 	bit	2, a
-	jrl	nz, VoiceSlot_StatusRet_Skip32
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip32
 	bit	3, a
-	jrl	nz, VoiceSlot_StatusRet_Skip34
-	jp	VoiceSlot_StatusRet_Loop3
-VoiceSlot_StatusRet_Skip28:
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip34
+	jp	SqStep_ShowCursorEventPopup_Loop3
+SqStep_ShowCursorEventPopup_Skip28:
 	ldfr_berp	c, 60
 	and	c, 192
 	ldto_berp	c, 60
-	jrl	z, VoiceSlot_StatusRet_Loop
+	jrl	z, SqStep_ShowCursorEventPopup_Loop
 	bit	6, c
-	jrl	z, VoiceSlot_StatusRet_Skip20
+	jrl	z, SqStep_ShowCursorEventPopup_Skip20
 	ld	(xiy), 3
-	jp	VoiceSlot_StatusRet_Join3
-VoiceSlot_StatusRet_Skip20:
+	jp	SqStep_ShowCursorEventPopup_Join3
+SqStep_ShowCursorEventPopup_Skip20:
 	ld	(xiy), 4
-VoiceSlot_StatusRet_Join3:
+SqStep_ShowCursorEventPopup_Join3:
 	call	Display_ModePopupDispatch
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Loop:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Loop:
 	set	5, (0x0d54:16)
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip30:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip30:
 	ldfr_berp	c, 60
 	and	c, 48
 	ldto_berp	c, 60
-	jrl	z, VoiceSlot_StatusRet_Loop
+	jrl	z, SqStep_ShowCursorEventPopup_Loop
 	ld	(xiy), 7
 	bit	4, c
-	jrl	nz, VoiceSlot_StatusRet_Skip31
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip31
 	ld	(xiy), 11
-VoiceSlot_StatusRet_Skip31:
+SqStep_ShowCursorEventPopup_Skip31:
 	call	Display_ModePopupDispatch
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip32:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip32:
 	ld	(xiy), 5
 	cp	(0x10f2:16), 6
-	jrl	nz, VoiceSlot_StatusRet_Skip33
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip33
 	ld	(xiy), 12
-VoiceSlot_StatusRet_Skip33:
+SqStep_ShowCursorEventPopup_Skip33:
 	call	Display_ModePopupDispatch
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip34:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip34:
 	ld	(xiy), 6
 	call	Display_ModePopupDispatch
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip35:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip35:
 	call	SeqTrack_ReadByteAndAdvance
 	stb_d8	(0x10f2), a
 	call	SeqTrack_ReadByteAndAdvance
@@ -11063,313 +11110,313 @@ VoiceSlot_StatusRet_Skip35:
 	stb_d8	(0x10f5), a
 	ldb_d8	a, (0x10f1)
 	cp	a, 0:i3
-	jrl	c, VoiceSlot_StatusRet_Skip36
+	jrl	c, SqStep_ShowCursorEventPopup_Skip36
 	cp	a, 13
-	jrl	ule, VoiceSlot_StatusRet_Skip54
+	jrl	ule, SqStep_ShowCursorEventPopup_Skip54
 	cp	a, 14
-	jrl	z, VoiceSlot_StatusRet_Skip54
+	jrl	z, SqStep_ShowCursorEventPopup_Skip54
 	cp	a, 15
-	jrl	z, VoiceSlot_StatusRet_Skip54
+	jrl	z, SqStep_ShowCursorEventPopup_Skip54
 	cp	a, 80
-	jrl	z, VoiceSlot_StatusRet_Skip54
+	jrl	z, SqStep_ShowCursorEventPopup_Skip54
 	cp	a, 81
-	jrl	z, VoiceSlot_StatusRet_Skip54
+	jrl	z, SqStep_ShowCursorEventPopup_Skip54
 	cp	a, 144
-	jrl	z, VoiceSlot_StatusRet_Skip54
+	jrl	z, SqStep_ShowCursorEventPopup_Skip54
 	cp	a, 112
-	jrl	z, VoiceSlot_StatusRet_Skip37
+	jrl	z, SqStep_ShowCursorEventPopup_Skip37
 	cp	a, 152
-	jrl	z, VoiceSlot_StatusRet_Skip37
+	jrl	z, SqStep_ShowCursorEventPopup_Skip37
 	cp	a, 19
-	jrl	z, VoiceSlot_StatusRet_Skip37
+	jrl	z, SqStep_ShowCursorEventPopup_Skip37
 	cp	a, 20
-	jrl	z, VoiceSlot_StatusRet_Skip37
+	jrl	z, SqStep_ShowCursorEventPopup_Skip37
 	cp	a, 16
-	jrl	z, VoiceSlot_StatusRet_Skip37
+	jrl	z, SqStep_ShowCursorEventPopup_Skip37
 	cp	a, 17
-	jrl	z, VoiceSlot_StatusRet_Skip37
+	jrl	z, SqStep_ShowCursorEventPopup_Skip37
 	cp	a, 18
-	jrl	z, VoiceSlot_StatusRet_Skip37
-VoiceSlot_StatusRet_Skip36:
-	jp	VoiceSlot_StatusRet_Loop3
-VoiceSlot_StatusRet_Skip37:
+	jrl	z, SqStep_ShowCursorEventPopup_Skip37
+SqStep_ShowCursorEventPopup_Skip36:
+	jp	SqStep_ShowCursorEventPopup_Loop3
+SqStep_ShowCursorEventPopup_Skip37:
 	ldb_d8	a, (0x10f2)
 	cp	a, 0:i3
-	jrl	z, VoiceSlot_StatusRet_Skip38
+	jrl	z, SqStep_ShowCursorEventPopup_Skip38
 	cp	a, 3:i3
-	jrl	z, VoiceSlot_StatusRet_Skip38
+	jrl	z, SqStep_ShowCursorEventPopup_Skip38
 	cp	a, 3:i3
-	jrl	z, VoiceSlot_StatusRet_Skip38
+	jrl	z, SqStep_ShowCursorEventPopup_Skip38
 	cp	a, 3:i3
-	jrl	z, VoiceSlot_StatusRet_Skip38
+	jrl	z, SqStep_ShowCursorEventPopup_Skip38
 	cp	a, 2:i3
-	jrl	z, VoiceSlot_StatusRet_Skip38
+	jrl	z, SqStep_ShowCursorEventPopup_Skip38
 	cp	a, 1:i3
-	jrl	z, VoiceSlot_StatusRet_Skip38
+	jrl	z, SqStep_ShowCursorEventPopup_Skip38
 	cp	a, 11
-	jrl	z, VoiceSlot_StatusRet_Skip38
-	jp	VoiceSlot_StatusRet_Loop3
-VoiceSlot_StatusRet_Skip38:
+	jrl	z, SqStep_ShowCursorEventPopup_Skip38
+	jp	SqStep_ShowCursorEventPopup_Loop3
+SqStep_ShowCursorEventPopup_Skip38:
 	ldb_d8	a, (0x10f3)
 	cp	(0x10f1:16), 112
-	jrl	nz, VoiceSlot_StatusRet_Skip41
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip41
 	ldb_d8	l, (0x10f2)
 	cp	l, 0:i3
-	jrl	z, VoiceSlot_StatusRet_Skip40
+	jrl	z, SqStep_ShowCursorEventPopup_Skip40
 	cp	l, 3:i3
-	jrl	z, VoiceSlot_StatusRet_Skip53
+	jrl	z, SqStep_ShowCursorEventPopup_Skip53
 	cp	l, 2:i3
-	jrl	z, VoiceSlot_StatusRet_Skip24
-	jp	VoiceSlot_StatusRet_Loop3
-	call	VoiceSlot_StatusRet_Helper6
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip24:
+	jrl	z, SqStep_ShowCursorEventPopup_Skip24
+	jp	SqStep_ShowCursorEventPopup_Loop3
+	call	ParamPopup_EmptyStub6
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip24:
 	call	ParamPopup_KeyNameBracketed
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip40:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip40:
 	bit	2, (0x10f5:16)
-	jrl	z, VoiceSlot_StatusRet_Loop3
-	call	VoiceSlot_StatusRet_Helper10
-	jp	VoiceSlot_StatusRet_Return
+	jrl	z, SqStep_ShowCursorEventPopup_Loop3
+	call	ParamPopup_EmptyStub10
+	jp	SqStep_ShowCursorEventPopup_Return
 	bit	7, (0x10f5:16)
-	jrl	z, VoiceSlot_StatusRet_Loop3
+	jrl	z, SqStep_ShowCursorEventPopup_Loop3
 	call	ParamPopup_TotalReverb
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip41:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip41:
 	cp	(0x10f1:16), 152
-	jrl	nz, VoiceSlot_StatusRet_Skip47
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip47
 	ldb_d8	l, (0x10f2)
 	cp	l, 11
-	jrl	z, VoiceSlot_StatusRet_Skip43
+	jrl	z, SqStep_ShowCursorEventPopup_Skip43
 	cp	l, 1:i3
-	jrl	z, VoiceSlot_StatusRet_Skip42
+	jrl	z, SqStep_ShowCursorEventPopup_Skip42
 	cp	l, 3:i3
-	jrl	nz, VoiceSlot_StatusRet_Code_Skip20
+	jrl	nz, SqStep_ShowCursorEventPopup_Code_Skip20
 	ldfr_berp	a, 60
 	ldb_d8	a, (0x10f5)
 	and	a, 1
 	ldto_berp	a, 60
-	jrl	z, VoiceSlot_StatusRet_Code_Skip20
+	jrl	z, SqStep_ShowCursorEventPopup_Code_Skip20
 	call	ParamPopup_Msa
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip42:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip42:
 	and	a, 127
 	call	ParamPopup_PanelMemory
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip43:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip43:
 	ldb_d8	a, (0x0dc8)
 	and	a, 2
 	cp	a, 0:i3
-	jr	nz, VoiceSlot_StatusRet_Skip89
+	jr	nz, SqStep_ShowCursorEventPopup_Skip89
 	ldb_d8	a, (0x10f5)
 	and	a, 64
 	cp	a, 0:i3
-	jr	nz, VoiceSlot_StatusRet_Skip45
-VoiceSlot_StatusRet_Skip89:
+	jr	nz, SqStep_ShowCursorEventPopup_Skip45
+SqStep_ShowCursorEventPopup_Skip89:
 	ldb_d8	a, (0x0dc8)
 	and	a, 1
 	call	ParamPopup_FadeIn
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip45:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip45:
 	ldb_d8	a, (0x10f3)
 	and	a, 64
 	cp	a, 0:i3
-	jr	z, VoiceSlot_StatusRet_Skip46
+	jr	z, SqStep_ShowCursorEventPopup_Skip46
 	ld	a, 1:opc
-VoiceSlot_StatusRet_Skip46:
+SqStep_ShowCursorEventPopup_Skip46:
 	call	ParamPopup_FadeOut
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip47:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip47:
 	cp	(0x10f1:16), 19
-	jrl	nz, VoiceSlot_StatusRet_Skip48
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip48
 	cp	(0x10f2:16), 3
-	jrl	nz, VoiceSlot_StatusRet_Code_Skip20
+	jrl	nz, SqStep_ShowCursorEventPopup_Code_Skip20
 	ld	hl, 1:i3
-	jp	VoiceSlot_StatusRet_Join4
-VoiceSlot_StatusRet_Skip48:
+	jp	SqStep_ShowCursorEventPopup_Join4
+SqStep_ShowCursorEventPopup_Skip48:
 	cp	(0x10f1:16), 20
-	jrl	nz, VoiceSlot_StatusRet_Skip49
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip49
 	cp	(0x10f2:16), 3
-	jrl	nz, VoiceSlot_StatusRet_Code_Skip20
+	jrl	nz, SqStep_ShowCursorEventPopup_Code_Skip20
 	ld	hl, 2:i3
-	jp	VoiceSlot_StatusRet_Join4
-VoiceSlot_StatusRet_Skip49:
+	jp	SqStep_ShowCursorEventPopup_Join4
+SqStep_ShowCursorEventPopup_Skip49:
 	cp	(0x10f1:16), 16
-	jrl	nz, VoiceSlot_StatusRet_Skip50
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip50
 	cp	(0x10f2:16), 3
-	jrl	nz, VoiceSlot_StatusRet_Code_Skip20
+	jrl	nz, SqStep_ShowCursorEventPopup_Code_Skip20
 	ld	hl, 3:i3
-	jp	VoiceSlot_StatusRet_Join4
-VoiceSlot_StatusRet_Skip50:
+	jp	SqStep_ShowCursorEventPopup_Join4
+SqStep_ShowCursorEventPopup_Skip50:
 	cp	(0x10f1:16), 17
-	jrl	nz, VoiceSlot_StatusRet_Skip51
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip51
 	cp	(0x10f2:16), 3
-	jrl	nz, VoiceSlot_StatusRet_Code_Skip20
+	jrl	nz, SqStep_ShowCursorEventPopup_Code_Skip20
 	ld	hl, 4:i3
-	jp	VoiceSlot_StatusRet_Join4
-VoiceSlot_StatusRet_Skip51:
+	jp	SqStep_ShowCursorEventPopup_Join4
+SqStep_ShowCursorEventPopup_Skip51:
 	cp	(0x10f1:16), 18
-	jrl	nz, VoiceSlot_StatusRet_Code_Skip20
+	jrl	nz, SqStep_ShowCursorEventPopup_Code_Skip20
 	cp	(0x10f2:16), 3
-	jrl	nz, VoiceSlot_StatusRet_Code_Skip20
+	jrl	nz, SqStep_ShowCursorEventPopup_Code_Skip20
 	ld	hl, 5:i3
-	jp	VoiceSlot_StatusRet_Join4
-VoiceSlot_StatusRet_Code_Skip20:
-	jp	VoiceSlot_StatusRet_Loop3
-VoiceSlot_StatusRet_Skip53:
+	jp	SqStep_ShowCursorEventPopup_Join4
+SqStep_ShowCursorEventPopup_Code_Skip20:
+	jp	SqStep_ShowCursorEventPopup_Loop3
+SqStep_ShowCursorEventPopup_Skip53:
 	xor	hl, hl
-VoiceSlot_StatusRet_Join4:
+SqStep_ShowCursorEventPopup_Join4:
 	call	ParamPopup_AccompVolume
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip54:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip54:
 	ldb_d8	a, (0x10f1)
 	cp	a, 144
-	jrl	z, VoiceSlot_StatusRet_Skip71
+	jrl	z, SqStep_ShowCursorEventPopup_Skip71
 	cp	a, 80
-	jrl	z, VoiceSlot_StatusRet_Skip67
+	jrl	z, SqStep_ShowCursorEventPopup_Skip67
 	cp	a, 81
-	jrl	z, VoiceSlot_StatusRet_Skip67
+	jrl	z, SqStep_ShowCursorEventPopup_Skip67
 	cp	a, 0:i3
-	jrl	c, VoiceSlot_StatusRet_Skip55
+	jrl	c, SqStep_ShowCursorEventPopup_Skip55
 	cp	a, 13
-	jrl	ule, VoiceSlot_StatusRet_Skip56
+	jrl	ule, SqStep_ShowCursorEventPopup_Skip56
 	cp	a, 14
-	jrl	z, VoiceSlot_StatusRet_Skip56
+	jrl	z, SqStep_ShowCursorEventPopup_Skip56
 	cp	a, 15
-	jrl	z, VoiceSlot_StatusRet_Skip56
-VoiceSlot_StatusRet_Skip55:
-	jp	VoiceSlot_StatusRet_Loop3
-VoiceSlot_StatusRet_Skip56:
+	jrl	z, SqStep_ShowCursorEventPopup_Skip56
+SqStep_ShowCursorEventPopup_Skip55:
+	jp	SqStep_ShowCursorEventPopup_Loop3
+SqStep_ShowCursorEventPopup_Skip56:
 	ldb_d8	a, (0x10f2)
 	cp	a, 3:i3
-	jrl	z, VoiceSlot_StatusRet_Code_Skip24
+	jrl	z, SqStep_ShowCursorEventPopup_Code_Skip24
 	cp	a, 4:i3
-	jrl	z, VoiceSlot_StatusRet_Skip57
+	jrl	z, SqStep_ShowCursorEventPopup_Skip57
 	cp	a, 12
-	jrl	z, VoiceSlot_StatusRet_Skip62
+	jrl	z, SqStep_ShowCursorEventPopup_Skip62
 	cp	a, 8
-	jrl	z, VoiceSlot_StatusRet_Skip63
+	jrl	z, SqStep_ShowCursorEventPopup_Skip63
 	cp	a, 9
-	jrl	z, VoiceSlot_StatusRet_Skip64
+	jrl	z, SqStep_ShowCursorEventPopup_Skip64
 	cp	a, 10
-	jrl	z, VoiceSlot_StatusRet_Skip65
+	jrl	z, SqStep_ShowCursorEventPopup_Skip65
 	cp	a, 11
-	jrl	z, VoiceSlot_StatusRet_Skip66
+	jrl	z, SqStep_ShowCursorEventPopup_Skip66
 	cp	a, 5:i3
-	jrl	z, VoiceSlot_StatusRet_Skip60
+	jrl	z, SqStep_ShowCursorEventPopup_Skip60
 	cp	a, 7:i3
-	jrl	z, VoiceSlot_StatusRet_Skip61
-	jp	VoiceSlot_StatusRet_Loop3
-VoiceSlot_StatusRet_Code_Skip24:
+	jrl	z, SqStep_ShowCursorEventPopup_Skip61
+	jp	SqStep_ShowCursorEventPopup_Loop3
+SqStep_ShowCursorEventPopup_Code_Skip24:
 	call	ParamPopup_PartVolume
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip57:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip57:
 	ldb_d8	a, (0x10f5)
 	bit	3, a
-	jrl	nz, VoiceSlot_StatusRet_Skip58
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip58
 	bit	6, a
-	jrl	nz, VoiceSlot_StatusRet_Skip59
-	jp	VoiceSlot_StatusRet_Loop3
-VoiceSlot_StatusRet_Skip58:
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip59
+	jp	SqStep_ShowCursorEventPopup_Loop3
+SqStep_ShowCursorEventPopup_Skip58:
 	call	ParamPopup_PartSustain
-	jp	VoiceSlot_StatusRet_Return
+	jp	SqStep_ShowCursorEventPopup_Return
 	call	ParamPopup_PartDspEffectOff
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip59:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip59:
 	call	ParamPopup_PartEffect
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip60:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip60:
 	call	ParamPopup_PartDspEffectLevel
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip61:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip61:
 	call	ParamPopup_PartReverb
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip62:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip62:
 	ldfr_berp	a, 60
 	ldb_d8	a, (0x10f5)
 	and	a, 192
 	ldto_berp	a, 60
-	jrl	z, VoiceSlot_StatusRet_Loop3
+	jrl	z, SqStep_ShowCursorEventPopup_Loop3
 	call	ParamPopup_PartTimbre
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip63:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip63:
 	call	ParamPopup_PartPanpot
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip64:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip64:
 	call	ParamPopup_PartKeyShift
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip65:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip65:
 	call	ParamPopup_PartTuning
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip66:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip66:
 	call	ParamPopup_PartBendSense
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip67:
-	jp	VoiceSlot_StatusRet_Loop3
-	jp	VoiceSlot_StatusRet_Loop3
-	jp	VoiceSlot_StatusRet_Loop3
-	call	VoiceSlot_StatusRet_Code_Skip24
-	jp	VoiceSlot_StatusRet_Return
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip67:
+	jp	SqStep_ShowCursorEventPopup_Loop3
+	jp	SqStep_ShowCursorEventPopup_Loop3
+	jp	SqStep_ShowCursorEventPopup_Loop3
+	call	SqStep_ShowCursorEventPopup_Code_Skip24
+	jp	SqStep_ShowCursorEventPopup_Return
 	ldb_d8	a, (0x10f5)
 	bit	3, a
-	jrl	nz, VoiceSlot_StatusRet_Skip68
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip68
 	bit	4, a
-	jrl	nz, VoiceSlot_StatusRet_Skip69
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip69
 	bit	7, a
-	jrl	nz, VoiceSlot_StatusRet_Skip70
-	jp	VoiceSlot_StatusRet_Loop3
-VoiceSlot_StatusRet_Skip68:
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip70
+	jp	SqStep_ShowCursorEventPopup_Loop3
+SqStep_ShowCursorEventPopup_Skip68:
 	call	ParamPopup_PartSustain
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip69:
-	call	VoiceSlot_StatusRet_Helper5
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip70:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip69:
+	call	ParamPopup_EmptyStub5
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip70:
 	call	ParamPopup_PartTremolo
-	jp	VoiceSlot_StatusRet_Return
-	call	VoiceSlot_StatusRet_Helper7
-	jp	VoiceSlot_StatusRet_Return
-	call	VoiceSlot_StatusRet_Helper8
-	jp	VoiceSlot_StatusRet_Return
+	jp	SqStep_ShowCursorEventPopup_Return
+	call	ParamPopup_EmptyStub7
+	jp	SqStep_ShowCursorEventPopup_Return
+	call	ParamPopup_EmptyStub8
+	jp	SqStep_ShowCursorEventPopup_Return
 	call	ParamPopup_RotarySpeedNullRet
-	jp	VoiceSlot_StatusRet_Return
-	jp	VoiceSlot_StatusRet_Loop3
-VoiceSlot_StatusRet_Skip71:
+	jp	SqStep_ShowCursorEventPopup_Return
+	jp	SqStep_ShowCursorEventPopup_Loop3
+SqStep_ShowCursorEventPopup_Skip71:
 	ldb_d8	a, (0x10f2)
-	jp	VoiceSlot_StatusRet_Loop3
+	jp	SqStep_ShowCursorEventPopup_Loop3
 	ldb_d8	a, (0x10f3)
 	bit	0, a
-	jrl	nz, VoiceSlot_StatusRet_Loop3
+	jrl	nz, SqStep_ShowCursorEventPopup_Loop3
 	bit	1, a
-	jrl	nz, VoiceSlot_StatusRet_Loop3
+	jrl	nz, SqStep_ShowCursorEventPopup_Loop3
 	bit	2, a
-	jrl	nz, VoiceSlot_StatusRet_Loop3
+	jrl	nz, SqStep_ShowCursorEventPopup_Loop3
 	bit	4, a
-	jrl	nz, VoiceSlot_StatusRet_Loop3
-	jp	VoiceSlot_StatusRet_Loop3
-VoiceSlot_StatusRet_Skip72:
+	jrl	nz, SqStep_ShowCursorEventPopup_Loop3
+	jp	SqStep_ShowCursorEventPopup_Loop3
+SqStep_ShowCursorEventPopup_Skip72:
 	call	SeqTrack_ReadByteAndAdvance
 	ld	xiy, 0x3670
 	cp	a, 128
-	jrl	z, VoiceSlot_StatusRet_Code_Skip41
+	jrl	z, SqStep_ShowCursorEventPopup_Code_Skip41
 	cp	a, 133
-	jrl	z, VoiceSlot_StatusRet_Code_Skip43
+	jrl	z, SqStep_ShowCursorEventPopup_Code_Skip43
 	cp	a, 134
-	jrl	z, VoiceSlot_StatusRet_Code_Skip44
+	jrl	z, SqStep_ShowCursorEventPopup_Code_Skip44
 	cp	a, 129
-	jrl	z, VoiceSlot_StatusRet_Skip44
+	jrl	z, SqStep_ShowCursorEventPopup_Skip44
 	cp	a, 132
-	jrl	z, VoiceSlot_StatusRet_Code_Skip40
-	jp	VoiceSlot_StatusRet_Loop2
-VoiceSlot_StatusRet_Code_Skip40:
+	jrl	z, SqStep_ShowCursorEventPopup_Code_Skip40
+	jp	SqStep_ShowCursorEventPopup_Loop2
+SqStep_ShowCursorEventPopup_Code_Skip40:
 	ld	(xiy), 9
 	call	DisplayStr_CopyStyleSectionName
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Code_Skip41:
-	call	VoiceSlot_SkipByteAndRead
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Code_Skip41:
+	call	SeqTrack_SkipByteAndRead
 	ld	c, a
 	pushw	bc
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	ld	l, a
 	rrc	a
 	and	a, 128
@@ -11380,97 +11427,97 @@ VoiceSlot_StatusRet_Code_Skip41:
 	ld	w, l
 	ld	(0x0ef2:16), wa
 	cp	(0x0d65:16), 3
-	jrl	z, VoiceSlot_StatusRet_Skip75
+	jrl	z, SqStep_ShowCursorEventPopup_Skip75
 	ld	(0x0def:16), 7
-	call	VoiceSlot_StatusRet_Helper11
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip75:
+	call	SqStep_ShowTempoPopup
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip75:
 	ld	(0x0def:16), 17
 	call	Display_UpdateRegion0
 	call	DisplayStr_WriteTempoLine_RhythmTrack
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Code_Skip43:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Code_Skip43:
 	ld	(xiy), 1
 	call	Display_ModePopupDispatch
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Code_Skip44:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Code_Skip44:
 	ld	(xiy), 2
 	call	Display_ModePopupDispatch
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip44:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip44:
 	cp	(0x0d65:16), 0
-	jrl	nz, VoiceSlot_StatusRet_Code_Skip45
-	call	VoiceSlot_IndexDone
-VoiceSlot_StatusRet_Code_Skip45:
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Join5:
+	jrl	nz, SqStep_ShowCursorEventPopup_Code_Skip45
+	call	SqStep_ShowCursorMarkerPopup
+SqStep_ShowCursorEventPopup_Code_Skip45:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Join5:
 	call	SeqTrack_ReadByteAndAdvance
 	cp	a, 208
-	jrl	z, VoiceSlot_StatusRet_Skip80
+	jrl	z, SqStep_ShowCursorEventPopup_Skip80
 	cp	a, 209
-	jrl	z, VoiceSlot_StatusRet_Skip82
+	jrl	z, SqStep_ShowCursorEventPopup_Skip82
 	cp	a, 210
-	jrl	z, VoiceSlot_StatusRet_Skip84
+	jrl	z, SqStep_ShowCursorEventPopup_Skip84
 	cp	a, 211
-	jrl	z, VoiceSlot_StatusRet_Skip86
-	jp	VoiceSlot_StatusRet_Loop2
-VoiceSlot_StatusRet_Skip80:
-	call	VoiceSlot_SkipByteAndRead
+	jrl	z, SqStep_ShowCursorEventPopup_Skip86
+	jp	SqStep_ShowCursorEventPopup_Loop2
+SqStep_ShowCursorEventPopup_Skip80:
+	call	SeqTrack_SkipByteAndRead
 	stb_d8	(0x3669), a
 	ld	(0x3668:16), 5
 	cp	(0x0def:16), 3
-	jrl	nz, VoiceSlot_StatusRet_Skip81
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip81
 	call	DisplayStr_WriteStoredControlLine
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip81:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip81:
 	ld	(0x0def:16), 3
 	call	DisplayStr_BytecodeBlock_B
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip82:
-	call	VoiceSlot_SkipByteAndRead
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip82:
+	call	SeqTrack_SkipByteAndRead
 	stb_d8	(0x3669), a
 	ld	(0x3668:16), 2
 	cp	(0x0def:16), 3
-	jrl	nz, VoiceSlot_StatusRet_Skip83
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip83
 	call	DisplayStr_WriteStoredControlLine
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip83:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip83:
 	ld	(0x0def:16), 3
 	call	DisplayStr_BytecodeBlock_B
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip84:
-	call	VoiceSlot_SkipByteAndRead
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip84:
+	call	SeqTrack_SkipByteAndRead
 	stb_d8	(0x3669), a
 	ld	(0x3668:16), 1
 	call	SeqTrack_ReadByteAndAdvance
 	stb_d8	(0x1112), a
 	cp	(0x0def:16), 3
-	jrl	nz, VoiceSlot_StatusRet_Skip85
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip85
 	call	DisplayStr_WriteStoredControlLine
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip85:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip85:
 	ld	(0x0def:16), 3
 	call	DisplayStr_BytecodeBlock_B
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip86:
-	call	VoiceSlot_SkipByteAndRead
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip86:
+	call	SeqTrack_SkipByteAndRead
 	stb_d8	(0x3669), a
 	ld	(0x3668:16), 3
 	cp	(0x0def:16), 3
-	jrl	nz, VoiceSlot_StatusRet_Skip87
+	jrl	nz, SqStep_ShowCursorEventPopup_Skip87
 	call	DisplayStr_WriteStoredControlLine
-	jp	VoiceSlot_StatusRet_Return
-VoiceSlot_StatusRet_Skip87:
+	jp	SqStep_ShowCursorEventPopup_Return
+SqStep_ShowCursorEventPopup_Skip87:
 	ld	(0x0def:16), 3
 	call	DisplayStr_BytecodeBlock_B
-VoiceSlot_StatusRet_Return:
+SqStep_ShowCursorEventPopup_Return:
 	ret
-; VoiceSlot_SkipByteAndRead: Reads two bytes at the song-data cursor with SeqTrack_ReadByteAndAdvance (read the cursor byte,
+; SeqTrack_SkipByteAndRead: Reads two bytes at the song-data cursor with SeqTrack_ReadByteAndAdvance (read the cursor byte,
 ;   advance one) and returns the second in A (W = the advance status), so it skips one byte. Basis: callers + body --
-;   VoiceSlot_StatusRet calls it right after consuming a stored event's status byte, skipping the clock byte +1 to
+;   SqStep_ShowCursorEventPopup calls it right after consuming a stored event's status byte, skipping the clock byte +1 to
 ;   fetch data byte +2 (the 0xDn value that goes to 0x3685, the 0xBn tag compared with 72, the 0xCn part), and twice
 ;   in a row to reach byte +4.
-VoiceSlot_SkipByteAndRead:
+SeqTrack_SkipByteAndRead:
 	call	SeqTrack_ReadByteAndAdvance
 	call	SeqTrack_ReadByteAndAdvance
 	ret
@@ -11497,7 +11544,7 @@ VoiceState_SaveAndRestore:
 	call	DMA_ChannelHandler_3_Helper
 	call	DisplayStr_StyleSectionInit
 	ret
-	; Handler dispatch table, 16 B.  Read by VoiceSlot_StatusRet (0xEFC788): `ld xix, Display_ModePopupDispatch_Tbl`
+	; Handler dispatch table, 16 B.  Read by SqStep_ShowCursorEventPopup (0xEFC788): `ld xix, Display_ModePopupDispatch_Tbl`
 	; indexed with stride 4 (`sla hl, 2`)
 	; 4 x 4-byte handler pointers; entry = index * 4, called through `call (x)`
 Display_ModePopupDispatch_Tbl:
@@ -11505,15 +11552,18 @@ Display_ModePopupDispatch_Tbl:
 	.long	DisplayStr_BytecodeBlock_C
 	.long	DisplayStr_BytecodeBlock_C
 	.long	VoiceState_SaveAndRestore
-	; Byte data, 4 B.  Read by VoiceSlot_StatusRet (0xEFC788): `ld xhl, Display_ModePopupIds`
+	; Byte data, 4 B.  Read by SqStep_ShowCursorEventPopup (0xEFC788): `ld xhl, Display_ModePopupIds`
 	; indexed with stride 4 (`sla hl, 2`)
 Display_ModePopupIds:
 	.byte	0x00, 0x05, 0x05, 0x0f
-	; Byte data, 12 B.  Read by VoiceSlot_StatusRet (0xEFC788): `ld xhl, VoiceSlot_StatusRet_Tbl2`
-	; reader VoiceSlot_StatusRet: `ld xhl, VoiceSlot_StatusRet_Tbl2` then `ld a, (xhl+a)`
-VoiceSlot_StatusRet_Tbl2:
+	; Byte data, 12 B.  Read by SqStep_ShowCursorEventPopup (0xEFC788): `ld xhl, SqStep_ShowCursorEventPopup_NoteCodeMap`
+	; reader SqStep_ShowCursorEventPopup: `ld xhl, SqStep_ShowCursorEventPopup_NoteCodeMap` then `ld a, (xhl+a)`
+SqStep_ShowCursorEventPopup_NoteCodeMap:
 	.byte	0x00, 0x06, 0x04, 0x05, 0x03, 0x07, 0x02, 0x07, 0x01, 0x07, 0x07, 0x07
-VoiceSlot_SaveState:
+; SeqCursor_Save: Saves the cursor track's song-data cursor into snapshot slot A (0..7; 8 bytes at 0x0DFF + 8 * A): block word,
+;   offset, SQSTEP_CLOCK, SQSTEP_WRAP_COUNT, SQSTEP_UNITS.  Registers preserved; SeqCursor_Restore writes them
+;   back.  Basis: body.
+SeqCursor_Save:
 	pushw wa
 	push xhl
 	push xiz
@@ -11524,7 +11574,7 @@ VoiceSlot_SaveState:
 	exts xwa
 	add xwa, 0xdff
 	ld xhl, xwa
-	call VoiceSlot_ComputeWordIndex
+	call SeqTrack_WordIndex
 	ld xiy, 0xc9e
 	ld	wa, (xiy+iz)
 	ld (xhl), wa
@@ -11546,7 +11596,9 @@ VoiceSlot_SaveState:
 	popw wa
 	ret
 
-VoiceSlot_RestoreState:
+; SeqCursor_Restore: Restores the song-data cursor from snapshot slot A (0..7) written by SeqCursor_Save (VoiceState_RestoreEntry,
+;   VoiceState_RestoreDone); WA, XHL, XIZ and XIY preserved.  Basis: body.
+SeqCursor_Restore:
 	pushw wa
 	push xhl
 	push xiz
@@ -11581,7 +11633,7 @@ VoiceState_RestoreEntry:
 	exts xwa
 	add xwa, 0xdff
 	ld xhl, xwa
-	call VoiceSlot_ComputeWordIndex
+	call SeqTrack_WordIndex
 	ld xiy, 0xc9e
 	ld wa, (xhl)
 	ld	(xiy+iz), wa
@@ -11610,7 +11662,7 @@ VoiceState_DataBlock2:
 	exts	xwa
 	add	xwa, 3583
 	ld	xix, xwa
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	ld	xiy, 3230
 	ld	wa, (xiy+iz)
 	cp	(xix), wa
@@ -11633,7 +11685,7 @@ VoiceState_DataBlock2_Code_Skip2:
 	jp	VoiceState_DataBlock2_Epilogue
 VoiceState_DataBlock2_Code_Skip3:
 	ld	iy, wa
-	call	VoiceSlot_UpdateCurrentPointer
+	call	SeqBlock_Select
 	ld	xhl, (4349:16)
 	ld	wa, (xhl+1)
 	cp	wa, 0:i3
@@ -11652,12 +11704,12 @@ VoiceState_DataBlock2_Epilogue:
 	pop	xiz
 	pop	xhl
 	ret
-; VoiceSlot_CompareSavedMarkerCount: Compares the 0x81-marker count saved in song-cursor snapshot slot A (0..7; word
-;   +4 of the 8-byte record at 0x0DFF + 8*A, copied from 0x0D58 by VoiceSlot_SaveState) with the current count 0x0D58:
+; SeqCursor_CompareSavedWrapCount: Compares the 0x81-marker count saved in song-cursor snapshot slot A (0..7; word
+;   +4 of the 8-byte record at 0x0DFF + 8*A, copied from 0x0D58 by SeqCursor_Save) with the current count 0x0D58:
 ;   W = 1 equal, 2 saved count below the current one, 3 saved count above it. Basis: callers + body --
 ;   ScoopDisp_StepMeasureForward/Back save the target position in slot 4 and step the cursor while W = 3, stopping on
 ;   W = 1 (reached) or W = 2 (passed).
-VoiceSlot_CompareSavedMarkerCount:
+SeqCursor_CompareSavedWrapCount:
 	push	xhl
 	xor	w, w
 	and	a, 7
@@ -11669,17 +11721,17 @@ VoiceSlot_CompareSavedMarkerCount:
 	cp hl, (3416:16)
 	jrl	ule, VoiceState_DataBlock2_Code_Skip6
 	ld	w, 3:opc
-	jp	VoiceSlot_CompareSavedMarkerCount_Epilogue2
+	jp	SeqCursor_CompareSavedWrapCount_Epilogue2
 VoiceState_DataBlock2_Code_Skip6:
 	jrl	z, VoiceState_DataBlock2_Code_Skip7
 	ld	w, 2:opc
-	jp	VoiceSlot_CompareSavedMarkerCount_Epilogue2
+	jp	SeqCursor_CompareSavedWrapCount_Epilogue2
 VoiceState_DataBlock2_Code_Skip7:
 	ld	w, 1:opc
-VoiceSlot_CompareSavedMarkerCount_Epilogue2:
+SeqCursor_CompareSavedWrapCount_Epilogue2:
 	pop	xhl
 	ret
-VoiceSlot_CheckCursorAtTrackStart:
+SeqTrack_CheckCursorAtStart:
 	pushw wa
 	push XHL
 	push XIX
@@ -11698,20 +11750,20 @@ VoiceSlot_CheckCursorAtTrackStart:
 	cp wa, 0:i3
 	jrl z, .Lc_efd255
 	ld IY,WA
-	call VoiceSlot_UpdateCurrentPointer
+	call SeqBlock_Select
 	ld xhl, (0x10fd:16)
 	cpw (XHL+0x01), 0x0000
 	jrl z, .Lc_efd242
 .Lc_efd238:
-VoiceSlot_CheckCursorAtTrackStart_Loop:
+SeqTrack_CheckCursorAtStart_Loop:
 	pop XIY
 	pop XIX
 	pop XHL
 	popw wa
 	ld W, 0xff:opc
-	jp VoiceSlot_CheckCursorAtTrackStart_Return
+	jp SeqTrack_CheckCursorAtStart_Return
 .Lc_efd242:
-VoiceSlot_CheckCursorAtTrackStart_Skip:
+SeqTrack_CheckCursorAtStart_Skip:
 	srl IX, 0x01
 	push XDE
 	ld XDE,0x00000cbe
@@ -11719,21 +11771,21 @@ VoiceSlot_CheckCursorAtTrackStart_Skip:
 	pop XDE
 	jrl nz, .Lc_efd238
 .Lc_efd255:
-VoiceSlot_CheckCursorAtTrackStart_Skip2:
+SeqTrack_CheckCursorAtStart_Skip2:
 	pop XIY
 	pop XIX
 	pop XHL
 	popw wa
 	ld W, 0x00:opc
-VoiceSlot_CheckCursorAtTrackStart_Return:
+SeqTrack_CheckCursorAtStart_Return:
 	ret
 ToneParam_ModeGuardEntry_Helper4:
 	push XHL
-	call VoiceSlot_ReadCurrentParams
+	call SeqTrack_ReadCursorByte
 	cp A,0x84
 	jrl z, .Lc_efd2d0
 	ld A, 0x07:opc
-	call VoiceSlot_SaveState
+	call SeqCursor_Save
 	xor BC,BC
 	ld l, (0x0eee:16)
 	xor H,H
@@ -11748,7 +11800,7 @@ ToneParam_ModeGuardEntry_Helper4:
 	cp wa, 0:i3
 	jrl z, .Lc_efd2c1
 .Lc_efd292:
-VoiceSlot_CheckCursorAtTrackStart_Loop2:
+ToneParam_ModeGuardEntry_Helper4_Loop2:
 	push XHL
 	pushw bc
 	pushw de
@@ -11779,7 +11831,7 @@ VoiceState_DataBlock2_Join6:
 	pop XHL
 	pushw wa
 	ld A, 0x07:opc
-	call VoiceSlot_RestoreState
+	call SeqCursor_Restore
 	popw wa
 	jp VoiceState_DataBlock2_Return11
 .Lc_efd2d0:
@@ -11872,29 +11924,29 @@ VoiceState_DataBlock2_Return3:
 	ret
 VoiceCtrl_ParamSetupBytecode_Helper4:
 	ld	a, 3:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 VoiceState_DataBlock2_Loop2:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, VoiceState_DataBlock2_Loop3
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	cp	w, 255
 	jrl	nz, VoiceState_DataBlock2_Loop2
 VoiceState_DataBlock2_Loop3:
-	call	VoiceSlot_StepCursorBack
+	call	SeqTrack_PrevEventKeepWrapCount
 	cp	w, 255
 	jrl	z, VoiceState_DataBlock2_Skip10
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, VoiceState_DataBlock2_Skip10
 	call	VoiceState_DataBlock2_Helper8
 	cp	w, 0:i3
 	jrl	nz, VoiceState_DataBlock2_Loop3
 VoiceState_DataBlock2_Loop4:
-	call	VoiceSlot_StepCursorBack
+	call	SeqTrack_PrevEventKeepWrapCount
 	cp	w, 255
 	jrl	z, VoiceState_DataBlock2_Skip8
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, VoiceState_DataBlock2_Loop5
 	call	VoiceState_DataBlock2_Helper8
@@ -11903,10 +11955,10 @@ VoiceState_DataBlock2_Loop4:
 	call	VoiceState_DataBlock2_Helper2
 	jp	VoiceState_DataBlock2_Loop4
 VoiceState_DataBlock2_Loop5:
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	cp	w, 255
 	jrl	z, VoiceState_DataBlock2_Skip9
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, VoiceState_DataBlock2_Skip9
 VoiceState_DataBlock2_Skip8:
@@ -11919,7 +11971,7 @@ VoiceState_DataBlock2_Skip9:
 	jp	VoiceState_DataBlock2_Return4
 VoiceState_DataBlock2_Skip10:
 	ld	a, 3:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	ld	w, 255:opc
 VoiceState_DataBlock2_Return4:
 	ret
@@ -11927,7 +11979,7 @@ VoiceState_DataBlock2_Helper8:
 	push	xiy
 	push	xix
 	ld	a, 2:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	ld	a, (3822:16)
 	dec	1, a
 	exts	wa
@@ -11962,7 +12014,7 @@ VoiceState_DataBlock2_Skip11:
 	ld	w, 255:opc
 VoiceState_DataBlock2_Join2:
 	ld	a, 2:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	pop	xix
 	pop	xiy
 	ret
@@ -11980,31 +12032,31 @@ VoiceState_DataBlock2_Join2:
 	push	xiz
 	and	(0x0f56:16), 254
 	ld	a, 4:opc
-	call	VoiceSlot_SaveState
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqCursor_Save
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, VoiceState_DataBlock2_Code_Skip14
 VoiceState_DataBlock2_Loop6:
-	call	VoiceSlot_StepCursorBack
+	call	SeqTrack_PrevEventKeepWrapCount
 	cp	w, 255
 	jrl	z, VoiceState_DataBlock2_Code_Skip14
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	nz, VoiceState_DataBlock2_Loop6
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 VoiceState_DataBlock2_Code_Skip14:
 	xor	a, a
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	call	MemConfig_VoiceSlotLookup
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	nz, VoiceState_DataBlock2_Skip14
 	jp	TempoRingBuf_IsEmpty_Skip2
 VoiceState_DataBlock2_Helper3_Loop:
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	cp	w, 255
 	jrl	z, VoiceState_DataBlock2_Helper3_Skip4
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	push	xde
 	ld	xde, 3230
 	ld	iy, (xde+iz)
@@ -12017,7 +12069,7 @@ VoiceState_DataBlock2_Helper3_Loop:
 	cp	a, (3585:16)
 	jrl	nc, VoiceState_DataBlock2_Helper3_Skip4
 VoiceState_DataBlock2_Helper3_Skip2:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 VoiceState_DataBlock2_Skip14:
 	and	a, 240
 	cp	a, 176
@@ -12036,7 +12088,7 @@ TempoRingBuf_IsEmpty_Skip2:
 	jp	VoiceState_DataBlock2_Helper3_Loop
 VoiceState_DataBlock2_Helper3_Skip4:
 	ld	a, 4:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	pop	xiz
 	pop	xiy
 	pop	xix
@@ -12051,7 +12103,7 @@ VoiceState_DataBlock2_Helper3_Skip4:
 	pop	xwa
 	ret
 VoiceState_DataBlock2_Helper9:
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	push	xde
 	ld	xde, 3230
 	ld	iy, (xde+iz)
@@ -12170,7 +12222,7 @@ VoiceState_DataBlock2_Tbl:
 	.byte	0x00, 0x01, 0x00, 0x02, 0x00, 0x04, 0x00, 0x08, 0x00, 0x10, 0x00, 0x20, 0x00, 0x40, 0x00, 0x80
 ; SqStep_BuildAdjacentRowBitmap: Builds the event bitmap of the grid row above (XIX = 0x3692) or below (XIX = 0x369A):
 ;   reads events from the block read position into 0x0EB5 (VoiceBank_ProcessCommand), sets bit (clock 0x0EB6 / 12) of
-;   the current beat byte for each displayable event (VoiceSlot_StatusCheck W = 0), moves to the next byte on a 0x81
+;   the current beat byte for each displayable event (SeqEvent_CheckStatusByte W = 0), moves to the next byte on a 0x81
 ;   beat marker and stops after (0x0EC1) beats or on 0x84; on the 0x82 end marker in the lower row it records the end
 ;   position (0x0F5B, 0x0F5A = 3). Basis: callers + body -- SqStep_SetupPrevGridRow and SqStep_SetupNextGridRow call
 ;   it last with XIX = 0x3692 / 0x369A and 0x0EC1 = the row's beat count; SqStep_BuildCurrentRowBitmap does the same
@@ -12186,7 +12238,7 @@ VoiceState_DataBlock2_Loop9:
 	ld	a, (3765:16)
 	pushw	bc
 	push	xix
-	call	VoiceSlot_StatusCheck
+	call	SeqEvent_CheckStatusByte
 	pop	xix
 	popw	bc
 	cp	w, 0:i3
@@ -12253,7 +12305,7 @@ VoiceState_DataBlock2_Tbl_Helper:
 	cp	(3429:16), 0
 	jrl	nz, VoiceState_DataBlock2_Skip25
 	ld	(3434:16), 0
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 144
 	jr	nz, VoiceState_DataBlock2_Skip24
 	call	MemConfig_Handler_5_Code_Helper10
@@ -12265,7 +12317,7 @@ VoiceState_DataBlock2_Skip25:
 	ld	w, 0:opc
 	ret
 VoiceState_DataBlock2_Helper11:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 144
 	jr	nz, VoiceState_DataBlock2_Skip26
 	call	MemConfig_Handler_5_Code_Helper10
@@ -12288,12 +12340,12 @@ VoiceState_DataBlock2_Loop10:
 	cp	w, 0:i3
 	jrl	nz, VoiceState_DataBlock2_Loop10
 VoiceState_DataBlock2_Loop11:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 132
 	jrl	z, VoiceState_DataBlock2_Skip28
 	cp	a, 129
 	jrl	nz, VoiceState_DataBlock2_Skip27
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 130
 	jrl	z, VoiceState_DataBlock2_Skip28
 VoiceState_DataBlock2_Skip27:
@@ -12301,12 +12353,12 @@ VoiceState_DataBlock2_Skip27:
 	cp	(3434:16), 0
 	jrl	nz, VoiceState_DataBlock2_Loop11
 VoiceState_DataBlock2_Skip28:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 132
 	jrl	z, VoiceState_DataBlock2_Skip30
 	cp	a, 129
 	jrl	nz, VoiceState_DataBlock2_Loop11
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, 130
 	jrl	nz, VoiceState_DataBlock2_Loop11
 	ld	wa, (3416:16)
@@ -12701,12 +12753,12 @@ SubCPU_ToneClearRegion:
 	call	(xhl)
 	jp	SubCPU_ToneClearRegion_Return
 SubCPU_ToneClearRegion_Skip:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, SubCPU_ToneClearRegion_Skip2
 	cp	a, 130
 	jrl	z, SubCPU_ToneClearRegion_Skip2
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, (0x0d57:16)
 	jrl	ugt, SubCPU_ToneClearRegion_Skip2
 	call	DMA_FlagCheckWithCalls
@@ -13081,12 +13133,12 @@ PerfMode_ParamHandler_11_Skip19:
 	jrl	z, PerfMode_ParamHandler_11_Skip21
 	and	(0x0f57:16), 254
 	call	Display_UpdateRegion0
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, PerfMode_ParamHandler_11_Skip20
 	cp	a, 130
 	jrl	z, PerfMode_ParamHandler_11_Skip20
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, (0x0d57:16)
 	jrl	nc, PerfMode_ParamHandler_11_Skip20
 	call	DMA_FlagCheckWithCalls
@@ -13098,17 +13150,17 @@ PerfMode_ParamHandler_11_Skip20:
 SubCPU_ToneParamRet_Join5:
 	or	(0x0dd3:16), 1
 	ldw	(0x26a6:16), 0
-	call	VoiceSlot_TableSetup
+	call	SqStep_RebuildGridRows
 	jp	SubCPU_ToneParamRet_Return2
 PerfMode_ParamHandler_11_Skip21:
 	and	(0x0f57:16), 254
 	call	Display_UpdateRegion0
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	z, PerfMode_ParamHandler_11_Skip22
 	cp	a, 130
 	jrl	z, PerfMode_ParamHandler_11_Skip22
-	call	VoiceSlot_FlagCheck
+	call	SeqTrack_PeekNextByte
 	cp	a, (0x0d57:16)
 	jrl	nc, PerfMode_ParamHandler_11_Skip22
 	call	DMA_FlagCheckWithCalls
@@ -13120,7 +13172,7 @@ PerfMode_ParamHandler_11_Skip22:
 SubCPU_ToneParamRet_Join6:
 	or	(0x0dd3:16), 1
 	ldw	(0x26a6:16), 0
-	call	VoiceSlot_TableSetup
+	call	SqStep_RebuildGridRows
 SubCPU_ToneParamRet_Return2:
 	ret
 MemConfig_Handler_5_Helper:
@@ -13818,11 +13870,11 @@ OscScope_RefreshLoop_Return:
 	ret
 MemConfig_Handler_3_Helper:
 	push	xhl
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 132
 	jrl	z, OscScope_RenderBlock_Skip3
 	ld	a, 7:opc
-	call	VoiceSlot_SaveState
+	call	SeqCursor_Save
 	xor	bc, bc
 	ld	l, (3822:16)
 	xor	h, h
@@ -13869,7 +13921,7 @@ OscScope_RenderBlock_Join3:
 	pop	xhl
 	pushw	wa
 	ld	a, 7:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	popw	wa
 	jp	OscScope_RenderBlock_Return2
 OscScope_RenderBlock_Skip3:
@@ -14325,7 +14377,7 @@ Str_Control_Helper:
 ;   writes "RHYTHM" at 0x0ECF, marks region 5, then Str_Control_Helper applies the program change to part 72 (program
 ;   (0x3686), bank (0x0EF5); PartCtrl_WriteProgramChange, AccVoice_DispatchEntry) and copies the 13-character rhythm
 ;   name that leaves at 0x340F to 0x0ED6; marks region 3. Basis: callers + body -- TempoRingBuf_OnProgramChangeEvent
-;   and VoiceSlot_StatusRet both set pop-up 4 ((0x0DEF) := 4) and call it for a program change on part 72 (the rhythm
+;   and SqStep_ShowCursorEventPopup both set pop-up 4 ((0x0DEF) := 4) and call it for a program change on part 72 (the rhythm
 ;   part).
 DisplayStr_ShowRhythmLine:
 	call	Display_UpdateRegion0
@@ -14349,7 +14401,7 @@ Str_Rhythm:
 ; DisplayStr_ShowRhythmVariationLine: Builds the rhythm-variation line of the CONTROL-track display: blanks the text
 ;   line, looks up the M.S.A. state at the cursor (SqStep_FindMsaStateAtCursor -> 0x10F6 bit 0) and writes " RHYTHM " or
 ;   "M.S.A. " at 0x0ECF, then "VARI" and the variation number ((C & 0x30) >> 4) + 1 at 0x0ED9 (DisplayStr_WriteVariationNumber);
-;   marks regions 5 and 3. Basis: callers + body -- VoiceSlot_StatusRet (pop-up 4) and SqStep_ShowRhythmVariationEvent
+;   marks regions 5 and 3. Basis: callers + body -- SqStep_ShowCursorEventPopup (pop-up 4) and SqStep_ShowRhythmVariationEvent
 ;   call it in display mode 2 with C = the value byte of a tag-0x48 offset-7 event.
 DisplayStr_ShowRhythmVariationLine:
 	pushw	bc
@@ -14377,7 +14429,7 @@ Str_MSA:
 	.ascii	"M.S.A.    "
 ; DisplayStr_ShowMeasureAndVariation: RHYTHM-track display: writes the measure number (DMA_ChannelHandler_3_Helper),
 ;   clears the rest of the line (DisplayStr_ClearRegion) and writes "VARI" and the variation number ((C & 0x30) >> 4)
-;   + 1 at 0x0ED4 (DisplayStr_WriteVariationNumber); marks region 3. Basis: callers + body -- VoiceSlot_StatusRet (pop-up 15) and
+;   + 1 at 0x0ED4 (DisplayStr_WriteVariationNumber); marks region 3. Basis: callers + body -- SqStep_ShowCursorEventPopup (pop-up 15) and
 ;   SqStep_ShowRhythmVariationEvent call it in display mode 3 with C = the value byte of a tag-0x48 offset-7 event;
 ;   DisplayStr_ShowRhythmVariationLine is the mode-2 form.
 DisplayStr_ShowMeasureAndVariation:
@@ -14470,7 +14522,7 @@ DisplayStr_ShowTempoLine_Data:
 	.byte	0x20, 0x20, 0x93, 0x3d, 0x20, 0x20, 0x20, 0x20
 	.byte	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20
 	.byte	0x20, 0x20
-VoiceSlot_StatusRet_Helper11:
+SqStep_ShowTempoPopup:
 	call	Display_UpdateRegion0
 	call	DisplayStr_BlankLineBuffer
 	ld	xiy, Str_TempoEq
@@ -14508,7 +14560,7 @@ DisplayStr_BytecodeBlock_C_Tbl:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x20, 0x20, 0x54
 	ld	xiy, 0x204f504d
-; port: v7's label VoiceSlot_StatusRet_Helper3_Skip is not in v6 -- no v6 bytes correspond to what it named
+; port: v7's label DisplayStr_RedrawStatusAndTempoLine_Helper3_Skip is not in v6 -- no v6 bytes correspond to what it named
 	; Lcd text, 25 B.  Read by DisplayStr_BytecodeBlock_C (0xEFEE47): `ld xiy, DisplayStr_TempoString`
 	; reader DisplayStr_BytecodeBlock_C: `ld xiy, DisplayStr_TempoString`
 	ld	w, 147:opc
@@ -14862,7 +14914,7 @@ Display_BytecodeBlock_F_Sub_Helper2:
 ; DisplayStr_WriteTempoValue: Writes the tempo (word 0x0EF2) as three digits at 0x0EDA, the value field of the TEMPO
 ;   line; when (0xFC5A) = 7 and (0xFC5B) = 2 -- the case where the line shows the 0x93 note glyph instead of 0x15 --
 ;   it writes tempo * 2 / 3. Basis: callers + body -- DisplayStr_ShowTempoLine calls it after copying the 'TEMPO
-;   <glyph>=' template (choosing the template on the same (0xFC5A, 0xFC5B) test), as do VoiceSlot_StatusRet_Code_Skip24/3;
+;   <glyph>=' template (choosing the template on the same (0xFC5A, 0xFC5B) test), as do SqStep_ShowCursorEventPopup_Code_Skip24/3;
 ;   TempoRingBuf_OnTempoEvent stores the tempo in 0x0EF2.
 DisplayStr_WriteTempoValue:
 	ld	wa, (3826:16)
@@ -14889,7 +14941,7 @@ DisplayStr_WriteTempoValue_Skip9:
 ;   stored at the song-data cursor: copies 26 bytes of the ' TEMPO <glyph>=' template (Display_BytecodeBlock_F_Tbl3,
 ;   or Display_BytecodeBlock_F_Tbl4 with glyph 0x93 when (0xFC5A) = 7 and (0xFC5B) = 2) to 0x0ECF without blanking the
 ;   line, writes the tempo (DisplayStr_WriteTempoValue) and marks region 3. Basis: callers + body --
-;   VoiceSlot_StatusRet calls it instead of VoiceSlot_StatusRet_Helper2 when (0x0D65) = 3 (the RHYTHM track, technics-
+;   SqStep_ShowCursorEventPopup calls it instead of SqStep_ShowTempoPopup when (0x0D65) = 3 (the RHYTHM track, technics-
 ;   docs display-subsystem.md), after setting pop-up 17 and redrawing region 0.
 DisplayStr_WriteTempoLine_RhythmTrack:
 	ld	xiy, Display_BytecodeBlock_F_Tbl2
@@ -14937,7 +14989,7 @@ Display_UpdateRegion0_Wrap:
 ; DisplayStr_ShowBeatCount: Writes at 0x0ED4 (7 words blanked first) the beat count (word 0x0D62): when non-zero the
 ;   glyph pair 0x1B 0x8B, up to three digits (UIRender_DescriptorTable2 -> 0x1181..) and a '+' when 0x0D64 bit 7 (a
 ;   half beat) is set; a zero count shows only glyph 28 when the bit is set. Basis: callers + body --
-;   VoiceSlot_IndexDone (the chord-track display of a position without an event) counts the 0x81 beat markers at the
+;   SqStep_ShowCursorMarkerPopup (the chord-track display of a position without an event) counts the 0x81 beat markers at the
 ;   song-data cursor into 0x0D62 and sets 0x0D64 bit 7 for an off-beat next event, then calls it.
 DisplayStr_ShowBeatCount:
 	ld	bc, 7:i3
@@ -16059,7 +16111,7 @@ Tbl_AccompVolumeLabels:
 	; (0xF00123): +8 when bit 7 of (0x10f3) is clear, 8 bytes copied.
 Tbl_MuteOnOff:
 	.ascii	"MUTE ON MUTE OFF"
-VoiceSlot_StatusRet_Helper5:
+ParamPopup_EmptyStub5:
 	ret
 	; ParamPopup_PartTremolo -- LCD parameter pop-up.
 	; Pop-up id 1.  "<part> TREMOLO ON/OFF": part name = StringData_PartNames[(0x10f1)*4], 4 chars, Str_Tremolo,
@@ -16098,11 +16150,11 @@ ParamPopup_PartTremolo_Skip2:
 	; reader ParamPopup_PartTremolo: `ld xiy, Str_Tremolo` then `ld bc, 8` + ldir (8 bytes copied)
 Str_Tremolo:
 	.ascii	"TREMOLO "
-VoiceSlot_StatusRet_Helper6:
+ParamPopup_EmptyStub6:
 	ret
-VoiceSlot_StatusRet_Helper7:
+ParamPopup_EmptyStub7:
 	ret
-VoiceSlot_StatusRet_Helper8:
+ParamPopup_EmptyStub8:
 	ret
 	ret
 	; "EXT.TAB EFFECT:" + "EN  " + "DIS " (23 bytes).  No reader found: no
@@ -16111,9 +16163,9 @@ VoiceSlot_StatusRet_Helper8:
 Str_ExtTabEffectEnDis:
 	.ascii	"EXT.TAB EFFECT:EN  DIS "
 ; ParamPopup_RotarySpeedNullRet: Empty routine (`ret`): the ROTARY SPEED arm of the step-record event display --
-;   VoiceSlot_StatusRet calls it for a stored parameter event on panel record 0x70, offset 0, whose mask byte (0x10F5)
+;   SqStep_ShowCursorEventPopup calls it for a stored parameter event on panel record 0x70, offset 0, whose mask byte (0x10F5)
 ;   has bit 2 set (SndParam_RotarySpeedSwitch), so that change shows no pop-up in this build. Basis: callers + body --
-;   the only call is VoiceSlot_StatusRet_Skip39 (tag (0x10F1) = 112, offset (0x10F2) = 0, bit 2 of (0x10F5)); the
+;   the only call is SqStep_ShowCursorEventPopup_Skip39 (tag (0x10F1) = 112, offset (0x10F2) = 0, bit 2 of (0x10F5)); the
 ;   namespace map gives record 0x70 +0 mask 0x04 as SndParam_RotarySpeedSwitch; the ParamPopup_TotalReverb test after
 ;   it is unreachable; X_NullRet convention (SqStep_TrackSetupNullRet).
 ParamPopup_RotarySpeedNullRet:
@@ -16147,7 +16199,7 @@ ParamPopup_TotalReverb_Skip2:
 	; reader ParamPopup_TotalReverb: `ld xiy, Str_TotalReverb` then `ld bc, 13` + ldir (13 bytes copied)
 Str_TotalReverb:
 	.ascii	"TOTAL REVERB "
-VoiceSlot_StatusRet_Helper10:
+ParamPopup_EmptyStub10:
 	ret
 	; ParamPopup_PartTimbre -- LCD parameter pop-up.
 	; Pop-up id 1.  part name = StringData_PartNames[(0x10f1)*4], 4 chars at 0x0ED1, then 6 chars of
@@ -16246,18 +16298,18 @@ SqStep_FindMsaStateAtCursor:
 	push	xiy
 	push	xiz
 	ld	a, 5:opc
-	call	VoiceSlot_SaveState
-	call	VoiceSlot_StepCursorBack
+	call	SeqCursor_Save
+	call	SeqTrack_PrevEventKeepWrapCount
 	call	MemConfig_VoiceSlotLookup
 	ld	(0x10f6:16), 0
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 	cp	a, 129
 	jrl	nz, ParamPopup_Msa_Skip3
 Tbl_MsaStates_Loop:
-	call	VoiceSlot_DispatchRet
+	call	SeqTrack_NextEventKeepWrapCount
 	cp	w, 255
 	jrl	z, SqStep_FindMsaStateAtCursor_Skip5
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	push	xhl
 	ld	xhl, 0x0c9e
 	ld	ix, (xhl+iz)
@@ -16278,7 +16330,7 @@ Tbl_MsaStates_Loop:
 	pop	xhl
 	jrl	nc, SqStep_FindMsaStateAtCursor_Skip5
 SqStep_FindMsaStateAtCursor_Skip3:
-	call	VoiceSlot_ReadCurrentParams
+	call	SeqTrack_ReadCursorByte
 ParamPopup_Msa_Skip3:
 	and	a, 240
 	cp	a, 176
@@ -16287,7 +16339,7 @@ ParamPopup_Msa_Skip3:
 	jp	Tbl_MsaStates_Loop
 SqStep_FindMsaStateAtCursor_Skip5:
 	ld	a, 5:opc
-	call	VoiceSlot_RestoreState
+	call	SeqCursor_Restore
 	pop	xiz
 	pop	xiy
 	pop	xix
@@ -16307,7 +16359,7 @@ SqStep_FindMsaStateAtCursor_Skip5:
 ;   it returns through ParamPopup_PartPedal's leading `ret`. Basis: callers + body -- SqStep_FindMsaStateAtCursor
 ;   calls it for each 0xBn event up to the cursor; its header describes this test.
 SqStep_UpdateMsaStateFromEvent:
-	call	VoiceSlot_ComputeWordIndex
+	call	SeqTrack_WordIndex
 	push	xhl
 	ld	xhl, 0x0c9e
 	ld	ix, (xhl+iz)

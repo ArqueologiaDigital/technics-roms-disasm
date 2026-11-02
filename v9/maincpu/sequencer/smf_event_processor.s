@@ -11047,29 +11047,29 @@ AccKey_ScanDone:
 
 AccChord_ReadAndStoreKeys:
 	ld a, (CHORD_ROOT:16)
-	ld (0x32d9:16), a
+	ld (ACC_CHORD_ROOT:16), a
 	ld a, (CHORD_TYPE:16)
-	ld (0x32d8:16), a
+	ld (ACC_CHORD_TYPE:16), a
 	ld a, (CHORD_BASS_ROOT:16)
-	ld (0x32da:16), a
+	ld (ACC_CHORD_BASS:16), a
 	ld a, (CHORD_FLAGS:16)
-	ld (0x32d7:16), a
+	ld (ACC_CHORD_FLAGS:16), a
 	cp (8968:16), 0
 	jr z, AccChord_CheckKeyOverride
 	ld a, (8962:16)
-	ld (0x32d9:16), a
+	ld (ACC_CHORD_ROOT:16), a
 	ld a, (8960:16)
-	ld (0x32d8:16), a
+	ld (ACC_CHORD_TYPE:16), a
 	ld a, (8964:16)
-	ld (0x32da:16), a
+	ld (ACC_CHORD_BASS:16), a
 	ld a, (8966:16)
-	ld (0x32d7:16), a
+	ld (ACC_CHORD_FLAGS:16), a
 
 AccChord_CheckKeyOverride:
-	bit 1, (0x32d7:16)
+	bit 1, (ACC_CHORD_FLAGS:16)
 	jr nz, AccChord_CheckUIState
-	ld a, (0x32d9:16)
-	ld (0x32da:16), a
+	ld a, (ACC_CHORD_ROOT:16)
+	ld (ACC_CHORD_BASS:16), a
 
 AccChord_CheckUIState:
 	cp (CURRENT_MODE:16), 14
@@ -11085,21 +11085,21 @@ AccChord_CheckKeyFlags:
 	jr nz, AccChord_CheckUIStateExit
 
 AccChord_SetDefaultKeys:
-	ld (0x32d7:16), 0
-	ld (0x32d8:16), 1
+	ld (ACC_CHORD_FLAGS:16), 0
+	ld (ACC_CHORD_TYPE:16), 1
 	ld (DISPLAY_CHORD_TYPE:16), 1
 	bit 4, (0x34ea:16)
 	jr z, AccChord_ReadChannelKeys
-	ld (0x32d8:16), 5
+	ld (ACC_CHORD_TYPE:16), 5
 	ld (DISPLAY_CHORD_TYPE:16), 5
 
 AccChord_ReadChannelKeys:
 	ld a, (0x34e9:16)
 	and a, 0xf
 	inc 1, a
-	ld (0x32d9:16), a
+	ld (ACC_CHORD_ROOT:16), a
 	ld (DISPLAY_CHORD_ROOT:16), a
-	ld (0x32da:16), a
+	ld (ACC_CHORD_BASS:16), a
 
 AccChord_CheckUIStateExit:
 	cp (CURRENT_MODE:16), 14
@@ -11117,33 +11117,33 @@ AccChord_CheckModeAndUpdate:
 	or a, (ACC_LANES_ENDING2:16)
 	and a, 0x3f
 	jrl z, AccChord_ReadKeysRet
-	ld a, (0x32d8:16)
+	ld a, (ACC_CHORD_TYPE:16)
 	cp a, 0:i3
 	jr nz, AccChord_ReadKeysRet
-	ld a, (0x32dc:16)
-	cp a, (0x32d8:16)
+	ld a, (ACC_CHORD_PREV_TYPE:16)
+	cp a, (ACC_CHORD_TYPE:16)
 	jr z, AccChord_ReadKeysRet
-	ld (0x32d8:16), a
+	ld (ACC_CHORD_TYPE:16), a
 	ld (CHORD_TYPE:16), a
 	ld (DISPLAY_CHORD_TYPE:16), a
 	ld (8960:16), a
-	ld a, (0x32dd:16)
-	ld (0x32d9:16), a
+	ld a, (ACC_CHORD_PREV_ROOT:16)
+	ld (ACC_CHORD_ROOT:16), a
 	ld (CHORD_ROOT:16), a
 	ld (DISPLAY_CHORD_ROOT:16), a
 	ld (8962:16), a
-	ld a, (0x32de:16)
-	ld (0x32da:16), a
+	ld a, (ACC_CHORD_PREV_BASS:16)
+	ld (ACC_CHORD_BASS:16), a
 	ld (CHORD_BASS_ROOT:16), a
 	ld (DISPLAY_CHORD_BASS:16), a
 	ld (8964:16), a
-	cp a, (0x32dd:16)
+	cp a, (ACC_CHORD_PREV_ROOT:16)
 	jr nz, AccChord_CompareNoteC
 	ld (DISPLAY_CHORD_BASS:16), 0
 
 AccChord_CompareNoteC:
-	ld a, (0x32db:16)
-	ld (0x32d7:16), a
+	ld a, (ACC_CHORD_PREV_FLAGS:16)
+	ld (ACC_CHORD_FLAGS:16), a
 	ld (CHORD_FLAGS:16), a
 	ld (8966:16), a
 	call Voice_InitSlotData

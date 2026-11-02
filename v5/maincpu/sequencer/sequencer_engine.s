@@ -4118,7 +4118,7 @@ SeqNote_HandleAccompChannel:
 	extz wa
 	calr Chan_IsActive
 	cp l, 1:i3
-	jrl z, SeqNote_NoteOff_WritePart
+	jrl z, SeqNoteCh_SendPitchBendEvent
 	jrl SeqNote_ConditionalWriteToBuffer
 
 SeqNoteCh_ClearAndRetStatus:
@@ -4201,14 +4201,14 @@ SeqNoteCh_HandleEventD0:
 	ld wa, bc
 	calr Chan_IsActive
 	cp l, 1:i3
-	jr z, SeqNote_SendNoteOff
+	jr z, SeqNoteCh_SendControllerEvent
 	jrl SeqNote_ConditionalWriteToBuffer
 
 SeqNoteCh_HandleEventD1:
 	ld wa, bc
 	calr Chan_IsActive
 	cp l, 1:i3
-	jr z, SeqNote_SendNoteOff
+	jr z, SeqNoteCh_SendControllerEvent
 	jrl SeqNote_ConditionalWriteToBuffer
 
 SeqNoteCh_HandleEventD3:
@@ -4217,7 +4217,7 @@ SeqNoteCh_HandleEventD3:
 	cp l, 1:i3
 	jrl nz, SeqNote_ConditionalWriteToBuffer
 
-SeqNote_SendNoteOff:
+SeqNoteCh_SendControllerEvent:
 	ld	a, (xsp + 18)
 	dec 1, a
 	ld	(xsp + 11), a
@@ -4242,7 +4242,7 @@ SeqNoteCh_HandleEventD2:
 	cp l, 1:i3
 	jr nz, SeqNote_ConditionalWriteToBuffer
 
-SeqNote_NoteOff_WritePart:
+SeqNoteCh_SendPitchBendEvent:
 	ld	a, (xsp + 18)
 	dec 1, a
 	ld	(xsp + 12), a
@@ -6586,7 +6586,7 @@ SeqCh_ClearActive_DrumShiftDone:
 	ret z
 	bit 2, (1054:16)
 	ret z
-	jp AccWrap_PlayModeStartPlay
+	jp AccWrap_PlayModeStopAcc
 
 NotePool_InsertEntry:
 	dec 8, xsp
@@ -18160,7 +18160,7 @@ SeqInit_SetBaseAddress:
 	ret
 
 SeqInit_JumpToPartInit:
-	jrl Part_InitFromPreset
+	jrl SeqSong_ResetAll
 
 SeqInit_FullReset:
 	push	qiz
@@ -18214,10 +18214,15 @@ SeqInit_InitVoiceSubBlocks:
 	popw_erp 0xfa
 	ret
 
-Part_InitFromPreset:
+; SeqSong_ResetAll: Re-initialises the sequencer's song memory: for every song slot 0..10 DataBuf_InitSlotFromPreset, then the
+;   slot's defaults (Part_InitVoiceDefaults, Part_WriteWord / Part_WriteByte from +0x1C to +0x112, the voice
+;   sub-blocks, VoiceChannels_InitPanFromPreset), then the panel indicator bit 0x4C.  Basis: callers + body --
+;   MainSysControl's INITIAL SETTING case 6 SEQUENCER (MainSysCtrl_OnInitSequencer),
+;   MainPreControl_OnExitPresentation, SeqInit_JumpToPartInit and SeqLoad_JumpInitFromPreset.
+SeqSong_ResetAll:
 	lda xsp, (xsp - 16)
 	push xiz
-	ld xiy, Part_InitFromPreset_LocalInit
+	ld xiy, SeqSong_ResetAll_LocalInit
 	lda xix, (xsp + 4)
 	ldw bc, 0x8
 	ldirw
@@ -25361,7 +25366,7 @@ SeqLoad_PostCheckAutoAccomp:
 	jp Seq_ResetAndRestartAccompaniment
 
 SeqLoad_JumpInitFromPreset:
-	jp Part_InitFromPreset
+	jp SeqSong_ResetAll
 
 SeqLoad_PostAltEntry:
 	cp wa, 0:i3

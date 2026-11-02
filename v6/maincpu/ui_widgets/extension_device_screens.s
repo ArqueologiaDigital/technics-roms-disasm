@@ -1193,7 +1193,7 @@ PanelButton_RhythmGroupCodes_LeftSeg1:			.incbin "includes/generated/naka_extens
 PanelButton_RhythmGroupCodes_LeftSeg6:			.incbin "includes/generated/naka_extension_device.bin", 0x358C, 0x8
 FileIO_BytecodeData_Data_12:			.incbin "includes/generated/naka_extension_device.bin", 0x3594, 0x4
 PanelButton_MspBank17FuncHandlers:	.incbin "includes/generated/naka_extension_device.bin", 0x3598, 0x18	; 6 x 32-bit pointer
-FileIO_BytecodeData_Data_13:			.incbin "includes/generated/naka_extension_device.bin", 0x35B0, 0x6
+PanelButton_MspBank17FuncCodes:			.incbin "includes/generated/naka_extension_device.bin", 0x35B0, 0x6
 ; PanelButton_MspBank18FuncHandlers: 6 x u32 handlers PanelButton_MspNumber calls for MSP 1-6 while the MSP bank is
 ;   18, C = PanelButton_MspBank18FuncCodes[button]: five are the pedal-function handlers of their codes
 ;   (PanelAction_PedalFunctionHandlers 4, 6, 5, 7, 1); slot 2 (code 0xB5) is handler 12,

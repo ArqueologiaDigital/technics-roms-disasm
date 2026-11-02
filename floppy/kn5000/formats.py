@@ -377,7 +377,7 @@ def describe_tm(ctx):
     o.comment('SOUND MEMORY, file type 4.  FileIO_SaveRegion4_VRAM (v10 0xf87e41) writes RAM')
     o.comment('0x1e0000, 0x72aa bytes, between PreTmSave and PostTmSave; at boot the firmware compares')
     o.comment('the 16-byte header with "KN5000 SOUND RAM" and sends the image to sub-CPU 0x7800')
-    o.comment('(SendPartDataBlock_ClearByte4).  40 records of 470 bytes follow it, the size of the')
+    o.comment('(SoundRam_InitPhase0_SendImage).  40 records of 470 bytes follow it, the size of the')
     o.comment('Flash section-7 small slots (Flash_CopyBlocksToSlots): the sub-CPU\'s own 426-byte tone')
     o.comment('record plus four 11-byte velocity-split records; then the kit record (128 user drum')
     o.comment('instruments of 80 B) ending with the edit index and the image checksum.  Field map, with')

@@ -533,7 +533,7 @@ FileIO_BytecodeData_Code_Skip37:
 	extz	wa
 	ld	c, (xbc+2)
 	extz	bc
-	call	VoiceData_DistributeToChannels
+	call	PanelVari_GetGroupSlot
 	ld	xwa, (xsp+2)
 	ld	(xwa+3), l
 	ld	xwa, (xsp+2)
@@ -605,7 +605,7 @@ PanelButton_RhythmGroup_Skip4:
 PanelButton_RhythmGroup_Skip5:
 	extz	bc
 	ldw	wa, 72
-	call	VoiceData_DistributeToChannels
+	call	PanelVari_GetGroupSlot
 	ld	(xiz+3), l
 	ld	xwa, xiz
 	calr	PanelEvent_Post
@@ -1016,7 +1016,7 @@ PanelButton_MspNumber:
 	jr	z, PanelButton_MspNumber_Skip
 	cp	hl, 17
 	jr	nz, PanelButton_MspNumber_Skip2
-	lda	xde, (FileIO_BytecodeData_Data_13:24)
+	lda	xde, (PanelButton_MspBank17FuncCodes:24)
 	ld	c, (xde+bc)
 	lda	xde, (PanelButton_MspBank17FuncHandlers:24)
 	lda	xde, (xde+wa)
@@ -3941,7 +3941,7 @@ Audio_ResetAfterPayloadError:
 	pop	xde
 Audio_ReinitDisplay:
 	calr	Display_SetupAndPrepareRender
-	calr	Display_CopyAndRenderBitmaps
+	calr	PanelMem_InitAllFromFactory
 	call	MainTitle_SetBootFlag
 Audio_ReinitToneGen:
 	push	xde
@@ -4045,12 +4045,17 @@ Audio_CheckAndReinitReverb:
 	pop	xhl
 	pop	xde
 	ret
-VoiceData_InitAndCopyParams:
+; PanelMem_InitFromFactory: WA = panel memory 0..79: clears its 960-byte record at 0x1ED400 + 960 * WA and fills it from the factory
+;   image at table data 0x99ECA0 + 0x2A2 * WA: its first 0x7C bytes, then 0x11E bytes of SndParamRam_DefaultImage
+;   + 0x7C, then its remaining 0x226 bytes.  WA >= 80 does nothing.  Basis: callers + body --
+;   PanelMem_InitAllFromFactory loops it over 0..79, and a memory that fails PanelTlv_ValidatePanelMemory is
+;   rebuilt with it.
+PanelMem_InitFromFactory:
 	dec	2, xsp
 	push	xiz
 	ld	(xsp + 4), wa
 	cpw	(xsp + 4), 0x50
-	jrl	nc, VoiceData_InitDone
+	jrl	nc, PanelMem_InitFromFactory_Done
 	pushw	0x3c0
 	pushw	0x0
 	ld	wa, (xsp + 8)
@@ -4100,7 +4105,7 @@ VoiceData_InitAndCopyParams:
 	push	xwa
 	call	Mem_Copy
 	lda	xsp, (xsp + 10)
-VoiceData_InitDone:
+PanelMem_InitFromFactory_Done:
 	pop	xiz
 	inc	2, xsp
 	ret
@@ -4377,7 +4382,7 @@ VoiceData_ExtendedParamSetup_Loop2:
 	pop	xhl
 	pop	xde
 	calr	MidiMsg_ParseChannelStream
-	calr	Display_CopyAndRenderBitmaps
+	calr	PanelMem_InitAllFromFactory
 	jp	SeqTimer_UpdateTempoReg
 MidiMsg_ParseChannelStream:
 	push	xiz
@@ -4452,11 +4457,16 @@ Display_SetRegionNon2:
 Display_RegionDone:
 	ld	wa, 0:i3
 	jp	BitMapOut_PrepareRender_CheckBit2
-Display_CopyAndRenderBitmaps:
+; PanelMem_InitAllFromFactory: Resets PANEL MEMORY to the factory state: PanelMem_HeaderTemplate ("HK", record size 960, 80 records) to
+;   0x1ED350, the 0xA0 bytes at table data 0x99EC00 to 0x1ED360, every panel memory 0..79 rebuilt by
+;   PanelMem_InitFromFactory, then PanelMem_ApplyFixups.  Basis: callers + body -- MainSysControl's INITIAL
+;   SETTING case 4 PANEL MEMORY (MainSysCtrl_OnInitPanelMemory), Audio_ReinitDisplay and the full re-init after a
+;   panel transfer call it.
+PanelMem_InitAllFromFactory:
 	pushw	iz
 	pushw	0x10
-	pushw	Display_CopyAndRenderBitmaps_Str_HK@hi16
-	pushw	Display_CopyAndRenderBitmaps_Str_HK@lo16
+	pushw	PanelMem_HeaderTemplate@hi16
+	pushw	PanelMem_HeaderTemplate@lo16
 	pushw	0x1e
 	pushw	0xd350
 	call	Mem_Copy
@@ -4468,20 +4478,23 @@ Display_CopyAndRenderBitmaps:
 	call	Mem_Copy
 	lda	xsp, (xsp + 20)
 	ld	iz, 0:i3
-DisplayRender_Loop:
+PanelMem_InitAllFromFactory_Loop:
 	ld	wa, iz
-	calr	VoiceData_InitAndCopyParams
+	calr	PanelMem_InitFromFactory
 	inc	1, iz
 	cp	iz, 0x50
-	jr	c, DisplayRender_Loop
-	calr	Display_ProcessBitmapTable
+	jr	c, PanelMem_InitAllFromFactory_Loop
+	calr	PanelMem_ApplyFixups
 	popw	iz
 	ret
-Display_ProcessBitmapTable:
+; PanelMem_ApplyFixups: Applies PanelMem_FixupRecords (one 6-byte record: u16 memory, 0x50 = all 80; TLV tag; payload offset; OR
+;   value; AND-NOT mask) to the panel memories at 0x1ED400: payload[offset] = (payload[offset] & ~mask) | value
+;   in the tag's record (PanelTlv_PayloadOfTag).  Basis: body + PanelMem_FixupRecords.
+PanelMem_ApplyFixups:
 	dec	2, xsp
 	push	xiz
 	ldw	(xsp + 4), 0x0
-BitmapTable_ProcessEntry:
+PanelMem_ApplyFixups_Record:
 	ld	wa, (xsp + 4)
 	extz	xwa
 	ld	xbc, xwa
@@ -4507,14 +4520,14 @@ BitmapTable_ProcessEntry:
 	lda	xhl, (xwa + 4)
 	lda	xix, (xwa + 5)
 	cpw	(xwa), 0x50
-	jr	nz, BitmapTable_CheckOffset
+	jr	nz, PanelMem_ApplyFixups_One
 	ld	iy, 0:i3
 	ld	e, (xde)
 	ld	d, (xix)
 	ld	l, (xhl)
 	add	xbc, xiz
 	ld	xix, xbc
-BitmapTable_RenderLine:
+PanelMem_ApplyFixups_AllLoop:
 	ld	a, e
 	extz	wa
 	lda	xbc, (xix+wa)
@@ -4525,11 +4538,11 @@ BitmapTable_RenderLine:
 	inc	1, iy
 	add	xix, 0x3c0
 	cp	iy, 0x50
-	jr	c, BitmapTable_RenderLine
-	jr	BitmapTable_NextEntry
-BitmapTable_CheckOffset:
+	jr	c, PanelMem_ApplyFixups_AllLoop
+	jr	PanelMem_ApplyFixups_Next
+PanelMem_ApplyFixups_One:
 	cpw	(xwa), 0x50
-	jr	ge, BitmapTable_NextEntry
+	jr	ge, PanelMem_ApplyFixups_Next
 	ld	wa, (xwa)
 	exts	xwa
 	ld	xiy, xwa
@@ -4548,10 +4561,10 @@ BitmapTable_CheckOffset:
 	extz	bc
 	ld	a, (xhl)
 	or	(xiy+bc), a
-BitmapTable_NextEntry:
+PanelMem_ApplyFixups_Next:
 	incw	1, (xsp + 4)
 	cpw	(xsp + 4), 0x1
-	jrl	c, BitmapTable_ProcessEntry
+	jrl	c, PanelMem_ApplyFixups_Record
 	pop	xiz
 	inc	2, xsp
 	ret
@@ -7152,7 +7165,7 @@ SndParamUpdate_Done:
 	popw_erp	0xfa
 	inc	8, xsp
 	ret
-MIDI_DistributeParamToChannels:
+PanelVari_SetGroupSlot:
 	dec	8, xsp
 	ld	(xsp + 2), e
 	ld	(xsp + 4), c
@@ -7185,40 +7198,40 @@ MidiDistribute_Done:
 	ret
 ; (pre-port v7 note about the bytes at 0xFC9576:)
 ; framing ported from v10's source for the same label (same span length, statement for statement); 27 of 35 slots byte-identical
-VoiceData_DistributeToChannels:
+PanelVari_GetGroupSlot:
 	dec	8, xsp
 	ld	(xsp+4), c
 	ld	(xsp+6), a
 	ld	(xsp+2), 0
 	cp	(xsp+6), 31
-	jr	ugt, VoiceData_DistributeToChannels_Entry
+	jr	ugt, PanelVari_GetGroupSlot_Rhythm
 	call	ApplyProgramChangeAs_DoLookupRe
 	ld	(xsp), l
-VoiceData_DistributeToChannels_Join:
+PanelVari_GetGroupSlot_Join:
 	ld	a, (xsp+6)
 	extz	wa
 	calr	PanelTlv_CompanionOfPart
 	cp	xhl, 0xffffffff
-	jr	z, VoiceData_DistributeToChannels_Skip
+	jr	z, PanelVari_GetGroupSlot_Skip
 	ld	a, (xsp+4)
 	cp	a, (xsp)
-	jr	ugt, VoiceData_DistributeToChannels_Skip
+	jr	ugt, PanelVari_GetGroupSlot_Skip
 	extz	wa
 	ld	a, (xhl+wa)
 	ld	(xsp+2), a
-VoiceData_DistributeToChannels_Skip:
+PanelVari_GetGroupSlot_Skip:
 	ld	l, (xsp+2)
-	jr	VoiceData_DistributeToChannels_Epilogue
-VoiceData_DistributeToChannels_Entry:
+	jr	PanelVari_GetGroupSlot_Epilogue
+PanelVari_GetGroupSlot_Rhythm:
 	.byte	0x8f, 0x06
 	push	xsp
 	popw	wa
-	jr	nz, VoiceData_DistributeToChannels_Skip2
+	jr	nz, PanelVari_GetGroupSlot_NoRecord
 	ld	(xsp), 15
-	jr	VoiceData_DistributeToChannels_Join
-VoiceData_DistributeToChannels_Skip2:
+	jr	PanelVari_GetGroupSlot_Join
+PanelVari_GetGroupSlot_NoRecord:
 	ld	l, 0:opc
-VoiceData_DistributeToChannels_Epilogue:
+PanelVari_GetGroupSlot_Epilogue:
 	inc	8, xsp
 	ret
 SwbtWr_AppendFixedParamBlock:
@@ -7888,7 +7901,7 @@ MIDI_SetupChannelParams:
 	extz	bc
 	ld	e, h
 	extz	de
-	call	MIDI_DistributeParamToChannels
+	call	PanelVari_SetGroupSlot
 	pop	xiz
 	pop	xiy
 	pop	xix
@@ -7897,7 +7910,7 @@ MIDI_SetupChannelParams:
 	pop	xbc
 	pop	xwa
 	ret
-Audio_WriteBankSelectParams:
+Audio_PostPendingAnalogControls:
 	pushw	de
 	bit	7, (ANALOG_MAIN_VOLUME_PENDING:16)
 	jr	z, BankSelect_CheckChannel1
@@ -8335,12 +8348,12 @@ MidiSeqBuf_Return:
 ;   and w, 7 / sll w, 2 / ld xix, <table> / ld_sril3 xix, (xix + w) / call (xix)
 ; so 8 entries, index = w & 7.  Each handler builds one record at RAM 0x9111
 ; (v9/v10: 0x91AD) whose first byte is the status named in the handler's label (C0 is
-; TempoCC_TransmitBytecodeBlock) and hands it to TempoRingBuf_ProcessEntry;
+; MIDI_EmitRecord_C0) and hands it to TempoRingBuf_ProcessEntry;
 ; entries 5-7 are the `ret` right after the table (no record).
 MidiSeqBuf_ProcessorTable:
 	.byte	0xff	; pad: the table proper starts one byte in
 MidiStream_ProcessorDispatchB_Data:
-	.long	TempoCC_TransmitBytecodeBlock
+	.long	MIDI_EmitRecord_C0
 	.long	MIDI_EmitRecord_B0
 	.long	MIDI_EmitRecord_D2
 	.long	MIDI_EmitRecord_D1
@@ -8557,7 +8570,7 @@ TempoRing_Return:
 TempoRing_ProcessorTable:
 	.byte	0xff	; pad: the table proper starts one byte in
 MidiStream_ProcessorDispatchC_Data:
-	.long	TempoCC_TransmitBytecodeBlock
+	.long	MIDI_EmitRecord_C0
 	.long	MIDI_EmitRecord_B0
 	.long	MIDI_EmitRecord_80
 	.long	MIDI_EmitRecord_D2
@@ -8591,7 +8604,7 @@ TempoRing_ValidateState:
 	and	(0x9100:16), 183
 MIDI_ParamValidation_ReturnNoOp:
 	ret
-TempoCC_TransmitBytecodeBlock:
+MIDI_EmitRecord_C0:
 	ld	xix, 0x90ed
 	ld	a, 192:opc
 	ldb_d8	w, (0x9109)
@@ -9033,7 +9046,7 @@ AudioSeq_FlushAndTerminate:
 	ld	(xix+hl), 0xff
 	ret
 VoiceMode_ParamHandler_4:
-	calr	VoiceMode_CheckPendingFlags
+	calr	VoiceMode4_RestoreValueHighBits
 	cp	(0x90f5:16), 255
 	jrl	z, MidiCtrl_NullRet
 	ld	xix, 0x90f7
@@ -9196,7 +9209,7 @@ VoiceMode_ParamHandler_4_Skip2:
 	call	MIDI_DispatchCC_Guarded
 MidiCtrl_NullRet:
 	ret
-VoiceMode_CheckPendingFlags:
+VoiceMode4_RestoreValueHighBits:
 	ld	xix, 0x90f5
 	bitm	0, (xix)
 	jr	z, VoiceMode_CheckFlag1
@@ -9614,8 +9627,8 @@ VoiceParam_DispatchDone:
 VoiceParam_ModeDispatch_Table:	.byte	0x74, 0xa8, 0xfc, 0x00
 	.long	VoiceParam_StorePendingModulation
 	.long	VoiceParam_StorePendingPitchBend
-	.long	VoiceNote_StoreBankSelect
-VoiceParam_StorePendingB4:
+	.long	VoiceParam_StorePendingExpression
+VoiceParam_StorePendingChanPressure:
 	extz	hl
 	ld	l, (0x9108:16)
 	ld	xix, 0x9412
@@ -9623,7 +9636,7 @@ VoiceParam_StorePendingB4:
 	set	7, a
 	ld	(xix+hl), a
 	ret
-VoiceParam_SendPendingB4:
+VoiceParam_SendPendingChanPressure:
 	ld	c, 0xb4:opc
 	ld	xix, 0xf1a0
 	ld	l, (0x9108:16)
@@ -9634,27 +9647,27 @@ VoiceParam_SendPendingB4:
 	ld	d, 0x7f:opc
 	ld	(0x909d:16), de
 	call	PartCtrl_CheckBitmaskBit
-	jr	nc, VoiceParam_SendPendingB4_Guard
+	jr	nc, VoiceParam_SendPendingChanPressure_Guard
 	ld	wa, (0x909b:16)
 	ld	(MIDI_MSG_STATUS:16), wa
 	ld	wa, (0x909d:16)
 	ld	(MIDI_MSG_DATA2:16), wa
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
-VoiceParam_SendPendingB4_Guard:
+VoiceParam_SendPendingChanPressure_Guard:
 	ld	l, (0x9108:16)
 	ld	xix, 0xf1a0
 	cpib_sri	0x03, 0xf0, 0xec, 0x0f
-	jr	z, VoiceParam_SendPendingB4_Done
+	jr	z, VoiceParam_SendPendingChanPressure_Done
 	ld	xix, 0x900e
 	ld	a, (xix+l)
 	cp	a, 0x10
-	jr	z, VoiceParam_SendPendingB4_Done
+	jr	z, VoiceParam_SendPendingChanPressure_Done
 	set	7, a
 	ld	(0x9025:16), a
 	ld	bc, (0x909b:16)
 	ld	de, (0x909d:16)
 	call	MIDI_DispatchCC_Guarded
-VoiceParam_SendPendingB4_Done:
+VoiceParam_SendPendingChanPressure_Done:
 	ret
 VoiceParam_StorePendingModulation:
 	extz	hl
@@ -9740,53 +9753,53 @@ VoiceParam_SendPendingPitchBend_Guard:
 	call	MIDI_DispatchCC_Guarded
 VoiceParam_SendPendingPitchBend_Done:
 	ret
-VoiceNote_StoreBankSelect:
+VoiceParam_StorePendingExpression:
 	ld	e, (0x90f7:16)
 	extz	hl
 	ld	l, (0x9108:16)
 	bit	7, (DEMO_CONTROL_FLAGS:16)
 	; LD SP, (XBC)
 	; BIT 7, (28ADh)
-	jr	nz, VoiceNote_WriteBankAndCC
+	jr	nz, VoiceParam_SendPendingExpression
 	set	7, e
 	ld	xix, 0x9372
 	ld	(xix+hl), e
 	ret
-VoiceNote_WriteBankAndCC:
+VoiceParam_SendPendingExpression:
 	ldw	bc, 0x1b0
 	extz	hl
 	ld	l, (0x9108:16)
 	ld	xix, 0xf1a0
 	ld	a, (xix+hl)
 	cp	a, 0xf
-	jr	z, VoiceNote_SetupCCParams
+	jr	z, VoiceParam_SendPendingExpression_SetupParams
 	ld	c, 0xb3:opc
 	ld	xix, SeqTrackAssign_PartTagTable
 	ld	b, (xix+a)
-VoiceNote_SetupCCParams:
+VoiceParam_SendPendingExpression_SetupParams:
 	ld	(0x909b:16), bc
 	ld	d, 0x7f:opc
 	ld	(0x909d:16), de
 	call	PartCtrl_CheckBitmaskBit
 	jr	nc, MIDI_VoiceNote_CtrlExit
 	cp	(0x909b:16), 176
-	jr	z, VoiceNote_CheckBankSelect
+	jr	z, VoiceParam_SendPendingExpression_CheckPedal
 	ld	wa, (0x909b:16)
 	ld	(MIDI_MSG_STATUS:16), wa
 	ld	wa, (0x909d:16)
 	ld	(MIDI_MSG_DATA2:16), wa
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
 	jr	MIDI_VoiceNote_CtrlExit
-VoiceNote_CheckBankSelect:
+VoiceParam_SendPendingExpression_CheckPedal:
 	bit	7, (DEMO_CONTROL_FLAGS:16)
-	jr	nz, VoiceNote_ApplyBankSelect
+	jr	nz, VoiceParam_SendPendingExpression_ApplyPedal
 	bit	7, (0x2892:16)
 	jr	z, VoiceNote_CtrlDone
-VoiceNote_ApplyBankSelect:
+VoiceParam_SendPendingExpression_ApplyPedal:
 	ld	a, (0x909d:16)
 	set	7, a
 	ld	(ANALOG_EXPRESSION_PEDAL_PENDING:16), a
-	call	Audio_WriteBankSelectParams
+	call	Audio_PostPendingAnalogControls
 	bit	7, (DEMO_CONTROL_FLAGS:16)
 	jr	z, MIDI_VoiceNote_CtrlExit
 	res	7, (DEMO_CONTROL_FLAGS:16)
@@ -9964,18 +9977,18 @@ SeqVoice_UpdateTempoParam:
 SeqVoice_TempoDone:
 	ret
 ; PendingParam_ScanAllTables: sends every part's deferred controller value whose bit 7 (pending) is set, and clears
-;   the flag.  Five 16-part arrays, named by what fills them (helper-naming batch h evidence): B4 (record 0xB4,
-;   filled only through VoiceParam_ModeDispatch_Table; meaning not established), modulation (MidiCC_SetPending-
+;   the flag.  Five 16-part arrays, named by what fills them (helper-naming batch h evidence): channel pressure (record 0xB4,
+;   filled by song event 0xD0 through VoiceParam_ModeDispatch_Table), modulation (MidiCC_SetPending-
 ;   PartModulation, record 0xB2), pitch bend (MidiRx_SetPendingPartPitchBend, 2 bytes per part, record 0xB1),
-;   expression (MidiCC_SetPendingPartExpression, record 0xB3; sent by VoiceNote_WriteBankAndCC) and volume
+;   expression (MidiCC_SetPendingPartExpression, record 0xB3; sent by VoiceParam_SendPendingExpression) and volume
 ;   (MidiCC_SetPendingPartVolume, CC7).  These scanners were labelled PendingExpr / Vol / Pan / Bank / PartCC
 ;   until 2026-10-06 (scripts/renaming/rename_kn5000_pending_param_arrays.sed).
 PendingParam_ScanAllTables:
 	ld	xiy, 0x9412
 	ldw	bc, 0x10
-PendingB4_ScanEntry:
+PendingChanPressure_ScanEntry:
 	bitm	7, (xiy)
-	jr	z, PendingB4_NextEntry
+	jr	z, PendingChanPressure_NextEntry
 	resm	7, (xiy)
 	ld	e, (xiy)
 	ld	xhl, xiy
@@ -9983,12 +9996,12 @@ PendingB4_ScanEntry:
 	ld	(0x9108:16), l
 	pushw	bc
 	push	xiy
-	calr	VoiceParam_SendPendingB4
+	calr	VoiceParam_SendPendingChanPressure
 	pop	xiy
 	popw	bc
-PendingB4_NextEntry:
+PendingChanPressure_NextEntry:
 	inc	1, xiy
-	djnz16	bc, PendingB4_ScanEntry
+	djnz16	bc, PendingChanPressure_ScanEntry
 	ld	xiy, 0x9392
 	ldw	bc, 0x10
 PendingModulation_ScanEntry:
@@ -10038,7 +10051,7 @@ PendingExpression_ScanEntry:
 	ld	(0x9108:16), l
 	pushw	bc
 	push	xiy
-	calr	VoiceNote_WriteBankAndCC
+	calr	VoiceParam_SendPendingExpression
 	pop	xiy
 	popw	bc
 PendingExpression_NextEntry:
@@ -10547,7 +10560,7 @@ MidiCC_Handler_BitManipulation_Code_Helper:
 	ret
 ; MidiCC_SetPendingPartVolume: Queues a part volume: for target BC with part C <= 31 it stores E | 0x80 in the
 ;   pending-volume byte 0x9416[C]; target BC = 0x00B0 instead marks 0x905C, stores E in ANALOG_MAIN_VOLUME_PENDING and
-;   calls Audio_WriteBankSelectParams at once. Basis: callers + body -- MidiCC_RxCC7_Volume passes its CC7 target
+;   calls Audio_PostPendingAnalogControls at once. Basis: callers + body -- MidiCC_RxCC7_Volume passes its CC7 target
 ;   (function 3, the part) and PerfMode_Evt04_VolumeHandler passes C = PART_SELECT, B = 3; the scanners send each
 ;   flagged byte as function 3.
 MidiCC_SetPendingPartVolume:
@@ -10562,7 +10575,7 @@ MidiCC_SetPendingPartVolume:
 MidiStream_ApplyPendingParams_Skip:
 	ld	(0x9038:16), 255
 	ld	(ANALOG_MAIN_VOLUME_PENDING:16), e
-	call	Audio_WriteBankSelectParams
+	call	Audio_PostPendingAnalogControls
 MidiCC_SetPendingPartVolume_Return:
 	ret
 	calr	MidiStream_ExtendedDispatch
@@ -10727,7 +10740,7 @@ MidiStream_LoadBankSelect:
 	res	7, a
 	ld	(xiy), a
 	ld	(ANALOG_EXPRESSION_PEDAL_PENDING:16), a
-	call	Audio_WriteBankSelectParams
+	call	Audio_PostPendingAnalogControls
 	ld	(0x9038:16), 255
 	ld	(MIDI_MSG_STATUS:16), 176
 	ld	(MIDI_MSG_DATA1:16), 1

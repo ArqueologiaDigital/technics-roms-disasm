@@ -990,7 +990,7 @@ SeqNodeInsert_EmptyList:
 	jr SeqNodeInsert_LinkPrev
 
 ; Points 0x10fd at 256-byte block IY (1-based) of the block area whose base is the u32 at
-; 0x110a: (IY - 1) * 256 + base.  Out: XHL = 0.  VoiceSlot_UpdateCurrentPointer does the same
+; 0x110a: (IY - 1) * 256 + base.  Out: XHL = 0.  SeqBlock_Select does the same
 ; with the base at 0x1d5a.
 SeqNode_ResolveSlotPtr:
 	ld hl, iy
@@ -1011,7 +1011,7 @@ VoiceSlot_AssignToChannel:
 	ld (4353:16), xiy
 	ld (SEQ_CURSOR_TRACK:16), a
 	ld c, w
-	call VoiceSlot_ComputeWordIndex
+	call SeqTrack_WordIndex
 	extz xiz
 	ld xix, 0xf1f8
 	xor b, b
@@ -1088,7 +1088,7 @@ VoiceSlot_CheckOccupied:
 	pop xbc
 	pop xhl
 	pop xwa
-	call VoiceSlot_InitAndProcess
+	call SeqTrack_WriteBytesAtCursor
 	xor w, w
 	popw bc
 	ret
@@ -1140,7 +1140,7 @@ VoiceSlot_Overflow:
 	pop xbc
 	pop xhl
 	pop xwa
-	call VoiceSlot_InitAndProcess
+	call SeqTrack_WriteBytesAtCursor
 	xor w, w
 	popw bc
 	ret

@@ -1840,7 +1840,7 @@ S2cGridBoxProc_CaseTable:
 	.short	S2cGridBoxProc_DefaultInherited - FdcFormat_DialGrid
 	.short	S2cGridBoxProc_ForwardToApFunc - FdcFormat_DialGrid
 	.short	S2cGridBoxProc_ForwardToApFunc - FdcFormat_DialGrid
-S2c_GridCheck_Dispatch_Data:	.byte	0xf5, 0x38
+S2cGridCheck_PartTrackAddrs:	.byte	0xf5, 0x38
 	.byte 0x00, 0x00, 0xf6, 0x38, 0x00, 0x00, 0xf7, 0x38
 	.byte 0x00, 0x00, 0xf8, 0x38, 0x00, 0x00, 0xf9, 0x38
 	.byte 0x00, 0x00

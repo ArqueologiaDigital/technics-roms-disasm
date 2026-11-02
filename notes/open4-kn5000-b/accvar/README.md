@@ -197,24 +197,35 @@ What happens next depends on the section (`kn5000_ram_bit_usage.py --tree v10 0x
   stepper of the per-tick vector, and `AccDir_Periodic_DisableAndReset` clears bits 2 and 4.
 - **Intro.**  `0x3284` bit 3 is set; `AudioMode_CheckAndUpdateStereo` tests it.
 - **Ending.**  `0x3284` bit 2 is set, the same bit as after a fill-in.  So `0x3284` is not what stops the
-  accompaniment after an ending; the stop was not found (proposed new issue).
+  accompaniment after an ending; the stop was not found (proposed new issue).  **Answered 2026-11-02**
+  (kn5000-rzg, `notes/open6-kn5000-d/accomp/README.md` B3): ending lanes do not loop at their 0x83 marker
+  (`AccVoice_ParkLaneAtEnd` parks them); when all six are parked, 0x3283 bit 2 makes `AccTick_Main` run
+  `AccEnding_StopWhenSilent`, which stops the transports once no ending note sounds.
 
 The fill-in's return to the variation happens at the fill's own end, which is the bar line.
 
 ## 6. Synchro start
 
-`PANEL_STYLE+5` bit 1 is the SYNCHRO armed bit.  `AccAutoPlay_SetConfig` arms the synchro start
+`PANEL_STYLE+5` bit 1 is the SYNCHRO armed bit.  `AccSynchro_UpdateArmed` arms the synchro start
 (`0x346d` bit 7) when four conditions hold:
 - nothing records or plays (`SEQ_REC_TRACKS`, `SEQ_TRACK_MASK` and `CMP_RECORD_PART` are all 0);
 - the accompaniment mode is on (`PANEL_STYLE+3` low three bits non-zero, bit 3 clear);
 - the SYNCHRO bit is set;
 - (from the code path) the request is not refused elsewhere.
 
+**Corrected 2026-11-02** (`notes/open6-kn5000-d/accomp/README.md` B2): the next sentence describes the
+sequencer's start, not the chord synchro start.  `ACC_TRANSPORT_STATE` = 128 is set only when 0x28B2 bit 1 is set
+(`AccPlayMode_StartPlayFull` / `_StopExprB`); the chord synchro start is `AccSynchro_OnChordKeyEvent` ->
+`AccAutoPlay_ActionDispatch` -> `AccPlayMode_StartAccPlayFull`.
+
 While waiting, `ACC_TRANSPORT_STATE` = 128 / 134.  `INTTR4_SeqAutoStart` starts `PLAY_TRANSPORT_STATE` and
 `SEQ_TRANSPORT_STATE` at the end of a bar of the accompaniment clock (`ACC_CLOCK` = 95 on the last beat, after
-at least one bar).  `AccAutoPlay_PeriodicCheck` drops the SYNCHRO bit as soon as a sequencer track plays or
-records (`AccAutoPlay_Disable`).  The BREAK half of SYNCHRO & BREAK while running, and synchro stop, were not
-traced.
+at least one bar).  `AccSynchro_PeriodicCheck` drops the SYNCHRO bit as soon as a sequencer track plays or
+records (`AccSynchro_Disarm`).  The BREAK half of SYNCHRO & BREAK while running, and synchro stop, were not
+traced.  **Answered 2026-11-02** (kn5000-rzg, `notes/open6-kn5000-d/accomp/README.md` B1-B2): the button toggles
+the same bit in every state.  While it is lit and the accompaniment runs, releasing every chord-zone key stops it
+(`AccSynchro_StopOnChordRelease` -> `AccPlayMode_StopPlayAndAcc`) and the next chord starts it again; that is the break and the
+synchro stop.
 
 ## Renames (all trees: v10, v9 / v8, v7, v6, v5)
 
@@ -263,7 +274,9 @@ Left with their old names, because they were not traced far enough:
 
 ## Proposed new issue: pattern transposition to the chord
 
-Not traced here.  Leads:
+Not traced here.  (Became kn5000-3qp; **answered 2026-11-02** in `notes/open6-kn5000-d/accomp/README.md` section A.
+The statement below that `Note_PitchClassTable` is not a transposition table is only half right: it is the
+note -> pitch-class map of the conversion.)  Leads:
 - `AccChord_ReadAndStoreKeys` copies the recognized chord into the engine (`0x32d8` / `0x32da`, compared with
   `0x32dc` / `0x32de` by `AccChord_CompareAndSetDirty`, which raises `0x32f3` bit 5).
 - The lane note writers (`AccBuf_WriteNoteEvent`, `AccVoice_WriteNoteEventToBuffer`, `AccPlay_ProcessNoteEvent`
@@ -322,8 +335,11 @@ placed after "## Chord Recognition" (the engine sub-lane's draft):
 > (`ACC_TRANSPORT_STATE` 128 / 134) and `INTTR4_SeqAutoStart` starts it at the end of a bar of the
 > accompaniment clock.
 
-Also correct the "Overview" sentence that says the engine does "variation/fill switching" in the chord
-detector, and add the renamed routines to the page's code references.
+Also add the renamed routines to the page's code references.  (Corrected 2026-11-02: this used to ask to
+correct an "Overview" sentence placing variation/fill switching in the chord detector.  The page has no such
+sentence: its Overview lists "variation/fill switching" among the subsystem's parts, which is right.  The
+open item there is the checklist line "Document the variation/fill-in switching state machine", which this
+draft answers.)
 
 ## Evidence
 

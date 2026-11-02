@@ -6712,7 +6712,7 @@ sub_F90CD4:
 ;          and at (XIZ+8), and it indexes this table with it:
 ;          `ld XIX,<this> / call T_PanelButton_CallTableEntry`, and T_PanelButton_CallTableEntry = 0xF8BDC5 calls
 ;          (this + 4*L) after `cp HL,0x001F`.
-;          Dispatch_FF3D39's CONTROL LEGEND names each code.
+;          ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND names each code.
 ;          (notes/proma-2026-09-25/gen_button_selectors.py, B1-B3)
 ; ★ 2026-09-25 (lane proma): the selector was recorded as open here.
 ; ---------------------------------------------------------------------
@@ -10421,7 +10421,7 @@ sub_F92C62:
 ;          and at (XIZ+8), and it indexes this table with it:
 ;          `ld XIX,<this> / call T_PanelButton_CallTableEntry`, and T_PanelButton_CallTableEntry = 0xF8BDC5 calls
 ;          (this + 4*L) after `cp HL,0x001F`.
-;          Dispatch_FF3D39's CONTROL LEGEND names each code.
+;          ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND names each code.
 ;          (notes/proma-2026-09-25/gen_button_selectors.py, B1-B3)
 ; ★ 2026-09-25 (lane proma): the selector was recorded as open here.
 ; ---------------------------------------------------------------------
@@ -11594,7 +11594,7 @@ sub_F93553:
 ;          and at (XIZ+8), and it indexes this table with it:
 ;          `ld XIX,<this> / call T_PanelButton_CallTableEntry`, and T_PanelButton_CallTableEntry = 0xF8BDC5 calls
 ;          (this + 4*L) after `cp HL,0x001F`.
-;          Dispatch_FF3D39's CONTROL LEGEND names each code.
+;          ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND names each code.
 ;          (notes/proma-2026-09-25/gen_button_selectors.py, B1-B3)
 ; ★ 2026-09-25 (lane proma): the selector was recorded as open here.
 ; Evidence: as ScreenButtonHandlers_GroupSoundDisplayHold.
@@ -11768,7 +11768,7 @@ CombinationGroupMenu_MoveHighlight:   ; entry: named by 1 `ld` operand, first at
 ScreenLeave_CombinationGroupMenu_Nop:
 	ret                                                  ; F93707  0e
 ; SoftKeyCol1_CombinationGroupMenu -- SOFT KEY column 1 on this screen: switch the group bank (0x216A) to 0x00 and post a BANK event
-; Evidence: ScreenButtonHandlers_CombinationGroupMenu [0x00] and [0x11]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x00 = SOFT KEY column 1, and
+; Evidence: ScreenButtonHandlers_CombinationGroupMenu [0x00] and [0x11]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x00 = SOFT KEY column 1, and
 ;          [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; Body: unless (0x216A) bit 3 is set or it is already 0: (0x216A) = 0, T_Queue2E00_AppendRegs {0xA8, 0x07 (BANK), 0x00, 0x3F}, (0x2075) &= 0xF7, then a
 ; redraw request ((0x2071) |= 0x10 on screen 0xA5, else (0x2095) |= 0x10).  Also `calr` from SoftKeyCol1_GroupCombiDisplayHold.
@@ -11798,7 +11798,7 @@ ScreenButtonHandlers_CombinationGroupMenu_Nop1:   ; entry: named by 2 `.long` op
 ScreenButtonHandlers_CombinationGroupMenu_Nop2:   ; entry: named by 2 `.long` operands, first at 0xF9355F
 	ret                                                  ; F93741  0e
 ; SoftKeyCol4_CombinationGroupMenu -- SOFT KEY column 4 on this screen: switch the group bank (0x216A) to 0x10, only while (0x08EC) bit 1 is set
-; Evidence: ScreenButtonHandlers_CombinationGroupMenu [0x03] and [0x14]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x03 = SOFT KEY column 4, and
+; Evidence: ScreenButtonHandlers_CombinationGroupMenu [0x03] and [0x14]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x03 = SOFT KEY column 4, and
 ;          [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; Body: SoftKeyCol1's with 0x10 and an extra `bit 1,(0x08EC)` gate; CombiGroupName_Lookup (the group-name fetch) answers banks 0x10-0x17 with the ROM string
 ; "EXT Silent Group" when that same bit is clear.  Also `calr` from SoftKeyCol4_GroupCombiDisplayHold.
@@ -11826,7 +11826,7 @@ SoftKeyCol4_CombinationGroupMenu:
 .LF9377F:
 	ret                                                  ; F9377F  0e
 ; SoftKeyCol5_CombinationGroupMenu -- SOFT KEY column 5 on this screen: step the selected group (0x2169) down (lower key) or up (upper key) and post it
-; Evidence: ScreenButtonHandlers_CombinationGroupMenu [0x04] and [0x15]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x04 = SOFT KEY column 5, and
+; Evidence: ScreenButtonHandlers_CombinationGroupMenu [0x04] and [0x15]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x04 = SOFT KEY column 5, and
 ;          [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; Body: `xor W,0x80` then bit 7 of W (set = lower key, SoftKeyCol1_DrawbarScreen header) picks dec/inc within 0..15, or 0..(0x08EA)-1 when (0x216A) == 0x10;
 ; on a change (0x2075) |= 8, (0x2169) = A, T_Queue2E00_AppendRegs {0xA8, 0x08, A, 0x0F}.  InstallPainter_CombinationGroupMenu stores 0x0484 at (0x209B) and
@@ -11875,7 +11875,7 @@ SoftKeyCol5_CombinationGroupMenu:
 .LF937DA:
 	ret                                                  ; F937DA  0e
 ; SoftKeyCol6_CombinationGroupMenu -- SOFT KEY column 6 on this screen: request screen 0xA6 (GroupCombiDisplayHold)
-; Evidence: ScreenButtonHandlers_CombinationGroupMenu [0x05] and [0x16]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x05 = SOFT KEY column 6, and
+; Evidence: ScreenButtonHandlers_CombinationGroupMenu [0x05] and [0x16]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x05 = SOFT KEY column 6, and
 ;          [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; Body: `ld (0x2070),0x80A6` = screen id 0xA6 + request flags 0x80; if (0x2092) bit 0: (0x2071) = 0x40, (0x2075) |= 0x80.  The list's "OK" legend
 ; sits at position 0x236B = x 216, inside column 6's band (x 200-239).
@@ -11892,17 +11892,17 @@ ScreenButtonHandlers_CombinationGroupMenu_Nop6:   ; entry: named by 2 `.long` op
 ScreenButtonHandlers_CombinationGroupMenu_Nop7:   ; entry: named by 2 `.long` operands, first at 0xF93573
 	ret                                                  ; F937F3  0e
 ; LcdKeyRow1_CombinationGroupMenu -- LCD row 1 key pair on this screen: no lasting effect -- `calr CombiGroup_MaxMemberIndexOfCurrent / ret`, the result is discarded
-; Evidence: ScreenButtonHandlers_CombinationGroupMenu [0x08] only; Dispatch_FF3D39's CONTROL LEGEND gives code 0x08 = the LCD-row-1 key pair (W bit 7 set = the left-hand key).
+; Evidence: ScreenButtonHandlers_CombinationGroupMenu [0x08] only; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x08 = the LCD-row-1 key pair (W bit 7 set = the left-hand key).
 LcdKeyRow1_CombinationGroupMenu:
 	calr CombiGroup_MaxMemberIndexOfCurrent                                          ; F937F4  1e 3c 03
 	ret                                                  ; F937F7  0e
 ; LcdKeyRow2_CombinationGroupMenu -- LCD row 2 key pair on this screen: no lasting effect -- `calr CombiGroup_MaxMemberIndexOfCurrent / ret`, the result is discarded
-; Evidence: ScreenButtonHandlers_CombinationGroupMenu [0x09] only; Dispatch_FF3D39's CONTROL LEGEND gives code 0x09 = the LCD-row-2 key pair (W bit 7 set = the left-hand key).
+; Evidence: ScreenButtonHandlers_CombinationGroupMenu [0x09] only; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x09 = the LCD-row-2 key pair (W bit 7 set = the left-hand key).
 LcdKeyRow2_CombinationGroupMenu:   ; entry: named by 1 `.long` operand, first at 0xF9357B
 	calr CombiGroup_MaxMemberIndexOfCurrent                                          ; F937F8  1e 38 03
 	ret                                                  ; F937FB  0e
 ; LcdKeyRow3_CombinationGroupMenu -- LCD row 3 key pair on this screen: no lasting effect -- `calr CombiGroup_MaxMemberIndexOfCurrent / ret`, the result is discarded
-; Evidence: ScreenButtonHandlers_CombinationGroupMenu [0x0A] only; Dispatch_FF3D39's CONTROL LEGEND gives code 0x0A = the LCD-row-3 key pair (W bit 7 set = the left-hand key).
+; Evidence: ScreenButtonHandlers_CombinationGroupMenu [0x0A] only; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x0A = the LCD-row-3 key pair (W bit 7 set = the left-hand key).
 LcdKeyRow3_CombinationGroupMenu:   ; entry: named by 1 `.long` operand, first at 0xF9357F
 	calr CombiGroup_MaxMemberIndexOfCurrent                                          ; F937FC  1e 34 03
 	ret                                                  ; F937FF  0e
@@ -11915,7 +11915,7 @@ ScreenButtonHandlers_CombinationGroupMenu_Nop13:   ; entry: named by 1 `.long` o
 ScreenButtonHandlers_CombinationGroupMenu_Nop14:   ; entry: named by 1 `.long` operand, first at 0xF9358F
 	ret                                                  ; F93803  0e
 ; ExitKey_CombinationGroupMenu -- EXIT on the COMBINATION GROUP MENU: request screen 0x02
-; Evidence: ScreenButtonHandlers_CombinationGroupMenu [0x0F] only; Dispatch_FF3D39's CONTROL LEGEND gives code 0x0F = EXIT.
+; Evidence: ScreenButtonHandlers_CombinationGroupMenu [0x0F] only; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x0F = EXIT.
 ; Body: acts only when W bit 7 is clear (code 0x0F exists only at pair position 1, where bit 7 is clear -- FINDINGS-prom_a-panel-control-map.md 1):
 ; (0x2070) = 0x8002, i.e. request screen 0x02; if (0x2092) bit 0: (0x209A) = 1 (PanelState_TakePendingHoldTime preloads the auto-return timer) and (0x2071) = 0.
 ExitKey_CombinationGroupMenu:   ; entry: named by 1 `.long` operand, first at 0xF93593
@@ -12003,7 +12003,7 @@ sub_F93835:
 ;          and at (XIZ+8), and it indexes this table with it:
 ;          `ld XIX,<this> / call T_PanelButton_CallTableEntry`, and T_PanelButton_CallTableEntry = 0xF8BDC5 calls
 ;          (this + 4*L) after `cp HL,0x001F`.
-;          Dispatch_FF3D39's CONTROL LEGEND names each code.
+;          ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND names each code.
 ;          (notes/proma-2026-09-25/gen_button_selectors.py, B1-B3)
 ; ★ 2026-09-25 (lane proma): the selector was recorded as open here.
 ; Evidence: as ScreenButtonHandlers_GroupSoundDisplayHold.
@@ -12298,7 +12298,7 @@ GroupCombiDisplayHold_ShowMemberPage_ManyPages:
 ScreenLeave_GroupCombiDisplayHold_Nop:
 	ret                                                  ; F93ADD  0e
 ; SoftKeyCol1_GroupCombiDisplayHold -- SOFT KEY column 1 on this screen: switch the group bank to 0x00 -- `calr SoftKeyCol1_CombinationGroupMenu / ret`
-; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x00] and [0x11]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x00 = SOFT KEY column 1, and
+; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x00] and [0x11]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x00 = SOFT KEY column 1, and
 ;          [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 SoftKeyCol1_GroupCombiDisplayHold:   ; entry: named by 2 `.long` operands, first at 0xF93839
 	calr SoftKeyCol1_CombinationGroupMenu                                          ; F93ADE  1e 27 fc
@@ -12308,20 +12308,20 @@ ScreenButtonHandlers_GroupCombiDisplayHold_Nop1:   ; entry: named by 2 `.long` o
 ScreenButtonHandlers_GroupCombiDisplayHold_Nop2:   ; entry: named by 2 `.long` operands, first at 0xF93841
 	ret                                                  ; F93AE3  0e
 ; SoftKeyCol4_GroupCombiDisplayHold -- SOFT KEY column 4 on this screen: switch the group bank to 0x10 -- `calr SoftKeyCol4_CombinationGroupMenu / ret`
-; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x03] and [0x14]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x03 = SOFT KEY column 4, and
+; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x03] and [0x14]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x03 = SOFT KEY column 4, and
 ;          [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 SoftKeyCol4_GroupCombiDisplayHold:   ; entry: named by 2 `.long` operands, first at 0xF93845
 	calr SoftKeyCol4_CombinationGroupMenu                                          ; F93AE4  1e 5b fc
 	ret                                                  ; F93AE7  0e
 ; SoftKeyCol5_GroupCombiDisplayHold -- SOFT KEY column 5 on this screen: step the shown group down/up -- `calr SoftKeyCol5_CombinationGroupMenu / ret`
-; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x04] and [0x15]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x04 = SOFT KEY column 5, and
+; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x04] and [0x15]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x04 = SOFT KEY column 5, and
 ;          [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; The list draws glyphs 0x8D/0x8E at 0x2096/0x22C6 (x 176, rows 208/222), inside column 5's band, above and below each other.
 SoftKeyCol5_GroupCombiDisplayHold:   ; entry: named by 2 `.long` operands, first at 0xF93849
 	calr SoftKeyCol5_CombinationGroupMenu                                          ; F93AE8  1e 95 fc
 	ret                                                  ; F93AEB  0e
 ; SoftKeyCol6_GroupCombiDisplayHold -- SOFT KEY column 6 on this screen: request screen 0xA5 (CombinationGroupMenu)
-; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x05] and [0x16]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x05 = SOFT KEY column 6, and
+; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x05] and [0x16]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x05 = SOFT KEY column 6, and
 ;          [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; Body: `ld (0x2070),0x80A5`; if (0x2092) bit 0: (0x2071) = 0x40, (0x2075) |= 0x80.  The list's "GR0UP" / "MENU" legend sits at 0x1EDF / 0x227A,
 ; x 184-239, centred on column 6's band.
@@ -12334,7 +12334,7 @@ SoftKeyCol6_GroupCombiDisplayHold:   ; entry: named by 2 `.long` operands, first
 .LF93B02:
 	ret                                                  ; F93B02  0e
 ; SoftKeyCol7_GroupCombiDisplayHold -- SOFT KEY column 7 on this screen: toggle DISPLAY HOLD
-; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x06] and [0x17]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x06 = SOFT KEY column 7, and
+; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x06] and [0x17]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x06 = SOFT KEY column 7, and
 ;          [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; Body: `xor (0x267F),0x01`, then queues sub_F9315D, which fills (DisplayHold_DrawHoldHighlight_DL1, op 05) or erases (DisplayHold_DrawHoldHighlight_DL2, op 1B) the box x 254-313, y 212-236 around the
 ; "DISPLAY" / "HOLD" legend (0x2190 / 0x2371).  (0x267F) bit 0 is what GroupCombiDisplayHold_SelectMemberAtRow tests before leaving the screen.
@@ -12348,7 +12348,7 @@ SoftKeyCol7_GroupCombiDisplayHold:   ; entry: named by 2 `.long` operands, first
 	call T_Kernel_SemaSignal                             ; F93B16  1d 88 2d f4
 	ret                                                  ; F93B1A  0e
 ; SoftKeyCol8_GroupCombiDisplayHold -- SOFT KEY column 8 on this screen: toggle DISPLAY HOLD (byte-identical to column 7's)
-; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x07] and [0x18]; Dispatch_FF3D39's CONTROL LEGEND gives code 0x07 = SOFT KEY column 8, and
+; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x07] and [0x18]; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x07 = SOFT KEY column 8, and
 ;          [c+0x11] is the same column's code re-pressed while already held (PanelButton_InterlockMask32 header; notes/proma-2026-09-25/gen_held_sets.py S1-S4).
 ; Body: `xor (0x267F),0x01`, then queues sub_F9315D, which fills (DisplayHold_DrawHoldHighlight_DL1, op 05) or erases (DisplayHold_DrawHoldHighlight_DL2, op 1B) the box x 254-313, y 212-236 around the
 ; "DISPLAY" / "HOLD" legend (0x2190 / 0x2371).  (0x267F) bit 0 is what GroupCombiDisplayHold_SelectMemberAtRow tests before leaving the screen.
@@ -12377,28 +12377,28 @@ CombiGroup_MaxMemberIndexOfCurrent:
 	pop W                                                ; F93B4A  c8 05
 	ret                                                  ; F93B4C  0e
 ; LcdKeyRow1_GroupCombiDisplayHold -- LCD row 1 key pair on this screen: select member row 0 -- CombiGroup_MaxMemberIndexOfCurrent, HL = 0, GroupCombiDisplayHold_SelectMemberAtRow
-; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x08] only; Dispatch_FF3D39's CONTROL LEGEND gives code 0x08 = the LCD-row-1 key pair (W bit 7 set = the left-hand key).
+; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x08] only; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x08 = the LCD-row-1 key pair (W bit 7 set = the left-hand key).
 LcdKeyRow1_GroupCombiDisplayHold:   ; entry: named by 1 `.long` operand, first at 0xF93859
 	calr CombiGroup_MaxMemberIndexOfCurrent                                      ; F93B4D  1e e3 ff
 	ldw hl, 0x00                                         ; F93B50  33 00 00
 	calr GroupCombiDisplayHold_SelectMemberAtRow                                      ; F93B53  1e 63 01
 	ret                                                  ; F93B56  0e
 ; LcdKeyRow2_GroupCombiDisplayHold -- LCD row 2 key pair on this screen: select member row 1 -- CombiGroup_MaxMemberIndexOfCurrent, HL = 1, GroupCombiDisplayHold_SelectMemberAtRow
-; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x09] only; Dispatch_FF3D39's CONTROL LEGEND gives code 0x09 = the LCD-row-2 key pair (W bit 7 set = the left-hand key).
+; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x09] only; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x09 = the LCD-row-2 key pair (W bit 7 set = the left-hand key).
 LcdKeyRow2_GroupCombiDisplayHold:   ; entry: named by 1 `.long` operand, first at 0xF9385D
 	calr CombiGroup_MaxMemberIndexOfCurrent                                      ; F93B57  1e d9 ff
 	ldw hl, 0x01                                         ; F93B5A  33 01 00
 	calr GroupCombiDisplayHold_SelectMemberAtRow                                      ; F93B5D  1e 59 01
 	ret                                                  ; F93B60  0e
 ; LcdKeyRow3_GroupCombiDisplayHold -- LCD row 3 key pair on this screen: select member row 2 -- CombiGroup_MaxMemberIndexOfCurrent, HL = 2, GroupCombiDisplayHold_SelectMemberAtRow
-; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x0A] only; Dispatch_FF3D39's CONTROL LEGEND gives code 0x0A = the LCD-row-3 key pair (W bit 7 set = the left-hand key).
+; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x0A] only; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x0A = the LCD-row-3 key pair (W bit 7 set = the left-hand key).
 LcdKeyRow3_GroupCombiDisplayHold:   ; entry: named by 1 `.long` operand, first at 0xF93861
 	calr CombiGroup_MaxMemberIndexOfCurrent                                      ; F93B61  1e cf ff
 	ldw hl, 0x02                                         ; F93B64  33 02 00
 	calr GroupCombiDisplayHold_SelectMemberAtRow                                      ; F93B67  1e 4f 01
 	ret                                                  ; F93B6A  0e
 ; LcdKeyRow4_GroupCombiDisplayHold -- LCD row 4 key pair on this screen: select member row 3 -- CombiGroup_MaxMemberIndexOfCurrent, HL = 3, GroupCombiDisplayHold_SelectMemberAtRow
-; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x0B] only; Dispatch_FF3D39's CONTROL LEGEND gives code 0x0B = the LCD-row-4 key pair (W bit 7 set = the left-hand key).
+; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x0B] only; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x0B = the LCD-row-4 key pair (W bit 7 set = the left-hand key).
 ; [0x0C] (LCD row 5) is .LF93B75, a `ret` inside this routine's extent.
 LcdKeyRow4_GroupCombiDisplayHold:   ; entry: named by 1 `.long` operand, first at 0xF93865
 	calr CombiGroup_MaxMemberIndexOfCurrent                                      ; F93B6B  1e c5 ff
@@ -12498,7 +12498,7 @@ ScreenButtonHandlers_GroupCombiDisplayHold_Nop13:   ; entry: named by 1 `.long` 
 ScreenButtonHandlers_GroupCombiDisplayHold_Nop14:   ; entry: named by 1 `.long` operand, first at 0xF93871
 	ret                                                  ; F93C19  0e
 ; ExitKey_GroupCombiDisplayHold -- EXIT on the group display-hold screen 0xA6: request screen 0x02
-; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x0F] only; Dispatch_FF3D39's CONTROL LEGEND gives code 0x0F = EXIT.
+; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x0F] only; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x0F = EXIT.
 ; Body: acts only when W bit 7 is clear (code 0x0F exists only at pair position 1, where bit 7 is clear -- FINDINGS-prom_a-panel-control-map.md 1):
 ; (0x2070) = 0x8002, i.e. request screen 0x02; if (0x2092) bit 0: (0x209A) = 1 (PanelState_TakePendingHoldTime preloads the auto-return timer) and (0x2071) = 0.
 ; Same body as ExitKey_CombinationGroupMenu plus `and (0x2075),0x7F` in the (0x2092) arm.
@@ -12516,7 +12516,7 @@ ExitKey_GroupCombiDisplayHold:   ; entry: named by 1 `.long` operand, first at 0
 .LF93C3C:
 	ret                                                  ; F93C3C  0e
 ; NumberPadKey_GroupCombiDisplayHold -- number-pad entry of a group number on screen 0xA6
-; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x1B] only; Dispatch_FF3D39's CONTROL LEGEND gives code 0x1B = the number pad, whole field.  (0x2823) == 0x20 -> T_Blink_Stop only.  Else when
+; Evidence: ScreenButtonHandlers_GroupCombiDisplayHold [0x1B] only; ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND gives code 0x1B = the number pad, whole field.  (0x2823) == 0x20 -> T_Blink_Stop only.  Else when
 ; (0x2267) & 0x0F == 0x0F (ordinal 12's value in PanelKeypad_OrdinalToKey_V2): (0x2826) = 2, T_AsciiDigits3_ToValue -> A; bound 1 (banks 0x28/0x29), 2 (0x20),
 ; (0x08EA) (0x10) or 16; if 1 <= A <= bound: (0x2169) = A-1, T_Queue2E00_AppendRegs {0xA8, 0x08, A-1, 0x0F}, T_Blink_Stop.  Then queues sub_F93109, which
 ; copies (0x2822) to (0x2661) and blinks the record DL_F2BA64.
@@ -13045,7 +13045,7 @@ sub_F9408A:
 ;          and at (XIZ+8), and it indexes this table with it:
 ;          `ld XIX,<this> / call T_PanelButton_CallTableEntry`, and T_PanelButton_CallTableEntry = 0xF8BDC5 calls
 ;          (this + 4*L) after `cp HL,0x001F`.
-;          Dispatch_FF3D39's CONTROL LEGEND names each code.
+;          ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND names each code.
 ;          (notes/proma-2026-09-25/gen_button_selectors.py, B1-B3)
 ; ★ 2026-09-25 (lane proma): the selector was recorded as open here.
 ; Evidence: as ScreenButtonHandlers_GroupSoundDisplayHold.

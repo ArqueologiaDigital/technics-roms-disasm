@@ -113,7 +113,7 @@ The parts are the six one-hot ACC_PART_BIT values 1, 2, 4, 8, 16, 32, in that or
 `Drum`, `Drum2`, `Bass`, `Acc1`, `Acc2`, `Acc3`. Measured (`probes/part_stats_probe.py`):
 
 - parts 0 and 1 have identical slot lists in all 404 halves. They play General MIDI drum notes (36, 49, 38 most
-  common), and the code skips the note check `Rhythm_CheckVelocityThreshold` for parts 1 and 2 only;
+  common), and the code skips the note check `Rhythm_CheckFixedNote` for parts 1 and 2 only;
 - part 2 plays notes 23..84, median 36: a bass line;
 - parts 3..5 play notes with medians 62..64, mostly 0x91 notes: chord parts.
 

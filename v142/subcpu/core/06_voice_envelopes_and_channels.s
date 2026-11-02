@@ -5262,7 +5262,7 @@ VoiceCC_DataTable_0280FE_Next:
 ; ToneGen_WriteVoice_TvfPair: Writes voice WA's TVF (filter) register pair: TG 0x100 + voice <- (XBC + 8) and
 ;   0x140 + voice <- (XBC + 10), each latch / data write with P6.7 low / high and a three-`nop` settling gap.
 ;   Basis: callers + body -- TVF_Refresh_Sounding_Voices calls it with XBC = the staging record 0x0451CC right
-;   after TVF_Emit_Registers / Voice_PanReg_WriteDispatchB put the clamped cutoff word and the second filter
+;   after TVF_Emit_Registers / TVF_Emit_Registers_Type2 put the clamped cutoff word and the second filter
 ;   word at staging +8 / +10; 0x100 / 0x140 is the filter pair (tone-generator.md).  Was
 ;   ToneGen_WriteVoice_Pan_Pair: those registers are not the pan.
 ToneGen_WriteVoice_TvfPair:
@@ -7080,10 +7080,10 @@ Voice_AllNotes_SustainRetrigger_Exit:
 ; TVF_Refresh_Sounding_Voices.  Left alone; maintainer's call.  See [UNCERTAIN].
 ; XWA = part record (voice list at +5).  Walks the list, classifies each voice by
 ; (voice+0x01)&0x3C and calls TVF_Emit_Registers (0x024444) for 4/0x20 or
-; Voice_PanReg_WriteDispatchB (0x024554) for 0x10, then pushes the result to TG registers
+; TVF_Emit_Registers_Type2 (0x024554) for 0x10, then pushes the result to TG registers
 ; 0x100/0x140 + voice (the filter pair) via ToneGen_WriteVoice_TvfPair with XBC = the staging record 0x0451CC.
 ; TVF_Refresh_Sounding_Voices: Re-emits the TVF (filter) registers of every voice in a part's voice list: classes
-;   (voice+1) & 0x3C = 4 / 0x20 through TVF_Emit_Registers, 0x10 through Voice_PanReg_WriteDispatchB (class 8
+;   (voice+1) & 0x3C = 4 / 0x20 through TVF_Emit_Registers, 0x10 through TVF_Emit_Registers_Type2 (class 8
 ;   skipped), then TG 0x100/0x140 via ToneGen_WriteVoice_TvfPair -- the filter counterpart of
 ;   Pitch_Refresh_Sounding_Voices. Basis: caller + body -- AudioChannel_Handler_Cmd03 calls it after storing the
 ;   part's cutoff offset part+0x1F, which TVF_Emit_Offset_Reg100 adds to the cutoff field.
@@ -7125,7 +7125,7 @@ VoiceCC_DataTable_028F75_Skip:
 	jr	VoiceCC_DataTable_028F75_Join
 VoiceCC_DataTable_028F75_Skip2:
 	ld	xwa, xbc
-	call	Voice_PanReg_WriteDispatchB
+	call	TVF_Emit_Registers_Type2
 	ld	a, (xiz)
 	extz	wa
 	lda	xbc, (ToneGen_StagingBlock:24)

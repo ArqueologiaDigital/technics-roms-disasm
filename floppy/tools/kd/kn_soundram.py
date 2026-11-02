@@ -52,8 +52,8 @@ def v(b):
 
 
 def sound(r):
-    L = ['; A SOUND EDIT record, 0x2C8 bytes (SOUND_HEAD / SOUND_MOD / VOICE_ELEM, kn7000/src/include/voice_record.inc).', '',
-         '\t.ascii\t%s' % s_esc(r[:16]), '\tSOUND_HEAD\t%s' % v(r[16:0x54])]
+    L = ['; A SOUND EDIT record, 0x2C8 bytes (SOUND_NAME_HEAD / SOUND_MOD / VOICE_ELEM, kn7000/src/include/voice_record.inc).', '',
+         '\tSOUND_NAME_HEAD\t%s, %s' % (s_esc(r[:16]), v(r[16:0x54]))]
     for u in range(4):
         L.append('\tSOUND_MOD\t%s\t; mod unit %d' % (v(r[0x54 + 0x7A * u:0x54 + 0x7A * (u + 1)]), u + 1))
     for e in range(4):
@@ -63,7 +63,7 @@ def sound(r):
 
 def voice(r):
     L = ['; A voice record, 0x8E bytes (VOICE_HEAD / VOICE_SUB / VOICE_ELEM, kn7000/src/include/voice_record.inc).', '',
-         '\t.ascii\t%s' % s_esc(r[:13]), '\tVOICE_HEAD_TAIL\t%s' % v(r[13:16])]
+         '\tVOICE_HEAD\t%s, %s' % (s_esc(r[:13]), v(r[13:16]))]
     for u in range(2):
         L.append('\tVOICE_SUB\t%s\t; sub-record %d' % (v(r[0x10 + 0x1C * u:0x2C + 0x1C * u]), u + 1))
     for e in range(2):

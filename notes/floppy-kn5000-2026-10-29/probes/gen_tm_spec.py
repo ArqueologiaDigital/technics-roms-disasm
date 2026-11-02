@@ -246,6 +246,12 @@ doc['notes'] = (
  'Field tiling of both blocks is checked by gen_tm_spec.py (every byte exactly once after repeat expansion). '
  'Old-format images: HdaeRom_DataHandler 0xFF024E dispatches on the 16-B id (SoundRam_Id_KN2000 / MKA / MKB / KN3000 / KN1500 / KN5000); KN3000 images lack the kit +0x11 byte (HdaeRom_DataDispatch_Block3 0xFF03FB inserts it), KN1500 records are 289 B (SoundRam_ConvertKn1500Record 0xFEF9B4), KN2000/MKA/MKB 144 B (SoundRam_ConvertKn2000Record 0xFEFD77). '
  'Producers: scratch scripts clamp_ranges.py (ROM tables + unidasm) and gen_tm_spec.py under ~/compartilhado/tmp/data-floppy-kn5000/agentA/scripts/ (not committed by this agent).')
+# 2026-11-02 (lane open6-kn5000-d/panel): the envelope, LFO and LFO-switch bytes take the SOUND EDIT pages' captions
+# (the element each page handler sends for a caption is the byte's offset); one table, shared with the patch applied
+# to the committed spec: notes/open6-kn5000-d/panel/probes/se_page_names.py.
+sys.path.insert(0, os.path.join(HERE, '..', 'open6-kn5000-d', 'panel', 'probes'))
+from se_page_names import apply as se_page_names_apply
+doc['fields'] = se_page_names_apply(doc['fields'])
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 json.dump(doc, open(OUT, 'w'), indent=1)
 def count(fields):

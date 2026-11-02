@@ -129,6 +129,10 @@ MAINCPU_ELFS = rebuilt_ROMs/wsa1_prom_a.llvm.elf rebuilt_ROMs/wsa1_prom_b.llvm.e
 MAINCPU_ROMS = rebuilt_ROMs/wsa1_prom_a.llvm.rom rebuilt_ROMs/wsa1_prom_b.llvm.rom
 $(MAINCPU_ELFS): rebuilt_ROMs/wsa1_prom_%.llvm.elf: rebuilt_ROMs/wsa1_maincpu.llvm.elf
 	$(LLVM_OBJCOPY) -j .prom_$* $< $@
+# scripts/analysis/gui_menu_map.py (the gate-wsa1 check) reads these two ELFs; `all` names them so a
+# fresh tree has them after the byte gate's `make all` (2026-11-02: without them the check stopped
+# with "build first" in a new worktree).
+all: $(MAINCPU_ELFS)
 
 $(MAINCPU_ROMS): rebuilt_ROMs/wsa1_prom_%.llvm.rom: rebuilt_ROMs/wsa1_maincpu.llvm.elf
 	$(LLVM_OBJCOPY) -O binary -j .prom_$* $< $@

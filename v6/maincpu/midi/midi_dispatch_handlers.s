@@ -11463,7 +11463,7 @@ MidiSysEx_ProcessBlock_Helper5:
 ;   RAM transfer (the abort path sends it too). What the receiver does with it is not identified; the callee's name
 ;   does not describe it. Basis: callers + body -- MidiSysEx_FinishSoundRamXfer calls it when the sound-RAM group (bit
 ;   6 of 0xBC7E) was received; the group's abort handler SeqChan_UnhandledCmd_Join2 sends the same packet after
-;   SendPartDataBlock_DoGetError.
+;   SoundRam_InitPhase2_ResetIfRamLost.
 MidiSysEx_SendSoundRamEndCmd:
 	push	xde
 	push	xhl
@@ -11607,7 +11607,7 @@ SeqChan_UnhandledCmd_Join2:
 	push	xhl
 	push	xix
 	push	xiz
-	call	SendPartDataBlock_DoGetError
+	call	SoundRam_InitPhase2_ResetIfRamLost
 	call	MIDI_SendAllVoicesPitchUpdate
 	pop	xiz
 	pop	xix
@@ -11631,7 +11631,7 @@ SeqChan_UnhandledCmd_Join3:
 	push	xhl
 	push	xix
 	push	xiz
-	call	AccDemo_InitDone
+	call	Composer_ResetStyleImage
 	res	0, (0x323b:16)
 	pop	xiz
 	pop	xix
@@ -11666,7 +11666,7 @@ SeqChan_UnhandledCmd_Join5:
 	push	xhl
 	push	xix
 	push	xiz
-	call	Voice_InitBankDataSafe
+	call	MspUser_ResetToFactory
 	pop	xiz
 	pop	xix
 	pop	xhl
@@ -12052,7 +12052,7 @@ MidiCtrl_ModeSwitchHandler:
 MidiCtrl_ApplyModeSwitch:
 	ld	a, (SWBTWR_PAYLOAD_2:16)
 	extz wa
-	calr	MidiCtrl_Bit2ToChannel
+	calr	MidiCtrl_GmBitToPolyphonyMode
 	ld	a, (SWBTWR_PAYLOAD_2:16)
 	extz wa
 	calr	MidiCtrl_SendControlPacket
@@ -12410,7 +12410,7 @@ SoundMode_ChorusType3:
 SoundMode_ChorusSyncAndRet:
 	jp	SndParam_ApplyAndSync
 VoiceData_ZeroFillAll:
-	lda	xbc, (VoiceData_RamBlockPtrs:24)
+	lda	xbc, (PanelVari_PartRecordPtrs:24)
 	ld xwa, xbc
 	lda xbc, (xbc + 64)
 VoiceData_ZeroFillOuter:
@@ -12585,7 +12585,7 @@ MidiBuf_FillLoop:
 	cp a, 0:i3
 	jr	nz, MidiBuf_FillLoop
 	ret
-MidiCtrl_ModeSwitch_Data:
+MidiCtrl_GmSwitchListener:
 	bit	0, (0xb72e:16)
 	; v7 bytes do not decode as v10's `sbc	xsp, xiz`
 	ret	nz
@@ -12597,17 +12597,17 @@ MidiCtrl_ModeSwitch_Data:
 	ret	z
 	ld	a, (SWBTWR_PAYLOAD_2:16)
 	extz	wa
-	calr	MidiCtrl_Bit2ToChannel
+	calr	MidiCtrl_GmBitToPolyphonyMode
 	ret
-MidiCtrl_Bit2ToChannel:
+MidiCtrl_GmBitToPolyphonyMode:
 	ld c, 0x0:opc
 	bit 2, a
-	jr	z, MidiCtrl_Bit2ToChannel_Store
+	jr	z, MidiCtrl_GmBitToPolyphonyMode_Send
 	ld c, 0x1:opc
-MidiCtrl_Bit2ToChannel_Store:
+MidiCtrl_GmBitToPolyphonyMode_Send:
 	extz bc
 	ld wa, bc
-	jp	COMM_WriteAndCheck
+	jp	SubCPU_SetPolyphonyModeAndResendVolumes
 MidiCtrl_SendControlPacket:
 	dec 4, xsp
 	ld c, a

@@ -194,6 +194,7 @@ DiskApi_CloseFile_Call
 DiskApi_DeleteFile_Call
 DiskApi_ReadFileToWindow_Entry
 DiskApi_WriteFileFromWindow_Entry
+DiskFormat_Execute_Entry
 DiskLoadFile_Execute
 DiskLoadScreen_MountAndScanDirectory
 DiskLoad_SetContentTypeFromSelectedEntry
@@ -414,7 +415,6 @@ MidiFilePlay_OnSongSelect
 MidiFilePlay_SnapshotRecordBytes
 MidiFilePlay_Tick
 MidiFileSave_Page3_LcdKeyRow3
-MidiFileSave_Page5_LcdKeyRow3
 MidiFileStream_Close
 MidiFileStream_GetByte
 MidiFileStream_Open

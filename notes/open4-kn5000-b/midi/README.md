@@ -105,7 +105,7 @@ TITLE_MDEXC) and `SeqData_Handlers` (`SeqData_DispatchHandler`, parameter and un
 
 ### Bulk transfer
 
-The data-dump block headers (`SysEx_TechMsg_*`, sent by `MidiPkt_ArpConfigChain_Data_Helper*`, and recognised as
+The data-dump block headers (`SysEx_TechMsg_*`, sent by `MidiPkt_SendBlock_*`, and recognised as
 ids 11-25) give each group's blocks; the receive handlers' headers give where each lands:
 
 | id | header after `2D 01 28 12` | group / block                      | lands at (receive side)                          |
@@ -187,7 +187,7 @@ sub-commands: 0x80-0x87 (`Voice_SystemMsg_DispatchTable`: 0x80/0x81 bare `ret`s,
 range, 0x84 ignored, 0x85 key-shift enable, 0x86 scale-tune mode, 0x87 rhythm mode), 0x09 (polyphony mode),
 0x91 (`Voice_SetVelSwitchConfig`, sent by `AudioInit_VoiceParamCtrl`), 0x92 (`Voice_AllVoices_PortamentoUpdate`),
 0x99, and 0xA3-0xB1 (`Voice_SystemMsg_SubA3` .. `_SubB1`: scale-tune user offsets, velocity update, scale-tune
-enable).  `SeqVoice_CheckAndRet_Prologue` sends `{4, F0, A, C, E}` records of this shape.
+enable).  `SubCPU_SendSystemRecord` sends `{4, F0, A, C, E}` records of this shape.
 
 ### Website page draft (sysex-messages.md, new section "Technics (0x50) Messages on MIDI" after "SysEx Parser State Machine")
 
