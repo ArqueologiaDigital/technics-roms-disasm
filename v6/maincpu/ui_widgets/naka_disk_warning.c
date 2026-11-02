@@ -1644,8 +1644,10 @@ typedef struct __attribute__((packed)) {
     uint32_t classdef_160_31_proc;
 } naka_disk_warning_t;
 
+/* PORT_BASE: v6 moved parts of this blob; from each offset on, its ROM address is that base + offset (scripts/converters/ported_c_rebase.py) */
+#define PORT_BASE(off) ((off) >= 0x3AB8u ? 0x00EA8BB0u : (off) >= 0x39EEu ? 0x00EA8C6Cu : BASE)
 #define SELF(field) \
-    ((uint32_t)(BASE + __builtin_offsetof(naka_disk_warning_t, field)))
+    ((uint32_t)(PORT_BASE(__builtin_offsetof(naka_disk_warning_t, field)) + __builtin_offsetof(naka_disk_warning_t, field)))
 
 _Static_assert(sizeof(naka_disk_warning_t) == 16430,
     "naka_disk_warning must be exactly 16430 bytes");
@@ -4524,4 +4526,5 @@ const naka_disk_warning_t naka_disk_warning_data
 };
 
 #undef SELF
+#undef PORT_BASE
 #undef BASE

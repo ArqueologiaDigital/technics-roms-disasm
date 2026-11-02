@@ -35,7 +35,16 @@ THREE STEPS (repository root, tree built with `make`)
                  fewest raw bytes is kept.
   --regen DIR    compile the C as it is now and rewrite each json entry against DIR/<bin> with the rule
                  port_maincpu_version.py --cdiv uses (aligned in-ROM pointer pair -> reloc, else raw).
-                 An entry that no longer differs is removed.
+                 Only the bytes some .incbin of TREE's assembly places are compared: the others never
+                 reach the ROM (the assembly spells them itself, e.g. as `.long Str_X` rows), so the
+                 C may compile them to anything.  An entry that no longer differs is removed.
+
+  --name-pointers DIR
+                 (after --regen) in each uint32_t[N] array whose element still compiles to another
+                 value than DIR/<bin> holds there, spell the element NAKA_ADDR(<label>) when the needed
+                 value is the address of a labelled slice of the same bin in TREE (the targets of a
+                 pointer table the port re-ordered, which no piecewise BASE expresses); the label gets
+                 an extern and its TREE address in the link script.  Then --regen again.
 
 The tool never reads the ROM: the needed bytes are the committed C + committed json of before the edit.
 `make gate` then certifies the image.
@@ -284,16 +293,43 @@ def do_set_base(tree, need_dir=None):
         print('  %-36s BASE %06x -> %s%s' % (name, old, ' '.join('%x:%06x' % x for x in cfg), note))
 
 
+ANY_SLICE = re.compile(rb'^[^;]*?\.incbin\s+"includes/generated/([\w.]+\.bin)"'
+                       rb'(?:\s*,\s*(0x[0-9a-fA-F]+|\d+)(?:\s*,\s*(0x[0-9a-fA-F]+|\d+))?)?')
+
+
+def placed(tree):
+    """bin -> [(start, end)] of the bin's bytes that TREE's assembly places in the image (every
+    .incbin of it, labelled or not).  Bytes of a bin that no .incbin places never reach the ROM."""
+    out = {}
+    for f in glob.glob(os.path.join(ROOT, tree, 'maincpu', '**', '*.s'), recursive=True):
+        for ln in open(f, 'rb'):
+            m = ANY_SLICE.match(ln)
+            if m:
+                off = int(m.group(2) or b'0', 0)
+                end = off + int(m.group(3), 0) if m.group(3) else None
+                out.setdefault(m.group(1).decode(), []).append((off, end))
+    return out
+
+
 def do_regen(tree, need_dir):
     d = json.load(open(json_path(tree)))
+    cover = placed(tree)
     before = sum(len(e.get('raw', {})) for e in d.values())
     for name in sorted(d):
         p = os.path.join(need_dir, name)
         if not os.path.exists(p):
             continue
         raw = compile_bin(tree, name)
-        need = open(p, 'rb').read()
-        e = entry(raw, need)
+        need = bytearray(open(p, 'rb').read())
+        # bytes no .incbin places are not the ROM's: the C may compile them to anything
+        mask = bytearray(len(need))
+        for a, b in cover.get(name, []):
+            for i in range(a, min(len(need), b if b is not None else len(need))):
+                mask[i] = 1
+        for i in range(len(need)):
+            if not mask[i]:
+                need[i] = raw[i] if i < len(raw) else 0
+        e = entry(raw, bytes(need))
         old = len(d[name].get('raw', {}))
         if e is None:
             del d[name]
@@ -305,6 +341,131 @@ def do_regen(tree, need_dir):
     print('%s: raw bytes %d -> %d, %d bins' % (os.path.relpath(json_path(tree), ROOT), before, after, len(d)))
 
 
+def dwarf_members(tree, name):
+    """[(offset, member, type)] of the blob's top-level struct, from DWARF (compiled with -g and
+    linked, so the names resolve)."""
+    src, inc, ld = rule(tree, name)
+    tmp = tempfile.mkdtemp(prefix='ported-c-rebase-g-')
+    try:
+        o = os.path.join(tmp, 'x.o')
+        subprocess.run([CLANG, '-target', 'tlcs900', '-ffreestanding', '-c', '-O2', '-g', '-w']
+                       + (['-I', inc] if inc else []) + ['-o', o, src], check=True)
+        elf = os.path.join(tmp, 'x.elf')
+        subprocess.run([LLD, '-T', ld, '-o', elf, o], check=True)
+        dw = subprocess.run([os.path.join(LLVM, 'llvm-dwarfdump'), '--debug-info', elf], capture_output=True,
+                            text=True).stdout
+    finally:
+        shutil.rmtree(tmp)
+    structs, cur = [], None
+    for blk in re.split(r'\n(?=0x[0-9a-f]+:\s+DW_TAG_)', dw):
+        head = blk.split('\n')[0]
+        if 'DW_TAG_structure_type' in head:
+            m = re.search(r'DW_AT_byte_size\s+\((0x[0-9a-f]+)\)', blk)
+            cur = [int(m.group(1), 16) if m else 0, []]
+            structs.append(cur)
+        elif 'DW_TAG_member' in head and cur is not None:
+            nm = re.search(r'DW_AT_name\s+\("([^"]+)"\)', blk)
+            loc = re.search(r'DW_AT_data_member_location\s+\((0x[0-9a-f]+)\)', blk)
+            ty = re.search(r'DW_AT_type\s+\(0x[0-9a-f]+ "([^"]*)"\)', blk)
+            if nm and loc:
+                cur[1].append((int(loc.group(1), 16), nm.group(1), ty.group(1) if ty else ''))
+    return sorted(max(structs)[1])
+
+
+def split_elems(body):
+    """top-level comma-separated elements of an initializer list body, with their spans."""
+    out, depth, start = [], 0, 0
+    for i, ch in enumerate(body):
+        if ch in '({[':
+            depth += 1
+        elif ch in ')}]':
+            depth -= 1
+        elif ch == ',' and depth == 0:
+            out.append((start, i))
+            start = i + 1
+    if body[start:].strip():
+        out.append((start, len(body)))
+    return out
+
+
+def do_name_pointers(tree, need_dir):
+    """In every top-level uint32_t[N] array of TREE's NAKA C whose element compiles to another value
+    than the tree needs (a placed byte), and whose needed value is the address of a labelled slice of
+    the same bin in TREE, spell the element NAKA_ADDR(<that label>): extern + link-script value from
+    symbols/maincpu_TREE_symbols_reference.txt.  For pointer tables whose targets the TREE's port
+    re-ordered (a piecewise BASE cannot express that)."""
+    syms = tree_syms(tree)
+    by_addr = {}
+    cover = placed(tree)
+    lab_of_slice = {}
+    for f in glob.glob(os.path.join(ROOT, tree, 'maincpu', '**', '*.s'), recursive=True):
+        for ln in open(f, 'rb'):
+            m = SLICE.match(ln)
+            if m and m.group(1).decode() in syms:
+                lab_of_slice.setdefault(m.group(2).decode(), {})[syms[m.group(1).decode()]] = m.group(1).decode()
+    d = json.load(open(json_path(tree)))
+    total = 0
+    for name, ent in sorted(d.items()):
+        if not ent.get('raw') or not name.startswith('naka_') or name not in lab_of_slice:
+            continue
+        rawpos = {int(o) for o in ent['raw']}
+        src, inc, ld = rule(tree, name)
+        need = open(os.path.join(need_dir, name), 'rb').read()
+        mem = dwarf_members(tree, name)
+        text = open(src, 'rb').read().decode('latin-1')
+        new_ext, new_ld, edits = set(), {}, []
+        for k, (off, mname, ty) in enumerate(mem):
+            mt = re.fullmatch(r'uint32_t\[(\d+)\]', ty)
+            if not mt:
+                continue
+            n = int(mt.group(1))
+            hit = [i for i in range(n) if any(off + 4 * i + j in rawpos for j in range(4))]
+            if not hit:
+                continue
+            m = re.search(r'\n    \.%s = \{' % re.escape(mname), text)
+            if not m:
+                continue
+            b0 = m.end()
+            depth, i = 1, b0
+            while depth:
+                depth += {'{': 1, '}': -1}.get(text[i], 0)
+                i += 1
+            body = text[b0:i - 1]
+            spans = split_elems(body)
+            if len(spans) != n:
+                continue
+            for e in hit:
+                v = int.from_bytes(need[off + 4 * e:off + 4 * e + 4], 'little')
+                lab = lab_of_slice[name].get(v)
+                if not lab:
+                    continue
+                a, z = spans[e]
+                el = body[a:z]
+                lead = el[:len(el) - len(el.lstrip())]
+                trail = el[len(el.rstrip()):]
+                edits.append((b0 + a, b0 + z, lead + 'NAKA_ADDR(%s)' % lab + trail))
+                new_ext.add(lab)
+                new_ld[lab] = v
+        if not edits:
+            continue
+        for a, z, rep in sorted(edits, reverse=True):
+            text = text[:a] + rep + text[z:]
+        have = set(re.findall(r'^extern const char (\w+);', text, re.M))
+        add = sorted(new_ext - have)
+        if add:
+            last = list(re.finditer(r'^extern const char \w+;\n', text, re.M))[-1]
+            text = text[:last.end()] + ''.join('extern const char %s;\n' % x for x in add) + text[last.end():]
+        open(src, 'wb').write(text.encode('latin-1'))
+        ldt = open(ld).read()
+        have = set(re.findall(r'^(\w+) = ', ldt, re.M))
+        ldt = ldt.rstrip('\n') + '\n' + ''.join('%s = 0x%08X;\n' % (x, new_ld[x]) for x in sorted(new_ld)
+                                                if x not in have)
+        open(ld, 'w').write(ldt)
+        total += len(edits)
+        print('  %-36s %d elements spelled by label (%d labels)' % (name, len(edits), len(new_ld)))
+    print('%s: %d pointer elements named' % (tree, total))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[1])
     ap.add_argument('--tree', required=True, choices=['v6', 'v5'])
@@ -312,6 +473,7 @@ def main():
     g.add_argument('--need', metavar='DIR')
     g.add_argument('--set-base', action='store_true')
     g.add_argument('--regen', metavar='DIR')
+    g.add_argument('--name-pointers', metavar='DIR')
     ap.add_argument('--need-dir', metavar='DIR', help='with --set-base: where slices imply several bases, '
                     'try each against the --need output and keep the one with the fewest raw bytes')
     a = ap.parse_args()
@@ -319,6 +481,8 @@ def main():
         do_need(a.tree, a.need)
     elif a.set_base:
         do_set_base(a.tree, a.need_dir)
+    elif a.name_pointers:
+        do_name_pointers(a.tree, a.name_pointers)
     else:
         do_regen(a.tree, a.regen)
 

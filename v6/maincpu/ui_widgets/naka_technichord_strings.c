@@ -116,7 +116,7 @@ extern const char SingleLoadSrc_PanelMemListProc;
 extern const char SingleLoadSrc_SequencerListProc;
 extern const char SingleLoadSrc_SoundMemListProc;
 
-#define BASE  0x00E85E5Eu
+#define BASE  0x00E85E82u
 
 /* One step of the welcome-screen animation script (12 bytes).
  * Walked by AcWelcomScreenProc (ui/drawbar_panel_ui.s): the current step
@@ -2752,8 +2752,10 @@ typedef struct __attribute__((packed)) {
     char Cheap_FuncNameTable_405_EndName[2];
 } naka_technichord_strings_t;
 
+/* PORT_BASE: v6 moved parts of this blob; from each offset on, its ROM address is that base + offset (scripts/converters/ported_c_rebase.py) */
+#define PORT_BASE(off) ((off) >= 0x17F12u ? 0x00E85E52u : (off) >= 0x5C8u ? 0x00E85E5Eu : BASE)
 #define SELF(field) \
-    ((uint32_t)(BASE + __builtin_offsetof(naka_technichord_strings_t, field)))
+    ((uint32_t)(PORT_BASE(__builtin_offsetof(naka_technichord_strings_t, field)) + __builtin_offsetof(naka_technichord_strings_t, field)))
 
 _Static_assert(sizeof(naka_technichord_strings_t) == 111742,
     "naka_technichord_strings must be exactly 111742 bytes");
@@ -8003,4 +8005,5 @@ const naka_technichord_strings_t naka_technichord_strings_data
 };
 
 #undef SELF
+#undef PORT_BASE
 #undef BASE

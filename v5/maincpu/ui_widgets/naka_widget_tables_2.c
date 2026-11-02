@@ -2588,8 +2588,10 @@ typedef struct __attribute__((packed)) {
     uint32_t Murai_ClassTable_161_Desc31Head[1];
 } naka_widget_tables_2_t;
 
+/* PORT_BASE: v5 moved parts of this blob; from each offset on, its ROM address is that base + offset (scripts/converters/ported_c_rebase.py) */
+#define PORT_BASE(off) ((off) >= 0x2691Eu ? 0x00E5A38Cu : (off) >= 0x2690Cu ? 0x00E5A386u : (off) >= 0x268BAu ? 0x00E5A38Cu : (off) >= 0x26842u ? 0x00E5A386u : (off) >= 0x267F6u ? 0x00E5A39Eu : BASE)
 #define SELF(field) \
-    ((uint32_t)(BASE + __builtin_offsetof(naka_widget_tables_2_t, field)))
+    ((uint32_t)(PORT_BASE(__builtin_offsetof(naka_widget_tables_2_t, field)) + __builtin_offsetof(naka_widget_tables_2_t, field)))
 
 _Static_assert(sizeof(naka_widget_tables_2_t) == 158788,
     "naka_widget_tables_2 must be exactly 158788 bytes");
@@ -4581,4 +4583,5 @@ const naka_widget_tables_2_t naka_widget_tables_2_data
 };
 
 #undef SELF
+#undef PORT_BASE
 #undef BASE

@@ -127,7 +127,7 @@ extern const char CmpStepTitle_OnHide;
 extern const char CmpStepTitle_OnPaint;
 extern const char CmpStepTitle_OnSwitchIn;
 
-#define BASE  0x00E30E4Eu
+#define BASE  0x00E30E48u
 
 /* RhythmDrum_Entries' entry: four bytes the reader uses separately (see the member's header). */
 typedef struct __attribute__((packed)) {
@@ -4106,8 +4106,10 @@ typedef struct __attribute__((packed)) {
     uint8_t East_ClassTable_163_Tail[94];
 } naka_widget_descriptors_t;
 
+/* PORT_BASE: v5 moved parts of this blob; from each offset on, its ROM address is that base + offset (scripts/converters/ported_c_rebase.py) */
+#define PORT_BASE(off) ((off) >= 0x192D4u ? 0x00E30E4Eu : BASE)
 #define SELF(field) \
-    ((uint32_t)(BASE + __builtin_offsetof(naka_widget_descriptors_t, field)))
+    ((uint32_t)(PORT_BASE(__builtin_offsetof(naka_widget_descriptors_t, field)) + __builtin_offsetof(naka_widget_descriptors_t, field)))
 
 _Static_assert(sizeof(naka_widget_descriptors_t) == 150888,
     "naka_widget_descriptors must be exactly 150888 bytes");
@@ -13046,4 +13048,5 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
 };
 
 #undef SELF
+#undef PORT_BASE
 #undef BASE
