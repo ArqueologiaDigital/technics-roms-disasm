@@ -1,3 +1,4 @@
+# APPLIED 2026-11-02 by the lane lead in commit 5a5311c56 (see notes/open6-kn5000-d/README.md).
 # Voice_Slot_ApplyPitchJitter (v142 0x02B3C0; only caller Voice_Init_Type1, 0x02C3CC) adds (tick & 7) to the word at
 # 0x0451CE, which the ToneGen_StagingBlock banner (v142 core/05_voice_params_and_tvf.s) maps to TG register
 # +0x040, the recording selector (class << 12 | entry) -- not to a pitch.  The effect is a random choice of

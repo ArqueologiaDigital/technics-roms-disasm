@@ -1,3 +1,4 @@
+# APPLIED 2026-11-02 by the lane lead in commit 5a5311c56 (see notes/open6-kn5000-d/README.md).
 # Renames for files this sub-lane does not own (lane open6/kn5000-d, naming, 2026-11-02).  For the lead to apply
 # serially.  The labels themselves were renamed in v10/v9/v7/v6/v5 (scripts/renaming/rename_open6_*.sed); these
 # rules fix the prose / generated comments elsewhere that quote the old names.

@@ -1,3 +1,4 @@
+# APPLIED 2026-11-02 by the lane lead in commit 5a5311c56 (see notes/open6-kn5000-d/README.md).
 # Renames proposed by sub-lane open6/kn5000-d subcmd (kn5000-1gu, kn5000-a1f).  Main CPU only:
 # apply to v10/maincpu, v9/maincpu, v7/maincpu, v6/maincpu, v5/maincpu (every old name below is present
 # in all five, checked 2026-11-02) and regenerate symbols/maincpu_*_symbols_reference.txt.  Evidence:

@@ -1,3 +1,4 @@
+# APPLIED 2026-11-02 by the lane lead in commit 5a5311c56 (see notes/open6-kn5000-d/README.md).
 # rename_panel.sed -- label renames found by sub-lane open6-kn5000-d/panel (2026-11-02); not applied by the
 # sub-lane.  Apply to every maincpu tree that has the names (v10, v9, v7, v6, v5) and the symbol files:
 #   sed -i -E -f notes/open6-kn5000-d/panel/rename_panel.sed <files>

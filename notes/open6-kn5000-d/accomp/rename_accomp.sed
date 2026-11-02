@@ -1,5 +1,6 @@
+# APPLIED 2026-11-02 by the lane lead in commit 5a5311c56 (see notes/open6-kn5000-d/README.md).
 # rename_accomp.sed -- sub-lane accomp of lane kn5000-d (2026-11-02), kn5000-3qp and kn5000-rzg.
-# NOT APPLIED.  For the lead: apply to v10, v9 (v8), v7, v6 and v5 (.s AND .c: three of the names are
+# For the lead (done, see the first line): apply to v10, v9 (v8), v7, v6 and v5 (.s AND .c: three of the names are
 # typed in naka_widget_descriptors.c / referenced from C), symbols/, docs/, notes/ and ../technics-docs,
 # then make gate.  Evidence for every rule: notes/open6-kn5000-d/accomp/README.md (section given).
 # No new name collides with an existing v10 symbol (checked against symbols/maincpu_v10_symbols_reference.txt).

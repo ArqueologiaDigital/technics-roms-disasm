@@ -65,8 +65,11 @@ record readers above.
 
 ### Names in the firmware that this changes
 
-Several v10 routine names now read wrong. They were left as they are (renaming them across v10 / v9 / v7 / v6 / v5
-is a separate change), and are listed so that the next naming pass can fix them:
+Several v10 routine names read wrong. This lane left them as they were. **Renamed 2026-11-02** in v10 / v9 / v7 / v6 / v5
+(lane open6/kn5000-d, `scripts/renaming/rename_open6_style.sed`; new names and evidence in
+`notes/open6-kn5000-d/naming/README.md`, "N-edb08959": `Composer_SetPassword` / `_GetPassword`,
+`AccPatch_DefaultStyleByTimeSig`, `AccPatch_SyncVoice_Bass` / `_Drum`, `ComposerChordMap_GetRecord`,
+`CmpRecSet_OnMeasure` .. `_OnRhythmBank`). The old names, for reference:
 
 | routine                                                  | what it does                                                          |
 |----------------------------------------------------------|-----------------------------------------------------------------------|
@@ -224,5 +227,5 @@ orphans, not a second link convention.
   `DSPCfg_ReadMultiField` / `DSPCfg_ReadField` give each parameter a width by its op letter (big-endian words, packed
   5/6-bit fields, bytes); every typed DSP slot record of the floppies decodes in range, and each is spelled with a
   per-effect macro.
-- Renames this lane found but did not make (v10 / v9 / v7 / v6 / v5, a sed script each): the table under "Names
-  in the firmware that this changes".
+- ~~Renames this lane found but did not make~~: made 2026-11-02 (lane open6/kn5000-d, N-edb08959; see "Names in the
+  firmware that this changes").
