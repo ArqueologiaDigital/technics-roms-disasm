@@ -214,13 +214,23 @@ midi/*.mid + sidecar/*.json --> demo_preset_NN.bin --> demo_preset_NN_compressed
                                                           .incbin --> ROM
 ```
 
-`compress_lzss.py --strict` makes a mismatch against the factory stream a hard
-build failure, so a bad edit cannot silently ship different music (verified: a
-one-semitone change to a single note makes `make` exit non-zero and produce no ROM).
+`compress_lzss.py` encodes each payload with the factory SLIDE4K encoder
+(`lzss_j.encode`, Okumura's LZSS.C with N = 4096, F = 18), reading no reference
+stream: it makes every factory stream byte
+(`notes/misc2-2026-11-02/probes/slide4k_encode_exact.py`).  Six blocks carry one
+alignment byte after their stream, which the decoder never reads; the Makefile
+records it (`DEMO_PRESET_PAD_NN`, passed as `--pad`).  An edit that changes the
+music changes the table data image, which `make gate` and `make verify-demo-presets`
+report.  Demo songs 17 and 18 are followed in the ROM by the stale end of an older
+stream; `table_data/kn5000_table_data.s` declares it (`DemoSongPreset17_StreamEndCopy`,
+`DemoSongPreset17_StaleStreamTail`, `DemoSongPreset18_StaleStreamTail`), so their
+payloads are the stream alone.  (Until 2026-11-02 the build replayed the factory
+streams' decisions with `--strict --reference`, and the two tails rode along inside
+the payloads.)
 
 ```
 make rebuild-demo-presets    # .mid + sidecar -> .bin -> compressed payload
-make verify-demo-presets     # check each matches the factory stream byte-for-byte
+make verify-demo-presets     # check each against the factory slice byte-for-byte
 ```
 
 Bootstrap targets, only needed if the extraction itself changes (they re-derive the
@@ -232,9 +242,9 @@ make demo-midi               # -> midi/*.mid
 make demo-sidecars           # -> sidecar/*.json
 ```
 
-`compress_lzss.py --reference` replays the original stream's compression
-decisions, so the rebuilt ROM stays byte-identical to the factory ROM.
-The references live in `original_ROMs/demo_preset_NN_compressed.original.bin`.
+The factory slices live in `original_ROMs/demo_preset_NN_compressed.original.bin`;
+the build no longer reads them (only `verify-demo-presets` and the probes do).
+`compress_lzss.py --reference` still replays a slice's decisions, for checking.
 
 ## Listening to them
 

@@ -1,0 +1,802 @@
+[
+ {
+  "batch": "g1",
+  "record (old name)": "SeMenu_Utility_FormatNumber_Data_2",
+  "v10 addr": "0xF12364",
+  "verdict": "renamed here",
+  "name now": "SeFil_FilterTypeField_StaticRecords",
+  "evidence": "record list: \"MODE\" labelled ref + 2 select frames; SeFil_DrawFilterTypeField draws it (COLORBLIT_MODE 2)"
+ },
+ {
+  "batch": "g1",
+  "record (old name)": "SeMenu_Utility_CompareBlock_Data",
+  "v10 addr": "0xF12386",
+  "verdict": "renamed here",
+  "name now": "SeFil_PageOfTwo_StaticRecords",
+  "evidence": "one labelled ref \"PAGE1/2\"; SeFilLpq1_DrawStaticScreen_End draws it unless SEMENU_PART_MODE = 1"
+ },
+ {
+  "batch": "g1",
+  "record (old name)": "SeMenu_Utility_CompareBlock_Data_2",
+  "v10 addr": "0xF12391",
+  "verdict": "renamed here",
+  "name now": "SeFil12dB_Caption_StaticRecords",
+  "evidence": "FILTER: CUTOFF EQUALIZER FREQ RESO TOUCH CURVE RANGE GAIN K dB; SeFilLpq1 / SeFilHpq1_DrawStaticScreen"
+ },
+ {
+  "batch": "g1",
+  "record (old name)": "SeMenu_Utility_CompareBlock_Data_3",
+  "v10 addr": "0xF12507",
+  "verdict": "renamed here",
+  "name now": "SeFil24dB_Caption_StaticRecords",
+  "evidence": "FILTER: CUTOFF RESO TOUCH CURVE K dB; SeFilL241 / SeFilH241_DrawStaticScreen"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "DataBuf_CopyBulkBitfields_Stub",
+  "v10 addr": "0xFD38FE",
+  "verdict": "already renamed",
+  "name now": "FileData_ImportM4M6_NullRet",
+  "evidence": "renamed by a later lane (same v10 address FD38FE)"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "MidiInit_Stub1",
+  "v10 addr": "0xFCF13A",
+  "verdict": "already renamed",
+  "name now": "SndParam_InitPhase1_NullRet",
+  "evidence": "renamed by a later lane (same v10 address FCF13A)"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "MidiInit_Stub2",
+  "v10 addr": "0xFCF13B",
+  "verdict": "already renamed",
+  "name now": "SndParam_InitPhase2_NullRet",
+  "evidence": "renamed by a later lane (same v10 address FCF13B)"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "MidiInit_Stub3",
+  "v10 addr": "0xFCF13C",
+  "verdict": "already renamed",
+  "name now": "SndParam_InitPhase3_NullRet",
+  "evidence": "renamed by a later lane (same v10 address FCF13C)"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "SC0Init_Entry",
+  "v10 addr": "0xFCF897",
+  "verdict": "renamed here (v7/v6/v5)",
+  "name now": "SC0_InitSerialPort",
+  "evidence": "v10/v9 name of the same slot 0 of SC0_InitFuncTable"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "MidiPkt_EnqueueExtended_Data",
+  "v10 addr": "0xFDA302",
+  "verdict": "already renamed",
+  "name now": "MidiPkt_SendCtlWordValueSysEx",
+  "evidence": "renamed by a later lane (same v10 address FDA302)"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "AccPos_ClearOnStart_Padding_Sub",
+  "v10 addr": "0xF5B414",
+  "verdict": "renamed here",
+  "name now": "AccReplay_HandlePendingStop",
+  "evidence": "body: bit 1 of 0x347A set and 0x3283 & 3 = 0 -> AccReplay_FullStop; demo mode only clears the flags"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "AccDir_Entry",
+  "v10 addr": "0xF5BD76",
+  "verdict": "already renamed",
+  "name now": "AccDir_TickVector",
+  "evidence": "renamed by a later lane (same v10 address F5BD76)"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "AccProcess_Entry",
+  "v10 addr": "0xF5BF49",
+  "verdict": "already renamed",
+  "name now": "AccProcess_TapTempoTick",
+  "evidence": "renamed by a later lane (same v10 address F5BF49)"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "AccStyle_Entry",
+  "v10 addr": "0xF5C558",
+  "verdict": "already renamed",
+  "name now": "SndArg_TickVector",
+  "evidence": "renamed by a later lane (same v10 address F5C558)"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "AccVoiceDelta_Part1",
+  "v10 addr": "0xF5CC63",
+  "verdict": "already renamed",
+  "name now": "SndArg_StoreDrumSound",
+  "evidence": "renamed by a later lane (same v10 address F5CC63)"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "AccVoiceDelta_Part2",
+  "v10 addr": "0xF5CC8E",
+  "verdict": "already renamed",
+  "name now": "SndArg_StoreBassSound",
+  "evidence": "renamed by a later lane (same v10 address F5CC8E)"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "AccVoiceDelta_Part3",
+  "v10 addr": "0xF5CCBF",
+  "verdict": "already renamed",
+  "name now": "SndArg_StoreAccomp1Sound",
+  "evidence": "renamed by a later lane (same v10 address F5CCBF)"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "AccVoiceDelta_Part4",
+  "v10 addr": "0xF5CCF0",
+  "verdict": "already renamed",
+  "name now": "SndArg_StoreAccomp2Sound",
+  "evidence": "renamed by a later lane (same v10 address F5CCF0)"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "AccVoiceDelta_Part5",
+  "v10 addr": "0xF5CD21",
+  "verdict": "already renamed",
+  "name now": "SndArg_StoreAccomp3Sound",
+  "evidence": "renamed by a later lane (same v10 address F5CD21)"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "AccTone_JumpTableData_Data",
+  "v10 addr": "0xF5D977",
+  "verdict": "renamed here",
+  "name now": "AccSection_ApplyPendingChange",
+  "evidence": "body: bit 0 of 0x341F -> 0x3426 = section record (0x3421), tuning copied, parts marked, bit cleared"
+ },
+ {
+  "batch": "g3",
+  "record (old name)": "AccPatch_CountSlots_Wrapper",
+  "v10 addr": "0xF5E919",
+  "verdict": "already renamed",
+  "name now": "AccPatch_RecountFreeSlots",
+  "evidence": "renamed by a later lane (same v10 address F5E919)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "FileIO_BytecodeData_Data",
+  "v10 addr": "0xED9D30",
+  "verdict": "already renamed",
+  "name now": "PanelButton_ModeKeyCodes_LeftSeg3",
+  "evidence": "renamed by a later lane (same v10 address ED9D30)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "FileIO_BytecodeData_Data_2",
+  "v10 addr": "0xED9D32",
+  "verdict": "already renamed",
+  "name now": "PanelButton_ModeKeyCodes_LeftSeg10",
+  "evidence": "renamed by a later lane (same v10 address ED9D32)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "FileIO_BytecodeData_Data_3",
+  "v10 addr": "0xED9D34",
+  "verdict": "already renamed",
+  "name now": "PanelButton_ModeKeyCodes_RightSeg4",
+  "evidence": "renamed by a later lane (same v10 address ED9D34)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "FileIO_BytecodeData_Data_4",
+  "v10 addr": "0xED9D36",
+  "verdict": "already renamed",
+  "name now": "PanelButton_ModeKeyCodes_RightSeg5",
+  "evidence": "renamed by a later lane (same v10 address ED9D36)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "FileIO_BytecodeData_Data_5",
+  "v10 addr": "0xED9D38",
+  "verdict": "already renamed",
+  "name now": "PanelButton_ModeKeyCodes_RightSeg10",
+  "evidence": "renamed by a later lane (same v10 address ED9D38)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "FileIO_BytecodeData_Data_6",
+  "v10 addr": "0xED9D3C",
+  "verdict": "already renamed",
+  "name now": "PanelButton_SoundGroupCodes_RightSeg1",
+  "evidence": "renamed by a later lane (same v10 address ED9D3C)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "FileIO_BytecodeData_Data_7",
+  "v10 addr": "0xED9D44",
+  "verdict": "already renamed",
+  "name now": "PanelButton_SoundGroupCodes_RightSeg2",
+  "evidence": "renamed by a later lane (same v10 address ED9D44)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "FileIO_BytecodeData_Data_8",
+  "v10 addr": "0xED9D4C",
+  "verdict": "already renamed",
+  "name now": "PanelButton_SoundGroupCodes_RightSeg9",
+  "evidence": "renamed by a later lane (same v10 address ED9D4C)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "FileIO_BytecodeData_Data_9",
+  "v10 addr": "0xED9D4E",
+  "verdict": "already renamed",
+  "name now": "PanelButton_RhythmGroupCodes_LeftSeg0",
+  "evidence": "renamed by a later lane (same v10 address ED9D4E)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "FileIO_BytecodeData_Data_10",
+  "v10 addr": "0xED9D56",
+  "verdict": "already renamed",
+  "name now": "PanelButton_RhythmGroupCodes_LeftSeg1",
+  "evidence": "renamed by a later lane (same v10 address ED9D56)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "FileIO_BytecodeData_Data_11",
+  "v10 addr": "0xED9D58",
+  "verdict": "already renamed",
+  "name now": "PanelButton_RhythmGroupCodes_LeftSeg6",
+  "evidence": "renamed by a later lane (same v10 address ED9D58)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "FileIO_BytecodeData_Data_13",
+  "v10 addr": "0xED9D7C",
+  "verdict": "renamed here (v7/v6/v5)",
+  "name now": "PanelButton_MspBank17FuncCodes",
+  "evidence": "v10/v9 name; same reader PanelButton_MspNumber (cp hl, 17)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "FileIO_BytecodeData_Data_14",
+  "v10 addr": "0xED9D9A",
+  "verdict": "already renamed",
+  "name now": "PanelButton_MspBank18FuncCodes",
+  "evidence": "renamed by a later lane (same v10 address ED9D9A)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "FileIO_BytecodeData_Data_15",
+  "v10 addr": "0xED9DA0",
+  "verdict": "already renamed",
+  "name now": "PanelButton_VariationCodes",
+  "evidence": "renamed by a later lane (same v10 address ED9DA0)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "CmpSetP1_DialGrid_Data",
+  "v10 addr": "0xE1CE16",
+  "verdict": "already renamed",
+  "name now": "AcCmpSetGridBox_RowUpSteps",
+  "evidence": "renamed by a later lane (same v10 address E1CE16)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "CmpSetP1_SendAndApplyFunc_Data",
+  "v10 addr": "0xE1CE28",
+  "verdict": "already renamed",
+  "name now": "AcCmpSetGridBox_RowDownSteps",
+  "evidence": "renamed by a later lane (same v10 address E1CE28)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "S2cMemNoBox_HandleScroll_Data",
+  "v10 addr": "0xE1D41C",
+  "verdict": "already renamed",
+  "name now": "S2cMemNoBox_SectionNameStrPtrs",
+  "evidence": "renamed by a later lane (same v10 address E1D41C)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "S2c_GridCheck_Dispatch_Data",
+  "v10 addr": "0xE1D736",
+  "verdict": "renamed here (v7/v6/v5)",
+  "name now": "S2cGridCheck_PartTrackAddrs",
+  "evidence": "v10/v9 name; same reader in sound_editor_ui.s"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "PsCmpCpFPtnBox_HandleEvtBC_Data",
+  "v10 addr": "0xE1D79C",
+  "verdict": "already renamed",
+  "name now": "PsCmpCpFPtnBox_PatternNameStrPtrs",
+  "evidence": "renamed by a later lane (same v10 address E1D79C)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "AcMemNoBox_HandleEvtBC_Data",
+  "v10 addr": "0xE1DB7C",
+  "verdict": "already renamed",
+  "name now": "AcMemNoBox_SectionNameStrPtrs",
+  "evidence": "renamed by a later lane (same v10 address E1DB7C)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "AcCmpRecBox_HandleEvtBC_Data",
+  "v10 addr": "0xE1DD08",
+  "verdict": "already renamed",
+  "name now": "AcCmpRecBox_TrackStateStrPtrs",
+  "evidence": "renamed by a later lane (same v10 address E1DD08)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "MspNameBnkFunc_Data",
+  "v10 addr": "0xE1DF24",
+  "verdict": "already renamed",
+  "name now": "MspNameBnkFunc_BankNamesInit",
+  "evidence": "renamed by a later lane (same v10 address E1DF24)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "RgpSetBnkBox_HandleEvtBC_Data",
+  "v10 addr": "0xE1E2D0",
+  "verdict": "already renamed",
+  "name now": "PsRgpSetBnkBox_CompileBankStrPtrs",
+  "evidence": "renamed by a later lane (same v10 address E1E2D0)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "MspPlayModeFunc_Data",
+  "v10 addr": "0xE1E318",
+  "verdict": "already renamed",
+  "name now": "MspPlayModeFunc_ModeNamesInit",
+  "evidence": "renamed by a later lane (same v10 address E1E318)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "AcSndArgGridBoxProc_Data",
+  "v10 addr": "0xE1E358",
+  "verdict": "already renamed",
+  "name now": "AcSndArgGridBox_RowPartBitsInit",
+  "evidence": "renamed by a later lane (same v10 address E1E358)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "AttLangCheck_Data",
+  "v10 addr": "0xE1E516",
+  "verdict": "already renamed",
+  "name now": "AttLangCheck_PtrTable",
+  "evidence": "renamed by a later lane (same v10 address E1E516)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "SureLangCheck_Data",
+  "v10 addr": "0xE1E596",
+  "verdict": "already renamed",
+  "name now": "SureLangCheck_PtrTable",
+  "evidence": "renamed by a later lane (same v10 address E1E596)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "SndMemLangCheck_Data",
+  "v10 addr": "0xE1E994",
+  "verdict": "already renamed",
+  "name now": "SndMemLangCheck_PtrTable",
+  "evidence": "renamed by a later lane (same v10 address E1E994)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "SndMem1LangCheck_Data",
+  "v10 addr": "0xE1EA88",
+  "verdict": "already renamed",
+  "name now": "SndMem1LangCheck_PtrTable",
+  "evidence": "renamed by a later lane (same v10 address E1EA88)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "MemfulLangCheck_Data",
+  "v10 addr": "0xE1ED64",
+  "verdict": "already renamed",
+  "name now": "MemfulLangCheck_PtrTable",
+  "evidence": "renamed by a later lane (same v10 address E1ED64)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Memful2LangCheck_Data",
+  "v10 addr": "0xE1EE2C",
+  "verdict": "already renamed",
+  "name now": "Memful2LangCheck_PtrTable",
+  "evidence": "renamed by a later lane (same v10 address E1EE2C)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "StylCnvLangCheck_Data",
+  "v10 addr": "0xE1EF42",
+  "verdict": "already renamed",
+  "name now": "StylCnvLangCheck_PtrTable",
+  "evidence": "renamed by a later lane (same v10 address E1EF42)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "AcCurSongName_HandleFocusGained_Data",
+  "v10 addr": "0xE264F0",
+  "verdict": "already renamed",
+  "name now": "AcCurrentSongBox_Str_SONG_Fmt2d",
+  "evidence": "renamed by a later lane (same v10 address E264F0)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "MidiPart_PageDisplay_Data",
+  "v10 addr": "0xE7ECF2",
+  "verdict": "already renamed",
+  "name now": "MidiSetup_PageIndicatorRect",
+  "evidence": "renamed by a later lane (same v10 address E7ECF2)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "NakaToggle_OnOff_Data",
+  "v10 addr": "0xE80040",
+  "verdict": "proposed (NAKA file)",
+  "name now": "FDTest_Group_OnOff_EmptyText",
+  "evidence": "4 zero bytes: the text of FDTest_Group_OnOff (PsEditSwBox); naka_widget_tables_2.s/.c belong to lane kn5000-c"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "PmemOutLGridCheck_LocalInit_Strings_Tail",
+  "v10 addr": "0xE8014A",
+  "verdict": "already renamed",
+  "name now": "PmemOutLGridCheck_Row0_Str_OFF",
+  "evidence": "renamed by a later lane (same v10 address E8014A)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "TtMdCtlMsg_EventDispatch_Data",
+  "v10 addr": "0xE801D4",
+  "verdict": "already renamed",
+  "name now": "PmemOutLGridCheck_CaseTable_Tail / PmemOutRGridCheck_RamRequestInit",
+  "evidence": "renamed by a later lane (same v10 address E801D4)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "MidiPartGridCheck_OnIndexswUp_Data",
+  "v10 addr": "0xE80640",
+  "verdict": "already renamed",
+  "name now": "MidiPartGridCheck_OctaveUpMap",
+  "evidence": "renamed by a later lane (same v10 address E80640)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "MidiPartGridCheck_OnIndexswDown_Data",
+  "v10 addr": "0xE80650",
+  "verdict": "already renamed",
+  "name now": "MidiPartGridCheck_OctaveDownMap",
+  "evidence": "renamed by a later lane (same v10 address E80650)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "ExitWindow_OK_Data_2",
+  "v10 addr": "0xEB7690",
+  "verdict": "already renamed",
+  "name now": "SupportClass_PropTypeRecords",
+  "evidence": "renamed by a later lane (same v10 address EB7690)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "MasterSetup_EventDispatch_Data",
+  "v10 addr": "0xEBA498",
+  "verdict": "already renamed",
+  "name now": "StyleSong_MasterTable_IdColumn",
+  "evidence": "renamed by a later lane (same v10 address EBA498)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "MasterSetup_DialTurn_Underflow_Data",
+  "v10 addr": "0xEBBBFE",
+  "verdict": "already renamed",
+  "name now": "StyleSong_MasterTable_LastEntry",
+  "evidence": "renamed by a later lane (same v10 address EBBBFE)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "MstStyle1Grid_CellSelect_Data",
+  "v10 addr": "0xECFCA4",
+  "verdict": "already renamed",
+  "name now": "MstStyle_GenreTable",
+  "evidence": "renamed by a later lane (same v10 address ECFCA4)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "VariScreen_HandlePaint_Data",
+  "v10 addr": "0xECFDFE",
+  "verdict": "already renamed",
+  "name now": "VariScreen_PartNames",
+  "evidence": "renamed by a later lane (same v10 address ECFDFE)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_SelectModeTable_2Part_Data",
+  "v10 addr": "0xE0BAAC",
+  "verdict": "already renamed",
+  "name now": "StyleUI_ParamBlockEndPtrTable",
+  "evidence": "renamed by a later lane (same v10 address E0BAAC)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_InitPartDisplay_Data",
+  "v10 addr": "0xE0BAF8",
+  "verdict": "already renamed",
+  "name now": "StyleUI_ControlTrackParamBlockPtrTable",
+  "evidence": "renamed by a later lane (same v10 address E0BAF8)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_SelectModeTable_2Part_Data_2",
+  "v10 addr": "0xE0BB44",
+  "verdict": "already renamed",
+  "name now": "StyleUI_ControlTrackParamBlockEndPtrTable",
+  "evidence": "renamed by a later lane (same v10 address E0BB44)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_TitleBar_GetPartConfig_Data",
+  "v10 addr": "0xE0BC44",
+  "verdict": "already renamed",
+  "name now": "SqStep_RowSegmentLines",
+  "evidence": "renamed by a later lane (same v10 address E0BC44)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Display_RedrawTitleBar_Data",
+  "v10 addr": "0xE0BD70",
+  "verdict": "already renamed",
+  "name now": "SqStep_Row1NumberDash",
+  "evidence": "renamed by a later lane (same v10 address E0BD70)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_TitleBar_Part1Check_Data",
+  "v10 addr": "0xE0BD75",
+  "verdict": "already renamed",
+  "name now": "SqStep_Row2NumberDash",
+  "evidence": "renamed by a later lane (same v10 address E0BD75)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_TitleBar_Part2Check_Data",
+  "v10 addr": "0xE0BD7A",
+  "verdict": "already renamed",
+  "name now": "SqStep_Row3NumberDash",
+  "evidence": "renamed by a later lane (same v10 address E0BD7A)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_InitPartDisplay_Data_2",
+  "v10 addr": "0xE0BD7F",
+  "verdict": "already renamed",
+  "name now": "SqStep_TrackNumberField",
+  "evidence": "renamed by a later lane (same v10 address E0BD7F)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Display_RedrawMainContent_Data",
+  "v10 addr": "0xE0BD89",
+  "verdict": "already renamed",
+  "name now": "SqStep_PopupLineField",
+  "evidence": "renamed by a later lane (same v10 address E0BD89)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Display_RedrawFooter_Data",
+  "v10 addr": "0xE0BDAC",
+  "verdict": "already renamed",
+  "name now": "SqStep_Rows1To2LineFields",
+  "evidence": "renamed by a later lane (same v10 address E0BDAC)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Display_RedrawFooter_Data_2",
+  "v10 addr": "0xE0BDE8",
+  "verdict": "already renamed",
+  "name now": "SqStep_Row3LineFields",
+  "evidence": "renamed by a later lane (same v10 address E0BDE8)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_FooterShowPartValue_Data",
+  "v10 addr": "0xE0BE06",
+  "verdict": "already renamed",
+  "name now": "SqStep_EndRepMarkFields",
+  "evidence": "renamed by a later lane (same v10 address E0BE06)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Display_RedrawButtonLabels_Data",
+  "v10 addr": "0xE0BF6E",
+  "verdict": "already renamed",
+  "name now": "SqStep_Row1ChordCells",
+  "evidence": "renamed by a later lane (same v10 address E0BF6E)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Display_RedrawButtonLabels_Data_2",
+  "v10 addr": "0xE0C0D6",
+  "verdict": "already renamed",
+  "name now": "SqStep_Row2ChordCells",
+  "evidence": "renamed by a later lane (same v10 address E0C0D6)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Display_RedrawButtonLabels_Data_3",
+  "v10 addr": "0xE0C23E",
+  "verdict": "already renamed",
+  "name now": "SqStep_Row3ChordCells",
+  "evidence": "renamed by a later lane (same v10 address E0C23E)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_Selection_RedrawActive_Data",
+  "v10 addr": "0xE0C50E",
+  "verdict": "already renamed",
+  "name now": "SqStep_CursorRowBlitBand",
+  "evidence": "renamed by a later lane (same v10 address E0C50E)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_Selection_RedrawActive_Data_2",
+  "v10 addr": "0xE0C516",
+  "verdict": "already renamed",
+  "name now": "SqStep_CursorRowEndBar",
+  "evidence": "renamed by a later lane (same v10 address E0C516)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_Selection_DrawMode1_Data",
+  "v10 addr": "0xE0C520",
+  "verdict": "already renamed",
+  "name now": "SqStep_RhythmCursor",
+  "evidence": "renamed by a later lane (same v10 address E0C520)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_Selection_RedrawActive_Data_3",
+  "v10 addr": "0xE0C54B",
+  "verdict": "already renamed",
+  "name now": "SqStep_ChordCellCursor",
+  "evidence": "renamed by a later lane (same v10 address E0C54B)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_Selection_DrawMode1_Data_2",
+  "v10 addr": "0xE0C596",
+  "verdict": "already renamed",
+  "name now": "SqStep_StepCursor",
+  "evidence": "renamed by a later lane (same v10 address E0C596)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_SidePanel_StoreAndDraw_Data",
+  "v10 addr": "0xE0C6A9",
+  "verdict": "already renamed",
+  "name now": "SqStep_RowCountBoxRecords",
+  "evidence": "renamed by a later lane (same v10 address E0C6A9)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_SidePanel_StoreAndDraw_Data_2",
+  "v10 addr": "0xE0C6CA",
+  "verdict": "already renamed",
+  "name now": "SqStep_RowCountBoxTables",
+  "evidence": "renamed by a later lane (same v10 address E0C6CA)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_SidePanel_DrawOneSlot_Data",
+  "v10 addr": "0xE0C724",
+  "verdict": "already renamed",
+  "name now": "SqStep_NibbleMarkPatterns",
+  "evidence": "renamed by a later lane (same v10 address E0C724)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Display_RedrawButtonLabels_Data_4",
+  "v10 addr": "0xE0C764",
+  "verdict": "already renamed",
+  "name now": "SqStep_CellFlagFields",
+  "evidence": "renamed by a later lane (same v10 address E0C764)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Display_RedrawButtonLabels_Data_5",
+  "v10 addr": "0xE0C8CC",
+  "verdict": "already renamed",
+  "name now": "SqStep_CellFlagGlyphs",
+  "evidence": "renamed by a later lane (same v10 address E0C8CC)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_SelectModeTable_2Part_XIX_Data",
+  "v10 addr": "0xE0C8CF",
+  "verdict": "already renamed",
+  "name now": "SqStep_BottomBarBoxes",
+  "evidence": "renamed by a later lane (same v10 address E0C8CF)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_CurveUpdate_Finalize_Data",
+  "v10 addr": "0xE0CB1A",
+  "verdict": "already renamed",
+  "name now": "Scoop_CharGlyphMap",
+  "evidence": "renamed by a later lane (same v10 address E0CB1A)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_EnvCalc_Handler1_Data",
+  "v10 addr": "0xE0CC1A",
+  "verdict": "already renamed",
+  "name now": "Scoop_StaticOp20_ClipBox",
+  "evidence": "renamed by a later lane (same v10 address E0CC1A)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_GlideCalc_Handler0_Data",
+  "v10 addr": "0xE0CC2A",
+  "verdict": "already renamed",
+  "name now": "Scoop_StaticOp08_ClipBox",
+  "evidence": "renamed by a later lane (same v10 address E0CC2A)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_EventLoop_12Entry_Data",
+  "v10 addr": "0xE0CC32",
+  "verdict": "already renamed",
+  "name now": "Scoop_StaticOpHandlerTable",
+  "evidence": "renamed by a later lane (same v10 address E0CC32)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_EventLoop_12Entry_Alt_Data_Target5_Data",
+  "v10 addr": "0xE0CCD6",
+  "verdict": "already renamed",
+  "name now": "Scoop_BoundOp05_ClipBox",
+  "evidence": "renamed by a later lane (same v10 address E0CCD6)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "Scoop_EventLoop_36Entry_Data_2",
+  "v10 addr": "0xE0CCF6",
+  "verdict": "already renamed",
+  "name now": "Scoop_BoundOp06_ClipBox",
+  "evidence": "renamed by a later lane (same v10 address E0CCF6)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "LswLeftHold_DefaultStr_Data",
+  "v10 addr": "0xE952A6",
+  "verdict": "already renamed",
+  "name now": "LswLeftHold_Str_ERR",
+  "evidence": "renamed by a later lane (same v10 address E952A6)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "IvSdpart_GetText_Data",
+  "v10 addr": "0xE9554A",
+  "verdict": "already renamed",
+  "name now": "IvSdpart_GetText_Str_SdPT",
+  "evidence": "renamed by a later lane (same v10 address E9554A)"
+ },
+ {
+  "batch": "g5",
+  "record (old name)": "IvMesageProc_Data",
+  "v10 addr": "0xE9D340",
+  "verdict": "already renamed",
+  "name now": "IvMessage_Catalog",
+  "evidence": "renamed by a later lane (same v10 address E9D340)"
+ }
+]

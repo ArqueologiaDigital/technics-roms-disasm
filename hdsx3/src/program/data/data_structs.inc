@@ -8,6 +8,7 @@
 # text, bytes no reader was seen to touch); tools/data_struct_names.py names the others.
 
 # REC_func_9780836B_entry_L10_Records: 8-byte records (func_9780836B_entry_L10_Records, 17 records); fields, and what reads them:
+#   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   f0           u32            func_9780836B_entry_L10 0x97808380 `mov (a0), d0`; func_9780836B_entry_L41 0x978083B1 `mov (a0), d0`
 #   +4   proc         ptr            func_9780836B_entry_L46 0x978083B6 `mov (4, a0), a0`
 .macro REC_func_9780836B_entry_L10_Records f0=0, proc=0
@@ -16,6 +17,7 @@
 .endm
 
 # REC_localeconv_Records: 40-byte records (localeconv_Records, 1 records); fields, and what reads them:
+#   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   text         ptr            no reader seen
 #   +4   p4           ptr            localeconv 0x9780851A `mov (4, a1), a0`
 #   +8   p8           ptr            localeconv 0x9780851A `mov (8, a1), a0`
@@ -52,6 +54,7 @@
 .endm
 
 # REC_localeconv_Records_2: 16-byte records (localeconv_Records_2, 2 records); fields, and what reads them:
+#   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   text         ptr            no reader seen
 #   +4   text_        ptr            localeconv 0x9780851A `mov (4, a1), a0`
 #   +8   p8           ptr            localeconv 0x9780851A `mov (8, a1), a0`
@@ -64,6 +67,7 @@
 .endm
 
 # REC_func_97805FD0_L26_Var: 4-byte records (func_97805FD0_L26_Var, 4 records); fields, and what reads them:
+#   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   f0           u8             func_97805FD0_L26 0x97805FF6 `movbu d0, (func_97805FD0_L26_Var)`; func_978063F3 0x978063F3 `movbu (func_97805FD0_L26_Var), d0` (+3)
 #   +1   f1           u8             func_978060B7_entry_L24 0x978060DE `movbu d0, (func_97805FD0_L26_Var+1)`
 #   +2   x2           u8[2]          no reader seen
@@ -74,12 +78,14 @@
 .endm
 
 # REC_func_97833B38_entry_L34_Records: 160-byte records (func_97833B38_entry_L34_Records, 9 records); fields, and what reads them:
+#   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   text         40 x 4 (u32)   func_97833B38_entry_L34 0x97833B71 `mov (d0, a0), d0`; func_97833B38_entry_L59 0x97833B96 `mov (d0, a0), a0` (+1)
 .macro REC_func_97833B38_entry_L34_Records text:vararg
 	.long	\text
 .endm
 
 # REC_func_97834719_Table: 12-byte records (func_97834719_Table, 12 records); fields, and what reads them:
+#   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   text         ptr            func_97834719_entry_L2a 0x97834745 `mov (d0, a0), a1`; func_97834719_entry_L58 0x97834773 `mov (d0, a0), a0`
 #   +4   x4           u8[4]          no reader seen
 #   +8   proc         ptr            no reader seen

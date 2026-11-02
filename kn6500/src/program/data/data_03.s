@@ -10162,32 +10162,32 @@ V_SeqIntTest_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x302A38, 0x302A3C
 data_4C302A3C:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A81B0 `call RegisterMode_entry, [a2], 4` (+0, arg sp40); InitializeUser15 0x4C0A81B0 `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A81B0 `call RegisterTitle_entry, [d2,a2], 8` (+0, arg sp40) (+1 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterMode (sp40): RegisterMode reads nothing through it at a fixed offset (it stores it, or keeps it for later); RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later); RegisterTitle (sp40): RegisterTitle reads nothing through it at a fixed offset (it stores it, or keeps it for later)
-	.long	data_4C201348	# +0
-data_4C302A40:
-	# 208 bytes of text with no NUL, 16 characters a row [INFERENCE: fixed-width names]; no instruction reads them (tools/data_readers.py)
-	.ascii	"<ACT NO=1><SHOW "
-	.ascii	"OBJ=\"fdemo_a1\"><"
-	.ascii	"/ACT><ACT NO=2><"
-	.ascii	"SHOW OBJ=\"fdemo_"
-	.ascii	"a2\"></ACT><ACT N"
-	.ascii	"O=3><SHOW OBJ=\"f"
-	.ascii	"demo_a3\"></ACT><"
-	.ascii	"ACT NO=4><SHOW O"
-	.ascii	"BJ=\"fdemo_a4\"></"
-	.ascii	"ACT><ACT NO=5><S"
-	.ascii	"HOW OBJ=\"fdemo_a"
-	.ascii	"5\"></ACT><ACT NO"
-	.ascii	"=6><SHOW OBJ=\"fd"
+	# 2 bytes the code takes the address of: InitializeUser15 0x4C0A81B0 `call RegisterMode_entry, [a2], 4` (+0, arg sp40); InitializeUser15 0x4C0A81B0 `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A81B0 `call RegisterTitle_entry, [d2,a2], 8` (+0, arg sp40) (+1 more); byte rows (u8); the callee walk: RegisterMode (sp40): RegisterMode reads nothing through it at a fixed offset (it stores it, or keeps it for later); RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later); RegisterTitle (sp40): RegisterTitle reads nothing through it at a fixed offset (it stores it, or keeps it for later)
+	tab_u8	72, 19	# +0
 
-doubles_4C302B10:	# IEEE-754 doubles (lo word, hi word)
-	.long	0x5F6F6D65, 0x3E223661	# 1850964.26
-	.long	0x43412F3C, 0x413C3E54	# 5.41086573e-09
-	.long	0x4E205443, 0x3E373D4F	# 2.67373158e+11
-	.long	0x4F48533C, 0x424F2057	# 5.57103515e+228
-# census: opaque -- unknown-dump: 1082 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x302B30, 0x302F6A
-
+text_4C302A3E:	# 1323 printable bytes with no NUL; no instruction reads them [INFERENCE: text]
+	.ascii	" L<ACT NO=1><SHOW OBJ=\"fdemo_a1\"></ACT><ACT NO=2><SHOW OBJ=\"fdem"
+	.ascii	"o_a2\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_a3\"></ACT><ACT NO=4><SHOW"
+	.ascii	" OBJ=\"fdemo_a4\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_a5\"></ACT><ACT "
+	.ascii	"NO=6><SHOW OBJ=\"fdemo_a6\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_a7\"><"
+	.ascii	"/ACT><ACT NO=8><SHOW OBJ=\"fdemo_a8\"></ACT><ACT NO=9><SHOW OBJ=\"f"
+	.ascii	"demo_a9\"></ACT><ACT NO=10><SHOW OBJ=\"fdemo_aa\"></ACT><ACT NO=11>"
+	.ascii	"<SHOW OBJ=\"fdemo_ab\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_ac\"></ACT"
+	.ascii	"><ACT NO=13><SHOW OBJ=\"fdemo_ad\"></ACT><ACT NO=14><SHOW OBJ=\"fde"
+	.ascii	"mo_ae\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_af\"></ACT><ACT NO=16><S"
+	.ascii	"HOW OBJ=\"fdemo_ag\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_ah\"></ACT><"
+	.ascii	"ACT NO=18><SHOW OBJ=\"fdemo_ai\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo"
+	.ascii	"_aj\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_ak\"></ACT><ACT NO=21><SHO"
+	.ascii	"W OBJ=\"fdemo_al\"></ACT><ACT NO=22><SHOW OBJ=\"fdemo_am\"></ACT><AC"
+	.ascii	"T NO=23><SHOW OBJ=\"fdemo_an\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_a"
+	.ascii	"o\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_ap\"></ACT><ACT NO=26><SHOW "
+	.ascii	"OBJ=\"fdemo_aq\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_ar\"></ACT><ACT "
+	.ascii	"NO=28><SHOW OBJ=\"fdemo_as\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_at\""
+	.ascii	"></ACT><ACT NO=30><SHOW OBJ=\"fdemo_au\"></ACT><ACT NO=31><SHOW OB"
+	.ascii	"J=\"fdemo_av\"></ACT><ACT NO=32><SHOW OBJ=\"fdemo_aw\"></ACT><ACT NO"
+	.ascii	"=33><SHOW OBJ=\"fdemo_ax\"></ACT><ACT NO=34><SHOW OBJ=\"fdemo_ay\"><"
+	.ascii	"/ACT><ACT NO=35><SHOW OBJ=\"fdemo_az\"></ACT>"
+	.space	1, 0x00
 Str_ACT_NO_1_SHOW_OBJ_fdemo_b1_ACT_ACT_NO_2:	.asciz "<ACT NO=1><SHOW OBJ=\"fdemo_b1\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_b2\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_b3\"></ACT><ACT NO=4><SHOW OBJ=\"fdemo_b4\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_b5\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_b6\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_b7\"></ACT><ACT NO=8><SHOW OBJ=\"fdemo_b8\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_b9\"></ACT><ACT NO=10><SHOW OBJ=\"fdemo_ba\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_bb\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_bc\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_bd\"></ACT><ACT NO=14><SHOW OBJ=\"fdemo_be\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_bf\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_bg\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_bh\"></ACT><ACT NO=18><SHOW OBJ=\"fdemo_bi\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_bj\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_bk\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_bl\"></ACT><ACT NO=22><SHOW OBJ=\"fdemo_bm\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_bn\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_bo\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_bp\"></ACT><ACT NO=26><SHOW OBJ=\"fdemo_bq\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_br\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_bs\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_bt\"></ACT><ACT NO=30><SHOW OBJ=\"fdemo_bu\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_bv\"></ACT><ACT NO=32><SHOW OBJ=\"fdemo_bw\"></ACT><ACT NO=33><SHOW OBJ=\"fdemo_bx\"></ACT><ACT NO=34><SHOW OBJ=\"fdemo_by\"></ACT><ACT NO=35><SHOW OBJ=\"fdemo_bz\"></ACT>"
 Str_ACT_NO_1_SHOW_OBJ_fdemo_c1_ACT_ACT_NO_2:	.asciz "<ACT NO=1><SHOW OBJ=\"fdemo_c1\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_c2\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_c3\"></ACT><ACT NO=4><SHOW OBJ=\"fdemo_c4\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_c5\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_c6\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_c7\"></ACT><ACT NO=8><SHOW OBJ=\"fdemo_c8\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_c9\"></ACT><ACT NO=10><SHOW OBJ=\"fdemo_ca\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_cb\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_cc\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_cd\"></ACT><ACT NO=14><SHOW OBJ=\"fdemo_ce\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_cf\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_cg\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_ch\"></ACT><ACT NO=18><SHOW OBJ=\"fdemo_ci\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_cj\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_ck\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_cl\"></ACT><ACT NO=22><SHOW OBJ=\"fdemo_cm\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_cn\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_co\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_cp\"></ACT><ACT NO=26><SHOW OBJ=\"fdemo_cq\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_cr\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_cs\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_ct\"></ACT><ACT NO=30><SHOW OBJ=\"fdemo_cu\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_cv\"></ACT><ACT NO=32><SHOW OBJ=\"fdemo_cw\"></ACT><ACT NO=33><SHOW OBJ=\"fdemo_cx\"></ACT><ACT NO=34><SHOW OBJ=\"fdemo_cy\"></ACT><ACT NO=35><SHOW OBJ=\"fdemo_cz\"></ACT>"
 Str_ACT_NO_1_SHOW_OBJ_fdemo_d1_ACT_ACT_NO_2:	.asciz "<ACT NO=1><SHOW OBJ=\"fdemo_d1\"></ACT><ACT NO=2><SHOW OBJ=\"fdemo_d2\"></ACT><ACT NO=3><SHOW OBJ=\"fdemo_d3\"></ACT><ACT NO=4><SHOW OBJ=\"fdemo_d4\"></ACT><ACT NO=5><SHOW OBJ=\"fdemo_d5\"></ACT><ACT NO=6><SHOW OBJ=\"fdemo_d6\"></ACT><ACT NO=7><SHOW OBJ=\"fdemo_d7\"></ACT><ACT NO=8><SHOW OBJ=\"fdemo_d8\"></ACT><ACT NO=9><SHOW OBJ=\"fdemo_d9\"></ACT><ACT NO=10><SHOW OBJ=\"fdemo_da\"></ACT><ACT NO=11><SHOW OBJ=\"fdemo_db\"></ACT><ACT NO=12><SHOW OBJ=\"fdemo_dc\"></ACT><ACT NO=13><SHOW OBJ=\"fdemo_dd\"></ACT><ACT NO=14><SHOW OBJ=\"fdemo_de\"></ACT><ACT NO=15><SHOW OBJ=\"fdemo_df\"></ACT><ACT NO=16><SHOW OBJ=\"fdemo_dg\"></ACT><ACT NO=17><SHOW OBJ=\"fdemo_dh\"></ACT><ACT NO=18><SHOW OBJ=\"fdemo_di\"></ACT><ACT NO=19><SHOW OBJ=\"fdemo_dj\"></ACT><ACT NO=20><SHOW OBJ=\"fdemo_dk\"></ACT><ACT NO=21><SHOW OBJ=\"fdemo_dl\"></ACT><ACT NO=22><SHOW OBJ=\"fdemo_dm\"></ACT><ACT NO=23><SHOW OBJ=\"fdemo_dn\"></ACT><ACT NO=24><SHOW OBJ=\"fdemo_do\"></ACT><ACT NO=25><SHOW OBJ=\"fdemo_dp\"></ACT><ACT NO=26><SHOW OBJ=\"fdemo_dq\"></ACT><ACT NO=27><SHOW OBJ=\"fdemo_dr\"></ACT><ACT NO=28><SHOW OBJ=\"fdemo_ds\"></ACT><ACT NO=29><SHOW OBJ=\"fdemo_dt\"></ACT><ACT NO=30><SHOW OBJ=\"fdemo_du\"></ACT><ACT NO=31><SHOW OBJ=\"fdemo_dv\"></ACT><ACT NO=32><SHOW OBJ=\"fdemo_dw\"></ACT><ACT NO=33><SHOW OBJ=\"fdemo_dx\"></ACT><ACT NO=34><SHOW OBJ=\"fdemo_dy\"></ACT><ACT NO=35><SHOW OBJ=\"fdemo_dz\"></ACT>"
@@ -10204,7 +10204,7 @@ data_4C306838:
 
 ptrs_4C306850:
 	.long	data_4C201A4C
-	.long	data_4C302A40
+	.long	text_4C302A3E+2
 	.long	data_4C306838
 	.long	data_4C201A4D
 	.long	Str_ACT_NO_1_SHOW_OBJ_fdemo_b1_ACT_ACT_NO_2
@@ -16310,131 +16310,131 @@ V_SdOct_ResNames:
 .incbin_range "baserom/kn6500_program.rom", 0x30E604, 0x30E608
 
 func_4C0FE5BC_entry_L18_Table:
-	.long	data_4C236048
-	.long	data_4C2360A8
-	.long	data_4C236108
-	.long	data_4C236168
-	.long	data_4C2361C8
-	.long	data_4C236228
-	.long	data_4C236288
-	.long	data_4C2362E8
-	.long	data_4C236348
-	.long	data_4C2363A8
-	.long	data_4C236408
-	.long	data_4C236468
-	.long	data_4C2364C8
-	.long	data_4C236528
-	.long	data_4C236588
-	.long	data_4C2365E8
-	.long	data_4C236648
-	.long	data_4C2366A8
-	.long	data_4C236708
-	.long	data_4C236768
-	.long	data_4C2367C8
-	.long	data_4C236828
+	.long	func_4C0FE647_Voicing
+	.long	func_4C0FE647_Voicing_2
+	.long	func_4C0FE647_Voicing_3
+	.long	func_4C0FE647_Voicing_4
+	.long	func_4C0FE647_Voicing_5
+	.long	func_4C0FE647_Voicing_6
+	.long	func_4C0FE647_Voicing_7
+	.long	func_4C0FE647_Voicing_8
+	.long	func_4C0FE647_Voicing_9
+	.long	func_4C0FE647_Voicing_10
+	.long	func_4C0FE647_Voicing_11
+	.long	func_4C0FE647_Voicing_12
+	.long	func_4C0FE647_Voicing_13
+	.long	func_4C0FE647_Voicing_14
+	.long	func_4C0FE647_Voicing_15
+	.long	func_4C0FE647_Voicing_16
+	.long	func_4C0FE647_Voicing_17
+	.long	func_4C0FE647_Voicing_18
+	.long	func_4C0FE647_Voicing_19
+	.long	func_4C0FE647_Voicing_20
+	.long	func_4C0FE647_Voicing_21
+	.long	func_4C0FE647_Voicing_22
 func_4C0FE5BC_entry_L36_Table:
-	.long	data_4C236048
-	.long	data_4C2360A8
-	.long	data_4C236108
-	.long	data_4C236168
-	.long	data_4C2361C8
-	.long	data_4C236228
-	.long	data_4C236288
-	.long	data_4C2362E8
-	.long	data_4C236348
-	.long	data_4C2363A8
-	.long	data_4C236888
-	.long	data_4C236468
-	.long	data_4C2368E8
-	.long	data_4C236528
-	.long	data_4C236948
-	.long	data_4C2365E8
-	.long	data_4C236648
-	.long	data_4C2369A8
-	.long	data_4C236708
-	.long	data_4C236A08
-	.long	data_4C2367C8
-	.long	data_4C236828
-	.long	data_4C236A68
-	.long	data_4C236AC8
-	.long	data_4C236B28
-	.long	data_4C236B88
-	.long	data_4C236BE8
-	.long	data_4C236C48
-	.long	data_4C236CA8
-	.long	data_4C236D08
-	.long	data_4C236D68
-	.long	data_4C236DC8
-	.long	data_4C236E28
-	.long	data_4C236E88
-	.long	data_4C236EE8
-	.long	data_4C236F48
-	.long	data_4C236FA8
-	.long	data_4C237008
-	.long	data_4C237068
+	.long	func_4C0FE647_Voicing
+	.long	func_4C0FE647_Voicing_2
+	.long	func_4C0FE647_Voicing_3
+	.long	func_4C0FE647_Voicing_4
+	.long	func_4C0FE647_Voicing_5
+	.long	func_4C0FE647_Voicing_6
+	.long	func_4C0FE647_Voicing_7
+	.long	func_4C0FE647_Voicing_8
+	.long	func_4C0FE647_Voicing_9
+	.long	func_4C0FE647_Voicing_10
+	.long	func_4C0FE647_Voicing_23
+	.long	func_4C0FE647_Voicing_12
+	.long	func_4C0FE647_Voicing_24
+	.long	func_4C0FE647_Voicing_14
+	.long	func_4C0FE647_Voicing_25
+	.long	func_4C0FE647_Voicing_16
+	.long	func_4C0FE647_Voicing_17
+	.long	func_4C0FE647_Voicing_26
+	.long	func_4C0FE647_Voicing_19
+	.long	func_4C0FE647_Voicing_27
+	.long	func_4C0FE647_Voicing_21
+	.long	func_4C0FE647_Voicing_22
+	.long	func_4C0FE647_Voicing_28
+	.long	func_4C0FE647_Voicing_29
+	.long	func_4C0FE647_Voicing_30
+	.long	func_4C0FE647_Voicing_31
+	.long	func_4C0FE647_Voicing_32
+	.long	func_4C0FE647_Voicing_33
+	.long	func_4C0FE647_Voicing_34
+	.long	func_4C0FE647_Voicing_35
+	.long	func_4C0FE647_Voicing_36
+	.long	func_4C0FE647_Voicing_37
+	.long	func_4C0FE647_Voicing_38
+	.long	func_4C0FE647_Voicing_39
+	.long	func_4C0FE647_Voicing_40
+	.long	func_4C0FE647_Voicing_41
+	.long	func_4C0FE647_Voicing_42
+	.long	func_4C0FE647_Voicing_43
+	.long	func_4C0FE647_Voicing_44
 func_4C0FE5BC_entry_L18_Table_2:
-	.long	data_4C2370C8
-	.long	data_4C2370E1
-	.long	data_4C2370FA
-	.long	data_4C23711B
-	.long	data_4C237134
-	.long	data_4C23714D
-	.long	data_4C237156
-	.long	data_4C23715F
-	.long	data_4C237180
-	.long	data_4C237189
-	.long	data_4C237192
-	.long	data_4C2371AB
-	.long	data_4C2371CC
-	.long	data_4C2371ED
-	.long	data_4C2371F6
-	.long	data_4C23720F
-	.long	data_4C237220
-	.long	data_4C237241
-	.long	data_4C237262
-	.long	data_4C237283
-	.long	data_4C2372A4
-	.long	data_4C2372AD
+	.long	func_4C0FE647_Inversions
+	.long	func_4C0FE647_Inversions_2
+	.long	func_4C0FE647_Inversions_3
+	.long	func_4C0FE647_Inversions_4
+	.long	func_4C0FE647_Inversions_5
+	.long	func_4C0FE647_Inversions_6
+	.long	func_4C0FE647_Inversions_7
+	.long	func_4C0FE647_Inversions_8
+	.long	func_4C0FE647_Inversions_9
+	.long	func_4C0FE647_Inversions_10
+	.long	func_4C0FE647_Inversions_11
+	.long	func_4C0FE647_Inversions_12
+	.long	func_4C0FE647_Inversions_13
+	.long	func_4C0FE647_Inversions_14
+	.long	func_4C0FE647_Inversions_15
+	.long	func_4C0FE647_Inversions_16
+	.long	func_4C0FE647_Inversions_17
+	.long	func_4C0FE647_Inversions_18
+	.long	func_4C0FE647_Inversions_19
+	.long	func_4C0FE647_Inversions_20
+	.long	func_4C0FE647_Inversions_21
+	.long	func_4C0FE647_Inversions_22
 func_4C0FE5BC_entry_L36_Table_2:
-	.long	data_4C2370C8
-	.long	data_4C2370E1
-	.long	data_4C2370FA
-	.long	data_4C23711B
-	.long	data_4C237134
-	.long	data_4C23714D
-	.long	data_4C237156
-	.long	data_4C23715F
-	.long	data_4C2372B8
-	.long	data_4C237189
-	.long	data_4C2372C9
-	.long	data_4C2371AB
-	.long	data_4C2372D2
-	.long	data_4C2371ED
-	.long	data_4C2372EB
-	.long	data_4C23720F
-	.long	data_4C237220
-	.long	data_4C2372FC
-	.long	data_4C237262
-	.long	data_4C237305
-	.long	data_4C23730E
-	.long	data_4C23731F
-	.long	data_4C237338
-	.long	data_4C237351
-	.long	data_4C23737A
-	.long	data_4C2373A3
-	.long	data_4C2373CC
-	.long	data_4C2373F5
-	.long	data_4C23740E
-	.long	data_4C237427
-	.long	data_4C237430
-	.long	data_4C237439
-	.long	data_4C237442
-	.long	data_4C23744B
-	.long	data_4C237454
-	.long	data_4C23745D
-	.long	data_4C237466
-	.long	data_4C23746F
-	.long	data_4C237478
+	.long	func_4C0FE647_Inversions
+	.long	func_4C0FE647_Inversions_2
+	.long	func_4C0FE647_Inversions_3
+	.long	func_4C0FE647_Inversions_4
+	.long	func_4C0FE647_Inversions_5
+	.long	func_4C0FE647_Inversions_6
+	.long	func_4C0FE647_Inversions_7
+	.long	func_4C0FE647_Inversions_8
+	.long	func_4C0FE647_Inversions_23
+	.long	func_4C0FE647_Inversions_10
+	.long	func_4C0FE647_Inversions_24
+	.long	func_4C0FE647_Inversions_12
+	.long	func_4C0FE647_Inversions_25
+	.long	func_4C0FE647_Inversions_14
+	.long	func_4C0FE647_Inversions_26
+	.long	func_4C0FE647_Inversions_16
+	.long	func_4C0FE647_Inversions_17
+	.long	func_4C0FE647_Inversions_27
+	.long	func_4C0FE647_Inversions_19
+	.long	func_4C0FE647_Inversions_28
+	.long	func_4C0FE647_Inversions_29
+	.long	func_4C0FE647_Inversions_30
+	.long	func_4C0FE647_Inversions_31
+	.long	func_4C0FE647_Inversions_32
+	.long	func_4C0FE647_Inversions_33
+	.long	func_4C0FE647_Inversions_34
+	.long	func_4C0FE647_Inversions_35
+	.long	func_4C0FE647_Inversions_36
+	.long	func_4C0FE647_Inversions_37
+	.long	func_4C0FE647_Inversions_38
+	.long	func_4C0FE647_Inversions_39
+	.long	func_4C0FE647_Inversions_40
+	.long	func_4C0FE647_Inversions_41
+	.long	func_4C0FE647_Inversions_42
+	.long	func_4C0FE647_Inversions_43
+	.long	func_4C0FE647_Inversions_44
+	.long	func_4C0FE647_Inversions_45
+	.long	func_4C0FE647_Inversions_46
+	.long	func_4C0FE647_Inversions_47
 	.long	loc_4C1003A9
 	.long	loc_4C1003AC
 	.long	loc_4C1003AF

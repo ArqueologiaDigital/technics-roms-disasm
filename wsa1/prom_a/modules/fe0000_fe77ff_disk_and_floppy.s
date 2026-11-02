@@ -1536,7 +1536,7 @@ Disk_ShowMountError:
 ;   Disk_RequestSenseDriveStatus (errors -> status 8 / 0x0C), status 0x0E, then Disk_FormatSelectedMedia as 2HD when
 ;   (0x21E8) bit 3 (Disk_Flags bit 6 set) else 2DD; a failed format flips (0x21E8) bit 3 and retries once at the other
 ;   density. Status 0x0F on success, 0x14 + alert on failure. Row-3 key of the 'Are You Sure?' screen 0x51 (its button
-;   table is Dispatch_FF3D39 row 5). Basis: callers + body + screen. (notes/naming-
+;   table is ScreenButtonHandlers_FloppyDiskFormatAreYouSure, row 5 of ScreenButtonHandlers_MidiFileSave). Basis: callers + body + screen. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave9_c9.json)
 DiskFormat_Execute:
 	pushw hl                                             ; FE09BE  2b
@@ -3662,8 +3662,11 @@ DiskSaveFile_Execute_Entry:
 .LFE1C94:
 	calr Ring_InitTenOfFourteen                                            ; FE1C94  1e 92 00
 	ret                                                  ; FE1C97  0e
-; MidiFileSave_Page5_LcdKeyRow3: the LcdKeyRow3 action of MidiFileSave_Page5 -- called only by LcdKeyRow3_MidiFileSave_Page5.
-MidiFileSave_Page5_LcdKeyRow3:
+; DiskFormat_Execute_Entry: the directory entry behind T_DiskFormat_Execute_Entry, run by YES on the FLOPPY DISK FORMAT
+;   confirmation (LcdKeyRow3_FloppyDiskFormatAreYouSure, its only caller): DiskFormat_Execute, then Ring_InitTenOfFourteen
+;   -- the format twin of DiskLoadFile_Execute and DiskSaveFile_Execute_Entry.  Was MidiFileSave_Page5_LcdKeyRow3
+;   (kn5000-wxn: the 'page 5' was screen 0x51, not MIDI FILE SAVE).
+DiskFormat_Execute_Entry:
 	calr DiskFormat_Execute                                          ; FE1C98  1e 23 ed
 	calr Ring_InitTenOfFourteen                                            ; FE1C9B  1e 8b 00
 	ret                                                  ; FE1C9E  0e

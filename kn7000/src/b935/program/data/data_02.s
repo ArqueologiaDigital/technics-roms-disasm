@@ -4481,28 +4481,28 @@ Str_CST_3:	.asciz ".CST"
 	.align	4, 0xFF	# pad after Str_CST_3
 Str_TO_SONG:	.asciz "TO SONG : "
 	.align	4, 0xFF	# pad after Str_TO_SONG
-Str_GM_GM2_8dGM2:	.asciz "GM/GM2~8dGM2 "
-Str_NX_8d_NX:	.asciz "  NX ~8d NX  "
-Str_GM_GM2_8d_NX:	.asciz "GM/GM2 ~8d NX"
-Str_PREV_TEC_8dNX:	.asciz "PREV.TEC~8dNX"
+Str_GM_GM2_8dGM2_2:	.asciz "GM/GM2~8dGM2 "
+Str_NX_8d_NX_2:	.asciz "  NX ~8d NX  "
+Str_GM_GM2_8d_NX_2:	.asciz "GM/GM2 ~8d NX"
+Str_PREV_TEC_8dNX_2:	.asciz "PREV.TEC~8dNX"
 
 SdcSmfLoadAsFunc_Table:
-	.long	Str_GM_GM2_8dGM2
-	.long	Str_NX_8d_NX
-	.long	Str_GM_GM2_8d_NX
-	.long	Str_PREV_TEC_8dNX
+	.long	Str_GM_GM2_8dGM2_2
+	.long	Str_NX_8d_NX_2
+	.long	Str_GM_GM2_8d_NX_2
+	.long	Str_PREV_TEC_8dNX_2
 
 Str_FROM_SONG:	.asciz "FROM SONG:"
 	.align	4, 0xFF	# pad after Str_FROM_SONG
-Str_NX_2:	.asciz " NX "
-Str_GM2_2:	.asciz "GM2"
+Str_NX_3:	.asciz " NX "
+Str_GM2_3:	.asciz "GM2"
 	.space	1, 0x00
 Str_GM:	.asciz " GM "
 	.align	4, 0xFF	# pad after Str_GM
 
 SdcSmfSaveAsFunc_Table:
-	.long	Str_NX_2
-	.long	Str_GM2_2
+	.long	Str_NX_3
+	.long	Str_GM2_3
 	.long	Str_GM
 
 func_4852F720_Var_14:	# s8, a constant; read / written by func_4852F720 0x4852F720: `movbu (a1), d0`
@@ -4571,18 +4571,10 @@ Str_KB_free:	.asciz "KB free ("
 	.align	4, 0xFF	# pad after Str_KB_free
 Str_used:	.asciz "% used)"
 
-func_4855E86A_Table:	# 2 x u32, 0..4294967295; read by func_4855E86A 0x4855E86A: `mov   (a1), d0`; func_4855E999 0x4855E999: `mov   (func_4855E86A_Table), d0` ...
-	tab_u32	4294967295, 0
-
-func_4852F720_Var_18:	# s8, a constant; read / written by func_4852F720 0x4852F720: `movbu (a1), d0`; func_4852F795 0x4852F795: `movbu (a1), d0`
-	.byte	0
-
-func_4852F720_Table_18:	# 67 x s8, 0..0; read by func_4852F720 0x4852F720: `movbu (a1), d0`; func_4852F795 0x4852F795: `movbu (a1), d0`
-	tab_s8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
-	tab_s8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
-	tab_s8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
-	tab_s8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
-	tab_s8	0, 0, 0	# [64]
+func_4855E86A_Table:	# 19 x u32, 0..4294967295; read by func_4855E86A 0x4855E86A: `mov   (a1), d0`; func_4855E999 0x4855E999: `mov   (func_4855E86A_Table), d0` ...; 19 records: the index is bounded by func_4855E86A 0x4855E86A: `mov -0x13, d1` / setlb / `mov (a1), d0` / `inc4 a1` / `inc d1` / lne (19 passes)
+	tab_u32	4294967295, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [8]
+	tab_u32	0, 0, 0	# [16]
 data_4868DE34:
 	.space	1, 0x00
 func_4855E86A_Table_2:	# 30 x u8, 0..0; read by func_4855E86A 0x4855E86A: `movbu (a1), d0`; func_4855FA6F 0x4855FA6F: `movbu (a1), d0`
@@ -6420,11 +6412,11 @@ Str_CHORUS_8:	.asciz "CHORUS"
 	.align	4, 0xFF	# pad after Str_CHORUS_8
 Str_2d_2:	.asciz "%2d:"
 	.align	4, 0xFF	# pad after Str_2d_2
-Str_OFF_34:	.asciz "OFF"
+Str_OFF_54:	.asciz "OFF"
 Str_ON_95:	.asciz "ON "
 
 AcEffOnOffBoxProc_Table:
-	.long	Str_OFF_34
+	.long	Str_OFF_54
 	.long	Str_ON_95
 
 Str_NAME_7:	.asciz "NAME: "
@@ -7211,33 +7203,33 @@ ptrs_486A1128:
 	.long	Str_Press_a_key_to_select_the_split_point_2
 	.long	Str_Press_a_key_to_select_the_split_point
 
-Str_C_6:	.asciz "C "
-Str_D_a0_2:	.asciz "D~a0"
-Str_D_3:	.asciz "D "
-Str_E_a0_2:	.asciz "E~a0"
-Str_E_2:	.asciz "E "
-Str_F_4:	.asciz "F "
-Str_F_9e_2:	.asciz "F~9e"
-Str_G_2:	.asciz "G "
-Str_A_a0_2:	.asciz "A~a0"
-Str_A_4:	.asciz "A "
-Str_B_a0_2:	.asciz "B~a0"
-Str_B_4:	.asciz "B "
-	.align	4, 0xFF	# pad after Str_B_4
+Str_C_21:	.asciz "C "
+Str_D_a0_4:	.asciz "D~a0"
+Str_D_8:	.asciz "D "
+Str_E_a0_4:	.asciz "E~a0"
+Str_E_7:	.asciz "E "
+Str_F_12:	.asciz "F "
+Str_F_9e_4:	.asciz "F~9e"
+Str_G_8:	.asciz "G "
+Str_A_a0_4:	.asciz "A~a0"
+Str_A_24:	.asciz "A "
+Str_B_a0_4:	.asciz "B~a0"
+Str_B_12:	.asciz "B "
+	.align	4, 0xFF	# pad after Str_B_12
 
 SplitPoint_Table_2:
-	.long	Str_C_6
-	.long	Str_D_a0_2
-	.long	Str_D_3
-	.long	Str_E_a0_2
-	.long	Str_E_2
-	.long	Str_F_4
-	.long	Str_F_9e_2
-	.long	Str_G_2
-	.long	Str_A_a0_2
-	.long	Str_A_4
-	.long	Str_B_a0_2
-	.long	Str_B_4
+	.long	Str_C_21
+	.long	Str_D_a0_4
+	.long	Str_D_8
+	.long	Str_E_a0_4
+	.long	Str_E_7
+	.long	Str_F_12
+	.long	Str_F_9e_4
+	.long	Str_G_8
+	.long	Str_A_a0_4
+	.long	Str_A_24
+	.long	Str_B_a0_4
+	.long	Str_B_12
 SplitPoint_Table_3:
 	.long	Bitmap_SplitPoint
 	.long	Bitmap_SplitPoint_2
@@ -7258,284 +7250,879 @@ SplitPoint_Table:	# 2 x u16, 156..185; read by SplitPoint 0x4856D960: `movhu  (a
 
 Str_s_2d:	.asciz "%s%2d"
 	.align	4, 0xFF	# pad after Str_s_2d
-data_486A11E0:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A11E0, 0x2A1240
-data_486A1240:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1240, 0x2A12A0
-data_486A12A0:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A12A0, 0x2A1300
-data_486A1300:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1300, 0x2A1360
-data_486A1360:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1360, 0x2A13C0
-data_486A13C0:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A13C0, 0x2A1420
-data_486A1420:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1420, 0x2A1480
-data_486A1480:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1480, 0x2A14E0
-data_486A14E0:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A14E0, 0x2A1540
-data_486A1540:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1540, 0x2A15A0
-data_486A15A0:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A15A0, 0x2A1600
-data_486A1600:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1600, 0x2A1660
-data_486A1660:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1660, 0x2A16C0
-data_486A16C0:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A16C0, 0x2A1720
-data_486A1720:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1720, 0x2A1780
-data_486A1780:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1780, 0x2A17E0
-data_486A17E0:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A17E0, 0x2A1840
-data_486A1840:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1840, 0x2A18A0
-data_486A18A0:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A18A0, 0x2A1900
-data_486A1900:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1900, 0x2A1960
-data_486A1960:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1960, 0x2A19C0
-data_486A19C0:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A19C0, 0x2A1A20
-data_486A1A20:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1A20, 0x2A1A80
-data_486A1A80:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1A80, 0x2A1AE0
-data_486A1AE0:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1AE0, 0x2A1B40
-data_486A1B40:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1B40, 0x2A1BA0
-data_486A1BA0:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1BA0, 0x2A1C00
-data_486A1C00:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1C00, 0x2A1C60
-data_486A1C60:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1C60, 0x2A1CC0
-data_486A1CC0:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1CC0, 0x2A1D20
-data_486A1D20:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1D20, 0x2A1D80
-data_486A1D80:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1D80, 0x2A1DE0
-data_486A1DE0:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1DE0, 0x2A1E40
-data_486A1E40:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1E40, 0x2A1EA0
-data_486A1EA0:
-# census: opaque -- unknown-dump: 96 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1EA0, 0x2A1F00
-data_486A1F00:
-# census: opaque -- unknown-dump: 96 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1F00, 0x2A1F60
-data_486A1F60:
-# census: opaque -- unknown-dump: 96 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1F60, 0x2A1FC0
-data_486A1FC0:
-# census: opaque -- unknown-dump: 96 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A1FC0, 0x2A2020
-data_486A2020:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2020, 0x2A2080
-data_486A2080:
-# census: opaque -- unknown-dump: 96 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2080, 0x2A20E0
-data_486A20E0:
-# census: opaque -- unknown-dump: 96 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A20E0, 0x2A2140
-data_486A2140:
-# census: opaque -- unknown-dump: 96 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2140, 0x2A21A0
-data_486A21A0:
-# census: opaque -- unknown-dump: 96 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A21A0, 0x2A2200
-data_486A2200:
-# census: opaque -- unknown-dump: 96 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2200, 0x2A2260
-data_486A2260:
-# census: opaque -- unknown-dump: 25 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2260, 0x2A2279
-data_486A2279:
-# census: opaque -- unknown-dump: 25 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2279, 0x2A2292
-data_486A2292:
-# census: opaque -- unknown-dump: 33 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2292, 0x2A22B3
-data_486A22B3:
-# census: opaque -- unknown-dump: 25 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A22B3, 0x2A22CC
-data_486A22CC:
-# census: opaque -- unknown-dump: 25 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A22CC, 0x2A22E5
-data_486A22E5:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A22E5, 0x2A22EE
-data_486A22EE:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A22EE, 0x2A22F7
-data_486A22F7:
-# census: opaque -- unknown-dump: 33 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A22F7, 0x2A2318
-data_486A2318:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2318, 0x2A2321
-data_486A2321:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2321, 0x2A232A
-data_486A232A:
-# census: opaque -- unknown-dump: 25 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A232A, 0x2A2343
-data_486A2343:
-# census: opaque -- unknown-dump: 33 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2343, 0x2A2364
-data_486A2364:
-# census: opaque -- unknown-dump: 33 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2364, 0x2A2385
-data_486A2385:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2385, 0x2A238E
-data_486A238E:
-# census: opaque -- unknown-dump: 25 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A238E, 0x2A23A7
-data_486A23A7:
-# census: opaque -- unknown-dump: 17 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A23A7, 0x2A23B8
-data_486A23B8:
-# census: opaque -- unknown-dump: 33 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A23B8, 0x2A23D9
-data_486A23D9:
-	# 33 bytes read by func_4856E546 0x4856E546 `mov (4, a0), d0` (+7, u32); func_4856E546 0x4856E546 `mov (8, a0), d0` (+11, u32); func_4856E546 0x4856E546 `mov (8, a0), d1` (+11, u32) (+1 more); the read fields at their widths (s16, u32, u8), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
-	tab_u8	4, 12, 48	# +0
-	tab_u32	0xFF3B3634, 0x3414FFFF, 0xFF3C3B36	# +3
-	tab_s16	-1	# +15
-	tab_u8	28, 54	# +17
-	tab_u32	0xFF403C3B, 0x3B24FFFF, 0xFF42403C	# +19
-	tab_s16	-1	# +31
-data_486A23FA:
-# census: opaque -- unknown-dump: 33 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A23FA, 0x2A241B
-data_486A241B:
-# census: opaque -- unknown-dump: 33 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A241B, 0x2A243C
-data_486A243C:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A243C, 0x2A2445
-data_486A2445:
-# census: opaque -- unknown-dump: 11 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2445, 0x2A2450
-data_486A2450:
-# census: opaque -- unknown-dump: 17 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2450, 0x2A2461
-data_486A2461:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2461, 0x2A246A
-data_486A246A:
-# census: opaque -- unknown-dump: 25 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A246A, 0x2A2483
-data_486A2483:
-# census: opaque -- unknown-dump: 17 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2483, 0x2A2494
-data_486A2494:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2494, 0x2A249D
-data_486A249D:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A249D, 0x2A24A6
-data_486A24A6:
-# census: opaque -- unknown-dump: 17 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A24A6, 0x2A24B7
-data_486A24B7:
-# census: opaque -- unknown-dump: 25 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A24B7, 0x2A24D0
-data_486A24D0:
-# census: opaque -- unknown-dump: 25 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A24D0, 0x2A24E9
-data_486A24E9:
-# census: opaque -- unknown-dump: 41 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A24E9, 0x2A2512
-data_486A2512:
-# census: opaque -- unknown-dump: 41 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2512, 0x2A253B
-data_486A253B:
-# census: opaque -- unknown-dump: 41 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A253B, 0x2A2564
-data_486A2564:
-# census: opaque -- unknown-dump: 41 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2564, 0x2A258D
-data_486A258D:
-# census: opaque -- unknown-dump: 25 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A258D, 0x2A25A6
-data_486A25A6:
-# census: opaque -- unknown-dump: 25 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A25A6, 0x2A25BF
-data_486A25BF:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A25BF, 0x2A25C8
-data_486A25C8:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A25C8, 0x2A25D1
-data_486A25D1:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A25D1, 0x2A25DA
-data_486A25DA:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A25DA, 0x2A25E3
-data_486A25E3:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A25E3, 0x2A25EC
-data_486A25EC:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A25EC, 0x2A25F5
-data_486A25F5:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A25F5, 0x2A25FE
-data_486A25FE:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A25FE, 0x2A2607
-data_486A2607:
-# census: opaque -- unknown-dump: 9 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2607, 0x2A2610
-data_486A2610:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2A2610, 0x2A261C
+
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing:
+	.byte	3, 55, 60, 64, 0xff, 0xff, 0xff, 0xff	# key 0
+	.byte	3, 56, 61, 65, 0xff, 0xff, 0xff, 0xff	# key 1
+	.byte	3, 57, 62, 66, 0xff, 0xff, 0xff, 0xff	# key 2
+	.byte	3, 55, 58, 63, 0xff, 0xff, 0xff, 0xff	# key 3
+	.byte	3, 56, 59, 64, 0xff, 0xff, 0xff, 0xff	# key 4
+	.byte	3, 57, 60, 65, 0xff, 0xff, 0xff, 0xff	# key 5
+	.byte	3, 58, 61, 66, 0xff, 0xff, 0xff, 0xff	# key 6
+	.byte	3, 55, 59, 62, 0xff, 0xff, 0xff, 0xff	# key 7
+	.byte	3, 56, 60, 63, 0xff, 0xff, 0xff, 0xff	# key 8
+	.byte	3, 57, 61, 64, 0xff, 0xff, 0xff, 0xff	# key 9
+	.byte	3, 58, 62, 65, 0xff, 0xff, 0xff, 0xff	# key 10
+	.byte	3, 59, 63, 66, 0xff, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_2:
+	.byte	3, 55, 60, 63, 0xff, 0xff, 0xff, 0xff	# key 0
+	.byte	3, 56, 61, 64, 0xff, 0xff, 0xff, 0xff	# key 1
+	.byte	3, 57, 62, 65, 0xff, 0xff, 0xff, 0xff	# key 2
+	.byte	3, 54, 58, 63, 0xff, 0xff, 0xff, 0xff	# key 3
+	.byte	3, 55, 59, 64, 0xff, 0xff, 0xff, 0xff	# key 4
+	.byte	3, 56, 60, 65, 0xff, 0xff, 0xff, 0xff	# key 5
+	.byte	3, 57, 61, 66, 0xff, 0xff, 0xff, 0xff	# key 6
+	.byte	3, 55, 58, 62, 0xff, 0xff, 0xff, 0xff	# key 7
+	.byte	3, 56, 59, 63, 0xff, 0xff, 0xff, 0xff	# key 8
+	.byte	3, 57, 60, 64, 0xff, 0xff, 0xff, 0xff	# key 9
+	.byte	3, 58, 61, 65, 0xff, 0xff, 0xff, 0xff	# key 10
+	.byte	3, 59, 62, 66, 0xff, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_3:
+	.byte	3, 58, 60, 64, 0xff, 0xff, 0xff, 0xff	# key 0
+	.byte	3, 59, 61, 65, 0xff, 0xff, 0xff, 0xff	# key 1
+	.byte	3, 60, 62, 66, 0xff, 0xff, 0xff, 0xff	# key 2
+	.byte	3, 55, 61, 63, 0xff, 0xff, 0xff, 0xff	# key 3
+	.byte	3, 56, 62, 64, 0xff, 0xff, 0xff, 0xff	# key 4
+	.byte	3, 57, 63, 65, 0xff, 0xff, 0xff, 0xff	# key 5
+	.byte	3, 58, 64, 66, 0xff, 0xff, 0xff, 0xff	# key 6
+	.byte	3, 55, 59, 65, 0xff, 0xff, 0xff, 0xff	# key 7
+	.byte	3, 56, 60, 66, 0xff, 0xff, 0xff, 0xff	# key 8
+	.byte	3, 57, 61, 67, 0xff, 0xff, 0xff, 0xff	# key 9
+	.byte	3, 56, 58, 62, 0xff, 0xff, 0xff, 0xff	# key 10
+	.byte	3, 57, 59, 63, 0xff, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_4:
+	.byte	3, 58, 60, 63, 0xff, 0xff, 0xff, 0xff	# key 0
+	.byte	3, 59, 61, 64, 0xff, 0xff, 0xff, 0xff	# key 1
+	.byte	3, 60, 62, 65, 0xff, 0xff, 0xff, 0xff	# key 2
+	.byte	3, 54, 61, 63, 0xff, 0xff, 0xff, 0xff	# key 3
+	.byte	3, 55, 62, 64, 0xff, 0xff, 0xff, 0xff	# key 4
+	.byte	3, 56, 63, 65, 0xff, 0xff, 0xff, 0xff	# key 5
+	.byte	3, 57, 64, 66, 0xff, 0xff, 0xff, 0xff	# key 6
+	.byte	3, 55, 58, 65, 0xff, 0xff, 0xff, 0xff	# key 7
+	.byte	3, 56, 59, 66, 0xff, 0xff, 0xff, 0xff	# key 8
+	.byte	3, 57, 60, 67, 0xff, 0xff, 0xff, 0xff	# key 9
+	.byte	3, 56, 58, 61, 0xff, 0xff, 0xff, 0xff	# key 10
+	.byte	3, 57, 59, 62, 0xff, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_5:
+	.byte	4, 54, 58, 60, 63, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 55, 59, 61, 64, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 56, 60, 62, 65, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 57, 61, 63, 66, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 52, 55, 58, 62, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 53, 56, 59, 63, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 54, 57, 60, 64, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 58, 61, 65, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 59, 62, 66, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 57, 60, 63, 67, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 56, 58, 61, 64, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 57, 59, 62, 65, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_6:
+	.byte	4, 60, 64, 67, 69, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 61, 65, 68, 70, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 62, 66, 69, 71, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 51, 55, 58, 60, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 52, 56, 59, 61, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 53, 57, 60, 62, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 54, 58, 61, 63, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 59, 62, 64, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 60, 63, 65, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 57, 61, 64, 66, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 58, 62, 65, 67, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 59, 63, 66, 68, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_7:
+	.byte	4, 60, 63, 67, 69, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 61, 64, 68, 70, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 62, 65, 69, 71, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 51, 54, 58, 60, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 52, 55, 59, 61, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 53, 56, 60, 62, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 54, 57, 61, 63, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 58, 62, 64, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 59, 63, 65, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 57, 60, 64, 66, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 58, 61, 65, 67, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 59, 62, 66, 68, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_8:
+	.byte	4, 55, 59, 60, 64, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 56, 60, 61, 65, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 57, 61, 62, 66, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 55, 58, 62, 63, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 56, 59, 63, 64, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 53, 57, 60, 64, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 54, 58, 61, 65, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 59, 62, 66, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 60, 63, 67, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 56, 57, 61, 64, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 57, 58, 62, 65, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 58, 59, 63, 66, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_9:
+	.byte	3, 60, 65, 67, 0xff, 0xff, 0xff, 0xff	# key 0
+	.byte	3, 61, 66, 68, 0xff, 0xff, 0xff, 0xff	# key 1
+	.byte	3, 62, 67, 69, 0xff, 0xff, 0xff, 0xff	# key 2
+	.byte	3, 63, 68, 70, 0xff, 0xff, 0xff, 0xff	# key 3
+	.byte	3, 64, 69, 71, 0xff, 0xff, 0xff, 0xff	# key 4
+	.byte	3, 53, 58, 60, 0xff, 0xff, 0xff, 0xff	# key 5
+	.byte	3, 54, 59, 61, 0xff, 0xff, 0xff, 0xff	# key 6
+	.byte	3, 55, 60, 62, 0xff, 0xff, 0xff, 0xff	# key 7
+	.byte	3, 56, 61, 63, 0xff, 0xff, 0xff, 0xff	# key 8
+	.byte	3, 57, 62, 64, 0xff, 0xff, 0xff, 0xff	# key 9
+	.byte	3, 58, 63, 65, 0xff, 0xff, 0xff, 0xff	# key 10
+	.byte	3, 59, 64, 66, 0xff, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_10:
+	.byte	3, 60, 64, 68, 0xff, 0xff, 0xff, 0xff	# key 0
+	.byte	3, 61, 65, 69, 0xff, 0xff, 0xff, 0xff	# key 1
+	.byte	3, 62, 66, 70, 0xff, 0xff, 0xff, 0xff	# key 2
+	.byte	3, 63, 67, 71, 0xff, 0xff, 0xff, 0xff	# key 3
+	.byte	3, 52, 56, 60, 0xff, 0xff, 0xff, 0xff	# key 4
+	.byte	3, 53, 57, 61, 0xff, 0xff, 0xff, 0xff	# key 5
+	.byte	3, 54, 58, 62, 0xff, 0xff, 0xff, 0xff	# key 6
+	.byte	3, 55, 59, 63, 0xff, 0xff, 0xff, 0xff	# key 7
+	.byte	3, 56, 60, 64, 0xff, 0xff, 0xff, 0xff	# key 8
+	.byte	3, 57, 61, 65, 0xff, 0xff, 0xff, 0xff	# key 9
+	.byte	3, 58, 62, 66, 0xff, 0xff, 0xff, 0xff	# key 10
+	.byte	3, 59, 63, 67, 0xff, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_11:
+	.byte	3, 54, 60, 63, 0xff, 0xff, 0xff, 0xff	# key 0
+	.byte	3, 55, 61, 64, 0xff, 0xff, 0xff, 0xff	# key 1
+	.byte	3, 56, 62, 65, 0xff, 0xff, 0xff, 0xff	# key 2
+	.byte	3, 54, 57, 63, 0xff, 0xff, 0xff, 0xff	# key 3
+	.byte	3, 55, 58, 64, 0xff, 0xff, 0xff, 0xff	# key 4
+	.byte	3, 56, 59, 65, 0xff, 0xff, 0xff, 0xff	# key 5
+	.byte	3, 57, 60, 66, 0xff, 0xff, 0xff, 0xff	# key 6
+	.byte	3, 55, 58, 61, 0xff, 0xff, 0xff, 0xff	# key 7
+	.byte	3, 56, 59, 62, 0xff, 0xff, 0xff, 0xff	# key 8
+	.byte	3, 57, 60, 63, 0xff, 0xff, 0xff, 0xff	# key 9
+	.byte	3, 58, 61, 64, 0xff, 0xff, 0xff, 0xff	# key 10
+	.byte	3, 59, 62, 65, 0xff, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_12:
+	.byte	4, 55, 58, 60, 65, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 56, 59, 61, 66, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 57, 60, 62, 67, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 56, 58, 61, 63, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 57, 59, 62, 64, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 58, 60, 63, 65, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 59, 61, 64, 66, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 60, 62, 65, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 61, 63, 66, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 57, 62, 64, 67, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 56, 58, 63, 65, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 57, 59, 64, 66, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_13:
+	.byte	4, 56, 58, 60, 64, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 57, 59, 61, 65, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 58, 60, 62, 66, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 55, 59, 61, 63, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 56, 60, 62, 64, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 57, 61, 63, 65, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 58, 62, 64, 66, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 59, 63, 65, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 54, 56, 60, 64, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 55, 57, 61, 65, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 56, 58, 62, 66, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 55, 57, 59, 63, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_14:
+	.byte	4, 60, 63, 66, 69, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 61, 64, 67, 70, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 62, 65, 68, 71, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 51, 54, 57, 60, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 52, 55, 58, 61, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 53, 56, 59, 62, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 54, 57, 60, 63, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 58, 61, 64, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 59, 62, 65, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 57, 60, 63, 66, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 58, 61, 64, 67, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 59, 62, 65, 68, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_15:
+	.byte	3, 54, 60, 64, 0xff, 0xff, 0xff, 0xff	# key 0
+	.byte	3, 55, 61, 65, 0xff, 0xff, 0xff, 0xff	# key 1
+	.byte	3, 56, 62, 66, 0xff, 0xff, 0xff, 0xff	# key 2
+	.byte	3, 55, 57, 63, 0xff, 0xff, 0xff, 0xff	# key 3
+	.byte	3, 56, 58, 64, 0xff, 0xff, 0xff, 0xff	# key 4
+	.byte	3, 57, 59, 65, 0xff, 0xff, 0xff, 0xff	# key 5
+	.byte	3, 58, 60, 66, 0xff, 0xff, 0xff, 0xff	# key 6
+	.byte	3, 55, 59, 61, 0xff, 0xff, 0xff, 0xff	# key 7
+	.byte	3, 56, 60, 62, 0xff, 0xff, 0xff, 0xff	# key 8
+	.byte	3, 57, 61, 63, 0xff, 0xff, 0xff, 0xff	# key 9
+	.byte	3, 58, 62, 64, 0xff, 0xff, 0xff, 0xff	# key 10
+	.byte	3, 59, 63, 65, 0xff, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_16:
+	.byte	4, 58, 60, 64, 66, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 59, 61, 65, 67, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 50, 54, 56, 60, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 51, 55, 57, 61, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 52, 56, 58, 62, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 53, 57, 59, 63, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 54, 58, 60, 64, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 59, 61, 65, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 60, 62, 66, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 57, 61, 63, 67, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 56, 58, 62, 64, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 57, 59, 63, 65, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_17:
+	.byte	4, 55, 59, 60, 63, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 56, 60, 61, 64, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 57, 61, 62, 65, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 54, 58, 62, 63, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 55, 59, 63, 64, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 53, 56, 60, 64, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 54, 57, 61, 65, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 58, 62, 66, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 59, 63, 67, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 56, 57, 60, 64, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 57, 58, 61, 65, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 58, 59, 62, 66, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_18:
+	.byte	4, 54, 59, 60, 64, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 55, 60, 61, 65, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 56, 61, 62, 66, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 55, 57, 62, 63, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 56, 58, 63, 64, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 53, 57, 59, 64, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 54, 58, 60, 65, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 59, 61, 66, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 60, 62, 67, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 56, 57, 61, 63, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 57, 58, 62, 64, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 58, 59, 63, 65, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_19:
+	.byte	4, 56, 59, 60, 64, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 57, 60, 61, 65, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 58, 61, 62, 66, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 55, 59, 62, 63, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 56, 60, 63, 64, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 53, 57, 61, 64, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 54, 58, 62, 65, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 59, 63, 66, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 60, 64, 67, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 56, 57, 61, 65, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 57, 58, 62, 66, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 55, 58, 59, 63, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_20:
+	.byte	4, 54, 59, 60, 63, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 55, 60, 61, 64, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 56, 61, 62, 65, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 54, 57, 62, 63, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 55, 58, 63, 64, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 53, 56, 59, 64, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 54, 57, 60, 65, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 58, 61, 66, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 59, 62, 67, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 56, 57, 60, 63, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 57, 58, 61, 64, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 53, 58, 59, 62, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_21:
+	.byte	4, 60, 62, 64, 67, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 61, 63, 65, 68, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 62, 64, 66, 69, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 63, 65, 67, 70, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 64, 66, 68, 71, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 53, 55, 57, 60, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 54, 56, 58, 61, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 57, 59, 62, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 58, 60, 63, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 57, 59, 61, 64, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 58, 60, 62, 65, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 59, 61, 63, 66, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table, a1` / `mov (d0, a1), a1` (func_4856DB99_Table)
+func_4856DC24_Voicing_22:
+	.byte	4, 60, 62, 63, 67, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 61, 63, 64, 68, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 62, 64, 65, 69, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 63, 65, 66, 70, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 64, 66, 67, 71, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 53, 55, 56, 60, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 54, 56, 57, 61, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 57, 58, 62, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 58, 59, 63, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 57, 59, 60, 64, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 58, 60, 61, 65, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 59, 61, 62, 66, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_23:
+	.byte	3, 60, 63, 66, 0xff, 0xff, 0xff, 0xff	# key 0
+	.byte	3, 61, 64, 67, 0xff, 0xff, 0xff, 0xff	# key 1
+	.byte	3, 62, 65, 68, 0xff, 0xff, 0xff, 0xff	# key 2
+	.byte	3, 63, 66, 69, 0xff, 0xff, 0xff, 0xff	# key 3
+	.byte	3, 64, 67, 70, 0xff, 0xff, 0xff, 0xff	# key 4
+	.byte	3, 65, 68, 71, 0xff, 0xff, 0xff, 0xff	# key 5
+	.byte	3, 54, 57, 60, 0xff, 0xff, 0xff, 0xff	# key 6
+	.byte	3, 55, 58, 61, 0xff, 0xff, 0xff, 0xff	# key 7
+	.byte	3, 56, 59, 62, 0xff, 0xff, 0xff, 0xff	# key 8
+	.byte	3, 57, 60, 63, 0xff, 0xff, 0xff, 0xff	# key 9
+	.byte	3, 58, 61, 64, 0xff, 0xff, 0xff, 0xff	# key 10
+	.byte	3, 59, 62, 65, 0xff, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_24:
+	.byte	4, 52, 56, 58, 60, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 53, 57, 59, 61, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 54, 58, 60, 62, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 55, 59, 61, 63, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 56, 60, 62, 64, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 57, 61, 63, 65, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 58, 62, 64, 66, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 59, 63, 65, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 54, 56, 60, 64, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 55, 57, 61, 65, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 56, 58, 62, 66, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 57, 59, 63, 67, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_25:
+	.byte	3, 52, 54, 60, 0xff, 0xff, 0xff, 0xff	# key 0
+	.byte	3, 53, 55, 61, 0xff, 0xff, 0xff, 0xff	# key 1
+	.byte	3, 54, 56, 62, 0xff, 0xff, 0xff, 0xff	# key 2
+	.byte	3, 55, 57, 63, 0xff, 0xff, 0xff, 0xff	# key 3
+	.byte	3, 56, 58, 64, 0xff, 0xff, 0xff, 0xff	# key 4
+	.byte	3, 57, 59, 65, 0xff, 0xff, 0xff, 0xff	# key 5
+	.byte	3, 58, 60, 66, 0xff, 0xff, 0xff, 0xff	# key 6
+	.byte	3, 55, 59, 61, 0xff, 0xff, 0xff, 0xff	# key 7
+	.byte	3, 56, 60, 62, 0xff, 0xff, 0xff, 0xff	# key 8
+	.byte	3, 57, 61, 63, 0xff, 0xff, 0xff, 0xff	# key 9
+	.byte	3, 58, 62, 64, 0xff, 0xff, 0xff, 0xff	# key 10
+	.byte	3, 59, 63, 65, 0xff, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_26:
+	.byte	4, 52, 54, 59, 60, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 53, 55, 60, 61, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 54, 56, 61, 62, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 55, 57, 62, 63, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 56, 58, 63, 64, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 57, 59, 64, 65, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 58, 60, 65, 66, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 59, 61, 66, 67, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 60, 62, 67, 68, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 61, 63, 68, 69, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 62, 64, 69, 70, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 63, 65, 70, 71, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_27:
+	.byte	4, 60, 63, 66, 71, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 49, 52, 55, 60, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 50, 53, 56, 61, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 51, 54, 57, 62, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 52, 55, 58, 63, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 53, 56, 59, 64, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 54, 57, 60, 65, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 58, 61, 66, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 59, 62, 67, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 57, 60, 63, 68, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 58, 61, 64, 69, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 59, 62, 65, 70, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_28:
+	.byte	3, 52, 57, 62, 0xff, 0xff, 0xff, 0xff	# key 0
+	.byte	3, 53, 58, 63, 0xff, 0xff, 0xff, 0xff	# key 1
+	.byte	3, 54, 59, 64, 0xff, 0xff, 0xff, 0xff	# key 2
+	.byte	3, 55, 60, 65, 0xff, 0xff, 0xff, 0xff	# key 3
+	.byte	3, 56, 61, 66, 0xff, 0xff, 0xff, 0xff	# key 4
+	.byte	3, 57, 62, 67, 0xff, 0xff, 0xff, 0xff	# key 5
+	.byte	3, 58, 63, 68, 0xff, 0xff, 0xff, 0xff	# key 6
+	.byte	3, 59, 64, 69, 0xff, 0xff, 0xff, 0xff	# key 7
+	.byte	3, 60, 65, 70, 0xff, 0xff, 0xff, 0xff	# key 8
+	.byte	3, 61, 66, 71, 0xff, 0xff, 0xff, 0xff	# key 9
+	.byte	3, 50, 55, 60, 0xff, 0xff, 0xff, 0xff	# key 10
+	.byte	3, 51, 56, 61, 0xff, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_29:
+	.byte	4, 60, 62, 63, 69, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 61, 63, 64, 70, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 62, 64, 65, 71, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 51, 53, 54, 60, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 52, 54, 55, 61, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 53, 55, 56, 62, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 54, 56, 57, 63, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 57, 58, 64, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 58, 59, 65, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 57, 59, 60, 66, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 58, 60, 61, 67, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 59, 61, 62, 68, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_30:
+	.byte	3, 52, 58, 62, 0xff, 0xff, 0xff, 0xff	# key 0
+	.byte	3, 53, 59, 63, 0xff, 0xff, 0xff, 0xff	# key 1
+	.byte	3, 54, 60, 64, 0xff, 0xff, 0xff, 0xff	# key 2
+	.byte	3, 55, 61, 65, 0xff, 0xff, 0xff, 0xff	# key 3
+	.byte	3, 56, 62, 66, 0xff, 0xff, 0xff, 0xff	# key 4
+	.byte	3, 57, 63, 67, 0xff, 0xff, 0xff, 0xff	# key 5
+	.byte	3, 58, 64, 68, 0xff, 0xff, 0xff, 0xff	# key 6
+	.byte	3, 59, 65, 69, 0xff, 0xff, 0xff, 0xff	# key 7
+	.byte	3, 60, 66, 70, 0xff, 0xff, 0xff, 0xff	# key 8
+	.byte	3, 61, 67, 71, 0xff, 0xff, 0xff, 0xff	# key 9
+	.byte	3, 50, 56, 60, 0xff, 0xff, 0xff, 0xff	# key 10
+	.byte	3, 51, 57, 61, 0xff, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_31:
+	.byte	4, 58, 60, 61, 64, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 59, 61, 62, 65, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 60, 62, 63, 66, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 61, 63, 64, 67, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 62, 64, 65, 68, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 63, 65, 66, 69, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 64, 66, 67, 70, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 65, 67, 68, 71, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 54, 56, 57, 60, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 55, 57, 58, 61, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 56, 58, 59, 62, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 57, 59, 60, 63, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_32:
+	.byte	4, 58, 60, 63, 64, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 59, 61, 64, 65, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 60, 62, 65, 66, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 61, 63, 66, 67, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 62, 64, 67, 68, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 63, 65, 68, 69, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 64, 66, 69, 70, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 65, 67, 70, 71, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 54, 56, 59, 60, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 55, 57, 60, 61, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 56, 58, 61, 62, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 57, 59, 62, 63, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_33:
+	.byte	4, 60, 62, 63, 70, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 61, 63, 64, 71, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 50, 52, 53, 60, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 51, 53, 54, 61, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 52, 54, 55, 62, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 53, 55, 56, 63, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 54, 56, 57, 64, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 57, 58, 65, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 58, 59, 66, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 57, 59, 60, 67, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 58, 60, 61, 68, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 59, 61, 62, 69, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_34:
+	.byte	4, 60, 62, 64, 71, 0xff, 0xff, 0xff	# key 0
+	.byte	4, 49, 51, 53, 60, 0xff, 0xff, 0xff	# key 1
+	.byte	4, 50, 52, 54, 61, 0xff, 0xff, 0xff	# key 2
+	.byte	4, 51, 53, 55, 62, 0xff, 0xff, 0xff	# key 3
+	.byte	4, 52, 54, 56, 63, 0xff, 0xff, 0xff	# key 4
+	.byte	4, 53, 55, 57, 64, 0xff, 0xff, 0xff	# key 5
+	.byte	4, 54, 56, 58, 65, 0xff, 0xff, 0xff	# key 6
+	.byte	4, 55, 57, 59, 66, 0xff, 0xff, 0xff	# key 7
+	.byte	4, 56, 58, 60, 67, 0xff, 0xff, 0xff	# key 8
+	.byte	4, 57, 59, 61, 68, 0xff, 0xff, 0xff	# key 9
+	.byte	4, 58, 60, 62, 69, 0xff, 0xff, 0xff	# key 10
+	.byte	4, 59, 61, 63, 70, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_35:
+	.byte	5, 60, 62, 64, 68, 70, 0xff, 0xff	# key 0
+	.byte	5, 61, 63, 65, 69, 71, 0xff, 0xff	# key 1
+	.byte	5, 50, 52, 54, 58, 60, 0xff, 0xff	# key 2
+	.byte	5, 51, 53, 55, 59, 61, 0xff, 0xff	# key 3
+	.byte	5, 52, 54, 56, 60, 62, 0xff, 0xff	# key 4
+	.byte	5, 53, 55, 57, 61, 63, 0xff, 0xff	# key 5
+	.byte	5, 54, 56, 58, 62, 64, 0xff, 0xff	# key 6
+	.byte	5, 55, 57, 59, 63, 65, 0xff, 0xff	# key 7
+	.byte	5, 56, 58, 60, 64, 66, 0xff, 0xff	# key 8
+	.byte	5, 57, 59, 61, 65, 67, 0xff, 0xff	# key 9
+	.byte	5, 58, 60, 62, 66, 68, 0xff, 0xff	# key 10
+	.byte	5, 59, 61, 63, 67, 69, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_36:
+	.byte	5, 60, 64, 66, 67, 70, 0xff, 0xff	# key 0
+	.byte	5, 61, 65, 67, 68, 71, 0xff, 0xff	# key 1
+	.byte	5, 50, 54, 56, 57, 60, 0xff, 0xff	# key 2
+	.byte	5, 51, 55, 57, 58, 61, 0xff, 0xff	# key 3
+	.byte	5, 52, 56, 58, 59, 62, 0xff, 0xff	# key 4
+	.byte	5, 53, 57, 59, 60, 63, 0xff, 0xff	# key 5
+	.byte	5, 54, 58, 60, 61, 64, 0xff, 0xff	# key 6
+	.byte	5, 55, 59, 61, 62, 65, 0xff, 0xff	# key 7
+	.byte	5, 56, 60, 62, 63, 66, 0xff, 0xff	# key 8
+	.byte	5, 57, 61, 63, 64, 67, 0xff, 0xff	# key 9
+	.byte	5, 58, 62, 64, 65, 68, 0xff, 0xff	# key 10
+	.byte	5, 59, 63, 65, 66, 69, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_37:
+	.byte	5, 55, 58, 60, 63, 65, 0xff, 0xff	# key 0
+	.byte	5, 56, 59, 61, 64, 66, 0xff, 0xff	# key 1
+	.byte	5, 57, 60, 62, 65, 67, 0xff, 0xff	# key 2
+	.byte	5, 58, 61, 63, 66, 68, 0xff, 0xff	# key 3
+	.byte	5, 59, 62, 64, 67, 69, 0xff, 0xff	# key 4
+	.byte	5, 60, 63, 65, 68, 70, 0xff, 0xff	# key 5
+	.byte	5, 61, 64, 66, 69, 71, 0xff, 0xff	# key 6
+	.byte	5, 50, 53, 55, 58, 60, 0xff, 0xff	# key 7
+	.byte	5, 51, 54, 56, 59, 61, 0xff, 0xff	# key 8
+	.byte	5, 52, 55, 57, 60, 62, 0xff, 0xff	# key 9
+	.byte	5, 53, 56, 58, 61, 63, 0xff, 0xff	# key 10
+	.byte	5, 54, 57, 59, 62, 64, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_38:
+	.byte	5, 60, 64, 66, 68, 70, 0xff, 0xff	# key 0
+	.byte	5, 61, 65, 67, 69, 71, 0xff, 0xff	# key 1
+	.byte	5, 50, 54, 56, 58, 60, 0xff, 0xff	# key 2
+	.byte	5, 51, 55, 57, 59, 61, 0xff, 0xff	# key 3
+	.byte	5, 52, 56, 58, 60, 62, 0xff, 0xff	# key 4
+	.byte	5, 53, 57, 59, 61, 63, 0xff, 0xff	# key 5
+	.byte	5, 54, 58, 60, 62, 64, 0xff, 0xff	# key 6
+	.byte	5, 55, 59, 61, 63, 65, 0xff, 0xff	# key 7
+	.byte	5, 56, 60, 62, 64, 66, 0xff, 0xff	# key 8
+	.byte	5, 57, 61, 63, 65, 67, 0xff, 0xff	# key 9
+	.byte	5, 58, 62, 64, 66, 68, 0xff, 0xff	# key 10
+	.byte	5, 59, 63, 65, 67, 69, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_39:
+	.byte	3, 58, 64, 69, 0xff, 0xff, 0xff, 0xff	# key 0
+	.byte	3, 59, 65, 70, 0xff, 0xff, 0xff, 0xff	# key 1
+	.byte	3, 60, 66, 71, 0xff, 0xff, 0xff, 0xff	# key 2
+	.byte	3, 49, 55, 60, 0xff, 0xff, 0xff, 0xff	# key 3
+	.byte	3, 50, 56, 61, 0xff, 0xff, 0xff, 0xff	# key 4
+	.byte	3, 51, 57, 62, 0xff, 0xff, 0xff, 0xff	# key 5
+	.byte	3, 52, 58, 63, 0xff, 0xff, 0xff, 0xff	# key 6
+	.byte	3, 53, 59, 64, 0xff, 0xff, 0xff, 0xff	# key 7
+	.byte	3, 54, 60, 65, 0xff, 0xff, 0xff, 0xff	# key 8
+	.byte	3, 55, 61, 66, 0xff, 0xff, 0xff, 0xff	# key 9
+	.byte	3, 56, 62, 67, 0xff, 0xff, 0xff, 0xff	# key 10
+	.byte	3, 57, 63, 68, 0xff, 0xff, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_40:
+	.byte	5, 57, 58, 60, 61, 64, 0xff, 0xff	# key 0
+	.byte	5, 58, 59, 61, 62, 65, 0xff, 0xff	# key 1
+	.byte	5, 59, 60, 62, 63, 66, 0xff, 0xff	# key 2
+	.byte	5, 60, 61, 63, 64, 67, 0xff, 0xff	# key 3
+	.byte	5, 61, 62, 64, 65, 68, 0xff, 0xff	# key 4
+	.byte	5, 62, 63, 65, 66, 69, 0xff, 0xff	# key 5
+	.byte	5, 63, 64, 66, 67, 70, 0xff, 0xff	# key 6
+	.byte	5, 64, 65, 67, 68, 71, 0xff, 0xff	# key 7
+	.byte	5, 53, 54, 56, 57, 60, 0xff, 0xff	# key 8
+	.byte	5, 54, 55, 57, 58, 61, 0xff, 0xff	# key 9
+	.byte	5, 55, 56, 58, 59, 62, 0xff, 0xff	# key 10
+	.byte	5, 56, 57, 59, 60, 63, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_41:
+	.byte	5, 57, 58, 60, 63, 64, 0xff, 0xff	# key 0
+	.byte	5, 58, 59, 61, 64, 65, 0xff, 0xff	# key 1
+	.byte	5, 59, 60, 62, 65, 66, 0xff, 0xff	# key 2
+	.byte	5, 60, 61, 63, 66, 67, 0xff, 0xff	# key 3
+	.byte	5, 61, 62, 64, 67, 68, 0xff, 0xff	# key 4
+	.byte	5, 62, 63, 65, 68, 69, 0xff, 0xff	# key 5
+	.byte	5, 63, 64, 66, 69, 70, 0xff, 0xff	# key 6
+	.byte	5, 64, 65, 67, 70, 71, 0xff, 0xff	# key 7
+	.byte	5, 53, 54, 56, 59, 60, 0xff, 0xff	# key 8
+	.byte	5, 54, 55, 57, 60, 61, 0xff, 0xff	# key 9
+	.byte	5, 55, 56, 58, 61, 62, 0xff, 0xff	# key 10
+	.byte	5, 56, 57, 59, 62, 63, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_42:
+	.byte	5, 55, 56, 58, 62, 64, 0xff, 0xff	# key 0
+	.byte	5, 56, 57, 59, 63, 65, 0xff, 0xff	# key 1
+	.byte	5, 57, 58, 60, 64, 66, 0xff, 0xff	# key 2
+	.byte	5, 58, 59, 61, 65, 67, 0xff, 0xff	# key 3
+	.byte	5, 59, 60, 62, 66, 68, 0xff, 0xff	# key 4
+	.byte	5, 60, 61, 63, 67, 69, 0xff, 0xff	# key 5
+	.byte	5, 61, 62, 64, 68, 70, 0xff, 0xff	# key 6
+	.byte	5, 62, 63, 65, 69, 71, 0xff, 0xff	# key 7
+	.byte	5, 51, 52, 54, 58, 60, 0xff, 0xff	# key 8
+	.byte	5, 52, 53, 55, 59, 61, 0xff, 0xff	# key 9
+	.byte	5, 53, 54, 56, 60, 62, 0xff, 0xff	# key 10
+	.byte	5, 54, 55, 57, 61, 63, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_43:
+	.byte	5, 56, 58, 60, 61, 64, 0xff, 0xff	# key 0
+	.byte	5, 57, 59, 61, 62, 65, 0xff, 0xff	# key 1
+	.byte	5, 58, 60, 62, 63, 66, 0xff, 0xff	# key 2
+	.byte	5, 59, 61, 63, 64, 67, 0xff, 0xff	# key 3
+	.byte	5, 60, 62, 64, 65, 68, 0xff, 0xff	# key 4
+	.byte	5, 61, 63, 65, 66, 69, 0xff, 0xff	# key 5
+	.byte	5, 62, 64, 66, 67, 70, 0xff, 0xff	# key 6
+	.byte	5, 63, 65, 67, 68, 71, 0xff, 0xff	# key 7
+	.byte	5, 52, 54, 56, 57, 60, 0xff, 0xff	# key 8
+	.byte	5, 53, 55, 57, 58, 61, 0xff, 0xff	# key 9
+	.byte	5, 54, 56, 58, 59, 62, 0xff, 0xff	# key 10
+	.byte	5, 55, 57, 59, 60, 63, 0xff, 0xff	# key 11
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_2, a1` / `mov (d0, a1), a1` (func_4856DB99_Table_2)
+func_4856DC24_Voicing_44:
+	.byte	5, 56, 58, 60, 63, 64, 0xff, 0xff	# key 0
+	.byte	5, 57, 59, 61, 64, 65, 0xff, 0xff	# key 1
+	.byte	5, 58, 60, 62, 65, 66, 0xff, 0xff	# key 2
+	.byte	5, 59, 61, 63, 66, 67, 0xff, 0xff	# key 3
+	.byte	5, 60, 62, 64, 67, 68, 0xff, 0xff	# key 4
+	.byte	5, 61, 63, 65, 68, 69, 0xff, 0xff	# key 5
+	.byte	5, 62, 64, 66, 69, 70, 0xff, 0xff	# key 6
+	.byte	5, 63, 65, 67, 70, 71, 0xff, 0xff	# key 7
+	.byte	5, 52, 54, 56, 59, 60, 0xff, 0xff	# key 8
+	.byte	5, 53, 55, 57, 60, 61, 0xff, 0xff	# key 9
+	.byte	5, 54, 56, 58, 61, 62, 0xff, 0xff	# key 10
+	.byte	5, 55, 57, 59, 62, 63, 0xff, 0xff	# key 11
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions:
+	.byte	3	# count
+	.byte	0x0b, 48, 52, 55, 0xff, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x13, 52, 55, 60, 0xff, 0xff, 0xff, 0xff	# inversion 2
+	.byte	0x1b, 55, 60, 64, 0xff, 0xff, 0xff, 0xff	# inversion 3
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_2:
+	.byte	3	# count
+	.byte	0x0b, 48, 51, 55, 0xff, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x13, 51, 55, 60, 0xff, 0xff, 0xff, 0xff	# inversion 2
+	.byte	0x1b, 55, 60, 63, 0xff, 0xff, 0xff, 0xff	# inversion 3
+# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_3:
+	.byte	4	# count
+	.byte	0x0c, 48, 52, 55, 58, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x14, 52, 55, 58, 60, 0xff, 0xff, 0xff	# inversion 2
+	.byte	0x1c, 55, 58, 60, 64, 0xff, 0xff, 0xff	# inversion 3
+	.byte	0x24, 58, 60, 64, 67, 0xff, 0xff, 0xff	# inversion 4
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_4:
+	.byte	3	# count
+	.byte	0x0c, 48, 51, 55, 58, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x1c, 55, 58, 60, 63, 0xff, 0xff, 0xff	# inversion 3
+	.byte	0x24, 58, 60, 63, 67, 0xff, 0xff, 0xff	# inversion 4
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_5:
+	.byte	3	# count
+	.byte	0x0c, 48, 51, 54, 58, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x1c, 54, 58, 60, 63, 0xff, 0xff, 0xff	# inversion 3
+	.byte	0x24, 58, 60, 63, 66, 0xff, 0xff, 0xff	# inversion 4
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_6:
+	.byte	0	# count
+	.byte	0x04, 60, 64, 67, 69, 0xff, 0xff, 0xff	# inversion 0
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_7:
+	.byte	0	# count
+	.byte	0x04, 60, 63, 67, 69, 0xff, 0xff, 0xff	# inversion 0
+# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_8:
+	.byte	4	# count
+	.byte	0x0c, 48, 52, 55, 59, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x14, 52, 55, 59, 60, 0xff, 0xff, 0xff	# inversion 2
+	.byte	0x1c, 55, 59, 60, 64, 0xff, 0xff, 0xff	# inversion 3
+	.byte	0x24, 59, 60, 64, 67, 0xff, 0xff, 0xff	# inversion 4
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_9:
+	.byte	0	# count
+	.byte	0x03, 60, 65, 67, 0xff, 0xff, 0xff, 0xff	# inversion 0
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_10:
+	.byte	0	# count
+	.byte	0x03, 60, 64, 68, 0xff, 0xff, 0xff, 0xff	# inversion 0
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_11:
+	.byte	3	# count
+	.byte	0x0b, 48, 51, 54, 0xff, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x13, 51, 54, 60, 0xff, 0xff, 0xff, 0xff	# inversion 2
+	.byte	0x1b, 54, 60, 63, 0xff, 0xff, 0xff, 0xff	# inversion 3
+# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_12:
+	.byte	4	# count
+	.byte	0x0c, 48, 53, 55, 58, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x14, 53, 55, 58, 60, 0xff, 0xff, 0xff	# inversion 2
+	.byte	0x1c, 55, 58, 60, 65, 0xff, 0xff, 0xff	# inversion 3
+	.byte	0x24, 58, 60, 65, 67, 0xff, 0xff, 0xff	# inversion 4
+# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_13:
+	.byte	4	# count
+	.byte	0x0c, 48, 52, 56, 58, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x14, 52, 56, 58, 60, 0xff, 0xff, 0xff	# inversion 2
+	.byte	0x1c, 56, 58, 60, 64, 0xff, 0xff, 0xff	# inversion 3
+	.byte	0x24, 58, 60, 64, 68, 0xff, 0xff, 0xff	# inversion 4
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_14:
+	.byte	0	# count
+	.byte	0x04, 60, 63, 66, 69, 0xff, 0xff, 0xff	# inversion 0
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_15:
+	.byte	3	# count
+	.byte	0x0b, 48, 52, 54, 0xff, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x13, 52, 54, 60, 0xff, 0xff, 0xff, 0xff	# inversion 2
+	.byte	0x1b, 54, 60, 64, 0xff, 0xff, 0xff, 0xff	# inversion 3
+# 2 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_16:
+	.byte	2	# count
+	.byte	0x0c, 48, 52, 54, 58, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x24, 58, 60, 64, 66, 0xff, 0xff, 0xff	# inversion 4
+# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_17:
+	.byte	4	# count
+	.byte	0x0c, 48, 51, 55, 59, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x14, 51, 55, 59, 60, 0xff, 0xff, 0xff	# inversion 2
+	.byte	0x1c, 55, 59, 60, 63, 0xff, 0xff, 0xff	# inversion 3
+	.byte	0x24, 59, 60, 63, 67, 0xff, 0xff, 0xff	# inversion 4
+# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_18:
+	.byte	4	# count
+	.byte	0x0c, 48, 52, 54, 59, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x14, 52, 54, 59, 60, 0xff, 0xff, 0xff	# inversion 2
+	.byte	0x1c, 54, 59, 60, 64, 0xff, 0xff, 0xff	# inversion 3
+	.byte	0x24, 59, 60, 64, 66, 0xff, 0xff, 0xff	# inversion 4
+# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_19:
+	.byte	4	# count
+	.byte	0x0c, 48, 52, 56, 59, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x14, 52, 56, 59, 60, 0xff, 0xff, 0xff	# inversion 2
+	.byte	0x1c, 56, 59, 60, 64, 0xff, 0xff, 0xff	# inversion 3
+	.byte	0x24, 59, 60, 64, 68, 0xff, 0xff, 0xff	# inversion 4
+# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_20:
+	.byte	4	# count
+	.byte	0x0c, 48, 51, 54, 59, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x14, 51, 54, 59, 60, 0xff, 0xff, 0xff	# inversion 2
+	.byte	0x1c, 54, 59, 60, 63, 0xff, 0xff, 0xff	# inversion 3
+	.byte	0x24, 59, 60, 63, 66, 0xff, 0xff, 0xff	# inversion 4
+# 1 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_21:
+	.byte	1	# count
+	.byte	0x0c, 48, 52, 55, 62, 0xff, 0xff, 0xff	# inversion 1
+# 1 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_3, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_3)
+func_4856DC24_Inversions_22:
+	.byte	1	# count
+	.byte	0x0c, 48, 51, 55, 62, 0xff, 0xff, 0xff	# inversion 1
+	.align	4, 0xFF	# pad after func_4856DC24_Inversions_22
+# 2 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_23:
+	.byte	2	# count
+	.byte	0x0b, 48, 53, 55, 0xff, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x13, 53, 55, 60, 0xff, 0xff, 0xff, 0xff	# inversion 2
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_24:
+	.byte	0	# count
+	.byte	0x03, 60, 63, 66, 0xff, 0xff, 0xff, 0xff	# inversion 0
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_25:
+	.byte	3	# count
+	.byte	0x0c, 48, 52, 56, 58, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x14, 52, 56, 58, 60, 0xff, 0xff, 0xff	# inversion 2
+	.byte	0x24, 58, 60, 64, 68, 0xff, 0xff, 0xff	# inversion 4
+# 2 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_26:
+	.byte	2	# count
+	.byte	0x0b, 48, 52, 54, 0xff, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x13, 52, 54, 60, 0xff, 0xff, 0xff, 0xff	# inversion 2
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_27:
+	.byte	0	# count
+	.byte	0x04, 52, 54, 59, 60, 0xff, 0xff, 0xff	# inversion 0
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_28:
+	.byte	0	# count
+	.byte	0x04, 60, 63, 66, 71, 0xff, 0xff, 0xff	# inversion 0
+# 2 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_29:
+	.byte	2	# count
+	.byte	0x0c, 48, 52, 55, 62, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x1c, 55, 60, 62, 64, 0xff, 0xff, 0xff	# inversion 3
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_30:
+	.byte	3	# count
+	.byte	0x0c, 48, 51, 55, 62, 0xff, 0xff, 0xff	# inversion 1
+	.byte	0x14, 51, 55, 60, 62, 0xff, 0xff, 0xff	# inversion 2
+	.byte	0x1c, 55, 60, 62, 63, 0xff, 0xff, 0xff	# inversion 3
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_31:
+	.byte	3	# count
+	.byte	0x0d, 48, 52, 55, 57, 62, 0xff, 0xff	# inversion 1
+	.byte	0x25, 57, 60, 62, 64, 67, 0xff, 0xff	# inversion 4
+	.byte	0x2d, 62, 64, 67, 69, 72, 0xff, 0xff	# inversion 5
+# 5 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_32:
+	.byte	5	# count
+	.byte	0x0d, 48, 51, 55, 57, 62, 0xff, 0xff	# inversion 1
+	.byte	0x15, 51, 55, 57, 60, 62, 0xff, 0xff	# inversion 2
+	.byte	0x1d, 55, 57, 60, 62, 63, 0xff, 0xff	# inversion 3
+	.byte	0x25, 57, 60, 62, 63, 67, 0xff, 0xff	# inversion 4
+	.byte	0x2d, 62, 63, 67, 69, 72, 0xff, 0xff	# inversion 5
+# 5 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_33:
+	.byte	5	# count
+	.byte	0x0d, 48, 52, 55, 58, 62, 0xff, 0xff	# inversion 1
+	.byte	0x15, 52, 55, 58, 60, 62, 0xff, 0xff	# inversion 2
+	.byte	0x1d, 55, 58, 60, 62, 64, 0xff, 0xff	# inversion 3
+	.byte	0x25, 58, 60, 62, 64, 67, 0xff, 0xff	# inversion 4
+	.byte	0x2d, 62, 64, 67, 70, 72, 0xff, 0xff	# inversion 5
+# 5 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_34:
+	.byte	5	# count
+	.byte	0x0d, 48, 52, 55, 58, 61, 0xff, 0xff	# inversion 1
+	.byte	0x15, 52, 55, 58, 60, 61, 0xff, 0xff	# inversion 2
+	.byte	0x1d, 55, 58, 60, 61, 64, 0xff, 0xff	# inversion 3
+	.byte	0x25, 58, 60, 61, 64, 67, 0xff, 0xff	# inversion 4
+	.byte	0x2d, 61, 64, 67, 70, 72, 0xff, 0xff	# inversion 5
+# 5 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_35:
+	.byte	5	# count
+	.byte	0x0d, 48, 52, 55, 58, 63, 0xff, 0xff	# inversion 1
+	.byte	0x15, 52, 55, 58, 60, 63, 0xff, 0xff	# inversion 2
+	.byte	0x1d, 55, 58, 60, 63, 64, 0xff, 0xff	# inversion 3
+	.byte	0x25, 58, 60, 63, 64, 67, 0xff, 0xff	# inversion 4
+	.byte	0x2d, 63, 64, 67, 70, 72, 0xff, 0xff	# inversion 5
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_36:
+	.byte	3	# count
+	.byte	0x0d, 48, 51, 55, 58, 62, 0xff, 0xff	# inversion 1
+	.byte	0x1d, 55, 58, 60, 62, 63, 0xff, 0xff	# inversion 3
+	.byte	0x25, 58, 60, 62, 63, 67, 0xff, 0xff	# inversion 4
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_37:
+	.byte	3	# count
+	.byte	0x0d, 48, 52, 55, 59, 62, 0xff, 0xff	# inversion 1
+	.byte	0x1d, 55, 59, 60, 62, 64, 0xff, 0xff	# inversion 3
+	.byte	0x25, 59, 60, 62, 64, 67, 0xff, 0xff	# inversion 4
+# 1 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_38:
+	.byte	1	# count
+	.byte	0x0d, 48, 52, 56, 58, 62, 0xff, 0xff	# inversion 1
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_39:
+	.byte	0	# count
+	.byte	0x05, 60, 64, 66, 67, 70, 0xff, 0xff	# inversion 0
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_40:
+	.byte	0	# count
+	.byte	0x05, 55, 58, 60, 63, 65, 0xff, 0xff	# inversion 0
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_41:
+	.byte	0	# count
+	.byte	0x05, 60, 64, 66, 68, 70, 0xff, 0xff	# inversion 0
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_42:
+	.byte	0	# count
+	.byte	0x03, 58, 64, 69, 0xff, 0xff, 0xff, 0xff	# inversion 0
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_43:
+	.byte	0	# count
+	.byte	0x05, 57, 58, 60, 61, 64, 0xff, 0xff	# inversion 0
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_44:
+	.byte	0	# count
+	.byte	0x05, 57, 58, 60, 63, 64, 0xff, 0xff	# inversion 0
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_45:
+	.byte	0	# count
+	.byte	0x05, 55, 56, 58, 62, 64, 0xff, 0xff	# inversion 0
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_46:
+	.byte	0	# count
+	.byte	0x05, 56, 58, 60, 61, 64, 0xff, 0xff	# inversion 0
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_4856DC24 0x4856DC24 `mov func_4856DB99_Table_4, a2` / `mov (d0, a2), d0` (func_4856DB99_Table_4)
+func_4856DC24_Inversions_47:
+	.byte	0	# count
+	.byte	0x05, 56, 58, 60, 63, 64, 0xff, 0xff	# inversion 0
+	.align	4, 0xFF	# pad after func_4856DC24_Inversions_47
 
 func_4856E546_Records:	# 53 x REC_func_4856E546_Records (16 bytes each); read by func_4856E546 0x4856E546 `mov (4, a0), d0`; func_4856E546 0x4856E546 `mov (8, a0), d0`; func_4856E546 0x4856E546 `mov (8, a0), d1` (+5)
 	REC_func_4856E546_Records	x0="0\x00\x00\x00", f4=425, DrawBox_d0=160, f12=255, x14="\x00\x00"	# [0]
@@ -7636,33 +8223,33 @@ ChordFinderTYPE_Table:
 TtChordFinder_Table:	# 16 x u8, 0..0; read by TtChordFinder 0x4856DE0D: `movbu  (a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
-Str_C_5:	.asciz "C "
-Str_D_a0:	.asciz "D~a0"
-Str_D_2:	.asciz "D "
-Str_E_a0:	.asciz "E~a0"
-Str_E:	.asciz "E "
-Str_F_3:	.asciz "F "
-Str_F_9e:	.asciz "F~9e"
-Str_G:	.asciz "G "
-Str_A_a0:	.asciz "A~a0"
-Str_A_3:	.asciz "A "
-Str_B_a0:	.asciz "B~a0"
-Str_B_3:	.asciz "B "
-	.align	4, 0xFF	# pad after Str_B_3
+Str_C_22:	.asciz "C "
+Str_D_a0_5:	.asciz "D~a0"
+Str_D_9:	.asciz "D "
+Str_E_a0_5:	.asciz "E~a0"
+Str_E_8:	.asciz "E "
+Str_F_13:	.asciz "F "
+Str_F_9e_5:	.asciz "F~9e"
+Str_G_9:	.asciz "G "
+Str_A_a0_5:	.asciz "A~a0"
+Str_A_25:	.asciz "A "
+Str_B_a0_5:	.asciz "B~a0"
+Str_B_13:	.asciz "B "
+	.align	4, 0xFF	# pad after Str_B_13
 
 ChordFinderROOT_Table:
-	.long	Str_C_5
-	.long	Str_D_a0
-	.long	Str_D_2
-	.long	Str_E_a0
-	.long	Str_E
-	.long	Str_F_3
-	.long	Str_F_9e
-	.long	Str_G
-	.long	Str_A_a0
-	.long	Str_A_3
-	.long	Str_B_a0
-	.long	Str_B_3
+	.long	Str_C_22
+	.long	Str_D_a0_5
+	.long	Str_D_9
+	.long	Str_E_a0_5
+	.long	Str_E_8
+	.long	Str_F_13
+	.long	Str_F_9e_5
+	.long	Str_G_9
+	.long	Str_A_a0_5
+	.long	Str_A_25
+	.long	Str_B_a0_5
+	.long	Str_B_13
 
 Str_FINGERED_2:	.asciz " FINGERED  "
 Str_PIANIST_2:	.asciz "  PIANIST  "
@@ -9382,7 +9969,7 @@ VoiceDirRemapFind_Table_p0_773:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
 
 ptrs_486A4640:
 	.long	VoiceDirRemapFind_Table_p0_446
-	.long	data_48717F40
+	.long	func_484129D5_Records_3+12638
 
 VoiceDirRemapFind_Table_p0_774:	# REC_VoiceDirRemapFind_Table_p0 (8 bytes)
 	REC_VoiceDirRemapFind_Table_p0	p0=VoiceDirRemapFind_Table_p0_487, key=32577, x6="qI"
@@ -15989,39 +16576,39 @@ func_4857F873_Table:	# 13 x u32, 0..11; read by func_4857F873 0x4857F873: `mov  
 
 Str_SRC:	.asciz "SRC"
 
-names_486AF314_p0_0:	# REC_names_486AF314_p0 (1 bytes)
-	REC_names_486AF314_p0	key=65
+names_486AF314_p0_0:	# REC_names_486AF314_p0 (4 bytes)
+	REC_names_486AF314_p0	key=65, x1="LT\x00"
 
-Str_LT:	.asciz "LT"
 Str_ALIGN:	.asciz "ALIGN"
 
-names_486AF314_p0_1:	# REC_names_486AF314_p0 (1 bytes)
-	REC_names_486AF314_p0	key=86
+names_486AF314_p0_1:	# REC_names_486AF314_p0 (4 bytes)
+	REC_names_486AF314_p0	key=86, x1="SPA"
 
-Str_SPACE:	.asciz "SPACE"
+Str_CE:	.asciz "CE"
 Str_HSPACE:	.asciz "HSPACE"
 
-names_486AF314_p0_2:	# REC_names_486AF314_p0 (1 bytes)
-	REC_names_486AF314_p0	key=87
+names_486AF314_p0_2:	# REC_names_486AF314_p0 (4 bytes)
+	REC_names_486AF314_p0	key=87, x1="IDT"
 
-Str_IDTH:	.asciz "IDTH"
+Str_H_8:	.asciz "H"
 Str_HEIGHT:	.asciz "HEIGHT"
 
-names_486AF314_p0_3:	# REC_names_486AF314_p0 (1 bytes)
-	REC_names_486AF314_p0	key=76
+names_486AF314_p0_3:	# REC_names_486AF314_p0 (4 bytes)
+	REC_names_486AF314_p0	key=76, x1="OWS"
 
-Str_OWSRC:	.asciz "OWSRC"
+Str_RC:	.asciz "RC"
 Str_BORDER:	.asciz "BORDER"
 
-names_486AF314_p0_4:	# REC_names_486AF314_p0 (1 bytes)
-	REC_names_486AF314_p0	
+# 0 records of 164 bytes up to the end marker (+0, 8 bits) that func_4857FA3C 0x4857FA3C: `movbu (a0), d0` / `cmp 0, d0`, `add 0xa4, a0` stops at, then the marker
+func_4857FA3C_List:
+	.byte	0	# end
 
 names_486AF314:
 	.long	Str_SRC, names_486AF314_p0_0
 	.long	Str_ALIGN, names_486AF314_p0_1
 	.long	Str_HSPACE, names_486AF314_p0_2
 	.long	Str_HEIGHT, names_486AF314_p0_3
-	.long	Str_BORDER, names_486AF314_p0_4
+	.long	Str_BORDER, func_4857FA3C_List
 
 func_4857FA3C_Table:	# 132 x u8, 0..255; read by func_4857FA3C 0x4857F132: `movbu  (a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -16046,12 +16633,14 @@ func_4857FA3C_Table_2:	# 132 x u8, 0..255; read by func_4857FA3C 0x4857F132: `mo
 
 Str_OBJ:	.asciz "OBJ"
 
-func_4857FB46_Table_2_p0_0:	# REC_func_4857FB46_Table_2_p0 (4 bytes)
-	REC_func_4857FB46_Table_2_p0	x1="\xFF\xFF\xFF"
+# 0 records of 32 bytes up to the end marker (+0, 8 bits) that func_4857FB46 0x4857FB46: `movbu (a0), d0` / `cmp 0, d0`, `add 0x20, a0` stops at, then the marker
+func_4857FB46_List:
+	.byte	0	# end
+	.byte	0xff, 0xff, 0xff	# the marker's fill to a 4-byte boundary
 
 func_4857FB46_Table_2:
 	.long	Str_OBJ
-	.long	func_4857FB46_Table_2_p0_0
+	.long	func_4857FB46_List
 
 func_4857FB46_Table:	# 132 x u8, 0..255; read by func_4857FB46 0x4857F132: `movbu  (a1), d1`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -16067,13 +16656,14 @@ func_4857FB46_Table:	# 132 x u8, 0..255; read by func_4857FB46 0x4857F132: `movb
 Str_NO_40:	.asciz "NO"
 Str_IMG_2:	.asciz "IMG"
 
-func_4857FC0D_Table_2_p0_0:	# REC_func_4857FC0D_Table_2_p0 (1 bytes)
-	REC_func_4857FC0D_Table_2_p0	
+# 0 records of 36 bytes up to the end marker (+0, 8 bits) that func_4857FC0D 0x4857FC0D: `movbu (a0), d0` / `cmp 0, d0`, `add 0x24, a0` stops at, then the marker
+func_4857FC0D_List:
+	.byte	0	# end
 
 func_4857FC0D_Table_2:
 	.long	Str_NO_40
 	.long	Str_IMG_2
-	.long	func_4857FC0D_Table_2_p0_0
+	.long	func_4857FC0D_List
 
 func_4857FC0D_Table:	# 132 x u8, 0..255; read by func_4857FC0D 0x4857F132: `movbu  (a1), d1`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -16100,21 +16690,19 @@ func_4857F555_Table_2:	# 4 x u8, 0..255; read by func_4857F555 0x4857F555: `movb
 
 Str_SRC_2:	.asciz "SRC"
 Str_BEAT:	.asciz "BEAT"
-Str_X_3:	.asciz "X"
+Str_X_2:	.asciz "X"
 Str_Y:	.asciz "Y"
 Str_DISP:	.asciz "DISP"
-
-func_4857FE65_Table_2_p0_0:	# REC_func_4857FE65_Table_2_p0 (1 bytes)
-	REC_func_4857FE65_Table_2_p0	
-	.align	4, 0xFF	# pad after func_4857FE65_Table_2_p0_0
+Str_text_27:	.asciz ""
+	.align	4, 0xFF	# pad after Str_text_27
 
 func_4857FE65_Table_2:
 	.long	Str_SRC_2
 	.long	Str_BEAT
-	.long	Str_X_3
+	.long	Str_X_2
 	.long	Str_Y
 	.long	Str_DISP
-	.long	func_4857FE65_Table_2_p0_0
+	.long	Str_text_27
 
 func_4857FE65_Table:	# 132 x u8, 0..255; read by func_4857FE65 0x4857F132: `movbu  (a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -19931,7 +20519,7 @@ ptrs_486BCE68:
 	.long	Str_empty_290
 	.long	Str_empty_289
 	.long	Str_empty_288
-	.long	Str_C_4
+	.long	Str_C_23
 # census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b935.rom", 0x2BCE88, 0x2BCE90
 
@@ -20290,10 +20878,16 @@ TgPartDrawbarLevelsDerive_Table_4:	# 10 x s16, -128..0; read by TgPartDrawbarLev
 	tab_s16	-128, -67, -51, -39, -27, -19, -11, -5, 0, 0
 TgPartDrawbarLevelsDerive_Table_5:	# 10 x s16, 0..16; read by TgPartDrawbarLevelsDerive 0x4C00A519: `movhu  (d2, a0), d0`
 	tab_s16	0, 0, 2, 4, 6, 8, 10, 12, 14, 16
-func_4C00AF99_Table:	# 1 x u16, 65535..65535; read by func_4C00AF99 0x4C00AF99: `movhu  (d0, a0), d0`
-	tab_u16	65535
-# census: opaque -- unknown-dump: 200 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x2BD92C, 0x2BD9F4
+func_4C00AF99_Table:	# 101 x u16, 1..65535; read by func_4C00AF99 0x4C00AF99: `movhu  (d0, a0), d0`; 101 records: the index is bounded by func_4C00AF99 0x4C00AF99: `cmp 0x64, d0` ... `movhu (d0, a0), d0`
+	tab_u16	65535, 65535, 65535, 65535, 50803, 42336, 36691, 31046, 25401, 21168, 18345, 15523	# [0]
+	tab_u16	12700, 11289, 10584, 9878, 9172, 8467, 7761, 7056, 6350, 5644, 5292, 4939	# [12]
+	tab_u16	4586, 4233, 3880, 3528, 3175, 2822, 2646, 2469, 2293, 2116, 1940, 1764	# [24]
+	tab_u16	1587, 1411, 1323, 1234, 1146, 1058, 970, 882, 793, 705, 661, 617	# [36]
+	tab_u16	573, 529, 485, 441, 396, 352, 330, 308, 286, 264, 242, 220	# [48]
+	tab_u16	198, 176, 165, 154, 143, 132, 121, 110, 99, 88, 82, 77	# [60]
+	tab_u16	71, 66, 60, 55, 49, 44, 41, 38, 35, 33, 30, 27	# [72]
+	tab_u16	24, 22, 20, 19, 17, 16, 15, 13, 12, 11, 10, 8	# [84]
+	tab_u16	7, 5, 3, 2, 1	# [96]
 
 TgGlobalRegsB0LoadA_Var:	# REC_TgGlobalRegsB0LoadA_ArgA0 (16 bytes): the layout TgGlobalRegsB0LoadA 0x4C038064 reads through its argument a0 (passed by func_4848382E 0x4848382E `call TgGlobalRegsB0LoadA_entry, [a2], 0x18`, +2 more calls)
 	REC_TgGlobalRegsB0LoadA_ArgA0	TgVoiceRegWrite_d0=4, TgVoiceRegWrite_d0_=2, TgVoiceRegWrite_d0__=128, TgVoiceRegWrite_d0___=12, TgVoiceRegWrite_d0____=32, TgVoiceRegWrite_d0_____=37, TgVoiceRegWrite_d0______=943, TgVoiceRegWrite_d0_______=1

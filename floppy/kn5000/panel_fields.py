@@ -58,14 +58,97 @@ CURATED = {
                 [(i, 'p%d' % i, 'dec', 'parameter byte %d of the algorithm: each record line names its effect\'s '
                   'parameters (specs/dsp_effect_params.json)' % i) for i in range(1, 24)],
 }
+# The companion ("VARI") records (2026-11-02, lane open6-kn5000-d/panel): one byte per SOUND GROUP button, the
+# sound number (slot 0..39 of that group) the part last had in the group.  MIDI_DistributeParamToChannels
+# (part, group, slot) stores companion[group] = slot when MainVariSet (EVT_VARI_WRITE) or Sound_SetSelection
+# picks a sound; VoiceData_DistributeToChannels (part, group) reads it back when PanelButton_SoundGroup handles a
+# SOUND GROUP button, so the button recalls the last sound of that group; PanelTlv_ResolvePartCompanions
+# re-derives the current sound's byte after a load (SndParam_ResolveVoiceEntry -> {group, slot} from the
+# bank map, descriptor slot +0x10).  The group index is SoundData_CategoryDesc's (SOUND_CATEGORY_NAMES, 18).
+SOUND_GROUPS = ['piano', 'guitar', 'strings_vocal', 'brass', 'flute', 'sax_reed', 'mallet_orch_perc', 'world_perc',
+                'organ_accordion', 'orchestral_pad', 'synth', 'bass', 'digital_drawbar', 'accordion_reg',
+                'gm_special', 'drum_kits', 'memory_a', 'memory_b']
+# The style record's companion (tag 0x49): the same per RHYTHM GROUP button (groups 0..15, PanelButton_RhythmGroup
+# and its PanelButton_RhythmGroupCodes_LeftSeg0/1/6 maps; the group / number pair is AccStyle_LookupPanelRhythm's).
+RHYTHM_GROUPS = ['standard_rock', 'r_roll_blues', 'pop_ballad', 'funk_fusion', 'soul_modern_dance', 'big_band_swing',
+                 'jazz_combo', 'us_trad', 'country', 'latin', 'march_waltz', 'party_time', 'showtime_trad_dance',
+                 'world', 'custom', 'memory']
+CURATED['part_vari'] = [(i, 'vari_' + g, 'dec', 'SOUND GROUP %d (%s): the slot last selected in it'
+                         % (i, g.upper().replace('_', ' '))) for i, g in enumerate(SOUND_GROUPS)]
+CURATED['style_vari'] = [(i, 'vari_' + g, 'dec', 'RHYTHM GROUP %d (%s): the number last selected in it'
+                          % (i, g.upper().replace('_', ' '))) for i, g in enumerate(RHYTHM_GROUPS)]
+CURATED['tag71'] = [(0, 'pmemout_l_flags', 'hex', 'the PANEL MEMORY page grid PmemOutLGridCheck sets bit 1 of this '
+                     'byte in a panel memory (0x1ed400 + 960 n); PanelMemory_Recall runs BitMapOut_DispatchIOChanges '
+                     'when bit 1 of the live copy is set (ui/bitmap_out_routines.s); 0 in every saved panel')]
+CURATED['tag98'] = [(12, 'reserved_12', 'hex', 'no reader: the 25 references to 0xfda2 (PANEL_PMEM_SETTINGS+12) are the '
+                     'END bound of the 0xf980..0xfda1 block copies (BitMapOut_ComputeRegionDelta, '
+                     'ToneGen_FileIO_SaveAndSync), not accesses of this byte; the load rule zeroes it')]
+# The bytes that kept f<offset> after the descriptors and the curated studies (2026-11-02, sub-lane
+# open6-kn5000-d/panel): notes/open6-kn5000-d/panel/probes/panel_f_readers.py lists every v5..v10 instruction that names
+# each one (absolute operand or base register).  A byte that no instruction reads is reserved_<off>; the hits of the
+# others are given here.  (kind, offset) -> (name, kind, note).
+_NOREAD = 'no instruction in v5..v10 reads it (panel_f_readers.py); no SndParam descriptor'
+_PTRS = 'its only v5..v10 references are the record-pointer tables (SndParam_BlockRamPtrs) and the record base load'
+VERDICT = {}
+for _o in range(10):
+    VERDICT[('tag68', _o)] = ('reserved_%d' % _o, 'hex', _NOREAD + '; 0 in every save; ' + (_PTRS if _o == 0 else
+                              'no rule'))
+VERDICT[('tag60', 0)] = ('reserved_0', 'hex', _NOREAD + '; ' + _PTRS + ' and the PANEL MEMORY recall copy '
+                         '(bitmap_out_routines.s) moves it with the record; 0 in every save')
+VERDICT[('tag72', 0)] = ('reserved_0', 'dec', _NOREAD + '; ' + _PTRS + '; BitMapOut_RestoreFields clears bit 7 and the '
+                         'recall copy moves it; the load rule ranges it 0..15; 1 or 13 in 77 of 4,688 saves')
+VERDICT[('tag72', 1)] = ('reserved_1', 'hex', _NOREAD + '; BitMapOut_RestoreFields clears bit 7; 0 in every save')
+for _o in (4, 5):
+    VERDICT[('tag72', _o)] = ('reserved_%d' % _o, 'hex', _NOREAD + '; 0 in every save')
+VERDICT[('tag80', 4)] = ('f4', 'hex', 'BLOCKED: no reader of its value: ToneGen_FileIO_SaveAndSync keeps it (with +0 and +2) '
+                         'across a demo preset load and the 25 MIDI preset banks (sound_config_lookup.c) store 0 in it, '
+                         'but no instruction tests it; 0 in every save. A MIDI capture from an instrument with the byte set '
+                         'would show what it does')
+VERDICT[('tag80', 5)] = ('reserved_5', 'hex', _NOREAD + '; the MIDI preset banks (sound_config_lookup.c) store its low 6 '
+                         'bits (6, 3 ...); 0x20 in most saves')
+VERDICT[('tag90', 1)] = ('conductor_flags', 'hex', 'read with +0 as the word 0x9163 (ExtData_ToneParam_MultiChannel); bit 1 '
+                         'gates AudioInit_ProcessModeChange / AudioMode_ConfigExternal_MergeFlags (0xc1fe bit 2); '
+                         'MIDI_WriteResetSequence sends it as the change event (0x90, 1); 0 or 2 in the saves. [INFERENCE: '
+                         'what bit 1 selects was not traced]')
+VERDICT[('tag90', 2)] = ('reserved_2', 'hex', _NOREAD + '; only the recall copies (bitmap_out_routines.s) move it; '
+                         '0x67 in every save')
+VERDICT[('tag91', 2)] = ('reserved_2', 'hex', _NOREAD + '; the load rule allows 0 or 1; 0 in every save')
+for _o in (1, 2, 3, 7, 8) + tuple(range(25, 34)):
+    VERDICT[('tag93', _o)] = ('reserved_%d' % _o, 'dec' if _o in (2, 3, 7, 8) else 'hex', _NOREAD +
+                              ('; validated by the load rule only' if _o in (1, 2, 3, 7, 8) else '; no rule') +
+                              '; the same value in all 63 saves')
+VERDICT[('tag98', 10)] = ('reserved_10', 'dec', _NOREAD + '; the load rule ranges it 0..99 (default 90); 90 or 0 in the saves')
+for _o in range(16, 27):
+    VERDICT[('tag99', _o)] = ('reserved_%d' % _o, 'hex', _NOREAD + '; no rule; the same 11 bytes in all 4,328 saves '
+                              '(82 01 02 81 00 10 11 12 13 00 00)')
+VERDICT[('tag9a', 0)] = ('reserved_0', 'hex', _NOREAD + '; ' + _PTRS + '; the load rule zeroes it')
+for _o in range(4, 20):
+    VERDICT[('tag9a', _o)] = ('reserved_%d' % _o, 'hex', _NOREAD + '; no rule; ' + (
+        'values 2..0x13 in some of the 45 saves' if _o in (4, 5, 6, 8) else '0 in every save'))
+for (_k, _o), (_n, _t, _note) in VERDICT.items():
+    CURATED.setdefault(_k, []).append((_o, _n, _t, _note))
+# Descriptors whose label is a placeholder, named from the code that reads the key.
+KEY_NAMES = {
+    0x28800: ('msp_bank', 'MSP BANK (0..18): PanelButton_MspNumber turns MSP 1-6 into pedal functions when '
+              'SndParam_LookupReadOnly(0x28800) is 17 or 18 (PanelButton_MspBank17FuncCodes / _MspBank18FuncCodes); '
+              'VwVariBox_Init / _Match compare it with the box index; AccompSeq_HandleSpecialMode tests 13 / 14'),
+    0x28403: ('composer_bend_range', 'the Composer RECORD SETTING page: CmpBndRng returns this key; '
+              'DrumVoice_Handler7 steps it 0..12 (PANEL_TOUCH+4)'),
+}
 KIND_OF_TAG = {0x78: 'style_name', 0x44: 'drawbar', 0x45: 'drawbar', 0x46: 'drawbar', 0x48: 'style_select',
-               0x61: 'dsp_slot', 0x63: 'dsp_slot', 0x64: 'dsp_slot', 0x65: 'dsp_slot', 0x66: 'dsp_slot'}
+               0x61: 'dsp_slot', 0x63: 'dsp_slot', 0x64: 'dsp_slot', 0x65: 'dsp_slot', 0x66: 'dsp_slot',
+               0x49: 'style_vari'}
+KIND_OF_TAG.update({t: 'part_vari' for t in list(range(0xC0, 0xD5)) + [0xD7]})
 EVIDENCE = {
     'part': 'analysis/disk-format-probes/README-lsw-part-record-fields.md (P proven, I inference)',
     'style_name': 'README-lsw-nonpart-records.md, tag 78',
     'drawbar': 'README-lsw-drawbar-records.md (parameter ids differ by 0x400 per part)',
     'style_select': 'README-lsw-nonpart-records.md, tag 48',
     'dsp_slot': 'README-lsw-leftover-records.md (slots 0x61 0x63 0x65 0x66 0x64 = 0..4)',
+    'part_vari': 'companion of part 0xC0 + tag (PanelTlv_CompanionByPart); MIDI_DistributeParamToChannels writes, '
+                 'VoiceData_DistributeToChannels reads (PanelButton_SoundGroup); notes/open6-kn5000-d/panel/README.md',
+    'style_vari': 'companion of the style record 0x48 (PanelTlv_CompanionOfPart, part 72); the same two routines '
+                  '(PanelButton_RhythmGroup); notes/open6-kn5000-d/panel/README.md',
 }
 
 
@@ -94,32 +177,126 @@ DSP_JSON = REPO / 'notes' / 'floppy-kn5000-2026-10-29' / 'specs' / 'dsp_effect_p
 _DSP = None
 
 
-def dsp_comment(payload):
-    """The parameters of a DSP slot record's effect, in the order its bytes hold them: from the v10 tables
-    DspFxParamCountTable, DSPCfg_LookupAndExtract_PtrTable and DspParamName_Table (notes/kn5000-style-2026-10-31/
-    probes/dsp_slot_params.py).  A parameter whose range passes 255 takes two bytes, big-endian; one with a
-    negative minimum is a signed byte.  That layout is measured: the json records, per effect, how many saved
-    records it decodes in range; where not all do, the comment says the packing is not established."""
+def dsp_spec():
+    """{effect number: {name, params, bytes, records, records_in_range}} from specs/dsp_effect_params.json, written by
+    notes/open6-kn5000-d/panel/probes/dsp_slot_packing.py from the v10 ROM: per parameter its name, range, the op
+    letter of its DspFxRecListPtrTable record and where DSPCfg_ReadField finds it (payload offset `off`, and in the
+    big-endian word W = payload[off] << 8 | payload[off + 1], value = (W >> shift) & mask; `width` = how far the
+    reader's pointer then moves; `signed` = read as a signed byte)."""
     global _DSP
     if _DSP is None:
-        _DSP = json.loads(DSP_JSON.read_text()) if DSP_JSON.exists() else {}
-    e = _DSP.get(str(payload[0]))
-    if not e:
+        _DSP = {int(k): v for k, v in json.loads(DSP_JSON.read_text()).items()} if DSP_JSON.exists() else {}
+    return _DSP
+
+
+def snake(t):
+    return re.sub(r'[^a-z0-9]+', '_', t.lower()).strip('_')
+
+
+def dsp_layout(e):
+    """(macro name, [arg names], [byte expressions], used bytes) of effect e's DSP slot macro; None if the effect
+    has no parameter-write record list.  A packed word (the 'p' / 'v' fields that share two bytes, width 0 until
+    the field that moves the pointer by 2) becomes two .byte expressions of its fields."""
+    v = dsp_spec().get(e)
+    if not v:
         return None
-    ps, p = [], 1
-    for q in e['params']:
-        w = 2 if q['max'] > 255 else 1
-        ps.append('p%d%s %s' % (p, '-%d' % (p + 1) if w == 2 else '', q['name'] or '(no name)'))
-        p += w
-    tail = '' if e.get('records') and e['records'] == e.get('records_in_range') else \
-        ' [byte packing not established for this effect: %d of %d saved records decode in range]' % (
-            e.get('records_in_range', 0), e.get('records', 0))
-    return '%s: %s%s' % (e['name'].strip(), ', '.join(ps), tail)
+    args, used, exprs, word, ptr = [], set(), [], [], 1
+    for k, q in enumerate(v['params']):
+        nm = snake(q['name']) or 'hidden_%d' % q['off']
+        base, i = nm, 2
+        while nm in used:
+            nm = '%s_%d' % (base, i)
+            i += 1
+        used.add(nm)
+        args.append(nm)
+        assert q['off'] == ptr, (e, k)
+        packed = q['width'] == 0 or (q['width'] == 2 and (q['shift'], q['mask']) != (0, 0xFFFF))
+        if packed or word:
+            word.append((nm, q['shift']))
+            if q['width'] == 2:
+                w = ' | '.join('((\\%s) << %d)' % (n, sh) if sh else '(\\%s)' % n for n, sh in word)
+                exprs += ['((%s) >> 8) & 0xff' % w, '(%s) & 0xff' % w]
+                word = []
+            else:
+                assert q['width'] == 0, (e, k)
+        elif q['width'] == 2:
+            exprs += ['((\\%s) >> 8) & 0xff' % nm, '(\\%s) & 0xff' % nm]
+        else:
+            exprs.append('(\\%s) & 0xff' % nm)
+        ptr += q['width']
+    assert not word, e
+    return 'ptlv_dsp%d_%s' % (e, snake(v['name'])), args, exprs, ptr - 1
+
+
+def dsp_values(e, payload):
+    """The parameter values of effect e read from payload as DSPCfg_ReadField reads them, or None when a payload bit
+    inside the effect's bytes belongs to no parameter (the macro could not spell it)."""
+    v = dsp_spec()[e]
+    cov, vals = [0] * 26, []
+    for q in v['params']:
+        o = q['off']
+        W = payload[o] << 8 | payload[o + 1]
+        x = (W >> q['shift']) & q['mask']
+        vals.append(x - 256 if q['signed'] and x > 127 else x)
+        m = q['mask'] << q['shift']
+        cov[o] |= m >> 8
+        cov[o + 1] |= m & 0xFF
+    if any(payload[o] & ~cov[o] & 0xFF for o in range(1, v['bytes'] + 1)):
+        return None
+    return vals
+
+
+def dsp_macros():
+    """The per-effect DSP slot macros (lines for kn5000_panel.inc)."""
+    L = ['; DSP slot records (tags 0x61 DSP EFFECT, 0x63 DIGITAL REVERB, 0x64 EQUALIZER, 0x65 ACOUSTIC ILLUSION,',
+         '; 0x66 MIC REVERB), one macro per DSP effect: +0 is the effect number, then its parameters in the bytes',
+         '; and bits where DSPCfg_ReadViaTableLookup -> DSPCfg_ReadMultiField -> DSPCfg_ReadField finds them',
+         '; (audio/dsp_config_sysex.s; the op letter of each parameter\'s DspFxRecListPtrTable record decides',
+         '; its width: \'g\' / \'d\' a big-endian word, \'p\' / \'v\' fields packed into a big-endian word, any other',
+         '; letter a byte; notes/open6-kn5000-d/panel/README.md).  `tail` is the bytes after the last parameter,',
+         '; up to +23: no reader (DSPCfg_RecordFieldToParamId maps payload bytes 1..16 only); kept as saved.',
+         '; Ranges and names: DSPCfg_LookupAndExtract_PtrTable, DspParamName_Table (specs/dsp_effect_params.json).']
+    for e in sorted(dsp_spec()):
+        lay = dsp_layout(e)
+        nm, args, exprs, n = lay
+        v = dsp_spec()[e]
+        L.append(';')
+        L.append('; effect %d %s, %d parameter bytes:' % (e, v['name'], n))
+        for a, q in zip(args, v['params']):
+            if (q['shift'], q['mask']) == (8, 0xFF):
+                where = '+%d' % q['off']
+            elif (q['shift'], q['mask']) == (0, 0xFFFF):
+                where = '+%d..+%d (big-endian)' % (q['off'], q['off'] + 1)
+            else:
+                hi = q['shift'] + q['mask'].bit_length() - 1
+                where = '+%d bits %d:%d' % (q['off'], hi - 8, q['shift'] - 8) if q['shift'] >= 8 else \
+                    '+%d..+%d bits %d:%d of the word' % (q['off'], q['off'] + 1, hi, q['shift'])
+            L.append(';   %-22s %-30s %s, %d..%d (op \'%s\')' % (a, where, q['name'] or '(blank name, DspParamName_Table 85)',
+                                                             q['min'], q['max'], q['op']))
+        L.append('\t.macro\t%s tag, %s, tail:vararg' % (nm, ', '.join(args)))
+        L.append('\t.byte\t\\tag, 24, %d' % e)
+        for x in exprs:
+            L.append('\t.byte\t' + x)
+        L += ['.Ldt\\@:', '\t.byte\t\\tail', '.Lde\\@:', '\t.if\t(.Lde\\@ - .Ldt\\@) - %d' % (23 - n),
+              '\t.error\t"%s: tail is not %d bytes"' % (nm, 23 - n), '\t.endif', '\t.endm']
+    return L
+
+
+def dsp_comment(payload):
+    """The comment of a DSP slot record that no per-effect macro spells: why."""
+    e = payload[0]
+    v = dsp_spec().get(e)
+    if not v:
+        return 'effect %d: no parameter-write record list (DspFxRecListPtrTable), so no reader of p1..p23' % e
+    return '%s: a bit outside every parameter field is set, so the bytes stay as saved' % v['name']
 
 
 def descriptors():
     """{(tag, payload offset): [descriptor]} from the firmware's SndParam table (see the docstring)."""
-    rx = re.compile(r'/\* \[\s*\d+\] 0x([0-9A-F]+)\s+(\w+) \*/\s*\{ \.key = 0x([0-9A-Fa-f]+), \.bank_index = '
+    # The comment lists every label at or inside the descriptor ("NAME, OTHER(+2)"); the first is the
+    # descriptor's own.  (Until 2026-11-02 the pattern took a single name only and dropped the 11 descriptors
+    # with a list, among them the MSP bank 0x28800 and the MSP reverb 0x28802.)
+    rx = re.compile(r'/\* \[\s*\d+\] 0x([0-9A-F]+)\s+(\w+)[^*]*\*/\s*\{ \.key = 0x([0-9A-Fa-f]+), \.bank_index = '
                     r'0x([0-9A-Fa-f]+), \.bank_offset = 0x([0-9A-Fa-f]+),\s*\.mask = 0x([0-9A-Fa-f]+), \.clamp_min = '
                     r'0x([0-9A-Fa-f]+), \.clamp_max = 0x([0-9A-Fa-f]+)', re.S)
     out = {}
@@ -154,6 +331,8 @@ def desc_name(d):
     """A descriptor's name as a field name: SndParam_Part13_ReverbSend -> reverb_send; a placeholder label
     (VoiceCtrlR1_Entry_011, WidgetParam_*_Entry) -> the key (lsw_<number> for a part key, key_<key>)."""
     nm = d['name'] or ''
+    if d['key'] in KEY_NAMES:
+        return KEY_NAMES[d['key']][0]
     if not nm.startswith('SndParam_'):
         n = lsw_number(d['key'])
         return 'lsw_%03x' % n if n is not None else 'key_%05x' % d['key']
@@ -162,7 +341,8 @@ def desc_name(d):
 
 
 def desc_note(d):
-    return '%s (key 0x%05x, mask 0x%02x, %d..%d)' % (d['name'], d['key'], d['mask'], d['lo'], d['hi'])
+    ev = ('; named from its readers: ' + KEY_NAMES[d['key']][1]) if d['key'] in KEY_NAMES else ''
+    return '%s (key 0x%05x, mask 0x%02x, %d..%d%s)' % (d['name'], d['key'], d['mask'], d['lo'], d['hi'], ev)
 
 
 def lowbit(m):
@@ -253,10 +433,12 @@ def model():
                 nref = sum(refs.get('%02x:%d' % (t, off), {}).get('refs', 0) for t in k['tags'])
                 dec = any(r.startswith('range') for r in per.get(off, set()))
                 zeroed = any(r.startswith('zeroed') for r in per.get(off, set()))
-                if nref == 0 and zeroed:
+                stored = sorted(r[len('store '):] for r in per.get(off, set()) if r.startswith('store '))
+                if nref == 0 and (zeroed or stored):
                     fields.append(dict(off=off, size=1, name=uniq('reserved_%d' % off), typ='dec' if dec else 'hex',
-                                       note='the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor '
-                                            'and no direct reference in v5..v10 (panel_field_refs.json)'))
+                                       note='the load rule %s (PanelTlv_ApplyFieldRule); no SndParam descriptor '
+                                            'and no direct reference in v5..v10 (panel_field_refs.json)' % (
+                                                'zeroes it' if zeroed else 'overwrites it with ' + '/'.join(stored))))
                 else:
                     fields.append(dict(off=off, size=1, name=uniq('f%d' % off), typ='dec' if dec else 'hex',
                                        note='TODO: not named; no SndParam descriptor, %d direct references in v5..v10 '
@@ -315,6 +497,7 @@ def write_include(path):
             else:
                 L.append('\t.byte\t\\%s' % name)
         L += ['\t.endm', '']
+    L += dsp_macros() + ['']
     L += ['; A record whose tag/length the v10 list does not have at its position (an older revision\'s',
           '; block): its header and payload bytes.  TODO: the older record lists are not dumped.',
           '\t.macro\tptlv_raw tag, len, data:vararg', '\t.byte\t\\tag, \\len', '\t.ifnb\t\\data',
@@ -352,8 +535,15 @@ def record_line(tag, n, payload, comment=None):
             vals.append(str(payload[off]))
         else:
             vals.append('0x%02x' % payload[off] if payload[off] else '0')
-    if kind == 'dsp_slot' and comment is None:
-        comment = dsp_comment(payload)
+    if kind == 'dsp_slot':
+        lay = dsp_layout(payload[0])
+        vv = dsp_values(payload[0], payload) if lay else None
+        if vv is not None:
+            nm, args, exprs, nb = lay
+            return '\t%s\t0x%02x, %s, %s' % (nm, tag, ', '.join(str(x) for x in vv),
+                                            ', '.join(str(x) for x in payload[nb + 1:24]))
+        if comment is None:
+            comment = dsp_comment(payload)
     return '\tptlv_%s\t0x%02x, %s%s' % (kind, tag, ', '.join(vals), ('\t; ' + comment) if comment else '')
 
 

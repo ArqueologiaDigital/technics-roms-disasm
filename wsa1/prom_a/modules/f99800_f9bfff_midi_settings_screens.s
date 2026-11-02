@@ -1259,7 +1259,7 @@ ScreenButton_MidiMenu:
 ;          and at (XIZ+8), and it indexes this table with it:
 ;          `ld L,(XIZ+0x08)` ... `ld C,L / cp BC,0x001F / sll 2,BC /
 ;          add XBC,<this> / ld XBC,(XBC) / jp (XBC)`.
-;          Dispatch_FF3D39's CONTROL LEGEND names each code.
+;          ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND names each code.
 ;          (notes/proma-2026-09-25/gen_button_selectors.py, B1-B3)
 ; ★ 2026-09-25 (lane proma): the selector was recorded as open here.
 ; Six distinct arms among the 32 slots.
@@ -1735,7 +1735,7 @@ ScreenButton_MidiTotalMode:
 ;          and at (XIZ+8), and it indexes this table with it:
 ;          `ld L,(XIZ+0x08)` ... `ld C,L / cp BC,0x001F / sll 2,BC /
 ;          add XBC,<this> / ld XBC,(XBC) / jp (XBC)`.
-;          Dispatch_FF3D39's CONTROL LEGEND names each code.
+;          ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND names each code.
 ;          (notes/proma-2026-09-25/gen_button_selectors.py, B1-B3)
 ; ★ 2026-09-25 (lane proma): the selector was recorded as open here.
 ; Evidence: as JumpTable_F99F96.
@@ -2461,7 +2461,7 @@ ScreenButton_MidiRealtimeMessages:
 ;          and at (XIZ+8), and it indexes this table with it:
 ;          `ld L,(XIZ+0x08)` ... `ld C,L / cp BC,0x001F / sll 2,BC /
 ;          add XBC,<this> / ld XBC,(XBC) / jp (XBC)`.
-;          Dispatch_FF3D39's CONTROL LEGEND names each code.
+;          ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND names each code.
 ;          (notes/proma-2026-09-25/gen_button_selectors.py, B1-B3)
 ; ★ 2026-09-25 (lane proma): the selector was recorded as open here.
 ; Evidence: as JumpTable_F99F96.
@@ -2848,7 +2848,7 @@ ScreenButton_MidiInputOutputFilter:
 ;          and at (XIZ+8), and it indexes this table with it:
 ;          `ld L,(XIZ+0x08)` ... `ld C,L / cp BC,0x001F / sll 2,BC /
 ;          add XBC,<this> / ld XBC,(XBC) / jp (XBC)`.
-;          Dispatch_FF3D39's CONTROL LEGEND names each code.
+;          ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND names each code.
 ;          (notes/proma-2026-09-25/gen_button_selectors.py, B1-B3)
 ; ★ 2026-09-25 (lane proma): the selector was recorded as open here.
 ; Evidence: as JumpTable_F99F96.
@@ -3705,7 +3705,7 @@ ScreenButton_MidiOutProgramChange:
 ;          and at (XIZ+8), and it indexes this table with it:
 ;          `ld L,(XIZ+0x08)` ... `ld C,L / cp BC,0x001F / sll 2,BC /
 ;          add XBC,<this> / ld XBC,(XBC) / jp (XBC)`.
-;          Dispatch_FF3D39's CONTROL LEGEND names each code.
+;          ScreenButtonHandlers_MidiFileSave's CONTROL LEGEND names each code.
 ;          (notes/proma-2026-09-25/gen_button_selectors.py, B1-B3)
 ; ★ 2026-09-25 (lane proma): the selector was recorded as open here.
 ; Evidence: as JumpTable_F99F96.  This is the last of the five

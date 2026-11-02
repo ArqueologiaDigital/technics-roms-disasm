@@ -82,7 +82,7 @@ def respell_map(data, label, path):
 
 CHORD_NAMES = ['M', '7', 'M7', 'aug', 'm', 'm7', 'dim7', 'm7(b5)', 'mM7', '7sus4', '6', '7(#5)', '(b5)',
                '7(b5)', '9', '7(b9)', 'M7(9)', '6(9)', 'm6', 'dim', 'm7(9)', 'm6(9)', 'sus4', '7(#9)',
-               'M7(b5)', 'M7(#5)', 'mM7(b5)', '7(13)', '7(#5)', '7(13)'] + ['no voicing'] * 9 + ['add9', 'madd9']
+               'M7(b5)', 'M7(#5)', 'mM7(b5)', '7(13)', '9(#5), voiced as 7(#5)', '7(b9,13), voiced as 7(13)'] + ['no voicing'] * 9 + ['add9', 'madd9']
 OLD_INF = b'; [INFERENCE] the fingered-chord recognition table (chord type, root offset).\n'
 NEW_INF = (b'; The fingered-chord recognition table: +0 = chord type (1-based row of ChordTables_TypeIntervals),\n'
            b'; +1 bits 0-6 = root offset in semitones above the reference note, bit 7 = accept without trying\n'

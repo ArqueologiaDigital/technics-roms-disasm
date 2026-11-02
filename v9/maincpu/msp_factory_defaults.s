@@ -1,6 +1,6 @@
 ; MSP_FACTORY_DEFAULTS -- factory image of the accompaniment stream-buffer pool
 ;
-; 5,376 bytes = 21 x 256.  Voice_InitBankData copies this to RAM 0x1E8B00 with
+; 5,376 bytes = 21 x 256.  MspUser_InitFromFactory copies this to RAM 0x1E8B00 with
 ; `ldw bc, 0xa80` + `ldirw` (0xA80 WORDS), and Voice_GetSlotAddress computes
 ; `0x1e8b00 + (index << 8)`, so the destination is an array of 256-byte blocks
 ; and this image preloads the first 21 of the pool's 57.
@@ -23,7 +23,7 @@
 ; because the assembly references it by name.
 ;
 ; READERS (addresses v10 = v9 / v7):
-;   Voice_InitBankData        0xF6F309 / 0xF6EF05  copies all 0xA80 words to
+;   MspUser_InitFromFactory   0xF6F309 / 0xF6EF05  copies all 0xA80 words to
 ;                                                  RAM 0x1E8B00 (`ldirw`)
 ;   Voice_GetSlotAddress      0xF6F3D0 / 0xF6EFCC  block n = 0x1E8B00 + n*256
 ;   CountAvailableVoiceSlots  0xF6F3B0 / 0xF6EFAC  `bitm 7` on block byte +0

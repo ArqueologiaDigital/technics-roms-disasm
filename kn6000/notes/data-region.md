@@ -177,7 +177,10 @@ banks, at 0x4C2B7668, copied by func_4C03D5A1 as the KN6000's func_4C03D431 copi
   (Resolved: 0fea0e82d, `siblings-data-final/README.md`: MusicStylistSetup, StylePanel_*, NoteConvRules'
   tables; the palettes are the bitmap resources' `Bitmap_*_Palette` items; open-items register 2026-10-31.)
 - The code reaches many tables with computed offsets: their bounds come from labels the code
-  names, so a table can still be split in two.
+  names, so a table can still be split in two.  (Resolved 2026-11-02, lane mn10300-data: a table indexed with
+  a bounded index now runs to that bound when the bytes are free and no code-named label is inside;
+  `../../kn7000/notes/mn10300-data-probes/split_tables.py` lists the tables whose bound still crosses a label,
+  `../../kn7000/notes/mn10300-data/README.md` section 3.)
 - [INFERENCE] the bitmap pixel order; the TABLE-tone and voice-record field names are the
   KN7000's (`voice_record.inc`), not re-traced in the KN6000's code.
   (Partly resolved 2026-11-02, lane mn10300-names.  The pixel order is traced, see "Other typed structures"

@@ -95,3 +95,9 @@ code). Leads: the pitch-bend reset after a ring overflow writes {0xD2, tick, 0, 
 (0x34AE), not {.., 0x40} (a firmware bug, unchanged); 0x216E is the COMPARE LED flag; the historical generator
 gen_prom_b_f5553f_module.py spells Select36CE_%06X with a format string, so regenerating it would bring the old
 names back.
+
+**Followed up 2026-11-02** (tracker kn5000-wxn, notes/open6-kn5000-d/wsa1/README.md): the floppy-format, MIXER-painter,
+SMF-copy, 0x216E and generator leads above were checked and applied (`MidiFileSave_Page4/5_*` are now
+`*_FloppyDiskFormatSelectType` / `*_FloppyDiskFormatAreYouSure`, `.LFBE135` is `CombiEditMixer_PaintPageFrame`,
+`SmfOut_WriteFirstWindow` is `SmfWrite_WriteFirstWindow_Copy2`, 0x216E is `PanelLed_CompareFlag`, and the f5553f generator
+now keeps the tree's names); the `MidiFileL0ad_` prefix was kept: it is the ROM's own spelling, "MIDI FILE L0AD".

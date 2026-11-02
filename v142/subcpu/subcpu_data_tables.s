@@ -655,17 +655,17 @@ TVF_Emit_Registers_CaseOffsets:
 	.short TVF_Emit_Registers_Mode3_OffsetOneOrBothWords - TVF_Emit_Registers_Table					; (tonerec+54)&7 = 3
 	.short TVF_Emit_Registers_Mode4_OffsetBothWords - TVF_Emit_Registers_Table					; (tonerec+54)&7 = 4
 	.short TVF_Emit_Registers_Mode5_OffsetEachWord - TVF_Emit_Registers_Table					; (tonerec+54)&7 = 5
-; --- 0x00F6CB-0x00F6D6  6 x u16 case offsets from Voice_PanReg_WriteDispatchB_Table (0x024582); the same six
+; --- 0x00F6CB-0x00F6D6  6 x u16 case offsets from TVF_Emit_Registers_Type2_Table (0x024582); the same six
 ; values as TVF_Emit_Registers_CaseOffsets, for the twin landing pad.
-; Read by Voice_PanReg_WriteDispatchB (0x024554): index = (tonerec+0x0F) & 7, range-checked
+; Read by TVF_Emit_Registers_Type2 (0x024554): index = (tonerec+0x0F) & 7, range-checked
 ; 0..5 (6 entries), doubled, ldw_sri / jp t, (xrr+rr).  Cases 1 and 2 share one body.
-Voice_PanReg_WriteDispatchB_CaseOffsets:
-	.short Voice_PanReg_WriteDispatchB_Table - Voice_PanReg_WriteDispatchB_Table			; (tonerec+0x0F)&7 = 0
-	.short Voice_PanReg_WriteDispatchB_Mode1Or2_OffsetCutoffWord - Voice_PanReg_WriteDispatchB_Table			; (tonerec+0x0F)&7 = 1
-	.short Voice_PanReg_WriteDispatchB_Mode1Or2_OffsetCutoffWord - Voice_PanReg_WriteDispatchB_Table			; (tonerec+0x0F)&7 = 2
-	.short Voice_PanReg_WriteDispatchB_Mode3_OffsetOneOrBothWords - Voice_PanReg_WriteDispatchB_Table			; (tonerec+0x0F)&7 = 3
-	.short Voice_PanReg_WriteDispatchB_Mode4_OffsetBothWords - Voice_PanReg_WriteDispatchB_Table			; (tonerec+0x0F)&7 = 4
-	.short Voice_PanReg_WriteDispatchB_Mode5_OffsetEachWord - Voice_PanReg_WriteDispatchB_Table			; (tonerec+0x0F)&7 = 5
+TVF_Emit_Registers_Type2_CaseOffsets:
+	.short TVF_Emit_Registers_Type2_Table - TVF_Emit_Registers_Type2_Table			; (tonerec+0x0F)&7 = 0
+	.short TVF_Emit_Registers_Type2_Mode1Or2_OffsetCutoffWord - TVF_Emit_Registers_Type2_Table			; (tonerec+0x0F)&7 = 1
+	.short TVF_Emit_Registers_Type2_Mode1Or2_OffsetCutoffWord - TVF_Emit_Registers_Type2_Table			; (tonerec+0x0F)&7 = 2
+	.short TVF_Emit_Registers_Type2_Mode3_OffsetOneOrBothWords - TVF_Emit_Registers_Type2_Table			; (tonerec+0x0F)&7 = 3
+	.short TVF_Emit_Registers_Type2_Mode4_OffsetBothWords - TVF_Emit_Registers_Type2_Table			; (tonerec+0x0F)&7 = 4
+	.short TVF_Emit_Registers_Type2_Mode5_OffsetEachWord - TVF_Emit_Registers_Type2_Table			; (tonerec+0x0F)&7 = 5
 ; --- 0x00F6D7-0x00F6DE  two 4-byte bit tables, one byte per output bus w = 0..3
 ; Read by AudioMod_Apply_BusRouting (0x02833C): per bus w it loads byte [table + w]
 ; from each (`lda xiy,(table:24) / ld L,(XIY+HL)`, HL = w, loop bound w < 4) and ANDs it

@@ -1152,7 +1152,7 @@ MainLoop_AfterBit3Check:
 	jr	z, MainLoop_AfterSeqBuf_DspSysEx
 	call	SeqBuf_DspSysEx_DataReadLoop
 MainLoop_AfterSeqBuf_DspSysEx:
-	ld	a, (13265:16)
+	ld	a, (ACC_SYNCHRO_STATE:16)
 	and	a, 3
 	jr	z, MainLoop_AfterAccWrap
 	ld	a, (12775:16)

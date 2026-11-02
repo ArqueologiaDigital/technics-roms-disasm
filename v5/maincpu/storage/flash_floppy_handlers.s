@@ -5255,7 +5255,7 @@ ToneParam_ExtendedOpsBlock_Skip2:
 ;   and brings older formats up to date: 'G',0,'K' or 'L','K','E' is relabelled 'H',0,'K' (the current header, cf.
 ;   AccPatch_EnsureStyleImageHeader) and kept; 'F',0,'K', 'F',' ','K', 'L','K','A' or 'L','K','B' is converted into
 ;   the current layout (AccPatch_ConvertLegacySectionLayout); anything else rebuilds the default image
-;   (AccDemo_InitDone) and returns 0xFF9A; finally fixes up the 30 records (AccPatch_ResetSectionPartByte2Defaults).
+;   (Composer_ResetStyleImage) and returns 0xFF9A; finally fixes up the 30 records (AccPatch_ResetSectionPartByte2Defaults).
 ;   Basis: callers + body -- ToneParam_ExtendedOpsBlock is the composer-data load path FileIO_LoadRegion3_ExtMem takes
 ;   when the file's region signature does not match (FileIO_CheckRegionSignature = 0): it reads the block between
 ;   cmp_ld_mae and cmp_ld_ato and calls this.
@@ -5331,7 +5331,7 @@ AccPatch_ConvertLegacyStyleImage_Join:
 	ld	iz, hl
 	jr	AccPatch_ConvertLegacyStyleImage_Skip11
 AccPatch_ConvertLegacyStyleImage_Skip10:
-	call	AccDemo_InitDone
+	call	Composer_ResetStyleImage
 	ldw	iz, 0xff9a
 AccPatch_ConvertLegacyStyleImage_Skip11:
 	calr	AccPatch_ResetSectionPartByte2Defaults

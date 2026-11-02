@@ -483,7 +483,7 @@
 .equ EVT_SET_MEMORY_DRAWBAR, 0x1e1000a	; Firmware method MT_SetMemoryDrawbar: store one memory-drawbar item (XDE = item<<16 | value) and send it to the tone generator
 .equ EVT_EXIST_PRESENTATION, 0x1e1000b	; Firmware method MT_ExistPresentation: query whether a presentation is loaded; MainPreControl returns the word at 0x0251D8
 .equ EVT_INIT_PRESENTATION, 0x1e1000c	; Firmware method MT_InitPresentation: clear the presentation-loaded flag (word 0x0251D8 := 0)
-.equ EVT_EXIT_PRESENTATION, 0x1e1000d	; Firmware method MT_ExitPresentation: leave the presentation: if one is loaded (0x0251D8 != 0) call Part_InitFromPreset, then clear the flag
+.equ EVT_EXIT_PRESENTATION, 0x1e1000d	; Firmware method MT_ExitPresentation: leave the presentation: if one is loaded (0x0251D8 != 0) call SeqSong_ResetAll, then clear the flag
 .equ EVT_GET_TONE_MODE, 0x1e1000e	; Firmware method MT_GetToneMode: query the voice/tone mode of drawbar part XDE; the answer is posted as 0x01C10008
 .equ EVT_VARI_WRITE, 0x1e20000	; Firmware method MT_VariWrite (slot 0x1E2, Toshi): write a variation parameter block (XDE) to the channels (MIDI_DistributeParamToChannels, SwbtWr ...
 .equ EVT_SVARI_INI, 0x1e20001	; Firmware method MT_SvariIni: build the current sound-variation parameter block and broadcast it as MT_SvariSet (0x01E20002), then MT_AutoFree

@@ -65,8 +65,11 @@ record readers above.
 
 ### Names in the firmware that this changes
 
-Several v10 routine names now read wrong. They were left as they are (renaming them across v10 / v9 / v7 / v6 / v5
-is a separate change), and are listed so that the next naming pass can fix them:
+Several v10 routine names read wrong. This lane left them as they were. **Renamed 2026-11-02** in v10 / v9 / v7 / v6 / v5
+(lane open6/kn5000-d, `scripts/renaming/rename_open6_style.sed`; new names and evidence in
+`notes/open6-kn5000-d/naming/README.md`, "N-edb08959": `Composer_SetPassword` / `_GetPassword`,
+`AccPatch_DefaultStyleByTimeSig`, `AccPatch_SyncVoice_Bass` / `_Drum`, `ComposerChordMap_GetRecord`,
+`CmpRecSet_OnMeasure` .. `_OnRhythmBank`). The old names, for reference:
 
 | routine                                                  | what it does                                                          |
 |----------------------------------------------------------|-----------------------------------------------------------------------|
@@ -114,7 +117,7 @@ BEND RANGE and two bytes of MIDI / keyboard bit fields. So the part bytes the ol
 **DSP slot records** (tags 0x61 0x63 0x64 0x65 0x66): +0 is the DSP effect number; the record's other bytes are
 that effect's parameters in order, from the v10 tables `DspFxParamCountTable` (count), `DSPCfg_LookupAndExtract_
 PtrTable` ({min, max, param id}, big-endian) and `DspParamName_Table` (`probes/dsp_slot_params.py`, committed as
-`specs/dsp_effect_params.json`). A parameter whose range passes 255 takes two bytes, big-endian; one with a
+`notes/floppy-kn5000-2026-10-29/specs/dsp_effect_params.json`). A parameter whose range passes 255 takes two bytes, big-endian; one with a
 negative minimum is a signed byte. Measured over the 23,487 DSP slot records of the floppies, that layout decodes
 every saved record of 28 of the 44 effects used; it fails in some records of CHORUS (1,640 of 1,680 fit),
 CONCERT REVERB 1 (1,613 of 1,719), WAVE REVERB 2, EXCITER and NO OPERATION, and in every record of the reverbs 18,
@@ -133,7 +136,7 @@ bit 7 of the DRUM bank byte = arranged. `AccVoiceState_Snapshot` writes them fro
 `AccStyle_InlinedBlock_Skip2` sets. `describe_lsw` types the area with the `sndarg` macro; the census
 `unknown-dump` opaque group of 63 files is gone.
 
-### SQT slot header (`specs/sqt_slot_header.json`, generator `probes/write_sqt_spec.py`)
+### SQT slot header (`notes/floppy-kn5000-2026-10-29/specs/sqt_slot_header.json`, generator `notes/floppy-kn5000-2026-10-29/probes/write_sqt_spec.py`)
 
 `probes/sqt_field_refs.py` searches every field of the song record in v5..v10 in four spellings (absolute address
 or `SEQ_SONG_RECORD+n` or any `.equ` name in the record; displacements after a song-record base; the slot accessors
@@ -154,7 +157,7 @@ with a constant BC). Results:
 The old "count" names came from an analogy; the "password" name also corrects the json's "no writer of a non-zero
 value found".
 
-### TM sound record (`specs/tm_sound_record.json`, generator `probes/gen_tm_spec.py`)
+### TM sound record (`notes/floppy-kn5000-2026-10-29/specs/tm_sound_record.json`, generator `notes/floppy-kn5000-2026-10-29/probes/gen_tm_spec.py`)
 
 `probes/tm_subcpu_refs.py` lists sub-CPU v1.42 reads through a tone-record pointer (Part_PatchRecord_Ptr, voice
 slot +0x13) or a partial-block pointer (voice slot +0x17). Results: +0x12 = `partial_flag_codes`, four 2-bit codes
@@ -207,17 +210,22 @@ orphans, not a second link convention.
 
 ## Left open (with the next step)
 
-- **N-b64487fc** (sound record: envelope pair order, LFO captions, controller groups): not settled. The sub-CPU
-  source records that its two readers of the envelope pairs disagree (`Voice_Level_ComputeTriplet` treats the
-  second byte as signed and scales it with `Detune_ScaleSymmetric`; the type-1/2 path indexes
-  `Voice_EnvelopeRate_Table` with it). The way to settle it in this repository is the SOUND EDIT pages: each page's
-  object entries carry the record offset and bit field (`SeMenu_StepParamFieldAndSend` reads entry +3, +6, +7), so
-  mapping the pages' captions (ATTACK TIME / LEVEL ...) to offsets names both bytes of each pair.
-- **125 panel bytes** keep `f<offset>` (see the table above): most are in the companion records 0xC0..0xD7, which
-  `PanelTlv_ResolvePartCompanions` fills from the part's sound through `SndParam_ResolveVoiceEntry`; tracing that
-  routine's frame offsets would name them.
-- **DSP slot packing** for 16 effects (reverbs 18-27, GEQ, ROOM, PEQ+S.DELAY, EXCITER, CHORUS's 40 odd records,
-  NO OPERATION): the parameter names are attached, the byte packing is not; `DSPCfg_ExtractPairFromStruct` /
-  `DSPCfg_ExtractFieldPair` are the readers to follow.
-- Renames this lane found but did not make (v10 / v9 / v7 / v6 / v5, a sed script each): the table under "Names
-  in the firmware that this changes".
+- **N-b64487fc** (sound record: envelope pair order, LFO captions, controller groups): envelopes and LFOs settled
+  2026-11-02 (sub-lane open6-kn5000-d/panel, notes/open6-kn5000-d/panel/README.md section 3): the SOUND EDIT page
+  handlers send each caption's value with the byte's offset as the element, so PITCH / AMPLITUDE / FILTER ENV are named
+  byte by byte (time first, then level: ATK, PEAK, DECAY1, SUST1 ...), the twelve LFO entries are DEPTH, SPEED,
+  TOUCH + KEYSYNC, WAVE + DELAY, and block +0x06 / +0x26 / +0x38 are the tones' LFO switches. The sub-CPU disagreement
+  is two record kinds (tone block vs drum-kit instrument). The seven controller groups +0x14..+0x28 are {tone
+  switches, FUNCTION, DEPTH}: group 0 the fixed PITCH BEND assignment, groups 1..6 the CONTROLLER page's FUNCTION
+  selections 1..6 (only which physical controller each page row is stays unread: the rows are icons).
+- **125 panel bytes** keep `f<offset>`: 62 named 2026-11-02 (notes/open6-kn5000-d/panel/README.md section 1): the
+  companion records 0xC0..0xD7 and 0x49 are the per-group "last sound / style" memory (`ptlv_part_vari`,
+  `ptlv_style_vari`), the descriptor pattern no longer drops 11 descriptors, MSP bank and Composer bend range are
+  named from their readers. Second pass: of the other 63, `conductor_flags` (0x90 +1) is named, 61 have no reader in
+  v5..v10 (probes/panel_f_readers.py) and are `reserved_<off>`, and 0x80 +4 is blocked (copied, never tested).
+- **DSP slot packing**: established 2026-11-02 for every effect (notes/open6-kn5000-d/panel/README.md section 2):
+  `DSPCfg_ReadMultiField` / `DSPCfg_ReadField` give each parameter a width by its op letter (big-endian words, packed
+  5/6-bit fields, bytes); every typed DSP slot record of the floppies decodes in range, and each is spelled with a
+  per-effect macro.
+- ~~Renames this lane found but did not make~~: made 2026-11-02 (lane open6/kn5000-d, N-edb08959; see "Names in the
+  firmware that this changes").

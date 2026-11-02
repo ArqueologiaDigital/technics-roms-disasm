@@ -1,0 +1,129 @@
+================================================================================================
+  bit11_xprod -- the bit-11 words across the KN5000 / SX-WSA1R homolog pairs
+================================================================================================
+
+  32 homolog pairs aligned (by effect name, rule 9 de-duplicated)
+
+  CONTROL -- decoded, non-bit-11 words whose form is once-per-image (n = 583):
+     IDENTICAL    264    45.3 %
+     SWAPPED      142    24.4 %
+     DISPLACED    134    23.0 %
+     DROPPED       43     7.4 %
+
+  THE BIT-11 WORDS (lo12 bit 11 set, C-format excluded), by lo12 and fate:
+
+     lo12   IDENTICAL  SWAPPED  DISPLACED  DROPPED
+     839            0        0          0        1
+     864            2        0          0        0
+     8BC           32        8          0        2
+     921            2        0          0        0
+     C63           88        0          4        0
+
+  8BC -- position of every occurrence (pooled, de-duplicated, all images):
+     KN  w0    x22
+     KN  w1    x2
+     WSA w0    x23
+     WSA w1    x2
+
+  the DROPPED and SWAPPED bit-11 words:
+     distortion         KN  w0   040.0.00.8BC*   SWAPPED   other: 880.1.30.8BC*
+     distortion         WSA w0   880.1.30.8BC*   SWAPPED   other: 040.0.00.8BC*
+     fuzz               KN  w0   040.0.00.8BC*   SWAPPED   other: 880.1.30.8BC*
+     fuzz               WSA w0   880.1.30.8BC*   SWAPPED   other: 040.0.00.8BC*
+     mix_up             WSA w0   040.0.00.8BC*   DROPPED   identical run after: 1 words
+     no_operation       KN  w18  80B.0.00.839*   DROPPED   identical run after: 1 words
+     overdrive          KN  w0   040.0.00.8BC*   SWAPPED   other: 880.1.30.8BC*
+     overdrive          WSA w0   880.1.30.8BC*   SWAPPED   other: 040.0.00.8BC*
+     ring_modulator     KN  w0   040.0.00.8BC*   SWAPPED   other: 880.1.30.8BC*
+     ring_modulator     WSA w0   880.1.30.8BC*   SWAPPED   other: 040.0.00.8BC*
+     s_delay_chorus     WSA w0   880.1.30.8BC*   DROPPED   identical run after: 3 words
+
+  THE RELOCATION TEST on the bit-11 words (IDENTICAL alignments only):
+     KN bodies load at I-RAM 84, SX-WSA1R bodies at 110
+     lo12   aligned-identical   moved in I-RAM   moved within the body
+     864                    1                1                       0
+     8BC                   16               16                       0
+     921                    1                1                       0
+     C63                   44               44                      41
+     -> a word byte-identical in both copies although it MOVED cannot hold an address of
+        the kind that moved with it.
+
+================================================================================================
+  --dram: the lo12 of the delay-DRAM escape words, across the same pairs
+================================================================================================
+     exciter            KN  880.1.30.407    <-> 880.1.30.00B*    lo12 407 on a neighbour: 000.2.F7.407
+     exciter            WSA 880.1.30.00B*   <-> 880.1.30.407     lo12 00B on a neighbour: no
+     no_operation       KN  880.1.30.00B*   <-> 880.1.30.000     lo12 00B on a neighbour: no
+     no_operation       WSA 880.1.30.000    <-> 880.1.30.00B*    lo12 000 on a neighbour: 000.2.04.000
+     peq_compressor     KN  880.1.30.000    <-> 880.1.30.00B*    lo12 000 on a neighbour: 000.2.4B.000
+     peq_compressor     WSA 880.1.30.00B*   <-> 880.1.30.000     lo12 00B on a neighbour: 02A.2.4B.00B*
+     peq_dist_delay     KN  880.1.60.2D9    <-> 880.1.60.000     lo12 2D9 on a neighbour: no
+     peq_dist_delay     WSA 880.1.60.000    <-> 880.1.60.2D9     lo12 000 on a neighbour: no
+     peq_dist_delay     KN  880.1.60.2D9    <-> 880.1.60.000     lo12 2D9 on a neighbour: no
+     peq_dist_delay     WSA 880.1.60.000    <-> 880.1.60.2D9     lo12 000 on a neighbour: no
+     peq_s_delay        KN  880.1.60.2D9    <-> 880.1.60.000     lo12 2D9 on a neighbour: no
+     peq_s_delay        WSA 880.1.60.000    <-> 880.1.60.2D9     lo12 000 on a neighbour: no
+     peq_s_delay        KN  880.1.60.2D9    <-> 880.1.60.000     lo12 2D9 on a neighbour: no
+     peq_s_delay        WSA 880.1.60.000    <-> 880.1.60.2D9     lo12 000 on a neighbour: no
+     ring_modulator     KN  880.1.30.407    <-> 880.1.30.00B*    lo12 407 on a neighbour: 000.2.04.407
+     ring_modulator     WSA 880.1.30.00B*   <-> 880.1.30.407     lo12 00B on a neighbour: no
+     s_delay_chorus     KN  880.1.30.407    <-> 880.1.30.000     lo12 407 on a neighbour: no
+     s_delay_chorus     WSA 880.1.30.000    <-> 880.1.30.407     lo12 000 on a neighbour: 022.2.00.000
+     s_delay_chorus     KN  880.1.60.2DA*   <-> 880.1.60.000     lo12 2DA on a neighbour: no
+     s_delay_chorus     WSA 880.1.60.000    <-> 880.1.60.2DA*    lo12 000 on a neighbour: 000.2.FF.000
+     s_delay_flanger    KN  880.1.60.2D9    <-> 880.1.60.000     lo12 2D9 on a neighbour: no
+     s_delay_flanger    WSA 880.1.60.000    <-> 880.1.60.2D9     lo12 000 on a neighbour: no
+     s_delay_flanger    KN  880.1.60.2D9    <-> 880.1.60.000     lo12 2D9 on a neighbour: no
+     s_delay_flanger    WSA 880.1.60.000    <-> 880.1.60.2D9     lo12 000 on a neighbour: no
+     s_delay_phaser     KN  880.1.60.2D9    <-> 880.1.60.000     lo12 2D9 on a neighbour: no
+     s_delay_phaser     WSA 880.1.60.000    <-> 880.1.60.2D9     lo12 000 on a neighbour: 000.2.00.000
+     s_delay_phaser     KN  880.1.60.2D9    <-> 880.1.60.000     lo12 2D9 on a neighbour: no
+     s_delay_phaser     WSA 880.1.60.000    <-> 880.1.60.2D9     lo12 000 on a neighbour: no
+     s_delay_s_delay    KN  880.1.60.2D9    <-> 880.1.60.000     lo12 2D9 on a neighbour: no
+     s_delay_s_delay    WSA 880.1.60.000    <-> 880.1.60.2D9     lo12 000 on a neighbour: no
+     s_delay_s_delay    KN  880.1.60.2D9    <-> 880.1.60.000     lo12 2D9 on a neighbour: no
+     s_delay_s_delay    WSA 880.1.60.000    <-> 880.1.60.2D9     lo12 000 on a neighbour: no
+     s_delay_s_delay    KN  880.1.60.2D9    <-> 880.1.60.000     lo12 2D9 on a neighbour: no
+     s_delay_s_delay    WSA 880.1.60.000    <-> 880.1.60.2D9     lo12 000 on a neighbour: no
+     s_delay_s_delay    KN  880.1.60.2D9    <-> 880.1.60.000     lo12 2D9 on a neighbour: no
+     s_delay_s_delay    WSA 880.1.60.000    <-> 880.1.60.2D9     lo12 000 on a neighbour: no
+     s_delay_vibrato    KN  880.1.60.2D9    <-> 880.1.60.000     lo12 2D9 on a neighbour: no
+     s_delay_vibrato    WSA 880.1.60.000    <-> 880.1.60.2D9     lo12 000 on a neighbour: no
+     s_delay_vibrato    KN  880.1.60.2D9    <-> 880.1.60.000     lo12 2D9 on a neighbour: no
+     s_delay_vibrato    WSA 880.1.60.000    <-> 880.1.60.2D9     lo12 000 on a neighbour: no
+     single_delay       KN  880.1.60.2D9    <-> 880.1.60.000     lo12 2D9 on a neighbour: no
+     single_delay       WSA 880.1.60.000    <-> 880.1.60.2D9     lo12 000 on a neighbour: no
+     single_delay       KN  880.1.60.2D9    <-> 880.1.60.000     lo12 2D9 on a neighbour: no
+     single_delay       WSA 880.1.60.000    <-> 880.1.60.2D9     lo12 000 on a neighbour: 000.2.4B.000
+
+     (only replace blocks of <= 6 words a side are listed; the tally counts all)
+     (lo12 here, lo12 there, migrated to a neighbour) -> count
+       ('000', '00B', True)  2
+       ('000', '2D4', True)  12
+       ('000', '2D9', False)  16
+       ('000', '2D9', True)  2
+       ('000', '2DA', True)  5
+       ('000', '407', True)  2
+       ('000', '40E', True)  1
+       ('000', '41A', True)  1
+       ('00B', '000', False)  1
+       ('00B', '000', True)  1
+       ('00B', '407', False)  6
+       ('2C7', '64B', False)  1
+       ('2D4', '000', False)  12
+       ('2D4', '2D5', False)  76
+       ('2D5', '2D4', False)  76
+       ('2D5', '2DA', False)  12
+       ('2D5', '41A', False)  7
+       ('2D9', '000', False)  18
+       ('2DA', '000', False)  5
+       ('2DA', '2D5', False)  12
+       ('407', '000', False)  1
+       ('407', '000', True)  1
+       ('407', '00B', True)  6
+       ('40E', '000', True)  1
+       ('41A', '000', False)  1
+       ('41A', '2D5', False)  7
+       ('64B', '2C7', False)  1
+       ('64B', '655', True)  4
+       ('655', '64B', False)  4

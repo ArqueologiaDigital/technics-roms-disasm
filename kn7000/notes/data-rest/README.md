@@ -150,7 +150,9 @@ its passes type most of the pieces listed here; that README lists what is still 
   its pointer fields stop holding addresses, or another base / name begins, capped by an index
   bound the readers check (`cmp N, rX` before the branch, or a byte index).  Where the readers
   check nothing, an all-number array can run on into the next table (listed in each macro header
-  as its count).
+  as its count).  (Resolved 2026-11-02, lane mn10300-data: `index_bounds` bounds them by the reader's index
+  check or counted loop; every struct array's macro header says where its count comes from (`count_notes`),
+  `../mn10300-data-probes/array_counts.py` lists the inferred ones; `../mn10300-data/README.md` section 3.)
 - **Field names.**  `tools/data_struct_names.py` names 17 record kinds; the rest keep offset names
   (f / p / s / a / x + offset) with every field's readers in the header.
 - **Bitmaps without MT_GetBitCount** are taken as 4 bits a pixel only when their pixels end at the
@@ -165,7 +167,9 @@ its passes type most of the pieces listed here; that README lists what is still 
   draws its five procs with DrawBitmapSP2 (they answer 1), and VwBitmapFileProc / VwJpegFileProc /
   PsUsrBmpToggleProc draw BMP / JPEG files.  The end-at-the-next-label test only guards the size.)
 - **Dispatch tables** (`{u32 key, code address}`) are named by their shape; their readers are cited
-  only where the walk sees them.
+  only where the walk sees them.  (Resolved 2026-11-02, lane mn10300-data: named after the routine that reads
+  their keys (`msg_readers`), the tables no instruction read were the slots past a 16-slot hash table's first
+  records, now that table's records (`index_bounds`); `../mn10300-data/README.md` section 3.)
 
 ## Website page draft
 

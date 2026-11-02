@@ -12356,6 +12356,7 @@
 .equ func_4C04DF54_L1e, 0x4c04df72
 .equ func_4C04DF75, 0x4c04df75
 .equ func_4C04DF75_L1e, 0x4c04df93
+.equ loc_4C04DF96, 0x4c04df96
 .equ func_4C04DFA2, 0x4c04dfa2
 .equ func_4C04DFA2_L18, 0x4c04dfba
 .equ func_4C04DFA2_L40, 0x4c04dfe2
@@ -48409,6 +48410,7 @@
 .equ func_4C129B80_entry_L3d, 0x4c129bbf
 .equ loc_4C129BC4, 0x4c129bc4
 .equ loc_4C129BCB, 0x4c129bcb
+.equ loc_4C129BE7, 0x4c129be7
 .equ func_4C129B80_entry_L6c, 0x4c129bee
 .equ func_4C129B80_entry_L6e, 0x4c129bf0
 .equ func_4C129BF3, 0x4c129bf3
@@ -48417,6 +48419,7 @@
 .equ func_4C129BF3_entry_L4a, 0x4c129c42
 .equ loc_4C129C47, 0x4c129c47
 .equ loc_4C129C50, 0x4c129c50
+.equ loc_4C129C69, 0x4c129c69
 .equ func_4C129BF3_entry_L75, 0x4c129c6d
 .equ func_4C129BF3_entry_L7b, 0x4c129c73
 .equ func_4C129C78, 0x4c129c78
@@ -62142,12 +62145,12 @@
 .equ func_4C04E666_entry_L2a_Records, 0x4c19c194
 .equ func_4C04EA50_entry_L7_Records, 0x4c19c214
 .equ func_4C04EC9A_Table, 0x4c19c220
-.equ MsgTable_4C19C2A0, 0x4c19c2a0
-.equ MsgTable_4C19C300, 0x4c19c300
-.equ MsgTable_4C19C350, 0x4c19c350
-.equ MsgTable_4C19C3B0, 0x4c19c3b0
+.equ func_4C04EE11_MsgTable, 0x4c19c2a0
+.equ func_4C04EE11_MsgTable_2, 0x4c19c300
+.equ func_4C04EE11_MsgTable_3, 0x4c19c350
+.equ func_4C04EE11_MsgTable_4, 0x4c19c3b0
 .equ func_4C04EE11_Table, 0x4c19c3e0
-.equ MsgTable_4C19C3F0, 0x4c19c3f0
+.equ func_4C04EE11_MsgTable_5, 0x4c19c3f0
 .equ func_4C04EE3D_entry_L14b_Table, 0x4c19c410
 .equ func_4C04FD66_L6_Table, 0x4c19c418
 .equ func_4C04FEDC_Table, 0x4c19c498
@@ -62580,8 +62583,6 @@
 .equ func_4C098DC0_Table, 0x4c1ca25c
 .equ func_4C098F2D_entry_L186_Table, 0x4c1ca264
 .equ func_4C098F2D_entry_L1ae_Table, 0x4c1ca27c
-.equ TgVoiceEgSegParamGet_Table, 0x4c1ca294
-.equ TgVoiceEgSegFlagTest_Table, 0x4c1ca298
 .equ TgPartProgramHandlerDispatch_Records, 0x4c1ca29c
 .equ func_4C0984F6_entry_L15_Records, 0x4c1ca31c
 .equ func_4C098A90_entry_Lb1_Table, 0x4c1ca39c
@@ -64801,7 +64802,7 @@
 .equ SplitPoint_Table, 0x4c235458
 .equ Str_s_2d_2, 0x4c23545c
 .equ R12OctaveFunc_L1c_Records, 0x4c235464
-.equ data_4C2354E4, 0x4c2354e4
+.equ func_4C0FE8A1_Voicing, 0x4c2354e4
 .equ func_4C0FF1C3_entry_L49_Records, 0x4c236920
 .equ ChordFinderTYPE_L48_Table, 0x4c236c70
 .equ TtChordFinder_Table, 0x4c236d0c

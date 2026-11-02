@@ -47987,7 +47987,7 @@ func_4855E9B7:
     add     -0x10, sp
 func_4855E9B7_entry:
     mov     0x50083ce4, a0
-    mov     func_4852F720_Var_18, a1
+    mov     func_4855E86A_Table+8, a1
     call    func_4852F720, 0, 0
     ret     0, 0x10
 
@@ -48045,7 +48045,7 @@ func_4855EA76:
     add     -0x10, sp
 func_4855EA76_entry:
     mov     0x50083ce4, d2
-    mov     func_4852F720_Var_18, a3
+    mov     func_4855E86A_Table+8, a3
     mov     d2, a0
     mov     a3, a1
     call    func_4852F795, 0, 0

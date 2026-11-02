@@ -964,7 +964,7 @@ ToneGen_WriteReg0840_Shadow2E_Next:
 ; ToneGen_WriteVoice_TvfRegs_Dup: Unreferenced, instruction-for-instruction copy of ToneGen_WriteVoice_TvfPair:
 ;   writes the voice's TVF (filter) register pair, TG 0x100+ch <- shadow +0x08 and 0x140+ch <- +0x0A. Basis: the live
 ;   twin's callers -- TVF_Refresh_Sounding_Voices (TVF_Refresh_Sounding_Voices) calls the twin right after
-;   TVF_Emit_Registers / Voice_PanReg_WriteDispatchB have put the clamped cutoff word and the second filter word into
+;   TVF_Emit_Registers / TVF_Emit_Registers_Type2 have put the clamped cutoff word and the second filter word into
 ;   0x0451D4 / 0x0451D6 = staging +0x08 / +0x0A.
 ToneGen_WriteVoice_TvfRegs_Dup:
 	dec	4, xsp

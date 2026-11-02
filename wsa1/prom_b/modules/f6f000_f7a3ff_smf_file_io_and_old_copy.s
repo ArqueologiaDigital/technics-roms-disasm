@@ -15521,7 +15521,7 @@ SmfWrite_CreateFileWithFirstWindow_Return:
 ; --------------------------------------------------------------------------
 ; SmfWrite_WriteFirstWindow: Disk_Flags |= 0x20, T_DiskApi_WriteFileFromWindow_Entry, A := Disk_LastError, the flag
 ;   cleared again -- the first 1,024-byte window of the .MID file. SmfWrite_CreateFileWithFirstWindow runs it last,
-;   after the free-space check, the delete and SmfWrite_SetOutputWindow; copy A of SmfOut_WriteFirstWindow. Basis:
+;   after the free-space check, the delete and SmfWrite_SetOutputWindow; its copies are SmfWriteCopy_WriteFirstWindow (copy D) and SmfWrite_WriteFirstWindow_Copy2 (copy E). Basis:
 ;   caller + body + twin. (notes/naming-pilot-2026-10-06/proposals_wave7_z.json)
 SmfWrite_WriteFirstWindow:
 	or	(Disk_Flags:16), 0x20	; F7664E  or (0x21e7),0x20
@@ -18373,7 +18373,7 @@ SmfOut_CreateFileWithFirstWindow_Return:
 ; SmfWriteCopy_WriteFirstWindow: Disk_Flags |= 0x20, T_DiskApi_WriteFileFromWindow_Entry, A := Disk_LastError, the
 ;   flag cleared again: writes the first 1,024-byte window of the .MID file; byte-identical to copy A's
 ;   SmfWrite_WriteFirstWindow. SmfOut_CreateFileWithFirstWindow, reached only from copy C (SmfWriteCopy_*), runs it
-;   last. SmfOut_WriteFirstWindow is already the label of a third identical copy at 0xF77F9A. Basis: caller + body +
+;   last. SmfWrite_WriteFirstWindow_Copy2 (0xF77F9A) is a third identical copy, in the unreached copy E. Basis: caller + body +
 ;   twin. (notes/naming-pilot-2026-10-06/proposals_wave10_b10.json)
 SmfWriteCopy_WriteFirstWindow:
 	or	(Disk_Flags:16), 0x20	; F77DB3  or (0x21e7),0x20
@@ -18572,7 +18572,7 @@ InputStream_Refill_Copy2:
 ; Called from: in-module: 0xF77EE3
 ; Touches: (0x10C5) (0x10C6) (0x10C7) (0x21D0) (0x21D1) (0x21D2) (0x21E7)
 ;          (0x2243) (0x2245)
-; Calls:   T_DiskSave_CheckFreeSpace T_DiskApi_DeleteFile_Call sub_F77FD6 SmfOut_WriteFirstWindow
+; Calls:   T_DiskSave_CheckFreeSpace T_DiskApi_DeleteFile_Call SmfWrite_SetOutputWindow_Copy2 SmfWrite_WriteFirstWindow_Copy2
 ; Evidence (BRANCH): a branch decoded inside this block targets it, and the
 ;                    block's own code is reached from the grades above.
 ;                    0xF77F2A is an instruction boundary of this
@@ -18583,21 +18583,31 @@ InputStream_Refill_Copy2:
 ; --------------------------------------------------------------------------
 ; InputStream_RefillDone_Copy2: Clears Disk_Flags bit 1 and returns W = 1 -- an exact copy of InputStream_RefillDone,
 ;   reached only through the veneer at 0xF77EE3 (copy D's twin veneer at 0xF77CFC calls InputStream_RefillDone_Copy).
-;   The bytes after its ret (0xF77F32-0xF77F99, holding the labels sub_F77F2A_Skip / _Return) are a separate unreached
+;   The bytes after its ret (0xF77F32-0xF77F99) are SmfWrite_CreateFileWithFirstWindow_Copy2, a separate unreached
 ;   copy of SmfOut_CreateFileWithFirstWindow. Basis: veneer position + body (exact copy) + twin. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave11_a11.json)
 InputStream_RefillDone_Copy2:
 	and	(Disk_Flags:16), 0xfd	; F77F2A  and (0x21e7),0xfd
 	ld	w, 1:opc	; F77F2F  ld W,0x01
 	ret	; F77F31  ret
+; SmfWrite_CreateFileWithFirstWindow_Copy2: copy E's SmfWrite_CreateFileWithFirstWindow -- instruction for instruction
+;   SmfOut_CreateFileWithFirstWindow (copy D), except that it calls copy E's own SmfWrite_SetOutputWindow_Copy2 and
+;   SmfWrite_WriteFirstWindow_Copy2.  Free-space check for SmfOut_TrackLength + 22, extension 'MID', delete, Disk_Flags
+;   bit 7, window, first window.  Was unlabelled after InputStream_RefillDone_Copy2 (kn5000-wxn).
+;   COPY E: 0xF77EE7-0xF77FE8 is a third copy of the SMF writer's file layer -- copy A InputStream_OpenAndReadFirstBlock
+;   (0xF7659B) .. SmfWrite_SetOutputWindow, copy D InputStream_OpenAndReadFirstBlock_Copy (0xF77D00) .., every routine at
+;   the same offset (+0x00 / +0x39 / +0x43 / +0x4B / +0xB3 / +0xC6 / +0xD4 / +0xEF).  Nothing outside it reaches it:
+;   its only callers are its own internal calls and the three veneers at 0xF77EDB / 0xF77EDF / 0xF77EE3, which nothing
+;   calls (no call, calr, jp, jr or 24-bit operand in prom_a or prom_b; notes/open6-kn5000-d/wsa1/probes/wsa1_wxn_refs.py).
+SmfWrite_CreateFileWithFirstWindow_Copy2:
 	xor	de, de	; F77F32  xor DE,DE
 	ld	d, (SmfOut_TrackLength+1:16)	; F77F34  ld D,(0x10c5)
 	ld	w, (SmfOut_TrackLength+2:16)	; F77F38  ld W,(0x10c6)
 	ld	a, (SmfOut_TrackLength+3:16)	; F77F3C  ld A,(0x10c7)
 	add	wa, 22	; F77F40  add WA,0x0016
-	jr	nov, sub_F77F2A_Skip	; F77F44  jr PO/NOV,0xf77f48
+	jr	nov, SmfWrite_CreateFileWithFirstWindow_Copy2_Skip	; F77F44  jr PO/NOV,0xf77f48
 	inc	1, d	; F77F46  inc 1,D
-sub_F77F2A_Skip:
+SmfWrite_CreateFileWithFirstWindow_Copy2_Skip:
 	srl	wa, 4	; F77F48  srl 0x04,WA
 	sla	de, 4	; F77F4B  sla 0x04,DE
 	and	de, 61440	; F77F4E  and DE,0xf000
@@ -18608,7 +18618,7 @@ sub_F77F2A_Skip:
 	call	T_DiskSave_CheckFreeSpace	; F77F5E  call 0xf425e8
 	ld	w, (Disk_LastError:16)	; F77F62  ld W,(0x2243)
 	cp	w, 0:i3	; F77F66  cp W,0
-	jr	nz, sub_F77F2A_Return	; F77F68  jr NZ,0xf77f99
+	jr	nz, SmfWrite_CreateFileWithFirstWindow_Copy2_Return	; F77F68  jr NZ,0xf77f99
 	ld	(Disk_FileName+8:16), 77	; F77F6A  ld (0x21d0),0x4d
 	ld	(Disk_FileName+9:16), 73	; F77F6F  ld (0x21d1),0x49
 	ld	(Disk_FileName+10:16), 68	; F77F74  ld (0x21d2),0x44
@@ -18617,60 +18627,51 @@ sub_F77F2A_Skip:
 	ld	(Disk_FileName+8:16), 77	; F77F82  ld (0x21d0),0x4d
 	ld	(Disk_FileName+9:16), 73	; F77F87  ld (0x21d1),0x49
 	ld	(Disk_FileName+10:16), 68	; F77F8C  ld (0x21d2),0x44
-	call	sub_F77FD6	; F77F91  call 0xf77fd6
-	call	SmfOut_WriteFirstWindow	; F77F95  call 0xf77f9a
-sub_F77F2A_Return:
+	call	SmfWrite_SetOutputWindow_Copy2	; F77F91  call 0xf77fd6
+	call	SmfWrite_WriteFirstWindow_Copy2	; F77F95  call 0xf77f9a
+SmfWrite_CreateFileWithFirstWindow_Copy2_Return:
 	ret	; F77F99  ret
 
-; --------------------------------------------------------------------------
-; SmfOut_WriteFirstWindow
-; Called from: in-module: 0xF77F95
-; Touches: (0x126C) (0x21E7) (0x2243)
-; Calls:   T_DiskApi_WriteFileFromWindow_Entry T_DiskApi_CloseFile_Call
-; Evidence (CALL): an opcode-anchored `call`/`jp addr24` in prom_a or prom_b
-;                  targets it.  The scan is at every byte offset, so a hit
-;                  is an upper bound on the CALL COUNT -- but a hit that
-;                  decodes is still a real instruction.  0xF77F9A is an
-;                  instruction boundary of this transcription, re-asserted
-;                  on every emit.  The name IS the address.
-; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
-;          per this tree's rule that a stated gap beats a plausible guess.
-; --------------------------------------------------------------------------
-; SmfOut_WriteFirstWindow: Disk_Flags |= 0x20, T_DiskApi_WriteFileFromWindow_Entry, A = Disk_LastError, the flag cleared again -- the
-;   SMF writer's first window (the code after it writes a continuation with bit 1, and the final flush closes).
-SmfOut_WriteFirstWindow:
+; SmfWrite_WriteFirstWindow_Copy2: copy E's SmfWrite_WriteFirstWindow, byte-identical to it and to copy D's
+;   SmfWriteCopy_WriteFirstWindow: Disk_Flags |= 0x20, T_DiskApi_WriteFileFromWindow_Entry, A := Disk_LastError, the
+;   flag cleared again.  Called only by SmfWrite_CreateFileWithFirstWindow_Copy2.  Was SmfOut_WriteFirstWindow, a name
+;   that read as the live writer's (kn5000-wxn).
+;   COPY E: 0xF77EE7-0xF77FE8 is a third copy of the SMF writer's file layer -- copy A InputStream_OpenAndReadFirstBlock
+;   (0xF7659B) .. SmfWrite_SetOutputWindow, copy D InputStream_OpenAndReadFirstBlock_Copy (0xF77D00) .., every routine at
+;   the same offset (+0x00 / +0x39 / +0x43 / +0x4B / +0xB3 / +0xC6 / +0xD4 / +0xEF).  Nothing outside it reaches it:
+;   its only callers are its own internal calls and the three veneers at 0xF77EDB / 0xF77EDF / 0xF77EE3, which nothing
+;   calls (no call, calr, jp, jr or 24-bit operand in prom_a or prom_b; notes/open6-kn5000-d/wsa1/probes/wsa1_wxn_refs.py).
+SmfWrite_WriteFirstWindow_Copy2:
 	or	(Disk_Flags:16), 0x20	; F77F9A  or (0x21e7),0x20
 	call	T_DiskApi_WriteFileFromWindow_Entry	; F77F9F  call 0xf425ac
 	ld	a, (Disk_LastError:16)	; F77FA3  ld A,(0x2243)
 	and	(Disk_Flags:16), 0xdf	; F77FA7  and (0x21e7),0xdf
 	ret	; F77FAC  ret
+; SmfWrite_WriteNextWindow_Copy2: copy E's SmfWrite_WriteNextWindow (byte-identical; copy D's is
+;   SmfOut_WriteNextWindow): Disk_Flags |= 0x02, T_DiskApi_WriteFileFromWindow_Entry, A := Disk_LastError.  Unreached
+;   (copy E, see SmfWrite_CreateFileWithFirstWindow_Copy2).  Was unlabelled (kn5000-wxn).
+SmfWrite_WriteNextWindow_Copy2:
 	or	(Disk_Flags:16), 0x02	; F77FAD  or (0x21e7),0x02
 	call	T_DiskApi_WriteFileFromWindow_Entry	; F77FB2  call 0xf425ac
 	ld	a, (Disk_LastError:16)	; F77FB6  ld A,(0x2243)
 	ret	; F77FBA  ret
+; SmfWrite_WriteLastWindowAndClose_Copy2: copy E's SmfWrite_WriteLastWindowAndClose (byte-identical;
+;   copy D's is SmfOut_WriteLastWindowAndClose): flush the last window when SmfOut_WindowsFlushed is non-zero, clear
+;   Disk_Flags bit 1, T_DiskApi_CloseFile_Call.  Unreached (copy E).  Was unlabelled (kn5000-wxn).
+SmfWrite_WriteLastWindowAndClose_Copy2:
 	cpw	(SmfOut_WindowsFlushed:16), 0x0000	; F77FBB  cp (0x126c),0x0000
-	jr	z, SmfOut_WriteFirstWindow_Skip	; F77FC1  jr Z,0xf77fcc
+	jr	z, SmfWrite_WriteLastWindowAndClose_Copy2_Skip	; F77FC1  jr Z,0xf77fcc
 	or	(Disk_Flags:16), 0x02	; F77FC3  or (0x21e7),0x02
 	call	T_DiskApi_WriteFileFromWindow_Entry	; F77FC8  call 0xf425ac
-SmfOut_WriteFirstWindow_Skip:
+SmfWrite_WriteLastWindowAndClose_Copy2_Skip:
 	and	(Disk_Flags:16), 0xfd	; F77FCC  and (0x21e7),0xfd
 	call	T_DiskApi_CloseFile_Call	; F77FD1  call 0xf425e4
 	ret	; F77FD5  ret
 
-; --------------------------------------------------------------------------
-; sub_F77FD6
-; Called from: in-module: 0xF77F91
-; Touches: (0x21D3) (0x21D7)  |  0x60A700 0x60AB00
-; Evidence (CALL): an opcode-anchored `call`/`jp addr24` in prom_a or prom_b
-;                  targets it.  The scan is at every byte offset, so a hit
-;                  is an upper bound on the CALL COUNT -- but a hit that
-;                  decodes is still a real instruction.  0xF77FD6 is an
-;                  instruction boundary of this transcription, re-asserted
-;                  on every emit.  The name IS the address.
-; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
-;          per this tree's rule that a stated gap beats a plausible guess.
-; --------------------------------------------------------------------------
-sub_F77FD6:
+; SmfWrite_SetOutputWindow_Copy2: copy E's SmfWrite_SetOutputWindow, byte-identical: Disk_WindowStart := 0x60A700,
+;   Disk_WindowEnd := 0x60AB00, the 1,024-byte output window.  Called only by SmfWrite_CreateFileWithFirstWindow_Copy2.
+;   Was sub_F77FD6 (kn5000-wxn).
+SmfWrite_SetOutputWindow_Copy2:
 	ld	xwa, 6334208	; F77FD6  ld XWA,0x0060a700
 	ld	(Disk_WindowStart:16), xwa	; F77FDB  ld (0x21d3),XWA
 	ld	xwa, 6335232	; F77FDF  ld XWA,0x0060ab00

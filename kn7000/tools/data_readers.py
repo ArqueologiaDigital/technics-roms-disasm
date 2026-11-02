@@ -201,7 +201,7 @@ class Reader:
 
     def __init__(self, src_glob, labels, in_data, distinct=False, ext=False, callee=False, array_end=False,
                  mem_ptrs=False, loop_index=False, chains=False, word=None, top_tested=False,
-                 fld_slots=False):
+                 fld_slots=False, sib_rules=()):
         self.in_data = in_data          # CPU address -> bool
         self.distinct = distinct
         self.labels = labels            # name -> CPU address (data and code)
@@ -214,6 +214,12 @@ class Reader:
         # bring to a label into a T value (one of them), and give a call's a0 what the callee
         # returns there (a first walk collects each function's returned addresses)
         self.ext, self.returns, self.tgt_origin, self.returns_p = ext, {}, {}, {}
+        # (lane mn10300-data, the siblings: gen_data_s FEATURES sib_*) single rules of ext without the rest:
+        #   fieldret    a call's a0 is the pointer field its callee returns (returns_p)
+        #   loopslots   a label reached only by a backward branch keeps the frame's slots
+        #   reloadbound a load into a register drops the index bound a `cmp` gave its old value
+        #   setlb       a constant in a register before `setlb` is a loop counter, not that constant
+        self.sib = frozenset(sib_rules) if not ext else frozenset(("fieldret", "loopslots", "reloadbound", "setlb"))
         # callee (lane callee-walk): the arguments a call passes on the stack (`mov aN, (0x18, sp)`
         # ... `call F`) are F's parameters sp24 ..., read in F as (0x18 + F's frame, sp); the frame's
         # slots are followed (the stack-slot rule of ext, also without the rest of ext); and each
@@ -653,7 +659,7 @@ class Reader:
                         # addresses and parameters the dispatch held [INFERENCE: a label a loop reaches
                         # backwards takes them too]
                         st, last_load = dict(ijmp), {}
-                    elif dead and came is None and self.ext:
+                    elif dead and came is None and "loopslots" in self.sib:
                         # reached only by a backward branch (a loop body the compiler puts before its
                         # test): the frame's slots keep what the code before the loop stored there
                         # [INFERENCE: a slot the loop rewrites, a stepped pointer, keeps its start]
@@ -1202,7 +1208,7 @@ class Reader:
                 else:
                     st[dst] = None
                     last_load.pop(dst, None)
-                    if self.ext:
+                    if "reloadbound" in self.sib:
                         # a bound a `cmp` gave the register's old value is not the loaded one's
                         st.pop("#b" + dst, None)
                         if w == 1:
@@ -1345,7 +1351,7 @@ class Reader:
                 last_load.pop(r, None)
             if self.rets_t and tgt in self.returns:
                 st["a0"] = T(self.returns[tgt])
-            elif self.ext and tgt in self.returns_p:
+            elif "fieldret" in self.sib and tgt in self.returns_p:
                 st["a0"] = self.returns_p[tgt]
             elif tgt in self.ret_val:
                 st["a0"] = self.ret_val[tgt]
@@ -1364,7 +1370,7 @@ class Reader:
                 self._retv[func].add(v if v is not None and v[0] == "P" and v[1][0] == "fld" and v[2] == 0
                                      and not v[3] else None)
             return
-        if op == "setlb" and self.ext:
+        if op == "setlb" and "setlb" in self.sib:
             # the head of a hardware loop (setlb .. Lcc): a register the code set to a constant before
             # it is a loop counter or index here, not that constant
             for r in REGS:

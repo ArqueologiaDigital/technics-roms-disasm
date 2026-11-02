@@ -258,7 +258,10 @@ varies from run to run).
   and stops before the terminator, written `.space 4, 0xFF`), `func_48440E4D_Records` (3 "User Bank"
   records, not 6), `data_50001850_p0_1` (a pseudo-record over three RAM pointer variables), build 935's
   64-character map at 0x48613508 (was a string running into the next record, now a 64-byte piece of
-  printable bytes).  `typer_stats.py` lists them.
+  printable bytes).  `typer_stats.py` lists them.  (Resolved 2026-11-02, lane mn10300-data: the end words are
+  their tables' `_End` items (`table_terminators`), the 935 map's printable 94 bytes are text
+  (`printable_runs`), `func_48440E4D_Records` has the 3 records the image holds; `../mn10300-data/README.md`
+  section 3.)
 - ~~Field names stay offset-named~~ (lane mn10300-rest, section 4: 941 630 -> 257 fields with a reader).
 
 ## Website page draft

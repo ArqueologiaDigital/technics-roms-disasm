@@ -24,7 +24,7 @@ TOOLS = {"icons_png": "scripts/build/icon_images.py", "fonts": "scripts/build/fo
          "ui_bitmaps": "scripts/build/ui_bitmaps_images.py"}
 GEN = re.compile(rb'^(\w+:\s*\.incbin\s+"includes/generated/(\w+)\.bin"[^;]*?)(\s*;\s*(.*))?$')
 DEMO = re.compile(rb'(\.incbin\s+"includes/demo_presets/demo_preset_(\d\d)_compressed\.bin".*census: generated -- '
-                  rb'midi_to_preset\.py \+ compress_lzss\.py --strict, from )demo_presets/midi( \+ sidecar)')
+                  rb'midi_to_preset\.py \+ compress_lzss\.py \(lzss_j\.encode, the factory encoder\), from )demo_presets/midi( \+ sidecar)')
 
 
 def main():

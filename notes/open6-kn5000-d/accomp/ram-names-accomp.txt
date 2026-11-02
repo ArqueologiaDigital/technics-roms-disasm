@@ -1,0 +1,23 @@
+0x32d7 ACC_CHORD_FLAGS ; the accompaniment's copy of CHORD_FLAGS (AccChord_ReadAndStoreKeys; from 0x2306 instead while 0x2308 is set by AccompValidate_StoreResult, [INFERENCE] a song chord track): bit 1 = on-bass chord (bass plays ACC_CHORD_BASS, Rhythm_CrossVoiceCorrect), bit 0 = every converted note becomes the C of its octave (Rhythm_NoteRangeCheck)
+0x32d8 ACC_CHORD_TYPE ; chord type 1..41 the patterns are converted for (AccChord_ReadAndStoreKeys from CHORD_TYPE or 0x2300); 0 = no chord: converted notes become 0; indexes Rhythm_InstrMapTable_* / Rhythm_PitchShiftTable_* (clamped below 0x30)
+0x32d9 ACC_CHORD_ROOT ; chord root 1 = C .. 12 = B; Rhythm_TransposeNote adds root - 1 (minus 12 above the part's turnover)
+0x32da ACC_CHORD_BASS ; bass root 1..12, = ACC_CHORD_ROOT unless ACC_CHORD_FLAGS bit 1 (AccChord_ReadAndStoreKeys); Rhythm_TransposeNote uses it for the BASS part (0x32f4 bit 3)
+0x32db ACC_CHORD_PREV_FLAGS ; ACC_CHORD_FLAGS of the previous tick (Rhythm_CompareAndTrigger / Rhythm_SaveNoteState)
+0x32dc ACC_CHORD_PREV_TYPE ; ACC_CHORD_TYPE of the previous tick; AccChord_CompareAndSetDirty raises 0x32f3 bit 5 when the type or bass changed; during an ending a released chord (type 0) is replaced by it (AccChord_ReadAndStoreKeys)
+0x32dd ACC_CHORD_PREV_ROOT ; ACC_CHORD_ROOT of the previous tick
+0x32de ACC_CHORD_PREV_BASS ; ACC_CHORD_BASS of the previous tick
+0x32df ACC_CHORD_VOICED_TYPE ; the chord the buffered notes were last converted for: Rhythm_CompareAndTrigger re-converts the ring buffers and sounding notes (Rhythm_NoteOnAfterSetup_A/B/C) when ACC_CHORD_TYPE / _ROOT / _BASS differ from it
+0x32e0 ACC_CHORD_VOICED_ROOT ; root of ACC_CHORD_VOICED_TYPE
+0x32e1 ACC_CHORD_VOICED_BASS ; bass root of ACC_CHORD_VOICED_TYPE
+0x332d ACC_BASS_FLOOR_ON ; bit 0: Rhythm_CrossVoiceCorrect set a floor for the next Rhythm_TransposeNote (cleared by it)
+0x332e ACC_BASS_FLOOR ; lowest note the BASS root note may take: pattern note + turnover + 1 - 12 (Rhythm_CrossVoiceCorrect); Rhythm_TransposeNote adds 12 below it
+0x3433 ACC_EVENT_EXT1 ; byte 6 of a 0x91 pattern note (AccMidi_ParseNoteOn): its shift for seventh-family chords (Rhythm_PitchShiftTable_Default selector 1): low nibble = semitones, bit 4 = down, bit 5 = drop the note
+0x3434 ACC_EVENT_EXT2 ; byte 7 of a 0x91 pattern note: its shift for minor-family chords (selector 2), coded as ACC_EVENT_EXT1
+0x3435 ACC_EVENT_PATTERN_NOTE ; the pattern note before conversion (AccBuf_WriteExtendedEvent), kept as the ring record's last byte so a chord change can convert it again
+0x332a ACC_LANES_PARKED ; lanes (bits 0-5) parked at their 0x83 end marker during an ending (AccVoice_ActivatePart); all six -> 0x3283 bit 2 and the byte is cleared
+0x3498 ACC_SYNCHRO_KEY_EVENT ; bit 0 = a chord-zone key went down (AccAutoPlay_NoteDispatch / AccAutoPlay_SplitDetect), bit 7 = a key went down in this pass; read by AccAutoPlay_TriggerCheck
+0x3499 ACC_SYNCHRO_TRIGGERED ; bit 0: the chord-zone key event has been handled (AccAutoPlay_Trigger_Process); cleared when the keys are released
+0x349a ACC_CHORD_KEYS_PREV ; word: chord-zone keys held before the last key event (AccAutoPlay_ZoneTrack)
+0x349c ACC_CHORD_KEYS_NOW ; word: chord-zone keys held now (AccAutoPlay_ZoneTrack_Apply); 0 after non-zero with SYNCHRO armed = synchro stop (AccAutoPlay_Trigger_Activate)
+0x346d ACC_SYNCHRO_STATE ; bit 7 = synchro allowed (AccAutoPlay_SetConfig), bit 2 = start requested now, bit 0 / 1 = start deferred to the main loop (AccAutoPlay_DeferredAction), bit 3 = started / stop cancelled, bit 4 = stopped by chord release (AccAutoPlay_SeqHandoff)
+0x346e ACC_SYNCHRO_ACTION ; bits 5-7 = the transport action AccAutoPlay_ActionDispatch performs (0xa0 = AccPlayMode_StartAccPlayFull), set by AccAutoPlay_Configure / _ModeDecode; bit 2 = re-check pending (AccAutoPlay_PeriodicCheck)

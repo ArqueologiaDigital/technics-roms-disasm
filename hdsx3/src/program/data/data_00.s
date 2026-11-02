@@ -12835,11 +12835,12 @@ SET_TOOLS_PAGECTRL_page:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B3F34, 0x0B3F38
 SEPARATE_OUTPUT_MIXER_window:
 	.space	4, 0xFF
-SEPARATE_OUTPUT_MIXER_KssAudioOutput1_sel_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3F3C, 0x0B3F40
-SEPARATE_OUTPUT_MIXER_KssAudioOutput1_en_paradraw:
-	.space	4, 0x00
+
+SEPARATE_OUTPUT_MIXER_KssAudioOutput1_sel_num:	# u16, initial value of a RAM variable: the KssAudioOutput SEPARATE_OUTPUT_MIXER_KssAudioOutput1's `sel_num` (+0x24), loaded and dereferenced by KssAudioOutputProc 0x9782571B: `mov (0x24, a0), a0` -> `movhu (a0), d0`
+	.word	5
+	.align	4, 0xFF	# pad after SEPARATE_OUTPUT_MIXER_KssAudioOutput1_sel_num
+SEPARATE_OUTPUT_MIXER_KssAudioOutput1_en_paradraw:	# u32, initial value of a RAM variable: the KssAudioOutput SEPARATE_OUTPUT_MIXER_KssAudioOutput1's `en_paradraw` (+0x28), loaded and dereferenced by KssAudioOutputProc 0x9782571B: `mov (0x28, a0), a0` -> `mov d0, (a0)`
+	.long	0
 TENT_WRITE_selected:
 	.space	4, 0x00
 CANEL1_selected:
@@ -12860,20 +12861,21 @@ EXP_PEDAL2_selected:
 	.space	4, 0x00
 CUSTOM_LYRICS_window:
 	.space	4, 0xFF
-TlxSongName_str_adr:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3F6C, 0x0B3F70
+TlxSongName_str_adr:	# u32, initial value of a RAM variable: the KssText TlxSongName's `str_adr` (+0x38), loaded and dereferenced by KssTextProc 0x97830472: `mov (0x38, a0), a0` -> `mov d1, (a0)`
+	.long	0x50d418
 
 TlxInterpreter_str_adr:	.asciz "0\xD4P"
 TlxInfo_str_adr:	.asciz "4\xD4P"
 TlxMeasure_str_adr:	.asciz "8\xD4P"
 TlxTimeSig_str_adr:	.asciz "2\xD4P"
-TlxBox_pEnable:
-	.space	4, 0x00
+
+TlxBox_pEnable:	# u32, initial value of a RAM variable: the KssXLyricsBox TlxBox's `pEnable` (+0x20), loaded and dereferenced by KssXLyricsBoxProc 0x97830AA5: `mov (0x20, a0), a0` -> `mov d0, (a0)`
+	.long	0
+
 TlxChord_str_adr:	.asciz "6\xD4P"
-CUSTOM_LYRICS_KssLabel_CUSTOM_LYRICS_CHORDS_str_adr:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3F88, 0x0B3F8C
+
+CUSTOM_LYRICS_KssLabel_CUSTOM_LYRICS_CHORDS_str_adr:	# u32, initial value of a RAM variable: the KssLabel CUSTOM_LYRICS_KssLabel_CUSTOM_LYRICS_CHORDS's `str_adr` (+0x30), loaded and dereferenced by KssLabelProc 0x978301C6: `mov (0x30, a0), a0` -> `mov d1, (a0)`
+	.long	0x51a6e3
 HDD_FLS_SELECT_window:
 	.space	4, 0xFF
 HDD_FLS_SELECT_ScreenMenu_OK_selected:
@@ -12882,23 +12884,21 @@ ScrBut_EditFlsName_selected:
 	.space	4, 0x00
 HDD_FLS_SELECT_ScreenMenu1_selected:
 	.space	4, 0x00
-CLS_Dir_List_str_adr:
-	.space	4, 0x00
-CLS_Dir_List_sel_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FA0, 0x0B3FA4
-CLS_Dir_List_en_paradraw:
-	.space	4, 0x00
+CLS_Dir_List_str_adr:	# u32, initial value of a RAM variable: the KSSCLSList CLS_Dir_List's `str_adr` (+0x2C), loaded and dereferenced by KSSCLSListProc 0x97828DBA: `mov (0x2c, a0), a0` -> `mov (a0), d0`
+	.long	0
+CLS_Dir_List_sel_num:	# u16, initial value of a RAM variable: the KSSCLSList CLS_Dir_List's `sel_num` (+0x34), loaded and dereferenced by KSSCLSListProc 0x97828DBA: `mov (0x34, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after CLS_Dir_List_sel_num
+CLS_Dir_List_en_paradraw:	# u32, initial value of a RAM variable: the KSSCLSList CLS_Dir_List's `en_paradraw` (+0x40), loaded and dereferenced by KSSCLSListProc 0x97828DBA: `mov (0x40, a0), a0` -> `mov d0, (a0)`
+	.long	0
 FILE_DEL_OPTIONS_window:
 	.space	4, 0xFF
 FILE_DEL_OPTIONS_ScreenMenu_DELETE_selected:
 	.space	4, 0x00
-FileDelSetSfxBox_pulSelectable:
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FB0, 0x0B3FB4
-FileDelSetSfxBox_pulYesNo:
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FB4, 0x0B3FB8
+FileDelSetSfxBox_pulSelectable:	# u32, initial value of a RAM variable: the KssSetSfx_DISP FileDelSetSfxBox's `pulSelectable` (+0x30), loaded and dereferenced by KssSetSfx_DISPProc 0x9781F096: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	3967
+FileDelSetSfxBox_pulYesNo:	# u32, initial value of a RAM variable: the KssSetSfx_DISP FileDelSetSfxBox's `pulYesNo` (+0x34), loaded and dereferenced by KssSetSfx_DISPProc 0x9781F096: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	3967
 SORTED_LIST_window:
 	.space	4, 0xFF
 SETUP_TOOL1_parent:
@@ -12920,79 +12920,79 @@ SETUP_TOOL2_ScreenMenu_ABOUT_HELP_selected:
 HDD_SETTOOLSPAR_1_selected:
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FDC, 0x0B3FE0
-HDD_SETTOOLSPAR_1_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FE0, 0x0B3FE4
+HDD_SETTOOLSPAR_1_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_1's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	1
+	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_1_num
 HDD_SETTOOLSPAR_2_selected:
 	.space	4, 0x00
-HDD_SETTOOLSPAR_2_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FE8, 0x0B3FEC
+HDD_SETTOOLSPAR_2_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_2's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	1
+	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_2_num
 HDD_SETTOOLSPAR_3_selected:
 	.space	4, 0x00
-HDD_SETTOOLSPAR_3_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FF0, 0x0B3FF4
+HDD_SETTOOLSPAR_3_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_3's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_3_num
 HDD_SETTOOLSPAR_4_selected:
 	.space	4, 0x00
-HDD_SETTOOLSPAR_4_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FF8, 0x0B3FFC
+HDD_SETTOOLSPAR_4_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_4's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_4_num
 HDD_SETTOOLSPAR_5_selected:
 	.space	4, 0x00
-HDD_SETTOOLSPAR_5_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4000, 0x0B4004
+HDD_SETTOOLSPAR_5_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_5's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_5_num
 HDD_SETTOOLSPAR_6_selected:
 	.space	4, 0x00
-HDD_SETTOOLSPAR_6_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4008, 0x0B400C
+HDD_SETTOOLSPAR_6_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_6's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	1
+	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_6_num
 HDD_SETTOOLSPAR_7_selected:
 	.space	4, 0x00
-HDD_SETTOOLSPAR_7_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4010, 0x0B4014
+HDD_SETTOOLSPAR_7_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_7's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	1
+	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_7_num
 HDD_SETTOOLSPAR_8_selected:
 	.space	4, 0x00
-HDD_SETTOOLSPAR_8_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4018, 0x0B401C
+HDD_SETTOOLSPAR_8_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_8's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_8_num
 HDD_SETTOOLSPAR_12_selected:
 	.space	4, 0x00
-HDD_SETTOOLSPAR_12_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4020, 0x0B4024
+HDD_SETTOOLSPAR_12_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_12's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_12_num
 DATA_LINK_window:
 	.space	4, 0xFF
 DATA_LINK_MenuBox_TEST_COMMUNICATION_selected:
 	.space	4, 0x00
-COMM_DISP_paintok:
-	.space	4, 0x00
+COMM_DISP_paintok:	# u32, initial value of a RAM variable: the KssCOMM_DISP COMM_DISP's `paintok` (+0x30), loaded and dereferenced by KssCOMM_DISPProc 0x9781DA36: `mov (0x30, a0), a0` -> `mov d0, (a0)`
+	.long	0
 CUSTOM_LYRICS_OPTION_window:
 	.space	4, 0xFF
 LyricsPassiveColor_selected:
 	.space	4, 0x00
-LyricsPassiveColor_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4038, 0x0B403C
+LyricsPassiveColor_num:	# u16, initial value of a RAM variable: the KssParaEditEntry LyricsPassiveColor's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after LyricsPassiveColor_num
 LyricsActiveColor_selected:
 	.space	4, 0x00
-LyricsActiveColor_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4040, 0x0B4044
+LyricsActiveColor_num:	# u16, initial value of a RAM variable: the KssParaEditEntry LyricsActiveColor's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after LyricsActiveColor_num
 LyricsLoadMode_selected:
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4044, 0x0B4048
-LyricsLoadMode_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4048, 0x0B404C
+LyricsLoadMode_num:	# u16, initial value of a RAM variable: the KssParaEditEntry LyricsLoadMode's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after LyricsLoadMode_num
 CLPARA4_selected:
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B404C, 0x0B4050
-CLPARA4_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4050, 0x0B4054
+CLPARA4_num:	# u16, initial value of a RAM variable: the KssParaEditEntry CLPARA4's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after CLPARA4_num
 PROTECT_OPTIONS_window:
 	.space	4, 0xFF
 PROTECT_OPTIONS_ScreenMenu_PROTECT_HDD_selected:
@@ -13013,13 +13013,13 @@ AllPartButton_MenuBox1_selected:
 	.space	4, 0x00
 BigFont_DirSelect_window:
 	.space	4, 0xFF
-DIR_SelectBig_str_adr:
-	.space	4, 0x00
-DIR_SelectBig_sel_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4080, 0x0B4084
-DIR_SelectBig_en_paradraw:
-	.space	4, 0x00
+DIR_SelectBig_str_adr:	# u32, initial value of a RAM variable: the HamaSelectList DIR_SelectBig's `str_adr` (+0x2C), loaded and dereferenced by HamaSelectListProc 0x9782E300: `mov (0x2c, a0), a0` -> `mov (a0), d0`
+	.long	0
+DIR_SelectBig_sel_num:	# u16, initial value of a RAM variable: the HamaSelectList DIR_SelectBig's `sel_num` (+0x34), loaded and dereferenced by HamaSelectListProc 0x9782E300: `mov (0x34, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after DIR_SelectBig_sel_num
+DIR_SelectBig_en_paradraw:	# u32, initial value of a RAM variable: the HamaSelectList DIR_SelectBig's `en_paradraw` (+0x40), loaded and dereferenced by HamaSelectListProc 0x9782E300: `mov (0x40, a0), a0` -> `mov d0, (a0)`
+	.long	0
 BigFont_DirSelect_ScreenMenu1_selected:
 	.space	4, 0x00
 BigFont_DirSelect_ScreenMenu_OK_selected:
@@ -13040,19 +13040,16 @@ HELP_WORKSHOP_window:
 HELP_WORKSHOP_KssXRegisterLine1_sel_num:
 # census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B40A8, 0x0B40AC
-HELP_WORKSHOP_KssXRegisterLine1_en_paradraw:
-	.space	4, 0x00
+HELP_WORKSHOP_KssXRegisterLine1_en_paradraw:	# u32, initial value of a RAM variable: the KssXRegisterLine HELP_WORKSHOP_KssXRegisterLine1's `en_paradraw` (+0x28), loaded and dereferenced by KssXRegisterLineProc 0x978360E3: `mov (0x28, a0), a0` -> `mov d0, (a0)`
+	.long	0
 ABOUT_HELP_window:
 	.space	4, 0xFF
-LabelHDSerialNo_str_adr:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B40B4, 0x0B40B8
-LabelHDParameter_str_adr:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B40B8, 0x0B40BC
-LabelHDModelNo_str_adr:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B40BC, 0x0B40C0
+LabelHDSerialNo_str_adr:	# u32, initial value of a RAM variable: the KssLabel LabelHDSerialNo's `str_adr` (+0x30), loaded and dereferenced by KssLabelProc 0x978301C6: `mov (0x30, a0), a0` -> `mov d1, (a0)`
+	.long	0x7fee30
+LabelHDParameter_str_adr:	# u32, initial value of a RAM variable: the KssLabel LabelHDParameter's `str_adr` (+0x30), loaded and dereferenced by KssLabelProc 0x978301C6: `mov (0x30, a0), a0` -> `mov d1, (a0)`
+	.long	0x7fee56
+LabelHDModelNo_str_adr:	# u32, initial value of a RAM variable: the KssLabel LabelHDModelNo's `str_adr` (+0x30), loaded and dereferenced by KssLabelProc 0x978301C6: `mov (0x30, a0), a0` -> `mov d1, (a0)`
+	.long	0x7fedf2
 LBN_1_parent:
 	.space	4, 0xFF
 LBN_1_child:
@@ -13063,23 +13060,22 @@ ClearLBN_selected:
 	.space	4, 0x00
 LBN_1_ScreenMenu1_selected:
 	.space	4, 0x00
-DirNumberLBN_val:
-	.space	2, 0xFF
-DirNumberLBN_count_digits:
-	.align	4, 0x00
-FileNumberLBN_val:
-	.space	2, 0xFF
-FileNumberLBN_count_digits:
-	.align	4, 0x00
+DirNumberLBN_val:	# u16, initial value of a RAM variable: the KssVwDigitBox DirNumberLBN's `val` (+0x34), loaded and dereferenced by KssVwDigitBoxProc 0x97814109: `mov (0x34, a0), a0` -> `movhu (a0), d1`
+	.word	65535
+DirNumberLBN_count_digits:	# u16, initial value of a RAM variable: the KssVwDigitBox DirNumberLBN's `count_digits` (+0x38), loaded and dereferenced by KssVwDigitBoxProc 0x97814109: `mov (0x38, a0), a0` -> `movhu (a0), d0`
+	.word	0
+FileNumberLBN_val:	# u16, initial value of a RAM variable: the KssVwDigitBox FileNumberLBN's `val` (+0x34), loaded and dereferenced by KssVwDigitBoxProc 0x97814109: `mov (0x34, a0), a0` -> `movhu (a0), d1`
+	.word	65535
+FileNumberLBN_count_digits:	# u16, initial value of a RAM variable: the KssVwDigitBox FileNumberLBN's `count_digits` (+0x38), loaded and dereferenced by KssVwDigitBoxProc 0x97814109: `mov (0x38, a0), a0` -> `movhu (a0), d0`
+	.word	0
 LBN_2_parent:
 	.space	4, 0xFF
 LBN_2_child:
 	.space	4, 0xFF
-LoadOptionLBN_pulSelectable:
-	.space	4, 0x00
-LoadOptionLBN_pulYesNo:
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B40E8, 0x0B40EC
+LoadOptionLBN_pulSelectable:	# u32, initial value of a RAM variable: the KssSetSfx_DISP LoadOptionLBN's `pulSelectable` (+0x30), loaded and dereferenced by KssSetSfx_DISPProc 0x9781F096: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+LoadOptionLBN_pulYesNo:	# u32, initial value of a RAM variable: the KssSetSfx_DISP LoadOptionLBN's `pulYesNo` (+0x34), loaded and dereferenced by KssSetSfx_DISPProc 0x9781F096: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	3847
 SELECT_PLUG2_window:
 	.space	4, 0xFF
 SELECT_PLUG2_ListBox1_selected:
@@ -13093,58 +13089,58 @@ KSS_EDIT_NAME_WND_parent:
 	.space	4, 0xFF
 KSS_EDIT_NAME_WND_child:
 	.space	4, 0xFF
-KSS_EDIT_NAME_WND_KssNamingEditSw1_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw2_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw3_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw4_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw5_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw6_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw7_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw8_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw9_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw10_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw11_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw12_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw13_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw14_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw15_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw16_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw17_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw18_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw19_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw20_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw21_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw22_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw23_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw24_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw25_page:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_KssNamingEditSw26_page:
-	.space	4, 0x00
+KSS_EDIT_NAME_WND_KssNamingEditSw1_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw1's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw2_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw2's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw3_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw3's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw4_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw4's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw5_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw5's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw6_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw6's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw7_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw7's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw8_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw8's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw9_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw9's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw10_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw10's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw11_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw11's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw12_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw12's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw13_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw13's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw14_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw14's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw15_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw15's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw16_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw16's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw17_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw17's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw18_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw18's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw19_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw19's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw20_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw20's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw21_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw21's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw22_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw22's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw23_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw23's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw24_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw24's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw25_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw25's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_KssNamingEditSw26_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw26's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
 KSS_EDIT_NAME_WND_IndexToggle_ABC_onoff:
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B416C, 0x0B4170
@@ -13152,30 +13148,29 @@ KSS_EDIT_NAME_WND_IndexToggle_123_onoff:
 	.space	4, 0x00
 KSS_EDIT_NAME_WND_IndexPushSw1_sw:
 	.space	4, 0x00
-KssCursBox_cursor:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4178, 0x0B417C
+KssCursBox_cursor:	# u16, initial value of a RAM variable: the KssCursorBox KssCursBox's `cursor` (+0x28), loaded and dereferenced by KssCursorBoxProc 0x9781A2A8: `mov (0x28, a0), a0` -> `movhu d0, (a0)`
+	.word	0
+	.align	4, 0xFF	# pad after KssCursBox_cursor
 HDD_SAVE_OPTIONS_window:
 	.space	4, 0xFF
-FileSaveSetSfxBox_pulSelectable:
-	.space	4, 0x00
-FileSaveSetSfxBox_pulYesNo:
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4184, 0x0B4188
+FileSaveSetSfxBox_pulSelectable:	# u32, initial value of a RAM variable: the KssSetSfx_DISP FileSaveSetSfxBox's `pulSelectable` (+0x30), loaded and dereferenced by KssSetSfx_DISPProc 0x9781F096: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
+FileSaveSetSfxBox_pulYesNo:	# u32, initial value of a RAM variable: the KssSetSfx_DISP FileSaveSetSfxBox's `pulYesNo` (+0x34), loaded and dereferenced by KssSetSfx_DISPProc 0x9781F096: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	127
 ALPHA_SORTED_LIST_window:
 	.space	4, 0xFF
 ALPHA_SORTED_LIST_KssxAlphabetBox1_sel_num:
 # census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B418C, 0x0B4190
-ALPHA_SORTED_LIST_KssxAlphabetBox1_en_paradraw:
-	.space	4, 0x00
-ALPHA_SORTED_LIST_HamaAlphabeticFileList1_str_adr:
-	.space	4, 0x00
-ALPHA_SORTED_LIST_HamaAlphabeticFileList1_sel_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4198, 0x0B419C
-ALPHA_SORTED_LIST_HamaAlphabeticFileList1_en_paradraw:
-	.space	4, 0x00
+ALPHA_SORTED_LIST_KssxAlphabetBox1_en_paradraw:	# u32, initial value of a RAM variable: the KssxAlphabetBox ALPHA_SORTED_LIST_KssxAlphabetBox1's `en_paradraw` (+0x28), loaded and dereferenced by KssxAlphabetBoxProc 0x9782C6E5: `mov (0x28, a0), a0` -> `mov d0, (a0)`
+	.long	0
+ALPHA_SORTED_LIST_HamaAlphabeticFileList1_str_adr:	# u32, initial value of a RAM variable: the HamaAlphabeticFileList ALPHA_SORTED_LIST_HamaAlphabeticFileList1's `str_adr` (+0x2C), loaded and dereferenced by HamaAlphabeticFileListProc 0x9782CC20: `mov (0x2c, a0), a0` -> `mov (a0), d0`
+	.long	0
+ALPHA_SORTED_LIST_HamaAlphabeticFileList1_sel_num:	# u16, initial value of a RAM variable: the HamaAlphabeticFileList ALPHA_SORTED_LIST_HamaAlphabeticFileList1's `sel_num` (+0x34), loaded and dereferenced by HamaAlphabeticFileListProc 0x9782CC20: `mov (0x34, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after ALPHA_SORTED_LIST_HamaAlphabeticFileList1_sel_num
+ALPHA_SORTED_LIST_HamaAlphabeticFileList1_en_paradraw:	# u32, initial value of a RAM variable: the HamaAlphabeticFileList ALPHA_SORTED_LIST_HamaAlphabeticFileList1's `en_paradraw` (+0x40), loaded and dereferenced by HamaAlphabeticFileListProc 0x9782CC20: `mov (0x40, a0), a0` -> `mov d0, (a0)`
+	.long	0
 JUKE_BOX_window:
 	.space	4, 0xFF
 JUKE_BOX_ScreenMenu1_selected:
@@ -13194,11 +13189,11 @@ JUKE_BOX_ScreenMenu7_selected:
 	.space	4, 0x00
 JUKE_BOX_ScreenMenu8_selected:
 	.space	4, 0x00
-JUKE_BOX_KssxJukeBox1_sel_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B41C4, 0x0B41C8
-JUKE_BOX_KssxJukeBox1_en_paradraw:
-	.space	4, 0x00
+JUKE_BOX_KssxJukeBox1_sel_num:	# u16, initial value of a RAM variable: the KssxJukeBox JUKE_BOX_KssxJukeBox1's `sel_num` (+0x24), loaded and dereferenced by KssxJukeBoxProc 0x9782B56D: `mov (0x24, a0), a0` -> `movhu (a0), d0`
+	.word	0
+	.align	4, 0xFF	# pad after JUKE_BOX_KssxJukeBox1_sel_num
+JUKE_BOX_KssxJukeBox1_en_paradraw:	# u32, initial value of a RAM variable: the KssxJukeBox JUKE_BOX_KssxJukeBox1's `en_paradraw` (+0x28), loaded and dereferenced by KssxJukeBoxProc 0x9782B56D: `mov (0x28, a0), a0` -> `mov d0, (a0)`
+	.long	0
 JUKE_BOX_MenuBox1_selected:
 	.space	4, 0x00
 JUKE_BOX_MenuBox2_selected:
@@ -13209,17 +13204,14 @@ FILE_SELECT_WIN1_parent:
 	.space	4, 0xFF
 FILE_SELECT_WIN1_child:
 	.space	4, 0xFF
-SelectedDirInFile_sel_num:
-# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B41E0, 0x0B41E2
-SelectedDirInFile_sel_dir:
-# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B41E2, 0x0B41E4
-SelectedDirInFile_paintok:
-	.space	4, 0x00
-SelectedDirInFile_aicok:
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B41E8, 0x0B41EC
+SelectedDirInFile_sel_num:	# u16, initial value of a RAM variable: the KSSPsFileBox SelectedDirInFile's `sel_num` (+0x34), loaded and dereferenced by KSSPsFileBoxProc 0x9780CBE5: `mov (0x34, a0), a0` -> `movhu d0, (a0)`
+	.word	1
+SelectedDirInFile_sel_dir:	# u16, initial value of a RAM variable: the KSSPsFileBox SelectedDirInFile's `sel_dir` (+0x38), loaded and dereferenced by KSSPsFileBoxProc 0x9780CBE5: `mov (0x38, a0), a0` -> `movhu d0, (a0)`
+	.word	1
+SelectedDirInFile_paintok:	# u32, initial value of a RAM variable: the KSSPsFileBox SelectedDirInFile's `paintok` (+0x44), loaded and dereferenced by KSSPsFileBoxProc 0x9780CBE5: `mov (0x44, a0), a0` -> `mov d0, (a0)`
+	.long	0
+SelectedDirInFile_aicok:	# u32, initial value of a RAM variable: the KSSPsFileBox SelectedDirInFile's `aicok` (+0x48), loaded and dereferenced by KSSPsFileBoxProc 0x9780CBE5: `mov (0x48, a0), a0` -> `mov d0, (a0)`
+	.long	1
 WP_OBJ_DELDIR_selected:
 	.space	4, 0x00
 FILE_SELECT_WIN1_ScreenMenu_SET_TO_JUKE_BOX_selected:
@@ -13228,14 +13220,12 @@ FILE_SELECT_WIN2_parent:
 	.space	4, 0xFF
 FILE_SELECT_WIN2_child:
 	.space	4, 0xFF
-FileLoadSetSfxBox_pulSelectable:
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B41FC, 0x0B4200
-FileLoadSetSfxBox_pulYesNo:
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4200, 0x0B4204
-FILE_SELECT_WIN2_KssAcActualDFStrBox1_paintok:
-	.space	4, 0x00
+FileLoadSetSfxBox_pulSelectable:	# u32, initial value of a RAM variable: the KssSetSfx_DISP FileLoadSetSfxBox's `pulSelectable` (+0x30), loaded and dereferenced by KssSetSfx_DISPProc 0x9781F096: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	3967
+FileLoadSetSfxBox_pulYesNo:	# u32, initial value of a RAM variable: the KssSetSfx_DISP FileLoadSetSfxBox's `pulYesNo` (+0x34), loaded and dereferenced by KssSetSfx_DISPProc 0x9781F096: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	3967
+FILE_SELECT_WIN2_KssAcActualDFStrBox1_paintok:	# u32, initial value of a RAM variable: the KssAcActualDFStrBox FILE_SELECT_WIN2_KssAcActualDFStrBox1's `paintok` (+0x28), loaded and dereferenced by KssAcActualDFStrBoxProc 0x9781BB50: `mov (0x28, a0), a0` -> `mov d0, (a0)`
+	.long	0
 DbWndRW_window:
 	.space	4, 0xFF
 DbWndRW_MenuBox_Read_TO_selected:
@@ -13261,17 +13251,14 @@ LoadOptionWndPg_page:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4230, 0x0B4234
 HDD_DIR_SELECT_window:
 	.space	4, 0xFF
-SelectedDirectory_sel_num:
-# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4238, 0x0B423A
-SelectedDirectory_sel_area:
-# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B423A, 0x0B423C
-SelectedDirectory_paintok:
-	.space	4, 0x00
-SelectedDirectory_aicok:
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4240, 0x0B4244
+SelectedDirectory_sel_num:	# u16, initial value of a RAM variable: the KSSPsDirBox SelectedDirectory's `sel_num` (+0x34), loaded and dereferenced by KSSPsDirBoxProc 0x9780B023: `mov (0x34, a0), a0` -> `movhu d0, (a0)`
+	.word	1
+SelectedDirectory_sel_area:	# u16, initial value of a RAM variable: the KSSPsDirBox SelectedDirectory's `sel_area` (+0x38), loaded and dereferenced by KSSPsDirBoxProc 0x9780B023: `mov (0x38, a0), a0` -> `movhu d0, (a0)`
+	.word	1
+SelectedDirectory_paintok:	# u32, initial value of a RAM variable: the KSSPsDirBox SelectedDirectory's `paintok` (+0x44), loaded and dereferenced by KSSPsDirBoxProc 0x9780B023: `mov (0x44, a0), a0` -> `mov d0, (a0)`
+	.long	0
+SelectedDirectory_aicok:	# u32, initial value of a RAM variable: the KSSPsDirBox SelectedDirectory's `aicok` (+0x48), loaded and dereferenced by KSSPsDirBoxProc 0x9780B023: `mov (0x48, a0), a0` -> `mov d0, (a0)`
+	.long	1
 HDD_DIR_SELECT_ScreenMenu_OK_selected:
 	.space	4, 0x00
 HDD_DIR_SELECT_ScreenMenu1_selected:
@@ -13286,75 +13273,71 @@ HDD_DIR_NAMING_window:
 	.space	4, 0xFF
 CP_HD_SELDIR_window:
 	.space	4, 0xFF
-SelectedCopyDest_sel_num:
-# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4260, 0x0B4262
-SelectedCopyDest_sel_area:
-# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4262, 0x0B4264
-SelectedCopyDest_paintok:
-	.space	4, 0x00
-SelectedCopyDest_aicok:
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4268, 0x0B426C
+SelectedCopyDest_sel_num:	# u16, initial value of a RAM variable: the KSSPsDirBox SelectedCopyDest's `sel_num` (+0x34), loaded and dereferenced by KSSPsDirBoxProc 0x9780B023: `mov (0x34, a0), a0` -> `movhu d0, (a0)`
+	.word	1
+SelectedCopyDest_sel_area:	# u16, initial value of a RAM variable: the KSSPsDirBox SelectedCopyDest's `sel_area` (+0x38), loaded and dereferenced by KSSPsDirBoxProc 0x9780B023: `mov (0x38, a0), a0` -> `movhu d0, (a0)`
+	.word	1
+SelectedCopyDest_paintok:	# u32, initial value of a RAM variable: the KSSPsDirBox SelectedCopyDest's `paintok` (+0x44), loaded and dereferenced by KSSPsDirBoxProc 0x9780B023: `mov (0x44, a0), a0` -> `mov d0, (a0)`
+	.long	0
+SelectedCopyDest_aicok:	# u32, initial value of a RAM variable: the KSSPsDirBox SelectedCopyDest's `aicok` (+0x48), loaded and dereferenced by KSSPsDirBoxProc 0x9780B023: `mov (0x48, a0), a0` -> `mov d0, (a0)`
+	.long	1
 COPY_FD_TO_HDD_window:
 	.space	4, 0xFF
-CP_FD_LIST_str_adr:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4270, 0x0B4274
-CP_FD_LIST_sel_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4274, 0x0B4278
-CP_FD_LIST_en_paradraw:
-	.space	4, 0x00
+CP_FD_LIST_str_adr:	# u32, initial value of a RAM variable: the SelectFDCPList CP_FD_LIST's `str_adr` (+0x2C), loaded and dereferenced by SelectFDCPListProc 0x97822019: `mov (0x2c, a0), a0` -> `mov d0, (a0)`
+	.long	0x7c12b0
+CP_FD_LIST_sel_num:	# u16, initial value of a RAM variable: the SelectFDCPList CP_FD_LIST's `sel_num` (+0x34), loaded and dereferenced by SelectFDCPListProc 0x97822019: `mov (0x34, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after CP_FD_LIST_sel_num
+CP_FD_LIST_en_paradraw:	# u32, initial value of a RAM variable: the SelectFDCPList CP_FD_LIST's `en_paradraw` (+0x40), loaded and dereferenced by SelectFDCPListProc 0x97822019: `mov (0x40, a0), a0` -> `mov d0, (a0)`
+	.long	0
 HDD_FILE_NAMING_window:
 	.space	4, 0xFF
 CLS_FILE_LOAD_SCREEN_window:
 	.space	4, 0xFF
 ScrBut_EditFLS_selected:
 	.space	4, 0x00
-CLS_FILE_BOX_str_adr:
-	.space	4, 0x00
-CLS_FILE_BOX_sel_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B428C, 0x0B4290
-CLS_FILE_BOX_en_paradraw:
-	.space	4, 0x00
+CLS_FILE_BOX_str_adr:	# u32, initial value of a RAM variable: the KSSCLSFileList CLS_FILE_BOX's `str_adr` (+0x2C), loaded and dereferenced by KSSCLSFileListProc 0x97829BA5: `mov (0x2c, a0), a0` -> `mov (a0), d0`
+	.long	0
+CLS_FILE_BOX_sel_num:	# u16, initial value of a RAM variable: the KSSCLSFileList CLS_FILE_BOX's `sel_num` (+0x34), loaded and dereferenced by KSSCLSFileListProc 0x97829BA5: `mov (0x34, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after CLS_FILE_BOX_sel_num
+CLS_FILE_BOX_en_paradraw:	# u32, initial value of a RAM variable: the KSSCLSFileList CLS_FILE_BOX's `en_paradraw` (+0x40), loaded and dereferenced by KSSCLSFileListProc 0x97829BA5: `mov (0x40, a0), a0` -> `mov d0, (a0)`
+	.long	0
 CLS_NAMING_window:
 	.space	4, 0xFF
 CLS_EDIT_window:
 	.space	4, 0xFF
 CLS_EDIT_ScreenMenu_SEARCH_selected:
 	.space	4, 0x00
-CLS_EDIT_BOX_str_adr:
-	.space	4, 0x00
-CLS_EDIT_BOX_sel_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B42A4, 0x0B42A8
-CLS_EDIT_BOX_en_paradraw:
-	.space	4, 0x00
+CLS_EDIT_BOX_str_adr:	# u32, initial value of a RAM variable: the KSSCLSFileList CLS_EDIT_BOX's `str_adr` (+0x2C), loaded and dereferenced by KSSCLSFileListProc 0x97829BA5: `mov (0x2c, a0), a0` -> `mov (a0), d0`
+	.long	0
+CLS_EDIT_BOX_sel_num:	# u16, initial value of a RAM variable: the KSSCLSFileList CLS_EDIT_BOX's `sel_num` (+0x34), loaded and dereferenced by KSSCLSFileListProc 0x97829BA5: `mov (0x34, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after CLS_EDIT_BOX_sel_num
+CLS_EDIT_BOX_en_paradraw:	# u32, initial value of a RAM variable: the KSSCLSFileList CLS_EDIT_BOX's `en_paradraw` (+0x40), loaded and dereferenced by KSSCLSFileListProc 0x97829BA5: `mov (0x40, a0), a0` -> `mov d0, (a0)`
+	.long	0
 CLS_DIR_SEL_window:
 	.space	4, 0xFF
 CLS_DIR_SEL_ScreenMenu_OK_selected:
 	.space	4, 0x00
-SelectedFLSDest_str_adr:
-	.space	4, 0x00
-SelectedFLSDest_sel_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B42B8, 0x0B42BC
-SelectedFLSDest_en_paradraw:
-	.space	4, 0x00
+SelectedFLSDest_str_adr:	# u32, initial value of a RAM variable: the HamaSelectList SelectedFLSDest's `str_adr` (+0x2C), loaded and dereferenced by HamaSelectListProc 0x9782E300: `mov (0x2c, a0), a0` -> `mov (a0), d0`
+	.long	0
+SelectedFLSDest_sel_num:	# u16, initial value of a RAM variable: the HamaSelectList SelectedFLSDest's `sel_num` (+0x34), loaded and dereferenced by HamaSelectListProc 0x9782E300: `mov (0x34, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after SelectedFLSDest_sel_num
+SelectedFLSDest_en_paradraw:	# u32, initial value of a RAM variable: the HamaSelectList SelectedFLSDest's `en_paradraw` (+0x40), loaded and dereferenced by HamaSelectListProc 0x9782E300: `mov (0x40, a0), a0` -> `mov d0, (a0)`
+	.long	0
 CLS_FILE_SELECT_window:
 	.space	4, 0xFF
 FLSLink_selected:
 	.space	4, 0x00
-FlsFileList_str_adr:
-	.space	4, 0x00
-FlsFileList_sel_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B42CC, 0x0B42D0
-FlsFileList_en_paradraw:
-	.space	4, 0x00
+FlsFileList_str_adr:	# u32, initial value of a RAM variable: the HamaSelectFileList FlsFileList's `str_adr` (+0x2C), loaded and dereferenced by HamaSelectFileListProc 0x9782EDF4: `mov (0x2c, a0), a0` -> `mov (a0), d0`
+	.long	0
+FlsFileList_sel_num:	# u16, initial value of a RAM variable: the HamaSelectFileList FlsFileList's `sel_num` (+0x34), loaded and dereferenced by HamaSelectFileListProc 0x9782EDF4: `mov (0x34, a0), a0` -> `movhu (a0), d0`
+	.word	0
+	.align	4, 0xFF	# pad after FlsFileList_sel_num
+FlsFileList_en_paradraw:	# u32, initial value of a RAM variable: the HamaSelectFileList FlsFileList's `en_paradraw` (+0x40), loaded and dereferenced by HamaSelectFileListProc 0x9782EDF4: `mov (0x40, a0), a0` -> `mov d0, (a0)`
+	.long	0
 WARNING_YESNO_window:
 	.space	4, 0xFF
 WARNING_DNO_FAULT_window:
@@ -13432,8 +13415,8 @@ PASSWORD_NAMING_IndexToggle_123_onoff:
 	.space	4, 0x00
 PASSWORD_NAMING_IndexPushSw1_sw:
 	.space	4, 0x00
-PASSWORD_NAMING_KssNamingEditSw1_page:
-	.space	4, 0x00
+PASSWORD_NAMING_KssNamingEditSw1_page:	# u32, initial value of a RAM variable: the KssNamingEditSw PASSWORD_NAMING_KssNamingEditSw1's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
+	.long	0
 PASSWORD_NAMING_ScreenMenu_SAVE_selected:
 	.space	4, 0x00
 PART1_NAMING_window:
@@ -13462,21 +13445,21 @@ CPFD2HD_Display_child:
 	.space	4, 0xFF
 CP_SMF_HDD_window:
 	.space	4, 0xFF
-CP_SMF_SelectList_str_adr:
-	.space	4, 0x00
-CP_SMF_SelectList_sel_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B43AC, 0x0B43B0
-CP_SMF_SelectList_en_paradraw:
-	.space	4, 0x00
-SMFFilterBox_paintok:
-	.space	4, 0x00
+CP_SMF_SelectList_str_adr:	# u32, initial value of a RAM variable: the SelectFDCPSMFList CP_SMF_SelectList's `str_adr` (+0x2C), loaded and dereferenced by SelectFDCPSMFListProc 0x97822C9C: `mov (0x2c, a0), a0` -> `mov d0, (a0)`
+	.long	0
+CP_SMF_SelectList_sel_num:	# u16, initial value of a RAM variable: the SelectFDCPSMFList CP_SMF_SelectList's `sel_num` (+0x34), loaded and dereferenced by SelectFDCPSMFListProc 0x97822C9C: `mov (0x34, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after CP_SMF_SelectList_sel_num
+CP_SMF_SelectList_en_paradraw:	# u32, initial value of a RAM variable: the SelectFDCPSMFList CP_SMF_SelectList's `en_paradraw` (+0x40), loaded and dereferenced by SelectFDCPSMFListProc 0x97822C9C: `mov (0x40, a0), a0` -> `mov d0, (a0)`
+	.long	0
+SMFFilterBox_paintok:	# u32, initial value of a RAM variable: the KssAcParaStrBox SMFFilterBox's `paintok` (+0x2C), loaded and dereferenced by KssAcParaStrBoxProc 0x9781B965: `mov (0x2c, a0), a0` -> `mov d0, (a0)`
+	.long	0
 CPFDSmf2HD_Display_parent:
 	.space	4, 0xFF
 CPFDSmf2HD_Display_child:
 	.space	4, 0xFF
-TheActualDF_paintok:
-	.space	4, 0x00
+TheActualDF_paintok:	# u32, initial value of a RAM variable: the KssAcActualDFStrBox TheActualDF's `paintok` (+0x28), loaded and dereferenced by KssAcActualDFStrBoxProc 0x9781BB50: `mov (0x28, a0), a0` -> `mov d0, (a0)`
+	.long	0
 SETUP_TOOL3_parent:
 	.space	4, 0xFF
 SETUP_TOOL3_child:
@@ -13487,29 +13470,29 @@ WP_OBJ_FRMTHD_selected:
 	.space	4, 0x00
 HDD_SETTOOLSPAR_9_selected:
 	.space	4, 0x00
-HDD_SETTOOLSPAR_9_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B43D8, 0x0B43DC
+HDD_SETTOOLSPAR_9_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_9's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_9_num
 HDD_SETTOOLSPAR_10_selected:
 	.space	4, 0x00
-HDD_SETTOOLSPAR_10_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B43E0, 0x0B43E4
+HDD_SETTOOLSPAR_10_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_10's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	1
+	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_10_num
 HDD_SETTOOLSPAR_11_selected:
 	.space	4, 0x00
-HDD_SETTOOLSPAR_11_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B43E8, 0x0B43EC
+HDD_SETTOOLSPAR_11_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_11's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	1
+	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_11_num
 SETUP_TOOL3_KssParaEditEntry1_selected:
 	.space	4, 0x00
-SETUP_TOOL3_KssParaEditEntry1_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B43F0, 0x0B43F4
+SETUP_TOOL3_KssParaEditEntry1_num:	# u16, initial value of a RAM variable: the KssParaEditEntry SETUP_TOOL3_KssParaEditEntry1's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after SETUP_TOOL3_KssParaEditEntry1_num
 SETUP_TOOL3_KssParaEditEntry2_selected:
 	.space	4, 0x00
-SETUP_TOOL3_KssParaEditEntry2_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B43F8, 0x0B43FC
+SETUP_TOOL3_KssParaEditEntry2_num:	# u16, initial value of a RAM variable: the KssParaEditEntry SETUP_TOOL3_KssParaEditEntry2's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
+	.word	0
+	.align	4, 0xFF	# pad after SETUP_TOOL3_KssParaEditEntry2_num
 JUKE_BOX_WIN_parent:
 	.space	4, 0xFF
 JUKE_BOX_WIN_child:
@@ -13518,13 +13501,13 @@ BigFileFont_Win1_parent:
 	.space	4, 0xFF
 BigFileFont_Win1_child:
 	.space	4, 0xFF
-File_SelectBig_str_adr:
-	.space	4, 0x00
-File_SelectBig_sel_num:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4410, 0x0B4414
-File_SelectBig_en_paradraw:
-	.space	4, 0x00
+File_SelectBig_str_adr:	# u32, initial value of a RAM variable: the HamaSelectFileList File_SelectBig's `str_adr` (+0x2C), loaded and dereferenced by HamaSelectFileListProc 0x9782EDF4: `mov (0x2c, a0), a0` -> `mov (a0), d0`
+	.long	0
+File_SelectBig_sel_num:	# u16, initial value of a RAM variable: the HamaSelectFileList File_SelectBig's `sel_num` (+0x34), loaded and dereferenced by HamaSelectFileListProc 0x9782EDF4: `mov (0x34, a0), a0` -> `movhu (a0), d0`
+	.word	0
+	.align	4, 0xFF	# pad after File_SelectBig_sel_num
+File_SelectBig_en_paradraw:	# u32, initial value of a RAM variable: the HamaSelectFileList File_SelectBig's `en_paradraw` (+0x40), loaded and dereferenced by HamaSelectFileListProc 0x9782EDF4: `mov (0x40, a0), a0` -> `mov d0, (a0)`
+	.long	0
 SET_To_JB_selected:
 	.space	4, 0x00
 HP_Basics_parent:
@@ -13539,21 +13522,18 @@ NewClsScreen_window:
 	.space	4, 0xFF
 NewClsSfx_selected:
 	.space	4, 0xFF
-NewClsList_extension:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4434, 0x0B4438
-NewClsNameLabel_str_adr:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4438, 0x0B443C
-NewClsLocationLabel_str_adr:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B443C, 0x0B4440
+NewClsList_extension:	# u32, initial value of a RAM variable: the KSSSelectList NewClsList's `extension` (+0x54), loaded and dereferenced by KSSSelectListProc 0x978280B6: `mov (0x54, a0), a0` -> `mov (a0), a0`
+	.long	0x10439dc
+NewClsNameLabel_str_adr:	# u32, initial value of a RAM variable: the KssText NewClsNameLabel's `str_adr` (+0x38), loaded and dereferenced by KssTextProc 0x97830472: `mov (0x38, a0), a0` -> `mov d1, (a0)`
+	.long	0x102de84
+NewClsLocationLabel_str_adr:	# u32, initial value of a RAM variable: the KssText NewClsLocationLabel's `str_adr` (+0x38), loaded and dereferenced by KssTextProc 0x97830472: `mov (0x38, a0), a0` -> `mov d1, (a0)`
+	.long	0x102de84
 PleaseWait_Win_parent:
 	.space	4, 0xFF
 PleaseWait_Win_child:
 	.space	4, 0xFF
-PleaseWait_Win_RotStrBox1_paintok:
-	.space	4, 0x00
+PleaseWait_Win_RotStrBox1_paintok:	# u32, initial value of a RAM variable: the AcRotStrBox PleaseWait_Win_RotStrBox1's `paintok` (+0x30), loaded and dereferenced by AcRotStrBoxProc 0x978334A3: `mov (0x30, a0), a0` -> `mov d0, (a0)`
+	.long	0
 
 			KssPsMultiLangTextBox	TENT_INFO, super=SEPARATE_OUTPUT_MIXER_KssUserBitmap1, next=SEPARATE_OUTPUT_MIXER_KssAudioOutput1, prev=SEPARATE_OUTPUT_MIXER_ExitScreen1, X=260, Y=2, W=280, H=50, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=3, fontcolor=CL_Navy, backfontcolor=CL_White, lines=3, Dim3d=1, strEnglish=Str_Please_note_Write_does_not_save_the_Outp, strGerman=Str_Bitte_beachten_Write_sichert_die_Output, strFrench=Str_Please_note_Write_does_not_save_the_Outp_2, strSpanish=Str_Please_note_Write_does_not_save_the_Outp_3, strItalian=Str_empty_14, strIndones=Str_empty_15, strJapan=Str_empty_16	# strEnglish "Please note: Write does not save the Out"; strGerman "Bitte beachten: 'Write' sichert die Outp"; strFrench "Please note: Write does not save the Out"; strSpanish "Please note: Write does not save the Out"; strItalian ""; strIndones ""; strJapan ""
 			AcScreenMenu	TENT_WRITE, super=SEPARATE_OUTPUT_MIXER_KssUserBitmap1, prev=SEPARATE_OUTPUT_MIXER_KssAudioOutput1, X=550, Y=36, W=80, H=22, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, editsw=ES_Right1, selected=TENT_WRITE_selected, str=Str_WRITE, screen=0xFFFFFFFF	# str "WRITE"

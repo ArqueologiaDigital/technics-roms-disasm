@@ -125,7 +125,7 @@ data_48400354:
 .incbin_range "baserom/kn2400_program.rom", 0x000354, 0x000358
 
 Str_C_26:	.asciz "C"
-Str_empty_701:	.asciz "."
+Str_empty_659:	.asciz "."
 data_4840035C:
 	.space	1, 0x00
 data_4840035D:
@@ -533,10 +533,9 @@ TgDrawbarToneRecInit_Table:	# 36 x u8, 0..255; read by TgDrawbarToneRecInit_entr
 	tab_u8	127, 127, 127, 127, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 255	# [32]
-TgPartDrawbarAtkRlsSet_Table:	# 15 x u16, 0..65534; read by TgPartDrawbarAtkRlsSet 0x5012E211: `movhu	(d0, a0), d0`; TgPartDrawbarAtkRlsSet 0x5012E211: `movhu	(d3, a0), d0` ...
+TgPartDrawbarAtkRlsSet_Table:	# 16 x u16, 0..65535; read by TgPartDrawbarAtkRlsSet 0x5012E211: `movhu	(d0, a0), d0`; TgPartDrawbarAtkRlsSet 0x5012E211: `movhu	(d3, a0), d0` ...; 16 records: the index is bounded by TgPartDrawbarAtkRlsSet 0x5012E211: `and 0x0f, d3` ... `movhu (d3, a0), d0`
 	tab_u16	0, 1, 2, 3, 4, 5, 6, 7, 65528, 65529, 65530, 65531	# [0]
-	tab_u16	65532, 65533, 65534	# [12]
-	.align	4, 0xFF	# pad after TgPartDrawbarAtkRlsSet_Table
+	tab_u16	65532, 65533, 65534, 65535	# [12]
 func_50130B45_Table:	# 128 x u8, 136..150; read by func_50130B45_entry : `movbu	(d0, a0), d1`
 	tab_u8	150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150	# [0]
 	tab_u8	150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150	# [16]
@@ -875,8 +874,12 @@ func_5014320B_entry_L83_Records:	# 16 x REC_func_5014320B_entry_L83_Records (8 b
 	REC_func_5014320B_entry_L83_Records	p0=data_4852BA5D, x4="\x02\x06\x00\x00"
 	REC_func_5014320B_entry_L83_Records	p0=data_4852BA5D, x4="\x02\x06\x00\x00"
 	REC_func_5014320B_entry_L83_Records	p0=data_4852BA5D, x4="\x02\x06\x00\x00"
-# census: opaque -- unknown-dump: 132 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0018E4, 0x001968
+# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0018E4, 0x001944
+
+text_48401944:	# 33 printable bytes with no NUL; no instruction reads them [INFERENCE: text]
+	.ascii	" !\"#$%&'()*+,-./0123456789:;<=>?@"
+	.align	4, 0xFF	# pad after text_48401944
 
 ResourceIdLeaf_48401968:	# a parameter-id trie leaf (ResourceIdFind): id 0x000000, type 0, kind 2
 	.long	0x000000
@@ -904,10 +907,10 @@ ResourceIdLeaf_484019C4:	# a parameter-id trie leaf (ResourceIdFind): id 0x00002
 	.byte	0x00, 0x00, 0x09, 0x00, 0x51, 0x00, 0x0f, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00	# +8
 	.byte	0x01, 0x00, 0x0a, 0x00, 0x51, 0x05, 0xff, 0x00	# +24
 
-Str_empty_700:	.asciz "("
+Str_empty_658:	.asciz "("
 # census: opaque -- unknown-dump: 14 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0019E6, 0x0019F4
-Str_empty_699:	.asciz ","
+Str_empty_657:	.asciz ","
 # census: opaque -- unknown-dump: 30 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0019F6, 0x001A14
 
@@ -4086,8 +4089,8 @@ data_4840547C:
 data_48405480:
 	.space	4, 0x00
 ptrs_48405484:
-	.long	Str_empty_700
-	.long	Str_empty_699
+	.long	Str_empty_658
+	.long	Str_empty_657
 	.long	0
 data_48405490:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
@@ -5197,7 +5200,7 @@ func_50150302_entry_L16_Records:	# 16 x REC_func_50150302_entry_L16_Records (8 b
 func_50150961_Table:	# 8 x u16, 0..19276; read by func_50150961 0x50150961: `movhu	(a1), d0`
 	tab_u16	19276, 71, 0, 0, 0, 0, 1872, 24
 
-func_501525E6_Records:	# 24 x REC_func_501525E6_Records (2 bytes each); read by func_501525E6 0x501525E6 `movbu (a1), d0`; func_5015261C 0x5015261C `movhu (a1), d0`
+func_501525E6_Records:	# 128 x REC_func_501525E6_Records (2 bytes each); read by func_501525E6 0x501525E6 `movbu (a1), d0`; func_5015261C 0x5015261C `movhu (a1), d0`
 	REC_func_501525E6_Records	key=76, x1="K"	# [0]
 	REC_func_501525E6_Records	key=71, x1="\x00"
 	REC_func_501525E6_Records	x1="\x00"
@@ -5222,45 +5225,110 @@ func_501525E6_Records:	# 24 x REC_func_501525E6_Records (2 bytes each); read by 
 	REC_func_501525E6_Records	key=1, x1="\x01"
 	REC_func_501525E6_Records	key=1, x1="\x01"
 	REC_func_501525E6_Records	key=1, x1="\x01"
-# census: opaque -- unknown-dump: 154 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x007024, 0x0070BE
-
-func_50152666_Var:	# u16, a constant; read / written by func_50152666 0x50152666: `movhu (func_50152666_Var), d0`
-	.word	1
-func_50152666_Var_2:	# u16, a constant; read / written by func_50152666 0x50152666: `movhu (func_50152666_Var_2), d0`
-	.word	1
-func_50152666_Var_3:	# u16, a constant; read / written by func_50152666 0x50152666: `movhu (func_50152666_Var_3), d0`
-	.word	1
-func_50152666_Var_4:	# u16, a constant; read / written by func_50152666 0x50152666: `movhu (func_50152666_Var_4), d0`
-	.word	1
-func_50152666_Var_5:	# u16, a constant; read / written by func_50152666 0x50152666: `movhu (func_50152666_Var_5), d0`
-	.word	1
-func_50152666_Var_6:	# u16, a constant; read / written by func_50152666 0x50152666: `movhu (func_50152666_Var_6), d0`
-	.word	1
-func_50152666_Var_7:	# u16, a constant; read / written by func_50152666 0x50152666: `movhu (func_50152666_Var_7), d0`
-	.word	1
-func_50152666_Var_8:	# u16, a constant; read / written by func_50152666 0x50152666: `movhu (func_50152666_Var_8), d0`
-	.word	0
-func_50152666_Var_9:	# u16, a constant; read / written by func_50152666 0x50152666: `movhu (func_50152666_Var_9), d0`
-	.word	0
-func_50152666_Var_10:	# u16, a constant; read / written by func_50152666 0x50152666: `movhu (func_50152666_Var_10), d0`
-	.word	0
-func_50152666_Var_11:	# u16, a constant; read / written by func_50152666 0x50152666: `movhu (func_50152666_Var_11), d0`
-	.word	0
-
-func_50152666_Table:	# 2 x u16, 0..50; read by func_50152666 0x50152666: `movhu (func_50152666_Table), d0`
-	tab_u16	0, 50
-
-Str_a_5:	.asciz "a"
-
-func_50152666_Table_2:	# 2 x u16, 1..255; read by func_50152666 0x50152666: `movhu (func_50152666_Table_2), d0`
-	tab_u16	255, 1
-
-func_50152666_Var_12:	# u16, a constant; read / written by func_50152666 0x50152666: `movhu (func_50152666_Var_12), d0`
-	.word	0
-
-func_50152666_Table_3:	# 10 x u16, 0..0; read by func_50152666 0x50152666: `movhu (func_50152666_Table_3), d0`
-	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	REC_func_501525E6_Records	key=255, x1="\xFF"	# [24]
+	REC_func_501525E6_Records	key=255, x1="\x03"
+	REC_func_501525E6_Records	key=4, x1="\x05"
+	REC_func_501525E6_Records	key=6, x1="\x07"
+	REC_func_501525E6_Records	key=8, x1="\x09"
+	REC_func_501525E6_Records	key=10, x1="\x0B"
+	REC_func_501525E6_Records	key=12, x1="\x0D"
+	REC_func_501525E6_Records	key=14, x1="\x0F"
+	REC_func_501525E6_Records	x1="\x01"	# [32]
+	REC_func_501525E6_Records	key=2, x1="\xFF"
+	REC_func_501525E6_Records	key=255, x1="\xFF"
+	REC_func_501525E6_Records	key=255, x1="\xFF"
+	REC_func_501525E6_Records	key=255, x1="\xFF"
+	REC_func_501525E6_Records	key=255, x1="\xFF"
+	REC_func_501525E6_Records	key=255, x1="\xFF"
+	REC_func_501525E6_Records	key=255, x1="\xFF"
+	REC_func_501525E6_Records	key=3, x1="\x03"	# [40]
+	REC_func_501525E6_Records	key=3, x1="\x03"
+	REC_func_501525E6_Records	key=3, x1="\x03"
+	REC_func_501525E6_Records	key=3, x1="\x03"
+	REC_func_501525E6_Records	key=3, x1="\x03"
+	REC_func_501525E6_Records	key=3, x1="\x03"
+	REC_func_501525E6_Records	key=3, x1="\x03"
+	REC_func_501525E6_Records	key=3, x1="\x03"
+	REC_func_501525E6_Records	key=3, x1="\x03"	# [48]
+	REC_func_501525E6_Records	key=3, x1="\x03"
+	REC_func_501525E6_Records	key=3, x1="\x03"
+	REC_func_501525E6_Records	key=3, x1="\x03"
+	REC_func_501525E6_Records	key=3, x1="\x03"
+	REC_func_501525E6_Records	key=3, x1="\x03"
+	REC_func_501525E6_Records	key=3, x1="\x03"
+	REC_func_501525E6_Records	key=3, x1="\x03"
+	REC_func_501525E6_Records	key=255, x1="\x01"	# [56]
+	REC_func_501525E6_Records	key=1, x1="\x01"
+	REC_func_501525E6_Records	key=1, x1="\x01"
+	REC_func_501525E6_Records	x1="\x01"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	key=1, x1="\x01"
+	REC_func_501525E6_Records	x1="\x01"	# [64]
+	REC_func_501525E6_Records	key=1, x1="\x01"
+	REC_func_501525E6_Records	key=1, x1="\x01"
+	REC_func_501525E6_Records	key=1, x1="\x01"
+	REC_func_501525E6_Records	key=1, x1="\x01"
+	REC_func_501525E6_Records	key=1, x1="\x01"
+	REC_func_501525E6_Records	key=1, x1="\x01"
+	REC_func_501525E6_Records	key=1, x1="\x01"
+	REC_func_501525E6_Records	key=1, x1="\x00"	# [72]
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	key=80, x1="\xFF"
+	REC_func_501525E6_Records	key=255, x1="\xFF"
+	REC_func_501525E6_Records	key=255, x1="\xFF"
+	REC_func_501525E6_Records	key=255, x1="\xFF"
+	REC_func_501525E6_Records	key=255, x1="\xFF"
+	REC_func_501525E6_Records	x1="\x00"	# [80]
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"	# [88]
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"	# [96]
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	key=1, x1="\x00"
+	REC_func_501525E6_Records	key=1, x1="\x00"
+	REC_func_501525E6_Records	key=1, x1="\x00"
+	REC_func_501525E6_Records	key=1, x1="\x00"	# [104]
+	REC_func_501525E6_Records	key=1, x1="\x00"
+	REC_func_501525E6_Records	key=1, x1="\x00"
+	REC_func_501525E6_Records	key=1, x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"	# [112]
+	REC_func_501525E6_Records	key=50, x1="\x00"
+	REC_func_501525E6_Records	key=97, x1="\x00"
+	REC_func_501525E6_Records	key=255, x1="\x00"
+	REC_func_501525E6_Records	key=1, x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"	# [120]
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
+	REC_func_501525E6_Records	x1="\x00"
 
 func_5015273E_Table:
 	.long	loc_5015275B
@@ -6090,15 +6158,41 @@ func_5015A790_Table:	# 128 x u8, a sparse map by index: 25 entries set, the rest
 Str_p_15:	.asciz "@ p"
 # census: opaque -- unknown-dump: 80 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008944, 0x008994
-data_48408994:
-# census: opaque -- unknown-dump: 108 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x008994, 0x008A00
-data_48408A00:
-# census: opaque -- unknown-dump: 108 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x008A00, 0x008A6C
-data_48408A6C:
-# census: opaque -- unknown-dump: 108 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x008A6C, 0x008AD8
+
+# 8 records of 12 bytes up to the end marker (+0, 32 bits) that func_5015A8CC 0x5015A8CC: `mov (a0), d1` / `cmp -1, d1`, `mov (0x10, sp), d0 / add 0xc, d0 / mov d0, (0x10, sp)` stops at, then the marker record
+func_5015A8CC_List:
+	.long	0x702005, 0x5f0001, 0x0
+	.long	0x702005, 0x15f0102, 0x0
+	.long	0x702005, 0x25f0204, 0x0
+	.long	0x702005, 0x35f0308, 0x0
+	.long	0x702005, 0x45f0410, 0x0
+	.long	0x702005, 0x55f0520, 0x0
+	.long	0x702005, 0x65f0640, 0x0
+	.long	0x702005, 0x75f0780, 0x0
+	.long	0xffffffff, 0x0, 0x0	# end
+# 8 records of 12 bytes up to the end marker (+0, 32 bits) that func_5015A8CC 0x5015A8CC: `mov (a0), d1` / `cmp -1, d1`, `mov (0x10, sp), d0 / add 0xc, d0 / mov d0, (0x10, sp)` stops at, then the marker record
+func_5015A8CC_List_2:
+	.long	0x702005, 0x85f0001, 0x0
+	.long	0x702005, 0x95f0102, 0x0
+	.long	0x702005, 0xa5f0204, 0x0
+	.long	0x702005, 0xb510308, 0x0
+	.long	0x702040, 0x6660410, 0x0
+	.long	0x7020a4, 0x230520, 0x0
+	.long	0x7020ae, 0x330640, 0x0
+	.long	0x702000, 0x1d080780, 0x0
+	.long	0xffffffff, 0x0, 0x0	# end
+# 8 records of 12 bytes up to the end marker (+0, 32 bits) that func_5015A8CC 0x5015A8CC: `mov (a0), d1` / `cmp -1, d1`, `mov (0x10, sp), d0 / add 0xc, d0 / mov d0, (0x10, sp)` stops at, then the marker record
+func_5015A8CC_List_3:
+	.long	0x702000, 0x10000001, 0x0
+	.long	0x702000, 0x11000102, 0x0
+	.long	0x702000, 0x12000204, 0x0
+	.long	0x702000, 0x13000308, 0x0
+	.long	0x702000, 0x14000410, 0x0
+	.long	0x702000, 0x19000520, 0x0
+	.long	0x702084, 0x150640, 0x0
+	.long	0x702084, 0x1150780, 0x0
+	.long	0xffffffff, 0x0, 0x0	# end
+
 Str_p_14:	.asciz "\x85 p"
 # census: opaque -- unknown-dump: 92 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008ADC, 0x008B38
@@ -6111,24 +6205,67 @@ Str_0_p:	.asciz "0 p"
 Str_h_p:	.asciz "h p"
 # census: opaque -- unknown-dump: 68 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008BD8, 0x008C1C
-data_48408C1C:
-# census: opaque -- unknown-dump: 108 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x008C1C, 0x008C88
-data_48408C88:
-# census: opaque -- unknown-dump: 108 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x008C88, 0x008CF4
-data_48408CF4:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x008CF4, 0x008D54
+
+# 8 records of 12 bytes up to the end marker (+0, 32 bits) that func_5015A8CC 0x5015A8CC: `mov (a0), d1` / `cmp -1, d1`, `mov (0x10, sp), d0 / add 0xc, d0 / mov d0, (0x10, sp)` stops at, then the marker record
+func_5015A8CC_List_4:
+	.long	0x702004, 0x4f0001, 0x0
+	.long	0x702004, 0x14f0102, 0x0
+	.long	0x702004, 0x24f0204, 0x0
+	.long	0x702004, 0x34f0308, 0x0
+	.long	0x702004, 0x44f0410, 0x0
+	.long	0x702004, 0x54f0520, 0x0
+	.long	0x702004, 0x64f0640, 0x0
+	.long	0x702004, 0x74f0780, 0x0
+	.long	0xffffffff, 0x0, 0x0	# end
+# 8 records of 12 bytes up to the end marker (+0, 32 bits) that func_5015A8CC 0x5015A8CC: `mov (a0), d1` / `cmp -1, d1`, `mov (0x10, sp), d0 / add 0xc, d0 / mov d0, (0x10, sp)` stops at, then the marker record
+func_5015A8CC_List_5:
+	.long	0x702004, 0x84f0001, 0x0
+	.long	0x702004, 0x9400102, 0x0
+	.long	0x702004, 0xa430204, 0x0
+	.long	0x702004, 0xb420308, 0x0
+	.long	0x702004, 0xc410410, 0x0
+	.long	0x7020a0, 0x170520, 0x0
+	.long	0x702001, 0x17000640, 0x0
+	.long	0x702040, 0x4640780, 0x0
+	.long	0xffffffff, 0x0, 0x0	# end
+# 7 records of 12 bytes up to the end marker (+0, 32 bits) that func_5015A8CC 0x5015A8CC: `mov (a0), d1` / `cmp -1, d1`, `mov (0x10, sp), d0 / add 0xc, d0 / mov d0, (0x10, sp)` stops at, then the marker record
+func_5015A8CC_List_6:
+	.long	0x702001, 0x10000001, 0x0
+	.long	0x702001, 0x11000102, 0x0
+	.long	0x702001, 0x12000204, 0x0
+	.long	0x702001, 0x13000308, 0x0
+	.long	0x702001, 0x14000410, 0x0
+	.long	0x702000, 0x18000520, 0x0
+	.long	0x702001, 0x18000640, 0x0
+	.long	0xffffffff, 0x0, 0x0	# end
+
 Str_p_12:	.asciz "\x09 p"
 # census: opaque -- unknown-dump: 92 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008D58, 0x008DB4
-data_48408DB4:
-# census: opaque -- unknown-dump: 108 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x008DB4, 0x008E20
-data_48408E20:
-# census: opaque -- unknown-dump: 108 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x008E20, 0x008E8C
+
+# 8 records of 12 bytes up to the end marker (+0, 32 bits) that func_5015A8CC 0x5015A8CC: `mov (a0), d1` / `cmp -1, d1`, `mov (0x10, sp), d0 / add 0xc, d0 / mov d0, (0x10, sp)` stops at, then the marker record
+func_5015A8CC_List_7:
+	.long	0x702000, 0x7000001, 0x0
+	.long	0x702001, 0x7000102, 0x0
+	.long	0x702000, 0x6000204, 0x0
+	.long	0x702001, 0x6000308, 0x0
+	.long	0x702000, 0x5000410, 0x0
+	.long	0x702001, 0x5000520, 0x0
+	.long	0x702000, 0x4000640, 0x0
+	.long	0x702001, 0x4000780, 0x0
+	.long	0xffffffff, 0x0, 0x0	# end
+# 8 records of 12 bytes up to the end marker (+0, 32 bits) that func_5015A8CC 0x5015A8CC: `mov (a0), d1` / `cmp -1, d1`, `mov (0x10, sp), d0 / add 0xc, d0 / mov d0, (0x10, sp)` stops at, then the marker record
+func_5015A8CC_List_8:
+	.long	0x702000, 0x3000001, 0x0
+	.long	0x702001, 0x3000102, 0x0
+	.long	0x702000, 0x2000204, 0x0
+	.long	0x702001, 0x2000308, 0x0
+	.long	0x702000, 0x1000410, 0x0
+	.long	0x702001, 0x1000520, 0x0
+	.long	0x702000, 0x640, 0x0
+	.long	0x702001, 0x780, 0x0
+	.long	0xffffffff, 0x0, 0x0	# end
+
 Str_p_11:	.asciz "\" p"
 # census: opaque -- unknown-dump: 92 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008E90, 0x008EEC
@@ -6147,89 +6284,95 @@ Str_p_7:	.asciz "@ p"
 Str_p_6:	.asciz "@ p"
 # census: opaque -- unknown-dump: 56 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008FD4, 0x00900C
-data_4840900C:
-# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x00900C, 0x009024
-data_48409024:
-# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x009024, 0x00903C
+
+# 1 records of 12 bytes up to the end marker (+0, 32 bits) that func_5015A8CC 0x5015A8CC: `mov (a0), d1` / `cmp -1, d1`, `mov (0x10, sp), d0 / add 0xc, d0 / mov d0, (0x10, sp)` stops at, then the marker record
+func_5015A8CC_List_9:
+	.long	0x701008, 0x9300ff, 0x2
+	.long	0xffffffff, 0x0, 0x0	# end
+# 1 records of 12 bytes up to the end marker (+0, 32 bits) that func_5015A8CC 0x5015A8CC: `mov (a0), d1` / `cmp -1, d1`, `mov (0x10, sp), d0 / add 0xc, d0 / mov d0, (0x10, sp)` stops at, then the marker record
+func_5015A8CC_List_10:
+	.long	0x701004, 0x9100ff, 0x4
+	.long	0xffffffff, 0x0, 0x0	# end
 data_4840903C:
 # census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x00903C, 0x009054
-data_48409054:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x009054, 0x009060
-data_48409060:
-# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x009060, 0x009078
-data_48409078:
-# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x009078, 0x009090
-data_48409090:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x009090, 0x00909C
-data_4840909C:
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x00909C, 0x0090A8
+# 0 records of 12 bytes up to the end marker (+0, 32 bits) that func_5015A8CC 0x5015A8CC: `mov (a0), d1` / `cmp -1, d1`, `mov (0x10, sp), d0 / add 0xc, d0 / mov d0, (0x10, sp)` stops at, then the marker record
+func_5015A8CC_List_11:
+	.long	0xffffffff, 0x0, 0x0	# end
+# 1 records of 12 bytes up to the end marker (+0, 32 bits) that func_5015A8CC 0x5015A8CC: `mov (a0), d1` / `cmp -1, d1`, `mov (0x10, sp), d0 / add 0xc, d0 / mov d0, (0x10, sp)` stops at, then the marker record
+func_5015A8CC_List_12:
+	.long	0x701010, 0x8100ff, 0x2
+	.long	0xffffffff, 0x0, 0x0	# end
+# 1 records of 12 bytes up to the end marker (+0, 32 bits) that func_5015A8CC 0x5015A8CC: `mov (a0), d1` / `cmp -1, d1`, `mov (0x10, sp), d0 / add 0xc, d0 / mov d0, (0x10, sp)` stops at, then the marker record
+func_5015A8CC_List_13:
+	.long	0x701000, 0x800001, 0x3
+	.long	0xffffffff, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+0, 32 bits) that func_5015A8CC 0x5015A8CC: `mov (a0), d1` / `cmp -1, d1`, `mov (0x10, sp), d0 / add 0xc, d0 / mov d0, (0x10, sp)` stops at, then the marker record
+func_5015A8CC_List_14:
+	.long	0xffffffff, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+0, 32 bits) that func_5015A8CC 0x5015A8CC: `mov (a0), d1` / `cmp -1, d1`, `mov (0x10, sp), d0 / add 0xc, d0 / mov d0, (0x10, sp)` stops at, then the marker record
+func_5015A8CC_List_15:
+	.long	0xffffffff, 0x0, 0x0	# end
+
 Str_p_5:	.asciz "\xBB p"
 # census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0090AC, 0x0090C0
 
 func_5015A8CC_entry_L21_Table:
 	.long	Str_p_15
-	.long	data_48408994
-	.long	data_48408A00
-	.long	data_48408A6C
+	.long	func_5015A8CC_List
+	.long	func_5015A8CC_List_2
+	.long	func_5015A8CC_List_3
 	.long	Str_p_14
 	.long	Str_p_13
 	.long	Str_0_p
 	.long	Str_h_p
-	.long	data_48408C1C
-	.long	data_48408C88
-	.long	data_48408CF4
+	.long	func_5015A8CC_List_4
+	.long	func_5015A8CC_List_5
+	.long	func_5015A8CC_List_6
 	.long	Str_p_12
-	.long	data_48408DB4
-	.long	data_48408E20
+	.long	func_5015A8CC_List_7
+	.long	func_5015A8CC_List_8
 	.long	Str_p_11
 	.long	Str_p_10
 	.long	Str_p_9
 	.long	Str_p_8
 	.long	Str_p_7
-	.long	data_4840900C
-	.long	data_48409024
+	.long	func_5015A8CC_List_9
+	.long	func_5015A8CC_List_10
 	.long	data_4840903C
-	.long	data_48409060
-	.long	data_48409078
-	.long	data_48409090
-	.long	data_4840909C
+	.long	func_5015A8CC_List_12
+	.long	func_5015A8CC_List_13
+	.long	func_5015A8CC_List_14
+	.long	func_5015A8CC_List_15
 	.long	Str_p_5
 func_5015A8CC_entry_L3f_Table:
 	.long	Str_p_15
-	.long	data_48408994
-	.long	data_48408A00
-	.long	data_48408A6C
+	.long	func_5015A8CC_List
+	.long	func_5015A8CC_List_2
+	.long	func_5015A8CC_List_3
 	.long	Str_p_14
 	.long	Str_p_13
 	.long	Str_0_p
 	.long	Str_h_p
-	.long	data_48408C1C
-	.long	data_48408C88
-	.long	data_48408CF4
+	.long	func_5015A8CC_List_4
+	.long	func_5015A8CC_List_5
+	.long	func_5015A8CC_List_6
 	.long	Str_p_12
-	.long	data_48408DB4
-	.long	data_48408E20
+	.long	func_5015A8CC_List_7
+	.long	func_5015A8CC_List_8
 	.long	Str_p_11
 	.long	Str_p_10
 	.long	Str_p_9
 	.long	Str_p_8
 	.long	Str_p_6
-	.long	data_4840900C
-	.long	data_48409024
-	.long	data_48409054
-	.long	data_48409060
-	.long	data_48409078
-	.long	data_48409090
-	.long	data_4840909C
+	.long	func_5015A8CC_List_9
+	.long	func_5015A8CC_List_10
+	.long	func_5015A8CC_List_11
+	.long	func_5015A8CC_List_12
+	.long	func_5015A8CC_List_13
+	.long	func_5015A8CC_List_14
+	.long	func_5015A8CC_List_15
 	.long	Str_p_5
 
 func_5015ADAF_Result_0:	# REC_func_5015ADAF_Result (8 bytes)
@@ -6317,7 +6460,7 @@ func_5015ADAF_Result_40:	# REC_func_5015ADAF_Result (8 bytes)
 func_5015ADAF_Result_41:	# REC_func_5015ADAF_Result (8 bytes)
 	REC_func_5015ADAF_Result	f0=0x702030, index=6, index_=5, x7="\x00"
 
-MsgTable_484092E8:	# 12 x {u32 key, code address}: a dispatch table; read by func_5015B736_entry_L1c 0x5015B755 `call func_5015B863_entry, [d2], 0x10`
+func_5015B863_MsgTable:	# 12 x {u32 key, code address}: a dispatch table; read by func_5015B736_entry_L1c 0x5015B755 `call func_5015B863_entry, [d2], 0x10`; func_5015B863_entry_L7 0x5015B86F `mov (a0), d2`
 	.long	1, func_5015B895
 	.long	2, loc_5015BAC0
 	.long	4, loc_5015B993
@@ -6331,7 +6474,7 @@ MsgTable_484092E8:	# 12 x {u32 key, code address}: a dispatch table; read by fun
 	.long	1024, loc_5015BBE1
 	.long	2048, loc_5015BCF3
 	.space	8, 0x00
-MsgTable_48409350:	# 8 x {u32 key, code address}: a dispatch table; read by func_5015B736_entry_L51 0x5015B78A `call func_5015B863_entry, [d2], 0x10`
+func_5015B863_MsgTable_2:	# 8 x {u32 key, code address}: a dispatch table; read by func_5015B736_entry_L51 0x5015B78A `call func_5015B863_entry, [d2], 0x10`; func_5015B863_entry_L7 0x5015B86F `mov (a0), d2`
 	.long	1, func_5015BCF6
 	.long	2, loc_5015BE15
 	.long	8, func_5015BEA5
@@ -6341,7 +6484,7 @@ MsgTable_48409350:	# 8 x {u32 key, code address}: a dispatch table; read by func
 	.long	128, func_5015C011
 	.long	256, func_5015C07C
 	.space	8, 0x00
-MsgTable_48409398:	# 9 x {u32 key, code address}: a dispatch table; read by func_5015B736_entry_L86 0x5015B7BF `call func_5015B863_entry, [d2], 0x10`
+func_5015B863_MsgTable_3:	# 9 x {u32 key, code address}: a dispatch table; read by func_5015B736_entry_L86 0x5015B7BF `call func_5015B863_entry, [d2], 0x10`; func_5015B863_entry_L7 0x5015B86F `mov (a0), d2`
 	.long	1, func_5015C0C6
 	.long	8, func_5015C194
 	.long	16, func_5015C1DD
@@ -6352,17 +6495,16 @@ MsgTable_48409398:	# 9 x {u32 key, code address}: a dispatch table; read by func
 	.long	16384, func_5015C2B5
 	.long	32768, loc_5015C301
 	.space	8, 0x00
-data_484093E8:
-	# 24 bytes the code takes the address of: func_5015B736_entry_Lbb 0x5015B7F4 `call func_5015B863_entry, [d2], 0x10` (+0, arg a0); func_5015B736_entry_Lbb 0x5015B7F4 `call func_5015B863_entry, [d2], 0x10` (+0, arg sp16); func_5015B736_entry_Lbb 0x5015B7F4 `mov data_484093E8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the callee walk: func_5015B863 (a0): func_5015B863 reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5015B863 (sp16): func_5015B863 reads nothing through it at a fixed offset (it stores it, or keeps it for later)
-	tab_u32	0x4, 0x5015C353, 0x8	# +0
-	.long	func_5015C307	# +12
-	tab_u32	0x0, 0x0	# +16
-data_48409400:
-	# 16 bytes the code takes the address of: func_5015B810_entry_L12 0x5015B825 `call func_5015B863_entry, [d2], 0x10` (+0, arg a0); func_5015B810_entry_L12 0x5015B825 `call func_5015B863_entry, [d2], 0x10` (+0, arg sp16); func_5015B810_entry_L12 0x5015B825 `mov data_48409400, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the callee walk: func_5015B863 (a0): func_5015B863 reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5015B863 (sp16): func_5015B863 reads nothing through it at a fixed offset (it stores it, or keeps it for later)
-	tab_u32	4	# +0
-	.long	func_5015C5A9	# +4
-	tab_u32	0, 0	# +8
-MsgTable_48409410:	# 3 x {u32 key, code address}: a dispatch table; read by func_5015B810_entry_L36 0x5015B849 `call func_5015B863_entry, [d2], 0x10`
+
+func_5015B863_entry_L7_Table:	# 6 x u32, 0..1343603539; read by func_5015B863_entry_L7 0x5015B86F: `mov (a0), d2`
+	tab_u32	4, 1343603539, 8, 1343603463, 0, 0
+
+func_5015B863_ArgA0_0:	# REC_func_5015B863_ArgA0 (8 bytes): the layout func_5015B863 0x5015B863 reads through its argument a0 (passed by func_5015B736_entry_L1c 0x5015B755 `call func_5015B863_entry, [d2], 0x10`, +5 more calls)
+	REC_func_5015B863_ArgA0	f0=4, proc=func_5015C5A9
+func_5015B863_ArgA0_1:	# REC_func_5015B863_ArgA0 (8 bytes)
+	REC_func_5015B863_ArgA0	
+
+func_5015B863_MsgTable_4:	# 3 x {u32 key, code address}: a dispatch table; read by func_5015B810_entry_L36 0x5015B849 `call func_5015B863_entry, [d2], 0x10`; func_5015B863_entry_L7 0x5015B86F `mov (a0), d2`
 	.long	4, func_5015C62A
 	.long	8192, func_5015C669
 	.long	16384, func_5015C6A8
@@ -7070,7 +7212,7 @@ func_5016B396_Result_28:	# REC_func_5016B726_Result (18 bytes)
 func_5016594F_entry_L63_Block_61:	# 12 bytes, copied whole by func_5016594F_entry_L63 0x501659B7: memcpy(.., 12); func_50165BF7_entry_L63 0x50165C5F: memcpy(.., 12); func_50165D44_entry_L63 0x50165DAA: memcpy(.., 12)
 	tab_u8	240, 80, 33, 126, 50, 31, 0, 247, 255, 255, 255, 255	# [0]
 data_4840A014:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 0	# +4
 	.long	func_5016594F_entry_L63_Block_61	# +8
@@ -7079,7 +7221,7 @@ data_4840A014:
 func_5016594F_entry_L63_Block_62:	# 12 bytes, copied whole by func_5016594F_entry_L63 0x501659B7: memcpy(.., 12); func_50165BF7_entry_L63 0x50165C5F: memcpy(.., 12); func_50165D44_entry_L63 0x50165DAA: memcpy(.., 12)
 	tab_u8	240, 80, 34, 126, 50, 31, 0, 247, 255, 255, 255, 255	# [0]
 data_4840A030:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 1	# +4
 	.long	func_5016594F_entry_L63_Block_62	# +8
@@ -7088,7 +7230,7 @@ data_4840A030:
 func_5016594F_entry_L63_Block_63:	# 12 bytes, copied whole by func_5016594F_entry_L63 0x501659B7: memcpy(.., 12); func_50165BF7_entry_L63 0x50165C5F: memcpy(.., 12); func_50165D44_entry_L63 0x50165DAA: memcpy(.., 12)
 	tab_u8	240, 80, 35, 126, 50, 31, 0, 247, 255, 255, 255, 255	# [0]
 data_4840A04C:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 2	# +4
 	.long	func_5016594F_entry_L63_Block_63	# +8
@@ -7097,7 +7239,7 @@ data_4840A04C:
 func_5016594F_entry_L63_Block_64:	# 12 bytes, copied whole by func_5016594F_entry_L63 0x501659B7: memcpy(.., 12); func_50165BF7_entry_L63 0x50165C5F: memcpy(.., 12); func_50165D44_entry_L63 0x50165DAA: memcpy(.., 12)
 	tab_u8	240, 80, 39, 126, 50, 31, 0, 247, 255, 255, 255, 255	# [0]
 data_4840A068:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 3	# +4
 	.long	func_5016594F_entry_L63_Block_64	# +8
@@ -7106,7 +7248,7 @@ data_4840A068:
 func_5016594F_entry_L63_Block_65:	# 12 bytes, copied whole by func_5016594F_entry_L63 0x501659B7: memcpy(.., 12); func_50165BF7_entry_L63 0x50165C5F: memcpy(.., 12); func_50165D44_entry_L63 0x50165DAA: memcpy(.., 12)
 	tab_u8	240, 80, 40, 126, 50, 31, 0, 247, 255, 255, 255, 255	# [0]
 data_4840A084:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 4	# +4
 	.long	func_5016594F_entry_L63_Block_65	# +8
@@ -7115,7 +7257,7 @@ data_4840A084:
 func_5016594F_entry_L63_Block_66:	# 12 bytes, copied whole by func_5016594F_entry_L63 0x501659B7: memcpy(.., 12); func_50165BF7_entry_L63 0x50165C5F: memcpy(.., 12); func_50165D44_entry_L63 0x50165DAA: memcpy(.., 12)
 	tab_u8	240, 80, 41, 126, 50, 31, 0, 0, 247, 255, 255, 255	# [0]
 data_4840A0A0:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 5	# +4
 	.long	func_5016594F_entry_L63_Block_66	# +8
@@ -7126,7 +7268,7 @@ func_5016594F_entry_L63_Block_67:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A0BC, 0x00A0C0
 data_4840A0C0:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 6	# +4
 	.long	func_5016594F_entry_L63_Block_67	# +8
@@ -7137,7 +7279,7 @@ func_5016594F_entry_L63_Block_68:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A0DC, 0x00A0E0
 data_4840A0E0:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 7	# +4
 	.long	func_5016594F_entry_L63_Block_68	# +8
@@ -7146,7 +7288,7 @@ data_4840A0E0:
 func_5016594F_entry_L63_Block_69:	# 12 bytes, copied whole by func_5016594F_entry_L63 0x501659B7: memcpy(.., 12); func_50165BF7_entry_L63 0x50165C5F: memcpy(.., 12); func_50165D44_entry_L63 0x50165DAA: memcpy(.., 12)
 	tab_u8	240, 80, 47, 126, 50, 31, 0, 247, 255, 255, 255, 255	# [0]
 data_4840A0FC:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 8	# +4
 	.long	func_5016594F_entry_L63_Block_69	# +8
@@ -7157,7 +7299,7 @@ func_5016594F_entry_L63_Block_70:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A118, 0x00A120
 data_4840A120:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 9	# +4
 	.long	func_5016594F_entry_L63_Block_70	# +8
@@ -7166,7 +7308,7 @@ data_4840A120:
 func_5016594F_entry_L63_Block_71:	# 12 bytes, copied whole by func_5016594F_entry_L63 0x501659B7: memcpy(.., 12); func_50165BF7_entry_L63 0x50165C5F: memcpy(.., 12); func_50165D44_entry_L63 0x50165DAA: memcpy(.., 12)
 	tab_u8	240, 80, 49, 126, 50, 31, 0, 247, 255, 255, 255, 255	# [0]
 data_4840A13C:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 10	# +4
 	.long	func_5016594F_entry_L63_Block_71	# +8
@@ -7175,7 +7317,7 @@ data_4840A13C:
 func_5016594F_entry_L63_Block_72:	# 12 bytes, copied whole by func_5016594F_entry_L63 0x501659B7: memcpy(.., 12); func_50165BF7_entry_L63 0x50165C5F: memcpy(.., 12); func_50165D44_entry_L63 0x50165DAA: memcpy(.., 12)
 	tab_u8	240, 80, 50, 126, 50, 31, 0, 247, 255, 255, 255, 255	# [0]
 data_4840A158:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 11	# +4
 	.long	func_5016594F_entry_L63_Block_72	# +8
@@ -7184,7 +7326,7 @@ data_4840A158:
 func_5016594F_entry_L63_Block_73:	# 12 bytes, copied whole by func_5016594F_entry_L63 0x501659B7: memcpy(.., 12); func_50165BF7_entry_L63 0x50165C5F: memcpy(.., 12); func_50165D44_entry_L63 0x50165DAA: memcpy(.., 12)
 	tab_u8	240, 80, 51, 126, 50, 31, 0, 0, 247, 255, 255, 255	# [0]
 data_4840A174:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 12	# +4
 	.long	func_5016594F_entry_L63_Block_73	# +8
@@ -7202,7 +7344,7 @@ func_5016594F_entry_L63_Block_75:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A1A8, 0x00A1B4
 data_4840A1B4:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 16	# +4
 	.long	func_5016594F_entry_L63_Block_75	# +8
@@ -7213,7 +7355,7 @@ func_5016594F_entry_L63_Block_76:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A1D0, 0x00A1DC
 data_4840A1DC:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 17	# +4
 	.long	func_5016594F_entry_L63_Block_76	# +8
@@ -7224,7 +7366,7 @@ func_5016594F_entry_L63_Block_77:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A1F8, 0x00A204
 data_4840A204:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 16	# +4
 	.long	func_5016594F_entry_L63_Block_77	# +8
@@ -7235,7 +7377,7 @@ func_5016594F_entry_L63_Block_78:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A220, 0x00A22C
 data_4840A22C:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 17	# +4
 	.long	func_5016594F_entry_L63_Block_78	# +8
@@ -7246,7 +7388,7 @@ func_5016594F_entry_L63_Block_79:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A248, 0x00A254
 data_4840A254:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 16	# +4
 	.long	func_5016594F_entry_L63_Block_79	# +8
@@ -7257,7 +7399,7 @@ func_5016594F_entry_L63_Block_80:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A270, 0x00A27C
 data_4840A27C:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 17	# +4
 	.long	func_5016594F_entry_L63_Block_80	# +8
@@ -7268,7 +7410,7 @@ func_5016594F_entry_L63_Block_81:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A298, 0x00A2A4
 data_4840A2A4:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 16	# +4
 	.long	func_5016594F_entry_L63_Block_81	# +8
@@ -7279,7 +7421,7 @@ func_5016594F_entry_L63_Block_82:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A2C0, 0x00A2CC
 data_4840A2CC:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 17	# +4
 	.long	func_5016594F_entry_L63_Block_82	# +8
@@ -7290,7 +7432,7 @@ func_5016594F_entry_L63_Block_83:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A2E8, 0x00A2F4
 data_4840A2F4:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 16	# +4
 	.long	func_5016594F_entry_L63_Block_83	# +8
@@ -7301,7 +7443,7 @@ func_5016594F_entry_L63_Block_84:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A310, 0x00A31C
 data_4840A31C:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 17	# +4
 	.long	func_5016594F_entry_L63_Block_84	# +8
@@ -7312,7 +7454,7 @@ func_5016594F_entry_L63_Block_85:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A338, 0x00A344
 data_4840A344:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 16	# +4
 	.long	func_5016594F_entry_L63_Block_85	# +8
@@ -7323,7 +7465,7 @@ func_5016594F_entry_L63_Block_86:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A360, 0x00A36C
 data_4840A36C:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 17	# +4
 	.long	func_5016594F_entry_L63_Block_86	# +8
@@ -7334,7 +7476,7 @@ func_5016594F_entry_L63_Block_87:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A388, 0x00A394
 data_4840A394:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 16	# +4
 	.long	func_5016594F_entry_L63_Block_87	# +8
@@ -7345,7 +7487,7 @@ func_5016594F_entry_L63_Block_88:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A3B0, 0x00A3BC
 data_4840A3BC:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 16	# +4
 	.long	func_5016594F_entry_L63_Block_88	# +8
@@ -7356,7 +7498,7 @@ func_5016594F_entry_L63_Block_89:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A3D8, 0x00A3E4
 data_4840A3E4:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 17	# +4
 	.long	func_5016594F_entry_L63_Block_89	# +8
@@ -7367,7 +7509,7 @@ func_5016594F_entry_L63_Block_90:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A400, 0x00A40C
 data_4840A40C:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 16	# +4
 	.long	func_5016594F_entry_L63_Block_90	# +8
@@ -7378,7 +7520,7 @@ func_5016594F_entry_L63_Block_91:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A428, 0x00A434
 data_4840A434:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 17	# +4
 	.long	func_5016594F_entry_L63_Block_91	# +8
@@ -7389,7 +7531,7 @@ func_5016594F_entry_L63_Block_92:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A450, 0x00A45C
 data_4840A45C:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 16	# +4
 	.long	func_5016594F_entry_L63_Block_92	# +8
@@ -7400,7 +7542,7 @@ func_5016594F_entry_L63_Block_93:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A478, 0x00A484
 data_4840A484:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 17	# +4
 	.long	func_5016594F_entry_L63_Block_93	# +8
@@ -7411,7 +7553,7 @@ func_5016594F_entry_L63_Block_94:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A4A0, 0x00A4AC
 data_4840A4AC:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 16	# +4
 	.long	func_5016594F_entry_L63_Block_94	# +8
@@ -7422,7 +7564,7 @@ func_5016594F_entry_L63_Block_95:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A4C8, 0x00A4D4
 data_4840A4D4:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 17	# +4
 	.long	func_5016594F_entry_L63_Block_95	# +8
@@ -7433,7 +7575,7 @@ func_5016594F_entry_L63_Block_96:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A4F0, 0x00A4FC
 data_4840A4FC:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 16	# +4
 	.long	func_5016594F_entry_L63_Block_96	# +8
@@ -7444,7 +7586,7 @@ func_5016594F_entry_L63_Block_97:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A518, 0x00A524
 data_4840A524:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 17	# +4
 	.long	func_5016594F_entry_L63_Block_97	# +8
@@ -7455,7 +7597,7 @@ func_5016594F_entry_L63_Block_98:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A540, 0x00A54C
 data_4840A54C:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 16	# +4
 	.long	func_5016594F_entry_L63_Block_98	# +8
@@ -7466,7 +7608,7 @@ func_5016594F_entry_L63_Block_99:	# 12 bytes, copied whole by func_5016594F_entr
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A568, 0x00A574
 data_4840A574:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 17	# +4
 	.long	func_5016594F_entry_L63_Block_99	# +8
@@ -7477,7 +7619,7 @@ func_5016594F_entry_L63_Block_100:	# 12 bytes, copied whole by func_5016594F_ent
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A590, 0x00A59C
 data_4840A59C:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 14	# +4
 	.long	func_5016594F_entry_L63_Block_100	# +8
@@ -7488,7 +7630,7 @@ func_5016594F_entry_L63_Block_101:	# 12 bytes, copied whole by func_5016594F_ent
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A5B8, 0x00A5C4
 data_4840A5C4:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 15	# +4
 	.long	func_5016594F_entry_L63_Block_101	# +8
@@ -7499,7 +7641,7 @@ func_5016594F_entry_L63_Block_102:	# 12 bytes, copied whole by func_5016594F_ent
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A5E0, 0x00A5EC
 data_4840A5EC:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 18	# +4
 	.long	func_5016594F_entry_L63_Block_102	# +8
@@ -7510,7 +7652,7 @@ func_5016594F_entry_L63_Block_103:	# 12 bytes, copied whole by func_5016594F_ent
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A608, 0x00A614
 data_4840A614:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 19	# +4
 	.long	func_5016594F_entry_L63_Block_103	# +8
@@ -7521,7 +7663,7 @@ func_5016594F_entry_L63_Block_104:	# 12 bytes, copied whole by func_5016594F_ent
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A630, 0x00A63C
 data_4840A63C:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 20	# +4
 	.long	func_5016594F_entry_L63_Block_104	# +8
@@ -7532,7 +7674,7 @@ func_5016594F_entry_L63_Block_105:	# 12 bytes, copied whole by func_5016594F_ent
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A658, 0x00A664
 data_4840A664:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 21	# +4
 	.long	func_5016594F_entry_L63_Block_105	# +8
@@ -7543,7 +7685,7 @@ func_5016594F_entry_L63_Block_106:	# 12 bytes, copied whole by func_5016594F_ent
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A680, 0x00A68C
 data_4840A68C:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 22	# +4
 	.long	func_5016594F_entry_L63_Block_106	# +8
@@ -7554,7 +7696,7 @@ func_5016594F_entry_L63_Block_107:	# 12 bytes, copied whole by func_5016594F_ent
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00A6A8, 0x00A6B4
 data_4840A6B4:
-	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+648 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	# 16 bytes read by func_50165414_L1a 0x5016542E `movhu (4, a0), d1` (+4, s16); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg a0); func_50165414_L40 0x50165454 `call func_50165776_entry, 0, 0x14` (+0, arg sp20) (+650 more); the read fields at their widths (s16, u16, u32, pointers), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u32	0xFFFFFF	# +0
 	tab_s16	4, 23	# +4
 	.long	func_5016594F_entry_L63_Block_107	# +8
@@ -8280,16 +8422,15 @@ func_5016EB32_Block:	# 3 bytes, copied whole by func_5016EB32 0x5016EB32: memcpy
 Str_LKG_4:	.asciz "LKG"
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00B3D4, 0x00B3E0
-data_4840B3E0:
-	# 192 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a0); func_5016EE20_entry_L77 0x5016EE9A `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a0); func_5016EE20_entry_L77 0x5016EE9A `mov data_4840B3E0, a0` (+0, as a base) (+86 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: PutM3Em (a0): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp40): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a0): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+3 more)
-	tab_u32	0x204000, 0x204001, 0x204004, 0xF101, 0x2000, 0x2001, 0x2010, 0x2011	# +0
-	tab_u32	0x2012, 0x2013, 0x2014, 0x2020, 0x2021, 0x2022, 0x2023, 0x2025	# +32
-	tab_u32	0x2040, 0x2041, 0x2042, 0x2043, 0x2080, 0x2081, 0x2082, 0x2083	# +64
-	tab_u32	0x2084, 0x2085, 0x2086, 0x2087, 0x208A, 0x208B, 0x208E, 0x2090	# +96
-	tab_u32	0x2091, 0x2092, 0x2093, 0x2094, 0x208F, 0x2098, 0x2099, 0x8090	# +128
-	tab_u32	0x8091, 0x8092, 0x8060, 0x8061, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF	# +160
 
-func_5016F3A3_Block:	# 144 bytes, copied whole by func_5016F3A3 0x5016F3A3: memcpy(.., 144)
+func_5016F3D4_entry_L26_Table:	# 48 x u32, 8192..16777215; read by func_5016F3D4_entry_L26 0x5016F3FF: `mov (a0), d1`; func_5016F3D4_entry_L38 0x5016F411: `mov (a0), d2` ...
+	tab_u32	2113536, 2113537, 2113540, 61697, 8192, 8193, 8208, 8209	# [0]
+	tab_u32	8210, 8211, 8212, 8224, 8225, 8226, 8227, 8229	# [8]
+	tab_u32	8256, 8257, 8258, 8259, 8320, 8321, 8322, 8323	# [16]
+	tab_u32	8324, 8325, 8326, 8327, 8330, 8331, 8334, 8336	# [24]
+	tab_u32	8337, 8338, 8339, 8340, 8335, 8344, 8345, 32912	# [32]
+	tab_u32	32913, 32914, 32864, 32865, 16777215, 16777215, 16777215, 16777215	# [40]
+func_5016F3A3_Block:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0` ...
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
 	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
@@ -8299,337 +8440,306 @@ func_5016F3A3_Block:	# 144 bytes, copied whole by func_5016F3A3 0x5016F3A3: memc
 	tab_u8	255, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1	# [96]
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
 	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
-data_4840B530:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L8e 0x5016EEB1 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L8e 0x5016EEB1 `mov data_4840B530, a1` (+0, as a base) (+4 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+2 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840B5C0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_La5 0x5016EEC8 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_La5 0x5016EEC8 `mov data_4840B5C0, a1` (+0, as a base) (+4 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+2 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840B650:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_Lbc 0x5016EEDF `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_Lbc 0x5016EEDF `mov data_4840B650, a1` (+0, as a base) (+4 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+2 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 1, 1, 1, 1, 0, 1, 0, 2, 0, 0, 0, 0, 1, 1	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840B6E0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_Ld3 0x5016EEF6 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_Ld3 0x5016EEF6 `mov data_4840B6E0, a1` (+0, as a base) (+4 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+2 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 1, 1, 1, 1, 0, 1, 0, 3, 0, 0, 0, 0, 1, 1	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840B770:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_Lea 0x5016EF0D `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_Lea 0x5016EF0D `mov data_4840B770, a1` (+0, as a base) (+4 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+2 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840B800:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L101 0x5016EF24 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L101 0x5016EF24 `mov data_4840B800, a1` (+0, as a base) (+4 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+2 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1	# +96
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840B890:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L45a 0x5016F27D `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L45a 0x5016F27D `mov data_4840B890, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	255, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 1, 0, 0, 80, 2, 60, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840B920:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L38b 0x5016F1AE `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L38b 0x5016F1AE `mov data_4840B920, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 255, 255, 255, 255, 255, 255, 255, 255	# +32
-	tab_u8	0, 1, 2, 11, 12, 13, 14, 15, 8, 9, 10, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840B9B0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L3a2 0x5016F1C5 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L3a2 0x5016F1C5 `mov data_4840B9B0, a1` (+0, as a base) (+6 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	255, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 0, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840BA40:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L3b9 0x5016F1DC `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L3b9 0x5016F1DC `mov data_4840BA40, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 3, 255, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 4, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840BAD0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L3d0 0x5016F1F3 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L3d0 0x5016F1F3 `mov data_4840BAD0, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 255, 255, 255, 255, 255, 255, 255, 255	# +32
-	tab_u8	0, 1, 2, 11, 12, 13, 14, 15, 8, 9, 10, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840BB60:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L218 0x5016F03B `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L218 0x5016F03B `mov data_4840BB60, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 255	# +32
-	tab_u8	0, 3, 1, 255, 255, 255, 255, 255, 255, 14, 255, 1, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	15, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0	# +96
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 1, 1, 0, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840BBF0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L22f 0x5016F052 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L22f 0x5016F052 `mov data_4840BBF0, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 255	# +32
-	tab_u8	0, 3, 255, 255, 255, 255, 255, 255, 255, 14, 255, 1, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	15, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0	# +96
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 1, 1, 0, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840BC80:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L246 0x5016F069 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L246 0x5016F069 `mov data_4840BC80, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 255	# +32
-	tab_u8	0, 3, 1, 255, 255, 255, 255, 255, 255, 14, 255, 1, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	15, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0	# +96
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 1, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840BD10:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L25d 0x5016F080 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L25d 0x5016F080 `mov data_4840BD10, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 1, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840BDA0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L274 0x5016F097 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L274 0x5016F097 `mov data_4840BDA0, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	0, 255, 2, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 1, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840BE30:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L28b 0x5016F0AE `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L28b 0x5016F0AE `mov data_4840BE30, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	0, 3, 1, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 1, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840BEC0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L2a2 0x5016F0C5 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L2a2 0x5016F0C5 `mov data_4840BEC0, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	0, 3, 255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 1, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840BF50:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L2b9 0x5016F0DC `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L2b9 0x5016F0DC `mov data_4840BF50, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 255	# +32
-	tab_u8	255, 1, 2, 255, 255, 255, 255, 255, 0, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 1, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840BFE0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L2d0 0x5016F0F3 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L2d0 0x5016F0F3 `mov data_4840BFE0, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 255, 10, 11, 12, 13, 255, 15	# +32
-	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 9, 255, 14, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 1, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840C070:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L30b 0x5016F12E `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L30b 0x5016F12E `mov data_4840C070, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840C100:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L322 0x5016F145 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L322 0x5016F145 `mov data_4840C100, a1` (+0, as a base) (+4 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840C190:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L339 0x5016F15C `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L339 0x5016F15C `mov data_4840C190, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 3, 0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	4, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840C220:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L350 0x5016F173 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L350 0x5016F173 `mov data_4840C220, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840C2B0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L148 0x5016EF6B `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L148 0x5016EF6B `mov data_4840C2B0, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 14	# +32
-	tab_u8	0, 3, 1, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	15, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0	# +96
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 1, 0, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840C340:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L15f 0x5016EF82 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L15f 0x5016EF82 `mov data_4840C340, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 14	# +32
-	tab_u8	0, 3, 1, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	15, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0	# +96
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840C3D0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L176 0x5016EF99 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L176 0x5016EF99 `mov data_4840C3D0, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840C460:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L18d 0x5016EFB0 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L18d 0x5016EFB0 `mov data_4840C460, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	0, 3, 1, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840C4F0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L1a4 0x5016EFC7 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L1a4 0x5016EFC7 `mov data_4840C4F0, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	255, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-data_4840C580:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L1bb 0x5016EFDE `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L1bb 0x5016EFDE `mov data_4840C580, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +0
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1	# +16
-	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
-	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +48
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +64
-	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# +80
-	tab_u8	255, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1	# +96
-	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
-	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
-
+func_5016F3D4_entry_L50_Table:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0` ...
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_2:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0` ...
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_3:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0` ...
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 1, 1, 1, 1, 0, 1, 0, 2, 0, 0, 0, 0, 1, 1	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_4:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0` ...
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 1, 1, 1, 1, 0, 1, 0, 3, 0, 0, 0, 0, 1, 1	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_5:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0` ...
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_6:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0` ...
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1	# [96]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_7:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	255, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 1, 0, 0, 80, 2, 60, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_8:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 255, 255, 255, 255, 255, 255, 255, 255	# [32]
+	tab_u8	0, 1, 2, 11, 12, 13, 14, 15, 8, 9, 10, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_9:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	255, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 0, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_10:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 3, 255, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 4, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_11:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 255, 255, 255, 255, 255, 255, 255, 255	# [32]
+	tab_u8	0, 1, 2, 11, 12, 13, 14, 15, 8, 9, 10, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_12:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 255	# [32]
+	tab_u8	0, 3, 1, 255, 255, 255, 255, 255, 255, 14, 255, 1, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	15, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0	# [96]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 1, 1, 0, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_13:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 255	# [32]
+	tab_u8	0, 3, 255, 255, 255, 255, 255, 255, 255, 14, 255, 1, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	15, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0	# [96]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 1, 1, 0, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_14:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 255	# [32]
+	tab_u8	0, 3, 1, 255, 255, 255, 255, 255, 255, 14, 255, 1, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	15, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0	# [96]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 1, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_15:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 1, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_16:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	0, 255, 2, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 1, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_17:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	0, 3, 1, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 1, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_18:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	0, 3, 255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 1, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_19:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 255	# [32]
+	tab_u8	255, 1, 2, 255, 255, 255, 255, 255, 0, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 1, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_20:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 255, 10, 11, 12, 13, 255, 15	# [32]
+	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 9, 255, 14, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 1, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_21:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_22:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_23:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 3, 0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	4, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_24:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_25:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 14	# [32]
+	tab_u8	0, 3, 1, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	15, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0	# [96]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 1, 0, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_26:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 14	# [32]
+	tab_u8	0, 3, 1, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	15, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0	# [96]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_27:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_28:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	0, 3, 1, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_29:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	255, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
+func_5016F3D4_entry_L50_Table_30:	# 144 x u8, 0..255; read by func_5016F3D4_entry_L50 0x5016F429: `movbu (a0), d2`; func_5016F3D4_entry_L7f 0x5016F458: `movbu (a0), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1	# [16]
+	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [32]
+	tab_u8	0, 1, 2, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [48]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [64]
+	tab_u8	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3	# [80]
+	tab_u8	255, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1	# [96]
+	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [112]
+	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [128]
 func_5017097A_entry_L12_Table:	# 16 x u8, 11..255; read by func_5017097A_entry_L12 0x50170991: `movbu (a0), d0`; func_5017097A_entry_L12 0x50170991: `movbu (a0), d1`
 	tab_u8	11, 127, 127, 127, 127, 127, 127, 127, 127, 12, 127, 127, 127, 127, 127, 255
 
@@ -9794,7 +9904,7 @@ Str_ACCOMP5:	.asciz "ACCOMP5"
 Str_BASS_2:	.asciz "BASS"
 Str_DRUM1:	.asciz "DRUM1"
 Str_DRUM2:	.asciz "DRUM2"
-Str_CHORD_5:	.asciz "CHORD"
+Str_CHORD_6:	.asciz "CHORD"
 Str_ROOT_BASS:	.asciz "ROOT BASS"
 Str_PADS_7:	.asciz "PADS"
 Str_PADS_8:	.asciz "PADS"
@@ -9803,18 +9913,18 @@ Str_METRONOME_2:	.asciz "METRONOME"
 Str_CHORD_FINDER_5:	.asciz "CHORD FINDER"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x010A1C, 0x010A24
-Str_RT1_3:	.asciz "RT1"
+Str_RT1_2:	.asciz "RT1"
 Str_LFT_2:	.asciz "LFT"
-Str_RT2_4:	.asciz "RT2"
-Str_P_8_2:	.asciz "P 8"
-Str_P_9_2:	.asciz "P 9"
+Str_RT2_3:	.asciz "RT2"
+Str_P_8:	.asciz "P 8"
+Str_P_9:	.asciz "P 9"
 Str_P10:	.asciz "P10"
 Str_P11:	.asciz "P11"
 Str_P12_2:	.asciz "P12"
-Str_P_5_2:	.asciz "P 5"
-Str_P_6_2:	.asciz "P 6"
-Str_P_7_2:	.asciz "P 7"
-Str_P_4_3:	.asciz "P 4"
+Str_P_5:	.asciz "P 5"
+Str_P_6:	.asciz "P 6"
+Str_P_7:	.asciz "P 7"
+Str_P_4_2:	.asciz "P 4"
 Str_DRM:	.asciz "DRM"
 Str_CHD_2:	.asciz "CHD"
 Str_APC_2:	.asciz "APC"
@@ -9827,18 +9937,18 @@ Str_RKB:	.asciz "RKB"
 Str_LKB:	.asciz "LKB"
 
 PsTrackSwitchProc_L34c_Table:
-	.long	Str_RT1_3
+	.long	Str_RT1_2
 	.long	Str_LFT_2
-	.long	Str_RT2_4
-	.long	Str_P_8_2
-	.long	Str_P_9_2
+	.long	Str_RT2_3
+	.long	Str_P_8
+	.long	Str_P_9
 	.long	Str_P10
 	.long	Str_P11
 	.long	Str_P12_2
-	.long	Str_P_5_2
-	.long	Str_P_6_2
-	.long	Str_P_7_2
-	.long	Str_P_4_3
+	.long	Str_P_5
+	.long	Str_P_6
+	.long	Str_P_7
+	.long	Str_P_4_2
 
 names_48410AAC:
 	.long	Str_DRM, Str_CHD_2
@@ -9846,27 +9956,22 @@ names_48410AAC:
 	.long	Str_RHY, Str_P13
 	.long	Str_P14, Str_P15
 	.long	Str_RKB, Str_LKB
-data_48410AD4:
-	.space	1, 0x00
 
-Str_REC_9:	.asciz "REC"
-Str_PLAY_7:	.asciz "PLAY"
-Str_MUTE_7:	.asciz "MUTE"
-Str_CLR_7:	.asciz "CLR"
-
-PsTrackSwitchProc_L3d7_Table_p0_0:	# REC_PsTrackSwitchProc_L3d7_Table_p0 (3 bytes)
-	REC_PsTrackSwitchProc_L3d7_Table_p0	index=80, f1=85, f2=78
-
-Str_CH:	.asciz "CH"
-	.align	4, 0xFF	# pad after Str_CH
+Str_text:	.asciz ""
+Str_REC_7:	.asciz "REC"
+Str_PLAY_5:	.asciz "PLAY"
+Str_MUTE:	.asciz "MUTE"
+Str_CLR_6:	.asciz "CLR"
+Str_PUNCH:	.asciz "PUNCH"
+	.align	4, 0xFF	# pad after Str_PUNCH
 
 PsTrackSwitchProc_L3d7_Table:
-	.long	data_48410AD4
-	.long	Str_REC_9
-	.long	Str_PLAY_7
-	.long	Str_MUTE_7
-	.long	Str_CLR_7
-	.long	PsTrackSwitchProc_L3d7_Table_p0_0
+	.long	Str_text
+	.long	Str_REC_7
+	.long	Str_PLAY_5
+	.long	Str_MUTE
+	.long	Str_CLR_6
+	.long	Str_PUNCH
 
 PsTrackSwitchProc_Table:	# 6 x s16, 10..255; read by PsTrackSwitchProc_L3d7 0x485F803A: `movhu	(d0, a0), d0`
 	tab_s16	245, 10, 12, 255, 255, 10
@@ -10862,7 +10967,7 @@ PsVariSelectProc_L1d_Records:	# 16 x REC_PsVariSelectProc_L1d_Records (8 bytes e
 	REC_PsVariSelectProc_L1d_Records	proc=PsVariSelectProc_L2c5
 	REC_PsVariSelectProc_L1d_Records	proc=PsVariSelectProc_L2c5
 
-DrawIcons_Impl_entry_L52_Table:	# 240 x u16, 0..65534; read by DrawIcons_Impl_entry_L52 0x485FB9BD: `movhu	(d0, a3), d0`
+DrawIcons_Impl_entry_L52_Table:	# 255 x u16, 0..65534; read by DrawIcons_Impl_entry_L52 0x485FB9BD: `movhu	(d0, a3), d0`
 	tab_u16	0, 256, 512, 768, 1024, 1280, 1536, 1792, 63488, 63744, 64000, 64256	# [0]
 	tab_u16	64512, 64768, 65024, 65280, 1, 257, 513, 769, 1025, 1281, 1537, 1793	# [12]
 	tab_u16	63489, 63745, 64001, 64257, 64513, 64769, 65025, 65281, 2, 258, 514, 770	# [24]
@@ -10883,8 +10988,9 @@ DrawIcons_Impl_entry_L52_Table:	# 240 x u16, 0..65534; read by DrawIcons_Impl_en
 	tab_u16	64764, 65020, 65276, 65532, 253, 509, 765, 1021, 1277, 1533, 1789, 2045	# [204]
 	tab_u16	63741, 63997, 64253, 64509, 64765, 65021, 65277, 65533, 254, 510, 766, 1022	# [216]
 	tab_u16	1278, 1534, 1790, 2046, 63742, 63998, 64254, 64510, 64766, 65022, 65278, 65534	# [228]
-# census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0122FC, 0x01231C
+	tab_u16	255, 511, 767, 1023, 1279, 1535, 1791, 2047, 63743, 63999, 64255, 64511	# [240]
+	tab_u16	64767, 65023, 65279	# [252]
+	.align	4, 0xFF	# pad after DrawIcons_Impl_entry_L52_Table
 DrawBitmapSPFast16_Impl_Table:	# 256 x u16, 8224..12079; read by DrawBitmapSPFast16_Impl_entry_L58 0x485FC1D6: `movhu	(d0, a0), d0`; DrawBitmapSPFast16_Impl_entry_L99 0x485FC217: `movhu	(d0, a1), d1` ...
 	tab_u16	8224, 8480, 8736, 8992, 9248, 9504, 9760, 10016, 10272, 10528, 10784, 11040	# [0]
 	tab_u16	11296, 11552, 11808, 12064, 8225, 8481, 8737, 8993, 9249, 9505, 9761, 10017	# [12]
@@ -12196,17 +12302,12 @@ ptrs_484151A0:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0151A8, 0x0151AC
 
-InitModeTitleTable_Table:	# 2 x u32, 131072..983040; read by InitModeTitleTable_entry_L4c 0x48608E4C: `mov	(a1), d0`
-	tab_u32	131072, 983040
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0151B4, 0x0151BC
-data_484151BC:
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+InitModeTitleTable_Table:	# 4 x u32, 131072..4294967295; read by InitModeTitleTable_entry_L4c 0x48608E4C: `mov	(a1), d0`; 4 records: the index is bounded by InitModeTitleTable 0x48608DFB: `mov -4, d1` / setlb / `mov (a1), d0` / `inc4 a1` / `inc d1` / lne (4 passes)
+	tab_u32	131072, 983040, 4294967295, 1212240296
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0151BC, 0x0151C0
-InitModeTitleTable_entry_L87_Table:	# 1 x u32, 131072..131072; read by InitModeTitleTable_entry_L87 0x48608E87: `mov	(a1), d0`
-	tab_u32	131072
-# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0151C4, 0x0151DC
+InitModeTitleTable_entry_L87_Table:	# 7 x u32, 0..4294967295; read by InitModeTitleTable_entry_L87 0x48608E87: `mov	(a1), d0`; 7 records: the index is bounded by InitModeTitleTable 0x48608DFB: `mov -7, d1` / setlb / `mov (a1), d0` / `inc4 a1` / `inc d1` / lne (7 passes)
+	tab_u32	131072, 4294967295, 4294967295, 1212240316, 0, 0, 0
 data_484151DC:
 	# a string, 4 bytes with its pad, read by UnregisteredMode 0x48608F75 `mov data_484151DC, d0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
@@ -16566,25 +16667,23 @@ func_4861932D_entry_L20_Records:	# 16 x REC_func_4861932D_entry_L20_Records (8 b
 	REC_func_4861932D_entry_L20_Records	proc=func_4861932D_entry_Le5
 	REC_func_4861932D_entry_L20_Records	proc=func_4861932D_entry_Le5
 	REC_func_4861932D_entry_L20_Records	proc=func_4861932D_entry_Le5
-func_48619B24_Records:	# 4 x REC_func_48619B24_Records (8 bytes each); read by func_48619B24 0x48619B24 `mov (a0), d1`; func_48619B24_entry_L34 0x48619B5A `mov (a0), d1`; func_48619B24_entry_L37 0x48619B5D `mov (4, a0), a0`
-	REC_func_48619B24_Records	key=0x702020, proc=loc_48619B66
+func_48619B24_Records:	# 16 x REC_func_48619B24_Records (8 bytes each); read by func_48619B24 0x48619B24 `mov (a0), d1`; func_48619B24_entry_L34 0x48619B5A `mov (a0), d1`; func_48619B24_entry_L37 0x48619B5D `mov (4, a0), a0`
+	REC_func_48619B24_Records	key=0x702020, proc=loc_48619B66	# [0]
 	REC_func_48619B24_Records	key=45073, proc=loc_48619B62
 	REC_func_48619B24_Records	key=45089, proc=loc_48619B62
 	REC_func_48619B24_Records	key=45105, proc=loc_48619B62
-
-MsgTable_4841D2E8:	# 12 x {u32 key, code address}: a dispatch table
-	.long	45121, loc_48619B62
-	.long	45137, loc_48619B62
-	.long	1, loc_48619B66
-	.long	0, func_48619B24_entry_L44
-	.long	0, func_48619B24_entry_L44
-	.long	0, func_48619B24_entry_L44
-	.long	0, func_48619B24_entry_L44
-	.long	0, func_48619B24_entry_L44
-	.long	0, func_48619B24_entry_L44
-	.long	49149, loc_48619B62
-	.long	57341, loc_48619B62
-	.long	0, func_48619B24_entry_L44
+	REC_func_48619B24_Records	key=45121, proc=loc_48619B62
+	REC_func_48619B24_Records	key=45137, proc=loc_48619B62
+	REC_func_48619B24_Records	key=1, proc=loc_48619B66
+	REC_func_48619B24_Records	proc=func_48619B24_entry_L44
+	REC_func_48619B24_Records	proc=func_48619B24_entry_L44	# [8]
+	REC_func_48619B24_Records	proc=func_48619B24_entry_L44
+	REC_func_48619B24_Records	proc=func_48619B24_entry_L44
+	REC_func_48619B24_Records	proc=func_48619B24_entry_L44
+	REC_func_48619B24_Records	proc=func_48619B24_entry_L44
+	REC_func_48619B24_Records	key=49149, proc=loc_48619B62
+	REC_func_48619B24_Records	key=57341, proc=loc_48619B62
+	REC_func_48619B24_Records	proc=func_48619B24_entry_L44
 
 func_4861CCB8_Table:	# 256 x s8, a sparse map by index: 34 entries set, the rest 0xFF (none); read by func_4861CCB8 : `movbu	(d0, a0), d0`
 	map_none8	128	# [0..127]
@@ -16963,34 +17062,138 @@ func_48627EB3_entry_L1b_Records:	# 32 x REC_func_48627EB3_entry_L1b_Records (8 b
 	REC_func_48627EB3_entry_L1b_Records	key=0xB07FFD, proc=loc_48627F34
 	REC_func_48627EB3_entry_L1b_Records	key=0xB07FFE, proc=loc_48627F2A
 	REC_func_48627EB3_entry_L1b_Records	key=0xB07FFF, proc=loc_48627F1F
-func_48627FB2_Records:	# 4 x REC_func_48627FB2_Records (8 bytes each); read by func_48627FB2 0x48627FB2 `mov (a0), d1`; func_48627FB2_entry_L3a 0x48627FEE `mov (a0), d1`; func_48627FB2_entry_L3d 0x48627FF1 `mov (4, a0), a0`
-	REC_func_48627FB2_Records	key=0xAFFFFE, proc=loc_48627FF6
+func_48627FB2_Records:	# 32 x REC_func_48627FB2_Records (8 bytes each); read by func_48627FB2 0x48627FB2 `mov (a0), d1`; func_48627FB2_entry_L3a 0x48627FEE `mov (a0), d1`; func_48627FB2_entry_L3d 0x48627FF1 `mov (4, a0), a0`
+	REC_func_48627FB2_Records	key=0xAFFFFE, proc=loc_48627FF6	# [0]
 	REC_func_48627FB2_Records	key=32767, proc=loc_48627FF6
 	REC_func_48627FB2_Records	key=0xDFFFFD, proc=loc_48627FFD
 	REC_func_48627FB2_Records	key=32771, proc=loc_48627FF6
-# census: opaque -- unknown-dump: 224 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x01DF94, 0x01E074
-func_48628025_Records:	# 4 x REC_func_48628025_Records (8 bytes each); read by func_48628025 0x48628025 `mov (a0), d0`; func_48628025_entry_L47 0x48628071 `mov (a0), d0`; func_48628025_entry_L4a 0x48628074 `mov (4, a0), a0`
-	REC_func_48628025_Records	key=0xAFFFFE, proc=loc_48628079
+	REC_func_48627FB2_Records	key=0xB00004, proc=loc_48627FF6
+	REC_func_48627FB2_Records	key=0xB00044, proc=loc_48627FF6
+	REC_func_48627FB2_Records	key=0xB00045, proc=loc_48627FF6
+	REC_func_48627FB2_Records	key=0xB00007, proc=loc_48627FF6
+	REC_func_48627FB2_Records	key=0xB00047, proc=loc_48627FF6	# [8]
+	REC_func_48627FB2_Records	key=0xB00046, proc=loc_48627FF6
+	REC_func_48627FB2_Records	key=0xB00008, proc=loc_48627FF6
+	REC_func_48627FB2_Records	key=32773, proc=loc_48627FF6
+	REC_func_48627FB2_Records	key=1, proc=loc_48628019
+	REC_func_48627FB2_Records	proc=func_48627FB2_entry_L6c
+	REC_func_48627FB2_Records	proc=func_48627FB2_entry_L6c
+	REC_func_48627FB2_Records	proc=func_48627FB2_entry_L6c
+	REC_func_48627FB2_Records	proc=func_48627FB2_entry_L6c	# [16]
+	REC_func_48627FB2_Records	proc=func_48627FB2_entry_L6c
+	REC_func_48627FB2_Records	proc=func_48627FB2_entry_L6c
+	REC_func_48627FB2_Records	proc=func_48627FB2_entry_L6c
+	REC_func_48627FB2_Records	proc=func_48627FB2_entry_L6c
+	REC_func_48627FB2_Records	proc=func_48627FB2_entry_L6c
+	REC_func_48627FB2_Records	proc=func_48627FB2_entry_L6c
+	REC_func_48627FB2_Records	proc=func_48627FB2_entry_L6c
+	REC_func_48627FB2_Records	key=0xB00058, proc=loc_48627FF6	# [24]
+	REC_func_48627FB2_Records	proc=func_48627FB2_entry_L6c
+	REC_func_48627FB2_Records	key=0xB0005A, proc=loc_48627FF6
+	REC_func_48627FB2_Records	proc=func_48627FB2_entry_L6c
+	REC_func_48627FB2_Records	proc=func_48627FB2_entry_L6c
+	REC_func_48627FB2_Records	key=0xB07FFD, proc=loc_48627FF6
+	REC_func_48627FB2_Records	key=0xB07FFE, proc=loc_48627FF6
+	REC_func_48627FB2_Records	key=0xB07FFF, proc=loc_48627FF6
+func_48628025_Records:	# 32 x REC_func_48628025_Records (8 bytes each); read by func_48628025 0x48628025 `mov (a0), d0`; func_48628025_entry_L47 0x48628071 `mov (a0), d0`; func_48628025_entry_L4a 0x48628074 `mov (4, a0), a0`
+	REC_func_48628025_Records	key=0xAFFFFE, proc=loc_48628079	# [0]
 	REC_func_48628025_Records	key=32767, proc=loc_48628079
 	REC_func_48628025_Records	key=0xDFFFFD, proc=loc_48628082
 	REC_func_48628025_Records	key=32771, proc=loc_48628079
-# census: opaque -- unknown-dump: 224 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x01E094, 0x01E174
-func_486280AA_Records:	# 4 x REC_func_486280AA_Records (8 bytes each); read by func_486280AA 0x486280AA `mov (a0), d1`; func_486280AA_entry_L3a 0x486280E6 `mov (a0), d1`; func_486280AA_entry_L3d 0x486280E9 `mov (4, a0), a0`
-	REC_func_486280AA_Records	key=0xAFFFFE, proc=loc_486280EE
+	REC_func_48628025_Records	key=0xB00004, proc=loc_48628079
+	REC_func_48628025_Records	key=0xB00044, proc=loc_48628079
+	REC_func_48628025_Records	key=0xB00045, proc=loc_48628079
+	REC_func_48628025_Records	key=0xB00007, proc=loc_48628079
+	REC_func_48628025_Records	key=0xB00047, proc=loc_48628079	# [8]
+	REC_func_48628025_Records	key=0xB00046, proc=loc_48628079
+	REC_func_48628025_Records	key=0xB00008, proc=loc_48628079
+	REC_func_48628025_Records	key=32773, proc=loc_48628079
+	REC_func_48628025_Records	key=1, proc=loc_4862809B
+	REC_func_48628025_Records	proc=func_48628025_entry_L75
+	REC_func_48628025_Records	proc=func_48628025_entry_L75
+	REC_func_48628025_Records	proc=func_48628025_entry_L75
+	REC_func_48628025_Records	proc=func_48628025_entry_L75	# [16]
+	REC_func_48628025_Records	proc=func_48628025_entry_L75
+	REC_func_48628025_Records	proc=func_48628025_entry_L75
+	REC_func_48628025_Records	proc=func_48628025_entry_L75
+	REC_func_48628025_Records	proc=func_48628025_entry_L75
+	REC_func_48628025_Records	proc=func_48628025_entry_L75
+	REC_func_48628025_Records	proc=func_48628025_entry_L75
+	REC_func_48628025_Records	proc=func_48628025_entry_L75
+	REC_func_48628025_Records	key=0xB00058, proc=loc_48628079	# [24]
+	REC_func_48628025_Records	proc=func_48628025_entry_L75
+	REC_func_48628025_Records	key=0xB0005A, proc=loc_48628079
+	REC_func_48628025_Records	proc=func_48628025_entry_L75
+	REC_func_48628025_Records	proc=func_48628025_entry_L75
+	REC_func_48628025_Records	key=0xB07FFD, proc=loc_48628079
+	REC_func_48628025_Records	key=0xB07FFE, proc=loc_48628079
+	REC_func_48628025_Records	key=0xB07FFF, proc=loc_48628079
+func_486280AA_Records:	# 32 x REC_func_486280AA_Records (8 bytes each); read by func_486280AA 0x486280AA `mov (a0), d1`; func_486280AA_entry_L3a 0x486280E6 `mov (a0), d1`; func_486280AA_entry_L3d 0x486280E9 `mov (4, a0), a0`
+	REC_func_486280AA_Records	key=0xAFFFFE, proc=loc_486280EE	# [0]
 	REC_func_486280AA_Records	key=1, proc=loc_486280EE
 	REC_func_486280AA_Records	key=32767, proc=loc_486280EE
 	REC_func_486280AA_Records	key=32771, proc=loc_486280EE
-# census: opaque -- unknown-dump: 224 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x01E194, 0x01E274
-func_48629232_entry_L24_Records:	# 4 x REC_func_48629232_entry_L24_Records (8 bytes each); read by func_48629232_entry_L24 0x4862925B `mov (a0), d0`; func_48629232_entry_L5e 0x48629295 `mov (a0), d0`; func_48629232_entry_L61 0x48629298 `mov (4, a0), a0`
-	REC_func_48629232_entry_L24_Records	key=0x8FFFFD, proc=loc_486292B1
+	REC_func_486280AA_Records	key=0xB00004, proc=loc_486280EE
+	REC_func_486280AA_Records	key=0xB00044, proc=loc_486280EE
+	REC_func_486280AA_Records	key=0xB00045, proc=loc_486280EE
+	REC_func_486280AA_Records	key=0xB00007, proc=loc_486280EE
+	REC_func_486280AA_Records	key=0xB00047, proc=loc_486280EE	# [8]
+	REC_func_486280AA_Records	key=0xB00046, proc=loc_486280EE
+	REC_func_486280AA_Records	key=0xB00008, proc=loc_486280EE
+	REC_func_486280AA_Records	key=32773, proc=loc_486280EE
+	REC_func_486280AA_Records	proc=func_486280AA_entry_L45
+	REC_func_486280AA_Records	proc=func_486280AA_entry_L45
+	REC_func_486280AA_Records	proc=func_486280AA_entry_L45
+	REC_func_486280AA_Records	proc=func_486280AA_entry_L45
+	REC_func_486280AA_Records	proc=func_486280AA_entry_L45	# [16]
+	REC_func_486280AA_Records	proc=func_486280AA_entry_L45
+	REC_func_486280AA_Records	proc=func_486280AA_entry_L45
+	REC_func_486280AA_Records	proc=func_486280AA_entry_L45
+	REC_func_486280AA_Records	proc=func_486280AA_entry_L45
+	REC_func_486280AA_Records	proc=func_486280AA_entry_L45
+	REC_func_486280AA_Records	proc=func_486280AA_entry_L45
+	REC_func_486280AA_Records	proc=func_486280AA_entry_L45
+	REC_func_486280AA_Records	key=0xB00058, proc=loc_486280EE	# [24]
+	REC_func_486280AA_Records	proc=func_486280AA_entry_L45
+	REC_func_486280AA_Records	key=0xB0005A, proc=loc_486280EE
+	REC_func_486280AA_Records	proc=func_486280AA_entry_L45
+	REC_func_486280AA_Records	proc=func_486280AA_entry_L45
+	REC_func_486280AA_Records	key=0xB07FFD, proc=loc_486280EE
+	REC_func_486280AA_Records	key=0xB07FFE, proc=loc_486280EE
+	REC_func_486280AA_Records	key=0xB07FFF, proc=loc_486280EE
+func_48629232_entry_L24_Records:	# 32 x REC_func_48629232_entry_L24_Records (8 bytes each); read by func_48629232_entry_L24 0x4862925B `mov (a0), d0`; func_48629232_entry_L5e 0x48629295 `mov (a0), d0`; func_48629232_entry_L61 0x48629298 `mov (4, a0), a0`
+	REC_func_48629232_entry_L24_Records	key=0x8FFFFD, proc=loc_486292B1	# [0]
 	REC_func_48629232_entry_L24_Records	key=1, proc=loc_4862929D
 	REC_func_48629232_entry_L24_Records	key=0xBFFFFD, proc=loc_486292BA
 	REC_func_48629232_entry_L24_Records	key=32771, proc=loc_4862929D
-# census: opaque -- unknown-dump: 224 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x01E294, 0x01E374
+	REC_func_48629232_entry_L24_Records	key=0xB00044, proc=loc_4862929D
+	REC_func_48629232_entry_L24_Records	key=0xB00045, proc=loc_4862929D
+	REC_func_48629232_entry_L24_Records	key=0xB00046, proc=loc_4862929D
+	REC_func_48629232_entry_L24_Records	key=0xB00007, proc=loc_4862929D
+	REC_func_48629232_entry_L24_Records	key=0xB00047, proc=loc_4862929D	# [8]
+	REC_func_48629232_entry_L24_Records	key=0xB00008, proc=loc_4862929D
+	REC_func_48629232_entry_L24_Records	key=32773, proc=loc_4862929D
+	REC_func_48629232_entry_L24_Records	key=49149, proc=loc_486292BA
+	REC_func_48629232_entry_L24_Records	key=49153, proc=loc_486292BA
+	REC_func_48629232_entry_L24_Records	proc=func_48629232_entry_L8d
+	REC_func_48629232_entry_L24_Records	proc=func_48629232_entry_L8d
+	REC_func_48629232_entry_L24_Records	proc=func_48629232_entry_L8d
+	REC_func_48629232_entry_L24_Records	proc=func_48629232_entry_L8d	# [16]
+	REC_func_48629232_entry_L24_Records	proc=func_48629232_entry_L8d
+	REC_func_48629232_entry_L24_Records	proc=func_48629232_entry_L8d
+	REC_func_48629232_entry_L24_Records	proc=func_48629232_entry_L8d
+	REC_func_48629232_entry_L24_Records	proc=func_48629232_entry_L8d
+	REC_func_48629232_entry_L24_Records	proc=func_48629232_entry_L8d
+	REC_func_48629232_entry_L24_Records	proc=func_48629232_entry_L8d
+	REC_func_48629232_entry_L24_Records	proc=func_48629232_entry_L8d
+	REC_func_48629232_entry_L24_Records	key=0xB00058, proc=loc_4862929D	# [24]
+	REC_func_48629232_entry_L24_Records	proc=func_48629232_entry_L8d
+	REC_func_48629232_entry_L24_Records	key=0xB0005A, proc=loc_4862929D
+	REC_func_48629232_entry_L24_Records	proc=func_48629232_entry_L8d
+	REC_func_48629232_entry_L24_Records	proc=func_48629232_entry_L8d
+	REC_func_48629232_entry_L24_Records	key=0xDFFFFD, proc=loc_4862929D
+	REC_func_48629232_entry_L24_Records	key=0xAFFFFE, proc=loc_4862929D
+	REC_func_48629232_entry_L24_Records	key=32767, proc=loc_4862929D
 
 func_4862BD08_Table:
 	.long	loc_4862BDB6
@@ -24156,1656 +24359,5486 @@ func_4863E41C_Table:
 	.long	loc_4863E577
 	.long	loc_4863E574
 	.long	loc_4863E56C
-# census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032394, 0x0323A0
 
-Str_Room1:	.asciz "     Room1      "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0323B1, 0x0323CC
-Str_Room2:	.asciz "     Room2      "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0323DD, 0x0323F8
-Str_Plate1:	.asciz "     Plate1     "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032409, 0x032424
-Str_Plate2:	.asciz "     Plate2     "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032435, 0x032450
-Str_Concert1:	.asciz "    Concert1    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032461, 0x03247C
-Str_Concert2:	.asciz "    Concert2    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03248D, 0x0324A8
-Str_Dark1:	.asciz "     Dark1      "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0324B9, 0x0324D4
-Str_Dark2:	.asciz "     Dark2      "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0324E5, 0x032500
-Str_Bright1:	.asciz "    Bright1     "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032511, 0x03252C
-Str_Bright2:	.asciz "    Bright2     "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03253D, 0x032558
-Str_Long1:	.asciz "     Long1      "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032569, 0x032584
-Str_Long2:	.asciz "     Long2      "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032595, 0x0325B0
-Str_Large_Hall1:	.asciz "  Large Hall1   "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0325C1, 0x0325DC
-Str_Large_Hall2:	.asciz "  Large Hall2   "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0325ED, 0x032608
-Str_Live_Stage:	.asciz "   Live Stage   "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032619, 0x032634
-Str_Stadium:	.asciz "    Stadium     "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032645, 0x032660
-Str_Medium_Gate:	.asciz "  Medium Gate   "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032671, 0x03268C
-Str_Short_Gate:	.asciz "   Short Gate   "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03269D, 0x0326B8
-Str_Long_Gate:	.asciz "   Long Gate    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0326C9, 0x0326E4
-Str_Deep1_7:	.asciz "     Deep1      "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0326F5, 0x032710
-Str_Deep2_7:	.asciz "     Deep2      "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032721, 0x03273C
-Str_Deep3_7:	.asciz "     Deep3      "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03274D, 0x032768
-Str_Deep4_7:	.asciz "     Deep4      "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032779, 0x032794
-Str_Deep5_7:	.asciz "     Deep5      "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0327A5, 0x0327C0
-Str_Deep6_7:	.asciz "     Deep6      "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0327D1, 0x0327EC
-Str_Deep7_7:	.asciz "     Deep7      "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0327FD, 0x032818
-Str_Deep8_7:	.asciz "     Deep8      "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032829, 0x032844
-Str_Normal1_7:	.asciz "    Normal1     "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032855, 0x032870
-Str_Normal2_7:	.asciz "    Normal2     "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032881, 0x03289C
-Str_Normal3_7:	.asciz "    Normal3     "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0328AD, 0x0328C8
-Str_Normal4_7:	.asciz "    Normal4     "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0328D9, 0x0328F4
-Str_Normal5_7:	.asciz "    Normal5     "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032905, 0x032920
-Str_Normal6_7:	.asciz "    Normal6     "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032931, 0x03294C
-Str_Normal7_7:	.asciz "    Normal7     "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03295D, 0x032978
-Str_Normal8_7:	.asciz "    Normal8     "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032989, 0x0329A4
-Str_Shallow1_7:	.asciz "    Shallow1    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0329B5, 0x0329D0
-Str_Shallow2_7:	.asciz "    Shallow2    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0329E1, 0x0329FC
-Str_Shallow3_7:	.asciz "    Shallow3    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032A0D, 0x032A28
-Str_Shallow4_7:	.asciz "    Shallow4    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032A39, 0x032A54
-Str_Shallow5_7:	.asciz "    Shallow5    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032A65, 0x032A80
-Str_Shallow6_7:	.asciz "    Shallow6    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032A91, 0x032AAC
-Str_Shallow7_7:	.asciz "    Shallow7    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032ABD, 0x032AD8
-Str_Shallow8_7:	.asciz "    Shallow8    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032AE9, 0x032B04
-Str_Deep9_7:	.asciz "     Deep9      "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032B15, 0x032B30
-Str_Deep10_7:	.asciz "     Deep10     "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032B41, 0x032B5C
-Str_Deep11_7:	.asciz "     Deep11     "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032B6D, 0x032B88
-Str_Deep12_7:	.asciz "     Deep12     "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032B99, 0x032BB4
-Str_Deep13_7:	.asciz "     Deep13     "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032BC5, 0x032BE0
-Str_Normal9_7:	.asciz "    Normal9     "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032BF1, 0x032C0C
-Str_Normal10_7:	.asciz "    Normal10    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032C1D, 0x032C38
-Str_Normal11_7:	.asciz "    Normal11    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032C49, 0x032C64
-Str_Normal12_7:	.asciz "    Normal12    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032C75, 0x032C90
-Str_Normal13_7:	.asciz "    Normal13    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032CA1, 0x032CBC
-Str_Shallow9_7:	.asciz "    Shallow9    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032CCD, 0x032CE8
-Str_Shallow10_7:	.asciz "   Shallow10    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032CF9, 0x032D14
-Str_Shallow11_7:	.asciz "   Shallow11    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032D25, 0x032D40
-Str_Shallow12_7:	.asciz "   Shallow12    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032D51, 0x032D6C
-Str_Shallow13_7:	.asciz "   Shallow13    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032D7D, 0x032D9C
-Str_Deep1_6:	.asciz "     Deep1      "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032DAD, 0x032DCC
-Str_Deep2_6:	.asciz "     Deep2      "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032DDD, 0x032DFC
-Str_Deep3_6:	.asciz "     Deep3      "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032E0D, 0x032E2C
-Str_Deep4_6:	.asciz "     Deep4      "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032E3D, 0x032E5C
-Str_Deep5_6:	.asciz "     Deep5      "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032E6D, 0x032E8C
-Str_Deep6_6:	.asciz "     Deep6      "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032E9D, 0x032EBC
-Str_Deep7_6:	.asciz "     Deep7      "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032ECD, 0x032EEC
-Str_Deep8_6:	.asciz "     Deep8      "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032EFD, 0x032F1C
-Str_Normal1_6:	.asciz "    Normal1     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032F2D, 0x032F4C
-Str_Normal2_6:	.asciz "    Normal2     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032F5D, 0x032F7C
-Str_Normal3_6:	.asciz "    Normal3     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032F8D, 0x032FAC
-Str_Normal4_6:	.asciz "    Normal4     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032FBD, 0x032FDC
-Str_Normal5_6:	.asciz "    Normal5     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x032FED, 0x03300C
-Str_Normal6_6:	.asciz "    Normal6     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03301D, 0x03303C
-Str_Normal7_6:	.asciz "    Normal7     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03304D, 0x03306C
-Str_Normal8_6:	.asciz "    Normal8     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03307D, 0x03309C
-Str_Shallow1_6:	.asciz "    Shallow1    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0330AD, 0x0330CC
-Str_Shallow2_6:	.asciz "    Shallow2    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0330DD, 0x0330FC
-Str_Shallow3_6:	.asciz "    Shallow3    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03310D, 0x03312C
-Str_Shallow4_6:	.asciz "    Shallow4    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03313D, 0x03315C
-Str_Shallow5_6:	.asciz "    Shallow5    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03316D, 0x03318C
-Str_Shallow6_6:	.asciz "    Shallow6    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03319D, 0x0331BC
-Str_Shallow7_6:	.asciz "    Shallow7    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0331CD, 0x0331EC
-Str_Shallow8_6:	.asciz "    Shallow8    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0331FD, 0x03321C
-Str_Deep9_6:	.asciz "     Deep9      "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03322D, 0x03324C
-Str_Deep10_6:	.asciz "     Deep10     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03325D, 0x03327C
-Str_Deep11_6:	.asciz "     Deep11     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03328D, 0x0332AC
-Str_Deep12_6:	.asciz "     Deep12     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0332BD, 0x0332DC
-Str_Deep13_6:	.asciz "     Deep13     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0332ED, 0x03330C
-Str_Normal9_6:	.asciz "    Normal9     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03331D, 0x03333C
-Str_Normal10_6:	.asciz "    Normal10    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03334D, 0x03336C
-Str_Normal11_6:	.asciz "    Normal11    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03337D, 0x03339C
-Str_Normal12_6:	.asciz "    Normal12    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0333AD, 0x0333CC
-Str_Normal13_6:	.asciz "    Normal13    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0333DD, 0x0333FC
-Str_Shallow9_6:	.asciz "    Shallow9    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03340D, 0x03342C
-Str_Shallow10_6:	.asciz "   Shallow10    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03343D, 0x03345C
-Str_Shallow11_6:	.asciz "   Shallow11    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03346D, 0x03348C
-Str_Shallow12_6:	.asciz "   Shallow12    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03349D, 0x0334BC
-Str_Shallow13_6:	.asciz "   Shallow13    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0334CD, 0x0334EC
-Str_Dry_Wet_1_4:	.asciz "   Dry/Wet 1    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0334FD, 0x03351C
-Str_Dry_Wet_2_4:	.asciz "   Dry/Wet 2    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03352D, 0x03354C
-Str_Dry_Wet_3_4:	.asciz "   Dry/Wet 3    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03355D, 0x03357C
-Str_Dry_Wet_4_4:	.asciz "   Dry/Wet 4    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03358D, 0x0335AC
-Str_Dry_Wet_5_4:	.asciz "   Dry/Wet 5    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0335BD, 0x0335DC
-Str_Dry_Wet_6_4:	.asciz "   Dry/Wet 6    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0335ED, 0x03360C
-Str_Dry_Wet_7_4:	.asciz "   Dry/Wet 7    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03361D, 0x03363C
-Str_Dry_Wet_8_4:	.asciz "   Dry/Wet 8    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03364D, 0x03366C
-Str_Dry_Wet_9_4:	.asciz "   Dry/Wet 9    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03367D, 0x03369C
-Str_Dry_Wet_10_4:	.asciz "   Dry/Wet 10   "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0336AD, 0x0336CC
-Str_Dry_Wet_11_4:	.asciz "   Dry/Wet 11   "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0336DD, 0x0336FC
-Str_Dry_Wet_12_4:	.asciz "   Dry/Wet 12   "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03370D, 0x03372C
-Str_Dry_Wet_13_4:	.asciz "   Dry/Wet 13   "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03373D, 0x03375C
-Str_Deep1_5:	.asciz "     Deep1      "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03376D, 0x03378C
-Str_Deep2_5:	.asciz "     Deep2      "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03379D, 0x0337BC
-Str_Deep3_5:	.asciz "     Deep3      "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0337CD, 0x0337EC
-Str_Deep4_5:	.asciz "     Deep4      "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0337FD, 0x03381C
-Str_Deep5_5:	.asciz "     Deep5      "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03382D, 0x03384C
-Str_Deep6_5:	.asciz "     Deep6      "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03385D, 0x03387C
-Str_Deep7_5:	.asciz "     Deep7      "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03388D, 0x0338AC
-Str_Deep8_5:	.asciz "     Deep8      "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0338BD, 0x0338DC
-Str_Normal1_5:	.asciz "    Normal1     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0338ED, 0x03390C
-Str_Normal2_5:	.asciz "    Normal2     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03391D, 0x03393C
-Str_Normal3_5:	.asciz "    Normal3     "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03394D, 0x03396C
-Str_Normal4_5:	.asciz "    Normal4     "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03397D, 0x03399C
-Str_Normal5_5:	.asciz "    Normal5     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0339AD, 0x0339CC
-Str_Normal6_5:	.asciz "    Normal6     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0339DD, 0x0339FC
-Str_Normal7_5:	.asciz "    Normal7     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033A0D, 0x033A2C
-Str_Normal8_5:	.asciz "    Normal8     "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033A3D, 0x033A5C
-Str_Shallow1_5:	.asciz "    Shallow1    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033A6D, 0x033A8C
-Str_Shallow2_5:	.asciz "    Shallow2    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033A9D, 0x033ABC
-Str_Shallow3_5:	.asciz "    Shallow3    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033ACD, 0x033AEC
-Str_Shallow4_5:	.asciz "    Shallow4    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033AFD, 0x033B1C
-Str_Shallow5_5:	.asciz "    Shallow5    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033B2D, 0x033B4C
-Str_Shallow6_5:	.asciz "    Shallow6    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033B5D, 0x033B7C
-Str_Shallow7_5:	.asciz "    Shallow7    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033B8D, 0x033BAC
-Str_Shallow8_5:	.asciz "    Shallow8    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033BBD, 0x033BDC
-Str_Deep9_5:	.asciz "     Deep9      "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033BED, 0x033C0C
-Str_Deep10_5:	.asciz "     Deep10     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033C1D, 0x033C3C
-Str_Deep11_5:	.asciz "     Deep11     "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033C4D, 0x033C6C
-Str_Deep12_5:	.asciz "     Deep12     "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033C7D, 0x033C9C
-Str_Deep13_5:	.asciz "     Deep13     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033CAD, 0x033CCC
-Str_Normal9_5:	.asciz "    Normal9     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033CDD, 0x033CFC
-Str_Normal10_5:	.asciz "    Normal10    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033D0D, 0x033D2C
-Str_Normal11_5:	.asciz "    Normal11    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033D3D, 0x033D5C
-Str_Normal12_5:	.asciz "    Normal12    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033D6D, 0x033D8C
-Str_Normal13_5:	.asciz "    Normal13    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033D9D, 0x033DBC
-Str_Shallow9_5:	.asciz "    Shallow9    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033DCD, 0x033DEC
-Str_Shallow10_5:	.asciz "   Shallow10    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033DFD, 0x033E1C
-Str_Shallow11_5:	.asciz "   Shallow11    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033E2D, 0x033E4C
-Str_Shallow12_5:	.asciz "   Shallow12    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033E5D, 0x033E7C
-Str_Shallow13_5:	.asciz "   Shallow13    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033E8D, 0x033EAC
-Str_Dry_Wet_1_3:	.asciz "   Dry/Wet 1    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033EBD, 0x033EDC
-Str_Dry_Wet_2_3:	.asciz "   Dry/Wet 2    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033EED, 0x033F0C
-Str_Dry_Wet_3_3:	.asciz "   Dry/Wet 3    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033F1D, 0x033F3C
-Str_Dry_Wet_4_3:	.asciz "   Dry/Wet 4    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033F4D, 0x033F6C
-Str_Dry_Wet_5_3:	.asciz "   Dry/Wet 5    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033F7D, 0x033F9C
-Str_Dry_Wet_6_3:	.asciz "   Dry/Wet 6    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033FAD, 0x033FCC
-Str_Dry_Wet_7_3:	.asciz "   Dry/Wet 7    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x033FDD, 0x033FFC
-Str_Dry_Wet_8_3:	.asciz "   Dry/Wet 8    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03400D, 0x03402C
-Str_Dry_Wet_9_3:	.asciz "   Dry/Wet 9    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03403D, 0x03405C
-Str_Dry_Wet_10_3:	.asciz "   Dry/Wet 10   "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03406D, 0x03408C
-Str_Dry_Wet_11_3:	.asciz "   Dry/Wet 11   "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03409D, 0x0340BC
-Str_Dry_Wet_12_3:	.asciz "   Dry/Wet 12   "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0340CD, 0x0340EC
-Str_Dry_Wet_13_3:	.asciz "   Dry/Wet 13   "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0340FD, 0x03411C
-Str_Chorus1:	.asciz "    Chorus1     "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03412D, 0x03414C
-Str_Chorus2:	.asciz "    Chorus2     "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03415D, 0x03417C
-Str_Chorus3:	.asciz "    Chorus3     "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03418D, 0x0341AC
-Str_Chorus4:	.asciz "    Chorus4     "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0341BD, 0x0341D8
-Str_GM_Chorus1:	.asciz "   GM Chorus1   "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0341E9, 0x034208
-Str_GM_Chorus2:	.asciz "   GM Chorus2   "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034219, 0x034234
-Str_GM_Chorus3:	.asciz "   GM Chorus3   "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034245, 0x034264
-Str_GM_Chorus4:	.asciz "   GM Chorus4   "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034275, 0x03429C
-Str_Feedback_Chorus:	.asciz "Feedback Chorus "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0342AD, 0x0342CC
-Str_Flanger_2:	.asciz "    Flanger     "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0342DD, 0x0342F8
-Str_Celeste1:	.asciz "    Celeste1    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034309, 0x034324
-Str_Celeste2:	.asciz "    Celeste2    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034335, 0x034350
-Str_Celeste3:	.asciz "    Celeste3    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034361, 0x03437C
-Str_Celeste4:	.asciz "    Celeste4    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03438D, 0x0343A8
-Str_Celeste5:	.asciz "    Celeste5    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0343B9, 0x0343D4
-Str_Celeste6:	.asciz "    Celeste6    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0343E5, 0x034400
-Str_Celeste7:	.asciz "    Celeste7    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034411, 0x03442C
-Str_Celeste8:	.asciz "    Celeste8    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03443D, 0x034458
-Str_Celeste9:	.asciz "    Celeste9    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034469, 0x034484
-Str_Celeste10:	.asciz "   Celeste10    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034495, 0x0344B0
-Str_Celeste11:	.asciz "   Celeste11    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0344C1, 0x0344DC
-Str_Celeste12:	.asciz "   Celeste12    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0344ED, 0x034508
-Str_Celeste13:	.asciz "   Celeste13    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034519, 0x034538
-Str_Mod_Cel_1:	.asciz "   Mod. Cel.1   "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034549, 0x034568
-Str_Mod_Cel_2:	.asciz "   Mod. Cel.2   "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034579, 0x034598
-Str_Mod_Cel_3:	.asciz "   Mod. Cel.3   "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0345A9, 0x0345C8
-Str_Mod_Cel_4:	.asciz "   Mod. Cel.4   "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0345D9, 0x0345F8
-Str_Mod_Cel_5:	.asciz "   Mod. Cel.5   "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034609, 0x034628
-Str_Mod_Cel_6:	.asciz "   Mod. Cel.6   "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034639, 0x034658
-Str_Mod_Cel_7:	.asciz "   Mod. Cel.7   "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034669, 0x034688
-Str_Mod_Cel_8:	.asciz "   Mod. Cel.8   "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034699, 0x0346B8
-Str_Mod_Cel_9:	.asciz "   Mod. Cel.9   "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0346C9, 0x0346E8
-Str_Mod_Cel_10:	.asciz "  Mod. Cel.10   "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0346F9, 0x034718
-Str_Mod_Cel_11:	.asciz "  Mod. Cel.11   "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034729, 0x034748
-Str_Mod_Cel_12:	.asciz "  Mod. Cel.12   "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034759, 0x034778
-Str_Mod_Cel_13:	.asciz "  Mod. Cel.13   "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034789, 0x0347AC
-Str_Deep1_4:	.asciz "     Deep1      "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0347BD, 0x0347E0
-Str_Deep2_4:	.asciz "     Deep2      "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0347F1, 0x034814
-Str_Deep3_4:	.asciz "     Deep3      "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034825, 0x034848
-Str_Deep4_4:	.asciz "     Deep4      "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034859, 0x03487C
-Str_Deep5_4:	.asciz "     Deep5      "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03488D, 0x0348B0
-Str_Deep6_4:	.asciz "     Deep6      "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0348C1, 0x0348E4
-Str_Deep7_4:	.asciz "     Deep7      "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0348F5, 0x034918
-Str_Normal1_4:	.asciz "    Normal1     "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034929, 0x03494C
-Str_Normal2_4:	.asciz "    Normal2     "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03495D, 0x034980
-Str_Normal3_4:	.asciz "    Normal3     "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034991, 0x0349B4
-Str_Normal4_4:	.asciz "    Normal4     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0349C5, 0x0349E8
-Str_Normal5_4:	.asciz "    Normal5     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0349F9, 0x034A1C
-Str_Normal6_4:	.asciz "    Normal6     "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034A2D, 0x034A50
-Str_Normal7_4:	.asciz "    Normal7     "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034A61, 0x034A84
-Str_Shallow1_4:	.asciz "    Shallow1    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034A95, 0x034AB8
-Str_Shallow2_4:	.asciz "    Shallow2    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034AC9, 0x034AEC
-Str_Shallow3_4:	.asciz "    Shallow3    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034AFD, 0x034B20
-Str_Shallow4_4:	.asciz "    Shallow4    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034B31, 0x034B54
-Str_Shallow5_4:	.asciz "    Shallow5    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034B65, 0x034B88
-Str_Shallow6_4:	.asciz "    Shallow6    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034B99, 0x034BBC
-Str_Shallow7_4:	.asciz "    Shallow7    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034BCD, 0x034BF0
-Str_Deep8_4:	.asciz "     Deep8      "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034C01, 0x034C24
-Str_Deep9_4:	.asciz "     Deep9      "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034C35, 0x034C58
-Str_Deep10_4:	.asciz "     Deep10     "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034C69, 0x034C8C
-Str_Deep11_4:	.asciz "     Deep11     "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034C9D, 0x034CC0
-Str_Deep12_4:	.asciz "     Deep12     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034CD1, 0x034CF4
-Str_Deep13_4:	.asciz "     Deep13     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034D05, 0x034D28
-Str_Normal8_4:	.asciz "    Normal8     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034D39, 0x034D5C
-Str_Normal9_4:	.asciz "    Normal9     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034D6D, 0x034D90
-Str_Normal10_4:	.asciz "    Normal10    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034DA1, 0x034DC4
-Str_Normal11_4:	.asciz "    Normal11    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034DD5, 0x034DF8
-Str_Normal12_4:	.asciz "    Normal12    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034E09, 0x034E2C
-Str_Normal13_4:	.asciz "    Normal13    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034E3D, 0x034E60
-Str_Shallow8_4:	.asciz "    Shallow8    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034E71, 0x034E94
-Str_Shallow9_4:	.asciz "    Shallow9    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034EA5, 0x034EC8
-Str_Shallow10_4:	.asciz "   Shallow10    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034ED9, 0x034EFC
-Str_Shallow11_4:	.asciz "   Shallow11    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034F0D, 0x034F30
-Str_Shallow12_4:	.asciz "   Shallow12    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034F41, 0x034F64
-Str_Shallow13_4:	.asciz "   Shallow13    "
-# census: opaque -- unknown-dump: 43 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034F75, 0x034FA0
-Str_Standard_2:	.asciz "   Standard     "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034FB1, 0x034FDC
-Str_Single_Rotor_2:	.asciz " Single Rotor   "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x034FED, 0x035018
-Str_Distorted_2:	.asciz "   Distorted    "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035029, 0x035054
-Str_Bright_Twin_2:	.asciz "  Bright  Twin  "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035065, 0x035090
-Str_Normal_Twin:	.asciz "  Normal Twin   "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0350A1, 0x0350CC
-Str_Mellow_Twin_2:	.asciz "  Mellow Twin   "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0350DD, 0x035108
-Str_Brilliant_Twin_2:	.asciz " Brilliant Twin "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035119, 0x035144
-Str_Standard:	.asciz "    Standard    "
-# census: opaque -- unknown-dump: 43 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035155, 0x035180
-Str_Single_Rotor:	.asciz " Single Rotor   "
-# census: opaque -- unknown-dump: 43 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035191, 0x0351BC
-Str_Distorted:	.asciz "   Distorted    "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0351CD, 0x0351F8
-Str_Bright_Twin:	.asciz "  Bright Twin   "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035209, 0x035234
-Str_Mellow_Twin:	.asciz "  Mellow Twin   "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035245, 0x035270
-Str_Brilliant_Twin:	.asciz " Brilliant Twin "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035281, 0x0352A4
-Str_Deep1_3:	.asciz "     Deep1      "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0352B5, 0x0352D8
-Str_Deep2_3:	.asciz "     Deep2      "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0352E9, 0x03530C
-Str_Deep3_3:	.asciz "     Deep3      "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03531D, 0x035340
-Str_Deep4_3:	.asciz "     Deep4      "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035351, 0x035374
-Str_Deep5_3:	.asciz "     Deep5      "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035385, 0x0353A8
-Str_Deep6_3:	.asciz "     Deep6      "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0353B9, 0x0353DC
-Str_Deep7_3:	.asciz "     Deep7      "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0353ED, 0x035410
-Str_Normal1_3:	.asciz "    Normal1     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035421, 0x035444
-Str_Normal2_3:	.asciz "    Normal2     "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035455, 0x035478
-Str_Normal3_3:	.asciz "    Normal3     "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035489, 0x0354AC
-Str_Normal4_3:	.asciz "    Normal4     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0354BD, 0x0354E0
-Str_Normal5_3:	.asciz "    Normal5     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0354F1, 0x035514
-Str_Normal6_3:	.asciz "    Normal6     "
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035525, 0x03552D
-Str_UCH:	.asciz "UCH#\x0D"
-# census: opaque -- unknown-dump: 21 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035533, 0x035548
-Str_Normal7_3:	.asciz "    Normal7     "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035559, 0x03557C
-Str_Shallow1_3:	.asciz "    Shallow1    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03558D, 0x0355B0
-Str_Shallow2_3:	.asciz "    Shallow2    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0355C1, 0x0355E4
-Str_Shallow3_3:	.asciz "    Shallow3    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0355F5, 0x035618
-Str_Shallow4_3:	.asciz "    Shallow4    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035629, 0x03564C
-Str_Shallow5_3:	.asciz "    Shallow5    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03565D, 0x035680
-Str_Shallow6_3:	.asciz "    Shallow6    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035691, 0x0356B4
-Str_Shallow7_3:	.asciz "    Shallow7    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0356C5, 0x0356E8
-Str_Deep8_3:	.asciz "     Deep8      "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0356F9, 0x03571C
-Str_Deep9_3:	.asciz "     Deep9      "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03572D, 0x035750
-Str_Deep10_3:	.asciz "     Deep10     "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035761, 0x035784
-Str_Deep11_3:	.asciz "     Deep11     "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035795, 0x0357B8
-Str_Deep12_3:	.asciz "     Deep12     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0357C9, 0x0357EC
-Str_Deep13_3:	.asciz "     Deep13     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0357FD, 0x035820
-Str_Normal8_3:	.asciz "    Normal8     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035831, 0x035854
-Str_Normal9_3:	.asciz "    Normal9     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035865, 0x035888
-Str_Normal10_3:	.asciz "    Normal10    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035899, 0x0358BC
-Str_Normal11_3:	.asciz "    Normal11    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0358CD, 0x0358F0
-Str_Normal12_3:	.asciz "    Normal12    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035901, 0x035924
-Str_Normal13_3:	.asciz "    Normal13    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035935, 0x035958
-Str_Shallow8_3:	.asciz "    Shallow8    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035969, 0x03598C
-Str_Shallow9_3:	.asciz "    Shallow9    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03599D, 0x0359C0
-Str_Shallow10_3:	.asciz "   Shallow10    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0359D1, 0x0359F4
-Str_Shallow11_3:	.asciz "   Shallow11    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035A05, 0x035A28
-Str_Shallow12_3:	.asciz "   Shallow12    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035A39, 0x035A5C
-Str_Shallow13_3:	.asciz "   Shallow13    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035A6D, 0x035A88
-Str_Tremolo1:	.asciz "    Tremolo1    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035A99, 0x035AB4
-Str_Tremolo2:	.asciz "    Tremolo2    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035AC5, 0x035AE0
-Str_Tremolo3:	.asciz "    Tremolo3    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035AF1, 0x035B0C
-Str_Tremolo4:	.asciz "    Tremolo4    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035B1D, 0x035B38
-Str_Tremolo5:	.asciz "    Tremolo5    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035B49, 0x035B64
-Str_Tremolo6:	.asciz "    Tremolo6    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035B75, 0x035B90
-Str_Tremolo7:	.asciz "    Tremolo7    "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035BA1, 0x035BBC
-Str_Tremolo8:	.asciz "    Tremolo8    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035BCD, 0x035BEC
-Str_Auto_Pan1:	.asciz "   Auto Pan1    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035BFD, 0x035C1C
-Str_Auto_Pan2:	.asciz "   Auto Pan2    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035C2D, 0x035C4C
-Str_Auto_Pan3:	.asciz "   Auto Pan3    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035C5D, 0x035C7C
-Str_Auto_Pan4:	.asciz "   Auto Pan4    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035C8D, 0x035CAC
-Str_Auto_Pan5:	.asciz "   Auto Pan5    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035CBD, 0x035CDC
-Str_Auto_Pan6:	.asciz "   Auto Pan6    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035CED, 0x035D0C
-Str_Auto_Pan7:	.asciz "   Auto Pan7    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035D1D, 0x035D3C
-Str_Vibrato1:	.asciz "    Vibrato1    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035D4D, 0x035D6C
-Str_Vibrato2:	.asciz "    Vibrato2    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035D7D, 0x035D9C
-Str_Vibrato3:	.asciz "    Vibrato3    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035DAD, 0x035DCC
-Str_Vibrato4:	.asciz "    Vibrato4    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035DDD, 0x035DFC
-Str_Vibrato5:	.asciz "    Vibrato5    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035E0D, 0x035E2C
-Str_Vibrato6:	.asciz "    Vibrato6    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035E3D, 0x035E5C
-Str_Vibrato7:	.asciz "    Vibrato7    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035E6D, 0x035E8C
-Str_Vibrato8:	.asciz "    Vibrato8    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035E9D, 0x035EB8
-Str_Ring_Mod_1:	.asciz "   Ring Mod.1   "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035EC9, 0x035EE4
-Str_Ring_Mod_2:	.asciz "   Ring Mod.2   "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035EF5, 0x035F10
-Str_Ring_Mod_3:	.asciz "   Ring Mod.3   "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035F21, 0x035F3C
-Str_Ring_Mod_4:	.asciz "   Ring Mod.4   "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035F4D, 0x035F70
-Str_Mixup1:	.asciz "     Mixup1     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035F81, 0x035FA4
-Str_Mixup2:	.asciz "     Mixup2     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035FB5, 0x035FD8
-Str_Mixup3:	.asciz "     Mixup3     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x035FE9, 0x03600C
-Str_Mixup4:	.asciz "     Mixup4     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03601D, 0x036040
-Str_Dry_Wet_1_2:	.asciz "   Dry/Wet 1    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036051, 0x036074
-Str_Dry_Wet_2_2:	.asciz "   Dry/Wet 2    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036085, 0x0360A8
-Str_Dry_Wet_3_2:	.asciz "   Dry/Wet 3    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0360B9, 0x0360DC
-Str_Dry_Wet_4_2:	.asciz "   Dry/Wet 4    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0360ED, 0x036110
-Str_Dry_Wet_5_2:	.asciz "   Dry/Wet 5    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036121, 0x036144
-Str_Dry_Wet_6_2:	.asciz "   Dry/Wet 6    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036155, 0x036178
-Str_Dry_Wet_7_2:	.asciz "   Dry/Wet 7    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036189, 0x0361AC
-Str_Dry_Wet_8_2:	.asciz "   Dry/Wet 8    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0361BD, 0x0361E0
-Str_Dry_Wet_9_2:	.asciz "   Dry/Wet 9    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0361F1, 0x036214
-Str_Dry_Wet_10_2:	.asciz "   Dry/Wet 10   "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036225, 0x036248
-Str_Dry_Wet_11_2:	.asciz "   Dry/Wet 11   "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036259, 0x03627C
-Str_Dry_Wet_12_2:	.asciz "   Dry/Wet 12   "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03628D, 0x0362B0
-Str_Dry_Wet_13_2:	.asciz "   Dry/Wet 13   "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0362C1, 0x0362E4
-Str_Dry_Wet_1:	.asciz "   Dry/Wet 1    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0362F5, 0x036318
-Str_Dry_Wet_2:	.asciz "   Dry/Wet 2    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036329, 0x03634C
-Str_Dry_Wet_3:	.asciz "   Dry/Wet 3    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03635D, 0x036380
-Str_Dry_Wet_4:	.asciz "   Dry/Wet 4    "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036391, 0x0363B4
-Str_Dry_Wet_5:	.asciz "   Dry/Wet 5    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0363C5, 0x0363E8
-Str_Dry_Wet_6:	.asciz "   Dry/Wet 6    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0363F9, 0x03641C
-Str_Dry_Wet_7:	.asciz "   Dry/Wet 7    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03642D, 0x036450
-Str_Dry_Wet_8:	.asciz "   Dry/Wet 8    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036461, 0x036484
-Str_Dry_Wet_9:	.asciz "   Dry/Wet 9    "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036495, 0x0364B8
-Str_Dry_Wet_10:	.asciz "   Dry/Wet 10   "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0364C9, 0x0364EC
-Str_Dry_Wet_11:	.asciz "   Dry/Wet 11   "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0364FD, 0x036520
-Str_Dry_Wet_12:	.asciz "   Dry/Wet 12   "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036531, 0x036554
-Str_Dry_Wet_13:	.asciz "   Dry/Wet 13   "
-# census: opaque -- unknown-dump: 55 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036565, 0x03659C
-Str_Make_Up:	.asciz "    Make Up     "
-# census: opaque -- unknown-dump: 55 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0365AD, 0x0365E4
-Str_Middle_Cut:	.asciz "   Middle Cut   "
-# census: opaque -- unknown-dump: 55 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0365F5, 0x03662C
-Str_Radio:	.asciz "     Radio      "
-# census: opaque -- unknown-dump: 55 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03663D, 0x036674
-Str_Treble_Boost:	.asciz "  Treble Boost  "
-# census: opaque -- unknown-dump: 55 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036685, 0x0366BC
-Str_Treble_Cut:	.asciz "   Treble Cut   "
-# census: opaque -- unknown-dump: 55 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0366CD, 0x036704
-Str_No_Hi_Hat:	.asciz "   No Hi Hat    "
-# census: opaque -- unknown-dump: 55 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036715, 0x03674C
-Str_Bass_Cut:	.asciz "    Bass Cut    "
-# census: opaque -- unknown-dump: 55 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x03675D, 0x036794
-Str_Too_Bright:	.asciz "   Too Bright   "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0367A5, 0x0367C4
-Str_Enhancer1:	.asciz "   Enhancer1    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0367D5, 0x0367F4
-Str_Enhancer2:	.asciz "   Enhancer2    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036805, 0x036824
-Str_Enhancer3:	.asciz "   Enhancer3    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036835, 0x036854
-Str_Enhancer4:	.asciz "   Enhancer4    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036865, 0x036884
-Str_Enhancer5:	.asciz "   Enhancer5    "
-# census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036895, 0x0368B4
-Str_Enhancer6:	.asciz "   Enhancer6    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0368C5, 0x0368E4
-Str_Exciter1:	.asciz "    Exciter1    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0368F5, 0x036914
-Str_Exciter2:	.asciz "    Exciter2    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036925, 0x036944
-Str_Exciter3:	.asciz "    Exciter3    "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036955, 0x036970
-Str_Wah1:	.asciz "      Wah1      "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036981, 0x03699C
-Str_Wah2:	.asciz "      Wah2      "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0369AD, 0x0369C8
-Str_Wah3:	.asciz "      Wah3      "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0369D9, 0x0369F4
-Str_Wah4:	.asciz "      Wah4      "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036A05, 0x036A20
-Str_Wah5:	.asciz "      Wah5      "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036A31, 0x036A54
-Str_Normal_3:	.asciz "     Normal     "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036A65, 0x036A88
-Str_Mild_2:	.asciz "      Mild      "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036A99, 0x036ABC
-Str_Hard_2:	.asciz "      Hard      "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036ACD, 0x036AF0
-Str_Bright_2:	.asciz "     Bright     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036B01, 0x036B24
-Str_Fat_2:	.asciz "      Fat       "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036B35, 0x036B58
-Str_Hard_Compress_3:	.asciz " Hard Compress  "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036B69, 0x036B8C
-Str_Normal_2:	.asciz "     Normal     "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036B9D, 0x036BC0
-Str_Mild:	.asciz "      Mild      "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036BD1, 0x036BF4
-Str_Hard:	.asciz "      Hard      "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036C05, 0x036C28
-Str_Bright:	.asciz "     Bright     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036C39, 0x036C5C
-Str_Fat:	.asciz "      Fat       "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036C6D, 0x036C90
-Str_Hard_Compress_2:	.asciz " Hard Compress  "
-# census: opaque -- unknown-dump: 35 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036CA1, 0x036CC4
-Str_Normal:	.asciz "     Normal     "
-# census: opaque -- unknown-dump: 35 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036CD5, 0x036CF8
-Str_Hard_Compress:	.asciz " Hard Compress  "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036D09, 0x036D28
-Str_Limiter1:	.asciz "    Limiter1    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036D39, 0x036D58
-Str_Limiter2:	.asciz "    Limiter2    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036D69, 0x036D88
-Str_Limiter3:	.asciz "    Limiter3    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036D99, 0x036DB8
-Str_Limiter4:	.asciz "    Limiter4    "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036DC9, 0x036DE8
-Str_Comp_1:	.asciz "     Comp.1     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036DF9, 0x036E18
-Str_Comp_2:	.asciz "     Comp.2     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036E29, 0x036E48
-Str_Comp_3:	.asciz "     Comp.3     "
-# census: opaque -- unknown-dump: 31 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036E59, 0x036E78
-Str_Comp_4:	.asciz "     Comp.4     "
-# census: opaque -- unknown-dump: 27 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036E89, 0x036EA4
-Str_Slow_Attacker1:	.asciz " Slow Attacker1 "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036EB5, 0x036ED0
-Str_Slow_Attacker2:	.asciz " Slow Attacker2 "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036EE1, 0x036EFC
-Str_Slow_Attacker3:	.asciz " Slow Attacker3 "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036F0D, 0x036F28
-Str_Slow_Attacker4:	.asciz " Slow Attacker4 "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036F39, 0x036F60
-Str_Deep1_2:	.asciz "     Deep1      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036F71, 0x036F98
-Str_Deep2_2:	.asciz "     Deep2      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036FA9, 0x036FD0
-Str_Deep3_2:	.asciz "     Deep3      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x036FE1, 0x037008
-Str_Deep4_2:	.asciz "     Deep4      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037019, 0x037040
-Str_Deep5_2:	.asciz "     Deep5      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037051, 0x037078
-Str_Deep6_2:	.asciz "     Deep6      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037089, 0x0370B0
-Str_Deep7_2:	.asciz "     Deep7      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0370C1, 0x0370E8
-Str_Deep8_2:	.asciz "     Deep8      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0370F9, 0x037120
-Str_Normal1_2:	.asciz "    Normal1     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037131, 0x037158
-Str_Normal2_2:	.asciz "    Normal2     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037169, 0x037190
-Str_Normal3_2:	.asciz "    Normal3     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0371A1, 0x0371C8
-Str_Normal4_2:	.asciz "    Normal4     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0371D9, 0x037200
-Str_Normal5_2:	.asciz "    Normal5     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037211, 0x037238
-Str_Normal6_2:	.asciz "    Normal6     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037249, 0x037270
-Str_Normal7_2:	.asciz "    Normal7     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037281, 0x0372A8
-Str_Normal8_2:	.asciz "    Normal8     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0372B9, 0x0372E0
-Str_Shallow1_2:	.asciz "    Shallow1    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0372F1, 0x037318
-Str_Shallow2_2:	.asciz "    Shallow2    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037329, 0x037350
-Str_Shallow3_2:	.asciz "    Shallow3    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037361, 0x037388
-Str_Shallow4_2:	.asciz "    Shallow4    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037399, 0x0373C0
-Str_Shallow5_2:	.asciz "    Shallow5    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0373D1, 0x0373F8
-Str_Shallow6_2:	.asciz "    Shallow6    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037409, 0x037430
-Str_Shallow7_2:	.asciz "    Shallow7    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037441, 0x037468
-Str_Shallow8_2:	.asciz "    Shallow8    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037479, 0x0374A0
-Str_Deep9_2:	.asciz "     Deep9      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0374B1, 0x0374D8
-Str_Deep10_2:	.asciz "     Deep10     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0374E9, 0x037510
-Str_Deep11_2:	.asciz "     Deep11     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037521, 0x037548
-Str_Deep12_2:	.asciz "     Deep12     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037559, 0x037580
-Str_Deep13_2:	.asciz "     Deep13     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037591, 0x0375B8
-Str_Deep14_2:	.asciz "     Deep14     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0375C9, 0x0375F0
-Str_Deep15_2:	.asciz "     Deep15     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037601, 0x037628
-Str_Deep16_2:	.asciz "     Deep16     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037639, 0x037660
-Str_Normal9_2:	.asciz "    Normal9     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037671, 0x037698
-Str_Normal10_2:	.asciz "    Normal10    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0376A9, 0x0376D0
-Str_Normal11_2:	.asciz "    Normal11    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0376E1, 0x037708
-Str_Normal12_2:	.asciz "    Normal12    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037719, 0x037740
-Str_Normal13_2:	.asciz "    Normal13    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037751, 0x037778
-Str_Normal14_2:	.asciz "    Normal14    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037789, 0x0377B0
-Str_Normal15_2:	.asciz "    Normal15    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0377C1, 0x0377E8
-Str_Normal16_2:	.asciz "    Normal16    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0377F9, 0x037820
-Str_Shallow9_2:	.asciz "    Shallow9    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037831, 0x037858
-Str_Shallow10_2:	.asciz "   Shallow10    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037869, 0x037890
-Str_Shallow11_2:	.asciz "   Shallow11    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0378A1, 0x0378C8
-Str_Shallow12_2:	.asciz "   Shallow12    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0378D9, 0x037900
-Str_Shallow13_2:	.asciz "   Shallow13    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037911, 0x037938
-Str_Shallow14_2:	.asciz "   Shallow14    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037949, 0x037970
-Str_Shallow15_2:	.asciz "   Shallow15    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037981, 0x0379A8
-Str_Shallow16_2:	.asciz "   Shallow16    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0379B9, 0x0379E0
-Str_Deep17_2:	.asciz "     Deep17     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0379F1, 0x037A18
-Str_Deep18_2:	.asciz "     Deep18     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037A29, 0x037A50
-Str_Deep19_2:	.asciz "     Deep19     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037A61, 0x037A88
-Str_Deep20_2:	.asciz "     Deep20     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037A99, 0x037AC0
-Str_Normal17_2:	.asciz "    Normal17    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037AD1, 0x037AF8
-Str_Normal18_2:	.asciz "    Normal18    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037B09, 0x037B30
-Str_Normal19_2:	.asciz "    Normal19    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037B41, 0x037B68
-Str_Normal20_2:	.asciz "    Normal20    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037B79, 0x037BA0
-Str_Shallow17_2:	.asciz "   Shallow17    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037BB1, 0x037BD8
-Str_Shallow18_2:	.asciz "   Shallow18    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037BE9, 0x037C10
-Str_Shallow19_2:	.asciz "   Shallow19    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037C21, 0x037C48
-Str_Shallow20_2:	.asciz "   Shallow20    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037C59, 0x037C80
-Str_Deep1:	.asciz "     Deep1      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037C91, 0x037CB8
-Str_Deep2:	.asciz "     Deep2      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037CC9, 0x037CF0
-Str_Deep3:	.asciz "     Deep3      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037D01, 0x037D28
-Str_Deep4:	.asciz "     Deep4      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037D39, 0x037D60
-Str_Deep5:	.asciz "     Deep5      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037D71, 0x037D98
-Str_Deep6:	.asciz "     Deep6      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037DA9, 0x037DD0
-Str_Deep7:	.asciz "     Deep7      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037DE1, 0x037E08
-Str_Deep8:	.asciz "     Deep8      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037E19, 0x037E40
-Str_Normal1:	.asciz "    Normal1     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037E51, 0x037E78
-Str_Normal2:	.asciz "    Normal2     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037E89, 0x037EB0
-Str_Normal3:	.asciz "    Normal3     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037EC1, 0x037EE8
-Str_Normal4:	.asciz "    Normal4     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037EF9, 0x037F20
-Str_Normal5:	.asciz "    Normal5     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037F31, 0x037F58
-Str_Normal6:	.asciz "    Normal6     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037F69, 0x037F90
-Str_Normal7:	.asciz "    Normal7     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037FA1, 0x037FC8
-Str_Normal8:	.asciz "    Normal8     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x037FD9, 0x038000
-Str_Shallow1:	.asciz "    Shallow1    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038011, 0x038038
-Str_Shallow2:	.asciz "    Shallow2    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038049, 0x038070
-Str_Shallow3:	.asciz "    Shallow3    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038081, 0x0380A8
-Str_Shallow4:	.asciz "    Shallow4    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0380B9, 0x0380E0
-Str_Shallow5:	.asciz "    Shallow5    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0380F1, 0x038118
-Str_Shallow6:	.asciz "    Shallow6    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038129, 0x038150
-Str_Shallow7:	.asciz "    Shallow7    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038161, 0x038188
-Str_Shallow8:	.asciz "    Shallow8    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038199, 0x0381C0
-Str_Deep9:	.asciz "     Deep9      "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0381D1, 0x0381F8
-Str_Deep10:	.asciz "     Deep10     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038209, 0x038230
-Str_Deep11:	.asciz "     Deep11     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038241, 0x038268
-Str_Deep12:	.asciz "     Deep12     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038279, 0x0382A0
-Str_Deep13:	.asciz "     Deep13     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0382B1, 0x0382D8
-Str_Deep14:	.asciz "     Deep14     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0382E9, 0x038310
-Str_Deep15:	.asciz "     Deep15     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038321, 0x038348
-Str_Deep16:	.asciz "     Deep16     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038359, 0x038380
-Str_Normal9:	.asciz "    Normal9     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038391, 0x0383B8
-Str_Normal10:	.asciz "    Normal10    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0383C9, 0x0383F0
-Str_Normal11:	.asciz "    Normal11    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038401, 0x038428
-Str_Normal12:	.asciz "    Normal12    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038439, 0x038460
-Str_Normal13:	.asciz "    Normal13    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038471, 0x038498
-Str_Normal14:	.asciz "    Normal14    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0384A9, 0x0384D0
-Str_Normal15:	.asciz "    Normal15    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0384E1, 0x038508
-Str_Normal16:	.asciz "    Normal16    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038519, 0x038540
-Str_Shallow9:	.asciz "    Shallow9    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038551, 0x038578
-Str_Shallow10:	.asciz "   Shallow10    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038589, 0x0385B0
-Str_Shallow11:	.asciz "   Shallow11    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0385C1, 0x0385E8
-Str_Shallow12:	.asciz "   Shallow12    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0385F9, 0x038620
-Str_Shallow13:	.asciz "   Shallow13    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038631, 0x038658
-Str_Shallow14:	.asciz "   Shallow14    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038669, 0x038690
-Str_Shallow15:	.asciz "   Shallow15    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0386A1, 0x0386C8
-Str_Shallow16:	.asciz "   Shallow16    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0386D9, 0x038700
-Str_Deep17:	.asciz "     Deep17     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038711, 0x038738
-Str_Deep18:	.asciz "     Deep18     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038749, 0x038770
-Str_Deep19:	.asciz "     Deep19     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038781, 0x0387A8
-Str_Deep20:	.asciz "     Deep20     "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0387B9, 0x0387E0
-Str_Normal17:	.asciz "    Normal17    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0387F1, 0x038818
-Str_Normal18:	.asciz "    Normal18    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038829, 0x038850
-Str_Normal19:	.asciz "    Normal19    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038861, 0x038888
-Str_Normal20:	.asciz "    Normal20    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038899, 0x0388C0
-Str_Shallow17:	.asciz "   Shallow17    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0388D1, 0x0388F8
-Str_Shallow18:	.asciz "   Shallow18    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038909, 0x038930
-Str_Shallow19:	.asciz "   Shallow19    "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038941, 0x038968
-Str_Shallow20:	.asciz "   Shallow20    "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038979, 0x0389A4
-Str_Multi1:	.asciz "     Multi1     "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0389B5, 0x0389E0
-Str_Multi2:	.asciz "     Multi2     "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0389F1, 0x038A1C
-Str_Multi3:	.asciz "     Multi3     "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038A2D, 0x038A58
-Str_Multi4:	.asciz "     Multi4     "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038A69, 0x038A94
-Str_Multi5:	.asciz "     Multi5     "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038AA5, 0x038AD0
-Str_Multi6:	.asciz "     Multi6     "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038AE1, 0x038B0C
-Str_Multi7:	.asciz "     Multi7     "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038B1D, 0x038B48
-Str_Multi8:	.asciz "     Multi8     "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038B59, 0x038B84
-Str_Delay_Chorus:	.asciz "  Delay+Chorus  "
-# census: opaque -- unknown-dump: 47 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038B95, 0x038BC4
-Str_Delay_Flanger:	.asciz " Delay+Flanger  "
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038BD5, 0x038C00
-Str_Delay_Vibrato:	.asciz " Delay+Vibrato  "
-# census: opaque -- unknown-dump: 47 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038C11, 0x038C40
-Str_Delay_Phaser:	.asciz "  Delay+Phaser  "
-# census: opaque -- unknown-dump: 39 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038C51, 0x038C78
-Str_Autowah_Delay:	.asciz " Autowah+Delay  "
-# census: opaque -- unknown-dump: 47 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038C89, 0x038CB8
-Str_Comp_Dst_Delay:	.asciz " Comp+Dst+Delay "
-# census: opaque -- unknown-dump: 47 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038CC9, 0x038CF8
-Str_Comp_Ovd_Delay:	.asciz " Comp+Ovd+Delay "
-# census: opaque -- unknown-dump: 19 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038D09, 0x038D1C
-Str_Room:	.asciz "      Room      "
-# census: opaque -- unknown-dump: 19 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038D2D, 0x038D40
-Str_Karaoke:	.asciz "    Karaoke     "
-# census: opaque -- unknown-dump: 19 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038D51, 0x038D64
-Str_Stage:	.asciz "     Stage      "
-# census: opaque -- unknown-dump: 19 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038D75, 0x038D88
-Str_Cave:	.asciz "      Cave      "
-# census: opaque -- unknown-dump: 19 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038D99, 0x038DAC
-Str_No_effect:	.asciz "   No effect    "
-# census: opaque -- unknown-dump: 23 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038DBD, 0x038DD4
-Str_Chorus:	.asciz "     Chorus     "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038DE5, 0x038E00
-Str_Flanger:	.asciz "    Flanger     "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038E11, 0x038E2C
-Str_Phaser:	.asciz "     Phaser     "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038E3D, 0x038E58
-Str_Delay1:	.asciz "     Delay1     "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038E69, 0x038E84
-Str_Delay2:	.asciz "     Delay2     "
-# census: opaque -- unknown-dump: 23 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038E95, 0x038EAC
-Str_Exciter:	.asciz "    Exciter     "
-# census: opaque -- unknown-dump: 27 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038EBD, 0x038ED8
-Str_Talking_cat:	.asciz "  Talking cat   "
-# census: opaque -- unknown-dump: 19 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038EE9, 0x038EFC
-Str_Ring_modulator:	.asciz " Ring modulator "
-# census: opaque -- unknown-dump: 19 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038F0D, 0x038F20
-Str_Pitch_shifter1:	.asciz " Pitch shifter1 "
-# census: opaque -- unknown-dump: 23 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038F31, 0x038F48
-Str_Pitch_shifter2:	.asciz " Pitch shifter2 "
-# census: opaque -- unknown-dump: 19 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038F59, 0x038F6C
-Str_Voice_changer1:	.asciz " Voice changer1 "
-# census: opaque -- unknown-dump: 19 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038F7D, 0x038F90
-Str_Voice_changer2:	.asciz " Voice changer2 "
-# census: opaque -- unknown-dump: 23 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038FA1, 0x038FB8
-Str_2_Band:	.asciz "     2 Band     "
-# census: opaque -- unknown-dump: 23 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038FC9, 0x038FE0
-Str_String_Resonance:	.asciz "String Resonance"
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x038FF1, 0x039000
+FxPreset_Room1_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	19, 12, 20, 50, 94, 114
+
+FxPreset_Room1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Room1      "
+	.byte	0, 0
+	.word	16, 6, 0	# descriptor index (FxDesc_016, FxDescTable[16]); parameter count
+	.long	FxPreset_Room1_Params
+	.long	0x0	# key (FxPresetTable[key] is this record)
+
+FxPreset_Room2_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	25, 12, 22, 50, 90, 110
+
+FxPreset_Room2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Room2      "
+	.byte	0, 0
+	.word	16, 6, 0	# descriptor index (FxDesc_016, FxDescTable[16]); parameter count
+	.long	FxPreset_Room2_Params
+	.long	0x2000	# key (FxPresetTable[key] is this record)
+
+FxPreset_Plate1_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	35, 45, 26, 50, 70, 90
+
+FxPreset_Plate1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Plate1     "
+	.byte	0, 0
+	.word	18, 6, 0	# descriptor index (FxDesc_018, FxDescTable[18]); parameter count
+	.long	FxPreset_Plate1_Params
+	.long	0x1	# key (FxPresetTable[key] is this record)
+
+FxPreset_Plate2_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	42, 45, 22, 50, 70, 90
+
+FxPreset_Plate2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Plate2     "
+	.byte	0, 0
+	.word	18, 6, 0	# descriptor index (FxDesc_018, FxDescTable[18]); parameter count
+	.long	FxPreset_Plate2_Params
+	.long	0x2001	# key (FxPresetTable[key] is this record)
+
+FxPreset_Concert1_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	35, 11, 21, 50, 70, 90
+
+FxPreset_Concert1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Concert1    "
+	.byte	0, 0
+	.word	20, 6, 0	# descriptor index (FxDesc_020, FxDescTable[20]); parameter count
+	.long	FxPreset_Concert1_Params
+	.long	0x2	# key (FxPresetTable[key] is this record)
+
+FxPreset_Concert2_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	39, 60, 23, 80, 70, 90
+
+FxPreset_Concert2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Concert2    "
+	.byte	0, 0
+	.word	20, 6, 0	# descriptor index (FxDesc_020, FxDescTable[20]); parameter count
+	.long	FxPreset_Concert2_Params
+	.long	0x2002	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dark1_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	45, 45, 14, 50, 70, 90
+
+FxPreset_Dark1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Dark1      "
+	.byte	0, 0
+	.word	22, 6, 0	# descriptor index (FxDesc_022, FxDescTable[22]); parameter count
+	.long	FxPreset_Dark1_Params
+	.long	0x3	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dark2_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	55, 90, 18, 50, 70, 90
+
+FxPreset_Dark2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Dark2      "
+	.byte	0, 0
+	.word	22, 6, 0	# descriptor index (FxDesc_022, FxDescTable[22]); parameter count
+	.long	FxPreset_Dark2_Params
+	.long	0x2003	# key (FxPresetTable[key] is this record)
+
+FxPreset_Bright1_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	41, 25, 21, 50, 70, 90
+
+FxPreset_Bright1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Bright1     "
+	.byte	0, 0
+	.word	24, 6, 0	# descriptor index (FxDesc_024, FxDescTable[24]); parameter count
+	.long	FxPreset_Bright1_Params
+	.long	0x4	# key (FxPresetTable[key] is this record)
+
+FxPreset_Bright2_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	45, 30, 23, 50, 50, 90
+
+FxPreset_Bright2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Bright2     "
+	.byte	0, 0
+	.word	24, 6, 0	# descriptor index (FxDesc_024, FxDescTable[24]); parameter count
+	.long	FxPreset_Bright2_Params
+	.long	0x2004	# key (FxPresetTable[key] is this record)
+
+FxPreset_Long1_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	65, 100, 18, 50, 70, 90
+
+FxPreset_Long1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Long1      "
+	.byte	0, 0
+	.word	20, 6, 0	# descriptor index (FxDesc_020, FxDescTable[20]); parameter count
+	.long	FxPreset_Long1_Params
+	.long	0x5	# key (FxPresetTable[key] is this record)
+
+FxPreset_Long2_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	75, 124, 18, 50, 70, 90
+
+FxPreset_Long2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Long2      "
+	.byte	0, 0
+	.word	20, 6, 0	# descriptor index (FxDesc_020, FxDescTable[20]); parameter count
+	.long	FxPreset_Long2_Params
+	.long	0x2005	# key (FxPresetTable[key] is this record)
+
+FxPreset_Large_Hall1_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	45, 45, 16, 50, 70, 90
+
+FxPreset_Large_Hall1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"  Large Hall1   "
+	.byte	0, 0
+	.word	20, 6, 0	# descriptor index (FxDesc_020, FxDescTable[20]); parameter count
+	.long	FxPreset_Large_Hall1_Params
+	.long	0x6	# key (FxPresetTable[key] is this record)
+
+FxPreset_Large_Hall2_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	55, 90, 18, 50, 70, 90
+
+FxPreset_Large_Hall2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"  Large Hall2   "
+	.byte	0, 0
+	.word	20, 6, 0	# descriptor index (FxDesc_020, FxDescTable[20]); parameter count
+	.long	FxPreset_Large_Hall2_Params
+	.long	0x2006	# key (FxPresetTable[key] is this record)
+
+FxPreset_Live_Stage_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	45, 20, 16, 50, 70, 90
+
+FxPreset_Live_Stage:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Live Stage   "
+	.byte	0, 0
+	.word	30, 6, 0	# descriptor index (FxDesc_030, FxDescTable[30]); parameter count
+	.long	FxPreset_Live_Stage_Params
+	.long	0x7	# key (FxPresetTable[key] is this record)
+
+FxPreset_Stadium_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	55, 250, 18, 50, 70, 90
+
+FxPreset_Stadium:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Stadium     "
+	.byte	0, 0
+	.word	30, 6, 0	# descriptor index (FxDesc_030, FxDescTable[30]); parameter count
+	.long	FxPreset_Stadium_Params
+	.long	0x2007	# key (FxPresetTable[key] is this record)
+
+FxPreset_Medium_Gate_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 12, 40, 20, 20, 84
+
+FxPreset_Medium_Gate:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"  Medium Gate   "
+	.byte	0, 0
+	.word	8, 6, 0	# descriptor index (FxDesc_008, FxDescTable[8]); parameter count
+	.long	FxPreset_Medium_Gate_Params
+	.long	0x2009	# key (FxPresetTable[key] is this record)
+
+FxPreset_Short_Gate_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	12, 12, 40, 20, 30, 90
+
+FxPreset_Short_Gate:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Short Gate   "
+	.byte	0, 0
+	.word	8, 6, 0	# descriptor index (FxDesc_008, FxDescTable[8]); parameter count
+	.long	FxPreset_Short_Gate_Params
+	.long	0x2109	# key (FxPresetTable[key] is this record)
+
+FxPreset_Long_Gate_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	55, 12, 10, 5, 15, 90
+
+FxPreset_Long_Gate:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Long Gate    "
+	.byte	0, 0
+	.word	8, 6, 0	# descriptor index (FxDesc_008, FxDescTable[8]); parameter count
+	.long	FxPreset_Long_Gate_Params
+	.long	0x2209	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep1_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 45, 6, 0, 84, 80
+
+FxPreset_Deep1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep1      "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Deep1_Params
+	.long	0x10	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep2_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	21, 30, 1, 0, 84, 80
+
+FxPreset_Deep2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep2      "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Deep2_Params
+	.long	0x110	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep3_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 4, 0, 84, 80
+
+FxPreset_Deep3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep3      "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Deep3_Params
+	.long	0x210	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep4_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 6, 0, 84, 80
+
+FxPreset_Deep4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep4      "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Deep4_Params
+	.long	0x310	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep5_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 8, 0, 84, 80
+
+FxPreset_Deep5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep5      "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Deep5_Params
+	.long	0x410	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep6_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 10, 0, 84, 80
+
+FxPreset_Deep6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep6      "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Deep6_Params
+	.long	0x510	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep7_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 12, 0, 84, 80
+
+FxPreset_Deep7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep7      "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Deep7_Params
+	.long	0x610	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep8_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 14, 0, 84, 80
+
+FxPreset_Deep8:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep8      "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Deep8_Params
+	.long	0x710	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal1_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 45, 6, 0, 76, 80
+
+FxPreset_Normal1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal1     "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Normal1_Params
+	.long	0x810	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal2_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	21, 30, 1, 0, 76, 80
+
+FxPreset_Normal2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal2     "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Normal2_Params
+	.long	0x910	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal3_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 4, 0, 76, 80
+
+FxPreset_Normal3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal3     "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Normal3_Params
+	.long	0xa10	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal4_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 6, 0, 76, 80
+
+FxPreset_Normal4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal4     "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Normal4_Params
+	.long	0xb10	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal5_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 8, 0, 76, 80
+
+FxPreset_Normal5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal5     "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Normal5_Params
+	.long	0xc10	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal6_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 10, 0, 76, 80
+
+FxPreset_Normal6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal6     "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Normal6_Params
+	.long	0xd10	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal7_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 12, 0, 76, 80
+
+FxPreset_Normal7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal7     "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Normal7_Params
+	.long	0xe10	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal8_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 14, 0, 76, 80
+
+FxPreset_Normal8:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal8     "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Normal8_Params
+	.long	0xf10	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow1_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 45, 6, 0, 70, 80
+
+FxPreset_Shallow1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow1    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Shallow1_Params
+	.long	0x1010	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow2_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	21, 30, 1, 0, 70, 80
+
+FxPreset_Shallow2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow2    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Shallow2_Params
+	.long	0x1110	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow3_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 4, 0, 70, 80
+
+FxPreset_Shallow3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow3    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Shallow3_Params
+	.long	0x1210	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow4_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 6, 0, 70, 80
+
+FxPreset_Shallow4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow4    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Shallow4_Params
+	.long	0x1310	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow5_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 8, 0, 70, 80
+
+FxPreset_Shallow5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow5    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Shallow5_Params
+	.long	0x1410	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow6_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 10, 0, 70, 80
+
+FxPreset_Shallow6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow6    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Shallow6_Params
+	.long	0x1510	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow7_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 12, 0, 70, 80
+
+FxPreset_Shallow7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow7    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Shallow7_Params
+	.long	0x1610	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow8_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 14, 0, 70, 80
+
+FxPreset_Shallow8:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow8    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Shallow8_Params
+	.long	0x1710	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep9_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 16, 0, 84, 80
+
+FxPreset_Deep9:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep9      "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Deep9_Params
+	.long	0x2010	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep10_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 20, 0, 84, 80
+
+FxPreset_Deep10:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep10     "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Deep10_Params
+	.long	0x2110	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep11_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 25, 0, 84, 80
+
+FxPreset_Deep11:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep11     "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Deep11_Params
+	.long	0x2210	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep12_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	12, 18, 31, 0, 84, 80
+
+FxPreset_Deep12:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep12     "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Deep12_Params
+	.long	0x2310	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep13_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	12, 18, 35, 0, 84, 80
+
+FxPreset_Deep13:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep13     "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Deep13_Params
+	.long	0x2410	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal9_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 16, 0, 76, 80
+
+FxPreset_Normal9:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal9     "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Normal9_Params
+	.long	0x2810	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal10_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 20, 0, 76, 80
+
+FxPreset_Normal10:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal10    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Normal10_Params
+	.long	0x2910	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal11_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 25, 0, 76, 80
+
+FxPreset_Normal11:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal11    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Normal11_Params
+	.long	0x2a10	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal12_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	12, 18, 31, 0, 76, 80
+
+FxPreset_Normal12:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal12    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Normal12_Params
+	.long	0x2b10	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal13_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	12, 18, 35, 0, 76, 80
+
+FxPreset_Normal13:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal13    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Normal13_Params
+	.long	0x2c10	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow9_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 16, 0, 70, 80
+
+FxPreset_Shallow9:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow9    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Shallow9_Params
+	.long	0x3010	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow10_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 20, 0, 70, 80
+
+FxPreset_Shallow10:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow10    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Shallow10_Params
+	.long	0x3110	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow11_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 25, 0, 70, 80
+
+FxPreset_Shallow11:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow11    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Shallow11_Params
+	.long	0x3210	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow12_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	12, 24, 31, 0, 70, 80
+
+FxPreset_Shallow12:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow12    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Shallow12_Params
+	.long	0x3310	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow13_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	12, 24, 35, 0, 70, 80
+
+FxPreset_Shallow13:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow13    "
+	.byte	0, 0
+	.word	1, 6, 0	# descriptor index (FxDesc_001, FxDescTable[1]); parameter count
+	.long	FxPreset_Shallow13_Params
+	.long	0x3410	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep1_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 45, 4, 4, 0, 84, 80, 0xffff
+
+FxPreset_Deep1_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep1      "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Deep1_2_Params
+	.long	0x12	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep2_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 99, 2, 2, 0, 84, 80, 0xffff
+
+FxPreset_Deep2_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep2      "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Deep2_2_Params
+	.long	0x112	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep3_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 99, 2, 4, 0, 84, 80, 0xffff
+
+FxPreset_Deep3_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep3      "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Deep3_2_Params
+	.long	0x212	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep4_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 4, 4, 0, 84, 80, 0xffff
+
+FxPreset_Deep4_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep4      "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Deep4_2_Params
+	.long	0x312	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep5_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 6, 6, 0, 84, 80, 0xffff
+
+FxPreset_Deep5_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep5      "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Deep5_2_Params
+	.long	0x412	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep6_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 8, 8, 0, 84, 80, 0xffff
+
+FxPreset_Deep6_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep6      "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Deep6_2_Params
+	.long	0x512	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep7_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 10, 10, 0, 84, 80, 0xffff
+
+FxPreset_Deep7_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep7      "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Deep7_2_Params
+	.long	0x612	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep8_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 12, 12, 0, 84, 80, 0xffff
+
+FxPreset_Deep8_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep8      "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Deep8_2_Params
+	.long	0x712	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal1_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 45, 4, 4, 0, 76, 80, 0xffff
+
+FxPreset_Normal1_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal1     "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Normal1_2_Params
+	.long	0x812	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal2_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 99, 2, 2, 0, 76, 80, 0xffff
+
+FxPreset_Normal2_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal2     "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Normal2_2_Params
+	.long	0x912	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal3_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 99, 2, 2, 0, 76, 80, 0xffff
+
+FxPreset_Normal3_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal3     "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Normal3_2_Params
+	.long	0xa12	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal4_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 4, 4, 0, 76, 80, 0xffff
+
+FxPreset_Normal4_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal4     "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Normal4_2_Params
+	.long	0xb12	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal5_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 6, 6, 0, 76, 80, 0xffff
+
+FxPreset_Normal5_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal5     "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Normal5_2_Params
+	.long	0xc12	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal6_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 8, 8, 0, 76, 80, 0xffff
+
+FxPreset_Normal6_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal6     "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Normal6_2_Params
+	.long	0xd12	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal7_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 10, 10, 0, 76, 80, 0xffff
+
+FxPreset_Normal7_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal7     "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Normal7_2_Params
+	.long	0xe12	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal8_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 12, 12, 0, 76, 80, 0xffff
+
+FxPreset_Normal8_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal8     "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Normal8_2_Params
+	.long	0xf12	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow1_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 45, 4, 4, 0, 70, 80, 0xffff
+
+FxPreset_Shallow1_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow1    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Shallow1_2_Params
+	.long	0x1012	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow2_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 99, 2, 2, 0, 70, 80, 0xffff
+
+FxPreset_Shallow2_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow2    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Shallow2_2_Params
+	.long	0x1112	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow3_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 99, 2, 4, 0, 70, 80, 0xffff
+
+FxPreset_Shallow3_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow3    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Shallow3_2_Params
+	.long	0x1212	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow4_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 4, 4, 0, 70, 80, 0xffff
+
+FxPreset_Shallow4_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow4    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Shallow4_2_Params
+	.long	0x1312	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow5_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 6, 6, 0, 70, 80, 0xffff
+
+FxPreset_Shallow5_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow5    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Shallow5_2_Params
+	.long	0x1412	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow6_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 8, 8, 0, 70, 80, 0xffff
+
+FxPreset_Shallow6_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow6    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Shallow6_2_Params
+	.long	0x1512	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow7_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 10, 10, 0, 70, 80, 0xffff
+
+FxPreset_Shallow7_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow7    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Shallow7_2_Params
+	.long	0x1612	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow8_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 12, 12, 0, 70, 80, 0xffff
+
+FxPreset_Shallow8_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow8    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Shallow8_2_Params
+	.long	0x1712	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep9_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 14, 14, 0, 84, 80, 0xffff
+
+FxPreset_Deep9_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep9      "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Deep9_2_Params
+	.long	0x2012	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep10_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 16, 16, 0, 84, 80, 0xffff
+
+FxPreset_Deep10_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep10     "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Deep10_2_Params
+	.long	0x2112	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep11_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 18, 18, 0, 84, 80, 0xffff
+
+FxPreset_Deep11_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep11     "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Deep11_2_Params
+	.long	0x2212	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep12_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 19, 19, 0, 84, 80, 0xffff
+
+FxPreset_Deep12_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep12     "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Deep12_2_Params
+	.long	0x2312	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep13_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 20, 20, 0, 84, 80, 0xffff
+
+FxPreset_Deep13_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep13     "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Deep13_2_Params
+	.long	0x2412	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal9_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 14, 14, 0, 76, 80, 0xffff
+
+FxPreset_Normal9_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal9     "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Normal9_2_Params
+	.long	0x2812	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal10_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 16, 16, 0, 76, 80, 0xffff
+
+FxPreset_Normal10_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal10    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Normal10_2_Params
+	.long	0x2912	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal11_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 18, 18, 0, 76, 80, 0xffff
+
+FxPreset_Normal11_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal11    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Normal11_2_Params
+	.long	0x2a12	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal12_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 19, 19, 0, 76, 80, 0xffff
+
+FxPreset_Normal12_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal12    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Normal12_2_Params
+	.long	0x2b12	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal13_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 20, 20, 0, 76, 80, 0xffff
+
+FxPreset_Normal13_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal13    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Normal13_2_Params
+	.long	0x2c12	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow9_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 14, 14, 0, 70, 80, 0xffff
+
+FxPreset_Shallow9_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow9    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Shallow9_2_Params
+	.long	0x3012	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow10_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 16, 16, 0, 70, 80, 0xffff
+
+FxPreset_Shallow10_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow10    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Shallow10_2_Params
+	.long	0x3112	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow11_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 18, 18, 0, 70, 80, 0xffff
+
+FxPreset_Shallow11_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow11    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Shallow11_2_Params
+	.long	0x3212	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow12_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 19, 19, 0, 70, 80, 0xffff
+
+FxPreset_Shallow12_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow12    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Shallow12_2_Params
+	.long	0x3312	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow13_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 20, 20, 0, 70, 80, 0xffff
+
+FxPreset_Shallow13_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow13    "
+	.byte	0, 0
+	.word	6, 7, 0	# descriptor index (FxDesc_006, FxDescTable[6]); parameter count
+	.long	FxPreset_Shallow13_2_Params
+	.long	0x3412	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_1_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 45, 4, 4, 0, 84, 80, 0xffff
+
+FxPreset_Dry_Wet_1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 1    "
+	.byte	0, 0
+	.word	14, 7, 0	# descriptor index (FxDesc_014, FxDescTable[14]); parameter count
+	.long	FxPreset_Dry_Wet_1_Params
+	.long	0x13	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 99, 2, 2, 0, 84, 80, 0xffff
+
+FxPreset_Dry_Wet_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 2    "
+	.byte	0, 0
+	.word	14, 7, 0	# descriptor index (FxDesc_014, FxDescTable[14]); parameter count
+	.long	FxPreset_Dry_Wet_2_Params
+	.long	0x113	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_3_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 99, 2, 4, 0, 84, 80, 0xffff
+
+FxPreset_Dry_Wet_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 3    "
+	.byte	0, 0
+	.word	14, 7, 0	# descriptor index (FxDesc_014, FxDescTable[14]); parameter count
+	.long	FxPreset_Dry_Wet_3_Params
+	.long	0x213	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_4_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 4, 4, 0, 84, 80, 0xffff
+
+FxPreset_Dry_Wet_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 4    "
+	.byte	0, 0
+	.word	14, 7, 0	# descriptor index (FxDesc_014, FxDescTable[14]); parameter count
+	.long	FxPreset_Dry_Wet_4_Params
+	.long	0x313	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_5_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 6, 6, 0, 84, 80, 0xffff
+
+FxPreset_Dry_Wet_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 5    "
+	.byte	0, 0
+	.word	14, 7, 0	# descriptor index (FxDesc_014, FxDescTable[14]); parameter count
+	.long	FxPreset_Dry_Wet_5_Params
+	.long	0x413	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_6_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 8, 8, 0, 84, 80, 0xffff
+
+FxPreset_Dry_Wet_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 6    "
+	.byte	0, 0
+	.word	14, 7, 0	# descriptor index (FxDesc_014, FxDescTable[14]); parameter count
+	.long	FxPreset_Dry_Wet_6_Params
+	.long	0x513	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_7_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 10, 10, 0, 84, 80, 0xffff
+
+FxPreset_Dry_Wet_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 7    "
+	.byte	0, 0
+	.word	14, 7, 0	# descriptor index (FxDesc_014, FxDescTable[14]); parameter count
+	.long	FxPreset_Dry_Wet_7_Params
+	.long	0x613	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_8_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 12, 12, 0, 84, 80, 0xffff
+
+FxPreset_Dry_Wet_8:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 8    "
+	.byte	0, 0
+	.word	14, 7, 0	# descriptor index (FxDesc_014, FxDescTable[14]); parameter count
+	.long	FxPreset_Dry_Wet_8_Params
+	.long	0x713	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_9_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 14, 14, 0, 84, 80, 0xffff
+
+FxPreset_Dry_Wet_9:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 9    "
+	.byte	0, 0
+	.word	14, 7, 0	# descriptor index (FxDesc_014, FxDescTable[14]); parameter count
+	.long	FxPreset_Dry_Wet_9_Params
+	.long	0x2013	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_10_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 16, 16, 0, 84, 80, 0xffff
+
+FxPreset_Dry_Wet_10:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 10   "
+	.byte	0, 0
+	.word	14, 7, 0	# descriptor index (FxDesc_014, FxDescTable[14]); parameter count
+	.long	FxPreset_Dry_Wet_10_Params
+	.long	0x2113	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_11_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 18, 18, 0, 84, 80, 0xffff
+
+FxPreset_Dry_Wet_11:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 11   "
+	.byte	0, 0
+	.word	14, 7, 0	# descriptor index (FxDesc_014, FxDescTable[14]); parameter count
+	.long	FxPreset_Dry_Wet_11_Params
+	.long	0x2213	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_12_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 19, 19, 0, 84, 80, 0xffff
+
+FxPreset_Dry_Wet_12:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 12   "
+	.byte	0, 0
+	.word	14, 7, 0	# descriptor index (FxDesc_014, FxDescTable[14]); parameter count
+	.long	FxPreset_Dry_Wet_12_Params
+	.long	0x2313	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_13_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	24, 36, 20, 20, 0, 84, 80, 0xffff
+
+FxPreset_Dry_Wet_13:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 13   "
+	.byte	0, 0
+	.word	14, 7, 0	# descriptor index (FxDesc_014, FxDescTable[14]); parameter count
+	.long	FxPreset_Dry_Wet_13_Params
+	.long	0x2413	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep1_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 6, 60, 15, 30, 0, 84, 80
+
+FxPreset_Deep1_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep1      "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Deep1_3_Params
+	.long	0x14	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep2_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 4, 30, 20, 40, 0, 84, 80
+
+FxPreset_Deep2_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep2      "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Deep2_3_Params
+	.long	0x114	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep3_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 8, 30, 35, 60, 0, 84, 80
+
+FxPreset_Deep3_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep3      "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Deep3_3_Params
+	.long	0x214	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep4_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 11, 30, 15, 30, 0, 84, 80
+
+FxPreset_Deep4_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep4      "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Deep4_3_Params
+	.long	0x314	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep5_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 13, 30, 35, 60, 0, 84, 80
+
+FxPreset_Deep5_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep5      "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Deep5_3_Params
+	.long	0x414	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep6_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 16, 30, 55, 80, 0, 84, 80
+
+FxPreset_Deep6_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep6      "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Deep6_3_Params
+	.long	0x514	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep7_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 16, 30, 15, 30, 0, 84, 80
+
+FxPreset_Deep7_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep7      "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Deep7_3_Params
+	.long	0x614	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep8_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 18, 35, 35, 60, 0, 84, 80
+
+FxPreset_Deep8_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep8      "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Deep8_3_Params
+	.long	0x714	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal1_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 6, 60, 15, 30, 0, 76, 80
+
+FxPreset_Normal1_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal1     "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Normal1_3_Params
+	.long	0x814	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal2_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 4, 35, 20, 40, 0, 76, 80
+
+FxPreset_Normal2_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal2     "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Normal2_3_Params
+	.long	0x914	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal3_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 8, 35, 35, 60, 0, 76, 80
+
+FxPreset_Normal3_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal3     "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Normal3_3_Params
+	.long	0xa14	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal4_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 11, 35, 15, 30, 0, 76, 80
+
+FxPreset_Normal4_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal4     "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Normal4_3_Params
+	.long	0xb14	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal5_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 13, 35, 35, 60, 0, 76, 80
+
+FxPreset_Normal5_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal5     "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Normal5_3_Params
+	.long	0xc14	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal6_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 16, 35, 55, 90, 0, 76, 80
+
+FxPreset_Normal6_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal6     "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Normal6_3_Params
+	.long	0xd14	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal7_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 16, 35, 15, 30, 0, 76, 80
+
+FxPreset_Normal7_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal7     "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Normal7_3_Params
+	.long	0xe14	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal8_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 18, 45, 35, 60, 0, 76, 80
+
+FxPreset_Normal8_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal8     "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Normal8_3_Params
+	.long	0xf14	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow1_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 6, 60, 15, 30, 0, 70, 80
+
+FxPreset_Shallow1_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow1    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Shallow1_3_Params
+	.long	0x1014	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow2_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 4, 35, 20, 40, 0, 70, 80
+
+FxPreset_Shallow2_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow2    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Shallow2_3_Params
+	.long	0x1114	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow3_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 8, 35, 35, 60, 0, 70, 80
+
+FxPreset_Shallow3_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow3    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Shallow3_3_Params
+	.long	0x1214	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow4_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 11, 35, 15, 30, 0, 70, 80
+
+FxPreset_Shallow4_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow4    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Shallow4_3_Params
+	.long	0x1314	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow5_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 13, 35, 35, 60, 0, 70, 80
+
+FxPreset_Shallow5_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow5    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Shallow5_3_Params
+	.long	0x1414	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow6_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 16, 35, 55, 90, 0, 70, 80
+
+FxPreset_Shallow6_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow6    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Shallow6_3_Params
+	.long	0x1514	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow7_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 16, 35, 15, 30, 0, 70, 80
+
+FxPreset_Shallow7_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow7    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Shallow7_3_Params
+	.long	0x1614	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow8_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 18, 45, 35, 60, 0, 70, 80
+
+FxPreset_Shallow8_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow8    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Shallow8_3_Params
+	.long	0x1714	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep9_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 16, 28, 65, 99, 0, 84, 80
+
+FxPreset_Deep9_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep9      "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Deep9_3_Params
+	.long	0x2014	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep10_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 13, 25, 45, 80, 0, 84, 80
+
+FxPreset_Deep10_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep10     "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Deep10_3_Params
+	.long	0x2114	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep11_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 4, 30, 15, 30, 0, 84, 80
+
+FxPreset_Deep11_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep11     "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Deep11_3_Params
+	.long	0x2214	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep12_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 4, 30, 19, 38, 0, 84, 80
+
+FxPreset_Deep12_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep12     "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Deep12_3_Params
+	.long	0x2314	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep13_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 18, 40, 25, 50, 0, 84, 80
+
+FxPreset_Deep13_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep13     "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Deep13_3_Params
+	.long	0x2414	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal9_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 16, 31, 65, 99, 0, 76, 80
+
+FxPreset_Normal9_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal9     "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Normal9_3_Params
+	.long	0x2814	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal10_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 13, 25, 45, 80, 0, 76, 80
+
+FxPreset_Normal10_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal10    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Normal10_3_Params
+	.long	0x2914	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal11_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 4, 35, 15, 30, 0, 76, 80
+
+FxPreset_Normal11_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal11    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Normal11_3_Params
+	.long	0x2a14	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal12_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 4, 35, 19, 38, 0, 76, 80
+
+FxPreset_Normal12_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal12    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Normal12_3_Params
+	.long	0x2b14	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal13_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 18, 60, 25, 50, 0, 76, 80
+
+FxPreset_Normal13_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal13    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Normal13_3_Params
+	.long	0x2c14	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow9_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 16, 31, 65, 99, 0, 70, 80
+
+FxPreset_Shallow9_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow9    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Shallow9_3_Params
+	.long	0x3014	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow10_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 13, 25, 45, 80, 0, 70, 80
+
+FxPreset_Shallow10_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow10    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Shallow10_3_Params
+	.long	0x3114	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow11_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 4, 35, 15, 30, 0, 70, 80
+
+FxPreset_Shallow11_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow11    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Shallow11_3_Params
+	.long	0x3214	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow12_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 4, 35, 19, 38, 0, 70, 80
+
+FxPreset_Shallow12_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow12    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Shallow12_3_Params
+	.long	0x3314	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow13_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 18, 60, 25, 50, 0, 70, 80
+
+FxPreset_Shallow13_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow13    "
+	.byte	0, 0
+	.word	2, 8, 0	# descriptor index (FxDesc_002, FxDescTable[2]); parameter count
+	.long	FxPreset_Shallow13_3_Params
+	.long	0x3414	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_1_2_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 6, 60, 15, 30, 0, 84, 80
+
+FxPreset_Dry_Wet_1_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 1    "
+	.byte	0, 0
+	.word	7, 8, 0	# descriptor index (FxDesc_007, FxDescTable[7]); parameter count
+	.long	FxPreset_Dry_Wet_1_2_Params
+	.long	0x15	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_2_2_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 4, 30, 20, 40, 0, 84, 80
+
+FxPreset_Dry_Wet_2_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 2    "
+	.byte	0, 0
+	.word	7, 8, 0	# descriptor index (FxDesc_007, FxDescTable[7]); parameter count
+	.long	FxPreset_Dry_Wet_2_2_Params
+	.long	0x115	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_3_2_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 8, 30, 35, 60, 0, 84, 80
+
+FxPreset_Dry_Wet_3_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 3    "
+	.byte	0, 0
+	.word	7, 8, 0	# descriptor index (FxDesc_007, FxDescTable[7]); parameter count
+	.long	FxPreset_Dry_Wet_3_2_Params
+	.long	0x215	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_4_2_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 11, 30, 15, 30, 0, 84, 80
+
+FxPreset_Dry_Wet_4_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 4    "
+	.byte	0, 0
+	.word	7, 8, 0	# descriptor index (FxDesc_007, FxDescTable[7]); parameter count
+	.long	FxPreset_Dry_Wet_4_2_Params
+	.long	0x315	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_5_2_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 13, 30, 35, 60, 0, 84, 80
+
+FxPreset_Dry_Wet_5_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 5    "
+	.byte	0, 0
+	.word	7, 8, 0	# descriptor index (FxDesc_007, FxDescTable[7]); parameter count
+	.long	FxPreset_Dry_Wet_5_2_Params
+	.long	0x415	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_6_2_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 16, 30, 55, 80, 0, 84, 80
+
+FxPreset_Dry_Wet_6_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 6    "
+	.byte	0, 0
+	.word	7, 8, 0	# descriptor index (FxDesc_007, FxDescTable[7]); parameter count
+	.long	FxPreset_Dry_Wet_6_2_Params
+	.long	0x515	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_7_2_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 16, 30, 15, 30, 0, 84, 80
+
+FxPreset_Dry_Wet_7_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 7    "
+	.byte	0, 0
+	.word	7, 8, 0	# descriptor index (FxDesc_007, FxDescTable[7]); parameter count
+	.long	FxPreset_Dry_Wet_7_2_Params
+	.long	0x615	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_8_2_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 18, 35, 35, 60, 0, 84, 80
+
+FxPreset_Dry_Wet_8_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 8    "
+	.byte	0, 0
+	.word	7, 8, 0	# descriptor index (FxDesc_007, FxDescTable[7]); parameter count
+	.long	FxPreset_Dry_Wet_8_2_Params
+	.long	0x715	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_9_2_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 16, 28, 65, 99, 0, 84, 80
+
+FxPreset_Dry_Wet_9_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 9    "
+	.byte	0, 0
+	.word	7, 8, 0	# descriptor index (FxDesc_007, FxDescTable[7]); parameter count
+	.long	FxPreset_Dry_Wet_9_2_Params
+	.long	0x2015	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_10_2_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 13, 25, 45, 80, 0, 84, 80
+
+FxPreset_Dry_Wet_10_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 10   "
+	.byte	0, 0
+	.word	7, 8, 0	# descriptor index (FxDesc_007, FxDescTable[7]); parameter count
+	.long	FxPreset_Dry_Wet_10_2_Params
+	.long	0x2115	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_11_2_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 4, 30, 15, 30, 0, 84, 80
+
+FxPreset_Dry_Wet_11_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 11   "
+	.byte	0, 0
+	.word	7, 8, 0	# descriptor index (FxDesc_007, FxDescTable[7]); parameter count
+	.long	FxPreset_Dry_Wet_11_2_Params
+	.long	0x2215	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_12_2_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 4, 30, 19, 38, 0, 84, 80
+
+FxPreset_Dry_Wet_12_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 12   "
+	.byte	0, 0
+	.word	7, 8, 0	# descriptor index (FxDesc_007, FxDescTable[7]); parameter count
+	.long	FxPreset_Dry_Wet_12_2_Params
+	.long	0x2315	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_13_2_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 18, 40, 25, 50, 0, 84, 80
+
+FxPreset_Dry_Wet_13_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 13   "
+	.byte	0, 0
+	.word	7, 8, 0	# descriptor index (FxDesc_007, FxDescTable[7]); parameter count
+	.long	FxPreset_Dry_Wet_13_2_Params
+	.long	0x2415	# key (FxPresetTable[key] is this record)
+
+FxPreset_Chorus1_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	50, 3, 11, 24, 22, 28, 99, 80
+
+FxPreset_Chorus1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Chorus1     "
+	.byte	0, 0
+	.word	82, 8, 0	# descriptor index (FxDesc_082, FxDescTable[82]); parameter count
+	.long	FxPreset_Chorus1_Params
+	.long	0x16	# key (FxPresetTable[key] is this record)
+
+FxPreset_Chorus2_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 6, 11, 24, 22, 28, 99, 80
+
+FxPreset_Chorus2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Chorus2     "
+	.byte	0, 0
+	.word	82, 8, 0	# descriptor index (FxDesc_082, FxDescTable[82]); parameter count
+	.long	FxPreset_Chorus2_Params
+	.long	0x116	# key (FxPresetTable[key] is this record)
+
+FxPreset_Chorus3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	50, 3, 11, 28, 22, 32, 99, 80
+
+FxPreset_Chorus3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Chorus3     "
+	.byte	0, 0
+	.word	82, 8, 0	# descriptor index (FxDesc_082, FxDescTable[82]); parameter count
+	.long	FxPreset_Chorus3_Params
+	.long	0x216	# key (FxPresetTable[key] is this record)
+
+FxPreset_Chorus4_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	50, 3, 8, 30, 19, 30, 99, 80
+
+FxPreset_Chorus4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Chorus4     "
+	.byte	0, 0
+	.word	82, 8, 0	# descriptor index (FxDesc_082, FxDescTable[82]); parameter count
+	.long	FxPreset_Chorus4_Params
+	.long	0x316	# key (FxPresetTable[key] is this record)
+
+FxPreset_GM_Chorus1_Params:	# the parameters (u16 x 5) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	20, 4, 0, 84, 80, 0xffff
+
+FxPreset_GM_Chorus1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   GM Chorus1   "
+	.byte	0, 0
+	.word	84, 5, 0	# descriptor index (FxDesc_084, FxDescTable[84]); parameter count
+	.long	FxPreset_GM_Chorus1_Params
+	.long	0x2016	# key (FxPresetTable[key] is this record)
+
+FxPreset_GM_Chorus2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	76, 11, 4, 10, 0, 84, 80, 0xffff
+
+FxPreset_GM_Chorus2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   GM Chorus2   "
+	.byte	0, 0
+	.word	95, 7, 0	# descriptor index (FxDesc_095, FxDescTable[95]); parameter count
+	.long	FxPreset_GM_Chorus2_Params
+	.long	0x2116	# key (FxPresetTable[key] is this record)
+
+FxPreset_GM_Chorus3_Params:	# the parameters (u16 x 5) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	76, 11, 0, 84, 80, 0xffff
+
+FxPreset_GM_Chorus3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   GM Chorus3   "
+	.byte	0, 0
+	.word	84, 5, 0	# descriptor index (FxDesc_084, FxDescTable[84]); parameter count
+	.long	FxPreset_GM_Chorus3_Params
+	.long	0x2216	# key (FxPresetTable[key] is this record)
+
+FxPreset_GM_Chorus4_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 11, 22, 10, 0, 84, 80, 0xffff
+
+FxPreset_GM_Chorus4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   GM Chorus4   "
+	.byte	0, 0
+	.word	95, 7, 0	# descriptor index (FxDesc_095, FxDescTable[95]); parameter count
+	.long	FxPreset_GM_Chorus4_Params
+	.long	0x2316	# key (FxPresetTable[key] is this record)
+
+FxPreset_Feedback_Chorus_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	20, 48, 48, 0xffec, 0xffec, 99, 99, 2, 0, 84, 80, 0xffff
+
+FxPreset_Feedback_Chorus:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"Feedback Chorus "
+	.byte	0, 0
+	.word	86, 11, 0	# descriptor index (FxDesc_086, FxDescTable[86]); parameter count
+	.long	FxPreset_Feedback_Chorus_Params
+	.long	0x2416	# key (FxPresetTable[key] is this record)
+
+FxPreset_Flanger_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 60, 0, 90, 0, 84, 80
+
+FxPreset_Flanger:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Flanger     "
+	.byte	0, 0
+	.word	85, 8, 0	# descriptor index (FxDesc_085, FxDescTable[85]); parameter count
+	.long	FxPreset_Flanger_Params
+	.long	0x2516	# key (FxPresetTable[key] is this record)
+
+FxPreset_Celeste1_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 45, 6, 0, 84, 80
+
+FxPreset_Celeste1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Celeste1    "
+	.byte	0, 0
+	.word	44, 6, 0	# descriptor index (FxDesc_044, FxDescTable[44]); parameter count
+	.long	FxPreset_Celeste1_Params
+	.long	0x19	# key (FxPresetTable[key] is this record)
+
+FxPreset_Celeste2_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	21, 30, 1, 0, 84, 80
+
+FxPreset_Celeste2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Celeste2    "
+	.byte	0, 0
+	.word	44, 6, 0	# descriptor index (FxDesc_044, FxDescTable[44]); parameter count
+	.long	FxPreset_Celeste2_Params
+	.long	0x119	# key (FxPresetTable[key] is this record)
+
+FxPreset_Celeste3_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 4, 0, 84, 80
+
+FxPreset_Celeste3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Celeste3    "
+	.byte	0, 0
+	.word	44, 6, 0	# descriptor index (FxDesc_044, FxDescTable[44]); parameter count
+	.long	FxPreset_Celeste3_Params
+	.long	0x219	# key (FxPresetTable[key] is this record)
+
+FxPreset_Celeste4_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 6, 0, 84, 80
+
+FxPreset_Celeste4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Celeste4    "
+	.byte	0, 0
+	.word	44, 6, 0	# descriptor index (FxDesc_044, FxDescTable[44]); parameter count
+	.long	FxPreset_Celeste4_Params
+	.long	0x319	# key (FxPresetTable[key] is this record)
+
+FxPreset_Celeste5_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 8, 0, 84, 80
+
+FxPreset_Celeste5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Celeste5    "
+	.byte	0, 0
+	.word	44, 6, 0	# descriptor index (FxDesc_044, FxDescTable[44]); parameter count
+	.long	FxPreset_Celeste5_Params
+	.long	0x419	# key (FxPresetTable[key] is this record)
+
+FxPreset_Celeste6_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 10, 0, 84, 80
+
+FxPreset_Celeste6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Celeste6    "
+	.byte	0, 0
+	.word	44, 6, 0	# descriptor index (FxDesc_044, FxDescTable[44]); parameter count
+	.long	FxPreset_Celeste6_Params
+	.long	0x519	# key (FxPresetTable[key] is this record)
+
+FxPreset_Celeste7_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 12, 0, 84, 80
+
+FxPreset_Celeste7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Celeste7    "
+	.byte	0, 0
+	.word	44, 6, 0	# descriptor index (FxDesc_044, FxDescTable[44]); parameter count
+	.long	FxPreset_Celeste7_Params
+	.long	0x619	# key (FxPresetTable[key] is this record)
+
+FxPreset_Celeste8_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 14, 0, 84, 80
+
+FxPreset_Celeste8:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Celeste8    "
+	.byte	0, 0
+	.word	44, 6, 0	# descriptor index (FxDesc_044, FxDescTable[44]); parameter count
+	.long	FxPreset_Celeste8_Params
+	.long	0x719	# key (FxPresetTable[key] is this record)
+
+FxPreset_Celeste9_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 16, 0, 84, 80
+
+FxPreset_Celeste9:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Celeste9    "
+	.byte	0, 0
+	.word	44, 6, 0	# descriptor index (FxDesc_044, FxDescTable[44]); parameter count
+	.long	FxPreset_Celeste9_Params
+	.long	0x2019	# key (FxPresetTable[key] is this record)
+
+FxPreset_Celeste10_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 20, 0, 84, 80
+
+FxPreset_Celeste10:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Celeste10    "
+	.byte	0, 0
+	.word	44, 6, 0	# descriptor index (FxDesc_044, FxDescTable[44]); parameter count
+	.long	FxPreset_Celeste10_Params
+	.long	0x2119	# key (FxPresetTable[key] is this record)
+
+FxPreset_Celeste11_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	16, 24, 25, 0, 84, 80
+
+FxPreset_Celeste11:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Celeste11    "
+	.byte	0, 0
+	.word	44, 6, 0	# descriptor index (FxDesc_044, FxDescTable[44]); parameter count
+	.long	FxPreset_Celeste11_Params
+	.long	0x2219	# key (FxPresetTable[key] is this record)
+
+FxPreset_Celeste12_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	12, 18, 31, 0, 84, 80
+
+FxPreset_Celeste12:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Celeste12    "
+	.byte	0, 0
+	.word	44, 6, 0	# descriptor index (FxDesc_044, FxDescTable[44]); parameter count
+	.long	FxPreset_Celeste12_Params
+	.long	0x2319	# key (FxPresetTable[key] is this record)
+
+FxPreset_Celeste13_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	12, 18, 35, 0, 84, 80
+
+FxPreset_Celeste13:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Celeste13    "
+	.byte	0, 0
+	.word	44, 6, 0	# descriptor index (FxDesc_044, FxDescTable[44]); parameter count
+	.long	FxPreset_Celeste13_Params
+	.long	0x2419	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mod_Cel_1_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 30, 6, 60, 15, 0, 84, 80
+
+FxPreset_Mod_Cel_1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Mod. Cel.1   "
+	.byte	0, 0
+	.word	45, 8, 0	# descriptor index (FxDesc_045, FxDescTable[45]); parameter count
+	.long	FxPreset_Mod_Cel_1_Params
+	.long	0x1b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mod_Cel_2_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 40, 4, 35, 20, 0, 84, 80
+
+FxPreset_Mod_Cel_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Mod. Cel.2   "
+	.byte	0, 0
+	.word	45, 8, 0	# descriptor index (FxDesc_045, FxDescTable[45]); parameter count
+	.long	FxPreset_Mod_Cel_2_Params
+	.long	0x11b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mod_Cel_3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 60, 8, 35, 35, 0, 84, 80
+
+FxPreset_Mod_Cel_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Mod. Cel.3   "
+	.byte	0, 0
+	.word	45, 8, 0	# descriptor index (FxDesc_045, FxDescTable[45]); parameter count
+	.long	FxPreset_Mod_Cel_3_Params
+	.long	0x21b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mod_Cel_4_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 30, 11, 35, 15, 0, 84, 80
+
+FxPreset_Mod_Cel_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Mod. Cel.4   "
+	.byte	0, 0
+	.word	45, 8, 0	# descriptor index (FxDesc_045, FxDescTable[45]); parameter count
+	.long	FxPreset_Mod_Cel_4_Params
+	.long	0x31b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mod_Cel_5_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 60, 13, 35, 35, 0, 84, 80
+
+FxPreset_Mod_Cel_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Mod. Cel.5   "
+	.byte	0, 0
+	.word	45, 8, 0	# descriptor index (FxDesc_045, FxDescTable[45]); parameter count
+	.long	FxPreset_Mod_Cel_5_Params
+	.long	0x41b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mod_Cel_6_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 90, 16, 35, 55, 0, 84, 80
+
+FxPreset_Mod_Cel_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Mod. Cel.6   "
+	.byte	0, 0
+	.word	45, 8, 0	# descriptor index (FxDesc_045, FxDescTable[45]); parameter count
+	.long	FxPreset_Mod_Cel_6_Params
+	.long	0x51b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mod_Cel_7_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 30, 16, 35, 15, 0, 84, 80
+
+FxPreset_Mod_Cel_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Mod. Cel.7   "
+	.byte	0, 0
+	.word	45, 8, 0	# descriptor index (FxDesc_045, FxDescTable[45]); parameter count
+	.long	FxPreset_Mod_Cel_7_Params
+	.long	0x61b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mod_Cel_8_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 60, 18, 45, 35, 0, 84, 80
+
+FxPreset_Mod_Cel_8:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Mod. Cel.8   "
+	.byte	0, 0
+	.word	45, 8, 0	# descriptor index (FxDesc_045, FxDescTable[45]); parameter count
+	.long	FxPreset_Mod_Cel_8_Params
+	.long	0x71b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mod_Cel_9_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 99, 16, 31, 65, 0, 84, 80
+
+FxPreset_Mod_Cel_9:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Mod. Cel.9   "
+	.byte	0, 0
+	.word	45, 8, 0	# descriptor index (FxDesc_045, FxDescTable[45]); parameter count
+	.long	FxPreset_Mod_Cel_9_Params
+	.long	0x201b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mod_Cel_10_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 80, 13, 25, 45, 0, 84, 80
+
+FxPreset_Mod_Cel_10:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"  Mod. Cel.10   "
+	.byte	0, 0
+	.word	45, 8, 0	# descriptor index (FxDesc_045, FxDescTable[45]); parameter count
+	.long	FxPreset_Mod_Cel_10_Params
+	.long	0x211b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mod_Cel_11_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 30, 4, 35, 15, 0, 84, 80
+
+FxPreset_Mod_Cel_11:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"  Mod. Cel.11   "
+	.byte	0, 0
+	.word	45, 8, 0	# descriptor index (FxDesc_045, FxDescTable[45]); parameter count
+	.long	FxPreset_Mod_Cel_11_Params
+	.long	0x221b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mod_Cel_12_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 38, 4, 35, 19, 0, 84, 80
+
+FxPreset_Mod_Cel_12:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"  Mod. Cel.12   "
+	.byte	0, 0
+	.word	45, 8, 0	# descriptor index (FxDesc_045, FxDescTable[45]); parameter count
+	.long	FxPreset_Mod_Cel_12_Params
+	.long	0x231b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mod_Cel_13_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 50, 18, 60, 25, 0, 84, 80
+
+FxPreset_Mod_Cel_13:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"  Mod. Cel.13   "
+	.byte	0, 0
+	.word	45, 8, 0	# descriptor index (FxDesc_045, FxDescTable[45]); parameter count
+	.long	FxPreset_Mod_Cel_13_Params
+	.long	0x241b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep1_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 4, 60, 90, 60, 90, 0, 84, 80
+
+FxPreset_Deep1_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep1      "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Deep1_4_Params
+	.long	0x20	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep2_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 3, 3, 60, 90, 60, 90, 0, 84, 80
+
+FxPreset_Deep2_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep2      "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Deep2_4_Params
+	.long	0x120	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep3_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 8, 8, 60, 90, 60, 90, 0, 84, 80
+
+FxPreset_Deep3_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep3      "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Deep3_4_Params
+	.long	0x220	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep4_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 12, 12, 60, 90, 60, 90, 0, 84, 80
+
+FxPreset_Deep4_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep4      "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Deep4_4_Params
+	.long	0x320	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep5_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 15, 15, 60, 90, 60, 90, 0, 84, 80
+
+FxPreset_Deep5_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep5      "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Deep5_4_Params
+	.long	0x420	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep6_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	64, 19, 19, 60, 90, 60, 90, 0, 84, 80
+
+FxPreset_Deep6_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep6      "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Deep6_4_Params
+	.long	0x520	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep7_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 22, 22, 60, 90, 60, 90, 0, 84, 80
+
+FxPreset_Deep7_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep7      "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Deep7_4_Params
+	.long	0x620	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal1_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 4, 60, 90, 60, 90, 0, 76, 80
+
+FxPreset_Normal1_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal1     "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Normal1_4_Params
+	.long	0x820	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal2_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 3, 3, 60, 90, 60, 90, 0, 76, 80
+
+FxPreset_Normal2_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal2     "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Normal2_4_Params
+	.long	0x920	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal3_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 8, 8, 60, 90, 60, 90, 0, 76, 80
+
+FxPreset_Normal3_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal3     "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Normal3_4_Params
+	.long	0xa20	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal4_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 12, 12, 60, 90, 60, 90, 0, 76, 80
+
+FxPreset_Normal4_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal4     "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Normal4_4_Params
+	.long	0xb20	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal5_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 15, 15, 60, 90, 60, 90, 0, 76, 80
+
+FxPreset_Normal5_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal5     "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Normal5_4_Params
+	.long	0xc20	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal6_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	64, 19, 19, 60, 90, 60, 90, 0, 76, 80
+
+FxPreset_Normal6_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal6     "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Normal6_4_Params
+	.long	0xd20	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal7_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 22, 22, 60, 90, 60, 90, 0, 76, 80
+
+FxPreset_Normal7_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal7     "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Normal7_4_Params
+	.long	0xe20	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow1_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 4, 60, 90, 60, 90, 0, 70, 80
+
+FxPreset_Shallow1_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow1    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Shallow1_4_Params
+	.long	0x1020	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow2_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 3, 3, 60, 90, 60, 90, 0, 70, 80
+
+FxPreset_Shallow2_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow2    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Shallow2_4_Params
+	.long	0x1120	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow3_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 8, 8, 60, 90, 60, 90, 0, 70, 80
+
+FxPreset_Shallow3_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow3    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Shallow3_4_Params
+	.long	0x1220	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow4_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 12, 12, 60, 90, 60, 90, 0, 70, 80
+
+FxPreset_Shallow4_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow4    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Shallow4_4_Params
+	.long	0x1320	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow5_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 15, 15, 60, 90, 60, 90, 0, 70, 80
+
+FxPreset_Shallow5_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow5    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Shallow5_4_Params
+	.long	0x1420	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow6_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	64, 19, 19, 60, 90, 60, 90, 0, 70, 80
+
+FxPreset_Shallow6_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow6    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Shallow6_4_Params
+	.long	0x1520	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow7_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 22, 22, 60, 90, 60, 90, 0, 70, 80
+
+FxPreset_Shallow7_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow7    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Shallow7_4_Params
+	.long	0x1620	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep8_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 4, 0xffaa, 0xffaa, 60, 90, 0, 84, 80
+
+FxPreset_Deep8_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep8      "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Deep8_4_Params
+	.long	0x2020	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep9_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 8, 0xffb4, 0xffb4, 60, 90, 0, 84, 80
+
+FxPreset_Deep9_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep9      "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Deep9_4_Params
+	.long	0x2120	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep10_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 5, 10, 0xffa6, 0xffa6, 60, 90, 0, 84, 80
+
+FxPreset_Deep10_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep10     "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Deep10_4_Params
+	.long	0x2220	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep11_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 4, 86, 86, 60, 90, 0, 84, 80
+
+FxPreset_Deep11_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep11     "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Deep11_4_Params
+	.long	0x2320	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep12_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 6, 12, 76, 76, 60, 90, 0, 84, 80
+
+FxPreset_Deep12_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep12     "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Deep12_4_Params
+	.long	0x2420	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep13_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 8, 90, 90, 60, 90, 0, 84, 80
+
+FxPreset_Deep13_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep13     "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Deep13_4_Params
+	.long	0x2520	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal8_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 4, 0xffaa, 0xffaa, 60, 90, 0, 76, 80
+
+FxPreset_Normal8_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal8     "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Normal8_4_Params
+	.long	0x2820	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal9_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 8, 0xffb4, 0xffb4, 60, 90, 0, 76, 80
+
+FxPreset_Normal9_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal9     "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Normal9_4_Params
+	.long	0x2920	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal10_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 5, 10, 0xffa6, 0xffa6, 60, 90, 0, 76, 80
+
+FxPreset_Normal10_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal10    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Normal10_4_Params
+	.long	0x2a20	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal11_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 4, 86, 86, 60, 90, 0, 76, 80
+
+FxPreset_Normal11_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal11    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Normal11_4_Params
+	.long	0x2b20	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal12_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 6, 12, 76, 76, 60, 90, 0, 76, 80
+
+FxPreset_Normal12_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal12    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Normal12_4_Params
+	.long	0x2c20	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal13_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 8, 90, 90, 60, 90, 0, 76, 80
+
+FxPreset_Normal13_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal13    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Normal13_4_Params
+	.long	0x2d20	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow8_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 4, 0xffaa, 0xffaa, 60, 90, 0, 70, 80
+
+FxPreset_Shallow8_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow8    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Shallow8_4_Params
+	.long	0x3020	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow9_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 8, 0xffb4, 0xffb4, 60, 90, 0, 70, 80
+
+FxPreset_Shallow9_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow9    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Shallow9_4_Params
+	.long	0x3120	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow10_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 5, 10, 0xffa6, 0xffa6, 60, 90, 0, 70, 80
+
+FxPreset_Shallow10_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow10    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Shallow10_4_Params
+	.long	0x3220	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow11_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 4, 86, 86, 60, 90, 0, 70, 80
+
+FxPreset_Shallow11_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow11    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Shallow11_4_Params
+	.long	0x3320	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow12_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 6, 12, 76, 76, 60, 90, 0, 70, 80
+
+FxPreset_Shallow12_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow12    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Shallow12_4_Params
+	.long	0x3420	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow13_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 8, 90, 90, 60, 90, 0, 70, 80
+
+FxPreset_Shallow13_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow13    "
+	.byte	0, 0
+	.word	5, 10, 0	# descriptor index (FxDesc_005, FxDescTable[5]); parameter count
+	.long	FxPreset_Shallow13_4_Params
+	.long	0x3520	# key (FxPresetTable[key] is this record)
+
+FxPreset_Standard_Params:	# the parameters (u16 x 14) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	0, 77, 64, 45, 7, 10, 10, 60, 40, 6, 72, 79, 84, 80
+
+FxPreset_Standard:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Standard     "
+	.byte	0, 0
+	.word	53, 14, 0	# descriptor index (FxDesc_053, FxDescTable[53]); parameter count
+	.long	FxPreset_Standard_Params
+	.long	0x22	# key (FxPresetTable[key] is this record)
+
+FxPreset_Single_Rotor_Params:	# the parameters (u16 x 14) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	0, 77, 58, 39, 7, 24, 35, 60, 39, 7, 24, 35, 84, 80
+
+FxPreset_Single_Rotor:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Single Rotor   "
+	.byte	0, 0
+	.word	53, 14, 0	# descriptor index (FxDesc_053, FxDescTable[53]); parameter count
+	.long	FxPreset_Single_Rotor_Params
+	.long	0x122	# key (FxPresetTable[key] is this record)
+
+FxPreset_Distorted_Params:	# the parameters (u16 x 14) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	35, 60, 60, 45, 7, 5, 10, 55, 40, 6, 45, 58, 84, 80
+
+FxPreset_Distorted:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Distorted    "
+	.byte	0, 0
+	.word	53, 14, 0	# descriptor index (FxDesc_053, FxDescTable[53]); parameter count
+	.long	FxPreset_Distorted_Params
+	.long	0x222	# key (FxPresetTable[key] is this record)
+
+FxPreset_Bright_Twin_Params:	# the parameters (u16 x 14) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	0, 75, 60, 45, 7, 5, 10, 58, 40, 6, 45, 58, 84, 80
+
+FxPreset_Bright_Twin:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"  Bright  Twin  "
+	.byte	0, 0
+	.word	134, 14, 0	# descriptor index (FxDesc_134, FxDescTable[134]); parameter count
+	.long	FxPreset_Bright_Twin_Params
+	.long	0x322	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal_Twin_Params:	# the parameters (u16 x 14) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	0, 75, 64, 45, 7, 5, 10, 55, 40, 6, 45, 70, 84, 80
+
+FxPreset_Normal_Twin:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"  Normal Twin   "
+	.byte	0, 0
+	.word	138, 14, 0	# descriptor index (FxDesc_138, FxDescTable[138]); parameter count
+	.long	FxPreset_Normal_Twin_Params
+	.long	0x422	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mellow_Twin_Params:	# the parameters (u16 x 14) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	0, 70, 60, 45, 7, 5, 10, 60, 40, 6, 45, 68, 84, 80
+
+FxPreset_Mellow_Twin:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"  Mellow Twin   "
+	.byte	0, 0
+	.word	135, 14, 0	# descriptor index (FxDesc_135, FxDescTable[135]); parameter count
+	.long	FxPreset_Mellow_Twin_Params
+	.long	0x522	# key (FxPresetTable[key] is this record)
+
+FxPreset_Brilliant_Twin_Params:	# the parameters (u16 x 14) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	0, 77, 60, 45, 7, 6, 8, 56, 40, 6, 49, 73, 84, 80
+
+FxPreset_Brilliant_Twin:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Brilliant Twin "
+	.byte	0, 0
+	.word	136, 14, 0	# descriptor index (FxDesc_136, FxDescTable[136]); parameter count
+	.long	FxPreset_Brilliant_Twin_Params
+	.long	0x622	# key (FxPresetTable[key] is this record)
+
+FxPreset_Standard_2_Params:	# the parameters (u16 x 14) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 65, 64, 45, 7, 4, 10, 50, 40, 6, 60, 60, 84, 80
+
+FxPreset_Standard_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Standard    "
+	.byte	0, 0
+	.word	15, 14, 0	# descriptor index (FxDesc_015, FxDescTable[15]); parameter count
+	.long	FxPreset_Standard_2_Params
+	.long	0x2022	# key (FxPresetTable[key] is this record)
+
+FxPreset_Single_Rotor_2_Params:	# the parameters (u16 x 14) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	48, 60, 70, 39, 7, 24, 35, 60, 39, 7, 24, 35, 84, 80
+
+FxPreset_Single_Rotor_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Single Rotor   "
+	.byte	0, 0
+	.word	15, 14, 0	# descriptor index (FxDesc_015, FxDescTable[15]); parameter count
+	.long	FxPreset_Single_Rotor_2_Params
+	.long	0x2122	# key (FxPresetTable[key] is this record)
+
+FxPreset_Distorted_2_Params:	# the parameters (u16 x 14) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	60, 55, 70, 45, 7, 5, 10, 60, 40, 6, 45, 58, 84, 80
+
+FxPreset_Distorted_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Distorted    "
+	.byte	0, 0
+	.word	15, 14, 0	# descriptor index (FxDesc_015, FxDescTable[15]); parameter count
+	.long	FxPreset_Distorted_2_Params
+	.long	0x2222	# key (FxPresetTable[key] is this record)
+
+FxPreset_Bright_Twin_2_Params:	# the parameters (u16 x 14) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	20, 65, 60, 45, 7, 5, 10, 58, 40, 6, 45, 58, 84, 80
+
+FxPreset_Bright_Twin_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"  Bright Twin   "
+	.byte	0, 0
+	.word	128, 14, 0	# descriptor index (FxDesc_128, FxDescTable[128]); parameter count
+	.long	FxPreset_Bright_Twin_2_Params
+	.long	0x2322	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mellow_Twin_2_Params:	# the parameters (u16 x 14) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 62, 70, 45, 7, 10, 10, 60, 40, 6, 72, 79, 84, 80
+
+FxPreset_Mellow_Twin_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"  Mellow Twin   "
+	.byte	0, 0
+	.word	129, 14, 0	# descriptor index (FxDesc_129, FxDescTable[129]); parameter count
+	.long	FxPreset_Mellow_Twin_2_Params
+	.long	0x2422	# key (FxPresetTable[key] is this record)
+
+FxPreset_Brilliant_Twin_2_Params:	# the parameters (u16 x 14) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	2, 76, 76, 45, 7, 10, 10, 60, 40, 6, 72, 79, 84, 80
+
+FxPreset_Brilliant_Twin_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Brilliant Twin "
+	.byte	0, 0
+	.word	137, 14, 0	# descriptor index (FxDesc_137, FxDescTable[137]); parameter count
+	.long	FxPreset_Brilliant_Twin_2_Params
+	.long	0x2522	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep1_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 1, 60, 90, 0, 90, 0, 84, 80
+
+FxPreset_Deep1_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep1      "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Deep1_5_Params
+	.long	0x23	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep2_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 2, 60, 90, 0, 90, 0, 84, 80
+
+FxPreset_Deep2_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep2      "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Deep2_5_Params
+	.long	0x123	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep3_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 4, 60, 90, 0, 90, 0, 84, 80
+
+FxPreset_Deep3_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep3      "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Deep3_5_Params
+	.long	0x223	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep4_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 6, 6, 60, 90, 0, 90, 0, 84, 80
+
+FxPreset_Deep4_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep4      "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Deep4_5_Params
+	.long	0x323	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep5_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 7, 7, 60, 90, 0, 90, 0, 84, 80
+
+FxPreset_Deep5_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep5      "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Deep5_5_Params
+	.long	0x423	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep6_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 8, 8, 60, 90, 0, 90, 0, 84, 80
+
+FxPreset_Deep6_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep6      "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Deep6_5_Params
+	.long	0x523	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep7_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 10, 10, 60, 90, 0, 90, 0, 84, 80
+
+FxPreset_Deep7_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep7      "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Deep7_5_Params
+	.long	0x623	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal1_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 1, 60, 90, 0, 90, 0, 76, 80
+
+FxPreset_Normal1_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal1     "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Normal1_5_Params
+	.long	0x823	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal2_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 2, 60, 90, 0, 90, 0, 76, 80
+
+FxPreset_Normal2_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal2     "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Normal2_5_Params
+	.long	0x923	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal3_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 4, 60, 90, 0, 90, 0, 76, 80
+
+FxPreset_Normal3_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal3     "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Normal3_5_Params
+	.long	0xa23	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal4_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 6, 6, 60, 90, 0, 90, 0, 76, 80
+
+FxPreset_Normal4_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal4     "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Normal4_5_Params
+	.long	0xb23	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal5_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 7, 7, 60, 90, 0, 90, 0, 76, 80
+
+FxPreset_Normal5_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal5     "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Normal5_5_Params
+	.long	0xc23	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal6_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 8, 8, 60, 90, 0, 90, 0, 76, 80
+
+FxPreset_Normal6_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal6     "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Normal6_5_Params
+	.long	0xd23	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal7_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 10, 10, 60, 90, 0, 90, 0, 76, 80
+
+FxPreset_Normal7_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal7     "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Normal7_5_Params
+	.long	0xe23	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow1_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 1, 60, 90, 0, 90, 0, 70, 80
+
+FxPreset_Shallow1_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow1    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Shallow1_5_Params
+	.long	0x1023	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow2_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 2, 60, 90, 0, 90, 0, 70, 80
+
+FxPreset_Shallow2_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow2    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Shallow2_5_Params
+	.long	0x1123	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow3_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 4, 60, 90, 0, 90, 0, 70, 80
+
+FxPreset_Shallow3_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow3    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Shallow3_5_Params
+	.long	0x1223	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow4_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 6, 6, 60, 90, 0, 90, 0, 70, 80
+
+FxPreset_Shallow4_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow4    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Shallow4_5_Params
+	.long	0x1323	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow5_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 7, 7, 60, 90, 0, 90, 0, 70, 80
+
+FxPreset_Shallow5_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow5    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Shallow5_5_Params
+	.long	0x1423	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow6_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 8, 8, 60, 90, 0, 90, 0, 70, 80
+
+FxPreset_Shallow6_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow6    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Shallow6_5_Params
+	.long	0x1523	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow7_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 10, 10, 60, 90, 0, 90, 0, 70, 80
+
+FxPreset_Shallow7_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow7    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Shallow7_5_Params
+	.long	0x1623	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep8_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 3, 0xffaa, 0xffaa, 0, 90, 0, 84, 80
+
+FxPreset_Deep8_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep8      "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Deep8_5_Params
+	.long	0x2023	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep9_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 6, 0xffb4, 0xffb4, 0, 90, 0, 84, 80
+
+FxPreset_Deep9_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep9      "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Deep9_5_Params
+	.long	0x2123	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep10_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 3, 0xffa6, 0xffa6, 0, 90, 0, 84, 80
+
+FxPreset_Deep10_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep10     "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Deep10_5_Params
+	.long	0x2223	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep11_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 6, 86, 86, 0, 90, 0, 84, 80
+
+FxPreset_Deep11_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep11     "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Deep11_5_Params
+	.long	0x2323	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep12_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 3, 76, 76, 0, 90, 0, 84, 80
+
+FxPreset_Deep12_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep12     "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Deep12_5_Params
+	.long	0x2423	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep13_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 3, 90, 90, 0, 90, 0, 84, 80
+
+FxPreset_Deep13_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep13     "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Deep13_5_Params
+	.long	0x2523	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal8_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 3, 0xffaa, 0xffaa, 0, 90, 0, 76, 80
+
+FxPreset_Normal8_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal8     "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Normal8_5_Params
+	.long	0x2823	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal9_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 6, 0xffb4, 0xffb4, 0, 90, 0, 76, 80
+
+FxPreset_Normal9_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal9     "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Normal9_5_Params
+	.long	0x2923	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal10_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 3, 0xffa6, 0xffa6, 0, 90, 0, 76, 80
+
+FxPreset_Normal10_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal10    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Normal10_5_Params
+	.long	0x2a23	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal11_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 6, 86, 86, 0, 90, 0, 76, 80
+
+FxPreset_Normal11_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal11    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Normal11_5_Params
+	.long	0x2b23	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal12_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 3, 76, 76, 0, 90, 0, 76, 80
+
+FxPreset_Normal12_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal12    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Normal12_5_Params
+	.long	0x2c23	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal13_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 3, 90, 90, 0, 90, 0, 76, 80
+
+FxPreset_Normal13_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal13    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Normal13_5_Params
+	.long	0x2d23	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow8_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 3, 0xffaa, 0xffaa, 0, 90, 0, 70, 80
+
+FxPreset_Shallow8_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow8    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Shallow8_5_Params
+	.long	0x3023	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow9_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 6, 0xffb4, 0xffb4, 0, 90, 0, 70, 80
+
+FxPreset_Shallow9_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow9    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Shallow9_5_Params
+	.long	0x3123	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow10_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 3, 0xffa6, 0xffa6, 0, 90, 0, 70, 80
+
+FxPreset_Shallow10_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow10    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Shallow10_5_Params
+	.long	0x3223	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow11_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 6, 86, 86, 0, 90, 0, 70, 80
+
+FxPreset_Shallow11_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow11    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Shallow11_5_Params
+	.long	0x3323	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow12_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 3, 76, 76, 0, 90, 0, 70, 80
+
+FxPreset_Shallow12_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow12    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Shallow12_5_Params
+	.long	0x3423	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow13_5_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 3, 90, 90, 0, 90, 0, 70, 80
+
+FxPreset_Shallow13_5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow13    "
+	.byte	0, 0
+	.word	4, 10, 0	# descriptor index (FxDesc_004, FxDescTable[4]); parameter count
+	.long	FxPreset_Shallow13_5_Params
+	.long	0x3523	# key (FxPresetTable[key] is this record)
+
+FxPreset_Tremolo1_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 6, 0, 1, 84, 80
+
+FxPreset_Tremolo1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Tremolo1    "
+	.byte	0, 0
+	.word	40, 6, 0	# descriptor index (FxDesc_040, FxDescTable[40]); parameter count
+	.long	FxPreset_Tremolo1_Params
+	.long	0x25	# key (FxPresetTable[key] is this record)
+
+FxPreset_Tremolo2_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	60, 10, 0, 1, 84, 80
+
+FxPreset_Tremolo2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Tremolo2    "
+	.byte	0, 0
+	.word	40, 6, 0	# descriptor index (FxDesc_040, FxDescTable[40]); parameter count
+	.long	FxPreset_Tremolo2_Params
+	.long	0x125	# key (FxPresetTable[key] is this record)
+
+FxPreset_Tremolo3_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 15, 0, 1, 84, 80
+
+FxPreset_Tremolo3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Tremolo3    "
+	.byte	0, 0
+	.word	40, 6, 0	# descriptor index (FxDesc_040, FxDescTable[40]); parameter count
+	.long	FxPreset_Tremolo3_Params
+	.long	0x225	# key (FxPresetTable[key] is this record)
+
+FxPreset_Tremolo4_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 24, 0, 1, 84, 80
+
+FxPreset_Tremolo4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Tremolo4    "
+	.byte	0, 0
+	.word	40, 6, 0	# descriptor index (FxDesc_040, FxDescTable[40]); parameter count
+	.long	FxPreset_Tremolo4_Params
+	.long	0x325	# key (FxPresetTable[key] is this record)
+
+FxPreset_Tremolo5_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	60, 25, 0, 1, 84, 80
+
+FxPreset_Tremolo5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Tremolo5    "
+	.byte	0, 0
+	.word	40, 6, 0	# descriptor index (FxDesc_040, FxDescTable[40]); parameter count
+	.long	FxPreset_Tremolo5_Params
+	.long	0x425	# key (FxPresetTable[key] is this record)
+
+FxPreset_Tremolo6_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	60, 30, 0, 1, 84, 80
+
+FxPreset_Tremolo6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Tremolo6    "
+	.byte	0, 0
+	.word	40, 6, 0	# descriptor index (FxDesc_040, FxDescTable[40]); parameter count
+	.long	FxPreset_Tremolo6_Params
+	.long	0x525	# key (FxPresetTable[key] is this record)
+
+FxPreset_Tremolo7_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	60, 41, 0, 1, 84, 80
+
+FxPreset_Tremolo7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Tremolo7    "
+	.byte	0, 0
+	.word	40, 6, 0	# descriptor index (FxDesc_040, FxDescTable[40]); parameter count
+	.long	FxPreset_Tremolo7_Params
+	.long	0x625	# key (FxPresetTable[key] is this record)
+
+FxPreset_Tremolo8_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 50, 0, 1, 84, 80
+
+FxPreset_Tremolo8:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Tremolo8    "
+	.byte	0, 0
+	.word	40, 6, 0	# descriptor index (FxDesc_040, FxDescTable[40]); parameter count
+	.long	FxPreset_Tremolo8_Params
+	.long	0x725	# key (FxPresetTable[key] is this record)
+
+FxPreset_Auto_Pan1_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 4, 90, 180, 0, 84, 80, 0xffff
+
+FxPreset_Auto_Pan1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Auto Pan1    "
+	.byte	0, 0
+	.word	48, 7, 0	# descriptor index (FxDesc_048, FxDescTable[48]); parameter count
+	.long	FxPreset_Auto_Pan1_Params
+	.long	0x2025	# key (FxPresetTable[key] is this record)
+
+FxPreset_Auto_Pan2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 1, 90, 180, 0, 84, 80, 0xffff
+
+FxPreset_Auto_Pan2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Auto Pan2    "
+	.byte	0, 0
+	.word	48, 7, 0	# descriptor index (FxDesc_048, FxDescTable[48]); parameter count
+	.long	FxPreset_Auto_Pan2_Params
+	.long	0x2125	# key (FxPresetTable[key] is this record)
+
+FxPreset_Auto_Pan3_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 2, 90, 180, 0, 84, 80, 0xffff
+
+FxPreset_Auto_Pan3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Auto Pan3    "
+	.byte	0, 0
+	.word	48, 7, 0	# descriptor index (FxDesc_048, FxDescTable[48]); parameter count
+	.long	FxPreset_Auto_Pan3_Params
+	.long	0x2225	# key (FxPresetTable[key] is this record)
+
+FxPreset_Auto_Pan4_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 4, 90, 180, 0, 84, 80, 0xffff
+
+FxPreset_Auto_Pan4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Auto Pan4    "
+	.byte	0, 0
+	.word	48, 7, 0	# descriptor index (FxDesc_048, FxDescTable[48]); parameter count
+	.long	FxPreset_Auto_Pan4_Params
+	.long	0x2325	# key (FxPresetTable[key] is this record)
+
+FxPreset_Auto_Pan5_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 6, 90, 180, 0, 84, 80, 0xffff
+
+FxPreset_Auto_Pan5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Auto Pan5    "
+	.byte	0, 0
+	.word	48, 7, 0	# descriptor index (FxDesc_048, FxDescTable[48]); parameter count
+	.long	FxPreset_Auto_Pan5_Params
+	.long	0x2425	# key (FxPresetTable[key] is this record)
+
+FxPreset_Auto_Pan6_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 8, 90, 180, 0, 84, 80, 0xffff
+
+FxPreset_Auto_Pan6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Auto Pan6    "
+	.byte	0, 0
+	.word	48, 7, 0	# descriptor index (FxDesc_048, FxDescTable[48]); parameter count
+	.long	FxPreset_Auto_Pan6_Params
+	.long	0x2525	# key (FxPresetTable[key] is this record)
+
+FxPreset_Auto_Pan7_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 12, 90, 180, 0, 84, 80, 0xffff
+
+FxPreset_Auto_Pan7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Auto Pan7    "
+	.byte	0, 0
+	.word	48, 7, 0	# descriptor index (FxDesc_048, FxDescTable[48]); parameter count
+	.long	FxPreset_Auto_Pan7_Params
+	.long	0x2625	# key (FxPresetTable[key] is this record)
+
+FxPreset_Vibrato1_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	20, 32, 90, 180, 0, 84, 80, 0xffff
+
+FxPreset_Vibrato1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Vibrato1    "
+	.byte	0, 0
+	.word	50, 7, 0	# descriptor index (FxDesc_050, FxDescTable[50]); parameter count
+	.long	FxPreset_Vibrato1_Params
+	.long	0x27	# key (FxPresetTable[key] is this record)
+
+FxPreset_Vibrato2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	10, 42, 90, 180, 0, 84, 80, 0xffff
+
+FxPreset_Vibrato2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Vibrato2    "
+	.byte	0, 0
+	.word	50, 7, 0	# descriptor index (FxDesc_050, FxDescTable[50]); parameter count
+	.long	FxPreset_Vibrato2_Params
+	.long	0x127	# key (FxPresetTable[key] is this record)
+
+FxPreset_Vibrato3_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	6, 56, 90, 180, 0, 84, 80, 0xffff
+
+FxPreset_Vibrato3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Vibrato3    "
+	.byte	0, 0
+	.word	50, 7, 0	# descriptor index (FxDesc_050, FxDescTable[50]); parameter count
+	.long	FxPreset_Vibrato3_Params
+	.long	0x227	# key (FxPresetTable[key] is this record)
+
+FxPreset_Vibrato4_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	5, 60, 90, 180, 0, 84, 80, 0xffff
+
+FxPreset_Vibrato4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Vibrato4    "
+	.byte	0, 0
+	.word	50, 7, 0	# descriptor index (FxDesc_050, FxDescTable[50]); parameter count
+	.long	FxPreset_Vibrato4_Params
+	.long	0x327	# key (FxPresetTable[key] is this record)
+
+FxPreset_Vibrato5_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	20, 20, 90, 180, 0, 84, 80, 0xffff
+
+FxPreset_Vibrato5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Vibrato5    "
+	.byte	0, 0
+	.word	50, 7, 0	# descriptor index (FxDesc_050, FxDescTable[50]); parameter count
+	.long	FxPreset_Vibrato5_Params
+	.long	0x427	# key (FxPresetTable[key] is this record)
+
+FxPreset_Vibrato6_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	12, 35, 180, 90, 0, 84, 80, 0xffff
+
+FxPreset_Vibrato6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Vibrato6    "
+	.byte	0, 0
+	.word	50, 7, 0	# descriptor index (FxDesc_050, FxDescTable[50]); parameter count
+	.long	FxPreset_Vibrato6_Params
+	.long	0x527	# key (FxPresetTable[key] is this record)
+
+FxPreset_Vibrato7_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	10, 22, 125, 90, 2, 84, 80, 0xffff
+
+FxPreset_Vibrato7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Vibrato7    "
+	.byte	0, 0
+	.word	50, 7, 0	# descriptor index (FxDesc_050, FxDescTable[50]); parameter count
+	.long	FxPreset_Vibrato7_Params
+	.long	0x627	# key (FxPresetTable[key] is this record)
+
+FxPreset_Vibrato8_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	19, 25, 57, 180, 1, 84, 80, 0xffff
+
+FxPreset_Vibrato8:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Vibrato8    "
+	.byte	0, 0
+	.word	50, 7, 0	# descriptor index (FxDesc_050, FxDescTable[50]); parameter count
+	.long	FxPreset_Vibrato8_Params
+	.long	0x727	# key (FxPresetTable[key] is this record)
+
+FxPreset_Ring_Mod_1_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	1, 80, 0, 1, 84, 80
+
+FxPreset_Ring_Mod_1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Ring Mod.1   "
+	.byte	0, 0
+	.word	54, 6, 0	# descriptor index (FxDesc_054, FxDescTable[54]); parameter count
+	.long	FxPreset_Ring_Mod_1_Params
+	.long	0x29	# key (FxPresetTable[key] is this record)
+
+FxPreset_Ring_Mod_2_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	7, 90, 0, 1, 84, 80
+
+FxPreset_Ring_Mod_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Ring Mod.2   "
+	.byte	0, 0
+	.word	54, 6, 0	# descriptor index (FxDesc_054, FxDescTable[54]); parameter count
+	.long	FxPreset_Ring_Mod_2_Params
+	.long	0x129	# key (FxPresetTable[key] is this record)
+
+FxPreset_Ring_Mod_3_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	58, 90, 0, 1, 84, 80
+
+FxPreset_Ring_Mod_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Ring Mod.3   "
+	.byte	0, 0
+	.word	54, 6, 0	# descriptor index (FxDesc_054, FxDescTable[54]); parameter count
+	.long	FxPreset_Ring_Mod_3_Params
+	.long	0x229	# key (FxPresetTable[key] is this record)
+
+FxPreset_Ring_Mod_4_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	69, 90, 0, 1, 84, 80
+
+FxPreset_Ring_Mod_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Ring Mod.4   "
+	.byte	0, 0
+	.word	54, 6, 0	# descriptor index (FxDesc_054, FxDescTable[54]); parameter count
+	.long	FxPreset_Ring_Mod_4_Params
+	.long	0x329	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mixup1_Params:	# the parameters (u16 x 9) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	50, 15, 68, 62, 90, 0, 1, 84, 80, 0xffff
+
+FxPreset_Mixup1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Mixup1     "
+	.byte	0, 0
+	.word	56, 9, 0	# descriptor index (FxDesc_056, FxDescTable[56]); parameter count
+	.long	FxPreset_Mixup1_Params
+	.long	0x2029	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mixup2_Params:	# the parameters (u16 x 9) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 15, 68, 62, 90, 0, 1, 84, 80, 0xffff
+
+FxPreset_Mixup2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Mixup2     "
+	.byte	0, 0
+	.word	56, 9, 0	# descriptor index (FxDesc_056, FxDescTable[56]); parameter count
+	.long	FxPreset_Mixup2_Params
+	.long	0x2129	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mixup3_Params:	# the parameters (u16 x 9) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	50, 15, 68, 62, 90, 1, 0, 84, 80, 0xffff
+
+FxPreset_Mixup3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Mixup3     "
+	.byte	0, 0
+	.word	56, 9, 0	# descriptor index (FxDesc_056, FxDescTable[56]); parameter count
+	.long	FxPreset_Mixup3_Params
+	.long	0x2229	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mixup4_Params:	# the parameters (u16 x 9) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	58, 8, 31, 37, 90, 1, 0, 84, 80, 0xffff
+
+FxPreset_Mixup4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Mixup4     "
+	.byte	0, 0
+	.word	56, 9, 0	# descriptor index (FxDesc_056, FxDescTable[56]); parameter count
+	.long	FxPreset_Mixup4_Params
+	.long	0x2329	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_1_3_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 4, 60, 90, 60, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_1_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 1    "
+	.byte	0, 0
+	.word	13, 10, 0	# descriptor index (FxDesc_013, FxDescTable[13]); parameter count
+	.long	FxPreset_Dry_Wet_1_3_Params
+	.long	0x2a	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_2_3_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 3, 3, 60, 90, 60, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_2_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 2    "
+	.byte	0, 0
+	.word	13, 10, 0	# descriptor index (FxDesc_013, FxDescTable[13]); parameter count
+	.long	FxPreset_Dry_Wet_2_3_Params
+	.long	0x12a	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_3_3_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 8, 8, 60, 90, 60, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_3_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 3    "
+	.byte	0, 0
+	.word	13, 10, 0	# descriptor index (FxDesc_013, FxDescTable[13]); parameter count
+	.long	FxPreset_Dry_Wet_3_3_Params
+	.long	0x22a	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_4_3_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 12, 12, 60, 90, 60, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_4_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 4    "
+	.byte	0, 0
+	.word	13, 10, 0	# descriptor index (FxDesc_013, FxDescTable[13]); parameter count
+	.long	FxPreset_Dry_Wet_4_3_Params
+	.long	0x32a	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_5_3_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 15, 15, 60, 90, 60, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_5_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 5    "
+	.byte	0, 0
+	.word	13, 10, 0	# descriptor index (FxDesc_013, FxDescTable[13]); parameter count
+	.long	FxPreset_Dry_Wet_5_3_Params
+	.long	0x42a	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_6_3_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	64, 19, 19, 60, 90, 60, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_6_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 6    "
+	.byte	0, 0
+	.word	13, 10, 0	# descriptor index (FxDesc_013, FxDescTable[13]); parameter count
+	.long	FxPreset_Dry_Wet_6_3_Params
+	.long	0x52a	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_7_3_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 22, 22, 60, 90, 60, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_7_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 7    "
+	.byte	0, 0
+	.word	13, 10, 0	# descriptor index (FxDesc_013, FxDescTable[13]); parameter count
+	.long	FxPreset_Dry_Wet_7_3_Params
+	.long	0x62a	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_8_3_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 4, 0xffaa, 0xffaa, 60, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_8_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 8    "
+	.byte	0, 0
+	.word	13, 10, 0	# descriptor index (FxDesc_013, FxDescTable[13]); parameter count
+	.long	FxPreset_Dry_Wet_8_3_Params
+	.long	0x202a	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_9_3_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 8, 0xffb4, 0xffb4, 60, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_9_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 9    "
+	.byte	0, 0
+	.word	13, 10, 0	# descriptor index (FxDesc_013, FxDescTable[13]); parameter count
+	.long	FxPreset_Dry_Wet_9_3_Params
+	.long	0x212a	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_10_3_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 5, 10, 0xffa6, 0xffa6, 60, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_10_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 10   "
+	.byte	0, 0
+	.word	13, 10, 0	# descriptor index (FxDesc_013, FxDescTable[13]); parameter count
+	.long	FxPreset_Dry_Wet_10_3_Params
+	.long	0x222a	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_11_3_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 4, 86, 86, 60, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_11_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 11   "
+	.byte	0, 0
+	.word	13, 10, 0	# descriptor index (FxDesc_013, FxDescTable[13]); parameter count
+	.long	FxPreset_Dry_Wet_11_3_Params
+	.long	0x232a	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_12_3_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	70, 6, 12, 76, 76, 60, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_12_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 12   "
+	.byte	0, 0
+	.word	13, 10, 0	# descriptor index (FxDesc_013, FxDescTable[13]); parameter count
+	.long	FxPreset_Dry_Wet_12_3_Params
+	.long	0x242a	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_13_3_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 8, 90, 90, 60, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_13_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 13   "
+	.byte	0, 0
+	.word	13, 10, 0	# descriptor index (FxDesc_013, FxDescTable[13]); parameter count
+	.long	FxPreset_Dry_Wet_13_3_Params
+	.long	0x252a	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_1_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 1, 60, 90, 0, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_1_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 1    "
+	.byte	0, 0
+	.word	11, 10, 0	# descriptor index (FxDesc_011, FxDescTable[11]); parameter count
+	.long	FxPreset_Dry_Wet_1_4_Params
+	.long	0x2b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_2_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 2, 60, 90, 0, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_2_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 2    "
+	.byte	0, 0
+	.word	11, 10, 0	# descriptor index (FxDesc_011, FxDescTable[11]); parameter count
+	.long	FxPreset_Dry_Wet_2_4_Params
+	.long	0x12b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_3_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 4, 60, 90, 0, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_3_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 3    "
+	.byte	0, 0
+	.word	11, 10, 0	# descriptor index (FxDesc_011, FxDescTable[11]); parameter count
+	.long	FxPreset_Dry_Wet_3_4_Params
+	.long	0x22b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_4_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 6, 6, 60, 90, 0, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_4_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 4    "
+	.byte	0, 0
+	.word	11, 10, 0	# descriptor index (FxDesc_011, FxDescTable[11]); parameter count
+	.long	FxPreset_Dry_Wet_4_4_Params
+	.long	0x32b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_5_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 7, 7, 60, 90, 0, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_5_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 5    "
+	.byte	0, 0
+	.word	11, 10, 0	# descriptor index (FxDesc_011, FxDescTable[11]); parameter count
+	.long	FxPreset_Dry_Wet_5_4_Params
+	.long	0x42b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_6_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 8, 8, 60, 90, 0, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_6_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 6    "
+	.byte	0, 0
+	.word	11, 10, 0	# descriptor index (FxDesc_011, FxDescTable[11]); parameter count
+	.long	FxPreset_Dry_Wet_6_4_Params
+	.long	0x52b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_7_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 10, 10, 60, 90, 0, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_7_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 7    "
+	.byte	0, 0
+	.word	11, 10, 0	# descriptor index (FxDesc_011, FxDescTable[11]); parameter count
+	.long	FxPreset_Dry_Wet_7_4_Params
+	.long	0x62b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_8_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 3, 0xffaa, 0xffaa, 0, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_8_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 8    "
+	.byte	0, 0
+	.word	11, 10, 0	# descriptor index (FxDesc_011, FxDescTable[11]); parameter count
+	.long	FxPreset_Dry_Wet_8_4_Params
+	.long	0x202b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_9_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 6, 0xffb4, 0xffb4, 0, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_9_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 9    "
+	.byte	0, 0
+	.word	11, 10, 0	# descriptor index (FxDesc_011, FxDescTable[11]); parameter count
+	.long	FxPreset_Dry_Wet_9_4_Params
+	.long	0x212b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_10_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 3, 0xffa6, 0xffa6, 0, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_10_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 10   "
+	.byte	0, 0
+	.word	11, 10, 0	# descriptor index (FxDesc_011, FxDescTable[11]); parameter count
+	.long	FxPreset_Dry_Wet_10_4_Params
+	.long	0x222b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_11_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 6, 86, 86, 0, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_11_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 11   "
+	.byte	0, 0
+	.word	11, 10, 0	# descriptor index (FxDesc_011, FxDescTable[11]); parameter count
+	.long	FxPreset_Dry_Wet_11_4_Params
+	.long	0x232b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_12_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 3, 76, 76, 0, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_12_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 12   "
+	.byte	0, 0
+	.word	11, 10, 0	# descriptor index (FxDesc_011, FxDescTable[11]); parameter count
+	.long	FxPreset_Dry_Wet_12_4_Params
+	.long	0x242b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Dry_Wet_13_4_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 1, 1, 90, 90, 0, 90, 0, 84, 80
+
+FxPreset_Dry_Wet_13_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Dry/Wet 13   "
+	.byte	0, 0
+	.word	11, 10, 0	# descriptor index (FxDesc_011, FxDescTable[11]); parameter count
+	.long	FxPreset_Dry_Wet_13_4_Params
+	.long	0x252b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Make_Up_Params:	# the parameters (u16 x 20) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	8, 28, 32, 14, 15, 23, 23, 19, 15, 21, 21, 21, 15, 24, 24, 22, 34, 44, 84, 80
+
+FxPreset_Make_Up:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Make Up     "
+	.byte	0, 0
+	.word	39, 20, 0	# descriptor index (FxDesc_039, FxDescTable[39]); parameter count
+	.long	FxPreset_Make_Up_Params
+	.long	0x30	# key (FxPresetTable[key] is this record)
+
+FxPreset_Middle_Cut_Params:	# the parameters (u16 x 20) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	10, 4, 4, 14, 15, 24, 24, 15, 15, 24, 18, 19, 15, 4, 0, 22, 24, 24, 84, 80
+
+FxPreset_Middle_Cut:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Middle Cut   "
+	.byte	0, 0
+	.word	39, 20, 0	# descriptor index (FxDesc_039, FxDescTable[39]); parameter count
+	.long	FxPreset_Middle_Cut_Params
+	.long	0x130	# key (FxPresetTable[key] is this record)
+
+FxPreset_Radio_Params:	# the parameters (u16 x 20) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	9, 3, 3, 12, 15, 42, 48, 16, 15, 41, 48, 17, 15, 24, 24, 19, 0, 0, 84, 80
+
+FxPreset_Radio:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Radio      "
+	.byte	0, 0
+	.word	39, 20, 0	# descriptor index (FxDesc_039, FxDescTable[39]); parameter count
+	.long	FxPreset_Radio_Params
+	.long	0x230	# key (FxPresetTable[key] is this record)
+
+FxPreset_Treble_Boost_Params:	# the parameters (u16 x 20) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	3, 14, 19, 11, 15, 24, 24, 14, 15, 24, 34, 16, 10, 24, 28, 21, 40, 12, 84, 80
+
+FxPreset_Treble_Boost:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"  Treble Boost  "
+	.byte	0, 0
+	.word	39, 20, 0	# descriptor index (FxDesc_039, FxDescTable[39]); parameter count
+	.long	FxPreset_Treble_Boost_Params
+	.long	0x330	# key (FxPresetTable[key] is this record)
+
+FxPreset_Treble_Cut_Params:	# the parameters (u16 x 20) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	0, 28, 28, 9, 15, 20, 10, 12, 15, 20, 20, 16, 15, 4, 4, 18, 24, 24, 84, 80
+
+FxPreset_Treble_Cut:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Treble Cut   "
+	.byte	0, 0
+	.word	39, 20, 0	# descriptor index (FxDesc_039, FxDescTable[39]); parameter count
+	.long	FxPreset_Treble_Cut_Params
+	.long	0x430	# key (FxPresetTable[key] is this record)
+
+FxPreset_No_Hi_Hat_Params:	# the parameters (u16 x 20) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	5, 24, 24, 11, 15, 24, 24, 14, 15, 24, 24, 20, 15, 2, 0, 23, 24, 24, 84, 80
+
+FxPreset_No_Hi_Hat:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   No Hi Hat    "
+	.byte	0, 0
+	.word	39, 20, 0	# descriptor index (FxDesc_039, FxDescTable[39]); parameter count
+	.long	FxPreset_No_Hi_Hat_Params
+	.long	0x530	# key (FxPresetTable[key] is this record)
+
+FxPreset_Bass_Cut_Params:	# the parameters (u16 x 20) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	7, 0, 0, 11, 15, 24, 24, 14, 15, 24, 24, 17, 15, 24, 24, 25, 20, 10, 84, 80
+
+FxPreset_Bass_Cut:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Bass Cut    "
+	.byte	0, 0
+	.word	39, 20, 0	# descriptor index (FxDesc_039, FxDescTable[39]); parameter count
+	.long	FxPreset_Bass_Cut_Params
+	.long	0x630	# key (FxPresetTable[key] is this record)
+
+FxPreset_Too_Bright_Params:	# the parameters (u16 x 20) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	4, 29, 34, 19, 15, 42, 48, 23, 15, 48, 48, 24, 15, 24, 24, 26, 48, 48, 84, 80
+
+FxPreset_Too_Bright:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Too Bright   "
+	.byte	0, 0
+	.word	39, 20, 0	# descriptor index (FxDesc_039, FxDescTable[39]); parameter count
+	.long	FxPreset_Too_Bright_Params
+	.long	0x730	# key (FxPresetTable[key] is this record)
+
+FxPreset_Enhancer1_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	50, 90, 50, 50, 25, 0, 84, 80
+
+FxPreset_Enhancer1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Enhancer1    "
+	.byte	0, 0
+	.word	3, 8, 0	# descriptor index (FxDesc_003, FxDescTable[3]); parameter count
+	.long	FxPreset_Enhancer1_Params
+	.long	0x2035	# key (FxPresetTable[key] is this record)
+
+FxPreset_Enhancer2_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	50, 90, 99, 10, 25, 0, 84, 80
+
+FxPreset_Enhancer2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Enhancer2    "
+	.byte	0, 0
+	.word	3, 8, 0	# descriptor index (FxDesc_003, FxDescTable[3]); parameter count
+	.long	FxPreset_Enhancer2_Params
+	.long	0x2135	# key (FxPresetTable[key] is this record)
+
+FxPreset_Enhancer3_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	50, 90, 10, 99, 25, 0, 84, 80
+
+FxPreset_Enhancer3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Enhancer3    "
+	.byte	0, 0
+	.word	3, 8, 0	# descriptor index (FxDesc_003, FxDescTable[3]); parameter count
+	.long	FxPreset_Enhancer3_Params
+	.long	0x2235	# key (FxPresetTable[key] is this record)
+
+FxPreset_Enhancer4_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	92, 50, 99, 99, 20, 0, 84, 80
+
+FxPreset_Enhancer4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Enhancer4    "
+	.byte	0, 0
+	.word	3, 8, 0	# descriptor index (FxDesc_003, FxDescTable[3]); parameter count
+	.long	FxPreset_Enhancer4_Params
+	.long	0x2335	# key (FxPresetTable[key] is this record)
+
+FxPreset_Enhancer5_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	90, 50, 99, 99, 30, 0, 84, 80
+
+FxPreset_Enhancer5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Enhancer5    "
+	.byte	0, 0
+	.word	3, 8, 0	# descriptor index (FxDesc_003, FxDescTable[3]); parameter count
+	.long	FxPreset_Enhancer5_Params
+	.long	0x2435	# key (FxPresetTable[key] is this record)
+
+FxPreset_Enhancer6_Params:	# the parameters (u16 x 8) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	99, 50, 99, 99, 45, 1, 84, 80
+
+FxPreset_Enhancer6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Enhancer6    "
+	.byte	0, 0
+	.word	3, 8, 0	# descriptor index (FxDesc_003, FxDescTable[3]); parameter count
+	.long	FxPreset_Enhancer6_Params
+	.long	0x2535	# key (FxPresetTable[key] is this record)
+
+FxPreset_Exciter1_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 86, 20, 16, 70, 84, 80, 0xffff
+
+FxPreset_Exciter1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Exciter1    "
+	.byte	0, 0
+	.word	35, 7, 0	# descriptor index (FxDesc_035, FxDescTable[35]); parameter count
+	.long	FxPreset_Exciter1_Params
+	.long	0x37	# key (FxPresetTable[key] is this record)
+
+FxPreset_Exciter2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 86, 23, 16, 86, 84, 80, 0xffff
+
+FxPreset_Exciter2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Exciter2    "
+	.byte	0, 0
+	.word	35, 7, 0	# descriptor index (FxDesc_035, FxDescTable[35]); parameter count
+	.long	FxPreset_Exciter2_Params
+	.long	0x137	# key (FxPresetTable[key] is this record)
+
+FxPreset_Exciter3_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 86, 24, 18, 99, 84, 80, 0xffff
+
+FxPreset_Exciter3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Exciter3    "
+	.byte	0, 0
+	.word	35, 7, 0	# descriptor index (FxDesc_035, FxDescTable[35]); parameter count
+	.long	FxPreset_Exciter3_Params
+	.long	0x237	# key (FxPresetTable[key] is this record)
+
+FxPreset_Wah1_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	2, 0, 60, 99, 99, 80
+
+FxPreset_Wah1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"      Wah1      "
+	.byte	0, 0
+	.word	52, 6, 0	# descriptor index (FxDesc_052, FxDescTable[52]); parameter count
+	.long	FxPreset_Wah1_Params
+	.long	0x2038	# key (FxPresetTable[key] is this record)
+
+FxPreset_Wah2_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	2, 15, 99, 60, 99, 80
+
+FxPreset_Wah2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"      Wah2      "
+	.byte	0, 0
+	.word	52, 6, 0	# descriptor index (FxDesc_052, FxDescTable[52]); parameter count
+	.long	FxPreset_Wah2_Params
+	.long	0x2138	# key (FxPresetTable[key] is this record)
+
+FxPreset_Wah3_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	2, 50, 99, 60, 99, 80
+
+FxPreset_Wah3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"      Wah3      "
+	.byte	0, 0
+	.word	52, 6, 0	# descriptor index (FxDesc_052, FxDescTable[52]); parameter count
+	.long	FxPreset_Wah3_Params
+	.long	0x2238	# key (FxPresetTable[key] is this record)
+
+FxPreset_Wah4_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	2, 0, 30, 60, 99, 80
+
+FxPreset_Wah4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"      Wah4      "
+	.byte	0, 0
+	.word	52, 6, 0	# descriptor index (FxDesc_052, FxDescTable[52]); parameter count
+	.long	FxPreset_Wah4_Params
+	.long	0x2338	# key (FxPresetTable[key] is this record)
+
+FxPreset_Wah5_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	2, 0, 60, 99, 99, 80
+
+FxPreset_Wah5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"      Wah5      "
+	.byte	0, 0
+	.word	52, 6, 0	# descriptor index (FxDesc_052, FxDescTable[52]); parameter count
+	.long	FxPreset_Wah5_Params
+	.long	0x2438	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	14, 28, 10, 10, 80, 99, 70, 64, 84, 80
+
+FxPreset_Normal:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Normal     "
+	.byte	0, 0
+	.word	32, 10, 0	# descriptor index (FxDesc_032, FxDescTable[32]); parameter count
+	.long	FxPreset_Normal_Params
+	.long	0x40	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mild_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	14, 28, 10, 10, 40, 60, 75, 69, 84, 80
+
+FxPreset_Mild:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"      Mild      "
+	.byte	0, 0
+	.word	32, 10, 0	# descriptor index (FxDesc_032, FxDescTable[32]); parameter count
+	.long	FxPreset_Mild_Params
+	.long	0x140	# key (FxPresetTable[key] is this record)
+
+FxPreset_Hard_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	14, 28, 10, 10, 99, 70, 72, 74, 84, 80
+
+FxPreset_Hard:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"      Hard      "
+	.byte	0, 0
+	.word	32, 10, 0	# descriptor index (FxDesc_032, FxDescTable[32]); parameter count
+	.long	FxPreset_Hard_Params
+	.long	0x240	# key (FxPresetTable[key] is this record)
+
+FxPreset_Bright_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	14, 28, 10, 10, 99, 70, 72, 74, 84, 80
+
+FxPreset_Bright:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Bright     "
+	.byte	0, 0
+	.word	130, 10, 0	# descriptor index (FxDesc_130, FxDescTable[130]); parameter count
+	.long	FxPreset_Bright_Params
+	.long	0x340	# key (FxPresetTable[key] is this record)
+
+FxPreset_Fat_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	14, 32, 10, 10, 99, 70, 76, 78, 84, 80
+
+FxPreset_Fat:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"      Fat       "
+	.byte	0, 0
+	.word	131, 10, 0	# descriptor index (FxDesc_131, FxDescTable[131]); parameter count
+	.long	FxPreset_Fat_Params
+	.long	0x440	# key (FxPresetTable[key] is this record)
+
+FxPreset_Hard_Compress_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	8, 9, 10, 10, 99, 70, 72, 74, 84, 80
+
+FxPreset_Hard_Compress:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Hard Compress  "
+	.byte	0, 0
+	.word	32, 10, 0	# descriptor index (FxDesc_032, FxDescTable[32]); parameter count
+	.long	FxPreset_Hard_Compress_Params
+	.long	0x540	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal_2_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	13, 29, 10, 10, 72, 99, 68, 64, 84, 80
+
+FxPreset_Normal_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Normal     "
+	.byte	0, 0
+	.word	33, 10, 0	# descriptor index (FxDesc_033, FxDescTable[33]); parameter count
+	.long	FxPreset_Normal_2_Params
+	.long	0x2040	# key (FxPresetTable[key] is this record)
+
+FxPreset_Mild_2_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	13, 29, 10, 10, 55, 80, 72, 68, 84, 80
+
+FxPreset_Mild_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"      Mild      "
+	.byte	0, 0
+	.word	33, 10, 0	# descriptor index (FxDesc_033, FxDescTable[33]); parameter count
+	.long	FxPreset_Mild_2_Params
+	.long	0x2140	# key (FxPresetTable[key] is this record)
+
+FxPreset_Hard_2_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	13, 29, 10, 10, 99, 70, 70, 74, 84, 80
+
+FxPreset_Hard_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"      Hard      "
+	.byte	0, 0
+	.word	33, 10, 0	# descriptor index (FxDesc_033, FxDescTable[33]); parameter count
+	.long	FxPreset_Hard_2_Params
+	.long	0x2240	# key (FxPresetTable[key] is this record)
+
+FxPreset_Bright_2_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	13, 29, 10, 10, 60, 99, 70, 60, 84, 80
+
+FxPreset_Bright_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Bright     "
+	.byte	0, 0
+	.word	132, 10, 0	# descriptor index (FxDesc_132, FxDescTable[132]); parameter count
+	.long	FxPreset_Bright_2_Params
+	.long	0x2340	# key (FxPresetTable[key] is this record)
+
+FxPreset_Fat_2_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	13, 29, 10, 10, 99, 70, 70, 74, 84, 80
+
+FxPreset_Fat_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"      Fat       "
+	.byte	0, 0
+	.word	133, 10, 0	# descriptor index (FxDesc_133, FxDescTable[133]); parameter count
+	.long	FxPreset_Fat_2_Params
+	.long	0x2440	# key (FxPresetTable[key] is this record)
+
+FxPreset_Hard_Compress_2_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	8, 9, 10, 10, 99, 70, 70, 74, 84, 80
+
+FxPreset_Hard_Compress_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Hard Compress  "
+	.byte	0, 0
+	.word	33, 10, 0	# descriptor index (FxDesc_033, FxDescTable[33]); parameter count
+	.long	FxPreset_Hard_Compress_2_Params
+	.long	0x2540	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal_3_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	13, 29, 10, 10, 60, 99, 74, 60, 84, 80
+
+FxPreset_Normal_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Normal     "
+	.byte	0, 0
+	.word	34, 10, 0	# descriptor index (FxDesc_034, FxDescTable[34]); parameter count
+	.long	FxPreset_Normal_3_Params
+	.long	0x41	# key (FxPresetTable[key] is this record)
+
+FxPreset_Hard_Compress_3_Params:	# the parameters (u16 x 10) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	6, 7, 10, 10, 99, 70, 74, 78, 84, 80
+
+FxPreset_Hard_Compress_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Hard Compress  "
+	.byte	0, 0
+	.word	34, 10, 0	# descriptor index (FxDesc_034, FxDescTable[34]); parameter count
+	.long	FxPreset_Hard_Compress_3_Params
+	.long	0x141	# key (FxPresetTable[key] is this record)
+
+FxPreset_Limiter1_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	14, 28, 10, 40, 10, 84, 80, 0xffff
+
+FxPreset_Limiter1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Limiter1    "
+	.byte	0, 0
+	.word	41, 7, 0	# descriptor index (FxDesc_041, FxDescTable[41]); parameter count
+	.long	FxPreset_Limiter1_Params
+	.long	0x44	# key (FxPresetTable[key] is this record)
+
+FxPreset_Limiter2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	10, 18, 10, 40, 10, 84, 80, 0xffff
+
+FxPreset_Limiter2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Limiter2    "
+	.byte	0, 0
+	.word	41, 7, 0	# descriptor index (FxDesc_041, FxDescTable[41]); parameter count
+	.long	FxPreset_Limiter2_Params
+	.long	0x144	# key (FxPresetTable[key] is this record)
+
+FxPreset_Limiter3_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	5, 5, 10, 40, 10, 99, 80, 0xffff
+
+FxPreset_Limiter3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Limiter3    "
+	.byte	0, 0
+	.word	41, 7, 0	# descriptor index (FxDesc_041, FxDescTable[41]); parameter count
+	.long	FxPreset_Limiter3_Params
+	.long	0x244	# key (FxPresetTable[key] is this record)
+
+FxPreset_Limiter4_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 50, 10, 40, 10, 84, 80, 0xffff
+
+FxPreset_Limiter4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Limiter4    "
+	.byte	0, 0
+	.word	41, 7, 0	# descriptor index (FxDesc_041, FxDescTable[41]); parameter count
+	.long	FxPreset_Limiter4_Params
+	.long	0x344	# key (FxPresetTable[key] is this record)
+
+FxPreset_Comp_1_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	14, 28, 10, 40, 10, 84, 80, 0xffff
+
+FxPreset_Comp_1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Comp.1     "
+	.byte	0, 0
+	.word	36, 7, 0	# descriptor index (FxDesc_036, FxDescTable[36]); parameter count
+	.long	FxPreset_Comp_1_Params
+	.long	0x45	# key (FxPresetTable[key] is this record)
+
+FxPreset_Comp_2_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	11, 20, 10, 40, 10, 84, 80, 0xffff
+
+FxPreset_Comp_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Comp.2     "
+	.byte	0, 0
+	.word	36, 7, 0	# descriptor index (FxDesc_036, FxDescTable[36]); parameter count
+	.long	FxPreset_Comp_2_Params
+	.long	0x145	# key (FxPresetTable[key] is this record)
+
+FxPreset_Comp_3_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	5, 14, 10, 40, 10, 84, 80, 0xffff
+
+FxPreset_Comp_3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Comp.3     "
+	.byte	0, 0
+	.word	36, 7, 0	# descriptor index (FxDesc_036, FxDescTable[36]); parameter count
+	.long	FxPreset_Comp_3_Params
+	.long	0x245	# key (FxPresetTable[key] is this record)
+
+FxPreset_Comp_4_Params:	# the parameters (u16 x 7) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 60, 10, 40, 10, 84, 80, 0xffff
+
+FxPreset_Comp_4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Comp.4     "
+	.byte	0, 0
+	.word	36, 7, 0	# descriptor index (FxDesc_036, FxDescTable[36]); parameter count
+	.long	FxPreset_Comp_4_Params
+	.long	0x345	# key (FxPresetTable[key] is this record)
+
+FxPreset_Slow_Attacker1_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	12, 4, 98, 98, 84, 80
+
+FxPreset_Slow_Attacker1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Slow Attacker1 "
+	.byte	0, 0
+	.word	37, 6, 0	# descriptor index (FxDesc_037, FxDescTable[37]); parameter count
+	.long	FxPreset_Slow_Attacker1_Params
+	.long	0x46	# key (FxPresetTable[key] is this record)
+
+FxPreset_Slow_Attacker2_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	12, 4, 98, 40, 84, 80
+
+FxPreset_Slow_Attacker2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Slow Attacker2 "
+	.byte	0, 0
+	.word	37, 6, 0	# descriptor index (FxDesc_037, FxDescTable[37]); parameter count
+	.long	FxPreset_Slow_Attacker2_Params
+	.long	0x146	# key (FxPresetTable[key] is this record)
+
+FxPreset_Slow_Attacker3_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	4, 12, 98, 98, 84, 80
+
+FxPreset_Slow_Attacker3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Slow Attacker3 "
+	.byte	0, 0
+	.word	37, 6, 0	# descriptor index (FxDesc_037, FxDescTable[37]); parameter count
+	.long	FxPreset_Slow_Attacker3_Params
+	.long	0x246	# key (FxPresetTable[key] is this record)
+
+FxPreset_Slow_Attacker4_Params:	# the parameters (u16 x 6) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	4, 12, 98, 40, 84, 80
+
+FxPreset_Slow_Attacker4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Slow Attacker4 "
+	.byte	0, 0
+	.word	37, 6, 0	# descriptor index (FxDesc_037, FxDescTable[37]); parameter count
+	.long	FxPreset_Slow_Attacker4_Params
+	.long	0x346	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep1_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	300, 300, 300, 300, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 64, 80, 0xffff
+
+FxPreset_Deep1_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep1      "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep1_6_Params
+	.long	0x48	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep2_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	150, 150, 150, 150, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 64, 80, 0xffff
+
+FxPreset_Deep2_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep2      "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep2_6_Params
+	.long	0x148	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep3_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	200, 200, 200, 200, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 64, 80, 0xffff
+
+FxPreset_Deep3_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep3      "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep3_6_Params
+	.long	0x248	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep4_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	250, 250, 250, 250, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 64, 80, 0xffff
+
+FxPreset_Deep4_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep4      "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep4_6_Params
+	.long	0x348	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep5_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	320, 320, 320, 320, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 64, 80, 0xffff
+
+FxPreset_Deep5_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep5      "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep5_6_Params
+	.long	0x448	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep6_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	340, 340, 340, 340, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 64, 80, 0xffff
+
+FxPreset_Deep6_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep6      "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep6_6_Params
+	.long	0x548	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep7_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	350, 350, 350, 350, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 64, 80, 0xffff
+
+FxPreset_Deep7_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep7      "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep7_6_Params
+	.long	0x648	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep8_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	350, 350, 350, 350, 0xffba, 0xffd8, 0xffba, 0xffd8, 12, 64, 80, 0xffff
+
+FxPreset_Deep8_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep8      "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep8_6_Params
+	.long	0x748	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal1_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	300, 300, 300, 300, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 54, 80, 0xffff
+
+FxPreset_Normal1_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal1     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal1_6_Params
+	.long	0x848	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal2_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	150, 150, 150, 150, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 54, 80, 0xffff
+
+FxPreset_Normal2_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal2     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal2_6_Params
+	.long	0x948	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal3_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	200, 200, 200, 200, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 54, 80, 0xffff
+
+FxPreset_Normal3_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal3     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal3_6_Params
+	.long	0xa48	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal4_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	250, 250, 250, 250, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 54, 80, 0xffff
+
+FxPreset_Normal4_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal4     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal4_6_Params
+	.long	0xb48	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal5_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	320, 320, 320, 320, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 54, 80, 0xffff
+
+FxPreset_Normal5_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal5     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal5_6_Params
+	.long	0xc48	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal6_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	340, 340, 340, 340, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 54, 80, 0xffff
+
+FxPreset_Normal6_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal6     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal6_6_Params
+	.long	0xd48	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal7_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	350, 350, 350, 350, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 54, 80, 0xffff
+
+FxPreset_Normal7_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal7     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal7_6_Params
+	.long	0xe48	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal8_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	350, 350, 350, 350, 0xffba, 0xffd8, 0xffba, 0xffd8, 12, 54, 80, 0xffff
+
+FxPreset_Normal8_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal8     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal8_6_Params
+	.long	0xf48	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow1_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	300, 300, 300, 300, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 44, 80, 0xffff
+
+FxPreset_Shallow1_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow1    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow1_6_Params
+	.long	0x1048	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow2_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	150, 150, 150, 150, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 44, 80, 0xffff
+
+FxPreset_Shallow2_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow2    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow2_6_Params
+	.long	0x1148	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow3_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	200, 200, 200, 200, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 44, 80, 0xffff
+
+FxPreset_Shallow3_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow3    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow3_6_Params
+	.long	0x1248	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow4_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	250, 250, 250, 250, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 44, 80, 0xffff
+
+FxPreset_Shallow4_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow4    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow4_6_Params
+	.long	0x1348	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow5_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	320, 320, 320, 320, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 44, 80, 0xffff
+
+FxPreset_Shallow5_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow5    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow5_6_Params
+	.long	0x1448	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow6_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	340, 340, 340, 340, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 44, 80, 0xffff
+
+FxPreset_Shallow6_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow6    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow6_6_Params
+	.long	0x1548	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow7_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	350, 350, 350, 350, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 12, 44, 80, 0xffff
+
+FxPreset_Shallow7_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow7    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow7_6_Params
+	.long	0x1648	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow8_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	350, 350, 350, 350, 0xffba, 0xffd8, 0xffba, 0xffd8, 12, 44, 80, 0xffff
+
+FxPreset_Shallow8_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow8    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow8_6_Params
+	.long	0x1748	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep9_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	35, 50, 35, 50, 0, 0, 0, 0, 12, 74, 80, 0xffff
+
+FxPreset_Deep9_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep9      "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep9_6_Params
+	.long	0x2048	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep10_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	65, 98, 65, 98, 0, 0, 0, 0, 12, 74, 80, 0xffff
+
+FxPreset_Deep10_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep10     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep10_6_Params
+	.long	0x2148	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep11_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	85, 128, 85, 128, 0, 0, 0, 0, 12, 74, 80, 0xffff
+
+FxPreset_Deep11_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep11     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep11_6_Params
+	.long	0x2248	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep12_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	100, 150, 64, 96, 0, 0, 0, 0, 12, 74, 80, 0xffff
+
+FxPreset_Deep12_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep12     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep12_6_Params
+	.long	0x2348	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep13_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	160, 240, 84, 126, 0, 0, 0, 0, 12, 74, 80, 0xffff
+
+FxPreset_Deep13_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep13     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep13_6_Params
+	.long	0x2448	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep14_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	230, 350, 104, 156, 0, 0, 0, 0, 12, 74, 80, 0xffff
+
+FxPreset_Deep14:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep14     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep14_Params
+	.long	0x2548	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep15_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	310, 206, 144, 96, 0, 0, 0, 0, 12, 74, 80, 0xffff
+
+FxPreset_Deep15:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep15     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep15_Params
+	.long	0x2648	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep16_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	350, 234, 194, 130, 0, 0, 0, 0, 12, 74, 80, 0xffff
+
+FxPreset_Deep16:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep16     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep16_Params
+	.long	0x2748	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal9_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	35, 50, 35, 50, 0, 0, 0, 0, 12, 64, 80, 0xffff
+
+FxPreset_Normal9_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal9     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal9_6_Params
+	.long	0x2848	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal10_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	65, 98, 65, 98, 0, 0, 0, 0, 12, 64, 80, 0xffff
+
+FxPreset_Normal10_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal10    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal10_6_Params
+	.long	0x2948	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal11_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	85, 128, 85, 128, 0, 0, 0, 0, 12, 64, 80, 0xffff
+
+FxPreset_Normal11_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal11    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal11_6_Params
+	.long	0x2a48	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal12_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	100, 150, 64, 96, 0, 0, 0, 0, 12, 64, 80, 0xffff
+
+FxPreset_Normal12_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal12    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal12_6_Params
+	.long	0x2b48	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal13_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	160, 240, 84, 126, 0, 0, 0, 0, 12, 64, 80, 0xffff
+
+FxPreset_Normal13_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal13    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal13_6_Params
+	.long	0x2c48	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal14_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	230, 350, 104, 156, 0, 0, 0, 0, 12, 64, 80, 0xffff
+
+FxPreset_Normal14:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal14    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal14_Params
+	.long	0x2d48	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal15_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	310, 206, 144, 96, 0, 0, 0, 0, 12, 64, 80, 0xffff
+
+FxPreset_Normal15:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal15    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal15_Params
+	.long	0x2e48	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal16_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	350, 234, 194, 130, 0, 0, 0, 0, 12, 64, 80, 0xffff
+
+FxPreset_Normal16:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal16    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal16_Params
+	.long	0x2f48	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow9_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	35, 50, 35, 50, 0, 0, 0, 0, 12, 54, 80, 0xffff
+
+FxPreset_Shallow9_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow9    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow9_6_Params
+	.long	0x3048	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow10_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	65, 98, 65, 98, 0, 0, 0, 0, 12, 54, 80, 0xffff
+
+FxPreset_Shallow10_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow10    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow10_6_Params
+	.long	0x3148	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow11_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	85, 128, 85, 128, 0, 0, 0, 0, 12, 54, 80, 0xffff
+
+FxPreset_Shallow11_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow11    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow11_6_Params
+	.long	0x3248	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow12_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	100, 150, 64, 96, 0, 0, 0, 0, 12, 54, 80, 0xffff
+
+FxPreset_Shallow12_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow12    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow12_6_Params
+	.long	0x3348	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow13_6_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	160, 240, 84, 126, 0, 0, 0, 0, 12, 54, 80, 0xffff
+
+FxPreset_Shallow13_6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow13    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow13_6_Params
+	.long	0x3448	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow14_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	230, 350, 104, 156, 0, 0, 0, 0, 12, 54, 80, 0xffff
+
+FxPreset_Shallow14:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow14    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow14_Params
+	.long	0x3548	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow15_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	310, 206, 144, 96, 0, 0, 0, 0, 12, 54, 80, 0xffff
+
+FxPreset_Shallow15:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow15    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow15_Params
+	.long	0x3648	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow16_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	350, 234, 194, 130, 0, 0, 0, 0, 12, 54, 80, 0xffff
+
+FxPreset_Shallow16:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow16    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow16_Params
+	.long	0x3748	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep17_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	160, 160, 160, 160, 0xffd0, 0xffb8, 0xffd0, 0xffb8, 24, 64, 80, 0xffff
+
+FxPreset_Deep17:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep17     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep17_Params
+	.long	0x49	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep18_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	200, 200, 200, 200, 0xffd3, 0xffbc, 0xffd3, 0xffbc, 24, 64, 80, 0xffff
+
+FxPreset_Deep18:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep18     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep18_Params
+	.long	0x149	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep19_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	280, 280, 280, 280, 0xffdc, 0xffca, 0xffdc, 0xffca, 24, 64, 80, 0xffff
+
+FxPreset_Deep19:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep19     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep19_Params
+	.long	0x249	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep20_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	350, 350, 350, 350, 0xffe2, 0xffd3, 0xffe2, 0xffd3, 24, 64, 80, 0xffff
+
+FxPreset_Deep20:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep20     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep20_Params
+	.long	0x349	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal17_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	160, 160, 160, 160, 0xffd0, 0xffb8, 0xffd0, 0xffb8, 24, 54, 80, 0xffff
+
+FxPreset_Normal17:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal17    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal17_Params
+	.long	0x849	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal18_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	200, 200, 200, 200, 0xffd3, 0xffbc, 0xffd3, 0xffbc, 24, 54, 80, 0xffff
+
+FxPreset_Normal18:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal18    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal18_Params
+	.long	0x949	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal19_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	280, 280, 280, 280, 0xffdc, 0xffca, 0xffdc, 0xffca, 24, 54, 80, 0xffff
+
+FxPreset_Normal19:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal19    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal19_Params
+	.long	0xa49	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal20_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	350, 350, 350, 350, 0xffe2, 0xffd3, 0xffe2, 0xffd3, 24, 54, 80, 0xffff
+
+FxPreset_Normal20:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal20    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal20_Params
+	.long	0xb49	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow17_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	160, 160, 160, 160, 0xffd0, 0xffb8, 0xffd0, 0xffb8, 24, 44, 80, 0xffff
+
+FxPreset_Shallow17:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow17    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow17_Params
+	.long	0x1049	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow18_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	200, 200, 200, 200, 0xffd3, 0xffbc, 0xffd3, 0xffbc, 24, 44, 80, 0xffff
+
+FxPreset_Shallow18:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow18    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow18_Params
+	.long	0x1149	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow19_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	280, 280, 280, 280, 0xffdc, 0xffca, 0xffdc, 0xffca, 24, 44, 80, 0xffff
+
+FxPreset_Shallow19:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow19    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow19_Params
+	.long	0x1249	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow20_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	350, 350, 350, 350, 0xffe2, 0xffd3, 0xffe2, 0xffd3, 24, 44, 80, 0xffff
+
+FxPreset_Shallow20:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow20    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow20_Params
+	.long	0x1349	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep1_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 80, 160, 160, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 64, 80, 0xffff
+
+FxPreset_Deep1_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep1      "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Deep1_7_Params
+	.long	0x4c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep2_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 40, 80, 80, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 64, 80, 0xffff
+
+FxPreset_Deep2_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep2      "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Deep2_7_Params
+	.long	0x14c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep3_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	60, 60, 120, 120, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 64, 80, 0xffff
+
+FxPreset_Deep3_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep3      "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Deep3_7_Params
+	.long	0x24c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep4_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	100, 100, 200, 200, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 64, 80, 0xffff
+
+FxPreset_Deep4_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep4      "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Deep4_7_Params
+	.long	0x34c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep5_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	120, 120, 240, 240, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 64, 80, 0xffff
+
+FxPreset_Deep5_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep5      "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Deep5_7_Params
+	.long	0x44c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep6_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	140, 140, 280, 280, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 64, 80, 0xffff
+
+FxPreset_Deep6_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep6      "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Deep6_7_Params
+	.long	0x54c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep7_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	160, 160, 320, 320, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 64, 80, 0xffff
+
+FxPreset_Deep7_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep7      "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Deep7_7_Params
+	.long	0x64c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep8_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	175, 175, 350, 350, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 64, 80, 0xffff
+
+FxPreset_Deep8_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep8      "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Deep8_7_Params
+	.long	0x74c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal1_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 80, 160, 160, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 54, 80, 0xffff
+
+FxPreset_Normal1_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal1     "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Normal1_7_Params
+	.long	0x84c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal2_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 40, 80, 80, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 54, 80, 0xffff
+
+FxPreset_Normal2_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal2     "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Normal2_7_Params
+	.long	0x94c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal3_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	60, 60, 120, 120, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 54, 80, 0xffff
+
+FxPreset_Normal3_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal3     "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Normal3_7_Params
+	.long	0xa4c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal4_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	100, 100, 200, 200, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 54, 80, 0xffff
+
+FxPreset_Normal4_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal4     "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Normal4_7_Params
+	.long	0xb4c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal5_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	120, 120, 240, 240, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 54, 80, 0xffff
+
+FxPreset_Normal5_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal5     "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Normal5_7_Params
+	.long	0xc4c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal6_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	140, 140, 280, 280, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 54, 80, 0xffff
+
+FxPreset_Normal6_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal6     "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Normal6_7_Params
+	.long	0xd4c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal7_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	160, 160, 320, 320, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 54, 80, 0xffff
+
+FxPreset_Normal7_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal7     "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Normal7_7_Params
+	.long	0xe4c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal8_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	175, 175, 350, 350, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 54, 80, 0xffff
+
+FxPreset_Normal8_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal8     "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Normal8_7_Params
+	.long	0xf4c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow1_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 80, 160, 160, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 44, 80, 0xffff
+
+FxPreset_Shallow1_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow1    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Shallow1_7_Params
+	.long	0x104c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow2_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 40, 80, 80, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 44, 80, 0xffff
+
+FxPreset_Shallow2_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow2    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Shallow2_7_Params
+	.long	0x114c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow3_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	60, 60, 120, 120, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 44, 80, 0xffff
+
+FxPreset_Shallow3_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow3    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Shallow3_7_Params
+	.long	0x124c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow4_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	100, 100, 200, 200, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 44, 80, 0xffff
+
+FxPreset_Shallow4_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow4    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Shallow4_7_Params
+	.long	0x134c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow5_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	120, 120, 240, 240, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 44, 80, 0xffff
+
+FxPreset_Shallow5_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow5    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Shallow5_7_Params
+	.long	0x144c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow6_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	140, 140, 280, 280, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 44, 80, 0xffff
+
+FxPreset_Shallow6_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow6    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Shallow6_7_Params
+	.long	0x154c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow7_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	160, 160, 320, 320, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 44, 80, 0xffff
+
+FxPreset_Shallow7_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow7    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Shallow7_7_Params
+	.long	0x164c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow8_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	175, 175, 350, 350, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 24, 44, 80, 0xffff
+
+FxPreset_Shallow8_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow8    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Shallow8_7_Params
+	.long	0x174c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep9_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	50, 75, 100, 150, 0, 0, 0, 0, 12, 74, 80, 0xffff
+
+FxPreset_Deep9_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep9      "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Deep9_7_Params
+	.long	0x204c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep10_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 45, 60, 90, 0, 0, 0, 0, 12, 74, 80, 0xffff
+
+FxPreset_Deep10_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep10     "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Deep10_7_Params
+	.long	0x214c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep11_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 60, 80, 120, 0, 0, 0, 0, 12, 74, 80, 0xffff
+
+FxPreset_Deep11_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep11     "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Deep11_7_Params
+	.long	0x224c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep12_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	60, 90, 120, 180, 0, 0, 0, 0, 12, 74, 80, 0xffff
+
+FxPreset_Deep12_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep12     "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Deep12_7_Params
+	.long	0x234c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep13_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	160, 240, 84, 126, 0, 0, 0, 0, 12, 74, 80, 0xffff
+
+FxPreset_Deep13_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep13     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep13_7_Params
+	.long	0x244c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep14_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	230, 350, 104, 156, 0, 0, 0, 0, 12, 74, 80, 0xffff
+
+FxPreset_Deep14_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep14     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep14_2_Params
+	.long	0x254c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep15_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	310, 206, 144, 96, 0, 0, 0, 0, 12, 74, 80, 0xffff
+
+FxPreset_Deep15_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep15     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep15_2_Params
+	.long	0x264c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep16_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	350, 234, 194, 130, 0, 0, 0, 0, 12, 74, 80, 0xffff
+
+FxPreset_Deep16_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep16     "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Deep16_2_Params
+	.long	0x274c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal9_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	50, 75, 100, 150, 0, 0, 0, 0, 12, 64, 80, 0xffff
+
+FxPreset_Normal9_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal9     "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Normal9_7_Params
+	.long	0x284c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal10_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 45, 60, 90, 0, 0, 0, 0, 12, 64, 80, 0xffff
+
+FxPreset_Normal10_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal10    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Normal10_7_Params
+	.long	0x294c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal11_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 60, 80, 120, 0, 0, 0, 0, 12, 64, 80, 0xffff
+
+FxPreset_Normal11_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal11    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Normal11_7_Params
+	.long	0x2a4c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal12_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	60, 90, 120, 180, 0, 0, 0, 0, 12, 64, 80, 0xffff
+
+FxPreset_Normal12_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal12    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Normal12_7_Params
+	.long	0x2b4c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal13_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	160, 240, 84, 126, 0, 0, 0, 0, 12, 64, 80, 0xffff
+
+FxPreset_Normal13_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal13    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal13_7_Params
+	.long	0x2c4c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal14_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	230, 350, 104, 156, 0, 0, 0, 0, 12, 64, 80, 0xffff
+
+FxPreset_Normal14_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal14    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal14_2_Params
+	.long	0x2d4c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal15_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	310, 206, 144, 96, 0, 0, 0, 0, 12, 64, 80, 0xffff
+
+FxPreset_Normal15_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal15    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal15_2_Params
+	.long	0x2e4c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal16_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	350, 234, 194, 130, 0, 0, 0, 0, 12, 64, 80, 0xffff
+
+FxPreset_Normal16_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal16    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Normal16_2_Params
+	.long	0x2f4c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow9_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	50, 75, 100, 150, 0, 0, 0, 0, 12, 54, 80, 0xffff
+
+FxPreset_Shallow9_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Shallow9    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Shallow9_7_Params
+	.long	0x304c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow10_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 45, 60, 90, 0, 0, 0, 0, 12, 54, 80, 0xffff
+
+FxPreset_Shallow10_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow10    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Shallow10_7_Params
+	.long	0x314c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow11_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 60, 80, 120, 0, 0, 0, 0, 12, 54, 80, 0xffff
+
+FxPreset_Shallow11_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow11    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Shallow11_7_Params
+	.long	0x324c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow12_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	60, 90, 120, 180, 0, 0, 0, 0, 12, 54, 80, 0xffff
+
+FxPreset_Shallow12_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow12    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Shallow12_7_Params
+	.long	0x334c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow13_7_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	160, 240, 84, 126, 0, 0, 0, 0, 12, 54, 80, 0xffff
+
+FxPreset_Shallow13_7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow13    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow13_7_Params
+	.long	0x344c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow14_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	230, 350, 104, 156, 0, 0, 0, 0, 12, 54, 80, 0xffff
+
+FxPreset_Shallow14_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow14    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow14_2_Params
+	.long	0x354c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow15_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	310, 206, 144, 96, 0, 0, 0, 0, 12, 54, 80, 0xffff
+
+FxPreset_Shallow15_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow15    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow15_2_Params
+	.long	0x364c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow16_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	350, 234, 194, 130, 0, 0, 0, 0, 12, 54, 80, 0xffff
+
+FxPreset_Shallow16_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow16    "
+	.byte	0, 0
+	.word	9, 11, 0	# descriptor index (FxDesc_009, FxDescTable[9]); parameter count
+	.long	FxPreset_Shallow16_2_Params
+	.long	0x374c	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep17_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 80, 160, 160, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 13, 64, 80, 0xffff
+
+FxPreset_Deep17_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep17     "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Deep17_2_Params
+	.long	0x4d	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep18_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 40, 80, 80, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 13, 64, 80, 0xffff
+
+FxPreset_Deep18_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep18     "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Deep18_2_Params
+	.long	0x14d	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep19_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	60, 60, 120, 120, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 13, 64, 80, 0xffff
+
+FxPreset_Deep19_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep19     "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Deep19_2_Params
+	.long	0x24d	# key (FxPresetTable[key] is this record)
+
+FxPreset_Deep20_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	100, 100, 200, 200, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 13, 64, 80, 0xffff
+
+FxPreset_Deep20_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Deep20     "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Deep20_2_Params
+	.long	0x34d	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal17_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 80, 160, 160, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 13, 54, 80, 0xffff
+
+FxPreset_Normal17_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal17    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Normal17_2_Params
+	.long	0x84d	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal18_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 40, 80, 80, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 13, 54, 80, 0xffff
+
+FxPreset_Normal18_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal18    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Normal18_2_Params
+	.long	0x94d	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal19_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	60, 60, 120, 120, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 13, 54, 80, 0xffff
+
+FxPreset_Normal19_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal19    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Normal19_2_Params
+	.long	0xa4d	# key (FxPresetTable[key] is this record)
+
+FxPreset_Normal20_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	100, 100, 200, 200, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 13, 54, 80, 0xffff
+
+FxPreset_Normal20_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Normal20    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Normal20_2_Params
+	.long	0xb4d	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow17_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 80, 160, 160, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 13, 44, 80, 0xffff
+
+FxPreset_Shallow17_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow17    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Shallow17_2_Params
+	.long	0x104d	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow18_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 40, 80, 80, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 13, 44, 80, 0xffff
+
+FxPreset_Shallow18_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow18    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Shallow18_2_Params
+	.long	0x114d	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow19_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	60, 60, 120, 120, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 13, 44, 80, 0xffff
+
+FxPreset_Shallow19_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow19    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Shallow19_2_Params
+	.long	0x124d	# key (FxPresetTable[key] is this record)
+
+FxPreset_Shallow20_2_Params:	# the parameters (u16 x 11) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	100, 100, 200, 200, 0xffc4, 0xffb0, 0xffc4, 0xffb0, 13, 44, 80, 0xffff
+
+FxPreset_Shallow20_2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   Shallow20    "
+	.byte	0, 0
+	.word	12, 11, 0	# descriptor index (FxDesc_012, FxDescTable[12]); parameter count
+	.long	FxPreset_Shallow20_2_Params
+	.long	0x134d	# key (FxPresetTable[key] is this record)
+
+FxPreset_Multi1_Params:	# the parameters (u16 x 13) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	136, 272, 408, 544, 0, 30, 60, 99, 0, 0xffe2, 12, 84, 80, 0xffff
+
+FxPreset_Multi1:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Multi1     "
+	.byte	0, 0
+	.word	10, 13, 0	# descriptor index (FxDesc_010, FxDescTable[10]); parameter count
+	.long	FxPreset_Multi1_Params
+	.long	0x51	# key (FxPresetTable[key] is this record)
+
+FxPreset_Multi2_Params:	# the parameters (u16 x 13) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	34, 68, 102, 136, 0, 30, 60, 99, 0, 0xffe2, 12, 84, 80, 0xffff
+
+FxPreset_Multi2:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Multi2     "
+	.byte	0, 0
+	.word	10, 13, 0	# descriptor index (FxDesc_010, FxDescTable[10]); parameter count
+	.long	FxPreset_Multi2_Params
+	.long	0x151	# key (FxPresetTable[key] is this record)
+
+FxPreset_Multi3_Params:	# the parameters (u16 x 13) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	34, 68, 102, 136, 99, 60, 30, 0, 0, 0xffe2, 12, 84, 80, 0xffff
+
+FxPreset_Multi3:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Multi3     "
+	.byte	0, 0
+	.word	10, 13, 0	# descriptor index (FxDesc_010, FxDescTable[10]); parameter count
+	.long	FxPreset_Multi3_Params
+	.long	0x251	# key (FxPresetTable[key] is this record)
+
+FxPreset_Multi4_Params:	# the parameters (u16 x 13) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	34, 68, 102, 136, 0, 60, 30, 99, 0, 0xffe2, 12, 84, 80, 0xffff
+
+FxPreset_Multi4:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Multi4     "
+	.byte	0, 0
+	.word	10, 13, 0	# descriptor index (FxDesc_010, FxDescTable[10]); parameter count
+	.long	FxPreset_Multi4_Params
+	.long	0x351	# key (FxPresetTable[key] is this record)
+
+FxPreset_Multi5_Params:	# the parameters (u16 x 13) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	34, 68, 102, 136, 99, 30, 60, 0, 0, 0xffe2, 12, 84, 80, 0xffff
+
+FxPreset_Multi5:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Multi5     "
+	.byte	0, 0
+	.word	10, 13, 0	# descriptor index (FxDesc_010, FxDescTable[10]); parameter count
+	.long	FxPreset_Multi5_Params
+	.long	0x451	# key (FxPresetTable[key] is this record)
+
+FxPreset_Multi6_Params:	# the parameters (u16 x 13) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	68, 136, 204, 272, 0, 60, 30, 99, 0, 0xffe2, 12, 84, 80, 0xffff
+
+FxPreset_Multi6:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Multi6     "
+	.byte	0, 0
+	.word	10, 13, 0	# descriptor index (FxDesc_010, FxDescTable[10]); parameter count
+	.long	FxPreset_Multi6_Params
+	.long	0x551	# key (FxPresetTable[key] is this record)
+
+FxPreset_Multi7_Params:	# the parameters (u16 x 13) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	68, 136, 204, 272, 99, 30, 60, 0, 0, 0xffe2, 12, 84, 80, 0xffff
+
+FxPreset_Multi7:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Multi7     "
+	.byte	0, 0
+	.word	10, 13, 0	# descriptor index (FxDesc_010, FxDescTable[10]); parameter count
+	.long	FxPreset_Multi7_Params
+	.long	0x651	# key (FxPresetTable[key] is this record)
+
+FxPreset_Multi8_Params:	# the parameters (u16 x 13) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	68, 136, 204, 272, 99, 30, 60, 0, 0xffd8, 0xffc4, 12, 84, 80, 0xffff
+
+FxPreset_Multi8:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Multi8     "
+	.byte	0, 0
+	.word	10, 13, 0	# descriptor index (FxDesc_010, FxDescTable[10]); parameter count
+	.long	FxPreset_Multi8_Params
+	.long	0x751	# key (FxPresetTable[key] is this record)
+
+FxPreset_Delay_Chorus_Params:	# the parameters (u16 x 13) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	20, 300, 300, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 50, 40, 6, 0, 84, 80, 0xffff
+
+FxPreset_Delay_Chorus:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"  Delay+Chorus  "
+	.byte	0, 0
+	.word	64, 13, 0	# descriptor index (FxDesc_064, FxDescTable[64]); parameter count
+	.long	FxPreset_Delay_Chorus_Params
+	.long	0x52	# key (FxPresetTable[key] is this record)
+
+FxPreset_Delay_Flanger_Params:	# the parameters (u16 x 16) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	20, 300, 300, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 80, 80, 2, 60, 50, 180, 0, 84, 80
+
+FxPreset_Delay_Flanger:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Delay+Flanger  "
+	.byte	0, 0
+	.word	66, 16, 0	# descriptor index (FxDesc_066, FxDescTable[66]); parameter count
+	.long	FxPreset_Delay_Flanger_Params
+	.long	0x2052	# key (FxPresetTable[key] is this record)
+
+FxPreset_Delay_Vibrato_Params:	# the parameters (u16 x 13) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	20, 300, 300, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 40, 6, 90, 0, 84, 80, 0xffff
+
+FxPreset_Delay_Vibrato:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Delay+Vibrato  "
+	.byte	0, 0
+	.word	67, 13, 0	# descriptor index (FxDesc_067, FxDescTable[67]); parameter count
+	.long	FxPreset_Delay_Vibrato_Params
+	.long	0x53	# key (FxPresetTable[key] is this record)
+
+FxPreset_Delay_Phaser_Params:	# the parameters (u16 x 16) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	20, 300, 300, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 80, 80, 4, 60, 50, 180, 0, 84, 80
+
+FxPreset_Delay_Phaser:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"  Delay+Phaser  "
+	.byte	0, 0
+	.word	68, 16, 0	# descriptor index (FxDesc_068, FxDescTable[68]); parameter count
+	.long	FxPreset_Delay_Phaser_Params
+	.long	0x2053	# key (FxPresetTable[key] is this record)
+
+FxPreset_Autowah_Delay_Params:	# the parameters (u16 x 12) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	2, 0, 99, 20, 300, 300, 0xffd8, 0xffc4, 0xffd8, 0xffc4, 99, 80
+
+FxPreset_Autowah_Delay:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Autowah+Delay  "
+	.byte	0, 0
+	.word	70, 12, 0	# descriptor index (FxDesc_070, FxDescTable[70]); parameter count
+	.long	FxPreset_Autowah_Delay_Params
+	.long	0x54	# key (FxPresetTable[key] is this record)
+
+FxPreset_Comp_Dst_Delay_Params:	# the parameters (u16 x 15) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	14, 28, 10, 10, 20, 77, 12, 300, 300, 0xffc4, 0xffd8, 0xffc4, 0xffd8, 84, 80, 0xffff
+
+FxPreset_Comp_Dst_Delay:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Comp+Dst+Delay "
+	.byte	0, 0
+	.word	80, 15, 0	# descriptor index (FxDesc_080, FxDescTable[80]); parameter count
+	.long	FxPreset_Comp_Dst_Delay_Params
+	.long	0x55	# key (FxPresetTable[key] is this record)
+
+FxPreset_Comp_Ovd_Delay_Params:	# the parameters (u16 x 15) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	14, 28, 10, 10, 20, 77, 12, 300, 300, 0xffc4, 0xffd8, 0xffc4, 0xffd8, 84, 80, 0xffff
+
+FxPreset_Comp_Ovd_Delay:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Comp+Ovd+Delay "
+	.byte	0, 0
+	.word	81, 15, 0	# descriptor index (FxDesc_081, FxDescTable[81]); parameter count
+	.long	FxPreset_Comp_Ovd_Delay_Params
+	.long	0x2055	# key (FxPresetTable[key] is this record)
+
+FxPreset_Room_Params:	# the parameters (u16 x 2) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	40, 60
+
+FxPreset_Room:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"      Room      "
+	.byte	0, 0
+	.word	88, 2, 0	# descriptor index (FxDesc_088, FxDescTable[88]); parameter count
+	.long	FxPreset_Room_Params
+	.long	0x5b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Karaoke_Params:	# the parameters (u16 x 2) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	47, 60
+
+FxPreset_Karaoke:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Karaoke     "
+	.byte	0, 0
+	.word	89, 2, 0	# descriptor index (FxDesc_089, FxDescTable[89]); parameter count
+	.long	FxPreset_Karaoke_Params
+	.long	0x15b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Stage_Params:	# the parameters (u16 x 2) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	55, 60
+
+FxPreset_Stage:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Stage      "
+	.byte	0, 0
+	.word	90, 2, 0	# descriptor index (FxDesc_090, FxDescTable[90]); parameter count
+	.long	FxPreset_Stage_Params
+	.long	0x25b	# key (FxPresetTable[key] is this record)
+
+FxPreset_Cave_Params:	# the parameters (u16 x 2) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	47, 60
+
+FxPreset_Cave:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"      Cave      "
+	.byte	0, 0
+	.word	91, 2, 0	# descriptor index (FxDesc_091, FxDescTable[91]); parameter count
+	.long	FxPreset_Cave_Params
+	.long	0x35b	# key (FxPresetTable[key] is this record)
+
+FxPreset_No_effect_Params:	# the parameters (u16 x 0) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	0, 0
+
+FxPreset_No_effect:	# FX preset record (FxPresetGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"   No effect    "
+	.byte	0, 0
+	.word	0, 0, 0	# descriptor index (FxDesc_000, FxDescTable[0]); parameter count
+	.long	FxPreset_No_effect_Params
+	.long	0x206f	# key (FxPresetTable[key] is this record)
+
+FxPreset_Chorus_Params:	# the parameters (u16 x 3) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	30, 6, 84, 0xffff
+
+FxPreset_Chorus:	# FX preset record (FxPresetGet / FxPresetVarGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Chorus     "
+	.byte	0, 0
+	.word	112, 3, 0	# descriptor index (FxDesc_112, FxDescTable[112]); parameter count
+	.long	FxPreset_Chorus_Params
+	.long	0xc0	# key (FxPresetVarTable[key] is this record)
+
+FxPreset_Flanger_2_Params:	# the parameters (u16 x 5) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 2, 60, 0, 84, 0xffff
+
+FxPreset_Flanger_2:	# FX preset record (FxPresetGet / FxPresetVarGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Flanger     "
+	.byte	0, 0
+	.word	113, 5, 0	# descriptor index (FxDesc_113, FxDescTable[113]); parameter count
+	.long	FxPreset_Flanger_2_Params
+	.long	0x1c0	# key (FxPresetVarTable[key] is this record)
+
+FxPreset_Phaser_Params:	# the parameters (u16 x 5) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	80, 4, 60, 99, 84, 0xffff
+
+FxPreset_Phaser:	# FX preset record (FxPresetGet / FxPresetVarGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Phaser     "
+	.byte	0, 0
+	.word	114, 5, 0	# descriptor index (FxDesc_114, FxDescTable[114]); parameter count
+	.long	FxPreset_Phaser_Params
+	.long	0x2c0	# key (FxPresetVarTable[key] is this record)
+
+FxPreset_Delay1_Params:	# the parameters (u16 x 5) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	150, 150, 0xffc4, 0xffc4, 60, 0xffff
+
+FxPreset_Delay1:	# FX preset record (FxPresetGet / FxPresetVarGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Delay1     "
+	.byte	0, 0
+	.word	115, 5, 0	# descriptor index (FxDesc_115, FxDescTable[115]); parameter count
+	.long	FxPreset_Delay1_Params
+	.long	0x4c0	# key (FxPresetVarTable[key] is this record)
+
+FxPreset_Delay2_Params:	# the parameters (u16 x 5) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	150, 150, 0xffc4, 0xffc4, 60, 0xffff
+
+FxPreset_Delay2:	# FX preset record (FxPresetGet / FxPresetVarGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     Delay2     "
+	.byte	0, 0
+	.word	116, 5, 0	# descriptor index (FxDesc_116, FxDescTable[116]); parameter count
+	.long	FxPreset_Delay2_Params
+	.long	0x5c0	# key (FxPresetVarTable[key] is this record)
+
+FxPreset_Exciter_Params:	# the parameters (u16 x 3) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	10, 36, 99, 0xffff
+
+FxPreset_Exciter:	# FX preset record (FxPresetGet / FxPresetVarGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"    Exciter     "
+	.byte	0, 0
+	.word	117, 3, 0	# descriptor index (FxDesc_117, FxDescTable[117]); parameter count
+	.long	FxPreset_Exciter_Params
+	.long	0x6c0	# key (FxPresetVarTable[key] is this record)
+
+FxPreset_Talking_cat_Params:	# the parameters (u16 x 5) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	75, 2, 0, 99, 99, 0xffff
+
+FxPreset_Talking_cat:	# FX preset record (FxPresetGet / FxPresetVarGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"  Talking cat   "
+	.byte	0, 0
+	.word	118, 5, 0	# descriptor index (FxDesc_118, FxDescTable[118]); parameter count
+	.long	FxPreset_Talking_cat_Params
+	.long	0x7c0	# key (FxPresetVarTable[key] is this record)
+
+FxPreset_Ring_modulator_Params:	# the parameters (u16 x 2) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	66, 99
+
+FxPreset_Ring_modulator:	# FX preset record (FxPresetGet / FxPresetVarGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Ring modulator "
+	.byte	0, 0
+	.word	119, 2, 0	# descriptor index (FxDesc_119, FxDescTable[119]); parameter count
+	.long	FxPreset_Ring_modulator_Params
+	.long	0x8c0	# key (FxPresetVarTable[key] is this record)
+
+FxPreset_Pitch_shifter1_Params:	# the parameters (u16 x 2) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	11, 84
+
+FxPreset_Pitch_shifter1:	# FX preset record (FxPresetGet / FxPresetVarGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Pitch shifter1 "
+	.byte	0, 0
+	.word	120, 2, 0	# descriptor index (FxDesc_120, FxDescTable[120]); parameter count
+	.long	FxPreset_Pitch_shifter1_Params
+	.long	0x9c0	# key (FxPresetVarTable[key] is this record)
+
+FxPreset_Pitch_shifter2_Params:	# the parameters (u16 x 3) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	11, 90, 84, 0xffff
+
+FxPreset_Pitch_shifter2:	# FX preset record (FxPresetGet / FxPresetVarGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Pitch shifter2 "
+	.byte	0, 0
+	.word	125, 3, 0	# descriptor index (FxDesc_125, FxDescTable[125]); parameter count
+	.long	FxPreset_Pitch_shifter2_Params
+	.long	0xac0	# key (FxPresetVarTable[key] is this record)
+
+FxPreset_Voice_changer1_Params:	# the parameters (u16 x 1) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	84, 0xffff
+
+FxPreset_Voice_changer1:	# FX preset record (FxPresetGet / FxPresetVarGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Voice changer1 "
+	.byte	0, 0
+	.word	126, 1, 0	# descriptor index (FxDesc_126, FxDescTable[126]); parameter count
+	.long	FxPreset_Voice_changer1_Params
+	.long	0xbc0	# key (FxPresetVarTable[key] is this record)
+
+FxPreset_Voice_changer2_Params:	# the parameters (u16 x 1) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	84, 0xffff
+
+FxPreset_Voice_changer2:	# FX preset record (FxPresetGet / FxPresetVarGet): name, descriptor index, parameter count, parameters, key
+	.ascii	" Voice changer2 "
+	.byte	0, 0
+	.word	127, 1, 0	# descriptor index (FxDesc_127, FxDescTable[127]); parameter count
+	.long	FxPreset_Voice_changer2_Params
+	.long	0xcc0	# key (FxPresetVarTable[key] is this record)
+
+FxPreset_2_Band_Params:	# the parameters (u16 x 4) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	14, 24, 14, 24
+
+FxPreset_2_Band:	# FX preset record (FxPresetGet / FxPresetVarGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"     2 Band     "
+	.byte	0, 0
+	.word	79, 4, 0	# descriptor index (FxDesc_079, FxDescTable[79]); parameter count
+	.long	FxPreset_2_Band_Params
+	.long	0x10c0	# key (FxPresetVarTable[key] is this record)
+
+FxPreset_String_Resonance_Params:	# the parameters (u16 x 3) of the preset after them; 0xFFFF pads to 4 bytes
+	.word	50, 0, 0, 0xffff
+
+FxPreset_String_Resonance:	# FX preset record (FxPresetGet / FxPresetVarGet): name, descriptor index, parameter count, parameters, key
+	.ascii	"String Resonance"
+	.byte	0, 0
+	.word	63, 3, 0	# descriptor index (FxDesc_063, FxDescTable[63]); parameter count
+	.long	FxPreset_String_Resonance_Params
+	.long	0x20c0	# key (FxPresetVarTable[key] is this record)
 
 FxDesc_000_Params:	# the 1 parameter records of FxDesc_000 (FX_PARAM; FxParamGet) -- its count is 0: no routine reads this one
 	FX_PARAM	"ETC ", 16, max=99, variant=0x00
@@ -29928,7 +33961,7 @@ Str_L_7:	.asciz "L"
 Str_M_7:	.asciz "M"
 Str_N_5:	.asciz "N"
 Str_O_5:	.asciz "O"
-Str_P_14:	.asciz "P"
+Str_P_15:	.asciz "P"
 Str_Q_6:	.asciz "Q"
 Str_R_5:	.asciz "R"
 Str_S_5:	.asciz "S"
@@ -30902,7 +34935,7 @@ Str_L_6:	.asciz "L"
 Str_M_6:	.asciz "M"
 Str_N_4:	.asciz "N"
 Str_O_4:	.asciz "O"
-Str_P_13:	.asciz "P"
+Str_P_14:	.asciz "P"
 Str_Q_5:	.asciz "Q"
 Str_R_4:	.asciz "R"
 Str_S_4:	.asciz "S"
@@ -32143,13 +36176,13 @@ Str_TT_NAMING:	.asciz "TT_NAMING"
 	.align	4, 0xFF	# pad after Str_TT_NAMING
 Str_ABC_123:	.asciz "ABC...123..."
 Str_abc_123:	.asciz "abc...123..."
-Str_empty_698:	.asciz " !#$%&?.... "
-	.align	4, 0xFF	# pad after Str_empty_698
+Str_empty_656:	.asciz " !#$%&?.... "
+	.align	4, 0xFF	# pad after Str_empty_656
 
 AcNamingWindowProc_Ld27_Table:
 	.long	Str_ABC_123
 	.long	Str_abc_123
-	.long	Str_empty_698
+	.long	Str_empty_656
 
 Str_A_26:	.asciz "A"
 Str_B_11:	.asciz "B"
@@ -32166,7 +36199,7 @@ Str_L_5:	.asciz "L"
 Str_M_5:	.asciz "M"
 Str_N_3:	.asciz "N"
 Str_O_3:	.asciz "O"
-Str_P_12:	.asciz "P"
+Str_P_13:	.asciz "P"
 Str_Q_4:	.asciz "Q"
 Str_R_3:	.asciz "R"
 Str_S_3:	.asciz "S"
@@ -32177,7 +36210,7 @@ Str_W_3:	.asciz "W"
 Str_X_7:	.asciz "X"
 Str_Y_4:	.asciz "Y"
 Str_Z_3:	.asciz "Z"
-Str_empty_697:	.asciz "_"
+Str_empty_655:	.asciz "_"
 Str_0_25:	.asciz "0"
 Str_1_34:	.asciz "1"
 Str_2_34:	.asciz "2"
@@ -32209,7 +36242,7 @@ ptrs_4844F910:
 	.long	Str_M_5
 	.long	Str_N_3
 	.long	Str_O_3
-	.long	Str_P_12
+	.long	Str_P_13
 	.long	Str_Q_4
 	.long	Str_R_3
 	.long	Str_S_3
@@ -32220,7 +36253,7 @@ ptrs_4844F910:
 	.long	Str_X_7
 	.long	Str_Y_4
 	.long	Str_Z_3
-	.long	Str_empty_697
+	.long	Str_empty_655
 	.long	Str_0_25
 	.long	Str_1_34
 	.long	Str_2_34
@@ -32260,7 +36293,7 @@ Str_w_4:	.asciz "w"
 Str_x_6:	.asciz "x"
 Str_y_3:	.asciz "y"
 Str_z_2:	.asciz "z"
-Str_empty_696:	.asciz "_"
+Str_empty_654:	.asciz "_"
 Str_0_24:	.asciz "0"
 Str_1_33:	.asciz "1"
 Str_2_33:	.asciz "2"
@@ -32303,7 +36336,7 @@ ptrs_4844F9FC:
 	.long	Str_x_6
 	.long	Str_y_3
 	.long	Str_z_2
-	.long	Str_empty_696
+	.long	Str_empty_654
 	.long	Str_0_24
 	.long	Str_1_33
 	.long	Str_2_33
@@ -32317,80 +36350,79 @@ ptrs_4844F9FC:
 	.long	Str_SPC
 	.long	data_4844F9FA
 
-Str_text:	.asciz "!"
-Str_empty_695:	.asciz "#"
-Str_empty_694:	.asciz "$"
-Str_empty_693:	.asciz "%"
-Str_empty_692:	.asciz "&"
-Str_empty_691:	.asciz "?"
-Str_40_3:	.asciz "~40"
-Str_5c_2:	.asciz "~5c"
-Str_empty_690:	.asciz "^"
-Str_empty_689:	.asciz "|"
-Str_22_2:	.asciz "~22"
-Str_27_2:	.asciz "~27"
-Str_empty_688:	.asciz "`"
-Str_empty_687:	.asciz ","
-Str_empty_686:	.asciz "."
-Str_empty_685:	.asciz ":"
-Str_empty_684:	.asciz ";"
-Str_empty_683:	.asciz "+"
-Str_empty_682:	.asciz "-"
-Str_empty_681:	.asciz "*"
-Str_empty_680:	.asciz "/"
-Str_empty_679:	.asciz "="
-Str_8b_2:	.asciz "~8b"
-Str_8d_2:	.asciz "~8d"
-Str_empty_678:	.asciz "("
-Str_empty_677:	.asciz ")"
-Str_empty_676:	.asciz "<"
-Str_empty_675:	.asciz ">"
-Str_empty_674:	.asciz "["
-Str_empty_673:	.asciz "]"
-Str_empty_672:	.asciz "{"
-Str_empty_671:	.asciz "}"
-data_4844FAE4:
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x04FAE4, 0x04FAE8
+Str_text_2:	.asciz "!"
+Str_text_3:	.asciz "#"
+Str_text_4:	.asciz "$"
+Str_text_5:	.asciz "%"
+Str_text_6:	.asciz "&"
+Str_text_7:	.asciz "?"
+Str_40:	.asciz "~40"
+Str_5c:	.asciz "~5c"
+Str_text_8:	.asciz "^"
+Str_text_9:	.asciz "|"
+Str_22:	.asciz "~22"
+Str_27:	.asciz "~27"
+Str_text_10:	.asciz "`"
+Str_text_11:	.asciz ","
+Str_text_12:	.asciz "."
+Str_text_13:	.asciz ":"
+Str_text_14:	.asciz ";"
+Str_text_15:	.asciz "+"
+Str_text_16:	.asciz "-"
+Str_text_17:	.asciz "*"
+Str_text_18:	.asciz "/"
+Str_text_19:	.asciz "="
+Str_8b:	.asciz "~8b"
+Str_8d:	.asciz "~8d"
+Str_text_20:	.asciz "("
+Str_text_21:	.asciz ")"
+Str_text_22:	.asciz "<"
+Str_text_23:	.asciz ">"
+Str_text_24:	.asciz "["
+Str_text_25:	.asciz "]"
+Str_text_26:	.asciz "{"
+Str_text_27:	.asciz "}"
+Str_text_28:	.asciz ""
+	.align	4, 0xFF	# pad after Str_text_28
 
-ptrs_4844FAE8:
-	.long	Str_text
-	.long	Str_empty_695
-	.long	Str_empty_694
-	.long	Str_empty_693
-	.long	Str_empty_692
-	.long	Str_empty_691
-	.long	Str_40_3
-	.long	Str_5c_2
-	.long	Str_empty_690
-	.long	Str_empty_689
-	.long	Str_22_2
-	.long	Str_27_2
-	.long	Str_empty_688
-	.long	Str_empty_687
-	.long	Str_empty_686
-	.long	Str_empty_685
-	.long	Str_empty_684
-	.long	Str_empty_683
-	.long	Str_empty_682
-	.long	Str_empty_681
-	.long	Str_empty_680
-	.long	Str_empty_679
-	.long	Str_8b_2
-	.long	Str_8d_2
-	.long	Str_empty_678
-	.long	Str_empty_677
-	.long	Str_empty_676
-	.long	Str_empty_675
-	.long	Str_empty_674
-	.long	Str_empty_673
-	.long	Str_empty_672
-	.long	Str_empty_671
-	.long	data_4844FAE4
+AcNamingWindowProc_Leea_Table:
+	.long	Str_text_2
+	.long	Str_text_3
+	.long	Str_text_4
+	.long	Str_text_5
+	.long	Str_text_6
+	.long	Str_text_7
+	.long	Str_40
+	.long	Str_5c
+	.long	Str_text_8
+	.long	Str_text_9
+	.long	Str_22
+	.long	Str_27
+	.long	Str_text_10
+	.long	Str_text_11
+	.long	Str_text_12
+	.long	Str_text_13
+	.long	Str_text_14
+	.long	Str_text_15
+	.long	Str_text_16
+	.long	Str_text_17
+	.long	Str_text_18
+	.long	Str_text_19
+	.long	Str_8b
+	.long	Str_8d
+	.long	Str_text_20
+	.long	Str_text_21
+	.long	Str_text_22
+	.long	Str_text_23
+	.long	Str_text_24
+	.long	Str_text_25
+	.long	Str_text_26
+	.long	Str_text_27
+	.long	Str_text_28
 AcNamingWindowProc_L31f_Table:
 	.long	ptrs_4844F910
 	.long	ptrs_4844F9FC
-	.long	ptrs_4844FAE8
+	.long	AcNamingWindowProc_Leea_Table
 
 AcNamingWindowProc_L4fe_Table:	# 8 x u16, 31..95; read by AcNamingWindowProc_L4fe 0x4864AD75: `movhu	(d1, a0), d1`; AcNamingWindowProc_L782 0x4864AFF9: `movhu	(d2, a0), d1` ...
 	tab_u16	37, 37, 31, 36, 36, 31, 32, 95
@@ -32469,7 +36501,7 @@ Str_L_4:	.asciz "L"
 Str_M_2:	.asciz "M"
 Str_N_2:	.asciz "N"
 Str_O_2:	.asciz "O"
-Str_P_11:	.asciz "P"
+Str_P_12:	.asciz "P"
 Str_Q_3:	.asciz "Q"
 Str_R_2:	.asciz "R"
 Str_S_2:	.asciz "S"
@@ -32497,7 +36529,7 @@ ptrs_4844FC60:
 	.long	Str_M_2
 	.long	Str_N_2
 	.long	Str_O_2
-	.long	Str_P_11
+	.long	Str_P_12
 	.long	Str_Q_3
 	.long	Str_R_2
 	.long	Str_S_2
@@ -32524,7 +36556,7 @@ Str_L_3:	.asciz "L"
 Str_M:	.asciz "M"
 Str_N:	.asciz "N"
 Str_O:	.asciz "O"
-Str_P_10:	.asciz "P"
+Str_P_11:	.asciz "P"
 Str_Q_2:	.asciz "Q"
 Str_R:	.asciz "R"
 Str_S:	.asciz "S"
@@ -32552,7 +36584,7 @@ ptrs_4844FCFC:
 	.long	Str_M
 	.long	Str_N
 	.long	Str_O
-	.long	Str_P_10
+	.long	Str_P_11
 	.long	Str_Q_2
 	.long	Str_R
 	.long	Str_S
@@ -32587,7 +36619,7 @@ data_4844FD70:
 data_4844FD71:
 	.space	1, 0x00
 
-Str_empty_670:	.asciz "_"
+Str_empty_653:	.asciz "_"
 Str_0_19:	.asciz "0"
 Str_1_31:	.asciz "1"
 Str_2_32:	.asciz "2"
@@ -32617,7 +36649,7 @@ ptrs_4844FD8C:
 	.long	data_4844FD6F
 	.long	data_4844FD70
 	.long	data_4844FD71
-	.long	Str_empty_670
+	.long	Str_empty_653
 	.long	Str_0_19
 	.long	Str_1_31
 	.long	Str_2_32
@@ -32630,22 +36662,22 @@ ptrs_4844FD8C:
 	.long	Str_9_4
 	.long	data_4844FD88
 
-Str_empty_669:	.asciz "!"
-Str_empty_668:	.asciz "#"
-Str_empty_667:	.asciz "$"
-Str_empty_666:	.asciz "%"
-Str_empty_665:	.asciz "&"
-Str_empty_664:	.asciz "?"
-Str_40_2:	.asciz "~40"
-Str_5c:	.asciz "~5c"
-Str_empty_663:	.asciz "^"
-Str_22:	.asciz "~22"
-Str_27:	.asciz "~27"
-Str_empty_662:	.asciz "`"
+Str_empty_652:	.asciz "!"
+Str_empty_651:	.asciz "#"
+Str_empty_650:	.asciz "$"
+Str_empty_649:	.asciz "%"
+Str_empty_648:	.asciz "&"
+Str_empty_647:	.asciz "?"
+Str_40_3:	.asciz "~40"
+Str_5c_2:	.asciz "~5c"
+Str_empty_646:	.asciz "^"
+Str_22_2:	.asciz "~22"
+Str_27_2:	.asciz "~27"
+Str_empty_645:	.asciz "`"
 data_4844FE14:
 	.space	1, 0x00
-Str_empty_661:	.asciz " "
-Str_empty_660:	.asciz "_"
+Str_empty_644:	.asciz " "
+Str_empty_643:	.asciz "_"
 Str_0_18:	.asciz "0"
 Str_1_30:	.asciz "1"
 Str_2_31:	.asciz "2"
@@ -32663,21 +36695,21 @@ data_4844FE2E:
 .incbin_range "baserom/kn2400_program.rom", 0x04FE2E, 0x04FE30
 
 ptrs_4844FE30:
-	.long	Str_empty_669
-	.long	Str_empty_668
-	.long	Str_empty_667
-	.long	Str_empty_666
-	.long	Str_empty_665
-	.long	Str_empty_664
-	.long	Str_40_2
-	.long	Str_5c
-	.long	Str_empty_663
-	.long	Str_22
-	.long	Str_27
-	.long	Str_empty_662
+	.long	Str_empty_652
+	.long	Str_empty_651
+	.long	Str_empty_650
+	.long	Str_empty_649
+	.long	Str_empty_648
+	.long	Str_empty_647
+	.long	Str_40_3
+	.long	Str_5c_2
+	.long	Str_empty_646
+	.long	Str_22_2
+	.long	Str_27_2
+	.long	Str_empty_645
 	.long	data_4844FE14
-	.long	Str_empty_661
-	.long	Str_empty_660
+	.long	Str_empty_644
+	.long	Str_empty_643
 	.long	Str_0_18
 	.long	Str_1_30
 	.long	Str_2_31
@@ -32691,15 +36723,15 @@ ptrs_4844FE30:
 	.long	data_4844FE2D
 	.long	data_4844FE2E
 
-Str_empty_659:	.asciz "("
-Str_empty_658:	.asciz ")"
-Str_empty_657:	.asciz "<"
-Str_empty_656:	.asciz ">"
-Str_empty_655:	.asciz "["
-Str_empty_654:	.asciz "]"
-Str_empty_653:	.asciz "{"
-Str_empty_652:	.asciz "}"
-Str_empty_651:	.asciz "|"
+Str_empty_642:	.asciz "("
+Str_empty_641:	.asciz ")"
+Str_empty_640:	.asciz "<"
+Str_empty_639:	.asciz ">"
+Str_empty_638:	.asciz "["
+Str_empty_637:	.asciz "]"
+Str_empty_636:	.asciz "{"
+Str_empty_635:	.asciz "}"
+Str_empty_634:	.asciz "|"
 data_4844FEAE:
 	.space	1, 0x00
 data_4844FEAF:
@@ -32708,17 +36740,17 @@ data_4844FEB0:
 	.space	1, 0x00
 data_4844FEB1:
 	.space	1, 0x00
-Str_empty_650:	.asciz ","
-Str_empty_649:	.asciz "."
-Str_empty_648:	.asciz ":"
-Str_empty_647:	.asciz ";"
-Str_empty_646:	.asciz "+"
-Str_empty_645:	.asciz "-"
-Str_empty_644:	.asciz "*"
-Str_empty_643:	.asciz "/"
-Str_empty_642:	.asciz "="
-Str_8b:	.asciz "~8b"
-Str_8d:	.asciz "~8d"
+Str_empty_633:	.asciz ","
+Str_empty_632:	.asciz "."
+Str_empty_631:	.asciz ":"
+Str_empty_630:	.asciz ";"
+Str_empty_629:	.asciz "+"
+Str_empty_628:	.asciz "-"
+Str_empty_627:	.asciz "*"
+Str_empty_626:	.asciz "/"
+Str_empty_625:	.asciz "="
+Str_8b_2:	.asciz "~8b"
+Str_8d_2:	.asciz "~8d"
 data_4844FECC:
 	.space	1, 0x00
 data_4844FECD:
@@ -32726,30 +36758,30 @@ data_4844FECD:
 .incbin_range "baserom/kn2400_program.rom", 0x04FECD, 0x04FED0
 
 ptrs_4844FED0:
-	.long	Str_empty_659
-	.long	Str_empty_658
-	.long	Str_empty_657
-	.long	Str_empty_656
-	.long	Str_empty_655
-	.long	Str_empty_654
-	.long	Str_empty_653
-	.long	Str_empty_652
-	.long	Str_empty_651
+	.long	Str_empty_642
+	.long	Str_empty_641
+	.long	Str_empty_640
+	.long	Str_empty_639
+	.long	Str_empty_638
+	.long	Str_empty_637
+	.long	Str_empty_636
+	.long	Str_empty_635
+	.long	Str_empty_634
 	.long	data_4844FEAE
 	.long	data_4844FEAF
 	.long	data_4844FEB0
 	.long	data_4844FEB1
-	.long	Str_empty_650
-	.long	Str_empty_649
-	.long	Str_empty_648
-	.long	Str_empty_647
-	.long	Str_empty_646
-	.long	Str_empty_645
-	.long	Str_empty_644
-	.long	Str_empty_643
-	.long	Str_empty_642
-	.long	Str_8b
-	.long	Str_8d
+	.long	Str_empty_633
+	.long	Str_empty_632
+	.long	Str_empty_631
+	.long	Str_empty_630
+	.long	Str_empty_629
+	.long	Str_empty_628
+	.long	Str_empty_627
+	.long	Str_empty_626
+	.long	Str_empty_625
+	.long	Str_8b_2
+	.long	Str_8d_2
 	.long	data_4844FECC
 	.long	data_4844FECD
 AcNamingEditSwProc_L3c_Table:
@@ -35970,4042 +40002,3 @@ Str_STEREO:	.asciz "STEREO"
 	.align	4, 0xFF	# pad after Str_STEREO
 
 		AcStrRadioBox	Sdspstereo, super=TtSdseparate, next=Sdspmono, prev=Sdspoff, flag=VF_Const, X=4, Y=73, W=94, H=34, color=CL_WallPattern, index=1, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=Sdspstereo_selected, tag=2, str=Str_STEREO	# str "STEREO"
-
-Str_MONO_x_2:	.asciz "MONO x 2"
-	.align	4, 0xFF	# pad after Str_MONO_x_2
-
-		AcStrRadioBox	Sdspmono, super=TtSdseparate, next=TtSdseparate_Line1, prev=Sdspstereo, flag=VF_Const, X=4, Y=116, W=94, H=34, color=CL_WallPattern, index=1, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=Sdspmono_selected, tag=3, str=Str_MONO_x_2	# str "MONO x 2"
-		VwLine	TtSdseparate_Line1, super=TtSdseparate, next=TtSdseparate_Label_MODE, prev=Sdspmono, flag=VF_Const, X=99, Y=38, W=1, H=102, color=CL_White, linemode=1
-
-Str_MODE:	.asciz "MODE"
-	.align	4, 0xFF	# pad after Str_MODE
-
-		VwLabel	TtSdseparate_Label_MODE, super=TtSdseparate, next=TtSdseparate_Line2, prev=TtSdseparate_Line1, flag=VF_Const, X=110, Y=82, W=24, H=19, str=Str_MODE, font=4, fontcolor=CL_White	# str "MODE"
-		VwLine	TtSdseparate_Line2, super=TtSdseparate, next=TtSdseparate_CatchEvent1, prev=TtSdseparate_Label_MODE, flag=VF_Const, X=99, Y=89, W=10, H=1, color=CL_White, linemode=1
-		IvCatchEvent	TtSdseparate_CatchEvent1, super=TtSdseparate, prev=TtSdseparate_Line2, flag=VF_Const|VF_InvisibleBox, X=106, Y=40, W=16, H=32, func=FN_SeparateOutProc
-
-	Window	Sdspwinmono, sub=Sdspwinmono_IndexWideES1, flag=VF_Const, X=140, Y=28, W=180, H=212, color=CL_WallPattern, index=0xFFFF, parent=Sdspwinmono_parent, child=Sdspwinmono_child
-		AcIndexWideES	Sdspwinmono_IndexWideES1, super=Sdspwinmono, next=Sdsppartmono, flag=VF_Const, X=222, Y=216, W=96, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom16, style=3
-
-Str_OUTPUT_PART_ASSIGN:	.asciz " OUTPUT  |PART ASSIGN|"
-Str_MONO_1_MONO_2:	.asciz "|-|MONO 1|MONO 2|"
-	.align	4, 0xFF	# pad after Str_MONO_1_MONO_2
-
-		AcGridBox	Sdsppartmono, super=Sdspwinmono, next=Sdspwinmono_IndexWideES2, prev=Sdspwinmono_IndexWideES1, flag=VF_Const, X=142, Y=65, W=176, H=148, color=CL_WallPattern, border=BD_3D_UP2, index=5, font=4, fontcolor=CL_White, row=4, col=2, vertline=1, selrow=Sdsppartmono_selrow, selcol=Sdsppartmono_selcol, pcol=Sdsppartmono_pcol, prow=Sdsppartmono_prow, crow=Sdsppartmono_crow, fixedcol=Str_OUTPUT_PART_ASSIGN, fixedrow=Str_MONO_1_MONO_2, func=FN_SpPartMono	# fixedcol " OUTPUT  |PART ASSIGN|"; fixedrow "|-|MONO 1|MONO 2|"
-		AcIndexWideES	Sdspwinmono_IndexWideES2, super=Sdspwinmono, prev=Sdsppartmono, flag=VF_Const, X=142, Y=216, W=76, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom11, style=14
-
-	Window	Sdspwinstereo, sub=Sdspwinstereo_IndexWideES1, flag=VF_Const, X=140, Y=28, W=180, H=212, color=CL_WallPattern, index=0xFFFF, parent=Sdspwinstereo_parent, child=Sdspwinstereo_child
-		AcIndexWideES	Sdspwinstereo_IndexWideES1, super=Sdspwinstereo, next=Sdspwinstereo_Box1, flag=VF_Const, X=142, Y=216, W=176, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom16, style=3
-		VwBox	Sdspwinstereo_Box1, super=Sdspwinstereo, sub=Sdspwinstereo_Label_PART_ASSIGN, prev=Sdspwinstereo_IndexWideES1, flag=VF_Const, X=142, Y=65, W=176, H=148, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_PART_ASSIGN:	.asciz "PART ASSIGN"
-
-			VwLabel	Sdspwinstereo_Label_PART_ASSIGN, super=Sdspwinstereo_Box1, next=Sdsppartstereo, flag=VF_Const, X=198, Y=92, W=63, H=19, str=Str_PART_ASSIGN, font=4, fontcolor=CL_Text	# str "PART ASSIGN"
-
-Str_empty_48:	.asciz ""
-	.align	4, 0xFF	# pad after Str_empty_48
-
-			AcMmmEditBox	Sdsppartstereo, super=Sdspwinstereo_Box1, next=Sdspwinstereo_Line1, prev=Sdspwinstereo_Label_PART_ASSIGN, flag=VF_Const, X=154, Y=158, W=153, H=34, color=CL_WallPattern, index=4, caption=Str_empty_48, font=4, fontcolor=CL_White, length=28, editsw=ES_None, dial=1, selected=Sdsppartstereo_selected, func=FN_SpPartStereo, data=Sdsppartstereo_data	# caption ""
-			VwLine	Sdspwinstereo_Line1, super=Sdspwinstereo_Box1, prev=Sdsppartstereo, flag=VF_Const, X=143, Y=139, W=174, H=1, color=CL_White, linemode=1
-
-	Window	Sdspwinetc, sub=Sdspwinetc_Label_EXPRESSION_PEDAL, flag=VF_Const, X=0, Y=156, W=140, H=82, color=CL_WallPattern, index=0xFFFF, parent=Sdspwinetc_parent, child=Sdspwinetc_child
-
-Str_EXPRESSION_PEDAL:	.asciz "EXPRESSION PEDAL"
-	.align	4, 0xFF	# pad after Str_EXPRESSION_PEDAL
-
-		VwLabel	Sdspwinetc_Label_EXPRESSION_PEDAL, super=Sdspwinetc, next=Sdspwinetc_Label_with_MAIN_OUT, flag=VF_Const, X=20, Y=211, W=66, H=19, str=Str_EXPRESSION_PEDAL, fontcolor=CL_White	# str "EXPRESSION PEDAL"
-
-Str_with_MAIN_OUT:	.asciz "with MAIN OUT"
-	.align	4, 0xFF	# pad after Str_with_MAIN_OUT
-
-		VwLabel	Sdspwinetc_Label_with_MAIN_OUT, super=Sdspwinetc, next=Sdspmainout, prev=Sdspwinetc_Label_EXPRESSION_PEDAL, flag=VF_Const, X=20, Y=168, W=54, H=19, str=Str_with_MAIN_OUT, fontcolor=CL_White	# str "with MAIN OUT"
-
-Str_ON_3:	.asciz "ON"
-Str_OFF_4:	.asciz "OFF"
-	.align	4, 0xFF	# pad after Str_OFF_4
-
-		PsToggleBox	Sdspmainout, super=Sdspwinetc, next=Sdspexpression, prev=Sdspwinetc_Label_with_MAIN_OUT, flag=VF_Const, X=4, Y=165, W=16, H=22, stron=Str_ON_3, stroff=Str_OFF_4, onoff=Sdspmainout_onoff, editsw=ES_Left4	# stron "ON"; stroff "OFF"
-
-Str_ON_4:	.asciz "ON"
-Str_OFF_5:	.asciz "OFF"
-	.align	4, 0xFF	# pad after Str_OFF_5
-
-		PsToggleBox	Sdspexpression, super=Sdspwinetc, prev=Sdspmainout, flag=VF_Const, X=4, Y=208, W=16, H=22, stron=Str_ON_4, stroff=Str_OFF_5, onoff=Sdspexpression_onoff, editsw=ES_Left5	# stron "ON"; stroff "OFF"
-
-Str_APC_REVERB_SETTING_2:	.asciz "APC REVERB SETTING"
-	.align	4, 0xFF	# pad after Str_APC_REVERB_SETTING_2
-
-	TtlScreen	SOUND_TtSdapcrev, sub=SOUND_TtSdapcrev_GridBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_SDMENU, window=SOUND_TtSdapcrev_window, title=Str_APC_REVERB_SETTING_2, icon=230	# title "APC REVERB SETTING"
-
-Str_PART_DEPTH:	.asciz "PART|  DEPTH |"
-Str_ACCOMP1_ACCOMP2_ACCOMP3_ACCOMP4_ACCOMP5:	.asciz "|-|ACCOMP1|ACCOMP2|ACCOMP3|ACCOMP4|ACCOMP5|BASS|DRUM1|DRUM2"
-	.align	4, 0xFF	# pad after Str_ACCOMP1_ACCOMP2_ACCOMP3_ACCOMP4_ACCOMP5
-
-		AcGridBox	SOUND_TtSdapcrev_GridBox1, super=SOUND_TtSdapcrev, next=SOUND_TtSdapcrev_IndexWideES1, flag=VF_Const, X=44, Y=36, W=234, H=174, color=CL_WallPattern, border=BD_3D_UP2, index=10, fontcolor=CL_White, row=10, col=2, vertline=1, selrow=SOUND_TtSdapcrev_GridBox1_selrow, selcol=SOUND_TtSdapcrev_GridBox1_selcol, pcol=SOUND_TtSdapcrev_GridBox1_pcol, prow=SOUND_TtSdapcrev_GridBox1_prow, crow=SOUND_TtSdapcrev_GridBox1_crow, fixedcol=Str_PART_DEPTH, fixedrow=Str_ACCOMP1_ACCOMP2_ACCOMP3_ACCOMP4_ACCOMP5, func=FN_ApcRevFunc	# fixedcol "PART|  DEPTH |"; fixedrow "|-|ACCOMP1|ACCOMP2|ACCOMP3|ACCOMP4|ACCOM"
-		AcIndexWideES	SOUND_TtSdapcrev_IndexWideES1, super=SOUND_TtSdapcrev, next=SOUND_TtSdapcrev_IndexWideES2, prev=SOUND_TtSdapcrev_GridBox1, flag=VF_Const, X=44, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=10, fontcolor=CL_Black, editsw=ES_Bottom2, editsw2=ES_Bottom3, style=14
-		AcIndexWideES	SOUND_TtSdapcrev_IndexWideES2, super=SOUND_TtSdapcrev, next=SOUND_TtSdapcrev_PR6041, prev=SOUND_TtSdapcrev_IndexWideES1, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=11, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
-		IvPR604	SOUND_TtSdapcrev_PR6041, super=SOUND_TtSdapcrev, prev=SOUND_TtSdapcrev_IndexWideES2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32
-
-	Window	ApcRevChkWin, sub=ApcRevChkWin_GridBox1, flag=VF_Const, X=281, Y=29, W=39, H=211, color=CL_WallPattern, index=0xFFFF, parent=ApcRevChkWin_parent, child=ApcRevChkWin_child
-
-Str_DEPTH_4:	.asciz "|DEPTH"
-Str_empty_49:	.asciz "|-| | | | | | | | | |"
-	.align	4, 0xFF	# pad after Str_empty_49
-
-		AcGridBox	ApcRevChkWin_GridBox1, super=ApcRevChkWin, flag=VF_Const, X=268, Y=36, W=52, H=174, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_White, row=10, col=2, selrow=ApcRevChkWin_GridBox1_selrow, selcol=ApcRevChkWin_GridBox1_selcol, pcol=ApcRevChkWin_GridBox1_pcol, prow=ApcRevChkWin_GridBox1_prow, crow=ApcRevChkWin_GridBox1_crow, fixedcol=Str_DEPTH_4, fixedrow=Str_empty_49, func=FN_ApcRevCheck	# fixedcol "|DEPTH"; fixedrow "|-| | | | | | | | | |"
-
-RN_TtSdmenu:	.asciz "TtSdmenu"
-RN_empty_332:	.asciz ""
-RN_empty_333:	.asciz ""
-RN_empty_334:	.asciz ""
-RN_empty_335:	.asciz ""
-RN_empty_336:	.asciz ""
-RN_empty_337:	.asciz ""
-RN_empty_338:	.asciz ""
-RN_empty_339:	.asciz ""
-RN_empty_340:	.asciz ""
-RN_TtSdpart:	.asciz "TtSdpart"
-RN_empty_341:	.asciz ""
-RN_empty_342:	.asciz ""
-RN_empty_343:	.asciz ""
-RN_empty_344:	.asciz ""
-RN_empty_345:	.asciz ""
-RN_empty_346:	.asciz ""
-RN_empty_347:	.asciz ""
-RN_empty_348:	.asciz ""
-RN_empty_349:	.asciz ""
-RN_empty_350:	.asciz ""
-RN_SpsPage1:	.asciz "SpsPage1"
-RN_empty_351:	.asciz ""
-RN_empty_352:	.asciz ""
-RN_empty_353:	.asciz ""
-RN_empty_354:	.asciz ""
-RN_empty_355:	.asciz ""
-RN_empty_356:	.asciz ""
-RN_empty_357:	.asciz ""
-RN_empty_358:	.asciz ""
-RN_empty_359:	.asciz ""
-RN_empty_360:	.asciz ""
-RN_empty_361:	.asciz ""
-RN_empty_362:	.asciz ""
-RN_empty_363:	.asciz ""
-RN_empty_364:	.asciz ""
-RN_empty_365:	.asciz ""
-RN_empty_366:	.asciz ""
-RN_empty_367:	.asciz ""
-RN_empty_368:	.asciz ""
-RN_empty_369:	.asciz ""
-RN_empty_370:	.asciz ""
-RN_empty_371:	.asciz ""
-RN_empty_372:	.asciz ""
-RN_empty_373:	.asciz ""
-RN_empty_374:	.asciz ""
-RN_empty_375:	.asciz ""
-RN_empty_376:	.asciz ""
-RN_empty_377:	.asciz ""
-RN_SpsPage2:	.asciz "SpsPage2"
-RN_empty_378:	.asciz ""
-RN_empty_379:	.asciz ""
-RN_empty_380:	.asciz ""
-RN_empty_381:	.asciz ""
-RN_empty_382:	.asciz ""
-RN_empty_383:	.asciz ""
-RN_empty_384:	.asciz ""
-RN_empty_385:	.asciz ""
-RN_empty_386:	.asciz ""
-RN_empty_387:	.asciz ""
-RN_empty_388:	.asciz ""
-RN_empty_389:	.asciz ""
-RN_empty_390:	.asciz ""
-RN_empty_391:	.asciz ""
-RN_empty_392:	.asciz ""
-RN_empty_393:	.asciz ""
-RN_empty_394:	.asciz ""
-RN_empty_395:	.asciz ""
-RN_empty_396:	.asciz ""
-RN_empty_397:	.asciz ""
-RN_empty_398:	.asciz ""
-RN_SpsPage5:	.asciz "SpsPage5"
-RN_empty_399:	.asciz ""
-RN_empty_400:	.asciz ""
-RN_empty_401:	.asciz ""
-RN_empty_402:	.asciz ""
-RN_empty_403:	.asciz ""
-RN_empty_404:	.asciz ""
-RN_empty_405:	.asciz ""
-RN_empty_406:	.asciz ""
-RN_empty_407:	.asciz ""
-RN_empty_408:	.asciz ""
-RN_empty_409:	.asciz ""
-RN_empty_410:	.asciz ""
-RN_empty_411:	.asciz ""
-RN_empty_412:	.asciz ""
-RN_empty_413:	.asciz ""
-RN_empty_414:	.asciz ""
-RN_empty_415:	.asciz ""
-RN_empty_416:	.asciz ""
-RN_empty_417:	.asciz ""
-RN_empty_418:	.asciz ""
-RN_empty_419:	.asciz ""
-RN_empty_420:	.asciz ""
-RN_empty_421:	.asciz ""
-RN_SpsPage3:	.asciz "SpsPage3"
-RN_empty_422:	.asciz ""
-RN_empty_423:	.asciz ""
-RN_empty_424:	.asciz ""
-RN_empty_425:	.asciz ""
-RN_empty_426:	.asciz ""
-RN_empty_427:	.asciz ""
-RN_empty_428:	.asciz ""
-RN_empty_429:	.asciz ""
-RN_empty_430:	.asciz ""
-RN_empty_431:	.asciz ""
-RN_empty_432:	.asciz ""
-RN_empty_433:	.asciz ""
-RN_empty_434:	.asciz ""
-RN_empty_435:	.asciz ""
-RN_empty_436:	.asciz ""
-RN_empty_437:	.asciz ""
-RN_empty_438:	.asciz ""
-RN_empty_439:	.asciz ""
-RN_empty_440:	.asciz ""
-RN_empty_441:	.asciz ""
-RN_empty_442:	.asciz ""
-RN_empty_443:	.asciz ""
-RN_empty_444:	.asciz ""
-RN_empty_445:	.asciz ""
-RN_empty_446:	.asciz ""
-RN_empty_447:	.asciz ""
-RN_empty_448:	.asciz ""
-RN_empty_449:	.asciz ""
-RN_empty_450:	.asciz ""
-RN_empty_451:	.asciz ""
-RN_empty_452:	.asciz ""
-RN_empty_453:	.asciz ""
-RN_empty_454:	.asciz ""
-RN_empty_455:	.asciz ""
-RN_SpsPage4:	.asciz "SpsPage4"
-RN_empty_456:	.asciz ""
-RN_empty_457:	.asciz ""
-RN_empty_458:	.asciz ""
-RN_empty_459:	.asciz ""
-RN_empty_460:	.asciz ""
-RN_empty_461:	.asciz ""
-RN_empty_462:	.asciz ""
-RN_empty_463:	.asciz ""
-RN_empty_464:	.asciz ""
-RN_empty_465:	.asciz ""
-RN_empty_466:	.asciz ""
-RN_empty_467:	.asciz ""
-RN_empty_468:	.asciz ""
-RN_empty_469:	.asciz ""
-RN_empty_470:	.asciz ""
-RN_empty_471:	.asciz ""
-RN_empty_472:	.asciz ""
-RN_empty_473:	.asciz ""
-RN_empty_474:	.asciz ""
-RN_empty_475:	.asciz ""
-RN_empty_476:	.asciz ""
-RN_empty_477:	.asciz ""
-RN_empty_478:	.asciz ""
-RN_empty_479:	.asciz ""
-RN_empty_480:	.asciz ""
-RN_empty_481:	.asciz ""
-RN_empty_482:	.asciz ""
-RN_empty_483:	.asciz ""
-RN_empty_484:	.asciz ""
-RN_empty_485:	.asciz ""
-RN_empty_486:	.asciz ""
-RN_empty_487:	.asciz ""
-RN_TtSdmtune:	.asciz "TtSdmtune"
-RN_empty_488:	.asciz ""
-RN_empty_489:	.asciz ""
-RN_empty_490:	.asciz ""
-RN_TtSdkeyscl:	.asciz "TtSdkeyscl"
-RN_empty_491:	.asciz ""
-RN_OctTunTemplate:	.asciz "OctTunTemplate"
-RN_empty_492:	.asciz ""
-RN_empty_493:	.asciz ""
-RN_KeyScalingWin:	.asciz "KeyScalingWin"
-RN_empty_494:	.asciz ""
-RN_empty_495:	.asciz ""
-RN_empty_496:	.asciz ""
-RN_empty_497:	.asciz ""
-RN_empty_498:	.asciz ""
-RN_empty_499:	.asciz ""
-RN_empty_500:	.asciz ""
-RN_empty_501:	.asciz ""
-RN_empty_502:	.asciz ""
-RN_empty_503:	.asciz ""
-RN_empty_504:	.asciz ""
-RN_empty_505:	.asciz ""
-RN_empty_506:	.asciz ""
-RN_empty_507:	.asciz ""
-RN_empty_508:	.asciz ""
-RN_empty_509:	.asciz ""
-RN_SpsKsclEditTuning:	.asciz "SpsKsclEditTuning"
-RN_empty_510:	.asciz ""
-RN_SpsKsclEditH:	.asciz "SpsKsclEditH"
-RN_empty_511:	.asciz ""
-RN_SpsKsclEditA:	.asciz "SpsKsclEditA"
-RN_empty_512:	.asciz ""
-RN_SpsKsclEditB:	.asciz "SpsKsclEditB"
-RN_empty_513:	.asciz ""
-RN_SpsKsclEditG:	.asciz "SpsKsclEditG"
-RN_empty_514:	.asciz ""
-RN_SpsKsclEditGis:	.asciz "SpsKsclEditGis"
-RN_empty_515:	.asciz ""
-RN_SpsKsclEditF:	.asciz "SpsKsclEditF"
-RN_empty_516:	.asciz ""
-RN_SpsKsclEditFis:	.asciz "SpsKsclEditFis"
-RN_empty_517:	.asciz ""
-RN_SpsKsclEditE:	.asciz "SpsKsclEditE"
-RN_empty_518:	.asciz ""
-RN_SpsKsclEditD:	.asciz "SpsKsclEditD"
-RN_empty_519:	.asciz ""
-RN_SpsKsclEditEs:	.asciz "SpsKsclEditEs"
-RN_empty_520:	.asciz ""
-RN_empty_521:	.asciz ""
-RN_SpsKsclEditC:	.asciz "SpsKsclEditC"
-RN_empty_522:	.asciz ""
-RN_SpsKsclEditCis:	.asciz "SpsKsclEditCis"
-RN_empty_523:	.asciz ""
-RN_empty_524:	.asciz ""
-RN_empty_525:	.asciz ""
-RN_empty_526:	.asciz ""
-RN_empty_527:	.asciz ""
-RN_empty_528:	.asciz ""
-RN_empty_529:	.asciz ""
-RN_OctTunTemplateWin:	.asciz "OctTunTemplateWin"
-RN_empty_530:	.asciz ""
-RN_empty_531:	.asciz ""
-RN_empty_532:	.asciz ""
-RN_empty_533:	.asciz ""
-RN_empty_534:	.asciz ""
-RN_empty_535:	.asciz ""
-RN_empty_536:	.asciz ""
-RN_empty_537:	.asciz ""
-RN_empty_538:	.asciz ""
-RN_empty_539:	.asciz ""
-RN_empty_540:	.asciz ""
-RN_empty_541:	.asciz ""
-RN_empty_542:	.asciz ""
-RN_empty_543:	.asciz ""
-RN_empty_544:	.asciz ""
-RN_empty_545:	.asciz ""
-RN_empty_546:	.asciz ""
-RN_TtSdmixer:	.asciz "TtSdmixer"
-RN_empty_547:	.asciz ""
-RN_empty_548:	.asciz ""
-RN_empty_549:	.asciz ""
-RN_empty_550:	.asciz ""
-RN_empty_551:	.asciz ""
-RN_empty_552:	.asciz ""
-RN_empty_553:	.asciz ""
-RN_empty_554:	.asciz ""
-RN_empty_555:	.asciz ""
-RN_empty_556:	.asciz ""
-RN_empty_557:	.asciz ""
-RN_empty_558:	.asciz ""
-RN_empty_559:	.asciz ""
-RN_empty_560:	.asciz ""
-RN_empty_561:	.asciz ""
-RN_empty_562:	.asciz ""
-RN_empty_563:	.asciz ""
-RN_ExMixerMenu:	.asciz "ExMixerMenu"
-RN_empty_564:	.asciz ""
-RN_PartMixerEdit:	.asciz "PartMixerEdit"
-RN_empty_565:	.asciz ""
-RN_TtSdtecd:	.asciz "TtSdtecd"
-RN_empty_566:	.asciz ""
-RN_empty_567:	.asciz ""
-RN_empty_568:	.asciz ""
-RN_empty_569:	.asciz ""
-RN_empty_570:	.asciz ""
-RN_empty_571:	.asciz ""
-RN_empty_572:	.asciz ""
-RN_empty_573:	.asciz ""
-RN_TtSqmixer:	.asciz "TtSqmixer"
-RN_TtSdmonitor:	.asciz "TtSdmonitor"
-RN_Sdmonitoron:	.asciz "Sdmonitoron"
-RN_Sdmonitoroff:	.asciz "Sdmonitoroff"
-RN_empty_574:	.asciz ""
-RN_empty_575:	.asciz ""
-RN_empty_576:	.asciz ""
-RN_empty_577:	.asciz ""
-RN_TtSdseparate:	.asciz "TtSdseparate"
-RN_Sdspoff:	.asciz "Sdspoff"
-RN_Sdspstereo:	.asciz "Sdspstereo"
-RN_Sdspmono:	.asciz "Sdspmono"
-RN_empty_578:	.asciz ""
-RN_empty_579:	.asciz ""
-RN_empty_580:	.asciz ""
-RN_empty_581:	.asciz ""
-RN_Sdspwinmono:	.asciz "Sdspwinmono"
-RN_empty_582:	.asciz ""
-RN_Sdsppartmono:	.asciz "Sdsppartmono"
-RN_empty_583:	.asciz ""
-RN_Sdspwinstereo:	.asciz "Sdspwinstereo"
-RN_empty_584:	.asciz ""
-RN_empty_585:	.asciz ""
-RN_empty_586:	.asciz ""
-RN_Sdsppartstereo:	.asciz "Sdsppartstereo"
-RN_empty_587:	.asciz ""
-RN_Sdspwinetc:	.asciz "Sdspwinetc"
-RN_empty_588:	.asciz ""
-RN_empty_589:	.asciz ""
-RN_Sdspmainout:	.asciz "Sdspmainout"
-RN_Sdspexpression:	.asciz "Sdspexpression"
-RN_TtSdapcrev:	.asciz "TtSdapcrev"
-RN_empty_590:	.asciz ""
-RN_empty_591:	.asciz ""
-RN_empty_592:	.asciz ""
-RN_empty_593:	.asciz ""
-RN_ApcRevChkWin:	.asciz "ApcRevChkWin"
-RN_empty_594:	.asciz ""
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x063378, 0x06337C
-Str_OTB_SOUND:	.asciz "OTB_SOUND"
-Str_iapsound:	.asciz "iapsound"
-	.align	4, 0xFF	# pad after Str_iapsound
-Str_MD_SOUND:	.asciz "MD_SOUND"
-	.align	4, 0xFF	# pad after Str_MD_SOUND
-Str_TT_SDMENU:	.asciz "TT_SDMENU"
-	.align	4, 0xFF	# pad after Str_TT_SDMENU
-Str_TT_SDPART:	.asciz "TT_SDPART"
-	.align	4, 0xFF	# pad after Str_TT_SDPART
-Str_TT_SDMTUNE:	.asciz "TT_SDMTUNE"
-	.align	4, 0xFF	# pad after Str_TT_SDMTUNE
-Str_TT_SDKEYSCL:	.asciz "TT_SDKEYSCL"
-Str_TT_SDMIXER:	.asciz "TT_SDMIXER"
-	.align	4, 0xFF	# pad after Str_TT_SDMIXER
-Str_TT_SDTECD:	.asciz "TT_SDTECD"
-	.align	4, 0xFF	# pad after Str_TT_SDTECD
-Str_TT_SQMIXER:	.asciz "TT_SQMIXER"
-	.align	4, 0xFF	# pad after Str_TT_SQMIXER
-Str_TT_SDSEPARATE:	.asciz "TT_SDSEPARATE"
-	.align	4, 0xFF	# pad after Str_TT_SDSEPARATE
-Str_TT_SDMONITOR:	.asciz "TT_SDMONITOR"
-	.align	4, 0xFF	# pad after Str_TT_SDMONITOR
-Str_TT_SDAPCREV:	.asciz "TT_SDAPCREV"
-
-AcSpsMmmEditProc_Table:	# 8 x s16, 19..255; read by AcSpsMmmEditProc_L5c2 0x4864F77C: `movhu	(d0, a0), d2`; AcMixPartSoundProc_L1f6 0x48651429: `movhu	(d0, a0), d0` ...
-	tab_s16	255, 19, 20, 21, 22, 255, 255, 255
-func_4864CD66_entry_L1e_Table:	# 5 x u32, 45072..45136; read by func_4864CD66_entry_L1e 0x4864CD89: `mov	(d1, a2), d0`; func_4864CD66_entry_L32 0x4864CD9D: `mov	(d0, a2), d0`
-	tab_u32	45136, 45120, 45104, 45088, 45072
-	.space	4, 0xFF
-
-Str_OtPt_2:	.asciz "OtPt"
-	.align	4, 0xFF	# pad after Str_OtPt_2
-
-Text_PART_1:	# 9 strings of 10 characters, NUL-terminated
-	.asciz	"  PART 1  "
-	.asciz	"  PART 2  "
-	.asciz	"  PART 3  "
-	.asciz	"  PART 4  "
-	.asciz	"  PART 5  "
-	.asciz	"  PART 6  "
-	.asciz	"  PART 7  "
-	.asciz	"  PART 8  "
-	.asciz	"  PART 9  "
-Text_PART_10:	# 9 strings of 9 characters, NUL-terminated
-	.asciz	" PART 10 "
-	.asciz	" PART 11 "
-	.asciz	" PART 12 "
-	.asciz	" PART 13 "
-	.asciz	" PART 14 "
-	.asciz	" PART 15 "
-	.asciz	" PART 16 "
-	.asciz	" RIGHT 1 "
-	.asciz	" RIGHT 2 "
-Text_LEFT_2:	# 9 strings of 10 characters, NUL-terminated
-	.asciz	"   LEFT   "
-	.asciz	" ACCOMP 1 "
-	.asciz	" ACCOMP 2 "
-	.asciz	" ACCOMP 3 "
-	.asciz	" ACCOMP 4 "
-	.asciz	" ACCOMP 5 "
-	.asciz	"   BASS   "
-	.asciz	"  DRUM 1  "
-	.asciz	"  DRUM 2  "
-data_4846356C:
-# census: opaque -- unknown-dump: 10 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x06356C, 0x063576
-
-Str_R_BASS_2:	.asciz "  R.BASS  "
-Str_PADS_1:	.asciz "  PADS 1  "
-Str_PADS_2_2:	.asciz "  PADS 2  "
-Str_METRONOME:	.asciz "METRONOME"
-Str_CHORDFINDER_2:	.asciz "CHORDFINDER"
-	.align	4, 0xFF	# pad after Str_CHORDFINDER_2
-
-AcSpsPartProc_L3f_Table:
-	.long	Text_PART_1
-	.long	Text_PART_1+11
-	.long	Text_PART_1+22
-	.long	Text_PART_1+33
-	.long	Text_PART_1+44
-	.long	Text_PART_1+55
-	.long	Text_PART_1+66
-	.long	Text_PART_1+77
-	.long	Text_PART_1+88
-	.long	Text_PART_10
-	.long	Text_PART_10+10
-	.long	Text_PART_10+20
-	.long	Text_PART_10+30
-	.long	Text_PART_10+40
-	.long	Text_PART_10+50
-	.long	Text_PART_10+60
-	.long	Text_PART_10+70
-	.long	Text_PART_10+80
-	.long	Text_LEFT_2
-	.long	Text_LEFT_2+11
-	.long	Text_LEFT_2+22
-	.long	Text_LEFT_2+33
-	.long	Text_LEFT_2+44
-	.long	Text_LEFT_2+55
-	.long	Text_LEFT_2+66
-	.long	Text_LEFT_2+77
-	.long	Text_LEFT_2+88
-	.long	data_4846356C
-	.long	Str_R_BASS_2
-	.long	Str_PADS_1
-	.long	Str_PADS_2_2
-	.long	Str_METRONOME
-	.long	Str_CHORDFINDER_2
-data_48463634:
-# census: opaque -- unknown-dump: 36 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x063634, 0x063658
-data_48463658:
-# census: opaque -- unknown-dump: 36 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x063658, 0x06367C
-data_4846367C:
-# census: opaque -- unknown-dump: 36 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x06367C, 0x0636A0
-data_484636A0:
-# census: opaque -- unknown-dump: 36 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0636A0, 0x0636C4
-data_484636C4:
-# census: opaque -- unknown-dump: 36 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0636C4, 0x0636E8
-data_484636E8:
-# census: opaque -- unknown-dump: 36 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0636E8, 0x06370C
-data_4846370C:
-# census: opaque -- unknown-dump: 36 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x06370C, 0x063730
-data_48463730:
-# census: opaque -- unknown-dump: 36 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x063730, 0x063754
-data_48463754:
-# census: opaque -- unknown-dump: 36 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x063754, 0x063778
-data_48463778:
-# census: opaque -- unknown-dump: 36 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x063778, 0x06379C
-
-func_4864D035_Records_p4_p0_0:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_1:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_2:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_3:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_4:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_5:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_6:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_7:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_8:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_9:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_10:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x02\x02\x00\x00\x00\x04\x05"
-func_4864D035_Records_p4_p0_11:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_12:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_13:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_14:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_15:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_16:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_17:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_18:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_19:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_20:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_21:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_22:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_23:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_24:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_25:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-func_4864D035_Records_p4_p0_26:	# REC_func_4864D035_Records_p4_p0 (36 bytes)
-	REC_func_4864D035_Records_p4_p0	x0="\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-
-Str_OFF_74:	.asciz "OFF"
-Str_ON_72:	.asciz "ON "
-
-ptrs_48463B70:
-	.long	Str_OFF_74
-	.long	Str_ON_72
-
-Str_POLY_3:	.asciz "POLY"
-Str_MONO_4:	.asciz "MONO"
-	.align	4, 0xFF	# pad after Str_MONO_4
-
-ptrs_48463B84:
-	.long	Str_POLY_3
-	.long	Str_MONO_4
-
-func_4864D035_Records:	# 68 x REC_func_4864D035_Records (28 bytes each); read by func_4864D035 0x4864D035 `mov (0xc, a0), d2`; func_4864D035 0x4864D035 `mov (4, a0), a0`; func_4864D035_entry_L4c 0x4864D083 `mov (4, a0), a0` (+18)
-	REC_func_4864D035_Records	proc=func_4864D0EC, f20=0xFFFFFFFF	# [0]
-	REC_func_4864D035_Records	proc=func_4864DE46, key=func_4864D035_Records_p4_17, p8=func_4864D035_Records_p4_p0_0, p12=data_48463634, f16=0xC00000, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D61C, key=func_4864D035_Records_p4_0, p8=func_4864D035_Records_p4_p0_10, p12=func_4864D035_Records_p4_p0_10, f16=0xB00007, f20=128
-	REC_func_4864D035_Records	proc=func_4864D7AC, key=func_4864D035_Records_p4_0, p8=func_4864D035_Records_p4_p0_10, p12=func_4864D035_Records_p4_p0_10, f16=0x200000, f20=0xFFFFFFFF, text=ptrs_48463B70
-	REC_func_4864D035_Records	proc=func_4864D881, key=func_4864D035_Records_p4_18, p8=func_4864D035_Records_p4_p0_1, p12=data_48463658, f16=0xB0000A, f20=64
-	REC_func_4864D035_Records	proc=func_4864D4AF, key=func_4864D035_Records_p4_1, p8=func_4864D035_Records_p4_p0_11, p12=func_4864D035_Records_p4_p0_11, f16=0xB00040, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D55C, key=func_4864D035_Records_p4_1, p8=func_4864D035_Records_p4_p0_11, p12=func_4864D035_Records_p4_p0_11, f16=0x204080, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D373, key=func_4864D035_Records_p4_3, p8=func_4864D035_Records_p4_p0_13, p12=func_4864D035_Records_p4_p0_13, f16=0xB08002, f20=64
-	REC_func_4864D035_Records	proc=func_4864D411, key=func_4864D035_Records_p4_4, p8=func_4864D035_Records_p4_p0_14, p12=func_4864D035_Records_p4_p0_14, f16=0xB08001, f20=128	# [8]
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_19, p8=func_4864D035_Records_p4_p0_2, p12=data_4846367C, f16=0xB08000, f20=2
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_5, p8=func_4864D035_Records_p4_p0_15, p12=func_4864D035_Records_p4_p0_15, f16=0x204083, f20=0xFFFFFFFF, text=ptrs_48463B70
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_2, p8=func_4864D035_Records_p4_p0_12, p12=func_4864D035_Records_p4_p0_12, f16=0x204081, f20=0xFFFFFFFF, text=ptrs_48463B70
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_6, p8=func_4864D035_Records_p4_p0_16, p12=func_4864D035_Records_p4_p0_16, f16=0x204084, f20=0xFFFFFFFF, text=ptrs_48463B70
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_7, p8=func_4864D035_Records_p4_p0_17, p12=func_4864D035_Records_p4_p0_17, f16=0x204086, f20=0xFFFFFFFF, text=ptrs_48463B70
-	REC_func_4864D035_Records	proc=func_4864D9C5, key=func_4864D035_Records_p4_8, p8=func_4864D035_Records_p4_p0_18, p12=func_4864D035_Records_p4_p0_18, f16=0x204087, f20=0xFFFFFFFF, text=ptrs_48463B70
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_20, p8=func_4864D035_Records_p4_p0_3, p12=data_484636A0, f16=0x200011, f20=0xFFFFFFFF, text=ptrs_48463B70
-	REC_func_4864D035_Records	proc=func_4864D940, key=func_4864D035_Records_p4_21, p8=func_4864D035_Records_p4_p0_4, p12=data_484636C4, f16=0xB0005B, f20=0xFFFFFFFF	# [16]
-	REC_func_4864D035_Records	proc=func_4864D4AF, key=func_4864D035_Records_p4_22, p8=func_4864D035_Records_p4_p0_5, p12=data_484636E8, f16=0xB0005E, f20=0xFFFFFFFF, text=ptrs_48463B70
-	REC_func_4864D035_Records	proc=func_4864DB36, key=func_4864D035_Records_p4_23, p8=func_4864D035_Records_p4_p0_6, p12=data_4846370C, f16=0x20005F, f20=0xFFFFFFFF, text=ptrs_48463B70
-	REC_func_4864D035_Records	proc=func_4864DB36, key=func_4864D035_Records_p4_23, p8=func_4864D035_Records_p4_p0_6, p12=data_4846370C, f16=0xB0005F, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_24, p8=func_4864D035_Records_p4_p0_7, p12=data_48463730, f16=0x20005D, f20=0xFFFFFFFF, text=ptrs_48463B70
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_24, p8=func_4864D035_Records_p4_p0_7, p12=data_48463730, f16=0xB0005D, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_25, p8=func_4864D035_Records_p4_p0_8, p12=data_48463754, f16=0x20005C, f20=0xFFFFFFFF, text=ptrs_48463B70
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_25, p8=func_4864D035_Records_p4_p0_8, p12=data_48463754, f16=0xB0005C, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864DBA7, key=func_4864D035_Records_p4_26, p8=func_4864D035_Records_p4_p0_9, p12=data_48463778, f16=0xB00052, f20=0xFFFFFFFF	# [24]
-	REC_func_4864D035_Records	proc=func_4864DC2E, key=func_4864D035_Records_p4_26, p8=func_4864D035_Records_p4_p0_9, p12=data_48463778, f16=0xB00053, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864DBA7, key=func_4864D035_Records_p4_26, p8=func_4864D035_Records_p4_p0_9, p12=data_48463778, f16=0xB00050, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864DC2E, key=func_4864D035_Records_p4_26, p8=func_4864D035_Records_p4_p0_9, p12=data_48463778, f16=0xB00051, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D2B6, key=func_4864D035_Records_p4_9, p8=func_4864D035_Records_p4_p0_19, p12=func_4864D035_Records_p4_p0_19, f16=0xB0007E, f20=0xFFFFFFFF, text=ptrs_48463B84
-	REC_func_4864D035_Records	proc=func_4864D4AF, key=func_4864D035_Records_p4_10, p8=func_4864D035_Records_p4_p0_20, p12=func_4864D035_Records_p4_p0_20, f16=0xB00041, f20=0xFFFFFFFF, text=ptrs_48463B70
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_10, p8=func_4864D035_Records_p4_p0_20, p12=func_4864D035_Records_p4_p0_20, f16=0xB00005, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=loc_4864DDF1, key=func_4864D035_Records_p4_11, p8=func_4864D035_Records_p4_p0_21, p12=func_4864D035_Records_p4_p0_21, f16=0xB08005, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_12, p8=func_4864D035_Records_p4_p0_22, p12=func_4864D035_Records_p4_p0_22, f16=0xB00047, f20=0xFFFFFFFF	# [32]
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_13, p8=func_4864D035_Records_p4_p0_23, p12=func_4864D035_Records_p4_p0_23, f16=0xB0004A, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_14, p8=func_4864D035_Records_p4_p0_24, p12=func_4864D035_Records_p4_p0_24, f16=0xB00049, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_14, p8=func_4864D035_Records_p4_p0_24, p12=func_4864D035_Records_p4_p0_24, f16=0xB0004B, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_14, p8=func_4864D035_Records_p4_p0_24, p12=func_4864D035_Records_p4_p0_24, f16=0xB00048, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_15, p8=func_4864D035_Records_p4_p0_25, p12=func_4864D035_Records_p4_p0_25, f16=0xB0004C, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_15, p8=func_4864D035_Records_p4_p0_25, p12=func_4864D035_Records_p4_p0_25, f16=0xB0004D, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_15, p8=func_4864D035_Records_p4_p0_25, p12=func_4864D035_Records_p4_p0_25, f16=0xB0004E, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D411, key=func_4864D035_Records_p4_20, p8=func_4864D035_Records_p4_p0_3, p12=data_484636A0, f16=0x2000C0, f20=128	# [40]
-	REC_func_4864D035_Records	proc=func_4864D411, key=func_4864D035_Records_p4_20, p8=func_4864D035_Records_p4_p0_3, p12=data_484636A0, f16=0x2000C1, f20=128
-	REC_func_4864D035_Records	proc=func_4864D411, key=func_4864D035_Records_p4_20, p8=func_4864D035_Records_p4_p0_3, p12=data_484636A0, f16=0x2000C2, f20=128
-	REC_func_4864D035_Records	proc=func_4864D411, key=func_4864D035_Records_p4_20, p8=func_4864D035_Records_p4_p0_3, p12=data_484636A0, f16=0x2000C3, f20=128
-	REC_func_4864D035_Records	proc=func_4864D411, key=func_4864D035_Records_p4_20, p8=func_4864D035_Records_p4_p0_3, p12=data_484636A0, f16=0x2000C4, f20=128
-	REC_func_4864D035_Records	proc=func_4864D411, key=func_4864D035_Records_p4_20, p8=func_4864D035_Records_p4_p0_3, p12=data_484636A0, f16=0x2000C5, f20=128
-	REC_func_4864D035_Records	proc=func_4864D411, key=func_4864D035_Records_p4_20, p8=func_4864D035_Records_p4_p0_3, p12=data_484636A0, f16=0x2000C6, f20=128
-	REC_func_4864D035_Records	proc=func_4864D411, key=func_4864D035_Records_p4_20, p8=func_4864D035_Records_p4_p0_3, p12=data_484636A0, f16=0x2000C7, f20=128
-	REC_func_4864D035_Records	proc=func_4864D411, key=func_4864D035_Records_p4_20, p8=func_4864D035_Records_p4_p0_3, p12=data_484636A0, f16=0x2000C8, f20=128	# [48]
-	REC_func_4864D035_Records	proc=func_4864D411, key=func_4864D035_Records_p4_20, p8=func_4864D035_Records_p4_p0_3, p12=data_484636A0, f16=0x2000C9, f20=128
-	REC_func_4864D035_Records	proc=func_4864D411, key=func_4864D035_Records_p4_20, p8=func_4864D035_Records_p4_p0_3, p12=data_484636A0, f16=0x2000CA, f20=128
-	REC_func_4864D035_Records	proc=func_4864D411, key=func_4864D035_Records_p4_20, p8=func_4864D035_Records_p4_p0_3, p12=data_484636A0, f16=0x2000CB, f20=128
-	REC_func_4864D035_Records	proc=func_4864DA1A, key=func_4864D035_Records_p4_23, p8=func_4864D035_Records_p4_p0_6, p12=data_4846370C, f16=45076, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864DD5F, key=func_4864D035_Records_p4_16, p8=func_4864D035_Records_p4_p0_26, p12=func_4864D035_Records_p4_p0_26, f16=0x204001, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_16, p8=func_4864D035_Records_p4_p0_26, p12=func_4864D035_Records_p4_p0_26, f16=0x204000, f20=0xFFFFFFFF, text=ptrs_48463B70
-	REC_func_4864D035_Records	proc=loc_4864DE31, key=func_4864D035_Records_p4_11, p8=func_4864D035_Records_p4_p0_21, p12=func_4864D035_Records_p4_p0_21, f16=0xB08005, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, key=func_4864D035_Records_p4_22, p8=func_4864D035_Records_p4_p0_5, p12=data_484636E8, f16=0x200012, f20=0xFFFFFFFF, text=ptrs_48463B70	# [56]
-	REC_func_4864D035_Records	proc=func_4864D0EC, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, f20=0xFFFFFFFF	# [64]
-	REC_func_4864D035_Records	proc=func_4864D0EC, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, f20=0xFFFFFFFF
-	REC_func_4864D035_Records	proc=func_4864D0EC, f20=0xFFFFFFFF
-
-Str_3d_226:	.asciz "%3d"
-Str_empty_1114:	.asciz " --"
-Str_4d_22:	.asciz "%4d"
-Str_empty_1113:	.asciz "  --"
-	.align	4, 0xFF	# pad after Str_empty_1113
-Str_3d_225:	.asciz "%+3d"
-	.align	4, 0xFF	# pad after Str_3d_225
-Str_0_23:	.asciz "  0"
-Str_empty_1112:	.asciz " --"
-Str_4d_21:	.asciz "%+4d"
-	.align	4, 0xFF	# pad after Str_4d_21
-Str_0_22:	.asciz "   0"
-	.align	4, 0xFF	# pad after Str_0_22
-Str_empty_1111:	.asciz "  --"
-	.align	4, 0xFF	# pad after Str_empty_1111
-Str_OFF_156:	.asciz "OFF"
-Str_ON_115:	.asciz "ON "
-Str_empty_1110:	.asciz " --"
-Str_3d_224:	.asciz "%3d"
-Str_empty_1109:	.asciz " --"
-Str_MUTE_6:	.asciz "MUTE"
-	.align	4, 0xFF	# pad after Str_MUTE_6
-Str_4d_20:	.asciz "%4d"
-Str_empty_1108:	.asciz "  --"
-	.align	4, 0xFF	# pad after Str_empty_1108
-Str_CTR_2:	.asciz "CTR"
-Str_L_2d_4:	.asciz "L%2d"
-	.align	4, 0xFF	# pad after Str_L_2d_4
-Str_R_2d_4:	.asciz "R%2d"
-	.align	4, 0xFF	# pad after Str_R_2d_4
-Str_empty_1107:	.asciz " --"
-
-func_4864DA1A_Table:	# 5 x u32, 45076..45140; read by func_4864DA1A_L2f 0x4864DA49: `mov	(d2, a0), a2`
-	tab_u32	45076, 45092, 45108, 45124, 45140
-func_4864DA1A_Table_2:	# 8 x u32, 45072..4294901766; read by func_4864DA1A_L2f 0x4864DA49: `mov	(d1, a0), d0`; func_4864DA1A_Lcc 0x4864DAE6: `mov	(d0, a0), d0`
-	tab_u32	45072, 45088, 45104, 45120, 45136, 196610, 327684, 4294901766
-
-Str_empty_1106:	.asciz "      ----                         "
-Str_20:	.asciz "   20"
-Str_25:	.asciz "   25"
-Str_31_5:	.asciz " 31.5"
-Str_40:	.asciz "   40"
-Str_50:	.asciz "   50"
-Str_63:	.asciz "   63"
-Str_80:	.asciz "   80"
-Str_100:	.asciz "  100"
-Str_125:	.asciz "  125"
-Str_160:	.asciz "  160"
-Str_200:	.asciz "  200"
-Str_250:	.asciz "  250"
-Str_315:	.asciz "  315"
-Str_400:	.asciz "  400"
-Str_500:	.asciz "  500"
-Str_630:	.asciz "  630"
-Str_800:	.asciz "  800"
-Str_1k:	.asciz "   1k"
-Str_1_25k:	.asciz "1.25k"
-Str_1_6k:	.asciz " 1.6k"
-Str_2k:	.asciz "   2k"
-Str_2_5k:	.asciz " 2.5k"
-Str_3_15k:	.asciz "3.15k"
-Str_4k:	.asciz "   4k"
-Str_5k:	.asciz "   5k"
-Str_6_3k:	.asciz " 6.3k"
-Str_8k:	.asciz "   8k"
-Str_10k:	.asciz "  10k"
-Str_12_5k:	.asciz "12.5k"
-Str_16k:	.asciz "  16k"
-Str_20k:	.asciz "  20k"
-Str_empty_641:	.asciz "     "
-
-func_4864DBA7_Table:
-	.long	Str_20
-	.long	Str_25
-	.long	Str_31_5
-	.long	Str_40
-	.long	Str_50
-	.long	Str_63
-	.long	Str_80
-	.long	Str_100
-	.long	Str_125
-	.long	Str_160
-	.long	Str_200
-	.long	Str_250
-	.long	Str_315
-	.long	Str_400
-	.long	Str_500
-	.long	Str_630
-	.long	Str_800
-	.long	Str_1k
-	.long	Str_1_25k
-	.long	Str_1_6k
-	.long	Str_2k
-	.long	Str_2_5k
-	.long	Str_3_15k
-	.long	Str_4k
-	.long	Str_5k
-	.long	Str_6_3k
-	.long	Str_8k
-	.long	Str_10k
-	.long	Str_12_5k
-	.long	Str_16k
-	.long	Str_20k
-	.long	Str_empty_641
-
-Str_empty_1104:	.asciz "  -- "
-	.align	4, 0xFF	# pad after Str_empty_1104
-Str_2d_48:	.asciz "+%2d."
-	.align	4, 0xFF	# pad after Str_2d_48
-Str_5_20:	.asciz "5"
-	.align	4, 0xFF	# pad after Str_5_20
-Str_0_21:	.asciz "0"
-	.align	4, 0xFF	# pad after Str_0_21
-Str_2d_47:	.asciz "-%2d."
-	.align	4, 0xFF	# pad after Str_2d_47
-Str_5_19:	.asciz "5"
-	.align	4, 0xFF	# pad after Str_5_19
-Str_0_20:	.asciz "0"
-	.align	4, 0xFF	# pad after Str_0_20
-Str_0_0:	.asciz "  0.0"
-	.align	4, 0xFF	# pad after Str_0_0
-Str_empty_1103:	.asciz "  -- "
-	.align	4, 0xFF	# pad after Str_empty_1103
-Str_OFF_155:	.asciz " OFF"
-	.align	4, 0xFF	# pad after Str_OFF_155
-Str_CH_2d:	.asciz "CH%2d"
-	.align	4, 0xFF	# pad after Str_CH_2d
-Str_empty_1102:	.asciz "  --"
-	.align	4, 0xFF	# pad after Str_empty_1102
-Str_empty_1101:	.asciz "     ------     "
-	.align	4, 0xFF	# pad after Str_empty_1101
-Str_427_5:	.asciz "427.5"
-Str_427_7:	.asciz "427.7"
-Str_427_9:	.asciz "427.9"
-Str_428_1:	.asciz "428.1"
-Str_428_2:	.asciz "428.2"
-Str_428_4:	.asciz "428.4"
-Str_428_6:	.asciz "428.6"
-Str_428_8:	.asciz "428.8"
-Str_429_0:	.asciz "429.0"
-Str_429_2:	.asciz "429.2"
-Str_429_4:	.asciz "429.4"
-Str_429_6:	.asciz "429.6"
-Str_429_8:	.asciz "429.8"
-Str_430_0:	.asciz "430.0"
-Str_430_2:	.asciz "430.2"
-Str_430_4:	.asciz "430.4"
-Str_430_6:	.asciz "430.6"
-Str_430_8:	.asciz "430.8"
-Str_431_0:	.asciz "431.0"
-Str_431_2:	.asciz "431.2"
-Str_431_3:	.asciz "431.3"
-Str_431_5:	.asciz "431.5"
-Str_431_7:	.asciz "431.7"
-Str_431_9:	.asciz "431.9"
-Str_432_1:	.asciz "432.1"
-Str_432_3:	.asciz "432.3"
-Str_432_5:	.asciz "432.5"
-Str_432_7:	.asciz "432.7"
-Str_432_9:	.asciz "432.9"
-Str_433_1:	.asciz "433.1"
-Str_433_3:	.asciz "433.3"
-Str_433_5:	.asciz "433.5"
-Str_433_7:	.asciz "433.7"
-Str_433_9:	.asciz "433.9"
-Str_434_1:	.asciz "434.1"
-Str_434_3:	.asciz "434.3"
-Str_434_5:	.asciz "434.5"
-Str_434_7:	.asciz "434.7"
-Str_434_9:	.asciz "434.9"
-Str_435_1:	.asciz "435.1"
-Str_435_3:	.asciz "435.3"
-Str_435_5:	.asciz "435.5"
-Str_435_7:	.asciz "435.7"
-Str_435_8:	.asciz "435.8"
-Str_436_0:	.asciz "436.0"
-Str_436_2:	.asciz "436.2"
-Str_436_4:	.asciz "436.4"
-Str_436_6:	.asciz "436.6"
-Str_436_8:	.asciz "436.8"
-Str_437_0:	.asciz "437.0"
-Str_437_2:	.asciz "437.2"
-Str_437_4:	.asciz "437.4"
-Str_437_6:	.asciz "437.6"
-Str_437_8:	.asciz "437.8"
-Str_438_0:	.asciz "438.0"
-Str_438_2:	.asciz "438.2"
-Str_438_4:	.asciz "438.4"
-Str_438_6:	.asciz "438.6"
-Str_438_8:	.asciz "438.8"
-Str_439_0:	.asciz "439.0"
-Str_439_2:	.asciz "439.2"
-Str_439_4:	.asciz "439.4"
-Str_439_6:	.asciz "439.6"
-Str_439_8:	.asciz "439.8"
-Str_440_0_3:	.asciz "440.0"
-	.align	4, 0xFF	# pad after Str_440_0_3
-
-MmmMtune_L4e_Table:
-	.long	Str_427_5
-	.long	Str_427_7
-	.long	Str_427_9
-	.long	Str_428_1
-	.long	Str_428_2
-	.long	Str_428_4
-	.long	Str_428_6
-	.long	Str_428_8
-	.long	Str_429_0
-	.long	Str_429_2
-	.long	Str_429_4
-	.long	Str_429_6
-	.long	Str_429_8
-	.long	Str_430_0
-	.long	Str_430_2
-	.long	Str_430_4
-	.long	Str_430_6
-	.long	Str_430_8
-	.long	Str_431_0
-	.long	Str_431_2
-	.long	Str_431_3
-	.long	Str_431_5
-	.long	Str_431_7
-	.long	Str_431_9
-	.long	Str_432_1
-	.long	Str_432_3
-	.long	Str_432_5
-	.long	Str_432_7
-	.long	Str_432_9
-	.long	Str_433_1
-	.long	Str_433_3
-	.long	Str_433_5
-	.long	Str_433_7
-	.long	Str_433_9
-	.long	Str_434_1
-	.long	Str_434_3
-	.long	Str_434_5
-	.long	Str_434_7
-	.long	Str_434_9
-	.long	Str_435_1
-	.long	Str_435_3
-	.long	Str_435_5
-	.long	Str_435_7
-	.long	Str_435_8
-	.long	Str_436_0
-	.long	Str_436_2
-	.long	Str_436_4
-	.long	Str_436_6
-	.long	Str_436_8
-	.long	Str_437_0
-	.long	Str_437_2
-	.long	Str_437_4
-	.long	Str_437_6
-	.long	Str_437_8
-	.long	Str_438_0
-	.long	Str_438_2
-	.long	Str_438_4
-	.long	Str_438_6
-	.long	Str_438_8
-	.long	Str_439_0
-	.long	Str_439_2
-	.long	Str_439_4
-	.long	Str_439_6
-	.long	Str_439_8
-	.long	Str_440_0_3
-
-Str_440_0_2:	.asciz "440.0"
-Str_440_2:	.asciz "440.2"
-Str_440_4:	.asciz "440.4"
-Str_440_6:	.asciz "440.6"
-Str_440_8:	.asciz "440.8"
-Str_441_0:	.asciz "441.0"
-Str_441_2:	.asciz "441.2"
-Str_441_4:	.asciz "441.4"
-Str_441_6:	.asciz "441.6"
-Str_441_8:	.asciz "441.8"
-Str_442_0:	.asciz "442.0"
-Str_442_2:	.asciz "442.2"
-Str_442_4:	.asciz "442.4"
-Str_442_6:	.asciz "442.6"
-Str_442_8:	.asciz "442.8"
-Str_443_0:	.asciz "443.0"
-Str_443_2:	.asciz "443.2"
-Str_443_4:	.asciz "443.4"
-Str_443_6:	.asciz "443.6"
-Str_443_8:	.asciz "443.8"
-Str_444_0:	.asciz "444.0"
-Str_444_2:	.asciz "444.2"
-Str_444_4:	.asciz "444.4"
-Str_444_6:	.asciz "444.6"
-Str_444_8:	.asciz "444.8"
-Str_445_0:	.asciz "445.0"
-Str_445_2:	.asciz "445.2"
-Str_445_4:	.asciz "445.4"
-Str_445_6:	.asciz "445.6"
-Str_445_8:	.asciz "445.8"
-Str_446_0:	.asciz "446.0"
-Str_446_2:	.asciz "446.2"
-Str_446_4:	.asciz "446.4"
-Str_446_6:	.asciz "446.6"
-Str_446_8:	.asciz "446.8"
-Str_447_0:	.asciz "447.0"
-Str_447_2:	.asciz "447.2"
-Str_447_4:	.asciz "447.4"
-Str_447_6:	.asciz "447.6"
-Str_447_8:	.asciz "447.8"
-Str_448_0:	.asciz "448.0"
-Str_448_2:	.asciz "448.2"
-Str_448_4:	.asciz "448.4"
-Str_448_6:	.asciz "448.6"
-Str_448_8:	.asciz "448.8"
-Str_449_0:	.asciz "449.0"
-Str_449_2:	.asciz "449.2"
-Str_449_4:	.asciz "449.4"
-Str_449_6:	.asciz "449.6"
-Str_449_8:	.asciz "449.8"
-Str_450_0:	.asciz "450.0"
-Str_450_2:	.asciz "450.2"
-Str_450_4:	.asciz "450.4"
-Str_450_7:	.asciz "450.7"
-Str_450_9:	.asciz "450.9"
-Str_451_1:	.asciz "451.1"
-Str_451_3:	.asciz "451.3"
-Str_451_5:	.asciz "451.5"
-Str_451_7:	.asciz "451.7"
-Str_451_9:	.asciz "451.9"
-Str_452_1:	.asciz "452.1"
-Str_452_3:	.asciz "452.3"
-Str_452_5:	.asciz "452.5"
-Str_452_7:	.asciz "452.7"
-Str_452_9:	.asciz "452.9"
-	.align	4, 0xFF	# pad after Str_452_9
-
-MmmMtune_L88_Table:
-	.long	Str_440_0_2
-	.long	Str_440_2
-	.long	Str_440_4
-	.long	Str_440_6
-	.long	Str_440_8
-	.long	Str_441_0
-	.long	Str_441_2
-	.long	Str_441_4
-	.long	Str_441_6
-	.long	Str_441_8
-	.long	Str_442_0
-	.long	Str_442_2
-	.long	Str_442_4
-	.long	Str_442_6
-	.long	Str_442_8
-	.long	Str_443_0
-	.long	Str_443_2
-	.long	Str_443_4
-	.long	Str_443_6
-	.long	Str_443_8
-	.long	Str_444_0
-	.long	Str_444_2
-	.long	Str_444_4
-	.long	Str_444_6
-	.long	Str_444_8
-	.long	Str_445_0
-	.long	Str_445_2
-	.long	Str_445_4
-	.long	Str_445_6
-	.long	Str_445_8
-	.long	Str_446_0
-	.long	Str_446_2
-	.long	Str_446_4
-	.long	Str_446_6
-	.long	Str_446_8
-	.long	Str_447_0
-	.long	Str_447_2
-	.long	Str_447_4
-	.long	Str_447_6
-	.long	Str_447_8
-	.long	Str_448_0
-	.long	Str_448_2
-	.long	Str_448_4
-	.long	Str_448_6
-	.long	Str_448_8
-	.long	Str_449_0
-	.long	Str_449_2
-	.long	Str_449_4
-	.long	Str_449_6
-	.long	Str_449_8
-	.long	Str_450_0
-	.long	Str_450_2
-	.long	Str_450_4
-	.long	Str_450_7
-	.long	Str_450_9
-	.long	Str_451_1
-	.long	Str_451_3
-	.long	Str_451_5
-	.long	Str_451_7
-	.long	Str_451_9
-	.long	Str_452_1
-	.long	Str_452_3
-	.long	Str_452_5
-	.long	Str_452_7
-	.long	Str_452_9
-
-AcTechniChordProc_Table:	# 14 x s16, 0..13; read by AcTechniChordProc_L4f 0x4864E509: `movhu	(d0, a0), d0`; AcTechniChordProc_Lfe 0x4864E5B8: `movhu	(d0, a1), d2` ...
-	tab_s16	0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12	# [0]
-	tab_s16	13, 3	# [12]
-	.space	4, 0xFF
-
-Str_CLOSE_2:	.asciz "CLOSE"
-Str_OPEN_1:	.asciz "OPEN 1"
-Str_OPEN_2:	.asciz "OPEN 2"
-Str_DUET_1:	.asciz "DUET 1"
-Str_DUET_2:	.asciz "DUET 2"
-Str_COUNTRY:	.asciz "COUNTRY"
-Str_THEATRE:	.asciz "THEATRE"
-Str_HYMN:	.asciz "HYMN"
-Str_BLOCK:	.asciz "BLOCK"
-Str_BIG_BAND_BRASS:	.asciz "BIG BAND BRASS"
-Str_BIG_BAND_REEDS:	.asciz "BIG BAND REEDS"
-Str_OCTAVE_5:	.asciz "OCTAVE"
-Str_HARDROCK:	.asciz "HARDROCK"
-Str_FANFARE:	.asciz "FANFARE"
-	.align	4, 0xFF	# pad after Str_FANFARE
-
-AcTechniChordProc_L192_Table:
-	.long	Str_CLOSE_2
-	.long	Str_OPEN_1
-	.long	Str_OPEN_2
-	.long	Str_DUET_1
-	.long	Str_DUET_2
-	.long	Str_COUNTRY
-	.long	Str_THEATRE
-	.long	Str_HYMN
-	.long	Str_BLOCK
-	.long	Str_BIG_BAND_BRASS
-	.long	Str_BIG_BAND_REEDS
-	.long	Str_OCTAVE_5
-	.long	Str_HARDROCK
-	.long	Str_FANFARE
-
-Str_PART_1_3:	.asciz " PART 1  "
-
-Text_PART_2:	# 19 strings of 9 characters, NUL-terminated
-	.asciz	" PART 2  "
-	.asciz	" PART 3  "
-	.asciz	" PART 4  "
-	.asciz	" PART 5  "
-	.asciz	" PART 6  "
-	.asciz	" PART 7  "
-	.asciz	" PART 8  "
-	.asciz	" PART 9  "
-	.asciz	" PART 10 "
-	.asciz	" PART 11 "
-	.asciz	" PART 12 "
-	.asciz	" PART 13 "
-	.asciz	" PART 14 "
-	.asciz	" PART 15 "
-	.asciz	" PART 16 "
-	.asciz	" RIGHT 1 "
-	.asciz	" RIGHT 2 "
-	.asciz	" LEFT    "
-	.asciz	"CONDUCTOR"
-
-MmmOrchestrator_L46_Table:
-	.long	Str_PART_1_3
-	.long	Text_PART_2
-	.long	Text_PART_2+10
-	.long	Text_PART_2+20
-	.long	Text_PART_2+30
-	.long	Text_PART_2+40
-	.long	Text_PART_2+50
-	.long	Text_PART_2+60
-	.long	Text_PART_2+70
-	.long	Text_PART_2+80
-	.long	Text_PART_2+90
-	.long	Text_PART_2+100
-	.long	Text_PART_2+110
-	.long	Text_PART_2+120
-	.long	Text_PART_2+130
-	.long	Text_PART_2+140
-	.long	Text_PART_2+150
-	.long	Text_PART_2+160
-	.long	Text_PART_2+170
-	.long	Text_PART_2+180
-
-Str_CONDUCTOR_2:	.asciz "CONDUCTOR"
-	.align	4, 0xFF	# pad after Str_CONDUCTOR_2
-
-IvSdpartProc_L140_Table:	# 31 x s16, 0..30; read by IvSdpartProc_L140 0x4864ED24: `movhu	(d0, a2), d0`; IvSdpartProc_L1cf 0x4864EDB3: `movhu	(d0, a3), d1` ...
-	tab_s16	16, 17, 18, 0, 1, 2, 3, 4, 5, 6, 7, 8	# [0]
-	tab_s16	9, 10, 11, 12, 13, 14, 15, 27, 28, 19, 20, 21	# [12]
-	tab_s16	22, 23, 24, 25, 26, 29, 30	# [24]
-	.align	4, 0xFF	# pad after IvSdpartProc_L140_Table
-
-AcSpsMmmEditProc_L5c2_Records:	# 7 x REC_AcSpsMmmEditProc_L5c2_Records (32 bytes each); read by AcSpsMmmEditProc_L5c2 0x4864F77C `movhu (d1, a0), d0`
-	REC_AcSpsMmmEditProc_L5c2_Records	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	REC_AcSpsMmmEditProc_L5c2_Records	2, 0, 1, 0, 4, 0, 5, 0, 6, 0, 7, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	REC_AcSpsMmmEditProc_L5c2_Records	16, 0, 56, 0, 0, 0, 0, 0, 20, 0, 21, 0, 22, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0
-	REC_AcSpsMmmEditProc_L5c2_Records	24, 0, 25, 0, 26, 0, 27, 0, 10, 0, 15, 0, 11, 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0
-	REC_AcSpsMmmEditProc_L5c2_Records	32, 0, 33, 0, 34, 0, 35, 0, 36, 0, 37, 0, 38, 0, 39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0
-	REC_AcSpsMmmEditProc_L5c2_Records	28, 0, 29, 0, 30, 0, 31, 0, 55, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0
-	REC_AcSpsMmmEditProc_L5c2_Records	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-
-IvSdpartProc_Table:	# 7 x u32, 7340053..4294967295; read by IvSdpartProc_Lbe 0x4864ECA2: `mov	(d1, a0), d0`; IvSdpartProc_Ldd 0x4864ECC1: `mov	(d0, a0), d0` ...
-	tab_u32	4294967295, 7340053, 7340081, 7340127, 7340162, 7340103, 7340053
-
-Str_SdPT:	.asciz "SdPT"
-	.align	4, 0xFF	# pad after Str_SdPT
-Str_empty_1100:	.asciz "     ------     "
-	.align	4, 0xFF	# pad after Str_empty_1100
-
-AcMixerProc_Lb6_Table:
-	.long	func_486517D0
-	.long	func_486517E0
-	.long	func_486519B7
-	.long	func_48651B2A
-	.long	func_48651E87
-	.long	func_48651EE0
-	.long	func_48651FF4
-	.long	func_486521F9
-	.long	func_486523A1
-	.long	func_4865253D
-
-Str_SOUND_17:	.asciz "SOUND"
-# census: opaque -- unknown-dump: 5 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x064E02, 0x064E07
-Str_VOLUME_5:	.asciz "VOLUME"
-	.align	4, 0x00	# pad after Str_VOLUME_5
-Str_REVERB_14:	.asciz "REVERB"
-Str_MULTI_6:	.asciz "MULTI"
-# census: opaque -- unknown-dump: 14 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x064E1D, 0x064E2B
-Str_DIGITAL_EFF:	.asciz "DIGITAL EFF"
-Str_CHORUS_12:	.asciz "CHORUS"
-Str_CHORUS_DEPTH_3:	.asciz "CHORUS DEPTH"
-	.align	4, 0x00	# pad after Str_CHORUS_DEPTH_3
-Str_EQUALIZER_HI_FC_Hz:	.asciz "EQUALIZER HI FC [Hz]"
-Str_EQUALIZER_HI_GAIN_dB:	.asciz "EQUALIZER HI GAIN [dB]"
-Str_EQUALIZER_LOW_FC_Hz:	.asciz "EQUALIZER LOW FC [Hz]"
-Str_EQUALIZER_LOW_GAIN_dB:	.asciz "EQUALIZER LOW GAIN [dB]"
-	.align	4, 0x00	# pad after Str_EQUALIZER_LOW_GAIN_dB
-Str_KEY_SHIFT_2:	.asciz "KEY SHIFT"
-Str_MIDI_CHANNEL:	.asciz "MIDI CHANNEL"
-Str_LOCAL_CONTROL:	.asciz "LOCAL CONTROL"
-# census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x064ECD, 0x064ED0
-data_48464ED0:
-# census: opaque -- unknown-dump: 411 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x064ED0, 0x06506B
-Str_VOLUME_6:	.asciz "VOLUME"
-	.align	4, 0x00	# pad after Str_VOLUME_6
-Str_REVERB_15:	.asciz "REVERB"
-Str_MULTI_7:	.asciz "MULTI"
-# census: opaque -- unknown-dump: 14 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x065081, 0x06508F
-Str_DIGITAL_EFF_2:	.asciz "DIGITAL EFF"
-Str_CHORUS_13:	.asciz "CHORUS"
-Str_CHORUS_DEPTH_4:	.asciz "CHORUS DEPTH"
-	.align	4, 0x00	# pad after Str_CHORUS_DEPTH_4
-Str_EQUALIZER_HI_FC_Hz_2:	.asciz "EQUALIZER HI FC [Hz]"
-Str_EQUALIZER_HI_GAIN_dB_2:	.asciz "EQUALIZER HI GAIN [dB]"
-Str_EQUALIZER_LOW_FC_Hz_2:	.asciz "EQUALIZER LOW FC [Hz]"
-Str_EQUALIZER_LOW_GAIN_dB_2:	.asciz "EQUALIZER LOW GAIN [dB]"
-	.align	4, 0x00	# pad after Str_EQUALIZER_LOW_GAIN_dB_2
-Str_KEY_SHIFT_3:	.asciz "KEY SHIFT"
-Str_MIDI_CHANNEL_2:	.asciz "MIDI CHANNEL"
-Str_LOCAL_CONTROL_2:	.asciz "LOCAL CONTROL"
-# census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x065131, 0x065134
-data_48465134:
-# census: opaque -- unknown-dump: 396 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x065134, 0x0652C0
-Str_1QFHVIBRATO_RATE:	.asciz "1QFHVIBRATO RATE"
-Str_VIBRATO_DEPTH:	.asciz "VIBRATO DEPTH"
-Str_VIBRATO_DELAY:	.asciz "VIBRATO DELAY"
-Str_FILTER_RESONANCE_5:	.asciz "FILTER RESONANCE"
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0652FE, 0x06530A
-Str_ATTACK_TIME_5:	.asciz "ATTACK TIME"
-Str_DECAY_TIME_2:	.asciz "DECAY TIME"
-Str_RELEASE_TIME_5:	.asciz "RELEASE TIME"
-# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06532E, 0x065330
-Str_empty_640:	.asciz "%"
-# census: opaque -- unknown-dump: 154 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x065332, 0x0653CC
-Str_SFHVIBRATO_RATE:	.asciz ".SFHVIBRATO RATE"
-Str_VIBRATO_DEPTH_2:	.asciz "VIBRATO DEPTH"
-Str_VIBRATO_DELAY_2:	.asciz "VIBRATO DELAY"
-Str_FILTER_RESONANCE_6:	.asciz "FILTER RESONANCE"
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06540A, 0x065416
-Str_ATTACK_TIME_6:	.asciz "ATTACK TIME"
-Str_DECAY_TIME_3:	.asciz "DECAY TIME"
-Str_RELEASE_TIME_6:	.asciz "RELEASE TIME"
-# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06543A, 0x06543C
-Str_empty_639:	.asciz "%"
-# census: opaque -- unknown-dump: 158 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06543E, 0x0654DC
-
-AcMixerScreenProc_Lba_Table:
-	.long	data_48464ED0
-	.long	Str_empty_640
-	.long	data_48465134
-	.long	Str_empty_639
-
-data_500017B8_p0_0:	# REC_data_500017B8_p0 (1 bytes), then 63 x u16 the code indexes from +0 (read by func_4864FE74 0x4864FE74 `movhu (d1, a0), d0`; func_4864FE74_entry_L1a 0x4864FE93 `movhu (d0, a0), d0`)
-	REC_data_500017B8_p0	x0="\x10"
-	tab_u16	4352, 4608, 768, 1024, 1280, 1536, 1792, 2048, 2304, 2560, 2816, 3072, 3328, 3584, 3840, 0	# [0]
-	tab_u16	256, 512, 768, 1024, 1280, 1536, 1792, 2048, 2304, 2560, 2816, 3072, 3328, 3584, 3840, 6656	# [16]
-	tab_u16	6400, 5888, 5632, 5376, 5120, 4864, 6144, 7424, 7168, 6912, 8704, 8960, 4608, 4352, 4096, 65280	# [32]
-	tab_u16	65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280	# [48]
-	.align	4, 0x00	# pad after data_500017B8_p0_0
-
-AcMixerScreenProc_Lba_Table_2:
-	.long	data_500017B8_p0_0
-	.long	data_500017B8_p0_0
-	.long	TtSqmixer_L74_Table
-	.long	TtSqmixer_L74_Table
-
-Str_PART_1_2:	.asciz "PART  1"
-
-Text_PART_2_2:	# 36 strings of 7 characters, NUL-terminated
-	.asciz	"PART  2"
-	.asciz	"PART  3"
-	.asciz	"PART  4"
-	.asciz	"PART  5"
-	.asciz	"PART  6"
-	.asciz	"PART  7"
-	.asciz	"PART  8"
-	.asciz	"PART  9"
-	.asciz	"PART 10"
-	.asciz	"PART 11"
-	.asciz	"PART 12"
-	.asciz	"PART 13"
-	.asciz	"PART 14"
-	.asciz	"PART 15"
-	.asciz	"PART 16"
-	.asciz	"RIGHT 1"
-	.asciz	"RIGHT 2"
-	.asciz	"LEFT   "
-	.asciz	"ACCOMP1"
-	.asciz	"ACCOMP2"
-	.asciz	"ACCOMP3"
-	.asciz	"ACCOMP4"
-	.asciz	"ACCOMP5"
-	.asciz	"BASS   "
-	.asciz	"DRUM  1"
-	.asciz	"DRUM  2"
-	.asciz	"CHORD  "
-	.asciz	"R.BASS "
-	.asciz	"PADS   "
-	.asciz	"PADS   "
-	.asciz	"       "
-	.asciz	"MIC    "
-	.asciz	"APC    "
-	.asciz	"CTRL   "
-	.asciz	"RHYTHM "
-	.asciz	"       "
-
-Str_PT_1:	.asciz "PT 1"
-Str_PT_2:	.asciz "PT 2"
-Str_PT_3:	.asciz "PT 3"
-Str_PT_4:	.asciz "PT 4"
-Str_PT_5:	.asciz "PT 5"
-Str_PT_6:	.asciz "PT 6"
-Str_PT_7:	.asciz "PT 7"
-Str_PT_8:	.asciz "PT 8"
-Str_PT_9:	.asciz "PT 9"
-Str_PT10:	.asciz "PT10"
-# census: opaque -- unknown-dump: 5 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0656D6, 0x0656DB
-Str_PT12:	.asciz "PT12"
-# census: opaque -- unknown-dump: 5 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0656E0, 0x0656E5
-Str_PT14:	.asciz "PT14"
-# census: opaque -- unknown-dump: 5 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0656EA, 0x0656EF
-Str_PT16:	.asciz "PT16"
-# census: opaque -- unknown-dump: 10 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0656F4, 0x0656FE
-Str_LEFT_3:	.asciz "LEFT"
-Str_ACP1_2:	.asciz "ACP1"
-Str_ACP2:	.asciz "ACP2"
-Str_ACP3_2:	.asciz "ACP3"
-Str_ACP4:	.asciz "ACP4"
-Str_ACP5_2:	.asciz "ACP5"
-Str_BASS_3:	.asciz "BASS"
-# census: opaque -- unknown-dump: 5 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x065721, 0x065726
-Str_DRM2:	.asciz "DRM2"
-# census: opaque -- unknown-dump: 5 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06572B, 0x065730
-Str_R_BA:	.asciz "R.BA"
-Str_PADS_9:	.asciz "PADS"
-Str_PADS_10:	.asciz "PADS"
-# census: opaque -- unknown-dump: 5 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06573F, 0x065744
-Str_MIC_17:	.asciz "MIC "
-Str_APC_7:	.asciz "APC "
-# census: opaque -- unknown-dump: 15 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06574E, 0x06575D
-Str_APC_8:	.asciz "APC "
-Str_MUSIC_2:	.asciz "MUSIC"
-Str_TRACK_1:	.asciz "TRACK 1"
-Str_TRACK_2_2:	.asciz "TRACK 2"
-Str_TRACK_3_2:	.asciz "TRACK 3"
-Str_TRACK_4_2:	.asciz "TRACK 4"
-Str_TRACK_5_2:	.asciz "TRACK 5"
-Str_TRACK_6_2:	.asciz "TRACK 6"
-Str_TRACK_7_2:	.asciz "TRACK 7"
-Str_TRACK_8_2:	.asciz "TRACK 8"
-Str_TRACK_9_2:	.asciz "TRACK 9"
-Str_TRACK10:	.asciz "TRACK10"
-
-names_50001910_p0_0:	# REC_names_50001910_p0 (4 bytes)
-	REC_names_50001910_p0	index=84, f1=82, f2=65, x3="C"
-
-Str_K11:	.asciz "K11"
-Str_TRACK12:	.asciz "TRACK12"
-
-names_50001910_p0_1:	# REC_names_50001910_p0 (4 bytes)
-	REC_names_50001910_p0	index=84, f1=82, f2=65, x3="C"
-
-Str_K13:	.asciz "K13"
-Str_TRACK14:	.asciz "TRACK14"
-
-names_50001910_p0_2:	# REC_names_50001910_p0 (4 bytes)
-	REC_names_50001910_p0	index=84, f1=82, f2=65, x3="C"
-
-Str_K15:	.asciz "K15"
-Str_TRACK16:	.asciz "TRACK16"
-
-names_50001910_p0_3:	# REC_names_50001910_p0 (4 bytes)
-	REC_names_50001910_p0	index=84, f1=82, f2=32, x3="1"
-# census: opaque -- unknown-dump: 41 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0657EC, 0x065815
-
-Str_TR10:	.asciz "TR10"
-# census: opaque -- unknown-dump: 5 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06581A, 0x06581F
-Str_TR12:	.asciz "TR12"
-# census: opaque -- unknown-dump: 5 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x065824, 0x065829
-Str_TR14:	.asciz "TR14"
-# census: opaque -- unknown-dump: 5 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06582E, 0x065833
-Str_TR16:	.asciz "TR16"
-Str_EDIT_MIXER_3:	.asciz "EDIT MIXER                "
-	.align	4, 0xFF	# pad after Str_EDIT_MIXER_3
-Str_TRACK_MIXER_2:	.asciz "TRACK MIXER               "
-	.align	4, 0xFF	# pad after Str_TRACK_MIXER_2
-Str_TR_EDIT_MIXER:	.asciz "TR EDIT MIXER             "
-	.align	4, 0xFF	# pad after Str_TR_EDIT_MIXER
-Str_Mix:	.asciz "Mix"
-Str_ExMx:	.asciz "ExMx"
-	.align	4, 0xFF	# pad after Str_ExMx
-
-AcMixPageProc_Table:	# 2 x s16, 2..5; read by AcMixPageProc_L84 0x48650FFE: `movhu	(d0, a0), d1`; AcMixPageProc_Lca 0x48651044: `movhu	(d1, a0), d2` ...
-	tab_s16	5, 2
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06589C, 0x0658A0
-
-Str_MxPG:	.asciz "MxPG"
-	.align	4, 0xFF	# pad after Str_MxPG
-Str_empty_1097:	.asciz "     ------     "
-	.align	4, 0xFF	# pad after Str_empty_1097
-Str_s_s_6:	.asciz "%s : %s"
-Str_MxOP:	.asciz "MxOP"
-	.align	4, 0xFF	# pad after Str_MxOP
-Str_DUMMY:	.asciz "DUMMY"
-	.align	4, 0xFF	# pad after Str_DUMMY
-Str_s_s_5:	.asciz "%s:%s"
-	.align	4, 0xFF	# pad after Str_s_s_5
-
-func_48651FF4_Table:	# 19 x REC_func_48651FF4_Table (4 bytes each); read by func_48651FF4_Lb2 0x486520A6 `movhu (2, a2), d1`; func_48651FF4_Lb2 0x486520A6 `movhu (d0, a2), d1`
-	REC_func_48651FF4_Table	f0=4, DrawBitmap_d1=10	# [0]
-	REC_func_48651FF4_Table	f0=3, DrawBitmap_d1=9
-	REC_func_48651FF4_Table	f0=3, DrawBitmap_d1=8
-	REC_func_48651FF4_Table	f0=3, DrawBitmap_d1=7
-	REC_func_48651FF4_Table	f0=3, DrawBitmap_d1=6
-	REC_func_48651FF4_Table	f0=3, DrawBitmap_d1=5
-	REC_func_48651FF4_Table	f0=4, DrawBitmap_d1=4
-	REC_func_48651FF4_Table	f0=5, DrawBitmap_d1=3
-	REC_func_48651FF4_Table	f0=6, DrawBitmap_d1=3	# [8]
-	REC_func_48651FF4_Table	f0=7, DrawBitmap_d1=3
-	REC_func_48651FF4_Table	f0=8, DrawBitmap_d1=3
-	REC_func_48651FF4_Table	f0=9, DrawBitmap_d1=3
-	REC_func_48651FF4_Table	f0=10, DrawBitmap_d1=4
-	REC_func_48651FF4_Table	f0=11, DrawBitmap_d1=5
-	REC_func_48651FF4_Table	f0=11, DrawBitmap_d1=6
-	REC_func_48651FF4_Table	f0=11, DrawBitmap_d1=7
-	REC_func_48651FF4_Table	f0=11, DrawBitmap_d1=8	# [16]
-	REC_func_48651FF4_Table	f0=11, DrawBitmap_d1=9
-	REC_func_48651FF4_Table	f0=10, DrawBitmap_d1=10
-
-Str_3d_223:	.asciz "%3d"
-Str_MUTE_5:	.asciz "MUTE"
-	.align	4, 0xFF	# pad after Str_MUTE_5
-
-AcSpsKsclPartProc_L19a_Table:	# 27 x s16, 0..28; read by AcSpsKsclPartProc_L19a 0x48652D0E: `movhu	(d0, a2), d0`; AcSpsKsclPartProc_L33e 0x48652EB2: `movhu	(d1, a2), d0` ...
-	tab_s16	16, 17, 18, 0, 1, 2, 3, 4, 5, 6, 7, 8	# [0]
-	tab_s16	9, 10, 11, 12, 13, 14, 15, 27, 28, 19, 20, 21	# [12]
-	tab_s16	22, 23, 24	# [24]
-	.align	4, 0xFF	# pad after AcSpsKsclPartProc_L19a_Table
-AcSpsKsclEditProc_Table:	# 14 x s16, 0..51; read by AcSpsKsclEditProc_L18 0x48652B14: `movhu	(d0, a0), d0`
-	tab_s16	15, 0, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49	# [0]
-	tab_s16	50, 51	# [12]
-TtSdkeyscl_Table:	# 20 x s16, 0..255; read by TtSdkeyscl_L82 0x48652AAB: `movhu	(d0, a0), d1`; AcKsclCopyEditProc_L20f 0x4865363B: `movhu	(d0, a2), d1` ...
-	tab_s16	255, 16, 17, 18, 0, 1, 2, 3, 4, 5, 6, 7	# [0]
-	tab_s16	8, 9, 10, 11, 12, 13, 14, 15	# [12]
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0659B0, 0x0659C0
-
-Text_ALL:	# 28 strings of 9 characters, NUL-terminated
-	.asciz	"   ALL   "
-	.asciz	" RIGHT 1 "
-	.asciz	" RIGHT 2 "
-	.asciz	"  LEFT   "
-	.asciz	" PART 1  "
-	.asciz	" PART 2  "
-	.asciz	" PART 3  "
-	.asciz	" PART 4  "
-	.asciz	" PART 5  "
-	.asciz	" PART 6  "
-	.asciz	" PART 7  "
-	.asciz	" PART 8  "
-	.asciz	" PART 9  "
-	.asciz	" PART 10 "
-	.asciz	" PART 11 "
-	.asciz	" PART 12 "
-	.asciz	" PART 13 "
-	.asciz	" PART 14 "
-	.asciz	" PART 15 "
-	.asciz	" PART 16 "
-	.asciz	"  CHORD  "
-	.asciz	" R.BASS  "
-	.asciz	"ACCOMP 1 "
-	.asciz	"ACCOMP 2 "
-	.asciz	"ACCOMP 3 "
-	.asciz	"ACCOMP 4 "
-	.asciz	"ACCOMP 5 "
-	.asciz	"  BASS   "
-
-AcKsclCopyEditProc_L141_Table:
-	.long	Text_ALL
-	.long	Text_ALL+10
-	.long	Text_ALL+20
-	.long	Text_ALL+30
-	.long	Text_ALL+40
-	.long	Text_ALL+50
-	.long	Text_ALL+60
-	.long	Text_ALL+70
-	.long	Text_ALL+80
-	.long	Text_ALL+90
-	.long	Text_ALL+100
-	.long	Text_ALL+110
-	.long	Text_ALL+120
-	.long	Text_ALL+130
-	.long	Text_ALL+140
-	.long	Text_ALL+150
-	.long	Text_ALL+160
-	.long	Text_ALL+170
-	.long	Text_ALL+180
-	.long	Text_ALL+190
-	.long	Text_ALL+200
-	.long	Text_ALL+210
-	.long	Text_ALL+220
-	.long	Text_ALL+230
-	.long	Text_ALL+240
-	.long	Text_ALL+250
-	.long	Text_ALL+260
-	.long	Text_ALL+270
-data_48465B48:
-	# 12 bytes the code takes the address of: TtSdkeyscl_L38 0x48652A61 `add data_48465B48, d3` (+0, as a base); TtSdkeyscl_L62 0x48652A8B `call func_4860B312_entry, [d2,d3], 8` (+0, arg sp36); TtSdkeyscl_L82 0x48652AAB `call MainPutM3Em_entry, [d2,d3,a2], 0x20` (+0, arg sp36) (+2 more); byte rows (u8); the callee walk: InterruptTitle (sp36) reads nothing through it the walk sees; MainPutM3Em (sp36) reads nothing through it the walk sees; func_4860B312 (sp36) reads nothing through it the walk sees (+1 more)
-	tab_u8	0, 4, 5, 16, 17, 18, 19, 20, 21, 22, 255, 255	# +0
-
-Str_ALL_37:	.asciz "   ALL   "
-	.align	4, 0xFF	# pad after Str_ALL_37
-Str_KScl:	.asciz "KScl"
-	.align	4, 0xFF	# pad after Str_KScl
-
-Text_FLAT:	# 10 strings of 12 characters, NUL-terminated
-	.asciz	"    FLAT    "
-	.asciz	"WERCKMEISTER"
-	.asciz	" KIRNBERGER "
-	.asciz	"  ARABIC 1  "
-	.asciz	"  ARABIC 2  "
-	.asciz	"  ARABIC 3  "
-	.asciz	"  ARABIC 4  "
-	.asciz	"  ARABIC 5  "
-	.asciz	"  SLENDRO   "
-	.asciz	"   PELOG    "
-data_48465BEA:
-# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x065BEA, 0x065BEC
-
-AcKsclTypeEditProc_Lc5_Table:
-	.long	Text_FLAT
-	.long	Text_FLAT+13
-	.long	Text_FLAT+26
-	.long	Text_FLAT+39
-	.long	Text_FLAT+52
-	.long	Text_FLAT+65
-	.long	Text_FLAT+78
-	.long	Text_FLAT+91
-	.long	Text_FLAT+104
-	.long	Text_FLAT+117
-	.long	data_48465BEA
-
-Str_0_15:	.asciz "  0"
-Str_1_29:	.asciz " +1"
-Str_2_30:	.asciz " +2"
-Str_3_22:	.asciz " +3"
-Str_4_24:	.asciz " +4"
-Str_5_12:	.asciz " +5"
-Str_6_11:	.asciz " +6"
-Str_7_2:	.asciz " +7"
-Str_8_3:	.asciz " +8"
-Str_9_2:	.asciz " +9"
-Str_10_3:	.asciz "+10"
-Str_11:	.asciz "+11"
-
-AcKsclShiftEditProc_Lc5_Table:
-	.long	Str_0_15
-	.long	Str_1_29
-	.long	Str_2_30
-	.long	Str_3_22
-	.long	Str_4_24
-	.long	Str_5_12
-	.long	Str_6_11
-	.long	Str_7_2
-	.long	Str_8_3
-	.long	Str_9_2
-	.long	Str_10_3
-	.long	Str_11
-
-Str_KEY_C:	.asciz "[KEY=C ]"
-
-Text_KEY_C:	# 11 strings of 8 characters, NUL-terminated
-	.asciz	"[KEY=C#]"
-	.asciz	"[KEY=D ]"
-	.asciz	"[KEY=D#]"
-	.asciz	"[KEY=E ]"
-	.asciz	"[KEY=F ]"
-	.asciz	"[KEY=F#]"
-	.asciz	"[KEY=G ]"
-	.asciz	"[KEY=G#]"
-	.asciz	"[KEY=A ]"
-	.asciz	"[KEY=A#]"
-	.asciz	"[KEY=B ]"
-
-AcKsclShiftProc_L3f_Table:
-	.long	Str_KEY_C
-	.long	Text_KEY_C
-	.long	Text_KEY_C+9
-	.long	Text_KEY_C+18
-	.long	Text_KEY_C+27
-	.long	Text_KEY_C+36
-	.long	Text_KEY_C+45
-	.long	Text_KEY_C+54
-	.long	Text_KEY_C+63
-	.long	Text_KEY_C+72
-	.long	Text_KEY_C+81
-	.long	Text_KEY_C+90
-
-Str_C_18:	.asciz "[C ]"
-
-Text_C:	# 11 strings of 4 characters, NUL-terminated
-	.asciz	"[C#]"
-	.asciz	"[D ]"
-	.asciz	"[D#]"
-	.asciz	"[E ]"
-	.asciz	"[F ]"
-	.asciz	"[F#]"
-	.asciz	"[G ]"
-	.asciz	"[G#]"
-	.asciz	"[A ]"
-	.asciz	"[A#]"
-	.asciz	"[B ]"
-
-AcKsclKeyEditProc_L51_Table:
-	.long	Str_C_18
-	.long	Text_C
-	.long	Text_C+5
-	.long	Text_C+10
-	.long	Text_C+15
-	.long	Text_C+20
-	.long	Text_C+25
-	.long	Text_C+30
-	.long	Text_C+35
-	.long	Text_C+40
-	.long	Text_C+45
-	.long	Text_C+50
-
-BitmapMonback_Pixels:	# 441 x 108, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapMonback answers MT_GetBitmapData with (src/program/data/media/BitmapMonback_Pixels.png)
-	.incbin	"build/bitmaps/BitmapMonback_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 441 108) from src/program/data/media/BitmapMonback_Pixels.png
-BitmapMonvol_Pixels:	# 37 x 29, 4 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapMonvol answers MT_GetBitmapData with (src/program/data/media/BitmapMonvol_Pixels.png)
-	.incbin	"build/bitmaps/BitmapMonvol_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 4 37 29) from src/program/data/media/BitmapMonvol_Pixels.png
-BitmapMonon_Pixels:	# 62 x 37, 4 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapMonon answers MT_GetBitmapData with (src/program/data/media/BitmapMonon_Pixels.png)
-	.incbin	"build/bitmaps/BitmapMonon_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 4 62 37) from src/program/data/media/BitmapMonon_Pixels.png
-BitmapMonoff_Pixels:	# 62 x 37, 4 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapMonoff answers MT_GetBitmapData with (src/program/data/media/BitmapMonoff_Pixels.png)
-	.incbin	"build/bitmaps/BitmapMonoff_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 4 62 37) from src/program/data/media/BitmapMonoff_Pixels.png
-
-DrawBitmapSPFast16_Impl_entry_Le0_Table_2:	# 16 x u32, 0..16777215; read by DrawBitmapSPFast16_Impl_entry_Le0 0x485FC25E: `mov (-0x80, a0), a2`
-	tab_u32	0, 128, 32768, 32896, 8388608, 8388736, 8421376, 12632256	# [0]
-	tab_u32	8421504, 255, 65280, 65535, 16711680, 16711935, 16776960, 16777215	# [8]
-
-Str_CcEv_14:	.asciz "CcEv"
-	.align	4, 0xFF	# pad after Str_CcEv_14
-
-Text_DRUM1_2:	# 10 strings of 26 characters, NUL-terminated
-	.asciz	"         DRUM1&2          "
-	.asciz	"           BASS           "
-	.asciz	"        ACCOMP1-5         "
-	.asciz	"           PADS           "
-	.asciz	"      DRUM1&2, BASS       "
-	.asciz	"     BASS, ACCOMP1-5      "
-	.asciz	"    DRUM1&2, ACCOMP1-5    "
-	.asciz	" DRUM1&2, BASS, ACCOMP1-5 "
-	.asciz	"RIGHT1&2, LEFT, BASS PEDAL"
-	.asciz	"         PART1-16         "
-	.align	4, 0xFF	# pad after Text_DRUM1_2
-
-SpPartStereo_L3f_Table:
-	.long	Text_DRUM1_2
-	.long	Text_DRUM1_2+27
-	.long	Text_DRUM1_2+54
-	.long	Text_DRUM1_2+81
-	.long	Text_DRUM1_2+108
-	.long	Text_DRUM1_2+135
-	.long	Text_DRUM1_2+162
-	.long	Text_DRUM1_2+189
-	.long	Text_DRUM1_2+216
-	.long	Text_DRUM1_2+243
-
-SpPartMono_Table:	# 25 x s16, 0..32; read by SpPartMono_Lc6 0x4865465E: `movhu	(d0, a0), d1`
-	tab_s16	16, 17, 18, 31, 0, 1, 2, 3, 4, 5, 6, 7	# [0]
-	tab_s16	8, 9, 10, 11, 12, 13, 14, 15, 32, 25, 24, 19	# [12]
-	tab_s16	29	# [24]
-	.align	4, 0xFF	# pad after SpPartMono_Table
-
-Text_PART_1_2:	# 34 strings of 10 characters, NUL-terminated
-	.asciz	"  PART 1  "
-	.asciz	"  PART 2  "
-	.asciz	"  PART 3  "
-	.asciz	"  PART 4  "
-	.asciz	"  PART 5  "
-	.asciz	"  PART 6  "
-	.asciz	"  PART 7  "
-	.asciz	"  PART 8  "
-	.asciz	"  PART 9  "
-	.asciz	"  PART 10 "
-	.asciz	"  PART 11 "
-	.asciz	"  PART 12 "
-	.asciz	"  PART 13 "
-	.asciz	"  PART 14 "
-	.asciz	"  PART 15 "
-	.asciz	"  PART 16 "
-	.asciz	" RIGHT 1  "
-	.asciz	" RIGHT 2  "
-	.asciz	"   LEFT   "
-	.asciz	"ACCOMP 1-5"
-	.asciz	"ACCOMP 1-5"
-	.asciz	"ACCOMP 1-5"
-	.asciz	"ACCOMP 1-5"
-	.asciz	"ACCOMP 1-5"
-	.asciz	"   BASS   "
-	.asciz	" DRUM 1&2 "
-	.asciz	" DRUM 1&2 "
-	.asciz	"          "
-	.asciz	"          "
-	.asciz	"   PADS   "
-	.asciz	"   PADS   "
-	.asciz	"BASS PEDAL"
-	.asciz	"METRONOME "
-	.asciz	"          "
-	.align	4, 0xFF	# pad after Text_PART_1_2
-
-SpPartMono_L13d_Table:
-	.long	Text_PART_1_2
-	.long	Text_PART_1_2+11
-	.long	Text_PART_1_2+22
-	.long	Text_PART_1_2+33
-	.long	Text_PART_1_2+44
-	.long	Text_PART_1_2+55
-	.long	Text_PART_1_2+66
-	.long	Text_PART_1_2+77
-	.long	Text_PART_1_2+88
-	.long	Text_PART_1_2+99
-	.long	Text_PART_1_2+110
-	.long	Text_PART_1_2+121
-	.long	Text_PART_1_2+132
-	.long	Text_PART_1_2+143
-	.long	Text_PART_1_2+154
-	.long	Text_PART_1_2+165
-	.long	Text_PART_1_2+176
-	.long	Text_PART_1_2+187
-	.long	Text_PART_1_2+198
-	.long	Text_PART_1_2+209
-	.long	Text_PART_1_2+220
-	.long	Text_PART_1_2+231
-	.long	Text_PART_1_2+242
-	.long	Text_PART_1_2+253
-	.long	Text_PART_1_2+264
-	.long	Text_PART_1_2+275
-	.long	Text_PART_1_2+286
-	.long	Text_PART_1_2+297
-	.long	Text_PART_1_2+308
-	.long	Text_PART_1_2+319
-	.long	Text_PART_1_2+330
-	.long	Text_PART_1_2+341
-	.long	Text_PART_1_2+352
-	.long	Text_PART_1_2+363
-
-Str_PRESET_IN_RHYTHM:	.asciz "PRESET IN RHYTHM"
-	.align	4, 0xFF	# pad after Str_PRESET_IN_RHYTHM
-Str_3d_222:	.asciz "      %3d       "
-	.align	4, 0xFF	# pad after Str_3d_222
-Str_3d_221:	.asciz "      %3d       "
-	.align	4, 0xFF	# pad after Str_3d_221
-Str_3d_220:	.asciz "      %3d       "
-	.align	4, 0xFF	# pad after Str_3d_220
-
-Text_3d:	# 22 strings of 3 characters, NUL-terminated
-	.asciz	"%3d"
-	.asciz	"%3d"
-	.asciz	"OFF"
-	.asciz	"ON "
-	.asciz	"OFF"
-	.asciz	"ON "
-	.asciz	"OFF"
-	.asciz	"ON "
-	.asciz	"OFF"
-	.asciz	"ON "
-	.asciz	"OFF"
-	.asciz	"ON "
-	.asciz	"OFF"
-	.asciz	"ON "
-	.asciz	"OFF"
-	.asciz	"ON "
-	.asciz	"OFF"
-	.asciz	"ON "
-	.asciz	"OFF"
-	.asciz	"ON "
-	.asciz	"OFF"
-	.asciz	"ON "
-
-IvOtherPartProc_L1d_Records:	# 16 x REC_IvOtherPartProc_L1d_Records (8 bytes each); read by IvOtherPartProc_L1d 0x4864CE43 `mov (a0), d0`; IvOtherPartProc_L4b 0x4864CE71 `mov (a0), d0`; IvOtherPartProc_L4e 0x4864CE74 `mov (4, a0), a0`
-	REC_IvOtherPartProc_L1d_Records	proc=IvOtherPartProc_L1ff	# [0]
-	REC_IvOtherPartProc_L1d_Records	key=1, proc=loc_4864CE79
-	REC_IvOtherPartProc_L1d_Records	key=2, proc=loc_4864CED0
-	REC_IvOtherPartProc_L1d_Records	key=0x700002, proc=loc_4864CEF7
-	REC_IvOtherPartProc_L1d_Records	key=0x700003, proc=loc_4864CF92
-	REC_IvOtherPartProc_L1d_Records	key=5, proc=loc_4864CF19
-	REC_IvOtherPartProc_L1d_Records	key=0x10054, proc=loc_4864CFB3
-	REC_IvOtherPartProc_L1d_Records	key=0x10075, proc=loc_4864CFC4
-	REC_IvOtherPartProc_L1d_Records	key=0x10052, proc=loc_4864CFD6	# [8]
-	REC_IvOtherPartProc_L1d_Records	key=0x10053, proc=loc_4864CFE4
-	REC_IvOtherPartProc_L1d_Records	key=0x100B2, proc=loc_4864CFF2
-	REC_IvOtherPartProc_L1d_Records	key=0x1003A, proc=loc_4864D013
-	REC_IvOtherPartProc_L1d_Records	proc=IvOtherPartProc_L1ff
-	REC_IvOtherPartProc_L1d_Records	proc=IvOtherPartProc_L1ff
-	REC_IvOtherPartProc_L1d_Records	proc=IvOtherPartProc_L1ff
-	REC_IvOtherPartProc_L1d_Records	proc=IvOtherPartProc_L1ff
-func_4864D0EC_entry_L1e_Records:	# 16 x REC_func_4864D0EC_entry_L1e_Records (8 bytes each); read by func_4864D0EC_entry_L1e 0x4864D10F `mov (a0), d0`; func_4864D0EC_entry_L4c 0x4864D13D `mov (a0), d0`; func_4864D0EC_entry_L4f 0x4864D140 `mov (4, a0), a0`
-	REC_func_4864D0EC_entry_L1e_Records	key=0x6FFFD0, proc=loc_4864D16E	# [0]
-	REC_func_4864D0EC_entry_L1e_Records	key=0x6FFFD1, proc=loc_4864D15A
-	REC_func_4864D0EC_entry_L1e_Records	key=0x6FFFD2, proc=loc_4864D163
-	REC_func_4864D0EC_entry_L1e_Records	key=131, proc=loc_4864D145
-	REC_func_4864D0EC_entry_L1e_Records	key=1, proc=loc_4864D1C1
-	REC_func_4864D0EC_entry_L1e_Records	key=133, proc=loc_4864D163
-	REC_func_4864D0EC_entry_L1e_Records	key=5, proc=loc_4864D27D
-	REC_func_4864D0EC_entry_L1e_Records	key=0x6FFFC7, proc=loc_4864D251
-	REC_func_4864D0EC_entry_L1e_Records	key=6, proc=loc_4864D281	# [8]
-	REC_func_4864D0EC_entry_L1e_Records	key=41, proc=loc_4864D17F
-	REC_func_4864D0EC_entry_L1e_Records	key=112, proc=loc_4864D285
-	REC_func_4864D0EC_entry_L1e_Records	key=113, proc=loc_4864D29F
-	REC_func_4864D0EC_entry_L1e_Records	proc=func_4864D0EC_entry_L1c0
-	REC_func_4864D0EC_entry_L1e_Records	proc=func_4864D0EC_entry_L1c0
-	REC_func_4864D0EC_entry_L1e_Records	proc=func_4864D0EC_entry_L1c0
-	REC_func_4864D0EC_entry_L1e_Records	proc=func_4864D0EC_entry_L1c0
-
-MainSoundAdd_Table:
-	.long	loc_4864E207
-	.long	loc_4864E207
-	.long	loc_4864E24E
-	.long	loc_4864E24E
-	.long	loc_4864E24E
-	.long	loc_4864E24E
-	.long	loc_4864E24E
-	.long	loc_4864E24E
-	.long	loc_4864E24E
-	.long	loc_4864E24E
-	.long	loc_4864E24E
-	.long	loc_4864E24E
-MainSoundAdd_Table_2:
-	.long	loc_4864E08F
-	.long	loc_4864E08F
-	.long	loc_4864E0DA
-	.long	loc_4864E0DA
-	.long	loc_4864E0DA
-	.long	loc_4864E0DA
-	.long	loc_4864E0DA
-	.long	loc_4864E0DA
-	.long	loc_4864E0DA
-	.long	loc_4864E0DA
-	.long	loc_4864E0DA
-	.long	loc_4864E0DA
-
-MmmMtune_L1d_Records:	# 16 x REC_MmmMtune_L1d_Records (8 bytes each); read by MmmMtune_L1d 0x4864E392 `mov (a0), d0`; MmmMtune_L4b 0x4864E3C0 `mov (a0), d0`; MmmMtune_L4e 0x4864E3C3 `mov (4, a0), a0`
-	REC_MmmMtune_L1d_Records	key=128, proc=loc_4864E419	# [0]
-	REC_MmmMtune_L1d_Records	key=129, proc=loc_4864E42C
-	REC_MmmMtune_L1d_Records	key=1, proc=loc_4864E437
-	REC_MmmMtune_L1d_Records	key=2, proc=loc_4864E43B
-	REC_MmmMtune_L1d_Records	key=109, proc=loc_4864E443
-	REC_MmmMtune_L1d_Records	proc=MmmMtune_Ld1
-	REC_MmmMtune_L1d_Records	proc=MmmMtune_Ld1
-	REC_MmmMtune_L1d_Records	proc=MmmMtune_Ld1
-	REC_MmmMtune_L1d_Records	proc=MmmMtune_Ld1	# [8]
-	REC_MmmMtune_L1d_Records	proc=MmmMtune_Ld1
-	REC_MmmMtune_L1d_Records	proc=MmmMtune_Ld1
-	REC_MmmMtune_L1d_Records	proc=MmmMtune_Ld1
-	REC_MmmMtune_L1d_Records	key=108, proc=loc_4864E43F
-	REC_MmmMtune_L1d_Records	key=125, proc=loc_4864E41C
-	REC_MmmMtune_L1d_Records	key=126, proc=loc_4864E3C8
-	REC_MmmMtune_L1d_Records	key=127, proc=loc_4864E416
-AcTechniChordProc_L1d_Records:	# 16 x REC_AcTechniChordProc_L1d_Records (8 bytes each); read by AcTechniChordProc_L1d 0x4864E4D7 `mov (a0), d0`; AcTechniChordProc_L4c 0x4864E506 `mov (a0), d0`; AcTechniChordProc_L4f 0x4864E509 `mov (4, a0), a0`
-	REC_AcTechniChordProc_L1d_Records	key=16, proc=loc_4864E8F8	# [0]
-	REC_AcTechniChordProc_L1d_Records	key=1, proc=loc_4864E50E
-	REC_AcTechniChordProc_L1d_Records	key=0x100B2, proc=loc_4864E5A9
-	REC_AcTechniChordProc_L1d_Records	key=0x100B3, proc=loc_4864E7BE
-	REC_AcTechniChordProc_L1d_Records	key=0x100B4, proc=loc_4864E5D4
-	REC_AcTechniChordProc_L1d_Records	key=0x710005, proc=loc_4864E81C
-	REC_AcTechniChordProc_L1d_Records	key=17, proc=loc_4864E860
-	REC_AcTechniChordProc_L1d_Records	key=18, proc=loc_4864E8F8
-	REC_AcTechniChordProc_L1d_Records	key=36, proc=loc_4864E990	# [8]
-	REC_AcTechniChordProc_L1d_Records	key=9, proc=loc_4864E562
-	REC_AcTechniChordProc_L1d_Records	key=20, proc=loc_4864E9B5
-	REC_AcTechniChordProc_L1d_Records	proc=AcTechniChordProc_L525
-	REC_AcTechniChordProc_L1d_Records	proc=AcTechniChordProc_L525
-	REC_AcTechniChordProc_L1d_Records	proc=AcTechniChordProc_L525
-	REC_AcTechniChordProc_L1d_Records	proc=AcTechniChordProc_L525
-	REC_AcTechniChordProc_L1d_Records	key=15, proc=loc_4864E860
-IvSdpartProc_L21_Records:	# 16 x REC_IvSdpartProc_L21_Records (8 bytes each); read by IvSdpartProc_L21 0x4864EC05 `mov (a0), d0`; IvSdpartProc_L50 0x4864EC34 `mov (a0), d0`; IvSdpartProc_L53 0x4864EC37 `mov (4, a0), a0`
-	REC_IvSdpartProc_L21_Records	key=16, proc=loc_4864ED87	# [0]
-	REC_IvSdpartProc_L21_Records	key=1, proc=loc_4864EC3C
-	REC_IvSdpartProc_L21_Records	key=2, proc=loc_4864ECF1
-	REC_IvSdpartProc_L21_Records	key=17, proc=loc_4864ED87
-	REC_IvSdpartProc_L21_Records	key=18, proc=loc_4864ED87
-	REC_IvSdpartProc_L21_Records	key=20, proc=loc_4864EE3B
-	REC_IvSdpartProc_L21_Records	key=0x710006, proc=loc_4864EEE2
-	REC_IvSdpartProc_L21_Records	key=22, proc=loc_4864EF17
-	REC_IvSdpartProc_L21_Records	key=0x100B2, proc=loc_4864EF9E	# [8]
-	REC_IvSdpartProc_L21_Records	key=9, proc=loc_4864ED28
-	REC_IvSdpartProc_L21_Records	key=0x1003A, proc=loc_4864EFC2
-	REC_IvSdpartProc_L21_Records	proc=IvSdpartProc_L3f0
-	REC_IvSdpartProc_L21_Records	proc=IvSdpartProc_L3f0
-	REC_IvSdpartProc_L21_Records	proc=IvSdpartProc_L3f0
-	REC_IvSdpartProc_L21_Records	proc=IvSdpartProc_L3f0
-	REC_IvSdpartProc_L21_Records	key=15, proc=loc_4864ED87
-AcSpsMmmEditProc_L21_Records:	# 32 x REC_AcSpsMmmEditProc_L21_Records (8 bytes each); read by AcSpsMmmEditProc_L21 0x4864F1DB `mov (a0), d0`; AcSpsMmmEditProc_L51 0x4864F20B `mov (a0), d0`; AcSpsMmmEditProc_L54 0x4864F20E `mov (4, a0), a0`
-	REC_AcSpsMmmEditProc_L21_Records	key=0x700000, proc=loc_4864F50F	# [0]
-	REC_AcSpsMmmEditProc_L21_Records	key=1, proc=loc_4864F213
-	REC_AcSpsMmmEditProc_L21_Records	key=0x10062, proc=loc_4864F3FE
-	REC_AcSpsMmmEditProc_L21_Records	key=0x710001, proc=loc_4864F785
-	REC_AcSpsMmmEditProc_L21_Records	key=0x710002, proc=loc_4864F7BE
-	REC_AcSpsMmmEditProc_L21_Records	proc=AcSpsMmmEditProc_L680
-	REC_AcSpsMmmEditProc_L21_Records	proc=AcSpsMmmEditProc_L680
-	REC_AcSpsMmmEditProc_L21_Records	proc=AcSpsMmmEditProc_L680
-	REC_AcSpsMmmEditProc_L21_Records	proc=AcSpsMmmEditProc_L680	# [8]
-	REC_AcSpsMmmEditProc_L21_Records	key=9, proc=loc_4864F410
-	REC_AcSpsMmmEditProc_L21_Records	key=41, proc=loc_4864F6AA
-	REC_AcSpsMmmEditProc_L21_Records	proc=AcSpsMmmEditProc_L680
-	REC_AcSpsMmmEditProc_L21_Records	proc=AcSpsMmmEditProc_L680
-	REC_AcSpsMmmEditProc_L21_Records	proc=AcSpsMmmEditProc_L680
-	REC_AcSpsMmmEditProc_L21_Records	key=0x1004E, proc=loc_4864F766
-	REC_AcSpsMmmEditProc_L21_Records	key=15, proc=loc_4864F5E2
-	REC_AcSpsMmmEditProc_L21_Records	key=0x100D0, proc=loc_4864F2E7	# [16]
-	REC_AcSpsMmmEditProc_L21_Records	key=49, proc=loc_4864F25C
-	REC_AcSpsMmmEditProc_L21_Records	key=17, proc=loc_4864F5E2
-	REC_AcSpsMmmEditProc_L21_Records	key=19, proc=loc_4864F5B9
-	REC_AcSpsMmmEditProc_L21_Records	key=20, proc=loc_4864F46B
-	REC_AcSpsMmmEditProc_L21_Records	key=18, proc=loc_4864F5E2
-	REC_AcSpsMmmEditProc_L21_Records	key=16, proc=loc_4864F5E2
-	REC_AcSpsMmmEditProc_L21_Records	key=0x10054, proc=loc_4864F7C8
-	REC_AcSpsMmmEditProc_L21_Records	key=0x100AE, proc=loc_4864F7D2	# [24]
-	REC_AcSpsMmmEditProc_L21_Records	proc=AcSpsMmmEditProc_L680
-	REC_AcSpsMmmEditProc_L21_Records	key=0x1003A, proc=loc_4864F2AD
-	REC_AcSpsMmmEditProc_L21_Records	key=0x1003B, proc=loc_4864F32B
-	REC_AcSpsMmmEditProc_L21_Records	key=0x1003C, proc=loc_4864F780
-	REC_AcSpsMmmEditProc_L21_Records	key=0x1003D, proc=loc_4864F394
-	REC_AcSpsMmmEditProc_L21_Records	proc=AcSpsMmmEditProc_L680
-	REC_AcSpsMmmEditProc_L21_Records	proc=AcSpsMmmEditProc_L680
-AcSpsPanProc_L1d_Records:	# 16 x REC_AcSpsPanProc_L1d_Records (8 bytes each); read by AcSpsPanProc_L1d 0x4864FAC3 `mov (a0), d0`; AcSpsPanProc_L3a 0x4864FAE0 `mov (4, a0), a0`
-	REC_AcSpsPanProc_L1d_Records	proc=AcSpsPanProc_L22a	# [0]
-	REC_AcSpsPanProc_L1d_Records	key=1, proc=loc_4864FAE5
-	REC_AcSpsPanProc_L1d_Records	key=2, proc=loc_4864FAE5
-	REC_AcSpsPanProc_L1d_Records	key=3, proc=loc_4864FAE5
-	REC_AcSpsPanProc_L1d_Records	key=4, proc=loc_4864FAE5
-	REC_AcSpsPanProc_L1d_Records	key=0x100A5, proc=loc_4864FAF5
-	REC_AcSpsPanProc_L1d_Records	key=0x100A6, proc=loc_4864FAF9
-	REC_AcSpsPanProc_L1d_Records	proc=AcSpsPanProc_L22a
-	REC_AcSpsPanProc_L1d_Records	proc=AcSpsPanProc_L22a	# [8]
-	REC_AcSpsPanProc_L1d_Records	proc=AcSpsPanProc_L22a
-	REC_AcSpsPanProc_L1d_Records	proc=AcSpsPanProc_L22a
-	REC_AcSpsPanProc_L1d_Records	key=27, proc=loc_4864FAE5
-	REC_AcSpsPanProc_L1d_Records	proc=AcSpsPanProc_L22a
-	REC_AcSpsPanProc_L1d_Records	key=0x1002D, proc=loc_4864FAF5
-	REC_AcSpsPanProc_L1d_Records	proc=AcSpsPanProc_L22a
-	REC_AcSpsPanProc_L1d_Records	key=0x1002F, proc=loc_4864FAF5
-AcMixerScreenProc_L21_Records:	# 16 x REC_AcMixerScreenProc_L21_Records (8 bytes each); read by AcMixerScreenProc_L21 0x4864FECA `mov (a0), d0`; AcMixerScreenProc_L50 0x4864FEF9 `mov (a0), d0`; AcMixerScreenProc_L53 0x4864FEFC `mov (4, a0), a0`
-	REC_AcMixerScreenProc_L21_Records	key=16, proc=loc_4865055F	# [0]
-	REC_AcMixerScreenProc_L21_Records	key=1, proc=loc_4864FF67
-	REC_AcMixerScreenProc_L21_Records	key=2, proc=loc_48650116
-	REC_AcMixerScreenProc_L21_Records	key=0x700002, proc=loc_48650540
-	REC_AcMixerScreenProc_L21_Records	key=20, proc=loc_4865020F
-	REC_AcMixerScreenProc_L21_Records	proc=AcMixerScreenProc_L6ef
-	REC_AcMixerScreenProc_L21_Records	key=22, proc=loc_486503B2
-	REC_AcMixerScreenProc_L21_Records	key=39, proc=loc_48650268
-	REC_AcMixerScreenProc_L21_Records	proc=AcMixerScreenProc_L6ef	# [8]
-	REC_AcMixerScreenProc_L21_Records	key=9, proc=loc_486501EE
-	REC_AcMixerScreenProc_L21_Records	key=0x1003A, proc=loc_4864FF01
-	REC_AcMixerScreenProc_L21_Records	proc=AcMixerScreenProc_L6ef
-	REC_AcMixerScreenProc_L21_Records	proc=AcMixerScreenProc_L6ef
-	REC_AcMixerScreenProc_L21_Records	proc=AcMixerScreenProc_L6ef
-	REC_AcMixerScreenProc_L21_Records	proc=AcMixerScreenProc_L6ef
-	REC_AcMixerScreenProc_L21_Records	key=15, proc=loc_4865055F
-AcMixerProc_L1e_Records:	# 16 x REC_AcMixerProc_L1e_Records (8 bytes each); read by AcMixerProc_L1e 0x4865061F `mov (a0), d0`; AcMixerProc_L4d 0x4865064E `mov (a0), d0`; AcMixerProc_L50 0x48650651 `mov (4, a0), a0`
-	REC_AcMixerProc_L1e_Records	key=0x100B0, proc=loc_48650783	# [0]
-	REC_AcMixerProc_L1e_Records	key=1, proc=loc_486507AF
-	REC_AcMixerProc_L1e_Records	key=16, proc=loc_48650883
-	REC_AcMixerProc_L1e_Records	key=0x700001, proc=loc_48650982
-	REC_AcMixerProc_L1e_Records	key=36, proc=loc_48650839
-	REC_AcMixerProc_L1e_Records	key=5, proc=loc_48650656
-	REC_AcMixerProc_L1e_Records	proc=AcMixerProc_L3cc
-	REC_AcMixerProc_L1e_Records	proc=AcMixerProc_L3cc
-	REC_AcMixerProc_L1e_Records	proc=AcMixerProc_L3cc	# [8]
-	REC_AcMixerProc_L1e_Records	proc=AcMixerProc_L3cc
-	REC_AcMixerProc_L1e_Records	proc=AcMixerProc_L3cc
-	REC_AcMixerProc_L1e_Records	key=27, proc=loc_48650839
-	REC_AcMixerProc_L1e_Records	proc=AcMixerProc_L3cc
-	REC_AcMixerProc_L1e_Records	key=0x1004D, proc=loc_48650954
-	REC_AcMixerProc_L1e_Records	key=0x100AE, proc=loc_48650710
-	REC_AcMixerProc_L1e_Records	key=0x100AF, proc=loc_48650783
-AcSpsKsclPartProc_L1e_Records:	# 16 x REC_AcSpsKsclPartProc_L1e_Records (8 bytes each); read by AcSpsKsclPartProc_L1e 0x48652B92 `mov (a0), d0`; AcSpsKsclPartProc_L4d 0x48652BC1 `mov (a0), d0`; AcSpsKsclPartProc_L50 0x48652BC4 `mov (4, a0), a0`
-	REC_AcSpsKsclPartProc_L1e_Records	key=16, proc=loc_48652E36	# [0]
-	REC_AcSpsKsclPartProc_L1e_Records	key=1, proc=loc_48652BC9
-	REC_AcSpsKsclPartProc_L1e_Records	key=2, proc=loc_48652C33
-	REC_AcSpsKsclPartProc_L1e_Records	key=49, proc=loc_48652C91
-	REC_AcSpsKsclPartProc_L1e_Records	key=20, proc=loc_48652D7D
-	REC_AcSpsKsclPartProc_L1e_Records	key=19, proc=loc_48652E0F
-	REC_AcSpsKsclPartProc_L1e_Records	key=0x710006, proc=loc_48652DD7
-	REC_AcSpsKsclPartProc_L1e_Records	key=17, proc=loc_48652E36
-	REC_AcSpsKsclPartProc_L1e_Records	key=18, proc=loc_48652E36	# [8]
-	REC_AcSpsKsclPartProc_L1e_Records	key=9, proc=loc_48652D12
-	REC_AcSpsKsclPartProc_L1e_Records	key=0x1003A, proc=loc_48652CDE
-	REC_AcSpsKsclPartProc_L1e_Records	proc=AcSpsKsclPartProc_L3c6
-	REC_AcSpsKsclPartProc_L1e_Records	key=0x1003C, proc=loc_48652F36
-	REC_AcSpsKsclPartProc_L1e_Records	proc=AcSpsKsclPartProc_L3c6
-	REC_AcSpsKsclPartProc_L1e_Records	proc=AcSpsKsclPartProc_L3c6
-	REC_AcSpsKsclPartProc_L1e_Records	key=15, proc=loc_48652E36
-AcKsclTypeEditProc_L1e_Records:	# 16 x REC_AcKsclTypeEditProc_L1e_Records (8 bytes each); read by AcKsclTypeEditProc_L1e 0x48653043 `mov (a0), d0`; AcKsclTypeEditProc_L4e 0x48653073 `mov (a0), d0`; AcKsclTypeEditProc_L51 0x48653076 `mov (4, a0), a0`
-	REC_AcKsclTypeEditProc_L1e_Records	key=16, proc=loc_48653155	# [0]
-	REC_AcKsclTypeEditProc_L1e_Records	key=1, proc=loc_4865307B
-	REC_AcKsclTypeEditProc_L1e_Records	key=17, proc=loc_48653155
-	REC_AcKsclTypeEditProc_L1e_Records	key=19, proc=loc_4865312E
-	REC_AcKsclTypeEditProc_L1e_Records	key=18, proc=loc_48653155
-	REC_AcKsclTypeEditProc_L1e_Records	proc=AcKsclTypeEditProc_L1b2
-	REC_AcKsclTypeEditProc_L1e_Records	proc=AcKsclTypeEditProc_L1b2
-	REC_AcKsclTypeEditProc_L1e_Records	proc=AcKsclTypeEditProc_L1b2
-	REC_AcKsclTypeEditProc_L1e_Records	proc=AcKsclTypeEditProc_L1b2	# [8]
-	REC_AcKsclTypeEditProc_L1e_Records	key=9, proc=loc_4865310B
-	REC_AcKsclTypeEditProc_L1e_Records	key=0x1003A, proc=loc_486530EE
-	REC_AcKsclTypeEditProc_L1e_Records	proc=AcKsclTypeEditProc_L1b2
-	REC_AcKsclTypeEditProc_L1e_Records	key=0x1003C, proc=loc_486531D3
-	REC_AcKsclTypeEditProc_L1e_Records	proc=AcKsclTypeEditProc_L1b2
-	REC_AcKsclTypeEditProc_L1e_Records	proc=AcKsclTypeEditProc_L1b2
-	REC_AcKsclTypeEditProc_L1e_Records	key=15, proc=loc_48653155
-AcKsclShiftEditProc_L1e_Records:	# 16 x REC_AcKsclShiftEditProc_L1e_Records (8 bytes each); read by AcKsclShiftEditProc_L1e 0x48653206 `mov (a0), d0`; AcKsclShiftEditProc_L4e 0x48653236 `mov (a0), d0`; AcKsclShiftEditProc_L51 0x48653239 `mov (4, a0), a0`
-	REC_AcKsclShiftEditProc_L1e_Records	key=16, proc=loc_48653318	# [0]
-	REC_AcKsclShiftEditProc_L1e_Records	key=1, proc=loc_4865323E
-	REC_AcKsclShiftEditProc_L1e_Records	key=17, proc=loc_48653318
-	REC_AcKsclShiftEditProc_L1e_Records	key=19, proc=loc_486532F1
-	REC_AcKsclShiftEditProc_L1e_Records	key=18, proc=loc_48653318
-	REC_AcKsclShiftEditProc_L1e_Records	proc=AcKsclShiftEditProc_L1ca
-	REC_AcKsclShiftEditProc_L1e_Records	proc=AcKsclShiftEditProc_L1ca
-	REC_AcKsclShiftEditProc_L1e_Records	proc=AcKsclShiftEditProc_L1ca
-	REC_AcKsclShiftEditProc_L1e_Records	proc=AcKsclShiftEditProc_L1ca	# [8]
-	REC_AcKsclShiftEditProc_L1e_Records	key=9, proc=loc_486532CE
-	REC_AcKsclShiftEditProc_L1e_Records	key=0x1003A, proc=loc_486532B1
-	REC_AcKsclShiftEditProc_L1e_Records	proc=AcKsclShiftEditProc_L1ca
-	REC_AcKsclShiftEditProc_L1e_Records	key=0x1003C, proc=loc_486533AE
-	REC_AcKsclShiftEditProc_L1e_Records	proc=AcKsclShiftEditProc_L1ca
-	REC_AcKsclShiftEditProc_L1e_Records	proc=AcKsclShiftEditProc_L1ca
-	REC_AcKsclShiftEditProc_L1e_Records	key=15, proc=loc_48653318
-AcKsclCopyEditProc_L1e_Records:	# 16 x REC_AcKsclCopyEditProc_L1e_Records (8 bytes each); read by AcKsclCopyEditProc_L1e 0x4865344A `mov (a0), d0`; AcKsclCopyEditProc_L4d 0x48653479 `mov (a0), d0`; AcKsclCopyEditProc_L50 0x4865347C `mov (4, a0), a0`
-	REC_AcKsclCopyEditProc_L1e_Records	key=16, proc=loc_486535D8	# [0]
-	REC_AcKsclCopyEditProc_L1e_Records	key=1, proc=loc_48653481
-	REC_AcKsclCopyEditProc_L1e_Records	key=2, proc=loc_4865352C
-	REC_AcKsclCopyEditProc_L1e_Records	key=19, proc=loc_486535B1
-	REC_AcKsclCopyEditProc_L1e_Records	key=17, proc=loc_486535D8
-	REC_AcKsclCopyEditProc_L1e_Records	key=18, proc=loc_486535D8
-	REC_AcKsclCopyEditProc_L1e_Records	key=20, proc=loc_486536C8
-	REC_AcKsclCopyEditProc_L1e_Records	proc=AcKsclCopyEditProc_L32c
-	REC_AcKsclCopyEditProc_L1e_Records	proc=AcKsclCopyEditProc_L32c	# [8]
-	REC_AcKsclCopyEditProc_L1e_Records	key=9, proc=loc_4865358E
-	REC_AcKsclCopyEditProc_L1e_Records	key=0x1003A, proc=loc_48653571
-	REC_AcKsclCopyEditProc_L1e_Records	proc=AcKsclCopyEditProc_L32c
-	REC_AcKsclCopyEditProc_L1e_Records	key=0x1003C, proc=loc_486536C3
-	REC_AcKsclCopyEditProc_L1e_Records	proc=AcKsclCopyEditProc_L32c
-	REC_AcKsclCopyEditProc_L1e_Records	proc=AcKsclCopyEditProc_L32c
-	REC_AcKsclCopyEditProc_L1e_Records	key=15, proc=loc_486535D8
-AcKsclKeyEditProc_L1e_Records:	# 16 x REC_AcKsclKeyEditProc_L1e_Records (8 bytes each); read by AcKsclKeyEditProc_L1e 0x48653787 `mov (a0), d0`; AcKsclKeyEditProc_L4e 0x486537B7 `mov (a0), d0`; AcKsclKeyEditProc_L51 0x486537BA `mov (4, a0), a0`
-	REC_AcKsclKeyEditProc_L1e_Records	proc=AcKsclKeyEditProc_L4a2	# [0]
-	REC_AcKsclKeyEditProc_L1e_Records	key=1, proc=loc_486537DC
-	REC_AcKsclKeyEditProc_L1e_Records	key=0x10032, proc=loc_486537BF
-	REC_AcKsclKeyEditProc_L1e_Records	key=33, proc=loc_48653BBA
-	REC_AcKsclKeyEditProc_L1e_Records	key=0x10034, proc=loc_48653C07
-	REC_AcKsclKeyEditProc_L1e_Records	proc=AcKsclKeyEditProc_L4a2
-	REC_AcKsclKeyEditProc_L1e_Records	proc=AcKsclKeyEditProc_L4a2
-	REC_AcKsclKeyEditProc_L1e_Records	key=7, proc=loc_48653826
-	REC_AcKsclKeyEditProc_L1e_Records	key=8, proc=loc_48653826	# [8]
-	REC_AcKsclKeyEditProc_L1e_Records	key=9, proc=loc_48653826
-	REC_AcKsclKeyEditProc_L1e_Records	key=10, proc=loc_48653826
-	REC_AcKsclKeyEditProc_L1e_Records	key=11, proc=loc_486537FF
-	REC_AcKsclKeyEditProc_L1e_Records	proc=AcKsclKeyEditProc_L4a2
-	REC_AcKsclKeyEditProc_L1e_Records	proc=AcKsclKeyEditProc_L4a2
-	REC_AcKsclKeyEditProc_L1e_Records	proc=AcKsclKeyEditProc_L4a2
-	REC_AcKsclKeyEditProc_L1e_Records	proc=AcKsclKeyEditProc_L4a2
-SpPartMono_L1d_Records:	# 16 x REC_SpPartMono_L1d_Records (8 bytes each); read by SpPartMono_L1d 0x486545B5 `mov (a0), d0`; SpPartMono_L4b 0x486545E3 `mov (a0), d0`; SpPartMono_L4e 0x486545E6 `mov (4, a0), a0`
-	REC_SpPartMono_L1d_Records	key=16, proc=loc_48654603	# [0]
-	REC_SpPartMono_L1d_Records	key=17, proc=loc_48654603
-	REC_SpPartMono_L1d_Records	key=2, proc=loc_486545EB
-	REC_SpPartMono_L1d_Records	key=18, proc=loc_48654603
-	REC_SpPartMono_L1d_Records	key=19, proc=loc_48654603
-	REC_SpPartMono_L1d_Records	key=21, proc=loc_486546D9
-	REC_SpPartMono_L1d_Records	key=22, proc=loc_48654771
-	REC_SpPartMono_L1d_Records	key=0x10082, proc=loc_48654775
-	REC_SpPartMono_L1d_Records	key=1, proc=loc_4865481A	# [8]
-	REC_SpPartMono_L1d_Records	proc=SpPartMono_L285
-	REC_SpPartMono_L1d_Records	proc=SpPartMono_L285
-	REC_SpPartMono_L1d_Records	proc=SpPartMono_L285
-	REC_SpPartMono_L1d_Records	proc=SpPartMono_L285
-	REC_SpPartMono_L1d_Records	proc=SpPartMono_L285
-	REC_SpPartMono_L1d_Records	proc=SpPartMono_L285
-	REC_SpPartMono_L1d_Records	proc=SpPartMono_L285
-ApcRevFunc_L1d_Records:	# 16 x REC_ApcRevFunc_L1d_Records (8 bytes each); read by ApcRevFunc_L1d 0x4865488F `mov (a0), d0`; ApcRevFunc_L4b 0x486548BD `mov (a0), d0`; ApcRevFunc_L4e 0x486548C0 `mov (4, a0), a0`
-	REC_ApcRevFunc_L1d_Records	key=16, proc=loc_486548EC	# [0]
-	REC_ApcRevFunc_L1d_Records	key=17, proc=loc_48654975
-	REC_ApcRevFunc_L1d_Records	key=2, proc=loc_486548C5
-	REC_ApcRevFunc_L1d_Records	key=18, proc=loc_486548EC
-	REC_ApcRevFunc_L1d_Records	key=19, proc=loc_48654975
-	REC_ApcRevFunc_L1d_Records	key=21, proc=loc_48654A09
-	REC_ApcRevFunc_L1d_Records	key=22, proc=loc_48654B3B
-	REC_ApcRevFunc_L1d_Records	key=0x10082, proc=loc_48654B3F
-	REC_ApcRevFunc_L1d_Records	key=1, proc=loc_48654BE5	# [8]
-	REC_ApcRevFunc_L1d_Records	proc=ApcRevFunc_L376
-	REC_ApcRevFunc_L1d_Records	proc=ApcRevFunc_L376
-	REC_ApcRevFunc_L1d_Records	proc=ApcRevFunc_L376
-	REC_ApcRevFunc_L1d_Records	proc=ApcRevFunc_L376
-	REC_ApcRevFunc_L1d_Records	proc=ApcRevFunc_L376
-	REC_ApcRevFunc_L1d_Records	proc=ApcRevFunc_L376
-	REC_ApcRevFunc_L1d_Records	proc=ApcRevFunc_L376
-ApcRevCheck_L1d_Records:	# 16 x REC_ApcRevCheck_L1d_Records (8 bytes each); read by ApcRevCheck_L1d 0x48654C09 `mov (a0), d0`; ApcRevCheck_L4a 0x48654C36 `mov (a0), d0`; ApcRevCheck_L4d 0x48654C39 `mov (4, a0), a0`
-	REC_ApcRevCheck_L1d_Records	key=16, proc=loc_48654C4F	# [0]
-	REC_ApcRevCheck_L1d_Records	key=17, proc=loc_48654C4F
-	REC_ApcRevCheck_L1d_Records	key=2, proc=loc_48654C3E
-	REC_ApcRevCheck_L1d_Records	key=18, proc=loc_48654C4F
-	REC_ApcRevCheck_L1d_Records	key=19, proc=loc_48654C4F
-	REC_ApcRevCheck_L1d_Records	key=21, proc=loc_48654C53
-	REC_ApcRevCheck_L1d_Records	key=22, proc=loc_48654CC0
-	REC_ApcRevCheck_L1d_Records	key=0x10082, proc=loc_48654CC4
-	REC_ApcRevCheck_L1d_Records	key=1, proc=loc_48654D3E	# [8]
-	REC_ApcRevCheck_L1d_Records	proc=ApcRevCheck_L155
-	REC_ApcRevCheck_L1d_Records	proc=ApcRevCheck_L155
-	REC_ApcRevCheck_L1d_Records	proc=ApcRevCheck_L155
-	REC_ApcRevCheck_L1d_Records	proc=ApcRevCheck_L155
-	REC_ApcRevCheck_L1d_Records	proc=ApcRevCheck_L155
-	REC_ApcRevCheck_L1d_Records	proc=ApcRevCheck_L155
-	REC_ApcRevCheck_L1d_Records	proc=ApcRevCheck_L155
-TsRight1Func_L1d_Records:	# 16 x REC_TsRight1Func_L1d_Records (8 bytes each); read by TsRight1Func_L1d 0x48654D62 `mov (a0), d0`; TsRight1Func_L4b 0x48654D90 `mov (a0), d0`; TsRight1Func_L4e 0x48654D93 `mov (4, a0), a0`
-	REC_TsRight1Func_L1d_Records	key=16, proc=loc_48654DB6	# [0]
-	REC_TsRight1Func_L1d_Records	key=17, proc=loc_48654E2A
-	REC_TsRight1Func_L1d_Records	key=2, proc=loc_48654D98
-	REC_TsRight1Func_L1d_Records	key=18, proc=loc_48654DB6
-	REC_TsRight1Func_L1d_Records	key=19, proc=loc_48654E2A
-	REC_TsRight1Func_L1d_Records	key=21, proc=loc_48654E9A
-	REC_TsRight1Func_L1d_Records	key=22, proc=loc_48654F76
-	REC_TsRight1Func_L1d_Records	key=0x10082, proc=loc_48654F7A
-	REC_TsRight1Func_L1d_Records	key=1, proc=loc_48655058	# [8]
-	REC_TsRight1Func_L1d_Records	proc=TsRight1Func_L316
-	REC_TsRight1Func_L1d_Records	proc=TsRight1Func_L316
-	REC_TsRight1Func_L1d_Records	proc=TsRight1Func_L316
-	REC_TsRight1Func_L1d_Records	proc=TsRight1Func_L316
-	REC_TsRight1Func_L1d_Records	proc=TsRight1Func_L316
-	REC_TsRight1Func_L1d_Records	proc=TsRight1Func_L316
-	REC_TsRight1Func_L1d_Records	proc=TsRight1Func_L316
-TsPart1Func_L1d_Records:	# 16 x REC_TsPart1Func_L1d_Records (8 bytes each); read by TsPart1Func_L1d 0x4865507C `mov (a0), d0`; TsPart1Func_L4a 0x486550A9 `mov (a0), d0`; TsPart1Func_L4d 0x486550AC `mov (4, a0), a0`
-	REC_TsPart1Func_L1d_Records	key=16, proc=loc_486550C2	# [0]
-	REC_TsPart1Func_L1d_Records	key=17, proc=loc_4865511D
-	REC_TsPart1Func_L1d_Records	key=2, proc=loc_486550B1
-	REC_TsPart1Func_L1d_Records	key=18, proc=loc_486550C2
-	REC_TsPart1Func_L1d_Records	key=19, proc=loc_4865511D
-	REC_TsPart1Func_L1d_Records	key=21, proc=loc_48655175
-	REC_TsPart1Func_L1d_Records	key=22, proc=loc_486551EB
-	REC_TsPart1Func_L1d_Records	key=0x10082, proc=loc_486551EF
-	REC_TsPart1Func_L1d_Records	key=1, proc=loc_48655276	# [8]
-	REC_TsPart1Func_L1d_Records	proc=TsPart1Func_L21a
-	REC_TsPart1Func_L1d_Records	proc=TsPart1Func_L21a
-	REC_TsPart1Func_L1d_Records	proc=TsPart1Func_L21a
-	REC_TsPart1Func_L1d_Records	proc=TsPart1Func_L21a
-	REC_TsPart1Func_L1d_Records	proc=TsPart1Func_L21a
-	REC_TsPart1Func_L1d_Records	proc=TsPart1Func_L21a
-	REC_TsPart1Func_L1d_Records	proc=TsPart1Func_L21a
-TsPart9Func_L1d_Records:	# 16 x REC_TsPart9Func_L1d_Records (8 bytes each); read by TsPart9Func_L1d 0x4865529A `mov (a0), d0`; TsPart9Func_L4a 0x486552C7 `mov (a0), d0`; TsPart9Func_L4d 0x486552CA `mov (4, a0), a0`
-	REC_TsPart9Func_L1d_Records	key=16, proc=loc_486552E0	# [0]
-	REC_TsPart9Func_L1d_Records	key=17, proc=loc_4865533B
-	REC_TsPart9Func_L1d_Records	key=2, proc=loc_486552CF
-	REC_TsPart9Func_L1d_Records	key=18, proc=loc_486552E0
-	REC_TsPart9Func_L1d_Records	key=19, proc=loc_4865533B
-	REC_TsPart9Func_L1d_Records	key=21, proc=loc_48655393
-	REC_TsPart9Func_L1d_Records	key=22, proc=loc_48655409
-	REC_TsPart9Func_L1d_Records	key=0x10082, proc=loc_4865540D
-	REC_TsPart9Func_L1d_Records	key=1, proc=loc_48655494	# [8]
-	REC_TsPart9Func_L1d_Records	proc=TsPart9Func_L21a
-	REC_TsPart9Func_L1d_Records	proc=TsPart9Func_L21a
-	REC_TsPart9Func_L1d_Records	proc=TsPart9Func_L21a
-	REC_TsPart9Func_L1d_Records	proc=TsPart9Func_L21a
-	REC_TsPart9Func_L1d_Records	proc=TsPart9Func_L21a
-	REC_TsPart9Func_L1d_Records	proc=TsPart9Func_L21a
-	REC_TsPart9Func_L1d_Records	proc=TsPart9Func_L21a
-TsAccomp1Func_L1d_Records:	# 16 x REC_TsAccomp1Func_L1d_Records (8 bytes each); read by TsAccomp1Func_L1d 0x486554B8 `mov (a0), d0`; TsAccomp1Func_L4a 0x486554E5 `mov (a0), d0`; TsAccomp1Func_L4d 0x486554E8 `mov (4, a0), a0`
-	REC_TsAccomp1Func_L1d_Records	key=16, proc=loc_486554FE	# [0]
-	REC_TsAccomp1Func_L1d_Records	key=17, proc=loc_48655559
-	REC_TsAccomp1Func_L1d_Records	key=2, proc=loc_486554ED
-	REC_TsAccomp1Func_L1d_Records	key=18, proc=loc_486554FE
-	REC_TsAccomp1Func_L1d_Records	key=19, proc=loc_48655559
-	REC_TsAccomp1Func_L1d_Records	key=21, proc=loc_486555B1
-	REC_TsAccomp1Func_L1d_Records	key=22, proc=loc_48655627
-	REC_TsAccomp1Func_L1d_Records	key=0x10082, proc=loc_4865562B
-	REC_TsAccomp1Func_L1d_Records	key=1, proc=loc_486556B2	# [8]
-	REC_TsAccomp1Func_L1d_Records	proc=TsAccomp1Func_L21a
-	REC_TsAccomp1Func_L1d_Records	proc=TsAccomp1Func_L21a
-	REC_TsAccomp1Func_L1d_Records	proc=TsAccomp1Func_L21a
-	REC_TsAccomp1Func_L1d_Records	proc=TsAccomp1Func_L21a
-	REC_TsAccomp1Func_L1d_Records	proc=TsAccomp1Func_L21a
-	REC_TsAccomp1Func_L1d_Records	proc=TsAccomp1Func_L21a
-	REC_TsAccomp1Func_L1d_Records	proc=TsAccomp1Func_L21a
-
-Field_IvPageControlOW_page:	.asciz "page"
-Field_IvPageControlOW_window:	.asciz "window"
-Field_IvPageControlOW_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_IvPageControlOW_end
-
-ClassFields_IvPageControlOW:
-	.long	Field_IvPageControlOW_page
-	.long	Field_IvPageControlOW_window
-	.long	Field_IvPageControlOW_end
-
-Field_AcSplitBox_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcSplitBox_end
-
-ClassFields_AcSplitBox:
-	.long	Field_AcSplitBox_end
-
-Field_AcFadeBox_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcFadeBox_end
-
-ClassFields_AcFadeBox:
-	.long	Field_AcFadeBox_end
-
-Field_AcPadRun_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcPadRun_end
-
-ClassFields_AcPadRun:
-	.long	Field_AcPadRun_end
-
-Field_AcRhyRun_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcRhyRun_end
-
-ClassFields_AcRhyRun:
-	.long	Field_AcRhyRun_end
-
-Field_AcMixerVolS_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcMixerVolS_end
-
-ClassFields_AcMixerVolS:
-	.long	Field_AcMixerVolS_end
-
-Field_AcMixerVolWS_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcMixerVolWS_end
-
-ClassFields_AcMixerVolWS:
-	.long	Field_AcMixerVolWS_end
-
-Field_AcTrackVol_track:	.asciz "track"
-Field_AcTrackVol_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcTrackVol_end
-
-ClassFields_AcTrackVol:
-	.long	Field_AcTrackVol_track
-	.long	Field_AcTrackVol_end
-
-Field_AcSeqRun_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcSeqRun_end
-
-ClassFields_AcSeqRun:
-	.long	Field_AcSeqRun_end
-
-Field_AcSeqCurSngName_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcSeqCurSngName_end
-
-ClassFields_AcSeqCurSngName:
-	.long	Field_AcSeqCurSngName_end
-
-Field_AcFavBankName_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcFavBankName_end
-
-ClassFields_AcFavBankName:
-	.long	Field_AcFavBankName_end
-
-Field_AcRightOct_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcRightOct_end
-
-ClassFields_AcRightOct:
-	.long	Field_AcRightOct_end
-
-Field_AcSndCtrlX_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcSndCtrlX_end
-
-ClassFields_AcSndCtrlX:
-	.long	Field_AcSndCtrlX_end
-
-Field_AcSndCtrlY_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcSndCtrlY_end
-
-ClassFields_AcSndCtrlY:
-	.long	Field_AcSndCtrlY_end
-
-Field_AcPmemBankName_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcPmemBankName_end
-
-ClassFields_AcPmemBankName:
-	.long	Field_AcPmemBankName_end
-
-Field_AcPmemXName_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcPmemXName_end
-
-ClassFields_AcPmemXName:
-	.long	Field_AcPmemXName_end
-
-Field_AcFootSw_sw:	.asciz "sw"
-Field_AcFootSw_end:	.asciz ""
-
-ClassFields_AcFootSw:
-	.long	Field_AcFootSw_sw
-	.long	Field_AcFootSw_end
-
-Field_AcPadBank_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcPadBank_end
-
-ClassFields_AcPadBank:
-	.long	Field_AcPadBank_end
-
-Field_AcPadName_pad:	.asciz "pad"
-Field_AcPadName_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcPadName_end
-
-ClassFields_AcPadName:
-	.long	Field_AcPadName_pad
-	.long	Field_AcPadName_end
-
-Field_AcSndLdOpt_item:	.asciz "item"
-Field_AcSndLdOpt_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcSndLdOpt_end
-
-ClassFields_AcSndLdOpt:
-	.long	Field_AcSndLdOpt_item
-	.long	Field_AcSndLdOpt_end
-
-Field_AcSndDspAlloc_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcSndDspAlloc_end
-
-ClassFields_AcSndDspAlloc:
-	.long	Field_AcSndDspAlloc_end
-
-Field_AcEffectType_eff:	.asciz "eff"
-Field_AcEffectType_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcEffectType_end
-
-ClassFields_AcEffectType:
-	.long	Field_AcEffectType_eff
-	.long	Field_AcEffectType_end
-
-Field_IvRstOtherPart_page:	.asciz "page"
-Field_IvRstOtherPart_pagemin:	.asciz "pagemin"
-Field_IvRstOtherPart_pagemax:	.asciz "pagemax"
-Field_IvRstOtherPart_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_IvRstOtherPart_end
-
-ClassFields_IvRstOtherPart:
-	.long	Field_IvRstOtherPart_page
-	.long	Field_IvRstOtherPart_pagemin
-	.long	Field_IvRstOtherPart_pagemax
-	.long	Field_IvRstOtherPart_end
-
-Field_AcHpScreen_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcHpScreen_end
-
-ClassFields_AcHpScreen:
-	.long	Field_AcHpScreen_end
-
-Field_AcVolBox_part:	.asciz "part"
-Field_AcVolBox_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcVolBox_end
-
-ClassFields_AcVolBox:
-	.long	Field_AcVolBox_part
-	.long	Field_AcVolBox_end
-
-Field_AcMonitorOn_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcMonitorOn_end
-
-ClassFields_AcMonitorOn:
-	.long	Field_AcMonitorOn_end
-
-Field_AcRcVolume_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcRcVolume_end
-
-ClassFields_AcRcVolume:
-	.long	Field_AcRcVolume_end
-
-Field_AcMonRcv_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcMonRcv_end
-
-ClassFields_AcMonRcv:
-	.long	Field_AcMonRcv_end
-
-Field_IvPageKNPR_page:	.asciz "page"
-Field_IvPageKNPR_KN2600:	.asciz "KN2600"
-Field_IvPageKNPR_KN2400:	.asciz "KN2400"
-Field_IvPageKNPR_PR54:	.asciz "PR54"
-Field_IvPageKNPR_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_IvPageKNPR_end
-
-ClassFields_IvPageKNPR:
-	.long	Field_IvPageKNPR_page
-	.long	Field_IvPageKNPR_KN2600
-	.long	Field_IvPageKNPR_KN2400
-	.long	Field_IvPageKNPR_PR54
-	.long	Field_IvPageKNPR_end
-
-Field_AcSeqMixerVol_part:	.asciz "part"
-Field_AcSeqMixerVol_editsw:	.asciz "editsw"
-Field_AcSeqMixerVol_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcSeqMixerVol_end
-
-ClassFields_AcSeqMixerVol:
-	.long	Field_AcSeqMixerVol_part
-	.long	Field_AcSeqMixerVol_editsw
-	.long	Field_AcSeqMixerVol_end
-
-ClassSig_IvPageControlOW:	.asciz "As"
-ClassSig_AcSplitBox:	.asciz ""
-ClassSig_AcFadeBox:	.asciz ""
-ClassSig_AcPadRun:	.asciz ""
-ClassSig_AcRhyRun:	.asciz ""
-ClassSig_AcMixerVolS:	.asciz ""
-ClassSig_AcMixerVolWS:	.asciz ""
-ClassSig_AcTrackVol:	.asciz "u"
-ClassSig_AcSeqRun:	.asciz ""
-ClassSig_AcSeqCurSngName:	.asciz ""
-ClassSig_AcFavBankName:	.asciz ""
-ClassSig_AcRightOct:	.asciz ""
-ClassSig_AcSndCtrlX:	.asciz ""
-ClassSig_AcSndCtrlY:	.asciz ""
-ClassSig_AcPmemBankName:	.asciz ""
-ClassSig_AcPmemXName:	.asciz ""
-ClassSig_AcFootSw:	.asciz "A"
-ClassSig_AcPadBank:	.asciz ""
-ClassSig_AcPadName:	.asciz "A"
-ClassSig_AcSndLdOpt:	.asciz "A"
-ClassSig_AcSndDspAlloc:	.asciz ""
-ClassSig_AcEffectType:	.asciz "A"
-ClassSig_IvRstOtherPart:	.asciz "mAA"
-ClassSig_AcHpScreen:	.asciz ""
-ClassSig_AcVolBox:	.asciz "t"
-ClassSig_AcMonitorOn:	.asciz ""
-ClassSig_AcRcVolume:	.asciz ""
-ClassSig_AcMonRcv:	.asciz ""
-ClassSig_IvPageKNPR:	.asciz "Asss"
-ClassSig_AcSeqMixerVol:	.asciz "te"
-ClassName_IvPageControlOW:	.asciz "IvPageControlOW"
-ClassName_AcSplitBox:	.asciz "AcSplitBox"
-ClassName_AcFadeBox:	.asciz "AcFadeBox"
-ClassName_AcPadRun:	.asciz "AcPadRun"
-ClassName_AcRhyRun:	.asciz "AcRhyRun"
-ClassName_AcMixerVolS:	.asciz "AcMixerVolS"
-ClassName_AcMixerVolWS:	.asciz "AcMixerVolWS"
-ClassName_AcTrackVol:	.asciz "AcTrackVol"
-ClassName_AcSeqRun:	.asciz "AcSeqRun"
-ClassName_AcSeqCurSngName:	.asciz "AcSeqCurSngName"
-ClassName_AcFavBankName:	.asciz "AcFavBankName"
-ClassName_AcRightOct:	.asciz "AcRightOct"
-ClassName_AcSndCtrlX:	.asciz "AcSndCtrlX"
-ClassName_AcSndCtrlY:	.asciz "AcSndCtrlY"
-ClassName_AcPmemBankName:	.asciz "AcPmemBankName"
-ClassName_AcPmemXName:	.asciz "AcPmemXName"
-ClassName_AcFootSw:	.asciz "AcFootSw"
-ClassName_AcPadBank:	.asciz "AcPadBank"
-ClassName_AcPadName:	.asciz "AcPadName"
-ClassName_AcSndLdOpt:	.asciz "AcSndLdOpt"
-ClassName_AcSndDspAlloc:	.asciz "AcSndDspAlloc"
-ClassName_AcEffectType:	.asciz "AcEffectType"
-ClassName_IvRstOtherPart:	.asciz "IvRstOtherPart"
-ClassName_AcHpScreen:	.asciz "AcHpScreen"
-ClassName_AcVolBox:	.asciz "AcVolBox"
-ClassName_AcMonitorOn:	.asciz "AcMonitorOn"
-ClassName_AcRcVolume:	.asciz "AcRcVolume"
-ClassName_AcMonRcv:	.asciz "AcMonRcv"
-ClassName_IvPageKNPR:	.asciz "IvPageKNPR"
-ClassName_AcSeqMixerVol:	.asciz "AcSeqMixerVol"
-Str_EV_DISPPADRUN:	.asciz "EV_DISPPADRUN"
-Str_EV_DISPRHYRUN:	.asciz "EV_DISPRHYRUN"
-Str_EV_SETZEROPOINT:	.asciz "EV_SETZEROPOINT"
-Str_EV_DISPSEQRUN:	.asciz "EV_DISPSEQRUN"
-Str_EV_SEQSONGNAME:	.asciz "EV_SEQSONGNAME"
-Str_EV_PADBANKNAME:	.asciz "EV_PADBANKNAME"
-Str_EV_PADNAME:	.asciz "EV_PADNAME"
-Str_EV_PAGECHANGEOT:	.asciz "EV_PAGECHANGEOT"
-Str_EV_SETPAGEOTHERPART:	.asciz "EV_SETPAGEOTHERPART"
-Str_EV_SEQPARTCHANGE:	.asciz "EV_SEQPARTCHANGE"
-Str_MT_GetPadRun:	.asciz "MT_GetPadRun"
-Str_MT_SetPadRun:	.asciz "MT_SetPadRun"
-Str_MT_GetRhyRun:	.asciz "MT_GetRhyRun"
-Str_MT_SetRhyRun:	.asciz "MT_SetRhyRun"
-Str_MT_GetSeqRun:	.asciz "MT_GetSeqRun"
-Str_MT_SetSeqRun:	.asciz "MT_SetSeqRun"
-Str_MT_GetSeqSongName:	.asciz "MT_GetSeqSongName"
-Str_MT_GetPadBankName:	.asciz "MT_GetPadBankName"
-Str_MT_GetPadName:	.asciz "MT_GetPadName"
-Str_MT_CheckMute:	.asciz "MT_CheckMute"
-	.align	4, 0xFF	# pad after Str_MT_CheckMute
-FnName_IvPageControlOWProc:	.asciz "IvPageControlOWProc"
-FnName_AcSplitBoxProc:	.asciz "AcSplitBoxProc"
-FnName_AcFadeBoxProc:	.asciz "AcFadeBoxProc"
-FnName_AcPadRunProc:	.asciz "AcPadRunProc"
-FnName_AcRhyRunProc:	.asciz "AcRhyRunProc"
-FnName_AcMixerVolSProc:	.asciz "AcMixerVolSProc"
-FnName_AcTrackVolProc:	.asciz "AcTrackVolProc"
-FnName_AcSeqRunProc:	.asciz "AcSeqRunProc"
-FnName_AcSeqCurSngNameProc:	.asciz "AcSeqCurSngNameProc"
-FnName_AcFavBankNameProc:	.asciz "AcFavBankNameProc"
-FnName_AcRightOctProc:	.asciz "AcRightOctProc"
-FnName_AcSndCtrlXProc:	.asciz "AcSndCtrlXProc"
-FnName_AcSndCtrlYProc:	.asciz "AcSndCtrlYProc"
-FnName_AcPmemBankNameProc:	.asciz "AcPmemBankNameProc"
-FnName_AcPmemXNameProc:	.asciz "AcPmemXNameProc"
-FnName_AcFootSwProc:	.asciz "AcFootSwProc"
-FnName_AcPadBankProc:	.asciz "AcPadBankProc"
-FnName_AcPadNameProc:	.asciz "AcPadNameProc"
-FnName_AcSndLdOptProc:	.asciz "AcSndLdOptProc"
-FnName_AcSndDspAllocProc:	.asciz "AcSndDspAllocProc"
-FnName_AcEffectTypeProc:	.asciz "AcEffectTypeProc"
-FnName_IvRstOtherPartProc:	.asciz "IvRstOtherPartProc"
-FnName_AcHpScreenProc:	.asciz "AcHpScreenProc"
-FnName_AcVolBoxProc:	.asciz "AcVolBoxProc"
-FnName_AcMonitorOnProc:	.asciz "AcMonitorOnProc"
-FnName_AcRcVolumeProc:	.asciz "AcRcVolumeProc"
-FnName_AcMonRcvProc:	.asciz "AcMonRcvProc"
-FnName_IvPageKNPRProc:	.asciz "IvPageKNPRProc"
-FnName_AcSeqMixerVolProc:	.asciz "AcSeqMixerVolProc"
-data_48469664:
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x069664, 0x069668
-data_48469668:
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x069668, 0x06966C
-FnName_MdNormal:	.asciz "MdNormal"
-FnName_TtNormal:	.asciz "TtNormal"
-FnName_MainPadRun:	.asciz "MainPadRun"
-FnName_MainRhyRun:	.asciz "MainRhyRun"
-FnName_MainSeqRun:	.asciz "MainSeqRun"
-	.align	4, 0x00	# pad after FnName_MainSeqRun
-Str_empty_16:	.asciz ""
-	.align	4, 0xFF	# pad after Str_empty_16
-
-	AcHpScreen	TtHomepage, sub=TtHomepage_StrBox_RHYTHM, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, border=BD_Single1, index=0xFFFF, exit=TT_NORMAL, window=TtHomepage_window, title=Str_empty_16, icon=183	# title ""
-
-Str_RHYTHM:	.asciz "RHYTHM"
-	.align	4, 0xFF	# pad after Str_RHYTHM
-
-		VwStrBox	TtHomepage_StrBox_RHYTHM, super=TtHomepage, next=TtHomepage_StrBox_RIGHT1, flag=VF_Const, X=4, Y=30, W=52, H=11, color=CL_White, border=BD_Round5, index=0xFFFF, font=3, fontcolor=CL_WhiteB, str=Str_RHYTHM	# str "RHYTHM"
-
-Str_RIGHT1:	.asciz "RIGHT1"
-	.align	4, 0xFF	# pad after Str_RIGHT1
-
-		VwStrBox	TtHomepage_StrBox_RIGHT1, super=TtHomepage, next=TtHomepage_StrBox_RIGHT2, prev=TtHomepage_StrBox_RHYTHM, flag=VF_Const, X=164, Y=30, W=52, H=11, color=CL_White, border=BD_Round5, index=0xFFFF, font=3, fontcolor=CL_WhiteB, str=Str_RIGHT1	# str "RIGHT1"
-
-Str_RIGHT2:	.asciz "RIGHT2"
-	.align	4, 0xFF	# pad after Str_RIGHT2
-
-		VwStrBox	TtHomepage_StrBox_RIGHT2, super=TtHomepage, next=TtHomepage_StrBox_LEFT, prev=TtHomepage_StrBox_RIGHT1, flag=VF_Const, X=164, Y=62, W=52, H=11, color=CL_White, border=BD_Round5, index=0xFFFF, font=3, fontcolor=CL_WhiteB, str=Str_RIGHT2	# str "RIGHT2"
-
-Str_LEFT:	.asciz "LEFT"
-	.align	4, 0xFF	# pad after Str_LEFT
-
-		VwStrBox	TtHomepage_StrBox_LEFT, super=TtHomepage, next=TtHomepage_SoundName1, prev=TtHomepage_StrBox_RIGHT2, flag=VF_Const, X=164, Y=94, W=52, H=11, color=CL_White, border=BD_Round5, index=0xFFFF, font=3, fontcolor=CL_WhiteB, str=Str_LEFT	# str "LEFT"
-		AcSoundName	TtHomepage_SoundName1, super=TtHomepage, next=TtHomepage_SoundName2, prev=TtHomepage_StrBox_LEFT, flag=VF_Const, X=168, Y=40, W=140, H=20, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, part=16
-		AcSoundName	TtHomepage_SoundName2, super=TtHomepage, next=TtHomepage_SoundName3, prev=TtHomepage_SoundName1, flag=VF_Const, X=168, Y=72, W=140, H=20, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, part=17
-		AcSoundName	TtHomepage_SoundName3, super=TtHomepage, next=TtHomepage_RhythmName1, prev=TtHomepage_SoundName2, flag=VF_Const, X=168, Y=104, W=140, H=20, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, part=18
-		AcRhythmName	TtHomepage_RhythmName1, super=TtHomepage, next=TtHomepage_TempoBox1, prev=TtHomepage_SoundName3, flag=VF_Const, X=16, Y=40, W=124, H=20, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White
-		AcTempoBox	TtHomepage_TempoBox1, super=TtHomepage, next=TtHomepage_TransposeBox1, prev=TtHomepage_RhythmName1, flag=VF_Const, X=12, Y=70, W=60, H=24, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White
-		AcTransposeBox	TtHomepage_TransposeBox1, super=TtHomepage, next=TtHomepage_ChordBox1, prev=TtHomepage_TempoBox1, flag=VF_Const, X=84, Y=74, W=64, H=16, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White
-		AcChordBox	TtHomepage_ChordBox1, super=TtHomepage, next=TtHomepage_PmemName1, prev=TtHomepage_TransposeBox1, flag=VF_Const, X=32, Y=98, W=120, H=20, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White
-		AcPmemName	TtHomepage_PmemName1, super=TtHomepage, next=TtHomepage_SplitBox1, prev=TtHomepage_ChordBox1, flag=VF_Const, X=28, Y=4, W=212, H=20, color=CL_TitleBar, index=0xFFFF, font=1, fontcolor=CL_White
-		AcSplitBox	TtHomepage_SplitBox1, super=TtHomepage, next=TtHomepage_PadRun1, prev=TtHomepage_PmemName1, flag=VF_Const, X=248, Y=126, W=64, H=9, color=CL_WallPattern, index=0xFFFF, font=3, fontcolor=CL_White
-		AcPadRun	TtHomepage_PadRun1, super=TtHomepage, next=TtHomepage_FadeBox1, prev=TtHomepage_SplitBox1, flag=VF_Const, X=4, Y=126, W=236, H=9, color=CL_WallPattern, index=0xFFFF, font=3, fontcolor=CL_White
-		AcFadeBox	TtHomepage_FadeBox1, super=TtHomepage, next=TtHomepage_RstOtherPart1, prev=TtHomepage_PadRun1, flag=VF_Const, X=240, Y=9, W=78, H=12, color=CL_TitleBar, index=0xFFFF, font=3, fontcolor=CL_White, align=1
-		IvRstOtherPart	TtHomepage_RstOtherPart1, super=TtHomepage, next=TtHomepage_PageControlOW1, prev=TtHomepage_FadeBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=144, W=32, H=32, page=TtHomepage_RstOtherPart1_page, pagemin=1, pagemax=4
-		IvPageControlOW	TtHomepage_PageControlOW1, super=TtHomepage, next=TtHomepage_PageControlOW2, prev=TtHomepage_RstOtherPart1, flag=VF_Const|VF_InvisibleBox, X=32, Y=144, W=32, H=32, page=1, window=NormVol1_id
-		IvPageControlOW	TtHomepage_PageControlOW2, super=TtHomepage, next=TtHomepage_PageControlOW3, prev=TtHomepage_PageControlOW1, flag=VF_Const|VF_InvisibleBox, X=64, Y=144, W=32, H=32, page=2, window=NormVol2_id
-		IvPageControlOW	TtHomepage_PageControlOW3, super=TtHomepage, next=TtHomepage_PageControlOW4, prev=TtHomepage_PageControlOW2, flag=VF_Const|VF_InvisibleBox, X=96, Y=144, W=32, H=32, page=3, window=NormVol3_id
-		IvPageControlOW	TtHomepage_PageControlOW4, super=TtHomepage, prev=TtHomepage_PageControlOW3, flag=VF_Const|VF_InvisibleBox, X=128, Y=144, W=32, H=32, page=4, window=NormVol4_id
-
-	Window	NormVol1, sub=NormVol1_Box1, flag=VF_Const, X=0, Y=136, W=320, H=104, color=CL_WallPattern, index=0xFFFF, parent=NormVol1_parent, child=NormVol1_child
-		VwBox	NormVol1_Box1, super=NormVol1, sub=NormVol1_VolBox1, next=NormVol1_MixerVol1, flag=VF_Const, X=79, Y=137, W=42, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF
-			AcVolBox	NormVol1_VolBox1, super=NormVol1_Box1, next=NormVol1_VolBox2, flag=VF_Const, X=82, Y=139, W=37, H=11, color=CL_Silver, index=0xFFFF, font=3, fontcolor=CL_Black, part=24
-			AcVolBox	NormVol1_VolBox2, super=NormVol1_Box1, next=NormVol1_VolBox3, prev=NormVol1_VolBox1, flag=VF_Const, X=82, Y=151, W=37, H=11, color=CL_Silver, index=0xFFFF, font=3, fontcolor=CL_Black, part=19
-			AcVolBox	NormVol1_VolBox3, super=NormVol1_Box1, next=NormVol1_VolBox4, prev=NormVol1_VolBox2, flag=VF_Const, X=82, Y=163, W=37, H=11, color=CL_Silver, index=0xFFFF, font=3, fontcolor=CL_Black, part=20
-			AcVolBox	NormVol1_VolBox4, super=NormVol1_Box1, next=NormVol1_VolBox5, prev=NormVol1_VolBox3, flag=VF_Const, X=82, Y=175, W=37, H=11, color=CL_Silver, index=0xFFFF, font=3, fontcolor=CL_Black, part=21
-			AcVolBox	NormVol1_VolBox5, super=NormVol1_Box1, next=NormVol1_VolBox6, prev=NormVol1_VolBox4, flag=VF_Const, X=82, Y=187, W=37, H=11, color=CL_Silver, index=0xFFFF, font=3, fontcolor=CL_Black, part=22
-			AcVolBox	NormVol1_VolBox6, super=NormVol1_Box1, next=NormVol1_VolBox7, prev=NormVol1_VolBox5, flag=VF_Const, X=82, Y=199, W=37, H=11, color=CL_Silver, index=0xFFFF, font=3, fontcolor=CL_Black, part=23
-			AcVolBox	NormVol1_VolBox7, super=NormVol1_Box1, next=NormVol1_VolBox8, prev=NormVol1_VolBox6, flag=VF_Const, X=82, Y=211, W=37, H=11, color=CL_Silver, index=0xFFFF, font=3, fontcolor=CL_Black, part=25
-			AcVolBox	NormVol1_VolBox8, super=NormVol1_Box1, prev=NormVol1_VolBox7, flag=VF_Const, X=82, Y=223, W=37, H=11, color=CL_Silver, index=0xFFFF, font=3, fontcolor=CL_Black, part=26
-		AcMixerVol	NormVol1_MixerVol1, super=NormVol1, next=NormVol1_MixerVol2, prev=NormVol1_Box1, flag=VF_Const, X=160, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=35, editsw=ES_Bottom5
-		AcMixerVol	NormVol1_MixerVol2, super=NormVol1, next=NormVol1_MixerVol3, prev=NormVol1_MixerVol1, flag=VF_Const, X=0, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=32, editsw=ES_Bottom1
-		AcMixerVol	NormVol1_MixerVol3, super=NormVol1, next=NormVol1_MixerVol4, prev=NormVol1_MixerVol2, flag=VF_Const, X=40, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=29, editsw=ES_Bottom2
-		AcMixerVol	NormVol1_MixerVol4, super=NormVol1, next=NormVol1_MixerVol5, prev=NormVol1_MixerVol3, flag=VF_Const, X=199, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=18, editsw=ES_Bottom6
-		AcMixerVol	NormVol1_MixerVol5, super=NormVol1, next=NormVol1_MixerVol6, prev=NormVol1_MixerVol4, flag=VF_Const, X=238, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=17, editsw=ES_Bottom7
-		AcMixerVol	NormVol1_MixerVol6, super=NormVol1, next=NormVol1_SeqMixerVol1, prev=NormVol1_MixerVol5, flag=VF_Const, X=277, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=16, editsw=ES_Bottom8
-		AcSeqMixerVol	NormVol1_SeqMixerVol1, super=NormVol1, prev=NormVol1_MixerVol6, flag=VF_Const, X=121, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=38, editsw=ES_Bottom4
-
-	Window	NormVol2, sub=NormVol2_MixerVol1, flag=VF_Const, X=0, Y=136, W=320, H=104, color=CL_WallPattern, index=0xFFFF, parent=NormVol2_parent, child=NormVol2_child
-		AcMixerVol	NormVol2_MixerVol1, super=NormVol2, next=NormVol2_MixerVol2, flag=VF_Const, X=3, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=26, editsw=ES_Bottom1
-		AcMixerVol	NormVol2_MixerVol2, super=NormVol2, next=NormVol2_MixerVol3, prev=NormVol2_MixerVol1, flag=VF_Const, X=43, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=25, editsw=ES_Bottom2
-		AcMixerVol	NormVol2_MixerVol3, super=NormVol2, next=NormVol2_MixerVol4, prev=NormVol2_MixerVol2, flag=VF_Const, X=82, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=23, editsw=ES_Bottom3
-		AcMixerVol	NormVol2_MixerVol4, super=NormVol2, next=NormVol2_MixerVol5, prev=NormVol2_MixerVol3, flag=VF_Const, X=121, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=22, editsw=ES_Bottom4
-		AcMixerVol	NormVol2_MixerVol5, super=NormVol2, next=NormVol2_MixerVol6, prev=NormVol2_MixerVol4, flag=VF_Const, X=160, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=21, editsw=ES_Bottom5
-		AcMixerVol	NormVol2_MixerVol6, super=NormVol2, next=NormVol2_MixerVol7, prev=NormVol2_MixerVol5, flag=VF_Const, X=199, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=20, editsw=ES_Bottom6
-		AcMixerVol	NormVol2_MixerVol7, super=NormVol2, next=NormVol2_MixerVol8, prev=NormVol2_MixerVol6, flag=VF_Const, X=238, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=19, editsw=ES_Bottom7
-		AcMixerVol	NormVol2_MixerVol8, super=NormVol2, prev=NormVol2_MixerVol7, flag=VF_Const, X=277, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=24, editsw=ES_Bottom8
-
-	Window	NormVol3, sub=NormVol3_MixerVol1, flag=VF_Const, X=0, Y=136, W=320, H=104, color=CL_WallPattern, index=0xFFFF, parent=NormVol3_parent, child=NormVol3_child
-		AcMixerVol	NormVol3_MixerVol1, super=NormVol3, next=NormVol3_MixerVol2, flag=VF_Const, X=3, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Bottom1
-		AcMixerVol	NormVol3_MixerVol2, super=NormVol3, next=NormVol3_MixerVol3, prev=NormVol3_MixerVol1, flag=VF_Const, X=43, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=1, editsw=ES_Bottom2
-		AcMixerVol	NormVol3_MixerVol3, super=NormVol3, next=NormVol3_MixerVol4, prev=NormVol3_MixerVol2, flag=VF_Const, X=82, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=2, editsw=ES_Bottom3
-		AcMixerVol	NormVol3_MixerVol4, super=NormVol3, next=NormVol3_MixerVol5, prev=NormVol3_MixerVol3, flag=VF_Const, X=121, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=3, editsw=ES_Bottom4
-		AcMixerVol	NormVol3_MixerVol5, super=NormVol3, next=NormVol3_MixerVol6, prev=NormVol3_MixerVol4, flag=VF_Const, X=160, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=4, editsw=ES_Bottom5
-		AcMixerVol	NormVol3_MixerVol6, super=NormVol3, next=NormVol3_MixerVol7, prev=NormVol3_MixerVol5, flag=VF_Const, X=199, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=5, editsw=ES_Bottom6
-		AcMixerVol	NormVol3_MixerVol7, super=NormVol3, next=NormVol3_MixerVol8, prev=NormVol3_MixerVol6, flag=VF_Const, X=238, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=6, editsw=ES_Bottom7
-		AcMixerVol	NormVol3_MixerVol8, super=NormVol3, prev=NormVol3_MixerVol7, flag=VF_Const, X=277, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=7, editsw=ES_Bottom8
-
-	Window	NormVol4, sub=NormVol4_MixerVol1, flag=VF_Const, X=0, Y=136, W=320, H=104, color=CL_WallPattern, index=0xFFFF, parent=NormVol4_parent, child=NormVol4_child
-		AcMixerVol	NormVol4_MixerVol1, super=NormVol4, next=NormVol4_MixerVol2, flag=VF_Const, X=3, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=8, editsw=ES_Bottom1
-		AcMixerVol	NormVol4_MixerVol2, super=NormVol4, next=NormVol4_MixerVol3, prev=NormVol4_MixerVol1, flag=VF_Const, X=43, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=9, editsw=ES_Bottom2
-		AcMixerVol	NormVol4_MixerVol3, super=NormVol4, next=NormVol4_MixerVol4, prev=NormVol4_MixerVol2, flag=VF_Const, X=82, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=10, editsw=ES_Bottom3
-		AcMixerVol	NormVol4_MixerVol4, super=NormVol4, next=NormVol4_MixerVol5, prev=NormVol4_MixerVol3, flag=VF_Const, X=121, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=11, editsw=ES_Bottom4
-		AcMixerVol	NormVol4_MixerVol5, super=NormVol4, next=NormVol4_MixerVol6, prev=NormVol4_MixerVol4, flag=VF_Const, X=160, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=12, editsw=ES_Bottom5
-		AcMixerVol	NormVol4_MixerVol6, super=NormVol4, next=NormVol4_MixerVol7, prev=NormVol4_MixerVol5, flag=VF_Const, X=199, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=13, editsw=ES_Bottom6
-		AcMixerVol	NormVol4_MixerVol7, super=NormVol4, next=NormVol4_MixerVol8, prev=NormVol4_MixerVol6, flag=VF_Const, X=238, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=14, editsw=ES_Bottom7
-		AcMixerVol	NormVol4_MixerVol8, super=NormVol4, prev=NormVol4_MixerVol7, flag=VF_Const, X=277, Y=137, W=39, H=99, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, part=15, editsw=ES_Bottom8
-
-Str_PROGRAM_MENUS:	.asciz "PROGRAM MENUS"
-	.align	4, 0xFF	# pad after Str_PROGRAM_MENUS
-
-	TtlScreen	TtProgram, sub=TtProgram_ModeMenu_SOUND, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, border=BD_Single2, index=0xFFFF, exit=TT_PS, window=TtProgram_window, title=Str_PROGRAM_MENUS, icon=42	# title "PROGRAM MENUS"
-
-Str_SOUND:	.asciz "SOUND"
-	.align	4, 0xFF	# pad after Str_SOUND
-
-		AcModeMenu	TtProgram_ModeMenu_SOUND, super=TtProgram, next=TtProgram_ModeMenu_REVERB_EFFECT, flag=VF_Const, X=8, Y=28, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left1, selected=TtProgram_ModeMenu_SOUND_selected, str=Str_SOUND, mode=MD_SOUND, icon=21	# str "SOUND"
-
-Str_REVERB_EFFECT:	.asciz "REVERB & EFFECT"
-
-		AcModeMenu	TtProgram_ModeMenu_REVERB_EFFECT, super=TtProgram, next=TtProgram_ModeMenu_CONTROL, prev=TtProgram_ModeMenu_SOUND, flag=VF_Const, X=8, Y=70, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left2, selected=TtProgram_ModeMenu_REVERB_EFFECT_selected, str=Str_REVERB_EFFECT, mode=MD_EFFECT, icon=206	# str "REVERB & EFFECT"
-
-Str_CONTROL:	.asciz "CONTROL"
-
-		AcModeMenu	TtProgram_ModeMenu_CONTROL, super=TtProgram, next=TtProgram_ModeMenu_CUSTOMIZE, prev=TtProgram_ModeMenu_REVERB_EFFECT, flag=VF_Const, X=8, Y=112, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left3, selected=TtProgram_ModeMenu_CONTROL_selected, str=Str_CONTROL, mode=MD_CONTROL, icon=147	# str "CONTROL"
-
-Str_CUSTOMIZE:	.asciz "CUSTOMIZE"
-	.align	4, 0xFF	# pad after Str_CUSTOMIZE
-
-		AcModeMenu	TtProgram_ModeMenu_CUSTOMIZE, super=TtProgram, next=TtProgram_ModeMenu_SEQUENCER, prev=TtProgram_ModeMenu_CONTROL, flag=VF_Const, X=8, Y=196, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left5, selected=TtProgram_ModeMenu_CUSTOMIZE_selected, str=Str_CUSTOMIZE, mode=MD_CUSTOMIZE, icon=187	# str "CUSTOMIZE"
-
-Str_SEQUENCER:	.asciz "SEQUENCER"
-	.align	4, 0xFF	# pad after Str_SEQUENCER
-
-		AcModeMenu	TtProgram_ModeMenu_SEQUENCER, super=TtProgram, next=TtProgram_ModeMenu_COMPOSER, prev=TtProgram_ModeMenu_CUSTOMIZE, flag=VF_Const, X=163, Y=70, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right2, selected=TtProgram_ModeMenu_SEQUENCER_selected, str=Str_SEQUENCER, mode=MD_SEQ, icon=51	# str "SEQUENCER"
-
-Str_COMPOSER:	.asciz "COMPOSER"
-	.align	4, 0xFF	# pad after Str_COMPOSER
-
-		AcModeMenu	TtProgram_ModeMenu_COMPOSER, super=TtProgram, next=TtProgram_ModeMenu_SOUND_EDIT, prev=TtProgram_ModeMenu_SEQUENCER, flag=VF_Const, X=163, Y=112, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right3, selected=TtProgram_ModeMenu_COMPOSER_selected, str=Str_COMPOSER, mode=MD_CMP, icon=77	# str "COMPOSER"
-
-Str_SOUND_EDIT:	.asciz "SOUND EDIT"
-	.align	4, 0xFF	# pad after Str_SOUND_EDIT
-
-		AcModeMenu	TtProgram_ModeMenu_SOUND_EDIT, super=TtProgram, next=TtProgram_ExitMode1, prev=TtProgram_ModeMenu_COMPOSER, flag=VF_Const, X=163, Y=28, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right1, selected=TtProgram_ModeMenu_SOUND_EDIT_selected, str=Str_SOUND_EDIT, mode=MD_SOUNDEDIT, icon=15	# str "SOUND EDIT"
-		IvExitMode	TtProgram_ExitMode1, super=TtProgram, next=TtProgram_ModeMenu_PERFORMANCE_PADS, prev=TtProgram_ModeMenu_SOUND_EDIT, flag=VF_Const|VF_InvisibleBox, X=184, Y=0, W=32, H=32, mode=MD_NORMAL
-
-Str_PERFORMANCE_PADS:	.asciz "PERFORMANCE PADS"
-	.align	4, 0xFF	# pad after Str_PERFORMANCE_PADS
-
-		AcModeMenu	TtProgram_ModeMenu_PERFORMANCE_PADS, super=TtProgram, next=TtProgram_ModeMenu_MIDI, prev=TtProgram_ExitMode1, flag=VF_Const, X=163, Y=154, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right4, selected=TtProgram_ModeMenu_PERFORMANCE_PADS_selected, str=Str_PERFORMANCE_PADS, mode=MD_MSP, icon=197	# str "PERFORMANCE PADS"
-
-Str_MIDI:	.asciz "MIDI"
-	.align	4, 0xFF	# pad after Str_MIDI
-
-		AcModeMenu	TtProgram_ModeMenu_MIDI, super=TtProgram, prev=TtProgram_ModeMenu_PERFORMANCE_PADS, flag=VF_Const, X=8, Y=154, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left4, selected=TtProgram_ModeMenu_MIDI_selected, str=Str_MIDI, mode=MD_MIDI, icon=25	# str "MIDI"
-
-RN_TtHomepage:	.asciz "TtHomepage"
-RN_empty_81:	.asciz ""
-RN_empty_82:	.asciz ""
-RN_empty_83:	.asciz ""
-RN_empty_84:	.asciz ""
-RN_empty_85:	.asciz ""
-RN_empty_86:	.asciz ""
-RN_empty_87:	.asciz ""
-RN_empty_88:	.asciz ""
-RN_empty_89:	.asciz ""
-RN_empty_90:	.asciz ""
-RN_empty_91:	.asciz ""
-RN_empty_92:	.asciz ""
-RN_empty_93:	.asciz ""
-RN_empty_94:	.asciz ""
-RN_empty_95:	.asciz ""
-RN_empty_96:	.asciz ""
-RN_empty_97:	.asciz ""
-RN_empty_98:	.asciz ""
-RN_empty_99:	.asciz ""
-RN_empty_100:	.asciz ""
-RN_NormVol1:	.asciz "NormVol1"
-RN_empty_101:	.asciz ""
-RN_empty_102:	.asciz ""
-RN_empty_103:	.asciz ""
-RN_empty_104:	.asciz ""
-RN_empty_105:	.asciz ""
-RN_empty_106:	.asciz ""
-RN_empty_107:	.asciz ""
-RN_empty_108:	.asciz ""
-RN_empty_109:	.asciz ""
-RN_empty_110:	.asciz ""
-RN_empty_111:	.asciz ""
-RN_empty_112:	.asciz ""
-RN_empty_113:	.asciz ""
-RN_empty_114:	.asciz ""
-RN_empty_115:	.asciz ""
-RN_empty_116:	.asciz ""
-RN_NormVol2:	.asciz "NormVol2"
-RN_empty_117:	.asciz ""
-RN_empty_118:	.asciz ""
-RN_empty_119:	.asciz ""
-RN_empty_120:	.asciz ""
-RN_empty_121:	.asciz ""
-RN_empty_122:	.asciz ""
-RN_empty_123:	.asciz ""
-RN_empty_124:	.asciz ""
-RN_NormVol3:	.asciz "NormVol3"
-RN_empty_125:	.asciz ""
-RN_empty_126:	.asciz ""
-RN_empty_127:	.asciz ""
-RN_empty_128:	.asciz ""
-RN_empty_129:	.asciz ""
-RN_empty_130:	.asciz ""
-RN_empty_131:	.asciz ""
-RN_empty_132:	.asciz ""
-RN_NormVol4:	.asciz "NormVol4"
-RN_empty_133:	.asciz ""
-RN_empty_134:	.asciz ""
-RN_empty_135:	.asciz ""
-RN_empty_136:	.asciz ""
-RN_empty_137:	.asciz ""
-RN_empty_138:	.asciz ""
-RN_empty_139:	.asciz ""
-RN_empty_140:	.asciz ""
-RN_TtProgram:	.asciz "TtProgram"
-RN_empty_141:	.asciz ""
-RN_empty_142:	.asciz ""
-RN_empty_143:	.asciz ""
-RN_empty_144:	.asciz ""
-RN_empty_145:	.asciz ""
-RN_empty_146:	.asciz ""
-RN_empty_147:	.asciz ""
-RN_empty_148:	.asciz ""
-RN_empty_149:	.asciz ""
-RN_empty_150:	.asciz ""
-	.align	4, 0x00	# pad after RN_empty_150
-Str_OTB_HOMEPAGE:	.asciz "OTB_HOMEPAGE"
-Str_iaphp:	.asciz "iaphp"
-	.align	4, 0xFF	# pad after Str_iaphp
-Str_MD_NORMAL:	.asciz "MD_NORMAL"
-	.align	4, 0xFF	# pad after Str_MD_NORMAL
-Str_MD_PROGRAM:	.asciz "MD_PROGRAM"
-	.align	4, 0xFF	# pad after Str_MD_PROGRAM
-Str_TT_NORMAL:	.asciz "TT_NORMAL"
-	.align	4, 0xFF	# pad after Str_TT_NORMAL
-Str_TT_PROGRAM:	.asciz "TT_PROGRAM"
-	.align	4, 0xFF	# pad after Str_TT_PROGRAM
-Str_OtPt:	.asciz "OtPt"
-	.align	4, 0xFF	# pad after Str_OtPt
-Str_PgOW:	.asciz "PgOW"
-	.align	4, 0xFF	# pad after Str_PgOW
-Str_PgKP:	.asciz "PgKP"
-	.align	4, 0xFF	# pad after Str_PgKP
-
-Bitmap_AcHpScreenProc_L9f:	# 24 x 24, 1 bit(s) a pixel: AcHpScreenProc_L9f 0x48655FF2 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcHpScreenProc_L9f.png)
-	.incbin	"build/bitmaps/Bitmap_AcHpScreenProc_L9f.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 24 24) from src/program/data/media/Bitmap_AcHpScreenProc_L9f.png
-
-IsPointOnScreen_Table:	# REC_DrawBitmapSP2_ArgA0 (4 bytes): the layout DrawBitmapSP2 0x485FC413 reads through its argument a0 (passed by AcHpScreenProc_L9f 0x48655FF2 `call DrawBitmapSP2_entry, [d2,d3,a2,a3], 0x30`); the layout DrawBitmapSP2_Impl 0x485FC4B6 reads through its argument a0 (passed by DrawBitmapSP2 0x485FC413 `call DrawBitmapSP2_Impl_entry, [d2,d3,a2,a3], 0x44`); +3 more routines
-	REC_DrawBitmapSP2_ArgA0	f0=2, SetChangeRect_d0=2
-
-Text_PT1:	# 19 strings of 5 characters, NUL-terminated
-	.asciz	"PT1  "
-	.asciz	"PT2  "
-	.asciz	"PT3  "
-	.asciz	"PT4  "
-	.asciz	"PT5  "
-	.asciz	"PT6  "
-	.asciz	"PT7  "
-	.asciz	"PT8  "
-	.asciz	"PT9  "
-	.asciz	"PT10 "
-	.asciz	"PT11 "
-	.asciz	"PT12 "
-	.asciz	"PT13 "
-	.asciz	"PT14 "
-	.asciz	"PT15 "
-	.asciz	"PT16 "
-	.asciz	"RT1  "
-	.asciz	"RT2  "
-	.asciz	"LEFT "
-Text_A1:	# 8 strings of 2 characters, NUL-terminated
-	.asciz	"A1"
-	.asciz	"A2"
-	.asciz	"A3"
-	.asciz	"A4"
-	.asciz	"A5"
-	.asciz	"BS"
-	.asciz	"D1"
-	.asciz	"D2"
-Text_CHORD:	# 9 strings of 5 characters, NUL-terminated
-	.asciz	"CHORD"
-	.asciz	"RTBS "
-	.asciz	"PADS "
-	.asciz	"PADS "
-	.asciz	"CTRL "
-	.asciz	"METR "
-	.asciz	"CFDR "
-	.asciz	"MIC  "
-	.asciz	"APC  "
-
-AcVolBoxProc_Table:	# 36 x REC_AcVolBoxProc_Table (16 bytes each); read by AcVolBoxProc_L55 0x486560AA `mov (4, a0), d1`; AcVolBoxProc_L55 0x486560AA `mov (8, a2), d0`; AcVolBoxProc_Le5 0x4865613A `mov (d2, a0), d0` (+16)
-	REC_AcVolBoxProc_Table	text=Text_PT1, param_key=0xB00007, param_key_=0x200000	# [0]
-	REC_AcVolBoxProc_Table	text=Text_PT1+6, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_PT1+12, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_PT1+18, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_PT1+24, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_PT1+30, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_PT1+36, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_PT1+42, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_PT1+48, param_key=0xB00007, param_key_=0x200000	# [8]
-	REC_AcVolBoxProc_Table	text=Text_PT1+54, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_PT1+60, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_PT1+66, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_PT1+72, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_PT1+78, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_PT1+84, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_PT1+90, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_PT1+96, param_key=0xB00007, param_key_=0x200000	# [16]
-	REC_AcVolBoxProc_Table	text=Text_PT1+102, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_PT1+108, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_A1, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_A1+3, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_A1+6, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_A1+9, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_A1+12, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_A1+15, param_key=0xB00007, param_key_=0x200000	# [24]
-	REC_AcVolBoxProc_Table	text=Text_A1+18, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_A1+21, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_CHORD, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_CHORD+6, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_CHORD+12, param_key=57345, param_key_=57346, f12=1
-	REC_AcVolBoxProc_Table	text=Text_CHORD+18, param_key=57345, param_key_=57346, f12=1
-	REC_AcVolBoxProc_Table	text=Text_CHORD+24, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_CHORD+30, param_key=32780, param_key_=32781, f12=1	# [32]
-	REC_AcVolBoxProc_Table	text=Text_CHORD+36, param_key=0xB00007, param_key_=0x200000
-	REC_AcVolBoxProc_Table	text=Text_CHORD+42, param_key=32778, param_key_=32779, f12=1
-	REC_AcVolBoxProc_Table	text=Text_CHORD+48, param_key=32776, param_key_=32777, f12=1
-
-Str_s_70:	.asciz "%s=   "
-	.align	4, 0xFF	# pad after Str_s_70
-Str_s_3d_3:	.asciz "%s=%3d"
-	.align	4, 0xFF	# pad after Str_s_3d_3
-Str_M_4:	.asciz "-M-"
-Str_M_3:	.asciz "-M-"
-Str_C_17:	.asciz "C"
-Str_D_a0_5:	.asciz "D~a0"
-Str_D_7:	.asciz "D"
-Str_E_a0_5:	.asciz "E~a0"
-Str_E_6:	.asciz "E"
-Str_F_6:	.asciz "F"
-Str_F_9e_5:	.asciz "F~9e"
-Str_G_5:	.asciz "G"
-Str_A_a0_5:	.asciz "A~a0"
-Str_A_12:	.asciz "A"
-Str_B_a0_5:	.asciz "B~a0"
-Str_B_8:	.asciz "B"
-	.align	4, 0xFF	# pad after Str_B_8
-
-AcSplitBoxProc_L78_Table:
-	.long	Str_C_17
-	.long	Str_D_a0_5
-	.long	Str_D_7
-	.long	Str_E_a0_5
-	.long	Str_E_6
-	.long	Str_F_6
-	.long	Str_F_9e_5
-	.long	Str_G_5
-	.long	Str_A_a0_5
-	.long	Str_A_12
-	.long	Str_B_a0_5
-	.long	Str_B_8
-
-Str_SPLIT_s_d:	.asciz "SPLIT:%s%d"
-	.align	4, 0xFF	# pad after Str_SPLIT_s_d
-Str_SPLIT_G2:	.asciz "SPLIT:G2"
-	.align	4, 0xFF	# pad after Str_SPLIT_G2
-Str_SPLIT_C3:	.asciz "SPLIT:C3"
-	.align	4, 0xFF	# pad after Str_SPLIT_C3
-Str_SPLIT_G3:	.asciz "SPLIT:G3"
-	.align	4, 0xFF	# pad after Str_SPLIT_G3
-Str_empty_638:	.asciz "        "
-Str_FADE_IN_4:	.asciz "FADE IN "
-Str_FADE_OUT_4:	.asciz "FADE OUT"
-	.align	4, 0xFF	# pad after Str_FADE_OUT_4
-
-AcFadeBoxProc_Lb0_Table:
-	.long	Str_empty_638
-	.long	Str_FADE_IN_4
-	.long	Str_FADE_OUT_4
-
-Str_PADS_14:	.asciz "PADS:"
-	.align	4, 0xFF	# pad after Str_PADS_14
-Str_Loop:	.asciz " [Loop"
-	.align	4, 0xFF	# pad after Str_Loop
-Str_empty_1092:	.asciz ","
-	.align	4, 0xFF	# pad after Str_empty_1092
-Str_empty_1091:	.asciz " ["
-	.align	4, 0xFF	# pad after Str_empty_1091
-Str_Solo:	.asciz "Solo]"
-	.align	4, 0xFF	# pad after Str_Solo
-Str_empty_1090:	.asciz "]"
-	.align	4, 0xFF	# pad after Str_empty_1090
-Str_2d_d:	.asciz " %2d/%d"
-Str_Control_Preset_2:	.asciz "Control Preset"
-	.align	4, 0xFF	# pad after Str_Control_Preset_2
-Str_ROTARY_SLOW_FAST_2:	.asciz "ROTARY SLOW/FAST"
-Str_P_MEM_BANK_INC_2:	.asciz "P.MEM BANK INC. "
-Str_GLIDE_5:	.asciz "     GLIDE      "
-Str_P_MEM_DECREMENT_2:	.asciz "P.MEM DECREMENT "
-Str_P_MEM_BANK_DEC_2:	.asciz "P.MEM BANK DEC. "
-Str_P_MEM_INCREMENT_2:	.asciz "P.MEM INCREMENT "
-	.align	4, 0xFF	# pad after Str_P_MEM_INCREMENT_2
-
-MainPadRun_entry_Lfd_Table:
-	.long	Str_ROTARY_SLOW_FAST_2
-	.long	Str_P_MEM_BANK_INC_2
-	.long	Str_GLIDE_5
-	.long	Str_P_MEM_DECREMENT_2
-	.long	Str_P_MEM_BANK_DEC_2
-	.long	Str_P_MEM_INCREMENT_2
-
-Str_INTRO_2d_d:	.asciz "(INTRO:%2d/%d)  "
-	.align	4, 0xFF	# pad after Str_INTRO_2d_d
-Str_MEASURE_4d:	.asciz "MEASURE =%4d"
-	.align	4, 0xFF	# pad after Str_MEASURE_4d
-Str_SONG_d_s:	.asciz "SONG %d:%s"
-	.align	4, 0xFF	# pad after Str_SONG_d_s
-Str_BANK_d_s:	.asciz "BANK %d : %s"
-	.align	4, 0xFF	# pad after Str_BANK_d_s
-Str_R1_R2_OCT_2_2:	.asciz "R1/R2 OCT:-2"
-	.align	4, 0xFF	# pad after Str_R1_R2_OCT_2_2
-Str_R1_R2_OCT_1_2:	.asciz "R1/R2 OCT:-1"
-	.align	4, 0xFF	# pad after Str_R1_R2_OCT_1_2
-Str_empty_1089:	.asciz "            "
-	.align	4, 0xFF	# pad after Str_empty_1089
-Str_R1_R2_OCT_1:	.asciz "R1/R2 OCT:+1"
-	.align	4, 0xFF	# pad after Str_R1_R2_OCT_1
-Str_R1_R2_OCT_2:	.asciz "R1/R2 OCT:+2"
-	.align	4, 0xFF	# pad after Str_R1_R2_OCT_2
-Str_R1_R2_OCT:	.asciz "R1/R2 OCT:--"
-	.align	4, 0xFF	# pad after Str_R1_R2_OCT
-Str_SOUND_DYN_CNT_1:	.asciz " SOUND DYN.CNT 1 "
-	.align	4, 0xFF	# pad after Str_SOUND_DYN_CNT_1
-Str_SOUND_DYN_CNT_2:	.asciz " SOUND DYN.CNT 2 "
-	.align	4, 0xFF	# pad after Str_SOUND_DYN_CNT_2
-Str_SOUND_DSP_DEPTH:	.asciz " SOUND DSP DEPTH "
-	.align	4, 0xFF	# pad after Str_SOUND_DSP_DEPTH
-Str_SOUND_DSP_DYN_CNT:	.asciz "SOUND DSP DYN.CNT"
-	.align	4, 0xFF	# pad after Str_SOUND_DSP_DYN_CNT
-Str_REVERB_DEPTH_2:	.asciz "  REVERB DEPTH   "
-	.align	4, 0xFF	# pad after Str_REVERB_DEPTH_2
-Str_CHORUS_DEPTH_2:	.asciz "  CHORUS DEPTH   "
-	.align	4, 0xFF	# pad after Str_CHORUS_DEPTH_2
-Str_BRIGHTNESS_4:	.asciz "   BRIGHTNESS    "
-	.align	4, 0xFF	# pad after Str_BRIGHTNESS_4
-Str_FILTER_RESONANCE_4:	.asciz " FILTER RESONANCE"
-	.align	4, 0xFF	# pad after Str_FILTER_RESONANCE_4
-Str_PAN_9:	.asciz "       PAN       "
-	.align	4, 0xFF	# pad after Str_PAN_9
-Str_ATTACK_TIME_4:	.asciz "   ATTACK TIME   "
-	.align	4, 0xFF	# pad after Str_ATTACK_TIME_4
-Str_RELEASE_TIME_4:	.asciz "   RELEASE TIME  "
-	.align	4, 0xFF	# pad after Str_RELEASE_TIME_4
-Str_empty_1088:	.asciz "-----------------"
-	.align	4, 0xFF	# pad after Str_empty_1088
-Str_X_s:	.asciz "X : %s"
-	.align	4, 0xFF	# pad after Str_X_s
-
-Text_A:	# 13 strings of 2 characters, NUL-terminated
-	.asciz	"A "
-	.asciz	"B "
-	.asciz	"C "
-	.asciz	"1 "
-	.asciz	"2 "
-	.asciz	"3 "
-	.asciz	"4 "
-	.asciz	"5 "
-	.asciz	"6 "
-	.asciz	"7 "
-	.asciz	"8 "
-	.asciz	"9 "
-	.asciz	"10"
-	.align	4, 0xFF	# pad after Text_A
-
-AcPmemBankNameProc_L6b_Table:
-	.long	Text_A
-	.long	Text_A+3
-	.long	Text_A+6
-	.long	Text_A+9
-	.long	Text_A+12
-	.long	Text_A+15
-	.long	Text_A+18
-	.long	Text_A+21
-	.long	Text_A+24
-	.long	Text_A+27
-	.long	Text_A+30
-	.long	Text_A+33
-	.long	Text_A+36
-
-Str_BANK_s_s:	.asciz "BANK %s: %s"
-Str_1d_s_2:	.asciz "%1d : %s"
-	.align	4, 0xFF	# pad after Str_1d_s_2
-
-Text_OFF:	# 43 strings of 16 characters, NUL-terminated
-	.asciz	"      OFF       "
-	.asciz	"   SOFT PEDAL   "
-	.asciz	"SOSTENUTO PEDAL "
-	.asciz	"P.MEM INCREMENT "
-	.asciz	"P.MEM DECREMENT "
-	.asciz	"P.MEM BANK INC. "
-	.asciz	"P.MEM BANK DEC. "
-	.asciz	"PANEL MEMORY 1  "
-	.asciz	"PANEL MEMORY 2  "
-	.asciz	"PANEL MEMORY 3  "
-	.asciz	"PANEL MEMORY 4  "
-	.asciz	"PANEL MEMORY 5  "
-	.asciz	"PANEL MEMORY 6  "
-	.asciz	"PANEL MEMORY 7  "
-	.asciz	"PANEL MEMORY 8  "
-	.asciz	"P.MEM INC.+DEC. "
-	.asciz	"  START/STOP    "
-	.asciz	"   FILL IN 1    "
-	.asciz	"   FILL IN 2    "
-	.asciz	"INTRO&ENDING 1  "
-	.asciz	"INTRO&ENDING 2  "
-	.asciz	"    SUSTAIN     "
-	.asciz	"     GLIDE      "
-	.asciz	" TECHNI-CHORD   "
-	.asciz	"DIGITAL EFFECT  "
-	.asciz	"   SOUND DSP    "
-	.asciz	" SOUND DSP VARI "
-	.asciz	"ROTARY SLOW/FAST"
-	.asciz	" MIC REVERB&EFF."
-	.asciz	"  PUNCH RECORD  "
-	.asciz	"   APC HOLD     "
-	.asciz	"    FADE IN     "
-	.asciz	"    FADE OUT    "
-	.asciz	"     PAD 1      "
-	.asciz	"     PAD 2      "
-	.asciz	"     PAD 3      "
-	.asciz	"     PAD 4      "
-	.asciz	"     PAD 5      "
-	.asciz	"     PAD 6      "
-	.asciz	"   TAP TEMPO    "
-	.asciz	"TOTAL EXPRESSION"
-	.asciz	"PART EXPRESSION "
-	.asciz	"     -----      "
-	.align	4, 0xFF	# pad after Text_OFF
-
-AcFootSwProc_Table:	# 43 x REC_AcFootSwProc_Table (8 bytes each); read by AcFootSwProc_L83 0x48657438 `movhu (d1, a1), d1`; AcFootSwProc_Ldc 0x48657491 `mov (4, a1), a0`; AcFootSwProc_Ldc 0x48657491 `call sprintf_entry, [a2], 0x20`
-	REC_AcFootSwProc_Table	x2="\x00\x00", text=Text_OFF	# [0]
-	REC_AcFootSwProc_Table	key=65, x2="\x00\x00", text=Text_OFF+17
-	REC_AcFootSwProc_Table	key=66, x2="\x00\x00", text=Text_OFF+34
-	REC_AcFootSwProc_Table	key=144, x2="\x00\x00", text=Text_OFF+51
-	REC_AcFootSwProc_Table	key=145, x2="\x00\x00", text=Text_OFF+68
-	REC_AcFootSwProc_Table	key=179, x2="\x00\x00", text=Text_OFF+85
-	REC_AcFootSwProc_Table	key=180, x2="\x00\x00", text=Text_OFF+102
-	REC_AcFootSwProc_Table	key=192, x2="\x00\x00", text=Text_OFF+119
-	REC_AcFootSwProc_Table	key=193, x2="\x00\x00", text=Text_OFF+136	# [8]
-	REC_AcFootSwProc_Table	key=194, x2="\x00\x00", text=Text_OFF+153
-	REC_AcFootSwProc_Table	key=195, x2="\x00\x00", text=Text_OFF+170
-	REC_AcFootSwProc_Table	key=196, x2="\x00\x00", text=Text_OFF+187
-	REC_AcFootSwProc_Table	key=197, x2="\x00\x00", text=Text_OFF+204
-	REC_AcFootSwProc_Table	key=198, x2="\x00\x00", text=Text_OFF+221
-	REC_AcFootSwProc_Table	key=199, x2="\x00\x00", text=Text_OFF+238
-	REC_AcFootSwProc_Table	key=178, x2="\x00\x00", text=Text_OFF+255
-	REC_AcFootSwProc_Table	key=136, x2="\x00\x00", text=Text_OFF+272	# [16]
-	REC_AcFootSwProc_Table	key=146, x2="\x00\x00", text=Text_OFF+289
-	REC_AcFootSwProc_Table	key=147, x2="\x00\x00", text=Text_OFF+306
-	REC_AcFootSwProc_Table	key=148, x2="\x00\x00", text=Text_OFF+323
-	REC_AcFootSwProc_Table	key=149, x2="\x00\x00", text=Text_OFF+340
-	REC_AcFootSwProc_Table	key=64, x2="\x00\x00", text=Text_OFF+357
-	REC_AcFootSwProc_Table	key=150, x2="\x00\x00", text=Text_OFF+374
-	REC_AcFootSwProc_Table	key=153, x2="\x00\x00", text=Text_OFF+391
-	REC_AcFootSwProc_Table	key=151, x2="\x00\x00", text=Text_OFF+408	# [24]
-	REC_AcFootSwProc_Table	key=191, x2="\x00\x00", text=Text_OFF+425
-	REC_AcFootSwProc_Table	key=190, x2="\x00\x00", text=Text_OFF+442
-	REC_AcFootSwProc_Table	key=173, x2="\x00\x00", text=Text_OFF+459
-	REC_AcFootSwProc_Table	key=188, x2="\x00\x00", text=Text_OFF+476
-	REC_AcFootSwProc_Table	key=176, x2="\x00\x00", text=Text_OFF+493
-	REC_AcFootSwProc_Table	key=177, x2="\x00\x00", text=Text_OFF+510
-	REC_AcFootSwProc_Table	key=184, x2="\x00\x00", text=Text_OFF+527
-	REC_AcFootSwProc_Table	key=185, x2="\x00\x00", text=Text_OFF+544	# [32]
-	REC_AcFootSwProc_Table	key=160, x2="\x00\x00", text=Text_OFF+561
-	REC_AcFootSwProc_Table	key=161, x2="\x00\x00", text=Text_OFF+578
-	REC_AcFootSwProc_Table	key=162, x2="\x00\x00", text=Text_OFF+595
-	REC_AcFootSwProc_Table	key=163, x2="\x00\x00", text=Text_OFF+612
-	REC_AcFootSwProc_Table	key=164, x2="\x00\x00", text=Text_OFF+629
-	REC_AcFootSwProc_Table	key=165, x2="\x00\x00", text=Text_OFF+646
-	REC_AcFootSwProc_Table	key=189, x2="\x00\x00", text=Text_OFF+663
-	REC_AcFootSwProc_Table	key=182, x2="\x00\x00", text=Text_OFF+680	# [40]
-	REC_AcFootSwProc_Table	key=183, x2="\x00\x00", text=Text_OFF+697
-	REC_AcFootSwProc_Table	key=-1, x2="\x00\x00", text=Text_OFF+714
-
-Str_1_26:	.asciz "1 "
-Str_2_27:	.asciz "2 "
-Str_1_25:	.asciz "1 "
-Str_2_26:	.asciz "2 "
-Str_3_21:	.asciz "3 "
-Str_4_23:	.asciz "4 "
-Str_E_5:	.asciz "E "
-	.align	4, 0xFF	# pad after Str_E_5
-
-AcFootSwProc_Table_2:	# 7 x REC_AcFootSwProc_Table_2 (8 bytes each); read by AcFootSwProc_L2d 0x486573E2 `mov (d0, a0), d0`; AcFootSwProc_L83 0x48657438 `mov (d0, a3), d0`; AcFootSwProc_Ldc 0x48657491 `mov (4, a3), a0` (+1)
-	REC_AcFootSwProc_Table_2	param_key=16386, text=Str_1_26
-	REC_AcFootSwProc_Table_2	param_key=16387, text=Str_2_27
-	REC_AcFootSwProc_Table_2	param_key=16388, text=Str_1_25
-	REC_AcFootSwProc_Table_2	param_key=16389, text=Str_2_26
-	REC_AcFootSwProc_Table_2	param_key=16390, text=Str_3_21
-	REC_AcFootSwProc_Table_2	param_key=16391, text=Str_4_23
-	REC_AcFootSwProc_Table_2	param_key=16384, text=Str_E_5
-
-Str_s_s_4:	.asciz "%s: %s"
-	.align	4, 0xFF	# pad after Str_s_s_4
-Str_E_TOTAL_EXPRESSION:	.asciz "E : TOTAL EXPRESSION"
-	.align	4, 0xFF	# pad after Str_E_TOTAL_EXPRESSION
-Str_BANK_s:	.asciz "BANK: %s"
-	.align	4, 0xFF	# pad after Str_BANK_s
-Str_1d_s:	.asciz "%1d : %s"
-	.align	4, 0xFF	# pad after Str_1d_s
-Str_OFF_73:	.asciz "OFF"
-Str_ON_71:	.asciz "ON "
-
-AcSndLdOptProc_L7b_Table:
-	.long	Str_OFF_73
-	.long	Str_ON_71
-
-Str_SOUND_DSP_LOAD:	.asciz "SOUND DSP LOAD   "
-Str_SOLO_LOAD:	.asciz "SOLO LOAD        "
-Str_PORTAMENT_LOAD:	.asciz "PORTAMENT LOAD   "
-Str_CHORUS_LOAD:	.asciz "CHORUS LOAD      "
-Str_CONTROLLERS_RESET:	.asciz "CONTROLLERS RESET"
-	.align	4, 0xFF	# pad after Str_CONTROLLERS_RESET
-
-AcSndLdOptProc_L2d_Records:	# 5 x REC_AcSndLdOptProc_L2d_Records (8 bytes each); read by AcSndLdOptProc_L2d 0x4865779F `mov (d0, a0), d0`; AcSndLdOptProc_L7b 0x486577ED `mov (4, a1), a1`; AcSndLdOptProc_L7b 0x486577ED `mov (d0, a2), d0` (+1)
-	REC_AcSndLdOptProc_L2d_Records	param_key=20512, text=Str_SOUND_DSP_LOAD
-	REC_AcSndLdOptProc_L2d_Records	param_key=20513, text=Str_SOLO_LOAD
-	REC_AcSndLdOptProc_L2d_Records	param_key=20514, text=Str_PORTAMENT_LOAD
-	REC_AcSndLdOptProc_L2d_Records	param_key=20515, text=Str_CHORUS_LOAD
-	REC_AcSndLdOptProc_L2d_Records	param_key=20516, text=Str_CONTROLLERS_RESET
-
-Str_s_s_3:	.asciz "%s: %s"
-	.align	4, 0xFF	# pad after Str_s_s_3
-Str_APC_5:	.asciz "   APC   "
-Str_SEQUENCER_12:	.asciz "SEQUENCER"
-
-AcSndDspAllocProc_L67_Table:
-	.long	Str_APC_5
-	.long	Str_SEQUENCER_12
-
-Str_ALLOCATION_MODE_s:	.asciz "ALLOCATION MODE: %s"
-Str_1_24:	.asciz "1 "
-Str_2_25:	.asciz "2 "
-Str_3_20:	.asciz "3 "
-Str_4_22:	.asciz "4 "
-Str_5_11:	.asciz "5 "
-Str_CHORUS_11:	.asciz "CHORUS"
-Str_MULTI_5:	.asciz "MULTI "
-Str_REVERB_13:	.asciz "REVERB"
-
-AcEffectTypeProc_Table:	# 8 x REC_AcEffectTypeProc_Table (12 bytes each); read by AcEffectTypeProc_L2d 0x48657985 `mov (d0, a0), d0`; AcEffectTypeProc_L7e 0x486579D6 `mov (8, a0), a0`; AcEffectTypeProc_L7e 0x486579D6 `mov (d0, a2), d0` (+6)
-	REC_AcEffectTypeProc_Table	param_key=45076, kind=2, x6="\x00\x00", text=Str_1_24
-	REC_AcEffectTypeProc_Table	param_key=45092, kind=3, x6="\x00\x00", text=Str_2_25
-	REC_AcEffectTypeProc_Table	param_key=45108, kind=4, x6="\x00\x00", text=Str_3_20
-	REC_AcEffectTypeProc_Table	param_key=45124, kind=5, x6="\x00\x00", text=Str_4_22
-	REC_AcEffectTypeProc_Table	param_key=45140, kind=6, x6="\x00\x00", text=Str_5_11
-	REC_AcEffectTypeProc_Table	param_key=41216, kind=9, x6="\x00\x00", text=Str_CHORUS_11
-	REC_AcEffectTypeProc_Table	param_key=41472, kind=1, x6="\x00\x00", text=Str_MULTI_5
-	REC_AcEffectTypeProc_Table	param_key=40960, x6="\x00\x00", text=Str_REVERB_13
-
-Str_s_69:	.asciz "%s                "
-	.align	4, 0xFF	# pad after Str_s_69
-Str_s_s_s:	.asciz "%s: %s - %s"
-Str_d_16:	.asciz "  %d  "
-	.align	4, 0xFF	# pad after Str_d_16
-Str_TRACK_35:	.asciz "TRACK"
-	.align	4, 0xFF	# pad after Str_TRACK_35
-Str_APC_10:	.asciz "APC"
-Str_CTRL_3:	.asciz "CTRL"
-	.align	4, 0xFF	# pad after Str_CTRL_3
-Str_RHY_3:	.asciz "RHY"
-Str_empty_1087:	.asciz "           "
-Str_MONITOR_OFF:	.asciz "MONITOR OFF"
-Str_empty_1086:	.asciz "              "
-	.align	4, 0xFF	# pad after Str_empty_1086
-Str_REMOTE_VOL_2d_3:	.asciz "REMOTE VOL=%2d "
-Str_REMOTE_VOL_MAX_3:	.asciz "REMOTE VOL=MAX"
-	.align	4, 0xFF	# pad after Str_REMOTE_VOL_MAX_3
-Str_PT1:	.asciz "PT1"
-Str_PT2:	.asciz "PT2"
-Str_PT3:	.asciz "PT3"
-Str_PT4:	.asciz "PT4"
-Str_PT5:	.asciz "PT5"
-Str_PT6:	.asciz "PT6"
-Str_PT7:	.asciz "PT7"
-Str_PT8:	.asciz "PT8"
-Str_PT9:	.asciz "PT9"
-Str_PT10_2:	.asciz "PT10"
-Str_PT11:	.asciz "PT11"
-Str_PT12_2:	.asciz "PT12"
-Str_PT13:	.asciz "PT13"
-Str_PT14_2:	.asciz "PT14"
-Str_PT15:	.asciz "PT15"
-Str_PT16_2:	.asciz "PT16"
-Str_RT1_2:	.asciz "RT1"
-Str_RT2_3:	.asciz "RT2"
-
-Text_LEFT_3:	# 16 strings of 4 characters, NUL-terminated
-	.asciz	"LEFT"
-	.asciz	"ACP1"
-	.asciz	"ACP2"
-	.asciz	"ACP3"
-	.asciz	"ACP4"
-	.asciz	"ACP5"
-	.asciz	"BASS"
-	.asciz	"DRM1"
-	.asciz	"DRM2"
-	.asciz	"CHRD"
-	.asciz	"RTBS"
-	.asciz	"PADS"
-	.asciz	"PADS"
-	.asciz	"BPDL"
-	.asciz	"METR"
-	.asciz	"CFDR"
-
-Str_MIC_15:	.asciz "MIC"
-Str_APC_4:	.asciz "APC"
-Str_CTRL:	.asciz "CTRL"
-Str_SD_2:	.asciz "SD"
-Str_MUSIC:	.asciz "MUSIC"
-	.align	4, 0xFF	# pad after Str_MUSIC
-
-AcSeqMixerVolProc_Table:	# 39 x REC_AcSeqMixerVolProc_Table (16 bytes each); read by AcSeqMixerVolProc_L51 0x48657F8C `mov (4, a1), d0`; AcSeqMixerVolProc_L51 0x48657F8C `mov (8, a2), d0`; AcSeqMixerVolProc_L172 0x486580AD `mov (0xc, a0), d1` (+38)
-	REC_AcSeqMixerVolProc_Table	text=Str_PT1, param_key=0xB00007, param_key_=0x200000	# [0]
-	REC_AcSeqMixerVolProc_Table	text=Str_PT2, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Str_PT3, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Str_PT4, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Str_PT5, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Str_PT6, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Str_PT7, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Str_PT8, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Str_PT9, param_key=0xB00007, param_key_=0x200000	# [8]
-	REC_AcSeqMixerVolProc_Table	text=Str_PT10_2, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Str_PT11, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Str_PT12_2, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Str_PT13, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Str_PT14_2, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Str_PT15, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Str_PT16_2, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Str_RT1_2, param_key=0xB00007, param_key_=0x200000	# [16]
-	REC_AcSeqMixerVolProc_Table	text=Str_RT2_3, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Text_LEFT_3, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Text_LEFT_3+5, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Text_LEFT_3+10, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Text_LEFT_3+15, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Text_LEFT_3+20, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Text_LEFT_3+25, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Text_LEFT_3+30, param_key=0xB00007, param_key_=0x200000	# [24]
-	REC_AcSeqMixerVolProc_Table	text=Text_LEFT_3+35, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Text_LEFT_3+40, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Text_LEFT_3+45, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Text_LEFT_3+50, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Text_LEFT_3+55, param_key=57345, param_key_=57346, key=1
-	REC_AcSeqMixerVolProc_Table	text=Text_LEFT_3+60, param_key=57345, param_key_=57346, key=1
-	REC_AcSeqMixerVolProc_Table	text=Text_LEFT_3+65, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Text_LEFT_3+70, param_key=32780, param_key_=32781, key=1	# [32]
-	REC_AcSeqMixerVolProc_Table	text=Text_LEFT_3+75, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Str_MIC_15, param_key=32778, param_key_=32779, key=1
-	REC_AcSeqMixerVolProc_Table	text=Str_APC_4, param_key=32776, param_key_=32777, key=1
-	REC_AcSeqMixerVolProc_Table	text=Str_CTRL, param_key=0xB00007, param_key_=0x200000
-	REC_AcSeqMixerVolProc_Table	text=Str_SD_2, param_key=32782, param_key_=32783, key=1
-	REC_AcSeqMixerVolProc_Table	text=Str_MUSIC, param_key=32774, param_key_=32775, key=1
-
-Bitmap_AcSeqMixerVolProc_L407:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407.png
-Bitmap_AcSeqMixerVolProc_L407_2:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_2.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_2.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_2.png
-Bitmap_AcSeqMixerVolProc_L407_3:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_3.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_3.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_3.png
-Bitmap_AcSeqMixerVolProc_L407_4:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_4.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_4.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_4.png
-Bitmap_AcSeqMixerVolProc_L407_5:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_5.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_5.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_5.png
-Bitmap_AcSeqMixerVolProc_L407_6:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_6.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_6.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_6.png
-Bitmap_AcSeqMixerVolProc_L407_7:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_7.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_7.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_7.png
-Bitmap_AcSeqMixerVolProc_L407_8:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_8.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_8.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_8.png
-Bitmap_AcSeqMixerVolProc_L407_9:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_9.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_9.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_9.png
-Bitmap_AcSeqMixerVolProc_L407_10:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_10.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_10.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_10.png
-Bitmap_AcSeqMixerVolProc_L407_11:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_11.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_11.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_11.png
-Bitmap_AcSeqMixerVolProc_L407_12:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_12.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_12.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_12.png
-Bitmap_AcSeqMixerVolProc_L407_13:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_13.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_13.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_13.png
-Bitmap_AcSeqMixerVolProc_L407_14:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_14.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_14.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_14.png
-Bitmap_AcSeqMixerVolProc_L407_15:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_15.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_15.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_15.png
-Bitmap_AcSeqMixerVolProc_L407_16:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_16.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_16.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_16.png
-Bitmap_AcSeqMixerVolProc_L407_17:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_17.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_17.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_17.png
-Bitmap_AcSeqMixerVolProc_L407_18:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_18.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_18.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_18.png
-Bitmap_AcSeqMixerVolProc_L407_19:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_19.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_19.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_19.png
-Bitmap_AcSeqMixerVolProc_L407_20:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_20.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_20.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_20.png
-Bitmap_AcSeqMixerVolProc_L407_21:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_21.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_21.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_21.png
-Bitmap_AcSeqMixerVolProc_L407_22:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_22.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_22.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_22.png
-Bitmap_AcSeqMixerVolProc_L407_23:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_23.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_23.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_23.png
-Bitmap_AcSeqMixerVolProc_L407_24:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_24.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_24.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_24.png
-Bitmap_AcSeqMixerVolProc_L407_25:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_25.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_25.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_25.png
-Bitmap_AcSeqMixerVolProc_L407_26:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_26.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_26.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_26.png
-Bitmap_AcSeqMixerVolProc_L407_27:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_27.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_27.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_27.png
-Bitmap_AcSeqMixerVolProc_L407_28:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_28.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_28.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_28.png
-Bitmap_AcSeqMixerVolProc_L407_29:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_29.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_29.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_29.png
-Bitmap_AcSeqMixerVolProc_L407_30:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_30.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_30.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_30.png
-Bitmap_AcSeqMixerVolProc_L407_31:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_31.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_31.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_31.png
-Bitmap_AcSeqMixerVolProc_L407_32:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_32.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_32.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_32.png
-Bitmap_AcSeqMixerVolProc_L407_33:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_33.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_33.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_33.png
-Bitmap_AcSeqMixerVolProc_L407_34:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_34.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_34.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_34.png
-Bitmap_AcSeqMixerVolProc_L407_35:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_35.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_35.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_35.png
-Bitmap_AcSeqMixerVolProc_L407_36:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_36.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_36.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_36.png
-Bitmap_AcSeqMixerVolProc_L407_37:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L407 0x48658342 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_37.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L407_37.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L407_37.png
-Bitmap_AcSeqMixerVolProc_L3cd:	# 32 x 32, 1 bit(s) a pixel: AcSeqMixerVolProc_L3cd 0x48658308 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcSeqMixerVolProc_L3cd.png)
-	.incbin	"build/bitmaps/Bitmap_AcSeqMixerVolProc_L3cd.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 32 32) from src/program/data/media/Bitmap_AcSeqMixerVolProc_L3cd.png
-
-AcSeqMixerVolProc_L407_Table:
-	.long	Bitmap_AcSeqMixerVolProc_L407
-	.long	Bitmap_AcSeqMixerVolProc_L407
-	.long	Bitmap_AcSeqMixerVolProc_L407_2
-	.long	Bitmap_AcSeqMixerVolProc_L407_3
-	.long	Bitmap_AcSeqMixerVolProc_L407_4
-	.long	Bitmap_AcSeqMixerVolProc_L407_5
-	.long	Bitmap_AcSeqMixerVolProc_L407_6
-	.long	Bitmap_AcSeqMixerVolProc_L407_7
-	.long	Bitmap_AcSeqMixerVolProc_L407_8
-	.long	Bitmap_AcSeqMixerVolProc_L407_9
-	.long	Bitmap_AcSeqMixerVolProc_L407_10
-	.long	Bitmap_AcSeqMixerVolProc_L407_11
-	.long	Bitmap_AcSeqMixerVolProc_L407_12
-	.long	Bitmap_AcSeqMixerVolProc_L407_13
-	.long	Bitmap_AcSeqMixerVolProc_L407_14
-	.long	Bitmap_AcSeqMixerVolProc_L407_15
-	.long	Bitmap_AcSeqMixerVolProc_L407_16
-	.long	Bitmap_AcSeqMixerVolProc_L407_17
-	.long	Bitmap_AcSeqMixerVolProc_L407_18
-	.long	Bitmap_AcSeqMixerVolProc_L407_19
-	.long	Bitmap_AcSeqMixerVolProc_L407_20
-	.long	Bitmap_AcSeqMixerVolProc_L407_21
-	.long	Bitmap_AcSeqMixerVolProc_L407_22
-	.long	Bitmap_AcSeqMixerVolProc_L407_23
-	.long	Bitmap_AcSeqMixerVolProc_L407_24
-	.long	Bitmap_AcSeqMixerVolProc_L407_25
-	.long	Bitmap_AcSeqMixerVolProc_L407_26
-	.long	Bitmap_AcSeqMixerVolProc_L407_27
-	.long	Bitmap_AcSeqMixerVolProc_L407_28
-	.long	Bitmap_AcSeqMixerVolProc_L407_29
-	.long	Bitmap_AcSeqMixerVolProc_L407_30
-	.long	Bitmap_AcSeqMixerVolProc_L407_31
-	.long	Bitmap_AcSeqMixerVolProc_L407_32
-	.long	Bitmap_AcSeqMixerVolProc_L407_33
-	.long	Bitmap_AcSeqMixerVolProc_L407_34
-	.long	Bitmap_AcSeqMixerVolProc_L407_35
-	.long	Bitmap_AcSeqMixerVolProc_L407_36
-	.long	Bitmap_AcSeqMixerVolProc_L407_37
-
-Str_3d_217:	.asciz "%3d"
-Str_MUTE_4:	.asciz "MUTE"
-	.align	4, 0xFF	# pad after Str_MUTE_4
-Str_MUTE_3:	.asciz "MUTE"
-	.align	4, 0xFF	# pad after Str_MUTE_3
-
-IvRstOtherPartProc_L1d_Records:	# 16 x REC_IvRstOtherPartProc_L1d_Records (8 bytes each); read by IvRstOtherPartProc_L1d 0x48655B08 `mov (a0), d0`; IvRstOtherPartProc_L4c 0x48655B37 `mov (a0), d0`; IvRstOtherPartProc_L4f 0x48655B3A `mov (4, a0), a0`
-	REC_IvRstOtherPartProc_L1d_Records	proc=IvRstOtherPartProc_L229	# [0]
-	REC_IvRstOtherPartProc_L1d_Records	key=1, proc=loc_48655B3F
-	REC_IvRstOtherPartProc_L1d_Records	key=2, proc=loc_48655BBF
-	REC_IvRstOtherPartProc_L1d_Records	key=0x10052, proc=loc_48655CC5
-	REC_IvRstOtherPartProc_L1d_Records	key=0x10054, proc=loc_48655CA2
-	REC_IvRstOtherPartProc_L1d_Records	key=5, proc=loc_48655C08
-	REC_IvRstOtherPartProc_L1d_Records	key=0x10075, proc=loc_48655CB3
-	REC_IvRstOtherPartProc_L1d_Records	key=0x300007, proc=loc_48655BE6
-	REC_IvRstOtherPartProc_L1d_Records	key=0x300008, proc=loc_48655C81	# [8]
-	REC_IvRstOtherPartProc_L1d_Records	key=0x10053, proc=loc_48655CD3
-	REC_IvRstOtherPartProc_L1d_Records	key=0x100B2, proc=loc_48655CE1
-	REC_IvRstOtherPartProc_L1d_Records	key=0x1003A, proc=loc_48655D02
-	REC_IvRstOtherPartProc_L1d_Records	proc=IvRstOtherPartProc_L229
-	REC_IvRstOtherPartProc_L1d_Records	proc=IvRstOtherPartProc_L229
-	REC_IvRstOtherPartProc_L1d_Records	proc=IvRstOtherPartProc_L229
-	REC_IvRstOtherPartProc_L1d_Records	proc=IvRstOtherPartProc_L229
-AcSndCtrlXProc_Lae_Records:	# 16 x REC_AcSndCtrlXProc_Lae_Records (8 bytes each); read by AcSndCtrlXProc_Lae 0x4865707F `mov (a0), d1`; AcSndCtrlXProc_Ld4 0x486570A5 `mov (a0), d1`; AcSndCtrlXProc_Ld7 0x486570A8 `mov (4, a0), a0`
-	REC_AcSndCtrlXProc_Lae_Records	key=64, proc=loc_486570F5	# [0]
-	REC_AcSndCtrlXProc_Lae_Records	key=65, proc=loc_486570DD
-	REC_AcSndCtrlXProc_Lae_Records	key=82, proc=loc_486570CD
-	REC_AcSndCtrlXProc_Lae_Records	key=1, proc=loc_486570ED
-	REC_AcSndCtrlXProc_Lae_Records	key=4, proc=loc_486570C5
-	REC_AcSndCtrlXProc_Lae_Records	key=84, proc=loc_486570D5
-	REC_AcSndCtrlXProc_Lae_Records	key=86, proc=loc_486570BD
-	REC_AcSndCtrlXProc_Lae_Records	key=7, proc=loc_486570AD
-	REC_AcSndCtrlXProc_Lae_Records	key=8, proc=loc_486570B5	# [8]
-	REC_AcSndCtrlXProc_Lae_Records	proc=AcSndCtrlXProc_L134
-	REC_AcSndCtrlXProc_Lae_Records	proc=AcSndCtrlXProc_L134
-	REC_AcSndCtrlXProc_Lae_Records	proc=AcSndCtrlXProc_L134
-	REC_AcSndCtrlXProc_Lae_Records	proc=AcSndCtrlXProc_L134
-	REC_AcSndCtrlXProc_Lae_Records	proc=AcSndCtrlXProc_L134
-	REC_AcSndCtrlXProc_Lae_Records	key=62, proc=loc_486570E5
-	REC_AcSndCtrlXProc_Lae_Records	key=63, proc=loc_486570FD
-AcSeqMixerVolProc_L1f_Records:	# 32 x REC_AcSeqMixerVolProc_L1f_Records (8 bytes each); read by AcSeqMixerVolProc_L1f 0x48657F5A `mov (a0), d0`; AcSeqMixerVolProc_L4e 0x48657F89 `mov (a0), d0`; AcSeqMixerVolProc_L51 0x48657F8C `mov (4, a0), a0`
-	REC_AcSeqMixerVolProc_L1f_Records	proc=AcSeqMixerVolProc_L8cf	# [0]
-	REC_AcSeqMixerVolProc_L1f_Records	key=1, proc=loc_48657F91
-	REC_AcSeqMixerVolProc_L1f_Records	key=0x100A2, proc=loc_48658763
-	REC_AcSeqMixerVolProc_L1f_Records	proc=AcSeqMixerVolProc_L8cf
-	REC_AcSeqMixerVolProc_L1f_Records	proc=AcSeqMixerVolProc_L8cf
-	REC_AcSeqMixerVolProc_L1f_Records	key=5, proc=loc_48658423
-	REC_AcSeqMixerVolProc_L1f_Records	proc=AcSeqMixerVolProc_L8cf
-	REC_AcSeqMixerVolProc_L1f_Records	proc=AcSeqMixerVolProc_L8cf
-	REC_AcSeqMixerVolProc_L1f_Records	key=40, proc=loc_48658625	# [8]
-	REC_AcSeqMixerVolProc_L1f_Records	key=0x100E8, proc=loc_48658715
-	REC_AcSeqMixerVolProc_L1f_Records	key=0x300009, proc=loc_486587D3
-	REC_AcSeqMixerVolProc_L1f_Records	proc=AcSeqMixerVolProc_L8cf
-	REC_AcSeqMixerVolProc_L1f_Records	proc=AcSeqMixerVolProc_L8cf
-	REC_AcSeqMixerVolProc_L1f_Records	proc=AcSeqMixerVolProc_L8cf
-	REC_AcSeqMixerVolProc_L1f_Records	key=0x100EE, proc=loc_48658773
-	REC_AcSeqMixerVolProc_L1f_Records	key=0x100EF, proc=loc_48658782
-	REC_AcSeqMixerVolProc_L1f_Records	proc=AcSeqMixerVolProc_L8cf	# [16]
-	REC_AcSeqMixerVolProc_L1f_Records	key=0x10051, proc=loc_486586E5
-	REC_AcSeqMixerVolProc_L1f_Records	key=0x100B2, proc=loc_48657FEB
-	REC_AcSeqMixerVolProc_L1f_Records	proc=AcSeqMixerVolProc_L8cf
-	REC_AcSeqMixerVolProc_L1f_Records	key=0x100B4, proc=loc_4865808F
-	REC_AcSeqMixerVolProc_L1f_Records	key=20, proc=loc_48658361
-	REC_AcSeqMixerVolProc_L1f_Records	proc=AcSeqMixerVolProc_L8cf
-	REC_AcSeqMixerVolProc_L1f_Records	proc=AcSeqMixerVolProc_L8cf
-	REC_AcSeqMixerVolProc_L1f_Records	key=0x10058, proc=loc_486586CF	# [24]
-	REC_AcSeqMixerVolProc_L1f_Records	key=0x100D9, proc=loc_48658262
-	REC_AcSeqMixerVolProc_L1f_Records	key=0x1003A, proc=loc_48658738
-	REC_AcSeqMixerVolProc_L1f_Records	proc=AcSeqMixerVolProc_L8cf
-	REC_AcSeqMixerVolProc_L1f_Records	proc=AcSeqMixerVolProc_L8cf
-	REC_AcSeqMixerVolProc_L1f_Records	proc=AcSeqMixerVolProc_L8cf
-	REC_AcSeqMixerVolProc_L1f_Records	proc=AcSeqMixerVolProc_L8cf
-	REC_AcSeqMixerVolProc_L1f_Records	key=31, proc=loc_48658538
-
-Field_AcRvariScreen_normal:	.asciz "normal"
-Field_AcRvariScreen_custom:	.asciz "custom"
-Field_AcRvariScreen_memory:	.asciz "memory"
-Field_AcRvariScreen_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcRvariScreen_end
-
-ClassFields_AcRvariScreen:
-	.long	Field_AcRvariScreen_normal
-	.long	Field_AcRvariScreen_custom
-	.long	Field_AcRvariScreen_memory
-	.long	Field_AcRvariScreen_end
-
-Field_AcRhyVari_param2:	.asciz "param2"
-Field_AcRhyVari_end:	.asciz ""
-
-ClassFields_AcRhyVari:
-	.long	Field_AcRhyVari_param2
-	.long	Field_AcRhyVari_end
-
-Field_AcRhyPage_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcRhyPage_end
-
-ClassFields_AcRhyPage:
-	.long	Field_AcRhyPage_end
-
-Field_AcRhyGroup_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcRhyGroup_end
-
-ClassFields_AcRhyGroup:
-	.long	Field_AcRhyGroup_end
-
-Field_AcRhyCmpVari_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcRhyCmpVari_end
-
-ClassFields_AcRhyCmpVari:
-	.long	Field_AcRhyCmpVari_end
-
-Field_AcSvariScreen_normal:	.asciz "normal"
-Field_AcSvariScreen_explorer:	.asciz "explorer"
-Field_AcSvariScreen_memory:	.asciz "memory"
-Field_AcSvariScreen_accordion:	.asciz "accordion"
-Field_AcSvariScreen_drawbar:	.asciz "drawbar"
-Field_AcSvariScreen_organ:	.asciz "organ"
-Field_AcSvariScreen_expew:	.asciz "expew"
-Field_AcSvariScreen_normaloct:	.asciz "normaloct"
-Field_AcSvariScreen_exploreroct:	.asciz "exploreroct"
-Field_AcSvariScreen_memoryoct:	.asciz "memoryoct"
-Field_AcSvariScreen_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcSvariScreen_end
-
-ClassFields_AcSvariScreen:
-	.long	Field_AcSvariScreen_normal
-	.long	Field_AcSvariScreen_explorer
-	.long	Field_AcSvariScreen_memory
-	.long	Field_AcSvariScreen_accordion
-	.long	Field_AcSvariScreen_drawbar
-	.long	Field_AcSvariScreen_organ
-	.long	Field_AcSvariScreen_expew
-	.long	Field_AcSvariScreen_normaloct
-	.long	Field_AcSvariScreen_exploreroct
-	.long	Field_AcSvariScreen_memoryoct
-	.long	Field_AcSvariScreen_end
-
-Field_AcSndVari_swvari:	.asciz "swvari"
-Field_AcSndVari_end:	.asciz ""
-
-ClassFields_AcSndVari:
-	.long	Field_AcSndVari_swvari
-	.long	Field_AcSndVari_end
-
-Field_AcSndPage_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcSndPage_end
-
-ClassFields_AcSndPage:
-	.long	Field_AcSndPage_end
-
-Field_AcSndGroup_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcSndGroup_end
-
-ClassFields_AcSndGroup:
-	.long	Field_AcSndGroup_end
-
-Field_AcSndImage_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcSndImage_end
-
-ClassFields_AcSndImage:
-	.long	Field_AcSndImage_end
-
-Field_AcPartSelect_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcPartSelect_end
-
-ClassFields_AcPartSelect:
-	.long	Field_AcPartSelect_end
-
-Field_AcAcdnTypeSw_style:	.asciz "style"
-Field_AcAcdnTypeSw_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcAcdnTypeSw_end
-
-ClassFields_AcAcdnTypeSw:
-	.long	Field_AcAcdnTypeSw_style
-	.long	Field_AcAcdnTypeSw_end
-
-Field_AcAcdnTab_swvari:	.asciz "swvari"
-Field_AcAcdnTab_end:	.asciz ""
-
-ClassFields_AcAcdnTab:
-	.long	Field_AcAcdnTab_swvari
-	.long	Field_AcAcdnTab_end
-
-Field_AcAcdnType_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcAcdnType_end
-
-ClassFields_AcAcdnType:
-	.long	Field_AcAcdnType_end
-
-Field_AcDrawbarScreen_drawbar:	.asciz "drawbar"
-Field_AcDrawbarScreen_write:	.asciz "write"
-Field_AcDrawbarScreen_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcDrawbarScreen_end
-
-ClassFields_AcDrawbarScreen:
-	.long	Field_AcDrawbarScreen_drawbar
-	.long	Field_AcDrawbarScreen_write
-	.long	Field_AcDrawbarScreen_end
-
-Field_AcDrawbar_editsw:	.asciz "editsw"
-Field_AcDrawbar_end:	.asciz ""
-
-ClassFields_AcDrawbar:
-	.long	Field_AcDrawbar_editsw
-	.long	Field_AcDrawbar_end
-
-Field_AcTremolo_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcTremolo_end
-
-ClassFields_AcTremolo:
-	.long	Field_AcTremolo_end
-
-Field_AcPerc223_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcPerc223_end
-
-ClassFields_AcPerc223:
-	.long	Field_AcPerc223_end
-
-Field_AcPerc4_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcPerc4_end
-
-ClassFields_AcPerc4:
-	.long	Field_AcPerc4_end
-
-Field_AcDrawSet_drawbar:	.asciz "drawbar"
-Field_AcDrawSet_setting:	.asciz "setting"
-Field_AcDrawSet_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcDrawSet_end
-
-ClassFields_AcDrawSet:
-	.long	Field_AcDrawSet_drawbar
-	.long	Field_AcDrawSet_setting
-	.long	Field_AcDrawSet_end
-
-Field_PsDrawEdit_data:	.asciz "data"
-Field_PsDrawEdit_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_PsDrawEdit_end
-
-ClassFields_PsDrawEdit:
-	.long	Field_PsDrawEdit_data
-	.long	Field_PsDrawEdit_end
-
-Field_AcDrawAttack_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcDrawAttack_end
-
-ClassFields_AcDrawAttack:
-	.long	Field_AcDrawAttack_end
-
-Field_AcDrawRelease_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcDrawRelease_end
-
-ClassFields_AcDrawRelease:
-	.long	Field_AcDrawRelease_end
-
-Field_AcPercDecay_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcPercDecay_end
-
-ClassFields_AcPercDecay:
-	.long	Field_AcPercDecay_end
-
-Field_AcPercLevel_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcPercLevel_end
-
-ClassFields_AcPercLevel:
-	.long	Field_AcPercLevel_end
-
-Field_AcDrawVari_swvari:	.asciz "swvari"
-Field_AcDrawVari_end:	.asciz ""
-
-ClassFields_AcDrawVari:
-	.long	Field_AcDrawVari_swvari
-	.long	Field_AcDrawVari_end
-
-Field_AcSndExpGroup_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcSndExpGroup_end
-
-ClassFields_AcSndExpGroup:
-	.long	Field_AcSndExpGroup_end
-
-Field_AcSndExpVari_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcSndExpVari_end
-
-ClassFields_AcSndExpVari:
-	.long	Field_AcSndExpVari_end
-
-Field_AcExpToggle_index:	.asciz "index"
-Field_AcExpToggle_tag:	.asciz "tag"
-Field_AcExpToggle_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcExpToggle_end
-
-ClassFields_AcExpToggle:
-	.long	Field_AcExpToggle_index
-	.long	Field_AcExpToggle_tag
-	.long	Field_AcExpToggle_end
-
-Field_AcSndExpWideES_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcSndExpWideES_end
-
-ClassFields_AcSndExpWideES:
-	.long	Field_AcSndExpWideES_end
-
-Field_AcAbcToggle_end:	.asciz ""
-	.align	4, 0xFF	# pad after Field_AcAbcToggle_end
-
-ClassFields_AcAbcToggle:
-	.long	Field_AcAbcToggle_end
-
-ClassSig_AcRvariScreen:	.asciz "sss"
-ClassSig_AcRhyVari:	.asciz "r"
-ClassSig_AcRhyPage:	.asciz ""
-ClassSig_AcRhyGroup:	.asciz ""
-ClassSig_AcRhyCmpVari:	.asciz ""
-ClassSig_AcSvariScreen:	.asciz "ssssssssss"
-ClassSig_AcSndVari:	.asciz "r"
-ClassSig_AcSndPage:	.asciz ""
-ClassSig_AcSndGroup:	.asciz ""
-ClassSig_AcSndImage:	.asciz ""
-ClassSig_AcPartSelect:	.asciz ""
-ClassSig_AcAcdnTypeSw:	.asciz "f"
-ClassSig_AcAcdnTab:	.asciz "r"
-ClassSig_AcAcdnType:	.asciz ""
-ClassSig_AcDrawbarScreen:	.asciz "ss"
-ClassSig_AcDrawbar:	.asciz "e"
-ClassSig_AcTremolo:	.asciz ""
-ClassSig_AcPerc223:	.asciz ""
-ClassSig_AcPerc4:	.asciz ""
-ClassSig_AcDrawSet:	.asciz "ss"
-ClassSig_PsDrawEdit:	.asciz "m"
-ClassSig_AcDrawAttack:	.asciz ""
-ClassSig_AcDrawRelease:	.asciz ""
-ClassSig_AcPercDecay:	.asciz ""
-ClassSig_AcPercLevel:	.asciz ""
-ClassSig_AcDrawVari:	.asciz "r"
-ClassSig_AcSndExpGroup:	.asciz ""
-ClassSig_AcSndExpVari:	.asciz ""
-ClassSig_AcExpToggle:	.asciz "AA"
-ClassSig_AcSndExpWideES:	.asciz ""
-ClassSig_AcAbcToggle:	.asciz ""
-ClassName_AcRvariScreen:	.asciz "AcRvariScreen"
-ClassName_AcRhyVari:	.asciz "AcRhyVari"
-ClassName_AcRhyPage:	.asciz "AcRhyPage"
-ClassName_AcRhyGroup:	.asciz "AcRhyGroup"
-ClassName_AcRhyCmpVari:	.asciz "AcRhyCmpVari"
-ClassName_AcSvariScreen:	.asciz "AcSvariScreen"
-ClassName_AcSndVari:	.asciz "AcSndVari"
-ClassName_AcSndPage:	.asciz "AcSndPage"
-ClassName_AcSndGroup:	.asciz "AcSndGroup"
-ClassName_AcSndImage:	.asciz "AcSndImage"
-ClassName_AcPartSelect:	.asciz "AcPartSelect"
-ClassName_AcAcdnTypeSw:	.asciz "AcAcdnTypeSw"
-ClassName_AcAcdnTab:	.asciz "AcAcdnTab"
-ClassName_AcAcdnType:	.asciz "AcAcdnType"
-ClassName_AcDrawbarScreen:	.asciz "AcDrawbarScreen"
-ClassName_AcDrawbar:	.asciz "AcDrawbar"
-ClassName_AcTremolo:	.asciz "AcTremolo"
-ClassName_AcPerc223:	.asciz "AcPerc223"
-ClassName_AcPerc4:	.asciz "AcPerc4"
-ClassName_AcDrawSet:	.asciz "AcDrawSet"
-ClassName_PsDrawEdit:	.asciz "PsDrawEdit"
-ClassName_AcDrawAttack:	.asciz "AcDrawAttack"
-ClassName_AcDrawRelease:	.asciz "AcDrawRelease"
-ClassName_AcPercDecay:	.asciz "AcPercDecay"
-ClassName_AcPercLevel:	.asciz "AcPercLevel"
-ClassName_AcDrawVari:	.asciz "AcDrawVari"
-ClassName_AcSndExpGroup:	.asciz "AcSndExpGroup"
-ClassName_AcSndExpVari:	.asciz "AcSndExpVari"
-ClassName_AcExpToggle:	.asciz "AcExpToggle"
-ClassName_AcSndExpWideES:	.asciz "AcSndExpWideES"
-ClassName_AcAbcToggle:	.asciz "AcAbcToggle"
-	.align	4, 0xFF	# pad after ClassName_AcAbcToggle
-Str_EV_WHOSELECTED:	.asciz "EV_WHOSELECTED"
-Str_EV_ALLPAINTSNDEXP:	.asciz "EV_ALLPAINTSNDEXP"
-Str_EV_SWOFFSNDEXP:	.asciz "EV_SWOFFSNDEXP"
-Str_EV_SNDSELSWVARI:	.asciz "EV_SNDSELSWVARI"
-Str_MT_RefreshParam:	.asciz "MT_RefreshParam"
-Str_MT_PartVariPut:	.asciz "MT_PartVariPut"
-Str_MT_SndExpLedDisp:	.asciz "MT_SndExpLedDisp"
-FnName_AcRvariScreenProc:	.asciz "AcRvariScreenProc"
-FnName_AcRhyVariProc:	.asciz "AcRhyVariProc"
-FnName_AcRhyPageProc:	.asciz "AcRhyPageProc"
-FnName_AcRhyGroupProc:	.asciz "AcRhyGroupProc"
-FnName_AcRhyCmpVariProc:	.asciz "AcRhyCmpVariProc"
-FnName_AcSvariScreenProc:	.asciz "AcSvariScreenProc"
-FnName_AcSndVariProc:	.asciz "AcSndVariProc"
-FnName_AcSndPageProc:	.asciz "AcSndPageProc"
-FnName_AcSndGroupProc:	.asciz "AcSndGroupProc"
-FnName_AcSndImageProc:	.asciz "AcSndImageProc"
-FnName_AcPartSelectProc:	.asciz "AcPartSelectProc"
-FnName_AcAcdnTypeSwProc:	.asciz "AcAcdnTypeSwProc"
-FnName_AcAcdnTabProc:	.asciz "AcAcdnTabProc"
-FnName_AcAcdnTypeProc:	.asciz "AcAcdnTypeProc"
-FnName_AcDrawbarScreenProc:	.asciz "AcDrawbarScreenProc"
-FnName_AcDrawbarProc:	.asciz "AcDrawbarProc"
-FnName_AcTremoloProc:	.asciz "AcTremoloProc"
-FnName_AcPerc223Proc:	.asciz "AcPerc223Proc"
-FnName_AcPerc4Proc:	.asciz "AcPerc4Proc"
-FnName_AcDrawSetProc:	.asciz "AcDrawSetProc"
-FnName_PsDrawEditProc:	.asciz "PsDrawEditProc"
-FnName_AcDrawAttackProc:	.asciz "AcDrawAttackProc"
-FnName_AcDrawReleaseProc:	.asciz "AcDrawReleaseProc"
-FnName_AcPercDecayProc:	.asciz "AcPercDecayProc"
-FnName_AcPercLevelProc:	.asciz "AcPercLevelProc"
-FnName_AcDrawVariProc:	.asciz "AcDrawVariProc"
-FnName_AcSndExpGroupProc:	.asciz "AcSndExpGroupProc"
-FnName_AcSndExpVariProc:	.asciz "AcSndExpVariProc"
-FnName_AcExpToggleProc:	.asciz "AcExpToggleProc"
-FnName_AcSndExpWideESProc:	.asciz "AcSndExpWideESProc"
-FnName_AcAbcToggleProc:	.asciz "AcAbcToggleProc"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06D0B8, 0x06D0BC
-FnName_SVariR12OctaveFunc:	.asciz "SVariR12OctaveFunc"
-FnName_BitmapDrawsw:	.asciz "BitmapDrawsw"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06D0DC, 0x06D0E0
-FnName_TtRvari:	.asciz "TtRvari"
-FnName_TtSvari:	.asciz "TtSvari"
-FnName_TtSedrawbar:	.asciz "TtSedrawbar"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06D0FC, 0x06D100
-Str_SOUND_2:	.asciz "SOUND"
-	.align	4, 0xFF	# pad after Str_SOUND_2
-
-	AcSvariScreen	SNDRHY_TtSvari, sub=SNDRHY_TtSvari_SndPage1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, border=BD_Single1, index=0xFFFF, exit=TT_PS, window=SNDRHY_TtSvari_window, title=Str_SOUND_2, icon=140, normal=SvariNormal_id, explorer=SvariExplorer_id, memory=SvariMemory_id, accordion=SvariAccordion_id, drawbar=SvariPercTone_id, organ=0xFFFFFFFF, expew=0xFFFFFFFF, normaloct=SvariNormalOct_id, exploreroct=SvariExplorerOct_id, memoryoct=SvariMemoryOct_id	# title "SOUND"
-		AcSndPage	SNDRHY_TtSvari_SndPage1, super=SNDRHY_TtSvari, next=SNDRHY_TtSvari_PartSelect1, flag=VF_Const, X=240, Y=5, W=80, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=SNDRHY_TtSvari_SndPage1_page
-		AcPartSelect	SNDRHY_TtSvari_PartSelect1, super=SNDRHY_TtSvari, next=SNDRHY_TtSvari_SndGroup1, prev=SNDRHY_TtSvari_SndPage1, flag=VF_Const, X=92, Y=2, W=146, H=12, color=CL_TitleBar, index=0xFFFF, font=6, fontcolor=CL_White
-		AcSndGroup	SNDRHY_TtSvari_SndGroup1, super=SNDRHY_TtSvari, prev=SNDRHY_TtSvari_PartSelect1, flag=VF_Const, X=92, Y=14, W=146, H=12, color=CL_TitleBar, index=0xFFFF, font=6, fontcolor=CL_White
-
-	Window	SvariNormal, sub=SvariNormal_SndVari1, flag=VF_Const, X=0, Y=30, W=320, H=210, color=CL_WallPattern, index=0xFFFF, parent=SvariNormal_parent, child=SvariNormal_child
-		AcSndVari	SvariNormal_SndVari1, super=SvariNormal, next=SvariNormal_SndVari2, flag=VF_Const, X=8, Y=30, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, editsw=ES_Left1, font=1, fontcolor=CL_Black, caption=SvariNormal_SndVari1_caption, visible=SvariNormal_SndVari1_visible, selected=SvariNormal_SndVari1_selected, swvari=SvariNormal_SndVari1_swvari
-		AcSndVari	SvariNormal_SndVari2, super=SvariNormal, next=SvariNormal_SndVari3, prev=SvariNormal_SndVari1, flag=VF_Const, X=8, Y=72, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Left2, font=1, fontcolor=CL_Black, caption=SvariNormal_SndVari2_caption, visible=SvariNormal_SndVari2_visible, selected=SvariNormal_SndVari2_selected, swvari=SvariNormal_SndVari2_swvari
-		AcSndVari	SvariNormal_SndVari3, super=SvariNormal, next=SvariNormal_SndVari4, prev=SvariNormal_SndVari2, flag=VF_Const, X=8, Y=114, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=2, editsw=ES_Left3, font=1, fontcolor=CL_Black, caption=SvariNormal_SndVari3_caption, visible=SvariNormal_SndVari3_visible, selected=SvariNormal_SndVari3_selected, swvari=SvariNormal_SndVari3_swvari
-		AcSndVari	SvariNormal_SndVari4, super=SvariNormal, next=SvariNormal_SndVari5, prev=SvariNormal_SndVari3, flag=VF_Const, X=8, Y=156, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=3, editsw=ES_Left4, font=1, fontcolor=CL_Black, caption=SvariNormal_SndVari4_caption, visible=SvariNormal_SndVari4_visible, selected=SvariNormal_SndVari4_selected, swvari=SvariNormal_SndVari4_swvari
-		AcSndVari	SvariNormal_SndVari5, super=SvariNormal, next=SvariNormal_SndVari6, prev=SvariNormal_SndVari4, flag=VF_Const, X=8, Y=198, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=4, editsw=ES_Left5, font=1, fontcolor=CL_Black, caption=SvariNormal_SndVari5_caption, visible=SvariNormal_SndVari5_visible, selected=SvariNormal_SndVari5_selected, swvari=SvariNormal_SndVari5_swvari
-		AcSndVari	SvariNormal_SndVari6, super=SvariNormal, next=SvariNormal_SndVari7, prev=SvariNormal_SndVari5, flag=VF_Const, X=163, Y=30, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=5, editsw=ES_Right1, font=1, fontcolor=CL_Black, caption=SvariNormal_SndVari6_caption, visible=SvariNormal_SndVari6_visible, selected=SvariNormal_SndVari6_selected, swvari=SvariNormal_SndVari6_swvari
-		AcSndVari	SvariNormal_SndVari7, super=SvariNormal, next=SvariNormal_SndVari8, prev=SvariNormal_SndVari6, flag=VF_Const, X=163, Y=72, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=6, editsw=ES_Right2, font=1, fontcolor=CL_Black, caption=SvariNormal_SndVari7_caption, visible=SvariNormal_SndVari7_visible, selected=SvariNormal_SndVari7_selected, swvari=SvariNormal_SndVari7_swvari
-		AcSndVari	SvariNormal_SndVari8, super=SvariNormal, next=SvariNormal_SndVari9, prev=SvariNormal_SndVari7, flag=VF_Const, X=163, Y=114, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=7, editsw=ES_Right3, font=1, fontcolor=CL_Black, caption=SvariNormal_SndVari8_caption, visible=SvariNormal_SndVari8_visible, selected=SvariNormal_SndVari8_selected, swvari=SvariNormal_SndVari8_swvari
-		AcSndVari	SvariNormal_SndVari9, super=SvariNormal, next=SvariNormal_SndVari10, prev=SvariNormal_SndVari8, flag=VF_Const, X=163, Y=156, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=8, editsw=ES_Right4, font=1, fontcolor=CL_Black, caption=SvariNormal_SndVari9_caption, visible=SvariNormal_SndVari9_visible, selected=SvariNormal_SndVari9_selected, swvari=SvariNormal_SndVari9_swvari
-		AcSndVari	SvariNormal_SndVari10, super=SvariNormal, prev=SvariNormal_SndVari9, flag=VF_Const, X=163, Y=198, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=9, editsw=ES_Right5, font=1, fontcolor=CL_Black, caption=SvariNormal_SndVari10_caption, visible=SvariNormal_SndVari10_visible, selected=SvariNormal_SndVari10_selected, swvari=SvariNormal_SndVari10_swvari
-
-	Window	SvariDrawbar, sub=SvariDrawbar_Drawbar1, flag=VF_Const, X=0, Y=98, W=320, H=142, color=CL_WallPattern, index=0xFFFF, parent=SvariDrawbar_parent, child=SvariDrawbar_child
-		AcDrawbar	SvariDrawbar_Drawbar1, super=SvariDrawbar, next=SvariDrawbar_Box1, flag=VF_Const, X=12, Y=112, W=296, H=122, color=CL_Silver, border=BD_3D_DOWN2, index=0xFFFF, editsw=ES_Bottom1
-		VwBox	SvariDrawbar_Box1, super=SvariDrawbar, sub=SvariDrawbar_Label_16_5_8_4_2_2_1_1_1, next=SvariDrawbar_UserBitmap1, prev=SvariDrawbar_Drawbar1, flag=VF_Const, X=12, Y=98, W=296, H=16, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF
-
-Str_16_5_8_4_2_2_1_1_1:	.asciz "16' 5  ' 8'  4' 2  ' 2' 1  '1  ' 1'"
-
-			VwLabel	SvariDrawbar_Label_16_5_8_4_2_2_1_1_1, super=SvariDrawbar_Box1, sub=SvariDrawbar_Label_2_3, flag=VF_Const, X=18, Y=98, W=284, H=19, str=Str_16_5_8_4_2_2_1_1_1, fontcolor=CL_Black	# str "16' 5  ' 8'  4' 2  ' 2' 1  '1  ' 1'"
-
-Str_2_3:	.asciz "2/3"
-
-				VwLabel	SvariDrawbar_Label_2_3, super=SvariDrawbar_Label_16_5_8_4_2_2_1_1_1, next=SvariDrawbar_Label_3_5, flag=VF_Const, X=154, Y=103, W=22, H=11, str=Str_2_3, font=3, fontcolor=CL_Black	# str "2/3"
-
-Str_3_5:	.asciz "3/5"
-
-				VwLabel	SvariDrawbar_Label_3_5, super=SvariDrawbar_Label_16_5_8_4_2_2_1_1_1, prev=SvariDrawbar_Label_2_3, flag=VF_Const, X=217, Y=103, W=22, H=11, str=Str_3_5, font=3, fontcolor=CL_Black	# str "3/5"
-		VwUserBitmap	SvariDrawbar_UserBitmap1, super=SvariDrawbar, next=SvariDrawbar_Label_1_3, prev=SvariDrawbar_Box1, flag=VF_Const, X=22, Y=234, W=294, H=6, func=FN_BitmapDrawsw
-
-Str_1_3:	.asciz "1/3"
-
-		VwLabel	SvariDrawbar_Label_1_3, super=SvariDrawbar, next=SvariDrawbar_Label_1_32, prev=SvariDrawbar_UserBitmap1, flag=VF_Const, X=58, Y=103, W=22, H=11, str=Str_1_3, font=3, fontcolor=CL_Black	# str "1/3"
-
-Str_1_3_2:	.asciz "1/3"
-
-		VwLabel	SvariDrawbar_Label_1_32, super=SvariDrawbar, prev=SvariDrawbar_Label_1_3, flag=VF_Const, X=249, Y=103, W=22, H=11, str=Str_1_3_2, font=3, fontcolor=CL_Black	# str "1/3"
-
-	Window	SvariDrawSet, sub=SvariDrawSet_DrawRelease_RELEASE_TIME, flag=VF_Const, X=0, Y=96, W=320, H=144, color=CL_WallPattern, index=0xFFFF, parent=SvariDrawSet_parent, child=SvariDrawSet_child
-
-Str_RELEASE_TIME:	.asciz "RELEASE TIME :"
-	.align	4, 0xFF	# pad after Str_RELEASE_TIME
-
-		AcDrawRelease	SvariDrawSet_DrawRelease_RELEASE_TIME, super=SvariDrawSet, next=SvariDrawSet_PercDecay_DECAY, flag=VF_Const, X=8, Y=156, W=149, H=26, color=CL_WallPattern, caption=Str_RELEASE_TIME, fontcolor=CL_White, align=1, length=3, editsw=ES_Left4, dial=1, selected=SvariDrawSet_DrawRelease_RELEASE_TIME_selected, data=SvariDrawSet_DrawRelease_RELEASE_TIME_data	# caption "RELEASE TIME :"
-
-Str_DECAY:	.asciz "DECAY :"
-
-		AcPercDecay	SvariDrawSet_PercDecay_DECAY, super=SvariDrawSet, next=SvariDrawSet_PercLevel_LEVEL, prev=SvariDrawSet_DrawRelease_RELEASE_TIME, flag=VF_Const, X=223, Y=114, W=89, H=26, color=CL_WallPattern, caption=Str_DECAY, fontcolor=CL_White, align=1, length=3, editsw=ES_Right3, dial=1, selected=SvariDrawSet_PercDecay_DECAY_selected, data=SvariDrawSet_PercDecay_DECAY_data	# caption "DECAY :"
-
-Str_LEVEL:	.asciz "LEVEL :"
-
-		AcPercLevel	SvariDrawSet_PercLevel_LEVEL, super=SvariDrawSet, next=SvariDrawSet_DrawAttack_ATTACK_TIME, prev=SvariDrawSet_PercDecay_DECAY, flag=VF_Const, X=223, Y=156, W=89, H=26, color=CL_WallPattern, caption=Str_LEVEL, fontcolor=CL_White, align=1, length=3, editsw=ES_Right4, dial=1, selected=SvariDrawSet_PercLevel_LEVEL_selected, data=SvariDrawSet_PercLevel_LEVEL_data	# caption "LEVEL :"
-
-Str_ATTACK_TIME:	.asciz "ATTACK TIME  :"
-	.align	4, 0xFF	# pad after Str_ATTACK_TIME
-
-		AcDrawAttack	SvariDrawSet_DrawAttack_ATTACK_TIME, super=SvariDrawSet, next=SvariDrawSet_IndexWideES1, prev=SvariDrawSet_PercLevel_LEVEL, flag=VF_Const, X=8, Y=114, W=149, H=26, color=CL_WallPattern, caption=Str_ATTACK_TIME, fontcolor=CL_White, align=1, length=3, editsw=ES_Left3, dial=1, selected=SvariDrawSet_DrawAttack_ATTACK_TIME_selected, data=SvariDrawSet_DrawAttack_ATTACK_TIME_data	# caption "ATTACK TIME  :"
-		AcIndexWideES	SvariDrawSet_IndexWideES1, super=SvariDrawSet, next=SvariDrawSet_DrawVari1, prev=SvariDrawSet_DrawAttack_ATTACK_TIME, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=3
-		AcDrawVari	SvariDrawSet_DrawVari1, super=SvariDrawSet, prev=SvariDrawSet_IndexWideES1, flag=VF_Const, X=8, Y=194, W=197, H=34, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left5, font=4, fontcolor=CL_Black, caption=SvariDrawSet_DrawVari1_caption, visible=SvariDrawSet_DrawVari1_visible, selected=SvariDrawSet_DrawVari1_selected, swvari=SvariDrawSet_DrawVari1_swvari
-
-	Window	SvariPercTone, sub=SvariPercTone_Tremolo_FAST, flag=VF_Const, X=0, Y=30, W=320, H=210, color=CL_WallPattern, index=0xFFFF, parent=SvariPercTone_parent, child=SvariPercTone_child
-
-Str_FAST:	.asciz "FAST"
-Str_SLOW:	.asciz "SLOW"
-	.align	4, 0xFF	# pad after Str_SLOW
-
-		AcTremolo	SvariPercTone_Tremolo_FAST, super=SvariPercTone, next=SvariPercTone_Perc223_2, flag=VF_Const, X=8, Y=34, W=39, H=18, stron=Str_FAST, stroff=Str_SLOW, onoff=SvariPercTone_Tremolo_FAST_onoff, editsw=ES_Left1	# stron "FAST"; stroff "SLOW"
-
-Str_2:	.asciz "2  '"
-Str_2_2:	.asciz "2  '"
-	.align	4, 0xFF	# pad after Str_2_2
-
-		AcPerc223	SvariPercTone_Perc223_2, super=SvariPercTone, sub=Black223, next=SvariPercTone_Perc4_4, prev=SvariPercTone_Tremolo_FAST, flag=VF_Const, X=273, Y=34, W=39, H=18, stron=Str_2, stroff=Str_2_2, onoff=SvariPercTone_Perc223_2_onoff, editsw=ES_Right1	# stron "2  '"; stroff "2  '"
-
-Str_2_3_2:	.asciz "2/3"
-
-			VwLabel	Black223, super=SvariPercTone_Perc223_2, sub=White223, flag=VF_Const, X=284, Y=42, W=22, H=11, str=Str_2_3_2, font=3, fontcolor=CL_BlackW	# str "2/3"
-
-Str_2_3_3:	.asciz "2/3"
-
-				VwLabel	White223, super=Black223, flag=VF_Const, X=284, Y=42, W=22, H=11, str=Str_2_3_3, font=3, fontcolor=CL_WhiteB	# str "2/3"
-
-Str_4:	.asciz "4'"
-Str_4_2:	.asciz "4'"
-	.align	4, 0xFF	# pad after Str_4_2
-
-		AcPerc4	SvariPercTone_Perc4_4, super=SvariPercTone, next=SvariPercTone_Label_PERCUSSIVE, prev=SvariPercTone_Perc223_2, flag=VF_Const, X=273, Y=76, W=39, H=18, stron=Str_4, stroff=Str_4_2, onoff=SvariPercTone_Perc4_4_onoff, editsw=ES_Right2	# stron "4'"; stroff "4'"
-
-Str_PERCUSSIVE:	.asciz "PERCUSSIVE"
-	.align	4, 0xFF	# pad after Str_PERCUSSIVE
-
-		VwLabel	SvariPercTone_Label_PERCUSSIVE, super=SvariPercTone, next=SvariPercTone_Label_TONE, prev=SvariPercTone_Perc4_4, flag=VF_Const, X=188, Y=54, W=84, H=15, str=Str_PERCUSSIVE, fontcolor=CL_White	# str "PERCUSSIVE"
-
-Str_TONE:	.asciz "TONE"
-	.align	4, 0xFF	# pad after Str_TONE
-
-		VwLabel	SvariPercTone_Label_TONE, super=SvariPercTone, next=SvariPercTone_Label_TREMOLO, prev=SvariPercTone_Label_PERCUSSIVE, flag=VF_Const, X=236, Y=68, W=36, H=17, str=Str_TONE, fontcolor=CL_White	# str "TONE"
-
-Str_TREMOLO:	.asciz "  TREMOLO"
-	.align	4, 0xFF	# pad after Str_TREMOLO
-
-		VwLabel	SvariPercTone_Label_TREMOLO, super=SvariPercTone, next=SvariPercTone_DrawSet_DRAWBAR_SETTING, prev=SvariPercTone_Label_TONE, flag=VF_Const, X=34, Y=34, W=76, H=19, str=Str_TREMOLO, fontcolor=CL_White	# str "  TREMOLO"
-
-Str_DRAWBAR_SETTING:	.asciz "DRAWBAR SETTING"
-Str_DRAWBAR_SETTING_2:	.asciz "DRAWBAR SETTING"
-
-		AcDrawSet	SvariPercTone_DrawSet_DRAWBAR_SETTING, super=SvariPercTone, prev=SvariPercTone_Label_TREMOLO, flag=VF_Const, X=8, Y=76, W=131, H=18, stron=Str_DRAWBAR_SETTING, stroff=Str_DRAWBAR_SETTING_2, onoff=SvariPercTone_DrawSet_DRAWBAR_SETTING_onoff, editsw=ES_Left2, drawbar=SvariDrawbar_id, setting=SvariDrawSet_id	# stron "DRAWBAR SETTING"; stroff "DRAWBAR SETTING"
-
-	Window	SvariAccordion, sub=SvariAccordion_AcdnTypeSw1, flag=VF_Const, X=0, Y=30, W=320, H=210, color=CL_WallPattern, index=0xFFFF, parent=SvariAccordion_parent, child=SvariAccordion_child
-		AcAcdnTypeSw	SvariAccordion_AcdnTypeSw1, super=SvariAccordion, next=SvariAccordion_AcdnTypeSw2, flag=VF_Const, X=4, Y=36, W=20, H=22, color=CL_Silver, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_Black, editsw=ES_Left1, style=1
-		AcAcdnTypeSw	SvariAccordion_AcdnTypeSw2, super=SvariAccordion, next=SvariAccordion_Label_TYPE, prev=SvariAccordion_AcdnTypeSw1, flag=VF_Const, X=4, Y=79, W=20, H=22, color=CL_Silver, border=BD_3D_UP2, font=4, fontcolor=CL_Black, editsw=ES_Left2, style=2
-
-Str_TYPE:	.asciz "TYPE"
-	.align	4, 0xFF	# pad after Str_TYPE
-
-		VwLabel	SvariAccordion_Label_TYPE, super=SvariAccordion, next=SvariAccordion_AcdnTab1, prev=SvariAccordion_AcdnTypeSw2, flag=VF_Const, X=4, Y=60, W=18, H=19, str=Str_TYPE, fontcolor=CL_White	# str "TYPE"
-		AcAcdnTab	SvariAccordion_AcdnTab1, super=SvariAccordion, next=SvariAccordion_AcdnTab2, prev=SvariAccordion_Label_TYPE, flag=VF_Const, X=81, Y=187, W=19, H=52, color=CL_Selected, border=BD_EditSwDown, editsw=ES_Bottom5, font=9, fontcolor=CL_White, caption=SvariAccordion_AcdnTab1_caption, visible=SvariAccordion_AcdnTab1_visible, selected=SvariAccordion_AcdnTab1_selected, swvari=SvariAccordion_AcdnTab1_swvari
-		AcAcdnTab	SvariAccordion_AcdnTab2, super=SvariAccordion, next=SvariAccordion_AcdnTab3, prev=SvariAccordion_AcdnTab1, flag=VF_Const, X=279, Y=35, W=37, H=24, color=CL_Selected, border=BD_3D_DOWN2, index=8, editsw=ES_Right1, font=9, fontcolor=CL_White, caption=SvariAccordion_AcdnTab2_caption, visible=SvariAccordion_AcdnTab2_visible, selected=SvariAccordion_AcdnTab2_selected, swvari=SvariAccordion_AcdnTab2_swvari
-		AcAcdnTab	SvariAccordion_AcdnTab3, super=SvariAccordion, next=SvariAccordion_AcdnTab4, prev=SvariAccordion_AcdnTab2, flag=VF_Const, X=279, Y=78, W=37, H=24, color=CL_Selected, border=BD_3D_DOWN2, index=9, editsw=ES_Right2, font=9, fontcolor=CL_White, caption=SvariAccordion_AcdnTab3_caption, visible=SvariAccordion_AcdnTab3_visible, selected=SvariAccordion_AcdnTab3_selected, swvari=SvariAccordion_AcdnTab3_swvari
-		AcAcdnTab	SvariAccordion_AcdnTab4, super=SvariAccordion, next=SvariAccordion_AcdnTab5, prev=SvariAccordion_AcdnTab3, flag=VF_Const, X=101, Y=187, W=19, H=52, color=CL_Selected, border=BD_EditSwDown, index=1, editsw=ES_Bottom6, font=9, fontcolor=CL_White, caption=SvariAccordion_AcdnTab4_caption, visible=SvariAccordion_AcdnTab4_visible, selected=SvariAccordion_AcdnTab4_selected, swvari=SvariAccordion_AcdnTab4_swvari
-		AcAcdnTab	SvariAccordion_AcdnTab5, super=SvariAccordion, next=SvariAccordion_AcdnTab6, prev=SvariAccordion_AcdnTab4, flag=VF_Const, X=121, Y=187, W=19, H=52, color=CL_Selected, border=BD_EditSwDown, index=2, editsw=ES_Bottom7, font=9, fontcolor=CL_White, caption=SvariAccordion_AcdnTab5_caption, visible=SvariAccordion_AcdnTab5_visible, selected=SvariAccordion_AcdnTab5_selected, swvari=SvariAccordion_AcdnTab5_swvari
-		AcAcdnTab	SvariAccordion_AcdnTab6, super=SvariAccordion, next=SvariAccordion_AcdnTab7, prev=SvariAccordion_AcdnTab5, flag=VF_Const, X=141, Y=187, W=19, H=52, color=CL_Selected, border=BD_EditSwDown, index=3, editsw=ES_Bottom8, font=9, fontcolor=CL_White, caption=SvariAccordion_AcdnTab6_caption, visible=SvariAccordion_AcdnTab6_visible, selected=SvariAccordion_AcdnTab6_selected, swvari=SvariAccordion_AcdnTab6_swvari
-		AcAcdnTab	SvariAccordion_AcdnTab7, super=SvariAccordion, next=SvariAccordion_AcdnTab8, prev=SvariAccordion_AcdnTab6, flag=VF_Const, X=161, Y=187, W=19, H=52, color=CL_Selected, border=BD_EditSwDown, index=4, editsw=ES_Bottom9, font=9, fontcolor=CL_White, caption=SvariAccordion_AcdnTab7_caption, visible=SvariAccordion_AcdnTab7_visible, selected=SvariAccordion_AcdnTab7_selected, swvari=SvariAccordion_AcdnTab7_swvari
-		AcAcdnTab	SvariAccordion_AcdnTab8, super=SvariAccordion, next=SvariAccordion_AcdnTab9, prev=SvariAccordion_AcdnTab7, flag=VF_Const, X=181, Y=187, W=19, H=52, color=CL_Selected, border=BD_EditSwDown, index=5, editsw=ES_Bottom10, font=9, fontcolor=CL_White, caption=SvariAccordion_AcdnTab8_caption, visible=SvariAccordion_AcdnTab8_visible, selected=SvariAccordion_AcdnTab8_selected, swvari=SvariAccordion_AcdnTab8_swvari
-		AcAcdnTab	SvariAccordion_AcdnTab9, super=SvariAccordion, next=SvariAccordion_AcdnTab10, prev=SvariAccordion_AcdnTab8, flag=VF_Const, X=201, Y=187, W=19, H=52, color=CL_Selected, border=BD_EditSwDown, index=6, editsw=ES_Bottom11, font=9, fontcolor=CL_White, caption=SvariAccordion_AcdnTab9_caption, visible=SvariAccordion_AcdnTab9_visible, selected=SvariAccordion_AcdnTab9_selected, swvari=SvariAccordion_AcdnTab9_swvari
-		AcAcdnTab	SvariAccordion_AcdnTab10, super=SvariAccordion, next=SvariAccordion_AcdnType1, prev=SvariAccordion_AcdnTab9, flag=VF_Const, X=221, Y=187, W=19, H=52, color=CL_Selected, border=BD_EditSwDown, index=7, editsw=ES_Bottom12, font=9, fontcolor=CL_White, caption=SvariAccordion_AcdnTab10_caption, visible=SvariAccordion_AcdnTab10_visible, selected=SvariAccordion_AcdnTab10_selected, swvari=SvariAccordion_AcdnTab10_swvari
-		AcAcdnType	SvariAccordion_AcdnType1, super=SvariAccordion, next=SvariAccordion_SndImage1, prev=SvariAccordion_AcdnTab10, flag=VF_Const, X=40, Y=46, W=62, H=40, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_White
-		AcSndImage	SvariAccordion_SndImage1, super=SvariAccordion, prev=SvariAccordion_AcdnType1, flag=VF_Const, X=120, Y=60, W=80, H=120
-
-	Window	SvariExplorer, sub=SvariExplorer_SndExpVari1, flag=VF_Const, X=0, Y=30, W=320, H=210, color=CL_WallPattern, index=0xFFFF, parent=SvariExplorer_parent, child=SvariExplorer_child
-		AcSndExpVari	SvariExplorer_SndExpVari1, super=SvariExplorer, next=SvariExplorer_SndExpVari2, flag=VF_Const, X=8, Y=30, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, editsw=ES_Left1, fontcolor=CL_Black, caption=SvariExplorer_SndExpVari1_caption, visible=SvariExplorer_SndExpVari1_visible, selected=SvariExplorer_SndExpVari1_selected, swvari=SvariExplorer_SndExpVari1_swvari
-		AcSndExpVari	SvariExplorer_SndExpVari2, super=SvariExplorer, next=SvariExplorer_SndExpVari3, prev=SvariExplorer_SndExpVari1, flag=VF_Const, X=8, Y=72, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Left2, fontcolor=CL_Black, caption=SvariExplorer_SndExpVari2_caption, visible=SvariExplorer_SndExpVari2_visible, selected=SvariExplorer_SndExpVari2_selected, swvari=SvariExplorer_SndExpVari2_swvari
-		AcSndExpVari	SvariExplorer_SndExpVari3, super=SvariExplorer, next=SvariExplorer_SndExpVari4, prev=SvariExplorer_SndExpVari2, flag=VF_Const, X=8, Y=114, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=2, editsw=ES_Left3, fontcolor=CL_Black, caption=SvariExplorer_SndExpVari3_caption, visible=SvariExplorer_SndExpVari3_visible, selected=SvariExplorer_SndExpVari3_selected, swvari=SvariExplorer_SndExpVari3_swvari
-		AcSndExpVari	SvariExplorer_SndExpVari4, super=SvariExplorer, next=SvariExplorer_SndExpVari5, prev=SvariExplorer_SndExpVari3, flag=VF_Const, X=8, Y=156, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=3, editsw=ES_Left4, fontcolor=CL_Black, caption=SvariExplorer_SndExpVari4_caption, visible=SvariExplorer_SndExpVari4_visible, selected=SvariExplorer_SndExpVari4_selected, swvari=SvariExplorer_SndExpVari4_swvari
-		AcSndExpVari	SvariExplorer_SndExpVari5, super=SvariExplorer, next=SvariExplorer_SndExpVari6, prev=SvariExplorer_SndExpVari4, flag=VF_Const, X=8, Y=198, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=4, editsw=ES_Left5, fontcolor=CL_Black, caption=SvariExplorer_SndExpVari5_caption, visible=SvariExplorer_SndExpVari5_visible, selected=SvariExplorer_SndExpVari5_selected, swvari=SvariExplorer_SndExpVari5_swvari
-		AcSndExpVari	SvariExplorer_SndExpVari6, super=SvariExplorer, next=SvariExplorer_SndExpVari7, prev=SvariExplorer_SndExpVari5, flag=VF_Const, X=163, Y=30, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=5, editsw=ES_Right1, fontcolor=CL_Black, caption=SvariExplorer_SndExpVari6_caption, visible=SvariExplorer_SndExpVari6_visible, selected=SvariExplorer_SndExpVari6_selected, swvari=SvariExplorer_SndExpVari6_swvari
-		AcSndExpVari	SvariExplorer_SndExpVari7, super=SvariExplorer, next=SvariExplorer_SndExpVari8, prev=SvariExplorer_SndExpVari6, flag=VF_Const, X=163, Y=72, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=6, editsw=ES_Right2, fontcolor=CL_Black, caption=SvariExplorer_SndExpVari7_caption, visible=SvariExplorer_SndExpVari7_visible, selected=SvariExplorer_SndExpVari7_selected, swvari=SvariExplorer_SndExpVari7_swvari
-		AcSndExpVari	SvariExplorer_SndExpVari8, super=SvariExplorer, next=SvariExplorer_SndExpVari9, prev=SvariExplorer_SndExpVari7, flag=VF_Const, X=163, Y=114, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=7, editsw=ES_Right3, fontcolor=CL_Black, caption=SvariExplorer_SndExpVari8_caption, visible=SvariExplorer_SndExpVari8_visible, selected=SvariExplorer_SndExpVari8_selected, swvari=SvariExplorer_SndExpVari8_swvari
-		AcSndExpVari	SvariExplorer_SndExpVari9, super=SvariExplorer, next=SvariExplorer_SndExpVari10, prev=SvariExplorer_SndExpVari8, flag=VF_Const, X=163, Y=156, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=8, editsw=ES_Right4, fontcolor=CL_Black, caption=SvariExplorer_SndExpVari9_caption, visible=SvariExplorer_SndExpVari9_visible, selected=SvariExplorer_SndExpVari9_selected, swvari=SvariExplorer_SndExpVari9_swvari
-		AcSndExpVari	SvariExplorer_SndExpVari10, super=SvariExplorer, next=SvariExplorer_SndExpWideES1, prev=SvariExplorer_SndExpVari9, flag=VF_Const, X=163, Y=198, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=9, editsw=ES_Right5, fontcolor=CL_Black, caption=SvariExplorer_SndExpVari10_caption, visible=SvariExplorer_SndExpVari10_visible, selected=SvariExplorer_SndExpVari10_selected, swvari=SvariExplorer_SndExpVari10_swvari
-		AcSndExpWideES	SvariExplorer_SndExpWideES1, super=SvariExplorer, next=SvariExplorer_Box1, prev=SvariExplorer_SndExpVari10, flag=VF_Const, X=133, Y=221, W=32, H=19, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom4, style=3
-		VwBox	SvariExplorer_Box1, super=SvariExplorer, sub=SvariExplorer_SndExpGroup1, next=SvariExplorer_AbcToggle_ALP, prev=SvariExplorer_SndExpWideES1, flag=VF_Const, X=0, Y=221, W=133, H=19, color=CL_Black, border=BD_3D_UP2, index=0xFFFF
-
-Str_empty_18:	.asciz ""
-	.align	4, 0xFF	# pad after Str_empty_18
-
-			AcSndExpGroup	SvariExplorer_SndExpGroup1, super=SvariExplorer_Box1, next=SvariExplorer_StrBox_GRP, flag=VF_Const, X=25, Y=223, W=106, H=14, color=CL_WallPattern, index=1, caption=Str_empty_18, font=3, fontcolor=CL_White, align=1, length=17, editsw=ES_None, selected=SvariExplorer_SndExpGroup1_selected	# caption ""
-
-Str_GRP:	.asciz "GRP:"
-	.align	4, 0xFF	# pad after Str_GRP
-
-			VwStrBox	SvariExplorer_StrBox_GRP, super=SvariExplorer_Box1, prev=SvariExplorer_SndExpGroup1, flag=VF_Const, X=4, Y=224, W=22, H=12, color=CL_Transparent, index=0xFFFF, font=3, fontcolor=CL_White, str=Str_GRP	# str "GRP:"
-
-Str_ALP:	.asciz "ALP"
-Str_CTG:	.asciz "CTG"
-
-		AcAbcToggle	SvariExplorer_AbcToggle_ALP, super=SvariExplorer, prev=SvariExplorer_Box1, flag=VF_Const, X=167, Y=221, W=32, H=19, stron=Str_ALP, stroff=Str_CTG, onoff=SvariExplorer_AbcToggle_ALP_onoff, editsw=ES_Bottom5, editsw2=ES_Bottom5	# stron "ALP"; stroff "CTG"
-
-	Window	SvariMemory, sub=SvariMemory_SndVari1, flag=VF_Const, X=0, Y=30, W=320, H=210, color=CL_WallPattern, index=0xFFFF, parent=SvariMemory_parent, child=SvariMemory_child
-		AcSndVari	SvariMemory_SndVari1, super=SvariMemory, next=SvariMemory_SndVari2, flag=VF_Const, X=8, Y=30, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, editsw=ES_Left1, fontcolor=CL_Black, caption=SvariMemory_SndVari1_caption, visible=SvariMemory_SndVari1_visible, selected=SvariMemory_SndVari1_selected, swvari=SvariMemory_SndVari1_swvari
-		AcSndVari	SvariMemory_SndVari2, super=SvariMemory, next=SvariMemory_SndVari3, prev=SvariMemory_SndVari1, flag=VF_Const, X=8, Y=72, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Left2, fontcolor=CL_Black, caption=SvariMemory_SndVari2_caption, visible=SvariMemory_SndVari2_visible, selected=SvariMemory_SndVari2_selected, swvari=SvariMemory_SndVari2_swvari
-		AcSndVari	SvariMemory_SndVari3, super=SvariMemory, next=SvariMemory_SndVari4, prev=SvariMemory_SndVari2, flag=VF_Const, X=8, Y=114, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=2, editsw=ES_Left3, fontcolor=CL_Black, caption=SvariMemory_SndVari3_caption, visible=SvariMemory_SndVari3_visible, selected=SvariMemory_SndVari3_selected, swvari=SvariMemory_SndVari3_swvari
-		AcSndVari	SvariMemory_SndVari4, super=SvariMemory, next=SvariMemory_SndVari5, prev=SvariMemory_SndVari3, flag=VF_Const, X=8, Y=156, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=3, editsw=ES_Left4, fontcolor=CL_Black, caption=SvariMemory_SndVari4_caption, visible=SvariMemory_SndVari4_visible, selected=SvariMemory_SndVari4_selected, swvari=SvariMemory_SndVari4_swvari
-		AcSndVari	SvariMemory_SndVari5, super=SvariMemory, next=SvariMemory_SndVari6, prev=SvariMemory_SndVari4, flag=VF_Const, X=8, Y=198, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=4, editsw=ES_Left5, fontcolor=CL_Black, caption=SvariMemory_SndVari5_caption, visible=SvariMemory_SndVari5_visible, selected=SvariMemory_SndVari5_selected, swvari=SvariMemory_SndVari5_swvari
-		AcSndVari	SvariMemory_SndVari6, super=SvariMemory, next=SvariMemory_SndVari7, prev=SvariMemory_SndVari5, flag=VF_Const, X=163, Y=30, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=5, editsw=ES_Right1, fontcolor=CL_Black, caption=SvariMemory_SndVari6_caption, visible=SvariMemory_SndVari6_visible, selected=SvariMemory_SndVari6_selected, swvari=SvariMemory_SndVari6_swvari
-		AcSndVari	SvariMemory_SndVari7, super=SvariMemory, next=SvariMemory_SndVari8, prev=SvariMemory_SndVari6, flag=VF_Const, X=163, Y=72, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=6, editsw=ES_Right2, fontcolor=CL_Black, caption=SvariMemory_SndVari7_caption, visible=SvariMemory_SndVari7_visible, selected=SvariMemory_SndVari7_selected, swvari=SvariMemory_SndVari7_swvari
-		AcSndVari	SvariMemory_SndVari8, super=SvariMemory, next=SvariMemory_SndVari9, prev=SvariMemory_SndVari7, flag=VF_Const, X=163, Y=114, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=7, editsw=ES_Right3, fontcolor=CL_Black, caption=SvariMemory_SndVari8_caption, visible=SvariMemory_SndVari8_visible, selected=SvariMemory_SndVari8_selected, swvari=SvariMemory_SndVari8_swvari
-		AcSndVari	SvariMemory_SndVari9, super=SvariMemory, next=SvariMemory_SndVari10, prev=SvariMemory_SndVari8, flag=VF_Const, X=163, Y=156, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=8, editsw=ES_Right4, fontcolor=CL_Black, caption=SvariMemory_SndVari9_caption, visible=SvariMemory_SndVari9_visible, selected=SvariMemory_SndVari9_selected, swvari=SvariMemory_SndVari9_swvari
-		AcSndVari	SvariMemory_SndVari10, super=SvariMemory, prev=SvariMemory_SndVari9, flag=VF_Const, X=163, Y=198, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=9, editsw=ES_Right5, fontcolor=CL_Black, caption=SvariMemory_SndVari10_caption, visible=SvariMemory_SndVari10_visible, selected=SvariMemory_SndVari10_selected, swvari=SvariMemory_SndVari10_swvari
-
-	Window	DrawbarWrite, sub=DrawbarWrite_TitleMenu_WRITE, flag=VF_Const, X=0, Y=30, W=160, H=36, color=CL_WallPattern, index=0xFFFF, parent=DrawbarWrite_parent, child=DrawbarWrite_child
-
-Str_WRITE:	.asciz "WRITE"
-	.align	4, 0xFF	# pad after Str_WRITE
-
-		AcTitleMenu	DrawbarWrite_TitleMenu_WRITE, super=DrawbarWrite, flag=VF_Const, X=8, Y=28, W=149, H=30, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=DrawbarWrite_TitleMenu_WRITE_selected, str=Str_WRITE, title=TT_SEWRITE	# str "WRITE"
-
-	Window	RvariNormal, sub=RvariNormal_RhyVari1, flag=VF_Const, X=0, Y=30, W=320, H=210, color=CL_WallPattern, index=0xFFFF, parent=RvariNormal_parent, child=RvariNormal_child
-		AcRhyVari	RvariNormal_RhyVari1, super=RvariNormal, next=RvariNormal_RhyVari2, flag=VF_Const, X=8, Y=30, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, editsw=ES_Left1, font=1, fontcolor=CL_Black, caption=RvariNormal_RhyVari1_caption, visible=RvariNormal_RhyVari1_visible, selected=RvariNormal_RhyVari1_selected, param2=RvariNormal_RhyVari1_param2
-		AcRhyVari	RvariNormal_RhyVari2, super=RvariNormal, next=RvariNormal_RhyVari3, prev=RvariNormal_RhyVari1, flag=VF_Const, X=8, Y=72, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Left2, font=1, fontcolor=CL_Black, caption=RvariNormal_RhyVari2_caption, visible=RvariNormal_RhyVari2_visible, selected=RvariNormal_RhyVari2_selected, param2=RvariNormal_RhyVari2_param2
-		AcRhyVari	RvariNormal_RhyVari3, super=RvariNormal, next=RvariNormal_RhyVari4, prev=RvariNormal_RhyVari2, flag=VF_Const, X=8, Y=114, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=2, editsw=ES_Left3, font=1, fontcolor=CL_Black, caption=RvariNormal_RhyVari3_caption, visible=RvariNormal_RhyVari3_visible, selected=RvariNormal_RhyVari3_selected, param2=RvariNormal_RhyVari3_param2
-		AcRhyVari	RvariNormal_RhyVari4, super=RvariNormal, next=RvariNormal_RhyVari5, prev=RvariNormal_RhyVari3, flag=VF_Const, X=8, Y=156, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=3, editsw=ES_Left4, font=1, fontcolor=CL_Black, caption=RvariNormal_RhyVari4_caption, visible=RvariNormal_RhyVari4_visible, selected=RvariNormal_RhyVari4_selected, param2=RvariNormal_RhyVari4_param2
-		AcRhyVari	RvariNormal_RhyVari5, super=RvariNormal, next=RvariNormal_RhyVari6, prev=RvariNormal_RhyVari4, flag=VF_Const, X=8, Y=198, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=4, editsw=ES_Left5, font=1, fontcolor=CL_Black, caption=RvariNormal_RhyVari5_caption, visible=RvariNormal_RhyVari5_visible, selected=RvariNormal_RhyVari5_selected, param2=RvariNormal_RhyVari5_param2
-		AcRhyVari	RvariNormal_RhyVari6, super=RvariNormal, next=RvariNormal_RhyVari7, prev=RvariNormal_RhyVari5, flag=VF_Const, X=163, Y=30, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=5, editsw=ES_Right1, font=1, fontcolor=CL_Black, caption=RvariNormal_RhyVari6_caption, visible=RvariNormal_RhyVari6_visible, selected=RvariNormal_RhyVari6_selected, param2=RvariNormal_RhyVari6_param2
-		AcRhyVari	RvariNormal_RhyVari7, super=RvariNormal, next=RvariNormal_RhyVari8, prev=RvariNormal_RhyVari6, flag=VF_Const, X=163, Y=72, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=6, editsw=ES_Right2, font=1, fontcolor=CL_Black, caption=RvariNormal_RhyVari7_caption, visible=RvariNormal_RhyVari7_visible, selected=RvariNormal_RhyVari7_selected, param2=RvariNormal_RhyVari7_param2
-		AcRhyVari	RvariNormal_RhyVari8, super=RvariNormal, next=RvariNormal_RhyVari9, prev=RvariNormal_RhyVari7, flag=VF_Const, X=163, Y=114, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=7, editsw=ES_Right3, font=1, fontcolor=CL_Black, caption=RvariNormal_RhyVari8_caption, visible=RvariNormal_RhyVari8_visible, selected=RvariNormal_RhyVari8_selected, param2=RvariNormal_RhyVari8_param2
-		AcRhyVari	RvariNormal_RhyVari9, super=RvariNormal, next=RvariNormal_RhyVari10, prev=RvariNormal_RhyVari8, flag=VF_Const, X=163, Y=156, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=8, editsw=ES_Right4, font=1, fontcolor=CL_Black, caption=RvariNormal_RhyVari9_caption, visible=RvariNormal_RhyVari9_visible, selected=RvariNormal_RhyVari9_selected, param2=RvariNormal_RhyVari9_param2
-		AcRhyVari	RvariNormal_RhyVari10, super=RvariNormal, prev=RvariNormal_RhyVari9, flag=VF_Const, X=163, Y=198, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=9, editsw=ES_Right5, font=1, fontcolor=CL_Black, caption=RvariNormal_RhyVari10_caption, visible=RvariNormal_RhyVari10_visible, selected=RvariNormal_RhyVari10_selected, param2=RvariNormal_RhyVari10_param2

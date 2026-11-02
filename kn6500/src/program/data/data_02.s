@@ -16959,22 +16959,22 @@ Text_Bluegrass_Dance:	# 22 strings of 16 characters, NUL-terminated
 	.asciz	"Country         "
 	.align	4, 0xFF	# pad after Text_Bluegrass_Dance
 
-Str_1_17:	.asciz "1"
-Str_2_19:	.asciz "2"
-Str_3_17:	.asciz "3"
-Str_4_18:	.asciz "4"
-Str_5_14:	.asciz "5"
-Str_6_14:	.asciz "6"
-Str_7_5:	.asciz "7"
-Str_8_5:	.asciz "8"
-Str_9_5:	.asciz "9"
-Str_A_3:	.asciz "A"
-Str_B_3:	.asciz "B"
-Str_C_3:	.asciz "C"
-Str_D_2:	.asciz "D"
-Str_E:	.asciz "E"
-Str_F_2:	.asciz "F"
-Str_G:	.asciz "G"
+Str_1_29:	.asciz "1"
+Str_2_30:	.asciz "2"
+Str_3_25:	.asciz "3"
+Str_4_24:	.asciz "4"
+Str_5_20:	.asciz "5"
+Str_6_20:	.asciz "6"
+Str_7_11:	.asciz "7"
+Str_8_11:	.asciz "8"
+Str_9_10:	.asciz "9"
+Str_A_26:	.asciz "A"
+Str_B_13:	.asciz "B"
+Str_C_14:	.asciz "C"
+Str_D_10:	.asciz "D"
+Str_E_8:	.asciz "E"
+Str_F_11:	.asciz "F"
+Str_G_9:	.asciz "G"
 Str_H_2:	.asciz "H"
 Str_I:	.asciz "I"
 Str_J:	.asciz "J"
@@ -16983,7 +16983,7 @@ Str_L_2:	.asciz "L"
 Str_M:	.asciz "M"
 Str_N:	.asciz "N"
 Str_O:	.asciz "O"
-Str_P_3:	.asciz "P"
+Str_P_11:	.asciz "P"
 Str_Q_2:	.asciz "Q"
 Str_R_2:	.asciz "R"
 Str_S_2:	.asciz "S"
@@ -19039,7 +19039,7 @@ func_4C001885_Var:	# u32, a constant; read / written by func_4C001885 0x4C001885
 localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x4C00246C `mov (0x10, a1), a0`; localeconv 0x4C00246C `mov (0x14, a1), a0`; localeconv 0x4C00246C `mov (0x18, a1), a0` (+12)
 	REC_localeconv_Records	text=Str_C_19, p4=data_4C176A82, p8=data_4C176A83, p12=data_4C176A84, p16=data_4C176A85, p20=data_4C176A86, p24=data_4C176A87, p28=data_4C176A88, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
 localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x4C00246C `mov (0xc, a1), a0`; localeconv 0x4C00246C `mov (4, a1), a0`; localeconv 0x4C00246C `mov (8, a1), a0`
-	REC_localeconv_Records_2	text=Str_C_18, text_=Str_empty_925, p8=data_4C176A90, p12=data_4C176A91
+	REC_localeconv_Records_2	text=Str_C_18, text_=Str_empty_908, p8=data_4C176A90, p12=data_4C176A91
 	REC_localeconv_Records_2	
 
 localeconv_Table:	# 4 x u32, 0..2576980378; read by localeconv 0x4C00246C: `mov (localeconv_Table), d0`
@@ -26840,8 +26840,9 @@ func_4C05A4F0_Block:	# 3 bytes, copied whole by func_4C05A4F0 0x4C05A4F0: memcpy
 func_4C05A4F0_Block_2:	# 26 bytes, copied whole by func_4C05A4F0 0x4C05A4F0: memcpy(.., 26)
 	tab_u8	0, 3, 0, 96, 16, 6, 16, 2, 0, 2, 0, 15, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
-	.space	64, 0x20
 
+text_4C2E5204:	# 64 printable bytes with no NUL; no instruction reads them [INFERENCE: text]
+	.ascii	"                                                                "
 Str_compile_bank_0:	.asciz " compile bank 0 "
 # census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x2E5255, 0x2E5274
@@ -34996,8 +34997,9 @@ MemStyleAreaHeaderRestamp_Block:	# 3 bytes, copied whole by MemStyleAreaHeaderRe
 MemStyleAreaHeaderRestamp_Block_2:	# 26 bytes, copied whole by MemStyleAreaHeaderRestamp 0x4C057607: memcpy(.., 26)
 	tab_u8	0, 3, 0, 96, 13, 8, 4, 2, 2, 1, 2, 15, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
-	.space	64, 0x20
 
+text_4C2ECC94:	# 64 printable bytes with no NUL; no instruction reads them [INFERENCE: text]
+	.ascii	"                                                                "
 Str_clear:	.asciz "    clear    "
 # census: opaque -- unknown-dump: 98 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x2ECCE2, 0x2ECD44
@@ -38256,10 +38258,16 @@ TgPartDrawbarLevelsDerive_Table_4:	# 10 x s16, -128..0; read by TgPartDrawbarLev
 	tab_s16	-128, -67, -51, -39, -27, -19, -11, -5, 0, 0
 TgPartDrawbarLevelsDerive_Table_5:	# 10 x s16, 0..16; read by TgPartDrawbarLevelsDerive 0x4C0897C5: `movhu	(d2, a0), d0`
 	tab_s16	0, 0, 2, 4, 6, 8, 10, 12, 14, 16
-func_4C08A16D_entry_L91_Table:	# 1 x u16, 65535..65535; read by func_4C08A16D_entry_L91 0x4C08A200: `movhu	(d0, a0), d0`
-	tab_u16	65535
-# census: opaque -- unknown-dump: 200 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x2F51FC, 0x2F52C4
+func_4C08A16D_entry_L91_Table:	# 101 x u16, 1..65535; read by func_4C08A16D_entry_L91 0x4C08A200: `movhu	(d0, a0), d0`; 101 records: the index is bounded by func_4C08A16D 0x4C08A16D: `cmp 0x64, d0` ... `movhu (d0, a0), d0`
+	tab_u16	65535, 65535, 65535, 65535, 50803, 42336, 36691, 31046, 25401, 21168, 18345, 15523	# [0]
+	tab_u16	12700, 11289, 10584, 9878, 9172, 8467, 7761, 7056, 6350, 5644, 5292, 4939	# [12]
+	tab_u16	4586, 4233, 3880, 3528, 3175, 2822, 2646, 2469, 2293, 2116, 1940, 1764	# [24]
+	tab_u16	1587, 1411, 1323, 1234, 1146, 1058, 970, 882, 793, 705, 661, 617	# [36]
+	tab_u16	573, 529, 485, 441, 396, 352, 330, 308, 286, 264, 242, 220	# [48]
+	tab_u16	198, 176, 165, 154, 143, 132, 121, 110, 99, 88, 82, 77	# [60]
+	tab_u16	71, 66, 60, 55, 49, 44, 41, 38, 35, 33, 30, 27	# [72]
+	tab_u16	24, 22, 20, 19, 17, 16, 15, 13, 12, 11, 10, 8	# [84]
+	tab_u16	7, 5, 3, 2, 1	# [96]
 func_4C0800BA_entry_L1d_Table:	# 128 x u16, 0..7; read by func_4C0800BA_entry_L1d 0x4C0800D9: `movhu	(d0, a0), d0`
 	tab_u16	0, 0, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7	# [0]
 	tab_u16	0, 0, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7	# [12]

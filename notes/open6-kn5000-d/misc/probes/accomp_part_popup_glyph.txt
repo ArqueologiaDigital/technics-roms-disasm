@@ -1,0 +1,138 @@
+== v10
+   pop-up record SqStep_PopupLineField: style 6, buffer 0x0ECA, 30 chars, cell x=8 y=180
+   TextStyle_FontTable[6] = font 0: 8x16, glyph bank 0x945CB0, kern 0x0
+   Scoop_CharGlyphMap[0x00..0x1F] = 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 7F 80 81 A1 A6 AA AB AC AD AF B0 B2 B3 B4 B6 B8
+   code 0x09 -> glyph code 0x20
+   glyph 0x20 in font 0: 16 bytes at 0x945CB0, 0 pixels set (blank: a space)
+   identical to the glyph of ' ' (0x20): True
+   table bytes: 09 09 41 43 43 4f 4d 50 20 50 41 52 54 31 20 4f 4e 20 41 43 43 4f 4d 50 20 50 41 52 54 32 20 4f 4e 20 09 09 41 43 43 4f 4d 50 20 50 41 52 54 33 20 4f 4e 20
+   what ParamPopup_AccompPart leaves in the 16 visible cells from 0x0ECF (glyph-mapped; '.' marks a byte past the 52-byte table):
+     A=1 (flag bits 00100000) ON  |N ACCOMP PART2 O|
+     A=1 (flag bits 00100000) OFF |N ACCOMP PARTOFF|
+     A=2 (flag bits 01000000) ON  |N   ACCOMP PART3|
+     A=2 (flag bits 01000000) OFF |N   ACCOMP PAOFF|
+     A=3 (flag bits 01100000) ON  | ON ............|
+     A=3 (flag bits 01100000) OFF | ON .........OFF|
+     A=4 (flag bits 10000000) ON  |................|
+     A=4 (flag bits 10000000) OFF |.............OFF|
+     A=5 (flag bits 10100000) ON  |................|
+     A=5 (flag bits 10100000) OFF |.............OFF|
+     A=6 (flag bits 11000000) ON  |................|
+     A=6 (flag bits 11000000) OFF |.............OFF|
+     A=7 (flag bits 11100000) ON  |................|
+     A=7 (flag bits 11100000) OFF |.............OFF|
+== v9
+   pop-up record SqStep_PopupLineField: style 6, buffer 0x0ECA, 30 chars, cell x=8 y=180
+   TextStyle_FontTable[6] = font 0: 8x16, glyph bank 0x945CB0, kern 0x0
+   Scoop_CharGlyphMap[0x00..0x1F] = 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 7F 80 81 A1 A6 AA AB AC AD AF B0 B2 B3 B4 B6 B8
+   code 0x09 -> glyph code 0x20
+   glyph 0x20 in font 0: 16 bytes at 0x945CB0, 0 pixels set (blank: a space)
+   identical to the glyph of ' ' (0x20): True
+   table bytes: 09 09 41 43 43 4f 4d 50 20 50 41 52 54 31 20 4f 4e 20 41 43 43 4f 4d 50 20 50 41 52 54 32 20 4f 4e 20 09 09 41 43 43 4f 4d 50 20 50 41 52 54 33 20 4f 4e 20
+   what ParamPopup_AccompPart leaves in the 16 visible cells from 0x0ECF (glyph-mapped; '.' marks a byte past the 52-byte table):
+     A=1 (flag bits 00100000) ON  |N ACCOMP PART2 O|
+     A=1 (flag bits 00100000) OFF |N ACCOMP PARTOFF|
+     A=2 (flag bits 01000000) ON  |N   ACCOMP PART3|
+     A=2 (flag bits 01000000) OFF |N   ACCOMP PAOFF|
+     A=3 (flag bits 01100000) ON  | ON ............|
+     A=3 (flag bits 01100000) OFF | ON .........OFF|
+     A=4 (flag bits 10000000) ON  |................|
+     A=4 (flag bits 10000000) OFF |.............OFF|
+     A=5 (flag bits 10100000) ON  |................|
+     A=5 (flag bits 10100000) OFF |.............OFF|
+     A=6 (flag bits 11000000) ON  |................|
+     A=6 (flag bits 11000000) OFF |.............OFF|
+     A=7 (flag bits 11100000) ON  |................|
+     A=7 (flag bits 11100000) OFF |.............OFF|
+== v8
+   pop-up record SqStep_PopupLineField: style 6, buffer 0x0ECA, 30 chars, cell x=8 y=180
+   TextStyle_FontTable[6] = font 0: 8x16, glyph bank 0x945CB0, kern 0x0
+   Scoop_CharGlyphMap[0x00..0x1F] = 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 7F 80 81 A1 A6 AA AB AC AD AF B0 B2 B3 B4 B6 B8
+   code 0x09 -> glyph code 0x20
+   glyph 0x20 in font 0: 16 bytes at 0x945CB0, 0 pixels set (blank: a space)
+   identical to the glyph of ' ' (0x20): True
+   table bytes: 09 09 41 43 43 4f 4d 50 20 50 41 52 54 31 20 4f 4e 20 41 43 43 4f 4d 50 20 50 41 52 54 32 20 4f 4e 20 09 09 41 43 43 4f 4d 50 20 50 41 52 54 33 20 4f 4e 20
+   what ParamPopup_AccompPart leaves in the 16 visible cells from 0x0ECF (glyph-mapped; '.' marks a byte past the 52-byte table):
+     A=1 (flag bits 00100000) ON  |N ACCOMP PART2 O|
+     A=1 (flag bits 00100000) OFF |N ACCOMP PARTOFF|
+     A=2 (flag bits 01000000) ON  |N   ACCOMP PART3|
+     A=2 (flag bits 01000000) OFF |N   ACCOMP PAOFF|
+     A=3 (flag bits 01100000) ON  | ON ............|
+     A=3 (flag bits 01100000) OFF | ON .........OFF|
+     A=4 (flag bits 10000000) ON  |................|
+     A=4 (flag bits 10000000) OFF |.............OFF|
+     A=5 (flag bits 10100000) ON  |................|
+     A=5 (flag bits 10100000) OFF |.............OFF|
+     A=6 (flag bits 11000000) ON  |................|
+     A=6 (flag bits 11000000) OFF |.............OFF|
+     A=7 (flag bits 11100000) ON  |................|
+     A=7 (flag bits 11100000) OFF |.............OFF|
+== v7
+   pop-up record SqStep_PopupLineField: style 6, buffer 0x0ECA, 30 chars, cell x=8 y=180
+   TextStyle_FontTable[6] = font 0: 8x16, glyph bank 0x945CB0, kern 0x0
+   Scoop_CharGlyphMap[0x00..0x1F] = 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 7F 80 81 A1 A6 AA AB AC AD AF B0 B2 B3 B4 B6 B8
+   code 0x09 -> glyph code 0x20
+   glyph 0x20 in font 0: 16 bytes at 0x945CB0, 0 pixels set (blank: a space)
+   identical to the glyph of ' ' (0x20): True
+   table bytes: 09 09 41 43 43 4f 4d 50 20 50 41 52 54 31 20 4f 4e 20 41 43 43 4f 4d 50 20 50 41 52 54 32 20 4f 4e 20 09 09 41 43 43 4f 4d 50 20 50 41 52 54 33 20 4f 4e 20
+   what ParamPopup_AccompPart leaves in the 16 visible cells from 0x0ECF (glyph-mapped; '.' marks a byte past the 52-byte table):
+     A=1 (flag bits 00100000) ON  |N ACCOMP PART2 O|
+     A=1 (flag bits 00100000) OFF |N ACCOMP PARTOFF|
+     A=2 (flag bits 01000000) ON  |N   ACCOMP PART3|
+     A=2 (flag bits 01000000) OFF |N   ACCOMP PAOFF|
+     A=3 (flag bits 01100000) ON  | ON ............|
+     A=3 (flag bits 01100000) OFF | ON .........OFF|
+     A=4 (flag bits 10000000) ON  |................|
+     A=4 (flag bits 10000000) OFF |.............OFF|
+     A=5 (flag bits 10100000) ON  |................|
+     A=5 (flag bits 10100000) OFF |.............OFF|
+     A=6 (flag bits 11000000) ON  |................|
+     A=6 (flag bits 11000000) OFF |.............OFF|
+     A=7 (flag bits 11100000) ON  |................|
+     A=7 (flag bits 11100000) OFF |.............OFF|
+== v6
+   pop-up record SqStep_PopupLineField: style 6, buffer 0x0ECA, 30 chars, cell x=8 y=180
+   TextStyle_FontTable[6] = font 0: 8x16, glyph bank 0x945CB0, kern 0x0
+   Scoop_CharGlyphMap[0x00..0x1F] = 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 7F 80 81 A1 A6 AA AB AC AD AF B0 B2 B3 B4 B6 B8
+   code 0x09 -> glyph code 0x20
+   glyph 0x20 in font 0: 16 bytes at 0x945CB0, 0 pixels set (blank: a space)
+   identical to the glyph of ' ' (0x20): True
+   table bytes: 09 09 41 43 43 4f 4d 50 20 50 41 52 54 31 20 4f 4e 20 41 43 43 4f 4d 50 20 50 41 52 54 32 20 4f 4e 20 09 09 41 43 43 4f 4d 50 20 50 41 52 54 33 20 4f 4e 20
+   what ParamPopup_AccompPart leaves in the 16 visible cells from 0x0ECF (glyph-mapped; '.' marks a byte past the 52-byte table):
+     A=1 (flag bits 00100000) ON  |N ACCOMP PART2 O|
+     A=1 (flag bits 00100000) OFF |N ACCOMP PARTOFF|
+     A=2 (flag bits 01000000) ON  |N   ACCOMP PART3|
+     A=2 (flag bits 01000000) OFF |N   ACCOMP PAOFF|
+     A=3 (flag bits 01100000) ON  | ON ............|
+     A=3 (flag bits 01100000) OFF | ON .........OFF|
+     A=4 (flag bits 10000000) ON  |................|
+     A=4 (flag bits 10000000) OFF |.............OFF|
+     A=5 (flag bits 10100000) ON  |................|
+     A=5 (flag bits 10100000) OFF |.............OFF|
+     A=6 (flag bits 11000000) ON  |................|
+     A=6 (flag bits 11000000) OFF |.............OFF|
+     A=7 (flag bits 11100000) ON  |................|
+     A=7 (flag bits 11100000) OFF |.............OFF|
+== v5
+   pop-up record SqStep_PopupLineField: style 6, buffer 0x0ECA, 30 chars, cell x=8 y=180
+   TextStyle_FontTable[6] = font 0: 8x16, glyph bank 0x945CB0, kern 0x0
+   Scoop_CharGlyphMap[0x00..0x1F] = 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 7F 80 81 A1 A6 AA AB AC AD AF B0 B2 B3 B4 B6 B8
+   code 0x09 -> glyph code 0x20
+   glyph 0x20 in font 0: 16 bytes at 0x945CB0, 0 pixels set (blank: a space)
+   identical to the glyph of ' ' (0x20): True
+   table bytes: 09 09 41 43 43 4f 4d 50 20 50 41 52 54 31 20 4f 4e 20 41 43 43 4f 4d 50 20 50 41 52 54 32 20 4f 4e 20 09 09 41 43 43 4f 4d 50 20 50 41 52 54 33 20 4f 4e 20
+   what ParamPopup_AccompPart leaves in the 16 visible cells from 0x0ECF (glyph-mapped; '.' marks a byte past the 52-byte table):
+     A=1 (flag bits 00100000) ON  |N ACCOMP PART2 O|
+     A=1 (flag bits 00100000) OFF |N ACCOMP PARTOFF|
+     A=2 (flag bits 01000000) ON  |N   ACCOMP PART3|
+     A=2 (flag bits 01000000) OFF |N   ACCOMP PAOFF|
+     A=3 (flag bits 01100000) ON  | ON ............|
+     A=3 (flag bits 01100000) OFF | ON .........OFF|
+     A=4 (flag bits 10000000) ON  |................|
+     A=4 (flag bits 10000000) OFF |.............OFF|
+     A=5 (flag bits 10100000) ON  |................|
+     A=5 (flag bits 10100000) OFF |.............OFF|
+     A=6 (flag bits 11000000) ON  |................|
+     A=6 (flag bits 11000000) OFF |.............OFF|
+     A=7 (flag bits 11100000) ON  |................|
+     A=7 (flag bits 11100000) OFF |.............OFF|

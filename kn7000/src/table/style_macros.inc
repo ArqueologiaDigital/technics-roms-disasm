@@ -181,9 +181,9 @@
 	.byte	\b4, \b5
 	.word	\tune
 .endm
-# A tone record's head (0x54 bytes) and its 0x7A-byte units are SOUND_HEAD / SOUND_MOD of
-# src/include/voice_record.inc (the same record as a SOUND EDIT record's first 0x23C bytes;
-# TgPartAuxRecBuild 0x4C00C6E9), its voice records VOICE_HEAD_TAIL / VOICE_SUB and its elements
+# A tone record's head (0x54 bytes, with its name) and its 0x7A-byte units are SOUND_NAME_HEAD /
+# SOUND_MOD of src/include/voice_record.inc (the same record as a SOUND EDIT record's first 0x23C bytes;
+# TgPartAuxRecBuild 0x4C00C6E9), its voice records VOICE_HEAD / VOICE_SUB and its elements
 # VOICE_ELEM: the archive includes that file.
 # A TABLE tone (class 0x40): the head is 0x27 bytes, then one 3-byte entry per note that
 # TgNoteOnTableTone (0x4C03600D) reads at +0x27 + note x 3: it enables up to two synth

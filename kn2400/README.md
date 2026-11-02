@@ -167,6 +167,8 @@ evidence and what is still binary.
   `kn2400_ported.sym`.
 - RAM and I/O addresses outside the initialised RAM image are still numbers in the code; data
   addresses are labels (`src/program/data/labels.sym`).
-- The data region's remaining binary pieces (`notes/data-region/README.md`, "What is left").
+- The data region's remaining binary pieces (`notes/data-region/README.md`, "What is left"): generic 0; the
+  census-opaque pieces fell from 2,885 / 61,226 to 1,192 / 27,313 bytes with lane mn10300-data's passes
+  (2026-11-02; what is left and why: `../kn7000/notes/mn10300-data/README.md` section 4).
 - The 4 MiB half of the IC12/IC13 flash pair at `0x48000000` has not been read; the documentation
   site's `kn2400-kn2600` page covers what is known about it.

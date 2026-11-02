@@ -27,11 +27,11 @@ through, and both are now wrong:
    tables "failed" that test. None of them was broken; the test was pointed at
    the wrong range. **All five are now identified** — §4.
 
-⚠ **The old figure survives in another lane's note.**
-`notes/FINDINGS-prom_b-thunk-table.md` still says "six of the ten character
-generators". The count is twelve; six of them are still in bank `0xF2`, so only
-the word "ten" is wrong. Left for whoever owns that file — prom_b is another
-lane and its notes are being edited concurrently.
+⚠ **The old figure survived in another lane's note.**
+`notes/FINDINGS-prom_b-thunk-table.md` said "six of the ten character
+generators". The count is twelve, and seven of them start in bank `0xF2`
+(`0xF203B0` .. `0xF25590`, the table in §1); that note says so since 2026-11-02.
+(This paragraph used to say six were in bank `0xF2`.)
 
 A third, smaller correction: the note said the tables were "indexed by
 something other than ASCII" and left it there. They are indexed by a **private
@@ -49,20 +49,20 @@ The twelve tables are laid **end to end in prom_b with no padding between
 them**. For all eleven that have a successor, `next_base - base` is an exact
 multiple of that table's own glyph pitch — and the quotient is the cell count.
 
-| base | pitch | geometry | cells | script |
-|---|---:|---|---:|---|
-| `0xF1B400` | 14 | 8 x 14 | **200** | Latin |
-| `0xF1BEF0` | 16 | 8 x 16 | **200** | Latin |
-| `0xF1CB70` | 32 | 16 x 16 | **200** | Latin |
-| `0xF1E470` | 8 | 8 x 8, proportional | **200** | Latin |
-| `0xF1EAB0` | 32 | 11 x 16, proportional | **200** | Latin |
-| `0xF203B0` | 32 | 16 x 16 | **120** | **hiragana** |
-| `0xF212B0` | 14 | 8 x 14 | **120** | **half-width katakana** |
-| `0xF21940` | 32 | 16 x 16 | **120** | **katakana** |
-| `0xF22840` | 32 | 16 x 16 | **240** | **kanji, set A** |
-| `0xF24640` | 32 | 16 x 16 | **60** | **kanji, set B** |
-| `0xF24DC0` | 10 | 8 x 10 | **200** | Latin |
-| `0xF25590` | 48 | 16 x 24 | — | Latin |
+| base       | pitch | geometry              |   cells | script                  |
+|------------|------:|-----------------------|--------:|-------------------------|
+| `0xF1B400` |    14 | 8 x 14                | **200** | Latin                   |
+| `0xF1BEF0` |    16 | 8 x 16                | **200** | Latin                   |
+| `0xF1CB70` |    32 | 16 x 16               | **200** | Latin                   |
+| `0xF1E470` |     8 | 8 x 8, proportional   | **200** | Latin                   |
+| `0xF1EAB0` |    32 | 11 x 16, proportional | **200** | Latin                   |
+| `0xF203B0` |    32 | 16 x 16               | **120** | **hiragana**            |
+| `0xF212B0` |    14 | 8 x 14                | **120** | **half-width katakana** |
+| `0xF21940` |    32 | 16 x 16               | **120** | **katakana**            |
+| `0xF22840` |    32 | 16 x 16               | **240** | **kanji, set A**        |
+| `0xF24640` |    32 | 16 x 16               |  **60** | **kanji, set B**        |
+| `0xF24DC0` |    10 | 8 x 10                | **200** | Latin                   |
+| `0xF25590` |    48 | 16 x 24               |       — | Latin                   |
 
 Six Latin faces come out at **exactly 200 cells each** despite using five
 different pitches (8, 10, 14, 16, 32 bytes per glyph). The three kana faces
@@ -148,8 +148,9 @@ The remaining defined codes in `0x80`-`0xC7` are capitals with diaeresis
 (`0x80`-`0x82` = Ä Ö Ü), cedilla forms, ligatures and a few shading patterns
 (`0x87`, `0x94`/`0x95`). ⚠ Those are eyeballed, not byte-proved.
 
-Nineteen of the sixty defined codes above `0x7F` are pinned by byte identity;
-the rest are not. Either way the block is a **Western-European extension**,
+Nineteen of the sixty defined codes above `0x7F` were pinned by byte identity when this section
+was written; §5.4 (2026-10-31, `notes/open4-f-probes/latin_b0_bc.py`) pins three more, `0xB0`, `0xBA`
+and `0xBC`, so twenty-two are now; the rest are not. Either way the block is a **Western-European extension**,
 which is what a 200-cell page with 95 ASCII codes in the middle of it is for.
 
 ---
@@ -186,10 +187,10 @@ three bits of each row's second byte — 8 + 3 = 11.
 
 120 cells, two blocks defined:
 
-| codes | count | content |
-|---|---:|---|
-| `0x0F`-`0x16` | 8 | marks and punctuation |
-| `0x21`-`0x58` | 56 | the kana |
+| codes         | count | content               |
+|---------------|------:|-----------------------|
+| `0x0F`-`0x16` |     8 | marks and punctuation |
+| `0x21`-`0x58` |    56 | the kana              |
 
 The 56 decompose as **46 gojūon + 9 small kana + 1 prolonged sound mark**, in
 Japanese dictionary order starting at `0x21`:
@@ -221,15 +222,15 @@ draw one S-shaped stroke across the cell (`..##....` / `.#..#..#` / `.....##.`),
 
 Both are 120-cell tables in the **same code space and the same order**:
 
-| codes | count | content |
-|---|---:|---|
-| `0x10`-`0x3D` | 46 | the gojūon, あ/ア through ん/ン |
-| `0x3E`-`0x46` | 9 | the small kana |
-| `0x47` | 1 | ー, the prolonged sound mark |
-| `0x48`-`0x5B` | 20 | the voiced (dakuten) forms |
-| `0x5C`-`0x60` | 5 | the semi-voiced (handakuten) forms |
-| `0x61`-`0x65` | 5 | 。 、 「 」 〜 |
-| `0x66` | 1 | ・ the katakana middle dot (U+30FB), a 4x4 filled dot at mid-height — **katakana only** |
+| codes         | count | content                                                                                |
+|---------------|------:|----------------------------------------------------------------------------------------|
+| `0x10`-`0x3D` |    46 | the gojūon, あ/ア through ん/ン                                                            |
+| `0x3E`-`0x46` |     9 | the small kana                                                                         |
+| `0x47`        |     1 | ー, the prolonged sound mark                                                            |
+| `0x48`-`0x5B` |    20 | the voiced (dakuten) forms                                                             |
+| `0x5C`-`0x60` |     5 | the semi-voiced (handakuten) forms                                                     |
+| `0x61`-`0x65` |     5 | 。 、 「 」 〜                                                                              |
+| `0x66`        |     1 | ・ the katakana middle dot (U+30FB), a 4x4 filled dot at mid-height — **katakana only** |
 
 46 + 9 + 1 + 20 + 5 + 5 = **86**, which is exactly the number of defined cells
 in the hiragana face; the katakana face has **87**, the extra being `0x66`,
@@ -254,10 +255,10 @@ python3 notes/font_sheet.py 0xF21940 32 --width 16 --range 0x10-0x17   # アイ�
 
 ### 4.3 `0xF22840` and `0xF24640` — two kanji sets, 16 x 16 (services `0x1A`, `0x1F`)
 
-| base | cells | defined | codes |
-|---|---:|---:|---|
-| `0xF22840` | 240 | **224** | `0x10`-`0xEF`, contiguous, **no blank cell anywhere** |
-| `0xF24640` | 60 | **43** | `0x10`-`0x3A`, contiguous |
+| base       | cells | defined | codes                                                 |
+|------------|------:|--------:|-------------------------------------------------------|
+| `0xF22840` |   240 | **224** | `0x10`-`0xEF`, contiguous, **no blank cell anywhere** |
+| `0xF24640` |    60 |  **43** | `0x10`-`0x3A`, contiguous                             |
 
 The glyphs are multi-stroke CJK ideographs — `0xF22840` code `0x12` is a
 triangular roof over a bar over a box (合); `0xF24640` code `0x33` is a box
@@ -331,12 +332,12 @@ That was a hypothesis with no test attached. It now has one, and it **passes**:
 
     python3 scripts/analysis/kanji_order_hypothesis.py
 
-| | set A (224 cells) | set B (43 cells) |
-|---|---:|---:|
-| adjacent code pairs that are dictionary words | **72** | 6 |
-| shuffle null, 10,000 permutations of the SAME characters | 24.8 ± 4.8 | 2.6 ± 1.5 |
-| permutations reaching the observed count | **0 / 10,000** | 410 / 10,000 |
-| distance from the null | **9.9 sd** | 2.2 sd |
+|                                                          | set A (224 cells) | set B (43 cells) |
+|----------------------------------------------------------|------------------:|-----------------:|
+| adjacent code pairs that are dictionary words            |            **72** |                6 |
+| shuffle null, 10,000 permutations of the SAME characters |        24.8 ± 4.8 |        2.6 ± 1.5 |
+| permutations reaching the observed count                 |    **0 / 10,000** |     410 / 10,000 |
+| distance from the null                                   |        **9.9 sd** |           2.2 sd |
 
 ★ The null is **computed, not assumed**, and it is the null that matters: these
 224 characters are the kanji of a technical manual, which pair up far more
@@ -377,9 +378,10 @@ appended after a gap is a block added later. See §5.4.
 
 ### 5.4 ✅ `Font_Svc06`'s codes `0xB0`-`0xBC` are the SPANISH set
 
-The service's header asked *"Unknown: what indexes codes 0xB0-0xBC"*. Rendered,
-they are Á É Ñ á ó ú ñ í ì ¿ and two cells whose reading is not settled — the
-`Ñ`/`ñ` pair and the inverted question mark make the language unambiguous.
+The service's header asked *"Unknown: what indexes codes 0xB0-0xBC"*.  The reading is the
+table below (byte identity, 2026-10-31).  ⚠ The first reading, by eye, which the table supersedes,
+was "Á É Ñ á ó ú ñ í ì ¿ and two cells whose reading is not settled"; the `Ñ`/`ñ` pair and the
+inverted question mark made the language unambiguous either way.
 
 ✅ **Settled 2026-10-31, by byte identity with the face's own ASCII cells** (the method §2
 used above `0x7E`; `notes/open4-f-probes/latin_b0_bc.py` asserts every row):
@@ -400,7 +402,7 @@ used above `0x7E`; `notes/open4-f-probes/latin_b0_bc.py` asserts every row):
 | `0xBB` | ¿       |                                                                                         |
 | `0xBC` | −2      | the `'2'` cell (0x32) narrowed by one column, plus the same 3x2 minus bar on the left   |
 
-⚠ So the list above was wrong in one place: there is no `ì`; `0xB9` is **ò**, the Italian
+⚠ So the first reading was wrong in one place: there is no `ì`; `0xB9` is **ò**, the Italian
 grave (the (EF) France/Italy area of §6.2), and `0xBA` is **¡**.  The two "unsettled" cells
 are `0xB0` and `0xBC`, the single-cell negatives −1 and −2: a reverse mapping must map the
 two-character strings "-1" and "-2" onto them, as no single Unicode character is either.
@@ -418,10 +420,10 @@ strings — the same answer, and the same gap, as for the kanji.
 `ldb a,nn` then `swi 7`, which is exactly how prom_a issues its own service call
 at `0xF83076`.
 
-| | services with a literal call site |
-|---|---|
-| the seven **Latin** text services | **6 of 7** (`0x06` 18 sites, `0x20` 21, `0x17` 5, `0x08` 4, `0x07` 3, `0x21` 3; only `0x1C` has none) |
-| the five **Japanese** text services | **0 of 5** |
+|                                     | services with a literal call site                                                                     |
+|-------------------------------------|-------------------------------------------------------------------------------------------------------|
+| the seven **Latin** text services   | **6 of 7** (`0x06` 18 sites, `0x20` 21, `0x17` 5, `0x08` 4, `0x07` 3, `0x21` 3; only `0x1C` has none) |
+| the five **Japanese** text services | **0 of 5**                                                                                            |
 
 ★ The census **calibrates its own noise**: 30 of the 64 SWI7 slots are dead
 (they point at a bare RET), and the pattern lands on a dead slot **7 times** out
@@ -452,12 +454,12 @@ layout and scored against a 151,357-word EDICT2 kana list. The control holds
 the runs fixed and varies **only the mapping**, scoring them again under 200
 random bijections of the same 87 codes onto the same 87 kana:
 
-| image | runs | real map | permuted-map null | permutations >= real |
-|---|---:|---:|---|---:|
-| prom_a | 373 | 4 | 1.6 ± 2.8 | 24 / 200 |
-| prom_b | 523 | 64 | 21.6 ± 23.1 | 9 / 200 |
-| prom_c | 147 | 3 | 10.8 ± 52.6 | 18 / 200 |
-| prom_d | 281 | 10 | 5.8 ± 6.6 | 43 / 200 |
+| image  | runs | real map | permuted-map null | permutations >= real |
+|--------|-----:|---------:|-------------------|---------------------:|
+| prom_a |  373 |        4 | 1.6 ± 2.8         |             24 / 200 |
+| prom_b |  523 |       64 | 21.6 ± 23.1       |              9 / 200 |
+| prom_c |  147 |        3 | 10.8 ± 52.6       |             18 / 200 |
+| prom_d |  281 |       10 | 5.8 ± 6.6         |             43 / 200 |
 
 The real layout is **indistinguishable from a random one** — on prom_c it scores
 *below* the mean. There is no Japanese text.
@@ -523,15 +525,15 @@ suffix; the shared-source step is the ordinary reading of those facts plus
 
   | disk    | runs | real map | permuted-map null | permutations >= real |
   |---------|-----:|---------:|-------------------|---------------------:|
-  | dance   | 1865 | 3        | 9.8 ± 88.9        | 75 / 200             |
-  | demo1   | 2667 | 12       | 13.9 ± 71.5       | 47 / 200             |
-  | etec    | 820  | 0        | 3.0 ± 4.6         | 200 / 200            |
-  | giontop | 1852 | 6        | 15.5 ± 56.5       | 94 / 200             |
-  | gjs1    | 1212 | 0        | 1.2 ± 2.7         | 200 / 200            |
-  | mcompos | 1580 | 3        | 12.5 ± 101.4      | 39 / 200             |
-  | myset   | 1631 | 4        | 8.3 ± 11.1        | 123 / 200            |
-  | qsdisk  | 1759 | 10       | 8.2 ± 15.6        | 43 / 200             |
-  | synth   | 1798 | 3        | 16.5 ± 174.4      | 70 / 200             |
+  | dance   | 1865 |        3 | 9.8 ± 88.9        |             75 / 200 |
+  | demo1   | 2667 |       12 | 13.9 ± 71.5       |             47 / 200 |
+  | etec    |  820 |        0 | 3.0 ± 4.6         |            200 / 200 |
+  | giontop | 1852 |        6 | 15.5 ± 56.5       |             94 / 200 |
+  | gjs1    | 1212 |        0 | 1.2 ± 2.7         |            200 / 200 |
+  | mcompos | 1580 |        3 | 12.5 ± 101.4      |             39 / 200 |
+  | myset   | 1631 |        4 | 8.3 ± 11.1        |            123 / 200 |
+  | qsdisk  | 1759 |       10 | 8.2 ± 15.6        |             43 / 200 |
+  | synth   | 1798 |        3 | 16.5 ± 174.4      |             70 / 200 |
 
   No disk scores above its null.  The positive control still separates on this data, though
   more weakly than on the ROMs (the disks' nulls are wide): `--plant 20` lifts myset to 54
@@ -607,13 +609,13 @@ problem or is an accident of the build is **not established**.
 
 ## The scripts
 
-| script | what it answers |
-|---|---|
-| `notes/font_layout_check.py` | re-derives every number above; exits non-zero on drift |
-| `notes/font_sheet.py` | contact sheet of a code range; `--extent` for real table extents |
-| `notes/render_font.py` | one glyph, large |
-| `notes/swi7_call_sites.py` | who calls which service, with a measured noise floor |
-| `notes/prom_a_byte_checks.py` | the blitter comparison and the service/font wiring |
+| script                                       | what it answers                                                       |
+|----------------------------------------------|-----------------------------------------------------------------------|
+| `notes/font_layout_check.py`                 | re-derives every number above; exits non-zero on drift                |
+| `notes/font_sheet.py`                        | contact sheet of a code range; `--extent` for real table extents      |
+| `notes/render_font.py`                       | one glyph, large                                                      |
+| `notes/swi7_call_sites.py`                   | who calls which service, with a measured noise floor                  |
+| `notes/prom_a_byte_checks.py`                | the blitter comparison and the service/font wiring                    |
 | `scripts/analysis/kanji_order_hypothesis.py` | is the private kanji order the order of the text it came from? (§5.2) |
-| `scripts/analysis/japanese_text_census.py` | is there any Japanese text in the four images? (§6.1) |
-| `scripts/build/wsa1_fonts.py` | the twelve faces <-> PNG contact sheets, round-trip |
+| `scripts/analysis/japanese_text_census.py`   | is there any Japanese text in the four images? (§6.1)                 |
+| `scripts/build/wsa1_fonts.py`                | the twelve faces <-> PNG contact sheets, round-trip                   |

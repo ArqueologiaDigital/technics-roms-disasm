@@ -2144,9 +2144,12 @@ free_X:
 	.include "sequencer/seq_audio_mode.s"
 	.include "sequencer/rhythm_routines.s"
 	.include "sequencer/accompaniment_engine.s"
-Voice_InitBankDataSafe:
+; MspUser_ResetToFactory: MspUser_InitFromFactory with XIZ preserved.  Basis: callers -- MainSysControl's INITIAL SETTING case 7 MSP
+;   USER (MainSysCtrl_OnInitMspUser), the MIDI transfer recovery of the accompaniment-block groups 18-21 and
+;   MspLoadAuto_CheckAndInit after a failed load.
+MspUser_ResetToFactory:
 	push xiz
-	call Voice_InitBankData
+	call MspUser_InitFromFactory
 	pop xiz
 	ret
 
@@ -2158,7 +2161,7 @@ Voice_InitBankDataSafe_Alt1:
 ; Voice_RefreshBankData_Wrap: XIZ-preserving wrapper of Voice_RefreshBankData (Voice_ComputeAllocSize: recomputes the
 ;   used size of the accompaniment block area 0x1E8800 into 0x1E881C). Basis: callers + body --
 ;   MidiPkt_GetUsedSize_AccompBlocks calls it before reading (0x1E881C) * 16; its header names Voice_RefreshBankData
-;   -> Voice_ComputeAllocSize. Siblings Voice_InitBankDataSafe / _Alt1 are the same wrapper shape.
+;   -> Voice_ComputeAllocSize. Siblings MspUser_ResetToFactory / _Alt1 are the same wrapper shape.
 Voice_RefreshBankData_Wrap:
 	push	xiz
 	call	Voice_RefreshBankData
@@ -2167,8 +2170,8 @@ Voice_RefreshBankData_Wrap:
 ; Voice_InitBankTables_Wrap: XIZ-preserving call of Voice_InitBankTables, which re-initialises the accompaniment block
 ;   area at 0x1E8800 (header from Voice_BankHeaderDefaults, slot table, compile/user bank name headers, the block pool
 ;   from 0x1E8B00). Basis: callers + body -- MidiPkt_PrepareAccompBlocksReceive is its only caller and its header
-;   names this call; X_Wrap convention (Voice_RefreshBankData_Wrap); Voice_InitBankDataSafe is the same shape for
-;   Voice_InitBankData.
+;   names this call; X_Wrap convention (Voice_RefreshBankData_Wrap); MspUser_ResetToFactory is the same shape for
+;   MspUser_InitFromFactory.
 Voice_InitBankTables_Wrap:
 	push	xiz
 	call	Voice_InitBankTables
@@ -2213,7 +2216,10 @@ Voice_InitBankTables_SlotLoop:
 	ret
 
 	.include "audio/voice_bank_defaults.s"
-Voice_InitBankData:
+; MspUser_InitFromFactory: Re-initialises the accompaniment block area (MSP user data) at 0x1E8800: Voice_InitBankTables, then
+;   Voice_FactoryPresetData (0xF0 words) to 0x1E8820, 0x60 zero words to 0x1E8A00 and MSP_FACTORY_DEFAULTS (0xA80
+;   words) to the block pool 0x1E8B00, and recounts the free blocks (CountAvailableVoiceSlots).  Basis: body.
+MspUser_InitFromFactory:
 	calr Voice_InitBankTables
 	ld xiy, Voice_FactoryPresetData
 	ld xix, 0x1e8820
@@ -2268,7 +2274,7 @@ Voice_ReinitIfBankCountNonzero:
 	ld wa, (xiy)
 	cp wa, 0:i3
 	jr z, Voice_ReinitIfBankCount_Done
-	calr Voice_InitBankData
+	calr MspUser_InitFromFactory
 
 Voice_ReinitIfBankCount_Done:
 	ret
@@ -2279,7 +2285,7 @@ Voice_ReinitIfBitFlagSet:
 	ld a, (xiy)
 	bit 0, a
 	jr z, Voice_ReinitIfBitFlag_Done
-	calr Voice_InitBankData
+	calr MspUser_InitFromFactory
 
 Voice_ReinitIfBitFlag_Done:
 	ret

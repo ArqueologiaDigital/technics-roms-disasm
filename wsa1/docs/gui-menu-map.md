@@ -96,9 +96,9 @@ Record macros: `wsa1/include/wsa1_gui.inc`. Key names: the `KEY_*` equates there
 | screen | 0x47 | `Paint_DiskL0adFile`                          | SAVE / SAVE FILE / SAVE ·                                    | 6    |                                                        |
 | screen | 0x49 | `Paint_MidiFileL0ad`                          | MIDI FILE L0AD / : / L0AD ·                                  | 6    |                                                        |
 | screen | 0x4C | `PageDispatch_DiskSaveFile`                   | DISK SAVE : FILE NAMING                                      | 63   |                                                        |
-| screen | 0x4E | `PageDispatch_MidiFileSave`                   | SAVE                                                         | 33   |                                                        |
-| screen | 0x50 | `Paint_FloppyDiskFormatSelectType`            | COMPOSER LOAD                                                | 33   |                                                        |
-| screen | 0x51 | `Paint_FloppyDiskFormatAreYouSure`            | ATTENTION! / Using DISK FORMAT will erase / any current data | 33   |                                                        |
+| screen | 0x4E | `PageDispatch_MidiFileSave`                   | SAVE                                                         | 25   |                                                        |
+| screen | 0x50 | `Paint_FloppyDiskFormatSelectType`            | COMPOSER LOAD                                                | 5    |                                                        |
+| screen | 0x51 | `Paint_FloppyDiskFormatAreYouSure`            | ATTENTION! / Using DISK FORMAT will erase / any current data | 3    |                                                        |
 | screen | 0x53 | `PageDispatch_L0adSingleC0mbination`          | LOAD SINGLE COMBINATION / DISK / 0K                          | 0    |                                                        |
 | screen | 0x54 | `PageDispatch_L0adSingleS0und`                | LOAD SINGLE SOUND / DISK / 0K                                | 0    |                                                        |
 | screen | 0x5B | `Screen_SoundGroupNaming_Enter`               | SOUND GROUP NAMING / SYSTEM / WRITE                          | 0    |                                                        |
@@ -2109,43 +2109,35 @@ Draws:
 - `DL_LoadL0adFileLoadL0ad0pti0n`: "LOAD"; "L0AD FILE"; "LOAD ·"; "L0AD 0PTI0N"
 - ... 5 more
 
-Keys (`Dispatch_FF3D39`):
+Keys (`ScreenButtonHandlers_MidiFileSave`):
 
-| key map                 | key                  | handler                             | requests |
-|-------------------------|----------------------|-------------------------------------|----------|
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol1`    | `SoftKeyCol1_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol2`    | `SoftKeyCol2_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol4`    | `SoftKeyCol4_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol5`    | `SoftKeyCol5_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol7`    | `SoftKeyCol7_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_LcdRow1`        | `LcdKeyRow1_MidiFileSave_Page0`     | repaint  |
-| `Dispatch_FF3D39` row 0 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page0`     | repaint  |
-| `Dispatch_FF3D39` row 0 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow1`        | `LcdKeyRow1_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow2`        | `LcdKeyRow2_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow5`        | `LcdKeyRow5_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 2 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page2`     |          |
-| `Dispatch_FF3D39` row 2 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page2`     |          |
-| `Dispatch_FF3D39` row 2 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 3 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page3`     |          |
-| `Dispatch_FF3D39` row 3 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page3`     |          |
-| `Dispatch_FF3D39` row 3 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 4 | `KEY_SoftKeyCol4`    | `sub_FF657B`                        |          |
-| `Dispatch_FF3D39` row 4 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page4`     |          |
-| `Dispatch_FF3D39` row 4 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page4`     |          |
-| `Dispatch_FF3D39` row 4 | `KEY_Exit`           | `ExitKey_MidiFileSave_Page4`        |          |
-| `Dispatch_FF3D39` row 4 | `KEY_SoftKeyCol5Alt` | `sub_FF657B`                        |          |
-| `Dispatch_FF3D39` row 5 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page5`     |          |
-| `Dispatch_FF3D39` row 5 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page5`     |          |
-| `Dispatch_FF3D39` row 5 | `KEY_Exit`           | `ExitKey_MidiFileSave_Page5`        |          |
+| key map                                   | key                  | handler                             | requests |
+|-------------------------------------------|----------------------|-------------------------------------|----------|
+| `ScreenButtonHandlers_MidiFileSave` row 0 | `KEY_SoftKeyCol1`    | `SoftKeyCol1_MidiFileSave_Page0`    |          |
+| `ScreenButtonHandlers_MidiFileSave` row 0 | `KEY_SoftKeyCol2`    | `SoftKeyCol2_MidiFileSave_Page0`    |          |
+| `ScreenButtonHandlers_MidiFileSave` row 0 | `KEY_SoftKeyCol4`    | `SoftKeyCol4_MidiFileSave_Page0`    |          |
+| `ScreenButtonHandlers_MidiFileSave` row 0 | `KEY_SoftKeyCol5`    | `SoftKeyCol5_MidiFileSave_Page0`    |          |
+| `ScreenButtonHandlers_MidiFileSave` row 0 | `KEY_SoftKeyCol7`    | `SoftKeyCol7_MidiFileSave_Page0`    |          |
+| `ScreenButtonHandlers_MidiFileSave` row 0 | `KEY_LcdRow1`        | `LcdKeyRow1_MidiFileSave_Page0`     | repaint  |
+| `ScreenButtonHandlers_MidiFileSave` row 0 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page0`     | repaint  |
+| `ScreenButtonHandlers_MidiFileSave` row 0 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
+| `ScreenButtonHandlers_MidiFileSave` row 0 | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_MidiFileSave_Page0`    |          |
+| `ScreenButtonHandlers_MidiFileSave` row 0 | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_MidiFileSave_Page0`    |          |
+| `ScreenButtonHandlers_MidiFileSave` row 0 | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_MidiFileSave_Page0`    |          |
+| `ScreenButtonHandlers_MidiFileSave` row 0 | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_MidiFileSave_Page0`    |          |
+| `ScreenButtonHandlers_MidiFileSave` row 0 | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_MidiFileSave_Page0`    |          |
+| `ScreenButtonHandlers_MidiFileSave` row 1 | `KEY_LcdRow1`        | `LcdKeyRow1_MidiFileSave_Page1`     |          |
+| `ScreenButtonHandlers_MidiFileSave` row 1 | `KEY_LcdRow2`        | `LcdKeyRow2_MidiFileSave_Page1`     |          |
+| `ScreenButtonHandlers_MidiFileSave` row 1 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page1`     |          |
+| `ScreenButtonHandlers_MidiFileSave` row 1 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page1`     |          |
+| `ScreenButtonHandlers_MidiFileSave` row 1 | `KEY_LcdRow5`        | `LcdKeyRow5_MidiFileSave_Page1`     |          |
+| `ScreenButtonHandlers_MidiFileSave` row 1 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
+| `ScreenButtonHandlers_MidiFileSave` row 2 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page2`     |          |
+| `ScreenButtonHandlers_MidiFileSave` row 2 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page2`     |          |
+| `ScreenButtonHandlers_MidiFileSave` row 2 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
+| `ScreenButtonHandlers_MidiFileSave` row 3 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page3`     |          |
+| `ScreenButtonHandlers_MidiFileSave` row 3 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page3`     |          |
+| `ScreenButtonHandlers_MidiFileSave` row 3 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
 
 ## screen 0x50: `Paint_FloppyDiskFormatSelectType`
 
@@ -2158,43 +2150,15 @@ Draws:
 - `DL_DiskDiskL0adDiskSaveMidiFile`: "DISK"; "DISK L0AD"; "DISK SAVE"; "MIDI FILE"
 - `DL_Disk`: "DISK"
 
-Keys (`Dispatch_FF3D39`):
+Keys (`ScreenButtonHandlers_FloppyDiskFormatSelectType`):
 
-| key map                 | key                  | handler                             | requests |
-|-------------------------|----------------------|-------------------------------------|----------|
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol1`    | `SoftKeyCol1_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol2`    | `SoftKeyCol2_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol4`    | `SoftKeyCol4_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol5`    | `SoftKeyCol5_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol7`    | `SoftKeyCol7_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_LcdRow1`        | `LcdKeyRow1_MidiFileSave_Page0`     | repaint  |
-| `Dispatch_FF3D39` row 0 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page0`     | repaint  |
-| `Dispatch_FF3D39` row 0 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow1`        | `LcdKeyRow1_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow2`        | `LcdKeyRow2_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow5`        | `LcdKeyRow5_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 2 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page2`     |          |
-| `Dispatch_FF3D39` row 2 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page2`     |          |
-| `Dispatch_FF3D39` row 2 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 3 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page3`     |          |
-| `Dispatch_FF3D39` row 3 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page3`     |          |
-| `Dispatch_FF3D39` row 3 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 4 | `KEY_SoftKeyCol4`    | `sub_FF657B`                        |          |
-| `Dispatch_FF3D39` row 4 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page4`     |          |
-| `Dispatch_FF3D39` row 4 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page4`     |          |
-| `Dispatch_FF3D39` row 4 | `KEY_Exit`           | `ExitKey_MidiFileSave_Page4`        |          |
-| `Dispatch_FF3D39` row 4 | `KEY_SoftKeyCol5Alt` | `sub_FF657B`                        |          |
-| `Dispatch_FF3D39` row 5 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page5`     |          |
-| `Dispatch_FF3D39` row 5 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page5`     |          |
-| `Dispatch_FF3D39` row 5 | `KEY_Exit`           | `ExitKey_MidiFileSave_Page5`        |          |
+| key map                                           | key                  | handler                                 | requests |
+|---------------------------------------------------|----------------------|-----------------------------------------|----------|
+| `ScreenButtonHandlers_FloppyDiskFormatSelectType` | `KEY_SoftKeyCol4`    | `sub_FF657B`                            |          |
+| `ScreenButtonHandlers_FloppyDiskFormatSelectType` | `KEY_LcdRow3`        | `LcdKeyRow3_FloppyDiskFormatSelectType` |          |
+| `ScreenButtonHandlers_FloppyDiskFormatSelectType` | `KEY_LcdRow4`        | `LcdKeyRow4_FloppyDiskFormatSelectType` |          |
+| `ScreenButtonHandlers_FloppyDiskFormatSelectType` | `KEY_Exit`           | `ExitKey_FloppyDiskFormatSelectType`    |          |
+| `ScreenButtonHandlers_FloppyDiskFormatSelectType` | `KEY_SoftKeyCol5Alt` | `sub_FF657B`                            |          |
 
 ## screen 0x51: `Paint_FloppyDiskFormatAreYouSure`
 
@@ -2211,43 +2175,13 @@ Draws:
 - `DL_2hd`: "(2HD)"
 - `DL_2dd`: "(2DD)"
 
-Keys (`Dispatch_FF3D39`):
+Keys (`ScreenButtonHandlers_FloppyDiskFormatAreYouSure`):
 
-| key map                 | key                  | handler                             | requests |
-|-------------------------|----------------------|-------------------------------------|----------|
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol1`    | `SoftKeyCol1_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol2`    | `SoftKeyCol2_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol4`    | `SoftKeyCol4_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol5`    | `SoftKeyCol5_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol7`    | `SoftKeyCol7_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_LcdRow1`        | `LcdKeyRow1_MidiFileSave_Page0`     | repaint  |
-| `Dispatch_FF3D39` row 0 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page0`     | repaint  |
-| `Dispatch_FF3D39` row 0 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 0 | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_MidiFileSave_Page0`    |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow1`        | `LcdKeyRow1_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow2`        | `LcdKeyRow2_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_LcdRow5`        | `LcdKeyRow5_MidiFileSave_Page1`     |          |
-| `Dispatch_FF3D39` row 1 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 2 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page2`     |          |
-| `Dispatch_FF3D39` row 2 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page2`     |          |
-| `Dispatch_FF3D39` row 2 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 3 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page3`     |          |
-| `Dispatch_FF3D39` row 3 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page3`     |          |
-| `Dispatch_FF3D39` row 3 | `KEY_Exit`           | `ExitKey_MidiFileSave_Pages0_1_2_3` |          |
-| `Dispatch_FF3D39` row 4 | `KEY_SoftKeyCol4`    | `sub_FF657B`                        |          |
-| `Dispatch_FF3D39` row 4 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page4`     |          |
-| `Dispatch_FF3D39` row 4 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page4`     |          |
-| `Dispatch_FF3D39` row 4 | `KEY_Exit`           | `ExitKey_MidiFileSave_Page4`        |          |
-| `Dispatch_FF3D39` row 4 | `KEY_SoftKeyCol5Alt` | `sub_FF657B`                        |          |
-| `Dispatch_FF3D39` row 5 | `KEY_LcdRow3`        | `LcdKeyRow3_MidiFileSave_Page5`     |          |
-| `Dispatch_FF3D39` row 5 | `KEY_LcdRow4`        | `LcdKeyRow4_MidiFileSave_Page5`     |          |
-| `Dispatch_FF3D39` row 5 | `KEY_Exit`           | `ExitKey_MidiFileSave_Page5`        |          |
+| key map                                           | key           | handler                                 | requests |
+|---------------------------------------------------|---------------|-----------------------------------------|----------|
+| `ScreenButtonHandlers_FloppyDiskFormatAreYouSure` | `KEY_LcdRow3` | `LcdKeyRow3_FloppyDiskFormatAreYouSure` |          |
+| `ScreenButtonHandlers_FloppyDiskFormatAreYouSure` | `KEY_LcdRow4` | `LcdKeyRow4_FloppyDiskFormatAreYouSure` |          |
+| `ScreenButtonHandlers_FloppyDiskFormatAreYouSure` | `KEY_Exit`    | `ExitKey_FloppyDiskFormatAreYouSure`    |          |
 
 ## screen 0x53: `PageDispatch_L0adSingleC0mbination`
 

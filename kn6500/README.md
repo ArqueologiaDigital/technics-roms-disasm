@@ -130,4 +130,6 @@ and what is still a blob: `../kn6000/notes/data-region.md`.
   siblings yet (the KN7000 takes this tree's: `../kn7000/tools/port_sibling_names.py`).
 - RAM and I/O addresses are still numbers in the source (data addresses are labels).
 - Part of the data region is still `.incbin_range` (`../kn6000/notes/data-region.md`, "What is
-  still generic").
+  still generic"): generic 0; the census-opaque pieces fell from 2,189 / 44,212 to 1,176 / 27,134 bytes with
+  lane mn10300-data's passes (2026-11-02; what is left and why: `../kn7000/notes/mn10300-data/README.md`
+  section 4).

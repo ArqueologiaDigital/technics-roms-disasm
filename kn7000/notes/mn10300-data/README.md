@@ -1,0 +1,243 @@
+# The MN10300 trees' opaque groups typed, and the walk / typer rows (lane mn10300-data, 2026-11-02)
+
+Lane `mn10300-data` of wave 6 of the open-items effort. Its items (`notes/open-items/REGISTER.md`):
+
+1. the opaque groups of the KN7000 program builds (941, 942 = sp7001, 935, 893) and of the siblings (KN6000,
+   KN6500, KN2400, HD-SX3): the work list of `../mn10300-rest/README.md` section 7, "Readers found, typing
+   not written" (widget RAM variables, 128 x 64 code / chord maps, chord voicings, terminator-ended lists,
+   style lists, the KN2400's FX presets, fixed-count tables), then the rest searched again;
+2. the walk / typer rows N-ff12bec3, N-044cdbc6, N-ad82330c, N-027de254, N-92b0bf4c, N-d8d7954f, N-2468beef,
+   N-1f66216a, N-61c32961, N-44fb32d4, N-05cd19fe, N-afa3d40e, N-cf9c7754.
+
+The machinery is in `kn7000/tools/` (`gen_data_s.py`, `data_readers.py`, `data_structs.py`). Every rule is a
+key of `gen_data_s.FEATURES` (off with `GEN_DATA_S_OFF=rule,...`), so `../mn10300-data-probes/data_stats.py`
+measures each against main c240d1c0b. Probes: `../mn10300-data-probes/` (README there).
+
+## 1. The typing passes (item 1)
+
+Each pass reads the converted code (`code_funcs()`: the functions' instructions, a `<name>_entry` label folded
+into its function) or the reader walk's accesses (`tools/data_readers.py`, with the access's own file and
+line), finds the reader's instructions, and types the bytes the reader implies when they are all still free.
+The header of every typed item cites the routine, its CPU address and the instructions.
+
+| rule (`FEATURES`)   | what it types                                                                                                                                                                                                                                                                                       | reader evidence (examples)                                                                                                                                                                                                |
+|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `widget_vars`       | a widget record's RAM state variable (the target of its `l` / `m` / `q` / `r` field, `<object>_<field>`) at the width the class chain's procedure dereferences it                                                                                                                                   | KN6000 `PsEditBoxProc` 0x4C00D398 `mov (0x34, a0), a0` -> `mov (a0), d0`; `AcNumEditBoxProc` `mov (0x38, a0), a0` -> `movhu (a0), d0`                                                                                     |
+| `maps128`           | the 128 x 64 maps of two-byte entries (16,384 bytes each; rows of 0xFF written as `.space`)                                                                                                                                                                                                         | KN7000 func_48412A17: `cmp 0x7f` (row), `and 0x3f` (column), `asl 7, d2` / `add func_48412A17_Records_2, d2` / `add d1, d1`; KN6000 func_4C15F0D9; KN2400 func_4863D95A                                                   |
+| `chord_voicings`    | the chord voicing blocks (12 rows {u8 count; u8 note[7]}, one per key) and inversion lists ({u8 count; max(count, 1) rows {u8 head; u8 note[7]}})                                                                                                                                                   | KN7000 func_4856DC66 `cmp 0xb, d2` / `asl 3, d2` / `add d2, a1` / `mov 8, d0` / `call memcpy`; the tables' counts from `cmp 0x15` (22) / `cmp 0x26` (39); KN6000 func_4C0FE8A1                                            |
+| `fx_presets`        | the KN2400's 548 DSP effect presets: name, descriptor index, parameter count, parameters, key (profile key `fx_presets`)                                                                                                                                                                            | FxPresetGet 0x4863CDB5 (`(key & 0xFF) << 6` or-ed with `(key >> 8) & 0x3F`), FxDescIndexGet `movhu (0x12, a0)`, `movhu (0x14, a0)`, `mov (0x18, a0), a0`; FxPresetTable[key] is the record for all 534 of FxPresetTable's |
+| `sentinel_lists`    | lists a loop walks until a record's field holds an end marker (-1, 0xFF, 0xFFFF, 0), from every start the loop's pointer has (a fixed address, the targets of the pointer field it was loaded from, or -- read from the code above the loop -- each entry of the pointer table it was indexed from) | KN6000 func_4C04D371 `mov (a2), d0` / `cmp -1, d0` / `add 0xc, a2`; KN7000 func_484061F9 `movbu (a0), d1` / `cmp 0xff, d1` with the pointer in a stack slot stepped by 0xd                                                |
+| `index_bounds`      | the extent of a table a routine indexes right after bounding the index (`and 2^k - 1`, `cmp N` + branch, a clamp `mov N, rX`) or reads in a counted `setlb` loop (`mov -N, dC` ... `inc dC` / `lne`): struct_arrays and reader_tables type up to it                                                 | KN6000 func_4C129B80 `and 0x1f, d1` / `asl 3, d1` (32 hash slots); func_4C08A2A3 `cmp 0x64, d0` (101 x u16); HpFlashWriteDefaults `mov -0x63, d1` / setlb (99 words)                                                      |
+| `table_terminators` | the all-ones word right after a typed table whose reader stops at -1                                                                                                                                                                                                                                | KN7000 PartHasDspUnit `mov (d0, a2), d0` / `cmp d3, d0` / `bne` with `mov -1, d3`                                                                                                                                         |
+| `msg_readers`       | a {u32 key, code address} dispatch table named after the routine that reads its keys (the walk's accesses, or the accesses through a routine's argument it is passed in)                                                                                                                            | KN7000 func_484AE7CD `mov (a2), d0`                                                                                                                                                                                       |
+| `table_ptrs`        | a reader table whose every entry is 0 or a data address is written as a pointer table (`.long` labels); the short strings a name table's entries point at are typed (strict: every free target a text of at most 15 characters, one empty one at most)                                              | KN2400 AcNamingWindowProc's character table (`"!"`, `"#"` ... `"}"`, `""`)                                                                                                                                                |
+| `doubles_text`      | a run of "doubles" mostly of eight-printable-byte words is not doubles; `printable_runs()` types 32 or more printable bytes no instruction reads as `.ascii` [INFERENCE: text]                                                                                                                      | the KN6000 / KN6500 feature-demo XML script (`<ACT NO=5><SHOW OBJ="fdemo_a5">` ...) the doubles pass took                                                                                                                 |
+| `count_notes`       | a struct array's macro header says where its count comes from when no loop or index check gives it (`[INFERENCE]`)                                                                                                                                                                                  | (N-92b0bf4c)                                                                                                                                                                                                              |
+
+## 2. The siblings' walk: the KN7000's ext rules one at a time (N-1f66216a)
+
+`readers_ext` (the KN7000 program builds' walk) is several rules; `data_readers.Reader(sib_rules=)` now takes
+four of them singly (`gen_data_s.FEATURES` `sib_<rule>`, the profile key `sib_rules`). The other parts of
+ext (the full stack-slot carry, the full join, the function-start rule, `lra`) stay off for the siblings:
+ext as a whole made the KN2400 worse (`../../../kn6000/notes/siblings-data-final/README.md`), so this lane
+takes the rules one at a time. Each rule alone against main (data_stats.py `--one`, compared with `--dirs`;
+every other rule of this lane on):
+
+| rule          | what it does                                                                 | KN6000                                                        | KN2400                                                        |
+|---------------|------------------------------------------------------------------------------|---------------------------------------------------------------|---------------------------------------------------------------|
+| `fieldret`    | a call's a0 is the pointer field its callee returns                          | no change                                                     | no change                                                     |
+| `loopslots`   | a label only a backward branch reaches keeps the frame's slots               | no change                                                     | reader rows 7,065 -> 2,513 bytes; typed +4,503; 52 bytes lost |
+| `reloadbound` | a load into a register drops the index bound a `cmp` gave its old value      | typed +56, opaque -36                                         | typed +80, opaque -36                                         |
+| `setlb`       | a constant in a register before `setlb` is a loop counter, not that constant | 5,877 typed bytes lost (func_4C03C193's results), rows +4,519 | no typed change; two more fields named                        |
+
+The 52 bytes `loopslots` lost on the KN2400 were the one-character strings of the naming window's
+character table (`ptrs_4844FAE8`), which the new walk reads as a u32 table (`AcNamingWindowProc_Leea_Table`)
+and so no longer followed; `table_ptrs` (a reader table whose every entry is 0 or a data address is a
+pointer table, its short strings typed) gives them back. The profiles take: KN6000, KN6500, HD-SX3
+`reloadbound`; KN2400 `loopslots`, `reloadbound`, `setlb`.
+
+## 3. The walk / typer rows (item 2)
+
+| item       | what                                                                        | outcome                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+|------------|-----------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| N-ff12bec3 | bytes no longer typed after mn10300-typer                                   | CLOSED: the tables' last 0xFFFFFFFF words are `<table>_End` items citing the loop that stops at them (`table_terminators`; PartHasDspUnit's table and its twins in every build); build 935's 64-character map is text where it is printable (94 bytes, `printable_runs`; the 31 control-character bytes before it no instruction reads); `func_48440E4D_Records` has the 3 records the image holds (what the 3 more of the over-long table held is typed as the strings and memcmp blocks after it); `data_50001850_p0_1` is typed (a record and its u16 rows)                                                                                                                                                                                                                                                                                                          |
+| N-044cdbc6 | blocks handed only to memcpy / strcpy / LibStrlen                           | OPEN (split): the strcpy / LibStrlen arguments are `.asciz` strings already (the KN7000's `handed to strcpy` headers). Left, handed only to memcpy: 941 data_485BA394 (32 bytes typed as rows of the 512 bytes func_4846FED0 copies with `mov 0x200, d0`: a 720 KB floppy's FAT boot-sector parameters, bytes / sector 0x200, 2 sectors a cluster, 1 reserved, 2 FATs, 112 root entries, 1440 sectors, media 0xF9, 3 sectors a FAT, 9 a track, 2 heads), the KN6000 / KN6500 func_4C02FB29 / func_4C02FC99 blocks (records of 6 / 0x4A bytes a memcpy loop copies +2.. of: `add d2, d1` / `mov 2, a1` / `add d1, a1` / `mov 4, d0` / `call memcpy` / `add 6, d2` / `cmp 0x30, d2`), the KN2400 data_4841E3E4 (32 bytes). Next step: a memcpy-loop rule (source + i + K, length L, i += S while i < N: N / S records of S bytes) and a BPB record type for data_485BA394 |
+| N-ad82330c | blocks whose pointer a routine stores (SetApTimer, PutM3Em, _tr_init)       | BLOCKED: the reader is chosen at run time. ApTimer hands the message to ProcCall 0x4842948C, which calls the procedure a window registered in the RAM table 0x5011FAAC (`lsr 16` / `asl 4` / `add 0x5011faac` / `mov (4, a0), a2`); no static walk binds it. Needs a run-time trace of the registrations (the KN7000 MAME driver, another repository).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| N-027de254 | records whose pointer fields point into their own tail                      | OPEN: the records are the MILK support classes' value descriptors (KN2400 data_484151E0, 76 bytes; the KN7000's data_485B03A4 ... 12-byte pieces), whose word +8 points at the descriptor's own +4; no routine the walk follows reads them (the support classes' procs uwordProc ... take them from the SptClass table). Next step: read the support-class procedures for the descriptors' fields, then a record macro whose payload carries its own label (`.long <label>_payload`)                                                                                                                                                                                                                                                                                                                                                                                    |
+| N-92b0bf4c | array record counts that are inferences                                     | CLOSED: `index_bounds` gives the count where a reader bounds the index or counts its loop; every struct array's macro header now says where its count comes from (`count_notes`); `../mn10300-data-probes/array_counts.py` lists the inferred ones per tree (section Measurements)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| N-d8d7954f | {u32 key, code} dispatch tables named by shape                              | CLOSED: named after the routine that reads their keys and cited (`msg_readers`); the ones no instruction read (941 MsgTable_485B92C8, 935 MsgTable_485B9288, KN6000 MsgTable_4C244408, KN2400 MsgTable_4841D2E8) were slots 4..15 of a 16-slot {key, code} hash table (`and 0x0f` / `asl 3`: func_48458AC7, func_4C118448 ...), now that table's records (`index_bounds`)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| N-2468beef | fields that stay offset-named                                               | OPEN: the fields left offset-named (Measurements) are the ones lane mn10300-rest classified (section 4 there): values only stored, combined in arithmetic or returned, compared with 0, or read through memcpy / strcpy; their uses name nothing. Next step: name them by hand from the routines that use them, in tools/data_struct_names.py                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| N-1f66216a | the siblings' walk lacks the KN7000 ext rules                               | CLOSED: four of ext's rules ported one at a time and measured (section 2); each profile takes those that lose nothing there                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| N-61c32961 | bytes per sibling moved from typed tables into reader rows by the new joins | OPEN (smaller): `../callee-walk-probes/callee_off_on.py` on this branch: the callee walk now loses KN6000 21 bytes (func_4C09A63A_entry_L65_Records_p0_1, 17; func_4C11B347_Table, 4) and KN2400 4 (func_4861CCC5_Table), from 29 / 8; it gains 14,900 / 14,965. The 4-byte pieces are words of the id lists func_4C11B347 scans by index (`asl2 d1` / `mov (d1, a0), d0`, until -1), which records of another reader now cover; the 17 bytes are the tail of func_4C09A63A_entry_L65_Records_p0_1, a second 29-byte record the walk with the callee rules no longer reaches. Next step: an indexed form of `sentinel_lists` (the list read as `(dI, aT)` with dI stepped by one), which types those lists whole                                                                                                                                                        |
+| N-44fb32d4 | KN6000 tables reached by computed offsets may be split in two               | CLOSED: tables indexed with a bounded index now run to the bound when the bytes are free and no code-named label is inside; `../mn10300-data-probes/split_tables.py --profile kn6000` lists those whose bound still crosses a label (KN6000 25, KN2400 28; the `fixed` ones the code names separately, which keeps them two tables)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| N-05cd19fe | KN6500: the data region's remaining `.incbin_range` pieces                  | OPEN: every remaining `.incbin_range` is a census-opaque piece (generic 0); KN6500 2,189 / 44,212 -> 1,176 / 27,134 pieces / bytes (section 4 says what and why; the O-kn6500-* rows)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| N-afa3d40e | KN6000: the same                                                            | OPEN: the same; KN6000 2,175 / 39,985 -> 1,145 / 24,654                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| N-cf9c7754 | KN2400: the same                                                            | OPEN: the same; KN2400 2,885 / 61,226 -> 1,192 / 27,313                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+
+## 4. What stays opaque, and why
+
+`../mn10300-data-probes/opaque_left.py` (opaque_groups.py's generic groups) on the regenerated sources. In
+941 (the other KN7000 builds alike) what is left is, by group:
+
+| group          | 941 bytes | what it is                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|----------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| false-string   | 4,304     | records whose head an earlier pass typed as a string (`Str_Ap`, `Str_empty_847` ...): the rest of the record has no reader the walk sees; a record type for them needs their readers (the menu and setup records they belong to)                                                                                                                                                                                                                         |
+| table-tail     | 5,354     | rows past a typed table: ChordRecogTable2 (1,500: its index is the 11-bit interval mask func_4844D680 returns, a bound the index rule cannot see in the caller), the key lists of func_4C021761 / func_4C0216A3 (the loop tests +8 through a second pointer, `mov 8, a3` / `add d2, a3`, which the rules do not relate to the list start), func_484061F9's lists after its last pointer, TgPartEgRampBuild_Table_3 (8 x 0x66 by `mulu`), the mixer pages |
+| after-string   | 2,869     | bytes after a real string with no reader                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| labelled-held  | 2,383     | blocks a typed pointer or a code immediate holds, read through nothing the walk follows: the MILK support-class value descriptors (N-027de254), data_485BA394 (the 512-byte FAT boot-sector template memcpy copies, N-044cdbc6)                                                                                                                                                                                                                          |
+| align-pad      | 232       | at most 3 bytes of 0x00 / 0xFF before a 4-byte boundary, no reader                                                                                                                                                                                                                                                                                                                                                                                       |
+| record-rest    | 219       | a record slot's bytes past its typed fields (the 107 x `01 00` after the switch descriptors)                                                                                                                                                                                                                                                                                                                                                             |
+| ram-widget-var | 128       | 57 widget variables whose class procedures dereference the field in a way field_deref does not match (AdMovableProc's `instance + size - 8`)                                                                                                                                                                                                                                                                                                             |
+| others         | 293       | the EUC-JP pieces that are not entry 6 of a language table, RAM words no instruction names                                                                                                                                                                                                                                                                                                                                                               |
+
+The siblings: the same groups, plus the KN2400's chord-name tables (no word of the image points into them)
+and its coefficient curves at 0x4840DAF8 (no holder), and the KN6000 / KN6500 / KN2400 bitmap / frame / icon
+name tables' second halves (`names_*`: the file-name slots, 0x400 bytes in; only the slot after the last
+name is read).
+
+## Measurements
+
+Before: main c240d1c0b's committed sources (`git archive c240d1c0b`); after: this branch's committed sources
+after the regeneration (`../mn10300-data-probes/data_stats.py --dirs BEFORE AFTER --brief`: typed bytes from
+labels.sym's item sizes, reader rows and opaque pieces n / bytes, offset-named fields with a reader; "typed
+before only" = the bytes a main item holds that no item here does):
+
+| tree   | typed before | typed after | change   | reader rows before | reader rows after | opaque before  | opaque after   | offset-named fields before | after | typed before only |
+|--------|--------------|-------------|----------|--------------------|-------------------|----------------|----------------|----------------------------|-------|-------------------|
+| 941    | 2,154,302    | 2,256,494   | +102,192 | 78 / 905           | 77 / 872          | 2,073 / 33,741 | 912 / 15,782   | 256                        | 255   | 0                 |
+| 942    | 2,161,564    | 2,261,320   | +99,756  | 81 / 1,013         | 80 / 980          | 2,094 / 31,158 | 917 / 15,655   | 258                        | 255   | 0                 |
+| 935    | 2,154,908    | 2,257,439   | +102,531 | 84 / 1,049         | 83 / 1,016        | 2,090 / 34,612 | 929 / 16,310   | 263                        | 260   | 0                 |
+| 893    | 2,156,004    | 2,257,726   | +101,722 | 79 / 917           | 78 / 884          | 2,076 / 33,339 | 918 / 15,843   | 263                        | 260   | 0                 |
+| kn6000 | 2,450,916    | 2,549,408   | +98,492  | 136 / 9,310        | 135 / 9,275       | 2,175 / 39,985 | 1,145 / 24,654 | 264                        | 262   | 0                 |
+| kn6500 | 1,962,208    | 2,062,463   | +100,255 | 141 / 9,426        | 140 / 9,391       | 2,189 / 44,212 | 1,176 / 27,134 | 263                        | 261   | 0                 |
+| kn2400 | 1,783,452    | 1,906,859   | +123,407 | 171 / 7,098        | 137 / 2,513       | 2,885 / 61,226 | 1,192 / 27,313 | 208                        | 200   | 0                 |
+| hdsx3  | 484,505      | 484,903     | +398     | 34 / 211           | 34 / 211          | 95 / 594       | 40 / 386       | 37                         | 37    | 0                 |
+
+Every rule was also measured alone and together with the generator runs (`data_stats.py --profile P
+--scratch DIR`, `--one`): the figures above are the generator's own (`gen_data_s: N typed items, X of Y
+bytes`), and no profile loses a typed byte. The sources of the struct arrays' counts
+(`../mn10300-data-probes/array_counts.py`, N-92b0bf4c; "other pass": arrays written by the callee / pointed-record
+passes, whose count is their own):
+
+| tree   | record arrays | loop end | index bound | capped | inferred | other pass |
+|--------|---------------|----------|-------------|--------|----------|------------|
+| 941    | 572           | 0        | 5           | 2      | 447      | 118        |
+| 942    | 572           | 0        | 5           | 2      | 447      | 118        |
+| 935    | 574           | 0        | 5           | 2      | 449      | 118        |
+| 893    | 574           | 0        | 5           | 2      | 449      | 118        |
+| kn6000 | 509           | 0        | 5           | 2      | 439      | 63         |
+| kn6500 | 509           | 0        | 5           | 2      | 439      | 63         |
+| kn2400 | 513           | 1        | 6           | 2      | 439      | 65         |
+| hdsx3  | 17            | 0        | 0           | 0      | 6        | 11         |
+
+The opaque pieces by the census classes the register's O- rows count (`../mn10300-data-probes/opaque_left.py
+--classes`, main -> this branch; what is left and why: section 4):
+
+| tree   | class        | where         | pieces / bytes before | pieces / bytes after |
+|--------|--------------|---------------|-----------------------|----------------------|
+| 941    | 7-bit values | RAM image     | 807 / 2,754           | 52 / 108             |
+| 941    | 7-bit values | program flash | 173 / 1,707           | 150 / 1,421          |
+| 941    | address-like | RAM image     | 1 / 4                 | 1 / 4                |
+| 941    | address-like | program flash | 75 / 1,284            | 70 / 380             |
+| 941    | binary       | RAM image     | 222 / 891             | 9 / 35               |
+| 941    | binary       | program flash | 551 / 24,067          | 402 / 11,903         |
+| 941    | printable    | program flash | 244 / 3,034           | 228 / 1,931          |
+| 941    | total        |               | 2,073 / 33,741        | 912 / 15,782         |
+| 942    | 7-bit values | RAM image     | 807 / 2,754           | 52 / 108             |
+| 942    | 7-bit values | program flash | 175 / 1,735           | 152 / 1,449          |
+| 942    | address-like | RAM image     | 1 / 4                 | 1 / 4                |
+| 942    | address-like | program flash | 76 / 500              | 74 / 396             |
+| 942    | binary       | RAM image     | 222 / 891             | 9 / 35               |
+| 942    | binary       | program flash | 564 / 22,564          | 404 / 11,748         |
+| 942    | printable    | program flash | 249 / 2,710           | 225 / 1,915          |
+| 942    | total        |               | 2,094 / 31,158        | 917 / 15,655         |
+| 935    | 7-bit values | RAM image     | 807 / 2,754           | 52 / 108             |
+| 935    | 7-bit values | program flash | 183 / 2,441           | 162 / 2,066          |
+| 935    | address-like | RAM image     | 1 / 4                 | 1 / 4                |
+| 935    | address-like | program flash | 87 / 1,316            | 82 / 412             |
+| 935    | binary       | RAM image     | 222 / 891             | 9 / 35               |
+| 935    | binary       | program flash | 549 / 23,889          | 400 / 11,725         |
+| 935    | printable    | program flash | 241 / 3,317           | 223 / 1,960          |
+| 935    | total        |               | 2,090 / 34,612        | 929 / 16,310         |
+| 893    | 7-bit values | RAM image     | 807 / 2,754           | 52 / 108             |
+| 893    | 7-bit values | program flash | 174 / 1,865           | 154 / 1,623          |
+| 893    | address-like | program flash | 71 / 484              | 69 / 380             |
+| 893    | binary       | RAM image     | 222 / 891             | 9 / 35               |
+| 893    | binary       | program flash | 549 / 23,888          | 400 / 11,724         |
+| 893    | printable    | RAM image     | 1 / 4                 | 1 / 4                |
+| 893    | printable    | program flash | 252 / 3,453           | 233 / 1,969          |
+| 893    | total        |               | 2,076 / 33,339        | 918 / 15,843         |
+| kn6000 | 7-bit values | RAM image     | 668 / 2,242           | 51 / 108             |
+| kn6000 | 7-bit values | program flash | 81 / 1,749            | 57 / 1,459           |
+| kn6000 | address-like | RAM image     | 6 / 160               | 6 / 160              |
+| kn6000 | address-like | program flash | 162 / 3,016           | 158 / 2,120          |
+| kn6000 | binary       | RAM image     | 227 / 904             | 9 / 32               |
+| kn6000 | binary       | program flash | 785 / 28,246          | 644 / 18,994         |
+| kn6000 | printable    | program flash | 246 / 3,668           | 220 / 1,781          |
+| kn6000 | total        |               | 2,175 / 39,985        | 1,145 / 24,654       |
+| kn6500 | 7-bit values | RAM image     | 668 / 2,242           | 51 / 108             |
+| kn6500 | 7-bit values | program flash | 78 / 2,067            | 54 / 1,777           |
+| kn6500 | address-like | RAM image     | 6 / 160               | 6 / 160              |
+| kn6500 | address-like | program flash | 148 / 2,965           | 143 / 2,065          |
+| kn6500 | binary       | RAM image     | 226 / 902             | 8 / 30               |
+| kn6500 | binary       | program flash | 812 / 31,840          | 681 / 21,240         |
+| kn6500 | printable    | program flash | 251 / 4,036           | 233 / 1,754          |
+| kn6500 | total        |               | 2,189 / 44,212        | 1,176 / 27,134       |
+| kn2400 | 7-bit values | RAM image     | 785 / 2,816           | 1 / 4                |
+| kn2400 | 7-bit values | program flash | 271 / 6,712           | 104 / 1,890          |
+| kn2400 | address-like | RAM image     | 3 / 88                | 3 / 88               |
+| kn2400 | address-like | program flash | 90 / 3,090            | 85 / 2,186           |
+| kn2400 | binary       | RAM image     | 190 / 760             | 2 / 8                |
+| kn2400 | binary       | program flash | 1,268 / 43,038        | 736 / 19,532         |
+| kn2400 | printable    | RAM image     | 4 / 212               | 4 / 208              |
+| kn2400 | printable    | program flash | 274 / 4,510           | 257 / 3,397          |
+| kn2400 | total        |               | 2,885 / 61,226        | 1,192 / 27,313       |
+| hdsx3  | 7-bit values | RAM image     | 20 / 68               | 5 / 20               |
+| hdsx3  | 7-bit values | program flash | 1 / 8                 | 1 / 8                |
+| hdsx3  | address-like | RAM image     | 3 / 16                | 3 / 16               |
+| hdsx3  | address-like | program flash | 2 / 55                | 2 / 55               |
+| hdsx3  | binary       | RAM image     | 47 / 188              | 7 / 28               |
+| hdsx3  | binary       | program flash | 19 / 102              | 19 / 102             |
+| hdsx3  | printable    | program flash | 3 / 157               | 3 / 157              |
+| hdsx3  | total        |               | 95 / 594              | 40 / 386             |
+
+**Census figures** (read-only, on the merged branch): `scripts/analysis/data_incbin_census.py --compare
+docs/coverage/data-incbin-2026-10-31-03.json` exits 0 (generic 0 everywhere, nothing rose).
+`scripts/analysis/doc_quality_census.py --compare docs/coverage/doc-quality-2026-10-31-03.json` exits 1 for 24
+figures: the 12 KN5000 ones ((d) `.byte` runs after a terminator, v5..v10) rise on main 6da8e5593 itself (this
+lane changes no KN5000 file); the 12 MN10300 ones -- (a) routines without a header: 941 +6, 942 +1, 935 +6,
+893 +1, KN2400 +6, KN6000 +7, KN6500 +29; (c) `loc_<hex>` locals +2 .. +25 -- are code addresses the newly typed
+records name (their handler fields: `code_refs.txt` gains 6 in 941, 27 in the KN6000, 60 in the KN6500, 2 in the
+KN2400), each now a labelled routine or local without a header comment, as in lane callee-walk.
+
+**Gates** (worktree, `kn7000/build/*.labels` deleted first, after the merge with main 6da8e5593): `make
+gate-kn7000 gate-kn6000 gate-kn6500 gate-kn2400 gate-hdsx3` exits 0 (53 OK lines, no FAIL) and `make -C
+kn7000 symbols-check` exits 0.
+
+
+## Regenerating
+
+After the tool commits, in this order (in a worktree, with the absolute Makefile overrides, `UNIDASM=` and
+`SP7001_UPDATES=`); the lane's tools change no symbol file, the voice archives or the plug-in's code:
+
+1. `make -C kn2400 data-and-code-src`, the same for `kn6000` and `kn6500` (independent: in parallel), then
+   `hdsx3` (its host is the KN6000), then `make -C <each> gui-map`;
+2. `make -C kn7000 data-and-code-src` (`tools/regen_data_and_code.sh`; this lane ran its rounds with the four
+   builds in parallel), then `make -C kn7000 plugin-src` and `make -C kn7000 gui-map`;
+3. build the four programs (`make -C kn7000 verify verify-sp7001 verify-935 verify-893`), then
+   `data-and-code-src` once more (it should reach its fixpoint in round 1).
+
+## Website page draft
+
+(For the KN7000, KN6000 / KN6500, KN2400 and HD-SX3 program-data pages of technics-docs, to be added by the
+website sync.)
+
+> **More of the data typed from the code that reads it.** Every widget's state variable in the initialised
+> RAM -- the selected item of a list, the value of a number box, the window a screen opens -- is now written
+> at the width its class's procedure reads it, with that instruction cited. The chord and code maps (128 rows
+> by 64 entries, one row per note, one column per chord type) and the chord voicings (twelve keys, up to seven
+> notes each, and the inversions) are tables of their own; so are the lists the firmware walks until an end
+> marker (the panel buttons' descriptors, the effect programs' command lists, the style lists), the tables
+> whose size the code checks before indexing them (the 32-slot hash tables, the 101-entry curves, the 99 words
+> the hard-disk defaults copy), and the SX-KN2400's 548 effect presets with their names and parameters. What
+> the KN6000 used to show as "doubles" is its feature demo's XML script, now text.

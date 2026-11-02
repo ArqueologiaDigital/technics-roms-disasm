@@ -1119,14 +1119,12 @@ rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom: rebuilt_ROMs/kn5000_subprogram_v14
 # File Type 007, flashed to Custom Data 0x3E0000 by
 # HANDLE_UPDATE_FILE_TYPE_ID_007h): an 11-byte header ("SLIDE4K\0" magic +
 # 24-bit BIG-endian decompressed size, here 03 00 00 = 196,608) followed by
-# the LZSS stream. The payload is already source-built, so recompressing the
-# build output with the factory stream's decisions must reproduce the update
-# image byte-for-byte. compress_lzss.py --strict aborts the build on any
-# divergence and the cmp seals whole-file byte-identity (same guarantee the
-# demo-preset pipeline provides for the in-ROM SLIDE4K blocks).
-rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom: rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom original_ROMs/kn5000_subprogram_v142_compressed.rom
-	python3 scripts/build/compress_lzss.py $< $@ --strict --with-header \
-		--reference original_ROMs/kn5000_subprogram_v142_compressed.rom
+# the LZSS stream. The payload is already source-built, and compress_lzss.py
+# encodes it with the factory SLIDE4K encoder (lzss_j.encode, N = 4096, F = 18;
+# no reference is read), which must reproduce the update image byte-for-byte:
+# the cmp seals whole-file byte-identity.
+rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom: rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom original_ROMs/kn5000_subprogram_v142_compressed.rom scripts/build/compress_lzss.py floppy/tools/kd/lzss_j.py
+	python3 scripts/build/compress_lzss.py $< $@ --with-header
 	cmp $@ original_ROMs/kn5000_subprogram_v142_compressed.rom
 	@echo "  subprogram v142 update image OK (byte-identical)"
 
@@ -1150,12 +1148,11 @@ rebuilt_ROMs/kn5000_subprogram_v141.llvm.rom: rebuilt_ROMs/kn5000_subprogram_v14
 	rm -f $@.full $@.part_a $@.part_b
 
 # --- Subcpu payload v1.41 firmware-update image (whole-file SLIDE4K) ---
-# Same guarantee as the v142 rule above: recompressing the source-built v1.41
-# payload with the factory stream's decisions must reproduce
+# Same guarantee as the v142 rule above: encoding the source-built v1.41
+# payload with the factory encoder must reproduce
 # original_ROMs/kn5000_subprogram_v141_compressed.rom (93,181 B) byte-for-byte.
-rebuilt_ROMs/kn5000_subprogram_v141_compressed.rom: rebuilt_ROMs/kn5000_subprogram_v141.llvm.rom original_ROMs/kn5000_subprogram_v141_compressed.rom
-	python3 scripts/build/compress_lzss.py $< $@ --strict --with-header \
-		--reference original_ROMs/kn5000_subprogram_v141_compressed.rom
+rebuilt_ROMs/kn5000_subprogram_v141_compressed.rom: rebuilt_ROMs/kn5000_subprogram_v141.llvm.rom original_ROMs/kn5000_subprogram_v141_compressed.rom scripts/build/compress_lzss.py floppy/tools/kd/lzss_j.py
+	python3 scripts/build/compress_lzss.py $< $@ --with-header
 	cmp $@ original_ROMs/kn5000_subprogram_v141_compressed.rom
 	@echo "  subprogram v141 update image OK (byte-identical)"
 
@@ -1179,12 +1176,11 @@ rebuilt_ROMs/kn5000_subprogram_v140.llvm.rom: rebuilt_ROMs/kn5000_subprogram_v14
 	rm -f $@.full $@.part_a $@.part_b
 
 # --- Subcpu payload v1.40 firmware-update image (whole-file SLIDE4K) ---
-# Same guarantee as the v142 rule above: recompressing the source-built v1.40
-# payload with the factory stream's decisions must reproduce
+# Same guarantee as the v142 rule above: encoding the source-built v1.40
+# payload with the factory encoder must reproduce
 # original_ROMs/kn5000_subprogram_v140_compressed.rom (93,124 B) byte-for-byte.
-rebuilt_ROMs/kn5000_subprogram_v140_compressed.rom: rebuilt_ROMs/kn5000_subprogram_v140.llvm.rom original_ROMs/kn5000_subprogram_v140_compressed.rom
-	python3 scripts/build/compress_lzss.py $< $@ --strict --with-header \
-		--reference original_ROMs/kn5000_subprogram_v140_compressed.rom
+rebuilt_ROMs/kn5000_subprogram_v140_compressed.rom: rebuilt_ROMs/kn5000_subprogram_v140.llvm.rom original_ROMs/kn5000_subprogram_v140_compressed.rom scripts/build/compress_lzss.py floppy/tools/kd/lzss_j.py
+	python3 scripts/build/compress_lzss.py $< $@ --with-header
 	cmp $@ original_ROMs/kn5000_subprogram_v140_compressed.rom
 	@echo "  subprogram v140 update image OK (byte-identical)"
 
@@ -1450,7 +1446,7 @@ verify-ftbmp:
 	python3 scripts/build/ftbmp_images.py verify
 
 # --- Table data ---
-rebuilt_ROMs/kn5000_table_data.llvm.o: $(TABLEDATA_SRC) $(DEMO_PRESET_COMPRESSED) $(HELP_DB_COMPRESSED) $(STALE_HELP_DUPLICATE) tabledata-images $(TABLEDATA_IMAGE_SRC) $(INDEXED_IMAGE_SRC) $(STYLE_EVENT_BINS) $(FTBMP_BMPS) $(LLVM_MC)
+rebuilt_ROMs/kn5000_table_data.llvm.o: $(TABLEDATA_SRC) original_ROMs/kn5000_table_data.rom $(DEMO_PRESET_COMPRESSED) $(HELP_DB_COMPRESSED) $(STALE_HELP_DUPLICATE) tabledata-images $(TABLEDATA_IMAGE_SRC) $(INDEXED_IMAGE_SRC) $(STYLE_EVENT_BINS) $(FTBMP_BMPS) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I table_data -o $@ table_data/kn5000_table_data.s
 
@@ -1667,26 +1663,45 @@ P2BIN=$(ASL_PATH)/p2bin
 #
 #   .mid + .yaml -> demo_preset_NN.bin -> demo_preset_NN_compressed.bin -> ROM
 #
-# Both .bin stages are generated (and .gitignore'd). compress_lzss.py --strict
-# aborts the build if a payload stops matching the factory stream, so an edit can
-# never silently ship different music.
+# Both .bin stages are generated (and .gitignore'd).  compress_lzss.py encodes each
+# stream with the factory SLIDE4K encoder (lzss_j.encode, Okumura's LZSS.C with
+# N = 4096, F = 18: notes/misc2-2026-11-02/probes/slide4k_encode_exact.py shows it
+# makes every factory stream byte); no reference is read.  DEMO_PRESET_PAD_NN is the
+# alignment byte six blocks carry after their stream (each block ends on an even
+# address), which the decoder never reads: its value is the factory image's.  An
+# edit that changes the music changes the table data image, so `make gate` (the
+# byte compare) and verify-demo-presets catch it.  Demo songs 17 and 18 are followed
+# by the stale end of an older stream, which table_data/kn5000_table_data.s declares
+# opaque (DemoSongPreset17_StaleStreamTail / DemoSongPreset18_StaleStreamTail).
+DEMO_PRESET_PAD_01 := 0x00
+DEMO_PRESET_PAD_06 := 0x7d
+DEMO_PRESET_PAD_07 := 0x7d
+DEMO_PRESET_PAD_08 := 0xc5
+DEMO_PRESET_PAD_10 := 0x43
+DEMO_PRESET_PAD_12 := 0x0b
 
 $(DEMO_PRESET_DIR)/demo_preset_%.bin: $(DEMO_PRESET_MIDI_DIR)/demo_preset_%.mid $(DEMO_PRESET_SIDECAR_DIR)/demo_preset_%.yaml
 	python3 scripts/build/midi_to_preset.py --midi $< \
 		--sidecar $(DEMO_PRESET_SIDECAR_DIR)/demo_preset_$*.yaml -o $@
 
-$(DEMO_PRESET_DIR)/demo_preset_%_compressed.bin: $(DEMO_PRESET_DIR)/demo_preset_%.bin original_ROMs/demo_preset_%_compressed.original.bin
-	python3 scripts/build/compress_lzss.py $< $@ --strict --reference original_ROMs/demo_preset_$*_compressed.original.bin
+$(DEMO_PRESET_DIR)/demo_preset_%_compressed.bin: $(DEMO_PRESET_DIR)/demo_preset_%.bin scripts/build/compress_lzss.py floppy/tools/kd/lzss_j.py
+	python3 scripts/build/compress_lzss.py $< $@ $(if $(DEMO_PRESET_PAD_$*),--pad $(DEMO_PRESET_PAD_$*))
 
 rebuild-demo-presets: $(DEMO_PRESET_COMPRESSED)
 
-# Check every payload against the factory stream byte-for-byte.
+# Check every payload against the factory slice byte-for-byte.  The slices of
+# demo songs 17 and 18 run on past their stream (the stale tails above), so the
+# payload is compared with the slice's first bytes, and the slice must be no
+# shorter; exit status 1 on any mismatch.
 verify-demo-presets: $(DEMO_PRESET_COMPRESSED)
-	@for i in $(DEMO_PRESET_IDS); do \
-		cmp -s $(DEMO_PRESET_DIR)/demo_preset_$${i}_compressed.bin \
-		       original_ROMs/demo_preset_$${i}_compressed.original.bin \
-		  && echo "  preset $$i OK" || echo "  preset $$i MISMATCH"; \
-	done
+	@bad=0; for i in $(DEMO_PRESET_IDS); do \
+		f=$(DEMO_PRESET_DIR)/demo_preset_$${i}_compressed.bin; \
+		r=original_ROMs/demo_preset_$${i}_compressed.original.bin; \
+		n=$$(stat -c %s $$f); m=$$(stat -c %s $$r); \
+		if [ $$n -le $$m ] && cmp -s -n $$n $$f $$r; then \
+		  echo "  preset $$i OK ($$n of the slice's $$m bytes)"; \
+		else echo "  preset $$i MISMATCH"; bad=1; fi; \
+	done; exit $$bad
 
 # --- bootstrap ---------------------------------------------------------------
 # Re-derive the checked-in source from the factory ROM. Only needed if the

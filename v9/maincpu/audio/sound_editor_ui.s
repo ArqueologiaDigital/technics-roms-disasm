@@ -177,7 +177,7 @@ UpdSeSel_SimpleUpdate_Step4:
 	lda xde, (xsp + 2)
 	ld wa, 0:i3
 	ld bc, 1:i3
-	call SeMenu_TransferPartValues
+	call SeLfo_GetEntryElement
 	ld c, (xsp + 2)
 	extz bc
 	pushw 0x20
@@ -913,13 +913,13 @@ UpdSeSel_DetailedUpdate_Join3:
 	ldto_berp a, 251
 	extz	wa
 	lda	xbc, (xsp+4)
-	call	SeMenu_TransferPartValues_EndData
+	call	SeLfo_GetSelectedLfo
 	ldto_berp a, 251
 	extz	wa
 	ld	c, (xsp+4)
 	extz	bc
 	lda	xde, (xsp+2)
-	call	SeMenu_TransferPartValues
+	call	SeLfo_GetEntryElement
 	ldib_erp 250, 0
 SeEasy_DrawPage_Loop4:
 	ld	c, (xsp+2)
@@ -1365,10 +1365,10 @@ UpdSeSel_DetailedUpdate_SetDisplayState_Join10:
 	jr	nz, UpdSeSel_DetailedUpdate_Skip9
 	cp	(xsp), 0
 	jr	nz, UpdSeSel_DetailedUpdate_Skip8
-	calr	UpdSeSel_DetailedUpdate_Helper5
+	calr	SeCtr2_RequestGroupValues
 	jr	UpdSeSel_DetailedUpdate_Join6
 UpdSeSel_DetailedUpdate_Skip8:
-	calr	UpdSeSel_DetailedUpdate_Helper6
+	calr	SeCtr2_RequestKitGroupValues
 UpdSeSel_DetailedUpdate_Join6:
 	ld	wa, 1:i3
 	call	SeMenu_SetCurrentStep
@@ -1409,11 +1409,11 @@ UpdSeSel_DetailedUpdate_Skip9:
 UpdSeSel_DetailedUpdate_Epilogue10:
 	lda	xsp, (xsp+10)
 	ret
-UpdSeSel_DetailedUpdate_Helper5:
+SeCtr2_RequestGroupValues:
 	dec	4, xsp
 	push	qiz
 	ldib_erp	251, 0
-UpdSeSel_DetailedUpdate_Helper5_Loop:
+SeCtr2_RequestGroupValues_Loop:
 	ldto_berp	a, 251
 	mul	a, 3
 	add	a, 24
@@ -1424,13 +1424,13 @@ UpdSeSel_DetailedUpdate_Helper5_Loop:
 	call	SeMenu_RegisterElement_Type1
 	inc1b_erp 251
 	cpib_erp 251, 6
-	jr c, UpdSeSel_DetailedUpdate_Helper5_Loop
+	jr c, SeCtr2_RequestGroupValues_Loop
 	lda	xwa, (xsp+4)
-	call	UpdSeSel_DetailedUpdate_SetDisplayState_Helper
+	call	SeCtr2_GetSelection
 	ld	a, (xsp+4)
 	extz	wa
 	lda	xbc, (xsp+2)
-	call	UpdSeSel_DetailedUpdate_SetDisplayState_Helper2
+	call	SeCtr2_GetGroupBase
 	ld	c, (xsp+2)
 	inc	2, c
 	extz	bc
@@ -1456,11 +1456,11 @@ UpdSeSel_DetailedUpdate_Helper5_Loop:
 	pop qiz
 	inc	4, xsp
 	ret
-UpdSeSel_DetailedUpdate_Helper6:
+SeCtr2_RequestKitGroupValues:
 	dec	4, xsp
 	push	qiz
 	ldib_erp	251, 0
-UpdSeSel_DetailedUpdate_Helper6_Loop:
+SeCtr2_RequestKitGroupValues_Loop:
 	ldto_berp	a, 251
 	mul	a, 3
 	add	a, 22
@@ -1471,13 +1471,13 @@ UpdSeSel_DetailedUpdate_Helper6_Loop:
 	call	SeMenu_RegisterElement_Type2
 	inc1b_erp 251
 	cpib_erp 251, 6
-	jr c, UpdSeSel_DetailedUpdate_Helper6_Loop
+	jr c, SeCtr2_RequestKitGroupValues_Loop
 	lda	xwa, (xsp+4)
-	call	UpdSeSel_DetailedUpdate_SetDisplayState_Helper
+	call	SeCtr2_GetSelection
 	ld	a, (xsp+4)
 	extz	wa
 	lda	xbc, (xsp+2)
-	call	UpdSeSel_DetailedUpdate_SetDisplayState_Helper3
+	call	SeCtr2_GetKitGroupBase
 	ld	c, (xsp+2)
 	inc	2, c
 	extz	bc
@@ -9507,11 +9507,11 @@ SeAmpEnv2_DrawStaticScreen:
 SeFilLpq1_DrawStaticScreen:
 	; --- Main: init, 2x XIY/XIX setup, language branch, 3 calls (80 bytes) ---
 	call SeFil_DrawPageHeader
-	ld xiy, SeMenu_Utility_CompareBlock_Data_2
+	ld xiy, SeFil12dB_Caption_StaticRecords
 	ld xix, SeFilHpq1_Records
 	call SeGfx_DrawStaticList
 	ld xiy, SeFilLpq1_Records
-	ld xix, SeMenu_Utility_CompareBlock_Data_3
+	ld xix, SeFil24dB_Caption_StaticRecords
 	call SeGfx_DrawStaticList
 	cp	(SEMENU_PART_MODE:16), 1
 	jr z, SeFilLpq1_DrawStaticScreen_Loop
@@ -9528,8 +9528,8 @@ SeFilLpq1_DrawStaticScreen_Loop:
 	ret
 SeFilLpq1_DrawStaticScreen_End:
 	; --- Helper: XIY/XIX setup + call F0EC00, call F0F6F5 (19 bytes) ---
-	ld xiy, SeMenu_Utility_CompareBlock_Data
-	ld xix, SeMenu_Utility_CompareBlock_Data_2
+	ld xiy, SeFil_PageOfTwo_StaticRecords
+	ld xix, SeFil12dB_Caption_StaticRecords
 	call SeGfx_DrawStaticList
 	call SeMenu_PresetManager_Save
 	ret
@@ -9558,13 +9558,13 @@ SeFil_DrawFilterTypeField:
 	ld	a, (CURRENT_TITLE:16)
 	ld	(1656:16), a
 	ld	(COLORBLIT_MODE:24), 2
-	ld xiy, SeMenu_Utility_FormatNumber_Data_2
+	ld xiy, SeFil_FilterTypeField_StaticRecords
 	cp	(SEMENU_PART_MODE:16), 1
 	jr z, SeFil_DrawFilterTypeField_Skip
-	ld xix, SeMenu_Utility_CompareBlock_Data
+	ld xix, SeFil_PageOfTwo_StaticRecords
 	jr t, SeFil_DrawFilterTypeField_Join
 SeFil_DrawFilterTypeField_Skip:
-	ld xix, SeMenu_Utility_FormatNumber_Data_2 + 24
+	ld xix, SeFil_FilterTypeField_StaticRecords + 24
 SeFil_DrawFilterTypeField_Join:
 	call SeGfx_DrawStaticList
 	ld	(COLORBLIT_MODE:24), 0
@@ -9578,7 +9578,7 @@ SeFil_DrawFilterTypeField_Join:
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeFilHpq1_DrawStaticScreen:
 	call	SeFil_DrawPageHeader
-	ld	xiy, SeMenu_Utility_CompareBlock_Data_2
+	ld	xiy, SeFil12dB_Caption_StaticRecords
 	ld	xix, SeFilHpq1_Records
 	call	SeGfx_DrawStaticList
 	ld	xiy, SeFilHpq1_Records
@@ -9602,7 +9602,7 @@ SeFilHpq1_DrawStaticScreen_Skip:
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeFilL241_DrawStaticScreen:
 	call	SeFil_DrawPageHeader
-	ld	xiy, SeMenu_Utility_CompareBlock_Data_3
+	ld	xiy, SeFil24dB_Caption_StaticRecords
 	ld	xix, SeFilL241_Records
 	call	SeGfx_DrawStaticList
 	ld	xiy, SeFilL241_Records
@@ -9626,7 +9626,7 @@ SeFilL241_DrawStaticScreen_Skip:
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeFilH241_DrawStaticScreen:
 	call	SeFil_DrawPageHeader
-	ld	xiy, SeMenu_Utility_CompareBlock_Data_3
+	ld	xiy, SeFil24dB_Caption_StaticRecords
 	ld	xix, SeFilL241_Records
 	call	SeGfx_DrawStaticList
 	ld	xiy, SeFilH241_Records
@@ -11923,20 +11923,20 @@ SeScreenData_0x1740:
 	sd_quad	0x05, 278, 39, 306, 52
 	sd_quad	0x05, 270, 67, 306, 92
 	sd_quad	0x05, 278, 107, 306, 120
-; static record list (4 records), read by GraphicsRender_ProcessEntries; ends SeScreenData_0x1776, SeMenu_Utility_CompareBlock_Data
+; static record list (4 records), read by GraphicsRender_ProcessEntries; ends SeScreenData_0x1776, SeFil_PageOfTwo_StaticRecords
 ; evidence: SeFil_DrawFilterTypeField_Join
-SeMenu_Utility_FormatNumber_Data_2:
+SeFil_FilterTypeField_StaticRecords:
 	sd_ctext	0x06, 8, 137*40+32, "M0DE"
 	sd_ctext	0x06, 6, 153*40+38, " \021"
 	sd_quad	0x05, 252, 149, 308, 166
 	sd_quad	0x05, 270, 67, 306, 92
-; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeMenu_Utility_CompareBlock_Data_2
+; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeFil12dB_Caption_StaticRecords
 ; evidence: SeFilLpq1_DrawStaticScreen_End
-SeMenu_Utility_CompareBlock_Data:
+SeFil_PageOfTwo_StaticRecords:
 	sd_ctext	0x06, 11, 6*40+32, "PAGE1/2"
 ; static record list (38 records), read by GraphicsRender_ProcessEntries; end SeFilHpq1_Records
 ; evidence: SeFilLpq1_DrawStaticScreen, SeFilHpq1_DrawStaticScreen
-SeMenu_Utility_CompareBlock_Data_2:
+SeFil12dB_Caption_StaticRecords:
 	sd_ptext	0x17, 13, 67, 30, "FILTER:"
 	sd_ptext	0x17, 12, 213, 98, "CUTOFF"
 	sd_ptext	0x17, 15, 67, 108, "EQUALIZER"
@@ -11979,13 +11979,13 @@ SeMenu_Utility_CompareBlock_Data_2:
 ; evidence: SeFilHpq1_DrawStaticScreen
 SeFilHpq1_Records:
 	sd_ptext	0x17, 21, 109, 30, "HIGH PASS -12dB"
-; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeMenu_Utility_CompareBlock_Data_3
+; static record list (1 record), read by GraphicsRender_ProcessEntries; end SeFil24dB_Caption_StaticRecords
 ; evidence: SeFilLpq1_DrawStaticScreen
 SeFilLpq1_Records:
 	sd_ptext	0x17, 20, 109, 30, "LOW PASS -12dB"
 ; static record list (17 records), read by GraphicsRender_ProcessEntries; end SeFilL241_Records
 ; evidence: SeFilL241_DrawStaticScreen, SeFilH241_DrawStaticScreen
-SeMenu_Utility_CompareBlock_Data_3:
+SeFil24dB_Caption_StaticRecords:
 	sd_ptext	0x17, 13, 67, 67, "FILTER:"
 	sd_ptext	0x17, 12, 211, 135, "CUTOFF"
 	sd_ctext	0x06, 10, 193*40+17, "FILTER"

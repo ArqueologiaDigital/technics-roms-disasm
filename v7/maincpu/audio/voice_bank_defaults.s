@@ -1,7 +1,7 @@
 ; =============================================================================
 ; Voice Bank Default Data - Header, slot templates, bank name strings
 ; =============================================================================
-; Used by Voice_InitBankTables and Voice_InitBankData to initialize
+; Used by Voice_InitBankTables and MspUser_InitFromFactory to initialize
 ; voice bank SRAM with factory defaults.
 
 Voice_BankHeaderDefaults:
