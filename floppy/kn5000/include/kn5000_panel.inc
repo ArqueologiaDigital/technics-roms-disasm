@@ -180,6 +180,48 @@
 	.byte	\reserved_23
 	.endm
 
+; part_vari: tags 0xc0 0xc1 0xc2 0xc3 0xc4 0xc5 0xc6 0xc7 0xc8 0xc9 0xca 0xcb 0xcc 0xcd 0xce 0xcf 0xd0 0xd1 0xd2 0xd3 0xd4 0xd7, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
+;   curated names: companion of part 0xC0 + tag (PanelTlv_CompanionByPart); MIDI_DistributeParamToChannels writes, VoiceData_DistributeToChannels reads (PanelButton_SoundGroup); notes/open6-kn5000-d/panel/README.md
+;   +0  vari_piano             dec     SOUND GROUP 0 (PIANO): the slot last selected in it [zeroed ]
+;   +1  vari_guitar            dec     SOUND GROUP 1 (GUITAR): the slot last selected in it [zeroed ]
+;   +2  vari_strings_vocal     dec     SOUND GROUP 2 (STRINGS VOCAL): the slot last selected in it [zeroed ]
+;   +3  vari_brass             dec     SOUND GROUP 3 (BRASS): the slot last selected in it [zeroed ]
+;   +4  vari_flute             dec     SOUND GROUP 4 (FLUTE): the slot last selected in it [zeroed ]
+;   +5  vari_sax_reed          dec     SOUND GROUP 5 (SAX REED): the slot last selected in it [zeroed ]
+;   +6  vari_mallet_orch_perc  dec     SOUND GROUP 6 (MALLET ORCH PERC): the slot last selected in it [zeroed ]
+;   +7  vari_world_perc        dec     SOUND GROUP 7 (WORLD PERC): the slot last selected in it [zeroed ]
+;   +8  vari_organ_accordion   dec     SOUND GROUP 8 (ORGAN ACCORDION): the slot last selected in it [zeroed ]
+;   +9  vari_orchestral_pad    dec     SOUND GROUP 9 (ORCHESTRAL PAD): the slot last selected in it [zeroed ]
+;   +10 vari_synth             dec     SOUND GROUP 10 (SYNTH): the slot last selected in it [zeroed ]
+;   +11 vari_bass              dec     SOUND GROUP 11 (BASS): the slot last selected in it [zeroed ]
+;   +12 vari_digital_drawbar   dec     SOUND GROUP 12 (DIGITAL DRAWBAR): the slot last selected in it [zeroed ]
+;   +13 vari_accordion_reg     dec     SOUND GROUP 13 (ACCORDION REG): the slot last selected in it [zeroed ]
+;   +14 vari_gm_special        dec     SOUND GROUP 14 (GM SPECIAL): the slot last selected in it [zeroed ]
+;   +15 vari_drum_kits         dec     SOUND GROUP 15 (DRUM KITS): the slot last selected in it [zeroed ]
+;   +16 vari_memory_a          dec     SOUND GROUP 16 (MEMORY A): the slot last selected in it [zeroed ]
+;   +17 vari_memory_b          dec     SOUND GROUP 17 (MEMORY B): the slot last selected in it [zeroed ]
+	.macro	ptlv_part_vari tag, vari_piano, vari_guitar, vari_strings_vocal, vari_brass, vari_flute, vari_sax_reed, vari_mallet_orch_perc, vari_world_perc, vari_organ_accordion, vari_orchestral_pad, vari_synth, vari_bass, vari_digital_drawbar, vari_accordion_reg, vari_gm_special, vari_drum_kits, vari_memory_a, vari_memory_b
+	.byte	\tag, 18
+	.byte	\vari_piano
+	.byte	\vari_guitar
+	.byte	\vari_strings_vocal
+	.byte	\vari_brass
+	.byte	\vari_flute
+	.byte	\vari_sax_reed
+	.byte	\vari_mallet_orch_perc
+	.byte	\vari_world_perc
+	.byte	\vari_organ_accordion
+	.byte	\vari_orchestral_pad
+	.byte	\vari_synth
+	.byte	\vari_bass
+	.byte	\vari_digital_drawbar
+	.byte	\vari_accordion_reg
+	.byte	\vari_gm_special
+	.byte	\vari_drum_kits
+	.byte	\vari_memory_a
+	.byte	\vari_memory_b
+	.endm
+
 ; style_name: tags 0x78, 18 payload bytes; rule list PanelTlv_Rules_Tag78.
 ;   curated names: README-lsw-nonpart-records.md, tag 78
 ;   +0  name                   ascii16 CODE: EffectMode_DisplayName_Render copies the style name here [range 0xFF/' '/'}'/' ']
@@ -207,29 +249,69 @@
 ;       apc_memory             0x08    SndParam_Apc_Memory (key 0x28081, mask 0x08, 0..1)
 ;       bits3_other            0xf0    bits no descriptor names
 ;   +4  byte4                  bits    SndParam bit fields [keep bits 0x47]
+;       key_28084              0x07    NakaInst_Param_Bitmap80 (key 0x28084, mask 0x07, 0..3)
 ;       techni_chord_on_off    0x40    SndParam_TechniChord_OnOff (key 0x04200, mask 0x40, 0..1)
-;       bits4_other            0xbf    bits no descriptor names
+;       bits4_other            0xb8    bits no descriptor names
 ;   +5  byte5                  bits    SndParam bit fields [keep bits 0x0E]
 ;       key_00001              0x01    WidgetParam_SineWave_Entry (key 0x00001, mask 0x01, 0..1)
+;       style_synchro_break    0x02    SndParam_Style_SynchroBreak (key 0x28103, mask 0x02, 0..1)
+;       key_28101              0x0c    NakaInst_Param_Idx01 (key 0x28101, mask 0x0c, 0..3)
 ;       style_ending           0x30    SndParam_Style_Ending (key 0x28102, mask 0x30, 0..2)
 ;       style_fill_in          0xc0    SndParam_Style_FillIn (key 0x28100, mask 0xc0, 0..2)
-;       bits5_other            0x0e    bits no descriptor names
 ;   +6  acc_flags2             hex     accompaniment flags [keep bits 0x04]
 ;   +7  byte7                  bits    SndParam bit fields [keep bits 0x30]
 ;       style_variation        0x30    SndParam_Style_Variation (key 0x28002, mask 0x30, 0..3)
 ;       bits7_other            0xcf    bits no descriptor names
 ;   +8  tempo                  u16     CODE: SeqTimer_PostTempoUpdate posts (0x48, 8); descriptors SndParam_Tempo (+8, 40..255) and SndParam_Tempo_Bit8 (+9 bit 0): a 9-bit tempo [no rule]
-	.macro	ptlv_style_select tag, style_number, style_bank, reserved_2, apc_mode, apc_memory, bits3_other, techni_chord_on_off, bits4_other, key_00001, style_ending, style_fill_in, bits5_other, acc_flags2, style_variation, bits7_other, tempo
+	.macro	ptlv_style_select tag, style_number, style_bank, reserved_2, apc_mode, apc_memory, bits3_other, key_28084, techni_chord_on_off, bits4_other, key_00001, style_synchro_break, key_28101, style_ending, style_fill_in, acc_flags2, style_variation, bits7_other, tempo
 	.byte	\tag, 10
 	.byte	\style_number
 	.byte	\style_bank
 	.byte	\reserved_2
 	.byte	((\apc_mode) << 0) | ((\apc_memory) << 3) | ((\bits3_other) << 4)
-	.byte	((\techni_chord_on_off) << 6) | ((\bits4_other) << 0)
-	.byte	((\key_00001) << 0) | ((\style_ending) << 4) | ((\style_fill_in) << 6) | ((\bits5_other) << 1)
+	.byte	((\key_28084) << 0) | ((\techni_chord_on_off) << 6) | ((\bits4_other) << 3)
+	.byte	((\key_00001) << 0) | ((\style_synchro_break) << 1) | ((\key_28101) << 2) | ((\style_ending) << 4) | ((\style_fill_in) << 6)
 	.byte	\acc_flags2
 	.byte	((\style_variation) << 4) | ((\bits7_other) << 0)
 	.short	\tempo
+	.endm
+
+; style_vari: tags 0x49, 16 payload bytes; rule list PanelTlv_Rules_Tag49.
+;   curated names: companion of the style record 0x48 (PanelTlv_CompanionOfPart, part 72); the same two routines (PanelButton_RhythmGroup); notes/open6-kn5000-d/panel/README.md
+;   +0  vari_standard_rock     dec     RHYTHM GROUP 0 (STANDARD ROCK): the number last selected in it [zeroed ]
+;   +1  vari_r_roll_blues      dec     RHYTHM GROUP 1 (R ROLL BLUES): the number last selected in it [zeroed ]
+;   +2  vari_pop_ballad        dec     RHYTHM GROUP 2 (POP BALLAD): the number last selected in it [zeroed ]
+;   +3  vari_funk_fusion       dec     RHYTHM GROUP 3 (FUNK FUSION): the number last selected in it [zeroed ]
+;   +4  vari_soul_modern_dance dec     RHYTHM GROUP 4 (SOUL MODERN DANCE): the number last selected in it [zeroed ]
+;   +5  vari_big_band_swing    dec     RHYTHM GROUP 5 (BIG BAND SWING): the number last selected in it [zeroed ]
+;   +6  vari_jazz_combo        dec     RHYTHM GROUP 6 (JAZZ COMBO): the number last selected in it [zeroed ]
+;   +7  vari_us_trad           dec     RHYTHM GROUP 7 (US TRAD): the number last selected in it [zeroed ]
+;   +8  vari_country           dec     RHYTHM GROUP 8 (COUNTRY): the number last selected in it [zeroed ]
+;   +9  vari_latin             dec     RHYTHM GROUP 9 (LATIN): the number last selected in it [zeroed ]
+;   +10 vari_march_waltz       dec     RHYTHM GROUP 10 (MARCH WALTZ): the number last selected in it [zeroed ]
+;   +11 vari_party_time        dec     RHYTHM GROUP 11 (PARTY TIME): the number last selected in it [zeroed ]
+;   +12 vari_showtime_trad_dance dec     RHYTHM GROUP 12 (SHOWTIME TRAD DANCE): the number last selected in it [zeroed ]
+;   +13 vari_world             dec     RHYTHM GROUP 13 (WORLD): the number last selected in it [zeroed ]
+;   +14 vari_custom            dec     RHYTHM GROUP 14 (CUSTOM): the number last selected in it [zeroed ]
+;   +15 vari_memory            dec     RHYTHM GROUP 15 (MEMORY): the number last selected in it [zeroed ]
+	.macro	ptlv_style_vari tag, vari_standard_rock, vari_r_roll_blues, vari_pop_ballad, vari_funk_fusion, vari_soul_modern_dance, vari_big_band_swing, vari_jazz_combo, vari_us_trad, vari_country, vari_latin, vari_march_waltz, vari_party_time, vari_showtime_trad_dance, vari_world, vari_custom, vari_memory
+	.byte	\tag, 16
+	.byte	\vari_standard_rock
+	.byte	\vari_r_roll_blues
+	.byte	\vari_pop_ballad
+	.byte	\vari_funk_fusion
+	.byte	\vari_soul_modern_dance
+	.byte	\vari_big_band_swing
+	.byte	\vari_jazz_combo
+	.byte	\vari_us_trad
+	.byte	\vari_country
+	.byte	\vari_latin
+	.byte	\vari_march_waltz
+	.byte	\vari_party_time
+	.byte	\vari_showtime_trad_dance
+	.byte	\vari_world
+	.byte	\vari_custom
+	.byte	\vari_memory
 	.endm
 
 ; tag43: tags 0x43, 4 payload bytes; rule list PanelTlv_Rules_Tag43.
@@ -283,43 +365,6 @@
 	.byte	\vocalist_control_volume
 	.byte	\vocalist_vocoder_key_split
 	.byte	\vocalist_chordal_key_split
-	.endm
-
-; tag49: tags 0x49, 16 payload bytes; rule list PanelTlv_Rules_Tag49.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 50 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  f3                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  f4                     hex     TODO: not named; no SndParam descriptor, 5 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  f5                     hex     TODO: not named; no SndParam descriptor, 5 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  f6                     hex     TODO: not named; no SndParam descriptor, 110 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  f8                     hex     TODO: not named; no SndParam descriptor, 110 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  f9                     hex     TODO: not named; no SndParam descriptor, 55 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 f10                    hex     TODO: not named; no SndParam descriptor, 30 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 f15                    hex     TODO: not named; no SndParam descriptor, 5 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tag49 tag, f0, reserved_1, reserved_2, f3, f4, f5, f6, reserved_7, f8, f9, f10, reserved_11, reserved_12, reserved_13, reserved_14, f15
-	.byte	\tag, 16
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\f3
-	.byte	\f4
-	.byte	\f5
-	.byte	\f6
-	.byte	\reserved_7
-	.byte	\f8
-	.byte	\f9
-	.byte	\f10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\f15
 	.endm
 
 ; tag60: tags 0x60, 4 payload bytes; rule list PanelTlv_Rules_Tag60.
@@ -395,11 +440,11 @@
 	.endm
 
 ; tag71: tags 0x71, 2 payload bytes; rule list PanelTlv_Rules_Tag71.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 40 direct references in v5..v10 (panel_field_refs.json) [keep bits 0x03]
+;   +0  pmemout_l_flags        hex     the PANEL MEMORY page grid PmemOutLGridCheck sets bit 1 of this byte in a panel memory (0x1ed400 + 960 n); PanelMemory_Recall runs BitMapOut_DispatchIOChanges when bit 1 of the live copy is set (ui/bitmap_out_routines.s); 0 in every saved panel [keep bits 0x03]
 ;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tag71 tag, f0, reserved_1
+	.macro	ptlv_tag71 tag, pmemout_l_flags, reserved_1
 	.byte	\tag, 2
-	.byte	\f0
+	.byte	\pmemout_l_flags
 	.byte	\reserved_1
 	.endm
 
@@ -408,39 +453,45 @@
 ;   +1  f1                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [keep bits 0x7F]
 ;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +3  byte3                  bits    SndParam bit fields [no rule]
+;       msp_volume             0x7f    SndParam_Msp_Volume (key 0x28801, mask 0x7f, 0..127)
 ;       msp_mute               0x80    SndParam_Msp_Mute (key 0x2880b, mask 0x80, 0..1)
-;       bits3_other            0x7f    bits no descriptor names
 ;   +4  f4                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [keep bits 0x40]
 ;   +5  f5                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [keep bits 0x7F]
-;   +6  f6                     hex     TODO: not named; no SndParam descriptor, 30 direct references in v5..v10 (panel_field_refs.json) [no rule]
-;   +7  f7                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [keep bits 0x7F]
+;   +6  msp_bank               dec     SndParam NakaInst_Param_Term00 (key 0x28800, mask 0xff, 0..255; named from its readers: MSP BANK (0..18): PanelButton_MspNumber turns MSP 1-6 into pedal functions when SndParam_LookupReadOnly(0x28800) is 17 or 18 (PanelButton_MspBank17FuncCodes / _MspBank18FuncCodes); VwVariBox_Init / _Match compare it with the box index; AccompSeq_HandleSpecialMode tests 13 / 14) [no rule]
+;   +7  msp_reverb             dec     SndParam SndParam_Msp_Reverb (key 0x28802, mask 0x7f, 0..127) [keep bits 0x7F]
 ;   +8  byte8                  bits    SndParam bit fields [clear bits 0x80]
 ;       key_28803              0x80    NakaInst_Param_Idx03_88 (key 0x28803, mask 0x80, 0..1)
 ;       bits8_other            0x7f    bits no descriptor names
-;   +9  f9                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [clear bits 0x80]
-;   +10 f10                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [clear bits 0x80]
+;   +9  byte9                  bits    SndParam bit fields [clear bits 0x80]
+;       key_28804              0x80    NakaInst_Param_Idx04_88 (key 0x28804, mask 0x80, 0..1)
+;       bits9_other            0x7f    bits no descriptor names
+;   +10 byte10                 bits    SndParam bit fields [clear bits 0x80]
+;       key_28805              0x80    NakaInst_Param_Idx05_88 (key 0x28805, mask 0x80, 0..1)
+;       bits10_other           0x7f    bits no descriptor names
 ;   +11 byte11                 bits    SndParam bit fields [clear bits 0x80]
 ;       key_28806              0x80    NakaInst_Param_Idx06_88 (key 0x28806, mask 0x80, 0..1)
 ;       bits11_other           0x7f    bits no descriptor names
-;   +12 f12                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [clear bits 0x80]
+;   +12 byte12                 bits    SndParam bit fields [clear bits 0x80]
+;       key_28807              0x80    NakaInst_Param_Idx07_88 (key 0x28807, mask 0x80, 0..1)
+;       bits12_other           0x7f    bits no descriptor names
 ;   +13 byte13                 bits    SndParam bit fields [clear bits 0x80]
 ;       key_28808              0x80    NakaInst_Param_Idx08_88 (key 0x28808, mask 0x80, 0..1)
 ;       bits13_other           0x7f    bits no descriptor names
-	.macro	ptlv_tag72 tag, f0, f1, reserved_2, msp_mute, bits3_other, f4, f5, f6, f7, key_28803, bits8_other, f9, f10, key_28806, bits11_other, f12, key_28808, bits13_other
+	.macro	ptlv_tag72 tag, f0, f1, reserved_2, msp_volume, msp_mute, f4, f5, msp_bank, msp_reverb, key_28803, bits8_other, key_28804, bits9_other, key_28805, bits10_other, key_28806, bits11_other, key_28807, bits12_other, key_28808, bits13_other
 	.byte	\tag, 14
 	.byte	\f0
 	.byte	\f1
 	.byte	\reserved_2
-	.byte	((\msp_mute) << 7) | ((\bits3_other) << 0)
+	.byte	((\msp_volume) << 0) | ((\msp_mute) << 7)
 	.byte	\f4
 	.byte	\f5
-	.byte	\f6
-	.byte	\f7
+	.byte	\msp_bank
+	.byte	\msp_reverb
 	.byte	((\key_28803) << 7) | ((\bits8_other) << 0)
-	.byte	\f9
-	.byte	\f10
+	.byte	((\key_28804) << 7) | ((\bits9_other) << 0)
+	.byte	((\key_28805) << 7) | ((\bits10_other) << 0)
 	.byte	((\key_28806) << 7) | ((\bits11_other) << 0)
-	.byte	\f12
+	.byte	((\key_28807) << 7) | ((\bits12_other) << 0)
 	.byte	((\key_28808) << 7) | ((\bits13_other) << 0)
 	.endm
 
@@ -490,14 +541,15 @@
 ;       bits8_other            0x40    bits no descriptor names
 ;   +9  byte9                  bits    SndParam bit fields [no rule]
 ;       midi_ctl_msg_reset_all_controllers 0x01    SndParam_MidiCtlMsg_ResetAllControllers (key 0x02299, mask 0x01, 0..1)
-;       bits9_other            0xfe    bits no descriptor names
+;       midi_common_apc_control 0x20    SndParam_MidiCommon_ApcControl (key 0x2a000, mask 0x20, 0..1)
+;       bits9_other            0xde    bits no descriptor names
 ;   +10 byte10                 bits    SndParam bit fields [keep bits 0x03; range 0x03/0/2/0]
 ;       midi_in_velocity_mode  0x03    SndParam_MidiIn_VelocityMode (key 0x05000, mask 0x03, 0..2)
 ;       bits10_other           0xfc    bits no descriptor names
 ;   +11 midi_in_velocity_offset dec     SndParam SndParam_MidiIn_VelocityOffset (key 0x05001, mask 0xff, 0..255) [no rule]
 ;   +12 midi_in_velocity_fixed dec     SndParam SndParam_MidiIn_VelocityFixed (key 0x05002, mask 0xff, 1..127) [range 0xFF/1/127/80]
 ;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tag80 tag, midi_common_program_change_mode, midi_realtime_clock, midi_common_prg_change_to_pmem, midi_common_note_only, midi_out_transpose, midi_out_drum_pattern, bits0_other, midi_common_fade_in_out, midi_common_song_select, bits1_other, midi_realtime_commands, midi_common_drums_type, bits2_other, midi_in_right1_input, midi_in_auto_play_chord, midi_out_auto_play_chord, midi_out_techni_chord, bits3_other, f4, f5, midi_common_realtime_sysex, bits6_other, midi_ctl_msg_bend_range, midi_ctl_msg_tuning, midi_ctl_msg_program_change, midi_ctl_msg_after_touch, midi_ctl_msg_pitch_bend, bits7_other, midi_ctl_msg_sustain, midi_ctl_msg_modulation, midi_ctl_msg_volume, midi_ctl_msg_expression, midi_ctl_msg_pan, midi_ctl_msg_effect_reverb, midi_ctl_msg_bank_select, bits8_other, midi_ctl_msg_reset_all_controllers, bits9_other, midi_in_velocity_mode, bits10_other, midi_in_velocity_offset, midi_in_velocity_fixed, reserved_13
+	.macro	ptlv_tag80 tag, midi_common_program_change_mode, midi_realtime_clock, midi_common_prg_change_to_pmem, midi_common_note_only, midi_out_transpose, midi_out_drum_pattern, bits0_other, midi_common_fade_in_out, midi_common_song_select, bits1_other, midi_realtime_commands, midi_common_drums_type, bits2_other, midi_in_right1_input, midi_in_auto_play_chord, midi_out_auto_play_chord, midi_out_techni_chord, bits3_other, f4, f5, midi_common_realtime_sysex, bits6_other, midi_ctl_msg_bend_range, midi_ctl_msg_tuning, midi_ctl_msg_program_change, midi_ctl_msg_after_touch, midi_ctl_msg_pitch_bend, bits7_other, midi_ctl_msg_sustain, midi_ctl_msg_modulation, midi_ctl_msg_volume, midi_ctl_msg_expression, midi_ctl_msg_pan, midi_ctl_msg_effect_reverb, midi_ctl_msg_bank_select, bits8_other, midi_ctl_msg_reset_all_controllers, midi_common_apc_control, bits9_other, midi_in_velocity_mode, bits10_other, midi_in_velocity_offset, midi_in_velocity_fixed, reserved_13
 	.byte	\tag, 14
 	.byte	((\midi_common_program_change_mode) << 0) | ((\midi_realtime_clock) << 2) | ((\midi_common_prg_change_to_pmem) << 3) | ((\midi_common_note_only) << 4) | ((\midi_out_transpose) << 5) | ((\midi_out_drum_pattern) << 6) | ((\bits0_other) << 7)
 	.byte	((\midi_common_fade_in_out) << 2) | ((\midi_common_song_select) << 3) | ((\bits1_other) << 0)
@@ -508,7 +560,7 @@
 	.byte	((\midi_common_realtime_sysex) << 3) | ((\bits6_other) << 0)
 	.byte	((\midi_ctl_msg_bend_range) << 0) | ((\midi_ctl_msg_tuning) << 1) | ((\midi_ctl_msg_program_change) << 4) | ((\midi_ctl_msg_after_touch) << 5) | ((\midi_ctl_msg_pitch_bend) << 6) | ((\bits7_other) << 2)
 	.byte	((\midi_ctl_msg_sustain) << 0) | ((\midi_ctl_msg_modulation) << 1) | ((\midi_ctl_msg_volume) << 2) | ((\midi_ctl_msg_expression) << 3) | ((\midi_ctl_msg_pan) << 4) | ((\midi_ctl_msg_effect_reverb) << 5) | ((\midi_ctl_msg_bank_select) << 7) | ((\bits8_other) << 6)
-	.byte	((\midi_ctl_msg_reset_all_controllers) << 0) | ((\bits9_other) << 1)
+	.byte	((\midi_ctl_msg_reset_all_controllers) << 0) | ((\midi_common_apc_control) << 5) | ((\bits9_other) << 1)
 	.byte	((\midi_in_velocity_mode) << 0) | ((\bits10_other) << 2)
 	.byte	\midi_in_velocity_offset
 	.byte	\midi_in_velocity_fixed
@@ -608,29 +660,31 @@
 ;   +1  f1                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [keep bits 0xF0]
 ;   +2  f2                     dec     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [keep bits 0x7F; range 0x7F/0/127/127]
 ;   +3  f3                     dec     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [keep bits 0x7F; range 0x7F/0/127/127]
-;   +4  f4                     dec     TODO: not named; no SndParam descriptor, 10 direct references in v5..v10 (panel_field_refs.json) [keep bits 0x0F; range 0x0F/0/12/2]
+;   +4  byte4                  bits    SndParam bit fields [keep bits 0x0F; range 0x0F/0/12/2]
+;       composer_bend_range    0x0f    NakaInst_Param_Field84 (key 0x28403, mask 0x0f, 0..12; named from its readers: the Composer RECORD SETTING page: CmpBndRng returns this key; DrumVoice_Handler7 steps it 0..12 (PANEL_TOUCH+4))
+;       bits4_other            0xf0    bits no descriptor names
 ;   +5  after_touch_curve      dec     SndParam SndParam_AfterTouch_Curve (key 0x00102, mask 0xff, 1..10) [range 0xFF/0/10/5]
 ;   +6  byte6                  bits    SndParam bit fields [range 0x7F/1/127/1]
 ;       after_touch_threshold  0x7f    SndParam_AfterTouch_Threshold (key 0x00103, mask 0x7f, 1..127)
 ;       after_touch_on_off     0x80    SndParam_AfterTouch_OnOff (key 0x00104, mask 0x80, 0..1)
 ;   +7  f7                     dec     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [range 0xFF/0/3/0]
 ;   +8  f8                     dec     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [range 0x7F/1/127/1]
-;   +9  f9                     hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [store 64]
-;   +10 f10                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [store 64]
-;   +11 f11                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [store 64]
-;   +12 f12                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [store 64]
-;   +13 f13                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [store 64]
-;   +14 f14                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [store 64]
-;   +15 f15                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [store 64]
-;   +16 f16                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [store 64]
-;   +17 f17                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [store 64]
-;   +18 f18                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [store 64]
-;   +19 f19                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [store 64]
-;   +20 f20                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [store 64]
-;   +21 f21                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [store 64]
-;   +22 f22                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [store 64]
-;   +23 f23                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [store 64]
-;   +24 f24                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [store 64]
+;   +9  reserved_9             hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
+;   +10 reserved_10            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
+;   +11 reserved_11            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
+;   +12 reserved_12            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
+;   +13 reserved_13            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
+;   +14 reserved_14            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
+;   +15 reserved_15            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
+;   +16 reserved_16            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
+;   +17 reserved_17            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
+;   +18 reserved_18            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
+;   +19 reserved_19            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
+;   +20 reserved_20            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
+;   +21 reserved_21            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
+;   +22 reserved_22            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
+;   +23 reserved_23            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
+;   +24 reserved_24            hex     the load rule overwrites it with 64 (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [store 64]
 ;   +25 f25                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
 ;   +26 f26                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
 ;   +27 f27                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
@@ -640,33 +694,33 @@
 ;   +31 f31                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
 ;   +32 f32                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
 ;   +33 f33                    hex     TODO: not named; no SndParam descriptor, 0 direct references in v5..v10 (panel_field_refs.json) [no rule]
-	.macro	ptlv_tag93 tag, initial_touch_velocity_sense, bits0_other, f1, f2, f3, f4, after_touch_curve, after_touch_threshold, after_touch_on_off, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, f20, f21, f22, f23, f24, f25, f26, f27, f28, f29, f30, f31, f32, f33
+	.macro	ptlv_tag93 tag, initial_touch_velocity_sense, bits0_other, f1, f2, f3, composer_bend_range, bits4_other, after_touch_curve, after_touch_threshold, after_touch_on_off, f7, f8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17, reserved_18, reserved_19, reserved_20, reserved_21, reserved_22, reserved_23, reserved_24, f25, f26, f27, f28, f29, f30, f31, f32, f33
 	.byte	\tag, 34
 	.byte	((\initial_touch_velocity_sense) << 0) | ((\bits0_other) << 4)
 	.byte	\f1
 	.byte	\f2
 	.byte	\f3
-	.byte	\f4
+	.byte	((\composer_bend_range) << 0) | ((\bits4_other) << 4)
 	.byte	\after_touch_curve
 	.byte	((\after_touch_threshold) << 0) | ((\after_touch_on_off) << 7)
 	.byte	\f7
 	.byte	\f8
-	.byte	\f9
-	.byte	\f10
-	.byte	\f11
-	.byte	\f12
-	.byte	\f13
-	.byte	\f14
-	.byte	\f15
-	.byte	\f16
-	.byte	\f17
-	.byte	\f18
-	.byte	\f19
-	.byte	\f20
-	.byte	\f21
-	.byte	\f22
-	.byte	\f23
-	.byte	\f24
+	.byte	\reserved_9
+	.byte	\reserved_10
+	.byte	\reserved_11
+	.byte	\reserved_12
+	.byte	\reserved_13
+	.byte	\reserved_14
+	.byte	\reserved_15
+	.byte	\reserved_16
+	.byte	\reserved_17
+	.byte	\reserved_18
+	.byte	\reserved_19
+	.byte	\reserved_20
+	.byte	\reserved_21
+	.byte	\reserved_22
+	.byte	\reserved_23
+	.byte	\reserved_24
 	.byte	\f25
 	.byte	\f26
 	.byte	\f27
@@ -725,7 +779,7 @@
 ;       fade_out_on_off        0x40    SndParam_FadeOut_OnOff (key 0x040c1, mask 0x40, 0..1)
 ;       fade_in_on_off         0x80    SndParam_FadeIn_OnOff (key 0x040c0, mask 0x80, 0..1)
 ;       bits11_other           0x3f    bits no descriptor names
-;   +12 f12                    hex     TODO: not named; no SndParam descriptor, 25 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
+;   +12 reserved_12            hex     no reader: the 25 references to 0xfda2 (PANEL_PMEM_SETTINGS+12) are the END bound of the 0xf980..0xfda1 block copies (BitMapOut_ComputeRegionDelta, ToneGen_FileIO_SaveAndSync), not accesses of this byte; the load rule zeroes it [zeroed ]
 ;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +14 byte14                 bits    SndParam bit fields [keep bits 0x03; range 0x03/0/2/0]
 ;       computer_connect_mode  0x03    SndParam_ComputerConnectMode (key 0x02c00, mask 0x03, 0..2)
@@ -733,7 +787,7 @@
 ;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
 ;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tag98 tag, panel_memory_mode, bits0_other, panel_memory_number, key_00301, key_04081, key_04080, bits2_other, music_style_arranger_on_off, music_style_arranger_mode, bits3_other, metronome_volume, metronome_mute, reserved_5, reserved_6, pmem_filter_rhythm_selection, pmem_filter_tempo, pmem_filter_split_point, pmem_filter_transpose, pmem_filter_apc_memory, pmem_filter_midi, pmem_filter_key_scale, pmem_filter_reverb, pmem_filter_dsp_effect, pmem_filter_part4_to16, pmem_filter_foot_ctrl, pmem_filter_mic_level_reverb, pmem_filter_fade_in_out, pmem_filter_r1_r2_octave, pmem_filter_vocalist, pmem_filter_acoustic_illusion, pmem_filter_equalizer, pmem_filter_msp_bank, bits9_other, f10, fade_out_on_off, fade_in_on_off, bits11_other, f12, reserved_13, computer_connect_mode, bits14_other, reserved_15, reserved_16, reserved_17
+	.macro	ptlv_tag98 tag, panel_memory_mode, bits0_other, panel_memory_number, key_00301, key_04081, key_04080, bits2_other, music_style_arranger_on_off, music_style_arranger_mode, bits3_other, metronome_volume, metronome_mute, reserved_5, reserved_6, pmem_filter_rhythm_selection, pmem_filter_tempo, pmem_filter_split_point, pmem_filter_transpose, pmem_filter_apc_memory, pmem_filter_midi, pmem_filter_key_scale, pmem_filter_reverb, pmem_filter_dsp_effect, pmem_filter_part4_to16, pmem_filter_foot_ctrl, pmem_filter_mic_level_reverb, pmem_filter_fade_in_out, pmem_filter_r1_r2_octave, pmem_filter_vocalist, pmem_filter_acoustic_illusion, pmem_filter_equalizer, pmem_filter_msp_bank, bits9_other, f10, fade_out_on_off, fade_in_on_off, bits11_other, reserved_12, reserved_13, computer_connect_mode, bits14_other, reserved_15, reserved_16, reserved_17
 	.byte	\tag, 18
 	.byte	((\panel_memory_mode) << 6) | ((\bits0_other) << 0)
 	.byte	((\panel_memory_number) << 0) | ((\key_00301) << 7)
@@ -747,7 +801,7 @@
 	.byte	((\pmem_filter_equalizer) << 0) | ((\pmem_filter_msp_bank) << 1) | ((\bits9_other) << 2)
 	.byte	\f10
 	.byte	((\fade_out_on_off) << 6) | ((\fade_in_on_off) << 7) | ((\bits11_other) << 0)
-	.byte	\f12
+	.byte	\reserved_12
 	.byte	\reserved_13
 	.byte	((\computer_connect_mode) << 0) | ((\bits14_other) << 2)
 	.byte	\reserved_15
@@ -891,906 +945,1579 @@
 	.byte	\reserved_25
 	.endm
 
-; tagc0: tags 0xc0, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagc0 tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+; DSP slot records (tags 0x61 DSP EFFECT, 0x63 DIGITAL REVERB, 0x64 EQUALIZER, 0x65 ACOUSTIC ILLUSION,
+; 0x66 MIC REVERB), one macro per DSP effect: +0 is the effect number, then its parameters in the bytes
+; and bits where DSPCfg_ReadViaTableLookup -> DSPCfg_ReadMultiField -> DSPCfg_ReadField finds them
+; (audio/dsp_config_sysex.s; the op letter of each parameter's DspFxRecListPtrTable record decides
+; its width: 'g' / 'd' a big-endian word, 'p' / 'v' fields packed into a big-endian word, any other
+; letter a byte; notes/open6-kn5000-d/panel/README.md).  `tail` is the bytes after the last parameter,
+; up to +23: no reader (DSPCfg_RecordFieldToParamId maps payload bytes 1..16 only); kept as saved.
+; Ranges and names: DSPCfg_LookupAndExtract_PtrTable, DspParamName_Table (specs/dsp_effect_params.json).
+;
+; effect 1 CHORUS, 5 parameter bytes:
+;   depth                  +1                             DEPTH, 0..99 (op 'f')
+;   lfo_speed              +2                             LFO SPEED, 0..99 (op 'e')
+;   lfo_waveform           +3                             LFO WAVEFORM, 0..2 (op 't')
+;   volume                 +4                             VOLUME, 0..99 (op 'c')
+;   rev_send               +5                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp1_chorus tag, depth, lfo_speed, lfo_waveform, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 1
+	.byte	(\depth) & 0xff
+	.byte	(\lfo_speed) & 0xff
+	.byte	(\lfo_waveform) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 18
+	.error	"ptlv_dsp1_chorus: tail is not 18 bytes"
+	.endif
 	.endm
-
-; tagc1: tags 0xc1, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 f17                    hex     TODO: not named; no SndParam descriptor, 15 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagc1 tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, f17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\f17
+;
+; effect 2 MODULATED CHORUS, 7 parameter bytes:
+;   depth                  +1                             DEPTH, 0..99 (op 'f')
+;   slow_lfo_speed         +2                             SLOW LFO SPEED, 0..99 (op 'e')
+;   fast_lfo_speed         +3                             FAST LFO SPEED, 0..99 (op 'e')
+;   fast_lfo_balance       +4                             FAST LFO BALANCE, 0..99 (op 'f')
+;   lfo_waveform           +5                             LFO WAVEFORM, 0..2 (op 't')
+;   volume                 +6                             VOLUME, 0..99 (op 'c')
+;   rev_send               +7                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp2_modulated_chorus tag, depth, slow_lfo_speed, fast_lfo_speed, fast_lfo_balance, lfo_waveform, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 2
+	.byte	(\depth) & 0xff
+	.byte	(\slow_lfo_speed) & 0xff
+	.byte	(\fast_lfo_speed) & 0xff
+	.byte	(\fast_lfo_balance) & 0xff
+	.byte	(\lfo_waveform) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 16
+	.error	"ptlv_dsp2_modulated_chorus: tail is not 16 bytes"
+	.endif
 	.endm
-
-; tagc2: tags 0xc2, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagc2 tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 3 ENHANCER, 9 parameter bytes:
+;   manual                 +1                             MANUAL, 0..99 (op 'k')
+;   low_mix                +2                             LOW MIX, 0..99 (op 'b')
+;   high_mix               +3                             HIGH MIX, 0..99 (op 'b')
+;   delay_l                +4..+5 (big-endian)            DELAY L, 0..350 (op 'd')
+;   delay_r                +6..+7 (big-endian)            DELAY R, 0..350 (op 'd')
+;   volume                 +8                             VOLUME, 0..99 (op 'c')
+;   rev_send               +9                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp3_enhancer tag, manual, low_mix, high_mix, delay_l, delay_r, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 3
+	.byte	(\manual) & 0xff
+	.byte	(\low_mix) & 0xff
+	.byte	(\high_mix) & 0xff
+	.byte	((\delay_l) >> 8) & 0xff
+	.byte	(\delay_l) & 0xff
+	.byte	((\delay_r) >> 8) & 0xff
+	.byte	(\delay_r) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 14
+	.error	"ptlv_dsp3_enhancer: tail is not 14 bytes"
+	.endif
 	.endm
-
-; tagc3: tags 0xc3, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagc3 tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 4 FLANGER, 8 parameter bytes:
+;   depth                  +1                             DEPTH, 0..99 (op 'f')
+;   lfo_speed              +2                             LFO SPEED, 0..99 (op 'e')
+;   resonance              +3                             RESONANCE, -99..99 (op 's')
+;   manual                 +4                             MANUAL, 0..99 (op 'l')
+;   phase                  +5                             PHASE, 0..180 (op 'h')
+;   lfo_waveform           +6                             LFO WAVEFORM, 0..2 (op 't')
+;   volume                 +7                             VOLUME, 0..99 (op 'c')
+;   rev_send               +8                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp4_flanger tag, depth, lfo_speed, resonance, manual, phase, lfo_waveform, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 4
+	.byte	(\depth) & 0xff
+	.byte	(\lfo_speed) & 0xff
+	.byte	(\resonance) & 0xff
+	.byte	(\manual) & 0xff
+	.byte	(\phase) & 0xff
+	.byte	(\lfo_waveform) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 15
+	.error	"ptlv_dsp4_flanger: tail is not 15 bytes"
+	.endif
 	.endm
-
-; tagc4: tags 0xc4, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagc4 tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 5 PHASER, 8 parameter bytes:
+;   depth                  +1                             DEPTH, 0..99 (op 'f')
+;   lfo_speed              +2                             LFO SPEED, 0..99 (op 'e')
+;   resonance              +3                             RESONANCE, -99..99 (op 's')
+;   manual                 +4                             MANUAL, 0..99 (op 'f')
+;   phase                  +5                             PHASE, 0..180 (op 'h')
+;   lfo_waveform           +6                             LFO WAVEFORM, 0..2 (op 't')
+;   volume                 +7                             VOLUME, 0..99 (op 'c')
+;   rev_send               +8                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp5_phaser tag, depth, lfo_speed, resonance, manual, phase, lfo_waveform, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 5
+	.byte	(\depth) & 0xff
+	.byte	(\lfo_speed) & 0xff
+	.byte	(\resonance) & 0xff
+	.byte	(\manual) & 0xff
+	.byte	(\phase) & 0xff
+	.byte	(\lfo_waveform) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 15
+	.error	"ptlv_dsp5_phaser: tail is not 15 bytes"
+	.endif
 	.endm
-
-; tagc5: tags 0xc5, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagc5 tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 6 ENSEMBLE, 5 parameter bytes:
+;   depth                  +1                             DEPTH, 0..99 (op 'w')
+;   lfo_speed              +2                             LFO SPEED, 0..99 (op 'e')
+;   lfo_waveform           +3                             LFO WAVEFORM, 0..2 (op 't')
+;   volume                 +4                             VOLUME, 0..99 (op 'c')
+;   rev_send               +5                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp6_ensemble tag, depth, lfo_speed, lfo_waveform, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 6
+	.byte	(\depth) & 0xff
+	.byte	(\lfo_speed) & 0xff
+	.byte	(\lfo_waveform) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 18
+	.error	"ptlv_dsp6_ensemble: tail is not 18 bytes"
+	.endif
 	.endm
-
-; tagc6: tags 0xc6, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagc6 tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 8 GATED REVERB, 6 parameter bytes:
+;   gate_time              +1                             GATE TIME, 0..99 (op 'o')
+;   high_damp_gain         +2 bits 5:0                    HIGH DAMP GAIN, 0..24 (op 'v')
+;   threshold              +3                             THRESHOLD, 0..99 (op 'f')
+;   mask_time              +4                             MASK TIME, 0..99 (op 'o')
+;   volume                 +5                             VOLUME, 0..99 (op 'c')
+;   rev_send               +6                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp8_gated_reverb tag, gate_time, high_damp_gain, threshold, mask_time, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 8
+	.byte	(\gate_time) & 0xff
+	.byte	(\high_damp_gain) & 0xff
+	.byte	(\threshold) & 0xff
+	.byte	(\mask_time) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 17
+	.error	"ptlv_dsp8_gated_reverb: tail is not 17 bytes"
+	.endif
 	.endm
-
-; tagc7: tags 0xc7, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagc7 tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 9 SINGLE DELAY, 9 parameter bytes:
+;   delay_l                +1..+2 (big-endian)            DELAY L, 0..350 (op 'g')
+;   delay_r                +3..+4 (big-endian)            DELAY R, 0..350 (op 'g')
+;   feedback_l             +5                             FEEDBACK L, -99..99 (op 's')
+;   feedback_r             +6                             FEEDBACK R, -99..99 (op 's')
+;   high_damp_gain         +7 bits 5:0                    HIGH DAMP GAIN, 0..24 (op 'v')
+;   volume                 +8                             VOLUME, 0..99 (op 'c')
+;   rev_send               +9                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp9_single_delay tag, delay_l, delay_r, feedback_l, feedback_r, high_damp_gain, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 9
+	.byte	((\delay_l) >> 8) & 0xff
+	.byte	(\delay_l) & 0xff
+	.byte	((\delay_r) >> 8) & 0xff
+	.byte	(\delay_r) & 0xff
+	.byte	(\feedback_l) & 0xff
+	.byte	(\feedback_r) & 0xff
+	.byte	(\high_damp_gain) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 14
+	.error	"ptlv_dsp9_single_delay: tail is not 14 bytes"
+	.endif
 	.endm
-
-; tagc8: tags 0xc8, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagc8 tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 10 MULTI TAP DELAY, 16 parameter bytes:
+;   delay_1                +1..+2 (big-endian)            DELAY 1, 0..700 (op 'g')
+;   delay_2                +3..+4 (big-endian)            DELAY 2, 0..700 (op 'g')
+;   delay_3                +5..+6 (big-endian)            DELAY 3, 0..700 (op 'g')
+;   delay_4                +7..+8 (big-endian)            DELAY 4, 0..700 (op 'g')
+;   pan_1                  +9                             PAN   1, 0..99 (op 'f')
+;   pan_2                  +10                            PAN   2, 0..99 (op 'f')
+;   pan_3                  +11                            PAN   3, 0..99 (op 'f')
+;   pan_4                  +12                            PAN   4, 0..99 (op 'f')
+;   feedback               +13                            FEEDBACK, -99..99 (op 's')
+;   high_damp_gain         +14 bits 5:0                   HIGH DAMP GAIN, 0..24 (op 'v')
+;   volume                 +15                            VOLUME, 0..99 (op 'c')
+;   rev_send               +16                            REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp10_multi_tap_delay tag, delay_1, delay_2, delay_3, delay_4, pan_1, pan_2, pan_3, pan_4, feedback, high_damp_gain, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 10
+	.byte	((\delay_1) >> 8) & 0xff
+	.byte	(\delay_1) & 0xff
+	.byte	((\delay_2) >> 8) & 0xff
+	.byte	(\delay_2) & 0xff
+	.byte	((\delay_3) >> 8) & 0xff
+	.byte	(\delay_3) & 0xff
+	.byte	((\delay_4) >> 8) & 0xff
+	.byte	(\delay_4) & 0xff
+	.byte	(\pan_1) & 0xff
+	.byte	(\pan_2) & 0xff
+	.byte	(\pan_3) & 0xff
+	.byte	(\pan_4) & 0xff
+	.byte	(\feedback) & 0xff
+	.byte	(\high_damp_gain) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 7
+	.error	"ptlv_dsp10_multi_tap_delay: tail is not 7 bytes"
+	.endif
 	.endm
-
-; tagc9: tags 0xc9, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagc9 tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 15 ROCK ROTARY, 16 parameter bytes:
+;   drive                  +1                             DRIVE, 0..99 (op 'a')
+;   volume_adjust          +2                             VOLUME ADJUST, 0..99 (op 'b')
+;   treble_depth           +3                             TREBLE DEPTH, 0..99 (op 'f')
+;   fast                   +4                             FAST, 0..99 (op 'j')
+;   slow                   +5                             SLOW, 0..99 (op 'j')
+;   wind_up                +6                             WIND UP, 0..99 (op 'i')
+;   wind_down              +7                             WIND DOWN, 0..99 (op 'i')
+;   bass_depth             +8                             BASS DEPTH, 0..99 (op 'f')
+;   bass_fast              +9                             BASS   FAST, 0..99 (op 'j')
+;   bass_slow              +10                            BASS   SLOW, 0..99 (op 'j')
+;   wind_up_2              +11                            WIND UP, 0..99 (op 'i')
+;   wind_down_2            +12                            WIND DOWN, 0..99 (op 'i')
+;   volume                 +13                            VOLUME, 0..99 (op 'c')
+;   slow_fast              +14                            SLOW/FAST, 0..1 (op 'f')
+;   rev_send               +15                            REV SEND, 0..99 (op '!')
+;   hidden_16              +16                            (blank name, DspParamName_Table 85), 0..99 (op 't')
+	.macro	ptlv_dsp15_rock_rotary tag, drive, volume_adjust, treble_depth, fast, slow, wind_up, wind_down, bass_depth, bass_fast, bass_slow, wind_up_2, wind_down_2, volume, slow_fast, rev_send, hidden_16, tail:vararg
+	.byte	\tag, 24, 15
+	.byte	(\drive) & 0xff
+	.byte	(\volume_adjust) & 0xff
+	.byte	(\treble_depth) & 0xff
+	.byte	(\fast) & 0xff
+	.byte	(\slow) & 0xff
+	.byte	(\wind_up) & 0xff
+	.byte	(\wind_down) & 0xff
+	.byte	(\bass_depth) & 0xff
+	.byte	(\bass_fast) & 0xff
+	.byte	(\bass_slow) & 0xff
+	.byte	(\wind_up_2) & 0xff
+	.byte	(\wind_down_2) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\slow_fast) & 0xff
+	.byte	(\rev_send) & 0xff
+	.byte	(\hidden_16) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 7
+	.error	"ptlv_dsp15_rock_rotary: tail is not 7 bytes"
+	.endif
 	.endm
-
-; tagca: tags 0xca, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagca tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 16 ROOM REVERB 1, 6 parameter bytes:
+;   reverb_time            +1                             REVERB TIME, 0..77 (op 'u')
+;   pre_delay              +2..+3 (big-endian)            PRE DELAY, 0..200 (op 'g')
+;   high_damp_gain         +4 bits 5:0                    HIGH DAMP GAIN, 0..24 (op 'v')
+;   er_level               +5                             ER.LEVEL, 0..99 (op 'f')
+;   volume                 +6                             VOLUME, 0..127 (op 'c')
+	.macro	ptlv_dsp16_room_reverb_1 tag, reverb_time, pre_delay, high_damp_gain, er_level, volume, tail:vararg
+	.byte	\tag, 24, 16
+	.byte	(\reverb_time) & 0xff
+	.byte	((\pre_delay) >> 8) & 0xff
+	.byte	(\pre_delay) & 0xff
+	.byte	(\high_damp_gain) & 0xff
+	.byte	(\er_level) & 0xff
+	.byte	(\volume) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 17
+	.error	"ptlv_dsp16_room_reverb_1: tail is not 17 bytes"
+	.endif
 	.endm
-
-; tagcb: tags 0xcb, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagcb tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 17 ROOM REVERB 2, 6 parameter bytes:
+;   reverb_time            +1                             REVERB TIME, 0..77 (op 'u')
+;   pre_delay              +2..+3 (big-endian)            PRE DELAY, 0..200 (op 'g')
+;   high_damp_gain         +4 bits 5:0                    HIGH DAMP GAIN, 0..24 (op 'v')
+;   er_level               +5                             ER.LEVEL, 0..99 (op 'f')
+;   volume                 +6                             VOLUME, 0..127 (op 'c')
+	.macro	ptlv_dsp17_room_reverb_2 tag, reverb_time, pre_delay, high_damp_gain, er_level, volume, tail:vararg
+	.byte	\tag, 24, 17
+	.byte	(\reverb_time) & 0xff
+	.byte	((\pre_delay) >> 8) & 0xff
+	.byte	(\pre_delay) & 0xff
+	.byte	(\high_damp_gain) & 0xff
+	.byte	(\er_level) & 0xff
+	.byte	(\volume) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 17
+	.error	"ptlv_dsp17_room_reverb_2: tail is not 17 bytes"
+	.endif
 	.endm
-
-; tagcc: tags 0xcc, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagcc tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 18 PLATE REVERB 1, 6 parameter bytes:
+;   reverb_time            +1                             REVERB TIME, 0..77 (op 'u')
+;   pre_delay              +2..+3 (big-endian)            PRE DELAY, 0..200 (op 'g')
+;   high_damp_gain         +4 bits 5:0                    HIGH DAMP GAIN, 0..24 (op 'v')
+;   er_level               +5                             ER.LEVEL, 0..99 (op 'f')
+;   volume                 +6                             VOLUME, 0..127 (op 'c')
+	.macro	ptlv_dsp18_plate_reverb_1 tag, reverb_time, pre_delay, high_damp_gain, er_level, volume, tail:vararg
+	.byte	\tag, 24, 18
+	.byte	(\reverb_time) & 0xff
+	.byte	((\pre_delay) >> 8) & 0xff
+	.byte	(\pre_delay) & 0xff
+	.byte	(\high_damp_gain) & 0xff
+	.byte	(\er_level) & 0xff
+	.byte	(\volume) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 17
+	.error	"ptlv_dsp18_plate_reverb_1: tail is not 17 bytes"
+	.endif
 	.endm
-
-; tagcd: tags 0xcd, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagcd tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 19 PLATE REVERB 2, 6 parameter bytes:
+;   reverb_time            +1                             REVERB TIME, 0..77 (op 'u')
+;   pre_delay              +2..+3 (big-endian)            PRE DELAY, 0..200 (op 'g')
+;   high_damp_gain         +4 bits 5:0                    HIGH DAMP GAIN, 0..24 (op 'v')
+;   er_level               +5                             ER.LEVEL, 0..99 (op 'f')
+;   volume                 +6                             VOLUME, 0..127 (op 'c')
+	.macro	ptlv_dsp19_plate_reverb_2 tag, reverb_time, pre_delay, high_damp_gain, er_level, volume, tail:vararg
+	.byte	\tag, 24, 19
+	.byte	(\reverb_time) & 0xff
+	.byte	((\pre_delay) >> 8) & 0xff
+	.byte	(\pre_delay) & 0xff
+	.byte	(\high_damp_gain) & 0xff
+	.byte	(\er_level) & 0xff
+	.byte	(\volume) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 17
+	.error	"ptlv_dsp19_plate_reverb_2: tail is not 17 bytes"
+	.endif
 	.endm
-
-; tagce: tags 0xce, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 f12                    hex     TODO: not named; no SndParam descriptor, 10 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 f13                    hex     TODO: not named; no SndParam descriptor, 10 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 f14                    hex     TODO: not named; no SndParam descriptor, 85 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagce tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, f12, f13, f14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\f12
-	.byte	\f13
-	.byte	\f14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 20 CONCERT REVERB 1, 6 parameter bytes:
+;   reverb_time            +1                             REVERB TIME, 15..97 (op 'u')
+;   pre_delay              +2..+3 (big-endian)            PRE DELAY, 0..200 (op 'g')
+;   high_damp_gain         +4 bits 5:0                    HIGH DAMP GAIN, 0..24 (op 'v')
+;   er_level               +5                             ER.LEVEL, 0..99 (op 'f')
+;   volume                 +6                             VOLUME, 0..127 (op 'c')
+	.macro	ptlv_dsp20_concert_reverb_1 tag, reverb_time, pre_delay, high_damp_gain, er_level, volume, tail:vararg
+	.byte	\tag, 24, 20
+	.byte	(\reverb_time) & 0xff
+	.byte	((\pre_delay) >> 8) & 0xff
+	.byte	(\pre_delay) & 0xff
+	.byte	(\high_damp_gain) & 0xff
+	.byte	(\er_level) & 0xff
+	.byte	(\volume) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 17
+	.error	"ptlv_dsp20_concert_reverb_1: tail is not 17 bytes"
+	.endif
 	.endm
-
-; tagcf: tags 0xcf, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagcf tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 21 CONCERT REVERB 2, 6 parameter bytes:
+;   reverb_time            +1                             REVERB TIME, 15..97 (op 'u')
+;   pre_delay              +2..+3 (big-endian)            PRE DELAY, 0..200 (op 'g')
+;   high_damp_gain         +4 bits 5:0                    HIGH DAMP GAIN, 0..24 (op 'v')
+;   er_level               +5                             ER.LEVEL, 0..99 (op 'f')
+;   volume                 +6                             VOLUME, 0..127 (op 'c')
+	.macro	ptlv_dsp21_concert_reverb_2 tag, reverb_time, pre_delay, high_damp_gain, er_level, volume, tail:vararg
+	.byte	\tag, 24, 21
+	.byte	(\reverb_time) & 0xff
+	.byte	((\pre_delay) >> 8) & 0xff
+	.byte	(\pre_delay) & 0xff
+	.byte	(\high_damp_gain) & 0xff
+	.byte	(\er_level) & 0xff
+	.byte	(\volume) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 17
+	.error	"ptlv_dsp21_concert_reverb_2: tail is not 17 bytes"
+	.endif
 	.endm
-
-; tagd0: tags 0xd0, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 25 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagd0 tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 22 DARK REVERB 1, 6 parameter bytes:
+;   reverb_time            +1                             REVERB TIME, 15..97 (op 'u')
+;   pre_delay              +2..+3 (big-endian)            PRE DELAY, 0..200 (op 'g')
+;   high_damp_gain         +4 bits 5:0                    HIGH DAMP GAIN, 0..24 (op 'v')
+;   er_level               +5                             ER.LEVEL, 0..99 (op 'f')
+;   volume                 +6                             VOLUME, 0..127 (op 'c')
+	.macro	ptlv_dsp22_dark_reverb_1 tag, reverb_time, pre_delay, high_damp_gain, er_level, volume, tail:vararg
+	.byte	\tag, 24, 22
+	.byte	(\reverb_time) & 0xff
+	.byte	((\pre_delay) >> 8) & 0xff
+	.byte	(\pre_delay) & 0xff
+	.byte	(\high_damp_gain) & 0xff
+	.byte	(\er_level) & 0xff
+	.byte	(\volume) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 17
+	.error	"ptlv_dsp22_dark_reverb_1: tail is not 17 bytes"
+	.endif
 	.endm
-
-; tagd1: tags 0xd1, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 f10                    hex     TODO: not named; no SndParam descriptor, 45 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagd1 tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, f10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\f10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 23 DARK REVERB 2, 6 parameter bytes:
+;   reverb_time            +1                             REVERB TIME, 15..97 (op 'u')
+;   pre_delay              +2..+3 (big-endian)            PRE DELAY, 0..200 (op 'g')
+;   high_damp_gain         +4 bits 5:0                    HIGH DAMP GAIN, 0..24 (op 'v')
+;   er_level               +5                             ER.LEVEL, 0..99 (op 'f')
+;   volume                 +6                             VOLUME, 0..127 (op 'c')
+	.macro	ptlv_dsp23_dark_reverb_2 tag, reverb_time, pre_delay, high_damp_gain, er_level, volume, tail:vararg
+	.byte	\tag, 24, 23
+	.byte	(\reverb_time) & 0xff
+	.byte	((\pre_delay) >> 8) & 0xff
+	.byte	(\pre_delay) & 0xff
+	.byte	(\high_damp_gain) & 0xff
+	.byte	(\er_level) & 0xff
+	.byte	(\volume) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 17
+	.error	"ptlv_dsp23_dark_reverb_2: tail is not 17 bytes"
+	.endif
 	.endm
-
-; tagd2: tags 0xd2, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 25 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagd2 tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 24 BRIGHT REVERB 1, 6 parameter bytes:
+;   reverb_time            +1                             REVERB TIME, 15..97 (op 'u')
+;   pre_delay              +2..+3 (big-endian)            PRE DELAY, 0..200 (op 'g')
+;   high_damp_gain         +4 bits 5:0                    HIGH DAMP GAIN, 0..24 (op 'v')
+;   er_level               +5                             ER.LEVEL, 0..99 (op 'f')
+;   volume                 +6                             VOLUME, 0..127 (op 'c')
+	.macro	ptlv_dsp24_bright_reverb_1 tag, reverb_time, pre_delay, high_damp_gain, er_level, volume, tail:vararg
+	.byte	\tag, 24, 24
+	.byte	(\reverb_time) & 0xff
+	.byte	((\pre_delay) >> 8) & 0xff
+	.byte	(\pre_delay) & 0xff
+	.byte	(\high_damp_gain) & 0xff
+	.byte	(\er_level) & 0xff
+	.byte	(\volume) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 17
+	.error	"ptlv_dsp24_bright_reverb_1: tail is not 17 bytes"
+	.endif
 	.endm
-
-; tagd3: tags 0xd3, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 25 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  f9                     hex     TODO: not named; no SndParam descriptor, 10 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagd3 tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, f9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\f9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 25 BRIGHT REVERB 2, 6 parameter bytes:
+;   reverb_time            +1                             REVERB TIME, 15..97 (op 'u')
+;   pre_delay              +2..+3 (big-endian)            PRE DELAY, 0..200 (op 'g')
+;   high_damp_gain         +4 bits 5:0                    HIGH DAMP GAIN, 0..24 (op 'v')
+;   er_level               +5                             ER.LEVEL, 0..99 (op 'f')
+;   volume                 +6                             VOLUME, 0..127 (op 'c')
+	.macro	ptlv_dsp25_bright_reverb_2 tag, reverb_time, pre_delay, high_damp_gain, er_level, volume, tail:vararg
+	.byte	\tag, 24, 25
+	.byte	(\reverb_time) & 0xff
+	.byte	((\pre_delay) >> 8) & 0xff
+	.byte	(\pre_delay) & 0xff
+	.byte	(\high_damp_gain) & 0xff
+	.byte	(\er_level) & 0xff
+	.byte	(\volume) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 17
+	.error	"ptlv_dsp25_bright_reverb_2: tail is not 17 bytes"
+	.endif
 	.endm
-
-; tagd4: tags 0xd4, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  reserved_1             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagd4 tag, f0, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\reserved_1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 26 WAVE REVERB 1, 6 parameter bytes:
+;   reverb_time            +1                             REVERB TIME, 15..97 (op 'u')
+;   pre_delay              +2..+3 (big-endian)            PRE DELAY, 0..200 (op 'g')
+;   high_damp_gain         +4 bits 5:0                    HIGH DAMP GAIN, 0..24 (op 'v')
+;   er_level               +5                             ER.LEVEL, 0..99 (op 'f')
+;   volume                 +6                             VOLUME, 0..127 (op 'c')
+	.macro	ptlv_dsp26_wave_reverb_1 tag, reverb_time, pre_delay, high_damp_gain, er_level, volume, tail:vararg
+	.byte	\tag, 24, 26
+	.byte	(\reverb_time) & 0xff
+	.byte	((\pre_delay) >> 8) & 0xff
+	.byte	(\pre_delay) & 0xff
+	.byte	(\high_damp_gain) & 0xff
+	.byte	(\er_level) & 0xff
+	.byte	(\volume) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 17
+	.error	"ptlv_dsp26_wave_reverb_1: tail is not 17 bytes"
+	.endif
 	.endm
-
-; tagd7: tags 0xd7, 18 payload bytes; rule list PanelTlv_Rules_TagC0.
-;   +0  f0                     hex     TODO: not named; no SndParam descriptor, 35 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +1  f1                     hex     TODO: not named; no SndParam descriptor, 20 direct references in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +2  reserved_2             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +3  reserved_3             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +4  reserved_4             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +5  reserved_5             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +6  reserved_6             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +7  reserved_7             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +8  reserved_8             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +9  reserved_9             hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +10 reserved_10            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +11 reserved_11            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +12 reserved_12            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +13 reserved_13            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +14 reserved_14            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +15 reserved_15            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +16 reserved_16            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-;   +17 reserved_17            hex     the load rule zeroes it (PanelTlv_ApplyFieldRule); no SndParam descriptor and no direct reference in v5..v10 (panel_field_refs.json) [zeroed ]
-	.macro	ptlv_tagd7 tag, f0, f1, reserved_2, reserved_3, reserved_4, reserved_5, reserved_6, reserved_7, reserved_8, reserved_9, reserved_10, reserved_11, reserved_12, reserved_13, reserved_14, reserved_15, reserved_16, reserved_17
-	.byte	\tag, 18
-	.byte	\f0
-	.byte	\f1
-	.byte	\reserved_2
-	.byte	\reserved_3
-	.byte	\reserved_4
-	.byte	\reserved_5
-	.byte	\reserved_6
-	.byte	\reserved_7
-	.byte	\reserved_8
-	.byte	\reserved_9
-	.byte	\reserved_10
-	.byte	\reserved_11
-	.byte	\reserved_12
-	.byte	\reserved_13
-	.byte	\reserved_14
-	.byte	\reserved_15
-	.byte	\reserved_16
-	.byte	\reserved_17
+;
+; effect 27 WAVE REVERB 2, 6 parameter bytes:
+;   reverb_time            +1                             REVERB TIME, 15..97 (op 'u')
+;   pre_delay              +2..+3 (big-endian)            PRE DELAY, 0..200 (op 'g')
+;   high_damp_gain         +4 bits 5:0                    HIGH DAMP GAIN, 0..24 (op 'v')
+;   er_level               +5                             ER.LEVEL, 0..99 (op 'f')
+;   volume                 +6                             VOLUME, 0..127 (op 'c')
+	.macro	ptlv_dsp27_wave_reverb_2 tag, reverb_time, pre_delay, high_damp_gain, er_level, volume, tail:vararg
+	.byte	\tag, 24, 27
+	.byte	(\reverb_time) & 0xff
+	.byte	((\pre_delay) >> 8) & 0xff
+	.byte	(\pre_delay) & 0xff
+	.byte	(\high_damp_gain) & 0xff
+	.byte	(\er_level) & 0xff
+	.byte	(\volume) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 17
+	.error	"ptlv_dsp27_wave_reverb_2: tail is not 17 bytes"
+	.endif
+	.endm
+;
+; effect 32 DISTORTION, 5 parameter bytes:
+;   drive                  +1                             DRIVE, 0..99 (op 'a')
+;   adjust                 +2                             ADJUST, 0..99 (op 'b')
+;   volume                 +3                             VOLUME, 0..99 (op 'c')
+;   rev_send               +4                             REV SEND, 0..99 (op '!')
+;   hidden_5               +5                             (blank name, DspParamName_Table 85), 0..99 (op 't')
+	.macro	ptlv_dsp32_distortion tag, drive, adjust, volume, rev_send, hidden_5, tail:vararg
+	.byte	\tag, 24, 32
+	.byte	(\drive) & 0xff
+	.byte	(\adjust) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+	.byte	(\hidden_5) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 18
+	.error	"ptlv_dsp32_distortion: tail is not 18 bytes"
+	.endif
+	.endm
+;
+; effect 33 OVERDRIVE, 5 parameter bytes:
+;   drive                  +1                             DRIVE, 0..99 (op 'a')
+;   adjust                 +2                             ADJUST, 0..99 (op 'b')
+;   volume                 +3                             VOLUME, 0..99 (op 'c')
+;   rev_send               +4                             REV SEND, 0..99 (op '!')
+;   hidden_5               +5                             (blank name, DspParamName_Table 85), 0..99 (op 't')
+	.macro	ptlv_dsp33_overdrive tag, drive, adjust, volume, rev_send, hidden_5, tail:vararg
+	.byte	\tag, 24, 33
+	.byte	(\drive) & 0xff
+	.byte	(\adjust) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+	.byte	(\hidden_5) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 18
+	.error	"ptlv_dsp33_overdrive: tail is not 18 bytes"
+	.endif
+	.endm
+;
+; effect 34 FUZZ, 5 parameter bytes:
+;   drive                  +1                             DRIVE, 0..99 (op 'a')
+;   adjust                 +2                             ADJUST, 0..99 (op 'b')
+;   volume                 +3                             VOLUME, 0..99 (op 'c')
+;   rev_send               +4                             REV SEND, 0..99 (op '!')
+;   hidden_5               +5                             (blank name, DspParamName_Table 85), 0..99 (op 't')
+	.macro	ptlv_dsp34_fuzz tag, drive, adjust, volume, rev_send, hidden_5, tail:vararg
+	.byte	\tag, 24, 34
+	.byte	(\drive) & 0xff
+	.byte	(\adjust) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+	.byte	(\hidden_5) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 18
+	.error	"ptlv_dsp34_fuzz: tail is not 18 bytes"
+	.endif
+	.endm
+;
+; effect 35 EXCITER, 8 parameter bytes:
+;   drive                  +1                             DRIVE, 0..99 (op 'a')
+;   adjust                 +2                             ADJUST, 0..99 (op 'b')
+;   high_emphasis_fc       +3..+4 bits 10:6 of the word   HIGH EMPHASIS FC, 1..26 (op 'p')
+;   emphasis_gain          +5                             EMPHASIS GAIN, 0..99 (op 'f')
+;   volume                 +6                             VOLUME, 0..99 (op 'c')
+;   rev_send               +7                             REV SEND, 0..99 (op '!')
+;   hidden_8               +8                             (blank name, DspParamName_Table 85), 0..99 (op 't')
+	.macro	ptlv_dsp35_exciter tag, drive, adjust, high_emphasis_fc, emphasis_gain, volume, rev_send, hidden_8, tail:vararg
+	.byte	\tag, 24, 35
+	.byte	(\drive) & 0xff
+	.byte	(\adjust) & 0xff
+	.byte	((((\high_emphasis_fc) << 6)) >> 8) & 0xff
+	.byte	(((\high_emphasis_fc) << 6)) & 0xff
+	.byte	(\emphasis_gain) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+	.byte	(\hidden_8) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 15
+	.error	"ptlv_dsp35_exciter: tail is not 15 bytes"
+	.endif
+	.endm
+;
+; effect 36 COMPRESSOR, 6 parameter bytes:
+;   threshold              +1                             THRESHOLD, 0..99 (op 'r')
+;   ratio                  +2                             RATIO, 0..99 (op 'r')
+;   attack_sens            +3                             ATTACK SENS., 0..90 (op 'm')
+;   release_sens           +4                             RELEASE SENS., 0..90 (op 'm')
+;   volume                 +5                             VOLUME, 0..99 (op 'c')
+;   rev_send               +6                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp36_compressor tag, threshold, ratio, attack_sens, release_sens, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 36
+	.byte	(\threshold) & 0xff
+	.byte	(\ratio) & 0xff
+	.byte	(\attack_sens) & 0xff
+	.byte	(\release_sens) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 17
+	.error	"ptlv_dsp36_compressor: tail is not 17 bytes"
+	.endif
+	.endm
+;
+; effect 37 SLOW ATTACKER, 5 parameter bytes:
+;   threshold              +1                             THRESHOLD, 0..99 (op 'f')
+;   attack_rate            +2                             ATTACK RATE, 0..99 (op 'n')
+;   release_rate           +3                             RELEASE RATE, 0..99 (op 'n')
+;   volume                 +4                             VOLUME, 0..99 (op 'c')
+;   rev_send               +5                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp37_slow_attacker tag, threshold, attack_rate, release_rate, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 37
+	.byte	(\threshold) & 0xff
+	.byte	(\attack_rate) & 0xff
+	.byte	(\release_rate) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 18
+	.error	"ptlv_dsp37_slow_attacker: tail is not 18 bytes"
+	.endif
+	.endm
+;
+; effect 39 PARAMETRIC EQ, 12 parameter bytes:
+;   band_emphasis_fc       +1..+2 bits 10:6 of the word   BAND EMPHASIS FC, 1..26 (op 'p')
+;   band_emphasis_q        +1 bits 7:3                    BAND EMPHASIS  Q, 0..31 (op 'p')
+;   band_emphasis_g        +1..+2 bits 5:0 of the word    BAND EMPHASIS  G, 0..48 (op 'p')
+;   band_emphasis_fc_2     +3..+4 bits 10:6 of the word   BAND EMPHASIS FC, 1..26 (op 'p')
+;   band_emphasis_q_2      +3 bits 7:3                    BAND EMPHASIS  Q, 0..31 (op 'p')
+;   band_emphasis_g_2      +3..+4 bits 5:0 of the word    BAND EMPHASIS  G, 0..48 (op 'p')
+;   band_emphasis_fc_3     +5..+6 bits 10:6 of the word   BAND EMPHASIS FC, 1..26 (op 'p')
+;   band_emphasis_q_3      +5 bits 7:3                    BAND EMPHASIS  Q, 0..31 (op 'p')
+;   band_emphasis_g_3      +5..+6 bits 5:0 of the word    BAND EMPHASIS  G, 0..48 (op 'p')
+;   band_emphasis_fc_4     +7..+8 bits 10:6 of the word   BAND EMPHASIS FC, 1..26 (op 'p')
+;   band_emphasis_q_4      +7 bits 7:3                    BAND EMPHASIS  Q, 0..31 (op 'p')
+;   band_emphasis_g_4      +7..+8 bits 5:0 of the word    BAND EMPHASIS  G, 0..48 (op 'p')
+;   band_emphasis_fc_5     +9..+10 bits 10:6 of the word  BAND EMPHASIS FC, 1..26 (op 'p')
+;   band_emphasis_q_5      +9 bits 7:3                    BAND EMPHASIS  Q, 0..31 (op 'p')
+;   band_emphasis_g_5      +9..+10 bits 5:0 of the word   BAND EMPHASIS  G, 0..48 (op 'p')
+;   volume                 +11                            VOLUME, 0..99 (op 'c')
+;   rev_send               +12                            REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp39_parametric_eq tag, band_emphasis_fc, band_emphasis_q, band_emphasis_g, band_emphasis_fc_2, band_emphasis_q_2, band_emphasis_g_2, band_emphasis_fc_3, band_emphasis_q_3, band_emphasis_g_3, band_emphasis_fc_4, band_emphasis_q_4, band_emphasis_g_4, band_emphasis_fc_5, band_emphasis_q_5, band_emphasis_g_5, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 39
+	.byte	((((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) >> 8) & 0xff
+	.byte	(((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) & 0xff
+	.byte	((((\band_emphasis_fc_2) << 6) | ((\band_emphasis_q_2) << 11) | (\band_emphasis_g_2)) >> 8) & 0xff
+	.byte	(((\band_emphasis_fc_2) << 6) | ((\band_emphasis_q_2) << 11) | (\band_emphasis_g_2)) & 0xff
+	.byte	((((\band_emphasis_fc_3) << 6) | ((\band_emphasis_q_3) << 11) | (\band_emphasis_g_3)) >> 8) & 0xff
+	.byte	(((\band_emphasis_fc_3) << 6) | ((\band_emphasis_q_3) << 11) | (\band_emphasis_g_3)) & 0xff
+	.byte	((((\band_emphasis_fc_4) << 6) | ((\band_emphasis_q_4) << 11) | (\band_emphasis_g_4)) >> 8) & 0xff
+	.byte	(((\band_emphasis_fc_4) << 6) | ((\band_emphasis_q_4) << 11) | (\band_emphasis_g_4)) & 0xff
+	.byte	((((\band_emphasis_fc_5) << 6) | ((\band_emphasis_q_5) << 11) | (\band_emphasis_g_5)) >> 8) & 0xff
+	.byte	(((\band_emphasis_fc_5) << 6) | ((\band_emphasis_q_5) << 11) | (\band_emphasis_g_5)) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 11
+	.error	"ptlv_dsp39_parametric_eq: tail is not 11 bytes"
+	.endif
+	.endm
+;
+; effect 48 AUTO PAN, 6 parameter bytes:
+;   depth                  +1                             DEPTH, 0..99 (op 'f')
+;   lfo_speed              +2                             LFO SPEED, 0..99 (op 'e')
+;   phase                  +3                             PHASE, 0..180 (op 'h')
+;   lfo_waveform           +4                             LFO WAVEFORM, 0..2 (op 't')
+;   volume                 +5                             VOLUME, 0..99 (op 'c')
+;   rev_send               +6                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp48_auto_pan tag, depth, lfo_speed, phase, lfo_waveform, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 48
+	.byte	(\depth) & 0xff
+	.byte	(\lfo_speed) & 0xff
+	.byte	(\phase) & 0xff
+	.byte	(\lfo_waveform) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 17
+	.error	"ptlv_dsp48_auto_pan: tail is not 17 bytes"
+	.endif
+	.endm
+;
+; effect 50 VIBRATO, 6 parameter bytes:
+;   depth                  +1                             DEPTH, 0..99 (op 'f')
+;   lfo_speed              +2                             LFO SPEED, 0..99 (op 'e')
+;   phase                  +3                             PHASE, 0..180 (op 'h')
+;   lfo_waveform           +4                             LFO WAVEFORM, 0..2 (op 't')
+;   volume                 +5                             VOLUME, 0..99 (op 'c')
+;   rev_send               +6                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp50_vibrato tag, depth, lfo_speed, phase, lfo_waveform, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 50
+	.byte	(\depth) & 0xff
+	.byte	(\lfo_speed) & 0xff
+	.byte	(\phase) & 0xff
+	.byte	(\lfo_waveform) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 17
+	.error	"ptlv_dsp50_vibrato: tail is not 17 bytes"
+	.endif
+	.endm
+;
+; effect 52 AUTO WAH, 5 parameter bytes:
+;   resonance              +1                             RESONANCE, 0..2 (op '$')
+;   manual                 +2                             MANUAL, 0..99 (op '$')
+;   sweep_range            +3                             SWEEP RANGE, 0..99 (op '$')
+;   volume                 +4                             VOLUME, 0..99 (op 'c')
+;   rev_send               +5                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp52_auto_wah tag, resonance, manual, sweep_range, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 52
+	.byte	(\resonance) & 0xff
+	.byte	(\manual) & 0xff
+	.byte	(\sweep_range) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 18
+	.error	"ptlv_dsp52_auto_wah: tail is not 18 bytes"
+	.endif
+	.endm
+;
+; effect 53 ROTARY SPEAKER, 16 parameter bytes:
+;   drive                  +1                             DRIVE, 0..99 (op 'a')
+;   volume_adjust          +2                             VOLUME ADJUST, 0..99 (op 'b')
+;   treble_depth           +3                             TREBLE DEPTH, 0..99 (op 'f')
+;   fast                   +4                             FAST, 0..99 (op 'j')
+;   slow                   +5                             SLOW, 0..99 (op 'j')
+;   wind_up                +6                             WIND UP, 0..99 (op 'i')
+;   wind_down              +7                             WIND DOWN, 0..99 (op 'i')
+;   bass_depth             +8                             BASS DEPTH, 0..99 (op 'f')
+;   bass_fast              +9                             BASS   FAST, 0..99 (op 'j')
+;   bass_slow              +10                            BASS   SLOW, 0..99 (op 'j')
+;   wind_up_2              +11                            WIND UP, 0..99 (op 'i')
+;   wind_down_2            +12                            WIND DOWN, 0..99 (op 'i')
+;   volume                 +13                            VOLUME, 0..99 (op 'c')
+;   slow_fast              +14                            SLOW/FAST, 0..1 (op 'f')
+;   rev_send               +15                            REV SEND, 0..99 (op '!')
+;   hidden_16              +16                            (blank name, DspParamName_Table 85), 0..99 (op 't')
+	.macro	ptlv_dsp53_rotary_speaker tag, drive, volume_adjust, treble_depth, fast, slow, wind_up, wind_down, bass_depth, bass_fast, bass_slow, wind_up_2, wind_down_2, volume, slow_fast, rev_send, hidden_16, tail:vararg
+	.byte	\tag, 24, 53
+	.byte	(\drive) & 0xff
+	.byte	(\volume_adjust) & 0xff
+	.byte	(\treble_depth) & 0xff
+	.byte	(\fast) & 0xff
+	.byte	(\slow) & 0xff
+	.byte	(\wind_up) & 0xff
+	.byte	(\wind_down) & 0xff
+	.byte	(\bass_depth) & 0xff
+	.byte	(\bass_fast) & 0xff
+	.byte	(\bass_slow) & 0xff
+	.byte	(\wind_up_2) & 0xff
+	.byte	(\wind_down_2) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\slow_fast) & 0xff
+	.byte	(\rev_send) & 0xff
+	.byte	(\hidden_16) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 7
+	.error	"ptlv_dsp53_rotary_speaker: tail is not 7 bytes"
+	.endif
+	.endm
+;
+; effect 54 RING MODULATOR, 5 parameter bytes:
+;   osc_speed              +1                             OSC SPEED, 0..99 (op 'e')
+;   phase                  +2                             PHASE, 0..180 (op 'h')
+;   lfo_waveform           +3                             LFO WAVEFORM, 0..2 (op 't')
+;   volume                 +4                             VOLUME, 0..99 (op 'c')
+;   rev_send               +5                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp54_ring_modulator tag, osc_speed, phase, lfo_waveform, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 54
+	.byte	(\osc_speed) & 0xff
+	.byte	(\phase) & 0xff
+	.byte	(\lfo_waveform) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 18
+	.error	"ptlv_dsp54_ring_modulator: tail is not 18 bytes"
+	.endif
+	.endm
+;
+; effect 56 MIX UP, 8 parameter bytes:
+;   depth                  +1                             DEPTH, 0..99 (op 'f')
+;   slow_lfo_speed         +2                             SLOW LFO SPEED, 0..99 (op 'e')
+;   fast_lfo_speed_l       +3                             FAST LFO SPEED L, 0..99 (op 'e')
+;   fast_lfo_speed_r       +4                             FAST LFO SPEED R, 0..99 (op 'e')
+;   phase                  +5                             PHASE, 0..180 (op 'h')
+;   lfo_waveform           +6                             LFO WAVEFORM, 0..2 (op 't')
+;   volume                 +7                             VOLUME, 0..99 (op 'c')
+;   rev_send               +8                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp56_mix_up tag, depth, slow_lfo_speed, fast_lfo_speed_l, fast_lfo_speed_r, phase, lfo_waveform, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 56
+	.byte	(\depth) & 0xff
+	.byte	(\slow_lfo_speed) & 0xff
+	.byte	(\fast_lfo_speed_l) & 0xff
+	.byte	(\fast_lfo_speed_r) & 0xff
+	.byte	(\phase) & 0xff
+	.byte	(\lfo_waveform) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 15
+	.error	"ptlv_dsp56_mix_up: tail is not 15 bytes"
+	.endif
+	.endm
+;
+; effect 57 STANDARD, 2 parameter bytes:
+;   intensity              +1                             INTENSITY, 1..99 (op 'l')
+;   hidden_2               +2                             (blank name, DspParamName_Table 85), 0..99 (op 'c')
+	.macro	ptlv_dsp57_standard tag, intensity, hidden_2, tail:vararg
+	.byte	\tag, 24, 57
+	.byte	(\intensity) & 0xff
+	.byte	(\hidden_2) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 21
+	.error	"ptlv_dsp57_standard: tail is not 21 bytes"
+	.endif
+	.endm
+;
+; effect 58 PERCUSSIVE, 2 parameter bytes:
+;   intensity              +1                             INTENSITY, 1..99 (op 'l')
+;   hidden_2               +2                             (blank name, DspParamName_Table 85), 0..99 (op 'c')
+	.macro	ptlv_dsp58_percussive tag, intensity, hidden_2, tail:vararg
+	.byte	\tag, 24, 58
+	.byte	(\intensity) & 0xff
+	.byte	(\hidden_2) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 21
+	.error	"ptlv_dsp58_percussive: tail is not 21 bytes"
+	.endif
+	.endm
+;
+; effect 59 SYMPHONIC, 2 parameter bytes:
+;   intensity              +1                             INTENSITY, 1..99 (op 'l')
+;   hidden_2               +2                             (blank name, DspParamName_Table 85), 0..99 (op 'c')
+	.macro	ptlv_dsp59_symphonic tag, intensity, hidden_2, tail:vararg
+	.byte	\tag, 24, 59
+	.byte	(\intensity) & 0xff
+	.byte	(\hidden_2) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 21
+	.error	"ptlv_dsp59_symphonic: tail is not 21 bytes"
+	.endif
+	.endm
+;
+; effect 60 DEEP SPACE, 2 parameter bytes:
+;   intensity              +1                             INTENSITY, 1..99 (op 'l')
+;   hidden_2               +2                             (blank name, DspParamName_Table 85), 0..99 (op 'c')
+	.macro	ptlv_dsp60_deep_space tag, intensity, hidden_2, tail:vararg
+	.byte	\tag, 24, 60
+	.byte	(\intensity) & 0xff
+	.byte	(\hidden_2) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 21
+	.error	"ptlv_dsp60_deep_space: tail is not 21 bytes"
+	.endif
+	.endm
+;
+; effect 64 S.DELAY+CHORUS, 13 parameter bytes:
+;   delay_dry_wet          +1                             DELAY DRY/WET, 0..99 (op 'f')
+;   delay_l                +2..+3 (big-endian)            DELAY L, 0..300 (op 'g')
+;   delay_r                +4..+5 (big-endian)            DELAY R, 0..300 (op 'g')
+;   feedback_l             +6                             FEEDBACK L, -99..99 (op 's')
+;   feedback_r             +7                             FEEDBACK R, -99..99 (op 's')
+;   chorus_dry_wet         +8                             CHORUS DRY/WET, 0..99 (op 'f')
+;   depth                  +9                             DEPTH, 0..99 (op 'f')
+;   lfo_speed              +10                            LFO SPEED, 0..99 (op 'e')
+;   lfo_waveform           +11                            LFO WAVEFORM, 0..2 (op 't')
+;   volume                 +12                            VOLUME, 0..99 (op 'c')
+;   rev_send               +13                            REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp64_s_delay_chorus tag, delay_dry_wet, delay_l, delay_r, feedback_l, feedback_r, chorus_dry_wet, depth, lfo_speed, lfo_waveform, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 64
+	.byte	(\delay_dry_wet) & 0xff
+	.byte	((\delay_l) >> 8) & 0xff
+	.byte	(\delay_l) & 0xff
+	.byte	((\delay_r) >> 8) & 0xff
+	.byte	(\delay_r) & 0xff
+	.byte	(\feedback_l) & 0xff
+	.byte	(\feedback_r) & 0xff
+	.byte	(\chorus_dry_wet) & 0xff
+	.byte	(\depth) & 0xff
+	.byte	(\lfo_speed) & 0xff
+	.byte	(\lfo_waveform) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 10
+	.error	"ptlv_dsp64_s_delay_chorus: tail is not 10 bytes"
+	.endif
+	.endm
+;
+; effect 65 S.DELAY+S.DELAY, 16 parameter bytes:
+;   delay1_dry_wet         +1                             DELAY1 DRY/WET, 0..99 (op 'f')
+;   delay_l                +2..+3 (big-endian)            DELAY L, 0..180 (op 'g')
+;   delay_r                +4..+5 (big-endian)            DELAY R, 0..180 (op 'g')
+;   feedback_l             +6                             FEEDBACK L, -99..99 (op 's')
+;   feedback_r             +7                             FEEDBACK R, -99..99 (op 's')
+;   delay2_dry_wet         +8                             DELAY2 DRY/WET, 0..99 (op 'f')
+;   delay_l_2              +9..+10 (big-endian)           DELAY L, 0..180 (op 'g')
+;   delay_r_2              +11..+12 (big-endian)          DELAY R, 0..180 (op 'g')
+;   feedback_l_2           +13                            FEEDBACK L, -99..99 (op 's')
+;   feedback_r_2           +14                            FEEDBACK R, -99..99 (op 's')
+;   volume                 +15                            VOLUME, 0..99 (op 'c')
+;   rev_send               +16                            REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp65_s_delay_s_delay tag, delay1_dry_wet, delay_l, delay_r, feedback_l, feedback_r, delay2_dry_wet, delay_l_2, delay_r_2, feedback_l_2, feedback_r_2, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 65
+	.byte	(\delay1_dry_wet) & 0xff
+	.byte	((\delay_l) >> 8) & 0xff
+	.byte	(\delay_l) & 0xff
+	.byte	((\delay_r) >> 8) & 0xff
+	.byte	(\delay_r) & 0xff
+	.byte	(\feedback_l) & 0xff
+	.byte	(\feedback_r) & 0xff
+	.byte	(\delay2_dry_wet) & 0xff
+	.byte	((\delay_l_2) >> 8) & 0xff
+	.byte	(\delay_l_2) & 0xff
+	.byte	((\delay_r_2) >> 8) & 0xff
+	.byte	(\delay_r_2) & 0xff
+	.byte	(\feedback_l_2) & 0xff
+	.byte	(\feedback_r_2) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 7
+	.error	"ptlv_dsp65_s_delay_s_delay: tail is not 7 bytes"
+	.endif
+	.endm
+;
+; effect 66 S.DELAY+FLANGER, 16 parameter bytes:
+;   delay_dry_wet          +1                             DELAY DRY/WET, 0..99 (op 'f')
+;   delay_l                +2..+3 (big-endian)            DELAY L, 0..300 (op 'g')
+;   delay_r                +4..+5 (big-endian)            DELAY R, 0..300 (op 'g')
+;   feedback_l             +6                             FEEDBACK L, -99..99 (op 's')
+;   feedback_r             +7                             FEEDBACK R, -99..99 (op 's')
+;   flanger_dry_wet        +8                             FLANGER DRY/WET, 0..99 (op 'f')
+;   depth                  +9                             DEPTH, 0..99 (op 'f')
+;   lfo_speed              +10                            LFO SPEED, 0..99 (op 'e')
+;   resonance              +11                            RESONANCE, -99..99 (op 's')
+;   manual                 +12                            MANUAL, 0..99 (op 'l')
+;   phase                  +13                            PHASE, 0..180 (op 'h')
+;   lfo_waveform           +14                            LFO WAVEFORM, 0..2 (op 't')
+;   volume                 +15                            VOLUME, 0..99 (op 'c')
+;   rev_send               +16                            REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp66_s_delay_flanger tag, delay_dry_wet, delay_l, delay_r, feedback_l, feedback_r, flanger_dry_wet, depth, lfo_speed, resonance, manual, phase, lfo_waveform, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 66
+	.byte	(\delay_dry_wet) & 0xff
+	.byte	((\delay_l) >> 8) & 0xff
+	.byte	(\delay_l) & 0xff
+	.byte	((\delay_r) >> 8) & 0xff
+	.byte	(\delay_r) & 0xff
+	.byte	(\feedback_l) & 0xff
+	.byte	(\feedback_r) & 0xff
+	.byte	(\flanger_dry_wet) & 0xff
+	.byte	(\depth) & 0xff
+	.byte	(\lfo_speed) & 0xff
+	.byte	(\resonance) & 0xff
+	.byte	(\manual) & 0xff
+	.byte	(\phase) & 0xff
+	.byte	(\lfo_waveform) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 7
+	.error	"ptlv_dsp66_s_delay_flanger: tail is not 7 bytes"
+	.endif
+	.endm
+;
+; effect 67 S.DELAY+VIBRATO, 13 parameter bytes:
+;   delay_dry_wet          +1                             DELAY DRY/WET, 0..99 (op 'f')
+;   delay_l                +2..+3 (big-endian)            DELAY L, 0..300 (op 'g')
+;   delay_r                +4..+5 (big-endian)            DELAY R, 0..300 (op 'g')
+;   feedback_l             +6                             FEEDBACK L, -99..99 (op 's')
+;   feedback_r             +7                             FEEDBACK R, -99..99 (op 's')
+;   depth                  +8                             DEPTH, 0..99 (op 'f')
+;   lfo_speed              +9                             LFO SPEED, 0..99 (op 'e')
+;   phase                  +10                            PHASE, 0..180 (op 'h')
+;   lfo_waveform           +11                            LFO WAVEFORM, 0..2 (op 't')
+;   volume                 +12                            VOLUME, 0..99 (op 'c')
+;   rev_send               +13                            REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp67_s_delay_vibrato tag, delay_dry_wet, delay_l, delay_r, feedback_l, feedback_r, depth, lfo_speed, phase, lfo_waveform, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 67
+	.byte	(\delay_dry_wet) & 0xff
+	.byte	((\delay_l) >> 8) & 0xff
+	.byte	(\delay_l) & 0xff
+	.byte	((\delay_r) >> 8) & 0xff
+	.byte	(\delay_r) & 0xff
+	.byte	(\feedback_l) & 0xff
+	.byte	(\feedback_r) & 0xff
+	.byte	(\depth) & 0xff
+	.byte	(\lfo_speed) & 0xff
+	.byte	(\phase) & 0xff
+	.byte	(\lfo_waveform) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 10
+	.error	"ptlv_dsp67_s_delay_vibrato: tail is not 10 bytes"
+	.endif
+	.endm
+;
+; effect 68 S.DELAY+PHASER, 16 parameter bytes:
+;   delay_dry_wet          +1                             DELAY DRY/WET, 0..99 (op 'f')
+;   delay_l                +2..+3 (big-endian)            DELAY L, 0..300 (op 'g')
+;   delay_r                +4..+5 (big-endian)            DELAY R, 0..300 (op 'g')
+;   feedback_l             +6                             FEEDBACK L, -99..99 (op 's')
+;   feedback_r             +7                             FEEDBACK R, -99..99 (op 's')
+;   phaser_dry_wet         +8                             PHASER DRY/WET, 0..99 (op 'f')
+;   depth                  +9                             DEPTH, 0..99 (op 'f')
+;   lfo_speed              +10                            LFO SPEED, 0..99 (op 'e')
+;   resonance              +11                            RESONANCE, -99..99 (op 's')
+;   manual                 +12                            MANUAL, 0..99 (op 'f')
+;   phase                  +13                            PHASE, 0..180 (op 'h')
+;   lfo_waveform           +14                            LFO WAVEFORM, 0..2 (op 't')
+;   volume                 +15                            VOLUME, 0..99 (op 'c')
+;   rev_send               +16                            REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp68_s_delay_phaser tag, delay_dry_wet, delay_l, delay_r, feedback_l, feedback_r, phaser_dry_wet, depth, lfo_speed, resonance, manual, phase, lfo_waveform, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 68
+	.byte	(\delay_dry_wet) & 0xff
+	.byte	((\delay_l) >> 8) & 0xff
+	.byte	(\delay_l) & 0xff
+	.byte	((\delay_r) >> 8) & 0xff
+	.byte	(\delay_r) & 0xff
+	.byte	(\feedback_l) & 0xff
+	.byte	(\feedback_r) & 0xff
+	.byte	(\phaser_dry_wet) & 0xff
+	.byte	(\depth) & 0xff
+	.byte	(\lfo_speed) & 0xff
+	.byte	(\resonance) & 0xff
+	.byte	(\manual) & 0xff
+	.byte	(\phase) & 0xff
+	.byte	(\lfo_waveform) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 7
+	.error	"ptlv_dsp68_s_delay_phaser: tail is not 7 bytes"
+	.endif
+	.endm
+;
+; effect 70 AUTO WAH+S.DELAY, 12 parameter bytes:
+;   resonance              +1                             RESONANCE, 0..2 (op '$')
+;   manual                 +2                             MANUAL, 0..99 (op '$')
+;   sweep_range            +3                             SWEEP RANGE, 0..99 (op '$')
+;   delay_dry_wet          +4                             DELAY DRY/WET, 0..99 (op 'f')
+;   delay_l                +5..+6 (big-endian)            DELAY L, 0..300 (op 'g')
+;   delay_r                +7..+8 (big-endian)            DELAY R, 0..300 (op 'g')
+;   feedback_l             +9                             FEEDBACK L, -99..99 (op 's')
+;   feedback_r             +10                            FEEDBACK R, -99..99 (op 's')
+;   volume                 +11                            VOLUME, 0..99 (op 'c')
+;   rev_send               +12                            REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp70_auto_wah_s_delay tag, resonance, manual, sweep_range, delay_dry_wet, delay_l, delay_r, feedback_l, feedback_r, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 70
+	.byte	(\resonance) & 0xff
+	.byte	(\manual) & 0xff
+	.byte	(\sweep_range) & 0xff
+	.byte	(\delay_dry_wet) & 0xff
+	.byte	((\delay_l) >> 8) & 0xff
+	.byte	(\delay_l) & 0xff
+	.byte	((\delay_r) >> 8) & 0xff
+	.byte	(\delay_r) & 0xff
+	.byte	(\feedback_l) & 0xff
+	.byte	(\feedback_r) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 11
+	.error	"ptlv_dsp70_auto_wah_s_delay: tail is not 11 bytes"
+	.endif
+	.endm
+;
+; effect 71 PEQ+CHORUS, 8 parameter bytes:
+;   band_emphasis_fc       +1..+2 bits 10:6 of the word   BAND EMPHASIS FC, 1..26 (op 'p')
+;   band_emphasis_q        +1 bits 7:3                    BAND EMPHASIS  Q, 0..31 (op 'p')
+;   band_emphasis_g        +1..+2 bits 5:0 of the word    BAND EMPHASIS  G, 0..48 (op 'p')
+;   chorus_dry_wet         +3                             CHORUS DRY/WET, 0..99 (op 'f')
+;   depth                  +4                             DEPTH, 0..99 (op 'f')
+;   lfo_speed              +5                             LFO SPEED, 0..99 (op 'e')
+;   lfo_waveform           +6                             LFO WAVEFORM, 0..2 (op 't')
+;   volume                 +7                             VOLUME, 0..99 (op 'c')
+;   rev_send               +8                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp71_peq_chorus tag, band_emphasis_fc, band_emphasis_q, band_emphasis_g, chorus_dry_wet, depth, lfo_speed, lfo_waveform, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 71
+	.byte	((((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) >> 8) & 0xff
+	.byte	(((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) & 0xff
+	.byte	(\chorus_dry_wet) & 0xff
+	.byte	(\depth) & 0xff
+	.byte	(\lfo_speed) & 0xff
+	.byte	(\lfo_waveform) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 15
+	.error	"ptlv_dsp71_peq_chorus: tail is not 15 bytes"
+	.endif
+	.endm
+;
+; effect 72 PEQ+S.DELAY, 11 parameter bytes:
+;   band_emphasis_fc       +1..+2 bits 10:6 of the word   BAND EMPHASIS FC, 1..26 (op 'p')
+;   band_emphasis_q        +1 bits 7:3                    BAND EMPHASIS  Q, 0..31 (op 'p')
+;   band_emphasis_g        +1..+2 bits 5:0 of the word    BAND EMPHASIS  G, 0..48 (op 'p')
+;   delay_dry_wet          +3                             DELAY DRY/WET, 0..99 (op 'f')
+;   delay_l                +4..+5 (big-endian)            DELAY L, 0..300 (op 'g')
+;   delay_r                +6..+7 (big-endian)            DELAY R, 0..300 (op 'g')
+;   feedback_l             +8                             FEEDBACK L, -99..99 (op 's')
+;   feedback_r             +9                             FEEDBACK R, -99..99 (op 's')
+;   volume                 +10                            VOLUME, 0..99 (op 'c')
+;   rev_send               +11                            REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp72_peq_s_delay tag, band_emphasis_fc, band_emphasis_q, band_emphasis_g, delay_dry_wet, delay_l, delay_r, feedback_l, feedback_r, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 72
+	.byte	((((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) >> 8) & 0xff
+	.byte	(((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) & 0xff
+	.byte	(\delay_dry_wet) & 0xff
+	.byte	((\delay_l) >> 8) & 0xff
+	.byte	(\delay_l) & 0xff
+	.byte	((\delay_r) >> 8) & 0xff
+	.byte	(\delay_r) & 0xff
+	.byte	(\feedback_l) & 0xff
+	.byte	(\feedback_r) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 12
+	.error	"ptlv_dsp72_peq_s_delay: tail is not 12 bytes"
+	.endif
+	.endm
+;
+; effect 73 PEQ+FLANGER, 11 parameter bytes:
+;   band_emphasis_fc       +1..+2 bits 10:6 of the word   BAND EMPHASIS FC, 1..26 (op 'p')
+;   band_emphasis_q        +1 bits 7:3                    BAND EMPHASIS  Q, 0..31 (op 'p')
+;   band_emphasis_g        +1..+2 bits 5:0 of the word    BAND EMPHASIS  G, 0..48 (op 'p')
+;   flanger_dry_wet        +3                             FLANGER DRY/WET, 0..99 (op 'f')
+;   depth                  +4                             DEPTH, 0..99 (op 'f')
+;   lfo_speed              +5                             LFO SPEED, 0..99 (op 'e')
+;   resonance              +6                             RESONANCE, -99..99 (op 's')
+;   manual                 +7                             MANUAL, 0..99 (op 'l')
+;   phase                  +8                             PHASE, 0..180 (op 'h')
+;   lfo_waveform           +9                             LFO WAVEFORM, 0..2 (op 't')
+;   volume                 +10                            VOLUME, 0..99 (op 'c')
+;   rev_send               +11                            REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp73_peq_flanger tag, band_emphasis_fc, band_emphasis_q, band_emphasis_g, flanger_dry_wet, depth, lfo_speed, resonance, manual, phase, lfo_waveform, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 73
+	.byte	((((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) >> 8) & 0xff
+	.byte	(((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) & 0xff
+	.byte	(\flanger_dry_wet) & 0xff
+	.byte	(\depth) & 0xff
+	.byte	(\lfo_speed) & 0xff
+	.byte	(\resonance) & 0xff
+	.byte	(\manual) & 0xff
+	.byte	(\phase) & 0xff
+	.byte	(\lfo_waveform) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 12
+	.error	"ptlv_dsp73_peq_flanger: tail is not 12 bytes"
+	.endif
+	.endm
+;
+; effect 74 PEQ+VIBRATO, 8 parameter bytes:
+;   band_emphasis_fc       +1..+2 bits 10:6 of the word   BAND EMPHASIS FC, 1..26 (op 'p')
+;   band_emphasis_q        +1 bits 7:3                    BAND EMPHASIS  Q, 0..31 (op 'p')
+;   band_emphasis_g        +1..+2 bits 5:0 of the word    BAND EMPHASIS  G, 0..48 (op 'p')
+;   depth                  +3                             DEPTH, 0..99 (op 'f')
+;   lfo_speed              +4                             LFO SPEED, 0..99 (op 'e')
+;   phase                  +5                             PHASE, 0..180 (op 'h')
+;   lfo_waveform           +6                             LFO WAVEFORM, 0..2 (op 't')
+;   volume                 +7                             VOLUME, 0..99 (op 'c')
+;   rev_send               +8                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp74_peq_vibrato tag, band_emphasis_fc, band_emphasis_q, band_emphasis_g, depth, lfo_speed, phase, lfo_waveform, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 74
+	.byte	((((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) >> 8) & 0xff
+	.byte	(((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) & 0xff
+	.byte	(\depth) & 0xff
+	.byte	(\lfo_speed) & 0xff
+	.byte	(\phase) & 0xff
+	.byte	(\lfo_waveform) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 15
+	.error	"ptlv_dsp74_peq_vibrato: tail is not 15 bytes"
+	.endif
+	.endm
+;
+; effect 75 PEQ+COMPRESSOR, 8 parameter bytes:
+;   band_emphasis_fc       +1..+2 bits 10:6 of the word   BAND EMPHASIS FC, 1..26 (op 'p')
+;   band_emphasis_q        +1 bits 7:3                    BAND EMPHASIS  Q, 0..31 (op 'p')
+;   band_emphasis_g        +1..+2 bits 5:0 of the word    BAND EMPHASIS  G, 0..48 (op 'p')
+;   threshold              +3                             THRESHOLD, 0..99 (op 'r')
+;   ratio                  +4                             RATIO, 0..99 (op 'r')
+;   attack_sens            +5                             ATTACK SENS., 0..90 (op 'm')
+;   release_sens           +6                             RELEASE SENS., 0..90 (op 'm')
+;   volume                 +7                             VOLUME, 0..99 (op 'c')
+;   rev_send               +8                             REV SEND, 0..99 (op '!')
+	.macro	ptlv_dsp75_peq_compressor tag, band_emphasis_fc, band_emphasis_q, band_emphasis_g, threshold, ratio, attack_sens, release_sens, volume, rev_send, tail:vararg
+	.byte	\tag, 24, 75
+	.byte	((((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) >> 8) & 0xff
+	.byte	(((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) & 0xff
+	.byte	(\threshold) & 0xff
+	.byte	(\ratio) & 0xff
+	.byte	(\attack_sens) & 0xff
+	.byte	(\release_sens) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 15
+	.error	"ptlv_dsp75_peq_compressor: tail is not 15 bytes"
+	.endif
+	.endm
+;
+; effect 79 GEQ, 9 parameter bytes:
+;   low_emphasis_fc        +1..+2 bits 10:6 of the word   LOW  EMPHASIS FC, 0..22 (op 'v')
+;   low_emphasis_g         +1..+2 bits 5:0 of the word    LOW  EMPHASIS  G, 0..48 (op 'v')
+;   band_emphasis_fc       +3..+4 bits 10:6 of the word   BAND EMPHASIS FC, 4..26 (op 'p')
+;   band_emphasis_g        +3..+4 bits 5:0 of the word    BAND EMPHASIS  G, 0..48 (op 'p')
+;   band_emphasis_fc_2     +5..+6 bits 10:6 of the word   BAND EMPHASIS FC, 4..26 (op 'p')
+;   band_emphasis_g_2      +5..+6 bits 5:0 of the word    BAND EMPHASIS  G, 0..48 (op 'p')
+;   high_emphasis_fc       +7..+8 bits 10:6 of the word   HIGH EMPHASIS FC, 8..26 (op 'v')
+;   high_emphasis_g        +7..+8 bits 5:0 of the word    HIGH EMPHASIS  G, 0..48 (op 'v')
+;   hidden_9               +9                             (blank name, DspParamName_Table 85), 0..99 (op 'c')
+	.macro	ptlv_dsp79_geq tag, low_emphasis_fc, low_emphasis_g, band_emphasis_fc, band_emphasis_g, band_emphasis_fc_2, band_emphasis_g_2, high_emphasis_fc, high_emphasis_g, hidden_9, tail:vararg
+	.byte	\tag, 24, 79
+	.byte	((((\low_emphasis_fc) << 6) | (\low_emphasis_g)) >> 8) & 0xff
+	.byte	(((\low_emphasis_fc) << 6) | (\low_emphasis_g)) & 0xff
+	.byte	((((\band_emphasis_fc) << 6) | (\band_emphasis_g)) >> 8) & 0xff
+	.byte	(((\band_emphasis_fc) << 6) | (\band_emphasis_g)) & 0xff
+	.byte	((((\band_emphasis_fc_2) << 6) | (\band_emphasis_g_2)) >> 8) & 0xff
+	.byte	(((\band_emphasis_fc_2) << 6) | (\band_emphasis_g_2)) & 0xff
+	.byte	((((\high_emphasis_fc) << 6) | (\high_emphasis_g)) >> 8) & 0xff
+	.byte	(((\high_emphasis_fc) << 6) | (\high_emphasis_g)) & 0xff
+	.byte	(\hidden_9) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 14
+	.error	"ptlv_dsp79_geq: tail is not 14 bytes"
+	.endif
+	.endm
+;
+; effect 88 ROOM, 5 parameter bytes:
+;   reverb_time            +1                             REVERB TIME, 15..97 (op 'u')
+;   high_emphasis_fc       +2..+3 bits 10:6 of the word   HIGH EMPHASIS FC, 4..23 (op 'v')
+;   emphasis_gain          +2..+3 bits 5:0 of the word    EMPHASIS GAIN, 12..36 (op 'v')
+;   volume                 +4                             VOLUME, 0..127 (op 'c')
+;   hidden_5               +5                             (blank name, DspParamName_Table 85), 0..127 (op 'y')
+	.macro	ptlv_dsp88_room tag, reverb_time, high_emphasis_fc, emphasis_gain, volume, hidden_5, tail:vararg
+	.byte	\tag, 24, 88
+	.byte	(\reverb_time) & 0xff
+	.byte	((((\high_emphasis_fc) << 6) | (\emphasis_gain)) >> 8) & 0xff
+	.byte	(((\high_emphasis_fc) << 6) | (\emphasis_gain)) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\hidden_5) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 18
+	.error	"ptlv_dsp88_room: tail is not 18 bytes"
+	.endif
+	.endm
+;
+; effect 89 KARAOKE, 5 parameter bytes:
+;   reverb_time            +1                             REVERB TIME, 15..97 (op 'u')
+;   high_emphasis_fc       +2..+3 bits 10:6 of the word   HIGH EMPHASIS FC, 4..23 (op 'v')
+;   emphasis_gain          +2..+3 bits 5:0 of the word    EMPHASIS GAIN, 12..36 (op 'v')
+;   volume                 +4                             VOLUME, 0..127 (op 'c')
+;   hidden_5               +5                             (blank name, DspParamName_Table 85), 0..127 (op 'y')
+	.macro	ptlv_dsp89_karaoke tag, reverb_time, high_emphasis_fc, emphasis_gain, volume, hidden_5, tail:vararg
+	.byte	\tag, 24, 89
+	.byte	(\reverb_time) & 0xff
+	.byte	((((\high_emphasis_fc) << 6) | (\emphasis_gain)) >> 8) & 0xff
+	.byte	(((\high_emphasis_fc) << 6) | (\emphasis_gain)) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\hidden_5) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 18
+	.error	"ptlv_dsp89_karaoke: tail is not 18 bytes"
+	.endif
+	.endm
+;
+; effect 90 BATH ROOM, 5 parameter bytes:
+;   reverb_time            +1                             REVERB TIME, 15..97 (op 'u')
+;   high_emphasis_fc       +2..+3 bits 10:6 of the word   HIGH EMPHASIS FC, 4..23 (op 'v')
+;   emphasis_gain          +2..+3 bits 5:0 of the word    EMPHASIS GAIN, 12..36 (op 'v')
+;   volume                 +4                             VOLUME, 0..127 (op 'c')
+;   hidden_5               +5                             (blank name, DspParamName_Table 85), 0..127 (op 'y')
+	.macro	ptlv_dsp90_bath_room tag, reverb_time, high_emphasis_fc, emphasis_gain, volume, hidden_5, tail:vararg
+	.byte	\tag, 24, 90
+	.byte	(\reverb_time) & 0xff
+	.byte	((((\high_emphasis_fc) << 6) | (\emphasis_gain)) >> 8) & 0xff
+	.byte	(((\high_emphasis_fc) << 6) | (\emphasis_gain)) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\hidden_5) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 18
+	.error	"ptlv_dsp90_bath_room: tail is not 18 bytes"
+	.endif
+	.endm
+;
+; effect 91 STAGE, 5 parameter bytes:
+;   reverb_time            +1                             REVERB TIME, 15..97 (op 'u')
+;   high_emphasis_fc       +2..+3 bits 10:6 of the word   HIGH EMPHASIS FC, 4..23 (op 'v')
+;   emphasis_gain          +2..+3 bits 5:0 of the word    EMPHASIS GAIN, 12..36 (op 'v')
+;   volume                 +4                             VOLUME, 0..127 (op 'c')
+;   hidden_5               +5                             (blank name, DspParamName_Table 85), 0..127 (op 'y')
+	.macro	ptlv_dsp91_stage tag, reverb_time, high_emphasis_fc, emphasis_gain, volume, hidden_5, tail:vararg
+	.byte	\tag, 24, 91
+	.byte	(\reverb_time) & 0xff
+	.byte	((((\high_emphasis_fc) << 6) | (\emphasis_gain)) >> 8) & 0xff
+	.byte	(((\high_emphasis_fc) << 6) | (\emphasis_gain)) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\hidden_5) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 18
+	.error	"ptlv_dsp91_stage: tail is not 18 bytes"
+	.endif
+	.endm
+;
+; effect 96 PEQ+COMPR+DIST, 11 parameter bytes:
+;   band_emphasis_fc       +1..+2 bits 10:6 of the word   BAND EMPHASIS FC, 1..26 (op 'p')
+;   band_emphasis_q        +1 bits 7:3                    BAND EMPHASIS  Q, 0..31 (op 'p')
+;   band_emphasis_g        +1..+2 bits 5:0 of the word    BAND EMPHASIS  G, 0..48 (op 'p')
+;   threshold              +3                             THRESHOLD, 0..99 (op 'r')
+;   ratio                  +4                             RATIO, 0..99 (op 'r')
+;   attack_sens            +5                             ATTACK SENS., 0..90 (op 'm')
+;   release_sens           +6                             RELEASE SENS., 0..90 (op 'm')
+;   drive                  +7                             DRIVE, 0..99 (op 'a')
+;   adjust                 +8                             ADJUST, 0..99 (op 'b')
+;   volume                 +9                             VOLUME, 0..99 (op 'c')
+;   rev_send               +10                            REV SEND, 0..99 (op '!')
+;   hidden_11              +11                            (blank name, DspParamName_Table 85), 0..99 (op 't')
+	.macro	ptlv_dsp96_peq_compr_dist tag, band_emphasis_fc, band_emphasis_q, band_emphasis_g, threshold, ratio, attack_sens, release_sens, drive, adjust, volume, rev_send, hidden_11, tail:vararg
+	.byte	\tag, 24, 96
+	.byte	((((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) >> 8) & 0xff
+	.byte	(((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) & 0xff
+	.byte	(\threshold) & 0xff
+	.byte	(\ratio) & 0xff
+	.byte	(\attack_sens) & 0xff
+	.byte	(\release_sens) & 0xff
+	.byte	(\drive) & 0xff
+	.byte	(\adjust) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+	.byte	(\hidden_11) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 12
+	.error	"ptlv_dsp96_peq_compr_dist: tail is not 12 bytes"
+	.endif
+	.endm
+;
+; effect 97 PEQ+COMPR+OVERDR, 11 parameter bytes:
+;   band_emphasis_fc       +1..+2 bits 10:6 of the word   BAND EMPHASIS FC, 1..26 (op 'p')
+;   band_emphasis_q        +1 bits 7:3                    BAND EMPHASIS  Q, 0..31 (op 'p')
+;   band_emphasis_g        +1..+2 bits 5:0 of the word    BAND EMPHASIS  G, 0..48 (op 'p')
+;   threshold              +3                             THRESHOLD, 0..99 (op 'r')
+;   ratio                  +4                             RATIO, 0..99 (op 'r')
+;   attack_sens            +5                             ATTACK SENS., 0..90 (op 'm')
+;   release_sens           +6                             RELEASE SENS., 0..90 (op 'm')
+;   drive                  +7                             DRIVE, 0..99 (op 'a')
+;   adjust                 +8                             ADJUST, 0..99 (op 'b')
+;   volume                 +9                             VOLUME, 0..99 (op 'c')
+;   rev_send               +10                            REV SEND, 0..99 (op '!')
+;   hidden_11              +11                            (blank name, DspParamName_Table 85), 0..99 (op 't')
+	.macro	ptlv_dsp97_peq_compr_overdr tag, band_emphasis_fc, band_emphasis_q, band_emphasis_g, threshold, ratio, attack_sens, release_sens, drive, adjust, volume, rev_send, hidden_11, tail:vararg
+	.byte	\tag, 24, 97
+	.byte	((((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) >> 8) & 0xff
+	.byte	(((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) & 0xff
+	.byte	(\threshold) & 0xff
+	.byte	(\ratio) & 0xff
+	.byte	(\attack_sens) & 0xff
+	.byte	(\release_sens) & 0xff
+	.byte	(\drive) & 0xff
+	.byte	(\adjust) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+	.byte	(\hidden_11) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 12
+	.error	"ptlv_dsp97_peq_compr_overdr: tail is not 12 bytes"
+	.endif
+	.endm
+;
+; effect 98 PEQ+DIST+DELAY, 14 parameter bytes:
+;   band_emphasis_fc       +1..+2 bits 10:6 of the word   BAND EMPHASIS FC, 1..26 (op 'p')
+;   band_emphasis_q        +1 bits 7:3                    BAND EMPHASIS  Q, 0..31 (op 'p')
+;   band_emphasis_g        +1..+2 bits 5:0 of the word    BAND EMPHASIS  G, 0..48 (op 'p')
+;   drive                  +3                             DRIVE, 0..99 (op 'a')
+;   adjust                 +4                             ADJUST, 0..99 (op 'b')
+;   delay_dry_wet          +5                             DELAY DRY/WET, 0..99 (op 'f')
+;   delay_l                +6..+7 (big-endian)            DELAY L, 0..300 (op 'g')
+;   delay_r                +8..+9 (big-endian)            DELAY R, 0..300 (op 'g')
+;   feedback_l             +10                            FEEDBACK L, -99..99 (op 's')
+;   feedback_r             +11                            FEEDBACK R, -99..99 (op 's')
+;   volume                 +12                            VOLUME, 0..99 (op 'c')
+;   rev_send               +13                            REV SEND, 0..99 (op '!')
+;   hidden_14              +14                            (blank name, DspParamName_Table 85), 0..99 (op 't')
+	.macro	ptlv_dsp98_peq_dist_delay tag, band_emphasis_fc, band_emphasis_q, band_emphasis_g, drive, adjust, delay_dry_wet, delay_l, delay_r, feedback_l, feedback_r, volume, rev_send, hidden_14, tail:vararg
+	.byte	\tag, 24, 98
+	.byte	((((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) >> 8) & 0xff
+	.byte	(((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) & 0xff
+	.byte	(\drive) & 0xff
+	.byte	(\adjust) & 0xff
+	.byte	(\delay_dry_wet) & 0xff
+	.byte	((\delay_l) >> 8) & 0xff
+	.byte	(\delay_l) & 0xff
+	.byte	((\delay_r) >> 8) & 0xff
+	.byte	(\delay_r) & 0xff
+	.byte	(\feedback_l) & 0xff
+	.byte	(\feedback_r) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+	.byte	(\hidden_14) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 9
+	.error	"ptlv_dsp98_peq_dist_delay: tail is not 9 bytes"
+	.endif
+	.endm
+;
+; effect 99 PEQ+OVERDR+DELAY, 14 parameter bytes:
+;   band_emphasis_fc       +1..+2 bits 10:6 of the word   BAND EMPHASIS FC, 1..26 (op 'p')
+;   band_emphasis_q        +1 bits 7:3                    BAND EMPHASIS  Q, 0..31 (op 'p')
+;   band_emphasis_g        +1..+2 bits 5:0 of the word    BAND EMPHASIS  G, 0..48 (op 'p')
+;   drive                  +3                             DRIVE, 0..99 (op 'a')
+;   adjust                 +4                             ADJUST, 0..99 (op 'b')
+;   delay_dry_wet          +5                             DELAY DRY/WET, 0..99 (op 'f')
+;   delay_l                +6..+7 (big-endian)            DELAY L, 0..300 (op 'g')
+;   delay_r                +8..+9 (big-endian)            DELAY R, 0..300 (op 'g')
+;   feedback_l             +10                            FEEDBACK L, -99..99 (op 's')
+;   feedback_r             +11                            FEEDBACK R, -99..99 (op 's')
+;   volume                 +12                            VOLUME, 0..99 (op 'c')
+;   rev_send               +13                            REV SEND, 0..99 (op '!')
+;   hidden_14              +14                            (blank name, DspParamName_Table 85), 0..99 (op 't')
+	.macro	ptlv_dsp99_peq_overdr_delay tag, band_emphasis_fc, band_emphasis_q, band_emphasis_g, drive, adjust, delay_dry_wet, delay_l, delay_r, feedback_l, feedback_r, volume, rev_send, hidden_14, tail:vararg
+	.byte	\tag, 24, 99
+	.byte	((((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) >> 8) & 0xff
+	.byte	(((\band_emphasis_fc) << 6) | ((\band_emphasis_q) << 11) | (\band_emphasis_g)) & 0xff
+	.byte	(\drive) & 0xff
+	.byte	(\adjust) & 0xff
+	.byte	(\delay_dry_wet) & 0xff
+	.byte	((\delay_l) >> 8) & 0xff
+	.byte	(\delay_l) & 0xff
+	.byte	((\delay_r) >> 8) & 0xff
+	.byte	(\delay_r) & 0xff
+	.byte	(\feedback_l) & 0xff
+	.byte	(\feedback_r) & 0xff
+	.byte	(\volume) & 0xff
+	.byte	(\rev_send) & 0xff
+	.byte	(\hidden_14) & 0xff
+.Ldt\@:
+	.byte	\tail
+.Lde\@:
+	.if	(.Lde\@ - .Ldt\@) - 9
+	.error	"ptlv_dsp99_peq_overdr_delay: tail is not 9 bytes"
+	.endif
 	.endm
 
 ; A record whose tag/length the v10 list does not have at its position (an older revision's
