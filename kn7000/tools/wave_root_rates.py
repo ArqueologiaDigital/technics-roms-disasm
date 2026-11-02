@@ -125,8 +125,12 @@ def stream_dir(path, prefix):
         ents = [tuple(s[base + 4 * j: base + 4 * j + 4]) for j in range(n)]
         first = {}
         for j, (A, P, B, Q) in enumerate(ents):
-            first.setdefault(B, j)
+            if not P & 0x0200:
+                first.setdefault(B, j)
+        starts = sorted(first)
         for j, (A, P, B, Q) in enumerate(ents):
+            if P & 0x0200:          # PREV: plays the recording holding unit -B backwards (wave_reverse_entry.py)
+                B = max(x for x in starts if x <= -B & 0xFFFF)
             out[(p, j)] = (f"{prefix}_P{p:02X}_W{first[B]:03X}", P)
     return out
 
@@ -146,7 +150,7 @@ def refs(table, streams):
     Es = collections.defaultdict(set)
     for d in D.values():
         for lab, P in d.values():
-            Es[lab].add((P >> 4) & 0xFF)
+            Es[lab].add((P >> 4) & 0x1F)
     out = collections.defaultdict(list)
     for p in params(c):
         zk = zone_keys(p)
@@ -158,7 +162,7 @@ def refs(table, streams):
                 sh = p["centre"] - 66
                 keys = [k + sh for k in keys if 0 <= k + sh < 128]
                 corr -= 256 * sh
-            out[lab].append((p["i"], zi, (P >> 4) & 0xFF, corr, keys))
+            out[lab].append((p["i"], zi, (P >> 4) & 0x1F, corr, keys))
     return out, Es
 
 

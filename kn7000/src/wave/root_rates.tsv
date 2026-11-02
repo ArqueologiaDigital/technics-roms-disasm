@@ -154,8 +154,7 @@ Main_P00_W0AA	15	0	50	9397.273	9397	49.9995	78	1 zone(s) of 1 parameter record(s
 Main_P00_W0AB	15	0	51	9956.063	9956	50.9999	79	1 zone(s) of 1 parameter record(s)
 Main_P00_W0AC	15	0	51	9956.063	9956	50.9999	79	1 zone(s) of 1 parameter record(s)
 Main_P00_W0AD	15	0	66	23679.643	23680	66.0003	0	no parameter record selects it: corr taken as 0, root 66
-Main_P00_W0AE	15	0	54	11839.822	11840	54.0003	85	1 zone(s) of 1 parameter record(s)
-Main_P00_W0AF	47	-	-	-	-	-	0	no rate: its P word does not read as one pitch exponent
+Main_P00_W0AE	15	0	54	11839.822	11840	54.0003	85	2 zone(s) of 2 parameter record(s)
 Main_P00_W0B0	15	0	54	11839.822	11840	54.0003	85	1 zone(s) of 1 parameter record(s)
 Main_P00_W0B1	15	0	50	9397.273	9397	49.9995	78	1 zone(s) of 1 parameter record(s)
 Main_P00_W0B2	15	0	50	9397.273	9397	49.9995	78	1 zone(s) of 1 parameter record(s)
