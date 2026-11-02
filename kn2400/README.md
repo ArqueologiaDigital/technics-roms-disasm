@@ -155,8 +155,13 @@ evidence and what is still binary.
 - Names: 11,993 entries are still `func_<ADDR>`. `make ported-names` carries unique,
   non-trivial matches with a KN7000 routine, exact or, with `--fuzzy`, near-exact; most of
   what is left has no KN7000 name either (`../kn7000/notes/function-naming-2026-10-24/`).
-- Reflection tables whose procedures are in the RAM-linked range: `gen_symbols.py` assumes one
-  link base, so it pairs none of them.
+- (settled 2026-11-02, lane mn10300-names) No reflection table names a procedure in the
+  RAM-linked range: `../kn7000/notes/mn10300-names-probes/names_kn2400_ram_tables.py` finds no
+  name run with RAM-linked code pointers before it, and no identifier string there that a
+  pointer names by its link address.  `make symbols` now gives `gen_symbols.py` that range
+  (`--code-range 0x3285be:0x3965b8:0x50120000`, the `LO:HI:LINK` form of `gen_image_s.py
+  --code`) and writes the same `kn2400.sym`; the 133 names at `0x50120000` and above come from
+  `kn2400_ported.sym`.
 - RAM and I/O addresses outside the initialised RAM image are still numbers in the code; data
   addresses are labels (`src/program/data/labels.sym`).
 - The data region's remaining binary pieces (`notes/data-region/README.md`, "What is left").

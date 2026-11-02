@@ -125,7 +125,7 @@ SYMOUT ?= .
 symbols: baserom/$(ROM)
 	@mkdir -p $(SYMOUT)/src
 	$(PYTHON) $(TOOLS)/gen_symbols.py baserom/$(ROM) --program-base 0x48400000 \
-	    --code-range 0x1e427c:0x3285be --no-manual \
+	    --code-range 0x1e427c:0x3285be --code-range 0x3285be:0x3965b8:0x50120000 --no-manual \
 	    --title "KN2400/KN2600 program-image symbols recovered from the MILK toolkit" \
 	    --inc-title "KN2400/KN2600 symbols" --sym $(SYMOUT)/$(MODEL).sym --inc $(SYMOUT)/src/symbols.inc
 symbols-check:
