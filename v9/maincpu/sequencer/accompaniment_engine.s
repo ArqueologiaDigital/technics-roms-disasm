@@ -6285,7 +6285,7 @@ AccWrap_PositionClear:
 
 AccWrap_PositionSaveData:
 	push	xiz
-	call	AccPos_ClearOnStart_Padding_Sub
+	call	AccReplay_HandlePendingStop
 	pop	xiz
 	ret
 
@@ -9219,23 +9219,23 @@ AccPos_ClearOnStart_Return:
 AccPos_ClearOnStart_Padding:
 	nop
 	nop
-AccPos_ClearOnStart_Padding_Sub:
+AccReplay_HandlePendingStop:
 	cp	(CURRENT_MODE:16), 19
-	jr	nz, AccPos_ClearOnStart_Padding_Sub_Skip
+	jr	nz, AccReplay_HandlePendingStop_Skip
 	and	(0x347a:16), 253
 	and	(0x28a6:16), 254
-	jr	AccPos_ClearOnStart_Padding_Sub_Return
-AccPos_ClearOnStart_Padding_Sub_Skip:
+	jr	AccReplay_HandlePendingStop_Return
+AccReplay_HandlePendingStop_Skip:
 	bit	1, (0x347a:16)
-	jr	z, AccPos_ClearOnStart_Padding_Sub_Return
+	jr	z, AccReplay_HandlePendingStop_Return
 	ld	a, (0x3283:16)
 	and	a, 3
 	cp	a, 0:i3
-	jr	nz, AccPos_ClearOnStart_Padding_Sub_Return
+	jr	nz, AccReplay_HandlePendingStop_Return
 	ld	(0x3479:16), 0
 	calr	AccReplay_FullStop
 	and	(0x347a:16), 253
-AccPos_ClearOnStart_Padding_Sub_Return:
+AccReplay_HandlePendingStop_Return:
 	ret
 	nop
 	nop
@@ -12301,7 +12301,7 @@ AccTone_InlineBytecodeData_Code_Helper:
 	ld	(0x342a:16), (xbc)
 	ld	(13355:16), 0
 	ret
-AccTone_JumpTableData_Data:
+AccSection_ApplyPendingChange:
 	bit	0, (0x341f:16)
 	ret	z
 	call	Rhythm_SendChanPressure_Wrap
@@ -13869,7 +13869,7 @@ AccTone_JumpTableData:
 	ret
 	call	AccTone_JumpTableData_Helper
 	ret
-	call	AccTone_JumpTableData_Data
+	call	AccSection_ApplyPendingChange
 	ret
 AccTone_LookupByProgramWrapped_Join:
 	push	xiz

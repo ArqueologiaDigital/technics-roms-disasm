@@ -2973,7 +2973,7 @@ StrTranspose_Minus23 00E1D71C
 StrTranspose_Minus24 00E1D720
 StrTranspose_Minus25 00E1D724
 S2cGridBoxProc_CaseTable 00E1D728
-S2c_GridCheck_Dispatch_Data 00E1D736
+S2cGridCheck_PartTrackAddrs 00E1D736
 StrBeat16 00E1D74A
 StrBeat15 00E1D74E
 StrBeat14 00E1D752
@@ -13513,7 +13513,7 @@ PanelButton_RhythmGroupCodes_LeftSeg1 00ED9D56
 PanelButton_RhythmGroupCodes_LeftSeg6 00ED9D58
 FileIO_BytecodeData_Data_12 00ED9D60
 PanelButton_MspBank17FuncHandlers 00ED9D64
-FileIO_BytecodeData_Data_13 00ED9D7C
+PanelButton_MspBank17FuncCodes 00ED9D7C
 PanelButton_MspBank18FuncHandlers 00ED9D82
 PanelButton_MspBank18FuncCodes 00ED9D9A
 PanelButton_VariationCodes 00ED9DA0
@@ -21463,12 +21463,12 @@ SeMenu_Utility_SearchByte_Data 00F12284
 SeFil_DrawModeCaption_Records 00F12317
 SeScreenData_0x1740 00F1231C
 SeScreenData_0x175E 00F1233A
-SeMenu_Utility_FormatNumber_Data_2 00F12352
-SeMenu_Utility_CompareBlock_Data 00F1235C
-SeMenu_Utility_CompareBlock_Data_2 00F12367
+SeFil_FilterTypeField_StaticRecords 00F12352
+SeFil_PageOfTwo_StaticRecords 00F1235C
+SeFil12dB_Caption_StaticRecords 00F12367
 SeFilHpq1_Records 00F124B4
 SeFilLpq1_Records 00F124C9
-SeMenu_Utility_CompareBlock_Data_3 00F124DD
+SeFil24dB_Caption_StaticRecords 00F124DD
 SeFilL241_Records 00F12573
 SeFilH241_Records 00F12587
 SeFilBpf1_Records 00F1259C
@@ -33030,9 +33030,9 @@ AccPos_SaveOnStop_Padding 00F5AFE2
 AccPos_ClearOnStart 00F5AFE4
 AccPos_ClearOnStart_Return 00F5B00D
 AccPos_ClearOnStart_Padding 00F5B00E
-AccPos_ClearOnStart_Padding_Sub 00F5B010
-AccPos_ClearOnStart_Padding_Sub_Skip 00F5B023
-AccPos_ClearOnStart_Padding_Sub_Return 00F5B041
+AccReplay_HandlePendingStop 00F5B010
+AccReplay_HandlePendingStop_Skip 00F5B023
+AccReplay_HandlePendingStop_Return 00F5B041
 AccFlags_SyncTo64607 00F5B044
 AccFlags_Sync_Process 00F5B057
 AccFlags_Sync_UpdateLED 00F5B068
@@ -33343,7 +33343,7 @@ AccTone_InlineBytecodeData 00F5D4C1
 AccTone_InlineBytecodeData_Skip 00F5D519
 AccTone_InlineBytecodeData_Skip2 00F5D534
 AccTone_InlineBytecodeData_Code_Helper 00F5D541
-AccTone_JumpTableData_Data 00F5D573
+AccSection_ApplyPendingChange 00F5D573
 AccTone_ExtendAndDispatch_Helper2 00F5D5C6
 AccVoice_GetMeasureStartBlock 00F5D5F6
 AccVoice_BarCounterBytecodeData_Helper2 00F5D61E
@@ -49044,7 +49044,7 @@ SysEx_InProgressByte 00FCF078
 SysEx_InProgressReturn 00FCF08B
 MIDI_RX_CONTEXT_RESTORE 00FCF08C
 MIDI_RX_CONTEXT_SAVE 00FCF0A9
-SC0Init_Entry 00FCF0C6
+SC0_InitSerialPort 00FCF0C6
 SC0Init_StandardBaudTable 00FCF0E0
 SC0Init_AlternateBaudTable 00FCF107
 SC0Init_BaudTableReturn 00FCF124

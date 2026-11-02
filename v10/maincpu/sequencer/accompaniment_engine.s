@@ -6759,7 +6759,7 @@ AccWrap_PositionClear:
 
 AccWrap_PositionSaveData:
 	push	xiz
-	call	AccPos_ClearOnStart_Padding_Sub
+	call	AccReplay_HandlePendingStop
 	pop	xiz
 	ret
 
@@ -9870,23 +9870,23 @@ AccPos_ClearOnStart_Padding:
 ; In demo mode (19) clears bit 1 of 0x347a and bit 0 of 0x28a6; otherwise, when bit 1 of 0x347a is
 ; set and bits 0..1 of 0x3283 are clear, clears 0x3479, stops the replay (AccReplay_FullStop) and
 ; clears that bit.
-AccPos_ClearOnStart_Padding_Sub:
+AccReplay_HandlePendingStop:
 	cp	(CURRENT_MODE:16), 19
-	jr	nz, AccPos_ClearOnStart_Padding_Sub_Skip
+	jr	nz, AccReplay_HandlePendingStop_Skip
 	and	(0x347a:16), 253
 	and	(0x28a6:16), 254
-	jr	AccPos_ClearOnStart_Padding_Sub_Return
-AccPos_ClearOnStart_Padding_Sub_Skip:
+	jr	AccReplay_HandlePendingStop_Return
+AccReplay_HandlePendingStop_Skip:
 	bit	1, (0x347a:16)
-	jr	z, AccPos_ClearOnStart_Padding_Sub_Return
+	jr	z, AccReplay_HandlePendingStop_Return
 	ld	a, (0x3283:16)
 	and	a, 3
 	cp	a, 0:i3
-	jr	nz, AccPos_ClearOnStart_Padding_Sub_Return
+	jr	nz, AccReplay_HandlePendingStop_Return
 	ld	(0x3479:16), 0
 	calr	AccReplay_FullStop
 	and	(0x347a:16), 253
-AccPos_ClearOnStart_Padding_Sub_Return:
+AccReplay_HandlePendingStop_Return:
 	ret
 	nop
 	nop
@@ -13063,7 +13063,7 @@ AccTone_InlineBytecodeData_Code_Helper:
 ; tuning, marks all parts changed in 0x332c (bit 7 too), runs
 ; AccTone_InlineBytecodeData_Code_Helper2, copies 0x32d8..0x32da to 0x32df..0x32e1 and clears the
 ; bit.
-AccTone_JumpTableData_Data:
+AccSection_ApplyPendingChange:
 	bit	0, (0x341f:16)
 	ret	z
 	call	Rhythm_SendChanPressure_Wrap
@@ -14341,7 +14341,7 @@ AccPatch_SetByChordIndex_Wrap:
 	pop	xiz
 	ret
 ; Calls AccTuning_CopyAllPartsFromStyle with XIY = XWA (the style header), preserving XIZ.
-; Called from AccTone_JumpTableData_Data, AccTone_InlineBytecodeData_Code_Skip,
+; Called from AccSection_ApplyPendingChange, AccTone_InlineBytecodeData_Code_Skip,
 ; AccTone_InlineBytecodeData_Code_Helper3_Join, AccTone_InlineBytecodeData_Code_Helper3_Skip7,
 ; AccVoice_BarCounterBytecodeData_Join2, AccVoice_BarCounterBytecodeData_Join3 and 1 more site.
 AccTuning_CopyAllPartsFromStyle_Wrap:
@@ -14431,14 +14431,14 @@ AccVoice_LoadAllParts_Wrap:
 	pop	xiz
 	ret
 ; Calls Rhythm_SendChanPressure with XIZ preserved.
-; Called from AccTone_JumpTableData_Data.
+; Called from AccSection_ApplyPendingChange.
 Rhythm_SendChanPressure_Wrap:
 	push	xiz
 	call	Rhythm_SendChanPressure
 	pop	xiz
 	ret
 ; Calls AccBuf_ResetAll4 with XIZ preserved.
-; Called from AccTone_JumpTableData_Data.
+; Called from AccSection_ApplyPendingChange.
 AccBuf_ResetAll4_Wrap:
 	push	xiz
 	call	AccBuf_ResetAll4
@@ -14706,7 +14706,7 @@ AccTone_JumpTableData:
 	ret
 	call	AccTone_JumpTableData_Helper
 	ret
-	call	AccTone_JumpTableData_Data
+	call	AccSection_ApplyPendingChange
 	ret
 AccTone_LookupByProgramWrapped_Join:
 	push	xiz

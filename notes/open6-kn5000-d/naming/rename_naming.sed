@@ -16,3 +16,13 @@ s/\bPart_InitFromPreset\b/SeqSong_ResetAll/g
 s/\bVoice_InitBankData\b/MspUser_InitFromFactory/g
 # SoundRam_InitFuncTable slot 0: KN5000 SOUND RAM image check + bulk transfer.
 s/\bSendPartDataBlock_ClearByte4\b/SoundRam_InitPhase0_SendImage/g
+#
+# --- kn5000-rld.  Files: v10/v9/v7/v6/v5 maincpu ui_widgets/naka_widget_tables_2.s and .c (label + C struct
+#     field + comment), factory_test/fd_test_data.s (the .long), ui_widgets/naka_style_bitmaps.c and
+#     naka_widget_tables_2.c (comments quoting names later lanes replaced; same addresses, symbols files).
+# 4 zero bytes, the text pointer of FDTest_Group_OnOff (PsEditSwBox, ES_Bottom2): an empty string.
+s/\bNakaToggle_OnOff_Data\b/FDTest_Group_OnOff_EmptyText/g
+s/\bExitWindow_OK_Data_2\b/SupportClass_PropTypeRecords/g
+s/\bMasterSetup_EventDispatch_Data\b/StyleSong_MasterTable_IdColumn/g
+s/\bMasterSetup_DialTurn_Underflow_Data\b/StyleSong_MasterTable_LastEntry/g
+s/\bMidiPart_PageDisplay_Data\b/MidiSetup_PageIndicatorRect/g

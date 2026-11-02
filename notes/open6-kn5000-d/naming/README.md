@@ -91,3 +91,33 @@ follow (`TVF_Emit_Registers_Type2_*`), and TVF_Emit_Registers' own inline case-5
 became `TVF_Emit_Registers_Mode5_*`.  v141 / v140 regenerated (`create_v141/v140_subcpu_source.py`, `--check` in
 the gate).
 
+
+## N-edb08959: the style-bank renames
+
+Each rename of the kn5000-style table was re-checked against the v10 body (and the v7 / v5 bodies, which carry the
+same code under the same labels):
+
+| old                                                                                           | new                                                                                                                            | evidence                                                                                                                                                         |
+|-----------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `SetCurrentSlotIndex`, `GetCurrentSlotIndex` (file_io/medley.s)                               | `Composer_SetPassword`, `Composer_GetPassword`                                                                                 | word 0x9480E = style image +0x0E; `Password_ClearAndSetSlot` (EVT_SET_PASSWORD) stores the entered value with it after ClearAllSongSlots                         |
+| `CheckIsCurrentSlot`, `CheckSlotIndexValid`                                                   | `Composer_IsPassword`, `Composer_HasPassword`                                                                                  | HL = (WA == password) / (password != 0); the password delete / save / set handlers are their only callers (not in the kn5000-style list; same word)              |
+| `AccPatch_VoiceStrideTable`                                                                   | `AccPatch_DefaultStyleByTimeSig`                                                                                               | `AccPatch_SetVoiceAndInit` reads the word at 2 * STYLE_SECTION_TIME_SIG into record +0x10 / +0x11 (PANEL_STYLE pair); respelled as 20 `.byte number, group` rows |
+| `AccPatch_SyncVoice_Rhythm`, `AccPatch_SyncVoice_Bass` (swapped)                              | `AccPatch_SyncVoice_Bass`, `AccPatch_SyncVoice_Drum`                                                                           | the first reads PANEL_PART_BASS into record +0x20, the second PANEL_PART_DRUM into +0x18 (locals `AccPatch_SyncRhythm_*` / `_SyncBass_*` follow)                 |
+| `TimeSig_DisplayStrings_Helper` (v6 / v5: `DrumVoice_NotifyEE_Helper5`)                       | `ComposerChordMap_GetRecord`                                                                                                   | XIY = RHYTHM_PATTERN_BUF_A + 0xBA0 + 32 * (0x390A; v6/v5 0x3852), the COMPOSER CHORD MAP record; the v6/v5 port had a neighbour's name on it                     |
+| `DrumVoice_Handler0` .. `7`                                                                   | `CmpRecSet_OnMeasure`, `_OnTimeSig`, `_OnKey`, `_OnChord`, `_OnBassType`, `_OnAccompType`, `_OnRhythmProgram`, `_OnRhythmBank` | fields: STYLE_SECTION_LAST_MEASURE 0..7, STYLE_SECTION_TIME_SIG 4..11, 0x34E9 key 0..11, 0x34EA bit 4 / bit 6 / bit 5, Rhythm_StepProgram, CmpSet_StepRhythmBank |
+| `DrumVoice_DispatchTable`, `_Dispatch`, `_Select`, `_ClampMin`, `_InlineStub`, `_NullHandler` | `CmpRecSet_RowHandlers`, `_DispatchRow`, `_DispatchCursorRow`, `_DispatchCursorRow_Clamp`, `_DispatchRow_Wrap`, `_NopRow`      | the table and its dispatchers (index = cursor row (0x3540) - 1)                                                                                                  |
+
+The `CmpRecSet_OnBassType_Code_*` labels sit in an unlabelled routine after `CmpRecSet_OnBassType` (it cycles bits 5 / 6
+of 0x34EA together, 0 -> 64 -> 32 -> 96); it kept the prefix it had (`DrumVoice_Handler4_Code_*`).  Also unchanged:
+`DrumVoice_NotifyEE` and `CmpSetTtl_DrumVoice0/1` (not read here).
+
+## kn5000-rld: the 100 not-reviewed generic records
+
+`probes/rld_record_status.py` looks each record's label up at its 2026-10-06 address: 90 of the 100 already carry
+descriptive names given by later lanes (2026-10-07 .. 10-31).  The other ten were read and named here
+(`scripts/renaming/rename_open6_rld.sed`): the four sound-editor filter-page static record lists (named from
+their contents in `sound_editor_screens/se_setup_*.c`), `AccReplay_HandlePendingStop`, `AccSection_ApplyPendingChange`,
+and three v7 / v6 / v5 labels that still had the generic name v10 / v9 had already replaced (same reader, same
+bytes).  One (`NakaToggle_OnOff_Data`, the empty text of `FDTest_Group_OnOff`) is in the NAKA files of lane
+kn5000-c and goes to the lead (`rename_naming.sed`), with three stale names quoted in NAKA C comments.  The verdict
+for every record is in `rld-verdicts.md` (table) and `rld-verdicts.json`.

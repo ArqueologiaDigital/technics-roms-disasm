@@ -810,7 +810,7 @@ MIDI_RX_CONTEXT_SAVE:
 	ld	(MIDI_RX_CONTEXT+20:16), xiy
 	ld	(MIDI_RX_CONTEXT+24:16), xiz
 	ret
-SC0Init_Entry:
+SC0_InitSerialPort:
 	res	0, (0xb74b:16)
 	ld	(0xb745:16), 0
 	calr	SC0Init_ClearContextSlots
@@ -890,14 +890,14 @@ SC0Init_EnableRegisters:
 	ret
 SC0Init_PaddingStub:
 	ret
-; SC0_InitFuncTable -- 4 handler pointers: SC0Init_Entry, then
+; SC0_InitFuncTable -- 4 handler pointers: SC0_InitSerialPort, then
 ; SC0Init_PaddingStub (a bare `ret`) three times.  Nothing in this file reads
 ; it; its only reference is entry 3 of SystemConfig_PointerTable
 ; (ui_widgets/widget_dispatch.s), and the reader of THAT table was not traced
 ; by the midi lane, so the indexing is not pinned here beyond the 4 entries
 ; that fit before MIDI_SC0_TX_DISPATCH.
 SC0_InitFuncTable:
-	.long	SC0Init_Entry
+	.long	SC0_InitSerialPort
 	.long	SC0Init_PaddingStub
 	.long	SC0Init_PaddingStub
 	.long	SC0Init_PaddingStub

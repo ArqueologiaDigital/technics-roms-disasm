@@ -1016,7 +1016,7 @@ PanelButton_MspNumber:
 	jr	z, PanelButton_MspNumber_Skip
 	cp	hl, 17
 	jr	nz, PanelButton_MspNumber_Skip2
-	lda	xde, (FileIO_BytecodeData_Data_13:24)
+	lda	xde, (PanelButton_MspBank17FuncCodes:24)
 	ld	c, (xde+bc)
 	lda	xde, (PanelButton_MspBank17FuncHandlers:24)
 	lda	xde, (xde+wa)
