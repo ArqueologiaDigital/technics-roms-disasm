@@ -1,0 +1,26 @@
+2026-11-02, lane open6/kn5000-d (sub-lane wsa1). All six leads of notes/open4-kn5000-b/naming/README.md "What is left" item 1 were checked against the code. Five were right and are applied; one was wrong and was not renamed. Notes: notes/open6-kn5000-d/wsa1/README.md. Evidence probe: notes/open6-kn5000-d/wsa1/probes/wsa1_wxn_refs.py (all PASS). Renames: notes/open6-kn5000-d/wsa1/rename_wsa1_wxn.sed.
+
+(1) Rows 4 and 5 of the 6 x 32 key matrix at prom_a 0xFF3D39 belong to the FLOPPY DISK FORMAT screens 0x50 and 0x51, not to MIDI FILE SAVE. The two dedicated button readers add 0xFF3D39 + 4*128 and + 5*128, and MIDI FILE SAVE has pages 0-3 only. The matrix is now ScreenButtonHandlers_MidiFileSave, and rows 4/5 have their own labels, ScreenButtonHandlers_FloppyDiskFormatSelectType / _AreYouSure. The six handlers are renamed: row 3 = 2DD / YES, row 4 = 2HD / NO, plus EXIT. MidiFileSave_Page5_LcdKeyRow3 is now DiskFormat_Execute_Entry (with its directory slot T_DiskFormat_Execute_Entry).
+
+(2) The posted MIXER page painter 0xFBE135 is now CombiEditMixer_PaintPageFrame, with a header. The stray `ret` before it at 0xFBE134 is unreached.
+
+(3) prom_b 0xF77EE7-0xF77FE8 is a third, unreached copy ("copy E") of the SMF file layer: nothing outside it calls its veneers. Its routines are named <copy-A name>_Copy2, matching its InputStream_*_Copy2 siblings. SmfOut_WriteFirstWindow is now SmfWrite_WriteFirstWindow_Copy2, sub_F77FD6 is now SmfWrite_SetOutputWindow_Copy2, and three new labels were added.
+
+(4) RAM 0x216E is PanelLed_CompareFlag. It is a new row of scripts/tools/name_wsa1_ram.py, and its 7 operands were respelled.
+
+(5) wsa1/notes/gen_prom_b_f5553f_module.py now overlays the committed source's label at each address, so it no longer prints or re-splices Select36CE_* and the other shape names. Its --names census went from 11 content / 95 framed / 96 sub_ to 162 / 36 / 4. The 7 keymap-spelled selector tables are the caveat. --historical-names keeps the old output.
+
+(6) Verdict, no change: the MidiFileL0ad_ prefix is the screen name MidiFileL0ad, which is CamelCase of the ROM caption "MIDI FILE L0AD" (digit zero, prom_b 0xF5930F). This is the tree's ROM-spelling rule. Normalising every 0-for-O name is an owner question.
+
+Website page draft: notes/open6-kn5000-d/wsa1/README.md "Website page draft" (technics-docs wsa1-menu-map.md, the Disk table's key counts for 0x4E/0x50/0x51 and one sentence). No renamed label is quoted on the site.
+
+Byte gate: make gate-wsa1 green.
+
+Left open, not part of this issue:
+- sub_FF657B: an eight-press counter on screen 0x50 that requests a screen 0x52 nobody has identified, gated on (0x21E8) bit 2.
+- The meaning of request 0x0201 after a format.
+- Respelling DispatchTable_F8C2B2's `.byte` handler pointers as symbols, and labelling the COMPARE LED handler at 0xF8C7AC.
+- Making copy D's mixed SmfOut_* / SmfWriteCopy_* names uniform.
+- Confirming physically which lamp the 0x0400 LED bit drives.
+
+Related: kn5000-nl6 (parent).

@@ -89,7 +89,9 @@ waves did.
    DiskFormat_Execute); the MIXER page-frame painter at 0xFBE135 needs its own label; SmfOut_WriteFirstWindow
    (0xF77F9A) sits on an unreachable copy; 0x216E is the COMPARE LED flag; the historical
    `gen_prom_b_f5553f_module.py` spells Select36CE_%06X with a format string; the `MidiFileL0ad_` prefix (digit
-   zero) of four prom_a/prom_b labels.
+   zero) of four prom_a/prom_b labels.  **Checked 2026-11-02 (tracker kn5000-wxn,
+   `notes/open6-kn5000-d/wsa1/README.md`):** the first five were right and are applied; the `MidiFileL0ad_` prefix
+   is the ROM's own caption spelling ("MIDI FILE L0AD") and was kept.
 2. **The 100 generic-label records left "not reviewed (stopped early)"** in g3 (17) and g5 (79) and the four in g1
    (`analysis/kn5000-naming/proposals-2026-10-07-generic-g*.json`).
 3. **More data spelled as code, found on the way** (KN5000 v10 family): `RhythmProc_ChannelMapTable`
