@@ -13,6 +13,20 @@
 # The Feature Demo's pictures. DemoJpgDataXn (recovered MILK name) returns the segment's
 # address for message 0x600E6 and 0 for any other; the 4-byte '27' placeholders are
 # returned the same way.  (slot, Xn, file stem or None, what the picture shows)
+# Who asks for each placeholder (program 941; notes/mn10300-names-probes/songtable_demo_l.py):
+# the Feature Demo plays StartFeatureDemo_Table 0x4867F75C[song - 1], ten SSW-ACT scripts that
+# SHOW only fdemo_a..fdemo_j; slots 11..15 hold the empty script 0x4867F73C, so no built-in
+# script SHOWs an fdemo_k* or fdemo_l* screen.
+DEMO_PLACEHOLDER_USE = {
+    "L1": ["The JpegFile widgets of the ten screens fdemo_l1..fdemo_la all name",
+           "DemoJpgDataL1, but no built-in demo script SHOWs those screens",
+           "(StartFeatureDemo_Table's slots 11..15 are the empty script)."],
+    "L2": ["No view names DemoJpgDataL2 (only its IDNAME row): nothing asks for it."],
+    "L3": ["No view names DemoJpgDataL3 (only its IDNAME row): nothing asks for it."],
+    "L4": ["No view names DemoJpgDataL4 (only its IDNAME row): nothing asks for it."],
+    "L7": ["No view names DemoJpgDataL7 (only its IDNAME row): nothing asks for it."],
+    "L8": ["No view names DemoJpgDataL8 (only its IDNAME row): nothing asks for it."],
+}
 DEMO = [
     (9,  "A1", "welcome",               "'Welcome to SX-KN7000' over a glass hall"),
     (10, "A2", "city_street",           "a crowded city street, 'SX-KN7000' top right"),
@@ -165,9 +179,17 @@ def _segments():
         "program's copy 0x485B7370), 8 zero bytes, then 220 records of 0x18 bytes, which fill",
         "the segment. Read through TableRomSeg01PtrSize by SramRecordsLoadFactory: it copies",
         "records lo..hi over the battery-SRAM table at 0x84030FF8 (same stride), or a",
-        "program-ROM default record (0x485B737E) when the signature does not match. Each record",
-        "is eight 3-byte entries (zzzj_voice, src/table/style_macros.inc). TODO: what the 220",
-        "records configure."])
+        "program-ROM default record (0x485B737E) when the signature does not match. They are",
+        "the SOUND ARRANGER's factory settings (its help text: \"There are some preset settings",
+        "already in the Sound Arranger\"): record n is preset rhythm n, counted through",
+        "GenreStyleTable's genres 0..13 (StyleIdToPresetOrdinal 0x4843FACD; CUSTOM and MEMORY",
+        "have none), and its eight entries (zzzj_voice, src/table/style_macros.inc) are the",
+        "{program, bank LSB, bank MSB} the arranger gives the accompaniment parts, in the order",
+        "Drum, Perc, Bass, Acc1-Acc5 (0x485B73A0 maps M3 parts 0x13..0x1A to them, 0x485B7396",
+        "the style parts). Bit 7 of entry 0's program byte = the arranger is ON for the rhythm",
+        "(0 in all 220; SndArgOnSet 0x4843FCE6), bit 7 of entries 2..7 = that part's CC94 127",
+        "instead of 0 (SndArgTemplateApply 0x4843FFD0, the part's 0x00B0005E). Probe:",
+        "notes/mn10300-names-probes/songtable_zzzj.py."])
     s[2] = ("FactoryMemStyleContainer", "tcmp", None, [
         "The factory MEMORY-style container ('TCMP'): MemStyleAreaLoadFactory copies it",
         "whole (through TableRomSeg02PtrSize) to MEM_STYLE_AREA 0x50180000 when it starts",
@@ -205,7 +227,7 @@ def _segments():
         if stem is None:
             s[slot] = (f"DemoJpg{xn}Placeholder", "marker", None, [
                 f"Not a picture: the 4-byte '27' + line feed that DemoJpgData{xn} returns in",
-                "place of a JPEG. TODO: whether the demo ever asks for it."])
+                "place of a JPEG."] + DEMO_PLACEHOLDER_USE[xn])
         else:
             s[slot] = (f"DemoJpg{xn}", "jpeg", f"demo_{xn.lower()}_{stem}.jpg", [
                 f"Feature Demo picture {xn}, returned by DemoJpgData{xn}: {what}."])

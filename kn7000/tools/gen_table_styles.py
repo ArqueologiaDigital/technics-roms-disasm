@@ -369,35 +369,69 @@ def technics_pads(d, s, e, label, jpg_dir, build, inline=False):
         open(path, "w").write(text)
         B.append(f'    .include\t"{path}"')
         pos = st + S
-    if pos < e:
-        B.append(f"    .byte\t{', '.join(hx(x) for x in d[pos:e])}\t# TODO: after the last pad; nothing reads it")
+    if pos < e and not inline and e % 4 == 0 and e - pos == -pos % 4 and d[pos:e] == bytes(e - pos):
+        # every directory offset is a multiple of 4: the fill takes the next segment there
+        B.append("    .align\t4, 0x00\t# fill to the next segment, which starts on a multiple of 4 as all 84 do;"
+                 " TechnicsPadsResourceParse reads only the count, so nothing reads it")
+    elif pos < e:
+        B.append(f"    .byte\t{', '.join(hx(x) for x in d[pos:e])}\t# after the last pad; nothing reads it")
     return B
 
 
+# The preset rhythms the 'ZZZJ' records follow: GenreStyleTable (941 0x48735EE4, 942
+# 0x48736F08), genres 0..13 with their style counts (+0x11).  StyleIdToPresetOrdinal
+# (func_4843FACD) numbers a rhythm by the counts of the genres before its own; CUSTOM (14)
+# and MEMORY (15) have no record.  notes/mn10300-names-probes/songtable_zzzj.py checks it.
+ZZZJ_GENRES = [("8&16 BEAT", 10), ("ROCK & POP", 16), ("BALLAD", 16), ("JAZZ & SWING", 20),
+               ("BALLROOM", 16), ("MOVIE & SHOW", 20), ("ENTERTAINER", 14), ("ORGANIST", 10),
+               ("60s & 70s", 13), ("MODERN DANCE", 14), ("SOUL & R&B", 19), ("COUNTRY&WESTERN", 14),
+               ("MARCH & WALTZ", 12), ("LATIN & WORLD", 26)]
+# A record's eight entries: 0x485B73A0 maps M3 parts 0x13..0x1A to entries 3, 4, 5, 6, 7, 2, 0, 1,
+# 0x485B7396 the style parts (Drum, Bass, Acc1-5, Perc) to entries 0, 2, 3, 4, 5, 6, 7, 1.
+ZZZJ_PARTS = ["Drum", "Perc", "Bass", "Acc1", "Acc2", "Acc3", "Acc4", "Acc5"]
+
+
 def sram_record_defaults(d, s, e, label):
-    """Segment 1: the 8-byte signature 'ZZZJ', 0, 'K', 0, 220 that SramRecordsLoadFactory
-    (0x4843FB65) compares with the program's copy 0x485B7370, 8 zero bytes, then 220
-    records of 0x18 bytes that it copies over the battery-SRAM table 0x84030FF8."""
+    """Segment 1: the 8-byte signature 'ZZZJ', 0, 'K', then the u16BE record count 220, that
+    SramRecordsLoadFactory (0x4843FB65) compares with the program's copy 0x485B7370, 8 zero
+    bytes, then 220 records of 0x18 bytes that it copies over the battery-SRAM table
+    0x84030FF8.  They are the SOUND ARRANGER's factory settings: one record per preset
+    rhythm (ZZZJ_GENRES), one {program, bank LSB, bank MSB} entry per accompaniment part
+    (ZZZJ_PARTS).  Bit 7 of entry 0's program byte: the arranger is ON for that rhythm
+    (SndArgOnSet 0x4843FCE6 / SndArgIsOn 0x4843FCA2); bit 7 of entries 2..7: the part's
+    CC94 is 127 instead of 0 (SndArgTemplateApply 0x4843FFD0 writes the part template's
+    field 5; SndArgPartVoiceSet 0x4843FECE takes it from the part's 0x00B0005E)."""
     sig = d[s:s + 8]
     if sig[:4] != b"ZZZJ" or sig[4:7] != b"\x00K\x00" or d[s + 8:s + 16] != bytes(8):
         raise SystemExit(f"{label}: unexpected header")
     n = sig[7]
     if s + 0x10 + 24 * n != e:
         raise SystemExit(f"{label}: {n} records do not fill the segment")
-    B = ['    .ascii\t"ZZZJ"', '    .byte\t0', '    .ascii\t"K"', '    .byte\t0', f"    .byte\t{n}\t\t# record count (0xDC)",
+    if sum(c for _g, c in ZZZJ_GENRES) != n:
+        raise SystemExit(f"{label}: {n} records but the preset genres hold {sum(c for _g, c in ZZZJ_GENRES)}")
+    B = ['    .ascii\t"ZZZJ"', '    .byte\t0', '    .ascii\t"K"',
+         f"    .be16\t{n}\t\t# record count (func_48440158 reads the SRAM copy's as a u16BE; 'ZZZI' marks an older one)",
          "    .space\t8, 0x00"]
+    rhythms = [(g, k + 1, c) for g, c in ZZZJ_GENRES for k in range(c)]
     for r in range(n):
         o = s + 0x10 + 24 * r
-        B.append(f"SramRecordDefault{r:03d}:")
+        g, k, c = rhythms[r]
+        B.append(f"SramRecordDefault{r:03d}:\t\t# preset rhythm {r}: {g}, rhythm {k} of {c}")
         for t in range(8):
-            a, b, c = d[o + 3 * t:o + 3 * t + 3]
-            B.append(f"    zzzj_voice\t{hx(a)}, {hx(b)}, {hx(c)}")
+            a, b, c3 = d[o + 3 * t:o + 3 * t + 3]
+            note = ZZZJ_PARTS[t]
+            if a & 0x80:
+                note += ": arranger ON" if t == 0 else (": CC94 127" if t > 1 else ": bit 7 (cleared on write)")
+            B.append(f"    zzzj_voice\t{hx(a)}, {hx(b)}, {hx(c3)}\t# {note}")
     return B
 
 
 def part_lines(blk, what):
     """A 0x18-byte part block of a MEMORY variation record: the 15 style_part fields, then
-    fields 15-23 of the part-field table 0x485B77D4 (part_more)."""
+    9 bytes (part_more) that no firmware routine reads or writes: StyleRecordBindMem points
+    0x50034BAC[] at the blocks and func_4844187A copies 15 bytes of each into the part
+    template, and func_48441EB4 writes 15; they are 0 in every TCMP block of tables 84/83
+    and of the IC21 images (notes/mn10300-names-probes/songtable_part_more.py)."""
     f = blk
     vals = [hx(f[0]), str(f[1]), hx(f[2]), hx(f[3]), hx(f[4])] + [str(x) for x in f[5:15]]
     return [f"\tstyle_part\t{', '.join(vals)}\t# {what}",
@@ -456,14 +490,18 @@ def tcmp_container(d, s, e, label):
         h = c[r:r + 0x20]
         streams[u24be(c, r + 0x15)] = v
         B += [f"{P}Var{v:02d}:\t\t# MemStyleVarRecPtr {v}: style {v // 20} slot {v % 20} ({SLOT_NAMES[v % 20]})",
-              f"\t.byte\t{', '.join(hx(x) for x in h[0:4])}\t# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)",
+              f"\t.byte\t{', '.join(hx(x) for x in h[0:3])}\t# +0x00 the source pattern: style-ID index entry,"
+              " 7 bits + the rest (func_4843B5DB / func_4843B8D7 copy a preset's; func_4843511C reads it)",
+              f"\t.byte\t{hx(h[3])}\t\t# +0x03 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainCMP_SetCmpRecordChord ->"
+              " func_4843C186); func_4843C149 takes bit 4 from the A/B parity in slots >= 12 (0x485b6d74)",
               f"\t.byte\t{', '.join(hx(x) for x in h[4:12])}\t# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)",
-              f"\t.byte\t{', '.join(hx(x) for x in h[12:16])}",
+              f"\t.byte\t{', '.join(hx(x) for x in h[12:16])}\t# +0x0c: no reader found",
               f"\t.byte\t{h[16] + 1} - 1, {h[17] + 1} - 1\t# bars - 1, beats a bar - 1 (MemStyleVarBarCount)",
-              f"\t.byte\t{', '.join(hx(x) for x in h[18:21])}",
+              f"\t.byte\t{', '.join(hx(x) for x in h[18:21])}\t# +0x12: no reader found",
               f"\t.be24\t{P}Stream{v:02d} - {label}\t# the stream in the heap (MemStyleRecData)",
-              f"\t.byte\t{hx(h[24])}, {hx(h[25])}\t# [INFERENCE] the sound units' two part numbers, as var_head's",
-              f"\t.byte\t{', '.join(hx(x) for x in h[26:32])}"]
+              f"\t.byte\t{hx(h[24])}, {hx(h[25])}\t# +0x18 EFFECT PART 1 / 2, 0xff none (MainCMP_SetCmpEffectPart -> func_4843C10D;"
+              " func_4843C0ED, func_4843CB41)",
+              f"\t.byte\t{', '.join(hx(x) for x in h[26:32])}\t# +0x1a: no reader found"]
         for p in range(8):
             B += part_lines(c[r + 0x20 + 0x18 * p:r + 0x38 + 0x18 * p], PART_NAMES[p])
     pos = vrec + 0xE0 * 20 * n
@@ -546,9 +584,14 @@ def tpad_container(d, s, e, label):
         streams[u24be(h, 0x1D)] = k
         B += [f"{P}Pad{k:02d}:",
               f'\t.ascii\t"{h[:16].decode("ascii")}"',
-              f"\t.byte\t{hx(h[16])}, {hx(h[17])}, 0, 0\t# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it",
-              f"\t.byte\t{hx(h[20])}, {hx(h[21])}, 0, 0\t# [INFERENCE] per-part flags, as TCMP's +0x04 bytes",
-              f"\t.byte\t{h[24] + 1} - 1, {h[25] + 1} - 1, {h[26]}, 0, 0\t# bars - 1, beats - 1, kind (as pad_head's)",
+              f"\t.byte\t{hx(h[16])}, {hx(h[17])}, 0\t# +0x10 the built-in pad it was copied from: ID & 0x7f, ID >> 7, 0"
+              " (func_48431D21)",
+              f"\t.byte\t{hx(h[19])}\t\t# +0x13 RECORD KEY/CHORD: bits 0-3 the key, bit 4 Min (MainPAD_SetUserPadRecordChord"
+              " -> func_484325B4; func_4843259F)",
+              f"\t.byte\t{hx(h[20])}, {hx(h[21])}, 0, 0\t# [INFERENCE] per-part flags, as TCMP's +0x04 bytes; no reader found",
+              f"\t.byte\t{h[24] + 1} - 1, {h[25] + 1} - 1, {h[26]}, 0, 0\t# bars - 1, beats - 1, flags (pad_head's): bit 0 LOOP,"
+              " bit 1 SYNCHRO (MainPAD_SetUserPadLoop / MainPAD_SetUserPadSync); [INFERENCE] bit 2 a"
+              " fixed-chord pad, bit 3 Min",
               f"\t.be24\t{P}Stream{k:02d} - {label}\t# the stream in the heap",
               "\t.space\t8, 0x00"]
         for p in range(2):

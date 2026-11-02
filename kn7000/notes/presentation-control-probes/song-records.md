@@ -33,8 +33,13 @@ from the 942 export table.
 | GUI subscription    | SetMmmFilter 0x4841C40A       | widgets register the ids they show, e.g. AcPmemNameProc 0x4841F482 subscribes to 0x80 and 0x600008                      |
 
 Sources: 1 = panel / keyboard (0x16000000 or an event in PanelBtnActType3; 0x10700000 keybed),
-2 = MIDI IN (0x484B2E17; SysEx tag +0x20000000 at 0x484B9B3F), 4 = song playback (0x48458712),
-5 = playback of 0x98 notes (0x48458807), 6 = SysEx tag +0x60000000 (0x484B9B57). 3 and 7..12 unknown.
+2 = MIDI IN channel messages (0x484B2E17; func_484B9B2E adds +0x20000000 when bit 0 of the
+per-channel context's +0x1D is set, which func_484B2F27 / func_484B2FEC do for 0x50150AE4 / 0x50150D04),
+3 = MIDI IN SysEx (func_484BFBEA, called by 72 SysEx handlers, adds +0x30000000 when bit 0 of the SysEx
+context's +0x1F is set; func_484BA1D1 / func_484BA20F store 0x01 / 0x41 there), 4 = song playback
+(0x48458712), 5 = playback of 0x98 notes (0x48458807), 6 = bit 1 of the same bytes (+0x60000000 in
+both routines; no writer of bit 1 was found, so source 6 looks unused). (Corrected 2026-11-02: this
+line used to give 0x484B9B30, a channel-message routine, as the SysEx tag.) 7..12 unknown.
 
 ## 2. Event grammar and playback dispatch
 
@@ -99,33 +104,46 @@ recording (0x4845A15D) use the same whitelist check 0x4845BC6D:
 Named ids (labels from the firmware's own STEP RECORD labeller 0x4853E4A0, strings
 0x48679158..0x486791E8):
 
-| id                                                                                                       | meaning                                | evidence                                                           | verdict     |
-|----------------------------------------------------------------------------------------------------------|----------------------------------------|--------------------------------------------------------------------|-------------|
-| 0x000001                                                                                                 | rhythm START/STOP                      | labeller 0x4853E602; events 0x85/0x86; auto-recorded by 0x48453AE5 | established |
-| 0x000004                                                                                                 | tempo 40..300                          | labeller TEMPO; event 0x80; SysEx F0 50 25                         | established |
-| 0x00C000                                                                                                 | rhythm (style)                         | labeller RHYTHM; CustomStyleIndexFromParam 0x4848453B              | established |
-| 0x00C004                                                                                                 | variation 1-4                          | labeller "VARI %d" 0x4853E520                                      | established |
-| 0x00D001                                                                                                 | COUNT / INTRO 1 / INTRO 2              | labeller 0x4853E53E                                                | established |
-| 0x00D002                                                                                                 | FILL IN 1 / 2                          | labeller 0x4853E58E                                                | established |
-| 0x00D003                                                                                                 | ENDING 1 / 2                           | labeller 0x4853E5C9                                                | established |
-| 0x702023                                                                                                 | FILL IN 1/2 panel-button event         | panel event 0x2023                                                 | established |
-| 0x600014                                                                                                 | PIC                                    | event 0x8A                                                         | established |
-| 0x600000                                                                                                 | chord (root / type)                    | labeller formats it with GetChordString 0x484212B1                 | established |
-| 0x000080                                                                                                 | panel memory number 0..103             | MainGetPmemName 0x4841622E reads it; AcPmemNameProc subscribes     | established |
-| 0x008080-0x008082                                                                                        | TECHNI-CHORD on/off, type, output part | TechniChordCompute 0x48472EBA; 0x48472E5B                          | established |
-| 0x008033                                                                                                 | FADE IN/OUT 0..2                       | AcFadeBoxProc 0x48494115                                           | inferred    |
-| 0x000003                                                                                                 | transpose (52..76)                     | SysEx template F0 7F 7F 04 04                                      | inferred    |
-| 0x000000                                                                                                 | master fine tuning                     | SysEx template F0 7F 7F 04 03                                      | inferred    |
-| 0xB08000-05                                                                                              | RPN 0, 1, 2, 5                         | id layout                                                          | inferred    |
-| 0xA0, 0x8002, 0x8006, 0x8008, 0x8020, 0x8031, 0x8032, 0x8040, 0x8060, 0xC080-C083, 0xE000-E002, 0x200000 | CONTROL-track settings                 | SysEx templates exist for most                                     | unknown     |
-| 0x20005F, 0x200081, 0x200088-9A, 0x2000A2, 0x2000B0-BF, 0x204080/81, 0x00B0x4                            | part-scoped parameters on part tracks  | Technics SysEx groups 00 02 xx / 00 10 xx                          | unknown     |
+| id                                                                                  | meaning                                                   | evidence                                                                                                        | verdict                |
+|-------------------------------------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|------------------------|
+| 0x000001                                                                            | rhythm START/STOP                                         | labeller 0x4853E602; events 0x85/0x86; auto-recorded by 0x48453AE5                                              | established            |
+| 0x000004                                                                            | tempo 40..300                                             | labeller TEMPO; event 0x80; SysEx F0 50 25                                                                      | established            |
+| 0x00C000                                                                            | rhythm (style)                                            | labeller RHYTHM; CustomStyleIndexFromParam 0x4848453B                                                           | established            |
+| 0x00C004                                                                            | variation 1-4                                             | labeller "VARI %d" 0x4853E520                                                                                   | established            |
+| 0x00D001                                                                            | COUNT / INTRO 1 / INTRO 2                                 | labeller 0x4853E53E                                                                                             | established            |
+| 0x00D002                                                                            | FILL IN 1 / 2                                             | labeller 0x4853E58E                                                                                             | established            |
+| 0x00D003                                                                            | ENDING 1 / 2                                              | labeller 0x4853E5C9                                                                                             | established            |
+| 0x702023                                                                            | FILL IN 1/2 panel-button event                            | panel event 0x2023                                                                                              | established            |
+| 0x600014                                                                            | PIC                                                       | event 0x8A                                                                                                      | established            |
+| 0x600000                                                                            | chord (root / type)                                       | labeller formats it with GetChordString 0x484212B1                                                              | established            |
+| 0x000080                                                                            | panel memory number; setting it recalls memory n (1..104) | MainGetPmemName 0x4841622E reads it; AcPmemNameProc subscribes; record kind 9 -> func_4C016C5C -> func_4C021827 | established            |
+| 0x008080-0x008082                                                                   | TECHNI-CHORD on/off, type, output part                    | TechniChordCompute 0x48472EBA; 0x48472E5B                                                                       | established            |
+| 0x008033                                                                            | FADE IN/OUT 0..2                                          | AcFadeBoxProc 0x48494115                                                                                        | inferred               |
+| 0x000003                                                                            | transpose (52..76)                                        | SysEx template F0 7F 7F 04 04                                                                                   | inferred               |
+| 0x000000                                                                            | master fine tuning                                        | SysEx template F0 7F 7F 04 03                                                                                   | inferred               |
+| 0xB08000-05                                                                         | RPN 0, 1, 2, 5                                            | id layout                                                                                                       | inferred               |
+| 0x008020                                                                            | REVERB on/off (bit 7 of block 0x4C byte 0)                | PutM3Em in REVSELTitleFunc; EffDispGrid reads it                                                                | inferred (caller name) |
+| 0x008060                                                                            | split mode 0..3                                           | AcSplitBoxProc reads it                                                                                         | inferred (caller name) |
+| 0x00C080                                                                            | APC / chord mode 0..3                                     | ApcSelFunc, TtChordFinder, MainCOMP_RtcControl                                                                  | inferred (caller name) |
+| 0x00C082, 0x00C083                                                                  | APC switches (1 bit each)                                 | ApcSelFunc reads both                                                                                           | inferred (caller name) |
+| 0x20005F                                                                            | the part's DIGITAL EFFECT on/off                          | PutM3Em in DSPSELTitleFunc; EffDispGrid                                                                         | inferred (caller name) |
+| 0x2000A2                                                                            | the part's tremulant 0..7                                 | AcTabTremulantProc                                                                                              | inferred (caller name) |
+| 0x200090-0x200098                                                                   | the part's drawbars                                       | kn67-field-names (drawbar records)                                                                              | inferred               |
+| 0x00B014-0x00B054                                                                   | the DSP (sound unit) groups' part keys                    | SndUnitRecApply and friends read them                                                                           | inferred (caller name) |
+| 0xA0, 0x8002, 0x8006, 0x8008, 0x8031, 0x8032, 0x8040, 0xC081, 0xE000-E002, 0x200000 | CONTROL-track settings                                    | no firmware-named caller; `songtable_song_ids.py` lists record and callers                                      | unknown                |
+| 0x200081, 0x200088, 0x200089-8F, 0x200099-9A, 0x2000B0-BF, 0x204080/81              | part-scoped parameters on part tracks                     | 0x2000B0-BF scale bits, 0x204080/81 the part's TG bits (kn67-field-names); no named caller                      | unknown                |
 
 So: voices, mixer and sound controllers (C0 and CCs on part tracks), rhythm style, variation,
 intro, fill, ending, start/stop and tempo can all change mid-song (established). The panel-memory
-number 0x80 is on the CONTROL list; that replaying it performs the recall is inferred. There is no
+number 0x80 is on the CONTROL list, and replaying it recalls that panel memory: PutM3Em finds no
+special handler for 0x80 (func_4C0216A3's class tables), so func_4C015E50 runs the setter of the
+record's kind 9 (func_4C015E50_Table 0x4858C318), func_4C016C5C, which stores the number and calls
+func_4C021827 (n = 1..104; it recalls through func_4C021F33, the `memcpy(0x84000020, memory, 0x750)`
+of kn67-field-names), unless the setter's flag argument has bit 0 (PutM3Em passes 0). Established
+from code, not run (`songtable_m3_set_kinds.py`). There is no
 KN5000-style panel-record snapshot in the events. Global effect types (0xA000/0xA100/0xA200) are on
-no list, so they cannot change mid-song (established). Drawbars and sound-edit parameters: unknown
-(candidates 0x200088..0x2000BF). Each 0x8E0-byte song record (Rec8E0TablePtr 0x48456E49) also holds a
+no list, so they cannot change mid-song (established). Drawbars: 0x200090-0x200098 are on the part
+list (inferred, from kn67-field-names); other sound-edit parameters: unknown. Each 0x8E0-byte song record (Rec8E0TablePtr 0x48456E49) also holds a
 full settings snapshot that the PANEL WRITE help text (0x48677798) says is applied at SEQUENCER
 RESET; the SMF importer fills it through PutM3Sqf (0x48547CBE).
 
@@ -154,8 +172,9 @@ So a user can record an automated performance on the instrument: on a CONTROL tr
 variation, intro, fill, ending, start/stop, tempo, transpose, panel-memory number, TECHNI-CHORD,
 fade and PIC (as F-type events); on part tracks voice changes and mixer moves. Not recorded: the
 sequencer's own playback, ids not on the track's list (effect types, and every 0x70xxxx panel event
-except 0x702023), source-6 messages. Whether incoming SysEx is recorded is unknown (it depends on
-the source tag context byte +0x1D selects in 0x484B9B30).
+except 0x702023), source-6 messages. Incoming SysEx is recorded like a panel change: its results
+carry source 3 (func_484BFBEA, section 1), which M3SendProcessSeq's table 0x4858C164 accepts (static
+path, not run).
 
 ## 5. SysEx
 
@@ -164,7 +183,7 @@ the source tag context byte +0x1D selects in 0x484B9B30).
 message to 0x484BA1D4 / 0x484BA212, gated by bit 0 of the MIDI field 0x484B33E9(4) (0x50150F56
 bits 5..6; set = ignore, inferred). The matcher 0x484C01F4 recognises Technics (0x50), GS (0x41),
 XG (0x43) and universal (0x7E/0x7F) messages; handlers 0x484BA25E (Technics control), 0x484BC4AF
-(universal), 0x484BD3BC (GS), 0x484BE16A (XG), 0x484C1B72 (Technics bulk/data, not traced); the
+(universal), 0x484BD3BC (GS), 0x484BE16A (XG), 0x484C1B72 (descriptor type 4, section 6); the
 callback 0x484B9B61 applies the result (PutM3Em or a push onto the M3 queue). 260 RX descriptors;
 the panel-control ones use `F0 50 2C 20 31 1F grp sub par val F7` (rhythm, variation,
 0xC080-83, intro / fill / ending, panel memory 0x80, tempo `F0 50 25 lo hi F7`, TECHNI-CHORD, fade,
@@ -184,22 +203,50 @@ becomes a song event (encoder 0x48547D05); PIC SysEx becomes an 0x8A event (0x48
 SysEx thus survives as parameter events or initial settings; unrecognised SysEx is dropped
 (established path, not run).
 
-## 6. Open
+## 6. Open (status 2026-11-02, lane mn10300-names, agent songtable)
 
-- Record a session in MAME (CONTROL track: variation, fill, panel memory, tempo), save, census, replay.
-- Name the unknown ids (set handlers through the trie 0x4C01BB0C, or the MIDI implementation chart).
-- Trace the set handler of 0x80 (panel-memory recall) and the SysEx source tag (0x484B9B30 / +0x1D).
-- Trace the type-4 Technics bulk SysEx 0x484C1B72.
-- Explain the tempo value 250 every demo song opens with.
+- Record a session in MAME (CONTROL track: variation, fill, panel memory, tempo), save, census,
+  replay. Still open: it needs a MAME run.
+- **Unknown ids: partly named** (table in section 3, `songtable_song_ids.py`). The ids with a
+  firmware-named caller are named after it; 0xA0, 0x8002, 0x8006, 0x8008, 0x8031, 0x8032, 0x8040,
+  0xC081, 0xE000-E002, 0x200000, 0x200081, 0x200088-8F/99-9A, 0x2000B0-BF and 0x204080/81 have none.
+  Next step: read the GUI widgets that subscribe to them (SetMmmFilter rows) or the KN7000 MIDI
+  implementation chart; the trie (ResourceIdTrie) gives only where each lives.
+- **Set handler of 0x80: closed.** Kind 9 -> func_4C016C5C -> func_4C021827 recalls panel memory n
+  (section 3). **SysEx source tag: closed.** Source 3, from func_484BFBEA and context +0x1F; the
+  routine this list named (0x484B9B30, +0x1D) tags channel messages with source 2 (section 1).
+- **Type-4 Technics SysEx 0x484C1B72: split.** It is not one bulk format but 47 descriptors
+  (`songtable_sysex_rx.py`): `F0 50 21..33 7E 31 1F ...` (subs 0x00-0x0C) and `F0 50 7E 01 00`
+  (sub 0x0D) look like a handshake (sub 5, `F0 50 29 cc F7`, checks the frame with func_484C356A,
+  answers through func_484C364E / func_484B3B94, counts errors in 0x50151BF8 and resends the block
+  0x5015177C while the state 0x50151BFA is 1..12), and `F0 50 2C 20 31 1F 7F gg ss ...` (subs
+  0x0E-0x17: groups 0x00-0x0B, 0x10, 0x20, 0x30) are dump requests: sub 0x10 sends 0x348-byte blocks
+  from 0x5015177C and waits for code 0x23 with a 5000-tick timeout (func_484C3A03). Subs 0, 1, 3, 4,
+  6, 7, 9, 0xA, 0xD are accepted and ignored. Only a message that arrived through func_484BA20F
+  (context +0x1F = 0x41) is served. Still open: the payload of each group (which block
+  func_484C34ED fetches, the frame func_484C1B1A builds) and the reply codes. Next step: trace
+  func_484C34ED / func_484C1B1A / func_484C3A03, then confirm with a MAME session that sends
+  `F0 50 2C 20 31 1F 7F 00 00 ... F7`.
+- **Tempo 250: closed.** The 0x80 event is BPM with no scale or offset (func_48458898:
+  `b1 + (b2 << 7)`; TempoBpmReloadWrite 0x4844786C, 40..300, TM5 reload 1,250,000 / BPM). Eight of
+  the ten demo songs set 250 BPM (song 4: 200) at beat 0, together with the first slide (0x8A), and
+  their real tempo at beat 4 (song 4: beat 2, song 1: beat 8), where the music starts; song 6 starts
+  at once at 138 (`songtable_demo_tempo.py`). So the first bar is an empty lead-in that plays in about
+  one second. [INFERENCE] It is the set-up bar a sequencer recording begins with, shortened that way
+  while the first picture is drawn.
 
 ## Reproduce (scripts in `songrec/`)
 
-| script                       | question it answers                                                         | command                                                                                                               |
-|------------------------------|-----------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
-| `song_tables.py`             | the length table, whitelists, presets, encoder and value-size hashes        | `python3 -I song_tables.py`                                                                                           |
-| `song_event_census.py`       | which statuses and A/F ids occur in song page data                          | `python3 -I song_event_census.py ROM demo*_pages.bin` (pages from kn7000_mame `tools/slideshow/demo_song_extract.py`) |
-| `sysex_desc.py`              | M3 id to transmit SysEx template                                            | `python3 -I sysex_desc.py`                                                                                            |
-| `sysex_rx_ids.py`            | the ids an incoming SysEx can set                                           | `python3 -I sysex_rx_ids.py`                                                                                          |
-| `callrefs.py`, `idrefs.py`   | the callers of an address; the functions that load an id                    | `python3 -I callrefs.py 0x4845a0be`                                                                                   |
-| `dv.py`                      | named disassembly of a range (`tools/dis_view.py` with its symbol-list fix) | `python3 -I dv.py 0x48458705 0x48458830`                                                                              |
-| `romread.py`, `padtables.py` | helpers: read the image by CPU address; align Markdown tables               | imported / `python3 -I padtables.py < in.md`                                                                          |
+| script                                                 | question it answers                                                                | command                                                                                                               |
+|--------------------------------------------------------|------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| `song_tables.py`                                       | the length table, whitelists, presets, encoder and value-size hashes               | `python3 -I song_tables.py`                                                                                           |
+| `song_event_census.py`                                 | which statuses and A/F ids occur in song page data                                 | `python3 -I song_event_census.py ROM demo*_pages.bin` (pages from kn7000_mame `tools/slideshow/demo_song_extract.py`) |
+| `sysex_desc.py`                                        | M3 id to transmit SysEx template                                                   | `python3 -I sysex_desc.py`                                                                                            |
+| `sysex_rx_ids.py`                                      | the ids an incoming SysEx can set                                                  | `python3 -I sysex_rx_ids.py`                                                                                          |
+| `callrefs.py`, `idrefs.py`                             | the callers of an address; the functions that load an id                           | `python3 -I callrefs.py 0x4845a0be`                                                                                   |
+| `dv.py`                                                | named disassembly of a range (`tools/dis_view.py` with its symbol-list fix)        | `python3 -I dv.py 0x48458705 0x48458830`                                                                              |
+| `romread.py`, `padtables.py`                           | helpers: read the image by CPU address; align Markdown tables                      | imported / `python3 -I padtables.py < in.md`                                                                          |
+| `../../mn10300-names-probes/songtable_m3_set_kinds.py` | what setting id 0x80 runs: PutM3Em's class tables and the kind setters             | from `kn7000/`: `python3 -I notes/mn10300-names-probes/songtable_m3_set_kinds.py`                                     |
+| `../../mn10300-names-probes/songtable_sysex_rx.py`     | the type-4 SysEx descriptors and sub-handlers; the context template's source bytes | from `kn7000/`: `python3 -I notes/mn10300-names-probes/songtable_sysex_rx.py`                                         |
+| `../../mn10300-names-probes/songtable_song_ids.py`     | record and callers of each unknown song id                                         | from `kn7000/`: `python3 -I notes/mn10300-names-probes/songtable_song_ids.py`                                         |
+| `../../mn10300-names-probes/songtable_demo_tempo.py`   | the demo songs' tempo events and lead-in                                           | from `kn7000/`: `python3 -I notes/mn10300-names-probes/songtable_demo_tempo.py`                                       |

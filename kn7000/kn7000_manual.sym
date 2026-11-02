@@ -2926,6 +2926,95 @@
 0x48448D15  SoundNameGet            ; the sound's 16-character name (MSB 0x10 / 0x11 / 0x18 / 0x19 named apart), else "Sound Name Error"
 0x48448E7C  SoundIconFetch          ; SoundIconGet's icon, 0 when the sound is not found
 ;
+; ---- SOUND ARRANGER ('ZZZJ' records, battery SRAM 0x84030FE8 / records 0x84030FF8) -- lane mn10300-names, songtable 2026-11-02
+0x4843FACD  StyleIdToPresetOrdinal ; (d0 = rhythm id) -> 0..219: the style counts (GenreStyleTable +0x11) of the genres before the rhythm's own plus its index (ResolveStyleId); -1 for ids with bits 0x700000 (CUSTOM, MEMORY, composer) or when func_484360F4 refuses. The SOUND ARRANGER record number
+0x4843FAD2  StyleIdToPresetOrdinal_entry
+0x4843FB49  SndArgPartEntry        ; (d0 = M3 part 0x13..0x1A) -> the record entry, table 0x485B73A0 (Acc1-5 -> 3..7, Bass -> 2, Drum -> 0, Perc -> 1); else -1 -- retf leaf
+0x4843FCA2  SndArgIsOn             ; (d0 = rhythm id) -> 1 when bit 7 of its record's first byte is set (the arranger is ON for that rhythm), 0 when clear, < 0 without a record
+0x4843FCA5  SndArgIsOn_entry
+0x4843FCE6  SndArgOnSet            ; (d0 = rhythm id, d1 = on) set / clear bit 7 of the record's first byte
+0x4843FCEB  SndArgOnSet_entry
+0x4843FE37  SndArgPartVoiceGet     ; (d0 = rhythm id, a0 = in/out word part<<24, a1 = out flag) word := part<<24 | msb<<16 | lsb<<8 | prog of the part's entry; flag := bit 7 (CC94 on) for entries 2..7, else 0
+0x4843FE3C  SndArgPartVoiceGet_entry
+0x4843FEAF  SndArgCurPartVoiceGet  ; SndArgPartVoiceGet for GetM3EmVal(0xC000), the current rhythm (TtSndArg)
+0x4843FEB4  SndArgCurPartVoiceGet_entry
+0x4843FECE  SndArgPartVoiceSet     ; (d0 = rhythm id, d1 = part<<24 | msb<<16 | lsb<<8 | prog, stack flag) store the entry: entry 0 keeps its ON bit, entry 1 clears bit 7, entries 2..7 take bit 7 from the flag; then func_48443C5A
+0x4843FED3  SndArgPartVoiceSet_entry
+0x4843FF83  SndArgCurPartVoiceSet  ; SndArgPartVoiceSet for the current rhythm (MainSNDARG_SetSndaParaCur, TtSndArg)
+0x4843FF88  SndArgCurPartVoiceSet_entry
+0x4843FFA4  SndArgRecordIfOn       ; (d0 = rhythm id) -> its record number when the arranger is ON, else -1 (callers store it at 0x5003A472 for func_48441DEB)
+0x4843FFA9  SndArgRecordIfOn_entry
+0x4843FFD0  SndArgTemplateApply    ; (d0 = record, d1 = style part 0..7, a0 = part template 0x5003A37C + part*0x18) template +2..+4 := the entry's prog & 0x7F, bank LSB, MSB (entry from table 0x485B7396); +5 (CC94) := 127 when bit 7 is set in entries 2..7, else 0
+0x4843FFD5  SndArgTemplateApply_entry
+0x4844003A  SndArgImportZZZ        ; (a0 = a block starting 'ZZZ', count at +6 <= 0xDC, +7 == 0) convert its records (five 2-byte entries from +0x10, through func_484346E9) into the SRAM table, entries 0, 2, 3, 4, 5; the block is read by func_48437D57 at file offset 0x5800 / 0x640 / 0x6A0 [INFERENCE: another model's file]
+0x4844003F  SndArgImportZZZ_entry
+0x48440158  SndArgSramUpgrade      ; SRAM 0x84030FE8 holds 'ZZZJ',0,'K' + u16BE count (8 bytes) or 'ZZZI' (6): reload the factory records from that count to 219 (SramRecordsLoadFactory) and write the 0x485B7370 signature; else -1
+0x4844015D  SndArgSramUpgrade_entry
+; ---- style part template (0x5003A37C, 8 x 0x18 fields of the part-field table 0x485B77D4)
+0x48440659  StylePartTemplateDefault ; -> a0 = the 24-field default template 0x485B7804 (fields 15..23 = 0, 0, 127, 0, 0, 64, 64, 64, 64)
+0x4844085D  StylePartFieldEmit     ; (d0 = channel, d1 = field 0..23, a1 = part template, a0 = previous) send field k as table 0x485B77D4[k] says: B0 -> CC table.cc := a1[k]; C0 -> program a1[2..4]; D0 -> a1[k]; E0 -> bend a1[0x13], a1[0x14]
+0x48440862  StylePartFieldEmit_entry
+0x4844187A  StyleTemplateLoadParts ; copy 15 bytes of each of the 8 part set-ups (pointers 0x50034BAC[], func_48433F13) into the part template 0x5003A37C; the MEMORY blocks' bytes 15..23 are never read
+0x4844187F  StyleTemplateLoadParts_entry
+0x48441DEB  StyleTemplateRebuild   ; (d0 = SOUND ARRANGER record or -1) StyleTemplateLoadParts, apply the stream's set-up events (B0/C0/...), then SndArgTemplateApply for the 8 parts when d0 >= 0 and StyleVariationNameFlagGet() is 0, then func_484418AC (emit fields 0..14)
+0x48441DF0  StyleTemplateRebuild_entry
+; ---- PERFORMANCE PAD flags (built-in pad +0x12, TPAD record +0x1A: bit 0 LOOP, bit 1 SYNCHRO, bit 2/3 [INFERENCE] fixed-chord pad / Min)
+0x48431D21  PadCopyBuiltinToUser   ; (d0 = user pad, d1 = built-in pad id) name, the two 15-byte set-ups (to +0x28 / +0x40), +0x10/+0x11/+0x12 := id & 0x7F, id >> 7, 0, +0x18..+0x1A := the pad's bars, beats, flags, then the stream into the TPAD heap
+0x48431D26  PadCopyBuiltinToUser_entry
+0x48432472  UserPadSynchroGet      ; current user pad (func_48431F13_Var): TPAD +0x1A & 2
+0x48432475  UserPadSynchroGet_entry
+0x4843248B  UserPadSynchroSet      ; (d0) set / clear TPAD +0x1A bit 1 (MainPAD_SetUserPadSync)
+0x4843248E  UserPadSynchroSet_entry
+0x484324CE  UserPadLoopGet         ; TPAD +0x1A & 1
+0x484324D1  UserPadLoopGet_entry
+0x484324E7  UserPadLoopSet         ; (d0) set / clear TPAD +0x1A bit 0 (MainPAD_SetUserPadLoop)
+0x484324EA  UserPadLoopSet_entry
+0x4843259F  UserPadRecChordGet     ; TPAD +0x13, RECORD KEY/CHORD (bits 0-3 key, bit 4 Min; FE_PadRecSetKey / FE_PadRecSetChord)
+0x484325A2  UserPadRecChordGet_entry
+0x484325B4  UserPadRecChordSet     ; (d0) TPAD +0x13 := d0 (MainPAD_SetUserPadRecordChord)
+0x484325B9  UserPadRecChordSet_entry
+0x48433FE8  PadSelectById          ; (d0 = pad id) folded index: built-in pad (func_4843443E) or a user / CUSTOM pad -> 0x50034C34, kind 0x50122DD8
+0x48433FED  PadSelectById_entry
+0x48434096  PadBindBuiltin         ; bind the selected built-in pad: name, set-up pointers (+0x16, stride 15), 0x50122E04..06 := +0x10..+0x12 (bars, beats, flags), stream +0x37
+0x4843409B  PadBindBuiltin_entry
+0x48434121  PadBindUser            ; the TPAD twin: set-ups +0x28 stride 0x18, 0x50122E04..06 := +0x18..+0x1A
+0x48434126  PadBindUser_entry
+0x4843440A  PadCurLoopGet          ; 0x50122E06 & 1 -- retf leaf
+0x48434417  PadCurSynchroGet       ; 0x50122E06 & 2 -- retf leaf
+0x48434424  PadCurFlag2Get         ; 0x50122E06 & 4 [INFERENCE: fixed-chord pad]; RhyNoteOnVoice, PadRecPtChdGrid, PadPartSetGrid1/2 -- retf leaf
+0x48434239  PadFlagsById           ; (d0 = pad id) -> the flags byte: built-in +0x12, user / CUSTOM +0x1A
+0x4843423E  PadFlagsById_entry
+0x48434591  PadNameGet             ; (d0 = pad id, a0 = buffer) copy the pad's name
+0x48434596  PadNameGet_entry
+0x48434611  PadSynchroById         ; PadFlagsById & 2
+0x48434614  PadSynchroById_entry
+0x48434621  PadFlag2ById           ; PadFlagsById & 4
+0x48434624  PadFlag2ById_entry
+; ---- MEMORY (TCMP) variation head
+0x4843C0ED  MemVarEffectPartGet    ; (d0 = 0/1) the current variation's +0x18 + d0, EFFECT PART 1/2 (CmpPartSetGrid2)
+0x4843C0F2  MemVarEffectPartGet_entry
+0x4843C10D  MemVarEffectPartSet    ; (d0 = 0/1, d1 = part or 0xFF) store it, then func_4843CB41 (MainCMP_SetCmpEffectPart)
+0x4843C112  MemVarEffectPartSet_entry
+0x4843C149  MemVarRecChordGet      ; the current variation's +0x03, RECORD KEY/CHORD; in slots 12-19 bit 4 (Min) forced from the A/B parity
+0x4843C14E  MemVarRecChordGet_entry
+0x4843C186  MemVarRecChordSet      ; (d0) +0x03 := d0 (MainCMP_SetCmpRecordChord)
+0x4843C18B  MemVarRecChordSet_entry
+; ---- M3 set path and source tags
+0x4C015E50  M3SetByKind            ; type-0 setter: jump through func_4C015E50_Table 0x4858C318 by the trie record's kind (+6, 0..0x24); 15-byte stubs from 0x4C015E76
+0x4C015E55  M3SetByKind_entry
+0x4C016C5C  M3SetPmemNumber        ; kind-9 setter (id 0x000080): store (func_4C016050, M3SendProcess), then PmemRecallOnSet unless the flag argument has bit 0 (PutM3Em passes 0)
+0x4C016C61  M3SetPmemNumber_entry
+0x4C021827  PmemRecallOnSet        ; (d0 = M3 word, d1 = n) n = 1..0x68: recall panel memory n (func_4C0234CF, func_4C021F33, ...); source 1 with GetM3EmVal(0x81) set takes func_4C0233BA / func_4C021EEE / func_4C023444 instead [INFERENCE: MEMORY SET store]
+0x4C02182C  PmemRecallOnSet_entry
+0x4C0216A3  M3SetSpecialDispatch   ; PutM3Em's first step: for class 0x00/0x20/0x60/0x70/0xB0/0xC0/0xD0/0xE0 walk the {mask, value, handler} triples at 0x48731E44.. and call each match; -1 when none (0x80 has none)
+0x4C0216A8  M3SetSpecialDispatch_entry
+0x484B9B2E  MidiChanSourceTag      ; channel-message result (contexts 0x50150AE4 / 0x50150D04): +0x1D bit 0 -> word += 0x20000000 (source 2), bit 1 -> += 0x60000000 (source 6)
+0x484B9B30  MidiChanSourceTag_entry
+0x484BFBEA  SysexSourceTag         ; SysEx result (context 0x50151B90): +0x1F bit 0 -> word += 0x30000000 (source 3), bit 1 -> += 0x60000000; 72 SysEx handlers call it
+0x484BFBEF  SysexSourceTag_entry
+0x484C1B6F  SysexTechnicsType4     ; descriptor type 4 (F0 50 21..33 7E 31 1F .., F0 50 7E 01 00, F0 50 2C 20 31 1F 7F gg ss ..): needs context +0x1F bits 0x01 and 0x40, then by the descriptor's sub (+6): 2, 5, 8, 0xB, 0xC, 0xE..0x17 -> func_484C1D13 .. func_484C2E55; the others ignored
+0x484C1B72  SysexTechnicsType4_entry
+;
 ; ==== BEGIN GENERATED by tools/port_sibling_names.py -- do not edit by hand ====
 ; Names carried from other MN10300 images where a routine is the same code, linked
 ; elsewhere (tools/port_sibling_names.py; the rules are in tools/fn_similarity.py,
