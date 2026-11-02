@@ -3330,7 +3330,7 @@ class Gen:
                         r = k
                         continue
                     vals = [int.from_bytes(row[2 * c:2 * c + 2], "little") for c in range(64)]
-                    out.append("\t.short\t" + ", ".join(f"0x{v:04x}" for v in vals) + f"\t# row {r}")
+                    out.append("\t.word\t" + ", ".join(f"0x{v:04x}" for v in vals) + f"\t# row {r}")
                     r += 1
                 return out
             self.add(a, n, lab, "code map", render)
@@ -3587,7 +3587,7 @@ class Gen:
             unit = next((u for u in (4, 2) if S % u == 0 and (a % u == 0) and size % u == 0), 1)
 
             def render(g, it, o=o, n=n, S=S, w=w, unit=unit, cite=cite, size=size, foff=foff, pad=pad):
-                d = {1: ".byte", 2: ".short", 4: ".long"}[unit]
+                d = {1: ".byte", 2: ".word", 4: ".long"}[unit]
                 padl = [f"\t.byte\t" + ", ".join(f"0x{c:02x}" for c in g.rom[o + size:o + size + pad])
                         + "\t# the marker's fill to a 4-byte boundary"] if pad else []
 
@@ -3874,14 +3874,14 @@ class Gen:
             def rpar(g, it, o=self.off(par), n=n, plen=plen):
                 vals = [int.from_bytes(g.rom[o + 2 * k:o + 2 * k + 2], "little") for k in range(plen // 2)]
                 return [f"{it.label}:\t# the parameters (u16 x {n}) of the preset after them; 0xFFFF pads to 4 bytes",
-                        "\t.short\t" + ", ".join(f"0x{v:x}" if v >= 0x8000 else str(v) for v in vals)]
+                        "\t.word\t" + ", ".join(f"0x{v:x}" if v >= 0x8000 else str(v) for v in vals)]
 
             def rrec(g, it, o=o, n=n, d=d, dref=dref, key=key, own=own, plab=plab, var=var):
                 nm_ = g.rom[o:o + 16]
                 return [f"{it.label}:\t# FX preset record (FxPresetGet{'' if not var else ' / FxPresetVarGet'}): "
                         f"name, descriptor index, parameter count, parameters, key",
                         f'\t.ascii\t"{c_escape(nm_)}"', "\t.byte\t0, 0",
-                        f"\t.short\t{d}, {n}, 0\t# descriptor index" + (f" ({dref}, FxDescTable[{d}])" if dref else "")
+                        f"\t.word\t{d}, {n}, 0\t# descriptor index" + (f" ({dref}, FxDescTable[{d}])" if dref else "")
                         + "; parameter count",
                         f"\t.long\t{plab}", f"\t.long\t0x{key:x}\t# key" + (" (FxPreset" + ("Var" if var else "")
                                                                           + "Table[key] is this record)" if own else "")]
@@ -3939,7 +3939,7 @@ class Gen:
                 continue
             x, t = hit
             cite = f"{re.sub(r'_entry$', '', x.func or '?')} 0x{x.cpu or 0:08X}: `{' '.join(x.insn.split())}` / `{t}`"
-            d = {1: ".byte", 2: ".short", 4: ".long"}[w]
+            d = {1: ".byte", 2: ".word", 4: ".long"}[w]
 
             def render(g, it2, w=w, d=d, cite=cite, tab=it.label):
                 return [f"{it2.label}:\t{d}\t0x{(1 << 8 * w) - 1:x}\t# the end marker of {tab}: {cite} stops at it"]
