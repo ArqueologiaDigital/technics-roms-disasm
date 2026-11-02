@@ -22,3 +22,17 @@ s/\bSeMenu_TransferPartValues\b/SeLfo_GetEntryElement/g
 # SeMenu_TransferPartValues_EndData (A = LFO kind) stores in (XBC) the page's selected LFO number (RAM 0x68D /
 # 0x68E / 0x68F), forcing it into 1..4.
 s/\bSeMenu_TransferPartValues_EndData\b/SeLfo_GetSelectedLfo/g
+# (added 2026-11-02, second pass) The CONTROLLER page's request helpers (audio/semenu_routines.s,
+# audio/sound_editor_ui.s).  UpdSeSel_DetailedUpdate_SetDisplayState_Helper stores the page's remembered selection
+# (RAM 0x695) clamped into 1..6, default 1.
+s/\bUpdSeSel_DetailedUpdate_SetDisplayState_Helper\b/SeCtr2_GetSelection/g
+# ..._Helper2 maps selection 1 / 2 / 5 / 6 to the sound record's controller-group base 0x17 / 0x1A / 0x23 / 0x26.
+s/\bUpdSeSel_DetailedUpdate_SetDisplayState_Helper2\b/SeCtr2_GetGroupBase/g
+# ..._Helper3 is its drum-kit twin: 0x15 / 0x18 / 0x21 / 0x24 in the kit-instrument layout.
+s/\bUpdSeSel_DetailedUpdate_SetDisplayState_Helper3\b/SeCtr2_GetKitGroupBase/g
+# UpdSeSel_DetailedUpdate_Helper5 requests the six FUNCTION bytes 0x18 + 3 k and the selected group's DEPTH and tone
+# switches, and stores the group base in page param 13; _Helper6 does the same for a drum kit (0x16 + 3 k).
+s/\bUpdSeSel_DetailedUpdate_Helper5\b/SeCtr2_RequestGroupValues/g
+s/\bUpdSeSel_DetailedUpdate_Helper5_Loop\b/SeCtr2_RequestGroupValues_Loop/g
+s/\bUpdSeSel_DetailedUpdate_Helper6\b/SeCtr2_RequestKitGroupValues/g
+s/\bUpdSeSel_DetailedUpdate_Helper6_Loop\b/SeCtr2_RequestKitGroupValues_Loop/g

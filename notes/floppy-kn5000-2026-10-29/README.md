@@ -210,7 +210,7 @@ Census `kn5000-floppy` after this pass: **generic 0**.
 - **Typed but unnamed**: fields named `f<offset>`, `b_<offset>`, `p<n>` carry a TODO saying what
   was tried. (2026-10-31, lane kn5000-style: the panel fields are named from the firmware's SndParam
   descriptors, the DSP slot parameters per effect, the SQT and TM TODO fields settled by recorded reader
-  searches; 125 panel bytes keep `f<offset>`: notes/kn5000-style-2026-10-31/README.md. 2026-11-02: 63 remain, the DSP
+  searches; 125 panel bytes keep `f<offset>`: notes/kn5000-style-2026-10-31/README.md. 2026-11-02: 1 remains (blocked), the DSP
   slot bytes are packed per effect and spelled with one macro per effect: notes/open6-kn5000-d/panel/README.md.) (The style bank's `r0c_*`, `gN_*`, `t*`, `hdr_04` and `hdr_30` are named since
   2026-10-31: `scripts/build/style_bank_layout.py`.) Long unnamed stretches are `.byte`
   rows under a neutral name. Examples: SQT slot +0x113..+0x2df (461 B, zeroed by the song init,
@@ -230,7 +230,8 @@ Census `kn5000-floppy` after this pass: **generic 0**.
 5. Are envelope pairs 2/3 of the sound record target-then-rate or the reverse? Which UI caption
    is each LFO byte, and what are the controller groups (`specs/tm_sound_record.json` notes)? (Envelopes and LFOs
    resolved 2026-11-02: time first, then level, in all three envelopes; every byte named from the SOUND EDIT pages,
-   notes/open6-kn5000-d/panel/README.md. The controller groups are still open.)
+   notes/open6-kn5000-d/panel/README.md. The controller groups are {tone switches, FUNCTION, DEPTH}, group 0 the
+   fixed PITCH BEND assignment, groups 1..6 the CONTROLLER page's FUNCTION selections, same notes.)
 6. Should `style_bank_extra.json`'s readings be adopted, in both lanes at once? (Resolved: the owner decided on 2026-10-31 to adopt them, verified against v10; both
    describers import `scripts/build/style_bank_layout.py`; notes/kn5000-style-2026-10-31/README.md.)
 

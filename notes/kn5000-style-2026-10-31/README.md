@@ -212,12 +212,14 @@ orphans, not a second link convention.
   handlers send each caption's value with the byte's offset as the element, so PITCH / AMPLITUDE / FILTER ENV are named
   byte by byte (time first, then level: ATK, PEAK, DECAY1, SUST1 ...), the twelve LFO entries are DEPTH, SPEED,
   TOUCH + KEYSYNC, WAVE + DELAY, and block +0x06 / +0x26 / +0x38 are the tones' LFO switches. The sub-CPU disagreement
-  is two record kinds (tone block vs drum-kit instrument). Still open: the controller groups +0x14..+0x28 (next step:
-  the SeCtr2 / SeCtr3 handlers, there).
+  is two record kinds (tone block vs drum-kit instrument). The seven controller groups +0x14..+0x28 are {tone
+  switches, FUNCTION, DEPTH}: group 0 the fixed PITCH BEND assignment, groups 1..6 the CONTROLLER page's FUNCTION
+  selections 1..6 (only which physical controller each page row is stays unread: the rows are icons).
 - **125 panel bytes** keep `f<offset>`: 62 named 2026-11-02 (notes/open6-kn5000-d/panel/README.md section 1): the
   companion records 0xC0..0xD7 and 0x49 are the per-group "last sound / style" memory (`ptlv_part_vari`,
   `ptlv_style_vari`), the descriptor pattern no longer drops 11 descriptors, MSP bank and Composer bend range are
-  named from their readers. 63 remain, each listed there with what is known.
+  named from their readers. Second pass: of the other 63, `conductor_flags` (0x90 +1) is named, 61 have no reader in
+  v5..v10 (probes/panel_f_readers.py) and are `reserved_<off>`, and 0x80 +4 is blocked (copied, never tested).
 - **DSP slot packing**: established 2026-11-02 for every effect (notes/open6-kn5000-d/panel/README.md section 2):
   `DSPCfg_ReadMultiField` / `DSPCfg_ReadField` give each parameter a width by its op letter (big-endian words, packed
   5/6-bit fields, bytes); every typed DSP slot record of the floppies decodes in range, and each is spelled with a
