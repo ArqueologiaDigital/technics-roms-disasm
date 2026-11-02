@@ -22591,10 +22591,10 @@ PanelLed_SetOrClearRequestBits:
 ;   (notes/naming-pilot-2026-10-06/proposals_wave11_a11.json)
 PanelLed_SetCompareFlag:
 	link XIZ,0x0000                                      ; FDA829  ee 0c 00 00
-	ld (0x216e:16), 0x00                                 ; FDA82D  f1 6e 21 00 00
+	ld (PanelLed_CompareFlag:16), 0x00                                 ; FDA82D  f1 6e 21 00 00
 	cp (XIZ+0x08),0x00                                   ; FDA832  8e 08 3f 00
 	jr z, .LFDA83D                                       ; FDA836  66 05
-	ld (0x216e:16), 0x01                                 ; FDA838  f1 6e 21 00 01
+	ld (PanelLed_CompareFlag:16), 0x01                                 ; FDA838  f1 6e 21 00 01
 .LFDA83D:
 	unlk XIZ                                             ; FDA83D  ee 0d
 	ret                                                  ; FDA83F  0e
