@@ -130,9 +130,89 @@ passes, whose count is their own):
 | kn2400 | 513           | 1        | 6           | 2      | 439      | 65         |
 | hdsx3  | 17            | 0        | 0           | 0      | 6        | 11         |
 
-The opaque pieces left by the census classes the register's O- rows count
-(`../mn10300-data-probes/opaque_left.py --classes`) are in the report of this lane (ITEM-OUTCOMES) and in
-section 4. Census figures (read-only): see the end of this note.
+The opaque pieces by the census classes the register's O- rows count (`../mn10300-data-probes/opaque_left.py
+--classes`, main -> this branch; what is left and why: section 4):
+
+| tree   | class        | where         | pieces / bytes before | pieces / bytes after |
+|--------|--------------|---------------|-----------------------|----------------------|
+| 941    | 7-bit values | RAM image     | 807 / 2,754           | 52 / 108             |
+| 941    | 7-bit values | program flash | 173 / 1,707           | 150 / 1,421          |
+| 941    | address-like | RAM image     | 1 / 4                 | 1 / 4                |
+| 941    | address-like | program flash | 75 / 1,284            | 70 / 380             |
+| 941    | binary       | RAM image     | 222 / 891             | 9 / 35               |
+| 941    | binary       | program flash | 551 / 24,067          | 402 / 11,903         |
+| 941    | printable    | program flash | 244 / 3,034           | 228 / 1,931          |
+| 941    | total        |               | 2,073 / 33,741        | 912 / 15,782         |
+| 942    | 7-bit values | RAM image     | 807 / 2,754           | 52 / 108             |
+| 942    | 7-bit values | program flash | 175 / 1,735           | 152 / 1,449          |
+| 942    | address-like | RAM image     | 1 / 4                 | 1 / 4                |
+| 942    | address-like | program flash | 76 / 500              | 74 / 396             |
+| 942    | binary       | RAM image     | 222 / 891             | 9 / 35               |
+| 942    | binary       | program flash | 564 / 22,564          | 404 / 11,748         |
+| 942    | printable    | program flash | 249 / 2,710           | 225 / 1,915          |
+| 942    | total        |               | 2,094 / 31,158        | 917 / 15,655         |
+| 935    | 7-bit values | RAM image     | 807 / 2,754           | 52 / 108             |
+| 935    | 7-bit values | program flash | 183 / 2,441           | 162 / 2,066          |
+| 935    | address-like | RAM image     | 1 / 4                 | 1 / 4                |
+| 935    | address-like | program flash | 87 / 1,316            | 82 / 412             |
+| 935    | binary       | RAM image     | 222 / 891             | 9 / 35               |
+| 935    | binary       | program flash | 549 / 23,889          | 400 / 11,725         |
+| 935    | printable    | program flash | 241 / 3,317           | 223 / 1,960          |
+| 935    | total        |               | 2,090 / 34,612        | 929 / 16,310         |
+| 893    | 7-bit values | RAM image     | 807 / 2,754           | 52 / 108             |
+| 893    | 7-bit values | program flash | 174 / 1,865           | 154 / 1,623          |
+| 893    | address-like | program flash | 71 / 484              | 69 / 380             |
+| 893    | binary       | RAM image     | 222 / 891             | 9 / 35               |
+| 893    | binary       | program flash | 549 / 23,888          | 400 / 11,724         |
+| 893    | printable    | RAM image     | 1 / 4                 | 1 / 4                |
+| 893    | printable    | program flash | 252 / 3,453           | 233 / 1,969          |
+| 893    | total        |               | 2,076 / 33,339        | 918 / 15,843         |
+| kn6000 | 7-bit values | RAM image     | 668 / 2,242           | 51 / 108             |
+| kn6000 | 7-bit values | program flash | 81 / 1,749            | 57 / 1,459           |
+| kn6000 | address-like | RAM image     | 6 / 160               | 6 / 160              |
+| kn6000 | address-like | program flash | 162 / 3,016           | 158 / 2,120          |
+| kn6000 | binary       | RAM image     | 227 / 904             | 9 / 32               |
+| kn6000 | binary       | program flash | 785 / 28,246          | 644 / 18,994         |
+| kn6000 | printable    | program flash | 246 / 3,668           | 220 / 1,781          |
+| kn6000 | total        |               | 2,175 / 39,985        | 1,145 / 24,654       |
+| kn6500 | 7-bit values | RAM image     | 668 / 2,242           | 51 / 108             |
+| kn6500 | 7-bit values | program flash | 78 / 2,067            | 54 / 1,777           |
+| kn6500 | address-like | RAM image     | 6 / 160               | 6 / 160              |
+| kn6500 | address-like | program flash | 148 / 2,965           | 143 / 2,065          |
+| kn6500 | binary       | RAM image     | 226 / 902             | 8 / 30               |
+| kn6500 | binary       | program flash | 812 / 31,840          | 681 / 21,240         |
+| kn6500 | printable    | program flash | 251 / 4,036           | 233 / 1,754          |
+| kn6500 | total        |               | 2,189 / 44,212        | 1,176 / 27,134       |
+| kn2400 | 7-bit values | RAM image     | 785 / 2,816           | 1 / 4                |
+| kn2400 | 7-bit values | program flash | 271 / 6,712           | 104 / 1,890          |
+| kn2400 | address-like | RAM image     | 3 / 88                | 3 / 88               |
+| kn2400 | address-like | program flash | 90 / 3,090            | 85 / 2,186           |
+| kn2400 | binary       | RAM image     | 190 / 760             | 2 / 8                |
+| kn2400 | binary       | program flash | 1,268 / 43,038        | 736 / 19,532         |
+| kn2400 | printable    | RAM image     | 4 / 212               | 4 / 208              |
+| kn2400 | printable    | program flash | 274 / 4,510           | 257 / 3,397          |
+| kn2400 | total        |               | 2,885 / 61,226        | 1,192 / 27,313       |
+| hdsx3  | 7-bit values | RAM image     | 20 / 68               | 5 / 20               |
+| hdsx3  | 7-bit values | program flash | 1 / 8                 | 1 / 8                |
+| hdsx3  | address-like | RAM image     | 3 / 16                | 3 / 16               |
+| hdsx3  | address-like | program flash | 2 / 55                | 2 / 55               |
+| hdsx3  | binary       | RAM image     | 47 / 188              | 7 / 28               |
+| hdsx3  | binary       | program flash | 19 / 102              | 19 / 102             |
+| hdsx3  | printable    | program flash | 3 / 157               | 3 / 157              |
+| hdsx3  | total        |               | 95 / 594              | 40 / 386             |
+
+**Census figures** (read-only, on the merged branch): `scripts/analysis/data_incbin_census.py --compare
+docs/coverage/data-incbin-2026-10-31-03.json` exits 0 (generic 0 everywhere, nothing rose).
+`scripts/analysis/doc_quality_census.py --compare docs/coverage/doc-quality-2026-10-31-03.json` exits 1 for 24
+figures: the 12 KN5000 ones ((d) `.byte` runs after a terminator, v5..v10) rise on main 6da8e5593 itself (this
+lane changes no KN5000 file); the 12 MN10300 ones -- (a) routines without a header: 941 +6, 942 +1, 935 +6,
+893 +1, KN2400 +6, KN6000 +7, KN6500 +29; (c) `loc_<hex>` locals +2 .. +25 -- are code addresses the newly typed
+records name (their handler fields: `code_refs.txt` gains 6 in 941, 27 in the KN6000, 60 in the KN6500, 2 in the
+KN2400), each now a labelled routine or local without a header comment, as in lane callee-walk.
+
+**Gates** (worktree, `kn7000/build/*.labels` deleted first, after the merge with main 6da8e5593): `make
+gate-kn7000 gate-kn6000 gate-kn6500 gate-kn2400 gate-hdsx3` exits 0 (53 OK lines, no FAIL) and `make -C
+kn7000 symbols-check` exits 0.
 
 
 ## Regenerating
