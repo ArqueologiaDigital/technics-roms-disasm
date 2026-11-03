@@ -57,6 +57,13 @@ The law makes the new (root, rate) pair exactly equivalent.
 | the 1,020 recordings no parameter record selects (drum-kit zones, unused entries)             | **inferred**: corr is taken as 0 (1,352 of the 1,416 kit-zone corrections are 0) and the root as 66, the pitch16 0x4280 point      |
 | the output clock does not enter the derivation                                              | the law is fitted against absolute pitch, so the rate is samples per second at the key, whatever the DAC rate                      |
 
+Re-measured 2026-11-03, after the KN7000 WAVs were merged into one per recording and trimmed to its end
+(`../../kn7000/notes/wave-roms-2026-10-29.md`, "Recording lines"): `loop_period_check.py` gives 625 of 719
+(wrong pitch class: mean 75.9) and the autocorrelation 697 of 719. The conclusion stands; the counts moved
+because the alternate starts' loops are now counted once, under their recording's rate, and 20 records
+with LOOP_END but no LOOP_START gained their loop from sample 0. The rates and root notes in the headers
+are unchanged.
+
 The output clocks were checked anyway:
 - **KN5000:** IC303's crystal X301 is a 33.8688 MHz part (QSXG1I3386A in the replacement parts list; the
   schematic prints "36.8688MHz"). That is 768 x 44,100 Hz, so IC303's output rate is 44.1 kHz. This is an
@@ -114,7 +121,8 @@ Why it stays BLOCKED:
 - **Hardware documents.** None is known for the TG LSIs, KN5000 IC303 TC183C230002 or KN7000 C1BB00000709.
   A patent search found only other makers' schemes; Kawai's US4876935 multiplies 8-bit data by an envelope.
 - **Data.** None of the 548 searchable 8-bit KN7000 recordings (of 959) has a 16-bit copy in either stream
-  (`gain_law_duplicates.py`). A copy would have let the law be measured per segment.
+  (`gain_law_duplicates.py`). A copy would have let the law be measured per segment. (Re-run 2026-11-03, after
+  the KN7000 WAVs were merged to one per recording: 520 searchable of 874, still 0 with a 16-bit copy.)
 - **What would settle it:** a line-out recording, on the owner's KN7000, of a sound built from 8-bit
   segments with rising codes (e.g. STRINGS, whose attack runs through codes 5..0), compared with the
   segment levels, or a datasheet.

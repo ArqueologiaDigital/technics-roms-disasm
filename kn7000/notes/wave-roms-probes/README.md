@@ -6,17 +6,19 @@ no ROM data is written. numpy is needed. Each runs in about a second; the `wave_
 up to 9 s, and the ones marked "from `kn7000/`" also read the git-ignored `baserom/kn7000_table.rom` and
 `baserom/kn7000_wave_*.bin` that `make` writes, and the 'JK' archive source `src/table/voices/internal_archive.s`.
 
-| script                  | question it answers                                                                                                                                                                                                                                 | run                                                 |
-|-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|
-| `wavestream.py`         | (library) joins a pair into its stream, reads a page's directory and a record                                                                                                                                                                       | imported by the others                              |
-| `layout_probe.py`       | what each 2 MiB page holds (entries, 8-bit entries, recordings, record words, first recording, end fill), and do the rules R1-R8 the source relies on hold everywhere                                                                               | `python3 layout_probe.py`                           |
-| `loop_probe.py`         | do the records' LOOP_START / LOOP_END marks, counted in granules of 2^(K+4) samples, fall where the data repeats its loop's first 32 samples after the end (and with L/2, 2L as controls)                                                           | `python3 loop_probe.py`                             |
-| `format_probe.py`       | does directory word P bit 3 mean "two 8-bit samples per word" (lag-1 correlation as 8-bit against as 16-bit, per recording)                                                                                                                         | `python3 format_probe.py`                           |
-| `wave_page_order.py`    | could a permutation of whole pages hide in the dump: how many page orders let every one of the 5,215 tone-database zones name an existing entry, and for those left, which keeps each sound's recordings falling in period as its zones rise in key | `python3 -I wave_page_order.py` (from `kn7000/`)    |
-| `wave_reverse_entry.py` | what is `Main_P00_E0AF` (P bit 9 set): what its B points at, how it relates to entry 0x0AE, and which sounds play the two                                                                                                                           | `python3 -I wave_reverse_entry.py` (from `kn7000/`) |
-| `wave_record_extent.py` | where does each recording end (every record word is a run of granules, a value below 0x80 one granule), what lies between recordings, which starts are alternate starts into another recording                                                      | `python3 -I wave_record_extent.py`                  |
-| `wave_split_list.py`    | what the split list belongs to: one granule per value, how alike those granules are, and how the values of two entries over the same recording differ with their keys                                                                               | `python3 -I wave_split_list.py` (from `kn7000/`)    |
-| `wave_port_readers.py`  | which instructions of program 941 touch the TG ports, at which offset: can any firmware code read the wave ROMs besides the service checksum                                                                                                        | `python3 -I wave_port_readers.py`                   |
+| script                  | question it answers                                                                                                                                                                                                                                                       | run                                                                                  |
+|-------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| `wavestream.py`         | (library) joins a pair into its stream, reads a page's directory and a record                                                                                                                                                                                             | imported by the others                                                               |
+| `layout_probe.py`       | what each 2 MiB page holds (entries, 8-bit entries, recordings, record words, first recording, end fill), and do the rules R1-R8 the source relies on hold everywhere                                                                                                     | `python3 layout_probe.py`                                                            |
+| `loop_probe.py`         | do the records' LOOP_START / LOOP_END marks, counted in granules of 2^(K+4) samples, fall where the data repeats its loop's first 32 samples after the end (and with L/2, 2L as controls)                                                                                 | `python3 loop_probe.py`                                                              |
+| `format_probe.py`       | does directory word P bit 3 mean "two 8-bit samples per word" (lag-1 correlation as 8-bit against as 16-bit, per recording)                                                                                                                                               | `python3 format_probe.py`                                                            |
+| `wave_page_order.py`    | could a permutation of whole pages hide in the dump: how many page orders let every one of the 5,215 tone-database zones name an existing entry, and for those left, which keeps each sound's recordings falling in period as its zones rise in key                       | `python3 -I wave_page_order.py` (from `kn7000/`)                                     |
+| `wave_reverse_entry.py` | what is `Main_P00_E0AF` (P bit 9 set): what its B points at, how it relates to entry 0x0AE, and which sounds play the two                                                                                                                                                 | `python3 -I wave_reverse_entry.py` (from `kn7000/`)                                  |
+| `wave_record_extent.py` | where does each recording end (every record word is a run of granules, a value below 0x80 one granule), what lies between recordings, which starts are alternate starts into another recording                                                                            | `python3 -I wave_record_extent.py`                                                   |
+| `wave_split_list.py`    | what the split list belongs to: one granule per value, how alike those granules are, and how the values of two entries over the same recording differ with their keys                                                                                                     | `python3 -I wave_split_list.py` (from `kn7000/`)                                     |
+| `wave_port_readers.py`  | which instructions of program 941 touch the TG ports, at which offset: can any firmware code read the wave ROMs besides the service checksum                                                                                                                              | `python3 -I wave_port_readers.py`                                                    |
+| `wave_runout_halves.py` | where the 9 run-outs that are not a copy of their loop's first 32 samples come from: first half the loop's own, second half words 16-31 from the loop start of which earlier recording                                                                                    | `python3 -I wave_runout_halves.py`                                                   |
+| `wav_merge_counts.py`   | what merging the WAVs into one per recording and trimming them to the recording's end changed (files, bytes, merged, trimmed), and that no sample changed and every loop and cue lies inside its file; reads the committed WAVs of a git revision and of the tree, no ROM | `python3 -I wav_merge_counts.py [--ffprobe]` (from the repo; 9 min with `--ffprobe`) |
 
 ## The signals, and the results of 2026-10-29
 
@@ -62,3 +64,29 @@ up to 9 s, and the ones marked "from `kn7000/`" also read the git-ignored `baser
 - `wave_port_readers.py`: the wave-ROM latches +6 / +8 / +A of both ports are used by 10 labels, all inside the
   checksum core 0x484839A1..0x48483B11; no instruction loads a port address into a register as a base.
 
+
+## The results of 2026-11-03 (lane wav-merge)
+
+- `wave_runout_halves.py`: MAIN 496 run-outs, 490 exact, 6 "halves", 0 other; SUB 362, 359 exact, 3 halves,
+  0 other. Each of the 9 is the loop's own first 16 words, then words 16-31 from the loop start of an earlier
+  recording of its page: MAIN `P03_W053` and `P03_W054` from `P03_W04E` (8-bit), `P06_W048` from `P06_W031`
+  (8-bit), `P0A_W015`..`P0A_W017` from `P0A_W014`; SUB `P08_W029`..`P08_W02B` from `P08_W028`. Those 16 words
+  occur 2 to 5 times in the page, always at that loop start + 16 or in a run-out that copies it.
+- `wav_merge_counts.py --ffprobe` (before = 1c5221133, after = the merged tree), per TG:
+
+  | what                                                       | MAIN                         | SUB                          |
+  |------------------------------------------------------------|------------------------------|------------------------------|
+  | WAV files before                                           | 2,250 (34,185,192 B)         | 1,431 (33,532,570 B)         |
+  | WAV files after                                            | 2,178 (34,182,754 B)         | 1,402 (33,534,926 B)         |
+  | merged: recordings with cue points / alternate-start WAVs  | 40 / 72                      | 21 / 29                      |
+  | trimmed recordings                                         | 500                          | 367                          |
+  | ... run-out only / zero words only / both                  | 447 / 4 / 49                 | 341 / 5 / 21                 |
+  | sample bytes removed (run-outs and zero words)             | 33,056                       | 21,600                       |
+  | data chunks equal to the old pieces' samples               | 2,178 of 2,178               | 1,402 of 1,402               |
+  | removed tails that are run-out plus zero words only        | 500 of 500                   | 367 of 367                   |
+  | files with every smpl loop and cue inside the data         | 2,178 of 2,178               | 1,402 of 1,402               |
+  | files ffprobe opens with a positive duration               | 2,178 of 2,178               | 1,402 of 1,402               |
+
+  All: 3,681 files, 67,717,762 B before; 3,580 files, 67,717,680 B after. The bytes barely move: the
+  54,656 B of samples removed and the 101 headers that went are offset by the longer ICMT comments and the
+  cue / adtl chunks.

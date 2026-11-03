@@ -55,11 +55,12 @@
   "title": "KN7000 941: SdReadBlockCmd_* / func_484ABA68_Var* data labels to rename"
  },
  "L-mn10300-names-wav-merge": {
-  "status": "BLOCKED",
-  "blocker": "owner decision: merge the WAV files into one per recording (alternate starts as cue points) and trim the run-outs? It would change about 100 and 850 WAV files (lane mn10300-names, 2026-11-02: \"an owner decision, not done\")",
+  "status": "RESOLVED",
+  "size": "M",
   "area": "KN7000",
-  "source": "kn7000/notes/wave-roms-2026-10-29.md:374",
-  "title": "KN7000 wave WAVs: one per recording with cue points, run-outs trimmed?"
+  "source": "kn7000/notes/wave-roms-2026-10-29.md:412",
+  "title": "KN7000 wave WAVs: one per recording with cue points, run-outs trimmed?",
+  "evidence": "lane wav-merge (2026-11-03), the owner said yes: d1b8aa461 (tools), 8efff976c (regen), a12f4afa4 (media): 3,681 WAVs -> 3,580, 101 alternate starts merged as cue points into 61 recordings, 867 trimmed; kn7000/notes/wave-roms-probes/wav_merge_counts.py, wave_runout_halves.py; kn7000/notes/wave-roms-2026-10-29.md \"Recording lines\""
  },
  "L-mn10300-rest-fxdesc-pnum": {
   "status": "RESOLVED",
