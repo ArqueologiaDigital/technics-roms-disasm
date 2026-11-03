@@ -19,6 +19,11 @@ SIGNAL: for each recording with a smpl loop in kn7000/src/wave/{main,sub}_wav.ts
 RUN  python3 notes/sound-probes/loop_period_check.py     (numpy; reads kn7000/wav/, committed)
 Printed 2026-10-31: all loops 728 of 821 (null 82.2); corr not whole semitones: 611 of 702 (null mean 74.3,
   max 87); audio: the derived T wins in 682 of 702.
+Printed 2026-11-03, after the WAV merge (kn7000/notes/wave-roms-2026-10-29.md, "Recording lines"): all loops
+  749 of 852 (null 85.0, max 93); corr not whole semitones: 625 of 719 (null mean 75.9, max 87); audio: 697 of
+  719.  The counts moved because an alternate start has no manifest row of its own any more (its loop, the
+  same as its recording's, is counted once, under the recording's rate), loops that ended past an old piece
+  are now in the recording's smpl chunk, and the 20 LOOP_END-only records gained their loop from sample 0.
 """
 import math
 from pathlib import Path

@@ -83,13 +83,34 @@ def ic307_items(manifest):
     return out
 
 
+K7_PAGE = 0x200000                  # bytes of a KN7000 stream page
+
+
 def kn7000_items(tg):
+    """[(start, end, label, bits)] of every KN7000 directory start in stream bytes, in order.  Since
+    2026-11-03 the manifest holds one row per recording, its alternate starts as cue points (`cues`,
+    `pos:label:text|...`, pos in samples), and the row ends where the recording ends; so each start is taken
+    to run to the next start (or its page's end), the item the source and the WAV files had before."""
     tsv = ROOT / f"kn7000/src/wave/{tg}_wav.tsv"
     out = []
     if tsv.exists():
-        for line in tsv.read_text(encoding="utf-8").splitlines()[1:]:
-            f = line.split("\t")
-            out.append((int(f[1], 0), int(f[2], 0), f[0], int(f[3])))
+        lines = tsv.read_text(encoding="utf-8").splitlines()
+        head = lines[0].split("\t")
+        st = []
+        for line in lines[1:]:
+            r = dict(zip(head, line.split("\t")))
+            a, bits = int(r["start"], 0), int(r["bits"])
+            st.append((a, r["label"], bits))
+            if r.get("cues", "-") not in ("", "-"):
+                for c in r["cues"].split("|"):
+                    pos, lab, _ = c.split(":", 2)
+                    st.append((a + int(pos) * bits // 8, lab, bits))
+        st.sort()
+        for i, (a, lab, bits) in enumerate(st):
+            e = (a // K7_PAGE + 1) * K7_PAGE
+            if i + 1 < len(st):
+                e = min(e, st[i + 1][0])
+            out.append((a, e, lab, bits))
     else:
         for line in (ROOT / f"kn7000/src/wave/{tg}.s").read_bytes().split(b"\n"):
             m = K7.match(line)

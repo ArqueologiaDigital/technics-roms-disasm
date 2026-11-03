@@ -9,18 +9,23 @@
 # checks every layout rule the source relies on (and stops if one does not hold), and writes:
 #   - every directory entry as `.word` fields with symbolic pointers to its record and its recording;
 #   - every record as `.word` parameter words spelled with the constants of src/wave/wave_format.inc;
-#   - every recording as one labelled `.incbin` of its raw item build/wav_pcm/<tg>/<label>.pcm, which
+#   - every recording as a labelled `.incbin` of its raw item build/wav_pcm/<tg>/<label>.pcm, which
 #     ../scripts/build/pcm_wav.py makes from the recording's WAV file wav/<tg>/<name>.wav (committed
 #     since 2026-10-31; `make wave-wav` re-extracts a missing one from the reference stream), with its
-#     format, size and the entries that play it.  The item is cut where the record grammar says the
-#     recording ends (notes/wave-roms-probes/wave_record_extent.py): an explicit loop's 32-sample run-out
-#     is its own line, `<label>_RunOut`, read from the loop's first 32 samples, and zero words after the
-#     recording are `.space`.  The WAV keeps the whole item, so the media do not change with the cut;
+#     format, size and the entries that play it.  ONE WAV PER RECORDING, ending where the record grammar
+#     says the recording ends (notes/wave-roms-probes/wave_record_extent.py; the owner's decision of
+#     2026-11-03): an ALTERNATE START (a directory start inside an earlier recording) is a slice of that
+#     recording's item under its own label, and a cue point in its WAV (the manifest's `cues` column);
+#     an explicit loop's 32-sample run-out is its own line, `<recording>_RunOut`, read from the loop's
+#     first 32 samples (the 9 that are not a copy: their first half from the loop, their second half from
+#     an earlier recording's loop start, wave_runout_halves.py), and zero words after the recording are
+#     `.space`.  Neither is in the WAV;
 #   - a reversed entry (P bit 9, PREV; notes/wave-roms-probes/wave_reverse_entry.py) has no recording of
 #     its own: its B is spelled as the negated unit address of the recording it plays backwards;
 #   - the erased fill that ends a page as `.space N, 0xff`;
-#   - beside the source, src/wave/<tg>_wav.tsv: the WAV manifest pcm_wav.py reads (where each recording
-#     is in the stream, its bit depth, the WAV's name, sample rate, loops and unity note; no sample data).
+#   - beside the source, src/wave/<tg>_wav.tsv: the WAV manifest pcm_wav.py reads, one row per recording
+#     (where it is in the stream, its bit depth, the WAV's name, sample rate, loops, unity note and the
+#     alternate starts' cue points; no sample data).
 # The committed .s files are the result; the build does not run this.  Format: notes/wave-roms-2026-10-29.md;
 # the WAV files: notes/media-files-2026-10-30/README.md.
 #
@@ -81,7 +86,10 @@ def load_rates(path):
 
 def loop_of(words, P):
     """(start, end) of the record's explicit loop, in samples from the recording's start, or None:
-    segments of (256 - value) granules of 2^(K+4) samples; LOOP_START / LOOP_END at a segment's end"""
+    segments of (256 - value) granules of 2^(K+4) samples; LOOP_START / LOOP_END at a segment's end.
+    A LOOP_END with no LOOP_START before it loops from the first sample (wave_record_extent.py: the
+    run-out repeats the recording's first 32 samples in 20 of 20; since 2026-11-03 the WAV's smpl
+    chunk carries that loop too)"""
     L = 1 << ((P & 7) + 4)
     pos, ls, le = 0, None, None
     for v in words:
@@ -92,6 +100,8 @@ def loop_of(words, P):
                 ls = pos
             if fl & 2:
                 le = pos
+                if fl == 2 and ls is None:
+                    ls = 0
         if fl & 2:
             break
     return (ls, le) if ls is not None and le is not None and le > ls else None
@@ -275,88 +285,148 @@ def page_source(s, p, pre, ref, tg, names, rates):
             w(f"{lead}\t.word\t" + ", ".join(fields[i:i + WORDS_PER_LINE]))
         w("\t.align\t4")
     w("\t.align\t32")
-    w(f"# recordings: one WAV file each, wav/{tg['tg']}/ (make wave-wav), through ../scripts/build/pcm_wav.py")
+    w(f"# recordings: one WAV file each, wav/{tg['tg']}/ (make wave-wav), through ../scripts/build/pcm_wav.py;")
+    w(f"# an alternate start is a slice of its recording's raw item and a cue point in its WAV")
     rows = []
-    for i, B in enumerate(starts):
-        a = B * 16
-        b = starts[i + 1] * 16 if i + 1 < len(starts) else end
-        fmts = {ents[j][1] & 8 for j in users[B]}
+    recs_h = [B for B in starts if home[B] == B]
+    m_of, body_of, lab_of = {}, {}, {}
+    for B in recs_h:                            # format and WAV extent of every recording, for the run-out search
+        grp = [x for x in starts if home[x] == B]
+        fmts = {ents[j][1] & 8 for x in grp for j in users[x]}
         if len(fmts) != 1:
-            raise LayoutError(f"page {p}: recording at {a:#x} is played as 8-bit and as 16-bit")
-        nsamp = (b - a) * (2 if fmts.pop() else 1)
-        kind = "8-bit" if ents[users[B][0]][1] & 8 else "16-bit"
-        who = " ".join(f"{j:03X}" for j in users[B])
-        lab = wname[B]
+            raise LayoutError(f"page {p}: recording at {B * 16:#x} is played as 8-bit and as 16-bit")
+        m_of[B] = 2 if fmts.pop() else 1
+        R, lw = reach[B]
+        body_of[B] = lw[1] if lw else R
+    for hi, H in enumerate(recs_h):
+        grp = [x for x in starts if home[x] == H]
+        a = H * 16
+        b = recs_h[hi + 1] * 16 if hi + 1 < len(recs_h) else end
+        m = m_of[H]
+        kind = "16-bit" if m == 1 else "8-bit"
+        R, lw = reach[H]
+        body = body_of[H]
+        if R > b:
+            raise LayoutError(f"page {p}: recording {a:#x} ends at {R:#x}, past the next one at {b:#x}")
+        if R <= a:
+            raise LayoutError(f"page {p}: recording {a:#x} has no extent")
+        nsamp = (body - a) * m
+        lab = wname[H]
         k5, nm = names.get(lab, ("", ""))
         wav = f"{lab}_{nm}.wav" if nm else f"{lab}.wav"
         pcm = f"build/wav_pcm/{tg['tg']}/{lab}.pcm"
-        why = (f"census: generated -- ../scripts/build/pcm_wav.py, from wav/{tg['tg']}/{wav}: {nsamp} {kind} samples, "
-               f"entr{'y' if len(users[B]) == 1 else 'ies'} {who}")
-        if home[B] != B:
-            why += f"; an alternate start into {wname[home[B]]}'s recording, which plays on through it"
-        for j in backwards.get(B, []):
-            why += f"; entry {j:03X} plays it backwards (PREV)"
-        R, lw = reach[home[B]]
-        if R > b:                               # the recording goes on in the next item
-            w(f"{lab}:\t.incbin\t\"{pcm}\", 0, {2 * (b - a)}\t; {why}")
-        else:
-            if R <= a:
-                raise LayoutError(f"page {p}: item {a:#x} lies past its recording's end {R:#x}")
-            body = R
-            if lw:                              # an explicit loop: its run-out on a line of its own
-                ls, le, m = lw
-                r = RUNOUT // m
-                if le + r != R:
-                    raise LayoutError(f"page {p}: loop end {le:#x} + run-out != recording end {R:#x}")
-                body = le
-            w(f"{lab}:\t.incbin\t\"{pcm}\", 0, {2 * (body - a)}\t; {why}")
-            if body < R:
-                src = max((x for x in starts if x * 16 <= ls), default=None) if ls is not None else None
-                nxt_src = starts[starts.index(src) + 1] * 16 if src is not None and src != starts[-1] else end
-                if (src is not None and ls + r <= nxt_src
-                        and list(s[base + ls: base + ls + r]) == list(s[base + le: base + le + r])):
-                    w(f"{lab}_RunOut:\t.incbin\t\"build/wav_pcm/{tg['tg']}/{wname[src]}.pcm\", {2 * (ls - src * 16)}, {2 * r}"
-                      f"\t; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first {RUNOUT} samples "
-                      f"again ({wname[src]} from sample {(ls - src * 16) * m}; loop_probe.py)")
-                else:
-                    diff = (sum(1 for x, y in zip(s[base + ls: base + ls + r], s[base + le: base + le + r]) if x != y)
-                            if ls is not None else None)
-                    w(f"{lab}_RunOut:\t.incbin\t\"{pcm}\", {2 * (le - a)}, {2 * r}"
-                      f"\t; census: generated -- ../scripts/build/pcm_wav.py, from wav/{tg['tg']}/{wav}: the run-out after the loop end, "
-                      + (f"not a copy of the loop's first {RUNOUT} samples ({diff} of {r} words differ)" if ls is not None
-                         else "for a loop without LOOP_START"))
-            if R < b:
-                if any(s[base + R: base + b]):
-                    raise LayoutError(f"page {p}: non-zero words between the recording's end {R:#x} and {b:#x}")
-                w(f"\t.space\t{2 * (b - R)}, 0\t; zero words to the next recording")
-        Es = sorted({(ents[j][1] >> 4) & 0x1F for j in users[B]})
+        src_note = f"../scripts/build/pcm_wav.py, from wav/{tg['tg']}/{wav}"
+        cues = []
+        for k, B in enumerate(grp):
+            p0 = B * 16
+            p1 = grp[k + 1] * 16 if k + 1 < len(grp) else body
+            if p1 <= p0:
+                raise LayoutError(f"page {p}: alternate start {p0:#x} lies past its recording's samples ({body:#x})")
+            who = " ".join(f"{j:03X}" for j in users[B])
+            ent = f"entr{'y' if len(users[B]) == 1 else 'ies'} {who}"
+            if B == H:
+                why = f"census: generated -- {src_note}: {nsamp} {kind} samples, {ent}"
+                if len(grp) > 1:
+                    why += f"; this line is samples 0-{(p1 - a) * m - 1}, up to the alternate start {wname[grp[1]]}"
+            else:
+                cpos = (p0 - a) * m
+                why = (f"census: generated -- {src_note}: samples {cpos}-{(p1 - a) * m - 1} of {lab}'s recording, {ent}: "
+                       f"an alternate start into it (cue point {wname[B]} in the WAV), which plays on to its end")
+                Es = sorted({(ents[j][1] >> 4) & 0x1F for j in users[B]})
+                text = (f"{ent} (select 0x{p:02X}{users[B][0]:03X}), pitch exponent E {', '.join(map(str, Es))}: "
+                        f"an alternate start {cpos} samples into the recording; it plays on to the recording's end")
+                if wname[B] in rates:
+                    rr = rates[wname[B]]
+                    text += (f"; on its own {rr[3]} Hz at root key {rr[2]} (TG read rate; "
+                             f"{'from the tone database' if 'zone(s)' in rr[4] else 'pitch exponent only'})")
+                if wname[B] in names:
+                    text += f"; the same audio as KN5000 IC307 {names[wname[B]][0]} (which holds every other word)"
+                cues.append((cpos, wname[B], text))
+            for j in backwards.get(B, []):
+                why += f"; entry {j:03X} plays it backwards (PREV)"
+            w(f"{wname[B]}:\t.incbin\t\"{pcm}\", {2 * (p0 - a)}, {2 * (p1 - p0)}\t; {why}")
+        if lw:                                  # an explicit loop: its run-out on a line of its own
+            ls, le, _m = lw
+            r = RUNOUT // m
+            h = r // 2
+            if le + r != R or le != body:
+                raise LayoutError(f"page {p}: loop end {le:#x} + run-out != recording end {R:#x}")
+            if not a <= ls < le:
+                raise LayoutError(f"page {p}: loop start {ls:#x} outside its recording {a:#x}..{le:#x}")
+            if ls + r > le:
+                raise LayoutError(f"page {p}: loop {ls:#x}..{le:#x} is shorter than its run-out")
+            ro = list(s[base + le: base + le + r])
+            if list(s[base + ls: base + ls + r]) == ro:
+                w(f"{lab}_RunOut:\t.incbin\t\"{pcm}\", {2 * (ls - a)}, {2 * r}"
+                  f"\t; census: generated -- {src_note}: the run-out, the loop's first {RUNOUT} samples again "
+                  f"(from sample {(ls - a) * m}; loop_probe.py)")
+            else:
+                # loop_probe.py: 9 run-outs are not a copy.  Their first half is the loop's first half; their
+                # second half is the second half of an EARLIER recording's loop start, the same in every
+                # recording of a run (notes/wave-roms-probes/wave_runout_halves.py)
+                donor = None
+                if list(s[base + ls: base + ls + h]) == ro[:h]:
+                    for D in reversed(recs_h[:hi]):
+                        ld = reach[D][1]
+                        if (ld and ld[0] + r <= body_of[D]
+                                and list(s[base + ld[0] + h: base + ld[0] + r]) == ro[h:]):
+                            donor = (D, ld[0])
+                            break
+                if donor is None:
+                    raise LayoutError(f"page {p}: run-out of {lab} is neither a copy of its loop start nor "
+                                      f"explained by an earlier recording's (wave_runout_halves.py)")
+                D, ld = donor
+                w(f"{lab}_RunOut:\t.incbin\t\"{pcm}\", {2 * (ls - a)}, {2 * h}"
+                  f"\t; census: generated -- {src_note}: the run-out, NOT a copy of the loop's first {RUNOUT} samples: "
+                  f"its first {h} words are the loop's first {h} again (from sample {(ls - a) * m}; loop_probe.py)")
+                w(f"\t.incbin\t\"build/wav_pcm/{tg['tg']}/{wname[D]}.pcm\", {2 * (ld + h - D * 16)}, {2 * h}"
+                  f"\t; census: generated -- ../scripts/build/pcm_wav.py, from wav/{tg['tg']}/"
+                  f"{(wname[D] + '_' + names[wname[D]][1]) if names.get(wname[D], ('', ''))[1] else wname[D]}.wav: "
+                  f"and its last {h} words are words {h}-{r - 1} from the loop start of {wname[D]}, an earlier "
+                  + ("8-bit " if m_of[D] == 2 else "") + f"recording (wave_runout_halves.py: every run-out of "
+                  f"this kind takes its second half from one such loop; an authoring artefact [INFERENCE])")
+        if R < b:
+            if any(s[base + R: base + b]):
+                raise LayoutError(f"page {p}: non-zero words between the recording's end {R:#x} and {b:#x}")
+            w(f"\t.space\t{2 * (b - R)}, 0\t; zero words to the next recording")
+        Es = sorted({(ents[j][1] >> 4) & 0x1F for j in users[H]})
         # one E for all its entries, and a MIDI note
         unity = f"{unity_note(Es[0]):.4f}" if len(Es) == 1 and 0 <= unity_note(Es[0]) < 128 else "-"
         rate = str(WAV_RATE)
         if lab in rates:
             rate, unity, root, hz, basis = rates[lab]
-        loops, seen, beyond = [], set(), 0
-        for j in users[B]:
-            lp = loop_of(recs[j], ents[j][1])
-            if lp is None:
-                continue
-            if lp[1] > nsamp:
-                beyond += 1
-            elif lp not in seen:
-                seen.add(lp)
-                loops.append(f"{j}:{lp[0]}:{lp[1] - 1}")
-        cmt = (f"KN7000 {tg['tgname']} tone generator, page 0x{p:02X}, entr{'y' if len(users[B]) == 1 else 'ies'} {who} "
-               f"(select 0x{p:02X}{users[B][0]:03X}); {kind}; pitch exponent E {', '.join(map(str, Es))}")
+        loops, seen = [], set()
+        for B in grp:
+            off = (B * 16 - a) * m
+            for j in users[B]:
+                lp = loop_of(recs[j], ents[j][1])
+                if lp is None:
+                    continue
+                lp = (lp[0] + off, lp[1] + off)
+                if lp[1] > nsamp:
+                    raise LayoutError(f"page {p}: entry {j:03X}'s loop ends at {lp[1]}, past its recording's {nsamp} samples")
+                if lp not in seen:
+                    seen.add(lp)
+                    loops.append(f"{j}:{lp[0]}:{lp[1] - 1}")
+        who = " ".join(f"{j:03X}" for j in users[H])
+        cmt = (f"KN7000 {tg['tgname']} tone generator, page 0x{p:02X}, entr{'y' if len(users[H]) == 1 else 'ies'} {who} "
+               f"(select 0x{p:02X}{users[H][0]:03X}); {kind}; pitch exponent E {', '.join(map(str, Es))}")
         if lab in rates:
             cmt += (f"; {rates[lab][3]} Hz at root key {rates[lab][2]} (TG read rate; "
                     f"{'from the tone database' if 'zone(s)' in rates[lab][4] else 'pitch exponent only'})")
         if k5:
             cmt += f"; the same audio as KN5000 IC307 {k5} (which holds every other word)"
-        if beyond:
-            cmt += f"; {beyond} loop(s) end past this item, left out"
-
-        rows.append([lab, f"{2 * (base + a):#x}", f"{2 * (base + b):#x}", "8" if kind == "8-bit" else "16",
-                     rate, wav, unity, ",".join(loops) or "-", cmt])
+        if cues:
+            cmt += (f"; alternate start{'s' if len(cues) > 1 else ''} (cue points): "
+                    + ", ".join(f"{c[1]} at sample {c[0]}" for c in cues))
+        if lw:
+            cmt += f"; ends at its loop end (the {RUNOUT}-sample run-out is in the source only)"
+        for c in cues:
+            if "|" in c[2] or "\t" in c[2]:
+                raise LayoutError(f"{c[1]}: cue text holds a separator")
+        rows.append([lab, f"{2 * (base + a):#x}", f"{2 * (base + body):#x}", "8" if m == 2 else "16",
+                     rate, wav, unity, ",".join(loops) or "-", cmt,
+                     "|".join(f"{c[0]}:{c[1]}:{c[2]}" for c in cues) or "-"])
     if fill:
         w(f"{pg}_Fill:\t.space\t{2 * fill}, 0xff\t; erased fill to the page end")
     return out, dict(n=n, n8=n8, recs=len(starts), recwords=pos - 4 * n, fill=2 * fill), rows
@@ -398,10 +468,11 @@ def main():
         "# Format, evidence and open questions: notes/wave-roms-2026-10-29.md.",
         "#",
         "# The recordings are WAV files, one each, in wav/<tg>/ (committed since 2026-10-31; `make wave-wav`",
-        "# re-extracts a missing one from the reference stream).  An item is cut where its recording ends:",
-        "# `<label>_RunOut` is an explicit loop's 32-sample run-out, read from the loop's first samples, and",
-        "# `.space N, 0` the zero words before the next recording; the WAV still holds the whole item",
-        "# (notes/wave-roms-probes/wave_record_extent.py).",
+        "# re-extracts a missing one from the reference stream).  A WAV ends where its recording ends",
+        "# (notes/wave-roms-probes/wave_record_extent.py): `<recording>_RunOut` is an explicit loop's 32-sample",
+        "# run-out, read from the loop's first samples, and `.space N, 0` the zero words before the next",
+        "# recording; neither is in the WAV.  An alternate start into a recording is a slice of the",
+        "# recording's raw item and a cue point in its WAV.",
         "# ../scripts/build/pcm_wav.py turns each back into the raw item build/wav_pcm/<tg>/<label>.pcm that",
         "# its .incbin below reads: 16-bit = signed little-endian, the WAV data as it is; 8-bit = two signed",
         f"# samples per word, low byte first, WAV byte = ROM byte ^ 0x80.  Manifest: src/wave/{sys.argv[1]}_wav.tsv.",
@@ -415,10 +486,12 @@ def main():
         f.write("\n".join(head + body) + "\n")
     man = os.path.join(os.path.dirname(sys.argv[3]), f"{sys.argv[1]}_wav.tsv")
     with open(man, "w", encoding="utf-8") as f:
-        f.write("label\tstart\tend\tbits\trate\twav\tunity\tloops\tcomment\n")
+        f.write("label\tstart\tend\tbits\trate\twav\tunity\tloops\tcomment\tcues\n")
         for r in rows:
             f.write("\t".join(r) + "\n")
-    print(f"wrote {sys.argv[3]}: {sum(st['n'] for st in stats)} entries, {sum(st['recs'] for st in stats)} recordings")
+    print(f"wrote {sys.argv[3]}: {sum(st['n'] for st in stats)} entries, {sum(st['recs'] for st in stats)} starts; "
+          f"{man}: {len(rows)} recordings, one WAV each, {sum(len(r[9].split('|')) for r in rows if r[9] != '-')} "
+          f"alternate starts as cue points")
     return 0
 
 

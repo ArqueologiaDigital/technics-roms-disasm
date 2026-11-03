@@ -32,6 +32,14 @@ data, only where each recording is and how it is encoded:
     unity   smpl chunk MIDI unity note as a decimal note number (40.7656 = note 40 + 0.7656 semitone), or `-`
     loops   smpl chunk loops `id:start:end,...` in samples, end inclusive, or `-`
     comment the WAV's LIST/INFO ICMT text
+    cues    (optional column) cue points `pos:label:text|pos:label:text...`, pos in samples from the WAV's
+            first sample: a `cue ` chunk, and a LIST/adtl chunk with each cue's `labl` (the label) and
+            `note` (the text).  The KN7000 manifests use it for the ALTERNATE STARTS: a second directory
+            entry into one recording, which the source reads as a slice of that recording's raw item
+            (kn7000/notes/wave-roms-2026-10-29.md, "Where a recording ends"); `-` or absent = none
+
+A loop or a cue that does not lie inside the recording is an error (in `extract`, `build`, `verify` and
+`retag` alike), so a manifest whose loop points disagree with its lengths cannot produce a WAV.
 
 THE MAPPING IS EXACT BOTH WAYS.
     16-bit: the WAV `data` chunk IS the ROM bytes (WAV 16-bit PCM is signed little-endian).
@@ -83,6 +91,35 @@ def info_text(s):
     return b
 
 
+def parse_loops(row):
+    """[(id, start, end)] of a manifest row's `loops` column, in samples, end inclusive"""
+    if row.get("loops", "-") in ("", "-"):
+        return []
+    return [tuple(int(x) for x in l.split(":")) for l in row["loops"].split(",")]
+
+
+def parse_cues(row):
+    """[(pos, label, text)] of a manifest row's `cues` column; [] for `-` or a manifest without it"""
+    c = row.get("cues", "-")
+    if c in ("", "-"):
+        return []
+    out = []
+    for item in c.split("|"):
+        pos, label, text = item.split(":", 2)
+        out.append((int(pos), label, text))
+    return out
+
+
+def check_points(row, nsamp, loops, cues):
+    """every smpl loop (end inclusive) and every cue lies inside the recording's nsamp samples"""
+    for ident, s, e in loops:
+        if not 0 <= s <= e < nsamp:
+            raise WavError(f"{row['label']}: loop {ident} {s}..{e} does not lie inside its {nsamp} samples")
+    for pos, label, _ in cues:
+        if not 0 <= pos < nsamp:
+            raise WavError(f"{row['label']}: cue {label} at sample {pos} does not lie inside its {nsamp} samples")
+
+
 def make_wav(raw, row):
     bits, rate = row["bits"], row["rate"]
     ba = bits // 8
@@ -92,8 +129,9 @@ def make_wav(raw, row):
         info += chunk(b"ICMT", info_text(row["comment"]))
     info += chunk(b"ISFT", info_text("technics-roms-disasm scripts/build/pcm_wav.py"))
     body = chunk(b"fmt ", fmt) + chunk(b"LIST", info) + chunk(b"data", rom_to_wavdata(raw, bits))
-    loops = [] if row.get("loops", "-") in ("", "-") else [tuple(int(x) for x in l.split(":"))
-                                                          for l in row["loops"].split(",")]
+    loops = parse_loops(row)
+    cues = parse_cues(row)
+    check_points(row, len(raw) // ba, loops, cues)
     unity = row.get("unity", "-")
     if loops or unity not in ("", "-"):
         note, frac = 60, 0
@@ -107,6 +145,15 @@ def make_wav(raw, row):
         for ident, s, e in loops:
             smpl += struct.pack("<6I", ident, 0, s, e, 0, 0)
         body += chunk(b"smpl", smpl)
+    if cues:
+        cue = struct.pack("<I", len(cues))
+        adtl = b"adtl"
+        for ident, (pos, label, text) in enumerate(cues, 1):
+            cue += struct.pack("<II4sIII", ident, pos, b"data", 0, 0, pos)
+            adtl += chunk(b"labl", struct.pack("<I", ident) + info_text(label))
+            if text:
+                adtl += chunk(b"note", struct.pack("<I", ident) + info_text(text))
+        body += chunk(b"cue ", cue) + chunk(b"LIST", adtl)
     return b"RIFF" + struct.pack("<I", 4 + len(body)) + b"WAVE" + body
 
 
@@ -141,6 +188,7 @@ def wav_to_rom(blob, row, name):
     if len(data) != n:
         raise WavError(f"{name}: {len(data)} data bytes, but {row['label']} occupies {n} bytes of the ROM "
                        f"(the next recording starts there; keep the length)")
+    check_points(row, n * 8 // bits, parse_loops(row), parse_cues(row))
     return wavdata_to_rom(data, bits)
 
 

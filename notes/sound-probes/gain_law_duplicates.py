@@ -12,6 +12,9 @@ METHOD: for each 8-bit recording (kn7000/src/wave/{main,sub}_wav.tsv), take the 
 READS kn7000/baserom/kn7000_wave_{main,sub}.bin (git-ignored; `make -C kn7000` joins them, SHA-1 checked).
 RUN  python3 notes/sound-probes/gain_law_duplicates.py      (numpy; about 1 minute)
 Printed 2026-10-31: 548 of the 959 8-bit recordings have such a window; 0 have a 16-bit copy.
+Printed 2026-11-03, after the WAV merge (one manifest row per recording, ending at its end): 520 of the 874
+  8-bit recordings have such a window; 0 have a 16-bit copy (the alternate starts' rows and the run-outs are
+  gone from the manifest, so fewer, longer windows are searched).
 """
 from pathlib import Path
 

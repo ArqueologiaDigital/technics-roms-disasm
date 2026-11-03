@@ -14,10 +14,11 @@
 # Format, evidence and open questions: notes/wave-roms-2026-10-29.md.
 #
 # The recordings are WAV files, one each, in wav/<tg>/ (committed since 2026-10-31; `make wave-wav`
-# re-extracts a missing one from the reference stream).  An item is cut where its recording ends:
-# `<label>_RunOut` is an explicit loop's 32-sample run-out, read from the loop's first samples, and
-# `.space N, 0` the zero words before the next recording; the WAV still holds the whole item
-# (notes/wave-roms-probes/wave_record_extent.py).
+# re-extracts a missing one from the reference stream).  A WAV ends where its recording ends
+# (notes/wave-roms-probes/wave_record_extent.py): `<recording>_RunOut` is an explicit loop's 32-sample
+# run-out, read from the loop's first samples, and `.space N, 0` the zero words before the next
+# recording; neither is in the WAV.  An alternate start into a recording is a slice of the
+# recording's raw item and a cue point in its WAV.
 # ../scripts/build/pcm_wav.py turns each back into the raw item build/wav_pcm/<tg>/<label>.pcm that
 # its .incbin below reads: 16-bit = signed little-endian, the WAV data as it is; 8-bit = two signed
 # samples per word, low byte first, WAV byte = ROM byte ^ 0x80.  Manifest: src/wave/sub_wav.tsv.
@@ -1028,7 +1029,8 @@ Sub_P00_R0CE:	.word	(Sub_P00_W0CE - Sub_P00) / 32, 256-4, REC_END
 Sub_P00_R0CF:	.word	(Sub_P00_W0CF - Sub_P00) / 32, 256-3, REC_END
 	.align	4
 	.align	32
-# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py
+# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py;
+# an alternate start is a slice of its recording's raw item and a cue point in its WAV
 Sub_P00_W000:	.incbin	"build/wav_pcm/sub/Sub_P00_W000.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W000.wav: 512 16-bit samples, entry 000
 Sub_P00_W001:	.incbin	"build/wav_pcm/sub/Sub_P00_W001.pcm", 0, 2048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W001.wav: 1024 16-bit samples, entry 001
 Sub_P00_W002:	.incbin	"build/wav_pcm/sub/Sub_P00_W002.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W002.wav: 32 16-bit samples, entry 002
@@ -1056,10 +1058,10 @@ Sub_P00_W023:	.incbin	"build/wav_pcm/sub/Sub_P00_W023.pcm", 0, 2304	; census: ge
 Sub_P00_W024:	.incbin	"build/wav_pcm/sub/Sub_P00_W024.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W024_Pipe16ftPlus8ftR.wav: 1536 16-bit samples, entry 024
 Sub_P00_W025:	.incbin	"build/wav_pcm/sub/Sub_P00_W025.pcm", 0, 4608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W025_Pipe16ftPlus8ftR.wav: 2304 16-bit samples, entry 025
 Sub_P00_W026:	.incbin	"build/wav_pcm/sub/Sub_P00_W026.pcm", 0, 5760	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W026_Pipe16ftPlus8ftR.wav: 2880 16-bit samples, entry 026
-Sub_P00_W027:	.incbin	"build/wav_pcm/sub/Sub_P00_W027.pcm", 0, 27648	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W027_FullPipeR.wav: 13856 16-bit samples, entry 027
-Sub_P00_W027_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W027.pcm", 23552, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W027 from sample 11776; loop_probe.py)
-Sub_P00_W028:	.incbin	"build/wav_pcm/sub/Sub_P00_W028.pcm", 0, 25600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W028_FullPipeR.wav: 12832 16-bit samples, entry 028
-Sub_P00_W028_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W028.pcm", 22528, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W028 from sample 11264; loop_probe.py)
+Sub_P00_W027:	.incbin	"build/wav_pcm/sub/Sub_P00_W027.pcm", 0, 27648	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W027_FullPipeR.wav: 13824 16-bit samples, entry 027
+Sub_P00_W027_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W027.pcm", 23552, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W027_FullPipeR.wav: the run-out, the loop's first 32 samples again (from sample 11776; loop_probe.py)
+Sub_P00_W028:	.incbin	"build/wav_pcm/sub/Sub_P00_W028.pcm", 0, 25600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W028_FullPipeR.wav: 12800 16-bit samples, entry 028
+Sub_P00_W028_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W028.pcm", 22528, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W028_FullPipeR.wav: the run-out, the loop's first 32 samples again (from sample 11264; loop_probe.py)
 Sub_P00_W029:	.incbin	"build/wav_pcm/sub/Sub_P00_W029.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W029_FullPipeR.wav: 6144 16-bit samples, entry 029
 Sub_P00_W02A:	.incbin	"build/wav_pcm/sub/Sub_P00_W02A.pcm", 0, 13824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W02A_FullPipeR.wav: 6912 16-bit samples, entry 02A
 Sub_P00_W02B:	.incbin	"build/wav_pcm/sub/Sub_P00_W02B.pcm", 0, 9728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W02B_FullPipeR.wav: 4864 16-bit samples, entry 02B
@@ -1097,24 +1099,24 @@ Sub_P00_W04A:	.incbin	"build/wav_pcm/sub/Sub_P00_W04A.pcm", 0, 9344	; census: ge
 Sub_P00_W04B:	.incbin	"build/wav_pcm/sub/Sub_P00_W04B.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W04B.wav: 13312 8-bit samples, entry 04B
 Sub_P00_W04C:	.incbin	"build/wav_pcm/sub/Sub_P00_W04C.pcm", 0, 11968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W04C.wav: 11968 8-bit samples, entry 04C
 Sub_P00_W04D:	.incbin	"build/wav_pcm/sub/Sub_P00_W04D.pcm", 0, 79424	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W04D.wav: 79424 8-bit samples, entry 04D
-Sub_P00_W04E:	.incbin	"build/wav_pcm/sub/Sub_P00_W04E.pcm", 0, 41856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W04E.wav: 41888 8-bit samples, entry 04E
-Sub_P00_W04E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W04E.pcm", 30848, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W04E from sample 30848; loop_probe.py)
-Sub_P00_W04F:	.incbin	"build/wav_pcm/sub/Sub_P00_W04F.pcm", 0, 41856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W04F.wav: 41888 8-bit samples, entry 04F
-Sub_P00_W04F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W04F.pcm", 30848, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W04F from sample 30848; loop_probe.py)
-Sub_P00_W050:	.incbin	"build/wav_pcm/sub/Sub_P00_W050.pcm", 0, 41856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W050.wav: 41888 8-bit samples, entry 050
-Sub_P00_W050_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W050.pcm", 30848, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W050 from sample 30848; loop_probe.py)
-Sub_P00_W051:	.incbin	"build/wav_pcm/sub/Sub_P00_W051.pcm", 0, 41856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W051.wav: 41888 8-bit samples, entry 051
-Sub_P00_W051_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W051.pcm", 30848, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W051 from sample 30848; loop_probe.py)
-Sub_P00_W052:	.incbin	"build/wav_pcm/sub/Sub_P00_W052.pcm", 0, 28800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W052_RideCymbal1.wav: 28832 8-bit samples, entry 052
-Sub_P00_W052_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W052.pcm", 19776, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W052 from sample 19776; loop_probe.py)
-Sub_P00_W053:	.incbin	"build/wav_pcm/sub/Sub_P00_W053.pcm", 0, 66112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W053.wav: 66144 8-bit samples, entry 053
-Sub_P00_W053_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W053.pcm", 35264, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W053 from sample 35264; loop_probe.py)
-Sub_P00_W054:	.incbin	"build/wav_pcm/sub/Sub_P00_W054.pcm", 0, 79360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W054.wav: 79392 8-bit samples, entry 054
-Sub_P00_W054_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W054.pcm", 48512, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W054 from sample 48512; loop_probe.py)
-Sub_P00_W055:	.incbin	"build/wav_pcm/sub/Sub_P00_W055.pcm", 0, 75008	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W055.wav: 75040 8-bit samples, entry 055
-Sub_P00_W055_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W055.pcm", 52928, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W055 from sample 52928; loop_probe.py)
-Sub_P00_W056:	.incbin	"build/wav_pcm/sub/Sub_P00_W056.pcm", 0, 61760	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W056.wav: 61792 8-bit samples, entry 056
-Sub_P00_W056_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W056.pcm", 44096, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W056 from sample 44096; loop_probe.py)
+Sub_P00_W04E:	.incbin	"build/wav_pcm/sub/Sub_P00_W04E.pcm", 0, 41856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W04E.wav: 41856 8-bit samples, entry 04E
+Sub_P00_W04E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W04E.pcm", 30848, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W04E.wav: the run-out, the loop's first 32 samples again (from sample 30848; loop_probe.py)
+Sub_P00_W04F:	.incbin	"build/wav_pcm/sub/Sub_P00_W04F.pcm", 0, 41856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W04F.wav: 41856 8-bit samples, entry 04F
+Sub_P00_W04F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W04F.pcm", 30848, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W04F.wav: the run-out, the loop's first 32 samples again (from sample 30848; loop_probe.py)
+Sub_P00_W050:	.incbin	"build/wav_pcm/sub/Sub_P00_W050.pcm", 0, 41856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W050.wav: 41856 8-bit samples, entry 050
+Sub_P00_W050_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W050.pcm", 30848, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W050.wav: the run-out, the loop's first 32 samples again (from sample 30848; loop_probe.py)
+Sub_P00_W051:	.incbin	"build/wav_pcm/sub/Sub_P00_W051.pcm", 0, 41856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W051.wav: 41856 8-bit samples, entry 051
+Sub_P00_W051_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W051.pcm", 30848, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W051.wav: the run-out, the loop's first 32 samples again (from sample 30848; loop_probe.py)
+Sub_P00_W052:	.incbin	"build/wav_pcm/sub/Sub_P00_W052.pcm", 0, 28800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W052_RideCymbal1.wav: 28800 8-bit samples, entry 052
+Sub_P00_W052_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W052.pcm", 19776, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W052_RideCymbal1.wav: the run-out, the loop's first 32 samples again (from sample 19776; loop_probe.py)
+Sub_P00_W053:	.incbin	"build/wav_pcm/sub/Sub_P00_W053.pcm", 0, 66112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W053.wav: 66112 8-bit samples, entry 053
+Sub_P00_W053_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W053.pcm", 35264, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W053.wav: the run-out, the loop's first 32 samples again (from sample 35264; loop_probe.py)
+Sub_P00_W054:	.incbin	"build/wav_pcm/sub/Sub_P00_W054.pcm", 0, 79360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W054.wav: 79360 8-bit samples, entry 054
+Sub_P00_W054_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W054.pcm", 48512, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W054.wav: the run-out, the loop's first 32 samples again (from sample 48512; loop_probe.py)
+Sub_P00_W055:	.incbin	"build/wav_pcm/sub/Sub_P00_W055.pcm", 0, 75008	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W055.wav: 75008 8-bit samples, entry 055
+Sub_P00_W055_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W055.pcm", 52928, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W055.wav: the run-out, the loop's first 32 samples again (from sample 52928; loop_probe.py)
+Sub_P00_W056:	.incbin	"build/wav_pcm/sub/Sub_P00_W056.pcm", 0, 61760	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W056.wav: 61760 8-bit samples, entry 056
+Sub_P00_W056_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W056.pcm", 44096, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W056.wav: the run-out, the loop's first 32 samples again (from sample 44096; loop_probe.py)
 Sub_P00_W057:	.incbin	"build/wav_pcm/sub/Sub_P00_W057.pcm", 0, 4480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W057.wav: 4480 8-bit samples, entry 057
 Sub_P00_W058:	.incbin	"build/wav_pcm/sub/Sub_P00_W058.pcm", 0, 4480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W058.wav: 4480 8-bit samples, entry 058
 Sub_P00_W059:	.incbin	"build/wav_pcm/sub/Sub_P00_W059.pcm", 0, 4928	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W059.wav: 4928 8-bit samples, entry 059
@@ -1139,46 +1141,46 @@ Sub_P00_W06B:	.incbin	"build/wav_pcm/sub/Sub_P00_W06B.pcm", 0, 7552	; census: ge
 Sub_P00_W06C:	.incbin	"build/wav_pcm/sub/Sub_P00_W06C.pcm", 0, 17792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W06C.wav: 8896 16-bit samples, entry 06C
 Sub_P00_W06D:	.incbin	"build/wav_pcm/sub/Sub_P00_W06D.pcm", 0, 5824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W06D.wav: 5824 8-bit samples, entry 06D
 Sub_P00_W06E:	.incbin	"build/wav_pcm/sub/Sub_P00_W06E.pcm", 0, 15104	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W06E.wav: 7552 16-bit samples, entry 06E
-Sub_P00_W06F:	.incbin	"build/wav_pcm/sub/Sub_P00_W06F.pcm", 0, 39936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W06F.wav: 19968 16-bit samples, entry 06F
-Sub_P00_W070:	.incbin	"build/wav_pcm/sub/Sub_P00_W070.pcm", 0, 44032	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W070.wav: 22080 16-bit samples, entry 070; an alternate start into Sub_P00_W06F's recording, which plays on through it
-Sub_P00_W070_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W070.pcm", 2048, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W070 from sample 1024; loop_probe.py)
+Sub_P00_W06F:	.incbin	"build/wav_pcm/sub/Sub_P00_W06F.pcm", 0, 39936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W06F.wav: 41984 16-bit samples, entry 06F; this line is samples 0-19967, up to the alternate start Sub_P00_W070
+Sub_P00_W070:	.incbin	"build/wav_pcm/sub/Sub_P00_W06F.pcm", 39936, 44032	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W06F.wav: samples 19968-41983 of Sub_P00_W06F's recording, entry 070: an alternate start into it (cue point Sub_P00_W070 in the WAV), which plays on to its end
+Sub_P00_W06F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W06F.pcm", 41984, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W06F.wav: the run-out, the loop's first 32 samples again (from sample 20992; loop_probe.py)
 	.space	64, 0	; zero words to the next recording
-Sub_P00_W071:	.incbin	"build/wav_pcm/sub/Sub_P00_W071.pcm", 0, 31744	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W071.wav: 15872 16-bit samples, entry 071
-Sub_P00_W072:	.incbin	"build/wav_pcm/sub/Sub_P00_W072.pcm", 0, 43520	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W072.wav: 21824 16-bit samples, entry 072; an alternate start into Sub_P00_W071's recording, which plays on through it
-Sub_P00_W072_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W072.pcm", 1536, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W072 from sample 768; loop_probe.py)
+Sub_P00_W071:	.incbin	"build/wav_pcm/sub/Sub_P00_W071.pcm", 0, 31744	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W071.wav: 37632 16-bit samples, entry 071; this line is samples 0-15871, up to the alternate start Sub_P00_W072
+Sub_P00_W072:	.incbin	"build/wav_pcm/sub/Sub_P00_W071.pcm", 31744, 43520	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W071.wav: samples 15872-37631 of Sub_P00_W071's recording, entry 072: an alternate start into it (cue point Sub_P00_W072 in the WAV), which plays on to its end
+Sub_P00_W071_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W071.pcm", 33280, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W071.wav: the run-out, the loop's first 32 samples again (from sample 16640; loop_probe.py)
 	.space	64, 0	; zero words to the next recording
-Sub_P00_W073:	.incbin	"build/wav_pcm/sub/Sub_P00_W073.pcm", 0, 23552	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W073.wav: 11776 16-bit samples, entry 073
-Sub_P00_W074:	.incbin	"build/wav_pcm/sub/Sub_P00_W074.pcm", 0, 40960	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W074.wav: 20544 16-bit samples, entry 074; an alternate start into Sub_P00_W073's recording, which plays on through it
-Sub_P00_W074_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W074.pcm", 1024, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W074 from sample 512; loop_probe.py)
+Sub_P00_W073:	.incbin	"build/wav_pcm/sub/Sub_P00_W073.pcm", 0, 23552	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W073.wav: 32256 16-bit samples, entry 073; this line is samples 0-11775, up to the alternate start Sub_P00_W074
+Sub_P00_W074:	.incbin	"build/wav_pcm/sub/Sub_P00_W073.pcm", 23552, 40960	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W073.wav: samples 11776-32255 of Sub_P00_W073's recording, entry 074: an alternate start into it (cue point Sub_P00_W074 in the WAV), which plays on to its end
+Sub_P00_W073_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W073.pcm", 24576, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W073.wav: the run-out, the loop's first 32 samples again (from sample 12288; loop_probe.py)
 	.space	64, 0	; zero words to the next recording
-Sub_P00_W075:	.incbin	"build/wav_pcm/sub/Sub_P00_W075.pcm", 0, 15360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W075.wav: 15360 8-bit samples, entry 075
-Sub_P00_W076:	.incbin	"build/wav_pcm/sub/Sub_P00_W076.pcm", 0, 20608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W076.wav: 20704 8-bit samples, entry 076; an alternate start into Sub_P00_W075's recording, which plays on through it
-Sub_P00_W076_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W076.pcm", 1152, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W076 from sample 1152; loop_probe.py)
+Sub_P00_W075:	.incbin	"build/wav_pcm/sub/Sub_P00_W075.pcm", 0, 15360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W075.wav: 35968 8-bit samples, entry 075; this line is samples 0-15359, up to the alternate start Sub_P00_W076
+Sub_P00_W076:	.incbin	"build/wav_pcm/sub/Sub_P00_W075.pcm", 15360, 20608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W075.wav: samples 15360-35967 of Sub_P00_W075's recording, entry 076: an alternate start into it (cue point Sub_P00_W076 in the WAV), which plays on to its end
+Sub_P00_W075_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W075.pcm", 16512, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W075.wav: the run-out, the loop's first 32 samples again (from sample 16512; loop_probe.py)
 	.space	64, 0	; zero words to the next recording
-Sub_P00_W077:	.incbin	"build/wav_pcm/sub/Sub_P00_W077.pcm", 0, 16640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W077.wav: 16640 8-bit samples, entry 077
-Sub_P00_W078:	.incbin	"build/wav_pcm/sub/Sub_P00_W078.pcm", 0, 19712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W078.wav: 19808 8-bit samples, entry 078; an alternate start into Sub_P00_W077's recording, which plays on through it
-Sub_P00_W078_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W078.pcm", 1408, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W078 from sample 1408; loop_probe.py)
+Sub_P00_W077:	.incbin	"build/wav_pcm/sub/Sub_P00_W077.pcm", 0, 16640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W077.wav: 36352 8-bit samples, entry 077; this line is samples 0-16639, up to the alternate start Sub_P00_W078
+Sub_P00_W078:	.incbin	"build/wav_pcm/sub/Sub_P00_W077.pcm", 16640, 19712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W077.wav: samples 16640-36351 of Sub_P00_W077's recording, entry 078: an alternate start into it (cue point Sub_P00_W078 in the WAV), which plays on to its end
+Sub_P00_W077_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W077.pcm", 18048, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W077.wav: the run-out, the loop's first 32 samples again (from sample 18048; loop_probe.py)
 	.space	64, 0	; zero words to the next recording
-Sub_P00_W079:	.incbin	"build/wav_pcm/sub/Sub_P00_W079.pcm", 0, 9600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W079.wav: 9600 8-bit samples, entry 079
-Sub_P00_W07A:	.incbin	"build/wav_pcm/sub/Sub_P00_W07A.pcm", 0, 17152	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W07A.wav: 17248 8-bit samples, entry 07A; an alternate start into Sub_P00_W079's recording, which plays on through it
-Sub_P00_W07A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W07A.pcm", 960, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W07A from sample 960; loop_probe.py)
+Sub_P00_W079:	.incbin	"build/wav_pcm/sub/Sub_P00_W079.pcm", 0, 9600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W079.wav: 26752 8-bit samples, entry 079; this line is samples 0-9599, up to the alternate start Sub_P00_W07A
+Sub_P00_W07A:	.incbin	"build/wav_pcm/sub/Sub_P00_W079.pcm", 9600, 17152	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W079.wav: samples 9600-26751 of Sub_P00_W079's recording, entry 07A: an alternate start into it (cue point Sub_P00_W07A in the WAV), which plays on to its end
+Sub_P00_W079_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W079.pcm", 10560, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W079.wav: the run-out, the loop's first 32 samples again (from sample 10560; loop_probe.py)
 	.space	64, 0	; zero words to the next recording
-Sub_P00_W07B:	.incbin	"build/wav_pcm/sub/Sub_P00_W07B.pcm", 0, 9600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W07B.wav: 9600 8-bit samples, entry 07B
-Sub_P00_W07C:	.incbin	"build/wav_pcm/sub/Sub_P00_W07C.pcm", 0, 16832	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W07C.wav: 16928 8-bit samples, entry 07C; an alternate start into Sub_P00_W07B's recording, which plays on through it
-Sub_P00_W07C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W07C.pcm", 1216, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W07C from sample 1216; loop_probe.py)
+Sub_P00_W07B:	.incbin	"build/wav_pcm/sub/Sub_P00_W07B.pcm", 0, 9600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W07B.wav: 26432 8-bit samples, entry 07B; this line is samples 0-9599, up to the alternate start Sub_P00_W07C
+Sub_P00_W07C:	.incbin	"build/wav_pcm/sub/Sub_P00_W07B.pcm", 9600, 16832	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W07B.wav: samples 9600-26431 of Sub_P00_W07B's recording, entry 07C: an alternate start into it (cue point Sub_P00_W07C in the WAV), which plays on to its end
+Sub_P00_W07B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W07B.pcm", 10816, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W07B.wav: the run-out, the loop's first 32 samples again (from sample 10816; loop_probe.py)
 	.space	64, 0	; zero words to the next recording
-Sub_P00_W07D:	.incbin	"build/wav_pcm/sub/Sub_P00_W07D.pcm", 0, 17920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W07D.wav: 17920 8-bit samples, entry 07D
-Sub_P00_W07E:	.incbin	"build/wav_pcm/sub/Sub_P00_W07E.pcm", 0, 34560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W07E.wav: 34656 8-bit samples, entry 07E; an alternate start into Sub_P00_W07D's recording, which plays on through it
-Sub_P00_W07E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W07E.pcm", 2560, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W07E from sample 2560; loop_probe.py)
+Sub_P00_W07D:	.incbin	"build/wav_pcm/sub/Sub_P00_W07D.pcm", 0, 17920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W07D.wav: 52480 8-bit samples, entry 07D; this line is samples 0-17919, up to the alternate start Sub_P00_W07E
+Sub_P00_W07E:	.incbin	"build/wav_pcm/sub/Sub_P00_W07D.pcm", 17920, 34560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W07D.wav: samples 17920-52479 of Sub_P00_W07D's recording, entry 07E: an alternate start into it (cue point Sub_P00_W07E in the WAV), which plays on to its end
+Sub_P00_W07D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W07D.pcm", 20480, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W07D.wav: the run-out, the loop's first 32 samples again (from sample 20480; loop_probe.py)
 	.space	64, 0	; zero words to the next recording
-Sub_P00_W07F:	.incbin	"build/wav_pcm/sub/Sub_P00_W07F.pcm", 0, 77824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W07F.wav: 38944 16-bit samples, entry 07F
-Sub_P00_W07F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W07F.pcm", 29696, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W07F from sample 14848; loop_probe.py)
-Sub_P00_W080:	.incbin	"build/wav_pcm/sub/Sub_P00_W080.pcm", 0, 43776	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W080.wav: 43808 8-bit samples, entry 080
-Sub_P00_W080_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W080.pcm", 23808, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W080 from sample 23808; loop_probe.py)
-Sub_P00_W081:	.incbin	"build/wav_pcm/sub/Sub_P00_W081.pcm", 0, 51200	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W081.wav: 51232 8-bit samples, entry 081
-Sub_P00_W081_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W081.pcm", 22784, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W081 from sample 22784; loop_probe.py)
-Sub_P00_W082:	.incbin	"build/wav_pcm/sub/Sub_P00_W082.pcm", 0, 53760	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W082.wav: 53792 8-bit samples, entry 082
-Sub_P00_W082_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W082.pcm", 24064, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P00_W082 from sample 24064; loop_probe.py)
+Sub_P00_W07F:	.incbin	"build/wav_pcm/sub/Sub_P00_W07F.pcm", 0, 77824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W07F.wav: 38912 16-bit samples, entry 07F
+Sub_P00_W07F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W07F.pcm", 29696, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W07F.wav: the run-out, the loop's first 32 samples again (from sample 14848; loop_probe.py)
+Sub_P00_W080:	.incbin	"build/wav_pcm/sub/Sub_P00_W080.pcm", 0, 43776	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W080.wav: 43776 8-bit samples, entry 080
+Sub_P00_W080_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W080.pcm", 23808, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W080.wav: the run-out, the loop's first 32 samples again (from sample 23808; loop_probe.py)
+Sub_P00_W081:	.incbin	"build/wav_pcm/sub/Sub_P00_W081.pcm", 0, 51200	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W081.wav: 51200 8-bit samples, entry 081
+Sub_P00_W081_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W081.pcm", 22784, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W081.wav: the run-out, the loop's first 32 samples again (from sample 22784; loop_probe.py)
+Sub_P00_W082:	.incbin	"build/wav_pcm/sub/Sub_P00_W082.pcm", 0, 53760	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W082.wav: 53760 8-bit samples, entry 082
+Sub_P00_W082_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P00_W082.pcm", 24064, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W082.wav: the run-out, the loop's first 32 samples again (from sample 24064; loop_probe.py)
 Sub_P00_W083:	.incbin	"build/wav_pcm/sub/Sub_P00_W083.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W083.wav: 5120 16-bit samples, entries 083 084
 Sub_P00_W085:	.incbin	"build/wav_pcm/sub/Sub_P00_W085.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W085.wav: 3072 16-bit samples, entry 085
 Sub_P00_W086:	.incbin	"build/wav_pcm/sub/Sub_P00_W086.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W086.wav: 2816 16-bit samples, entries 086 087
@@ -1236,7 +1238,7 @@ Sub_P00_W0CB:	.incbin	"build/wav_pcm/sub/Sub_P00_W0CB.pcm", 0, 1536	; census: ge
 Sub_P00_W0CC:	.incbin	"build/wav_pcm/sub/Sub_P00_W0CC.pcm", 0, 1536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W0CC.wav: 1536 8-bit samples, entry 0CC
 Sub_P00_W0CD:	.incbin	"build/wav_pcm/sub/Sub_P00_W0CD.pcm", 0, 640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W0CD.wav: 640 8-bit samples, entry 0CD
 Sub_P00_W0CE:	.incbin	"build/wav_pcm/sub/Sub_P00_W0CE.pcm", 0, 640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W0CE.wav: 640 8-bit samples, entry 0CE
-Sub_P00_W0CF:	.incbin	"build/wav_pcm/sub/Sub_P00_W0CF.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W0CF.wav: 544 16-bit samples, entry 0CF
+Sub_P00_W0CF:	.incbin	"build/wav_pcm/sub/Sub_P00_W0CF.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P00_W0CF.wav: 512 16-bit samples, entry 0CF
 	.space	64, 0	; zero words to the next recording
 Sub_P00_Fill:	.space	768, 0xff	; erased fill to the page end
 
@@ -1937,7 +1939,8 @@ Sub_P01_R0C5:	.word	(Sub_P01_W0C5 - Sub_P01) / 32, 0x08<<8 | 256-3, 0x01<<8 | 25
 	.word	0x23<<8 | 256-4, 0x1c<<8 | 256-1, 0x23<<8 | 256-1, 0x1c<<8 | 256-1, 0x23<<8 | 256-1, 0x2c<<8 | 256-7, 0x2d<<8 | 256-14, REC_END | 0x05<<8
 	.align	4
 	.align	32
-# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py
+# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py;
+# an alternate start is a slice of its recording's raw item and a cue point in its WAV
 Sub_P01_W000:	.incbin	"build/wav_pcm/sub/Sub_P01_W000.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W000.wav: 3072 16-bit samples, entries 000 001
 Sub_P01_W002:	.incbin	"build/wav_pcm/sub/Sub_P01_W002.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W002.wav: 3328 16-bit samples, entry 002
 Sub_P01_W003:	.incbin	"build/wav_pcm/sub/Sub_P01_W003.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W003.wav: 3328 16-bit samples, entries 003 004
@@ -1959,26 +1962,26 @@ Sub_P01_W018:	.incbin	"build/wav_pcm/sub/Sub_P01_W018.pcm", 0, 6144	; census: ge
 Sub_P01_W019:	.incbin	"build/wav_pcm/sub/Sub_P01_W019.pcm", 0, 7680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W019.wav: 3840 16-bit samples, entries 019 01A
 Sub_P01_W01B:	.incbin	"build/wav_pcm/sub/Sub_P01_W01B.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W01B.wav: 2048 16-bit samples, entries 01B 01C
 Sub_P01_W01D:	.incbin	"build/wav_pcm/sub/Sub_P01_W01D.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W01D.wav: 3584 16-bit samples, entry 01D
-Sub_P01_W01E:	.incbin	"build/wav_pcm/sub/Sub_P01_W01E.pcm", 0, 90112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W01E.wav: 45088 16-bit samples, entry 01E
-Sub_P01_W01E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W01E.pcm", 59392, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W01E from sample 29696; loop_probe.py)
-Sub_P01_W01F:	.incbin	"build/wav_pcm/sub/Sub_P01_W01F.pcm", 0, 83968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W01F.wav: 42016 16-bit samples, entry 01F
-Sub_P01_W01F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W01F.pcm", 56320, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W01F from sample 28160; loop_probe.py)
-Sub_P01_W020:	.incbin	"build/wav_pcm/sub/Sub_P01_W020.pcm", 0, 79872	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W020.wav: 39968 16-bit samples, entry 020
-Sub_P01_W020_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W020.pcm", 53248, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W020 from sample 26624; loop_probe.py)
-Sub_P01_W021:	.incbin	"build/wav_pcm/sub/Sub_P01_W021.pcm", 0, 76288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W021.wav: 38176 16-bit samples, entry 021
-Sub_P01_W021_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W021.pcm", 50688, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W021 from sample 25344; loop_probe.py)
-Sub_P01_W022:	.incbin	"build/wav_pcm/sub/Sub_P01_W022.pcm", 0, 72192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W022.wav: 36128 16-bit samples, entry 022
-Sub_P01_W022_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W022.pcm", 48128, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W022 from sample 24064; loop_probe.py)
-Sub_P01_W023:	.incbin	"build/wav_pcm/sub/Sub_P01_W023.pcm", 0, 67840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W023.wav: 33952 16-bit samples, entry 023
-Sub_P01_W023_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W023.pcm", 45568, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W023 from sample 22784; loop_probe.py)
-Sub_P01_W024:	.incbin	"build/wav_pcm/sub/Sub_P01_W024.pcm", 0, 65280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W024.wav: 32672 16-bit samples, entry 024
-Sub_P01_W024_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W024.pcm", 43520, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W024 from sample 21760; loop_probe.py)
-Sub_P01_W025:	.incbin	"build/wav_pcm/sub/Sub_P01_W025.pcm", 0, 62208	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W025.wav: 31136 16-bit samples, entry 025
-Sub_P01_W025_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W025.pcm", 41472, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W025 from sample 20736; loop_probe.py)
-Sub_P01_W026:	.incbin	"build/wav_pcm/sub/Sub_P01_W026.pcm", 0, 59904	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W026.wav: 29984 16-bit samples, entry 026
-Sub_P01_W026_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W026.pcm", 39936, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W026 from sample 19968; loop_probe.py)
-Sub_P01_W027:	.incbin	"build/wav_pcm/sub/Sub_P01_W027.pcm", 0, 51968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W027.wav: 26016 16-bit samples, entry 027
-Sub_P01_W027_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W027.pcm", 35968, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W027 from sample 17984; loop_probe.py)
+Sub_P01_W01E:	.incbin	"build/wav_pcm/sub/Sub_P01_W01E.pcm", 0, 90112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W01E.wav: 45056 16-bit samples, entry 01E
+Sub_P01_W01E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W01E.pcm", 59392, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W01E.wav: the run-out, the loop's first 32 samples again (from sample 29696; loop_probe.py)
+Sub_P01_W01F:	.incbin	"build/wav_pcm/sub/Sub_P01_W01F.pcm", 0, 83968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W01F.wav: 41984 16-bit samples, entry 01F
+Sub_P01_W01F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W01F.pcm", 56320, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W01F.wav: the run-out, the loop's first 32 samples again (from sample 28160; loop_probe.py)
+Sub_P01_W020:	.incbin	"build/wav_pcm/sub/Sub_P01_W020.pcm", 0, 79872	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W020.wav: 39936 16-bit samples, entry 020
+Sub_P01_W020_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W020.pcm", 53248, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W020.wav: the run-out, the loop's first 32 samples again (from sample 26624; loop_probe.py)
+Sub_P01_W021:	.incbin	"build/wav_pcm/sub/Sub_P01_W021.pcm", 0, 76288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W021.wav: 38144 16-bit samples, entry 021
+Sub_P01_W021_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W021.pcm", 50688, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W021.wav: the run-out, the loop's first 32 samples again (from sample 25344; loop_probe.py)
+Sub_P01_W022:	.incbin	"build/wav_pcm/sub/Sub_P01_W022.pcm", 0, 72192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W022.wav: 36096 16-bit samples, entry 022
+Sub_P01_W022_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W022.pcm", 48128, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W022.wav: the run-out, the loop's first 32 samples again (from sample 24064; loop_probe.py)
+Sub_P01_W023:	.incbin	"build/wav_pcm/sub/Sub_P01_W023.pcm", 0, 67840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W023.wav: 33920 16-bit samples, entry 023
+Sub_P01_W023_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W023.pcm", 45568, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W023.wav: the run-out, the loop's first 32 samples again (from sample 22784; loop_probe.py)
+Sub_P01_W024:	.incbin	"build/wav_pcm/sub/Sub_P01_W024.pcm", 0, 65280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W024.wav: 32640 16-bit samples, entry 024
+Sub_P01_W024_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W024.pcm", 43520, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W024.wav: the run-out, the loop's first 32 samples again (from sample 21760; loop_probe.py)
+Sub_P01_W025:	.incbin	"build/wav_pcm/sub/Sub_P01_W025.pcm", 0, 62208	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W025.wav: 31104 16-bit samples, entry 025
+Sub_P01_W025_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W025.pcm", 41472, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W025.wav: the run-out, the loop's first 32 samples again (from sample 20736; loop_probe.py)
+Sub_P01_W026:	.incbin	"build/wav_pcm/sub/Sub_P01_W026.pcm", 0, 59904	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W026.wav: 29952 16-bit samples, entry 026
+Sub_P01_W026_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W026.pcm", 39936, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W026.wav: the run-out, the loop's first 32 samples again (from sample 19968; loop_probe.py)
+Sub_P01_W027:	.incbin	"build/wav_pcm/sub/Sub_P01_W027.pcm", 0, 51968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W027.wav: 25984 16-bit samples, entry 027
+Sub_P01_W027_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W027.pcm", 35968, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W027.wav: the run-out, the loop's first 32 samples again (from sample 17984; loop_probe.py)
 Sub_P01_W028:	.incbin	"build/wav_pcm/sub/Sub_P01_W028.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W028.wav: 3072 16-bit samples, entries 028 029
 Sub_P01_W02A:	.incbin	"build/wav_pcm/sub/Sub_P01_W02A.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W02A.wav: 2560 16-bit samples, entry 02A
 Sub_P01_W02B:	.incbin	"build/wav_pcm/sub/Sub_P01_W02B.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W02B.wav: 2816 16-bit samples, entries 02B 02C
@@ -2000,25 +2003,25 @@ Sub_P01_W041:	.incbin	"build/wav_pcm/sub/Sub_P01_W041.pcm", 0, 2560	; census: ge
 Sub_P01_W042:	.incbin	"build/wav_pcm/sub/Sub_P01_W042.pcm", 0, 2560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W042.wav: 1280 16-bit samples, entry 042
 Sub_P01_W043:	.incbin	"build/wav_pcm/sub/Sub_P01_W043.pcm", 0, 5888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W043.wav: 2944 16-bit samples, entry 043
 Sub_P01_W044:	.incbin	"build/wav_pcm/sub/Sub_P01_W044.pcm", 0, 6912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W044.wav: 3456 16-bit samples, entries 044 045 046 047
-Sub_P01_W048:	.incbin	"build/wav_pcm/sub/Sub_P01_W048.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W048.wav: 256 16-bit samples, entry 048
-Sub_P01_W049:	.incbin	"build/wav_pcm/sub/Sub_P01_W049.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W049.wav: 256 16-bit samples, entry 049; an alternate start into Sub_P01_W048's recording, which plays on through it
-Sub_P01_W04A:	.incbin	"build/wav_pcm/sub/Sub_P01_W04A.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W04A.wav: 256 16-bit samples, entry 04A; an alternate start into Sub_P01_W048's recording, which plays on through it
-Sub_P01_W04B:	.incbin	"build/wav_pcm/sub/Sub_P01_W04B.pcm", 0, 10752	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W04B.wav: 5376 16-bit samples, entry 04B; an alternate start into Sub_P01_W048's recording, which plays on through it
-Sub_P01_W04C:	.incbin	"build/wav_pcm/sub/Sub_P01_W04C.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W04C.wav: 256 16-bit samples, entry 04C
-Sub_P01_W04D:	.incbin	"build/wav_pcm/sub/Sub_P01_W04D.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W04D.wav: 256 16-bit samples, entry 04D; an alternate start into Sub_P01_W04C's recording, which plays on through it
-Sub_P01_W04E:	.incbin	"build/wav_pcm/sub/Sub_P01_W04E.pcm", 0, 14848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W04E.wav: 7424 16-bit samples, entry 04E; an alternate start into Sub_P01_W04C's recording, which plays on through it
-Sub_P01_W04F:	.incbin	"build/wav_pcm/sub/Sub_P01_W04F.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W04F.wav: 256 16-bit samples, entry 04F
-Sub_P01_W050:	.incbin	"build/wav_pcm/sub/Sub_P01_W050.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W050.wav: 256 16-bit samples, entry 050; an alternate start into Sub_P01_W04F's recording, which plays on through it
-Sub_P01_W051:	.incbin	"build/wav_pcm/sub/Sub_P01_W051.pcm", 0, 20992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W051.wav: 10496 16-bit samples, entry 051; an alternate start into Sub_P01_W04F's recording, which plays on through it
-Sub_P01_W052:	.incbin	"build/wav_pcm/sub/Sub_P01_W052.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W052.wav: 128 16-bit samples, entry 052
-Sub_P01_W053:	.incbin	"build/wav_pcm/sub/Sub_P01_W053.pcm", 0, 13056	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W053.wav: 6528 16-bit samples, entry 053; an alternate start into Sub_P01_W052's recording, which plays on through it
-Sub_P01_W054:	.incbin	"build/wav_pcm/sub/Sub_P01_W054.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W054.wav: 256 8-bit samples, entry 054
-Sub_P01_W055:	.incbin	"build/wav_pcm/sub/Sub_P01_W055.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W055.wav: 256 8-bit samples, entry 055; an alternate start into Sub_P01_W054's recording, which plays on through it
-Sub_P01_W056:	.incbin	"build/wav_pcm/sub/Sub_P01_W056.pcm", 0, 8960	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W056.wav: 8960 8-bit samples, entry 056; an alternate start into Sub_P01_W054's recording, which plays on through it
-Sub_P01_W057:	.incbin	"build/wav_pcm/sub/Sub_P01_W057.pcm", 0, 192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W057.wav: 192 8-bit samples, entry 057
-Sub_P01_W058:	.incbin	"build/wav_pcm/sub/Sub_P01_W058.pcm", 0, 6592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W058.wav: 6592 8-bit samples, entry 058; an alternate start into Sub_P01_W057's recording, which plays on through it
-Sub_P01_W059:	.incbin	"build/wav_pcm/sub/Sub_P01_W059.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W059.wav: 512 16-bit samples, entries 059 05A 05B 05D 05E
-Sub_P01_W05C:	.incbin	"build/wav_pcm/sub/Sub_P01_W05C.pcm", 0, 33024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W05C.wav: 16512 16-bit samples, entry 05C; an alternate start into Sub_P01_W059's recording, which plays on through it
+Sub_P01_W048:	.incbin	"build/wav_pcm/sub/Sub_P01_W048.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W048.wav: 6144 16-bit samples, entry 048; this line is samples 0-255, up to the alternate start Sub_P01_W049
+Sub_P01_W049:	.incbin	"build/wav_pcm/sub/Sub_P01_W048.pcm", 512, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W048.wav: samples 256-511 of Sub_P01_W048's recording, entry 049: an alternate start into it (cue point Sub_P01_W049 in the WAV), which plays on to its end
+Sub_P01_W04A:	.incbin	"build/wav_pcm/sub/Sub_P01_W048.pcm", 1024, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W048.wav: samples 512-767 of Sub_P01_W048's recording, entry 04A: an alternate start into it (cue point Sub_P01_W04A in the WAV), which plays on to its end
+Sub_P01_W04B:	.incbin	"build/wav_pcm/sub/Sub_P01_W048.pcm", 1536, 10752	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W048.wav: samples 768-6143 of Sub_P01_W048's recording, entry 04B: an alternate start into it (cue point Sub_P01_W04B in the WAV), which plays on to its end
+Sub_P01_W04C:	.incbin	"build/wav_pcm/sub/Sub_P01_W04C.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W04C.wav: 7936 16-bit samples, entry 04C; this line is samples 0-255, up to the alternate start Sub_P01_W04D
+Sub_P01_W04D:	.incbin	"build/wav_pcm/sub/Sub_P01_W04C.pcm", 512, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W04C.wav: samples 256-511 of Sub_P01_W04C's recording, entry 04D: an alternate start into it (cue point Sub_P01_W04D in the WAV), which plays on to its end
+Sub_P01_W04E:	.incbin	"build/wav_pcm/sub/Sub_P01_W04C.pcm", 1024, 14848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W04C.wav: samples 512-7935 of Sub_P01_W04C's recording, entry 04E: an alternate start into it (cue point Sub_P01_W04E in the WAV), which plays on to its end
+Sub_P01_W04F:	.incbin	"build/wav_pcm/sub/Sub_P01_W04F.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W04F.wav: 11008 16-bit samples, entry 04F; this line is samples 0-255, up to the alternate start Sub_P01_W050
+Sub_P01_W050:	.incbin	"build/wav_pcm/sub/Sub_P01_W04F.pcm", 512, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W04F.wav: samples 256-511 of Sub_P01_W04F's recording, entry 050: an alternate start into it (cue point Sub_P01_W050 in the WAV), which plays on to its end
+Sub_P01_W051:	.incbin	"build/wav_pcm/sub/Sub_P01_W04F.pcm", 1024, 20992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W04F.wav: samples 512-11007 of Sub_P01_W04F's recording, entry 051: an alternate start into it (cue point Sub_P01_W051 in the WAV), which plays on to its end
+Sub_P01_W052:	.incbin	"build/wav_pcm/sub/Sub_P01_W052.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W052.wav: 6656 16-bit samples, entry 052; this line is samples 0-127, up to the alternate start Sub_P01_W053
+Sub_P01_W053:	.incbin	"build/wav_pcm/sub/Sub_P01_W052.pcm", 256, 13056	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W052.wav: samples 128-6655 of Sub_P01_W052's recording, entry 053: an alternate start into it (cue point Sub_P01_W053 in the WAV), which plays on to its end
+Sub_P01_W054:	.incbin	"build/wav_pcm/sub/Sub_P01_W054.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W054.wav: 9472 8-bit samples, entry 054; this line is samples 0-255, up to the alternate start Sub_P01_W055
+Sub_P01_W055:	.incbin	"build/wav_pcm/sub/Sub_P01_W054.pcm", 256, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W054.wav: samples 256-511 of Sub_P01_W054's recording, entry 055: an alternate start into it (cue point Sub_P01_W055 in the WAV), which plays on to its end
+Sub_P01_W056:	.incbin	"build/wav_pcm/sub/Sub_P01_W054.pcm", 512, 8960	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W054.wav: samples 512-9471 of Sub_P01_W054's recording, entry 056: an alternate start into it (cue point Sub_P01_W056 in the WAV), which plays on to its end
+Sub_P01_W057:	.incbin	"build/wav_pcm/sub/Sub_P01_W057.pcm", 0, 192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W057.wav: 6784 8-bit samples, entry 057; this line is samples 0-191, up to the alternate start Sub_P01_W058
+Sub_P01_W058:	.incbin	"build/wav_pcm/sub/Sub_P01_W057.pcm", 192, 6592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W057.wav: samples 192-6783 of Sub_P01_W057's recording, entry 058: an alternate start into it (cue point Sub_P01_W058 in the WAV), which plays on to its end
+Sub_P01_W059:	.incbin	"build/wav_pcm/sub/Sub_P01_W059.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W059.wav: 17024 16-bit samples, entries 059 05A 05B 05D 05E; this line is samples 0-511, up to the alternate start Sub_P01_W05C
+Sub_P01_W05C:	.incbin	"build/wav_pcm/sub/Sub_P01_W059.pcm", 1024, 33024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W059.wav: samples 512-17023 of Sub_P01_W059's recording, entry 05C: an alternate start into it (cue point Sub_P01_W05C in the WAV), which plays on to its end
 Sub_P01_W05F:	.incbin	"build/wav_pcm/sub/Sub_P01_W05F.pcm", 0, 5888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W05F.wav: 5888 8-bit samples, entry 05F
 Sub_P01_W060:	.incbin	"build/wav_pcm/sub/Sub_P01_W060.pcm", 0, 6912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W060.wav: 6912 8-bit samples, entries 060 061
 Sub_P01_W062:	.incbin	"build/wav_pcm/sub/Sub_P01_W062.pcm", 0, 9216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W062.wav: 9216 8-bit samples, entry 062
@@ -2054,24 +2057,24 @@ Sub_P01_W08B:	.incbin	"build/wav_pcm/sub/Sub_P01_W08B.pcm", 0, 1856	; census: ge
 Sub_P01_W08C:	.incbin	"build/wav_pcm/sub/Sub_P01_W08C.pcm", 0, 3200	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W08C.wav: 3200 8-bit samples, entry 08C
 Sub_P01_W08D:	.incbin	"build/wav_pcm/sub/Sub_P01_W08D.pcm", 0, 5888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W08D.wav: 2944 16-bit samples, entry 08D
 Sub_P01_W08E:	.incbin	"build/wav_pcm/sub/Sub_P01_W08E.pcm", 0, 8704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W08E.wav: 4352 16-bit samples, entry 08E
-Sub_P01_W08F:	.incbin	"build/wav_pcm/sub/Sub_P01_W08F.pcm", 0, 43008	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W08F.wav: 21536 16-bit samples, entry 08F
-Sub_P01_W08F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W08F.pcm", 28160, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W08F from sample 14080; loop_probe.py)
-Sub_P01_W090:	.incbin	"build/wav_pcm/sub/Sub_P01_W090.pcm", 0, 48128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W090.wav: 24096 16-bit samples, entry 090
-Sub_P01_W090_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W090.pcm", 34304, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W090 from sample 17152; loop_probe.py)
-Sub_P01_W091:	.incbin	"build/wav_pcm/sub/Sub_P01_W091.pcm", 0, 42496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W091.wav: 21280 16-bit samples, entry 091
-Sub_P01_W091_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W091.pcm", 28416, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W091 from sample 14208; loop_probe.py)
-Sub_P01_W092:	.incbin	"build/wav_pcm/sub/Sub_P01_W092.pcm", 0, 18688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W092.wav: 18720 8-bit samples, entry 092
-Sub_P01_W092_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W092.pcm", 12032, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W092 from sample 12032; loop_probe.py)
-Sub_P01_W093:	.incbin	"build/wav_pcm/sub/Sub_P01_W093.pcm", 0, 23744	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W093.wav: 23776 8-bit samples, entry 093
-Sub_P01_W093_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W093.pcm", 17536, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W093 from sample 17536; loop_probe.py)
-Sub_P01_W094:	.incbin	"build/wav_pcm/sub/Sub_P01_W094.pcm", 0, 31744	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W094.wav: 31776 8-bit samples, entry 094
-Sub_P01_W094_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W094.pcm", 23168, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W094 from sample 23168; loop_probe.py)
-Sub_P01_W095:	.incbin	"build/wav_pcm/sub/Sub_P01_W095.pcm", 0, 31872	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W095.wav: 31904 8-bit samples, entry 095
-Sub_P01_W095_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W095.pcm", 21888, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W095 from sample 21888; loop_probe.py)
-Sub_P01_W096:	.incbin	"build/wav_pcm/sub/Sub_P01_W096.pcm", 0, 40960	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W096.wav: 40992 8-bit samples, entry 096
-Sub_P01_W096_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W096.pcm", 32192, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W096 from sample 32192; loop_probe.py)
-Sub_P01_W097:	.incbin	"build/wav_pcm/sub/Sub_P01_W097.pcm", 0, 55936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W097.wav: 55968 8-bit samples, entry 097
-Sub_P01_W097_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W097.pcm", 37568, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W097 from sample 37568; loop_probe.py)
+Sub_P01_W08F:	.incbin	"build/wav_pcm/sub/Sub_P01_W08F.pcm", 0, 43008	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W08F.wav: 21504 16-bit samples, entry 08F
+Sub_P01_W08F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W08F.pcm", 28160, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W08F.wav: the run-out, the loop's first 32 samples again (from sample 14080; loop_probe.py)
+Sub_P01_W090:	.incbin	"build/wav_pcm/sub/Sub_P01_W090.pcm", 0, 48128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W090.wav: 24064 16-bit samples, entry 090
+Sub_P01_W090_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W090.pcm", 34304, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W090.wav: the run-out, the loop's first 32 samples again (from sample 17152; loop_probe.py)
+Sub_P01_W091:	.incbin	"build/wav_pcm/sub/Sub_P01_W091.pcm", 0, 42496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W091.wav: 21248 16-bit samples, entry 091
+Sub_P01_W091_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W091.pcm", 28416, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W091.wav: the run-out, the loop's first 32 samples again (from sample 14208; loop_probe.py)
+Sub_P01_W092:	.incbin	"build/wav_pcm/sub/Sub_P01_W092.pcm", 0, 18688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W092.wav: 18688 8-bit samples, entry 092
+Sub_P01_W092_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W092.pcm", 12032, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W092.wav: the run-out, the loop's first 32 samples again (from sample 12032; loop_probe.py)
+Sub_P01_W093:	.incbin	"build/wav_pcm/sub/Sub_P01_W093.pcm", 0, 23744	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W093.wav: 23744 8-bit samples, entry 093
+Sub_P01_W093_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W093.pcm", 17536, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W093.wav: the run-out, the loop's first 32 samples again (from sample 17536; loop_probe.py)
+Sub_P01_W094:	.incbin	"build/wav_pcm/sub/Sub_P01_W094.pcm", 0, 31744	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W094.wav: 31744 8-bit samples, entry 094
+Sub_P01_W094_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W094.pcm", 23168, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W094.wav: the run-out, the loop's first 32 samples again (from sample 23168; loop_probe.py)
+Sub_P01_W095:	.incbin	"build/wav_pcm/sub/Sub_P01_W095.pcm", 0, 31872	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W095.wav: 31872 8-bit samples, entry 095
+Sub_P01_W095_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W095.pcm", 21888, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W095.wav: the run-out, the loop's first 32 samples again (from sample 21888; loop_probe.py)
+Sub_P01_W096:	.incbin	"build/wav_pcm/sub/Sub_P01_W096.pcm", 0, 40960	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W096.wav: 40960 8-bit samples, entry 096
+Sub_P01_W096_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W096.pcm", 32192, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W096.wav: the run-out, the loop's first 32 samples again (from sample 32192; loop_probe.py)
+Sub_P01_W097:	.incbin	"build/wav_pcm/sub/Sub_P01_W097.pcm", 0, 55936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W097.wav: 55936 8-bit samples, entry 097
+Sub_P01_W097_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W097.pcm", 37568, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W097.wav: the run-out, the loop's first 32 samples again (from sample 37568; loop_probe.py)
 Sub_P01_W098:	.incbin	"build/wav_pcm/sub/Sub_P01_W098.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W098.wav: 2048 16-bit samples, entry 098
 Sub_P01_W099:	.incbin	"build/wav_pcm/sub/Sub_P01_W099.pcm", 0, 2816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W099.wav: 2816 8-bit samples, entry 099
 Sub_P01_W09A:	.incbin	"build/wav_pcm/sub/Sub_P01_W09A.pcm", 0, 1792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W09A.wav: 1792 8-bit samples, entry 09A
@@ -2100,10 +2103,10 @@ Sub_P01_W0B0:	.incbin	"build/wav_pcm/sub/Sub_P01_W0B0.pcm", 0, 6208	; census: ge
 Sub_P01_W0B1:	.incbin	"build/wav_pcm/sub/Sub_P01_W0B1.pcm", 0, 2560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W0B1_AnalogSnare2.wav: 2560 8-bit samples, entry 0B1
 Sub_P01_W0B2:	.incbin	"build/wav_pcm/sub/Sub_P01_W0B2.pcm", 0, 3136	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W0B2_SoulHHPedal.wav: 3136 8-bit samples, entry 0B2
 Sub_P01_W0B3:	.incbin	"build/wav_pcm/sub/Sub_P01_W0B3.pcm", 0, 832	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W0B3.wav: 832 8-bit samples, entry 0B3
-Sub_P01_W0B4:	.incbin	"build/wav_pcm/sub/Sub_P01_W0B4.pcm", 0, 37440	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W0B4.wav: 37472 8-bit samples, entry 0B4
-Sub_P01_W0B4_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W0B4.pcm", 26432, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W0B4 from sample 26432; loop_probe.py)
-Sub_P01_W0B5:	.incbin	"build/wav_pcm/sub/Sub_P01_W0B5.pcm", 0, 33088	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W0B5.wav: 33120 8-bit samples, entry 0B5
-Sub_P01_W0B5_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W0B5.pcm", 22080, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P01_W0B5 from sample 22080; loop_probe.py)
+Sub_P01_W0B4:	.incbin	"build/wav_pcm/sub/Sub_P01_W0B4.pcm", 0, 37440	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W0B4.wav: 37440 8-bit samples, entry 0B4
+Sub_P01_W0B4_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W0B4.pcm", 26432, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W0B4.wav: the run-out, the loop's first 32 samples again (from sample 26432; loop_probe.py)
+Sub_P01_W0B5:	.incbin	"build/wav_pcm/sub/Sub_P01_W0B5.pcm", 0, 33088	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W0B5.wav: 33088 8-bit samples, entry 0B5
+Sub_P01_W0B5_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P01_W0B5.pcm", 22080, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W0B5.wav: the run-out, the loop's first 32 samples again (from sample 22080; loop_probe.py)
 Sub_P01_W0B6:	.incbin	"build/wav_pcm/sub/Sub_P01_W0B6.pcm", 0, 19200	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W0B6.wav: 9600 16-bit samples, entry 0B6
 Sub_P01_W0B7:	.incbin	"build/wav_pcm/sub/Sub_P01_W0B7.pcm", 0, 15040	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W0B7.wav: 15040 8-bit samples, entry 0B7
 Sub_P01_W0B8:	.incbin	"build/wav_pcm/sub/Sub_P01_W0B8.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P01_W0B8.wav: 6656 16-bit samples, entry 0B8
@@ -2277,67 +2280,68 @@ Sub_P02_R023:	.word	(Sub_P02_W01F - Sub_P02) / 32, 256-5, 96, 88, 80, 72, REC_EN
 Sub_P02_R024:	.word	(Sub_P02_W01F - Sub_P02) / 32, 256-5, 104, 96, 88, 80, REC_END | 72
 	.align	4
 	.align	32
-# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py
-Sub_P02_W000:	.incbin	"build/wav_pcm/sub/Sub_P02_W000.pcm", 0, 101376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W000.wav: 50720 16-bit samples, entry 000
-Sub_P02_W000_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W000.pcm", 66560, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W000 from sample 33280; loop_probe.py)
-Sub_P02_W001:	.incbin	"build/wav_pcm/sub/Sub_P02_W001.pcm", 0, 70144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W001.wav: 35104 16-bit samples, entry 001
-Sub_P02_W001_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W001.pcm", 46080, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W001 from sample 23040; loop_probe.py)
-Sub_P02_W002:	.incbin	"build/wav_pcm/sub/Sub_P02_W002.pcm", 0, 63488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W002.wav: 31776 16-bit samples, entry 002
-Sub_P02_W002_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W002.pcm", 43008, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W002 from sample 21504; loop_probe.py)
-Sub_P02_W003:	.incbin	"build/wav_pcm/sub/Sub_P02_W003.pcm", 0, 56064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W003.wav: 28064 16-bit samples, entry 003
-Sub_P02_W003_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W003.pcm", 38144, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W003 from sample 19072; loop_probe.py)
-Sub_P02_W004:	.incbin	"build/wav_pcm/sub/Sub_P02_W004.pcm", 0, 54784	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W004.wav: 27424 16-bit samples, entry 004
-Sub_P02_W004_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W004.pcm", 37888, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W004 from sample 18944; loop_probe.py)
-Sub_P02_W005:	.incbin	"build/wav_pcm/sub/Sub_P02_W005.pcm", 0, 47360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W005.wav: 23712 16-bit samples, entry 005
-Sub_P02_W005_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W005.pcm", 33024, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W005 from sample 16512; loop_probe.py)
-Sub_P02_W006:	.incbin	"build/wav_pcm/sub/Sub_P02_W006.pcm", 0, 40192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W006.wav: 20128 16-bit samples, entry 006
-Sub_P02_W006_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W006.pcm", 27008, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W006 from sample 13504; loop_probe.py)
-Sub_P02_W007:	.incbin	"build/wav_pcm/sub/Sub_P02_W007.pcm", 0, 49152	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W007.wav: 24608 16-bit samples, entry 007
-Sub_P02_W007_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W007.pcm", 33984, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W007 from sample 16992; loop_probe.py)
-Sub_P02_W008:	.incbin	"build/wav_pcm/sub/Sub_P02_W008.pcm", 0, 101376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W008.wav: 50720 16-bit samples, entry 008
-Sub_P02_W008_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W008.pcm", 44032, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W008 from sample 22016; loop_probe.py)
-Sub_P02_W009:	.incbin	"build/wav_pcm/sub/Sub_P02_W009.pcm", 0, 100352	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W009.wav: 50208 16-bit samples, entry 009
-Sub_P02_W009_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W009.pcm", 57600, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W009 from sample 28800; loop_probe.py)
-Sub_P02_W00A:	.incbin	"build/wav_pcm/sub/Sub_P02_W00A.pcm", 0, 39296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00A.wav: 39328 8-bit samples, entry 00A
-Sub_P02_W00A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W00A.pcm", 19200, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W00A from sample 19200; loop_probe.py)
-Sub_P02_W00B:	.incbin	"build/wav_pcm/sub/Sub_P02_W00B.pcm", 0, 49024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00B.wav: 49056 8-bit samples, entry 00B
-Sub_P02_W00B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W00B.pcm", 30464, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W00B from sample 30464; loop_probe.py)
-Sub_P02_W00C:	.incbin	"build/wav_pcm/sub/Sub_P02_W00C.pcm", 0, 32000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00C.wav: 32032 8-bit samples, entry 00C
-Sub_P02_W00C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W00C.pcm", 14400, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W00C from sample 14400; loop_probe.py)
-Sub_P02_W00D:	.incbin	"build/wav_pcm/sub/Sub_P02_W00D.pcm", 0, 73792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00D.wav: 73824 8-bit samples, entry 00D
-Sub_P02_W00D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W00D.pcm", 46784, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W00D from sample 46784; loop_probe.py)
-Sub_P02_W00E:	.incbin	"build/wav_pcm/sub/Sub_P02_W00E.pcm", 0, 102912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00E_ViolaEns.wav: 51488 16-bit samples, entry 00E
-Sub_P02_W00E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W00E.pcm", 54784, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W00E from sample 27392; loop_probe.py)
-Sub_P02_W00F:	.incbin	"build/wav_pcm/sub/Sub_P02_W00F.pcm", 0, 105472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00F_ViolaEns.wav: 52768 16-bit samples, entry 00F
-Sub_P02_W00F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W00F.pcm", 60416, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W00F from sample 30208; loop_probe.py)
-Sub_P02_W010:	.incbin	"build/wav_pcm/sub/Sub_P02_W010.pcm", 0, 107264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W010_ViolaEns.wav: 53664 16-bit samples, entry 010
-Sub_P02_W010_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W010.pcm", 64256, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W010 from sample 32128; loop_probe.py)
-Sub_P02_W011:	.incbin	"build/wav_pcm/sub/Sub_P02_W011.pcm", 0, 45696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W011_ViolaEns.wav: 45728 8-bit samples, entry 011
-Sub_P02_W011_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W011.pcm", 25600, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W011 from sample 25600; loop_probe.py)
-Sub_P02_W012:	.incbin	"build/wav_pcm/sub/Sub_P02_W012.pcm", 0, 52032	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W012.wav: 52064 8-bit samples, entry 012
-Sub_P02_W012_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W012.pcm", 33152, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W012 from sample 33152; loop_probe.py)
-Sub_P02_W013:	.incbin	"build/wav_pcm/sub/Sub_P02_W013.pcm", 0, 52800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W013.wav: 52832 8-bit samples, entry 013
-Sub_P02_W013_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W013.pcm", 35200, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W013 from sample 35200; loop_probe.py)
-Sub_P02_W014:	.incbin	"build/wav_pcm/sub/Sub_P02_W014.pcm", 0, 97280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W014.wav: 48672 16-bit samples, entry 014
-Sub_P02_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W014.pcm", 52224, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W014 from sample 26112; loop_probe.py)
-Sub_P02_W015:	.incbin	"build/wav_pcm/sub/Sub_P02_W015.pcm", 0, 90112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W015.wav: 45088 16-bit samples, entry 015
-Sub_P02_W015_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W015.pcm", 45056, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W015 from sample 22528; loop_probe.py)
-Sub_P02_W016:	.incbin	"build/wav_pcm/sub/Sub_P02_W016.pcm", 0, 99328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W016.wav: 49696 16-bit samples, entry 016
-Sub_P02_W016_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W016.pcm", 56832, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W016 from sample 28416; loop_probe.py)
-Sub_P02_W017:	.incbin	"build/wav_pcm/sub/Sub_P02_W017.pcm", 0, 47232	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W017.wav: 47264 8-bit samples, entry 017
-Sub_P02_W017_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W017.pcm", 27136, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W017 from sample 27136; loop_probe.py)
-Sub_P02_W018:	.incbin	"build/wav_pcm/sub/Sub_P02_W018.pcm", 0, 34560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W018.wav: 34592 8-bit samples, entry 018
-Sub_P02_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W018.pcm", 16896, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W018 from sample 16896; loop_probe.py)
-Sub_P02_W019:	.incbin	"build/wav_pcm/sub/Sub_P02_W019.pcm", 0, 96256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W019.wav: 48160 16-bit samples, entry 019
-Sub_P02_W019_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W019.pcm", 53248, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W019 from sample 26624; loop_probe.py)
-Sub_P02_W01A:	.incbin	"build/wav_pcm/sub/Sub_P02_W01A.pcm", 0, 96256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W01A.wav: 48160 16-bit samples, entry 01A
-Sub_P02_W01A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W01A.pcm", 53248, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W01A from sample 26624; loop_probe.py)
-Sub_P02_W01B:	.incbin	"build/wav_pcm/sub/Sub_P02_W01B.pcm", 0, 83968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W01B.wav: 42016 16-bit samples, entry 01B
-Sub_P02_W01B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W01B.pcm", 41984, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W01B from sample 20992; loop_probe.py)
-Sub_P02_W01C:	.incbin	"build/wav_pcm/sub/Sub_P02_W01C.pcm", 0, 90112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W01C.wav: 45088 16-bit samples, entry 01C
-Sub_P02_W01C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W01C.pcm", 48128, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P02_W01C from sample 24064; loop_probe.py)
+# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py;
+# an alternate start is a slice of its recording's raw item and a cue point in its WAV
+Sub_P02_W000:	.incbin	"build/wav_pcm/sub/Sub_P02_W000.pcm", 0, 101376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W000.wav: 50688 16-bit samples, entry 000
+Sub_P02_W000_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W000.pcm", 66560, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W000.wav: the run-out, the loop's first 32 samples again (from sample 33280; loop_probe.py)
+Sub_P02_W001:	.incbin	"build/wav_pcm/sub/Sub_P02_W001.pcm", 0, 70144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W001.wav: 35072 16-bit samples, entry 001
+Sub_P02_W001_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W001.pcm", 46080, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W001.wav: the run-out, the loop's first 32 samples again (from sample 23040; loop_probe.py)
+Sub_P02_W002:	.incbin	"build/wav_pcm/sub/Sub_P02_W002.pcm", 0, 63488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W002.wav: 31744 16-bit samples, entry 002
+Sub_P02_W002_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W002.pcm", 43008, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W002.wav: the run-out, the loop's first 32 samples again (from sample 21504; loop_probe.py)
+Sub_P02_W003:	.incbin	"build/wav_pcm/sub/Sub_P02_W003.pcm", 0, 56064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W003.wav: 28032 16-bit samples, entry 003
+Sub_P02_W003_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W003.pcm", 38144, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W003.wav: the run-out, the loop's first 32 samples again (from sample 19072; loop_probe.py)
+Sub_P02_W004:	.incbin	"build/wav_pcm/sub/Sub_P02_W004.pcm", 0, 54784	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W004.wav: 27392 16-bit samples, entry 004
+Sub_P02_W004_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W004.pcm", 37888, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W004.wav: the run-out, the loop's first 32 samples again (from sample 18944; loop_probe.py)
+Sub_P02_W005:	.incbin	"build/wav_pcm/sub/Sub_P02_W005.pcm", 0, 47360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W005.wav: 23680 16-bit samples, entry 005
+Sub_P02_W005_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W005.pcm", 33024, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W005.wav: the run-out, the loop's first 32 samples again (from sample 16512; loop_probe.py)
+Sub_P02_W006:	.incbin	"build/wav_pcm/sub/Sub_P02_W006.pcm", 0, 40192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W006.wav: 20096 16-bit samples, entry 006
+Sub_P02_W006_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W006.pcm", 27008, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W006.wav: the run-out, the loop's first 32 samples again (from sample 13504; loop_probe.py)
+Sub_P02_W007:	.incbin	"build/wav_pcm/sub/Sub_P02_W007.pcm", 0, 49152	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W007.wav: 24576 16-bit samples, entry 007
+Sub_P02_W007_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W007.pcm", 33984, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W007.wav: the run-out, the loop's first 32 samples again (from sample 16992; loop_probe.py)
+Sub_P02_W008:	.incbin	"build/wav_pcm/sub/Sub_P02_W008.pcm", 0, 101376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W008.wav: 50688 16-bit samples, entry 008
+Sub_P02_W008_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W008.pcm", 44032, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W008.wav: the run-out, the loop's first 32 samples again (from sample 22016; loop_probe.py)
+Sub_P02_W009:	.incbin	"build/wav_pcm/sub/Sub_P02_W009.pcm", 0, 100352	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W009.wav: 50176 16-bit samples, entry 009
+Sub_P02_W009_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W009.pcm", 57600, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W009.wav: the run-out, the loop's first 32 samples again (from sample 28800; loop_probe.py)
+Sub_P02_W00A:	.incbin	"build/wav_pcm/sub/Sub_P02_W00A.pcm", 0, 39296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00A.wav: 39296 8-bit samples, entry 00A
+Sub_P02_W00A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W00A.pcm", 19200, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00A.wav: the run-out, the loop's first 32 samples again (from sample 19200; loop_probe.py)
+Sub_P02_W00B:	.incbin	"build/wav_pcm/sub/Sub_P02_W00B.pcm", 0, 49024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00B.wav: 49024 8-bit samples, entry 00B
+Sub_P02_W00B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W00B.pcm", 30464, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00B.wav: the run-out, the loop's first 32 samples again (from sample 30464; loop_probe.py)
+Sub_P02_W00C:	.incbin	"build/wav_pcm/sub/Sub_P02_W00C.pcm", 0, 32000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00C.wav: 32000 8-bit samples, entry 00C
+Sub_P02_W00C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W00C.pcm", 14400, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00C.wav: the run-out, the loop's first 32 samples again (from sample 14400; loop_probe.py)
+Sub_P02_W00D:	.incbin	"build/wav_pcm/sub/Sub_P02_W00D.pcm", 0, 73792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00D.wav: 73792 8-bit samples, entry 00D
+Sub_P02_W00D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W00D.pcm", 46784, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00D.wav: the run-out, the loop's first 32 samples again (from sample 46784; loop_probe.py)
+Sub_P02_W00E:	.incbin	"build/wav_pcm/sub/Sub_P02_W00E.pcm", 0, 102912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00E_ViolaEns.wav: 51456 16-bit samples, entry 00E
+Sub_P02_W00E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W00E.pcm", 54784, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00E_ViolaEns.wav: the run-out, the loop's first 32 samples again (from sample 27392; loop_probe.py)
+Sub_P02_W00F:	.incbin	"build/wav_pcm/sub/Sub_P02_W00F.pcm", 0, 105472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00F_ViolaEns.wav: 52736 16-bit samples, entry 00F
+Sub_P02_W00F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W00F.pcm", 60416, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W00F_ViolaEns.wav: the run-out, the loop's first 32 samples again (from sample 30208; loop_probe.py)
+Sub_P02_W010:	.incbin	"build/wav_pcm/sub/Sub_P02_W010.pcm", 0, 107264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W010_ViolaEns.wav: 53632 16-bit samples, entry 010
+Sub_P02_W010_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W010.pcm", 64256, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W010_ViolaEns.wav: the run-out, the loop's first 32 samples again (from sample 32128; loop_probe.py)
+Sub_P02_W011:	.incbin	"build/wav_pcm/sub/Sub_P02_W011.pcm", 0, 45696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W011_ViolaEns.wav: 45696 8-bit samples, entry 011
+Sub_P02_W011_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W011.pcm", 25600, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W011_ViolaEns.wav: the run-out, the loop's first 32 samples again (from sample 25600; loop_probe.py)
+Sub_P02_W012:	.incbin	"build/wav_pcm/sub/Sub_P02_W012.pcm", 0, 52032	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W012.wav: 52032 8-bit samples, entry 012
+Sub_P02_W012_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W012.pcm", 33152, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W012.wav: the run-out, the loop's first 32 samples again (from sample 33152; loop_probe.py)
+Sub_P02_W013:	.incbin	"build/wav_pcm/sub/Sub_P02_W013.pcm", 0, 52800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W013.wav: 52800 8-bit samples, entry 013
+Sub_P02_W013_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W013.pcm", 35200, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W013.wav: the run-out, the loop's first 32 samples again (from sample 35200; loop_probe.py)
+Sub_P02_W014:	.incbin	"build/wav_pcm/sub/Sub_P02_W014.pcm", 0, 97280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W014.wav: 48640 16-bit samples, entry 014
+Sub_P02_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W014.pcm", 52224, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W014.wav: the run-out, the loop's first 32 samples again (from sample 26112; loop_probe.py)
+Sub_P02_W015:	.incbin	"build/wav_pcm/sub/Sub_P02_W015.pcm", 0, 90112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W015.wav: 45056 16-bit samples, entry 015
+Sub_P02_W015_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W015.pcm", 45056, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W015.wav: the run-out, the loop's first 32 samples again (from sample 22528; loop_probe.py)
+Sub_P02_W016:	.incbin	"build/wav_pcm/sub/Sub_P02_W016.pcm", 0, 99328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W016.wav: 49664 16-bit samples, entry 016
+Sub_P02_W016_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W016.pcm", 56832, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W016.wav: the run-out, the loop's first 32 samples again (from sample 28416; loop_probe.py)
+Sub_P02_W017:	.incbin	"build/wav_pcm/sub/Sub_P02_W017.pcm", 0, 47232	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W017.wav: 47232 8-bit samples, entry 017
+Sub_P02_W017_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W017.pcm", 27136, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W017.wav: the run-out, the loop's first 32 samples again (from sample 27136; loop_probe.py)
+Sub_P02_W018:	.incbin	"build/wav_pcm/sub/Sub_P02_W018.pcm", 0, 34560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W018.wav: 34560 8-bit samples, entry 018
+Sub_P02_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W018.pcm", 16896, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W018.wav: the run-out, the loop's first 32 samples again (from sample 16896; loop_probe.py)
+Sub_P02_W019:	.incbin	"build/wav_pcm/sub/Sub_P02_W019.pcm", 0, 96256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W019.wav: 48128 16-bit samples, entry 019
+Sub_P02_W019_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W019.pcm", 53248, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W019.wav: the run-out, the loop's first 32 samples again (from sample 26624; loop_probe.py)
+Sub_P02_W01A:	.incbin	"build/wav_pcm/sub/Sub_P02_W01A.pcm", 0, 96256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W01A.wav: 48128 16-bit samples, entry 01A
+Sub_P02_W01A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W01A.pcm", 53248, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W01A.wav: the run-out, the loop's first 32 samples again (from sample 26624; loop_probe.py)
+Sub_P02_W01B:	.incbin	"build/wav_pcm/sub/Sub_P02_W01B.pcm", 0, 83968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W01B.wav: 41984 16-bit samples, entry 01B
+Sub_P02_W01B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W01B.pcm", 41984, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W01B.wav: the run-out, the loop's first 32 samples again (from sample 20992; loop_probe.py)
+Sub_P02_W01C:	.incbin	"build/wav_pcm/sub/Sub_P02_W01C.pcm", 0, 90112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W01C.wav: 45056 16-bit samples, entry 01C
+Sub_P02_W01C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P02_W01C.pcm", 48128, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W01C.wav: the run-out, the loop's first 32 samples again (from sample 24064; loop_probe.py)
 Sub_P02_W01D:	.incbin	"build/wav_pcm/sub/Sub_P02_W01D.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W01D_DanceBass.wav: 4096 16-bit samples, entries 01D 01E
-Sub_P02_W01F:	.incbin	"build/wav_pcm/sub/Sub_P02_W01F.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W01F_DanceBass.wav: 2576 16-bit samples, entries 01F 020 021 022 023 024
+Sub_P02_W01F:	.incbin	"build/wav_pcm/sub/Sub_P02_W01F.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P02_W01F_DanceBass.wav: 2560 16-bit samples, entries 01F 020 021 022 023 024
 	.space	32, 0	; zero words to the next recording
 Sub_P02_Fill:	.space	896, 0xff	; erased fill to the page end
 
@@ -2735,7 +2739,8 @@ Sub_P03_R06D:	.word	(Sub_P03_W06D - Sub_P03) / 32, 0x01<<8 | 256-2, 0x08<<8 | 25
 	.word	0x08<<8 | 256-2, 0x01<<8 | 256-2, 0x08<<8 | 256-1, 0x01<<8 | 256-5, 0x08<<8 | 256-9, LOOP_END | 0x01<<8 | 256-1
 	.align	4
 	.align	32
-# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py
+# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py;
+# an alternate start is a slice of its recording's raw item and a cue point in its WAV
 Sub_P03_W000:	.incbin	"build/wav_pcm/sub/Sub_P03_W000.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W000.wav: 3072 16-bit samples, entries 000 001 002
 Sub_P03_W003:	.incbin	"build/wav_pcm/sub/Sub_P03_W003.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W003.wav: 2048 16-bit samples, entry 003
 Sub_P03_W004:	.incbin	"build/wav_pcm/sub/Sub_P03_W004.pcm", 0, 4352	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W004.wav: 2176 16-bit samples, entry 004
@@ -2746,43 +2751,43 @@ Sub_P03_W008:	.incbin	"build/wav_pcm/sub/Sub_P03_W008.pcm", 0, 2496	; census: ge
 Sub_P03_W009:	.incbin	"build/wav_pcm/sub/Sub_P03_W009.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W009.wav: 3584 16-bit samples, entries 009 00A
 Sub_P03_W00B:	.incbin	"build/wav_pcm/sub/Sub_P03_W00B.pcm", 0, 8704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W00B.wav: 4352 16-bit samples, entries 00B 00C
 Sub_P03_W00D:	.incbin	"build/wav_pcm/sub/Sub_P03_W00D.pcm", 0, 9216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W00D.wav: 4608 16-bit samples, entries 00D 00E 00F 010 011 012
-Sub_P03_W013:	.incbin	"build/wav_pcm/sub/Sub_P03_W013.pcm", 0, 63488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W013.wav: 31776 16-bit samples, entry 013
-Sub_P03_W013_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W013.pcm", 43008, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W013 from sample 21504; loop_probe.py)
-Sub_P03_W014:	.incbin	"build/wav_pcm/sub/Sub_P03_W014.pcm", 0, 58368	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W014.wav: 29216 16-bit samples, entry 014
-Sub_P03_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W014.pcm", 38912, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W014 from sample 19456; loop_probe.py)
-Sub_P03_W015:	.incbin	"build/wav_pcm/sub/Sub_P03_W015.pcm", 0, 55296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W015.wav: 27680 16-bit samples, entry 015
-Sub_P03_W015_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W015.pcm", 36864, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W015 from sample 18432; loop_probe.py)
-Sub_P03_W016:	.incbin	"build/wav_pcm/sub/Sub_P03_W016.pcm", 0, 55296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W016.wav: 27680 16-bit samples, entry 016
-Sub_P03_W016_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W016.pcm", 36864, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W016 from sample 18432; loop_probe.py)
-Sub_P03_W017:	.incbin	"build/wav_pcm/sub/Sub_P03_W017.pcm", 0, 51712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W017.wav: 25888 16-bit samples, entry 017
-Sub_P03_W017_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W017.pcm", 34304, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W017 from sample 17152; loop_probe.py)
-Sub_P03_W018:	.incbin	"build/wav_pcm/sub/Sub_P03_W018.pcm", 0, 55296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W018.wav: 27680 16-bit samples, entry 018
-Sub_P03_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W018.pcm", 36864, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W018 from sample 18432; loop_probe.py)
-Sub_P03_W019:	.incbin	"build/wav_pcm/sub/Sub_P03_W019.pcm", 0, 51712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W019.wav: 25888 16-bit samples, entry 019
-Sub_P03_W019_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W019.pcm", 34304, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W019 from sample 17152; loop_probe.py)
-Sub_P03_W01A:	.incbin	"build/wav_pcm/sub/Sub_P03_W01A.pcm", 0, 51712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W01A.wav: 25888 16-bit samples, entry 01A
-Sub_P03_W01A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W01A.pcm", 34304, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W01A from sample 17152; loop_probe.py)
+Sub_P03_W013:	.incbin	"build/wav_pcm/sub/Sub_P03_W013.pcm", 0, 63488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W013.wav: 31744 16-bit samples, entry 013
+Sub_P03_W013_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W013.pcm", 43008, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W013.wav: the run-out, the loop's first 32 samples again (from sample 21504; loop_probe.py)
+Sub_P03_W014:	.incbin	"build/wav_pcm/sub/Sub_P03_W014.pcm", 0, 58368	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W014.wav: 29184 16-bit samples, entry 014
+Sub_P03_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W014.pcm", 38912, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W014.wav: the run-out, the loop's first 32 samples again (from sample 19456; loop_probe.py)
+Sub_P03_W015:	.incbin	"build/wav_pcm/sub/Sub_P03_W015.pcm", 0, 55296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W015.wav: 27648 16-bit samples, entry 015
+Sub_P03_W015_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W015.pcm", 36864, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W015.wav: the run-out, the loop's first 32 samples again (from sample 18432; loop_probe.py)
+Sub_P03_W016:	.incbin	"build/wav_pcm/sub/Sub_P03_W016.pcm", 0, 55296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W016.wav: 27648 16-bit samples, entry 016
+Sub_P03_W016_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W016.pcm", 36864, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W016.wav: the run-out, the loop's first 32 samples again (from sample 18432; loop_probe.py)
+Sub_P03_W017:	.incbin	"build/wav_pcm/sub/Sub_P03_W017.pcm", 0, 51712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W017.wav: 25856 16-bit samples, entry 017
+Sub_P03_W017_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W017.pcm", 34304, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W017.wav: the run-out, the loop's first 32 samples again (from sample 17152; loop_probe.py)
+Sub_P03_W018:	.incbin	"build/wav_pcm/sub/Sub_P03_W018.pcm", 0, 55296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W018.wav: 27648 16-bit samples, entry 018
+Sub_P03_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W018.pcm", 36864, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W018.wav: the run-out, the loop's first 32 samples again (from sample 18432; loop_probe.py)
+Sub_P03_W019:	.incbin	"build/wav_pcm/sub/Sub_P03_W019.pcm", 0, 51712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W019.wav: 25856 16-bit samples, entry 019
+Sub_P03_W019_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W019.pcm", 34304, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W019.wav: the run-out, the loop's first 32 samples again (from sample 17152; loop_probe.py)
+Sub_P03_W01A:	.incbin	"build/wav_pcm/sub/Sub_P03_W01A.pcm", 0, 51712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W01A.wav: 25856 16-bit samples, entry 01A
+Sub_P03_W01A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W01A.pcm", 34304, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W01A.wav: the run-out, the loop's first 32 samples again (from sample 17152; loop_probe.py)
 Sub_P03_W01B:	.incbin	"build/wav_pcm/sub/Sub_P03_W01B.pcm", 0, 13824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W01B_ElectricBass.wav: 6912 16-bit samples, entries 01B 01C
 Sub_P03_W01D:	.incbin	"build/wav_pcm/sub/Sub_P03_W01D.pcm", 0, 18432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W01D_ElectricBass.wav: 9216 16-bit samples, entry 01D
 Sub_P03_W01E:	.incbin	"build/wav_pcm/sub/Sub_P03_W01E.pcm", 0, 18944	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W01E_ElectricBass.wav: 9472 16-bit samples, entries 01E 01F 020 021 022 023
-Sub_P03_W024:	.incbin	"build/wav_pcm/sub/Sub_P03_W024.pcm", 0, 36864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W024.wav: 18464 16-bit samples, entry 024
-Sub_P03_W024_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W024.pcm", 26624, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W024 from sample 13312; loop_probe.py)
-Sub_P03_W025:	.incbin	"build/wav_pcm/sub/Sub_P03_W025.pcm", 0, 39936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W025.wav: 20000 16-bit samples, entry 025
-Sub_P03_W025_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W025.pcm", 28672, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W025 from sample 14336; loop_probe.py)
-Sub_P03_W026:	.incbin	"build/wav_pcm/sub/Sub_P03_W026.pcm", 0, 39936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W026.wav: 20000 16-bit samples, entry 026
-Sub_P03_W026_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W026.pcm", 28672, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W026 from sample 14336; loop_probe.py)
-Sub_P03_W027:	.incbin	"build/wav_pcm/sub/Sub_P03_W027.pcm", 0, 39936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W027.wav: 20000 16-bit samples, entry 027
-Sub_P03_W027_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W027.pcm", 28672, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W027 from sample 14336; loop_probe.py)
-Sub_P03_W028:	.incbin	"build/wav_pcm/sub/Sub_P03_W028.pcm", 0, 45056	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W028.wav: 22560 16-bit samples, entry 028
-Sub_P03_W028_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W028.pcm", 30720, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W028 from sample 15360; loop_probe.py)
-Sub_P03_W029:	.incbin	"build/wav_pcm/sub/Sub_P03_W029.pcm", 0, 61440	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W029.wav: 30752 16-bit samples, entry 029
-Sub_P03_W029_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W029.pcm", 47104, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W029 from sample 23552; loop_probe.py)
-Sub_P03_W02A:	.incbin	"build/wav_pcm/sub/Sub_P03_W02A.pcm", 0, 44032	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W02A.wav: 22048 16-bit samples, entry 02A
-Sub_P03_W02A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W02A.pcm", 29696, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W02A from sample 14848; loop_probe.py)
-Sub_P03_W02B:	.incbin	"build/wav_pcm/sub/Sub_P03_W02B.pcm", 0, 44032	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W02B.wav: 22048 16-bit samples, entry 02B
-Sub_P03_W02B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W02B.pcm", 29696, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W02B from sample 14848; loop_probe.py)
-Sub_P03_W02C:	.incbin	"build/wav_pcm/sub/Sub_P03_W02C.pcm", 0, 41472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W02C.wav: 20768 16-bit samples, entry 02C
-Sub_P03_W02C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W02C.pcm", 27648, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W02C from sample 13824; loop_probe.py)
+Sub_P03_W024:	.incbin	"build/wav_pcm/sub/Sub_P03_W024.pcm", 0, 36864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W024.wav: 18432 16-bit samples, entry 024
+Sub_P03_W024_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W024.pcm", 26624, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W024.wav: the run-out, the loop's first 32 samples again (from sample 13312; loop_probe.py)
+Sub_P03_W025:	.incbin	"build/wav_pcm/sub/Sub_P03_W025.pcm", 0, 39936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W025.wav: 19968 16-bit samples, entry 025
+Sub_P03_W025_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W025.pcm", 28672, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W025.wav: the run-out, the loop's first 32 samples again (from sample 14336; loop_probe.py)
+Sub_P03_W026:	.incbin	"build/wav_pcm/sub/Sub_P03_W026.pcm", 0, 39936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W026.wav: 19968 16-bit samples, entry 026
+Sub_P03_W026_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W026.pcm", 28672, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W026.wav: the run-out, the loop's first 32 samples again (from sample 14336; loop_probe.py)
+Sub_P03_W027:	.incbin	"build/wav_pcm/sub/Sub_P03_W027.pcm", 0, 39936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W027.wav: 19968 16-bit samples, entry 027
+Sub_P03_W027_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W027.pcm", 28672, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W027.wav: the run-out, the loop's first 32 samples again (from sample 14336; loop_probe.py)
+Sub_P03_W028:	.incbin	"build/wav_pcm/sub/Sub_P03_W028.pcm", 0, 45056	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W028.wav: 22528 16-bit samples, entry 028
+Sub_P03_W028_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W028.pcm", 30720, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W028.wav: the run-out, the loop's first 32 samples again (from sample 15360; loop_probe.py)
+Sub_P03_W029:	.incbin	"build/wav_pcm/sub/Sub_P03_W029.pcm", 0, 61440	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W029.wav: 30720 16-bit samples, entry 029
+Sub_P03_W029_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W029.pcm", 47104, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W029.wav: the run-out, the loop's first 32 samples again (from sample 23552; loop_probe.py)
+Sub_P03_W02A:	.incbin	"build/wav_pcm/sub/Sub_P03_W02A.pcm", 0, 44032	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W02A.wav: 22016 16-bit samples, entry 02A
+Sub_P03_W02A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W02A.pcm", 29696, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W02A.wav: the run-out, the loop's first 32 samples again (from sample 14848; loop_probe.py)
+Sub_P03_W02B:	.incbin	"build/wav_pcm/sub/Sub_P03_W02B.pcm", 0, 44032	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W02B.wav: 22016 16-bit samples, entry 02B
+Sub_P03_W02B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W02B.pcm", 29696, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W02B.wav: the run-out, the loop's first 32 samples again (from sample 14848; loop_probe.py)
+Sub_P03_W02C:	.incbin	"build/wav_pcm/sub/Sub_P03_W02C.pcm", 0, 41472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W02C.wav: 20736 16-bit samples, entry 02C
+Sub_P03_W02C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W02C.pcm", 27648, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W02C.wav: the run-out, the loop's first 32 samples again (from sample 13824; loop_probe.py)
 Sub_P03_W02D:	.incbin	"build/wav_pcm/sub/Sub_P03_W02D.pcm", 0, 20480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W02D.wav: 10240 16-bit samples, entries 02D 02E
 Sub_P03_W02F:	.incbin	"build/wav_pcm/sub/Sub_P03_W02F.pcm", 0, 14848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W02F.wav: 7424 16-bit samples, entries 02F 030 031 032 033
 Sub_P03_W034:	.incbin	"build/wav_pcm/sub/Sub_P03_W034.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W034.wav: 2816 16-bit samples, entries 034 035 036 037 038 039 03A
@@ -2798,56 +2803,56 @@ Sub_P03_W051:	.incbin	"build/wav_pcm/sub/Sub_P03_W051.pcm", 0, 256	; census: gen
 Sub_P03_W052:	.incbin	"build/wav_pcm/sub/Sub_P03_W052.pcm", 0, 2048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W052.wav: 1024 16-bit samples, entry 052
 Sub_P03_W053:	.incbin	"build/wav_pcm/sub/Sub_P03_W053.pcm", 0, 2048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W053.wav: 1024 16-bit samples, entry 053
 Sub_P03_W054:	.incbin	"build/wav_pcm/sub/Sub_P03_W054.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W054.wav: 512 16-bit samples, entry 054
-Sub_P03_W055:	.incbin	"build/wav_pcm/sub/Sub_P03_W055.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W055.wav: 256 8-bit samples, entry 055
-Sub_P03_W056:	.incbin	"build/wav_pcm/sub/Sub_P03_W056.pcm", 0, 23296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W056.wav: 23392 8-bit samples, entry 056; an alternate start into Sub_P03_W055's recording, which plays on through it
-Sub_P03_W056_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W056.pcm", 256, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W056 from sample 256; loop_probe.py)
+Sub_P03_W055:	.incbin	"build/wav_pcm/sub/Sub_P03_W055.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W055.wav: 23552 8-bit samples, entry 055; this line is samples 0-255, up to the alternate start Sub_P03_W056
+Sub_P03_W056:	.incbin	"build/wav_pcm/sub/Sub_P03_W055.pcm", 256, 23296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W055.wav: samples 256-23551 of Sub_P03_W055's recording, entry 056: an alternate start into it (cue point Sub_P03_W056 in the WAV), which plays on to its end
+Sub_P03_W055_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W055.pcm", 512, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W055.wav: the run-out, the loop's first 32 samples again (from sample 512; loop_probe.py)
 	.space	64, 0	; zero words to the next recording
-Sub_P03_W057:	.incbin	"build/wav_pcm/sub/Sub_P03_W057.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W057.wav: 512 8-bit samples, entry 057
-Sub_P03_W058:	.incbin	"build/wav_pcm/sub/Sub_P03_W058.pcm", 0, 18688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W058.wav: 18784 8-bit samples, entry 058; an alternate start into Sub_P03_W057's recording, which plays on through it
-Sub_P03_W058_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W058.pcm", 256, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W058 from sample 256; loop_probe.py)
+Sub_P03_W057:	.incbin	"build/wav_pcm/sub/Sub_P03_W057.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W057.wav: 19200 8-bit samples, entry 057; this line is samples 0-511, up to the alternate start Sub_P03_W058
+Sub_P03_W058:	.incbin	"build/wav_pcm/sub/Sub_P03_W057.pcm", 512, 18688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W057.wav: samples 512-19199 of Sub_P03_W057's recording, entry 058: an alternate start into it (cue point Sub_P03_W058 in the WAV), which plays on to its end
+Sub_P03_W057_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W057.pcm", 768, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W057.wav: the run-out, the loop's first 32 samples again (from sample 768; loop_probe.py)
 	.space	64, 0	; zero words to the next recording
-Sub_P03_W059:	.incbin	"build/wav_pcm/sub/Sub_P03_W059.pcm", 0, 384	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W059.wav: 384 8-bit samples, entry 059
-Sub_P03_W05A:	.incbin	"build/wav_pcm/sub/Sub_P03_W05A.pcm", 0, 16768	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W05A.wav: 16864 8-bit samples, entry 05A; an alternate start into Sub_P03_W059's recording, which plays on through it
-Sub_P03_W05A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W05A.pcm", 128, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W05A from sample 128; loop_probe.py)
+Sub_P03_W059:	.incbin	"build/wav_pcm/sub/Sub_P03_W059.pcm", 0, 384	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W059.wav: 17152 8-bit samples, entry 059; this line is samples 0-383, up to the alternate start Sub_P03_W05A
+Sub_P03_W05A:	.incbin	"build/wav_pcm/sub/Sub_P03_W059.pcm", 384, 16768	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W059.wav: samples 384-17151 of Sub_P03_W059's recording, entry 05A: an alternate start into it (cue point Sub_P03_W05A in the WAV), which plays on to its end
+Sub_P03_W059_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W059.pcm", 512, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W059.wav: the run-out, the loop's first 32 samples again (from sample 512; loop_probe.py)
 	.space	64, 0	; zero words to the next recording
-Sub_P03_W05B:	.incbin	"build/wav_pcm/sub/Sub_P03_W05B.pcm", 0, 896	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W05B.wav: 896 8-bit samples, entry 05B
-Sub_P03_W05C:	.incbin	"build/wav_pcm/sub/Sub_P03_W05C.pcm", 0, 18688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W05C.wav: 18784 8-bit samples, entry 05C; an alternate start into Sub_P03_W05B's recording, which plays on through it
-Sub_P03_W05C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W05C.pcm", 128, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W05C from sample 128; loop_probe.py)
+Sub_P03_W05B:	.incbin	"build/wav_pcm/sub/Sub_P03_W05B.pcm", 0, 896	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W05B.wav: 19584 8-bit samples, entry 05B; this line is samples 0-895, up to the alternate start Sub_P03_W05C
+Sub_P03_W05C:	.incbin	"build/wav_pcm/sub/Sub_P03_W05B.pcm", 896, 18688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W05B.wav: samples 896-19583 of Sub_P03_W05B's recording, entry 05C: an alternate start into it (cue point Sub_P03_W05C in the WAV), which plays on to its end
+Sub_P03_W05B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W05B.pcm", 1024, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W05B.wav: the run-out, the loop's first 32 samples again (from sample 1024; loop_probe.py)
 	.space	64, 0	; zero words to the next recording
-Sub_P03_W05D:	.incbin	"build/wav_pcm/sub/Sub_P03_W05D.pcm", 0, 896	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W05D.wav: 896 8-bit samples, entry 05D
-Sub_P03_W05E:	.incbin	"build/wav_pcm/sub/Sub_P03_W05E.pcm", 0, 38528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W05E.wav: 38624 8-bit samples, entry 05E; an alternate start into Sub_P03_W05D's recording, which plays on through it
-Sub_P03_W05E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W05E.pcm", 128, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W05E from sample 128; loop_probe.py)
+Sub_P03_W05D:	.incbin	"build/wav_pcm/sub/Sub_P03_W05D.pcm", 0, 896	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W05D.wav: 39424 8-bit samples, entry 05D; this line is samples 0-895, up to the alternate start Sub_P03_W05E
+Sub_P03_W05E:	.incbin	"build/wav_pcm/sub/Sub_P03_W05D.pcm", 896, 38528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W05D.wav: samples 896-39423 of Sub_P03_W05D's recording, entry 05E: an alternate start into it (cue point Sub_P03_W05E in the WAV), which plays on to its end
+Sub_P03_W05D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W05D.pcm", 1024, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W05D.wav: the run-out, the loop's first 32 samples again (from sample 1024; loop_probe.py)
 	.space	64, 0	; zero words to the next recording
-Sub_P03_W05F:	.incbin	"build/wav_pcm/sub/Sub_P03_W05F.pcm", 0, 135168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W05F.wav: 67616 16-bit samples, entry 05F
-Sub_P03_W05F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W05F.pcm", 59904, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W05F from sample 29952; loop_probe.py)
-Sub_P03_W060:	.incbin	"build/wav_pcm/sub/Sub_P03_W060.pcm", 0, 76544	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W060.wav: 76576 8-bit samples, entry 060
-Sub_P03_W060_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W060.pcm", 40064, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W060 from sample 40064; loop_probe.py)
-Sub_P03_W061:	.incbin	"build/wav_pcm/sub/Sub_P03_W061.pcm", 0, 66048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W061.wav: 66080 8-bit samples, entry 061
-Sub_P03_W061_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W061.pcm", 40960, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W061 from sample 40960; loop_probe.py)
-Sub_P03_W062:	.incbin	"build/wav_pcm/sub/Sub_P03_W062.pcm", 0, 70656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W062.wav: 70688 8-bit samples, entry 062
-Sub_P03_W062_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W062.pcm", 45312, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W062 from sample 45312; loop_probe.py)
-Sub_P03_W063:	.incbin	"build/wav_pcm/sub/Sub_P03_W063.pcm", 0, 72064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W063.wav: 72096 8-bit samples, entry 063
-Sub_P03_W063_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W063.pcm", 46848, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W063 from sample 46848; loop_probe.py)
-Sub_P03_W064:	.incbin	"build/wav_pcm/sub/Sub_P03_W064.pcm", 0, 50432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W064.wav: 50464 8-bit samples, entry 064
-Sub_P03_W064_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W064.pcm", 25216, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W064 from sample 25216; loop_probe.py)
-Sub_P03_W065:	.incbin	"build/wav_pcm/sub/Sub_P03_W065.pcm", 0, 123392	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W065.wav: 123424 8-bit samples, entry 065
-Sub_P03_W065_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W065.pcm", 61696, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W065 from sample 61696; loop_probe.py)
-Sub_P03_W066:	.incbin	"build/wav_pcm/sub/Sub_P03_W066.pcm", 0, 44288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W066.wav: 44320 8-bit samples, entry 066
-Sub_P03_W066_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W066.pcm", 4608, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W066 from sample 4608; loop_probe.py)
-Sub_P03_W067:	.incbin	"build/wav_pcm/sub/Sub_P03_W067.pcm", 0, 49920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W067.wav: 49952 8-bit samples, entry 067
-Sub_P03_W067_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W067.pcm", 512, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W067 from sample 512; loop_probe.py)
-Sub_P03_W068:	.incbin	"build/wav_pcm/sub/Sub_P03_W068.pcm", 0, 69376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W068.wav: 34720 16-bit samples, entry 068
-Sub_P03_W068_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W068.pcm", 256, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W068 from sample 128; loop_probe.py)
-Sub_P03_W069:	.incbin	"build/wav_pcm/sub/Sub_P03_W069.pcm", 0, 46592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W069.wav: 46624 8-bit samples, entry 069
-Sub_P03_W069_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W069.pcm", 15104, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W069 from sample 15104; loop_probe.py)
-Sub_P03_W06A:	.incbin	"build/wav_pcm/sub/Sub_P03_W06A.pcm", 0, 46592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W06A.wav: 46624 8-bit samples, entry 06A
-Sub_P03_W06A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W06A.pcm", 15104, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W06A from sample 15104; loop_probe.py)
-Sub_P03_W06B:	.incbin	"build/wav_pcm/sub/Sub_P03_W06B.pcm", 0, 33088	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W06B.wav: 33120 8-bit samples, entry 06B
-Sub_P03_W06B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W06B.pcm", 8832, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W06B from sample 8832; loop_probe.py)
-Sub_P03_W06C:	.incbin	"build/wav_pcm/sub/Sub_P03_W06C.pcm", 0, 28864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W06C.wav: 28896 8-bit samples, entry 06C
-Sub_P03_W06C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W06C.pcm", 8832, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W06C from sample 8832; loop_probe.py)
-Sub_P03_W06D:	.incbin	"build/wav_pcm/sub/Sub_P03_W06D.pcm", 0, 28864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W06D.wav: 28928 8-bit samples, entry 06D
-Sub_P03_W06D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W06D.pcm", 8832, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P03_W06D from sample 8832; loop_probe.py)
+Sub_P03_W05F:	.incbin	"build/wav_pcm/sub/Sub_P03_W05F.pcm", 0, 135168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W05F.wav: 67584 16-bit samples, entry 05F
+Sub_P03_W05F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W05F.pcm", 59904, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W05F.wav: the run-out, the loop's first 32 samples again (from sample 29952; loop_probe.py)
+Sub_P03_W060:	.incbin	"build/wav_pcm/sub/Sub_P03_W060.pcm", 0, 76544	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W060.wav: 76544 8-bit samples, entry 060
+Sub_P03_W060_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W060.pcm", 40064, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W060.wav: the run-out, the loop's first 32 samples again (from sample 40064; loop_probe.py)
+Sub_P03_W061:	.incbin	"build/wav_pcm/sub/Sub_P03_W061.pcm", 0, 66048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W061.wav: 66048 8-bit samples, entry 061
+Sub_P03_W061_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W061.pcm", 40960, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W061.wav: the run-out, the loop's first 32 samples again (from sample 40960; loop_probe.py)
+Sub_P03_W062:	.incbin	"build/wav_pcm/sub/Sub_P03_W062.pcm", 0, 70656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W062.wav: 70656 8-bit samples, entry 062
+Sub_P03_W062_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W062.pcm", 45312, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W062.wav: the run-out, the loop's first 32 samples again (from sample 45312; loop_probe.py)
+Sub_P03_W063:	.incbin	"build/wav_pcm/sub/Sub_P03_W063.pcm", 0, 72064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W063.wav: 72064 8-bit samples, entry 063
+Sub_P03_W063_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W063.pcm", 46848, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W063.wav: the run-out, the loop's first 32 samples again (from sample 46848; loop_probe.py)
+Sub_P03_W064:	.incbin	"build/wav_pcm/sub/Sub_P03_W064.pcm", 0, 50432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W064.wav: 50432 8-bit samples, entry 064
+Sub_P03_W064_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W064.pcm", 25216, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W064.wav: the run-out, the loop's first 32 samples again (from sample 25216; loop_probe.py)
+Sub_P03_W065:	.incbin	"build/wav_pcm/sub/Sub_P03_W065.pcm", 0, 123392	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W065.wav: 123392 8-bit samples, entry 065
+Sub_P03_W065_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W065.pcm", 61696, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W065.wav: the run-out, the loop's first 32 samples again (from sample 61696; loop_probe.py)
+Sub_P03_W066:	.incbin	"build/wav_pcm/sub/Sub_P03_W066.pcm", 0, 44288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W066.wav: 44288 8-bit samples, entry 066
+Sub_P03_W066_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W066.pcm", 4608, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W066.wav: the run-out, the loop's first 32 samples again (from sample 4608; loop_probe.py)
+Sub_P03_W067:	.incbin	"build/wav_pcm/sub/Sub_P03_W067.pcm", 0, 49920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W067.wav: 49920 8-bit samples, entry 067
+Sub_P03_W067_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W067.pcm", 512, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W067.wav: the run-out, the loop's first 32 samples again (from sample 512; loop_probe.py)
+Sub_P03_W068:	.incbin	"build/wav_pcm/sub/Sub_P03_W068.pcm", 0, 69376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W068.wav: 34688 16-bit samples, entry 068
+Sub_P03_W068_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W068.pcm", 256, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W068.wav: the run-out, the loop's first 32 samples again (from sample 128; loop_probe.py)
+Sub_P03_W069:	.incbin	"build/wav_pcm/sub/Sub_P03_W069.pcm", 0, 46592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W069.wav: 46592 8-bit samples, entry 069
+Sub_P03_W069_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W069.pcm", 15104, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W069.wav: the run-out, the loop's first 32 samples again (from sample 15104; loop_probe.py)
+Sub_P03_W06A:	.incbin	"build/wav_pcm/sub/Sub_P03_W06A.pcm", 0, 46592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W06A.wav: 46592 8-bit samples, entry 06A
+Sub_P03_W06A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W06A.pcm", 15104, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W06A.wav: the run-out, the loop's first 32 samples again (from sample 15104; loop_probe.py)
+Sub_P03_W06B:	.incbin	"build/wav_pcm/sub/Sub_P03_W06B.pcm", 0, 33088	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W06B.wav: 33088 8-bit samples, entry 06B
+Sub_P03_W06B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W06B.pcm", 8832, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W06B.wav: the run-out, the loop's first 32 samples again (from sample 8832; loop_probe.py)
+Sub_P03_W06C:	.incbin	"build/wav_pcm/sub/Sub_P03_W06C.pcm", 0, 28864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W06C.wav: 28864 8-bit samples, entry 06C
+Sub_P03_W06C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W06C.pcm", 8832, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W06C.wav: the run-out, the loop's first 32 samples again (from sample 8832; loop_probe.py)
+Sub_P03_W06D:	.incbin	"build/wav_pcm/sub/Sub_P03_W06D.pcm", 0, 28864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W06D.wav: 28864 8-bit samples, entry 06D
+Sub_P03_W06D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P03_W06D.pcm", 8832, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P03_W06D.wav: the run-out, the loop's first 32 samples again (from sample 8832; loop_probe.py)
 	.space	32, 0	; zero words to the next recording
 Sub_P03_Fill:	.space	256, 0xff	; erased fill to the page end
 
@@ -3329,7 +3334,8 @@ Sub_P04_R089:	.word	(Sub_P04_W089 - Sub_P04) / 32, 256-128, 256-22, REC_END
 Sub_P04_R08A:	.word	(Sub_P04_W08A - Sub_P04) / 32, 256-120, REC_END
 	.align	4
 	.align	32
-# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py
+# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py;
+# an alternate start is a slice of its recording's raw item and a cue point in its WAV
 Sub_P04_W000:	.incbin	"build/wav_pcm/sub/Sub_P04_W000.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W000_PercOrgan.wav: 2816 16-bit samples, entry 000
 Sub_P04_W001:	.incbin	"build/wav_pcm/sub/Sub_P04_W001.pcm", 0, 4608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W001_PercOrgan.wav: 2304 16-bit samples, entry 001
 Sub_P04_W002:	.incbin	"build/wav_pcm/sub/Sub_P04_W002.pcm", 0, 2816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W002_PercOrgan.wav: 1408 16-bit samples, entry 002
@@ -3349,18 +3355,18 @@ Sub_P04_W00F:	.incbin	"build/wav_pcm/sub/Sub_P04_W00F.pcm", 0, 2560	; census: ge
 Sub_P04_W010:	.incbin	"build/wav_pcm/sub/Sub_P04_W010.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W010_16ftAnd1ft.wav: 1792 16-bit samples, entry 010
 Sub_P04_W011:	.incbin	"build/wav_pcm/sub/Sub_P04_W011.pcm", 0, 2560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W011_16ftAnd1ft.wav: 1280 16-bit samples, entry 011
 Sub_P04_W012:	.incbin	"build/wav_pcm/sub/Sub_P04_W012.pcm", 0, 1536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W012.wav: 768 16-bit samples, entry 012
-Sub_P04_W013:	.incbin	"build/wav_pcm/sub/Sub_P04_W013.pcm", 0, 104448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W013.wav: 52256 16-bit samples, entry 013
-Sub_P04_W013_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W013.pcm", 24576, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P04_W013 from sample 12288; loop_probe.py)
-Sub_P04_W014:	.incbin	"build/wav_pcm/sub/Sub_P04_W014.pcm", 0, 94208	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W014.wav: 47136 16-bit samples, entry 014
-Sub_P04_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W014.pcm", 22016, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P04_W014 from sample 11008; loop_probe.py)
-Sub_P04_W015:	.incbin	"build/wav_pcm/sub/Sub_P04_W015.pcm", 0, 93184	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W015.wav: 46624 16-bit samples, entry 015
-Sub_P04_W015_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W015.pcm", 21504, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P04_W015 from sample 10752; loop_probe.py)
-Sub_P04_W016:	.incbin	"build/wav_pcm/sub/Sub_P04_W016.pcm", 0, 93696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W016.wav: 46880 16-bit samples, entry 016
-Sub_P04_W016_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W016.pcm", 21760, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P04_W016 from sample 10880; loop_probe.py)
-Sub_P04_W017:	.incbin	"build/wav_pcm/sub/Sub_P04_W017.pcm", 0, 93696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W017.wav: 46880 16-bit samples, entry 017
-Sub_P04_W017_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W017.pcm", 21760, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P04_W017 from sample 10880; loop_probe.py)
-Sub_P04_W018:	.incbin	"build/wav_pcm/sub/Sub_P04_W018.pcm", 0, 115968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W018.wav: 58016 16-bit samples, entry 018
-Sub_P04_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W018.pcm", 26752, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P04_W018 from sample 13376; loop_probe.py)
+Sub_P04_W013:	.incbin	"build/wav_pcm/sub/Sub_P04_W013.pcm", 0, 104448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W013.wav: 52224 16-bit samples, entry 013
+Sub_P04_W013_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W013.pcm", 24576, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W013.wav: the run-out, the loop's first 32 samples again (from sample 12288; loop_probe.py)
+Sub_P04_W014:	.incbin	"build/wav_pcm/sub/Sub_P04_W014.pcm", 0, 94208	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W014.wav: 47104 16-bit samples, entry 014
+Sub_P04_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W014.pcm", 22016, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W014.wav: the run-out, the loop's first 32 samples again (from sample 11008; loop_probe.py)
+Sub_P04_W015:	.incbin	"build/wav_pcm/sub/Sub_P04_W015.pcm", 0, 93184	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W015.wav: 46592 16-bit samples, entry 015
+Sub_P04_W015_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W015.pcm", 21504, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W015.wav: the run-out, the loop's first 32 samples again (from sample 10752; loop_probe.py)
+Sub_P04_W016:	.incbin	"build/wav_pcm/sub/Sub_P04_W016.pcm", 0, 93696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W016.wav: 46848 16-bit samples, entry 016
+Sub_P04_W016_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W016.pcm", 21760, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W016.wav: the run-out, the loop's first 32 samples again (from sample 10880; loop_probe.py)
+Sub_P04_W017:	.incbin	"build/wav_pcm/sub/Sub_P04_W017.pcm", 0, 93696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W017.wav: 46848 16-bit samples, entry 017
+Sub_P04_W017_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W017.pcm", 21760, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W017.wav: the run-out, the loop's first 32 samples again (from sample 10880; loop_probe.py)
+Sub_P04_W018:	.incbin	"build/wav_pcm/sub/Sub_P04_W018.pcm", 0, 115968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W018.wav: 57984 16-bit samples, entry 018
+Sub_P04_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W018.pcm", 26752, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W018.wav: the run-out, the loop's first 32 samples again (from sample 13376; loop_probe.py)
 Sub_P04_W019:	.incbin	"build/wav_pcm/sub/Sub_P04_W019.pcm", 0, 8704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W019_GermanAcdn1.wav: 4352 16-bit samples, entry 019
 Sub_P04_W01A:	.incbin	"build/wav_pcm/sub/Sub_P04_W01A.pcm", 0, 9728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W01A_GermanAcdn1.wav: 4864 16-bit samples, entry 01A
 Sub_P04_W01B:	.incbin	"build/wav_pcm/sub/Sub_P04_W01B.pcm", 0, 10752	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W01B_GermanAcdn1.wav: 5376 16-bit samples, entry 01B
@@ -3446,27 +3452,27 @@ Sub_P04_W06A:	.incbin	"build/wav_pcm/sub/Sub_P04_W06A.pcm", 0, 11776	; census: g
 Sub_P04_W06B:	.incbin	"build/wav_pcm/sub/Sub_P04_W06B.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W06B.wav: 4096 16-bit samples, entry 06B
 Sub_P04_W06C:	.incbin	"build/wav_pcm/sub/Sub_P04_W06C.pcm", 0, 9728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W06C.wav: 4864 16-bit samples, entry 06C
 Sub_P04_W06D:	.incbin	"build/wav_pcm/sub/Sub_P04_W06D.pcm", 0, 6912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W06D.wav: 3456 16-bit samples, entry 06D
-Sub_P04_W06E:	.incbin	"build/wav_pcm/sub/Sub_P04_W06E.pcm", 0, 89600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W06E.wav: 44832 16-bit samples, entry 06E
-Sub_P04_W06E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W06E.pcm", 51200, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P04_W06E from sample 25600; loop_probe.py)
-Sub_P04_W06F:	.incbin	"build/wav_pcm/sub/Sub_P04_W06F.pcm", 0, 89600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W06F.wav: 44832 16-bit samples, entry 06F
-Sub_P04_W06F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W06F.pcm", 51200, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P04_W06F from sample 25600; loop_probe.py)
-Sub_P04_W070:	.incbin	"build/wav_pcm/sub/Sub_P04_W070.pcm", 0, 89600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W070.wav: 44832 16-bit samples, entry 070
-Sub_P04_W070_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W070.pcm", 51200, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P04_W070 from sample 25600; loop_probe.py)
-Sub_P04_W071:	.incbin	"build/wav_pcm/sub/Sub_P04_W071.pcm", 0, 89600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W071.wav: 44832 16-bit samples, entry 071
-Sub_P04_W071_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W071.pcm", 51200, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P04_W071 from sample 25600; loop_probe.py)
-Sub_P04_W072:	.incbin	"build/wav_pcm/sub/Sub_P04_W072.pcm", 0, 112384	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W072.wav: 56224 16-bit samples, entry 072
-Sub_P04_W072_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W072.pcm", 64256, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P04_W072 from sample 32128; loop_probe.py)
+Sub_P04_W06E:	.incbin	"build/wav_pcm/sub/Sub_P04_W06E.pcm", 0, 89600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W06E.wav: 44800 16-bit samples, entry 06E
+Sub_P04_W06E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W06E.pcm", 51200, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W06E.wav: the run-out, the loop's first 32 samples again (from sample 25600; loop_probe.py)
+Sub_P04_W06F:	.incbin	"build/wav_pcm/sub/Sub_P04_W06F.pcm", 0, 89600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W06F.wav: 44800 16-bit samples, entry 06F
+Sub_P04_W06F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W06F.pcm", 51200, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W06F.wav: the run-out, the loop's first 32 samples again (from sample 25600; loop_probe.py)
+Sub_P04_W070:	.incbin	"build/wav_pcm/sub/Sub_P04_W070.pcm", 0, 89600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W070.wav: 44800 16-bit samples, entry 070
+Sub_P04_W070_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W070.pcm", 51200, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W070.wav: the run-out, the loop's first 32 samples again (from sample 25600; loop_probe.py)
+Sub_P04_W071:	.incbin	"build/wav_pcm/sub/Sub_P04_W071.pcm", 0, 89600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W071.wav: 44800 16-bit samples, entry 071
+Sub_P04_W071_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W071.pcm", 51200, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W071.wav: the run-out, the loop's first 32 samples again (from sample 25600; loop_probe.py)
+Sub_P04_W072:	.incbin	"build/wav_pcm/sub/Sub_P04_W072.pcm", 0, 112384	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W072.wav: 56192 16-bit samples, entry 072
+Sub_P04_W072_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W072.pcm", 64256, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W072.wav: the run-out, the loop's first 32 samples again (from sample 32128; loop_probe.py)
 Sub_P04_W073:	.incbin	"build/wav_pcm/sub/Sub_P04_W073.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W073.wav: 5120 16-bit samples, entry 073
 Sub_P04_W074:	.incbin	"build/wav_pcm/sub/Sub_P04_W074.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W074.wav: 6144 16-bit samples, entry 074
 Sub_P04_W075:	.incbin	"build/wav_pcm/sub/Sub_P04_W075.pcm", 0, 11264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W075.wav: 5632 16-bit samples, entry 075
 Sub_P04_W076:	.incbin	"build/wav_pcm/sub/Sub_P04_W076.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W076.wav: 3584 16-bit samples, entry 076
 Sub_P04_W077:	.incbin	"build/wav_pcm/sub/Sub_P04_W077.pcm", 0, 7680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W077.wav: 3840 16-bit samples, entry 077
-Sub_P04_W078:	.incbin	"build/wav_pcm/sub/Sub_P04_W078.pcm", 0, 33536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W078.wav: 33568 8-bit samples, entry 078
-Sub_P04_W078_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W078.pcm", 20224, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P04_W078 from sample 20224; loop_probe.py)
-Sub_P04_W079:	.incbin	"build/wav_pcm/sub/Sub_P04_W079.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W079.wav: 35360 8-bit samples, entry 079
-Sub_P04_W079_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W079.pcm", 21888, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P04_W079 from sample 21888; loop_probe.py)
-Sub_P04_W07A:	.incbin	"build/wav_pcm/sub/Sub_P04_W07A.pcm", 0, 40320	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W07A.wav: 40352 8-bit samples, entry 07A
-Sub_P04_W07A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W07A.pcm", 26880, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P04_W07A from sample 26880; loop_probe.py)
+Sub_P04_W078:	.incbin	"build/wav_pcm/sub/Sub_P04_W078.pcm", 0, 33536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W078.wav: 33536 8-bit samples, entry 078
+Sub_P04_W078_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W078.pcm", 20224, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W078.wav: the run-out, the loop's first 32 samples again (from sample 20224; loop_probe.py)
+Sub_P04_W079:	.incbin	"build/wav_pcm/sub/Sub_P04_W079.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W079.wav: 35328 8-bit samples, entry 079
+Sub_P04_W079_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W079.pcm", 21888, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W079.wav: the run-out, the loop's first 32 samples again (from sample 21888; loop_probe.py)
+Sub_P04_W07A:	.incbin	"build/wav_pcm/sub/Sub_P04_W07A.pcm", 0, 40320	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W07A.wav: 40320 8-bit samples, entry 07A
+Sub_P04_W07A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P04_W07A.pcm", 26880, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W07A.wav: the run-out, the loop's first 32 samples again (from sample 26880; loop_probe.py)
 Sub_P04_W07B:	.incbin	"build/wav_pcm/sub/Sub_P04_W07B.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W07B.wav: 5120 16-bit samples, entry 07B
 Sub_P04_W07C:	.incbin	"build/wav_pcm/sub/Sub_P04_W07C.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W07C.wav: 6144 16-bit samples, entry 07C
 Sub_P04_W07D:	.incbin	"build/wav_pcm/sub/Sub_P04_W07D.pcm", 0, 10752	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P04_W07D.wav: 5376 16-bit samples, entry 07D
@@ -3941,11 +3947,12 @@ Sub_P05_R06D:	.word	(Sub_P05_W06D - Sub_P05) / 32, 0x1c<<8 | 256-1, 0x13<<8 | 25
 Sub_P05_R06E:	.word	(Sub_P05_W06E - Sub_P05) / 32, 256-8, 64, 56, REC_END
 	.align	4
 	.align	32
-# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py
-Sub_P05_W000:	.incbin	"build/wav_pcm/sub/Sub_P05_W000.pcm", 0, 79616	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W000.wav: 39840 16-bit samples, entry 000
-Sub_P05_W000_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W000.pcm", 52992, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P05_W000 from sample 26496; loop_probe.py)
-Sub_P05_W001:	.incbin	"build/wav_pcm/sub/Sub_P05_W001.pcm", 0, 66560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W001.wav: 33312 16-bit samples, entry 001
-Sub_P05_W001_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W001.pcm", 47104, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P05_W001 from sample 23552; loop_probe.py)
+# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py;
+# an alternate start is a slice of its recording's raw item and a cue point in its WAV
+Sub_P05_W000:	.incbin	"build/wav_pcm/sub/Sub_P05_W000.pcm", 0, 79616	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W000.wav: 39808 16-bit samples, entry 000
+Sub_P05_W000_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W000.pcm", 52992, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W000.wav: the run-out, the loop's first 32 samples again (from sample 26496; loop_probe.py)
+Sub_P05_W001:	.incbin	"build/wav_pcm/sub/Sub_P05_W001.pcm", 0, 66560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W001.wav: 33280 16-bit samples, entry 001
+Sub_P05_W001_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W001.pcm", 47104, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W001.wav: the run-out, the loop's first 32 samples again (from sample 23552; loop_probe.py)
 Sub_P05_W002:	.incbin	"build/wav_pcm/sub/Sub_P05_W002.pcm", 0, 9216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W002.wav: 4608 16-bit samples, entry 002
 Sub_P05_W003:	.incbin	"build/wav_pcm/sub/Sub_P05_W003.pcm", 0, 11776	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W003.wav: 5888 16-bit samples, entry 003
 Sub_P05_W004:	.incbin	"build/wav_pcm/sub/Sub_P05_W004.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W004.wav: 3584 16-bit samples, entry 004
@@ -3976,22 +3983,22 @@ Sub_P05_W01C:	.incbin	"build/wav_pcm/sub/Sub_P05_W01C.pcm", 0, 5120	; census: ge
 Sub_P05_W01D:	.incbin	"build/wav_pcm/sub/Sub_P05_W01D.pcm", 0, 2944	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W01D.wav: 2944 8-bit samples, entry 01D
 Sub_P05_W01E:	.incbin	"build/wav_pcm/sub/Sub_P05_W01E.pcm", 0, 3712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W01E.wav: 3712 8-bit samples, entry 01E
 Sub_P05_W01F:	.incbin	"build/wav_pcm/sub/Sub_P05_W01F.pcm", 0, 15616	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W01F.wav: 7808 16-bit samples, entry 01F
-Sub_P05_W020:	.incbin	"build/wav_pcm/sub/Sub_P05_W020.pcm", 0, 89600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W020.wav: 44832 16-bit samples, entry 020
-Sub_P05_W020_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W020.pcm", 71680, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P05_W020 from sample 35840; loop_probe.py)
-Sub_P05_W021:	.incbin	"build/wav_pcm/sub/Sub_P05_W021.pcm", 0, 78848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W021.wav: 39456 16-bit samples, entry 021
-Sub_P05_W021_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W021.pcm", 62464, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P05_W021 from sample 31232; loop_probe.py)
-Sub_P05_W022:	.incbin	"build/wav_pcm/sub/Sub_P05_W022.pcm", 0, 74496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W022.wav: 37280 16-bit samples, entry 022
-Sub_P05_W022_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W022.pcm", 57856, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P05_W022 from sample 28928; loop_probe.py)
-Sub_P05_W023:	.incbin	"build/wav_pcm/sub/Sub_P05_W023.pcm", 0, 87040	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W023.wav: 43552 16-bit samples, entry 023
-Sub_P05_W023_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W023.pcm", 71168, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P05_W023 from sample 35584; loop_probe.py)
-Sub_P05_W024:	.incbin	"build/wav_pcm/sub/Sub_P05_W024.pcm", 0, 101120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W024.wav: 50592 16-bit samples, entry 024
-Sub_P05_W024_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W024.pcm", 85248, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P05_W024 from sample 42624; loop_probe.py)
-Sub_P05_W025:	.incbin	"build/wav_pcm/sub/Sub_P05_W025.pcm", 0, 41664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W025.wav: 41696 8-bit samples, entry 025
-Sub_P05_W025_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W025.pcm", 32704, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P05_W025 from sample 32704; loop_probe.py)
-Sub_P05_W026:	.incbin	"build/wav_pcm/sub/Sub_P05_W026.pcm", 0, 44992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W026.wav: 45024 8-bit samples, entry 026
-Sub_P05_W026_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W026.pcm", 35648, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P05_W026 from sample 35648; loop_probe.py)
-Sub_P05_W027:	.incbin	"build/wav_pcm/sub/Sub_P05_W027.pcm", 0, 73344	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W027.wav: 73376 8-bit samples, entry 027
-Sub_P05_W027_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W027.pcm", 57856, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P05_W027 from sample 57856; loop_probe.py)
+Sub_P05_W020:	.incbin	"build/wav_pcm/sub/Sub_P05_W020.pcm", 0, 89600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W020.wav: 44800 16-bit samples, entry 020
+Sub_P05_W020_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W020.pcm", 71680, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W020.wav: the run-out, the loop's first 32 samples again (from sample 35840; loop_probe.py)
+Sub_P05_W021:	.incbin	"build/wav_pcm/sub/Sub_P05_W021.pcm", 0, 78848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W021.wav: 39424 16-bit samples, entry 021
+Sub_P05_W021_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W021.pcm", 62464, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W021.wav: the run-out, the loop's first 32 samples again (from sample 31232; loop_probe.py)
+Sub_P05_W022:	.incbin	"build/wav_pcm/sub/Sub_P05_W022.pcm", 0, 74496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W022.wav: 37248 16-bit samples, entry 022
+Sub_P05_W022_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W022.pcm", 57856, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W022.wav: the run-out, the loop's first 32 samples again (from sample 28928; loop_probe.py)
+Sub_P05_W023:	.incbin	"build/wav_pcm/sub/Sub_P05_W023.pcm", 0, 87040	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W023.wav: 43520 16-bit samples, entry 023
+Sub_P05_W023_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W023.pcm", 71168, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W023.wav: the run-out, the loop's first 32 samples again (from sample 35584; loop_probe.py)
+Sub_P05_W024:	.incbin	"build/wav_pcm/sub/Sub_P05_W024.pcm", 0, 101120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W024.wav: 50560 16-bit samples, entry 024
+Sub_P05_W024_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W024.pcm", 85248, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W024.wav: the run-out, the loop's first 32 samples again (from sample 42624; loop_probe.py)
+Sub_P05_W025:	.incbin	"build/wav_pcm/sub/Sub_P05_W025.pcm", 0, 41664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W025.wav: 41664 8-bit samples, entry 025
+Sub_P05_W025_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W025.pcm", 32704, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W025.wav: the run-out, the loop's first 32 samples again (from sample 32704; loop_probe.py)
+Sub_P05_W026:	.incbin	"build/wav_pcm/sub/Sub_P05_W026.pcm", 0, 44992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W026.wav: 44992 8-bit samples, entry 026
+Sub_P05_W026_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W026.pcm", 35648, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W026.wav: the run-out, the loop's first 32 samples again (from sample 35648; loop_probe.py)
+Sub_P05_W027:	.incbin	"build/wav_pcm/sub/Sub_P05_W027.pcm", 0, 73344	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W027.wav: 73344 8-bit samples, entry 027
+Sub_P05_W027_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P05_W027.pcm", 57856, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W027.wav: the run-out, the loop's first 32 samples again (from sample 57856; loop_probe.py)
 Sub_P05_W028:	.incbin	"build/wav_pcm/sub/Sub_P05_W028.pcm", 0, 53120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W028.wav: 26560 16-bit samples, entry 028
 Sub_P05_W029:	.incbin	"build/wav_pcm/sub/Sub_P05_W029.pcm", 0, 51712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W029.wav: 25856 16-bit samples, entry 029
 Sub_P05_W02A:	.incbin	"build/wav_pcm/sub/Sub_P05_W02A.pcm", 0, 25216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P05_W02A.wav: 25216 8-bit samples, entry 02A
@@ -4694,56 +4701,57 @@ Sub_P06_R06B:	.word	(Sub_P06_W06B - Sub_P06) / 32, 0x25<<8 | 256-2, 0x1c<<8 | 25
 Sub_P06_R06C:	.word	(Sub_P06_W06C - Sub_P06) / 32, 256-128, 256-128, 256-128, 256-128, 256-128, 256-118, REC_END
 	.align	4
 	.align	32
-# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py
+# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py;
+# an alternate start is a slice of its recording's raw item and a cue point in its WAV
 Sub_P06_W000:	.incbin	"build/wav_pcm/sub/Sub_P06_W000.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W000.wav: 3328 16-bit samples, entry 000
 Sub_P06_W001:	.incbin	"build/wav_pcm/sub/Sub_P06_W001.pcm", 0, 7680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W001.wav: 3840 16-bit samples, entry 001
 Sub_P06_W002:	.incbin	"build/wav_pcm/sub/Sub_P06_W002.pcm", 0, 4352	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W002.wav: 4352 8-bit samples, entry 002
 Sub_P06_W003:	.incbin	"build/wav_pcm/sub/Sub_P06_W003.pcm", 0, 5888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W003.wav: 5888 8-bit samples, entry 003
 Sub_P06_W004:	.incbin	"build/wav_pcm/sub/Sub_P06_W004.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W004.wav: 3584 8-bit samples, entry 004
-Sub_P06_W005:	.incbin	"build/wav_pcm/sub/Sub_P06_W005.pcm", 0, 130048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W005.wav: 65056 16-bit samples, entry 005
-Sub_P06_W005_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W005.pcm", 114688, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W005 from sample 57344; loop_probe.py)
-Sub_P06_W006:	.incbin	"build/wav_pcm/sub/Sub_P06_W006.pcm", 0, 113664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W006.wav: 56864 16-bit samples, entry 006
-Sub_P06_W006_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W006.pcm", 96768, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W006 from sample 48384; loop_probe.py)
-Sub_P06_W007:	.incbin	"build/wav_pcm/sub/Sub_P06_W007.pcm", 0, 121344	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W007.wav: 60704 16-bit samples, entry 007
-Sub_P06_W007_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W007.pcm", 101376, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W007 from sample 50688; loop_probe.py)
-Sub_P06_W008:	.incbin	"build/wav_pcm/sub/Sub_P06_W008.pcm", 0, 114688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W008.wav: 57376 16-bit samples, entry 008
-Sub_P06_W008_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W008.pcm", 95744, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W008 from sample 47872; loop_probe.py)
-Sub_P06_W009:	.incbin	"build/wav_pcm/sub/Sub_P06_W009.pcm", 0, 119552	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W009.wav: 59808 16-bit samples, entry 009
-Sub_P06_W009_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W009.pcm", 100096, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W009 from sample 50048; loop_probe.py)
-Sub_P06_W00A:	.incbin	"build/wav_pcm/sub/Sub_P06_W00A.pcm", 0, 112640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00A.wav: 56352 16-bit samples, entry 00A
-Sub_P06_W00A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W00A.pcm", 93184, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W00A from sample 46592; loop_probe.py)
-Sub_P06_W00B:	.incbin	"build/wav_pcm/sub/Sub_P06_W00B.pcm", 0, 50560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00B.wav: 50592 8-bit samples, entry 00B
-Sub_P06_W00B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W00B.pcm", 39936, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W00B from sample 39936; loop_probe.py)
-Sub_P06_W00C:	.incbin	"build/wav_pcm/sub/Sub_P06_W00C.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00C.wav: 17696 16-bit samples, entry 00C
-Sub_P06_W00C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W00C.pcm", 23552, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W00C from sample 11776; loop_probe.py)
-Sub_P06_W00D:	.incbin	"build/wav_pcm/sub/Sub_P06_W00D.pcm", 0, 15616	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00D.wav: 15648 8-bit samples, entry 00D
-Sub_P06_W00D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W00D.pcm", 9984, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W00D from sample 9984; loop_probe.py)
-Sub_P06_W00E:	.incbin	"build/wav_pcm/sub/Sub_P06_W00E.pcm", 0, 14080	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00E.wav: 14112 8-bit samples, entry 00E
-Sub_P06_W00E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W00E.pcm", 8448, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W00E from sample 8448; loop_probe.py)
-Sub_P06_W00F:	.incbin	"build/wav_pcm/sub/Sub_P06_W00F.pcm", 0, 14720	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00F.wav: 14752 8-bit samples, entry 00F
-Sub_P06_W00F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W00F.pcm", 9088, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W00F from sample 9088; loop_probe.py)
-Sub_P06_W010:	.incbin	"build/wav_pcm/sub/Sub_P06_W010.pcm", 0, 19328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W010.wav: 19360 8-bit samples, entry 010
-Sub_P06_W010_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W010.pcm", 11648, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W010 from sample 11648; loop_probe.py)
-Sub_P06_W011:	.incbin	"build/wav_pcm/sub/Sub_P06_W011.pcm", 0, 29696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W011.wav: 14880 16-bit samples, entry 011
-Sub_P06_W011_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W011.pcm", 25600, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W011 from sample 12800; loop_probe.py)
+Sub_P06_W005:	.incbin	"build/wav_pcm/sub/Sub_P06_W005.pcm", 0, 130048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W005.wav: 65024 16-bit samples, entry 005
+Sub_P06_W005_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W005.pcm", 114688, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W005.wav: the run-out, the loop's first 32 samples again (from sample 57344; loop_probe.py)
+Sub_P06_W006:	.incbin	"build/wav_pcm/sub/Sub_P06_W006.pcm", 0, 113664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W006.wav: 56832 16-bit samples, entry 006
+Sub_P06_W006_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W006.pcm", 96768, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W006.wav: the run-out, the loop's first 32 samples again (from sample 48384; loop_probe.py)
+Sub_P06_W007:	.incbin	"build/wav_pcm/sub/Sub_P06_W007.pcm", 0, 121344	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W007.wav: 60672 16-bit samples, entry 007
+Sub_P06_W007_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W007.pcm", 101376, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W007.wav: the run-out, the loop's first 32 samples again (from sample 50688; loop_probe.py)
+Sub_P06_W008:	.incbin	"build/wav_pcm/sub/Sub_P06_W008.pcm", 0, 114688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W008.wav: 57344 16-bit samples, entry 008
+Sub_P06_W008_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W008.pcm", 95744, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W008.wav: the run-out, the loop's first 32 samples again (from sample 47872; loop_probe.py)
+Sub_P06_W009:	.incbin	"build/wav_pcm/sub/Sub_P06_W009.pcm", 0, 119552	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W009.wav: 59776 16-bit samples, entry 009
+Sub_P06_W009_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W009.pcm", 100096, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W009.wav: the run-out, the loop's first 32 samples again (from sample 50048; loop_probe.py)
+Sub_P06_W00A:	.incbin	"build/wav_pcm/sub/Sub_P06_W00A.pcm", 0, 112640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00A.wav: 56320 16-bit samples, entry 00A
+Sub_P06_W00A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W00A.pcm", 93184, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00A.wav: the run-out, the loop's first 32 samples again (from sample 46592; loop_probe.py)
+Sub_P06_W00B:	.incbin	"build/wav_pcm/sub/Sub_P06_W00B.pcm", 0, 50560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00B.wav: 50560 8-bit samples, entry 00B
+Sub_P06_W00B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W00B.pcm", 39936, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00B.wav: the run-out, the loop's first 32 samples again (from sample 39936; loop_probe.py)
+Sub_P06_W00C:	.incbin	"build/wav_pcm/sub/Sub_P06_W00C.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00C.wav: 17664 16-bit samples, entry 00C
+Sub_P06_W00C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W00C.pcm", 23552, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00C.wav: the run-out, the loop's first 32 samples again (from sample 11776; loop_probe.py)
+Sub_P06_W00D:	.incbin	"build/wav_pcm/sub/Sub_P06_W00D.pcm", 0, 15616	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00D.wav: 15616 8-bit samples, entry 00D
+Sub_P06_W00D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W00D.pcm", 9984, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00D.wav: the run-out, the loop's first 32 samples again (from sample 9984; loop_probe.py)
+Sub_P06_W00E:	.incbin	"build/wav_pcm/sub/Sub_P06_W00E.pcm", 0, 14080	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00E.wav: 14080 8-bit samples, entry 00E
+Sub_P06_W00E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W00E.pcm", 8448, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00E.wav: the run-out, the loop's first 32 samples again (from sample 8448; loop_probe.py)
+Sub_P06_W00F:	.incbin	"build/wav_pcm/sub/Sub_P06_W00F.pcm", 0, 14720	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00F.wav: 14720 8-bit samples, entry 00F
+Sub_P06_W00F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W00F.pcm", 9088, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W00F.wav: the run-out, the loop's first 32 samples again (from sample 9088; loop_probe.py)
+Sub_P06_W010:	.incbin	"build/wav_pcm/sub/Sub_P06_W010.pcm", 0, 19328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W010.wav: 19328 8-bit samples, entry 010
+Sub_P06_W010_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W010.pcm", 11648, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W010.wav: the run-out, the loop's first 32 samples again (from sample 11648; loop_probe.py)
+Sub_P06_W011:	.incbin	"build/wav_pcm/sub/Sub_P06_W011.pcm", 0, 29696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W011.wav: 14848 16-bit samples, entry 011
+Sub_P06_W011_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W011.pcm", 25600, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W011.wav: the run-out, the loop's first 32 samples again (from sample 12800; loop_probe.py)
 Sub_P06_W012:	.incbin	"build/wav_pcm/sub/Sub_P06_W012.pcm", 0, 9216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W012.wav: 9216 8-bit samples, entry 012
 Sub_P06_W013:	.incbin	"build/wav_pcm/sub/Sub_P06_W013.pcm", 0, 11520	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W013.wav: 11520 8-bit samples, entry 013
 Sub_P06_W014:	.incbin	"build/wav_pcm/sub/Sub_P06_W014.pcm", 0, 12800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W014.wav: 12800 8-bit samples, entry 014
 Sub_P06_W015:	.incbin	"build/wav_pcm/sub/Sub_P06_W015.pcm", 0, 8320	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W015.wav: 8320 8-bit samples, entry 015
 Sub_P06_W016:	.incbin	"build/wav_pcm/sub/Sub_P06_W016.pcm", 0, 10752	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W016.wav: 10752 8-bit samples, entry 016
 Sub_P06_W017:	.incbin	"build/wav_pcm/sub/Sub_P06_W017.pcm", 0, 13056	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W017.wav: 13056 8-bit samples, entry 017
-Sub_P06_W018:	.incbin	"build/wav_pcm/sub/Sub_P06_W018.pcm", 0, 28160	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W018.wav: 14112 16-bit samples, entry 018
-Sub_P06_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W018.pcm", 15360, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W018 from sample 7680; loop_probe.py)
-Sub_P06_W019:	.incbin	"build/wav_pcm/sub/Sub_P06_W019.pcm", 0, 20480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W019.wav: 20512 8-bit samples, entry 019
-Sub_P06_W019_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W019.pcm", 14848, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W019 from sample 14848; loop_probe.py)
-Sub_P06_W01A:	.incbin	"build/wav_pcm/sub/Sub_P06_W01A.pcm", 0, 17664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W01A.wav: 17696 8-bit samples, entry 01A
-Sub_P06_W01A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W01A.pcm", 12032, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W01A from sample 12032; loop_probe.py)
-Sub_P06_W01B:	.incbin	"build/wav_pcm/sub/Sub_P06_W01B.pcm", 0, 15616	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W01B.wav: 15648 8-bit samples, entry 01B
-Sub_P06_W01B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W01B.pcm", 10240, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W01B from sample 10240; loop_probe.py)
-Sub_P06_W01C:	.incbin	"build/wav_pcm/sub/Sub_P06_W01C.pcm", 0, 13952	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W01C.wav: 13984 8-bit samples, entry 01C
-Sub_P06_W01C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W01C.pcm", 9344, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W01C from sample 9344; loop_probe.py)
-Sub_P06_W01D:	.incbin	"build/wav_pcm/sub/Sub_P06_W01D.pcm", 0, 18432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W01D.wav: 18464 8-bit samples, entry 01D
-Sub_P06_W01D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W01D.pcm", 13056, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W01D from sample 13056; loop_probe.py)
+Sub_P06_W018:	.incbin	"build/wav_pcm/sub/Sub_P06_W018.pcm", 0, 28160	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W018.wav: 14080 16-bit samples, entry 018
+Sub_P06_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W018.pcm", 15360, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W018.wav: the run-out, the loop's first 32 samples again (from sample 7680; loop_probe.py)
+Sub_P06_W019:	.incbin	"build/wav_pcm/sub/Sub_P06_W019.pcm", 0, 20480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W019.wav: 20480 8-bit samples, entry 019
+Sub_P06_W019_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W019.pcm", 14848, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W019.wav: the run-out, the loop's first 32 samples again (from sample 14848; loop_probe.py)
+Sub_P06_W01A:	.incbin	"build/wav_pcm/sub/Sub_P06_W01A.pcm", 0, 17664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W01A.wav: 17664 8-bit samples, entry 01A
+Sub_P06_W01A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W01A.pcm", 12032, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W01A.wav: the run-out, the loop's first 32 samples again (from sample 12032; loop_probe.py)
+Sub_P06_W01B:	.incbin	"build/wav_pcm/sub/Sub_P06_W01B.pcm", 0, 15616	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W01B.wav: 15616 8-bit samples, entry 01B
+Sub_P06_W01B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W01B.pcm", 10240, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W01B.wav: the run-out, the loop's first 32 samples again (from sample 10240; loop_probe.py)
+Sub_P06_W01C:	.incbin	"build/wav_pcm/sub/Sub_P06_W01C.pcm", 0, 13952	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W01C.wav: 13952 8-bit samples, entry 01C
+Sub_P06_W01C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W01C.pcm", 9344, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W01C.wav: the run-out, the loop's first 32 samples again (from sample 9344; loop_probe.py)
+Sub_P06_W01D:	.incbin	"build/wav_pcm/sub/Sub_P06_W01D.pcm", 0, 18432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W01D.wav: 18432 8-bit samples, entry 01D
+Sub_P06_W01D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W01D.pcm", 13056, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W01D.wav: the run-out, the loop's first 32 samples again (from sample 13056; loop_probe.py)
 Sub_P06_W01E:	.incbin	"build/wav_pcm/sub/Sub_P06_W01E.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W01E.wav: 3072 16-bit samples, entry 01E
 Sub_P06_W01F:	.incbin	"build/wav_pcm/sub/Sub_P06_W01F.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W01F.wav: 4096 16-bit samples, entry 01F
 Sub_P06_W020:	.incbin	"build/wav_pcm/sub/Sub_P06_W020.pcm", 0, 3328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W020.wav: 3328 8-bit samples, entry 020
@@ -4765,10 +4773,10 @@ Sub_P06_W02F:	.incbin	"build/wav_pcm/sub/Sub_P06_W02F.pcm", 0, 12832	; census: g
 Sub_P06_W030:	.incbin	"build/wav_pcm/sub/Sub_P06_W030.pcm", 0, 8864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W030_VoiceAh.wav: 8864 8-bit samples, entry 030
 Sub_P06_W031:	.incbin	"build/wav_pcm/sub/Sub_P06_W031.pcm", 0, 8864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W031_VoiceYeh.wav: 8864 8-bit samples, entry 031
 Sub_P06_W032:	.incbin	"build/wav_pcm/sub/Sub_P06_W032.pcm", 0, 11072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W032_VoiceUh.wav: 11072 8-bit samples, entry 032
-Sub_P06_W033:	.incbin	"build/wav_pcm/sub/Sub_P06_W033.pcm", 0, 28576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W033.wav: 28608 8-bit samples, entry 033
-Sub_P06_W033_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W033.pcm", 16000, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W033 from sample 16000; loop_probe.py)
-Sub_P06_W034:	.incbin	"build/wav_pcm/sub/Sub_P06_W034.pcm", 0, 28448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W034.wav: 28480 8-bit samples, entry 034
-Sub_P06_W034_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W034.pcm", 11232, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P06_W034 from sample 11232; loop_probe.py)
+Sub_P06_W033:	.incbin	"build/wav_pcm/sub/Sub_P06_W033.pcm", 0, 28576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W033.wav: 28576 8-bit samples, entry 033
+Sub_P06_W033_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W033.pcm", 16000, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W033.wav: the run-out, the loop's first 32 samples again (from sample 16000; loop_probe.py)
+Sub_P06_W034:	.incbin	"build/wav_pcm/sub/Sub_P06_W034.pcm", 0, 28448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W034.wav: 28448 8-bit samples, entry 034
+Sub_P06_W034_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P06_W034.pcm", 11232, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W034.wav: the run-out, the loop's first 32 samples again (from sample 11232; loop_probe.py)
 Sub_P06_W035:	.incbin	"build/wav_pcm/sub/Sub_P06_W035.pcm", 0, 4224	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W035.wav: 4224 8-bit samples, entry 035
 Sub_P06_W036:	.incbin	"build/wav_pcm/sub/Sub_P06_W036.pcm", 0, 3040	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W036.wav: 3040 8-bit samples, entry 036
 Sub_P06_W037:	.incbin	"build/wav_pcm/sub/Sub_P06_W037.pcm", 0, 2048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W037.wav: 2048 8-bit samples, entry 037
@@ -4824,7 +4832,7 @@ Sub_P06_W068:	.incbin	"build/wav_pcm/sub/Sub_P06_W068.pcm", 0, 37120	; census: g
 Sub_P06_W069:	.incbin	"build/wav_pcm/sub/Sub_P06_W069.pcm", 0, 7552	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W069.wav: 7552 8-bit samples, entry 069
 Sub_P06_W06A:	.incbin	"build/wav_pcm/sub/Sub_P06_W06A.pcm", 0, 21248	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W06A.wav: 10624 16-bit samples, entry 06A
 Sub_P06_W06B:	.incbin	"build/wav_pcm/sub/Sub_P06_W06B.pcm", 0, 18784	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W06B.wav: 18784 8-bit samples, entry 06B
-Sub_P06_W06C:	.incbin	"build/wav_pcm/sub/Sub_P06_W06C.pcm", 0, 48576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W06C.wav: 24304 16-bit samples, entry 06C
+Sub_P06_W06C:	.incbin	"build/wav_pcm/sub/Sub_P06_W06C.pcm", 0, 48576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P06_W06C.wav: 24288 16-bit samples, entry 06C
 	.space	32, 0	; zero words to the next recording
 
 # ==== page 0x07 (selects 0x07000-0x0701C): 29 entries (29 16-bit, 0 8-bit), 29 recordings ====
@@ -4920,65 +4928,66 @@ Sub_P07_R01B:	.word	(Sub_P07_W01B - Sub_P07) / 32, 256-128, 256-128, LOOP_START 
 Sub_P07_R01C:	.word	(Sub_P07_W01C - Sub_P07) / 32, 256-128, 256-128, LOOP_START | 256-69, 256-128, LOOP_END | 256-12
 	.align	4
 	.align	32
-# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py
-Sub_P07_W000:	.incbin	"build/wav_pcm/sub/Sub_P07_W000.pcm", 0, 116736	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W000.wav: 58400 16-bit samples, entry 000
-Sub_P07_W000_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W000.pcm", 99328, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W000 from sample 49664; loop_probe.py)
-Sub_P07_W001:	.incbin	"build/wav_pcm/sub/Sub_P07_W001.pcm", 0, 83968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W001.wav: 42016 16-bit samples, entry 001
-Sub_P07_W001_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W001.pcm", 71168, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W001 from sample 35584; loop_probe.py)
-Sub_P07_W002:	.incbin	"build/wav_pcm/sub/Sub_P07_W002.pcm", 0, 106496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W002.wav: 53280 16-bit samples, entry 002
-Sub_P07_W002_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W002.pcm", 93696, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W002 from sample 46848; loop_probe.py)
-Sub_P07_W003:	.incbin	"build/wav_pcm/sub/Sub_P07_W003.pcm", 0, 69376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W003.wav: 34720 16-bit samples, entry 003
-Sub_P07_W003_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W003.pcm", 55808, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W003 from sample 27904; loop_probe.py)
-Sub_P07_W004:	.incbin	"build/wav_pcm/sub/Sub_P07_W004.pcm", 0, 74496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W004.wav: 37280 16-bit samples, entry 004
-Sub_P07_W004_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W004.pcm", 61696, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W004 from sample 30848; loop_probe.py)
-Sub_P07_W005:	.incbin	"build/wav_pcm/sub/Sub_P07_W005.pcm", 0, 62208	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W005.wav: 31136 16-bit samples, entry 005
-Sub_P07_W005_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W005.pcm", 49664, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W005 from sample 24832; loop_probe.py)
-Sub_P07_W006:	.incbin	"build/wav_pcm/sub/Sub_P07_W006.pcm", 0, 81920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W006.wav: 40992 16-bit samples, entry 006
-Sub_P07_W006_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W006.pcm", 68096, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W006 from sample 34048; loop_probe.py)
-Sub_P07_W007:	.incbin	"build/wav_pcm/sub/Sub_P07_W007.pcm", 0, 71936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W007.wav: 36000 16-bit samples, entry 007
-Sub_P07_W007_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W007.pcm", 58624, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W007 from sample 29312; loop_probe.py)
-Sub_P07_W008:	.incbin	"build/wav_pcm/sub/Sub_P07_W008.pcm", 0, 68224	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W008.wav: 34144 16-bit samples, entry 008
-Sub_P07_W008_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W008.pcm", 54784, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W008 from sample 27392; loop_probe.py)
-Sub_P07_W009:	.incbin	"build/wav_pcm/sub/Sub_P07_W009.pcm", 0, 58624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W009.wav: 29344 16-bit samples, entry 009
-Sub_P07_W009_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W009.pcm", 42624, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W009 from sample 21312; loop_probe.py)
-Sub_P07_W00A:	.incbin	"build/wav_pcm/sub/Sub_P07_W00A.pcm", 0, 61440	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00A.wav: 30752 16-bit samples, entry 00A
-Sub_P07_W00A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W00A.pcm", 47104, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W00A from sample 23552; loop_probe.py)
-Sub_P07_W00B:	.incbin	"build/wav_pcm/sub/Sub_P07_W00B.pcm", 0, 68608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00B.wav: 34336 16-bit samples, entry 00B
-Sub_P07_W00B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W00B.pcm", 55296, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W00B from sample 27648; loop_probe.py)
-Sub_P07_W00C:	.incbin	"build/wav_pcm/sub/Sub_P07_W00C.pcm", 0, 87040	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00C.wav: 43552 16-bit samples, entry 00C
-Sub_P07_W00C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W00C.pcm", 73728, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W00C from sample 36864; loop_probe.py)
-Sub_P07_W00D:	.incbin	"build/wav_pcm/sub/Sub_P07_W00D.pcm", 0, 72704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00D.wav: 36384 16-bit samples, entry 00D
-Sub_P07_W00D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W00D.pcm", 59904, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W00D from sample 29952; loop_probe.py)
-Sub_P07_W00E:	.incbin	"build/wav_pcm/sub/Sub_P07_W00E.pcm", 0, 67584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00E.wav: 33824 16-bit samples, entry 00E
-Sub_P07_W00E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W00E.pcm", 54784, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W00E from sample 27392; loop_probe.py)
-Sub_P07_W00F:	.incbin	"build/wav_pcm/sub/Sub_P07_W00F.pcm", 0, 69120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00F.wav: 34592 16-bit samples, entry 00F
-Sub_P07_W00F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W00F.pcm", 55808, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W00F from sample 27904; loop_probe.py)
-Sub_P07_W010:	.incbin	"build/wav_pcm/sub/Sub_P07_W010.pcm", 0, 78848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W010.wav: 39456 16-bit samples, entry 010
-Sub_P07_W010_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W010.pcm", 65792, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W010 from sample 32896; loop_probe.py)
-Sub_P07_W011:	.incbin	"build/wav_pcm/sub/Sub_P07_W011.pcm", 0, 72960	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W011.wav: 36512 16-bit samples, entry 011
-Sub_P07_W011_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W011.pcm", 59904, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W011 from sample 29952; loop_probe.py)
-Sub_P07_W012:	.incbin	"build/wav_pcm/sub/Sub_P07_W012.pcm", 0, 83968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W012.wav: 42016 16-bit samples, entry 012
-Sub_P07_W012_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W012.pcm", 53248, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W012 from sample 26624; loop_probe.py)
-Sub_P07_W013:	.incbin	"build/wav_pcm/sub/Sub_P07_W013.pcm", 0, 72704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W013.wav: 36384 16-bit samples, entry 013
-Sub_P07_W013_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W013.pcm", 48128, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W013 from sample 24064; loop_probe.py)
-Sub_P07_W014:	.incbin	"build/wav_pcm/sub/Sub_P07_W014.pcm", 0, 69120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W014.wav: 34592 16-bit samples, entry 014
-Sub_P07_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W014.pcm", 46080, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W014 from sample 23040; loop_probe.py)
-Sub_P07_W015:	.incbin	"build/wav_pcm/sub/Sub_P07_W015.pcm", 0, 67072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W015.wav: 33568 16-bit samples, entry 015
-Sub_P07_W015_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W015.pcm", 44544, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W015 from sample 22272; loop_probe.py)
-Sub_P07_W016:	.incbin	"build/wav_pcm/sub/Sub_P07_W016.pcm", 0, 62464	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W016.wav: 31264 16-bit samples, entry 016
-Sub_P07_W016_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W016.pcm", 41984, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W016 from sample 20992; loop_probe.py)
-Sub_P07_W017:	.incbin	"build/wav_pcm/sub/Sub_P07_W017.pcm", 0, 61952	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W017.wav: 31008 16-bit samples, entry 017
-Sub_P07_W017_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W017.pcm", 42496, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W017 from sample 21248; loop_probe.py)
-Sub_P07_W018:	.incbin	"build/wav_pcm/sub/Sub_P07_W018.pcm", 0, 61184	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W018.wav: 30624 16-bit samples, entry 018
-Sub_P07_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W018.pcm", 41984, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W018 from sample 20992; loop_probe.py)
-Sub_P07_W019:	.incbin	"build/wav_pcm/sub/Sub_P07_W019.pcm", 0, 60928	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W019.wav: 30496 16-bit samples, entry 019
-Sub_P07_W019_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W019.pcm", 41728, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W019 from sample 20864; loop_probe.py)
-Sub_P07_W01A:	.incbin	"build/wav_pcm/sub/Sub_P07_W01A.pcm", 0, 59648	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W01A.wav: 29856 16-bit samples, entry 01A
-Sub_P07_W01A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W01A.pcm", 41728, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W01A from sample 20864; loop_probe.py)
-Sub_P07_W01B:	.incbin	"build/wav_pcm/sub/Sub_P07_W01B.pcm", 0, 59392	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W01B.wav: 29728 16-bit samples, entry 01B
-Sub_P07_W01B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W01B.pcm", 41472, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W01B from sample 20736; loop_probe.py)
-Sub_P07_W01C:	.incbin	"build/wav_pcm/sub/Sub_P07_W01C.pcm", 0, 59520	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W01C.wav: 29824 16-bit samples, entry 01C
-Sub_P07_W01C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W01C.pcm", 41600, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P07_W01C from sample 20800; loop_probe.py)
+# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py;
+# an alternate start is a slice of its recording's raw item and a cue point in its WAV
+Sub_P07_W000:	.incbin	"build/wav_pcm/sub/Sub_P07_W000.pcm", 0, 116736	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W000.wav: 58368 16-bit samples, entry 000
+Sub_P07_W000_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W000.pcm", 99328, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W000.wav: the run-out, the loop's first 32 samples again (from sample 49664; loop_probe.py)
+Sub_P07_W001:	.incbin	"build/wav_pcm/sub/Sub_P07_W001.pcm", 0, 83968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W001.wav: 41984 16-bit samples, entry 001
+Sub_P07_W001_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W001.pcm", 71168, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W001.wav: the run-out, the loop's first 32 samples again (from sample 35584; loop_probe.py)
+Sub_P07_W002:	.incbin	"build/wav_pcm/sub/Sub_P07_W002.pcm", 0, 106496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W002.wav: 53248 16-bit samples, entry 002
+Sub_P07_W002_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W002.pcm", 93696, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W002.wav: the run-out, the loop's first 32 samples again (from sample 46848; loop_probe.py)
+Sub_P07_W003:	.incbin	"build/wav_pcm/sub/Sub_P07_W003.pcm", 0, 69376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W003.wav: 34688 16-bit samples, entry 003
+Sub_P07_W003_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W003.pcm", 55808, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W003.wav: the run-out, the loop's first 32 samples again (from sample 27904; loop_probe.py)
+Sub_P07_W004:	.incbin	"build/wav_pcm/sub/Sub_P07_W004.pcm", 0, 74496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W004.wav: 37248 16-bit samples, entry 004
+Sub_P07_W004_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W004.pcm", 61696, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W004.wav: the run-out, the loop's first 32 samples again (from sample 30848; loop_probe.py)
+Sub_P07_W005:	.incbin	"build/wav_pcm/sub/Sub_P07_W005.pcm", 0, 62208	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W005.wav: 31104 16-bit samples, entry 005
+Sub_P07_W005_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W005.pcm", 49664, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W005.wav: the run-out, the loop's first 32 samples again (from sample 24832; loop_probe.py)
+Sub_P07_W006:	.incbin	"build/wav_pcm/sub/Sub_P07_W006.pcm", 0, 81920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W006.wav: 40960 16-bit samples, entry 006
+Sub_P07_W006_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W006.pcm", 68096, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W006.wav: the run-out, the loop's first 32 samples again (from sample 34048; loop_probe.py)
+Sub_P07_W007:	.incbin	"build/wav_pcm/sub/Sub_P07_W007.pcm", 0, 71936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W007.wav: 35968 16-bit samples, entry 007
+Sub_P07_W007_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W007.pcm", 58624, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W007.wav: the run-out, the loop's first 32 samples again (from sample 29312; loop_probe.py)
+Sub_P07_W008:	.incbin	"build/wav_pcm/sub/Sub_P07_W008.pcm", 0, 68224	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W008.wav: 34112 16-bit samples, entry 008
+Sub_P07_W008_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W008.pcm", 54784, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W008.wav: the run-out, the loop's first 32 samples again (from sample 27392; loop_probe.py)
+Sub_P07_W009:	.incbin	"build/wav_pcm/sub/Sub_P07_W009.pcm", 0, 58624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W009.wav: 29312 16-bit samples, entry 009
+Sub_P07_W009_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W009.pcm", 42624, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W009.wav: the run-out, the loop's first 32 samples again (from sample 21312; loop_probe.py)
+Sub_P07_W00A:	.incbin	"build/wav_pcm/sub/Sub_P07_W00A.pcm", 0, 61440	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00A.wav: 30720 16-bit samples, entry 00A
+Sub_P07_W00A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W00A.pcm", 47104, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00A.wav: the run-out, the loop's first 32 samples again (from sample 23552; loop_probe.py)
+Sub_P07_W00B:	.incbin	"build/wav_pcm/sub/Sub_P07_W00B.pcm", 0, 68608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00B.wav: 34304 16-bit samples, entry 00B
+Sub_P07_W00B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W00B.pcm", 55296, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00B.wav: the run-out, the loop's first 32 samples again (from sample 27648; loop_probe.py)
+Sub_P07_W00C:	.incbin	"build/wav_pcm/sub/Sub_P07_W00C.pcm", 0, 87040	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00C.wav: 43520 16-bit samples, entry 00C
+Sub_P07_W00C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W00C.pcm", 73728, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00C.wav: the run-out, the loop's first 32 samples again (from sample 36864; loop_probe.py)
+Sub_P07_W00D:	.incbin	"build/wav_pcm/sub/Sub_P07_W00D.pcm", 0, 72704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00D.wav: 36352 16-bit samples, entry 00D
+Sub_P07_W00D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W00D.pcm", 59904, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00D.wav: the run-out, the loop's first 32 samples again (from sample 29952; loop_probe.py)
+Sub_P07_W00E:	.incbin	"build/wav_pcm/sub/Sub_P07_W00E.pcm", 0, 67584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00E.wav: 33792 16-bit samples, entry 00E
+Sub_P07_W00E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W00E.pcm", 54784, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00E.wav: the run-out, the loop's first 32 samples again (from sample 27392; loop_probe.py)
+Sub_P07_W00F:	.incbin	"build/wav_pcm/sub/Sub_P07_W00F.pcm", 0, 69120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00F.wav: 34560 16-bit samples, entry 00F
+Sub_P07_W00F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W00F.pcm", 55808, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W00F.wav: the run-out, the loop's first 32 samples again (from sample 27904; loop_probe.py)
+Sub_P07_W010:	.incbin	"build/wav_pcm/sub/Sub_P07_W010.pcm", 0, 78848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W010.wav: 39424 16-bit samples, entry 010
+Sub_P07_W010_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W010.pcm", 65792, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W010.wav: the run-out, the loop's first 32 samples again (from sample 32896; loop_probe.py)
+Sub_P07_W011:	.incbin	"build/wav_pcm/sub/Sub_P07_W011.pcm", 0, 72960	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W011.wav: 36480 16-bit samples, entry 011
+Sub_P07_W011_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W011.pcm", 59904, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W011.wav: the run-out, the loop's first 32 samples again (from sample 29952; loop_probe.py)
+Sub_P07_W012:	.incbin	"build/wav_pcm/sub/Sub_P07_W012.pcm", 0, 83968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W012.wav: 41984 16-bit samples, entry 012
+Sub_P07_W012_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W012.pcm", 53248, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W012.wav: the run-out, the loop's first 32 samples again (from sample 26624; loop_probe.py)
+Sub_P07_W013:	.incbin	"build/wav_pcm/sub/Sub_P07_W013.pcm", 0, 72704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W013.wav: 36352 16-bit samples, entry 013
+Sub_P07_W013_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W013.pcm", 48128, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W013.wav: the run-out, the loop's first 32 samples again (from sample 24064; loop_probe.py)
+Sub_P07_W014:	.incbin	"build/wav_pcm/sub/Sub_P07_W014.pcm", 0, 69120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W014.wav: 34560 16-bit samples, entry 014
+Sub_P07_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W014.pcm", 46080, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W014.wav: the run-out, the loop's first 32 samples again (from sample 23040; loop_probe.py)
+Sub_P07_W015:	.incbin	"build/wav_pcm/sub/Sub_P07_W015.pcm", 0, 67072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W015.wav: 33536 16-bit samples, entry 015
+Sub_P07_W015_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W015.pcm", 44544, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W015.wav: the run-out, the loop's first 32 samples again (from sample 22272; loop_probe.py)
+Sub_P07_W016:	.incbin	"build/wav_pcm/sub/Sub_P07_W016.pcm", 0, 62464	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W016.wav: 31232 16-bit samples, entry 016
+Sub_P07_W016_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W016.pcm", 41984, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W016.wav: the run-out, the loop's first 32 samples again (from sample 20992; loop_probe.py)
+Sub_P07_W017:	.incbin	"build/wav_pcm/sub/Sub_P07_W017.pcm", 0, 61952	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W017.wav: 30976 16-bit samples, entry 017
+Sub_P07_W017_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W017.pcm", 42496, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W017.wav: the run-out, the loop's first 32 samples again (from sample 21248; loop_probe.py)
+Sub_P07_W018:	.incbin	"build/wav_pcm/sub/Sub_P07_W018.pcm", 0, 61184	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W018.wav: 30592 16-bit samples, entry 018
+Sub_P07_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W018.pcm", 41984, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W018.wav: the run-out, the loop's first 32 samples again (from sample 20992; loop_probe.py)
+Sub_P07_W019:	.incbin	"build/wav_pcm/sub/Sub_P07_W019.pcm", 0, 60928	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W019.wav: 30464 16-bit samples, entry 019
+Sub_P07_W019_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W019.pcm", 41728, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W019.wav: the run-out, the loop's first 32 samples again (from sample 20864; loop_probe.py)
+Sub_P07_W01A:	.incbin	"build/wav_pcm/sub/Sub_P07_W01A.pcm", 0, 59648	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W01A.wav: 29824 16-bit samples, entry 01A
+Sub_P07_W01A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W01A.pcm", 41728, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W01A.wav: the run-out, the loop's first 32 samples again (from sample 20864; loop_probe.py)
+Sub_P07_W01B:	.incbin	"build/wav_pcm/sub/Sub_P07_W01B.pcm", 0, 59392	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W01B.wav: 29696 16-bit samples, entry 01B
+Sub_P07_W01B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W01B.pcm", 41472, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W01B.wav: the run-out, the loop's first 32 samples again (from sample 20736; loop_probe.py)
+Sub_P07_W01C:	.incbin	"build/wav_pcm/sub/Sub_P07_W01C.pcm", 0, 59520	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W01C.wav: 29760 16-bit samples, entry 01C
+Sub_P07_W01C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P07_W01C.pcm", 41600, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P07_W01C.wav: the run-out, the loop's first 32 samples again (from sample 20800; loop_probe.py)
 	.space	64, 0	; zero words to the next recording
 Sub_P07_Fill:	.space	4480, 0xff	; erased fill to the page end
 
@@ -5308,7 +5317,8 @@ Sub_P08_R02B:	.word	(Sub_P08_W02B - Sub_P08) / 32, 256-128, 256-128, 256-128, 25
 	.word	LOOP_END | 256-97
 	.align	4
 	.align	32
-# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py
+# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py;
+# an alternate start is a slice of its recording's raw item and a cue point in its WAV
 Sub_P08_W000:	.incbin	"build/wav_pcm/sub/Sub_P08_W000.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W000.wav: 512 16-bit samples, entry 000
 Sub_P08_W001:	.incbin	"build/wav_pcm/sub/Sub_P08_W001.pcm", 0, 68608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W001.wav: 34304 16-bit samples, entry 001
 Sub_P08_W002:	.incbin	"build/wav_pcm/sub/Sub_P08_W002.pcm", 0, 73728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W002.wav: 36864 16-bit samples, entry 002
@@ -5337,38 +5347,41 @@ Sub_P08_W018:	.incbin	"build/wav_pcm/sub/Sub_P08_W018.pcm", 0, 35328	; census: g
 Sub_P08_W019:	.incbin	"build/wav_pcm/sub/Sub_P08_W019.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W019.wav: 35328 8-bit samples, entry 019
 Sub_P08_W01A:	.incbin	"build/wav_pcm/sub/Sub_P08_W01A.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W01A.wav: 35328 8-bit samples, entry 01A
 Sub_P08_W01B:	.incbin	"build/wav_pcm/sub/Sub_P08_W01B.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W01B.wav: 35328 8-bit samples, entry 01B
-Sub_P08_W01C:	.incbin	"build/wav_pcm/sub/Sub_P08_W01C.pcm", 0, 67584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W01C.wav: 33824 16-bit samples, entry 01C
-Sub_P08_W01C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W01C.pcm", 39936, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P08_W01C from sample 19968; loop_probe.py)
-Sub_P08_W01D:	.incbin	"build/wav_pcm/sub/Sub_P08_W01D.pcm", 0, 66048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W01D.wav: 33056 16-bit samples, entry 01D
-Sub_P08_W01D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W01D.pcm", 38912, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P08_W01D from sample 19456; loop_probe.py)
-Sub_P08_W01E:	.incbin	"build/wav_pcm/sub/Sub_P08_W01E.pcm", 0, 64512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W01E.wav: 32288 16-bit samples, entry 01E
-Sub_P08_W01E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W01E.pcm", 37888, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P08_W01E from sample 18944; loop_probe.py)
-Sub_P08_W01F:	.incbin	"build/wav_pcm/sub/Sub_P08_W01F.pcm", 0, 61952	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W01F.wav: 31008 16-bit samples, entry 01F
-Sub_P08_W01F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W01F.pcm", 35840, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P08_W01F from sample 17920; loop_probe.py)
-Sub_P08_W020:	.incbin	"build/wav_pcm/sub/Sub_P08_W020.pcm", 0, 58112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W020.wav: 29088 16-bit samples, entry 020
-Sub_P08_W020_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W020.pcm", 32512, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P08_W020 from sample 16256; loop_probe.py)
-Sub_P08_W021:	.incbin	"build/wav_pcm/sub/Sub_P08_W021.pcm", 0, 55808	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W021.wav: 27936 16-bit samples, entry 021
-Sub_P08_W021_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W021.pcm", 31232, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P08_W021 from sample 15616; loop_probe.py)
-Sub_P08_W022:	.incbin	"build/wav_pcm/sub/Sub_P08_W022.pcm", 0, 55296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W022.wav: 27680 16-bit samples, entry 022
-Sub_P08_W022_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W022.pcm", 31232, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P08_W022 from sample 15616; loop_probe.py)
-Sub_P08_W023:	.incbin	"build/wav_pcm/sub/Sub_P08_W023.pcm", 0, 48384	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W023.wav: 24224 16-bit samples, entry 023
-Sub_P08_W023_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W023.pcm", 29568, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P08_W023 from sample 14784; loop_probe.py)
-Sub_P08_W024:	.incbin	"build/wav_pcm/sub/Sub_P08_W024.pcm", 0, 44544	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W024.wav: 22304 16-bit samples, entry 024
-Sub_P08_W024_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W024.pcm", 27008, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P08_W024 from sample 13504; loop_probe.py)
-Sub_P08_W025:	.incbin	"build/wav_pcm/sub/Sub_P08_W025.pcm", 0, 35840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W025.wav: 17952 16-bit samples, entry 025
-Sub_P08_W025_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W025.pcm", 24320, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P08_W025 from sample 12160; loop_probe.py)
-Sub_P08_W026:	.incbin	"build/wav_pcm/sub/Sub_P08_W026.pcm", 0, 34816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W026.wav: 17440 16-bit samples, entry 026
-Sub_P08_W026_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W026.pcm", 23552, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P08_W026 from sample 11776; loop_probe.py)
-Sub_P08_W027:	.incbin	"build/wav_pcm/sub/Sub_P08_W027.pcm", 0, 33792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W027.wav: 16928 16-bit samples, entry 027
-Sub_P08_W027_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W027.pcm", 22528, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P08_W027 from sample 11264; loop_probe.py)
-Sub_P08_W028:	.incbin	"build/wav_pcm/sub/Sub_P08_W028.pcm", 0, 30848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W028.wav: 15456 16-bit samples, entry 028
-Sub_P08_W028_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W028.pcm", 21056, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P08_W028 from sample 10528; loop_probe.py)
-Sub_P08_W029:	.incbin	"build/wav_pcm/sub/Sub_P08_W029.pcm", 0, 49024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W029.wav: 24544 16-bit samples, entry 029
-Sub_P08_W029_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W029.pcm", 49024, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W029.wav: the run-out after the loop end, not a copy of the loop's first 32 samples (16 of 32 words differ)
-Sub_P08_W02A:	.incbin	"build/wav_pcm/sub/Sub_P08_W02A.pcm", 0, 41984	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W02A.wav: 21024 16-bit samples, entry 02A
-Sub_P08_W02A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W02A.pcm", 41984, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W02A.wav: the run-out after the loop end, not a copy of the loop's first 32 samples (16 of 32 words differ)
-Sub_P08_W02B:	.incbin	"build/wav_pcm/sub/Sub_P08_W02B.pcm", 0, 46176	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W02B.wav: 23152 16-bit samples, entry 02B
-Sub_P08_W02B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W02B.pcm", 46176, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W02B.wav: the run-out after the loop end, not a copy of the loop's first 32 samples (16 of 32 words differ)
+Sub_P08_W01C:	.incbin	"build/wav_pcm/sub/Sub_P08_W01C.pcm", 0, 67584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W01C.wav: 33792 16-bit samples, entry 01C
+Sub_P08_W01C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W01C.pcm", 39936, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W01C.wav: the run-out, the loop's first 32 samples again (from sample 19968; loop_probe.py)
+Sub_P08_W01D:	.incbin	"build/wav_pcm/sub/Sub_P08_W01D.pcm", 0, 66048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W01D.wav: 33024 16-bit samples, entry 01D
+Sub_P08_W01D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W01D.pcm", 38912, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W01D.wav: the run-out, the loop's first 32 samples again (from sample 19456; loop_probe.py)
+Sub_P08_W01E:	.incbin	"build/wav_pcm/sub/Sub_P08_W01E.pcm", 0, 64512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W01E.wav: 32256 16-bit samples, entry 01E
+Sub_P08_W01E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W01E.pcm", 37888, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W01E.wav: the run-out, the loop's first 32 samples again (from sample 18944; loop_probe.py)
+Sub_P08_W01F:	.incbin	"build/wav_pcm/sub/Sub_P08_W01F.pcm", 0, 61952	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W01F.wav: 30976 16-bit samples, entry 01F
+Sub_P08_W01F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W01F.pcm", 35840, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W01F.wav: the run-out, the loop's first 32 samples again (from sample 17920; loop_probe.py)
+Sub_P08_W020:	.incbin	"build/wav_pcm/sub/Sub_P08_W020.pcm", 0, 58112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W020.wav: 29056 16-bit samples, entry 020
+Sub_P08_W020_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W020.pcm", 32512, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W020.wav: the run-out, the loop's first 32 samples again (from sample 16256; loop_probe.py)
+Sub_P08_W021:	.incbin	"build/wav_pcm/sub/Sub_P08_W021.pcm", 0, 55808	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W021.wav: 27904 16-bit samples, entry 021
+Sub_P08_W021_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W021.pcm", 31232, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W021.wav: the run-out, the loop's first 32 samples again (from sample 15616; loop_probe.py)
+Sub_P08_W022:	.incbin	"build/wav_pcm/sub/Sub_P08_W022.pcm", 0, 55296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W022.wav: 27648 16-bit samples, entry 022
+Sub_P08_W022_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W022.pcm", 31232, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W022.wav: the run-out, the loop's first 32 samples again (from sample 15616; loop_probe.py)
+Sub_P08_W023:	.incbin	"build/wav_pcm/sub/Sub_P08_W023.pcm", 0, 48384	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W023.wav: 24192 16-bit samples, entry 023
+Sub_P08_W023_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W023.pcm", 29568, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W023.wav: the run-out, the loop's first 32 samples again (from sample 14784; loop_probe.py)
+Sub_P08_W024:	.incbin	"build/wav_pcm/sub/Sub_P08_W024.pcm", 0, 44544	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W024.wav: 22272 16-bit samples, entry 024
+Sub_P08_W024_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W024.pcm", 27008, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W024.wav: the run-out, the loop's first 32 samples again (from sample 13504; loop_probe.py)
+Sub_P08_W025:	.incbin	"build/wav_pcm/sub/Sub_P08_W025.pcm", 0, 35840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W025.wav: 17920 16-bit samples, entry 025
+Sub_P08_W025_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W025.pcm", 24320, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W025.wav: the run-out, the loop's first 32 samples again (from sample 12160; loop_probe.py)
+Sub_P08_W026:	.incbin	"build/wav_pcm/sub/Sub_P08_W026.pcm", 0, 34816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W026.wav: 17408 16-bit samples, entry 026
+Sub_P08_W026_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W026.pcm", 23552, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W026.wav: the run-out, the loop's first 32 samples again (from sample 11776; loop_probe.py)
+Sub_P08_W027:	.incbin	"build/wav_pcm/sub/Sub_P08_W027.pcm", 0, 33792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W027.wav: 16896 16-bit samples, entry 027
+Sub_P08_W027_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W027.pcm", 22528, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W027.wav: the run-out, the loop's first 32 samples again (from sample 11264; loop_probe.py)
+Sub_P08_W028:	.incbin	"build/wav_pcm/sub/Sub_P08_W028.pcm", 0, 30848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W028.wav: 15424 16-bit samples, entry 028
+Sub_P08_W028_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W028.pcm", 21056, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W028.wav: the run-out, the loop's first 32 samples again (from sample 10528; loop_probe.py)
+Sub_P08_W029:	.incbin	"build/wav_pcm/sub/Sub_P08_W029.pcm", 0, 49024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W029.wav: 24512 16-bit samples, entry 029
+Sub_P08_W029_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W029.pcm", 31520, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W029.wav: the run-out, NOT a copy of the loop's first 32 samples: its first 16 words are the loop's first 16 again (from sample 15760; loop_probe.py)
+	.incbin	"build/wav_pcm/sub/Sub_P08_W028.pcm", 21088, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W028.wav: and its last 16 words are words 16-31 from the loop start of Sub_P08_W028, an earlier recording (wave_runout_halves.py: every run-out of this kind takes its second half from one such loop; an authoring artefact [INFERENCE])
+Sub_P08_W02A:	.incbin	"build/wav_pcm/sub/Sub_P08_W02A.pcm", 0, 41984	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W02A.wav: 20992 16-bit samples, entry 02A
+Sub_P08_W02A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W02A.pcm", 28000, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W02A.wav: the run-out, NOT a copy of the loop's first 32 samples: its first 16 words are the loop's first 16 again (from sample 14000; loop_probe.py)
+	.incbin	"build/wav_pcm/sub/Sub_P08_W028.pcm", 21088, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W028.wav: and its last 16 words are words 16-31 from the loop start of Sub_P08_W028, an earlier recording (wave_runout_halves.py: every run-out of this kind takes its second half from one such loop; an authoring artefact [INFERENCE])
+Sub_P08_W02B:	.incbin	"build/wav_pcm/sub/Sub_P08_W02B.pcm", 0, 46176	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W02B.wav: 23088 16-bit samples, entry 02B
+Sub_P08_W02B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P08_W02B.pcm", 30784, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W02B.wav: the run-out, NOT a copy of the loop's first 32 samples: its first 16 words are the loop's first 16 again (from sample 15392; loop_probe.py)
+	.incbin	"build/wav_pcm/sub/Sub_P08_W028.pcm", 21088, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P08_W028.wav: and its last 16 words are words 16-31 from the loop start of Sub_P08_W028, an earlier recording (wave_runout_halves.py: every run-out of this kind takes its second half from one such loop; an authoring artefact [INFERENCE])
 	.space	64, 0	; zero words to the next recording
 Sub_P08_Fill:	.space	13952, 0xff	; erased fill to the page end
 
@@ -6473,7 +6486,8 @@ Sub_P09_R0A8:	.word	(Sub_P09_W0A8 - Sub_P09) / 32, 256-128, 256-128, LOOP_START 
 Sub_P09_R0A9:	.word	(Sub_P09_W0A9 - Sub_P09) / 32, 256-128, 256-128, LOOP_START | 256-123, 256-128, LOOP_END | 256-20
 	.align	4
 	.align	32
-# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py
+# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py;
+# an alternate start is a slice of its recording's raw item and a cue point in its WAV
 Sub_P09_W000:	.incbin	"build/wav_pcm/sub/Sub_P09_W000.pcm", 0, 8704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W000.wav: 4352 16-bit samples, entries 000 001
 Sub_P09_W002:	.incbin	"build/wav_pcm/sub/Sub_P09_W002.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W002.wav: 5120 16-bit samples, entry 002
 Sub_P09_W003:	.incbin	"build/wav_pcm/sub/Sub_P09_W003.pcm", 0, 4864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W003.wav: 2432 16-bit samples, entry 003
@@ -6587,38 +6601,38 @@ Sub_P09_W070:	.incbin	"build/wav_pcm/sub/Sub_P09_W070.pcm", 0, 1024	; census: ge
 Sub_P09_W071:	.incbin	"build/wav_pcm/sub/Sub_P09_W071.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W071.wav: 256 16-bit samples, entry 071
 Sub_P09_W072:	.incbin	"build/wav_pcm/sub/Sub_P09_W072.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W072.wav: 256 16-bit samples, entry 072
 Sub_P09_W073:	.incbin	"build/wav_pcm/sub/Sub_P09_W073.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W073.wav: 256 16-bit samples, entry 073
-Sub_P09_W074:	.incbin	"build/wav_pcm/sub/Sub_P09_W074.pcm", 0, 12800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W074.wav: 12800 8-bit samples, entry 074
-Sub_P09_W075:	.incbin	"build/wav_pcm/sub/Sub_P09_W075.pcm", 0, 12800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W075.wav: 12800 8-bit samples, entry 075; an alternate start into Sub_P09_W074's recording, which plays on through it
-Sub_P09_W076:	.incbin	"build/wav_pcm/sub/Sub_P09_W076.pcm", 0, 15328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W076_Seashore3.wav: 15328 8-bit samples, entry 076; an alternate start into Sub_P09_W074's recording, which plays on through it
-Sub_P09_W077:	.incbin	"build/wav_pcm/sub/Sub_P09_W077.pcm", 0, 10272	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W077_Seashore4.wav: 10272 8-bit samples, entry 077; an alternate start into Sub_P09_W074's recording, which plays on through it
-Sub_P09_W078:	.incbin	"build/wav_pcm/sub/Sub_P09_W078.pcm", 0, 18752	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W078.wav: 19040 8-bit samples, entry 078; an alternate start into Sub_P09_W074's recording, which plays on through it
-Sub_P09_W078_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W078.pcm", 2208, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W078 from sample 2208; loop_probe.py)
+Sub_P09_W074:	.incbin	"build/wav_pcm/sub/Sub_P09_W074.pcm", 0, 12800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W074.wav: 69952 8-bit samples, entry 074; this line is samples 0-12799, up to the alternate start Sub_P09_W075
+Sub_P09_W075:	.incbin	"build/wav_pcm/sub/Sub_P09_W074.pcm", 12800, 12800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W074.wav: samples 12800-25599 of Sub_P09_W074's recording, entry 075: an alternate start into it (cue point Sub_P09_W075 in the WAV), which plays on to its end
+Sub_P09_W076:	.incbin	"build/wav_pcm/sub/Sub_P09_W074.pcm", 25600, 15328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W074.wav: samples 25600-40927 of Sub_P09_W074's recording, entry 076: an alternate start into it (cue point Sub_P09_W076 in the WAV), which plays on to its end
+Sub_P09_W077:	.incbin	"build/wav_pcm/sub/Sub_P09_W074.pcm", 40928, 10272	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W074.wav: samples 40928-51199 of Sub_P09_W074's recording, entry 077: an alternate start into it (cue point Sub_P09_W077 in the WAV), which plays on to its end
+Sub_P09_W078:	.incbin	"build/wav_pcm/sub/Sub_P09_W074.pcm", 51200, 18752	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W074.wav: samples 51200-69951 of Sub_P09_W074's recording, entry 078: an alternate start into it (cue point Sub_P09_W078 in the WAV), which plays on to its end
+Sub_P09_W074_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W074.pcm", 53408, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W074.wav: the run-out, the loop's first 32 samples again (from sample 53408; loop_probe.py)
 	.space	256, 0	; zero words to the next recording
-Sub_P09_W079:	.incbin	"build/wav_pcm/sub/Sub_P09_W079.pcm", 0, 18176	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W079_Telephone.wav: 18208 8-bit samples, entry 079
-Sub_P09_W079_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W079.pcm", 5440, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W079 from sample 5440; loop_probe.py)
-Sub_P09_W07A:	.incbin	"build/wav_pcm/sub/Sub_P09_W07A.pcm", 0, 16416	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W07A_Helicopter.wav: 16448 8-bit samples, entry 07A
-Sub_P09_W07A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W07A.pcm", 0, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W07A from sample 0; loop_probe.py)
+Sub_P09_W079:	.incbin	"build/wav_pcm/sub/Sub_P09_W079.pcm", 0, 18176	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W079_Telephone.wav: 18176 8-bit samples, entry 079
+Sub_P09_W079_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W079.pcm", 5440, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W079_Telephone.wav: the run-out, the loop's first 32 samples again (from sample 5440; loop_probe.py)
+Sub_P09_W07A:	.incbin	"build/wav_pcm/sub/Sub_P09_W07A.pcm", 0, 16416	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W07A_Helicopter.wav: 16416 8-bit samples, entry 07A
+Sub_P09_W07A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W07A.pcm", 0, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W07A_Helicopter.wav: the run-out, the loop's first 32 samples again (from sample 0; loop_probe.py)
 Sub_P09_W07B:	.incbin	"build/wav_pcm/sub/Sub_P09_W07B.pcm", 0, 10400	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W07B_GunShot.wav: 10400 8-bit samples, entry 07B
-Sub_P09_W07C:	.incbin	"build/wav_pcm/sub/Sub_P09_W07C.pcm", 0, 22048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W07C_Applause.wav: 22080 8-bit samples, entry 07C
-Sub_P09_W07C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W07C.pcm", 0, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W07C from sample 0; loop_probe.py)
+Sub_P09_W07C:	.incbin	"build/wav_pcm/sub/Sub_P09_W07C.pcm", 0, 22048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W07C_Applause.wav: 22048 8-bit samples, entry 07C
+Sub_P09_W07C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W07C.pcm", 0, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W07C_Applause.wav: the run-out, the loop's first 32 samples again (from sample 0; loop_probe.py)
 Sub_P09_W07D:	.incbin	"build/wav_pcm/sub/Sub_P09_W07D.pcm", 0, 24288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W07D.wav: 24288 8-bit samples, entry 07D
 Sub_P09_W07E:	.incbin	"build/wav_pcm/sub/Sub_P09_W07E.pcm", 0, 20992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W07E.wav: 20992 8-bit samples, entry 07E
-Sub_P09_W07F:	.incbin	"build/wav_pcm/sub/Sub_P09_W07F.pcm", 0, 37472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W07F.wav: 37504 8-bit samples, entry 07F
-Sub_P09_W07F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W07F.pcm", 31968, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W07F from sample 31968; loop_probe.py)
+Sub_P09_W07F:	.incbin	"build/wav_pcm/sub/Sub_P09_W07F.pcm", 0, 37472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W07F.wav: 37472 8-bit samples, entry 07F
+Sub_P09_W07F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W07F.pcm", 31968, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W07F.wav: the run-out, the loop's first 32 samples again (from sample 31968; loop_probe.py)
 Sub_P09_W080:	.incbin	"build/wav_pcm/sub/Sub_P09_W080.pcm", 0, 26496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W080.wav: 26496 8-bit samples, entry 080
 Sub_P09_W081:	.incbin	"build/wav_pcm/sub/Sub_P09_W081.pcm", 0, 7520	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W081.wav: 7520 8-bit samples, entry 081
 Sub_P09_W082:	.incbin	"build/wav_pcm/sub/Sub_P09_W082.pcm", 0, 18784	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W082.wav: 18784 8-bit samples, entry 082
 Sub_P09_W083:	.incbin	"build/wav_pcm/sub/Sub_P09_W083.pcm", 0, 12384	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W083.wav: 12384 8-bit samples, entry 083
 Sub_P09_W084:	.incbin	"build/wav_pcm/sub/Sub_P09_W084.pcm", 0, 4448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W084.wav: 4448 8-bit samples, entry 084
 Sub_P09_W085:	.incbin	"build/wav_pcm/sub/Sub_P09_W085.pcm", 0, 5536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W085.wav: 5536 8-bit samples, entry 085
-Sub_P09_W086:	.incbin	"build/wav_pcm/sub/Sub_P09_W086.pcm", 0, 36608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W086.wav: 36640 8-bit samples, entry 086
-Sub_P09_W086_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W086.pcm", 1344, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W086 from sample 1344; loop_probe.py)
-Sub_P09_W087:	.incbin	"build/wav_pcm/sub/Sub_P09_W087.pcm", 0, 24256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W087.wav: 24288 8-bit samples, entry 087
-Sub_P09_W087_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W087.pcm", 2208, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W087 from sample 2208; loop_probe.py)
-Sub_P09_W088:	.incbin	"build/wav_pcm/sub/Sub_P09_W088.pcm", 0, 4512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W088.wav: 4544 8-bit samples, entry 088
-Sub_P09_W088_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W088.pcm", 2656, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W088 from sample 2656; loop_probe.py)
-Sub_P09_W089:	.incbin	"build/wav_pcm/sub/Sub_P09_W089.pcm", 0, 30848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W089.wav: 30880 8-bit samples, entry 089
-Sub_P09_W089_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W089.pcm", 13216, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W089 from sample 13216; loop_probe.py)
+Sub_P09_W086:	.incbin	"build/wav_pcm/sub/Sub_P09_W086.pcm", 0, 36608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W086.wav: 36608 8-bit samples, entry 086
+Sub_P09_W086_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W086.pcm", 1344, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W086.wav: the run-out, the loop's first 32 samples again (from sample 1344; loop_probe.py)
+Sub_P09_W087:	.incbin	"build/wav_pcm/sub/Sub_P09_W087.pcm", 0, 24256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W087.wav: 24256 8-bit samples, entry 087
+Sub_P09_W087_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W087.pcm", 2208, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W087.wav: the run-out, the loop's first 32 samples again (from sample 2208; loop_probe.py)
+Sub_P09_W088:	.incbin	"build/wav_pcm/sub/Sub_P09_W088.pcm", 0, 4512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W088.wav: 4512 8-bit samples, entry 088
+Sub_P09_W088_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W088.pcm", 2656, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W088.wav: the run-out, the loop's first 32 samples again (from sample 2656; loop_probe.py)
+Sub_P09_W089:	.incbin	"build/wav_pcm/sub/Sub_P09_W089.pcm", 0, 30848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W089.wav: 30848 8-bit samples, entry 089
+Sub_P09_W089_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W089.pcm", 13216, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W089.wav: the run-out, the loop's first 32 samples again (from sample 13216; loop_probe.py)
 Sub_P09_W08A:	.incbin	"build/wav_pcm/sub/Sub_P09_W08A.pcm", 0, 26496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W08A.wav: 26496 8-bit samples, entry 08A
 Sub_P09_W08B:	.incbin	"build/wav_pcm/sub/Sub_P09_W08B.pcm", 0, 39744	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W08B.wav: 39744 8-bit samples, entry 08B
 Sub_P09_W08C:	.incbin	"build/wav_pcm/sub/Sub_P09_W08C.pcm", 0, 39744	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W08C.wav: 39744 8-bit samples, entry 08C
@@ -6632,42 +6646,42 @@ Sub_P09_W093:	.incbin	"build/wav_pcm/sub/Sub_P09_W093.pcm", 0, 10176	; census: g
 Sub_P09_W094:	.incbin	"build/wav_pcm/sub/Sub_P09_W094.pcm", 0, 15488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W094.wav: 15488 8-bit samples, entry 094
 Sub_P09_W095:	.incbin	"build/wav_pcm/sub/Sub_P09_W095.pcm", 0, 288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W095.wav: 288 8-bit samples, entry 095
 Sub_P09_W096:	.incbin	"build/wav_pcm/sub/Sub_P09_W096.pcm", 0, 2944	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W096.wav: 1472 16-bit samples, entry 096
-Sub_P09_W097:	.incbin	"build/wav_pcm/sub/Sub_P09_W097.pcm", 0, 11232	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W097_BrushSwirl.wav: 11264 8-bit samples, entry 097
-Sub_P09_W097_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W097.pcm", 5952, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W097 from sample 5952; loop_probe.py)
+Sub_P09_W097:	.incbin	"build/wav_pcm/sub/Sub_P09_W097.pcm", 0, 11232	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W097_BrushSwirl.wav: 11232 8-bit samples, entry 097
+Sub_P09_W097_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W097.pcm", 5952, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W097_BrushSwirl.wav: the run-out, the loop's first 32 samples again (from sample 5952; loop_probe.py)
 Sub_P09_W098:	.incbin	"build/wav_pcm/sub/Sub_P09_W098.pcm", 0, 5984	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W098_BrushSlap.wav: 5984 8-bit samples, entry 098
 Sub_P09_W099:	.incbin	"build/wav_pcm/sub/Sub_P09_W099.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W099.wav: 7168 16-bit samples, entry 099
-Sub_P09_W09A:	.incbin	"build/wav_pcm/sub/Sub_P09_W09A.pcm", 0, 104448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09A.wav: 52256 16-bit samples, entry 09A
-Sub_P09_W09A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W09A.pcm", 61440, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W09A from sample 30720; loop_probe.py)
-Sub_P09_W09B:	.incbin	"build/wav_pcm/sub/Sub_P09_W09B.pcm", 0, 90112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09B.wav: 45088 16-bit samples, entry 09B
-Sub_P09_W09B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W09B.pcm", 53248, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W09B from sample 26624; loop_probe.py)
-Sub_P09_W09C:	.incbin	"build/wav_pcm/sub/Sub_P09_W09C.pcm", 0, 89088	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09C.wav: 44576 16-bit samples, entry 09C
-Sub_P09_W09C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W09C.pcm", 52224, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W09C from sample 26112; loop_probe.py)
-Sub_P09_W09D:	.incbin	"build/wav_pcm/sub/Sub_P09_W09D.pcm", 0, 84992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09D.wav: 42528 16-bit samples, entry 09D
-Sub_P09_W09D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W09D.pcm", 49152, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W09D from sample 24576; loop_probe.py)
-Sub_P09_W09E:	.incbin	"build/wav_pcm/sub/Sub_P09_W09E.pcm", 0, 80384	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09E.wav: 40224 16-bit samples, entry 09E
-Sub_P09_W09E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W09E.pcm", 45056, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W09E from sample 22528; loop_probe.py)
-Sub_P09_W09F:	.incbin	"build/wav_pcm/sub/Sub_P09_W09F.pcm", 0, 76800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09F.wav: 38432 16-bit samples, entry 09F
-Sub_P09_W09F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W09F.pcm", 43008, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W09F from sample 21504; loop_probe.py)
-Sub_P09_W0A0:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A0.pcm", 0, 75264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A0.wav: 37664 16-bit samples, entry 0A0
-Sub_P09_W0A0_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A0.pcm", 42496, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W0A0 from sample 21248; loop_probe.py)
-Sub_P09_W0A1:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A1.pcm", 0, 66560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A1.wav: 33312 16-bit samples, entry 0A1
-Sub_P09_W0A1_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A1.pcm", 40704, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W0A1 from sample 20352; loop_probe.py)
-Sub_P09_W0A2:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A2.pcm", 0, 61952	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A2.wav: 31008 16-bit samples, entry 0A2
-Sub_P09_W0A2_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A2.pcm", 37632, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W0A2 from sample 18816; loop_probe.py)
-Sub_P09_W0A3:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A3.pcm", 0, 50176	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A3.wav: 25120 16-bit samples, entry 0A3
-Sub_P09_W0A3_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A3.pcm", 34048, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W0A3 from sample 17024; loop_probe.py)
-Sub_P09_W0A4:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A4.pcm", 0, 47488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A4.wav: 23776 16-bit samples, entry 0A4
-Sub_P09_W0A4_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A4.pcm", 32128, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W0A4 from sample 16064; loop_probe.py)
-Sub_P09_W0A5:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A5.pcm", 0, 46080	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A5.wav: 23072 16-bit samples, entry 0A5
-Sub_P09_W0A5_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A5.pcm", 30720, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W0A5 from sample 15360; loop_probe.py)
-Sub_P09_W0A6:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A6.pcm", 0, 42368	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A6.wav: 21216 16-bit samples, entry 0A6
-Sub_P09_W0A6_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A6.pcm", 28928, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W0A6 from sample 14464; loop_probe.py)
-Sub_P09_W0A7:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A7.pcm", 0, 36672	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A7.wav: 18368 16-bit samples, entry 0A7
-Sub_P09_W0A7_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A7.pcm", 23168, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W0A7 from sample 11584; loop_probe.py)
-Sub_P09_W0A8:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A8.pcm", 0, 30976	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A8.wav: 15520 16-bit samples, entry 0A8
-Sub_P09_W0A8_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A8.pcm", 22272, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W0A8 from sample 11136; loop_probe.py)
-Sub_P09_W0A9:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A9.pcm", 0, 33728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A9.wav: 16944 16-bit samples, entry 0A9
-Sub_P09_W0A9_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A9.pcm", 24256, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P09_W0A9 from sample 12128; loop_probe.py)
+Sub_P09_W09A:	.incbin	"build/wav_pcm/sub/Sub_P09_W09A.pcm", 0, 104448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09A.wav: 52224 16-bit samples, entry 09A
+Sub_P09_W09A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W09A.pcm", 61440, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09A.wav: the run-out, the loop's first 32 samples again (from sample 30720; loop_probe.py)
+Sub_P09_W09B:	.incbin	"build/wav_pcm/sub/Sub_P09_W09B.pcm", 0, 90112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09B.wav: 45056 16-bit samples, entry 09B
+Sub_P09_W09B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W09B.pcm", 53248, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09B.wav: the run-out, the loop's first 32 samples again (from sample 26624; loop_probe.py)
+Sub_P09_W09C:	.incbin	"build/wav_pcm/sub/Sub_P09_W09C.pcm", 0, 89088	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09C.wav: 44544 16-bit samples, entry 09C
+Sub_P09_W09C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W09C.pcm", 52224, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09C.wav: the run-out, the loop's first 32 samples again (from sample 26112; loop_probe.py)
+Sub_P09_W09D:	.incbin	"build/wav_pcm/sub/Sub_P09_W09D.pcm", 0, 84992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09D.wav: 42496 16-bit samples, entry 09D
+Sub_P09_W09D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W09D.pcm", 49152, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09D.wav: the run-out, the loop's first 32 samples again (from sample 24576; loop_probe.py)
+Sub_P09_W09E:	.incbin	"build/wav_pcm/sub/Sub_P09_W09E.pcm", 0, 80384	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09E.wav: 40192 16-bit samples, entry 09E
+Sub_P09_W09E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W09E.pcm", 45056, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09E.wav: the run-out, the loop's first 32 samples again (from sample 22528; loop_probe.py)
+Sub_P09_W09F:	.incbin	"build/wav_pcm/sub/Sub_P09_W09F.pcm", 0, 76800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09F.wav: 38400 16-bit samples, entry 09F
+Sub_P09_W09F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W09F.pcm", 43008, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W09F.wav: the run-out, the loop's first 32 samples again (from sample 21504; loop_probe.py)
+Sub_P09_W0A0:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A0.pcm", 0, 75264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A0.wav: 37632 16-bit samples, entry 0A0
+Sub_P09_W0A0_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A0.pcm", 42496, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A0.wav: the run-out, the loop's first 32 samples again (from sample 21248; loop_probe.py)
+Sub_P09_W0A1:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A1.pcm", 0, 66560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A1.wav: 33280 16-bit samples, entry 0A1
+Sub_P09_W0A1_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A1.pcm", 40704, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A1.wav: the run-out, the loop's first 32 samples again (from sample 20352; loop_probe.py)
+Sub_P09_W0A2:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A2.pcm", 0, 61952	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A2.wav: 30976 16-bit samples, entry 0A2
+Sub_P09_W0A2_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A2.pcm", 37632, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A2.wav: the run-out, the loop's first 32 samples again (from sample 18816; loop_probe.py)
+Sub_P09_W0A3:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A3.pcm", 0, 50176	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A3.wav: 25088 16-bit samples, entry 0A3
+Sub_P09_W0A3_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A3.pcm", 34048, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A3.wav: the run-out, the loop's first 32 samples again (from sample 17024; loop_probe.py)
+Sub_P09_W0A4:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A4.pcm", 0, 47488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A4.wav: 23744 16-bit samples, entry 0A4
+Sub_P09_W0A4_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A4.pcm", 32128, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A4.wav: the run-out, the loop's first 32 samples again (from sample 16064; loop_probe.py)
+Sub_P09_W0A5:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A5.pcm", 0, 46080	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A5.wav: 23040 16-bit samples, entry 0A5
+Sub_P09_W0A5_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A5.pcm", 30720, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A5.wav: the run-out, the loop's first 32 samples again (from sample 15360; loop_probe.py)
+Sub_P09_W0A6:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A6.pcm", 0, 42368	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A6.wav: 21184 16-bit samples, entry 0A6
+Sub_P09_W0A6_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A6.pcm", 28928, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A6.wav: the run-out, the loop's first 32 samples again (from sample 14464; loop_probe.py)
+Sub_P09_W0A7:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A7.pcm", 0, 36672	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A7.wav: 18336 16-bit samples, entry 0A7
+Sub_P09_W0A7_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A7.pcm", 23168, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A7.wav: the run-out, the loop's first 32 samples again (from sample 11584; loop_probe.py)
+Sub_P09_W0A8:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A8.pcm", 0, 30976	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A8.wav: 15488 16-bit samples, entry 0A8
+Sub_P09_W0A8_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A8.pcm", 22272, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A8.wav: the run-out, the loop's first 32 samples again (from sample 11136; loop_probe.py)
+Sub_P09_W0A9:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A9.pcm", 0, 33728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A9.wav: 16864 16-bit samples, entry 0A9
+Sub_P09_W0A9_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P09_W0A9.pcm", 24256, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P09_W0A9.wav: the run-out, the loop's first 32 samples again (from sample 12128; loop_probe.py)
 	.space	96, 0	; zero words to the next recording
 Sub_P09_Fill:	.space	384, 0xff	; erased fill to the page end
 
@@ -6846,90 +6860,91 @@ Sub_P0A_R02C:	.word	(Sub_P0A_W02C - Sub_P0A) / 32, 0x01<<8 | 256-3, 0x08<<8 | 25
 	.word	0x2c<<8 | 256-17, 0x25<<8 | 256-4, 0x2c<<8 | 256-1, 0x25<<8 | 256-1, 0x2c<<8 | 256-3, 0x25<<8 | 256-1, 0x2c<<8 | 256-1, 0x2d<<8 | 256-39, 0x2d<<8 | 256-79, REC_END | 0x05<<8
 	.align	4
 	.align	32
-# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py
-Sub_P0A_W000:	.incbin	"build/wav_pcm/sub/Sub_P0A_W000.pcm", 0, 88064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W000.wav: 44064 16-bit samples, entry 000
-Sub_P0A_W000_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W000.pcm", 70144, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W000 from sample 35072; loop_probe.py)
-Sub_P0A_W001:	.incbin	"build/wav_pcm/sub/Sub_P0A_W001.pcm", 0, 61440	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W001.wav: 30752 16-bit samples, entry 001
-Sub_P0A_W001_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W001.pcm", 49664, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W001 from sample 24832; loop_probe.py)
-Sub_P0A_W002:	.incbin	"build/wav_pcm/sub/Sub_P0A_W002.pcm", 0, 54784	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W002.wav: 27424 16-bit samples, entry 002
-Sub_P0A_W002_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W002.pcm", 42496, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W002 from sample 21248; loop_probe.py)
-Sub_P0A_W003:	.incbin	"build/wav_pcm/sub/Sub_P0A_W003.pcm", 0, 55040	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W003.wav: 27552 16-bit samples, entry 003
-Sub_P0A_W003_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W003.pcm", 41728, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W003 from sample 20864; loop_probe.py)
-Sub_P0A_W004:	.incbin	"build/wav_pcm/sub/Sub_P0A_W004.pcm", 0, 81920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W004.wav: 40992 16-bit samples, entry 004
-Sub_P0A_W004_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W004.pcm", 69888, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W004 from sample 34944; loop_probe.py)
-Sub_P0A_W005:	.incbin	"build/wav_pcm/sub/Sub_P0A_W005.pcm", 0, 46592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W005.wav: 23328 16-bit samples, entry 005
-Sub_P0A_W005_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W005.pcm", 35328, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W005 from sample 17664; loop_probe.py)
-Sub_P0A_W006:	.incbin	"build/wav_pcm/sub/Sub_P0A_W006.pcm", 0, 64000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W006.wav: 32032 16-bit samples, entry 006
-Sub_P0A_W006_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W006.pcm", 51456, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W006 from sample 25728; loop_probe.py)
-Sub_P0A_W007:	.incbin	"build/wav_pcm/sub/Sub_P0A_W007.pcm", 0, 53888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W007.wav: 26976 16-bit samples, entry 007
-Sub_P0A_W007_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W007.pcm", 41088, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W007 from sample 20544; loop_probe.py)
-Sub_P0A_W008:	.incbin	"build/wav_pcm/sub/Sub_P0A_W008.pcm", 0, 78720	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W008.wav: 39392 16-bit samples, entry 008
-Sub_P0A_W008_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W008.pcm", 66816, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W008 from sample 33408; loop_probe.py)
-Sub_P0A_W009:	.incbin	"build/wav_pcm/sub/Sub_P0A_W009.pcm", 0, 73216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W009.wav: 36640 16-bit samples, entry 009
-Sub_P0A_W009_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W009.pcm", 60544, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W009 from sample 30272; loop_probe.py)
-Sub_P0A_W00A:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00A.pcm", 0, 103936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00A.wav: 52000 16-bit samples, entry 00A
-Sub_P0A_W00A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00A.pcm", 84992, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W00A from sample 42496; loop_probe.py)
-Sub_P0A_W00B:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00B.pcm", 0, 77312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00B.wav: 38688 16-bit samples, entry 00B
-Sub_P0A_W00B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00B.pcm", 62976, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W00B from sample 31488; loop_probe.py)
-Sub_P0A_W00C:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00C.pcm", 0, 58368	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00C.wav: 29216 16-bit samples, entry 00C
-Sub_P0A_W00C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00C.pcm", 44544, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W00C from sample 22272; loop_probe.py)
-Sub_P0A_W00D:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00D.pcm", 0, 77312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00D.wav: 38688 16-bit samples, entry 00D
-Sub_P0A_W00D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00D.pcm", 63488, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W00D from sample 31744; loop_probe.py)
-Sub_P0A_W00E:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00E.pcm", 0, 75264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00E.wav: 37664 16-bit samples, entry 00E
-Sub_P0A_W00E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00E.pcm", 60928, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W00E from sample 30464; loop_probe.py)
-Sub_P0A_W00F:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00F.pcm", 0, 56064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00F.wav: 28064 16-bit samples, entry 00F
-Sub_P0A_W00F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00F.pcm", 40192, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W00F from sample 20096; loop_probe.py)
-Sub_P0A_W010:	.incbin	"build/wav_pcm/sub/Sub_P0A_W010.pcm", 0, 44672	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W010.wav: 22368 16-bit samples, entry 010
-Sub_P0A_W010_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W010.pcm", 28928, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W010 from sample 14464; loop_probe.py)
-Sub_P0A_W011:	.incbin	"build/wav_pcm/sub/Sub_P0A_W011.pcm", 0, 57472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W011.wav: 28768 16-bit samples, entry 011
-Sub_P0A_W011_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W011.pcm", 39680, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W011 from sample 19840; loop_probe.py)
-Sub_P0A_W012:	.incbin	"build/wav_pcm/sub/Sub_P0A_W012.pcm", 0, 65664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W012.wav: 32864 16-bit samples, entry 012
-Sub_P0A_W012_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W012.pcm", 47616, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W012 from sample 23808; loop_probe.py)
-Sub_P0A_W013:	.incbin	"build/wav_pcm/sub/Sub_P0A_W013.pcm", 0, 41472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W013.wav: 20768 16-bit samples, entry 013
-Sub_P0A_W013_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W013.pcm", 35840, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W013 from sample 17920; loop_probe.py)
-Sub_P0A_W014:	.incbin	"build/wav_pcm/sub/Sub_P0A_W014.pcm", 0, 25600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W014.wav: 12832 16-bit samples, entry 014
-Sub_P0A_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W014.pcm", 20480, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W014 from sample 10240; loop_probe.py)
-Sub_P0A_W015:	.incbin	"build/wav_pcm/sub/Sub_P0A_W015.pcm", 0, 25600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W015.wav: 12832 16-bit samples, entry 015
-Sub_P0A_W015_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W015.pcm", 20224, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W015 from sample 10112; loop_probe.py)
-Sub_P0A_W016:	.incbin	"build/wav_pcm/sub/Sub_P0A_W016.pcm", 0, 31232	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W016.wav: 15648 16-bit samples, entry 016
-Sub_P0A_W016_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W016.pcm", 25856, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W016 from sample 12928; loop_probe.py)
-Sub_P0A_W017:	.incbin	"build/wav_pcm/sub/Sub_P0A_W017.pcm", 0, 24832	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W017.wav: 12448 16-bit samples, entry 017
-Sub_P0A_W017_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W017.pcm", 19712, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W017 from sample 9856; loop_probe.py)
-Sub_P0A_W018:	.incbin	"build/wav_pcm/sub/Sub_P0A_W018.pcm", 0, 32000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W018.wav: 16032 16-bit samples, entry 018
-Sub_P0A_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W018.pcm", 25856, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W018 from sample 12928; loop_probe.py)
-Sub_P0A_W019:	.incbin	"build/wav_pcm/sub/Sub_P0A_W019.pcm", 0, 19584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W019.wav: 9824 16-bit samples, entry 019
-Sub_P0A_W019_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W019.pcm", 13824, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W019 from sample 6912; loop_probe.py)
-Sub_P0A_W01A:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01A.pcm", 0, 26752	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01A.wav: 13408 16-bit samples, entry 01A
-Sub_P0A_W01A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01A.pcm", 21120, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W01A from sample 10560; loop_probe.py)
-Sub_P0A_W01B:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01B.pcm", 0, 27904	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01B.wav: 13984 16-bit samples, entry 01B
-Sub_P0A_W01B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01B.pcm", 22528, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W01B from sample 11264; loop_probe.py)
-Sub_P0A_W01C:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01C.pcm", 0, 25088	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01C.wav: 12576 16-bit samples, entry 01C
-Sub_P0A_W01C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01C.pcm", 19584, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W01C from sample 9792; loop_probe.py)
-Sub_P0A_W01D:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01D.pcm", 0, 21504	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01D.wav: 10784 16-bit samples, entry 01D
-Sub_P0A_W01D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01D.pcm", 15744, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W01D from sample 7872; loop_probe.py)
-Sub_P0A_W01E:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01E.pcm", 0, 24192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01E.wav: 12128 16-bit samples, entry 01E
-Sub_P0A_W01E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01E.pcm", 18560, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W01E from sample 9280; loop_probe.py)
-Sub_P0A_W01F:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01F.pcm", 0, 30592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01F.wav: 15328 16-bit samples, entry 01F
-Sub_P0A_W01F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01F.pcm", 25536, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W01F from sample 12768; loop_probe.py)
-Sub_P0A_W020:	.incbin	"build/wav_pcm/sub/Sub_P0A_W020.pcm", 0, 37248	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W020.wav: 18656 16-bit samples, entry 020
-Sub_P0A_W020_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W020.pcm", 32192, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W020 from sample 16096; loop_probe.py)
-Sub_P0A_W021:	.incbin	"build/wav_pcm/sub/Sub_P0A_W021.pcm", 0, 30272	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W021.wav: 15168 16-bit samples, entry 021
-Sub_P0A_W021_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W021.pcm", 25152, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W021 from sample 12576; loop_probe.py)
-Sub_P0A_W022:	.incbin	"build/wav_pcm/sub/Sub_P0A_W022.pcm", 0, 36544	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W022.wav: 18304 16-bit samples, entry 022
-Sub_P0A_W022_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W022.pcm", 30144, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W022 from sample 15072; loop_probe.py)
-Sub_P0A_W023:	.incbin	"build/wav_pcm/sub/Sub_P0A_W023.pcm", 0, 67264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W023.wav: 33664 16-bit samples, entry 023
-Sub_P0A_W023_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W023.pcm", 43264, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W023 from sample 21632; loop_probe.py)
-Sub_P0A_W024:	.incbin	"build/wav_pcm/sub/Sub_P0A_W024.pcm", 0, 57664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W024.wav: 28864 16-bit samples, entry 024
-Sub_P0A_W024_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W024.pcm", 38464, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W024 from sample 19232; loop_probe.py)
-Sub_P0A_W025:	.incbin	"build/wav_pcm/sub/Sub_P0A_W025.pcm", 0, 50304	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W025.wav: 25184 16-bit samples, entry 025
-Sub_P0A_W025_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W025.pcm", 33536, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0A_W025 from sample 16768; loop_probe.py)
+# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py;
+# an alternate start is a slice of its recording's raw item and a cue point in its WAV
+Sub_P0A_W000:	.incbin	"build/wav_pcm/sub/Sub_P0A_W000.pcm", 0, 88064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W000.wav: 44032 16-bit samples, entry 000
+Sub_P0A_W000_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W000.pcm", 70144, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W000.wav: the run-out, the loop's first 32 samples again (from sample 35072; loop_probe.py)
+Sub_P0A_W001:	.incbin	"build/wav_pcm/sub/Sub_P0A_W001.pcm", 0, 61440	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W001.wav: 30720 16-bit samples, entry 001
+Sub_P0A_W001_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W001.pcm", 49664, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W001.wav: the run-out, the loop's first 32 samples again (from sample 24832; loop_probe.py)
+Sub_P0A_W002:	.incbin	"build/wav_pcm/sub/Sub_P0A_W002.pcm", 0, 54784	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W002.wav: 27392 16-bit samples, entry 002
+Sub_P0A_W002_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W002.pcm", 42496, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W002.wav: the run-out, the loop's first 32 samples again (from sample 21248; loop_probe.py)
+Sub_P0A_W003:	.incbin	"build/wav_pcm/sub/Sub_P0A_W003.pcm", 0, 55040	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W003.wav: 27520 16-bit samples, entry 003
+Sub_P0A_W003_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W003.pcm", 41728, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W003.wav: the run-out, the loop's first 32 samples again (from sample 20864; loop_probe.py)
+Sub_P0A_W004:	.incbin	"build/wav_pcm/sub/Sub_P0A_W004.pcm", 0, 81920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W004.wav: 40960 16-bit samples, entry 004
+Sub_P0A_W004_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W004.pcm", 69888, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W004.wav: the run-out, the loop's first 32 samples again (from sample 34944; loop_probe.py)
+Sub_P0A_W005:	.incbin	"build/wav_pcm/sub/Sub_P0A_W005.pcm", 0, 46592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W005.wav: 23296 16-bit samples, entry 005
+Sub_P0A_W005_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W005.pcm", 35328, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W005.wav: the run-out, the loop's first 32 samples again (from sample 17664; loop_probe.py)
+Sub_P0A_W006:	.incbin	"build/wav_pcm/sub/Sub_P0A_W006.pcm", 0, 64000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W006.wav: 32000 16-bit samples, entry 006
+Sub_P0A_W006_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W006.pcm", 51456, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W006.wav: the run-out, the loop's first 32 samples again (from sample 25728; loop_probe.py)
+Sub_P0A_W007:	.incbin	"build/wav_pcm/sub/Sub_P0A_W007.pcm", 0, 53888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W007.wav: 26944 16-bit samples, entry 007
+Sub_P0A_W007_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W007.pcm", 41088, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W007.wav: the run-out, the loop's first 32 samples again (from sample 20544; loop_probe.py)
+Sub_P0A_W008:	.incbin	"build/wav_pcm/sub/Sub_P0A_W008.pcm", 0, 78720	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W008.wav: 39360 16-bit samples, entry 008
+Sub_P0A_W008_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W008.pcm", 66816, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W008.wav: the run-out, the loop's first 32 samples again (from sample 33408; loop_probe.py)
+Sub_P0A_W009:	.incbin	"build/wav_pcm/sub/Sub_P0A_W009.pcm", 0, 73216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W009.wav: 36608 16-bit samples, entry 009
+Sub_P0A_W009_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W009.pcm", 60544, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W009.wav: the run-out, the loop's first 32 samples again (from sample 30272; loop_probe.py)
+Sub_P0A_W00A:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00A.pcm", 0, 103936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00A.wav: 51968 16-bit samples, entry 00A
+Sub_P0A_W00A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00A.pcm", 84992, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00A.wav: the run-out, the loop's first 32 samples again (from sample 42496; loop_probe.py)
+Sub_P0A_W00B:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00B.pcm", 0, 77312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00B.wav: 38656 16-bit samples, entry 00B
+Sub_P0A_W00B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00B.pcm", 62976, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00B.wav: the run-out, the loop's first 32 samples again (from sample 31488; loop_probe.py)
+Sub_P0A_W00C:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00C.pcm", 0, 58368	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00C.wav: 29184 16-bit samples, entry 00C
+Sub_P0A_W00C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00C.pcm", 44544, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00C.wav: the run-out, the loop's first 32 samples again (from sample 22272; loop_probe.py)
+Sub_P0A_W00D:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00D.pcm", 0, 77312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00D.wav: 38656 16-bit samples, entry 00D
+Sub_P0A_W00D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00D.pcm", 63488, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00D.wav: the run-out, the loop's first 32 samples again (from sample 31744; loop_probe.py)
+Sub_P0A_W00E:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00E.pcm", 0, 75264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00E.wav: 37632 16-bit samples, entry 00E
+Sub_P0A_W00E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00E.pcm", 60928, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00E.wav: the run-out, the loop's first 32 samples again (from sample 30464; loop_probe.py)
+Sub_P0A_W00F:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00F.pcm", 0, 56064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00F.wav: 28032 16-bit samples, entry 00F
+Sub_P0A_W00F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W00F.pcm", 40192, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W00F.wav: the run-out, the loop's first 32 samples again (from sample 20096; loop_probe.py)
+Sub_P0A_W010:	.incbin	"build/wav_pcm/sub/Sub_P0A_W010.pcm", 0, 44672	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W010.wav: 22336 16-bit samples, entry 010
+Sub_P0A_W010_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W010.pcm", 28928, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W010.wav: the run-out, the loop's first 32 samples again (from sample 14464; loop_probe.py)
+Sub_P0A_W011:	.incbin	"build/wav_pcm/sub/Sub_P0A_W011.pcm", 0, 57472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W011.wav: 28736 16-bit samples, entry 011
+Sub_P0A_W011_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W011.pcm", 39680, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W011.wav: the run-out, the loop's first 32 samples again (from sample 19840; loop_probe.py)
+Sub_P0A_W012:	.incbin	"build/wav_pcm/sub/Sub_P0A_W012.pcm", 0, 65664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W012.wav: 32832 16-bit samples, entry 012
+Sub_P0A_W012_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W012.pcm", 47616, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W012.wav: the run-out, the loop's first 32 samples again (from sample 23808; loop_probe.py)
+Sub_P0A_W013:	.incbin	"build/wav_pcm/sub/Sub_P0A_W013.pcm", 0, 41472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W013.wav: 20736 16-bit samples, entry 013
+Sub_P0A_W013_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W013.pcm", 35840, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W013.wav: the run-out, the loop's first 32 samples again (from sample 17920; loop_probe.py)
+Sub_P0A_W014:	.incbin	"build/wav_pcm/sub/Sub_P0A_W014.pcm", 0, 25600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W014.wav: 12800 16-bit samples, entry 014
+Sub_P0A_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W014.pcm", 20480, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W014.wav: the run-out, the loop's first 32 samples again (from sample 10240; loop_probe.py)
+Sub_P0A_W015:	.incbin	"build/wav_pcm/sub/Sub_P0A_W015.pcm", 0, 25600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W015.wav: 12800 16-bit samples, entry 015
+Sub_P0A_W015_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W015.pcm", 20224, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W015.wav: the run-out, the loop's first 32 samples again (from sample 10112; loop_probe.py)
+Sub_P0A_W016:	.incbin	"build/wav_pcm/sub/Sub_P0A_W016.pcm", 0, 31232	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W016.wav: 15616 16-bit samples, entry 016
+Sub_P0A_W016_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W016.pcm", 25856, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W016.wav: the run-out, the loop's first 32 samples again (from sample 12928; loop_probe.py)
+Sub_P0A_W017:	.incbin	"build/wav_pcm/sub/Sub_P0A_W017.pcm", 0, 24832	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W017.wav: 12416 16-bit samples, entry 017
+Sub_P0A_W017_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W017.pcm", 19712, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W017.wav: the run-out, the loop's first 32 samples again (from sample 9856; loop_probe.py)
+Sub_P0A_W018:	.incbin	"build/wav_pcm/sub/Sub_P0A_W018.pcm", 0, 32000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W018.wav: 16000 16-bit samples, entry 018
+Sub_P0A_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W018.pcm", 25856, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W018.wav: the run-out, the loop's first 32 samples again (from sample 12928; loop_probe.py)
+Sub_P0A_W019:	.incbin	"build/wav_pcm/sub/Sub_P0A_W019.pcm", 0, 19584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W019.wav: 9792 16-bit samples, entry 019
+Sub_P0A_W019_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W019.pcm", 13824, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W019.wav: the run-out, the loop's first 32 samples again (from sample 6912; loop_probe.py)
+Sub_P0A_W01A:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01A.pcm", 0, 26752	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01A.wav: 13376 16-bit samples, entry 01A
+Sub_P0A_W01A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01A.pcm", 21120, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01A.wav: the run-out, the loop's first 32 samples again (from sample 10560; loop_probe.py)
+Sub_P0A_W01B:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01B.pcm", 0, 27904	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01B.wav: 13952 16-bit samples, entry 01B
+Sub_P0A_W01B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01B.pcm", 22528, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01B.wav: the run-out, the loop's first 32 samples again (from sample 11264; loop_probe.py)
+Sub_P0A_W01C:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01C.pcm", 0, 25088	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01C.wav: 12544 16-bit samples, entry 01C
+Sub_P0A_W01C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01C.pcm", 19584, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01C.wav: the run-out, the loop's first 32 samples again (from sample 9792; loop_probe.py)
+Sub_P0A_W01D:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01D.pcm", 0, 21504	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01D.wav: 10752 16-bit samples, entry 01D
+Sub_P0A_W01D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01D.pcm", 15744, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01D.wav: the run-out, the loop's first 32 samples again (from sample 7872; loop_probe.py)
+Sub_P0A_W01E:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01E.pcm", 0, 24192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01E.wav: 12096 16-bit samples, entry 01E
+Sub_P0A_W01E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01E.pcm", 18560, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01E.wav: the run-out, the loop's first 32 samples again (from sample 9280; loop_probe.py)
+Sub_P0A_W01F:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01F.pcm", 0, 30592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01F.wav: 15296 16-bit samples, entry 01F
+Sub_P0A_W01F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W01F.pcm", 25536, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W01F.wav: the run-out, the loop's first 32 samples again (from sample 12768; loop_probe.py)
+Sub_P0A_W020:	.incbin	"build/wav_pcm/sub/Sub_P0A_W020.pcm", 0, 37248	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W020.wav: 18624 16-bit samples, entry 020
+Sub_P0A_W020_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W020.pcm", 32192, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W020.wav: the run-out, the loop's first 32 samples again (from sample 16096; loop_probe.py)
+Sub_P0A_W021:	.incbin	"build/wav_pcm/sub/Sub_P0A_W021.pcm", 0, 30272	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W021.wav: 15136 16-bit samples, entry 021
+Sub_P0A_W021_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W021.pcm", 25152, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W021.wav: the run-out, the loop's first 32 samples again (from sample 12576; loop_probe.py)
+Sub_P0A_W022:	.incbin	"build/wav_pcm/sub/Sub_P0A_W022.pcm", 0, 36544	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W022.wav: 18272 16-bit samples, entry 022
+Sub_P0A_W022_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W022.pcm", 30144, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W022.wav: the run-out, the loop's first 32 samples again (from sample 15072; loop_probe.py)
+Sub_P0A_W023:	.incbin	"build/wav_pcm/sub/Sub_P0A_W023.pcm", 0, 67264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W023.wav: 33632 16-bit samples, entry 023
+Sub_P0A_W023_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W023.pcm", 43264, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W023.wav: the run-out, the loop's first 32 samples again (from sample 21632; loop_probe.py)
+Sub_P0A_W024:	.incbin	"build/wav_pcm/sub/Sub_P0A_W024.pcm", 0, 57664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W024.wav: 28832 16-bit samples, entry 024
+Sub_P0A_W024_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W024.pcm", 38464, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W024.wav: the run-out, the loop's first 32 samples again (from sample 19232; loop_probe.py)
+Sub_P0A_W025:	.incbin	"build/wav_pcm/sub/Sub_P0A_W025.pcm", 0, 50304	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W025.wav: 25152 16-bit samples, entry 025
+Sub_P0A_W025_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0A_W025.pcm", 33536, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W025.wav: the run-out, the loop's first 32 samples again (from sample 16768; loop_probe.py)
 Sub_P0A_W026:	.incbin	"build/wav_pcm/sub/Sub_P0A_W026.pcm", 0, 30912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W026.wav: 30912 8-bit samples, entry 026
 Sub_P0A_W027:	.incbin	"build/wav_pcm/sub/Sub_P0A_W027.pcm", 0, 30912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W027.wav: 30912 8-bit samples, entry 027
 Sub_P0A_W028:	.incbin	"build/wav_pcm/sub/Sub_P0A_W028.pcm", 0, 30912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W028.wav: 30912 8-bit samples, entry 028
 Sub_P0A_W029:	.incbin	"build/wav_pcm/sub/Sub_P0A_W029.pcm", 0, 30912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W029.wav: 30912 8-bit samples, entry 029
 Sub_P0A_W02A:	.incbin	"build/wav_pcm/sub/Sub_P0A_W02A.pcm", 0, 30912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W02A.wav: 30912 8-bit samples, entry 02A
 Sub_P0A_W02B:	.incbin	"build/wav_pcm/sub/Sub_P0A_W02B.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W02B.wav: 13312 8-bit samples, entry 02B
-Sub_P0A_W02C:	.incbin	"build/wav_pcm/sub/Sub_P0A_W02C.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W02C.wav: 13344 8-bit samples, entry 02C
+Sub_P0A_W02C:	.incbin	"build/wav_pcm/sub/Sub_P0A_W02C.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0A_W02C.wav: 13312 8-bit samples, entry 02C
 	.space	32, 0	; zero words to the next recording
 Sub_P0A_Fill:	.space	2432, 0xff	; erased fill to the page end
 
@@ -7211,7 +7226,8 @@ Sub_P0B_R023:	.word	(Sub_P0B_W023 - Sub_P0B) / 32, 0x0a<<8 | 256-3, 0x01<<8 | 25
 	.word	0x0a<<8 | 256-1, LOOP_END | 0x09<<8 | 256-1
 	.align	4
 	.align	32
-# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py
+# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py;
+# an alternate start is a slice of its recording's raw item and a cue point in its WAV
 Sub_P0B_W000:	.incbin	"build/wav_pcm/sub/Sub_P0B_W000.pcm", 0, 70528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W000.wav: 35264 16-bit samples, entry 000
 Sub_P0B_W001:	.incbin	"build/wav_pcm/sub/Sub_P0B_W001.pcm", 0, 70528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W001.wav: 35264 16-bit samples, entry 001
 Sub_P0B_W002:	.incbin	"build/wav_pcm/sub/Sub_P0B_W002.pcm", 0, 22144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W002.wav: 22144 8-bit samples, entry 002
@@ -7219,12 +7235,12 @@ Sub_P0B_W003:	.incbin	"build/wav_pcm/sub/Sub_P0B_W003.pcm", 0, 11072	; census: g
 Sub_P0B_W004:	.incbin	"build/wav_pcm/sub/Sub_P0B_W004.pcm", 0, 11072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W004.wav: 11072 8-bit samples, entry 004
 Sub_P0B_W005:	.incbin	"build/wav_pcm/sub/Sub_P0B_W005.pcm", 0, 79424	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W005.wav: 79424 8-bit samples, entry 005
 Sub_P0B_W006:	.incbin	"build/wav_pcm/sub/Sub_P0B_W006.pcm", 0, 15488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W006.wav: 15488 8-bit samples, entry 006
-Sub_P0B_W007:	.incbin	"build/wav_pcm/sub/Sub_P0B_W007.pcm", 0, 70592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W007.wav: 70624 8-bit samples, entry 007
-Sub_P0B_W007_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W007.pcm", 52928, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0B_W007 from sample 52928; loop_probe.py)
-Sub_P0B_W008:	.incbin	"build/wav_pcm/sub/Sub_P0B_W008.pcm", 0, 70592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W008.wav: 70624 8-bit samples, entry 008
-Sub_P0B_W008_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W008.pcm", 52928, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0B_W008 from sample 52928; loop_probe.py)
-Sub_P0B_W009:	.incbin	"build/wav_pcm/sub/Sub_P0B_W009.pcm", 0, 70592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W009.wav: 70624 8-bit samples, entry 009
-Sub_P0B_W009_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W009.pcm", 52928, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0B_W009 from sample 52928; loop_probe.py)
+Sub_P0B_W007:	.incbin	"build/wav_pcm/sub/Sub_P0B_W007.pcm", 0, 70592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W007.wav: 70592 8-bit samples, entry 007
+Sub_P0B_W007_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W007.pcm", 52928, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W007.wav: the run-out, the loop's first 32 samples again (from sample 52928; loop_probe.py)
+Sub_P0B_W008:	.incbin	"build/wav_pcm/sub/Sub_P0B_W008.pcm", 0, 70592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W008.wav: 70592 8-bit samples, entry 008
+Sub_P0B_W008_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W008.pcm", 52928, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W008.wav: the run-out, the loop's first 32 samples again (from sample 52928; loop_probe.py)
+Sub_P0B_W009:	.incbin	"build/wav_pcm/sub/Sub_P0B_W009.pcm", 0, 70592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W009.wav: 70592 8-bit samples, entry 009
+Sub_P0B_W009_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W009.pcm", 52928, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W009.wav: the run-out, the loop's first 32 samples again (from sample 52928; loop_probe.py)
 Sub_P0B_W00A:	.incbin	"build/wav_pcm/sub/Sub_P0B_W00A.pcm", 0, 57728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W00A.wav: 28864 16-bit samples, entry 00A
 Sub_P0B_W00B:	.incbin	"build/wav_pcm/sub/Sub_P0B_W00B.pcm", 0, 64128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W00B.wav: 32064 16-bit samples, entry 00B
 Sub_P0B_W00C:	.incbin	"build/wav_pcm/sub/Sub_P0B_W00C.pcm", 0, 64128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W00C.wav: 32064 16-bit samples, entry 00C
@@ -7234,36 +7250,36 @@ Sub_P0B_W00F:	.incbin	"build/wav_pcm/sub/Sub_P0B_W00F.pcm", 0, 26496	; census: g
 Sub_P0B_W010:	.incbin	"build/wav_pcm/sub/Sub_P0B_W010.pcm", 0, 26496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W010.wav: 26496 8-bit samples, entry 010
 Sub_P0B_W011:	.incbin	"build/wav_pcm/sub/Sub_P0B_W011.pcm", 0, 32128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W011.wav: 16064 16-bit samples, entry 011
 Sub_P0B_W012:	.incbin	"build/wav_pcm/sub/Sub_P0B_W012.pcm", 0, 38528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W012.wav: 19264 16-bit samples, entry 012
-Sub_P0B_W013:	.incbin	"build/wav_pcm/sub/Sub_P0B_W013.pcm", 0, 106496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W013.wav: 53280 16-bit samples, entry 013
-Sub_P0B_W013_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W013.pcm", 62464, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0B_W013 from sample 31232; loop_probe.py)
-Sub_P0B_W014:	.incbin	"build/wav_pcm/sub/Sub_P0B_W014.pcm", 0, 91136	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W014.wav: 45600 16-bit samples, entry 014
-Sub_P0B_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W014.pcm", 52224, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0B_W014 from sample 26112; loop_probe.py)
-Sub_P0B_W015:	.incbin	"build/wav_pcm/sub/Sub_P0B_W015.pcm", 0, 83456	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W015.wav: 41760 16-bit samples, entry 015
-Sub_P0B_W015_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W015.pcm", 48128, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0B_W015 from sample 24064; loop_probe.py)
-Sub_P0B_W016:	.incbin	"build/wav_pcm/sub/Sub_P0B_W016.pcm", 0, 40192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W016.wav: 40224 8-bit samples, entry 016
-Sub_P0B_W016_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W016.pcm", 22528, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0B_W016 from sample 22528; loop_probe.py)
-Sub_P0B_W017:	.incbin	"build/wav_pcm/sub/Sub_P0B_W017.pcm", 0, 38656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W017.wav: 38688 8-bit samples, entry 017
-Sub_P0B_W017_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W017.pcm", 22528, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0B_W017 from sample 22528; loop_probe.py)
-Sub_P0B_W018:	.incbin	"build/wav_pcm/sub/Sub_P0B_W018.pcm", 0, 36992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W018.wav: 37024 8-bit samples, entry 018
-Sub_P0B_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W018.pcm", 22528, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0B_W018 from sample 22528; loop_probe.py)
-Sub_P0B_W019:	.incbin	"build/wav_pcm/sub/Sub_P0B_W019.pcm", 0, 32640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W019.wav: 32672 8-bit samples, entry 019
-Sub_P0B_W019_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W019.pcm", 19968, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0B_W019 from sample 19968; loop_probe.py)
-Sub_P0B_W01A:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01A.pcm", 0, 32448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W01A.wav: 32480 8-bit samples, entry 01A
-Sub_P0B_W01A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01A.pcm", 19840, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0B_W01A from sample 19840; loop_probe.py)
-Sub_P0B_W01B:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01B.pcm", 0, 30656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W01B.wav: 30688 8-bit samples, entry 01B
-Sub_P0B_W01B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01B.pcm", 18048, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0B_W01B from sample 18048; loop_probe.py)
-Sub_P0B_W01C:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01C.pcm", 0, 28928	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W01C.wav: 28960 8-bit samples, entry 01C
-Sub_P0B_W01C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01C.pcm", 18112, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0B_W01C from sample 18112; loop_probe.py)
-Sub_P0B_W01D:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01D.pcm", 0, 39296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W01D.wav: 39328 8-bit samples, entry 01D
-Sub_P0B_W01D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01D.pcm", 25280, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0B_W01D from sample 25280; loop_probe.py)
-Sub_P0B_W01E:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01E.pcm", 0, 29664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W01E.wav: 29696 8-bit samples, entry 01E
-Sub_P0B_W01E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01E.pcm", 19072, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0B_W01E from sample 19072; loop_probe.py)
+Sub_P0B_W013:	.incbin	"build/wav_pcm/sub/Sub_P0B_W013.pcm", 0, 106496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W013.wav: 53248 16-bit samples, entry 013
+Sub_P0B_W013_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W013.pcm", 62464, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W013.wav: the run-out, the loop's first 32 samples again (from sample 31232; loop_probe.py)
+Sub_P0B_W014:	.incbin	"build/wav_pcm/sub/Sub_P0B_W014.pcm", 0, 91136	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W014.wav: 45568 16-bit samples, entry 014
+Sub_P0B_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W014.pcm", 52224, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W014.wav: the run-out, the loop's first 32 samples again (from sample 26112; loop_probe.py)
+Sub_P0B_W015:	.incbin	"build/wav_pcm/sub/Sub_P0B_W015.pcm", 0, 83456	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W015.wav: 41728 16-bit samples, entry 015
+Sub_P0B_W015_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W015.pcm", 48128, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W015.wav: the run-out, the loop's first 32 samples again (from sample 24064; loop_probe.py)
+Sub_P0B_W016:	.incbin	"build/wav_pcm/sub/Sub_P0B_W016.pcm", 0, 40192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W016.wav: 40192 8-bit samples, entry 016
+Sub_P0B_W016_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W016.pcm", 22528, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W016.wav: the run-out, the loop's first 32 samples again (from sample 22528; loop_probe.py)
+Sub_P0B_W017:	.incbin	"build/wav_pcm/sub/Sub_P0B_W017.pcm", 0, 38656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W017.wav: 38656 8-bit samples, entry 017
+Sub_P0B_W017_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W017.pcm", 22528, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W017.wav: the run-out, the loop's first 32 samples again (from sample 22528; loop_probe.py)
+Sub_P0B_W018:	.incbin	"build/wav_pcm/sub/Sub_P0B_W018.pcm", 0, 36992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W018.wav: 36992 8-bit samples, entry 018
+Sub_P0B_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W018.pcm", 22528, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W018.wav: the run-out, the loop's first 32 samples again (from sample 22528; loop_probe.py)
+Sub_P0B_W019:	.incbin	"build/wav_pcm/sub/Sub_P0B_W019.pcm", 0, 32640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W019.wav: 32640 8-bit samples, entry 019
+Sub_P0B_W019_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W019.pcm", 19968, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W019.wav: the run-out, the loop's first 32 samples again (from sample 19968; loop_probe.py)
+Sub_P0B_W01A:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01A.pcm", 0, 32448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W01A.wav: 32448 8-bit samples, entry 01A
+Sub_P0B_W01A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01A.pcm", 19840, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W01A.wav: the run-out, the loop's first 32 samples again (from sample 19840; loop_probe.py)
+Sub_P0B_W01B:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01B.pcm", 0, 30656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W01B.wav: 30656 8-bit samples, entry 01B
+Sub_P0B_W01B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01B.pcm", 18048, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W01B.wav: the run-out, the loop's first 32 samples again (from sample 18048; loop_probe.py)
+Sub_P0B_W01C:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01C.pcm", 0, 28928	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W01C.wav: 28928 8-bit samples, entry 01C
+Sub_P0B_W01C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01C.pcm", 18112, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W01C.wav: the run-out, the loop's first 32 samples again (from sample 18112; loop_probe.py)
+Sub_P0B_W01D:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01D.pcm", 0, 39296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W01D.wav: 39296 8-bit samples, entry 01D
+Sub_P0B_W01D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01D.pcm", 25280, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W01D.wav: the run-out, the loop's first 32 samples again (from sample 25280; loop_probe.py)
+Sub_P0B_W01E:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01E.pcm", 0, 29664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W01E.wav: 29664 8-bit samples, entry 01E
+Sub_P0B_W01E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01E.pcm", 19072, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W01E.wav: the run-out, the loop's first 32 samples again (from sample 19072; loop_probe.py)
 Sub_P0B_W01F:	.incbin	"build/wav_pcm/sub/Sub_P0B_W01F.pcm", 0, 70528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W01F.wav: 35264 16-bit samples, entry 01F
 Sub_P0B_W020:	.incbin	"build/wav_pcm/sub/Sub_P0B_W020.pcm", 0, 70528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W020.wav: 35264 16-bit samples, entry 020
 Sub_P0B_W021:	.incbin	"build/wav_pcm/sub/Sub_P0B_W021.pcm", 0, 70528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W021.wav: 35264 16-bit samples, entry 021
 Sub_P0B_W022:	.incbin	"build/wav_pcm/sub/Sub_P0B_W022.pcm", 0, 70528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W022.wav: 35264 16-bit samples, entry 022
-Sub_P0B_W023:	.incbin	"build/wav_pcm/sub/Sub_P0B_W023.pcm", 0, 66112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W023.wav: 66240 8-bit samples, entry 023
-Sub_P0B_W023_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W023.pcm", 35264, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0B_W023 from sample 35264; loop_probe.py)
+Sub_P0B_W023:	.incbin	"build/wav_pcm/sub/Sub_P0B_W023.pcm", 0, 66112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W023.wav: 66112 8-bit samples, entry 023
+Sub_P0B_W023_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0B_W023.pcm", 35264, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0B_W023.wav: the run-out, the loop's first 32 samples again (from sample 35264; loop_probe.py)
 	.space	96, 0	; zero words to the next recording
 Sub_P0B_Fill:	.space	298240, 0xff	; erased fill to the page end
 
@@ -7554,7 +7570,8 @@ Sub_P0C_R02C:	.word	(Sub_P0C_W02C - Sub_P0C) / 32, 256-128, 256-128, LOOP_START 
 Sub_P0C_R02D:	.word	(Sub_P0C_W02D - Sub_P0C) / 32, 256-128, LOOP_START | 256-84, 256-128, 256-128, LOOP_END | 256-23
 	.align	4
 	.align	32
-# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py
+# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py;
+# an alternate start is a slice of its recording's raw item and a cue point in its WAV
 Sub_P0C_W000:	.incbin	"build/wav_pcm/sub/Sub_P0C_W000.pcm", 0, 61824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W000.wav: 30912 16-bit samples, entry 000
 Sub_P0C_W001:	.incbin	"build/wav_pcm/sub/Sub_P0C_W001.pcm", 0, 61824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W001.wav: 30912 16-bit samples, entry 001
 Sub_P0C_W002:	.incbin	"build/wav_pcm/sub/Sub_P0C_W002.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W002.wav: 35328 8-bit samples, entry 002
@@ -7564,10 +7581,10 @@ Sub_P0C_W005:	.incbin	"build/wav_pcm/sub/Sub_P0C_W005.pcm", 0, 35328	; census: g
 Sub_P0C_W006:	.incbin	"build/wav_pcm/sub/Sub_P0C_W006.pcm", 0, 28736	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W006.wav: 28736 8-bit samples, entry 006
 Sub_P0C_W007:	.incbin	"build/wav_pcm/sub/Sub_P0C_W007.pcm", 0, 97152	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W007.wav: 48576 16-bit samples, entry 007
 Sub_P0C_W008:	.incbin	"build/wav_pcm/sub/Sub_P0C_W008.pcm", 0, 105984	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W008.wav: 52992 16-bit samples, entry 008
-Sub_P0C_W009:	.incbin	"build/wav_pcm/sub/Sub_P0C_W009.pcm", 0, 70592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W009.wav: 70624 8-bit samples, entry 009
-Sub_P0C_W009_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W009.pcm", 52928, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W009 from sample 52928; loop_probe.py)
-Sub_P0C_W00A:	.incbin	"build/wav_pcm/sub/Sub_P0C_W00A.pcm", 0, 70592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W00A.wav: 70624 8-bit samples, entry 00A
-Sub_P0C_W00A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W00A.pcm", 52928, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W00A from sample 52928; loop_probe.py)
+Sub_P0C_W009:	.incbin	"build/wav_pcm/sub/Sub_P0C_W009.pcm", 0, 70592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W009.wav: 70592 8-bit samples, entry 009
+Sub_P0C_W009_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W009.pcm", 52928, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W009.wav: the run-out, the loop's first 32 samples again (from sample 52928; loop_probe.py)
+Sub_P0C_W00A:	.incbin	"build/wav_pcm/sub/Sub_P0C_W00A.pcm", 0, 70592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W00A.wav: 70592 8-bit samples, entry 00A
+Sub_P0C_W00A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W00A.pcm", 52928, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W00A.wav: the run-out, the loop's first 32 samples again (from sample 52928; loop_probe.py)
 Sub_P0C_W00B:	.incbin	"build/wav_pcm/sub/Sub_P0C_W00B.pcm", 0, 26496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W00B.wav: 26496 8-bit samples, entry 00B
 Sub_P0C_W00C:	.incbin	"build/wav_pcm/sub/Sub_P0C_W00C.pcm", 0, 23872	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W00C.wav: 23872 8-bit samples, entry 00C
 Sub_P0C_W00D:	.incbin	"build/wav_pcm/sub/Sub_P0C_W00D.pcm", 0, 20352	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W00D.wav: 20352 8-bit samples, entry 00D
@@ -7577,8 +7594,8 @@ Sub_P0C_W010:	.incbin	"build/wav_pcm/sub/Sub_P0C_W010.pcm", 0, 56576	; census: g
 Sub_P0C_W011:	.incbin	"build/wav_pcm/sub/Sub_P0C_W011.pcm", 0, 48640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W011.wav: 24320 16-bit samples, entry 011
 Sub_P0C_W012:	.incbin	"build/wav_pcm/sub/Sub_P0C_W012.pcm", 0, 88320	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W012.wav: 44160 16-bit samples, entry 012
 Sub_P0C_W013:	.incbin	"build/wav_pcm/sub/Sub_P0C_W013.pcm", 0, 105984	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W013.wav: 52992 16-bit samples, entry 013
-Sub_P0C_W014:	.incbin	"build/wav_pcm/sub/Sub_P0C_W014.pcm", 0, 141184	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W014.wav: 70624 16-bit samples, entry 014
-Sub_P0C_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W014.pcm", 105856, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W014 from sample 52928; loop_probe.py)
+Sub_P0C_W014:	.incbin	"build/wav_pcm/sub/Sub_P0C_W014.pcm", 0, 141184	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W014.wav: 70592 16-bit samples, entry 014
+Sub_P0C_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W014.pcm", 105856, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W014.wav: the run-out, the loop's first 32 samples again (from sample 52928; loop_probe.py)
 Sub_P0C_W015:	.incbin	"build/wav_pcm/sub/Sub_P0C_W015.pcm", 0, 61824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W015.wav: 30912 16-bit samples, entry 015
 Sub_P0C_W016:	.incbin	"build/wav_pcm/sub/Sub_P0C_W016.pcm", 0, 61824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W016.wav: 30912 16-bit samples, entry 016
 Sub_P0C_W017:	.incbin	"build/wav_pcm/sub/Sub_P0C_W017.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W017.wav: 35328 8-bit samples, entry 017
@@ -7586,42 +7603,42 @@ Sub_P0C_W018:	.incbin	"build/wav_pcm/sub/Sub_P0C_W018.pcm", 0, 35328	; census: g
 Sub_P0C_W019:	.incbin	"build/wav_pcm/sub/Sub_P0C_W019.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W019.wav: 35328 8-bit samples, entry 019
 Sub_P0C_W01A:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01A.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W01A.wav: 35328 8-bit samples, entry 01A
 Sub_P0C_W01B:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01B.pcm", 0, 15488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W01B.wav: 15488 8-bit samples, entry 01B
-Sub_P0C_W01C:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01C.pcm", 0, 55296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W01C.wav: 27680 16-bit samples, entry 01C
-Sub_P0C_W01C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01C.pcm", 30720, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W01C from sample 15360; loop_probe.py)
-Sub_P0C_W01D:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01D.pcm", 0, 45056	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W01D.wav: 22560 16-bit samples, entry 01D
-Sub_P0C_W01D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01D.pcm", 23552, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W01D from sample 11776; loop_probe.py)
-Sub_P0C_W01E:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01E.pcm", 0, 23552	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W01E.wav: 11808 16-bit samples, entry 01E
-Sub_P0C_W01E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01E.pcm", 12288, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W01E from sample 6144; loop_probe.py)
-Sub_P0C_W01F:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01F.pcm", 0, 25600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W01F.wav: 12832 16-bit samples, entry 01F
-Sub_P0C_W01F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01F.pcm", 15360, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W01F from sample 7680; loop_probe.py)
-Sub_P0C_W020:	.incbin	"build/wav_pcm/sub/Sub_P0C_W020.pcm", 0, 29696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W020.wav: 14880 16-bit samples, entry 020
-Sub_P0C_W020_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W020.pcm", 19456, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W020 from sample 9728; loop_probe.py)
-Sub_P0C_W021:	.incbin	"build/wav_pcm/sub/Sub_P0C_W021.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W021.wav: 17696 16-bit samples, entry 021
-Sub_P0C_W021_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W021.pcm", 25088, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W021 from sample 12544; loop_probe.py)
-Sub_P0C_W022:	.incbin	"build/wav_pcm/sub/Sub_P0C_W022.pcm", 0, 24576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W022.wav: 12320 16-bit samples, entry 022
-Sub_P0C_W022_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W022.pcm", 14336, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W022 from sample 7168; loop_probe.py)
-Sub_P0C_W023:	.incbin	"build/wav_pcm/sub/Sub_P0C_W023.pcm", 0, 20736	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W023.wav: 10400 16-bit samples, entry 023
-Sub_P0C_W023_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W023.pcm", 10496, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W023 from sample 5248; loop_probe.py)
-Sub_P0C_W024:	.incbin	"build/wav_pcm/sub/Sub_P0C_W024.pcm", 0, 20224	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W024.wav: 10144 16-bit samples, entry 024
-Sub_P0C_W024_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W024.pcm", 9984, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W024 from sample 4992; loop_probe.py)
-Sub_P0C_W025:	.incbin	"build/wav_pcm/sub/Sub_P0C_W025.pcm", 0, 33280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W025.wav: 16672 16-bit samples, entry 025
-Sub_P0C_W025_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W025.pcm", 23040, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W025 from sample 11520; loop_probe.py)
-Sub_P0C_W026:	.incbin	"build/wav_pcm/sub/Sub_P0C_W026.pcm", 0, 29312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W026.wav: 14688 16-bit samples, entry 026
-Sub_P0C_W026_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W026.pcm", 19072, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W026 from sample 9536; loop_probe.py)
-Sub_P0C_W027:	.incbin	"build/wav_pcm/sub/Sub_P0C_W027.pcm", 0, 19584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W027.wav: 9824 16-bit samples, entry 027
-Sub_P0C_W027_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W027.pcm", 9600, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W027 from sample 4800; loop_probe.py)
-Sub_P0C_W028:	.incbin	"build/wav_pcm/sub/Sub_P0C_W028.pcm", 0, 29696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W028.wav: 14880 16-bit samples, entry 028
-Sub_P0C_W028_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W028.pcm", 19584, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W028 from sample 9792; loop_probe.py)
-Sub_P0C_W029:	.incbin	"build/wav_pcm/sub/Sub_P0C_W029.pcm", 0, 30336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W029.wav: 15200 16-bit samples, entry 029
-Sub_P0C_W029_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W029.pcm", 20224, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W029 from sample 10112; loop_probe.py)
-Sub_P0C_W02A:	.incbin	"build/wav_pcm/sub/Sub_P0C_W02A.pcm", 0, 18880	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W02A.wav: 9472 16-bit samples, entry 02A
-Sub_P0C_W02A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W02A.pcm", 8896, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W02A from sample 4448; loop_probe.py)
-Sub_P0C_W02B:	.incbin	"build/wav_pcm/sub/Sub_P0C_W02B.pcm", 0, 18560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W02B.wav: 9312 16-bit samples, entry 02B
-Sub_P0C_W02B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W02B.pcm", 8256, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W02B from sample 4128; loop_probe.py)
-Sub_P0C_W02C:	.incbin	"build/wav_pcm/sub/Sub_P0C_W02C.pcm", 0, 29632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W02C.wav: 14848 16-bit samples, entry 02C
-Sub_P0C_W02C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W02C.pcm", 19456, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W02C from sample 9728; loop_probe.py)
-Sub_P0C_W02D:	.incbin	"build/wav_pcm/sub/Sub_P0C_W02D.pcm", 0, 31424	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W02D.wav: 15760 16-bit samples, entry 02D
-Sub_P0C_W02D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W02D.pcm", 13568, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0C_W02D from sample 6784; loop_probe.py)
+Sub_P0C_W01C:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01C.pcm", 0, 55296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W01C.wav: 27648 16-bit samples, entry 01C
+Sub_P0C_W01C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01C.pcm", 30720, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W01C.wav: the run-out, the loop's first 32 samples again (from sample 15360; loop_probe.py)
+Sub_P0C_W01D:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01D.pcm", 0, 45056	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W01D.wav: 22528 16-bit samples, entry 01D
+Sub_P0C_W01D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01D.pcm", 23552, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W01D.wav: the run-out, the loop's first 32 samples again (from sample 11776; loop_probe.py)
+Sub_P0C_W01E:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01E.pcm", 0, 23552	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W01E.wav: 11776 16-bit samples, entry 01E
+Sub_P0C_W01E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01E.pcm", 12288, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W01E.wav: the run-out, the loop's first 32 samples again (from sample 6144; loop_probe.py)
+Sub_P0C_W01F:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01F.pcm", 0, 25600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W01F.wav: 12800 16-bit samples, entry 01F
+Sub_P0C_W01F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W01F.pcm", 15360, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W01F.wav: the run-out, the loop's first 32 samples again (from sample 7680; loop_probe.py)
+Sub_P0C_W020:	.incbin	"build/wav_pcm/sub/Sub_P0C_W020.pcm", 0, 29696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W020.wav: 14848 16-bit samples, entry 020
+Sub_P0C_W020_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W020.pcm", 19456, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W020.wav: the run-out, the loop's first 32 samples again (from sample 9728; loop_probe.py)
+Sub_P0C_W021:	.incbin	"build/wav_pcm/sub/Sub_P0C_W021.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W021.wav: 17664 16-bit samples, entry 021
+Sub_P0C_W021_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W021.pcm", 25088, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W021.wav: the run-out, the loop's first 32 samples again (from sample 12544; loop_probe.py)
+Sub_P0C_W022:	.incbin	"build/wav_pcm/sub/Sub_P0C_W022.pcm", 0, 24576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W022.wav: 12288 16-bit samples, entry 022
+Sub_P0C_W022_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W022.pcm", 14336, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W022.wav: the run-out, the loop's first 32 samples again (from sample 7168; loop_probe.py)
+Sub_P0C_W023:	.incbin	"build/wav_pcm/sub/Sub_P0C_W023.pcm", 0, 20736	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W023.wav: 10368 16-bit samples, entry 023
+Sub_P0C_W023_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W023.pcm", 10496, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W023.wav: the run-out, the loop's first 32 samples again (from sample 5248; loop_probe.py)
+Sub_P0C_W024:	.incbin	"build/wav_pcm/sub/Sub_P0C_W024.pcm", 0, 20224	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W024.wav: 10112 16-bit samples, entry 024
+Sub_P0C_W024_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W024.pcm", 9984, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W024.wav: the run-out, the loop's first 32 samples again (from sample 4992; loop_probe.py)
+Sub_P0C_W025:	.incbin	"build/wav_pcm/sub/Sub_P0C_W025.pcm", 0, 33280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W025.wav: 16640 16-bit samples, entry 025
+Sub_P0C_W025_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W025.pcm", 23040, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W025.wav: the run-out, the loop's first 32 samples again (from sample 11520; loop_probe.py)
+Sub_P0C_W026:	.incbin	"build/wav_pcm/sub/Sub_P0C_W026.pcm", 0, 29312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W026.wav: 14656 16-bit samples, entry 026
+Sub_P0C_W026_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W026.pcm", 19072, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W026.wav: the run-out, the loop's first 32 samples again (from sample 9536; loop_probe.py)
+Sub_P0C_W027:	.incbin	"build/wav_pcm/sub/Sub_P0C_W027.pcm", 0, 19584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W027.wav: 9792 16-bit samples, entry 027
+Sub_P0C_W027_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W027.pcm", 9600, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W027.wav: the run-out, the loop's first 32 samples again (from sample 4800; loop_probe.py)
+Sub_P0C_W028:	.incbin	"build/wav_pcm/sub/Sub_P0C_W028.pcm", 0, 29696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W028.wav: 14848 16-bit samples, entry 028
+Sub_P0C_W028_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W028.pcm", 19584, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W028.wav: the run-out, the loop's first 32 samples again (from sample 9792; loop_probe.py)
+Sub_P0C_W029:	.incbin	"build/wav_pcm/sub/Sub_P0C_W029.pcm", 0, 30336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W029.wav: 15168 16-bit samples, entry 029
+Sub_P0C_W029_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W029.pcm", 20224, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W029.wav: the run-out, the loop's first 32 samples again (from sample 10112; loop_probe.py)
+Sub_P0C_W02A:	.incbin	"build/wav_pcm/sub/Sub_P0C_W02A.pcm", 0, 18880	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W02A.wav: 9440 16-bit samples, entry 02A
+Sub_P0C_W02A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W02A.pcm", 8896, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W02A.wav: the run-out, the loop's first 32 samples again (from sample 4448; loop_probe.py)
+Sub_P0C_W02B:	.incbin	"build/wav_pcm/sub/Sub_P0C_W02B.pcm", 0, 18560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W02B.wav: 9280 16-bit samples, entry 02B
+Sub_P0C_W02B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W02B.pcm", 8256, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W02B.wav: the run-out, the loop's first 32 samples again (from sample 4128; loop_probe.py)
+Sub_P0C_W02C:	.incbin	"build/wav_pcm/sub/Sub_P0C_W02C.pcm", 0, 29632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W02C.wav: 14816 16-bit samples, entry 02C
+Sub_P0C_W02C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W02C.pcm", 19456, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W02C.wav: the run-out, the loop's first 32 samples again (from sample 9728; loop_probe.py)
+Sub_P0C_W02D:	.incbin	"build/wav_pcm/sub/Sub_P0C_W02D.pcm", 0, 31424	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W02D.wav: 15712 16-bit samples, entry 02D
+Sub_P0C_W02D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0C_W02D.pcm", 13568, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0C_W02D.wav: the run-out, the loop's first 32 samples again (from sample 6784; loop_probe.py)
 	.space	32, 0	; zero words to the next recording
 Sub_P0C_Fill:	.space	4992, 0xff	; erased fill to the page end
 
@@ -8245,7 +8262,8 @@ Sub_P0D_R0C8:	.word	(Sub_P0D_W0C8 - Sub_P0D) / 32, 256-30, 64, 56, 48, 40, REC_E
 Sub_P0D_R0C9:	.word	(Sub_P0D_W0C9 - Sub_P0D) / 32, 256-33, 64, 56, 48, 40, REC_END
 	.align	4
 	.align	32
-# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py
+# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py;
+# an alternate start is a slice of its recording's raw item and a cue point in its WAV
 Sub_P0D_W000:	.incbin	"build/wav_pcm/sub/Sub_P0D_W000.pcm", 0, 8704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0D_W000.wav: 4352 16-bit samples, entry 000
 Sub_P0D_W001:	.incbin	"build/wav_pcm/sub/Sub_P0D_W001.pcm", 0, 8704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0D_W001.wav: 4352 16-bit samples, entry 001
 Sub_P0D_W002:	.incbin	"build/wav_pcm/sub/Sub_P0D_W002.pcm", 0, 4864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0D_W002.wav: 2432 16-bit samples, entry 002
@@ -8564,79 +8582,80 @@ Sub_P0E_R022:	.word	(Sub_P0E_W022 - Sub_P0E) / 32, LOOP_START | 256-125, LOOP_EN
 Sub_P0E_R023:	.word	(Sub_P0E_W023 - Sub_P0E) / 32, 256-128, LOOP_START | 256-59, 256-128, LOOP_END | 256-59
 	.align	4
 	.align	32
-# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py
-Sub_P0E_W000:	.incbin	"build/wav_pcm/sub/Sub_P0E_W000.pcm", 0, 35840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W000.wav: 17952 16-bit samples, entry 000
-Sub_P0E_W000_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W000.pcm", 24576, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W000 from sample 12288; loop_probe.py)
-Sub_P0E_W001:	.incbin	"build/wav_pcm/sub/Sub_P0E_W001.pcm", 0, 32768	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W001.wav: 16416 16-bit samples, entry 001
-Sub_P0E_W001_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W001.pcm", 22528, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W001 from sample 11264; loop_probe.py)
-Sub_P0E_W002:	.incbin	"build/wav_pcm/sub/Sub_P0E_W002.pcm", 0, 30720	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W002.wav: 15392 16-bit samples, entry 002
-Sub_P0E_W002_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W002.pcm", 19456, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W002 from sample 9728; loop_probe.py)
-Sub_P0E_W003:	.incbin	"build/wav_pcm/sub/Sub_P0E_W003.pcm", 0, 33280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W003.wav: 16672 16-bit samples, entry 003
-Sub_P0E_W003_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W003.pcm", 22528, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W003 from sample 11264; loop_probe.py)
-Sub_P0E_W004:	.incbin	"build/wav_pcm/sub/Sub_P0E_W004.pcm", 0, 42496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W004.wav: 21280 16-bit samples, entry 004
-Sub_P0E_W004_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W004.pcm", 32256, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W004 from sample 16128; loop_probe.py)
-Sub_P0E_W005:	.incbin	"build/wav_pcm/sub/Sub_P0E_W005.pcm", 0, 27136	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W005.wav: 13600 16-bit samples, entry 005
-Sub_P0E_W005_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W005.pcm", 16896, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W005 from sample 8448; loop_probe.py)
-Sub_P0E_W006:	.incbin	"build/wav_pcm/sub/Sub_P0E_W006.pcm", 0, 17920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W006.wav: 8992 16-bit samples, entry 006
-Sub_P0E_W006_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W006.pcm", 7680, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W006 from sample 3840; loop_probe.py)
-Sub_P0E_W007:	.incbin	"build/wav_pcm/sub/Sub_P0E_W007.pcm", 0, 22272	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W007.wav: 11168 16-bit samples, entry 007
-Sub_P0E_W007_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W007.pcm", 12032, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W007 from sample 6016; loop_probe.py)
-Sub_P0E_W008:	.incbin	"build/wav_pcm/sub/Sub_P0E_W008.pcm", 0, 37888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W008.wav: 18976 16-bit samples, entry 008
-Sub_P0E_W008_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W008.pcm", 27904, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W008 from sample 13952; loop_probe.py)
-Sub_P0E_W009:	.incbin	"build/wav_pcm/sub/Sub_P0E_W009.pcm", 0, 37376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W009.wav: 18720 16-bit samples, entry 009
-Sub_P0E_W009_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W009.pcm", 27136, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W009 from sample 13568; loop_probe.py)
-Sub_P0E_W00A:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00A.pcm", 0, 19840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00A.wav: 9952 16-bit samples, entry 00A
-Sub_P0E_W00A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00A.pcm", 9600, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W00A from sample 4800; loop_probe.py)
-Sub_P0E_W00B:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00B.pcm", 0, 43520	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00B.wav: 21792 16-bit samples, entry 00B
-Sub_P0E_W00B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00B.pcm", 33408, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W00B from sample 16704; loop_probe.py)
-Sub_P0E_W00C:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00C.pcm", 0, 29824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00C.wav: 14944 16-bit samples, entry 00C
-Sub_P0E_W00C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00C.pcm", 19968, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W00C from sample 9984; loop_probe.py)
-Sub_P0E_W00D:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00D.pcm", 0, 30912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00D.wav: 15488 16-bit samples, entry 00D
-Sub_P0E_W00D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00D.pcm", 20608, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W00D from sample 10304; loop_probe.py)
-Sub_P0E_W00E:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00E.pcm", 0, 29696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00E.wav: 14880 16-bit samples, entry 00E
-Sub_P0E_W00E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00E.pcm", 19264, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W00E from sample 9632; loop_probe.py)
-Sub_P0E_W00F:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00F.pcm", 0, 67904	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00F.wav: 33984 16-bit samples, entry 00F
-Sub_P0E_W00F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00F.pcm", 52416, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W00F from sample 26208; loop_probe.py)
-Sub_P0E_W010:	.incbin	"build/wav_pcm/sub/Sub_P0E_W010.pcm", 0, 96256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W010.wav: 48160 16-bit samples, entry 010
-Sub_P0E_W010_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W010.pcm", 56320, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W010 from sample 28160; loop_probe.py)
-Sub_P0E_W011:	.incbin	"build/wav_pcm/sub/Sub_P0E_W011.pcm", 0, 58368	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W011.wav: 29216 16-bit samples, entry 011
-Sub_P0E_W011_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W011.pcm", 26624, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W011 from sample 13312; loop_probe.py)
-Sub_P0E_W012:	.incbin	"build/wav_pcm/sub/Sub_P0E_W012.pcm", 0, 76800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W012.wav: 38432 16-bit samples, entry 012
-Sub_P0E_W012_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W012.pcm", 45056, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W012 from sample 22528; loop_probe.py)
-Sub_P0E_W013:	.incbin	"build/wav_pcm/sub/Sub_P0E_W013.pcm", 0, 71168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W013.wav: 35616 16-bit samples, entry 013
-Sub_P0E_W013_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W013.pcm", 38912, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W013 from sample 19456; loop_probe.py)
-Sub_P0E_W014:	.incbin	"build/wav_pcm/sub/Sub_P0E_W014.pcm", 0, 71168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W014.wav: 35616 16-bit samples, entry 014
-Sub_P0E_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W014.pcm", 38912, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W014 from sample 19456; loop_probe.py)
-Sub_P0E_W015:	.incbin	"build/wav_pcm/sub/Sub_P0E_W015.pcm", 0, 70144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W015.wav: 35104 16-bit samples, entry 015
-Sub_P0E_W015_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W015.pcm", 38400, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W015 from sample 19200; loop_probe.py)
-Sub_P0E_W016:	.incbin	"build/wav_pcm/sub/Sub_P0E_W016.pcm", 0, 70144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W016.wav: 35104 16-bit samples, entry 016
-Sub_P0E_W016_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W016.pcm", 38400, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W016 from sample 19200; loop_probe.py)
-Sub_P0E_W017:	.incbin	"build/wav_pcm/sub/Sub_P0E_W017.pcm", 0, 64512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W017.wav: 32288 16-bit samples, entry 017
-Sub_P0E_W017_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W017.pcm", 32256, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W017 from sample 16128; loop_probe.py)
-Sub_P0E_W018:	.incbin	"build/wav_pcm/sub/Sub_P0E_W018.pcm", 0, 64000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W018.wav: 32032 16-bit samples, entry 018
-Sub_P0E_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W018.pcm", 32000, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W018 from sample 16000; loop_probe.py)
-Sub_P0E_W019:	.incbin	"build/wav_pcm/sub/Sub_P0E_W019.pcm", 0, 64000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W019.wav: 32032 16-bit samples, entry 019
-Sub_P0E_W019_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W019.pcm", 32000, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W019 from sample 16000; loop_probe.py)
-Sub_P0E_W01A:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01A.pcm", 0, 64000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01A.wav: 32032 16-bit samples, entry 01A
-Sub_P0E_W01A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01A.pcm", 32000, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W01A from sample 16000; loop_probe.py)
-Sub_P0E_W01B:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01B.pcm", 0, 115456	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01B.wav: 57760 16-bit samples, entry 01B
-Sub_P0E_W01B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01B.pcm", 67328, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W01B from sample 33664; loop_probe.py)
-Sub_P0E_W01C:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01C.pcm", 0, 82944	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01C.wav: 41504 16-bit samples, entry 01C
-Sub_P0E_W01C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01C.pcm", 43008, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W01C from sample 21504; loop_probe.py)
-Sub_P0E_W01D:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01D.pcm", 0, 71680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01D.wav: 35872 16-bit samples, entry 01D
-Sub_P0E_W01D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01D.pcm", 38912, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W01D from sample 19456; loop_probe.py)
-Sub_P0E_W01E:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01E.pcm", 0, 70656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01E.wav: 35360 16-bit samples, entry 01E
-Sub_P0E_W01E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01E.pcm", 38400, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W01E from sample 19200; loop_probe.py)
-Sub_P0E_W01F:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01F.pcm", 0, 64512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01F.wav: 32288 16-bit samples, entry 01F
-Sub_P0E_W01F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01F.pcm", 32256, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W01F from sample 16128; loop_probe.py)
-Sub_P0E_W020:	.incbin	"build/wav_pcm/sub/Sub_P0E_W020.pcm", 0, 63488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W020.wav: 31776 16-bit samples, entry 020
-Sub_P0E_W020_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W020.pcm", 31744, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W020 from sample 15872; loop_probe.py)
-Sub_P0E_W021:	.incbin	"build/wav_pcm/sub/Sub_P0E_W021.pcm", 0, 64512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W021.wav: 32288 16-bit samples, entry 021
-Sub_P0E_W021_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W021.pcm", 32256, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W021 from sample 16128; loop_probe.py)
-Sub_P0E_W022:	.incbin	"build/wav_pcm/sub/Sub_P0E_W022.pcm", 0, 64000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W022.wav: 32032 16-bit samples, entry 022
-Sub_P0E_W022_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W022.pcm", 32000, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W022 from sample 16000; loop_probe.py)
-Sub_P0E_W023:	.incbin	"build/wav_pcm/sub/Sub_P0E_W023.pcm", 0, 95744	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W023.wav: 47920 16-bit samples, entry 023
-Sub_P0E_W023_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W023.pcm", 47872, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0E_W023 from sample 23936; loop_probe.py)
+# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py;
+# an alternate start is a slice of its recording's raw item and a cue point in its WAV
+Sub_P0E_W000:	.incbin	"build/wav_pcm/sub/Sub_P0E_W000.pcm", 0, 35840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W000.wav: 17920 16-bit samples, entry 000
+Sub_P0E_W000_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W000.pcm", 24576, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W000.wav: the run-out, the loop's first 32 samples again (from sample 12288; loop_probe.py)
+Sub_P0E_W001:	.incbin	"build/wav_pcm/sub/Sub_P0E_W001.pcm", 0, 32768	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W001.wav: 16384 16-bit samples, entry 001
+Sub_P0E_W001_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W001.pcm", 22528, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W001.wav: the run-out, the loop's first 32 samples again (from sample 11264; loop_probe.py)
+Sub_P0E_W002:	.incbin	"build/wav_pcm/sub/Sub_P0E_W002.pcm", 0, 30720	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W002.wav: 15360 16-bit samples, entry 002
+Sub_P0E_W002_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W002.pcm", 19456, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W002.wav: the run-out, the loop's first 32 samples again (from sample 9728; loop_probe.py)
+Sub_P0E_W003:	.incbin	"build/wav_pcm/sub/Sub_P0E_W003.pcm", 0, 33280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W003.wav: 16640 16-bit samples, entry 003
+Sub_P0E_W003_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W003.pcm", 22528, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W003.wav: the run-out, the loop's first 32 samples again (from sample 11264; loop_probe.py)
+Sub_P0E_W004:	.incbin	"build/wav_pcm/sub/Sub_P0E_W004.pcm", 0, 42496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W004.wav: 21248 16-bit samples, entry 004
+Sub_P0E_W004_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W004.pcm", 32256, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W004.wav: the run-out, the loop's first 32 samples again (from sample 16128; loop_probe.py)
+Sub_P0E_W005:	.incbin	"build/wav_pcm/sub/Sub_P0E_W005.pcm", 0, 27136	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W005.wav: 13568 16-bit samples, entry 005
+Sub_P0E_W005_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W005.pcm", 16896, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W005.wav: the run-out, the loop's first 32 samples again (from sample 8448; loop_probe.py)
+Sub_P0E_W006:	.incbin	"build/wav_pcm/sub/Sub_P0E_W006.pcm", 0, 17920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W006.wav: 8960 16-bit samples, entry 006
+Sub_P0E_W006_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W006.pcm", 7680, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W006.wav: the run-out, the loop's first 32 samples again (from sample 3840; loop_probe.py)
+Sub_P0E_W007:	.incbin	"build/wav_pcm/sub/Sub_P0E_W007.pcm", 0, 22272	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W007.wav: 11136 16-bit samples, entry 007
+Sub_P0E_W007_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W007.pcm", 12032, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W007.wav: the run-out, the loop's first 32 samples again (from sample 6016; loop_probe.py)
+Sub_P0E_W008:	.incbin	"build/wav_pcm/sub/Sub_P0E_W008.pcm", 0, 37888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W008.wav: 18944 16-bit samples, entry 008
+Sub_P0E_W008_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W008.pcm", 27904, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W008.wav: the run-out, the loop's first 32 samples again (from sample 13952; loop_probe.py)
+Sub_P0E_W009:	.incbin	"build/wav_pcm/sub/Sub_P0E_W009.pcm", 0, 37376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W009.wav: 18688 16-bit samples, entry 009
+Sub_P0E_W009_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W009.pcm", 27136, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W009.wav: the run-out, the loop's first 32 samples again (from sample 13568; loop_probe.py)
+Sub_P0E_W00A:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00A.pcm", 0, 19840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00A.wav: 9920 16-bit samples, entry 00A
+Sub_P0E_W00A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00A.pcm", 9600, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00A.wav: the run-out, the loop's first 32 samples again (from sample 4800; loop_probe.py)
+Sub_P0E_W00B:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00B.pcm", 0, 43520	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00B.wav: 21760 16-bit samples, entry 00B
+Sub_P0E_W00B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00B.pcm", 33408, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00B.wav: the run-out, the loop's first 32 samples again (from sample 16704; loop_probe.py)
+Sub_P0E_W00C:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00C.pcm", 0, 29824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00C.wav: 14912 16-bit samples, entry 00C
+Sub_P0E_W00C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00C.pcm", 19968, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00C.wav: the run-out, the loop's first 32 samples again (from sample 9984; loop_probe.py)
+Sub_P0E_W00D:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00D.pcm", 0, 30912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00D.wav: 15456 16-bit samples, entry 00D
+Sub_P0E_W00D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00D.pcm", 20608, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00D.wav: the run-out, the loop's first 32 samples again (from sample 10304; loop_probe.py)
+Sub_P0E_W00E:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00E.pcm", 0, 29696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00E.wav: 14848 16-bit samples, entry 00E
+Sub_P0E_W00E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00E.pcm", 19264, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00E.wav: the run-out, the loop's first 32 samples again (from sample 9632; loop_probe.py)
+Sub_P0E_W00F:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00F.pcm", 0, 67904	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00F.wav: 33952 16-bit samples, entry 00F
+Sub_P0E_W00F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W00F.pcm", 52416, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W00F.wav: the run-out, the loop's first 32 samples again (from sample 26208; loop_probe.py)
+Sub_P0E_W010:	.incbin	"build/wav_pcm/sub/Sub_P0E_W010.pcm", 0, 96256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W010.wav: 48128 16-bit samples, entry 010
+Sub_P0E_W010_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W010.pcm", 56320, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W010.wav: the run-out, the loop's first 32 samples again (from sample 28160; loop_probe.py)
+Sub_P0E_W011:	.incbin	"build/wav_pcm/sub/Sub_P0E_W011.pcm", 0, 58368	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W011.wav: 29184 16-bit samples, entry 011
+Sub_P0E_W011_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W011.pcm", 26624, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W011.wav: the run-out, the loop's first 32 samples again (from sample 13312; loop_probe.py)
+Sub_P0E_W012:	.incbin	"build/wav_pcm/sub/Sub_P0E_W012.pcm", 0, 76800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W012.wav: 38400 16-bit samples, entry 012
+Sub_P0E_W012_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W012.pcm", 45056, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W012.wav: the run-out, the loop's first 32 samples again (from sample 22528; loop_probe.py)
+Sub_P0E_W013:	.incbin	"build/wav_pcm/sub/Sub_P0E_W013.pcm", 0, 71168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W013.wav: 35584 16-bit samples, entry 013
+Sub_P0E_W013_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W013.pcm", 38912, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W013.wav: the run-out, the loop's first 32 samples again (from sample 19456; loop_probe.py)
+Sub_P0E_W014:	.incbin	"build/wav_pcm/sub/Sub_P0E_W014.pcm", 0, 71168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W014.wav: 35584 16-bit samples, entry 014
+Sub_P0E_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W014.pcm", 38912, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W014.wav: the run-out, the loop's first 32 samples again (from sample 19456; loop_probe.py)
+Sub_P0E_W015:	.incbin	"build/wav_pcm/sub/Sub_P0E_W015.pcm", 0, 70144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W015.wav: 35072 16-bit samples, entry 015
+Sub_P0E_W015_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W015.pcm", 38400, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W015.wav: the run-out, the loop's first 32 samples again (from sample 19200; loop_probe.py)
+Sub_P0E_W016:	.incbin	"build/wav_pcm/sub/Sub_P0E_W016.pcm", 0, 70144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W016.wav: 35072 16-bit samples, entry 016
+Sub_P0E_W016_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W016.pcm", 38400, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W016.wav: the run-out, the loop's first 32 samples again (from sample 19200; loop_probe.py)
+Sub_P0E_W017:	.incbin	"build/wav_pcm/sub/Sub_P0E_W017.pcm", 0, 64512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W017.wav: 32256 16-bit samples, entry 017
+Sub_P0E_W017_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W017.pcm", 32256, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W017.wav: the run-out, the loop's first 32 samples again (from sample 16128; loop_probe.py)
+Sub_P0E_W018:	.incbin	"build/wav_pcm/sub/Sub_P0E_W018.pcm", 0, 64000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W018.wav: 32000 16-bit samples, entry 018
+Sub_P0E_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W018.pcm", 32000, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W018.wav: the run-out, the loop's first 32 samples again (from sample 16000; loop_probe.py)
+Sub_P0E_W019:	.incbin	"build/wav_pcm/sub/Sub_P0E_W019.pcm", 0, 64000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W019.wav: 32000 16-bit samples, entry 019
+Sub_P0E_W019_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W019.pcm", 32000, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W019.wav: the run-out, the loop's first 32 samples again (from sample 16000; loop_probe.py)
+Sub_P0E_W01A:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01A.pcm", 0, 64000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01A.wav: 32000 16-bit samples, entry 01A
+Sub_P0E_W01A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01A.pcm", 32000, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01A.wav: the run-out, the loop's first 32 samples again (from sample 16000; loop_probe.py)
+Sub_P0E_W01B:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01B.pcm", 0, 115456	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01B.wav: 57728 16-bit samples, entry 01B
+Sub_P0E_W01B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01B.pcm", 67328, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01B.wav: the run-out, the loop's first 32 samples again (from sample 33664; loop_probe.py)
+Sub_P0E_W01C:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01C.pcm", 0, 82944	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01C.wav: 41472 16-bit samples, entry 01C
+Sub_P0E_W01C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01C.pcm", 43008, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01C.wav: the run-out, the loop's first 32 samples again (from sample 21504; loop_probe.py)
+Sub_P0E_W01D:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01D.pcm", 0, 71680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01D.wav: 35840 16-bit samples, entry 01D
+Sub_P0E_W01D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01D.pcm", 38912, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01D.wav: the run-out, the loop's first 32 samples again (from sample 19456; loop_probe.py)
+Sub_P0E_W01E:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01E.pcm", 0, 70656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01E.wav: 35328 16-bit samples, entry 01E
+Sub_P0E_W01E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01E.pcm", 38400, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01E.wav: the run-out, the loop's first 32 samples again (from sample 19200; loop_probe.py)
+Sub_P0E_W01F:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01F.pcm", 0, 64512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01F.wav: 32256 16-bit samples, entry 01F
+Sub_P0E_W01F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W01F.pcm", 32256, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W01F.wav: the run-out, the loop's first 32 samples again (from sample 16128; loop_probe.py)
+Sub_P0E_W020:	.incbin	"build/wav_pcm/sub/Sub_P0E_W020.pcm", 0, 63488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W020.wav: 31744 16-bit samples, entry 020
+Sub_P0E_W020_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W020.pcm", 31744, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W020.wav: the run-out, the loop's first 32 samples again (from sample 15872; loop_probe.py)
+Sub_P0E_W021:	.incbin	"build/wav_pcm/sub/Sub_P0E_W021.pcm", 0, 64512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W021.wav: 32256 16-bit samples, entry 021
+Sub_P0E_W021_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W021.pcm", 32256, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W021.wav: the run-out, the loop's first 32 samples again (from sample 16128; loop_probe.py)
+Sub_P0E_W022:	.incbin	"build/wav_pcm/sub/Sub_P0E_W022.pcm", 0, 64000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W022.wav: 32000 16-bit samples, entry 022
+Sub_P0E_W022_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W022.pcm", 32000, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W022.wav: the run-out, the loop's first 32 samples again (from sample 16000; loop_probe.py)
+Sub_P0E_W023:	.incbin	"build/wav_pcm/sub/Sub_P0E_W023.pcm", 0, 95744	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W023.wav: 47872 16-bit samples, entry 023
+Sub_P0E_W023_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0E_W023.pcm", 47872, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0E_W023.wav: the run-out, the loop's first 32 samples again (from sample 23936; loop_probe.py)
 	.space	32, 0	; zero words to the next recording
 Sub_P0E_Fill:	.space	91264, 0xff	; erased fill to the page end
 
@@ -8774,59 +8793,60 @@ Sub_P0F_R01A:	.word	(Sub_P0F_W01A - Sub_P0F) / 32, 256-128, 256-121, REC_END
 Sub_P0F_R01B:	.word	(Sub_P0F_W01B - Sub_P0F) / 32, 256-128, 256-128, 256-128, 256-128, 256-128, 256-59, REC_END
 	.align	4
 	.align	32
-# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py
-Sub_P0F_W000:	.incbin	"build/wav_pcm/sub/Sub_P0F_W000.pcm", 0, 53376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W000.wav: 26720 16-bit samples, entry 000
-Sub_P0F_W000_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W000.pcm", 36736, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W000 from sample 18368; loop_probe.py)
-Sub_P0F_W001:	.incbin	"build/wav_pcm/sub/Sub_P0F_W001.pcm", 0, 34496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W001.wav: 34528 8-bit samples, entry 001
-Sub_P0F_W001_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W001.pcm", 26752, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W001 from sample 26752; loop_probe.py)
-Sub_P0F_W002:	.incbin	"build/wav_pcm/sub/Sub_P0F_W002.pcm", 0, 70400	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W002.wav: 35232 16-bit samples, entry 002
-Sub_P0F_W002_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W002.pcm", 55552, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W002 from sample 27776; loop_probe.py)
-Sub_P0F_W003:	.incbin	"build/wav_pcm/sub/Sub_P0F_W003.pcm", 0, 45696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W003.wav: 22880 16-bit samples, entry 003
-Sub_P0F_W003_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W003.pcm", 29952, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W003 from sample 14976; loop_probe.py)
-Sub_P0F_W004:	.incbin	"build/wav_pcm/sub/Sub_P0F_W004.pcm", 0, 31488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W004.wav: 31520 8-bit samples, entry 004
-Sub_P0F_W004_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W004.pcm", 22912, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W004 from sample 22912; loop_probe.py)
-Sub_P0F_W005:	.incbin	"build/wav_pcm/sub/Sub_P0F_W005.pcm", 0, 134144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W005.wav: 67104 16-bit samples, entry 005
-Sub_P0F_W005_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W005.pcm", 96512, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W005 from sample 48256; loop_probe.py)
-Sub_P0F_W006:	.incbin	"build/wav_pcm/sub/Sub_P0F_W006.pcm", 0, 69632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W006.wav: 34848 16-bit samples, entry 006
-Sub_P0F_W006_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W006.pcm", 52224, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W006 from sample 26112; loop_probe.py)
-Sub_P0F_W007:	.incbin	"build/wav_pcm/sub/Sub_P0F_W007.pcm", 0, 68608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W007.wav: 34336 16-bit samples, entry 007
-Sub_P0F_W007_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W007.pcm", 52224, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W007 from sample 26112; loop_probe.py)
-Sub_P0F_W008:	.incbin	"build/wav_pcm/sub/Sub_P0F_W008.pcm", 0, 67584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W008.wav: 33824 16-bit samples, entry 008
-Sub_P0F_W008_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W008.pcm", 51200, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W008 from sample 25600; loop_probe.py)
-Sub_P0F_W009:	.incbin	"build/wav_pcm/sub/Sub_P0F_W009.pcm", 0, 90112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W009.wav: 45088 16-bit samples, entry 009
-Sub_P0F_W009_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W009.pcm", 73728, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W009 from sample 36864; loop_probe.py)
-Sub_P0F_W00A:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00A.pcm", 0, 85504	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00A.wav: 42784 16-bit samples, entry 00A
-Sub_P0F_W00A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00A.pcm", 72192, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W00A from sample 36096; loop_probe.py)
-Sub_P0F_W00B:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00B.pcm", 0, 69632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00B.wav: 34848 16-bit samples, entry 00B
-Sub_P0F_W00B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00B.pcm", 56320, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W00B from sample 28160; loop_probe.py)
-Sub_P0F_W00C:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00C.pcm", 0, 63488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00C.wav: 31776 16-bit samples, entry 00C
-Sub_P0F_W00C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00C.pcm", 50176, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W00C from sample 25088; loop_probe.py)
-Sub_P0F_W00D:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00D.pcm", 0, 59392	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00D.wav: 29728 16-bit samples, entry 00D
-Sub_P0F_W00D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00D.pcm", 46080, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W00D from sample 23040; loop_probe.py)
-Sub_P0F_W00E:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00E.pcm", 0, 52224	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00E.wav: 26144 16-bit samples, entry 00E
-Sub_P0F_W00E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00E.pcm", 38912, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W00E from sample 19456; loop_probe.py)
-Sub_P0F_W00F:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00F.pcm", 0, 72960	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00F.wav: 36512 16-bit samples, entry 00F
-Sub_P0F_W00F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00F.pcm", 59136, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W00F from sample 29568; loop_probe.py)
-Sub_P0F_W010:	.incbin	"build/wav_pcm/sub/Sub_P0F_W010.pcm", 0, 79616	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W010.wav: 39840 16-bit samples, entry 010
-Sub_P0F_W010_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W010.pcm", 65536, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W010 from sample 32768; loop_probe.py)
-Sub_P0F_W011:	.incbin	"build/wav_pcm/sub/Sub_P0F_W011.pcm", 0, 143104	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W011.wav: 71584 16-bit samples, entry 011
-Sub_P0F_W011_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W011.pcm", 123136, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W011 from sample 61568; loop_probe.py)
-Sub_P0F_W012:	.incbin	"build/wav_pcm/sub/Sub_P0F_W012.pcm", 0, 52480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W012.wav: 26272 16-bit samples, entry 012
-Sub_P0F_W012_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W012.pcm", 40192, 64	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W012 from sample 20096; loop_probe.py)
-Sub_P0F_W013:	.incbin	"build/wav_pcm/sub/Sub_P0F_W013.pcm", 0, 45696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W013.wav: 45728 8-bit samples, entry 013
-Sub_P0F_W013_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W013.pcm", 38272, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W013 from sample 38272; loop_probe.py)
-Sub_P0F_W014:	.incbin	"build/wav_pcm/sub/Sub_P0F_W014.pcm", 0, 68096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W014.wav: 68128 8-bit samples, entry 014
-Sub_P0F_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W014.pcm", 54272, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W014 from sample 54272; loop_probe.py)
-Sub_P0F_W015:	.incbin	"build/wav_pcm/sub/Sub_P0F_W015.pcm", 0, 84864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W015.wav: 84896 8-bit samples, entry 015
-Sub_P0F_W015_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W015.pcm", 72704, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W015 from sample 72704; loop_probe.py)
-Sub_P0F_W016:	.incbin	"build/wav_pcm/sub/Sub_P0F_W016.pcm", 0, 57472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W016.wav: 57504 8-bit samples, entry 016
-Sub_P0F_W016_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W016.pcm", 42624, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W016 from sample 42624; loop_probe.py)
-Sub_P0F_W017:	.incbin	"build/wav_pcm/sub/Sub_P0F_W017.pcm", 0, 180736	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W017.wav: 180768 8-bit samples, entry 017
-Sub_P0F_W017_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W017.pcm", 150528, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W017 from sample 150528; loop_probe.py)
-Sub_P0F_W018:	.incbin	"build/wav_pcm/sub/Sub_P0F_W018.pcm", 0, 154624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W018.wav: 154656 8-bit samples, entry 018
-Sub_P0F_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W018.pcm", 131584, 32	; census: generated -- ../scripts/build/pcm_wav.py: the run-out, the loop's first 32 samples again (Sub_P0F_W018 from sample 131584; loop_probe.py)
+# recordings: one WAV file each, wav/sub/ (make wave-wav), through ../scripts/build/pcm_wav.py;
+# an alternate start is a slice of its recording's raw item and a cue point in its WAV
+Sub_P0F_W000:	.incbin	"build/wav_pcm/sub/Sub_P0F_W000.pcm", 0, 53376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W000.wav: 26688 16-bit samples, entry 000
+Sub_P0F_W000_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W000.pcm", 36736, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W000.wav: the run-out, the loop's first 32 samples again (from sample 18368; loop_probe.py)
+Sub_P0F_W001:	.incbin	"build/wav_pcm/sub/Sub_P0F_W001.pcm", 0, 34496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W001.wav: 34496 8-bit samples, entry 001
+Sub_P0F_W001_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W001.pcm", 26752, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W001.wav: the run-out, the loop's first 32 samples again (from sample 26752; loop_probe.py)
+Sub_P0F_W002:	.incbin	"build/wav_pcm/sub/Sub_P0F_W002.pcm", 0, 70400	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W002.wav: 35200 16-bit samples, entry 002
+Sub_P0F_W002_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W002.pcm", 55552, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W002.wav: the run-out, the loop's first 32 samples again (from sample 27776; loop_probe.py)
+Sub_P0F_W003:	.incbin	"build/wav_pcm/sub/Sub_P0F_W003.pcm", 0, 45696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W003.wav: 22848 16-bit samples, entry 003
+Sub_P0F_W003_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W003.pcm", 29952, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W003.wav: the run-out, the loop's first 32 samples again (from sample 14976; loop_probe.py)
+Sub_P0F_W004:	.incbin	"build/wav_pcm/sub/Sub_P0F_W004.pcm", 0, 31488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W004.wav: 31488 8-bit samples, entry 004
+Sub_P0F_W004_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W004.pcm", 22912, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W004.wav: the run-out, the loop's first 32 samples again (from sample 22912; loop_probe.py)
+Sub_P0F_W005:	.incbin	"build/wav_pcm/sub/Sub_P0F_W005.pcm", 0, 134144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W005.wav: 67072 16-bit samples, entry 005
+Sub_P0F_W005_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W005.pcm", 96512, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W005.wav: the run-out, the loop's first 32 samples again (from sample 48256; loop_probe.py)
+Sub_P0F_W006:	.incbin	"build/wav_pcm/sub/Sub_P0F_W006.pcm", 0, 69632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W006.wav: 34816 16-bit samples, entry 006
+Sub_P0F_W006_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W006.pcm", 52224, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W006.wav: the run-out, the loop's first 32 samples again (from sample 26112; loop_probe.py)
+Sub_P0F_W007:	.incbin	"build/wav_pcm/sub/Sub_P0F_W007.pcm", 0, 68608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W007.wav: 34304 16-bit samples, entry 007
+Sub_P0F_W007_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W007.pcm", 52224, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W007.wav: the run-out, the loop's first 32 samples again (from sample 26112; loop_probe.py)
+Sub_P0F_W008:	.incbin	"build/wav_pcm/sub/Sub_P0F_W008.pcm", 0, 67584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W008.wav: 33792 16-bit samples, entry 008
+Sub_P0F_W008_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W008.pcm", 51200, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W008.wav: the run-out, the loop's first 32 samples again (from sample 25600; loop_probe.py)
+Sub_P0F_W009:	.incbin	"build/wav_pcm/sub/Sub_P0F_W009.pcm", 0, 90112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W009.wav: 45056 16-bit samples, entry 009
+Sub_P0F_W009_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W009.pcm", 73728, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W009.wav: the run-out, the loop's first 32 samples again (from sample 36864; loop_probe.py)
+Sub_P0F_W00A:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00A.pcm", 0, 85504	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00A.wav: 42752 16-bit samples, entry 00A
+Sub_P0F_W00A_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00A.pcm", 72192, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00A.wav: the run-out, the loop's first 32 samples again (from sample 36096; loop_probe.py)
+Sub_P0F_W00B:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00B.pcm", 0, 69632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00B.wav: 34816 16-bit samples, entry 00B
+Sub_P0F_W00B_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00B.pcm", 56320, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00B.wav: the run-out, the loop's first 32 samples again (from sample 28160; loop_probe.py)
+Sub_P0F_W00C:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00C.pcm", 0, 63488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00C.wav: 31744 16-bit samples, entry 00C
+Sub_P0F_W00C_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00C.pcm", 50176, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00C.wav: the run-out, the loop's first 32 samples again (from sample 25088; loop_probe.py)
+Sub_P0F_W00D:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00D.pcm", 0, 59392	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00D.wav: 29696 16-bit samples, entry 00D
+Sub_P0F_W00D_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00D.pcm", 46080, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00D.wav: the run-out, the loop's first 32 samples again (from sample 23040; loop_probe.py)
+Sub_P0F_W00E:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00E.pcm", 0, 52224	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00E.wav: 26112 16-bit samples, entry 00E
+Sub_P0F_W00E_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00E.pcm", 38912, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00E.wav: the run-out, the loop's first 32 samples again (from sample 19456; loop_probe.py)
+Sub_P0F_W00F:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00F.pcm", 0, 72960	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00F.wav: 36480 16-bit samples, entry 00F
+Sub_P0F_W00F_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W00F.pcm", 59136, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W00F.wav: the run-out, the loop's first 32 samples again (from sample 29568; loop_probe.py)
+Sub_P0F_W010:	.incbin	"build/wav_pcm/sub/Sub_P0F_W010.pcm", 0, 79616	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W010.wav: 39808 16-bit samples, entry 010
+Sub_P0F_W010_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W010.pcm", 65536, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W010.wav: the run-out, the loop's first 32 samples again (from sample 32768; loop_probe.py)
+Sub_P0F_W011:	.incbin	"build/wav_pcm/sub/Sub_P0F_W011.pcm", 0, 143104	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W011.wav: 71552 16-bit samples, entry 011
+Sub_P0F_W011_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W011.pcm", 123136, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W011.wav: the run-out, the loop's first 32 samples again (from sample 61568; loop_probe.py)
+Sub_P0F_W012:	.incbin	"build/wav_pcm/sub/Sub_P0F_W012.pcm", 0, 52480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W012.wav: 26240 16-bit samples, entry 012
+Sub_P0F_W012_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W012.pcm", 40192, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W012.wav: the run-out, the loop's first 32 samples again (from sample 20096; loop_probe.py)
+Sub_P0F_W013:	.incbin	"build/wav_pcm/sub/Sub_P0F_W013.pcm", 0, 45696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W013.wav: 45696 8-bit samples, entry 013
+Sub_P0F_W013_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W013.pcm", 38272, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W013.wav: the run-out, the loop's first 32 samples again (from sample 38272; loop_probe.py)
+Sub_P0F_W014:	.incbin	"build/wav_pcm/sub/Sub_P0F_W014.pcm", 0, 68096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W014.wav: 68096 8-bit samples, entry 014
+Sub_P0F_W014_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W014.pcm", 54272, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W014.wav: the run-out, the loop's first 32 samples again (from sample 54272; loop_probe.py)
+Sub_P0F_W015:	.incbin	"build/wav_pcm/sub/Sub_P0F_W015.pcm", 0, 84864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W015.wav: 84864 8-bit samples, entry 015
+Sub_P0F_W015_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W015.pcm", 72704, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W015.wav: the run-out, the loop's first 32 samples again (from sample 72704; loop_probe.py)
+Sub_P0F_W016:	.incbin	"build/wav_pcm/sub/Sub_P0F_W016.pcm", 0, 57472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W016.wav: 57472 8-bit samples, entry 016
+Sub_P0F_W016_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W016.pcm", 42624, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W016.wav: the run-out, the loop's first 32 samples again (from sample 42624; loop_probe.py)
+Sub_P0F_W017:	.incbin	"build/wav_pcm/sub/Sub_P0F_W017.pcm", 0, 180736	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W017.wav: 180736 8-bit samples, entry 017
+Sub_P0F_W017_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W017.pcm", 150528, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W017.wav: the run-out, the loop's first 32 samples again (from sample 150528; loop_probe.py)
+Sub_P0F_W018:	.incbin	"build/wav_pcm/sub/Sub_P0F_W018.pcm", 0, 154624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W018.wav: 154624 8-bit samples, entry 018
+Sub_P0F_W018_RunOut:	.incbin	"build/wav_pcm/sub/Sub_P0F_W018.pcm", 131584, 32	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W018.wav: the run-out, the loop's first 32 samples again (from sample 131584; loop_probe.py)
 Sub_P0F_W019:	.incbin	"build/wav_pcm/sub/Sub_P0F_W019.pcm", 0, 6336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W019.wav: 6336 8-bit samples, entry 019
 Sub_P0F_W01A:	.incbin	"build/wav_pcm/sub/Sub_P0F_W01A.pcm", 0, 32000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W01A.wav: 16000 16-bit samples, entry 01A
-Sub_P0F_W01B:	.incbin	"build/wav_pcm/sub/Sub_P0F_W01B.pcm", 0, 89600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W01B.wav: 44832 16-bit samples, entry 01B
+Sub_P0F_W01B:	.incbin	"build/wav_pcm/sub/Sub_P0F_W01B.pcm", 0, 89600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/sub/Sub_P0F_W01B.wav: 44800 16-bit samples, entry 01B
 	.space	64, 0	; zero words to the next recording
 Sub_P0F_Fill:	.space	30720, 0xff	; erased fill to the page end
