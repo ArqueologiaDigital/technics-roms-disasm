@@ -186,7 +186,7 @@ local function icon_on_lcd(row, r)    -- the LCD at row's icon position = the re
   local p = u32(r + S.PR_ICONP)
   local y0 = S.TITLE_H + row * S.ROW_H + S.ICON_DY
   for y = 0, 31 do for x = 0, 31 do
-    if sp:read_u16(S.FB + (y0 + y) * S.FB_STRIDE + (8 + x) * 2) ~= sp:read_u16(p + (y * 32 + x) * 2) then return false end
+    if sp:read_u16(S.MFB + (y0 + y) * S.FB_STRIDE + (8 + x) * 2) ~= sp:read_u16(p + (y * 32 + x) * 2) then return false end
   end end
   return true
 end
@@ -232,6 +232,9 @@ local function check_list(tag)
   for i = 1, n do names[#names + 1] = cstr(rec(i - 1) + S.PR_NAME) end
   result(tag, ok, string.format("%d programs (fatscan.py: %d), %d folders looked into: %s%s", n, EXPECT and #EXPECT or -1,
     u32(S.V_NCAND), table.concat(names, " | "), #bad > 0 and ("; DIFFER: " .. table.concat(bad, ", ")) or ""))
+end
+local function lcd_start()             -- the S1D13806's start address, REG[042h]-[044h] (words)
+  return sp:read_u8(S.LCDC + 0x42) | (sp:read_u8(S.LCDC + 0x43) << 8) | (sp:read_u8(S.LCDC + 0x44) << 16)
 end
 local function page_on_lcd()          -- every row of the page shown has its program's icon on the LCD
   local top, n, okc = u32(S.V_TOP), u32(S.V_NPROG), 0
@@ -299,7 +302,10 @@ local function card()
   wait(3)
   check_list("list")
   local good, d = sel_is(0, "first page")
-  result("screen", good and u32(S.V_NREDRAW) <= 3, d .. string.format("; full redraws after the firmware's paint %d", u32(S.V_NREDRAW)))
+  local st = lcd_start()               -- the controller on the menu's own frame (MFB), the firmware's start saved
+  local mine = u32(S.V_LCDMINE) == 1 and st == u32(S.V_LCDSTART) and st == u32(S.V_LCDSAVE) + S.MFB_OFS // 2
+  result("screen", good and mine and u32(S.V_NREDRAW) == 0, d .. string.format("; the LCD's start %05X (MFB's %05X, the firmware's %05X), " ..
+    "set back %d times; full redraws %d", st, u32(S.V_LCDSTART), u32(S.V_LCDSAVE), u32(S.V_LCDRESET), u32(S.V_NREDRAW)))
   local steps = {}
   local function step(b, want, label) btn(b); wait(1); local g, dd = sel_is(want, label); steps[#steps + 1] = (g and "" or "NOT ") .. dd; return g end
   local n = u32(S.V_NPROG)
@@ -359,13 +365,15 @@ local function card()
   end
   result("navigate", all, table.concat(steps, "; "))
   local r0 = u32(S.V_NREDRAW)         -- something else draws on the LCD: the menu draws itself again
-  for y = 100, 140 do for x = 0, 639, 2 do sp:write_u32(S.FB + y * S.FB_STRIDE + x * 2, 0xFFFFFFFF) end end
+  for y = 100, 140 do for x = 0, 639, 2 do sp:write_u32(S.MFB + y * S.FB_STRIDE + x * 2, 0xFFFFFFFF) end end
   wait(2)
   good, d = page_on_lcd()
   result("repaint", u32(S.V_NREDRAW) > r0 and good, string.format("full redraws %d -> %d; %s", r0, u32(S.V_NREDRAW), d))
   press("CPC_SEG11", 0x80, 2.0)       -- hold EXIT: leave
   ok = wait_until(function() return mstate() == S.ST_END or not menu_up() end, 5)
   local calls = u32(S.SVC + S.SV_CALLS)
+  local fw = u32(S.V_LCDSAVE)
+  result("lcd-back", u32(S.V_LCDMINE) == 0 and lcd_start() == fw, string.format("after LEAVE: the LCD's start %05X, the firmware's %05X", lcd_start(), fw))
   continue_next(YES)                  -- YES: the loader loads C:\KN7APP.BIN, the menu, again
   ok = ok and wait_until(function() return menu_up() and mstate() == S.ST_MENU and u32(S.SVC + S.SV_CALLS) < calls end, 90)
   wait(2)
@@ -431,9 +439,15 @@ local function run()
     if not seen[w] then seen[w] = true; nseen = nseen + 1 end
     if offset >= S.APP_BASE + ((size + 3) & ~3) and offset < S.LB_ADDR and (data & mask) ~= 0 then nonzero = nonzero + 1 end
   end)
+  local fw, back = u32(S.V_LCDSAVE), false   -- the firmware's start address written back before the program runs
+  MT_STARTTAP = sp:install_write_tap(S.LCDC + 0x42, S.LCDC + 0x43, "lcdstart", function(offset, data, mask)
+    if ((data & mask) >> ((offset & 2) * 8)) & 0xFFFF == fw & 0xFFFF then back = true end
+  end)
   btn("R5")                           -- RUN
   ok = ok and wait_until(function() return not menu_up() end, 30)
   wait(1)
+  MT_STARTTAP:remove()
+  result("lcd-run", back, string.format("RUN: the firmware's LCD start %05X written back before the program (the LCD's now %05X)", fw, lcd_start()))
   local lb = S.LB_ADDR
   local started = ok and u32(lb + S.LB_MAGIC) == S.LAUNCH_MAGIC and u32(lb + S.LB_CHECK) == S.LAUNCH_CHECK
     and cstr(lb + S.LB_DIR, 16) == dir and cstr(lb + S.LB_PREFIX, 16) == dir .. "\\" and cstr(lb + S.LB_PATH, 32) == "C:\\" .. dir
@@ -487,10 +501,24 @@ local function leave()
   local i = open_to(want)
   if i == nil then result("game", false, "no program named " .. want); return end
   select(i)
+  M.video:snapshot()                  -- the program's row selected
+  -- from RUN on, a line whenever the LCD's start address or a word of MT_WATCH ("addr,addr,...") changes, with its
+  -- time; snapshots 0.1 .. 4 s after RUN (what shows between the menu and the program's first picture)
+  local wl = {}
+  for a in (os.getenv("MT_WATCH") or ""):gmatch("%w+") do wl[#wl + 1] = tonumber(a) end
+  local t_run, lastw = now(), nil
+  MT_RUNWATCH = emu.add_machine_frame_notifier(function()
+    local v = { string.format("start %05X", lcd_start()) }
+    for _, a in ipairs(wl) do v[#v + 1] = string.format("%08X=%X", a, u32(a)) end
+    local line = table.concat(v, " ")
+    if line ~= lastw then log(string.format("run+%.3f s: %s", now() - t_run, line)); lastw = line end
+  end)
   btn("R5")                           -- RUN
+  for _, d in ipairs({ 0.1, 0.2, 0.3, 0.4, 1, 2 }) do wait(d); M.video:snapshot() end
   local ga, gv = (os.getenv("MT_GAME_UP") or ""):match("(%w+)=(%w+)")
   ga, gv = tonumber(ga), tonumber(gv)
   ok = wait_until(function() return not menu_up() end, 30) and (not ga or wait_until(function() return u32(ga) == gv end, 120))
+  MT_RUNWATCH = nil
   result("game", ok, string.format("RUN on %q: %q runs (word %s = %s)", want, appname(), tostring(ga), ga and u32(ga) or "-"))
   wait(5)
   seen = { t0 = now(), last = u32(TITLE) }; watch = true

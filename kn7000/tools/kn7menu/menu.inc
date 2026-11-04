@@ -27,7 +27,16 @@
 .equ BMPBUF,        0x502CD000      # BMP_MAX bytes: an icon file
 .equ BMP_MAX,       0x3000
 .equ CRCTAB,        0x502D0000      # 1 KB: CRC-32 table
-.equ AREA_END,      0x502D0400      # the end of what the menu uses below LB_ADDR (kn7cnv.inc)
+.equ DESC_TAB,      0x502D0400      # MAX_PROG x DESC_LEN: each record's description (KN7MENU.TOC), by PR_INDEX
+.equ DESC_LEN,      64
+.equ AREA_END,      0x502D1400      # the end of what the menu uses below LB_ADDR (kn7cnv.inc)
+# ---- the LCD (menu_draw.s LcdTake): the menu draws in a frame of its own in display memory, past the firmware's
+# (bytes 0-0x4B4FF of FB), and the controller shows it from the menu's first call: nothing the firmware draws shows
+# while the menu is up. Pinball Fantasies keeps its table at the same offset on the owner's unit (Pinball 78749f9).
+.equ LCDC,          0x9CC00000      # the S1D13806's registers
+.equ MFB_OFS,       0x50000
+.equ MFB,           FB + MFB_OFS
+.equ MFB_BYTES,     241 * FB_STRIDE # the rows the firmware's start address shows (1-240), and row 0
 # ---- above the application area (not zeroed by anyone; written before it is read) ----------------
 .equ STAGE,         0x502E8000      # the chosen KN7APP.BIN, read and checked here before it is started
 .equ STAGE_MAX,     LB_ADDR - APP_BASE   # the most a program may have: up to the launch block
@@ -80,6 +89,7 @@
 .equ PR_CAT,        0x88            # the menu folder it is listed in (KN7MENU.TOC): 0 the top, else a PR_CATID
 .equ PR_CATID,      0x8C            # a menu folder's own number (PF_FOLDER), 1 up
 .equ PR_COUNT,      0x90            # a menu folder's entries (programs and folders in it)
+.equ PR_DESC,       0x94            # its description (KN7MENU.TOC: in DESC_TAB), or 0: the row's second line
 .equ PF_APP,        0x01            # KN7APP.BIN is there
 .equ PF_MANIFEST,   0x02            # MANIFEST.TXT is there
 .equ PF_MNAME,      0x04            # ... and gave a NAME
@@ -170,6 +180,10 @@
 .equ V_TOCST,       M_VARS+0x124    # TOC_* below
 .equ V_TITLEP,      M_VARS+0x128    # the title bar's text, or 0 for str_title
 .equ V_TOCPROGS,    M_VARS+0x12C    # programs KN7MENU.TOC placed
+.equ V_LCDMINE,     M_VARS+0x130    # 1 while the LCD shows MFB (LcdTake .. LcdGive)
+.equ V_LCDSAVE,     M_VARS+0x134    # the firmware's start address (REG[042h]-[044h], words), for LcdGive
+.equ V_LCDSTART,    M_VARS+0x138    # MFB's: V_LCDSAVE + MFB_OFS / 2
+.equ V_LCDRESET,    M_VARS+0x13C    # times something else set the start address and LcdCheck set it back
 
 .equ RD_ALL,        1               # V_REDRAW: the whole screen
 .equ RD_STATUS,     2               #   the progress screen's status lines only
@@ -188,7 +202,7 @@
 
 # ---- KN7MENU.TOC (mktoc.py), little-endian ---------------------------------------------------------
 .equ TOC_MAGIC,     0x434F544B      # "KTOC"
-.equ TOC_VERSION,   1
+.equ TOC_VERSION,   2               # 2 since 2026-11-03: the descriptions (TF_DESC, TP_DESC)
 .equ TH_VERSION,    0x04            # the header: magic, version, the file's bytes, CRC-32 of what follows it,
 .equ TH_BYTES,      0x08            #   then the counts
 .equ TH_CRC,        0x0C
@@ -196,14 +210,16 @@
 .equ TH_NPROG,      0x14
 .equ TH_NICON,      0x18
 .equ TH_LEN,        0x20
-.equ TF_LEN,        0x50            # a folder: its name (64), its parent (0 the top, else 1 + its index), its icon
+.equ TF_LEN,        0x90            # a folder: its name (64), its parent (0 the top, else 1 + its index), its icon
 .equ TF_PARENT,     0x40
-.equ TF_ICON,       0x44            #   (an index, or -1: the default)
-.equ TP_LEN,        0x60            # a program: its folder on the card (16, as PR_DIR), the name shown (64),
-.equ TP_NAME,       0x10            #   its menu folder (as TF_PARENT), KN7APP.BIN's size, its icon
-.equ TP_FOLDER,     0x50
+.equ TF_ICON,       0x44            #   (an index, or -1: the default), 8 bytes 0, its description (64)
+.equ TF_DESC,       0x50
+.equ TP_LEN,        0xA0            # a program: its folder on the card (16, as PR_DIR), the name shown (64),
+.equ TP_NAME,       0x10            #   its menu folder (as TF_PARENT), KN7APP.BIN's size, its icon, 4 bytes 0,
+.equ TP_FOLDER,     0x50            #   its description (64)
 .equ TP_APPSZ,      0x54
 .equ TP_ICON,       0x58
+.equ TP_DESC,       0x60
 .equ TOC_MAXFOLD,   16
 
 # ---- limits (every loop is bounded) ----------------------------------------------------------------

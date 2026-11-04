@@ -3,18 +3,20 @@
 #
 # mktoc.py CARD_DIR -- the program menu's table of contents, CARD_DIR/KN7MENU.TOC (README.md, "The table of
 # contents"), from the card tree as it will be copied to the card: every folder of the root with a KN7APP.BIN, its
-# MANIFEST.TXT's NAME=, ICON= (decoded here, as the menu's DecodeBmp decodes it) and FOLDER= (the menu folder it is
-# listed in: "Games", or a path, "HW Probes/Pinball"; none: the top of the menu), and KN7APP.BIN's size. The menu
+# MANIFEST.TXT's NAME=, ICON= (decoded here, as the menu's DecodeBmp decodes it), FOLDER= (the menu folder it is
+# listed in: "Games", or a path, "HW Probes/Pinball"; none: the top of the menu) and DESC= (what the row's second
+# line says after the folder, "C:\AW\"), and KN7APP.BIN's size; each menu folder's description (FOLDER_DESC). The menu
 # then reads that one file and the root directory as it starts, instead of every folder's directory, manifest and
 # icon; it finds KN7APP.BIN itself when the program is run. Run it last, on the whole tree (stage.sh, `make card`):
 # a folder added to the card by hand afterwards is not in it, and the menu looks into that folder as before.
 # Little-endian (menu.inc TH_*, TF_*, TP_*):
-#   header, 32 bytes: "KTOC", u32 1, u32 the file's bytes, u32 CRC-32 of the file from byte 16, u32 the menu's
+#   header, 32 bytes: "KTOC", u32 2 (the version: 1 had no descriptions), u32 the file's bytes, u32 CRC-32 of the file from byte 16, u32 the menu's
 #     folders, u32 the programs, u32 the icons, u32 0;
-#   each menu folder, 80 bytes: its name (64, NUL-padded), u32 its parent (0 the top, else 1 + its index), u32 its
-#     icon (an index, or -1), 8 bytes 0;
-#   each program, 96 bytes: the root folder's name (16, as the menu keeps it: "AW"), the name shown (64), u32 its
-#     menu folder (as a folder's parent), u32 KN7APP.BIN's bytes, u32 its icon (or -1), 4 bytes 0;
+#   each menu folder, 144 bytes: its name (64, NUL-padded), u32 its parent (0 the top, else 1 + its index), u32 its
+#     icon (an index, or -1), 8 bytes 0, its description (64, NUL-padded; empty: the row's second line blank);
+#   each program, 160 bytes: the root folder's name (16, as the menu keeps it: "AW"), the name shown (64), u32 its
+#     menu folder (as a folder's parent), u32 KN7APP.BIN's bytes, u32 its icon (or -1), 4 bytes 0, its
+#     description (64);
 #   each icon, 32 x 32 RGB565, the top row first: 2048 bytes.
 import os
 import struct
@@ -26,7 +28,15 @@ sys.path.insert(0, HERE)
 import gen_icons  # noqa: E402
 
 MAX_PROG, MAX_FOLD, W = 64, 16, 32
+LINE = 57                                 # the characters a row's line shows (menu.inc NAME_CHARS)
 FOLDER_ICON = {'games': 'folder-games', 'hw probes': 'folder-probes', 'other apps': 'folder-apps'}
+# what a menu folder's row says under its name, by its path (lower case); none: nothing
+FOLDER_DESC = {'games': 'Games to play on the keybed and the panel',
+               'hw probes': 'Programs that measure the instrument',
+               'hw probes/rom dumper passes': 'Passes 5-9: memory, effects DSP and CPU readings',
+               'hw probes/pinball probes': 'What restarted the unit, found step by step',
+               'other apps': 'Music programs and a diagnostic build',
+               'tools': 'Utilities'}
 
 
 def manifest(path):
@@ -81,7 +91,7 @@ def main():
                 sys.exit(f'mktoc: more than {MAX_FOLD} menu folders')
             kind = FOLDER_ICON.get(name.lower()) or FOLDER_ICON.get(path.split('/')[0].lower(), 'folder')
             icons.append(drawn(kind))
-            folders.append((name, parent, len(icons) - 1))
+            folders.append((name, parent, len(icons) - 1, FOLDER_DESC.get(path.lower(), '')))
             index[path.lower()] = len(folders)
         return index[path.lower()]
 
@@ -102,18 +112,22 @@ def main():
                 icons.append(px)
                 icon = len(icons) - 1
         where = '/'.join(p.strip() for p in m.get('FOLDER', '').split('/') if p.strip())
-        progs.append((d.upper(), m.get('NAME') or d, folder(where), os.path.getsize(app), icon))
+        desc = m.get('DESC', '')
+        if len(f'C:\\{d}\\   {desc}') > LINE:
+            print(f'mktoc: {d}: its DESC= is cut short on the menu ({LINE} characters with "C:\\{d}\\   ")')
+        progs.append((d.upper(), m.get('NAME') or d, folder(where), os.path.getsize(app), icon, desc))
     if len(icons) > MAX_PROG:
         sys.exit(f'mktoc: {len(icons)} icons; the menu keeps {MAX_PROG}')
     body = struct.pack('<IIII', len(folders), len(progs), len(icons), 0)
-    for name, parent, icon in folders:
-        body += name.encode('ascii', 'replace')[:63].ljust(64, b'\0') + struct.pack('<Ii8x', parent, icon)
-    for d, name, where, size, icon in progs:
-        body += (d.encode('ascii')[:15].ljust(16, b'\0') + name.encode('ascii', 'replace')[:63].ljust(64, b'\0')
-                 + struct.pack('<IIi4x', where, size, icon))
+    text = lambda t: t.encode('ascii', 'replace')[:63].ljust(64, b'\0')
+    for name, parent, icon, desc in folders:
+        body += text(name) + struct.pack('<Ii8x', parent, icon) + text(desc)
+    for d, name, where, size, icon, desc in progs:
+        body += (d.encode('ascii')[:15].ljust(16, b'\0') + text(name) + struct.pack('<IIi4x', where, size, icon)
+                 + text(desc))
     body += b''.join(icons)
     size = 16 + len(body)
-    toc = b'KTOC' + struct.pack('<II', 1, size) + struct.pack('<I', zlib.crc32(body)) + body
+    toc = b'KTOC' + struct.pack('<II', 2, size) + struct.pack('<I', zlib.crc32(body)) + body
     with open(os.path.join(card, 'KN7MENU.TOC'), 'wb') as f:
         f.write(toc)
     top = sum(1 for p in progs if p[2] == 0)

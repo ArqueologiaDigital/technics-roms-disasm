@@ -1,19 +1,21 @@
 # (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>
 # Licensed under the terms of the GNU General Public License v3 or later
 #
-# menu_draw.s -- the program menu's screen (included by menu.s). The LCD is 640 x 240 RGB565 at FB
-# (kn7cnv.inc). The layout follows the firmware's own screens: a title bar TITLE_H high, then five rows
+# menu_draw.s -- the program menu's screen (included by menu.s). The LCD is 640 x 240 RGB565; the menu draws at MFB,
+# its own frame past the firmware's (FB, kn7cnv.inc), which the controller shows while the menu is up (LcdTake).
+# The layout follows the firmware's own screens: a title bar TITLE_H high, then five rows
 # of ROW_H, each beside one of the buttons left and right of the display (LCDL 1..5, LCDR 1..5). A row of
 # the list is a program; the right buttons' labels sit after LIST_W.
 
 # Refresh: draw what V_REDRAW asks for; when nothing was asked, sample the LCD and draw everything again
-# if it is no longer what we drew (the firmware painted over it).
+# if it is no longer what we drew (something wrote into MFB). The controller kept on MFB first (LcdCheck).
 Refresh:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
     mov     (V_STATE), d0
     cmp     ST_END, d0
     beq     rfh_ret
+    call    LcdCheck, 0, 0
     mov     (V_REDRAW), d0
     cmp     0, d0
     bne     rfh_draw
@@ -37,6 +39,104 @@ rfh_draw:
 rfh_ret:
     ret     [d2,d3,a2,a3], 0x30
 
+# LcdTake: the LCD shows MFB, black, from here (DoInit, the menu's first call): the firmware's start address saved for
+# LcdGive, MFB cleared, the controller pointed at it, the firmware's own picture left as it is in FB. Same line
+# offset, bits a pixel and SwivelView: only the start moves, by MFB_OFS / 2 words, so MFB shows exactly as FB did.
+# Once (V_LCDMINE).
+LcdTake:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    mov     (V_LCDMINE), d0
+    cmp     0, d0
+    bne     ltk_ret
+    call    LcdNow, 0, 0
+    mov     d0, (V_LCDSAVE)
+    add     MFB_OFS/2, d0
+    mov     d0, (V_LCDSTART)
+    mov     MFB, a0
+    mov     MFB_BYTES/4, d1
+    clr     d0
+ltk_clr:
+    mov     d0, (a0)
+    add     4, a0
+    add     -1, d1
+    bne     ltk_clr
+    mov     (V_LCDSTART), d0
+    call    LcdStart, 0, 0
+    mov     1, d0
+    mov     d0, (V_LCDMINE)
+ltk_ret:
+    ret     [d2,d3,a2,a3], 0x30
+
+# LcdGive: the firmware's start address back, and its own picture with it (before RQ_END, and before a program is
+# started: it finds the LCD as the loader left it). Leaf (LcdStart's).
+LcdGive:
+    mov     (V_LCDMINE), d0
+    cmp     0, d0
+    beq     lst_ret
+    clr     d0
+    mov     d0, (V_LCDMINE)
+    mov     (V_LCDSAVE), d0
+    bra     LcdStart
+
+# LcdCheck: still on MFB? When something else set the start address, take that as the firmware's (for LcdGive) and
+# set MFB's again. Leaf (LcdStart's).
+LcdCheck:
+    mov     (V_LCDMINE), d0
+    cmp     0, d0
+    beq     lst_ret
+    movhu   (LCDC + 0x42), d0
+    movbu   (LCDC + 0x44), d1
+    asl     16, d1
+    or      d1, d0
+    mov     (V_LCDSTART), d1
+    cmp     d1, d0
+    beq     lst_ret
+    mov     d0, (V_LCDSAVE)
+    add     MFB_OFS/2, d0
+    mov     d0, (V_LCDSTART)
+    mov     (V_LCDRESET), d1
+    inc     d1
+    mov     d1, (V_LCDRESET)
+    bra     LcdStart
+
+# LcdNow -> d0: the controller's start address, REG[042h]-[044h] (words). Leaf.
+LcdNow:
+    movhu   (LCDC + 0x42), d0
+    movbu   (LCDC + 0x44), d1
+    asl     16, d1
+    or      d1, d0
+    rets
+
+# LcdStart(d0 = start address, words): REG[042h]-[044h]. The controller latches the address as a frame begins, so
+# the bytes go outside the vertical non-display period (REG[03Ah] bit 7, waited out for up to 2000 reads), with
+# interrupts off, the low two as one 16-bit write (technics-anotherworld kn7000 lcd8.s LcdStart, Pinball's
+# writeStart: what the owner's unit showed). Leaf; uses d0, d1, a0, a1.
+LcdStart:
+    mov     d0, a1
+    mov     2000, d1
+lst_spin:
+    movbu   (LCDC + 0x3A), d0
+    btst    0x80, d0
+    beq     lst_go
+    add     -1, d1
+    bne     lst_spin
+lst_go:
+    mov     psw, d0
+    mov     d0, a0
+    and     0xF7FF, psw
+    nop
+    nop
+    mov     a1, d1
+    movhu   d1, (LCDC + 0x42)
+    lsr     16, d1
+    movbu   d1, (LCDC + 0x44)
+    mov     a0, d0
+    mov     d0, psw
+    nop
+lst_ret:
+    rets
+
 # LcdSum -> d0: a checksum of 300 LCD pixels, every 32nd of every 16th row (Fletcher-like: the order
 # matters, so a moved picture shows).
 LcdSum:
@@ -44,7 +144,7 @@ LcdSum:
     add     -0x20, sp
     clr     d2
     clr     d3
-    mov     FB+4*FB_STRIDE+16, a2
+    mov     MFB+4*FB_STRIDE+16, a2
     mov     15, d0
     mov     d0, (0x14, sp)
 ls_row:
@@ -393,17 +493,12 @@ drw_prog:
 drw_where:
     mov     C_DIM, d0
     mov     d0, (V_FG)
-    mov     (PR_FLAGS, a2), d0      # a menu folder: how much it holds
+    mov     (PR_FLAGS, a2), d0      # a menu folder: its description (KN7MENU.TOC), or nothing
     btst    PF_FOLDER, d0
     beq     drw_wl
-    mov     LINEBUF, a0
-    mov     str_w_folder, a1
-    call    StrCpy, 0, 0
-    mov     (PR_COUNT, a2), d0
-    call    PutDec, 0, 0
-    mov     str_w_entries, a1
-    call    StrCpy, 0, 0
-    mov     LINEBUF, a0
+    mov     (PR_DESC, a2), a0
+    cmp     0, a0
+    beq     drw_ret
     bra     drw_line2
 drw_wl:
     mov     a2, a0
@@ -417,8 +512,9 @@ drw_line2:
 drw_ret:
     ret     [d2,d3,a2,a3], 0x30
 
-# WhereLine(a0 = record) -> a0 = LINEBUF: "C:\AW\KN7APP.BIN  15260 bytes", and a note when its manifest
-# or icon could not be used.
+# WhereLine(a0 = record) -> a0 = LINEBUF: the program's folder, "C:\AW\", then its description (KN7MENU.TOC, from
+# its manifest's DESC=), and a note when its manifest or icon could not be used. (Every program's file is
+# KN7APP.BIN: its name said nothing; until 2026-11-03 the line gave it, and its size.)
 WhereLine:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
@@ -429,12 +525,16 @@ WhereLine:
     mov     a2, a1
     add     PR_DIR, a1
     call    StrCpy, 0, 0
-    mov     str_w_app, a1
+    mov     str_w_sep, a1
     call    StrCpy, 0, 0
-    mov     (PR_APPSZ, a2), d0
-    call    PutDec, 0, 0
-    mov     str_w_bytes, a1
+    mov     (PR_DESC, a2), a1
+    cmp     0, a1
+    beq     wl_nodesc
+    mov     str_spaces3, a1
     call    StrCpy, 0, 0
+    mov     (PR_DESC, a2), a1
+    call    StrCpy, 0, 0
+wl_nodesc:
     mov     (PR_FLAGS, a2), d2
     mov     str_w_noman, a1
     btst    PF_MANIFEST, d2
@@ -553,7 +653,7 @@ FillRect:
     mulu    d3, d2
     add     d0, d0
     add     d0, d2
-    mov     FB, a2
+    mov     MFB, a2
     add     d2, a2
     mov     (V_FG), d3
     cmp     0, a0
@@ -609,7 +709,7 @@ DrawIcon:
     mulu    d3, d2
     add     d0, d0
     add     d0, d2
-    mov     FB, a2
+    mov     MFB, a2
     add     d2, a2
     mov     ICON_W, d2
 di_row:
@@ -678,7 +778,7 @@ dc_ok:
     mulu    d3, d2
     add     d1, d1
     add     d1, d2
-    mov     FB, a2
+    mov     MFB, a2
     add     d2, a2
     mov     13, d0
     mov     d0, (0x14, sp)

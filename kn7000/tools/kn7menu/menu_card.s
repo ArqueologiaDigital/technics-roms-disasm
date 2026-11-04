@@ -839,6 +839,10 @@ lt_clr:
     mov     (TF_ICON, a1), d0
     mov     a3, a0
     call    TocIcon, 0, 0
+    mov     (0x14, sp), a1
+    add     TF_DESC, a1
+    mov     a3, a0
+    call    TocDesc, 0, 0
     mov     (V_NREC), d0
     inc     d0
     mov     d0, (V_NREC)
@@ -902,6 +906,10 @@ lt_place:
     mov     (TP_ICON, a1), d0
     mov     a3, a0
     call    TocIcon, 0, 0
+    mov     (0x14, sp), a1
+    add     TP_DESC, a1
+    mov     a3, a0
+    call    TocDesc, 0, 0
     mov     (V_TOCPROGS), d0
     inc     d0
     mov     d0, (V_TOCPROGS)
@@ -914,6 +922,29 @@ lt_ok:
 lt_bad:
     mov     1, d0
 lt_ret:
+    ret     [d2,d3,a2,a3], 0x30
+
+# TocDesc(a0 = record, a1 = the TOC's 64 bytes): the record's description into its DESC_TAB slot (PR_INDEX), and
+# PR_DESC pointing at it; an empty one leaves PR_DESC 0 (the second line blank, or the folder's place).
+TocDesc:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    mov     a0, a3
+    clr     d0
+    mov     d0, (PR_DESC, a3)
+    movbu   (a1), d0
+    cmp     0, d0
+    beq     tdc_ret
+    mov     (PR_INDEX, a3), d0
+    cmp     MAX_PROG, d0
+    bcc     tdc_ret
+    mov     DESC_LEN, d1
+    mulu    d1, d0
+    mov     DESC_TAB, a0
+    add     d0, a0
+    mov     a0, (PR_DESC, a3)
+    call    TocName, 0, 0
+tdc_ret:
     ret     [d2,d3,a2,a3], 0x30
 
 # TocName(a0 = to, a1 = 64 bytes): at most 63 characters, NUL-ended, printable ASCII kept (else '?'). Leaf.

@@ -100,6 +100,8 @@ me_answer:
     mov     (V_STATE), d0
     cmp     ST_END, d0
     bne     me_show
+    call    LcdGive, 0, 0           # the firmware's screen back, for its message
+    mov     MAILBOX, a0
     mov     RQ_END, d0              # leave: the firmware's message, then "Continue Next?"
     movbu   d0, (a0)
     bra     me_ret
@@ -127,6 +129,7 @@ me_ret:
 DoInit:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
+    call    LcdTake, 0, 0           # the LCD the menu's own at once: none of the firmware's screen shows
     mov     RD_ALL, d0
     mov     d0, (V_REDRAW)
     mov     -1, d0
@@ -761,6 +764,7 @@ cs_ret:
 Launch:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
+    call    LcdGive, 0, 0           # the firmware's screen back: the program finds the LCD as the loader left it
     mov     (V_RUNREC), a2
     mov     (PR_APPSZ, a2), d2
     mov     STAGE, a0               # zeros after the file, to a word boundary (the copy goes by words)

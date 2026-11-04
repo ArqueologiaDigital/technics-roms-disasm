@@ -43,8 +43,10 @@ buttons left and right of the display.
 | right button 4, **LEAVE**   | end the conversion (when let go): the firmware's message, then "Continue Next?" |
 | EXIT, held 1.5 s and let go | the same as LEAVE                                                               |
 
-Under each program's name the row shows where it is and how large (`C:\AW\KN7APP.BIN  15416 bytes`),
-and a note when its manifest or icon could not be used. When RUN refuses a program, the reason
+Under each program's name the row shows its folder and what it is (`C:\AW\   Eric Chahi's 1991 cinematic
+adventure`: the manifest's `DESC=`), and a note when its manifest or icon could not be used; under a menu folder's,
+what kind of programs it holds (`mktoc.py` `FOLDER_DESC`), or nothing. (Until 2026-11-03 the line named the file,
+`KN7APP.BIN` for every program, and its size, and a folder's said how many entries it held.) When RUN refuses a program, the reason
 replaces that line in red: the file is damaged (its CRC-32), not an application of this loader (its
 header), built for another loader version, empty or too large, or unreadable. The menu stays.
 
@@ -108,8 +110,10 @@ folder, it reads the launch block (below), as Another World now does.
     # Another World for the KN7000
     NAME=Another World
     ICON=ICON.BMP
+    FOLDER=Games
+    DESC=Eric Chahi's 1991 cinematic adventure
 
-- One `KEY=VALUE` per line. The keys are `NAME`, `ICON` and `FOLDER`, in any case; blanks around the key, the
+- One `KEY=VALUE` per line. The keys are `NAME`, `ICON`, `FOLDER` and `DESC`, in any case; blanks around the key, the
   `=` and the value do not count. Other keys, blank lines and lines starting with `#` are ignored. A
   UTF-8 byte-order mark at the start is skipped. The menu reads the first 2,047 bytes.
 - `NAME`: what the list shows, up to 63 characters (a row shows the first 57). ASCII only: any other
@@ -120,6 +124,9 @@ folder, it reads the launch block (below), as Another World now does.
   FAT's VFAT entries) or, without one, its 8.3 name. **Without a usable icon** (no `ICON=`, a missing
   file, a file the menu cannot read) it shows the built-in default icon, a small window, and the row's
   second line says "(its icon file is unusable)" when an `ICON=` named one.
+- `DESC`: what the row's second line says after the program's folder (`C:\AW\`): what it is, in a few words. The
+  line shows 57 characters, so with an 8-letter folder 42 of them; `mktoc.py` says when one is cut short. Read only
+  by `mktoc.py`, as `FOLDER` is.
 - `FOLDER`: the menu folder the program is listed in, by name (`FOLDER=Games`), or a path of folders
   (`FOLDER=HW Probes/Pinball probes`). Without it, the top of the menu. It is read only by `mktoc.py`, as
   the card is made: a folder not in `KN7MENU.TOC` is listed at the top.
@@ -155,7 +162,7 @@ that the file does not list (copied to the card by hand afterwards) is looked in
 top. A file it cannot use (its size, its header, its counts, its CRC-32) is ignored, and every folder is looked into.
 
 The top of the menu lists the menu's folders first, then the programs placed there; a folder lists its own folders,
-then its programs; each part sorted by name. A folder's second line says how many entries it holds.
+then its programs; each part sorted by name. A folder's second line says what it holds (`FOLDER_DESC`).
 
 ## How it finds the programs
 
@@ -321,7 +328,7 @@ World measured untouched by the firmware on programs 893 and 941 (technics-anoth
 | range                     | what                                                                    |
 |---------------------------|-------------------------------------------------------------------------|
 | `0x502B8000`-`0x502B9FFF` | KN7LOAD.CNV, its variables and service table: read only (five services) |
-| `0x502BA000`-`0x502BD1C2` | the menu's image (12,739 bytes; `IMAGE_MAX` `0x502C0000`)               |
+| `0x502BA000`-`0x502BD971` | the menu's image (14,706 bytes; `IMAGE_MAX` `0x502C0000`)               |
 | `0x502C0000`-`0x502C03FF` | `M_VARS`: variables                                                     |
 | `0x502C1000`-`0x502C37FF` | `PROG_TAB`: 64 program records of 160 bytes                             |
 | `0x502C3800`-`0x502C38FF` | `ORDER`: the sorted list                                                |
@@ -329,6 +336,7 @@ World measured untouched by the firmware on programs 893 and 941 (technics-anoth
 | `0x502CC000`-`0x502CCDFF` | `FATBUF`, `SECBUF`, `TEXTBUF` (the manifest), `LINEBUF`, `LFNBUF`       |
 | `0x502CD000`-`0x502CFFFF` | `BMPBUF`: an icon file                                                  |
 | `0x502D0000`-`0x502D03FF` | `CRCTAB`: the CRC-32 table                                              |
+| `0x502D0400`-`0x502D13FF` | `DESC_TAB`: 64 descriptions of 64 bytes (`KN7MENU.TOC`)                 |
 | `0x502E7F00`-`0x502E7FFF` | the launch block (written by the trampoline only)                       |
 | `0x502E8000`-`0x50315EFF` | `STAGE`: the program being checked (188,160 bytes)                      |
 | `0x5031B000`-`0x5031BFFF` | the firmware's mailbox page: only the request is written                |
@@ -337,10 +345,21 @@ World measured untouched by the firmware on programs 893 and 941 (technics-anoth
 | `0x50368000`-`0x503681D3` | `T_CODE`: the trampoline (`tramp.s`, 468 bytes)                         |
 | `0x50369800`-`0x5036997F` | `T_DATA`: what the menu hands the trampoline                            |
 
-The menu's own area (`0x502BA000`-`0x502D03FF`) is zeroed by the loader before it loads the menu; what
+The menu's own area (`0x502BA000`-`0x502D13FF`) is zeroed by the loader before it loads the menu; what
 lies above it (`STAGE`, `ICONS`, the trampoline's region) the menu writes before it reads. A program
 started from the menu finds the application area as the loader leaves it, and may use all of the
 converter's RAM again: the trampoline has finished when the program's first call comes.
+
+**The LCD.** The menu draws in a frame of its own, `MFB`, at `0x50000` in the LCD controller's display memory, past
+the firmware's frame (its bytes `0`-`0x4B4FF`); Pinball Fantasies keeps its table at the same offset on the owner's
+unit. On its first call (`LcdTake`, `menu_draw.s`) the menu saves the controller's start address, clears `MFB` and
+moves the start address on by `0x50000 / 2` words (same line offset, bits a pixel and SwivelView): from then on
+the LCD shows only the menu, whatever the firmware draws in its own frame. Before `RQ_END` (LEAVE, EXIT, a failure)
+and before a program is started (`Launch`), `LcdGive` writes the firmware's start address back, so its message,
+"Continue Next?" and the program find the LCD as the loader left it. If something else sets the start address while
+the menu is up, `LcdCheck` takes that as the firmware's and sets the menu's again (`V_LCDRESET` counts it).
+(Until 2026-11-03 the menu drew in the firmware's frame and drew itself again whenever the firmware had painted
+over it.)
 
 ## Safety
 
