@@ -139,7 +139,8 @@ The `func_` count is the number of function labels that no symbol file names:
   as single bytes scattered across 893's moved code. Second, `tools/port_names_by_code.py` takes
   the build's candidates from its `func_<ADDR>` labels, which sit at the `add -N, sp` prologue,
   while 941 names these four at the call entry 3 bytes in, so the two signatures never compare
-  equal. `kn7000_manual.sym` also said `DspFullReinit` "downloads the kernel then every effect
+  equal.  (Fixed 2026-11-06, lane kn7000-names: the tool takes B's `func_<ADDR>_entry` labels
+  too, and finds three of the four on its own, `kn7000-names/README.md`.) `kn7000_manual.sym` also said `DspFullReinit` "downloads the kernel then every effect
   record". The code does something else. It pulses the DSP reset line (GPIO `0x36008004` bit 7),
   sets the ready line's interrupt mode, and then makes up to 11 attempts to write `0x91919191` and
   `0x20` to index 0 one byte at a time and read them back. A good read-back clears

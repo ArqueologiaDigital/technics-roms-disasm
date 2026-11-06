@@ -34395,11 +34395,11 @@ CmpStepTitle_Method3Nop:
 
 AccAudio_LockAcquire:
 	ldw wa, 0x8
-	jp Audio_Lock_Acquire
+	jp Kernel_SemaWait
 
 AccAudio_LockRelease:
 	ldw wa, 0x8
-	jp Audio_Lock_Release
+	jp Kernel_SemaSignal
 AccAudio_DataBlock1:
 	ld	xwa, xiy
 	ld	xbc, xix

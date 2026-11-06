@@ -301,4 +301,28 @@ Each gap between referenced bases equals count x stride. The strides come from t
   for the "about 80 minutes" the service manual gives for the sequencer data; the RAM
   is DRAM, so the mechanism is not visible in the code.
 - What keeps the keyboard silent for the whole time the PICTURE LOAD screen is shown
-  (only the open-time All Notes Off was traced). Excluded on 2026-11-02: the open-time DiskCmdTransact(0x14) only sets the disk phase 3 (SdDrvPhaseSet, 0x50160648), which makes DiskCmdPostAsync refuse (0x8002); SetExtMode / ResetExtMode select the fmm backend (0x5007125A); SDModuleModeReq(0, 0) at close drives the SD-audio module. The owner's manual (SD card chapter) lists the same silence for LOAD (TECH) PAGE 3, SD SONG MEDLEY, COPY FROM DISK and SD-SOUND EXPORT/IMPORT. Next step: trace the keyboard's key events to TgcBufWrite / TgPartKeyEvent (0x4C036E9E) and find the test those five screens set; or, in MAME, tap TgPartKeyEvent with a key pressed while PICTURE LOAD is shown.
+  (only the open-time All Notes Off was traced). Excluded on 2026-11-02: the open-time DiskCmdTransact(0x14) only sets the disk phase 3 (SdDrvPhaseSet, 0x50160648), which makes DiskCmdPostAsync refuse (0x8002); SetExtMode / ResetExtMode select the fmm backend (0x5007125A); SDModuleModeReq(0, 0) at close drives the SD-audio module. The owner's manual (SD card chapter) lists the same silence for LOAD (TECH) PAGE 3, SD SONG MEDLEY, COPY FROM DISK and SD-SOUND EXPORT/IMPORT. (OPEN, lane kn7000-names 2026-11-06.) The key path is now traced statically, end to end:
+  the key-bed FIFO TGA_KEY_FIFO 0x98050004 is read by func_48448077 (one {key, velocity} word; key bit 7 = break)
+  under func_48447FCD, which turns it into M3 message 0x10700000 with data key | velocity << 8. TickJobsTask polls it
+  on every pass (`call func_4C014E41` at 0x4C02BD80, unconditionally; func_4C014E41 loops func_48447FCD ->
+  func_4C01B6DA). func_4C01B6DA sends every id with low 24 bits 0x700000 to func_48451AA7. That diverts the key to
+  M3SendProcess only when func_484A3A2A is true: the service test state byte 0x5006BA20+0x1F9 is 0xF6, or it is 0xFC
+  with +0x1F8 = 0xB (the factory test modes, not PICTURE LOAD). Otherwise func_484524EB routes it: func_4844FD70 gives
+  kind 1 for 0x700000, the key's zone record (func_4845124C / func_4845127C) gives the part, a negative part or a
+  failed slot (func_48450542, 64 held-key slots of 6 bytes at 0x5003AC4C) drops it, and func_4844FAF1 posts the
+  part's note to func_4C024DD8, the M3 -> TG translator, whose note case calls func_4C029793 (status 0x90..0x94 by
+  source) -> TgcBufWrite; the library's SndCmdStreamInterpret (0x4C003B2C) hands status 0x9n to TgPartKeyEvent.
+  TgcBufWrite itself has no gate (it only waits for ring space). `work-ram-map-probes/picload_key_gate.py` intersects
+  the absolute work-RAM operands the key path reads (878 functions to depth 8; 336 addresses) with those written by
+  everything the two PICTURE LOAD procedures call to depth 3 (193 functions; 104 addresses): 19 in common, and none
+  is a gate. They are the allocator (0x500006E0..E8), the chord detector the open-time All Notes Off resets
+  (0x50000B0F..B3C, func_4844DA79), 0x50000C10 / 0x50000CE8 (read-modify-write inside one routine), the index
+  switch refresh (0x50021FD8..E0) and sequencer / tempo state (0x50149662..96). The test-mode setters
+  (func_4849FBC3 / func_4849FBF6) are not reachable from either procedure even at depth 6. So no direct-address
+  flag set by PICTURE LOAD stops the key before the TG command stream. What is left: indexed state (the per-part
+  records at 0x500B5340 + part*0x54C, whose +0x1D byte TgLevelResolve reads as muted / solo; the zone records), state
+  changed through messages the probe does not follow (ApPostEvent / SendEvent to DiskWaitWin and the parent
+  window), or something after the TG (the audio path). Next step, in MAME: open PICTURE LOAD, hold a key, and
+  break on func_4C029793 (0x4C029793) and TgcBufWrite (0x4C003A60). If a {0x9n, part, key, velocity} message
+  reaches TgcBufWrite, the gate is in the TG library or the audio path (then tap TgPartKeyEvent 0x4C036E9E and
+  TgLevelResolve 0x4C02FBDE's result); if not, step func_484524EB for the test that returns.

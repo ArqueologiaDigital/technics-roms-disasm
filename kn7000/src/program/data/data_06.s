@@ -2639,12 +2639,12 @@ PCCom_window:	# u32, initial value of a RAM variable: the TtlScreen PCCom's `win
 AMCOM_window:	# u32, initial value of a RAM variable: the TtlScreen AMCOM's `window` (+0x24), loaded and dereferenced by ScreenProc 0x48417810: `mov (0x24, a3), a0` -> `mov d0, (a0)`
 	.long	0xffffffff
 
-func_4858391E_Var:	# u8, initial value of a RAM variable; read / written by func_4858391E 0x4858391E: `movbu (func_4858391E_Var), d0`; func_4858391E 0x4858391E: `movbu d0, (func_4858391E_Var)` ...
+func_4858391E_Var:	# u8, initial value of a RAM variable; read / written by PcComCommand 0x4858391E: `movbu (func_4858391E_Var), d0`; PcComCommand 0x4858391E: `movbu d0, (func_4858391E_Var)` ...
 	.byte	0
-func_4858391E_Var_2:	# u8, initial value of a RAM variable; read / written by func_4858391E 0x4858391E: `movbu (func_4858391E_Var_2), d0`; func_4858391E 0x4858391E: `movbu d0, (func_4858391E_Var_2)` ...
+func_4858391E_Var_2:	# u8, initial value of a RAM variable; read / written by PcComCommand 0x4858391E: `movbu (func_4858391E_Var_2), d0`; PcComCommand 0x4858391E: `movbu d0, (func_4858391E_Var_2)` ...
 	.byte	0
 
-func_4858391E_Table_4:	# 2 x u8, 0..255; read by func_4858391E 0x4858391E: `movbu (func_4858391E_Table_4), d0`; func_4858391E 0x4858391E: `movbu d0, (func_4858391E_Table_4)`
+func_4858391E_Table_4:	# 2 x u8, 0..255; read by PcComCommand 0x4858391E: `movbu (func_4858391E_Table_4), d0`; PcComCommand 0x4858391E: `movbu d0, (func_4858391E_Table_4)`
 	tab_u8	0, 255
 
 demo1_1_window:	# u32, initial value of a RAM variable: the Screen demo1_1's `window` (+0x24), loaded and dereferenced by ScreenProc 0x48417810: `mov (0x24, a3), a0` -> `mov d0, (a0)`
@@ -3534,7 +3534,7 @@ TechnicsPadsResourceInit_Var:	# u32, initial value of a RAM variable; read / wri
 
 func_48448015_Table:	# 2 x u16, 1000..65535; read by func_48448015 0x48448015: `movhu (func_48448015_Table), d0`; func_48448015 0x48448015: `movhu d0, (func_48448015_Table)`
 	tab_u16	1000, 65535
-func_48448077_Table:	# 4 x u8, 0..255; read by func_48448077 0x48448077: `movbu (func_48448077_Table), d0`; func_48448077 0x48448077: `movbu d0, (func_48448077_Table)` ...
+func_48448077_Table:	# 4 x u8, 0..255; read by KeybedFifoRead 0x48448077: `movbu (func_48448077_Table), d0`; KeybedFifoRead 0x48448077: `movbu d0, (func_48448077_Table)` ...
 	tab_u8	0, 255, 255, 255
 
 func_48449462_Records:	# 7 x REC_func_48449462_Records (8 bytes each); read by func_48449462 0x48449462 `mov (4, a0), d1`; func_48449462 0x48449462 `mov (d0, a0), d0`
@@ -3813,7 +3813,7 @@ AcRhythmVerBoxProc_Table:	# 2 x s16, -1..0; read by AcRhythmVerBoxProc 0x4848895
 	tab_s16	0, -1
 AcAromVerBoxProc_Table:	# 2 x s16, -1..1111; read by AcAromVerBoxProc 0x48488A0B: `movhu (AcAromVerBoxProc_Table), d0`; AcAromVerBoxProc 0x48488A0B: `movhu d2, (AcAromVerBoxProc_Table)`
 	tab_s16	1111, -1
-func_4858391E_Table_5:	# 4 x u8, 1..255; read by func_4858391E 0x4858391E: `movbu (func_4858391E_Table_5), d0`
+func_4858391E_Table_5:	# 4 x u8, 1..255; read by PcComCommand 0x4858391E: `movbu (func_4858391E_Table_5), d0`
 	tab_u8	1, 255, 255, 255
 
 func_484D80BD_Var:	# u16, initial value of a RAM variable; read / written by func_484D80BD 0x484D80BD: `movhu d2, (func_484D80BD_Var)`; VwMnameSeProc 0x484D885F: `movhu (func_484D80BD_Var), d0` ...
@@ -3892,14 +3892,16 @@ AcNoteEditBoxProc_Table_6:	# 7 x u16, 0..65535; read by AcNoteEditBoxProc 0x4853
 
 SdCommandSend_Var:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x4854C291 reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854AFE9 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
 	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=1, f4=66, x5="\x00\x00\x00\x00", f9=149
-SdReadBlockCmd_Var_2:	# REC_SdCardRegRead_ArgA1_s9 (9 bytes): the layout SdCardRegRead 0x4854B5E3 reads through its argument a1 (passed by DiskDriveCtrlHandler 0x4854B32B `call SdCardRegRead_entry, [d2,d3,a2,a3], 0x24`); the layout SdReadBlockCmd 0x4854C3A6 reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854AFE9 `call SdReadBlockCmd_entry, [d2,d3,a2,a3], 0x2c`, +1 more calls)
-	REC_SdCardRegRead_ArgA1_s9	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=64, x5="\x00\x00\x0F\x00"
-
-SdReadBlockCmd_Table:	# 41 x u8, 0..255; read by SdReadBlockCmd 0x4854C3A6: `movbu d0, (5, a2)`
-	tab_u8	255, 2, 0, 2, 0, 69, 0, 0, 0, 0, 255, 2, 0, 2, 0, 67	# [0]
-	tab_u8	0, 0, 1, 0, 255, 2, 0, 2, 0, 70, 0, 0, 0, 0, 255, 2	# [16]
-	tab_u8	0, 2, 0, 71, 0, 0, 0, 0, 255	# [32]
-
+SdFrameR2Cmd0:	# REC_SdCommandSend_ArgA0 (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=64, x5="\x00\x00\x0F\x00", f9=255
+SdFrameR2Cmd5:	# REC_SdCommandSend_ArgA0 (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=69, x5="\x00\x00\x00\x00", f9=255
+SdFrameR2Cmd3:	# REC_SdCommandSend_ArgA0 (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=67, x5="\x00\x00\x01\x00", f9=255
+SdFrameR2Cmd6:	# REC_SdCommandSend_ArgA0 (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=70, x5="\x00\x00\x00\x00", f9=255
+SdFrameR2Cmd7:	# REC_SdCommandSend_ArgA0 (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=71, x5="\x00\x00\x00\x00", f9=255
 SdCommandSend_Var_4:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x4854C291 reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854AFE9 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
 	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=3, SdResponseScan_d0=1, f4=64, x5="\x00\x00\x00\x00", f9=149
 SdCommandSend_Var_7:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x4854C291 reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854AFE9 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
@@ -3909,13 +3911,13 @@ SdCommandSend_Var_10:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommand
 
 SdReadBlockCmd_Var:	# u16, initial value of a RAM variable; read / written by SdReadBlockCmd 0x4854C3A6: `movhu (a3), d0`
 	.word	3
-SdReadBlockCmd_Var_3:	# u16, initial value of a RAM variable; read / written by SdReadBlockCmd 0x4854C3A6: `movhu (2, a3), d0`
+SdReadBlockCmd_Var_2:	# u16, initial value of a RAM variable; read / written by SdReadBlockCmd 0x4854C3A6: `movhu (2, a3), d0`
 	.word	1
 
 Str_Q_2:	.asciz "Q"
 	.space	3, 0x00
 
-SdReadBlockCmd_Var_4:	# u8, initial value of a RAM variable; read / written by SdReadBlockCmd 0x4854C3A6: `movbu d0, (5, a2)`
+SdReadBlockCmd_Var_3:	# u8, initial value of a RAM variable; read / written by SdReadBlockCmd 0x4854C3A6: `movbu d0, (5, a2)`
 	.byte	255
 SdWriteBlockCmd_Var:	# u16, initial value of a RAM variable; read / written by SdWriteBlockCmd 0x4854C5C0: `movhu (a3), d0`
 	.word	3

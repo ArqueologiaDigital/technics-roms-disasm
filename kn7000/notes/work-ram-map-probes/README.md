@@ -4,16 +4,17 @@ Each script answers one question the note relies on. Run the Python ones from th
 repository root; the Lua ones are MAME autoboot scripts (MAME build and ROM set as in
 `kn7000_mame/INTEGRATION.md`).
 
-| script              | question it answers                                                                                    |
-|---------------------|--------------------------------------------------------------------------------------------------------|
-| `decode_all.py`     | Linear decode of the program ROM's code regions (input for `scan_ramrefs.py`).                         |
-| `scan_ramrefs.py`   | Which work-RAM addresses does the firmware touch, from which functions, and how (the reference sweep)? |
-| `rom_facts.py`      | What do the data words the map rests on hold (.data image, RTOS config, reset-time clear loops)?       |
-| `limit_arith.py`    | Which explanations of the 0x4D800 picture-import limit fit, and with how much slack?                   |
-| `bmp_sizes.py`      | Which BMP files fit the 0x18000 debug read and the 0x4D800 import limit?                               |
-| `arena_verify.lua`  | At runtime, which address does the zlib-arena allocator return right after a reset?                    |
-| `gap_write_tap.lua` | Does anything write 0x50298000..0x502B7FFF during boot, and what is in the main pool header?           |
-| `gapwatch2.lua`     | Which code writes the RAM spans no instruction references (ignoring the reset clears)?                 |
+| script                | question it answers                                                                                                                 |
+|-----------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| `decode_all.py`       | Linear decode of the program ROM's code regions (input for `scan_ramrefs.py`).                                                      |
+| `scan_ramrefs.py`     | Which work-RAM addresses does the firmware touch, from which functions, and how (the reference sweep)?                              |
+| `rom_facts.py`        | What do the data words the map rests on hold (.data image, RTOS config, reset-time clear loops)?                                    |
+| `limit_arith.py`      | Which explanations of the 0x4D800 picture-import limit fit, and with how much slack?                                                |
+| `bmp_sizes.py`        | Which BMP files fit the 0x18000 debug read and the 0x4D800 import limit?                                                            |
+| `arena_verify.lua`    | At runtime, which address does the zlib-arena allocator return right after a reset?                                                 |
+| `gap_write_tap.lua`   | Does anything write 0x50298000..0x502B7FFF during boot, and what is in the main pool header?                                        |
+| `gapwatch2.lua`       | Which code writes the RAM spans no instruction references (ignoring the reset clears)?                                              |
+| `picload_key_gate.py` | Does PICTURE LOAD write a work-RAM variable the key-bed note path reads (N-44e56012)? Prints the key path and the shared addresses. |
 
 ## Commands and expected results (build 941, 2026-10-18)
 
@@ -69,3 +70,9 @@ The second prints, for each build, `source references inside: 0` and `... 4-alig
 program's data region ...: 0` for the unused .bss tail (about 30 s per build, most of it the raw
 word scan).  For 0x5000000C..0x50000010 it finds the four `0x9000000e` accesses of the RAM-init
 marker in every build.
+
+    python3 -I notes/work-ram-map-probes/picload_key_gate.py 8 3      (from kn7000/)
+
+prints (build 941, 2026-11-06) the key path func_4C014E41 -> func_4C01B6DA -> func_48451AA7 -> ...
+-> TgcBufWrite, 878 key-path functions (depth 8), 193 PICTURE LOAD functions (depth 3), 336 / 104
+RAM addresses, 19 in both (allocator, chord detector, index switches, sequencer / tempo state).

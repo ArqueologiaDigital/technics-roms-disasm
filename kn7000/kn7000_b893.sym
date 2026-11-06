@@ -11,7 +11,7 @@
 0x48000000  TABLE_ROM_BASE	; table flash mapping
 0x4C000000  BOOTROM_BASE	; library/kernel code (undumped internal ROM)
 0x50000000  WORK_RAM_BASE	; work RAM
-; UNPORTED (RAM delta ambiguous (0x5002157F moved +0, 0x50021FC0 moved -4)): 0x50021CF8  INITIAL_SP	; initial stack pointer
+0x50021CC8  INITIAL_SP	; initial stack pointer
 0x57800000  PICTURE_FLASH	; picture flash (separate device)
 0x56000000  CUSTOM_FLASH_READ	; custom-data flash read view (idd7000-programmed; u32 dir archive @+0x200)
 0x56020000  CUSTOM_FLASH_BANK	; compressed custom-style bank in the custom flash (Huffman/LZH; decoded on style-load)

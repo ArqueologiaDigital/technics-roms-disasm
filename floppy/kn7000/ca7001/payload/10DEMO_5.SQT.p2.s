@@ -783,8 +783,7 @@ P_10DEMO_5_SQT_p2:
 	sq_note	8, 0, 69, 106, 65, 0
 	sq_note	77, 0, 67, 83, 23, 0
 	sq_beat
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"10DEMO_5.sqt.p2.ref", 0xbfc, 4
+	.byte	4, 144, 69, 100	; the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0xe0, 0, 65535	; cell 13: song 1 track 3, 1 of 1
 	sq_beat
 	sq_beat
@@ -1203,8 +1202,7 @@ P_10DEMO_5_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"10DEMO_5.sqt.p2.ref", 0xdc2, 1
+	.byte	1	; data bytes of an event cut at the start
 	sq_beat
 	sq_note	1, 0, 48, 90, 94, 1
 	sq_beat
@@ -1546,9 +1544,8 @@ P_10DEMO_5_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	0, 59	; data bytes of an event cut at the start
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"10DEMO_5.sqt.p2.ref", 0x121f, 5
+	.byte	0	; data bytes of an event cut at the start
+	sq_note	59, 0, 40, 69, 46, 0
 	sq_beat
 	sq_beat
 	sq_beat
@@ -1567,8 +1564,7 @@ P_10DEMO_5_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"10DEMO_5.sqt.p2.ref", 0x1236, 2
+	.byte	5, 1	; data bytes of an event cut at the start
 	sq_beat
 	sq_beat
 	sq_note	6, 0, 57, 85, 22, 0
@@ -1610,8 +1606,7 @@ P_10DEMO_5_SQT_p2:
 	sq_note	5, 0, 60, 96, 21, 0
 	sq_note	6, 0, 64, 89, 23, 0
 	sq_note	71, 0, 67, 98, 38, 0
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"10DEMO_5.sqt.p2.ref", 0x12fc, 4
+	.byte	71, 144, 60, 98	; the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0xa4, 0, 21	; cell 20: song 1 track 6, 1 of 2
 	sq_sys	0, 0xf1, 2, 0, 0, 2, 127
 	sq_8n	0, 0, 110, 0
@@ -1793,9 +1788,8 @@ P_10DEMO_5_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	k5_note	0x90, 54, 90, 26, 0, 10
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"10DEMO_5.sqt.p2.ref", 0x1417, 5
+	.byte	144, 54, 90, 26, 0	; a tick-first event cut at the start (its tick is gone)
+	sq_note	10, 0, 66, 90, 27, 0
 	sq_beat
 	sq_note	8, 0, 55, 93, 88, 0
 	sq_note	77, 0, 67, 88, 23, 0
@@ -1832,8 +1826,9 @@ P_10DEMO_5_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
+	.byte	118	; data bytes of an event cut at the start
 	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"10DEMO_5.sqt.p2.ref", 0x1468, 152
+	.incbin	"10DEMO_5.sqt.p2.ref", 0x1469, 151
 
 	.if	(. - P_10DEMO_5_SQT_p2) - 5376
 	.error	"10DEMO_5.SQT part 2: the payload is not 5376 bytes"

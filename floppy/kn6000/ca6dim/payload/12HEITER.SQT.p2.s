@@ -9,9 +9,8 @@ P_12HEITER_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	42, 0, 95	; data bytes of an event cut at the start
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"12HEITER.sqt.p2.ref", 0xa, 5
+	.byte	42, 0	; data bytes of an event cut at the start
+	sq_note	95, 0, 79, 96, 23, 0
 	sq_beat
 	sq_bend	33, 0, 64, 60
 	sq_bend	36, 0, 64, 56
@@ -65,8 +64,7 @@ P_12HEITER_SQT_p2:
 	sq_cc	49, 0, 16, 1, 0
 	sq_note	55, 0, 77, 101, 87, 0
 	sq_beat
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"12HEITER.sqt.p2.ref", 0xfd, 3
+	.byte	51, 144, 75	; the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 3	; cell 2: song 1 track 2, 1 of 15
 	sq_sys	0, 0x85
 	sq_beat

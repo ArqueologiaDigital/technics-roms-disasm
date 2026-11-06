@@ -203,13 +203,13 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 
 | File                                            | ROM                                               | Symbols | Address Range                                              |
 |-------------------------------------------------|---------------------------------------------------|---------|------------------------------------------------------------|
-| `symbols/maincpu_symbols_reference.txt`         | Main CPU **v10** (identical to `maincpu_v10_...`) | 53,744  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v10_symbols_reference.txt`     | Main CPU v10                                      | 53,744  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v9_symbols_reference.txt`      | Main CPU v9                                       | 53,736  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v8_symbols_reference.txt`      | Main CPU v8 (same rows as v9: same source, link)  | 53,736  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v7_symbols_reference.txt`      | Main CPU v7                                       | 53,559  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v6_symbols_reference.txt`      | Main CPU v6                                       | 54,171  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v5_symbols_reference.txt`      | Main CPU v5                                       | 54,147  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_symbols_reference.txt`         | Main CPU **v10** (identical to `maincpu_v10_...`) | 54,074  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v10_symbols_reference.txt`     | Main CPU v10                                      | 54,074  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v9_symbols_reference.txt`      | Main CPU v9                                       | 54,072  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v8_symbols_reference.txt`      | Main CPU v8 (same rows as v9: same source, link)  | 54,072  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v7_symbols_reference.txt`      | Main CPU v7                                       | 54,080  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v6_symbols_reference.txt`      | Main CPU v6                                       | 53,907  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v5_symbols_reference.txt`      | Main CPU v5                                       | 53,870  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/subcpu_symbols_reference.txt`          | Sub CPU payload v1.42                             | 5,070   | 0x000400 - 0x0451CC (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_v141_symbols_reference.txt`     | Sub CPU payload v1.41                             | 5,069   | 0x000400 - 0x0451B4 (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_v140_symbols_reference.txt`     | Sub CPU payload v1.40                             | 5,069   | 0x000400 - 0x045180 (past the image: DRAM `.equ` symbols)  |
@@ -221,7 +221,9 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 | `symbols/hdae5000_v1_10i_symbols_reference.txt` | HDAE5000 expansion v1.10i                         | 6,690   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
 
 The two HD-AE5000 v1 rows were added 2026-10-30 (lane open/hdae-v1), from
-`l2_symbol_reference.py --regen --only hdae5000_v1_15i,hdae5000_v1_10i`.
+`l2_symbol_reference.py --regen --only hdae5000_v1_15i,hdae5000_v1_10i`.  The seven main-CPU rows were re-counted
+2026-11-06 (lane open10/kernel4, the main CPU's kernel joined to `wsa1/kernel/kernel.s`), from
+`l2_symbol_reference.py --regen --only maincpu,maincpu_v10,maincpu_v9,maincpu_v8,maincpu_v7,maincpu_v6,maincpu_v5`.
 The three sub-CPU payload rows were regenerated 2026-11-06 (lane open9/kernel-a3), when the payload's
 kernel became `wsa1/kernel/kernel.s` and 62 of its labels took that file's names
 (`scripts/renaming/rename_kernel_a3.sed`); `KERNEL_*` equates are not rows.
@@ -750,34 +752,34 @@ This is a strict policy to ensure the disassembly is maintainable and understand
 
    **Main CPU (maincpu/):**
 
-   | Prefix | Subsystem | Example |
-   |--------|-----------|---------|
-   | `Audio_` | Audio subsystem (locks, DMA, commands) | `Audio_Lock_Acquire`, `Audio_DMA_Transfer` |
-   | `AudioCmd_` | Audio command formatting | `AudioCmd_NoteOn`, `AudioCmd_ProgramChange` |
-   | `AudioInit_` | Audio initialization | `AudioInit_ResetChannels` |
-   | `Acc_` / `AccPedal_` / `AccVoice_` | Auto-accompaniment | `AccPedal_ApplyChangeMask` |
-   | `BitMapOut_` | Bitmap rendering | `BitMapOut_DrawRegion` |
-   | `CPanel_` | Control panel protocol | `CPanel_ReadButtons` |
-   | `Display_` | Display/video routines | `Display_ClearScreen` |
-   | `DSPCfg_` | DSP configuration | `DSPCfg_SetReverb` |
-   | `Encoder_` | Rotary encoder handling | `Encoder_ReadDelta` |
-   | `FDC_` | Floppy disk controller | `FDC_ReadSectors`, `FDC_HANDLER_OFFSETS` |
-   | `FileIO_` | File I/O operations | `FileIO_OpenFile` |
-   | `InterCPU_` | Inter-CPU communication | `InterCPU_Send_Data_Block` |
-   | `MIDI_` | MIDI processing | `MIDI_SendSysExCmd`, `MIDI_RX_BYTE_DISPATCHER` |
-   | `MidiPkt_` | MIDI packet handling | `MidiPkt_Nop` |
-   | `MT_` | MIDI transport | `MT_StartPlay` |
-   | `Rhythm_` | Rhythm/style patterns | `Rhythm_LoadPattern` |
-   | `Scoop_` | Scoop event system | `Scoop_EventLoop` |
-   | `SeMenu_` | Sound editor menu | `SeMenu_DrawPage` |
-   | `Seq_` / `SeqStep_` / `SeqPart_` / `SeqPlay_` | Sequencer | `Seq_WriteMidi90` |
-   | `SMF_` | Standard MIDI File | `SMF_ParseHeader` |
-   | `SndParam_` | Sound parameters | `SndParam_SetVolume` |
-   | `SubCPU_` | Sub CPU management | `SubCPU_Send_Payload` |
-   | `SysEx_` | SysEx message handling | `SysEx_ValidateRolandHeader` |
-   | `TaskSched_` | Task scheduler | `TaskSched_Dispatch` |
-   | `ToneGen_` | Tone generator (keyboard input) | `ToneGen_KeyEvent` |
-   | `UI_` / `Widget_` | UI framework | `UI_STATE_MACHINE_TABLE` |
+   | Prefix                                        | Subsystem                                                                              | Example                                            |
+   |-----------------------------------------------|----------------------------------------------------------------------------------------|----------------------------------------------------|
+   | `Audio_`                                      | Audio subsystem (DMA, commands; its locks are kernel semaphores)                       | `Audio_DMA_Transfer`, `Audio_InitFuncTable`        |
+   | `AudioCmd_`                                   | Audio command formatting                                                               | `AudioCmd_NoteOn`, `AudioCmd_ProgramChange`        |
+   | `AudioInit_`                                  | Audio initialization                                                                   | `AudioInit_ResetChannels`                          |
+   | `Acc_` / `AccPedal_` / `AccVoice_`            | Auto-accompaniment                                                                     | `AccPedal_ApplyChangeMask`                         |
+   | `BitMapOut_`                                  | Bitmap rendering                                                                       | `BitMapOut_DrawRegion`                             |
+   | `CPanel_`                                     | Control panel protocol                                                                 | `CPanel_ReadButtons`                               |
+   | `Display_`                                    | Display/video routines                                                                 | `Display_ClearScreen`                              |
+   | `DSPCfg_`                                     | DSP configuration                                                                      | `DSPCfg_SetReverb`                                 |
+   | `Encoder_`                                    | Rotary encoder handling                                                                | `Encoder_ReadDelta`                                |
+   | `FDC_`                                        | Floppy disk controller                                                                 | `FDC_ReadSectors`, `FDC_HANDLER_OFFSETS`           |
+   | `FileIO_`                                     | File I/O operations                                                                    | `FileIO_OpenFile`                                  |
+   | `InterCPU_`                                   | Inter-CPU communication                                                                | `InterCPU_Send_Data_Block`                         |
+   | `MIDI_`                                       | MIDI processing                                                                        | `MIDI_SendSysExCmd`, `MIDI_RX_BYTE_DISPATCHER`     |
+   | `MidiPkt_`                                    | MIDI packet handling                                                                   | `MidiPkt_Nop`                                      |
+   | `MT_`                                         | MIDI transport                                                                         | `MT_StartPlay`                                     |
+   | `Rhythm_`                                     | Rhythm/style patterns                                                                  | `Rhythm_LoadPattern`                               |
+   | `Scoop_`                                      | Scoop event system                                                                     | `Scoop_EventLoop`                                  |
+   | `SeMenu_`                                     | Sound editor menu                                                                      | `SeMenu_DrawPage`                                  |
+   | `Seq_` / `SeqStep_` / `SeqPart_` / `SeqPlay_` | Sequencer                                                                              | `Seq_WriteMidi90`                                  |
+   | `SMF_`                                        | Standard MIDI File                                                                     | `SMF_ParseHeader`                                  |
+   | `SndParam_`                                   | Sound parameters                                                                       | `SndParam_SetVolume`                               |
+   | `SubCPU_`                                     | Sub CPU management                                                                     | `SubCPU_Send_Payload`                              |
+   | `SysEx_`                                      | SysEx message handling                                                                 | `SysEx_ValidateRolandHeader`                       |
+   | `Kernel_` / `TaskSched_`                      | Multitasking kernel (`wsa1/kernel/kernel.s`, shared with the sub CPU and the SX-WSA1R) | `Kernel_Dispatch`, `TaskSched_TaskDescriptorTable` |
+   | `ToneGen_`                                    | Tone generator (keyboard input)                                                        | `ToneGen_KeyEvent`                                 |
+   | `UI_` / `Widget_`                             | UI framework                                                                           | `UI_STATE_MACHINE_TABLE`                           |
 
    **Sub CPU (subcpu/):**
 

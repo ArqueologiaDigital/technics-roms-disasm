@@ -36,6 +36,10 @@
 0x484ABB87  PanelPump_entry
 0x484ABA57  TickHookPass            ; = IC18 TickHookPass 0x500025C6: passes each of four ROM words (0x4874D11C..28, all 0x50151BFC, the time base's address) with its index 0..3 to TickHookStub; the first call of every pass of TickJobsTask [INFERENCE: a debug hook]
 0x484ABA5A  TickHookPass_entry
+0x4874E140  TickHookArg0            ; TickHookPass's four ROM words (IC18's TickHookArg0..3 are .bss); all hold 0x50151BFC, the time base's address (lane kn7000-names 2026-11-06)
+0x4874E144  TickHookArg1
+0x4874E148  TickHookArg2
+0x4874E14C  TickHookArg3
 0x48431D03  TickHookStub            ; does nothing (clears a local and returns); TickHookPass's callee
 0x48431D06  TickHookStub_entry
 0x4C02BC27  TickJobsTask            ; the periodic task loop: waits on event flag 0xC (set every 4 ms by the kernel tick), TickHookPass, then the jobs requested in TickJobs 0x50151C00/01 (0x08 PanelService + the panel poll + switch events; 0x02 0x48402703; 0x80/0x20 PanelPump; 0x80 also inverts IOLATCH_04 bit 5; 0x40/0x10 0x484AE78C), then a fixed service list
@@ -494,6 +498,11 @@
 0x4854B5C0  SdWriteProtectPoll_entry
 0x4854B5C9  SdCidPtrGet             ; return the 16-byte CID shadow 0x50082728
 0x4854B5D2  SdCardRegRead           ; re-read a card register into record a0 {valid,len,data}: CS release, SdReadBlockCmd(frame a1, 15 bytes -> rec+1) up to 20 tries (0xFA-tick sleeps); ok -> len 0xF; R1 0x0400 -> invalidate+-1; 0x1200 -> invalidate
+0x50007EA4  SdFrameR2Cmd0           ; .data: the mode-2 SD frames, IC18's SdFrameR2Cmd* table (0x5001008C) in program 941: 10 bytes each {u16 clock mode 2, u16 response type 2, 0x40|n, four argument bytes, CRC}. n = 0, argument 0x00000F00: the only one read, DiskDriveCtrlHandler's attach hands it to SdCardRegRead (lane kn7000-names 2026-11-06, notes/kn7000-names-probes/names_sd_frames.py)
+0x50007EAE  SdFrameR2Cmd5           ; n = 5, argument 0; this and the next three: no reader
+0x50007EB8  SdFrameR2Cmd3           ; n = 3, argument 0x00000100
+0x50007EC2  SdFrameR2Cmd6           ; n = 6, argument 0
+0x50007ECC  SdFrameR2Cmd7           ; n = 7, argument 0
 0x4854B5D7  SdCardRegRead_entry
 0x4854B646  SdCardRegInvalidate     ; record: valid:=0, len:=0, data[0..7] = ROM default 0x4867b9c0
 0x4854B649  SdCardRegInvalidate_entry
@@ -3089,7 +3098,7 @@
 0x4C008324  TgPartEqLoFcSet_entry
 0x4C008348  TgPartEqLoGainSet          ; CC83: part +0x23
 0x4C00834A  TgPartEqLoGainSet_entry
-0x4C0080D8  TgPartEqCoefCalc           ; both (FC, gain) pairs -> double-precision filter coefficients (table 0x4C008071); which TG register they reach is not traced
+0x4C0080D8  TgPartEqCoefCalc           ; both (FC, gain) pairs -> five 20-bit filter coefficients at part record +0x28..+0x38 (double-precision maths, table 0x4C008071) and a shift byte at +0x3C; they reach the voices' TG register classes 0x40000000-0x50000000 through TgPartEqVoicesApply / TgVoiceReg4000GroupWrite (notes/ic18-rhythm-rom.md)
 0x4C0080DD  TgPartEqCoefCalc_entry
 0x4C00777C  TgPartDspSwitchSet         ; CC94 (DIGITAL EFFECT): part flag 0x1000; 64 = the sound's own setting (looked up by func_48448D93)
 0x4C00777E  TgPartDspSwitchSet_entry
@@ -3108,11 +3117,50 @@
 0x484D7690  PowerOnFactoryReset        ; (d0 = panel power-on code) unless RamInitMarker == 0x5AA5: codes 6 / 1 reprogram the custom-flash settings (func_4C023F80 / func_4C023F9B), wipe RAM 0x50000010.. and SRAM 0x84000010.., marker := 0x5AA5, restart at 0x4840FFF9
 0x484D7695  PowerOnFactoryReset_entry
 0x5000000E  RamInitMarker              ; RAM u16 (written through 0x9000000E): 0x5AA5 only across the factory-reset restart
-; UNPORTED (RAM delta ambiguous (0x500214F6 moved +16, 0x5002154C moved +0)): 0x500214F8  BootStack                  ; RAM 0x800-byte pre-kernel stack, top = INITIAL_SP 0x50021CF8 (the last library variable below ends exactly 0x800 under it in all four builds)
+0x50021508  BootStack                  ; RAM 0x800-byte pre-kernel stack, top = INITIAL_SP 0x50021CF8 (the last library variable below ends exactly 0x800 under it in all four builds)
+0x50021D08  DspPresetRamRecords        ; RAM 10 x 0x42-byte records, kind 1 of func_48412C25 (d0 = kind 1..12 from DspPresetKeyKind, d1 = index -> base + index * 0x42; kinds 2..12 are battery SRAM from 0x840301B8, kind 2 the same size). In 941 / 942 it starts at INITIAL_SP, the boot stack's top; in 935 / 893 the reset loads a stack top 0x2C / 0x30 below it (lane kn7000-names 2026-11-06, notes/mn10300-names-probes/ramgui_reset_layout.py)
 0x50046B7C  PanelMemBank1Save          ; RAM 0x3C00 slot: PANEL MEMORY bank 1 (SRAM 0x84000824, 0x3A90 bytes) saved around a built-in demo; the last 0x170 bytes are slack
 ; UNPORTED (RAM delta ambiguous (0x50110C20 moved +0, 0x5011F880 moved +16)): 0x5011F080  WPAL1                      ; RAM 0x400 after PICTURE_PLANE2 (942 exports GetWPAL1Addr); unreferenced in 941 / 935 / 893
 ; UNPORTED (RAM delta ambiguous (0x50110C20 moved +0, 0x5011F880 moved +16)): 0x5011F480  WPAL2                      ; RAM 0x400 (942 GetWPAL2Addr)
 0x484D7A2A  LibImageLoad               ; ResetEntry's last call before KernelStart: walks LibLoadDescriptor's 12-byte records {flags, len, src, dest}, stops after the one with flag bit 15 (notes/older-program-builds.md)
+; ---- lane kn7000-names 2026-11-06: the key-bed path (notes/work-ram-map.md N-44e56012; probe notes/work-ram-map-probes/picload_key_gate.py) ----
+0x48448066  KeybedFifoRead             ; read one {key, velocity} word from TGA_KEY_FIFO 0x98050004 (key bit 7 = release; a non-0xFF release velocity re-latches the key in 0x501496A2/A3 for the next poll) and decode it into (a0) through func_48448128
+0x4844806B  KeybedFifoRead_entry
+0x48447FBC  KeybedEventToM3            ; (a0, a1 out) one key-bed event -> M3 message 0x10700000, data key | velocity << 8; -1 when the FIFO is empty
+0x48447FC1  KeybedEventToM3_entry
+0x4C014E9B  KeybedPollPass             ; TickJobsTask's key-bed pass (0x4C02BD80, unconditional): KeybedEventToM3 until empty, each event to func_4C01B6DA (source 0)
+0x4C014EA0  KeybedPollPass_entry
+0x48451A96  KeybedM3Dispatch           ; M3 id 0x700000 (the key bed): to M3SendProcess in the service test modes (TestModeKeyDivert), else func_484524EB plays it on the zone's part
+0x48451A9B  KeybedM3Dispatch_entry
+0x484A3A19  TestModeKeyDivert          ; 1 when the test state byte 0x5006BA20+0x1F9 is 0xF6, or 0xFC with +0x1F8 = 0xB
+0x484A3A1C  TestModeKeyDivert_entry
+0x4C0297ED  TgcNoteOnSend              ; (d0 source nibble, d1 part, stack key / velocity) TgcBufWrite {4, 0x90..0x94, part, key, velocity}, the status chosen by the source
+0x4C0297F2  TgcNoteOnSend_entry
+; ---- lane kn7000-names 2026-11-06: the style variation's DSP parts and the part EQ (notes/ic18-rhythm-rom.md; probe notes/ic18-rhythm-rom-probes/rhythm_part_eq_and_units.py) ----
+0x48442153  StyleVarDspPartsApply      ; the bound variation's +2/+3 (via 0x50122DD4): style parts of DSP units EFF4/EFF5, >= 8 -> default 2 / 3 (swapped on a clash); TG parts via StylePartToTgPart; when 0x5003A43C != 0 queues key 0xB048 = (p3 << 8) | p2, SOUND DSP 0x0020005F := 1 if named else 0, SOUND DSP DEPTH 0x00B0005F := 80
+0x48442158  StyleVarDspPartsApply_entry
+0x48435C18  StylePartToTgPart          ; (d0 style part < 0x20) -> TG part from 0x485B6DA8 (Drum 0x19, Bass 0x18, Acc1-5 0x13-0x17, Perc 0x1A), else -1
+0x4C004641  TgPartEqVoicesApply        ; (d0 part, a0 voice list) merge part record +0x28..+0x38 (TgPartEqCoefCalc's five 20-bit words) into each voice's +0x64..+0x74 and write them (TgVoiceReg4000GroupWrite)
+0x4C004646  TgPartEqVoicesApply_entry
+; ---- lane kn7000-names 2026-11-06: MUSIC STYLE ARRANGER ids and the PC COMMUNICATION SysEx (notes/presentation-control-probes/song-records.md; probes song_id_users.py, sysex_pccom.py) ----
+0x4C02AD62  MsaModeApply               ; (d0 = MUSIC STYLE ARRANGER MODE 0xA1, rhythm, variation, source) 1 nothing, 2 the style's per-variation setting (func_4C02ACA8), 3 recall PANEL MEMORY variation+1 (func_4C0219BF)
+0x4C02AD65  MsaModeApply_entry
+0x4C029D4F  MsaOnRhythmVariation       ; on an M3 change of 0xC000 / 0xC004: when MUSIC STYLE ARRANGER 0xA0 is 1, MsaModeApply(0xA1, ...)
+0x4C029D54  MsaOnRhythmVariation_entry
+0x4C021A19  PmemRecallBankA            ; (d0 = n 1..4) recall panel memory n through func_4C021F33, store it at 0x84000773, announce id 0x80
+0x4C021A1E  PmemRecallBankA_entry
+0x484C3506  PcComCrc7Put               ; CRC-7 (x^7+x^3+1) of bytes 1..n-3 of the F0..F7 frame, written before F7
+0x484C350B  PcComCrc7Put_entry
+0x484C3559  PcComCrc7Check             ; 0 when the byte before F7 is the CRC-7 of bytes 1..n-3, else -1
+0x484C355E  PcComCrc7Check_entry
+0x484C35DE  PcComReplyDone             ; build F0 50 28 20 31 1F cc F7
+0x484C35E1  PcComReplyDone_entry
+0x484C363D  PcComReplyStatus           ; (d0 = code) build F0 50 29 20 31 1F code cc F7
+0x484C3640  PcComReplyStatus_entry
+0x484C39F2  PcComAwait                 ; (a0 = rx 0x5015136A, a1 = tx, d0 = timeout ticks, d1 = type) wait for an F0 50 <type> 20 .. 1F frame; resends tx on a bad CRC / NAK 1; -1 timeout, -2 cancel (2F) or NAK
+0x484C39F5  PcComAwait_entry
+0x4858390D  PcComCommand               ; run a PC COMMUNICATION command record (copied to 0x50172F4C): kinds 1 SaveSmf, 2 LoadSmf, 3 save group, 4 load group, 5-9 SD-card ops, 10 enter TT_PCCOM, 11 leave, 12 PictureImport
+0x4858390F  PcComCommand_entry
 ;
 ; ==== BEGIN GENERATED by tools/port_sibling_names.py -- do not edit by hand ====
 ; Names carried from other MN10300 images where a routine is the same code, linked

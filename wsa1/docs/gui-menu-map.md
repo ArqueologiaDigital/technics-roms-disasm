@@ -2154,11 +2154,11 @@ Keys (`ScreenButtonHandlers_FloppyDiskFormatSelectType`):
 
 | key map                                           | key                  | handler                                 | requests |
 |---------------------------------------------------|----------------------|-----------------------------------------|----------|
-| `ScreenButtonHandlers_FloppyDiskFormatSelectType` | `KEY_SoftKeyCol4`    | `sub_FF657B`                            |          |
+| `ScreenButtonHandlers_FloppyDiskFormatSelectType` | `KEY_SoftKeyCol4`    | `HiddenKey_FloppyDiskFormatSelectType`  |          |
 | `ScreenButtonHandlers_FloppyDiskFormatSelectType` | `KEY_LcdRow3`        | `LcdKeyRow3_FloppyDiskFormatSelectType` |          |
 | `ScreenButtonHandlers_FloppyDiskFormatSelectType` | `KEY_LcdRow4`        | `LcdKeyRow4_FloppyDiskFormatSelectType` |          |
 | `ScreenButtonHandlers_FloppyDiskFormatSelectType` | `KEY_Exit`           | `ExitKey_FloppyDiskFormatSelectType`    |          |
-| `ScreenButtonHandlers_FloppyDiskFormatSelectType` | `KEY_SoftKeyCol5Alt` | `sub_FF657B`                            |          |
+| `ScreenButtonHandlers_FloppyDiskFormatSelectType` | `KEY_SoftKeyCol5Alt` | `HiddenKey_FloppyDiskFormatSelectType`  |          |
 
 ## screen 0x51: `Paint_FloppyDiskFormatAreYouSure`
 

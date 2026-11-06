@@ -21572,7 +21572,7 @@ func_48448128_Table_3:	# 58 x u8, 0..198; read by func_48448128 0x48448128: `mov
 	tab_u8	80, 148, 14, 94, 138, 17, 107, 128, 19, 121, 118, 22, 160, 62, 6, 160	# [16]
 	tab_u8	62, 6, 160, 70, 6, 160, 70, 6, 160, 74, 6, 160, 78, 6, 160, 78	# [32]
 	tab_u8	6, 160, 86, 6, 160, 86, 6, 160, 94, 6	# [48]
-func_48448128_Table:	# 175 x u8, 47..255; read by func_48448128_entry 0x48447F33: `movbu  (d3, a0), d0`; func_48448201_entry 0x48447F33: `movbu  (d0, a0), d0`
+func_48448128_Table:	# 175 x u8, 47..255; read by func_48448128_entry 0x48448077: `movbu  (d3, a0), d0`; func_48448201_entry 0x48448077: `movbu  (d0, a0), d0`
 	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 251, 246, 241, 237, 234, 230, 227	# [0]
 	tab_u8	224, 221, 219, 216, 214, 211, 209, 207, 205, 203, 202, 200, 198, 197, 195, 193	# [16]
 	tab_u8	192, 191, 189, 188, 187, 185, 184, 183, 182, 181, 179, 178, 177, 176, 175, 174	# [32]
@@ -21591,7 +21591,7 @@ func_48448201_Table:	# 81 x u8, 0..46; read by func_48448201 0x48448201: `movbu 
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [48]
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0	# [64]
 	tab_u8	0	# [80]
-func_48448128_Table_2:	# 256 x u8, 1..127; read by func_48448128_entry 0x48447F33: `movbu  (d0, a0), d0`
+func_48448128_Table_2:	# 256 x u8, 1..127; read by func_48448128_entry 0x48448077: `movbu  (d0, a0), d0`
 	tab_u8	1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [0]
 	tab_u8	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [16]
 	tab_u8	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [32]
@@ -33268,13 +33268,13 @@ VOCALIST_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x34D118, 0x34D11C
 
-func_484ABA68_Var:	# u32, a constant; read / written by TickHookPass 0x484ABA68: `mov (func_484ABA68_Var), a0`
+TickHookArg0:	# u32, a constant; read / written by TickHookPass 0x484ABA68: `mov (TickHookArg0), a0`
 	.long	0x50151bfc
-func_484ABA68_Var_2:	# u32, a constant; read / written by TickHookPass 0x484ABA68: `mov (func_484ABA68_Var_2), a0`
+TickHookArg1:	# u32, a constant; read / written by TickHookPass 0x484ABA68: `mov (TickHookArg1), a0`
 	.long	0x50151bfc
-func_484ABA68_Var_3:	# u32, a constant; read / written by TickHookPass 0x484ABA68: `mov (func_484ABA68_Var_3), a0`
+TickHookArg2:	# u32, a constant; read / written by TickHookPass 0x484ABA68: `mov (TickHookArg2), a0`
 	.long	0x50151bfc
-func_484ABA68_Var_4:	# u32, a constant; read / written by TickHookPass 0x484ABA68: `mov (func_484ABA68_Var_4), a0`
+TickHookArg3:	# u32, a constant; read / written by TickHookPass 0x484ABA68: `mov (TickHookArg3), a0`
 	.long	0x50151bfc
 
 # 33 classes; a class id is (0x1b4 << 16) | its index here (ClassProc 0x4842A802 reads entry id & 0xFFFF, 0x18 bytes each)

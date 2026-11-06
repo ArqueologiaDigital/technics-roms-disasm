@@ -834,15 +834,18 @@ V140_SRC = $(wildcard v140/subcpu/*.s v140/subcpu/*/*.s)
 # The sub-CPU kernel is wsa1/kernel/kernel.s, shared with both SX-WSA1R CPUs since 2026-11-06
 # (wsa1/notes/open9-a3-probes/README.md); every payload version includes it through -I wsa1/kernel.
 SUBCPU_KERNEL_SRC = wsa1/kernel/kernel.s wsa1/kernel/kernel_kn5000_subcpu.inc
+# ...and the main-CPU programs' (v10, v9 and its v8 build, v7) since the same day: KERNEL_KN5000 = 2
+# (lane open10/kernel4, wsa1/notes/open10-kernel4-probes/README.md).
+MAINCPU_KERNEL_SRC = wsa1/kernel/kernel.s wsa1/kernel/kernel_kn5000_maincpu.inc
 SUBBOOT_SRC = $(wildcard subcpu/boot/*.s subcpu/boot/*/*.s)
 HDAE_SRC = $(wildcard hdae5000/*.s hdae5000/*/*.s)
 TABLEDATA_SRC = $(wildcard table_data/*.s table_data/*/*.s)
 CUSTOMDATA_SRC = $(wildcard custom_data/*.s custom_data/*/*.s)
 
 # --- Maincpu ---
-rebuilt_ROMs/kn5000_v10_program.llvm.o: $(V10_SRC) original_ROMs/kn5000_v10_program.rom $(C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_v10_program.llvm.o: $(V10_SRC) $(MAINCPU_KERNEL_SRC) original_ROMs/kn5000_v10_program.rom $(C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
-	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v10/maincpu -o $@ v10/maincpu/kn5000_v10_program.s
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v10/maincpu -I wsa1/kernel -o $@ v10/maincpu/kn5000_v10_program.s
 
 rebuilt_ROMs/kn5000_v10_program.llvm.elf: rebuilt_ROMs/kn5000_v10_program.llvm.o v10/maincpu/maincpu.ld
 	$(LLVM_LLD) -T v10/maincpu/maincpu.ld -o $@ $<
@@ -851,9 +854,9 @@ rebuilt_ROMs/kn5000_v10_program.llvm.rom: rebuilt_ROMs/kn5000_v10_program.llvm.e
 	$(LLVM_OBJCOPY) -O binary $< $@
 
 # --- V9 Maincpu ---
-rebuilt_ROMs/kn5000_v9_program.llvm.o: $(V9_SRC) original_ROMs/kn5000_v9_program.rom $(V9_C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_v9_program.llvm.o: $(V9_SRC) $(MAINCPU_KERNEL_SRC) original_ROMs/kn5000_v9_program.rom $(V9_C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
-	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v9/maincpu -o $@ v9/maincpu/kn5000_v9_program.s
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v9/maincpu -I wsa1/kernel -o $@ v9/maincpu/kn5000_v9_program.s
 
 rebuilt_ROMs/kn5000_v9_program.llvm.elf: rebuilt_ROMs/kn5000_v9_program.llvm.o v9/maincpu/maincpu.ld
 	$(LLVM_LLD) -T v9/maincpu/maincpu.ld -o $@ $<
@@ -895,9 +898,9 @@ verify-v8-reference: original_ROMs/kn5000_v8_program.rom
 	 if [ "$$got" = "$(KN5000_V8_SHA1)" ]; then echo "OK    $< has SHA-1 $(KN5000_V8_SHA1)"; \
 	 else echo "FAIL  $< has SHA-1 $$got, expected $(KN5000_V8_SHA1)"; exit 1; fi
 
-rebuilt_ROMs/kn5000_v8_program.llvm.o: $(V9_SRC) $(V9_C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_v8_program.llvm.o: $(V9_SRC) $(MAINCPU_KERNEL_SRC) $(V9_C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
-	$(LLVM_MC) -triple=tlcs900 -filetype=obj --defsym FW_VERSION_BYTE=0x08 -I v9/maincpu -o $@ v9/maincpu/kn5000_v9_program.s
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj --defsym FW_VERSION_BYTE=0x08 -I v9/maincpu -I wsa1/kernel -o $@ v9/maincpu/kn5000_v9_program.s
 
 rebuilt_ROMs/kn5000_v8_program.llvm.elf: rebuilt_ROMs/kn5000_v8_program.llvm.o v9/maincpu/maincpu.ld
 	$(LLVM_LLD) -T v9/maincpu/maincpu.ld -o $@ $<
@@ -924,9 +927,9 @@ v7-extract-bins: $(V7_C_DATA_BINS)
 v7-c-bins-raw: $(V7_C_DATA_BINS)
 v7-c-bins: v7-extract-bins
 
-rebuilt_ROMs/kn5000_v7_program.llvm.o: $(V7_SRC) v7-extract-bins $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_v7_program.llvm.o: $(V7_SRC) $(MAINCPU_KERNEL_SRC) v7-extract-bins $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
-	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v7/maincpu -o $@ v7/maincpu/kn5000_v7_program.s
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v7/maincpu -I wsa1/kernel -o $@ v7/maincpu/kn5000_v7_program.s
 
 rebuilt_ROMs/kn5000_v7_program.llvm.elf: rebuilt_ROMs/kn5000_v7_program.llvm.o v7/maincpu/maincpu.ld
 	$(LLVM_LLD) -T v7/maincpu/maincpu.ld -o $@ $<

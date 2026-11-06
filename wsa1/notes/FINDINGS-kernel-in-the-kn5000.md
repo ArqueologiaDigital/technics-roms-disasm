@@ -292,6 +292,22 @@ Kernel_KillTask                  0xF989C3   0xEF23AA   0.909   0/0   TaskSched_T
 tree already names `0xEF1977` `TaskSched_Init` and `0xEF1AC0`
 `TaskSched_Dispatch`. This tool found those addresses without reading that file.
 
+★ 2026-11-06 (lane open10/kernel4): SETTLED, and the main CPU's kernel now builds from
+`wsa1/kernel/kernel.s` (`KERNEL_KN5000 = 2`, `kernel/kernel_kn5000_maincpu.inc`).  The placement
+above was approximate, like A2's sub-CPU sites (sec 3): measured again on proven boundaries, one LCS
+of the main CPU's whole kernel extent against kernel.s's KN5000 view
+(`notes/open10-kernel4-probes/kernel4_maincpu.py --pairing`), 1,135 slots on each side align 1,133,
+1,030 of them byte-identical: the two KN5000 kernels are one build over two RAM maps.  Several sites
+in the table are a routine off: Kernel_Start is not near 0xEF1A4E but is TaskSched_PostInit
+(0xEF1A86, now Kernel_InitRam__install); Kernel_RotateQueue is 0xEF1CA8 (TaskSched_YieldToQueue_NoBlock),
+not YieldToQueue+4; Kernel_SemaSignal is Audio_Lock_Release (0xEF1F0F), not TaskSched_SignalEvent,
+which is TaskEvent_Signal -- the same event-flag / semaphore mix-up sec 8 had; MsgQueue_Send is
+TaskMsg_Send (0xEF2070); SoftTimer_Register is TaskTimer_Register (0xEF22C9); Kernel_SetTaskLevel is
+TaskSched_ChangePriority (0xEF22F5); Kernel_KillTask is 0xEF23AA, which the tree called
+`TaskSched_TCBTemplate` (it is code).  The main program's own muITRON stubs (`rot_rdq_X`,
+`sig_sem_X`, `wai_flg_X`, `snd_msg_X`, ... in kn5000_v10_program.s) all jump to the routine of that
+meaning.  The tree's labels took kernel.s's names (`scripts/renaming/rename_kernel4.sed`).
+
 ---
 
 ## 8. What differs: three RAM maps for one kernel (`--constants`)
@@ -342,6 +358,13 @@ The **main CPU's** map, from the same measurement over `kn5000_v10_program.rom`:
 | TCB template | `0xFFF980DE` | `0x00EF18EB` |
 | ready levels | `2` | `3` |
 | tasks | `3` | `5` |
+
+(★ 2026-11-06, lane open10/kernel4: the main-CPU table has the sub-CPU table's mix-up, corrected the
+same way by its byte gate: 0x04CD / 0x04D1 and 0x04F8 / 0x04F9 are the EVENT flags (TaskEvent_*,
+`KERNEL_EVENT_QUEUES` = 0x04D1 x 10, `KERNEL_EVENT_FLAGS` = 0x04F9); the semaphores are 0x0503 x 12
+(wait queues) and 0x0533 (counts); the message-queue wait queues are 0x053F x 5 (0x054F was a heads
+row minus 4) with heads at 0x0553; the node pool is 0x0567 x 10 and the free list 0x05B7.
+`kernel/kernel_kn5000_maincpu.inc` is the checked map.)
 
 ★ The KN5000 column is **monotone in the WSA1 column**: the arrays appear in the
 same order, with different sizes. That is a second, independent structural

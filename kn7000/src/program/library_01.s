@@ -665,11 +665,11 @@ loc_4C021995:
     call    func_4C0230E8_entry, [d2,d3,a2,a3], 0x30
 loc_4C0219BC:
     ret     [d2], 0x14
-
-func_4C0219BF:
+# PmemRecallBankA  (lib CPU 0x4c0219bf)
+PmemRecallBankA:
     movm    [d2,d3], (sp)
     add     -0x10, sp
-func_4C0219BF_entry:
+PmemRecallBankA_entry:
     movbu   d1, (0x24, sp)
     mov     d0, d3
     mov     d3, d2
@@ -6720,7 +6720,7 @@ loc_4C02598E:
     and     0xff000000, d1
     lsr     24, d1
     extbu   d1
-    call    func_4C029793_entry, [d2,d3,a2], 0x28
+    call    TgcNoteOnSend_entry, [d2,d3,a2], 0x28
     jmp     loc_4C025EFD
     mov     a2, d0
     and     0xff, d0
@@ -6739,7 +6739,7 @@ loc_4C02598E:
     and     0xff000000, d1
     lsr     24, d1
     extbu   d1
-    call    func_4C029793_entry, [d2,d3,a2], 0x28
+    call    TgcNoteOnSend_entry, [d2,d3,a2], 0x28
     jmp     loc_4C025EFD
     mov     0x0000ff00, d2
     mov     0x80, d1
@@ -13299,11 +13299,11 @@ func_4C02976A_entry:
     add     0xc, a0
     call    TgcBufWrite_entry, [d2,d3,a2], 0x34
     ret     [d2], 0x18
-
-func_4C029793:
+# TgcNoteOnSend  (lib CPU 0x4c029793)
+TgcNoteOnSend:
     movm    [d2,d3,a2], (sp)
     add     -0x1c, sp
-func_4C029793_entry:
+TgcNoteOnSend_entry:
     mov     0x20, a0
     mov     d0, d2
     mov     0x30, d0
@@ -13922,11 +13922,11 @@ loc_4C029CF1:
     clr     d0
 loc_4C029CF2:
     ret     0, 8
-
-func_4C029CF5:
+# MsaOnRhythmVariation  (lib CPU 0x4c029cf5)
+MsaOnRhythmVariation:
     movm    [d2,d3,a2], (sp)
     add     -0x18, sp
-func_4C029CF5_entry:
+MsaOnRhythmVariation_entry:
     mov     d1, d3
     mov     d0, a2
     and     0x00ffffff, d0
@@ -13967,7 +13967,7 @@ loc_4C029D2A:
     extbu   d3
     mov     d2, d1
     mov     d3, d0
-    call    func_4C02AD08_entry, 0, 0x14
+    call    MsaModeApply_entry, 0, 0x14
     ret     [d2,d3,a2], 0x24
 loc_4C029D6F:
     mov     0xa0, d0
@@ -13996,7 +13996,7 @@ loc_4C029D81:
     mov     d0, (0x14, sp)
     extbu   d2
     mov     d2, d0
-    call    func_4C02AD08_entry, 0, 0x14
+    call    MsaModeApply_entry, 0, 0x14
     bra     loc_4C029DFF
 loc_4C029DBA:
     mov     0xa0, d0
@@ -14022,7 +14022,7 @@ loc_4C029DBA:
     extbu   d2
     mov     d3, d1
     mov     d2, d0
-    call    func_4C02AD08_entry, 0, 0x14
+    call    MsaModeApply_entry, 0, 0x14
 loc_4C029DFF:
     ret     [d2,d3,a2], 0x24
 
@@ -15810,10 +15810,10 @@ loc_4C02ACFF:
 func_4C02AD02:
     mov     0xa0, d0
     retf    0, 0
-
-func_4C02AD08:
+# MsaModeApply  (lib CPU 0x4c02ad08)
+MsaModeApply:
     add     -0x14, sp
-func_4C02AD08_entry:
+MsaModeApply_entry:
     extbu   d0
     cmp     1, d0
     beq     loc_4C02AD39
@@ -15834,7 +15834,7 @@ loc_4C02AD2A:
     movbu   (0x28, sp), d1
     inc     d0
     extbu   d0
-    call    func_4C0219BF_entry, [d2,d3], 0x18
+    call    PmemRecallBankA_entry, [d2,d3], 0x18
 loc_4C02AD39:
     ret     0, 0x14
 
@@ -17567,7 +17567,7 @@ loc_4C02BD72:
     bclr    0x10, (0x50151c00)
     call    func_484AE78C_entry, 0, 0x10
 loc_4C02BD80:
-    call    func_4C014E41_entry, [a2,a3], 0x24
+    call    KeybedPollPass_entry, [a2,a3], 0x24
     call    func_484B2ADA_entry, 0, 8
     call    func_484B9BD0_entry, 0, 8
     call    func_4C014F30_entry, [d2,a2,a3], 0x2c
@@ -23972,7 +23972,7 @@ loc_4C02F60B:
     call    func_4C0041A8_entry, [d2,d3,a2,a3], 0x24
     mov     d2, d0
     mov     a2, a0
-    call    func_4C0045E7_entry, [d2,d3,a2,a3], 0x28
+    call    TgPartEqVoicesApply_entry, [d2,d3,a2,a3], 0x28
     jmp     loc_4C02F9F6
     movbu   (0xd0, sp), d0
     mov     0x54c, d1

@@ -33,9 +33,10 @@
 .include "src/sp7001/program/data/gui_event_ids.inc"   # EV_ / MT_ ids, named in mov / cmp immediates
 .include "src/sp7001/program/data/gui_code_ids.inc"   # TT_ / MD_ / CLASS_ / FN_ / object ids, likewise
 
-# 3 names converted code references outside itself (not in symbols.inc)
+# 4 names converted code references outside itself (not in symbols.inc)
 .equ TableRomDirectory, 0x48000000
 .equ LibRomImageBase, 0x487BA785
+.equ DspPresetRamRecords, 0x50021D08
 .equ PanelMemBank1Save, 0x50046B7C
 
 # 11 data addresses named by annotations/*.ann

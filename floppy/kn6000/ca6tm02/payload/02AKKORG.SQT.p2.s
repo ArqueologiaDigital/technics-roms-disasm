@@ -2657,8 +2657,7 @@ P_02AKKORG_SQT_p2:
 	sq_note	19, 0, 74, 95, 37, 0
 	sq_note	81, 0, 70, 76, 42, 0
 	sq_beat
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"02AKKORG.sqt.p2.ref", 0x20fe, 2
+	.byte	59, 144	; the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0xff, 36, 46	; cell 34: song 2 track 5, 3 of 5
 	.byte	0x90, 0x30, 0x51, 0x1c, 0x01	; bytes 2..6 of `sq_note	82, 0, 48, 81, 28, 1` (the event spans two cells)
 	sq_note	84, 0, 47, 70, 10, 0
@@ -3549,8 +3548,7 @@ P_02AKKORG_SQT_p2:
 	sq_beat
 	sq_note	8, 0, 74, 107, 64, 0
 	sq_beat
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"02AKKORG.sqt.p2.ref", 0x28fd, 3
+	.byte	3, 144, 70	; the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0xff, 0, 36	; cell 42: song 2 track 5, 1 of 5
 	sq_sys	0, 0xf1, 6, 0, 64, 0, 2
 	sq_note	0, 0, 45, 91, 22, 0
@@ -3989,11 +3987,15 @@ P_02AKKORG_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	70, 55, 3, 56	; data bytes of an event cut at the start
-	k5_note	0x90, 52, 71, 77, 7, 60
-	k5_note	0x90, 44, 73, 55, 3, 60
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"02AKKORG.sqt.p2.ref", 0x2cf1, 15
+	.byte	70, 55, 3	; data bytes of an event cut at the start
+	sq_note	56, 0, 52, 71, 77, 7
+	sq_note	60, 0, 44, 73, 55, 3
+	sq_note	60, 0, 50, 65, 35, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	79, 0, 43, 75, 67, 3
 	sq_cell	0xff, 34, 41	; cell 46: song 2 track 5, 4 of 5
 	.byte	0x90, 0x2b, 0x4c, 0x42, 0x07	; bytes 2..6 of `sq_note	78, 0, 43, 76, 66, 7` (the event spans two cells)
 	sq_note	88, 0, 45, 65, 52, 14

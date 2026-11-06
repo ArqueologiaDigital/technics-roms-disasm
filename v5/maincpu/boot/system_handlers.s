@@ -188,7 +188,7 @@ Vga_SelectWritePlane:
 	ret
 
 Vga_SetupMultiPlaneDisplay:
-	call Stop_and_Clear_8bit_Timer_3
+	call Timer3_Stop
 	ld xwa, 0x1b4000
 	ld xbc, 0xf180
 	ldw de, 0x400
@@ -220,10 +220,10 @@ Vga_SetupMultiPlaneDisplay:
 	call Copy_DE_words_from_XBC_to_XWA
 	ld wa, 0:i3
 	calr Vga_SelectWritePlane
-	jp Start_8bit_Timer_3
+	jp Timer3_Start
 
 Vga_RestoreMultiPlaneDisplay:
-	call Stop_and_Clear_8bit_Timer_3
+	call Timer3_Stop
 	ld xwa, 0xf180
 	ld xbc, 0x1b4000
 	ldw de, 0x400
@@ -255,10 +255,10 @@ Vga_RestoreMultiPlaneDisplay:
 	call Copy_DE_words_from_XBC_to_XWA
 	ld wa, 0:i3
 	calr Vga_SelectWritePlane
-	jp Start_8bit_Timer_3
+	jp Timer3_Start
 
 Vga_BackupPlane3ToBuffer:
-	call Stop_and_Clear_8bit_Timer_3
+	call Timer3_Stop
 	ld wa, 3:i3
 	calr Vga_SelectWritePlane
 	ld xwa, 0x1a9800
@@ -267,10 +267,10 @@ Vga_BackupPlane3ToBuffer:
 	call Copy_DE_words_from_XBC_to_XWA
 	ld wa, 0:i3
 	calr Vga_SelectWritePlane
-	jp Start_8bit_Timer_3
+	jp Timer3_Start
 
 Vga_RestorePlane3FromBuffer:
-	call Stop_and_Clear_8bit_Timer_3
+	call Timer3_Stop
 	ld wa, 3:i3
 	calr Vga_SelectWritePlane
 	ld xwa, 0x69800
@@ -279,7 +279,7 @@ Vga_RestorePlane3FromBuffer:
 	call Copy_DE_words_from_XBC_to_XWA
 	ld wa, 0:i3
 	calr Vga_SelectWritePlane
-	jp Start_8bit_Timer_3
+	jp Timer3_Start
 
 ; Boot_InitWorkRAM -- Early-boot DRAM initialisation
 ;
@@ -600,7 +600,7 @@ UI_SUBSTATE_PROCESS_A:
 	res 1, (1043:16)
 	res 0, (1044:16)
 	ld a, 0x2:opc
-	call TaskSched_SignalEvent_NoBlock
+	call TaskEvent_Signal_NoResched
 	jr UIStateMachine_ExitToScheduler
 
 UI_SUBSTATE_CLEAR_BIT3:
@@ -625,7 +625,7 @@ UI_SUBSTATE_ACTION_3:
 UIStateMachine_ExitToScheduler:
 	pop xhl
 	popw wa
-	jp INTT3_CheckNesting
+	jp IRQ_Epilogue
 
 INTTR4_HANDLER:
 	pushw wa
@@ -1947,10 +1947,10 @@ Checksum_AccumulateLoop:
 	cpl hl
 	ret
 
-; TaskSched_TaskTable -- the five tasks TaskSched_SpawnTask starts, numbered from 1 (it adds
+; TaskSched_TaskDescriptorTable -- the five tasks Kernel_StartTask starts, numbered from 1 (it adds
 ;          A*12 to the table address minus 12).  Each record: the entry point, the initial stack top (it builds
 ;          the first frame 0x22 below it), the initial SR word stored in that frame, the priority byte, 0.
-TaskSched_TaskTable:
+TaskSched_TaskDescriptorTable:
 	.long	Boot_InitPeripherals, 0x0001dc34	; task 1
 	.short	0x8800
 	.byte	3, 0
@@ -1966,10 +1966,10 @@ TaskSched_TaskTable:
 	.long	DrawTask_Main, 0x0001d032	; task 5
 	.short	0x8800
 	.byte	3, 0
-; one byte per queue, all 1: TaskSched_Init copies these 10 next to the 10 queue heads at RAM 0x4D1 (to 0x4F9),
+; one byte per queue, all 1: Kernel_InitRam copies these 10 next to the 10 queue heads at RAM 0x4D1 (to 0x4F9),
 ; and the next 12 next to the 12 at 0x503 (to 0x533)
-TaskSched_ExtQueueByteInit:	.byte	1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-TaskSched_ExtQueue2ByteInit:	.byte	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+TaskSched_EventFlagInit:	.byte	1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+TaskSched_SemaphoreInit:	.byte	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 ; task 3's entry: spins forever (priority 1)
 TaskSched_IdleTask:
 	jr	TaskSched_IdleTask
@@ -1979,15 +1979,15 @@ INTT3_PriorityAdjust:
 	jr nz, INTT3_PriorityAdjust_Active
 	ld a, 0x5:opc
 	ld c, 0x2:opc
-	jrl TaskSched_ChangePriority_Inline
+	jrl Kernel_SetTaskLevel_NoDispatch
 
 INTT3_PriorityAdjust_Active:
 	ld a, 0x3:opc
-	calr TaskSched_YieldToQueue_NoBlock
+	calr Kernel_RotateQueue
 	ld a, 0x5:opc
 	ld c, 0x3:opc
-	jrl TaskSched_ChangePriority_Inline
-TaskTimer_NullCallback:
+	jrl Kernel_SetTaskLevel_NoDispatch
+TaskSched_NullTimerCallback:
 	ret
 
 INTT3_HANDLER:
@@ -1998,9 +1998,9 @@ INTT3_HANDLER:
 	calr INTT3_PriorityAdjust
 	popw bc
 	popw wa
-	jrl INTT3_CheckNesting
+	jrl IRQ_Epilogue
 
-TaskSched_Init:
+Kernel_InitRam:
 	ld xsp, 0x1e53a
 	xor wa, wa
 	ld (1159:16), wa
@@ -2012,32 +2012,32 @@ TaskSched_Init:
 	ld de, 4:i3
 	ld b, 0x3:opc
 
-TaskSched_InitPriorityQueues:
+Kernel_InitRam__ready_queues:
 	ld ix, hl
 	ld (xhl+), IX
 	ld (xhl+), IX
-	djnz8 b, TaskSched_InitPriorityQueues
+	djnz8 b, Kernel_InitRam__ready_queues
 	ldw ix, 0x489
 	extz xix
 	ld b, 0x5:opc
 	ld a, 0x0:opc
 
-TaskSched_InitTCBFields:
+Kernel_InitRam__tcbs:
 	ld (xix + 9), a
 	ld (xix + 10), 0x0
 	ld (xix + 11), 0x0
 	add ix, 0xc
-	djnz8 b, TaskSched_InitTCBFields
+	djnz8 b, Kernel_InitRam__tcbs
 	ldw ix, 0x5bb
 	extz xix
 	ld b, 0x1:opc
 	ld xwa, 0xffffffff
 
-TaskSched_InitTimerSlots:
+Kernel_InitRam__soft_timers:
 	ld (xix + 4), xwa
 	add ix, 0x8
-	djnz8 b, TaskSched_InitTimerSlots
-	ld xhl, TaskSched_ExtQueueByteInit
+	djnz8 b, Kernel_InitRam__soft_timers
+	ld xhl, TaskSched_EventFlagInit
 	ldw de, 0x4f9
 	extz xde
 	ldw bc, 0xa
@@ -2046,12 +2046,12 @@ TaskSched_InitTimerSlots:
 	extz xhl
 	ld b, 0xa:opc
 
-TaskSched_InitExtQueues:
+TaskSched_Init_QueueGroup_B:
 	ld ix, hl
 	ld (xhl+), IX
 	ld (xhl+), IX
-	djnz8 b, TaskSched_InitExtQueues
-	ld xhl, TaskSched_ExtQueue2ByteInit
+	djnz8 b, TaskSched_Init_QueueGroup_B
+	ld xhl, TaskSched_SemaphoreInit
 	ldw de, 0x533
 	extz xde
 	ldw bc, 0xc
@@ -2060,20 +2060,20 @@ TaskSched_InitExtQueues:
 	extz xhl
 	ld b, 0xc:opc
 
-TaskSched_InitExtQueues2:
+Kernel_InitRam__sema_queues:
 	ld ix, hl
 	ld (xhl+), IX
 	ld (xhl+), IX
-	djnz8 b, TaskSched_InitExtQueues2
+	djnz8 b, Kernel_InitRam__sema_queues
 	ldw hl, 0x567
 	extz xhl
 	ld b, 0xa:opc
 	ld xwa, 0xffffffff
 
-TaskSched_InitFreeList:
+Kernel_InitRam__free_nodes:
 	ld (xhl + 4), xwa
 	add hl, 0x8
-	djnz8 b, TaskSched_InitFreeList
+	djnz8 b, Kernel_InitRam__free_nodes
 	ldw iy, 0x5b7
 	extz xiy
 	ld (xiy + 0:8), iy
@@ -2081,7 +2081,7 @@ TaskSched_InitFreeList:
 	ldw ix, 0x567
 	ld b, 0xa:opc
 
-TaskSched_LinkFreeSlots:
+Kernel_InitRam__free_append:
 	extz xix
 	extz xiy
 	xor xwa, xwa
@@ -2091,66 +2091,66 @@ TaskSched_LinkFreeSlots:
 	ld (xwa), ix
 	ld (xiy + 2), ix
 	add ix, 0x8
-	djnz8 b, TaskSched_LinkFreeSlots
+	djnz8 b, Kernel_InitRam__free_append
 	ldw hl, 0x53f
 	extz xhl
 	ld b, 0x5:opc
 
-TaskSched_InitLockQueues:
+Kernel_InitRam__wait_queues:
 	ld ix, hl
 	ld (xhl+), IX
 	ld (xhl+), IX
-	djnz8 b, TaskSched_InitLockQueues
+	djnz8 b, Kernel_InitRam__wait_queues
 	ldw hl, 0x553
 	extz xhl
 	ld b, 0x5:opc
 
-TaskSched_InitMsgQueues:
+Kernel_InitRam__msg_queues:
 	ld	ix, hl
 	ld	(xhl+), ix
 	ld	(xhl+), ix
-	djnz8	b, TaskSched_InitMsgQueues
-	ld	xwa, TaskSched_TimerDesc_Slot1
-	jr	TaskSched_PostInit
-TaskSched_TimerDesc_Slot1:
-	; The descriptor TaskSched_InitMsgQueues passes to TaskTimer_Register in XWA.  TaskTimer_Register
-	; reads byte +0 as the timer slot; +4 is TaskTimer_NullCallback, a bare `ret`.  Was decoded as
+	djnz8	b, Kernel_InitRam__msg_queues
+	ld	xwa, SoftTimer_Request_Boot
+	jr	Kernel_InitRam__install
+SoftTimer_Request_Boot:
+	; The descriptor Kernel_InitRam__msg_queues passes to SoftTimer_Register in XWA.  SoftTimer_Register
+	; reads byte +0 as the timer slot; +4 is TaskSched_NullTimerCallback, a bare `ret`.  Was decoded as
 	; `normal / nop / normal / nop / jr pe, 25 / .byte 0xef / nop`.
 	.byte	1, 0, 1, 0
-	.long	TaskTimer_NullCallback
-TaskSched_PostInit:
-	call TaskTimer_Register
-	calr Stop_and_Clear_8bit_Timer_3
+	.long	TaskSched_NullTimerCallback
+Kernel_InitRam__install:
+	call SoftTimer_Register
+	calr Timer3_Stop
 	ld (TREG3:8), 0x07:io
 	ld	a, (INTET23:8)
 	and a, 0xf
 	or a, 0x20
 	ld	(INTET23:8), a
-	calr Start_8bit_Timer_3
+	calr Timer3_Start
 	ld a, 0x1:opc
-	calr TaskSched_SpawnTask
+	calr Kernel_StartTask
 	ei 6
 	ld (1157:16), 0
 	xor wa, wa
 	ldc_cr16 wa, 0x7c
 	ld (1475:16), wa
-	jrl TaskSched_Dispatch
+	jrl Kernel_Dispatch
 
-TaskSched_AllIdle:
+Kernel_Idle:
 	ei 0
 	ld (305:16), 255
 
-TaskSched_HaltLoop:
-	jr TaskSched_HaltLoop
+Kernel_Idle__loop:
+	jr Kernel_Idle__loop
 
-TaskSched_Dispatch:
+Kernel_Dispatch:
 	ld (305:16), 0
 	ld wa, (1475:16)
 	or wa, wa
-	jr nz, TaskSched_ReturnToDispatch
+	jr nz, Kernel_ResumeTask
 	xor wa, wa
 	cp (1159:16), wa
-	jr z, TaskSched_ScanPriorityQueues
+	jr z, Kernel_Dispatch__pick_task
 	ld iy, (1159:16)
 	extz xiy
 	ld (xiy + 4), xsp
@@ -2158,20 +2158,20 @@ TaskSched_Dispatch:
 	xor wa, wa
 	ld (1159:16), wa
 
-TaskSched_ScanPriorityQueues:
+Kernel_Dispatch__pick_task:
 	ld b, 0x3:opc
 	ldw ix, 0x4c5
 	extz xix
 
-TaskSched_ScanQueue_Loop:
+Kernel_Dispatch__scan:
 	ld hl, (xix + 0:8)
 	cp hl, ix
-	jr nz, TaskSched_FoundReadyTask
+	jr nz, Kernel_Dispatch__switch_to
 	inc 4, ix
-	djnz8 b, TaskSched_ScanQueue_Loop
-	jr TaskSched_AllIdle
+	djnz8 b, Kernel_Dispatch__scan
+	jr Kernel_Idle
 
-TaskSched_FoundReadyTask:
+Kernel_Dispatch__switch_to:
 	ld (1159:16), hl
 	extz xhl
 	ld a, (xhl + 11)
@@ -2179,7 +2179,7 @@ TaskSched_FoundReadyTask:
 	ld (305:16), a
 	ld xsp, (xhl + 4)
 
-TaskSched_ReturnToDispatch:
+Kernel_ResumeTask:
 	pop xiz
 	pop xiy
 	pop xix
@@ -2191,7 +2191,7 @@ TaskSched_ReturnToDispatch:
 	ret
 
 
-TaskSched_TimerTick:
+Kernel_ServiceSoftTimers:
 	ld wa, (1475:16)
 	inc 1, wa
 	ld (1475:16), wa
@@ -2201,20 +2201,20 @@ TaskSched_TimerTick:
 	extz xix
 	ld b, 0x1:opc
 
-TaskSched_CheckTimerSlot:
+Kernel_ServiceSoftTimers__next:
 	ld xwa, (xix + 4)
 	cp xwa, 0xffffffff
-	jr z, TaskSched_TimerSlot_Skip
+	jr z, Kernel_ServiceSoftTimers__step
 
 	ld wa, (xix + 0:8)
 	dec 1, wa
 	ld (xix + 0:8), wa
 	or wa, wa
-	jr z, TaskSched_TimerSlot_Fire
+	jr z, Kernel_ServiceSoftTimers__fire
 
-TaskSched_TimerSlot_Skip:
+Kernel_ServiceSoftTimers__step:
 	add ix, 0x8
-	djnz8 b, TaskSched_CheckTimerSlot
+	djnz8 b, Kernel_ServiceSoftTimers__next
 	ei 6
 	ld wa, (1475:16)
 	dec 1, wa
@@ -2222,27 +2222,27 @@ TaskSched_TimerSlot_Skip:
 	ldc_cr16 wa, 0x7c
 	ret
 
-TaskSched_TimerSlot_Fire:
+Kernel_ServiceSoftTimers__fire:
 	ld wa, (xix + 2)
 	ld (xix + 0:8), wa
-	lda xwa, (TaskSched_TimerSlot_Skip:24)
+	lda xwa, (Kernel_ServiceSoftTimers__step:24)
 	push xwa
 	ld xwa, (xix + 4)
 	jp (xwa)
 
 
-INTT3_CheckNesting:
+IRQ_Epilogue:
 	pushw wa
 	ld wa, (1475:16)
 	cp wa, 1:i3
-	jr z, INTT3_EnterScheduler
+	jr z, IRQ_Epilogue__enter_kernel
 	dec 1, wa
 	ld (1475:16), wa
 	ldc_cr16 wa, 0x7c
 	popw wa
 	reti
 
-INTT3_EnterScheduler:
+IRQ_Epilogue__enter_kernel:
 	xor wa, wa
 	ld (1475:16), wa
 	ldc_cr16 wa, 0x7c
@@ -2257,21 +2257,21 @@ INTT3_EnterScheduler:
 	push xix
 	push xiy
 	push xiz
-	jrl TaskSched_Dispatch
+	jrl Kernel_Dispatch
 
 ; ===========================================================================
-; TaskSched_SpawnTask - start task A (1-5) of TaskSched_TaskTable
+; Kernel_StartTask - start task A (1-5) of TaskSched_TaskDescriptorTable
 ; ===========================================================================
 ; Entry: A = task number (WA from the callers: 2 = DiskStream_ReaderTask, 4 = MainTitle_TeardownAndLoop,
 ;        5 = DrawTask_Main)
 ; Does:  if the task's TCB (0x47D + 12*A) is idle (+9 = 0), stores the task number at +11, builds the task's
 ;        first frame 0x22 below its stack top (initial SR word, entry point), stores the frame pointer at +4 and
 ;        the priority at +8, marks it ready (+9 := 4, +10 := 0), links it at the tail of ready queue
-;        0x4C1 + 4*priority, and enters TaskSched_Dispatch; a task that is not idle makes it return at once
-;        (TaskSched_ReturnToDispatch).  Its sub-CPU twin (v142) has the same name: an aligned run of 63 B at +32
+;        0x4C1 + 4*priority, and enters Kernel_Dispatch; a task that is not idle makes it return at once
+;        (Kernel_ResumeTask).  Its sub-CPU twin (v142) has the same name: an aligned run of 63 B at +32
 ;        (technics-docs cpu-subsystem.md).  Called "Show_ScreenGroup" until 2026-10-17; it draws nothing.
 ; ===========================================================================
-TaskSched_SpawnTask:
+Kernel_StartTask:
 	push	sr
 	ei 6
 	push xhl
@@ -2285,7 +2285,7 @@ TaskSched_SpawnTask:
 	ld l, 0xc:opc
 	mul hl, a
 	extz xhl
-	add xhl, TaskSched_TaskTable - 12	; tasks are numbered from 1
+	add xhl, TaskSched_TaskDescriptorTable - 12	; tasks are numbered from 1
 	ld c, 0xc:opc
 	mul bc, a
 	add bc, 0x47d
@@ -2293,7 +2293,7 @@ TaskSched_SpawnTask:
 	ld xix, xbc
 	ld a, (xix + 9)
 	cp a, 0:i3
-	jrl nz, TaskSched_ReturnToDispatch
+	jrl nz, Kernel_ResumeTask
 	ld (xix + 11), w
 	ld xiy, (xhl + 4)
 	sub xiy, 0x22
@@ -2319,13 +2319,13 @@ TaskSched_SpawnTask:
 	ld (xix + 2), wa
 	ld (xwa), ix
 	ld (xiy + 2), ix
-	jrl TaskSched_Dispatch
-; TaskSched_ExitCurrentTask: Ends the calling task: on the scheduler stack (XSP := 0x1E53A) clears the current task's
+	jrl Kernel_Dispatch
+; Kernel_ExitTask: Ends the calling task: on the scheduler stack (XSP := 0x1E53A) clears the current task's
 ;   TCB (0x487) bytes +9/+10, sets the current task to 0, unlinks the TCB from its queue (+0 next, +2 prev) and enters
-;   TaskSched_Dispatch; it never returns. Basis: callers + body -- DiskStream_ReaderTask calls it as its last action
-;   once the stream is read (0x2357E := 0); TaskSched_SpawnTask is the start side (TCB +9 := 4, linked into queue 0x4C1 +
+;   Kernel_Dispatch; it never returns. Basis: callers + body -- DiskStream_ReaderTask calls it as its last action
+;   once the stream is read (0x2357E := 0); Kernel_StartTask is the start side (TCB +9 := 4, linked into queue 0x4C1 +
 ;   4 * priority).
-TaskSched_ExitCurrentTask:
+Kernel_ExitTask:
 	ei 6
 	ld xsp, 0x1e53a
 	ld ix, (1159:16)
@@ -2341,12 +2341,12 @@ TaskSched_ExitCurrentTask:
 	ld hl, (xix + 2)
 	ld (xhl + 0:8), wa
 	ld (xwa + 2), hl
-	jrl TaskSched_Dispatch
+	jrl Kernel_Dispatch
 
-TaskSched_GetCurrentGroup:
+TaskSched_GetCurrentTaskId:
 	ld hl, (1475:16)
 	or hl, hl
-	jr nz, TaskSched_GetCurrentGroup_Nested
+	jr nz, TaskSched_ReturnZero
 	push xix
 	ld ix, (1159:16)
 	extz xix
@@ -2355,11 +2355,11 @@ TaskSched_GetCurrentGroup:
 	pop xix
 	ret
 
-TaskSched_GetCurrentGroup_Nested:
+TaskSched_ReturnZero:
 	xor hl, hl
 	ret
 
-TaskSched_YieldToQueue:
+Kernel_YieldRotate:
 	push	sr
 	ei 6
 	push xhl
@@ -2376,7 +2376,7 @@ TaskSched_YieldToQueue:
 	extz xiy
 	ld ix, (xiy + 0:8)
 	cp ix, (xiy + 2)
-	jrl z, TaskSched_ReturnToDispatch
+	jrl z, Kernel_ResumeTask
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -2392,9 +2392,9 @@ TaskSched_YieldToQueue:
 	ld (xix + 2), wa
 	ld (xwa), ix
 	ld (xiy + 2), ix
-	jrl TaskSched_Dispatch
+	jrl Kernel_Dispatch
 
-TaskSched_YieldToQueue_NoBlock:
+Kernel_RotateQueue:
 	push xwa
 	push xix
 	push xiy
@@ -2406,7 +2406,7 @@ TaskSched_YieldToQueue_NoBlock:
 	extz xiy
 	ld ix, (xiy + 0:8)
 	cp ix, (xiy + 2)
-	jr z, TaskSched_YieldToQueue_NoBlock_Return
+	jr z, Kernel_RotateQueue__ret
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -2423,14 +2423,14 @@ TaskSched_YieldToQueue_NoBlock:
 	ld (xwa), ix
 	ld (xiy + 2), ix
 
-TaskSched_YieldToQueue_NoBlock_Return:
+Kernel_RotateQueue__ret:
 	pop xhl
 	pop xiy
 	pop xix
 	pop xwa
 	ret
 
-TaskSched_Resume:
+Kernel_BlockSelf:
 	push	sr
 	ei 6
 	push xhl
@@ -2444,7 +2444,7 @@ TaskSched_Resume:
 	extz xix
 	ld a, (xix + 10)
 	cp a, 0:i3
-	jr nz, TaskSched_Resume_DecrementWait
+	jr nz, TaskSched_Block_Self_Consume
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -2453,14 +2453,14 @@ TaskSched_Resume:
 	ld (xhl + 0:8), wa
 	ld (xwa + 2), hl
 	ld (xix + 9), 0x3
-	jrl TaskSched_Dispatch
+	jrl Kernel_Dispatch
 
-TaskSched_Resume_DecrementWait:
+TaskSched_Block_Self_Consume:
 	dec 1, a
 	ld (xix + 10), a
-	jrl TaskSched_ReturnToDispatch
+	jrl Kernel_ResumeTask
 
-TaskSched_WakeBySlotID:
+Kernel_ReadyTask:
 	push	sr
 	ei 6
 	push xhl
@@ -2475,7 +2475,7 @@ TaskSched_WakeBySlotID:
 	ld ix, wa
 	extz xix
 	cp (xix + 9), 0x3
-	jr nz, TaskSched_WakeBySlotID_Pending
+	jr nz, TaskSched_Wake_Task_Count
 	ld (xix + 9), 0x4
 	ld a, (xix + 8)
 	sll a, 2
@@ -2490,11 +2490,11 @@ TaskSched_WakeBySlotID:
 	ld (xix + 2), wa
 	ld (xwa), ix
 	ld (xiy + 2), ix
-	jrl TaskSched_Dispatch
+	jrl Kernel_Dispatch
 
-TaskSched_WakeBySlotID_Pending:
+TaskSched_Wake_Task_Count:
 	incm8 1, (xix + 10)
-	jrl TaskSched_Dispatch
+	jrl Kernel_Dispatch
 	push xwa
 	push xix
 	push xiy
@@ -2505,7 +2505,7 @@ TaskSched_WakeBySlotID_Pending:
 	ld ix, wa
 	extz xix
 	cp (xix + 9), 0x3
-	jr nz, TaskSched_WakeInline_Pending
+	jr nz, TaskSched_Wake_Task_NoResched_Count
 	ld (xix + 9), 0x4
 	ld a, (xix + 8)
 	sll a, 2
@@ -2521,16 +2521,16 @@ TaskSched_WakeBySlotID_Pending:
 	ld (xwa), ix
 	ld (xiy + 2), ix
 
-TaskSched_WakeInline_Return:
+Kernel_ReadyTask_NoDispatch__done:
 	pop	sr
 	pop xiy
 	pop xix
 	pop xwa
 	ret
 
-TaskSched_WakeInline_Pending:
+TaskSched_Wake_Task_NoResched_Count:
 	incm8 1, (xix + 10)
-	jr TaskSched_WakeInline_Return
+	jr Kernel_ReadyTask_NoDispatch__done
 	push	sr
 	ei 6
 	push xhl
@@ -2546,9 +2546,9 @@ TaskSched_WakeInline_Pending:
 	extz xix
 	ld l, (xix + 10)
 	ld (xix + 10), 0x0
-	jrl TaskSched_ReturnToDispatch
+	jrl Kernel_ResumeTask
 
-TaskSched_SignalEvent:
+TaskEvent_Signal:
 	push	sr
 	ei 6
 	push xhl
@@ -2566,14 +2566,14 @@ TaskSched_SignalEvent:
 	extz xiy
 	ld ix, (xiy + 0:8)
 	cp ix, iy
-	jr nz, TaskSched_SignalEvent_Unlink
+	jr nz, TaskEvent_Signal_Wake
 	extz hl
 	add hl, 0x4f8
 	extz xhl
 	setm 0, (xhl)
-	jrl TaskSched_ReturnToDispatch
+	jrl Kernel_ResumeTask
 
-TaskSched_SignalEvent_Unlink:
+TaskEvent_Signal_Wake:
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -2595,9 +2595,9 @@ TaskSched_SignalEvent_Unlink:
 	ld (xix + 2), wa
 	ld (xwa), ix
 	ld (xiy + 2), ix
-	jrl TaskSched_Dispatch
+	jrl Kernel_Dispatch
 
-TaskSched_SignalEvent_NoBlock:
+TaskEvent_Signal_NoResched:
 	push xwa
 	push xix
 	push xiy
@@ -2612,7 +2612,7 @@ TaskSched_SignalEvent_NoBlock:
 	ei 6
 	ld ix, (xiy + 0:8)
 	cp ix, iy
-	jr nz, TaskSched_SignalEvent_NoBlock_Unlink
+	jr nz, TaskEvent_Signal_NoResched_Wake
 	extz hl
 	add hl, 0x4f8
 	extz xhl
@@ -2624,7 +2624,7 @@ TaskSched_SignalEvent_NoBlock:
 	pop xwa
 	ret
 
-TaskSched_SignalEvent_NoBlock_Unlink:
+TaskEvent_Signal_NoResched_Wake:
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -2653,7 +2653,7 @@ TaskSched_SignalEvent_NoBlock_Unlink:
 	pop xwa
 	ret
 
-TaskSched_WaitForEvent:
+TaskEvent_Wait:
 	push	sr
 	ei 6
 	push xhl
@@ -2668,11 +2668,11 @@ TaskSched_WaitForEvent:
 	add wa, 0x4f8
 	extz xwa
 	bitm 0, (xwa)
-	jr z, TaskSched_WaitForEvent_Block
+	jr z, TaskEvent_Wait_SuspendTask
 	resm 0, (xwa)
-	jrl TaskSched_ReturnToDispatch
+	jrl Kernel_ResumeTask
 
-TaskSched_WaitForEvent_Block:
+TaskEvent_Wait_SuspendTask:
 	ld ix, (1159:16)
 	extz xix
 	xor xwa, xwa
@@ -2694,7 +2694,7 @@ TaskSched_WaitForEvent_Block:
 	ld (xix + 2), wa
 	ld (xwa), ix
 	ld (xiy + 2), ix
-	jrl TaskSched_Dispatch
+	jrl Kernel_Dispatch
 	extz wa
 	add wa, 0x4f8
 	extz xwa
@@ -2705,15 +2705,15 @@ TaskSched_WaitForEvent_Block:
 	ret
 
 ; ===========================================================================
-; Audio_Lock_Release - Release inter-CPU communication lock
+; Kernel_SemaSignal - Release inter-CPU communication lock
 ; ===========================================================================
 ; Entry: A = lock index (0-7)
 ; Exit:  Lock released, next waiting request (if any) is signaled
 ; Notes: Increments counter at (0x0532 + lock_index)
 ;        Processes linked list at 0x0487 to wake waiting tasks
-;        Must be paired with Audio_Lock_Acquire
+;        Must be paired with Kernel_SemaWait
 ; ===========================================================================
-Audio_Lock_Release:
+Kernel_SemaSignal:
 	push	sr
 	ei 6
 	push xhl
@@ -2731,19 +2731,19 @@ Audio_Lock_Release:
 	extz xiy
 	ld ix, (xiy + 0:8)
 	cp ix, iy
-	jr nz, AudioLock_Release_WakeWaiter
+	jr nz, Kernel_SemaSignal__wake
 	extz hl
 	add hl, 0x532
 	extz xhl
 	ld a, (xhl)
 	inc 1, a
-	jr z, AudioLock_Release_NoWaiter_Done
+	jr z, Kernel_SemaSignal__return
 	ld (xhl), a
 
-AudioLock_Release_NoWaiter_Done:
-	jrl TaskSched_ReturnToDispatch
+Kernel_SemaSignal__return:
+	jrl Kernel_ResumeTask
 
-AudioLock_Release_WakeWaiter:
+Kernel_SemaSignal__wake:
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -2765,7 +2765,7 @@ AudioLock_Release_WakeWaiter:
 	ld (xix + 2), wa
 	ld (xwa), ix
 	ld (xiy + 2), ix
-	jrl TaskSched_Dispatch
+	jrl Kernel_Dispatch
 	push xwa
 	push xix
 	push xiy
@@ -2780,16 +2780,16 @@ AudioLock_Release_WakeWaiter:
 	ei 6
 	ld ix, (xiy + 0:8)
 	cp ix, iy
-	jr nz, AudioLock_Release_NB_WakeWaiter
+	jr nz, Kernel_SemaSignal_NoDispatch__wake
 	extz hl
 	add hl, 0x532
 	extz xhl
 	ld a, (xhl)
 	inc 1, a
-	jr z, AudioLock_Release_NB_Saturated
+	jr z, Kernel_SemaSignal_NoDispatch__return
 	ld (xhl), a
 
-AudioLock_Release_NB_Saturated:
+Kernel_SemaSignal_NoDispatch__return:
 	pop	sr
 	pop xhl
 	pop xiy
@@ -2797,7 +2797,7 @@ AudioLock_Release_NB_Saturated:
 	pop xwa
 	ret
 
-AudioLock_Release_NB_WakeWaiter:
+Kernel_SemaSignal_NoDispatch__wake:
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -2827,16 +2827,16 @@ AudioLock_Release_NB_WakeWaiter:
 	ret
 
 ; ===========================================================================
-; Audio_Lock_Acquire - Acquire inter-CPU communication lock
+; Kernel_SemaWait - Acquire inter-CPU communication lock
 ; ===========================================================================
 ; Entry: A = lock index (0-7)
 ; Exit:  Lock acquired, safe to send audio commands
 ; Notes: Decrements counter at (0x0532 + lock_index)
 ;        If counter is zero, adds request to linked list at 0x0487 and waits
-;        Must be paired with Audio_Lock_Release after sending commands
+;        Must be paired with Kernel_SemaSignal after sending commands
 ;        Used by audio subsystem to serialize access to Sub-CPU communication
 ; ===========================================================================
-Audio_Lock_Acquire:
+Kernel_SemaWait:
 	push	sr
 	ei 6
 	push xhl
@@ -2851,11 +2851,11 @@ Audio_Lock_Acquire:
 	add wa, 0x532
 	extz xwa
 	cp (xwa), 0x0
-	jr z, AudioLock_Acquire_Block
+	jr z, Kernel_SemaWait__block
 	decm8 1, (xwa)
-	jrl TaskSched_ReturnToDispatch
+	jrl Kernel_ResumeTask
 
-AudioLock_Acquire_Block:
+Kernel_SemaWait__block:
 	ld ix, (1159:16)
 	extz xix
 	xor xwa, xwa
@@ -2877,28 +2877,28 @@ AudioLock_Acquire_Block:
 	ld (xix + 2), wa
 	ld (xwa), ix
 	ld (xiy + 2), ix
-	jrl TaskSched_Dispatch
+	jrl Kernel_Dispatch
 
-AudioLock_TryAcquire:
+Kernel_SemaTryWait:
 	extz wa
 	add wa, 0x532
 	extz xwa
 	push	sr
 	ei 6
 	cp (xwa), 0x0
-	jr z, AudioLock_TryAcquire_Fail
+	jr z, Kernel_SemaTryWait__fail
 	decm8 1, (xwa)
 	xor hl, hl
-	jr AudioLock_TryAcquire_Return
+	jr Kernel_SemaTryWait__ret
 
-AudioLock_TryAcquire_Fail:
+Kernel_SemaTryWait__fail:
 	ldw hl, 0xffff
 
-AudioLock_TryAcquire_Return:
+Kernel_SemaTryWait__ret:
 	pop	sr
 	ret
 
-AudioLock_GetCount:
+TaskSem_GetCount:
 	extz wa
 	add wa, 0x532
 	extz xwa
@@ -2906,7 +2906,7 @@ AudioLock_GetCount:
 	extz hl
 	ret
 
-TaskMsg_Send:
+MsgQueue_Send:
 	push	sr
 	ei 6
 	push xhl
@@ -2925,12 +2925,12 @@ TaskMsg_Send:
 	extz xiy
 	ld ix, (xiy + 0:8)
 	cp ix, iy
-	jr nz, TaskMsg_Send_WakeReceiver
+	jr nz, MsgQueue_Send__wake
 	ld ix, (1463:16)
 	extz xix
 	ld iy, (xix + 0:8)
 	cp iy, ix
-	jrl z, TaskMsg_Send_QueueFull
+	jrl z, MsgQueue_Send__no_node
 	ldw (xsp + 24), 0x0
 	extz xix
 	xor xwa, xwa
@@ -2951,13 +2951,13 @@ TaskMsg_Send:
 	ld (xix + 2), wa
 	ld (xwa), ix
 	ld (xiy + 2), ix
-	jrl TaskSched_ReturnToDispatch
+	jrl Kernel_ResumeTask
 
-TaskMsg_Send_QueueFull:
+MsgQueue_Send__no_node:
 	ldw (xsp + 24), 0xffff
-	jrl TaskSched_ReturnToDispatch
+	jrl Kernel_ResumeTask
 
-TaskMsg_Send_WakeReceiver:
+MsgQueue_Send__wake:
 	ldw (xsp + 24), 0x0
 	extz xix
 	xor xwa, xwa
@@ -2982,7 +2982,7 @@ TaskMsg_Send_WakeReceiver:
 	ld (xix + 2), wa
 	ld (xwa), ix
 	ld (xiy + 2), ix
-	jrl TaskSched_Dispatch
+	jrl Kernel_Dispatch
 	push xwa
 	push xix
 	push xiy
@@ -3000,12 +3000,12 @@ TaskMsg_Send_WakeReceiver:
 	ei 6
 	ld ix, (xiy + 0:8)
 	cp ix, iy
-	jr nz, TaskMsg_Send_NB_WakeReceiver
+	jr nz, MsgQueue_Send_NoDispatch__wake
 	ld ix, (1463:16)
 	extz xix
 	ld iy, (xix + 0:8)
 	cp iy, ix
-	jrl z, TaskMsg_Send_NB_QueueFull
+	jrl z, MsgQueue_Send_NoDispatch__no_node
 	ldw (xsp + 4), 0x0
 	extz xix
 	xor xwa, xwa
@@ -3027,7 +3027,7 @@ TaskMsg_Send_WakeReceiver:
 	ld (xwa), ix
 	ld (xiy + 2), ix
 
-TaskMsg_Send_NB_Return:
+MsgQueue_Send_NoDispatch__ret:
 	pop	sr
 	pop xbc
 	pop xhl
@@ -3037,11 +3037,11 @@ TaskMsg_Send_NB_Return:
 	pop xwa
 	ret
 
-TaskMsg_Send_NB_QueueFull:
+MsgQueue_Send_NoDispatch__no_node:
 	ldw (xsp + 4), 0xffff
-	jr TaskMsg_Send_NB_Return
+	jr MsgQueue_Send_NoDispatch__ret
 
-TaskMsg_Send_NB_WakeReceiver:
+MsgQueue_Send_NoDispatch__wake:
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -3074,7 +3074,7 @@ TaskMsg_Send_NB_WakeReceiver:
 	pop xwa
 	ret
 
-TaskMsg_Receive:
+MsgQueue_ReceiveBlocking:
 	push	sr
 	ei 6
 	push xhl
@@ -3092,7 +3092,7 @@ TaskMsg_Receive:
 	extz xiy
 	ld ix, (xiy + 0:8)
 	cp ix, iy
-	jr z, TaskMsg_Receive_Block
+	jr z, MsgQueue_ReceiveBlocking__block
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -3113,9 +3113,9 @@ TaskMsg_Receive:
 	ld (xwa), ix
 	ld (xiy + 2), ix
 	ld (xsp + 24), xiz
-	jrl TaskSched_ReturnToDispatch
+	jrl Kernel_ResumeTask
 
-TaskMsg_Receive_Block:
+MsgQueue_ReceiveBlocking__block:
 	ld ix, (1159:16)
 	extz xix
 	xor xwa, xwa
@@ -3135,9 +3135,9 @@ TaskMsg_Receive_Block:
 	ld (xix + 2), wa
 	ld (xwa), ix
 	ld (xiy + 2), ix
-	jrl TaskSched_Dispatch
+	jrl Kernel_Dispatch
 
-TaskMsg_TryReceive:
+MsgQueue_Receive_NoBlock:
 	push xix
 	push xiz
 	sll a, 2
@@ -3149,7 +3149,7 @@ TaskMsg_TryReceive:
 	extz xiy
 	ld ix, (xiy + 0:8)
 	cp ix, iy
-	jr z, TaskMsg_TryReceive_Empty
+	jr z, MsgQueue_Receive_NoBlock__empty
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -3170,18 +3170,18 @@ TaskMsg_TryReceive:
 	ld (xwa), ix
 	ld (xiy + 2), ix
 	ld xhl, xiz
-	jr TaskMsg_TryReceive_Return
+	jr MsgQueue_Receive_NoBlock__ret
 
-TaskMsg_TryReceive_Empty:
+MsgQueue_Receive_NoBlock__empty:
 	xor xhl, xhl
 
-TaskMsg_TryReceive_Return:
+MsgQueue_Receive_NoBlock__ret:
 	pop	sr
 	pop xiz
 	pop xix
 	ret
 
-TaskTimer_Register:
+SoftTimer_Register:
 	push	sr
 	ei 6
 	push xhl
@@ -3202,9 +3202,9 @@ TaskTimer_Register:
 	ld (xiy + 2), wa
 	ld xwa, (xix + 4)
 	ld (xiy + 4), xwa
-	jrl TaskSched_Dispatch
+	jrl Kernel_Dispatch
 
-TaskSched_ChangePriority:
+Kernel_SetTaskLevel:
 	push	sr
 	ei 6
 	push xhl
@@ -3220,7 +3220,7 @@ TaskSched_ChangePriority:
 	ld ix, wa
 	extz xix
 	cp (xix + 9), 0x4
-	jr nz, TaskSched_ChangePriority_NotReady
+	jr nz, Kernel_SetTaskLevel__store_only
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -3241,13 +3241,13 @@ TaskSched_ChangePriority:
 	ld (xix + 2), wa
 	ld (xwa), ix
 	ld (xiy + 2), ix
-	jrl TaskSched_Dispatch
+	jrl Kernel_Dispatch
 
-TaskSched_ChangePriority_NotReady:
+Kernel_SetTaskLevel__store_only:
 	ld (xix + 8), e
-	jrl TaskSched_ReturnToDispatch
+	jrl Kernel_ResumeTask
 
-TaskSched_ChangePriority_Inline:
+Kernel_SetTaskLevel_NoDispatch:
 	push xwa
 	push xix
 	push xiy
@@ -3261,7 +3261,7 @@ TaskSched_ChangePriority_Inline:
 	push	sr
 	ei 6
 	cp (xix + 9), 0x4
-	jr nz, TaskSched_ChangePriority_Inline_NotReady
+	jr nz, Kernel_SetTaskLevel_NoDispatch__store_only
 	extz xix
 	xor xwa, xwa
 	xor xhl, xhl
@@ -3282,12 +3282,12 @@ TaskSched_ChangePriority_Inline:
 	ld (xix + 2), wa
 	ld (xwa), ix
 	ld (xiy + 2), ix
-	jr TaskSched_ChangePriority_Inline_Return
+	jr Task_Reassign_Guard_Return
 
-TaskSched_ChangePriority_Inline_NotReady:
+Kernel_SetTaskLevel_NoDispatch__store_only:
 	ld (xix + 8), e
 
-TaskSched_ChangePriority_Inline_Return:
+Task_Reassign_Guard_Return:
 	pop	sr
 	popw de
 	pop xhl
@@ -3296,7 +3296,7 @@ TaskSched_ChangePriority_Inline_Return:
 	pop xwa
 	ret
 
-TaskSched_TCBTemplate:
+Kernel_KillTask:
 	pushw	wa
 	push	xix
 	push	xiy
@@ -3330,11 +3330,11 @@ TaskSched_DelayTicks_SpinLoop:
 	jr gt, TaskSched_DelayTicks_SpinLoop
 	ret
 
-Start_8bit_Timer_3:
+Timer3_Start:
 	set	3, (T8RUN:8)
 	ret
 
-Stop_and_Clear_8bit_Timer_3:
+Timer3_Stop:
 	res	3, (T8RUN:8)
 	ret
 
@@ -5434,7 +5434,7 @@ sendCOMM:
 	ld iz, bc
 	ld (xsp + 6), a
 	ld wa, 2:i3
-	call Audio_Lock_Acquire
+	call Kernel_SemaWait
 	cp iz, 0x20
 	jr ule, sendCOMM_FinalChunk
 
@@ -5458,7 +5458,7 @@ sendCOMM_FinalChunk:
 	ld xde, (xsp + 2)
 	calr InterCPU_Send_Data_Block
 	ld wa, 2:i3
-	call Audio_Lock_Release
+	call Kernel_SemaSignal
 	popw iz
 	inc 6, xsp
 	ret
@@ -5839,9 +5839,9 @@ FlashBufferIO_Exit:
 ; 0xEF35C5-0xEF35D0 (`and A,0xf8 / set 0,A') when the count completes.
 ; INT0 therefore runs at 6 for the length of a payload burst and at 1 between
 ; bursts.  [INFERENCE] that looks deliberate: the scheduler spends its time at
-; `ei 6' (TaskSched_PostInit, TaskSched_TimerSlot_Skip), so a level-1 INT0 has
+; `ei 6' (Kernel_InitRam__install, Kernel_ServiceSoftTimers__step), so a level-1 INT0 has
 ; to wait for an unmasked window while a level-6 one does not.
-; The soft spot is the RTOS tick: at 0xEF1B63 INTT3_EnterScheduler executes
+; The soft spot is the RTOS tick: at 0xEF1B63 IRQ_Epilogue__enter_kernel executes
 ; `ei 0 / nop / ei 6', a one-instruction window at IFF=0 in which any PENDING
 ; interrupt, INT0 included, is admitted whatever its level.
 ;

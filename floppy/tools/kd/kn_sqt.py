@@ -26,7 +26,9 @@ QUESTION IT ANSWERS
   A chain that parses to 0x82 is typed event by event (sq_* macros, kn_song.inc); one that does not is left
   as the reference bytes of its cells, and the unit says where parsing stopped.
   The bytes after a track's 0x82 and the free cells are stale events in two orders (stale_tokens below,
-  k5_* macros): the rest that neither order explains is declared opaque.
+  k5_* macros), cut where an older layer begins (after a stale 0x82) or where the bytes end; of the rest, a run
+  of 0xFF is song memory no save wrote, and a run that is, at one alignment, mostly the bytes of one of the
+  file's song records is spelled as that record's image (record_image); what is left is declared opaque.
 """
 import collections
 import os
@@ -120,6 +122,42 @@ def _live_event(s, i):
     return 2 + n, '\t%s\t%d, %d%s' % (MAC[st & 0xF0], s[i], st & 15, ''.join(', %d' % b for b in d))
 
 
+def _layer_start(s, i):
+    """Is i where an older layer of stale bytes may begin?  At the start of the bytes (after the live 0x82,
+    or at a free cell's first byte) and right after a stale 0x82: each save wrote its stream from the cell's
+    start and ended it with 0x82, so the bytes after an end of track are an older save's, cut wherever the
+    newer one stopped (2026-11-06, lane kn7000-names; notes/floppy-leftovers-2026-10-31/README.md)."""
+    return i == 0 or s[i - 1] == 0x82
+
+
+def _data_ok(st, d):
+    """The data bytes d of tick-first status st have bit 7 clear (a note's beats and a bend's MSB excepted)."""
+    free = {0x90: 3, 0xE0: 1}.get(st & 0xF0)
+    return not any(b & 0x80 for k, b in enumerate(d) if k != free)
+
+
+def _cut_options(s, i):
+    """Tick-first events cut by the start of a layer or by the end of the bytes: [(length, line)]."""
+    out, N, x = [], len(s), s[i]
+    ticked = lambda st: st in LENGTHS and st not in UNTICKED
+    if _layer_start(s, i):
+        if x < 0x80:
+            # the data bytes of an event cut at the start: every prefix of the run, so that the bytes after it
+            # can start the next event (a tick)
+            j = i
+            while j < N and s[j] < 0x80:
+                j += 1
+            for m in range(1, j - i + 1):
+                out.append((m, '; data bytes of an event cut at the start'))
+        elif ticked(x) and N - i > LENGTHS[x] and _data_ok(x, s[i + 1:i + 1 + LENGTHS[x]]):
+            # status and data of a tick-first event whose tick was the last byte of the layer before
+            out.append((1 + LENGTHS[x], '; a tick-first event cut at the start (its tick is gone)'))
+    if x < 0x80 and i + 1 < N and ticked(s[i + 1]) and N - i < 2 + LENGTHS[s[i + 1]] \
+            and _data_ok(s[i + 1], s[i + 2:]):
+        out.append((N - i, '; the first %d bytes of a tick-first event, cut by the end' % (N - i)))
+    return out
+
+
 def _options(s, i):
     """Every token that can start at i: [(length, line)]."""
     out, x = [], s[i]
@@ -130,6 +168,7 @@ def _options(s, i):
     ev = _live_event(s, i)
     if ev:
         out.append(ev)
+    out += _cut_options(s, i)
     if x >= 0x80:
         n = 5 if x & 0xF0 == 0x90 else K5_LENGTHS.get(x)
         if n is not None:
@@ -190,11 +229,67 @@ def stale_tokens(s, min_resync=12):
     return out
 
 
-def stale_lines(s, ref, at):
-    """Lines spelling the stale bytes s, which sit at offset `at` of `ref`."""
+def _erased(r):
+    """Is r 0xFF but for at most two bytes with one bit clear?  The song memory's unused bytes are 0xFF (a free
+    cell is often 251 x 0xFF), so such a run is memory that no save wrote."""
+    odd = [b for b in r if b != 0xFF]
+    return len(odd) <= 2 and all(bin(b).count('1') == 7 for b in odd)
+
+
+def _erased_lines(r):
+    L, k = [], 0
+    while k < len(r):
+        q = k
+        while q < len(r) and r[q] == 0xFF:
+            q += 1
+        if q > k:
+            L.append('\t.fill\t%d, 1, 0xff\t; song memory no save wrote (it is 0xFF until written)' % (q - k))
+        if q < len(r):
+            L.append('\t.byte\t0x%02x\t; 0xFF with one bit clear' % r[q])
+            q += 1
+        k = q
+    return L
+
+
+IMAGE_MIN, IMAGE_SHARE = 64, 0.75
+
+
+def record_image(r, p1):
+    """(record offset, song, equal bytes) when the stale run r is, at one alignment, the bytes of a song record
+    of this file's part 1 (at least IMAGE_SHARE of them equal, r at least IMAGE_MIN bytes), else None.  Two
+    KN6000 runs are (notes/floppy-leftovers-2026-10-31/probes/sqt_record_images.py): the cell held a song
+    record's image before it held events [INFERENCE: how is not traced]."""
+    rl = RECORD_LEN.get(p1[5:7]) if p1 else None
+    if not rl or len(r) < IMAGE_MIN or len(r) > rl:
+        return None
+    cand = set()
+    for k in range(0, len(r) - 8, 4):
+        q = p1.find(r[k:k + 8])
+        while q >= 0:
+            if q - k >= 0 and q - k + len(r) <= len(p1):
+                cand.add(q - k)
+            q = p1.find(r[k:k + 8], q + 1)
+    best = None
+    for a in cand:
+        eq = sum(1 for x, y in zip(r, p1[a:a + len(r)]) if x == y)
+        if best is None or eq > best[0]:
+            best = (eq, a)
+    if best is None or best[0] < IMAGE_SHARE * len(r) or best[1] % rl + len(r) > rl:
+        return None
+    return best[1] % rl, best[1] // rl + 1, best[0]
+
+
+def stale_lines(s, ref, at, p1=None):
+    """Lines spelling the stale bytes s, which sit at offset `at` of `ref` (p1: the file's part 1)."""
     L = []
     for o, m, line in stale_tokens(s):
-        if line is None:
+        if line is None and _erased(s[o:o + m]):
+            L += _erased_lines(s[o:o + m])
+        elif line is None and record_image(s[o:o + m], p1):
+            ro, song, eq = record_image(s[o:o + m], p1)
+            L += ['\t; the image of song-record bytes +0x%X..+0x%X: %d of these %d equal song %d\'s in part 1'
+                  % (ro, ro + m - 1, eq, m, song)] + rows(s[o:o + m])
+        elif line is None:
             L += ['\t; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)',
                   '\t.incbin\t"%s", 0x%x, %d' % (ref, at + o, m)]
         elif line.startswith(';'):
@@ -307,7 +402,7 @@ def typer2(ctx, part, p2, ref, lab, p1):
                             lines.append('\t.fill\t%d, 1, 0x%02x\t; after the end of track' % (len(rest), rest[0]))
                         else:
                             lines.append('; after the end of track: stale events of an earlier version of the song (stale_tokens)')
-                            lines += stale_lines(rest, ref, (cc - 1) * 256 + 5 + (max(end, lo) - lo))
+                            lines += stale_lines(rest, ref, (cc - 1) * 256 + 5 + (max(end, lo) - lo), p1)
                 plan[cc] = lines
     L = ['\t.include\t"kn_song.inc"', '',
          '; %d cells of 256 bytes.  Tracks typed event by event: %d of %d.'
@@ -332,7 +427,7 @@ def typer2(ctx, part, p2, ref, lab, p1):
             L.append('\t.incbin\t"%s", 0x%x, 251\t; events of a track not typed (see above)' % (ref, b + 5))
         else:
             L.append('; a free cell: stale events of an earlier song (stale_tokens)')
-            L += stale_lines(body, ref, b + 5)
+            L += stale_lines(body, ref, b + 5, p1)
     return L
 
 

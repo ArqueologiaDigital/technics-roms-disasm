@@ -153,11 +153,17 @@ up instruction by instruction).
   LibLoadDescriptorTail).
 - `gen_data_s.py`: name the KN2400's unregistered titles from TitleNameTable (the research
   agent's diff, not applied: `title_names=(0x48414BD8, 0x140)`); InitModeTitleTable's
-  28-byte default record is typed as one word plus 24 opaque bytes.
+  28-byte default record is typed as one word plus 24 opaque bytes.  (2026-11-06, lane
+  kn7000-names: the default record is typed now, `TitleDefaultRecord`, 7 x u32; the 25 titles
+  to name are listed by `../kn7000-names-probes/names_kn2400_titles.py`; BLOCKED in wave 10 only
+  because `gen_data_s.py` was lane mn10300-data2's, `../kn7000-names/README.md`.)
 - `gen_data_s.py`, near the bitmap bit-count comment: drop the `[INFERENCE]` (N-c62a74fa).
 - N-fb88572c's frozen name map (design in `../gui-data-region/README.md`).
-- 941's data labels `SdReadBlockCmd_Var_2` / `SdReadBlockCmd_Table` are the mode-2 SD frames
-  at 0x50007E94.. (the IC18 SdFrameR2Cmd* table's twin); `func_484ABA68_Var..` are TickHookArg0..3.
+- ~~941's data labels `SdReadBlockCmd_Var_2` / `SdReadBlockCmd_Table` are the mode-2 SD frames
+  at 0x50007E94.. (the IC18 SdFrameR2Cmd* table's twin); `func_484ABA68_Var..` are TickHookArg0..3.~~
+  (Resolved 2026-11-06, lane kn7000-names: named in `kn7000_manual.sym`, `SdFrameR2Cmd0/5/3/6/7`
+  and `TickHookArg0..3`; the data labels follow at the next `make data-and-code-src`;
+  `../kn7000-names/README.md`.)
 
 ## Website page draft
 
@@ -210,19 +216,22 @@ the image).
 
 ## Found on the way, not fixed here
 
-- `src/b935/symbols.inc` sets `INITIAL_SP` to 941's 0x50021CF8, but 935's reset loads
+- (Resolved 2026-11-06, lane kn7000-names: `port_symbols.py` takes INITIAL_SP from the reset's
+  stack load, `../kn7000-names/README.md`.)  `src/b935/symbols.inc` sets `INITIAL_SP` to 941's 0x50021CF8, but 935's reset loads
   0x50021CCC (`notes/mn10300-names-probes/ramgui_reset_layout.py`); in 935 the name only spells
   `add INITIAL_SP, a0`, where the value is the base of 0x42-byte records, not the stack.
   `tools/port_symbols.py` moves a RAM name by the majority vote of the references near it, and
   the stack top moved -0x2C while its neighbours did not.  Next step: port the memory-map
   constants a build's reset code loads (INITIAL_SP) from that code, not by the vote.
-- `tools/port_names_by_code.py` takes B's candidates from its `func_<ADDR>` labels, which sit
+- (Resolved 2026-11-06, lane kn7000-names: `_entry` labels are candidates now,
+  `../kn7000-names/README.md`.)  `tools/port_names_by_code.py` takes B's candidates from its `func_<ADDR>` labels, which sit
   at an `add -N, sp` prologue; a name 941 gives the call entry 3 bytes later never matches,
   which is why 941's four DSP host-port names never reached 935 / 893
   (`../older-program-builds.md`).  Next step: compare a `_entry` name with the entry of B's
   prologue routines.
 - KN2400 `FilePriorityFunc` and the KN7000's `SdcPanelSwAsFunc` are the same routine by body;
-  both names come from reflection tables (`../sibling-name-port/README.md`).
+  both names come from reflection tables (`../sibling-name-port/README.md`).  (Resolved
+  2026-11-06: both are right, a template twin with different choice lists.)
 - The IC18 rhythm source grew from 14.4 MB to 21.1 MB when every note began to spell its
   conversion rule and every drum note its kit key; emptying `NCR_NAMES` in
   `tools/gen_ic18_rhythm_s.py` would save about 5.6 MB.  The owner decided on 2026-11-06 to keep the names ("keep the names. Yes!"),

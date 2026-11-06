@@ -3,8 +3,8 @@
 ; how a name qualifies. Columns: B address, name, ; the A address it was carried
 ; from and the number of instructions that matched (entry to first return).
 ;
-; 2 names carried (3613 candidates in A, 14819 routine starts in A, 6619 unnamed entries in B)
-; not carried: 562 A signatures with fewer than 8 unmasked instructions; 3 with a twin among A's routine starts;
+; 2 names carried (3889 candidates in A, 14867 routine starts in A, 10933 unnamed entries in B)
+; not carried: 588 A signatures with fewer than 8 unmasked instructions; 2 with a twin among A's routine starts;
 ; 0 whose name is taken in B
 0x4840B495  DspBootDefaultEffects	; = 0x4840537D, 44 insns
 0x4840B588  DspBootProbe	; = 0x48405470, 58 insns

@@ -30564,7 +30564,7 @@ loc_48412C3B:
     nop
     mulu    d1, d0
     mov     d0, a0
-    add     INITIAL_SP, a0
+    add     DspPresetRamRecords, a0
     rets
 loc_48412C4C:
     exthu   d1

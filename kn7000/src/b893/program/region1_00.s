@@ -12280,7 +12280,7 @@ ResetEntry:
     movbu   d1, (UNKNOWN_34004002)
 
 func_48407A69:
-    mov     0x50021cc8, a0
+    mov     INITIAL_SP, a0
     mov     a0, sp
     add     -0xc, sp
     call    func_484D6F01_entry, 0, 8
@@ -12573,7 +12573,7 @@ DspEffectAssign:
     movhu   d1, (0x2c, sp)
     movhu   d0, (0x28, sp)
     mov     0x500c6d44, d0
-    mov     d0, (0x50021cc8)
+    mov     d0, (INITIAL_SP)
     movhu   (0x28, sp), d0
     movhu   d0, (0x10, sp)
     mov     d1, d0
