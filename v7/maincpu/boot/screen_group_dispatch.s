@@ -34,7 +34,7 @@
 AudioDispatch_ClearVoiceFlags:
 	ld	(0xc162:16), 0
 AudioDispatch_SetBusyFlag:
-	orw	(0xc500:16), 0x1
+	orw	(AUDIO_STATE_CHANGES:16), 0x1
 ; Audio voice callback dispatch
 AudioVoice_Callback:
 	ld	a, (CURRENT_MODE:16)
@@ -80,7 +80,7 @@ AudioVoiceReset_Handler:
 	ld	(0xc220:16), 255
 	ld	(0xc164:16), 255
 	ld	(0xc165:16), 255
-	orw	(0xc500:16), 257
+	orw	(AUDIO_STATE_CHANGES:16), 257
 	andw	(AUDIO_CONFIG_UPDATE:16), 0xfffd
 	ld	a, (CURRENT_MODE:16)
 	extz	wa
@@ -228,7 +228,7 @@ UIStateEvt_VoiceAssign_Reset:
 	add	xwa, xbc
 	ld	(xwa), 0xff
 UIStateEvt_VoiceAssign_Notify:
-	orw	(0xc500:16), 2048
+	orw	(AUDIO_STATE_CHANGES:16), 2048
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
 UIStateEvt_ToneChange:
 	bit	5, e
@@ -269,7 +269,7 @@ UIStateEvt_ToneChange_Set:
 	jr	nz, Tone_WriteEndMarker
 	ld	(0xc17c:16), 22
 Tone_WriteEndMarker:
-	orw	(0xc500:16), 4
+	orw	(AUDIO_STATE_CHANGES:16), 4
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
 ; (v7 label ScreenGroup_InitFinalize stood here; dropped, see the file header)
 ; (was .incbin "includes/romslices/v7_block_screengroup_initfinalize.bin")

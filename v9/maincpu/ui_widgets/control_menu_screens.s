@@ -618,5 +618,5 @@ NakaWidget_TEST1CP:			.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x27
 ; transfer fails during boot. The dialog shows a severe hardware error
 ; that typically requires service center attention.
 ; ===========================================================================
-ErrorDialog_CautionHeader:
-	.byte 0x2b, 0x00	; class id 0x0160002b (Label), low half: index 0x2b
+; (ErrorDialog_CautionHeader, element 8, follows this file's .include in extensions/extension_data.s:
+;  until 2026-11-06 its first two bytes ended this file -- scripts/converters/naka_join_caution_header.py)

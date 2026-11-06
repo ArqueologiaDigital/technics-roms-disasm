@@ -3901,7 +3901,7 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
 
     /* ==== SCREEN TITLE_PMBKSEL -- "TT_PMBKSEL", title id 0xD0, function NAKA_APFUNC_DefaultFunction ====
      * What: the panel-memory bank-select page.
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: panel switch handler PmBankNamingCheck > (by BitMapOut_UpdateWidget_Finalize)
      * EXIT -> TITLE_NORMAL */
     .PMBANK = {
         .class_ = NAKA_CLASS(PmBankScreen),

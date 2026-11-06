@@ -160,7 +160,7 @@ IvSdpart_PartRow:	.incbin "includes/generated/naka_sequencer_channels.bin", 0xCC
 ; [nakarest] that copy was found.
 ; Part_CaptionStrPtrs: Initial image (WorkRamInit_Image + 0x147C, copied to RAM 0x3E9A0 by Boot_InitWorkRAM) of 27 x
 ;   u32 part-caption pointers indexed by part number -- "RIGHT 1:", "RIGHT 2:", "LEFT :", "PART 4 :" .. "PART 16:",
-;   "ACCOMP1:" .. "ACCOMP3:", "BASS :", "DRUM :", "CHORD :", "R.BASS :", "MSP :" x2, "CONTROL:", "METRO :" -- then 0;
+;   "ACCOMP1:" .. "ACCOMP3:", "BASS :", "DRUM :", "CHORD :", "R.BASS :", "MSP :" x2, "CONTROL:", "METRO :" (the 0 after them is AcWelcomScreen_SavedSteps[0].timer);
 ;   the accordion and drawbar part views draw entry [PART_SELECT]. Nothing about drawbar control. Basis: readers +
 ;   bytes.
 Part_CaptionStrPtrs:
@@ -179,19 +179,18 @@ Part_CaptionStrPtrs:
 	.long NakaInst_MSP
 	.long NakaInst_CONTROL
 	.long NakaInst_METRO
-	.long 0x00000000
-	.long 0xFFFFFFFF
-	.long 0xFFFF0002
-	.long 0x00000000
-	.long 0xFFFFFFFF
-	.long 0xFFFF0002
-	.long 0x00000000
-; [nakarest] naka_sequencer_channels+0xd54  +0xd54..+0xd5c (0xeeedcc, 8 B)
-; [nakarest] purpose not established: layout of 8 B at 0xeeedcc not derived; readers below
-; [nakarest] Readers: work-RAM image: Boot_InitWorkRAM copies these bytes to RAM
-; [nakarest] 0x3ea28..0x3ea30 (its ld xde/xhl/xbc + ldir blocks); no literal RAM reference into
-; [nakarest] that copy was found.
-	.incbin "includes/generated/naka_sequencer_channels.bin", 0xD54, 0x8
+; AcWelcomScreen_SavedSteps -- 3 WELCOME-script steps of 12 bytes (+0 u32 SetApTimer interval, +4 x,
+;   +6 y, +8 op, +10 argument), the power-on image of RAM 0x3EA0C / 0x3EA18 / 0x3EA24: the last step
+;   AcWelcomScreen_Select's op 2 drew in its slot 0 / 1 (`lda xwa, (0x03ea0c:24)` + 12 * argument) and
+;   ops 9 / 12 drew at 0x3EA24, which the next one blits away unless +10 is 0xFFFF.  Empty steps of
+;   those ops.  Basis: readers + bytes (scripts/converters/naka_type_welcome_steps.py).
+AcWelcomScreen_SavedSteps:
+	.long	0
+	.short	0xffff, 0xffff, 2, 0xffff
+	.long	0
+	.short	0xffff, 0xffff, 2, 0xffff
+	.long	0
+	.short	0xffff, 0xffff, 9, 0xffff
 MidiPart_ConfigNameTable:
 	.long PsMixer_BootDefaultRows
 	.long PsMixer_DefaultGridPartRows

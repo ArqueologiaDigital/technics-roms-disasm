@@ -190,11 +190,18 @@ def spell_structs(t):
     count = 0
     exact_name = {v: n for n, v in N_names(t).items()}
     base_of = {n0: s0 for s0, e0, n0 in spans}
+    size_of = {n0: e0 - s0 for s0, e0, n0 in spans}
     recref = re.compile(r'\b(%s)\+(\d+)\b' % "|".join(map(re.escape, base_of)))
 
     def to_exact(m):
-        """a REC+k written earlier whose address has since got a name of its own takes that name"""
-        v = base_of[m.group(1)] + int(m.group(2))
+        """a REC+k written earlier whose address has since got a name of its own takes that name.
+        Only a k INSIDE the record (k < its size) is a field; REC+size and beyond were written on purpose,
+        as an end-of-array bound (`cp xhl, ACC_BASS_NOTES+72`, wave 10), and are left alone even though
+        the next record starts there -- so a rerun of this tool is a no-op on them."""
+        k = int(m.group(2))
+        if k >= size_of[m.group(1)]:
+            return m.group(0)
+        v = base_of[m.group(1)] + k
         if v in exact_name:
             hit[0] += 1
             return exact_name[v]
