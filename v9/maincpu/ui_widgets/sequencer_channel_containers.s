@@ -299,7 +299,7 @@ MidiPart_ConfigNameTable:
 	.long TrackName6_Unassigned_07
 	.long TrackName6_Unassigned_06
 ; [nakarest] naka_sequencer_channels+0xf00  +0xf00..+0xf48 (0xeeef78, 72 B)
-; [nakarest] purpose not established: layout of 72 B at 0xeeef78 not derived; readers below
+; [nakarest] +0x14..+0x48 is TrackMixer_ColumnPartMap in the C (RAM 0x3ebe8); readers below
 ; [nakarest] Readers: work-RAM image: Boot_InitWorkRAM copies these bytes to RAM
 ; [nakarest] 0x3ebd4..0x3ec1c (its ld xde/xhl/xbc + ldir blocks), where they are read by
 ; [nakarest] TrackMixer_Init (ui/drawbar_panel_ui.s: `ld xwa, 0x3ebe8`),
@@ -447,8 +447,9 @@ Naka_DrawbarReg_Table:
 ; [nakarest] naka_sequencer_channels+0x1600  +0x1600..+0x19ee (0xeef678, 1006 B)
 ; [nakarest] purpose not established: layout of 1006 B at 0xeef678 not derived; readers below
 ; [nakarest] Readers: work-RAM image: Boot_InitWorkRAM copies these bytes to RAM
-; [nakarest] 0x3f2d4..0x3f6c2 (its ld xde/xhl/xbc + ldir blocks); no literal RAM reference into
-; [nakarest] that copy was found.
+; [nakarest] 0x3f2d4..0x3f6c2 (its ld xde/xhl/xbc + ldir blocks).  +0x24..+0x124 (RAM 0x3f2f8) is
+; ChordName_TypeRootTables in the C: MainChordPre_AppendChordSuffix (kn5000_v10_program.s) reads it
+; (`lda xbc, (0x03f2f8:24)`, then [4*DISPLAY_CHORD_TYPE], [4*DISPLAY_CHORD_ROOT], [4*DISPLAY_CHORD_BASS]).
 	.incbin "includes/generated/naka_sequencer_channels.bin", 0x1600, 0x3EE
 ; WorkRamInit_Image2 -- 1 x struct: start of the second work-RAM image (Boot_InitWorkRAM copies 0x95B bytes from
 ; here to RAM 0xE35E).  Its first cells are the inter-CPU E1 DMA watchdog: the poll counts ticks while

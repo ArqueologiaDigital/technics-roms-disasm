@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 54,080
-#   semantic names ........... 53,759 (99.4%)
+#   symbols .................. 54,079
+#   semantic names ........... 53,758 (99.4%)
 #   positional names ......... 321
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -4100,9 +4100,8 @@ NakaWidget_Perf3ModernBluegrass 00E23F80
 NakaWidget_Perf3StyleSel 00E23FC8
 NakaWidget_Perf3SoundSel 00E23FFE
 NakaWidget_Perf3RhythmSel 00E24034
-NakaWidget_Perf3RhythmSel_Tail 00E24056
-NakaWidget_Perf3RhythmSel_StrOn 00E2405E
-NakaWidget_Perf3RhythmSel_StrOff 00E24066
+NakaWidget_Perf3RhythmSel_StrOff 00E2405E
+NakaWidget_Perf3RhythmSel_StrOn 00E24066
 NakaHdr_Perf2MeasureBoxData 00E2406E
 NakaHdr_Perf2FileListData 00E24088
 Yoko_ViewTable_06F 00E240AC
@@ -50910,16 +50909,16 @@ UIStateEvt_TransposeUpdate 00FDDA79
 UIStateEvt_TransposeUpdate_Clear 00FDDAB0
 UIStateEvt_TransposeUpdate_Apply 00FDDAD0
 UIStateEvt_ParamEdit_Data 00FDDAD7
-PanelTag48_UpdateAudioConfig_StyleNumber 00FDDAFE
-PanelTag48_UpdateAudioConfig_StyleNumber_Skip 00FDDB3D
-PanelTag48_UpdateAudioConfig_StyleNumber_Skip2 00FDDB64
+PanelTag48_UpdateAudioConfig_ApcMode 00FDDAFE
+PanelTag48_UpdateAudioConfig_ApcMode_Skip 00FDDB3D
+PanelTag48_UpdateAudioConfig_ApcMode_Skip2 00FDDB64
 UIStateEvt_ParamEdit_Data_Join 00FDDB79
-PanelTag48_UpdateAudioConfig_StyleNumber_Skip3 00FDDB95
-PanelTag48_UpdateAudioConfig_StyleNumber_Skip4 00FDDB99
-PanelTag48_UpdateAudioConfig_StyleNumber_Skip5 00FDDBBA
-PanelTag48_UpdateAudioConfig_StyleNumber_Join2 00FDDBBF
-PanelTag48_UpdateAudioConfig_StyleNumber_Skip6 00FDDBD4
-PanelTag48_UpdateAudioConfig_StyleNumber_Join3 00FDDBDA
+PanelTag48_UpdateAudioConfig_ApcMode_Skip3 00FDDB95
+PanelTag48_UpdateAudioConfig_ApcMode_Skip4 00FDDB99
+PanelTag48_UpdateAudioConfig_ApcMode_Skip5 00FDDBBA
+PanelTag48_UpdateAudioConfig_ApcMode_Join2 00FDDBBF
+PanelTag48_UpdateAudioConfig_ApcMode_Skip6 00FDDBD4
+PanelTag48_UpdateAudioConfig_ApcMode_Join3 00FDDBDA
 UIStateEvt_ParamEdit_Data_Case4 00FDDBE9
 UIStateEvt_ParamEdit_Data_Case4_Skip7 00FDDBFD
 UIStateEvt_ParamEdit_Data_Case4_Join3 00FDDC03

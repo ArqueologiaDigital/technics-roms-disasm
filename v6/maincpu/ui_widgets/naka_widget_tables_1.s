@@ -6,12 +6,12 @@
 ; NakaWidget_Perf3RhythmSel (a 42-byte PsWideToggle, element 9 of Viewable slot
 ; 0xe3), split across the blob boundary: direct_play_medley_screens.s holds its
 ; first 34 bytes.  Then the record's two captions: its +30 word points at
-; NakaWidget_Perf3RhythmSel_StrOn, its +26 word (stroff, by the other
-; PsWideToggle records) at NakaWidget_Perf3RhythmSel_StrOff.
+; NakaWidget_Perf3RhythmSel_StrOff, its +26 word (stron, like the other
+; PsWideToggle records) at NakaWidget_Perf3RhythmSel_StrOn.
 ; -----------------------------------------------------------------------------
 NakaWidget_Perf3RhythmSel_Tail:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x0, 0x8
-NakaWidget_Perf3RhythmSel_StrOn:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x8, 0x8
-NakaWidget_Perf3RhythmSel_StrOff:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x10, 0x8
+NakaWidget_Perf3RhythmSel_StrOff:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x8, 0x8
+NakaWidget_Perf3RhythmSel_StrOn:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x10, 0x8
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] NakaHdr_Perf2MeasureBoxData
 ; NakaHdr_Perf2MeasureBoxData -- widget record, entry 10 of
