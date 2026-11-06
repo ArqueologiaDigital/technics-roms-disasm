@@ -69,9 +69,26 @@ NAMES = {
     "GetEditSwPointInit_Table": ("EditSwPoint", {0: "x", 2: "y"}),
     "func_4844D0F8_Table": ("ChordRecogEntry", {0: "chord_type", 1: "root_flags"}, "ChordRecogTable"),
     "func_4844D297_Table": ("ChordRecogEntry2", {0: "chord_type", 1: "root_flags"}, "ChordRecogTable2"),
+    # (lane mn10300-data2) the same two kinds under the labels they now have: the generator looks a kind up by
+    # the array's current label, which is ChordRecogTable / ChordRecogTable2 since the rename above
+    "ChordRecogTable": ("ChordRecogEntry", {0: "chord_type", 1: "root_flags"}),
+    "ChordRecogTable2": ("ChordRecogEntry2", {0: "chord_type", 1: "root_flags"}),
     "TechniChordBlock_Records": ("TechniChordVoicingBlock", {0: "below"}),
     "TechniChordHymn_Records": ("TechniChordVoicingHymn", {0: "below"}),
     "TechniChordTheatre_Records": ("TechniChordVoicingTheatre", {0: "below"}),
+    # (lane mn10300-data2, N-2468beef) the flash chips the custom-data flash routines know, 32 bytes each:
+    # FlashReadAutoselect 0x4847F980 compares +0 / +2 with the autoselect reads (the JEDEC manufacturer and
+    # device codes); FlashProgram128Words 0x4847F9F7 `asl 5` / `add FlashChipIdTable` / `movhu (4, a0), d0`
+    # bounds its sector loop with +4 (`cmp d2, d0` / `bgt`) and walks the sector table at +8 (`mov (8, a0)`;
+    # FlashSectorErase 0x4847F75A `mov (8, a0), a0` too)
+    "FlashChipIdTable": ("FlashChip", {0: "maker_id", 2: "device_id", 4: "nsectors", 8: "sectors"}),
+    # DiskLoadDispatch 0x4852CFE4: `asl 3` / `movbu (d0, a2), d0` hands +0 to func_4852FAF0 and func_4852FC0E
+    # (does the disk hold files of this kind?) and compares it with 7; then calls +4 (`mov (4, a0), a1` /
+    # `calls (a1)`): the loader of that kind of file
+    "DiskFileHandlerTable": ("DiskFileHandler", {0: "file_kind", 4: "proc"}),
+    # PanelSelfTestScanEntry 0x484A0D07: `movbu (d1, a2), d2` / `cmp 0xf0, d0` ... `cmp 0xf6, d0` picks the
+    # test case by +0; the case then uses +1 (`movbu (1, a2), d3`) -- kn7000_manual.sym: switch# -> [LED reg, value]
+    "PanelSwitchClassTable": ("PanelTestSwitch", {0: "test_class", 1: "test_arg"}),
 }
 
 
@@ -188,6 +205,13 @@ OPTIONS = {
     # NoteConvTable: +0 name, then s8 delta[41][12] (0x1F0 bytes, the melody rules) or
     # [41][12][12] (0x1714 bytes, the chord rules); func_48436229 indexes them from +4
     "NoteConvRules_p4": {"tail": (1, True, 4)},
+    # (lane mn10300-data2) the record count a reader's index cannot exceed, when the bound is in a callee the
+    # index rule does not follow: func_4844D297 indexes ChordRecogTable2 by func_4844D680's answer, the chord's
+    # interval mask, which that routine builds by or-ing one of the bits 0x01 .. 0x400 per note (its jump table
+    # func_4844D680_Table, cases 0..10) or answers 0xFFFF (refused before the index): 0 .. 2047.  The table
+    # ends exactly where the next one (func_484375EA_Table) starts, 4,096 bytes on, as ChordRecogTable's 2,048
+    # records do.
+    "ChordRecogTable2": {"count": (2048, "the index is func_4844D680's 11-bit interval mask (bits 0x01 .. 0x400)")},
 }
 
 

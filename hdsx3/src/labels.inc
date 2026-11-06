@@ -10549,7 +10549,7 @@
 .equ KssFileSfx_DISPProc_L131_Var, 0x978a2d8c
 .equ KssFileSfx_DISPProc_L131_Var_2, 0x978a2d8e
 .equ Str_CDIR, 0x978a2d90
-.equ names_978A31BC, 0x978a31bc
+.equ KssSetSfx_DISPProc_L2e7_Table, 0x978a31d8
 .equ KssSetSfx_DISPProc_L822_Table, 0x978a31e8
 .equ KssSetSfx_DISPProc_L9a_Var, 0x978a31f8
 .equ KssSetSfx_DISPProc_L9a_Var_2, 0x978a31fa

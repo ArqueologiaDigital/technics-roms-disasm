@@ -53,14 +53,25 @@
 	.long	\next
 	.word	\key
 .endm
-# One entry of the SupportClass table (registry slot 0xD, tools/gen_data_s.py support_classes):
-# SupportClassProc (0x4842AAF0) indexes it by an id's low half, 12 bytes an entry: MT_GetInstance
-# answers the entry's address, MT_GetPropSize its +6 halfword, any other message is passed to the
-# entry's +0 procedure (`mov (d1, a0), a1 / calls (a1)`).  +4 and +8 are not read there (`x4`, `data`).
-.macro SUPPORT_CLASS proc, x4, propsize, data
+# One entry of the SupportClass table (registry slot 0xD; 0x1C0 in the KN6000 / KN6500 layout;
+# tools/gen_data_s.py support_classes): SupportClassProc (941 0x4842AAF0) indexes it by an id's low
+# half, 12 bytes an entry: MT_GetInstance answers the entry's address, MT_GetPropSize its +6
+# halfword, any other message is passed to the entry's +0 procedure (`mov (d1, a0), a1 / calls
+# (a1)`).  The procedures pass what they do not answer to the classes' common handler (941
+# func_48431434, a3 = the entry), which reads +4 and +8: `movhu (4, a3), d0` / `cmp 0, d0` / `beq`
+# (no names), then `mov (8, a3)` the value-name list (SPT_VALUE_NAME below).
+.macro SUPPORT_CLASS proc, nnames, propsize, value_names
 	.long	\proc
-	.word	\x4, \propsize
-	.long	\data
+	.word	\nnames, \propsize
+	.long	\value_names
+.endm
+# One pair of a support class's value-name list (SUPPORT_CLASS value_names): the handler turns a
+# value into its name (`mov (4, a0), d0` / `cmp d3, d0` / `strcpy`), a name into its value (`strcmp`,
+# then `mov (4, a0), d0`; -1 when none matches) and gives the n-th name (`asl 3` / `mov (d0, a1)`);
+# every walk stops at the pair whose name's first byte is 0 (`movbu (a0), d0` / `cmp 0, d0`).
+.macro SPT_VALUE_NAME name, value
+	.long	\name
+	.long	\value
 .endm
 # One entry of a table of the resource-id trie (tools/gen_data_s.py resource_trie): func_4C01BB1A
 # (lib 0x4C01BB1A) indexes a table by one nibble of the id; `target` is the leaf record (inner 0) or
@@ -221,4 +232,19 @@
 	FXM_ADDR	\b
 	FXM_ADDR	\c
 	FXM_ADDR	\d
+.endm
+# The first 32 bytes of a FAT boot sector (tools/gen_data_s.py boot_sectors): the jump to the boot
+# code, the OEM name and the DOS 3 BIOS parameter block, at the offsets of Microsoft's "FAT: General
+# Overview of On-Disk Format" (+0x0B bytes a sector ... +0x1C hidden sectors, u16 little-endian).  The
+# disk formatters copy one into a zeroed sector (941 func_484707AC / func_48470A76: memcpy(.., 0x20)).
+.macro FAT_BOOT_HEAD jmp0, jmp1, jmp2, oem, bytes_per_sector, sectors_per_cluster, reserved_sectors, fat_count, root_entries, total_sectors, media, sectors_per_fat, sectors_per_track, heads, hidden_sectors
+	.byte	\jmp0, \jmp1, \jmp2
+	.ascii	"\oem"
+	.word	\bytes_per_sector
+	.byte	\sectors_per_cluster
+	.word	\reserved_sectors
+	.byte	\fat_count
+	.word	\root_entries, \total_sectors
+	.byte	\media
+	.word	\sectors_per_fat, \sectors_per_track, \heads, \hidden_sectors
 .endm

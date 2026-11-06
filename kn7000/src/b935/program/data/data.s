@@ -24,4 +24,5 @@
 .include "src/b935/program/data/data_03.s"
 .include "src/b935/program/data/data_04.s"
 .include "src/b935/program/data/data_05.s"
+.include "src/b935/program/data/data_06.s"
 .org 0x3B8B14

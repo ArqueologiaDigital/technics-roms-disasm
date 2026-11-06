@@ -2582,62 +2582,62 @@ display_palette:
 	.long	0x00FF6060, 0x00FF6060, 0x00FF6060, 0x00FF6060, 0x00FF6060, 0x00FF0000, 0x00FF0000, 0x00FF0000	# idx 496
 	.long	0x00FF6060, 0x00FF6060, 0x00FFA0A0, 0x00FFA0A0, 0x00FF6060, 0x00FF6060, 0x00FF6060, 0x00FFFFFF	# idx 504
 
-# 54 SupportClass entries (registry slot 0xD; a support-class id is (0xd << 16) | its index), then an empty one
+# 54 SupportClass entries (registry slot 0xd; a support-class id is (0xd << 16) | its index), then an empty one
 SupportClassTable:
-	SUPPORT_CLASS	swordProc, 0, 2, data_485AF0A8	# [0]
-	SUPPORT_CLASS	uwordProc, 0, 2, data_485AF0B4	# [1]
-	SUPPORT_CLASS	ucharProc, 0, 1, data_485AF0C0	# [2]
-	SUPPORT_CLASS	scharProc, 0, 1, data_485AF0CC	# [3]
-	SUPPORT_CLASS	slongProc, 0, 4, data_485AF0D8	# [4]
-	SUPPORT_CLASS	ulongProc, 0, 4, data_485AF0E4	# [5]
-	SUPPORT_CLASS	boolProc, 2, 4, data_485AF0F8	# [6]
-	SUPPORT_CLASS	ObjectIDProc, 0, 4, data_485AF114	# [7]
-	SUPPORT_CLASS	pFuncProc, 0, 4, data_485AF120	# [8]
-	SUPPORT_CLASS	pProcProc, 0, 4, data_485AF12C	# [9]
-	SUPPORT_CLASS	pPropProc, 0, 4, data_485AF138	# [10]
-	SUPPORT_CLASS	pStringProc, 0, 4, data_485AF144	# [11]
-	SUPPORT_CLASS	ClassIDProc, 0, 4, data_485AF150	# [12]
-	SUPPORT_CLASS	ScreenIDProc, 0, 4, data_485AF15C	# [13]
-	SUPPORT_CLASS	EventIDProc, 0, 4, data_485AF168	# [14]
-	SUPPORT_CLASS	RECTWProc, 0, 8, data_485AF174	# [15]
-	SUPPORT_CLASS	RectX1Proc, 0, 2, data_485AF180	# [16]
-	SUPPORT_CLASS	RectY1Proc, 0, 2, data_485AF18C	# [17]
-	SUPPORT_CLASS	RectX2Proc, 0, 2, data_485AF198	# [18]
-	SUPPORT_CLASS	RectY2Proc, 0, 2, data_485AF1A4	# [19]
-	SUPPORT_CLASS	POINTWProc, 0, 4, data_485AF1B0	# [20]
-	SUPPORT_CLASS	PointXProc, 0, 2, data_485AF1BC	# [21]
-	SUPPORT_CLASS	PointYProc, 0, 2, data_485AF1C8	# [22]
-	SUPPORT_CLASS	StringProc, 0, 4, data_485AF1D4	# [23]
-	SUPPORT_CLASS	NameProc, 0, 4, data_485AF1E0	# [24]
-	SUPPORT_CLASS	ConstFlagProc, 2, 4, ptrs_485AF200	# [25]
-	SUPPORT_CLASS	ViewIDProc, 0, 2, data_485AF21C	# [26]
-	SUPPORT_CLASS	ViewFlagProc, 6, 2, names_485AF268	# [27]
-	SUPPORT_CLASS	ColorIDProc, 42, 2, names_485AF468	# [28]
-	SUPPORT_CLASS	BorderIDProc, 26, 2, names_485AF6E4	# [29]
-	SUPPORT_CLASS	OTBlockIDProc, 0, 4, data_485AF7C0	# [30]
-	SUPPORT_CLASS	ModeIDProc, 0, 4, data_485AF7CC	# [31]
-	SUPPORT_CLASS	TitleIDProc, 0, 4, data_485AF7D8	# [32]
-	SUPPORT_CLASS	IconIDProc, 0, 4, data_485AF7E4	# [33]
-	SUPPORT_CLASS	FontIDProc, 0, 4, data_485AF7F0	# [34]
-	SUPPORT_CLASS	AlignmentIDProc, 3, 1, ptrs_485AF824	# [35]
-	SUPPORT_CLASS	EditSwIDProc, 28, 2, names_485AF96C	# [36]
-	SUPPORT_CLASS	EditSwStyleIDProc, 17, 1, names_485AFAE0	# [37]
-	SUPPORT_CLASS	LineModeIDProc, 2, 1, ptrs_485AFB8C	# [38]
-	SUPPORT_CLASS	FrameIDProc, 2, 2, ptrs_485AFBB8	# [39]
-	SUPPORT_CLASS	BitmapIDProc, 0, 4, data_485AFBD4	# [40]
-	SUPPORT_CLASS	ApFuncIDProc, 0, 4, data_485AFBE0	# [41]
-	SUPPORT_CLASS	MainFuncIDProc, 0, 4, data_485AFBEC	# [42]
-	SUPPORT_CLASS	pBoolProc, 2, 4, data_485AFC00	# [43]
-	SUPPORT_CLASS	pSwordProc, 0, 4, data_485AFC1C	# [44]
-	SUPPORT_CLASS	pUwordProc, 0, 4, data_485AFC28	# [45]
-	SUPPORT_CLASS	pScharProc, 0, 4, data_485AFC34	# [46]
-	SUPPORT_CLASS	pUcharProc, 0, 4, data_485AFC40	# [47]
-	SUPPORT_CLASS	pSlongProc, 0, 4, data_485AFC4C	# [48]
-	SUPPORT_CLASS	pUlongProc, 0, 4, data_485AFC58	# [49]
-	SUPPORT_CLASS	WindowIDProc, 0, 4, data_485AFC64	# [50]
-	SUPPORT_CLASS	PartIDProc, 39, 2, names_485AFDFC	# [51]
-	SUPPORT_CLASS	TrackIDProc, 19, 2, names_485B0008	# [52]
-	SUPPORT_CLASS	IntTimeIDProc, 14, 2, names_485B011C	# [53]
+	SUPPORT_CLASS	swordProc, 0, 2, SptSword_ValueNames	# [0]
+	SUPPORT_CLASS	uwordProc, 0, 2, SptUword_ValueNames	# [1]
+	SUPPORT_CLASS	ucharProc, 0, 1, SptUchar_ValueNames	# [2]
+	SUPPORT_CLASS	scharProc, 0, 1, SptSchar_ValueNames	# [3]
+	SUPPORT_CLASS	slongProc, 0, 4, SptSlong_ValueNames	# [4]
+	SUPPORT_CLASS	ulongProc, 0, 4, SptUlong_ValueNames	# [5]
+	SUPPORT_CLASS	boolProc, 2, 4, SptBool_ValueNames	# [6]
+	SUPPORT_CLASS	ObjectIDProc, 0, 4, SptObjectID_ValueNames	# [7]
+	SUPPORT_CLASS	pFuncProc, 0, 4, SptPFunc_ValueNames	# [8]
+	SUPPORT_CLASS	pProcProc, 0, 4, SptPProc_ValueNames	# [9]
+	SUPPORT_CLASS	pPropProc, 0, 4, SptPProp_ValueNames	# [10]
+	SUPPORT_CLASS	pStringProc, 0, 4, SptPString_ValueNames	# [11]
+	SUPPORT_CLASS	ClassIDProc, 0, 4, SptClassID_ValueNames	# [12]
+	SUPPORT_CLASS	ScreenIDProc, 0, 4, SptScreenID_ValueNames	# [13]
+	SUPPORT_CLASS	EventIDProc, 0, 4, SptEventID_ValueNames	# [14]
+	SUPPORT_CLASS	RECTWProc, 0, 8, SptRECTW_ValueNames	# [15]
+	SUPPORT_CLASS	RectX1Proc, 0, 2, SptRectX1_ValueNames	# [16]
+	SUPPORT_CLASS	RectY1Proc, 0, 2, SptRectY1_ValueNames	# [17]
+	SUPPORT_CLASS	RectX2Proc, 0, 2, SptRectX2_ValueNames	# [18]
+	SUPPORT_CLASS	RectY2Proc, 0, 2, SptRectY2_ValueNames	# [19]
+	SUPPORT_CLASS	POINTWProc, 0, 4, SptPOINTW_ValueNames	# [20]
+	SUPPORT_CLASS	PointXProc, 0, 2, SptPointX_ValueNames	# [21]
+	SUPPORT_CLASS	PointYProc, 0, 2, SptPointY_ValueNames	# [22]
+	SUPPORT_CLASS	StringProc, 0, 4, SptString_ValueNames	# [23]
+	SUPPORT_CLASS	NameProc, 0, 4, SptName_ValueNames	# [24]
+	SUPPORT_CLASS	ConstFlagProc, 2, 4, SptConstFlag_ValueNames	# [25]
+	SUPPORT_CLASS	ViewIDProc, 0, 2, SptViewID_ValueNames	# [26]
+	SUPPORT_CLASS	ViewFlagProc, 6, 2, SptViewFlag_ValueNames	# [27]
+	SUPPORT_CLASS	ColorIDProc, 42, 2, SptColorID_ValueNames	# [28]
+	SUPPORT_CLASS	BorderIDProc, 26, 2, SptBorderID_ValueNames	# [29]
+	SUPPORT_CLASS	OTBlockIDProc, 0, 4, SptOTBlockID_ValueNames	# [30]
+	SUPPORT_CLASS	ModeIDProc, 0, 4, SptModeID_ValueNames	# [31]
+	SUPPORT_CLASS	TitleIDProc, 0, 4, SptTitleID_ValueNames	# [32]
+	SUPPORT_CLASS	IconIDProc, 0, 4, SptIconID_ValueNames	# [33]
+	SUPPORT_CLASS	FontIDProc, 0, 4, SptFontID_ValueNames	# [34]
+	SUPPORT_CLASS	AlignmentIDProc, 3, 1, SptAlignmentID_ValueNames	# [35]
+	SUPPORT_CLASS	EditSwIDProc, 28, 2, SptEditSwID_ValueNames	# [36]
+	SUPPORT_CLASS	EditSwStyleIDProc, 17, 1, SptEditSwStyleID_ValueNames	# [37]
+	SUPPORT_CLASS	LineModeIDProc, 2, 1, SptLineModeID_ValueNames	# [38]
+	SUPPORT_CLASS	FrameIDProc, 2, 2, SptFrameID_ValueNames	# [39]
+	SUPPORT_CLASS	BitmapIDProc, 0, 4, SptBitmapID_ValueNames	# [40]
+	SUPPORT_CLASS	ApFuncIDProc, 0, 4, SptApFuncID_ValueNames	# [41]
+	SUPPORT_CLASS	MainFuncIDProc, 0, 4, SptMainFuncID_ValueNames	# [42]
+	SUPPORT_CLASS	pBoolProc, 2, 4, SptPBool_ValueNames	# [43]
+	SUPPORT_CLASS	pSwordProc, 0, 4, SptPSword_ValueNames	# [44]
+	SUPPORT_CLASS	pUwordProc, 0, 4, SptPUword_ValueNames	# [45]
+	SUPPORT_CLASS	pScharProc, 0, 4, SptPSchar_ValueNames	# [46]
+	SUPPORT_CLASS	pUcharProc, 0, 4, SptPUchar_ValueNames	# [47]
+	SUPPORT_CLASS	pSlongProc, 0, 4, SptPSlong_ValueNames	# [48]
+	SUPPORT_CLASS	pUlongProc, 0, 4, SptPUlong_ValueNames	# [49]
+	SUPPORT_CLASS	WindowIDProc, 0, 4, SptWindowID_ValueNames	# [50]
+	SUPPORT_CLASS	PartIDProc, 39, 2, SptPartID_ValueNames	# [51]
+	SUPPORT_CLASS	TrackIDProc, 19, 2, SptTrackID_ValueNames	# [52]
+	SUPPORT_CLASS	IntTimeIDProc, 14, 2, SptIntTimeID_ValueNames	# [53]
 	SUPPORT_CLASS	0, 0, 0, 0	# [54]
 
 # 107 classes; a class id is (0x4 << 16) | its index here (ClassProc 0x4842A7C0 reads entry id & 0xFFFF, 0x18 bytes each)
@@ -4061,36 +4061,63 @@ Str_5_16:	.asciz "5"
 	.align	4, 0xFF	# pad after Str_5_16
 
 names_48726724:
-	.long	Str_OnIcon, Str_GakuIcon
-	.long	Str_GoldTechnics, Str_SlideBase
-	.long	Str_SlideMove, Str_MixerControl
-	.long	Str_MixerPoint, Str_Forward
-	.long	Str_Backward, Str_Pause
-	.long	Str_Start, Str_Before
-	.long	Str_Next, Str_LiBass
-	.long	Str_LiBrass, Str_LiDrum
-	.long	Str_LiFlute, Str_LiGuitar
-	.long	Str_LiWorld, Str_LiMallet
-	.long	Str_LiMemA, Str_LiMemB
-	.long	Str_LiOrgan, Str_LiOrchPad
-	.long	Str_LiPiano, Str_LiSax
-	.long	Str_LiStrings, Str_LiSynth
-	.long	Str_LiDrawbar, Str_LiAccordion
-	.long	Str_LedSwOn, Str_LedSwOff
-	.long	Str_LiGMSpecial, Str_LiMetronome
-	.long	Str_LiMIC, Str_LiUpright
-	.long	Str_LiElectric, Str_LiModern
-	.long	Str_LiRhythm, Str_LiMem
-	.long	Str_LiPianoMix, Str_LiOrchMix
-	.long	Str_LiSaxWood, Str_LiDanceSyn
-	.long	Str_LiGuitHarpsi, Str_SlideBaseR
-	.long	Str_SlideMoveR, Str_SlideBase65
-	.long	Str_SlideMove65, Str_FwdNext
-	.long	Str_BwdBefore, Str_StartPause
-	.long	Str_Stop, 0x485B42CB
-
-ptrs_487267FC:	# 256 pointers, typed by value (every word 0 or an address of this region); reader not traced
+	.long	Str_OnIcon
+	.long	Str_GakuIcon
+	.long	Str_GoldTechnics
+	.long	Str_SlideBase
+	.long	Str_SlideMove
+	.long	Str_MixerControl
+	.long	Str_MixerPoint
+	.long	Str_Forward
+	.long	Str_Backward
+	.long	Str_Pause
+	.long	Str_Start
+	.long	Str_Before
+	.long	Str_Next
+	.long	Str_LiBass
+	.long	Str_LiBrass
+	.long	Str_LiDrum
+	.long	Str_LiFlute
+	.long	Str_LiGuitar
+	.long	Str_LiWorld
+	.long	Str_LiMallet
+	.long	Str_LiMemA
+	.long	Str_LiMemB
+	.long	Str_LiOrgan
+	.long	Str_LiOrchPad
+	.long	Str_LiPiano
+	.long	Str_LiSax
+	.long	Str_LiStrings
+	.long	Str_LiSynth
+	.long	Str_LiDrawbar
+	.long	Str_LiAccordion
+	.long	Str_LedSwOn
+	.long	Str_LedSwOff
+	.long	Str_LiGMSpecial
+	.long	Str_LiMetronome
+	.long	Str_LiMIC
+	.long	Str_LiUpright
+	.long	Str_LiElectric
+	.long	Str_LiModern
+	.long	Str_LiRhythm
+	.long	Str_LiMem
+	.long	Str_LiPianoMix
+	.long	Str_LiOrchMix
+	.long	Str_LiSaxWood
+	.long	Str_LiDanceSyn
+	.long	Str_LiGuitHarpsi
+	.long	Str_SlideBaseR
+	.long	Str_SlideMoveR
+	.long	Str_SlideBase65
+	.long	Str_SlideMove65
+	.long	Str_FwdNext
+	.long	Str_BwdBefore
+	.long	Str_StartPause
+	.long	Str_Stop
+	.long	data_485B42CB
 	.long	0
+
+ptrs_48726800:	# 255 pointers, typed by value (every word 0 or an address of this region); reader not traced
 	.long	0
 	.long	0
 	.long	0
@@ -4355,46 +4382,83 @@ Str_I_2:	.asciz "I"
 	.align	4, 0xFF	# pad after Str_I_2
 
 names_48726F2C:
-	.long	Str_Round1a, Str_Round1b
-	.long	Str_Round1c, Str_Round1d
-	.long	Str_Round2a, Str_Round2b
-	.long	Str_Round2c, Str_Round2d
-	.long	Str_Round5a, Str_Round5b
-	.long	Str_Round5c, Str_Round5d
-	.long	Str_Round9a, Str_Round9b
-	.long	Str_Round9c, Str_Round9d
-	.long	Str_Round14a, Str_Round14b
-	.long	Str_Round14c, Str_Round14d
-	.long	Str_Round1sa, Str_Round1sb
-	.long	Str_Round1sc, Str_Round1sd
-	.long	Str_Round2sa, Str_Round2sb
-	.long	Str_Round2sc, Str_Round2sd
-	.long	Str_Round5sa, Str_Round5sb
-	.long	Str_Round5sc, Str_Round5sd
-	.long	Str_Round9sa, Str_Round9sb
-	.long	Str_Round9sc, Str_Round9sd
-	.long	Str_Round14sa, Str_Round14sb
-	.long	Str_Round14sc, Str_Round14sd
-	.long	Str_Right12, Str_Right16
-	.long	Str_Right24, Str_Right32
-	.long	Str_Right48, Str_Left12
-	.long	Str_Left16, Str_Left24
-	.long	Str_Left32, Str_Left48
-	.long	Str_LOnOff16, Str_LOnOff24
-	.long	Str_LOnOff32, Str_LOnOff48
-	.long	Str_ROnOff16, Str_ROnOff24
-	.long	Str_ROnOff32, Str_ROnOff48
-	.long	Str_LeftSwitch, Str_RightSwitch
-	.long	Str_EditA, Str_EditB
-	.long	Str_EditC, Str_EditD
-	.long	Str_Edit95A, Str_Edit95B
-	.long	Str_Edit95C, Str_Edit95D
-	.long	Str_EditDA, Str_EditDB
-	.long	Str_EditDC, Str_EditDD
-	.long	Str_MixerTab, 0x485B488B
-
-ptrs_48727054:	# 256 pointers, typed by value (every word 0 or an address of this region); reader not traced
+	.long	Text_Round1a
+	.long	Text_Round1a+8
+	.long	Text_Round1a+16
+	.long	Text_Round1a+24
+	.long	Text_Round1a+32
+	.long	Text_Round1a+40
+	.long	Text_Round1a+48
+	.long	Text_Round1a+56
+	.long	Text_Round1a+64
+	.long	Text_Round1a+72
+	.long	Text_Round1a+80
+	.long	Text_Round1a+88
+	.long	Text_Round1a+96
+	.long	Text_Round1a+104
+	.long	Text_Round1a+112
+	.long	Text_Round1a+120
+	.long	Text_Round14a
+	.long	Text_Round14a+9
+	.long	Text_Round14a+18
+	.long	Text_Round14a+27
+	.long	Text_Round14a+36
+	.long	Text_Round14a+45
+	.long	Text_Round14a+54
+	.long	Text_Round14a+63
+	.long	Text_Round14a+72
+	.long	Text_Round14a+81
+	.long	Text_Round14a+90
+	.long	Text_Round14a+99
+	.long	Text_Round14a+108
+	.long	Text_Round14a+117
+	.long	Text_Round14a+126
+	.long	Text_Round14a+135
+	.long	Text_Round14a+144
+	.long	Text_Round14a+153
+	.long	Text_Round14a+162
+	.long	Text_Round14a+171
+	.long	Str_Round14sa
+	.long	Str_Round14sb
+	.long	Str_Round14sc
+	.long	Str_Round14sd
+	.long	Str_Right12
+	.long	Str_Right16
+	.long	Str_Right24
+	.long	Str_Right32
+	.long	Str_Right48
+	.long	Str_Left12
+	.long	Str_Left16
+	.long	Str_Left24
+	.long	Str_Left32
+	.long	Str_Left48
+	.long	Text_LOnOff16
+	.long	Text_LOnOff16+9
+	.long	Text_LOnOff16+18
+	.long	Text_LOnOff16+27
+	.long	Text_LOnOff16+36
+	.long	Text_LOnOff16+45
+	.long	Text_LOnOff16+54
+	.long	Text_LOnOff16+63
+	.long	Str_LeftSwitch
+	.long	Str_RightSwitch
+	.long	Str_EditA
+	.long	Str_EditB
+	.long	Str_EditC
+	.long	Str_EditD
+	.long	Str_Edit95A
+	.long	Str_Edit95B
+	.long	Str_Edit95C
+	.long	Str_Edit95D
+	.long	Str_EditDA
+	.long	Str_EditDB
+	.long	Str_EditDC
+	.long	Str_EditDD
+	.long	Str_MixerTab
+	.long	data_485B488B
 	.long	0
+
+ptrs_48727058:	# 255 pointers, typed by value (every word 0 or an address of this region); reader not traced
 	.long	0
 	.long	0
 	.long	0
@@ -4656,130 +4720,250 @@ GetIconCount_Table:	# 2 x u16, 240..65535; read by GetIconCount 0x4842DEFA: `mov
 	tab_u16	240, 65535
 
 names_48727730:
-	.long	Str_None, Str_Default
-	.long	Str_i0, Str_i1
-	.long	Str_i2, Str_i3
-	.long	Str_i4, Str_i5
-	.long	Str_i6, Str_i7
-	.long	Str_i8, Str_i9
-	.long	Str_i10, Str_i11
-	.long	Str_i12, Str_i13
-	.long	Str_i14, Str_i15
-	.long	Str_i16, Str_i17
-	.long	Str_i18, Str_i19
-	.long	Str_i20, Str_i21
-	.long	Str_i22, Str_i23
-	.long	Str_i24, Str_i25
-	.long	Str_i26, Str_i27
-	.long	Str_i28, Str_i29
-	.long	Str_i30, Str_i31
-	.long	Str_i32, Str_i33
-	.long	Str_i34, Str_i35
-	.long	Str_i36, Str_i37
-	.long	Str_i38, Str_i39
-	.long	Str_i40, Str_i41
-	.long	Str_i42, Str_i43
-	.long	Str_i44, Str_i45
-	.long	Str_i46, Str_i47
-	.long	Str_i48, Str_i49
-	.long	Str_i50, Str_i51
-	.long	Str_i52, Str_i53
-	.long	Str_i54, Str_i55
-	.long	Str_i56, Str_i57
-	.long	Str_i58, Str_i59
-	.long	Str_i60, Str_i61
-	.long	Str_i62, Str_i63
-	.long	Str_i64, Str_i65
-	.long	Str_i66, Str_i67
-	.long	Str_i68, Str_i69
-	.long	Str_i70, Str_i71
-	.long	Str_i72, Str_i73
-	.long	Str_i74, Str_i75
-	.long	Str_i76, Str_i77
-	.long	Str_i78, Str_i79
-	.long	Str_i80, Str_i81
-	.long	Str_i82, Str_i83
-	.long	Str_i84, Str_i85
-	.long	Str_i86, Str_i87
-	.long	Str_i88, Str_i89
-	.long	Str_i90, Str_i91
-	.long	Str_i92, Str_i93
-	.long	Str_i94, Str_i95
-	.long	Str_i96, Str_i97
-	.long	Str_i98, Str_i99
-	.long	Str_i100, 0x485B4D9C
-	.long	Str_i102, 0x485B4DA6
-	.long	Str_i104, 0x485B4DB0
-	.long	Str_i106, 0x485B4DBA
-	.long	Str_i108, 0x485B4DC4
-	.long	Str_i110, 0x485B4DCE
-	.long	Str_i112, 0x485B4DD8
-	.long	Str_i114, 0x485B4DE2
-	.long	Str_i116, 0x485B4DEC
-	.long	Str_i118, 0x485B4DF6
-	.long	Str_i120, 0x485B4E00
-	.long	Str_i122, 0x485B4E0A
-	.long	Str_i124, 0x485B4E14
-	.long	Str_i126, 0x485B4E1E
-	.long	Str_i128, 0x485B4E28
-	.long	Str_i130, 0x485B4E32
-	.long	Str_i132, 0x485B4E3C
-	.long	Str_i134, 0x485B4E46
-	.long	Str_i136, 0x485B4E50
-	.long	Str_i138, 0x485B4E5A
-	.long	Str_i140, 0x485B4E64
-	.long	Str_i142, 0x485B4E6E
-	.long	Str_i144, 0x485B4E78
-	.long	Str_i146, 0x485B4E82
-	.long	Str_i148, 0x485B4E8C
-	.long	Str_i150, 0x485B4E96
-	.long	Str_i152, 0x485B4EA0
-	.long	Str_i154, 0x485B4EAA
-	.long	Str_i156, 0x485B4EB4
-	.long	Str_i158, 0x485B4EBE
-	.long	Str_i160, 0x485B4EC8
-	.long	Str_i162, 0x485B4ED2
-	.long	Str_i164, 0x485B4EDC
-	.long	Str_i166, 0x485B4EE6
-	.long	Str_i168, 0x485B4EF0
-	.long	Str_i170, 0x485B4EFA
-	.long	Str_i172, 0x485B4F04
-	.long	Str_i174, 0x485B4F0E
-	.long	Str_i176, 0x485B4F18
-	.long	Str_i178, 0x485B4F22
-	.long	Str_i180, 0x485B4F2C
-	.long	Str_i182, 0x485B4F36
-	.long	Str_i184, 0x485B4F40
-	.long	Str_i186, 0x485B4F4A
-	.long	Str_i188, 0x485B4F54
-	.long	Str_i190, 0x485B4F5E
-	.long	Str_i192, 0x485B4F68
-	.long	Str_i194, 0x485B4F72
-	.long	Str_i196, 0x485B4F7C
-	.long	Str_i198, 0x485B4F86
-	.long	Str_i200, 0x485B4F90
-	.long	Str_i202, 0x485B4F9A
-	.long	Str_i204, 0x485B4FA4
-	.long	Str_i206, 0x485B4FAE
-	.long	Str_i208, 0x485B4FB8
-	.long	Str_i210, 0x485B4FC2
-	.long	Str_i212, 0x485B4FCC
-	.long	Str_i214, 0x485B4FD6
-	.long	Str_i216, 0x485B4FE0
-	.long	Str_i218, 0x485B4FEA
-	.long	Str_i220, 0x485B4FF4
-	.long	Str_i222, 0x485B4FFE
-	.long	Str_i224, 0x485B5008
-	.long	Str_i226, 0x485B5012
-	.long	Str_i228, 0x485B501C
-	.long	Str_i230, 0x485B5026
-	.long	Str_i232, 0x485B5030
-	.long	Str_i234, 0x485B503A
-	.long	Str_i236, 0x485B5044
-
-ptrs_48727AF0:	# 257 pointers, typed by value (every word 0 or an address of this region); reader not traced
+	.long	Str_None
+	.long	Str_Default
+	.long	Str_i0
+	.long	Str_i1
+	.long	Str_i2
+	.long	Str_i3
+	.long	Str_i4
+	.long	Str_i5
+	.long	Str_i6
+	.long	Str_i7
+	.long	Str_i8
+	.long	Str_i9
+	.long	Str_i10
+	.long	Str_i11
+	.long	Str_i12
+	.long	Str_i13
+	.long	Str_i14
+	.long	Str_i15
+	.long	Str_i16
+	.long	Str_i17
+	.long	Str_i18
+	.long	Str_i19
+	.long	Str_i20
+	.long	Str_i21
+	.long	Str_i22
+	.long	Str_i23
+	.long	Str_i24
+	.long	Str_i25
+	.long	Str_i26
+	.long	Str_i27
+	.long	Str_i28
+	.long	Str_i29
+	.long	Str_i30
+	.long	Str_i31
+	.long	Str_i32
+	.long	Str_i33
+	.long	Str_i34
+	.long	Str_i35
+	.long	Str_i36
+	.long	Str_i37
+	.long	Str_i38
+	.long	Str_i39
+	.long	Str_i40
+	.long	Str_i41
+	.long	Str_i42
+	.long	Str_i43
+	.long	Str_i44
+	.long	Str_i45
+	.long	Str_i46
+	.long	Str_i47
+	.long	Str_i48
+	.long	Str_i49
+	.long	Str_i50
+	.long	Str_i51
+	.long	Str_i52
+	.long	Str_i53
+	.long	Str_i54
+	.long	Str_i55
+	.long	Str_i56
+	.long	Str_i57
+	.long	Str_i58
+	.long	Str_i59
+	.long	Str_i60
+	.long	Str_i61
+	.long	Str_i62
+	.long	Str_i63
+	.long	Str_i64
+	.long	Str_i65
+	.long	Str_i66
+	.long	Str_i67
+	.long	Str_i68
+	.long	Str_i69
+	.long	Str_i70
+	.long	Str_i71
+	.long	Str_i72
+	.long	Str_i73
+	.long	Str_i74
+	.long	Str_i75
+	.long	Str_i76
+	.long	Str_i77
+	.long	Str_i78
+	.long	Str_i79
+	.long	Str_i80
+	.long	Str_i81
+	.long	Str_i82
+	.long	Str_i83
+	.long	Str_i84
+	.long	Str_i85
+	.long	Str_i86
+	.long	Str_i87
+	.long	Str_i88
+	.long	Str_i89
+	.long	Str_i90
+	.long	Str_i91
+	.long	Str_i92
+	.long	Str_i93
+	.long	Str_i94
+	.long	Str_i95
+	.long	Str_i96
+	.long	Str_i97
+	.long	Str_i98
+	.long	Str_i99
+	.long	Text_i100
+	.long	Text_i100+5
+	.long	Text_i100+10
+	.long	Text_i100+15
+	.long	Text_i100+20
+	.long	Text_i100+25
+	.long	Text_i100+30
+	.long	Text_i100+35
+	.long	Text_i100+40
+	.long	Text_i100+45
+	.long	Text_i100+50
+	.long	Text_i100+55
+	.long	Text_i100+60
+	.long	Text_i100+65
+	.long	Text_i100+70
+	.long	Text_i100+75
+	.long	Text_i100+80
+	.long	Text_i100+85
+	.long	Text_i100+90
+	.long	Text_i100+95
+	.long	Text_i100+100
+	.long	Text_i100+105
+	.long	Text_i100+110
+	.long	Text_i100+115
+	.long	Text_i100+120
+	.long	Text_i100+125
+	.long	Text_i100+130
+	.long	Text_i100+135
+	.long	Text_i100+140
+	.long	Text_i100+145
+	.long	Text_i100+150
+	.long	Text_i100+155
+	.long	Text_i100+160
+	.long	Text_i100+165
+	.long	Text_i100+170
+	.long	Text_i100+175
+	.long	Text_i100+180
+	.long	Text_i100+185
+	.long	Text_i100+190
+	.long	Text_i100+195
+	.long	Text_i100+200
+	.long	Text_i100+205
+	.long	Text_i100+210
+	.long	Text_i100+215
+	.long	Text_i100+220
+	.long	Text_i100+225
+	.long	Text_i100+230
+	.long	Text_i100+235
+	.long	Text_i100+240
+	.long	Text_i100+245
+	.long	Text_i100+250
+	.long	Text_i100+255
+	.long	Text_i100+260
+	.long	Text_i100+265
+	.long	Text_i100+270
+	.long	Text_i100+275
+	.long	Text_i100+280
+	.long	Text_i100+285
+	.long	Text_i100+290
+	.long	Text_i100+295
+	.long	Text_i100+300
+	.long	Text_i100+305
+	.long	Text_i100+310
+	.long	Text_i100+315
+	.long	Text_i100+320
+	.long	Text_i100+325
+	.long	Text_i100+330
+	.long	Text_i100+335
+	.long	Text_i100+340
+	.long	Text_i100+345
+	.long	Text_i100+350
+	.long	Text_i100+355
+	.long	Text_i100+360
+	.long	Text_i100+365
+	.long	Text_i100+370
+	.long	Text_i100+375
+	.long	Text_i100+380
+	.long	Text_i100+385
+	.long	Text_i100+390
+	.long	Text_i100+395
+	.long	Text_i100+400
+	.long	Text_i100+405
+	.long	Text_i100+410
+	.long	Text_i100+415
+	.long	Text_i100+420
+	.long	Text_i100+425
+	.long	Text_i100+430
+	.long	Text_i100+435
+	.long	Text_i100+440
+	.long	Text_i100+445
+	.long	Text_i100+450
+	.long	Text_i100+455
+	.long	Text_i100+460
+	.long	Text_i100+465
+	.long	Text_i100+470
+	.long	Text_i100+475
+	.long	Text_i100+480
+	.long	Text_i100+485
+	.long	Text_i100+490
+	.long	Text_i100+495
+	.long	Text_i100+500
+	.long	Text_i100+505
+	.long	Text_i100+510
+	.long	Text_i100+515
+	.long	Text_i100+520
+	.long	Text_i100+525
+	.long	Text_i100+530
+	.long	Text_i100+535
+	.long	Text_i100+540
+	.long	Text_i100+545
+	.long	Text_i100+550
+	.long	Text_i100+555
+	.long	Text_i100+560
+	.long	Text_i100+565
+	.long	Text_i100+570
+	.long	Text_i100+575
+	.long	Text_i100+580
+	.long	Text_i100+585
+	.long	Text_i100+590
+	.long	Text_i100+595
+	.long	Text_i100+600
+	.long	Text_i100+605
+	.long	Text_i100+610
+	.long	Text_i100+615
+	.long	Text_i100+620
+	.long	Text_i100+625
+	.long	Text_i100+630
+	.long	Text_i100+635
+	.long	Text_i100+640
+	.long	Text_i100+645
+	.long	Text_i100+650
+	.long	Text_i100+655
+	.long	Text_i100+660
+	.long	Text_i100+665
+	.long	Text_i100+670
+	.long	Text_i100+675
+	.long	Text_i100+680
+	.long	Text_i100+685
 	.long	data_485B5049
 	.long	0
+
+ptrs_48727AF8:	# 255 pointers, typed by value (every word 0 or an address of this region); reader not traced
 	.long	0
 	.long	0
 	.long	0
@@ -13303,7 +13487,7 @@ func_484480E6_Table_3:	# 58 x u8, 0..198; read by func_484480E6 0x484480E6: `mov
 	tab_u8	80, 148, 14, 94, 138, 17, 107, 128, 19, 121, 118, 22, 160, 62, 6, 160	# [16]
 	tab_u8	62, 6, 160, 70, 6, 160, 70, 6, 160, 74, 6, 160, 78, 6, 160, 78	# [32]
 	tab_u8	6, 160, 86, 6, 160, 86, 6, 160, 94, 6	# [48]
-func_484480E6_Table:	# 175 x u8, 47..255; read by func_484480E6_entry 0x48447EF1: `movbu  (d3, a0), d0`; func_484481BF_entry 0x48447EF1: `movbu  (d0, a0), d0`
+func_484480E6_Table:	# 175 x u8, 47..255; read by func_484480E6_entry 0x48448035: `movbu  (d3, a0), d0`; func_484481BF_entry 0x48448035: `movbu  (d0, a0), d0`
 	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 251, 246, 241, 237, 234, 230, 227	# [0]
 	tab_u8	224, 221, 219, 216, 214, 211, 209, 207, 205, 203, 202, 200, 198, 197, 195, 193	# [16]
 	tab_u8	192, 191, 189, 188, 187, 185, 184, 183, 182, 181, 179, 178, 177, 176, 175, 174	# [32]
@@ -13322,7 +13506,7 @@ func_484481BF_Table:	# 81 x u8, 0..46; read by func_484481BF 0x484481BF: `movbu 
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [48]
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0	# [64]
 	tab_u8	0	# [80]
-func_484480E6_Table_2:	# 256 x u8, 1..127; read by func_484480E6_entry 0x48447EF1: `movbu  (d0, a0), d0`
+func_484480E6_Table_2:	# 256 x u8, 1..127; read by func_484480E6_entry 0x48448035: `movbu  (d0, a0), d0`
 	tab_u8	1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [0]
 	tab_u8	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [16]
 	tab_u8	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [32]
@@ -16114,16 +16298,16 @@ ptrs_487347F0:
 	.long	func_484576A5
 	.long	func_484576B0
 
-Str_Technics_2:	.asciz "\xEB\x1C\x90Technics"
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33480C, 0x334820
+FatBootHead_720K:	# a FAT boot sector's first 32 bytes, a 720 KB disk's (1440 sectors of 512 bytes): func_484706E3 0x484706E3: memcpy(.., 0x20)
+	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 2, 1, 2, 112, 1440, 0xf9, 3, 9, 2, 0
+	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
 
 func_484706E3_Block:	# 3 bytes, copied whole by func_484706E3 0x484706E3: memcpy(.., 3)
 	tab_u8	249, 255, 255	# [0]
 
-Str_Technics:	.asciz "\xEB\x1C\x90Technics"
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33482F, 0x334843
+FatBootHead_1440K:	# a FAT boot sector's first 32 bytes, a 1440 KB disk's (2880 sectors of 512 bytes): func_484709AD 0x484709AD: memcpy(.., 0x20)
+	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 1, 1, 2, 224, 2880, 0xf0, 9, 18, 2, 0
+	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
 
 func_484709AD_Block:	# 3 bytes, copied whole by func_484709AD 0x484709AD: memcpy(.., 3)
 	tab_u8	240, 255, 255	# [0]
@@ -16614,7 +16798,7 @@ func_48485D82_Records:	# 3 x REC_func_48485D82_Records (16 bytes each); read by 
 	REC_func_48485D82_Records	1343703364, 0, 0, 0
 	REC_func_48485D82_Records	1343703428, 0, 0, 0
 
-MssNameFunc_Table:	# 1084 x u16, 0..1079; read by MssNameFunc 0x4847AE1A: `movhu  (-2, a0), d0`; func_4847F341 0x4847F341: `movhu  (-2, a0), d2` ...
+MssNameFunc_Table:	# 1080 x u16, 0..1079; read by MssNameFunc 0x4847AE1A: `movhu  (-2, a0), d0`; func_4847F341 0x4847F341: `movhu  (-2, a0), d2` ...
 	tab_u16	56, 57, 58, 59, 52, 53, 54, 55, 60, 61, 62, 63	# [0]
 	tab_u16	64, 65, 66, 67, 68, 69, 70, 71, 76, 77, 78, 79	# [12]
 	tab_u16	72, 73, 74, 75, 80, 81, 82, 83, 84, 85, 86, 87	# [24]
@@ -16705,947 +16889,853 @@ MssNameFunc_Table:	# 1084 x u16, 0..1079; read by MssNameFunc 0x4847AE1A: `movhu
 	tab_u16	1044, 1045, 1046, 1047, 1048, 1049, 1050, 1051, 1052, 1053, 1054, 1055	# [1044]
 	tab_u16	1056, 1057, 1058, 1059, 1060, 1061, 1062, 1063, 1064, 1065, 1066, 1067	# [1056]
 	tab_u16	1068, 1069, 1070, 1071, 1072, 1073, 1074, 1075, 1076, 1077, 1078, 1079	# [1068]
-	tab_u16	0, 1, 2, 3	# [1080]
-	.space	2, 0xFF
 
-StyleGenreTable_p4_p12_0:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 29 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C053 `movhu (d0, a0), d0`)
-	REC_StyleGenreTable_p4_p12	s0="\x04"
-	tab_u16	1280, 1536, 1792, 65280, 2303, 2304, 2560, 2816, 65280, 3327, 3328, 3584, 3840, 65280, 4351, 4352	# [0]
-	tab_u16	4608, 4864, 65280, 6399, 6400, 6656, 6912, 65280, 7423, 7424, 7680, 7936, 65280	# [16]
-	.space	1, 0xFF
+StyleSetups_Rock_Pop_Disco_Orchestra:	# the setups of style "Disco Orchestra" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	0, 1, 2, 3, 0xffff
+StyleSetups_Rock_Pop_60s_Blues_Rock:	# the setups of style "60s Blues Rock" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	4, 5, 6, 7, 0xffff
+StyleSetups_Rock_Pop_60s_PopOrchestra:	# the setups of style "60s PopOrchestra" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	8, 9, 10, 11, 0xffff
+StyleSetups_Rock_Pop_Mersey_Ballad:	# the setups of style "Mersey Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	12, 13, 14, 15, 0xffff
+StyleSetups_Rock_Pop_Pacific_Pop:	# the setups of style "Pacific Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	16, 17, 18, 19, 0xffff
+StyleSetups_Rock_Pop_Spiritual_Pop:	# the setups of style "Spiritual Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	24, 25, 26, 27, 0xffff
+StyleSetups_Rock_Pop_Pop_Imagination:	# the setups of style "Pop Imagination" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	28, 29, 30, 31, 0xffff
+StyleSetups_Rock_Pop_60s_Soul:	# the setups of style "60s Soul" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	32, 33, 34, 35, 0xffff
+StyleSetups_Rock_Pop_Folk_Rock:	# the setups of style "Folk Rock" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	36, 37, 38, 39, 0xffff
+StyleSetups_Rock_Pop_Organ_RockBallad:	# the setups of style "Organ RockBallad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	40, 41, 42, 43, 0xffff
+StyleSetups_Rock_Pop_UK_Piano_Legend:	# the setups of style "UK Piano Legend" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	48, 49, 50, 51, 0xffff
+StyleSetups_Rock_Pop_Straight_8_Beat:	# the setups of style "Straight 8 Beat" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	52, 53, 54, 55, 0xffff
+StyleSetups_Rock_Pop_Dance_Superstar:	# the setups of style "Dance Superstar" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	64, 65, 66, 67, 0xffff
+StyleSetups_Rock_Pop_Detroit_Ballad:	# the setups of style "Detroit Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	68, 69, 70, 71, 0xffff
+StyleSetups_Rock_Pop_EZ_16_Beat:	# the setups of style "EZ 16 Beat" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	76, 77, 78, 79, 0xffff
+StyleSetups_Rock_Pop_Chart_16:	# the setups of style "Chart 16" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	84, 85, 86, 87, 0xffff
+StyleSetups_Rock_Pop_Studio_Pop:	# the setups of style "Studio Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	88, 89, 90, 91, 0xffff
+StyleSetups_Rock_Pop_King_s_Rock:	# the setups of style "King's Rock" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	92, 93, 94, 95, 0xffff
+StyleSetups_Rock_Pop_Let_s_Rock:	# the setups of style "Let's Rock" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	96, 97, 98, 99, 0xffff
+StyleSetups_Rock_Pop_Rock_Status:	# the setups of style "Rock Status" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	100, 101, 102, 103, 0xffff
+StyleSetups_Rock_Pop_Leroy_s_Band:	# the setups of style "Leroy's Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	104, 105, 106, 107, 0xffff
+StyleSetups_Rock_Pop_Cool_Old_Rock:	# the setups of style "Cool Old Rock" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	112, 113, 114, 115, 0xffff
+StyleSetups_Rock_Pop_Blues_Alley:	# the setups of style "Blues Alley" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	116, 117, 118, 119, 0xffff
+StyleSetups_Rock_Pop_Heavy_Shuffle:	# the setups of style "Heavy Shuffle" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	120, 121, 122, 123, 0xffff
+StyleSetups_Rock_Pop_Easy_Rock:	# the setups of style "Easy Rock" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	124, 125, 126, 127, 0xffff
+StyleSetups_Rock_Pop_Pop_Girls:	# the setups of style "Pop Girls" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	128, 129, 130, 131, 0xffff
+StyleSetups_Rock_Pop_90s_Top_Ten:	# the setups of style "90s Top Ten" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	132, 133, 134, 135, 0xffff
+StyleSetups_Rock_Pop_90s_Rock_Roll:	# the setups of style "90s Rock & Roll" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	136, 137, 138, 139, 0xffff
+StyleSetups_Rock_Pop_Pop_Shuffle:	# the setups of style "Pop Shuffle" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	144, 145, 146, 147, 0xffff
+StyleSetups_Rock_Pop_Rock_Gig:	# the setups of style "Rock Gig" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	148, 149, 150, 151, 0xffff
+StyleSetups_Rock_Pop_Jazzy_Grooves:	# the setups of style "Jazzy Grooves" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	152, 153, 154, 155, 0xffff
+StyleSetups_Rock_Pop_Pop_Love_Song:	# the setups of style "Pop Love Song" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	156, 157, 158, 159, 0xffff
+StyleSetups_Rock_Pop_Blues_For_Ray:	# the setups of style "Blues For Ray" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	168, 169, 170, 171, 0xffff
+StyleSetups_Rock_Pop_Superstar_Ballad:	# the setups of style "Superstar Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	172, 173, 174, 175, 0xffff
+StyleSetups_Rock_Pop_16Beat_Standards:	# the setups of style "16Beat Standards" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	180, 181, 182, 183, 0xffff
+StyleSetups_Rock_Pop_SupergroupBallad:	# the setups of style "SupergroupBallad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	196, 197, 198, 199, 0xffff
+StyleSetups_Rock_Pop_80s_Movie_Ballad:	# the setups of style "80s Movie Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	204, 205, 206, 207, 0xffff
+StyleSetups_Rock_Pop_50s_Smooch_Dance:	# the setups of style "50s Smooch Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	208, 209, 210, 211, 0xffff
+StyleSetups_Rock_Pop_Twisters:	# the setups of style "Twisters" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	320, 321, 322, 323, 0xffff
+StyleSetups_Rock_Pop_Ageless_8_Beat:	# the setups of style "Ageless 8 Beat" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	444, 445, 446, 447, 0xffff
+StyleSetups_Rock_Pop_Evergreen_16:	# the setups of style "Evergreen 16" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	464, 465, 466, 467, 0xffff
+StyleSetups_Rock_Pop_Chart_Reggae:	# the setups of style "Chart Reggae" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	596, 597, 598, 599, 0xffff
+StyleSetups_Rock_Pop_Piano_Blues:	# the setups of style "Piano Blues" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	656, 657, 658, 659, 0xffff
+StyleSetups_Rock_Pop_West_Coast_Funk:	# the setups of style "West Coast Funk" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	660, 661, 662, 663, 0xffff
+StyleSetups_Rock_Pop_West_Indies_Cool:	# the setups of style "West Indies Cool" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	844, 845, 846, 847, 0xffff
+StyleSetups_Rock_Pop_Slow_and_Flowery:	# the setups of style "Slow and Flowery" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	884, 885, 886, 887, 0xffff
+StyleSetups_Rock_Pop_Funky_Town:	# the setups of style "Funky Town" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	900, 901, 902, 903, 0xffff
+StyleSetups_Rock_Pop_Euro_Pop_Rock:	# the setups of style "Euro Pop/Rock" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	940, 941, 942, 943, 0xffff
+StyleSetups_Rock_Pop_Soft_Rock:	# the setups of style "Soft Rock" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	944, 945, 946, 947, 0xffff
+StyleSetups_Rock_Pop_Poet_Rock:	# the setups of style "Poet Rock" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	948, 949, 950, 951, 0xffff
+StyleSetups_Rock_Pop_Uptown_Swing:	# the setups of style "Uptown Swing" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	952, 953, 954, 955, 0xffff
+StyleSetups_Rock_Pop_Hip_Smooth:	# the setups of style "Hip & Smooth" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	956, 957, 958, 959, 0xffff
+StyleSetups_Rock_Pop_Ageless_16_Beat:	# the setups of style "Ageless 16 Beat" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	960, 961, 962, 963, 0xffff
+StyleSetups_Rock_Pop_Pop16:	# the setups of style "Pop16" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	964, 965, 966, 967, 0xffff
+StyleSetups_Rock_Pop_Slow_Feelings:	# the setups of style "Slow Feelings" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	968, 969, 970, 971, 0xffff
+StyleSetups_Rock_Pop_Groovy_90s:	# the setups of style "Groovy 90s" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	972, 973, 974, 975, 0xffff
+StyleSetups_Rock_Pop_Yuppie_Beat:	# the setups of style "Yuppie Beat" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	976, 977, 978, 979, 0xffff
+StyleSetups_Rock_Pop_Pop_Ballad_Boys:	# the setups of style "Pop Ballad Boys" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	984, 985, 986, 987, 0xffff
+StyleSetups_Easy_Listening_Sweet_Pop:	# the setups of style "Sweet Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	20, 21, 22, 23, 0xffff
+StyleSetups_Easy_Listening_Song_Contest:	# the setups of style "Song Contest" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	56, 57, 58, 59, 0xffff
+StyleSetups_Easy_Listening_Ballad_Orchestra:	# the setups of style "Ballad Orchestra" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	60, 61, 62, 63, 0xffff
+StyleSetups_Easy_Listening_16_Beat_Grooves:	# the setups of style "16 Beat Grooves" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	72, 73, 74, 75, 0xffff
+StyleSetups_Easy_Listening_Easy_16_Ballad:	# the setups of style "Easy 16 Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	80, 81, 82, 83, 0xffff
+StyleSetups_Easy_Listening_Yesteryear:	# the setups of style "Yesteryear" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	160, 161, 162, 163, 0xffff
+StyleSetups_Easy_Listening_SavedByTheBallad:	# the setups of style "SavedByTheBallad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	164, 165, 166, 167, 0xffff
+StyleSetups_Easy_Listening_Dreamy_Ballad:	# the setups of style "Dreamy Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	176, 177, 178, 179, 0xffff
+StyleSetups_Easy_Listening_Fifties_Smooch:	# the setups of style "Fifties Smooch" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	188, 189, 190, 191, 0xffff
+StyleSetups_Easy_Listening_Daydreams:	# the setups of style "Daydreams" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	192, 193, 194, 195, 0xffff
+StyleSetups_Easy_Listening_Slow_Easy:	# the setups of style "Slow & Easy" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	200, 201, 202, 203, 0xffff
+StyleSetups_Easy_Listening_Pop_Piano_Star:	# the setups of style "Pop Piano Star" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	216, 217, 218, 219, 0xffff
+StyleSetups_Easy_Listening_Candlelight_Fox:	# the setups of style "Candlelight Fox" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	300, 301, 302, 303, 0xffff
+StyleSetups_Easy_Listening_Hollywood_Charm:	# the setups of style "Hollywood Charm" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	412, 413, 414, 415, 0xffff
+StyleSetups_Easy_Listening_Ballad_Producer:	# the setups of style "Ballad Producer" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	416, 417, 418, 419, 0xffff
+StyleSetups_Easy_Listening_Slow_Oldies:	# the setups of style "Slow Oldies" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	476, 477, 478, 479, 0xffff
+StyleSetups_Easy_Listening_Schlager_Romance:	# the setups of style "Schlager Romance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	484, 485, 486, 487, 0xffff
+StyleSetups_Easy_Listening_Golden_Oldie:	# the setups of style "Golden Oldie" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	488, 489, 490, 491, 0xffff
+StyleSetups_Easy_Listening_Easy_Swing_Pop:	# the setups of style "Easy Swing Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	616, 617, 618, 619, 0xffff
+StyleSetups_Easy_Listening_Cool_Waltz:	# the setups of style "Cool Waltz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	752, 753, 754, 755, 0xffff
+StyleSetups_Easy_Listening_Smiling_70s:	# the setups of style "Smiling 70s" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	880, 881, 882, 883, 0xffff
+StyleSetups_Easy_Listening_Chill_Out_Corner:	# the setups of style "Chill Out Corner" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	904, 905, 906, 907, 0xffff
+StyleSetups_Easy_Listening_OldFashion_Dance:	# the setups of style "OldFashion Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	920, 921, 922, 923, 0xffff
+StyleSetups_Easy_Listening_Latin_Drawbars:	# the setups of style "Latin Drawbars" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	924, 925, 926, 927, 0xffff
+StyleSetups_Easy_Listening_70s_Covers_Band:	# the setups of style "70s Covers Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1048, 1049, 1050, 1051, 0xffff
+StyleSetups_Soul_Gospel_70s_Detroit_Pop:	# the setups of style "70s Detroit Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	44, 45, 46, 47, 0xffff
+StyleSetups_Soul_Gospel_Soulful_Organ:	# the setups of style "Soulful Organ" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	184, 185, 186, 187, 0xffff
+StyleSetups_Soul_Gospel_Soul_Club:	# the setups of style "Soul Club" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	212, 213, 214, 215, 0xffff
+StyleSetups_Soul_Gospel_Pop_Soul:	# the setups of style "Pop Soul" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	600, 601, 602, 603, 0xffff
+StyleSetups_Soul_Gospel_Sweet_Soul:	# the setups of style "Sweet Soul" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	604, 605, 606, 607, 0xffff
+StyleSetups_Soul_Gospel_Cool_Groovy:	# the setups of style "Cool & Groovy" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	608, 609, 610, 611, 0xffff
+StyleSetups_Soul_Gospel_Soul_Groove:	# the setups of style "Soul Groove" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	612, 613, 614, 615, 0xffff
+StyleSetups_Soul_Gospel_70s_Revival:	# the setups of style "70s Revival" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	620, 621, 622, 623, 0xffff
+StyleSetups_Soul_Gospel_Sunday_Morning:	# the setups of style "Sunday Morning" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	624, 625, 626, 627, 0xffff
+StyleSetups_Soul_Gospel_Sing_To_The_Lord:	# the setups of style "Sing To The Lord" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	628, 629, 630, 631, 0xffff
+StyleSetups_Soul_Gospel_Pop_Spiritual:	# the setups of style "Pop Spiritual" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	632, 633, 634, 635, 0xffff
+StyleSetups_Soul_Gospel_Modern_Spirit:	# the setups of style "Modern Spirit" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	636, 637, 638, 639, 0xffff
+StyleSetups_Soul_Gospel_Funky_R_B:	# the setups of style "Funky R&B" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	644, 645, 646, 647, 0xffff
+StyleSetups_Soul_Gospel_Soul_Jazz:	# the setups of style "Soul Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	664, 665, 666, 667, 0xffff
+StyleSetups_Soul_Gospel_Waltzing_Church:	# the setups of style "Waltzing Church" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	672, 673, 674, 675, 0xffff
+StyleSetups_Soul_Gospel_Morning_Blues:	# the setups of style "Morning Blues" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	892, 893, 894, 895, 0xffff
+StyleSetups_Soul_Gospel_Soulfood_To_Go:	# the setups of style "Soulfood To Go" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	908, 909, 910, 911, 0xffff
+StyleSetups_Soul_Gospel_Funk_4_Experts:	# the setups of style "Funk 4 Experts" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	932, 933, 934, 935, 0xffff
+StyleSetups_Soul_Gospel_70s_Funk:	# the setups of style "70s Funk" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	980, 981, 982, 983, 0xffff
+StyleSetups_Dance_Pop_90s_Boy_Groups:	# the setups of style "90s Boy Groups" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	108, 109, 110, 111, 0xffff
+StyleSetups_Dance_Pop_Electric_World:	# the setups of style "Electric World" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	544, 545, 546, 547, 0xffff
+StyleSetups_Dance_Pop_Barbie_s_Home:	# the setups of style "Barbie's Home" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	548, 549, 550, 551, 0xffff
+StyleSetups_Dance_Pop_Drumming_Beats:	# the setups of style "Drumming Beats" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	552, 553, 554, 555, 0xffff
+StyleSetups_Dance_Pop_Hip_Dance:	# the setups of style "Hip Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	556, 557, 558, 559, 0xffff
+StyleSetups_Dance_Pop_Dreamland:	# the setups of style "Dreamland" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	560, 561, 562, 563, 0xffff
+StyleSetups_Dance_Pop_Believe_This:	# the setups of style "Believe This" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	564, 565, 566, 567, 0xffff
+StyleSetups_Dance_Pop_London_Subway:	# the setups of style "London Subway" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	568, 569, 570, 571, 0xffff
+StyleSetups_Dance_Pop_Hip_Stuff:	# the setups of style "Hip Stuff" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	572, 573, 574, 575, 0xffff
+StyleSetups_Dance_Pop_Golden_Dancing:	# the setups of style "Golden Dancing" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	576, 577, 578, 579, 0xffff
+StyleSetups_Dance_Pop_Street_Dance:	# the setups of style "Street Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	580, 581, 582, 583, 0xffff
+StyleSetups_Dance_Pop_Retro_Disco:	# the setups of style "Retro Disco" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	584, 585, 586, 587, 0xffff
+StyleSetups_Dance_Pop_Dance_Latin:	# the setups of style "Dance Latin" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	588, 589, 590, 591, 0xffff
+StyleSetups_Dance_Pop_The_Big_Hit:	# the setups of style "The Big Hit" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	592, 593, 594, 595, 0xffff
+StyleSetups_Dance_Pop_Steamy_Funk:	# the setups of style "Steamy Funk" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	640, 641, 642, 643, 0xffff
+StyleSetups_Dance_Pop_Hip_Club_Mixes:	# the setups of style "Hip Club Mixes" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	652, 653, 654, 655, 0xffff
+StyleSetups_Latin_World_Latino_Pop:	# the setups of style "Latino Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	140, 141, 142, 143, 0xffff
+StyleSetups_Latin_World_Smooth_Latin:	# the setups of style "Smooth Latin" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	328, 329, 330, 331, 0xffff
+StyleSetups_Latin_World_Latin_Party:	# the setups of style "Latin Party" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	332, 333, 334, 335, 0xffff
+StyleSetups_Latin_World_Uptown_Cha_Cha:	# the setups of style "Uptown Cha Cha" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	356, 357, 358, 359, 0xffff
+StyleSetups_Latin_World_Special_Latin:	# the setups of style "Special Latin" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	360, 361, 362, 363, 0xffff
+StyleSetups_Latin_World_Jazz_Latin:	# the setups of style "Jazz Latin" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	776, 777, 778, 779, 0xffff
+StyleSetups_Latin_World_Acoustic_Bossa:	# the setups of style "Acoustic Bossa" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	780, 781, 782, 783, 0xffff
+StyleSetups_Latin_World_Ballroom_Beguine:	# the setups of style "Ballroom Beguine" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	784, 785, 786, 787, 0xffff
+StyleSetups_Latin_World_Rhumba_Party:	# the setups of style "Rhumba Party" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	788, 789, 790, 791, 0xffff
+StyleSetups_Latin_World_Bolero_Dance:	# the setups of style "Bolero Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	792, 793, 794, 795, 0xffff
+StyleSetups_Latin_World_Latin_Dance_Band:	# the setups of style "Latin Dance Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	796, 797, 798, 799, 0xffff
+StyleSetups_Latin_World_Samba_Holiday:	# the setups of style "Samba Holiday" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	800, 801, 802, 803, 0xffff
+StyleSetups_Latin_World_Ballroom_Samba:	# the setups of style "Ballroom Samba" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	804, 805, 806, 807, 0xffff
+StyleSetups_Latin_World_Amigo_Beats:	# the setups of style "Amigo Beats" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	808, 809, 810, 811, 0xffff
+StyleSetups_Latin_World_Latin_Tango:	# the setups of style "Latin Tango" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	812, 813, 814, 815, 0xffff
+StyleSetups_Latin_World_Mexicana:	# the setups of style "Mexicana" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	824, 825, 826, 827, 0xffff
+StyleSetups_Latin_World_Dance_Lambada:	# the setups of style "Dance Lambada" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	840, 841, 842, 843, 0xffff
+StyleSetups_Latin_World_Greek_Dance:	# the setups of style "Greek Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	848, 849, 850, 851, 0xffff
+StyleSetups_Latin_World_Scottish_Dance:	# the setups of style "Scottish Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	852, 853, 854, 855, 0xffff
+StyleSetups_Latin_World_Cumbia_Band:	# the setups of style "Cumbia Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	856, 857, 858, 859, 0xffff
+StyleSetups_Latin_World_Cut_Time_Bossa:	# the setups of style "Cut Time Bossa" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	860, 861, 862, 863, 0xffff
+StyleSetups_Latin_World_Talempong_World:	# the setups of style "Talempong World" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	864, 865, 866, 867, 0xffff
+StyleSetups_Latin_World_Romantic_Waltz:	# the setups of style "Romantic Waltz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	868, 869, 870, 871, 0xffff
+StyleSetups_Latin_World_Dangdut_Special:	# the setups of style "Dangdut Special" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	872, 873, 874, 875, 0xffff
+StyleSetups_Latin_World_Indonesian_Folk:	# the setups of style "Indonesian Folk" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	876, 877, 878, 879, 0xffff
+StyleSetups_Latin_World_Radio_Bossa:	# the setups of style "Radio Bossa" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1044, 1045, 1046, 1047, 0xffff
+StyleSetups_Latin_World_Bossa_Guitars:	# the setups of style "Bossa Guitars" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1060, 1061, 1062, 1063, 0xffff
+StyleSetups_Jazz_Swing_Blue_Notes:	# the setups of style "Blue Notes" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	220, 221, 222, 223, 0xffff
+StyleSetups_Jazz_Swing_LoungeLizardJazz:	# the setups of style "LoungeLizardJazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	224, 225, 226, 227, 0xffff
+StyleSetups_Jazz_Swing_Jazz_Harmonicity:	# the setups of style "Jazz Harmonicity" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	228, 229, 230, 231, 0xffff
+StyleSetups_Jazz_Swing_Acapella_Group:	# the setups of style "Acapella Group" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	232, 233, 234, 235, 0xffff
+StyleSetups_Jazz_Swing_Manhattan_Voices:	# the setups of style "Manhattan Voices" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	236, 237, 238, 239, 0xffff
+StyleSetups_Jazz_Swing_Big_Band_Stomp:	# the setups of style "Big Band Stomp" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	240, 241, 242, 243, 0xffff
+StyleSetups_Jazz_Swing_Swing_Counting:	# the setups of style "Swing Counting" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	244, 245, 246, 247, 0xffff
+StyleSetups_Jazz_Swing_Big_Band_Dance:	# the setups of style "Big Band Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	248, 249, 250, 251, 0xffff
+StyleSetups_Jazz_Swing_Big_Band_Smooch:	# the setups of style "Big Band Smooch" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	252, 253, 254, 255, 0xffff
+StyleSetups_Jazz_Swing_Moonlight_Band:	# the setups of style "Moonlight Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	256, 257, 258, 259, 0xffff
+StyleSetups_Jazz_Swing_Late_Night_Jazz:	# the setups of style "Late Night Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	260, 261, 262, 263, 0xffff
+StyleSetups_Jazz_Swing_RatPack_LoveSong:	# the setups of style "RatPack LoveSong" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	264, 265, 266, 267, 0xffff
+StyleSetups_Jazz_Swing_12_Bar_Blues:	# the setups of style "12 Bar Blues" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	268, 269, 270, 271, 0xffff
+StyleSetups_Jazz_Swing_Cocktail_Jazz:	# the setups of style "Cocktail Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	272, 273, 274, 275, 0xffff
+StyleSetups_Jazz_Swing_Scatty_Singers:	# the setups of style "Scatty Singers" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	276, 277, 278, 279, 0xffff
+StyleSetups_Jazz_Swing_The_Swing_Era:	# the setups of style "The Swing Era" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	284, 285, 286, 287, 0xffff
+StyleSetups_Jazz_Swing_NightClubCabaret:	# the setups of style "NightClubCabaret" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	288, 289, 290, 291, 0xffff
+StyleSetups_Jazz_Swing_Bourbon_Street:	# the setups of style "Bourbon Street" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	292, 293, 294, 295, 0xffff
+StyleSetups_Jazz_Swing_I_Got_The_Blues:	# the setups of style "I Got The Blues" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	296, 297, 298, 299, 0xffff
+StyleSetups_Jazz_Swing_Casino_Show:	# the setups of style "Casino Show" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	404, 405, 406, 407, 0xffff
+StyleSetups_Jazz_Swing_Lounge_Act:	# the setups of style "Lounge Act" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	440, 441, 442, 443, 0xffff
+StyleSetups_Jazz_Swing_Tower_Of_Jazz:	# the setups of style "Tower Of Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	648, 649, 650, 651, 0xffff
+StyleSetups_Jazz_Swing_West_Coast_Jazz:	# the setups of style "West Coast Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	668, 669, 670, 671, 0xffff
+StyleSetups_Jazz_Swing_Sweet_Swingy:	# the setups of style "Sweet & Swingy" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	756, 757, 758, 759, 0xffff
+StyleSetups_Jazz_Swing_80s_Jazz_Band:	# the setups of style "80s Jazz Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	896, 897, 898, 899, 0xffff
+StyleSetups_Jazz_Swing_Hotelbar_Jazz:	# the setups of style "Hotelbar Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	936, 937, 938, 939, 0xffff
+StyleSetups_Jazz_Swing_Jazz_Club_Jam:	# the setups of style "Jazz Club Jam" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1040, 1041, 1042, 1043, 0xffff
+StyleSetups_Jazz_Swing_Jazz_Accordion:	# the setups of style "Jazz Accordion" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1072, 1073, 1074, 1075, 0xffff
+StyleSetups_Show_Ballroom_Dinner_Dance:	# the setups of style "Dinner Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	280, 281, 282, 283, 0xffff
+StyleSetups_Show_Ballroom_Swinging_Bert:	# the setups of style "Swinging Bert" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	304, 305, 306, 307, 0xffff
+StyleSetups_Show_Ballroom_Ribbon_Foxtrot:	# the setups of style "Ribbon Foxtrot" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	308, 309, 310, 311, 0xffff
+StyleSetups_Show_Ballroom_60s_Foxtrot:	# the setups of style "60s Foxtrot" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	312, 313, 314, 315, 0xffff
+StyleSetups_Show_Ballroom_Ballroom_Dance:	# the setups of style "Ballroom Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	316, 317, 318, 319, 0xffff
+StyleSetups_Show_Ballroom_Slow_Latin_Dance:	# the setups of style "Slow Latin Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	324, 325, 326, 327, 0xffff
+StyleSetups_Show_Ballroom_Slow_Waltzing:	# the setups of style "Slow Waltzing" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	340, 341, 342, 343, 0xffff
+StyleSetups_Show_Ballroom_Fast_Ballroom:	# the setups of style "Fast Ballroom" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	344, 345, 346, 347, 0xffff
+StyleSetups_Show_Ballroom_Euro_Tango:	# the setups of style "Euro Tango" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	348, 349, 350, 351, 0xffff
+StyleSetups_Show_Ballroom_Vienna_Ballroom:	# the setups of style "Vienna Ballroom" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	352, 353, 354, 355, 0xffff
+StyleSetups_Show_Ballroom_Sci_fi_Adventure:	# the setups of style "Sci-fi Adventure" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	364, 365, 366, 367, 0xffff
+StyleSetups_Show_Ballroom_Spy_Superstar:	# the setups of style "Spy Superstar" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	368, 369, 370, 371, 0xffff
+StyleSetups_Show_Ballroom_Cartoon_Ballad:	# the setups of style "Cartoon Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	372, 373, 374, 375, 0xffff
+StyleSetups_Show_Ballroom_ProductionNumber:	# the setups of style "ProductionNumber" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	376, 377, 378, 379, 0xffff
+StyleSetups_Show_Ballroom_Choreographic:	# the setups of style "Choreographic" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	380, 381, 382, 383, 0xffff
+StyleSetups_Show_Ballroom_Tap_Dance_Legend:	# the setups of style "Tap Dance Legend" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	384, 385, 386, 387, 0xffff
+StyleSetups_Show_Ballroom_Legendary_Ballad:	# the setups of style "Legendary Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	388, 389, 390, 391, 0xffff
+StyleSetups_Show_Ballroom_Movie_Melodrama:	# the setups of style "Movie Melodrama" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	392, 393, 394, 395, 0xffff
+StyleSetups_Show_Ballroom_Swing_Production:	# the setups of style "Swing Production" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	396, 397, 398, 399, 0xffff
+StyleSetups_Show_Ballroom_Breakfast_Waltz:	# the setups of style "Breakfast Waltz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	400, 401, 402, 403, 0xffff
+StyleSetups_Show_Ballroom_Modern_Musical:	# the setups of style "Modern Musical" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	408, 409, 410, 411, 0xffff
+StyleSetups_Show_Ballroom_Show_Tunes:	# the setups of style "Show Tunes" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	420, 421, 422, 423, 0xffff
+StyleSetups_Show_Ballroom_Show_Overture:	# the setups of style "Show Overture" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	424, 425, 426, 427, 0xffff
+StyleSetups_Show_Ballroom_Starry_Eyed:	# the setups of style "Starry Eyed" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	428, 429, 430, 431, 0xffff
+StyleSetups_Show_Ballroom_Rags_to_Jazz:	# the setups of style "Rags to Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	432, 433, 434, 435, 0xffff
+StyleSetups_Show_Ballroom_Vegas_Cabaret:	# the setups of style "Vegas Cabaret" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	436, 437, 438, 439, 0xffff
+StyleSetups_Show_Ballroom_Music_Hall_Joe:	# the setups of style "Music Hall Joe" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	712, 713, 714, 715, 0xffff
+StyleSetups_Show_Ballroom_Ballroom_Waltz:	# the setups of style "Ballroom Waltz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	748, 749, 750, 751, 0xffff
+StyleSetups_Show_Ballroom_Strict_Tempo:	# the setups of style "Strict Tempo" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1052, 1053, 1054, 1055, 0xffff
+StyleSetups_Trad_Folk_Standard_3_4:	# the setups of style "Standard 3/4" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	336, 337, 338, 339, 0xffff
+StyleSetups_Trad_Folk_Franco_Americana:	# the setups of style "Franco Americana" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	724, 725, 726, 727, 0xffff
+StyleSetups_Trad_Folk_Marching_Band:	# the setups of style "Marching Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	728, 729, 730, 731, 0xffff
+StyleSetups_Trad_Folk_Stadium_Events:	# the setups of style "Stadium Events" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	732, 733, 734, 735, 0xffff
+StyleSetups_Trad_Folk_OktoberFest:	# the setups of style "OktoberFest" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	736, 737, 738, 739, 0xffff
+StyleSetups_Trad_Folk_Mountain_Music:	# the setups of style "Mountain Music" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	740, 741, 742, 743, 0xffff
+StyleSetups_Trad_Folk_Zillertal:	# the setups of style "Zillertal" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	744, 745, 746, 747, 0xffff
+StyleSetups_Trad_Folk_Parisian_Dance:	# the setups of style "Parisian Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	760, 761, 762, 763, 0xffff
+StyleSetups_Trad_Folk_Bier_Hall:	# the setups of style "Bier Hall" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	764, 765, 766, 767, 0xffff
+StyleSetups_Trad_Folk_French_Chanson:	# the setups of style "French Chanson" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	768, 769, 770, 771, 0xffff
+StyleSetups_Trad_Folk_Vienna_Dance:	# the setups of style "Vienna Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	772, 773, 774, 775, 0xffff
+StyleSetups_Trad_Folk_Island_Dreams:	# the setups of style "Island Dreams" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	816, 817, 818, 819, 0xffff
+StyleSetups_Trad_Folk_Waikiki_Dance:	# the setups of style "Waikiki Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	820, 821, 822, 823, 0xffff
+StyleSetups_Trad_Folk_Gypsy_Party:	# the setups of style "Gypsy Party" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	828, 829, 830, 831, 0xffff
+StyleSetups_Trad_Folk_Italian_Night:	# the setups of style "Italian Night" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	832, 833, 834, 835, 0xffff
+StyleSetups_Trad_Folk_Ceilidh_Band:	# the setups of style "Ceilidh Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	836, 837, 838, 839, 0xffff
+StyleSetups_Trad_Folk_Modern_Folk:	# the setups of style "Modern Folk" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	888, 889, 890, 891, 0xffff
+StyleSetups_Party_Music_Ballermann:	# the setups of style "Ballermann" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	448, 449, 450, 451, 0xffff
+StyleSetups_Party_Music_Party_R_B:	# the setups of style "Party R&B" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	452, 453, 454, 455, 0xffff
+StyleSetups_Party_Music_Party_Shuffle:	# the setups of style "Party Shuffle" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	456, 457, 458, 459, 0xffff
+StyleSetups_Party_Music_Party_On:	# the setups of style "Party On!" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	460, 461, 462, 463, 0xffff
+StyleSetups_Party_Music_Summer_Fun:	# the setups of style "Summer Fun" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	468, 469, 470, 471, 0xffff
+StyleSetups_Party_Music_Party_Highlights:	# the setups of style "Party Highlights" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	472, 473, 474, 475, 0xffff
+StyleSetups_Party_Music_German_Holiday:	# the setups of style "German Holiday" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	480, 481, 482, 483, 0xffff
+StyleSetups_Party_Music_The_Last_Band:	# the setups of style "The Last Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	492, 493, 494, 495, 0xffff
+StyleSetups_Party_Music_Samba_Nights:	# the setups of style "Samba Nights" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	496, 497, 498, 499, 0xffff
+StyleSetups_Party_Music_Organ_Party:	# the setups of style "Organ Party" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	912, 913, 914, 915, 0xffff
+StyleSetups_Party_Music_Party_Pop_Organ:	# the setups of style "Party Pop Organ" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	916, 917, 918, 919, 0xffff
+StyleSetups_Party_Music_Accordion_Party:	# the setups of style "Accordion Party" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	928, 929, 930, 931, 0xffff
+StyleSetups_Country_Barn_Dance:	# the setups of style "Barn Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	500, 501, 502, 503, 0xffff
+StyleSetups_Country_Country_Festival:	# the setups of style "Country Festival" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	676, 677, 678, 679, 0xffff
+StyleSetups_Country_Nashville_Blues:	# the setups of style "Nashville Blues" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	680, 681, 682, 683, 0xffff
+StyleSetups_Country_Country_Hit:	# the setups of style "Country Hit" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	684, 685, 686, 687, 0xffff
+StyleSetups_Country_70s_Folk:	# the setups of style "70s Folk" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	688, 689, 690, 691, 0xffff
+StyleSetups_Country_Foxtrot_Country:	# the setups of style "Foxtrot Country" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	692, 693, 694, 695, 0xffff
+StyleSetups_Country_Southern_Shuffle:	# the setups of style "Southern Shuffle" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	696, 697, 698, 699, 0xffff
+StyleSetups_Country_Very_Country:	# the setups of style "Very Country" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	700, 701, 702, 703, 0xffff
+StyleSetups_Country_KentuckyLoveSong:	# the setups of style "KentuckyLoveSong" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	704, 705, 706, 707, 0xffff
+StyleSetups_Country_Southern_Waltz:	# the setups of style "Southern Waltz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	708, 709, 710, 711, 0xffff
+StyleSetups_Country_Bluegrass_City:	# the setups of style "Bluegrass City" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	716, 717, 718, 719, 0xffff
+StyleSetups_Country_Country_Dance:	# the setups of style "Country Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	720, 721, 722, 723, 0xffff
+StyleSetups_Organ_Stylist_Tonewheel_Jazz:	# the setups of style "Tonewheel Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	504, 505, 506, 507, 0xffff
+StyleSetups_Organ_Stylist_Organ_A_Go_Go:	# the setups of style "Organ A-Go-Go" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	508, 509, 510, 511, 0xffff
+StyleSetups_Organ_Stylist_Organ_Bossanova:	# the setups of style "Organ Bossanova" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	512, 513, 514, 515, 0xffff
+StyleSetups_Organ_Stylist_Latin_Holiday:	# the setups of style "Latin Holiday" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	516, 517, 518, 519, 0xffff
+StyleSetups_Organ_Stylist_Samba_PartyPiece:	# the setups of style "Samba PartyPiece" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	520, 521, 522, 523, 0xffff
+StyleSetups_Organ_Stylist_Show_Organist:	# the setups of style "Show Organist" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	524, 525, 526, 527, 0xffff
+StyleSetups_Organ_Stylist_Love_Song_Tabs:	# the setups of style "Love Song Tabs" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	528, 529, 530, 531, 0xffff
+StyleSetups_Organ_Stylist_NostalgicFoxtrot:	# the setups of style "NostalgicFoxtrot" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	532, 533, 534, 535, 0xffff
+StyleSetups_Organ_Stylist_Organ_Waltz:	# the setups of style "Organ Waltz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	536, 537, 538, 539, 0xffff
+StyleSetups_Organ_Stylist_Cinema_Organist:	# the setups of style "Cinema Organist" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	540, 541, 542, 543, 0xffff
+StyleSetups_Organ_Stylist_Ballroom_Tabs:	# the setups of style "Ballroom Tabs" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	988, 989, 990, 991, 0xffff
+StyleSetups_Organ_Stylist_Home_Organ_Latin:	# the setups of style "Home Organ Latin" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	992, 993, 994, 995, 0xffff
+StyleSetups_Organ_Stylist_Seaside_Ballroom:	# the setups of style "Seaside Ballroom" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	996, 997, 998, 999, 0xffff
+StyleSetups_Organ_Stylist_Organ_Blue_Notes:	# the setups of style "Organ Blue Notes" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1000, 1001, 1002, 1003, 0xffff
+StyleSetups_Organ_Stylist_Waller_Wurly:	# the setups of style "Waller Wurly" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1004, 1005, 1006, 1007, 0xffff
+StyleSetups_Organ_Stylist_Home_Organ_Waltz:	# the setups of style "Home Organ Waltz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1008, 1009, 1010, 1011, 0xffff
+StyleSetups_Organ_Stylist_Home_Organ_Swing:	# the setups of style "Home Organ Swing" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1012, 1013, 1014, 1015, 0xffff
+StyleSetups_Organ_Stylist_Time_For_The_T:	# the setups of style "Time For The T" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1016, 1017, 1018, 1019, 0xffff
+StyleSetups_Organ_Stylist_Picture_Palace:	# the setups of style "Picture Palace" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1020, 1021, 1022, 1023, 0xffff
+StyleSetups_Organ_Stylist_TheatreOrgan_3_4:	# the setups of style "TheatreOrgan 3/4" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1024, 1025, 1026, 1027, 0xffff
+StyleSetups_Organ_Stylist_Organ_Showcase:	# the setups of style "Organ Showcase" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1028, 1029, 1030, 1031, 0xffff
+StyleSetups_Organ_Stylist_B3_For_The_90s:	# the setups of style "B3 For The 90s" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1032, 1033, 1034, 1035, 0xffff
+StyleSetups_Organ_Stylist_Tango_Organist:	# the setups of style "Tango Organist" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1036, 1037, 1038, 1039, 0xffff
+StyleSetups_Organ_Stylist_Latin_Rhythm_Box:	# the setups of style "Latin Rhythm Box" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1056, 1057, 1058, 1059, 0xffff
+StyleSetups_Organ_Stylist_Hula_Organ:	# the setups of style "Hula Organ" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1064, 1065, 1066, 1067, 0xffff
+StyleSetups_Organ_Stylist_Party_Tabs:	# the setups of style "Party Tabs" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1068, 1069, 1070, 1071, 0xffff
+StyleSetups_Organ_Stylist_Jive_Organist:	# the setups of style "Jive Organist" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	1076, 1077, 1078, 1079, 0xffff
 
-Str_empty_282:	.asciz " "
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3380F8, 0x338100
-Str_empty_281:	.asciz "$"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338102, 0x33810A
-Str_empty_280:	.asciz "("
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33810C, 0x338114
-Str_0_15:	.asciz "0"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338116, 0x33811E
-Str_4_28:	.asciz "4"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338120, 0x338128
-Str_empty_279:	.asciz "@"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33812A, 0x338132
-Str_D_10:	.asciz "D"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338134, 0x33813C
-Str_L:	.asciz "L"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33813E, 0x338146
-Str_T:	.asciz "T"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338148, 0x338150
-Str_X_3:	.asciz "X"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338152, 0x33815A
-Str_empty_278:	.asciz "\\"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33815C, 0x338164
-Str_empty_277:	.asciz "`"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338166, 0x33816E
-Str_d_4:	.asciz "d"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338170, 0x338178
-Str_h_2:	.asciz "h"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33817A, 0x338182
-Str_p:	.asciz "p"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338184, 0x33818C
-Str_t_2:	.asciz "t"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33818E, 0x338196
-Str_x_2:	.asciz "x"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338198, 0x3381A0
-Str_empty_276:	.asciz "|"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3381A2, 0x3381AA
-data_487381AA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3381AA, 0x3381B4
-data_487381B4:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3381B4, 0x3381BE
-data_487381BE:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3381BE, 0x3381C8
-data_487381C8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3381C8, 0x3381D2
-data_487381D2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3381D2, 0x3381DC
-data_487381DC:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3381DC, 0x3381E6
-data_487381E6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3381E6, 0x3381F0
-data_487381F0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3381F0, 0x3381FA
-data_487381FA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3381FA, 0x338204
-data_48738204:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338204, 0x33820E
-data_4873820E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33820E, 0x338218
-data_48738218:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338218, 0x338222
-data_48738222:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338222, 0x33822C
-data_4873822C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33822C, 0x338236
-data_48738236:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338236, 0x338240
-data_48738240:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338240, 0x33824A
-data_4873824A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33824A, 0x338254
-data_48738254:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338254, 0x33825E
-data_4873825E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33825E, 0x338268
-data_48738268:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338268, 0x338272
-data_48738272:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338272, 0x33827C
-data_4873827C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33827C, 0x338286
-data_48738286:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338286, 0x338290
-data_48738290:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338290, 0x33829A
-data_4873829A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33829A, 0x3382A4
-data_487382A4:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3382A4, 0x3382AE
-data_487382AE:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3382AE, 0x3382B8
-data_487382B8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3382B8, 0x3382C2
-data_487382C2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3382C2, 0x3382CC
-data_487382CC:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3382CC, 0x3382D6
-data_487382D6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3382D6, 0x3382E0
-data_487382E0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3382E0, 0x3382EA
-data_487382EA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3382EA, 0x3382F4
-
-StyleGenreTable_p4_p4_0:	# REC_StyleGenreTable_p4_p4 (8 bytes)
-	REC_StyleGenreTable_p4_p4	f0=20, x2="\x15\x00\x16\x00", f6=23
-	.space	2, 0xFF
-
-Str_8_11:	.asciz "8"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338300, 0x338308
-Str_empty_275:	.asciz "<"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33830A, 0x338312
-Str_H:	.asciz "H"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338314, 0x33831C
-Str_P:	.asciz "P"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33831E, 0x338326
-data_48738326:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338326, 0x338330
-data_48738330:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338330, 0x33833A
-data_4873833A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33833A, 0x338344
-data_48738344:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338344, 0x33834E
-data_4873834E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33834E, 0x338358
-data_48738358:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338358, 0x338362
-data_48738362:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338362, 0x33836C
-data_4873836C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33836C, 0x338376
-data_48738376:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338376, 0x338380
-data_48738380:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338380, 0x33838A
-data_4873838A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33838A, 0x338394
-data_48738394:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x338394, 0x33839E
-data_4873839E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33839E, 0x3383A8
-data_487383A8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3383A8, 0x3383B2
-data_487383B2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3383B2, 0x3383BC
-data_487383BC:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3383BC, 0x3383C6
-data_487383C6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3383C6, 0x3383D0
-data_487383D0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3383D0, 0x3383DA
-data_487383DA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3383DA, 0x3383E4
-data_487383E4:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3383E4, 0x3383EE
-
-StyleGenreTable_p4_p4_1:	# REC_StyleGenreTable_p4_p4 (8 bytes)
-	REC_StyleGenreTable_p4_p4	f0=44, x2="-\x00.\x00", f6=47
-	.align	4, 0xFF	# pad after StyleGenreTable_p4_p4_1
-StyleGenreTable_p4_p12_1:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 89 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C053 `movhu (d0, a0), d0`)
-	REC_StyleGenreTable_p4_p12	s0="\xB8"
-	tab_u16	47360, 47616, 47872, 65280, 54527, 54528, 54784, 55040, 65280, 22783, 22786, 23042, 23298, 65282, 23807, 23810	# [0]
-	tab_u16	24066, 24322, 65282, 24831, 24834, 25090, 25346, 65282, 25855, 25858, 26114, 26370, 65282, 27903, 27906, 28162	# [16]
-	tab_u16	28418, 65282, 28927, 28930, 29186, 29442, 65282, 29951, 29954, 30210, 30466, 65282, 30975, 30978, 31234, 31490	# [32]
-	tab_u16	65282, 31999, 32002, 32258, 32514, 65282, 34047, 34050, 34306, 34562, 65282, 39167, 39170, 39426, 39682, 65282	# [48]
-	tab_u16	41215, 41218, 41474, 41730, 65282, 31999, 32003, 32259, 32515, 65283, 36095, 36099, 36355, 36611, 65283, 42239	# [64]
-	tab_u16	42243, 42499, 42755, 65283, 54527, 54531, 54787, 55043, 65283	# [80]
-	.align	4, 0xFF	# pad after StyleGenreTable_p4_p12_1
-StyleGenreTable_p4_p4_2:	# REC_StyleGenreTable_p4_p4 (8 bytes)
-	REC_StyleGenreTable_p4_p4	f0=108, x2="m\x00n\x00", f6=111
-	.space	2, 0xFF
-StyleGenreTable_p4_p12_2:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 74 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C053 `movhu (d0, a0), d0`)
-	REC_StyleGenreTable_p4_p12	s0=" "
-	tab_u16	8450, 8706, 8962, 65282, 9471, 9474, 9730, 9986, 65282, 10495, 10498, 10754, 11010, 65282, 11519, 11522	# [0]
-	tab_u16	11778, 12034, 65282, 12543, 12546, 12802, 13058, 65282, 13567, 13570, 13826, 14082, 65282, 14591, 14594, 14850	# [16]
-	tab_u16	15106, 65282, 15615, 15618, 15874, 16130, 65282, 16639, 16642, 16898, 17154, 65282, 17663, 17666, 17922, 18178	# [32]
-	tab_u16	65282, 18687, 18690, 18946, 19202, 65282, 19711, 19714, 19970, 20226, 65282, 20735, 20738, 20994, 21250, 65282	# [48]
-	tab_u16	33023, 33026, 33282, 33538, 65282, 36095, 36098, 36354, 36610, 65282	# [64]
-	.align	4, 0xFF	# pad after StyleGenreTable_p4_p12_2
-StyleGenreTable_p4_p4_3:	# REC_StyleGenreTable_p4_p4 (8 bytes)
-	REC_StyleGenreTable_p4_p4	f0=140, x2="\x8D\x00\x8E\x00", f6=143
-	.space	2, 0xFF
-StyleGenreTable_p4_p12_3:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 129 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C053 `movhu (d0, a0), d0`)
-	REC_StyleGenreTable_p4_p12	s0="H"
-	tab_u16	18689, 18945, 19201, 65281, 19711, 19713, 19969, 20225, 65281, 25855, 25857, 26113, 26369, 65281, 26879, 26881	# [0]
-	tab_u16	27137, 27393, 65281, 2303, 2307, 2563, 2819, 65283, 3327, 3331, 3587, 3843, 65283, 4351, 4355, 4611	# [16]
-	tab_u16	4867, 65283, 5375, 5379, 5635, 5891, 65283, 6399, 6403, 6659, 6915, 65283, 7423, 7427, 7683, 7939	# [32]
-	tab_u16	65283, 8447, 8451, 8707, 8963, 65283, 9471, 9475, 9731, 9987, 65283, 10495, 10499, 10755, 11011, 65283	# [48]
-	tab_u16	11519, 11523, 11779, 12035, 65283, 14591, 14595, 14851, 15107, 65283, 18687, 18691, 18947, 19203, 65283, 20735	# [64]
-	tab_u16	20739, 20995, 21251, 65283, 21759, 21763, 22019, 22275, 65283, 22783, 22787, 23043, 23299, 65283, 23807, 23811	# [80]
-	tab_u16	24067, 24323, 65283, 24831, 24835, 25091, 25347, 65283, 25855, 25859, 26115, 26371, 65283, 26879, 26883, 27139	# [96]
-	tab_u16	27395, 65283, 27903, 27907, 28163, 28419, 65283, 5375, 5380, 5636, 5892, 65284, 9471, 9476, 9732, 9988	# [112]
-	tab_u16	65284	# [128]
-	.space	1, 0xFF
-StyleGenreTable_p4_p4_4:	# REC_StyleGenreTable_p4_p4 (8 bytes)
-	REC_StyleGenreTable_p4_p4	f0=220, x2="\xDD\x00\xDE\x00", f6=223
-	.align	4, 0xFF	# pad after StyleGenreTable_p4_p4_4
-StyleGenreTable_p4_p12_4:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 134 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C053 `movhu (d0, a0), d0`)
-	REC_StyleGenreTable_p4_p12	s0="\xE0"
-	tab_u16	57600, 57856, 58112, 65280, 58623, 58624, 58880, 59136, 65280, 59647, 59648, 59904, 60160, 65280, 60671, 60672	# [0]
-	tab_u16	60928, 61184, 65280, 61695, 61696, 61952, 62208, 65280, 62719, 62720, 62976, 63232, 65280, 63743, 63744, 64000	# [16]
-	tab_u16	64256, 65280, 64767, 64768, 65024, 65280, 65280, 255, 257, 513, 769, 65281, 1279, 1281, 1537, 1793	# [32]
-	tab_u16	65281, 2303, 2305, 2561, 2817, 65281, 3327, 3329, 3585, 3841, 65281, 4351, 4353, 4609, 4865, 65281	# [48]
-	tab_u16	5375, 5377, 5633, 5889, 65281, 7423, 7425, 7681, 7937, 65281, 8447, 8449, 8705, 8961, 65281, 9471	# [64]
-	tab_u16	9473, 9729, 9985, 65281, 10495, 10497, 10753, 11009, 65281, 38143, 38145, 38401, 38657, 65281, 47359, 47361	# [80]
-	tab_u16	47617, 47873, 65281, 35071, 35074, 35330, 35586, 65282, 40191, 40194, 40450, 40706, 65282, 62719, 62722, 62978	# [96]
-	tab_u16	63234, 65282, 33023, 33027, 33283, 33539, 65283, 43263, 43267, 43523, 43779, 65283, 4351, 4356, 4612, 4868	# [112]
-	tab_u16	65284, 12543, 12548, 12804, 13060, 65284	# [128]
-	.space	1, 0xFF
-StyleGenreTable_p4_p4_5:	# REC_StyleGenreTable_p4_p4 (8 bytes)
-	REC_StyleGenreTable_p4_p4	f0=280, x2="\x19\x01\x1A\x01", f6=283
-	.align	4, 0xFF	# pad after StyleGenreTable_p4_p4_5
-StyleGenreTable_p4_p12_5:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 139 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C053 `movhu (d0, a0), d0`)
-	REC_StyleGenreTable_p4_p12	s0="0"
-	tab_u16	12545, 12801, 13057, 65281, 13567, 13569, 13825, 14081, 65281, 14591, 14593, 14849, 15105, 65281, 15615, 15617	# [0]
-	tab_u16	15873, 16129, 65281, 17663, 17665, 17921, 18177, 65281, 21759, 21761, 22017, 22273, 65281, 22783, 22785, 23041	# [16]
-	tab_u16	23297, 65281, 23807, 23809, 24065, 24321, 65281, 24831, 24833, 25089, 25345, 65281, 27903, 27905, 28161, 28417	# [32]
-	tab_u16	65281, 28927, 28929, 29185, 29441, 65281, 29951, 29953, 30209, 30465, 65281, 30975, 30977, 31233, 31489, 65281	# [48]
-	tab_u16	31999, 32001, 32257, 32513, 65281, 33023, 33025, 33281, 33537, 65281, 34047, 34049, 34305, 34561, 65281, 35071	# [64]
-	tab_u16	35073, 35329, 35585, 65281, 36095, 36097, 36353, 36609, 65281, 37119, 37121, 37377, 37633, 65281, 39167, 39169	# [80]
-	tab_u16	39425, 39681, 65281, 42239, 42241, 42497, 42753, 65281, 43263, 43265, 43521, 43777, 65281, 44287, 44289, 44545	# [96]
-	tab_u16	44801, 65281, 45311, 45313, 45569, 45825, 65281, 46335, 46337, 46593, 46849, 65281, 51455, 51458, 51714, 51970	# [112]
-	tab_u16	65282, 60671, 60674, 60930, 61186, 65282, 7423, 7428, 7684, 7940, 65284	# [128]
-	.align	4, 0xFF	# pad after StyleGenreTable_p4_p12_5
-StyleGenreTable_p4_p4_6:	# REC_StyleGenreTable_p4_p4 (8 bytes)
-	REC_StyleGenreTable_p4_p4	f0=336, x2="Q\x01R\x01", f6=339
-	.space	2, 0xFF
-StyleGenreTable_p4_p12_6:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 79 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C053 `movhu (d0, a0), d0`)
-	REC_StyleGenreTable_p4_p12	s0="\xD4"
-	tab_u16	54530, 54786, 55042, 65282, 55551, 55554, 55810, 56066, 65282, 56575, 56578, 56834, 57090, 65282, 57599, 57602	# [0]
-	tab_u16	57858, 58114, 65282, 58623, 58626, 58882, 59138, 65282, 59647, 59650, 59906, 60162, 65282, 63743, 63746, 64002	# [16]
-	tab_u16	64258, 65282, 64767, 64770, 65026, 65282, 65282, 255, 259, 515, 771, 65283, 1279, 1283, 1539, 1795	# [32]
-	tab_u16	65283, 12543, 12547, 12803, 13059, 65283, 13567, 13571, 13827, 14083, 65283, 15615, 15619, 15875, 16131, 65283	# [48]
-	tab_u16	16639, 16643, 16899, 17155, 65283, 17663, 17667, 17923, 18179, 65283, 30975, 30979, 31235, 31491, 65283	# [64]
-	.space	1, 0xFF
-StyleGenreTable_p4_p4_7:	# REC_StyleGenreTable_p4_p4 (8 bytes)
-	REC_StyleGenreTable_p4_p4	f0=448, x2="\xC1\x01\xC2\x01", f6=451
-	.align	4, 0xFF	# pad after StyleGenreTable_p4_p4_7
-StyleGenreTable_p4_p12_7:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 54 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C053 `movhu (d0, a0), d0`)
-	REC_StyleGenreTable_p4_p12	s0="\xC4"
-	tab_u16	50433, 50689, 50945, 65281, 51455, 51457, 51713, 51969, 65281, 52479, 52481, 52737, 52993, 65281, 54527, 54529	# [0]
-	tab_u16	54785, 55041, 65281, 55551, 55553, 55809, 56065, 65281, 57599, 57601, 57857, 58113, 65281, 60671, 60673, 60929	# [16]
-	tab_u16	61185, 65281, 61695, 61697, 61953, 62209, 65281, 37119, 37123, 37379, 37635, 65283, 38143, 38147, 38403, 38659	# [32]
-	tab_u16	65283, 41215, 41219, 41475, 41731, 65283	# [48]
-	.space	1, 0xFF
-StyleGenreTable_p4_p4_8:	# REC_StyleGenreTable_p4_p4 (8 bytes)
-	REC_StyleGenreTable_p4_p4	f0=500, x2="\xF5\x01\xF6\x01", f6=503
-	.align	4, 0xFF	# pad after StyleGenreTable_p4_p4_8
-StyleGenreTable_p4_p12_8:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 54 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C053 `movhu (d0, a0), d0`)
-	REC_StyleGenreTable_p4_p12	s0="\xA4"
-	tab_u16	42242, 42498, 42754, 65282, 43263, 43266, 43522, 43778, 65282, 44287, 44290, 44546, 44802, 65282, 45311, 45314	# [0]
-	tab_u16	45570, 45826, 65282, 46335, 46338, 46594, 46850, 65282, 47359, 47362, 47618, 47874, 65282, 48383, 48386, 48642	# [16]
-	tab_u16	48898, 65282, 49407, 49410, 49666, 49922, 65282, 50431, 50434, 50690, 50946, 65282, 52479, 52482, 52738, 52994	# [32]
-	tab_u16	65282, 53503, 53506, 53762, 54018, 65282	# [48]
-	.space	1, 0xFF
-StyleGenreTable_p4_p4_9:	# REC_StyleGenreTable_p4_p4 (8 bytes)
-	REC_StyleGenreTable_p4_p4	f0=504, x2="\xF9\x01\xFA\x01", f6=507
-	.align	4, 0xFF	# pad after StyleGenreTable_p4_p4_9
-StyleGenreTable_p4_p12_9:	# REC_StyleGenreTable_p4_p12 (1 bytes), then 129 x u16 the code indexes from +0 (read by StyleListBoxGetItem 0x4847C053 `movhu (d0, a0), d0`)
-	REC_StyleGenreTable_p4_p12	s0="\xFC"
-	tab_u16	64769, 65025, 65281, 65281, 255, 258, 514, 770, 65282, 1279, 1282, 1538, 1794, 65282, 2303, 2306	# [0]
-	tab_u16	2562, 2818, 65282, 3327, 3330, 3586, 3842, 65282, 4351, 4354, 4610, 4866, 65282, 5375, 5378, 5634	# [16]
-	tab_u16	5890, 65282, 6399, 6402, 6658, 6914, 65282, 7423, 7426, 7682, 7938, 65282, 56575, 56579, 56835, 57091	# [32]
-	tab_u16	65283, 57599, 57603, 57859, 58115, 65283, 58623, 58627, 58883, 59139, 65283, 59647, 59651, 59907, 60163, 65283	# [48]
-	tab_u16	60671, 60675, 60931, 61187, 65283, 61695, 61699, 61955, 62211, 65283, 62719, 62723, 62979, 63235, 65283, 63743	# [64]
-	tab_u16	63747, 64003, 64259, 65283, 64767, 64771, 65027, 65283, 65283, 255, 260, 516, 772, 65284, 1279, 1284	# [80]
-	tab_u16	1540, 1796, 65284, 2303, 2308, 2564, 2820, 65284, 3327, 3332, 3588, 3844, 65284, 8447, 8452, 8708	# [96]
-	tab_u16	8964, 65284, 10495, 10500, 10756, 11012, 65284, 11519, 11524, 11780, 12036, 65284, 13567, 13572, 13828, 14084	# [112]
-	tab_u16	65284	# [128]
-	.align	4, 0xFF	# pad after StyleGenreTable_p4_p12_9
-
-ptrs_48738B3C:
-	.long	Text_Disco_Orchestra
-	.long	MssNameFunc_Table+2160
-	.long	Text_Disco_Orchestra+17
-	.long	StyleGenreTable_p4_p12_0
-	.long	Text_Disco_Orchestra+34
-	.long	StyleGenreTable_p4_p12_0+10
-	.long	Text_Disco_Orchestra+51
-	.long	StyleGenreTable_p4_p12_0+20
-	.long	Text_Disco_Orchestra+68
-	.long	StyleGenreTable_p4_p12_0+30
-	.long	Text_Disco_Orchestra+85
-	.long	StyleGenreTable_p4_p12_0+40
-	.long	Text_Disco_Orchestra+102
-	.long	StyleGenreTable_p4_p12_0+50
-	.long	Text_Disco_Orchestra+119
-	.long	Str_empty_282
-	.long	Text_Disco_Orchestra+136
-	.long	Str_empty_281
-	.long	Text_Disco_Orchestra+153
-	.long	Str_empty_280
-	.long	Text_Disco_Orchestra+170
-	.long	Str_0_15
-	.long	Text_Disco_Orchestra+187
-	.long	Str_4_28
-	.long	Text_Disco_Orchestra+204
-	.long	Str_empty_279
-	.long	Text_Disco_Orchestra+221
-	.long	Str_D_10
-	.long	Text_Disco_Orchestra+238
-	.long	Str_L
-	.long	Text_Disco_Orchestra+255
-	.long	Str_T
-	.long	Text_Disco_Orchestra+272
-	.long	Str_X_3
-	.long	Text_Disco_Orchestra+289
-	.long	Str_empty_278
-	.long	Text_Disco_Orchestra+306
-	.long	Str_empty_277
-	.long	Text_Disco_Orchestra+323
-	.long	Str_d_4
-	.long	Text_Disco_Orchestra+340
-	.long	Str_h_2
-	.long	Text_Disco_Orchestra+357
-	.long	Str_p
-	.long	Text_Disco_Orchestra+374
-	.long	Str_t_2
-	.long	Text_Disco_Orchestra+391
-	.long	Str_x_2
-	.long	Text_Disco_Orchestra+408
-	.long	Str_empty_276
-	.long	Text_Disco_Orchestra+425
-	.long	data_487381AA
-	.long	Text_Disco_Orchestra+442
-	.long	data_487381B4
-	.long	Text_Disco_Orchestra+459
-	.long	data_487381BE
-	.long	Text_Disco_Orchestra+476
-	.long	data_487381C8
-	.long	Text_Disco_Orchestra+493
-	.long	data_487381D2
-	.long	Text_Disco_Orchestra+510
-	.long	data_487381DC
-	.long	Text_Disco_Orchestra+527
-	.long	data_487381E6
-	.long	Text_Disco_Orchestra+544
-	.long	data_487381F0
-	.long	Text_Disco_Orchestra+561
-	.long	data_487381FA
-	.long	Text_Disco_Orchestra+578
-	.long	data_48738204
-	.long	Text_Disco_Orchestra+595
-	.long	data_4873820E
-	.long	Text_Disco_Orchestra+612
-	.long	data_48738218
-	.long	Text_Disco_Orchestra+629
-	.long	data_48738222
-	.long	Text_Disco_Orchestra+646
-	.long	data_4873822C
-	.long	Text_Disco_Orchestra+663
-	.long	data_48738236
-	.long	Text_Disco_Orchestra+680
-	.long	data_48738240
-	.long	Text_Disco_Orchestra+697
-	.long	data_4873824A
-	.long	Text_Disco_Orchestra+714
-	.long	data_48738254
-	.long	Text_Disco_Orchestra+731
-	.long	data_4873825E
-	.long	Text_Disco_Orchestra+748
-	.long	data_48738268
-	.long	Text_Disco_Orchestra+765
-	.long	data_48738272
-	.long	Text_Disco_Orchestra+782
-	.long	data_4873827C
-	.long	Text_Disco_Orchestra+799
-	.long	data_48738286
-	.long	Text_Disco_Orchestra+816
-	.long	data_48738290
-	.long	Text_Disco_Orchestra+833
-	.long	data_4873829A
-	.long	Text_Disco_Orchestra+850
-	.long	data_487382A4
-	.long	Text_Disco_Orchestra+867
-	.long	data_487382AE
-	.long	Text_Disco_Orchestra+884
-	.long	data_487382B8
-	.long	Text_Disco_Orchestra+901
-	.long	data_487382C2
-	.long	Text_Disco_Orchestra+918
-	.long	data_487382CC
-	.long	Text_Disco_Orchestra+935
-	.long	data_487382D6
-	.long	Text_Disco_Orchestra+952
-	.long	data_487382E0
-	.long	Text_Disco_Orchestra+969
-	.long	data_487382EA
-	.long	0
-	.space	4, 0x00
-ptrs_48738D14:
-	.long	Text_Sweet_Pop
-	.long	StyleGenreTable_p4_p4_0
-	.long	Text_Sweet_Pop+17
-	.long	Str_8_11
-	.long	Text_Sweet_Pop+34
-	.long	Str_empty_275
-	.long	Text_Sweet_Pop+51
-	.long	Str_H
-	.long	Text_Sweet_Pop+68
-	.long	Str_P
-	.long	Text_Sweet_Pop+85
-	.long	data_48738326
-	.long	Text_Sweet_Pop+102
-	.long	data_48738330
-	.long	Text_Sweet_Pop+119
-	.long	data_4873833A
-	.long	Text_Sweet_Pop+136
-	.long	data_48738344
-	.long	Text_Sweet_Pop+153
-	.long	data_4873834E
-	.long	Text_Sweet_Pop+170
-	.long	data_48738358
-	.long	Text_Sweet_Pop+187
-	.long	data_48738362
-	.long	Text_Sweet_Pop+204
-	.long	data_4873836C
-	.long	Text_Sweet_Pop+221
-	.long	data_48738376
-	.long	Text_Sweet_Pop+238
-	.long	data_48738380
-	.long	Text_Sweet_Pop+255
-	.long	data_4873838A
-	.long	Text_Sweet_Pop+272
-	.long	data_48738394
-	.long	Text_Sweet_Pop+289
-	.long	data_4873839E
-	.long	Text_Sweet_Pop+306
-	.long	data_487383A8
-	.long	Text_Sweet_Pop+323
-	.long	data_487383B2
-	.long	Text_Sweet_Pop+340
-	.long	data_487383BC
-	.long	Text_Sweet_Pop+357
-	.long	data_487383C6
-	.long	Text_Sweet_Pop+374
-	.long	data_487383D0
-	.long	Text_Sweet_Pop+391
-	.long	data_487383DA
-	.long	Text_Sweet_Pop+408
-	.long	data_487383E4
-	.long	0
-	.space	4, 0x00
-ptrs_48738DE4:
-	.long	Text_70s_Detroit_Pop
-	.long	StyleGenreTable_p4_p4_1
-	.long	Text_70s_Detroit_Pop+17
-	.long	StyleGenreTable_p4_p12_1
-	.long	Text_70s_Detroit_Pop+34
-	.long	StyleGenreTable_p4_p12_1+10
-	.long	Text_70s_Detroit_Pop+51
-	.long	StyleGenreTable_p4_p12_1+20
-	.long	Text_70s_Detroit_Pop+68
-	.long	StyleGenreTable_p4_p12_1+30
-	.long	Text_70s_Detroit_Pop+85
-	.long	StyleGenreTable_p4_p12_1+40
-	.long	Text_70s_Detroit_Pop+102
-	.long	StyleGenreTable_p4_p12_1+50
-	.long	Text_70s_Detroit_Pop+119
-	.long	StyleGenreTable_p4_p12_1+60
-	.long	Text_70s_Detroit_Pop+136
-	.long	StyleGenreTable_p4_p12_1+70
-	.long	Text_70s_Detroit_Pop+153
-	.long	StyleGenreTable_p4_p12_1+80
-	.long	Text_70s_Detroit_Pop+170
-	.long	StyleGenreTable_p4_p12_1+90
-	.long	Text_70s_Detroit_Pop+187
-	.long	StyleGenreTable_p4_p12_1+100
-	.long	Text_70s_Detroit_Pop+204
-	.long	StyleGenreTable_p4_p12_1+110
-	.long	Text_70s_Detroit_Pop+221
-	.long	StyleGenreTable_p4_p12_1+120
-	.long	Text_70s_Detroit_Pop+238
-	.long	StyleGenreTable_p4_p12_1+130
-	.long	Text_70s_Detroit_Pop+255
-	.long	StyleGenreTable_p4_p12_1+140
-	.long	Text_70s_Detroit_Pop+272
-	.long	StyleGenreTable_p4_p12_1+150
-	.long	Text_70s_Detroit_Pop+289
-	.long	StyleGenreTable_p4_p12_1+160
-	.long	Text_70s_Detroit_Pop+306
-	.long	StyleGenreTable_p4_p12_1+170
-	.long	0
-	.space	4, 0x00
-ptrs_48738E84:
-	.long	Text_90s_Boy_Groups
-	.long	StyleGenreTable_p4_p4_2
-	.long	Text_90s_Boy_Groups+17
-	.long	StyleGenreTable_p4_p12_2
-	.long	Text_90s_Boy_Groups+34
-	.long	StyleGenreTable_p4_p12_2+10
-	.long	Text_90s_Boy_Groups+51
-	.long	StyleGenreTable_p4_p12_2+20
-	.long	Text_90s_Boy_Groups+68
-	.long	StyleGenreTable_p4_p12_2+30
-	.long	Text_90s_Boy_Groups+85
-	.long	StyleGenreTable_p4_p12_2+40
-	.long	Text_90s_Boy_Groups+102
-	.long	StyleGenreTable_p4_p12_2+50
-	.long	Text_90s_Boy_Groups+119
-	.long	StyleGenreTable_p4_p12_2+60
-	.long	Text_90s_Boy_Groups+136
-	.long	StyleGenreTable_p4_p12_2+70
-	.long	Text_90s_Boy_Groups+153
-	.long	StyleGenreTable_p4_p12_2+80
-	.long	Text_90s_Boy_Groups+170
-	.long	StyleGenreTable_p4_p12_2+90
-	.long	Text_90s_Boy_Groups+187
-	.long	StyleGenreTable_p4_p12_2+100
-	.long	Text_90s_Boy_Groups+204
-	.long	StyleGenreTable_p4_p12_2+110
-	.long	Text_90s_Boy_Groups+221
-	.long	StyleGenreTable_p4_p12_2+120
-	.long	Text_90s_Boy_Groups+238
-	.long	StyleGenreTable_p4_p12_2+130
-	.long	Text_90s_Boy_Groups+255
-	.long	StyleGenreTable_p4_p12_2+140
-	.long	0
-	.space	4, 0x00
-ptrs_48738F0C:
-	.long	Text_90s_Boy_Groups+272
-	.long	StyleGenreTable_p4_p4_3
-	.long	Text_90s_Boy_Groups+289
-	.long	StyleGenreTable_p4_p12_3
-	.long	Text_90s_Boy_Groups+306
-	.long	StyleGenreTable_p4_p12_3+10
-	.long	Text_90s_Boy_Groups+323
-	.long	StyleGenreTable_p4_p12_3+20
-	.long	Text_90s_Boy_Groups+340
-	.long	StyleGenreTable_p4_p12_3+30
-	.long	Text_90s_Boy_Groups+357
-	.long	StyleGenreTable_p4_p12_3+40
-	.long	Text_90s_Boy_Groups+374
-	.long	StyleGenreTable_p4_p12_3+50
-	.long	Text_90s_Boy_Groups+391
-	.long	StyleGenreTable_p4_p12_3+60
-	.long	Text_90s_Boy_Groups+408
-	.long	StyleGenreTable_p4_p12_3+70
-	.long	Text_90s_Boy_Groups+425
-	.long	StyleGenreTable_p4_p12_3+80
-	.long	Text_90s_Boy_Groups+442
-	.long	StyleGenreTable_p4_p12_3+90
-	.long	Text_90s_Boy_Groups+459
-	.long	StyleGenreTable_p4_p12_3+100
-	.long	Text_90s_Boy_Groups+476
-	.long	StyleGenreTable_p4_p12_3+110
-	.long	Text_90s_Boy_Groups+493
-	.long	StyleGenreTable_p4_p12_3+120
-	.long	Text_90s_Boy_Groups+510
-	.long	StyleGenreTable_p4_p12_3+130
-	.long	Text_90s_Boy_Groups+527
-	.long	StyleGenreTable_p4_p12_3+140
-	.long	Text_90s_Boy_Groups+544
-	.long	StyleGenreTable_p4_p12_3+150
-	.long	Text_90s_Boy_Groups+561
-	.long	StyleGenreTable_p4_p12_3+160
-	.long	Text_90s_Boy_Groups+578
-	.long	StyleGenreTable_p4_p12_3+170
-	.long	Text_90s_Boy_Groups+595
-	.long	StyleGenreTable_p4_p12_3+180
-	.long	Text_90s_Boy_Groups+612
-	.long	StyleGenreTable_p4_p12_3+190
-	.long	Text_90s_Boy_Groups+629
-	.long	StyleGenreTable_p4_p12_3+200
-	.long	Text_90s_Boy_Groups+646
-	.long	StyleGenreTable_p4_p12_3+210
-	.long	Text_90s_Boy_Groups+663
-	.long	StyleGenreTable_p4_p12_3+220
-	.long	Text_90s_Boy_Groups+680
-	.long	StyleGenreTable_p4_p12_3+230
-	.long	Text_90s_Boy_Groups+697
-	.long	StyleGenreTable_p4_p12_3+240
-	.long	Text_90s_Boy_Groups+714
-	.long	StyleGenreTable_p4_p12_3+250
-	.long	0
-	.space	4, 0x00
-ptrs_48738FEC:
-	.long	Text_Blue_Notes
-	.long	StyleGenreTable_p4_p4_4
-	.long	Text_Blue_Notes+17
-	.long	StyleGenreTable_p4_p12_4
-	.long	Text_Blue_Notes+34
-	.long	StyleGenreTable_p4_p12_4+10
-	.long	Text_Blue_Notes+51
-	.long	StyleGenreTable_p4_p12_4+20
-	.long	Text_Blue_Notes+68
-	.long	StyleGenreTable_p4_p12_4+30
-	.long	Text_Blue_Notes+85
-	.long	StyleGenreTable_p4_p12_4+40
-	.long	Text_Blue_Notes+102
-	.long	StyleGenreTable_p4_p12_4+50
-	.long	Text_Blue_Notes+119
-	.long	StyleGenreTable_p4_p12_4+60
-	.long	Text_Blue_Notes+136
-	.long	StyleGenreTable_p4_p12_4+70
-	.long	Text_Blue_Notes+153
-	.long	StyleGenreTable_p4_p12_4+80
-	.long	Text_Blue_Notes+170
-	.long	StyleGenreTable_p4_p12_4+90
-	.long	Text_Blue_Notes+187
-	.long	StyleGenreTable_p4_p12_4+100
-	.long	Text_Blue_Notes+204
-	.long	StyleGenreTable_p4_p12_4+110
-	.long	Text_Blue_Notes+221
-	.long	StyleGenreTable_p4_p12_4+120
-	.long	Text_Blue_Notes+238
-	.long	StyleGenreTable_p4_p12_4+130
-	.long	Text_Blue_Notes+255
-	.long	StyleGenreTable_p4_p12_4+140
-	.long	Text_Blue_Notes+272
-	.long	StyleGenreTable_p4_p12_4+150
-	.long	Text_Blue_Notes+289
-	.long	StyleGenreTable_p4_p12_4+160
-	.long	Text_Blue_Notes+306
-	.long	StyleGenreTable_p4_p12_4+170
-	.long	Text_Blue_Notes+323
-	.long	StyleGenreTable_p4_p12_4+180
-	.long	Text_Blue_Notes+340
-	.long	StyleGenreTable_p4_p12_4+190
-	.long	Text_Blue_Notes+357
-	.long	StyleGenreTable_p4_p12_4+200
-	.long	Text_Blue_Notes+374
-	.long	StyleGenreTable_p4_p12_4+210
-	.long	Text_Blue_Notes+391
-	.long	StyleGenreTable_p4_p12_4+220
-	.long	Text_Blue_Notes+408
-	.long	StyleGenreTable_p4_p12_4+230
-	.long	Text_Blue_Notes+425
-	.long	StyleGenreTable_p4_p12_4+240
-	.long	Text_Blue_Notes+442
-	.long	StyleGenreTable_p4_p12_4+250
-	.long	Text_Blue_Notes+459
-	.long	StyleGenreTable_p4_p12_4+260
-	.long	0
-	.space	4, 0x00
-ptrs_487390D4:
-	.long	Text_Blue_Notes+476
-	.long	StyleGenreTable_p4_p4_5
-	.long	Text_Blue_Notes+493
-	.long	StyleGenreTable_p4_p12_5
-	.long	Text_Blue_Notes+510
-	.long	StyleGenreTable_p4_p12_5+10
-	.long	Text_Blue_Notes+527
-	.long	StyleGenreTable_p4_p12_5+20
-	.long	Text_Blue_Notes+544
-	.long	StyleGenreTable_p4_p12_5+30
-	.long	Text_Blue_Notes+561
-	.long	StyleGenreTable_p4_p12_5+40
-	.long	Text_Blue_Notes+578
-	.long	StyleGenreTable_p4_p12_5+50
-	.long	Text_Blue_Notes+595
-	.long	StyleGenreTable_p4_p12_5+60
-	.long	Text_Blue_Notes+612
-	.long	StyleGenreTable_p4_p12_5+70
-	.long	Text_Blue_Notes+629
-	.long	StyleGenreTable_p4_p12_5+80
-	.long	Text_Blue_Notes+646
-	.long	StyleGenreTable_p4_p12_5+90
-	.long	Text_Blue_Notes+663
-	.long	StyleGenreTable_p4_p12_5+100
-	.long	Text_Blue_Notes+680
-	.long	StyleGenreTable_p4_p12_5+110
-	.long	Text_Blue_Notes+697
-	.long	StyleGenreTable_p4_p12_5+120
-	.long	Text_Blue_Notes+714
-	.long	StyleGenreTable_p4_p12_5+130
-	.long	Text_Blue_Notes+731
-	.long	StyleGenreTable_p4_p12_5+140
-	.long	Text_Blue_Notes+748
-	.long	StyleGenreTable_p4_p12_5+150
-	.long	Text_Blue_Notes+765
-	.long	StyleGenreTable_p4_p12_5+160
-	.long	Text_Blue_Notes+782
-	.long	StyleGenreTable_p4_p12_5+170
-	.long	Text_Blue_Notes+799
-	.long	StyleGenreTable_p4_p12_5+180
-	.long	Text_Blue_Notes+816
-	.long	StyleGenreTable_p4_p12_5+190
-	.long	Text_Blue_Notes+833
-	.long	StyleGenreTable_p4_p12_5+200
-	.long	Text_Blue_Notes+850
-	.long	StyleGenreTable_p4_p12_5+210
-	.long	Text_Blue_Notes+867
-	.long	StyleGenreTable_p4_p12_5+220
-	.long	Text_Blue_Notes+884
-	.long	StyleGenreTable_p4_p12_5+230
-	.long	Text_Blue_Notes+901
-	.long	StyleGenreTable_p4_p12_5+240
-	.long	Text_Blue_Notes+918
-	.long	StyleGenreTable_p4_p12_5+250
-	.long	Text_Blue_Notes+935
-	.long	StyleGenreTable_p4_p12_5+260
-	.long	Text_Blue_Notes+952
-	.long	StyleGenreTable_p4_p12_5+270
-	.long	0
-	.space	4, 0x00
-ptrs_487391C4:
-	.long	Text_Standard_3_4
-	.long	StyleGenreTable_p4_p4_6
-	.long	Text_Standard_3_4+17
-	.long	StyleGenreTable_p4_p12_6
-	.long	Text_Standard_3_4+34
-	.long	StyleGenreTable_p4_p12_6+10
-	.long	Text_Standard_3_4+51
-	.long	StyleGenreTable_p4_p12_6+20
-	.long	Text_Standard_3_4+68
-	.long	StyleGenreTable_p4_p12_6+30
-	.long	Text_Standard_3_4+85
-	.long	StyleGenreTable_p4_p12_6+40
-	.long	Text_Standard_3_4+102
-	.long	StyleGenreTable_p4_p12_6+50
-	.long	Text_Standard_3_4+119
-	.long	StyleGenreTable_p4_p12_6+60
-	.long	Text_Standard_3_4+136
-	.long	StyleGenreTable_p4_p12_6+70
-	.long	Text_Standard_3_4+153
-	.long	StyleGenreTable_p4_p12_6+80
-	.long	Text_Standard_3_4+170
-	.long	StyleGenreTable_p4_p12_6+90
-	.long	Text_Standard_3_4+187
-	.long	StyleGenreTable_p4_p12_6+100
-	.long	Text_Standard_3_4+204
-	.long	StyleGenreTable_p4_p12_6+110
-	.long	Text_Standard_3_4+221
-	.long	StyleGenreTable_p4_p12_6+120
-	.long	Text_Standard_3_4+238
-	.long	StyleGenreTable_p4_p12_6+130
-	.long	Text_Standard_3_4+255
-	.long	StyleGenreTable_p4_p12_6+140
-	.long	Text_Standard_3_4+272
-	.long	StyleGenreTable_p4_p12_6+150
-	.long	0
-	.space	4, 0x00
-ptrs_48739254:
-	.long	Text_Ballermann
-	.long	StyleGenreTable_p4_p4_7
-	.long	Text_Ballermann+17
-	.long	StyleGenreTable_p4_p12_7
-	.long	Text_Ballermann+34
-	.long	StyleGenreTable_p4_p12_7+10
-	.long	Text_Ballermann+51
-	.long	StyleGenreTable_p4_p12_7+20
-	.long	Text_Ballermann+68
-	.long	StyleGenreTable_p4_p12_7+30
-	.long	Text_Ballermann+85
-	.long	StyleGenreTable_p4_p12_7+40
-	.long	Text_Ballermann+102
-	.long	StyleGenreTable_p4_p12_7+50
-	.long	Text_Ballermann+119
-	.long	StyleGenreTable_p4_p12_7+60
-	.long	Text_Ballermann+136
-	.long	StyleGenreTable_p4_p12_7+70
-	.long	Text_Ballermann+153
-	.long	StyleGenreTable_p4_p12_7+80
-	.long	Text_Ballermann+170
-	.long	StyleGenreTable_p4_p12_7+90
-	.long	Text_Ballermann+187
-	.long	StyleGenreTable_p4_p12_7+100
-	.long	0
-	.space	4, 0x00
-ptrs_487392BC:
-	.long	Text_Ballermann+204
-	.long	StyleGenreTable_p4_p4_8
-	.long	Text_Ballermann+221
-	.long	StyleGenreTable_p4_p12_8
-	.long	Text_Ballermann+238
-	.long	StyleGenreTable_p4_p12_8+10
-	.long	Text_Ballermann+255
-	.long	StyleGenreTable_p4_p12_8+20
-	.long	Text_Ballermann+272
-	.long	StyleGenreTable_p4_p12_8+30
-	.long	Text_Ballermann+289
-	.long	StyleGenreTable_p4_p12_8+40
-	.long	Text_Ballermann+306
-	.long	StyleGenreTable_p4_p12_8+50
-	.long	Text_Ballermann+323
-	.long	StyleGenreTable_p4_p12_8+60
-	.long	Text_Ballermann+340
-	.long	StyleGenreTable_p4_p12_8+70
-	.long	Text_Ballermann+357
-	.long	StyleGenreTable_p4_p12_8+80
-	.long	Text_Ballermann+374
-	.long	StyleGenreTable_p4_p12_8+90
-	.long	Text_Ballermann+391
-	.long	StyleGenreTable_p4_p12_8+100
-	.long	0
-	.space	4, 0x00
-ptrs_48739324:
-	.long	Text_Ballermann+408
-	.long	StyleGenreTable_p4_p4_9
-	.long	Text_Ballermann+425
-	.long	StyleGenreTable_p4_p12_9
-	.long	Text_Ballermann+442
-	.long	StyleGenreTable_p4_p12_9+10
-	.long	Text_Ballermann+459
-	.long	StyleGenreTable_p4_p12_9+20
-	.long	Text_Ballermann+476
-	.long	StyleGenreTable_p4_p12_9+30
-	.long	Text_Ballermann+493
-	.long	StyleGenreTable_p4_p12_9+40
-	.long	Text_Ballermann+510
-	.long	StyleGenreTable_p4_p12_9+50
-	.long	Text_Ballermann+527
-	.long	StyleGenreTable_p4_p12_9+60
-	.long	Text_Ballermann+544
-	.long	StyleGenreTable_p4_p12_9+70
-	.long	Text_Ballermann+561
-	.long	StyleGenreTable_p4_p12_9+80
-	.long	Text_Ballermann+578
-	.long	StyleGenreTable_p4_p12_9+90
-	.long	Text_Ballermann+595
-	.long	StyleGenreTable_p4_p12_9+100
-	.long	Text_Ballermann+612
-	.long	StyleGenreTable_p4_p12_9+110
-	.long	Text_Ballermann+629
-	.long	StyleGenreTable_p4_p12_9+120
-	.long	Text_Ballermann+646
-	.long	StyleGenreTable_p4_p12_9+130
-	.long	Text_Ballermann+663
-	.long	StyleGenreTable_p4_p12_9+140
-	.long	Text_Ballermann+680
-	.long	StyleGenreTable_p4_p12_9+150
-	.long	Text_Ballermann+697
-	.long	StyleGenreTable_p4_p12_9+160
-	.long	Text_Ballermann+714
-	.long	StyleGenreTable_p4_p12_9+170
-	.long	Text_Ballermann+731
-	.long	StyleGenreTable_p4_p12_9+180
-	.long	Text_Ballermann+748
-	.long	StyleGenreTable_p4_p12_9+190
-	.long	Text_Ballermann+765
-	.long	StyleGenreTable_p4_p12_9+200
-	.long	Text_Ballermann+782
-	.long	StyleGenreTable_p4_p12_9+210
-	.long	Text_Ballermann+799
-	.long	StyleGenreTable_p4_p12_9+220
-	.long	Text_Ballermann+816
-	.long	StyleGenreTable_p4_p12_9+230
-	.long	Text_Ballermann+833
-	.long	StyleGenreTable_p4_p12_9+240
-	.long	Text_Ballermann+850
-	.long	StyleGenreTable_p4_p12_9+250
-	.long	0
-	.space	4, 0x00
+StyleGenre_Rock_Pop_Styles:	# StyleGenre "Rock & Pop"'s 58 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Disco_Orchestra, StyleSetups_Rock_Pop_Disco_Orchestra
+	.long	Text_Disco_Orchestra+17, StyleSetups_Rock_Pop_60s_Blues_Rock
+	.long	Text_Disco_Orchestra+34, StyleSetups_Rock_Pop_60s_PopOrchestra
+	.long	Text_Disco_Orchestra+51, StyleSetups_Rock_Pop_Mersey_Ballad
+	.long	Text_Disco_Orchestra+68, StyleSetups_Rock_Pop_Pacific_Pop
+	.long	Text_Disco_Orchestra+85, StyleSetups_Rock_Pop_Spiritual_Pop
+	.long	Text_Disco_Orchestra+102, StyleSetups_Rock_Pop_Pop_Imagination
+	.long	Text_Disco_Orchestra+119, StyleSetups_Rock_Pop_60s_Soul
+	.long	Text_Disco_Orchestra+136, StyleSetups_Rock_Pop_Folk_Rock
+	.long	Text_Disco_Orchestra+153, StyleSetups_Rock_Pop_Organ_RockBallad
+	.long	Text_Disco_Orchestra+170, StyleSetups_Rock_Pop_UK_Piano_Legend
+	.long	Text_Disco_Orchestra+187, StyleSetups_Rock_Pop_Straight_8_Beat
+	.long	Text_Disco_Orchestra+204, StyleSetups_Rock_Pop_Dance_Superstar
+	.long	Text_Disco_Orchestra+221, StyleSetups_Rock_Pop_Detroit_Ballad
+	.long	Text_Disco_Orchestra+238, StyleSetups_Rock_Pop_EZ_16_Beat
+	.long	Text_Disco_Orchestra+255, StyleSetups_Rock_Pop_Chart_16
+	.long	Text_Disco_Orchestra+272, StyleSetups_Rock_Pop_Studio_Pop
+	.long	Text_Disco_Orchestra+289, StyleSetups_Rock_Pop_King_s_Rock
+	.long	Text_Disco_Orchestra+306, StyleSetups_Rock_Pop_Let_s_Rock
+	.long	Text_Disco_Orchestra+323, StyleSetups_Rock_Pop_Rock_Status
+	.long	Text_Disco_Orchestra+340, StyleSetups_Rock_Pop_Leroy_s_Band
+	.long	Text_Disco_Orchestra+357, StyleSetups_Rock_Pop_Cool_Old_Rock
+	.long	Text_Disco_Orchestra+374, StyleSetups_Rock_Pop_Blues_Alley
+	.long	Text_Disco_Orchestra+391, StyleSetups_Rock_Pop_Heavy_Shuffle
+	.long	Text_Disco_Orchestra+408, StyleSetups_Rock_Pop_Easy_Rock
+	.long	Text_Disco_Orchestra+425, StyleSetups_Rock_Pop_Pop_Girls
+	.long	Text_Disco_Orchestra+442, StyleSetups_Rock_Pop_90s_Top_Ten
+	.long	Text_Disco_Orchestra+459, StyleSetups_Rock_Pop_90s_Rock_Roll
+	.long	Text_Disco_Orchestra+476, StyleSetups_Rock_Pop_Pop_Shuffle
+	.long	Text_Disco_Orchestra+493, StyleSetups_Rock_Pop_Rock_Gig
+	.long	Text_Disco_Orchestra+510, StyleSetups_Rock_Pop_Jazzy_Grooves
+	.long	Text_Disco_Orchestra+527, StyleSetups_Rock_Pop_Pop_Love_Song
+	.long	Text_Disco_Orchestra+544, StyleSetups_Rock_Pop_Blues_For_Ray
+	.long	Text_Disco_Orchestra+561, StyleSetups_Rock_Pop_Superstar_Ballad
+	.long	Text_Disco_Orchestra+578, StyleSetups_Rock_Pop_16Beat_Standards
+	.long	Text_Disco_Orchestra+595, StyleSetups_Rock_Pop_SupergroupBallad
+	.long	Text_Disco_Orchestra+612, StyleSetups_Rock_Pop_80s_Movie_Ballad
+	.long	Text_Disco_Orchestra+629, StyleSetups_Rock_Pop_50s_Smooch_Dance
+	.long	Text_Disco_Orchestra+646, StyleSetups_Rock_Pop_Twisters
+	.long	Text_Disco_Orchestra+663, StyleSetups_Rock_Pop_Ageless_8_Beat
+	.long	Text_Disco_Orchestra+680, StyleSetups_Rock_Pop_Evergreen_16
+	.long	Text_Disco_Orchestra+697, StyleSetups_Rock_Pop_Chart_Reggae
+	.long	Text_Disco_Orchestra+714, StyleSetups_Rock_Pop_Piano_Blues
+	.long	Text_Disco_Orchestra+731, StyleSetups_Rock_Pop_West_Coast_Funk
+	.long	Text_Disco_Orchestra+748, StyleSetups_Rock_Pop_West_Indies_Cool
+	.long	Text_Disco_Orchestra+765, StyleSetups_Rock_Pop_Slow_and_Flowery
+	.long	Text_Disco_Orchestra+782, StyleSetups_Rock_Pop_Funky_Town
+	.long	Text_Disco_Orchestra+799, StyleSetups_Rock_Pop_Euro_Pop_Rock
+	.long	Text_Disco_Orchestra+816, StyleSetups_Rock_Pop_Soft_Rock
+	.long	Text_Disco_Orchestra+833, StyleSetups_Rock_Pop_Poet_Rock
+	.long	Text_Disco_Orchestra+850, StyleSetups_Rock_Pop_Uptown_Swing
+	.long	Text_Disco_Orchestra+867, StyleSetups_Rock_Pop_Hip_Smooth
+	.long	Text_Disco_Orchestra+884, StyleSetups_Rock_Pop_Ageless_16_Beat
+	.long	Text_Disco_Orchestra+901, StyleSetups_Rock_Pop_Pop16
+	.long	Text_Disco_Orchestra+918, StyleSetups_Rock_Pop_Slow_Feelings
+	.long	Text_Disco_Orchestra+935, StyleSetups_Rock_Pop_Groovy_90s
+	.long	Text_Disco_Orchestra+952, StyleSetups_Rock_Pop_Yuppie_Beat
+	.long	Text_Disco_Orchestra+969, StyleSetups_Rock_Pop_Pop_Ballad_Boys
+	.long	0, 0
+StyleGenre_Easy_Listening_Styles:	# StyleGenre "Easy Listening"'s 25 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Sweet_Pop, StyleSetups_Easy_Listening_Sweet_Pop
+	.long	Text_Sweet_Pop+17, StyleSetups_Easy_Listening_Song_Contest
+	.long	Text_Sweet_Pop+34, StyleSetups_Easy_Listening_Ballad_Orchestra
+	.long	Text_Sweet_Pop+51, StyleSetups_Easy_Listening_16_Beat_Grooves
+	.long	Text_Sweet_Pop+68, StyleSetups_Easy_Listening_Easy_16_Ballad
+	.long	Text_Sweet_Pop+85, StyleSetups_Easy_Listening_Yesteryear
+	.long	Text_Sweet_Pop+102, StyleSetups_Easy_Listening_SavedByTheBallad
+	.long	Text_Sweet_Pop+119, StyleSetups_Easy_Listening_Dreamy_Ballad
+	.long	Text_Sweet_Pop+136, StyleSetups_Easy_Listening_Fifties_Smooch
+	.long	Text_Sweet_Pop+153, StyleSetups_Easy_Listening_Daydreams
+	.long	Text_Sweet_Pop+170, StyleSetups_Easy_Listening_Slow_Easy
+	.long	Text_Sweet_Pop+187, StyleSetups_Easy_Listening_Pop_Piano_Star
+	.long	Text_Sweet_Pop+204, StyleSetups_Easy_Listening_Candlelight_Fox
+	.long	Text_Sweet_Pop+221, StyleSetups_Easy_Listening_Hollywood_Charm
+	.long	Text_Sweet_Pop+238, StyleSetups_Easy_Listening_Ballad_Producer
+	.long	Text_Sweet_Pop+255, StyleSetups_Easy_Listening_Slow_Oldies
+	.long	Text_Sweet_Pop+272, StyleSetups_Easy_Listening_Schlager_Romance
+	.long	Text_Sweet_Pop+289, StyleSetups_Easy_Listening_Golden_Oldie
+	.long	Text_Sweet_Pop+306, StyleSetups_Easy_Listening_Easy_Swing_Pop
+	.long	Text_Sweet_Pop+323, StyleSetups_Easy_Listening_Cool_Waltz
+	.long	Text_Sweet_Pop+340, StyleSetups_Easy_Listening_Smiling_70s
+	.long	Text_Sweet_Pop+357, StyleSetups_Easy_Listening_Chill_Out_Corner
+	.long	Text_Sweet_Pop+374, StyleSetups_Easy_Listening_OldFashion_Dance
+	.long	Text_Sweet_Pop+391, StyleSetups_Easy_Listening_Latin_Drawbars
+	.long	Text_Sweet_Pop+408, StyleSetups_Easy_Listening_70s_Covers_Band
+	.long	0, 0
+StyleGenre_Soul_Gospel_Styles:	# StyleGenre "Soul & Gospel"'s 19 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_70s_Detroit_Pop, StyleSetups_Soul_Gospel_70s_Detroit_Pop
+	.long	Text_70s_Detroit_Pop+17, StyleSetups_Soul_Gospel_Soulful_Organ
+	.long	Text_70s_Detroit_Pop+34, StyleSetups_Soul_Gospel_Soul_Club
+	.long	Text_70s_Detroit_Pop+51, StyleSetups_Soul_Gospel_Pop_Soul
+	.long	Text_70s_Detroit_Pop+68, StyleSetups_Soul_Gospel_Sweet_Soul
+	.long	Text_70s_Detroit_Pop+85, StyleSetups_Soul_Gospel_Cool_Groovy
+	.long	Text_70s_Detroit_Pop+102, StyleSetups_Soul_Gospel_Soul_Groove
+	.long	Text_70s_Detroit_Pop+119, StyleSetups_Soul_Gospel_70s_Revival
+	.long	Text_70s_Detroit_Pop+136, StyleSetups_Soul_Gospel_Sunday_Morning
+	.long	Text_70s_Detroit_Pop+153, StyleSetups_Soul_Gospel_Sing_To_The_Lord
+	.long	Text_70s_Detroit_Pop+170, StyleSetups_Soul_Gospel_Pop_Spiritual
+	.long	Text_70s_Detroit_Pop+187, StyleSetups_Soul_Gospel_Modern_Spirit
+	.long	Text_70s_Detroit_Pop+204, StyleSetups_Soul_Gospel_Funky_R_B
+	.long	Text_70s_Detroit_Pop+221, StyleSetups_Soul_Gospel_Soul_Jazz
+	.long	Text_70s_Detroit_Pop+238, StyleSetups_Soul_Gospel_Waltzing_Church
+	.long	Text_70s_Detroit_Pop+255, StyleSetups_Soul_Gospel_Morning_Blues
+	.long	Text_70s_Detroit_Pop+272, StyleSetups_Soul_Gospel_Soulfood_To_Go
+	.long	Text_70s_Detroit_Pop+289, StyleSetups_Soul_Gospel_Funk_4_Experts
+	.long	Text_70s_Detroit_Pop+306, StyleSetups_Soul_Gospel_70s_Funk
+	.long	0, 0
+StyleGenre_Dance_Pop_Styles:	# StyleGenre "Dance Pop"'s 16 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_90s_Boy_Groups, StyleSetups_Dance_Pop_90s_Boy_Groups
+	.long	Text_90s_Boy_Groups+17, StyleSetups_Dance_Pop_Electric_World
+	.long	Text_90s_Boy_Groups+34, StyleSetups_Dance_Pop_Barbie_s_Home
+	.long	Text_90s_Boy_Groups+51, StyleSetups_Dance_Pop_Drumming_Beats
+	.long	Text_90s_Boy_Groups+68, StyleSetups_Dance_Pop_Hip_Dance
+	.long	Text_90s_Boy_Groups+85, StyleSetups_Dance_Pop_Dreamland
+	.long	Text_90s_Boy_Groups+102, StyleSetups_Dance_Pop_Believe_This
+	.long	Text_90s_Boy_Groups+119, StyleSetups_Dance_Pop_London_Subway
+	.long	Text_90s_Boy_Groups+136, StyleSetups_Dance_Pop_Hip_Stuff
+	.long	Text_90s_Boy_Groups+153, StyleSetups_Dance_Pop_Golden_Dancing
+	.long	Text_90s_Boy_Groups+170, StyleSetups_Dance_Pop_Street_Dance
+	.long	Text_90s_Boy_Groups+187, StyleSetups_Dance_Pop_Retro_Disco
+	.long	Text_90s_Boy_Groups+204, StyleSetups_Dance_Pop_Dance_Latin
+	.long	Text_90s_Boy_Groups+221, StyleSetups_Dance_Pop_The_Big_Hit
+	.long	Text_90s_Boy_Groups+238, StyleSetups_Dance_Pop_Steamy_Funk
+	.long	Text_90s_Boy_Groups+255, StyleSetups_Dance_Pop_Hip_Club_Mixes
+	.long	0, 0
+StyleGenre_Latin_World_Styles:	# StyleGenre "Latin & World"'s 27 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_90s_Boy_Groups+272, StyleSetups_Latin_World_Latino_Pop
+	.long	Text_90s_Boy_Groups+289, StyleSetups_Latin_World_Smooth_Latin
+	.long	Text_90s_Boy_Groups+306, StyleSetups_Latin_World_Latin_Party
+	.long	Text_90s_Boy_Groups+323, StyleSetups_Latin_World_Uptown_Cha_Cha
+	.long	Text_90s_Boy_Groups+340, StyleSetups_Latin_World_Special_Latin
+	.long	Text_90s_Boy_Groups+357, StyleSetups_Latin_World_Jazz_Latin
+	.long	Text_90s_Boy_Groups+374, StyleSetups_Latin_World_Acoustic_Bossa
+	.long	Text_90s_Boy_Groups+391, StyleSetups_Latin_World_Ballroom_Beguine
+	.long	Text_90s_Boy_Groups+408, StyleSetups_Latin_World_Rhumba_Party
+	.long	Text_90s_Boy_Groups+425, StyleSetups_Latin_World_Bolero_Dance
+	.long	Text_90s_Boy_Groups+442, StyleSetups_Latin_World_Latin_Dance_Band
+	.long	Text_90s_Boy_Groups+459, StyleSetups_Latin_World_Samba_Holiday
+	.long	Text_90s_Boy_Groups+476, StyleSetups_Latin_World_Ballroom_Samba
+	.long	Text_90s_Boy_Groups+493, StyleSetups_Latin_World_Amigo_Beats
+	.long	Text_90s_Boy_Groups+510, StyleSetups_Latin_World_Latin_Tango
+	.long	Text_90s_Boy_Groups+527, StyleSetups_Latin_World_Mexicana
+	.long	Text_90s_Boy_Groups+544, StyleSetups_Latin_World_Dance_Lambada
+	.long	Text_90s_Boy_Groups+561, StyleSetups_Latin_World_Greek_Dance
+	.long	Text_90s_Boy_Groups+578, StyleSetups_Latin_World_Scottish_Dance
+	.long	Text_90s_Boy_Groups+595, StyleSetups_Latin_World_Cumbia_Band
+	.long	Text_90s_Boy_Groups+612, StyleSetups_Latin_World_Cut_Time_Bossa
+	.long	Text_90s_Boy_Groups+629, StyleSetups_Latin_World_Talempong_World
+	.long	Text_90s_Boy_Groups+646, StyleSetups_Latin_World_Romantic_Waltz
+	.long	Text_90s_Boy_Groups+663, StyleSetups_Latin_World_Dangdut_Special
+	.long	Text_90s_Boy_Groups+680, StyleSetups_Latin_World_Indonesian_Folk
+	.long	Text_90s_Boy_Groups+697, StyleSetups_Latin_World_Radio_Bossa
+	.long	Text_90s_Boy_Groups+714, StyleSetups_Latin_World_Bossa_Guitars
+	.long	0, 0
+StyleGenre_Jazz_Swing_Styles:	# StyleGenre "Jazz & Swing"'s 28 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Blue_Notes, StyleSetups_Jazz_Swing_Blue_Notes
+	.long	Text_Blue_Notes+17, StyleSetups_Jazz_Swing_LoungeLizardJazz
+	.long	Text_Blue_Notes+34, StyleSetups_Jazz_Swing_Jazz_Harmonicity
+	.long	Text_Blue_Notes+51, StyleSetups_Jazz_Swing_Acapella_Group
+	.long	Text_Blue_Notes+68, StyleSetups_Jazz_Swing_Manhattan_Voices
+	.long	Text_Blue_Notes+85, StyleSetups_Jazz_Swing_Big_Band_Stomp
+	.long	Text_Blue_Notes+102, StyleSetups_Jazz_Swing_Swing_Counting
+	.long	Text_Blue_Notes+119, StyleSetups_Jazz_Swing_Big_Band_Dance
+	.long	Text_Blue_Notes+136, StyleSetups_Jazz_Swing_Big_Band_Smooch
+	.long	Text_Blue_Notes+153, StyleSetups_Jazz_Swing_Moonlight_Band
+	.long	Text_Blue_Notes+170, StyleSetups_Jazz_Swing_Late_Night_Jazz
+	.long	Text_Blue_Notes+187, StyleSetups_Jazz_Swing_RatPack_LoveSong
+	.long	Text_Blue_Notes+204, StyleSetups_Jazz_Swing_12_Bar_Blues
+	.long	Text_Blue_Notes+221, StyleSetups_Jazz_Swing_Cocktail_Jazz
+	.long	Text_Blue_Notes+238, StyleSetups_Jazz_Swing_Scatty_Singers
+	.long	Text_Blue_Notes+255, StyleSetups_Jazz_Swing_The_Swing_Era
+	.long	Text_Blue_Notes+272, StyleSetups_Jazz_Swing_NightClubCabaret
+	.long	Text_Blue_Notes+289, StyleSetups_Jazz_Swing_Bourbon_Street
+	.long	Text_Blue_Notes+306, StyleSetups_Jazz_Swing_I_Got_The_Blues
+	.long	Text_Blue_Notes+323, StyleSetups_Jazz_Swing_Casino_Show
+	.long	Text_Blue_Notes+340, StyleSetups_Jazz_Swing_Lounge_Act
+	.long	Text_Blue_Notes+357, StyleSetups_Jazz_Swing_Tower_Of_Jazz
+	.long	Text_Blue_Notes+374, StyleSetups_Jazz_Swing_West_Coast_Jazz
+	.long	Text_Blue_Notes+391, StyleSetups_Jazz_Swing_Sweet_Swingy
+	.long	Text_Blue_Notes+408, StyleSetups_Jazz_Swing_80s_Jazz_Band
+	.long	Text_Blue_Notes+425, StyleSetups_Jazz_Swing_Hotelbar_Jazz
+	.long	Text_Blue_Notes+442, StyleSetups_Jazz_Swing_Jazz_Club_Jam
+	.long	Text_Blue_Notes+459, StyleSetups_Jazz_Swing_Jazz_Accordion
+	.long	0, 0
+StyleGenre_Show_Ballroom_Styles:	# StyleGenre "Show & Ballroom"'s 29 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Blue_Notes+476, StyleSetups_Show_Ballroom_Dinner_Dance
+	.long	Text_Blue_Notes+493, StyleSetups_Show_Ballroom_Swinging_Bert
+	.long	Text_Blue_Notes+510, StyleSetups_Show_Ballroom_Ribbon_Foxtrot
+	.long	Text_Blue_Notes+527, StyleSetups_Show_Ballroom_60s_Foxtrot
+	.long	Text_Blue_Notes+544, StyleSetups_Show_Ballroom_Ballroom_Dance
+	.long	Text_Blue_Notes+561, StyleSetups_Show_Ballroom_Slow_Latin_Dance
+	.long	Text_Blue_Notes+578, StyleSetups_Show_Ballroom_Slow_Waltzing
+	.long	Text_Blue_Notes+595, StyleSetups_Show_Ballroom_Fast_Ballroom
+	.long	Text_Blue_Notes+612, StyleSetups_Show_Ballroom_Euro_Tango
+	.long	Text_Blue_Notes+629, StyleSetups_Show_Ballroom_Vienna_Ballroom
+	.long	Text_Blue_Notes+646, StyleSetups_Show_Ballroom_Sci_fi_Adventure
+	.long	Text_Blue_Notes+663, StyleSetups_Show_Ballroom_Spy_Superstar
+	.long	Text_Blue_Notes+680, StyleSetups_Show_Ballroom_Cartoon_Ballad
+	.long	Text_Blue_Notes+697, StyleSetups_Show_Ballroom_ProductionNumber
+	.long	Text_Blue_Notes+714, StyleSetups_Show_Ballroom_Choreographic
+	.long	Text_Blue_Notes+731, StyleSetups_Show_Ballroom_Tap_Dance_Legend
+	.long	Text_Blue_Notes+748, StyleSetups_Show_Ballroom_Legendary_Ballad
+	.long	Text_Blue_Notes+765, StyleSetups_Show_Ballroom_Movie_Melodrama
+	.long	Text_Blue_Notes+782, StyleSetups_Show_Ballroom_Swing_Production
+	.long	Text_Blue_Notes+799, StyleSetups_Show_Ballroom_Breakfast_Waltz
+	.long	Text_Blue_Notes+816, StyleSetups_Show_Ballroom_Modern_Musical
+	.long	Text_Blue_Notes+833, StyleSetups_Show_Ballroom_Show_Tunes
+	.long	Text_Blue_Notes+850, StyleSetups_Show_Ballroom_Show_Overture
+	.long	Text_Blue_Notes+867, StyleSetups_Show_Ballroom_Starry_Eyed
+	.long	Text_Blue_Notes+884, StyleSetups_Show_Ballroom_Rags_to_Jazz
+	.long	Text_Blue_Notes+901, StyleSetups_Show_Ballroom_Vegas_Cabaret
+	.long	Text_Blue_Notes+918, StyleSetups_Show_Ballroom_Music_Hall_Joe
+	.long	Text_Blue_Notes+935, StyleSetups_Show_Ballroom_Ballroom_Waltz
+	.long	Text_Blue_Notes+952, StyleSetups_Show_Ballroom_Strict_Tempo
+	.long	0, 0
+StyleGenre_Trad_Folk_Styles:	# StyleGenre "Trad & Folk"'s 17 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Standard_3_4, StyleSetups_Trad_Folk_Standard_3_4
+	.long	Text_Standard_3_4+17, StyleSetups_Trad_Folk_Franco_Americana
+	.long	Text_Standard_3_4+34, StyleSetups_Trad_Folk_Marching_Band
+	.long	Text_Standard_3_4+51, StyleSetups_Trad_Folk_Stadium_Events
+	.long	Text_Standard_3_4+68, StyleSetups_Trad_Folk_OktoberFest
+	.long	Text_Standard_3_4+85, StyleSetups_Trad_Folk_Mountain_Music
+	.long	Text_Standard_3_4+102, StyleSetups_Trad_Folk_Zillertal
+	.long	Text_Standard_3_4+119, StyleSetups_Trad_Folk_Parisian_Dance
+	.long	Text_Standard_3_4+136, StyleSetups_Trad_Folk_Bier_Hall
+	.long	Text_Standard_3_4+153, StyleSetups_Trad_Folk_French_Chanson
+	.long	Text_Standard_3_4+170, StyleSetups_Trad_Folk_Vienna_Dance
+	.long	Text_Standard_3_4+187, StyleSetups_Trad_Folk_Island_Dreams
+	.long	Text_Standard_3_4+204, StyleSetups_Trad_Folk_Waikiki_Dance
+	.long	Text_Standard_3_4+221, StyleSetups_Trad_Folk_Gypsy_Party
+	.long	Text_Standard_3_4+238, StyleSetups_Trad_Folk_Italian_Night
+	.long	Text_Standard_3_4+255, StyleSetups_Trad_Folk_Ceilidh_Band
+	.long	Text_Standard_3_4+272, StyleSetups_Trad_Folk_Modern_Folk
+	.long	0, 0
+StyleGenre_Party_Music_Styles:	# StyleGenre "Party Music"'s 12 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Ballermann, StyleSetups_Party_Music_Ballermann
+	.long	Text_Ballermann+17, StyleSetups_Party_Music_Party_R_B
+	.long	Text_Ballermann+34, StyleSetups_Party_Music_Party_Shuffle
+	.long	Text_Ballermann+51, StyleSetups_Party_Music_Party_On
+	.long	Text_Ballermann+68, StyleSetups_Party_Music_Summer_Fun
+	.long	Text_Ballermann+85, StyleSetups_Party_Music_Party_Highlights
+	.long	Text_Ballermann+102, StyleSetups_Party_Music_German_Holiday
+	.long	Text_Ballermann+119, StyleSetups_Party_Music_The_Last_Band
+	.long	Text_Ballermann+136, StyleSetups_Party_Music_Samba_Nights
+	.long	Text_Ballermann+153, StyleSetups_Party_Music_Organ_Party
+	.long	Text_Ballermann+170, StyleSetups_Party_Music_Party_Pop_Organ
+	.long	Text_Ballermann+187, StyleSetups_Party_Music_Accordion_Party
+	.long	0, 0
+StyleGenre_Country_Styles:	# StyleGenre "Country"'s 12 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Ballermann+204, StyleSetups_Country_Barn_Dance
+	.long	Text_Ballermann+221, StyleSetups_Country_Country_Festival
+	.long	Text_Ballermann+238, StyleSetups_Country_Nashville_Blues
+	.long	Text_Ballermann+255, StyleSetups_Country_Country_Hit
+	.long	Text_Ballermann+272, StyleSetups_Country_70s_Folk
+	.long	Text_Ballermann+289, StyleSetups_Country_Foxtrot_Country
+	.long	Text_Ballermann+306, StyleSetups_Country_Southern_Shuffle
+	.long	Text_Ballermann+323, StyleSetups_Country_Very_Country
+	.long	Text_Ballermann+340, StyleSetups_Country_KentuckyLoveSong
+	.long	Text_Ballermann+357, StyleSetups_Country_Southern_Waltz
+	.long	Text_Ballermann+374, StyleSetups_Country_Bluegrass_City
+	.long	Text_Ballermann+391, StyleSetups_Country_Country_Dance
+	.long	0, 0
+StyleGenre_Organ_Stylist_Styles:	# StyleGenre "Organ Stylist"'s 27 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Ballermann+408, StyleSetups_Organ_Stylist_Tonewheel_Jazz
+	.long	Text_Ballermann+425, StyleSetups_Organ_Stylist_Organ_A_Go_Go
+	.long	Text_Ballermann+442, StyleSetups_Organ_Stylist_Organ_Bossanova
+	.long	Text_Ballermann+459, StyleSetups_Organ_Stylist_Latin_Holiday
+	.long	Text_Ballermann+476, StyleSetups_Organ_Stylist_Samba_PartyPiece
+	.long	Text_Ballermann+493, StyleSetups_Organ_Stylist_Show_Organist
+	.long	Text_Ballermann+510, StyleSetups_Organ_Stylist_Love_Song_Tabs
+	.long	Text_Ballermann+527, StyleSetups_Organ_Stylist_NostalgicFoxtrot
+	.long	Text_Ballermann+544, StyleSetups_Organ_Stylist_Organ_Waltz
+	.long	Text_Ballermann+561, StyleSetups_Organ_Stylist_Cinema_Organist
+	.long	Text_Ballermann+578, StyleSetups_Organ_Stylist_Ballroom_Tabs
+	.long	Text_Ballermann+595, StyleSetups_Organ_Stylist_Home_Organ_Latin
+	.long	Text_Ballermann+612, StyleSetups_Organ_Stylist_Seaside_Ballroom
+	.long	Text_Ballermann+629, StyleSetups_Organ_Stylist_Organ_Blue_Notes
+	.long	Text_Ballermann+646, StyleSetups_Organ_Stylist_Waller_Wurly
+	.long	Text_Ballermann+663, StyleSetups_Organ_Stylist_Home_Organ_Waltz
+	.long	Text_Ballermann+680, StyleSetups_Organ_Stylist_Home_Organ_Swing
+	.long	Text_Ballermann+697, StyleSetups_Organ_Stylist_Time_For_The_T
+	.long	Text_Ballermann+714, StyleSetups_Organ_Stylist_Picture_Palace
+	.long	Text_Ballermann+731, StyleSetups_Organ_Stylist_TheatreOrgan_3_4
+	.long	Text_Ballermann+748, StyleSetups_Organ_Stylist_Organ_Showcase
+	.long	Text_Ballermann+765, StyleSetups_Organ_Stylist_B3_For_The_90s
+	.long	Text_Ballermann+782, StyleSetups_Organ_Stylist_Tango_Organist
+	.long	Text_Ballermann+799, StyleSetups_Organ_Stylist_Latin_Rhythm_Box
+	.long	Text_Ballermann+816, StyleSetups_Organ_Stylist_Hula_Organ
+	.long	Text_Ballermann+833, StyleSetups_Organ_Stylist_Party_Tabs
+	.long	Text_Ballermann+850, StyleSetups_Organ_Stylist_Jive_Organist
+	.long	0, 0
 
 StyleGenreTable:	# 12 x StyleGenre (8 bytes each); read by func_4847B45A 0x4847B45A `mov (d0, a0), a1`; func_4847B4A8 0x4847B4A8 `mov (4, a0), a0`; func_4847B87F 0x4847B87F `mov (4, a0), a3` (+7)
-	StyleGenre	name=Text_Rock_Pop, styles=ptrs_48738B3C	# [0]
-	StyleGenre	name=Text_Rock_Pop+17, styles=ptrs_48738D14
-	StyleGenre	name=Text_Rock_Pop+34, styles=ptrs_48738DE4
-	StyleGenre	name=Text_Rock_Pop+51, styles=ptrs_48738E84
-	StyleGenre	name=Text_Rock_Pop+68, styles=ptrs_48738F0C
-	StyleGenre	name=Text_Rock_Pop+85, styles=ptrs_48738FEC
-	StyleGenre	name=Text_Rock_Pop+102, styles=ptrs_487390D4
-	StyleGenre	name=Text_Rock_Pop+119, styles=ptrs_487391C4
-	StyleGenre	name=Text_Rock_Pop+136, styles=ptrs_48739254	# [8]
-	StyleGenre	name=Text_Rock_Pop+153, styles=ptrs_487392BC
-	StyleGenre	name=Text_Rock_Pop+170, styles=ptrs_48739324
+	StyleGenre	name=Text_Rock_Pop, styles=StyleGenre_Rock_Pop_Styles	# [0]
+	StyleGenre	name=Text_Rock_Pop+17, styles=StyleGenre_Easy_Listening_Styles
+	StyleGenre	name=Text_Rock_Pop+34, styles=StyleGenre_Soul_Gospel_Styles
+	StyleGenre	name=Text_Rock_Pop+51, styles=StyleGenre_Dance_Pop_Styles
+	StyleGenre	name=Text_Rock_Pop+68, styles=StyleGenre_Latin_World_Styles
+	StyleGenre	name=Text_Rock_Pop+85, styles=StyleGenre_Jazz_Swing_Styles
+	StyleGenre	name=Text_Rock_Pop+102, styles=StyleGenre_Show_Ballroom_Styles
+	StyleGenre	name=Text_Rock_Pop+119, styles=StyleGenre_Trad_Folk_Styles
+	StyleGenre	name=Text_Rock_Pop+136, styles=StyleGenre_Party_Music_Styles	# [8]
+	StyleGenre	name=Text_Rock_Pop+153, styles=StyleGenre_Country_Styles
+	StyleGenre	name=Text_Rock_Pop+170, styles=StyleGenre_Organ_Stylist_Styles
 	StyleGenre	
 
 # 4 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
@@ -17666,94 +17756,86 @@ func_4847CEC0_List_5:
 # 5 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
 func_4847CEC0_List_6:
 	.word	0x240, 0x32, 0x3, 0x7e, 0x376, 0xffff
-
-Str_9_11:	.asciz "9"
-# census: opaque -- unknown-dump: 18 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33949E, 0x3394B0
-
-# 3 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+# 9 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
 func_4847CEC0_List_7:
+	.word	0x39, 0x1bd, 0x37, 0x4a, 0xcb, 0xa4, 0xc8, 0xcc, 0x91, 0xffff
+# 3 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847CEC0_List_8:
 	.word	0x87, 0x24e, 0x5a, 0xffff
 # 27 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_8:
-	.word	0x2f9, 0x2d7, 0x116, 0x1ce, 0x23b, 0x186, 0xda, 0xaa, 0x33f, 0x15b, 0x335, 0x2fc, 0x2e6, 0x1de, 0x382, 0x350, 0x29c, 0x67, 0x256, 0x3be, 0x174, 0x308, 0x2fb, 0x412, 0x431, 0x36f, 0x3f6, 0xffff
-
-Str_empty_273:	.asciz "\\"
-# census: opaque -- unknown-dump: 224 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3394F2, 0x3395D2
-
-# 83 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
 func_4847CEC0_List_9:
+	.word	0x2f9, 0x2d7, 0x116, 0x1ce, 0x23b, 0x186, 0xda, 0xaa, 0x33f, 0x15b, 0x335, 0x2fc, 0x2e6, 0x1de, 0x382, 0x350, 0x29c, 0x67, 0x256, 0x3be, 0x174, 0x308, 0x2fb, 0x412, 0x431, 0x36f, 0x3f6, 0xffff
+# 112 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847CEC0_List_10:
+	.word	0x5c, 0x1be, 0x30f, 0x40a, 0x219, 0x3d4, 0x437, 0x40b, 0x409, 0x408, 0x3eb, 0x50, 0x128, 0xa0, 0xa7, 0x3cb, 0xb0, 0x1a1, 0xec, 0x166, 0x135, 0x216, 0x13f, 0x41f, 0x3a9, 0x257, 0x1e3, 0x103, 0xf6, 0x2b7, 0x2c2, 0x2eb, 0x3a1, 0x255, 0x12, 0x316, 0x22a, 0x228, 0x1db, 0x206, 0x14a, 0x420, 0x23d, 0x254, 0xf0, 0x4d, 0xe4, 0x183, 0x12e, 0x138, 0x35e, 0x1e6, 0x8e, 0xb6, 0x5d, 0x23e, 0x347, 0x1fa, 0x20e, 0x6b, 0x3a6, 0x3b0, 0x194, 0x76, 0x2bd, 0x1f7, 0x1f6, 0xa9, 0x75, 0x12b, 0x12a, 0x115, 0xbd, 0x2e0, 0x31a, 0x318, 0x31b, 0x10e, 0x10f, 0x10d, 0x69, 0x1e, 0x88, 0x35f, 0x426, 0x30a, 0x30c, 0x18, 0x5b, 0x47, 0xa1, 0x56, 0x2c6, 0x39d, 0x2de, 0x1ed, 0x5f, 0x17d, 0x167, 0x7, 0x2ca, 0x27f, 0x324, 0x1f0, 0x416, 0x14c, 0x30d, 0x14e, 0x309, 0x397, 0x222, 0x3e0, 0xffff
+# 83 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847CEC0_List_11:
 	.word	0x122, 0x356, 0x1b4, 0x2b3, 0x389, 0x1b5, 0x252, 0x34f, 0x322, 0x31c, 0x395, 0x39e, 0x19e, 0x1b7, 0x3fd, 0x1a9, 0x31f, 0x31d, 0x165, 0x300, 0x3db, 0x178, 0x317, 0x2bc, 0x77, 0x38c, 0x19b, 0x407, 0x3b3, 0x1b8, 0x386, 0x108, 0x100, 0xb5, 0x1f9, 0xc2, 0x162, 0xd9, 0xd8, 0x1d1, 0x15, 0x3da, 0x95, 0x311, 0x427, 0x190, 0x2d8, 0x417, 0x2ee, 0x179, 0x191, 0x3d7, 0x28c, 0x269, 0x3bb, 0xb8, 0x35c, 0x3bc, 0x38d, 0x117, 0x261, 0x327, 0x30b, 0x3f7, 0x2cf, 0x378, 0x2a4, 0x2b9, 0x2ad, 0x2ae, 0x2ac, 0x2af, 0x3e4, 0x2d4, 0x217, 0x197, 0x213, 0x29d, 0x315, 0x314, 0x359, 0x35a, 0x1a8, 0xffff
 # 47 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_10:
+func_4847CEC0_List_12:
 	.word	0x102, 0x253, 0x225, 0x351, 0x146, 0x340, 0x34b, 0xfb, 0x369, 0x368, 0x36a, 0xf9, 0x282, 0xb4, 0x23, 0xbc, 0x62, 0x422, 0x325, 0x248, 0x0, 0x1b2, 0x127, 0x126, 0x175, 0xe1, 0x141, 0x2e7, 0x425, 0x233, 0xbf, 0xe9, 0xfe, 0x2aa, 0xb1, 0x171, 0x3f8, 0x3fb, 0x3fa, 0x3f9, 0x232, 0x319, 0x3ba, 0x21, 0x344, 0x34, 0xa5, 0xffff
 # 20 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_11:
+func_4847CEC0_List_13:
 	.word	0x1c8, 0x48, 0x204, 0x2e8, 0xb2, 0x346, 0x3a4, 0x345, 0x210, 0x40c, 0x3e2, 0x19f, 0x3e5, 0x2f2, 0x16b, 0x208, 0x20b, 0x15e, 0x40d, 0x97, 0xffff
 # 66 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_12:
+func_4847CEC0_List_14:
 	.word	0xc, 0x3fc, 0x215, 0x221, 0x185, 0x17c, 0x1cc, 0x182, 0x2d1, 0x158, 0x7a, 0x3ca, 0x223, 0x27, 0x33e, 0x1a7, 0x2d3, 0x2b6, 0x380, 0x24b, 0x323, 0x25d, 0x1ae, 0x120, 0x372, 0x13, 0x2be, 0x112, 0x3c4, 0x292, 0x414, 0x379, 0x2b2, 0x2b1, 0xcd, 0x3dd, 0x3dc, 0x3de, 0x3df, 0x406, 0x41d, 0x133, 0x13a, 0x118, 0x18a, 0x2f8, 0x15f, 0xbb, 0x307, 0x367, 0x40f, 0x3ff, 0x286, 0x114, 0x384, 0x281, 0x28e, 0x387, 0x22e, 0x296, 0x25b, 0x28a, 0x28b, 0x29e, 0x98, 0x288, 0xffff
 # 41 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_13:
+func_4847CEC0_List_15:
 	.word	0x361, 0x37e, 0x23c, 0x399, 0x3c3, 0x12c, 0x3c6, 0x3a0, 0x1e5, 0x1d8, 0x150, 0x244, 0x81, 0x83, 0x2e9, 0x3a3, 0x355, 0x13e, 0x8d, 0x26e, 0x71, 0x273, 0x26c, 0x2a2, 0x270, 0x272, 0x3c8, 0x155, 0x271, 0x31, 0x3e3, 0x306, 0x27e, 0x3b9, 0x2f7, 0x287, 0x38f, 0xa, 0x9f, 0x119, 0x33d, 0xffff
 # 60 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_14:
+func_4847CEC0_List_16:
 	.word	0x391, 0x1d3, 0x436, 0x1d9, 0x1ee, 0x64, 0x18f, 0x2d2, 0x33b, 0xff, 0x329, 0x331, 0x429, 0x2b8, 0x7b, 0x2c5, 0x1e9, 0x36b, 0x349, 0xc7, 0xc6, 0x78, 0xc5, 0x25c, 0x2cc, 0x2cd, 0x3bf, 0x58, 0x22f, 0x3d3, 0x84, 0x3b8, 0x2b0, 0x41b, 0x8, 0x3a5, 0x1fc, 0x1f4, 0x34a, 0x2ef, 0x10a, 0x277, 0x2a3, 0x2c1, 0x211, 0x3f2, 0x3ed, 0x4, 0x305, 0x262, 0x432, 0x129, 0x328, 0x11e, 0x237, 0x235, 0x234, 0x236, 0xeb, 0x334, 0xffff
-
-Str_t:	.asciz "t"
-# census: opaque -- unknown-dump: 18 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33985A, 0x33986C
-
+# 9 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847CEC0_List_17:
+	.word	0x74, 0x279, 0x1d6, 0x36d, 0x21f, 0x202, 0x337, 0x336, 0x342, 0xffff
 # 19 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_15:
+func_4847CEC0_List_18:
 	.word	0x35b, 0x34c, 0x33c, 0x3e9, 0x106, 0x433, 0xde, 0xdf, 0xdd, 0x113, 0x164, 0x3d1, 0x1c5, 0x90, 0x212, 0x1b3, 0x15a, 0x283, 0x38a, 0xffff
 # 12 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_16:
+func_4847CEC0_List_19:
 	.word	0x1c, 0x226, 0x2ba, 0x36c, 0x2bb, 0x231, 0x21e, 0x2ff, 0x405, 0x39c, 0x21a, 0x24, 0xffff
 # 44 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_17:
+func_4847CEC0_List_20:
 	.word	0xa2, 0x3c1, 0x29f, 0x263, 0xee, 0x26b, 0x2d6, 0x348, 0xd3, 0x143, 0x411, 0xd6, 0x37f, 0xe5, 0x310, 0x312, 0x207, 0x144, 0x24f, 0x149, 0x169, 0x8c, 0x14b, 0x1b6, 0x3cd, 0x2e2, 0x275, 0x16f, 0x250, 0xe2, 0x125, 0x1e4, 0x377, 0x25, 0x239, 0x2d5, 0x1c0, 0x14, 0xb3, 0x189, 0x1, 0x3b5, 0x1ca, 0xf4, 0xffff
 # 49 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_18:
+func_4847CEC0_List_21:
 	.word	0x251, 0x1c1, 0x10, 0x1f2, 0x1bf, 0x2db, 0x2d9, 0x2dd, 0x338, 0x333, 0x11d, 0x374, 0x2f1, 0x66, 0x339, 0x358, 0x8f, 0x32b, 0x107, 0x180, 0x2da, 0x101, 0x362, 0x6c, 0x230, 0x242, 0x31e, 0x1cd, 0x381, 0x393, 0xc3, 0x1a, 0x22, 0x16e, 0x18b, 0x19d, 0x193, 0x294, 0x22d, 0x148, 0x2e4, 0x396, 0x290, 0x37d, 0x3aa, 0x52, 0x371, 0x3a7, 0x1b, 0xffff
-
-Str_6_20:	.asciz "6"
-# census: opaque -- unknown-dump: 42 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33996E, 0x339998
-
+# 21 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+func_4847CEC0_List_22:
+	.word	0x36, 0x2a5, 0x2c4, 0x2b5, 0xe0, 0x16c, 0x357, 0xac, 0x2ce, 0x161, 0x2cb, 0x121, 0x1ad, 0x423, 0x1c3, 0x2c3, 0x238, 0x42d, 0x22c, 0x245, 0xed, 0xffff
 # 26 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_19:
+func_4847CEC0_List_23:
 	.word	0x32c, 0x170, 0x1eb, 0x3c0, 0x1a0, 0xe6, 0x1bb, 0x1a4, 0xc1, 0x172, 0x3fe, 0x428, 0x2, 0x1aa, 0x18d, 0xa3, 0x1a5, 0x176, 0x35d, 0x123, 0x1df, 0x65, 0x1fd, 0x205, 0x421, 0x38b, 0xffff
 # 51 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_20:
+func_4847CEC0_List_24:
 	.word	0x297, 0x36e, 0x363, 0x398, 0x28, 0x1d7, 0x147, 0x19c, 0x330, 0x1ec, 0x1da, 0x365, 0x1fe, 0x390, 0x1f3, 0x1cf, 0x168, 0x136, 0x375, 0x2c7, 0x3f5, 0x17e, 0x19a, 0x401, 0x354, 0x9e, 0x274, 0x7d, 0x68, 0x33, 0x353, 0x383, 0x38e, 0x220, 0x25a, 0x85, 0x3c7, 0x43, 0x19, 0x3d6, 0x3ae, 0x55, 0x57, 0x2c, 0x2e, 0x4f, 0x40, 0x59, 0x53, 0x2fd, 0x37a, 0xffff
 # 4 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_21:
+func_4847CEC0_List_25:
 	.word	0x1b9, 0x13c, 0x424, 0x402, 0xffff
 # 46 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_22:
+func_4847CEC0_List_26:
 	.word	0x284, 0x28f, 0x293, 0x1c7, 0xa8, 0x7c, 0xfd, 0x17, 0x419, 0xc9, 0x27a, 0x246, 0x34d, 0xd0, 0x1e2, 0x3c, 0x42a, 0x370, 0x39a, 0x385, 0x41, 0x26f, 0x278, 0x3d5, 0x403, 0x14f, 0x41e, 0x2dc, 0x99, 0x60, 0x3ac, 0xb7, 0x26, 0x2a9, 0x17f, 0x72, 0x70, 0x1cb, 0x3ec, 0x96, 0x51, 0x11a, 0x3b4, 0x303, 0x2fa, 0x21d, 0xffff
 # 201 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_23:
+func_4847CEC0_List_27:
 	.word	0x130, 0x321, 0x14d, 0x20a, 0x39f, 0x1f1, 0x320, 0x366, 0x243, 0x418, 0x1ac, 0x18e, 0xce, 0x1ea, 0x73, 0xe3, 0x291, 0x3ab, 0x3f1, 0xab, 0x11f, 0x1e7, 0xf8, 0x229, 0x13d, 0x41c, 0x3e, 0x105, 0x24a, 0x29, 0x1af, 0x61, 0x109, 0x111, 0x18c, 0x6d, 0x25e, 0x1a6, 0x20f, 0x20d, 0x20c, 0x79, 0x63, 0x1d2, 0x151, 0x1bc, 0x3ad, 0x154, 0x35, 0x3b1, 0x26d, 0x187, 0x140, 0x38, 0x352, 0x276, 0x30e, 0x3ee, 0x1d4, 0x37b, 0x39b, 0xca, 0x3c9, 0x3b7, 0x1dd, 0x3b6, 0x157, 0x413, 0x37c, 0x3f, 0x104, 0x415, 0x134, 0x26a, 0x93, 0xd4, 0x373, 0x3d2, 0x3b2, 0x4c, 0x3a, 0x3bd, 0x388, 0x3cc, 0x12f, 0x203, 0xa6, 0x280, 0xae, 0x41a, 0x224, 0x32a, 0x29a, 0x267, 0x2f, 0xd5, 0xba, 0x29b, 0x265, 0x298, 0x259, 0xd7, 0x28d, 0x20, 0x258, 0xb9, 0x266, 0x260, 0x2ea, 0x2a6, 0x2a8, 0x23f, 0x227, 0x24c, 0x15c, 0x1c2, 0x3e1, 0x2c9, 0x341, 0xaf, 0x2a, 0x435, 0x27b, 0x8a, 0x21b, 0x27c, 0x430, 0x1e0, 0xcf, 0xc4, 0x2f5, 0x94, 0x17a, 0x285, 0x45, 0x1a2, 0x3c2, 0xdc, 0x1d0, 0x1fb, 0x11c, 0x326, 0x214, 0x404, 0x16a, 0x173, 0x132, 0x1a3, 0x249, 0x302, 0x80, 0xd, 0x1d, 0x241, 0x4b, 0x3d0, 0x1c4, 0x16, 0x264, 0x9d, 0x184, 0x34e, 0x27d, 0x1e1, 0x198, 0x1d5, 0x2d, 0x3a2, 0x6, 0x11, 0x9c, 0x2fe, 0x2bf, 0x3d, 0x3f4, 0x49, 0x7f, 0x2ec, 0x25f, 0xfc, 0xf3, 0x196, 0x1f8, 0x42, 0xf5, 0xf1, 0x3a8, 0xf7, 0x2f0, 0x2f3, 0x2f4, 0x9, 0x3b, 0x313, 0xdb, 0x289, 0x54, 0x3af, 0x44, 0x82, 0x92, 0xffff
 # 50 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_24:
+func_4847CEC0_List_28:
 	.word	0x392, 0x23a, 0x2a1, 0x6e, 0x2d0, 0x360, 0x32d, 0x32e, 0x15d, 0x32f, 0x343, 0x139, 0xbe, 0x8b, 0x6f, 0x2ab, 0x33a, 0x1ab, 0x13b, 0x137, 0x1ef, 0x2a0, 0x3ea, 0x42b, 0xe8, 0x209, 0x295, 0x10b, 0x16d, 0x3ef, 0x1ff, 0x434, 0x1ba, 0x1dc, 0x2f6, 0x11b, 0x2df, 0x181, 0xc0, 0x3e6, 0x1b0, 0x124, 0x2e1, 0x3f3, 0x30, 0x177, 0x247, 0x40e, 0x301, 0xe7, 0xffff
 # 10 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_25:
+func_4847CEC0_List_29:
 	.word	0x22b, 0x195, 0xef, 0xb, 0x42e, 0x159, 0x1c6, 0xf2, 0x9a, 0x3cf, 0xffff
 # 11 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_26:
+func_4847CEC0_List_30:
 	.word	0x2c8, 0xfa, 0x364, 0x2b, 0x145, 0x304, 0x160, 0x110, 0x268, 0x3d9, 0x21c, 0xffff
 # 31 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_27:
+func_4847CEC0_List_31:
 	.word	0x332, 0x1b1, 0x218, 0x156, 0x192, 0x400, 0x153, 0x200, 0x3f0, 0x3e8, 0x201, 0x17b, 0x42f, 0xf, 0xad, 0x199, 0x3d8, 0x299, 0x2c0, 0x1f, 0x9b, 0x163, 0x2e3, 0x12d, 0x46, 0x131, 0x188, 0x3e7, 0x2ed, 0x42c, 0x89, 0xffff
 # 5 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_28:
+func_4847CEC0_List_32:
 	.word	0x2a7, 0x1f5, 0x1e8, 0xe, 0x86, 0xffff
 # 1 entries of 16 bits up to the end marker that func_4847CEC0 0x4847CEC0: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847CEC0_List_29:
+func_4847CEC0_List_33:
 	.word	0x2e5, 0xffff
 	.byte	0xff, 0xff	# the marker's fill to a 4-byte boundary
 
@@ -17764,33 +17846,33 @@ func_4847C7E4_Records:	# 34 x REC_func_4847C7E4_Records (8 bytes each); read by 
 	REC_func_4847C7E4_Records	text=Str_5_29, index=func_4847CEC0_List_4
 	REC_func_4847C7E4_Records	text=Str_6_26, index=func_4847CEC0_List_5
 	REC_func_4847C7E4_Records	text=Str_7_16, index=func_4847CEC0_List_6
-	REC_func_4847C7E4_Records	text=Str_8_17, index=Str_9_11
-	REC_func_4847C7E4_Records	text=Str_9_16, index=func_4847CEC0_List_7
-	REC_func_4847C7E4_Records	text=Str_A_30, index=func_4847CEC0_List_8	# [8]
-	REC_func_4847C7E4_Records	text=Str_B_18, index=Str_empty_273
-	REC_func_4847C7E4_Records	text=Str_C_28, index=func_4847CEC0_List_9
-	REC_func_4847C7E4_Records	text=Str_D_15, index=func_4847CEC0_List_10
-	REC_func_4847C7E4_Records	text=Str_E_14, index=func_4847CEC0_List_11
-	REC_func_4847C7E4_Records	text=Str_F_18, index=func_4847CEC0_List_12
-	REC_func_4847C7E4_Records	text=Str_G_14, index=func_4847CEC0_List_13
-	REC_func_4847C7E4_Records	text=Str_H_6, index=func_4847CEC0_List_14
-	REC_func_4847C7E4_Records	text=Str_I_6, index=Str_t	# [16]
-	REC_func_4847C7E4_Records	text=Str_J_5, index=func_4847CEC0_List_15
-	REC_func_4847C7E4_Records	text=Str_K_5, index=func_4847CEC0_List_16
-	REC_func_4847C7E4_Records	text=Str_L_6, index=func_4847CEC0_List_17
-	REC_func_4847C7E4_Records	text=Str_M_5, index=func_4847CEC0_List_18
-	REC_func_4847C7E4_Records	text=Str_N_6, index=Str_6_20
-	REC_func_4847C7E4_Records	text=Str_O_5, index=func_4847CEC0_List_19
-	REC_func_4847C7E4_Records	text=Str_P_14, index=func_4847CEC0_List_20
-	REC_func_4847C7E4_Records	text=Str_Q_8, index=func_4847CEC0_List_21	# [24]
-	REC_func_4847C7E4_Records	text=Str_R_5, index=func_4847CEC0_List_22
-	REC_func_4847C7E4_Records	text=Str_S_6, index=func_4847CEC0_List_23
-	REC_func_4847C7E4_Records	text=Str_T_6, index=func_4847CEC0_List_24
-	REC_func_4847C7E4_Records	text=Str_U_5, index=func_4847CEC0_List_25
-	REC_func_4847C7E4_Records	text=Str_V_5, index=func_4847CEC0_List_26
-	REC_func_4847C7E4_Records	text=Str_W_5, index=func_4847CEC0_List_27
-	REC_func_4847C7E4_Records	text=Str_Y_6, index=func_4847CEC0_List_28
-	REC_func_4847C7E4_Records	text=Str_Z_5, index=func_4847CEC0_List_29	# [32]
+	REC_func_4847C7E4_Records	text=Str_8_16, index=func_4847CEC0_List_7
+	REC_func_4847C7E4_Records	text=Str_9_16, index=func_4847CEC0_List_8
+	REC_func_4847C7E4_Records	text=Str_A_30, index=func_4847CEC0_List_9	# [8]
+	REC_func_4847C7E4_Records	text=Str_B_18, index=func_4847CEC0_List_10
+	REC_func_4847C7E4_Records	text=Str_C_28, index=func_4847CEC0_List_11
+	REC_func_4847C7E4_Records	text=Str_D_14, index=func_4847CEC0_List_12
+	REC_func_4847C7E4_Records	text=Str_E_14, index=func_4847CEC0_List_13
+	REC_func_4847C7E4_Records	text=Str_F_18, index=func_4847CEC0_List_14
+	REC_func_4847C7E4_Records	text=Str_G_14, index=func_4847CEC0_List_15
+	REC_func_4847C7E4_Records	text=Str_H_5, index=func_4847CEC0_List_16
+	REC_func_4847C7E4_Records	text=Str_I_6, index=func_4847CEC0_List_17	# [16]
+	REC_func_4847C7E4_Records	text=Str_J_5, index=func_4847CEC0_List_18
+	REC_func_4847C7E4_Records	text=Str_K_5, index=func_4847CEC0_List_19
+	REC_func_4847C7E4_Records	text=Str_L_5, index=func_4847CEC0_List_20
+	REC_func_4847C7E4_Records	text=Str_M_5, index=func_4847CEC0_List_21
+	REC_func_4847C7E4_Records	text=Str_N_6, index=func_4847CEC0_List_22
+	REC_func_4847C7E4_Records	text=Str_O_5, index=func_4847CEC0_List_23
+	REC_func_4847C7E4_Records	text=Str_P_13, index=func_4847CEC0_List_24
+	REC_func_4847C7E4_Records	text=Str_Q_8, index=func_4847CEC0_List_25	# [24]
+	REC_func_4847C7E4_Records	text=Str_R_5, index=func_4847CEC0_List_26
+	REC_func_4847C7E4_Records	text=Str_S_6, index=func_4847CEC0_List_27
+	REC_func_4847C7E4_Records	text=Str_T_5, index=func_4847CEC0_List_28
+	REC_func_4847C7E4_Records	text=Str_U_5, index=func_4847CEC0_List_29
+	REC_func_4847C7E4_Records	text=Str_V_5, index=func_4847CEC0_List_30
+	REC_func_4847C7E4_Records	text=Str_W_5, index=func_4847CEC0_List_31
+	REC_func_4847C7E4_Records	text=Str_Y_6, index=func_4847CEC0_List_32
+	REC_func_4847C7E4_Records	text=Str_Z_5, index=func_4847CEC0_List_33	# [32]
 	REC_func_4847C7E4_Records	
 
 PostEvent_Records_p4_0:	# REC_PostEvent_Records_p4 (410 bytes)
@@ -25001,11 +25083,11 @@ VOCALIST_ResNames:
 
 func_484AB85B_Var:	# u32, a constant; read / written by TickHookPass 0x484AB85B: `mov (func_484AB85B_Var), a0`
 	.long	0x50151bd8
-func_484AB85B_Var_2:	# u32, a constant; read / written by TickHookPass 0x484AB85B: `mov (func_484AB85B_Var_2), a0`
+TickHookArg1:	# u32, a constant; read / written by TickHookPass 0x484AB85B: `mov (TickHookArg1), a0`
 	.long	0x50151bd8
-func_484AB85B_Var_3:	# u32, a constant; read / written by TickHookPass 0x484AB85B: `mov (func_484AB85B_Var_3), a0`
+TickHookArg2:	# u32, a constant; read / written by TickHookPass 0x484AB85B: `mov (TickHookArg2), a0`
 	.long	0x50151bd8
-func_484AB85B_Var_4:	# u32, a constant; read / written by TickHookPass 0x484AB85B: `mov (func_484AB85B_Var_4), a0`
+TickHookArg3:	# u32, a constant; read / written by TickHookPass 0x484AB85B: `mov (TickHookArg3), a0`
 	.long	0x50151bd8
 
 # 33 classes; a class id is (0x1b4 << 16) | its index here (ClassProc 0x4842A7C0 reads entry id & 0xFFFF, 0x18 bytes each)
@@ -28674,23 +28756,32 @@ func_48500A08_Table:
 	.long	Str_P_7_2
 	.long	Str_P_8_2
 	.long	Str_P_9_2
-
-names_4874F7A4:
-	.long	Str_DRM_2, Str_P11_2
-	.long	Str_P12, Str_P13_2
-	.long	Str_P14_2, Str_P15_2
-	.long	Str_P16, Str_RT1_4
-	.long	Str_RT2_2, Str_LFT_3
-	.long	Str_AC1_3, Str_AC2_3
-	.long	Str_AC3_3, Str_AC4_3
-	.long	Str_AC5_3, Str_BAS_3
-	.long	Str_DR1_3, Str_DR2_3
-	.long	Str_CHD, Str_RTB
-	.long	Str_PD1, Str_PD2
-	.long	Str_BPD, Str_MET
-	.long	Str_CDF, Str_text_67
-
-ptrs_4874F80C:	# 32 pointers, typed by value (every word 0 or an address of this region); reader not traced
+	.long	Str_DRM_2
+	.long	Str_P11_2
+	.long	Str_P12_2
+	.long	Str_P13_2
+	.long	Str_P14_2
+	.long	Str_P15_2
+	.long	Str_P16
+	.long	Str_RT1_3
+	.long	Str_RT2_3
+	.long	Str_LFT_3
+	.long	Str_AC1_3
+	.long	Str_AC2_3
+	.long	Str_AC3_3
+	.long	Str_AC4_3
+	.long	Str_AC5_3
+	.long	Str_BAS_3
+	.long	Str_DR1_3
+	.long	Str_DR2_3
+	.long	Str_CHD_2
+	.long	Str_RTB
+	.long	Str_PD1
+	.long	Str_PD2
+	.long	Str_BPD
+	.long	Str_MET
+	.long	Str_CDF
+	.long	Str_text_36
 	.long	Str_text_37
 	.long	Str_text_38
 	.long	Str_text_39
@@ -28720,8 +28811,8 @@ ptrs_4874F80C:	# 32 pointers, typed by value (every word 0 or an address of this
 	.long	Str_text_63
 	.long	Str_text_64
 	.long	Str_text_65
-	.long	Str_APC_8
-	.long	Str_CTL_4
+	.long	Str_APC_4
+	.long	Str_CTL_5
 	.long	Str_RHY_3
 
 TtCmStep_Table:	# 8 x u8, 19..26; read by TtCmStep 0x48502DF2: `movbu  (d1, a0), d1`; MainCMP_SetCmpRecPart 0x48503324: `movbu  (d0, a2), d1` ...
@@ -39926,381 +40017,3 @@ func_4856CE55_Table_4:
 	.long	loc_4856EEBA
 	.long	loc_4856EEBD
 	.long	func_4856EEC0
-
-VoiceDirRemapFind_Var:	# u16, a constant; read / written by VoiceDirRemapFind 0x485718F5: `movhu (VoiceDirRemapFind_Var), d1`
-	.word	1
-VoiceDirRemapFind_Var_2:	# u16, a constant; read / written by VoiceDirRemapFind 0x485718F5: `movhu (VoiceDirRemapFind_Var_2), d0`
-	.word	371
-
-VoiceDirRemapFind_Table:
-	.long	VoiceDirRemapFind_Table_p0_975
-	.long	VoiceDirRemapFind_Table_p0_501
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_380
-	.long	VoiceDirRemapFind_Table_p0_62
-	.long	VoiceDirRemapFind_Table_p0_714
-	.long	VoiceDirRemapFind_Table_p0_715
-	.long	VoiceDirRemapFind_Table_p0_716
-	.long	VoiceDirRemapFind_Table_p0_717
-	.long	VoiceDirRemapFind_Table_p0_966
-	.long	VoiceDirRemapFind_Table_p0_935
-	.long	VoiceDirRemapFind_Table_p0_558
-	.long	VoiceDirRemapFind_Table_p0_559
-	.long	VoiceDirRemapFind_Table_p0_560
-	.long	VoiceDirRemapFind_Table_p0_437
-	.long	VoiceDirRemapFind_Table_p0_438
-	.long	VoiceDirRemapFind_Table_p0_551
-	.long	VoiceDirRemapFind_Table_p0_864
-	.long	VoiceDirRemapFind_Table_p0_865
-	.long	VoiceDirRemapFind_Table_p0_866
-	.long	VoiceDirRemapFind_Table_p0_867
-	.long	VoiceDirRemapFind_Table_p0_909
-	.long	VoiceDirRemapFind_Table_p0_869
-	.long	VoiceDirRemapFind_Table_p0_870
-	.long	VoiceDirRemapFind_Table_p0_948
-	.long	VoiceDirRemapFind_Table_p0_943
-	.long	VoiceDirRemapFind_Table_p0_5
-	.long	VoiceDirRemapFind_Table_p0_504
-	.long	VoiceDirRemapFind_Table_p0_681
-	.long	VoiceDirRemapFind_Table_p0_391
-	.long	VoiceDirRemapFind_Table_p0_76
-	.long	VoiceDirRemapFind_Table_p0_590
-	.long	VoiceDirRemapFind_Table_p0_566
-	.long	VoiceDirRemapFind_Table_p0_582
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_931
-	.long	VoiceDirRemapFind_Table_p0_949
-	.long	VoiceDirRemapFind_Table_p0_933
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_293
-	.long	VoiceDirRemapFind_Table_p0_427
-	.long	VoiceDirRemapFind_Table_p0_428
-	.long	VoiceDirRemapFind_Table_p0_913
-	.long	VoiceDirRemapFind_Table_p0_982
-	.long	VoiceDirRemapFind_Table_p0_907
-	.long	VoiceDirRemapFind_Table_p0_768
-	.long	VoiceDirRemapFind_Table_p0_769
-	.long	VoiceDirRemapFind_Table_p0_770
-	.long	VoiceDirRemapFind_Table_p0_771
-	.long	VoiceDirRemapFind_Table_p0_772
-	.long	VoiceDirRemapFind_Table_p0_955
-	.long	VoiceDirRemapFind_Table_p0_939
-	.long	VoiceDirRemapFind_Table_p0_910
-	.long	VoiceDirRemapFind_Table_p0_956
-	.long	VoiceDirRemapFind_Table_p0_916
-	.long	VoiceDirRemapFind_Table_p0_974
-	.long	VoiceDirRemapFind_Table_p0_317
-	.long	VoiceDirRemapFind_Table_p0_577
-	.long	VoiceDirRemapFind_Table_p0_396
-	.long	VoiceDirRemapFind_Table_p0_534
-	.long	VoiceDirRemapFind_Table_p0_535
-	.long	VoiceDirRemapFind_Table_p0_895
-	.long	VoiceDirRemapFind_Table_p0_925
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_963
-	.long	VoiceDirRemapFind_Table_p0_307
-	.long	VoiceDirRemapFind_Table_p0_733
-	.long	VoiceDirRemapFind_Table_p0_324
-	.long	VoiceDirRemapFind_Table_p0_607
-	.long	VoiceDirRemapFind_Table_p0_702
-	.long	VoiceDirRemapFind_Table_p0_706
-	.long	VoiceDirRemapFind_Table_p0_327
-	.long	VoiceDirRemapFind_Table_p0_652
-	.long	VoiceDirRemapFind_Table_p0_811
-	.long	VoiceDirRemapFind_Table_p0_823
-	.long	VoiceDirRemapFind_Table_p0_979
-	.long	VoiceDirRemapFind_Table_p0_301
-	.long	VoiceDirRemapFind_Table_p0_923
-	.long	VoiceDirRemapFind_Table_p0_824
-	.long	VoiceDirRemapFind_Table_p0_836
-	.long	VoiceDirRemapFind_Table_p0_906
-	.long	VoiceDirRemapFind_Table_p0_742
-	.long	VoiceDirRemapFind_Table_p0_743
-	.long	VoiceDirRemapFind_Table_p0_744
-	.long	VoiceDirRemapFind_Table_p0_957
-	.long	VoiceDirRemapFind_Table_p0_746
-	.long	VoiceDirRemapFind_Table_p0_747
-	.long	VoiceDirRemapFind_Table_p0_920
-	.long	VoiceDirRemapFind_Table_p0_918
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_497
-	.long	VoiceDirRemapFind_Table_p0_108
-	.long	VoiceDirRemapFind_Table_p0_813
-	.long	VoiceDirRemapFind_Table_p0_814
-	.long	VoiceDirRemapFind_Table_p0_815
-	.long	VoiceDirRemapFind_Table_p0_816
-	.long	VoiceDirRemapFind_Table_p0_817
-	.long	VoiceDirRemapFind_Table_p0_818
-	.long	VoiceDirRemapFind_Table_p0_819
-	.long	VoiceDirRemapFind_Table_p0_934
-	.long	VoiceDirRemapFind_Table_p0_526
-	.long	VoiceDirRemapFind_Table_p0_527
-	.long	VoiceDirRemapFind_Table_p0_529
-	.long	VoiceDirRemapFind_Table_p0_684
-	.long	VoiceDirRemapFind_Table_p0_364
-	.long	VoiceDirRemapFind_Table_p0_967
-	.long	VoiceDirRemapFind_Table_p0_781
-	.long	VoiceDirRemapFind_Table_p0_782
-	.long	VoiceDirRemapFind_Table_p0_783
-	.long	VoiceDirRemapFind_Table_p0_784
-	.long	VoiceDirRemapFind_Table_p0_619
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_233
-	.long	VoiceDirRemapFind_Table_p0_924
-	.long	VoiceDirRemapFind_Table_p0_898
-	.long	VoiceDirRemapFind_Table_p0_616
-	.long	VoiceDirRemapFind_Table_p0_500
-	.long	VoiceDirRemapFind_Table_p0_350
-	.long	VoiceDirRemapFind_Table_p0_825
-	.long	VoiceDirRemapFind_Table_p0_826
-	.long	VoiceDirRemapFind_Table_p0_827
-	.long	VoiceDirRemapFind_Table_p0_828
-	.long	VoiceDirRemapFind_Table_p0_829
-	.long	VoiceDirRemapFind_Table_p0_830
-	.long	VoiceDirRemapFind_Table_p0_968
-	.long	VoiceDirRemapFind_Table_p0_965
-	.long	VoiceDirRemapFind_Table_p0_583
-	.long	VoiceDirRemapFind_Table_p0_570
-	.long	VoiceDirRemapFind_Table_p0_404
-	.long	VoiceDirRemapFind_Table_p0_388
-	.long	VoiceDirRemapFind_Table_p0_30
-	.long	VoiceDirRemapFind_Table_p0_549
-	.long	VoiceDirRemapFind_Table_p0_852
-	.long	VoiceDirRemapFind_Table_p0_853
-	.long	VoiceDirRemapFind_Table_p0_854
-	.long	VoiceDirRemapFind_Table_p0_855
-	.long	VoiceDirRemapFind_Table_p0_856
-	.long	VoiceDirRemapFind_Table_p0_857
-	.long	VoiceDirRemapFind_Table_p0_858
-	.long	VoiceDirRemapFind_Table_p0_915
-	.long	VoiceDirRemapFind_Table_p0_944
-	.long	VoiceDirRemapFind_Table_p0_658
-	.long	VoiceDirRemapFind_Table_p0_665
-	.long	VoiceDirRemapFind_Table_p0_958
-	.long	VoiceDirRemapFind_Table_p0_383
-	.long	VoiceDirRemapFind_Table_p0_72
-	.long	VoiceDirRemapFind_Table_p0_575
-	.long	VoiceDirRemapFind_Table_p0_564
-	.long	VoiceDirRemapFind_Table_p0_675
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_980
-	.long	VoiceDirRemapFind_Table_p0_892
-	.long	VoiceDirRemapFind_Table_p0_177
-	.long	VoiceDirRemapFind_Table_p0_127
-	.long	VoiceDirRemapFind_Table_p0_964
-	.long	VoiceDirRemapFind_Table_p0_850
-	.long	VoiceDirRemapFind_Table_p0_420
-	.long	VoiceDirRemapFind_Table_p0_542
-	.long	VoiceDirRemapFind_Table_p0_872
-	.long	VoiceDirRemapFind_Table_p0_873
-	.long	VoiceDirRemapFind_Table_p0_874
-	.long	VoiceDirRemapFind_Table_p0_914
-	.long	VoiceDirRemapFind_Table_p0_884
-	.long	VoiceDirRemapFind_Table_p0_885
-	.long	VoiceDirRemapFind_Table_p0_886
-	.long	VoiceDirRemapFind_Table_p0_954
-	.long	VoiceDirRemapFind_Table_p0_729
-	.long	VoiceDirRemapFind_Table_p0_7
-	.long	VoiceDirRemapFind_Table_p0_912
-	.long	VoiceDirRemapFind_Table_p0_741
-	.long	VoiceDirRemapFind_Table_p0_930
-	.long	VoiceDirRemapFind_Table_p0_8
-	.long	VoiceDirRemapFind_Table_p0_973
-	.long	VoiceDirRemapFind_Table_p0_672
-	.long	VoiceDirRemapFind_Table_p0_972
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_80
-	.long	VoiceDirRemapFind_Table_p0_950
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_132
-	.long	VoiceDirRemapFind_Table_p0_55
-	.long	VoiceDirRemapFind_Table_p0_888
-	.long	VoiceDirRemapFind_Table_p0_889
-	.long	VoiceDirRemapFind_Table_p0_890
-	.long	VoiceDirRemapFind_Table_p0_485
-	.long	VoiceDirRemapFind_Table_p0_703
-	.long	VoiceDirRemapFind_Table_p0_163
-	.long	VoiceDirRemapFind_Table_p0_653
-	.long	VoiceDirRemapFind_Table_p0_809
-	.long	VoiceDirRemapFind_Table_p0_821
-	.long	VoiceDirRemapFind_Table_p0_833
-	.long	VoiceDirRemapFind_Table_p0_694
-	.long	VoiceDirRemapFind_Table_p0_947
-	.long	VoiceDirRemapFind_Table_p0_822
-	.long	VoiceDirRemapFind_Table_p0_834
-	.long	VoiceDirRemapFind_Table_p0_545
-	.long	VoiceDirRemapFind_Table_p0_456
-	.long	VoiceDirRemapFind_Table_p0_457
-	.long	VoiceDirRemapFind_Table_p0_683
-	.long	VoiceDirRemapFind_Table_p0_595
-	.long	VoiceDirRemapFind_Table_p0_591
-	.long	VoiceDirRemapFind_Table_p0_981
-	.long	VoiceDirRemapFind_Table_p0_904
-	.long	VoiceDirRemapFind_Table_p0_919
-	.long	VoiceDirRemapFind_Table_p0_594
-	.long	VoiceDirRemapFind_Table_p0_495
-	.long	VoiceDirRemapFind_Table_p0_674
-	.long	VoiceDirRemapFind_Table_p0_801
-	.long	VoiceDirRemapFind_Table_p0_802
-	.long	VoiceDirRemapFind_Table_p0_803
-	.long	VoiceDirRemapFind_Table_p0_804
-	.long	VoiceDirRemapFind_Table_p0_908
-	.long	VoiceDirRemapFind_Table_p0_806
-	.long	VoiceDirRemapFind_Table_p0_807
-	.long	VoiceDirRemapFind_Table_p0_808
-	.long	VoiceDirRemapFind_Table_p0_763
-	.long	VoiceDirRemapFind_Table_p0_764
-	.long	VoiceDirRemapFind_Table_p0_765
-	.long	VoiceDirRemapFind_Table_p0_363
-	.long	VoiceDirRemapFind_Table_p0_361
-	.long	VoiceDirRemapFind_Table_p0_548
-	.long	VoiceDirRemapFind_Table_p0_471
-	.long	VoiceDirRemapFind_Table_p0_472
-	.long	VoiceDirRemapFind_Table_p0_473
-	.long	VoiceDirRemapFind_Table_p0_682
-	.long	VoiceDirRemapFind_Table_p0_336
-	.long	VoiceDirRemapFind_Table_p0_671
-	.long	VoiceDirRemapFind_Table_p0_678
-	.long	VoiceDirRemapFind_Table_p0_922
-	.long	VoiceDirRemapFind_Table_p0_728
-	.long	VoiceDirRemapFind_Table_p0_612
-	.long	VoiceDirRemapFind_Table_p0_613
-	.long	VoiceDirRemapFind_Table_p0_614
-	.long	VoiceDirRemapFind_Table_p0_686
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_573
-	.long	VoiceDirRemapFind_Table_p0_519
-	.long	VoiceDirRemapFind_Table_p0_711
-	.long	VoiceDirRemapFind_Table_p0_713
-	.long	VoiceDirRemapFind_Table_p0_945
-	.long	VoiceDirRemapFind_Table_p0_946
-	.long	VoiceDirRemapFind_Table_p0_585
-	.long	VoiceDirRemapFind_Table_p0_586
-	.long	VoiceDirRemapFind_Table_p0_402
-	.long	VoiceDirRemapFind_Table_p0_929
-	.long	VoiceDirRemapFind_Table_p0_32
-	.long	VoiceDirRemapFind_Table_p0_553
-	.long	VoiceDirRemapFind_Table_p0_840
-	.long	VoiceDirRemapFind_Table_p0_841
-	.long	VoiceDirRemapFind_Table_p0_842
-	.long	VoiceDirRemapFind_Table_p0_843
-	.long	VoiceDirRemapFind_Table_p0_844
-	.long	VoiceDirRemapFind_Table_p0_845
-	.long	VoiceDirRemapFind_Table_p0_846
-	.long	VoiceDirRemapFind_Table_p0_941
-	.long	VoiceDirRemapFind_Table_p0_942
-	.long	VoiceDirRemapFind_Table_p0_894
-	.long	VoiceDirRemapFind_Table_p0_502
-	.long	VoiceDirRemapFind_Table_p0_309
-	.long	VoiceDirRemapFind_Table_p0_389
-	.long	VoiceDirRemapFind_Table_p0_390
-	.long	VoiceDirRemapFind_Table_p0_718
-	.long	VoiceDirRemapFind_Table_p0_719
-	.long	VoiceDirRemapFind_Table_p0_700
-	.long	VoiceDirRemapFind_Table_p0_154
-	.long	VoiceDirRemapFind_Table_p0_787
-	.long	VoiceDirRemapFind_Table_p0_936
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_785
-	.long	VoiceDirRemapFind_Table_p0_969
-	.long	VoiceDirRemapFind_Table_p0_415
-	.long	VoiceDirRemapFind_Table_p0_418
-	.long	VoiceDirRemapFind_Table_p0_696
-	.long	VoiceDirRemapFind_Table_p0_876
-	.long	VoiceDirRemapFind_Table_p0_877
-	.long	VoiceDirRemapFind_Table_p0_878
-	.long	VoiceDirRemapFind_Table_p0_983
-	.long	VoiceDirRemapFind_Table_p0_880
-	.long	VoiceDirRemapFind_Table_p0_881
-	.long	VoiceDirRemapFind_Table_p0_882
-	.long	VoiceDirRemapFind_Table_p0_953
-	.long	VoiceDirRemapFind_Table_p0_727
-	.long	VoiceDirRemapFind_Table_p0_636
-	.long	VoiceDirRemapFind_Table_p0_505
-	.long	VoiceDirRemapFind_Table_p0_961
-	.long	VoiceDirRemapFind_Table_p0_962
-	.long	VoiceDirRemapFind_Table_p0_376
-	.long	VoiceDirRemapFind_Table_p0_576
-	.long	VoiceDirRemapFind_Table_p0_687
-	.long	VoiceDirRemapFind_Table_p0_971
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_303
-	.long	VoiceDirRemapFind_Table_p0_951
-	.long	VoiceDirRemapFind_Table_p0_860
-	.long	VoiceDirRemapFind_Table_p0_848
-	.long	VoiceDirRemapFind_Table_p0_861
-	.long	VoiceDirRemapFind_Table_p0_862
-	.long	VoiceDirRemapFind_Table_p0_851
-	.long	VoiceDirRemapFind_Table_p0_863
-	.long	ptrs_486A2DE8
-	.long	VoiceDirRemapFind_Table_p0_774
-	.long	VoiceDirRemapFind_Table_p0_775
-	.long	VoiceDirRemapFind_Table_p0_776
-	.long	VoiceDirRemapFind_Table_p0_777
-	.long	VoiceDirRemapFind_Table_p0_778
-	.long	VoiceDirRemapFind_Table_p0_779
-	.long	VoiceDirRemapFind_Table_p0_926
-	.long	VoiceDirRemapFind_Table_p0_952
-	.long	VoiceDirRemapFind_Table_p0_81
-	.long	VoiceDirRemapFind_Table_p0_541
-	.long	VoiceDirRemapFind_Table_p0_447
-	.long	VoiceDirRemapFind_Table_p0_448
-	.long	VoiceDirRemapFind_Table_p0_449
-	.long	VoiceDirRemapFind_Table_p0_629
-	.long	VoiceDirRemapFind_Table_p0_451
-	.long	VoiceDirRemapFind_Table_p0_621
-	.long	VoiceDirRemapFind_Table_p0_622
-	.long	VoiceDirRemapFind_Table_p0_899
-	.long	VoiceDirRemapFind_Table_p0_901
-	.long	VoiceDirRemapFind_Table_p0_902
-	.long	VoiceDirRemapFind_Table_p0_491
-	.long	VoiceDirRemapFind_Table_p0_695
-	.long	VoiceDirRemapFind_Table_p0_903
-	.long	VoiceDirRemapFind_Table_p0_790
-	.long	VoiceDirRemapFind_Table_p0_791
-	.long	VoiceDirRemapFind_Table_p0_792
-	.long	VoiceDirRemapFind_Table_p0_793
-	.long	VoiceDirRemapFind_Table_p0_794
-	.long	VoiceDirRemapFind_Table_p0_795
-	.long	VoiceDirRemapFind_Table_p0_797
-	.long	VoiceDirRemapFind_Table_p0_798
-	.long	VoiceDirRemapFind_Table_p0_799
-	.long	VoiceDirRemapFind_Table_p0_800
-	.long	VoiceDirRemapFind_Table_p0_837
-	.long	VoiceDirRemapFind_Table_p0_970
-	.long	VoiceDirRemapFind_Table_p0_839
-	.long	VoiceDirRemapFind_Table_p0_463
-	.long	VoiceDirRemapFind_Table_p0_911
-	.long	VoiceDirRemapFind_Table_p0_751
-	.long	VoiceDirRemapFind_Table_p0_752
-	.long	VoiceDirRemapFind_Table_p0_753
-	.long	VoiceDirRemapFind_Table_p0_754
-	.long	VoiceDirRemapFind_Table_p0_755
-	.long	VoiceDirRemapFind_Table_p0_921
-	.long	VoiceDirRemapFind_Table_p0_917
-	.long	0
-	.long	VoiceDirRemapFind_Table_p0_498
-	.long	VoiceDirRemapFind_Table_p0_109
-	.long	VoiceDirRemapFind_Table_p0_384
-	.long	VoiceDirRemapFind_Table_p0_978
-	.long	VoiceDirRemapFind_Table_p0_604
-	.long	VoiceDirRemapFind_Table_p0_676
-	.long	VoiceDirRemapFind_Table_p0_518
-	.long	VoiceDirRemapFind_Table_p0_677
-	.long	VoiceDirRemapFind_Table_p0_738
-	.long	VoiceDirRemapFind_Table_p0_927
-	.long	VoiceDirRemapFind_Table_p0_740
-	.long	VoiceDirRemapFind_Table_p0_709
-	.long	VoiceDirRemapFind_Table_p0_403
-	.long	VoiceDirRemapFind_Table_p0_734
-	.long	VoiceDirRemapFind_Table_p0_33
-	.long	VoiceDirRemapFind_Table_p0_554
-	.long	VoiceDirRemapFind_Table_p0_406
-	.long	VoiceDirRemapFind_Table_p0_959
-	.long	VoiceDirRemapFind_Table_p0_960
-	.long	VoiceDirRemapFind_Table_p0_720
-	.long	VoiceDirRemapFind_Table_p0_721
-	.long	VoiceDirRemapFind_Table_p0_758
-	.long	VoiceDirRemapFind_Table_p0_759
-	.long	VoiceDirRemapFind_Table_p0_976
-	.long	VoiceDirRemapFind_Table_p0_938

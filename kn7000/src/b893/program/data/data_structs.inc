@@ -1132,20 +1132,20 @@
 	.long	\proc
 .endm
 
-# REC_FlashChipIdTable: 32-byte records (FlashChipIdTable, 3 records); fields, and what reads them:
+# FlashChip: 32-byte records (FlashChipIdTable, 3 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u16            FlashReadAutoselect 0x4847F7BD `movhu (d1, a1), d1`
-#   +2   key_         u16            FlashReadAutoselect 0x4847F7BD `movhu (2, a0), d1`
-#   +4   f4           u16            FlashProgram128Words 0x4847F834 `movhu (4, a0), d0`; FlashProgram128Words 0x4847F834 `movhu (4, a3), d1`
+#   +0   maker_id     u16            FlashReadAutoselect 0x4847F7BD `movhu (d1, a1), d1`
+#   +2   device_id    u16            FlashReadAutoselect 0x4847F7BD `movhu (2, a0), d1`
+#   +4   nsectors     u16            FlashProgram128Words 0x4847F834 `movhu (4, a0), d0`; FlashProgram128Words 0x4847F834 `movhu (4, a3), d1`
 #   +6   x6           u8[2]          no reader seen
-#   +8   memcpy_d1    ptr            func_4847F521 0x4847F521 `mov (8, a0), a0`; FlashSectorErase 0x4847F597 `mov (8, a0), a0` (+10)
+#   +8   sectors      ptr            func_4847F521 0x4847F521 `mov (8, a0), a0`; FlashSectorErase 0x4847F597 `mov (8, a0), a0` (+10)
 #   +12  x12          u8[20]         no reader seen
-.macro REC_FlashChipIdTable key=0, key_=0, f4=0, x6, memcpy_d1=0, x12
-	.word	\key
-	.word	\key_
-	.word	\f4
+.macro FlashChip maker_id=0, device_id=0, nsectors=0, x6, sectors=0, x12
+	.word	\maker_id
+	.word	\device_id
+	.word	\nsectors
 	.ascii	"\x6"
-	.long	\memcpy_d1
+	.long	\sectors
 	.ascii	"\x12"
 .endm
 
@@ -1667,13 +1667,13 @@
 	.long	\proc
 .endm
 
-# REC_PanelSwitchClassTable: 2-byte records (PanelSwitchClassTable, 103 records); fields, and what reads them:
+# PanelTestSwitch: 2-byte records (PanelSwitchClassTable, 103 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   y            u8             PanelSelfTestScanEntry 0x484A0AFA `movbu (d1, a2), d2`
-#   +1   f1           u8             PanelSelfTestScanEntry 0x484A0AFA `movbu (1, a2), d3`
-.macro REC_PanelSwitchClassTable y=0, f1=0
-	.byte	\y
-	.byte	\f1
+#   +0   test_class   u8             PanelSelfTestScanEntry 0x484A0AFA `movbu (d1, a2), d2`
+#   +1   test_arg     u8             PanelSelfTestScanEntry 0x484A0AFA `movbu (1, a2), d3`
+.macro PanelTestSwitch test_class=0, test_arg=0
+	.byte	\test_class
+	.byte	\test_arg
 .endm
 
 # REC_InOutTestWindowProc_Var_2: 4-byte records (InOutTestWindowProc_Var_2, 15 records); fields, and what reads them:
@@ -3000,13 +3000,13 @@
 	.word	\index__
 .endm
 
-# REC_DiskFileHandlerTable: 8-byte records (DiskFileHandlerTable, 11 records); fields, and what reads them:
+# DiskFileHandler: 8-byte records (DiskFileHandlerTable, 11 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u8             DiskLoadDispatch 0x4852C927 `movbu (d0, a2), d0`; DiskLoadDispatch 0x4852C927 `movbu (d1, a2), d1`
+#   +0   file_kind    u8             DiskLoadDispatch 0x4852C927 `movbu (d0, a2), d0`; DiskLoadDispatch 0x4852C927 `movbu (d1, a2), d1`
 #   +1   x1           u8[3]          no reader seen
 #   +4   proc         ptr            DiskLoadDispatch 0x4852C927 `mov (4, a0), a1`
-.macro REC_DiskFileHandlerTable f0=0, x1, proc=0
-	.byte	\f0
+.macro DiskFileHandler file_kind=0, x1, proc=0
+	.byte	\file_kind
 	.ascii	"\x1"
 	.long	\proc
 .endm
@@ -4865,18 +4865,6 @@
 	.ascii	"\x0"
 .endm
 
-# REC_names_500019A0_p0: 4-byte records (names_500019A0_p0, 4 records); fields, and what reads them:
-#   +0   index        u8             ConvertStrings 0x4842DF66 `movbu (a2), d0`
-#   +1   f1           u8             ConvertStrings 0x4842DF66 `movbu (a2), d0`
-#   +2   f2           u8             ConvertStrings 0x4842DF66 `movbu (a2), d0`
-#   +3   x3           u8[1]          no reader seen
-.macro REC_names_500019A0_p0 index=0, f1=0, f2=0, x3
-	.byte	\index
-	.byte	\f1
-	.byte	\f2
-	.ascii	"\x3"
-.endm
-
 # REC_TtNormal_Records_p0: 4-byte records (TtNormal_Records_p0, 4 records); fields, and what reads them:
 #   +0   x0           u8[4]          no reader seen
 .macro REC_TtNormal_Records_p0 x0
@@ -5055,23 +5043,9 @@
 	.byte	\key
 .endm
 
-# REC_names_486ADABC_p0: 4-byte records (names_486ADABC_p0, 4 records); fields, and what reads them:
-#   +0   key          u8             func_4857E7C9 0x4857E7C9 `movbu (a0), d0`
-#   +1   x1           u8[3]          no reader seen
-.macro REC_names_486ADABC_p0 key=0, x1
-	.byte	\key
-	.ascii	"\x1"
-.endm
-
 # REC_func_4857EAA0_Table_p0: 1-byte records (func_4857EAA0_Table_p0, 1 records); fields, and what reads them:
 #   +0   key          u8             func_4857EAA0 0x4857EAA0 `movbu (a0), d0`; func_4857EAA0 0x4857EAA0 `movbu (a0), d1`
 .macro REC_func_4857EAA0_Table_p0 key=0
-	.byte	\key
-.endm
-
-# REC_names_486ADE04_p0: 1-byte records (names_486ADE04_p0, 4 records); fields, and what reads them:
-#   +0   key          u8             func_4857EDAE 0x4857EDAE `movbu (a0), d0`
-.macro REC_names_486ADE04_p0 key=0
 	.byte	\key
 .endm
 
@@ -5235,22 +5209,6 @@
 	.long	\key
 	.long	\key_
 	.long	\proc
-.endm
-
-# REC_StyleGenreTable_p4_p4: 8-byte records (StyleGenreTable_p4_p4, 10 records); fields, and what reads them:
-#   +0   f0           u16            func_4847B4A8 0x4847B4A8 `movhu (a0), d0`; func_4847BA76 0x4847BA76 `movhu (a0), d0` (+2)
-#   +2   x2           u8[4]          no reader seen
-#   +6   f6           u16            func_4847C32D 0x4847C32D `movhu (6, a0), d0`
-.macro REC_StyleGenreTable_p4_p4 f0=0, x2, f6=0
-	.word	\f0
-	.ascii	"\x2"
-	.word	\f6
-.endm
-
-# REC_StyleGenreTable_p4_p12: 1-byte records (StyleGenreTable_p4_p12, 10 records); fields, and what reads them:
-#   +0   s0           char[1]        StyleListBoxGetItem 0x4847C053 `call strcpy_entry, [a2], 4`
-.macro REC_StyleGenreTable_p4_p12 s0
-	.ascii	"\s0"
 .endm
 
 # REC_PostEvent_Records_p4: 410-byte records (PostEvent_Records_p4, 1 records); fields, and what reads them:
@@ -5601,7 +5559,7 @@
 	.long	\SdMediaStateGet_d0
 .endm
 
-# REC_SdCommandSend_ArgA0: 10-byte records (SdCommandSend_ArgA0, 4 records); fields, and what reads them:
+# REC_SdCommandSend_ArgA0: 10-byte records (SdCommandSend_ArgA0, 9 records); fields, and what reads them:
 #   (the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls))
 #   +0   SdSpiClockSet_d0 u16            SdCommandSend 0x4854BBBE `movhu (a3), d0`
 #   +2   SdResponseScan_d0 u16            SdCommandSend 0x4854BBBE `movhu (2, a3), d0`
@@ -5614,18 +5572,4 @@
 	.byte	\f4
 	.ascii	"\x5"
 	.byte	\f9
-.endm
-
-# REC_SdCardRegRead_ArgA1_s9: 9-byte records (SdCardRegRead_ArgA1_s9, 1 records); fields, and what reads them:
-#   (the layout SdCardRegRead 0x4854AF0E reads through its argument a1 (passed by DiskDriveCtrlHandler 0x4854AC56 `call SdCardRegRead_entry, [d2,d3,a2,a3], 0x24`))
-#   (the layout SdReadBlockCmd 0x4854BCD3 reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdReadBlockCmd_entry, [d2,d3,a2,a3], 0x2c`, +1 more calls))
-#   +0   SdSpiClockSet_d0 u16            SdReadBlockCmd 0x4854BCD3 `movhu (a3), d0`
-#   +2   SdResponseScan_d0 u16            SdReadBlockCmd 0x4854BCD3 `movhu (2, a3), d0`
-#   +4   f4           u8             SdSpiSendBuf 0x4854B8CA `movbu (d0, a0), d1`
-#   +5   x5           u8[4]          no reader seen
-.macro REC_SdCardRegRead_ArgA1_s9 SdSpiClockSet_d0=0, SdResponseScan_d0=0, f4=0, x5
-	.word	\SdSpiClockSet_d0
-	.word	\SdResponseScan_d0
-	.byte	\f4
-	.ascii	"\x5"
 .endm

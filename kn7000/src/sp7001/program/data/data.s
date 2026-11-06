@@ -24,4 +24,5 @@
 .include "src/sp7001/program/data/data_03.s"
 .include "src/sp7001/program/data/data_04.s"
 .include "src/sp7001/program/data/data_05.s"
+.include "src/sp7001/program/data/data_06.s"
 .org 0x3BA32C

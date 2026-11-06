@@ -52953,7 +52953,7 @@ loc_4841FE36:
     mov     (0x2c, sp), a0
     exthu   d0
     asl2    d0
-    mov     names_5000071C, a1
+    mov     AcMixerVolWideProc_Table, a1
     mov     (d0, a1), a1
     call    strcpy_entry, [a2], 4
     clr     d0

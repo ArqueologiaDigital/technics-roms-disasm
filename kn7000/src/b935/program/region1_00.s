@@ -17946,12 +17946,12 @@ func_4840AE06_entry:
 # DspReadyWaitOn  (CPU 0x4840ae62)
 DspReadyWaitOn:
     mov     1, d0
-    movbu   d0, (func_4840AE62_Table)
+    movbu   d0, (DspReadyWaitEnabled)
     ret     0, 0
 # DspReadyWaitOff  (CPU 0x4840ae6d)
 DspReadyWaitOff:
     clr     d0
-    movbu   d0, (func_4840AE62_Table)
+    movbu   d0, (DspReadyWaitEnabled)
     ret     0, 0
 # DspWaitReady  (CPU 0x4840ae77)
 DspWaitReady:
@@ -17960,7 +17960,7 @@ DspWaitReady:
 DspWaitReady_entry:
     mov     0x0003ffff, d0
     mov     d0, (0, sp)
-    movbu   (func_4840AE62_Table), d0
+    movbu   (DspReadyWaitEnabled), d0
     cmp     0, d0
     bne     loc_4840AE90
     bra     loc_4840AEC0
@@ -52938,7 +52938,7 @@ loc_4841FDF4:
     mov     (0x2c, sp), a0
     exthu   d0
     asl2    d0
-    mov     names_50000714, a1
+    mov     AcMixerVolWideProc_Table, a1
     mov     (d0, a1), a1
     call    strcpy_entry, [a2], 4
     clr     d0

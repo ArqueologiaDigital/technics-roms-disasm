@@ -50225,7 +50225,7 @@ func_4857E7C9:
     bge     loc_4857E80E
     jmp     loc_4857E88A
 loc_4857E80E:
-    mov     names_486ADABC, a2
+    mov     func_4857E7C9_Table_4, a2
     mov     sp, a0
     mov     a0, d0
     add     0x128, d0
@@ -50966,7 +50966,7 @@ loc_4857EE0E:
     mov     d0, (0x18, sp)
     mov     sp, a2
     add     0x1f8, a2
-    mov     names_486ADE04, a3
+    mov     func_4857EDAE_Table_4, a3
 loc_4857EE22:
     mov     d3, d0
     mov     (0x2ac, sp), a0

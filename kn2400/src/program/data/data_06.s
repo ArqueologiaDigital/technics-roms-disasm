@@ -2913,7 +2913,7 @@ DiskDriveCtrlHandler_ArgA0_3:	# REC_DiskDriveCtrlHandler_ArgA0 (4 bytes)
 Str_C_3:	.asciz "C"
 	.align	4, 0x00	# pad after Str_C_3
 Str_DM:	.asciz "DM"
-Str_P_16:	.asciz "P"
+Str_P_8:	.asciz "P"
 	.space	11, 0x00
 Str_F:	.asciz "F"
 	.align	4, 0x00	# pad after Str_F
@@ -4939,15 +4939,21 @@ func_48600019_Table:	# 4 x REC_func_48600019_Table (56 bytes each); read by func
 	REC_func_48600019_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, index_=0x5003524C, key___=-1, count=1, index__=0x50036A70
 
 names_50006228:
-	.long	Str_CHARA1, Str_CHARA2
-	.long	Str_CHARA3, Str_CHARA4
-	.long	Str_CHARA5, Str_CHARA1P
-	.long	Str_CHARA6, Str_CHARA1W
-	.long	Str_CHARA2W, Str_CHARA5W
-	.long	Str_CHARA7W, Str_CHARA7
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x1E357C, 0x1E3580
-	.space	76, 0x00
+	.long	Str_CHARA1
+	.long	Str_CHARA2
+	.long	Str_CHARA3
+	.long	Str_CHARA4
+	.long	Str_CHARA5
+	.long	Str_CHARA1P
+	.long	Str_CHARA6
+	.long	Str_CHARA1W
+	.long	Str_CHARA2W
+	.long	Str_CHARA5W
+	.long	Str_CHARA7W
+	.long	Str_CHARA7
+	.long	data_4841A885
+	.long	0
+	.space	72, 0x00
 # census: opaque -- unknown-dump: 52 bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x1E35CC, 0x1E3600
 	.space	76, 0x00

@@ -17716,13 +17716,13 @@ TickHookPass_entry:
     mov     (func_484AB85B_Var), a0
     clr     d0
     call    TickHookStub_entry, 0, 4
-    mov     (func_484AB85B_Var_2), a0
+    mov     (TickHookArg1), a0
     mov     1, d0
     call    TickHookStub_entry, 0, 4
-    mov     (func_484AB85B_Var_3), a0
+    mov     (TickHookArg2), a0
     mov     2, d0
     call    TickHookStub_entry, 0, 4
-    mov     (func_484AB85B_Var_4), a0
+    mov     (TickHookArg3), a0
     mov     3, d0
     call    TickHookStub_entry, 0, 4
     ret     0, 0x10

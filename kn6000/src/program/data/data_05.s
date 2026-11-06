@@ -614,21 +614,9 @@
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 254, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
+	.space	108, 0xff	# song memory no save wrote (it is 0xFF until written)
+	.byte	0xfe	# 0xFF with one bit clear
+	.space	110, 0xff	# song memory no save wrote (it is 0xFF until written)
 	sq_cell	0x80, 0, 13	# cell 12: song 1 track 5, 1 of 3
 	sq_beat
 	sq_beat
@@ -1644,20 +1632,9 @@
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 239, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-	.byte	255, 255, 255, 255, 255, 255, 255, 255, 255, 255
+	.space	114, 0xff	# song memory no save wrote (it is 0xFF until written)
+	.byte	0xef	# 0xFF with one bit clear
+	.space	87, 0xff	# song memory no save wrote (it is 0xFF until written)
 	sq_cell	0x80, 0, 65535	# cell 30: song 1 track 11, 1 of 1
 	sq_beat
 	sq_beat
@@ -1951,7 +1928,8 @@
 	sq_beat
 	sq_beat
 	sq_end
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
+	.byte	0	# data bytes of an event cut at the start
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 35	# cell 34: song 1 track 16, 1 of 10
 	sq_beat
 	sq_beat
@@ -5730,7 +5708,8 @@ zlib_4C3CB1D0:	# DemoSong05: its event memory, 15104 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
+	.byte	0	# data bytes of an event cut at the start
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	.endzlib
 	.align	4, 0xFF	# pad after zlib_4C3CB1D0
 zlib_4C3CCDA0:	# DemoSong06: its event memory, 19456 bytes, stored as a zlib stream of 9759 bytes (inflated by the program); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
@@ -9912,7 +9891,8 @@ zlib_4C3CCDA0:	# DemoSong06: its event memory, 19456 bytes, stored as a zlib str
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
 	sq_end
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
+	.byte	0	# data bytes of an event cut at the start
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 70	# cell 69: song 1 track 16, 1 of 8
 	sq_beat
 	sq_beat
@@ -10461,8 +10441,7 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	0
+	.byte	0	# data bytes of an event cut at the start
 	sq_8n	72, 0, 97, 0
 	sq_8n	78, 0, 97, 0
 	sq_8n	84, 0, 97, 0
@@ -10502,8 +10481,7 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_note	28, 0, 43, 47, 6, 0
 	sq_note	36, 0, 45, 51, 6, 0
 	sq_note	42, 0, 48, 53, 5, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	47, 144
+	.byte	47, 144	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 4	# cell 3: song 1 track 3, 1 of 3
 	sq_beat
 	sq_beat
@@ -10919,10 +10897,9 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	81, 101, 22, 0, 65	# data bytes of an event cut at the start
-	k5_note	0x90, 79, 108, 24, 0, 94
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	224, 64, 62
+	.byte	81, 101, 22, 0	# data bytes of an event cut at the start
+	sq_note	65, 0, 79, 108, 24, 0
+	sq_bend	94, 0, 64, 62
 	sq_beat
 	sq_bend	1, 0, 0, 60
 	sq_bend	1, 0, 64, 57
@@ -11230,11 +11207,10 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	k5_note	0x90, 74, 76, 10, 0, 74
-	k5_note	0x90, 51, 106, 11, 0, 81
-	k5_note	0x90, 75, 97, 11, 0, 91
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 53, 93, 17, 0
+	.byte	144, 74, 76, 10, 0	# a tick-first event cut at the start (its tick is gone)
+	sq_note	74, 0, 51, 106, 11, 0
+	sq_note	81, 0, 75, 97, 11, 0
+	sq_note	91, 0, 53, 93, 17, 0
 	sq_beat
 	sq_note	1, 0, 77, 83, 15, 0
 	sq_note	12, 0, 55, 85, 12, 0
@@ -11335,14 +11311,13 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	k5_note	0x90, 69, 26, 5, 0, 48
-	k5_note	0x90, 44, 76, 5, 0, 49
-	k5_note	0x90, 69, 35, 5, 0, 52
-	k5_note	0x90, 41, 110, 5, 0, 60
-	k5_note	0x90, 82, 92, 5, 0, 68
-	k5_note	0x90, 69, 33, 5, 0, 95
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 69, 72, 5, 0
+	.byte	144, 69, 26, 5, 0	# a tick-first event cut at the start (its tick is gone)
+	sq_note	48, 0, 44, 76, 5, 0
+	sq_note	49, 0, 69, 35, 5, 0
+	sq_note	52, 0, 41, 110, 5, 0
+	sq_note	60, 0, 82, 92, 5, 0
+	sq_note	68, 0, 69, 33, 5, 0
+	sq_note	95, 0, 69, 72, 5, 0
 	sq_beat
 	sq_note	0, 0, 112, 123, 5, 0
 	sq_note	6, 0, 36, 107, 5, 0
@@ -11513,24 +11488,29 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	k5_note	0x90, 26, 36, 8, 0, 24
-	k5_note	0x90, 26, 49, 8, 0, 24
-	k5_note	0x90, 41, 61, 21, 0, 32
-	k5_note	0x90, 26, 56, 7, 0, 35
-	k5_note	0x90, 41, 71, 5, 0, 40
-	k5_note	0x90, 26, 81, 6, 0, 46
-	k5_note	0x90, 41, 87, 10, 0, 48
-	k5_note	0x90, 26, 86, 7, 0, 56
-	k5_note	0x90, 26, 110, 6, 0, 58
-	k5_note	0x90, 41, 109, 9, 0, 64
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 26, 127, 6, 0, 129, 129, 129, 129, 129, 130, 14, 0
+	.byte	144, 26, 36, 8, 0	# a tick-first event cut at the start (its tick is gone)
+	sq_note	24, 0, 26, 49, 8, 0
+	sq_note	24, 0, 41, 61, 21, 0
+	sq_note	32, 0, 26, 56, 7, 0
+	sq_note	35, 0, 41, 71, 5, 0
+	sq_note	40, 0, 26, 81, 6, 0
+	sq_note	46, 0, 41, 87, 10, 0
+	sq_note	48, 0, 26, 86, 7, 0
+	sq_note	56, 0, 26, 110, 6, 0
+	sq_note	58, 0, 41, 109, 9, 0
+	sq_note	64, 0, 26, 127, 6, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	.byte	14, 0	# data bytes of an event cut at the start
 	sq_note	29, 0, 54, 93, 10, 0
 	sq_note	46, 0, 54, 108, 16, 0
 	sq_note	77, 0, 54, 94, 11, 0
 	sq_note	95, 0, 54, 100, 13, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	95, 144
+	.byte	95, 144	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 18	# cell 17: song 1 track 8, 1 of 2
 	sq_8n	0, 0, 119, 0
 	sq_beat
@@ -11666,9 +11646,8 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	10, 0, 80	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 65, 73, 9, 0
+	.byte	10, 0	# data bytes of an event cut at the start
+	sq_note	80, 0, 65, 73, 9, 0
 	sq_beat
 	sq_note	6, 0, 55, 101, 35, 1
 	sq_note	6, 0, 67, 101, 35, 1
@@ -11676,8 +11655,7 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 54, 67, 13, 0
+	.byte	144, 54, 67, 13, 0	# a tick-first event cut at the start (its tick is gone)
 	sq_beat
 	sq_note	2, 0, 54, 104, 13, 0
 	sq_note	25, 0, 54, 83, 14, 0
@@ -11693,8 +11671,7 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_note	51, 0, 62, 108, 11, 0
 	sq_note	73, 0, 54, 56, 11, 0
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	2, 144, 54, 104, 13
+	.byte	2, 144, 54, 104, 13	# the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 65535	# cell 19: song 1 track 9, 1 of 1
 	sq_beat
 	sq_beat
@@ -11906,9 +11883,8 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	18, 7, 120, 0	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 18, 10, 114
+	.byte	18, 7, 120	# data bytes of an event cut at the start
+	sq_cc	0, 0, 18, 10, 114
 	sq_cc	14, 0, 18, 11, 127
 	sq_beat
 	sq_beat
@@ -12183,10 +12159,9 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	k5_note	0x90, 69, 86, 16, 0, 46
-	k5_note	0x90, 67, 85, 18, 0, 71
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 62, 98, 22, 0
+	.byte	144, 69, 86, 16, 0	# a tick-first event cut at the start (its tick is gone)
+	sq_note	46, 0, 67, 85, 18, 0
+	sq_note	71, 0, 62, 98, 22, 0
 	sq_beat
 	sq_note	4, 0, 70, 111, 19, 0
 	sq_note	29, 0, 69, 94, 20, 0
@@ -12275,16 +12250,15 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	k5_note	0x90, 44, 82, 5, 0, 48
-	k5_note	0x90, 70, 81, 5, 0, 52
-	k5_ev	0xd0, 8, 55
-	k5_ev	0xd0, 14, 55
-	k5_ev	0xd0, 16, 58
-	k5_ev	0xd0, 0, 66
-	k5_note	0x90, 69, 73, 5, 0, 67
-	k5_note	0x90, 82, 69, 5, 0, 92
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 36, 73, 5, 0
+	.byte	144, 44, 82, 5, 0	# a tick-first event cut at the start (its tick is gone)
+	sq_note	48, 0, 70, 81, 5, 0
+	sq_press	52, 0, 8
+	sq_press	55, 0, 14
+	sq_press	55, 0, 16
+	sq_press	58, 0, 0
+	sq_note	66, 0, 69, 73, 5, 0
+	sq_note	67, 0, 82, 69, 5, 0
+	sq_note	92, 0, 36, 73, 5, 0
 	sq_beat
 	sq_note	0, 0, 70, 89, 5, 0
 	sq_note	0, 0, 53, 70, 5, 0
@@ -12309,8 +12283,7 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_note	66, 0, 69, 73, 5, 0
 	sq_note	66, 0, 82, 64, 5, 0
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	0, 144, 112, 120, 5
+	.byte	0, 144, 112, 120, 5	# the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 28	# cell 27: song 1 track 13, 1 of 14
 	sq_press	15, 0, 11
 	sq_press	19, 0, 0
@@ -12974,9 +12947,8 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	k5_note	0x90, 81, 109, 14, 0, 83
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 81, 116, 29, 0
+	.byte	144, 81, 109, 14, 0	# a tick-first event cut at the start (its tick is gone)
+	sq_note	83, 0, 81, 116, 29, 0
 	sq_beat
 	sq_beat
 	sq_beat
@@ -13040,9 +13012,15 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	k5_note	0x90, 73, 120, 51, 5, 8
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 68, 101, 51, 5, 129, 129, 129, 129, 129, 129, 129
+	.byte	144, 73, 120, 51, 5	# a tick-first event cut at the start (its tick is gone)
+	sq_note	8, 0, 68, 101, 51, 5
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	sq_cell	0x80, 0, 65535	# cell 41: song 1 track 15, 1 of 1
 	sq_cc	0, 0, 14, 10, 1
 	sq_beat
@@ -13128,8 +13106,7 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	5, 0
+	.byte	5, 0	# data bytes of an event cut at the start
 	sq_beat
 	sq_note	0, 0, 53, 77, 5, 0
 	sq_note	2, 0, 38, 83, 5, 0
@@ -13155,8 +13132,7 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_note	48, 0, 44, 76, 5, 0
 	sq_note	50, 0, 36, 81, 5, 0
 	sq_note	51, 0, 70, 77, 5, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	66, 144, 69
+	.byte	66, 144, 69	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 43	# cell 42: song 1 track 16, 1 of 3
 	sq_beat
 	sq_beat
@@ -13319,20 +13295,19 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	49, 10	# data bytes of an event cut at the start
-	k5_ev	0xd0, 52, 13
-	k5_ev	0xd0, 54, 16
-	k5_ev	0xd0, 55, 16
-	k5_ev	0xd0, 56, 19
-	k5_ev	0xd0, 57, 25
-	k5_ev	0xd0, 61, 34
-	k5_ev	0xd0, 63, 40
-	k5_ev	0xd0, 58, 43
-	k5_ev	0xd0, 52, 47
-	k5_ev	0xd0, 41, 47
-	k5_ev	0xd0, 17, 50
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	208, 0
+	.byte	49	# data bytes of an event cut at the start
+	sq_press	10, 0, 52
+	sq_press	13, 0, 54
+	sq_press	16, 0, 55
+	sq_press	16, 0, 56
+	sq_press	19, 0, 57
+	sq_press	25, 0, 61
+	sq_press	34, 0, 63
+	sq_press	40, 0, 58
+	sq_press	43, 0, 52
+	sq_press	47, 0, 41
+	sq_press	47, 0, 17
+	sq_press	50, 0, 0
 	sq_beat
 	sq_beat
 	sq_beat
@@ -13377,8 +13352,7 @@ zlib_4C3CF3C0:	# DemoSong07: its event memory, 11264 bytes, stored as a zlib str
 	sq_note	72, 0, 81, 95, 16, 0
 	sq_beat
 	sq_note	24, 0, 87, 94, 17, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	70, 144, 87, 97, 19
+	.byte	70, 144, 87, 97, 19	# the first 5 bytes of a tick-first event, cut by the end
 	.endzlib
 zlib_4C3D0A50:	# DemoSong08: its event memory, 28416 bytes, stored as a zlib stream of 11944 bytes (inflated by the program); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
@@ -13897,8 +13871,7 @@ zlib_4C3D0A50:	# DemoSong08: its event memory, 28416 bytes, stored as a zlib str
 	sq_note	28, 0, 43, 47, 6, 0
 	sq_note	36, 0, 45, 51, 6, 0
 	sq_note	42, 0, 48, 53, 5, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	47, 144, 50
+	.byte	47, 144, 50	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 11	# cell 10: song 1 track 2, 1 of 6
 	sq_beat
 	sq_beat
@@ -14245,11 +14218,10 @@ zlib_4C3D0A50:	# DemoSong08: its event memory, 28416 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	28, 0, 50	# data bytes of an event cut at the start
-	k5_note	0x90, 58, 80, 44, 0, 51
-	k5_note	0x90, 70, 71, 15, 0, 70
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 70, 65, 28, 0
+	.byte	28, 0	# data bytes of an event cut at the start
+	sq_note	50, 0, 58, 80, 44, 0
+	sq_note	51, 0, 70, 71, 15, 0
+	sq_note	70, 0, 70, 65, 28, 0
 	sq_beat
 	sq_note	1, 0, 58, 72, 46, 0
 	sq_note	2, 0, 70, 75, 20, 0
@@ -14265,8 +14237,7 @@ zlib_4C3D0A50:	# DemoSong08: its event memory, 28416 bytes, stored as a zlib str
 	sq_note	73, 0, 70, 63, 5, 0
 	sq_beat
 	sq_note	2, 0, 70, 80, 15, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	2, 144, 58
+	.byte	2, 144, 58	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 17	# cell 16: song 1 track 3, 1 of 9
 	sq_beat
 	sq_beat
@@ -18704,9 +18675,9 @@ zlib_4C3D0A50:	# DemoSong08: its event memory, 28416 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	k5_note	0x90, 68, 96, 19, 0, 71
-	k5_note	0x90, 64, 102, 15, 0, 93
-	.byte	144, 65, 88, 14	# the first 4 bytes of a KN5000-order event, cut by the end
+	.byte	144, 68, 96, 19, 0	# a tick-first event cut at the start (its tick is gone)
+	sq_note	71, 0, 64, 102, 15, 0
+	.byte	93, 144, 65, 88, 14	# the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 89	# cell 88: song 1 track 10, 1 of 3
 	sq_beat
 	sq_beat
@@ -18905,7 +18876,8 @@ zlib_4C3D0A50:	# DemoSong08: its event memory, 28416 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
+	.byte	0	# data bytes of an event cut at the start
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 92	# cell 91: song 1 track 11, 1 of 6
 	sq_beat
 	sq_beat
@@ -19753,16 +19725,16 @@ zlib_4C3D0A50:	# DemoSong08: its event memory, 28416 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	26, 110, 6, 0, 58	# data bytes of an event cut at the start
-	k5_note	0x90, 41, 121, 9, 0, 64
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 26, 127, 6, 0
+	.byte	26, 110, 6, 0	# data bytes of an event cut at the start
+	sq_note	58, 0, 41, 121, 9, 0
+	sq_note	64, 0, 26, 127, 6, 0
 	sq_beat
 	sq_beat
 	sq_beat
 	sq_beat
 	sq_end
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
+	.byte	0	# data bytes of an event cut at the start
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 106	# cell 105: song 1 track 14, 1 of 5
 	sq_beat
 	sq_beat
@@ -20141,7 +20113,8 @@ zlib_4C3D0A50:	# DemoSong08: its event memory, 28416 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
+	.byte	0	# data bytes of an event cut at the start
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 65535	# cell 111: song 1 track 16, 1 of 1
 	sq_beat
 	sq_beat
@@ -20239,10 +20212,9 @@ zlib_4C3D0A50:	# DemoSong08: its event memory, 28416 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	35, 2	# data bytes of an event cut at the start
-	k5_note	0x90, 85, 109, 57, 0, 4
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	224, 108, 37
+	.byte	35	# data bytes of an event cut at the start
+	sq_note	2, 0, 85, 109, 57, 0
+	sq_bend	4, 0, 108, 37
 	sq_bend	6, 0, 7, 40
 	sq_bend	8, 0, 34, 42
 	sq_bend	10, 0, 61, 44
@@ -20959,7 +20931,8 @@ zlib_4C3D38F8:	# DemoSong09: its event memory, 6144 bytes, stored as a zlib stre
 	sq_beat
 	sq_beat
 	sq_end
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
+	.byte	0	# data bytes of an event cut at the start
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 12	# cell 11: song 1 track 2, 1 of 7
 	sq_beat
 	sq_beat
@@ -21446,7 +21419,8 @@ zlib_4C3D38F8:	# DemoSong09: its event memory, 6144 bytes, stored as a zlib stre
 	sq_beat
 	sq_beat
 	sq_end
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
+	.byte	0	# data bytes of an event cut at the start
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 19	# cell 18: song 1 track 5, 1 of 4
 	sq_sys	0, 0xf1, 2, 0, 80, 1, 2
 	sq_note	0, 0, 60, 64, 0, 16
@@ -21717,7 +21691,8 @@ zlib_4C3D38F8:	# DemoSong09: its event memory, 6144 bytes, stored as a zlib stre
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	64, 0, 1, 0	# data bytes of an event cut at the start
+	.byte	64	# data bytes of an event cut at the start
+	.byte	0, 1, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 65535	# cell 22: song 1 track 6, 1 of 1
 	sq_sys	0, 0x85
 	sq_sys	0, 0xf1, 2, 0, 0, 2, 127
@@ -21867,8 +21842,7 @@ zlib_4C3D38F8:	# DemoSong09: its event memory, 6144 bytes, stored as a zlib stre
 	sq_end
 	sq_note	75, 0, 36, 67, 7, 0
 	sq_note	79, 0, 106, 63, 5, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	94, 144, 54, 64, 13
+	.byte	94, 144, 54, 64, 13	# the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 65535	# cell 23: song 1 track 8, 1 of 1
 	sq_8n	0, 0, 27, 1
 	sq_beat
@@ -22049,8 +22023,7 @@ zlib_4C3D38F8:	# DemoSong09: its event memory, 6144 bytes, stored as a zlib stre
 	sq_beat
 	sq_beat
 	sq_note	1, 0, 64, 112, 14, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	24, 144, 65, 76
+	.byte	24, 144, 65, 76	# the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 65535	# cell 24: song 1 track 15, 1 of 1
 	sq_cc	0, 0, 14, 10, 1
 	sq_beat
@@ -22211,8 +22184,7 @@ zlib_4C3D38F8:	# DemoSong09: its event memory, 6144 bytes, stored as a zlib stre
 	sq_note	0, 0, 77, 110, 59, 0
 	sq_bend	2, 0, 81, 35
 	sq_note	2, 0, 85, 109, 57, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	4, 224
+	.byte	4, 224	# the first 2 bytes of a tick-first event, cut by the end
 	.endzlib
 zlib_4C3D4568:	# DemoSong10: its event memory, 3584 bytes, stored as a zlib stream of 2093 bytes (inflated by the program); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
@@ -22672,8 +22644,7 @@ zlib_4C3D4568:	# DemoSong10: its event memory, 3584 bytes, stored as a zlib stre
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
 	sq_beat
 	sq_end
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	60, 73, 19, 0
+	.byte	60, 73, 19, 0	# data bytes of an event cut at the start
 	sq_beat
 	sq_note	6, 0, 55, 96, 50, 0
 	sq_note	69, 0, 54, 107, 28, 0
@@ -22681,8 +22652,7 @@ zlib_4C3D4568:	# DemoSong10: its event memory, 3584 bytes, stored as a zlib stre
 	sq_note	5, 0, 53, 73, 50, 0
 	sq_note	71, 0, 51, 106, 28, 0
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	9, 144, 52, 77, 44
+	.byte	9, 144, 52, 77, 44	# the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 65535	# cell 8: song 1 track 2, 1 of 1
 	sq_beat
 	sq_beat
@@ -22796,8 +22766,7 @@ zlib_4C3D4568:	# DemoSong10: its event memory, 3584 bytes, stored as a zlib stre
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
 	sq_beat
 	sq_end
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	2
+	.byte	2	# data bytes of an event cut at the start
 	sq_beat
 	sq_beat
 	sq_beat
@@ -22858,8 +22827,8 @@ zlib_4C3D4568:	# DemoSong10: its event memory, 3584 bytes, stored as a zlib stre
 	sq_beat
 	sq_beat
 	sq_end
-	k5_note	0x90, 54, 91, 9, 1, 95
-	.byte	144, 57	# the first 2 bytes of a KN5000-order event, cut by the end
+	.byte	144, 54, 91, 9, 1	# a tick-first event cut at the start (its tick is gone)
+	.byte	95, 144, 57	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 65535	# cell 9: song 1 track 3, 1 of 1
 	sq_beat
 	sq_beat
@@ -23036,8 +23005,7 @@ zlib_4C3D4568:	# DemoSong10: its event memory, 3584 bytes, stored as a zlib stre
 	sq_beat
 	sq_beat
 	sq_note	3, 0, 54, 77, 87, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	3, 144
+	.byte	3, 144	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 65535	# cell 10: song 1 track 4, 1 of 1
 	sq_beat
 	sq_beat
@@ -23151,8 +23119,7 @@ zlib_4C3D4568:	# DemoSong10: its event memory, 3584 bytes, stored as a zlib stre
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
 	sq_beat
 	sq_end
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	3
+	.byte	3	# data bytes of an event cut at the start
 	sq_note	57, 0, 55, 70, 2, 3
 	sq_beat
 	sq_beat
@@ -23209,8 +23176,7 @@ zlib_4C3D4568:	# DemoSong10: its event memory, 3584 bytes, stored as a zlib stre
 	sq_beat
 	sq_beat
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	95, 144, 54
+	.byte	95, 144, 54	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 12	# cell 11: song 1 track 5, 1 of 2
 	sq_sys	0, 0xf1, 6, 0, 64, 0, 2
 	sq_note	0, 0, 55, 69, 27, 0
@@ -23369,8 +23335,7 @@ zlib_4C3D4568:	# DemoSong10: its event memory, 3584 bytes, stored as a zlib stre
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
 	sq_beat
 	sq_end
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	34, 0
+	.byte	34, 0	# data bytes of an event cut at the start
 	sq_note	69, 0, 54, 104, 27, 0
 	sq_note	71, 0, 60, 81, 67, 0
 	sq_beat
@@ -23526,17 +23491,15 @@ zlib_4C3D4568:	# DemoSong10: its event memory, 3584 bytes, stored as a zlib stre
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	241, 2, 0, 80, 3, 0
+	.byte	241, 2, 0, 80, 3, 0	# a tick-first event cut at the start (its tick is gone)
 	sq_beat
 	sq_beat
 	sq_beat
 	sq_beat
 	sq_beat
 	sq_end
-	k5_note	0x90, 53, 106, 94, 0, 10
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	224, 64, 45
+	.byte	144, 53, 106, 94, 0	# a tick-first event cut at the start (its tick is gone)
+	sq_bend	10, 0, 64, 45
 	sq_bend	11, 0, 0, 51
 	sq_bend	15, 0, 64, 54
 	sq_bend	20, 0, 0, 58
@@ -23681,8 +23644,7 @@ zlib_4C3D4568:	# DemoSong10: its event memory, 3584 bytes, stored as a zlib stre
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	46, 114, 14, 0
+	.byte	46, 114, 14, 0	# data bytes of an event cut at the start
 	sq_beat
 	sq_note	64, 0, 34, 98, 22, 0
 	sq_beat
@@ -23717,8 +23679,7 @@ zlib_4C3D4568:	# DemoSong10: its event memory, 3584 bytes, stored as a zlib stre
 	sq_beat
 	sq_beat
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	48, 144, 34
+	.byte	48, 144, 34	# the first 3 bytes of a tick-first event, cut by the end
 	.endzlib
 	.align	4, 0xFF	# pad after zlib_4C3D4568
 zlib_4C3D4D98:	# DemoSong11: its event memory, 11264 bytes, stored as a zlib stream of 5243 bytes (inflated by the program); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
@@ -26247,7 +26208,8 @@ zlib_4C3D4D98:	# DemoSong11: its event memory, 11264 bytes, stored as a zlib str
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
 	sq_end
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
+	.byte	0	# data bytes of an event cut at the start
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	.endzlib
 	.align	4, 0xFF	# pad after zlib_4C3D4D98
 zlib_4C3D6214:	# DemoSong12: its event memory, 25600 bytes, stored as a zlib stream of 7611 bytes (inflated by the program); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
@@ -32100,7 +32062,8 @@ zlib_4C3D6214:	# DemoSong12: its event memory, 25600 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
+	.byte	0	# data bytes of an event cut at the start
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 100	# cell 99: song 1 track 16, 1 of 2
 	sq_beat
 	sq_beat
@@ -37477,7 +37440,7 @@ V_demo1_1_ResNames:
 	# 4 bytes read by MssNameFunc_L121 0x4C1637F8 `movhu (-2, a0), d0` (+2, u16); the read fields at their widths (u16), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u16	43786, 19495	# +0
 
-func_4C16B39F_entry_L43_Table:	# 1004 x u16, 0..999; read by MssNameFunc_L121 0x4C1637F8: `movhu	(-2, a0), d0`; func_4C16B39F_entry_L43 0x4C16B3E7: `movhu	(d0, a1), d1` ...
+func_4C16B39F_entry_L43_Table:	# 1000 x u16, 0..999; read by MssNameFunc_L121 0x4C1637F8: `movhu	(-2, a0), d0`; func_4C16B39F_entry_L43 0x4C16B3E7: `movhu	(d0, a1), d1` ...
 	tab_u16	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11	# [0]
 	tab_u16	12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23	# [12]
 	tab_u16	24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35	# [24]
@@ -37561,1238 +37524,1014 @@ func_4C16B39F_entry_L43_Table:	# 1004 x u16, 0..999; read by MssNameFunc_L121 0x
 	tab_u16	960, 961, 962, 963, 964, 965, 966, 967, 968, 969, 970, 971	# [960]
 	tab_u16	972, 973, 974, 975, 976, 977, 978, 979, 980, 981, 982, 983	# [972]
 	tab_u16	984, 985, 986, 987, 988, 989, 990, 991, 992, 993, 994, 995	# [984]
-	tab_u16	996, 997, 998, 999, 0, 1, 2, 3	# [996]
-	.space	2, 0xFF
-data_4C3DD6E2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD6E2, 0x3DD6EC
-data_4C3DD6EC:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD6EC, 0x3DD6F6
-data_4C3DD6F6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD6F6, 0x3DD700
-data_4C3DD700:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD700, 0x3DD70A
-data_4C3DD70A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD70A, 0x3DD714
+	tab_u16	996, 997, 998, 999	# [996]
 
-Str_empty_264:	.asciz "$"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD716, 0x3DD71E
-Str_empty_263:	.asciz "("
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD720, 0x3DD728
-Str_empty_262:	.asciz ","
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD72A, 0x3DD732
-Str_0_15:	.asciz "0"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD734, 0x3DD73C
-Str_empty_261:	.asciz "@"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD73E, 0x3DD746
-Str_L:	.asciz "L"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD748, 0x3DD750
-Str_P:	.asciz "P"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD752, 0x3DD75A
-Str_empty_260:	.asciz "`"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD75C, 0x3DD764
-Str_h:	.asciz "h"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD766, 0x3DD76E
-Str_x:	.asciz "x"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD770, 0x3DD778
-Str_empty_259:	.asciz "|"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD77A, 0x3DD782
-data_4C3DD782:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD782, 0x3DD78C
-data_4C3DD78C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD78C, 0x3DD796
-data_4C3DD796:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD796, 0x3DD7A0
-data_4C3DD7A0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD7A0, 0x3DD7AA
-data_4C3DD7AA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD7AA, 0x3DD7B4
-data_4C3DD7B4:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD7B4, 0x3DD7BE
-data_4C3DD7BE:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD7BE, 0x3DD7C8
-data_4C3DD7C8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD7C8, 0x3DD7D2
-data_4C3DD7D2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD7D2, 0x3DD7DC
-data_4C3DD7DC:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD7DC, 0x3DD7E6
-data_4C3DD7E6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD7E6, 0x3DD7F0
-data_4C3DD7F0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD7F0, 0x3DD7FA
-data_4C3DD7FA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD7FA, 0x3DD804
-data_4C3DD804:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD804, 0x3DD80E
-data_4C3DD80E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD80E, 0x3DD818
-data_4C3DD818:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD818, 0x3DD822
-data_4C3DD822:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD822, 0x3DD82C
-data_4C3DD82C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD82C, 0x3DD836
-data_4C3DD836:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD836, 0x3DD840
-data_4C3DD840:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD840, 0x3DD84A
-data_4C3DD84A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD84A, 0x3DD854
-data_4C3DD854:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD854, 0x3DD85E
-data_4C3DD85E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD85E, 0x3DD868
-data_4C3DD868:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD868, 0x3DD872
-data_4C3DD872:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD872, 0x3DD87C
-data_4C3DD87C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD87C, 0x3DD886
-data_4C3DD886:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD886, 0x3DD890
-data_4C3DD890:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD890, 0x3DD89A
-data_4C3DD89A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD89A, 0x3DD8A4
-data_4C3DD8A4:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD8A4, 0x3DD8AE
-data_4C3DD8AE:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD8AE, 0x3DD8B8
-data_4C3DD8B8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD8B8, 0x3DD8C2
-data_4C3DD8C2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD8C2, 0x3DD8CC
-data_4C3DD8CC:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD8CC, 0x3DD8D6
-data_4C3DD8D6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD8D6, 0x3DD8E0
-data_4C3DD8E0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD8E0, 0x3DD8EA
-data_4C3DD8EA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD8EA, 0x3DD8F4
-Str_empty_258:	.asciz " "
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD8F6, 0x3DD8FE
-Str_X:	.asciz "X"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD900, 0x3DD908
-Str_empty_257:	.asciz "\\"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD90A, 0x3DD912
-Str_d_3:	.asciz "d"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD914, 0x3DD91C
-Str_l:	.asciz "l"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD91E, 0x3DD926
-Str_t:	.asciz "t"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD928, 0x3DD930
-data_4C3DD930:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD930, 0x3DD93A
-data_4C3DD93A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD93A, 0x3DD944
-data_4C3DD944:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD944, 0x3DD94E
-data_4C3DD94E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD94E, 0x3DD958
-data_4C3DD958:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD958, 0x3DD962
-data_4C3DD962:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD962, 0x3DD96C
-data_4C3DD96C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD96C, 0x3DD976
-data_4C3DD976:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD976, 0x3DD980
-data_4C3DD980:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD980, 0x3DD98A
-data_4C3DD98A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD98A, 0x3DD994
-data_4C3DD994:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD994, 0x3DD99E
-data_4C3DD99E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD99E, 0x3DD9A8
-data_4C3DD9A8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD9A8, 0x3DD9B2
-data_4C3DD9B2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD9B2, 0x3DD9BC
-data_4C3DD9BC:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD9BC, 0x3DD9C6
-data_4C3DD9C6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD9C6, 0x3DD9D0
-data_4C3DD9D0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD9D0, 0x3DD9DA
-data_4C3DD9DA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD9DA, 0x3DD9E4
-data_4C3DD9E4:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD9E4, 0x3DD9EE
-data_4C3DD9EE:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD9EE, 0x3DD9F8
-data_4C3DD9F8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DD9F8, 0x3DDA02
-Str_8_11:	.asciz "8"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA04, 0x3DDA0C
-Str_H:	.asciz "H"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA0E, 0x3DDA16
-Str_T:	.asciz "T"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA18, 0x3DDA20
-data_4C3DDA20:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA20, 0x3DDA2A
-data_4C3DDA2A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA2A, 0x3DDA34
-data_4C3DDA34:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA34, 0x3DDA3E
-data_4C3DDA3E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA3E, 0x3DDA48
-data_4C3DDA48:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA48, 0x3DDA52
-data_4C3DDA52:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA52, 0x3DDA5C
-data_4C3DDA5C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA5C, 0x3DDA66
-data_4C3DDA66:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA66, 0x3DDA70
-data_4C3DDA70:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA70, 0x3DDA7A
-data_4C3DDA7A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA7A, 0x3DDA84
-data_4C3DDA84:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA84, 0x3DDA8E
-data_4C3DDA8E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA8E, 0x3DDA98
-Str_D_9:	.asciz "D"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA9A, 0x3DDAA2
-data_4C3DDAA2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDAA2, 0x3DDAAC
-data_4C3DDAAC:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDAAC, 0x3DDAB6
-data_4C3DDAB6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDAB6, 0x3DDAC0
-data_4C3DDAC0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDAC0, 0x3DDACA
-data_4C3DDACA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDACA, 0x3DDAD4
-data_4C3DDAD4:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDAD4, 0x3DDADE
-data_4C3DDADE:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDADE, 0x3DDAE8
-data_4C3DDAE8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDAE8, 0x3DDAF2
-data_4C3DDAF2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDAF2, 0x3DDAFC
-data_4C3DDAFC:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDAFC, 0x3DDB06
-data_4C3DDB06:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDB06, 0x3DDB10
-data_4C3DDB10:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDB10, 0x3DDB1A
-data_4C3DDB1A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDB1A, 0x3DDB24
-data_4C3DDB24:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDB24, 0x3DDB2E
-data_4C3DDB2E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDB2E, 0x3DDB38
-data_4C3DDB38:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDB38, 0x3DDB42
-data_4C3DDB42:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDB42, 0x3DDB4C
-data_4C3DDB4C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDB4C, 0x3DDB56
-data_4C3DDB56:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDB56, 0x3DDB60
+StyleSetups_Rock_Pop_Italian_Pop:	# the setups of style "Italian Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	0, 1, 2, 3, 0xffff
+StyleSetups_Rock_Pop_70_s_Folk:	# the setups of style "70's Folk" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	8, 9, 10, 11, 0xffff
+StyleSetups_Rock_Pop_Folk_Rock:	# the setups of style "Folk Rock" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	12, 13, 14, 15, 0xffff
+StyleSetups_Rock_Pop_Pop_Dance:	# the setups of style "Pop Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	16, 17, 18, 19, 0xffff
+StyleSetups_Rock_Pop_Star_Groove:	# the setups of style "Star Groove" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	24, 25, 26, 27, 0xffff
+StyleSetups_Rock_Pop_Cool_16_Beat:	# the setups of style "Cool 16 Beat" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	28, 29, 30, 31, 0xffff
+StyleSetups_Rock_Pop_Detroit_Ballad:	# the setups of style "Detroit Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	36, 37, 38, 39, 0xffff
+StyleSetups_Rock_Pop_Pop_Girls:	# the setups of style "Pop Girls" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	40, 41, 42, 43, 0xffff
+StyleSetups_Rock_Pop_90_s_Rock_Roll:	# the setups of style "90's Rock & Roll" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	44, 45, 46, 47, 0xffff
+StyleSetups_Rock_Pop_90_s_Top_Ten:	# the setups of style "90's Top Ten" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	48, 49, 50, 51, 0xffff
+StyleSetups_Rock_Pop_Pop_Shuffle:	# the setups of style "Pop Shuffle" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	64, 65, 66, 67, 0xffff
+StyleSetups_Rock_Pop_Beach_Party:	# the setups of style "Beach Party" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	76, 77, 78, 79, 0xffff
+StyleSetups_Rock_Pop_Mersey_Beat:	# the setups of style "Mersey Beat" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	80, 81, 82, 83, 0xffff
+StyleSetups_Rock_Pop_16Beat_Standards:	# the setups of style "16Beat Standards" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	96, 97, 98, 99, 0xffff
+StyleSetups_Rock_Pop_Piano_Superstar:	# the setups of style "Piano Superstar" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	104, 105, 106, 107, 0xffff
+StyleSetups_Rock_Pop_Fifties_Smooch:	# the setups of style "Fifties Smooch" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	120, 121, 122, 123, 0xffff
+StyleSetups_Rock_Pop_Rock_Balladeer:	# the setups of style "Rock Balladeer" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	124, 125, 126, 127, 0xffff
+StyleSetups_Rock_Pop_Rhythm_Blues:	# the setups of style "Rhythm & Blues" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	140, 141, 142, 143, 0xffff
+StyleSetups_Rock_Pop_King_s_Rock:	# the setups of style "King's Rock" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	152, 153, 154, 155, 0xffff
+StyleSetups_Rock_Pop_Cool_Old_Rock:	# the setups of style "Cool Old Rock" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	156, 157, 158, 159, 0xffff
+StyleSetups_Rock_Pop_Let_s_Rock:	# the setups of style "Let's Rock" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	160, 161, 162, 163, 0xffff
+StyleSetups_Rock_Pop_Leroy_s_Band:	# the setups of style "Leroy's Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	164, 165, 166, 167, 0xffff
+StyleSetups_Rock_Pop_Twisters:	# the setups of style "Twisters" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	168, 169, 170, 171, 0xffff
+StyleSetups_Rock_Pop_Rock_Status:	# the setups of style "Rock Status" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	172, 173, 174, 175, 0xffff
+StyleSetups_Rock_Pop_Heavy_Shuffle:	# the setups of style "Heavy Shuffle" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	176, 177, 178, 179, 0xffff
+StyleSetups_Rock_Pop_UK_Piano_Legend:	# the setups of style "UK Piano Legend" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	180, 181, 182, 183, 0xffff
+StyleSetups_Rock_Pop_Rock_Gig:	# the setups of style "Rock Gig" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	184, 185, 186, 187, 0xffff
+StyleSetups_Rock_Pop_Revival_Rock:	# the setups of style "Revival Rock" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	188, 189, 190, 191, 0xffff
+StyleSetups_Rock_Pop_Solid_Gold_Hits:	# the setups of style "Solid Gold Hits" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	192, 193, 194, 195, 0xffff
+StyleSetups_Rock_Pop_70_s_Power_Rock:	# the setups of style "70's Power Rock" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	196, 197, 198, 199, 0xffff
+StyleSetups_Rock_Pop_Blues_Alley:	# the setups of style "Blues Alley" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	200, 201, 202, 203, 0xffff
+StyleSetups_Rock_Pop_Classic_60s_Rock:	# the setups of style "Classic 60s Rock" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	208, 209, 210, 211, 0xffff
+StyleSetups_Rock_Pop_60_s_Gold:	# the setups of style "60's Gold" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	212, 213, 214, 215, 0xffff
+StyleSetups_Rock_Pop_Straight_70_s:	# the setups of style "Straight 70's" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	216, 217, 218, 219, 0xffff
+StyleSetups_Rock_Pop_Modern_Blues:	# the setups of style "Modern Blues" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	220, 221, 222, 223, 0xffff
+StyleSetups_Rock_Pop_Piano_Blues:	# the setups of style "Piano Blues" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	224, 225, 226, 227, 0xffff
+StyleSetups_Rock_Pop_Monday_Morning:	# the setups of style "Monday Morning" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	228, 229, 230, 231, 0xffff
+StyleSetups_Rock_Pop_West_Coast_Funk:	# the setups of style "West Coast Funk" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	264, 265, 266, 267, 0xffff
+StyleSetups_Rock_Pop_Jazzy_Grooves:	# the setups of style "Jazzy Grooves" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	268, 269, 270, 271, 0xffff
+StyleSetups_Rock_Pop_Chart_Reggae:	# the setups of style "Chart Reggae" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	748, 749, 750, 751, 0xffff
+StyleSetups_Rock_Pop_West_Indies_Cool:	# the setups of style "West Indies Cool" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	768, 769, 770, 771, 0xffff
+StyleSetups_Rock_Pop_Grooving_8_Beat:	# the setups of style "Grooving 8 Beat" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	800, 801, 802, 803, 0xffff
+StyleSetups_Rock_Pop_Romantic_8_Beat:	# the setups of style "Romantic 8 Beat" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	804, 805, 806, 807, 0xffff
+StyleSetups_Rock_Pop_Euro_Pop:	# the setups of style "Euro Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	824, 825, 826, 827, 0xffff
+StyleSetups_Rock_Pop_Jazz_Pop_16:	# the setups of style "Jazz Pop 16" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	832, 833, 834, 835, 0xffff
+StyleSetups_Rock_Pop_Slow_Pop_Ballad:	# the setups of style "Slow Pop Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	864, 865, 866, 867, 0xffff
+StyleSetups_Rock_Pop_Metal_Ballad:	# the setups of style "Metal Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	868, 869, 870, 871, 0xffff
+StyleSetups_Rock_Pop_50_s_Rock_n_Roll:	# the setups of style "50's Rock'n'Roll" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	876, 877, 878, 879, 0xffff
+StyleSetups_Rock_Pop_Time_To_Twist:	# the setups of style "Time To Twist!" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	884, 885, 886, 887, 0xffff
+StyleSetups_Rock_Pop_Rock_Guitars:	# the setups of style "Rock Guitars" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	888, 889, 890, 891, 0xffff
+StyleSetups_Rock_Pop_Oldies_Dance:	# the setups of style "Oldies Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	892, 893, 894, 895, 0xffff
+StyleSetups_Rock_Pop_Let_s_Twist:	# the setups of style "Let's Twist" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	992, 993, 994, 995, 0xffff
+StyleSetups_Easy_Listening_Grand_Prix:	# the setups of style "Grand Prix" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	4, 5, 6, 7, 0xffff
+StyleSetups_Easy_Listening_16_Beat_Grooves:	# the setups of style "16 Beat Grooves" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	20, 21, 22, 23, 0xffff
+StyleSetups_Easy_Listening_Easy_16_Ballad:	# the setups of style "Easy 16 Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	32, 33, 34, 35, 0xffff
+StyleSetups_Easy_Listening_Slow_Easy:	# the setups of style "Slow & Easy" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	88, 89, 90, 91, 0xffff
+StyleSetups_Easy_Listening_Yesteryear:	# the setups of style "Yesteryear" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	92, 93, 94, 95, 0xffff
+StyleSetups_Easy_Listening_Ballad_Producer:	# the setups of style "Ballad Producer" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	100, 101, 102, 103, 0xffff
+StyleSetups_Easy_Listening_New_Rock_Ballad:	# the setups of style "New Rock Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	108, 109, 110, 111, 0xffff
+StyleSetups_Easy_Listening_Daydreams:	# the setups of style "Daydreams" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	116, 117, 118, 119, 0xffff
+StyleSetups_Easy_Listening_Soft_Listening:	# the setups of style "Soft Listening" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	128, 129, 130, 131, 0xffff
+StyleSetups_Easy_Listening_Ballad_Dreams:	# the setups of style "Ballad Dreams" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	132, 133, 134, 135, 0xffff
+StyleSetups_Easy_Listening_80_s_Movie_Theme:	# the setups of style "80's Movie Theme" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	136, 137, 138, 139, 0xffff
+StyleSetups_Easy_Listening_Smoochy_Ballad:	# the setups of style "Smoochy Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	144, 145, 146, 147, 0xffff
+StyleSetups_Easy_Listening_Schlager_Romance:	# the setups of style "Schlager Romance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	148, 149, 150, 151, 0xffff
+StyleSetups_Easy_Listening_Golden_Oldie:	# the setups of style "Golden Oldie" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	204, 205, 206, 207, 0xffff
+StyleSetups_Easy_Listening_Easy_Swing_Pop:	# the setups of style "Easy Swing Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	244, 245, 246, 247, 0xffff
+StyleSetups_Easy_Listening_Vocal_Ballads:	# the setups of style "Vocal Ballads" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	520, 521, 522, 523, 0xffff
+StyleSetups_Easy_Listening_Hollywood_Charm:	# the setups of style "Hollywood Charm" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	624, 625, 626, 627, 0xffff
+StyleSetups_Easy_Listening_After_Eight_Beat:	# the setups of style "After Eight Beat" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	812, 813, 814, 815, 0xffff
+StyleSetups_Easy_Listening_80_s_Best_Groove:	# the setups of style "80's Best Groove" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	816, 817, 818, 819, 0xffff
+StyleSetups_Easy_Listening_Yuppie_Dreams:	# the setups of style "Yuppie Dreams" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	820, 821, 822, 823, 0xffff
+StyleSetups_Easy_Listening_Classic_Ballad:	# the setups of style "Classic Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	844, 845, 846, 847, 0xffff
+StyleSetups_Easy_Listening_Slow_Synth_Pop:	# the setups of style "Slow Synth Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	848, 849, 850, 851, 0xffff
+StyleSetups_Easy_Listening_Symphony_Ballad:	# the setups of style "Symphony Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	852, 853, 854, 855, 0xffff
+StyleSetups_Easy_Listening_Modern_Ballad:	# the setups of style "Modern Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	856, 857, 858, 859, 0xffff
+StyleSetups_Easy_Listening_Dreamy_Sixteen:	# the setups of style "Dreamy Sixteen" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	860, 861, 862, 863, 0xffff
+StyleSetups_Easy_Listening_Lindner_Story:	# the setups of style "Lindner Story" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	872, 873, 874, 875, 0xffff
+StyleSetups_Easy_Listening_LA_Ballads:	# the setups of style "LA Ballads" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	984, 985, 986, 987, 0xffff
+StyleSetups_Easy_Listening_Slow_Dance:	# the setups of style "Slow Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	988, 989, 990, 991, 0xffff
+StyleSetups_Party_Music_Ballermann:	# the setups of style "Ballermann" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	52, 53, 54, 55, 0xffff
+StyleSetups_Party_Music_German_Holiday:	# the setups of style "German Holiday" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	56, 57, 58, 59, 0xffff
+StyleSetups_Party_Music_Summer_Fun:	# the setups of style "Summer Fun" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	72, 73, 74, 75, 0xffff
+StyleSetups_Party_Music_The_Last_Band:	# the setups of style "The Last Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	84, 85, 86, 87, 0xffff
+StyleSetups_Party_Music_Samba_Nights:	# the setups of style "Samba Nights" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	352, 353, 354, 355, 0xffff
+StyleSetups_Party_Music_Party_On:	# the setups of style "Party On!" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	664, 665, 666, 667, 0xffff
+StyleSetups_Party_Music_Merry_Christmas:	# the setups of style "Merry Christmas" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	676, 677, 678, 679, 0xffff
+StyleSetups_Party_Music_German_Schlager:	# the setups of style "German Schlager" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	828, 829, 830, 831, 0xffff
+StyleSetups_Party_Music_Accordion_Pop:	# the setups of style "Accordion Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	836, 837, 838, 839, 0xffff
+StyleSetups_Party_Music_Party_Pop:	# the setups of style "Party Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	840, 841, 842, 843, 0xffff
+StyleSetups_Party_Music_Party_Rock_Roll:	# the setups of style "Party Rock&Roll" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	880, 881, 882, 883, 0xffff
+StyleSetups_Party_Music_German_Party:	# the setups of style "German Party" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	956, 957, 958, 959, 0xffff
+StyleSetups_Party_Music_Deutschland_Pop:	# the setups of style "Deutschland Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	976, 977, 978, 979, 0xffff
+StyleSetups_Party_Music_Volks_Pop:	# the setups of style "Volks Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	980, 981, 982, 983, 0xffff
+StyleSetups_Party_Music_Polonaise_Time:	# the setups of style "Polonaise Time!" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	996, 997, 998, 999, 0xffff
+StyleSetups_Dance_Pop_90_s_Boy_Groups:	# the setups of style "90's Boy Groups" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	60, 61, 62, 63, 0xffff
+StyleSetups_Dance_Pop_Girly_Pop:	# the setups of style "Girly Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	68, 69, 70, 71, 0xffff
+StyleSetups_Dance_Pop_Steamy_Funk:	# the setups of style "Steamy Funk" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	252, 253, 254, 255, 0xffff
+StyleSetups_Dance_Pop_Electric_World:	# the setups of style "Electric World" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	296, 297, 298, 299, 0xffff
+StyleSetups_Dance_Pop_Barbie_s_Home:	# the setups of style "Barbie's Home" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	300, 301, 302, 303, 0xffff
+StyleSetups_Dance_Pop_Drumming_Beats:	# the setups of style "Drumming Beats" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	304, 305, 306, 307, 0xffff
+StyleSetups_Dance_Pop_Hip_Hop:	# the setups of style "Hip Hop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	308, 309, 310, 311, 0xffff
+StyleSetups_Dance_Pop_Dreamland:	# the setups of style "Dreamland" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	312, 313, 314, 315, 0xffff
+StyleSetups_Dance_Pop_Believe_This:	# the setups of style "Believe This" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	316, 317, 318, 319, 0xffff
+StyleSetups_Dance_Pop_London_Subway:	# the setups of style "London Subway" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	320, 321, 322, 323, 0xffff
+StyleSetups_Dance_Pop_Hip_Stuff:	# the setups of style "Hip Stuff" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	324, 325, 326, 327, 0xffff
+StyleSetups_Dance_Pop_Golden_Dancing:	# the setups of style "Golden Dancing" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	328, 329, 330, 331, 0xffff
+StyleSetups_Dance_Pop_Street_Dance:	# the setups of style "Street Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	332, 333, 334, 335, 0xffff
+StyleSetups_Dance_Pop_Retro_Disco:	# the setups of style "Retro Disco" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	336, 337, 338, 339, 0xffff
+StyleSetups_Dance_Pop_Dance_Latin:	# the setups of style "Dance Latin" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	340, 341, 342, 343, 0xffff
+StyleSetups_Dance_Pop_Dance_Production:	# the setups of style "Dance Production" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	344, 345, 346, 347, 0xffff
+StyleSetups_Dance_Pop_Hip_Club_Mixes:	# the setups of style "Hip Club Mixes" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	348, 349, 350, 351, 0xffff
+StyleSetups_Dance_Pop_The_Big_Hit:	# the setups of style "The Big Hit" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	356, 357, 358, 359, 0xffff
+StyleSetups_Dance_Pop_Club_Reggae:	# the setups of style "Club Reggae" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	360, 361, 362, 363, 0xffff
+StyleSetups_Dance_Pop_Disco_Craze:	# the setups of style "Disco Craze" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	912, 913, 914, 915, 0xffff
+StyleSetups_Dance_Pop_Caribbean_Sun:	# the setups of style "Caribbean Sun" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	968, 969, 970, 971, 0xffff
+StyleSetups_Soul_Gospel_Slowest_Ballads:	# the setups of style "Slowest Ballads" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	112, 113, 114, 115, 0xffff
+StyleSetups_Soul_Gospel_80_s_Glam_Soul:	# the setups of style "80's Glam Soul" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	232, 233, 234, 235, 0xffff
+StyleSetups_Soul_Gospel_Cool_Groovy:	# the setups of style "Cool & Groovy" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	236, 237, 238, 239, 0xffff
+StyleSetups_Soul_Gospel_70_s_Detroit_Pop:	# the setups of style "70's Detroit Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	240, 241, 242, 243, 0xffff
+StyleSetups_Soul_Gospel_Soul_Club:	# the setups of style "Soul Club" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	248, 249, 250, 251, 0xffff
+StyleSetups_Soul_Gospel_Funky_R_B:	# the setups of style "Funky R&B" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	260, 261, 262, 263, 0xffff
+StyleSetups_Soul_Gospel_Soul_Machine:	# the setups of style "Soul Machine" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	272, 273, 274, 275, 0xffff
+StyleSetups_Soul_Gospel_Soul_Groove:	# the setups of style "Soul Groove" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	276, 277, 278, 279, 0xffff
+StyleSetups_Soul_Gospel_Pop_Soul:	# the setups of style "Pop Soul" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	280, 281, 282, 283, 0xffff
+StyleSetups_Soul_Gospel_Soul_Jazz:	# the setups of style "Soul Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	288, 289, 290, 291, 0xffff
+StyleSetups_Soul_Gospel_Sweet_Soul_Music:	# the setups of style "Sweet Soul Music" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	292, 293, 294, 295, 0xffff
+StyleSetups_Soul_Gospel_Pop_Spiritual:	# the setups of style "Pop Spiritual" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	364, 365, 366, 367, 0xffff
+StyleSetups_Soul_Gospel_70_s_Revival:	# the setups of style "70's Revival" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	368, 369, 370, 371, 0xffff
+StyleSetups_Soul_Gospel_Sunday_Morning:	# the setups of style "Sunday Morning" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	372, 373, 374, 375, 0xffff
+StyleSetups_Soul_Gospel_Sing_To_The_Lord:	# the setups of style "Sing To The Lord" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	376, 377, 378, 379, 0xffff
+StyleSetups_Soul_Gospel_Gospel_Service:	# the setups of style "Gospel Service" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	380, 381, 382, 383, 0xffff
+StyleSetups_Soul_Gospel_Waltzing_Church:	# the setups of style "Waltzing Church" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	384, 385, 386, 387, 0xffff
+StyleSetups_Soul_Gospel_Cool_R_B:	# the setups of style "Cool R&B" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	896, 897, 898, 899, 0xffff
+StyleSetups_Soul_Gospel_Smooth_Jazz_6000:	# the setups of style "Smooth Jazz 6000" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	900, 901, 902, 903, 0xffff
+StyleSetups_Soul_Gospel_Melodic_Soul:	# the setups of style "Melodic Soul" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	904, 905, 906, 907, 0xffff
+StyleSetups_Soul_Gospel_Funky_Soul:	# the setups of style "Funky Soul" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	908, 909, 910, 911, 0xffff
+StyleSetups_Soul_Gospel_Gospel_Band:	# the setups of style "Gospel Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	916, 917, 918, 919, 0xffff
+StyleSetups_Jazz_Swing_Tower_Of_Jazz:	# the setups of style "Tower Of Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	256, 257, 258, 259, 0xffff
+StyleSetups_Jazz_Swing_West_Coast_Jazz:	# the setups of style "West Coast Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	284, 285, 286, 287, 0xffff
+StyleSetups_Jazz_Swing_Old_Time_Jazz:	# the setups of style "Old Time Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	388, 389, 390, 391, 0xffff
+StyleSetups_Jazz_Swing_Jazz_Show_Time:	# the setups of style "Jazz Show Time" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	448, 449, 450, 451, 0xffff
+StyleSetups_Jazz_Swing_The_Big_Band_Era:	# the setups of style "The Big Band Era" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	452, 453, 454, 455, 0xffff
+StyleSetups_Jazz_Swing_Slow_Big_Band:	# the setups of style "Slow Big Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	456, 457, 458, 459, 0xffff
+StyleSetups_Jazz_Swing_Midnight_BigBand:	# the setups of style "Midnight BigBand" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	460, 461, 462, 463, 0xffff
+StyleSetups_Jazz_Swing_Dance_Band_Years:	# the setups of style "Dance Band Years" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	464, 465, 466, 467, 0xffff
+StyleSetups_Jazz_Swing_Vegas_Cabaret:	# the setups of style "Vegas Cabaret" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	468, 469, 470, 471, 0xffff
+StyleSetups_Jazz_Swing_Cool_Swing:	# the setups of style "Cool Swing" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	472, 473, 474, 475, 0xffff
+StyleSetups_Jazz_Swing_Swing_Ballad:	# the setups of style "Swing Ballad" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	476, 477, 478, 479, 0xffff
+StyleSetups_Jazz_Swing_Sweet_Swingy:	# the setups of style "Sweet & Swingy" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	480, 481, 482, 483, 0xffff
+StyleSetups_Jazz_Swing_Jazz_Club:	# the setups of style "Jazz Club" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	484, 485, 486, 487, 0xffff
+StyleSetups_Jazz_Swing_Dance_Band_Era:	# the setups of style "Dance Band Era" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	488, 489, 490, 491, 0xffff
+StyleSetups_Jazz_Swing_Romantic_Dance:	# the setups of style "Romantic Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	492, 493, 494, 495, 0xffff
+StyleSetups_Jazz_Swing_Jazz_Session:	# the setups of style "Jazz Session" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	496, 497, 498, 499, 0xffff
+StyleSetups_Jazz_Swing_Smooth_Jazz:	# the setups of style "Smooth Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	500, 501, 502, 503, 0xffff
+StyleSetups_Jazz_Swing_Steady_Swing:	# the setups of style "Steady Swing" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	504, 505, 506, 507, 0xffff
+StyleSetups_Jazz_Swing_Combo_Legend:	# the setups of style "Combo Legend" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	508, 509, 510, 511, 0xffff
+StyleSetups_Jazz_Swing_Lounge_Act:	# the setups of style "Lounge Act" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	512, 513, 514, 515, 0xffff
+StyleSetups_Jazz_Swing_Vocalising_Jazz:	# the setups of style "Vocalising Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	516, 517, 518, 519, 0xffff
+StyleSetups_Jazz_Swing_Funk_Vocals:	# the setups of style "Funk Vocals" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	524, 525, 526, 527, 0xffff
+StyleSetups_Jazz_Swing_Modern_Groove:	# the setups of style "Modern Groove" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	528, 529, 530, 531, 0xffff
+StyleSetups_Jazz_Swing_Slow_Jazz_Groove:	# the setups of style "Slow Jazz Groove" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	532, 533, 534, 535, 0xffff
+StyleSetups_Jazz_Swing_Paris_Jazz:	# the setups of style "Paris Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	536, 537, 538, 539, 0xffff
+StyleSetups_Jazz_Swing_8_In_A_Bar_Jazz:	# the setups of style "8 In A Bar Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	540, 541, 542, 543, 0xffff
+StyleSetups_Jazz_Swing_Groovy_Jazz:	# the setups of style "Groovy Jazz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	544, 545, 546, 547, 0xffff
+StyleSetups_Jazz_Swing_Jazzy_Accordions:	# the setups of style "Jazzy Accordions" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	548, 549, 550, 551, 0xffff
+StyleSetups_Jazz_Swing_Saloon_Combo:	# the setups of style "Saloon Combo" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	552, 553, 554, 555, 0xffff
+StyleSetups_Jazz_Swing_Club_Band:	# the setups of style "Club Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	556, 557, 558, 559, 0xffff
+StyleSetups_Jazz_Swing_Starry_Eyed:	# the setups of style "Starry Eyed" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	628, 629, 630, 631, 0xffff
+StyleSetups_Jazz_Swing_Slow_Show_Band:	# the setups of style "Slow Show Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	924, 925, 926, 927, 0xffff
+StyleSetups_Jazz_Swing_Boogie_Band:	# the setups of style "Boogie Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	928, 929, 930, 931, 0xffff
+StyleSetups_Jazz_Swing_Quintet_Band:	# the setups of style "Quintet Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	932, 933, 934, 935, 0xffff
+StyleSetups_Trad_Folk_Island_Romance:	# the setups of style "Island Romance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	392, 393, 394, 395, 0xffff
+StyleSetups_Trad_Folk_Waikiki_Dance:	# the setups of style "Waikiki Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	396, 397, 398, 399, 0xffff
+StyleSetups_Trad_Folk_French_American:	# the setups of style "French American" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	428, 429, 430, 431, 0xffff
+StyleSetups_Trad_Folk_Marching_Band:	# the setups of style "Marching Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	560, 561, 562, 563, 0xffff
+StyleSetups_Trad_Folk_Stadium_Events:	# the setups of style "Stadium Events" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	564, 565, 566, 567, 0xffff
+StyleSetups_Trad_Folk_OktoberFest:	# the setups of style "OktoberFest" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	568, 569, 570, 571, 0xffff
+StyleSetups_Trad_Folk_Mountain_Music:	# the setups of style "Mountain Music" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	572, 573, 574, 575, 0xffff
+StyleSetups_Trad_Folk_Zillertal:	# the setups of style "Zillertal" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	576, 577, 578, 579, 0xffff
+StyleSetups_Trad_Folk_French_Chanson:	# the setups of style "French Chanson" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	584, 585, 586, 587, 0xffff
+StyleSetups_Trad_Folk_Parisian_Dance:	# the setups of style "Parisian Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	588, 589, 590, 591, 0xffff
+StyleSetups_Trad_Folk_Bier_Hall:	# the setups of style "Bier Hall" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	592, 593, 594, 595, 0xffff
+StyleSetups_Trad_Folk_Vienna_Dance:	# the setups of style "Vienna Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	596, 597, 598, 599, 0xffff
+StyleSetups_Trad_Folk_Gypsy_Party:	# the setups of style "Gypsy Party" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	756, 757, 758, 759, 0xffff
+StyleSetups_Trad_Folk_Ceilidh_Band:	# the setups of style "Ceilidh Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	760, 761, 762, 763, 0xffff
+StyleSetups_Trad_Folk_Italian_Nights:	# the setups of style "Italian Nights" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	764, 765, 766, 767, 0xffff
+StyleSetups_Trad_Folk_Greek_Dance:	# the setups of style "Greek Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	776, 777, 778, 779, 0xffff
+StyleSetups_Trad_Folk_Folk_Players:	# the setups of style "Folk Players" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	808, 809, 810, 811, 0xffff
+StyleSetups_Trad_Folk_Northern_Polka:	# the setups of style "Northern Polka" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	936, 937, 938, 939, 0xffff
+StyleSetups_Country_Bluegrass_Dance:	# the setups of style "Bluegrass Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	400, 401, 402, 403, 0xffff
+StyleSetups_Country_Bluegrass_City:	# the setups of style "Bluegrass City" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	404, 405, 406, 407, 0xffff
+StyleSetups_Country_Barn_Dance:	# the setups of style "Barn Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	408, 409, 410, 411, 0xffff
+StyleSetups_Country_Country_Dance:	# the setups of style "Country Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	412, 413, 414, 415, 0xffff
+StyleSetups_Country_Country_Romance:	# the setups of style "Country Romance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	416, 417, 418, 419, 0xffff
+StyleSetups_Country_Modern_Country:	# the setups of style "Modern Country" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	420, 421, 422, 423, 0xffff
+StyleSetups_Country_Old_Country_Hit:	# the setups of style "Old Country Hit" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	424, 425, 426, 427, 0xffff
+StyleSetups_Country_Southern_Shuffle:	# the setups of style "Southern Shuffle" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	432, 433, 434, 435, 0xffff
+StyleSetups_Country_Guitar_Country:	# the setups of style "Guitar Country" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	436, 437, 438, 439, 0xffff
+StyleSetups_Country_Easy_Country:	# the setups of style "Easy Country" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	440, 441, 442, 443, 0xffff
+StyleSetups_Country_Country_Dream:	# the setups of style "Country Dream" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	444, 445, 446, 447, 0xffff
+StyleSetups_Country_SlowCountryDance:	# the setups of style "SlowCountryDance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	920, 921, 922, 923, 0xffff
+StyleSetups_Show_Ballroom_Ballroom_Waltz:	# the setups of style "Ballroom Waltz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	580, 581, 582, 583, 0xffff
+StyleSetups_Show_Ballroom_Slow_Latin_Dance:	# the setups of style "Slow Latin Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	600, 601, 602, 603, 0xffff
+StyleSetups_Show_Ballroom_60_s_Foxtrot:	# the setups of style "60's Foxtrot" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	608, 609, 610, 611, 0xffff
+StyleSetups_Show_Ballroom_Ribbon_Foxtrot:	# the setups of style "Ribbon Foxtrot" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	612, 613, 614, 615, 0xffff
+StyleSetups_Show_Ballroom_Swinging_Bert:	# the setups of style "Swinging Bert" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	616, 617, 618, 619, 0xffff
+StyleSetups_Show_Ballroom_Show_Overture:	# the setups of style "Show Overture" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	620, 621, 622, 623, 0xffff
+StyleSetups_Show_Ballroom_It_s_Show_Time:	# the setups of style "It's Show Time" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	632, 633, 634, 635, 0xffff
+StyleSetups_Show_Ballroom_Show_Tunes:	# the setups of style "Show Tunes" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	636, 637, 638, 639, 0xffff
+StyleSetups_Show_Ballroom_Dinner_Dance:	# the setups of style "Dinner Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	640, 641, 642, 643, 0xffff
+StyleSetups_Show_Ballroom_Ballroom_Dance:	# the setups of style "Ballroom Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	644, 645, 646, 647, 0xffff
+StyleSetups_Show_Ballroom_50_s_Dance_Craze:	# the setups of style "50's Dance Craze" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	648, 649, 650, 651, 0xffff
+StyleSetups_Show_Ballroom_Euro_Tango:	# the setups of style "Euro Tango" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	656, 657, 658, 659, 0xffff
+StyleSetups_Show_Ballroom_Showmanship:	# the setups of style "Showmanship" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	660, 661, 662, 663, 0xffff
+StyleSetups_Show_Ballroom_Slow_Waltzing:	# the setups of style "Slow Waltzing" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	668, 669, 670, 671, 0xffff
+StyleSetups_Show_Ballroom_Vienna_Ballroom:	# the setups of style "Vienna Ballroom" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	672, 673, 674, 675, 0xffff
+StyleSetups_Show_Ballroom_German_Foxtrot:	# the setups of style "German Foxtrot" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	948, 949, 950, 951, 0xffff
+StyleSetups_Show_Ballroom_European_Foxtrot:	# the setups of style "European Foxtrot" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	952, 953, 954, 955, 0xffff
+StyleSetups_Show_Ballroom_English_Waltz:	# the setups of style "English Waltz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	960, 961, 962, 963, 0xffff
+StyleSetups_Latin_World_Uptown_Cha_Cha:	# the setups of style "Uptown Cha Cha" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	604, 605, 606, 607, 0xffff
+StyleSetups_Latin_World_Mambo_Dancing:	# the setups of style "Mambo Dancing" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	652, 653, 654, 655, 0xffff
+StyleSetups_Latin_World_Easy_Latin:	# the setups of style "Easy Latin" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	680, 681, 682, 683, 0xffff
+StyleSetups_Latin_World_Gentle_Bossa:	# the setups of style "Gentle Bossa" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	684, 685, 686, 687, 0xffff
+StyleSetups_Latin_World_Beguine_Ensemble:	# the setups of style "Beguine Ensemble" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	688, 689, 690, 691, 0xffff
+StyleSetups_Latin_World_Cha_Cha_Band:	# the setups of style "Cha Cha Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	692, 693, 694, 695, 0xffff
+StyleSetups_Latin_World_Latin_Tango:	# the setups of style "Latin Tango" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	696, 697, 698, 699, 0xffff
+StyleSetups_Latin_World_Samba_De_Rio:	# the setups of style "Samba De Rio" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	700, 701, 702, 703, 0xffff
+StyleSetups_Latin_World_Ballroom_Samba:	# the setups of style "Ballroom Samba" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	704, 705, 706, 707, 0xffff
+StyleSetups_Latin_World_NYC_Latin_Club:	# the setups of style "NYC Latin Club" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	708, 709, 710, 711, 0xffff
+StyleSetups_Latin_World_Cuban_Night_Club:	# the setups of style "Cuban Night Club" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	712, 713, 714, 715, 0xffff
+StyleSetups_Latin_World_U_S_Latino_Pop:	# the setups of style "U.S.Latino Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	716, 717, 718, 719, 0xffff
+StyleSetups_Latin_World_Cut_Time_Bossa:	# the setups of style "Cut Time Bossa" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	720, 721, 722, 723, 0xffff
+StyleSetups_Latin_World_80_s_Latin_Hits:	# the setups of style "80's Latin Hits" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	724, 725, 726, 727, 0xffff
+StyleSetups_Latin_World_Bolero_Dance:	# the setups of style "Bolero Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	728, 729, 730, 731, 0xffff
+StyleSetups_Latin_World_Latin_Elegance:	# the setups of style "Latin Elegance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	732, 733, 734, 735, 0xffff
+StyleSetups_Latin_World_Cumbia_Band:	# the setups of style "Cumbia Band" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	736, 737, 738, 739, 0xffff
+StyleSetups_Latin_World_Dance_Lambada:	# the setups of style "Dance Lambada" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	740, 741, 742, 743, 0xffff
+StyleSetups_Latin_World_Special_Latin:	# the setups of style "Special Latin" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	744, 745, 746, 747, 0xffff
+StyleSetups_Latin_World_Calypso_Dance:	# the setups of style "Calypso Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	752, 753, 754, 755, 0xffff
+StyleSetups_Latin_World_Mexican_Sounds:	# the setups of style "Mexican Sounds" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	772, 773, 774, 775, 0xffff
+StyleSetups_Latin_World_Scottish_Dance:	# the setups of style "Scottish Dance" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	780, 781, 782, 783, 0xffff
+StyleSetups_Latin_World_Romantic_Waltz:	# the setups of style "Romantic Waltz" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	784, 785, 786, 787, 0xffff
+StyleSetups_Latin_World_Dangdut_Special:	# the setups of style "Dangdut Special" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	788, 789, 790, 791, 0xffff
+StyleSetups_Latin_World_Talempong_World:	# the setups of style "Talempong World" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	792, 793, 794, 795, 0xffff
+StyleSetups_Latin_World_Indonesian_Folk:	# the setups of style "Indonesian Folk" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	796, 797, 798, 799, 0xffff
+StyleSetups_Latin_World_Popular_Latin:	# the setups of style "Popular Latin" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	940, 941, 942, 943, 0xffff
+StyleSetups_Latin_World_Modern_Cha_Cha:	# the setups of style "Modern Cha Cha" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	944, 945, 946, 947, 0xffff
+StyleSetups_Latin_World_Modern_Latin_Pop:	# the setups of style "Modern Latin Pop" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	964, 965, 966, 967, 0xffff
+StyleSetups_Latin_World_Nights_In_Italy:	# the setups of style "Nights In Italy" (u16 MusicStylistSetup numbers: StyleRecordTable records), then 0xFFFF; StyleListBoxGetItem reads four
+	.word	972, 973, 974, 975, 0xffff
 
-StyleGenreTable_p4_p4_0:	# REC_StyleGenreTable_p4_p4 (180 bytes)
-	REC_StyleGenreTable_p4_p4	f0=112, x2="q\x00r\x00", f6=115, x8="\xFF\xFF\xE8\x00\xE9\x00\xEA\x00\xEB\x00\xFF\xFF\xEC\x00\xED\x00\xEE\x00\xEF\x00\xFF\xFF\xF0\x00\xF1\x00\xF2\x00\xF3\x00\xFF\xFF\xF8\x00\xF9\x00\xFA\x00\xFB\x00\xFF\xFF\x04\x01\x05\x01\x06\x01\x07\x01\xFF\xFF\x10\x01\x11\x01\x12\x01\x13\x01\xFF\xFF\x14\x01\x15\x01\x16\x01\x17\x01\xFF\xFF\x18\x01\x19\x01\x1A\x01\x1B\x01\xFF\xFF \x01!\x01\"\x01#\x01\xFF\xFF$\x01%\x01&\x01'\x01\xFF\xFFl\x01m\x01n\x01o\x01\xFF\xFFp\x01q\x01r\x01s\x01\xFF\xFFt\x01u\x01v\x01w\x01\xFF\xFFx\x01y\x01z\x01{\x01\xFF\xFF|\x01}\x01~\x01\x7F\x01\xFF\xFF\x80\x01\x81\x01\x82\x01\x83\x01\xFF\xFF\x80\x03\x81\x03\x82\x03\x83\x03\xFF\xFF"
-data_4C3DDC14:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDC14, 0x3DDC1E
-data_4C3DDC1E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDC1E, 0x3DDC28
-data_4C3DDC28:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDC28, 0x3DDC32
-data_4C3DDC32:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDC32, 0x3DDC3C
-StyleGenreTable_p4_p4_1:	# REC_StyleGenreTable_p4_p4 (180 bytes)
-	REC_StyleGenreTable_p4_p4	f0=256, x2="\x01\x01\x02\x01", f6=259, x8="\xFF\xFF\x1C\x01\x1D\x01\x1E\x01\x1F\x01\xFF\xFF\x84\x01\x85\x01\x86\x01\x87\x01\xFF\xFF\xC0\x01\xC1\x01\xC2\x01\xC3\x01\xFF\xFF\xC4\x01\xC5\x01\xC6\x01\xC7\x01\xFF\xFF\xC8\x01\xC9\x01\xCA\x01\xCB\x01\xFF\xFF\xCC\x01\xCD\x01\xCE\x01\xCF\x01\xFF\xFF\xD0\x01\xD1\x01\xD2\x01\xD3\x01\xFF\xFF\xD4\x01\xD5\x01\xD6\x01\xD7\x01\xFF\xFF\xD8\x01\xD9\x01\xDA\x01\xDB\x01\xFF\xFF\xDC\x01\xDD\x01\xDE\x01\xDF\x01\xFF\xFF\xE0\x01\xE1\x01\xE2\x01\xE3\x01\xFF\xFF\xE4\x01\xE5\x01\xE6\x01\xE7\x01\xFF\xFF\xE8\x01\xE9\x01\xEA\x01\xEB\x01\xFF\xFF\xEC\x01\xED\x01\xEE\x01\xEF\x01\xFF\xFF\xF0\x01\xF1\x01\xF2\x01\xF3\x01\xFF\xFF\xF4\x01\xF5\x01\xF6\x01\xF7\x01\xFF\xFF\xF8\x01\xF9\x01\xFA\x01\xFB\x01\xFF\xFF"
-data_4C3DDCF0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDCF0, 0x3DDCFA
-data_4C3DDCFA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDCFA, 0x3DDD04
-data_4C3DDD04:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDD04, 0x3DDD0E
-data_4C3DDD0E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDD0E, 0x3DDD18
-data_4C3DDD18:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDD18, 0x3DDD22
-data_4C3DDD22:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDD22, 0x3DDD2C
-data_4C3DDD2C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDD2C, 0x3DDD36
-data_4C3DDD36:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDD36, 0x3DDD40
-data_4C3DDD40:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDD40, 0x3DDD4A
-data_4C3DDD4A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDD4A, 0x3DDD54
-data_4C3DDD54:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDD54, 0x3DDD5E
-data_4C3DDD5E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDD5E, 0x3DDD68
-data_4C3DDD68:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDD68, 0x3DDD72
-data_4C3DDD72:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDD72, 0x3DDD7C
-data_4C3DDD7C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDD7C, 0x3DDD86
-data_4C3DDD86:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDD86, 0x3DDD90
-StyleGenreTable_p4_p4_2:	# REC_StyleGenreTable_p4_p4 (180 bytes)
-	REC_StyleGenreTable_p4_p4	f0=392, x2="\x89\x01\x8A\x01", f6=395, x8="\xFF\xFF\x8C\x01\x8D\x01\x8E\x01\x8F\x01\xFF\xFF\xAC\x01\xAD\x01\xAE\x01\xAF\x01\xFF\xFF0\x021\x022\x023\x02\xFF\xFF4\x025\x026\x027\x02\xFF\xFF8\x029\x02:\x02;\x02\xFF\xFF<\x02=\x02>\x02?\x02\xFF\xFF@\x02A\x02B\x02C\x02\xFF\xFFH\x02I\x02J\x02K\x02\xFF\xFFL\x02M\x02N\x02O\x02\xFF\xFFP\x02Q\x02R\x02S\x02\xFF\xFFT\x02U\x02V\x02W\x02\xFF\xFF\xF4\x02\xF5\x02\xF6\x02\xF7\x02\xFF\xFF\xF8\x02\xF9\x02\xFA\x02\xFB\x02\xFF\xFF\xFC\x02\xFD\x02\xFE\x02\xFF\x02\xFF\xFF\x08\x03\x09\x03\n\x03\x0B\x03\xFF\xFF(\x03)\x03*\x03+\x03\xFF\xFF\xA8\x03\xA9\x03\xAA\x03\xAB\x03\xFF\xFF"
-data_4C3DDE44:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDE44, 0x3DDE4E
-data_4C3DDE4E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDE4E, 0x3DDE58
-data_4C3DDE58:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDE58, 0x3DDE62
-data_4C3DDE62:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDE62, 0x3DDE6C
-data_4C3DDE6C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDE6C, 0x3DDE76
-data_4C3DDE76:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDE76, 0x3DDE80
-data_4C3DDE80:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDE80, 0x3DDE8A
-data_4C3DDE8A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDE8A, 0x3DDE94
-data_4C3DDE94:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDE94, 0x3DDE9E
-data_4C3DDE9E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDE9E, 0x3DDEA8
-data_4C3DDEA8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDEA8, 0x3DDEB2
-data_4C3DDEB2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDEB2, 0x3DDEBC
-StyleGenreTable_p4_p4_3:	# REC_StyleGenreTable_p4_p4 (180 bytes)
-	REC_StyleGenreTable_p4_p4	f0=580, x2="E\x02F\x02", f6=583, x8="\xFF\xFFX\x02Y\x02Z\x02[\x02\xFF\xFF`\x02a\x02b\x02c\x02\xFF\xFFd\x02e\x02f\x02g\x02\xFF\xFFh\x02i\x02j\x02k\x02\xFF\xFFl\x02m\x02n\x02o\x02\xFF\xFFx\x02y\x02z\x02{\x02\xFF\xFF|\x02}\x02~\x02\x7F\x02\xFF\xFF\x80\x02\x81\x02\x82\x02\x83\x02\xFF\xFF\x84\x02\x85\x02\x86\x02\x87\x02\xFF\xFF\x88\x02\x89\x02\x8A\x02\x8B\x02\xFF\xFF\x90\x02\x91\x02\x92\x02\x93\x02\xFF\xFF\x94\x02\x95\x02\x96\x02\x97\x02\xFF\xFF\x9C\x02\x9D\x02\x9E\x02\x9F\x02\xFF\xFF\xA0\x02\xA1\x02\xA2\x02\xA3\x02\xFF\xFF\xB4\x03\xB5\x03\xB6\x03\xB7\x03\xFF\xFF\xB8\x03\xB9\x03\xBA\x03\xBB\x03\xFF\xFF\xC0\x03\xC1\x03\xC2\x03\xC3\x03\xFF\xFF"
-StyleGenreTable_p4_p4_4:	# REC_StyleGenreTable_p4_p4 (180 bytes)
-	REC_StyleGenreTable_p4_p4	f0=604, x2="]\x02^\x02", f6=607, x8="\xFF\xFF\x8C\x02\x8D\x02\x8E\x02\x8F\x02\xFF\xFF\xA8\x02\xA9\x02\xAA\x02\xAB\x02\xFF\xFF\xAC\x02\xAD\x02\xAE\x02\xAF\x02\xFF\xFF\xB0\x02\xB1\x02\xB2\x02\xB3\x02\xFF\xFF\xB4\x02\xB5\x02\xB6\x02\xB7\x02\xFF\xFF\xB8\x02\xB9\x02\xBA\x02\xBB\x02\xFF\xFF\xBC\x02\xBD\x02\xBE\x02\xBF\x02\xFF\xFF\xC0\x02\xC1\x02\xC2\x02\xC3\x02\xFF\xFF\xC4\x02\xC5\x02\xC6\x02\xC7\x02\xFF\xFF\xC8\x02\xC9\x02\xCA\x02\xCB\x02\xFF\xFF\xCC\x02\xCD\x02\xCE\x02\xCF\x02\xFF\xFF\xD0\x02\xD1\x02\xD2\x02\xD3\x02\xFF\xFF\xD4\x02\xD5\x02\xD6\x02\xD7\x02\xFF\xFF\xD8\x02\xD9\x02\xDA\x02\xDB\x02\xFF\xFF\xDC\x02\xDD\x02\xDE\x02\xDF\x02\xFF\xFF\xE0\x02\xE1\x02\xE2\x02\xE3\x02\xFF\xFF\xE4\x02\xE5\x02\xE6\x02\xE7\x02\xFF\xFF"
-data_4C3DE024:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DE024, 0x3DE02E
-data_4C3DE02E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DE02E, 0x3DE038
-data_4C3DE038:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DE038, 0x3DE042
-data_4C3DE042:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DE042, 0x3DE04C
-data_4C3DE04C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DE04C, 0x3DE056
-data_4C3DE056:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DE056, 0x3DE060
-data_4C3DE060:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DE060, 0x3DE06A
-data_4C3DE06A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DE06A, 0x3DE074
-data_4C3DE074:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DE074, 0x3DE07E
-data_4C3DE07E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DE07E, 0x3DE088
-data_4C3DE088:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DE088, 0x3DE092
-data_4C3DE092:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DE092, 0x3DE09C
-
-ptrs_4C3DE09C:
-	.long	Text_Italian_Pop
-	.long	func_4C16B39F_entry_L43_Table+2000
-	.long	Text_Italian_Pop+17
-	.long	data_4C3DD6E2
-	.long	Text_Italian_Pop+34
-	.long	data_4C3DD6EC
-	.long	Text_Italian_Pop+51
-	.long	data_4C3DD6F6
-	.long	Text_Italian_Pop+68
-	.long	data_4C3DD700
-	.long	Text_Italian_Pop+85
-	.long	data_4C3DD70A
-	.long	Text_Italian_Pop+102
-	.long	Str_empty_264
-	.long	Text_Italian_Pop+119
-	.long	Str_empty_263
-	.long	Text_Italian_Pop+136
-	.long	Str_empty_262
-	.long	Text_Italian_Pop+153
-	.long	Str_0_15
-	.long	Text_Italian_Pop+170
-	.long	Str_empty_261
-	.long	Text_Italian_Pop+187
-	.long	Str_L
-	.long	Text_Italian_Pop+204
-	.long	Str_P
-	.long	Text_Italian_Pop+221
-	.long	Str_empty_260
-	.long	Text_Italian_Pop+238
-	.long	Str_h
-	.long	Text_Italian_Pop+255
-	.long	Str_x
-	.long	Text_Italian_Pop+272
-	.long	Str_empty_259
-	.long	Text_Italian_Pop+289
-	.long	data_4C3DD782
-	.long	Text_Italian_Pop+306
-	.long	data_4C3DD78C
-	.long	Text_Italian_Pop+323
-	.long	data_4C3DD796
-	.long	Text_Italian_Pop+340
-	.long	data_4C3DD7A0
-	.long	Text_Italian_Pop+357
-	.long	data_4C3DD7AA
-	.long	Text_Italian_Pop+374
-	.long	data_4C3DD7B4
-	.long	Text_Italian_Pop+391
-	.long	data_4C3DD7BE
-	.long	Text_Italian_Pop+408
-	.long	data_4C3DD7C8
-	.long	Text_Italian_Pop+425
-	.long	data_4C3DD7D2
-	.long	Text_Italian_Pop+442
-	.long	data_4C3DD7DC
-	.long	Text_Italian_Pop+459
-	.long	data_4C3DD7E6
-	.long	Text_Italian_Pop+476
-	.long	data_4C3DD7F0
-	.long	Text_Italian_Pop+493
-	.long	data_4C3DD7FA
-	.long	Text_Italian_Pop+510
-	.long	data_4C3DD804
-	.long	Text_Italian_Pop+527
-	.long	data_4C3DD80E
-	.long	Text_Italian_Pop+544
-	.long	data_4C3DD818
-	.long	Text_Italian_Pop+561
-	.long	data_4C3DD822
-	.long	Text_Italian_Pop+578
-	.long	data_4C3DD82C
-	.long	Text_Italian_Pop+595
-	.long	data_4C3DD836
-	.long	Text_Italian_Pop+612
-	.long	data_4C3DD840
-	.long	Text_Italian_Pop+629
-	.long	data_4C3DD84A
-	.long	Text_Italian_Pop+646
-	.long	data_4C3DD854
-	.long	Text_Italian_Pop+663
-	.long	data_4C3DD85E
-	.long	Text_Italian_Pop+680
-	.long	data_4C3DD868
-	.long	Text_Italian_Pop+697
-	.long	data_4C3DD872
-	.long	Text_Italian_Pop+714
-	.long	data_4C3DD87C
-	.long	Text_Italian_Pop+731
-	.long	data_4C3DD886
-	.long	Text_Italian_Pop+748
-	.long	data_4C3DD890
-	.long	Text_Italian_Pop+765
-	.long	data_4C3DD89A
-	.long	Text_Italian_Pop+782
-	.long	data_4C3DD8A4
-	.long	Text_Italian_Pop+799
-	.long	data_4C3DD8AE
-	.long	Text_Italian_Pop+816
-	.long	data_4C3DD8B8
-	.long	Text_Italian_Pop+833
-	.long	data_4C3DD8C2
-	.long	Text_Italian_Pop+850
-	.long	data_4C3DD8CC
-	.long	Text_Italian_Pop+867
-	.long	data_4C3DD8D6
-	.long	0
-	.space	4, 0x00
-ptrs_4C3DE244:
-	.long	Text_Italian_Pop+884
-	.long	data_4C3DD8E0
-	.long	Text_Italian_Pop+901
-	.long	data_4C3DD8EA
-	.long	Text_Italian_Pop+918
-	.long	Str_empty_258
-	.long	Text_Italian_Pop+935
-	.long	Str_X
-	.long	Text_Italian_Pop+952
-	.long	Str_empty_257
-	.long	Text_Italian_Pop+969
-	.long	Str_d_3
-	.long	Text_Italian_Pop+986
-	.long	Str_l
-	.long	Text_Italian_Pop+1003
-	.long	Str_t
-	.long	Text_Italian_Pop+1020
-	.long	data_4C3DD930
-	.long	Text_Italian_Pop+1037
-	.long	data_4C3DD93A
-	.long	Text_Italian_Pop+1054
-	.long	data_4C3DD944
-	.long	Text_Italian_Pop+1071
-	.long	data_4C3DD94E
-	.long	Text_Italian_Pop+1088
-	.long	data_4C3DD958
-	.long	Text_Italian_Pop+1105
-	.long	data_4C3DD962
-	.long	Text_Italian_Pop+1122
-	.long	data_4C3DD96C
-	.long	Text_Italian_Pop+1139
-	.long	data_4C3DD976
-	.long	Text_Italian_Pop+1156
-	.long	data_4C3DD980
-	.long	Text_Italian_Pop+1173
-	.long	data_4C3DD98A
-	.long	Text_Italian_Pop+1190
-	.long	data_4C3DD994
-	.long	Text_Italian_Pop+1207
-	.long	data_4C3DD99E
-	.long	Text_Italian_Pop+1224
-	.long	data_4C3DD9A8
-	.long	Text_Italian_Pop+1241
-	.long	data_4C3DD9B2
-	.long	Text_Italian_Pop+1258
-	.long	data_4C3DD9BC
-	.long	Text_Italian_Pop+1275
-	.long	data_4C3DD9C6
-	.long	Text_Italian_Pop+1292
-	.long	data_4C3DD9D0
-	.long	Text_Italian_Pop+1309
-	.long	data_4C3DD9DA
-	.long	Text_Italian_Pop+1326
-	.long	data_4C3DD9E4
-	.long	Text_Italian_Pop+1343
-	.long	data_4C3DD9EE
-	.long	0
-	.space	4, 0x00
-ptrs_4C3DE32C:
-	.long	Text_Italian_Pop+1360
-	.long	data_4C3DD9F8
-	.long	Text_Italian_Pop+1377
-	.long	Str_8_11
-	.long	Text_Italian_Pop+1394
-	.long	Str_H
-	.long	Text_Italian_Pop+1411
-	.long	Str_T
-	.long	Text_Italian_Pop+1428
-	.long	data_4C3DDA20
-	.long	Text_Italian_Pop+1445
-	.long	data_4C3DDA2A
-	.long	Text_Italian_Pop+1462
-	.long	data_4C3DDA34
-	.long	Text_Italian_Pop+1479
-	.long	data_4C3DDA3E
-	.long	Text_Italian_Pop+1496
-	.long	data_4C3DDA48
-	.long	Text_Italian_Pop+1513
-	.long	data_4C3DDA52
-	.long	Text_Italian_Pop+1530
-	.long	data_4C3DDA5C
-	.long	Text_Italian_Pop+1547
-	.long	data_4C3DDA66
-	.long	Text_Italian_Pop+1564
-	.long	data_4C3DDA70
-	.long	Text_Italian_Pop+1581
-	.long	data_4C3DDA7A
-	.long	Text_Italian_Pop+1598
-	.long	data_4C3DDA84
-	.long	0
-	.space	4, 0x00
-ptrs_4C3DE3AC:
-	.long	Text_90_s_Boy_Groups
-	.long	data_4C3DDA8E
-	.long	Text_90_s_Boy_Groups+17
-	.long	Str_D_9
-	.long	Text_90_s_Boy_Groups+34
-	.long	data_4C3DDAA2
-	.long	Text_90_s_Boy_Groups+51
-	.long	data_4C3DDAAC
-	.long	Text_90_s_Boy_Groups+68
-	.long	data_4C3DDAB6
-	.long	Text_90_s_Boy_Groups+85
-	.long	data_4C3DDAC0
-	.long	Text_90_s_Boy_Groups+102
-	.long	data_4C3DDACA
-	.long	Text_90_s_Boy_Groups+119
-	.long	data_4C3DDAD4
-	.long	Text_90_s_Boy_Groups+136
-	.long	data_4C3DDADE
-	.long	Text_90_s_Boy_Groups+153
-	.long	data_4C3DDAE8
-	.long	Text_90_s_Boy_Groups+170
-	.long	data_4C3DDAF2
-	.long	Text_90_s_Boy_Groups+187
-	.long	data_4C3DDAFC
-	.long	Text_90_s_Boy_Groups+204
-	.long	data_4C3DDB06
-	.long	Text_90_s_Boy_Groups+221
-	.long	data_4C3DDB10
-	.long	Text_90_s_Boy_Groups+238
-	.long	data_4C3DDB1A
-	.long	Text_90_s_Boy_Groups+255
-	.long	data_4C3DDB24
-	.long	Text_90_s_Boy_Groups+272
-	.long	data_4C3DDB2E
-	.long	Text_90_s_Boy_Groups+289
-	.long	data_4C3DDB38
-	.long	Text_90_s_Boy_Groups+306
-	.long	data_4C3DDB42
-	.long	Text_90_s_Boy_Groups+323
-	.long	data_4C3DDB4C
-	.long	Text_90_s_Boy_Groups+340
-	.long	data_4C3DDB56
-	.long	0
-	.space	4, 0x00
-ptrs_4C3DE45C:
-	.long	Text_Slowest_Ballads
-	.long	StyleGenreTable_p4_p4_0
-	.long	Text_Slowest_Ballads+17
-	.long	StyleGenreTable_p4_p4_0+10
-	.long	Text_Slowest_Ballads+34
-	.long	StyleGenreTable_p4_p4_0+20
-	.long	Text_Slowest_Ballads+51
-	.long	StyleGenreTable_p4_p4_0+30
-	.long	Text_Slowest_Ballads+68
-	.long	StyleGenreTable_p4_p4_0+40
-	.long	Text_Slowest_Ballads+85
-	.long	StyleGenreTable_p4_p4_0+50
-	.long	Text_Slowest_Ballads+102
-	.long	StyleGenreTable_p4_p4_0+60
-	.long	Text_Slowest_Ballads+119
-	.long	StyleGenreTable_p4_p4_0+70
-	.long	Text_Slowest_Ballads+136
-	.long	StyleGenreTable_p4_p4_0+80
-	.long	Text_Slowest_Ballads+153
-	.long	StyleGenreTable_p4_p4_0+90
-	.long	Text_Slowest_Ballads+170
-	.long	StyleGenreTable_p4_p4_0+100
-	.long	Text_Slowest_Ballads+187
-	.long	StyleGenreTable_p4_p4_0+110
-	.long	Text_Slowest_Ballads+204
-	.long	StyleGenreTable_p4_p4_0+120
-	.long	Text_Slowest_Ballads+221
-	.long	StyleGenreTable_p4_p4_0+130
-	.long	Text_Slowest_Ballads+238
-	.long	StyleGenreTable_p4_p4_0+140
-	.long	Text_Slowest_Ballads+255
-	.long	StyleGenreTable_p4_p4_0+150
-	.long	Text_Slowest_Ballads+272
-	.long	StyleGenreTable_p4_p4_0+160
-	.long	Text_Slowest_Ballads+289
-	.long	StyleGenreTable_p4_p4_0+170
-	.long	Text_Slowest_Ballads+306
-	.long	data_4C3DDC14
-	.long	Text_Slowest_Ballads+323
-	.long	data_4C3DDC1E
-	.long	Text_Slowest_Ballads+340
-	.long	data_4C3DDC28
-	.long	Text_Slowest_Ballads+357
-	.long	data_4C3DDC32
-	.long	0
-	.space	4, 0x00
-ptrs_4C3DE514:
-	.long	Text_Tower_Of_Jazz
-	.long	StyleGenreTable_p4_p4_1
-	.long	Text_Tower_Of_Jazz+17
-	.long	StyleGenreTable_p4_p4_1+10
-	.long	Text_Tower_Of_Jazz+34
-	.long	StyleGenreTable_p4_p4_1+20
-	.long	Text_Tower_Of_Jazz+51
-	.long	StyleGenreTable_p4_p4_1+30
-	.long	Text_Tower_Of_Jazz+68
-	.long	StyleGenreTable_p4_p4_1+40
-	.long	Text_Tower_Of_Jazz+85
-	.long	StyleGenreTable_p4_p4_1+50
-	.long	Text_Tower_Of_Jazz+102
-	.long	StyleGenreTable_p4_p4_1+60
-	.long	Text_Tower_Of_Jazz+119
-	.long	StyleGenreTable_p4_p4_1+70
-	.long	Text_Tower_Of_Jazz+136
-	.long	StyleGenreTable_p4_p4_1+80
-	.long	Text_Tower_Of_Jazz+153
-	.long	StyleGenreTable_p4_p4_1+90
-	.long	Text_Tower_Of_Jazz+170
-	.long	StyleGenreTable_p4_p4_1+100
-	.long	Text_Tower_Of_Jazz+187
-	.long	StyleGenreTable_p4_p4_1+110
-	.long	Text_Tower_Of_Jazz+204
-	.long	StyleGenreTable_p4_p4_1+120
-	.long	Text_Tower_Of_Jazz+221
-	.long	StyleGenreTable_p4_p4_1+130
-	.long	Text_Tower_Of_Jazz+238
-	.long	StyleGenreTable_p4_p4_1+140
-	.long	Text_Tower_Of_Jazz+255
-	.long	StyleGenreTable_p4_p4_1+150
-	.long	Text_Tower_Of_Jazz+272
-	.long	StyleGenreTable_p4_p4_1+160
-	.long	Text_Tower_Of_Jazz+289
-	.long	StyleGenreTable_p4_p4_1+170
-	.long	Text_Tower_Of_Jazz+306
-	.long	data_4C3DDCF0
-	.long	Text_Tower_Of_Jazz+323
-	.long	data_4C3DDCFA
-	.long	Text_Tower_Of_Jazz+340
-	.long	data_4C3DDD04
-	.long	Text_Tower_Of_Jazz+357
-	.long	data_4C3DDD0E
-	.long	Text_Tower_Of_Jazz+374
-	.long	data_4C3DDD18
-	.long	Text_Tower_Of_Jazz+391
-	.long	data_4C3DDD22
-	.long	Text_Tower_Of_Jazz+408
-	.long	data_4C3DDD2C
-	.long	Text_Tower_Of_Jazz+425
-	.long	data_4C3DDD36
-	.long	Text_Tower_Of_Jazz+442
-	.long	data_4C3DDD40
-	.long	Text_Tower_Of_Jazz+459
-	.long	data_4C3DDD4A
-	.long	Text_Tower_Of_Jazz+476
-	.long	data_4C3DDD54
-	.long	Text_Tower_Of_Jazz+493
-	.long	data_4C3DDD5E
-	.long	Text_Tower_Of_Jazz+510
-	.long	data_4C3DDD68
-	.long	Text_Tower_Of_Jazz+527
-	.long	data_4C3DDD72
-	.long	Text_Tower_Of_Jazz+544
-	.long	data_4C3DDD7C
-	.long	Text_Tower_Of_Jazz+561
-	.long	data_4C3DDD86
-	.long	0
-	.space	4, 0x00
-ptrs_4C3DE62C:
-	.long	Text_Island_Romance
-	.long	StyleGenreTable_p4_p4_2
-	.long	Text_Island_Romance+17
-	.long	StyleGenreTable_p4_p4_2+10
-	.long	Text_Island_Romance+34
-	.long	StyleGenreTable_p4_p4_2+20
-	.long	Text_Island_Romance+51
-	.long	StyleGenreTable_p4_p4_2+30
-	.long	Text_Island_Romance+68
-	.long	StyleGenreTable_p4_p4_2+40
-	.long	Text_Island_Romance+85
-	.long	StyleGenreTable_p4_p4_2+50
-	.long	Text_Island_Romance+102
-	.long	StyleGenreTable_p4_p4_2+60
-	.long	Text_Island_Romance+119
-	.long	StyleGenreTable_p4_p4_2+70
-	.long	Text_Island_Romance+136
-	.long	StyleGenreTable_p4_p4_2+80
-	.long	Text_Island_Romance+153
-	.long	StyleGenreTable_p4_p4_2+90
-	.long	Text_Island_Romance+170
-	.long	StyleGenreTable_p4_p4_2+100
-	.long	Text_Island_Romance+187
-	.long	StyleGenreTable_p4_p4_2+110
-	.long	Text_Island_Romance+204
-	.long	StyleGenreTable_p4_p4_2+120
-	.long	Text_Island_Romance+221
-	.long	StyleGenreTable_p4_p4_2+130
-	.long	Text_Island_Romance+238
-	.long	StyleGenreTable_p4_p4_2+140
-	.long	Text_Island_Romance+255
-	.long	StyleGenreTable_p4_p4_2+150
-	.long	Text_Island_Romance+272
-	.long	StyleGenreTable_p4_p4_2+160
-	.long	Text_Island_Romance+289
-	.long	StyleGenreTable_p4_p4_2+170
-	.long	0
-	.space	4, 0x00
-ptrs_4C3DE6C4:
-	.long	Text_Bluegrass_Dance
-	.long	data_4C3DDE44
-	.long	Text_Bluegrass_Dance+17
-	.long	data_4C3DDE4E
-	.long	Text_Bluegrass_Dance+34
-	.long	data_4C3DDE58
-	.long	Text_Bluegrass_Dance+51
-	.long	data_4C3DDE62
-	.long	Text_Bluegrass_Dance+68
-	.long	data_4C3DDE6C
-	.long	Text_Bluegrass_Dance+85
-	.long	data_4C3DDE76
-	.long	Text_Bluegrass_Dance+102
-	.long	data_4C3DDE80
-	.long	Text_Bluegrass_Dance+119
-	.long	data_4C3DDE8A
-	.long	Text_Bluegrass_Dance+136
-	.long	data_4C3DDE94
-	.long	Text_Bluegrass_Dance+153
-	.long	data_4C3DDE9E
-	.long	Text_Bluegrass_Dance+170
-	.long	data_4C3DDEA8
-	.long	Text_Bluegrass_Dance+187
-	.long	data_4C3DDEB2
-	.long	0
-	.space	4, 0x00
-ptrs_4C3DE72C:
-	.long	Text_Bluegrass_Dance+204
-	.long	StyleGenreTable_p4_p4_3
-	.long	Text_Bluegrass_Dance+221
-	.long	StyleGenreTable_p4_p4_3+10
-	.long	Text_Bluegrass_Dance+238
-	.long	StyleGenreTable_p4_p4_3+20
-	.long	Text_Bluegrass_Dance+255
-	.long	StyleGenreTable_p4_p4_3+30
-	.long	Text_Bluegrass_Dance+272
-	.long	StyleGenreTable_p4_p4_3+40
-	.long	Text_Bluegrass_Dance+289
-	.long	StyleGenreTable_p4_p4_3+50
-	.long	Text_Bluegrass_Dance+306
-	.long	StyleGenreTable_p4_p4_3+60
-	.long	Text_Bluegrass_Dance+323
-	.long	StyleGenreTable_p4_p4_3+70
-	.long	Text_Bluegrass_Dance+340
-	.long	StyleGenreTable_p4_p4_3+80
-	.long	Text_Bluegrass_Dance+357
-	.long	StyleGenreTable_p4_p4_3+90
-	.long	Text_Bluegrass_Dance+374
-	.long	StyleGenreTable_p4_p4_3+100
-	.long	Text_Bluegrass_Dance+391
-	.long	StyleGenreTable_p4_p4_3+110
-	.long	Text_Bluegrass_Dance+408
-	.long	StyleGenreTable_p4_p4_3+120
-	.long	Text_Bluegrass_Dance+425
-	.long	StyleGenreTable_p4_p4_3+130
-	.long	Text_Bluegrass_Dance+442
-	.long	StyleGenreTable_p4_p4_3+140
-	.long	Text_Bluegrass_Dance+459
-	.long	StyleGenreTable_p4_p4_3+150
-	.long	Text_Bluegrass_Dance+476
-	.long	StyleGenreTable_p4_p4_3+160
-	.long	Text_Bluegrass_Dance+493
-	.long	StyleGenreTable_p4_p4_3+170
-	.long	0
-	.space	4, 0x00
-ptrs_4C3DE7C4:
-	.long	Text_Uptown_Cha_Cha
-	.long	StyleGenreTable_p4_p4_4
-	.long	Text_Uptown_Cha_Cha+17
-	.long	StyleGenreTable_p4_p4_4+10
-	.long	Text_Uptown_Cha_Cha+34
-	.long	StyleGenreTable_p4_p4_4+20
-	.long	Text_Uptown_Cha_Cha+51
-	.long	StyleGenreTable_p4_p4_4+30
-	.long	Text_Uptown_Cha_Cha+68
-	.long	StyleGenreTable_p4_p4_4+40
-	.long	Text_Uptown_Cha_Cha+85
-	.long	StyleGenreTable_p4_p4_4+50
-	.long	Text_Uptown_Cha_Cha+102
-	.long	StyleGenreTable_p4_p4_4+60
-	.long	Text_Uptown_Cha_Cha+119
-	.long	StyleGenreTable_p4_p4_4+70
-	.long	Text_Uptown_Cha_Cha+136
-	.long	StyleGenreTable_p4_p4_4+80
-	.long	Text_Uptown_Cha_Cha+153
-	.long	StyleGenreTable_p4_p4_4+90
-	.long	Text_Uptown_Cha_Cha+170
-	.long	StyleGenreTable_p4_p4_4+100
-	.long	Text_Uptown_Cha_Cha+187
-	.long	StyleGenreTable_p4_p4_4+110
-	.long	Text_Uptown_Cha_Cha+204
-	.long	StyleGenreTable_p4_p4_4+120
-	.long	Text_Uptown_Cha_Cha+221
-	.long	StyleGenreTable_p4_p4_4+130
-	.long	Text_Uptown_Cha_Cha+238
-	.long	StyleGenreTable_p4_p4_4+140
-	.long	Text_Uptown_Cha_Cha+255
-	.long	StyleGenreTable_p4_p4_4+150
-	.long	Text_Uptown_Cha_Cha+272
-	.long	StyleGenreTable_p4_p4_4+160
-	.long	Text_Uptown_Cha_Cha+289
-	.long	StyleGenreTable_p4_p4_4+170
-	.long	Text_Uptown_Cha_Cha+306
-	.long	data_4C3DE024
-	.long	Text_Uptown_Cha_Cha+323
-	.long	data_4C3DE02E
-	.long	Text_Uptown_Cha_Cha+340
-	.long	data_4C3DE038
-	.long	Text_Uptown_Cha_Cha+357
-	.long	data_4C3DE042
-	.long	Text_Uptown_Cha_Cha+374
-	.long	data_4C3DE04C
-	.long	Text_Uptown_Cha_Cha+391
-	.long	data_4C3DE056
-	.long	Text_Uptown_Cha_Cha+408
-	.long	data_4C3DE060
-	.long	Text_Uptown_Cha_Cha+425
-	.long	data_4C3DE06A
-	.long	Text_Uptown_Cha_Cha+442
-	.long	data_4C3DE074
-	.long	Text_Uptown_Cha_Cha+459
-	.long	data_4C3DE07E
-	.long	Text_Uptown_Cha_Cha+476
-	.long	data_4C3DE088
-	.long	Text_Uptown_Cha_Cha+493
-	.long	data_4C3DE092
-	.long	0
-	.space	4, 0x00
+StyleGenre_Rock_Pop_Styles:	# StyleGenre "Rock & Pop"'s 52 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Italian_Pop, StyleSetups_Rock_Pop_Italian_Pop
+	.long	Text_Italian_Pop+17, StyleSetups_Rock_Pop_70_s_Folk
+	.long	Text_Italian_Pop+34, StyleSetups_Rock_Pop_Folk_Rock
+	.long	Text_Italian_Pop+51, StyleSetups_Rock_Pop_Pop_Dance
+	.long	Text_Italian_Pop+68, StyleSetups_Rock_Pop_Star_Groove
+	.long	Text_Italian_Pop+85, StyleSetups_Rock_Pop_Cool_16_Beat
+	.long	Text_Italian_Pop+102, StyleSetups_Rock_Pop_Detroit_Ballad
+	.long	Text_Italian_Pop+119, StyleSetups_Rock_Pop_Pop_Girls
+	.long	Text_Italian_Pop+136, StyleSetups_Rock_Pop_90_s_Rock_Roll
+	.long	Text_Italian_Pop+153, StyleSetups_Rock_Pop_90_s_Top_Ten
+	.long	Text_Italian_Pop+170, StyleSetups_Rock_Pop_Pop_Shuffle
+	.long	Text_Italian_Pop+187, StyleSetups_Rock_Pop_Beach_Party
+	.long	Text_Italian_Pop+204, StyleSetups_Rock_Pop_Mersey_Beat
+	.long	Text_Italian_Pop+221, StyleSetups_Rock_Pop_16Beat_Standards
+	.long	Text_Italian_Pop+238, StyleSetups_Rock_Pop_Piano_Superstar
+	.long	Text_Italian_Pop+255, StyleSetups_Rock_Pop_Fifties_Smooch
+	.long	Text_Italian_Pop+272, StyleSetups_Rock_Pop_Rock_Balladeer
+	.long	Text_Italian_Pop+289, StyleSetups_Rock_Pop_Rhythm_Blues
+	.long	Text_Italian_Pop+306, StyleSetups_Rock_Pop_King_s_Rock
+	.long	Text_Italian_Pop+323, StyleSetups_Rock_Pop_Cool_Old_Rock
+	.long	Text_Italian_Pop+340, StyleSetups_Rock_Pop_Let_s_Rock
+	.long	Text_Italian_Pop+357, StyleSetups_Rock_Pop_Leroy_s_Band
+	.long	Text_Italian_Pop+374, StyleSetups_Rock_Pop_Twisters
+	.long	Text_Italian_Pop+391, StyleSetups_Rock_Pop_Rock_Status
+	.long	Text_Italian_Pop+408, StyleSetups_Rock_Pop_Heavy_Shuffle
+	.long	Text_Italian_Pop+425, StyleSetups_Rock_Pop_UK_Piano_Legend
+	.long	Text_Italian_Pop+442, StyleSetups_Rock_Pop_Rock_Gig
+	.long	Text_Italian_Pop+459, StyleSetups_Rock_Pop_Revival_Rock
+	.long	Text_Italian_Pop+476, StyleSetups_Rock_Pop_Solid_Gold_Hits
+	.long	Text_Italian_Pop+493, StyleSetups_Rock_Pop_70_s_Power_Rock
+	.long	Text_Italian_Pop+510, StyleSetups_Rock_Pop_Blues_Alley
+	.long	Text_Italian_Pop+527, StyleSetups_Rock_Pop_Classic_60s_Rock
+	.long	Text_Italian_Pop+544, StyleSetups_Rock_Pop_60_s_Gold
+	.long	Text_Italian_Pop+561, StyleSetups_Rock_Pop_Straight_70_s
+	.long	Text_Italian_Pop+578, StyleSetups_Rock_Pop_Modern_Blues
+	.long	Text_Italian_Pop+595, StyleSetups_Rock_Pop_Piano_Blues
+	.long	Text_Italian_Pop+612, StyleSetups_Rock_Pop_Monday_Morning
+	.long	Text_Italian_Pop+629, StyleSetups_Rock_Pop_West_Coast_Funk
+	.long	Text_Italian_Pop+646, StyleSetups_Rock_Pop_Jazzy_Grooves
+	.long	Text_Italian_Pop+663, StyleSetups_Rock_Pop_Chart_Reggae
+	.long	Text_Italian_Pop+680, StyleSetups_Rock_Pop_West_Indies_Cool
+	.long	Text_Italian_Pop+697, StyleSetups_Rock_Pop_Grooving_8_Beat
+	.long	Text_Italian_Pop+714, StyleSetups_Rock_Pop_Romantic_8_Beat
+	.long	Text_Italian_Pop+731, StyleSetups_Rock_Pop_Euro_Pop
+	.long	Text_Italian_Pop+748, StyleSetups_Rock_Pop_Jazz_Pop_16
+	.long	Text_Italian_Pop+765, StyleSetups_Rock_Pop_Slow_Pop_Ballad
+	.long	Text_Italian_Pop+782, StyleSetups_Rock_Pop_Metal_Ballad
+	.long	Text_Italian_Pop+799, StyleSetups_Rock_Pop_50_s_Rock_n_Roll
+	.long	Text_Italian_Pop+816, StyleSetups_Rock_Pop_Time_To_Twist
+	.long	Text_Italian_Pop+833, StyleSetups_Rock_Pop_Rock_Guitars
+	.long	Text_Italian_Pop+850, StyleSetups_Rock_Pop_Oldies_Dance
+	.long	Text_Italian_Pop+867, StyleSetups_Rock_Pop_Let_s_Twist
+	.long	0, 0
+StyleGenre_Easy_Listening_Styles:	# StyleGenre "Easy Listening"'s 28 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Italian_Pop+884, StyleSetups_Easy_Listening_Grand_Prix
+	.long	Text_Italian_Pop+901, StyleSetups_Easy_Listening_16_Beat_Grooves
+	.long	Text_Italian_Pop+918, StyleSetups_Easy_Listening_Easy_16_Ballad
+	.long	Text_Italian_Pop+935, StyleSetups_Easy_Listening_Slow_Easy
+	.long	Text_Italian_Pop+952, StyleSetups_Easy_Listening_Yesteryear
+	.long	Text_Italian_Pop+969, StyleSetups_Easy_Listening_Ballad_Producer
+	.long	Text_Italian_Pop+986, StyleSetups_Easy_Listening_New_Rock_Ballad
+	.long	Text_Italian_Pop+1003, StyleSetups_Easy_Listening_Daydreams
+	.long	Text_Italian_Pop+1020, StyleSetups_Easy_Listening_Soft_Listening
+	.long	Text_Italian_Pop+1037, StyleSetups_Easy_Listening_Ballad_Dreams
+	.long	Text_Italian_Pop+1054, StyleSetups_Easy_Listening_80_s_Movie_Theme
+	.long	Text_Italian_Pop+1071, StyleSetups_Easy_Listening_Smoochy_Ballad
+	.long	Text_Italian_Pop+1088, StyleSetups_Easy_Listening_Schlager_Romance
+	.long	Text_Italian_Pop+1105, StyleSetups_Easy_Listening_Golden_Oldie
+	.long	Text_Italian_Pop+1122, StyleSetups_Easy_Listening_Easy_Swing_Pop
+	.long	Text_Italian_Pop+1139, StyleSetups_Easy_Listening_Vocal_Ballads
+	.long	Text_Italian_Pop+1156, StyleSetups_Easy_Listening_Hollywood_Charm
+	.long	Text_Italian_Pop+1173, StyleSetups_Easy_Listening_After_Eight_Beat
+	.long	Text_Italian_Pop+1190, StyleSetups_Easy_Listening_80_s_Best_Groove
+	.long	Text_Italian_Pop+1207, StyleSetups_Easy_Listening_Yuppie_Dreams
+	.long	Text_Italian_Pop+1224, StyleSetups_Easy_Listening_Classic_Ballad
+	.long	Text_Italian_Pop+1241, StyleSetups_Easy_Listening_Slow_Synth_Pop
+	.long	Text_Italian_Pop+1258, StyleSetups_Easy_Listening_Symphony_Ballad
+	.long	Text_Italian_Pop+1275, StyleSetups_Easy_Listening_Modern_Ballad
+	.long	Text_Italian_Pop+1292, StyleSetups_Easy_Listening_Dreamy_Sixteen
+	.long	Text_Italian_Pop+1309, StyleSetups_Easy_Listening_Lindner_Story
+	.long	Text_Italian_Pop+1326, StyleSetups_Easy_Listening_LA_Ballads
+	.long	Text_Italian_Pop+1343, StyleSetups_Easy_Listening_Slow_Dance
+	.long	0, 0
+StyleGenre_Party_Music_Styles:	# StyleGenre "Party Music"'s 15 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Italian_Pop+1360, StyleSetups_Party_Music_Ballermann
+	.long	Text_Italian_Pop+1377, StyleSetups_Party_Music_German_Holiday
+	.long	Text_Italian_Pop+1394, StyleSetups_Party_Music_Summer_Fun
+	.long	Text_Italian_Pop+1411, StyleSetups_Party_Music_The_Last_Band
+	.long	Text_Italian_Pop+1428, StyleSetups_Party_Music_Samba_Nights
+	.long	Text_Italian_Pop+1445, StyleSetups_Party_Music_Party_On
+	.long	Text_Italian_Pop+1462, StyleSetups_Party_Music_Merry_Christmas
+	.long	Text_Italian_Pop+1479, StyleSetups_Party_Music_German_Schlager
+	.long	Text_Italian_Pop+1496, StyleSetups_Party_Music_Accordion_Pop
+	.long	Text_Italian_Pop+1513, StyleSetups_Party_Music_Party_Pop
+	.long	Text_Italian_Pop+1530, StyleSetups_Party_Music_Party_Rock_Roll
+	.long	Text_Italian_Pop+1547, StyleSetups_Party_Music_German_Party
+	.long	Text_Italian_Pop+1564, StyleSetups_Party_Music_Deutschland_Pop
+	.long	Text_Italian_Pop+1581, StyleSetups_Party_Music_Volks_Pop
+	.long	Text_Italian_Pop+1598, StyleSetups_Party_Music_Polonaise_Time
+	.long	0, 0
+StyleGenre_Dance_Pop_Styles:	# StyleGenre "Dance Pop"'s 21 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_90_s_Boy_Groups, StyleSetups_Dance_Pop_90_s_Boy_Groups
+	.long	Text_90_s_Boy_Groups+17, StyleSetups_Dance_Pop_Girly_Pop
+	.long	Text_90_s_Boy_Groups+34, StyleSetups_Dance_Pop_Steamy_Funk
+	.long	Text_90_s_Boy_Groups+51, StyleSetups_Dance_Pop_Electric_World
+	.long	Text_90_s_Boy_Groups+68, StyleSetups_Dance_Pop_Barbie_s_Home
+	.long	Text_90_s_Boy_Groups+85, StyleSetups_Dance_Pop_Drumming_Beats
+	.long	Text_90_s_Boy_Groups+102, StyleSetups_Dance_Pop_Hip_Hop
+	.long	Text_90_s_Boy_Groups+119, StyleSetups_Dance_Pop_Dreamland
+	.long	Text_90_s_Boy_Groups+136, StyleSetups_Dance_Pop_Believe_This
+	.long	Text_90_s_Boy_Groups+153, StyleSetups_Dance_Pop_London_Subway
+	.long	Text_90_s_Boy_Groups+170, StyleSetups_Dance_Pop_Hip_Stuff
+	.long	Text_90_s_Boy_Groups+187, StyleSetups_Dance_Pop_Golden_Dancing
+	.long	Text_90_s_Boy_Groups+204, StyleSetups_Dance_Pop_Street_Dance
+	.long	Text_90_s_Boy_Groups+221, StyleSetups_Dance_Pop_Retro_Disco
+	.long	Text_90_s_Boy_Groups+238, StyleSetups_Dance_Pop_Dance_Latin
+	.long	Text_90_s_Boy_Groups+255, StyleSetups_Dance_Pop_Dance_Production
+	.long	Text_90_s_Boy_Groups+272, StyleSetups_Dance_Pop_Hip_Club_Mixes
+	.long	Text_90_s_Boy_Groups+289, StyleSetups_Dance_Pop_The_Big_Hit
+	.long	Text_90_s_Boy_Groups+306, StyleSetups_Dance_Pop_Club_Reggae
+	.long	Text_90_s_Boy_Groups+323, StyleSetups_Dance_Pop_Disco_Craze
+	.long	Text_90_s_Boy_Groups+340, StyleSetups_Dance_Pop_Caribbean_Sun
+	.long	0, 0
+StyleGenre_Soul_Gospel_Styles:	# StyleGenre "Soul & Gospel"'s 22 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Slowest_Ballads, StyleSetups_Soul_Gospel_Slowest_Ballads
+	.long	Text_Slowest_Ballads+17, StyleSetups_Soul_Gospel_80_s_Glam_Soul
+	.long	Text_Slowest_Ballads+34, StyleSetups_Soul_Gospel_Cool_Groovy
+	.long	Text_Slowest_Ballads+51, StyleSetups_Soul_Gospel_70_s_Detroit_Pop
+	.long	Text_Slowest_Ballads+68, StyleSetups_Soul_Gospel_Soul_Club
+	.long	Text_Slowest_Ballads+85, StyleSetups_Soul_Gospel_Funky_R_B
+	.long	Text_Slowest_Ballads+102, StyleSetups_Soul_Gospel_Soul_Machine
+	.long	Text_Slowest_Ballads+119, StyleSetups_Soul_Gospel_Soul_Groove
+	.long	Text_Slowest_Ballads+136, StyleSetups_Soul_Gospel_Pop_Soul
+	.long	Text_Slowest_Ballads+153, StyleSetups_Soul_Gospel_Soul_Jazz
+	.long	Text_Slowest_Ballads+170, StyleSetups_Soul_Gospel_Sweet_Soul_Music
+	.long	Text_Slowest_Ballads+187, StyleSetups_Soul_Gospel_Pop_Spiritual
+	.long	Text_Slowest_Ballads+204, StyleSetups_Soul_Gospel_70_s_Revival
+	.long	Text_Slowest_Ballads+221, StyleSetups_Soul_Gospel_Sunday_Morning
+	.long	Text_Slowest_Ballads+238, StyleSetups_Soul_Gospel_Sing_To_The_Lord
+	.long	Text_Slowest_Ballads+255, StyleSetups_Soul_Gospel_Gospel_Service
+	.long	Text_Slowest_Ballads+272, StyleSetups_Soul_Gospel_Waltzing_Church
+	.long	Text_Slowest_Ballads+289, StyleSetups_Soul_Gospel_Cool_R_B
+	.long	Text_Slowest_Ballads+306, StyleSetups_Soul_Gospel_Smooth_Jazz_6000
+	.long	Text_Slowest_Ballads+323, StyleSetups_Soul_Gospel_Melodic_Soul
+	.long	Text_Slowest_Ballads+340, StyleSetups_Soul_Gospel_Funky_Soul
+	.long	Text_Slowest_Ballads+357, StyleSetups_Soul_Gospel_Gospel_Band
+	.long	0, 0
+StyleGenre_Jazz_Swing_Styles:	# StyleGenre "Jazz & Swing"'s 34 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Tower_Of_Jazz, StyleSetups_Jazz_Swing_Tower_Of_Jazz
+	.long	Text_Tower_Of_Jazz+17, StyleSetups_Jazz_Swing_West_Coast_Jazz
+	.long	Text_Tower_Of_Jazz+34, StyleSetups_Jazz_Swing_Old_Time_Jazz
+	.long	Text_Tower_Of_Jazz+51, StyleSetups_Jazz_Swing_Jazz_Show_Time
+	.long	Text_Tower_Of_Jazz+68, StyleSetups_Jazz_Swing_The_Big_Band_Era
+	.long	Text_Tower_Of_Jazz+85, StyleSetups_Jazz_Swing_Slow_Big_Band
+	.long	Text_Tower_Of_Jazz+102, StyleSetups_Jazz_Swing_Midnight_BigBand
+	.long	Text_Tower_Of_Jazz+119, StyleSetups_Jazz_Swing_Dance_Band_Years
+	.long	Text_Tower_Of_Jazz+136, StyleSetups_Jazz_Swing_Vegas_Cabaret
+	.long	Text_Tower_Of_Jazz+153, StyleSetups_Jazz_Swing_Cool_Swing
+	.long	Text_Tower_Of_Jazz+170, StyleSetups_Jazz_Swing_Swing_Ballad
+	.long	Text_Tower_Of_Jazz+187, StyleSetups_Jazz_Swing_Sweet_Swingy
+	.long	Text_Tower_Of_Jazz+204, StyleSetups_Jazz_Swing_Jazz_Club
+	.long	Text_Tower_Of_Jazz+221, StyleSetups_Jazz_Swing_Dance_Band_Era
+	.long	Text_Tower_Of_Jazz+238, StyleSetups_Jazz_Swing_Romantic_Dance
+	.long	Text_Tower_Of_Jazz+255, StyleSetups_Jazz_Swing_Jazz_Session
+	.long	Text_Tower_Of_Jazz+272, StyleSetups_Jazz_Swing_Smooth_Jazz
+	.long	Text_Tower_Of_Jazz+289, StyleSetups_Jazz_Swing_Steady_Swing
+	.long	Text_Tower_Of_Jazz+306, StyleSetups_Jazz_Swing_Combo_Legend
+	.long	Text_Tower_Of_Jazz+323, StyleSetups_Jazz_Swing_Lounge_Act
+	.long	Text_Tower_Of_Jazz+340, StyleSetups_Jazz_Swing_Vocalising_Jazz
+	.long	Text_Tower_Of_Jazz+357, StyleSetups_Jazz_Swing_Funk_Vocals
+	.long	Text_Tower_Of_Jazz+374, StyleSetups_Jazz_Swing_Modern_Groove
+	.long	Text_Tower_Of_Jazz+391, StyleSetups_Jazz_Swing_Slow_Jazz_Groove
+	.long	Text_Tower_Of_Jazz+408, StyleSetups_Jazz_Swing_Paris_Jazz
+	.long	Text_Tower_Of_Jazz+425, StyleSetups_Jazz_Swing_8_In_A_Bar_Jazz
+	.long	Text_Tower_Of_Jazz+442, StyleSetups_Jazz_Swing_Groovy_Jazz
+	.long	Text_Tower_Of_Jazz+459, StyleSetups_Jazz_Swing_Jazzy_Accordions
+	.long	Text_Tower_Of_Jazz+476, StyleSetups_Jazz_Swing_Saloon_Combo
+	.long	Text_Tower_Of_Jazz+493, StyleSetups_Jazz_Swing_Club_Band
+	.long	Text_Tower_Of_Jazz+510, StyleSetups_Jazz_Swing_Starry_Eyed
+	.long	Text_Tower_Of_Jazz+527, StyleSetups_Jazz_Swing_Slow_Show_Band
+	.long	Text_Tower_Of_Jazz+544, StyleSetups_Jazz_Swing_Boogie_Band
+	.long	Text_Tower_Of_Jazz+561, StyleSetups_Jazz_Swing_Quintet_Band
+	.long	0, 0
+StyleGenre_Trad_Folk_Styles:	# StyleGenre "Trad & Folk"'s 18 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Island_Romance, StyleSetups_Trad_Folk_Island_Romance
+	.long	Text_Island_Romance+17, StyleSetups_Trad_Folk_Waikiki_Dance
+	.long	Text_Island_Romance+34, StyleSetups_Trad_Folk_French_American
+	.long	Text_Island_Romance+51, StyleSetups_Trad_Folk_Marching_Band
+	.long	Text_Island_Romance+68, StyleSetups_Trad_Folk_Stadium_Events
+	.long	Text_Island_Romance+85, StyleSetups_Trad_Folk_OktoberFest
+	.long	Text_Island_Romance+102, StyleSetups_Trad_Folk_Mountain_Music
+	.long	Text_Island_Romance+119, StyleSetups_Trad_Folk_Zillertal
+	.long	Text_Island_Romance+136, StyleSetups_Trad_Folk_French_Chanson
+	.long	Text_Island_Romance+153, StyleSetups_Trad_Folk_Parisian_Dance
+	.long	Text_Island_Romance+170, StyleSetups_Trad_Folk_Bier_Hall
+	.long	Text_Island_Romance+187, StyleSetups_Trad_Folk_Vienna_Dance
+	.long	Text_Island_Romance+204, StyleSetups_Trad_Folk_Gypsy_Party
+	.long	Text_Island_Romance+221, StyleSetups_Trad_Folk_Ceilidh_Band
+	.long	Text_Island_Romance+238, StyleSetups_Trad_Folk_Italian_Nights
+	.long	Text_Island_Romance+255, StyleSetups_Trad_Folk_Greek_Dance
+	.long	Text_Island_Romance+272, StyleSetups_Trad_Folk_Folk_Players
+	.long	Text_Island_Romance+289, StyleSetups_Trad_Folk_Northern_Polka
+	.long	0, 0
+StyleGenre_Country_Styles:	# StyleGenre "Country"'s 12 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Bluegrass_Dance, StyleSetups_Country_Bluegrass_Dance
+	.long	Text_Bluegrass_Dance+17, StyleSetups_Country_Bluegrass_City
+	.long	Text_Bluegrass_Dance+34, StyleSetups_Country_Barn_Dance
+	.long	Text_Bluegrass_Dance+51, StyleSetups_Country_Country_Dance
+	.long	Text_Bluegrass_Dance+68, StyleSetups_Country_Country_Romance
+	.long	Text_Bluegrass_Dance+85, StyleSetups_Country_Modern_Country
+	.long	Text_Bluegrass_Dance+102, StyleSetups_Country_Old_Country_Hit
+	.long	Text_Bluegrass_Dance+119, StyleSetups_Country_Southern_Shuffle
+	.long	Text_Bluegrass_Dance+136, StyleSetups_Country_Guitar_Country
+	.long	Text_Bluegrass_Dance+153, StyleSetups_Country_Easy_Country
+	.long	Text_Bluegrass_Dance+170, StyleSetups_Country_Country_Dream
+	.long	Text_Bluegrass_Dance+187, StyleSetups_Country_SlowCountryDance
+	.long	0, 0
+StyleGenre_Show_Ballroom_Styles:	# StyleGenre "Show & Ballroom"'s 18 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Bluegrass_Dance+204, StyleSetups_Show_Ballroom_Ballroom_Waltz
+	.long	Text_Bluegrass_Dance+221, StyleSetups_Show_Ballroom_Slow_Latin_Dance
+	.long	Text_Bluegrass_Dance+238, StyleSetups_Show_Ballroom_60_s_Foxtrot
+	.long	Text_Bluegrass_Dance+255, StyleSetups_Show_Ballroom_Ribbon_Foxtrot
+	.long	Text_Bluegrass_Dance+272, StyleSetups_Show_Ballroom_Swinging_Bert
+	.long	Text_Bluegrass_Dance+289, StyleSetups_Show_Ballroom_Show_Overture
+	.long	Text_Bluegrass_Dance+306, StyleSetups_Show_Ballroom_It_s_Show_Time
+	.long	Text_Bluegrass_Dance+323, StyleSetups_Show_Ballroom_Show_Tunes
+	.long	Text_Bluegrass_Dance+340, StyleSetups_Show_Ballroom_Dinner_Dance
+	.long	Text_Bluegrass_Dance+357, StyleSetups_Show_Ballroom_Ballroom_Dance
+	.long	Text_Bluegrass_Dance+374, StyleSetups_Show_Ballroom_50_s_Dance_Craze
+	.long	Text_Bluegrass_Dance+391, StyleSetups_Show_Ballroom_Euro_Tango
+	.long	Text_Bluegrass_Dance+408, StyleSetups_Show_Ballroom_Showmanship
+	.long	Text_Bluegrass_Dance+425, StyleSetups_Show_Ballroom_Slow_Waltzing
+	.long	Text_Bluegrass_Dance+442, StyleSetups_Show_Ballroom_Vienna_Ballroom
+	.long	Text_Bluegrass_Dance+459, StyleSetups_Show_Ballroom_German_Foxtrot
+	.long	Text_Bluegrass_Dance+476, StyleSetups_Show_Ballroom_European_Foxtrot
+	.long	Text_Bluegrass_Dance+493, StyleSetups_Show_Ballroom_English_Waltz
+	.long	0, 0
+StyleGenre_Latin_World_Styles:	# StyleGenre "Latin & World"'s 30 styles, GenreStyle {char *name, u16 *setups}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)
+	.long	Text_Uptown_Cha_Cha, StyleSetups_Latin_World_Uptown_Cha_Cha
+	.long	Text_Uptown_Cha_Cha+17, StyleSetups_Latin_World_Mambo_Dancing
+	.long	Text_Uptown_Cha_Cha+34, StyleSetups_Latin_World_Easy_Latin
+	.long	Text_Uptown_Cha_Cha+51, StyleSetups_Latin_World_Gentle_Bossa
+	.long	Text_Uptown_Cha_Cha+68, StyleSetups_Latin_World_Beguine_Ensemble
+	.long	Text_Uptown_Cha_Cha+85, StyleSetups_Latin_World_Cha_Cha_Band
+	.long	Text_Uptown_Cha_Cha+102, StyleSetups_Latin_World_Latin_Tango
+	.long	Text_Uptown_Cha_Cha+119, StyleSetups_Latin_World_Samba_De_Rio
+	.long	Text_Uptown_Cha_Cha+136, StyleSetups_Latin_World_Ballroom_Samba
+	.long	Text_Uptown_Cha_Cha+153, StyleSetups_Latin_World_NYC_Latin_Club
+	.long	Text_Uptown_Cha_Cha+170, StyleSetups_Latin_World_Cuban_Night_Club
+	.long	Text_Uptown_Cha_Cha+187, StyleSetups_Latin_World_U_S_Latino_Pop
+	.long	Text_Uptown_Cha_Cha+204, StyleSetups_Latin_World_Cut_Time_Bossa
+	.long	Text_Uptown_Cha_Cha+221, StyleSetups_Latin_World_80_s_Latin_Hits
+	.long	Text_Uptown_Cha_Cha+238, StyleSetups_Latin_World_Bolero_Dance
+	.long	Text_Uptown_Cha_Cha+255, StyleSetups_Latin_World_Latin_Elegance
+	.long	Text_Uptown_Cha_Cha+272, StyleSetups_Latin_World_Cumbia_Band
+	.long	Text_Uptown_Cha_Cha+289, StyleSetups_Latin_World_Dance_Lambada
+	.long	Text_Uptown_Cha_Cha+306, StyleSetups_Latin_World_Special_Latin
+	.long	Text_Uptown_Cha_Cha+323, StyleSetups_Latin_World_Calypso_Dance
+	.long	Text_Uptown_Cha_Cha+340, StyleSetups_Latin_World_Mexican_Sounds
+	.long	Text_Uptown_Cha_Cha+357, StyleSetups_Latin_World_Scottish_Dance
+	.long	Text_Uptown_Cha_Cha+374, StyleSetups_Latin_World_Romantic_Waltz
+	.long	Text_Uptown_Cha_Cha+391, StyleSetups_Latin_World_Dangdut_Special
+	.long	Text_Uptown_Cha_Cha+408, StyleSetups_Latin_World_Talempong_World
+	.long	Text_Uptown_Cha_Cha+425, StyleSetups_Latin_World_Indonesian_Folk
+	.long	Text_Uptown_Cha_Cha+442, StyleSetups_Latin_World_Popular_Latin
+	.long	Text_Uptown_Cha_Cha+459, StyleSetups_Latin_World_Modern_Cha_Cha
+	.long	Text_Uptown_Cha_Cha+476, StyleSetups_Latin_World_Modern_Latin_Pop
+	.long	Text_Uptown_Cha_Cha+493, StyleSetups_Latin_World_Nights_In_Italy
+	.long	0, 0
 
 StyleGenreTable:	# 11 x StyleGenre (8 bytes each); read by func_4C163CC7_entry_L7 0x4C163CD4 `mov (d0, a0), a1`; func_4C163D15_entry_Lf 0x4C163D27 `mov (4, a0), a0`; func_4C1640C8_entry_L3c 0x4C164109 `mov (4, a0), a3` (+8)
-	StyleGenre	name=Text_Rock_Pop, styles=ptrs_4C3DE09C	# [0]
-	StyleGenre	name=Text_Rock_Pop+17, styles=ptrs_4C3DE244
-	StyleGenre	name=Text_Rock_Pop+34, styles=ptrs_4C3DE32C
-	StyleGenre	name=Text_Rock_Pop+51, styles=ptrs_4C3DE3AC
-	StyleGenre	name=Text_Rock_Pop+68, styles=ptrs_4C3DE45C
-	StyleGenre	name=Text_Rock_Pop+85, styles=ptrs_4C3DE514
-	StyleGenre	name=Text_Rock_Pop+102, styles=ptrs_4C3DE62C
-	StyleGenre	name=Text_Rock_Pop+119, styles=ptrs_4C3DE6C4
-	StyleGenre	name=Text_Rock_Pop+136, styles=ptrs_4C3DE72C	# [8]
-	StyleGenre	name=Text_Rock_Pop+153, styles=ptrs_4C3DE7C4
+	StyleGenre	name=Text_Rock_Pop, styles=StyleGenre_Rock_Pop_Styles	# [0]
+	StyleGenre	name=Text_Rock_Pop+17, styles=StyleGenre_Easy_Listening_Styles
+	StyleGenre	name=Text_Rock_Pop+34, styles=StyleGenre_Party_Music_Styles
+	StyleGenre	name=Text_Rock_Pop+51, styles=StyleGenre_Dance_Pop_Styles
+	StyleGenre	name=Text_Rock_Pop+68, styles=StyleGenre_Soul_Gospel_Styles
+	StyleGenre	name=Text_Rock_Pop+85, styles=StyleGenre_Jazz_Swing_Styles
+	StyleGenre	name=Text_Rock_Pop+102, styles=StyleGenre_Trad_Folk_Styles
+	StyleGenre	name=Text_Rock_Pop+119, styles=StyleGenre_Country_Styles
+	StyleGenre	name=Text_Rock_Pop+136, styles=StyleGenre_Show_Ballroom_Styles	# [8]
+	StyleGenre	name=Text_Rock_Pop+153, styles=StyleGenre_Latin_World_Styles
 	StyleGenre	
 
-StyleAlphabetTable_p4_0:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=341, x2="\x1D\x02\xD0\x00"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DE91A, 0x3DE922
-StyleAlphabetTable_p4_1:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=553, x2="\x95\x02\xFF\xFF"
-StyleAlphabetTable_p4_2:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=489, x2="\xEA\x01\xFF\xFF"
-StyleAlphabetTable_p4_3:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=147, x2="r\x03\xFF\xFF"
-StyleAlphabetTable_p4_4:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=712, x2="\"\x02\xAA\x00"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DE93A, 0x3DE942
-StyleAlphabetTable_p4_5:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=913, x2="H\x01\xB6\x00"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DE948, 0x3DE94C
-StyleAlphabetTable_p4_6:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=833, x2="A\x00[\x00"
-
-Str_X_4:	.asciz "X"
-	.space	2, 0xFF
-Str_3_25:	.asciz "3"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DE958, 0x3DE95C
-
-StyleAlphabetTable_p4_7:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=589, x2="U\x03\x9A\x02"
-# census: opaque -- unknown-dump: 38 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DE962, 0x3DE988
-StyleAlphabetTable_p4_8:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=889, x2="\x0B\x02\x10\x01"
-# census: opaque -- unknown-dump: 196 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DE98E, 0x3DEA52
-StyleAlphabetTable_p4_9:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=782, x2="\x18\x02\x0B\x00"
-# census: opaque -- unknown-dump: 124 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DEA58, 0x3DEAD4
-StyleAlphabetTable_p4_10:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=521, x2="\x89\x02g\x01"
-# census: opaque -- unknown-dump: 90 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DEADA, 0x3DEB34
-StyleAlphabetTable_p4_11:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=932, x2="Z\x03\\\x03"
-# census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DEB3A, 0x3DEB5E
-
-Str_R:	.asciz "R"
-# census: opaque -- unknown-dump: 104 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DEB60, 0x3DEBC8
-
-StyleAlphabetTable_p4_12:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=793, x2="D\x01/\x00"
-# census: opaque -- unknown-dump: 98 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DEBCE, 0x3DEC30
-StyleAlphabetTable_p4_13:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=199, x2="\x7F\x01\x97\x03"
-# census: opaque -- unknown-dump: 124 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DEC36, 0x3DECB2
-StyleAlphabetTable_p4_14:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=200, x2="m\x01J\x00"
-# census: opaque -- unknown-dump: 26 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DECB8, 0x3DECD2
-StyleAlphabetTable_p4_15:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=155, x2="\xE3\x02\x00\x03"
-# census: opaque -- unknown-dump: 34 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DECD8, 0x3DECFA
-StyleAlphabetTable_p4_16:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=302, x2="\x97\x01\x1C\x03"
-# census: opaque -- unknown-dump: 18 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DED00, 0x3DED12
-StyleAlphabetTable_p4_17:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=287, x2="\xEF\x00B\x03"
-# census: opaque -- unknown-dump: 86 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DED18, 0x3DED6E
-StyleAlphabetTable_p4_18:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=357, x2="5\x00\xEF\x01"
-# census: opaque -- unknown-dump: 102 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DED74, 0x3DEDDA
-StyleAlphabetTable_p4_19:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=2, x2="\x9A\x03\x9D\x01"
-# census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DEDE0, 0x3DEE00
-
-Str_N:	.asciz "N"
-# census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DEE02, 0x3DEE22
-
-StyleAlphabetTable_p4_20:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=267, x2="\x1E\x03\x1B\x03"
-# census: opaque -- unknown-dump: 118 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DEE28, 0x3DEE9E
-StyleAlphabetTable_p4_21:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=513, x2="\x84\x02\x18\x00"
-	.space	2, 0xFF
-StyleAlphabetTable_p4_22:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=260, x2="_\x01\xE3\x00"
-# census: opaque -- unknown-dump: 102 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DEEAC, 0x3DEF12
-StyleAlphabetTable_p4_23:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=616, x2="\xA6\x02\x97\x02"
-# census: opaque -- unknown-dump: 340 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DEF18, 0x3DF06C
-StyleAlphabetTable_p4_24:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=322, x2="\x81\x01>\x00"
-# census: opaque -- unknown-dump: 90 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DF072, 0x3DF0CC
-
-Str_empty_256:	.asciz "="
-# census: opaque -- unknown-dump: 14 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DF0CE, 0x3DF0DC
-
-StyleAlphabetTable_p4_25:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=175, x2="\x10\x03>\x03"
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DF0E2, 0x3DF0EE
-
-Str_empty_255:	.asciz ","
-# census: opaque -- unknown-dump: 38 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DF0F0, 0x3DF116
-
-StyleAlphabetTable_p4_26:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=411, x2="\xA7\x01\xCC\x00"
-# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DF11C, 0x3DF122
-StyleAlphabetTable_p4_27:	# REC_StyleAlphabetTable_p4 (6 bytes)
-	REC_StyleAlphabetTable_p4	f0=573, x2="\xFF\xFF\xFF\xFF"
+StyleSetups_Letter_1:	# the setups (u16 MusicStylistSetup numbers) under letter "1" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	341, 541, 208, 424, 551, 20, 0xffff
+StyleSetups_Letter_2:	# the setups (u16 MusicStylistSetup numbers) under letter "2" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	553, 661, 0xffff
+StyleSetups_Letter_4:	# the setups (u16 MusicStylistSetup numbers) under letter "4" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	489, 490, 0xffff
+StyleSetups_Letter_5:	# the setups (u16 MusicStylistSetup numbers) under letter "5" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	147, 882, 0xffff
+StyleSetups_Letter_6:	# the setups (u16 MusicStylistSetup numbers) under letter "6" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	712, 546, 170, 544, 214, 213, 0xffff
+StyleSetups_Letter_7:	# the setups (u16 MusicStylistSetup numbers) under letter "7" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	913, 328, 182, 844, 0xffff
+StyleSetups_Letter_8:	# the setups (u16 MusicStylistSetup numbers) under letter "8" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	833, 65, 91, 88, 0xffff
+StyleSetups_Letter_9:	# the setups (u16 MusicStylistSetup numbers) under letter "9" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	51, 342, 0xffff
+StyleSetups_Letter_A:	# the setups (u16 MusicStylistSetup numbers) under letter "A" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	589, 853, 666, 86, 323, 32, 440, 865, 188, 397, 592, 874, 574, 845, 776, 851
+	.word	284, 750, 947, 591, 799, 0xffff
+StyleSetups_Letter_B:	# the setups (u16 MusicStylistSetup numbers) under letter "B" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	889, 523, 272, 132, 136, 95, 93, 861, 869, 127, 144, 857, 988, 123, 863, 135
+	.word	103, 867, 991, 101, 38, 111, 122, 960, 654, 613, 647, 950, 606, 451, 448, 455
+	.word	751, 59, 886, 518, 14, 514, 579, 749, 969, 360, 79, 753, 306, 304, 325, 748
+	.word	608, 102, 242, 722, 726, 959, 150, 847, 454, 458, 326, 763, 468, 203, 403, 223
+	.word	896, 201, 222, 439, 416, 527, 568, 539, 730, 542, 540, 928, 165, 543, 473, 723
+	.word	685, 682, 680, 687, 389, 63, 60, 566, 85, 704, 352, 684, 558, 681, 494, 891
+	.word	189, 637, 989, 298, 0xffff
+StyleSetups_Letter_C:	# the setups (u16 MusicStylistSetup numbers) under letter "C" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	782, 536, 11, 428, 106, 759, 358, 754, 771, 692, 703, 626, 80, 693, 604, 584
+	.word	552, 815, 617, 813, 679, 13, 956, 97, 118, 674, 492, 363, 347, 628, 689, 560
+	.word	946, 582, 237, 528, 348, 507, 245, 477, 806, 31, 720, 630, 707, 823, 923, 432
+	.word	412, 441, 442, 414, 419, 433, 426, 808, 894, 447, 471, 285, 817, 737, 738, 620
+	.word	0xffff
+StyleSetups_Letter_D:	# the setups (u16 MusicStylistSetup numbers) under letter "D" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	521, 649, 359, 651, 301, 777, 602, 643, 764, 743, 467, 789, 790, 788, 178, 254
+	.word	66, 850, 705, 336, 912, 915, 202, 391, 992, 169, 575, 315, 45, 517, 27, 415
+	.word	487, 418, 522, 308, 142, 158, 314, 129, 6, 437, 986, 728, 877, 760, 235, 0xffff
+StyleSetups_Letter_E:	# the setups (u16 MusicStylistSetup numbers) under letter "E" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	932, 858, 860, 217, 873, 576, 941, 233, 762, 34, 761, 627, 747, 827, 958, 954
+	.word	345, 346, 658, 187, 0xffff
+StyleSetups_Letter_F:	# the setups (u16 MusicStylistSetup numbers) under letter "F" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	82, 297, 664, 299, 547, 758, 400, 648, 121, 727, 810, 339, 866, 293, 23, 506
+	.word	226, 131, 821, 114, 811, 15, 809, 937, 10, 9, 955, 952, 640, 619, 610, 897
+	.word	588, 839, 695, 457, 931, 599, 787, 911, 262, 253, 350, 908, 266, 910, 283, 258
+	.word	269, 259, 286, 256, 0xffff
+StyleSetups_Letter_G:	# the setups (u16 MusicStylistSetup numbers) under letter "G" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	793, 324, 47, 837, 977, 149, 826, 332, 41, 42, 43, 40, 843, 577, 781, 646
+	.word	718, 370, 981, 504, 375, 381, 368, 386, 372, 374, 512, 933, 987, 731, 639, 380
+	.word	828, 963, 598, 444, 903, 483, 263, 900, 902, 965, 195, 901, 990, 939, 993, 216
+	.word	5, 26, 757, 0xffff
+StyleSetups_Letter_H:	# the setups (u16 MusicStylistSetup numbers) under letter "H" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	199, 383, 919, 274, 193, 904, 516, 220, 160, 466, 410, 775, 459, 463, 134, 686
+	.word	534, 734, 392, 408, 179, 417, 205, 791, 741, 7, 191, 983, 292, 404, 405, 30
+	.word	725, 255, 310, 28, 311, 525, 48, 8, 838, 70, 982, 354, 431, 742, 583, 478
+	.word	622, 379, 387, 402, 597, 197, 238, 538, 711, 390, 474, 319, 317, 318, 449, 396
+	.word	0xffff
+StyleSetups_Letter_I:	# the setups (u16 MusicStylistSetup numbers) under letter "I" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	200, 365, 74, 973, 621, 797, 232, 394, 752, 399, 398, 855, 3, 974, 766, 0xffff
+StyleSetups_Letter_J:	# the setups (u16 MusicStylistSetup numbers) under letter "J" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	155, 739, 768, 935, 510, 531, 537, 549, 499, 545, 548, 550, 934, 485, 511, 694
+	.word	557, 938, 373, 0xffff
+StyleSetups_Letter_K:	# the setups (u16 MusicStylistSetup numbers) under letter "K" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	302, 407, 796, 313, 556, 143, 868, 500, 595, 998, 153, 0xffff
+StyleSetups_Letter_L:	# the setups (u16 MusicStylistSetup numbers) under letter "L" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	287, 239, 834, 247, 508, 740, 229, 926, 650, 171, 854, 250, 688, 944, 702, 690
+	.word	732, 652, 945, 343, 745, 895, 436, 427, 883, 570, 377, 700, 862, 848, 356, 148
+	.word	81, 321, 327, 872, 921, 624, 173, 559, 642, 52, 984, 39, 479, 0xffff
+StyleSetups_Letter_M:	# the setups (u16 MusicStylistSetup numbers) under letter "M" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	357, 53, 495, 715, 653, 713, 563, 561, 997, 565, 772, 724, 450, 533, 104, 502
+	.word	486, 0, 535, 460, 140, 804, 488, 464, 174, 976, 773, 736, 719, 113, 349, 562
+	.word	927, 794, 330, 971, 856, 206, 665, 109, 465, 555, 119, 108, 100, 625, 264, 309
+	.word	572, 980, 224, 605, 660, 0xffff
+StyleSetups_Letter_N:	# the setups (u16 MusicStylistSetup numbers) under letter "N" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	2, 922, 413, 438, 425, 472, 393, 783, 519, 406, 422, 138, 388, 673, 629, 498
+	.word	320, 333, 0xffff
+StyleSetups_Letter_O:	# the setups (u16 MusicStylistSetup numbers) under letter "O" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	78, 395, 696, 181, 207, 112, 892, 890, 820, 949, 117, 957, 721, 172, 98, 716
+	.word	0xffff
+StyleSetups_Letter_P:	# the setups (u16 MusicStylistSetup numbers) under letter "P" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	267, 798, 795, 714, 75, 805, 829, 999, 84, 55, 785, 355, 840, 667, 996, 744
+	.word	614, 683, 909, 529, 215, 312, 780, 120, 230, 376, 4, 167, 105, 137, 497, 530
+	.word	68, 401, 183, 888, 779, 446, 816, 967, 296, 430, 936, 361, 50, 282, 825, 49
+	.word	18, 832, 37, 835, 19, 17, 824, 335, 1, 16, 35, 198, 593, 0xffff
+StyleSetups_Letter_Q:	# the setups (u16 MusicStylistSetup numbers) under letter "Q" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	513, 644, 24, 0xffff
+StyleSetups_Letter_R:	# the setups (u16 MusicStylistSetup numbers) under letter "R" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	260, 351, 227, 141, 898, 846, 493, 89, 366, 334, 362, 769, 970, 924, 58, 918
+	.word	641, 371, 364, 733, 943, 940, 735, 655, 382, 268, 554, 803, 154, 157, 212, 159
+	.word	434, 162, 870, 871, 176, 126, 218, 161, 878, 194, 876, 880, 881, 186, 33, 600
+	.word	587, 590, 953, 476, 756, 0xffff
+StyleSetups_Letter_S:	# the setups (u16 MusicStylistSetup numbers) under letter "S" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	616, 678, 663, 708, 710, 709, 701, 353, 677, 331, 842, 185, 25, 505, 164, 532
+	.word	800, 631, 501, 524, 225, 859, 979, 831, 899, 786, 151, 453, 305, 645, 338, 209
+	.word	509, 294, 929, 887, 635, 638, 662, 917, 196, 435, 177, 163, 972, 852, 668, 64
+	.word	961, 124, 520, 369, 168, 778, 378, 22, 72, 812, 96, 99, 90, 115, 461, 456
+	.word	249, 228, 515, 462, 67, 906, 612, 246, 822, 248, 985, 920, 671, 128, 125, 252
+	.word	71, 192, 801, 421, 156, 76, 290, 279, 243, 907, 291, 288, 281, 240, 234, 251
+	.word	277, 275, 280, 278, 236, 578, 445, 303, 340, 656, 130, 942, 54, 634, 429, 765
+	.word	210, 367, 46, 409, 56, 184, 481, 951, 261, 893, 12, 706, 632, 633, 669, 746
+	.word	618, 337, 607, 586, 975, 329, 139, 221, 420, 276, 770, 818, 57, 968, 73, 241
+	.word	77, 219, 925, 110, 594, 496, 443, 729, 21, 819, 905, 145, 580, 295, 470, 452
+	.word	491, 475, 480, 107, 807, 691, 344, 257, 978, 36, 914, 849, 0xffff
+StyleSetups_Letter_T:	# the setups (u16 MusicStylistSetup numbers) under letter "T" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	322, 385, 62, 792, 300, 964, 133, 697, 657, 659, 698, 699, 767, 609, 879, 774
+	.word	166, 611, 615, 948, 503, 94, 87, 864, 384, 966, 875, 962, 623, 841, 265, 69
+	.word	482, 567, 116, 83, 569, 180, 603, 316, 526, 146, 994, 885, 995, 884, 585, 0xffff
+StyleSetups_Letter_U:	# the setups (u16 MusicStylistSetup numbers) under letter "U" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	61, 307, 469, 717, 930, 152, 270, 0xffff
+StyleSetups_Letter_V:	# the setups (u16 MusicStylistSetup numbers) under letter "V" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	175, 784, 830, 211, 601, 596, 672, 244, 0xffff
+StyleSetups_Letter_W:	# the setups (u16 MusicStylistSetup numbers) under letter "W" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	44, 273, 231, 484, 670, 92, 802, 916, 190, 814, 289, 636, 564, 836, 271, 675
+	.word	571, 755, 581, 0xffff
+StyleSetups_Letter_Y:	# the setups (u16 MusicStylistSetup numbers) under letter "Y" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	411, 423, 204, 676, 29, 0xffff
+StyleSetups_Letter_Z:	# the setups (u16 MusicStylistSetup numbers) under letter "Z" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	573, 0xffff
+	.align	4, 0xFF	# pad after StyleSetups_Letter_Z
 
 StyleAlphabetTable:	# 34 x StyleLetter (8 bytes each); read by func_4C164F3F 0x4C164F3F `mov (4, a0), a0`; func_4C164F3F 0x4C164F3F `mov (d2, a2), a1`; func_4C165012 0x4C165012 `mov (d1, a0), d1` (+7)
-	StyleLetter	letter=Str_1_28, setups=StyleAlphabetTable_p4_0	# [0]
-	StyleLetter	letter=Str_2_30, setups=StyleAlphabetTable_p4_1
-	StyleLetter	letter=Str_4_24, setups=StyleAlphabetTable_p4_2
-	StyleLetter	letter=Str_5_20, setups=StyleAlphabetTable_p4_3
-	StyleLetter	letter=Str_6_20, setups=StyleAlphabetTable_p4_4
-	StyleLetter	letter=Str_7_11, setups=StyleAlphabetTable_p4_5
-	StyleLetter	letter=Str_8_12, setups=StyleAlphabetTable_p4_6
-	StyleLetter	letter=Str_9_10, setups=Str_3_25
-	StyleLetter	letter=Str_A_26, setups=StyleAlphabetTable_p4_7	# [8]
-	StyleLetter	letter=Str_B_13, setups=StyleAlphabetTable_p4_8
-	StyleLetter	letter=Str_C_14, setups=StyleAlphabetTable_p4_9
-	StyleLetter	letter=Str_D_10, setups=StyleAlphabetTable_p4_10
-	StyleLetter	letter=Str_E_8, setups=StyleAlphabetTable_p4_11
-	StyleLetter	letter=Str_F_10, setups=Str_R
-	StyleLetter	letter=Str_G_9, setups=StyleAlphabetTable_p4_12
-	StyleLetter	letter=Str_H_2, setups=StyleAlphabetTable_p4_13
-	StyleLetter	letter=Str_I, setups=StyleAlphabetTable_p4_14	# [16]
-	StyleLetter	letter=Str_J, setups=StyleAlphabetTable_p4_15
-	StyleLetter	letter=Str_K, setups=StyleAlphabetTable_p4_16
-	StyleLetter	letter=Str_L_2, setups=StyleAlphabetTable_p4_17
-	StyleLetter	letter=Str_M, setups=StyleAlphabetTable_p4_18
-	StyleLetter	letter=Str_N_2, setups=StyleAlphabetTable_p4_19
-	StyleLetter	letter=Str_O, setups=Str_N
-	StyleLetter	letter=Str_P_10, setups=StyleAlphabetTable_p4_20
-	StyleLetter	letter=Str_Q_2, setups=StyleAlphabetTable_p4_21	# [24]
-	StyleLetter	letter=Str_R_2, setups=StyleAlphabetTable_p4_22
-	StyleLetter	letter=Str_S, setups=StyleAlphabetTable_p4_23
-	StyleLetter	letter=Str_T_2, setups=StyleAlphabetTable_p4_24
-	StyleLetter	letter=Str_U, setups=Str_empty_256
-	StyleLetter	letter=Str_V, setups=StyleAlphabetTable_p4_25
-	StyleLetter	letter=Str_W, setups=Str_empty_255
-	StyleLetter	letter=Str_Y, setups=StyleAlphabetTable_p4_26
-	StyleLetter	letter=Str_Z, setups=StyleAlphabetTable_p4_27	# [32]
+	StyleLetter	letter=Str_1_28, setups=StyleSetups_Letter_1	# [0]
+	StyleLetter	letter=Str_2_30, setups=StyleSetups_Letter_2
+	StyleLetter	letter=Str_4_24, setups=StyleSetups_Letter_4
+	StyleLetter	letter=Str_5_20, setups=StyleSetups_Letter_5
+	StyleLetter	letter=Str_6_20, setups=StyleSetups_Letter_6
+	StyleLetter	letter=Str_7_11, setups=StyleSetups_Letter_7
+	StyleLetter	letter=Str_8_11, setups=StyleSetups_Letter_8
+	StyleLetter	letter=Str_9_10, setups=StyleSetups_Letter_9
+	StyleLetter	letter=Str_A_26, setups=StyleSetups_Letter_A	# [8]
+	StyleLetter	letter=Str_B_13, setups=StyleSetups_Letter_B
+	StyleLetter	letter=Str_C_14, setups=StyleSetups_Letter_C
+	StyleLetter	letter=Str_D_9, setups=StyleSetups_Letter_D
+	StyleLetter	letter=Str_E_8, setups=StyleSetups_Letter_E
+	StyleLetter	letter=Str_F_10, setups=StyleSetups_Letter_F
+	StyleLetter	letter=Str_G_9, setups=StyleSetups_Letter_G
+	StyleLetter	letter=Str_H, setups=StyleSetups_Letter_H
+	StyleLetter	letter=Str_I, setups=StyleSetups_Letter_I	# [16]
+	StyleLetter	letter=Str_J, setups=StyleSetups_Letter_J
+	StyleLetter	letter=Str_K, setups=StyleSetups_Letter_K
+	StyleLetter	letter=Str_L, setups=StyleSetups_Letter_L
+	StyleLetter	letter=Str_M, setups=StyleSetups_Letter_M
+	StyleLetter	letter=Str_N, setups=StyleSetups_Letter_N
+	StyleLetter	letter=Str_O, setups=StyleSetups_Letter_O
+	StyleLetter	letter=Str_P, setups=StyleSetups_Letter_P
+	StyleLetter	letter=Str_Q_2, setups=StyleSetups_Letter_Q	# [24]
+	StyleLetter	letter=Str_R, setups=StyleSetups_Letter_R
+	StyleLetter	letter=Str_S, setups=StyleSetups_Letter_S
+	StyleLetter	letter=Str_T, setups=StyleSetups_Letter_T
+	StyleLetter	letter=Str_U, setups=StyleSetups_Letter_U
+	StyleLetter	letter=Str_V, setups=StyleSetups_Letter_V
+	StyleLetter	letter=Str_W, setups=StyleSetups_Letter_W
+	StyleLetter	letter=Str_Y, setups=StyleSetups_Letter_Y
+	StyleLetter	letter=Str_Z, setups=StyleSetups_Letter_Z	# [32]
 	StyleLetter	
 
-StyleEraTable_p4_0:	# REC_StyleEraTable_p4 (58 bytes)
-	REC_StyleEraTable_p4	f0=341, x2="3\x00V\x01U\x03C\x01 \x00a\x03\xBC\x00j\x03>\x02\x84\x00\x7F\x00\xDC\x03\x87\x00g\x00c\x03\xDF\x03e\x00&\x00;\x00C\x02h\x012\x010\x01E\x01f\x00F\x01\x0F\x02?\x00"
-# census: opaque -- unknown-dump: 336 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DF272, 0x3DF3C2
-StyleEraTable_p4_1:	# REC_StyleEraTable_p4 (58 bytes)
-	REC_StyleEraTable_p4	f0=20, x2="A\x03A\x00[\x00X\x00S\x03\x1C\x01\xEE\x02\xB3\x03\x88\x00_\x00]\x00]\x03e\x03Y\x03_\x03o\x00e\x02\xEF\x02\xED\x02\xC9\x03\xEC\x02\xD6\x02\xB7\x018\x02\xC0\x02`\x01\x03\x03a\x00"
-# census: opaque -- unknown-dump: 312 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DF3FC, 0x3DF534
-StyleEraTable_p4_2:	# REC_StyleEraTable_p4 (58 bytes)
-	REC_StyleEraTable_p4	f0=424, x2="\x91\x03H\x01\xB6\x00L\x03\x9A\x02V\x00P\x02M\x03y\x03\x10\x01\xB6\x03\x0E\x00\xF2\x00\x96\x00O\x03\x80\x03U\x00.\x02{\x03\x0B\x00j\x00/\x03i\x02-\x03\x0D\x00\x10\x02&\x03\xAA\x01"
-# census: opaque -- unknown-dump: 256 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DF56E, 0x3DF66E
-StyleEraTable_p4_3:	# REC_StyleEraTable_p4 (58 bytes)
-	REC_StyleEraTable_p4	f0=208, x2="'\x02\"\x02\xAA\x00 \x02\xD6\x00\xD5\x00\xB8\x01v\x03O\x00`\x02\xCB\x00\xDF\x00\xC9\x00\xDE\x00\xA5\x00\xAD\x02\xAA\x02\xA8\x02\xAF\x02\xAC\x02\xA9\x02P\x00t\x02\xB1\x02v\x02\xB9\x01\xBA\x01Z\x02"
-# census: opaque -- unknown-dump: 128 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DF6A8, 0x3DF728
-StyleEraTable_p4_4:	# REC_StyleEraTable_p4 (58 bytes)
-	REC_StyleEraTable_p4	f0=147, x2="r\x03\x0B\x02\x90\x00{\x00z\x00\x87\x02\xC3\x01\xC0\x01\xF1\x02\xD4\x01\xA0\x01\xF2\x02\xDD\x01\xA3\x01~\x03\xD7\x01l\x02\x09\x02\x89\x02\x8B\x02\xE0\x03\xE7\x01\xA2\x01\n\x02\x9E\x00m\x03\x88\x02y\x00"
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DF762, 0x3DF7C2
-StyleEraTable_p4_5:	# REC_StyleEraTable_p4 (58 bytes)
-	REC_StyleEraTable_p4	f0=776, x2="\xFB\x02\xF7\x02\xA2\x02\x09\x03\xF8\x02\xFA\x02\xF9\x02\x92\x02\xF6\x02W\x02V\x02\xF5\x02\x9A\x01\x98\x01U\x02\xA1\x02\x0B\x03\xF4\x02\n\x03\x90\x02\x99\x01\x91\x02\x93\x02T\x02\xA0\x02\xA3\x02\x9B\x01\xFF\xFF"
-StyleEraTable_p4_6:	# REC_StyleEraTable_p4 (58 bytes)
-	REC_StyleEraTable_p4	f0=541, x2="\xE9\x01\xEA\x01\xC7\x01\x06\x02\xC6\x01\xCA\x01\x1E\x02\x1C\x02\x1F\x02\xFB\x01\xD3\x01\x05\x02\xA4\x03\xBA\x03\xFA\x01\xBB\x03\xB8\x03\xC9\x01\xF8\x01\xA5\x03\xE3\x01\x04\x02\xD2\x01\xCB\x01\xCF\x01\x16\x02\xA7\x03\xFE\x01"
-# census: opaque -- unknown-dump: 64 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DF836, 0x3DF876
-StyleEraTable_p4_7:	# REC_StyleEraTable_p4 (58 bytes)
-	REC_StyleEraTable_p4	f0=654, x2="^\x02\x02\x02\x1B\x02\xEE\x01\x18\x02\xB4\x02\xB5\x02\\\x02\xEC\x01\xB7\x02\x00\x02\x1A\x02\x19\x02\xB6\x02\x9E\x03\x8C\x02\xEF\x01\x8D\x02\x9F\x03]\x02\x01\x02\xED\x01\x9C\x03\x8F\x02\x03\x02_\x02\x9D\x03\xFF\xFF"
-StyleEraTable_p4_8:	# REC_StyleEraTable_p4 (58 bytes)
-	REC_StyleEraTable_p4	f0=553, x2="\x95\x02\xC0\x03H\x02(\x02\xEB\x02\xC3\x03\xE9\x02+\x02\x94\x02\xB8\x02\xE8\x02*\x02K\x02\x97\x02{\x02\x96\x02\xC1\x03z\x02x\x02y\x02\xEA\x02J\x02\xB9\x02\xBA\x02\xBB\x02\xC2\x03I\x02\xFF\xFF"
-	.align	4, 0xFF	# pad after StyleEraTable_p4_8
+StyleSetups_Era_1990_s:	# the setups (u16 MusicStylistSetup numbers) under era "1990's" of StyleEraTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	341, 51, 342, 853, 323, 32, 865, 188, 874, 574, 132, 127, 988, 135, 103, 867
+	.word	991, 101, 38, 59, 579, 360, 306, 304, 325, 102, 326, 527, 63, 60, 189, 989
+	.word	298, 358, 626, 363, 347, 348, 31, 823, 923, 359, 301, 743, 575, 315, 45, 308
+	.word	314, 129, 986, 873, 576, 34, 627, 345, 346, 297, 299, 866, 131, 821, 114, 350
+	.word	324, 47, 977, 332, 41, 42, 43, 40, 577, 718, 987, 990, 134, 741, 191, 404
+	.word	405, 30, 310, 28, 311, 525, 48, 70, 742, 319, 317, 318, 74, 855, 3, 302
+	.word	407, 313, 740, 854, 343, 356, 321, 327, 872, 921, 624, 52, 984, 39, 357, 53
+	.word	0, 976, 719, 113, 349, 100, 625, 309, 572, 2, 922, 406, 422, 320, 333, 112
+	.word	820, 716, 75, 55, 312, 68, 296, 361, 50, 49, 18, 37, 19, 17, 335, 1
+	.word	16, 35, 351, 334, 362, 58, 126, 33, 524, 979, 305, 852, 124, 72, 115, 822
+	.word	985, 920, 128, 125, 71, 421, 578, 303, 340, 130, 54, 46, 56, 420, 57, 73
+	.word	344, 978, 36, 322, 62, 300, 133, 864, 875, 69, 316, 526, 61, 307, 717, 44
+	.word	190, 423, 29, 573, 0xffff
+StyleSetups_Era_1980_s:	# the setups (u16 MusicStylistSetup numbers) under era "1980's" of StyleEraTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	20, 833, 65, 91, 88, 851, 284, 750, 947, 136, 95, 93, 861, 869, 857, 863
+	.word	111, 613, 751, 749, 969, 748, 726, 439, 568, 704, 352, 771, 97, 118, 946, 237
+	.word	245, 707, 432, 433, 808, 447, 285, 817, 254, 66, 850, 705, 27, 6, 437, 235
+	.word	858, 860, 941, 233, 827, 727, 810, 293, 23, 811, 809, 911, 262, 253, 908, 266
+	.word	910, 283, 269, 286, 826, 444, 903, 263, 900, 902, 965, 901, 5, 26, 904, 7
+	.word	292, 725, 255, 354, 238, 232, 768, 868, 287, 239, 834, 247, 250, 944, 945, 436
+	.word	570, 862, 848, 724, 971, 856, 109, 119, 108, 264, 438, 138, 117, 98, 267, 355
+	.word	614, 909, 4, 137, 446, 816, 967, 282, 825, 832, 835, 824, 24, 260, 89, 769
+	.word	970, 943, 940, 268, 434, 870, 871, 353, 25, 859, 294, 435, 64, 22, 96, 99
+	.word	90, 249, 67, 906, 612, 246, 248, 252, 907, 281, 234, 251, 280, 236, 445, 942
+	.word	261, 706, 139, 770, 818, 968, 110, 21, 819, 905, 295, 849, 964, 615, 94, 966
+	.word	265, 116, 569, 270, 244, 92, 271, 571, 0xffff
+StyleSetups_Era_1970_s:	# the setups (u16 MusicStylistSetup numbers) under era "1970's" of StyleEraTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	424, 913, 328, 182, 844, 666, 86, 592, 845, 889, 272, 950, 14, 242, 150, 847
+	.word	896, 85, 558, 891, 11, 106, 815, 617, 813, 13, 528, 806, 426, 178, 336, 912
+	.word	915, 217, 187, 664, 339, 15, 10, 9, 619, 897, 258, 259, 256, 149, 843, 370
+	.word	368, 386, 828, 216, 199, 274, 179, 8, 379, 387, 197, 365, 531, 557, 556, 595
+	.word	998, 427, 377, 148, 173, 559, 997, 104, 804, 174, 330, 665, 425, 181, 890, 949
+	.word	172, 805, 829, 999, 84, 840, 667, 996, 529, 376, 105, 530, 183, 888, 198, 593
+	.word	898, 846, 366, 371, 364, 803, 176, 218, 186, 616, 331, 842, 185, 800, 831, 899
+	.word	151, 338, 196, 177, 369, 378, 812, 801, 290, 279, 243, 291, 288, 240, 277, 275
+	.word	278, 367, 184, 951, 12, 618, 337, 329, 276, 241, 219, 594, 107, 807, 257, 914
+	.word	385, 948, 87, 384, 841, 180, 175, 830, 273, 802, 814, 289, 0xffff
+StyleSetups_Era_1960_s:	# the setups (u16 MusicStylistSetup numbers) under era "1960's" of StyleEraTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	208, 551, 546, 170, 544, 214, 213, 440, 886, 79, 608, 203, 223, 201, 222, 165
+	.word	685, 682, 680, 687, 684, 681, 80, 628, 689, 630, 441, 442, 602, 202, 169, 142
+	.word	82, 547, 226, 610, 195, 193, 220, 686, 205, 200, 549, 545, 548, 550, 143, 229
+	.word	171, 688, 690, 81, 140, 206, 224, 629, 78, 207, 683, 215, 230, 167, 227, 141
+	.word	212, 194, 600, 164, 631, 225, 209, 887, 168, 228, 192, 76, 210, 221, 77, 443
+	.word	691, 609, 166, 611, 83, 603, 885, 884, 211, 601, 231, 204, 0xffff
+StyleSetups_Era_1950_s:	# the setups (u16 MusicStylistSetup numbers) under era "1950's" of StyleEraTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	147, 882, 523, 144, 123, 122, 647, 451, 448, 753, 468, 416, 754, 477, 419, 894
+	.word	471, 620, 521, 649, 651, 992, 487, 418, 522, 158, 877, 648, 121, 646, 993, 160
+	.word	417, 478, 622, 449, 621, 752, 155, 485, 153, 650, 895, 883, 479, 450, 486, 892
+	.word	120, 644, 154, 157, 159, 162, 161, 878, 876, 880, 881, 476, 645, 163, 520, 156
+	.word	893, 145, 470, 879, 623, 146, 994, 995, 469, 152, 484, 755, 0xffff
+StyleSetups_Era_Pre_1920_s:	# the setups (u16 MusicStylistSetup numbers) under era "Pre 1920's" of StyleEraTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	776, 763, 759, 674, 777, 760, 762, 761, 658, 758, 599, 598, 757, 410, 408, 597
+	.word	673, 779, 756, 778, 656, 409, 657, 659, 596, 672, 675, 411, 0xffff
+StyleSetups_Era_1940_s:	# the setups (u16 MusicStylistSetup numbers) under era "1940's" of StyleEraTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	541, 489, 490, 455, 518, 454, 458, 542, 540, 543, 507, 467, 517, 932, 954, 506
+	.word	955, 952, 457, 504, 933, 483, 516, 466, 459, 463, 534, 935, 510, 499, 934, 511
+	.word	500, 508, 533, 502, 535, 460, 488, 464, 465, 519, 498, 497, 953, 505, 532, 501
+	.word	453, 509, 461, 456, 462, 481, 496, 452, 491, 480, 503, 482, 0xffff
+StyleSetups_Era_1930_s:	# the setups (u16 MusicStylistSetup numbers) under era "1930's" of StyleEraTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	654, 606, 514, 539, 494, 536, 692, 693, 604, 492, 695, 512, 538, 537, 694, 926
+	.word	652, 495, 653, 927, 605, 513, 493, 924, 655, 515, 607, 925, 0xffff
+StyleSetups_Era_1920_s:	# the setups (u16 MusicStylistSetup numbers) under era "1920's" of StyleEraTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
+	.word	553, 661, 960, 584, 552, 747, 963, 745, 555, 660, 696, 744, 554, 587, 663, 635
+	.word	662, 961, 634, 632, 633, 746, 586, 697, 698, 699, 962, 585, 0xffff
+	.align	4, 0xFF	# pad after StyleSetups_Era_1920_s
 
 StyleRecordTable:	# 1000 x MusicStylistSetup (24 bytes each); read by MssNameFunc_L121 0x4C1637F8 `mov (4, a0), a1`; func_4C163899 0x4C163899 `mov (4, a0), a1`; AcCategoryListBoxProc_L54 0x4C1639E8 `movhu (8, a1), d0` (+65)
 	MusicStylistSetup	panel=StylePanel_Mellow_Italiano_1, name=Text_Mellow_Italiano_119, era_pos=112, letter=20, letter_pos=17, x22="\x00\x00"	# [0]
@@ -39796,15 +39535,15 @@ StyleRecordTable:	# 1000 x MusicStylistSetup (24 bytes each); read by MssNameFun
 	MusicStylistSetup	panel=StylePanel_Kirmes_Accordion_3, name=Text_Mellow_Italiano_119+26946, genre=2, style=14, setup=2, era=2, era_pos=64, letter=18, letter_pos=9, x22="\x00\x00"
 	MusicStylistSetup	panel=StylePanel_Party_Brass_4, name=Text_Mellow_Italiano_119+26973, genre=2, style=14, setup=3, era=2, era_pos=83, letter=23, letter_pos=7, x22="\x00\x00"
 StyleEraTable:	# 10 x StyleEra (12 bytes each); read by func_4C165A19_entry_L42 0x4C165A60 `mov (4, a1), a0`; func_4C165A19_entry_L42 0x4C165A60 `movhu (8, a0), d0`; func_4C165A19_entry_L83 0x4C165AA1 `mov (d0, a0), a1` (+8)
-	StyleEra	name=Text_Pre_1920_s, setups=StyleEraTable_p4_5, era=5, x10="\x00\x00"	# [0]
-	StyleEra	name=Text_Pre_1920_s+17, setups=StyleEraTable_p4_8, era=8, x10="\x00\x00"
-	StyleEra	name=Text_Pre_1920_s+34, setups=StyleEraTable_p4_7, era=7, x10="\x00\x00"
-	StyleEra	name=Text_Pre_1920_s+51, setups=StyleEraTable_p4_6, era=6, x10="\x00\x00"
-	StyleEra	name=Text_Pre_1920_s+68, setups=StyleEraTable_p4_4, era=4, x10="\x00\x00"
-	StyleEra	name=Text_Pre_1920_s+85, setups=StyleEraTable_p4_3, era=3, x10="\x00\x00"
-	StyleEra	name=Text_Pre_1920_s+102, setups=StyleEraTable_p4_2, era=2, x10="\x00\x00"
-	StyleEra	name=Text_Pre_1920_s+119, setups=StyleEraTable_p4_1, era=1, x10="\x00\x00"
-	StyleEra	name=Text_Pre_1920_s+136, setups=StyleEraTable_p4_0, x10="\x00\x00"	# [8]
+	StyleEra	name=Text_Pre_1920_s, setups=StyleSetups_Era_Pre_1920_s, era=5, x10="\x00\x00"	# [0]
+	StyleEra	name=Text_Pre_1920_s+17, setups=StyleSetups_Era_1920_s, era=8, x10="\x00\x00"
+	StyleEra	name=Text_Pre_1920_s+34, setups=StyleSetups_Era_1930_s, era=7, x10="\x00\x00"
+	StyleEra	name=Text_Pre_1920_s+51, setups=StyleSetups_Era_1940_s, era=6, x10="\x00\x00"
+	StyleEra	name=Text_Pre_1920_s+68, setups=StyleSetups_Era_1950_s, era=4, x10="\x00\x00"
+	StyleEra	name=Text_Pre_1920_s+85, setups=StyleSetups_Era_1960_s, era=3, x10="\x00\x00"
+	StyleEra	name=Text_Pre_1920_s+102, setups=StyleSetups_Era_1970_s, era=2, x10="\x00\x00"
+	StyleEra	name=Text_Pre_1920_s+119, setups=StyleSetups_Era_1980_s, era=1, x10="\x00\x00"
+	StyleEra	name=Text_Pre_1920_s+136, setups=StyleSetups_Era_1990_s, x10="\x00\x00"	# [8]
 	StyleEra	x10="\x00\x00"
 
 # 3 ApFunction procedures; a function id is (0x127 << 16) | its index (the names are the parallel table at slot 0x327)
@@ -40041,4 +39780,235 @@ User07_Functions:
 	IDNAME	FN_DirPlayRx, DirPlayRx, User07_Functions, 0x107
 	IDNAME	FN_MrxFifoWrite, MrxFifoWrite, User07_Functions, 0x107
 	IDNAME	FN_ErxFifoWrite, ErxFifoWrite, User07_Functions, 0x107
+	.space	4, 0x00
+
+User07_FunctionNames:
+	.long	FnName_HDDTestProc
+	.long	FnName_sprintf
+	.long	FnName_sscanf
+	.long	FnName_putstr
+	.long	FnName_loc_cpu
+	.long	FnName_unl_cpu
+	.long	FnName_dis_int
+	.long	FnName_ena_int
+	.long	FnName_dly_tsk
+	.long	FnName_cre_tsk_X
+	.long	FnName_del_tsk
+	.long	FnName_sta_tsk
+	.long	FnName_ext_tsk
+	.long	FnName_exd_tsk
+	.long	FnName_ter_tsk
+	.long	FnName_chg_pri_X
+	.long	FnName_rot_rdq
+	.long	FnName_get_tid
+	.long	FnName_cre_sem_X
+	.long	FnName_del_sem
+	.long	FnName_sig_sem
+	.long	FnName_wai_sem
+	.long	FnName_preq_sem
+	.long	FnName_ref_sem_X
+	.long	FnName_cre_flg_X
+	.long	FnName_del_flg
+	.long	FnName_set_flg
+	.long	FnName_clr_flg
+	.long	FnName_wai_flg_X
+	.long	FnName_cre_mbx_X
+	.long	FnName_del_mbx
+	.long	FnName_snd_msg_X
+	.long	FnName_rcv_msg_X
+	.long	FnName_prcv_msg_X
+	.long	FnName_SetExtMode
+	.long	FnName_ResetExtMode
+	.long	FnName_CheckExtMode
+	.long	FnName_LoadLsw_HD
+	.long	FnName_LoadPmt_HD
+	.long	FnName_LoadMd_HD
+	.long	FnName_LoadSqt_HD
+	.long	FnName_LoadSqfSeq_HD
+	.long	FnName_LoadCmp_HD
+	.long	FnName_LoadMsp_HD
+	.long	FnName_LoadTm_HD
+	.long	FnName_LoadEfc_HD
+	.long	FnName_LoadFav_HD
+	.long	FnName_LoadHmp_HD
+	.long	FnName_LoadRcm_HD
+	.long	FnName_LoadCst
+	.long	FnName_SaveLsw_HD
+	.long	FnName_SavePmt_HD
+	.long	FnName_SaveMd_HD
+	.long	FnName_SaveFav_HD
+	.long	FnName_SaveHmp_HD
+	.long	FnName_SaveEfc_HD
+	.long	FnName_SaveSqt_HD
+	.long	FnName_SaveCmp_HD
+	.long	FnName_SaveMsp_HD
+	.long	FnName_SaveTm_HD
+	.long	FnName_SaveRcm_HD
+	.long	FnName_SaveCst
+	.long	FnName_LoadSmf
+	.long	FnName_SaveSmf
+	.long	FnName_LoadHpBmp
+	.long	FnName_TransldSeq
+	.long	FnName_TransldLswPm
+	.long	FnName_TransldLsw
+	.long	FnName_TransldPm
+	.long	FnName_TransldSqf
+	.long	FnName_TransldMidi
+	.long	FnName_CmpConvLoad
+	.long	FnName_UserPadConvLoad
+	.long	FnName_PreTmTransLoad
+	.long	FnName_PostTmTransLoad
+	.long	FnName_FDLoadSaveTest
+	.long	FnName_GetMediaType
+	.long	FnName_GetDiskFreeSpace
+	.long	FnName_GetVolumeLabel
+	.long	FnName_findfirst
+	.long	FnName_findnext
+	.long	FnName_findclose
+	.long	FnName_fopen_ext
+	.long	FnName_fwrite_ext
+	.long	FnName_fread_ext
+	.long	FnName_fclose_ext
+	.long	FnName_ferror_ext
+	.long	FnName_free_X
+	.long	FnName_malloc_X
+	.long	FnName_MidiTx
+	.long	FnName_GetBeatSeq
+	.long	FnName_ReqStopAll
+	.long	FnName_DirStopAll
+	.long	FnName_IsRunningSeq
+	.long	FnName_IsStartTimingSeq
+	.long	FnName_IsStopTimingSeq
+	.long	FnName_M3SendProcess
+	.long	FnName_M3SendProcessTgc
+	.long	FnName_M3SendProcessTgcOld
+	.long	FnName_M3SendProcessMidi
+	.long	FnName_M3SendProcessSeq
+	.long	FnName_M3SendProcessRhy
+	.long	FnName_M3SendProcessPad
+	.long	FnName_M3SendProcessApp
+	.long	FnName_M3SendProcessCp
+	.long	FnName_M3BufferOut
+	.long	FnName_PutM3Em
+	.long	FnName_PutM3Sqf
+	.long	FnName_PutM3Force
+	.long	FnName_PutM3Non
+	.long	FnName_PutM3EmDelay
+	.long	FnName_AddM3Em
+	.long	FnName_GetM3Em
+	.long	FnName_GetM3Sqf
+	.long	FnName_GetM3Init
+	.long	FnName_GetM3EmVal
+	.long	FnName_GetM3SqfVal
+	.long	FnName_GetM3InitVal
+	.long	FnName_TgcBufWrite
+	.long	FnName_GetLyricsData
+	.long	FnName_GetRvPoint1
+	.long	FnName_GetRvPoint2
+	.long	FnName_GetWrPoint1
+	.long	FnName_GetWrPoint2
+	.long	FnName_GetVRAMAddr
+	.long	FnName_GetWRAMAddr
+	.long	FnName_GetWPAL1Addr
+	.long	FnName_GetWPAL2Addr
+	.long	FnName_GetTimBase
+	.long	FnName_LcdOut
+	.long	FnName_ScreenOn
+	.long	FnName_ScreenOff
+	.long	FnName_GetSeqPlyPart
+	.long	FnName_SetSeqPlyPart
+	.long	FnName_GetSeqPlyPartBit
+	.long	FnName_SetSeqPlyPartBit
+	.long	FnName_GetSeqPlySrtR
+	.long	FnName_SetSeqPlySrtR
+	.long	FnName_GetSeqPlySrtRBit
+	.long	FnName_SetSeqPlySrtRBit
+	.long	FnName_GetSeqPlyEnR
+	.long	FnName_SetSeqPlyEnR
+	.long	FnName_GetSeqPlyEnRBit
+	.long	FnName_SetSeqPlyEnRBit
+	.long	FnName_GetSeqRecPart
+	.long	FnName_SetSeqRecPart
+	.long	FnName_GetSeqRecPartBit
+	.long	FnName_SetSeqRecPartBit
+	.long	FnName_GetSeqRecSrtR
+	.long	FnName_SetSeqRecSrtR
+	.long	FnName_GetSeqRecSrtRBit
+	.long	FnName_SetSeqRecSrtRBit
+	.long	FnName_GetMeasSeq
+	.long	FnName_SetMeasSeq
+	.long	FnName_IncMeasSeq
+	.long	FnName_SwInMeasSeq
+	.long	FnName_GetTrackStatusSeq
+	.long	FnName_GetTrackPartSeq
+	.long	FnName_GetSeqSongNo
+	.long	FnName_SetSeqSongNo
+	.long	FnName_CurSongSet_NoPlayDisp
+	.long	FnName_CurSongSet_PlayDisp
+	.long	FnName_SongCapacity_KB
+	.long	FnName_SongCapacity_Per
+	.long	FnName_seq_ini_in
+	.long	FnName_seq_anoff_op
+	.long	FnName_sqpstp_op
+	.long	FnName_SeqAllStopProc
+	.long	FnName_SeqPlayChk
+	.long	FnName_PlayLedCtrlSeq
+	.long	FnName_EasyRecLedCtrlSeq
+	.long	FnName_InitFeatureDemo
+	.long	FnName_ExitFeatureDemo
+	.long	FnName_ExistFeatureDemo
+	.long	FnName_StartFeatureDemo
+	.long	FnName_EndFeatureDemo
+	.long	FnName_GetDemoCtlTimer
+	.long	FnName_SrtExtDemo
+	.long	FnName_StpDemoPlay
+	.long	FnName_decompInit
+	.long	FnName_decomp
+	.long	FnName_decompEnd
+	.long	FnName_compInit
+	.long	FnName_comp
+	.long	FnName_compEnd
+	.long	FnName_initialize_comp
+	.long	FnName_DirPlayRx
+	.long	FnName_MrxFifoWrite
+	.long	FnName_ErxFifoWrite
+# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x3E5D84, 0x3E5D88
+User07_MainFunctions:
+	.space	4, 0x00
+data_4C3E5D8C:
+	# 4 bytes the code takes the address of: InitializeUser07 0x4C171CF2 `call RegisterObjectTable, 0, 0` (+0, arg sp44); InitializeUser07 0x4C171CF2 `mov data_4C3E5D8C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp44): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
+	.long	data_4C2ABFA8	# +0
+
+# 18 objects of block V_HD_MENU; object <name> is index <name>_ix, id <name>_id = (0x77 << 16) | <name>_ix
+V_HD_MENU_Viewables:
+	OBJ	HD_MENU, V_HD_MENU_Viewables, 0x77
+	OBJ	HDD_DBMEMO, V_HD_MENU_Viewables, 0x77
+	OBJ	HD_MENU_CatchEvent1, V_HD_MENU_Viewables, 0x77
+	OBJ	HD_MENU_Label_Flash, V_HD_MENU_Viewables, 0x77
+	OBJ	HD_MENU_Label_PPORT, V_HD_MENU_Viewables, 0x77
+	OBJ	HD_MENU_Label_SRAM, V_HD_MENU_Viewables, 0x77
+	OBJ	HD_MENU_Label_USB, V_HD_MENU_Viewables, 0x77
+	OBJ	HD_MENU_Label_HDD, V_HD_MENU_Viewables, 0x77
+	OBJ	HD_MENU_ScreenMenu_DEBUG, V_HD_MENU_Viewables, 0x77
+	OBJ	HD_MENU_TitleMenu_HDD_COMMUNICATION_TE, V_HD_MENU_Viewables, 0x77
+	OBJ	HD_MENU_Label_ALL_TEST, V_HD_MENU_Viewables, 0x77
+	OBJ	HDD_DEBUG, V_HD_MENU_Viewables, 0x77
+	OBJ	HamaDeb, V_HD_MENU_Viewables, 0x77
+	OBJ	HDD_DEBUG_CatchEvent1, V_HD_MENU_Viewables, 0x77
+	OBJ	HDD_DEBUG_ExitScreen1, V_HD_MENU_Viewables, 0x77
+	OBJ	HDD_DEBUG_Label_F1_F2_F3_F4_F5_F6_F7, V_HD_MENU_Viewables, 0x77
+	OBJ	HDD_DEBUG_Label_LOAD, V_HD_MENU_Viewables, 0x77
+	OBJ	HDD_DEBUG_Label_INIT, V_HD_MENU_Viewables, 0x77
+	.space	4, 0x00
+# 8 objects of block V_HDDTEST; object <name> is index <name>_ix, id <name>_id = (0xd5 << 16) | <name>_ix
+V_HDDTEST_Viewables:
+	OBJ	HDDTEST, V_HDDTEST_Viewables, 0xd5
+	OBJ	HDDTEST_CatchEvent1, V_HDDTEST_Viewables, 0xd5
+	OBJ	TEST_START, V_HDDTEST_Viewables, 0xd5
+	OBJ	TestConsole, V_HDDTEST_Viewables, 0xd5
+	OBJ	START_PPORT, V_HDDTEST_Viewables, 0xd5
+	OBJ	FDTEST_SW, V_HDDTEST_Viewables, 0xd5
+	OBJ	USBTEST_SW, V_HDDTEST_Viewables, 0xd5
+	OBJ	HDDTEST_SW, V_HDDTEST_Viewables, 0xd5
 	.space	4, 0x00

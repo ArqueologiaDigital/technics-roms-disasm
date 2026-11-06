@@ -51504,7 +51504,7 @@ KssSetSfx_DISPProc_L2e7:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	names_978A31BC+28, a0
+	mov	KssSetSfx_DISPProc_L2e7_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x24, sp), d0
 	asl2	d0
@@ -51542,7 +51542,7 @@ KssSetSfx_DISPProc_L2e7:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	names_978A31BC+28, a0
+	mov	KssSetSfx_DISPProc_L2e7_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x24, sp), d0
 	add	6, d0
@@ -51605,7 +51605,7 @@ KssSetSfx_DISPProc_L2e7:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	names_978A31BC+28, a0
+	mov	KssSetSfx_DISPProc_L2e7_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x24, sp), d0
 	asl2	d0
@@ -51643,7 +51643,7 @@ KssSetSfx_DISPProc_L2e7:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	names_978A31BC+28, a0
+	mov	KssSetSfx_DISPProc_L2e7_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x24, sp), d0
 	add	6, d0

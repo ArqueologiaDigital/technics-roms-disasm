@@ -34565,7 +34565,7 @@ InitModeTitleTable_entry:
     mov     d1, (4, a2)
     mov     d2, d0
     asl2    d0
-    mov     names_485AD928, a0
+    mov     InitModeTitleTable_Table_3, a0
     mov     (d0, a0), d1
     mov     d2, d0
     asl     3, d0
@@ -34603,7 +34603,7 @@ loc_4843169F:
     lne
     mov     d2, d0
     asl2    d0
-    mov     names_485ADB18, a0
+    mov     InitModeTitleTable_Table_4, a0
     mov     (d0, a0), a0
     asl     4, d2
     add     a2, d2
@@ -34637,7 +34637,7 @@ loc_484316DA:
     lne
     mov     d2, d1
     asl2    d1
-    mov     names_485AEA98, a0
+    mov     InitModeTitleTable_Table_5, a0
     mov     (d1, a0), a0
     mov     0x1c, d0
     nop

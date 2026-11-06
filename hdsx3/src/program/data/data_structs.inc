@@ -101,18 +101,6 @@
 	.ascii	"\x0"
 .endm
 
-# REC_names_978A31BC_p0: 1-byte records (names_978A31BC_p0, 4 records); fields, and what reads them:
-#   +0   x0           u8[1]          no reader seen
-.macro REC_names_978A31BC_p0 x0
-	.ascii	"\x0"
-.endm
-
-# REC_KssSetSfx_DISPProc_L822_Table_p0: 4-byte records (KssSetSfx_DISPProc_L822_Table_p0, 4 records); fields, and what reads them:
-#   +0   text         ptr            KssSetSfx_DISPProc_La1d 0x9781FAB3 `mov (a0), d0`
-.macro REC_KssSetSfx_DISPProc_L822_Table_p0 text=0
-	.long	\text
-.endm
-
 # REC_KssCopyFdToHD_DISPProc_L709_Table_p0: 1-byte records (KssCopyFdToHD_DISPProc_L709_Table_p0, 1 records); fields, and what reads them:
 #   +0   x0           u8[1]          no reader seen
 .macro REC_KssCopyFdToHD_DISPProc_L709_Table_p0 x0

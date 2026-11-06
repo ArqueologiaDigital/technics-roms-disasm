@@ -4525,18 +4525,6 @@
 	.ascii	"\x0"
 .endm
 
-# REC_names_50001910_p0: 4-byte records (names_50001910_p0, 4 records); fields, and what reads them:
-#   +0   index        u8             ConvertStrings_entry_L12 0x4860572A `movbu (a2), d0`; ConvertStrings_entry_L32 0x4860574A `movbu (a2), d0` (+4)
-#   +1   f1           u8             ConvertStrings_entry_L3e 0x48605756 `movbu (a2), d0`
-#   +2   f2           u8             ConvertStrings_entry_L3e 0x48605756 `movbu (a2), d0`
-#   +3   x3           u8[1]          no reader seen
-.macro REC_names_50001910_p0 index=0, f1=0, f2=0, x3
-	.byte	\index
-	.byte	\f1
-	.byte	\f2
-	.ascii	"\x3"
-.endm
-
 # REC_AcFavScreenProc_Table_p4: 1-byte records (AcFavScreenProc_Table_p4, 2 records); fields, and what reads them:
 #   +0   f0           u8             AcFavCategoryProc_L10f 0x4865EE5A `movbu (a0), d0`
 .macro REC_AcFavScreenProc_Table_p4 f0=0
@@ -4689,23 +4677,9 @@
 	.byte	\key
 .endm
 
-# REC_names_4850E1E0_p0: 4-byte records (names_4850E1E0_p0, 4 records); fields, and what reads them:
-#   +0   key          u8             func_486FF583_L59 0x486FF5DC `movbu (a0), d0`; func_486FF583_Lae 0x486FF631 `movbu (a0), d0`
-#   +1   x1           u8[3]          no reader seen
-.macro REC_names_4850E1E0_p0 key=0, x1
-	.byte	\key
-	.ascii	"\x1"
-.endm
-
 # REC_func_486FF85A_L44_Table_p0: 1-byte records (func_486FF85A_L44_Table_p0, 1 records); fields, and what reads them:
 #   +0   key          u8             func_486FF85A_L2e 0x486FF888 `movbu (a0), d1`; func_486FF85A_L64 0x486FF8BE `movbu (a0), d0`
 .macro REC_func_486FF85A_L44_Table_p0 key=0
-	.byte	\key
-.endm
-
-# REC_names_4850E528_p0: 1-byte records (names_4850E528_p0, 4 records); fields, and what reads them:
-#   +0   key          u8             func_486FFB68_L74 0x486FFBDC `movbu (a0), d0`; func_486FFB68_L11e 0x486FFC86 `movbu (a0), d0`
-.macro REC_names_4850E528_p0 key=0
 	.byte	\key
 .endm
 
@@ -4769,34 +4743,6 @@
 #   +0   x0           u8[20]         no reader seen
 .macro REC_func_4863DE13_Result x0
 	.ascii	"\x0"
-.endm
-
-# REC_StyleGenreTable_p4_p4: 80-byte records (StyleGenreTable_p4_p4, 6 records); fields, and what reads them:
-#   +0   f0           u16            func_4863EFAC_entry_Lf 0x4863EFBE `movhu (a0), d0`; func_4863F243_entry_L47 0x4863F28F `movhu (a0), d0` (+2)
-#   +2   x2           u8[4]          no reader seen
-#   +6   f6           u16            func_4863F5E8 0x4863F5E8 `movhu (6, a0), d0`
-#   +8   x8           u8[72]         no reader seen
-.macro REC_StyleGenreTable_p4_p4 f0=0, x2, f6=0, x8
-	.word	\f0
-	.ascii	"\x2"
-	.word	\f6
-	.ascii	"\x8"
-.endm
-
-# REC_StyleAlphabetTable_p4: 6-byte records (StyleAlphabetTable_p4, 24 records); fields, and what reads them:
-#   +0   f0           u16            func_4863F985 0x4863F985 `movhu (a0), d0`
-#   +2   x2           u8[4]          no reader seen
-.macro REC_StyleAlphabetTable_p4 f0=0, x2
-	.word	\f0
-	.ascii	"\x2"
-.endm
-
-# REC_StyleEraTable_p4: 130-byte records (StyleEraTable_p4, 6 records); fields, and what reads them:
-#   +0   f0           u16            func_4864000C 0x4864000C `movhu (a0), d0`; func_4864012F_entry_L7e 0x486401B2 `movhu (a0), d0`
-#   +2   x2           u8[128]        no reader seen
-.macro REC_StyleEraTable_p4 f0=0, x2
-	.word	\f0
-	.ascii	"\x2"
 .endm
 
 # REC_GetFocusObject_Records_p4: 12-byte records (GetFocusObject_Records_p4, 1 records); fields, and what reads them:

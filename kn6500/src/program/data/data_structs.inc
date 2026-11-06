@@ -3690,7 +3690,7 @@
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   key          u16            func_4C167AB6 0x4C167AB6 `movhu (d1, a1), d1`
 #   +2   key_         u16            func_4C167AB6 0x4C167AB6 `movhu (2, a0), d1`
-#   +4   f4           u16            func_4C167B2D_entry_L14 0x4C167B46 `movhu (4, a0), d0`; func_4C167B2D_entry_L49 0x4C167B7B `movhu (4, a3), d1`
+#   +4   f4           u16            FlashProgram128Words_L14 0x4C167B46 `movhu (4, a0), d0`; FlashProgram128Words_L49 0x4C167B7B `movhu (4, a3), d1`
 #   +6   x6           u8[2]          no reader seen
 #   +8   memcpy_d1    ptr            func_4C16781F 0x4C16781F `mov (8, a0), a0`; FlashSectorErase 0x4C167895 `mov (8, a0), a0` (+9)
 #   +12  x12          u8[20]         no reader seen
@@ -4399,18 +4399,6 @@
 	.ascii	"\x0"
 .endm
 
-# REC_names_50001B30_p0: 4-byte records (names_50001B30_p0, 4 records); fields, and what reads them:
-#   +0   index        u8             ConvertStrings_entry_L12 0x4C020709 `movbu (a2), d0`; ConvertStrings_entry_L32 0x4C020729 `movbu (a2), d0` (+4)
-#   +1   f1           u8             ConvertStrings_entry_L3e 0x4C020735 `movbu (a2), d0`
-#   +2   f2           u8             ConvertStrings_entry_L3e 0x4C020735 `movbu (a2), d0`
-#   +3   x3           u8[1]          no reader seen
-.macro REC_names_50001B30_p0 index=0, f1=0, f2=0, x3
-	.byte	\index
-	.byte	\f1
-	.byte	\f2
-	.ascii	"\x3"
-.endm
-
 # REC_AcFavScreenProc_Ld8_Records_p0_p8: 4-byte records (AcFavScreenProc_Ld8_Records_p0_p8, 17 records); fields, and what reads them:
 #   +0   f0           u8             AcFavItemProc_Le3 0x4C07A763 `movbu (a0), d0`
 #   +1   x1           u8[3]          no reader seen
@@ -4503,14 +4491,6 @@
 #   +0   key          u8             func_4C0ABEBC_L4a 0x4C0ABF06 `movbu (a0), d1`; func_4C0ABEBC_Lae 0x4C0ABF6A `movbu (a0), d0`
 .macro REC_func_4C0ABEBC_L5e_Table_p0 key=0
 	.byte	\key
-.endm
-
-# REC_names_4C201BC0_p0: 4-byte records (names_4C201BC0_p0, 4 records); fields, and what reads them:
-#   +0   key          u8             func_4C0AC04A_L52 0x4C0AC09C `movbu (a0), d0`; func_4C0AC04A_La5 0x4C0AC0EF `movbu (a0), d0`
-#   +1   x1           u8[3]          no reader seen
-.macro REC_names_4C201BC0_p0 key=0, x1
-	.byte	\key
-	.ascii	"\x1"
 .endm
 
 # REC_GetGenreName_entry_L14_Records_p20: 80-byte records (GetGenreName_entry_L14_Records_p20, 5 records); fields, and what reads them:
@@ -4685,34 +4665,6 @@
 	.ascii	"\x0"
 .endm
 
-# REC_StyleGenreTable_p4_p4: 190-byte records (StyleGenreTable_p4_p4, 4 records); fields, and what reads them:
-#   +0   f0           u16            func_4C1642F7_entry_Lf 0x4C164309 `movhu (a0), d0`; func_4C1648A1_entry_L4f 0x4C1648F5 `movhu (a0), d0` (+2)
-#   +2   x2           u8[4]          no reader seen
-#   +6   f6           u16            func_4C16508E 0x4C16508E `movhu (6, a0), d0`
-#   +8   x8           u8[182]        no reader seen
-.macro REC_StyleGenreTable_p4_p4 f0=0, x2, f6=0, x8
-	.word	\f0
-	.ascii	"\x2"
-	.word	\f6
-	.ascii	"\x8"
-.endm
-
-# REC_StyleAlphabetTable_p4: 14-byte records (StyleAlphabetTable_p4, 21 records); fields, and what reads them:
-#   +0   f0           u16            func_4C16564C 0x4C16564C `movhu (a0), d0`
-#   +2   x2           u8[12]         no reader seen
-.macro REC_StyleAlphabetTable_p4 f0=0, x2
-	.word	\f0
-	.ascii	"\x2"
-.endm
-
-# REC_StyleEraTable_p4: 210-byte records (StyleEraTable_p4, 3 records); fields, and what reads them:
-#   +0   f0           u16            func_4C165FF0 0x4C165FF0 `movhu (a0), d0`; func_4C166144_entry_L7c 0x4C1661C5 `movhu (a0), d0`
-#   +2   x2           u8[208]        no reader seen
-.macro REC_StyleEraTable_p4 f0=0, x2
-	.word	\f0
-	.ascii	"\x2"
-.endm
-
 # REC_func_4C04D55E_Result: 1-byte records (func_4C04D55E_Result, 12 records); fields, and what reads them:
 #   +0   f0           u8             func_4C04D5D3 0x4C04D5D3 `movbu (a0), d1`; func_4C04D5F4 0x4C04D5F4 `movbu (a0), d1` (+53)
 .macro REC_func_4C04D55E_Result f0=0
@@ -4797,9 +4749,9 @@
 # REC_func_4C167937_ArgA0: 2-byte records (func_4C167937_ArgA0, 2 records); fields, and what reads them:
 #   (the layout func_4C167937 0x4C167937 reads through its argument a0 (passed by func_4C1679E3_entry_Lbc 0x4C167AA4 `call func_4C167937_entry, [d2,d3,a2,a3], 0x24`))
 #   (an array of 2-byte records: func_4C167937 steps it by 2 in a loop; as many as are free up to the next label [INFERENCE: the block's extent])
-#   +0   f0           u16            func_4C167937_entry_L46 0x4C167982 `movhu (a3), d0`
-.macro REC_func_4C167937_ArgA0 f0=0
-	.word	\f0
+#   +0   FlashWordProgram_d0 u16            func_4C167937_entry_L46 0x4C167982 `movhu (a3), d0`
+.macro REC_func_4C167937_ArgA0 FlashWordProgram_d0=0
+	.word	\FlashWordProgram_d0
 .endm
 
 # REC_func_4C04EF81_ArgA0: 8-byte records (func_4C04EF81_ArgA0, 6 records); fields, and what reads them:

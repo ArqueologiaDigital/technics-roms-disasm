@@ -942,7 +942,7 @@
 .equ data_48413858, 0x48413858
 .equ data_4841385C, 0x4841385c
 .equ func_48608B9F_Table, 0x48413860
-.equ names_48413A68, 0x48413a68
+.equ InitModeTitleTable_Table_2, 0x48413a68
 .equ ModeNameTable, 0x48413c58
 .equ TitleNameTable, 0x48414bd8
 .equ GetSw2Mode_Table, 0x484150dc
@@ -1053,7 +1053,7 @@
 .equ Str_FAT16, 0x4841e3cc
 .equ Str_empty_1187, 0x4841e3d4
 .equ Str_r_6, 0x4841e3e0
-.equ data_4841E3E4, 0x4841e3e4
+.equ FatBootSector_720K_Default, 0x4841e3e4
 .equ func_485E6123_entry_L14_Table, 0x4841e404
 .equ func_485E6123_entry_L14_Table_2, 0x4841e420
 .equ func_485E6123_entry_L14_Table_3, 0x4841e458
@@ -1320,7 +1320,8 @@
 .equ IvMessageProc_Table, 0x4845e918
 .equ Str_Msg, 0x4845e934
 .equ AcPleaseWaitProc_L135_Table, 0x4845e9b0
-.equ names_4845EA08, 0x4845ea08
+.equ CheckLanguage_L66_Table, 0x4845ea08
+.equ Str_MessageID_3d, 0x4845ea24
 .equ Str_s_02d, 0x4845ea34
 .equ Str_OTB_WELCOME, 0x4845ec18
 .equ Str_iapwcm, 0x4845ec24
@@ -4111,7 +4112,7 @@
 .equ Str_3d_19, 0x484dbd58
 .equ ApcToSMFConvGrid_Table, 0x484dbd5c
 .equ ApcToSMFConvGrid_Le6_Var, 0x484dbd68
-.equ names_484DBD94, 0x484dbd94
+.equ ApcToSMFConvGrid_L261_Table, 0x484dbd94
 .equ ApcToSMFConvGrid_L2a1_Table, 0x484dbdc0
 .equ Str_98, 0x484dbdc8
 .equ Str_empty_613, 0x484dbdcc
@@ -4597,7 +4598,7 @@
 .equ func_486FF242_L44_Table, 0x4850e154
 .equ func_486FF3BA_L63_Table, 0x4850e168
 .equ func_486FF3BA_Table, 0x4850e174
-.equ names_4850E1E0, 0x4850e1e0
+.equ func_486FF583_L6f_Table, 0x4850e1e0
 .equ func_486FF583_Table, 0x4850e208
 .equ func_486FF583_Table_2, 0x4850e28c
 .equ func_486FF68D_L54_Table, 0x4850e318
@@ -4608,7 +4609,7 @@
 .equ func_486FF09C_entry_L8_Table_2, 0x4850e448
 .equ func_486FF9AC_L78_Table, 0x4850e460
 .equ func_486FF9AC_Table, 0x4850e478
-.equ names_4850E528, 0x4850e528
+.equ func_486FFB68_L8d_Table, 0x4850e528
 .equ func_486FFB68_Table, 0x4850e548
 .equ func_486FFB68_Table_2, 0x4850e5cc
 .equ func_486FFB68_Table_3, 0x4850e650
@@ -5240,7 +5241,7 @@
 .equ func_485E93F6_entry_Ld6_Records, 0x485422b0
 .equ InitPaletteRGB_Table, 0x48542330
 .equ InitPaletteRGB_Table_2, 0x48542730
-.equ data_48542B30, 0x48542b30
+.equ SupportClassTable, 0x48542b30
 .equ PS_Classes, 0x48542dc4
 .equ PS_Events, 0x485437e4
 .equ PS_Methods, 0x485438d8
@@ -5305,9 +5306,9 @@
 .equ func_50173E4E_Table, 0x4854b1ba
 .equ StyleVariationNameGet_entry_L25_Table, 0x4854b1c0
 .equ func_48611924_Table, 0x4854b1e0
-.equ Str_Technics_2, 0x4854b204
+.equ FatBootHead_720K, 0x4854b204
 .equ func_4863182B_entry_L9e_Block, 0x4854b224
-.equ Str_Technics, 0x4854b227
+.equ FatBootHead_1440K, 0x4854b227
 .equ func_48631AF5_entry_L9e_Block, 0x4854b247
 .equ NoteConvRules, 0x4854b24c
 .equ func_50178059_Table, 0x4854b64c
@@ -59216,7 +59217,7 @@
 .equ GroupBoxProc_L104_Var, 0x50000708
 .equ SetDialEnable_Var, 0x5000070c
 .equ CheckProgDial_Var, 0x50000710
-.equ names_50000714, 0x50000714
+.equ AcMixerVolWideProc_L5c_Table, 0x50000714
 .equ AcChordBoxProc_L1ae_Table, 0x50000874
 .equ AcTransposeBoxProc_La4_Var, 0x50000974
 .equ func_485FA084_Var, 0x50000978
@@ -59318,8 +59319,8 @@
 .equ AcMixPartSoundProc_L114_Table, 0x500017bc
 .equ func_486517E0_entry_L4a_Table, 0x50001850
 .equ func_48651E87_L1d_Table, 0x500018ec
-.equ names_50001910, 0x50001910
-.equ names_50001950, 0x50001950
+.equ func_486519B7_L23_Table, 0x5000192c
+.equ TtSdapcrev_L1d_Table, 0x5000196c
 .equ AcTrackVolProc_Table, 0x500019c0
 .equ AcSndExpGroupProc_L4f_Table, 0x500020a4
 .equ AcFavScreenProc_Table, 0x5000215c

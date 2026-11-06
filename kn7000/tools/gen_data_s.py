@@ -67,12 +67,12 @@ PROFILES = {
                 bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/941", string_arrays=True, string_arrays_min=4, text_strict=True, readers_ext=True),
     "b935": dict(rom="baserom/kn7000_program_b935.rom", src="src/b935/program", prog="src/b935/program.s",
                  syms=["kn7000_b935.sym", "kn7000_b935_manual.sym", "kn7000_b935_exports.sym",
-                       "kn7000_b935_bycode.sym"],
+                       "kn7000_b935_bycode.sym", "kn7000_b935_own.sym"],
                  labels="build/kn7000_program_b935.labels", r1=0x18595C, pal=0x3256D8, end=0x3B8F6D, structs=True,
                 bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/b935", string_arrays=True, string_arrays_min=4, text_strict=True, readers_ext=True),
     "b893": dict(rom="baserom/kn7000_program_b893.rom", src="src/b893/program", prog="src/b893/program.s",
                  syms=["kn7000_b893.sym", "kn7000_b893_manual.sym", "kn7000_b893_exports.sym",
-                       "kn7000_b893_bycode.sym"],
+                       "kn7000_b893_bycode.sym", "kn7000_b893_own.sym"],
                  labels="build/kn7000_program_b893.labels", r1=0x1846A0, pal=0x323E80, end=0x3B76B1, structs=True,
                 bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/b893", string_arrays=True, string_arrays_min=4, text_strict=True, readers_ext=True),
     "sp7001": dict(rom="baserom/kn7000_program_sp7001.rom", src="src/sp7001/program", prog="src/sp7001/program.s",
@@ -126,6 +126,8 @@ PROFILES["kn2400"] = dict(root="../kn2400", rom="baserom/kn2400_program.rom", sr
                           # crt0_start copies .data 0x485DD334 -> 0x50000010, 0x6E78 bytes (kn2400_manual.sym);
                           # stated, since the typed code spells the copy's source as a data label
                           raminit=(0x485DD334, 0x50000010, 0x6E78),
+                          # lane mn10300-data2: TitleNameTable (0x140 name pointers, title i's "_TT_<NAME>")
+                          title_names=(0x48414BD8, 0x140),
                           # func_486183E3 inflates demo song n's three streams (ptrs_50000C18 / C48 / C78)
                           # through func_486D4A2A, as the KN7000's func_48457350 through func_48533758
                           inflate="func_486D4A2A",
@@ -233,13 +235,53 @@ PROFILE = "941"
 #                field_slots, field_bra, field_keyloop, field_merge, field_screen
 FEATURES = {k: True for k in ("ptr_starts", "array_end", "mem_ptrs", "loop_index", "step_arrays", "deep_records",
                               "top_tested", "fld_slots", "fx_streams", "pow10_table", "euc_text",
-                              "sibling_trie", "builtin_pads", "widget_vars", "maps128", "sentinel_lists", "chord_voicings", "index_bounds", "fx_presets", "table_terminators", "msg_readers", "count_notes", "doubles_text", "table_ptrs")}
+                              "sibling_trie", "builtin_pads", "widget_vars", "maps128", "sentinel_lists", "chord_voicings", "index_bounds", "fx_presets", "table_terminators", "msg_readers", "count_notes", "doubles_text", "table_ptrs",
+                              # lane mn10300-data2 (wave 10)
+                              "support_values", "sibling_support", "boot_sectors", "panel_700", "style_lists", "reclaim_strings", "curated_counts", "nv_not_ptrs")}
 for _k in os.environ.get("GEN_DATA_S_OFF", "").split(","):
     if _k.strip():
         FEATURES[_k.strip()] = False
 KN7_DIR = KN7                 # this tree; KN7 is rebound to the profile's root by configure()
 TAIL = None                   # (CPU lo, hi) of gen_program_s.py's tail code, see configure()
 from data_readers import LIBC as DR_LIBC  # noqa: E402
+
+
+# An older build's kn7000_<b>_own.sym (names written for THAT build: routines and data 941 has no 1:1
+# counterpart for, and corrections of ported names) replaces the ported rows, as gen_program_s.py's
+# load_manual_syms does: a row of the other files at one of its addresses, or named like one of its
+# names (X and X_entry count as one), is dropped.  milk_model.read_syms keeps the first row of an
+# address or a name, so the override is applied here, for every Model this generator builds.
+_MM_READ_SYMS = MM.read_syms
+
+
+def _sym_rows(path):
+    rows = []
+    if os.path.exists(path):
+        for line in open(path, encoding="latin-1"):
+            if not line.lstrip().startswith(";"):
+                m = re.match(r"0x([0-9A-Fa-f]{8})\s+(\S+)", line)
+                if m:
+                    rows.append((int(m.group(1), 16), m.group(2)))
+    return rows
+
+
+def read_syms_own(paths):
+    """milk_model.read_syms, with the rows of an `*_own.sym` among `paths` replacing the others'."""
+    own = [p for p in paths if p.endswith("_own.sym")]
+    if not own:
+        return _MM_READ_SYMS(paths)
+    stem = lambda nm: nm[:-6] if nm.endswith("_entry") else nm
+    orows = [r for p in own for r in _sym_rows(p)]
+    own_at, own_nm = {a for a, _ in orows}, {stem(n) for _, n in orows}
+    by_addr, by_name = {}, {}
+    for a, n in orows + [(a, n) for p in paths if p not in own for a, n in _sym_rows(p)
+                         if a not in own_at and stem(n) not in own_nm]:
+        by_addr.setdefault(a, n)
+        by_name.setdefault(n, a)
+    return by_addr, by_name
+
+
+MM.read_syms = read_syms_own
 
 
 def configure(name):
@@ -727,6 +769,28 @@ class Gen:
             for i, (nm, _a, _c) in d.items():
                 n = sanitize(nm or f"ID_{i:X}", 60)
                 self.id_name[i] = self.uniq(n if n not in self.names else n + "_ID")
+        # (lane mn10300-data2, L-mn10300-names-kn2400-titles) the titles no screen registers but the firmware's own
+        # title-name table names (profile `title_names`: its CPU address and entry count; the KN2400's
+        # TitleNameTable, title i's name string "_TT_<NAME>" at entry i): TT_<NAME> = (title slot << 16) | i.
+        # The firmware's placeholders ("_TT_13e") stay unnamed.
+        self.table_titles = {}
+        tn = P.get("title_names")
+        if tn:
+            ta, cnt = tn
+            slot = MM.SCHEMES[MM.SCHEME]["title_slot"]
+            have = set(self.id_name.values())
+            for i in range(cnt):
+                tid = (slot << 16) | i
+                if tid in m.titles:
+                    continue
+                s = m.cstr(m.u32(ta + 4 * i)) or ""
+                if not s.startswith("_TT_") or re.fullmatch(r"_TT_[0-9a-f]+", s):
+                    continue
+                n = sanitize(s[1:], 60)
+                if n in have or n in self.names:
+                    continue
+                self.id_name[tid] = self.uniq(n)
+                self.table_titles[tid] = s
 
     def str_item(self, a, base, kind="string", block=None):
         """A NUL-terminated string at `a` as an .asciz item; returns its label."""
@@ -949,13 +1013,15 @@ class Gen:
             self.add(a, n, self.name_at(a, f"ResourceIdLeaf_{a:08X}"), "trie leaf", render)
 
     def support_classes(self):
-        """(KN7000 program builds) the SupportClass table, registry slot 0xD (InitSptClassTable,
-        0x4842E5DC: class SupportClass, proc SupportClassProc, its count and table): 12-byte
-        entries {proc, u16, u16 property size, pointer}, then an all-zero entry; spelled with
-        SUPPORT_CLASS (src/include/data_tables.inc, whose header gives SupportClassProc's reads)."""
+        """The SupportClass table (InitSptClassTable: class SupportClass, proc SupportClassProc, its
+        count and table; registry slot 0xD in the KN7000 / KN2400 layout, 0x1C0 in the NAKA one):
+        12-byte entries {proc, u16 name count, u16 property size, pointer}, then an all-zero entry;
+        spelled with SUPPORT_CLASS (src/include/data_tables.inc, whose header gives the readers).
+        Each entry's pointer is its value-name list (support_value_names)."""
         m = self.m
-        r = m.by_slot.get(0xD)
-        if not r or r.get("kind") != "SupportClass" or not self.in_data(r["table"] or 0):
+        slot, r = next(((s, r) for s, r in sorted(m.by_slot.items()) if r.get("kind") == "SupportClass"),
+                       (None, None))
+        if not r or not self.in_data(r["table"] or 0):
             return
         n = r["count"] + 1 if not any(m.rom[self.off(r["table"]) + 12 * r["count"]:
                                              self.off(r["table"]) + 12 * r["count"] + 12]) else r["count"]
@@ -970,13 +1036,247 @@ class Gen:
             if v and self.in_data(v):
                 self.refs.add(v)
 
-        def render(g, it, ents=ents, cnt=r["count"]):
-            out = [f"# {cnt} SupportClass entries (registry slot 0xD; a support-class id is (0xd << 16) | its"
+        def render(g, it, ents=ents, cnt=r["count"], slot=slot):
+            out = [f"# {cnt} SupportClass entries (registry slot {slot:#x}; a support-class id is ({slot:#x} << 16) | its"
                    f" index), then an empty one", f"{it.label}:"]
             for i, (p, x4, ps, d) in enumerate(ents):
                 out.append(f"\tSUPPORT_CLASS\t{g.ref(p)}, {x4}, {ps}, {g.ref(d)}\t# [{i}]")
             return out
         self.add(r["table"], 12 * n, self.name_at(r["table"], "SupportClassTable"), "support class table", render)
+        if FEATURES.get("support_values", True):
+            for i, (p, nn, _ps, d) in enumerate(ents):
+                if p:
+                    self.support_value_names(i, p, nn, d)
+
+    def style_genre_lists(self):
+        """(FEATURES["style_lists"], lane mn10300-data2) What a StyleGenre record's +4 points at: its styles,
+        GenreStyle {char *name, u16 *setups} pairs (data_struct_names.py), ended by a pair whose +4 is 0, and
+        each style's setups, four u16 MusicStylistSetup numbers (StyleRecordTable records; 1,080 = 270
+        styles x 4) and the end marker 0xFFFF.  941 StyleListBoxGetItem 0x4847C216: `asl 3` /
+        `add StyleGenreTable, a0` / `mov (4, a0), d0` (the pairs), pair i's `mov (4, a0), d0` (its
+        styles), `movhu (d0, a1), d3` four times (`cmp 4, d2` / `blt`), then the next pair's `mov (0xc,
+        a0), d0` / `cmp 0, d0` (the end); func_4847BA42 `mov (d0, a3), a1` / memcpy(.., 0x10) (the pair's
+        name).  Typed before the record passes, which read the lists' u16 rows at odd offsets or took a
+        style number's low byte for a one-character string (opaque group false-string)."""
+        if not FEATURES.get("style_lists", True):
+            return
+        m = self.m
+        g0 = m.sym_by_name.get("StyleGenreTable")
+        if g0 is None:
+            g0 = next((a for a, n in self.fixed.items() if n == "StyleGenreTable"), None)
+        if g0 is None or not self.in_data(g0):
+            return
+        isptr = lambda v: v and self.in_data(v) and m.inrom(v)
+        npairs = nlists = 0
+        k = 0
+        while isptr(m.u32(g0 + 8 * k)) and isptr(m.u32(g0 + 8 * k + 4)) and k < 64:
+            gname = m.cstr(m.u32(g0 + 8 * k)) or ""
+            pa = m.u32(g0 + 8 * k + 4)
+            k += 1
+            pairs = []
+            while len(pairs) < 256 and self.free(pa + 8 * len(pairs), 8):
+                na, sa = m.u32(pa + 8 * len(pairs)), m.u32(pa + 8 * len(pairs) + 4)
+                if sa == 0:
+                    pairs.append((na, 0))
+                    break
+                if not (isptr(na) and isptr(sa) and sa % 2 == 0):
+                    pairs = []
+                    break
+                pairs.append((na, sa))
+            if not pairs or pairs[-1][1] != 0 or pa % 4:
+                continue
+            lists = {}
+            for na, sa in pairs[:-1]:
+                if sa in lists:
+                    continue
+                vals = []
+                while len(vals) < 64 and self.free(sa + 2 * len(vals), 2):
+                    v = int.from_bytes(m.rom[self.off(sa) + 2 * len(vals):self.off(sa) + 2 * len(vals) + 2], "little")
+                    vals.append(v)
+                    if v == 0xFFFF:
+                        break
+                if vals and vals[-1] == 0xFFFF:
+                    lists[sa] = (vals, m.cstr(na) or "")
+            if len(lists) != len({sa for _n, sa in pairs[:-1]}):
+                continue
+            tag = sanitize(gname, 30) or f"{k - 1}"
+            for sa, (vals, nm) in sorted(lists.items()):
+                cur = self.fixed.get(sa)
+                lab = cur if cur and not self.GUESSED.match(cur) else self.rename_at(
+                    sa, f"StyleSetups_{tag}_{sanitize(nm, 30) or 'unnamed'}")
+                self.add(sa, 2 * len(vals), lab, "style list",
+                         lambda g, it, vals=vals, nm=nm: [
+                             f"{it.label}:\t# the setups of style \"{nm.strip()}\" (u16 MusicStylistSetup numbers: StyleRecordTable"
+                             f" records), then 0xFFFF; StyleListBoxGetItem reads four"]
+                         + ["\t.word\t" + ", ".join(f"{v}" if v != 0xFFFF else "0xffff" for v in vals)])
+                nlists += 1
+
+            def render(g, it, pairs=pairs, gname=gname):
+                out = [f"{it.label}:\t# StyleGenre \"{gname.strip()}\"'s {len(pairs) - 1} styles, GenreStyle {{char *name, u16"
+                       f" *setups}}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)"]
+                out += [f"\t.long\t{g.ref(na)}, {g.ref(sa)}" for na, sa in pairs]
+                return out
+            cur = self.fixed.get(pa)
+            lab = cur if cur and not self.GUESSED.match(cur) else self.rename_at(pa, f"StyleGenre_{tag}_Styles")
+            self.add(pa, 8 * len(pairs), lab, "style genre pairs", render)
+            npairs += 1
+        print(f"gen_data_s: style genres: {npairs} style lists, {nlists} setup lists")
+        # the eras' and the letters' setup lists: StyleEra {name, setups, era} (12 bytes; func_4847D644 walks
+        # the eras, func_4847D639 reads the first one's +4) and StyleLetter {letter, setups} (8 bytes;
+        # func_4847C977 counts +4's list up to 0xFFFF, func_4847D083 `movhu (a2), d0` / `cmp 0xffff, d0` / `add
+        # 2, a2` walks it): u16 MusicStylistSetup numbers ended by 0xFFFF, of any length
+        nset = 0
+        for tname, stride, kind in (("StyleEraTable", 12, "era"), ("StyleAlphabetTable", 8, "letter"),
+                                    ("StyleEraTableKN2400", 12, "era"), ("StyleAlphabetTableKN2400", 8, "letter")):
+            t0 = m.sym_by_name.get(tname)
+            if t0 is None:
+                t0 = next((a for a, n in self.fixed.items() if n == tname), None)
+            if t0 is None or not self.in_data(t0):
+                continue
+            k = 0
+            while k < 64 and isptr(m.u32(t0 + stride * k)) and isptr(m.u32(t0 + stride * k + 4)):
+                sa = m.u32(t0 + stride * k + 4)
+                nm = (m.cstr(m.u32(t0 + stride * k)) or "").strip()
+                k += 1
+                if sa % 2 or not self.free(sa, 2):
+                    continue
+                vals = []
+                while len(vals) < 2048 and self.free(sa + 2 * len(vals), 2):
+                    v = int.from_bytes(m.rom[self.off(sa) + 2 * len(vals):self.off(sa) + 2 * len(vals) + 2], "little")
+                    vals.append(v)
+                    if v == 0xFFFF:
+                        break
+                if not vals or vals[-1] != 0xFFFF:
+                    continue
+                cur = self.fixed.get(sa)
+                lab = cur if cur and not self.GUESSED.match(cur) and not cur.startswith("func_") else self.rename_at(
+                    sa, f"StyleSetups_{kind.capitalize()}_{sanitize(nm, 30) or k - 1}")
+                self.add(sa, 2 * len(vals), lab, "style list",
+                         lambda g, it, vals=vals, nm=nm, kind=kind, tname=tname: [
+                             f"{it.label}:\t# the setups (u16 MusicStylistSetup numbers) under {kind} \"{nm}\" of {tname},"
+                             f" then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)"]
+                         + ["\t.word\t" + ", ".join(f"{v}" if v != 0xFFFF else "0xffff" for v in vals[i:i + 16])
+                            for i in range(0, len(vals), 16)])
+                nset += 1
+        print(f"gen_data_s: style eras / letters: {nset} setup lists")
+
+    def boot_sectors(self):
+        """(FEATURES["boot_sectors"], lane mn10300-data2, N-044cdbc6) The first 32 bytes of a FAT
+        boot sector that a routine hands memcpy (`mov Head, a1` / `mov 0x20, d0` or `mov 0x200, d0` /
+        `call memcpy`): the disk formatters copy one into a zeroed 512-byte sector before writing it
+        (941 func_484707AC 720 KB, func_48470A76 1.44 MB), and func_4846FED0 copies one in place of a
+        boot sector it cannot read.  The layout is the FAT boot sector's (the DOS 3 BPB: Microsoft,
+        "FAT: General Overview of On-Disk Format", offsets 0x00..0x1D), written with FAT_BOOT_HEAD
+        (src/include/data_tables.inc); typed only when the bytes are a plausible BPB (512..4096 bytes
+        a sector, a power-of-two cluster, one or two FATs, a media byte 0xF0 / 0xF8..0xFF)."""
+        if not FEATURES.get("boot_sectors", True):
+            return
+        found = collections.OrderedDict()
+        for fn, cpu, L in self.code_funcs():
+            for i, ins in enumerate(L):
+                if not re.match(r"call memcpy(_entry)?\b", ins):
+                    continue
+                src = n = None
+                for x in L[max(0, i - 4):i]:
+                    mo = re.fullmatch(r"mov ([A-Za-z_]\w*), a1", x)
+                    if mo:
+                        src = self.data_label_addr(mo.group(1))
+                    mo = re.fullmatch(r"mov (0x[0-9a-f]+|\d+), d0", x)
+                    if mo:
+                        n = int(mo.group(1), 0)
+                if src is not None and n in (0x20, 0x200):
+                    found.setdefault(src, []).append((re.sub(r"_entry$", "", fn), cpu, n))
+        u16 = lambda o: int.from_bytes(self.rom[o:o + 2], "little")
+        for a, uses in found.items():
+            if not self.free(a, 32):
+                continue
+            o = self.off(a)
+            bps, spc, nfat, media = u16(o + 0x0B), self.rom[o + 0x0D], self.rom[o + 0x10], self.rom[o + 0x15]
+            if bps not in (512, 1024, 2048, 4096) or spc not in (1, 2, 4, 8, 16, 32, 64, 128) \
+                    or nfat not in (1, 2) or not (media == 0xF0 or media >= 0xF8) or not u16(o + 0x13):
+                continue
+            raw = self.rom[o:o + 32]
+            f = dict(bps=bps, spc=spc, res=u16(o + 0x0E), nfat=nfat, root=u16(o + 0x11), tot=u16(o + 0x13),
+                     media=media, spf=u16(o + 0x16), spt=u16(o + 0x18), heads=u16(o + 0x1A), hidden=u16(o + 0x1C))
+            kb = f["tot"] * bps // 1024
+            cite = "; ".join(f"{fn} 0x{cpu or 0:08X}: memcpy(.., {n:#x})" for fn, cpu, n in uses[:3])
+
+            def render(g, it, raw=raw, f=f, kb=kb, cite=cite, uses=uses):
+                tail = raw[0x1E:0x20]
+                jmp = raw[0:3]
+                out = [f"{it.label}:\t# a FAT boot sector's first 32 bytes, a {kb} KB disk's ({f['tot']} sectors of"
+                       f" {f['bps']} bytes): {cite}"
+                       + ("; the 0x200-byte copy runs on into the items after these 32 bytes" if
+                          any(n == 0x200 for _f, _c, n in uses) else ""),
+                       f'\tFAT_BOOT_HEAD\t{", ".join(f"0x{x:02x}" for x in jmp)}, "{c_escape(raw[3:11])}", '
+                       f"{f['bps']}, {f['spc']}, {f['res']}, {f['nfat']}, {f['root']}, {f['tot']}, 0x{f['media']:02x},"
+                       f" {f['spf']}, {f['spt']}, {f['heads']}, {f['hidden']}",
+                       f"\t.byte\t0x{tail[0]:02x}, 0x{tail[1]:02x}\t# +0x1E: "
+                       + ("the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop"
+                          if jmp[0] == 0xEB and jmp[1] == 0x1C and tail == b"\xeb\xfe" else
+                          "past the BPB; no reader")]
+                return out
+            cur = self.fixed.get(a)
+            lab = cur if cur and not self.GUESSED.match(cur) else self.rename_at(
+                a, f"FatBootSector_{kb}K_Default" if any(n == 0x200 for _f, _c, n in uses) else f"FatBootHead_{kb}K")
+            self.add(a, 32, lab, "boot sector head", render)
+
+    def support_value_names(self, i, proc, nn, d):
+        """(N-027de254) A support class's value-name list, the pointer at +8 of its SupportClass
+        entry: {char *name, u32 value} pairs ended by a pair whose name is "" -- for a class with no
+        names (+4 = 0: the integers, IDs, pointers, rects) only that end pair, its "" the four bytes
+        before it.  The reader is the support classes' common handler (941 func_48431434, which each
+        xxxProc calls for the messages it does not answer itself; a3 = the entry, MT_GetInstance's
+        answer): `movhu (4, a3), d0` / `cmp 0, d0` / `beq` (no names: done), `mov (8, a3), a0` the
+        list, then (value -> name, MT_DumpPropertyEx's text) `asl 3` / `mov (4, a0), d0` / `cmp d3,
+        d0` until `movbu (a0), d0` / `cmp 0, d0` finds the empty name, `strcpy`; (name -> value) the
+        same walk with `strcmp` and `mov (4, a0), d0` / `mov d0, (a2)`, -1 when no name matches; and
+        (the n-th name) `mov (8, a0), d0` / `asl 3, d0` / `mov (d0, a1), a1` / `strcpy`."""
+        m = self.m
+        if not self.in_data(d) or not m.inrom(d):
+            return
+        pairs = []
+        for k in range(nn + 1):
+            na, v = m.u32(d + 8 * k), m.u32(d + 8 * k + 4)
+            if not (self.in_data(na) and m.inrom(na)):
+                return
+            s = m.cstr(na)
+            if s is None:
+                return
+            pairs.append((na, v, s))
+            if s == "":
+                break
+        if pairs[-1][2] != "" or len(pairs) != nn + 1 or not self.free(d, 8 * len(pairs)):
+            return
+        pn = m.sym_by_addr.get(proc) or self.extern.get(proc) or ""
+        stem = re.sub(r"Proc$", "", pn) if pn and not re.fullmatch(r"(func|loc)_[0-9A-F]{8}", pn) else f"Class{i}"
+        stem = "Spt" + stem[:1].upper() + stem[1:]
+        for na, v, s in pairs[:-1]:
+            self.str_item(na, "Str_" + sanitize(s, 40), "string")
+        na = pairs[-1][0]
+        if self.free(na, 1):
+            o = self.off(na)
+            pad = 0
+            while (na + 1 + pad) % 4 and self.free(na + 1 + pad, 1) and self.rom[o + 1 + pad] == 0xFF:
+                pad += 1
+            if (na + 1 + pad) % 4:
+                pad = 0
+            self.add(na, 1 + pad, self.name_at(na, f"{stem}_EndName"), "string",
+                     lambda g, it, pad=pad: [f'{it.label}:\t.asciz ""\t# the end pair\'s name'
+                                             + (f", then {pad} bytes of 0xFF to a word" if pad else "")]
+                     + (["\t.align\t4, 0xFF"] if pad else []))
+        what = (f"{nn} name(s), then the end pair" if nn else
+                "no names, its entry's +4 being 0: only the end pair")
+
+        def render(g, it, pairs=pairs, what=what):
+            out = [f"{it.label}:\t# the value names of support class {stem} ({what}): {{char *name, u32 value}}"
+                   f" pairs the SupportClass handler (func_48431434 in 941) walks until a name's first byte is 0"]
+            for na, v, s in pairs:
+                vs = (s if s and s in g.names and g.const_value(s) == v else
+                      g.ref(v) if g.in_data(v) or v in g.extern else (f"0x{v:X}" if v > 0xFFFF else str(v)))
+                out.append(f"\tSPT_VALUE_NAME\t{g.ref(na)}, {vs}" + ("\t# end" if not s else ""))
+            return out
+        self.add(d, 8 * len(pairs), self.name_at(d, f"{stem}_ValueNames"), "support value names", render)
 
     # -- objects ---------------------------------------------------------------
     def obj_names(self, b):
@@ -1659,6 +1959,15 @@ class Gen:
                     m_ += 1
                 if m_ == ixb[0]:
                     n, ix_note = m_, f"; {m_} records: the index is bounded by {ixb[2]}"
+            cnt = DN.options(self.label_at.get(a) or self.fixed.get(a) or "").get("count") \
+                if FEATURES.get("curated_counts", True) else None
+            if cnt and cnt[0] > n:
+                # (lane mn10300-data2) a count data_struct_names.OPTIONS states, with its evidence (a bound in a callee)
+                m_ = n
+                while m_ < cnt[0] and self.free(a + m_ * s, s) and not any(x in hard for x in range(a + m_ * s, a + m_ * s + s)):
+                    m_ += 1
+                if m_ == cnt[0]:
+                    n, ix_note = m_, f"; {m_} records: {cnt[1]}"
             end_note = ""
             lb = self.loop_end(a, s, n)
             if lb is not None:
@@ -3578,6 +3887,8 @@ class Gen:
             nxt = named[kx] if kx < len(named) else DATA_END
             if nxt < o + size:
                 continue        # another list or a named address inside: not one list
+            if not self.free(a, size) and FEATURES.get("reclaim_strings", True):
+                self.reclaim_guessed_strings(a, max(size, full if nxt >= o + full and S > foff + w else size))
             if nxt >= o + full and self.free(a, full) and S > foff + w:
                 size = full
             if not self.free(a, size):
@@ -3619,6 +3930,38 @@ class Gen:
                     out.append(line + (f"\t# end" if r_ == n else ""))
                 return out + padl
             self.add(a, size + pad, lab, "sentinel list", render)
+
+    def reclaim_guessed_strings(self, a, size):
+        """(FEATURES["reclaim_strings"], lane mn10300-data2) Give back the bytes of [a, a + size) when
+        every item there is a string an earlier pass took by its look alone (typed_refs: a referenced
+        address whose bytes up to a NUL are printable; its label a guessed one, Str_ ...), so that a
+        reader-typed list can have them: a record's head byte read as a one-character string
+        (`Str_p_20` = 0x85 0x20 0x70 0x00, the first word of a PanelButtonDispatch record; opaque group
+        false-string).  Returns True when the span is free afterwards."""
+        o = self.off(a)
+        self.build_index()
+        import bisect
+        i = max(0, bisect.bisect_right(self.starts, o) - 1)
+        hit = []
+        while i < len(self.ranges) and self.ranges[i][0] < o + size:
+            s, e, _x = self.ranges[i]
+            if e > o:
+                it = self.items[s]
+                if it.kind != "string" or not (it.label and self.GUESSED.match(it.label)) or s < o or e > o + size \
+                        or it.start in self.fixed_by_code or (self.fixed.get(it.start) == it.label
+                                                               and it.label in self.code_names):
+                    return False
+                hit.append(s)
+            i += 1
+        for s in hit:
+            it = self.items.pop(s)
+            self.claimed[s:s + it.size] = bytes(it.size)
+            self.ranges = [r for r in self.ranges if r[0] != s]
+            if self.label_at.get(it.start) == it.label:
+                del self.label_at[it.start]
+        self.reclaimed = getattr(self, "reclaimed", 0) + len(hit)
+        self.build_index()
+        return self.free(a, size)
 
     def chord_voicings(self):
         """(FEATURES["chord_voicings"], lane mn10300-data) The chord voicings and their inversions.  A
@@ -4478,11 +4821,11 @@ class Gen:
         directory (`mov ToneRecordDirectory, a0 / asl2 d0 / mov (d0, a0), a0`).  The
         records it lists lie back to back, so each one's size is the distance to the
         next; three shapes occur (src/include/voice_record.inc):
-          tone        0x54-byte head (16-character name, SOUND_HEAD) + n x 0x7A units
+          tone        0x54-byte head (16-character name, SOUND_NAME_HEAD) + n x 0x7A units
                       (SOUND_MOD), n = 1..4
           TABLE tone  class 0x40 at +0x10: the 16-character name, a 0x17-byte head and
                       128 three-byte note entries (TgNoteOnTableTone reads +0x27 + note x 3)
-          voice       a 13-character name and three bytes (VOICE_HEAD_TAIL), then one or
+          voice       a 13-character name and three bytes (VOICE_HEAD), then one or
                       two 0x1C-byte sub-records (VOICE_SUB)
         A record of any other size stays as it is (none in the KN6000 v7.1)."""
         a0 = self.m.sym_by_name.get("ToneRecordDirectory")
@@ -4523,16 +4866,16 @@ class Gen:
                 kind, k = shape
                 hx = lambda bs: ", ".join(f"0x{x:02x}" for x in bs)
                 if kind == "tone":
-                    out = [f"{it.label}:\t# tone record, {k} unit(s)", f'\t.ascii\t"{c_escape(raw[:16])}"',
-                           f"\tSOUND_HEAD\t{hx(raw[0x10:0x54])}"]
+                    out = [f"{it.label}:\t# tone record, {k} unit(s)",
+                           f'\tSOUND_NAME_HEAD\t"{c_escape(raw[:16])}", {hx(raw[0x10:0x54])}']
                     out += [f"\tSOUND_MOD\t{hx(raw[0x54 + 0x7A * j:0x54 + 0x7A * (j + 1)])}" for j in range(k)]
                 elif kind == "table":
                     out = [f"{it.label}:\t# TABLE tone record: one entry per note (TgNoteOnTableTone)",
                            f'\t.ascii\t"{c_escape(raw[:16])}"', f"\ttone_head_table\t{hx(raw[0x10:0x27])}"]
                     out += [f"\ttone_note\t{hx(raw[0x27 + 3 * j:0x2A + 3 * j])}\t# note {j}" for j in range(128)]
                 else:
-                    out = [f"{it.label}:\t# voice record, {k} sub-record(s)", f'\t.ascii\t"{c_escape(raw[:13])}"',
-                           f"\tVOICE_HEAD_TAIL\t{hx(raw[13:16])}"]
+                    out = [f"{it.label}:\t# voice record, {k} sub-record(s)",
+                           f'\tVOICE_HEAD\t"{c_escape(raw[:13])}", {hx(raw[13:16])}']
                     out += [f"\tVOICE_SUB\t{hx(raw[16 + 0x1C * j:16 + 0x1C * (j + 1)])}" for j in range(k)]
                 return out
             self.add(a, n, lab, "tone record", render)
@@ -4678,8 +5021,12 @@ class Gen:
                 continue
             if r.get("bits_default") and self.free(a + n, 1) and self.in_data(a + n) \
                     and (a + n) not in set(self.prev_data_label.values()) | set(self.label_at):
-                # [INFERENCE] no MT_GetBitCount answer: the depth the drawer uses then (profile
-                # `bitmap_bits`), taken only when the pixels end exactly where the next item or label is
+                # no MT_GetBitCount answer: the depth the drawer uses then (profile `bitmap_bits`).
+                # Not an inference (N-c62a74fa, kn7000/notes/data-rest/README.md): VwUserBitmapProc
+                # 0x48418625, the only code that asks MT_GetBitCount, draws any answer but 1 and 8 with
+                # DrawBitmapSPFast16 (4 bpp), and a bitmap proc answers 0 to a message it has no case
+                # for.  This test only guards the size: the pixels must end exactly where the next item
+                # or label is
                 continue
             base = func if func.startswith("Bitmap") else "Bitmap_" + re.sub(r"^func_", "", func)
             lab = self.name_at(a, f"{base}_Pixels")
@@ -4702,8 +5049,12 @@ class Gen:
             png = TP.to_png(fmt, raw, pal)
             self.media_files[fn] = png
             self.add(a, n, lab, "bitmap",
-                     lambda g, it, fn=fn, fmt=fmt, func=func, w=w, h=h, depth=depth: [
-                         f"{it.label}:\t# {w} x {h}, {depth} bit(s) a pixel, rows padded to even bytes: the bitmap"
+                     lambda g, it, fn=fn, fmt=fmt, func=func, w=w, h=h, depth=depth,
+                            bits_default=bool(r.get("bits_default")): [
+                         f"{it.label}:\t# {w} x {h}, {depth} bit(s) a pixel"
+                         + (" (no MT_GetBitCount answer: VwUserBitmapProc draws it with DrawBitmapSPFast16)"
+                            if bits_default else "") +
+                         f", rows padded to even bytes: the bitmap"
                          f" {func} answers MT_GetBitmapData with ({OUTDIR}/media/{fn})",
                          f'\t.incbin\t"{P.get("bitmap_dir", "build/bitmaps")}/{os.path.splitext(fn)[0]}.bin"\t# census: generated -- '
                          f"../kn7000/tools/table_png.py ({fmt}) from {OUTDIR}/media/{fn}"])
@@ -4724,6 +5075,12 @@ class Gen:
                 p = m.u32(self.addr_of(o + 8 * n))
                 s = m.cstr(p) if p and self.in_data(p) else None
                 if not s or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{1,40}", s):
+                    break
+                v = m.u32(self.addr_of(o + 8 * n) + 4)
+                if FEATURES.get("nv_not_ptrs", True) and v and self.in_data(v) and m.cstr(v) \
+                        and re.fullmatch(r"[A-Za-z_][A-Za-z0-9_ ]{1,40}", m.cstr(v)):
+                    # (lane mn10300-data2) the "value" is a name too: a pointer table of names read two words
+                    # at a time (941 0x5000190C: "PT10", "PT11" ... after func_4848F914_Table's "PT 1".."PT 9")
                     break
                 n += 1
             if n >= 4:
@@ -4762,10 +5119,15 @@ class Gen:
         sys.path.insert(0, os.path.join(KN7, "..", "floppy", "tools"))
         import kn_panel
         rom, o, k = self.rom, R1_END, 0
-        while o < DATA_END - 0x750:
+        # (lane mn10300-data2) the KN6000 / KN6500 record is 0x700 bytes, 42 records (no part 0x1F):
+        # its CUSTOM banks' records are 0x700 bytes apart (kn7000/notes/custom-data-ic21.md), and the
+        # default one is copied record by record to the record at 0x84000020 (copies_into below)
+        shapes = ((0x750, 43), (0x700, 42)) if FEATURES.get("panel_700", True) else ((0x750, 43),)
+        loops = self.memcpy_loops() if FEATURES.get("panel_700", True) else {}
+        while o < DATA_END - 0x700:
             if rom[o] == 0x40 and rom[o + 1] == 18 and not self.claimed[o]:
                 recs, e = kn_panel.block(rom, o)
-                if recs and e - o == 0x750 and len(recs) == 43 and self.free(self.addr_of(o), 0x750):
+                if recs and (e - o, len(recs)) in shapes and self.free(self.addr_of(o), e - o):
                     k += 1
                     nm = rom[o + 2:o + 18].decode("latin-1").strip()
                     a = self.addr_of(o)
@@ -4777,11 +5139,42 @@ class Gen:
                                      f"{it.label}:\t.ascii\t\"{c_escape(bank)}\"\t# a panel-memory bank's name"])
                     lines = self.kn7(kn_panel.block_lines(rom[o:e], [(q - o, t, n) for q, t, n in recs],
                                                           f'panel memory "{nm}"'), b"")
-                    self.add(a, 0x750, self.name_at(a, "PanelMemory_" + (sanitize(nm) or f"{a:08X}")), "panel memory",
-                             lambda g, it, lines=lines: [f"{it.label}:"] + lines)
+                    cps = sorted({(fn, cpu, s, ln) for (base, fn, cpu, s, ln) in loops.get("all", [])
+                                  if a <= base < self.addr_of(e)})
+                    cite = ([f"# its records' payloads are copied by memcpy loops (record + 2, the length, the"
+                             f" step): " + "; ".join(f"{fn} 0x{cpu or 0:08X} ({ln:#x} bytes, step {s:#x})"
+                                                       for fn, cpu, s, ln in cps[:6])] if cps else [])
+                    self.add(a, e - o, self.name_at(a, "PanelMemory_" + (sanitize(nm) or f"{a:08X}")), "panel memory",
+                             lambda g, it, lines=lines, cite=cite: [f"{it.label}:"] + cite + lines)
                     o = e
                     continue
             o += 1
+
+    def memcpy_loops(self):
+        """{"all": [(table address, function, CPU, step, length)]}: the loops that copy one record at
+        a time out of a table, `mov Table, dB` / `add dI, dB` / `mov K, aS` / `add dB, aS` / `mov L,
+        d0` / `call memcpy` ... `add S, dI` / `cmp N, dI` / `blt` (KN6000 func_4C02FB29: the default
+        panel memory's records, record + 2, 0x48 or 4 bytes, step 0x4A or 6)."""
+        out = []
+        for fn, cpu, L in self.code_funcs():
+            for i, ins in enumerate(L):
+                if not re.match(r"call memcpy(_entry)?\b", ins):
+                    continue
+                base = ln = step = None
+                for x in L[max(0, i - 8):i]:
+                    mo = re.fullmatch(r"mov ([A-Za-z_]\w*), d\d", x)
+                    if mo and self.data_label_addr(mo.group(1)) is not None:
+                        base = self.data_label_addr(mo.group(1))
+                    mo = re.fullmatch(r"mov (0x[0-9a-f]+|\d+), d0", x)
+                    if mo:
+                        ln = int(mo.group(1), 0)
+                for x in L[i + 1:i + 3]:
+                    mo = re.fullmatch(r"add (0x[0-9a-f]+|\d+), d\d", x)
+                    if mo:
+                        step = int(mo.group(1), 0)
+                if base is not None and ln and step:
+                    out.append((base, re.sub(r"_entry(_L[0-9a-f]+)?$", "", fn), cpu, step, ln))
+        return {"all": out}
 
     def short_strings(self):
         """Gaps of a few bytes that are a short NUL-terminated text (1..3
@@ -5811,6 +6204,10 @@ class Gen:
                     extra = f"\t# screen {self.obj_by_id.get(scr, hex(scr) if isinstance(scr, int) else '?')}"
                 out.append(f".equ {self.id_name[i]}, 0x{i:08X}{extra}")
             out.append("")
+        if getattr(self, "table_titles", None):
+            out.append(f"# {len(self.table_titles)} titles no screen registers, named by the firmware's own title-name"
+                       f" table ({P['title_names'][0]:#010x}, entry i = title i's name string)")
+            out += [f".equ {self.id_name[i]}, 0x{i:08X}\t# \"{s}\"" for i, s in sorted(self.table_titles.items())] + [""]
         if self.host_used:
             out += [f"# the {P['host'].upper()}'s titles and functions this image's records name (the host's ids)"]
             out += [f".equ {self.host_ids[i]}, 0x{i:08X}" for i in sorted(self.host_used)] + [""]
@@ -5838,8 +6235,12 @@ class Gen:
             self.bitmaps()
         self.code_refs()
         if P.get("structs"):
-            if P.get("readers_ext"):
+            if P.get("readers_ext") or FEATURES.get("sibling_support", True):
+                # (lane mn10300-data2) the siblings register the same SupportClass table (KN2400 slot 0xD,
+                # KN6000 / KN6500 0x1C0: InitSptClassTable)
                 self.support_classes()
+            self.boot_sectors()
+            self.style_genre_lists()
             if P.get("readers_ext") or FEATURES.get("sibling_trie", True):
                 # (lane mn10300-rest) the siblings have the same trie (KN6000 func_4C02CA6A, KN2400 func_5014A95C)
                 self.resource_trie()
