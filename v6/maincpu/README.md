@@ -77,6 +77,18 @@ runs over every tree) also write into the committed tree and are not in the sequ
     python3 scripts/converters/ported_c_rebase.py --tree v6 --need $TMPDIR/need-v6-b
     python3 scripts/converters/ported_c_rebase.py --tree v6 --ram-self $TMPDIR/need-v6-b
     python3 scripts/converters/ported_c_rebase.py --tree v6 --regen $TMPDIR/need-v6-b
+    # v6 first: v5's --own-values copies the RAM names v6's C spells
+    python3 scripts/converters/port_ram_names.py --tree v6
+    python3 scripts/converters/ported_c_rebase.py --tree v6 --need $TMPDIR/need-v6-c
+    python3 scripts/converters/ported_c_rebase.py --tree v6 --ram-self-pieces $TMPDIR/need-v6-c
+    python3 scripts/converters/ported_c_rebase.py --tree v6 --own-values $TMPDIR/need-v6-c
+    python3 scripts/converters/ported_c_rebase.py --tree v6 --hand-c $TMPDIR/need-v6-c
+    python3 scripts/converters/ported_c_rebase.py --tree v6 --regen $TMPDIR/need-v6-c
+    python3 scripts/tools/port_todo_hand.py --tree v6          # edits 8 and 9 take bin slices out
+    python3 scripts/converters/ported_c_rebase.py --tree v6 --regen $TMPDIR/need-v6-c
+    python3 scripts/converters/naka_type_straddling_records.py --tree v6 --apply
+    python3 scripts/converters/naka_gui_symbolize.py --tree v6 --apply
+    python3 scripts/converters/naka_gui_symbolize.py --tree v6 --headers --apply
 
 `port_hand_edits.py` makes `FIRMWARE_VERSION` the byte `FW_VERSION_BYTE` (v7 spells it `reti`)
 and decodes `AccTone_JumpTableData` as the call/ret thunks it is (v10's spelling and names).
@@ -116,8 +128,18 @@ the porter's further markers and its neighbour lines when an instruction straddl
 three regions of `HAND_REGIONS` (code the source tree spells as bytes), and writes the case-offset tables
 that hold rows as `.short Case - Base` (base from the reader).  `port_todo_hand.py` is the list of rows
 read by hand, with the evidence for each.  `ported_c_rebase.py --ram-self` spells
-naka_sequencer_channels' 64 work-RAM self-pointers as `NAKA_WRAM(Naka_DrawbarReg_Table[k])`.  The rows
-left are halves of pointers a C slice boundary cuts (`@lo16` is an error in data).
+naka_sequencer_channels' 64 work-RAM self-pointers as `NAKA_WRAM(Naka_DrawbarReg_Table[k])`.
+
+The steps after that (2026-11-06, lane open11/v6v5-port2; `notes/v6v5-port2-2026-11-06/README.md`) leave no
+`; TODO(port)` row and almost no raw json byte.  `port_todo_hand.py` edits 5-7 write the last rows, halves
+of pointers a slice boundary cut, as whole `.long` pointers by moving the slice boundary; edits 8-9 write
+two pointer tables whose strings the port spells (the ResEvent 0x1c1 names, AcBitEditBox's property names)
+as `.long` to labelled strings.  `port_ram_names.py` gives the tree v7's `shared/ram_variables_by_use.s`
+names (values derived from the source tree's routines by `name_kn5000_ram.py --ref`; the code's numeric
+operands take them).  `ported_c_rebase.py --ram-self-pieces` makes NAKA_WRAM piecewise (the elements name
+entries 17 / 30 / 43 / 56, the bass-note spelling blocks MainChordPre_AppendChordSuffix reads),
+`--own-values` gives the C the tree's own RAM names, link-script addresses, literals and `#define`s, and
+`--hand-c` the two initializers that were read as pointers but are coordinate pairs.
 
 ## Build
 

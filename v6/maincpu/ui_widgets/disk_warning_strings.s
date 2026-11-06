@@ -1992,10 +1992,16 @@ NakaClass_AcWindowMenu_PropNames:	.incbin "includes/generated/naka_disk_warning.
 NakaClass_AcWindowMenu_PropNameText:	.incbin "includes/generated/naka_disk_warning.bin", 0x39CE, 0x14
 ; NakaClass_AcBitEditBox_PropNames -- 3 x u32: name pointers of class AcBitEditBox (0x1600043)'s own properties, one per letter of its propdata "jm":
 ; "func", "data", ended by "". +20 (propname) of entry 67 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].
-NakaClass_AcBitEditBox_PropNames:	.incbin "includes/generated/naka_disk_warning.bin", 0x39E2, 0xC
+NakaClass_AcBitEditBox_PropNames:
+	.long	NakaClass_AcBitEditBox_PropName_func
+	.long	NakaClass_AcBitEditBox_PropName_data
+	.long	NakaClass_AcBitEditBox_PropName_End
 ; NakaClass_AcBitEditBox_PropNameText -- 14 x char: the property-name strings NakaClass_AcBitEditBox_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
+NakaClass_AcBitEditBox_PropName_End:
 	aligned_string ""
+NakaClass_AcBitEditBox_PropName_data:
 	aligned_string "data"
+NakaClass_AcBitEditBox_PropName_func:
 	aligned_string "func"
 NakaClass_AcFuncToggle_PropNames:
 	.long	NakaClass_AcFuncToggle_PropName_func

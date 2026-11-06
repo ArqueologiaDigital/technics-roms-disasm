@@ -28,7 +28,7 @@
 #include <stdint.h>
 
 /* ── Constants ── */
-#define SENTINEL  0x6B4A  /* SeMenu_BitShift_Stub low word */
+#define SENTINEL  0x6A21  /* SeMenu_BitShift_Stub low word */
 #define SE_PREFIX 0xF000  /* Normal SE function entry prefix */
 #define ALT_PREFIX 0x0000 /* Alt-type entry prefix */
 
@@ -107,7 +107,7 @@ const tonegen_param_table_t tonegen_param_table_data
      * ================================================================ */
     .rows = {
         /* Row 0 */
-        { .entries = { SE(0xC5C3), SE(0xC62A), SENT, SENT, SE(0xC6C2), SENT },
+        { .entries = { SE(0xC49A), SE(0xC501), SENT, SENT, SE(0xC599), SENT },
           .null_entry = ENULL, .alt_entry = ALT(0xC7BF),
           .entries2 = { SE(0xC817), SE(0xC88B), SENT, SENT,
                         SE(0xC8EE), SE(0xC96E), SE(0xC9D6), SE(0xCA45),

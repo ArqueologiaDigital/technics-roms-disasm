@@ -1184,7 +1184,7 @@ AccPlay_InitializeStart:
 	pop XBC
 	pop XHL
 	pop XWA
-	ld a, (0x0433:16)
+	ld a, (ACC_BEATS_PER_BAR:16)
 	sla A, 0x01
 	and A,0x1f
 	or A,0x80
@@ -1195,7 +1195,7 @@ AccPlay_InitializeStart:
 	ld	xbc, 0:i3
 	ld	xde, 0:i3
 	call	CtrlPanel_IndicatorDispatch
-	ld	(36494:16), 4
+	ld	(DEMO_PLAY_STATE:16), 4
 	ret
 AccPlay_MainUpdateLoop:
 	call AccWrap_PlayModeDispatch
@@ -1266,7 +1266,7 @@ AccPlay_SetIndicatorAndRet:
 
 
 AccPlay_DispatchSeqStart:
-	bit 2, (0x0420:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlay_DispatchSeqRet
 	call Seq_DispatcherEntry
 	or	(0x3330:16), 0x01
@@ -1400,7 +1400,7 @@ AccPlay_PostLoopCleanup:
 AccPlay_StopIfRunning:
 	bit	0, (32349:16)
 	jr	z, AccPlay_StopRet
-	bit	2, (1056:16)
+	bit	2, (PLAY_TRANSPORT_STATE:16)
 	jr	nz, AccPlay_StopRet
 	call	Seq_DispatcherEntry
 	and	(13104:16), 254
@@ -1500,7 +1500,7 @@ AccPlay_SetupSoundParams:
 	call SwbtWr_QueuePostEvent
 	ld H, 0x00:opc
 	ld L, 0x00:opc
-	ld	(0x9037:16), 0x17
+	ld	(PROGRAM_CHANGE_PART:16), 0x17
 	call PartCtrl_WriteProgramChange
 	ld XBC,0x0000ff7e
 	ld	(xbc+l), h
@@ -1963,7 +1963,7 @@ MidiSeq_SustainRet:
 	ret
 
 AccPlay_TrackMeasureChange:
-	ld	a, (1076:16)
+	ld	a, (ACC_BAR_COUNT:16)
 	ld	w, (32380:16)
 	cp	a, w
 	jr	z, AccPlay_MeasureTrackRet
@@ -2584,19 +2584,19 @@ AccPlay_ToggleRet:
 	ret
 
 AccPlay_StopAndReset:
-	bit 2, (1056:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlay_StopResetRet
 	ld wa, 0:i3
-	ld (1047:16), a
-	ld (1048:16), wa
-	ld (1045:16), a
-	ld (1046:16), a
-	ld (1076:16), a
-	ld (1077:16), a
+	ld (PLAY_CLOCK:16), a
+	ld (PLAY_BEAT_COUNT:16), wa
+	ld (ACC_CLOCK:16), a
+	ld (ACC_BEAT:16), a
+	ld (ACC_BAR_COUNT:16), a
+	ld (ACC_SECTION_BAR:16), a
 	ld (1130:16), a
 	ld (1128:16), wa
-	ld (1056:16), 1
-	ld (1054:16), 1
+	ld (PLAY_TRANSPORT_STATE:16), 1
+	ld (ACC_TRANSPORT_STATE:16), 1
 	ld (1055:16), 1
 
 AccPlay_StopResetRet:
@@ -5042,7 +5042,7 @@ StsAreYouSure_ReturnZero:
 	ret
 
 GMOKFunc:
-	ld l, (0x0340ea:24)
+	ld l, (SURE_CONFIRM:24)
 	cp l, 2:i3
 	jr z, GMOK_ConfirmDialog
 	cp l, 1:i3

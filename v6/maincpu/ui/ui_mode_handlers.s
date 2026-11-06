@@ -749,7 +749,7 @@ EffectMode_CopyHoldPedalBits:
 
 	ret z
 
-	bit 2, (1056:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 
 	ret z
 
@@ -814,7 +814,7 @@ EffectMode_SetRegion_Apply:
 	cp	a, 197
 	jr	nz, EffectMode_PopIzRet
 EffectMode_CheckPedalType:
-	bit	2, (0x041e:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, EffectMode_PopIzRet
 	ld	wa, (35998:16)
 	bit	0, wa
@@ -1885,7 +1885,7 @@ EffectMode_HandleTimerEvents:
 	call	CtrlPanel_GetSelectionState
 	cp	hl, 0:i3
 	ret	nz
-	ld	a, (36026:16)
+	ld	a, (DIAG_ANIM_STEP:16)
 	cp	a, 150
 	jrl	z, EffectMode_TimerEvent_Step96
 	cp	a, 120
@@ -1902,65 +1902,65 @@ EffectMode_HandleTimerEvents:
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ld	a, (36026:16)
+	ld	a, (DIAG_ANIM_STEP:16)
 	inc	1, a
 	inc	1, a
-	ld	(36026:16), a
+	ld	(DIAG_ANIM_STEP:16), a
 	ret
 EffectMode_TimerEvent_Step1E:
 	ld	xwa, NAKA_VIEW_TEST55
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ld	a, (36026:16)
+	ld	a, (DIAG_ANIM_STEP:16)
 	inc	1, a
 	inc	1, a
-	ld	(36026:16), a
+	ld	(DIAG_ANIM_STEP:16), a
 	ret
 EffectMode_TimerEvent_Step3C:
 	ld	xwa, NAKA_VIEW_TEST56
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ld	a, (36026:16)
+	ld	a, (DIAG_ANIM_STEP:16)
 	inc	1, a
 	inc	1, a
-	ld	(36026:16), a
+	ld	(DIAG_ANIM_STEP:16), a
 	ret
 EffectMode_TimerEvent_Step5A:
 	ld	xwa, NAKA_VIEW_TEST51
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ld	a, (36026:16)
+	ld	a, (DIAG_ANIM_STEP:16)
 	inc	1, a
 	inc	1, a
-	ld	(36026:16), a
+	ld	(DIAG_ANIM_STEP:16), a
 	ret
 EffectMode_TimerEvent_Step78:
 	ld	xwa, NAKA_VIEW_TEST52
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ld	a, (36026:16)
+	ld	a, (DIAG_ANIM_STEP:16)
 	inc	1, a
 	inc	1, a
-	ld	(36026:16), a
+	ld	(DIAG_ANIM_STEP:16), a
 	ret
 EffectMode_TimerEvent_Step96:
 	ld	xwa, NAKA_VIEW_TEST53
 	ld	xbc, EVT_SHOW
 	ld	xde, 0:i3
 	call	ApPostEvent
-	ld	(36026:16), 220
+	ld	(DIAG_ANIM_STEP:16), 220
 	ret
 EffectMode_TimerEvent_Default:
 	inc	1, a
 	inc	1, a
-	ld	(36026:16), a
+	ld	(DIAG_ANIM_STEP:16), a
 	ret
 EffectMode_RunDiagSequence:
-	ld	a, (36026:16)
+	ld	a, (DIAG_ANIM_STEP:16)
 	cp	a, 0:i3
 	jr	nz, EffectMode_DiagSeq_AnimFrame
 	ld	xwa, NAKA_VIEW_TEST51
@@ -1993,7 +1993,7 @@ EffectMode_RunDiagSequence:
 	call	ApPostEvent
 	calr	A_Short_Pause
 	calr	A_Short_Pause
-	inc	1, (36026:16)
+	inc	1, (DIAG_ANIM_STEP:16)
 	ret
 EffectMode_DiagSeq_AnimFrame:
 	ld	c, (36024:16)
@@ -2007,14 +2007,14 @@ EffectMode_DiagSeq_AnimFrame:
 	ld	xwa, 4294967295
 	ld	xbc, EVT_INTERRUPT_TITLE
 	call	ApPostEvent
-	ld	a, (36026:16)
+	ld	a, (DIAG_ANIM_STEP:16)
 	cp	a, 5:i3
 	jr	nz, EffectMode_DiagSeq_IncFrame	; -> 0xFB7379
-	ld	(36026:16), 1
+	ld	(DIAG_ANIM_STEP:16), 1
 	jr	EffectMode_DiagSeq_SetDelay	; -> 0xFB737F
 EffectMode_DiagSeq_IncFrame:
 	inc	1, a
-	ld	(36026:16), a
+	ld	(DIAG_ANIM_STEP:16), a
 EffectMode_DiagSeq_SetDelay:
 	ld	(36024:16), 30
 	ret
@@ -2494,7 +2494,7 @@ SystemInitOkFunc:
 	call SendEvent
 	exts xhl
 	ld (0x0340de:24), xhl
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr nz, SystemInitOk_PostEvent
 	ld xwa, NAKA_MAINFUNC_MainSysControl
 	ld xbc, EVT_SYS_INI
@@ -3709,7 +3709,7 @@ MstStyle_EventDispatch:
 	muls wa, 0xa
 	sub wa, 0xa
 	add wa, iy
-	ld (0x0340c4:24), wa
+	ld (MUSIC_STYLIST_GENRE:24), wa
 	jrl SeqFileAlt_ReturnZeroJmp
 AcMstStyle1GridBoxProc_OnIndexswUp:
 	ld xwa, (xsp + 16)
@@ -3742,7 +3742,7 @@ AcMstStyle1GridBoxProc_OnIndexswUp:
 	ld wa, (xwa)
 	muls wa, 0xa
 	dec 1, wa
-	ld (0x0340c4:24), wa
+	ld (MUSIC_STYLIST_GENRE:24), wa
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0:i3
@@ -3761,7 +3761,7 @@ AcMstStyle1GridBoxProc_OnIndexswUp:
 	jr MstStyle_DialDown_PostEvent
 
 MstStyle_DialDown_Decrement:
-	decw 1, (0x340c4:24)
+	decw 1, (MUSIC_STYLIST_GENRE:24)
 	ld wa, iy
 	dec 1, wa
 	ld de, wa
@@ -3833,7 +3833,7 @@ AcMstStyle1GridBoxProc_OnIndexswDown:
 	ld wa, (xwa)
 	muls wa, 0xa
 	sub wa, 0xa
-	ld (0x0340c4:24), wa
+	ld (MUSIC_STYLIST_GENRE:24), wa
 	ld xwa, (xsp + 16)
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0:i3
@@ -3852,7 +3852,7 @@ AcMstStyle1GridBoxProc_OnIndexswDown:
 	jrl MstStyle_DialUp_PostEvent
 
 MstStyle_DialUp_Increment:
-	incw 1, (0x340c4:24)
+	incw 1, (MUSIC_STYLIST_GENRE:24)
 	ld de, bc
 	extz xde
 	add xde, 0xffff0000
@@ -3883,7 +3883,7 @@ MstStyle_DialUp_CheckLimit:
 	ld wa, bc
 	cp bc, de
 	jrl ge, SeqFileAlt_ReturnZeroJmp
-	incw 1, (0x340c4:24)
+	incw 1, (MUSIC_STYLIST_GENRE:24)
 	ld de, wa
 	extz xde
 	add xde, 0xffff0000
@@ -4220,13 +4220,13 @@ MstStyle1_EventDispatch:
 	ld xwa, (xsp + 58)
 	or xwa, xwa
 	jrl nz, SeqFile_ReturnZeroJmp
-	ld wa, (0x0340c4:24)
+	ld wa, (MUSIC_STYLIST_GENRE:24)
 	extz xwa
 	sll xwa, 3
 	lda xbc, (MstStyle_GenreTable_GroupColumn:24)
 	add xbc, xwa
 	ld xde, (xbc)
-	ld (0x0340d2:24), xde
+	ld (MUSIC_STYLIST_GROUP_TABLE:24), xde
 	ld c, 0x0:opc
 
 MstStyle1Sub_CountEntries_Loop:
@@ -4246,7 +4246,7 @@ MstStyle1Sub_CountEntries_Done:
 	dec 1, c
 
 MstStyle1Sub_CountEntries_Adjust:
-	ld wa, (0x0340c4:24)
+	ld wa, (MUSIC_STYLIST_GENRE:24)
 	extz xwa
 	ld xde, 0x340c8
 	add xde, xwa
@@ -4298,13 +4298,13 @@ MstStyle1Sub_HandleSubSelect:
 	call InheritedProc
 	ld xwa, (xsp + 66)
 	call GetViewInstance
-	ld wa, (0x0340c4:24)
+	ld wa, (MUSIC_STYLIST_GENRE:24)
 	extz xwa
 	sll xwa, 3
 	lda xbc, (MstStyle_GenreTable_GroupColumn:24)
 	add xbc, xwa
 	ld xde, (xbc)
-	ld (0x0340d2:24), xde
+	ld (MUSIC_STYLIST_GROUP_TABLE:24), xde
 	ld c, 0x0:opc
 
 MstStyle1Sub_SubSel_CountLoop:
@@ -4324,7 +4324,7 @@ MstStyle1Sub_SubSel_CountDone:
 	dec 1, c
 
 MstStyle1Sub_SubSel_Adjust:
-	ld wa, (0x0340c4:24)
+	ld wa, (MUSIC_STYLIST_GENRE:24)
 	extz xwa
 	ld xde, 0x340c8
 	add xde, xwa
@@ -4384,7 +4384,7 @@ AcMstStyle1SubGridBoxProc_OnIndexswUp:
 	muls wa, 0xa
 	dec 1, wa
 	ld (0x0340c6:24), wa
-	ld de, (0x0340c4:24)
+	ld de, (MUSIC_STYLIST_GENRE:24)
 	extz xde
 	add xbc, xde
 	ld (xbc), a
@@ -4405,7 +4405,7 @@ MstStyle1Sub_DialDown_Decrement:
 	ld wa, (0x0340c6:24)
 	dec 1, wa
 	ld (0x0340c6:24), wa
-	ld de, (0x0340c4:24)
+	ld de, (MUSIC_STYLIST_GENRE:24)
 	extz xde
 	add xbc, xde
 	ld (xbc), a
@@ -4493,7 +4493,7 @@ AcMstStyle1SubGridBoxProc_OnIndexswDown:
 	muls wa, 0xa
 	sub wa, 0xa
 	ld (0x0340c6:24), wa
-	ld bc, (0x0340c4:24)
+	ld bc, (MUSIC_STYLIST_GENRE:24)
 	extz xbc
 	add xix, xbc
 	ld (xix), a
@@ -4513,7 +4513,7 @@ AcMstStyle1SubGridBoxProc_OnIndexswDown:
 MstStyle1Sub_DialUp_Increment:
 	inc 1, bc
 	ld (0x0340c6:24), bc
-	ld wa, (0x0340c4:24)
+	ld wa, (MUSIC_STYLIST_GENRE:24)
 	extz xwa
 	add xix, xwa
 	ld (xix), c
@@ -4536,7 +4536,7 @@ MstStyle1Sub_DialUp_CheckLimit:
 	jrl ge, SeqFile_ReturnZeroJmp
 	inc 1, bc
 	ld (0x0340c6:24), bc
-	ld wa, (0x0340c4:24)
+	ld wa, (MUSIC_STYLIST_GENRE:24)
 	extz xwa
 	ld xhl, 0x340c8
 	add xhl, xwa
@@ -4733,7 +4733,7 @@ MstStyle1SubGrid_CellSelect:
 	add	hl, wa
 	exts	xhl
 	sll	xhl, 3
-	add	xhl, (213202:24)
+	add	xhl, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld	xwa, (xhl)
 	push	xwa
 	push	xde
@@ -4769,7 +4769,7 @@ MstStyle1SubGrid_PadLeft_Check:
 	add	wa, (xsp+28)
 	exts	xwa
 	sll	xwa, 3
-	add	xwa, (0x0340d2:24)
+	add	xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld	xwa, (xwa)
 	push	xwa
 	call	Strlen
@@ -4792,7 +4792,7 @@ MstStyle1SubGrid_BottomSection:
 	add	hl, (xbc)
 	exts	xhl
 	sll	xhl, 3
-	add	xhl, (0x0340d2:24)
+	add	xhl, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld	xwa, (xhl)
 	push	xwa
 	push	xde
@@ -4828,7 +4828,7 @@ MstStyle1SubGrid_PadLeft_CheckB:
 	add	wa, (xsp+28)
 	exts	xwa
 	sll	xwa, 3
-	add	xwa, (0x0340d2:24)
+	add	xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld	xwa, (xwa)
 	push	xwa
 	call	Strlen
@@ -4944,13 +4944,13 @@ MstStyle1Page_EventDispatch:
 	jrl z, MstStyle2_HandleSpecialEvent
 	or xwa, xwa
 	jrl nz, SeqData_ReturnZero
-	ld wa, (0x0340c4:24)
+	ld wa, (MUSIC_STYLIST_GENRE:24)
 	extz xwa
 	sll xwa, 3
 	lda xbc, (MstStyle_GenreTable_GroupColumn:24)
 	add xbc, xwa
 	ld xde, (xbc)
-	ld (0x0340d2:24), xde
+	ld (MUSIC_STYLIST_GROUP_TABLE:24), xde
 	ld c, 0x0:opc
 
 MstStyle2_CountEntries_Loop:
@@ -4997,7 +4997,7 @@ MstStyle2_CountEntries_Adjust:
 	jrl nz, MstStyle2_InitOdd_Setup
 	extz xwa
 	sll xwa, 3
-	add xwa, (0x340d2:24)
+	add xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld xhl, (xwa + 4)
 	ld (0x0340d6:24), xhl
 	ld c, 0x0:opc
@@ -5031,7 +5031,7 @@ MstStyle2_CountSubEntries_AdjA:
 	inc 1, wa
 	extz xwa
 	sll xwa, 3
-	add xwa, (0x340d2:24)
+	add xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld xde, (xwa + 4)
 	ld (0x0340da:24), xde
 	ld c, 0x0:opc
@@ -5072,7 +5072,7 @@ MstStyle2_InitOdd_Setup:
 	dec 1, wa
 	extz xwa
 	sll xwa, 3
-	add xwa, (0x340d2:24)
+	add xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld xde, (xwa + 4)
 	ld (0x0340d6:24), xde
 	ld c, 0x0:opc
@@ -5101,7 +5101,7 @@ MstStyle2_InitOdd_CountAdjA:
 	ld wa, (0x0340c6:24)
 	extz xwa
 	sll xwa, 3
-	add xwa, (0x340d2:24)
+	add xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld xde, (xwa + 4)
 	ld (0x0340da:24), xde
 	ld c, 0x0:opc
@@ -5198,7 +5198,7 @@ MstStyle2_HandleDialTurn:
 	cp wa, 0:i3
 	jr z, MstStyle2_DialDown_PageDec
 	decw	1, (xix)
-	ld wa, (0x0340c4:24)
+	ld wa, (MUSIC_STYLIST_GENRE:24)
 	extz xwa
 	add xbc, xwa
 	ld xwa, (xde)
@@ -5224,7 +5224,7 @@ MstStyle2_DialDown_PageDec:
 	dec 2, wa
 	exts xwa
 	sll xwa, 3
-	add xwa, (0x340d2:24)
+	add xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld xhl, (xwa + 4)
 	ld (0x0340d6:24), xhl
 	ld c, 0x0:opc
@@ -5261,7 +5261,7 @@ MstStyle2_PageDec_CountAdj:
 	dec 1, wa
 	exts xwa
 	sll xwa, 3
-	add xwa, (0x340d2:24)
+	add xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld xhl, (xwa + 4)
 	ld (0x0340da:24), xhl
 	ld c, 0x0:opc
@@ -5291,7 +5291,7 @@ MstStyle2_PageDec_CountAdj2:
 MstStyle2_DialDown_UpdateAndPost:
 	ld xwa, (xde)
 	decw	1, (xwa)
-	ld wa, (0x0340c4:24)
+	ld wa, (MUSIC_STYLIST_GENRE:24)
 	extz xwa
 	ld xbc, 0x340c8
 	add xbc, xwa
@@ -5328,7 +5328,7 @@ MstStyle2_DialUp_Scroll:
 	cp wa, 0:i3
 	jr nz, MstStyle2_DialUp_PageInc
 	incw 1, (xiy)
-	ld wa, (0x0340c4:24)
+	ld wa, (MUSIC_STYLIST_GENRE:24)
 	extz xwa
 	add xbc, xwa
 	ld xwa, (xde)
@@ -5354,7 +5354,7 @@ MstStyle2_DialUp_PageInc:
 	dec 2, wa
 	exts xwa
 	sll xwa, 3
-	add xwa, (0x340d2:24)
+	add xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld xhl, (xwa + 4)
 	ld (0x0340d6:24), xhl
 	ld c, 0x0:opc
@@ -5396,7 +5396,7 @@ MstStyle2_PageInc_CountAdj:
 	dec 1, wa
 	exts xwa
 	sll xwa, 3
-	add xwa, (0x340d2:24)
+	add xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld xhl, (xwa + 4)
 	ld (0x0340da:24), xhl
 	ld c, 0x0:opc
@@ -5426,7 +5426,7 @@ MstStyle2_PageInc_CountAdj2:
 MstStyle2_DialUp_UpdateAndPost:
 	ld xwa, (xde)
 	incw 1, (xwa)
-	ld wa, (0x0340c4:24)
+	ld wa, (MUSIC_STYLIST_GENRE:24)
 	extz xwa
 	ld xbc, 0x340c8
 	add xbc, xwa
@@ -5480,7 +5480,7 @@ AcMstStyle2GridBoxProc_OnIndexswUp:
 	lda xhl, (xhl + 86)
 	ld xwa, (xhl)
 	decw	1, (xwa)
-	ld wa, (0x0340c4:24)
+	ld wa, (MUSIC_STYLIST_GENRE:24)
 	extz xwa
 	add xbc, xwa
 	ld xwa, (xhl)
@@ -5494,7 +5494,7 @@ AcMstStyle2GridBoxProc_OnIndexswUp:
 	dec 2, wa
 	exts xwa
 	sll xwa, 3
-	add xwa, (0x340d2:24)
+	add xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld xhl, (xwa + 4)
 	ld (0x0340d6:24), xhl
 	ld c, 0x0:opc
@@ -5531,7 +5531,7 @@ MstStyle2_DialScrollDown_CountAdj:
 	dec 1, wa
 	exts xwa
 	sll xwa, 3
-	add xwa, (0x340d2:24)
+	add xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld xde, (xwa + 4)
 	ld (0x0340da:24), xde
 	ld c, 0x0:opc
@@ -5586,7 +5586,7 @@ MstStyle2_DialScrollUp_Middle:
 	lda xde, (xhl + 86)
 	ld xwa, (xde)
 	decw	1, (xwa)
-	ld wa, (0x0340c4:24)
+	ld wa, (MUSIC_STYLIST_GENRE:24)
 	extz xwa
 	add xbc, xwa
 	ld xwa, (xde)
@@ -5686,7 +5686,7 @@ AcMstStyle2GridBoxProc_OnIndexswDown:
 	lda xbc, (xiz + 86)
 	ld xwa, (xbc)
 	incw 1, (xwa)
-	ld wa, (0x0340c4:24)
+	ld wa, (MUSIC_STYLIST_GENRE:24)
 	extz xwa
 	ld xde, 0x340c8
 	add xde, xwa
@@ -5727,7 +5727,7 @@ MstStyle2_DialScrollUp_NextPage:
 	dec 2, wa
 	exts xwa
 	sll xwa, 3
-	add xwa, (0x340d2:24)
+	add xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld xiy, (xwa + 4)
 	ld (0x0340d6:24), xiy
 	ld c, 0x0:opc
@@ -5764,7 +5764,7 @@ MstStyle2_DialScroll_CountAdjD:
 	dec 1, wa
 	exts xwa
 	sll xwa, 3
-	add xwa, (0x340d2:24)
+	add xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld xhl, (xwa + 4)
 	ld (0x0340da:24), xhl
 	ld c, 0x0:opc
@@ -5794,7 +5794,7 @@ MstStyle2_DialScroll_IncAndPost:
 	lda xbc, (xiz + 86)
 	ld xwa, (xbc)
 	incw 1, (xwa)
-	ld wa, (0x0340c4:24)
+	ld wa, (MUSIC_STYLIST_GENRE:24)
 	extz xwa
 	ld xde, 0x340c8
 	add xde, xwa
@@ -5908,7 +5908,7 @@ MstStyle2_GetNameB_DrawString:
 	dec 2,WA
 	exts XWA
 	sll XWA, 0x03
-	add	xwa, (213202:24)
+	add	xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld	xwa, (xwa)
 	push	xwa
 	pushw MstStyle2_GetNameB_DrawString_Str_Fmts@hi16
@@ -5947,7 +5947,7 @@ MstStyle2_GetNameB_DrawString:
 MstStyle2_NameB_DrawCurrent:
 	exts	xwa
 	sll	xwa, 3
-	add	xwa, (213202:24)
+	add	xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld	xwa, (xwa)
 	push	xwa
 	pushw	MstStyle2_NameB_DrawCurrent_Str_Fmts@hi16
@@ -5963,7 +5963,7 @@ MstStyle2_NameB_DrawLower:
 	dec	1, wa
 	exts	xwa
 	sll	xwa, 3
-	add	xwa, (213202:24)
+	add	xwa, (MUSIC_STYLIST_GROUP_TABLE:24)
 	ld	xwa, (xwa)
 	push	xwa
 	pushw	MstStyle2_NameB_DrawLower_Str_Fmts@hi16
@@ -6035,7 +6035,7 @@ MstStyle2_NameB_Render:
 	ld	wa, (xbc)
 	add	wa, 20
 	ld	(xde+6), wa
-	ld	wa, (213188:24)
+	ld	wa, (MUSIC_STYLIST_GENRE:24)
 	extz	xwa
 	sll	xwa, 3
 	ld	xbc, MstStyle_GenreTable
@@ -9506,7 +9506,7 @@ DispTimeSet_EventDispatch_Skip:
 	cp	de, 4:i3
 	jr	nz, DispTimeSet_EventDispatch_Skip2
 	lda	xwa, (xsp+8)
-	lda	xbc, (213226:24)
+	lda	xbc, (SURE_CONFIRM:24)
 	ld	(xwa), xbc
 	ldw	(xwa+4), 1
 	ld	xbc, 1:i3
@@ -9615,7 +9615,7 @@ DispTimeSetGridCheck_OnIndexswDown_Skip18:
 	cp	iz, 4:i3
 	jr	nz, DispTimeSetGridCheck_OnIndexswDown_Skip19
 	lda	xwa, (xsp+8)
-	lda	xbc, (213226:24)
+	lda	xbc, (SURE_CONFIRM:24)
 	ld	(xwa), xbc
 	ldw	(xwa+4), 1
 	ld	xbc, 4294967295
@@ -9730,7 +9730,7 @@ DispTimeSetGridCheck_OnLswData_Skip4:
 	ld	xbc, EVT_GRID_DRAW
 	jrl	DispTimeSet_SendEventReturn
 DispTimeSetGridCheck_OnLswData_Skip5:
-	lda	xbc, (213226:24)
+	lda	xbc, (SURE_CONFIRM:24)
 	lda	xwa, (ParamStr_Table_03:24)
 	ld	(xsp+4), xwa
 	cp	xbc, (xde)
@@ -9889,7 +9889,7 @@ DispTimeSetCheck_TryRow4:
 	jr nz, .Lc_fbc476
 	cpw (XWA), 0x0004
 	jr nz, .Lc_fbc476
-	ld a, (0x0340ea:24)
+	ld a, (SURE_CONFIRM:24)
 	extz WA
 	sla WA, 0x02
 	ld	xwa, (xde+wa)
@@ -11929,9 +11929,9 @@ GmOnOff_GetBoundsRect:
 	jr GmOnOff_SendAndReturn
 
 GmOnOff_CheckDesign:
-	ld	c, (35976:16)
-	or	c, (35978:16)
-	or	c, (35980:16)
+	ld	c, (DISPLAY_CHORD_ROOT:16)
+	or	c, (DISPLAY_CHORD_TYPE:16)
+	or	c, (DISPLAY_CHORD_BASS:16)
 	jr	nz, GmOnOff_SendHideEvent
 	ldw	bc, 245
 	call	DrawBox

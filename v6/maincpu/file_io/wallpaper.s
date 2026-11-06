@@ -43,14 +43,14 @@ FmmWallpaperLoadFunc:
 	ld	xbc, EVT_SHOW
 	ld	xde, 5:i3
 	call	ApPostEvent
-	cpw	(0x8448:16), 0
+	cpw	(DISK_MEDIA_TYPE:16), 0
 	jr	ge, WPLoad_DispatchState
 	call	GetDiskSizeInfo
 	extz	hl
-	ld	(0x8448:16), hl
+	ld	(DISK_MEDIA_TYPE:16), hl
 	calr	SignalProgressUpdate
 WPLoad_DispatchState:
-	ld	wa, (0x8448:16)
+	ld	wa, (DISK_MEDIA_TYPE:16)
 	cp	wa, 1:i3
 	jrl	z, WPLoad_HandleSuccess
 	cp	wa, 0:i3
@@ -357,7 +357,7 @@ SingleLoad_ScanAreas_CheckAvail:
 
 SingleLoad_ScanAreas_MarkAvailable:
 	or	(0x893e:16), de
-	cp	(0x8940:16), 4
+	cp	(SINGLE_LOAD_AREA:16), 4
 	jr	nc, SingleLoad_ScanAreas_LimitReached
 	jr	SingleLoad_ScanAreas_LoopContinue
 SingleLoad_ScanAreas_TypeNotThree:
@@ -382,7 +382,7 @@ SingleLoad_ScanAreas_TypeNotThree:
 
 SingleLoad_ScanAreas_TypeTwo_Mark:
 	or	(0x893e:16), de
-	cp	(0x8940:16), 4
+	cp	(SINGLE_LOAD_AREA:16), 4
 	jr	nc, SingleLoad_ScanAreas_LimitReached
 	jr	SingleLoad_ScanAreas_LoopContinue
 SingleLoad_ScanAreas_TypeGeneric:
@@ -401,11 +401,11 @@ SingleLoad_ScanAreas_TypeGeneric:
 
 SingleLoad_ScanAreas_Generic_Mark:
 	or	(0x893e:16), de
-	cp	(0x8940:16), 4
+	cp	(SINGLE_LOAD_AREA:16), 4
 	jr	c, SingleLoad_ScanAreas_LoopContinue
 SingleLoad_ScanAreas_LimitReached:
 	ldto_berp	A, 0xf8
-	ld	(0x8940:16), a
+	ld	(SINGLE_LOAD_AREA:16), a
 SingleLoad_ScanAreas_LoopContinue:
 	inc 1, iz
 	cp iz, 4:i3
@@ -418,7 +418,7 @@ SingleLoad_ScanAreas_LoopContinue:
 ;   callers + body.
 SingleLoad_FindNextArea:
 	pushw	iz
-	ld	a, (35136:16)
+	ld	a, (SINGLE_LOAD_AREA:16)
 	cp	a, 4:i3
 	jr	nc, SingleLoad_FindNextArea_NotFound
 	ld	bc, (35134:16)
@@ -445,7 +445,7 @@ SingleLoad_FindNextArea_SearchLoop:
 SingleLoad_FindNextArea_CheckSlot:
 	and	iy, bc
 	jr	z, SingleLoad_FindNextArea_NextSlot
-	ld	(35136:16), l
+	ld	(SINGLE_LOAD_AREA:16), l
 	ld	l, 1:opc
 	jr	SingleLoad_FindNextArea_Return
 SingleLoad_FindNextArea_NextSlot:

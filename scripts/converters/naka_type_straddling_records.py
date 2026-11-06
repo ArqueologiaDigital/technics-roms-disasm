@@ -34,8 +34,9 @@ Then scripts/converters/naka_gui_symbolize.py names the values (OBJ_ links, NAKA
 
 The records and their offsets come from v10 (its graph reads the Viewable tables from the v10 ROM); every
 tree's C file of the same name has v10's struct layout.  The bytes: v10 / v9 read their own
-includes/generated/<bin>.bin; v7 / v6 / v5 read v10's bin of the same file (their C records are v10's; only
-BASE / PORT_BASE / RAM-cell values differ, and those are not record fields this rewrites).  Each changed
+includes/generated/<bin>.bin; v7 reads v10's bin of the same file (its C records are v10's; only BASE /
+PORT_BASE / RAM-cell values differ, and those are not record fields this rewrites); v6 / v5, whose C has
+values of its own since lane open11/v6v5-port2, read what their C compiles to.  Each changed
 file is compiled before and after with the tree's own link script and written only when identical.  A
 record already typed in a tree (by an earlier run) is found typed and left.
 
@@ -235,6 +236,12 @@ def main():
         binp, ld = S.bin_rule(a.tree, p)
         if a.tree in ('v10', 'v9'):
             data = open(binp, 'rb').read()
+        elif a.tree in ('v6', 'v5'):
+            # the ported trees' C has values of its own (ported_c_rebase.py --own-values / --hand-c, lane
+            # open11/v6v5-port2): their records take what the tree's C compiles to now, which is the tree's
+            # ROM wherever an .incbin places it -- v10's bytes made 8 records of naka_technichord_part.c and
+            # NakaWidget_PanelSimulator DIFFER
+            data = S.compile_c(p, ld, open(p, encoding='latin-1').read().encode('latin-1').decode('utf-8', 'surrogateescape'))
         else:
             data = open(S.bin_rule('v10', p.replace('/%s/' % a.tree, '/v10/'))[0], 'rb').read()
         good_txt, done = base_txt, 0

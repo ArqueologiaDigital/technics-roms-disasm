@@ -27,7 +27,7 @@ SeMenu_SendEvent_StoreAndReturn:
 	ret
 
 SeMenu_LoadRawAddr:
-	ld	(xwa), (0x8c80)	; v10/v9: (0x8d38)
+	ld	(xwa), (ACTIVE_TITLE)	; v10/v9: (0x8d38)
 
 	ret
 
@@ -1098,11 +1098,11 @@ SeMenu_ValidatePartNumber_End:
 	ret
 
 SeMenu_StorePartMask:
-	ld (1630:16), a
+	ld (SEMENU_PART_MASK:16), a
 	ret
 
 SeMenu_PartMask_Data:
-	ld	(xwa), (0x65e)
+	ld	(xwa), (SEMENU_PART_MASK)
 	ret
 ; SeMenu_SetPartEnabled: Sets (C != 0) or clears (C = 0) the enable bit of part A (1..4; bit 2A-2 of the part mask
 ;   0x65E), then sends the new mask (as edit element 17, or display object 13 when the object entry is non-zero); A
@@ -1132,12 +1132,12 @@ SeMenu_SetPartEnabled_Skip2:
 	jr	nz, SeMenu_PartMask_Data_Code_Skip
 	ld	a, l
 	cpl	a
-	and	(1630:16), a
+	and	(SEMENU_PART_MASK:16), a
 	jr	SeMenu_SetPartEnabled_Join
 SeMenu_PartMask_Data_Code_Skip:
-	or	(1630:16), l
+	or	(SEMENU_PART_MASK:16), l
 SeMenu_SetPartEnabled_Join:
-	ld	(xsp+2), (0x065e)
+	ld	(xsp+2), (SEMENU_PART_MASK)
 	extz	hl
 	lda	xde, (xsp+2)
 	cp	(xsp), 0
@@ -1173,7 +1173,7 @@ SeMenu_IsPartEnabled_CheckMask:
 	extz bc
 	ld wa, 1:i3
 	calr SeMenu_BitShiftMask
-	ld a, (1630:16)
+	ld a, (SEMENU_PART_MASK:16)
 	and a, l
 	cp a, 0:i3
 	scc16 nz, hl
@@ -5866,7 +5866,7 @@ SeMenu_LoadObjEntries:
 	ret
 
 SeMenu_SetMode:
-	ld (1710:16), a
+	ld (SEMENU_PART_MODE:16), a
 	ret
 
 SeMenu_SetMode_Data:
@@ -6254,11 +6254,11 @@ SeMenu_StepNoteParamInRange_Epilogue:
 SeMenu_SetEditEnable:
 	cp a, 1:i3
 	jr nz, SeMenu_SetEditEnable_Clear
-	set	2, (0x288b:16)
+	set	2, (SEQ_RTMCFG:16)
 	ret
 
 SeMenu_SetEditEnable_Clear:
-	res	2, (0x288b:16)
+	res	2, (SEQ_RTMCFG:16)
 	ret
 
 SeMenu_OrPartConfig:

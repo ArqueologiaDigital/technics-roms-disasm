@@ -16,7 +16,7 @@ FmmPasswordFunc:
 	ld	wa, iz
 	cp	xbc, EVT_CHECK_PASSWORD3
 	jrl	z, Password_HandleLoadEvent
-	lda	xde, (35156:16)
+	lda	xde, (PASSWORD_STATE:16)
 	cp	xbc, EVT_CHECK_PASSWORD2
 	jrl	z, Password_HandleSaveEvent
 	cp	xbc, EVT_CHECK_PASSWORD
@@ -61,7 +61,7 @@ Password_HandleDeleteEvent:
 	ld	xde, 4:i3
 	jr	Password_ForwardToFileName
 Password_Delete_CheckLoadOnly:
-	cp	(0x8954:16), 1
+	cp	(PASSWORD_STATE:16), 1
 	jr	nz, Password_Delete_CheckSaveOnly
 	ld	wa, iz
 	call	CheckSlotIsSelected
@@ -73,7 +73,7 @@ Password_Delete_CheckLoadOnly:
 	ld	xde, 4:i3
 	jr	Password_ForwardToFileName
 Password_Delete_CheckSaveOnly:
-	cp	(0x8954:16), 2
+	cp	(PASSWORD_STATE:16), 2
 	jr	nz, Password_ShowErrorStatus
 	ld	wa, iz
 	call	Composer_IsPassword
@@ -110,7 +110,7 @@ Password_HandleSaveEvent:
 	jr t, Password_ForwardToSaveFilter
 Password_Save_CheckLoadOnly:
 .Lc_f8c61d:
-	cp	(0x8954:16), 0x01
+	cp	(PASSWORD_STATE:16), 0x01
 	jr nz, .Lc_f8c641
 	ld WA,IZ
 	call CheckSlotIsSelected
@@ -123,7 +123,7 @@ Password_Save_CheckLoadOnly:
 	jr t, Password_ForwardToSaveFilter
 Password_Save_CheckSaveOnly:
 .Lc_f8c641:
-	cp	(0x8954:16), 0x02
+	cp	(PASSWORD_STATE:16), 0x02
 	jr nz, Password_SaveErrorStatus
 	ld WA,IZ
 	call Composer_IsPassword
@@ -203,10 +203,10 @@ SelectMode_DetermineMode:
 	ld a, 0x3:opc
 
 SelectMode_SetBothMode:
-	ld	(35156:16), a
+	ld	(PASSWORD_STATE:16), a
 	jr	SelectMode_Return
 SelectMode_SingleMode:
-	lda	xbc, (35156:16)
+	lda	xbc, (PASSWORD_STATE:16)
 	cpib_erp	250, 0
 	jr	z, SelectMode_CheckSaveOnlyMode
 	ld	(xbc), 1
@@ -221,7 +221,7 @@ SelectMode_StoreMode:
 	ld (xbc), a
 
 SelectMode_Return:
-	ld	l, (35156:16)
+	ld	l, (PASSWORD_STATE:16)
 	extz	hl
 	pop	xiz
 	ret
@@ -376,7 +376,7 @@ FileName_OpSave:
 	ld	xbc, EVT_SET_NOT_DRAW_FLAG
 	ld	xde, 1:i3
 	call	ApPostEvent
-	cpw	(61854:16), 0
+	cpw	(SEQ_TRACK_MASK:16), 0
 	jr	z, FileName_OpSave_ShowCode1
 	ld	wa, 2:i3
 	call	FileIO_WriteRecordName_Done
@@ -416,7 +416,7 @@ FileName_OpLoad:
 	cp	hl, 0:i3
 	jr	z, FileName_OpLoad_NoPwd
 	ld	xde, 0:i3
-	ld	e, (35156:16)
+	ld	e, (PASSWORD_STATE:16)
 	ld	xwa, 4294967295
 	ld	xbc, EVT_WAKEUP_PASSWORD
 	jrl	FileName_OpDispatch
@@ -424,7 +424,7 @@ FileName_OpLoad_NoPwd:
 	call CheckFileSystemStatus
 	cp hl, 0:i3
 	jr z, FileName_OpLoad_Execute
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, FileName_OpLoad_Execute
 	ld xwa, 0xffffffff
 	ld xbc, EVT_NOT_PARA_DRAW
@@ -509,7 +509,7 @@ FileName_OpDelete:
 	call CheckFileSystemStatus
 	cp hl, 0:i3
 	jr z, FileName_OpFormatVariant
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, FileName_OpDelete_Execute
 	ld xwa, 0xffffffff
 	ld xbc, EVT_NOT_PARA_DRAW
@@ -628,7 +628,7 @@ FileName_UpdateDisplay:
 	cp	(xsp+4), wa
 	jrl	z, FileName_Return	; -> 0xF8CD60
 	call	NotifyUIOfSelectionChange
-	ld	(35136:16), 4
+	ld	(SINGLE_LOAD_AREA:16), 4
 	ld	de, (32450:16)
 	exts	xde
 	ld	xwa, (32442:16)

@@ -130,10 +130,9 @@
 	.long	ChordTypeStr_Type36
 	.long	ChordTypeStr_Type37
 	.long	ChordTypeStr_Type38
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xe6, 0xff
-ExtData_ChordTypeTable_Top:
-	.short	0x00ec	; high half of entry 39, begun in style_bitmaps.s
+	.long	ChordTypeStr_Type39
+; v5 holds the whole table here; ExtData_ChordTypeTable_Top is v7's file boundary, half way into entry 39
+	.set	ExtData_ChordTypeTable_Top, MainChordPre_ChordTypeNames + 4 * 39 + 2
 	.long ChordTypeStr_Type40
 	.long ChordTypeStr_Type41
 	.long ChordTypeStr_Type42
