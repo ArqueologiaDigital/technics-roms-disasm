@@ -24,9 +24,9 @@
 #   For v5  use maincpu_v5_symbols_reference.txt
 # =====================================================
 #
-#   symbols .................. 54,073
-#   semantic names ........... 53,783 (99.5%)
-#   positional names ......... 290
+#   symbols .................. 54,083
+#   semantic names ........... 53,794 (99.5%)
+#   positional names ......... 289
 #
 LED_patterns_indicating_firmware_version 00E00000
 LED_patterns_firmware_v8_plus 00E00008
@@ -704,7 +704,6 @@ NakaWidget_seampamp2 00E0CF5C
 NakaWidget_seampenv1 00E0CF7E
 NakaWidget_seampenv2 00E0CFA0
 NakaWidget_seamplfo1 00E0CFC2
-GUI_DisplayStructData 00E0CFDE
 NakaWidget_sefillpq1 00E0CFE4
 NakaWidget_sefilhpq1 00E0D006
 NakaWidget_sefill241 00E0D028
@@ -721,7 +720,7 @@ NakaWidget_sectr3 00E0D17C
 NakaWidget_secopy 00E0D19E
 NakaWidget_sewrtmem 00E0D1C0
 NakaWidget_sewrtsnd 00E0D1E2
-GUI_DisplayStructData_0x226 00E0D204
+Scoop_ViewableTable_020 00E0D204
 Scoop_ViewableTable_021 00E0D20C
 Scoop_ViewableTable_022 00E0D214
 Scoop_ViewableTable_023 00E0D21C
@@ -3420,7 +3419,9 @@ HamaStr_HamaListProc 00E1F774
 FDTest_DiagList_Total 00E1F794
 FDTest_String_Total 00E1F7C8
 FDTest_DiagList_NG 00E1F7D2
+FDTest_String_DiagList_NG 00E1F806
 FDTest_DiagList_OK 00E1F810
+FDTest_String_DiagList_OK 00E1F844
 FDTest_Separator1 00E1F84E
 FDTest_Panel_Param 00E1F868
 FDTest_Label_Tilde80 00E1F88E
@@ -3440,8 +3441,10 @@ FDTest_Divider1 00E1F9DE
 FDTest_ConsoleArea1 00E1F9F8
 FDTest_String_Console1 00E1FA2E
 FDTest_Label_MemoryDump 00E1FA36
+FDTest_String_MemoryDump 00E1FA56
 FDTest_StatusBar1 00E1FA62
 FDTest_Container_DebugHDAE2 00E1FA7C
+FDTest_String_DebugHDAE2 00E1FAA6
 FDTest_MenuItem_Load2 00E1FABE
 FDTest_String_Load2 00E1FAEA
 FDTest_MenuItem_Go2 00E1FAF0
@@ -3449,6 +3452,7 @@ FDTest_String_Go2 00E1FB1C
 FDTest_NavWidget2 00E1FB20
 FDTest_Divider2 00E1FB3A
 FDTest_ConsoleArea2 00E1FB54
+FDTest_String_ConsoleArea2 00E1FB8A
 FDTest_StatusBar_Memory 00E1FB92
 FDTest_Label_Console2 00E1FBA8
 String_CONSOLE 00E1FBC8
@@ -7041,19 +7045,24 @@ MenuStr_PartSetting 00E819D0
 NakaMenuItem_Mixer 00E819DE
 MenuStr_Mixer 00E81A14
 NakaMenuItem_MasterTuning 00E81A1A
+MenuStr_MasterTuning 00E81A50
 NakaMenuItem_KeyScaling 00E81A5E
 MenuStr_KeyScaling 00E81A94
 NakaMenuItem_ReverbEqPresets 00E81AA0
 MenuStr_ReverbEqPresets 00E81AD6
 NakaMenuItem_Reverb 00E81AEA
+MenuStr_Reverb 00E81B20
 NakaMenuItem_Equalizer 00E81B28
+MenuStr_Equalizer 00E81B5E
 NakaMenuItem_DspEffect 00E81B68
+MenuStr_DspEffect 00E81B9E
 NakaMenuItem_AcousticIllusion 00E81BAA
 MenuStr_AcousticIllusion 00E81BE0
 NakaWidget_SoundEdit 00E81BF2
 MenuStr_SoundEdit 00E81C28
 NakaWidget_Sdmenu2 00E81C34
 NakaMenuItem_LeftHold 00E81C58
+MenuStr_LeftHold 00E81C8E
 NakaMenuItem_TechniChord 00E81C98
 NakaInst_TECHNI_CHORD 00E81CCE
 NakaWidget_Sdpart 00E81CDC
@@ -16047,6 +16056,7 @@ IvSdpart_PartNameStrPtrs 00EEECC8
 IvSdpart_CurrentPage 00EEED40
 IvSdpart_PartRow 00EEED42
 Part_CaptionStrPtrs 00EEED44
+AcWelcomScreen_SavedSteps 00EEEDB0
 MidiPart_ConfigNameTable 00EEEDD4
 TrackMixer_GridRowMapEnd 00EEEFC0
 DrawbarBitmap_SliderBitmapPtrs 00EEEFCC
@@ -51097,26 +51107,26 @@ AudioInit_ClearAuxVoiceFlag 00FDF06A
 AudioInit_CheckReverbFlag 00FDF074
 AudioInit_ClearReverbFlag 00FDF07F
 Audio_CheckInitStatus 00FDF08A
-AudioInit_ClearStatusBit8 00FDF0B1
-AudioInit_CheckGroupB_Presence 00FDF0B7
-AudioInit_ClearStatusBit9 00FDF0CD
+AudioInit_NoPlayTracks 00FDF0B1
+AudioInit_CheckRecTracks 00FDF0B7
+AudioInit_NoRecTracks 00FDF0CD
 AudioInit_ChannelLoop_Init 00FDF0D3
 AudioInit_ChannelLoop_Body 00FDF0DB
 AudioInit_VoiceNotAssigned 00FDF12C
 AudioInit_CheckVoiceChanged 00FDF130
 AudioInit_VoiceUnchanged 00FDF159
-AudioInit_CheckGroupA 00FDF17A
-AudioInit_GroupA_TypeE 00FDF1EB
-AudioInit_GroupA_OtherType 00FDF230
-AudioInit_GroupA_NoAuxMapping 00FDF28B
-AudioInit_GroupA_DefaultMapping 00FDF29E
-AudioInit_GroupA_NoSecondary 00FDF2F2
+AudioInit_CheckPlayTrack 00FDF17A
+AudioInit_PlayTrack_Apc 00FDF1EB
+AudioInit_PlayTrack_OtherAssign 00FDF230
+AudioInit_PlayTrack_NoAuxMapping 00FDF28B
+AudioInit_PlayTrack_DefaultMapping 00FDF29E
+AudioInit_PlayTrack_NoSecondary 00FDF2F2
 AudioInit_StoreChannelMapping 00FDF303
-AudioInit_CheckGroupB_Channel 00FDF316
-AudioInit_GroupB_CheckType 00FDF34E
-AudioInit_GroupB_TypeE 00FDF3A6
-AudioInit_GroupB_Type10 00FDF3EA
-AudioInit_GroupB_DefaultMapping 00FDF410
+AudioInit_CheckRecTrack 00FDF316
+AudioInit_RecTrack_CheckType 00FDF34E
+AudioInit_RecTrack_Apc 00FDF3A6
+AudioInit_RecTrack_Rhythm 00FDF3EA
+AudioInit_RecTrack_OtherAssign 00FDF410
 AudioInit_ChannelLoop_Next 00FDF44C
 AudioInit_ChannelLoop_Done 00FDF45A
 AudioInit_SetChangedFlag 00FDF466

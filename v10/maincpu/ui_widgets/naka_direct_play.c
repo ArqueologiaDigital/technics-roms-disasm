@@ -3878,7 +3878,8 @@ const naka_direct_play_t naka_direct_play_data
     },
 
     /* ==== SCREEN TITLE_SQMDLYPLY "SONG MEDLEY" -- "TT_SQMDLYPLY", title id 0x7A, function NAKA_MAINFUNC_SqMdlyPlyTtlFunc ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: MENU DISK button (mode MD_DISK) > "SONG MEDLEY" (by SongMedleyTtlJgFunc) > (by
+     *       FmmDiskMedleySelectFunc) > (by PlayMode_CheckAndDispatch) > (by FmmIntMedleyFunc)
      * Procedure: SqMdlyPlyTtlFunc opens TITLE_SQMIXER
      * EXIT -> TITLE_SQMDLY */
     .SqMdlyPly = {

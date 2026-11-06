@@ -19967,7 +19967,7 @@ InitializeScoop:
 	RegObjTabl NAKA_CLASS_Function, FunctionProc, 0x0, Scoop_FunctionTable_406, 0x406
 	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0x21, GUI_DisplayStructData_0x750, 0x146
 	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0x21, GUI_DisplayStructData_0x7D8, 0x446
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1, GUI_DisplayStructData_0x226, 0x20
+	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1, Scoop_ViewableTable_020, 0x20
 	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x1, GUI_DisplayStructData_0x326, 0x320
 	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1, Scoop_ViewableTable_021, 0x21
 	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x1, Scoop_ResNameTable_321, 0x321

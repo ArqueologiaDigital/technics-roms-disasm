@@ -7364,7 +7364,7 @@ AudioInit_ChannelMapB:
 	.byte 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
 ; 20 x u8 slot map (0,2,1,7,8,9,10,11,4,5,6,3,15,0x15,0x15,0xFF,0x15,12,13,14).
 ; Read with `ld a, (xix+wa)` at 18 sites: AudioInit_ChannelLoop_Body (0xFDF0DB),
-; AudioInit_CheckGroupA/B, AudioInit_GroupA/B_* and PanelTag98_ApplyFieldsAndVolume.
+; AudioInit_CheckPlayTrack / CheckRecTrack, AudioInit_PlayTrack_* / RecTrack_* and PanelTag98_ApplyFieldsAndVolume.
 AudioInit_SlotOrderMap:
 	.byte 0x00, 0x02, 0x01, 0x07, 0x08, 0x09, 0x0a, 0x0b
 	.byte 0x04, 0x05, 0x06, 0x03, 0x0f, 0x15, 0x15, 0xff
@@ -9667,7 +9667,7 @@ Sprintf_HexDigitsUpper:
 ; ui_widgets/sequencer_channel_containers.s (to 0xEEFA65).  The code reads
 ; the RAM copy, not these bytes: RAM 0x3D528 / 0x3D52C are Heap_Alloc's and
 ; Free's variables; 213 more cells up to 0x3D991 are named by 32-bit pointers
-; in the NAKA widget descriptors (GUI_FormatStrings, GUI_DisplayStructData,
+; in the NAKA widget descriptors (GUI_FormatStrings, the IvDirmdScreen records after it,
 ; NAKA_PerfReg_Container_Root, NakaNode_* ...), i.e. per-widget state.
 ; Each line's comment gives the RAM address of its first byte.  The three
 ; 0x00FF0000 words at 0xEEDBE8/0xEEDCA0/0xEEDCE8 were typed as `.long` pointers

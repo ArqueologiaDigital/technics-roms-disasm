@@ -2372,9 +2372,7 @@ Toshi_NORMAL_Elem60:
 Toshi_NORMAL_Elem61:
 	NAKA_REC_VwUserBitmap super=IDX_Toshi_NORMAL_Elem60, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem62, prev=NAKA_INDEX_NONE, flag=VF_Const, x=40, y=204, w=108, h=20, func=NAKA_APFUNC_BitmapFoutst
 Toshi_NORMAL_Elem62:
-	naka_node 0x69, 60, NAKA_INDEX_NONE, NAKA_INDEX_NONE, 61
-	.short 8, 160, 200, 272, 224
-	.short 24, 290
+	NAKA_REC_VwUserBitmap super=IDX_Toshi_NORMAL_Elem60, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=IDX_Toshi_NORMAL_Elem61, flag=VF_Const, x=160, y=200, w=113, h=25, func=NAKA_APFUNC_BitmapFoutpic
 
 
 	; data-as-code (v10_data_as_code_census.py, STRICT rule): 0xED3C77-0xED3C8C (21 B), unreached CODE-territory, was disassembled as 18 plausible-but-dead instruction lines; per=100% dist=11 near NakaInst_MainVariSet+2095
@@ -2388,15 +2386,10 @@ Toshi_NORMAL_Elem62:
 ; `naka_node` (parent, first child, next, previous -- element indices of the
 ; same table), +0x0C (8), the text rectangle x1, y1, x2, y2, +0x16 a pointer
 ; to the record's string, +0x1A..+0x1E three words, then the string.  The
-; links are checked by scripts/analysis/ext_lane_checks.py test1.  Element 8
-; begins 2 bytes before this file resumes: its type byte 0x2B and the 0x00
-; after it are the last two bytes of the control_menu_screens.s blob.
+; links are checked by scripts/analysis/ext_lane_checks.py test1.
 ; ---------------------------------------------------------------------------
-	.byte 0x60, 0x01	; element 8: header bytes 2-3
-	.short 7, NAKA_INDEX_NONE, 9, NAKA_INDEX_NONE
-	.short 8, 78, 128, 225, 146
-	.long Str_ErrorDialog_Caution
-	.short 2, 0, 249
+ErrorDialog_CautionHeader:
+	NAKA_REC_Label super=IDX_NakaWidget_TEST1CP, sub=NAKA_INDEX_NONE, next=IDX_ErrorDialog_CPUTransmissionError, prev=NAKA_INDEX_NONE, flag=VF_Const, x=78, y=128, w=148, h=19, str=Str_ErrorDialog_Caution, font=idCHARA3, fontcolor=CL_Red
 Str_ErrorDialog_Caution:	.asciz "CAUTION!!"	; English text
 
 

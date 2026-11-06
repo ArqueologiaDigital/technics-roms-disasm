@@ -112,7 +112,7 @@ NakaWidget_sewrtsnd:	.incbin "includes/generated/gui_display_struct_data.bin", 0
 ; 32 parameter blocks of 8 B, one per object 0x20..0x3f (class 0x01600010, proc ViewableProc),
 ; registered by InitializeScoop+0x16F: the block address is the +10 data field of the 14-byte
 ; descriptor {+0 class, +4 proc, +8 u16, +10 data} RegisterObjectTable copies to 0x27ED2 + 14*index
-GUI_DisplayStructData_0x226:	.incbin "includes/generated/gui_display_struct_data.bin", 0x226, 0x8
+Scoop_ViewableTable_020:	.incbin "includes/generated/gui_display_struct_data.bin", 0x226, 0x8
 Scoop_ViewableTable_021:	.incbin "includes/generated/gui_display_struct_data.bin", 0x22E, 0x8
 Scoop_ViewableTable_022:	.incbin "includes/generated/gui_display_struct_data.bin", 0x236, 0x8
 Scoop_ViewableTable_023:	.incbin "includes/generated/gui_display_struct_data.bin", 0x23E, 0x8

@@ -1477,7 +1477,8 @@ const naka_composer_style_t naka_composer_style_data
     },
 
     /* ==== SCREEN TITLE_STYLCNVCNVT "STYLE CONVERT" -- "TT_STYLCNVCNVT", title id 0x12, function NAKA_MAINFUNC_StylCnvCnvtTtlFunc ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: MENU DISK button (mode MD_DISK) > "STYLE CONVERT" > (by StylCnvWaitTtlFunc) > (by
+     *       FloppyState_Dispatch)
      * EXIT -> TITLE_STYLCNVWAIT */
     .StylCnvCnvtScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -1612,7 +1613,8 @@ const naka_composer_style_t naka_composer_style_data
     .str_22 = ALIGNED_STRING(""),
 
     /* ==== SCREEN TITLE_STYLCNVSTOR "STORAGE DATA" -- "TT_STYLCNVSTOR", title id 0x13, function NAKA_MAINFUNC_StylCnvStorTtlFunc ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: MENU DISK button (mode MD_DISK) > "STYLE CONVERT" > (by StylCnvWaitTtlFunc) > (by
+     *       FloppyState_Dispatch)
      * EXIT -> TITLE_STYLCNVWAIT */
     .StylCnvStorScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -1696,7 +1698,8 @@ const naka_composer_style_t naka_composer_style_data
     },
 
     /* ==== SCREEN TITLE_STYLCNVTXT "STYLE CONVERT" -- "TT_STYLCNVTXT", title id 0x14, function NAKA_MAINFUNC_StylCnvTxtTtlFunc ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: MENU DISK button (mode MD_DISK) > "STYLE CONVERT" > (by StylCnvWaitTtlFunc) > (by
+     *       FloppyState_Dispatch)
      * EXIT -> TITLE_STYLCNVWAIT */
     .StylCnvTxtScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -1758,7 +1761,8 @@ const naka_composer_style_t naka_composer_style_data
     },
 
     /* ==== SCREEN TITLE_STYLCNVSEL "STYLE CONVERT" -- "TT_STYLCNVSEL", title id 0x15, function NAKA_MAINFUNC_StylCnvSelTtlFunc ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: MENU DISK button (mode MD_DISK) > "STYLE CONVERT" > (by StylCnvWaitTtlFunc) > (by
+     *       FloppyState_Dispatch)
      * EXIT -> TITLE_STYLCNVWAIT */
     .StylCnvSelScreen = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -1909,7 +1913,8 @@ const naka_composer_style_t naka_composer_style_data
     },
 
     /* ==== SCREEN TITLE_STYLCNVCONT "STYLE CONVERT" -- "TT_STYLCNVCONT", title id 0x16, function NAKA_MAINFUNC_StylCnvContTtlFunc ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: MENU DISK button (mode MD_DISK) > "STYLE CONVERT" > (by StylCnvWaitTtlFunc) > (by
+     *       FloppyState_Dispatch)
      * Procedure: StylCnvSel_End opens TITLE_MESAGE
      * EXIT -> TITLE_STYLCNVWAIT */
     .StylCnvContScreen = {
