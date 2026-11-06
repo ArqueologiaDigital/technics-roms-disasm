@@ -1,0 +1,6 @@
+N-a810f3f6  OPEN  KN6000 func_ 9,917 -> 9,910; aligned names 108 -> 115 (e5127d07d; kn7000/notes/sibling-names2/README.md). Next: KN7000 names for the 1,358 call-site pairs 941 also leaves unnamed (routine-map-kn7000.tsv), then hand naming (0x4C11/0x4C12 sequencer/SMF code; kernel services by uITRON 3.0 function codes once the TFN table is available)
+N-f22bdce4  OPEN  KN6500 func_ 9,972 -> 9,966; aligned names 108 -> 114 (e5127d07d). Next: as N-a810f3f6 (1,421 pairs)
+N-b3ba9d8b  OPEN  KN2400 func_ 11,340 -> 11,315; aligned names 228 -> 249; TG library 418 -> 424 of 544, short twins 36 -> 30 (703afabca). The 30 have no possible RAM pair (the KN2400 rearranged the variables they read). Next: as N-a810f3f6 (2,320 pairs)
+N-8fce01b1  OPEN  KN6000 work-RAM operands 17,752/2,524 -> 17,755/2,522 (+3 on purpose: WORK_RAM_BASE unnamed); RAM pairs 1,613 -> 2,123; RAM names 483 -> 486. Next: more routine names, KN7000 RAM names via ram-map-kn7000.tsv
+N-cccf0416  OPEN  KN6500 17,788/2,533 -> 17,791/2,531; RAM pairs 1,636 -> 2,124. Next: as N-8fce01b1
+N-dc17693c  OPEN  KN2400 20,931/2,940 -> 20,908/2,933; accessor names 21 -> 28; RAM pairs 2,258 -> 3,147. Next: as N-8fce01b1

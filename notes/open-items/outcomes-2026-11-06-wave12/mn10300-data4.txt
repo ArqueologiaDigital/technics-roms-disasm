@@ -1,0 +1,4 @@
+N-2468beef   OPEN     offset-named 941/942 203->185, 935/893 225->207, KN6000 222->157, KN6500 220->156, KN2400 160->142; TG image named by register class (KN6000 TG map below 0x20 unknown, kn6000-tonegen-spec.md s.2); next: func_4C00206A/_4C002055_Records (935/893), func_484288AC_Table, func_4841202C_Table_2_p0
+N-dff57eb2   OPEN     KN6000 764/16,206 -> 696/7,665 B (fx_param_lists 7,091 B, string_ptr_runs); next: table-tails 2,697 B (func_4C03CD2C_entry_L9d_Selected_* tails, ResourceIdLeaf), false-string 994 B, 0x95 text cells 192 B
+N-6acf011c   OPEN     KN6500 755/18,340 -> 687/9,791 B; same rules and next step as KN6000 (false-string 2,949 B)
+N-b3924e48   OPEN     KN2400 790/16,682 -> 769/13,880 B (names_48545C20 1,080 B = icon file-name half, typed; after-string 2,711 -> 1,497); next: func_50186924_Selected_6 856 B (DSP coefficient records, then floats that doubles() misreads)

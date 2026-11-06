@@ -477,7 +477,7 @@
   "was": [
    "N-3912088e"
   ],
-  "plan": "offset-named fields with a reader 941 244->203, 942 246->203, 935/893 251->225, KN6000 255->221, KN6500 254->220, KN2400 194->160, HD-SX3 37->20; next: kind by kind from field_names_census.py --list (TgPartEditLfoLoadA_Records; the TG register image func_4C0948CB_ArgA0 needs the TG register map) (lane mn10300-data3, 2026-11-06)"
+  "plan": "offset-named 941/942 203->185, 935/893 225->207, KN6000 222->157, KN6500 220->156, KN2400 160->142; TG image named by register class (KN6000 TG map below 0x20 unknown, kn6000-tonegen-spec.md s.2); next: func_4C00206A/_4C002055_Records (935/893), func_484288AC_Table, func_4841202C_Table_2_p0 (lane mn10300-data4, 2026-11-06)"
  },
  "N-24a40225": {
   "status": "RESOLVED",
@@ -548,10 +548,10 @@
   "title": "HD-AE5000 filesystem (kn5000-44c) answer row: every HDAE5000_SaveSong_<part> writes the new chain's first clus"
  },
  "N-2a3d2074": {
-  "status": "ACTIONABLE",
+  "status": "RESOLVED",
   "size": "M",
   "title": "KN5000 v6 / v5: 212 / 220 raw bytes in the C divergence json",
-  "plan": "json raw 148 / 156 -> 5 / 5 (ff2826ddd, 556b456b5, e17213042). Left: RAM_Softver_Window, MainProgram/MainTable/SubProgram/SoundTable_Selected sit 4 B lower in v6/v5 (no MPVersion window cell). Next: gen_naka_gui_headers.ram_mapper places v6/v5 cells by the tree's own Murai_SoundMenuWorkCells cell lines (lane v6v5-port2, 2026-11-06)"
+  "evidence": "lane v6v5-port3 (2026-11-06): 9531422d3 + c38c0826a: gen_naka_gui_headers.ram_mapper anchors v6/v5 work cells on the tree's own `; work cell:` lines (v10/v9/v7 headers unchanged); json raw 5 -> 0, verbatim debt v6 5 -> 0 B, v5 5 -> 0 B; notes/v6v5-port3-2026-11-06/README.md"
  },
  "N-2a8e12a9": {
   "status": "RESOLVED",
@@ -618,7 +618,7 @@
   "status": "ACTIONABLE",
   "title": "65 NAKA Viewable elements have no typed record (straddling members, DRAM, string blocks)",
   "size": "M",
-  "plan": "be6097f98 + f3220ffc9; all 3 blob-edge records typed; untyped elements 52 -> 49 (old probe rule; 45 by the corrected rule), all left in the asm. Next: retype includes/gui_display_struct_data.c (16 IvDirmdScreen records framed 6 B early + NakaWidget_seamplfo1's tail; needs -I ui_widgets), then the 13 work-RAM view records and the FDTest string-block records (lane kn5000-naka, 2026-11-06)"
+  "plan": "cd67e8859 + a50867fdf; untyped Viewable elements (v10) 45 -> 13. All 13 left are work-RAM view records (slots 0xB5/0xB8/0xB9, ROM image 0xEEDB58..0xEEDD35). Next: split WorkRamInit_Image's .byte rows (ui_widgets/widget_dispatch.s) at the 13 record addresses, label them, run naka_asm_records.py --apply, together with a v6/v5 naka_gui_symbolize.py --apply (the labels rename OBJ_ enum constants in all five trees' C) (lane kn5000-naka2, 2026-11-06)"
  },
  "N-31aaf45b": {
   "status": "RESOLVED",
@@ -795,10 +795,10 @@
   "evidence": "marked CLOSED 2026-08-25 in WSA1-EMULATION-DISASM-GAPS.md gap L (service manual OCR lines 793-801)"
  },
  "N-44e56012": {
-  "status": "ACTIONABLE",
+  "status": "BLOCKED",
   "title": "What keeps the keyboard silent during the whole PICTURE LOAD screen",
   "size": "M",
-  "plan": "kn7000/notes/picload-silence-probes/README.md: in MAME the key reaches the TG and is audible on SD PICTURE LOAD (same 118 TG writes, RMS 322.5 vs 321.2); next: trace the service manual's MUTE lines (CN506, ACP/FAJ; pp. 122-127) to their CPU pin and watch it in MAME, or measure on the instrument (lane kn7000-research, 2026-11-06)"
+  "blocker": "needs the instrument: in emulation no mute line (PMUT = P04 bit 2, SPSW / D/A mode on latch 0x98060000) moves on SD PICTURE LOAD for 941 or 893 (065a91958, kn7000/notes/audio-mute-probes/README.md); play a key on SD PICTURE LOAD with a card holding pictures and note whether the sound stops for the whole screen or only during card reads (lane kn7000-research2, 2026-11-06)"
  },
  "N-44fb32d4": {
   "status": "RESOLVED",
@@ -1013,7 +1013,7 @@
   "status": "ACTIONABLE",
   "title": "Flag bytes with most numeric uses (audio config, seq play state, accompaniment, SE flags)",
   "size": "L",
-  "plan": "63a7f34a4; 0xC594 AUDIO_CONFIG_UPDATE, 0xC596 AUDIO_CONFIG_FLAGS named per bit; numeric uses 747 -> 611 (v10). Next: 0xC598 per bit (AudioInit_GroupA_* / GroupB_* sound-group status), then 0xC1FE, 0xC59C, 0x28B2 / 0x28B3, 0x34CD, 0x35B0, 0xE3E2 (lane kn5000-naka, 2026-11-06)"
+  "plan": "3df5bbad6; 0xC598/0xC59A/0xC59C/0xC59E named per bit; numeric uses (v10) 611 -> 484. Next: 0x28B2 / 0x28B3 per bit, then 0xC1FE (the 358-byte audio state: decide on a record), 0x34CD, 0x35B0, 0xE3E2 (lane kn5000-naka2, 2026-11-06)"
  },
  "N-52dcf02a": {
   "status": "RESOLVED",
@@ -1243,7 +1243,7 @@
   "was": [
    "N-05cd19fe"
   ],
-  "plan": "KN6500 opaque 765/20,216 -> 755/18,340 B; same next step as the KN6000 (lane mn10300-data3, 2026-11-06)"
+  "plan": "KN6500 755/18,340 -> 687/9,791 B; same rules and next step as KN6000 (false-string 2,949 B) (lane mn10300-data4, 2026-11-06)"
  },
  "N-6c3137ef": {
   "status": "RESOLVED",
@@ -1422,7 +1422,7 @@
   "status": "ACTIONABLE",
   "title": "81 titles have no menu path (most TITLE_SE* pages)",
   "size": "M",
-  "plan": "086ddcbb6; titles with a path 158 -> 162 (53 -> 49 without; 31 of the 49 are opened by code no traced path reaches, now named in docs/gui/kn5000-menu-map.md); unknown-path sites 20 -> 19, none loads a constant. Next: make panel-button handlers roots of the path search; read DemoSong_TitleCol's titles (lane kn5000-naka, 2026-11-06)"
+  "plan": "92309965b; titles with a path 162 -> 170 (49 -> 41 without: 23 opened by code no traced path reaches, 18 by nothing found); unknown-path sites 19 -> 18. Next: FileIO_ErrorCodeByteBlock's site (index 119 = TITLE_DKMDLY), the disk dialogs' saved return titles (RAM 0x7F6A/0x7F6E/0x808A/0x843A writers), the boot self-test entry (lane kn5000-naka2, 2026-11-06)"
  },
  "N-7d7472a2": {
   "status": "RESOLVED",
@@ -1612,7 +1612,7 @@
   "was": [
    "N-4a4e97bc"
   ],
-  "plan": "KN6000 numeric work-RAM operands 20,128/2,996 -> 17,752/2,524, 491 names (kn6000_ram.sym, kn6000_aligned.sym). Next: KN7000 RAM names via notes/ram-map-kn7000.tsv (1,613 pairs) on re-run; more accessors once more routines are named (lane sibling-names, 2026-11-06)"
+  "plan": "KN6000 work-RAM operands 17,752/2,524 -> 17,755/2,522 (+3 on purpose: WORK_RAM_BASE unnamed); RAM pairs 1,613 -> 2,123; RAM names 483 -> 486. Next: more routine names, KN7000 RAM names via ram-map-kn7000.tsv (lane sibling-names2, 2026-11-06)"
  },
  "N-91fea94d": {
   "status": "RESOLVED",
@@ -1738,7 +1738,7 @@
   "was": [
    "N-90175c82"
   ],
-  "plan": "3ea2d13ab + 3ae043781: JPEG encoder named in 941/942/935/893, 893 own 7 -> 4; next: 0x484101FD with the data regeneration (gen_data_s.py), 0x48451649 = 941 func_484516EC (read func_4845027B / func_48449420), the two SD AUDIO routines (lane kn7000-research, 2026-11-06)"
+  "plan": "a44a8baa5 + 4de104f09: 0x48451649 = KeyZoneNoteResolve (+ SoundTableKeyMapOn), 893 own 3 -> 2; next: name 941's SD AUDIO player family (0x485790A9..), then 893's 0x485785B0 / 0x485788D8 (lane kn7000-research2, 2026-11-06)"
  },
  "N-99d09c1a": {
   "status": "RESOLVED",
@@ -2005,7 +2005,7 @@
   "was": [
    "N-cf9c7754"
   ],
-  "plan": "KN2400 opaque 801/18,746 -> 790/16,682 B; next: names_48545C20 (1,080 B), func_50186924_Selected_6 (856 B), after-string group (2,711 B) (lane mn10300-data3, 2026-11-06)"
+  "plan": "KN2400 790/16,682 -> 769/13,880 B (names_48545C20 1,080 B = icon file-name half, typed; after-string 2,711 -> 1,497); next: func_50186924_Selected_6 856 B (DSP coefficient records, then floats that doubles() misreads) (lane mn10300-data4, 2026-11-06)"
  },
  "N-b4e82675": {
   "status": "RESOLVED",
@@ -2133,7 +2133,7 @@
    "N-141a8cab",
    "N-eadb1f7f"
   ],
-  "plan": "9a0ffd57a + a4d3d8abc: TCMP var/style/part set-up reader and 4 pad bytes traced; m<id> names handed to gen_panel_macros.py's owner (kn7000-research/README.md); voice record fields + 0x27-byte header still to trace (lane kn7000-research, 2026-11-06)"
+  "plan": "065b31aa8 + 0b15e8135 + 065a91958: custom-sound header is a drum-kit tone head (class, key map +0x11 traced), refs per note, voice +0x0D bits 0/2 = layers; next: sub-record / element fields via TgTableToneStage's staged pointers, MAME check on 03custm3 slot 7 (lane kn7000-research2, 2026-11-06)"
  },
  "N-b991a5c9": {
   "status": "RESOLVED",
@@ -2325,7 +2325,7 @@
   "was": [
    "N-82a73a67"
   ],
-  "plan": "KN6500 20,164/3,006 -> 17,788/2,533, 492 names. Next: as N-8fce01b1 (lane sibling-names, 2026-11-06)"
+  "plan": "KN6500 17,788/2,533 -> 17,791/2,531; RAM pairs 1,636 -> 2,124. Next: as N-8fce01b1 (lane sibling-names2, 2026-11-06)"
  },
  "N-ccd08682": {
   "status": "RESOLVED",
@@ -2445,7 +2445,7 @@
   "status": "ACTIONABLE",
   "title": "523 field_XX members in NAKA C (was 525; 291 in naka_sequencer_channels.c)",
   "size": "L",
-  "plan": "57cfaeeae + 864af44ad; field_XX 434 -> 163 (v10/v9), 442 -> 171 (v7); naka_sequencer_channels.c 291 -> 22. Next: the 12-member run at RAM 0x3EA10 (around Util_StorePartArrayBase / Util_StoreGridArrayBase), the 10 words at blob 0x18A3, then the 141 in other files (naka_gui_census.py --files v10) (lane kn5000-naka, 2026-11-06)"
+  "plan": "7bf7a8e1f + 065f55a6f; field_XX 163 -> 141 (v10/v9), 171 -> 149 (v7); naka_sequencer_channels.c 22 -> 0. Next: naka_extension_device.c (40), naka_disk_menu_file_io.c (19), naka_effects_seq.c (16) ... (naka_gui_census.py --files v10) (lane kn5000-naka2, 2026-11-06)"
  },
  "N-d8d7954f": {
   "status": "RESOLVED",
@@ -2495,7 +2495,7 @@
   "was": [
    "N-5cad02df"
   ],
-  "plan": "KN2400 23,931/3,565 -> 20,931/2,940, 642 names. Next: as N-8fce01b1 (lane sibling-names, 2026-11-06)"
+  "plan": "KN2400 20,931/2,940 -> 20,908/2,933; accessor names 21 -> 28; RAM pairs 2,258 -> 3,147. Next: as N-8fce01b1 (lane sibling-names2, 2026-11-06)"
  },
  "N-dcfbe4b5": {
   "status": "RESOLVED",
@@ -2540,7 +2540,7 @@
   "was": [
    "N-afa3d40e"
   ],
-  "plan": "KN6000 opaque 774/18,082 -> 764/16,206 B; next: the effect-DSP records (labelled-held 8,435 B) need the KN6000 effect-DSP stream format, then the names_* tails (lane mn10300-data3, 2026-11-06)"
+  "plan": "KN6000 764/16,206 -> 696/7,665 B (fx_param_lists 7,091 B, string_ptr_runs); next: table-tails 2,697 B (func_4C03CD2C_entry_L9d_Selected_* tails, ResourceIdLeaf), false-string 994 B, 0x95 text cells 192 B (lane mn10300-data4, 2026-11-06)"
  },
  "N-e0c4b660": {
   "status": "RESOLVED",
@@ -2772,7 +2772,7 @@
   "status": "ACTIONABLE",
   "size": "L",
   "title": "IC21 factory banks: field-level questions (pointer to custom-data-ic21.md)",
-  "plan": "pointer row; follows N-b8f49b1e (custom-data-ic21.md Open questions updated) (lane kn7000-research, 2026-11-06)"
+  "plan": "pointer row; follows N-b8f49b1e (custom-data-ic21.md \"Open questions\" updated) (lane kn7000-research2, 2026-11-06)"
  },
  "N-f3ec939a": {
   "status": "RESOLVED",
@@ -4406,7 +4406,7 @@
   "size": "L",
   "was_status": "RESOLVED",
   "was": "N-02383279",
-  "plan": "KN6000 func_ 10,061 -> 9,917 (a20b441bb; census-after.txt). Next: KN7000 names reach it via notes/routine-map-kn7000.tsv on re-run; per-subsystem naming of code with no KN7000 twin (lane sibling-names, 2026-11-06)"
+  "plan": "KN6000 func_ 9,917 -> 9,910; aligned names 108 -> 115 (e5127d07d; kn7000/notes/sibling-names2/README.md). Next: KN7000 names for the 1,358 call-site pairs 941 also leaves unnamed (routine-map-kn7000.tsv), then hand naming (0x4C11/0x4C12 sequencer/SMF code; kernel services by uITRON 3.0 function codes once the TFN table is available) (lane sibling-names2, 2026-11-06)"
  },
  "N-f22bdce4": {
   "status": "ACTIONABLE",
@@ -4414,14 +4414,14 @@
   "size": "L",
   "was_status": "RESOLVED",
   "was": "N-a6b3dca1",
-  "plan": "KN6500 func_ 10,116 -> 9,972 (a20b441bb). Next: as N-02383279 (lane sibling-names, 2026-11-06)"
+  "plan": "KN6500 func_ 9,972 -> 9,966; aligned names 108 -> 114 (e5127d07d). Next: as N-a810f3f6 (1,421 pairs) (lane sibling-names2, 2026-11-06)"
  },
  "N-b3ba9d8b": {
   "status": "ACTIONABLE",
   "title": "KN2400: 11,678 entries still func_<ADDR>",
   "size": "L",
   "was": "N-391deec6",
-  "plan": "KN2400 func_ 11,645 -> 11,340; RAM-run TG library 332 -> 418 of 544 (a20b441bb, missed-after.txt). Next: as N-02383279; 36 short identical-code library routines still need RAM pairs (lane sibling-names, 2026-11-06)"
+  "plan": "KN2400 func_ 11,340 -> 11,315; aligned names 228 -> 249; TG library 418 -> 424 of 544, short twins 36 -> 30 (703afabca). The 30 have no possible RAM pair (the KN2400 rearranged the variables they read). Next: as N-a810f3f6 (2,320 pairs) (lane sibling-names2, 2026-11-06)"
  },
  "N-2dea56c9": {
   "status": "RESOLVED",
@@ -4432,8 +4432,27 @@
   "evidence": "not an item of its own: the remainder of N-2a3d2074, whose plan carries the same next step (wave 11 (2026-11-06))"
  },
  "N-c20ee5a7": {
+  "status": "RESOLVED",
+  "size": "S",
+  "evidence": "lane v6v5-port3 (2026-11-06): 9db322139, 64f0962be, 623ea1281, 508ee51b3 (the four converters per tree; v10/v9/v7 runs write nothing) + 3060ed9e9, 88117fe50, 3c0bcb0b1, 7a1614a38; v6/v5 rom addrs 6 -> 0, ram cells 1 -> 0, field_XX 349 -> 171 (= v7), records 3,259 -> 3,260; make gate exit 0"
+ },
+ "L-wave12-kn7000-handback-names": {
   "status": "ACTIONABLE",
   "size": "S",
-  "plan": "make the four kn5000-naka converters (naka_join_perf3rhythmsel.py, naka_move_edge_heads_to_asm.py, naka_type_trackmixer_map.py, naka_widen_ram_cells.py) read their addresses and sizes per tree, then run them on v6 / v5 with make gate green (lane v6v5-port2, wave 11 (2026-11-06))"
+  "area": "KN7000",
+  "source": "kn7000/notes/kn7000-research2/README.md:1",
+  "title": "KN7000: apply SoundKindGet / TableToneKeyMap (proposed by kn7000-research2) to the .sym files, then sed the data labels derived from them",
+  "plan": "add the two names to the KN7000 builds' .sym files, regenerate program sources, then a sed rename of the data labels the generator derived from the old func_ names (it keeps a label it made before); lanes kn7000-research2 / mn10300-data4 (wave 12 (2026-11-06))"
+ },
+ "L-wave12-kn7000-mame-audio-lines": {
+  "status": "BLOCKED",
+  "area": "MAME/emulation",
+  "source": "kn7000/notes/audio-mute-probes/README.md:1",
+  "title": "KN7000 MAME driver: PMUT (P22) is stored but unused; the IC25 74AHC174 latch at 0x98060000 (SPSW, D/A mode, SD power) is not modelled",
+  "blocker": "the fix belongs to the kn7000_mame repository (its owner); written up in section 5 of kn7000/notes/audio-mute-probes/README.md (lane kn7000-research2, wave 12 (2026-11-06))"
+ },
+ "N-8280b5e3": {
+  "status": "RESOLVED",
+  "evidence": "not an open item: it says nothing of v6v5-port3's two items is left; the v6 / v5 field_XX that remain are v7's, tracked as N-d8cf1242 (wave 12 (2026-11-06))"
  }
 }

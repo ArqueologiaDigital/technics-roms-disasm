@@ -11,7 +11,7 @@
   "tree": "hdsx3",
   "n": 2,
   "bytes": 8,
-  "first": "hdsx3/src/program/data/data_00.s:13128",
+  "first": "hdsx3/src/program/data/data_00.s:13140",
   "kind": "unknown-dump",
   "reason": "N bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads the"
  },
@@ -25,8 +25,8 @@
  },
  {
   "tree": "hdsx3",
-  "n": 3,
-  "bytes": 157,
+  "n": 2,
+  "bytes": 150,
   "first": "hdsx3/src/program/data/data_00.s:5489",
   "kind": "unknown-dump",
   "reason": "N bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/dat"
@@ -35,15 +35,15 @@
   "tree": "hdsx3",
   "n": 3,
   "bytes": 16,
-  "first": "hdsx3/src/program/data/data_00.s:14205",
+  "first": "hdsx3/src/program/data/data_00.s:14217",
   "kind": "unknown-dump",
   "reason": "N bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); "
  },
  {
   "tree": "hdsx3",
-  "n": 2,
-  "bytes": 55,
-  "first": "hdsx3/src/program/data/data_00.s:10055",
+  "n": 1,
+  "bytes": 4,
+  "first": "hdsx3/src/program/data/data_00.s:12835",
   "kind": "unknown-dump",
   "reason": "N bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers."
  },
@@ -51,7 +51,7 @@
   "tree": "kn2400",
   "n": 1,
   "bytes": 4,
-  "first": "kn2400/src/program/data/data_06.s:5112",
+  "first": "kn2400/src/program/data/data_06.s:5139",
   "kind": "unknown-dump",
   "reason": "N bytes of N-bit values in the initialised-RAM image (initial values no instruction names); no instruction rea"
  },
@@ -65,32 +65,32 @@
  },
  {
   "tree": "kn2400",
-  "n": 2,
-  "bytes": 8,
+  "n": 3,
+  "bytes": 12,
   "first": "kn2400/src/program/data/data_05.s:36930",
   "kind": "unknown-dump",
   "reason": "N bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads the"
  },
  {
   "tree": "kn2400",
-  "n": 461,
-  "bytes": 10264,
+  "n": 462,
+  "bytes": 10282,
   "first": "kn2400/src/program/data/data_00.s:125",
   "kind": "unknown-dump",
   "reason": "N bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base"
  },
  {
   "tree": "kn2400",
-  "n": 2,
-  "bytes": 172,
-  "first": "kn2400/src/program/data/data_06.s:143",
+  "n": 1,
+  "bytes": 124,
+  "first": "kn2400/src/program/data/data_06.s:165",
   "kind": "unknown-dump",
   "reason": "N bytes of printable bytes, not NUL-terminated text in the initialised-RAM image (initial values no instructio"
  },
  {
   "tree": "kn2400",
-  "n": 150,
-  "bytes": 2470,
+  "n": 131,
+  "bytes": 1480,
   "first": "kn2400/src/program/data/data_00.s:2337",
   "kind": "unknown-dump",
   "reason": "N bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/dat"
@@ -98,16 +98,16 @@
  {
   "tree": "kn2400",
   "n": 1,
-  "bytes": 52,
-  "first": "kn2400/src/program/data/data_06.s:4958",
+  "bytes": 4,
+  "first": "kn2400/src/program/data/data_06.s:4985",
   "kind": "unknown-dump",
   "reason": "N bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); "
  },
  {
   "tree": "kn2400",
-  "n": 71,
-  "bytes": 2026,
-  "first": "kn2400/src/program/data/data_00.s:37499",
+  "n": 68,
+  "bytes": 288,
+  "first": "kn2400/src/program/data/data_00.s:37520",
   "kind": "unknown-dump",
   "reason": "N bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers."
  },
@@ -123,14 +123,14 @@
   "tree": "kn6000",
   "n": 51,
   "bytes": 108,
-  "first": "kn6000/src/program/data/data_06.s:7344",
+  "first": "kn6000/src/program/data/data_06.s:10810",
   "kind": "unknown-dump",
   "reason": "N bytes of N-bit values in the initialised-RAM image (initial values no instruction names); no instruction rea"
  },
  {
   "tree": "kn6000",
-  "n": 43,
-  "bytes": 1253,
+  "n": 42,
+  "bytes": 1229,
   "first": "kn6000/src/program/data/data_00.s:7774",
   "kind": "unknown-dump",
   "reason": "N bytes of N-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store"
@@ -139,14 +139,14 @@
   "tree": "kn6000",
   "n": 9,
   "bytes": 32,
-  "first": "kn6000/src/program/data/data_06.s:7412",
+  "first": "kn6000/src/program/data/data_06.s:10878",
   "kind": "unknown-dump",
   "reason": "N bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads the"
  },
  {
   "tree": "kn6000",
-  "n": 391,
-  "bytes": 11874,
+  "n": 325,
+  "bytes": 4789,
   "first": "kn6000/src/program/data/data_00.s:113",
   "kind": "unknown-dump",
   "reason": "N bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base"
@@ -154,23 +154,23 @@
  {
   "tree": "kn6000",
   "n": 130,
-  "bytes": 947,
-  "first": "kn6000/src/program/data/data_00.s:6062",
+  "bytes": 939,
+  "first": "kn6000/src/program/data/data_00.s:8825",
   "kind": "unknown-dump",
   "reason": "N bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/dat"
  },
  {
   "tree": "kn6000",
   "n": 1,
-  "bytes": 52,
-  "first": "kn6000/src/program/data/data_06.s:16728",
+  "bytes": 4,
+  "first": "kn6000/src/program/data/data_06.s:20208",
   "kind": "unknown-dump",
   "reason": "N bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); "
  },
  {
   "tree": "kn6000",
-  "n": 139,
-  "bytes": 1940,
+  "n": 138,
+  "bytes": 564,
   "first": "kn6000/src/program/data/data_00.s:22355",
   "kind": "unknown-dump",
   "reason": "N bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers."
@@ -193,8 +193,8 @@
  },
  {
   "tree": "kn6500",
-  "n": 40,
-  "bytes": 1571,
+  "n": 39,
+  "bytes": 1547,
   "first": "kn6500/src/program/data/data_00.s:7796",
   "kind": "unknown-dump",
   "reason": "N bytes of N-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store"
@@ -209,32 +209,32 @@
  },
  {
   "tree": "kn6500",
-  "n": 388,
-  "bytes": 13687,
+  "n": 322,
+  "bytes": 6602,
   "first": "kn6500/src/program/data/data_00.s:113",
   "kind": "unknown-dump",
   "reason": "N bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base"
  },
  {
   "tree": "kn6500",
-  "n": 142,
-  "bytes": 1003,
-  "first": "kn6500/src/program/data/data_00.s:6081",
+  "n": 141,
+  "bytes": 987,
+  "first": "kn6500/src/program/data/data_00.s:8847",
   "kind": "unknown-dump",
   "reason": "N bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/dat"
  },
  {
   "tree": "kn6500",
   "n": 1,
-  "bytes": 52,
-  "first": "kn6500/src/program/data/data_05.s:37593",
+  "bytes": 4,
+  "first": "kn6500/src/program/data/data_05.s:37607",
   "kind": "unknown-dump",
   "reason": "N bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); "
  },
  {
   "tree": "kn6500",
   "n": 125,
-  "bytes": 1889,
+  "bytes": 513,
   "first": "kn6500/src/program/data/data_01.s:4608",
   "kind": "unknown-dump",
   "reason": "N bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers."

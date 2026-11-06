@@ -1,0 +1,2 @@
+N-2a3d2074  CLOSED  9531422d3 + c38c0826a: gen_naka_gui_headers.ram_mapper anchors v6/v5 work cells on the tree's own `; work cell:` lines (v10/v9/v7 headers unchanged); json raw 5 -> 0, verbatim debt v6 5 -> 0 B, v5 5 -> 0 B; notes/v6v5-port3-2026-11-06/README.md
+N-c20ee5a7  CLOSED  9db322139, 64f0962be, 623ea1281, 508ee51b3 (the four converters per tree; v10/v9/v7 runs write nothing) + 3060ed9e9, 88117fe50, 3c0bcb0b1, 7a1614a38; v6/v5 rom addrs 6 -> 0, ram cells 1 -> 0, field_XX 349 -> 171 (= v7), records 3,259 -> 3,260; make gate exit 0

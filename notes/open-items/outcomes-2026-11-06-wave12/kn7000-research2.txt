@@ -1,0 +1,4 @@
+N-44e56012  BLOCKED  needs the instrument: in emulation no mute line (PMUT = P04 bit 2, SPSW / D/A mode on latch 0x98060000) moves on SD PICTURE LOAD for 941 or 893 (065a91958, kn7000/notes/audio-mute-probes/README.md); play a key on SD PICTURE LOAD with a card holding pictures and note whether the sound stops for the whole screen or only during card reads
+N-99771106  OPEN     a44a8baa5 + 4de104f09: 0x48451649 = KeyZoneNoteResolve (+ SoundTableKeyMapOn), 893 own 3 -> 2; next: name 941's SD AUDIO player family (0x485790A9..), then 893's 0x485785B0 / 0x485788D8
+N-b8f49b1e  OPEN     065b31aa8 + 0b15e8135 + 065a91958: custom-sound header is a drum-kit tone head (class, key map +0x11 traced), refs per note, voice +0x0D bits 0/2 = layers; next: sub-record / element fields via TgTableToneStage's staged pointers, MAME check on 03custm3 slot 7
+N-f3c6a3ea  OPEN     pointer row; follows N-b8f49b1e (custom-data-ic21.md "Open questions" updated)
