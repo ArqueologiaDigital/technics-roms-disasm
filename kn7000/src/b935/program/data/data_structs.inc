@@ -4071,10 +4071,10 @@
 
 # REC_func_48406633_Table: 4-byte records (func_48406633_Table, 5 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u8             func_48404D10 0x48404D10 `movbu (a0), d0`
-#   +1   f1           u8             func_48404D10 0x48404D10 `movbu (1, a1), d0`
-#   +2   f2           u8             func_48404D10 0x48404D10 `movbu (2, a3), d0`
-#   +3   f3           u8             func_48404D10 0x48404D10 `movbu (3, a3), d0`
+#   +0   f0           u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
+#   +1   f1           u8             JpegEncSetup 0x48404D10 `movbu (1, a1), d0`
+#   +2   f2           u8             JpegEncSetup 0x48404D10 `movbu (2, a3), d0`
+#   +3   f3           u8             JpegEncSetup 0x48404D10 `movbu (3, a3), d0`
 .macro REC_func_48406633_Table f0=0, f1=0, f2=0, f3=0
 	.byte	\f0
 	.byte	\f1
@@ -4084,10 +4084,10 @@
 
 # REC_func_48406633_Table_2: 4-byte records (func_48406633_Table_2, 5 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u8             func_48404D10 0x48404D10 `movbu (a0), d0`
-#   +1   f1           u8             func_48404D10 0x48404D10 `movbu (a1), d0`
-#   +2   f2           u8             func_48404D10 0x48404D10 `movbu (a1), d0`
-#   +3   f3           u8             func_48404D10 0x48404D10 `movbu (a1), d0`
+#   +0   f0           u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
+#   +1   f1           u8             JpegEncSetup 0x48404D10 `movbu (a1), d0`
+#   +2   f2           u8             JpegEncSetup 0x48404D10 `movbu (a1), d0`
+#   +3   f3           u8             JpegEncSetup 0x48404D10 `movbu (a1), d0`
 .macro REC_func_48406633_Table_2 f0=0, f1=0, f2=0, f3=0
 	.byte	\f0
 	.byte	\f1
@@ -4097,10 +4097,10 @@
 
 # REC_func_48404D10_Records_2: 4-byte records (func_48404D10_Records_2, 5 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u8             func_48404D10 0x48404D10 `movbu (a0), d0`
-#   +1   f1           u8             func_48404D10 0x48404D10 `movbu (a3), d0`
-#   +2   f2           u8             func_48404D10 0x48404D10 `movbu (a3), d0`
-#   +3   f3           u8             func_48404D10 0x48404D10 `movbu (a3), d0`
+#   +0   f0           u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
+#   +1   f1           u8             JpegEncSetup 0x48404D10 `movbu (a3), d0`
+#   +2   f2           u8             JpegEncSetup 0x48404D10 `movbu (a3), d0`
+#   +3   f3           u8             JpegEncSetup 0x48404D10 `movbu (a3), d0`
 .macro REC_func_48404D10_Records_2 f0=0, f1=0, f2=0, f3=0
 	.byte	\f0
 	.byte	\f1
@@ -4110,10 +4110,10 @@
 
 # REC_func_48404D10_Records: 4-byte records (func_48404D10_Records, 8 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u8             func_48404D10 0x48404D10 `movbu (a3), d0`
-#   +1   f1           u8             func_48404D10 0x48404D10 `movbu (a1), d0`
-#   +2   f2           u8             func_48404D10 0x48404D10 `movbu (a0), d0`
-#   +3   f3           u8             func_48404D10 0x48404D10 `movbu (a0), d0`
+#   +0   f0           u8             JpegEncSetup 0x48404D10 `movbu (a3), d0`
+#   +1   f1           u8             JpegEncSetup 0x48404D10 `movbu (a1), d0`
+#   +2   f2           u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
+#   +3   f3           u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
 .macro REC_func_48404D10_Records f0=0, f1=0, f2=0, f3=0
 	.byte	\f0
 	.byte	\f1

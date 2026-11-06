@@ -383,7 +383,7 @@ data_48703218:
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program.rom", 0x303218, 0x303228
 
-func_4840DDB1_Table:	# 64 x u8, 0..63; read by func_4840DDB1_entry 0x48407BD8: `movbu  (a2), d0`; func_4840EAA5_entry 0x4840E721: `movbu  (a1), d0` ...
+func_4840DDB1_Table:	# 64 x u8, 0..63; read by func_4840DDB1_entry 0x4840D61D: `movbu  (a2), d0`; func_4840EAA5_entry 0x4840E721: `movbu  (a1), d0` ...
 	tab_u8	0, 1, 8, 16, 9, 2, 3, 10, 17, 24, 32, 25, 18, 11, 4, 5	# [0]
 	tab_u8	12, 19, 26, 33, 40, 48, 41, 34, 27, 20, 13, 6, 7, 14, 21, 28	# [16]
 	tab_u8	35, 42, 49, 56, 57, 50, 43, 36, 29, 22, 15, 23, 30, 37, 44, 51	# [32]
@@ -27181,28 +27181,28 @@ Str_JFIF:	.asciz "JFIF"
 # census: opaque -- unknown-dump: 11 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x33905D, 0x339068
 
-func_4840D29C_Table:	# 5 x u8, 1..3; read by func_4840D29C_entry 0x48407BD8: `movbu  (d1, a0), d0`
+func_4840D29C_Table:	# 5 x u8, 1..3; read by JpegEncSetup_entry 0x4840D29C: `movbu  (d1, a0), d0`
 	tab_u8	1, 3, 3, 3, 3
 
-func_4840EBC3_Table:	# 5 x REC_func_4840EBC3_Table (4 bytes each); read by func_4840D29C 0x4840D29C `movbu (1, a1), d0`; func_4840D29C 0x4840D29C `movbu (2, a3), d0`; func_4840D29C 0x4840D29C `movbu (3, a3), d0` (+1)
+func_4840EBC3_Table:	# 5 x REC_func_4840EBC3_Table (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (1, a1), d0`; JpegEncSetup 0x4840D29C `movbu (2, a3), d0`; JpegEncSetup 0x4840D29C `movbu (3, a3), d0` (+1)
 	REC_func_4840EBC3_Table	f0=1
 	REC_func_4840EBC3_Table	f0=1, f1=1, f2=1
 	REC_func_4840EBC3_Table	f0=2, f1=1, f2=1
 	REC_func_4840EBC3_Table	f0=2, f1=1, f2=1
 	REC_func_4840EBC3_Table	f0=4, f1=1, f2=1
-func_4840EBC3_Table_2:	# 5 x REC_func_4840EBC3_Table_2 (4 bytes each); read by func_4840D29C 0x4840D29C `movbu (a0), d0`; func_4840D29C 0x4840D29C `movbu (a1), d0`
+func_4840EBC3_Table_2:	# 5 x REC_func_4840EBC3_Table_2 (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a1), d0`
 	REC_func_4840EBC3_Table_2	f0=1
 	REC_func_4840EBC3_Table_2	f0=1, f1=1, f2=1
 	REC_func_4840EBC3_Table_2	f0=1, f1=1, f2=1
 	REC_func_4840EBC3_Table_2	f0=2, f1=1, f2=1
 	REC_func_4840EBC3_Table_2	f0=1, f1=1, f2=1
-func_4840D29C_Records_2:	# 5 x REC_func_4840D29C_Records_2 (4 bytes each); read by func_4840D29C 0x4840D29C `movbu (a0), d0`; func_4840D29C 0x4840D29C `movbu (a3), d0`
+func_4840D29C_Records_2:	# 5 x REC_func_4840D29C_Records_2 (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a3), d0`
 	REC_func_4840D29C_Records_2	
 	REC_func_4840D29C_Records_2	f1=1, f2=1
 	REC_func_4840D29C_Records_2	f1=1, f2=1
 	REC_func_4840D29C_Records_2	f1=1, f2=1
 	REC_func_4840D29C_Records_2	f1=1, f2=1
-func_4840D29C_Records:	# 8 x REC_func_4840D29C_Records (4 bytes each); read by func_4840D29C 0x4840D29C `movbu (a0), d0`; func_4840D29C 0x4840D29C `movbu (a1), d0`; func_4840D29C 0x4840D29C `movbu (a3), d0`
+func_4840D29C_Records:	# 8 x REC_func_4840D29C_Records (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a1), d0`; JpegEncSetup 0x4840D29C `movbu (a3), d0`
 	REC_func_4840D29C_Records	
 	REC_func_4840D29C_Records	f1=17, f2=17
 	REC_func_4840D29C_Records	f1=17, f2=17

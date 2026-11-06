@@ -26168,7 +26168,7 @@ data_486EE1E0:
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b893.rom", 0x2EE1E0, 0x2EE1F0
 
-func_48405825_Table:	# 64 x u8, 0..63; read by func_48405825_entry 0x4840221D: `movbu  (a2), d0`; func_48406515_entry 0x48406191: `movbu  (a1), d0` ...
+func_48405825_Table:	# 64 x u8, 0..63; read by func_48405825_entry 0x48405091: `movbu  (a2), d0`; func_48406515_entry 0x48406191: `movbu  (a1), d0` ...
 	tab_u8	0, 1, 8, 16, 9, 2, 3, 10, 17, 24, 32, 25, 18, 11, 4, 5	# [0]
 	tab_u8	12, 19, 26, 33, 40, 48, 41, 34, 27, 20, 13, 6, 7, 14, 21, 28	# [16]
 	tab_u8	35, 42, 49, 56, 57, 50, 43, 36, 29, 22, 15, 23, 30, 37, 44, 51	# [32]
@@ -39145,7 +39145,7 @@ func_48408926_Table_p0_30:	# REC_func_48408926_Table_p0 (99 bytes)
 .incbin_range "baserom/kn7000_program_b893.rom", 0x301C44, 0x301C8C
 
 ptrs_48701C8C:
-	.long	func_484101FD
+	.long	DspUnitsResetUnused
 	.long	loc_4841027C
 	.long	func_4841027F
 	.long	loc_4841028A

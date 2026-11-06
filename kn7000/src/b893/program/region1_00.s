@@ -25390,8 +25390,8 @@ loc_484101F3:
     movhu   (0x5c, sp), d0
     add     0x1f0, sp
     ret     [d2,d3], 8
-
-func_484101FD:
+# DspUnitsResetUnused  (CPU 0x484101fd)
+DspUnitsResetUnused:
     movm    [d2,d3], (sp)
     add     -0x14, sp
     mov     (0x50151bd8), d0

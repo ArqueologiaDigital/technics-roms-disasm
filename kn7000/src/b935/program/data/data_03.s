@@ -264,7 +264,7 @@ func_48408926_Table_p0_30:	# REC_func_48408926_Table_p0 (99 bytes)
 .incbin_range "baserom/kn7000_program_b935.rom", 0x30349C, 0x3034E4
 
 ptrs_487034E4:
-	.long	func_484101FD
+	.long	DspUnitsResetUnused
 	.long	loc_4841027C
 	.long	func_4841027F
 	.long	loc_4841028A
@@ -27007,28 +27007,28 @@ Str_JFIF:	.asciz "JFIF"
 # census: opaque -- unknown-dump: 11 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b935.rom", 0x338FF9, 0x339004
 
-func_48404D10_Table:	# 5 x u8, 1..3; read by func_48404D10_entry 0x4840221D: `movbu  (d1, a0), d0`
+func_48404D10_Table:	# 5 x u8, 1..3; read by JpegEncSetup_entry 0x48404D10: `movbu  (d1, a0), d0`
 	tab_u8	1, 3, 3, 3, 3
 
-func_48406633_Table:	# 5 x REC_func_48406633_Table (4 bytes each); read by func_48404D10 0x48404D10 `movbu (1, a1), d0`; func_48404D10 0x48404D10 `movbu (2, a3), d0`; func_48404D10 0x48404D10 `movbu (3, a3), d0` (+1)
+func_48406633_Table:	# 5 x REC_func_48406633_Table (4 bytes each); read by JpegEncSetup 0x48404D10 `movbu (1, a1), d0`; JpegEncSetup 0x48404D10 `movbu (2, a3), d0`; JpegEncSetup 0x48404D10 `movbu (3, a3), d0` (+1)
 	REC_func_48406633_Table	f0=1
 	REC_func_48406633_Table	f0=1, f1=1, f2=1
 	REC_func_48406633_Table	f0=2, f1=1, f2=1
 	REC_func_48406633_Table	f0=2, f1=1, f2=1
 	REC_func_48406633_Table	f0=4, f1=1, f2=1
-func_48406633_Table_2:	# 5 x REC_func_48406633_Table_2 (4 bytes each); read by func_48404D10 0x48404D10 `movbu (a0), d0`; func_48404D10 0x48404D10 `movbu (a1), d0`
+func_48406633_Table_2:	# 5 x REC_func_48406633_Table_2 (4 bytes each); read by JpegEncSetup 0x48404D10 `movbu (a0), d0`; JpegEncSetup 0x48404D10 `movbu (a1), d0`
 	REC_func_48406633_Table_2	f0=1
 	REC_func_48406633_Table_2	f0=1, f1=1, f2=1
 	REC_func_48406633_Table_2	f0=1, f1=1, f2=1
 	REC_func_48406633_Table_2	f0=2, f1=1, f2=1
 	REC_func_48406633_Table_2	f0=1, f1=1, f2=1
-func_48404D10_Records_2:	# 5 x REC_func_48404D10_Records_2 (4 bytes each); read by func_48404D10 0x48404D10 `movbu (a0), d0`; func_48404D10 0x48404D10 `movbu (a3), d0`
+func_48404D10_Records_2:	# 5 x REC_func_48404D10_Records_2 (4 bytes each); read by JpegEncSetup 0x48404D10 `movbu (a0), d0`; JpegEncSetup 0x48404D10 `movbu (a3), d0`
 	REC_func_48404D10_Records_2	
 	REC_func_48404D10_Records_2	f1=1, f2=1
 	REC_func_48404D10_Records_2	f1=1, f2=1
 	REC_func_48404D10_Records_2	f1=1, f2=1
 	REC_func_48404D10_Records_2	f1=1, f2=1
-func_48404D10_Records:	# 8 x REC_func_48404D10_Records (4 bytes each); read by func_48404D10 0x48404D10 `movbu (a0), d0`; func_48404D10 0x48404D10 `movbu (a1), d0`; func_48404D10 0x48404D10 `movbu (a3), d0`
+func_48404D10_Records:	# 8 x REC_func_48404D10_Records (4 bytes each); read by JpegEncSetup 0x48404D10 `movbu (a0), d0`; JpegEncSetup 0x48404D10 `movbu (a1), d0`; JpegEncSetup 0x48404D10 `movbu (a3), d0`
 	REC_func_48404D10_Records	
 	REC_func_48404D10_Records	f1=17, f2=17
 	REC_func_48404D10_Records	f1=17, f2=17

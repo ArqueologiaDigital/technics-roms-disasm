@@ -4889,13 +4889,13 @@ func_4C02B40F_Table:	# 5 x REC_func_4C02B40F_Table (8 bytes each); read by func_
 	REC_func_4C02B40F_Table	addr=0x8400077F, f4=63, x5="\x00\x00\x00"
 	REC_func_4C02B40F_Table	addr=0x8400079F, x5="\x00\x00\x00"
 
-func_48404D10_Table_2:	# u8, a constant; read / written by func_48404D10 0x48404D10: `movbu (a1), d0`
+func_48404D10_Table_2:	# u8, a constant; read / written by JpegEncSetup 0x48404D10: `movbu (a1), d0`
 	.byte	1
-func_48404D10_Var:	# u8, a constant; read / written by func_48404D10 0x48404D10: `movbu (a0), d0`
+JpegEncSetup_Var:	# u8, a constant; read / written by JpegEncSetup 0x48404D10: `movbu (a0), d0`
 	.byte	2
-func_48404D10_Var_2:	# u8, a constant; read / written by func_48404D10 0x48404D10: `movbu (a0), d0`
+JpegEncSetup_Var_2:	# u8, a constant; read / written by JpegEncSetup 0x48404D10: `movbu (a0), d0`
 	.byte	3
-func_48404D10_Var_3:	# u8, a constant; read / written by func_48404D10 0x48404D10: `movbu (a0), d0`
+JpegEncSetup_Var_3:	# u8, a constant; read / written by JpegEncSetup 0x48404D10: `movbu (a0), d0`
 	.byte	4
 
 func_4840ADC1_Records:	# 25 x REC_func_4840ADC1_Records (8 bytes each); read by func_4840ADC1 0x4840ADC1 `mov (4, a1), d2`; func_4840ADC1 0x4840ADC1 `mov (a1), d1`

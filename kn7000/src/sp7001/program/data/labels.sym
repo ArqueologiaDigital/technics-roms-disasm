@@ -849,9 +849,9 @@
 0x4858EE78  func_4C02B59C_Records  96
 0x4858EED8  func_4C02B47C_Table  40
 0x4858EF00  func_4840D29C_Table_2  1
-0x4858EF01  func_4840D29C_Var  1
-0x4858EF02  func_4840D29C_Var_2  1
-0x4858EF03  func_4840D29C_Var_3  1
+0x4858EF01  JpegEncSetup_Var  1
+0x4858EF02  JpegEncSetup_Var_2  1
+0x4858EF03  JpegEncSetup_Var_3  1
 0x4858EF04  Str_JK_3  3
 0x4858EF08  SndDbTriDefaultsA_Table  72
 0x4858EF50  SndDbTriDefaultsB_Table  72
