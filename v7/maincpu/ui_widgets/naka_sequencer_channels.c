@@ -1860,44 +1860,12 @@ typedef struct __attribute__((packed)) {
     uint16_t field_0d5a;
     /* MidiPart_ConfigNameTable: 110 pointers (cut from ptrs_3 by split_naka_pointer_arrays.py) */
     uint32_t MidiPart_ConfigNameTable[110];
-    uint16_t field_0f14;
-    uint16_t field_0f16;
-    uint16_t field_0f18;
-    uint16_t field_0f1a;
-    uint16_t field_0f1c;
-    uint16_t field_0f1e;
-    uint16_t field_0f20;
-    uint16_t field_0f22;
-    uint16_t field_0f24;
-    uint16_t field_0f26;
-    uint16_t field_0f28;
-    uint16_t field_0f2a;
-    uint16_t field_0f2c;
-    uint16_t field_0f2e;
-    uint16_t field_0f30;
-    uint16_t field_0f32;
-    uint16_t field_0f34;
-    uint16_t field_0f36;
-    uint16_t field_0f38;
-    uint16_t field_0f3a;
-    uint16_t field_0f3c;
-    uint16_t field_0f3e;
-    uint16_t field_0f40;
-    uint8_t bytes_0f42[6];  /* 4 pointers */
-    /* 9 pointers */
-    /* zero padding */
-    /* NAKA_TYPE_AcTitleMenu */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
+    /* AcTrackMixerProc's column -> part map: the power-on image of RAM 0x3EBE8 (Boot_InitWorkRAM
+     * copies WorkRamInit_Image to RAM 0x3D524).  TrackMixer_Init installs it as the PsMixer grid
+     * array (Util_StoreGridArrayBase), PsMixer_ReadWordArrayEntry reads word [page*8 + column] as
+     * the column's part, TrackMixer_UpdateHandler writes word [track] (0..15).  32 words: these 26
+     * and TrackMixer_GridRowMapEnd (scripts/converters/naka_type_trackmixer_map.py) */
+    uint16_t TrackMixer_ColumnPartMap[26];
     /* last 6 words (0x00FF) of the grid map TrackMixer_Init installs at RAM 0x3EBE8 */
     uint16_t TrackMixer_GridRowMapEnd[6];
     /* per-drawbar slider bitmap base (9 drawbars) + an unreferenced word */
@@ -1952,242 +1920,76 @@ typedef struct __attribute__((packed)) {
     naka_cls_AcIndexToggle_t Root_NamingSymbolToggleView;
     /* Naka_DrawbarReg_Table: 69 pointers (cut from ptrs_7 by split_naka_pointer_arrays.py) */
     uint32_t Naka_DrawbarReg_Table[69];
-    uint16_t field_1624;
-    uint16_t field_1626;
-    uint16_t field_1628;
-    uint16_t field_162a;
-    uint16_t field_162c;
-    uint16_t field_162e;
-    uint16_t field_1630;
-    uint16_t field_1632;
-    uint16_t field_1634;
-    uint16_t field_1636;
-    uint16_t field_1638;
-    uint16_t field_163a;
-    uint16_t field_163c;
-    uint16_t field_163e;
-    uint16_t field_1640;
-    uint16_t field_1642;
-    uint16_t field_1644;
-    uint16_t field_1646;
-    uint16_t field_1648;
-    uint16_t field_164a;
-    uint16_t field_164c;
-    uint16_t field_164e;
-    uint16_t field_1650;
-    uint16_t field_1652;
-    uint16_t field_1654;
-    uint16_t field_1656;
-    uint16_t field_1658;
-    uint16_t field_165a;
-    uint16_t field_165c;
-    uint16_t field_165e;
-    uint16_t field_1660;
-    uint16_t field_1662;
-    uint16_t field_1664;
-    uint16_t field_1666;
-    uint16_t field_1668;
-    uint16_t field_166a;
-    uint16_t field_166c;
-    uint16_t field_166e;
-    uint16_t field_1670;
-    uint16_t field_1672;
-    uint16_t field_1674;
-    uint16_t field_1676;
-    uint16_t field_1678;
-    uint16_t field_167a;
-    uint16_t field_167c;
-    uint16_t field_167e;
-    uint16_t field_1680;
-    uint16_t field_1682;
-    uint16_t field_1684;
-    uint16_t field_1686;
-    uint16_t field_1688;
-    uint16_t field_168a;
-    uint16_t field_168c;
-    uint16_t field_168e;
-    uint16_t field_1690;
-    uint16_t field_1692;
-    uint16_t field_1694;
-    uint16_t field_1696;
-    uint16_t field_1698;
-    uint16_t field_169a;
-    uint16_t field_169c;
-    uint16_t field_169e;
-    uint16_t field_16a0;
-    uint16_t field_16a2;
-    uint16_t field_16a4;
-    uint16_t field_16a6;
-    uint16_t field_16a8;
-    uint16_t field_16aa;
-    uint16_t field_16ac;
-    uint16_t field_16ae;
-    uint16_t field_16b0;
-    uint16_t field_16b2;
-    uint16_t field_16b4;
-    uint16_t field_16b6;
-    uint16_t field_16b8;
-    uint16_t field_16ba;
-    uint16_t field_16bc;
-    uint16_t field_16be;
-    uint16_t field_16c0;
-    uint16_t field_16c2;
-    uint16_t field_16c4;
-    uint16_t field_16c6;
-    uint16_t field_16c8;
-    uint16_t field_16ca;
-    uint16_t field_16cc;
-    uint16_t field_16ce;
-    uint16_t field_16d0;
-    uint16_t field_16d2;
-    uint16_t field_16d4;
-    uint16_t field_16d6;
-    uint16_t field_16d8;
-    uint16_t field_16da;
-    uint16_t field_16dc;
-    uint16_t field_16de;
-    uint16_t field_16e0;
-    uint16_t field_16e2;
-    uint16_t field_16e4;
-    uint16_t field_16e6;
-    uint16_t field_16e8;
-    uint16_t field_16ea;
-    uint16_t field_16ec;
-    uint16_t field_16ee;
-    uint16_t field_16f0;
-    uint16_t field_16f2;
-    uint16_t field_16f4;
-    uint16_t field_16f6;
-    uint16_t field_16f8;
-    uint16_t field_16fa;
-    uint16_t field_16fc;
-    uint16_t field_16fe;
-    uint16_t field_1700;
-    uint16_t field_1702;
-    uint16_t field_1704;
-    uint16_t field_1706;
-    uint16_t field_1708;
-    uint16_t field_170a;
-    uint16_t field_170c;
-    uint16_t field_170e;
-    uint16_t field_1710;
-    uint16_t field_1712;
-    uint16_t field_1714;
-    uint16_t field_1716;
-    uint16_t field_1718;
-    uint16_t field_171a;
-    uint16_t field_171c;
-    uint16_t field_171e;
-    uint16_t field_1720;
-    uint16_t field_1722;
-    uint16_t Normal_Window;
-    uint16_t field_1726;
-    uint16_t normal_Window;
-    uint16_t field_172a;
+    /* the chord-name lookup's first level: the power-on image of RAM 0x3F2F8, 64 RAM pointers, one
+     * per chord type.  MainChordPre_AppendChordSuffix loads 0x3F2F8 and follows [4*DISPLAY_CHORD_TYPE],
+     * then [4*DISPLAY_CHORD_ROOT] in the root table it points at (RAM 0x3F228 / 0x3F25C / 0x3F290 /
+     * 0x3F2C4), then [4*DISPLAY_CHORD_BASS], and appends that string
+     * (scripts/converters/naka_type_trackmixer_map.py) */
+    uint32_t ChordName_TypeRootTables[64];
+    int32_t Normal_Window;  /* letter r cell (32-bit) */
+    int32_t normal_Window;  /* letter r cell (32-bit) */
     uint8_t normal_AcLswBox_Value[2];
     uint16_t normal_IvWindowPageControl_Page;
-    uint16_t NakaWidget_N1_Parent;
-    uint16_t field_1732;
-    uint16_t NakaWidget_N1_Child;
-    uint16_t field_1736;
-    uint16_t Toshi_NORMAL_Elem33_Parent;
-    uint16_t field_173a;
-    uint16_t Toshi_NORMAL_Elem33_Child;
-    uint16_t field_173e;
-    uint16_t Toshi_NORMAL_Elem39_Parent;
-    uint16_t field_1742;
-    uint16_t Toshi_NORMAL_Elem39_Child;
-    uint16_t field_1746;
-    uint16_t Toshi_NORMAL_Elem48_Parent;
-    uint16_t field_174a;
-    uint16_t Toshi_NORMAL_Elem48_Child;
-    uint16_t field_174e;
-    uint16_t Toshi_NORMAL_Elem57_Parent;
-    uint16_t field_1752;
-    uint16_t Toshi_NORMAL_Elem57_Child;
-    uint16_t field_1756;
-    uint16_t Toshi_NORMAL_Elem60_Parent;
-    uint16_t field_175a;
-    uint16_t Toshi_NORMAL_Elem60_Child;
-    uint16_t field_175e;
-    uint16_t ControlMenu_Window;
-    uint16_t field_1762;
+    int32_t NakaWidget_N1_Parent;  /* letter r cell (32-bit) */
+    int32_t NakaWidget_N1_Child;  /* letter r cell (32-bit) */
+    int32_t Toshi_NORMAL_Elem33_Parent;  /* letter r cell (32-bit) */
+    int32_t Toshi_NORMAL_Elem33_Child;  /* letter r cell (32-bit) */
+    int32_t Toshi_NORMAL_Elem39_Parent;  /* letter r cell (32-bit) */
+    int32_t Toshi_NORMAL_Elem39_Child;  /* letter r cell (32-bit) */
+    int32_t Toshi_NORMAL_Elem48_Parent;  /* letter r cell (32-bit) */
+    int32_t Toshi_NORMAL_Elem48_Child;  /* letter r cell (32-bit) */
+    int32_t Toshi_NORMAL_Elem57_Parent;  /* letter r cell (32-bit) */
+    int32_t Toshi_NORMAL_Elem57_Child;  /* letter r cell (32-bit) */
+    int32_t Toshi_NORMAL_Elem60_Parent;  /* letter r cell (32-bit) */
+    int32_t Toshi_NORMAL_Elem60_Child;  /* letter r cell (32-bit) */
+    int32_t ControlMenu_Window;  /* letter r cell (32-bit) */
     uint8_t pad_277[14];  /* zero padding */
-    uint16_t ControlIni_Window;
-    uint16_t field_1774;
+    int32_t ControlIni_Window;  /* letter r cell (32-bit) */
     uint8_t SYSINI_Selected[2];
-    uint16_t Initial_TtlScreen_Window;
-    uint16_t field_177a;
-    uint16_t SYSINISURE_Window;
-    uint16_t field_177e;
-    uint16_t ControlFsw_Window;
-    uint16_t field_1782;
+    int32_t Initial_TtlScreen_Window;  /* letter r cell (32-bit) */
+    int32_t SYSINISURE_Window;  /* letter r cell (32-bit) */
+    int32_t ControlFsw_Window;  /* letter r cell (32-bit) */
     uint16_t ControlFsw_AcFSWAssGridBox_Selrow;
     uint16_t ControlFsw_AcFSWAssGridBox_Selcol;
-    uint16_t ControlFsw_AcFSWAssGridBox_Pcol;
-    uint16_t field_178a;
-    uint16_t ControlFsw_AcFSWAssGridBox_Prow;
-    uint16_t field_178e;
-    uint16_t ControlFsw_AcFSWAssGridBox_Crow;
-    uint16_t field_1792;
-    uint16_t ControlSns_Window;
-    uint16_t field_1796;
+    uint32_t ControlFsw_AcFSWAssGridBox_Pcol;  /* letter s cell (32-bit) */
+    uint32_t ControlFsw_AcFSWAssGridBox_Prow;  /* letter s cell (32-bit) */
+    uint32_t ControlFsw_AcFSWAssGridBox_Crow;  /* letter s cell (32-bit) */
+    int32_t ControlSns_Window;  /* letter r cell (32-bit) */
     uint16_t ControlSns_AcTchSensGridBox_Selrow;
     uint16_t ControlSns_AcTchSensGridBox_Selcol;
-    uint16_t ControlSns_AcTchSensGridBox_Pcol;
-    uint16_t field_179e;
-    uint16_t ControlSns_AcTchSensGridBox_Prow;
-    uint16_t field_17a2;
-    uint16_t ControlSns_AcTchSensGridBox_Crow;
-    uint16_t field_17a6;
-    uint16_t NakaWidget_ToshiView044_0_MsaModeScreen_Window;
-    uint16_t field_17aa;
+    uint32_t ControlSns_AcTchSensGridBox_Pcol;  /* letter s cell (32-bit) */
+    uint32_t ControlSns_AcTchSensGridBox_Prow;  /* letter s cell (32-bit) */
+    uint32_t ControlSns_AcTchSensGridBox_Crow;  /* letter s cell (32-bit) */
+    int32_t NakaWidget_ToshiView044_0_MsaModeScreen_Window;  /* letter r cell (32-bit) */
     uint8_t NakaWidget_ToshiView044_0_MsaModeScreen_Newmsamode[2];
     uint8_t NakaWidget_ToshiView044_0_MsaModeScreen_Oldmsamode[2];
-    uint16_t NakaWidget_ToshiView044_10_MsaModeScreen_Window;
-    uint16_t field_17b2;
+    int32_t NakaWidget_ToshiView044_10_MsaModeScreen_Window;  /* letter r cell (32-bit) */
     uint16_t NakaWidget_ToshiView044_10_MsaModeScreen_Newmsamode;
     uint16_t NakaWidget_ToshiView044_10_MsaModeScreen_Oldmsamode;
-    uint16_t PanelMemoryMode_TtlScreen_Window;
-    uint16_t field_17ba;
+    int32_t PanelMemoryMode_TtlScreen_Window;  /* letter r cell (32-bit) */
     uint16_t PanelMemoryMode_IvPmemWindowPageCtl_Page;
-    uint16_t PMEM1_Parent;
-    uint16_t field_17c0;
-    uint16_t PMEM1_Child;
-    uint16_t field_17c4;
+    int32_t PMEM1_Parent;  /* letter r cell (32-bit) */
+    int32_t PMEM1_Child;  /* letter r cell (32-bit) */
     uint8_t PMEM1_PmemModeBox_Newpmemmode[2];
     uint8_t PMEM1_PmemModeBox_Oldpmemmode[2];
-    uint16_t PMEM2_Parent;
-    uint16_t field_17cc;
-    uint16_t PMEM2_Child;
-    uint16_t field_17d0;
+    int32_t PMEM2_Parent;  /* letter r cell (32-bit) */
+    int32_t PMEM2_Child;  /* letter r cell (32-bit) */
     uint16_t PMEM2_AcPmExpFilterGridBox_Selrow;
     uint16_t PMEM2_AcPmExpFilterGridBox_Selcol;
-    uint16_t PMEM2_AcPmExpFilterGridBox_Pcol;
-    uint16_t field_17d8;
-    uint16_t PMEM2_AcPmExpFilterGridBox_Prow;
-    uint16_t field_17dc;
-    uint16_t PMEM2_AcPmExpFilterGridBox_Crow;
-    uint16_t field_17e0;
-    uint16_t NakaWidget_ToshiView045_18_Window_Parent;
-    uint16_t field_17e4;
-    uint16_t NakaWidget_ToshiView045_18_Window_Child;
-    uint16_t field_17e8;
-    uint16_t ControlSys_Window;
-    uint16_t field_17ec;
+    uint32_t PMEM2_AcPmExpFilterGridBox_Pcol;  /* letter s cell (32-bit) */
+    uint32_t PMEM2_AcPmExpFilterGridBox_Prow;  /* letter s cell (32-bit) */
+    uint32_t PMEM2_AcPmExpFilterGridBox_Crow;  /* letter s cell (32-bit) */
+    int32_t NakaWidget_ToshiView045_18_Window_Parent;  /* letter r cell (32-bit) */
+    int32_t NakaWidget_ToshiView045_18_Window_Child;  /* letter r cell (32-bit) */
+    int32_t ControlSys_Window;  /* letter r cell (32-bit) */
     uint16_t ControlSys_AcDispTimeSetGridBox_Selrow;
     uint16_t ControlSys_AcDispTimeSetGridBox_Selcol;
-    uint16_t ControlSys_AcDispTimeSetGridBox_Pcol;
-    uint16_t field_17f4;
-    uint16_t ControlSys_AcDispTimeSetGridBox_Prow;
-    uint16_t field_17f8;
-    uint16_t ControlSys_AcDispTimeSetGridBox_Crow;
-    uint16_t field_17fc;
-    uint16_t WallpaperSetting_TtlScreen_Window;
-    uint16_t field_1800;
+    uint32_t ControlSys_AcDispTimeSetGridBox_Pcol;  /* letter s cell (32-bit) */
+    uint32_t ControlSys_AcDispTimeSetGridBox_Prow;  /* letter s cell (32-bit) */
+    uint32_t ControlSys_AcDispTimeSetGridBox_Crow;  /* letter s cell (32-bit) */
+    int32_t WallpaperSetting_TtlScreen_Window;  /* letter r cell (32-bit) */
     uint8_t Load_AcTitleMenu_Selected[2];
-    uint16_t ControlWallSet_Window;
-    uint16_t field_1806;
+    int32_t ControlWallSet_Window;  /* letter r cell (32-bit) */
     uint8_t Load_AcTitleMenu_2_Selected[2];
     uint16_t ControlWallSet_AcRamEditBox_Selected;
     uint8_t ControlWallSet_AcRamEditBox_Value[4];
@@ -2195,56 +1997,39 @@ typedef struct __attribute__((packed)) {
     uint8_t ControlWallSet_MenuPages_Value[4];
     uint8_t ControlWallSet_AcRamEditBox_3_Selected[2];
     uint8_t ControlWallSet_Others_Value[4];
-    uint16_t WALLSETSURE_Window;
-    uint16_t field_181e;
-    uint16_t ONETCH_Window;
-    uint16_t field_1822;
+    int32_t WALLSETSURE_Window;  /* letter r cell (32-bit) */
+    int32_t ONETCH_Window;  /* letter r cell (32-bit) */
     uint8_t ONETCH_AcRamBox_Value[4];
-    uint16_t MUSICSTYL_Window;
-    uint16_t field_182a;
+    int32_t MUSICSTYL_Window;  /* letter r cell (32-bit) */
     uint8_t StyleExplorer_AcTitleMenu_Selected[2];
     uint8_t StyleAlphabetical_AcTitleMenu_Selected[2];
-    uint16_t MSCTSEL_Window;
-    uint16_t field_1832;
+    int32_t MSCTSEL_Window;  /* letter r cell (32-bit) */
     uint16_t MSCTSEL_IvMstStyleWindowPgCtl_Page;
-    uint16_t STYLE1_Parent;
-    uint16_t field_1838;
-    uint16_t STYLE1_Child;
-    uint16_t field_183c;
+    int32_t STYLE1_Parent;  /* letter r cell (32-bit) */
+    int32_t STYLE1_Child;  /* letter r cell (32-bit) */
     uint8_t STYLE1_AcMstStyle1GridBox_Selrow[2];
     uint16_t STYLE1_AcMstStyle1GridBox_Selcol;
-    uint16_t STYLE1_AcMstStyle1GridBox_Pcol;
-    uint16_t field_1844;
-    uint16_t STYLE1_AcMstStyle1GridBox_Prow;
-    uint16_t field_1848;
-    uint16_t STYLE1_AcMstStyle1GridBox_Crow;
-    uint16_t field_184c;
+    uint32_t STYLE1_AcMstStyle1GridBox_Pcol;  /* letter s cell (32-bit) */
+    uint32_t STYLE1_AcMstStyle1GridBox_Prow;  /* letter s cell (32-bit) */
+    uint32_t STYLE1_AcMstStyle1GridBox_Crow;  /* letter s cell (32-bit) */
     uint16_t STYLE1_AcMstStyle1GridBox_Nowstylectgdtno;
     uint16_t STYLE1_AcMstStyle1GridBox_Nowstylectgmaxpage;
     uint16_t STYLE1_AcMstStyle1GridBox_Nowstylectgpage;
     uint8_t STYLE1_AcMstStyle1SubGridBox_Selrow[2];
     uint8_t STYLE1_AcMstStyle1SubGridBox_Selcol[2];
-    uint16_t STYLE1_AcMstStyle1SubGridBox_Pcol;
-    uint16_t field_185a;
-    uint16_t STYLE1_AcMstStyle1SubGridBox_Prow;
-    uint16_t field_185e;
-    uint16_t STYLE1_AcMstStyle1SubGridBox_Crow;
-    uint16_t field_1862;
+    uint32_t STYLE1_AcMstStyle1SubGridBox_Pcol;  /* letter s cell (32-bit) */
+    uint32_t STYLE1_AcMstStyle1SubGridBox_Prow;  /* letter s cell (32-bit) */
+    uint32_t STYLE1_AcMstStyle1SubGridBox_Crow;  /* letter s cell (32-bit) */
     uint16_t STYLE1_AcMstStyle1SubGridBox_Nowstylesubctgdtno;
     uint16_t STYLE1_AcMstStyle1SubGridBox_Nowstylesubctgmaxpage;
     uint16_t STYLE1_AcMstStyle1SubGridBox_Nowstylesubctgpage;
-    uint16_t STYLE2_Parent;
-    uint16_t field_186c;
-    uint16_t STYLE2_Child;
-    uint16_t field_1870;
+    int32_t STYLE2_Parent;  /* letter r cell (32-bit) */
+    int32_t STYLE2_Child;  /* letter r cell (32-bit) */
     uint8_t STYLE2_AcMstStyle2GridBox_Selrow[2];
     uint8_t STYLE2_AcMstStyle2GridBox_Selcol[2];
-    uint16_t STYLE2_AcMstStyle2GridBox_Pcol;
-    uint16_t field_1878;
-    uint16_t STYLE2_AcMstStyle2GridBox_Prow;
-    uint16_t field_187c;
-    uint16_t STYLE2_AcMstStyle2GridBox_Crow;
-    uint16_t field_1880;
+    uint32_t STYLE2_AcMstStyle2GridBox_Pcol;  /* letter s cell (32-bit) */
+    uint32_t STYLE2_AcMstStyle2GridBox_Prow;  /* letter s cell (32-bit) */
+    uint32_t STYLE2_AcMstStyle2GridBox_Crow;  /* letter s cell (32-bit) */
     uint16_t STYLE2_AcMstStyle2GridBox_Nowstylesubctgdtno;
     uint16_t STYLE2_AcMstStyle2GridBox_Nowstylesubctgmaxpage;
     uint16_t STYLE2_AcMstStyle2GridBox_Nowstylesubctgpage;
@@ -2252,13 +2037,10 @@ typedef struct __attribute__((packed)) {
     uint16_t STYLE2_AcMstStyle2GridBox_Nowstyle;
     uint16_t STYLE2_AcMstStyle2GridBox_Nowstylesubsubdtno1;
     uint16_t STYLE2_AcMstStyle2GridBox_Nowstylesubsubdtno2;
-    uint16_t MSSCTSEL_Window;
-    uint16_t field_1892;
+    int32_t MSSCTSEL_Window;  /* letter r cell (32-bit) */
     uint16_t MSSCTSEL_IvMstStyleWindowPgCtl_Page;
-    uint16_t SONG1_Parent;
-    uint16_t field_1898;
-    uint16_t SONG1_Child;
-    uint16_t field_189c;
+    int32_t SONG1_Parent;  /* letter r cell (32-bit) */
+    int32_t SONG1_Child;  /* letter r cell (32-bit) */
     uint16_t SONG1_AcMstSong1GridBox_Selrow;
     uint8_t SONG1_AcMstSong1GridBox_Selcol[2];
     uint8_t SONG1_AcMstSong1GridBox_Pcol[1];
@@ -2276,12 +2058,9 @@ typedef struct __attribute__((packed)) {
     uint32_t NakaData_RomEnd_ptr_3;
     uint8_t pad_291[1];
     uint8_t SONG2_AcMstSong2GridBox_Selcol[2];
-    uint16_t SONG2_AcMstSong2GridBox_Pcol;
-    uint16_t field_18c2;
-    uint16_t SONG2_AcMstSong2GridBox_Prow;
-    uint16_t field_18c6;
-    uint16_t SONG2_AcMstSong2GridBox_Crow;
-    uint16_t field_18ca;
+    uint32_t SONG2_AcMstSong2GridBox_Pcol;  /* letter s cell (32-bit) */
+    uint32_t SONG2_AcMstSong2GridBox_Prow;  /* letter s cell (32-bit) */
+    uint32_t SONG2_AcMstSong2GridBox_Crow;  /* letter s cell (32-bit) */
     uint16_t SONG2_AcMstSong2GridBox_Nowsongsubctgdtno;
     uint16_t SONG2_AcMstSong2GridBox_Nowsongsubctgmaxpage;
     uint16_t SONG2_AcMstSong2GridBox_Nowsongsubctgpage;
@@ -2289,16 +2068,12 @@ typedef struct __attribute__((packed)) {
     uint16_t SONG2_AcMstSong2GridBox_Nowsong;
     uint16_t SONG2_AcMstSong2GridBox_Nowsongsubsubdtno1;
     uint16_t SONG2_AcMstSong2GridBox_Nowsongsubsubdtno2;
-    uint16_t MSSONGLIST_Window;
-    uint16_t field_18dc;
+    int32_t MSSONGLIST_Window;  /* letter r cell (32-bit) */
     uint16_t MSSONGLIST_AcMstSugAlpGridBox_Selrow;
     uint8_t MSSONGLIST_AcMstSugAlpGridBox_Selcol[2];
-    uint16_t MSSONGLIST_AcMstSugAlpGridBox_Pcol;
-    uint16_t field_18e4;
-    uint16_t MSSONGLIST_AcMstSugAlpGridBox_Prow;
-    uint16_t field_18e8;
-    uint16_t MSSONGLIST_AcMstSugAlpGridBox_Crow;
-    uint16_t field_18ec;
+    uint32_t MSSONGLIST_AcMstSugAlpGridBox_Pcol;  /* letter s cell (32-bit) */
+    uint32_t MSSONGLIST_AcMstSugAlpGridBox_Prow;  /* letter s cell (32-bit) */
+    uint32_t MSSONGLIST_AcMstSugAlpGridBox_Crow;  /* letter s cell (32-bit) */
     char MSSONGLIST_AcMstSugAlpGridBox_Nowalph[2];
     uint8_t MSSONGLIST_AcMstSugAlpGridBox_Nowalphtop[2];
     char MSSONGLIST_AcMstSugAlpGridBox_Nowalphdtno[2];
@@ -2306,125 +2081,79 @@ typedef struct __attribute__((packed)) {
     uint16_t MSSONGLIST_AcMstSugAlpGridBox_Nowalphpage;
     uint16_t MSSONGLIST_AcMstSugAlpGridBox_Nowalphselsong;
     uint16_t MSSONGLIST_AcMstSugAlpGridBox_Nowttlselsong;
-    uint16_t MSSTLSEL_Window;
-    uint16_t field_18fe;
+    int32_t MSSTLSEL_Window;  /* letter r cell (32-bit) */
     uint8_t MSSTLSEL_AcMstStyleAlpGridBox_Selrow[2];
     uint8_t MSSTLSEL_AcMstStyleAlpGridBox_Selcol[2];
-    uint16_t MSSTLSEL_AcMstStyleAlpGridBox_Pcol;
-    uint16_t field_1906;
-    uint16_t MSSTLSEL_AcMstStyleAlpGridBox_Prow;
-    uint16_t field_190a;
-    uint16_t MSSTLSEL_AcMstStyleAlpGridBox_Crow;
-    uint16_t field_190e;
+    uint32_t MSSTLSEL_AcMstStyleAlpGridBox_Pcol;  /* letter s cell (32-bit) */
+    uint32_t MSSTLSEL_AcMstStyleAlpGridBox_Prow;  /* letter s cell (32-bit) */
+    uint32_t MSSTLSEL_AcMstStyleAlpGridBox_Crow;  /* letter s cell (32-bit) */
     char MSSTLSEL_AcMstStyleAlpGridBox_Nowalph[2];
     uint16_t MSSTLSEL_AcMstStyleAlpGridBox_Nowalphtop;
     char MSSTLSEL_AcMstStyleAlpGridBox_Nowalphdtno[2];
     uint16_t MSSTLSEL_AcMstStyleAlpGridBox_Nowalphmaxpage;
     uint16_t MSSTLSEL_AcMstStyleAlpGridBox_Nowalphpage;
-    uint16_t PMBANK_Window;
-    uint16_t field_191c;
+    int32_t PMBANK_Window;  /* letter r cell (32-bit) */
     uint16_t PMBANK_Page;
     uint16_t PMBANK_Nowbank;
     uint16_t PMBANK_Oldbank;
     uint16_t PMBANK_PsPageBox_Page;
-    uint16_t PMVIEW_Window;
-    uint16_t field_1928;
+    int32_t PMVIEW_Window;  /* letter r cell (32-bit) */
     uint16_t PMVIEW_AcPmBkEditBox_Selected;
     uint8_t PMVIEW_AcPmBkEditBox_Value[4];
     uint16_t PMVIEW_PsPageBox_Page;
-    uint16_t PMNAME_Window;
-    uint16_t field_1934;
-    uint16_t NakaWidget_PMBKNAME_Window;
-    uint16_t field_1938;
-    uint16_t NakaWidget_SVARI_Window;
-    uint16_t field_193c;
+    int32_t PMNAME_Window;  /* letter r cell (32-bit) */
+    int32_t NakaWidget_PMBKNAME_Window;  /* letter r cell (32-bit) */
+    int32_t NakaWidget_SVARI_Window;  /* letter r cell (32-bit) */
     uint16_t NakaWidget_SVARI_Page;
     uint8_t pad_297[2];  /* zero padding */
     uint16_t NakaWidget_SVARI_Varisu;
     uint8_t pad_298[4];  /* zero padding */
     uint16_t NakaWidget_SVARI_Oldvari;
-    uint16_t RVARI_Window;
-    uint16_t field_194c;
+    int32_t RVARI_Window;  /* letter r cell (32-bit) */
     uint16_t RVARI_Page;
     char H_str[2];
     uint16_t RVARI_Varisu;
     uint8_t RVARI_Nowswno[2];
     uint8_t RVARI_Nowvari[2];
     uint8_t RVARI_Oldvari[2];
-    uint16_t vF4_e0_Window;
-    uint16_t field_195c;
-    uint16_t TEST1RAM_Parent;
-    uint16_t field_1960;
-    uint16_t TEST1RAM_Child;
-    uint16_t field_1964;
-    uint16_t TEST1CP_Parent;
-    uint16_t field_1968;
-    uint16_t TEST1CP_Child;
-    uint16_t field_196c;
-    uint16_t vF4_e13_Window;
-    uint16_t field_1970;
-    uint16_t TEST2_Window;
-    uint16_t field_1974;
-    uint16_t TEST2OKOK_Parent;
-    uint16_t field_1978;
-    uint16_t TEST2OKOK_Child;
-    uint16_t field_197c;
-    uint16_t TEST2NGNG_Parent;
-    uint16_t field_1980;
-    uint16_t TEST2NGNG_Child;
-    uint16_t field_1984;
-    uint16_t TEST2NGOK_Parent;
-    uint16_t field_1988;
-    uint16_t TEST2NGOK_Child;
-    uint16_t field_198c;
-    uint16_t TEST2OKNG_Parent;
-    uint16_t field_1990;
-    uint16_t TEST2OKNG_Child;
-    uint16_t field_1994;
-    uint16_t TEST3_Window;
-    uint16_t field_1998;
+    int32_t vF4_e0_Window;  /* letter r cell (32-bit) */
+    int32_t TEST1RAM_Parent;  /* letter r cell (32-bit) */
+    int32_t TEST1RAM_Child;  /* letter r cell (32-bit) */
+    int32_t TEST1CP_Parent;  /* letter r cell (32-bit) */
+    int32_t TEST1CP_Child;  /* letter r cell (32-bit) */
+    int32_t vF4_e13_Window;  /* letter r cell (32-bit) */
+    int32_t TEST2_Window;  /* letter r cell (32-bit) */
+    int32_t TEST2OKOK_Parent;  /* letter r cell (32-bit) */
+    int32_t TEST2OKOK_Child;  /* letter r cell (32-bit) */
+    int32_t TEST2NGNG_Parent;  /* letter r cell (32-bit) */
+    int32_t TEST2NGNG_Child;  /* letter r cell (32-bit) */
+    int32_t TEST2NGOK_Parent;  /* letter r cell (32-bit) */
+    int32_t TEST2NGOK_Child;  /* letter r cell (32-bit) */
+    int32_t TEST2OKNG_Parent;  /* letter r cell (32-bit) */
+    int32_t TEST2OKNG_Child;  /* letter r cell (32-bit) */
+    int32_t TEST3_Window;  /* letter r cell (32-bit) */
     uint8_t TEST3_Nowswno[2];
     uint8_t TEST3_Oldswno[2];
-    uint16_t TEST4_Window;
-    uint16_t field_19a0;
-    uint16_t TEST5_Window;
-    uint16_t field_19a4;
-    uint16_t TEST51_Parent;
-    uint16_t field_19a8;
-    uint16_t TEST51_Child;
-    uint16_t field_19ac;
-    uint16_t TEST52_Parent;
-    uint16_t field_19b0;
-    uint16_t TEST52_Child;
-    uint16_t field_19b4;
-    uint16_t TEST53_Parent;
-    uint16_t field_19b8;
-    uint16_t TEST53_Child;
-    uint16_t field_19bc;
-    uint16_t TEST54_Parent;
-    uint16_t field_19c0;
-    uint16_t TEST54_Child;
-    uint16_t field_19c4;
-    uint16_t TEST55_Parent;
-    uint16_t field_19c8;
-    uint16_t TEST55_Child;
-    uint16_t field_19cc;
-    uint16_t TEST56_Parent;
-    uint16_t field_19d0;
-    uint16_t TEST56_Child;
-    uint16_t field_19d4;
-    uint16_t TEST6_Window;
-    uint16_t field_19d8;
-    uint16_t TEST6OK_Parent;
-    uint16_t field_19dc;
-    uint16_t TEST6OK_Child;
-    uint16_t field_19e0;
-    uint16_t TEST6NG_Parent;
-    uint16_t field_19e4;
-    uint16_t TEST6NG_Child;
-    uint16_t field_19e8;
-    uint16_t EXT_Window;
-    uint16_t field_19ec;
+    int32_t TEST4_Window;  /* letter r cell (32-bit) */
+    int32_t TEST5_Window;  /* letter r cell (32-bit) */
+    int32_t TEST51_Parent;  /* letter r cell (32-bit) */
+    int32_t TEST51_Child;  /* letter r cell (32-bit) */
+    int32_t TEST52_Parent;  /* letter r cell (32-bit) */
+    int32_t TEST52_Child;  /* letter r cell (32-bit) */
+    int32_t TEST53_Parent;  /* letter r cell (32-bit) */
+    int32_t TEST53_Child;  /* letter r cell (32-bit) */
+    int32_t TEST54_Parent;  /* letter r cell (32-bit) */
+    int32_t TEST54_Child;  /* letter r cell (32-bit) */
+    int32_t TEST55_Parent;  /* letter r cell (32-bit) */
+    int32_t TEST55_Child;  /* letter r cell (32-bit) */
+    int32_t TEST56_Parent;  /* letter r cell (32-bit) */
+    int32_t TEST56_Child;  /* letter r cell (32-bit) */
+    int32_t TEST6_Window;  /* letter r cell (32-bit) */
+    int32_t TEST6OK_Parent;  /* letter r cell (32-bit) */
+    int32_t TEST6OK_Child;  /* letter r cell (32-bit) */
+    int32_t TEST6NG_Parent;  /* letter r cell (32-bit) */
+    int32_t TEST6NG_Child;  /* letter r cell (32-bit) */
+    int32_t EXT_Window;  /* letter r cell (32-bit) */
     /* zero padding */
     /* zero padding */
     /* zero padding */
@@ -3369,53 +3098,10 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
         NAKA_ADDR(TrackName6_Unassigned),
     },
 
-    .field_0f14 = 0x001D,
-
-    .field_0f16 = 0x001D,
-
-    .field_0f18 = 0x001D,
-
-    .field_0f1a = 0x001D,
-
-    .field_0f1c = 0x001D,
-
-    .field_0f1e = 0x001D,
-
-    .field_0f20 = 0x001D,
-
-    .field_0f22 = 0x001D,
-
-    .field_0f24 = 0x001D,
-
-    .field_0f26 = 0x001D,
-
-    .field_0f28 = 0x001D,
-
-    .field_0f2a = 0x001D,
-
-    .field_0f2c = 0x001D,
-
-    .field_0f2e = 0x001D,
-
-    .field_0f30 = 0x001D,
-
-    .field_0f32 = 0x001D,
-
-    .field_0f34 = 0x0016,
-
-    .field_0f36 = 0x0014,
-
-    .field_0f38 = 0x0013,
-
-    .field_0f3a = 0x0012,
-
-    .field_0f3c = 0x0015,
-
-    .field_0f3e = 0x0017,
-
-    .field_0f40 = 0x0011,
-
-    .bytes_0f42 = { 0x10, 0x00, 0xFF, 0x00, 0xFF, 0x00 },
+    .TrackMixer_ColumnPartMap = {
+        0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D,
+        0x001D, 0x001D, 0x001D, 0x0016, 0x0014, 0x0013, 0x0012, 0x0015, 0x0017, 0x0011, 0x0010, 0x00FF, 0x00FF,
+    },
 
     .TrackMixer_GridRowMapEnd = {
         0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF,
@@ -3621,477 +3307,152 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
         NAKA_ADDR(SeqChanContainer_ChordTypeRef_B),
     },
 
-    .field_1624 = 0xF228,
-
-    .field_1626 = 0x0003,
-
-    .field_1628 = 0xF228,
-
-    .field_162a = 0x0003,
-
-    .field_162c = 0xF228,
-
-    .field_162e = 0x0003,
-
-    .field_1630 = 0xF228,
-
-    .field_1632 = 0x0003,
-
-    .field_1634 = 0xF228,
-
-    .field_1636 = 0x0003,
-
-    .field_1638 = 0xF25C,
-
-    .field_163a = 0x0003,
-
-    .field_163c = 0xF25C,
-
-    .field_163e = 0x0003,
-
-    .field_1640 = 0xF25C,
-
-    .field_1642 = 0x0003,
-
-    .field_1644 = 0xF290,
-
-    .field_1646 = 0x0003,
-
-    .field_1648 = 0xF25C,
-
-    .field_164a = 0x0003,
-
-    .field_164c = 0xF228,
-
-    .field_164e = 0x0003,
-
-    .field_1650 = 0xF228,
-
-    .field_1652 = 0x0003,
-
-    .field_1654 = 0xF228,
-
-    .field_1656 = 0x0003,
-
-    .field_1658 = 0xF2C4,
-
-    .field_165a = 0x0003,
-
-    .field_165c = 0xF2C4,
-
-    .field_165e = 0x0003,
-
-    .field_1660 = 0xF228,
-
-    .field_1662 = 0x0003,
-
-    .field_1664 = 0xF228,
-
-    .field_1666 = 0x0003,
-
-    .field_1668 = 0xF25C,
-
-    .field_166a = 0x0003,
-
-    .field_166c = 0xF228,
-
-    .field_166e = 0x0003,
-
-    .field_1670 = 0xF25C,
-
-    .field_1672 = 0x0003,
-
-    .field_1674 = 0xF290,
-
-    .field_1676 = 0x0003,
-
-    .field_1678 = 0xF25C,
-
-    .field_167a = 0x0003,
-
-    .field_167c = 0xF25C,
-
-    .field_167e = 0x0003,
-
-    .field_1680 = 0xF228,
-
-    .field_1682 = 0x0003,
-
-    .field_1684 = 0xF228,
-
-    .field_1686 = 0x0003,
-
-    .field_1688 = 0xF2C4,
-
-    .field_168a = 0x0003,
-
-    .field_168c = 0xF228,
-
-    .field_168e = 0x0003,
-
-    .field_1690 = 0xF290,
-
-    .field_1692 = 0x0003,
-
-    .field_1694 = 0xF228,
-
-    .field_1696 = 0x0003,
-
-    .field_1698 = 0xF228,
-
-    .field_169a = 0x0003,
-
-    .field_169c = 0xF228,
-
-    .field_169e = 0x0003,
-
-    .field_16a0 = 0xF228,
-
-    .field_16a2 = 0x0003,
-
-    .field_16a4 = 0xF228,
-
-    .field_16a6 = 0x0003,
-
-    .field_16a8 = 0xF228,
-
-    .field_16aa = 0x0003,
-
-    .field_16ac = 0xF228,
-
-    .field_16ae = 0x0003,
-
-    .field_16b0 = 0xF228,
-
-    .field_16b2 = 0x0003,
-
-    .field_16b4 = 0xF228,
-
-    .field_16b6 = 0x0003,
-
-    .field_16b8 = 0xF228,
-
-    .field_16ba = 0x0003,
-
-    .field_16bc = 0xF228,
-
-    .field_16be = 0x0003,
-
-    .field_16c0 = 0xF25C,
-
-    .field_16c2 = 0x0003,
-
-    .field_16c4 = 0xF228,
-
-    .field_16c6 = 0x0003,
-
-    .field_16c8 = 0xF228,
-
-    .field_16ca = 0x0003,
-
-    .field_16cc = 0xF228,
-
-    .field_16ce = 0x0003,
-
-    .field_16d0 = 0xF228,
-
-    .field_16d2 = 0x0003,
-
-    .field_16d4 = 0xF228,
-
-    .field_16d6 = 0x0003,
-
-    .field_16d8 = 0xF228,
-
-    .field_16da = 0x0003,
-
-    .field_16dc = 0xF228,
-
-    .field_16de = 0x0003,
-
-    .field_16e0 = 0xF228,
-
-    .field_16e2 = 0x0003,
-
-    .field_16e4 = 0xF228,
-
-    .field_16e6 = 0x0003,
-
-    .field_16e8 = 0xF228,
-
-    .field_16ea = 0x0003,
-
-    .field_16ec = 0xF228,
-
-    .field_16ee = 0x0003,
-
-    .field_16f0 = 0xF228,
-
-    .field_16f2 = 0x0003,
-
-    .field_16f4 = 0xF228,
-
-    .field_16f6 = 0x0003,
-
-    .field_16f8 = 0xF228,
-
-    .field_16fa = 0x0003,
-
-    .field_16fc = 0xF228,
-
-    .field_16fe = 0x0003,
-
-    .field_1700 = 0xF228,
-
-    .field_1702 = 0x0003,
-
-    .field_1704 = 0xF228,
-
-    .field_1706 = 0x0003,
-
-    .field_1708 = 0xF228,
-
-    .field_170a = 0x0003,
-
-    .field_170c = 0xF228,
-
-    .field_170e = 0x0003,
-
-    .field_1710 = 0xF228,
-
-    .field_1712 = 0x0003,
-
-    .field_1714 = 0xF228,
-
-    .field_1716 = 0x0003,
-
-    .field_1718 = 0xF228,
-
-    .field_171a = 0x0003,
-
-    .field_171c = 0xF228,
-
-    .field_171e = 0x0003,
-
-    .field_1720 = 0xF228,
-
-    .field_1722 = 0x0003,
-
-    .Normal_Window = NAKA_NONE,
-
-    .field_1726 = NAKA_NONE,
-
-    .normal_Window = NAKA_NONE,
-
-    .field_172a = NAKA_NONE,
+    .ChordName_TypeRootTables = {
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F25C, 0x0003F25C, 0x0003F25C,
+        0x0003F290, 0x0003F25C, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F2C4, 0x0003F2C4, 0x0003F228,
+        0x0003F228, 0x0003F25C, 0x0003F228, 0x0003F25C,
+        0x0003F290, 0x0003F25C, 0x0003F25C, 0x0003F228,
+        0x0003F228, 0x0003F2C4, 0x0003F228, 0x0003F290,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F25C,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+    },
+
+    .Normal_Window = -1,
+
+    .normal_Window = -1,
 
     .normal_AcLswBox_Value = { 0 },
 
     .normal_IvWindowPageControl_Page = 0x0001,
 
-    .NakaWidget_N1_Parent = NAKA_NONE,
+    .NakaWidget_N1_Parent = -1,
 
-    .field_1732 = NAKA_NONE,
+    .NakaWidget_N1_Child = -1,
 
-    .NakaWidget_N1_Child = NAKA_NONE,
+    .Toshi_NORMAL_Elem33_Parent = -1,
 
-    .field_1736 = NAKA_NONE,
+    .Toshi_NORMAL_Elem33_Child = -1,
 
-    .Toshi_NORMAL_Elem33_Parent = NAKA_NONE,
+    .Toshi_NORMAL_Elem39_Parent = -1,
 
-    .field_173a = NAKA_NONE,
+    .Toshi_NORMAL_Elem39_Child = -1,
 
-    .Toshi_NORMAL_Elem33_Child = NAKA_NONE,
+    .Toshi_NORMAL_Elem48_Parent = -1,
 
-    .field_173e = NAKA_NONE,
+    .Toshi_NORMAL_Elem48_Child = -1,
 
-    .Toshi_NORMAL_Elem39_Parent = NAKA_NONE,
+    .Toshi_NORMAL_Elem57_Parent = -1,
 
-    .field_1742 = NAKA_NONE,
+    .Toshi_NORMAL_Elem57_Child = -1,
 
-    .Toshi_NORMAL_Elem39_Child = NAKA_NONE,
+    .Toshi_NORMAL_Elem60_Parent = -1,
 
-    .field_1746 = NAKA_NONE,
+    .Toshi_NORMAL_Elem60_Child = -1,
 
-    .Toshi_NORMAL_Elem48_Parent = NAKA_NONE,
-
-    .field_174a = NAKA_NONE,
-
-    .Toshi_NORMAL_Elem48_Child = NAKA_NONE,
-
-    .field_174e = NAKA_NONE,
-
-    .Toshi_NORMAL_Elem57_Parent = NAKA_NONE,
-
-    .field_1752 = NAKA_NONE,
-
-    .Toshi_NORMAL_Elem57_Child = NAKA_NONE,
-
-    .field_1756 = NAKA_NONE,
-
-    .Toshi_NORMAL_Elem60_Parent = NAKA_NONE,
-
-    .field_175a = NAKA_NONE,
-
-    .Toshi_NORMAL_Elem60_Child = NAKA_NONE,
-
-    .field_175e = NAKA_NONE,
-
-    .ControlMenu_Window = NAKA_NONE,
-
-    .field_1762 = NAKA_NONE,
+    .ControlMenu_Window = -1,
 
     .pad_277 = { 0 },
 
-    .ControlIni_Window = NAKA_NONE,
-
-    .field_1774 = NAKA_NONE,
+    .ControlIni_Window = -1,
 
     .SYSINI_Selected = { 0 },
 
-    .Initial_TtlScreen_Window = NAKA_NONE,
+    .Initial_TtlScreen_Window = -1,
 
-    .field_177a = NAKA_NONE,
+    .SYSINISURE_Window = -1,
 
-    .SYSINISURE_Window = NAKA_NONE,
-
-    .field_177e = NAKA_NONE,
-
-    .ControlFsw_Window = NAKA_NONE,
-
-    .field_1782 = NAKA_NONE,
+    .ControlFsw_Window = -1,
 
     .ControlFsw_AcFSWAssGridBox_Selrow = 0x0002,
 
     .ControlFsw_AcFSWAssGridBox_Selcol = 0x0001,
 
-    .ControlFsw_AcFSWAssGridBox_Pcol = 0x3814,
+    .ControlFsw_AcFSWAssGridBox_Pcol = 0x00D13814,
 
-    .field_178a = 0x00D1,
+    .ControlFsw_AcFSWAssGridBox_Prow = 0x00D13824,
 
-    .ControlFsw_AcFSWAssGridBox_Prow = 0x3824,
+    .ControlFsw_AcFSWAssGridBox_Crow = 0x00D13840,
 
-    .field_178e = 0x00D1,
-
-    .ControlFsw_AcFSWAssGridBox_Crow = 0x3840,
-
-    .field_1792 = 0x00D1,
-
-    .ControlSns_Window = NAKA_NONE,
-
-    .field_1796 = NAKA_NONE,
+    .ControlSns_Window = -1,
 
     .ControlSns_AcTchSensGridBox_Selrow = 0x0001,
 
     .ControlSns_AcTchSensGridBox_Selcol = 0x0001,
 
-    .ControlSns_AcTchSensGridBox_Pcol = 0x3814,
+    .ControlSns_AcTchSensGridBox_Pcol = 0x00D13814,
 
-    .field_179e = 0x00D1,
+    .ControlSns_AcTchSensGridBox_Prow = 0x00D13824,
 
-    .ControlSns_AcTchSensGridBox_Prow = 0x3824,
+    .ControlSns_AcTchSensGridBox_Crow = 0x00D13838,
 
-    .field_17a2 = 0x00D1,
-
-    .ControlSns_AcTchSensGridBox_Crow = 0x3838,
-
-    .field_17a6 = 0x00D1,
-
-    .NakaWidget_ToshiView044_0_MsaModeScreen_Window = NAKA_NONE,
-
-    .field_17aa = NAKA_NONE,
+    .NakaWidget_ToshiView044_0_MsaModeScreen_Window = -1,
 
     .NakaWidget_ToshiView044_0_MsaModeScreen_Newmsamode = { 0 },
 
     .NakaWidget_ToshiView044_0_MsaModeScreen_Oldmsamode = { 0 },
 
-    .NakaWidget_ToshiView044_10_MsaModeScreen_Window = NAKA_NONE,
-
-    .field_17b2 = NAKA_NONE,
+    .NakaWidget_ToshiView044_10_MsaModeScreen_Window = -1,
 
     .NakaWidget_ToshiView044_10_MsaModeScreen_Newmsamode = 0x0003,
 
     .NakaWidget_ToshiView044_10_MsaModeScreen_Oldmsamode = 0x0002,
 
-    .PanelMemoryMode_TtlScreen_Window = NAKA_NONE,
-
-    .field_17ba = NAKA_NONE,
+    .PanelMemoryMode_TtlScreen_Window = -1,
 
     .PanelMemoryMode_IvPmemWindowPageCtl_Page = 0x0001,
 
-    .PMEM1_Parent = NAKA_NONE,
+    .PMEM1_Parent = -1,
 
-    .field_17c0 = NAKA_NONE,
-
-    .PMEM1_Child = NAKA_NONE,
-
-    .field_17c4 = NAKA_NONE,
+    .PMEM1_Child = -1,
 
     .PMEM1_PmemModeBox_Newpmemmode = { 0 },
 
     .PMEM1_PmemModeBox_Oldpmemmode = { 0 },
 
-    .PMEM2_Parent = NAKA_NONE,
+    .PMEM2_Parent = -1,
 
-    .field_17cc = NAKA_NONE,
-
-    .PMEM2_Child = NAKA_NONE,
-
-    .field_17d0 = NAKA_NONE,
+    .PMEM2_Child = -1,
 
     .PMEM2_AcPmExpFilterGridBox_Selrow = 0x0002,
 
     .PMEM2_AcPmExpFilterGridBox_Selcol = 0x0001,
 
-    .PMEM2_AcPmExpFilterGridBox_Pcol = 0x37F8,
+    .PMEM2_AcPmExpFilterGridBox_Pcol = 0x00B437F8,
 
-    .field_17d8 = 0x00B4,
+    .PMEM2_AcPmExpFilterGridBox_Prow = 0x00B43808,
 
-    .PMEM2_AcPmExpFilterGridBox_Prow = 0x3808,
+    .PMEM2_AcPmExpFilterGridBox_Crow = 0x00B43828,
 
-    .field_17dc = 0x00B4,
+    .NakaWidget_ToshiView045_18_Window_Parent = -1,
 
-    .PMEM2_AcPmExpFilterGridBox_Crow = 0x3828,
+    .NakaWidget_ToshiView045_18_Window_Child = -1,
 
-    .field_17e0 = 0x00B4,
-
-    .NakaWidget_ToshiView045_18_Window_Parent = NAKA_NONE,
-
-    .field_17e4 = NAKA_NONE,
-
-    .NakaWidget_ToshiView045_18_Window_Child = NAKA_NONE,
-
-    .field_17e8 = NAKA_NONE,
-
-    .ControlSys_Window = NAKA_NONE,
-
-    .field_17ec = NAKA_NONE,
+    .ControlSys_Window = -1,
 
     .ControlSys_AcDispTimeSetGridBox_Selrow = 0x0002,
 
     .ControlSys_AcDispTimeSetGridBox_Selcol = 0x0001,
 
-    .ControlSys_AcDispTimeSetGridBox_Pcol = 0x3814,
+    .ControlSys_AcDispTimeSetGridBox_Pcol = 0x00D13814,
 
-    .field_17f4 = 0x00D1,
+    .ControlSys_AcDispTimeSetGridBox_Prow = 0x00D13824,
 
-    .ControlSys_AcDispTimeSetGridBox_Prow = 0x3824,
+    .ControlSys_AcDispTimeSetGridBox_Crow = 0x00D13840,
 
-    .field_17f8 = 0x00D1,
-
-    .ControlSys_AcDispTimeSetGridBox_Crow = 0x3840,
-
-    .field_17fc = 0x00D1,
-
-    .WallpaperSetting_TtlScreen_Window = NAKA_NONE,
-
-    .field_1800 = NAKA_NONE,
+    .WallpaperSetting_TtlScreen_Window = -1,
 
     .Load_AcTitleMenu_Selected = { 0 },
 
-    .ControlWallSet_Window = NAKA_NONE,
-
-    .field_1806 = NAKA_NONE,
+    .ControlWallSet_Window = -1,
 
     .Load_AcTitleMenu_2_Selected = { 0 },
 
@@ -4107,53 +3468,35 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .ControlWallSet_Others_Value = { 0 },
 
-    .WALLSETSURE_Window = NAKA_NONE,
+    .WALLSETSURE_Window = -1,
 
-    .field_181e = NAKA_NONE,
-
-    .ONETCH_Window = NAKA_NONE,
-
-    .field_1822 = NAKA_NONE,
+    .ONETCH_Window = -1,
 
     .ONETCH_AcRamBox_Value = { 0 },
 
-    .MUSICSTYL_Window = NAKA_NONE,
-
-    .field_182a = NAKA_NONE,
+    .MUSICSTYL_Window = -1,
 
     .StyleExplorer_AcTitleMenu_Selected = { 0 },
 
     .StyleAlphabetical_AcTitleMenu_Selected = { 0 },
 
-    .MSCTSEL_Window = NAKA_NONE,
-
-    .field_1832 = NAKA_NONE,
+    .MSCTSEL_Window = -1,
 
     .MSCTSEL_IvMstStyleWindowPgCtl_Page = 0x0001,
 
-    .STYLE1_Parent = NAKA_NONE,
+    .STYLE1_Parent = -1,
 
-    .field_1838 = NAKA_NONE,
-
-    .STYLE1_Child = NAKA_NONE,
-
-    .field_183c = NAKA_NONE,
+    .STYLE1_Child = -1,
 
     .STYLE1_AcMstStyle1GridBox_Selrow = { 0 },
 
     .STYLE1_AcMstStyle1GridBox_Selcol = 0x0001,
 
-    .STYLE1_AcMstStyle1GridBox_Pcol = 0x37F8,
+    .STYLE1_AcMstStyle1GridBox_Pcol = 0x00D137F8,
 
-    .field_1844 = 0x00D1,
+    .STYLE1_AcMstStyle1GridBox_Prow = 0x00D13808,
 
-    .STYLE1_AcMstStyle1GridBox_Prow = 0x3808,
-
-    .field_1848 = 0x00D1,
-
-    .STYLE1_AcMstStyle1GridBox_Crow = 0x3824,
-
-    .field_184c = 0x00D1,
+    .STYLE1_AcMstStyle1GridBox_Crow = 0x00D13824,
 
     .STYLE1_AcMstStyle1GridBox_Nowstylectgdtno = 0x000A,
 
@@ -4165,17 +3508,11 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .STYLE1_AcMstStyle1SubGridBox_Selcol = { 0 },
 
-    .STYLE1_AcMstStyle1SubGridBox_Pcol = 0x3840,
+    .STYLE1_AcMstStyle1SubGridBox_Pcol = 0x00D13840,
 
-    .field_185a = 0x00D1,
+    .STYLE1_AcMstStyle1SubGridBox_Prow = 0x00D13850,
 
-    .STYLE1_AcMstStyle1SubGridBox_Prow = 0x3850,
-
-    .field_185e = 0x00D1,
-
-    .STYLE1_AcMstStyle1SubGridBox_Crow = 0x386C,
-
-    .field_1862 = 0x00D1,
+    .STYLE1_AcMstStyle1SubGridBox_Crow = 0x00D1386C,
 
     .STYLE1_AcMstStyle1SubGridBox_Nowstylesubctgdtno = 0x001B,
 
@@ -4183,29 +3520,19 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .STYLE1_AcMstStyle1SubGridBox_Nowstylesubctgpage = 0x0001,
 
-    .STYLE2_Parent = NAKA_NONE,
+    .STYLE2_Parent = -1,
 
-    .field_186c = NAKA_NONE,
-
-    .STYLE2_Child = NAKA_NONE,
-
-    .field_1870 = NAKA_NONE,
+    .STYLE2_Child = -1,
 
     .STYLE2_AcMstStyle2GridBox_Selrow = { 0 },
 
     .STYLE2_AcMstStyle2GridBox_Selcol = { 0 },
 
-    .STYLE2_AcMstStyle2GridBox_Pcol = 0x37F8,
+    .STYLE2_AcMstStyle2GridBox_Pcol = 0x00D137F8,
 
-    .field_1878 = 0x00D1,
+    .STYLE2_AcMstStyle2GridBox_Prow = 0x00D13808,
 
-    .STYLE2_AcMstStyle2GridBox_Prow = 0x3808,
-
-    .field_187c = 0x00D1,
-
-    .STYLE2_AcMstStyle2GridBox_Crow = 0x3820,
-
-    .field_1880 = 0x00D1,
+    .STYLE2_AcMstStyle2GridBox_Crow = 0x00D13820,
 
     .STYLE2_AcMstStyle2GridBox_Nowstylesubctgdtno = 0x0018,
 
@@ -4221,19 +3548,13 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .STYLE2_AcMstStyle2GridBox_Nowstylesubsubdtno2 = 0x0003,
 
-    .MSSCTSEL_Window = NAKA_NONE,
-
-    .field_1892 = NAKA_NONE,
+    .MSSCTSEL_Window = -1,
 
     .MSSCTSEL_IvMstStyleWindowPgCtl_Page = 0x0001,
 
-    .SONG1_Parent = NAKA_NONE,
+    .SONG1_Parent = -1,
 
-    .field_1898 = NAKA_NONE,
-
-    .SONG1_Child = NAKA_NONE,
-
-    .field_189c = NAKA_NONE,
+    .SONG1_Child = -1,
 
     .SONG1_AcMstSong1GridBox_Selrow = 0x0006,
 
@@ -4269,17 +3590,11 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .SONG2_AcMstSong2GridBox_Selcol = { 0 },
 
-    .SONG2_AcMstSong2GridBox_Pcol = 0x3D6C,
+    .SONG2_AcMstSong2GridBox_Pcol = 0x00CF3D6C,
 
-    .field_18c2 = 0x00CF,
+    .SONG2_AcMstSong2GridBox_Prow = 0x00CF3D7C,
 
-    .SONG2_AcMstSong2GridBox_Prow = 0x3D7C,
-
-    .field_18c6 = 0x00CF,
-
-    .SONG2_AcMstSong2GridBox_Crow = 0x3D94,
-
-    .field_18ca = 0x00CF,
+    .SONG2_AcMstSong2GridBox_Crow = 0x00CF3D94,
 
     .SONG2_AcMstSong2GridBox_Nowsongsubctgdtno = 0x0004,
 
@@ -4295,25 +3610,17 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .SONG2_AcMstSong2GridBox_Nowsongsubsubdtno2 = 0x0003,
 
-    .MSSONGLIST_Window = NAKA_NONE,
-
-    .field_18dc = NAKA_NONE,
+    .MSSONGLIST_Window = -1,
 
     .MSSONGLIST_AcMstSugAlpGridBox_Selrow = NAKA_NONE,
 
     .MSSONGLIST_AcMstSugAlpGridBox_Selcol = { 0 },
 
-    .MSSONGLIST_AcMstSugAlpGridBox_Pcol = 0x3844,
+    .MSSONGLIST_AcMstSugAlpGridBox_Pcol = 0x00D03844,
 
-    .field_18e4 = 0x00D0,
+    .MSSONGLIST_AcMstSugAlpGridBox_Prow = 0x00D03854,
 
-    .MSSONGLIST_AcMstSugAlpGridBox_Prow = 0x3854,
-
-    .field_18e8 = 0x00D0,
-
-    .MSSONGLIST_AcMstSugAlpGridBox_Crow = 0x386C,
-
-    .field_18ec = 0x00D0,
+    .MSSONGLIST_AcMstSugAlpGridBox_Crow = 0x00D0386C,
 
     .MSSONGLIST_AcMstSugAlpGridBox_Nowalph = "A",
 
@@ -4329,25 +3636,17 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .MSSONGLIST_AcMstSugAlpGridBox_Nowttlselsong = 0x0001,
 
-    .MSSTLSEL_Window = NAKA_NONE,
-
-    .field_18fe = NAKA_NONE,
+    .MSSTLSEL_Window = -1,
 
     .MSSTLSEL_AcMstStyleAlpGridBox_Selrow = { 0 },
 
     .MSSTLSEL_AcMstStyleAlpGridBox_Selcol = { 0 },
 
-    .MSSTLSEL_AcMstStyleAlpGridBox_Pcol = 0x37F8,
+    .MSSTLSEL_AcMstStyleAlpGridBox_Pcol = 0x00D137F8,
 
-    .field_1906 = 0x00D1,
+    .MSSTLSEL_AcMstStyleAlpGridBox_Prow = 0x00D13808,
 
-    .MSSTLSEL_AcMstStyleAlpGridBox_Prow = 0x3808,
-
-    .field_190a = 0x00D1,
-
-    .MSSTLSEL_AcMstStyleAlpGridBox_Crow = 0x3820,
-
-    .field_190e = 0x00D1,
+    .MSSTLSEL_AcMstStyleAlpGridBox_Crow = 0x00D13820,
 
     .MSSTLSEL_AcMstStyleAlpGridBox_Nowalph = "A",
 
@@ -4359,9 +3658,7 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .MSSTLSEL_AcMstStyleAlpGridBox_Nowalphpage = 0x0001,
 
-    .PMBANK_Window = NAKA_NONE,
-
-    .field_191c = NAKA_NONE,
+    .PMBANK_Window = -1,
 
     .PMBANK_Page = 0x0001,
 
@@ -4371,9 +3668,7 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .PMBANK_PsPageBox_Page = 0x0001,
 
-    .PMVIEW_Window = NAKA_NONE,
-
-    .field_1928 = NAKA_NONE,
+    .PMVIEW_Window = -1,
 
     .PMVIEW_AcPmBkEditBox_Selected = 0x0001,
 
@@ -4381,17 +3676,11 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .PMVIEW_PsPageBox_Page = 0x0001,
 
-    .PMNAME_Window = NAKA_NONE,
+    .PMNAME_Window = -1,
 
-    .field_1934 = NAKA_NONE,
+    .NakaWidget_PMBKNAME_Window = -1,
 
-    .NakaWidget_PMBKNAME_Window = NAKA_NONE,
-
-    .field_1938 = NAKA_NONE,
-
-    .NakaWidget_SVARI_Window = NAKA_NONE,
-
-    .field_193c = NAKA_NONE,
+    .NakaWidget_SVARI_Window = -1,
 
     .NakaWidget_SVARI_Page = 0x0001,
 
@@ -4403,9 +3692,7 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .NakaWidget_SVARI_Oldvari = 0x0003,
 
-    .RVARI_Window = NAKA_NONE,
-
-    .field_194c = NAKA_NONE,
+    .RVARI_Window = -1,
 
     .RVARI_Page = 0x0001,
 
@@ -4419,153 +3706,81 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .RVARI_Oldvari = { 0 },
 
-    .vF4_e0_Window = NAKA_NONE,
+    .vF4_e0_Window = -1,
 
-    .field_195c = NAKA_NONE,
+    .TEST1RAM_Parent = -1,
 
-    .TEST1RAM_Parent = NAKA_NONE,
+    .TEST1RAM_Child = -1,
 
-    .field_1960 = NAKA_NONE,
+    .TEST1CP_Parent = -1,
 
-    .TEST1RAM_Child = NAKA_NONE,
+    .TEST1CP_Child = -1,
 
-    .field_1964 = NAKA_NONE,
+    .vF4_e13_Window = -1,
 
-    .TEST1CP_Parent = NAKA_NONE,
+    .TEST2_Window = -1,
 
-    .field_1968 = NAKA_NONE,
+    .TEST2OKOK_Parent = -1,
 
-    .TEST1CP_Child = NAKA_NONE,
+    .TEST2OKOK_Child = -1,
 
-    .field_196c = NAKA_NONE,
+    .TEST2NGNG_Parent = -1,
 
-    .vF4_e13_Window = NAKA_NONE,
+    .TEST2NGNG_Child = -1,
 
-    .field_1970 = NAKA_NONE,
+    .TEST2NGOK_Parent = -1,
 
-    .TEST2_Window = NAKA_NONE,
+    .TEST2NGOK_Child = -1,
 
-    .field_1974 = NAKA_NONE,
+    .TEST2OKNG_Parent = -1,
 
-    .TEST2OKOK_Parent = NAKA_NONE,
+    .TEST2OKNG_Child = -1,
 
-    .field_1978 = NAKA_NONE,
-
-    .TEST2OKOK_Child = NAKA_NONE,
-
-    .field_197c = NAKA_NONE,
-
-    .TEST2NGNG_Parent = NAKA_NONE,
-
-    .field_1980 = NAKA_NONE,
-
-    .TEST2NGNG_Child = NAKA_NONE,
-
-    .field_1984 = NAKA_NONE,
-
-    .TEST2NGOK_Parent = NAKA_NONE,
-
-    .field_1988 = NAKA_NONE,
-
-    .TEST2NGOK_Child = NAKA_NONE,
-
-    .field_198c = NAKA_NONE,
-
-    .TEST2OKNG_Parent = NAKA_NONE,
-
-    .field_1990 = NAKA_NONE,
-
-    .TEST2OKNG_Child = NAKA_NONE,
-
-    .field_1994 = NAKA_NONE,
-
-    .TEST3_Window = NAKA_NONE,
-
-    .field_1998 = NAKA_NONE,
+    .TEST3_Window = -1,
 
     .TEST3_Nowswno = { 0 },
 
     .TEST3_Oldswno = { 0 },
 
-    .TEST4_Window = NAKA_NONE,
+    .TEST4_Window = -1,
 
-    .field_19a0 = NAKA_NONE,
+    .TEST5_Window = -1,
 
-    .TEST5_Window = NAKA_NONE,
+    .TEST51_Parent = -1,
 
-    .field_19a4 = NAKA_NONE,
+    .TEST51_Child = -1,
 
-    .TEST51_Parent = NAKA_NONE,
+    .TEST52_Parent = -1,
 
-    .field_19a8 = NAKA_NONE,
+    .TEST52_Child = -1,
 
-    .TEST51_Child = NAKA_NONE,
+    .TEST53_Parent = -1,
 
-    .field_19ac = NAKA_NONE,
+    .TEST53_Child = -1,
 
-    .TEST52_Parent = NAKA_NONE,
+    .TEST54_Parent = -1,
 
-    .field_19b0 = NAKA_NONE,
+    .TEST54_Child = -1,
 
-    .TEST52_Child = NAKA_NONE,
+    .TEST55_Parent = -1,
 
-    .field_19b4 = NAKA_NONE,
+    .TEST55_Child = -1,
 
-    .TEST53_Parent = NAKA_NONE,
+    .TEST56_Parent = -1,
 
-    .field_19b8 = NAKA_NONE,
+    .TEST56_Child = -1,
 
-    .TEST53_Child = NAKA_NONE,
+    .TEST6_Window = -1,
 
-    .field_19bc = NAKA_NONE,
+    .TEST6OK_Parent = -1,
 
-    .TEST54_Parent = NAKA_NONE,
+    .TEST6OK_Child = -1,
 
-    .field_19c0 = NAKA_NONE,
+    .TEST6NG_Parent = -1,
 
-    .TEST54_Child = NAKA_NONE,
+    .TEST6NG_Child = -1,
 
-    .field_19c4 = NAKA_NONE,
-
-    .TEST55_Parent = NAKA_NONE,
-
-    .field_19c8 = NAKA_NONE,
-
-    .TEST55_Child = NAKA_NONE,
-
-    .field_19cc = NAKA_NONE,
-
-    .TEST56_Parent = NAKA_NONE,
-
-    .field_19d0 = NAKA_NONE,
-
-    .TEST56_Child = NAKA_NONE,
-
-    .field_19d4 = NAKA_NONE,
-
-    .TEST6_Window = NAKA_NONE,
-
-    .field_19d8 = NAKA_NONE,
-
-    .TEST6OK_Parent = NAKA_NONE,
-
-    .field_19dc = NAKA_NONE,
-
-    .TEST6OK_Child = NAKA_NONE,
-
-    .field_19e0 = NAKA_NONE,
-
-    .TEST6NG_Parent = NAKA_NONE,
-
-    .field_19e4 = NAKA_NONE,
-
-    .TEST6NG_Child = NAKA_NONE,
-
-    .field_19e8 = NAKA_NONE,
-
-    .EXT_Window = NAKA_NONE,
-
-    .field_19ec = NAKA_NONE,
+    .EXT_Window = -1,
 
     .WorkRamInit_Image2 = { 0x00, 0xFF, 0x0000, 0x0000, 0x00, 0xFF, { 0x00, 0x00, 0x00, 0x00 } },
 

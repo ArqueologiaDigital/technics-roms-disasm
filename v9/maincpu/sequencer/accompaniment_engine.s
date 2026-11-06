@@ -3757,7 +3757,7 @@ AccTick_AfterSync:
 	jr nz, AccTick_ProcessAccChannels
 	bit 0, (ACC_RUN_FLAGS:16)
 	jr z, AccTick_CheckNoteOn
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	and wa, 0x200
 	jr z, AccTick_CheckNoteOn
 

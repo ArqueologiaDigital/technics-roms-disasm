@@ -7269,13 +7269,13 @@ ParamEdit_WordTable:
 ; 7 x u16 switch offsets.  PanelTag48_UpdateAudioConfig (0xFDE2A8): `ld_rrw wa,xix,wa;
 ; lda xix,(0xFDE2CF); jp_rr 8,xix,wa` -- targets 0xFDE2CF + offset (no labels yet).
 ParamEdit_SwitchOffsets:
-	.short	UIStateEvt_ParamEdit_Data_Case6_Epilogue - PanelTag48_UpdateAudioConfig_StyleNumber
-	.short	UIStateEvt_ParamEdit_Data_Case6_Epilogue - PanelTag48_UpdateAudioConfig_StyleNumber
-	.short	UIStateEvt_ParamEdit_Data_Case6_Epilogue - PanelTag48_UpdateAudioConfig_StyleNumber
-	.short	PanelTag48_UpdateAudioConfig_StyleNumber - PanelTag48_UpdateAudioConfig_StyleNumber
-	.short	UIStateEvt_ParamEdit_Data_Case4 - PanelTag48_UpdateAudioConfig_StyleNumber
-	.short	UIStateEvt_ParamEdit_Data_Case5 - PanelTag48_UpdateAudioConfig_StyleNumber
-	.short	UIStateEvt_ParamEdit_Data_Case6 - PanelTag48_UpdateAudioConfig_StyleNumber
+	.short	UIStateEvt_ParamEdit_Data_Case6_Epilogue - PanelTag48_UpdateAudioConfig_ApcMode
+	.short	UIStateEvt_ParamEdit_Data_Case6_Epilogue - PanelTag48_UpdateAudioConfig_ApcMode
+	.short	UIStateEvt_ParamEdit_Data_Case6_Epilogue - PanelTag48_UpdateAudioConfig_ApcMode
+	.short	PanelTag48_UpdateAudioConfig_ApcMode - PanelTag48_UpdateAudioConfig_ApcMode
+	.short	UIStateEvt_ParamEdit_Data_Case4 - PanelTag48_UpdateAudioConfig_ApcMode
+	.short	UIStateEvt_ParamEdit_Data_Case5 - PanelTag48_UpdateAudioConfig_ApcMode
+	.short	UIStateEvt_ParamEdit_Data_Case6 - PanelTag48_UpdateAudioConfig_ApcMode
 ; 6 x u16 switch offsets.  PanelTag90_UpdateAudioConfig (0xFDE514): `ld_rrw wa,xix,wa;
 ; lda xix,(0xFDE538); jp_rr` -- targets 0xFDE538 + offset (no labels yet).
 VolumeMixer_SwitchOffsets:

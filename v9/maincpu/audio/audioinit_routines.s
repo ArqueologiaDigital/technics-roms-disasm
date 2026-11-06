@@ -33,10 +33,10 @@ AudioInit_ConfigStereoVoice:
 	jr nz, AudioInit_SetDefaultLevels
 
 AudioInit_CheckVoiceMixFlags:
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	and wa, 0x7
 	jr z, AudioInit_SetDefaultLevels
-	ld wa, (0xc594:16)
+	ld wa, (AUDIO_CONFIG_UPDATE:16)
 	bit 4, wa
 	jr nz, AudioInit_ClearModeRegister
 	set 3, (0xc1fe:16)
@@ -75,14 +75,14 @@ AudioInit_VoiceNotConfigured:
 	jr nz, AudioInit_RouteAndPan
 
 AudioInit_CheckMixFlagsAlt:
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	and wa, 0x7
 	jr nz, AudioInit_CheckBit2Mode
 	bit 2, (0xc1fe:16)
 	jr z, AudioInit_RouteAndPan
 
 AudioInit_CheckBit2Mode:
-	ld wa, (0xc594:16)
+	ld wa, (AUDIO_CONFIG_UPDATE:16)
 	bit 4, wa
 	jr nz, AudioInit_ClearModeAlt
 	set 3, (0xc1fe:16)
@@ -111,7 +111,7 @@ AudioInit_ConfigureVoiceFromFlags:
 	ld wa, (0xc598:16)
 	and wa, 0xe
 	jr z, AudioInit_VoiceRouteJump
-	ld wa, (0xc594:16)
+	ld wa, (AUDIO_CONFIG_UPDATE:16)
 	bit 4, wa
 	jr nz, AudioInit_ClearModeFromFlags
 	set 3, (0xc1fe:16)
@@ -171,7 +171,7 @@ AudioInit_PushAndConfigVoice:
 	ld (xsp), a
 	cp (xsp), 0x1
 	call z, (AudioInit_RefreshToneBank:24)
-	orw (0xc594:16), 2
+	orw (AUDIO_CONFIG_UPDATE:16), 2
 	ld a, (xsp)
 	extz wa
 	calr AudioInit_ConfigStereoVoice
@@ -217,10 +217,10 @@ AudioInit_LoadGroupVoice:
 	ld wa, (0xc598:16)
 	and wa, 0x60
 	jr nz, AudioInit_SetGroupLevels
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	and wa, 0x7
 	jr z, AudioInit_SetGroupLevels
-	ld wa, (0xc594:16)
+	ld wa, (AUDIO_CONFIG_UPDATE:16)
 	bit 4, wa
 	jr nz, AudioInit_ClearGroupMode
 	set 3, (0xc1fe:16)
@@ -270,10 +270,10 @@ AudioInit_CheckSoundGroup51:
 	ld wa, (0xc598:16)
 	and wa, 0x60
 	jr nz, AudioInit_SetGroup51Levels
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	and wa, 0x7
 	jr z, AudioInit_SetGroup51Levels
-	ld wa, (0xc594:16)
+	ld wa, (AUDIO_CONFIG_UPDATE:16)
 	bit 4, wa
 	jr nz, AudioInit_ClearGroup51Mode
 	set 3, (0xc1fe:16)
@@ -329,7 +329,7 @@ AudioInit_LoadAndConfigure:
 	cp c, 0xff
 	jr z, AudioInit_MixFallbackConfig
 	orw (0xc59c:16), 2
-	ld wa, (0xc594:16)
+	ld wa, (AUDIO_CONFIG_UPDATE:16)
 	bit 4, wa
 	ret z
 	ld (0xc1ff:16), 255
@@ -378,18 +378,18 @@ AudioInit_CheckVoiceParamState:
 	cp (0xc5c8:16), 255
 	jr z, AudioInit_CheckBit2VoiceParam
 	set 0, c
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	and wa, 0x80
 	cp wa, 0x80
 	jr nz, AudioInit_CompareAndSendMIDI
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	and wa, 0x3
 	jr z, AudioInit_CompareAndSendMIDI
 	set 4, c
 	jr AudioInit_CompareAndSendMIDI
 
 AudioInit_CheckBit2VoiceParam:
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	bit 2, wa
 	jr z, AudioInit_CompareAndSendMIDI
 	or c, 0x18
@@ -432,7 +432,7 @@ AudioInit_DrumRoutingCheck:
 	ld wa, (0xc598:16)
 	bit 0, wa
 	jr nz, AudioInit_CheckOutputFlags
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	and wa, 0x3
 	jr nz, AudioInit_ProcessVoiceAssign
 
@@ -440,7 +440,7 @@ AudioInit_CheckOutputFlags:
 	ld wa, (0xc598:16)
 	and wa, 0x60
 	jrl nz, AudioInit_NoRoutingActive
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	and wa, 0x3
 	jrl z, AudioInit_NoRoutingActive
 
@@ -575,7 +575,7 @@ AudioInit_ClearBank2Routing:
 	orw (0xc59a:16), 512
 
 AudioInit_CheckBit2Routing:
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	bit 2, wa
 	jr z, AudioInit_ClearBank3Routing
 	ld a, (0xc2ce:16)
@@ -633,7 +633,7 @@ AudioInit_ClearDrumModeAlt:
 	ret
 
 AudioInit_ClearPartFlags_ByMode:
-	ld wa, (0xc594:16)
+	ld wa, (AUDIO_CONFIG_UPDATE:16)
 	and wa, 0x3
 	jr z, AudioInit_SetPartMasks
 	ld de, 0:i3
@@ -1144,8 +1144,8 @@ AudioInit_DefaultOutputRouting:
 	ld	de, (xbc+wa)
 
 AudioInit_ApplyOutputRouting:
-	andw (0xc596:16), 0xffe8
-	or (0xc596:16), de
+	andw (AUDIO_CONFIG_FLAGS:16), 0xffe8
+	or (AUDIO_CONFIG_FLAGS:16), de
 	inc 2, xsp
 	ret
 
@@ -1230,15 +1230,15 @@ AudioInit_MIDIDisabled:
 
 AudioInit_RefreshToneBank:
 	pushw iz
-	ld iz, (0xc596:16)
-	andw (0xc596:16), 0xffef
+	ld iz, (AUDIO_CONFIG_FLAGS:16)
+	andw (AUDIO_CONFIG_FLAGS:16), 0xffef
 	call Voice_UpdatePlayModeState
 	cp l, 0xff
 	call nz, (VoiceEvent_AllocAllLayers:24)
 	call NoteMap_FindBestMatch
 	cp l, 0xff
 	call nz, (VoiceEvent_DispatchTable:24)
-	ld (0xc596:16), iz
+	ld (AUDIO_CONFIG_FLAGS:16), iz
 	popw iz
 	ret
 
@@ -1277,11 +1277,11 @@ AudioInit_VoiceRoutingTable_Loop:
 	.byte 0x61, 0xda, 0xcf, 0x20, 0x00, 0x67, 0x81, 0x0e
 
 AudioInit_ConfigureVoiceRouting:
-	andw (0xc596:16), 0xfeff
-	ld wa, (0xc596:16)
+	andw (AUDIO_CONFIG_FLAGS:16), 0xfeff
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	and wa, 0x3
 	jrl z, AudioInit_Routing_NoActiveVoices
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	and wa, 0xa0
 	cp wa, 0xa0
 	jrl nz, AudioInit_Routing_NoGroupAB
@@ -1291,7 +1291,7 @@ AudioInit_ConfigureVoiceRouting:
 	ld (0xc2bb:16), 22
 	ld (0xc204:16), 255
 	ld (0xc218:16), 255
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	bit 9, wa
 	jr z, AudioInit_Routing_CheckSplitMode
 	ld a, (PANEL_STYLE+5:16)
@@ -1306,7 +1306,7 @@ AudioInit_ConfigureVoiceRouting:
 	jrl AudioInit_Routing_Done
 
 AudioInit_Routing_SetOverrideFlag:
-	orw (0xc596:16), 256
+	orw (AUDIO_CONFIG_FLAGS:16), 256
 	jrl AudioInit_Routing_Done
 
 AudioInit_Routing_CheckSplitMode:
@@ -1329,7 +1329,7 @@ AudioInit_Routing_SplitCheckAux:
 	jrl AudioInit_Routing_Done
 
 AudioInit_Routing_SplitOverride:
-	orw (0xc596:16), 256
+	orw (AUDIO_CONFIG_FLAGS:16), 256
 	jrl AudioInit_Routing_Done
 
 AudioInit_Routing_NoSplit:
@@ -1364,7 +1364,7 @@ AudioInit_Routing_TypeED_CheckAux:
 	jrl AudioInit_Routing_Done
 
 AudioInit_Routing_TypeED_Override:
-	orw (0xc596:16), 256
+	orw (AUDIO_CONFIG_FLAGS:16), 256
 	jrl AudioInit_Routing_Done
 
 AudioInit_Routing_NoGroupAB:
@@ -1390,7 +1390,7 @@ AudioInit_Routing_AllDisabled:
 	jrl AudioInit_Routing_Done
 
 AudioInit_Routing_CheckMixMode:
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	bit 9, wa
 	jrl nz, AudioInit_Routing_Done
 	bit 1, (PANEL_STYLE+5:16)
@@ -1428,7 +1428,7 @@ AudioInit_Routing_SkipToEnd:
 	jr AudioInit_Routing_Done
 
 AudioInit_Routing_NoActiveVoices:
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	bit 2, wa
 	jr z, AudioInit_Routing_FullDisable
 	ld (0xc2ba:16), 21
@@ -1448,11 +1448,11 @@ AudioInit_Routing_Done:
 	ret
 
 AudioInit_ConfigurePanning:
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	and wa, 0x400
 	cp wa, 0x400
 	ret nz
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	bit 2, wa
 	ret nz
 	cp (0xc1ff:16), 255
@@ -1557,7 +1557,7 @@ AudioInit_Pan_Done:
 	ret
 
 AudioInit_CheckStereoMode:
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	bit 11, wa
 	ret z
 	bit 0, (0xc1fe:16)
@@ -1632,7 +1632,7 @@ AudioInit_Dispatch_CheckMisc:
 	ld wa, (0xc59a:16)
 	bit 13, wa
 	jr z, AudioInit_Dispatch_CheckToneRefresh
-	ld wa, (0xc596:16)
+	ld wa, (AUDIO_CONFIG_FLAGS:16)
 	bit 4, wa
 	jr z, AudioInit_Dispatch_RefreshTone
 

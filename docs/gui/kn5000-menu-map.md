@@ -13,7 +13,7 @@ title's procedure, or the function of a menu box, passing the title's `TT_*` ind
 `UI_ChangeTitleByIndex` / `UI_InterruptTitleByIndex` (`scripts/converters/name_title_index_operands.py`)
 or posting `EVT_CHANGE_TITLE` itself.
 
-211 titles (158 with a path), 21 modes, 3259 widget records in 18 C files, 99 menu entries, 275 code transitions and 267 EXIT links.
+211 titles (162 with a path; 31 of the others are opened by code that no traced path reaches), 21 modes, 3260 widget records in 18 C files, 99 menu entries, 282 code transitions and 267 EXIT links.
 
 ## Modes
 
@@ -2129,6 +2129,13 @@ the song-name page reached from easy record. It reuses TT_SQSNGNAME's view 0x008
 - View: element 0 of Viewable slot 0x3B (record outside the C sources)
 - EXIT -> `TITLE_PS`
 
+### `TITLE_SECOPY`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch)
+- Registered: `"TT_SECOPY"`, title id 0x3D, function `NAKA_MAINFUNC_SeCopyTitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x3D (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
 ### `TITLE_SEWRTMEM`
 
 - Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch)
@@ -2295,7 +2302,7 @@ the Composer (mode 0xE, MD_CMP) real-time page.
     - `OBJ_DemoSong17` AcDemoSongBox "Modern Bluegrass" [163,156 149x26]
     - `OBJ_DemoRhy_PsWideToggle` PsWideToggle "STYLE" [4,216 72x23]
     - `OBJ_DemoRhy_PsWideToggle_2` PsWideToggle "SOUND" [124,216 72x23]
-    - `NakaWidget_Perf3RhythmSel` PsWideToggle "RHYTHM", record outside the C sources
+    - `OBJ_NakaWidget_Perf3RhythmSel` PsWideToggle [244,216 72x23]
     - `OBJ_NakaHdr_Perf2MeasureBoxData` IvMainEditSw [0,0 32x32]
     - `OBJ_NakaHdr_Perf2FileListData` AcDemoMedleyDispBox [100,40 114x19]
 
@@ -2744,13 +2751,6 @@ the song-copy page reached from TT_SQCMENU. It reuses TT_SQSNGCP's view 0x009100
 - View: element 0 of Viewable slot 0x2F (record outside the C sources)
 - EXIT -> `TITLE_PS`
 
-### `TITLE_SECOPY`
-
-- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeAmpAmp1_OnSwitch15)
-- Registered: `"TT_SECOPY"`, title id 0x3D, function `NAKA_MAINFUNC_SeCopyTitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x3D (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
 ### `TITLE_SEAMPAMP2`
 
 - Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeAmpAmp1_OnSwitch25)
@@ -2779,6 +2779,34 @@ the song-copy page reached from TT_SQCMENU. It reuses TT_SQSNGCP's view 0x009100
 - View: element 0 of Viewable slot 0x36 (record outside the C sources)
 - EXIT -> `TITLE_PS`
 
+### `TITLE_SEFILHPQ1`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by UpdSeSel_DetailedUpdate_SetDisplayState_Join12)
+- Registered: `"TT_SEFILHPQ1"`, title id 0x31, function `NAKA_MAINFUNC_SeFilHpq1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x31 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILL241`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by UpdSeSel_DetailedUpdate_SetDisplayState_Join12)
+- Registered: `"TT_SEFILL241"`, title id 0x32, function `NAKA_MAINFUNC_SeFilL241TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x32 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILH241`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by UpdSeSel_DetailedUpdate_SetDisplayState_Join12)
+- Registered: `"TT_SEFILH241"`, title id 0x33, function `NAKA_MAINFUNC_SeFilH241TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x33 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILBPF1`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by UpdSeSel_DetailedUpdate_SetDisplayState_Join12)
+- Registered: `"TT_SEFILBPF1"`, title id 0x34, function `NAKA_MAINFUNC_SeFilBpf1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x34 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
 ### `TITLE_SEFILBCF1`
 
 - Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by UpdSeSel_DetailedUpdate_SetDisplayState_Join12)
@@ -2793,9 +2821,16 @@ the song-copy page reached from TT_SQCMENU. It reuses TT_SQSNGCP's view 0x009100
 - View: element 0 of Viewable slot 0x3C (record outside the C sources)
 - EXIT -> `TITLE_PS`
 
+### `TITLE_SETONHYB1`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeCopy_OnSideRow2)
+- Registered: `"TT_SETONHYB1"`, title id 0x26, function `NAKA_MAINFUNC_SeTonHyb1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x26 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
 ### `TITLE_SEWRTSND`
 
-- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeWrtMem_OnSideRow5)
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeCopy_OnSideRow5)
 - Registered: `"TT_SEWRTSND"`, title id 0x3F, function `NAKA_MAINFUNC_SeWrtSndTitleFunc`, v10/maincpu/display/scoop_display.s
 - View: element 0 of Viewable slot 0x3F (record outside the C sources)
 - EXIT -> `TITLE_PS`
@@ -2991,13 +3026,6 @@ the sequencer song-name page.
 - View: element 0 of Viewable slot 0x2E (record outside the C sources)
 - EXIT -> `TITLE_PS`
 
-### `TITLE_SETONHYB1`
-
-- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeAmpAmp1_OnSwitch15) > (by SeCopy_OnSideRow2)
-- Registered: `"TT_SETONHYB1"`, title id 0x26, function `NAKA_MAINFUNC_SeTonHyb1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x26 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
 ### `TITLE_SEFILENV2`
 
 - Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeFilLpq1_OnColumn4_Join26) > (by SeFilEnv1_OnSwitch25)
@@ -3007,14 +3035,15 @@ the sequencer song-name page.
 
 ### `TITLE_SETONTON2`
 
-- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeAmpAmp1_OnSwitch15) > (by SeCopy_OnSideRow2) > (by SeTonHyb1_OnSwitch25)
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeCopy_OnSideRow2) > (by SeTonHyb1_OnSwitch25)
 - Registered: `"TT_SETONTON2"`, title id 0x23, function `NAKA_MAINFUNC_SeTonTon2TitleFunc`, v10/maincpu/display/scoop_display.s
 - View: element 0 of Viewable slot 0x23 (record outside the C sources)
 - EXIT -> `TITLE_PS`
 
 ### `TITLE_SDOCT` -- "RIGHT1/RIGHT2 OCTAVE"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `MidiPartGridCheck`
 - Registered: `"TT_SDOCT"`, title id 0xF, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/seq_event_playback.s
 - View: `OBJ_R12OctaveSetting` (TtlScreen) in `naka_midi_reverb.c`
 - EXIT -> `TITLE_PS`
@@ -3026,7 +3055,8 @@ the sequencer song-name page.
 
 ### `TITLE_STYLCNVCNVT` -- "STYLE CONVERT"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `FloppyState_Dispatch`, `TableData_JumpToEntry`
 - Registered: `"TT_STYLCNVCNVT"`, title id 0x12, function `NAKA_MAINFUNC_StylCnvCnvtTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_StylCnvCnvtScreen` (TtlScreen) in `naka_composer_style.c`
 - EXIT -> `TITLE_STYLCNVWAIT`
@@ -3042,7 +3072,8 @@ the sequencer song-name page.
 
 ### `TITLE_STYLCNVSTOR` -- "STORAGE DATA"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `FloppyState_Dispatch`
 - Registered: `"TT_STYLCNVSTOR"`, title id 0x13, function `NAKA_MAINFUNC_StylCnvStorTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_StylCnvStorScreen` (TtlScreen) in `naka_composer_style.c`
 - EXIT -> `TITLE_STYLCNVWAIT`
@@ -3055,7 +3086,8 @@ the sequencer song-name page.
 
 ### `TITLE_STYLCNVTXT` -- "STYLE CONVERT"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `FloppyState_Dispatch`
 - Registered: `"TT_STYLCNVTXT"`, title id 0x14, function `NAKA_MAINFUNC_StylCnvTxtTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_StylCnvTxtScreen` (TtlScreen) in `naka_composer_style.c`
 - EXIT -> `TITLE_STYLCNVWAIT`
@@ -3068,7 +3100,8 @@ the sequencer song-name page.
 
 ### `TITLE_STYLCNVSEL` -- "STYLE CONVERT"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `FloppyState_Dispatch`
 - Registered: `"TT_STYLCNVSEL"`, title id 0x15, function `NAKA_MAINFUNC_StylCnvSelTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_StylCnvSelScreen` (TtlScreen) in `naka_composer_style.c`
 - EXIT -> `TITLE_STYLCNVWAIT`
@@ -3085,7 +3118,8 @@ the sequencer song-name page.
 
 ### `TITLE_STYLCNVCONT` -- "STYLE CONVERT"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `AccBankData_ProcessWithCopy`, `FloppyState_Dispatch`
 - Registered: `"TT_STYLCNVCONT"`, title id 0x16, function `NAKA_MAINFUNC_StylCnvContTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_StylCnvContScreen` (TtlScreen) in `naka_composer_style.c`
 - Its procedure `StylCnvSel_End` opens: `TITLE_MESAGE`
@@ -3099,34 +3133,6 @@ the sequencer song-name page.
       - `OBJ_Next_Label` Label "Next ?" [90,150 100x19]
     - `OBJ_StylCnvContScreen_VwEditSwBox` VwEditSwBox [281,118 31x18]
     - `OBJ_StylCnvContScreen_VwEditSwBox_2` VwEditSwBox [281,160 31x18]
-
-### `TITLE_SEFILHPQ1`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEFILHPQ1"`, title id 0x31, function `NAKA_MAINFUNC_SeFilHpq1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x31 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILL241`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEFILL241"`, title id 0x32, function `NAKA_MAINFUNC_SeFilL241TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x32 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILH241`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEFILH241"`, title id 0x33, function `NAKA_MAINFUNC_SeFilH241TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x33 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILBPF1`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEFILBPF1"`, title id 0x34, function `NAKA_MAINFUNC_SeFilBpf1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x34 (record outside the C sources)
-- EXIT -> `TITLE_PS`
 
 ### `TITLE_CTPMPARA` -- "INITIAL"
 
@@ -3145,7 +3151,8 @@ the sequencer song-name page.
 
 ### `TITLE_DPPD` -- "PIANO DISC DIRECT PLAY    "
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `FmmPdMedleyFunc`
 - Registered: `"TT_DPPD"`, title id 0x71, function `NAKA_MAINFUNC_DpPdTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_DpPd` (TtlScreen) in `naka_direct_play.c`
 - Its procedure `DpPdTtlFunc` opens: `TITLE_ETMENU`, `TITLE_SQMIXER`
@@ -3166,7 +3173,8 @@ the sequencer song-name page.
 
 ### `TITLE_DPMDLYPD` -- "PIANO DISC MEDLEY    "
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `FmmPdMedleyFunc`
 - Registered: `"TT_DPMDLYPD"`, title id 0x75, function `NAKA_MAINFUNC_DpMdlyPdTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_DpMdlyPd` (TtlScreen) in `naka_direct_play.c`
 - Its procedure `DpMdlyPdTtlFunc` opens: `TITLE_ETMENU`, `TITLE_SQMIXER`
@@ -3189,7 +3197,8 @@ the sequencer song-name page.
 
 ### `TITLE_SQMDLY` -- "INTERNAL SONG MEDLEY"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `PlayMode_CheckAndDispatch`, `PlayMode_StartAndSendCommand`, `SeqRestart_SendPlaybackNotify`
 - Registered: `"TT_SQMDLY"`, title id 0x79, function `NAKA_MAINFUNC_FmmIntMedleyFunc`, v10/maincpu/file_io/medley.s
 - View: `OBJ_IntSongMedley` (TtlScreen) in `naka_disk_menu_file_io.c`
 - Its procedure `FmmIntMedleyFunc` opens: `TITLE_MESAGE`, `TITLE_SQMDLYPLY`
@@ -3214,7 +3223,8 @@ the sequencer song-name page.
 
 ### `TITLE_SQMDLYPLY` -- "SONG MEDLEY"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `FmmIntMedleyFunc`
 - Registered: `"TT_SQMDLYPLY"`, title id 0x7A, function `NAKA_MAINFUNC_SqMdlyPlyTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_SqMdlyPly` (TtlScreen) in `naka_direct_play.c`
 - Its procedure `SqMdlyPlyTtlFunc` opens: `TITLE_SQMIXER`
@@ -3236,7 +3246,8 @@ the sequencer song-name page.
 
 ### `TITLE_SQCYCPLY` -- "CYCLE PLAY"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `ApPlaySyori`
 - Registered: `"TT_SQCYCPLY"`, title id 0x82, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_CyclePlay_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_SQPLAY`
@@ -3253,7 +3264,8 @@ the sequencer song-name page.
 
 ### `TITLE_SQCYCREC` -- "REALTIME RECORD"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `ApPlaySyori`
 - Registered: `"TT_SQCYCREC"`, title id 0x86, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_RealtimeRecord_TtlScreen_2` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_SQREALREC`
@@ -3295,7 +3307,8 @@ the auto-punch variant of the punch-in page.
 
 ### `TITLE_SQSTEP`
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `Part_ValidateAndActivate`
 - Registered: `"TT_SQSTEP"`, title id 0x8A, function `NAKA_MAINFUNC_SqStepTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_NakaWidget_StepRecSubPanel` (IvDirmdScreen) in `naka_direct_play.c`
 - EXIT -> `TITLE_PS`
@@ -3307,7 +3320,8 @@ the auto-punch variant of the punch-in page.
 
 the sequencer note-edit page. Grid and box code shared with another edit title picks its layout coordinates by whether ...
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `BmDrEdit_SaveSequencerState`
 - Registered: `"TT_SQNOTEEDT"`, title id 0x95, function `NAKA_MAINFUNC_SqNoteEdtTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_NoteEdit_TtlScreen_2` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_SQNOTESEL`
@@ -3343,7 +3357,8 @@ the sequencer note-edit page. Grid and box code shared with another edit title p
 
 ### `TITLE_SQNOTECYCP` -- "CYCLE PLAY"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `BmDrEdit_PostModeChange96`
 - Registered: `"TT_SQNOTECYCP"`, title id 0x96, function `NAKA_MAINFUNC_SqNoteCycpTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_CyclePlay_TtlScreen_2` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_SQNOTEEDT`
@@ -3360,7 +3375,8 @@ the sequencer note-edit page. Grid and box code shared with another edit title p
 
 ### `TITLE_SQDRMEDT` -- "DRUM EDIT"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `BmDrEdit_SaveSequencerState`, `SeMenu_HandleMenuChange`
 - Registered: `"TT_SQDRMEDT"`, title id 0x98, function `NAKA_MAINFUNC_SqDrmEdtTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_DrumEdit_TtlScreen_2` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_SQDRMSEL`
@@ -3395,7 +3411,8 @@ the sequencer note-edit page. Grid and box code shared with another edit title p
 
 ### `TITLE_SQDRMCYCP` -- "CYCLE PLAY"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `BmDrEdit_PostModeChange99`
 - Registered: `"TT_SQDRMCYCP"`, title id 0x99, function `NAKA_MAINFUNC_SqDrmCycpTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_CyclePlay_TtlScreen_3` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_SQDRMEDT`
@@ -3412,7 +3429,8 @@ the sequencer note-edit page. Grid and box code shared with another edit title p
 
 ### `TITLE_SQSTEPBAL` -- "PART BALANCE"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `UIDisp_StepMeasure`
 - Registered: `"TT_SQSTEPBAL"`, title id 0xA9, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_StepPartBal` (TtlScreen) in `naka_direct_play.c`
 - EXIT -> `TITLE_SQSTEP`
@@ -3427,7 +3445,8 @@ the sequencer note-edit page. Grid and box code shared with another edit title p
 
 ### `TITLE_SQMETBAL` -- "METRONOME BALANCE"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `ApPlaySyori`
 - Registered: `"TT_SQMETBAL"`, title id 0xAB, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_MetronomeBalance_TtlScreen` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_PS`
@@ -3481,7 +3500,8 @@ the sequencer note-edit page. Grid and box code shared with another edit title p
 
 the music-style page in the One-Touch-Play (MD_OTP) title group.
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `EffectMode_CopyVoiceParams`
 - Registered: `"TT_MUSICSTYL"`, title id 0xC1, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_MUSICSTYL` (TtlScreen) in `naka_ctrl_menu_body.c`
 - Menu entries: "STYLE EXPLORER" -> `TITLE_MSCTSEL`, "STYLE ALPHABETICAL" -> `TITLE_MSALPSEL`
@@ -3556,7 +3576,8 @@ the music-style page in the One-Touch-Play (MD_OTP) title group.
 
 ### `TITLE_MSPBKSL` -- "MSP BANK SELECT"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `AccompSeq_ProcessAfterNote_Helper`, `SoundCtrl_CalcScaledTempo`
 - Registered: `"TT_MSPBKSL"`, title id 0xC8, function `NAKA_MAINFUNC_MspBkslTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_MspBkslScreen` (TtlScreen) in `naka_composer_style.c`
 - EXIT -> `TITLE_NORMAL`
@@ -3573,7 +3594,8 @@ the music-style page in the One-Touch-Play (MD_OTP) title group.
 
 the panel-memory bank-select page.
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `BitMapOut_UpdateWidget_Finalize`
 - Registered: `"TT_PMBKSEL"`, title id 0xD0, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_PMBANK` (PmBankScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_NORMAL`
@@ -3710,7 +3732,8 @@ the accordion screen. It is opened when the sound category byte (0xC07E) is 13.
 
 ### `TITLE_APCSEL` -- "AUTO PLAY CHORD"
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `SoundCtrl_CalcScaledTempo`
 - Registered: `"TT_APCSEL"`, title id 0xED, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/storage/flash_floppy_handlers.s
 - View: `OBJ_ApcSelScreen` (TtlScreen) in `naka_msp_recording.c`
 - EXIT -> `TITLE_PS`
@@ -3742,7 +3765,8 @@ the welcome (boot) screen. It is requested once at boot.
 
 the software-version screen, requested by a control-panel switch chord.
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `Boot_HandleComboDisplay`, `MainTitle_PrepareAndDispatch`
 - Registered: `"TT_SOFTVER"`, title id 0xF0, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
 - View: `OBJ_Softver` (TtlScreen) in `naka_technichord_part.c`
 - EXIT -> `TITLE_PS`
@@ -3759,7 +3783,8 @@ the software-version screen, requested by a control-panel switch chord.
 
 the first self-test screen. It is shown when the SRAM test or the panel-detection check reports a problem, and an entry of ...
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `SelfTest_FirmwareVersionCheck`
 - Registered: `"TT_TEST1"`, title id 0xF4, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_vF4_e0` (TtlScreen) in `naka_ctrl_menu_body.c`
 - EXIT -> `TITLE_PS`
@@ -3769,7 +3794,8 @@ the first self-test screen. It is shown when the SRAM test or the panel-detectio
 
 ### `TITLE_TEST2`
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `SelfTest_FirmwareVersionCheck`
 - Registered: `"TT_TEST2"`, title id 0xF5, function `NAKA_MAINFUNC_TEST2FUNC`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_TEST2` (TtlScreen) in `naka_extension_device.c`
 - EXIT -> `TITLE_PS`
@@ -3791,7 +3817,8 @@ the first self-test screen. It is shown when the SRAM test or the panel-detectio
 
 a self-test screen. While it is up, some panel handlers stand down and one is active only there.
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `SelfTest_FirmwareVersionCheck`
 - Registered: `"TT_TEST3"`, title id 0xF6, function `NAKA_MAINFUNC_TEST3FUNC`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_TEST3` (SineWaveScreen) in `naka_extension_device.c`
 - EXIT -> `TITLE_PS`
@@ -3801,7 +3828,8 @@ a self-test screen. While it is up, some panel handlers stand down and one is ac
 
 ### `TITLE_TEST4`
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `SelfTest_FirmwareVersionCheck`
 - Registered: `"TT_TEST4"`, title id 0xF7, function `NAKA_MAINFUNC_TEST4FUNC`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_TEST4` (TtlScreen) in `naka_extension_device.c`
 - EXIT -> `TITLE_PS`
@@ -3813,7 +3841,8 @@ a self-test screen. While it is up, some panel handlers stand down and one is ac
 
 ### `TITLE_TEST5`
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `SelfTest_FirmwareVersionCheck`
 - Registered: `"TT_TEST5"`, title id 0xF8, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_TEST5` (TtlScreen) in `naka_extension_device.c`
 - EXIT -> `TITLE_PS`
@@ -3828,7 +3857,8 @@ a self-test screen. While it is up, some panel handlers stand down and one is ac
 
 ### `TITLE_TEST6`
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `SelfTest_FirmwareVersionCheck`
 - Registered: `"TT_TEST6"`, title id 0xF9, function `NAKA_MAINFUNC_TEST6FUNC`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_TEST6` (TtlScreen) in `naka_extension_device.c`
 - EXIT -> `TITLE_PS`
@@ -3842,7 +3872,8 @@ a self-test screen. While it is up, some panel handlers stand down and one is ac
 
 ### `TITLE_EXT`
 
-- Path: none found (no data entry, and no traced code, opens it)
+- Path: none found (no data entry opens it; the code that does is reached by no traced path)
+- Opened by code in: `SelfTest_FirmwareVersionCheck`
 - Registered: `"TT_EXT"`, title id 0xFB, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
 - View: `OBJ_EXT` (IvScreen) in `naka_extension_device.c`
 - EXIT -> `TITLE_PS`
