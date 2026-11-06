@@ -56,7 +56,7 @@ PanelEvent_Post:
 	ld	c, e
 	extz	bc
 	sll	bc, 2
-	lda	xde, (0xbf79:16)
+	lda	xde, (PANEL_EVENT_QUEUE:16)
 	ld	ix, bc
 	extz	xix
 	add	xix, xde
@@ -255,7 +255,7 @@ PanelButton_ModeKey_Join4:
 	jr	z, FileIO_BytecodeData_Code_Skip15
 	ld	(xwa), 10
 FileIO_BytecodeData_Code_Skip15:
-	cpw	(10380:16), 0
+	cpw	(SEQ_REC_TRACKS:16), 0
 	jr	z, PanelButton_ModeKey_Skip9
 	ld	a, (xwa)
 	cp	a, 19
@@ -280,7 +280,7 @@ PanelButton_SequencerPlay:
 	ld	a, (CURRENT_MODE:16)
 	cp	a, 19
 	jr	z, PanelButton_SequencerPlay_Epilogue
-	bit	2, (0x421:16)
+	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jr	nz, PanelButton_SequencerPlay_Skip2
 	ld	a, (10377:16)
 	xor	a, 1
@@ -446,7 +446,7 @@ PanelButton_SoundGroup:
 PanelButton_SoundGroup_Skip:
 	jrl	FileIO_BytecodeData_Code_Epilogue9
 PanelButton_SoundGroup_Skip2:
-	ld	a, (0x36e3:24)
+	ld	a, (CMP_RECORD_PART:24)
 	and	a, 31
 	jrl	z, FileIO_BytecodeData_Code_Epilogue9
 PanelButton_SoundGroup_Skip3:
@@ -566,7 +566,7 @@ PanelButton_RhythmGroup:
 	jr	nz, PanelButton_RhythmGroup_Epilogue
 	bit	0, (0x341b:16)
 	jr	nz, PanelButton_RhythmGroup_Epilogue
-	cp	(0x341e:16), 12
+	cp	(STYLE_SECTION:16), 12
 	jr	nc, PanelButton_RhythmGroup_Epilogue
 PanelButton_RhythmGroup_Skip:
 	ld	b, 0:opc
@@ -764,7 +764,7 @@ PanelButton_AutoPlayChord:
 	jr	z, PanelButton_AutoPlayChord_Epilogue
 	ld	xwa, xiz
 	calr	PanelEvent_Post
-	bit	2, (0x41e:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	z, PanelButton_AutoPlayChord_Skip
 	ld	xwa, 163968
 	call	SndParam_LookupReadOnly
@@ -1296,7 +1296,7 @@ FileIO_BytecodeData_Code_Helper3:
 	call	SndParam_LookupViaEncode
 	lda	xwa, (xsp)
 	ld	(xwa+4), l
-	ld	(xwa+2), (0x8c82)
+	ld	(xwa+2), (PART_SELECT)
 	call	SndParam_ResolveVoiceEntry
 	lda	xhl, (xsp)
 	inc	6, xsp
@@ -1698,7 +1698,7 @@ ExtDev_SndParam_Block14_Dual:
 	and	c, e
 	ret	z
 	set	1, (0x9039:16)
-	ld	(xwa), (0x8c82)
+	ld	(xwa), (PART_SELECT)
 	ld	(xwa+1), 4
 	ld	(xhl), 64
 	ld	(xix), 64
@@ -1930,7 +1930,7 @@ PanelButton_HelpMode_Epilogue:
 	pop	xiz
 	ret
 VoiceEntry_FindMasterVolume:
-	lda	xde, (0xbf79:16)
+	lda	xde, (PANEL_EVENT_QUEUE:16)
 	ld	xbc, 0:i3
 	ld	wa, 0:i3
 	jr	VoiceEntry_CheckTerminator
@@ -2479,35 +2479,35 @@ AnalogIn_Debounce_Done:
 	ret
 Audio_UpdateLEDsAndChannels:
 	calr	Audio_InitChannelTimers
-	orw	(0x8e82:16), 2
+	orw	(LED_REQUEST_3:16), 2
 	ret
 MIDI_ProcessChangedChannels:
 	cp	(CURRENT_TITLE:16), 251
 	ret	z
 	calr	Audio_CheckAndFlagChanges
-	ld	wa, (0x8e7c:16)
+	ld	wa, (LED_REQUEST_HOLD_1:16)
 	cpl	wa
-	and	wa, (0x8e7a:16)
+	and	wa, (LED_REQUEST_1:16)
 	jr	z, MidiChanged_ProcessGroup2
 	ld	xbc, PanelLed_PendingGroup1Handlers
 	calr	DispatchBitmaskHandlers
-	ldw	(0x8e7a:16), 0
+	ldw	(LED_REQUEST_1:16), 0
 MidiChanged_ProcessGroup2:
-	ld	wa, (0x8e80:16)
+	ld	wa, (LED_REQUEST_HOLD_2:16)
 	cpl	wa
-	and	wa, (0x8e7e:16)
+	and	wa, (LED_REQUEST_2:16)
 	jr	z, MidiChanged_ProcessGroup3
 	ld	xbc, PanelLed_PendingGroup2Handlers
 	calr	DispatchBitmaskHandlers
-	ldw	(0x8e7e:16), 0
+	ldw	(LED_REQUEST_2:16), 0
 MidiChanged_ProcessGroup3:
-	ld	wa, (0x8e84:16)
+	ld	wa, (LED_REQUEST_HOLD_3:16)
 	cpl	wa
-	and	wa, (0x8e82:16)
+	and	wa, (LED_REQUEST_3:16)
 	jr	z, MidiChanged_ProcessGroup4
 	ld	xbc, PanelLed_PendingGroup3Handlers
 	calr	DispatchBitmaskHandlers
-	ldw	(0x8e82:16), 0
+	ldw	(LED_REQUEST_3:16), 0
 MidiChanged_ProcessGroup4:
 	ld	wa, (0x8e88:16)
 	cpl	wa
@@ -2520,19 +2520,19 @@ MidiChanged_ProcessGroup4:
 MidiChannel_DispatchChanged:
 	cp	(CURRENT_TITLE:16), 251
 	ret	z
-	ld	wa, (0x8e7c:16)
+	ld	wa, (LED_REQUEST_HOLD_1:16)
 	cp	wa, 0:i3
 	jr	z, MidiDispatch_CheckGroup2
 	ld	xbc, PanelLed_HeldGroup1Handlers
 	calr	DispatchBitmaskHandlers
 MidiDispatch_CheckGroup2:
-	ld	wa, (0x8e80:16)
+	ld	wa, (LED_REQUEST_HOLD_2:16)
 	cp	wa, 0:i3
 	jr	z, MidiDispatch_CheckGroup3
 	ld	xbc, PanelLed_HeldGroup2Handlers
 	calr	DispatchBitmaskHandlers
 MidiDispatch_CheckGroup3:
-	ld	wa, (0x8e84:16)
+	ld	wa, (LED_REQUEST_HOLD_3:16)
 	cp	wa, 0:i3
 	jr	z, MidiDispatch_CheckGroup4
 	ld	xbc, PanelLed_HeldGroup3Handlers
@@ -2547,7 +2547,7 @@ MidiDispatch_UpdateLEDs:
 	jrl	CPanel_LED_FlushImage
 Audio_InitChannelTimers:
 	ld	(0x8e8c:16), 5
-	ld	(0x8e8e:16), 5
+	ld	(DEMO_PLAY_STATE:16), 5
 	ld	(0x8e90:16), 5
 	ld	(0x8e92:16), 5
 	ld	(0x8e94:16), 5
@@ -2560,7 +2560,7 @@ Audio_CheckAndFlagChanges:
 	call	GetDialEnableState
 	cp	l, (0x8e9e:16)
 	jr	z, AudioChange_CheckSelectionState
-	orw	(0x8e82:16), 64
+	orw	(LED_REQUEST_3:16), 64
 	ld	(0x8e9e:16), l
 AudioChange_CheckSelectionState:
 	call	CtrlPanel_GetSelectionState
@@ -2568,13 +2568,13 @@ AudioChange_CheckSelectionState:
 	ret	z
 	cp	l, 2:i3
 	jr	nz, AudioChange_UpdatePreviousSelect
-	orw	(0x8e84:16), 4
+	orw	(LED_REQUEST_HOLD_3:16), 4
 AudioChange_UpdatePreviousSelect:
 	cp	(0x8ea0:16), 2
 	jr	nz, AudioChange_SetChannelFlag
-	andw	(0x8e84:16), 0xfffb
+	andw	(LED_REQUEST_HOLD_3:16), 0xfffb
 AudioChange_SetChannelFlag:
-	orw	(0x8e82:16), 4
+	orw	(LED_REQUEST_3:16), 4
 	ld	(0x8ea0:16), l
 	ret
 DispatchBitmaskHandlers:
@@ -2656,7 +2656,7 @@ Set_LEDs:
 	.include "ui/led_panel_write.s"
 SndParam_SetResBit0_Via028100:
 	push	xiz
-	lda	xiz, (0x8e58:16)
+	lda	xiz, (CPANEL_LED_IMAGE:16)
 	ld	xwa, 0x00028100
 	call	SndParam_LookupReadOnly
 	lda	xwa, (xiz+4)
@@ -2843,7 +2843,7 @@ SndParam_GuardedNibbleSet_ViaReg0103:
 	; --- Routine 3: complex bit checks, and (xiz+0x0e), set 0 in A (59 bytes) ---
 	push	xiz
 	lda	xiz, (CPANEL_LED_IMAGE:16)
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, MidiCtrl_PopIzRet
 	ld	xwa, 0x00028103
 	call	SndParam_LookupReadOnly
@@ -3449,7 +3449,7 @@ CtrlPanel_GuardedNibbleSet_8F4E:
 	; --- Sub 9: guarded nibble set/res at (XIZ+0x0e) via (0x8f4e) lookup (76 bytes) ---
 	push	xiz
 	lda	xiz, (CPANEL_LED_IMAGE:16)
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, CtrlPanel_BitOp_Cleanup
 	ld	xwa, 0x00028103
 	call	SndParam_LookupReadOnly
@@ -3460,7 +3460,7 @@ CtrlPanel_GuardedNibbleSet_8F4E:
 	cp	(0x7e53:16), 0
 	jr	z, CtrlPanel_BitOp_Cleanup
 CtrlPanelGuard_PassedCheck:
-	ld	a, (0x8e8e:16)
+	ld	a, (DEMO_PLAY_STATE:16)
 	extz	wa
 	call	CtrlPanel_LookupIndicatorEntry
 	and	l, (0x8e8a:16)
@@ -3568,13 +3568,13 @@ CtrlPanel_SetIndicatorBit:
 	jr	z, CtrlPanel_SetIndicator_Group2
 	cpib_erp	0xfb, 0
 	jr	nz, CtrlPanel_PopRetFA
-	or	(0x8e7a:16), hl
+	or	(LED_REQUEST_1:16), hl
 	jr	CtrlPanel_PopRetFA
 CtrlPanel_SetIndicator_Group2:
-	or	(0x8e7e:16), hl
+	or	(LED_REQUEST_2:16), hl
 	jr	CtrlPanel_PopRetFA
 CtrlPanel_SetIndicator_Group3:
-	or	(0x8e82:16), hl
+	or	(LED_REQUEST_3:16), hl
 	jr	CtrlPanel_PopRetFA
 CtrlPanel_SetIndicator_Group4:
 	or	(0x8e86:16), hl
@@ -3597,13 +3597,13 @@ CtrlPanel_IndicatorDispatch:
 	jr	z, CtrlPanel_DispIndicator_Group2
 	cpib_erp	0xfb, 0
 	jr	nz, CtrlPanel_PopRetFA2
-	or	(0x8e7c:16), hl
+	or	(LED_REQUEST_HOLD_1:16), hl
 	jr	CtrlPanel_PopRetFA2
 CtrlPanel_DispIndicator_Group2:
-	or	(0x8e80:16), hl
+	or	(LED_REQUEST_HOLD_2:16), hl
 	jr	CtrlPanel_PopRetFA2
 CtrlPanel_DispIndicator_Group3:
-	or	(0x8e84:16), hl
+	or	(LED_REQUEST_HOLD_3:16), hl
 	jr	CtrlPanel_PopRetFA2
 CtrlPanel_DispIndicator_Group4:
 	or	(0x8e88:16), hl
@@ -3626,16 +3626,16 @@ CtrlPanel_SetIndicatorLED:
 	jr	z, CtrlPanel_SetLED_Group2
 	cpib_erp	0xfb, 0
 	jr	nz, MidiChOutState_Return
-	and	(0x8e7c:16), wa
-	or	(0x8e7a:16), hl
+	and	(LED_REQUEST_HOLD_1:16), wa
+	or	(LED_REQUEST_1:16), hl
 	jr	MidiChOutState_Return
 CtrlPanel_SetLED_Group2:
-	and	(0x8e80:16), wa
-	or	(0x8e7e:16), hl
+	and	(LED_REQUEST_HOLD_2:16), wa
+	or	(LED_REQUEST_2:16), hl
 	jr	MidiChOutState_Return
 CtrlPanel_SetLED_Group3:
-	and	(0x8e84:16), wa
-	or	(0x8e82:16), hl
+	and	(LED_REQUEST_HOLD_3:16), wa
+	or	(LED_REQUEST_3:16), hl
 MidiChOutState_Return:
 	popw_erp	0xfa
 	ret
@@ -3645,7 +3645,7 @@ MidiChannel_ProcessOutputState:
 	calr	MidiChOut_DetectChanges
 	lda	xde, (xiz + 14)
 	ld	c, (0x8db6:16)
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, MidiChOut_CheckHWState
 	ld	a, c
 	bit	1, c
@@ -3654,12 +3654,12 @@ MidiChannel_ProcessOutputState:
 	ld	(0x8db6:16), a
 	jr	MidiChOut_ClearLowNibble
 MidiChOut_CheckHWState:
-	ld	l, (1046:16)
-	ld	a, (1045:16)
+	ld	l, (ACC_BEAT:16)
+	ld	a, (ACC_CLOCK:16)
 	and	a, 0x60
 	jr	nz, MidiChOut_CheckBit1Clear
 	set	1, (0x8db6:16)
-	ld	a, (1075:16)
+	ld	a, (ACC_BEATS_PER_BAR:16)
 	cp	a, 6:i3
 	jr	z, MidiChOut_Mode6or3_Mask7
 	cp	a, 3:i3
@@ -3690,27 +3690,27 @@ MidiChannel_CleanupRet:
 	pop	xiz
 	ret
 MidiChOut_DetectChanges:
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	ret	nz
-	ld	a, (1056:16)
+	ld	a, (PLAY_TRANSPORT_STATE:16)
 	xor	a, (0x33c3:16)
 	bit	2, a
 	ret	z
-	orw	(0x8e7e:16), 4
-	ldmm8	0x33c3, 1056
+	orw	(LED_REQUEST_2:16), 4
+	ldmm8	0x33c3, PLAY_TRANSPORT_STATE
 	ret
 MidiChannel_ScanPending:
 	push	xiz
 	lda	xiz, (CPANEL_LED_IMAGE:16)
-	ld	wa, (0x8e80:16)
+	ld	wa, (LED_REQUEST_HOLD_2:16)
 	bit	2, wa
 	jr	nz, MidiScan_PopIzRet
 	ld	a, (0x8e8a:16)
 	and	a, 0x3
 	jr	nz, MidiScan_PopIzRet
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, MidiScan_PopIzRet
-	bit	2, (0x288b:16)
+	bit	2, (SEQ_RTMCFG:16)
 	jr	nz, MidiScan_AltPathCheck
 	ld	xwa, 0x28103
 	call	SndParam_LookupReadOnly
@@ -3754,13 +3754,13 @@ UIState_UpdateControlBits:
 	jr	z, UIState_UpdateControlBits_Skip
 	cp	a, 0:i3
 	ret	nz
-	orw	(0x8e7a:16), 0x69
+	orw	(LED_REQUEST_1:16), 0x69
 	ret
 UIState_UpdateControlBits_Skip:
-	orw	(0x8e7a:16), 0x28
+	orw	(LED_REQUEST_1:16), 0x28
 	ret
 UIState_UpdateControlBits_Skip2:
-	orw	(0x8e7a:16), 0x40
+	orw	(LED_REQUEST_1:16), 0x40
 	ret
 UIState_SwitchOnDisplayMode:
 	; --- Switch on A = (0xc07d): or bits into (0x8f3a)/(0x8f42) (53 bytes) ---
@@ -3775,16 +3775,16 @@ UIState_SwitchOnDisplayMode:
 	jr	z, UIState_Mode0or1
 	cp	a, 0x10
 	ret	nz
-	orw	(0x8e7a:16), 107
+	orw	(LED_REQUEST_1:16), 107
 	ret
 UIState_Mode0or1:
-	orw	(0x8e7a:16), 111
+	orw	(LED_REQUEST_1:16), 111
 	ret
 UIState_Mode3:
-	orw	(0x8e82:16), 512
+	orw	(LED_REQUEST_3:16), 512
 	ret
 UIState_Mode4:
-	orw	(0x8e82:16), 0x8000
+	orw	(LED_REQUEST_3:16), 0x8000
 	ret
 ; (pre-port v7 note about the bytes at 0xFC7396:)
 ; framing ported from v10's source for the same label (same span length, statement for statement); 29 of 48 slots byte-identical
@@ -3801,10 +3801,10 @@ UIState_ProcessExtendedMode:
 	lda	xix, (UIState_ProcessExtendedMode_Cases:24)
 	jp	t, (xix+wa)
 UIState_ProcessExtendedMode_Cases:	; the switch's base: case k is at +UIState_ProcessExtendedMode_CaseTable[k]
-	orw	(36478:16), 515
+	orw	(LED_REQUEST_2:16), 515
 	ret
 UIState_ProcessExtendedMode_Case5:	; cases 5, 6
-	orw	(36478:16), 252
+	orw	(LED_REQUEST_2:16), 252
 	ret
 UIState_ProcessExtendedMode_Case3:
 	ld	xwa, 0x028080
@@ -3813,13 +3813,13 @@ UIState_ProcessExtendedMode_Case3:
 	jr	z, UIState_ProcessExtendedMode_Skip
 	ld	(0xffc8:24), l
 UIState_ProcessExtendedMode_Skip:
-	orw	(36478:16), 256
+	orw	(LED_REQUEST_2:16), 256
 	ret
 UIState_ProcessExtendedMode_Case4:
-	orw	(36482:16), 16
+	orw	(LED_REQUEST_3:16), 16
 	ret
 UIState_ProcessExtendedMode_Case7:
-	orw	(36478:16), 512
+	orw	(LED_REQUEST_2:16), 512
 UIState_ProcessExtendedMode_Case1:	; cases 1, 2
 	ret
 UIStateEvt_NullHandler:
@@ -3836,16 +3836,16 @@ UIState_SwitchForMidiFlags:
 	cp	a, 6:i3
 	ret	nz
 UIState_MidiMode6:
-	orw	(0x8e82:16), 1024
+	orw	(LED_REQUEST_3:16), 1024
 	ret
 UIState_MidiMode3F:
-	orw	(0x8e82:16), 2048
+	orw	(LED_REQUEST_3:16), 2048
 	ret
 UIState_MidiMode4:
-	orw	(0x8e82:16), 2
+	orw	(LED_REQUEST_3:16), 2
 	ret
 UIState_MidiMode14:
-	orw	(0x8e82:16), 4096
+	orw	(LED_REQUEST_3:16), 4096
 	ret
 UIState_NullReturn:
 	ret
@@ -3857,19 +3857,19 @@ UIState_ProcessAltMode:
 	jr	z, UIState_ProcessAltMode_Skip
 	cp	a, 1:i3
 	ret	nz
-	orw	(0x8e82:16), 0x3
+	orw	(LED_REQUEST_3:16), 0x3
 	ret
 UIState_ProcessAltMode_Skip:
-	orw	(0x8e82:16), 0x8
+	orw	(LED_REQUEST_3:16), 0x8
 	ret
 UIState_ProcessAltMode_Skip2:
-	orw	(0x8e82:16), 0x6000
+	orw	(LED_REQUEST_3:16), 0x6000
 	ret
 UIState_ProcessSimpleMode:
 	ld	a, (SWBTWR_PAYLOAD_1:16)
 	cp	a, 1:i3
 	ret	nz
-	orw	(0x8e7a:16), 0x90
+	orw	(LED_REQUEST_1:16), 0x90
 	ret
 CtrlPanel_LookupIndicatorEntry:
 	extz	wa
@@ -3890,21 +3890,21 @@ FindBit_ShiftLoop:
 	jr	z, FindBit_ShiftLoop
 	ret
 Audio_InitAllDefaults:
-	ld	(0xbf79:16), 255
+	ld	(PANEL_EVENT_QUEUE:16), 255
 	ld	(SWBTWR_EVENT_QUEUE:16), 255
-	ldw	(0x901e:16), 0
+	ldw	(SWBTWR_WRITE_INDEX:16), 0
 	ldw	(0x9020:16), 0
 	ld	(0xbe79:16), 255
 	ldw	(0x9022:16), 0
-	ldw	(0x9073:16), 0
+	ldw	(EXT_RECORD_OFFSET:16), 0
 	ld	(0x903b:16), 255
 	ld	(0x90ed:16), 255
 	ld	(0x90f5:16), 255
 	ld	(0x9112:16), 255
-	ld	(0x9038:16), 127
+	ld	(PANEL_EVENT_SOURCE:16), 127
 	ld	(0x8ea3:16), 255
 	lda	xwa, (PanelTlv_PayloadByTag:24)
-	ld	(0x9032:16), xwa
+	ld	(PART_RECORD_PTRS:16), xwa
 	lda	xwa, (PanelTlv_CompanionByPart:24)
 	ld	(0x90c2:16), xwa
 	lda	xbc, (0x90cd:16)
@@ -4007,7 +4007,7 @@ Audio_UpdateTempoAndReturn:
 	jp	Fade_SetFullLevelAndFlush
 Audio_FullReinitWithPreset:
 	lda	xwa, (PanelTlv_PayloadByTag:24)
-	ld	(0x9032:16), xwa
+	ld	(PART_RECORD_PTRS:16), xwa
 	lda	xwa, (PanelTlv_CompanionByPart:24)
 	ld	(0x90c2:16), xwa
 	call	Sys_CheckPowerStableFlag
@@ -4643,42 +4643,42 @@ MidiNoHeader_Done:
 	inc	6, xsp
 	ret
 MIDI_WriteCommandToBuffer:
-	ld	hl, (0x901e:16)
+	ld	hl, (SWBTWR_WRITE_INDEX:16)
 	ld	ix, hl
 	inc	1, hl
-	ld	(0x901e:16), hl
+	ld	(SWBTWR_WRITE_INDEX:16), hl
 	lda	xhl, (SWBTWR_EVENT_QUEUE:16)
 	extz	xix
 	add	xix, xhl
 	ld	(xix), a
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	ld	ix, wa
 	inc	1, wa
-	ld	(0x901e:16), wa
+	ld	(SWBTWR_WRITE_INDEX:16), wa
 	ld	wa, ix
 	extz	xwa
 	add	xwa, xhl
 	ld	(xwa), c
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	ld	bc, wa
 	inc	1, wa
-	ld	(0x901e:16), wa
+	ld	(SWBTWR_WRITE_INDEX:16), wa
 	extz	xbc
 	add	xbc, xhl
 	ld	(xbc), e
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	ld	bc, wa
 	inc	1, wa
-	ld	(0x901e:16), wa
+	ld	(SWBTWR_WRITE_INDEX:16), wa
 	extz	xbc
 	add	xbc, xhl
 	ld	a, (xsp + 4)
 	ld	(xbc), a
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	extz	xwa
 	add	xwa, xhl
 	ld	(xwa), 0xff
-	cpw	(0x901e:16), 508
+	cpw	(SWBTWR_WRITE_INDEX:16), 508
 	jr	c, MidiWrite_ReturnDiscard
 	push	xde
 	push	xhl
@@ -4689,7 +4689,7 @@ MIDI_WriteCommandToBuffer:
 	pop	xix
 	pop	xhl
 	pop	xde
-	ldw	(0x901e:16), 0
+	ldw	(SWBTWR_WRITE_INDEX:16), 0
 MidiWrite_ReturnDiscard:
 	retd	0x2
 Audio_InitAllChannelParams:
@@ -4735,11 +4735,11 @@ Audio_InitSingleChannelParams:
 	inc	2, xsp
 	ret
 Audio_MainPeriodicUpdate:
-	cp	(0xbf79:16), 255
+	cp	(PANEL_EVENT_QUEUE:16), 255
 	ret	z
 	res	0, (0x90a5:16)
 	lda	xwa, (PanelTlv_PayloadByTag:24)
-	ld	(0x9032:16), xwa
+	ld	(PART_RECORD_PTRS:16), xwa
 	calr	Audio_SyncBufferPositions
 	push	xde
 	push	xhl
@@ -4758,8 +4758,8 @@ Audio_MainPeriodicUpdate:
 	res	1, (0x9039:16)
 	ret
 Audio_SyncBufferPositions:
-	ldw	(0x9073:16), 0
-	ldmm16	0x9020, 0x901e
+	ldw	(EXT_RECORD_OFFSET:16), 0
+	ldmm16	0x9020, SWBTWR_WRITE_INDEX
 	jr	FileIO_ProcessRemainingOps
 ; File I/O operation dispatch
 FileIO_OperationDispatch:
@@ -4770,7 +4770,7 @@ FileIO_OperationDispatch:
 	lda	xbc, (SoundProgram_DispatchTable:24)
 	ld	xhl, (xbc+wa)
 	call	(xhl)
-	cpw	(0x901e:16), 508
+	cpw	(SWBTWR_WRITE_INDEX:16), 508
 	jr	c, FileIO_ProcessRemainingOps
 	push	xde
 	push	xhl
@@ -4783,24 +4783,24 @@ FileIO_OperationDispatch:
 	pop	xde
 	ldw	(0x9020:16), 0
 FileIO_ProcessRemainingOps:
-	lda	xbc, (0xbf79:16)
-	ld	wa, (0x9073:16)
+	lda	xbc, (PANEL_EVENT_QUEUE:16)
+	ld	wa, (EXT_RECORD_OFFSET:16)
 	extz	xwa
 	add	xwa, xbc
 	cp	(xwa), 0xff
 	jr	nz, FileIO_OperationDispatch
 	lda	xbc, (SWBTWR_EVENT_QUEUE:16)
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	(xwa), 0xff
-	ld	(0x9038:16), 127
+	ld	(PANEL_EVENT_SOURCE:16), 127
 	ret
 ; (pre-port v7 note about the bytes at 0xFC7D77:)
 ; framing ported from v10's source for the same label (same span length, statement for statement); 149 of 201 slots byte-identical
 ExtData_ToneParam_DispatchHandler:
 	calr	SndParam_WriteLookupAndStore
-	ld	a, (0x906f:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	cp	a, 22
 	jr	z, ExtData_ToneParam_DispatchHandler_Skip
 	extz	wa
@@ -4843,8 +4843,8 @@ ExtData_ToneParam_DispatchHandler_Case1:	; cases 1, 2
 ExtData_ToneParam_DispatchHandler_Join:
 	dec	6, xsp
 	lda	xwa, (xsp)
-	ld	(xwa), (0x9070)
-	ld	(xwa+1), (0x9071)
+	ld	(xwa), (EXTDATA_VALUE)
+	ld	(xwa+1), (EXTDATA_MASK)
 	ld	(xwa+2), (MIDI_MSG_STATUS)
 	call	SndParam_ApplyProgramChange
 	ld	a, (MIDI_MSG_STATUS:16)
@@ -4917,13 +4917,13 @@ ExtData_ToneParam_DispatchHandler_Join2:
 	lda	xwa, (xsp)
 	cp	(xwa), 15
 	jr	nz, ExtData_Voice_CheckMode3_Helper_Skip
-	and	(36976:16), 183
-	and	(36977:16), 183
+	and	(EXTDATA_VALUE:16), 183
+	and	(EXTDATA_MASK:16), 183
 ExtData_Voice_CheckMode3_Helper_Skip:
 	cp	(xwa), 12
 	jr	nz, ExtData_Voice_CheckMode3_Helper_Skip2
-	res	6, (36976:16)
-	res	6, (36977:16)
+	res	6, (EXTDATA_VALUE:16)
+	res	6, (EXTDATA_MASK:16)
 ExtData_Voice_CheckMode3_Helper_Skip2:
 	bit	1, (36921:16)
 	jr	z, ExtData_Voice_CheckMode3_Helper_Skip3
@@ -4935,7 +4935,7 @@ ExtData_Voice_CheckMode3_Helper_Skip3:
 	ldw	wa, 104
 ExtData_Voice_CheckMode3_Helper_Join:
 	calr	ExtData_ToneParam_DispatchHandler_Helper
-	ld	c, (0x9071:16)
+	ld	c, (EXTDATA_MASK:16)
 	ld	a, c
 	and	a, 7
 	cp	a, 7:i3
@@ -4946,7 +4946,7 @@ ExtData_Voice_CheckMode3_Helper_Join:
 ExtData_ToneParam_DispatchHandler_Skip2:
 	and	c, 3
 	jr	z, ExtData_ToneParam_DispatchHandler_Join4
-	ld	a, (0x9070:16)
+	ld	a, (EXTDATA_VALUE:16)
 	cp	a, 2:i3
 	jr	nz, ExtData_ToneParam_DispatchHandler_Skip3
 	ld	(0x9093:16), 1
@@ -5008,7 +5008,7 @@ FileIO_AllocBuffer:
 	ret
 ExtData_ToneParam_CheckMode:
 	calr	SndParam_WriteLookupAndStore
-	ld	a, (0x906f:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	cp	a, 1:i3
 	jr	z, ExtData_ToneParam_CheckMode_Skip
 	cp	a, 0:i3
@@ -5029,7 +5029,7 @@ ExtData_Tag43_SetByte1Fields:
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_ToneParam_AltDispatch:
 	calr	SndParam_WriteLookupAndStore
-	ld	a, (0x906f:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	extz	wa
 	cp	wa, 0:i3
 	ret	mi
@@ -5077,7 +5077,7 @@ ExtData_ToneParam_AltEntry:
 	ret
 ExtData_ToneParam_AltBody:
 	calr	SndParam_WriteLookupAndStore
-	ld	a, (0x906f:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	extz	wa
 	cp	wa, 0:i3
 	ret	mi
@@ -5107,8 +5107,8 @@ ExtData_ToneParam_AltBody_Case1:	; cases 1, 2
 	ret
 ExtData_ToneParam_AltBody_Join:
 	lda	xwa, (0x902a:16)
-	ld	(xwa), (0x9070)
-	ld	(xwa+1), (0x9071)
+	ld	(xwa), (EXTDATA_VALUE)
+	ld	(xwa+1), (EXTDATA_MASK)
 	ld	(xwa+2), (MIDI_MSG_STATUS)
 	call	Rhythm_LookupTempoVelocity_Wrap
 	ld	a, (MIDI_MSG_STATUS:16)
@@ -5152,8 +5152,8 @@ ExtData_ToneParam_AltBody_Join3:
 	calr	ExtData_ToneParam_DispatchHandler_Helper
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_ToneParam_AltBody_OnStyleProgram_Skip:
-	ld	(MIDI_MSG_DATA2), (36976:16)
-	ld	(MIDI_MSG_DATA3), (36977:16)
+	ld	(MIDI_MSG_DATA2), (EXTDATA_VALUE:16)
+	ld	(MIDI_MSG_DATA3), (EXTDATA_MASK:16)
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_ToneParam_AltBody_Join4:
 	ldw	wa, 48
@@ -5164,15 +5164,15 @@ ExtData_SetTempoIfChanged:
 	lda	xiz, (PANEL_STYLE:16)
 	lda	xbc, (xiz+8)
 	lda	xhl, (xiz+9)
-	ld	e, (0x9070:16)
+	ld	e, (EXTDATA_VALUE:16)
 	cp	(xbc), e
 	jr	nz, ExtData_ToneParam_AltBody_Skip
 	ld	a, (xhl)
-	cp	a, (0x9071:16)
+	cp	a, (EXTDATA_MASK:16)
 	jr	z, ExtData_ToneParam_AltBody_Epilogue
 ExtData_ToneParam_AltBody_Skip:
 	ld	(xbc), e
-	ld	(xhl), (0x9071)
+	ld	(xhl), (EXTDATA_MASK)
 	ld	(MIDI_MSG_DATA2), (xbc)
 	ld	(MIDI_MSG_DATA3:16), 255
 	calr	SwbtWr_FlushAndAppendParams
@@ -5186,7 +5186,7 @@ ExtData_ToneParam_AltBody_Epilogue:
 	ret
 ExtData_ToneParam_MultiChannel:
 	calr	SndParam_WriteLookupAndStore
-	ld	a, (0x906f:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	cp	a, 16
 	jr	z, ExtData_ToneParam_MultiChannel_Skip2
 	cp	a, 4:i3
@@ -5203,7 +5203,7 @@ ExtData_ToneParam_MultiChannel_Skip2:
 	calr	ExtData_ToneParam_MultiChannel_Helper
 	ret
 ExtData_ToneParam_MultiChannel_Skip3:
-	ld	c, (0x9071:16)
+	ld	c, (EXTDATA_MASK:16)
 	ld	a, c
 	and	a, 255
 	cp	a, 255
@@ -5213,7 +5213,7 @@ ExtData_ToneParam_MultiChannel_Skip3:
 ExtData_ToneParam_MultiChannel_Skip4:
 	and	c, 3
 	ret	z
-	ld	c, (0x9070:16)
+	ld	c, (EXTDATA_VALUE:16)
 	and	c, 3
 	lda	xwa, (PANEL_CONDUCTOR+4:16)
 	cp	c, 3:i3
@@ -5276,12 +5276,12 @@ ExtData_ToneParam_MultiChannel_Join3:
 	bit	0, (xbc+3)
 	jr	nz, ExtData_ToneParam_MultiChannel_Skip11
 ExtData_ToneParam_MultiChannel_Skip10:
-	cp	(36975:16), 1
+	cp	(EXTDATA_TLV_OFFSET:16), 1
 	jr	nz, ExtData_ToneParam_MultiChannel_Skip11
-	res	1, (0x9070:16)
-	res	1, (0x9071:16)
+	res	1, (EXTDATA_VALUE:16)
+	res	1, (EXTDATA_MASK:16)
 ExtData_ToneParam_MultiChannel_Skip11:
-	cp	(0x906f:16), 1
+	cp	(EXTDATA_TLV_OFFSET:16), 1
 	jr	nz, ExtData_ToneParam_MultiChannel_Skip13
 	ld	wa, 2:i3
 	calr	ExtData_ToneParam_DispatchHandler_Helper
@@ -5290,33 +5290,33 @@ ExtData_ToneParam_MultiChannel_Skip11:
 	ret
 ExtData_ToneParam_MultiChannel_Skip12:
 	set	0, (36921:16)
-	res	1, (36976:16)
-	res	1, (36977:16)
+	res	1, (EXTDATA_VALUE:16)
+	res	1, (EXTDATA_MASK:16)
 	ld	(MIDI_MSG_DATA3:16), 0
 ExtData_ToneParam_MultiChannel_Skip13:
 	calr	ExtData_ToneParam_MultiChannel_Helper2
 	call	ToneGen_DispatchByMode
 	jrl	MIDI_WriteResetSequence
 ExtData_ToneParam_MultiChannel_Helper2:
-	ld	c, (0x9071:16)
+	ld	c, (EXTDATA_MASK:16)
 	cp	c, 0:i3
 	ret	z
 	lda	xix, (0x909f:16)
 	lda	xhl, (0x90a1:16)
-	ld	e, (0x906f:16)
+	ld	e, (EXTDATA_TLV_OFFSET:16)
 	extz	de
-	ld	a, (0x9070:16)
+	ld	a, (EXTDATA_VALUE:16)
 	and	a, c
 	or	(xix+de), a
-	ld	c, (36975:16)
+	ld	c, (EXTDATA_TLV_OFFSET:16)
 	extz	bc
-	ld	a, (0x9071:16)
+	ld	a, (EXTDATA_MASK:16)
 	cpl	a
 	and	(xhl+bc), a
-	ld	c, (36975:16)
+	ld	c, (EXTDATA_TLV_OFFSET:16)
 	extz	bc
-	ld	a, (36976:16)
-	and	a, (36977:16)
+	ld	a, (EXTDATA_VALUE:16)
+	and	a, (EXTDATA_MASK:16)
 	or	(xhl+bc), a
 	ld	c, (xhl)
 	cp	c, 0:i3
@@ -5351,63 +5351,63 @@ MIDI_WriteResetSequence:
 	ld	a, (0x9039:16)
 	bit	0, a
 	ret	z
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	ld	de, wa
 	inc	1, wa
-	ld	(0x901e:16), wa
+	ld	(SWBTWR_WRITE_INDEX:16), wa
 	lda	xbc, (SWBTWR_EVENT_QUEUE:16)
 	extz	xde
 	add	xde, xbc
 	ld	(xde), 0x90
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	ld	de, wa
 	inc	1, wa
-	ld	(0x901e:16), wa
+	ld	(SWBTWR_WRITE_INDEX:16), wa
 	extz	xde
 	add	xde, xbc
 	ld	(xde), 0x0
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	ld	hl, wa
 	inc	1, wa
-	ld	(0x901e:16), wa
+	ld	(SWBTWR_WRITE_INDEX:16), wa
 	extz	xhl
 	add	xhl, xbc
 	lda	xde, (PANEL_CONDUCTOR:16)
 	ld	a, (xde)
 	ld	(xhl), a
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	ld	hl, wa
 	inc	1, wa
-	ld	(0x901e:16), wa
+	ld	(SWBTWR_WRITE_INDEX:16), wa
 	extz	xhl
 	add	xhl, xbc
 	ld	(xhl), 0x1f
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	ld	hl, wa
 	inc	1, wa
-	ld	(0x901e:16), wa
+	ld	(SWBTWR_WRITE_INDEX:16), wa
 	extz	xhl
 	add	xhl, xbc
 	ld	(xhl), 0x90
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	ld	hl, wa
 	inc	1, wa
-	ld	(0x901e:16), wa
+	ld	(SWBTWR_WRITE_INDEX:16), wa
 	extz	xhl
 	add	xhl, xbc
 	ld	(xhl), 0x1
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	ld	hl, wa
 	inc	1, wa
-	ld	(0x901e:16), wa
+	ld	(SWBTWR_WRITE_INDEX:16), wa
 	extz	xhl
 	add	xhl, xbc
 	ld	a, (xde + 1)
 	ld	(xhl), a
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	ld	de, wa
 	inc	1, wa
-	ld	(0x901e:16), wa
+	ld	(SWBTWR_WRITE_INDEX:16), wa
 	extz	xde
 	add	xde, xbc
 	ld	(xde), 0x1f
@@ -5441,12 +5441,12 @@ ExtData_Voice_UpdateFlags:
 	calr	MIDI_WriteResetSequence
 	ret
 ExtData_ToneParam_MultiChannel_Helper:
-	ld	(MIDI_MSG_DATA2), (36976:16)
-	ld	(MIDI_MSG_DATA3), (36977:16)
+	ld	(MIDI_MSG_DATA2), (EXTDATA_VALUE:16)
+	ld	(MIDI_MSG_DATA3), (EXTDATA_MASK:16)
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_Voice_CheckMode:
 	calr	SndParam_WriteLookupAndStore
-	ld	a, (0x906f:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	cp	a, 1:i3
 	ret	nz
 	calr	ExtData_ToggleReverbIllusionOnOff
@@ -5459,7 +5459,7 @@ ExtData_Voice_RetEntry:
 	ret
 ExtData_Voice_MixedHandler:
 	calr	SndParam_WriteLookupAndStore
-	ld	a, (0x906f:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	cp	a, 2:i3
 	jr	z, ExtData_Voice_MixedHandler_Skip
 	cp	a, 0:i3
@@ -5481,8 +5481,8 @@ ExtData_Voice_MixedHandler_Join:
 	calr	SwbtWr_FlushAndAppendParams
 	cp	(0xc508:16), 255
 	ret	nz
-	ld	a, (0x9070:16)
-	and	a, (0x9071:16)
+	ld	a, (EXTDATA_VALUE:16)
+	and	a, (EXTDATA_MASK:16)
 	bit	0, a
 	jr	z, ExtData_Voice_MixedHandler_Skip5
 	ld	a, (PANEL_PLAY_SETTINGS:16)
@@ -5498,7 +5498,7 @@ ExtData_Voice_MixedHandler_Join4:
 	call	CtrlPanel_SetIndicatorBit
 	ret
 ExtData_Voice_MixedHandler_Helper:
-	ld	c, (0x9071:16)
+	ld	c, (EXTDATA_MASK:16)
 	ld	a, c
 	and	a, 255
 	cp	a, 255
@@ -5511,7 +5511,7 @@ ExtData_Voice_MixedHandler_Skip6:
 	jr	nz, ExtData_Voice_MixedHandler_Join3
 	and	c, 3
 	jr	z, ExtData_Voice_MixedHandler_Join3
-	ld	a, (0x9070:16)
+	ld	a, (EXTDATA_VALUE:16)
 	and	a, 3
 	cp	a, 1:i3
 	jr	z, ExtData_Voice_MixedHandler_Skip2
@@ -5548,7 +5548,7 @@ ExtData_Voice_MixedHandler_Skip4:
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_Voice_CheckMode3:
 	calr	SndParam_WriteLookupAndStore
-	ld	a, (0x906f:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	cp	a, 3:i3
 	ret	nz
 	calr	ExtData_Voice_CheckMode3_Helper
@@ -5559,7 +5559,7 @@ ExtData_Voice_RetEntry2:
 ; framing ported from v10's source for the same label (same span length, statement for statement); 66 of 90 slots byte-identical
 ExtData_Voice_FullHandler:
 	calr	SndParam_WriteLookupAndStore
-	ld	a, (0x906f:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	cp	a, 11
 	jr	z, ExtData_Voice_FullHandler_Skip
 	cp	a, 2:i3
@@ -5577,13 +5577,13 @@ ExtData_Voice_FullHandler_Skip:
 ExtData_Voice_FullHandler_Join:
 	ldw	wa, 128
 	calr	ExtData_Voice_FullHandler_Helper2
-	and	(36978:16), 128
+	and	(EXTDATA_NEW_VALUE:16), 128
 	ldw	wa, 127
 	calr	VoiceParam_CompareAndUpdate
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_Voice_FullHandler_Skip2:
-	ld	a, (0x9070:16)
-	and	a, (0x9071:16)
+	ld	a, (EXTDATA_VALUE:16)
+	and	a, (EXTDATA_MASK:16)
 	ret	z
 	ld	wa, 1:i3
 	calr	ExtData_ToneParam_DispatchHandler_Helper
@@ -5646,11 +5646,11 @@ ExtData_Voice_FullHandler_Helper_Code_Skip3:
 	pop	qiz
 	ret
 ExtData_Voice_CopyAndJump:
-	ld	(MIDI_MSG_DATA2), (36976:16)
-	ld	(MIDI_MSG_DATA3), (36977:16)
+	ld	(MIDI_MSG_DATA2), (EXTDATA_VALUE:16)
+	ld	(MIDI_MSG_DATA3), (EXTDATA_MASK:16)
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_Voice_CompareAndDispatch:
-	ld	a, (0x906f:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	cp	a, 0:i3
 	jr	z, ExtData_Voice_CompareAndDispatch_Skip
 	cp	a, 1:i3
@@ -5666,8 +5666,8 @@ ExtData_Voice_CompareAndDispatch_Helper:
 	calr	Audio_FlushPendingBankSelects
 	ld	(0x90be:16), 176
 	ld	(0x90bf:16), 0
-	ld	(0x90c0), (36976:16)
-	ld	(0x90c1), (36977:16)
+	ld	(0x90c0), (EXTDATA_VALUE:16)
+	ld	(0x90c1), (EXTDATA_MASK:16)
 	jp	MIDI_LoadParamsAndDispatchCC
 MidiChannel_ResetAndConfigure:
 	res	7, (0x2892:16)
@@ -5737,13 +5737,13 @@ MidiChannel_ResetAndConfigure_Skip2:
 	calr	SwbtWr_FlushAndAppendParams
 	ld	(0x90be), (MIDI_MSG_STATUS:16)
 	ld	(0x90bf), (MIDI_MSG_DATA1:16)
-	ld	(0x90c0), (36976:16)
-	ld	(0x90c1), (36977:16)
+	ld	(0x90c0), (EXTDATA_VALUE:16)
+	ld	(0x90c1), (EXTDATA_MASK:16)
 	call	MIDI_LoadParamsAndDispatchCC
 	ret
 MidiCh_IterateVolume_Forward:
 	pushw	iz
-	ldb_d8	a, (0x9071)
+	ldb_d8	a, (EXTDATA_MASK)
 	res	7, a
 	cp	a, 0:i3
 	jr	z, MidiCh_IterateVolume_Forward_Epilogue
@@ -5763,8 +5763,8 @@ MidiCh_IterateVolume_Forward_Loop:
 MidiCh_IterateVolume_Forward_Skip:
 	ldmm8	0x90be, MIDI_MSG_STATUS
 	ld	(0x90bf), (xbc)
-	ldmm8	0x90c0, 0x9070
-	ldmm8	0x90c1, 0x9071
+	ldmm8	0x90c0, EXTDATA_VALUE
+	ldmm8	0x90c1, EXTDATA_MASK
 	call	MIDI_LoadParamsAndDispatchCC
 	lda_d16	xwa, (0x903b)
 	ld	bc, iz
@@ -5808,8 +5808,8 @@ MidiCh_IterateVolume_Reverse_Loop:
 MidiCh_IterateVolume_Reverse_Skip:
 	ldmm8	0x90be, MIDI_MSG_STATUS
 	ld	(0x90bf), (xbc)
-	ldmm8	0x90c0, 0x9070
-	ldmm8	0x90c1, 0x9071
+	ldmm8	0x90c0, EXTDATA_VALUE
+	ldmm8	0x90c1, EXTDATA_MASK
 	call	MIDI_LoadParamsAndDispatchCC
 	lda_d16	xwa, (0x903b)
 	ld	bc, iz
@@ -5837,7 +5837,7 @@ MidiCh_IterateVolume_Reverse_Epilogue:
 	ret
 MidiCh_IteratePan_Forward:
 	pushw	iz
-	ldb_d8	a, (0x9071)
+	ldb_d8	a, (EXTDATA_MASK)
 	res	7, a
 	cp	a, 0:i3
 	jrl	z, MidiCh_IteratePan_Forward_Epilogue
@@ -5865,8 +5865,8 @@ MidiCh_IteratePan_Forward_Skip:
 	extz	xbc
 	add	xbc, xwa
 	ld	(0x90bf), (xbc)
-	ldmm8	0x90c0, 0x9070
-	ldmm8	0x90c1, 0x9071
+	ldmm8	0x90c0, EXTDATA_VALUE
+	ldmm8	0x90c1, EXTDATA_MASK
 	call	MIDI_LoadParamsAndDispatchCC
 	lda_d16	xwa, (0x903b)
 	ld	bc, iz
@@ -5895,7 +5895,7 @@ MidiCh_IteratePan_Forward_Epilogue:
 MidiCh_IterateExpression:
 	dec	2, xsp
 	push	xiz
-	ldb_d8	a, (0x9071)
+	ldb_d8	a, (EXTDATA_MASK)
 	res	7, a
 	cp	a, 0:i3
 	jr	z, MidiCh_IterateExpression_Epilogue
@@ -5921,8 +5921,8 @@ MidiCh_IterateExpression_Loop:
 	extz	xbc
 	add	xbc, xwa
 	ld	(0x90bf), (xbc)
-	ldmm8	0x90c0, 0x9070
-	ldmm8	0x90c1, 0x9071
+	ldmm8	0x90c0, EXTDATA_VALUE
+	ldmm8	0x90c1, EXTDATA_MASK
 	call	MIDI_LoadParamsAndDispatchCC
 	bitm	5, (xiz+0xd)
 	jr	nz, MidiCh_IterateExpression_Skip
@@ -6443,11 +6443,11 @@ UIState_RenderBitmapData_Skip2:
 ToshiCmd_DefaultHandler_Ret:
 	ret
 SndParam_FetchSequencerParams:
-	ld	wa, (0x9073:16)
+	ld	wa, (EXT_RECORD_OFFSET:16)
 	ld	bc, wa
 	inc	1, wa
-	ld	(0x9073:16), wa
-	lda	xwa, (0xbf79:16)
+	ld	(EXT_RECORD_OFFSET:16), wa
+	lda	xwa, (PANEL_EVENT_QUEUE:16)
 	extz	xbc
 	add	xbc, xwa
 	mrib4	0x81, 0x19, 0x67, 0x90
@@ -6455,28 +6455,28 @@ SndParam_FetchSequencerParams:
 	extz	wa
 	calr	PanelTlv_PayloadOfTag
 	ld	(0x906b:16), xhl
-	ld	wa, (0x9073:16)
+	ld	wa, (EXT_RECORD_OFFSET:16)
 	ld	de, wa
 	inc	1, wa
-	ld	(0x9073:16), wa
-	lda	xbc, (0xbf79:16)
+	ld	(EXT_RECORD_OFFSET:16), wa
+	lda	xbc, (PANEL_EVENT_QUEUE:16)
 	extz	xde
 	add	xde, xbc
 	ld	a, (xde)
 	ld	(MIDI_MSG_DATA1:16), a
-	ld	(0x906f:16), a
-	ld	wa, (0x9073:16)
+	ld	(EXTDATA_TLV_OFFSET:16), a
+	ld	wa, (EXT_RECORD_OFFSET:16)
 	ld	de, wa
 	inc	1, wa
-	ld	(0x9073:16), wa
+	ld	(EXT_RECORD_OFFSET:16), wa
 	extz	xde
 	add	xde, xbc
 	mrib4	0x82, 0x19, 0x70, 0x90
 	ld	(MIDI_MSG_DATA2:16), 0
-	ld	wa, (0x9073:16)
+	ld	wa, (EXT_RECORD_OFFSET:16)
 	ld	de, wa
 	inc	1, wa
-	ld	(0x9073:16), wa
+	ld	(EXT_RECORD_OFFSET:16), wa
 	extz	xde
 	add	xde, xbc
 	mrib4	0x82, 0x19, 0x71, 0x90
@@ -6488,14 +6488,14 @@ SndParam_WriteLookupAndStore:
 	calr	PanelTlv_PayloadOfTag
 	cp	xhl, 0xffffffff
 	ret	z
-	ld	a, (0x906f:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	extz	wa
-	ld	(0x9072), (xhl+wa)
+	ld	(EXTDATA_NEW_VALUE), (xhl+wa)
 	ret
 SwbtWr_FlushAndAppendParams:
 	cp	(MIDI_MSG_DATA3:16), 0
 	ret	z
-	cpw	(0x901e:16), 508
+	cpw	(SWBTWR_WRITE_INDEX:16), 508
 	jr	c, SwbtWr_FlushDone
 	push	xde
 	push	xhl
@@ -6506,12 +6506,12 @@ SwbtWr_FlushAndAppendParams:
 	pop	xix
 	pop	xhl
 	pop	xde
-	ldw	(0x901e:16), 0
+	ldw	(SWBTWR_WRITE_INDEX:16), 0
 SwbtWr_FlushDone:
 	calr	SwbtWr_AppendFixedParamBlock
 	ret
 SwbtWr_CheckBufferOverflow:
-	cpw	(0x901e:16), 508
+	cpw	(SWBTWR_WRITE_INDEX:16), 508
 	jr	c, SwbtWr_CheckBufferOverflow_Skip
 	push	xde
 	push	xhl
@@ -6522,11 +6522,11 @@ SwbtWr_CheckBufferOverflow:
 	pop	xix
 	pop	xhl
 	pop	xde
-	ldw	(0x901e:16), 0
+	ldw	(SWBTWR_WRITE_INDEX:16), 0
 SwbtWr_CheckBufferOverflow_Skip:
 	jrl	SwbtWr_AppendFixedParamBlock
 SwbtWr_WriteParamBlock:
-	cpw	(0x901e:16), 508
+	cpw	(SWBTWR_WRITE_INDEX:16), 508
 	jr	c, SwbtWr_WriteParamBlock_Join
 	push	xde
 	push	xhl
@@ -6537,17 +6537,17 @@ SwbtWr_WriteParamBlock:
 	pop	xix
 	pop	xhl
 	pop	xde
-	ldw	(0x901e:16), 0
+	ldw	(SWBTWR_WRITE_INDEX:16), 0
 SwbtWr_WriteParamBlock_Join:
 	jrl	SwbtWr_AppendFixedParamBlock
 ExtData_ToneParam_DispatchHandler_Helper:
 	dec	2, xsp
 	ld	(xsp), a
-	ld	c, (0x9071:16)
+	ld	c, (EXTDATA_MASK:16)
 	ld	a, c
 	and	a, (xsp)
 	jr	z, Voice_Update_Return
-	ld	a, (0x9070:16)
+	ld	a, (EXTDATA_VALUE:16)
 	and	a, c
 	jr	z, Voice_Update_Return
 	ld	a, (MIDI_MSG_STATUS:16)
@@ -6555,13 +6555,13 @@ ExtData_ToneParam_DispatchHandler_Helper:
 	calr	PanelTlv_PayloadOfTag
 	cp	xhl, 0xffffffff
 	jr	z, Voice_Update_Return
-	ld	a, (0x906f:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	extz	wa
 	lda	xhl, (xhl+wa)
-	ld	a, (0x9070:16)
-	and	a, (0x9071:16)
+	ld	a, (EXTDATA_VALUE:16)
+	and	a, (EXTDATA_MASK:16)
 	xor	(xhl), a
-	ld	c, (0x9072:16)
+	ld	c, (EXTDATA_NEW_VALUE:16)
 	cp	(xhl), c
 	jr	z, Voice_Update_Return
 	ld	a, (xhl)
@@ -6576,10 +6576,10 @@ Voice_Update_Return:
 VoiceParam_CompareAndUpdate:
 	dec	2, xsp
 	ld	(xsp), a
-	ld	a, (0x9071:16)
+	ld	a, (EXTDATA_MASK:16)
 	and	a, (xsp)
 	jr	z, VoiceParam_CompareAndUpdate_Epilogue
-	ld	a, (36976:16)
+	ld	a, (EXTDATA_VALUE:16)
 	and	a, (xsp)
 	; data-as-code (v10_data_as_code_census.py, STRICT rule): 0xFC972C-0xFC9746 (26 B), unreached CODE-territory, was disassembled as 9 plausible-but-dead instruction lines; per=67% dist=15 near VoiceParam_CompareAndUpdate+17
 	jr	z, VoiceParam_CompareAndUpdate_Epilogue
@@ -6588,19 +6588,19 @@ VoiceParam_CompareAndUpdate:
 	calr	PanelTlv_PayloadOfTag
 	cp	xhl, 4294967295
 	jr	z, VoiceParam_CompareAndUpdate_Epilogue
-	ld	a, (36975:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	extz	wa
 	lda	xhl, (xhl+wa)
 	ld	a, (xsp)
 	cpl	a
 	and	a, (xhl)
-	or	a, (0x9070:16)
+	or	a, (EXTDATA_VALUE:16)
 	ld	c, a
-	ld	a, (0x9072:16)
+	ld	a, (EXTDATA_NEW_VALUE:16)
 	cp	c, a
 	jr	z, VoiceParam_CompareAndUpdate_Epilogue
 	ld	(xhl), c
-	ld	(0x9072:16), c
+	ld	(EXTDATA_NEW_VALUE:16), c
 	ld	(MIDI_MSG_DATA2:16), c
 	ld	a, (xsp)
 	or	(MIDI_MSG_DATA3:16), a
@@ -6610,7 +6610,7 @@ VoiceParam_CompareAndUpdate_Epilogue:
 ExtData_ToneParam_DispatchHandler_Helper2:
 	dec	2, xsp
 	ld	(xsp), a
-	ld	a, (0x9071:16)
+	ld	a, (EXTDATA_MASK:16)
 	and	a, (xsp)
 	; data-as-code (v10_data_as_code_census.py, STRICT rule): 0xFC977B-0xFC9795 (26 B), unreached CODE-territory, was disassembled as 9 plausible-but-dead instruction lines; per=67% dist=15 near VoiceParam_CompareAndUpdate+96
 	jr	z, ExtData_ToneParam_DispatchHandler_Helper2_Epilogue
@@ -6619,19 +6619,19 @@ ExtData_ToneParam_DispatchHandler_Helper2:
 	calr	PanelTlv_PayloadOfTag
 	cp	xhl, 4294967295
 	jr	z, ExtData_ToneParam_DispatchHandler_Helper2_Epilogue
-	ld	a, (36975:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	extz	wa
 	lda	xhl, (xhl+wa)
 	ld	a, (xsp)
 	cpl	a
 	and	a, (xhl)
-	or	a, (0x9070:16)
+	or	a, (EXTDATA_VALUE:16)
 	ld	c, a
-	ld	a, (0x9072:16)
+	ld	a, (EXTDATA_NEW_VALUE:16)
 	cp	c, a
 	jr	z, ExtData_ToneParam_DispatchHandler_Helper2_Epilogue
 	ld	(xhl), c
-	ld	(0x9072:16), c
+	ld	(EXTDATA_NEW_VALUE:16), c
 	ld	(MIDI_MSG_DATA2:16), c
 	ld	a, (xsp)
 	or	(MIDI_MSG_DATA3:16), a
@@ -6640,10 +6640,10 @@ ExtData_ToneParam_DispatchHandler_Helper2_Epilogue:
 	ret
 	dec	2, xsp
 	ld	(xsp), a
-	ld	a, (0x9071:16)
+	ld	a, (EXTDATA_MASK:16)
 	and	a, (xsp)
 	jr	z, SwbtWr_WriteParamBlock_Epilogue
-	ld	a, (36976:16)
+	ld	a, (EXTDATA_VALUE:16)
 	and	a, (xsp)
 	jr	z, SwbtWr_WriteParamBlock_Epilogue
 	ld	a, (MIDI_MSG_STATUS:16)
@@ -6651,21 +6651,21 @@ ExtData_ToneParam_DispatchHandler_Helper2_Epilogue:
 	calr	PanelTlv_PayloadOfTag
 	cp	xhl, 0xffffffff
 	jr	z, SwbtWr_WriteParamBlock_Epilogue
-	ld	a, (0x906f:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	extz	wa
 	lda	xhl, (xhl+wa)
 	ld	c, (xsp)
 	cpl	c
 	ld	e, c
 	and	e, (xhl)
-	or	e, (0x9070:16)
-	ld	a, (0x9072:16)
+	or	e, (EXTDATA_VALUE:16)
+	ld	a, (EXTDATA_NEW_VALUE:16)
 	cp	e, a
 	jr	nz, SwbtWr_WriteParamBlock_Skip
 	and	e, c
 SwbtWr_WriteParamBlock_Skip:
 	ld	(xhl), e
-	ld	(0x9072:16), e
+	ld	(EXTDATA_NEW_VALUE:16), e
 	ld	(MIDI_MSG_DATA2:16), e
 	ld	a, (xsp)
 	or	(MIDI_MSG_DATA3:16), a
@@ -6675,7 +6675,7 @@ SwbtWr_WriteParamBlock_Epilogue:
 ExtData_ToneParam_AltBody_Helper:
 	dec	2, xsp
 	ld	(xsp), a
-	ld	a, (0x9071:16)
+	ld	a, (EXTDATA_MASK:16)
 	and	a, (xsp)
 	jr	z, SwbtWr_WriteParamBlock_Epilogue2
 	ld	a, (MIDI_MSG_STATUS:16)
@@ -6683,21 +6683,21 @@ ExtData_ToneParam_AltBody_Helper:
 	calr	PanelTlv_PayloadOfTag
 	cp	xhl, 0xffffffff
 	jr	z, SwbtWr_WriteParamBlock_Epilogue2
-	ld	a, (0x906f:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	extz	wa
 	lda	xhl, (xhl+wa)
 	ld	c, (xsp)
 	cpl	c
 	ld	e, c
 	and	e, (xhl)
-	or	e, (0x9070:16)
-	ld	a, (0x9072:16)
+	or	e, (EXTDATA_VALUE:16)
+	ld	a, (EXTDATA_NEW_VALUE:16)
 	cp	e, a
 	jr	nz, SwbtWr_WriteParamBlock_Skip2
 	and	e, c
 SwbtWr_WriteParamBlock_Skip2:
 	ld	(xhl), e
-	ld	(0x9072:16), e
+	ld	(EXTDATA_NEW_VALUE:16), e
 	ld	(MIDI_MSG_DATA2:16), e
 	ld	a, (xsp)
 	or	(MIDI_MSG_DATA3:16), a
@@ -6707,10 +6707,10 @@ SwbtWr_WriteParamBlock_Epilogue2:
 ExtData_ToneParam_DispatchHandler_Helper3:
 	dec	2, xsp
 	ld	(xsp), c
-	ld	c, (0x9071:16)
+	ld	c, (EXTDATA_MASK:16)
 	and	c, a
 	jr	z, SwbtWr_WriteParamBlock_Epilogue3
-	ld	c, (0x9070:16)
+	ld	c, (EXTDATA_VALUE:16)
 	and	c, a
 	jr	z, SwbtWr_WriteParamBlock_Epilogue3
 	ld	a, (MIDI_MSG_STATUS:16)
@@ -6718,7 +6718,7 @@ ExtData_ToneParam_DispatchHandler_Helper3:
 	calr	PanelTlv_PayloadOfTag
 	cp	xhl, 0xffffffff
 	jr	z, SwbtWr_WriteParamBlock_Epilogue3
-	ld	a, (0x906f:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	extz	wa
 	lda	xhl, (xhl+wa)
 	ld	e, (xhl)
@@ -6737,11 +6737,11 @@ SwbtWr_WriteParamBlock_Join3:
 	cpl	a
 	and	a, (xhl)
 	or	e, a
-	ld	a, (36978:16)
+	ld	a, (EXTDATA_NEW_VALUE:16)
 	cp	e, a
 	jr	z, SwbtWr_WriteParamBlock_Epilogue3
 	ld	(xhl), e
-	ld	(0x9072:16), e
+	ld	(EXTDATA_NEW_VALUE:16), e
 	ld	(MIDI_MSG_DATA2:16), e
 	ld	a, (xsp)
 	or	(MIDI_MSG_DATA3:16), a
@@ -6751,7 +6751,7 @@ SwbtWr_WriteParamBlock_Epilogue3:
 ExtData_Voice_FullHandler_Helper2:
 	dec	2, xsp
 	ld	(xsp), a
-	ld	a, (0x9071:16)
+	ld	a, (EXTDATA_MASK:16)
 	and	a, (xsp)
 	jr	z, SwbtWr_WriteParamBlock_Epilogue4
 	ld	a, (MIDI_MSG_STATUS:16)
@@ -6759,18 +6759,18 @@ ExtData_Voice_FullHandler_Helper2:
 	calr	PanelTlv_PayloadOfTag
 	cp	xhl, 0xffffffff
 	jr	z, SwbtWr_WriteParamBlock_Epilogue4
-	ld	a, (0x906f:16)
+	ld	a, (EXTDATA_TLV_OFFSET:16)
 	extz	wa
 	lda	xhl, (xhl+wa)
 	ld	a, (xsp)
 	cpl	a
 	and	a, (xhl)
 	ld	c, a
-	ld	a, (36976:16)
+	ld	a, (EXTDATA_VALUE:16)
 	and	a, (xsp)
 	or	a, c
 	ld	(xhl), a
-	ld	(0x9072:16), a
+	ld	(EXTDATA_NEW_VALUE:16), a
 	ld	(MIDI_MSG_DATA2:16), a
 	ld	a, (xsp)
 	or	(MIDI_MSG_DATA3:16), a
@@ -6793,7 +6793,7 @@ ToneGen_ApplyVoiceParams:
 	extz	wa
 	lda	xhl, (xhl+wa)
 	ld	c, (xhl)
-	ld	(0x9072:16), c
+	ld	(EXTDATA_NEW_VALUE:16), c
 	ld	e, (xsp)
 	and	e, (xsp + 10)
 	ld	a, (xsp + 10)
@@ -7066,7 +7066,7 @@ RegBitManip_Handler_4_Helper:
 	ret
 MidiStream_CmdPedalNotify_Helper2_Helper:
 	dec	6, xsp
-	ld	a, (0x9037:16)
+	ld	a, (PROGRAM_CHANGE_PART:16)
 	lda	xbc, (0x90af:16)
 	lda	xde, (xbc+1)
 	cp	a, 31
@@ -7076,7 +7076,7 @@ MidiStream_CmdPedalNotify_Helper2_Helper:
 	ld	(xwa+3), c
 	ld	c, (xde)
 	ld	(xwa+4), c
-	ld	(xwa+2), (0x9037)
+	ld	(xwa+2), (PROGRAM_CHANGE_PART)
 	call	SndBuf_WriteParamEntries_Helper
 	lda	xbc, (0x902e:16)
 	lda	xwa, (xsp)
@@ -7096,7 +7096,7 @@ SndBuf_WriteParamEntries_Skip:
 	ld	(xhl), a
 	ld	a, (xde)
 	ld	(xhl+1), a
-	ld	(xhl+2), (0x9037)
+	ld	(xhl+2), (PROGRAM_CHANGE_PART)
 	nop
 	push	xde
 	push	xhl
@@ -7235,36 +7235,36 @@ PanelVari_GetGroupSlot_Epilogue:
 	inc	8, xsp
 	ret
 SwbtWr_AppendFixedParamBlock:
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	ld	de, wa
 	inc	1, wa
-	ld	(0x901e:16), wa
+	ld	(SWBTWR_WRITE_INDEX:16), wa
 	lda	xbc, (SWBTWR_EVENT_QUEUE:16)
 	extz	xde
 	add	xde, xbc
 	ldmi16	(xde), 0x9067
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	ld	de, wa
 	inc	1, wa
-	ld	(0x901e:16), wa
+	ld	(SWBTWR_WRITE_INDEX:16), wa
 	extz	xde
 	add	xde, xbc
 	ldmi16	(xde), 0x9068
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	ld	de, wa
 	inc	1, wa
-	ld	(0x901e:16), wa
+	ld	(SWBTWR_WRITE_INDEX:16), wa
 	extz	xde
 	add	xde, xbc
 	ldmi16	(xde), 0x9069
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	ld	de, wa
 	inc	1, wa
-	ld	(0x901e:16), wa
+	ld	(SWBTWR_WRITE_INDEX:16), wa
 	extz	xde
 	add	xde, xbc
 	ldmi16	(xde), 0x906a
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	(xwa), 0xff
@@ -7307,7 +7307,7 @@ VoicePanInit_Loop:
 	ld	(xbc), 0x10
 	bit	0, iz
 	jr	z, ToneGen_IncrementAndExit
-	lda	xwa, (0xf1a0:16)
+	lda	xwa, (SEQ_TRACK_ASSIGN:16)
 	ldto_werp	BC, 0xfa
 	extz	xbc
 	add	xbc, xwa
@@ -7760,7 +7760,7 @@ PartCtrl_WriteProgramChange:
 	push	xiy
 	push	xiz
 	ld	(0x902a:16), hl
-	ld	a, (0x9037:16)
+	ld	a, (PROGRAM_CHANGE_PART:16)
 	ld	(0x902c:16), a
 	call	SndParam_FetchAndStore
 	pop	xiz
@@ -7833,7 +7833,7 @@ MIDI_WriteVoiceParamCC:
 	xor	h, h
 	ld	l, c
 	sla	hl, 2
-	ld	xix, (0x9032:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	cp	xix, 0x90a6
 	jr	z, MidiWriteVoice_Done
@@ -7867,7 +7867,7 @@ MIDI_WriteVoiceParamDirect:
 	xor	h, h
 	ld	l, c
 	sla	hl, 2
-	ld	xix, (0x9032:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	cp	xix, 0x90a6
 	jr	z, MidiWriteDirect_Done
@@ -8131,13 +8131,13 @@ MidiParamValid_Return:
 	ret
 MidiStream_ProcessEventBuffer:
 	push	xiz
-	ld	a, (0x36e3:16)
+	ld	a, (CMP_RECORD_PART:16)
 	and	a, 0xf
 	jrl	z, MidiStream_Return
 	calr	MidiStream_InitFromLookup
 	ei	6
 	or	(1113:16), 1
-	ld	a, (1045:16)
+	ld	a, (ACC_CLOCK:16)
 	ld	(0x9109:16), a
 	ei	0
 	ld	xix, SWBTWR_EVENT_QUEUE
@@ -8205,7 +8205,7 @@ MidiStream_ProcessHandler_5:
 MidiStream_InitFromLookup:
 	ld	(0x9112:16), 255
 	extz	hl
-	ld	l, (0x36e3:16)
+	ld	l, (CMP_RECORD_PART:16)
 	and	l, 0xf
 	sll	hl, 2
 	ld	xiy, MidiStream_PartEventMapTable
@@ -8383,7 +8383,7 @@ Tempo_ProcessExpressionChange:
 	cpw	(0x9105:16), 0
 	jr	z, TempoExpr_Done
 	xor	l, l
-	ld	xix, 0xf1a0
+	ld	xix, SEQ_TRACK_ASSIGN
 TempoExpr_FindActivePart:
 	cpib_sri	0x03, 0xf0, 0xec, 0x0f
 	jr	z, TempoExpr_StorePartIndex
@@ -8449,13 +8449,13 @@ MIDI_SelectTempoExpressionSource:
 TempoSrc_CheckAutoPlay:
 	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jr	z, Tempo_ExpressionStore
-	ld	wa, (0x288c:16)
+	ld	wa, (SEQ_REC_TRACKS:16)
 	set	2, (0x9039:16)
 	jr	Tempo_ExpressionStore
 Tempo_Expression_Bypass:
-	bit	0, (0x28a9:16)
+	bit	0, (SEQ_PLAY_FLAGS:16)
 	jr	z, Tempo_ExpressionStore
-	ld	wa, (0x288e:16)
+	ld	wa, (SEQ_RECORDING_TRACKS:16)
 	jr	Tempo_ExpressionStore
 TempoSrc_DirectTempoMode:
 	ld	wa, (3407:16)
@@ -8479,14 +8479,14 @@ Mod_SelectExpressionSource:
 	and	(0x9039:16), 243
 	jr	Mod_ExpressionStore
 ModExpr_CheckAutoPlay:
-	cpw	(0x288c:16), 0
+	cpw	(SEQ_REC_TRACKS:16), 0
 	jr	z, Mod_ExpressionStore
-	ld	wa, (0x288c:16)
+	ld	wa, (SEQ_REC_TRACKS:16)
 	set	2, (0x9039:16)
 	jr	Mod_ExpressionStore
-	bit	0, (0x28a9:16)
+	bit	0, (SEQ_PLAY_FLAGS:16)
 	jr	z, Mod_ExpressionStore
-	ld	wa, (0x288e:16)
+	ld	wa, (SEQ_RECORDING_TRACKS:16)
 	jr	Mod_ExpressionStore
 ModExpr_DirectMode:
 	ld	wa, (3407:16)
@@ -8611,7 +8611,7 @@ MIDI_EmitRecord_C0:
 	ld	(xix+), wa
 	ldw_d16	wa, (0x90fd)
 	ld	(xix+), wa
-	ld	xiy, (0x9032:16)
+	ld	xiy, (PART_RECORD_PTRS:16)
 	extz	wa
 	sll	wa, 2
 	ld	xiy, (xiy+wa)
@@ -8785,7 +8785,7 @@ TempoRing_InitPartStream:
 	jr	c, TempoPartStream_Done
 	extz	hl
 	ld	l, (0x9107:16)
-	ld	xix, 0xf1a0
+	ld	xix, SEQ_TRACK_ASSIGN
 	ld	l, (xix+hl)
 	sll	hl, 2
 	ld	xix, SeqTrackAssign_RecordMapTable
@@ -8814,7 +8814,7 @@ TempoRingBuf_ProcessEntry:
 	call	TempoRingBuf_WriteBytes
 	inc	6, xsp
 	ei	0
-	cp	(0x9038:16), 255
+	cp	(PANEL_EVENT_SOURCE:16), 255
 	jr	nz, TempoRingBuf_ClearEntryType
 	call	AudioCtrl_SaveAllRegs
 	call	SeqPlay_CheckAndStartPlayback
@@ -8841,7 +8841,7 @@ PartExpr_ProcessNextBit:
 	ld	(0x9105:16), wa
 	jr	nc, PartExpr_AdvanceBit
 	ld	l, c
-	ld	xix, 0xf1a0
+	ld	xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+l)
 	cp	a, 0:i3
 	jr	z, PartExpr_WriteToBuffer
@@ -8889,12 +8889,12 @@ PartExpr_Done:
 	ret
 Part_ReinitAllActive:
 	push	xiz
-	ld	(0x9108:16), 0
+	ld	(MIDI_CUR_PART:16), 0
 PartReinit_ProcessNextPart:
-	ld	c, (0x9108:16)
+	ld	c, (MIDI_CUR_PART:16)
 	ldfr_berp	A, 0x3c
 	ldfr_werp	DE, 0x3e
-	ld	de, (0xf19e:16)
+	ld	de, (SEQ_TRACK_MASK:16)
 	ld	a, c
 	scf
 	xorcf_a_16	de
@@ -8903,7 +8903,7 @@ PartReinit_ProcessNextPart:
 	jr	c, PartReinit_AdvancePart
 	extz	hl
 	ld	l, c
-	ld	xix, 0xf1a0
+	ld	xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+hl)
 	ld	(0x910d:16), a
 	calr	PartReinit_SendD0Command
@@ -8913,8 +8913,8 @@ PartReinit_ProcessNextPart:
 	calr	PartReinit_SendD0Command
 	calr	PartReinit_CheckSpecialPart15
 PartReinit_AdvancePart:
-	inc	1, (0x9108:16)
-	cp	(0x9108:16), 16
+	inc	1, (MIDI_CUR_PART:16)
+	cp	(MIDI_CUR_PART:16), 16
 	jr	c, PartReinit_ProcessNextPart
 	calr	PendingParam_ScanAllTables
 	call	SwbtWr_ReinitOutputBank
@@ -8927,7 +8927,7 @@ PartReinit_SendD2Command:
 	xor	a, a
 	ld	w, 0x40:opc
 	ld	(xix+), WA
-	ld	a, (0x9108:16)
+	ld	a, (MIDI_CUR_PART:16)
 	ld	w, 0xff:opc
 	ld	(xix), wa
 	calr	VoiceParam_DispatchByMode
@@ -8937,7 +8937,7 @@ PartReinit_SendD1Command:
 	ldw	wa, 0xd1
 	ld	(xix+), WA
 	ld	a, 0x0:opc
-	ld	w, (0x9108:16)
+	ld	w, (MIDI_CUR_PART:16)
 	ld	(xix+), WA
 	ld	(xix), 0xff
 	calr	VoiceParam_DispatchByMode
@@ -8947,7 +8947,7 @@ PartReinit_SendD0Command:
 	ldw	wa, 0xd0
 	ld	(xix+), WA
 	ld	a, 0x0:opc
-	ld	w, (0x9108:16)
+	ld	w, (MIDI_CUR_PART:16)
 	ld	(xix+), WA
 	ld	(xix), 0xff
 	calr	VoiceParam_DispatchByMode
@@ -8957,8 +8957,8 @@ PartReinit_SendB0Command:
 	ldw	wa, 0xb0
 	ld	(xix+), WA
 	extz	hl
-	ld	l, (0x9108:16)
-	ld	xiy, 0xf1a0
+	ld	l, (MIDI_CUR_PART:16)
+	ld	xiy, SEQ_TRACK_ASSIGN
 	ld	l, (xiy+hl)
 	ld	xiy, SeqTrackAssign_PartTagTable
 	ld	a, (xiy+hl)
@@ -8966,7 +8966,7 @@ PartReinit_SendB0Command:
 	ld	(xix+), WA
 	ldw	wa, 0x800
 	ld	(xix+), WA
-	ld	a, (0x9108:16)
+	ld	a, (MIDI_CUR_PART:16)
 	ld	w, 0xff:opc
 	ld	(xix), wa
 	calr	VoiceMode_ParamHandler_3
@@ -8986,7 +8986,7 @@ Audio_ReinitAndProcessEvents:
 	call	MidiPkt_ProcessEventQueue
 	ret
 Audio_SyncAndProcessSequencer:
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	ld	(0x9020:16), wa
 	call	SeqBuf_SaveReadPos
 AudioSeq_CheckEventPending:
@@ -9012,7 +9012,7 @@ AudioSeq_ReadNextEvent:
 VoiceMode_ParamDispatch:
 	ld	(xiy), 0xff
 	ld	a, (0x90f6:16)
-	ld	(0x9038:16), a
+	ld	(PANEL_EVENT_SOURCE:16), a
 	extz	hl
 	ld	l, (0x90f5:16)
 	and	l, 0x70
@@ -9042,7 +9042,7 @@ VoiceMode_ParamHandler_1:
 	ret
 AudioSeq_FlushAndTerminate:
 	ld	xix, SWBTWR_EVENT_QUEUE
-	ld	hl, (0x901e:16)
+	ld	hl, (SWBTWR_WRITE_INDEX:16)
 	ld	(xix+hl), 0xff
 	ret
 VoiceMode_ParamHandler_4:
@@ -9053,17 +9053,17 @@ VoiceMode_ParamHandler_4:
 	ld	BC, (xix+)
 	ld	DE, (xix+)
 	ld	a, (xix)
-	ld	(0x9108:16), a
+	ld	(MIDI_CUR_PART:16), a
 	extz	hl
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x9032:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	cp	xix, 0xffffffff
 	jrl	z, MidiCtrl_NullRet
 	ld	(0x909b:16), bc
 	ld	(0x909d:16), de
-	ld	(0x9037:16), c
+	ld	(PROGRAM_CHANGE_PART:16), c
 	ld	hl, de
 	call	PartCtrl_WriteProgramChange
 	ld	(0x910f:16), hl
@@ -9106,8 +9106,8 @@ VoiceMode4_CheckPart0:
 ; MIDI controller dispatch handler
 MidiCtrl_DispatchHandler:
 	xor	h, h
-	ld	l, (0x9108:16)
-	ld	xix, 0xf1a0
+	ld	l, (MIDI_CUR_PART:16)
+	ld	xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+hl)
 	cp	a, 0xd
 	jrl	z, MidiCtrl_NullRet
@@ -9143,7 +9143,7 @@ MidiCtrl_Mode0_Handler:
 	xor	d, d
 	call	MIDI_DispatchCC_Guarded
 	xor	h, h
-	ld	l, (0x9108:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 0x900e
 	ld	a, (xix+hl)
 	set	7, a
@@ -9165,7 +9165,7 @@ VoiceMode_ParamHandler_4_Skip:
 	sll	e, 4
 	call	MIDI_DispatchCC_Guarded
 	extz	hl
-	ld	l, (0x9108:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 0x900e
 	ld	a, (xix+hl)
 	set	7, a
@@ -9197,7 +9197,7 @@ MidiCtrl_Mode3_Handler:
 	call	MIDI_DispatchCC_Guarded
 VoiceMode_ParamHandler_4_Skip2:
 	extz	hl
-	ld	l, (0x9108:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 0x900e
 	ld	a, (xix+hl)
 	set	7, a
@@ -9283,8 +9283,8 @@ VoiceMode3_EvType0:
 	jr	z, VoiceMode3_DispatchTable_Code_Skip2
 	ldw_d16	bc, (0x90f7)
 	extz	hl
-	ldb_d8	l, (0x9108)
-	ld	xix, 0xf1a0
+	ldb_d8	l, (MIDI_CUR_PART)
+	ld	xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+hl)
 	cp	a, 14
 	jr	nz, VoiceMode3_DispatchTable_Code_Skip
@@ -9306,7 +9306,7 @@ VoiceMode3_DispatchTable_Code_Skip3:
 	jr	z, VoiceMode3_DispatchTable_Code_Return
 	extz	hl
 	ldb_d8	l, (0x90fb)
-	ld	xix, 0xf1a0
+	ld	xix, SEQ_TRACK_ASSIGN
 	cp	(xix+hl), 0x0f
 	jr	nz, VoiceMode3_DispatchTable_Code_Return
 	ld	xix, 0x900e
@@ -9329,7 +9329,7 @@ VoiceMode3_EvType6:
 	extz	hl
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x9032:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	cp	xix, 0xffffffff
 	jr	z, VoiceMode3_DispatchTable_Code_Return2
@@ -9350,8 +9350,8 @@ VoiceMode3_EvType6:
 	set	3, (0x8c9a:16)
 VoiceMode3_DispatchTable_Code_Skip4:
 	extz	hl
-	ldb_d8	l, (0x9108)
-	ld	xix, 0xf1a0
+	ldb_d8	l, (MIDI_CUR_PART)
+	ld	xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+hl)
 	cp	a, 15
 	jr	z, VoiceMode3_DispatchTable_Code_Return2
@@ -9376,8 +9376,8 @@ VoiceMode3_EvType5:
 	bit	7, d
 	jr	nz, MidiPartCC_WriteAndDispatch_Skip
 	extz	hl
-	ldb_d8	l, (0x9108)
-	ld	xix, 0xf1a0
+	ldb_d8	l, (MIDI_CUR_PART)
+	ld	xix, SEQ_TRACK_ASSIGN
 	cp	(xix+hl), 0x0f
 	jr	z, MidiPartCC_WriteAndDispatch_Skip
 	set	7, e
@@ -9386,8 +9386,8 @@ VoiceMode3_EvType5:
 	ret
 MidiPartCC_WriteAndDispatch:
 	extz	hl
-	ldb_d8	l, (0x9108)
-	ld	xix, 0xf1a0
+	ldb_d8	l, (MIDI_CUR_PART)
+	ld	xix, SEQ_TRACK_ASSIGN
 	ld	l, (xix+hl)
 	ld	xix, SeqTrackAssign_PartTagTable
 	ld	c, (xix+hl)
@@ -9402,8 +9402,8 @@ MidiPartCC_WriteAndDispatch_Skip:
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
 MidiPartCC_CheckAndGuard:
 	extz	hl
-	ldb_d8	l, (0x9108)
-	ld	xix, 0xf1a0
+	ldb_d8	l, (MIDI_CUR_PART)
+	ld	xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+hl)
 	cp	a, 14
 	jr	z, MIDI_PartCC_DispatchExit
@@ -9432,7 +9432,7 @@ MidiVoice_DataBlockHandler:
 	ld	(MIDI_MSG_DATA2:16), wa
 MidiVoice_DataBlockHandler_Skip:
 	extz	hl
-	ldb_d8	l, (0x9108)
+	ldb_d8	l, (MIDI_CUR_PART)
 	ld	xix, 0x900e
 	ld	a, (xix+hl)
 	cp	a, 16
@@ -9450,8 +9450,8 @@ MidiVoice_DataBlockHandler_Skip4:
 	ret
 VoiceMode3_EvType2:
 	extz	hl
-	ldb_d8	l, (0x9108)
-	ld	xix, 0xf1a0
+	ldb_d8	l, (MIDI_CUR_PART)
+	ld	xix, SEQ_TRACK_ASSIGN
 	cp	(xix+hl), 0x0f
 	jr	nz, VoiceMode3_EvType2_Return
 	call	PartCtrl_CheckBitmaskBit
@@ -9463,7 +9463,7 @@ VoiceMode3_EvType2:
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
 VoiceMode3_EvType2_Skip:
 	extz	hl
-	ldb_d8	l, (0x9108)
+	ldb_d8	l, (MIDI_CUR_PART)
 	ld	xix, 0x900e
 	ld	a, (xix+hl)
 	cp	a, 16
@@ -9480,17 +9480,17 @@ VoiceMode3_EvType3:
 	call	PartCtrl_CheckBitmaskBit
 	jr	nc, MidiVoice_DataBlockHandler_Skip2
 	ld	a, 0:opc
-	stb_d8	(0x9584), a
+	stb_d8	(MIDIRX_PART_EVENT), a
 	ldw_d16	wa, (0x90f7)
-	ld	(0x9584:16), wa
+	ld	(MIDIRX_PART_EVENT:16), wa
 	ldw	wa, 0x7f00
 	ld	(0x9586:16), wa
 	call	VoiceMode3_DispatchTable_Code_Helper
 	ldb_d8	a, (0x90f6)
-	stb_d8	(0x9038), a
+	stb_d8	(PANEL_EVENT_SOURCE), a
 MidiVoice_DataBlockHandler_Skip2:
 	extz	hl
-	ldb_d8	l, (0x9108)
+	ldb_d8	l, (MIDI_CUR_PART)
 	ld	xix, 0x900e
 	ld	a, (xix+hl)
 	cp	a, 16
@@ -9512,7 +9512,7 @@ VoiceMode3_EvType4:
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
 MidiVoice_DataBlockHandler_Skip3:
 	extz	hl
-	ldb_d8	l, (0x9108)
+	ldb_d8	l, (MIDI_CUR_PART)
 	ld	xix, 0x900e
 	ld	a, (xix+hl)
 	cp	a, 16
@@ -9526,7 +9526,7 @@ MidiVoice_DataBlockHandler_Return3:
 	ret
 VoiceMode3_InitChannelMatch:
 	ld	a, (0x90fb:16)
-	ld	(0x9108:16), a
+	ld	(MIDI_CUR_PART:16), a
 	calr	VoiceMode3_BuildChannelTable
 	cp	(0x9112:16), 255
 	jr	z, VoiceMode3_NoMatch
@@ -9572,8 +9572,8 @@ VoiceMode3_ScanDone:
 VoiceMode3_BuildChannelTable:
 	ld	(0x9112:16), 255
 	extz	hl
-	ld	l, (0x9108:16)
-	ld	xix, 0xf1a0
+	ld	l, (MIDI_CUR_PART:16)
+	ld	xix, SEQ_TRACK_ASSIGN
 	ld	l, (xix+hl)
 	sll	hl, 2
 	ld	xix, SeqTrackAssign_PlaybackMapTable
@@ -9593,7 +9593,7 @@ VoiceMode_ParamHandler_0:
 	cp	(0x90f5:16), 128
 	jr	nz, VoiceMode0_Done
 	ld	a, (0x90f9:16)
-	ld	(0x9108:16), a
+	ld	(MIDI_CUR_PART:16), a
 	call	PartCtrl_CheckBitmaskBit
 	jr	nc, VoiceMode0_Done
 	ld	wa, (0x90f7:16)
@@ -9630,7 +9630,7 @@ VoiceParam_ModeDispatch_Table:	.byte	0x74, 0xa8, 0xfc, 0x00
 	.long	VoiceParam_StorePendingExpression
 VoiceParam_StorePendingChanPressure:
 	extz	hl
-	ld	l, (0x9108:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 0x9412
 	ld	a, (0x90f7:16)
 	set	7, a
@@ -9638,8 +9638,8 @@ VoiceParam_StorePendingChanPressure:
 	ret
 VoiceParam_SendPendingChanPressure:
 	ld	c, 0xb4:opc
-	ld	xix, 0xf1a0
-	ld	l, (0x9108:16)
+	ld	xix, SEQ_TRACK_ASSIGN
+	ld	l, (MIDI_CUR_PART:16)
 	ld	l, (xix+l)
 	ld	xix, SeqTrackAssign_PartTagTable
 	ld	b, (xix+l)
@@ -9654,8 +9654,8 @@ VoiceParam_SendPendingChanPressure:
 	ld	(MIDI_MSG_DATA2:16), wa
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
 VoiceParam_SendPendingChanPressure_Guard:
-	ld	l, (0x9108:16)
-	ld	xix, 0xf1a0
+	ld	l, (MIDI_CUR_PART:16)
+	ld	xix, SEQ_TRACK_ASSIGN
 	cpib_sri	0x03, 0xf0, 0xec, 0x0f
 	jr	z, VoiceParam_SendPendingChanPressure_Done
 	ld	xix, 0x900e
@@ -9671,7 +9671,7 @@ VoiceParam_SendPendingChanPressure_Done:
 	ret
 VoiceParam_StorePendingModulation:
 	extz	hl
-	ld	l, (0x9108:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 0x9392
 	ld	a, (0x90f7:16)
 	set	7, a
@@ -9679,8 +9679,8 @@ VoiceParam_StorePendingModulation:
 	ret
 VoiceParam_SendPendingModulation:
 	ld	c, 0xb2:opc
-	ld	xix, 0xf1a0
-	ld	l, (0x9108:16)
+	ld	xix, SEQ_TRACK_ASSIGN
+	ld	l, (MIDI_CUR_PART:16)
 	ld	l, (xix+l)
 	ld	xix, SeqTrackAssign_PartTagTable
 	ld	b, (xix+l)
@@ -9695,8 +9695,8 @@ VoiceParam_SendPendingModulation:
 	ld	(MIDI_MSG_DATA2:16), wa
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
 VoiceParam_SendPendingModulation_Guard:
-	ld	l, (0x9108:16)
-	ld	xix, 0xf1a0
+	ld	l, (MIDI_CUR_PART:16)
+	ld	xix, SEQ_TRACK_ASSIGN
 	cpib_sri	0x03, 0xf0, 0xec, 0x0f
 	jr	z, VoiceParam_SendPendingModulation_Done
 	ld	xix, 0x900e
@@ -9712,7 +9712,7 @@ VoiceParam_SendPendingModulation_Done:
 	ret
 VoiceParam_StorePendingPitchBend:
 	extz	hl
-	ld	l, (0x9108:16)
+	ld	l, (MIDI_CUR_PART:16)
 	sll	l, 1
 	ld	xix, 0x93b2
 	ld	wa, (0x90f7:16)
@@ -9722,8 +9722,8 @@ VoiceParam_StorePendingPitchBend:
 	ret
 VoiceParam_SendPendingPitchBend:
 	ld	c, 0xb1:opc
-	ld	xix, 0xf1a0
-	ld	l, (0x9108:16)
+	ld	xix, SEQ_TRACK_ASSIGN
+	ld	l, (MIDI_CUR_PART:16)
 	ld	l, (xix+l)
 	ld	xix, SeqTrackAssign_PartTagTable
 	ld	b, (xix+l)
@@ -9738,8 +9738,8 @@ VoiceParam_SendPendingPitchBend:
 	ld	(MIDI_MSG_DATA2:16), wa
 	call	SwbtWr_WriteParamBlockSafe
 VoiceParam_SendPendingPitchBend_Guard:
-	ld	l, (0x9108:16)
-	ld	xix, 0xf1a0
+	ld	l, (MIDI_CUR_PART:16)
+	ld	xix, SEQ_TRACK_ASSIGN
 	cpib_sri	0x03, 0xf0, 0xec, 0x0f
 	jr	z, VoiceParam_SendPendingPitchBend_Done
 	ld	xix, 0x900e
@@ -9756,7 +9756,7 @@ VoiceParam_SendPendingPitchBend_Done:
 VoiceParam_StorePendingExpression:
 	ld	e, (0x90f7:16)
 	extz	hl
-	ld	l, (0x9108:16)
+	ld	l, (MIDI_CUR_PART:16)
 	bit	7, (DEMO_CONTROL_FLAGS:16)
 	; LD SP, (XBC)
 	; BIT 7, (28ADh)
@@ -9768,8 +9768,8 @@ VoiceParam_StorePendingExpression:
 VoiceParam_SendPendingExpression:
 	ldw	bc, 0x1b0
 	extz	hl
-	ld	l, (0x9108:16)
-	ld	xix, 0xf1a0
+	ld	l, (MIDI_CUR_PART:16)
+	ld	xix, SEQ_TRACK_ASSIGN
 	ld	a, (xix+hl)
 	cp	a, 0xf
 	jr	z, VoiceParam_SendPendingExpression_SetupParams
@@ -9805,7 +9805,7 @@ VoiceParam_SendPendingExpression_ApplyPedal:
 	res	7, (DEMO_CONTROL_FLAGS:16)
 MIDI_VoiceNote_CtrlExit:
 	extz	hl
-	ld	l, (0x9108:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 0x900e
 	ld	a, (xix+hl)
 	cp	a, 0x10
@@ -9852,8 +9852,8 @@ MidiVoiceNote_LookupMode3:
 MidiPart_FindChannelInTable:
 	cp	xbc, 0x0
 	jr	z, MidiPart_NoChannelFound
-	ld	(0x9108:16), l
-	ld	xix, 0xf1a0
+	ld	(MIDI_CUR_PART:16), l
+	ld	xix, SEQ_TRACK_ASSIGN
 	ld	w, (xix+hl)
 	ld	(0x910d:16), w
 MidiPart_ScanNextEntry:
@@ -9870,8 +9870,8 @@ MidiNote_RhythmPartDispatch:
 	jrl	nz, MidiNoteVel_Handler_2
 	ld	(0x909b:16), bc
 	ld	(0x909d:16), de
-	ld	(0x9108:16), a
-	ld	(0x9037:16), c
+	ld	(MIDI_CUR_PART:16), a
+	ld	(PROGRAM_CHANGE_PART:16), c
 	ld	hl, de
 	call	PartCtrl_WriteProgramChange
 	ld	(0x910f:16), hl
@@ -9896,8 +9896,8 @@ MidiNote_RhythmPartDispatch:
 ; MIDI part channel dispatch
 MidiPart_ChannelDispatch:
 	extz	hl
-	ld	l, (0x9108:16)
-	ld	xix, 0xf1a0
+	ld	l, (MIDI_CUR_PART:16)
+	ld	xix, SEQ_TRACK_ASSIGN
 	cp	(xix+hl), 0x10
 	jrl	nz, MidiNoteVel_Handler_2
 	ld	xix, 0x900e
@@ -9927,7 +9927,7 @@ MidiNoteVel_Handler_0:
 MidiNoteVel_Handler_0_Skip:
 	call	MIDI_DispatchCC_Guarded
 	xor	h, h
-	ld	l, (0x9108:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 0x900e
 	ld	a, (xix+hl)
 	set	7, a
@@ -9949,7 +9949,7 @@ MidiNoteVel_Handler_1_Skip:
 	sll	e, 4
 	call	MIDI_DispatchCC_Guarded
 	extz	hl
-	ld	l, (0x9108:16)
+	ld	l, (MIDI_CUR_PART:16)
 	ld	xix, 0x900e
 	ld	a, (xix+hl)
 	set	7, a
@@ -9964,7 +9964,7 @@ MidiNoteVel_Handler_2:
 SeqVoice_UpdateTempoParam:
 	cp	bc, 0x748
 	jr	nz, SeqVoice_TempoDone
-	ld	(0x9108:16), a
+	ld	(MIDI_CUR_PART:16), a
 	call	PartCtrl_CheckBitmaskBit
 	jr	nc, SeqVoice_TempoDone
 	and	d, 0x30
@@ -9993,7 +9993,7 @@ PendingChanPressure_ScanEntry:
 	ld	e, (xiy)
 	ld	xhl, xiy
 	sub	xhl, 0x9412
-	ld	(0x9108:16), l
+	ld	(MIDI_CUR_PART:16), l
 	pushw	bc
 	push	xiy
 	calr	VoiceParam_SendPendingChanPressure
@@ -10011,7 +10011,7 @@ PendingModulation_ScanEntry:
 	ld	e, (xiy)
 	ld	xhl, xiy
 	sub	xhl, 0x9392
-	ld	(0x9108:16), l
+	ld	(MIDI_CUR_PART:16), l
 	pushw	bc
 	push	xiy
 	calr	VoiceParam_SendPendingModulation
@@ -10030,7 +10030,7 @@ PendingPitchBend_ScanEntry:
 	ld	xhl, xiy
 	sub	xhl, 0x93b2
 	srl	l, 1
-	ld	(0x9108:16), l
+	ld	(MIDI_CUR_PART:16), l
 	pushw	bc
 	push	xiy
 	calr	VoiceParam_SendPendingPitchBend
@@ -10048,7 +10048,7 @@ PendingExpression_ScanEntry:
 	ld	e, (xiy)
 	ld	xhl, xiy
 	sub	xhl, 0x9372
-	ld	(0x9108:16), l
+	ld	(MIDI_CUR_PART:16), l
 	pushw	bc
 	push	xiy
 	calr	VoiceParam_SendPendingExpression
@@ -10066,7 +10066,7 @@ PendingVolume_ScanEntry:
 	ld	e, (xiy)
 	ld	hl, iy
 	sub	xhl, 0x93f2
-	ld	(0x9108:16), l
+	ld	(MIDI_CUR_PART:16), l
 	pushw	bc
 	push	xiy
 	calr	MidiPartCC_WriteAndDispatch
@@ -10080,7 +10080,7 @@ PartCtrl_CheckBitmaskBit:
 	pushw	wa
 	pushw	bc
 	ld	wa, (0xf1d0:16)
-	ld	c, (0x9108:16)
+	ld	c, (MIDI_CUR_PART:16)
 	inc	1, c
 PartCtrl_ShiftBitmask:
 	srl	wa, 1
@@ -10512,7 +10512,7 @@ MidiStream_PartEventMap_Bass:	; part record 0x13
 	.byte	0x13, 0x08, 0x7f, 0x04
 	.fill	8, 1, 0xff
 MidiCC_NullHandlerBlock_Helper:
-	ld	(0x9038:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	a, (PANEL_PMEM_SETTINGS+11:16)
 	and	a, 63
 	ld	w, e
@@ -10524,7 +10524,7 @@ MidiCC_NullHandlerBlock_Helper:
 	ld	(MIDI_MSG_DATA2:16), de
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
 	ret
-	ld	(0x9038:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	(MIDI_MSG_STATUS:16), bc
 	ld	(MIDI_MSG_DATA2:16), de
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
@@ -10534,7 +10534,7 @@ MidiCC_NullHandlerBlock_Helper:
 MidiStream_ApplyPendingParams:
 	cp	(CURRENT_MODE:16), 14
 	jr	z, MidiStream_ApplyDone
-	ld	(0x9038:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	and	d, 0x7
 	jr	z, MidiStream_ApplyDone
 	call	MIDI_WriteVoiceParamCC
@@ -10552,7 +10552,7 @@ MidiStream_DispatchData:
 	calr	MidiStream_ExtendedDispatch
 	ret
 MidiCC_Handler_BitManipulation_Code_Helper:
-	ld	(0x9038:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	call	MIDI_WriteVoiceParamDirect
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
 	ret
@@ -10573,7 +10573,7 @@ MidiCC_SetPendingPartVolume:
 	ld	(xix+c), e
 	jr	MidiCC_SetPendingPartVolume_Return
 MidiStream_ApplyPendingParams_Skip:
-	ld	(0x9038:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	(ANALOG_MAIN_VOLUME_PENDING:16), e
 	call	Audio_PostPendingAnalogControls
 MidiCC_SetPendingPartVolume_Return:
@@ -10616,8 +10616,8 @@ MidiCC_RxCC1_Modulation_Helper:
 	calr	MidiStream_ExtendedDispatch
 	ret
 MidiCC_Handler_BitManipulation_Code_Helper3:
-	ld	(0x9038:16), 255
-	ld	bc, (0x9584:16)
+	ld	(PANEL_EVENT_SOURCE:16), 255
+	ld	bc, (MIDIRX_PART_EVENT:16)
 	ld	de, (0x9586:16)
 	call	MIDI_WriteVoiceParamCC
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
@@ -10625,8 +10625,8 @@ MidiCC_Handler_BitManipulation_Code_Helper3:
 	calr	MidiStream_ExtendedDispatch
 	ret
 MidiCC_RxFunc08_Helper:
-	ld	(0x9038:16), 255
-	ld	wa, (0x9584:16)
+	ld	(PANEL_EVENT_SOURCE:16), 255
+	ld	wa, (MIDIRX_PART_EVENT:16)
 	ld	(MIDI_MSG_STATUS:16), wa
 	ld	wa, (0x9586:16)
 	ld	(MIDI_MSG_DATA2:16), wa
@@ -10635,8 +10635,8 @@ MidiCC_RxFunc08_Helper:
 	calr	MidiStream_ExtendedDispatch
 	ret
 MidiCC_Handler_BitManipulation_Code_Helper4:
-	ld	(0x9038:16), 255
-	ld	wa, (0x9584:16)
+	ld	(PANEL_EVENT_SOURCE:16), 255
+	ld	wa, (MIDIRX_PART_EVENT:16)
 	ld	(MIDI_MSG_STATUS:16), wa
 	ld	wa, (0x9586:16)
 	ld	(MIDI_MSG_DATA2:16), wa
@@ -10645,9 +10645,9 @@ MidiCC_Handler_BitManipulation_Code_Helper4:
 	calr	MidiStream_ExtendedDispatch
 	ret
 VoiceMode3_DispatchTable_Code_Helper:
-	ld	bc, (0x9584:16)
+	ld	bc, (MIDIRX_PART_EVENT:16)
 	ld	de, (0x9586:16)
-	ld	(0x9038:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	(MIDI_MSG_STATUS:16), bc
 	ld	(MIDI_MSG_DATA2:16), de
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
@@ -10684,9 +10684,9 @@ VoiceMode3_DispatchTable_Code_Helper:
 	calr	MidiStream_CmdPedalNotify_Helper3
 	ret
 MidiCC_Handler_BitManipulation_Code_Helper5:
-	ld	bc, (0x9584:16)
+	ld	bc, (MIDIRX_PART_EVENT:16)
 	ld	de, (0x9586:16)
-	ld	(0x9038:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	(MIDI_MSG_STATUS:16), bc
 	ld	(MIDI_MSG_DATA2:16), de
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
@@ -10694,8 +10694,8 @@ MidiCC_Handler_BitManipulation_Code_Helper5:
 	calr	MidiStream_CmdPedalNotify_Helper3
 	ret
 MidiCC_Handler_BitManipulation_Code_Helper6:
-	ld	(0x9038:16), 255
-	ld	bc, (0x9584:16)
+	ld	(PANEL_EVENT_SOURCE:16), 255
+	ld	bc, (MIDIRX_PART_EVENT:16)
 	ld	de, (0x9586:16)
 	call	MIDI_WriteVoiceParamCC
 	call	SwbtWr_WriteVoiceParam_PreserveRegs
@@ -10721,7 +10721,7 @@ MidiStream_LoadVoiceLoop:
 	jr	z, MidiStream_LoadVoiceNext
 	res	7, a
 	ld	(xiy+hl), a
-	ld	(0x9038:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	(MIDI_MSG_STATUS:16), w
 	ld	(MIDI_MSG_DATA1:16), l
 	ld	(MIDI_MSG_DATA2:16), a
@@ -10741,7 +10741,7 @@ MidiStream_LoadBankSelect:
 	ld	(xiy), a
 	ld	(ANALOG_EXPRESSION_PEDAL_PENDING:16), a
 	call	Audio_PostPendingAnalogControls
-	ld	(0x9038:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	(MIDI_MSG_STATUS:16), 176
 	ld	(MIDI_MSG_DATA1:16), 1
 	ld	(MIDI_MSG_DATA2:16), a
@@ -10759,7 +10759,7 @@ MidiStream_LoadMultiLoop:
 	jr	z, MidiStream_LoadMultiNext
 	res	7, a
 	ld	(xiy+hl), wa
-	ld	(0x9038:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	c, 0xb1:opc
 	ld	(MIDI_MSG_STATUS:16), bc
 	ld	(MIDI_MSG_DATA2:16), wa
@@ -10779,7 +10779,7 @@ MidiStream_LoadPedalLoop:
 	jr	z, MidiStream_LoadPedalNext
 	res	7, a
 	ld	(xiy+hl), a
-	ld	(0x9038:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	c, l
 	ld	b, 0x3:opc
 	ld	e, a
@@ -10796,10 +10796,10 @@ MidiStream_ProcessRxBuffer:
 	jr	nz, MidiStream_ProcessDone
 	bit	4, (PANEL_MIDI:16)
 	jr	nz, MidiStream_ProcessDone
-	ldw	(0x9073:16), 0
+	ldw	(EXT_RECORD_OFFSET:16), 0
 MidiStream_DispatchLoop:
-	ld	xix, 0xbf79
-	ld	hl, (0x9073:16)
+	ld	xix, PANEL_EVENT_QUEUE
+	ld	hl, (EXT_RECORD_OFFSET:16)
 	ld	a, (xix+hl)
 	cp	a, 0xff
 	jr	z, MidiStream_ProcessDone
@@ -10818,7 +10818,7 @@ MidiStream_DispatchLoop:
 	ld	(0x909d:16), de
 	call	(xiy)
 MidiStream_AdvanceRxPtr:
-	inc	4, (0x9073:16)
+	inc	4, (EXT_RECORD_OFFSET:16)
 	jr	MidiStream_DispatchLoop
 MidiStream_ProcessDone:
 	ret
@@ -10858,7 +10858,7 @@ MidiStream_RunStatus_Mode3:
 	extz	hl
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x9032:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	ld	wa, (xix)
 	ld	(0x902a:16), wa
@@ -10890,7 +10890,7 @@ MidiStream_HandlePgmChange:
 	extz	hl
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x9032:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	ld	l, b
 	ld	e, (xix+l)
@@ -10914,7 +10914,7 @@ MidiStream_HandleChanPressure_Skip:
 	extz	hl
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x9032:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	ld	l, b
 	ld	e, (xix+l)
@@ -10928,7 +10928,7 @@ MidiStream_HandleSysMsg:
 	extz	hl
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x9032:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	ld	l, b
 	ld	e, (xix+l)
@@ -11102,9 +11102,9 @@ MidiStream_PartSelectDone:
 MidiStream_CmdPedalNotify_Helper3:
 	ret
 MidiRx_ProgramChange_Helper:
-	cp	(0x9584:16), 20
+	cp	(MIDIRX_PART_EVENT:16), 20
 	jr	nz, MidiStream_ExtendedDispatch_Skip8
-	ld	(0x9584:16), 72
+	ld	(MIDIRX_PART_EVENT:16), 72
 	ld	c, 72:opc
 MidiStream_ExtendedDispatch_Skip8:
 	cp	(CURRENT_MODE:16), 14
@@ -11115,7 +11115,7 @@ MidiStream_ExtendedDispatch_Skip9:
 	cp	c, 72
 	jr	z, MidiStream_ExtendedDispatch_Return4
 MidiStream_ExtendedDispatch_Skip10:
-	ld	(0x9038:16), 255
+	ld	(PANEL_EVENT_SOURCE:16), 255
 	cp	c, 0:i3
 	jr	nz, MidiStream_ExtendedDispatch_Skip11
 	bit	3, (PANEL_MIDI:16)
@@ -11161,13 +11161,13 @@ MidiRx_ProgramChangeModeTable:
 	.long	MidiStream_ExtDispatch_Mode2Ret
 	.long	MidiStream_ExtDispatch_Mode3
 MidiStream_ExtDispatch_Mode0:
-	ldw_d16	bc, (0x9584)
+	ldw_d16	bc, (MIDIRX_PART_EVENT)
 	ldw_d16	de, (0x9586)
 	stb_d8	(0x9036), c
 	xor	h, h
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x9032:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	cp	xix, 0xffffffff
 	jr	z, MidiStream_ExtDispatch_Mode0_Return
@@ -11210,13 +11210,13 @@ MidiStream_ExtendedDispatch_Skip3:
 MidiStream_ExtDispatch_Mode0_Return:
 	ret
 MidiStream_ExtDispatch_Mode1:
-	ldw_d16	bc, (0x9584)
+	ldw_d16	bc, (MIDIRX_PART_EVENT)
 	ldw_d16	de, (0x9586)
-	stb_d8	(0x9037), c
+	stb_d8	(PROGRAM_CHANGE_PART), c
 	extz	hl
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x9032:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	cp	xix, 0xffffffff
 	jr	z, MidiStream_ExtendedDispatch_Return2
@@ -11239,14 +11239,14 @@ MidiStream_ExtendedDispatch_Skip5:
 MidiStream_ExtendedDispatch_Return2:
 	ret
 MidiStream_ExtDispatch_Mode3:
-	ldw_d16	bc, (0x9584)
+	ldw_d16	bc, (MIDIRX_PART_EVENT)
 	cp	c, 72
 	jr	z, MidiStream_ExtendedDispatch_Return3
 	ldw_d16	de, (0x9586)
 	extz	hl
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x9032:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	cp	xix, 0xffffffff
 	jr	z, MidiStream_ExtendedDispatch_Return3
@@ -11260,7 +11260,7 @@ MidiStream_ExtDispatch_Mode3:
 	ld	(0x902c:16), de
 	call	MidiStream_ResolveVoiceIndex
 	ldw_d16	de, (0x902e)
-	ldb_d8	c, (0x9584)
+	ldb_d8	c, (MIDIRX_PART_EVENT)
 	ld	b, d
 	ld	d, 255:opc
 	call	MidiStream_ExtendedDispatch_Helper
@@ -11275,11 +11275,11 @@ MidiStream_ExtendedDispatch_Helper:
 	calr	MidiStream_ExtendedDispatch_Helper_Helper
 	bit	1, (0x903a:16)
 	jr	nz, MidiStream_ExtendedDispatch_Epilogue
-	stb_d8	(0x9037), c
+	stb_d8	(PROGRAM_CHANGE_PART), c
 	xor	h, h
 	ld	l, c
 	sll	hl, 2
-	ld	xix, (0x9032:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	ld	(xix), e
 	andmi8	(xix+0x1), 128
@@ -11322,7 +11322,7 @@ MidiStream_ExtendedDispatch_Helper_Helper:
 	bit	0, (0x903a:16)
 	jr	z, MidiStream_ExtendedDispatch_Helper_Skip2
 	and	(0x903a:16), 254
-	stb_d8	(0x9037), c
+	stb_d8	(PROGRAM_CHANGE_PART), c
 	ld	l, e
 	ld	h, b
 	ld	xix, RegBitManip_Handler_4_Code
@@ -11362,7 +11362,7 @@ MidiStream_ExtendedDispatch_Skip7:
 	jr	z, MidiStream_ExtendedDispatch_Epilogue2
 MidiStream_ExtendedDispatch_Helper_Join:
 	push_a
-	ldb_d8	a, (0x36e3)
+	ldb_d8	a, (CMP_RECORD_PART)
 	and	a, 31
 	pop_a
 	jr	nz, MidiStream_ExtendedDispatch_Epilogue2
@@ -11387,13 +11387,13 @@ MidiStream_ExtendedDispatch_Helper_Skip4:
 ;   Part 72 is mapped to 20. v10's routine of that name with v7's RAM addresses; v7's mode-1 path lacks v10's
 ;   part-20 test. Basis: callers + body -- MidiCC_Handler_PairedParamA/B are the CC32/CC0 (bank select) handlers.
 MidiCC_ApplyBankSelect:
-	cp	(0x9584:16), 72
+	cp	(MIDIRX_PART_EVENT:16), 72
 	jr	nz, MidiStream_ExtendedDispatch_Helper_Skip5
-	ld	(0x9584:16), 20
+	ld	(MIDIRX_PART_EVENT:16), 20
 	cp	(CURRENT_MODE:16), 14
 	jrl	z, MidiStream_ExtDispatch_ModeJump3_Return
 MidiStream_ExtendedDispatch_Helper_Skip5:
-	ldw_d16	bc, (0x9584)
+	ldw_d16	bc, (MIDIRX_PART_EVENT)
 	ldw_d16	de, (0x9586)
 	ld	xix, 0x9312
 	ld	xiz, 0x9352
@@ -11512,7 +11512,7 @@ MidiStream_HandleRunningStatus_Skip3:
 	extz	hl
 	ldb_d8	l, (0x909b)
 	sll	hl, 2
-	ld	xix, (0x9032:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	ld	xix, (xix+hl)
 	cp	xix, 0xffffffff
 	jr	z, MidiStream_HandleRunningStatus_Return2

@@ -8337,7 +8337,7 @@ SeMenu_DrawPartSelector:
 	push XIX
 	push XIY
 	push XIZ
-	cp (0x06ae:16), 0x01
+	cp (SEMENU_PART_MODE:16), 0x01
 	jr nz, .Lc_f0f090
 	ld (COLORBLIT_MODE:24), 0x00
 	ld XIY,SeMenu_DrawPartSelector_Records4
@@ -8353,7 +8353,7 @@ SeMenu_ShowConfirmDialog_Data_Code_Skip:
 	call SeGfx_DrawStaticList
 	ld C, 0x04:opc
 .Lc_f0f0a6:
-	ld w, (0x065e:16)
+	ld w, (SEMENU_PART_MASK:16)
 	ld A,C
 	sla A, 0x01
 	dec 1,A
@@ -8429,8 +8429,8 @@ SeMenu_ClearRect:
 SeMenu_DrawKeyboardGraphic:
 	ld (COLORBLIT_MODE:24), 0x00
 	ld C, 0x07:opc
-	ld ix, (0x06c6:16)
-	ld iy, (0x06c8:16)
+	ld ix, (SEMENU_GFX_X:16)
+	ld iy, (SEMENU_GFX_Y:16)
 .Lc_f0f166:
 SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	pushw ix
@@ -8443,8 +8443,8 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	add IX,0x001c
 	dec 1,C
 	jr nz, .Lc_f0f166
-	ld ix, (0x06c6:16)
-	ld iy, (0x06c8:16)
+	ld ix, (SEMENU_GFX_X:16)
+	ld iy, (SEMENU_GFX_Y:16)
 	ld (0x06cc:16), ix
 	addw (0x06cc:16), 0x00c4
 	ld (0x06d0:16), ix
@@ -8453,8 +8453,8 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	ld (0x06d2:16), iy
 	addw (0x06d2:16), 0x000c
 	call SeGfx_StaticOp09_FromBuf
-	ld ix, (0x06c6:16)
-	ld iy, (0x06c8:16)
+	ld ix, (SEMENU_GFX_X:16)
+	ld iy, (SEMENU_GFX_Y:16)
 	add IX,0x00c4
 	ld (0x06cc:16), ix
 	ld (0x06d0:16), ix
@@ -8463,8 +8463,8 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	ld (0x06d2:16), iy
 	subw (0x06d2:16), 0x0001
 	call SeGfx_StaticOp09_FromBuf
-	ld ix, (0x06c6:16)
-	ld iy, (0x06c8:16)
+	ld ix, (SEMENU_GFX_X:16)
+	ld iy, (SEMENU_GFX_Y:16)
 	ld (0x06cc:16), ix
 	subw (0x06cc:16), 0x0008
 	ld (0x06d0:16), ix
@@ -8472,8 +8472,8 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	ld (0x06d2:16), iy
 	addw (0x06d2:16), 0x000c
 	call SeGfx_StaticOp09_FromBuf
-	ld ix, (0x06c6:16)
-	ld iy, (0x06c8:16)
+	ld ix, (SEMENU_GFX_X:16)
+	ld iy, (SEMENU_GFX_Y:16)
 	ld (0x06cc:16), ix
 	subw (0x06cc:16), 0x0005
 	ld (0x06d0:16), ix
@@ -8483,8 +8483,8 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	ld (0x06d2:16), iy
 	addw (0x06d2:16), 0x0007
 	call SeGfx_StaticOp09_FromBuf
-	ld ix, (0x06c6:16)
-	ld iy, (0x06c8:16)
+	ld ix, (SEMENU_GFX_X:16)
+	ld iy, (SEMENU_GFX_Y:16)
 	sub IX,0x0004
 	ld (0x06cc:16), ix
 	ld (0x06d0:16), ix
@@ -8493,8 +8493,8 @@ SeMenu_ShowConfirmDialog_Data_Code_Loop:
 	ld (0x06d2:16), iy
 	addw (0x06d2:16), 0x000b
 	call SeGfx_StaticOp02_FromBuf
-	ld ix, (0x06c6:16)
-	ld iy, (0x06c8:16)
+	ld ix, (SEMENU_GFX_X:16)
+	ld iy, (SEMENU_GFX_Y:16)
 	ld (0x06cc:16), ix
 	addw (0x06cc:16), 0x001c
 	ld (0x06d0:16), ix
@@ -8587,7 +8587,7 @@ SeMenu_KeyboardOctave_BlackKeyX:
 ;   7-5 of the part's curve-type byte (0x662+part, 0x668+part in 4-part mode) a SeEnvCurve_BitmapTable bitmap or (type
 ;   3) a framed box, at that part's cell. Basis: callers + body.
 SeMenu_DrawSelectedPartEnvCurve:
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	nz, SeMenu_DrawSelectedPartEnvCurve_Skip
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiy, SeMenu_ShowConfirmDialog_Sub_Data_2
@@ -8603,7 +8603,7 @@ SeMenu_DrawSelectedPartEnvCurve_Join:
 	xor	xwa, xwa
 	ldb_d8	a, (0x65d)
 	sla	wa, 2
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	nz, SeMenu_ShowConfirmDialog_Data_Code_Skip2
 	ld	xiz, SeMenu_DrawSelectedPartEnvCurve_Records4
 	jr	SeMenu_ShowConfirmDialog_Data_Code_Join
@@ -8613,10 +8613,10 @@ SeMenu_ShowConfirmDialog_Data_Code_Join:
 	push	xwa
 	add	xiz, xwa
 	ld	wa, (xiz)
-	ld	(0x6c6:16), wa
+	ld	(SEMENU_GFX_X:16), wa
 	ld	wa, (xiz+2)
-	ld	(0x6c8:16), wa
-	cp	(0x6ae:16), 1
+	ld	(SEMENU_GFX_Y:16), wa
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	nz, SeMenu_ShowConfirmDialog_Data_Code_Skip3
 	ld	xiz, 1634
 	jr	SeMenu_ShowConfirmDialog_Data_Code_Join2
@@ -8628,7 +8628,7 @@ SeMenu_ShowConfirmDialog_Data_Code_Join2:
 	add	xiz, xwa
 	call	SeMenu_DrawEnvCurvePicture
 	pop	xwa
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	nz, SeMenu_ShowConfirmDialog_Data_Code_Skip4
 	ld	xiz, SeAmpAmp1_DrumKitTouchCurveFramePtrs
 	jr	SeMenu_ShowConfirmDialog_Data_Code_Join3
@@ -8652,8 +8652,8 @@ SeMenu_DrawEnvCurvePicture:
 	srl	a, 5
 	cp	a, 3:i3
 	jr	nz, SeMenu_ShowConfirmDialog_Data_Code_Skip5
-	ldw_d16	ix, (0x6c6)
-	ldw_d16	iy, (0x6c8)
+	ldw_d16	ix, (SEMENU_GFX_X)
+	ldw_d16	iy, (SEMENU_GFX_Y)
 	ld	(0x6cc:16), ix
 	addw	(0x6cc:16), 1
 	ld	(0x6d0:16), ix
@@ -8663,8 +8663,8 @@ SeMenu_DrawEnvCurvePicture:
 	ld	(0x6d2:16), iy
 	addw	(0x6d2:16), 37
 	call	SeGfx_StaticOp1B_FromBuf
-	ldw_d16	ix, (0x6c6)
-	ldw_d16	iy, (0x6c8)
+	ldw_d16	ix, (SEMENU_GFX_X)
+	ldw_d16	iy, (SEMENU_GFX_Y)
 	ld	(0x6cc:16), ix
 	addw	(0x6cc:16), 1
 	ld	(0x6d0:16), ix
@@ -8680,10 +8680,10 @@ SeMenu_ShowConfirmDialog_Data_Code_Skip5:
 	xor	w, w
 	sll	wa, 2
 	ld	xiy, (xiz+wa)
-	ldw_d16	wa, (0x6c6)
+	ldw_d16	wa, (SEMENU_GFX_X)
 	div	a, 8
 	xor	w, w
-	ldw_d16	hl, (0x6c8)
+	ldw_d16	hl, (SEMENU_GFX_Y)
 	mul	l, 40
 	add	hl, wa
 	ld	ix, hl
@@ -8728,7 +8728,7 @@ SeMenu_DrawDrumKitCopyConfirm:
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiz, SeMenu_DrumKitCopyConfirm_TextByLanguage
 	xor	xwa, xwa
-	ld	a, (0x0340e4:24)
+	ld	a, (HELP_LANGUAGE:24)
 	sla	wa, 2
 	add	xiz, xwa
 	ld	xiy, (xiz)
@@ -8748,7 +8748,7 @@ SeMenuTitle_DrawStaticScreen:
 	jr	SeMenuTitle_DrawStaticScreen_Return
 SeMenuTitle_DrawStaticScreen_Skip:
 	ld	(COLORBLIT_MODE:24), 0
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeMenuTitle_DrawStaticScreen_Skip2
 	ld	xiy, SeMenuTitle_StaticRecords
 	ld	xix, SeMenu_DrawOriginalEditedBadge_Records2
@@ -8818,7 +8818,7 @@ SeMenu_WaveformSelect_Apply_Helper3_Return3:
 ;  indexed by title id - 0x20): redraws one parameter field, A = the field index. Basis: the table index and RegTitle
 ;  (scripts/renaming/name_se_title_methods.py).
 SeMenuTitle_DrawField:
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeMenuTitle_DrawField_Skip
 	call	SeMenu_DrawOriginalEditedBadge
 	jrl	SeMenu_PresetManager_Init_Code_Return
@@ -8887,7 +8887,7 @@ SeMenu_PresetManager_Init_Code_Return:
 SeCopy_DrawStaticScreen:
 	; --- Wrapper 1: conditional XIY/XIX setup + call (28 bytes) ---
 	ld	(COLORBLIT_MODE:24), 0
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	nz, SeMenu_PresetManager_End
 	ld	xiy, SeCopy_DrawStaticScreen_Records
 	ld	xix, SeDrumKit_TouchCurvePageRecords
@@ -8923,7 +8923,7 @@ SeTonTon1_DrawStaticScreen:
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeTonHyb1_DrawStaticScreen:
 	call	SeMenu_DrawToneSelectTitle
-	cp	(1710:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeTonHyb1_DrawStaticScreen_Skip
 	ld	xiy, SeTonHyb1_DrawStaticScreen_Records
 	ld	xix, SeTonHyb1_DrawStaticScreen_Records3
@@ -8951,7 +8951,7 @@ SeTonHyb1_DrawStaticScreen_Join:
 ;   parts enabled in (0x65E), a hatch pattern for disabled ones, 2 or 4 parts by (0x6AE); no selection box (unlike
 ;   SeMenu_DrawPartSelector). Basis: callers + body -- page-draw routines call it after SeMenu_DrawSoloButton.
 SeMenu_DrawPartLabels:
-	cp (0x06ae:16), 0x01
+	cp (SEMENU_PART_MODE:16), 0x01
 	jr nz, .Lc_f0f79a
 	ld (COLORBLIT_MODE:24), 0x00
 	ld XIY,SeMenu_DrawPartLabels_Records4
@@ -8968,7 +8968,7 @@ SeMenu_DrawPartLabels_Skip2:
 	ld C, 0x04:opc
 .Lc_f0f7b0:
 SeMenu_DrawPartLabels_Join:
-	ld w, (0x065e:16)
+	ld w, (SEMENU_PART_MASK:16)
 	ld A,C
 	sla A, 0x01
 	dec 1,A
@@ -9003,7 +9003,7 @@ SeMenu_DrawPartLabels_Join2:
 ;   SeMenu_DrawSoloButton, where other pages draw SeMenu_DrawPartSelector / SeMenu_DrawPartLabels from the same mask.
 SeMenu_DrawPartRadioButtons:
 	ld (COLORBLIT_MODE:24), 0x00
-	cp (0x06ae:16), 0x01
+	cp (SEMENU_PART_MODE:16), 0x01
 	jr nz, .Lc_f0f816
 	ld C, 0x02:opc
 	jr t, .Lc_f0f818
@@ -9012,7 +9012,7 @@ SeMenu_DrawPartRadioButtons_Skip:
 	ld C, 0x04:opc
 .Lc_f0f818:
 SeMenu_DrawPartRadioButtons_Join:
-	ld w, (0x065e:16)
+	ld w, (SEMENU_PART_MASK:16)
 	ld A,C
 	sla A, 0x01
 	dec 1,A
@@ -9050,7 +9050,7 @@ SeMenu_DrawTwoPartRadioButtons:
 	ld (COLORBLIT_MODE:24), 0x00
 	ld C, 0x02:opc
 SeMenu_DrawTwoPartRadioButtons_Loop:
-	ld w, (0x065e:16)
+	ld w, (SEMENU_PART_MASK:16)
 	ld A,C
 	sla A, 0x01
 	dec 1,A
@@ -9160,7 +9160,7 @@ SeLfo1_DrawPartLabels:
 	ld	(COLORBLIT_MODE:24), 0
 	ld	c, 4:opc
 SeLfo1_DrawPartLabels_Loop:
-	ld	w, (1630:16)
+	ld	w, (SEMENU_PART_MASK:16)
 	ld	a, c
 	sla	a, 1
 	dec	1, a
@@ -9290,7 +9290,7 @@ SeMenu_PresetBrowser_Data_Sub_Join:
 SeAmpAmp1_DrawStaticScreen:
 	; --- Main dispatch: language check, XIY/XIX setup, calls (111 bytes) ---
 	call	SeAmp_DrawSectionFrame
-	cp	(1710:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeMenu_CompareAndApply_Check
 	call	SeMenu_PresetManager_Save
 	ld	xiy, SeAmpAmp1_DrawStaticScreen_Records
@@ -9305,7 +9305,7 @@ SeMenu_CompareAndApply_Match:
 	call	SeMenu_DrawSoloButton
 	call	SeMenu_DrawPartLabels
 	call	SeMenu_DrawSelectedPartEnvCurve
-	cp	(1710:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeMenu_CompareAndApply_Apply
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiy, SeMenu_CompareAndApply_Match_Records
@@ -9327,7 +9327,7 @@ SeAmp_DrawSectionFrame:
 	; --- Init helper: language-conditional XIX setup (35 bytes) ---
 	ld (COLORBLIT_MODE:24), 0x00
 	ld XIY,SeAmp_SectionFrameRecords
-	cp (0x06ae:16), 0x01
+	cp (SEMENU_PART_MODE:16), 0x01
 	jr z, SeMenu_CompareAndApply_Data2
 	ld XIX,SeAmp_TitleIcon
 	jr t, SeMenu_CompareAndApply_Data3
@@ -9363,8 +9363,8 @@ SeAmpAmp2_DrawStaticScreen:
 ; SeMenu_DrawBreakpointKeyboard: Draws the mini keyboard at (56,139) (SeMenu_DrawKeyboardGraphic) and the fields below
 ;   it: params 0-2 (0x660-0x662) as note names, param 3 (0x663) as a number. Basis: callers + body.
 SeMenu_DrawBreakpointKeyboard:
-	ldw	(1734:16), 56
-	ldw	(1736:16), 139
+	ldw	(SEMENU_GFX_X:16), 56
+	ldw	(SEMENU_GFX_Y:16), 139
 	call	SeMenu_DrawKeyboardGraphic
 	ld	(COLORBLIT_MODE:24), 0
 	ld	xiy, SeMenu_DrawBreakpointKeyboard_Records
@@ -9376,7 +9376,7 @@ SeMenu_DrawBreakpointKeyboard:
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeAmpEnv1_DrawStaticScreen:
 	call	SeAmp_DrawSectionFrame
-	cp	(1710:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeAmpEnv1_DrawStaticScreen_Skip
 	ld	xiy, SeAmpEnv1_Records
 	ld	xix, SeAmpEnv2_Records
@@ -9398,7 +9398,7 @@ SeAmpEnv1_DrawStaticScreen_Join:
 	call	SeMenu_DrawSoloButton
 	call	SeMenu_DrawPartSelector
 	ld	(COLORBLIT_MODE:24), 0
-	cp	(1710:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeAmpEnv1_DrawStaticScreen_Skip2
 	ld	xiy, SeAmpEnv1_DrawStaticScreen_Records
 	ld	xix, SeAmpEnv1_FourPartFieldRecordPtrs
@@ -9448,8 +9448,8 @@ SeAmpEnv2_DrawStaticScreen:
 	ld	xix, SeFil_PageHeader_Records
 	call	SeGfx_DrawStaticList
 	call	SeMenu_PresetManager_Save
-	ldw	(1734:16), 56
-	ldw	(1736:16), 139
+	ldw	(SEMENU_GFX_X:16), 56
+	ldw	(SEMENU_GFX_Y:16), 139
 	call	SeMenu_DrawKeyboardGraphic
 	call	SeMenu_DrawSoloButton
 	call	SeMenu_DrawPartSelector
@@ -9470,7 +9470,7 @@ SeFilLpq1_DrawStaticScreen:
 	ld	xiy, SeFilLpq1_Records
 	ld	xix, SeFil24dB_Caption_StaticRecords
 	call	SeGfx_DrawStaticList
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeFilLpq1_DrawStaticScreen_Loop
 	call	SeFilLpq1_DrawStaticScreen_End
 SeFilLpq1_DrawStaticScreen_Loop:
@@ -9491,7 +9491,7 @@ SeFilLpq1_DrawStaticScreen_End:
 	ret
 SeFil_DrawPageHeader:
 	ld (COLORBLIT_MODE:24), 0x00
-	cp (0x06ae:16), 0x01
+	cp (SEMENU_PART_MODE:16), 0x01
 	jr z, SeFil_DrawPageHeader_Skip
 	ld XIX,SeFil_DrawModeCaption_Records
 	jr t, SeFil_DrawPageHeader_Join
@@ -9512,7 +9512,7 @@ SeFil_DrawFilterTypeField:
 	ld (0x0678:16), a
 	ld (COLORBLIT_MODE:24), 0x02
 	ld XIY,SeScreenData_0x175E
-	cp (0x06ae:16), 0x01
+	cp (SEMENU_PART_MODE:16), 0x01
 	jr z, SeFil_DrawFilterTypeField_Skip
 	ld XIX,SeFil_PageOfTwo_StaticRecords
 	jr t, SeFil_DrawFilterTypeField_Join
@@ -9535,7 +9535,7 @@ SeFilHpq1_DrawStaticScreen:
 	ld	xiy, SeFilHpq1_Records
 	ld	xix, SeFilLpq1_Records
 	call	SeGfx_DrawStaticList
-	cp	(1710:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeFilHpq1_DrawStaticScreen_Skip
 	call	SeFilLpq1_DrawStaticScreen_End
 SeFilHpq1_DrawStaticScreen_Skip:
@@ -9559,7 +9559,7 @@ SeFilL241_DrawStaticScreen:
 	ld	xiy, SeFilL241_Records
 	ld	xix, SeFilH241_Records
 	call	SeGfx_DrawStaticList
-	cp	(1710:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeFilL241_DrawStaticScreen_Skip
 	call	SeFilLpq1_DrawStaticScreen_End
 SeFilL241_DrawStaticScreen_Skip:
@@ -9583,7 +9583,7 @@ SeFilH241_DrawStaticScreen:
 	ld	xiy, SeFilH241_Records
 	ld	xix, SeFilBpf1_Records
 	call	SeGfx_DrawStaticList
-	cp	(1710:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeFilH241_DrawStaticScreen_Skip
 	call	SeFilLpq1_DrawStaticScreen_End
 SeFilH241_DrawStaticScreen_Skip:
@@ -9992,7 +9992,7 @@ SeMenu_DrawLfoSelectedPartLine:
 ;  SeTitle_FieldDrawTable, indexed by title id - 0x20): redraws one parameter field, A = the field index. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeAmpAmp1_DrawField:
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	nz, SeAmpAmp1_DrawField_Skip5
 	cp	a, 3:i3
 	jr	c, SeAmpAmp1_DrawField_Skip6
@@ -10009,7 +10009,7 @@ SeAmpAmp1_DrawField_Skip6:
 	cp	a, 0:i3
 	jr	nz, SeAmpAmp1_DrawField_Join4
 	call	SeMenu_DrawSelectedPartEnvCurve
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeAmpAmp1_DrawField_Skip7
 	ld	(COLORBLIT_MODE:24), 1
 	ld	xiy, SeAmpAmp1_DrawField_Records
@@ -10024,7 +10024,7 @@ SeAmpAmp1_DrawField_Join3:
 	ld	a, 0:opc
 SeAmpAmp1_DrawField_Join4:
 	ld	(COLORBLIT_MODE:24), 0
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeAmpAmp1_DrawField_Skip8
 	ld	xiy, SeAmpAmp1_FourPartFieldRecordPtrs
 	jr	SeAmpAmp1_DrawField_Join5
@@ -10045,7 +10045,7 @@ SeAmpAmp2_SeFilFil2_DrawField:
 ;  SeTitle_FieldDrawTable, indexed by title id - 0x20): redraws one parameter field, A = the field index. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeAmpEnv1_DrawField:
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeAmpEnv1_DrawField_Skip9
 	ld	xiy, SeAmpEnv1_FourPartFieldRecordPtrs
 	jr	SeAmpEnv1_DrawField_Join7
@@ -10224,7 +10224,7 @@ SeMenu_DrawWriteDestName_Skip7:
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeWrtSnd_DrawStaticScreen:
 	ld	(COLORBLIT_MODE:24), 0
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeWrtSnd_DrawStaticScreen_Skip16
 	ld	xiy, SeWrtSnd_DrawStaticScreen_Records
 	ld	xix, SeWrtSnd_DrawStaticScreen_Records2
@@ -10458,8 +10458,8 @@ SeTonRan1_DrawStaticScreen:
 	ld	xiy, SeTonRan_RangeStripFrame
 	ld	xix, SeTonRan1_KeyLayerFrame
 	call	SeGfx_DrawStaticList
-	ldw	(1734:16), 47
-	ldw	(1736:16), 51
+	ldw	(SEMENU_GFX_X:16), 47
+	ldw	(SEMENU_GFX_Y:16), 51
 	call	SeMenu_DrawKeyboardGraphic
 	call	SeMenu_DrawSoloButton
 	call	SeMenu_DrawPartSelector
@@ -10542,8 +10542,8 @@ SeMenu_FilterEdit_Init_Sub:
 	ld	xix, SeTonTon1_Field14_Record
 	call	SeGfx_DrawStaticList
 	call	SeMenu_PresetManager_Save
-	ldw	(1734:16), 56
-	ldw	(1736:16), 139
+	ldw	(SEMENU_GFX_X:16), 56
+	ldw	(SEMENU_GFX_Y:16), 139
 	call	SeMenu_DrawKeyboardGraphic
 	call	SeMenu_DrawSoloButton
 	call	SeMenu_DrawPartSelector
@@ -10710,7 +10710,7 @@ SeCtr2_DrawField:
 	cp	a, 12
 	jr	nz, SeCtr2_DrawField_DefaultPath
 	ld	(COLORBLIT_MODE:24), 0
-	cp	(0x6ae:16), 1
+	cp	(SEMENU_PART_MODE:16), 1
 	jr	z, SeMenu_EqEdit_DrawTable
 	ld	xiy, SeCtr2_Records
 	ld	xix, SeCtr2_FunctionNameFields
@@ -14876,7 +14876,7 @@ PsCmpCpFGrpBoxProc_OnApRhyGrpNm:
 	inc	8, xsp
 	lda	xwa, (xiz+22)
 	lda	xbc, (xiz+32)
-	cp	(0x38ef:16), 0
+	cp	(CMPNCP_FROM_ITEM:16), 0
 	jr	nz, PsCmpCpFGrpBox_SetColorFF
 	cp	(0x39c8:16), 0
 	jr	nz, PsCmpCpFGrpBox_SetColorFF
@@ -14905,7 +14905,7 @@ PsCmpCpFGrpBox_SendNotify:
 	ld	bc, (xde)
 	add	bc, 39
 	ld	(xwa+6), bc
-	cp	(14575:16), 0
+	cp	(CMPNCP_FROM_ITEM:16), 0
 	jr	nz, PsCmpCpFGrpBox_PushF5
 	pushw 242
 	ld	bc, 1:i3
@@ -14985,7 +14985,7 @@ PsCmpCpFVariBoxProc_OnApRhyVariNm:
 	inc	8, xsp
 	lda	xwa, (xiz+22)
 	lda	xbc, (xiz+32)
-	cp	(0x38ef:16), 1
+	cp	(CMPNCP_FROM_ITEM:16), 1
 	jr	nz, PsCmpCpFVariBox_SetColorFF
 	cp	(0x39c8:16), 0
 	jr	nz, PsCmpCpFVariBox_SetColorFF
@@ -15017,7 +15017,7 @@ PsCmpCpFVariBox_SendNotify:
 	ld	bc, (xde)
 	add	bc, 39
 	ld	(xwa+6), bc
-	cp	(14575:16), 1
+	cp	(CMPNCP_FROM_ITEM:16), 1
 	jr	nz, PsCmpCpFVariBox_PushF5
 	pushw 242
 	ld	bc, 1:i3
@@ -15071,7 +15071,7 @@ PsCmpCpFPtnBoxProc_OnPaintOrRepaint:
 	ld	xwa, (xsp+268)
 	call	GetViewInstance
 	ld	xiz, xhl
-	ld	a, (13367:16)
+	ld	a, (RHYTHM_LOAD_PART:16)
 	extz	wa
 	sla	wa, 2
 	lda	xbc, (PsCmpCpFPtnBox_PatternNameStrPtrs:24)
@@ -15083,7 +15083,7 @@ PsCmpCpFPtnBoxProc_OnPaintOrRepaint:
 	inc	8, xsp
 	lda	xwa, (xiz+22)
 	lda	xbc, (xiz+32)
-	cp	(14575:16), 2
+	cp	(CMPNCP_FROM_ITEM:16), 2
 	jr	nz, PsCmpCpFPtnBox_SetColorFF
 	cp	(14792:16), 0
 	jr	nz, PsCmpCpFPtnBox_SetColorFF
@@ -15112,7 +15112,7 @@ PsCmpCpFPtnBox_SendNotify:
 	ld	bc, (xde)
 	add	bc, 38
 	ld	(xwa+6), bc
-	cp	(14575:16), 2
+	cp	(CMPNCP_FROM_ITEM:16), 2
 	jr	nz, PsCmpCpFPtnBox_PushF5
 	pushw 242
 	ld	bc, 1:i3
@@ -15168,10 +15168,10 @@ PsCstmCpBnkBoxProc_OnPaintOrRepaint:
 	call	GetViewInstance
 	cp	(xhl+36), 0
 	jr	nz, PsCstmCpBnkBox_ReadParam2
-	ldb_d8	a, (0x38fe)
+	ldb_d8	a, (CSTMCP_FROM_SLOT)
 	jr	PsCstmCpBnkBox_LookupAndSend
 PsCstmCpBnkBox_ReadParam2:
-	ld	a, (14591:16)
+	ld	a, (CSTMCP_TO_SLOT:16)
 PsCstmCpBnkBox_LookupAndSend:
 	extz	wa
 	sla	wa, 2
@@ -15230,7 +15230,7 @@ PsCstmCpSwBoxProc_OnPaintOrRepaint:
 	cp	(xhl+36), 0
 	jr	nz, PsCstmCpSwBox_ReadParam2
 	ld	xwa, PsCstmCpSwBox_HandleEvtBC_Str_CUSTOM
-	cp	(0x38fe:16), 10
+	cp	(CSTMCP_FROM_SLOT:16), 10
 	jr	nc, PsCstmCpSwBox_PushTableAddr0
 	ld	xwa, PsCstmCpSwBox_HandleEvtBC_Str_MEMORY
 PsCstmCpSwBox_PushTableAddr0:
@@ -15240,7 +15240,7 @@ PsCstmCpSwBox_PushTableAddr0:
 
 PsCstmCpSwBox_ReadParam2:
 	ld	xwa, PsCstmCpSwBox_ReadParam2_Str_CUSTOM
-	cp	(14591:16), 10
+	cp	(CSTMCP_TO_SLOT:16), 10
 	jr	nc, PsCstmCpSwBox_PushTableAddr1
 	ld	xwa, PsCstmCpSwBox_ReadParam2_Str_MEMORY
 PsCstmCpSwBox_PushTableAddr1:
@@ -15296,7 +15296,7 @@ PsCstmCpNameBox_CallInherited:
 	jrl PsCtmAtt_ReturnZero
 
 PsCstmCpNameBoxProc_OnDraw:
-	cp	(0x39c6:16), 0
+	cp	(CSTMCP_WINDOW:16), 0
 	jrl	nz, PsCtmAtt_ReturnZero
 	ld	xwa, xiz
 	ld	xde, (xsp+260)
@@ -15322,7 +15322,7 @@ PsCstmCpNameBox_MainFuncCall:
 	jr PsCtmAtt_ReturnZero
 
 PsCstmCpNameBoxProc_OnCstmFNmDisp:
-	cp	(0x39c6:16), 0x00
+	cp	(CSTMCP_WINDOW:16), 0x00
 	jr nz, PsCtmAtt_ReturnZero
 	ld XWA,XIZ
 	call GetViewInstance
@@ -15337,7 +15337,7 @@ PsCstmCpNameBoxProc_OnCstmFNmDisp:
 	ld XBC,EVT_PARA_DRAW
 	jr t, PsCstmCpNameBox_SendEventJoin
 PsCstmCpNameBoxProc_OnCstmTNmDisp:
-	cp	(0x39c6:16), 0x00
+	cp	(CSTMCP_WINDOW:16), 0x00
 	jr nz, PsCtmAtt_ReturnZero
 	ld XWA,XIZ
 	call GetViewInstance
@@ -15441,7 +15441,7 @@ AcMemNoBoxProc_OnPaintOrRepaint:
 	ld	xwa, (xsp+268)
 	call	GetViewInstance
 	ld	xiz, xhl
-	ld	a, (13342:16)
+	ld	a, (STYLE_SECTION:16)
 	extz	wa
 	sla	wa, 2
 	lda	xbc, (AcMemNoBox_SectionNameStrPtrs:24)
@@ -15453,7 +15453,7 @@ AcMemNoBoxProc_OnPaintOrRepaint:
 	inc	8, xsp
 	lda	xwa, (xiz+22)
 	lda	xbc, (xiz+32)
-	cp	(14576:16), 1
+	cp	(CMPNCP_TO_ITEM:16), 1
 	jr	nz, AcMemNoBox_SetColorFF
 	cp	(14792:16), 1
 	jr	nz, AcMemNoBox_SetColorFF
@@ -15485,7 +15485,7 @@ AcMemNoBox_SendNotify:
 	ld	bc, (xde)
 	add	bc, 46
 	ld	(xwa+6), bc
-	cp	(14576:16), 1
+	cp	(CMPNCP_TO_ITEM:16), 1
 	jr	nz, AcMemNoBox_PushF5
 	pushw 242
 	ld	bc, 1:i3
@@ -15554,7 +15554,7 @@ AcCmpRecBoxProc_OnPaintOrRepaint:
 	ld	xwa, (xsp+12)
 	ld	(xsp+8), xwa
 	ld	e, (xiz+36)
-	ld	a, (14051:16)
+	ld	a, (CMP_RECORD_PART:16)
 	and	a, e
 	lda	xhl, (AcCmpRecBox_TrackStateStrPtrs:24)
 	lda	xbc, (xsp+16)
@@ -15571,7 +15571,7 @@ AcCmpRecBoxProc_OnPaintOrRepaint:
 AcCmpRecBox_CheckParam2:
 	ld	xwa, (xsp+4)
 	ld	e, (xwa+37)
-	ld	a, (13369:16)
+	ld	a, (CMP_SOLO:16)
 	and	a, e
 	cp	a, e
 	jr	nz, AcCmpRecBox_AdjustTable
@@ -15643,7 +15643,7 @@ PsCmpQtzBoxProc_OnPaintOrRepaint:
 	call	InheritedProc
 	ld	xwa, xiz
 	call	GetViewInstance
-	ld	a, (13347:16)
+	ld	a, (CMP_QUANTIZE:16)
 	extz	wa
 	sla	wa, 2
 	lda	xbc, (PtrTbl_NotePositionStrs:24)
@@ -15953,7 +15953,7 @@ PsNameMemBoxProc_OnPaintOrRepaint:
 	ld	xwa, (xsp+268)
 	call	GetViewInstance
 	ld	xiz, xhl
-	ld	a, (13342:16)
+	ld	a, (STYLE_SECTION:16)
 	extz	wa
 	sla	wa, 2
 	lda	xbc, (PtrTbl_StyleVarGroupCodes:24)
@@ -15965,7 +15965,7 @@ PsNameMemBoxProc_OnPaintOrRepaint:
 	inc	8, xsp
 	lda	xwa, (xiz+22)
 	lda	xbc, (xiz+32)
-	cp	(14576:16), 0
+	cp	(CMPNCP_TO_ITEM:16), 0
 	jr	nz, PsNameMemBox_SetColorFF
 	cp	(14792:16), 1
 	jr	nz, PsNameMemBox_SetColorFF
@@ -15997,7 +15997,7 @@ PsNameMemBox_SendNotify:
 	ld	bc, (xde)
 	add	bc, 38
 	ld	(xwa+6), bc
-	cp	(14576:16), 0
+	cp	(CMPNCP_TO_ITEM:16), 0
 	jr	nz, EasyCmp_TtlDispatch
 	pushw 242
 	ld	bc, 1:i3
@@ -17849,7 +17849,7 @@ MspPlayModeFunc_DataBlock:
 	ld	xhl, (xsp+12)
 	jr	MspPlayModeFunc_Epilogue
 MspPlayModeFunc_OnGetLargeStep:	; cases 31457342, 31457343
-	ld	a, (1054:16)
+	ld	a, (ACC_TRANSPORT_STATE:16)
 	and	a, 4
 	cp	a, 4:i3
 	scc16	nz, hl
@@ -17984,7 +17984,7 @@ AcSndArgGridBoxProc_OnIndexswUp:	; cases 29360151, 29360153
 	dec	2, a
 	extz	wa
 	lda	xbc, (xsp+12)
-	ld	(0x32d6), (xbc+wa)
+	ld	(SNDARG_PART_SELECT), (xbc+wa)
 	ld	d, 0:opc
 	extz	xde
 	ld	xwa, NAKA_MAINFUNC_SndArgNmGet
@@ -18052,7 +18052,7 @@ AcSndArgGridBoxProc_OnIndexswDown:	; cases 29360152, 29360154
 	dec	2, a
 	extz	wa
 	lda	xbc, (xsp+12)
-	ld	(0x32d6), (xbc+wa)
+	ld	(SNDARG_PART_SELECT), (xbc+wa)
 	ld	d, 0:opc
 	extz	xde
 	ld	xwa, NAKA_MAINFUNC_SndArgNmGet
@@ -19256,7 +19256,7 @@ CmpNameMenuBoxProc:
 	jr CmpNameMenu_Epilogue
 
 CmpNameMenuBoxProc_OnDraw:
-	cp	(13342:16), 12
+	cp	(STYLE_SECTION:16), 12
 	jr	nc, CmpNameMenu_SetReturnZero
 	ld	xwa, xiz
 	call	InheritedProc

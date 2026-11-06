@@ -12,8 +12,8 @@ Sequencer_ResetAfterFloppyIO:
 	call FloppyIO_ReturnReady
 	call SeqPlay_RestoreVoiceState_Return
 	xor wa, wa
-	ld (0xf19e:16), wa
-	ld (0x00ffec:24), wa
+	ld (SEQ_TRACK_MASK:16), wa
+	ld (SEQ_TRACK_MASK_COPY:24), wa
 	ldw (0xf19c:16), 0
 	cpw (6699:16), 49
 	jrl z, SeqPlay_ReadyStateTransition
@@ -24,8 +24,8 @@ SeqPlay_ResetAndStop:
 	call FloppyIO_ReturnReady
 	call SeqPlay_RestoreVoiceState_Return
 	xor wa, wa
-	ld (0xf19e:16), wa
-	ld (0x00ffec:24), wa
+	ld (SEQ_TRACK_MASK:16), wa
+	ld (SEQ_TRACK_MASK_COPY:24), wa
 	ldw (0xf19c:16), 0
 	push xhl
 	ld xhl, (FILEIO_BLOCK_BYTES:16)
@@ -45,9 +45,9 @@ SeqPlay_FinishFloppyLoadAndStart:
 	ldw (0x1a2b:16), 0x0001
 	call SeqPlay_DelayLoop_Outer
 	call BitMapOut_RenderDisplay
-	ld wa, (0x00ffec:24)
-	ld (0xf19e:16), wa
-	and	(0x288b:16), 0xf7
+	ld wa, (SEQ_TRACK_MASK_COPY:24)
+	ld (SEQ_TRACK_MASK:16), wa
+	and	(SEQ_RTMCFG:16), 0xf7
 	call SeqPlay_CheckStartConditions
 	call SeqPlay_InitChannelParams
 	ldw (0xf19c:16), 0x0000
@@ -126,7 +126,7 @@ SeqTrack_ClearPlaybackBuf2_Loop:
 ; ============================================================================
 FloppyIO_ReadNextByte:
 	push xix
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	ld A, (xix+)
 	cp xix, 0x17f9
 	jrl ule, FloppyIO_ReadNextByte_StorePtr
@@ -155,7 +155,7 @@ FloppyIO_ReadNextByte_DivDone:
 	ld xix, 0x13fa
 
 FloppyIO_ReadNextByte_StorePtr:
-	ld (4376:16), xix
+	ld (SMF_FILE_PTR:16), xix
 
 ; port: v7's label FloppyIO_ReadNextByte_UpdateRemaining is not in v6 -- no v6 bytes correspond to what it named
 	pop xix
@@ -260,8 +260,8 @@ SeqPlay_PrepareAndScanChannels:
 	call SeqPlay_CheckStartConditions
 	call SeqPlay_RestoreVoiceState_Return
 	xor wa, wa
-	ld (0xf19e:16), wa
-	ld (0x00ffec:24), wa
+	ld (SEQ_TRACK_MASK:16), wa
+	ld (SEQ_TRACK_MASK_COPY:24), wa
 	ld (4237:16), wa
 
 SeqPlay_InitTrackLoop:
@@ -299,7 +299,7 @@ SeqTrack_AssignFloppyChannels:
 	ld (5113:16), 0
 
 SeqTrack_AssignChannel_Loop:
-	cpw (0xf231:16), 16
+	cpw (SEQ_FREE_BLOCKS:16), 16
 	jrl c, SeqTrack_ErrorMark
 	push xiy
 	push xix
@@ -307,7 +307,7 @@ SeqTrack_AssignChannel_Loop:
 	ld wa, ix
 	pop xix
 	pop xiy
-	ld	bc, (0x2851:16)
+	ld	bc, (SEQ_BLOCK_TOTAL:16)
 	cp wa, bc
 	jrl ugt, SeqTrack_ErrorMark
 	cp wa, 0:i3
@@ -315,12 +315,12 @@ SeqTrack_AssignChannel_Loop:
 	pushw wa
 	ld hl, wa
 	call ToneGen_ComputeBlockPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ormi8 (xhl), 0x80
 	ldw (xhl + 1), 0x0
 	ldw (xhl + 3), 0xffff
 	popw wa
-	ld xhl, 0xf250
+	ld xhl, SEQ_TRACK_TABLE
 	or	(xhl+iy), 0x80
 	push xhl
 	lda	xhl, (xhl+iy)
@@ -345,7 +345,7 @@ SeqTrack_AssignChannel_Loop:
 
 SeqTrack_ErrorMark:
 	ld (3830:16), 255
-	ld (4323:16), 255
+	ld (SEQ_EVENT_ABORT:16), 255
 
 SeqTrack_AssignChannels_Done:
 	ret
@@ -814,13 +814,13 @@ SoundGen_ScanActiveVoiceBitmap:
 	xor c, c
 
 SoundGen_ScanBitmap_Loop:
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
 	jrl nc, SoundGen_ScanBitmap_Next
-	ld	(0x285b:16), c
-	inc	1, (0x285b:16)
+	ld	(SEQ_TRACK:16), c
+	inc	1, (SEQ_TRACK:16)
 	pushw bc
 	call Scoop_SpecialMode_ParamCheckBound
 	popw bc
@@ -838,7 +838,7 @@ FloppyIO_ReturnReady:
 SMF_ReadMidiEventToBuffer:
 	ld (4010:16), a
 	xor bc, bc
-	ld xix, 0xfab
+	ld xix, SEQ_EVT_STATUS
 	ld (xix+), a
 	inc 1, c
 
@@ -890,7 +890,7 @@ FloppyIO_ReadMidiEventBytes:
 	ld a, (4010:16)
 	ld l, a
 	and l, 0xf0
-	ld xix, 0xfab
+	ld xix, SEQ_EVT_STATUS
 	ld (xix+), a
 	xor h, h
 	ld a, c
@@ -953,7 +953,7 @@ VoiceChannels_LoadPartMapAndInitPan:
 	ld xiy, VoiceChannels_LoadPartMapAndInitPan_Data
 
 VoiceChannels_LoadPartMap_Mode1:
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	ldw bc, 0x10
 	ldir85
 	ldw (0xf290:16), 0xffff
@@ -1010,7 +1010,7 @@ SeqPlay_InitChannelParams_Loop:
 FloppyIO_ComputeSwitchboardAddr:
 	ld xhl, SEQ_SONG_SLOTS
 	xor xwa, xwa
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	sla xwa, 11
 	add xhl, xwa
 	ld xix, xhl
@@ -1022,7 +1022,7 @@ SMF_VoiceSetup_AssignToTrack:
 	ld iy, (4237:16)
 	call SoundGen_ClampVoiceIndexMin1
 	ld ix, iy
-	cpw (0xf231:16), 16
+	cpw (SEQ_FREE_BLOCKS:16), 16
 	jrl c, SMF_VoiceSetup_Exit
 	push xiy
 	push xix
@@ -1030,7 +1030,7 @@ SMF_VoiceSetup_AssignToTrack:
 	ld wa, ix
 	pop xix
 	pop xiy
-	ld	bc, (0x2851:16)
+	ld	bc, (SEQ_BLOCK_TOTAL:16)
 	cp wa, bc
 	jrl ugt, SMF_VoiceSetup_Exit
 	cp wa, 0:i3
@@ -1038,7 +1038,7 @@ SMF_VoiceSetup_AssignToTrack:
 	pushw wa
 	ld hl, wa
 	call ToneGen_ComputeBlockPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ormi8 (xhl), 0x80
 	ldw (xhl + 1), 0x0
 	ldw (xhl + 3), 0xffff
@@ -1046,7 +1046,7 @@ SMF_VoiceSetup_AssignToTrack:
 	ld hl, iy
 	sla iy, 1
 	add iy, hl
-	ld xhl, 0xf250
+	ld xhl, SEQ_TRACK_TABLE
 	or	(xhl+iy), 0x80
 	ldfr_lerp XHL, 0x38
 	lda	xhl, (xhl+iy)
@@ -1154,12 +1154,12 @@ SMF_MTrk_SignatureMatch_Entry:
 	djnz16	bc, SMF_MTrk_SignatureMatch_Loop
 	ld	(0x108c:16), 0
 SMF_ProcessVoiceData:
-	cp	(0x10e3:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, SMF_EventFailureExit
 	push	xwa
 	push	xbc
 	ld	xbc, 0:i3
-	ld	xwa, (0x1a2d:16)
+	ld	xwa, (FILEIO_BLOCK_BYTES:16)
 	cp	xwa, xbc
 	jr	lt, SMF_ProcessVoiceData_Skip
 	pop	xbc
@@ -1175,7 +1175,7 @@ SMF_ProcessVoiceData_Entry:
 	push	xwa
 	push	xbc
 	ld	xbc, 0:i3
-	ld	xwa, (0x1a2d:16)
+	ld	xwa, (FILEIO_BLOCK_BYTES:16)
 	cp	xwa, xbc
 	jr	lt, SMF_ProcessVoiceData_Skip2
 	pop	xbc
@@ -1196,7 +1196,7 @@ SMF_ProcessVoiceData_Entry2:
 	push	xwa
 	push	xbc
 	ld	xbc, 0:i3
-	ld	xwa, (0x1a2d:16)
+	ld	xwa, (FILEIO_BLOCK_BYTES:16)
 	cp	xwa, xbc
 	jr	lt, SMF_VoiceData_ParseFailed
 	pop	xbc
@@ -1232,7 +1232,7 @@ SMF_VoiceData_MetaParseFailed:
 SMF_VoiceData_CheckEndOfTrack:
 	cp (4009:16), 255
 	jrl z, SMF_VoiceData_HandleEndOfTrack
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl z, SMF_ProcessVoiceData
 	ld (3830:16), 255
 	jr SMF_EventFailureExit
@@ -1276,7 +1276,7 @@ SMF_VoiceData_CheckMidiStatus:
 	bit 7, a
 	jrl z, SMF_VoiceData_ReadMidiRunning
 	call SMF_ReadMidiEventWithStatus
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SMF_EventFailureExit
 	push xwa
 	push xbc
@@ -1298,7 +1298,7 @@ SMF_EventFailureExit:
 
 SMF_VoiceData_ReadMidiRunning:
 	call FloppyIO_ReadMidiEventBytes
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SMF_VoiceData_SetErrorFlag
 	push xwa
 	push xbc
@@ -1328,11 +1328,11 @@ SMF_HeaderMagic_MTrk_Ref:	.ascii "MTrk"
 SeqTrack_InitScoopAndSetWall:
 	xor a, a
 	ld hl, 1:i3
-	ld	(0x285b:16), a
-	inc	1, (0x285b:16)
-	ld	(9832:16), l
-	inc	1, (9832:16)
-	ld	a, (0x285b:16)
+	ld	(SEQ_TRACK:16), a
+	inc	1, (SEQ_TRACK:16)
+	ld	(SEQ_OP_DEST_TRACK:16), l
+	inc	1, (SEQ_OP_DEST_TRACK:16)
+	ld	a, (SEQ_TRACK:16)
 	ld	(9834:16), a
 	pushw wa
 	push xhl
@@ -1342,9 +1342,9 @@ SeqTrack_InitScoopAndSetWall:
 	ret
 
 SeqTrack_ValidateAndAssignVoices:
-	cpw (0xf231:16), 16
+	cpw (SEQ_FREE_BLOCKS:16), 16
 	jrl nc, SeqTrack_AssignVoices_HaveDispatch
-	ld (4323:16), 255
+	ld (SEQ_EVENT_ABORT:16), 255
 	jrl SoundGen_ResetVoiceBitmapAndFlag
 
 SeqTrack_AssignVoices_HaveDispatch:
@@ -1576,12 +1576,12 @@ SeqTrack_ChannelMapSwap10And16:
 
 ToneGen_ComputeBlockPtr:
 	push xiy
-	ld	xiy, (7510:16)
+	ld	xiy, (SEQ_BLOCK_POOL:16)
 	extz xhl
 	dec 1, xhl
 	sla xhl, 8
 	add xiy, xhl
-	ld (4349:16), xiy
+	ld (SEQ_BLOCK_PTR:16), xiy
 	xor xhl, xhl
 	pop xiy
 	ret
@@ -1606,12 +1606,12 @@ SoundGen_RefreshVoices_Loop:
 	call SoundGen_UpdateAndRefresh
 	pop xiy
 	popw bc
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_RefreshVoices_Done
 	djnz16 bc, SoundGen_RefreshVoices_Loop
 	call ToneGen_WriteChannelRegs
 	or (4236:16), 1
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 SoundGen_RefreshVoices_Done:
 	ret
@@ -1686,7 +1686,7 @@ Sequencer_Validate_Done:
 	ret
 
 Sequencer_AdvanceBlockPosition:
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	add xix, (4211:16)
 	cp xix, 0x17f9
 	jrl ule, Sequencer_Advance_StorePtr
@@ -1713,10 +1713,10 @@ Sequencer_Advance_DivDone:
 	sub xix, 0x400
 
 Sequencer_Advance_StorePtr:
-	ld (4376:16), xix
+	ld (SMF_FILE_PTR:16), xix
 
 ; port: v7's label Sequencer_Advance_UpdateRemaining is not in v6 -- no v6 bytes correspond to what it named
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 	ret
 
 SMF_SetTempoFromMetaEvent:
@@ -1811,7 +1811,7 @@ SoundGen_UpdateTempoAndScale:
 	pushw bc
 	call SoundGen_UpdateAndRefresh
 	popw bc
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_NullRet
 	ld iy, 7:i3
 	cpw (3932:16), 0
@@ -1839,7 +1839,7 @@ SoundGen_ScaleAndWriteTempo:
 	call SoundGen_UpdateAndRefresh
 	pop xiy
 	popw bc
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_NullRet
 	ld a, c
 	pushw bc
@@ -1847,13 +1847,13 @@ SoundGen_ScaleAndWriteTempo:
 	call SoundGen_UpdateAndRefresh
 	pop xiy
 	popw bc
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_NullRet
 	ld a, b
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_NullRet
 	ld xiy, 7:i3
 	cpw (3932:16), 0
@@ -1866,13 +1866,13 @@ SoundGen_ScaleAndWriteTempo:
 
 SoundGen_SetVoiceBitAndWriteRegs:
 	ld bc, iy
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	stcf_a_16 de
-	ld (0x00ffec:24), de
+	ld (SEQ_TRACK_MASK_COPY:24), de
 	call ToneGen_WriteChannelRegs
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 SoundGen_NullRet:
 	ret
@@ -1882,42 +1882,42 @@ SoundGen_CaptureVoiceParams:
 	sla xiy, 1
 	ld xde, 0xc9e
 	ld	wa, (xde+iy)
-	ld	(0x2893:16), wa
+	ld	(SEQ_DATA_BLOCK:16), wa
 	srl xiy, 1
 	ld xde, 0xcbe
 	ld	a, (xde+iy)
 	xor w, w
-	ld	(9804:16), wa
+	ld	(SEQ_DATA_OFFSET:16), wa
 	pop xde
 	ret
 
 ToneGen_LoadBlockValidate:
 	push xhl
-	ld	hl, (0x2893:16)
+	ld	hl, (SEQ_DATA_BLOCK:16)
 	call ToneGen_ComputeBlockPtr
-	ld xhl, (4349:16)
-	ld	iy, (9804:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
+	ld	iy, (SEQ_DATA_OFFSET:16)
 	ld	(xhl+iy), a
 	pop xhl
 	ret
 
 SoundGen_StoreVoiceParamsToTables:
 	push xix
-	ld	wa, (9804:16)
+	ld	wa, (SEQ_DATA_OFFSET:16)
 	ld xix, 0xf218
 	ld	(xix+hl), a
 	sla hl, 1
-	ld	wa, (0x2893:16)
+	ld	wa, (SEQ_DATA_BLOCK:16)
 	ld xix, 0xf1f8
 	ld	(xix+hl), wa
 	pop xix
 	ret
 
 MidiEvent_DispatchSetA:
-	ld xix, 0xfab
-	ld a, (4011:16)
+	ld xix, SEQ_EVT_STATUS
+	ld a, (SEQ_EVT_STATUS:16)
 	pushw hl
-	ld hl, (4012:16)
+	ld hl, (SEQ_EVT_DATA1:16)
 	cp l, 0x7f
 	jrl ule, MidiEvent_ClampVelocityA_Low
 	ld l, 0x7f:opc
@@ -1928,7 +1928,7 @@ MidiEvent_ClampVelocityA_Low:
 	ld h, 0x7f:opc
 
 MidiEvent_ClampVelocityA_High:
-	ld (4012:16), hl
+	ld (SEQ_EVT_DATA1:16), hl
 	popw hl
 	ld w, a
 	and w, 0xf0
@@ -1976,10 +1976,10 @@ MidiNoteOff_NullRetA:
 	ret
 
 MidiEvent_DispatchSetB:
-	ld xix, 0xfab
-	ld a, (4011:16)
+	ld xix, SEQ_EVT_STATUS
+	ld a, (SEQ_EVT_STATUS:16)
 	pushw hl
-	ld hl, (4012:16)
+	ld hl, (SEQ_EVT_DATA1:16)
 	cp l, 0x7f
 	jrl ule, MidiEvent_ClampVelocityB_Low
 	ld l, 0x7f:opc
@@ -1990,7 +1990,7 @@ MidiEvent_ClampVelocityB_Low:
 	ld h, 0x7f:opc
 
 MidiEvent_ClampVelocityB_High:
-	ld (4012:16), hl
+	ld (SEQ_EVT_DATA1:16), hl
 	popw hl
 	ld w, a
 	and w, 0xf0
@@ -2073,7 +2073,7 @@ SeqTrack_ReleaseVoice_Done:
 SMF_ReadMidiEventWithStatus:
 	ld (4010:16), a
 	xor bc, bc
-	ld xix, 0xfab
+	ld xix, SEQ_EVT_STATUS
 	ld (xix+), a
 	inc 1, c
 
@@ -2123,14 +2123,14 @@ SMF_ReadMidiStatus_Done:
 SetWall_ValidateAndApply:
 	ld	(0x27b8:16), 0
 	call SetWall_ParserInit
-	ld	a, (0x285b:16)
+	ld	a, (SEQ_TRACK:16)
 	cp a, 1:i3
 	jrl c, SetWall_ParamOutOfRange
 	cp	a, (0x2885:16)
 	jrl ugt, SetWall_ParamOutOfRange
-	cp	a, (9832:16)
+	cp	a, (SEQ_OP_DEST_TRACK:16)
 	jrl z, SetWall_ParamOutOfRange
-	ld	a, (9832:16)
+	ld	a, (SEQ_OP_DEST_TRACK:16)
 	cp a, 1:i3
 	jrl c, SetWall_ParamOutOfRange
 	cp	a, (0x2885:16)
@@ -2148,54 +2148,54 @@ SetWall_ParamOutOfRange:
 SetWall_ParamsValid:
 	xor hl, hl
 	ld (SEQ_ERROR_CODE:16), 0
-	and	(0x285f:16), 191
-	ld	a, (0x285b:16)
+	and	(SEQ_EDIT_FLAGS:16), 191
+	ld	a, (SEQ_TRACK:16)
 	call SetWall_SingleSlotResolve
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl z, SetWall_SlotResolved
 	jrl Scoop_NullRet
 
 SetWall_SlotResolved:
-	ld	wa, (0x2893:16)
+	ld	wa, (SEQ_DATA_BLOCK:16)
 	ld	(0x27ba:16), wa
-	ld	a, (9832:16)
+	ld	a, (SEQ_OP_DEST_TRACK:16)
 	call SetWall_SingleSlotResolve
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, Scoop_NullRet
-	ld	wa, (0x2893:16)
+	ld	wa, (SEQ_DATA_BLOCK:16)
 	ld	(0x27be:16), wa
 	ld	a, (9834:16)
-	cp	a, (0x285b:16)
+	cp	a, (SEQ_TRACK:16)
 	jrl z, SetWall_InitVoiceSlots
-	cp	a, (9832:16)
+	cp	a, (SEQ_OP_DEST_TRACK:16)
 	jrl z, SetWall_InitVoiceSlots
-	ld	a, (0x285b:16)
+	ld	a, (SEQ_TRACK:16)
 	pushw wa
 	ld	a, (9834:16)
-	ld	(0x285b:16), a
+	ld	(SEQ_TRACK:16), a
 	call Scoop_SpecialMode_ParamCheckBound
 	popw wa
-	ld	(0x285b:16), a
+	ld	(SEQ_TRACK:16), a
 
 SetWall_InitVoiceSlots:
 	xor xhl, xhl
-	ld	l, (0x285b:16)
+	ld	l, (SEQ_TRACK:16)
 	call VoiceChannel_ClearRegisters
 	ld xix, 0x17fa
 	nop
 	ld	wa, (0x27ba:16)
-	ld	(0x2893:16), wa
+	ld	(SEQ_DATA_BLOCK:16), wa
 	ld hl, wa
 	call ToneGen_ComputeBlockPtr
 	call VoiceChannel_CopyParamBlock
 	ld	(0x27bc:16), iy
 	xor xhl, xhl
-	ld	l, (9832:16)
+	ld	l, (SEQ_OP_DEST_TRACK:16)
 	call VoiceChannel_ClearRegisters
 	ld xix, 0x18fa
 	nop
 	ld	wa, (0x27be:16)
-	ld	(0x2893:16), wa
+	ld	(SEQ_DATA_BLOCK:16), wa
 	ld hl, wa
 	call ToneGen_ComputeBlockPtr
 	call VoiceChannel_CopyParamBlock
@@ -2206,7 +2206,7 @@ SetWall_InitVoiceSlots:
 	dec 1, hl
 	muls l, 0x3
 	push xiy
-	ld xiy, 0xf250
+	ld xiy, SEQ_TRACK_TABLE
 	or	(xiy+hl), 0x80
 	inc 1, xhl
 	ld	(xiy+hl), ix
@@ -2214,8 +2214,8 @@ SetWall_InitVoiceSlots:
 	ld (3308:16), ix
 	ld hl, ix
 	call ToneGen_ComputeBlockPtr
-	ld xhl, (4349:16)
-	ld	(0x2865:16), xhl
+	ld xhl, (SEQ_BLOCK_PTR:16)
+	ld	(SEQ_WRITE_BLOCK_PTR:16), xhl
 	ld ix, 5:i3
 	ldw (xhl + 1), 0x0
 	ldw (xhl + 3), 0xffff
@@ -2279,7 +2279,7 @@ Scoop_NullRet:
 
 ToneGen_CopyBlockToVoiceBuffer:
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x38
 	pop xiz
 	push_lerp 0x38
@@ -2287,7 +2287,7 @@ ToneGen_CopyBlockToVoiceBuffer:
 	push xhl
 	call ToneGen_ComputeBlockPtr
 	xor xiy, xiy
-	ld xiy, (4349:16)
+	ld xiy, (SEQ_BLOCK_PTR:16)
 	ld xix, 0x17fa
 	ldw bc, 0x100
 	ldir85
@@ -2303,7 +2303,7 @@ ToneGen_CopyBlockToVoiceBuffer:
 	pop_lerp 0x38
 	push xiz
 	ldto_lerp XIZ, 0x38
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	xor xiy, xiy
 	ld iy, 5:i3
@@ -2314,7 +2314,7 @@ VoiceChannel_ResetSlotByIndex:
 	dec 1, hl
 	ld iy, hl
 	muls_erpb 0xf4, 0x03
-	ld xix, 0xf250
+	ld xix, SEQ_TRACK_TABLE
 	and	(xix+iy), 0x7f
 	inc 1, iy
 	ldw	(xix+iy), 0xffff
@@ -2386,7 +2386,7 @@ ToneGen_WriteAllCh_Loop:
 	call ToneGen_AdvancePosition
 	popw iy
 	popw wa
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl z, ToneGen_WriteAllChannels_Next
 	popw iy
 	jrl ToneGen_WriteAllCh_Done
@@ -2406,7 +2406,7 @@ ToneGen_WriteAllCh_Done:
 	ret
 
 ToneGen_UpdateBlocks:
-	ld	hl, (0x2893:16)
+	ld	hl, (SEQ_DATA_BLOCK:16)
 	pushw bc
 	call ToneGen_ComputeBlockPtr
 	popw bc
@@ -2423,7 +2423,7 @@ ToneGen_UpdateBlocks_Loop:
 	call ToneGen_AdvancePosition
 	pop xix
 	popw bc
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, ToneGen_UpdateBlocks_Done
 	inc 1, ix
 	djnz16 bc, ToneGen_UpdateBlocks_Loop
@@ -2437,20 +2437,20 @@ ToneGen_SetChannelFlag:
 	ld a, c
 	scf
 	stcfa_dd16 0xfa, 0x19
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	stcf_a_16 de
-	ld (0x00ffec:24), de
+	ld (SEQ_TRACK_MASK_COPY:24), de
 	ret
 
 ToneGen_WriteChannelRegs:
 	push xix
-	ld	wa, (0x2893:16)
+	ld	wa, (SEQ_DATA_BLOCK:16)
 	sla iy, 1
 	ld xix, 0xc9e
 	ld	(xix+iy), wa
-	ld	wa, (9804:16)
+	ld	wa, (SEQ_DATA_OFFSET:16)
 	srl iy, 1
 	ld xix, 0xcbe
 	ld	(xix+iy), a
@@ -2465,17 +2465,17 @@ ToneGen_SyncVoiceBitmapFromSlots:
 ToneGen_SyncBitmap_Loop:
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
 	ldto_werp DE, 0x3e
 	ldto_berp A, 0x3c
 	jrl c, ToneGen_UpdateBlocks_NextChannel
-	ld xix, 0xf250
+	ld xix, SEQ_TRACK_TABLE
 	bit	7, (xix+hl)
 	jrl z, ToneGen_UpdateBlocks_NextChannel
-	ld xix, 0xf250
+	ld xix, SEQ_TRACK_TABLE
 	lda	xix, (xix+hl)
 	ld wa, (xix + 1)
 	ld iy, bc
@@ -2563,7 +2563,7 @@ SoundGen_ScalePitch_NoScale:
 	ret
 
 MidiEvent_HandleChannelPressureA:
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
 	extz xiy
 	push xiy
@@ -2571,7 +2571,7 @@ MidiEvent_HandleChannelPressureA:
 	ld a, 0xd0:opc
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, ToneGen_SetSustainExitAlt
 	sla xiy, 1
 	push xix
@@ -2585,17 +2585,17 @@ MidiEvent_HandleChannelPressureA:
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, ToneGen_SetSustainExitAlt
-	ld a, (4012:16)
+	ld a, (SEQ_EVT_DATA1:16)
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, ToneGen_SetSustainExitAlt
 	call ToneGen_SetSustainBit
 	call ToneGen_WriteChannelRegs
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 ToneGen_SetSustainExitAlt:
 	ret
@@ -2613,18 +2613,18 @@ MidiNoteOn_ScanSlotsA_NextSlot:
 	add xiy, 0x7
 	cp xiy, 0x12d9
 	jrl ule, MidiNoteOn_ScanSlotsA_Loop
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 	jrl VoiceSynth_NullRet2
 
 MidiNoteOn_FoundFreeSlotA:
 	call SndParam_LookupChannelVoice
 	cp a, 0xff
 	jr nz, MidiNoteOn_SetupVoiceA
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 	jp VoiceSynth_NullRet2
 MidiNoteOn_SetupVoiceA:
 	or	(4236:16), 1
-	ld	iy, (4011:16)
+	ld	iy, (SEQ_EVT_STATUS:16)
 	and	iy, 15
 	extz	xiy
 	push	xiy
@@ -2636,7 +2636,7 @@ MidiNoteOn_SetupVoiceA:
 	call	SoundGen_UpdateAndRefresh
 	pop	xix
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceSynth_NullRet2
 	sla	xiy, 1
 	push	xix
@@ -2652,11 +2652,11 @@ MidiNoteOn_SetupVoiceA:
 	call	SoundGen_UpdateAndRefresh
 	pop	xix
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceSynth_NullRet2
 	cp	(4600:16), 2
 	jr	nz, MidiNoteOn_StandardNoteA
-	ld	a, (4011:16)
+	ld	a, (SEQ_EVT_STATUS:16)
 	and	a, 15
 	cp	a, 9
 	jrl	nz, MidiNoteOn_NonDrumLookupA
@@ -2674,7 +2674,7 @@ MidiNoteOn_SetupVoiceA:
 	ld	bc, (xix+hl)
 	ld	e, b
 	xor	hl, hl
-	ld	l, (4012:16)
+	ld	l, (SEQ_EVT_DATA1:16)
 	pushw	hl
 	call	SndParam_LookupByChannel
 	ld	a, l
@@ -2696,14 +2696,14 @@ MidiNoteOn_NonDrumLookupA:
 	ld	wa, (xix+hl)
 	ld	c, w
 	call	SndParam_LookupByPartAndNote
-	ld	a, (4012:16)
+	ld	a, (SEQ_EVT_DATA1:16)
 	add	a, l
 	pop	xde
 	pop	xbc
 	pop	xix
 	jp	Scoop_ApplySoundParams
 MidiNoteOn_StandardNoteA:
-	ld a, (4012:16)
+	ld a, (SEQ_EVT_DATA1:16)
 
 Scoop_ApplySoundParams:
 	push xiy
@@ -2711,19 +2711,19 @@ Scoop_ApplySoundParams:
 	call SoundGen_UpdateAndRefresh
 	pop xix
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceSynth_NullRet2
-	ld a, (4013:16)
+	ld a, (SEQ_EVT_DATA2:16)
 	push xiy
 	push xix
 	call SoundGen_UpdateAndRefresh
 	pop xix
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceSynth_NullRet2
-	ld	a, (9804:16)
+	ld	a, (SEQ_DATA_OFFSET:16)
 	ld (xix + 2), a
-	ld	wa, (0x2893:16)
+	ld	wa, (SEQ_DATA_BLOCK:16)
 	ld (xix + 3), wa
 	xor a, a
 	push xiy
@@ -2731,7 +2731,7 @@ Scoop_ApplySoundParams:
 	call SoundGen_UpdateAndRefresh
 	pop xix
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceSynth_NullRet2
 	xor a, a
 	push xiy
@@ -2739,21 +2739,21 @@ Scoop_ApplySoundParams:
 	call SoundGen_UpdateAndRefresh
 	pop xix
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceSynth_NullRet2
 	call ToneGen_SetSustainBit
 	push xix
 	call ToneGen_WriteChannelRegs
 	pop xix
-	ld a, (4011:16)
+	ld a, (SEQ_EVT_STATUS:16)
 	and a, 0xf
 	or a, 0x80
 	ld (xix), a
-	ld a, (4012:16)
+	ld a, (SEQ_EVT_DATA1:16)
 	ld (xix + 1), a
 	xor wa, wa
 	ld (xix + 5), wa
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 VoiceSynth_NullRet2:
 	ret
@@ -2766,11 +2766,11 @@ MidiNoteOff_ScanActiveA_Loop:
 	jrl z, ToneGen_LoopAdvanceChkAlt
 	ld a, (xiy)
 	and a, 0xf
-	ld l, (4011:16)
+	ld l, (SEQ_EVT_STATUS:16)
 	and l, 0xf
 	cp a, l
 	jrl nz, ToneGen_LoopAdvanceChkAlt
-	ld l, (4012:16)
+	ld l, (SEQ_EVT_DATA1:16)
 	cp (xiy + 1), l
 	jrl nz, ToneGen_LoopAdvanceChkAlt
 	andmi8 (xiy), 0x7f
@@ -2791,20 +2791,20 @@ MidiNoteOff_ScanActiveA_Loop:
 	ld w, 0x5:opc
 
 Scoop_ApplyMatchedVoiceEntry:
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+ix), w
 	pop xhl
 	push_sd16w	0x93, 0x28
 	push_sd16w	0x4c, 0x26
-	ld	(0x2893:16), hl
-	ld	(9804:16), ix
+	ld	(SEQ_DATA_BLOCK:16), hl
+	ld	(SEQ_DATA_OFFSET:16), ix
 	pushw wa
 	call ToneGen_AdvanceBlockPosition
 	popw wa
 	push xix
 	push xiy
-	ld xix, (4349:16)
-	ld	iy, (9804:16)
+	ld xix, (SEQ_BLOCK_PTR:16)
+	ld	iy, (SEQ_DATA_OFFSET:16)
 	and iy, 0xff
 	ld	(xix+iy), a
 	pop xiy
@@ -2824,7 +2824,7 @@ MidiNoteOff_ReleaseVoiceA_Done:
 ; Voice synthesis command dispatcher
 ; Dispatches on DRAM[4012] value: <0x10 uses algorithm table, others are direct handlers
 VoiceSynth_CommandDispatch:
-	ld a, (4012:16)
+	ld a, (SEQ_EVT_DATA1:16)
 	cp a, 0x10
 	jrl c, VoiceSynth_AlgoTableDispatch
 	cp a, 0x20
@@ -2950,7 +2950,7 @@ VoiceSynth_Algorithm_Table:
 	.long VoiceSynth_Algo_Null
 
 MidiEvent_HandlePitchBendA:
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
 	extz xiy
 	push xiy
@@ -2958,7 +2958,7 @@ MidiEvent_HandlePitchBendA:
 	ld a, 0xd2:opc
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceSynth_NullRet3
 	sla xiy, 1
 	push xix
@@ -2972,35 +2972,35 @@ MidiEvent_HandlePitchBendA:
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceSynth_NullRet3
-	ld a, (4012:16)
+	ld a, (SEQ_EVT_DATA1:16)
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceSynth_NullRet3
-	ld a, (4013:16)
+	ld a, (SEQ_EVT_DATA2:16)
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceSynth_NullRet3
 	call ToneGen_SetSustainBit
 	call ToneGen_WriteChannelRegs
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 VoiceSynth_NullRet3:
 	ret
 
 MidiEvent_HandleProgramChangeA:
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
 	extz xiy
 	bit 0, (4236:16)
 	jrl nz, MidiPgmChg_CheckModeA
 	call VoiceChannel_ApplyParamByMode
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 MidiPgmChg_CheckModeA:
 	cp (4600:16), 0
@@ -3017,7 +3017,7 @@ MidiPgmChg_Mode0_SetupA:
 	ld	xix, 3954
 	ld	l, (xix+iy)
 	stb_d8	(6744), l
-	ldb_d8	l, (4012)
+	ldb_d8	l, (SEQ_EVT_DATA1)
 	stb_d8	(6745), l
 	ld	xix, SeqTrack_ChannelMapSwap10And16
 	ld	l, (xix+iy)
@@ -3042,7 +3042,7 @@ MidiPgmChg_Mode0_SetupA:
 	call	SoundGen_UpdateAndRefresh
 	pop	xhl
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, SoundGen_NullReturn
 	sla	xiy, 1
 	push	xix
@@ -3060,7 +3060,7 @@ MidiPgmChg_Mode0_SetupA:
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
 	pop	xhl
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, SoundGen_NullReturn
 	push	xix
 	ld	xix, SeqTrack_ChannelMapSwap10And16
@@ -3071,7 +3071,7 @@ MidiPgmChg_Mode0_SetupA:
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
 	pop	xhl
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, SoundGen_NullReturn
 	xor	a, a
 	push	xhl
@@ -3079,25 +3079,25 @@ MidiPgmChg_Mode0_SetupA:
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
 	pop	xhl
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, SoundGen_NullReturn
 	ldb_d8	a, (6746)
 	and	a, 127
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, SoundGen_NullReturn
 	ldb_d8	a, (6747)
 	and	a, 127
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, SoundGen_NullReturn
 	call	ToneGen_SetSustainBit
 	call	ToneGen_WriteChannelRegs
-	ld	(4323:16), 0
+	ld	(SEQ_EVENT_ABORT:16), 0
 	jrl	SoundGen_NullReturn
 MidiPgmChg_Mode2_SetupA:
 	push XIX
@@ -3107,7 +3107,7 @@ MidiPgmChg_Mode2_SetupA:
 	ld XIX,0x00000f72
 	ld	l, (xix+iy)
 	ld (0x1a58:16), l
-	ld l, (0x0fac:16)
+	ld l, (SEQ_EVT_DATA1:16)
 	ld (0x1a59:16), l
 	ld XIX,SeqTrack_ChannelMapSwap10And16
 	ld	l, (xix+iy)
@@ -3144,7 +3144,7 @@ MidiPgmChg_Mode2_ApplyEnvelopeA:
 	call SoundGen_UpdateAndRefresh
 	pop xhl
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_NullReturn
 	sla xiy, 1
 	push xix
@@ -3162,7 +3162,7 @@ MidiPgmChg_Mode2_ApplyEnvelopeA:
 	call SoundGen_UpdateAndRefresh
 	pop xiy
 	pop xhl
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_NullReturn
 	push xix
 	ld xix, SeqTrack_ChannelMapSwap10And16
@@ -3173,7 +3173,7 @@ MidiPgmChg_Mode2_ApplyEnvelopeA:
 	call SoundGen_UpdateAndRefresh
 	pop xiy
 	pop xhl
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_NullReturn
 	xor a, a
 	push xhl
@@ -3181,25 +3181,25 @@ MidiPgmChg_Mode2_ApplyEnvelopeA:
 	call SoundGen_UpdateAndRefresh
 	pop xiy
 	pop xhl
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_NullReturn
 	ld a, (6746:16)
 	and a, 0x7f
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_NullReturn
 	ld a, (6747:16)
 	and a, 0x7f
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_NullReturn
 	call ToneGen_SetSustainBit
 	call ToneGen_WriteChannelRegs
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 	jrl SoundGen_NullReturn
 
 MidiPgmChg_Mode1_SetupA:
@@ -3216,7 +3216,7 @@ MidiPgmChg_Mode1_SetupA:
 	or a, w
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_NullReturn
 	sla xiy, 1
 	push xix
@@ -3230,7 +3230,7 @@ MidiPgmChg_Mode1_SetupA:
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_NullReturn
 	push xix
 	ld xix, SeqTrack_ChannelMapIdentity
@@ -3239,19 +3239,19 @@ MidiPgmChg_Mode1_SetupA:
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_NullReturn
 	ld a, 0x0:opc
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_NullReturn
-	ld a, (4012:16)
+	ld a, (SEQ_EVT_DATA1:16)
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_NullReturn
 	push xix
 	ld xix, 0xf82
@@ -3260,11 +3260,11 @@ MidiPgmChg_Mode1_SetupA:
 	and a, 0x70
 	srl a, 4
 	call SoundGen_UpdateAndRefresh
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_NullReturn
 	call ToneGen_SetSustainBit
 	call ToneGen_WriteChannelRegs
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 	jrl SoundGen_NullReturn
 
 SoundGen_NullReturn:
@@ -3277,13 +3277,13 @@ MidiEvent_HandleChannelPressureB:
 	and xiy, 0xf
 	push xiy
 	call SoundGen_ReadVoiceRegs
-	ld w, (4011:16)
+	ld w, (SEQ_EVT_STATUS:16)
 	and w, 0xf
 	ld a, 0xa0:opc
 	or a, w
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, ToneGen_SetSustain_Exit
 	sla xiy, 1
 	push xix
@@ -3297,17 +3297,17 @@ MidiEvent_HandleChannelPressureB:
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, ToneGen_SetSustain_Exit
-	ld a, (4012:16)
+	ld a, (SEQ_EVT_DATA1:16)
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, ToneGen_SetSustain_Exit
 	call ToneGen_SetSustainBit
 	call SoundGen_WriteVoiceParams
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 ToneGen_SetSustain_Exit:
 	ret
@@ -3331,7 +3331,7 @@ MidiNoteOn_FoundFreeSlotB:
 	call SndParam_LookupChannelVoice
 	cp a, 0xff
 	jr nz, MidiNoteOn_SetupVoiceB
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 	jp VoiceParam_NullRet2
 MidiNoteOn_SetupVoiceB:
 	or	(4236:16), 1
@@ -3343,7 +3343,7 @@ MidiNoteOn_SetupVoiceB:
 	push	xix
 	call	SoundGen_ReadVoiceRegs
 	pop	xix
-	ld	w, (4011:16)
+	ld	w, (SEQ_EVT_STATUS:16)
 	and	w, 15
 	ld	a, 144:opc
 	or	a, w
@@ -3351,7 +3351,7 @@ MidiNoteOn_SetupVoiceB:
 	call	SoundGen_UpdateAndRefresh
 	pop	xix
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_NullRet2
 	sla	xiy, 1
 	push	xix
@@ -3369,11 +3369,11 @@ MidiNoteOn_SetupVoiceB:
 	call	SoundGen_UpdateAndRefresh
 	pop	xix
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_NullRet2
 	cp	(4600:16), 2
 	jr	nz, MidiNoteOn_StandardNoteB
-	ld	a, (4011:16)
+	ld	a, (SEQ_EVT_STATUS:16)
 	and	a, 15
 	cp	a, 9
 	jrl	nz, MidiNoteOn_NonDrumLookupB
@@ -3391,7 +3391,7 @@ MidiNoteOn_SetupVoiceB:
 	ld	bc, (xix+hl)
 	ld	e, b
 	xor	hl, hl
-	ld	l, (4012:16)
+	ld	l, (SEQ_EVT_DATA1:16)
 	pushw	hl
 	call	SndParam_LookupByChannel
 	ld	a, l
@@ -3413,14 +3413,14 @@ MidiNoteOn_NonDrumLookupB:
 	ld	wa, (xix+hl)
 	ld	c, w
 	call	SndParam_LookupByPartAndNote
-	ld	a, (4012:16)
+	ld	a, (SEQ_EVT_DATA1:16)
 	add	a, l
 	pop	xde
 	pop	xbc
 	pop	xix
 	jp	Scoop_ApplySoundParamsAlt
 MidiNoteOn_StandardNoteB:
-	ld a, (4012:16)
+	ld a, (SEQ_EVT_DATA1:16)
 
 Scoop_ApplySoundParamsAlt:
 	push xiy
@@ -3428,9 +3428,9 @@ Scoop_ApplySoundParamsAlt:
 	call SoundGen_UpdateAndRefresh
 	pop xix
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullRet2
-	ld a, (4013:16)
+	ld a, (SEQ_EVT_DATA2:16)
 	cp a, 0x7f
 	jrl ule, MidiNoteOn_ClampVelocityB
 	ld a, 0x7f:opc
@@ -3441,11 +3441,11 @@ MidiNoteOn_ClampVelocityB:
 	call SoundGen_UpdateAndRefresh
 	pop xix
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullRet2
-	ld	a, (9804:16)
+	ld	a, (SEQ_DATA_OFFSET:16)
 	ld (xix + 2), a
-	ld	wa, (0x2893:16)
+	ld	wa, (SEQ_DATA_BLOCK:16)
 	ld (xix + 3), wa
 	xor a, a
 	push xiy
@@ -3455,28 +3455,28 @@ MidiNoteOn_ClampVelocityB:
 	popw wa
 	pop xix
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullRet2
 	push xiy
 	push xix
 	call SoundGen_UpdateAndRefresh
 	pop xix
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullRet2
 	call ToneGen_SetSustainBit
 	push xix
 	call SoundGen_WriteVoiceParams
 	pop xix
-	ld a, (4011:16)
+	ld a, (SEQ_EVT_STATUS:16)
 	and a, 0xf
 	or a, 0x80
 	ld (xix), a
-	ld a, (4012:16)
+	ld a, (SEQ_EVT_DATA1:16)
 	ld (xix + 1), a
 	xor wa, wa
 	ld (xix + 5), wa
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 VoiceParam_NullRet2:
 	ret
@@ -3489,11 +3489,11 @@ MidiNoteOff_ScanActiveB_Loop:
 	jrl z, ToneGen_LoopAdvanceCheck
 	ld a, (xiy)
 	and a, 0xf
-	ld l, (4011:16)
+	ld l, (SEQ_EVT_STATUS:16)
 	and l, 0xf
 	cp a, l
 	jrl nz, ToneGen_LoopAdvanceCheck
-	ld l, (4012:16)
+	ld l, (SEQ_EVT_DATA1:16)
 	cp (xiy + 1), l
 	jrl nz, ToneGen_LoopAdvanceCheck
 	andmi8 (xiy), 0x7f
@@ -3514,18 +3514,18 @@ MidiNoteOff_ScanActiveB_Loop:
 	ld w, 0x5:opc
 
 Scoop_ApplyMatchedVoiceEntryAlt:
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+ix), w
 	pop xhl
 	push_sd16w	0x93, 0x28
 	push_sd16w	0x4c, 0x26
-	ld	(0x2893:16), hl
-	ld	(9804:16), ix
+	ld	(SEQ_DATA_BLOCK:16), hl
+	ld	(SEQ_DATA_OFFSET:16), ix
 	pushw wa
 	call ToneGen_AdvanceBlockPosition
 	popw wa
-	ld	ix, (9804:16)
-	ld xhl, (4349:16)
+	ld	ix, (SEQ_DATA_OFFSET:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+ix), a
 	popw_dd16	0x4c, 0x26
 	popw_dd16	0x93, 0x28
@@ -3542,7 +3542,7 @@ MidiNoteOff_ReleaseVoiceB_Done:
 ; Voice parameter command dispatcher
 ; Dispatches on DRAM[4012] value: <0x10 uses read-update table, others are direct handlers
 VoiceParam_CommandDispatch:
-	ld a, (4012:16)
+	ld a, (SEQ_EVT_DATA1:16)
 	cp a, 0x10
 	jrl c, VoiceParam_ReadUpdateDispatch
 	cp a, 0x20
@@ -3668,13 +3668,13 @@ MidiEvent_HandlePitchBendB:
 	and iy, 0xf
 	push xiy
 	call SoundGen_ReadVoiceRegs
-	ld w, (4011:16)
+	ld w, (SEQ_EVT_STATUS:16)
 	and w, 0xf
 	ld a, 0xe0:opc
 	or a, w
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullRet3
 	sla xiy, 1
 	push xix
@@ -3688,29 +3688,29 @@ MidiEvent_HandlePitchBendB:
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullRet3
 	push xiy
-	ld a, (4012:16)
+	ld a, (SEQ_EVT_DATA1:16)
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullRet3
 	push xiy
-	ld a, (4013:16)
+	ld a, (SEQ_EVT_DATA2:16)
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullRet3
 	call ToneGen_SetSustainBit
 	call SoundGen_WriteVoiceParams
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 VoiceParam_NullRet3:
 	ret
 
 MidiEvent_HandleProgramChangeB:
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
 	ld iy, (4237:16)
 	call SoundGen_ClampVoiceIndexMin1
@@ -3718,7 +3718,7 @@ MidiEvent_HandleProgramChangeB:
 	bit 0, (4236:16)
 	jrl nz, MidiPgmChg_CheckModeB
 	call VoiceChannel_ApplyParamByMode
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 MidiPgmChg_CheckModeB:
 	cp (4600:16), 0
@@ -3730,7 +3730,7 @@ MidiPgmChg_CheckModeB:
 MidiPgmChg_Mode0_SetupB:
 	push	xix
 	push	xiy
-	ldw_d16	iy, (4011)
+	ldw_d16	iy, (SEQ_EVT_STATUS)
 	and	iy, 15
 	ld	xix, 3970
 	ld	l, (xix+iy)
@@ -3738,7 +3738,7 @@ MidiPgmChg_Mode0_SetupB:
 	ld	xix, 3954
 	ld	l, (xix+iy)
 	stb_d8	(6744), l
-	ldb_d8	l, (4012)
+	ldb_d8	l, (SEQ_EVT_DATA1)
 	stb_d8	(6745), l
 	ld	xix, VoiceParam_ChannelMapRemapped
 	ld	l, (xix+iy)
@@ -3764,7 +3764,7 @@ MidiPgmChg_Mode0_SetupB:
 	call	SoundGen_UpdateAndRefresh
 	pop	xhl
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_NullReturn
 	sla	iy, 1
 	push	xix
@@ -3782,16 +3782,16 @@ MidiPgmChg_Mode0_SetupB:
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
 	pop	xhl
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_NullReturn
-	ldb_d8	a, (4011)
+	ldb_d8	a, (SEQ_EVT_STATUS)
 	and	a, 15
 	push	xhl
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
 	pop	xhl
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_NullReturn
 	xor	a, a
 	push	xhl
@@ -3799,30 +3799,30 @@ MidiPgmChg_Mode0_SetupB:
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
 	pop	xhl
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_NullReturn
 	ldb_d8	a, (6746)
 	and	a, 127
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_NullReturn
 	ldb_d8	a, (6747)
 	and	a, 127
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_NullReturn
 	call	ToneGen_SetSustainBit
 	call	SoundGen_WriteVoiceParams
-	ld	(4323:16), 0
+	ld	(SEQ_EVENT_ABORT:16), 0
 	jrl	VoiceParam_NullReturn
 MidiPgmChg_Mode2_SetupB:
 	push XIX
 	push XIY
-	ld iy, (0x0fab:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and IY,0x000f
 	ld XIX,0x00000f82
 	ld	l, (xix+iy)
@@ -3830,7 +3830,7 @@ MidiPgmChg_Mode2_SetupB:
 	ld XIX,0x00000f72
 	ld	l, (xix+iy)
 	ld (0x1a58:16), l
-	ld l, (0x0fac:16)
+	ld l, (SEQ_EVT_DATA1:16)
 	ld (0x1a59:16), l
 	ld XIX,VoiceParam_ChannelMapRemapped
 	ld	l, (xix+iy)
@@ -3868,7 +3868,7 @@ MidiPgmChg_Mode2_ApplyEnvelopeB:
 	call SoundGen_UpdateAndRefresh
 	pop xhl
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullReturn
 	sla iy, 1
 	push xix
@@ -3886,16 +3886,16 @@ MidiPgmChg_Mode2_ApplyEnvelopeB:
 	call SoundGen_UpdateAndRefresh
 	pop xiy
 	pop xhl
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullReturn
-	ld a, (4011:16)
+	ld a, (SEQ_EVT_STATUS:16)
 	and a, 0xf
 	push xhl
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
 	pop xhl
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullReturn
 	xor a, a
 	push xhl
@@ -3903,32 +3903,32 @@ MidiPgmChg_Mode2_ApplyEnvelopeB:
 	call SoundGen_UpdateAndRefresh
 	pop xiy
 	pop xhl
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullReturn
 	ld a, (6746:16)
 	and a, 0x7f
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullReturn
 	ld a, (6747:16)
 	and a, 0x7f
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullReturn
 	call ToneGen_SetSustainBit
 	call SoundGen_WriteVoiceParams
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 	jrl VoiceParam_NullReturn
 
 MidiPgmChg_Mode1_SetupB:
 	push xiy
 	call SoundGen_ReadVoiceRegs
 	ld a, 0xc0:opc
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
 	push xix
 	ld xix, 0xf72
@@ -3940,7 +3940,7 @@ MidiPgmChg_Mode1_SetupB:
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullReturn
 	sla iy, 1
 	push xix
@@ -3954,30 +3954,30 @@ MidiPgmChg_Mode1_SetupB:
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullReturn
-	ld a, (4011:16)
+	ld a, (SEQ_EVT_STATUS:16)
 	and a, 0xf
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullReturn
 	ld a, 0x0:opc
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullReturn
-	ld a, (4012:16)
+	ld a, (SEQ_EVT_DATA1:16)
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullReturn
 	push xix
 	push xiy
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
 	ld xix, 0xf82
 	ld	a, (xix+iy)
@@ -3986,11 +3986,11 @@ MidiPgmChg_Mode1_SetupB:
 	and a, 0x70
 	srl a, 4
 	call SoundGen_UpdateAndRefresh
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceParam_NullReturn
 	call ToneGen_SetSustainBit
 	call SoundGen_WriteVoiceParams
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 	jrl VoiceParam_NullReturn
 
 VoiceParam_NullReturn:
@@ -4013,12 +4013,12 @@ SoundGen_ReadVoiceRegs:
 	sla iy, 1
 	ld xde, 0xc9e
 	ld	wa, (xde+iy)
-	ld	(0x2893:16), wa
+	ld	(SEQ_DATA_BLOCK:16), wa
 	srl iy, 1
 	ld xde, 0xcbe
 	ld	a, (xde+iy)
 	xor w, w
-	ld	(9804:16), wa
+	ld	(SEQ_DATA_OFFSET:16), wa
 	pop xde
 	ret
 
@@ -4029,11 +4029,11 @@ SoundGen_StoreVoiceToTables_Clamped:
 	ld hl, 1:i3
 
 SoundGen_StoreVoice_AfterClamp:
-	ld	wa, (9804:16)
+	ld	wa, (SEQ_DATA_OFFSET:16)
 	ld xix, 0xf218
 	ld	(xix+hl), a
 	sla hl, 1
-	ld	wa, (0x2893:16)
+	ld	wa, (SEQ_DATA_BLOCK:16)
 	ld xix, 0xf1f8
 	ld	(xix+hl), wa
 	pop xix
@@ -4044,7 +4044,7 @@ VoiceChannel_ClearRegisters:
 	ld iy, hl
 	muls_erpb 0xf4, 0x03
 	push xix
-	ld xix, 0xf250
+	ld xix, SEQ_TRACK_TABLE
 	and	(xix+iy), 0x7f
 	inc 1, iy
 	ldw	(xix+iy), 0xffff
@@ -4064,20 +4064,20 @@ VoiceChannel_CopyParamBlock:
 	pushw bc
 	push xhl
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x38
 	pop xiz
 	push_lerp 0x38
-	ld xiy, (4349:16)
+	ld xiy, (SEQ_BLOCK_PTR:16)
 	ldw bc, 0x100
 	ldir85
-	ld	iy, (0x2893:16)
+	ld	iy, (SEQ_DATA_BLOCK:16)
 	ld wa, 1:i3
 	call DispatchHandler_JumpSub
 	pop_lerp 0x38
 	push xiz
 	ldto_lerp XIZ, 0x38
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	pop xhl
 	popw bc
@@ -4161,7 +4161,7 @@ VoiceChannel_FindNextLoop:
 Scoop_HandleEqualCompare:
 	cp c, 0x82
 	jr nz, Scoop_Equal_AdvanceAndRevalidate
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+ix), 0x82
 	ld	(0x27b8:16), 255
 	ld wa, (3308:16)
@@ -4173,10 +4173,10 @@ Scoop_HandleEqualCompare:
 	jr Scoop_Equal_Done
 
 Scoop_Equal_AdvanceAndRevalidate:
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+ix), 0x81
 	call VoiceChannel_AdvanceIndex
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	push xix
 	ld xix, 0x17fa
 	nop
@@ -4204,12 +4204,12 @@ ToneGen_AdvanceVoiceLoop:
 	ret
 
 VoiceChannel_FindNextValid:
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+ix), c
 	bit	0, (0x27b8:16)
 	jr nz, VoiceChannel_ValidateAndLoop
 	call VoiceChannel_AdvanceIndex
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	a, (0x27c2:16)
 	ld	(xhl+ix), a
 
@@ -4222,7 +4222,7 @@ VoiceChannel_ValidateAndLoop:
 	ld	(0x27bc:16), iy
 	pop xix
 	call VoiceChannel_AdvanceIndex
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	push xde
 	ld xde, 0x17fa
 	bit	7, (xde+iy)
@@ -4263,23 +4263,23 @@ VoiceChannel_AdvancePosition:
 	jr VoiceChannel_StorePosition_Continue
 
 VoiceChannel_AdvPos_CheckBounds:
-	cp	wa, (0x2851:16)
+	cp	wa, (SEQ_BLOCK_TOTAL:16)
 	jr ule, VoiceChannel_AdvPos_LoadBlock
 	ld (SEQ_ERROR_CODE:16), 10
 	jr VoiceChannel_StorePosition_Continue
 
 VoiceChannel_AdvPos_LoadBlock:
-	ld	(0x2893:16), wa
+	ld	(SEQ_DATA_BLOCK:16), wa
 	ld hl, wa
 	call ToneGen_ComputeBlockPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	bitm 7, (xhl)
 	jr nz, VoiceChannel_AdvPos_CopyBlock
 	ld (SEQ_ERROR_CODE:16), 11
 	jr VoiceChannel_StorePosition_Continue
 
 VoiceChannel_AdvPos_CopyBlock:
-	ld	hl, (0x2893:16)
+	ld	hl, (SEQ_DATA_BLOCK:16)
 	call ToneGen_CopyBlockToVoiceBuffer
 	ld iy, 5:i3
 
@@ -4288,22 +4288,22 @@ VoiceChannel_StorePosition_Continue:
 	ret
 
 ToneGen_WriteParamToBlock:
-	ld	hl, (0x2893:16)
+	ld	hl, (SEQ_DATA_BLOCK:16)
 	call ToneGen_ComputeBlockPtr
-	ld	iy, (9804:16)
+	ld	iy, (SEQ_DATA_OFFSET:16)
 	and iy, 0xff
 	extz xiy
-	add xiy, (4349:16)
+	add xiy, (SEQ_BLOCK_PTR:16)
 	ld (xiy), a
 	ret
 
 ToneGen_AdvancePosition:
-	ld	wa, (9804:16)
+	ld	wa, (SEQ_DATA_OFFSET:16)
 	cp wa, 0xff
 	jr nz, ToneGen_AdvPos_Increment
-	cpw (0xf231:16), 0
+	cpw (SEQ_FREE_BLOCKS:16), 0
 	jr nz, ToneGen_AdvPos_DispatchLink
-	ld (4323:16), 255
+	ld (SEQ_EVENT_ABORT:16), 255
 	jr ToneGen_AdvPos_Return
 
 ToneGen_AdvPos_DispatchLink:
@@ -4312,21 +4312,21 @@ ToneGen_AdvPos_DispatchLink:
 
 ToneGen_AdvPos_Increment:
 	inc 1, wa
-	ld	(9804:16), wa
+	ld	(SEQ_DATA_OFFSET:16), wa
 
 ToneGen_AdvPos_ClearError:
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 ToneGen_AdvPos_Return:
 	ret
 
 ToneGen_AdvPosForRefresh:
-	ld	wa, (9804:16)
+	ld	wa, (SEQ_DATA_OFFSET:16)
 	cp wa, 0xff
 	jr nz, ToneGen_AdvRefresh_Increment
-	cpw (0xf231:16), 0
+	cpw (SEQ_FREE_BLOCKS:16), 0
 	jr nz, ToneGen_AdvRefresh_DispatchLink
-	ld (4323:16), 255
+	ld (SEQ_EVENT_ABORT:16), 255
 	jr ToneGen_AdvRefresh_Return
 
 ToneGen_AdvRefresh_DispatchLink:
@@ -4335,37 +4335,37 @@ ToneGen_AdvRefresh_DispatchLink:
 
 ToneGen_AdvRefresh_Increment:
 	inc 1, wa
-	ld	(9804:16), wa
+	ld	(SEQ_DATA_OFFSET:16), wa
 
 ToneGen_AdvRefresh_ClearError:
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 ToneGen_AdvRefresh_Return:
 	ret
 
 ToneGen_SetSustainBit:
 	pushw bc
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
 	ld bc, iy
 	xor b, b
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	stcf_a_16 de
-	ld (0x00ffec:24), de
+	ld (SEQ_TRACK_MASK_COPY:24), de
 	popw bc
 	ret
 
 ToneGen_AdvanceBlockPosition:
-	ld	wa, (9804:16)
+	ld	wa, (SEQ_DATA_OFFSET:16)
 	cp wa, 0xff
 	jr nz, ToneGen_AdvBlock_IncrementPos
-	ld	hl, (0x2893:16)
+	ld	hl, (SEQ_DATA_BLOCK:16)
 	call ToneGen_ComputeBlockPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
-	ld	(0x2893:16), wa
+	ld	(SEQ_DATA_BLOCK:16), wa
 	ld hl, wa
 	call ToneGen_ComputeBlockPtr
 	ld wa, 5:i3
@@ -4375,14 +4375,14 @@ ToneGen_AdvBlock_IncrementPos:
 	inc 1, wa
 
 ToneGen_AdvBlock_StorePos:
-	ld	(9804:16), wa
+	ld	(SEQ_DATA_OFFSET:16), wa
 	ret
 
 VoiceSynth_HandleBankSelect:
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
 	extz xiy
-	ld a, (4013:16)
+	ld a, (SEQ_EVT_DATA2:16)
 	push xix
 	ld xix, 0xf82
 	ld	(xix+iy), a
@@ -4390,7 +4390,7 @@ VoiceSynth_HandleBankSelect:
 	ret
 
 VoiceSynth_HandleDataEntry:
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
 	push xix
 	ld xix, 0x10b3
@@ -4406,7 +4406,7 @@ VoiceSynth_HandleDataEntry:
 	ld xix, VoiceSynth_DataEntry_PtrTable
 	ld	xhl, (xix+hl)
 	pop xix
-	ld a, (4013:16)
+	ld a, (SEQ_EVT_DATA2:16)
 	xor b, b
 	ld ix, bc
 	extz xix
@@ -4455,12 +4455,12 @@ VoiceSynth_HandlePan:
 	bit 0, (4236:16)
 	jr nz, VoiceSynth_Pan_SetDirection
 	call VoiceChannel_SetPanDirection
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 VoiceSynth_Pan_SetDirection:
 	ld (4233:16), 4
 	xor a, a
-	cp (4013:16), 64
+	cp (SEQ_EVT_DATA2:16), 64
 	jr c, VoiceSynth_Pan_StoreAndUpdate
 	or a, 0x8
 
@@ -4480,11 +4480,11 @@ VoiceSynth_HandleReverb:
 	bit 0, (4236:16)
 	jr nz, VoiceSynth_Reverb_SetParams
 	call VoiceChannel_SetParamByte7
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 VoiceSynth_Reverb_SetParams:
 	ld (4233:16), 7
-	ld a, (4013:16)
+	ld a, (SEQ_EVT_DATA2:16)
 	ld (4234:16), a
 	ld (4235:16), 127
 	call VoiceChannel_UpdateWithPitch
@@ -4494,18 +4494,18 @@ VoiceSynth_HandleChorus:
 	bit 0, (4236:16)
 	jr nz, VoiceSynth_Chorus_SetParams
 	call VoiceChannel_MergeParamByte5
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 VoiceSynth_Chorus_SetParams:
 	ld (4233:16), 5
-	ld a, (4013:16)
+	ld a, (SEQ_EVT_DATA2:16)
 	ld (4234:16), a
 	ld (4235:16), 127
 	call VoiceChannel_UpdateWithPitch
 	ret
 
 VoiceChannel_SelectNextParam:
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
 	push xix
 	ld xix, 0x10b3
@@ -4550,7 +4550,7 @@ VoiceChannel_ParamLimitTable:
 	.byte 0x0c, 0x7f, 0xff
 
 VoiceChannel_SelectPrevParam:
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
 	push xix
 	ld xix, 0x10b3
@@ -4578,7 +4578,7 @@ VoiceChannel_PrevParam_Done:
 	ret
 
 VoiceChannel_ClearChannelFlags:
-	ld c, (4011:16)
+	ld c, (SEQ_EVT_STATUS:16)
 	and c, 0xf
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e
@@ -4607,16 +4607,16 @@ VoiceChannel_ClearChannelFlags:
 	ret
 
 VoiceChannel_NoteOnByChannel:
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
-	ld a, (4013:16)
+	ld a, (SEQ_EVT_DATA2:16)
 	push xix
 	ld xix, 0x1093
 	ld	(xix+iy), a
 	pop xix
 	cp a, 0x7f
 	jr z, VoiceChannel_NoteOn_ClearSlot
-	ld c, (4011:16)
+	ld c, (SEQ_EVT_STATUS:16)
 	and c, 0xf
 	ld wa, (4239:16)
 	and wa, (4241:16)
@@ -4644,7 +4644,7 @@ VoiceChannel_NoteOn_LookupBank:
 	jr nz, VoiceChannel_NoteOn_Done
 
 VoiceChannel_NoteOn_ClearSlot:
-	ld c, (4011:16)
+	ld c, (SEQ_EVT_STATUS:16)
 	and c, 0xf
 	xor b, b
 	ld iy, bc
@@ -4662,16 +4662,16 @@ VoiceChannel_NoteOn_Done:
 	ret
 
 VoiceChannel_NoteOffByChannel:
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
-	ld a, (4013:16)
+	ld a, (SEQ_EVT_DATA2:16)
 	push xix
 	ld xix, 0x10a3
 	ld	(xix+iy), a
 	pop xix
 	cp a, 0x7f
 	jr z, VoiceChannel_NoteOff_ClearSlot
-	ld c, (4011:16)
+	ld c, (SEQ_EVT_STATUS:16)
 	and c, 0xf
 	ld wa, (4239:16)
 	and wa, (4241:16)
@@ -4703,7 +4703,7 @@ VoiceChannel_NoteOff_LookupBank:
 	jr nz, VoiceChannel_NoteOff_Done
 
 VoiceChannel_NoteOff_ClearSlot:
-	ld c, (4011:16)
+	ld c, (SEQ_EVT_STATUS:16)
 	and c, 0xf
 	xor b, b
 	ld iy, bc
@@ -4733,7 +4733,7 @@ VoiceParam_ByMode_Mode0:
 	push	xix
 	push	xde
 	xor	de, de
-	ld	e, (4011:16)
+	ld	e, (SEQ_EVT_STATUS:16)
 	and	e, 15
 	ld	xix, 3970
 	ld	l, (xix+de)
@@ -4741,7 +4741,7 @@ VoiceParam_ByMode_Mode0:
 	ld	xix, 3954
 	ld	l, (xix+de)
 	ld	(6744:16), l
-	ld	l, (4012:16)
+	ld	l, (SEQ_EVT_DATA1:16)
 	ld	(6745:16), l
 	ld	xix, SeqTrack_ChannelMapSwap10And16
 	ld	l, (xix+de)
@@ -4761,7 +4761,7 @@ VoiceParam_ByMode_Mode2:
 	push XIX
 	push XDE
 	xor DE,DE
-	ld e, (0x0fab:16)
+	ld e, (SEQ_EVT_STATUS:16)
 	and E,0x0f
 	ld XIX,0x00000f82
 	ld	l, (xix+de)
@@ -4769,7 +4769,7 @@ VoiceParam_ByMode_Mode2:
 	ld XIX,0x00000f72
 	ld	l, (xix+de)
 	ld (0x1a58:16), l
-	ld l, (0x0fac:16)
+	ld l, (SEQ_EVT_DATA1:16)
 	ld (0x1a59:16), l
 	ld XIX,SeqTrack_ChannelMapSwap10And16
 	ld	l, (xix+de)
@@ -4799,9 +4799,9 @@ VoiceParam_ByMode_Mode2_Apply:
 	jr VoiceParam_ByMode_StoreAndReturn
 
 VoiceParam_ByMode_Mode1:
-	ld a, (4012:16)
+	ld a, (SEQ_EVT_DATA1:16)
 	xor hl, hl
-	ld l, (4011:16)
+	ld l, (SEQ_EVT_STATUS:16)
 	and l, 0xf
 	push xix
 	ld xix, 0xf72
@@ -4813,7 +4813,7 @@ VoiceParam_ByMode_Mode1:
 	or a, c
 	ld (xiy + 0:8), a
 	xor h, h
-	ld l, (4011:16)
+	ld l, (SEQ_EVT_STATUS:16)
 	and l, 0xf
 	push xix
 	ld xix, 0xf82
@@ -4834,11 +4834,11 @@ SoundGen_WriteVoiceParams:
 	push xde
 	ld iy, (4237:16)
 	call SoundGen_ClampVoiceIndexMin1
-	ld	wa, (0x2893:16)
+	ld	wa, (SEQ_DATA_BLOCK:16)
 	sla xiy, 1
 	ld xde, 0xc9e
 	ld	(xde+iy), wa
-	ld	wa, (9804:16)
+	ld	wa, (SEQ_DATA_OFFSET:16)
 	srl xiy, 1
 	ld xde, 0xcbe
 	ld	(xde+iy), a
@@ -4846,9 +4846,9 @@ SoundGen_WriteVoiceParams:
 	ret
 
 VoiceParam_HandleBankSelect:
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
-	ld a, (4013:16)
+	ld a, (SEQ_EVT_DATA2:16)
 	push xde
 	ld xde, 0xf82
 	ld	(xde+iy), a
@@ -4856,7 +4856,7 @@ VoiceParam_HandleBankSelect:
 	ret
 
 VoiceParam_HandleDataEntry:
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
 	push xix
 	ld xix, 0x10b3
@@ -4871,7 +4871,7 @@ VoiceParam_HandleDataEntry:
 	ld xix, VoiceSynth_DataEntry_PtrTable
 	ld	xhl, (xix+hl)
 	pop xix
-	ld a, (4013:16)
+	ld a, (SEQ_EVT_DATA2:16)
 	xor b, b
 	ld ix, bc
 	push xiy
@@ -4900,12 +4900,12 @@ VoiceParam_HandlePan:
 	bit 0, (4236:16)
 	jr nz, VoiceParam_Pan_SetDirection
 	call VoiceChannel_SetPanDirection
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 VoiceParam_Pan_SetDirection:
 	ld (4233:16), 4
 	xor a, a
-	cp (4013:16), 64
+	cp (SEQ_EVT_DATA2:16), 64
 	jr c, VoiceParam_Pan_StoreAndUpdate
 	ld a, 0x8:opc
 
@@ -4919,11 +4919,11 @@ VoiceParam_HandleReverb:
 	bit 0, (4236:16)
 	jr nz, VoiceParam_Reverb_SetParams
 	call VoiceChannel_SetParamByte7
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 VoiceParam_Reverb_SetParams:
 	ld (4233:16), 7
-	ld a, (4013:16)
+	ld a, (SEQ_EVT_DATA2:16)
 	ld (4234:16), a
 	ld (4235:16), 127
 	call SoundGen_ClampUpdateVoice
@@ -4933,23 +4933,23 @@ VoiceParam_HandleChorus:
 	bit 0, (4236:16)
 	jr nz, VoiceParam_Chorus_SetParams
 	call VoiceChannel_MergeParamByte5
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 VoiceParam_Chorus_SetParams:
 	ld (4233:16), 5
-	ld a, (4013:16)
+	ld a, (SEQ_EVT_DATA2:16)
 	ld (4234:16), a
 	ld (4235:16), 127
 	call SoundGen_ClampUpdateVoice
 	ret
 
 ToneGen_AdvanceAndValidateVoice:
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	(xhl+ix), b
 	bit	1, (0x27b8:16)
 	jr nz, ToneGen_ValidateVoiceLoop
 	call VoiceChannel_AdvanceIndex
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	a, (0x27c4:16)
 	ld	(xhl+ix), a
 
@@ -4962,7 +4962,7 @@ ToneGen_ValidateVoiceLoop:
 	ld	(0x27c0:16), iy
 	pop xix
 	call VoiceChannel_AdvanceIndex
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	push xix
 	ld xix, 0x18fa
 	bit	7, (xix+iy)
@@ -4981,23 +4981,23 @@ ToneGen_AdvValidate_StoreAndDone:
 	ret
 
 VoiceSynth_Algo_SimpleStore:
-	ld	iy, (4011:16)
+	ld	iy, (SEQ_EVT_STATUS:16)
 	and	iy, 15
-	ldb_d8	a, (4013)
+	ldb_d8	a, (SEQ_EVT_DATA2)
 	push	xix
 	ld	xix, 3954
 	ld	(xix+iy), a
 	pop	xix
 	ret
 VoiceSynth_Algo_MultiPath:
-	ld	iy, (4011:16)
+	ld	iy, (SEQ_EVT_STATUS:16)
 	and	iy, 15
 	push	xiy
 	call	SoundGen_CaptureVoiceParams
 	ld	a, 209:opc
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jr	nz, VoiceSynth_Algo_MultiPath_Return
 	sla	xiy, 1
 	push	xix
@@ -5011,23 +5011,23 @@ VoiceSynth_Algo_MultiPath:
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jr	nz, VoiceSynth_Algo_MultiPath_Return
-	ld	a, (4013:16)
+	ld	a, (SEQ_EVT_DATA2:16)
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jr	nz, VoiceSynth_Algo_MultiPath_Return
 	call	ToneGen_SetSustainBit
 	call	ToneGen_WriteChannelRegs
-	ld	(4323:16), 0
+	ld	(SEQ_EVENT_ABORT:16), 0
 VoiceSynth_Algo_MultiPath_Return:
 	ret
 VoiceSynth_Algo_Null:
 	ret
 VoiceSynth_Algo_ChannelConfig:
-	ld	iy, (4011:16)
+	ld	iy, (SEQ_EVT_STATUS:16)
 	and	iy, 15
 	push	xix
 	ld	xix, 4275
@@ -5042,7 +5042,7 @@ VoiceSynth_Algo_ChannelConfig:
 	ld	xix, VoiceSynth_DataEntry_PtrTable
 	ld	xhl, (xix+hl)
 	pop	xix
-	ld	a, (4013:16)
+	ld	a, (SEQ_EVT_DATA2:16)
 	xor	b, b
 	ld	ix, bc
 	push	xiy
@@ -5070,10 +5070,10 @@ VoiceSynth_Algo_ConditionalUpdate:
 	bit	0, (4236:16)
 	jr nz, VoiceSynth_ConditionalUpdate_SetParams
 	call VoiceChannel_SetRecordField3
-	ld	(4323:16), 0
+	ld	(SEQ_EVENT_ABORT:16), 0
 VoiceSynth_ConditionalUpdate_SetParams:
 	ld	(4233:16), 3
-	ld	a, (4013:16)
+	ld	a, (SEQ_EVT_DATA2:16)
 	cp	(4600:16), 2
 	jr nz, VoiceSynth_ConditionalUpdate_StoreAndCall
 	call VoiceSynth_ApplyLogCurve
@@ -5090,7 +5090,7 @@ VoiceSynth_ApplyLogCurve:
 	ld	a, l
 	ret
 VoiceSynth_Algo_MultiStage:
-	ld	iy, (4011:16)
+	ld	iy, (SEQ_EVT_STATUS:16)
 	and	iy, 15
 	extz	xiy
 	call	SoundGen_CaptureVoiceParams
@@ -5098,7 +5098,7 @@ VoiceSynth_Algo_MultiStage:
 	ld	a, 176:opc
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceSynth_Algo_MultiStage_Return
 	sla	xiy, 1
 	push	xix
@@ -5112,9 +5112,9 @@ VoiceSynth_Algo_MultiStage:
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jr	nz, VoiceSynth_Algo_MultiStage_Return
-	ld	l, (4011:16)
+	ld	l, (SEQ_EVT_STATUS:16)
 	and	l, 15
 	xor	h, h
 	extz	xhl
@@ -5130,33 +5130,33 @@ VoiceSynth_Algo_MultiStage_Skip:
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jr	nz, VoiceSynth_Algo_MultiStage_Return
 	ld	a, 8:opc
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jr	nz, VoiceSynth_Algo_MultiStage_Return
-	ld	a, (4013:16)
+	ld	a, (SEQ_EVT_DATA2:16)
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jr	nz, VoiceSynth_Algo_MultiStage_Return
 	ld	a, 127:opc
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jr	nz, VoiceSynth_Algo_MultiStage_Return
 	call	ToneGen_SetSustainBit
 	call	ToneGen_WriteChannelRegs
-	ld	(4323:16), 0
+	ld	(SEQ_EVENT_ABORT:16), 0
 VoiceSynth_Algo_MultiStage_Return:
 	ret
 VoiceSynth_Algo_PitchModulated:
-	ld	iy, (4011:16)
+	ld	iy, (SEQ_EVT_STATUS:16)
 	and	iy, 15
 	extz	xiy
 	push	xiy
@@ -5164,7 +5164,7 @@ VoiceSynth_Algo_PitchModulated:
 	ld	a, 211:opc
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jr	nz, VoiceSynth_Algo_PitchModulated_Return
 	sla	xiy, 1
 	push	xix
@@ -5178,9 +5178,9 @@ VoiceSynth_Algo_PitchModulated:
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jr	nz, VoiceSynth_Algo_PitchModulated_Return
-	ld	a, (4013:16)
+	ld	a, (SEQ_EVT_DATA2:16)
 	cp	(4600:16), 2
 	jr	nz, VoiceSynth_Algo_PitchModulated_Skip
 	call	VoiceSynth_ApplyLogCurve
@@ -5188,17 +5188,17 @@ VoiceSynth_Algo_PitchModulated_Skip:
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jr	nz, VoiceSynth_Algo_PitchModulated_Return
 	call	ToneGen_SetSustainBit
 	call	ToneGen_WriteChannelRegs
-	ld	(4323:16), 0
+	ld	(SEQ_EVENT_ABORT:16), 0
 VoiceSynth_Algo_PitchModulated_Return:
 	ret
 VoiceSynth_Algo_DirectStore:
-	ld	iy, (4011:16)
+	ld	iy, (SEQ_EVT_STATUS:16)
 	and	iy, 15
-	ldb_d8	a, (4013)
+	ldb_d8	a, (SEQ_EVT_DATA2)
 	push	xix
 	ld	xix, 3954
 	ld	(xix+iy), a
@@ -5210,13 +5210,13 @@ VoiceSynth_Algo_PitchShift:
 	and	iy, 15
 	push	xiy
 	call	SoundGen_ReadVoiceRegs
-	ld	w, (4011:16)
+	ld	w, (SEQ_EVT_STATUS:16)
 	and	w, 15
 	ld	a, 208:opc
 	or	a, w
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jr	nz, VoiceSynth_Algo_PitchShift_Return
 	sla	iy, 1
 	push	xix
@@ -5230,21 +5230,21 @@ VoiceSynth_Algo_PitchShift:
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jr	nz, VoiceSynth_Algo_PitchShift_Return
 	push	xiy
-	ld	a, (4013:16)
+	ld	a, (SEQ_EVT_DATA2:16)
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jr	nz, VoiceSynth_Algo_PitchShift_Return
 	call	ToneGen_SetSustainBit
 	call	SoundGen_WriteVoiceParams
-	ld	(4323:16), 0
+	ld	(SEQ_EVENT_ABORT:16), 0
 VoiceSynth_Algo_PitchShift_Return:
 	ret
 VoiceParam_ReadUpdate_6:
-	ld	iy, (4011:16)
+	ld	iy, (SEQ_EVT_STATUS:16)
 	and	iy, 15
 	push	xix
 	ld	xix, 4275
@@ -5259,7 +5259,7 @@ VoiceParam_ReadUpdate_6:
 	ld	xix, VoiceSynth_DataEntry_PtrTable
 	ld	xhl, (xix+hl)
 	pop	xix
-	ld	a, (4013:16)
+	ld	a, (SEQ_EVT_DATA2:16)
 	xor	b, b
 	ld	ix, bc
 	push	xiy
@@ -5286,10 +5286,10 @@ VoiceParam_ReadUpdate_7:
 	bit	0, (4236:16)
 	jr	nz, VoiceParam_ReadUpdate_7_Skip
 	call	VoiceChannel_SetRecordField3
-	ld	(4323:16), 0
+	ld	(SEQ_EVENT_ABORT:16), 0
 VoiceParam_ReadUpdate_7_Skip:
 	ld	(4233:16), 3
-	ld	a, (4013:16)
+	ld	a, (SEQ_EVT_DATA2:16)
 	cp	(4600:16), 2
 	jr	nz, VoiceParam_ReadUpdate_7_Skip2
 	call	VoiceSynth_ApplyLogCurve
@@ -5307,7 +5307,7 @@ VoiceParam_ReadUpdate_10:
 	ld	a, 176:opc
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_ReadUpdate_10_Return
 	sla	iy, 1
 	push	xix
@@ -5321,36 +5321,36 @@ VoiceParam_ReadUpdate_10:
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_ReadUpdate_10_Return
-	ld	a, (4011:16)
+	ld	a, (SEQ_EVT_STATUS:16)
 	and	a, 15
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_ReadUpdate_10_Return
 	ld	a, 8:opc
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_ReadUpdate_10_Return
-	ld	a, (4013:16)
+	ld	a, (SEQ_EVT_DATA2:16)
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_ReadUpdate_10_Return
 	ld	a, 127:opc
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_ReadUpdate_10_Return
 	call	ToneGen_SetSustainBit
 	call	SoundGen_WriteVoiceParams
-	ld	(4323:16), 0
+	ld	(SEQ_EVENT_ABORT:16), 0
 VoiceParam_ReadUpdate_10_Return:
 	ret
 VoiceParam_ReadUpdate_11:
@@ -5359,13 +5359,13 @@ VoiceParam_ReadUpdate_11:
 	and	iy, 15
 	push	xiy
 	call	SoundGen_ReadVoiceRegs
-	ld	w, (4011:16)
+	ld	w, (SEQ_EVT_STATUS:16)
 	and	w, 15
 	ld	a, 240:opc
 	or	a, w
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_ReadUpdate_11_Return
 	sla	xiy, 1
 	push	xix
@@ -5379,9 +5379,9 @@ VoiceParam_ReadUpdate_11:
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_ReadUpdate_11_Return
-	ld	a, (4013:16)
+	ld	a, (SEQ_EVT_DATA2:16)
 	cp	(4600:16), 2
 	jr	nz, VoiceParam_ReadUpdate_11_Skip
 	call	VoiceSynth_ApplyLogCurve
@@ -5389,17 +5389,17 @@ VoiceParam_ReadUpdate_11_Skip:
 	push	xiy
 	call	SoundGen_UpdateAndRefresh
 	pop	xiy
-	cp	(4323:16), 0
+	cp	(SEQ_EVENT_ABORT:16), 0
 	jrl	nz, VoiceParam_ReadUpdate_11_Return
 	call	ToneGen_SetSustainBit
 	call	SoundGen_WriteVoiceParams
-	ld	(4323:16), 0
+	ld	(SEQ_EVENT_ABORT:16), 0
 VoiceParam_ReadUpdate_11_Return:
 	ret
 
 ToneGen_ValidateAndSelectVoice:
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x38
 	pop xiz
 	push_lerp 0x38
@@ -5417,16 +5417,16 @@ ToneGen_ValidateVoice_CheckLink:
 	jr ToneGen_SaveVoiceState_Continue
 
 ToneGen_ValidateVoice_CheckBounds:
-	cp	wa, (0x2851:16)
+	cp	wa, (SEQ_BLOCK_TOTAL:16)
 	jr ule, ToneGen_ValidateVoice_LoadBlock
 	ld (SEQ_ERROR_CODE:16), 10
 	jr ToneGen_SaveVoiceState_Continue
 
 ToneGen_ValidateVoice_LoadBlock:
-	ld	(0x2893:16), wa
+	ld	(SEQ_DATA_BLOCK:16), wa
 	ld hl, wa
 	call ToneGen_ComputeBlockPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	bitm 7, (xhl)
 	jr nz, ToneGen_ValidateVoice_CopyParams
 	ld (SEQ_ERROR_CODE:16), 11
@@ -5439,14 +5439,14 @@ ToneGen_SaveVoiceState_Continue:
 	pop_lerp 0x38
 	push xiz
 	ldto_lerp XIZ, 0x38
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	ret
 
 Scoop_AssignVoiceAfterMatch:
 	push xiy
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x38
 	pop xiz
 	push_lerp 0x38
@@ -5462,7 +5462,7 @@ Scoop_AssignVoiceAfterMatch:
 	pop_lerp 0x38
 	push xiz
 	ldto_lerp XIZ, 0x38
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	pop xiy
 	ret

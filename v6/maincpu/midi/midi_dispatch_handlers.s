@@ -49,7 +49,7 @@ MidiCC_CC82_Records:
 	.byte 0x48, 0x05, 0x00, 0xfc
 	.byte 0x48, 0x06, 0x04, 0x04
 MidiCC_RxCC64_Sustain:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiCC_RxCC64_Sustain_Return
 	xor	w, w
@@ -62,16 +62,16 @@ MidiCC_RxCC64_Sustain:
 	jr	z, MidiCC_RxCC64_Sustain_Return
 	inc	2, xix
 	ld	d, (xix+hl)
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	calr	MidiCC_Helper_ConditionalESetup
 MidiCC_RxCC64_Sustain_Return:
 	ret
 MidiCC_RxFunc08:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiCC_RxFunc08_Return
 	xor	w, w
@@ -84,16 +84,16 @@ MidiCC_RxFunc08:
 	jr	z, MidiCC_RxFunc08_Return
 	inc	2, xix
 	ld	d, (xix+hl)
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_RxFunc08_Helper
 MidiCC_RxFunc08_Return:
 	ret
 MidiCC_RxFunc09:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiCC_RxFunc09_Return
 	xor	w, w
@@ -106,16 +106,16 @@ MidiCC_RxFunc09:
 	jr	z, MidiCC_RxFunc09_Return
 	inc	2, xix
 	ld	d, (xix+hl)
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_RxFunc08_Helper
 MidiCC_RxFunc09_Return:
 	ret
 MidiCC_RxCC1_Modulation:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiCC_RxCC1_Modulation_Return
 	xor	w, w
@@ -128,16 +128,16 @@ MidiCC_RxCC1_Modulation:
 	jr	z, MidiCC_RxCC1_Modulation_Return
 	inc	2, xix
 	ld	d, (xix+hl)
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_RxCC1_Modulation_Helper
 MidiCC_RxCC1_Modulation_Return:
 	ret
 MidiCC_RxCC7_Volume:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiCC_RxCC7_Volume_Return
 	xor	w, w
@@ -150,16 +150,16 @@ MidiCC_RxCC7_Volume:
 	jr	z, MidiCC_RxCC7_Volume_Return
 	inc	2, xix
 	ld	d, (xix+hl)
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_SetPendingPartVolume
 MidiCC_RxCC7_Volume_Return:
 	ret
 MidiCC_RxCC11_Expression:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiCC_RxCC11_Expression_Return
 	xor	w, w
@@ -172,16 +172,16 @@ MidiCC_RxCC11_Expression:
 	jr	z, MidiCC_RxCC7_Volume_Return
 	inc	2, xix
 	ld	d, (xix+hl)
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_RxCC11_Expression_Helper
 MidiCC_RxCC11_Expression_Return:
 	ret
 MidiCC_RxCC10_Pan:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiCC_RxCC10_Pan_Return
 	xor	w, w
@@ -194,16 +194,16 @@ MidiCC_RxCC10_Pan:
 	jr	z, MidiCC_RxCC7_Volume_Return
 	inc	2, xix
 	ld	d, (xix+hl)
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_Handler_BitManipulation_Code_Helper6
 MidiCC_RxCC10_Pan_Return:
 	ret
 MidiCC_RxCC93_Chorus:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiCC_RxCC93_Chorus_Return
 	xor	w, w
@@ -216,16 +216,16 @@ MidiCC_RxCC93_Chorus:
 	jr	z, MidiCC_RxCC93_Chorus_Return
 	inc	2, xix
 	ld	d, (xix+hl)
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_Handler_BitManipulation_Code_Helper6
 MidiCC_RxCC93_Chorus_Return:
 	ret
 MidiCC_RxCC94_Celeste:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiCC_RxCC94_Celeste_Return
 	xor	w, w
@@ -238,16 +238,16 @@ MidiCC_RxCC94_Celeste:
 	jr	z, MidiCC_RxCC94_Celeste_Return
 	inc	2, xix
 	ld	d, (xix+hl)
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	calr	MidiCC_Helper_ConditionalESetup
 MidiCC_RxCC94_Celeste_Return:
 	ret
 MidiCC_RxCC91_Reverb:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiCC_RxCC91_Reverb_Return
 	xor	w, w
@@ -260,10 +260,10 @@ MidiCC_RxCC91_Reverb:
 	jr	z, MidiCC_RxCC91_Reverb_Return
 	inc	2, xix
 	ld	d, (xix+hl)
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	cp	c, 96
 	jr	z, MidiCC_RxCC91_Reverb_Skip
@@ -278,7 +278,7 @@ MidiCC_StubHandler_A:
 MidiCC_StubHandler_B:
 	ret
 MidiCC_RxFunc12:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiCC_RxFunc12_Return
 	xor	w, w
@@ -291,16 +291,16 @@ MidiCC_RxFunc12:
 	jr	z, MidiCC_RxFunc12_Return
 	inc	2, xix
 	ld	d, (xix+hl)
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_Handler_BitManipulation_Code_Helper4
 MidiCC_RxFunc12_Return:
 	ret
 MidiCC_RxFunc13:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiCC_RxFunc13_Return
 	xor	w, w
@@ -314,16 +314,16 @@ MidiCC_RxFunc13_MidEntry:
 	jr	z, MidiCC_RxFunc13_Return
 	inc	2, xix
 	ld	d, (xix+hl)
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_Handler_BitManipulation_Code_Helper4
 MidiCC_RxFunc13_Return:
 	ret
 MidiCC_RxFunc14:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiCC_RxFunc14_Return
 	xor	w, w
@@ -336,16 +336,16 @@ MidiCC_RxFunc14:
 	jr	z, MidiCC_RxFunc14_Return
 	inc	2, xix
 	ld	d, (xix+hl)
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_Handler_BitManipulation_Code_Helper4
 MidiCC_RxFunc14_Return:
 	ret
 MidiCC_RxFunc15:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiCC_RxFunc15_Return
 	xor	w, w
@@ -358,16 +358,16 @@ MidiCC_RxFunc15:
 	jr	z, MidiCC_RxFunc15_Return
 	inc	2, xix
 	ld	d, (xix+hl)
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_Handler_BitManipulation_Code_Helper4
 MidiCC_RxFunc15_Return:
 	ret
 MidiCC_Handler_BankModeSelect:
-	ld	l, (0x95aa:16)
+	ld	l, (MIDIRX_PART:16)
 	cp	l, 31
 	jrl	ugt, MidiCC_Handler_BankModeSelect_Return
 	extz	hl
@@ -389,7 +389,7 @@ MidiCC_Handler_BankModeSelect_Skip:
 	bit	0, (PANEL_MIDI+7:16)
 	jr	z, MidiCC_Handler_BankModeSelect_Return
 	ld	b, 11:opc
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	cp	e, 12
 	jr	ugt, MidiCC_Handler_BankModeSelect_Return
 	ld	d, 127:opc
@@ -398,7 +398,7 @@ MidiCC_Handler_BankModeSelect_Skip2:
 	bit	1, (PANEL_MIDI+7:16)
 	jr	z, MidiCC_Handler_BankModeSelect_Return
 	ld	b, 10:opc
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	sll	e, 1
 	ld	d, 255:opc
 	jr	MidiCC_Handler_BankModeSelect_Join
@@ -406,7 +406,7 @@ MidiCC_Handler_BankModeSelect_Skip3:
 	bit	1, (PANEL_MIDI+7:16)
 	jr	z, MidiCC_Handler_BankModeSelect_Return
 	ld	b, 9:opc
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	cp	e, 76
 	jr	ugt, MidiCC_Handler_BankModeSelect_Return
 	cp	e, 52
@@ -415,13 +415,13 @@ MidiCC_Handler_BankModeSelect_Skip3:
 MidiCC_Handler_BankModeSelect_Join:
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_Handler_BitManipulation_Code_Helper3
 MidiCC_Handler_BankModeSelect_Return:
 	ret
 MidiCC_Handler_ExpressionParam:
-	ld	l, (0x95aa:16)
+	ld	l, (MIDIRX_PART:16)
 	cp	l, 31
 	jr	ugt, MidiCC_Handler_ExpressionParam_Return
 	extz	hl
@@ -438,29 +438,29 @@ MidiCC_Handler_ExpressionParam:
 	bit	1, (PANEL_MIDI+7:16)
 	jr	z, MidiCC_Handler_ExpressionParam_Return
 	ld	b, 10:opc
-	ld	xix, (0x9032:16)
+	ld	xix, (PART_RECORD_PTRS:16)
 	extz	hl
-	ld	l, (0x95aa:16)
+	ld	l, (MIDIRX_PART:16)
 	sll	hl, 2
 	ld	xix, (xix+hl)
 	ld a, (xix+10)
 	res 0, a
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	srl	e, 6
 	or	e, a
 	ld	d, 255:opc
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_Handler_BitManipulation_Code_Helper3
 MidiCC_Handler_ExpressionParam_Return:
 	ret
 MidiCC_Handler_DirectStoreA:
-	ld	a, (0x9576:16)
+	ld	a, (MIDIRX_DATA2:16)
 	set	7, a
 	extz	hl
-	ld	l, (0x95aa:16)
+	ld	l, (MIDIRX_PART:16)
 	sll	hl, 1
 	ld	xix, 0x95b5
 	ld	(xix+hl), a
@@ -474,10 +474,10 @@ MidiCC_Handler_DirectStoreA:
 MidiCC_Handler_DirectStoreA_Return:
 	ret
 MidiCC_Handler_DirectStoreB:
-	ld	a, (0x9576:16)
+	ld	a, (MIDIRX_DATA2:16)
 	set	7, a
 	extz	hl
-	ld	l, (0x95aa:16)
+	ld	l, (MIDIRX_PART:16)
 	sll	hl, 1
 	ld	xix, 0x95b4
 	ld	(xix+hl), a
@@ -492,7 +492,7 @@ MidiCC_Handler_DirectStoreB:
 MidiCC_Handler_DirectStoreB_Return:
 	ret
 MidiCC_Handler_ParamDispatch:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiCC_Handler_ParamDispatch_Return
 	sll	a, 1
@@ -500,18 +500,18 @@ MidiCC_Handler_ParamDispatch:
 	ld	bc, (xix+a)
 	cp c, 255
 	jr	z, MidiCC_Handler_ParamDispatch_Return
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld	d, 127:opc
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	VoiceMode3_DispatchTable_Code_Helper
 MidiCC_Handler_ParamDispatch_Return:
 	ret
 	; --- Subroutine 1: table-indexed dispatch via XIX+A (54 bytes) ---
 MidiCC_Handler_TableDispatch:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp a, 0x1f
 	jr	ugt, MidiCC_Handler_TableDispatch_Ret
 	sll	a, 1
@@ -519,18 +519,18 @@ MidiCC_Handler_TableDispatch:
 	ld	bc, (xix+a)
 	cp c, 0xff
 	jr	z, MidiCC_Handler_TableDispatch_Ret
-	ld	e, (0x9576:16)
+	ld	e, (MIDIRX_DATA2:16)
 	ld d, 0x7f:opc
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_Handler_BitManipulation_Code_Helper5
 MidiCC_Handler_TableDispatch_Ret:
 	ret
 	; --- Subroutine 2: conditional E setup from D (26 bytes) ---
 MidiCC_Helper_ConditionalESetup:
-	ld	a, (0x9576:16)
+	ld	a, (MIDIRX_DATA2:16)
 	ld	de, (0x9586:16)
 	xor e, e
 	cp a, 0x40
@@ -545,12 +545,12 @@ MidiCC_Helper_EntryWithEqA:
 	ld e, a
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_Handler_BitManipulation_Code_Helper6
 	ret
 MidiRx_ProgramChange:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiRx_ProgramChange_Return
 	bit	4, (PANEL_MIDI+7:16)
@@ -560,17 +560,17 @@ MidiRx_ProgramChange:
 	ld	bc, (xix+a)
 	cp c, 255
 	jr	z, MidiRx_ProgramChange_Return
-	ld	e, (0x9575:16)
+	ld	e, (MIDIRX_DATA1:16)
 	ld	d, 255:opc
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiRx_ProgramChange_Helper
 MidiRx_ProgramChange_Return:
 	ret
 MidiRx_PitchBend:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiRx_PitchBend_Return
 	bit	6, (PANEL_MIDI+7:16)
@@ -580,17 +580,17 @@ MidiRx_PitchBend:
 	ld	bc, (xix+a)
 	cp c, 255
 	jr	z, MidiRx_PitchBend_Return
-	ld	e, (0x9575:16)
-	ld	d, (0x9576:16)
+	ld	e, (MIDIRX_DATA1:16)
+	ld	d, (MIDIRX_DATA2:16)
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_Handler_BitManipulation_Code_Helper2
 MidiRx_PitchBend_Return:
 	ret
 MidiRx_ChannelPressure:
-	ld	a, (0x95aa:16)
+	ld	a, (MIDIRX_PART:16)
 	cp	a, 31
 	jr	ugt, MidiRx_ChannelPressure_Return
 	bit	5, (PANEL_MIDI+7:16)
@@ -600,11 +600,11 @@ MidiRx_ChannelPressure:
 	ld	bc, (xix+a)
 	cp c, 255
 	jr	z, MidiRx_ChannelPressure_Return
-	ld	e, (0x9575:16)
+	ld	e, (MIDIRX_DATA1:16)
 	ld	d, 127:opc
 	ld	a, (0x9577:16)
 	ld	(0x9588:16), a
-	ld	(0x9584:16), bc
+	ld	(MIDIRX_PART_EVENT:16), bc
 	ld	(0x9586:16), de
 	call	MidiCC_Handler_BitManipulation_Code_Helper4
 MidiRx_ChannelPressure_Return:
@@ -673,7 +673,7 @@ UIState_DisplayUpdate_BitmapHandler_Loop:
 	ld	(0x95af:16), 0
 	ld	(0x95b0:16), 0
 UIState_DisplayUpdate_BitmapHandler_Loop2:
-	ld	xiz, (0x9032:16)
+	ld	xiz, (PART_RECORD_PTRS:16)
 	xor	d, d
 	ld	e, (0x95b0:16)
 	sll	de, 2
@@ -2756,7 +2756,7 @@ FileData_RawDataBlock:
 	push	xiz
 	call	PreLswLoad
 	calr	DataBuf_Data_FormatDispatch
-	lda	xwa, (0xf980:16)
+	lda	xwa, (LIVE_PANEL_BLOCK:16)
 	ld	(xsp+6), xwa
 	pushw	1664
 	call	Malloc
@@ -5214,7 +5214,7 @@ FileData_ImportNNLivePanel:
 	push	xiz
 	call	PreLswLoad
 	calr	DataBuf_Data_FormatDispatch
-	lda	xwa, (0xf980:16)
+	lda	xwa, (LIVE_PANEL_BLOCK:16)
 	ld	(xsp+6), xwa
 	pushw 1088
 	call	Malloc
@@ -6697,13 +6697,13 @@ DataBuf_InitSlotFromPreset:
 	lda	xwa, (DataSlot_HeaderTemplate:24)
 	cp iz, 0:i3
 	jr	nz, DataBuf_InitSlotFromPreset_Alt
-	lda xbc, (0x00f180:24)
+	lda xbc, (SEQ_SONG_RECORD:24)
 	add xbc, 0x2e0
 	pushw 0x20
 	push xwa
 	push xbc
 	call	Mem_Copy
-	lda xbc, (0x00f180:24)
+	lda xbc, (SEQ_SONG_RECORD:24)
 	add xbc, 0x300
 	lda xwa, (PANEL_PMEM_SETTINGS+12:16)
 	sub xwa, 0xf9a0
@@ -7150,7 +7150,7 @@ SndParam_UpdateChan_CopyMemory:
 	ld (xsp), xwa
 	ld xwa, 0x2e0
 	add (xsp), xwa
-	lda xbc, (0xf980:16)
+	lda xbc, (LIVE_PANEL_BLOCK:16)
 	lda xwa, (PANEL_PMEM_SETTINGS+12:16)
 	sub xwa, xbc
 	pushw wa
@@ -9379,7 +9379,7 @@ MidiPkt_SetXferTotal_All:
 	dec	4, xsp
 	push	xiz
 	ld	xiz, xwa
-	lda	xwa, (0xf980:16)
+	lda	xwa, (LIVE_PANEL_BLOCK:16)
 	ld	(xiz), xwa
 	calr	MidiPkt_GetUsedSize_SeqEvents
 	ld	(xsp+4), xhl
@@ -9412,7 +9412,7 @@ MidiPkt_SetXferTotal_All_Skip4:
 	inc	4, xsp
 	ret
 MidiPkt_SetXferTotal_Panel:
-	lda	xde, (0xf980:16)
+	lda	xde, (LIVE_PANEL_BLOCK:16)
 	ld	(xwa), xde
 	lda	xbc, (0xffbe:16)
 	sub	xbc, xde
@@ -9431,7 +9431,7 @@ MidiPkt_SetXferTotal_Panel:
 ;   0xBC40 (MidiPkt_SetXferTotal_Panel) and the block descriptor 0xBC50 (this) and starts step 1; the send side
 ;   MidiPkt_SendBlock_LivePanel uses it for 0xBC30.
 MidiPkt_SetXferBlock_LivePanel:
-	lda	xde, (0xf980:16)
+	lda	xde, (LIVE_PANEL_BLOCK:16)
 	ld	(xwa), xde
 	lda	xbc, (0xffbe:16)
 	sub	xbc, xde
@@ -9551,7 +9551,7 @@ MidiPkt_SetXferBlock_StyleImagePool_Epilogue3:
 MidiPkt_SetXferTotal_SeqData:
 	push	xiz
 	ld	xiz, xwa
-	lda	xwa, (0xf180:16)
+	lda	xwa, (SEQ_SONG_RECORD:16)
 	ld	(xiz), xwa
 	add	xwa, 0x53000
 	ld	(xiz+4), xwa
@@ -9574,7 +9574,7 @@ MidiPkt_SetXferTotal_SeqData_Epilogue4:
 ;   memory at 0xB0000). Basis: callers + body -- MidiPkt_ArpExtHandler_K (command 18, state 0) points the total
 ;   descriptor 0xBC40 (MidiPkt_SetXferTotal_SeqData) and the block descriptor 0xBC50 (this) and starts step 11.
 MidiPkt_SetXferBlock_CurrentSong:
-	lda	xbc, (0xf180:16)
+	lda	xbc, (SEQ_SONG_RECORD:16)
 	ld	(xwa), xbc
 	lda	xbc, (xbc+2048)
 	ld	(xwa+4), xbc
@@ -9804,7 +9804,7 @@ MidiChan_TimerDispatch_Data_Code_Loop:
 	jr	lt, MidiChan_TimerDispatch_Data_Code_Loop
 	ret
 Part_LookupByIndex:
-	ld	xbc, (0x9032:16)
+	ld	xbc, (PART_RECORD_PTRS:16)
 	extz wa
 	sla wa, 2
 	ld	xhl, (xbc+wa)
@@ -9982,7 +9982,7 @@ AssSwb_ProcessLoop_Data_Join:
 	inc	6, xsp
 	ret
 Part_LookupTableEntry:
-	ld	xde, (0x9032:16)
+	ld	xde, (PART_RECORD_PTRS:16)
 	extz wa
 	sla wa, 2
 	ld	xwa, (xde+wa)
@@ -11342,28 +11342,28 @@ SeqChan_WriteField_Data_A:
 	ld	bc, 3:i3
 	ld	de, 0:i3
 	call	MIDI_ReadChannelParam
-	set	7, (0xbc5a:16)
+	set	7, (MIDIPKT_RX_GROUPS:16)
 	ret
 SeqChan_WriteField_Data_B:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 3:i3
 	ld	de, 0:i3
 	call	MIDI_ReadChannelParam
-	set	6, (0xbc5a:16)
+	set	6, (MIDIPKT_RX_GROUPS:16)
 	ret
 SeqChan_WriteField_Data_C:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 3:i3
 	ld	de, 0:i3
 	call	MIDI_ReadChannelParam
-	set	5, (0xbc5a:16)
+	set	5, (MIDIPKT_RX_GROUPS:16)
 	ret
 SeqChan_WriteField_Data_D:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 3:i3
 	ld	de, 0:i3
 	call	MIDI_ReadChannelParam
-	set	4, (0xbc5a:16)
+	set	4, (MIDIPKT_RX_GROUPS:16)
 	ret
 SeqChan_RetStub_C:
 	ret
@@ -11372,7 +11372,7 @@ SeqChan_WriteField_Data_E:
 	ld	bc, 3:i3
 	ld	de, 0:i3
 	call	MIDI_ReadChannelParam
-	set	2, (0xbc5a:16)
+	set	2, (MIDIPKT_RX_GROUPS:16)
 	ret
 ; MIDI SysEx processing block with dispatch
 MidiSysEx_ProcessBlock:
@@ -11443,7 +11443,7 @@ MidiSysEx_ReinitSwbtWrOutput:
 	pop	xde
 	ret
 MidiSysEx_ProcessBlock_Helper4:
-	bit	7, (0xbc5a:16)
+	bit	7, (MIDIPKT_RX_GROUPS:16)
 	ret	z
 	calr	MidiSysEx_ReapplyReceivedPanel
 	calr	MidiSysEx_ProcessBlock_Helper5
@@ -11451,10 +11451,10 @@ MidiSysEx_ProcessBlock_Helper4:
 	calr	MidiSysEx_ProcessBlock_Helper5
 	calr	MidiSysEx_ReinitSwbtWrOutput
 	calr	MidiSysEx_ProcessBlock_Helper5
-	res	7, (0xbc5a:16)
+	res	7, (MIDIPKT_RX_GROUPS:16)
 	ret
 MidiSysEx_ProcessBlock_Helper5:
-	bit	4, (0xbc5a:16)
+	bit	4, (MIDIPKT_RX_GROUPS:16)
 	ret	z
 	set	0, (4330:16)
 	ret
@@ -11488,15 +11488,15 @@ MidiSysEx_FinishSoundRamXfer:
 	ld	xix, xsp
 	ld	bc, 3:i3
 	ldirw
-	bit	6, (0xbc5a:16)
+	bit	6, (MIDIPKT_RX_GROUPS:16)
 	jr	z, MidiSysEx_FinishSoundRamXfer_Epilogue
 	calr	MidiSysEx_SendSoundRamEndCmd
-	res	6, (0xbc5a:16)
+	res	6, (MIDIPKT_RX_GROUPS:16)
 MidiSysEx_FinishSoundRamXfer_Epilogue:
 	inc	6, xsp
 	ret
 MidiSysEx_ProcessBlock_Helper8:
-	bit	5, (0xbc5a:16)
+	bit	5, (MIDIPKT_RX_GROUPS:16)
 	ret	z
 	res	0, (0x323b:16)
 	push	xde
@@ -11508,10 +11508,10 @@ MidiSysEx_ProcessBlock_Helper8:
 	pop	xix
 	pop	xhl
 	pop	xde
-	res	5, (0xbc5a:16)
+	res	5, (MIDIPKT_RX_GROUPS:16)
 	ret
 MidiSysEx_ProcessBlock_Helper9:
-	bit	4, (0xbc5a:16)
+	bit	4, (MIDIPKT_RX_GROUPS:16)
 	ret	z
 	push	xde
 	push	xhl
@@ -11525,12 +11525,12 @@ MidiSysEx_ProcessBlock_Helper9:
 	pop	xhl
 	pop	xde
 	set	1, (0xbc58:16)
-	res	4, (0xbc5a:16)
+	res	4, (MIDIPKT_RX_GROUPS:16)
 	ret
 MidiSysEx_ProcessBlock_Helper10:
 	ret
 MidiSysEx_ProcessBlock_Join:
-	bit	2, (0xbc5a:16)
+	bit	2, (MIDIPKT_RX_GROUPS:16)
 	ret	z
 	push	xde
 	push	xhl
@@ -11541,7 +11541,7 @@ MidiSysEx_ProcessBlock_Join:
 	pop	xix
 	pop	xhl
 	pop	xde
-	res	2, (0xbc5a:16)
+	res	2, (MIDIPKT_RX_GROUPS:16)
 	ret
 SeqChan_UnhandledCmd:
 	ret
@@ -11810,7 +11810,7 @@ SoundMode_ResetAllParams:
 	calr	MidiChan_ClearStorageFields
 	calr	MidiChan_InitSoundRegisters
 	ld	(0xbc58:16), 0
-	ld	(0xbc5a:16), 0
+	ld	(MIDIPKT_RX_GROUPS:16), 0
 	ld	(0xbc5c:16), 0
 	ld	(0xbc5e:16), 0
 	ld	(0xbc60:16), 0
@@ -11913,7 +11913,7 @@ SoundMode_DispatchRender_2:
 	calr	SoundMode_AlternateRender
 SoundMode_PostRender:
 	call	BitMapOut_ComputeRegionDelta
-	lda xde, (0x03c8e4:24)
+	lda xde, (PANEL_RECALL_BACKUP:24)
 	lda xbc, (PANEL_RECORDS:16)
 	ld xhl, xbc
 	lda xwa, (0xffbe:16)
@@ -12143,7 +12143,7 @@ SoundMode_ProcessToneAndParams:
 TGReg_ClearTerminator:
 	lda xwa, (PANEL_PART_RT1:16)
 	sub xwa, 0xf9b4
-	lda xbc, (0x03c8e4:24)
+	lda xbc, (PANEL_RECALL_BACKUP:24)
 	add xwa, xbc
 	ld (xwa), 0xff
 	ret
@@ -12645,7 +12645,7 @@ VoiceData_SyncLoop:
 	ld c, (xhl - 1)
 	ld xwa, xhl
 	sub xwa, 0xf9a0
-	lda xde, (0x03c8e4:24)
+	lda xde, (PANEL_RECALL_BACKUP:24)
 	add xde, xwa
 	extz bc
 	pushw bc
@@ -12901,7 +12901,7 @@ SeqData_FormatOutput_CaseA:
 	calr	SeqData_FormatOutput_CaseB
 	ret
 SeqData_FormatOutput_CaseB:
-	ldw	(0x901e:16), 0
+	ldw	(SWBTWR_WRITE_INDEX:16), 0
 	push xde
 	push xhl
 	push xix
@@ -12938,13 +12938,13 @@ SeqData_FormatOutput_Data:
 	bit	4, (PANEL_MIDI:16)
 	ret	nz
 	calr	SeqData_FormatOutput_Data_Helper
-	cpw	(0x901e:16), 0
+	cpw	(SWBTWR_WRITE_INDEX:16), 0
 	ret	z
 	push	xde
 	push	xhl
 	push	xix
 	push	xiz
-	ldmm16	0x9020, 0x901e
+	ldmm16	0x9020, SWBTWR_WRITE_INDEX
 	call	MidiStream_JumpStubData
 	call	SwbtWr_ReinitBothBanks
 	pop	xiz

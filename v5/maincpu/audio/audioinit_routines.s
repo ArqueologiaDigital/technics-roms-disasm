@@ -105,7 +105,7 @@ AudioInit_FallbackToStereo:
 	extz	wa
 	jrl	AudioInit_ConfigStereoVoice
 AudioInit_SelectVoiceByType:
-	ld	a, (0x36e3:16)
+	ld	a, (CMP_RECORD_PART:16)
 	cp	a, 0x60
 	jr	z, AudioInit_StereoVoiceCfg
 	cp	a, 0x10
@@ -609,7 +609,7 @@ Audio_CheckInitStatus:
 	ldw	(xsp), 0x0
 	ldw	(0xc4d8:16), 0
 	ld	(0xc4de:16), 255
-	ld	hl, (0xf19e:16)
+	ld	hl, (SEQ_TRACK_MASK:16)
 	or	hl, (3409:16)
 	ld	wa, hl
 	cp	wa, 0:i3
@@ -619,7 +619,7 @@ Audio_CheckInitStatus:
 AudioInit_ClearStatusBit8:
 	andw	(0xc4d8:16), 0xfeff
 AudioInit_CheckGroupB_Presence:
-	ld	bc, (0x288c:16)
+	ld	bc, (SEQ_REC_TRACKS:16)
 	or	bc, (3407:16)
 	ld	wa, bc
 	cp	wa, 0:i3
@@ -635,7 +635,7 @@ AudioInit_ChannelLoop_Init:
 AudioInit_ChannelLoop_Body:
 	ld	a, e
 	extz	wa
-	lda	xix, (0xf1a0:16)
+	lda	xix, (SEQ_TRACK_ASSIGN:16)
 	extz	xwa
 	add	xwa, xix
 	ld	a, (xwa)
@@ -664,7 +664,7 @@ AudioInit_ChannelLoop_Body_Skip:
 AudioInit_ChannelLoop_Body_Skip2:
 	ld	a, e
 	extz	wa
-	lda	xix, (0xf1a0:16)
+	lda	xix, (SEQ_TRACK_ASSIGN:16)
 	extz	xwa
 	add	xwa, xix
 	ld	a, (xwa)
@@ -1031,7 +1031,7 @@ AudioInit_ApplyOutputRouting:
 	inc	2, xsp
 	ret
 AudioInit_SelectPriority:
-	ld	a, (0x36e3:16)
+	ld	a, (CMP_RECORD_PART:16)
 	cp	a, 0x10
 	jrl	z, AudioInit_Priority_Mode10
 	cp	a, 0x8

@@ -277,7 +277,7 @@ AssswbWr_Return:
 	pop	xiz
 	ret
 AssswbWr:
-	ld	hl, (0x901e:16)
+	ld	hl, (SWBTWR_WRITE_INDEX:16)
 	cp	hl, 0x1fc
 	jr	nc, AssswbWr_BufferFull
 	lda	xix, (SWBTWR_EVENT_QUEUE:16)
@@ -289,9 +289,9 @@ AssswbWr:
 	ld	a, (xsp + 4)
 	ld	(xhl+), a
 	ld	(xhl), 0xff
-	ld	wa, (0x901e:16)
+	ld	wa, (SWBTWR_WRITE_INDEX:16)
 	inc	4, wa
-	ld	(0x901e:16), wa
+	ld	(SWBTWR_WRITE_INDEX:16), wa
 AssswbWr_BufferFull:
 	retd	0x2
 AddswbWr:
@@ -313,7 +313,7 @@ AddswbWr:
 AddswbWr_BufferFull:
 	retd	0x2
 SwbtWr:
-	lda	xix, (0xbf79:16)
+	lda	xix, (PANEL_EVENT_QUEUE:16)
 	ld	xiy, xix
 	lda	xhl, (xix + 60)
 	cp	(xix), 0xff
@@ -362,7 +362,7 @@ SwbtWr_ProcessAll:
 SwbtWr_ProcessAll_CompactDone:
 	ld	(xix), 0xff
 	sub	xix, 0xbc7c
-	ld	(0x901e:16), ix
+	ld	(SWBTWR_WRITE_INDEX:16), ix
 	ld	(0xbe79:16), 255
 	ldw	(0x9022:16), 0
 	ret
@@ -372,7 +372,7 @@ SwbtWr_InitBank1:
 	ld	xiy, SwbtBank1_PostCallbacks
 	ld	(0xbfc5:16), xiy
 	ld	xiy, SWBTWR_EVENT_QUEUE
-	ld	(0xbfc9:16), xiy
+	ld	(SWBTWR_BUFFER_PTR:16), xiy
 	calr	SwbtWr_DispatchLoop_Init
 	ret
 SwbtWr_InitBank2:
@@ -381,7 +381,7 @@ SwbtWr_InitBank2:
 	ld	xiy, SwbtBank2_PostCallbacks
 	ld	(0xbfc5:16), xiy
 	ld	xiy, SWBTWR_EVENT_QUEUE
-	ld	(0xbfc9:16), xiy
+	ld	(SWBTWR_BUFFER_PTR:16), xiy
 	calr	SwbtWr_DispatchLoop_Init
 	ret
 SwbtWr_InitBank3:
@@ -389,15 +389,15 @@ SwbtWr_InitBank3:
 	ld	(0xbfc1:16), xiy
 	ld	xiy, SwbtBank3_PostCallbacks
 	ld	(0xbfc5:16), xiy
-	ld	xiy, 0xbf79
-	ld	(0xbfc9:16), xiy
+	ld	xiy, PANEL_EVENT_QUEUE
+	ld	(SWBTWR_BUFFER_PTR:16), xiy
 	calr	SwbtWr_DispatchLoop_Init
 	ret
 SwbtWr_DispatchLoop_Init:
-	ldw	(0xbfbb:16), 0
+	ldw	(SWBTWR_DISPATCH_INDEX:16), 0
 SwbtWr_DispatchLoop:
-	ld	xiy, (0xbfc9:16)
-	add	iy, (0xbfbb:16)
+	ld	xiy, (SWBTWR_BUFFER_PTR:16)
+	add	iy, (SWBTWR_DISPATCH_INDEX:16)
 	cp	(xiy), 0xff
 	jr	z, SwbtWr_DispatchLoop_PostCallbacks
 	ld	xix, (0xbfc1:16)
@@ -445,7 +445,7 @@ SwbtWr_DispatchLoop_ExecuteCallback:
 	add	xhl, 0x4
 	jr	SwbtWr_DispatchLoop_ScanCallbacks
 SwbtWr_DispatchLoop_NextEvent:
-	addw	(0xbfbb:16), 4
+	addw	(SWBTWR_DISPATCH_INDEX:16), 4
 	jrl	SwbtWr_DispatchLoop
 SwbtWr_DispatchLoop_PostCallbacks:
 	ld	xix, (0xbfc5:16)
@@ -461,14 +461,14 @@ SwbtWr_PostCallback_Loop:
 SwbtWr_PostCallback_Done:
 	ret
 SwbtWr_QueueMainEvent:
-	cpw	(0x901e:16), 507
+	cpw	(SWBTWR_WRITE_INDEX:16), 507
 	jr	ugt, SwbtWr_QueueMainEvent_Done
 	ld	xhl, SWBTWR_EVENT_QUEUE
-	add	hl, (0x901e:16)
+	add	hl, (SWBTWR_WRITE_INDEX:16)
 	ld	(xhl), de
 	ld	(xhl + 2), wa
 	ld	(xhl + 4), 0xff
-	add	(0x901e:16), 4
+	add	(SWBTWR_WRITE_INDEX:16), 4
 SwbtWr_QueueMainEvent_Done:
 	ret
 SwbtWr_QueuePostEvent:
@@ -483,7 +483,7 @@ SwbtWr_QueuePostEvent:
 SwbtWr_QueuePostEvent_Done:
 	ret
 SwbtWr_TrailingBytecode:
-	ld	xhl, 0xbf79
+	ld	xhl, PANEL_EVENT_QUEUE
 SwbtWr_TrailingBytecode_Join:
 	cp	(xhl), 255
 	jr	z, SwbtWr_TrailingBytecode_Skip
@@ -630,7 +630,7 @@ VoiceParam_RestoreReverbChorus_Loop:
 	ret
 BitMapOut_ComputeRegionDelta:
 	lda	xwa, (PANEL_PMEM_SETTINGS+12:16)
-	lda	xbc, (0xf980:16)
+	lda	xbc, (LIVE_PANEL_BLOCK:16)
 	sub	xwa, xbc
 	pushw	wa
 	push	xbc
@@ -679,7 +679,7 @@ BitMapOut_RenderDisplay:
 	lda	xsp, (xsp + 20)
 	calr	VoiceParam_SaveReverbChorus
 	lda	xix, (0xf460:16)
-	lda	xbc, (0xf980:16)
+	lda	xbc, (LIVE_PANEL_BLOCK:16)
 	ld	xhl, xbc
 	lda	xwa, (0xfd5e:16)
 	sub	xwa, xbc
@@ -718,7 +718,7 @@ BitMapOut_SkipRestore:
 BitMapOut_MergeOutputFields:
 	lda	xix, (PANEL_PMEM_SETTINGS:16)
 	lda	xbc, (xix + 1)
-	lda	xhl, (0xf980:16)
+	lda	xhl, (LIVE_PANEL_BLOCK:16)
 	ld	xwa, xbc
 	sub	xwa, xhl
 	lda	xde, (0xf460:16)
@@ -1279,7 +1279,7 @@ GET_COMPUTER_INTERFACE_SELECTION:
 Fade_Tick:
 	bit	3, (0xc130:16)
 	jrl	z, Fade_Tick_Ramp
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	z, Fade_Tick_NotBothPlaying
 	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jr	z, Fade_Tick_NotBothPlaying
@@ -1287,7 +1287,7 @@ Fade_Tick:
 	jr	z, Fade_Tick_BothPlaying_RhythmStop
 	bit	5, (0xc130:16)
 	jr	z, Fade_Tick_BothPlaying_RhythmStop
-	cpw	(0x288c:16), 0
+	cpw	(SEQ_REC_TRACKS:16), 0
 	jr	nz, Fade_Tick_StopAll_SetFlag
 	jr	Fade_Tick_StopAll
 Fade_Tick_BothPlaying_RhythmStop:
@@ -1299,14 +1299,14 @@ Fade_Tick_BothPlaying_RhythmStop:
 Fade_Tick_BothPlaying_SeqStop:
 	bit	5, (0xc130:16)
 	jr	z, Fade_Tick_AutoReset
-	cpw	(0x288c:16), 0
+	cpw	(SEQ_REC_TRACKS:16), 0
 	jr	z, Fade_Tick_BothPlaying_SeqStop_Join
 	set	1, (9808:16)
 Fade_Tick_BothPlaying_SeqStop_Join:
 	call	AccWrap_PlayModeStopExpr
 	jr	Fade_Tick_StopSequencer
 Fade_Tick_NotBothPlaying:
-	bit	2, (1054:16)
+	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	z, Fade_Tick_SeqOnly
 	bit	4, (0xc130:16)
 	jr	z, Fade_Tick_AutoReset
@@ -1323,7 +1323,7 @@ Fade_Tick_SeqOnly:
 	call	SqTrSel_CaseG
 	jr	Fade_Tick_AutoReset
 Fade_Tick_SeqOnly_Stop:
-	cpw	(0x288c:16), 0
+	cpw	(SEQ_REC_TRACKS:16), 0
 	jr	z, Fade_Tick_StopAll
 Fade_Tick_StopAll_SetFlag:
 	set	1, (9808:16)
