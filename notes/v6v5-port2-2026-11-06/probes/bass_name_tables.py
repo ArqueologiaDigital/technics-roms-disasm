@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """bass_name_tables.py TREE -- what the 64 work-RAM pointers after Naka_DrawbarReg_Table (the C's
-Naka_DrawbarReg_Table_RamPtrs) and the four 13-entry blocks they point at hold, read from TREE's ROM.
+ChordName_TypeRootTables) and the four 13-entry blocks they point at hold, read from TREE's ROM.
 
 The reader is MainChordPre_AppendChordSuffix (kn5000_TREE_program.s): after the root name, the
 chord-type name and "on" / blank it does

@@ -850,14 +850,14 @@ typedef struct __attribute__((packed)) {
     naka_cls_Window_t CheckMessage;
     /* element 16 of Viewable slot 0xEE: EditSw (class id 0x01600030) */
     naka_cls_EditSw_t NakaWidget_Mesage_16_EditSw;
-    uint8_t bytes_33da[4];
+    char NakaWidget_Mesage_16_EditSw_Str[4];
     /* element 17 of Viewable slot 0xEE: AcRamBox (class id 0x0160004F) */
     naka_cls_AcRamBox_t CheckMessage_AcRamBox;
     /* element 18 of Viewable slot 0xEE: AcRamBox (class id 0x0160004F) */
     naka_cls_AcRamBox_t CheckMessage_AcRamBox_2;
     /* element 19 of Viewable slot 0xEE: EditSw (class id 0x01600030) */
     naka_cls_EditSw_t NakaWidget_Mesage_19_EditSw;
-    uint8_t bytes_345e[4];
+    char NakaWidget_Mesage_19_EditSw_Str[4];
     /* element 20 of Viewable slot 0xEE "NoMessage": Window (class id 0x01600035) */
     naka_cls_Window_t NoMessage;
     /* element 21 of Viewable slot 0xEE: AcRamBox (class id 0x0160004F) */
@@ -6918,7 +6918,7 @@ const naka_technichord_part_t naka_technichord_part_data
         .prev = NAKA_NONE,
         .flag = VF_Const,
         .rect = NAKA_XYWH(295, 229, 12, 19),
-        .str = 0x00E850A8,
+        .str = SELF(NakaWidget_Mesage_16_EditSw_Str),
         .font = idCHARA1,
         .fontcolor = CL_EditSw,
         .editsw = ES_Bottom8,
@@ -6926,7 +6926,7 @@ const naka_technichord_part_t naka_technichord_part_data
         .index = 0xFFFF,
     },
 
-    .bytes_33da = { 0x7E, 0x38, 0x31, 0x00 },
+    .NakaWidget_Mesage_16_EditSw_Str = "~81",
 
     .CheckMessage_AcRamBox = {
         .class_ = NAKA_CLASS(AcRamBox),
@@ -6972,7 +6972,7 @@ const naka_technichord_part_t naka_technichord_part_data
         .prev = OBJ_CheckMessage_AcRamBox_2,
         .flag = VF_Const,
         .rect = NAKA_XYWH(215, 229, 12, 11),
-        .str = 0x00E8512C,
+        .str = SELF(NakaWidget_Mesage_19_EditSw_Str),
         .font = idCHARA1,
         .fontcolor = CL_EditSw,
         .editsw = ES_Bottom6,
@@ -6980,7 +6980,7 @@ const naka_technichord_part_t naka_technichord_part_data
         .index = 0xFFFF,
     },
 
-    .bytes_345e = { 0x7E, 0x38, 0x31, 0x00 },
+    .NakaWidget_Mesage_19_EditSw_Str = "~81",
 
     /* ==== VIEW OBJ_NoMessage: Window, the top of an object tree that no title shows
      * directly (a window, page or popup another view or procedure opens) ==== */
