@@ -40,7 +40,9 @@
 #   * the two routines' own bodies do not disagree: fn_similarity.compare gives no
 #     conflicting named callee or string, and a skeleton similarity of at least
 #     --min-body (default 0.6; a short body differs by little).
-# Accepted names make new anchors, and the rounds run to a fixed point.
+# Accepted names make new anchors, and so does a pair the rule accepts where A names
+# neither routine (the two are one routine, unnamed): its own call sites and RAM
+# operands pair the next round's.  The rounds run to a fixed point.
 #
 # THE AUDIT measures the rule where the answer is known: every B callee that B
 # already names and that the rule pairs with a named A callee is counted right when
@@ -157,7 +159,7 @@ class Run:
                 fa, fb = self.A.off(al[0]), self.B.off(bl[0])
                 if fa is not None and fb is not None:
                     out.append((nm, fa, fb))
-        return out
+        return out + self.pair_anchors
 
     def votes(self, anchors, done):
         """Aligned call-site pairs {(cb, ca): [(anchor, class)]} of the anchors not in done."""
@@ -215,13 +217,22 @@ class Run:
                         self.audit["wrong"] += 1
                         self.audit_wrong.append((nb, self.B.cpu(cb), na, self.A.cpu(ca), len(sup)))
                 continue
+            if not na:
+                # no name to carry, but a pair the rule accepts is the same routine on both
+                # sides: it anchors the next round (its own callees and RAM operands)
+                if len(by_b[cb]) == 1 and len(by_a[ca]) == 1 and decisive:
+                    c = FS.compare(self.SA, ca, self.SB, cb)
+                    if not c.conflict and c.sk >= self.a.min_body:
+                        self.judged.add((cb, ca))
+                        self.pair_anchors.append((f"@0x{self.A.cpu(ca):08X}", ca, cb))
+                        self.last_why[(cb, ca)] = "A's callee is unnamed too (the pair anchors the next round)"
+                        continue
+                self.reject((cb, ca), "A's callee is unnamed too", final=False)
+                continue
             if not self.b_open(cb):
                 continue
             if len(by_b[cb]) != 1 or len(by_a[ca]) != 1:
                 self.reject((cb, ca), "pairs with more than one routine")
-                continue
-            if not na:
-                self.reject((cb, ca), "A's callee is unnamed too")
                 continue
             if norm_name(na) in self.b_taken:
                 self.reject((cb, ca), "the name is taken in B")
@@ -249,19 +260,23 @@ class Run:
         if final:
             self.judged.add(key)
 
-    def run(self, max_rounds=12):
+    def run(self, max_rounds=40):
         done = set()
         all_calls = collections.defaultdict(list)
         self.judged = set()
         self.last_why = {}
         self.how = {}
+        self.pair_anchors = []
         for self.n_round in range(1, max_rounds + 1):
             for key, sup in self.votes(self.anchors(), done).items():
                 all_calls[key].extend(sup)
+            n_pairs = len(self.pair_anchors)
             new = self.round(all_calls)
             tw = self.twin_pass() if self.a.twins else 0
-            print(f"  round {self.n_round}: {new} names by call site, {tw} by mapped operands", file=sys.stderr)
-            if not new and not tw:
+            np_ = len(self.pair_anchors) - n_pairs
+            print(f"  round {self.n_round}: {new} names by call site, {tw} by mapped operands, "
+                  f"{np_} unnamed pairs", file=sys.stderr)
+            if not new and not tw and not np_:
                 break
         for why in self.last_why.values():
             self.rejected[why] += 1
@@ -410,6 +425,7 @@ def main():
     ap.add_argument("--b-labels", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--ram-map", required=True)
+    ap.add_argument("--routine-map", help="write every routine pair the rule accepted (named or not) here")
     ap.add_argument("--report")
     ap.add_argument("--title", required=True)
     ap.add_argument("--min-ratio", type=float, default=0.9)
@@ -458,12 +474,28 @@ def main():
         f.write("# B address takes\n")
         for vb, va, n in pairs:
             f.write(f"0x{vb:08X}\t0x{va:08X}\t{n}\t{r.a_ram.get(va, '')}\n")
+    if a.routine_map:
+        with open(a.routine_map, "w") as f:
+            f.write(f"# {a.title}: routine pairs (port_names_by_alignment.py; B start, A start, B name, A name, how)\n")
+            f.write("# anchors (one name on both sides), names carried, and pairs accepted where A names neither;\n")
+            f.write("# a '-' name is a func_ placeholder.  A KN7000 name given to an A start later reaches B by a re-run.\n")
+            rpairs = {}
+            for nm, fa, fb in r.anchors():
+                if not nm.startswith("@"):
+                    rpairs[fb] = (fa, "same name" if not any(x[0] == r.B.cpu(fb) for x in rows) else "carried")
+            for nm, fa, fb in r.pair_anchors:
+                rpairs.setdefault(fb, (fa, "call sites, A unnamed"))
+            for fb, (fa, how) in sorted(rpairs.items()):
+                f.write(f"0x{r.B.cpu(fb):08X}\t0x{r.A.cpu(fa):08X}\t{r.SB.name_at(fb) or '-'}\t"
+                        f"{r.SA.name_at(fa) or '-'}\t{how}\n")
     if a.report:
         with open(a.report, "w") as f:
             f.write(f"# {a.title}\n\n")
             f.write(f"- routine names carried: {len(rows)}, {sum(1 for x in rows if x[0] in r.how)} of them by "
                     f"mapped operands (rounds: "
                     f"{', '.join(str(sum(1 for x in rows if x[8] == k)) for k in range(1, r.n_round + 1))})\n")
+            f.write(f"- routine pairs both images leave unnamed, accepted by the same rule as anchors: "
+                    f"{len(r.pair_anchors)}\n")
             f.write(f"- accepted pairs that a later round gave a rival: {len(r.late_rivals)}\n")
             f.write(f"- audit, callees both images name: {r.audit['right']} right, {r.audit['wrong']} wrong\n")
             f.write(f"- audit, same-body routines B names already, picked by mapped operands: "

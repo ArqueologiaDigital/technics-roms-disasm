@@ -183,7 +183,7 @@ NEW_SYM     := $(wildcard $(ALIGNED_SYM) $(RAM_SYM))
 aligned-names: $(TOOLS)/port_names_by_alignment.py $(TOOLS)/fn_similarity.py src/labels.inc baserom/$(ROM)
 	$(PYTHON) $(TOOLS)/port_names_by_alignment.py $(PORT_FROM) --b-rom baserom/$(ROM) --b-base $(BASE) \
 	    $(subst --code,--b-code,$(CODE)) --b-sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym $(FN_SYM) \
-	    $(wildcard $(RAM_SYM)) --b-labels src/labels.inc --out $(ALIGNED_SYM) --ram-map notes/ram-map-kn7000.tsv \
+	    $(wildcard $(RAM_SYM)) --b-labels src/labels.inc --out $(ALIGNED_SYM) --ram-map notes/ram-map-kn7000.tsv --routine-map notes/routine-map-kn7000.tsv \
 	    --report notes/aligned-names-report.md --unidasm $(UNIDASM) $(if $(PORT_CACHE),--cache $(PORT_CACHE)) \
 	    --title "$(MODEL): KN7000 941 names carried along aligned call sites and RAM operands"
 ram-names: $(TOOLS)/name_ram_by_use.py src/program.s
