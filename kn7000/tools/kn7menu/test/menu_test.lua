@@ -8,8 +8,8 @@
 --   card      the card make card builds: the programs (names, folders, sizes, icons in RAM and on the LCD),
 --             in whichever menu folder KN7MENU.TOC put them, equal fatscan.py's (MT_EXPECT); the left buttons
 --             pick rows (and open folders), PART SELECT moves, PAGE DOWN / PAGE UP turn pages, LCDR 1 goes back; the menu draws itself again after something else drew
---             on the LCD; holding EXIT leaves, "Continue Next?" YES brings the menu back (the loader loads
---             it again); LEAVE (LCDR 4), then NO, leaves STYLE CONVERT.
+--             on the LCD; holding EXIT leaves to the main screen with no firmware message and no "Continue
+--             Next?" (ended()); DISK MENU, STYLE CONVERT, OK bring the menu back; LEAVE (LCDR 4) leaves the same way.
 --   fallback  a card of malformed and missing manifests and icons, a long-named folder, a folder without a
 --             program, a damaged and a foreign KN7APP.BIN: the list equals fatscan.py's, and RUN on the
 --             damaged and the foreign one is refused with the message, the menu staying.
@@ -17,15 +17,17 @@
 --             first, cnv_romdump test/cpu_tap.lua for pass 9; its PREFILL_END(MT_OUT) is called at the end): the launch block, the program's own header at
 --             APP_BASE, the converter calls going to it; with MT_DONE ("addr=value", the program's own
 --             "finished" word) wait for it to finish and end (its hold, 0xFE, EXIT, "Continue Next?" YES):
---             the menu is back; then LEAVE and NO.
+--             the menu is back; then LEAVE (ended()).
 --   leave     MT_PROGRAM (a program that goes back to the menu at its quit: Another World) started from the menu
 --             and quit with EXIT held gives the menu back with no firmware message and no "Continue Next?"
 --             (MT_GAME_UP "addr=value": the program's word that says it runs).
 --   buttons   a menu that reads no button (-D BUTTONS_USED=0): each candidate button is pressed in turn;
 --             what each changed in IC23 (the panel settings), whether the firmware drew on the LCD, and
 --             whether the converter went on being called.
+--   end       the menu up (on the fallback card), then LEAVE: how it ends (ended()), also for test builds (END_D).
 -- MT_SYMS: test/syms.py's table. MT_PANEL: PANEL_CPR of the BIOS (893 0x5006BE4C), to confirm each press
--- in the firmware's own bitmap. MT_POWER=1: POWER OFF at the end (else exit).
+-- in the firmware's own bitmap. MT_CHGMODE, MT_RQSTATE: what FindEnd must find on the BIOS (893 0x4842B301, 0x5004E3F8;
+-- test/endsig.py). MT_POWER=1: POWER OFF at the end (else exit).
 local M = manager.machine
 local cpu = M.devices[":maincpu"]
 local sp = cpu.spaces["program"]
@@ -35,6 +37,8 @@ local OUT = os.getenv("MT_OUT") or "."
 local EXPECT = os.getenv("MT_EXPECT") and dofile(os.getenv("MT_EXPECT")) or nil
 local PANEL = tonumber(os.getenv("MT_PANEL") or "")
 local POWER = (os.getenv("MT_POWER") or "") ~= ""
+local CHGMODE, RQSTATE = tonumber(os.getenv("MT_CHGMODE") or ""), tonumber(os.getenv("MT_RQSTATE") or "")
+local MSGW = tonumber(os.getenv("MT_MSGW") or "")  -- TtMessage's message number (893 0x5006B59C: MT_SetParam's movhu)
 local LV_STATE = S.LOADER_VARS                     -- loader.s: 1 = running an application
 local results, fails = {}, 0
 local function now() return M.time:as_double() end
@@ -161,14 +165,15 @@ local B = { L1 = { "CPL_SEG0", 0x02 }, L2 = { "CPL_SEG0", 0x08 }, L3 = { "CPL_SE
 local function btn(name, hold) return press(B[name][1], B[name][2], hold) end
 local YES, NO = B.R3, B.R4            -- "Continue Next?" (right buttons 3 and 4)
 
-local function to_menu()              -- DISK MENU, STYLE CONVERT (left button 3), OK (right button 4) until loaded
+local function to_menu(c_old)         -- DISK MENU, STYLE CONVERT (left button 3), OK (right button 4) until loaded
+  -- (c_old: the loader's calls in the session before; the firmware loads the loader afresh, which counts from 0)
   wait_until(function() return now() > 30 end, 60)
   press("CPR_SEG1", 0x04); wait(5)
   press("CPL_SEG0", 0x20); wait(7)
   phase = "converter"
   for i = 1, 8 do
     press("CPR_SEG6", 0x01)
-    if wait_until(function() return u32(LV_STATE) == 1 end, 8) then break end
+    if wait_until(function() return u32(LV_STATE) == 1 and (not c_old or u32(S.SVC + S.SV_CALLS) < c_old) end, 8) then break end
     log(string.format("OK press %d not taken at t=%.0f s; again", i, now()))
   end
   return wait_until(function() return menu_up() and mstate() == S.ST_MENU end, 120)  -- (ST_TOC is 8: ">=" took it for the menu)
@@ -293,11 +298,61 @@ local function continue_next(answer)
   press(answer[1], answer[2]); wait(3)
 end
 
+-- The menu's own end (README.md "Ending"), after act() (LEAVE, or EXIT held): every mode/title the firmware takes from
+-- the press on is logged with its time (mode word 0x50000980 = ModeProc_Table[1], labels.sym 0x5000097C; title word
+-- 0x500009A0). The firmware must end on the main screen (MD_NORMAL), never having opened its message (title F0003,
+-- message 0x4A "ERROR!") nor "Continue Next?" (F004C); the menu's last answer RQ_QUIET, the converter no longer called,
+-- the LCD the firmware's. Its frame (display memory from 0, RGB565) goes to OUT/<label>-<s>s.ppm 0.5, 2 and 5 s after.
+local MODEW, MD_NORMAL = 0x50000980, 0x000E0001
+local function lcd_ppm(name)
+  local f = io.open(OUT .. "/" .. name .. ".ppm", "wb")
+  if not f then return end
+  f:write("P6\n640 241\n255\n")
+  for y = 0, 240 do
+    local row = {}
+    for x = 0, 639 do
+      local p = sp:read_u16(S.FB + y * S.FB_STRIDE + x * 2)
+      row[#row + 1] = string.char(((p >> 11) & 31) * 255 // 31, ((p >> 5) & 63) * 255 // 63, (p & 31) * 255 // 31)
+    end
+    f:write(table.concat(row))
+  end
+  f:close()
+end
+local function ended(label, act)
+  local seen, t0, watch = {}, now(), true
+  local last = string.format("%05X/%05X", u32(MODEW), u32(TITLE))
+  local first = last
+  MT_ENDWATCH = emu.add_machine_frame_notifier(function()
+    if not watch then return end
+    local k = string.format("%05X/%05X", u32(MODEW), u32(TITLE))
+    if k ~= last then seen[#seen + 1] = string.format("%s@%.2f", k, now() - t0); last = k end
+  end)
+  local fw = u32(S.V_LCDSAVE)
+  act()
+  local ok = wait_until(function() return mstate() == S.ST_END end, 5)
+  local te = now()
+  for _, d in ipairs({ 0.5, 2, 5 }) do wait_until(function() return now() >= te + d end, d + 1); lcd_ppm(string.format("%s-%gs", label, d)) end
+  local calls = u32(S.SVC + S.SV_CALLS); wait(3)
+  watch = false
+  local bad = false
+  for _, x in ipairs(seen) do if x:match("/F0003@") or x:match("/F004C@") then bad = true end end
+  local rq = sp:read_u8(S.MAILBOX)
+  result(label, ok and not bad and u32(MODEW) == MD_NORMAL and rq == S.RQ_QUIET and u32(S.SVC + S.SV_CALLS) == calls
+    and u32(S.V_LCDMINE) == 0 and lcd_start() == fw,
+    string.format("menu state %d, last answer %d (RQ_QUIET %d), calls %d then none in 3 s: %s; LCD start %05X (the firmware's %05X); mode/title %s, then %s; now %05X/%05X%s",
+      mstate(), rq, S.RQ_QUIET or -1, calls, tostring(u32(S.SVC + S.SV_CALLS) == calls), lcd_start(), fw, first,
+      #seen > 0 and table.concat(seen, " ") or "unchanged", u32(MODEW), u32(TITLE),
+      MSGW and string.format("; message word %04X", sp:read_u16(MSGW)) or ""))
+end
+
 -- ---- the modes ---------------------------------------------------------------------------------
 local function card()
   local ok = to_menu()
   result("menu", ok and u32(S.V_PANEL) == PANEL, string.format("the loader (state %d) runs %q; menu state %d, panel %08X, ms counter %08X, calls %d",
     u32(LV_STATE), appname(), mstate(), u32(S.V_PANEL), u32(S.V_MS), u32(S.V_CALLS)))
+  result("findend", S.V_CHGMODE and u32(S.V_CHGMODE) == CHGMODE and u32(S.V_RQSTATE) == RQSTATE, string.format("FindEnd: ChangeMode %08X (want %08X), state byte %08X (want %08X) = %d",
+    S.V_CHGMODE and u32(S.V_CHGMODE) or 0, CHGMODE or 0, S.V_RQSTATE and u32(S.V_RQSTATE) or 0, RQSTATE or 0,
+    S.V_RQSTATE and u32(S.V_RQSTATE) ~= 0 and sp:read_u8(u32(S.V_RQSTATE)) or -1))
   if not ok then return end
   wait(3)
   check_list("list")
@@ -369,22 +424,15 @@ local function card()
   wait(2)
   good, d = page_on_lcd()
   result("repaint", u32(S.V_NREDRAW) > r0 and good, string.format("full redraws %d -> %d; %s", r0, u32(S.V_NREDRAW), d))
-  press("CPC_SEG11", 0x80, 2.0)       -- hold EXIT: leave
-  ok = wait_until(function() return mstate() == S.ST_END or not menu_up() end, 5)
+  ended("exit", function() press("CPC_SEG11", 0x80, 2.0) end)   -- hold EXIT: the main screen
   local calls = u32(S.SVC + S.SV_CALLS)
-  local fw = u32(S.V_LCDSAVE)
-  result("lcd-back", u32(S.V_LCDMINE) == 0 and lcd_start() == fw, string.format("after LEAVE: the LCD's start %05X, the firmware's %05X", lcd_start(), fw))
-  continue_next(YES)                  -- YES: the loader loads C:\KN7APP.BIN, the menu, again
-  ok = ok and wait_until(function() return menu_up() and mstate() == S.ST_MENU and u32(S.SVC + S.SV_CALLS) < calls end, 90)
+  ok = to_menu(calls)                 -- DISK MENU, STYLE CONVERT, OK: the firmware loads the loader, which loads the menu
   wait(2)
-  result("again", ok and u32(S.V_NPROG) == n0, string.format("EXIT held: the menu ended; YES: the loader started it again (calls %d, menu state %d, %d programs)",
+  result("again", ok and u32(S.V_NPROG) == n0, string.format("after EXIT held: DISK MENU, STYLE CONVERT, OK start the menu again (calls %d, menu state %d, %d programs)",
     u32(S.SVC + S.SV_CALLS), mstate(), u32(S.V_NPROG)))
-  btn("R4")                           -- LEAVE
-  ok = wait_until(function() return mstate() == S.ST_END end, 5)
-  continue_next(NO)
+  wait(3)
+  ended("leave", function() btn("R4") end)   -- LEAVE: the main screen
   phase = "after"
-  calls = u32(S.SVC + S.SV_CALLS); wait(5)
-  result("leave", ok and u32(S.SVC + S.SV_CALLS) == calls, "LEAVE, NO: STYLE CONVERT left, the converter is not called any more (snapshot: main screen)")
 end
 
 local function fallback()
@@ -409,9 +457,7 @@ local function fallback()
           u32(S.V_MSG) ~= 0 and cstr(u32(S.V_MSG), 96) or "", tostring(menu_up())))
     end
   end
-  btn("R4")
-  wait_until(function() return mstate() == S.ST_END end, 5)
-  continue_next(NO)
+  ended("leave", function() btn("R4") end)
   phase = "after"
 end
 
@@ -472,9 +518,7 @@ local function run()
   wait(2)
   result("back", ok and u32(S.V_NPROG) > 0, string.format("YES at \"Continue Next?\": %q again, state %d, %d programs, launch block now %08X",
     appname(), mstate(), u32(S.V_NPROG), u32(S.LB_ADDR)))
-  btn("R4")
-  wait_until(function() return mstate() == S.ST_END end, 5)
-  continue_next(NO)
+  ended("leave", function() btn("R4") end)
   phase = "after"
 end
 
@@ -483,8 +527,7 @@ end
 -- MT_PROGRAM is started with RUN (MT_GAME_UP "addr=value": its word that says it runs) and quit with EXIT held: the
 -- menu must be back, its list shown, and the firmware's titles never "Continue Next?" (0x000F004C) nor its message
 -- (0x000F0003). Every title the firmware takes is logged with its time; snapshots 0.2, 0.5, 1, 2 and 4 s after EXIT.
--- (Leaving the menu itself is the firmware's own end of a conversion: its message, then "Continue Next?"; a converter
--- cannot skip it: whatever it asks for on its last call, the firmware then opens that title. card() checks it.)
+-- (Leaving the menu itself goes to the main screen with neither: README.md "Ending"; card() checks it with ended().)
 local function leave()
   local seen, watch = {}, false
   MT_TITLES = emu.add_machine_frame_notifier(function()
@@ -534,6 +577,17 @@ local function leave()
   phase = "after"
 end
 
+-- end: the menu up, then LEAVE (ended()); run_menu_tests.sh's END_D gives the test builds that end as before
+-- (END_WITH_FE) or with ChangeMode and 0xFE (END_FE_AFTER_MODE), to see how those end.
+local function endonly()
+  local ok = to_menu()
+  result("menu", ok, string.format("%q, menu state %d, %d programs", appname(), mstate(), u32(S.V_NPROG)))
+  if not ok then return end
+  wait(3)
+  ended("leave", function() btn("R4") end)
+  phase = "after"
+end
+
 local function buttons()
   local ok = to_menu()
   result("menu", ok, string.format("menu state %d (it reads no button: BUTTONS_USED %d)", mstate(), S.BUTTONS_USED or -1))
@@ -576,7 +630,7 @@ end
 
 local co = coroutine.create(function()
   if MODE == "card" then card() elseif MODE == "fallback" then fallback() elseif MODE == "run" then run()
-  elseif MODE == "buttons" then buttons() elseif MODE == "leave" then leave() end
+  elseif MODE == "buttons" then buttons() elseif MODE == "leave" then leave() elseif MODE == "end" then endonly() end
   finish()
   while true do coroutine.yield() end
 end)

@@ -9,7 +9,8 @@
 # OUT is a scratch directory (~/compartilhado/tmp/..., never /tmp). CASEs:
 #   guard      guard.py on the menu (clean), and on test/guard_selftest.s (must find each planted reference)
 #   card       the card `make card` builds (the menu, Another World, Pinball Fantasies, passes 5-9, DSPTONE):
-#              the list, the screen, the buttons, the redraw, EXIT / YES / LEAVE / NO (menu_test.lua MT_MODE=card)
+#              the list, the screen, the buttons, the redraw; EXIT held and LEAVE each end on the main screen with no
+#              firmware message and no "Continue Next?", the menu started again between (menu_test.lua MT_MODE=card)
 #   fallback   test/mkfallback.py's card: missing and malformed manifests and icons, a long-named folder, a
 #              folder without a program, a damaged and a foreign KN7APP.BIN (refused, with the message)
 #   buttons    a menu that reads no button (-D BUTTONS_USED=0) on the card: what each candidate button does to
@@ -20,6 +21,9 @@
 #   leave      TREE as for `tree`: MT_PROGRAM (env; a program that goes back to the menu at its quit, Another World)
 #              started and quit with EXIT held gives the menu back with no firmware message and no "Continue Next?"
 #              (MT_GAME_UP: its "running" word; menu_test.lua MT_MODE=leave)
+#   end        the fallback card with this menu at its root (with END_D=END_WITH_FE or END_FE_AFTER_MODE, that test
+#              build of it: menu.s EndRequest): the menu up, then LEAVE: the firmware's modes and titles, its message
+#              number, the LCD frame as PPM (menu_test.lua MT_MODE=end, ended())
 #   cputime    pass 9 started from its folder (CPUTIME): its file written to the card's root, checked by the
 #              release's verifier (verify_dump.py --cputime with cpu_tap.lua's account, check_cpu_probe.py);
 #              then "Continue Next?" YES brings the menu back
@@ -34,7 +38,10 @@ CARD_IMG="${CARD_IMG:-$EMU/sdcard_from_real_kn7000.img}"
 [ -f "$CARD_IMG" ] || CARD_IMG="$HOME/compartilhado/kn7000-emulator/sdcard_from_real_kn7000.img"
 FLOPPY="$LOADER/releases/2026-10-19/floppy/kn7load_floppy.img"
 BIOS="${BIOS:-v13}"
-case "$BIOS" in v13) PANEL=0x5006BE4C ;; v16) PANEL=0x5006BE50 ;; *) echo "unknown bios $BIOS" >&2; exit 2 ;; esac
+case "$BIOS" in               # the panel bitmaps; what FindEnd finds (ChangeMode, the state byte: test/endsig.py)
+  v13) PANEL=0x5006BE4C; CHGMODE=0x4842B301; RQSTATE=0x5004E3F8; MSGW=0x5006B59C ;;
+  v16) PANEL=0x5006BE50; CHGMODE=0x4842B343; RQSTATE=0x5004E3FC; MSGW= ;;
+  *) echo "unknown bios $BIOS" >&2; exit 2 ;; esac
 OUT="$(mkdir -p "$1" && cd "$1" && pwd)"; shift
 say() { echo "run_menu_tests: $*" | tee -a "$OUT/summary.txt"; }
 
@@ -52,7 +59,7 @@ mame() {
   python3 -I "$MENU/fatscan.py" --image "$R/sd.img" --lua "$R/expect.lua" > "$R/fatscan.txt"
   cp "$FLOPPY" "$R/floppy.img"; chmod u+w "$R/floppy.img"
   ( cd "$EMU" && env MT_MODE="$M" MT_OUT="$R" MT_SYMS="${SYMS:-$OUT/build/syms.lua}" MT_EXPECT="$R/expect.lua" \
-      MT_PANEL="$PANEL" "$@" DISPLAY="${DISPLAY:-:0}" timeout 5400 ./kn7000 kn7000 -bios "$BIOS" -rompath ./roms \
+      MT_PANEL="$PANEL" MT_CHGMODE="$CHGMODE" MT_RQSTATE="$RQSTATE" MT_MSGW="$MSGW" "$@" DISPLAY="${DISPLAY:-:0}" timeout 5400 ./kn7000 kn7000 -bios "$BIOS" -rompath ./roms \
       -pluginspath ./plugins -skip_gameinfo -window -nothrottle -harddisk "$R/sd.img" -flop "$R/floppy.img" \
       -nvram_directory "$R/nv" -cfg_directory "$R/cfg" -snapshot_directory "$R/snap" \
       -autoboot_script "${SCRIPT:-$HERE/menu_test.lua}" ) > "$R/run.log" 2>&1
@@ -97,6 +104,21 @@ while [ $# -gt 0 ]; do
     python3 -I "$HERE/mkfallback.py" "$OUT/fallback-tree" "$OUT/build/KN7APP.BIN" "$LOADER/releases" > /dev/null
     mame "$OUT/fallback" "$OUT/fallback-tree" fallback
     rm -f -- "$OUT/fallback/sd.img" "$OUT/fallback/floppy.img"
+    ;;
+  end)                                # this menu, or with END_D the test build -D $END_D, on the fallback card: LEAVE
+    E="end${END_D:+-$END_D}"; BIN="$OUT/build/KN7APP.BIN"; ESYMS="$OUT/build/syms.lua"
+    if [ -n "${END_D:-}" ]; then
+      B="$OUT/build-$END_D"; mkdir -p "$B"
+      cp "$OUT/build/tramp_bin.inc" "$OUT/build/tramp_syms.inc" "$OUT/build/default_icon.inc" "$OUT/build/tramp.map" "$B/"
+      python3 "$MENU/../xapasm.py" "$MENU/menu.s" -I "$MENU" -I "$B" -I "$LOADER" -D "$END_D" -o "$B/menu.bin" -m "$B/menu.map" > /dev/null
+      python3 -I "$LOADER/mkapp.py" "$B/menu.bin" "$B/KN7APP.BIN" > /dev/null
+      python3 -I "$HERE/syms.py" "$LOADER" "$B" "$B/syms.lua"
+      BIN="$B/KN7APP.BIN"; ESYMS="$B/syms.lua"
+    fi
+    python3 -I "$HERE/mkfallback.py" "$OUT/$E-tree" "$BIN" "$LOADER/releases" > /dev/null
+    say "$E: menu $(sha1sum < "$BIN" | cut -c1-40)"
+    SYMS="$ESYMS" mame "$OUT/$E" "$OUT/$E-tree" end
+    rm -f -- "$OUT/$E/sd.img" "$OUT/$E/floppy.img"
     ;;
   buttons)
     B="$OUT/build-nobuttons"; mkdir -p "$B"
