@@ -338,7 +338,12 @@ its opaque bytes fall by 726 (pieces split at labels the new records and reader 
   0x1D / 0x1E, "PAD PART1" / "PAD PART2" in ApcToSMFConvGrid).  PM_ENTRIES' eight bytes were already named
   (the accompaniment parts' volumes).  Left: PM_SET88's m008008 (0x008008 / 0x008009), which KN6000
   func_4C114253 sets from latched panel control 0xC6.  `kn7000/src/include/panel_memory.inc`; the values are
-  still written in hex by `gen_data_s.py style_panels()`.)
+  still written in hex by `gen_data_s.py style_panels()`.)  (Resolved 2026-11-06, lane mn10300-data3,
+  N-4b34dd8b: m008008 is `seq_volume`, the sequencer's volume: control 0xC6 is the APC/SEQUENCER VOLUME
+  slider (index 30 of PanelCtrlValueGet_Table, latched by func_4C047993 from wire 0xD6, the CPL panel CPU's
+  AD6, which the SX-KN6500 service manual wires to VR1 "APC/SEQUENCER VOLUME"; the KN7000's control 0xC2 /
+  AD2 / VR1102 likewise); style_panels() now writes PM_SET88 / PM_SET8C's levels and numbers in decimal.
+  `../../../kn7000/notes/mn10300-data3/README.md` section 2.)
 
 ## Website page draft
 

@@ -226,7 +226,10 @@ run-time dispatch, see `../mn10300-data/README.md` section 3.)  (Lane mn10300-re
   four of ext's rules ported one at a time, `sib_rules`, each measured; `../mn10300-data/README.md` section 2.)
 - A handful of bytes per sibling that a reader table or a record's head held are now in reader rows,
   because a record the new joins find claims a different extent (KN6000 / KN6500: 29 bytes, KN2400: 8;
-  `callee_off_on.py` lists them).
+  `callee_off_on.py` lists them).  (Resolved 2026-11-06, lane mn10300-data3, N-61c32961: the last of them were
+  the menu parameter-id lists of KN6000 func_4C11B347 / KN6500 func_4C11B237 / KN2400 func_4861CCC5
+  (and 941 func_4845BC68), walked by index (`asl2 d0` / `mov (d0, a0), d0` / `cmp d2, d0` / `lne`); the
+  `sentinel_indexed` rule types them as -1-ended u32 lists, `../mn10300-data3/README.md` section 1.)
 
 ## Website page draft
 

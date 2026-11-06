@@ -236,6 +236,8 @@ PROFILE = "941"
 #                counter stepped by one and scaled to the entry width (`asl2 dI`), `lne` / `b<cc>` back
 #   frozen_obj_names  the GUI objects with an empty ResName keep the names <src>/data/gui_object_names.tsv
 #                gives them (written back by every run), instead of names invented afresh each time
+#   host_widget_vars  (a plug-in) widget_vars() also reads the host firmware's class procedures (the HD-SX3's
+#                widgets are instances of the KN6000's classes)
 #   field_*      (tools/data_field_uses.py, read there) the field-use walk's new rules: field_pos,
 #                field_slots, field_bra, field_keyloop, field_merge, field_screen
 FEATURES = {k: True for k in ("ptr_starts", "array_end", "mem_ptrs", "loop_index", "step_arrays", "deep_records",
@@ -244,7 +246,7 @@ FEATURES = {k: True for k in ("ptr_starts", "array_end", "mem_ptrs", "loop_index
                               # lane mn10300-data2 (wave 10)
                               "support_values", "sibling_support", "boot_sectors", "panel_700", "style_lists", "reclaim_strings", "curated_counts", "nv_not_ptrs",
                               # lane mn10300-data3 (wave 11)
-                              "sentinel_indexed", "frozen_obj_names")}
+                              "sentinel_indexed", "frozen_obj_names", "host_widget_vars")}
 for _k in os.environ.get("GEN_DATA_S_OFF", "").split(","):
     if _k.strip():
         FEATURES[_k.strip()] = False
@@ -4387,11 +4389,43 @@ class Gen:
                 return [f"{it2.label}:\t{d}\t0x{(1 << 8 * w) - 1:x}\t# the end marker of {tab}: {cite} stops at it"]
             self.add(e, w, self.name_at(e, f"{it.label}_End"), "table end", render)
 
-    def field_deref(self, proc, off):
+    def host_code_bodies(self):
+        """(a plug-in, lane mn10300-data3) code_bodies() of the host firmware's converted code: the class
+        procedures of the host's classes, which the plug-in's widgets are instances of, are there."""
+        if hasattr(self, "_hbodies"):
+            return self._hbodies
+        import glob as _glob
+        import data_readers as DR
+        self._hbodies = body = {}
+        hp = PROFILES.get(P.get("host") or "", {})
+        if not hp or not FEATURES.get("host_widget_vars", True):
+            return body
+        root = os.path.normpath(os.path.join(KN7_DIR, hp.get("root", ".")))
+        cur = None
+        for f in sorted(_glob.glob(os.path.join(root, hp.get("code", hp["src"] + "/*.s")))):
+            for ln in open(f, encoding="latin-1"):
+                code = ln.split("#", 1)[0].rstrip()
+                if not code.strip():
+                    continue
+                mo = re.match(r"^([A-Za-z_][\w.$]*):", code)
+                if mo:
+                    n = mo.group(1)
+                    if not DR.LOCAL.search(n):
+                        cur = n
+                        body.setdefault(cur, (self.host.sym_by_name.get(n), []))
+                    rest = code[mo.end():].strip()
+                    if rest and cur:
+                        body[cur][1].append(" ".join(rest.split()))
+                    continue
+                if cur and code[:1] in " \t":
+                    body[cur][1].append(" ".join(code.split()))
+        return body
+
+    def field_deref(self, proc, off, bodies=None):
         """(widget_vars) How `proc` reads the variable a widget's field at +off points at: the field load
         (`mov (off, aR), aS`, or `add off, aR` then `mov (aR), aS`) and, within the next 8 instructions,
         a load or store through aS: (CPU, field instruction, access instruction, width), or None."""
-        b = self.code_bodies().get(proc)
+        b = (bodies if bodies is not None else self.code_bodies()).get(proc)
         if not b:
             return None
         L = b[1]
@@ -4441,6 +4475,11 @@ class Gen:
                 for c in reversed(m.chain(k.id)):
                     pn = by_addr.get(c.proc) or self.extern.get(c.proc)
                     r = self.field_deref(pn, off) if pn else None
+                    if not r and self.host is not None:
+                        # (a plug-in, lane mn10300-data3) a host class: its procedure is the host's code
+                        hn = self.host.sym_by_addr.get(c.proc)
+                        r = self.field_deref(hn, off, self.host_code_bodies()) if hn else None
+                        pn = f"the host's {hn}" if r else pn
                     if r:
                         memo[key] = (c.name, pn) + r
                         break

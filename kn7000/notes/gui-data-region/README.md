@@ -287,7 +287,10 @@ items; the bytes are what fell.
   `src/<build>/data/gui_object_names.tsv`, one row per unnamed object `{object id (slot << 16 | index),
   class name, name}`, written once from the current labels so nothing is renamed; `obj_names()` uses
   the row when id and class match and invents (and reports) only for objects not in the map.  941:
-  6,309 rows, about 291 KB.
+  6,309 rows, about 291 KB.  (Resolved 2026-11-06, lane mn10300-data3, N-fb88572c: implemented as proposed,
+  `gen_data_s.py` frozen_object_names / object_names_tsv, FEATURES `frozen_obj_names`; the map is
+  `<src>/data/gui_object_names.tsv` in every tree and is written back by each run, so a new object's name is
+  frozen from its first generation; `../mn10300-data3/README.md` section 1.)
 
 ## Website page draft
 

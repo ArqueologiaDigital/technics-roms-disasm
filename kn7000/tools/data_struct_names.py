@@ -266,6 +266,20 @@ OPTIONS = {
     # records do.
     "ChordRecogTable2": {"count": (2048, "the index is func_4844D680's 11-bit interval mask (bits 0x01 .. 0x400)")},
 }
+# (lane mn10300-data3) the same table in the other builds and the siblings, under their labels: the reader is
+# func_4844D297's code instruction for instruction (942 func_4844D286, 935 / 893 func_4844D255, KN6000
+# func_4C09D886, KN6500 func_4C09D607, KN2400 func_4860E29C), its index the answer of the twin of
+# func_4844D680 (KN6000 func_4C09DC6F: the same jump table of bits 0x01 .. 0x400); each table ends 4,096 bytes
+# on, where the next item starts (942 func_484375D9_Table, KN6000 / KN6500 User02_ApFunctions, KN2400
+# func_501752A3_Table)
+for _l in ("func_4844D286_Table", "func_4844D255_Table", "func_4C09D886_entry_L6e_Table",
+           "func_4C09D607_entry_L6e_Table", "func_4860E29C_Table"):
+    OPTIONS[_l] = OPTIONS["ChordRecogTable2"]
+    NAMES[_l] = ("ChordRecogEntry2", {0: "chord_type", 1: "root_flags"})
+# and the first table (941 ChordRecogTable, read by func_4844D0F8 the same way)
+for _l in ("func_4844D0E7_Table", "func_4844D0B6_Table", "func_4C09D6E7_entry_L4b_Table",
+           "func_4C09D468_entry_L4b_Table", "func_4860E0FD_Table"):
+    NAMES[_l] = ("ChordRecogEntry", {0: "chord_type", 1: "root_flags"})
 
 
 
