@@ -55,6 +55,7 @@ DATA_MACROS = {"naka_header", "addr24", "aligned_string", "desc_entry", "naka_no
                "sndparam_descriptor"}
 REL = P.REL
 BITOPS = {"and", "or", "xor", "andw", "orw", "xorw", "andcf", "orcf", "xorcf"}
+SOURCE_TREE = {"v6": "v7", "v5": "v6"}
 
 
 def is_instruction(body):
@@ -112,6 +113,16 @@ class Tree:
             self.used |= {ln.split("\t")[0] for ln in open(dl) if ln.strip() and not ln.startswith("#")}
         self.sorted_labels = sorted((a, sorted(ns)[0]) for a, ns in self.labels.items())
         self.keys = [a for a, n in self.sorted_labels]
+        # RAM .equ names the tree's instructions use as memory operands, by value (only values one
+        # name spells)
+        ram = collections.defaultdict(set)
+        for labs, body, com in self.parsed:
+            for nm in re.findall(r'\(([A-Za-z_]\w*)(?:\+\d+)?(?::(?:8|16|24))?\)', body or ""):
+                v = self.syms.get(nm)
+                if v is not None and v < BASE:
+                    ram[v].add(nm)
+        self.ram_names = {v: next(iter(ns)) for v, ns in ram.items() if len(ns) == 1}
+        self._source_tree()
 
     def _inside(self, j):
         """a line a TODO(port) block runs on through: a `.byte` row, a line with only labels
@@ -132,7 +143,9 @@ class Tree:
                 i += 1
                 continue
             j = i + 1
-            while j < n and self._inside(j) and not TODO.match(self.order[j][3]):
+            # the porter starts a new marker after each `; port:` comment it writes inside a run of
+            # rows; the rows on both sides are one block (an instruction can straddle the marker)
+            while j < n and self._inside(j):
                 j += 1
             while j > i + 1 and not BYTE_ROW.match(self.order[j - 1][3]):
                 j -= 1                    # trailing labels and comments belong to what follows
@@ -152,8 +165,9 @@ class Tree:
                     continue
                 for lab in labs:
                     inner[self.order[k][0]].append(lab)
-                if not labs and self.order[k][3].strip():
-                    comments.append(self.order[k][3])
+                    comments.append((self.order[k][0], None, k, lab))
+                if not labs and self.order[k][3].strip() and not TODO.match(self.order[k][3]):
+                    comments.append((self.order[k][0], self.order[k][3], k, None))
             ctx = self.context(first, last)
             start = a
             if ctx != "code":
@@ -208,7 +222,60 @@ class Tree:
         j = bisect.bisect_right(self.keys, addr) - 1
         return P.label_stem(self.sorted_labels[j][1]) if j >= 0 else "Rom"
 
+    def _source_tree(self):
+        """the tree this one was ported from (v7 for v6, v6 for v5): its labels and image, to name a
+        new label after the source tree's label for the same thing"""
+        self.src_pairs = []
+        src = SOURCE_TREE.get(self.tree)
+        elf = os.path.join(ROOT, "rebuilt_ROMs", "kn5000_%s_program.llvm.elf" % src) if src else ""
+        if not src or not os.path.exists(elf):
+            return
+        out = subprocess.run([P.NM, "--defined-only", elf], capture_output=True, text=True, check=True).stdout
+        ss = {}
+        for ln in out.splitlines():
+            f = ln.split()
+            if len(f) == 3 and f[1] in "tT" and not f[2].startswith((".L", "__")):
+                v = int(f[0], 16)
+                if BASE <= v < BASE + 0x200000:
+                    ss.setdefault(f[2], v)
+        self.src_rom = open(os.path.join(ROOT, "rebuilt_ROMs", "kn5000_%s_program.llvm.rom" % src), "rb").read()
+        self.src_by_addr = {}
+        for nm, v in sorted(ss.items()):
+            self.src_by_addr.setdefault(v, nm)
+        self.src_pairs = sorted((self.syms[nm], v) for nm, v in ss.items()
+                                if nm in self.syms and BASE <= self.syms[nm] < BASE + 0x200000)
+        self.src_keys = [d for d, sv in self.src_pairs]
+        self.src_addrs = sorted(self.src_by_addr)
+
+    def source_name(self, addr):
+        """the source tree's label for the thing at addr: at the address the nearest label both trees
+        define puts it, with the same bytes there (up to 12, up to the source tree's next label, at
+        least 4); None if there is none or the name is taken"""
+        if not self.src_pairs:
+            return None
+        j = bisect.bisect_right(self.src_keys, addr) - 1
+        if j < 0:
+            return None
+        d, sv = self.src_pairs[j]
+        sa = addr - d + sv
+        nm = self.src_by_addr.get(sa)
+        if not nm or nm in self.used:
+            return None
+        k = bisect.bisect_right(self.src_addrs, sa)
+        n = min(12, (self.src_addrs[k] - sa) if k < len(self.src_addrs) else 12)
+        if n < 4 or self.src_rom[sa - BASE:sa - BASE + n] != self.rom[addr - BASE:addr - BASE + n]:
+            return None
+        return nm
+
     def new_name(self, addr, suffix):
+        src = self.source_name(addr)
+        if src:
+            self.used.add(src)
+            self.labels[addr].append(src)
+            j = bisect.bisect_right(self.keys, addr)
+            self.keys.insert(j, addr)
+            self.sorted_labels.insert(j, (addr, src))
+            return src
         base = self.enclosing(addr)
         name, k = base + suffix, 2
         while name in self.used:
@@ -219,6 +286,87 @@ class Tree:
         self.keys.insert(j, addr)
         self.sorted_labels.insert(j, (addr, name))
         return name
+
+
+WIDEN_BACK, WIDEN_FWD = 3, 6
+
+
+def widen(T, b):
+    """A code block whose bytes do not decode on their own -- an instruction straddles its first or
+    last byte, the porter having kept a source-tree line for the other part of it -- decoded together
+    with up to WIDEN_BACK byte lines before it and WIDEN_FWD after it (instructions, or `.byte` lines
+    of code the source tree spells as bytes; no other directive).  -> (Block, items) of the narrowest
+    widening that decodes cleanly with every label inside on an instruction start, or None."""
+    def byte_lines(k, step, limit):
+        out = []
+        while 0 <= k < len(T.order) and len(out) < limit:
+            labs, body, com = T.parsed[k]
+            if T.size[k] > 0 and k not in T.todo_rows:
+                w = body.split(None, 1)[0] if body else ""
+                if not (is_instruction(body) or w == ".byte"):
+                    break
+                out.append(k)
+            elif body and T.size[k] == 0 and not is_instruction(body):
+                break                       # a directive that emits nothing (.org, .equ ...)
+            k += step
+        return out
+    back = byte_lines(b.first - 1, -1, WIDEN_BACK)
+    fwd = byte_lines(b.last + 1, 1, WIDEN_FWD)
+    for total in range(1, len(back) + len(fwd) + 1):
+        for nb in range(0, min(total, len(back)) + 1):
+            nf = total - nb
+            if nf > len(fwd):
+                continue
+            first = back[nb - 1] if nb else b.first
+            last = fwd[nf - 1] if nf else b.last
+            a = T.order[first][0] if nb else b.start
+            e = T.order[last][0] + T.size[last] if nf else b.e
+            items = P.decode_region(T.rom[a - BASE:e - BASE])
+            if any(t is None for o, l, t in items):
+                continue
+            starts = {a + o for o, l, t in items}
+            inner = collections.defaultdict(list)
+            for ad, labs in b.inner.items():
+                inner[ad].extend(labs)
+            comments = []
+            for k in range(first, last + 1):
+                if b.first <= k <= b.last:
+                    continue
+                labs, body, com = T.parsed[k]
+                for lab in labs:
+                    inner[T.order[k][0]].append(lab)
+                    comments.append((T.order[k][0], None, k, lab))
+                if k == first and nb:
+                    continue
+                if com and com.strip():
+                    comments.append((T.order[k][0], "\t; " + com.strip().lstrip(";").strip(), k, None))
+            if comments:
+                comments = b.comments + comments
+            else:
+                comments = list(b.comments)
+            if any(ad not in starts for ad in inner if a < ad < e) or any(
+                    ad == e for ad in ()):
+                continue
+            nbk = Block(first, last, min(a, b.a), e, a, T.rom[a - BASE:e - BASE], "code", inner, comments)
+            return nbk, [(a + o, l, t) for o, l, t in items]
+    return None
+
+
+def start_agrees(T, start):
+    """Is `start` an instruction start when the bytes are decoded from the nearest label before
+    it?  The porter's lines next to a TODO(port) block can be the source tree's own spelling of
+    code as `.byte` rows or as faux instructions, so the block's first byte is not known to start
+    an instruction just because a line ends there."""
+    j = bisect.bisect_right(T.keys, start) - 1
+    if j < 0:
+        return False
+    a = T.keys[j]
+    if a == start:
+        return True
+    if start - a > 512:
+        return False
+    items = P.decode_region(T.rom[a - BASE:start - BASE])
+    return all(t is not None for o, l, t in items) and sum(l for o, l, t in items) == start - a
 
 
 def unspelled_row(T, text, addr, n):
@@ -265,6 +413,8 @@ def symbolize(T, text, addr, n, inst_starts, newlabels):
         v, suf = int(m.group(1)), m.group(2) or ""
         if BASE <= v < BASE + len(T.rom) and T.label_for(v):
             return "(" + T.label_for(v) + suf + ")"
+        if v in T.ram_names:
+            return "(" + T.ram_names[v] + suf + ")"
         return "(0x%x%s)" % (v, suf)
     ops = re.sub(r'\((\d+)(:(?:8|16|24))?\)', mem, ops)
 
@@ -294,19 +444,29 @@ def main():
     # decode every code block; collect instruction starts first (for new labels)
     good = {}
     inst_starts = set()
+    widened = 0
     for k, b in enumerate(blocks):
         if b.kind != "code":
             continue
         items = P.decode_region(b.bs)
-        if any(t is None for o, l, t in items):
-            continue                        # a byte that starts no instruction: not clean code
         starts = {b.start + o for o, l, t in items}
-        if any(ad >= b.start and ad not in starts for ad in b.inner):
-            continue                        # a label inside would split an instruction
+        if any(t is None for o, l, t in items) or any(ad >= b.start and ad not in starts for ad in b.inner):
+            # a byte that starts no instruction, or a label inside would split one: try the block
+            # with its neighbour lines
+            w = widen(T, b)
+            if w is None or not start_agrees(T, w[0].start):
+                continue
+            blocks[k], seq = w
+            widened += 1
+            good[k] = seq
+            inst_starts.update(ad for ad, l, t in seq)
+            continue
+        if not start_agrees(T, b.start):
+            continue
         good[k] = [(b.start + o, l, t) for o, l, t in items]
         inst_starts.update(starts)
-    print("code blocks decoded and round-tripped: %d of %d (%d bytes)" % (
-        len(good), kinds["code"], sum(len(blocks[k].bs) for k in good)))
+    print("code blocks decoded and round-tripped: %d of %d (%d bytes; %d of them with neighbour lines)" % (
+        len(good), kinds["code"], sum(len(blocks[k].bs) for k in good), widened))
     newlabels = {}
     rewritten = {}
     for k, seq in good.items():
@@ -362,7 +522,40 @@ def main():
             if b.a <= ad < b.e and nm not in names[ad]:
                 names[ad].append(nm)
                 block_of_addr[ad] = k
-        lines = list(b.comments)
+        # labels and comments stay before the instruction at their address, in their source order
+        # (b.comments holds both, with their line index); new labels come after them
+        starts_here = {ad for ad, n, t in seq}
+        at = collections.defaultdict(list)
+        # a header comment `; NAME: ...` (and the comment lines that continue it) stands before label
+        # NAME, wherever the porter left it
+        where = {lab: ad for ad, c, kk, lab in b.comments if lab}
+        after = {lab for lab in T.parsed[b.last + 1][0]} if b.last + 1 < len(T.parsed) else set()
+        cur = None
+        placed = []
+        for ad, c, kk, lab in sorted(b.comments, key=lambda x: x[2]):
+            if lab is None:
+                m = re.match(r'^;\s*([A-Za-z_]\w*):', c)
+                if m and m.group(1) in where and where[m.group(1)] in starts_here:
+                    cur = where[m.group(1)]
+                elif m and m.group(1) in after:
+                    cur = "end"                 # the label the block's next line carries
+                elif not re.match(r'^;\s\s', c):
+                    cur = None
+                placed.append((cur if cur is not None else ad, c, None))
+            else:
+                cur = None
+                placed.append((ad, None, lab))
+        tail = [c for ad, c, lab in placed if ad == "end"]
+        lines = [c for ad, c, lab in placed if lab is None and ad != "end" and ad not in starts_here]
+        for ad, c, lab in placed:
+            if ad in starts_here:
+                if lab is None:
+                    # before the labels already queued at ad that its own label follows
+                    at[ad].append(c)
+                else:
+                    at[ad].append(lab + ":")
+        for ad in list(names):
+            names[ad] = [nm for nm in names[ad] if nm + ":" not in at.get(ad, [])]
         if b.start > b.a:
             # the bytes before the first reachable address stay rows, under the marker
             lines.append(T.order[b.first][3])
@@ -372,8 +565,10 @@ def main():
                 for z in range(x, y, 8):
                     lines.append("\t.byte\t" + ", ".join("0x%02x" % v for v in T.rom[z - BASE:min(y, z + 8) - BASE]))
         for ad, n, t in seq:
+            lines.extend(at.get(ad, []))
             lines.extend(nm + ":" for nm in names.get(ad, []))
             lines.append("\t" + t)
+        lines.extend(tail)
         edits[rel][T.order[b.first][2]] = lines
     for ad, nm in newlabels.items():
         if ad in block_of_addr:
