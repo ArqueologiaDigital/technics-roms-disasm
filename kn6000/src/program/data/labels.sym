@@ -28387,11 +28387,12 @@
 0x4C244368  func_4C117D0E_entry_L20_Records  128
 0x4C2443E8  func_4C118448_Records  128
 0x4C244468  func_4C11B33A_Table  256
-0x4C244568  func_4C11B347_entry_L4a_Selected_0  52
-0x4C244664  func_4C11B347_entry_L4a_Selected_1  52
+0x4C244568  func_4C11B347_entry_L4a_Selected_0  252
+0x4C244664  func_4C11B347_entry_L4a_Selected_1  172
 0x4C244710  func_4C11B347_entry_L4a_Selected_2  52
-0x4C244744  func_4C11B347_entry_L4a_Selected_3  52
-0x4C2447C4  func_4C11B347_entry_L4a_Selected_4  52
+0x4C244744  func_4C11B347_entry_L4a_Selected_3  128
+0x4C2447C4  func_4C11B347_entry_L4a_Selected_4  36
+0x4C2447E8  func_4C11B347_Table  20
 0x4C2447FC  func_4C11CE59_Table  28
 0x4C244818  func_4C11D4E3_Table  20
 0x4C24482C  func_4C11D4E3_entry_L222_Table  8

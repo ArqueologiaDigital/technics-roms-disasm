@@ -4460,11 +4460,12 @@
 0x4841D248  func_4861932D_entry_L20_Records  128
 0x4841D2C8  func_48619B24_Records  128
 0x4841D348  func_4861CCB8_Table  256
-0x4841D448  func_4861CCC5_entry_L55_Selected_0  52
-0x4841D594  func_4861CCC5_entry_L55_Selected_1  52
+0x4841D448  func_4861CCC5_entry_L55_Selected_0  332
+0x4841D594  func_4861CCC5_entry_L55_Selected_1  252
 0x4841D690  func_4861CCC5_entry_L55_Selected_2  52
-0x4841D6C4  func_4861CCC5_entry_L55_Selected_3  52
-0x4841D748  func_4861CCC5_entry_L55_Selected_4  52
+0x4841D6C4  func_4861CCC5_entry_L55_Selected_3  132
+0x4841D748  func_4861CCC5_entry_L55_Selected_4  36
+0x4841D76C  func_4861CCC5_Table  20
 0x4841D780  func_4861ED5D_Table  76
 0x4841D7FC  func_48620E7C_Table_p0_0  96
 0x4841D85C  func_48620E7C_Table_p0_1  96

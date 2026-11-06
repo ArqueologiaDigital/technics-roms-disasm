@@ -1014,6 +1014,7 @@
 .equ func_4861CCC5_entry_L55_Selected_2, 0x4841d690
 .equ func_4861CCC5_entry_L55_Selected_3, 0x4841d6c4
 .equ func_4861CCC5_entry_L55_Selected_4, 0x4841d748
+.equ func_4861CCC5_Table, 0x4841d76c
 .equ func_4861ED5D_Table, 0x4841d780
 .equ func_48620E7C_Table, 0x4841da3c
 .equ func_4862246A_entry_L23_Records, 0x4841da58

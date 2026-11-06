@@ -65185,6 +65185,7 @@
 .equ func_4C11B347_entry_L4a_Selected_2, 0x4c244710
 .equ func_4C11B347_entry_L4a_Selected_3, 0x4c244744
 .equ func_4C11B347_entry_L4a_Selected_4, 0x4c2447c4
+.equ func_4C11B347_Table, 0x4c2447e8
 .equ func_4C11CE59_Table, 0x4c2447fc
 .equ func_4C11D4E3_Table, 0x4c244818
 .equ func_4C11D4E3_entry_L222_Table, 0x4c24482c

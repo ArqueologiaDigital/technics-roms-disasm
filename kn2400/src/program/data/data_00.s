@@ -5764,70 +5764,70 @@ func_501574C3_Table:	# 32 x u32, 1..2147483648; read by func_501574C3_L6 0x50157
 	tab_u32	65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608	# [16]
 	tab_u32	16777216, 33554432, 67108864, 134217728, 268435456, 536870912, 1073741824, 2147483648	# [24]
 
-func_50157736_Table:	# 27 x REC_func_50157736_Table (3 bytes each); read by func_50157736_entry_L10 0x5015774B `movbu (1, a1), d0`; func_50157736_entry_L10 0x5015774B `movbu (a0), d0`; func_50157736_entry_L10 0x5015774B `movbu (a1), d0` (+8)
-	REC_func_50157736_Table	f2=127	# [0]
-	REC_func_50157736_Table	index=1, index_=1, f2=127
-	REC_func_50157736_Table	index=2, index_=2, f2=127
-	REC_func_50157736_Table	index=3, index_=3, f2=255
-	REC_func_50157736_Table	index=4, index_=4, f2=223
-	REC_func_50157736_Table	index=6, index_=5, f2=3
-	REC_func_50157736_Table	index=11, index_=6, f2=255
-	REC_func_50157736_Table	index=12, index_=7, f2=255
-	REC_func_50157736_Table	index=13, index_=8, f2=255	# [8]
-	REC_func_50157736_Table	index=14, index_=9, f2=127
-	REC_func_50157736_Table	index=15, index_=10, f2=255
-	REC_func_50157736_Table	index=24, index_=11, f2=127
-	REC_func_50157736_Table	index=25, index_=12, f2=127
-	REC_func_50157736_Table	index=26, index_=13, f2=127
-	REC_func_50157736_Table	index=27, index_=14, f2=127
-	REC_func_50157736_Table	index=28, index_=15, f2=127
-	REC_func_50157736_Table	index=29, index_=16, f2=127	# [16]
-	REC_func_50157736_Table	index=30, index_=17, f2=255
-	REC_func_50157736_Table	index=34, index_=18, f2=15
-	REC_func_50157736_Table	index=36, index_=19, f2=255
-	REC_func_50157736_Table	index=37, index_=20, f2=255
-	REC_func_50157736_Table	index=38, index_=21, f2=255
-	REC_func_50157736_Table	index=39, index_=22, f2=255
-	REC_func_50157736_Table	index=40, index_=23, f2=255
-	REC_func_50157736_Table	index=41, index_=24, f2=255	# [24]
-	REC_func_50157736_Table	index=42, index_=25, f2=63
-	REC_func_50157736_Table	f2=255
-func_50157736_Table_2:	# 7 x REC_func_50157736_Table_2 (3 bytes each); read by func_50157736_entry_Le4 0x5015781F `movbu (1, a1), d0`; func_50157736_entry_Le4 0x5015781F `movbu (a0), d0`; func_50157736_entry_Le4 0x5015781F `movbu (a0), d2` (+2)
-	REC_func_50157736_Table_2	f2=127
-	REC_func_50157736_Table_2	index=1, index_=1, f2=127
-	REC_func_50157736_Table_2	index=2, index_=2, f2=127
-	REC_func_50157736_Table_2	index=4, index_=3, f2=64
-	REC_func_50157736_Table_2	index=7, index_=4, f2=48
-	REC_func_50157736_Table_2	index=8, index_=5, f2=255
-	REC_func_50157736_Table_2	index=9, index_=6, f2=1
-func_50157736_Table_3:	# 3 x REC_func_50157736_Table_3 (3 bytes each); read by func_50157736_entry_L12f 0x5015786A `movbu (1, a1), d0`; func_50157736_entry_L12f 0x5015786A `movbu (a0), d0`; func_50157736_entry_L12f 0x5015786A `movbu (a1), d0` (+2)
-	REC_func_50157736_Table_3	f2=7
-	REC_func_50157736_Table_3	index=3, index_=1, f2=1
-	REC_func_50157736_Table_3	index=4, index_=2, f2=255
-func_50157736_Table_4:	# 14 x REC_func_50157736_Table_4 (3 bytes each); read by func_50157736_entry_L181 0x501578BC `movbu (1, a1), d0`; func_50157736_entry_L181 0x501578BC `movbu (a0), d0`; func_50157736_entry_L181 0x501578BC `movbu (a0), d2` (+2)
-	REC_func_50157736_Table_4	f2=136	# [0]
-	REC_func_50157736_Table_4	index=1, index_=1, f2=127
-	REC_func_50157736_Table_4	index=2, index_=2, f2=127
-	REC_func_50157736_Table_4	index=3, index_=3, f2=127
-	REC_func_50157736_Table_4	index=4, index_=4, f2=127
-	REC_func_50157736_Table_4	index=5, index_=5, f2=127
-	REC_func_50157736_Table_4	index=6, index_=6, f2=127
-	REC_func_50157736_Table_4	index=7, index_=7, f2=63
-	REC_func_50157736_Table_4	index=14, index_=8, f2=127	# [8]
-	REC_func_50157736_Table_4	index=15, index_=9, f2=127
-	REC_func_50157736_Table_4	index=16, index_=10, f2=127
-	REC_func_50157736_Table_4	index=17, index_=11, f2=127
-	REC_func_50157736_Table_4	index=18, index_=12, f2=127
-	REC_func_50157736_Table_4	index=19, index_=13, f2=127
-func_50157736_Table_5:	# 4 x REC_func_50157736_Table_5 (3 bytes each); read by func_50157736_entry_L1d2 0x5015790D `movbu (1, a1), d0`; func_50157736_entry_L1d2 0x5015790D `movbu (a0), d0`; func_50157736_entry_L1d2 0x5015790D `movbu (a0), d2` (+2)
-	REC_func_50157736_Table_5	f2=4
-	REC_func_50157736_Table_5	index=3, index_=1, f2=255
-	REC_func_50157736_Table_5	index=4, index_=2, f2=15
-	REC_func_50157736_Table_5	index=8, index_=3, f2=255
-func_50157736_Table_6:	# 3 x REC_func_50157736_Table_6 (3 bytes each); read by func_50157736_entry_L222 0x5015795D `movbu (1, a1), d0`; func_50157736_entry_L222 0x5015795D `movbu (a0), d0`; func_50157736_entry_L222 0x5015795D `movbu (a1), d0` (+3)
-	REC_func_50157736_Table_6	f2=255
-	REC_func_50157736_Table_6	index=1, index_=1, f2=255
-	REC_func_50157736_Table_6	index=5, f2=255
+func_50157736_Table:	# 27 x PanelMemFieldMap (3 bytes each); read by func_50157736_entry_L10 0x5015774B `movbu (1, a1), d0`; func_50157736_entry_L10 0x5015774B `movbu (a0), d0`; func_50157736_entry_L10 0x5015774B `movbu (a1), d0` (+8)
+	PanelMemFieldMap	mask=127	# [0]
+	PanelMemFieldMap	param_off=1, rec_off=1, mask=127
+	PanelMemFieldMap	param_off=2, rec_off=2, mask=127
+	PanelMemFieldMap	param_off=3, rec_off=3, mask=255
+	PanelMemFieldMap	param_off=4, rec_off=4, mask=223
+	PanelMemFieldMap	param_off=6, rec_off=5, mask=3
+	PanelMemFieldMap	param_off=11, rec_off=6, mask=255
+	PanelMemFieldMap	param_off=12, rec_off=7, mask=255
+	PanelMemFieldMap	param_off=13, rec_off=8, mask=255	# [8]
+	PanelMemFieldMap	param_off=14, rec_off=9, mask=127
+	PanelMemFieldMap	param_off=15, rec_off=10, mask=255
+	PanelMemFieldMap	param_off=24, rec_off=11, mask=127
+	PanelMemFieldMap	param_off=25, rec_off=12, mask=127
+	PanelMemFieldMap	param_off=26, rec_off=13, mask=127
+	PanelMemFieldMap	param_off=27, rec_off=14, mask=127
+	PanelMemFieldMap	param_off=28, rec_off=15, mask=127
+	PanelMemFieldMap	param_off=29, rec_off=16, mask=127	# [16]
+	PanelMemFieldMap	param_off=30, rec_off=17, mask=255
+	PanelMemFieldMap	param_off=34, rec_off=18, mask=15
+	PanelMemFieldMap	param_off=36, rec_off=19, mask=255
+	PanelMemFieldMap	param_off=37, rec_off=20, mask=255
+	PanelMemFieldMap	param_off=38, rec_off=21, mask=255
+	PanelMemFieldMap	param_off=39, rec_off=22, mask=255
+	PanelMemFieldMap	param_off=40, rec_off=23, mask=255
+	PanelMemFieldMap	param_off=41, rec_off=24, mask=255	# [24]
+	PanelMemFieldMap	param_off=42, rec_off=25, mask=63
+	PanelMemFieldMap	mask=255
+func_50157736_Table_2:	# 7 x PanelMemFieldMap_2 (3 bytes each); read by func_50157736_entry_Le4 0x5015781F `movbu (1, a1), d0`; func_50157736_entry_Le4 0x5015781F `movbu (a0), d0`; func_50157736_entry_Le4 0x5015781F `movbu (a0), d2` (+2)
+	PanelMemFieldMap_2	mask=127
+	PanelMemFieldMap_2	param_off=1, rec_off=1, mask=127
+	PanelMemFieldMap_2	param_off=2, rec_off=2, mask=127
+	PanelMemFieldMap_2	param_off=4, rec_off=3, mask=64
+	PanelMemFieldMap_2	param_off=7, rec_off=4, mask=48
+	PanelMemFieldMap_2	param_off=8, rec_off=5, mask=255
+	PanelMemFieldMap_2	param_off=9, rec_off=6, mask=1
+func_50157736_Table_3:	# 3 x PanelMemFieldMap_3 (3 bytes each); read by func_50157736_entry_L12f 0x5015786A `movbu (1, a1), d0`; func_50157736_entry_L12f 0x5015786A `movbu (a0), d0`; func_50157736_entry_L12f 0x5015786A `movbu (a1), d0` (+2)
+	PanelMemFieldMap_3	mask=7
+	PanelMemFieldMap_3	param_off=3, rec_off=1, mask=1
+	PanelMemFieldMap_3	param_off=4, rec_off=2, mask=255
+func_50157736_Table_4:	# 14 x PanelMemFieldMap_4 (3 bytes each); read by func_50157736_entry_L181 0x501578BC `movbu (1, a1), d0`; func_50157736_entry_L181 0x501578BC `movbu (a0), d0`; func_50157736_entry_L181 0x501578BC `movbu (a0), d2` (+2)
+	PanelMemFieldMap_4	mask=136	# [0]
+	PanelMemFieldMap_4	param_off=1, rec_off=1, mask=127
+	PanelMemFieldMap_4	param_off=2, rec_off=2, mask=127
+	PanelMemFieldMap_4	param_off=3, rec_off=3, mask=127
+	PanelMemFieldMap_4	param_off=4, rec_off=4, mask=127
+	PanelMemFieldMap_4	param_off=5, rec_off=5, mask=127
+	PanelMemFieldMap_4	param_off=6, rec_off=6, mask=127
+	PanelMemFieldMap_4	param_off=7, rec_off=7, mask=63
+	PanelMemFieldMap_4	param_off=14, rec_off=8, mask=127	# [8]
+	PanelMemFieldMap_4	param_off=15, rec_off=9, mask=127
+	PanelMemFieldMap_4	param_off=16, rec_off=10, mask=127
+	PanelMemFieldMap_4	param_off=17, rec_off=11, mask=127
+	PanelMemFieldMap_4	param_off=18, rec_off=12, mask=127
+	PanelMemFieldMap_4	param_off=19, rec_off=13, mask=127
+func_50157736_Table_5:	# 4 x PanelMemFieldMap_5 (3 bytes each); read by func_50157736_entry_L1d2 0x5015790D `movbu (1, a1), d0`; func_50157736_entry_L1d2 0x5015790D `movbu (a0), d0`; func_50157736_entry_L1d2 0x5015790D `movbu (a0), d2` (+2)
+	PanelMemFieldMap_5	mask=4
+	PanelMemFieldMap_5	param_off=3, rec_off=1, mask=255
+	PanelMemFieldMap_5	param_off=4, rec_off=2, mask=15
+	PanelMemFieldMap_5	param_off=8, rec_off=3, mask=255
+func_50157736_Table_6:	# 3 x PanelMemFieldMap_6 (3 bytes each); read by func_50157736_entry_L222 0x5015795D `movbu (1, a1), d0`; func_50157736_entry_L222 0x5015795D `movbu (a0), d0`; func_50157736_entry_L222 0x5015795D `movbu (a1), d0` (+3)
+	PanelMemFieldMap_6	mask=255
+	PanelMemFieldMap_6	param_off=1, rec_off=1, mask=255
+	PanelMemFieldMap_6	param_off=5, mask=255
 	.align	4, 0xFF	# pad after func_50157736_Table_6
 data_48407BB8:
 	.space	1, 0xFF
@@ -9531,39 +9531,39 @@ GetEditSwPointInit_Table:	# 32 x EditSwPoint (4 bytes each); read by GetEditSwPo
 	EditSwPoint	x=160, y=120
 	EditSwPoint	x=160, y=120
 	EditSwPoint	x=160, y=120
-GetEditSwPointInit_Table_2:	# 32 x REC_GetEditSwPointInit_Table_2 (4 bytes each); read by GetEditSwPointInit 0x485EF67F `movhu (2, a0), d0`; GetEditSwPointInit 0x485EF67F `movhu (d0, a0), d0`
-	REC_GetEditSwPointInit_Table_2	f0=20, f2=239	# [0]
-	REC_GetEditSwPointInit_Table_2	f0=60, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=100, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=140, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=180, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=220, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=260, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=300, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=340, f2=239	# [8]
-	REC_GetEditSwPointInit_Table_2	f0=380, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=420, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=460, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=500, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=540, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=580, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=620, f2=239
-	REC_GetEditSwPointInit_Table_2	f2=43	# [16]
-	REC_GetEditSwPointInit_Table_2	f2=85
-	REC_GetEditSwPointInit_Table_2	f2=127
-	REC_GetEditSwPointInit_Table_2	f2=169
-	REC_GetEditSwPointInit_Table_2	f2=211
-	REC_GetEditSwPointInit_Table_2	f0=160, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=160, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=160, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=160, f2=120	# [24]
-	REC_GetEditSwPointInit_Table_2	f0=160, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=160, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=160, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=160, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=160, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=160, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=160, f2=120
+GetEditSwPointInit_Table_2:	# 32 x EditSwPoint_2 (4 bytes each); read by GetEditSwPointInit 0x485EF67F `movhu (2, a0), d0`; GetEditSwPointInit 0x485EF67F `movhu (d0, a0), d0`
+	EditSwPoint_2	x=20, y=239	# [0]
+	EditSwPoint_2	x=60, y=239
+	EditSwPoint_2	x=100, y=239
+	EditSwPoint_2	x=140, y=239
+	EditSwPoint_2	x=180, y=239
+	EditSwPoint_2	x=220, y=239
+	EditSwPoint_2	x=260, y=239
+	EditSwPoint_2	x=300, y=239
+	EditSwPoint_2	x=340, y=239	# [8]
+	EditSwPoint_2	x=380, y=239
+	EditSwPoint_2	x=420, y=239
+	EditSwPoint_2	x=460, y=239
+	EditSwPoint_2	x=500, y=239
+	EditSwPoint_2	x=540, y=239
+	EditSwPoint_2	x=580, y=239
+	EditSwPoint_2	x=620, y=239
+	EditSwPoint_2	y=43	# [16]
+	EditSwPoint_2	y=85
+	EditSwPoint_2	y=127
+	EditSwPoint_2	y=169
+	EditSwPoint_2	y=211
+	EditSwPoint_2	x=160, y=120
+	EditSwPoint_2	x=160, y=120
+	EditSwPoint_2	x=160, y=120
+	EditSwPoint_2	x=160, y=120	# [24]
+	EditSwPoint_2	x=160, y=120
+	EditSwPoint_2	x=160, y=120
+	EditSwPoint_2	x=160, y=120
+	EditSwPoint_2	x=160, y=120
+	EditSwPoint_2	x=160, y=120
+	EditSwPoint_2	x=160, y=120
+	EditSwPoint_2	x=160, y=120
 
 DrawBitmapSPFast16_Impl_entry_Le0_Table:	# 16 x u32, 0..16777215; read by DrawBitmapSPFast16_Impl_entry_Le0 0x485FC25E: `mov (-0x80, a0), a2`
 	tab_u32	0, 128, 32768, 32896, 8388608, 8388736, 8421376, 12632256	# [0]
@@ -17066,24 +17066,25 @@ func_4861CCB8_Table:	# 256 x s8, a sparse map by index: 34 entries set, the rest
 	map8	244, 9
 	map_none8	11	# [245..255]
 
-func_4861CCC5_entry_L55_Selected_0:	# REC_func_4861CCC5_entry_L55_Selected (52 bytes)
-	REC_func_4861CCC5_entry_L55_Selected	key=0x900000, x4="\x00\x00\xC0\x00\x07\x00\xB0\x00\x00\x00 \x00\x0B\x00\xB0\x00\\\x00\xB0\x00\\\x00 \x00[\x00\xB0\x00~\x00\xB0\x00\x14\xB0\x00\x00$\xB0\x00\x004\xB0\x00\x00D\xB0\x00\x00"
-# census: opaque -- unknown-dump: 280 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x01D47C, 0x01D594
-func_4861CCC5_entry_L55_Selected_1:	# REC_func_4861CCC5_entry_L55_Selected (52 bytes)
-	REC_func_4861CCC5_entry_L55_Selected	key=0x900000, x4="\x00\x00\xC0\x00\x07\x00\xB0\x00\x00\x00 \x00\x0B\x00\xB0\x00\\\x00\xB0\x00\\\x00 \x00[\x00\xB0\x00~\x00\xB0\x00\x14\xB0\x00\x00$\xB0\x00\x004\xB0\x00\x00D\xB0\x00\x00"
-# census: opaque -- unknown-dump: 200 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x01D5C8, 0x01D690
-func_4861CCC5_entry_L55_Selected_2:	# REC_func_4861CCC5_entry_L55_Selected (52 bytes)
-	REC_func_4861CCC5_entry_L55_Selected	key=0x900000, x4="\x80\xC0\x00\x00\x81\xC0\x00\x00\x82\xC0\x00\x00\x83\xC0\x00\x00\x07\x00\xB0\x00\x00\x00 \x00\x02\xD0\x00\x00# p\x00\x01\xD0\x00\x00\x03\xD0\x00\x00\x01\x00\x00\x00\xFF\xFF\xFF\xFF"
-func_4861CCC5_entry_L55_Selected_3:	# REC_func_4861CCC5_entry_L55_Selected (52 bytes)
-	REC_func_4861CCC5_entry_L55_Selected	key=49280, x4="\x81\xC0\x00\x00\x82\xC0\x00\x00\x83\xC0\x00\x002\x80\x00\x00\x07\x00\xB0\x00\x00\x00 \x00\x02\xD0\x00\x00# p\x00\x01\xD0\x00\x00\x03\xD0\x00\x00\x01\x00\x00\x00\x00\xC0\x00\x00"
-# census: opaque -- unknown-dump: 80 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x01D6F8, 0x01D748
-func_4861CCC5_entry_L55_Selected_4:	# REC_func_4861CCC5_entry_L55_Selected (52 bytes)
-	REC_func_4861CCC5_entry_L55_Selected	key=53250, x4="# p\x00\x01\xD0\x00\x00\x03\xD0\x00\x00\x01\x00\x00\x00\x00\xC0\x00\x00\x04\xC0\x00\x00\x04\x00\x00\x00\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x01D77C, 0x01D780
+# 82 entries of 32 bits up to the end marker that func_4861CCC5_entry_Lbb 0x4861CD85: `mov (d0, a0), d0` / `cmp d2, d0`, `inc d3` stops at, then the marker
+func_4861CCC5_entry_L55_Selected_0:
+	.long	0x900000, 0xc00000, 0xb00007, 0x200000, 0xb0000b, 0xb0005c, 0x20005c, 0xb0005b, 0xb0007e, 0xb014, 0xb024, 0xb034, 0xb044, 0xb054, 0xb0005f, 0x20005f, 0xb0005d, 0x20005d, 0xb00005, 0xb00041, 0xb00050, 0xb00051, 0xb00052, 0xb00053, 0x200081, 0x200088, 0x200089, 0x20008a, 0x20008b, 0x200090, 0x200091, 0x200092, 0x200093, 0x200094, 0x200095, 0x200096, 0x200097, 0x200098, 0x200099, 0x20009a, 0xb00079, 0xb00078, 0xb0005e, 0xb00040, 0x204080, 0x204081, 0xb0000a, 0xb08000, 0xb08001, 0xb08002, 0xb08005, 0xd00000, 0xe00000, 0xb00001, 0xb00042, 0xb00043, 0xb00047, 0xb00048, 0xb00049, 0xb0004a, 0xb0004b, 0xb0004c, 0xb0004d, 0xb0004e, 0x600014, 0x2000a2, 0x2000b0, 0x2000b1, 0x2000b2, 0x2000b3, 0x2000b4, 0x2000b5, 0x2000b6, 0x2000b7, 0x2000b8, 0x2000b9, 0x2000ba, 0x2000bb, 0x2000bc, 0x2000bd, 0x2000be, 0x2000bf, 0xffffffff
+# 62 entries of 32 bits up to the end marker that func_4861CCC5_entry_Lbb 0x4861CD85: `mov (d0, a0), d0` / `cmp d2, d0`, `inc d3` stops at, then the marker
+func_4861CCC5_entry_L55_Selected_1:
+	.long	0x900000, 0xc00000, 0xb00007, 0x200000, 0xb0000b, 0xb0005c, 0x20005c, 0xb0005b, 0xb0007e, 0xb014, 0xb024, 0xb034, 0xb044, 0xb054, 0xb0005f, 0x20005f, 0xb0005d, 0x20005d, 0xb00005, 0xb00041, 0xb00050, 0xb00051, 0xb00052, 0xb00053, 0x200081, 0x200088, 0x200089, 0x20008a, 0x20008b, 0x200090, 0x200091, 0x200092, 0x200093, 0x200094, 0x200095, 0x200096, 0x200097, 0x200098, 0x200099, 0x20009a, 0xb00079, 0xb00078, 0xb0000a, 0xb08002, 0x600014, 0x2000a2, 0x2000b0, 0x2000b1, 0x2000b2, 0x2000b3, 0x2000b4, 0x2000b5, 0x2000b6, 0x2000b7, 0x2000b8, 0x2000b9, 0x2000ba, 0x2000bb, 0x2000bc, 0x2000bd, 0x2000be, 0x2000bf, 0xffffffff
+# 12 entries of 32 bits up to the end marker that func_4861CCC5_entry_Lbb 0x4861CD85: `mov (d0, a0), d0` / `cmp d2, d0`, `inc d3` stops at, then the marker
+func_4861CCC5_entry_L55_Selected_2:
+	.long	0x900000, 0xc080, 0xc081, 0xc082, 0xc083, 0xb00007, 0x200000, 0xd002, 0x702023, 0xd001, 0xd003, 0x1, 0xffffffff
+# 32 entries of 32 bits up to the end marker that func_4861CCC5_entry_Lbb 0x4861CD85: `mov (d0, a0), d0` / `cmp d2, d0`, `inc d3` stops at, then the marker
+func_4861CCC5_entry_L55_Selected_3:
+	.long	0xc080, 0xc081, 0xc082, 0xc083, 0x8032, 0xb00007, 0x200000, 0xd002, 0x702023, 0xd001, 0xd003, 0x1, 0xc000, 0xc004, 0x4, 0x8080, 0x8040, 0x8020, 0x8060, 0x3, 0x8033, 0x80, 0x8031, 0xa0, 0x8002, 0xe001, 0xe002, 0xe000, 0x0, 0x8006, 0x8008, 0x600014, 0xffffffff
+# 8 entries of 32 bits up to the end marker that func_4861CCC5_entry_Lbb 0x4861CD85: `mov (d0, a0), d0` / `cmp d2, d0`, `inc d3` stops at, then the marker
+func_4861CCC5_entry_L55_Selected_4:
+	.long	0xd002, 0x702023, 0xd001, 0xd003, 0x1, 0xc000, 0xc004, 0x4, 0xffffffff
+
+func_4861CCC5_Table:	# 20 x u8, 0..255; read by func_4861CCC5_entry : `movbu	(d0, a0), d1`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 255	# [16]
 
 func_4861ED5D_Table:
 	.long	loc_4861ED7D
@@ -36359,8 +36360,8 @@ DbModeEditBoxProc_L79_Table:
 
 Str_02d_s_3:	.asciz "%02d:%s"
 
-Draw2BpFile_entry_L1e_Var:	# REC_Draw2BpFile_ArgA0 (4 bytes): the layout Draw2BpFile 0x485FFA0C reads through its argument a0 (passed by DbBitmapLoadProc_Lb4 0x4864A083 `call Draw2BpFile_entry, [a2,a3], 0x18`); the layout Draw2BpFile_Impl 0x485FFA72 reads through its argument a0 (passed by Draw2BpFile 0x485FFA0C `call Draw2BpFile_Impl_entry, [d2,d3,a2,a3], 0x10`)
-	REC_Draw2BpFile_ArgA0	
+Draw2BpFile_entry_L1e_Var:	# BmpFileOrigin (4 bytes): the layout Draw2BpFile 0x485FFA0C reads through its argument a0 (passed by DbBitmapLoadProc_Lb4 0x4864A083 `call Draw2BpFile_entry, [a2,a3], 0x18`); the layout Draw2BpFile_Impl 0x485FFA72 reads through its argument a0 (passed by Draw2BpFile 0x485FFA0C `call Draw2BpFile_Impl_entry, [d2,d3,a2,a3], 0x10`)
+	BmpFileOrigin	
 
 Str_rb_47:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_47

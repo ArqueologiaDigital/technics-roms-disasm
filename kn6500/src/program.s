@@ -493258,7 +493258,7 @@ func_4C11B237_entry:
 	cmp	0x12, a2
 	bgt	func_4C11B237_entry_L28
 	extbu	d0
-	mov	func_4C11B237_entry_L4a_Selected_4+36, a0
+	mov	func_4C11B237_Table, a0
 	movbu	(d0, a0), d0
 	mov	func_4C11B237_entry_L4a_Selected_0, a0
 	cmp	d3, d0

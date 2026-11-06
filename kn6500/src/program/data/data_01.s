@@ -27149,24 +27149,25 @@ func_4C11B22A_Table:	# 256 x s8, a sparse map by index: 33 entries set, the rest
 	map8	244, 9
 	map_none8	11	# [245..255]
 
-func_4C11B237_entry_L4a_Selected_0:	# REC_func_4C11B237_entry_L4a_Selected (52 bytes)
-	REC_func_4C11B237_entry_L4a_Selected	key=0x900000, x4="\x00\x00\xC0\x00\x07\x00\xB0\x00\x00\x00 \x00\x0B\x00\xB0\x00\\\x00\xB0\x00\\\x00 \x00[\x00\xB0\x00~\x00\xB0\x00\x14\xB0\x00\x00$\xB0\x00\x004\xB0\x00\x00D\xB0\x00\x00"
-# census: opaque -- unknown-dump: 200 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x24546C, 0x245534
-func_4C11B237_entry_L4a_Selected_1:	# REC_func_4C11B237_entry_L4a_Selected (52 bytes)
-	REC_func_4C11B237_entry_L4a_Selected	key=0x900000, x4="\x00\x00\xC0\x00\x07\x00\xB0\x00\x00\x00 \x00\x0B\x00\xB0\x00\\\x00\xB0\x00\\\x00 \x00[\x00\xB0\x00~\x00\xB0\x00\x14\xB0\x00\x00$\xB0\x00\x004\xB0\x00\x00D\xB0\x00\x00"
-# census: opaque -- unknown-dump: 120 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x245568, 0x2455E0
-func_4C11B237_entry_L4a_Selected_2:	# REC_func_4C11B237_entry_L4a_Selected (52 bytes)
-	REC_func_4C11B237_entry_L4a_Selected	key=0x900000, x4="\x80\xC0\x00\x00\x81\xC0\x00\x00\x82\xC0\x00\x00\x83\xC0\x00\x00\x07\x00\xB0\x00\x00\x00 \x00\x02\xD0\x00\x00# p\x00\x01\xD0\x00\x00\x03\xD0\x00\x00\x01\x00\x00\x00\xFF\xFF\xFF\xFF"
-func_4C11B237_entry_L4a_Selected_3:	# REC_func_4C11B237_entry_L4a_Selected (52 bytes)
-	REC_func_4C11B237_entry_L4a_Selected	key=49280, x4="\x81\xC0\x00\x00\x82\xC0\x00\x00\x83\xC0\x00\x002\x80\x00\x00\x07\x00\xB0\x00\x00\x00 \x00\x02\xD0\x00\x00# p\x00\x01\xD0\x00\x00\x03\xD0\x00\x00\x01\x00\x00\x00\x00\xC0\x00\x00"
-# census: opaque -- unknown-dump: 76 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x245648, 0x245694
-func_4C11B237_entry_L4a_Selected_4:	# REC_func_4C11B237_entry_L4a_Selected (52 bytes)
-	REC_func_4C11B237_entry_L4a_Selected	key=53250, x4="# p\x00\x01\xD0\x00\x00\x03\xD0\x00\x00\x01\x00\x00\x00\x00\xC0\x00\x00\x04\xC0\x00\x00\x04\x00\x00\x00\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x2456C8, 0x2456CC
+# 62 entries of 32 bits up to the end marker that func_4C11B237_entry_Lb0 0x4C11B2EC: `mov (d0, a0), d0` / `cmp d2, d0`, `inc d3` stops at, then the marker
+func_4C11B237_entry_L4a_Selected_0:
+	.long	0x900000, 0xc00000, 0xb00007, 0x200000, 0xb0000b, 0xb0005c, 0x20005c, 0xb0005b, 0xb0007e, 0xb014, 0xb024, 0xb034, 0xb044, 0xb054, 0xb0005f, 0x20005f, 0xb0005d, 0x20005d, 0xb00005, 0xb00041, 0xb00050, 0xb00051, 0xb00052, 0xb00053, 0x200081, 0x200088, 0x200089, 0x20008a, 0x20008b, 0x200090, 0x200091, 0x200092, 0x200093, 0x200094, 0x200095, 0x200096, 0x200097, 0x200098, 0xb00079, 0xb00078, 0xb0005e, 0xb00040, 0x204080, 0x204081, 0xb0000a, 0xb08000, 0xb08001, 0xb08002, 0xb08005, 0xd00000, 0xe00000, 0xb00001, 0xb00042, 0xb00043, 0xb00047, 0xb00048, 0xb00049, 0xb0004a, 0xb0004b, 0xb0004c, 0xb0004d, 0xb0004e, 0xffffffff
+# 42 entries of 32 bits up to the end marker that func_4C11B237_entry_Lb0 0x4C11B2EC: `mov (d0, a0), d0` / `cmp d2, d0`, `inc d3` stops at, then the marker
+func_4C11B237_entry_L4a_Selected_1:
+	.long	0x900000, 0xc00000, 0xb00007, 0x200000, 0xb0000b, 0xb0005c, 0x20005c, 0xb0005b, 0xb0007e, 0xb014, 0xb024, 0xb034, 0xb044, 0xb054, 0xb0005f, 0x20005f, 0xb0005d, 0x20005d, 0xb00005, 0xb00041, 0xb00050, 0xb00051, 0xb00052, 0xb00053, 0x200081, 0x200088, 0x200089, 0x20008a, 0x20008b, 0x200090, 0x200091, 0x200092, 0x200093, 0x200094, 0x200095, 0x200096, 0x200097, 0x200098, 0xb00079, 0xb00078, 0xb0000a, 0xb08002, 0xffffffff
+# 12 entries of 32 bits up to the end marker that func_4C11B237_entry_Lb0 0x4C11B2EC: `mov (d0, a0), d0` / `cmp d2, d0`, `inc d3` stops at, then the marker
+func_4C11B237_entry_L4a_Selected_2:
+	.long	0x900000, 0xc080, 0xc081, 0xc082, 0xc083, 0xb00007, 0x200000, 0xd002, 0x702023, 0xd001, 0xd003, 0x1, 0xffffffff
+# 31 entries of 32 bits up to the end marker that func_4C11B237_entry_Lb0 0x4C11B2EC: `mov (d0, a0), d0` / `cmp d2, d0`, `inc d3` stops at, then the marker
+func_4C11B237_entry_L4a_Selected_3:
+	.long	0xc080, 0xc081, 0xc082, 0xc083, 0x8032, 0xb00007, 0x200000, 0xd002, 0x702023, 0xd001, 0xd003, 0x1, 0xc000, 0xc004, 0x4, 0x8080, 0x8040, 0x8020, 0x8060, 0x3, 0x8033, 0x80, 0x8031, 0xa0, 0x8002, 0xe001, 0xe002, 0xe000, 0x0, 0x8006, 0x8008, 0xffffffff
+# 8 entries of 32 bits up to the end marker that func_4C11B237_entry_Lb0 0x4C11B2EC: `mov (d0, a0), d0` / `cmp d2, d0`, `inc d3` stops at, then the marker
+func_4C11B237_entry_L4a_Selected_4:
+	.long	0xd002, 0x702023, 0xd001, 0xd003, 0x1, 0xc000, 0xc004, 0x4, 0xffffffff
+
+func_4C11B237_Table:	# 20 x u8, 0..255; read by func_4C11B237_entry : `movbu	(d0, a0), d0`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 255	# [16]
 
 func_4C11CE1C_Table:
 	.long	loc_4C11CE3C

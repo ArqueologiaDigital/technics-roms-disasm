@@ -104233,7 +104233,7 @@ func_4861CCC5_entry:
 	cmp	0x12, a2
 	bgt	func_4861CCC5_entry_L29
 	extbu	d0
-	mov	func_4861CCC5_entry_L55_Selected_4+36, a0
+	mov	func_4861CCC5_Table, a0
 	movbu	(d0, a0), d1
 	mov	func_4861CCC5_entry_L55_Selected_0, a0
 	cmp	d3, d1

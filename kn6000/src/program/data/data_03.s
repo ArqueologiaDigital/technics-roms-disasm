@@ -6,11 +6,11 @@
 func_4C001885_Var:	# u32, a constant; read / written by func_4C001885 0x4C001885: `mov (func_4C001885_Var), a0`; func_4C00191A_entry_L3d 0x4C00195C: `mov (func_4C001885_Var), a1` ...
 	.long	0x4c1760a8
 
-localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x4C00246C `mov (0x10, a1), a0`; localeconv 0x4C00246C `mov (0x14, a1), a0`; localeconv 0x4C00246C `mov (0x18, a1), a0` (+12)
-	REC_localeconv_Records	text=Str_C_19, p4=data_4C17627E, p8=data_4C17627F, p12=data_4C176280, p16=data_4C176281, p20=data_4C176282, p24=data_4C176283, p28=data_4C176284, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
-localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x4C00246C `mov (0xc, a1), a0`; localeconv 0x4C00246C `mov (4, a1), a0`; localeconv 0x4C00246C `mov (8, a1), a0`
-	REC_localeconv_Records_2	text=Str_C_18, text_=Str_empty_939, p8=data_4C17628C, p12=data_4C17628D
-	REC_localeconv_Records_2	
+localeconv_Records:	# 1 x LconvMonetary (40 bytes each); read by localeconv 0x4C00246C `mov (0x10, a1), a0`; localeconv 0x4C00246C `mov (0x14, a1), a0`; localeconv 0x4C00246C `mov (0x18, a1), a0` (+12)
+	LconvMonetary	locale=Str_C_19, int_curr_symbol=data_4C17627E, currency_symbol=data_4C17627F, mon_decimal_point=data_4C176280, mon_thousands_sep=data_4C176281, mon_grouping=data_4C176282, positive_sign=data_4C176283, negative_sign=data_4C176284, int_frac_digits=127, frac_digits=127, p_cs_precedes=127, p_sep_by_space=127, n_cs_precedes=127, n_sep_by_space=127, p_sign_posn=127, n_sign_posn=127
+localeconv_Records_2:	# 2 x LconvNumeric (16 bytes each); read by localeconv 0x4C00246C `mov (0xc, a1), a0`; localeconv 0x4C00246C `mov (4, a1), a0`; localeconv 0x4C00246C `mov (8, a1), a0`
+	LconvNumeric	locale=Str_C_18, decimal_point=Str_empty_939, thousands_sep=data_4C17628C, grouping=data_4C17628D
+	LconvNumeric	
 
 localeconv_Table:	# 4 x u32, 0..2576980378; read by localeconv 0x4C00246C: `mov (localeconv_Table), d0`
 	tab_u32	0, 0, 2576980378, 1069128089
@@ -37750,117 +37750,117 @@ func_4C0FE816_entry_L36_Table_2:
 	.long	loc_4C100609
 	.long	loc_4C10060C
 
-EQFcEditCheck_L4f_Records:	# 27 x REC_EQFcEditCheck_L4f_Records (6 bytes each); read by EQFcEditCheck_L4f 0x4C105211 `call strcpy_entry, [a2], 4`
-	REC_EQFcEditCheck_L4f_Records	s0="   40\x00"	# [0]
-	REC_EQFcEditCheck_L4f_Records	s0="   50\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="   63\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="   80\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  100\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  125\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  160\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  200\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  250\x00"	# [8]
-	REC_EQFcEditCheck_L4f_Records	s0="  315\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  400\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  500\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  630\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  800\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="   1k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="1.25k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0=" 1.6k\x00"	# [16]
-	REC_EQFcEditCheck_L4f_Records	s0="   2k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0=" 2.5k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="3.15k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="   4k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="   5k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0=" 6.3k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="   8k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  10k\x00"	# [24]
-	REC_EQFcEditCheck_L4f_Records	s0="12.5k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  16k\x00"
-EQQEditCheck_L4f_Records:	# 32 x REC_EQQEditCheck_L4f_Records (6 bytes each); read by EQQEditCheck_L4f 0x4C105398 `call strcpy_entry, [a2], 4`
-	REC_EQQEditCheck_L4f_Records	s0="  0.1\x00"	# [0]
-	REC_EQQEditCheck_L4f_Records	s0="  0.2\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  0.3\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  0.4\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  0.5\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  0.6\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  0.7\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  0.8\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  0.9\x00"	# [8]
-	REC_EQQEditCheck_L4f_Records	s0="  1.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  1.5\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  2.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  2.5\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  3.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  3.5\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  4.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  5.0\x00"	# [16]
-	REC_EQQEditCheck_L4f_Records	s0="  6.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  7.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  8.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  9.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 10.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 11.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 12.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 13.0\x00"	# [24]
-	REC_EQQEditCheck_L4f_Records	s0=" 14.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 15.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 16.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 17.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 18.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 19.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 20.0\x00"
-EQGainEditCheck_L4f_Records:	# 49 x REC_EQGainEditCheck_L4f_Records (6 bytes each); read by EQGainEditCheck_L4f 0x4C10508A `call strcpy_entry, [a2], 4`
-	REC_EQGainEditCheck_L4f_Records	s0="-12.0\x00"	# [0]
-	REC_EQGainEditCheck_L4f_Records	s0="-11.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="-11.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="-10.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="-10.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 9.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 9.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 8.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 8.0\x00"	# [8]
-	REC_EQGainEditCheck_L4f_Records	s0="- 7.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 7.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 6.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 6.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 5.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 5.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 4.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 4.0\x00"	# [16]
-	REC_EQGainEditCheck_L4f_Records	s0="- 3.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 3.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 2.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 2.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 1.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 1.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 0.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="  0.0\x00"	# [24]
-	REC_EQGainEditCheck_L4f_Records	s0="+ 0.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 1.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 1.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 2.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 2.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 3.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 3.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 4.0\x00"	# [32]
-	REC_EQGainEditCheck_L4f_Records	s0="+ 4.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 5.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 5.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 6.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 6.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 7.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 7.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 8.0\x00"	# [40]
-	REC_EQGainEditCheck_L4f_Records	s0="+ 8.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 9.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 9.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+10.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+10.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+11.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+11.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+12.0\x00"	# [48]
+EQFcEditCheck_L4f_Records:	# 27 x EqEditLabel (6 bytes each); read by EQFcEditCheck_L4f 0x4C105211 `call strcpy_entry, [a2], 4`
+	EqEditLabel	label="   40\x00"	# [0]
+	EqEditLabel	label="   50\x00"
+	EqEditLabel	label="   63\x00"
+	EqEditLabel	label="   80\x00"
+	EqEditLabel	label="  100\x00"
+	EqEditLabel	label="  125\x00"
+	EqEditLabel	label="  160\x00"
+	EqEditLabel	label="  200\x00"
+	EqEditLabel	label="  250\x00"	# [8]
+	EqEditLabel	label="  315\x00"
+	EqEditLabel	label="  400\x00"
+	EqEditLabel	label="  500\x00"
+	EqEditLabel	label="  630\x00"
+	EqEditLabel	label="  800\x00"
+	EqEditLabel	label="   1k\x00"
+	EqEditLabel	label="1.25k\x00"
+	EqEditLabel	label=" 1.6k\x00"	# [16]
+	EqEditLabel	label="   2k\x00"
+	EqEditLabel	label=" 2.5k\x00"
+	EqEditLabel	label="3.15k\x00"
+	EqEditLabel	label="   4k\x00"
+	EqEditLabel	label="   5k\x00"
+	EqEditLabel	label=" 6.3k\x00"
+	EqEditLabel	label="   8k\x00"
+	EqEditLabel	label="  10k\x00"	# [24]
+	EqEditLabel	label="12.5k\x00"
+	EqEditLabel	label="  16k\x00"
+EQQEditCheck_L4f_Records:	# 32 x EqEditLabel_2 (6 bytes each); read by EQQEditCheck_L4f 0x4C105398 `call strcpy_entry, [a2], 4`
+	EqEditLabel_2	label="  0.1\x00"	# [0]
+	EqEditLabel_2	label="  0.2\x00"
+	EqEditLabel_2	label="  0.3\x00"
+	EqEditLabel_2	label="  0.4\x00"
+	EqEditLabel_2	label="  0.5\x00"
+	EqEditLabel_2	label="  0.6\x00"
+	EqEditLabel_2	label="  0.7\x00"
+	EqEditLabel_2	label="  0.8\x00"
+	EqEditLabel_2	label="  0.9\x00"	# [8]
+	EqEditLabel_2	label="  1.0\x00"
+	EqEditLabel_2	label="  1.5\x00"
+	EqEditLabel_2	label="  2.0\x00"
+	EqEditLabel_2	label="  2.5\x00"
+	EqEditLabel_2	label="  3.0\x00"
+	EqEditLabel_2	label="  3.5\x00"
+	EqEditLabel_2	label="  4.0\x00"
+	EqEditLabel_2	label="  5.0\x00"	# [16]
+	EqEditLabel_2	label="  6.0\x00"
+	EqEditLabel_2	label="  7.0\x00"
+	EqEditLabel_2	label="  8.0\x00"
+	EqEditLabel_2	label="  9.0\x00"
+	EqEditLabel_2	label=" 10.0\x00"
+	EqEditLabel_2	label=" 11.0\x00"
+	EqEditLabel_2	label=" 12.0\x00"
+	EqEditLabel_2	label=" 13.0\x00"	# [24]
+	EqEditLabel_2	label=" 14.0\x00"
+	EqEditLabel_2	label=" 15.0\x00"
+	EqEditLabel_2	label=" 16.0\x00"
+	EqEditLabel_2	label=" 17.0\x00"
+	EqEditLabel_2	label=" 18.0\x00"
+	EqEditLabel_2	label=" 19.0\x00"
+	EqEditLabel_2	label=" 20.0\x00"
+EQGainEditCheck_L4f_Records:	# 49 x EqEditLabel_3 (6 bytes each); read by EQGainEditCheck_L4f 0x4C10508A `call strcpy_entry, [a2], 4`
+	EqEditLabel_3	label="-12.0\x00"	# [0]
+	EqEditLabel_3	label="-11.5\x00"
+	EqEditLabel_3	label="-11.0\x00"
+	EqEditLabel_3	label="-10.5\x00"
+	EqEditLabel_3	label="-10.0\x00"
+	EqEditLabel_3	label="- 9.5\x00"
+	EqEditLabel_3	label="- 9.0\x00"
+	EqEditLabel_3	label="- 8.5\x00"
+	EqEditLabel_3	label="- 8.0\x00"	# [8]
+	EqEditLabel_3	label="- 7.5\x00"
+	EqEditLabel_3	label="- 7.0\x00"
+	EqEditLabel_3	label="- 6.5\x00"
+	EqEditLabel_3	label="- 6.0\x00"
+	EqEditLabel_3	label="- 5.5\x00"
+	EqEditLabel_3	label="- 5.0\x00"
+	EqEditLabel_3	label="- 4.5\x00"
+	EqEditLabel_3	label="- 4.0\x00"	# [16]
+	EqEditLabel_3	label="- 3.5\x00"
+	EqEditLabel_3	label="- 3.0\x00"
+	EqEditLabel_3	label="- 2.5\x00"
+	EqEditLabel_3	label="- 2.0\x00"
+	EqEditLabel_3	label="- 1.5\x00"
+	EqEditLabel_3	label="- 1.0\x00"
+	EqEditLabel_3	label="- 0.5\x00"
+	EqEditLabel_3	label="  0.0\x00"	# [24]
+	EqEditLabel_3	label="+ 0.5\x00"
+	EqEditLabel_3	label="+ 1.0\x00"
+	EqEditLabel_3	label="+ 1.5\x00"
+	EqEditLabel_3	label="+ 2.0\x00"
+	EqEditLabel_3	label="+ 2.5\x00"
+	EqEditLabel_3	label="+ 3.0\x00"
+	EqEditLabel_3	label="+ 3.5\x00"
+	EqEditLabel_3	label="+ 4.0\x00"	# [32]
+	EqEditLabel_3	label="+ 4.5\x00"
+	EqEditLabel_3	label="+ 5.0\x00"
+	EqEditLabel_3	label="+ 5.5\x00"
+	EqEditLabel_3	label="+ 6.0\x00"
+	EqEditLabel_3	label="+ 6.5\x00"
+	EqEditLabel_3	label="+ 7.0\x00"
+	EqEditLabel_3	label="+ 7.5\x00"
+	EqEditLabel_3	label="+ 8.0\x00"	# [40]
+	EqEditLabel_3	label="+ 8.5\x00"
+	EqEditLabel_3	label="+ 9.0\x00"
+	EqEditLabel_3	label="+ 9.5\x00"
+	EqEditLabel_3	label="+10.0\x00"
+	EqEditLabel_3	label="+10.5\x00"
+	EqEditLabel_3	label="+11.0\x00"
+	EqEditLabel_3	label="+11.5\x00"
+	EqEditLabel_3	label="+12.0\x00"	# [48]
 
 # 68 ApFunction procedures; a function id is (0x12c << 16) | its index (the names are the parallel table at slot 0x32c)
 User12_ApFunctions:
