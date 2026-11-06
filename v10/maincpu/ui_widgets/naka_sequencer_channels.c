@@ -2049,20 +2049,18 @@ typedef struct __attribute__((packed)) {
     int32_t SONG1_Child;  /* letter r cell (32-bit) */
     uint16_t SONG1_AcMstSong1GridBox_Selrow;
     uint8_t SONG1_AcMstSong1GridBox_Selcol[2];
-    uint8_t SONG1_AcMstSong1GridBox_Pcol[1];
-    uint16_t field_18a3;
-    uint16_t field_18a5;
-    uint16_t field_18a7;
-    uint16_t field_18a9;
-    uint16_t field_18ab;
-    uint16_t field_18ad;
-    uint16_t field_18af;
-    uint16_t field_18b1;
-    char str_12[2];
-    uint16_t field_18b5;
-    uint16_t field_18b7;
-    uint32_t NakaData_RomEnd_ptr_3;
-    uint8_t pad_291[1];
+    /* SONG1_AcMstSong1GridBox's pcol / prow / crow (letter s, 32-bit) and its three song-category
+     * counters, then SONG2's window parent / child (letter r) and its grid box's selrow: the cells
+     * those records name (scripts/converters/naka_frame_song_grid_cells.py) */
+    uint32_t SONG1_AcMstSong1GridBox_Pcol;  /* letter s cell (32-bit) */
+    uint32_t SONG1_AcMstSong1GridBox_Prow;  /* letter s cell (32-bit) */
+    uint32_t SONG1_AcMstSong1GridBox_Crow;  /* letter s cell (32-bit) */
+    uint16_t SONG1_AcMstSong1GridBox_Nowsongctgdtno;
+    uint16_t SONG1_AcMstSong1GridBox_Nowsongctgmaxpage;
+    uint16_t SONG1_AcMstSong1GridBox_Nowsongctgpage;
+    int32_t SONG2_Parent;  /* letter r cell (32-bit) */
+    int32_t SONG2_Child;  /* letter r cell (32-bit) */
+    uint16_t SONG2_AcMstSong2GridBox_Selrow;
     uint8_t SONG2_AcMstSong2GridBox_Selcol[2];
     uint32_t SONG2_AcMstSong2GridBox_Pcol;  /* letter s cell (32-bit) */
     uint32_t SONG2_AcMstSong2GridBox_Prow;  /* letter s cell (32-bit) */
@@ -3547,33 +3545,23 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
 
     .SONG1_AcMstSong1GridBox_Selcol = { 0 },
 
-    .SONG1_AcMstSong1GridBox_Pcol = { 0 },
+    .SONG1_AcMstSong1GridBox_Pcol = 0x00CF6A00,
 
-    .field_18a3 = 0xCF6A,
+    .SONG1_AcMstSong1GridBox_Prow = 0x00CF6A10,
 
-    .field_18a5 = 0x1000,
+    .SONG1_AcMstSong1GridBox_Crow = 0x00CF6A2C,
 
-    .field_18a7 = 0xCF6A,
+    .SONG1_AcMstSong1GridBox_Nowsongctgdtno = 0x0007,
 
-    .field_18a9 = 0x2C00,
+    .SONG1_AcMstSong1GridBox_Nowsongctgmaxpage = 0x0001,
 
-    .field_18ab = 0xCF6A,
+    .SONG1_AcMstSong1GridBox_Nowsongctgpage = 0x0001,
 
-    .field_18ad = 0x0700,
+    .SONG2_Parent = -1,
 
-    .field_18af = 0x0100,
+    .SONG2_Child = -1,
 
-    .field_18b1 = 0x0100,
-
-    .str_12 = ALIGNED_STRING(""),
-
-    .field_18b5 = NAKA_NONE,
-
-    .field_18b7 = NAKA_NONE,
-
-    .NakaData_RomEnd_ptr_3 = NAKA_ADDR(NakaData_RomEnd),
-
-    .pad_291 = { 0 },
+    .SONG2_AcMstSong2GridBox_Selrow = 0x0000,
 
     .SONG2_AcMstSong2GridBox_Selcol = { 0 },
 
