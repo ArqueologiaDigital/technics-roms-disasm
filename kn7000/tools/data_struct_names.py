@@ -123,6 +123,22 @@ NAMES = {
     # GetEditSwPointInit_Table's: its label in the builds since the table split
     "GetEditSwPointInit_Records": ("EditSwPoint", {0: "x", 2: "y"}),
     "GetEditSwPointInit_Table_2": ("EditSwPoint", {0: "x", 2: "y"}),
+    # (lane mn10300-data4, N-2468beef) the tone-type feature records (kn7000_manual.sym "LFO EDIT group loaders"):
+    # one per tone type (the tone descriptor's +0x44 & 0xF), 39 bytes = a 19-byte head and four 5-byte EG segment
+    # entries from +0x13.  The head's four LFO triples at +0 / +3 / +6 / +9 (t<k>_a, _b, _c, the fourth with a _d)
+    # are what TgPartEditLfoLoadA..H project onto the part's 8-byte LFO block (SOUND EDIT record +0x45): A
+    # (groups 0..3) := t0_a, t0_b, seg1_c, seg1_e, seg1_param, -, lfo_p6, lfo_p7; B := t0_a, t0_b, t1_a, t1_b,
+    # seg1_c, seg1_e, lfo_p6, lfo_p7; C := t2_a, t2_b, t2_c, seg1_param; D := t0_a, t0_b, t1_a, t1_b; E := seg1_e,
+    # seg1_c, seg1_b, seg1_param; F := t3_a .. t3_d; G / H := seg0_flags bit 7, t0_flags & 0x3F, t0_a; every loader
+    # puts lfo_p6 / lfo_p7 (+0x0E / +0x12) at block +6 / +7.  The segments: TgVoiceEgSegParamGet / TgVoiceEgSegFlagTest
+    # test the flag byte +0x13 + seg * 5 (seg<k>_flags) against a mask table, TgPartToneTypeParamGet answers byte
+    # +0x16 + sel * 5 (seg<k>_param), TgPartEgRampBuild reads +0x14 / +0x15 (seg0_b, seg0_c).  +5 (note_flags) is
+    # read by TgKitElemNoteOn / TgElemNoteOnFresh at note-on [INFERENCE: what each LFO value is (speed, depth,
+    # delay) is not traced]
+    "TgPartEditLfoLoadA_Records": ("ToneTypeFeature", {
+        0: "t0_a", 1: "t0_b", 2: "t0_flags", 3: "t1_a", 4: "t1_b", 5: "note_flags", 6: "t2_a", 7: "t2_b", 8: "t2_c",
+        9: "t3_a", 10: "t3_b", 11: "t3_c", 12: "t3_d", 14: "lfo_p6", 18: "lfo_p7", 19: "seg0_flags", 20: "seg0_b",
+        21: "seg0_c", 22: "seg0_param", 24: "seg1_flags", 25: "seg1_b", 26: "seg1_c", 27: "seg1_param", 28: "seg1_e"}),
 }
 # (lane mn10300-data3, N-2468beef) kinds whose array labels differ by build or model (the reader routines are
 # address-named): (label pattern, (kind, fields)), looked up after the exact keys.
@@ -137,6 +153,24 @@ NAMES_RE = [
                  r"|func_4C04BB68_entry_L[0-9a-f]+_Table(_\d+)?|func_4C04C58C_entry_L[0-9a-f]+_Table(_\d+)?"
                  r"|func_4C04C6FC_entry_L[0-9a-f]+_Table(_\d+)?|func_50157736_Table(_\d+)?"),
      (3, ("PanelMemFieldMap", {0: "param_off", 1: "rec_off", 2: "mask"}))),
+    # (lane mn10300-data4, N-2468beef) the SX-KN6000 / KN6500 voice register image (0xA0 bytes a slot, the shadow
+    # at 0x50043100 + slot * 0xA0): func_4C0948CB 0x4C0948CB (KN6500 func_4C094795) writes it field by field to the
+    # MAIN TG, word (slot << 20) | (class << 16) | field through func_4C09465B (KN6500 func_4C094525), the latch
+    # to 0x98050000 / 0x98050002.  Each field is named by the class it is written to (tg_<class>, hex); +0x7C is
+    # the pitch's 17th bit (`and 0x00018000` / `or 0x58004000`: class 0x5800, the gate-on pitch plane); the
+    # writes the routine makes after the gate word (0x87FF, class 0) are in this order.  Probe:
+    # kn7000/notes/mn10300-data4-probes/tg_image_regs.py.  What each class does is the TG's register map:
+    # kn7000_mame notes/kn6000-tonegen-spec.md pins only the EG [rate|level] pairs at classes 4/5, 8/9, 0xC/0xD
+    # and the plane 0x20 send matrix (0x8000 .. 0x9000) [the rest unknown].
+    (_re.compile(r"func_4C0948CB_ArgA0|func_4C094795_ArgA0"), (0xA0, ("TgVoiceRegImage", {2: "tg_0001", 4: "tg_0002", 6: "tg_0003", 8: "tg_0004", 12: "tg_0005", 16: "tg_0006", 18: "tg_0007", 20: "tg_0008", 24: "tg_0009", 28: "tg_000a", 30: "tg_000b", 32: "tg_000c", 36: "tg_000d", 40: "tg_000e", 42: "tg_000f", 44: "tg_0400", 46: "tg_0401", 48: "tg_0800", 50: "tg_0804", 52: "tg_0808", 54: "tg_080c", 56: "tg_0801", 58: "tg_0805", 60: "tg_0809", 62: "tg_080d", 64: "tg_1000", 68: "tg_1400", 72: "tg_1800", 76: "tg_1c00", 80: "tg_2000", 84: "tg_2400", 88: "tg_2800", 92: "tg_2c00", 96: "tg_3000", 100: "tg_4000", 104: "tg_4400", 108: "tg_4800", 112: "tg_4c00", 120: "tg_5400", 124: "pitch_hi", 128: "tg_5c00", 132: "tg_6000", 136: "tg_6400", 140: "tg_8000", 144: "tg_8400", 148: "tg_8800", 152: "tg_8c00", 156: "tg_9000"}))),
+    # (lane mn10300-data4, N-2468beef) the SX-KN6000 / KN6500 RAM test's regions: RamTestFunc (test mode) calls
+    # func_4C0506C7 (KN6500 func_4C050837), which writes 0x5A5A5A5A / 0xA5A5A5A5 over each word pair from +0 (`mov
+    # (a0), a2`) for +4 >> 3 passes (`mov (4, a0), d3` / `lsr 3, d3`) and ORs +8 (a halfword failed low) or +9
+    # (high) into its answer; only record 0 is tested (`cmp 1, d0` ends the loop)
+    (_re.compile(r"func_4C0506C7_entry_L4_Records|func_4C050837_entry_L4_Records"), (12, ("RamTestRegion", {0: "base", 4: "length"}))),
+    # its byte twin, func_4C050787 (KN6500 func_4C0508F7): 0x5A / 0xA5 over each byte from +0 for +4 >> 1 byte
+    # pairs, +8 ORed into the answer on a failure (RamTestFunc shifts it 2 left over the word test's bits)
+    (_re.compile(r"func_4C050787_entry_L4_Records|func_4C0508F7_entry_L4_Records"), (12, ("RamTestByteRegion", {0: "base", 4: "length", 8: "fail_bit"}))),
     # the EQ edit boxes' value labels: EQQEditCheck 0x4856B28E / EQGainEditCheck / EQFcEditCheck strcpy the
     # entry the value picks into the box's text (`call strcpy_entry`)
     (_re.compile(r"EQ\w*EditCheck(_L[0-9a-f]+)?_Records(_\d+)?"), (None, ("EqEditLabel", {0: "label"}))),

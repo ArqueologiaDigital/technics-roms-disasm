@@ -254,7 +254,7 @@ FEATURES = {k: True for k in ("ptr_starts", "array_end", "mem_ptrs", "loop_index
                               # lane mn10300-data3 (wave 11)
                               "sentinel_indexed", "frozen_obj_names", "host_widget_vars",
                               # lane mn10300-data4 (wave 12)
-                              "named_base_not_end", "fx_param_lists")}
+                              "named_base_not_end", "fx_param_lists", "string_ptr_runs")}
 for _k in os.environ.get("GEN_DATA_S_OFF", "").split(","):
     if _k.strip():
         FEATURES[_k.strip()] = False
@@ -5513,6 +5513,56 @@ class Gen:
             n += 1
         print(f"gen_data_s: {n} copied blocks")
 
+    def string_ptr_runs(self):
+        """(the siblings: `structs` profiles without readers_ext; FEATURES["string_ptr_runs"], lane mn10300-data4)
+        Aligned runs of >= 4 words no item holds, each 0 or the address of a NUL-terminated printable string
+        of this region (at least 4 of them not 0), trailing zeros left out: tables of names, written `.long
+        Str_...`.  The ones the census held opaque are the second halves of the GUI resource name tables
+        (KN6000 GetBitmapNameTable / GetFrameNameTable / GetIconNameTable answer a 256-slot table of names,
+        and the 256 slots after it name the resources' files, "music1.bmp", "i0.bmp"; the KN2400's icon
+        table the same), the font files after the fonts' names (the initialised-RAM image) and the
+        PRESENTATION / ACTION tags.  [INFERENCE: typed by value, as pointer_runs in the KN7000 builds; the
+        second halves' reader was not traced]  Probe: notes/mn10300-data4-probes/string_ptr_runs.py."""
+        if not FEATURES.get("string_ptr_runs", True):
+            return
+        self.build_index()
+        m, n, o = self.m, 0, R1_END + (-R1_END % 4)
+
+        def is_str(v):
+            if not v or not self.in_data(v):
+                return False
+            s = m.cstr(v)
+            return s is not None and 2 <= len(s) <= 80 and all(0x20 <= ord(c) < 0x7F for c in s)
+        while o + 16 <= DATA_END:
+            e, nz = o, 0
+            while e + 4 <= DATA_END and not any(self.claimed[e:e + 4]):
+                v = int.from_bytes(self.rom[e:e + 4], "little")
+                if v and not is_str(v):
+                    break
+                nz += 1 if v else 0
+                e += 4
+            if nz >= 4:
+                vals = [int.from_bytes(self.rom[k:k + 4], "little") for k in range(o, e, 4)]
+                while vals and vals[-1] == 0:
+                    vals.pop()
+                while vals and vals[0] == 0:     # (leading zeros: the previous table's empty slots)
+                    vals.pop(0)
+                    o += 4
+                e = o + 4 * len(vals)
+                for v in vals:
+                    if v:
+                        self.str_item(v, "Str_" + (sanitize(m.cstr(v), 40) or "text"), "string")
+                a = self.addr_of(o)
+                self.add(a, e - o, self.name_at(a, f"names_{a:08X}"), "name table",
+                         lambda g, it, vals=vals: [f"{it.label}:\t# {len(vals)} string pointers, typed by value (every "
+                                                   "word 0 or a printable string of this region); reader not traced"]
+                         + [f"\t.long\t{g.ref(v)}" for v in vals])
+                n += 1
+                o = e
+            else:
+                o = max(e, o + 4) if e > o else o + 4
+        print(f"gen_data_s: {n} string pointer runs")
+
     def pointer_runs(self):
         """(KN7000 program builds) aligned runs of >= 3 words no item holds, each 0 or an address of
         this data region (at least two of them not 0): pointer arrays, written `.long Label`.  What
@@ -6547,6 +6597,8 @@ class Gen:
             self.variables()
             if P.get("readers_ext"):
                 self.pointer_runs()
+            else:
+                self.string_ptr_runs()
         if self.readers_callee:
             # (lane callee-walk) the blocks a caller hands a routine, typed by what it reads through them;
             # then what a span arg_reserve() kept for a record that did not fit, as before

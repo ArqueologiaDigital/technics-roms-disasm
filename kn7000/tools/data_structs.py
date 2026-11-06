@@ -253,6 +253,10 @@ def name_fields(g, names):
     pre = {"num": "f", "ptr": "p", "text": "s", "bytes": "x", "array": "a"}
     for f in g.fields:
         n = names.get(f.off) if names else None
+        if n and f.kind == "bytes" and f.width > 1:
+            # (lane mn10300-data4) a curated field name is for the field its reader reads; bytes no reader of this
+            # build touches that cover it (and others) keep their offset name
+            n = None
         if not n:
             n = DN.auto_name(g, f)
         if not n:
