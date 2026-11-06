@@ -59197,6 +59197,11 @@
 .equ SndCmdStreamWrite_Table, 0x50000010
 .equ func_50127747_Table, 0x50000020
 .equ func_5012A787_Table, 0x500000a0
+.equ StrapBit3Latch, 0x500002b4
+.equ func_485E427C_L55_Table, 0x500002b8
+.equ func_485E6562_L68_Var, 0x500002bc
+.equ func_485E67EB_entry_L6e_Var, 0x500002c0
+.equ func_485E67EB_Table, 0x500002c1
 .equ func_485E68E5_Table, 0x500002c4
 .equ func_485E695A_L55_Table, 0x500002c8
 .equ func_485E8AED_L49_Var, 0x500002cc
@@ -59298,7 +59303,7 @@
 .equ func_4863CB8B_entry_L19b_Var, 0x500011b0
 .equ func_4863CB8B_entry_L1b4_Var, 0x500011b4
 .equ func_4863CB8B_entry_L1cd_Var, 0x500011b8
-.equ AcStyleNameProc_L3f_Var, 0x50001230
+.equ CUR_STYLE_IDX, 0x50001230
 .equ AcStyleNameProc_L66_Var, 0x50001232
 .equ func_4863EFAC_entry_Lf_Table, 0x50001234
 .equ AcCategoryStrBoxProc_L4f_Table, 0x50001238
@@ -59313,7 +59318,7 @@
 .equ func_486456DB_Table, 0x50001258
 .equ func_48646369_Table, 0x5000125c
 .equ Str_We_are_Taian_BOYS, 0x50001370
-.equ AcWelcomeScreenProc_Lc5_Table, 0x500013e8
+.equ OpeningFrameIndex, 0x500013e8
 .equ AcMPVerProc_L37_Var, 0x500013f4
 .equ TtSqmixer_L74_Table, 0x50001750
 .equ func_4864FE5C_Var, 0x500017b4

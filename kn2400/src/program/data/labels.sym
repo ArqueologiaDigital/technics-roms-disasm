@@ -41102,7 +41102,12 @@
 0x485E4272  func_5018B93E_Table  10
 0x50000010  SndCmdStreamWrite_Table  14
 0x50000020  func_50127747_Table  128
-0x500000A0  func_5012A787_Table  548
+0x500000A0  func_5012A787_Table  532
+0x500002B4  StrapBit3Latch  4
+0x500002B8  func_485E427C_L55_Table  4
+0x500002BC  func_485E6562_L68_Var  4
+0x500002C0  func_485E67EB_entry_L6e_Var  1
+0x500002C1  func_485E67EB_Table  3
 0x500002C4  func_485E68E5_Table  4
 0x500002C8  func_485E695A_L55_Table  4
 0x500002CC  func_485E8AED_L49_Var  4
@@ -41247,7 +41252,7 @@
 0x50001228  OrgStyleList_selected  2
 0x5000122A  OrgSubCtgList_selected  2
 0x5000122C  MusicStylistOrgan_StrRadioBox_ORGAN_selected  4
-0x50001230  AcStyleNameProc_L3f_Var  2
+0x50001230  CUR_STYLE_IDX  2
 0x50001232  AcStyleNameProc_L66_Var  2
 0x50001234  func_4863EFAC_entry_Lf_Table  4
 0x50001238  AcCategoryStrBoxProc_L4f_Table  4
@@ -41322,7 +41327,7 @@
 0x500013DC  AllInitial_window  4
 0x500013E0  FactoryInitial_window  4
 0x500013E4  MPVersion_window  4
-0x500013E8  AcWelcomeScreenProc_Lc5_Table  12
+0x500013E8  OpeningFrameIndex  12
 0x500013F4  AcMPVerProc_L37_Var  4
 0x500013F8  TtSdmenu_window  4
 0x500013FC  TtSdmenu_TitleMenu_PART_SETTING_selected  0

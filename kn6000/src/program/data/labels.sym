@@ -50364,7 +50364,7 @@
 0x5000552C  STYLCNVSEL_window  4
 0x50005530  StylCnvSelBox_sel_num  2
 0x50005534  STYLCNVCONT_window  4
-0x50005538  AcStyleNameProc_L3f_Var  2
+0x50005538  CUR_STYLE_IDX  2
 0x5000553A  AcStyleNameProc_L66_Var  2
 0x5000553C  func_4C163D15_entry_Lf_Table  4
 0x50005540  func_4C169690_entry_L68_Var  4
@@ -50534,8 +50534,8 @@
 0x50005D80  ptrs_50005D80  12
 0x50005D8C  func_4C1566B3_entry_Lc2_Var  4
 0x50005D90  func_4C156795_entry_L8d_Table  6
-0x50005D98  func_4C154BC3_Var  1
-0x50005D99  func_4C1575AE_Table  3
+0x50005D98  DspHostPortError  1
+0x50005D99  DspReadyWaitEnabled  3
 0x50005D9C  func_4C154BC3_entry_L363_Table  832
 0x500060DC  func_4C155072_Table  832
 0x5000641C  func_4C157DE2_entry_L1b41_Records  216

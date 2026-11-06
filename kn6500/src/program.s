@@ -594269,7 +594269,7 @@ DspManagerInit:
 	mov	d0, (0x5028e33c)
 	mov	d0, (0x5028e340)
 	call	DspFullReinit, 0, 0x1c
-	movbu	(func_4C15517F_Var), d0
+	movbu	(DspHostPortError), d0
 	extb	d0
 	movhu	d0, (0x24, sp)
 	clr	d0
@@ -597371,7 +597371,7 @@ func_4C156F29:
 	add	-0x10, sp
 
 func_4C156F29_entry:
-	movbu	(func_4C15517F_Var), d0
+	movbu	(DspHostPortError), d0
 	extb	d0
 	cmp	0, d0
 	beq	func_4C156F29_entry_Ld
@@ -598802,12 +598802,12 @@ func_4C157B0E_entry:
 
 DspReadyWaitOn:
 	mov	1, d0
-	movbu	d0, (func_4C157B6A_Table)
+	movbu	d0, (DspReadyWaitEnabled)
 	ret	0, 0
 
 DspReadyWaitOff:
 	clr	d0
-	movbu	d0, (func_4C157B6A_Table)
+	movbu	d0, (DspReadyWaitEnabled)
 	ret	0, 0
 
 DspWaitReady:
@@ -598817,7 +598817,7 @@ DspWaitReady:
 DspWaitReady_entry:
 	mov	0x0003ffff, d0
 	mov	d0, (0, sp)
-	movbu	(func_4C157B6A_Table), d0
+	movbu	(DspReadyWaitEnabled), d0
 	cmp	0, d0
 	bne	DspWaitReady_entry_L14
 	bra	DspWaitReady_entry_L44
@@ -598836,7 +598836,7 @@ DspWaitReady_entry_L1e:
 	bra	DspWaitReady_entry_L37
 DspWaitReady_entry_L2d:
 	mov	-1, d0
-	movbu	d0, (func_4C15517F_Var)
+	movbu	d0, (DspHostPortError)
 	bra	DspWaitReady_entry_L44
 DspWaitReady_entry_L37:
 	movhu	(G23ICR), d0
@@ -598988,7 +598988,7 @@ func_4C157D15:
 func_4C157D15_entry:
 	movhu	d1, (0x1c, sp)
 	movhu	d0, (0x18, sp)
-	movbu	(func_4C15517F_Var), d0
+	movbu	(DspHostPortError), d0
 	extb	d0
 	cmp	0, d0
 	beq	func_4C157D15_entry_L13
@@ -599030,7 +599030,7 @@ DspPortReadChecked:
 	add	-0xc, sp
 
 DspPortReadChecked_entry:
-	movbu	(func_4C15517F_Var), d0
+	movbu	(DspHostPortError), d0
 	extb	d0
 	cmp	0, d0
 	bne	DspPortReadChecked_entry_Ld
@@ -599107,7 +599107,7 @@ DspFullReinit_L32:
 	bra	DspFullReinit_L72
 DspFullReinit_L69:
 	clr	d0
-	movbu	d0, (func_4C15517F_Var)
+	movbu	d0, (DspHostPortError)
 	bra	DspFullReinit_L8a
 DspFullReinit_L72:
 	movbu	(0x18, sp), d0
@@ -599120,7 +599120,7 @@ DspFullReinit_L79:
 	bra	DspFullReinit_L32
 DspFullReinit_L82:
 	mov	-1, d0
-	movbu	d0, (func_4C15517F_Var)
+	movbu	d0, (DspHostPortError)
 DspFullReinit_L8a:
 	ret	0, 0x1c
 
@@ -599490,7 +599490,7 @@ DspBootDefaultEffects_L98:
 	ret	0, 0x14
 
 DspHostPortStatus:
-	movbu	(func_4C15517F_Var), d0
+	movbu	(DspHostPortError), d0
 	extb	d0
 	cmp	0, d0
 	beq	DspHostPortStatus_Ld
@@ -619101,7 +619101,7 @@ AcStyleNameProc_L3f:
 	cmp	TT_MSCTM, d0
 	beq	AcStyleNameProc_L66
 	mov	(0x2c, sp), a2
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	func_4C163E7B_entry, [a2], 0x18
 	mov	a0, a1
 	mov	a2, a0
@@ -619158,7 +619158,7 @@ AcCategoryListBoxProc_L51:
 	jmp	AcCategoryListBoxProc_L325
 AcCategoryListBoxProc_L54:
 	call	GetViewInstance, 0, 0
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	(0x2c, a0), a0
 	mov	0x18, d1
 	nop
@@ -619391,7 +619391,7 @@ AcCategoryListBoxProc_L2fa:
 	clr	d0
 	bra	AcCategoryListBoxProc_L330
 AcCategoryListBoxProc_L2fd:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	EV_STYLEOUT, d1
 	mov	d0, (0x10, sp)
 	mov	FN_MiddleFuncCall, d0
@@ -619480,7 +619480,7 @@ func_4C1642F7_entry_Lf:
 	mov	0x01850000, d1
 	mov	(4, a0), a0
 	movhu	(a0), d0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 	movhu	d0, (func_4C1642F7_entry_Lf_Table)
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -619780,7 +619780,7 @@ AcSubCategoryListBoxProc_L32f:
 	clr	d0
 	bra	AcSubCategoryListBoxProc_L369
 loc_4C164670:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	EV_STYLEOUT, d1
 	mov	d0, (0x10, sp)
 	mov	FN_MiddleFuncCall, d0
@@ -619808,7 +619808,7 @@ func_4C1646AA:
 	add	-0x70, sp
 
 func_4C1646AA_entry:
-	movhu	(AcStyleNameProc_L3f_Var), d1
+	movhu	(CUR_STYLE_IDX), d1
 	mov	a0, (0x88, sp)
 	mov	StyleRecordTable, a0
 	mov	0x18, d2
@@ -620007,7 +620007,7 @@ func_4C1648A1:
 	add	-0x18, sp
 
 func_4C1648A1_entry:
-	movhu	(AcStyleNameProc_L3f_Var), d1
+	movhu	(CUR_STYLE_IDX), d1
 	mov	StyleRecordTable, a1
 	mov	a1, a0
 	mov	d0, d3
@@ -620059,7 +620059,7 @@ func_4C1648A1_entry_L4f:
 	mov	(4, a1), a0
 	mov	0x01850000, d1
 	movhu	(a0), d0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 	movhu	d0, (func_4C1642F7_entry_Lf_Table)
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -620160,10 +620160,10 @@ loc_4C1649F9:
 	mov	(0x3c, sp), a2
 	cmp	0, a2
 	bne	AcCtgStyleListBoxProc_L107
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	EV_STYLEOUT, d1
 	movhu	d0, (func_4C1642F7_entry_Lf_Table)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	d0, (0x10, sp)
 	mov	FN_MiddleFuncCall, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
@@ -620442,7 +620442,7 @@ AcCtgStyleListBoxProc_L409:
 	clr	d0
 	bra	AcCtgStyleListBoxProc_L441
 loc_4C164D3E:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	EV_STYLEOUT, d1
 	mov	d0, (0x10, sp)
 	mov	FN_MiddleFuncCall, d0
@@ -620468,7 +620468,7 @@ func_4C164D76:
 
 func_4C164D76_entry:
 	add	-0x118, sp
-	movhu	(AcStyleNameProc_L3f_Var), d1
+	movhu	(CUR_STYLE_IDX), d1
 	mov	a0, (0x130, sp)
 	mov	0x18, d2
 	mov	0x18, d0
@@ -620751,7 +620751,7 @@ func_4C164F98:
 	movm	[d2], (sp)
 
 func_4C164F98_entry:
-	movhu	(AcStyleNameProc_L3f_Var), d2
+	movhu	(CUR_STYLE_IDX), d2
 	mov	StyleRecordTable, a1
 	mov	0x18, d0
 	nop
@@ -620811,7 +620811,7 @@ func_4C164F98_entry_L72:
 	ret	[d2], 4
 
 func_4C16500F:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	0x18, d1
 	nop
 	nop
@@ -620832,7 +620832,7 @@ func_4C16503C:
 	movm	[d2], (sp)
 
 func_4C16503C_entry:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	0x18, d1
 	nop
 	nop
@@ -620872,7 +620872,7 @@ func_4C16508E:
 	add	-0x14, sp
 
 func_4C16508E_entry:
-	movhu	(AcStyleNameProc_L3f_Var), d1
+	movhu	(CUR_STYLE_IDX), d1
 	movbu	d0, (0x2c, sp)
 	mov	StyleRecordTable, a0
 	mov	0x18, d0
@@ -620911,7 +620911,7 @@ func_4C16508E_entry:
 	cmp	1, d0
 	bne	func_4C16508E_entry_L94
 	call	func_4C16500F, 0, 0
-	movhu	(AcStyleNameProc_L3f_Var), d1
+	movhu	(CUR_STYLE_IDX), d1
 	exthu	d0
 	cmp	d0, d1
 	beq	func_4C16508E_entry_Lcd
@@ -620927,7 +620927,7 @@ func_4C16508E_entry:
 	add	d0, a3
 	mov	(4, a3), a0
 	movhu	(6, a0), d0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 	bra	func_4C16508E_entry_Lcd
 func_4C16508E_entry_L84:
 	add	-1, d0
@@ -620935,11 +620935,11 @@ func_4C16508E_entry_L84:
 	add	d0, d0
 	mov	d2, a0
 	movhu	(d0, a0), d1
-	movhu	d1, (AcStyleNameProc_L3f_Var)
+	movhu	d1, (CUR_STYLE_IDX)
 	bra	func_4C16508E_entry_Lcd
 func_4C16508E_entry_L94:
 	call	func_4C16503C_entry, [d2], 4
-	movhu	(AcStyleNameProc_L3f_Var), d1
+	movhu	(CUR_STYLE_IDX), d1
 	exthu	d0
 	cmp	d0, d1
 	beq	func_4C16508E_entry_Lcd
@@ -620955,7 +620955,7 @@ func_4C16508E_entry_L94:
 	add	d0, a3
 	mov	(4, a3), a0
 	movhu	(a0), d0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 	bra	func_4C16508E_entry_Lcd
 func_4C16508E_entry_Lc0:
 	inc	d0
@@ -620963,9 +620963,9 @@ func_4C16508E_entry_Lc0:
 	add	d0, d0
 	mov	d2, a0
 	movhu	(d0, a0), d1
-	movhu	d1, (AcStyleNameProc_L3f_Var)
+	movhu	d1, (CUR_STYLE_IDX)
 func_4C16508E_entry_Lcd:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	0x01850000, d1
 	movhu	d0, (func_4C1642F7_entry_Lf_Table)
 	clr	d0
@@ -621266,7 +621266,7 @@ AcAlphabetListBoxProc_L32f:
 	clr	d0
 	bra	AcAlphabetListBoxProc_L369
 loc_4C1654B3:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	EV_STYLEOUT, d1
 	mov	d0, (0x10, sp)
 	mov	FN_MiddleFuncCall, d0
@@ -621328,7 +621328,7 @@ func_4C165521:
 
 func_4C165521_entry:
 	mov	a0, (0x94, sp)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	StyleRecordTable, a1
 	mov	0x18, d1
 	nop
@@ -621463,7 +621463,7 @@ func_4C16564C:
 func_4C16564C_entry:
 	mov	0x18, d2
 	mov	d0, d1
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	extbu	d1
 	nop
 	nop
@@ -621480,7 +621480,7 @@ func_4C16564C_entry:
 	mov	(4, a0), a0
 	mov	0x01850000, d1
 	movhu	(a0), d0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 	movhu	d0, (func_4C1642F7_entry_Lf_Table)
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -621581,10 +621581,10 @@ loc_4C165769:
 	mov	(0x3c, sp), a2
 	cmp	0, a2
 	bne	AcAlpStyleListBoxProc_L107
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	EV_STYLEOUT, d1
 	movhu	d0, (func_4C1642F7_entry_Lf_Table)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	d0, (0x10, sp)
 	mov	FN_MiddleFuncCall, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
@@ -621843,7 +621843,7 @@ AcAlpStyleListBoxProc_L3d2:
 	clr	d0
 	bra	AcAlpStyleListBoxProc_L40a
 loc_4C165A77:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	EV_STYLEOUT, d1
 	mov	d0, (0x10, sp)
 	mov	FN_MiddleFuncCall, d0
@@ -621870,7 +621870,7 @@ func_4C165AAF:
 func_4C165AAF_entry:
 	add	-0x110, sp
 	mov	a0, (0x128, sp)
-	movhu	(AcStyleNameProc_L3f_Var), d2
+	movhu	(CUR_STYLE_IDX), d2
 	mov	0x18, d0
 	nop
 	nop
@@ -621991,7 +621991,7 @@ func_4C165BA9:
 	movm	[d2], (sp)
 
 func_4C165BA9_entry:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	0x18, d1
 	nop
 	nop
@@ -622014,7 +622014,7 @@ func_4C165BD0:
 
 func_4C165BD0_entry:
 	mov	d0, d1
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	StyleRecordTable, a2
 	mov	0x18, d2
 	nop
@@ -622084,7 +622084,7 @@ func_4C165BD0_entry_L8a:
 	add	d0, d0
 	movhu	(d0, a2), d1
 	clr	d0
-	movhu	d1, (AcStyleNameProc_L3f_Var)
+	movhu	d1, (CUR_STYLE_IDX)
 	movhu	d1, (func_4C1642F7_entry_Lf_Table)
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -622384,7 +622384,7 @@ AcEraListBoxProc_L32f:
 	clr	d0
 	bra	AcEraListBoxProc_L369
 loc_4C165FB6:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	EV_STYLEOUT, d1
 	mov	d0, (0x10, sp)
 	mov	FN_MiddleFuncCall, d0
@@ -622417,7 +622417,7 @@ func_4C165FFB:
 	add	-0x7c, sp
 
 func_4C165FFB_entry:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	a0, (0x94, sp)
 	mov	StyleRecordTable, d2
 	mov	0x18, d1
@@ -622432,8 +622432,8 @@ func_4C165FFB_entry:
 	cmp	0xffff, d1
 	bne	func_4C165FFB_entry_L42
 	call	func_4C165FF0, 0, 0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	d0, (CUR_STYLE_IDX)
+	movhu	(CUR_STYLE_IDX), d0
 	mov	0x18, d1
 	nop
 	nop
@@ -622569,7 +622569,7 @@ func_4C166144:
 
 func_4C166144_entry:
 	movbu	d0, (0x2c, sp)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	StyleRecordTable, a2
 	mov	a2, a0
 	mov	0x18, d1
@@ -622583,8 +622583,8 @@ func_4C166144_entry:
 	cmp	0xffff, d0
 	bne	func_4C166144_entry_L41
 	call	func_4C165FF0, 0, 0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	d0, (CUR_STYLE_IDX)
+	movhu	(CUR_STYLE_IDX), d0
 	mov	0x18, d1
 	nop
 	nop
@@ -622640,7 +622640,7 @@ func_4C166144_entry_L7c:
 	mov	(4, a0), a0
 	mov	0x01850000, d1
 	movhu	(a0), d0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 	movhu	d0, (func_4C1642F7_entry_Lf_Table)
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -622653,7 +622653,7 @@ func_4C1661FA:
 	add	-0x14, sp
 
 func_4C1661FA_entry:
-	movhu	(AcStyleNameProc_L3f_Var), d2
+	movhu	(CUR_STYLE_IDX), d2
 	movbu	d0, (0x2c, sp)
 	mov	StyleRecordTable, a2
 	mov	a2, a0
@@ -622668,8 +622668,8 @@ func_4C1661FA_entry:
 	cmp	0xffff, d0
 	bne	func_4C1661FA_entry_L43
 	call	func_4C165FF0, 0, 0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
-	movhu	(AcStyleNameProc_L3f_Var), d2
+	movhu	d0, (CUR_STYLE_IDX)
+	movhu	(CUR_STYLE_IDX), d2
 	mov	0x18, d0
 	nop
 	nop
@@ -622754,7 +622754,7 @@ func_4C1661FA_entry_Lad:
 	mov	a0, d1
 	movhu	(d1, a3), d0
 	mov	0x01850000, d1
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 	movhu	d0, (func_4C1642F7_entry_Lf_Table)
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -622914,10 +622914,10 @@ loc_4C166436:
 	mov	(0x3c, sp), a2
 	cmp	0, a2
 	bne	AcEraStyleListBoxProc_L107
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	EV_STYLEOUT, d1
 	movhu	d0, (func_4C1642F7_entry_Lf_Table)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	d0, (0x10, sp)
 	mov	FN_MiddleFuncCall, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
@@ -623176,7 +623176,7 @@ AcEraStyleListBoxProc_L3d2:
 	clr	d0
 	bra	AcEraStyleListBoxProc_L40a
 loc_4C166744:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	EV_STYLEOUT, d1
 	mov	d0, (0x10, sp)
 	mov	FN_MiddleFuncCall, d0
@@ -623202,7 +623202,7 @@ func_4C16677C:
 
 func_4C16677C_entry:
 	add	-0x110, sp
-	movhu	(AcStyleNameProc_L3f_Var), d1
+	movhu	(CUR_STYLE_IDX), d1
 	mov	a0, (0x128, sp)
 	mov	0x18, d0
 	nop
@@ -623216,8 +623216,8 @@ func_4C16677C_entry:
 	cmp	0xffff, d0
 	bne	func_4C16677C_entry_L4e
 	call	func_4C165FF0, 0, 0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
-	movhu	(AcStyleNameProc_L3f_Var), d1
+	movhu	d0, (CUR_STYLE_IDX)
+	movhu	(CUR_STYLE_IDX), d1
 	mov	0x18, d0
 	nop
 	nop
@@ -623368,7 +623368,7 @@ func_4C1668CA:
 	add	-8, sp
 
 func_4C1668CA_entry:
-	movhu	(AcStyleNameProc_L3f_Var), d1
+	movhu	(CUR_STYLE_IDX), d1
 	mov	StyleRecordTable, a2
 	mov	0x18, d0
 	nop
@@ -623381,8 +623381,8 @@ func_4C1668CA_entry:
 	cmp	0xffff, d0
 	bne	func_4C1668CA_entry_L33
 	call	func_4C165FF0, 0, 0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
-	movhu	(AcStyleNameProc_L3f_Var), d1
+	movhu	d0, (CUR_STYLE_IDX)
+	movhu	(CUR_STYLE_IDX), d1
 func_4C1668CA_entry_L33:
 	mov	0x18, d0
 	nop
@@ -623404,7 +623404,7 @@ func_4C16691B:
 	add	-0x14, sp
 
 func_4C16691B_entry:
-	movhu	(AcStyleNameProc_L3f_Var), d1
+	movhu	(CUR_STYLE_IDX), d1
 	movbu	d0, (0x2c, sp)
 	mov	StyleRecordTable, a2
 	mov	a2, a1
@@ -623419,8 +623419,8 @@ func_4C16691B_entry:
 	cmp	0xffff, d0
 	bne	func_4C16691B_entry_L43
 	call	func_4C165FF0, 0, 0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
-	movhu	(AcStyleNameProc_L3f_Var), d1
+	movhu	d0, (CUR_STYLE_IDX)
+	movhu	(CUR_STYLE_IDX), d1
 	mov	0x18, d0
 	nop
 	nop
@@ -623496,7 +623496,7 @@ func_4C16691B_entry_La8:
 	mov	a0, d1
 	movhu	(d1, a3), d0
 	mov	0x01850000, d1
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 	movhu	d0, (func_4C1642F7_entry_Lf_Table)
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -624820,7 +624820,7 @@ func_4C16764B_entry_L2a:
 	ret	0, 0x14
 
 func_4C16769D:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	0x18, d1
 	nop
 	nop

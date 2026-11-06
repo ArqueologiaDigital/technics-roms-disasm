@@ -67559,7 +67559,7 @@
 .equ Str_Insert_Style_Disk_of_Technics_KN_1000_75, 0x5000546c
 .equ Str_V1_0, 0x50005499
 .equ Str_KN3000_SOUND_RAM, 0x500054a0
-.equ AcStyleNameProc_L3f_Var, 0x50005538
+.equ CUR_STYLE_IDX, 0x50005538
 .equ AcStyleNameProc_L66_Var, 0x5000553a
 .equ func_4C163D15_entry_Lf_Table, 0x5000553c
 .equ func_4C169690_entry_L68_Var, 0x50005540
@@ -67621,8 +67621,8 @@
 .equ ptrs_50005D80, 0x50005d80
 .equ func_4C1566B3_entry_Lc2_Var, 0x50005d8c
 .equ func_4C156795_entry_L8d_Table, 0x50005d90
-.equ func_4C154BC3_Var, 0x50005d98
-.equ func_4C1575AE_Table, 0x50005d99
+.equ DspHostPortError, 0x50005d98
+.equ DspReadyWaitEnabled, 0x50005d99
 .equ func_4C154BC3_entry_L363_Table, 0x50005d9c
 .equ func_4C155072_Table, 0x500060dc
 .equ func_4C157DE2_entry_L1b41_Records, 0x5000641c
