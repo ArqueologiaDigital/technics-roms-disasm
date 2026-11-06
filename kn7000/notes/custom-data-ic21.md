@@ -269,7 +269,12 @@ The PERFORMANCE PAD user memory's layout (`MemPadAreaLoadFactory` 0x48432175; th
 | `+0x2E0` | six event streams, same format, index = pad                                                                                                   |
 
 `func_484388C6` checks each MEMORY pad stream (opens with 0xF4, ends with 0xF5, `stream[0]` the
-index) and `func_484385DD` sets bits 2/3 of `+0x1A` for pads 4 and 5.
+index) and `func_484385DD` sets bits 2/3 of `+0x1A` for pads 4 and 5.  Of a pad record's thirteen setting bytes
+(`+0x10..+0x1C`) the user-pad module reads four (2026-11-06, lane kn7000-research): `+0x13` RECORD
+KEY / CHORD (`UserPadRecChordGet`), `+0x18` measures - 1 and `+0x19` beats - 1 (the firmware's
+`MainPAD_SetUserPadMsrTmSigAftClr` stores them through `func_4843264C`; `func_484326B7` multiplies them
+into the beat count, as `MemStyleVarBarCount` does for a style) and `+0x1A` the flags (bit 0 LOOP, bit 1
+SYNCHRO).  The other nine have no reader in that module; the `TPAD_PAD` macro names the four.
 
 ## Stale records and residue
 
@@ -398,7 +403,8 @@ State after lane ic21-rest (2026-10-31):
 - Not closed by this lane (firmware tracing still to do; no blocker): the panel-memory fields named only
   by their parameter id (`m<id>`), see `notes/data-semantics-2026-10-29/kn67-field-names.md`; the voice
   record's single fields beyond those `voice_record.inc` names, and the custom-sound block's 0x27-byte
-  header; the pad record's setting bytes.  (Status 2026-11-06, lane kn7000-research: the TCMP variation
+  header; nine of the pad record's thirteen setting bytes.  (Status 2026-11-06, lane kn7000-research: the
+pad record's `+0x13`, `+0x18`, `+0x19` and `+0x1A` are traced, section "TPAD"; the TCMP variation
   bytes `+0x00..+0x02` and `+0x18` / `+0x19`, the style record's `+0x70` and the reader of the part
   set-up are traced, section "The TCMP style container"; the macros in `src/customdata/customdata.inc`
   carry the names.  The part set-up's bytes 15..23 have no reader: 0 everywhere.)  The `m<id>` fields

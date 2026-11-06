@@ -204,12 +204,18 @@
 .endm
 
 # The first 0x28 bytes of a 0x60-byte pad record (TPAD +0xA0 + pad*0x60; the MEMORY area's
-# accessor is func_48438791): the 16-byte name, thirteen setting bytes (+0x14/+0x15 one per
-# part, +0x1A bits 2/3 set for pads 4 and 5 by func_484385DD), the u24BE stream offset
+# accessor is func_48438791): the 16-byte name, thirteen setting bytes, the u24BE stream offset
 # (+0x1D, func_484387A9), eight zero bytes; two PART_SETUP blocks and eight zero bytes follow.
-.macro TPAD_PAD name, s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, stream
+# The setting bytes the user-pad module reads (lane kn7000-research, 2026-11-06):
+#   rec_chord +0x13  RECORD KEY / CHORD: bits 0-3 key, bit 4 minor (UserPadRecChordGet / Set)
+#   bars      +0x18  \ measures - 1 and beats - 1 (MainPAD_SetUserPadMsrTmSigAftClr ->
+#   meter     +0x19  /  func_4843264C stores them; func_484326B7 = (bars + 1) * ((meter & 7) + 1))
+#   flags     +0x1A  bit 0 LOOP (UserPadLoopGet), bit 1 SYNCHRO (UserPadSynchroGet), bits 2/3 set
+#                    for pads 4 and 5 by func_484385DD (PadFlag2ById reads bit 2)
+#   s4, s5    +0x14 / +0x15  one per part; s0..s2, s6, s7, s11, s12: no reader in the pad module
+.macro TPAD_PAD name, s0, s1, s2, rec_chord, s4, s5, s6, s7, bars, meter, flags, s11, s12, stream
 	.ascii	"\name"
-	.byte	\s0, \s1, \s2, \s3, \s4, \s5, \s6, \s7, \s8, \s9, \s10, \s11, \s12
+	.byte	\s0, \s1, \s2, \rec_chord, \s4, \s5, \s6, \s7, \bars, \meter, \flags, \s11, \s12
 	.be24	\stream
 	.space	8
 .endm
