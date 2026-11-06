@@ -345,7 +345,7 @@ SeAmpAmp1_OnColumn5_Epilogue36:
 SeAmpAmp1_OnSideRow1:
 	cp	a, 0:i3
 	jp	nz, (SeMenu_ToggleSolo:24)
-	ldw	wa, 45
+	ldw	wa, TT_SEAMPENV1
 	ld	bc, 0:i3
 	jp	SeMenu_SendEvent
 SeAmpAmp1_OnSideRow2:
@@ -365,7 +365,7 @@ SeAmpAmp1_OnSideRow3:
 	jr	nz, SeAmpAmp1_OnSideRow3_Skip54
 	cp	(xsp), 1
 	jr	z, SeAmpAmp1_OnSideRow3_Epilogue37
-	ldw	wa, 47
+	ldw	wa, TT_SEAMPLFO1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	jr	SeAmpAmp1_OnSideRow3_Epilogue37
@@ -418,7 +418,7 @@ SeAmpAmp1_OnSwitch25:
 	jr	z, SeAmpAmp1_OnSwitch25_Epilogue40
 	cp	(xsp+2), 0
 	jr	nz, SeAmpAmp1_OnSwitch25_Epilogue40
-	ldw	wa, 44
+	ldw	wa, TT_SEAMPAMP2
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 SeAmpAmp1_OnSwitch25_Epilogue40:
@@ -435,11 +435,11 @@ SeAmpAmp1_OnSwitch15:
 	jr	nz, SeAmpAmp1_OnSwitch15_Epilogue6
 	cp	(xsp), 0
 	jr	nz, SeAmpAmp1_OnSwitch15_Skip5
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	jr	SeAmpAmp1_OnSwitch15_Join5
 SeAmpAmp1_OnSwitch15_Skip5:
-	ldw	wa, 61
+	ldw	wa, TT_SECOPY
 	ld	bc, 0:i3
 SeAmpAmp1_OnSwitch15_Join5:
 	call	SeMenu_SendEvent
@@ -615,7 +615,7 @@ SeAmpAmp2_OnColumn6_Skip9:
 SeAmpAmp2_OnSideRow1:
 	cp	a, 0:i3
 	jp	nz, (SeMenu_ToggleSolo:24)
-	ldw	wa, 45
+	ldw	wa, TT_SEAMPENV1
 	ld	bc, 0:i3
 	jp	SeMenu_SendEvent
 SeAmpAmp2_OnSideRow2:
@@ -625,14 +625,14 @@ SeAmpAmp2_OnSideRow2:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 44
+	ldw	wa, TT_SEAMPAMP2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
 SeAmpAmp2_OnSideRow3:
 	cp	a, 0:i3
 	jr	nz, SeAmpAmp2_OnSideRow3_Skip10
-	ldw	wa, 47
+	ldw	wa, TT_SEAMPLFO1
 	ld	bc, 0:i3
 	jr	SeAmpAmp2_OnSideRow3_Join6
 SeAmpAmp2_OnSideRow3_Skip10:
@@ -640,7 +640,7 @@ SeAmpAmp2_OnSideRow3_Skip10:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 44
+	ldw	wa, TT_SEAMPAMP2
 	ld	bc, 1:i3
 SeAmpAmp2_OnSideRow3_Join6:
 	call	SeMenu_SendEvent
@@ -652,7 +652,7 @@ SeAmpAmp2_OnSideRow4:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 44
+	ldw	wa, TT_SEAMPAMP2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
@@ -663,14 +663,14 @@ SeAmpAmp2_OnSideRow5:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 44
+	ldw	wa, TT_SEAMPAMP2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
 SeAmpAmp2_OnSwitch25:
 	cp	a, 0:i3
 	ret	z
-	ldw	wa, 43
+	ldw	wa, TT_SEAMPAMP1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -679,7 +679,7 @@ SeAmpAmp2_OnSwitch15:
 	ret	nz
 	ld	wa, 0:i3
 	call	SeMenu_SetupMenuDisplay
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -1136,7 +1136,7 @@ SeAmpEnv1_OnSideRow1:
 SeAmpEnv1_OnSideRow2:
 	cp	a, 0:i3
 	jr	nz, SeAmpEnv1_OnSideRow2_Skip17
-	ldw	wa, 43
+	ldw	wa, TT_SEAMPAMP1
 	ld	bc, 0:i3
 	jr	SeAmpEnv1_OnSideRow2_Join15
 SeAmpEnv1_OnSideRow2_Skip17:
@@ -1144,7 +1144,7 @@ SeAmpEnv1_OnSideRow2_Skip17:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 45
+	ldw	wa, TT_SEAMPENV1
 	ld	bc, 1:i3
 SeAmpEnv1_OnSideRow2_Join15:
 	call	SeMenu_SendEvent
@@ -1158,7 +1158,7 @@ SeAmpEnv1_OnSideRow3:
 	jr	nz, SeAmpEnv1_OnSideRow3_Skip18
 	cp	(xsp), 0
 	jr	nz, SeAmpEnv1_OnSideRow3_Epilogue7
-	ldw	wa, 47
+	ldw	wa, TT_SEAMPLFO1
 	ld	bc, 0:i3
 	jr	SeAmpEnv1_OnSideRow3_Join16
 SeAmpEnv1_OnSideRow3_Skip18:
@@ -1166,7 +1166,7 @@ SeAmpEnv1_OnSideRow3_Skip18:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeAmpEnv1_OnSideRow3_Epilogue7
-	ldw	wa, 45
+	ldw	wa, TT_SEAMPENV1
 	ld	bc, 1:i3
 SeAmpEnv1_OnSideRow3_Join16:
 	call	SeMenu_SendEvent
@@ -1186,7 +1186,7 @@ SeAmpEnv1_OnSideRow4:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeAmpEnv1_OnSideRow4_Epilogue45
-	ldw	wa, 45
+	ldw	wa, TT_SEAMPENV1
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 SeAmpEnv1_OnSideRow4_Epilogue45:
@@ -1205,7 +1205,7 @@ SeAmpEnv1_OnSideRow5:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeAmpEnv1_OnSideRow5_Epilogue8
-	ldw	wa, 45
+	ldw	wa, TT_SEAMPENV1
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	jr	SeAmpEnv1_OnSideRow5_Epilogue8
@@ -1246,7 +1246,7 @@ SeAmpEnv1_OnSwitch25:
 	jr	z, SeAmpEnv1_OnSwitch25_Epilogue46
 	cp	(xsp+2), 0
 	jr	nz, SeAmpEnv1_OnSwitch25_Epilogue46
-	ldw	wa, 46
+	ldw	wa, TT_SEAMPENV2
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 SeAmpEnv1_OnSwitch25_Epilogue46:
@@ -1263,11 +1263,11 @@ SeAmpEnv1_OnSwitch15:
 	jr	nz, SeAmpEnv1_OnSwitch15_Epilogue9
 	cp	(xsp), 0
 	jr	nz, SeAmpEnv1_OnSwitch15_Skip20
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	jr	SeAmpEnv1_OnSwitch15_Join18
 SeAmpEnv1_OnSwitch15_Skip20:
-	ldw	wa, 61
+	ldw	wa, TT_SECOPY
 	ld	bc, 0:i3
 SeAmpEnv1_OnSwitch15_Join18:
 	call	SeMenu_SendEvent
@@ -1620,7 +1620,7 @@ SeAmpEnv2_OnSideRow1:
 SeAmpEnv2_OnSideRow2:
 	cp	a, 0:i3
 	jr	nz, SeAmpEnv2_OnSideRow2_Skip24
-	ldw	wa, 43
+	ldw	wa, TT_SEAMPAMP1
 	ld	bc, 0:i3
 	jr	SeAmpEnv2_OnSideRow2_Join19
 SeAmpEnv2_OnSideRow2_Skip24:
@@ -1628,7 +1628,7 @@ SeAmpEnv2_OnSideRow2_Skip24:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 46
+	ldw	wa, TT_SEAMPENV2
 	ld	bc, 1:i3
 SeAmpEnv2_OnSideRow2_Join19:
 	call	SeMenu_SendEvent
@@ -1636,7 +1636,7 @@ SeAmpEnv2_OnSideRow2_Join19:
 SeAmpEnv2_OnSideRow3:
 	cp	a, 0:i3
 	jr	nz, SeAmpEnv2_OnSideRow3_Skip25
-	ldw	wa, 47
+	ldw	wa, TT_SEAMPLFO1
 	ld	bc, 0:i3
 	jr	SeAmpEnv2_OnSideRow3_Join20
 SeAmpEnv2_OnSideRow3_Skip25:
@@ -1644,7 +1644,7 @@ SeAmpEnv2_OnSideRow3_Skip25:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 46
+	ldw	wa, TT_SEAMPENV2
 	ld	bc, 1:i3
 SeAmpEnv2_OnSideRow3_Join20:
 	call	SeMenu_SendEvent
@@ -1656,7 +1656,7 @@ SeAmpEnv2_OnSideRow4:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 46
+	ldw	wa, TT_SEAMPENV2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
@@ -1667,14 +1667,14 @@ SeAmpEnv2_OnSideRow5:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 46
+	ldw	wa, TT_SEAMPENV2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
 SeAmpEnv2_OnSwitch25:
 	cp	a, 0:i3
 	ret	z
-	ldw	wa, 45
+	ldw	wa, TT_SEAMPENV1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -1683,7 +1683,7 @@ SeAmpEnv2_OnSwitch15:
 	ret	nz
 	ld	wa, 0:i3
 	call	SeMenu_SetupMenuDisplay
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -1718,13 +1718,13 @@ SeAmpLfo1_OnColumn8:
 SeAmpLfo1_OnSideRow1:
 	cp	a, 0:i3
 	jp	nz, (SeMenu_ToggleSolo:24)
-	ldw	wa, 45
+	ldw	wa, TT_SEAMPENV1
 	ld	bc, 0:i3
 	jp	SeMenu_SendEvent
 SeAmpLfo1_OnSideRow2:
 	cp	a, 0:i3
 	jr	nz, SeAmpLfo1_OnSideRow2_Skip26
-	ldw	wa, 43
+	ldw	wa, TT_SEAMPAMP1
 	ld	bc, 0:i3
 	jp	SeMenu_SendEvent
 SeAmpLfo1_OnSideRow2_Skip26:
@@ -1757,7 +1757,7 @@ SeAmpLfo1_OnSwitch15:
 	ret	nz
 	ld	wa, 0:i3
 	call	SeMenu_SetupMenuDisplay
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -2385,7 +2385,7 @@ SeFilLpq1_OnColumn4_Join26:
 	jr	nz, SeFilLpq1_OnColumn4_Skip27
 	cp	(xsp), 0
 	jr nz, .Lc_f05401
-	ldw WA, 0x0037
+	ldw WA, TT_SEFILENV1
 	ld bc, 0:i3
 	call SeMenu_SendEvent
 	jr t, .Lc_f05401
@@ -2401,7 +2401,7 @@ SeFilLpq1_OnColumn4_Join27:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -2414,7 +2414,7 @@ SeFilLpq1_OnColumn4_Join28:
 	jr nz, .Lc_f05439
 	cp (XSP),0x00
 	jr nz, .Lc_f0544c
-	ldw WA, 0x0039
+	ldw WA, TT_SEFILLFO1
 	ld bc, 0:i3
 	jr t, .Lc_f05448
 .Lc_f05439:
@@ -2423,7 +2423,7 @@ SeFilLpq1_OnColumn4_Skip28:
 	call SeMenu_SelectPartIfEnabled
 	cp l, 0:i3
 	jr z, .Lc_f0544c
-	ldw WA, 0x0030
+	ldw WA, TT_SEFILLPQ1
 	ld bc, 0:i3
 .Lc_f05448:
 SeFilLpq1_OnColumn4_Join29:
@@ -2446,7 +2446,7 @@ SeFilLpq1_OnSideRow4:
 	ld	a, (xsp+2)
 	extz	wa
 	call	SeMenu_SetFilterType
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	jr	SeFilLpq1_OnSideRow4_Join8
 SeFilLpq1_OnSideRow4_Skip8:
@@ -2456,7 +2456,7 @@ SeFilLpq1_OnSideRow4_Skip8:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeFilLpq1_OnSideRow4_Epilogue
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 SeFilLpq1_OnSideRow4_Join8:
 	call	SeMenu_SendEvent
@@ -2476,7 +2476,7 @@ SeFilLpq1_OnSideRow4_Join30:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeFilLpq1_OnSideRow4_Epilogue2
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 SeFilLpq1_OnSideRow4_Epilogue2:
@@ -2491,7 +2491,7 @@ SeFilLpq1_OnSwitch25:
 	jr	z, SeFilLpq1_OnSwitch25_Epilogue3
 	cp	(xsp+2), 0
 	jr	nz, SeFilLpq1_OnSwitch25_Epilogue3
-	ldw	wa, 54
+	ldw	wa, TT_SEFILFIL2
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 SeFilLpq1_OnSwitch25_Epilogue3:
@@ -2508,12 +2508,12 @@ SeFilLpq1_OnSwitch15:
 	jr	nz, SeFilLpq1_OnSwitch15_Epilogue22
 	cp (XSP),0x00
 	jr nz, .Lc_f0550c
-	ldw WA, 0x0020
+	ldw WA, TT_SEMENU
 	ld bc, 0:i3
 	jr t, .Lc_f05511
 .Lc_f0550c:
 SeFilLpq1_OnSwitch15_Skip29:
-	ldw WA, 0x003d
+	ldw WA, TT_SECOPY
 	ld bc, 0:i3
 .Lc_f05511:
 SeFilLpq1_OnSwitch15_Join31:
@@ -2580,7 +2580,7 @@ SeFilHpq1_OnSideRow4:
 	ld	a, (xsp+2)
 	extz	wa
 	call	SeMenu_SetFilterType
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	jr	SeFilHpq1_OnSideRow4_Join9
 SeFilHpq1_OnSideRow4_Skip9:
@@ -2590,7 +2590,7 @@ SeFilHpq1_OnSideRow4_Skip9:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeFilHpq1_OnSideRow4_Epilogue23
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 SeFilHpq1_OnSideRow4_Join9:
 	call	SeMenu_SendEvent
@@ -2609,7 +2609,7 @@ SeFilHpq1_OnSwitch25:
 	jr	nz, SeFilHpq1_OnSwitch25_Epilogue24
 	cp	(xsp), 0
 	jr	nz, SeFilHpq1_OnSwitch25_Epilogue24
-	ldw	wa, 54
+	ldw	wa, TT_SEFILFIL2
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 SeFilHpq1_OnSwitch25_Epilogue24:
@@ -2626,11 +2626,11 @@ SeFilHpq1_OnSwitch15:
 	jr	nz, SeFilHpq1_OnSwitch15_Epilogue25
 	cp	(xsp), 0
 	jr	nz, SeFilHpq1_OnSwitch15_Skip30
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	jr	SeFilHpq1_OnSwitch15_Join32
 SeFilHpq1_OnSwitch15_Skip30:
-	ldw	wa, 61
+	ldw	wa, TT_SECOPY
 	ld	bc, 0:i3
 SeFilHpq1_OnSwitch15_Join32:
 	call	SeMenu_SendEvent
@@ -2672,7 +2672,7 @@ SeFilL241_OnColumn6_Join33:
 	jr	nz, SeFilL241_OnColumn6_Skip31
 	cp	(xsp), 0
 	jr	nz, SeFilL241_OnColumn6_Epilogue26
-	ldw	wa, 55
+	ldw	wa, TT_SEFILENV1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	jr	SeFilL241_OnColumn6_Epilogue26
@@ -2688,7 +2688,7 @@ SeFilL241_OnColumn6_Join34:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -2701,7 +2701,7 @@ SeFilL241_OnColumn6_Join35:
 	jr	nz, SeFilL241_OnColumn6_Skip32
 	cp	(xsp), 0
 	jr	nz, SeFilL241_OnColumn6_Epilogue27
-	ldw	wa, 57
+	ldw	wa, TT_SEFILLFO1
 	ld	bc, 0:i3
 	jr	SeFilL241_OnColumn6_Join36
 SeFilL241_OnColumn6_Skip32:
@@ -2709,7 +2709,7 @@ SeFilL241_OnColumn6_Skip32:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeFilL241_OnColumn6_Epilogue27
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 SeFilL241_OnColumn6_Join36:
 	call	SeMenu_SendEvent
@@ -2731,7 +2731,7 @@ SeFilL241_OnSideRow4:
 	ld	a, (xsp+2)
 	extz	wa
 	call	SeMenu_SetFilterType
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	jr	SeFilL241_OnSideRow4_Join10
 SeFilL241_OnSideRow4_Skip10:
@@ -2741,7 +2741,7 @@ SeFilL241_OnSideRow4_Skip10:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeFilL241_OnSideRow4_Epilogue4
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 SeFilL241_OnSideRow4_Join10:
 	call	SeMenu_SendEvent
@@ -2761,7 +2761,7 @@ SeFilL241_OnSideRow4_Join11:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeFilL241_OnSideRow4_Epilogue5
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 SeFilL241_OnSideRow4_Epilogue5:
@@ -2776,7 +2776,7 @@ SeFilL241_OnSwitch25:
 	jr	z, SeFilL241_OnSwitch25_Epilogue6
 	cp	(xsp+2), 0
 	jr	nz, SeFilL241_OnSwitch25_Epilogue6
-	ldw	wa, 54
+	ldw	wa, TT_SEFILFIL2
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 SeFilL241_OnSwitch25_Epilogue6:
@@ -2793,11 +2793,11 @@ SeFilL241_OnSwitch15:
 	jr	nz, SeFilL241_OnSwitch15_Epilogue28
 	cp	(xsp), 0
 	jr	nz, SeFilL241_OnSwitch15_Skip33
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	jr	SeFilL241_OnSwitch15_Join37
 SeFilL241_OnSwitch15_Skip33:
-	ldw	wa, 61
+	ldw	wa, TT_SECOPY
 	ld	bc, 0:i3
 SeFilL241_OnSwitch15_Join37:
 	call	SeMenu_SendEvent
@@ -2854,7 +2854,7 @@ SeFilH241_OnSideRow4:
 	ld	a, (xsp+2)
 	extz	wa
 	call	SeMenu_SetFilterType
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	jr	SeFilH241_OnSideRow4_Join12
 SeFilH241_OnSideRow4_Skip11:
@@ -2864,7 +2864,7 @@ SeFilH241_OnSideRow4_Skip11:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeFilH241_OnSideRow4_Epilogue7
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 SeFilH241_OnSideRow4_Join12:
 	call	SeMenu_SendEvent
@@ -2883,7 +2883,7 @@ SeFilH241_OnSwitch25:
 	jr	z, SeFilH241_OnSwitch25_Epilogue8
 	cp	(xsp+2), 0
 	jr	nz, SeFilH241_OnSwitch25_Epilogue8
-	ldw	wa, 54
+	ldw	wa, TT_SEFILFIL2
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 SeFilH241_OnSwitch25_Epilogue8:
@@ -2900,11 +2900,11 @@ SeFilH241_OnSwitch15:
 	jr	nz, SeFilH241_OnSwitch15_Epilogue29
 	cp	(xsp), 0
 	jr	nz, SeFilH241_OnSwitch15_Skip34
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	jr	SeFilH241_OnSwitch15_Join38
 SeFilH241_OnSwitch15_Skip34:
-	ldw	wa, 61
+	ldw	wa, TT_SECOPY
 	ld	bc, 0:i3
 SeFilH241_OnSwitch15_Join38:
 	call	SeMenu_SendEvent
@@ -3093,7 +3093,7 @@ SeFilBpf1_OnSideRow1:
 	jr	nz, SeFilBpf1_OnSideRow1_Skip35
 	cp	(xsp), 0
 	jr	nz, SeFilBpf1_OnSideRow1_Epilogue30
-	ldw	wa, 55
+	ldw	wa, TT_SEFILENV1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	jr	SeFilBpf1_OnSideRow1_Epilogue30
@@ -3109,7 +3109,7 @@ SeFilBpf1_OnSideRow2:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -3122,7 +3122,7 @@ SeFilBpf1_OnSideRow3:
 	jr	nz, SeFilBpf1_OnSideRow3_Skip36
 	cp	(xsp), 0
 	jr	nz, SeFilBpf1_OnSideRow3_Epilogue31
-	ldw	wa, 57
+	ldw	wa, TT_SEFILLFO1
 	ld	bc, 0:i3
 	jr	SeFilBpf1_OnSideRow3_Join39
 SeFilBpf1_OnSideRow3_Skip36:
@@ -3130,7 +3130,7 @@ SeFilBpf1_OnSideRow3_Skip36:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeFilBpf1_OnSideRow3_Epilogue31
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 SeFilBpf1_OnSideRow3_Join39:
 	call	SeMenu_SendEvent
@@ -3151,7 +3151,7 @@ SeFilBpf1_OnSideRow4:
 	ld	a, (xsp+2)
 	extz	wa
 	call	SeMenu_SetFilterType
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	jr	SeFilBpf1_OnSideRow4_Join16
 SeFilBpf1_OnSideRow4_Skip15:
@@ -3161,7 +3161,7 @@ SeFilBpf1_OnSideRow4_Skip15:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeFilBpf1_OnSideRow4_Epilogue9
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 SeFilBpf1_OnSideRow4_Join16:
 	call	SeMenu_SendEvent
@@ -3181,7 +3181,7 @@ SeFilBpf1_OnSideRow5:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeFilBpf1_OnSideRow5_Epilogue10
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 SeFilBpf1_OnSideRow5_Epilogue10:
@@ -3196,7 +3196,7 @@ SeFilBpf1_OnSwitch25:
 	jr	z, SeFilBpf1_OnSwitch25_Epilogue11
 	cp	(xsp+2), 0
 	jr	nz, SeFilBpf1_OnSwitch25_Epilogue11
-	ldw	wa, 54
+	ldw	wa, TT_SEFILFIL2
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 SeFilBpf1_OnSwitch25_Epilogue11:
@@ -3213,11 +3213,11 @@ SeFilBpf1_OnSwitch15:
 	jr	nz, SeFilBpf1_OnSwitch15_Epilogue32
 	cp	(xsp), 0
 	jr	nz, SeFilBpf1_OnSwitch15_Skip37
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	jr	SeFilBpf1_OnSwitch15_Join40
 SeFilBpf1_OnSwitch15_Skip37:
-	ldw	wa, 61
+	ldw	wa, TT_SECOPY
 	ld	bc, 0:i3
 SeFilBpf1_OnSwitch15_Join40:
 	call	SeMenu_SendEvent
@@ -3233,7 +3233,7 @@ SeFilBcf1_OnSideRow1:
 	jr	nz, SeFilBcf1_OnSideRow1_Skip38
 	cp	(xsp), 0
 	jr	nz, SeFilBcf1_OnSideRow1_Epilogue33
-	ldw	wa, 55
+	ldw	wa, TT_SEFILENV1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	jr	SeFilBcf1_OnSideRow1_Epilogue33
@@ -3249,7 +3249,7 @@ SeFilBcf1_OnSideRow2:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -3262,7 +3262,7 @@ SeFilBcf1_OnSideRow3:
 	jr	nz, SeFilBcf1_OnSideRow3_Skip39
 	cp	(xsp), 0
 	jr	nz, SeFilBcf1_OnSideRow3_Epilogue34
-	ldw	wa, 57
+	ldw	wa, TT_SEFILLFO1
 	ld	bc, 0:i3
 	jr	SeFilBcf1_OnSideRow3_Join41
 SeFilBcf1_OnSideRow3_Skip39:
@@ -3270,7 +3270,7 @@ SeFilBcf1_OnSideRow3_Skip39:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeFilBcf1_OnSideRow3_Epilogue34
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 SeFilBcf1_OnSideRow3_Join41:
 	call	SeMenu_SendEvent
@@ -3292,7 +3292,7 @@ SeFilBcf1_OnSideRow4:
 	ld	a, (xsp+2)
 	extz	wa
 	call	SeMenu_SetFilterType
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	jr	SeFilBcf1_OnSideRow4_Join17
 SeFilBcf1_OnSideRow4_Skip16:
@@ -3302,7 +3302,7 @@ SeFilBcf1_OnSideRow4_Skip16:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeFilBcf1_OnSideRow4_Epilogue12
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 SeFilBcf1_OnSideRow4_Join17:
 	call	SeMenu_SendEvent
@@ -3322,7 +3322,7 @@ SeFilBcf1_OnSideRow5:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeFilBcf1_OnSideRow5_Epilogue13
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 SeFilBcf1_OnSideRow5_Epilogue13:
@@ -3337,7 +3337,7 @@ SeFilBcf1_OnSwitch25:
 	jr	z, SeFilBcf1_OnSwitch25_Epilogue14
 	cp	(xsp+2), 0
 	jr	nz, SeFilBcf1_OnSwitch25_Epilogue14
-	ldw	wa, 54
+	ldw	wa, TT_SEFILFIL2
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 SeFilBcf1_OnSwitch25_Epilogue14:
@@ -3354,11 +3354,11 @@ SeFilBcf1_OnSwitch15:
 	jr	nz, SeFilBcf1_OnSwitch15_Epilogue35
 	cp	(xsp), 0
 	jr	nz, SeFilBcf1_OnSwitch15_Skip40
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	jr	SeFilBcf1_OnSwitch15_Join42
 SeFilBcf1_OnSwitch15_Skip40:
-	ldw	wa, 61
+	ldw	wa, TT_SECOPY
 	ld	bc, 0:i3
 SeFilBcf1_OnSwitch15_Join42:
 	call	SeMenu_SendEvent
@@ -3534,7 +3534,7 @@ SeFilFil2_OnColumn6_Skip44:
 SeFilFil2_OnSideRow1:
 	cp	a, 0:i3
 	jp	nz, (SeMenu_ToggleSolo:24)
-	ldw	wa, 55
+	ldw	wa, TT_SEFILENV1
 	ld	bc, 0:i3
 	jp	SeMenu_SendEvent
 SeFilFil2_OnSideRow2:
@@ -3544,14 +3544,14 @@ SeFilFil2_OnSideRow2:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 54
+	ldw	wa, TT_SEFILFIL2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
 SeFilFil2_OnSideRow3:
 	cp	a, 0:i3
 	jr	nz, SeFilFil2_OnSideRow3_Skip45
-	ldw	wa, 57
+	ldw	wa, TT_SEFILLFO1
 	ld	bc, 0:i3
 	jr	SeFilFil2_OnSideRow3_Join43
 SeFilFil2_OnSideRow3_Skip45:
@@ -3559,7 +3559,7 @@ SeFilFil2_OnSideRow3_Skip45:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 54
+	ldw	wa, TT_SEFILFIL2
 	ld	bc, 1:i3
 SeFilFil2_OnSideRow3_Join43:
 	call	SeMenu_SendEvent
@@ -3571,7 +3571,7 @@ SeFilFil2_OnSideRow4:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 54
+	ldw	wa, TT_SEFILFIL2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
@@ -3582,14 +3582,14 @@ SeFilFil2_OnSideRow5:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 54
+	ldw	wa, TT_SEFILFIL2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
 SeFilFil2_OnSwitch25:
 	cp	a, 0:i3
 	ret	z
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -3598,7 +3598,7 @@ SeFilFil2_OnSwitch15:
 	ret	nz
 	ld	wa, 0:i3
 	call	SeMenu_SetupMenuDisplay
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -3645,7 +3645,7 @@ SeFilEnv1_OnSideRow1:
 SeFilEnv1_OnSideRow2:
 	cp	a, 0:i3
 	jr	nz, SeFilEnv1_OnSideRow2_Skip46
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	jr	SeFilEnv1_OnSideRow2_Join44
 SeFilEnv1_OnSideRow2_Skip46:
@@ -3653,7 +3653,7 @@ SeFilEnv1_OnSideRow2_Skip46:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 55
+	ldw	wa, TT_SEFILENV1
 	ld	bc, 1:i3
 SeFilEnv1_OnSideRow2_Join44:
 	call	SeMenu_SendEvent
@@ -3661,7 +3661,7 @@ SeFilEnv1_OnSideRow2_Join44:
 SeFilEnv1_OnSideRow3:
 	cp	a, 0:i3
 	jr	nz, SeFilEnv1_OnSideRow3_Skip47
-	ldw	wa, 57
+	ldw	wa, TT_SEFILLFO1
 	ld	bc, 0:i3
 	jr	SeFilEnv1_OnSideRow3_Join45
 SeFilEnv1_OnSideRow3_Skip47:
@@ -3669,7 +3669,7 @@ SeFilEnv1_OnSideRow3_Skip47:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 55
+	ldw	wa, TT_SEFILENV1
 	ld	bc, 1:i3
 SeFilEnv1_OnSideRow3_Join45:
 	call	SeMenu_SendEvent
@@ -3684,7 +3684,7 @@ SeFilEnv1_OnSideRow4_Skip48:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 55
+	ldw	wa, TT_SEFILENV1
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
@@ -3698,14 +3698,14 @@ SeFilEnv1_OnSideRow5_Skip49:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 55
+	ldw	wa, TT_SEFILENV1
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
 SeFilEnv1_OnSwitch25:
 	cp	a, 0:i3
 	ret	nz
-	ldw	wa, 56
+	ldw	wa, TT_SEFILENV2
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -3714,7 +3714,7 @@ SeFilEnv1_OnSwitch15:
 	ret	nz
 	ld	wa, 0:i3
 	call	SeMenu_SetupMenuDisplay
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -3750,7 +3750,7 @@ SeFilEnv2_OnSideRow1:
 SeFilEnv2_OnSideRow2:
 	cp	a, 0:i3
 	jr	nz, SeFilEnv2_OnSideRow2_Skip50
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	jr	SeFilEnv2_OnSideRow2_Join46
 SeFilEnv2_OnSideRow2_Skip50:
@@ -3758,7 +3758,7 @@ SeFilEnv2_OnSideRow2_Skip50:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 56
+	ldw	wa, TT_SEFILENV2
 	ld	bc, 1:i3
 SeFilEnv2_OnSideRow2_Join46:
 	call	SeMenu_SendEvent
@@ -3766,7 +3766,7 @@ SeFilEnv2_OnSideRow2_Join46:
 SeFilEnv2_OnSideRow3:
 	cp	a, 0:i3
 	jr	nz, SeFilEnv2_OnSideRow3_Skip51
-	ldw	wa, 57
+	ldw	wa, TT_SEFILLFO1
 	ld	bc, 0:i3
 	jr	SeFilEnv2_OnSideRow3_Join47
 SeFilEnv2_OnSideRow3_Skip51:
@@ -3774,7 +3774,7 @@ SeFilEnv2_OnSideRow3_Skip51:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 56
+	ldw	wa, TT_SEFILENV2
 	ld	bc, 1:i3
 SeFilEnv2_OnSideRow3_Join47:
 	call	SeMenu_SendEvent
@@ -3786,7 +3786,7 @@ SeFilEnv2_OnSideRow4:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 56
+	ldw	wa, TT_SEFILENV2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
@@ -3797,14 +3797,14 @@ SeFilEnv2_OnSideRow5:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 56
+	ldw	wa, TT_SEFILENV2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
 SeFilEnv2_OnSwitch25:
 	cp	a, 0:i3
 	ret	z
-	ldw	wa, 55
+	ldw	wa, TT_SEFILENV1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -3813,7 +3813,7 @@ SeFilEnv2_OnSwitch15:
 	ret	nz
 	ld	wa, 0:i3
 	call	SeMenu_SetupMenuDisplay
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -3848,13 +3848,13 @@ SeFilLfo1_OnColumn8:
 SeFilLfo1_OnSideRow1:
 	cp	a, 0:i3
 	jp	nz, (SeMenu_ToggleSolo:24)
-	ldw	wa, 55
+	ldw	wa, TT_SEFILENV1
 	ld	bc, 0:i3
 	jp	SeMenu_SendEvent
 SeFilLfo1_OnSideRow2:
 	cp	a, 0:i3
 	jr	nz, SeFilLfo1_OnSideRow2_Skip52
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 	jp	SeMenu_SendEvent
 SeFilLfo1_OnSideRow2_Skip52:
@@ -3890,7 +3890,7 @@ SeFilLfo1_OnSwitch15:
 	ret	nz
 	ld	wa, 0:i3
 	call	SeMenu_SetupMenuDisplay
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
