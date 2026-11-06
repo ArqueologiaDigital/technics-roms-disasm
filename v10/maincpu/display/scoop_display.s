@@ -9667,7 +9667,7 @@ SystemInit_StepHandler_0_Skip7:
 ; SqStep_WriteClockWrapMarker: Counts one clock wrap (word 0x0D58 += 1) and writes one 0x81 event: falls into
 ;   SqStep_WriteWrapMarker, which passes the one-byte record {0x81} at 0x0E48 (W = 1) to
 ;   SystemInit_StepHandler_0_Helper2, all registers preserved. Basis: callers + body -- SqStep_WriteClockWrapMarkers
-;   calls it once per 96-clock unit of the step (0x0DCD), and SqStep_PanelButtonDispatch_Tbl2_Sub2 each time the clock
+;   calls it once per 96-clock unit of the step (SQSTEP_SEEK_UNITS), and SqStep_PanelButtonDispatch_Tbl2_Sub2 each time the clock
 ;   0x0D57 passes 96; the meaning of 0x81 is taken from that pairing only, as in SqStep_WriteClockWrapMarkers.
 SqStep_WriteClockWrapMarker:
 	incw	1, (SQSTEP_WRAP_COUNT:16)
@@ -10434,7 +10434,7 @@ SeqTrack_NextEvent_AtEnd:
 SeqTrack_NextEvent_Return:
 	ret
 
-; SeqTrack_NextEventKeepWrapCount: SeqTrack_NextEvent with SQSTEP_WRAP_COUNT (0x0D58) saved and restored around it.  Basis: body.
+; SeqTrack_NextEventKeepWrapCount: SeqTrack_NextEvent with SQSTEP_WRAP_COUNT (SQSTEP_WRAP_COUNT) saved and restored around it.  Basis: body.
 SeqTrack_NextEventKeepWrapCount:
 	push_sd16w 0x58, 0x0d
 	call SeqTrack_NextEvent
@@ -10446,7 +10446,7 @@ SeqTrack_PrevEvent:
 	ld	w, 1:opc
 	call	SeqTrack_StepEvent
 	ret
-; SeqTrack_PrevEventKeepWrapCount: SeqTrack_PrevEvent with SQSTEP_WRAP_COUNT (0x0D58) saved and restored; W = 255 at the start of the track.
+; SeqTrack_PrevEventKeepWrapCount: SeqTrack_PrevEvent with SQSTEP_WRAP_COUNT (SQSTEP_WRAP_COUNT) saved and restored; W = 255 at the start of the track.
 ;   Backward twin of SeqTrack_NextEventKeepWrapCount.  Basis: callers + body -- ScoopDisp_SeekBackWrapMarkers
 ;   walks back to the preceding 0x81 with it.
 SeqTrack_PrevEventKeepWrapCount:

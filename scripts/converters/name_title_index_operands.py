@@ -41,7 +41,12 @@ PRIMITIVES = {'UI_ChangeTitleByIndex': ('a',), 'UI_InterruptTitleByIndex': ('a',
 #   FileIO_DiskEventDispatch: `ld (xsp), c; ld (xsp+2), a`; floppy/HD with bit 0 of 0x340F4 set
 #     -> UI_ChangeTitleByIndex((xsp)) = C, otherwise A.
 #   FileIO_GetDiskCapacity: `ld (xsp), a`; floppy/HD -> UI_ChangeTitleByIndex((xsp)) = A.
-STACK_FORWARDERS = {'FileIO_DiskEventDispatch': ('a', 'c'), 'FileIO_GetDiskCapacity': ('a',)}
+#   SeMenu_SendEvent (audio/semenu_routines.s; lane kn5000-notes, 2026-11-06): `ld (xsp), c`; C = 0 ->
+#     UI_ChangeTitleByIndex(A), otherwise UI_PostRefreshEvent; either way C is stored in 0x698.  It is jumped
+#     to from inside its own file (tail calls), so the register walk never sees its entry as an entry and
+#     the fixpoint below does not find it: the sound editor's page changes all go through it.
+STACK_FORWARDERS = {'FileIO_DiskEventDispatch': ('a', 'c'), 'FileIO_GetDiskCapacity': ('a',),
+                    'SeMenu_SendEvent': ('a',)}
 REGS = {'a': {'a', 'wa', 'xwa'}, 'c': {'c', 'bc', 'xbc'}}
 LABEL = re.compile(r'^([A-Za-z_.$][\w.$]*):')
 BRANCH = re.compile(r'^(jr|jrl|jp|djnz)\s+(?:(\w+)\s*,\s*)?(\(?[A-Za-z_.$][\w.$]*(?::24)?\)?)\s*$')

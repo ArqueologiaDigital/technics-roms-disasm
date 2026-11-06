@@ -1,4 +1,4 @@
-dispatch-table census, 2026-11-06, measured at bc080f57 (+ uncommitted changes)
+dispatch-table census, 2026-11-06, measured at eb8fef84
 tool: scripts/analysis/dispatch_table_census/ (rules in census.py's docstring)
 
 image      framed  used  NOT   newT newT(x) spellT stale staleT |   U U-NOT U-newT null | D-unres

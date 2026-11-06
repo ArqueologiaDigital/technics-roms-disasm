@@ -7,7 +7,7 @@
 ; =============================================================================
 
 Rhythm_CompareAndTrigger:
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jrl z, Rhythm_SaveNoteState
 	bit 6, (0x28ac:16)
 	jr z, Rhythm_CompareAndTriggerNotes
@@ -153,8 +153,8 @@ Rhythm_SetupChannel_D7:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x32f4:16), 251
-	or (0x32f4:16), 8
+	and (ACC_PART_FLAGS:16), 251
+	or (ACC_PART_FLAGS:16), 8
 	ld (ACC_PART_BIT:16), 4
 	calr RhythmEvt_ProcessNote
 	ret
@@ -167,8 +167,8 @@ Rhythm_SetupChannel_D4:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING+1:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x32f4:16), 247
-	or (0x32f4:16), 4
+	and (ACC_PART_FLAGS:16), 247
+	or (ACC_PART_FLAGS:16), 4
 	ld (ACC_PART_BIT:16), 8
 	calr RhythmEvt_ProcessNote
 	ret
@@ -181,7 +181,7 @@ Rhythm_SetupChannel_D5:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING+2:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x32f4:16), 243
+	and (ACC_PART_FLAGS:16), 243
 	ld (ACC_PART_BIT:16), 16
 	calr RhythmEvt_ProcessNote
 	ret
@@ -194,7 +194,7 @@ Rhythm_SetupChannel_D6:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING+3:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x32f4:16), 243
+	and (ACC_PART_FLAGS:16), 243
 	ld (ACC_PART_BIT:16), 32
 	calr RhythmEvt_ProcessNote
 	ret
@@ -265,9 +265,9 @@ RhythmEvt_NoteOn91:
 RhythmEvt_ApplyTranspose:
 	ld	a, (xhl+iy)
 	calr Rhythm_CheckFixedNote
-	bit 4, (0x32f4:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr nz, RhythmEvt_PostProcess
-	bit 3, (0x32f4:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, RhythmEvt_ApplyNoteRange
 	calr Rhythm_BassToRoot
 
@@ -309,9 +309,9 @@ RhythmEvt_FullLoop:
 	call RingBuf_AdvanceIndex
 	ld	a, (xhl+iy)
 	calr Rhythm_CheckFixedNote
-	bit 4, (0x32f4:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr nz, RhythmEvt_Full90_PostTransp
-	bit 3, (0x32f4:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, RhythmEvt_Full90_PostRange
 	calr Rhythm_BassToRoot
 
@@ -345,9 +345,9 @@ RhythmEvt_Full91:
 	call RingBuf_AdvanceIndex
 	ld	a, (xhl+iy)
 	calr Rhythm_CheckFixedNote
-	bit 4, (0x32f4:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr nz, RhythmEvt_Full91_PostTransp
-	bit 3, (0x32f4:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, RhythmEvt_Full91_PostRange
 	calr Rhythm_BassToRoot
 
@@ -374,10 +374,10 @@ RhythmEvt_FullDone:
 
 ; Sets bit 4 of 0x32f4 when velocity A is 0x78 or more, clears it otherwise.
 Rhythm_CheckFixedNote:
-	and (0x32f4:16), 239
+	and (ACC_PART_FLAGS:16), 239
 	cp a, 0x78
 	jr c, Rhythm_VelThreshReturn
-	or (0x32f4:16), 16
+	or (ACC_PART_FLAGS:16), 16
 
 Rhythm_VelThreshReturn:
 	ret
@@ -413,7 +413,7 @@ Rhythm_AdvanceDone:
 
 ; Applies the chord-voicing correction to a note.
 ;   Active when bit 0 or 1 of 0x32d7 is set, or when no part has the bits 0x3f set in
-;   0x3316..0x3318 and bit 5 of 0x32f3 is set.  Then 0x332e = A + (0x32cb) + 1 - 12, bit 0 of
+;   0x3316..0x3318 and bit 5 of 0x32f3 is set.  Then 0x332e = A + (ACC_CUR_TURNOVER) + 1 - 12, bit 0 of
 ;   0x332d is set, A loses its pitch-class offset (A - Note_PitchClassTable[A]) and 0x3433 /
 ;   0x3434 are cleared.  Bit 5 of 0x32f3 is always cleared.
 Rhythm_BassToRoot:
@@ -483,9 +483,9 @@ Rhythm_ChordConvertNote90:
 	jr Rhythm_VelLookA_Done
 
 Rhythm_VelLookA_CheckEmpty:
-	bit 4, (0x32f4:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VelLookA_CheckRange
-	and (0x32f4:16), 239
+	and (ACC_PART_FLAGS:16), 239
 	ld a, w
 	jr Rhythm_VelLookA_Done
 
@@ -497,12 +497,12 @@ Rhythm_VelLookA_CheckRange:
 
 Rhythm_VelLookA_SelectTable:
 	ld xiy, Rhythm_ChordRowMap
-	bit 2, (0x32f4:16)
+	bit 2, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VelLookA_CheckBit3
 	ld xiy, Rhythm_ChordRowMap_Acc1
 
 Rhythm_VelLookA_CheckBit3:
-	bit 3, (0x32f4:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VelLookA_TableLookup
 	ld xiy, Rhythm_ChordRowMap_Bass
 
@@ -535,7 +535,7 @@ Rhythm_NotePitchClass:
 ; byte 0x32D8 (index clamped to 0..0x2F, anything larger reads entry 0) to a
 ; ROW NUMBER of the 16-byte-row table at Rhythm_ChordNoteDeltaRows.
 ; Readers (all the same pattern): Rhythm_ChordConvertNote90, Rhythm_ChordConvertNote91
-; (second half) and Rhythm_TranspMod_BaseApply:
+; (second half) and Rhythm_PhraseChordRow:
 ;     ld xiy, <variant> / ldb_sri L, ..., 0xf4, 0xec     ; L := variant[L]
 ;     sla hl, 4 / ld xiy, Rhythm_ChordNoteDeltaRows
 ;     lda_dri XIY, ...  ; xiy += row*16  /  ldb_sri A, ... ; A := row[A]
@@ -545,7 +545,7 @@ Rhythm_NotePitchClass:
 ; Variant choice: bit 2 of RAM 0x32F4 selects +0x31 (the positional alias
 ; Rhythm_ChordRowMap_Acc1), bit 3 selects +0x62 (..._0x62) and,
 ; being tested second, wins over bit 2;
-; Rhythm_TranspMod_BaseApply always uses +0x31.  Stride 0x31 = 49 is pinned by
+; Rhythm_PhraseChordRow always uses +0x31.  Stride 0x31 = 49 is pinned by
 ; those two aliases; the tables end exactly at Rhythm_TransposeNote (147 B).
 ; Values 0..20 = row numbers.  What each 16-byte row holds belongs to the
 ; documentation of Rhythm_ChordNoteDeltaRows (C data, another file).
@@ -556,10 +556,10 @@ Rhythm_ChordRowMap:
 	.byte 0, 1, 2, 8, 10, 3, 8, 4, 0, 18, 19, 20, 0, 5, 0, 0
 	.byte 5, 0, 0, 1, 1, 6, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte 0	; entry 48: past the 0..0x2F index clamp, never read
-	; +0x31: bit 2 of 0x32F4 set; always used by Rhythm_TranspMod_BaseApply
+	; +0x31: bit 2 of 0x32F4 set; always used by Rhythm_PhraseChordRow
 ; Rhythm_ChordRowMap_Acc1: Second 49-byte variant of Rhythm_ChordRowMap (RAM 0x32D8, clamped 0..0x2F -> row
 ;   of Rhythm_ChordNoteDeltaRows), used while bit 2 of 0x32F4 is set, i.e. for the D4 (status 0x94) channel;
-;   Rhythm_TranspMod_BaseApply always uses it. Basis: readers + bytes.
+;   Rhythm_PhraseChordRow always uses it. Basis: readers + bytes.
 Rhythm_ChordRowMap_Acc1:
 	.byte 0, 0, 0, 1, 5, 0, 3, 9, 10, 7, 4, 2, 5, 6, 6, 11
 	.byte 12, 14, 15, 8, 10, 16, 17, 4, 13, 18, 19, 20, 0, 5, 12, 13
@@ -574,7 +574,7 @@ Rhythm_ChordRowMap_Bass:
 
 Rhythm_TransposeNote:
 	ld a, (ACC_CHORD_ROOT:16)
-	bit 3, (0x32f4:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_Transp_CheckZero
 	ld a, (ACC_CHORD_BASS:16)
 
@@ -634,9 +634,9 @@ Rhythm_ChordConvertNote91:
 	jrl Rhythm_VoiceMap_Done
 
 Rhythm_VoiceMap_CheckInstr:
-	bit 4, (0x32f4:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VoiceMap_CheckBit4
-	and (0x32f4:16), 239
+	and (ACC_PART_FLAGS:16), 239
 	jrl Rhythm_VoiceMap_Done
 
 Rhythm_VoiceMap_CheckBit4:
@@ -647,7 +647,7 @@ Rhythm_VoiceMap_CheckBit4:
 
 Rhythm_VoiceMap_ClampInstr:
 	ld xiy, Rhythm_ChordExtSelect
-	bit 3, (0x32f4:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VoiceMap_SelectTable
 	ld xiy, Rhythm_ChordExtSelect_Bass
 
@@ -687,12 +687,12 @@ Rhythm_VoiceMap_ApplyBase:
 
 Rhythm_VoiceMap_Inst2Clamp:
 	ld xiy, Rhythm_ChordRowMap
-	bit 2, (0x32f4:16)
+	bit 2, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VoiceMap_Inst2Bit2
 	ld xiy, Rhythm_ChordRowMap_Acc1
 
 Rhythm_VoiceMap_Inst2Bit2:
-	bit 3, (0x32f4:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VoiceMap_Inst2Bit3
 	ld xiy, Rhythm_ChordRowMap_Bass
 
@@ -748,9 +748,9 @@ Rhythm_ChordConvertNoteFast:
 	jr Rhythm_VelComp_Done
 
 Rhythm_VelComp_CheckBit4:
-	bit 4, (0x32f4:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VelComp_ClampInstr
-	and (0x32f4:16), 239
+	and (ACC_PART_FLAGS:16), 239
 	ld a, w
 	jr Rhythm_VelComp_Done
 
@@ -762,7 +762,7 @@ Rhythm_VelComp_ClampInstr:
 
 Rhythm_VelComp_SelectTable:
 	ld xiy, Rhythm_ChordRowMapFast
-	bit 2, (0x32f4:16)
+	bit 2, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VelComp_Lookup
 	ld xiy, Rhythm_ChordRowMapFast_Acc1
 
@@ -823,16 +823,16 @@ Rhythm_DispatchCh_D7:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x32f4:16), 251
-	or (0x32f4:16), 8
+	and (ACC_PART_FLAGS:16), 251
+	or (ACC_PART_FLAGS:16), 8
 	ld w, 0x97:opc
-	ld xix, 0x30f4
+	ld xix, ACC_BASS_NOTES
 
 Rhythm_DispatchCh_D7_Loop:
 	ld (ACC_PART_BIT:16), 4
 	calr Rhythm_SingleNoteHandler
 	add xix, 0x9
-	cp xix, 0x313c
+	cp xix, ACC_BASS_NOTES+72
 	jr c, Rhythm_DispatchCh_D7_Loop
 	ret
 
@@ -843,16 +843,16 @@ Rhythm_DispatchCh_D4:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING+1:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x32f4:16), 247
-	or (0x32f4:16), 4
+	and (ACC_PART_FLAGS:16), 247
+	or (ACC_PART_FLAGS:16), 4
 	ld w, 0x94:opc
-	ld xix, 0x313c
+	ld xix, ACC_ACCOMP1_NOTES
 
 Rhythm_DispatchCh_D4_Loop:
 	ld (ACC_PART_BIT:16), 8
 	calr Rhythm_SingleNoteHandler
 	add xix, 0x9
-	cp xix, 0x3184
+	cp xix, ACC_ACCOMP1_NOTES+72
 	jr c, Rhythm_DispatchCh_D4_Loop
 	ret
 
@@ -863,15 +863,15 @@ Rhythm_DispatchCh_D5:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING+2:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x32f4:16), 243
+	and (ACC_PART_FLAGS:16), 243
 	ld w, 0x95:opc
-	ld xix, 0x3184
+	ld xix, ACC_ACCOMP2_NOTES
 
 Rhythm_DispatchCh_D5_Loop:
 	ld (ACC_PART_BIT:16), 16
 	calr Rhythm_SingleNoteHandler
 	add xix, 0x9
-	cp xix, 0x31cc
+	cp xix, ACC_ACCOMP2_NOTES+72
 	jr c, Rhythm_DispatchCh_D5_Loop
 	ret
 
@@ -882,15 +882,15 @@ Rhythm_DispatchCh_D6:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING+3:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x32f4:16), 243
+	and (ACC_PART_FLAGS:16), 243
 	ld w, 0x96:opc
-	ld xix, 0x31cc
+	ld xix, ACC_ACCOMP3_NOTES
 
 Rhythm_DispatchCh_D6_Loop:
 	ld (ACC_PART_BIT:16), 32
 	calr Rhythm_SingleNoteHandler
 	add xix, 0x9
-	cp xix, 0x3214
+	cp xix, ACC_ACCOMP3_NOTES+72
 	jr c, Rhythm_DispatchCh_D6_Loop
 	ret
 
@@ -992,9 +992,9 @@ Rhythm_MatchedPhrase_NonNote:
 
 Rhythm_MatchedPhrase_Process:
 	calr Rhythm_CheckFixedNote
-	bit 4, (0x32f4:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr nz, Rhythm_MatchedPhrase_Output
-	bit 3, (0x32f4:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_MatchedPhrase_PostRange
 	calr Rhythm_BassToRoot
 
@@ -1014,9 +1014,9 @@ Rhythm_MismatchedPhrase:
 	pushw wa
 	ld a, (xix + 6)
 	calr Rhythm_CheckFixedNote
-	bit 4, (0x32f4:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr nz, Rhythm_Mismatch90_Output
-	bit 3, (0x32f4:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_Mismatch90_PostRange
 	calr Rhythm_BassToRoot
 
@@ -1039,9 +1039,9 @@ Rhythm_MismatchOther:
 	ld (ACC_EVENT_EXT2:16), a
 	ld a, (xix + 8)
 	calr Rhythm_CheckFixedNote
-	bit 4, (0x32f4:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr nz, Rhythm_MismatchOther_Output
-	bit 3, (0x32f4:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_MismatchOther_PostRange
 	calr Rhythm_BassToRoot
 
@@ -1164,7 +1164,7 @@ Rhythm_SendVolume_Dispatch:
 	calr Rhythm_SendVolume_D6
 	ret
 
-; When 0x332f is non-zero, sends 0xd7 0x03 (0x332f) on the rhythm byte stream.
+; When 0x332f is non-zero, sends 0xd7 0x03 (ACC_CH_CC3) on the rhythm byte stream.
 Rhythm_SendVolume_D7:
 	cp (ACC_CH_CC3:16), 0
 	jr z, Rhythm_SendVolume_D7_Skip
@@ -1318,14 +1318,14 @@ Rhythm_SaveState:
 	ld (0x32f2:16), a
 	ld a, (0x33e8:16)
 	ld (0x33e9:16), a
-	ld a, (0x3283:16)
+	ld a, (ACC_RUN_FLAGS:16)
 	and a, 0xfd
 	bit 0, a
 	jr z, Rhythm_SaveState_StoreBits
 	or a, 0x2
 
 Rhythm_SaveState_StoreBits:
-	ld (0x3283:16), a
+	ld (ACC_RUN_FLAGS:16), a
 	or (0x32f3:16), 1
 	cp (0x3280:16), 0
 	jr nz, Rhythm_SaveState_CheckFx
@@ -1599,7 +1599,7 @@ Rhythm_SeqReset_Store:
 ; `ld xix, (xiy+hl)` (xix := table[L]); if non-zero, with
 ; interrupts masked (`ei 6` .. `ei 0`) the word at (xix+6) is copied to
 ; (xix+4).  Stride 4 from `sla l, 2`; 17 entries = 68 bytes, to
-; Rhythm_TransposeWithMod.  Non-zero entries: [1] 0x2D94, [2] 0x2E94,
+; Rhythm_PhraseConvertNote.  Non-zero entries: [1] 0x2D94, [2] 0x2E94,
 ; [4] 0x2F94, [8] 0x2C94, [16] 0x2A94.  This table only selects which structure Rhythm_SeqResetCheck
 ; updates; the structures themselves are not described here.
 ; -----------------------------------------------------------------------------
@@ -1622,79 +1622,87 @@ Rhythm_SeqResetTable:
 	.long 0x00000000	; [15]
 	.long 0x00002a94	; [16]
 
-Rhythm_TransposeWithMod:
+; Converts a note of the AccompSeq phrase engine (accompseq_routines.s) for the accompaniment's chord.
+;   In: A = note; callers AccompSeq_ConvertNote90 / _91 (through Rhythm_PhraseConvertNote_Tramp) set the
+;   convert flags first.  Out: A.  A is returned unchanged when there is no chord (ACC_CHORD_TYPE or
+;   ACC_CHORD_ROOT 0) or the note is fixed (flags bit 2).  A 0x91 note (flags bit 1) first takes its rule
+;   byte (Rhythm_PhraseExtShift; a dropped note returns 0).  Then the ACCOMP1 chord-type row
+;   (Rhythm_PhraseChordRow) and the root shift with a fixed turnover of 6 and ceiling 0x7f
+;   (Rhythm_PhraseRootShift).  Unlike AccVoice_CorrectNote, the converter of the style patterns, it has no
+;   bass or root-only rule and no per-part turnover or ceiling, and leaves a note without a chord as it is.
+Rhythm_PhraseConvertNote:
 	cp (ACC_CHORD_TYPE:16), 0
-	jr z, Rhythm_TranspMod_Return
+	jr z, Rhythm_PhraseConv_Return
 	cp (ACC_CHORD_ROOT:16), 0
-	jr z, Rhythm_TranspMod_Return
-	bit 2, (0x33e5:16)
-	jr nz, Rhythm_TranspMod_Return
-	bit 1, (0x33e5:16)
-	jr z, Rhythm_TranspMod_ApplyBoth
-	calr Rhythm_TranspMod_ModCheck
-	bit 0, (0x33e5:16)
-	jr nz, Rhythm_TranspMod_Return
+	jr z, Rhythm_PhraseConv_Return
+	bit 2, (ACCSEQ_CONVERT_FLAGS:16)
+	jr nz, Rhythm_PhraseConv_Return
+	bit 1, (ACCSEQ_CONVERT_FLAGS:16)
+	jr z, Rhythm_PhraseConv_ApplyBoth
+	calr Rhythm_PhraseExtShift
+	bit 0, (ACCSEQ_CONVERT_FLAGS:16)
+	jr nz, Rhythm_PhraseConv_Return
 
-Rhythm_TranspMod_ApplyBoth:
-	calr Rhythm_TranspMod_BaseApply
-	calr Rhythm_TranspMod_OctaveWrap
+Rhythm_PhraseConv_ApplyBoth:
+	calr Rhythm_PhraseChordRow
+	calr Rhythm_PhraseRootShift
 
-Rhythm_TranspMod_Return:
+Rhythm_PhraseConv_Return:
 	ret
 
-; Clears bit 0 of 0x33e5.  L = Rhythm_ChordExtSelect[(0x32d8)] (index 0 when 0x30 or
-; more); L = 0 leaves A.  Otherwise the modifier H = (0x33e6) for L = 1, else (0x33e7): bit 5 ->
-; A = 0 and bit 0 of 0x33e5 set; otherwise A + (H & 15), or A - (H & 15) with bit 4.
-Rhythm_TranspMod_ModCheck:
-	and (0x33e5:16), 254
+; Clears bit 0 of ACCSEQ_CONVERT_FLAGS.  L = Rhythm_ChordExtSelect[(ACC_CHORD_TYPE)] (index 0 when 0x30 or
+; more); L = 0 leaves A.  Otherwise the modifier H = (ACCSEQ_NOTE_EXT1) for L = 1, else (ACCSEQ_NOTE_EXT2):
+; bit 5 -> A = 0 and bit 0 of ACCSEQ_CONVERT_FLAGS set; otherwise A + (H & 15), or A - (H & 15) with bit 4.
+Rhythm_PhraseExtShift:
+	and (ACCSEQ_CONVERT_FLAGS:16), 254
 	ld l, (ACC_CHORD_TYPE:16)
 	cp l, 0x30
-	jr c, Rhythm_TranspMod_LookupTable
+	jr c, Rhythm_PhraseConv_LookupTable
 	xor l, l
 
-Rhythm_TranspMod_LookupTable:
+Rhythm_PhraseConv_LookupTable:
 	ld xiy, Rhythm_ChordExtSelect
 	ld	l, (xiy+l)
 	cp l, 0:i3
-	jr z, Rhythm_TranspMod_Done
-	ld h, (0x33e6:16)
+	jr z, Rhythm_PhraseConv_Done
+	ld h, (ACCSEQ_NOTE_EXT1:16)
 	cp l, 1:i3
-	jr z, Rhythm_TranspMod_Offset1
-	ld h, (0x33e7:16)
+	jr z, Rhythm_PhraseConv_Offset1
+	ld h, (ACCSEQ_NOTE_EXT2:16)
 
-Rhythm_TranspMod_Offset1:
+Rhythm_PhraseConv_Offset1:
 	bit 5, h
-	jr z, Rhythm_TranspMod_MuteCheck
+	jr z, Rhythm_PhraseConv_MuteCheck
 	ld a, 0x0:opc
-	or (0x33e5:16), 1
-	jr Rhythm_TranspMod_Done
+	or (ACCSEQ_CONVERT_FLAGS:16), 1
+	jr Rhythm_PhraseConv_Done
 
-Rhythm_TranspMod_MuteCheck:
+Rhythm_PhraseConv_MuteCheck:
 	bit 4, h
-	jr nz, Rhythm_TranspMod_SubOffset
+	jr nz, Rhythm_PhraseConv_SubOffset
 	and h, 0xf
 	add a, h
-	jr Rhythm_TranspMod_Done
+	jr Rhythm_PhraseConv_Done
 
-Rhythm_TranspMod_SubOffset:
+Rhythm_PhraseConv_SubOffset:
 	and h, 0xf
 	sub a, h
 
-Rhythm_TranspMod_Done:
+Rhythm_PhraseConv_Done:
 	ret
 
 ; In: A = note.  W = note + byte [pitch class of A (Note_PitchClassTable)] of the 16-byte row
-; Rhythm_ChordRowMap_Acc1[(0x32d8)] (row 0 when 0x30 or more) of Rhythm_ChordNoteDeltaRows.
-Rhythm_TranspMod_BaseApply:
+; Rhythm_ChordRowMap_Acc1[(ACC_CHORD_TYPE)] (row 0 when 0x30 or more) of Rhythm_ChordNoteDeltaRows.
+Rhythm_PhraseChordRow:
 	ld w, a
 	ld xiy, Note_PitchClassTable
 	ld	a, (xiy+a)
 	ld l, (ACC_CHORD_TYPE:16)
 	cp l, 0x30
-	jr c, Rhythm_TranspMod_BaseLookup
+	jr c, Rhythm_PhraseConv_BaseLookup
 	xor l, l
 
-Rhythm_TranspMod_BaseLookup:
+Rhythm_PhraseConv_BaseLookup:
 	extz hl
 	ld xiy, Rhythm_ChordRowMap_Acc1
 	ld	l, (xiy+hl)
@@ -1706,36 +1714,36 @@ Rhythm_TranspMod_BaseLookup:
 	add w, a
 	ret
 
-; Adds the offset (0x32d9) - 1 to the note W (an offset of 7 or more is taken as offset - 12),
+; Adds the offset (ACC_CHORD_ROOT) - 1 to the note W (an offset of 7 or more is taken as offset - 12),
 ; correcting by an octave when bit 7 of the sum is set, then lowers it by octaves to 0x7f or below.
 ; Out: A = W.
-Rhythm_TranspMod_OctaveWrap:
+Rhythm_PhraseRootShift:
 	ld a, (ACC_CHORD_ROOT:16)
 	dec 1, a
 	cp a, 7:i3
-	jr nc, Rhythm_TranspMod_WrapNeg
+	jr nc, Rhythm_PhraseConv_WrapNeg
 	add w, a
 	bit 7, w
-	jr z, Rhythm_TranspMod_WrapJump
+	jr z, Rhythm_PhraseConv_WrapJump
 	sub w, 0xc
 
-Rhythm_TranspMod_WrapJump:
-	jr Rhythm_TranspMod_WrapClamp
+Rhythm_PhraseConv_WrapJump:
+	jr Rhythm_PhraseConv_WrapClamp
 
-Rhythm_TranspMod_WrapNeg:
+Rhythm_PhraseConv_WrapNeg:
 	sub a, 0xc
 	add w, a
 	bit 7, w
-	jr z, Rhythm_TranspMod_WrapClamp
+	jr z, Rhythm_PhraseConv_WrapClamp
 	add w, 0xc
 
-Rhythm_TranspMod_WrapClamp:
+Rhythm_PhraseConv_WrapClamp:
 	cp w, 0x7f
-	jr ule, Rhythm_TranspMod_WrapDone
+	jr ule, Rhythm_PhraseConv_WrapDone
 	sub w, 0xc
-	jr Rhythm_TranspMod_WrapClamp
+	jr Rhythm_PhraseConv_WrapClamp
 
-Rhythm_TranspMod_WrapDone:
+Rhythm_PhraseConv_WrapDone:
 	ld a, w
 	ret
 

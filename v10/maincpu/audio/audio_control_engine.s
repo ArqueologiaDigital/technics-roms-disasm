@@ -9603,7 +9603,7 @@ VoiceMode_ParamDispatch_Sentinel:
 
 
 ; Jump table: 8 x .long code pointer.  Reader VoiceMode_ParamDispatch:
-;   ld (xiy), 0xff / ld a, (0x91b6:16) / ld (0x90f8:16), a / extz hl
+;   ld (xiy), 0xff / ld a, (0x91b6:16) / ld (PANEL_EVENT_SOURCE), a / extz hl
 ;   ld l, (0x91b5:16) / and l, 0x70 / srl hl, 2
 ;   ld xiy, VoiceMode_ParamDispatch_Table / ld_sril3 XIY, 0x07, 0xf4, 0xec
 ;   call (xiy)
@@ -11207,7 +11207,7 @@ MidiStream_PartEventMap_Bass:	; part record 0x13
 	.fill	8, 1, 0xff
 ; MidiCC_RxCC83_SetParamBitsAndQueue: CC83 on part 25: merges bits 6-7 of E into the byte at 0xFDA1 (bits 0-5 kept),
 ;   puts the result in E and queues the event BC/DE (BC = 0x0B98: param 0x0B of target 0x98, D = 0xC0 mask) on the
-;   SwbtWr queue; marks (0x90F8) = 0xFF. What bits 6-7 of that byte control is not established. Basis: callers + body
+;   SwbtWr queue; marks (PANEL_EVENT_SOURCE) = 0xFF. What bits 6-7 of that byte control is not established. Basis: callers + body
 ;   -- the only caller MidiCC_Handler_BitManipulation is CC function 18 <- CC83, taken only for part 25 with bit 2 of
 ;   (0xFD51) set, E from MidiCC_CC83_ValueMap (value 0/1/2 -> 0x00/0x80/0x40).
 MidiCC_RxCC83_SetParamBitsAndQueue:
@@ -11256,7 +11256,7 @@ MidiStream_DispatchData:
 	ret
 ; MidiCC_Switch_WritePartParamAndQueue: Switch-controller copy of MidiCC_WritePartParamAndQueue: writes E under mask D
 ;   into parameter byte B of part C's block (MIDI_WriteVoiceParamDirect, the same body as MIDI_WriteVoiceParamCC) and
-;   queues the event on the SwbtWr queue; marks (0x90F8) = 0xFF. The caller has already set E to D (on) or 0 (off).
+;   queues the event on the SwbtWr queue; marks (PANEL_EVENT_SOURCE) = 0xFF. The caller has already set E to D (on) or 0 (off).
 ;   Basis: callers + body -- reached only from MidiCC_Helper_ConditionalESetup, the on/off tail (value >= 0x40) shared
 ;   by CC64 Sustain, CC94 and CC91's target 0x60.
 MidiCC_Switch_WritePartParamAndQueue:
@@ -11338,7 +11338,7 @@ MidiCC_SetPendingPartModulation:
 	ret
 ; MidiCC_DataEntry_WritePartParamAndQueue: Data-entry (CC6/CC38) copy of MidiCC_WritePartParamAndQueue, byte for byte:
 ;   writes the value into the target part's parameter byte under mask D (MIDI_WriteVoiceParamCC on (MIDIRX_PART_EVENT)/(0x9646)),
-;   queues the event on the SwbtWr queue and marks (0x90F8) = 0xFF. Basis: callers + body -- the only callers are the
+;   queues the event on the SwbtWr queue and marks (PANEL_EVENT_SOURCE) = 0xFF. Basis: callers + body -- the only callers are the
 ;   CC6 and CC38 data-entry handlers.
 MidiCC_DataEntry_WritePartParamAndQueue:
 	ld	(PANEL_EVENT_SOURCE:16), 255
@@ -11351,7 +11351,7 @@ MidiCC_DataEntry_WritePartParamAndQueue:
 	ret
 ; MidiCC_RxFunc08_QueuePartParam: Copy of MidiCC_QueuePartParam for CC functions 8 and 9, byte for byte: queues the
 ;   saved part-parameter event ((MIDIRX_PART_EVENT)/(0x9646) -> MIDI_MSG_STATUS/DATA2) on the SwbtWr queue without writing it
-;   into the part block; marks (0x90F8) = 0xFF. Basis: callers + body -- only MidiCC_RxFunc08/09 call it (no
+;   into the part block; marks (PANEL_EVENT_SOURCE) = 0xFF. Basis: callers + body -- only MidiCC_RxFunc08/09 call it (no
 ;   controller maps to those functions).
 MidiCC_RxFunc08_QueuePartParam:
 	ld	(PANEL_EVENT_SOURCE:16), 255
@@ -11364,7 +11364,7 @@ MidiCC_RxFunc08_QueuePartParam:
 	calr	MidiStream_ExtendedDispatch
 	ret
 ; MidiCC_QueuePartParam: Queues the part-parameter event saved by a MIDI receive handler ((MIDIRX_PART_EVENT) part/param,
-;   (0x9646) value/mask) on the SwbtWr event queue WITHOUT writing it into the part's parameter block; marks (0x90F8)
+;   (0x9646) value/mask) on the SwbtWr event queue WITHOUT writing it into the part's parameter block; marks (PANEL_EVENT_SOURCE)
 ;   = 0xFF. Basis: callers + body -- CC functions 12-15 and Channel Pressure.
 MidiCC_QueuePartParam:
 	ld	(PANEL_EVENT_SOURCE:16), 255
@@ -11422,7 +11422,7 @@ MidiCC_ResetAllControllers:
 	ret
 ; MidiCC_AllSoundOff_QueuePartParam: CC120 (All Sound Off) copy of MidiCC_QueuePartParam: queues the saved part event
 ;   ((MIDIRX_PART_EVENT) = 0xAE / part, (0x9646) = value / 0x7F -> MIDI_MSG_STATUS / DATA2) on the SwbtWr queue without writing a
-;   part parameter; marks (0x90F8) = 0xFF. Same as the first six instructions of MidiCC_ResetAllControllers. Basis:
+;   part parameter; marks (PANEL_EVENT_SOURCE) = 0xFF. Same as the first six instructions of MidiCC_ResetAllControllers. Basis:
 ;   callers + body -- the only caller MidiCC_Handler_TableDispatch reads MidiCC_PartTargets_CC120_AllSoundOff
 ;   (function 41 <- CC120).
 MidiCC_AllSoundOff_QueuePartParam:
@@ -11437,7 +11437,7 @@ MidiCC_AllSoundOff_QueuePartParam:
 	ret
 ; MidiCC_WritePartParamAndQueue: Writes the received controller value into the target part's parameter byte under mask
 ;   D (MIDI_WriteVoiceParamCC on (MIDIRX_PART_EVENT)/(0x9646)) and queues the same 4-byte event on the SwbtWr queue; marks
-;   (0x90F8) = 0xFF. Basis: callers + body -- Pan, Chorus and Reverb receive handlers.
+;   (PANEL_EVENT_SOURCE) = 0xFF. Basis: callers + body -- Pan, Chorus and Reverb receive handlers.
 MidiCC_WritePartParamAndQueue:
 	ld	(PANEL_EVENT_SOURCE:16), 255
 	ld	bc, (MIDIRX_PART_EVENT:16)
@@ -11873,7 +11873,7 @@ MidiStream_PartSelectDone:
 MidiStream_ExtendedDispatch:
 	ret
 ; MidiRx_ApplyProgramChange: Applies a received program change for the part in (MIDIRX_PART_EVENT) (E = program): part 20 is
-;   taken as part 72; in modes 14 (MD_CMP) and 17 (MD_SND_ARG) part 72 is ignored; marks (0x90F8) = 0xFF. Part 0 with
+;   taken as part 72; in modes 14 (MD_CMP) and 17 (MD_SND_ARG) part 72 is ignored; marks (PANEL_EVENT_SOURCE) = 0xFF. Part 0 with
 ;   bit 3 of (PANEL_MIDI) set and program < 80 writes program + 1 into param 1 of target 0x98 and queues it. Otherwise it
 ;   calls the MIDI-mode handler for (PANEL_MIDI) bits 0-1 (MidiRx_ProgramChangeModeTable: Mode0 / Mode1 / nothing /
 ;   Mode3), which ends in MidiStream_SetPartProgram. Basis: callers + body -- the only caller is MidiRx_ProgramChange

@@ -95,7 +95,7 @@ UpdSeSel_Step1_Flag40:
 	jr nz, UpdSeSel_Step1_DefaultMode
 	ld wa, 2:i3
 	call SeMenu_SetMode
-	ldw wa, 0xea
+	ldw wa, TT_DRAWBAR
 	ld bc, 0:i3
 	call SeMenu_SendEvent
 	ld wa, 0:i3
@@ -303,7 +303,7 @@ UpdSeSel_DetailedUpdate_Step3_Store:
 	call SeMenu_SetupDisplayObject
 	ld wa, 4:i3
 	call SeMenu_SetCurrentStep
-	ldw wa, 0x20
+	ldw wa, TT_SEMENU
 	ld bc, 1:i3
 	jrl UpdSeSel_DetailedUpdate_SendEventAndEnd
 
@@ -380,7 +380,7 @@ UpdSeSel_DetailedUpdate_Step2_FillTable:
 UpdSeSel_DetailedUpdate_Step2_ClearPatch:
 	ld wa, 0:i3
 	call SeMenu_SetPatchBank
-	ldw wa, 0x20
+	ldw wa, TT_SEMENU
 	ld bc, 1:i3
 
 UpdSeSel_DetailedUpdate_SendEventAndEnd:
@@ -1584,7 +1584,7 @@ UpdSeSel_DetailedUpdate_Skip12:
 UpdSeSel_DetailedUpdate_Helper6_Skip:
 	cp	a, 0:i3
 	jr	nz, UpdSeSel_DetailedUpdate_Skip13
-	ldw	wa, 53
+	ldw	wa, TT_SEFILBCF1
 	ld	bc, 0:i3
 UpdSeSel_DetailedUpdate_Join9:
 	call	SeMenu_SendEvent
@@ -2987,7 +2987,7 @@ SeCtr2_OnSideRow2_Skip47:
 	ld	wa, 1:i3
 SeCtr2_OnSideRow2_Join23:
 	call	SeCtr2_SetSelection
-	ldw	wa, 59
+	ldw	wa, TT_SECTR2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 SeCtr2_OnSideRow2_Epilogue44:
@@ -3011,7 +3011,7 @@ SeCtr2_OnSideRow3_Skip48:
 	ld	wa, 5:i3
 SeCtr2_OnSideRow3_Join24:
 	call	SeCtr2_SetSelection
-	ldw	wa, 59
+	ldw	wa, TT_SECTR2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 SeCtr2_OnSideRow3_Epilogue45:
@@ -3026,7 +3026,7 @@ SeCtr2_OnSwitch25:
 	jr	z, SeCtr2_OnSwitch25_Epilogue46
 	cp	(xsp+2), 0
 	jr	nz, SeCtr2_OnSwitch25_Epilogue46
-	ldw	wa, 60
+	ldw	wa, TT_SECTR3
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 SeCtr2_OnSwitch25_Epilogue46:
@@ -3041,11 +3041,11 @@ SeCtr2_OnSwitch15:
 	jr	nz, SeCtr2_OnSwitch15_Epilogue5
 	cp	(xsp), 0
 	jr	nz, SeCtr2_OnSwitch15_Skip3
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	jr	SeCtr2_OnSwitch15_Join2
 SeCtr2_OnSwitch15_Skip3:
-	ldw	wa, 61
+	ldw	wa, TT_SECOPY
 	ld	bc, 0:i3
 SeCtr2_OnSwitch15_Join2:
 	call	SeMenu_SendEvent
@@ -3107,14 +3107,14 @@ SeCtr3_OnColumn6:
 SeCtr3_OnSwitch25:
 	cp	a, 0:i3
 	ret	z
-	ldw	wa, 59
+	ldw	wa, TT_SECTR2
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
 SeCtr3_OnSwitch15:
 	cp	a, 0:i3
 	ret	nz
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -3606,7 +3606,7 @@ SeMenu_CopyWriteUpdate_Epilogue50:
 SeMenu_CopyWriteUpdate_Skip9:
 	ld	wa, 0:i3
 	call	SeMenu_CopyWriteUpdate_Step3_Helper14
-	ldw	wa, 62
+	ldw	wa, TT_SEWRTMEM
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	jr	SeMenu_CopyWriteUpdate_Epilogue51
@@ -3628,7 +3628,7 @@ SeMenu_CopyWriteUpdate_Skip10:
 	incw	1, (xsp+6)
 	ld	wa, (xsp+6)
 	call	SeMenu_SetupDisplayObject_Data
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	call	SeMenu_SetPartConfigBit3
@@ -3643,11 +3643,11 @@ SeMenu_CopyWriteUpdate_Epilogue51:
 	jr	nz, SeMenu_CopyWriteUpdate_Skip11
 	cp	(xsp+4), 0
 	jr	nz, SeMenu_CopyWriteUpdate_Skip51
-	ldw	wa, 33
+	ldw	wa, TT_SEEASY
 	ld	bc, 0:i3
 	jr	SeMenu_CopyWriteUpdate_Join25
 SeMenu_CopyWriteUpdate_Skip51:
-	ldw	wa, 34
+	ldw	wa, TT_SETONTON1
 	ld	bc, 0:i3
 	jr	SeMenu_CopyWriteUpdate_Join25
 SeMenu_CopyWriteUpdate_Skip11:
@@ -3659,7 +3659,7 @@ SeMenu_CopyWriteUpdate_Skip11:
 	jr	nz, SeMenu_CopyWriteUpdate_Skip52
 	ld	wa, 0:i3
 	call	SeMenu_SetPatchBank
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 1:i3
 SeMenu_CopyWriteUpdate_Join25:
 	call	SeMenu_SendEvent
@@ -3675,7 +3675,7 @@ SeMenu_CopyWriteUpdate_Skip53:
 	decm	1, (xsp+2)
 	ld	wa, (xsp+2)
 	call	SeMenu_SetupDisplayObject_Data
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	call	SeMenu_SetPartConfigBit3
@@ -3690,11 +3690,11 @@ SeMenu_CopyWriteUpdate_Epilogue11:
 	jr	nz, SeMenu_CopyWriteUpdate_Skip12
 	cp	(xsp+4), 0
 	jr	nz, SeMenu_CopyWriteUpdate_Skip54
-	ldw	wa, 36
+	ldw	wa, TT_SETONRAN1
 	ld	bc, 0:i3
 	jr	SeMenu_CopyWriteUpdate_Join26
 SeMenu_CopyWriteUpdate_Skip54:
-	ldw	wa, 43
+	ldw	wa, TT_SEAMPAMP1
 	ld	bc, 0:i3
 SeMenu_CopyWriteUpdate_Join26:
 	call	SeMenu_SendEvent
@@ -3742,11 +3742,11 @@ SeMenu_CopyWriteUpdate_Epilogue52:
 	jr	nz, SeMenu_CopyWriteUpdate_Skip13
 	cp	(xsp+4), 0
 	jr	nz, SeMenu_CopyWriteUpdate_Skip57
-	ldw	wa, 58
+	ldw	wa, TT_SEDIGEFF
 	ld	bc, 0:i3
 	jr	SeMenu_CopyWriteUpdate_Join27
 SeMenu_CopyWriteUpdate_Skip57:
-	ldw	wa, 39
+	ldw	wa, TT_SEPITPIT1
 	ld	bc, 0:i3
 SeMenu_CopyWriteUpdate_Join27:
 	call	SeMenu_SendEvent
@@ -3784,7 +3784,7 @@ SeMenu_CopyWriteUpdate_Epilogue53:
 	jr	nz, SeMenu_CopyWriteUpdate_Skip84
 	cp	(xsp+2), 0
 	jr	nz, SeMenu_CopyWriteUpdate_Skip83
-	ldw	wa, 59
+	ldw	wa, TT_SECTR2
 	ld	bc, 0:i3
 	jr	SeMenu_CopyWriteUpdate_Join41
 SeMenu_CopyWriteUpdate_Skip83:
@@ -3797,7 +3797,7 @@ SeMenu_CopyWriteUpdate_Skip83:
 SeMenu_CopyWriteUpdate_Skip84:
 	cp	(xsp+2), 0
 	jr	nz, SeMenu_CopyWriteUpdate_Skip85
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 SeMenu_CopyWriteUpdate_Join41:
 	call	SeMenu_SendEvent
@@ -3828,7 +3828,7 @@ SeMenu_CopyWriteUpdate_Skip85:
 SeMenu_CopyWriteUpdate_Skip14:
 	ld	wa, 1:i3
 	call	SeMenu_SetFilterMode
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ld	wa, 0:i3
@@ -4514,7 +4514,7 @@ SeTonTon2_OnSideRow5:
 SeTonTon2_OnSwitch25:
 	cp	a, 0:i3
 	ret	z
-	ldw	wa, 38
+	ldw	wa, TT_SETONHYB1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -4523,7 +4523,7 @@ SeTonTon2_OnSwitch15:
 	ret	nz
 	ld	wa, 0:i3
 	call	SeMenu_SetupMenuDisplay
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -4716,14 +4716,14 @@ SeTonRan1_OnSideRow2:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 36
+	ldw	wa, TT_SETONRAN1
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
 SeTonRan1_OnSideRow3:
 	cp	a, 0:i3
 	jr	nz, SeTonRan1_OnSideRow3_Skip22
-	ldw	wa, 37
+	ldw	wa, TT_SETONRAN2
 	ld	bc, 0:i3
 	jr	SeTonRan1_OnSideRow3_Join9
 SeTonRan1_OnSideRow3_Skip22:
@@ -4731,7 +4731,7 @@ SeTonRan1_OnSideRow3_Skip22:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 36
+	ldw	wa, TT_SETONRAN1
 	ld	bc, 1:i3
 SeTonRan1_OnSideRow3_Join9:
 	call	SeMenu_SendEvent
@@ -4743,7 +4743,7 @@ SeTonRan1_OnSideRow4:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 36
+	ldw	wa, TT_SETONRAN1
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
@@ -4754,7 +4754,7 @@ SeTonRan1_OnSideRow5:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 36
+	ldw	wa, TT_SETONRAN1
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
@@ -4763,7 +4763,7 @@ SeTonRan1_OnSwitch15:
 	ret	nz
 	ld	wa, 0:i3
 	call	SeMenu_SetupMenuDisplay
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -4953,7 +4953,7 @@ SeTonRan2_OnSideRow1:
 SeTonRan2_OnSideRow2:
 	cp	a, 0:i3
 	jr	nz, SeTonRan2_OnSideRow2_Skip27
-	ldw	wa, 36
+	ldw	wa, TT_SETONRAN1
 	ld	bc, 0:i3
 	jr	SeTonRan2_OnSideRow2_Join10
 SeTonRan2_OnSideRow2_Skip27:
@@ -4961,7 +4961,7 @@ SeTonRan2_OnSideRow2_Skip27:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 37
+	ldw	wa, TT_SETONRAN2
 	ld	bc, 1:i3
 SeTonRan2_OnSideRow2_Join10:
 	call	SeMenu_SendEvent
@@ -4973,7 +4973,7 @@ SeTonRan2_OnSideRow3:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 37
+	ldw	wa, TT_SETONRAN2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
@@ -4984,7 +4984,7 @@ SeTonRan2_OnSideRow4:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 37
+	ldw	wa, TT_SETONRAN2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
@@ -4995,7 +4995,7 @@ SeTonRan2_OnSideRow5:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 37
+	ldw	wa, TT_SETONRAN2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
@@ -5004,7 +5004,7 @@ SeTonRan2_OnSwitch15:
 	ret	nz
 	ld	wa, 0:i3
 	call	SeMenu_SetupMenuDisplay
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -5429,7 +5429,7 @@ SeTonHyb1_OnSideRow2:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 38
+	ldw	wa, TT_SETONHYB1
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
@@ -5440,7 +5440,7 @@ SeTonHyb1_OnSideRow3:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 38
+	ldw	wa, TT_SETONHYB1
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
@@ -5457,7 +5457,7 @@ SeTonHyb1_OnSideRow4:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeTonHyb1_OnSideRow4_Epilogue56
-	ldw	wa, 38
+	ldw	wa, TT_SETONHYB1
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 SeTonHyb1_OnSideRow4_Epilogue56:
@@ -5476,7 +5476,7 @@ SeTonHyb1_OnSideRow5:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	jr	z, SeTonHyb1_OnSideRow5_Epilogue57
-	ldw	wa, 38
+	ldw	wa, TT_SETONHYB1
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 SeTonHyb1_OnSideRow5_Epilogue57:
@@ -5491,11 +5491,11 @@ SeTonHyb1_OnSwitch25:
 	jr	z, SeTonHyb1_OnSwitch25_Epilogue58
 	cp	(xsp+2), 0
 	jr	nz, SeTonHyb1_OnSwitch25_Skip70
-	ldw	wa, 35
+	ldw	wa, TT_SETONTON2
 	ld	bc, 0:i3
 	jr	SeTonHyb1_OnSwitch25_Join32
 SeTonHyb1_OnSwitch25_Skip70:
-	ldw	wa, 34
+	ldw	wa, TT_SETONTON1
 	ld	bc, 0:i3
 SeTonHyb1_OnSwitch25_Join32:
 	call	SeMenu_SendEvent
@@ -5512,11 +5512,11 @@ SeTonHyb1_OnSwitch15:
 	call	SeMenu_LoadObjEntries
 	cp	(xsp), 0
 	jr	nz, SeTonHyb1_OnSwitch15_Skip30
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	jr	SeTonHyb1_OnSwitch15_Join15
 SeTonHyb1_OnSwitch15_Skip30:
-	ldw	wa, 61
+	ldw	wa, TT_SECOPY
 	ld	bc, 0:i3
 SeTonHyb1_OnSwitch15_Join15:
 	call	SeMenu_SendEvent
@@ -5841,7 +5841,7 @@ SeEasy_OnSideRow1:
 	ret	z
 	ld	wa, 0:i3
 	call	SeMenu_CopyWriteUpdate_Step3_Helper14
-	ldw	wa, 62
+	ldw	wa, TT_SEWRTMEM
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -5956,7 +5956,7 @@ SeEasy_OnSideRow5_Epilogue61:
 SeEasy_OnSwitch15:
 	cp	a, 0:i3
 	ret	nz
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -6418,7 +6418,7 @@ SeDigEff_OnSideRow2:
 	ld	wa, 0:i3
 	ldw	bc, 93
 	call	SeMenu_RegisterElement_Extended
-	ldw	wa, 58
+	ldw	wa, TT_SEDIGEFF
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	call	SeMenu_SetPartConfigBit3
@@ -6494,7 +6494,7 @@ SeDigEff_OnSideRow3:
 	ld	wa, 0:i3
 	ldw	bc, 93
 	call	SeMenu_RegisterElement_Extended
-	ldw	wa, 58
+	ldw	wa, TT_SEDIGEFF
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	call	SeMenu_SetPartConfigBit3
@@ -6528,7 +6528,7 @@ SeDigEff_OnSideRow3_Epilogue:
 SeDigEff_OnSwitch15:
 	cp	a, 0:i3
 	ret	nz
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -6647,7 +6647,7 @@ SeWrtMem_OnSideRow4_Epilogue4:
 SeWrtMem_OnSideRow5:
 	cp	a, 0:i3
 	ret	nz
-	ldw	wa, 63
+	ldw	wa, TT_SEWRTSND
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -6656,7 +6656,7 @@ SeWrtMem_OnSwitch15:
 	ret	nz
 	ld	wa, 0:i3
 	call	SeMenu_SetSelectedRow
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -6717,7 +6717,7 @@ SeWrtSnd_OnSideRow1_Loop:
 	jr	c, SeWrtSnd_OnSideRow1_Loop
 	ld	wa, 0:i3
 	call	SeMenu_CopyWriteUpdate_Step3_Helper14
-	ldw	wa, 62
+	ldw	wa, TT_SEWRTMEM
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 SeWrtSnd_OnSideRow1_Epilogue:
@@ -6755,7 +6755,7 @@ SeWrtSnd_OnSwitch15_Loop2:
 	inc1b_erp 251
 	cp_erpb 251, 13
 	jr	c, SeWrtSnd_OnSwitch15_Loop2
-	ldw	wa, 61
+	ldw	wa, TT_SECOPY
 	ld	bc, 0:i3
 	jr	SeWrtSnd_OnSwitch15_Join2
 SeWrtSnd_OnSwitch15_Skip:
@@ -6778,7 +6778,7 @@ SeWrtSnd_OnSwitch15_Loop3:
 	jr	c, SeWrtSnd_OnSwitch15_Loop3
 	ld	wa, 0:i3
 	call	SeMenu_CopyWriteUpdate_Step3_Helper14
-	ldw	wa, 62
+	ldw	wa, TT_SEWRTMEM
 	ld	bc, 0:i3
 SeWrtSnd_OnSwitch15_Join2:
 	call	SeMenu_SendEvent
@@ -7394,29 +7394,29 @@ SeWrtSnd_ClearName_Epilogue:
 SeCopy_OnSideRow2:
 	cp	a, 0:i3
 	jr	nz, SeCopy_OnSideRow2_Skip5
-	ldw	wa, 38
+	ldw	wa, TT_SETONHYB1
 	ld	bc, 0:i3
 	jr	SeCopy_OnSideRow2_Join7
 SeCopy_OnSideRow2_Skip5:
-	ldw	wa, 43
+	ldw	wa, TT_SEAMPAMP1
 	ld	bc, 0:i3
 SeCopy_OnSideRow2_Join7:
 	jp	SeMenu_SendEvent
 SeCopy_OnSideRow3:
 	cp	a, 0:i3
 	jr	nz, SeCopy_OnSideRow3_Skip6
-	ldw	wa, 59
+	ldw	wa, TT_SECTR2
 	ld	bc, 0:i3
 	jr	SeCopy_OnSideRow3_Join8
 SeCopy_OnSideRow3_Skip6:
-	ldw	wa, 48
+	ldw	wa, TT_SEFILLPQ1
 	ld	bc, 0:i3
 SeCopy_OnSideRow3_Join8:
 	jp	SeMenu_SendEvent
 SeCopy_OnSideRow5:
 	cp	a, 0:i3
 	ret	nz
-	ldw	wa, 63
+	ldw	wa, TT_SEWRTSND
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ld	wa, 2:i3
@@ -7425,7 +7425,7 @@ SeCopy_OnSideRow5:
 SeCopy_OnSwitch15:
 	cp	a, 0:i3
 	ret	nz
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret

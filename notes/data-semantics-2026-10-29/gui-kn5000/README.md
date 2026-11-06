@@ -222,6 +222,9 @@ ids are named in every GUI C file.
   `WorkRamInit_Image`; the other 15 DRAM records are now typed in `naka_sequencer_channels.c`. 32 asm records were
   skipped by `naka_asm_records.py --report`, because their block holds strings (`aligned_string`) or ends before or
   after the record. The enums and the menu map name all of them.
+  (2026-11-06, lane kn5000-notes: 17 of the 20 straddling records are typed, `naka_type_straddling_records.py`; by
+  `notes/kn5000-notes-2026-11-06/probes/naka_untyped_elements.py` 69 -> 52 untyped elements in v10, 3 of them records
+  that run past the end of their C blob.  Still open: `notes/kn5000-notes-2026-11-06/README.md`, "Left".)
 - **73 numeric ROM addresses** (75 in v6/v5): 25 in `naka_widget_descriptors.c`, 19 in `naka_block_007.c`, 15 in
   `naka_technichord_strings.c`, and a few handler words. They point at string or record interiors with no slice of
   their own, and need a label split first.  (2026-11-02, lane kn5000-c: 73 -> 9 per tree, 75 -> 11 in v6 / v5.  The class
@@ -229,10 +232,15 @@ ids are named in every GUI C file.
   markup-tag handler words are FDemoText_Tag_* routines, MetPunchSw's texts are two strings.  The 9 left are fields
   of records typed with the wrong layout, the population of the first bullet:
   `notes/kn5000-c-2026-11-02/README.md`.)
+  (2026-11-06, lane kn5000-notes: 9 -> 1 per tree, 11 -> 7 in v6 / v5: the dispatch-overlay "pointers" were rectangle
+  words, the EditSw texts are `<Record>_Str` members, the disk_warning one sat in a case table.  The one left is the
+  PsWideToggle that runs past the end of naka_direct_play.c's blob: `notes/kn5000-notes-2026-11-06/README.md`.)
 - **525 `field_XX` members** (533 in v7/v6/v5). 291 are in `naka_sequencer_channels.c`; none of those is read by its
   RAM address in the asm (checked: one direct `(0xADDR)` use among them), and none is a widget's cell. Naming them
   needs the routines that reach them through a base pointer. The rest are spread over 15 files.  (2026-11-02: 523 /
   531, MetPunchSw's two strings retyped; still open, lane kn5000-c README has the next step.)
+  (2026-11-06, lane kn5000-notes: 523 -> 434 in v10 / v9, 531 -> 442 in v7, 531 -> 509 in v6 / v5, by the record and
+  case-table retyping; naka_sequencer_channels.c's 291 are unchanged and still need their base-pointer readers.)
 - **1 property value has no name**: `TEST3.fontcolor = 0x0043`.  (Settled 2026-10-31, lane kn5000-a: it cannot have a
   firmware name.  ColorIDProc's name table names no 0x43, the boot palette's entry 0x43 is 0x000000, and
   `SineWaveScreenProc` never reads its fontcolor field, +42: it draws with the fixed colours 0xff / 0xf5.  (A comment in
@@ -241,6 +249,9 @@ ids are named in every GUI C file.
 - **81 titles have no path.** No traced code opens 108 of the 130 title names that the asm never spells. That
   includes most sound-edit (`TITLE_SE*`) pages, which the Scoop module's sound-editor screens open through their own
   data, not NAKA records.
+  (2026-11-06, lane kn5000-notes: 81 -> 53.  `SeMenu_SendEvent` is the sound editor's title opener and the
+  DirmdEmulator pages' method tables and switch handlers are now code transitions:
+  `notes/kn5000-notes-2026-11-06/README.md`.)
 - **Icons**: the firmware names most only `iNN`.  (Done 2026-10-31, lane kn5000-a: each of the 113 icons the KN5000 and
   HD-AE5000 records use has a description of what it shows, `scripts/generators/naka_icon_descriptions.json`, written
   beside its `idICON_iNN` in naka_classes.h / naka_values.s and in the HD-AE5000 menu maps; the names stay the firmware's.)

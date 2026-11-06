@@ -854,7 +854,7 @@ INTTR4_SeqAccum_Done:
 INTTR4_SeqAccum_Reset:
 	xor	wa, wa
 	ld	(1120:16), wa
-	ld	(13014:16), wa
+	ld	(ACC_NEXT_NOTE_OFF:16), wa
 	ld	(1122:16), a
 	ld	(13018:16), a
 	ld	(1111:16), a
@@ -1155,7 +1155,7 @@ MainLoop_AfterSeqBuf_DspSysEx:
 	ld	a, (ACC_SYNCHRO_STATE:16)
 	and	a, 3
 	jr	z, MainLoop_AfterAccWrap
-	ld	a, (12775:16)
+	ld	a, (ACC_RUN_FLAGS:16)
 	and	a, 3
 	jr	nz, MainLoop_AfterAccWrap
 	call	AccWrap_DeferredAction
@@ -1685,7 +1685,7 @@ SeqTiming_Snapshot:
 	ld l, (0x0462:16)
 	ld (0x045e:16), wa
 	ld (0x045d:16), l
-	cp	wa, (0x32d6:16)
+	cp	wa, (ACC_NEXT_NOTE_OFF:16)
 	jr	c, SeqTiming_Snapshot_CheckFrac
 	ldw	(1120:16), 0
 SeqTiming_Snapshot_CheckFrac:
@@ -1694,7 +1694,7 @@ SeqTiming_Snapshot_CheckFrac:
 	ld	(1122:16), 0
 SeqTiming_Snapshot_PostSnap:
 	ei	0
-	cp	wa, (13014:16)
+	cp	wa, (ACC_NEXT_NOTE_OFF:16)
 	jr	c, SeqTiming_Snapshot_CheckFracOverflow	; -> 0xEF1724
 	push	xhl
 	call	AccTiming_InitAllParts

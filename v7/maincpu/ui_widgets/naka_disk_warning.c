@@ -381,47 +381,8 @@ typedef struct __attribute__((packed)) {
     uint8_t field_0d4b;
     /* MainPmanControl_CaseTable: 6 u16 case offsets of a compiled switch; the asm spells them `.short <Case> - <Base>` (scripts/converters/naka_case_tables_retype.py) */
     uint16_t MainPmanControl_CaseTable[6];
-    uint8_t field_0d58;
-    uint16_t field_0d59;
-    uint16_t field_0d5b;
-    uint16_t field_0d5d;
-    uint16_t field_0d5f;
-    uint16_t field_0d61;
-    uint16_t field_0d63;
-    uint16_t field_0d65;
-    uint16_t field_0d67;
-    uint16_t field_0d69;
-    uint16_t field_0d6b;
-    uint8_t pad_51[3];  /* zero padding */
-    uint16_t field_0d70;
-    uint32_t ptr_0d72;
-    char str_85[2];
-    char R_str[2];
-    uint16_t field_0d7a;
-    uint16_t field_0d7c;
-    char h_str[2];
-    char s_str[2];
-    uint16_t field_0d82;
-    uint32_t Data_WidgetNamesCharMapBlock_ptr;
-    char G_str[2];
-    char str_90[2];
-    uint16_t field_0d8c;
-    uint16_t field_0d8e;
-    uint16_t field_0d90;
-    uint16_t field_0d92;
-    uint16_t field_0d94;
-    uint16_t field_0d96;
-    uint16_t field_0d98;
-    uint16_t field_0d9a;
-    uint16_t field_0d9c;
-    uint16_t field_0d9e;
-    uint16_t field_0da0;
-    uint16_t field_0da2;
-    uint16_t field_0da4;
-    uint16_t field_0da6;
-    uint16_t field_0da8;
-    uint16_t field_0daa;
-    uint8_t bytes_0dac[2];
+    /* CtrlPanel_DispatchByIndex_CaseTable: 43 u16 case offsets of a compiled switch; the asm spells them `.short <Case> - <Base>` (scripts/converters/naka_case_tables_retype.py) */
+    uint16_t CtrlPanel_DispatchByIndex_CaseTable[43];
     /* zero padding */
     /* zero padding */
     /* zero padding */
@@ -1895,87 +1856,14 @@ const naka_disk_warning_t naka_disk_warning_data
         0x0000, 0x0011, 0x0022, 0x0064, 0x007D, 0x0096,
     },
 
-    .field_0d58 = 0x38,
-
-    .field_0d59 = 0x3301,
-
-    .field_0d5b = 0xA501,
-
-    .field_0d5d = 0x0400,
-
-    .field_0d5f = 0xAA00,
-
-    .field_0d61 = 0x0800,
-
-    .field_0d63 = 0x3300,
-
-    .field_0d65 = 0x3301,
-
-    .field_0d67 = 0x3301,
-
-    .field_0d69 = 0xA501,
-
-    .field_0d6b = 0x0400,
-
-    .pad_51 = { 0 },
-
-    .field_0d70 = 0x00B4,
-
-    .ptr_0d72 = 0x00E000CA,
-
-    .str_85 = "<",
-
-    .R_str = "R",
-
-    .field_0d7a = 0x00F6,
-
-    .field_0d7c = 0x0101,
-
-    .h_str = "h",
-
-    .s_str = "s",
-
-    .field_0d82 = 0x00BF,
-
-    .Data_WidgetNamesCharMapBlock_ptr = NAKA_ADDR(Data_WidgetNamesCharMapBlock),
-
-    .G_str = "G",
-
-    .str_90 = "]",
-
-    .field_0d8c = 0x0115,
-
-    .field_0d8e = 0x0120,
-
-    .field_0d90 = 0x0087,
-
-    .field_0d92 = 0x0092,
-
-    .field_0d94 = 0x0133,
-
-    .field_0d96 = 0x00A5,
-
-    .field_0d98 = 0x0133,
-
-    .field_0d9a = 0x00A5,
-
-    .field_0d9c = 0x0133,
-
-    .field_0d9e = 0x00A5,
-
-    .field_0da0 = 0x0133,
-
-    .field_0da2 = 0x00A5,
-
-    .field_0da4 = 0x00A5,
-
-    .field_0da6 = 0x00A5,
-
-    .field_0da8 = 0x00A5,
-
-    .field_0daa = 0x00A5,
-
-    .bytes_0dac = { 0xA5, 0x00 },
+    .CtrlPanel_DispatchByIndex_CaseTable = {
+        0x0138, 0x0133, 0x00A5, 0x0004, 0x00AA, 0x0008, 0x0133, 0x0133,
+        0x0133, 0x00A5, 0x0004, 0x0000, 0x00B4, 0x00CA, 0x00E0, 0x003C,
+        0x0052, 0x00F6, 0x0101, 0x0068, 0x0073, 0x00BF, 0x00D5, 0x00EB,
+        0x0047, 0x005D, 0x0115, 0x0120, 0x0087, 0x0092, 0x0133, 0x00A5,
+        0x0133, 0x00A5, 0x0133, 0x00A5, 0x0133, 0x00A5, 0x00A5, 0x00A5,
+        0x00A5, 0x00A5, 0x00A5,
+    },
 
     .GroupBox_ModeSwitchGroup = {
         0x000000FF, 0x000000FF, 0x00000101, 0x00000101,
