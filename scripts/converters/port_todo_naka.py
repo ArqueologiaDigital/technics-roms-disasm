@@ -413,6 +413,7 @@ class Tree:
         self.blocks = []
         self.runs = []
         self.neighbours = {}
+        self.marker_of = {}
         for path in S.tree_files(self.tree):
             rel = os.path.relpath(path, os.path.join(ROOT, self.tree, "maincpu"))
             L = S.rd(path).split("\n")
@@ -423,14 +424,28 @@ class Tree:
                     continue
                 j = i + 1
                 items = []
-                while j < len(L) and (ROW.match(L[j]) or KEEP.match(L[j]) and not TODO.match(L[j])):
+                marker = L[i]
+                # the porter starts a new marker after each `; port:` comment inside a run of rows:
+                # the rows on both sides are one block (a pointer can straddle the marker); each
+                # row keeps its own marker's text for the bytes that stay rows
+                while j < len(L) and (ROW.match(L[j]) or KEEP.match(L[j])):
                     m = ROW.match(L[j])
-                    if m:
-                        items.append(("row", self.addr.get((rel, j + 1)),
-                                      bytes(int(x, 16) for x in m.group(1).split(", ")), j))
+                    if TODO.match(L[j]):
+                        marker = L[j]
+                    elif m:
+                        a = self.addr.get((rel, j + 1))
+                        bs = bytes(int(x, 16) for x in m.group(1).split(", "))
+                        if a is not None:
+                            for q in range(len(bs)):
+                                self.marker_of[a + q] = marker
+                        items.append(("row", a, bs, j))
                     else:
                         items.append(("line", None, L[j], j))
                     j += 1
+                while j > i + 1 and not ROW.match(L[j - 1]):
+                    j -= 1                    # trailing labels and comments belong to what follows
+                    if items and items[-1][0] == "line" and items[-1][3] == j:
+                        items.pop()
                 def near(k, step):
                     while 0 <= k < len(L):
                         c = L[k].split(";")[0].strip()
@@ -715,11 +730,12 @@ def convert(tree, listing=False):
                 left += len(x)
                 continue
             pend = []
+            pend_at = [None]
 
             def flush():
                 nonlocal pend, left
                 if pend:
-                    new.extend(rows_text(marker, bytes(pend)))
+                    new.extend(rows_text(T.marker_of.get(pend_at[0], marker), bytes(pend)))
                     left += len(pend)
                     pend = []
             for p, n, ln in items:
@@ -730,6 +746,10 @@ def convert(tree, listing=False):
                 if p in T.new:
                     new.append(T.new[p] + ":")
                 if ln is None:
+                    if pend and T.marker_of.get(p, marker) != T.marker_of.get(pend_at[0], marker):
+                        flush()
+                    if not pend:
+                        pend_at[0] = p
                     pend.append(T.rom[p - BASE])
                     continue
                 flush()
