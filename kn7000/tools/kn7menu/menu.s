@@ -69,7 +69,7 @@ MenuEntry:
     beq     me_fail
     cmp     ST_TOC, d0
     beq     me_toc
-    bra     me_answer               # ST_END: 0xFE again
+    bra     me_answer               # ST_END: the same last answer again
 me_toc:
     call    DoToc, 0, 0
     bra     me_refresh
@@ -100,9 +100,9 @@ me_answer:
     mov     (V_STATE), d0
     cmp     ST_END, d0
     bne     me_show
-    call    LcdGive, 0, 0           # the firmware's screen back, for its message
+    call    LcdGive, 0, 0           # the firmware's screen back
+    call    EndRequest, 0, 0        # leave: d0 = the last answer (the main screen, or 0xFE)
     mov     MAILBOX, a0
-    mov     RQ_END, d0              # leave: the firmware's message, then "Continue Next?"
     movbu   d0, (a0)
     bra     me_ret
 me_show:
@@ -160,10 +160,12 @@ di_fail:
 di_ret:
     ret     [d2,d3,a2,a3], 0x30
 
-# DoPanel: the firmware's switch bitmaps (two signature searches of the program flash).
+# DoPanel: the firmware's switch bitmaps (two signature searches of the program flash), and the routine and
+# byte the menu ends with (FindEnd, one more; without them it ends with 0xFE).
 DoPanel:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
+    call    FindEnd, 0, 0           # V_CHGMODE, V_RQSTATE, or 0
     call    FindPanel, 0, 0         # V_PANEL, or 0
     mov     str_f_nopanel, a0
     mov     (V_PANEL), d0
@@ -433,8 +435,8 @@ dm_ret:
     ret     [d2,d3,a2,a3], 0x30
 
 # ExitHeld -> d0 = 1 once EXIT (V_BTN), after being down for QUIT_MS, has been let go, else 0 (V_EXIT_T0
-# times it, V_EXITARMED remembers it). Ending on the release keeps the press from reaching the firmware's
-# message, which comes up as soon as the menu answers 0xFE.
+# times it, V_EXITARMED remembers it). Ending on the release keeps the press from reaching the screen the
+# firmware opens as soon as the menu answers (the main screen, or the message of 0xFE).
 ExitHeld:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
@@ -983,6 +985,101 @@ FindPanel:
     bhi     fp_ret
     mov     d2, (V_PANEL)
 fp_ret:
+    ret     [d2,d3,a2,a3], 0x30
+
+# FindEnd: V_CHGMODE = ChangeMode and V_RQSTATE = STYLE CONVERT's state byte, from the head of the firmware's
+# request loop (sig_reqloop, one hit), where request 0 calls ChangeMode and 0xFE ChangeTitle; the request-4
+# dispatch must be EG_RQ4 after it (sig_rq4), both ChangeTitle calls must agree and differ from ChangeMode,
+# ChangeMode must start with its prologue, the byte must be in work RAM. Else both stay 0 (README.md "Ending").
+FindEnd:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    clr     d0
+    mov     d0, (V_CHGMODE)
+    mov     d0, (V_RQSTATE)
+    mov     sig_reqloop, a0
+    call    CountFlash, 0, 0
+    cmp     1, d0
+    bne     fe_ret
+    mov     (V_TMP), a2             # the head
+    mov     sig_rq4, a0             # the request-4 dispatch, where it must be
+    mov     a2, d0
+    add     EG_RQ4, d0
+    mov     d0, d1
+    inc     d1
+    call    FindSig, 0, 0
+    cmp     0, d0
+    beq     fe_ret
+    mov     d0, a3
+    mov     EG_TITLE49, d0          # ChangeTitle, from its two calls
+    call    CallTarget, 0, 0
+    mov     d0, d2
+    mov     EG_TITLE4C, d0
+    call    CallTarget, 0, 0
+    cmp     d2, d0
+    bne     fe_ret
+    mov     EG_CHGMODE, d0          # ChangeMode
+    call    CallTarget, 0, 0
+    cmp     d2, d0
+    beq     fe_ret
+    add     -5, d0                  # its prologue: `calls` enters there
+    mov     d0, d3
+    mov     sig_prolog, a0
+    mov     d3, d1
+    inc     d1
+    call    FindSig, 0, 0
+    cmp     0, d0
+    beq     fe_ret
+    mov     a3, a0                  # the state byte, from `movbu (state), d0`
+    add     2, a0
+    call    Read32U, 0, 0
+    mov     0x50000000, d1          # in work RAM
+    cmp     d1, d0
+    bcs     fe_ret
+    mov     0x503FFF00, d1
+    cmp     d1, d0
+    bhi     fe_ret
+    mov     d0, (V_RQSTATE)
+    mov     d3, (V_CHGMODE)
+fe_ret:
+    ret     [d2,d3,a2,a3], 0x30
+
+# CallTarget(d0 = offset, a2 = sig_reqloop's hit) -> d0 = where the `call (d32)` (dd) at a2 + d0 goes.
+CallTarget:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    mov     a2, d2
+    add     d0, d2                  # the call
+    mov     d2, a0
+    inc     a0
+    call    Read32U, 0, 0
+    add     d2, d0
+    ret     [d2,d3,a2,a3], 0x30
+
+# EndRequest -> d0 = the menu's last answer. With FindEnd's finds: the state byte at 1, ChangeMode(1, 0), and
+# RQ_QUIET, which the firmware then serves by returning (its request 4 with the byte at 1, on a title that is
+# not "Continue Next?"): the main screen comes next, as NO on "Continue Next?" gives it (ChangeMode(1, 0)), with
+# no "ERROR!" (STYLCNVCONT's InterruptTitle(3, 0x4A) after 0xFE). Without them, RQ_END, as before.
+EndRequest:
+    movm    [d2,d3,a2,a3], (sp)
+    add     -0x20, sp
+    mov     RQ_END, d2
+.ifndef END_WITH_FE                 # (a test build: the ending before 2026-11-06, 0xFE; run_menu_tests.sh end)
+    mov     (V_CHGMODE), a2
+    cmp     0, a2
+    beq     er_ret
+.ifndef END_FE_AFTER_MODE           # (a test build: ChangeMode(1, 0), then 0xFE all the same)
+    mov     (V_RQSTATE), a0
+    mov     1, d0
+    movbu   d0, (a0)
+    mov     RQ_QUIET, d2
+.endif
+    mov     1, d0                   # MD_NORMAL, the main screen
+    clr     d1
+    calls   (a2)
+.endif
+er_ret:
+    mov     d2, d0
     ret     [d2,d3,a2,a3], 0x30
 
 # CountFlash(a0 = signature) -> d0 = its hits in the program flash; V_TMP = the first.

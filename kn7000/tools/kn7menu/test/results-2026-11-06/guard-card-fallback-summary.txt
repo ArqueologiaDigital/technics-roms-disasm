@@ -1,0 +1,28 @@
+run_menu_tests: emulator md5 8b9865bd; floppy b7a67de602694fd2; card image 3a6227294a56e751; bios v13
+run_menu_tests: menu KN7APP.BIN 7f0c53b99660560ee3e324d98ae4e619b832b3e0 (15210 bytes)
+run_menu_tests: guard     PASS  menu: guard: clean; self-test: 12 of 12 planted references found (/home/fsanches/compartilhado/tmp/kn7menu-leave-agent/t2/guard/selftest.txt)
+run_menu_tests: card tree /home/fsanches/compartilhado/tmp/kn7menu-leave-agent/t2/build/card (149 files); its KN7APP.BINs: 7c2d2c06ee8a 91022a0f7239 9a5077d387cb ddc23b5328c2 c8334f68c9e3 5d7d5df5b594 9f12e9e1f71e 24bdc35ded21 7f0c53b99660 
+  menu_test: OK press 1 not taken at t=53 s; again
+  menu_test: menu      PASS  the loader (state 1) runs "KN7000 PROGRAM MENU 1.0"; menu state 4, panel 5006BE4C, ms counter 500C53F8, calls 6
+  menu_test: findend   PASS  FindEnd: ChangeMode 4842B301 (want 4842B301), state byte 5004E3F8 (want 5004E3F8) = 5
+  menu_test: list      PASS  KN7MENU.TOC 1, 8 programs (fatscan.py: 8) in 4 menu folders, 8 placed by it, 1 folders looked into; the top: Games | HW Probes | Other apps
+  menu_test: screen    PASS  first page: selected 0 (want 0), top 0; page from 0: 3 of 3 icons on the LCD; the LCD's start 4DA7F (MFB's 4DA7F, the firmware's 25A7F), set back 0 times; full redraws 0
+  menu_test: navigate  PASS  opened HW Probes: selected 0 (want 0), top 0; page from 0: 1 of 1 icons on the LCD, 1 entries; opened ROM dumper passes: selected 0 (want 0), top 0; page from 0: 5 of 5 icons on the LCD, 5 entries; LCDL 3: selected 2 (want 2), top 0; page from 0: 5 of 5 icons on the LCD; PART SELECT RIGHT 1: selected 3 (want 3), top 0; page from 0: 5 of 5 icons on the LCD; PART SELECT LEFT: selected 2 (want 2), top 0; page from 0: 5 of 5 icons on the LCD; LCDR 1, BACK to HW Probes: selected 0 (want 0), top 0; page from 0: 1 of 1 icons on the LCD; LCDR 1, BACK to the top: selected 1 (want 1), top 0; page from 0: 3 of 3 icons on the LCD
+  menu_test: repaint   PASS  full redraws 0 -> 1; page from 0: 3 of 3 icons on the LCD
+  menu_test: exit      PASS  menu state 7, last answer 4 (RQ_QUIET 4), calls 354 then none in 3 s: true; LCD start 25A7F (the firmware's 25A7F); mode/title E0006/F004A, then E0006/F0046@0.17 E0006/F004A@0.22 E0001/F0001@2.15; now E0001/F0001; message word 0000
+  menu_test: OK press 1 not taken at t=110 s; again
+  menu_test: again     PASS  after EXIT held: DISK MENU, STYLE CONVERT, OK start the menu again (calls 40, menu state 4, 3 programs)
+  menu_test: leave     PASS  menu state 7, last answer 4 (RQ_QUIET 4), calls 102 then none in 3 s: true; LCD start 25A7F (the firmware's 25A7F); mode/title E0006/F004A, then E0001/F0001@0.47; now E0001/F0001; message word 0000
+  menu_test: taps      PASS  IC23 writes from the converter's code 0 (the firmware's own: 952168), pools 0, loader area foreign 0, converter RAM foreign 0 (/home/fsanches/compartilhado/tmp/kn7menu-leave-agent/t2/card/taps.txt)
+  menu_test: 10 checks, 0 failed (t=132 s); presses the emulated panel lost and the harness repeated: 0
+run_menu_tests: card PASS  10 checks passed, 0 failed (/home/fsanches/compartilhado/tmp/kn7menu-leave-agent/t2/card/session.txt)
+  menu_test: OK press 1 not taken at t=53 s; again
+  menu_test: menu      PASS  menu state 4, 8 programs
+  menu_test: list      PASS  8 programs (fatscan.py: 8), 10 folders looked into: BADMAN | Damaged copy (one byte changed) | Missing icon file, and a name longer than a row has room for, b | My Long Program Name | Not an application at all | SHORTNM | Top-down 32-bit icon | Wrong-size icon
+  menu_test: screen    PASS  page from 0: 5 of 5 icons on the LCD
+  menu_test: refuse-crc PASS  RUN on "Damaged copy (one byte changed)": check 6 (want 6), message "Damaged: its CRC-32 does not match. Not started.", still the menu true
+  menu_test: refuse-header PASS  RUN on "Not an application at all": check 4 (want 4), message "Not a KN7LOAD application (bad header): not started.", still the menu true
+  menu_test: leave     PASS  menu state 7, last answer 4 (RQ_QUIET 4), calls 194 then none in 3 s: true; LCD start 25A7F (the firmware's 25A7F); mode/title E0006/F004A, then E0001/F0001@0.45; now E0001/F0001; message word 0000
+  menu_test: taps      PASS  IC23 writes from the converter's code 0 (the firmware's own: 952168), pools 0, loader area foreign 0, converter RAM foreign 0 (/home/fsanches/compartilhado/tmp/kn7menu-leave-agent/t2/fallback/taps.txt)
+  menu_test: 7 checks, 0 failed (t=82 s); presses the emulated panel lost and the harness repeated: 0
+run_menu_tests: fallback PASS  7 checks passed, 0 failed (/home/fsanches/compartilhado/tmp/kn7menu-leave-agent/t2/fallback/session.txt)
