@@ -67,12 +67,12 @@ PROFILES = {
                 bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/941", string_arrays=True, string_arrays_min=4, text_strict=True, readers_ext=True),
     "b935": dict(rom="baserom/kn7000_program_b935.rom", src="src/b935/program", prog="src/b935/program.s",
                  syms=["kn7000_b935.sym", "kn7000_b935_manual.sym", "kn7000_b935_exports.sym",
-                       "kn7000_b935_bycode.sym"],
+                       "kn7000_b935_bycode.sym", "kn7000_b935_own.sym"],
                  labels="build/kn7000_program_b935.labels", r1=0x18595C, pal=0x3256D8, end=0x3B8F6D, structs=True,
                 bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/b935", string_arrays=True, string_arrays_min=4, text_strict=True, readers_ext=True),
     "b893": dict(rom="baserom/kn7000_program_b893.rom", src="src/b893/program", prog="src/b893/program.s",
                  syms=["kn7000_b893.sym", "kn7000_b893_manual.sym", "kn7000_b893_exports.sym",
-                       "kn7000_b893_bycode.sym"],
+                       "kn7000_b893_bycode.sym", "kn7000_b893_own.sym"],
                  labels="build/kn7000_program_b893.labels", r1=0x1846A0, pal=0x323E80, end=0x3B76B1, structs=True,
                 bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/b893", string_arrays=True, string_arrays_min=4, text_strict=True, readers_ext=True),
     "sp7001": dict(rom="baserom/kn7000_program_sp7001.rom", src="src/sp7001/program", prog="src/sp7001/program.s",
@@ -240,6 +240,44 @@ for _k in os.environ.get("GEN_DATA_S_OFF", "").split(","):
 KN7_DIR = KN7                 # this tree; KN7 is rebound to the profile's root by configure()
 TAIL = None                   # (CPU lo, hi) of gen_program_s.py's tail code, see configure()
 from data_readers import LIBC as DR_LIBC  # noqa: E402
+
+
+# An older build's kn7000_<b>_own.sym (names written for THAT build: routines and data 941 has no 1:1
+# counterpart for, and corrections of ported names) replaces the ported rows, as gen_program_s.py's
+# load_manual_syms does: a row of the other files at one of its addresses, or named like one of its
+# names (X and X_entry count as one), is dropped.  milk_model.read_syms keeps the first row of an
+# address or a name, so the override is applied here, for every Model this generator builds.
+_MM_READ_SYMS = MM.read_syms
+
+
+def _sym_rows(path):
+    rows = []
+    if os.path.exists(path):
+        for line in open(path, encoding="latin-1"):
+            if not line.lstrip().startswith(";"):
+                m = re.match(r"0x([0-9A-Fa-f]{8})\s+(\S+)", line)
+                if m:
+                    rows.append((int(m.group(1), 16), m.group(2)))
+    return rows
+
+
+def read_syms_own(paths):
+    """milk_model.read_syms, with the rows of an `*_own.sym` among `paths` replacing the others'."""
+    own = [p for p in paths if p.endswith("_own.sym")]
+    if not own:
+        return _MM_READ_SYMS(paths)
+    stem = lambda nm: nm[:-6] if nm.endswith("_entry") else nm
+    orows = [r for p in own for r in _sym_rows(p)]
+    own_at, own_nm = {a for a, _ in orows}, {stem(n) for _, n in orows}
+    by_addr, by_name = {}, {}
+    for a, n in orows + [(a, n) for p in paths if p not in own for a, n in _sym_rows(p)
+                         if a not in own_at and stem(n) not in own_nm]:
+        by_addr.setdefault(a, n)
+        by_name.setdefault(n, a)
+    return by_addr, by_name
+
+
+MM.read_syms = read_syms_own
 
 
 def configure(name):
@@ -4478,11 +4516,11 @@ class Gen:
         directory (`mov ToneRecordDirectory, a0 / asl2 d0 / mov (d0, a0), a0`).  The
         records it lists lie back to back, so each one's size is the distance to the
         next; three shapes occur (src/include/voice_record.inc):
-          tone        0x54-byte head (16-character name, SOUND_HEAD) + n x 0x7A units
+          tone        0x54-byte head (16-character name, SOUND_NAME_HEAD) + n x 0x7A units
                       (SOUND_MOD), n = 1..4
           TABLE tone  class 0x40 at +0x10: the 16-character name, a 0x17-byte head and
                       128 three-byte note entries (TgNoteOnTableTone reads +0x27 + note x 3)
-          voice       a 13-character name and three bytes (VOICE_HEAD_TAIL), then one or
+          voice       a 13-character name and three bytes (VOICE_HEAD), then one or
                       two 0x1C-byte sub-records (VOICE_SUB)
         A record of any other size stays as it is (none in the KN6000 v7.1)."""
         a0 = self.m.sym_by_name.get("ToneRecordDirectory")
@@ -4523,16 +4561,16 @@ class Gen:
                 kind, k = shape
                 hx = lambda bs: ", ".join(f"0x{x:02x}" for x in bs)
                 if kind == "tone":
-                    out = [f"{it.label}:\t# tone record, {k} unit(s)", f'\t.ascii\t"{c_escape(raw[:16])}"',
-                           f"\tSOUND_HEAD\t{hx(raw[0x10:0x54])}"]
+                    out = [f"{it.label}:\t# tone record, {k} unit(s)",
+                           f'\tSOUND_NAME_HEAD\t"{c_escape(raw[:16])}", {hx(raw[0x10:0x54])}']
                     out += [f"\tSOUND_MOD\t{hx(raw[0x54 + 0x7A * j:0x54 + 0x7A * (j + 1)])}" for j in range(k)]
                 elif kind == "table":
                     out = [f"{it.label}:\t# TABLE tone record: one entry per note (TgNoteOnTableTone)",
                            f'\t.ascii\t"{c_escape(raw[:16])}"', f"\ttone_head_table\t{hx(raw[0x10:0x27])}"]
                     out += [f"\ttone_note\t{hx(raw[0x27 + 3 * j:0x2A + 3 * j])}\t# note {j}" for j in range(128)]
                 else:
-                    out = [f"{it.label}:\t# voice record, {k} sub-record(s)", f'\t.ascii\t"{c_escape(raw[:13])}"',
-                           f"\tVOICE_HEAD_TAIL\t{hx(raw[13:16])}"]
+                    out = [f"{it.label}:\t# voice record, {k} sub-record(s)",
+                           f'\tVOICE_HEAD\t"{c_escape(raw[:13])}", {hx(raw[13:16])}']
                     out += [f"\tVOICE_SUB\t{hx(raw[16 + 0x1C * j:16 + 0x1C * (j + 1)])}" for j in range(k)]
                 return out
             self.add(a, n, lab, "tone record", render)
@@ -4678,8 +4716,12 @@ class Gen:
                 continue
             if r.get("bits_default") and self.free(a + n, 1) and self.in_data(a + n) \
                     and (a + n) not in set(self.prev_data_label.values()) | set(self.label_at):
-                # [INFERENCE] no MT_GetBitCount answer: the depth the drawer uses then (profile
-                # `bitmap_bits`), taken only when the pixels end exactly where the next item or label is
+                # no MT_GetBitCount answer: the depth the drawer uses then (profile `bitmap_bits`).
+                # Not an inference (N-c62a74fa, kn7000/notes/data-rest/README.md): VwUserBitmapProc
+                # 0x48418625, the only code that asks MT_GetBitCount, draws any answer but 1 and 8 with
+                # DrawBitmapSPFast16 (4 bpp), and a bitmap proc answers 0 to a message it has no case
+                # for.  This test only guards the size: the pixels must end exactly where the next item
+                # or label is
                 continue
             base = func if func.startswith("Bitmap") else "Bitmap_" + re.sub(r"^func_", "", func)
             lab = self.name_at(a, f"{base}_Pixels")
@@ -4702,8 +4744,12 @@ class Gen:
             png = TP.to_png(fmt, raw, pal)
             self.media_files[fn] = png
             self.add(a, n, lab, "bitmap",
-                     lambda g, it, fn=fn, fmt=fmt, func=func, w=w, h=h, depth=depth: [
-                         f"{it.label}:\t# {w} x {h}, {depth} bit(s) a pixel, rows padded to even bytes: the bitmap"
+                     lambda g, it, fn=fn, fmt=fmt, func=func, w=w, h=h, depth=depth,
+                            bits_default=bool(r.get("bits_default")): [
+                         f"{it.label}:\t# {w} x {h}, {depth} bit(s) a pixel"
+                         + (" (no MT_GetBitCount answer: VwUserBitmapProc draws it with DrawBitmapSPFast16)"
+                            if bits_default else "") +
+                         f", rows padded to even bytes: the bitmap"
                          f" {func} answers MT_GetBitmapData with ({OUTDIR}/media/{fn})",
                          f'\t.incbin\t"{P.get("bitmap_dir", "build/bitmaps")}/{os.path.splitext(fn)[0]}.bin"\t# census: generated -- '
                          f"../kn7000/tools/table_png.py ({fmt}) from {OUTDIR}/media/{fn}"])
