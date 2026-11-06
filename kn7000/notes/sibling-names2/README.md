@@ -46,7 +46,7 @@ KN6000 / KN6500 work-RAM operand counts below rise by 3.
 |--------|----------------------|--------|---------------------|-------|--------------|-------|-----------------------------|----------------|
 | KN6000 | 9,917                | 9,910  | 5,678               | 5,671 | 2,785        | 2,792 | 17,752 / 2,524              | 17,755 / 2,522 |
 | KN6500 | 9,972                | 9,966  | 5,704               | 5,698 | 2,792        | 2,798 | 17,788 / 2,533              | 17,791 / 2,531 |
-| KN2400 | 11,340               | 11,317 | 6,538               | 6,518 | 3,420        | 3,440 | 20,931 / 2,940              | 20,908 / 2,933 |
+| KN2400 | 11,340               | 11,315 | 6,538               | 6,517 | 3,420        | 3,441 | 20,931 / 2,940              | 20,908 / 2,933 |
 | HD-SX3 | 765                  | 765    | 459                 | 459   | 179          | 179   | 0 / 0                       | 0 / 0          |
 
 Where the names came from (the tools' reports):
@@ -55,12 +55,13 @@ Where the names came from (the tools' reports):
 |--------|-----------------------|---------------------------|-------------|--------------------|-----------------|------------------------------|
 | KN6000 | 108 -> 115            | 4                         | 8 -> 7      | 25 -> 25           | 458 -> 461      | 1,613 -> 2,123 (1,620 + 503) |
 | KN6500 | 108 -> 114            | 2                         | 9 -> 8      | 25 -> 25           | 458 -> 461      | 1,636 -> 2,124 (1,643 + 481) |
-| KN2400 | 228 -> 248            | 6                         | 8 -> 8      | 21 -> 28           | 613 -> 613      | 2,258 -> 3,147 (2,284 + 863) |
+| KN2400 | 228 -> 249            | 6                         | 8 -> 8      | 21 -> 28           | 613 -> 613      | 2,258 -> 3,147 (2,284 + 863) |
 | HD-SX3 | 2 -> 2                | 0                         | 0           | -                  | -               | 0                            |
 
-Three of the KN2400's new names are the KN7000's own since wave 11 (`JpegEncSetup`,
-`JpegEncImage`, `JpegEncMcu`, N-99771106): that is the wave-11 next step "re-run with the KN7000
-names", and it is all it gave; the KN6000 / KN6500 had no routine the new KN7000 names reach.  The
+Four of the KN2400's new names are the KN7000's own since wave 11 (`JpegEncSetup`,
+`JpegEncImage`, `JpegEncMcu`, N-99771106, and `KeyZoneNoteResolve`, from lane kn7000-research2
+merged during this lane): that is the wave-11 next step "re-run with the KN7000 names", and it is
+all it gave; the KN6000 / KN6500 had no routine the new KN7000 names reach.  The
 KN2400's RAM-linked tone-generator library (941's library at 0x4C000000): 418 -> 424 of 941's 544
 names (`missed-kn2400-tglib-after.txt`); the short identical-code routines without a name there
 fell from 36 to 30.  The 30 left (`TgGlobalChanBRefresh`, `TgGlobalChan3Refresh` ... in 941) are
@@ -105,7 +106,7 @@ lanes' to name; once it is, `make aligned-names` carries those names with no cha
 
 `../sibling-names2-probes/func_pairing.py` (`func-pairing.txt`): of the KN6000's 5,671 func_
 starts, 1,358 pair by call sites with a 941 routine that 941 leaves unnamed too
-(`notes/routine-map-kn7000.tsv`, "A unnamed"; KN6500 1,421 of 5,698, KN2400 2,320 of 6,518).
+(`notes/routine-map-kn7000.tsv`, "A unnamed"; KN6500 1,421 of 5,698, KN2400 2,320 of 6,518, measured before KeyZoneNoteResolve).
 Every KN7000 name given to such a routine reaches the sibling by `make aligned-names`.  The rest
 have no call-site partner (some have a same-body one that `port_names_by_code.py` saw, unnamed on
 both sides): the KN6000's are thickest in 0x4C11xxxx / 0x4C12xxxx (485 + 450; the sequencer and
@@ -134,7 +135,7 @@ offline, and naming them from memory would be a guess.  Next step: read the tabl
 |------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | N-a810f3f6 | OPEN    | KN6000 func_ 9,917 -> 9,910 (aligned names 108 -> 115, by RAM runs and pointer pairs); the rest wants KN7000 names (1,358 call-site pairs) or hand naming         |
 | N-f22bdce4 | OPEN    | KN6500 func_ 9,972 -> 9,966 (108 -> 114); next as N-a810f3f6                                                                                                      |
-| N-b3ba9d8b | OPEN    | KN2400 func_ 11,340 -> 11,317 (228 -> 248; TG library 418 -> 424 of 544, short twins 36 -> 30, those 30 blocked by a changed variable layout); next as N-a810f3f6 |
+| N-b3ba9d8b | OPEN    | KN2400 func_ 11,340 -> 11,315 (228 -> 249; TG library 418 -> 424 of 544, short twins 36 -> 30, those 30 blocked by a changed variable layout); next as N-a810f3f6 |
 | N-8fce01b1 | OPEN    | KN6000 work-RAM 17,752 / 2,524 -> 17,755 / 2,522 (+3 operands: WORK_RAM_BASE unnamed on purpose; RAM pairs 1,613 -> 2,123); next: more routine names              |
 | N-cccf0416 | OPEN    | KN6500 17,788 / 2,533 -> 17,791 / 2,531 (as N-8fce01b1; RAM pairs 1,636 -> 2,124)                                                                                 |
 | N-dc17693c | OPEN    | KN2400 20,931 / 2,940 -> 20,908 / 2,933 (accessor names 21 -> 28; RAM pairs 2,258 -> 3,147)                                                                       |
