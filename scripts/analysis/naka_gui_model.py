@@ -507,12 +507,23 @@ class Graph:
             if md['home'] in self.titles and md['home'] not in path:
                 path[md['home']] = [('mode', md['name'])]
                 q.append(md['home'])
-        while q:
-            t = q.popleft()
-            for pri, to, lab in sorted(adj[t], key=lambda x: x[0]):
-                if to not in path:
-                    path[to] = path[t] + [(t, lab)]
-                    q.append(to)
+
+        def bfs():
+            while q:
+                t = q.popleft()
+                for pri, to, lab in sorted(adj[t], key=lambda x: x[0]):
+                    if to not in path:
+                        path[to] = path[t] + [(t, lab)]
+                        q.append(to)
+        bfs()
+        # second, the panel-switch handlers (lane kn5000-naka2, 2026-11-06; add_code_edges' main_edges): a
+        # title no mode reaches but such a handler opens gets the path 'panel switch handler F > (by R)';
+        # mode paths keep precedence
+        for fname, to, routine in sorted(getattr(self, 'main_edges', [])):
+            if to not in path and to in self.titles:
+                path[to] = [('main', fname), ('main', '(by %s)' % routine)]
+                q.append(to)
+                bfs()
         return path
 
 
@@ -547,10 +558,12 @@ def title_path(g, tid, paths=None):
     if tid not in paths:
         return None
     parts = []
-    for x, lab in paths[tid]:
+    for i, (x, lab) in enumerate(paths[tid]):
         if x == 'mode':
             b = getattr(g, 'mode_button', {}).get(lab)
             parts.append('%s button (mode %s)' % (' / '.join(b), lab) if b else 'mode %s' % lab)
+        elif x == 'main' and i == 0:
+            parts.append('panel switch handler %s' % lab)
         elif lab and (lab.startswith('"') or lab.startswith('(')):
             parts.append(lab)
         else:
@@ -665,6 +678,14 @@ def dirmd_page_handlers(tree):
     return res
 
 
+# The trees the two path rules of lane kn5000-naka2 (2026-11-06) apply to: a title procedure's direct callees,
+# and the panel-switch handlers as roots (add_code_edges, menu_paths).  The paths feed the SCREEN headers
+# naka_gui_symbolize.py writes into each tree's C; v6 / v5's C belongs to the lane that ports them, so they join
+# when it regenerates their headers (`python3 scripts/converters/naka_gui_symbolize.py --tree v6 --headers`, then
+# add the tree here).
+CALLEE_RULE_TREES = ('v10', 'v9', 'v7')
+
+
 def add_code_edges(g):
     """g.code_edges: (from title, to title, routine) for every title procedure and menu box
     function that passes a TT_* index; g.mode_button: MD_X -> buttons."""
@@ -684,11 +705,31 @@ def add_code_edges(g):
     tt = {n: v for n, v in g.ids.items() if n.startswith('TT_')}
     g.routine_opens = opens
     g.code_edges = []
+    calls = N.callees(g.tree, extra)
+    wide = g.tree in CALLEE_RULE_TREES
     for tid, t in g.titles.items():
         lab = func_label(g.m, t['func'])
         for n in sorted(opens.get(lab, ())):
             if n in tt:
                 g.code_edges.append((tid, 0x01A00000 + tt[n], lab, ''))
+        # its direct callees' titles too, the rule menu-box functions follow below (lane kn5000-naka2,
+        # 2026-11-06: StylCnvModlTtlFunc -> FloppyState_Dispatch opens the Style Convert pages)
+        for c in sorted(calls.get(lab, ())) if lab and wide else ():
+            for n in sorted(set(opens.get(c, ())) - set(opens.get(lab, ()))):
+                if n in tt:
+                    g.code_edges.append((tid, 0x01A00000 + tt[n], c, ''))
+    # panel-switch handlers are roots of their own (lane kn5000-naka2, 2026-11-06): a Function-table entry
+    # (extra) that is no title's procedure and whose own body names a panel-switch event (EVT_SW_IN*) is
+    # where a press arrives without any menu entry; the titles it or its direct callees open get the path
+    # 'panel switch handler F > (by R)' (g.main_edges: (handler, title, routine)), used by menu_paths()
+    g.main_edges = []
+    if wide:
+        procs = {func_label(g.m, t['func']) for t in g.titles.values()}
+        for h in sorted(N.routines_naming(g.tree, re.compile(r'\bEVT_SW_IN\w*\b'), extra) & extra - procs):
+            for r in [h] + sorted(calls.get(h, ())):
+                for n in sorted(opens.get(r, ())):
+                    if n in tt:
+                        g.main_edges.append((h, 0x01A00000 + tt[n], r))
     # a DirmdEmulator page (the sound editor's TITLE_SE* screens): its title function's methods and
     # the switch handlers its OnSwitchIn dispatches to open the titles (SeMenu_SendEvent, ...)
     for tid, t in g.titles.items():
@@ -699,7 +740,6 @@ def add_code_edges(g):
                     g.code_edges.append((tid, 0x01A00000 + tt[n], h, ''))
     # a menu box's function often only calls the routine that opens the title
     # (DirectPlayTtlJgFunc -> FileIO_DetectFileTypeAndPost): count its direct callees' titles too
-    calls = N.callees(g.tree, extra)
     for frm, key, fn, label in g.func_entries:
         lab = func_label(g.m, g.ids.get(fn))
         if lab and lab in calls:
