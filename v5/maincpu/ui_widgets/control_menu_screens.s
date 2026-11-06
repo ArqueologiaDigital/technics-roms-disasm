@@ -425,37 +425,38 @@ NakaWidget_MSCTSEL_10_AcIndexWideES:		.incbin "includes/generated/naka_ctrl_menu
 NakaWidget_MSCTSEL_11_Label:			.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x1818, 0x2E
 NakaWidget_STYLE2:				.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x1846, 0x24
 NakaWidget_MSCTSEL_13_AcMstStyle2GridBox:
-	.long	NAKA_CLASS_AcMstStyle2GridBox	; AcMstStyle2GridBox class
-	.short	IDX_NakaWidget_STYLE2	; AcMstStyle2GridBox super
-	.short	IDX_NakaWidget_MSCTSEL_14_Box	; AcMstStyle2GridBox sub
-	.short	IDX_NakaWidget_MSCTSEL_16_AcIndexWideES	; AcMstStyle2GridBox next
-	.short	NAKA_INDEX_NONE	; AcMstStyle2GridBox prev
-	.short	VF_Const	; AcMstStyle2GridBox flag
-	.short	40, 64, 309, 212	; AcMstStyle2GridBox rect (x1, y1, x2, y2)
-	.short	CL_WallPattern	; AcMstStyle2GridBox color
-	.short	BD_None	; AcMstStyle2GridBox border
-	.short	1	; AcMstStyle2GridBox index
-	.long	idCHARA6	; AcMstStyle2GridBox font
-	.short	CL_White	; AcMstStyle2GridBox fontcolor
-	.short	AL_LeftJustify	; AcMstStyle2GridBox align
-	.short	9	; AcMstStyle2GridBox row
-	.short	2	; AcMstStyle2GridBox col
-	.short	0x0	; AcMstStyle2GridBox vertline
-	.long	0x3f542	; AcMstStyle2GridBox selrow
-	.long	0x3f544	; AcMstStyle2GridBox selcol
-	.long	0x3f546	; AcMstStyle2GridBox pcol
-	.long	0x3f54a	; AcMstStyle2GridBox prow
-	.long	0x3f54e	; AcMstStyle2GridBox crow
-	.long	NakaText_MSCTSEL_13_fixedcol	; AcMstStyle2GridBox fixedcol
-	.long	NakaText_MSCTSEL_13_fixedrow	; AcMstStyle2GridBox fixedrow
-	.long	NAKA_APFUNC_MstStyle2GridCheck	; AcMstStyle2GridBox func
-	.long	0x3f552	; AcMstStyle2GridBox nowstylesubctgdtno
-	.long	0x3f554	; AcMstStyle2GridBox nowstylesubctgmaxpage
-	.long	0x3f556	; AcMstStyle2GridBox nowstylesubctgpage
-	.long	0x3f558	; AcMstStyle2GridBox nowstylesubctg
-	.long	0x3f55a	; AcMstStyle2GridBox nowstyle
-	.long	0x3f55c	; AcMstStyle2GridBox nowstylesubsubdtno1
-	.long	0x3f55e	; AcMstStyle2GridBox nowstylesubsubdtno2
+	; AcMstStyle2GridBox class
+	; AcMstStyle2GridBox super
+	; AcMstStyle2GridBox sub
+	; AcMstStyle2GridBox next
+	; AcMstStyle2GridBox prev
+	; AcMstStyle2GridBox flag
+	; AcMstStyle2GridBox rect (x1, y1, x2, y2)
+	; AcMstStyle2GridBox color
+	; AcMstStyle2GridBox border
+	; AcMstStyle2GridBox index
+	; AcMstStyle2GridBox font
+	; AcMstStyle2GridBox fontcolor
+	; AcMstStyle2GridBox align
+	; AcMstStyle2GridBox row
+	; AcMstStyle2GridBox col
+	; AcMstStyle2GridBox vertline
+	; AcMstStyle2GridBox selrow
+	; AcMstStyle2GridBox selcol
+	; AcMstStyle2GridBox pcol
+	; AcMstStyle2GridBox prow
+	; AcMstStyle2GridBox crow
+	; AcMstStyle2GridBox fixedcol
+	; AcMstStyle2GridBox fixedrow
+	; AcMstStyle2GridBox func
+	; AcMstStyle2GridBox nowstylesubctgdtno
+	; AcMstStyle2GridBox nowstylesubctgmaxpage
+	; AcMstStyle2GridBox nowstylesubctgpage
+	; AcMstStyle2GridBox nowstylesubctg
+	; AcMstStyle2GridBox nowstyle
+	; AcMstStyle2GridBox nowstylesubsubdtno1
+	; AcMstStyle2GridBox nowstylesubsubdtno2
+	NAKA_REC_AcMstStyle2GridBox super=IDX_NakaWidget_STYLE2, sub=IDX_NakaWidget_MSCTSEL_14_Box, next=IDX_NakaWidget_MSCTSEL_16_AcIndexWideES, prev=NAKA_INDEX_NONE, flag=VF_Const, x=40, y=64, w=270, h=149, color=CL_WallPattern, border=BD_None, index=1, font=idCHARA6, fontcolor=CL_White, align=AL_LeftJustify, row=9, col=2, vertline=0x0, selrow=0x3f542, selcol=0x3f544, pcol=0x3f546, prow=0x3f54a, crow=0x3f54e, fixedcol=NakaText_MSCTSEL_13_fixedcol, fixedrow=NakaText_MSCTSEL_13_fixedrow, func=NAKA_APFUNC_MstStyle2GridCheck, nowstylesubctgdtno=0x3f552, nowstylesubctgmaxpage=0x3f554, nowstylesubctgpage=0x3f556, nowstylesubctg=0x3f558, nowstyle=0x3f55a, nowstylesubsubdtno1=0x3f55c, nowstylesubsubdtno2=0x3f55e
 NakaText_MSCTSEL_13_fixedrow:
 	.asciz	" | | | || | | | |"
 NakaText_MSCTSEL_13_fixedcol:
