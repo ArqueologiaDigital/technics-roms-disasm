@@ -417,7 +417,18 @@ Murai_ClassCount_161:
 ; [nakarest] Continues the table itself: ResEvent slot 0x1c1 (table 0xe812e4, 10 entries,
 ; [nakarest] InitializeMurai), 10 entry pointers x 4 bytes (starts 0xe812e4, 36 of its 40 bytes
 ; [nakarest] are here or later).
-Naka_EventDispatch_Table:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x306, 0x28
+; v6 / v5: 9 names and the 0 end word (no EV_MPVERSION); the names are the strings below
+Naka_EventDispatch_Table:
+	.long	Str_EV_ACCORDIONTAB
+	.long	Str_EV_READPRESENTATION
+	.long	Str_EV_READACTION
+	.long	Str_EV_READSONG
+	.long	Str_EV_ALLINITIAL
+	.long	Str_EV_STARTSONG
+	.long	Str_EV_ENDSONG
+	.long	Str_EV_EXECPRESENTATION
+	.long	Str_EV_TONEMODE
+	.long	0
 ; [nakarest] naka_sound_menu_drawbar+0x32e  +0x32e..+0x3c2 (0xe81310, 148 B)
 ; [nakarest] name strings, entries 0-9 of ResEvent slot 0x1c1 (table 0xe812e4, 10 entries,
 ; [nakarest] InitializeMurai): "EV_MPVERSION", "EV_TONEMODE", "EV_EXECPRESENTATION",
@@ -426,14 +437,23 @@ Naka_EventDispatch_Table:	.incbin "includes/generated/naka_sound_menu_drawbar.bi
 ; InitializeMurai `RegObjTable` passes this address as the count; the macro loads it with `ld wa, (count:24)` and
 ; RegisterObjectTable stores it at +8 of the 14-byte registry record (0x27ed2 + 14 * slot).
 ; The table holds 10 event-name pointers "EV_ACCORDIONTAB" .. "EV_MPVERSION" and a 0 end word.
+Str_EV_TONEMODE:
 	.asciz	"EV_TONEMODE"
+Str_EV_EXECPRESENTATION:
 	.asciz	"EV_EXECPRESENTATION"
+Str_EV_ENDSONG:
 	aligned_string "EV_ENDSONG"
+Str_EV_STARTSONG:
 	aligned_string "EV_STARTSONG"
+Str_EV_ALLINITIAL:
 	.asciz	"EV_ALLINITIAL"
+Str_EV_READSONG:
 	.asciz	"EV_READSONG"
+Str_EV_READACTION:
 	.asciz	"EV_READACTION"
+Str_EV_READPRESENTATION:
 	.asciz	"EV_READPRESENTATION"
+Str_EV_ACCORDIONTAB:
 	.asciz	"EV_ACCORDIONTAB"
 Murai_ResEventCount_1C1:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x3C2, 0x2
 ; [nakarest] Naka_Event_Table3  +0x3c4..+0x404 (0xe813a6, 64 B)

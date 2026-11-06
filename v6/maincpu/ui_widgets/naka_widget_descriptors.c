@@ -6095,9 +6095,9 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
     .AppEvtHandler_Branch_002_CaseTable = { 0x0032, 0x0014, 0x000A, 0x0000, 0x003C, 0x0028, 0x003C, 0x001E },
 
     .AppEvtHandler_Branch_002_RamPtrs = {
-        0x0000F1F1, 0x0000261C, 0x0000F228, 0x0000260E,
-        0x00002604, 0x0000F1DB, 0x00002604, 0x0000F1D6,
-        0x00002604,
+        SQEDT_QTZ_TRACK, SQEDT_TRNS_TRACK, SQEDT_VELOCNG_TRACK, SQEDT_NOTECNG_TRACK,
+        SQEDT_ADVDLY_TRACK, SQEDT_MERS_TRACK, SQEDT_ADVDLY_TRACK, SQEDT_MDEL_TRACK,
+        SQEDT_ADVDLY_TRACK,
     },
 
     .AppEvent_ChainDispatch1_CaseTable = {
@@ -6116,9 +6116,9 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
     .AppEvent_SubDispatch_Table_2 = { 0x32, 0x00, 0x14, 0x00, 0x0A, 0x00, 0x00, 0x00, 0x3C, 0x00, 0x28, 0x00, 0x3C, 0x00, 0x1E, 0x00 },
 
     .AppEvent_SubDispatch_RamPtrs = {
-        0x0000F1F1, 0x0000261C, 0x0000F228, 0x0000260E,
-        0x00002604, 0x0000F1DB, 0x00002604, 0x0000F1D6,
-        0x00002604,
+        SQEDT_QTZ_TRACK, SQEDT_TRNS_TRACK, SQEDT_VELOCNG_TRACK, SQEDT_NOTECNG_TRACK,
+        SQEDT_ADVDLY_TRACK, SQEDT_MERS_TRACK, SQEDT_ADVDLY_TRACK, SQEDT_MDEL_TRACK,
+        SQEDT_ADVDLY_TRACK,
     },
 
     .AppEvent_InlineHandler_CaseTable = {
@@ -8661,8 +8661,8 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
     },
 
     .Tempo_AdjustEffect_Table = {
-        0x91, 0x39, 0x00, 0x00, 0x92, 0x39, 0x00, 0x00, 0x93, 0x39, 0x00, 0x00, 0x94, 0x39, 0x00, 0x00,
-        0x95, 0x39, 0x00, 0x00,
+        0xD9, 0x38, 0x00, 0x00, 0xDA, 0x38, 0x00, 0x00, 0xDB, 0x38, 0x00, 0x00, 0xDC, 0x38, 0x00, 0x00,
+        0xDD, 0x38, 0x00, 0x00,
     },
 
     .Tempo_DisplayBPMReturn_LocalInit = { 0x4553, 0x2051, 0x2020, 0x2020, 0x2020, 0x2020, 0x2020, 0x2020 },
@@ -10568,19 +10568,19 @@ const naka_widget_descriptors_t naka_widget_descriptors_data
     },
 
     .SndArgNmGet_RamPtrsA = {
-        0x000039F8,
-        0x00003A09,
-        0x00003A1A,
-        0x00003A2B,
-        0x00003A3C,
+        0x00003940,
+        0x00003951,
+        0x00003962,
+        0x00003973,
+        0x00003984,
     },
 
     .SndArgNmGet_RamPtrsB = {
-        0x000039E4,
-        0x000039E8,
-        0x000039EC,
-        0x000039F0,
-        0x000039F4,
+        0x0000392C,
+        0x00003930,
+        0x00003934,
+        0x00003938,
+        0x0000393C,
     },
 
     .CmpStepTitleFunc_ProcTable = {

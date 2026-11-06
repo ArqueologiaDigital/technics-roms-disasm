@@ -2010,12 +2010,8 @@ typedef struct __attribute__((packed)) {
     char I0Bmp_str[8];
     char TrashBmp_str[10];
     char TrashBmp_str_2[10];
-    naka_dispatch_t w190;  /* 0x33 */
-    uint16_t field_566a;
-    uint8_t pad_0[2];  /* zero padding */
-    uint16_t field_566e;
-    uint16_t field_5670;
-    uint16_t field_5672;
+    /* element 0 of Viewable slot 0x0: Screen (class id 0x01600033) */
+    naka_cls_Screen_t NakaWidget_PanelSimulator;
     /* zero padding */
     /* zero padding */
     /* Bitmap record, element 1 of Viewable slot 0x0 (PanelSimulator): draws bitmap 1 at (6, 34) */
@@ -2038,7 +2034,7 @@ _Static_assert(sizeof(naka_widget_names_charmap_t) == 22158,
  * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Root_ViewableTable_000, OBJ_x). */
 #define Root_ViewableTable_000_SLOT 0x000u
 enum Root_ViewableTable_000_objects {
-    OBJ_NakaWidget_PanelSimulator,                  /*  0 Screen, record outside the C sources (NakaWidget_PanelSimulator) */
+    OBJ_NakaWidget_PanelSimulator,                  /*  0 Screen */
       OBJ_NakaDbg_PanelSimBitmap,                   /*  1 Bitmap */
       OBJ_PanelSimulatorForHk_Label,                /*  2 Label, record in naka_debug_naming.c */
       OBJ_CheckTitle_AcTitleMenu,                   /*  3 AcTitleMenu, record in naka_debug_naming.c */
@@ -6711,25 +6707,25 @@ const naka_widget_names_charmap_t naka_widget_names_charmap_data
 
     .TrashBmp_str_2 = "trash.bmp",
 
-    .w190 = {
-        .header    = NAKA_HDR(0x33),
-        .field_04   = NAKA_NONE,
-        .field_06   = 0x0001,
-        .name_ptr   = 0xFFFFFFFF,
-        .inst_ptr   = NAKA_ADDR(SCREEN_BPP),
-        .link_ptr   = 0x013F0000,
-        .proc_addr  = 0x000200EF,
+    /* ==== SCREEN TITLE_PS -- "TT_PS", title id 0x0, function NAKA_APFUNC_DefaultFunction ====
+     * What: Not an event. This is title id 0, entry 0 of object table 0x1A0. InitializeObjectTable
+     *       registers that table as class 0x01600007 with proc TitleProc ...
+     * Path: mode MD_PS
+     * Menu: "CHECK TITLE" -> TITLE_CHECK
+     * EXIT -> TITLE_PS */
+    .NakaWidget_PanelSimulator = {
+        .class_ = NAKA_CLASS(Screen),
+        .super = NAKA_NONE,
+        .sub = OBJ_NakaDbg_PanelSimBitmap,
+        .next = NAKA_NONE,
+        .prev = NAKA_NONE,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(0, 0, 320, 240),
+        .color = CL_Green,
+        .border = BD_Single1,
+        .exit = TITLE_PS,
+        .window = 0x0003F0A8,
     },
-
-    .field_566a = 0x0001,
-
-    .pad_0 = { 0 },
-
-    .field_566e = 0x01A0,
-
-    .field_5670 = 0xF0AC,
-
-    .field_5672 = 0x0003,
 
     .NakaDbg_PanelSimBitmap = {
         .class_ = NAKA_CLASS(Bitmap),

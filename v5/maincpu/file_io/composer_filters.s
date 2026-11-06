@@ -43,14 +43,14 @@ FmmComposerLoadFunc:
 	ld	xbc, EVT_SHOW
 	ld	xde, 5:i3
 	call	ApPostEvent
-	cpw	(0x8448:16), 0
+	cpw	(DISK_MEDIA_TYPE:16), 0
 	jr	ge, CompLoad_DispatchState
 	call	GetDiskSizeInfo
 	extz	hl
-	ld	(0x8448:16), hl
+	ld	(DISK_MEDIA_TYPE:16), hl
 	calr	SignalProgressUpdate
 CompLoad_DispatchState:
-	ld	wa, (0x8448:16)
+	ld	wa, (DISK_MEDIA_TYPE:16)
 	cp	wa, 1:i3
 	jrl	z, CompLoad_HandleSuccess
 	cp	wa, 0:i3
@@ -556,7 +556,7 @@ LoadFilter_OpLoad:
 	ld XBC,EVT_SET_NOT_DRAW_FLAG
 	ld xde, 1:i3
 	call ApPostEvent
-	cpw (0xf19e:16), 0x0000
+	cpw (SEQ_TRACK_MASK:16), 0x0000
 	jr z, LoadFilter_Load_ShowCode1
 	ld wa, 2:i3
 	call FileIO_WriteRecordName_Done
@@ -819,7 +819,7 @@ SaveFilter_OpSave:
 	cp	hl, 0:i3
 	jr	z, SaveFilter_Save_NoPwd
 	ld	xde, 0:i3
-	ld	e, (35156:16)
+	ld	e, (PASSWORD_STATE:16)
 	ld	xwa, 4294967295
 	ld	xbc, EVT_WAKEUP_PASSWORD
 	jr	SaveFilter_DispatchWidget
@@ -827,7 +827,7 @@ SaveFilter_Save_NoPwd:
 	call CheckFileSystemStatus
 	cp hl, 0:i3
 	jr z, SaveFilter_Save_Execute
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, SaveFilter_Save_Execute
 	ld xwa, 0xffffffff
 	ld xbc, EVT_NOT_PARA_DRAW

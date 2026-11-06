@@ -34,6 +34,10 @@ USAGE
   make all
   python3 scripts/tools/name_kn5000_ram.py --tree v10|v9|v7 [--apply] [--infer-block-delta]
   python3 scripts/tools/name_kn5000_ram.py --tree v10|v9|v7 --check-xhl   # named xhl loads the PTR rule would not make
+  python3 scripts/tools/name_kn5000_ram.py --tree v6 --ref v7 [--apply]    (v5: --tree v5 --ref v6)
+      the ported trees derive from the tree they were ported from instead (their labels are its, and it
+      is the nearer build); scripts/converters/port_ram_names.py runs this after giving the tree its copy of
+      shared/ram_variables_by_use.s (lane open11/v6v5-port2, 2026-11-06)
 """
 import argparse
 import collections
@@ -182,7 +186,9 @@ def addr_tokens(code):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--tree", required=True, choices=["v10", "v9", "v7"])
+    ap.add_argument("--tree", required=True, choices=["v10", "v9", "v7", "v6", "v5"])
+    ap.add_argument("--ref", default="v10", choices=["v10", "v7", "v6"],
+                    help="the tree whose names and routines the votes come from (v7 for the ported v6, v6 for v5)")
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--infer-block-delta", action="store_true",
                     help="also place unvoted names by their voted neighbours' common delta (a guess; off by default)")
@@ -203,14 +209,14 @@ def main():
                         print("  not a pointer load: %s:%d: %s" % (os.path.relpath(f, REPO), i + 1, l.strip()))
         print("%s: %d named `ld xhl, NAME` pointer loads pass xhl_is_pointer, %d do not" % (a.tree, kept, rejected))
         return 1 if rejected else 0
-    ref = ram_names("v10")
+    ref = ram_names(a.ref)
     NAMED.update(ref)
     byaddr10 = {v: n for n, v in ref.items()}
-    if a.tree == "v10":
+    if a.tree == a.ref:
         addr = dict(ref)
         report = {}
     else:
-        B10, BT = bodies("v10"), bodies(a.tree)
+        B10, BT = bodies(a.ref), bodies(a.tree)
         votes = collections.defaultdict(collections.Counter)
         for lab, (f, body) in B10.items():
             if lab not in BT:
@@ -302,7 +308,7 @@ def main():
         if ch and a.apply:
             open(f, "wb").write("\n".join(L).encode("latin-1"))
     fixed = []
-    if a.tree != "v10":
+    if a.tree != a.ref:
         for cf in const_files(a.tree):
             if not os.path.exists(cf):
                 continue
@@ -313,8 +319,9 @@ def main():
                 if m and m.group(2) in addr and int(m.group(4), 16) != addr[m.group(2)]:
                     fixed.append((m.group(2), m.group(4), "0x%04x" % addr[m.group(2)]))
                     rest = m.group(5)
-                    L[i] = "%s%s%s0x%04x%s\t; %s address, derived from v10's uses (name_kn5000_ram.py); was a copy of v10's %s" % (
-                        m.group(1), m.group(2), m.group(3), addr[m.group(2)], rest.rstrip(), a.tree, m.group(4))
+                    L[i] = "%s%s%s0x%04x%s\t; %s address, derived from %s's uses (name_kn5000_ram.py); was a copy of %s's %s" % (
+                        m.group(1), m.group(2), m.group(3), addr[m.group(2)], rest.rstrip(), a.tree, a.ref, a.ref,
+                        m.group(4))
                     ch = True
             if ch and a.apply:
                 open(cf, "wb").write("\n".join(L).encode("latin-1"))

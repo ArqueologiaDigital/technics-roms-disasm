@@ -15,7 +15,7 @@
 
 ToneGen_DispatchSubHandler:
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x38
 	pop xiz
 	push_lerp 0x38
@@ -27,20 +27,20 @@ ToneGen_DispatchSubHandler:
 	pop_lerp 0x38
 	push xiz
 	ldto_lerp XIZ, 0x38
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
-	cp	ix, (0x2851:16)
+	cp	ix, (SEQ_BLOCK_TOTAL:16)
 	jr ule, ToneGen_StoreBlockAndLink
 	ld (SEQ_ERROR_CODE:16), 5
 	jr ToneGen_DispatchReturn
 
 ToneGen_StoreBlockAndLink:
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld (xhl + 3), ix
 	ld hl, ix
 	call ToneGen_ComputeBlockPtr
 	ld wa, (3308:16)
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld (xhl + 1), wa
 	ldw (xhl + 3), 0xffff
 	ld (3308:16), ix
@@ -54,24 +54,24 @@ ToneGen_DispatchAndLinkBlock:
 	push xiy
 	call DispatchHandler_JumpToSubHandler
 	ld wa, ix
-	ld	hl, (0x2893:16)
+	ld	hl, (SEQ_DATA_BLOCK:16)
 	call ToneGen_ComputeBlockPtr
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld (xhl + 3), wa
 	ld hl, wa
 	call ToneGen_ComputeBlockPtr
-	ld xhl, (4349:16)
-	ld	bc, (0x2893:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
+	ld	bc, (SEQ_DATA_BLOCK:16)
 	ld (xhl + 1), bc
 	ldw (xhl + 3), 0xffff
-	ld	(0x2893:16), wa
-	ldw	(9804:16), 5
+	ld	(SEQ_DATA_BLOCK:16), wa
+	ldw	(SEQ_DATA_OFFSET:16), 5
 	pop xiy
 	pop xix
 	ret
 
 VoiceChannel_GetCombinedStatus:
-	cp (4012:16), 6
+	cp (SEQ_EVT_DATA1:16), 6
 	jr z, VoiceChannel_GetStatusBank2First
 	push xix
 	ld xix, 0x10d3
@@ -100,7 +100,7 @@ VoiceChannel_CombineStatusBits:
 	ret
 
 VoiceChannel_LookupParams:
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
 	push xix
 	ld xix, 0x10b3
@@ -127,7 +127,7 @@ VoiceChannel_SetPanDirection:
 	ld w, (xiy + 4)
 	and w, 0xf7
 	xor a, a
-	cp (4013:16), 64
+	cp (SEQ_EVT_DATA2:16), 64
 	jr c, VoiceChannel_MergePanBit
 	or a, 0x8
 
@@ -138,7 +138,7 @@ VoiceChannel_MergePanBit:
 	ret
 
 VoiceChannel_UpdateWithPitch:
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
 	extz xiy
 	push xiy
@@ -154,7 +154,7 @@ VoiceChannel_UpdateWithPitch:
 VoiceChannel_ApplyPitchFlags:
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceChannel_NullRet
 	sla xiy, 1
 	push xix
@@ -168,7 +168,7 @@ VoiceChannel_ApplyPitchFlags:
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, VoiceChannel_NullRet
 	push xix
 	ld xix, SeqTrack_ChannelMapIdentity
@@ -182,31 +182,31 @@ VoiceChannel_SelectChannelBank:
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet
 	ld a, (4233:16)
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet
 	ld a, (4234:16)
 	and a, 0x7f
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet
 	ld a, (4235:16)
 	and a, 0x7f
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet
 	call ToneGen_SetSustainBit
 	call ToneGen_WriteChannelRegs
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 VoiceChannel_NullRet:
 	ret
@@ -220,7 +220,7 @@ SoundGen_ClampUpdateVoice:
 	ld a, 0xb0:opc
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet2
 	sla iy, 1
 	push xix
@@ -234,43 +234,43 @@ SoundGen_ClampUpdateVoice:
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet2
-	ld a, (4011:16)
+	ld a, (SEQ_EVT_STATUS:16)
 	and a, 0xf
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet2
 	ld a, (4233:16)
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet2
 	ld a, (4234:16)
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet2
 	ld a, (4235:16)
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jr nz, VoiceChannel_NullRet2
 	call ToneGen_SetSustainBit
 	call SoundGen_WriteVoiceParams
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 VoiceChannel_NullRet2:
 	ret
 
 VoiceChannel_SetParamByte7:
 	call VoiceChannel_GetParamBlock
-	ld a, (4013:16)
+	ld a, (SEQ_EVT_DATA2:16)
 	ld w, (xiy + 7)
 	and w, 0x80
 	or w, a
@@ -279,7 +279,7 @@ VoiceChannel_SetParamByte7:
 
 VoiceChannel_MergeParamByte5:
 	call VoiceChannel_GetParamBlock
-	ld a, (4013:16)
+	ld a, (SEQ_EVT_DATA2:16)
 	ld w, (xiy + 5)
 	and w, 0x80
 	or w, a
@@ -287,7 +287,7 @@ VoiceChannel_MergeParamByte5:
 	ret
 
 SoundGen_LookupChannelBankParams:
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
 	push xix
 	ld xix, 0x1093
@@ -319,7 +319,7 @@ SoundGen_LookupReturn:
 
 VoiceChannel_GetParamBlock:
 	xor h, h
-	ld l, (4011:16)
+	ld l, (SEQ_EVT_STATUS:16)
 	and l, 0xf
 	sla hl, 2
 	cp (4600:16), 1
@@ -371,7 +371,7 @@ VoiceChannel_GetParamBlockAlt_Data:
 ; Called from smf_tonegen_core.s (two sites).
 VoiceChannel_SetRecordField3:
 	call	VoiceChannel_GetParamBlock
-	ld	a, (4013:16)
+	ld	a, (SEQ_EVT_DATA2:16)
 	ld	(xiy+3), a
 	ret
 
@@ -405,7 +405,7 @@ SoundGen_UpdateAndWriteChannel:
 	call SoundGen_UpdateAndRefresh
 	popw bc
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_PopIyRet
 	sla xiy, 1
 	push xix
@@ -419,11 +419,11 @@ SoundGen_UpdateAndWriteChannel:
 	call SoundGen_UpdateAndRefresh
 	pop xiy
 	popw bc
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_PopIyRet
 	ld l, c
 	xor h, h
-	ld l, (4011:16)
+	ld l, (SEQ_EVT_STATUS:16)
 	and l, 0xf
 	xor h, h
 	cpw (3932:16), 0
@@ -448,7 +448,7 @@ SoundGen_ApplyChannelParam:
 	call SoundGen_UpdateAndRefresh
 	pop xiy
 	popw bc
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_PopIyRet
 	pop xiy
 	push xiy
@@ -459,23 +459,23 @@ SoundGen_ApplyChannelParam:
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_PopIyRet
 	ld a, (4234:16)
 	and a, 0x7f
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_PopIyRet
 	ld a, 0x7f:opc
 	push xiy
 	call SoundGen_UpdateAndRefresh
 	pop xiy
-	cp (4323:16), 0
+	cp (SEQ_EVENT_ABORT:16), 0
 	jrl nz, SoundGen_PopIyRet
 	call ToneGen_SetSustainBit
-	ld iy, (4011:16)
+	ld iy, (SEQ_EVT_STATUS:16)
 	and iy, 0xf
 	extz xiy
 	cpw (3932:16), 0
@@ -488,7 +488,7 @@ SoundGen_ApplyChannelParam:
 
 SoundGen_CommitChannelRegs:
 	call ToneGen_WriteChannelRegs
-	ld (4323:16), 0
+	ld (SEQ_EVENT_ABORT:16), 0
 
 SoundGen_PopIyRet:
 	pop xiy
@@ -599,7 +599,7 @@ SndParam_LookupChannelVoice:
 	push XHL
 	cp (0x11f8:16), 0x02
 	jr nz, SndParam_LookupDefault
-	ld a, (0x0fab:16)
+	ld a, (SEQ_EVT_STATUS:16)
 	and A,0x0f
 	cp A,0x09
 	jr nz, SndParam_LookupDefault
@@ -617,7 +617,7 @@ SndParam_LookupChannelVoice:
 	ld	bc, (xix+hl)
 	ld E,B
 	xor HL,HL
-	ld l, (0x0fac:16)
+	ld l, (SEQ_EVT_DATA1:16)
 	pushw hl
 	call SndParam_LookupByChannel
 	ld A,L
@@ -636,7 +636,7 @@ SndParam_LookupReturn:
 VoiceChannel_StoreVoiceIdx:
 	push XDE
 	xor DE,DE
-	ld e, (0x0fab:16)
+	ld e, (SEQ_EVT_STATUS:16)
 	and E,0x0f
 	ld (0x1a5f:16), de
 	pop XDE
@@ -765,10 +765,10 @@ SMF_LoadSoundBankAndPlay:
 	push xde
 	call SetWall_LoadBankToToneGen
 	ld a, (4599:16)
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr z, SMF_LoadBank_ClearAndPrepare
 	ld a, (4599:16)
-	ld (0x00ffe3:24), a
+	ld (SEQ_CURRENT_SONG:24), a
 	call SoundBank_LoadToWorkRAM
 	call SeqPlay_StartWithDisplay
 
@@ -815,8 +815,8 @@ SMF_Seek_WritePosition:
 SMF_RestoreTimerState:
 	bit	0, (10377:16)
 	jr	z, SMF_SeekReturn
-	ld	wa, (65516:24)
-	ld	(61854:16), wa
+	ld	wa, (SEQ_TRACK_MASK_COPY:24)
+	ld	(SEQ_TRACK_MASK:16), wa
 	call	Audio_CheckSubsystemReady
 SMF_SeekReturn:
 	ret
@@ -854,12 +854,12 @@ SMF_InitChannelState:
 	ld (4236:16), a
 	ld (4347:16), wa
 	ld (4344:16), a
-	cpw (0xffec:24), 0
+	cpw (SEQ_TRACK_MASK_COPY:24), 0
 	jr z, SMF_SetStatusAndJump
 	xor c, c
 
 SMF_ScanChannelLoop:
-	ld de, (0x00ffec:24)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
 	ld a, c
 	scf
 	xorcf_a_16 de
@@ -867,7 +867,7 @@ SMF_ScanChannelLoop:
 	ld l, c
 	xor h, h
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+hl), 0x10
 	pop xix
 	jr z, SMF_LoopNextChannel
@@ -891,7 +891,7 @@ SMF_SetStatusAndJump:
 
 SMF_FoundActiveChannel:
 	call Vga_SetupMultiPlaneDisplay
-	ld wa, (0x00ffec:24)
+	ld wa, (SEQ_TRACK_MASK_COPY:24)
 	ld (4325:16), wa
 	ld (4324:16), 255
 	bit 2, (PANEL_GM+3:16)
@@ -924,14 +924,14 @@ SMF_FindFirstActiveChannel:
 	jrl SMF_Finalize_RestoreAndPlay
 
 SMF_SetupActiveChannel:
-	ld	(0x285b:16), c
+	ld	(SEQ_TRACK:16), c
 	inc 1, hl
 	push xde
 	ld xde, 0xf250
 	ld	hl, (xde+hl)
 	pop xde
-	ld	(0x2893:16), hl
-	ldw	(9804:16), 5
+	ld	(SEQ_DATA_BLOCK:16), hl
+	ldw	(SEQ_DATA_OFFSET:16), 5
 	ld xiy, SMF_SetupActiveChannel_Str_MThd
 	ld xix, 0x13fa
 	ld bc, 7:i3
@@ -947,19 +947,19 @@ SMF_SetupActiveChannel:
 	ld (xix+), WA
 	ld wa, (4004:16)
 	ld (xix+), WA
-	ld (4376:16), xix
-	ld xix, (4376:16)
+	ld (SMF_FILE_PTR:16), xix
+	ld xix, (SMF_FILE_PTR:16)
 	ld xiy, SMF_HeaderConstants
 	ld bc, 4:i3
 	ldir85
 	ld xiy, 0xf280
 	ldw bc, 0x10
 	ldir85
-	ld (4376:16), xix
+	ld (SMF_FILE_PTR:16), xix
 	ldw (4206:16), 0
 	ld (4208:16), 0
 	ld xiy, 0x106e
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 
 SMF_WaitForReady:
 	ld A, (xiy+)
@@ -969,13 +969,13 @@ SMF_WaitForReady:
 	ldw wa, 0x58ff
 	ld (xix+), WA
 	ld a, 0x4:opc
-	ld w, (1075:16)
+	ld w, (ACC_BEATS_PER_BAR:16)
 	ld (xix+), WA
 	ldw wa, 0x1802
 	ld (xix+), WA
 	ld a, 0x8:opc
 	ld (xix+), a
-	ld (4376:16), xix
+	ld (SMF_FILE_PTR:16), xix
 	ld l, (PANEL_STYLE+8:16)
 	xor h, h
 	pushw bc
@@ -1008,7 +1008,7 @@ SMF_Setup_WriteLoop:
 	ld xiy, SMF_GmSystemOffEvent
 
 SMF_Setup_SelectTablePtr:
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	ldw bc, 0x8
 
 SMF_WriteChannelDataLoop:
@@ -1021,7 +1021,7 @@ SMF_WriteChannelDataLoop:
 	pop xix
 	pop xiy
 	popw bc
-	ld xix, (4376:16)
+	ld xix, (SMF_FILE_PTR:16)
 	push xwa
 	push xbc
 	ld xbc, 0:i3
@@ -1040,7 +1040,7 @@ SMF_WriteChannel_FileUnderflow:
 SMF_WriteChannel_Continue:
 	djnz16 bc, SMF_WriteChannelDataLoop
 
-	ld (4376:16), xix
+	ld (SMF_FILE_PTR:16), xix
 
 	cp (6709:16), 0
 
@@ -1048,14 +1048,14 @@ SMF_WriteChannel_Continue:
 
 	call BitMapOut_ComputeRegionDelta
 
-	ld	(0x285b:16), 0
+	ld	(SEQ_TRACK:16), 0
 
 
 
 SMF_ScanAndProcessChannel:
 	ld xiy, 0xf460
 	xor hl, hl
-	ld	l, (0x285b:16)
+	ld	l, (SEQ_TRACK:16)
 	ld c, l
 	ld de, (4325:16)
 	ld a, c
@@ -1063,7 +1063,7 @@ SMF_ScanAndProcessChannel:
 	xorcf_a_16 de
 	jrl c, SMF_AdvanceChannelScan
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	ld	l, (xix+hl)
 	pop xix
 	ld b, l
@@ -1096,11 +1096,11 @@ SMF_WriteChannelNoteData:
 	ld	(4359:16), a
 	ld	a, (xiy+7)
 	ld	(4332:16), a
-	and	(10331:16), 15
-	ld	l, (10331:16)
+	and	(SEQ_TRACK:16), 15
+	ld	l, (SEQ_TRACK:16)
 	xor	h, h
 	push	xix
-	ld	xix, 61856
+	ld	xix, SEQ_TRACK_ASSIGN
 	ld	l, (xix+hl)
 	pop	xix
 	cp	(4324:16), 255
@@ -1369,10 +1369,10 @@ SMF_WriteVol_FileUnderflow4:
 	jp SMF_FlushAndFinalize
 
 SMF_WriteVol_PanAndPitch:
-	ld	l, (0x285b:16)
+	ld	l, (SEQ_TRACK:16)
 	xor h, h
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	ld	l, (xix+hl)
 	pop xix
 	cp l, 0xc
@@ -1458,10 +1458,10 @@ SMF_WriteRPN_FileUnderflow3:
 	jp SMF_FlushAndFinalize
 
 SMF_WriteRPN_FineTune:
-	ld	l, (0x285b:16)
+	ld	l, (SEQ_TRACK:16)
 	xor h, h
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	ld	l, (xix+hl)
 	sla hl, 1
 	ld xix, SMF_PartRecordOffsetByTrackAssign
@@ -1560,10 +1560,10 @@ SMF_WriteRPN_FileUnderflow7:
 	jp SMF_FlushAndFinalize
 
 SMF_WriteRPN_CoarseTune:
-	ld	l, (0x285b:16)
+	ld	l, (SEQ_TRACK:16)
 	xor h, h
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	ld	l, (xix+hl)
 	sla l, 1
 	ld xix, SMF_PartRecordOffsetByTrackAssign
@@ -1657,10 +1657,10 @@ SMF_WriteRPN_FileUnderflow11:
 	jp SMF_FlushAndFinalize
 
 SMF_WriteRPN_Transpose:
-	ld	l, (0x285b:16)
+	ld	l, (SEQ_TRACK:16)
 	xor h, h
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	ld	l, (xix+hl)
 	sla l, 1
 	ld xix, SMF_PartRecordOffsetByTrackAssign
@@ -1710,8 +1710,8 @@ SMF_WriteRPN_FileUnderflow13:
 	jp SMF_FlushAndFinalize
 
 SMF_AdvanceChannelScan:
-	inc	1, (0x285b:16)
-	cp	(0x285b:16), 15
+	inc	1, (SEQ_TRACK:16)
+	cp	(SEQ_TRACK:16), 15
 	jrl ule, SMF_ScanAndProcessChannel
 
 SMF_FinishChannelAndGetNextEvent:
@@ -2005,7 +2005,7 @@ SMF_SystemExclusive_Handler:
 	and l, 0xf
 	xor h, h
 	push xix
-	ld xix, 0xf1a0
+	ld xix, SEQ_TRACK_ASSIGN
 	cp	(xix+hl), 0x0f
 	pop xix
 	jrl z, SMF_ProcessEventLoop
@@ -2119,7 +2119,7 @@ SMF_NoteOn_WriteEventBytes:
 	push	xwa
 	push	xbc
 	ld	xbc, 0:i3
-	ld	xwa, (0x1a2d:16)
+	ld	xwa, (FILEIO_BLOCK_BYTES:16)
 	cp	xwa, xbc
 	jr	lt, SMF_NoteOn_StoreVoiceData_Skip
 	pop	xbc
@@ -2201,7 +2201,7 @@ SMF_ProgramChange_ProcessPatch:
 	push	xix
 	xor	hl, hl
 	ld	l, (4213:16)
-	ld	xix, 61856
+	ld	xix, SEQ_TRACK_ASSIGN
 	ld	l, (xix+hl)
 	ld	xix, SMF_PartIndexByTrackAssign
 	ld	l, (xix+hl)
@@ -3056,7 +3056,7 @@ FileOpen_DeviceFound:
 	jr nz, FileOpen_CheckPermission
 
 FileOpen_ErrorNoFile:
-	ldw (0x01e53c:24), 0x0007
+	ldw (FILE_ERROR:24), 0x0007
 	ld xhl, 0:i3
 	jrl FileOpen_Return
 
@@ -3070,7 +3070,7 @@ FileOpen_CheckPermission:
 	cpl wa
 	and a, c
 	jr z, FileOpen_FindFreeSlot
-	ldw (0x01e53c:24), 0x0002
+	ldw (FILE_ERROR:24), 0x0002
 	ld xhl, 0:i3
 	jrl FileOpen_Return
 
@@ -3095,7 +3095,7 @@ FileOpen_SlotSearchLoop:
 FileOpen_SlotExhausted:
 	cp (xsp + 14), 0x10
 	jr nz, FileOpen_InitSlot
-	ldw (0x01e53c:24), 0x0004
+	ldw (FILE_ERROR:24), 0x0004
 	call SeqStep_FileNopB
 	ld xhl, 0:i3
 	jrl FileOpen_Return
@@ -3175,7 +3175,7 @@ FileOpen_PopulateStruct:
 	ld	(xde+bc), xwa
 	ld a, l
 	exts wa
-	ld (0x01e53c:24), wa
+	ld (FILE_ERROR:24), wa
 	ld xwa, xiz
 	push xwa
 	call SeqStep_FreeMemory
@@ -3198,14 +3198,14 @@ FileRead:
 	jr nz, SeqStep_FileReadCheck
 
 SeqStep_FileReadSetup:
-	ldw (0x01e53c:24), 0x0011
+	ldw (FILE_ERROR:24), 0x0011
 	ld hl, 0:i3
 	ret
 
 SeqStep_FileReadCheck:
 	bitm 0, (xbc + 4)
 	jr nz, SeqStep_FileReadProcess
-	ldw (0x01e53c:24), 0x000d
+	ldw (FILE_ERROR:24), 0x000d
 	ld hl, 0:i3
 	ret
 
@@ -3235,14 +3235,14 @@ FileWrite:
 	jr nz, SeqStep_FileReadLoop
 
 SeqStep_FileReadAdvance:
-	ldw (0x01e53c:24), 0x0011
+	ldw (FILE_ERROR:24), 0x0011
 	ld hl, 0:i3
 	ret
 
 SeqStep_FileReadLoop:
 	bitm 1, (xbc + 4)
 	jr nz, SeqStep_FileReadDone
-	ldw (0x01e53c:24), 0x000d
+	ldw (FILE_ERROR:24), 0x000d
 	ld hl, 0:i3
 	ret
 
@@ -3273,14 +3273,14 @@ SeqStep_FileReadReturn:
 	jr nz, SeqStep_FileReadCleanup
 
 SeqStep_FileReadError:
-	ldw (0x01e53c:24), 0x0011
+	ldw (FILE_ERROR:24), 0x0011
 	ldw hl, 0xffff
 	jr SeqStep_FileReadVtableReturn
 
 SeqStep_FileReadCleanup:
 	bitm 0, (xbc + 4)
 	jr nz, SeqStep_FileReadComplete
-	ldw (0x01e53c:24), 0x000d
+	ldw (FILE_ERROR:24), 0x000d
 	ldw hl, 0xffff
 	jr SeqStep_FileReadVtableReturn
 
@@ -3316,13 +3316,13 @@ SeqStep_ByteBlockEF56:
 	cp	(xbc+4), 0
 	jr	nz, SeqStep_ByteBlockEF56_Skip2
 SeqStep_ByteBlockEF56_Skip:
-	ldw	(0x1e53c:24), 17
+	ldw	(FILE_ERROR:24), 17
 	ld	xhl, 0:i3
 	jr	SeqStep_ByteBlockEF56_Epilogue
 SeqStep_ByteBlockEF56_Skip2:
 	bitm	0, (xbc+4)
 	jr	nz, SeqStep_ByteBlockEF56_Skip3
-	ldw	(124220:24), 13
+	ldw	(FILE_ERROR:24), 13
 	ld	xhl, 0:i3
 	jr	SeqStep_ByteBlockEF56_Epilogue
 SeqStep_ByteBlockEF56_Skip3:
@@ -3356,14 +3356,14 @@ SeqStep_FileWriteSetup:
 	jr nz, SeqStep_FileWriteCheckMode
 
 SeqStep_FileWriteNoHandle:
-	ldw (0x01e53c:24), 0x0011
+	ldw (FILE_ERROR:24), 0x0011
 	ldw hl, 0xffff
 	jr SeqStep_FileWriteReturn
 
 SeqStep_FileWriteCheckMode:
 	bitm 1, (xbc + 4)
 	jr nz, SeqStep_FileWriteProcess
-	ldw (0x01e53c:24), 0x000d
+	ldw (FILE_ERROR:24), 0x000d
 	ldw hl, 0xffff
 	jr SeqStep_FileWriteReturn
 
@@ -3399,13 +3399,13 @@ SeqStep_ByteBlockF002:
 	cp	(xbc+4), 0
 	jr	nz, SeqStep_ByteBlockF002_Skip2
 SeqStep_ByteBlockF002_Skip:
-	ldw	(0x1e53c:24), 17
+	ldw	(FILE_ERROR:24), 17
 	ldw	hl, 0xffff
 	ret
 SeqStep_ByteBlockF002_Skip2:
 	bitm	1, (xbc+4)
 	jr	nz, SeqStep_ByteBlockF002_Skip3
-	ldw	(124220:24), 13
+	ldw	(FILE_ERROR:24), 13
 	ldw	hl, 0xffff
 	ret
 SeqStep_ByteBlockF002_Skip3:
@@ -3456,7 +3456,7 @@ SeqStep_FileCloseInner:
 	jr z, SeqStep_FileCloseProcess
 
 SeqStep_FileCloseCheck:
-	ldw (0x01e53c:24), 0x0011
+	ldw (FILE_ERROR:24), 0x0011
 	ldw hl, 0xffff
 	jrl SeqStep_FileCloseFinal
 
@@ -3472,7 +3472,7 @@ SeqStep_FileCloseProcess:
 	jr z, SeqStep_FileCloseReturn
 	ld wa, (xsp + 4)
 	exts wa
-	ld (0x01e53c:24), wa
+	ld (FILE_ERROR:24), wa
 
 SeqStep_FileCloseReturn:
 	inc 1, (0x210f4:24)
@@ -3495,7 +3495,7 @@ SeqStep_FileCloseReturn:
 	jr z, SeqStep_FileCloseCleanup
 	cpw (xsp + 4), 0x0
 	jr nz, SeqStep_FileCloseCleanup
-	ldw (0x01e53c:24), 0x0026
+	ldw (FILE_ERROR:24), 0x0026
 
 SeqStep_FileCloseCleanup:
 	ld wa, (xsp + 6)
@@ -3541,7 +3541,7 @@ SeqStep_FileCloseExit:
 	lda	xsp, (xsp+10)
 	jrl	SeqStep_FileCloseExit_Epilogue2
 SeqStep_FileCloseExit_Skip:
-	ldw	(0x1e53c:24), 25
+	ldw	(FILE_ERROR:24), 25
 	ldw	hl, 0xffff
 	jr	SeqStep_FileCloseExit_Epilogue2
 SeqStep_FileCloseExit_Skip2:
@@ -3591,7 +3591,7 @@ SeqStep_FileCloseExit_Epilogue2:
 	ld	xbc, (xsp+4)
 	or	xbc, xbc
 	jr	nz, SeqStep_FileCloseExit_Skip4
-	ldw	(0x1e53c:24), 17
+	ldw	(FILE_ERROR:24), 17
 	ldw	hl, 0xffff
 	ret
 SeqStep_FileCloseExit_Skip4:
@@ -3653,9 +3653,9 @@ SeqStep_FileOpenSetupVtable:
 SeqStep_ByteBlockF245:
 	dec	2, xsp
 	push	xiz
-	ld	wa, (0x1e53c:24)
+	ld	wa, (FILE_ERROR:24)
 	ld	(xsp+4), wa
-	ldw	(0x1e53c:24), 0
+	ldw	(FILE_ERROR:24), 0
 	pushw	SeqStep_ByteBlockF245_Str_d@hi16
 	pushw	SeqStep_ByteBlockF245_Str_d@lo16
 	ld	xwa, (xsp+14)
@@ -3668,18 +3668,18 @@ SeqStep_ByteBlockF245:
 	push	xiz
 	call	FileClose
 	inc	4, xsp
-	ldw	(0x1e53c:24), 21
+	ldw	(FILE_ERROR:24), 21
 	ldw	hl, 0xffff
 	jr	SeqStep_ByteBlockF245_Epilogue
 SeqStep_ByteBlockF245_Skip3:
-	cpw	(124220:24), 5
+	cpw	(FILE_ERROR:24), 5
 	jr	z, SeqStep_ByteBlockF245_Skip4
 	ldw	hl, 0xffff
 	jr	SeqStep_ByteBlockF245_Epilogue
 SeqStep_ByteBlockF245_Skip4:
 	ld	wa, (xsp+4)
 	exts	wa
-	ld	(0x1e53c:24), wa
+	ld	(FILE_ERROR:24), wa
 	pushw	SeqStep_ByteBlockF245_Str_wb@hi16
 	pushw	SeqStep_ByteBlockF245_Str_wb@lo16
 	ld	xwa, (xsp+14)
@@ -3712,7 +3712,7 @@ SeqStep_ByteBlockF245_Epilogue:
 	cp	(xde+4), 0
 	jr	nz, SeqStep_ByteBlockF245_Skip6
 SeqStep_ByteBlockF245_Skip5:
-	ldw	(0x1e53c:24), 17
+	ldw	(FILE_ERROR:24), 17
 	ldw	hl, 17
 	ret
 SeqStep_ByteBlockF245_Skip6:
@@ -3725,7 +3725,7 @@ SeqStep_ByteBlockF245_Skip6:
 	ld	hl, 0:i3
 	ret
 SeqStep_ByteBlockF245_Skip7:
-	ldw	(0x1e53c:24), 18
+	ldw	(FILE_ERROR:24), 18
 	ldw	hl, 18
 	ret
 	ld	xbc, (xsp+4)
@@ -3734,7 +3734,7 @@ SeqStep_ByteBlockF245_Skip7:
 	cp	(xbc+4), 0
 	jr	nz, SeqStep_ByteBlockF245_Skip2
 SeqStep_ByteBlockF245_Skip8:
-	ldw	(0x1e53c:24), 17
+	ldw	(FILE_ERROR:24), 17
 	ldw	hl, 17
 	ret
 SeqStep_ByteBlockF245_Skip2:
@@ -3751,7 +3751,7 @@ SeqStep_ByteBlockF245_Skip2:
 	ret	z
 	ld	a, l
 	exts	wa
-	ld	(0x1e53c:24), wa
+	ld	(FILE_ERROR:24), wa
 	ret
 
 SeqStep_FileSeekSetup:
@@ -3763,7 +3763,7 @@ SeqStep_FileSeekSetup:
 	jr nz, SeqStep_FileSeekProcess
 
 SeqStep_FileSeekNoHandle:
-	ldw (0x01e53c:24), 0x0011
+	ldw (FILE_ERROR:24), 0x0011
 	ldw hl, 0x11
 	ret
 
@@ -3832,7 +3832,7 @@ SeqStep_FileSeekUpdate:
 	ret z
 	ld a, l
 	exts wa
-	ld (0x01e53c:24), wa
+	ld (FILE_ERROR:24), wa
 	ret
 
 SeqStep_FileSeekStore:
@@ -3843,7 +3843,7 @@ SeqStep_FileSeekStore:
 	jr nz, SeqStep_FileSeekFinal
 
 SeqStep_FileSeekComplete:
-	ldw (0x01e53c:24), 0x0011
+	ldw (FILE_ERROR:24), 0x0011
 	ld xhl, 0xffffffff
 	ret
 
@@ -3855,7 +3855,7 @@ SeqStep_FileSeekFinal:
 	ret
 
 SeqStep_FileSeekExit:
-	ldw (0x01e53c:24), 0x0012
+	ldw (FILE_ERROR:24), 0x0012
 	ld xhl, 0xffffffff
 	ret
 
@@ -3887,9 +3887,9 @@ SeqStep_FileSeekCleanup:
 	ld xwa, (xsp + 4)
 	or xwa, xwa
 	jr nz, SeqStep_FileTellReturn
-	cpw (0x1e53c:24), 13
+	cpw (FILE_ERROR:24), 13
 	jr nz, SeqStep_FileTellSetup
-	ldw (0x01e53c:24), 0x0000
+	ldw (FILE_ERROR:24), 0x0000
 	pushw SeqStep_FileSeekCleanup_Str_d@hi16
 	pushw SeqStep_FileSeekCleanup_Str_d@lo16
 	ld xwa, (xsp + 18)
@@ -3900,7 +3900,7 @@ SeqStep_FileSeekCleanup:
 	ld xwa, (xsp + 4)
 	or xwa, xwa
 	jr nz, SeqStep_FileTellReturn
-	cpw (0x1e53c:24), 13
+	cpw (FILE_ERROR:24), 13
 	jr nz, SeqStep_FileTellReturn
 	ldw hl, 0xffff
 	jrl SeqStep_FileTellExit
@@ -3925,12 +3925,12 @@ SeqStep_FileTellReturn:
 	push xiz
 	call FileClose
 	inc 8, xsp
-	ldw (0x01e53c:24), 0x0015
+	ldw (FILE_ERROR:24), 0x0015
 	ldw hl, 0xffff
 	jr SeqStep_FileTellExit
 
 SeqStep_FileTellProcess:
-	ldw (0x01e53c:24), 0x0000
+	ldw (FILE_ERROR:24), 0x0000
 	pushw SeqStep_FileTellProcess_Str_a@hi16
 	pushw SeqStep_FileTellProcess_Str_a@lo16
 	ld xwa, (xsp + 22)
@@ -3961,7 +3961,7 @@ SeqStep_FileTellDone:
 	push xwa
 	calr FileOpenDefault
 	lda xsp, (xsp + 12)
-	ldw (0x01e53c:24), 0x001a
+	ldw (FILE_ERROR:24), 0x001a
 	ldw hl, 0xffff
 	jr SeqStep_FileTellExit
 
@@ -4002,7 +4002,7 @@ SeqStep_FileTellFinal_Skip:
 	ld	xwa, (xiz+26)
 	or	xwa, xwa
 	jr	nz, SeqStep_FileTellFinal_Skip2
-	ldw	(0x1e53c:24), 13
+	ldw	(FILE_ERROR:24), 13
 	jr	SeqStep_FileSeekCleanup_Loop
 SeqStep_FileTellFinal_Skip2:
 	pushw	0
@@ -4027,7 +4027,7 @@ SeqStep_FileTellFinal_Loop:
 	jr	z, SeqStep_FileSeekCleanup_Skip4
 	cp	(xsp+8), 229
 	jr	z, SeqStep_FileSeekCleanup_Skip3
-	ldw	(0x1e53c:24), 27
+	ldw	(FILE_ERROR:24), 27
 SeqStep_FileSeekCleanup_Loop:
 	push	xiz
 	call	FileClose
@@ -6932,7 +6932,7 @@ Fat_TransferSectorsDirect_Skip:
 	jr	z, SeqByteBlock_PathNormalize_Skip22
 	ld	a, l
 	exts	wa
-	ld	(124220:24), wa
+	ld	(FILE_ERROR:24), wa
 	ld	(xiz+6), wa
 	ld	hl, 0:i3
 	jrl	SeqByteBlock_PathNormalize_Epilogue8
@@ -6960,7 +6960,7 @@ SeqByteBlock_PathNormalize_Skip23:
 	or	xhl, xhl
 	jr	nz, SeqByteBlock_PathNormalize_Skip24
 	ldw	(xiz+6), 10
-	ldw	(124220:24), 10
+	ldw	(FILE_ERROR:24), 10
 	ld	hl, 0:i3
 	jrl	SeqByteBlock_PathNormalize_Epilogue8
 SeqByteBlock_PathNormalize_Skip24:
@@ -7120,7 +7120,7 @@ Fat_ReadFile_Loop2:
 	jr	z, SeqByteBlock_PathNormalize_Skip26
 	ld	a, l
 	exts	wa
-	ld	(124220:24), wa
+	ld	(FILE_ERROR:24), wa
 	ld	hl, (xsp+2)
 	jrl	SeqByteBlock_PathNormalize_Epilogue9
 Fat_ReadFile_Skip4:
@@ -7364,7 +7364,7 @@ Fat_WriteFile_Join:
 	jr	z, SeqByteBlock_PathNormalize_Skip27
 	ld	a, l
 	exts	wa
-	ld	(124220:24), wa
+	ld	(FILE_ERROR:24), wa
 	ld	hl, (xsp+2)
 	jrl	SeqByteBlock_PathNormalize_Epilogue10
 SeqByteBlock_PathNormalize_Skip27:
@@ -7827,7 +7827,7 @@ SeqByteBlock_PathNormalize_Skip32:
 	setm	7, (xiz+3)
 	jr	SeqByteBlock_PathNormalize_Join12
 SeqByteBlock_PathNormalize_Skip33:
-	ldw	(0x1e53c:24), 18
+	ldw	(FILE_ERROR:24), 18
 	ldw	hl, 0xffff
 SeqByteBlock_PathNormalize_Epilogue12:
 	pop	xiz
@@ -7836,7 +7836,7 @@ SeqByteBlock_PathNormalize_Epilogue12:
 SeqStep_CountValidSectors:
 	push xiz
 	ldiw_erp 0xfa, 0
-	ldw (0x01e53c:24), 0x0000
+	ldw (FILE_ERROR:24), 0x0000
 	ld iz, 0:i3
 	jr SeqStep_CountLoop_Compare
 
@@ -7851,7 +7851,7 @@ SeqStep_CountLoop_Body:
 	inc1w_erp 0xfa
 
 SeqStep_CountLoop_CheckEnd:
-	cpw (0x1e53c:24), 0
+	cpw (FILE_ERROR:24), 0
 	jr nz, SeqStep_CountLoop_ResetWerp
 	ld xwa, (xsp + 8)
 	cpw (xwa + 6), 0x0
@@ -7899,7 +7899,7 @@ SeqStep_SectorCompareBlock:
 	and	wa, 24
 	cp	wa, bc
 	jr	z, SeqStep_SectorCompareBlock_Skip
-	ldw	(0x1e53c:24), 13
+	ldw	(FILE_ERROR:24), 13
 	ldw	hl, 0xffff
 	ret
 SeqStep_SectorCompareBlock_Skip:
@@ -8019,7 +8019,7 @@ SeqChan_ByteBlockC_Skip:
 	jr	nz, SeqChan_ByteBlockC_Skip3
 	cpw	(xsp+16), 1
 	jr	nz, SeqChan_ByteBlockC_Skip3
-	ldw	(35160:16), 65535
+	ldw	(FDC_PROBE_FLAG:16), 65535
 	push	xiz
 	pushw	1
 	pushw	1
@@ -8032,7 +8032,7 @@ SeqChan_ByteBlockC_Skip:
 	pushw 3
 	calr	SeqStep_ParseVariableHeader
 	lda	xsp, (xsp+16)
-	ldw	(35160:16), 0
+	ldw	(FDC_PROBE_FLAG:16), 0
 	cp	hl, 0:i3
 	jr	nz, SeqChan_ByteBlockC_Skip2
 	ld	(xiz+16), 2
@@ -8534,23 +8534,23 @@ FDC_SetSectorLength:
 	jr z, FDC_SectorLen_0x21
 	cp wa, 0x2f
 	jr nz, FDC_SectorLen_0x24
-	ldw (0x01e53c:24), 0x001f
+	ldw (FILE_ERROR:24), 0x001f
 	ret
 
 FDC_SectorLen_0x21:
-	ldw (0x01e53c:24), 0x0021
+	ldw (FILE_ERROR:24), 0x0021
 	ret
 
 FDC_SectorLen_0x06:
-	ldw (0x01e53c:24), 0x0006
+	ldw (FILE_ERROR:24), 0x0006
 	ret
 
 FDC_SectorLen_0x20:
-	ldw (0x01e53c:24), 0x0020
+	ldw (FILE_ERROR:24), 0x0020
 	ret
 
 FDC_SectorLen_0x24:
-	ldw (0x01e53c:24), 0x0024
+	ldw (FILE_ERROR:24), 0x0024
 	ret
 
 FDC_Format2DD_Start:
@@ -9265,7 +9265,7 @@ GetMediaType_SetupReadCmd:
 	ldw (XSP+0x10), 0x0001
 	ld XWA,(XSP+0x02)
 	ld (XSP+0x12),XWA
-	ldw	(0x8958:16), 0xffff
+	ldw	(FDC_PROBE_FLAG:16), 0xffff
 	lds_erpb 0xfb, 0
 	call Check_for_Floppy_Disk_Change
 	cp l, 0:i3
@@ -9371,7 +9371,7 @@ GetMediaType_CheckExtraFormat:
 	ldib_erp 0xfb, 5
 
 GetMediaType_Epilogue:
-	ldw	(35160:16), 0
+	ldw	(FDC_PROBE_FLAG:16), 0
 
 	ld xwa, (xsp + 2)
 
@@ -10788,9 +10788,9 @@ Seq_DispatcherTick_Process:
 	call Seq_ReadTempoLookup
 	calr Seq_ProcessAllInputState
 	call Rhythm_CompareAndTrigger
-	and	(0x323c:16), 0x9f
+	and	(ACC_PART_FLAGS:16), 0x9f
 	call AccTick_Main
-	ld	a, (0x323c:16)
+	ld	a, (ACC_PART_FLAGS:16)
 	and A,0x60
 	call Rhythm_SaveState
 	call Seq_RhythmProcessor
@@ -10803,11 +10803,11 @@ Seq_DispatcherTickReturn:
 
 SeqTick_ReadControlState:
 	ld	a, (PANEL_STYLE:16)
-	ld	(12861:16), a
+	ld	(ACC_PENDING_STYLE:16), a
 	ld	a, (PANEL_STYLE+1:16)
 	and	a, 127
 	and	a, 7
-	ld	(12863:16), a
+	ld	(ACC_PENDING_GROUP:16), a
 	calr	VoiceParam_ClampAndStore
 	nop
 	nop
@@ -10828,7 +10828,7 @@ SeqCtl_CheckBit6:
 	or a, 0x2
 
 SeqCtl_CheckBit7:
-	ld	(12867:16), a
+	ld	(ACC_REQ_FILLIN:16), a
 	xor	a, a
 	bit	4, w
 	jr	z, SeqCtl_CheckBit4
@@ -10839,7 +10839,7 @@ SeqCtl_CheckBit4:
 	or a, 0x2
 
 SeqCtl_CheckBit5:
-	ld	(12869:16), a
+	ld	(ACC_REQ_ENDING:16), a
 	xor	a, a
 	bit	2, w
 	jr	z, SeqCtl_CheckBit2
@@ -10856,10 +10856,10 @@ SeqCtl_CheckBit3:
 	or a, 0x4
 
 SeqTick_ReadControlState_StoreIntroBits:
-	stb_d8	(12871), a
+	stb_d8	(ACC_REQ_INTRO), a
 	ldb_d8	a, (PANEL_PMEM_SETTINGS+3)
 	and	a, 1
-	stb_d8	(12873), a
+	stb_d8	(ACC_STYLE_ARRANGER_ON), a
 	ldb_d8	a, (PANEL_STYLE+4)
 	and	a, 16
 	srl	a, 4
@@ -10868,7 +10868,7 @@ SeqTick_ReadControlState_StoreIntroBits:
 	ldb_d8	a, (PANEL_STYLE+7)
 	and	a, 48
 	srl	a, 4
-	stb_d8	(12877), a
+	stb_d8	(ACC_VARIATION_REQUEST), a
 	xor	a, a
 	bit	2, (PANEL_GM+3:16)
 	jr	nz, SeqCtl_StoreKeyMask
@@ -10877,13 +10877,13 @@ SeqCtl_StoreKeyMask:
 	ld	(12879:16), a
 	ret
 VoiceParam_ClampAndStore:
-	ld	l, (12861:16)
-	ld	h, (12863:16)
+	ld	l, (ACC_PENDING_STYLE:16)
+	ld	h, (ACC_PENDING_GROUP:16)
 	calr	VoiceParam_ClampAndValidate
-	ld	(12861:16), l
+	ld	(ACC_PENDING_STYLE:16), l
 	and	h, 127
 	and	h, 7
-	ld	(12863:16), h
+	ld	(ACC_PENDING_GROUP:16), h
 	ret
 VoiceParam_ClampAndValidate:
 	cp l, 0x80
@@ -10936,14 +10936,14 @@ Seq_ReadTempoLookup:
 	ld	(12947:16), wa
 	ret
 Seq_ProcessAllInputState:
-	ld	a, (0x31cb:16)
+	ld	a, (ACC_RUN_FLAGS:16)
 	and A,0xfe
-	bit 2, (0x041e:16)
+	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, .Lc_f53115
 	or A,0x01
 Seq_InputState_StoreFlag:
 .Lc_f53115:
-	ld	(0x31cb:16), a
+	ld	(ACC_RUN_FLAGS:16), a
 	calr AccKey_ScanAndSetDirty
 	calr AccState_ReadAccompParams
 	calr AudioMode_CheckAndUpdateStereo
@@ -10962,7 +10962,7 @@ Seq_InputState_StoreFlag:
 	add BC,HL
 	ld	(0x31c5:16), bc
 	ld	(0x3231:16), 0x18
-	bit	0, (0x31cb:16)
+	bit	0, (ACC_RUN_FLAGS:16)
 	jr z, AccInput_CheckRecordMode
 	call AccTuning_DisableIfNoStyle
 	bit	0, (0x32ab:16)
@@ -10999,7 +10999,7 @@ AccKey_ScanAndSetDirty:
 
 	ld a, 0x1:opc
 
-	ld xhl, 0xf1a0
+	ld xhl, SEQ_TRACK_ASSIGN
 
 	xor c, c
 
@@ -11016,7 +11016,7 @@ AccKey_ScanLoop:
 	jr AccKey_ScanLoop
 
 AccKey_FoundActiveKey:
-	and	wa, (0xf19e:16)
+	and	wa, (SEQ_TRACK_MASK:16)
 	jr	z, AccKey_ScanDone
 	or	(12748:16), 2
 AccKey_ScanDone:
@@ -11024,30 +11024,30 @@ AccKey_ScanDone:
 	ret
 
 AccChord_ReadAndStoreKeys:
-	ld	a, (0xce20:16)
-	ld	(0x3221:16), a
-	ld	a, (0xce1f:16)
-	ld	(0x3220:16), a
-	ld	a, (0xce21:16)
-	ld	(0x3222:16), a
-	ld	a, (0xce1e:16)
-	ld	(0x321f:16), a
-	cp	(0x2302:16), 0x00
+	ld	a, (CHORD_ROOT:16)
+	ld	(ACC_CHORD_ROOT:16), a
+	ld	a, (CHORD_TYPE:16)
+	ld	(ACC_CHORD_TYPE:16), a
+	ld	a, (CHORD_BASS_ROOT:16)
+	ld	(ACC_CHORD_BASS:16), a
+	ld	a, (CHORD_FLAGS:16)
+	ld	(ACC_CHORD_FLAGS:16), a
+	cp	(SEQ_CHORD_FROM_SONG:16), 0x00
 	jr z, .Lc_f53209
-	ld	a, (0x22fc:16)
-	ld	(0x3221:16), a
-	ld	a, (0x22fa:16)
-	ld	(0x3220:16), a
-	ld	a, (0x22fe:16)
-	ld	(0x3222:16), a
-	ld	a, (0x2300:16)
-	ld	(0x321f:16), a
+	ld	a, (SEQ_CHORD_ROOT:16)
+	ld	(ACC_CHORD_ROOT:16), a
+	ld	a, (SEQ_CHORD_TYPE:16)
+	ld	(ACC_CHORD_TYPE:16), a
+	ld	a, (SEQ_CHORD_BASS:16)
+	ld	(ACC_CHORD_BASS:16), a
+	ld	a, (SEQ_CHORD_FLAGS:16)
+	ld	(ACC_CHORD_FLAGS:16), a
 AccChord_CheckKeyOverride:
 .Lc_f53209:
-	bit	1, (0x321f:16)
+	bit	1, (ACC_CHORD_FLAGS:16)
 	jr nz, .Lc_f53217
-	ld	a, (0x3221:16)
-	ld	(0x3222:16), a
+	ld	a, (ACC_CHORD_ROOT:16)
+	ld	(ACC_CHORD_BASS:16), a
 AccChord_CheckUIState:
 .Lc_f53217:
 	cp (CURRENT_MODE:16), 0x0e
@@ -11057,68 +11057,68 @@ AccChord_CheckUIState:
 	cp (CURRENT_TITLE:16), 0xb0
 	jr nz, AccChord_SetDefaultKeys
 AccChord_CheckKeyFlags:
-	ld a, (1054:16)
+	ld a, (ACC_TRANSPORT_STATE:16)
 	and a, 0x18
 	jr nz, AccChord_CheckUIStateExit
 
 AccChord_SetDefaultKeys:
-	ld	(12831:16), 0
-	ld	(12832:16), 1
-	ld	(35978:16), 1
+	ld	(ACC_CHORD_FLAGS:16), 0
+	ld	(ACC_CHORD_TYPE:16), 1
+	ld	(DISPLAY_CHORD_TYPE:16), 1
 	bit	4, (13362:16)
 	jr	z, AccChord_ReadChannelKeys
-	ld	(12832:16), 5
-	ld	(35978:16), 5
+	ld	(ACC_CHORD_TYPE:16), 5
+	ld	(DISPLAY_CHORD_TYPE:16), 5
 AccChord_ReadChannelKeys:
 	ld	a, (13361:16)
 	and	a, 15
 	inc	1, a
-	ld	(12833:16), a
-	ld	(35976:16), a
-	ld	(12834:16), a
+	ld	(ACC_CHORD_ROOT:16), a
+	ld	(DISPLAY_CHORD_ROOT:16), a
+	ld	(ACC_CHORD_BASS:16), a
 AccChord_CheckUIStateExit:
 	cp	(CURRENT_MODE:16), 14
 	jr	z, AccChord_CheckModeAndUpdate
 	cp	(12857:16), 14
 	jr	nz, AccChord_CheckModeAndUpdate
-	ldb_d8	a, (52767)
-	stb_d8	(35978), a
-	ldb_d8	a, (52768)
-	stb_d8	(35976), a
+	ldb_d8	a, (CHORD_TYPE)
+	stb_d8	(DISPLAY_CHORD_TYPE), a
+	ldb_d8	a, (CHORD_ROOT)
+	stb_d8	(DISPLAY_CHORD_ROOT), a
 	calr	AccDisplay_RefreshIfDiskActive
 AccChord_CheckModeAndUpdate:
-	ld	a, (12892:16)
-	or	a, (12893:16)
+	ld	a, (ACC_LANES_ENDING1:16)
+	or	a, (ACC_LANES_ENDING2:16)
 	and	a, 63
 	jrl	z, AccChord_ReadKeysRet	; -> 0xF5331C
-	ld	a, (12832:16)
+	ld	a, (ACC_CHORD_TYPE:16)
 	cp	a, 0:i3
 	jr	nz, AccChord_ReadKeysRet	; -> 0xF5331C
-	ld	a, (12836:16)
-	cp	a, (12832:16)
+	ld	a, (ACC_CHORD_PREV_TYPE:16)
+	cp	a, (ACC_CHORD_TYPE:16)
 	jr	z, AccChord_ReadKeysRet	; -> 0xF5331C
-	ld	(12832:16), a
-	ld	(52767:16), a
-	ld	(35978:16), a
-	ld	(8954:16), a
-	ld	a, (12837:16)
-	ld	(12833:16), a
-	ld	(52768:16), a
-	ld	(35976:16), a
-	ld	(8956:16), a
-	ld	a, (12838:16)
-	ld	(12834:16), a
-	ld	(52769:16), a
-	ld	(35980:16), a
-	ld	(8958:16), a
-	cp	a, (12837:16)
+	ld	(ACC_CHORD_TYPE:16), a
+	ld	(CHORD_TYPE:16), a
+	ld	(DISPLAY_CHORD_TYPE:16), a
+	ld	(SEQ_CHORD_TYPE:16), a
+	ld	a, (ACC_CHORD_PREV_ROOT:16)
+	ld	(ACC_CHORD_ROOT:16), a
+	ld	(CHORD_ROOT:16), a
+	ld	(DISPLAY_CHORD_ROOT:16), a
+	ld	(SEQ_CHORD_ROOT:16), a
+	ld	a, (ACC_CHORD_PREV_BASS:16)
+	ld	(ACC_CHORD_BASS:16), a
+	ld	(CHORD_BASS_ROOT:16), a
+	ld	(DISPLAY_CHORD_BASS:16), a
+	ld	(SEQ_CHORD_BASS:16), a
+	cp	a, (ACC_CHORD_PREV_ROOT:16)
 	jr	nz, AccChord_CompareNoteC	; -> 0xF532ED
-	ld	(35980:16), 0
+	ld	(DISPLAY_CHORD_BASS:16), 0
 AccChord_CompareNoteC:
-	ldb_d8	a, (12835)
-	stb_d8	(12831), a
-	stb_d8	(52766), a
-	stb_d8	(8960), a
+	ldb_d8	a, (ACC_CHORD_PREV_FLAGS)
+	stb_d8	(ACC_CHORD_FLAGS), a
+	stb_d8	(CHORD_FLAGS), a
+	stb_d8	(SEQ_CHORD_FLAGS), a
 	call	Voice_InitSlotData
 	call	Voice_FindAndAllocBestMatch
 	ldb_d8	a, (PANEL_STYLE+3)
@@ -11148,10 +11148,10 @@ AccState_ReadAccompParams:
 	ld A, 0x00:opc
 	ei 0x06
 	ld (0x0464:16), a
-	ld a, (0x0416:16)
+	ld a, (ACC_BEAT:16)
 	ld	(0x31c8:16), a
-	ld a, (0x0434:16)
+	ld a, (ACC_BAR_COUNT:16)
 	ld	(0x31fc:16), a
-	ld a, (0x0435:16)
+	ld a, (ACC_SECTION_BAR:16)
 	ld	(0x31fb:16), a
-	ld a, (0x0415:16)
+	ld a, (ACC_CLOCK:16)

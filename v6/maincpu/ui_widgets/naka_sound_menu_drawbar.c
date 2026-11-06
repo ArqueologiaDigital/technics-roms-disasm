@@ -508,7 +508,7 @@ const naka_sound_menu_drawbar_t naka_sound_menu_drawbar_data
 
     .EV_ACCORDIONTAB_str = "EV_ACCORDIONTAB",
 
-    .Murai_ResEventCount_1C1 = 0x000A,
+    .Murai_ResEventCount_1C1 = 0x0009,
 
     .Naka_Event_Table3 = {
         SELF(MT_GetPart_str),

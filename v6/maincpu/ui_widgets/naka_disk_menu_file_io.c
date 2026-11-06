@@ -11427,7 +11427,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
 
     .StyleConvert_AcTitleMenu_ptr = SELF(StyleConvert_AcTitleMenu),
 
-    .field_53f2 = 0xEEEE,
+    .field_53f2 = 0xEEEA,
 
     .field_53f4 = 0x0003,
 
@@ -11583,7 +11583,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         SELF(DiskLoadP3_PsFileNameBox_7),
     },
 
-    .field_563e = 0xEF24,
+    .field_563e = 0xEF20,
 
     .field_5640 = 0x0003,
 
