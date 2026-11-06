@@ -1,0 +1,5 @@
+L-kernel-a3-kn5000-maincpu         CLOSED  579b240ce (+4fc7bd5bc ledgers); wsa1/notes/open10-kernel4-probes/README.md, kernel4_maincpu.py --verify 20/20
+L-kernel-a3-softtimer-boot-header  CLOSED  bc080f57c; data_range_census: SoftTimer_Request_Boot KNOWN-A in v142/prom_a/prom_c (v141/v140 same source)
+L-kernel-a3-join-probe-stale       CLOSED  18bfa2ce2; kernel_join_probe.py --verify 16/16 (POST_MERGE_EDITS + RESPELLINGS, mutation-tested)
+N-1e4a337c                         CLOSED  bc6186f1b; format_screen_requests.py A1-A3 (screen 0x52 = PanelScreen_NullVtable; bit 2 never set)
+N-813b5071                         CLOSED  bc6186f1b; format_screen_requests.py B1-B3 (0x0201 = mode request -> current play mode's screen)

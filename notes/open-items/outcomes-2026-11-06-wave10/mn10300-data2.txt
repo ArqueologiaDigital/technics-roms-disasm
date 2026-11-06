@@ -1,0 +1,15 @@
+L-mn10300-names-bitcount-inference  CLOSED   ed8903b33 (VwUserBitmapProc cited; the bitmap header says the default depth)
+L-mn10300-names-data-own-syms       CLOSED   ed8903b33 + d42c7296a (935/893 0x500066DD/D9 = DspReadyWaitEnabled)
+N-f67b155c                          CLOSED   ed8903b33, d42c7296a, c98b75e31 (SOUND_NAME_HEAD / VOICE_HEAD; the four old macros deleted)
+N-027de254                          CLOSED   e1e81eea2 (support-class value-name lists, func_48431434; 54 per image, KN2400 data_484151E0 included)
+N-044cdbc6                          CLOSED   e1e81eea2 (FAT_BOOT_HEAD for the 941/KN2400 BPB templates; KN6000/6500 memcpy-loop blocks = default panel memory)
+N-4666109a                          BLOCKED  needs a run-time write-watch in the KN7000 MAME driver (another repository); no static reader exists (bytes constant in all 120 pads / 60 TCMP records)
+N-4b34dd8b                          OPEN     m008008 = parameter 0x008008, set with 0x008006 from panel control 0xC2 (KN6000 0xC6) by func_48454E3A; the song-play / panel split is traced. Next: identify wire 0xC2 (service manual / MAME panel HLE)
+N-2468beef                          OPEN     FlashChip, DiskFileHandler, PanelTestSwitch, ChordRecogEntry/2 named; 941 255->244, KN2400 200->194. Next: the same, kind by kind, from field_names_census.py --list
+L-mn10300-names-kn2400-titles       CLOSED   b51de23dc + d42c7296a (25 TT_ names from TitleNameTable in kn2400 gui_ids.inc)
+N-61c32961                          OPEN     not reached (lane mn10300-data2, 2026-11-06): the indexed sentinel_lists form for func_4C11B347 / func_4861CCC5 (21 B KN6000, 4 B KN2400), in gen_data_s.py
+N-fb88572c                          OPEN     not reached (lane mn10300-data2, 2026-11-06): the frozen gui_object_names.tsv for gen_data_s.py obj_names() (design in kn7000/notes/gui-data-region/README.md)
+O-kn7000-program-unknown-dump-bfbe48  CLOSED  0 / 0 (nv_not_ptrs, 4dcd80d03)
+O-kn7000-sp7001-unknown-dump-bfbe48   CLOSED  0 / 0 (nv_not_ptrs, 4dcd80d03)
+O-kn7000-b935-unknown-dump-bfbe48     CLOSED  0 / 0 (nv_not_ptrs, 4dcd80d03)
+O-kn7000-b893-unknown-dump-337026     CLOSED  0 / 0 (nv_not_ptrs, 4dcd80d03)

@@ -1,0 +1,16 @@
+L-mn10300-names-b935-initial-sp      CLOSED   759c25d1a + fe68e7918; kn7000/notes/kn7000-names-probes/names_reset_sp_check.py (4 builds OK)
+L-mn10300-names-port-entry           CLOSED   759c25d1a; 935 test carries DspFullReinit/DspWritePMWord/DspWriteDMWord; siblings +28/+28/+21 rows (00b055b0f)
+L-mn10300-names-sd-frame-labels      CLOSED   fe68e7918 + 183cfa428 (941 data typed as five 10-byte frames, TickHookArg0..3); names_sd_frames.py; 942/935/893 data at next data-and-code-src
+L-mn10300-names-kn2400-titles        BLOCKED  gen_data_s.py is lane mn10300-data2's: names_kn2400_titles.py lists the 25 titles to add to gui_ids.inc; TitleDefaultRecord already typed
+N-89cedbdb                           CLOSED   kn7000/notes/sibling-name-port/README.md + names_choice_func_lists.py: both names right (template twins, different choice lists)
+N-61c32961                           BLOCKED  gen_data_s.py (lane mn10300-data2): indexed sentinel_lists for func_4C11B347 / func_4861CCC5
+N-fb88572c                           BLOCKED  gen_data_s.py obj_names() + data dirs (lane mn10300-data2): frozen gui_object_names.tsv, design in gui-data-region/README.md
+N-83177c3d                           CLOSED   ec36573a2; ic18-rhythm-rom.md, rhythm_kit_tone_fallback.py (3,386 notes; 92.5% -> 93.9%)
+N-c052c027                           CLOSED   ec36573a2; ic18-rhythm-rom.md "What the conversion tables do", rhythm_noteconv_tables.py
+N-e779328f                           CLOSED   ec36573a2; rhythm_part_eq_and_units.py (EQ words -> TG classes 0x40000000..0x50000000; +2/+3 = EFF4/EFF5 parts); the TG datasheet question remains as a note caveat
+N-c6900716                           OPEN     fccde08a5: 0xA0/0xA1/0x200000 named (song_id_users.py); 17 ids left; next: find their editing screens by transmit-template number or MT_GetMmmParam1, or a MAME watch of the panel record
+N-abdfdef8                           CLOSED   fccde08a5; song-records.md section 7 (PC COMMUNICATION protocol), sysex_pccom.py
+N-42bc8729                           CLOSED   f4ecaec97 + 06e540040; sp7001-build-diff.md "The last 24", oldbuilds_baseext_unresolved_calls.py (24 of 24)
+N-44e56012                           OPEN     6153ee11a: key-bed path traced, no work-RAM gate (picload_key_gate.py); next: MAME break on TgcNoteOnSend 0x4C029793 / TgcBufWrite 0x4C003A60 during PICTURE LOAD
+N-e140c8dc                           CLOSED   635dba2f1 + 0cf4805c3; KN6000 1,768 -> 36 B, KN7000 5,270 -> 5,045 B (the rest is untouched RAM [INFERENCE], sqt_ram_phase.py)
+O-kn6000-floppy-unknown-dump-397763  CLOSED   same commits; group 126 x 1,768 B -> 3 x 36 B (the collector may give it a new id)
