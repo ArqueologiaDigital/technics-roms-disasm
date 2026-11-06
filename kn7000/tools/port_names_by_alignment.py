@@ -49,10 +49,25 @@
 # the two names agree (case-insensitively, X and X_entry one name) and wrong when
 # they differ; the wrong ones are listed in the report.
 #
+# POINTERS (lane open12/sibling-names2): an aligned instruction pair whose numbers are a
+# routine start on both sides (`mov func, d0`, a callback handed to a registration) pairs
+# the two routines as a call site does; one whose numbers are data addresses on both sides
+# (`mov table, a0`) pairs the two tables, whose 32-bit words pair at equal offsets as long
+# as both or neither are code addresses.  A table is used only when at least --table-agree
+# of its word pairs are routines both images name alike and none is named unlike (a walk
+# that slipped by a row pairs every later word wrongly, and its named words show it); its
+# audit leaves each named word out in turn.  Without that test the KN2400's table-word
+# pairs were 317 wrong of 1,043 (../notes/sibling-names2/README.md).
+#
 # RAM: a B address pairs with an A address under the same uniqueness rule.  The
-# names of A's RAM addresses (its --a-sym rows outside the image) are carried onto
-# their B partners; every pair, named or not, is written to --ram-map, so a RAM
-# name given to the KN7000 later reaches the sibling by a re-run.
+# names of A's RAM addresses (its --a-sym rows outside the image, but not a RAM window's
+# base, is_region_base) are carried onto their B partners; every pair, named or not, is
+# written to --ram-map, so a RAM name given to the KN7000 later reaches the sibling by a
+# re-run.  RUNS (wave 12): a relinked module keeps its variables' order and spacing, so
+# the voted pairs come in runs of one delta; between two voted pairs that are neighbours
+# in B's order and share the delta, the RAM addresses both codes spell pair by that delta
+# (ram_runs; the premise is audited on the voted pairs themselves, ram_runs_audit).  The
+# twin pass reads these pairs too.
 #
 # Usage:
 #   port_names_by_alignment.py --a-rom A.rom --a-code LO:HI[:CPU] ... --a-sym A1.sym ...
@@ -60,6 +75,7 @@
 #       --b-labels B/src/labels.inc --out B_aligned.sym --ram-map B_ram_map.tsv
 #       --report REPORT.md --title "..." [--unidasm PATH] [--cache DIR]
 import argparse
+import bisect
 import collections
 import difflib
 import os
@@ -77,6 +93,15 @@ RAM_TOPS = (0x50, 0x90, 0x84)
 
 def is_ram(v):
     return (v >> 24) in RAM_TOPS
+
+
+def is_region_base(v):
+    """0x50000000, 0x90000000, 0x84000000: the base of a RAM window is a memory-map constant,
+    not a variable.  Its A name (WORK_RAM_BASE) is not carried: in B's data the same value is a
+    bus-window base held as a number (KN6000 func_4C0506C7_entry_L4_Records' +0 field holds
+    0x50000000 / 0x58000000 / 0x54000000), and a label there makes gen_data_s.py read that
+    field as a pointer (lane mn10300-data3, ../notes/mn10300-data3/README.md section 3)."""
+    return is_ram(v) and not v & 0x00FFFFFF
 
 
 def big_numbers(ops):
@@ -115,7 +140,8 @@ class Run:
             B = GI.Image(a.b_rom, a.b_base, ranges(a.b_code, a.b_base), a.unidasm)
         a_all = GI.load_syms(a.a_sym)
         b_all = GI.load_syms(a.b_sym)
-        self.a_ram = {cpu: nm for cpu, nm in a_all.items() if A.off(cpu) is None and is_ram(cpu)}
+        self.a_ram = {cpu: nm for cpu, nm in a_all.items()
+                      if A.off(cpu) is None and is_ram(cpu) and not is_region_base(cpu)}
         self.b_ram = {cpu: nm for cpu, nm in b_all.items() if B.off(cpu) is None and is_ram(cpu)}
         a_names = {cpu: nm for cpu, nm in a_all.items() if not nm.endswith("_entry") and A.off(cpu) is not None}
         b_names = {cpu: nm for cpu, nm in b_all.items() if not nm.endswith("_entry") and B.off(cpu) is not None}
@@ -177,7 +203,7 @@ class Run:
                 j = amap.get(k)
                 if j is None or j not in cb_at or ca is None or cb_at[j] is None:
                     continue
-                calls[(cb_at[j], ca)].append((nm, cls))
+                calls[(cb_at[j], ca)].append((nm, cls, "call"))
             ba, bb = self.SA.body(fa), self.SB.body(fb)
             for k, j in amap.items():
                 if k >= len(ba) or j >= len(bb):
@@ -191,7 +217,78 @@ class Run:
                 for va, vb in zip(na, nb):
                     if is_ram(va) and is_ram(vb):
                         self.ram_votes[vb][va] += 1
+                    elif self.a.pointers:
+                        self.pointer_votes(calls, nm, cls, va, vb)
         return calls
+
+    # ---- routine addresses held as operands, and in the data tables operands point to ---
+    def data_off(self, img, v):
+        """File offset of CPU address v in img's data (in the image, outside every code range)."""
+        o = v - img.base
+        if 0 <= o <= len(img.d) - 4 and not img.in_code(o) and img.off(v) is None:
+            return o
+        return None
+
+    def pointer_votes(self, calls, nm, cls, va, vb):
+        """POINTERS: an aligned operand that is a routine start on both sides (`mov
+        func, d0`: a callback handed over) pairs the two routines; one that is a data
+        address on both sides (`mov table, a0`) pairs the two tables, and the words of
+        the tables pair as far as their layouts agree (table_pairs).  Each pair is one
+        support of the anchor's class, as a call site is, and goes through the same
+        tests; the audit counts these pairs apart (pointers right / wrong)."""
+        oa, ob = self.A.off(va), self.B.off(vb)
+        if oa is not None and ob is not None:
+            sa, sb = self.SA.routine(oa), self.SB.routine(ob)
+            if sa in self.SA.starts and sb in self.SB.starts and sa == oa and sb == ob:
+                calls[(sb, sa)].append((nm, cls, "pointer"))
+            return
+        da, db = self.data_off(self.A, va), self.data_off(self.B, vb)
+        if da is None or db is None or (db, da) in self.tables_done:
+            return
+        self.tables_done.add((db, da))
+        tp = self.table_pairs(da, db)
+        agree = bad = 0
+        for sb, sa, _o in tp:
+            na, nb = self.a_name(sa), self.SB.name_at(sb)
+            if na and nb:
+                if norm_name(na) == norm_name(nb):
+                    agree += 1
+                else:
+                    bad += 1
+        # a table counts only when the words both images name agree, at least --table-agree
+        # of them, and none disagrees: a walk that slipped by a row (an entry one side
+        # added) pairs every later word with the wrong routine, which the named ones show
+        # the audit, leave one out: would the table pass on its other named words, and is
+        # the word left out right?  (the words that let a table pass cannot audit it)
+        if not bad and agree - 1 >= self.a.table_agree:
+            self.table_stats["audit: named word, table passes without it, right"] += agree
+        elif bad == 1 and agree >= self.a.table_agree:
+            self.table_stats["audit: named word, table passes without it, wrong"] += 1
+        if bad or agree < self.a.table_agree:
+            self.table_stats["tables refused (named words disagree, or too few agree)"] += 1
+            return
+        self.table_stats["tables used"] += 1
+        for sb, sa, o in tp:
+            calls[(sb, sa)].append((f"{nm} table 0x{vb:08X}+{o}", cls, "table"))
+
+    def table_pairs(self, da, db):
+        """[(B start, A start, offset)] of the 32-bit words at the same offsets of two
+        paired tables that are routine starts on both sides, up to --table-max bytes;
+        the walk stops where one side holds a code address and the other does not (the
+        two layouts part), or where either side reaches code."""
+        A, B = self.A, self.B
+        out = []
+        for o in range(0, self.a.table_max, 4):
+            if da + o + 4 > len(A.d) or db + o + 4 > len(B.d) or A.in_code(da + o) or B.in_code(db + o):
+                break
+            wa = int.from_bytes(A.d[da + o:da + o + 4], "little")
+            wb = int.from_bytes(B.d[db + o:db + o + 4], "little")
+            pa, pb = A.off(wa), B.off(wb)
+            if (pa is None) != (pb is None):
+                break
+            if pa is not None and pa in self.SA.starts and pb in self.SB.starts:
+                out.append((pb, pa, o))
+        return out
 
     def round(self, all_calls):
         by_b = collections.defaultdict(set)
@@ -205,16 +302,23 @@ class Run:
                 continue
             na = self.a_name(ca)
             nb = self.SB.name_at(cb)
-            strong = sum(1 for _n, c in sup if c in ("exact", "skeleton"))
+            strong = sum(1 for _n, c, _k in sup if c in ("exact", "skeleton"))
+            kinds = {k for _n, _c, k in sup}
+            ptr_only = "call" not in kinds
+            pkind = "table" if kinds == {"table"} else "pointer"
             decisive = strong >= 1 or len(sup) >= 2
             if na and nb:                                    # the audit: both named already,
                 if decisive:                                 # judged by the rule's own support test
                     self.judged.add((cb, ca))
-                if decisive and len(by_b[cb]) == 1 and len(by_a[ca]) == 1:
+                if decisive and len(by_b[cb]) == 1 and len(by_a[ca]) == 1 and not (ptr_only and pkind == "table"):
                     if norm_name(na) == norm_name(nb):
                         self.audit["right"] += 1
+                        if ptr_only:
+                            self.audit[f"{pkind} right"] += 1
                     else:
                         self.audit["wrong"] += 1
+                        if ptr_only:
+                            self.audit[f"{pkind} wrong"] += 1
                         self.audit_wrong.append((nb, self.B.cpu(cb), na, self.A.cpu(ca), len(sup)))
                 continue
             if not na:
@@ -249,7 +353,9 @@ class Run:
                 continue
             self.judged.add((cb, ca))
             self.rows.append((self.B.cpu(cb), na, self.A.cpu(ca), len(sup), strong,
-                              sorted({n for n, _c in sup})[:3], c.sk, c.st, self.n_round))
+                              sorted({n for n, _c, _k in sup})[:3], c.sk, c.st, self.n_round))
+            if ptr_only:
+                self.ptr_rows.add(self.B.cpu(cb))
             self.SB.names[self.B.cpu(cb)] = na
             self.b_taken.add(norm_name(na))
             new += 1
@@ -267,6 +373,9 @@ class Run:
         self.last_why = {}
         self.how = {}
         self.pair_anchors = []
+        self.tables_done = set()
+        self.table_stats = collections.Counter()
+        self.ptr_rows = set()
         for self.n_round in range(1, max_rounds + 1):
             for key, sup in self.votes(self.anchors(), done).items():
                 all_calls[key].extend(sup)
@@ -394,8 +503,66 @@ class Run:
             new += 1
         return new
 
+    def ram_refs(self, img):
+        """Every RAM address a non-branch instruction of img's decoded code spells."""
+        out = set()
+        for _o, (_b, mnem, ops) in img.ix.items():
+            if GI.target_of(mnem, ops) is None:
+                out.update(v for v in big_numbers(ops) if is_ram(v))
+        return out
+
     def ram_pairs(self):
-        """[(b, a, votes, other_a_votes)] for B RAM addresses whose votes name one A address
+        """ram_voted() and, unless --no-ram-runs, the pairs ram_runs() adds between them."""
+        voted = self.ram_voted()
+        if not self.a.ram_runs:
+            return voted
+        return sorted(voted + self.ram_runs(voted))
+
+    def ram_runs(self, voted):
+        """RUNS: a module's variables keep their order and spacing when the module is relinked,
+        so the voted pairs come in runs of one delta (B address - A address).  Between two
+        voted pairs next to each other in B's order that have the same delta d, every RAM
+        address vb that B's code spells and no vote gives another A address pairs with
+        vb - d, when A's code spells that and no voted pair holds it.  The audit
+        (ram_runs_audit) tests the premise on the voted pairs themselves."""
+        if not hasattr(self, "_refs"):
+            self._refs = (self.ram_refs(self.A), sorted(self.ram_refs(self.B)))
+        a_refs, b_refs = self._refs
+        vb_set = {vb for vb, _va, _n in voted}
+        va_set = {va for _vb, va, _n in voted}
+        out = []
+        seq = sorted((vb, va) for vb, va, _n in voted)
+        for (b1, a1), (b2, a2) in zip(seq, seq[1:]):
+            d = b1 - a1
+            if b2 - a2 != d or b2 - b1 > self.a.ram_run_gap:
+                continue
+            i = bisect.bisect_right(b_refs, b1)
+            while i < len(b_refs) and b_refs[i] < b2:
+                vb = b_refs[i]
+                i += 1
+                va = vb - d
+                if vb in vb_set or va in va_set or va not in a_refs:
+                    continue
+                if self.ram_votes.get(vb) and set(self.ram_votes[vb]) != {va}:
+                    continue
+                out.append((vb, va, 0))
+        return out
+
+    def ram_runs_audit(self):
+        """(right, wrong): each voted pair whose two neighbours in B's order share one delta
+        is predicted to have that delta too (the RUNS premise, measured where it is known)."""
+        seq = sorted((vb, va) for vb, va, _n in self.ram_voted())
+        ok = bad = 0
+        for (b0, a0), (b1, a1), (b2, a2) in zip(seq, seq[1:], seq[2:]):
+            if b0 - a0 == b2 - a2 and b2 - b0 <= self.a.ram_run_gap:
+                if b1 - a1 == b0 - a0:
+                    ok += 1
+                else:
+                    bad += 1
+        return ok, bad
+
+    def ram_voted(self):
+        """[(b, a, votes)] for B RAM addresses whose votes name one A address
         that no other B address claims."""
         a_claims = collections.Counter()
         best = {}
@@ -432,6 +599,16 @@ def main():
     ap.add_argument("--min-body", type=float, default=0.6)
     ap.add_argument("--unidasm", default=os.environ.get("UNIDASM", "../../tools/unidasm"))
     ap.add_argument("--cache")
+    ap.add_argument("--no-pointers", dest="pointers", action="store_false",
+                    help="call sites only: no pairs from routine addresses held as operands or in paired tables")
+    ap.add_argument("--table-agree", type=int, default=2,
+                    help="how many words of two paired tables both images must name alike, none unlike (default 2)")
+    ap.add_argument("--table-max", type=lambda v: int(v, 0), default=0x400,
+                    help="how far into two paired data tables table_pairs walks (default 0x400 bytes)")
+    ap.add_argument("--no-ram-runs", dest="ram_runs", action="store_false",
+                    help="RAM pairs by aligned operands only, not also between two pairs of one delta (ram_runs)")
+    ap.add_argument("--ram-run-gap", type=lambda v: int(v, 0), default=0x1000,
+                    help="the widest B span between two pairs of one delta that ram_runs fills (default 0x1000)")
     ap.add_argument("--no-twins", dest="twins", action="store_false",
                     help="call sites only: skip the pass over same-body routines told apart by their RAM operands")
     a = ap.parse_args()
@@ -497,11 +674,20 @@ def main():
             f.write(f"- routine pairs both images leave unnamed, accepted by the same rule as anchors: "
                     f"{len(r.pair_anchors)}\n")
             f.write(f"- accepted pairs that a later round gave a rival: {len(r.late_rivals)}\n")
-            f.write(f"- audit, callees both images name: {r.audit['right']} right, {r.audit['wrong']} wrong\n")
+            f.write(f"- audit, callees both images name: {r.audit['right']} right, {r.audit['wrong']} wrong "
+                    f"(of them paired by operand pointers alone: {r.audit['pointer right']} right, "
+                    f"{r.audit['pointer wrong']} wrong; pairs by table words alone are audited below)\n")
+            f.write(f"- paired data tables: {dict(sorted(r.table_stats.items()))}\n")
+            f.write(f"- routine names carried on pointer supports alone (an operand or a table word): "
+                    f"{len(r.ptr_rows)}\n")
             f.write(f"- audit, same-body routines B names already, picked by mapped operands: "
                     f"{r.audit['twin right']} right, {r.audit['twin wrong']} wrong\n")
-            f.write(f"- RAM address pairs: {len(pairs)} (of {len(r.ram_votes)} B addresses seen in aligned operands); "
-                    f"named from A: {len(ram_rows)}; RAM audit {ram_audit['right']} right, {ram_audit['wrong']} wrong\n")
+            nv = len(r.ram_voted())
+            ro, rb = r.ram_runs_audit()
+            f.write(f"- RAM address pairs: {len(pairs)}: {nv} by aligned operands (of {len(r.ram_votes)} B addresses seen "
+                    f"in them), {len(pairs) - nv} between two of one delta (runs; the premise on the voted pairs: "
+                    f"{ro} right, {rb} wrong); named from A: {len(ram_rows)}; RAM audit {ram_audit['right']} right, "
+                    f"{ram_audit['wrong']} wrong\n")
             f.write("- not carried (last reason per call-site pair):\n")
             for why, n in r.rejected.most_common():
                 f.write(f"  - {n:6d} {why}\n")
