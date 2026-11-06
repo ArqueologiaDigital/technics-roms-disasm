@@ -73,15 +73,8 @@ MenuStr_Mixer:	aligned_string "MIXER"
 
 
 NakaMenuItem_MasterTuning:
-	naka_header NAKA_TYPE_AcTitleMenu
-	.byte 0x06, 0x00
-	.byte 0xff, 0xff, 0x0a, 0x00, 0x08, 0x00, 0x08, 0x00
-	.byte 0x08, 0x00, 0x9c, 0x00, 0x9c, 0x00, 0xb5, 0x00
-	.byte 0xf7, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00
-	.byte 0x00, 0x00, 0xff, 0x00, 0x00, 0x00, 0x8b, 0x00
-	.byte 0x72, 0xe6, 0x03, 0x00, 0x50, 0x1a, 0xe8, 0x00
-	.byte 0x04, 0x00, 0xa0, 0x01, 0x09, 0x00, 0x00, 0x00
-	aligned_string "MASTER TUNING"
+	NAKA_REC_AcTitleMenu super=IDX_NakaWidget_Sdmenu1, sub=NAKA_INDEX_NONE, next=IDX_NakaMenuItem_KeyScaling, prev=IDX_NakaMenuItem_Mixer, flag=VF_Const, x=8, y=156, w=149, h=26, color=CL_Transparent, border=BD_None, index=0xffff, font=idCHARA1, fontcolor=CL_White, align=AL_Center, editsw=ES_Left4, selected=0x3e672, str=MenuStr_MasterTuning, title=TITLE_SDMTUNE, icon=idICON_i7
+MenuStr_MasterTuning:	aligned_string "MASTER TUNING"
 NakaMenuItem_KeyScaling:
 	NAKA_REC_AcTitleMenu super=IDX_NakaWidget_Sdmenu1, sub=NAKA_INDEX_NONE, next=IDX_NakaMenuItem_ReverbEqPresets, prev=IDX_NakaMenuItem_MasterTuning, flag=VF_Const, x=8, y=198, w=149, h=26, color=CL_Transparent, border=BD_None, index=0xffff, font=idCHARA1, fontcolor=CL_White, align=AL_Center, editsw=ES_Left5, selected=0x3e674, str=MenuStr_KeyScaling, title=TITLE_SDSCLTYP, icon=idICON_i130
 MenuStr_KeyScaling:	aligned_string "KEY SCALING"
@@ -91,38 +84,14 @@ NakaMenuItem_ReverbEqPresets:
 
 MenuStr_ReverbEqPresets:	aligned_string "REVERB & EQ PRESETS"
 NakaMenuItem_Reverb:
-
-	naka_header NAKA_TYPE_AcTitleMenu
-	.byte 0x06, 0x00
-	.byte 0xff, 0xff, 0x0d, 0x00, 0x0b, 0x00, 0x08, 0x00
-	.byte 0xa3, 0x00, 0x48, 0x00, 0x37, 0x01, 0x61, 0x00
-	.byte 0xf7, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00
-	.byte 0x00, 0x00, 0xff, 0x00, 0x00, 0x00, 0x09, 0x00
-	.byte 0x78, 0xe6, 0x03, 0x00, 0x20, 0x1b, 0xe8, 0x00
-	.byte 0x0a, 0x00, 0xa0, 0x01, 0x17, 0x00, 0x00, 0x00
-	aligned_string "REVERB"
+	NAKA_REC_AcTitleMenu super=IDX_NakaWidget_Sdmenu1, sub=NAKA_INDEX_NONE, next=IDX_NakaMenuItem_Equalizer, prev=IDX_NakaMenuItem_ReverbEqPresets, flag=VF_Const, x=163, y=72, w=149, h=26, color=CL_Transparent, border=BD_None, index=0xffff, font=idCHARA1, fontcolor=CL_White, align=AL_Center, editsw=ES_Right2, selected=0x3e678, str=MenuStr_Reverb, title=TITLE_SDREVSET, icon=idICON_i21
+MenuStr_Reverb:	aligned_string "REVERB"
 NakaMenuItem_Equalizer:
-
-	naka_header NAKA_TYPE_AcTitleMenu
-	.byte 0x06, 0x00, 0xff, 0xff
-	.byte 0x0e, 0x00, 0x0c, 0x00, 0x08, 0x00, 0xa3, 0x00
-	.byte 0x72, 0x00, 0x37, 0x01, 0x8b, 0x00, 0xf7, 0x00
-	.byte 0x00, 0x00, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00
-	.byte 0xff, 0x00, 0x00, 0x00, 0x0a, 0x00, 0x7a, 0xe6
-	.byte 0x03, 0x00, 0x5e, 0x1b, 0xe8, 0x00, 0x0c, 0x00
-	.byte 0xa0, 0x01, 0x0d, 0x00, 0x00, 0x00
-	aligned_string "EQUALIZER"
+	NAKA_REC_AcTitleMenu super=IDX_NakaWidget_Sdmenu1, sub=NAKA_INDEX_NONE, next=IDX_NakaMenuItem_DspEffect, prev=IDX_NakaMenuItem_Reverb, flag=VF_Const, x=163, y=114, w=149, h=26, color=CL_Transparent, border=BD_None, index=0xffff, font=idCHARA1, fontcolor=CL_White, align=AL_Center, editsw=ES_Right3, selected=0x3e67a, str=MenuStr_Equalizer, title=TITLE_SDEQUALIZER, icon=idICON_i11
+MenuStr_Equalizer:	aligned_string "EQUALIZER"
 NakaMenuItem_DspEffect:
-
-	naka_header NAKA_TYPE_AcTitleMenu
-	.byte 0x06, 0x00, 0xff, 0xff
-	.byte 0x0f, 0x00, 0x0d, 0x00, 0x08, 0x00, 0xa3, 0x00
-	.byte 0x9c, 0x00, 0x37, 0x01, 0xb5, 0x00, 0xf7, 0x00
-	.byte 0x00, 0x00, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00
-	.byte 0xff, 0x00, 0x00, 0x00, 0x0b, 0x00, 0x7c, 0xe6
-	.byte 0x03, 0x00, 0x9e, 0x1b, 0xe8, 0x00, 0x0b, 0x00
-	.byte 0xa0, 0x01, 0x0c, 0x00, 0x00, 0x00
-	aligned_string "DSP EFFECT"
+	NAKA_REC_AcTitleMenu super=IDX_NakaWidget_Sdmenu1, sub=NAKA_INDEX_NONE, next=IDX_NakaMenuItem_AcousticIllusion, prev=IDX_NakaMenuItem_Equalizer, flag=VF_Const, x=163, y=156, w=149, h=26, color=CL_Transparent, border=BD_None, index=0xffff, font=idCHARA1, fontcolor=CL_White, align=AL_Center, editsw=ES_Right4, selected=0x3e67c, str=MenuStr_DspEffect, title=TITLE_SDDSPEFF, icon=idICON_i10
+MenuStr_DspEffect:	aligned_string "DSP EFFECT"
 NakaMenuItem_AcousticIllusion:
 	; padding
 	; padding
@@ -132,41 +101,15 @@ NakaMenuItem_AcousticIllusion:
 
 MenuStr_AcousticIllusion:	aligned_string "ACOUSTIC ILLUSION"
 NakaWidget_SoundEdit:
+	NAKA_REC_AcSndEMenu super=IDX_NakaWidget_Sdmenu1, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=IDX_NakaMenuItem_AcousticIllusion, flag=VF_Const, x=8, y=114, w=149, h=26, color=CL_Transparent, border=BD_None, index=0xffff, font=idCHARA1, fontcolor=CL_White, align=AL_Center, editsw=ES_Left3, selected=0x3e680, str=MenuStr_SoundEdit, mode=NAKA_MODE_MD_SOUNDEDIT, icon=idICON_i13
 
-	.byte 0x20, 0x00, 0x61, 0x01, 0x06, 0x00
-	.byte 0xff, 0xff
-	.byte 0xff, 0xff
-	.byte 0x0f, 0x00
-	.byte 0x08, 0x00
-	.byte 0x08, 0x00
-	.byte 0x72, 0x00
-	.byte 0x9c, 0x00
-	.byte 0x8b, 0x00
-	.byte 0xf7, 0x00
-	.byte 0x00, 0x00
-	.byte 0xff, 0xff
-	.zero 4
-	.byte 0xff, 0x00
-	.byte 0x00, 0x00
-	.byte 0x8a, 0x00
-	.long 0x3e680
-	.long MenuStr_SoundEdit
-	.byte 0x03, 0x00, 0x80, 0x01, 0x0f, 0x00, 0x00, 0x00
 
 MenuStr_SoundEdit:	aligned_string "SOUND EDIT"
 NakaWidget_Sdmenu2:
 	NAKA_REC_Window super=NAKA_INDEX_NONE, sub=IDX_NakaMenuItem_LeftHold, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Const, x=56, y=120, w=36, h=16, color=CL_Transparent, border=BD_None, modal=0x0, parent=0x3e682, child=0x3e686
 NakaMenuItem_LeftHold:
-
-	naka_header NAKA_TYPE_AcTitleMenu
-	.byte 0x11, 0x00, 0xff, 0xff
-	.byte 0x13, 0x00, 0xff, 0xff, 0x08, 0x00, 0x08, 0x00
-	.byte 0x72, 0x00, 0x9c, 0x00, 0x8b, 0x00, 0xf7, 0x00
-	.byte 0x00, 0x00, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00
-	.byte 0xff, 0x00, 0x00, 0x00, 0x8a, 0x00, 0x8a, 0xe6
-	.byte 0x03, 0x00, 0x8e, 0x1c, 0xe8, 0x00, 0x07, 0x00
-	.byte 0xa0, 0x01, 0x16, 0x00, 0x00, 0x00
-	aligned_string "LEFT HOLD"
+	NAKA_REC_AcTitleMenu super=IDX_NakaWidget_Sdmenu2, sub=NAKA_INDEX_NONE, next=IDX_NakaMenuItem_TechniChord, prev=NAKA_INDEX_NONE, flag=VF_Const, x=8, y=114, w=149, h=26, color=CL_Transparent, border=BD_None, index=0xffff, font=idCHARA1, fontcolor=CL_White, align=AL_Center, editsw=ES_Left3, selected=0x3e68a, str=MenuStr_LeftHold, title=TITLE_SDLFTHLD, icon=idICON_i20
+MenuStr_LeftHold:	aligned_string "LEFT HOLD"
 NakaMenuItem_TechniChord:
 	; padding
 	; padding

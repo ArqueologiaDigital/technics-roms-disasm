@@ -2901,7 +2901,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
     .SongMedley_str = "SONG MEDLEY",
 
     /* ==== SCREEN TITLE_SQMDLY "INTERNAL SONG MEDLEY" -- "TT_SQMDLY", title id 0x79, function NAKA_MAINFUNC_FmmIntMedleyFunc ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: MENU DISK button (mode MD_DISK) > "SONG MEDLEY" (by SongMedleyTtlJgFunc) > (by
+     *       FmmDiskMedleySelectFunc) > (by PlayMode_CheckAndDispatch)
      * Procedure: FmmIntMedleyFunc opens TITLE_MESAGE, TITLE_SQMDLYPLY
      * EXIT -> TITLE_SQPLAY
      * Opened from: an untitled view ("MEDLEY") */

@@ -140,7 +140,7 @@
      "size": 2,
      "name": "track_mask_50",
      "kind": "u16",
-     "evidence": "per-track bit mask (Bit16Mask_Table[t]) tested by AudioInit_GroupA_DefaultMapping (audioinit_routines.s:938) and PartCtrl_CheckBitmaskBit (audio_control_engine.s:10735); set 0xffff by SeqInit_Return and MainExe_SeqStopFinish; 0xffff in 153/153",
+     "evidence": "per-track bit mask (Bit16Mask_Table[t]) tested by AudioInit_PlayTrack_DefaultMapping (audioinit_routines.s:938) and PartCtrl_CheckBitmaskBit (audio_control_engine.s:10735); set 0xffff by SeqInit_Return and MainExe_SeqStopFinish; 0xffff in 153/153",
      "inference": true,
      "todo": "what the bit selects in the channel mapping is not established"
     },

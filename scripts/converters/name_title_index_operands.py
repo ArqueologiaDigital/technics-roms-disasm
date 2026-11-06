@@ -62,6 +62,14 @@ STACK_FORWARDERS = {'FileIO_DiskEventDispatch': ('a', 'c'), 'FileIO_GetDiskCapac
 _SEFIL_TYPES = ('TT_SEFILHPQ1', 'TT_SEFILL241', 'TT_SEFILH241', 'TT_SEFILBPF1')
 COMPUTED = {('sound_editor_ui.s', 'add a, TT_SEFILLPQ1'): _SEFIL_TYPES,
             ('sound_editor_ui.s', 'add a, 48'): _SEFIL_TYPES}
+# The same for an index register LOADED from a title table, keyed by (file name, the instruction before, the
+# load), both with whitespace collapsed: the instruction text alone is not unique (lane kn5000-naka2, 2026-11-06).
+#   file_demo_proc.s, Demo_SelectEntry_DrawSecondary: `lda xbc, (DemoSong_TitleCol:24); ld a, (xbc+wa)` with WA =
+#     2 * DEMO_CURRENT_SONG, then UI_ChangeTitleByIndex: the title column of the 23-song demo order, whose bytes
+#     (DemoSong_TitleCol + 2k, k = 0..22, read from the v10 ROM) are 0xE1..0xE4 only: TT_DEMOSTYLE, TT_DEMOSOUND,
+#     TT_DEMORHY, TT_DEMOFEATURE (notes/kn5000-naka2-2026-11-06/probes/demo_title_column.py prints them).
+COMPUTED_LOADS = {('file_demo_proc.s', 'lda xbc, (DemoSong_TitleCol:24)', 'ld a, (xbc+wa)'):
+                  ('TT_DEMOSTYLE', 'TT_DEMOSOUND', 'TT_DEMORHY', 'TT_DEMOFEATURE')}
 REGS = {'a': {'a', 'wa', 'xwa'}, 'c': {'c', 'bc', 'xbc'}}
 LABEL = re.compile(r'^([A-Za-z_.$][\w.$]*):')
 BRANCH = re.compile(r'^(jr|jrl|jp|djnz)\s+(?:(\w+)\s*,\s*)?(\(?[A-Za-z_.$][\w.$]*(?::24)?\)?)\s*$')
@@ -167,6 +175,9 @@ def walk(f, pos, reg, limit=400):
         seen.add(p)
         n += 1
         comp = COMPUTED.get((os.path.basename(f.path), re.sub(r'\s+', ' ', f.ins[p][1])))
+        if comp is None and p > 0:
+            comp = COMPUTED_LOADS.get((os.path.basename(f.path), re.sub(r'\s+', ' ', f.ins[p - 1][1]),
+                                       re.sub(r'\s+', ' ', f.ins[p][1])))
         if comp and reg == 'a':
             defs.extend((p, v) for v in comp)
             continue
@@ -357,6 +368,24 @@ def opens_by_routine(tree, kind='title', extra=()):
                                 r = lab
                         q -= 1
                     out[r].add(tl)
+    return out
+
+
+def routines_naming(tree, pattern, extra=()):
+    """routine entry labels whose body (from the entry to the next entry) has an instruction matching
+    `pattern` (a compiled regex), e.g. the panel-switch handlers: \\bEVT_SW_IN\\w*\\b (lane kn5000-naka2)."""
+    files = [File(p) for p in sorted(glob.glob(os.path.join(ROOT, tree, 'maincpu', '**', '*.s'),
+                                                recursive=True))]
+    ent = routine_entries(files, extra)
+    out = set()
+    for f in files:
+        cur = None
+        for pos, (i, code) in enumerate(f.ins):
+            for lab in f.labels_of.get(pos, []):
+                if lab in ent:
+                    cur = lab
+            if cur and pattern.search(code):
+                out.add(cur)
     return out
 
 

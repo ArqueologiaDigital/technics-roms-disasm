@@ -13,7 +13,7 @@ title's procedure, or the function of a menu box, passing the title's `TT_*` ind
 `UI_ChangeTitleByIndex` / `UI_InterruptTitleByIndex` (`scripts/converters/name_title_index_operands.py`)
 or posting `EVT_CHANGE_TITLE` itself.
 
-211 titles (162 with a path; 31 of the others are opened by code that no traced path reaches), 21 modes, 3260 widget records in 18 C files, 99 menu entries, 282 code transitions and 267 EXIT links.
+211 titles (170 with a path; 23 of the others are opened by code that no traced path reaches), 21 modes, 3260 widget records in 18 C files, 99 menu entries, 357 code transitions and 267 EXIT links.
 
 ## Modes
 
@@ -488,6 +488,23 @@ the SOUND menu. It is the home title of mode 2, MD_SOUND (0x01800002).
 - Registered: `"TT_SEMENU"`, title id 0x20, function `NAKA_MAINFUNC_SeMenuTitleFunc`, v10/maincpu/display/scoop_display.s
 - View: element 0 of Viewable slot 0x20 (record outside the C sources)
 - EXIT -> `TITLE_PS`
+
+### `TITLE_PMBKSEL`
+
+the panel-memory bank-select page.
+
+- Path: panel switch handler PmBankNamingCheck > (by BitMapOut_UpdateWidget_Finalize)
+- Registered: `"TT_PMBKSEL"`, title id 0xD0, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
+- View: `OBJ_PMBANK` (PmBankScreen) in `naka_ctrl_menu_body.c`
+- EXIT -> `TITLE_NORMAL`
+- Widgets:
+
+  - `OBJ_PMBANK` PmBankScreen [0,0 320x240]
+    - `OBJ_PMBANK_Icon` Icon [27,0 28x28]
+    - `OBJ_PmemBankSelect_StringBox` StringBox "PMEM BANK SELECT" [56,6 180x17]
+    - `OBJ_PMBANK_PsPageBox` PsPageBox [245,6 71x18]
+      - `OBJ_Page_Label` Label "PAGE 1/2" [246,7 68x19]
+    - `OBJ_PMBANK_IvIntEasySet` IvIntEasySet [0,0 32x32]
 
 ### `TITLE_CMBKSL` -- "RECORD MEMORY"
 
@@ -2948,6 +2965,31 @@ the sequencer track-mixer page.
     - `OBJ_Sqmixer_AcTrackMixer` AcTrackMixer [108,31 204x13]
     - `OBJ_NakaWidget_Sqmixer_3_IvExit` IvExit [0,0 32x32]
 
+### `TITLE_SQMDLY` -- "INTERNAL SONG MEDLEY"
+
+- Path: MENU DISK button (mode MD_DISK) > "SONG MEDLEY" (by SongMedleyTtlJgFunc) > (by FmmDiskMedleySelectFunc) > (by PlayMode_CheckAndDispatch)
+- Registered: `"TT_SQMDLY"`, title id 0x79, function `NAKA_MAINFUNC_FmmIntMedleyFunc`, v10/maincpu/file_io/medley.s
+- View: `OBJ_IntSongMedley` (TtlScreen) in `naka_disk_menu_file_io.c`
+- Its procedure `FmmIntMedleyFunc` opens: `TITLE_MESAGE`, `TITLE_SQMDLYPLY`
+- EXIT -> `TITLE_SQPLAY`
+- Opened from: `an untitled view` ("MEDLEY")
+- Widgets:
+
+  - `OBJ_IntSongMedley` TtlScreen "INTERNAL SONG MEDLEY" [0,0 320x240]
+    - `OBJ_IntSongMedley_AcIndexWideES` AcIndexWideES [84,216 152x23]
+    - `OBJ_IntSongMedley_AcIndexEditSw` AcIndexEditSw [281,76 31x18]
+    - `OBJ_IntSongMedley_AcIndexEditSw_2` AcIndexEditSw [281,118 31x18]
+    - `OBJ_IntSongMedley_PsFileNameBox` PsFileNameBox [62,37 196x177]
+      - `OBJ_IntSongMedley_PsFileNameBox_2` PsFileNameBox [227,39 28x172]
+      - `OBJ_IntSongMedley_Line` Line [224,40 1x170]
+    - `OBJ_IntSongMedley_AcMonoIndexToggle` AcMonoIndexToggle "ON" [281,160 31x18]
+    - `OBJ_IntSongMedley_AcIndexEditSw_3` AcIndexEditSw [262,30 50x25]
+      - `OBJ_Start_Label` Label "START" [265,35 44x19]
+    - `OBJ_IntSongMedley_IvOneShotTimer` IvOneShotTimer [0,0 32x32]
+    - `OBJ_All_Label` Label "ALL" [282,77 28x19]
+    - `OBJ_Add_Label` Label "ADD" [282,119 28x19]
+    - `OBJ_Loop_Label` Label "LOOP" [278,145 36x19]
+
 ### `TITLE_DKSVNAMESMF` -- "SAVE FILE NAMING"
 
 - Path: MENU DISK button (mode MD_DISK) > "SAVE" > "SMF FORMAT 0" (by SaveSmfTtlJgFunc) > "NAME"
@@ -2973,6 +3015,82 @@ the sequencer track-mixer page.
   - `OBJ_DiskSaveName` TtlScreen "SAVE FILE NAMING" [0,0 320x240]
     - `OBJ_DiskSaveName_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
     - `OBJ_DiskSaveName_IvNaming` IvNaming [0,0 32x32]
+
+### `TITLE_STYLCNVCNVT` -- "STYLE CONVERT"
+
+- Path: MENU DISK button (mode MD_DISK) > "STYLE CONVERT" > (by StylCnvWaitTtlFunc) > (by FloppyState_Dispatch)
+- Registered: `"TT_STYLCNVCNVT"`, title id 0x12, function `NAKA_MAINFUNC_StylCnvCnvtTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
+- View: `OBJ_StylCnvCnvtScreen` (TtlScreen) in `naka_composer_style.c`
+- EXIT -> `TITLE_STYLCNVWAIT`
+- Widgets:
+
+  - `OBJ_StylCnvCnvtScreen` TtlScreen "STYLE CONVERT" [0,0 320x240]
+    - `OBJ_StylCnvCnvtScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_StylCnvCnvtBox` PsParaListBox [8,44 260x160]
+    - `OBJ_PREV_VwEditSwBox_2` VwEditSwBox "PREV" [44,216 32x23]
+    - `OBJ_StylCnvCnvtScreen_VwWideESBox` VwWideESBox [84,216 72x23]
+    - `OBJ_NEXT_VwEditSwBox_2` VwEditSwBox "NEXT" [164,216 32x23]
+    - `OBJ_StylCnvCnvtScreen_VwEditSwBox` VwEditSwBox [281,160 31x18]
+
+### `TITLE_STYLCNVSTOR` -- "STORAGE DATA"
+
+- Path: MENU DISK button (mode MD_DISK) > "STYLE CONVERT" > (by StylCnvWaitTtlFunc) > (by FloppyState_Dispatch)
+- Registered: `"TT_STYLCNVSTOR"`, title id 0x13, function `NAKA_MAINFUNC_StylCnvStorTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
+- View: `OBJ_StylCnvStorScreen` (TtlScreen) in `naka_composer_style.c`
+- EXIT -> `TITLE_STYLCNVWAIT`
+- Widgets:
+
+  - `OBJ_StylCnvStorScreen` TtlScreen "STORAGE DATA" [0,0 320x240]
+    - `OBJ_StylCnvStorScreen_AcRamEditBox` AcRamEditBox "  Data Storage to :" [16,90 270x50]
+    - `OBJ_StylCnvStorScreen_AcIndexWideES` AcIndexWideES [244,216 72x23]
+    - `OBJ_StylCnvStorScreen_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
+
+### `TITLE_STYLCNVTXT` -- "STYLE CONVERT"
+
+- Path: MENU DISK button (mode MD_DISK) > "STYLE CONVERT" > (by StylCnvWaitTtlFunc) > (by FloppyState_Dispatch)
+- Registered: `"TT_STYLCNVTXT"`, title id 0x14, function `NAKA_MAINFUNC_StylCnvTxtTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
+- View: `OBJ_StylCnvTxtScreen` (TtlScreen) in `naka_composer_style.c`
+- EXIT -> `TITLE_STYLCNVWAIT`
+- Widgets:
+
+  - `OBJ_StylCnvTxtScreen` TtlScreen "STYLE CONVERT" [0,0 320x240]
+    - `OBJ_StylCnvTxtScreen_VwBox` VwBox [8,44 284x160]
+      - `OBJ_StylCnvTxtScreen_PSSCTxtBox2` PSSCTxtBox2 [10,68 280x60]
+    - `OBJ_StylCnvTxtScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
+
+### `TITLE_STYLCNVSEL` -- "STYLE CONVERT"
+
+- Path: MENU DISK button (mode MD_DISK) > "STYLE CONVERT" > (by StylCnvWaitTtlFunc) > (by FloppyState_Dispatch)
+- Registered: `"TT_STYLCNVSEL"`, title id 0x15, function `NAKA_MAINFUNC_StylCnvSelTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
+- View: `OBJ_StylCnvSelScreen` (TtlScreen) in `naka_composer_style.c`
+- EXIT -> `TITLE_STYLCNVWAIT`
+- Widgets:
+
+  - `OBJ_StylCnvSelScreen` TtlScreen "STYLE CONVERT" [0,0 320x240]
+    - `OBJ_StylCnvSelScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_StylCnvSelBox` PsParaListBox [8,50 260x160]
+    - `OBJ_PREV_VwEditSwBox_3` VwEditSwBox "PREV" [44,216 32x23]
+    - `OBJ_StylCnvSelScreen_VwWideESBox` VwWideESBox [84,216 72x23]
+    - `OBJ_NEXT_VwEditSwBox_3` VwEditSwBox "NEXT" [164,216 32x23]
+    - `OBJ_StylCnvSelScreen_VwEditSwBox` VwEditSwBox [281,160 31x18]
+    - `OBJ_StylCnvSelScreen_PsSCTxtBox` PsSCTxtBox [8,28 260x18]
+
+### `TITLE_STYLCNVCONT` -- "STYLE CONVERT"
+
+- Path: MENU DISK button (mode MD_DISK) > "STYLE CONVERT" > (by StylCnvWaitTtlFunc) > (by FloppyState_Dispatch)
+- Registered: `"TT_STYLCNVCONT"`, title id 0x16, function `NAKA_MAINFUNC_StylCnvContTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
+- View: `OBJ_StylCnvContScreen` (TtlScreen) in `naka_composer_style.c`
+- Its procedure `StylCnvSel_End` opens: `TITLE_MESAGE`
+- EXIT -> `TITLE_STYLCNVWAIT`
+- Widgets:
+
+  - `OBJ_StylCnvContScreen` TtlScreen "STYLE CONVERT" [0,0 320x240]
+    - `OBJ_StylCnvContScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_StylCnvContScreen_VwBox` VwBox [40,88 200x110]
+      - `OBJ_Continue_Label` Label "Continue" [66,118 132x19]
+      - `OBJ_Next_Label` Label "Next ?" [90,150 100x19]
+    - `OBJ_StylCnvContScreen_VwEditSwBox` VwEditSwBox [281,118 31x18]
+    - `OBJ_StylCnvContScreen_VwEditSwBox_2` VwEditSwBox [281,160 31x18]
 
 ### `TITLE_SQSNGNAME` -- "NAMING"
 
@@ -3040,6 +3158,28 @@ the sequencer song-name page.
 - View: element 0 of Viewable slot 0x23 (record outside the C sources)
 - EXIT -> `TITLE_PS`
 
+### `TITLE_SQMDLYPLY` -- "SONG MEDLEY"
+
+- Path: MENU DISK button (mode MD_DISK) > "SONG MEDLEY" (by SongMedleyTtlJgFunc) > (by FmmDiskMedleySelectFunc) > (by PlayMode_CheckAndDispatch) > (by FmmIntMedleyFunc)
+- Registered: `"TT_SQMDLYPLY"`, title id 0x7A, function `NAKA_MAINFUNC_SqMdlyPlyTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
+- View: `OBJ_SqMdlyPly` (TtlScreen) in `naka_direct_play.c`
+- Its procedure `SqMdlyPlyTtlFunc` opens: `TITLE_SQMIXER`
+- EXIT -> `TITLE_SQMDLY`
+- Widgets:
+
+  - `OBJ_SqMdlyPly` TtlScreen "SONG MEDLEY" [0,0 320x240]
+    - `OBJ_SqMdlyPly_Box` Box [80,70 160x78]
+      - `OBJ_SqMdlyPly_AcTempoBox` AcTempoBox [96,110 80x24]
+      - `OBJ_SqMdlyPly_MeasureBox` MeasureBox [108,86 108x19]
+      - `OBJ_SqMdlyPly_TrTransposeBox` TrTransposeBox [180,110 50x24]
+    - `OBJ_SqMdlyPly_VwEditSwBox` VwEditSwBox [270,118 42x18]
+      - `OBJ_Skip_Label_7` Label "SKIP" [272,119 36x19]
+    - `OBJ_SqMdlyPly_IvMainEditSw` IvMainEditSw [0,0 32x32]
+    - `OBJ_SqMdlyPly_AcCurSongNameBox` AcCurSongNameBox [35,40 250x26]
+    - `OBJ_SqMdlyPly_IvTrackSwitch` IvTrackSwitch [0,32 32x32]
+    - `OBJ_NakaWidget_SongMdly2OffOnSel` IvExit [0,64 32x32]
+    - `OBJ_NakaWidget_SongMdly2Mixer` VwMenuBox "MIXER" [8,114 50x26]
+
 ### `TITLE_SDOCT` -- "RIGHT1/RIGHT2 OCTAVE"
 
 - Path: none found (no data entry opens it; the code that does is reached by no traced path)
@@ -3052,87 +3192,6 @@ the sequencer song-name page.
   - `OBJ_R12OctaveSetting` TtlScreen "RIGHT1/RIGHT2 OCTAVE" [0,0 320x240]
     - `OBJ_R12OctaveSetting_AcLswEditBox` AcLswEditBox "OCTAVE   :" [16,87 285x72]
     - `OBJ_R12OctaveSetting_AcIndexWideES` AcIndexWideES [244,216 72x23]
-
-### `TITLE_STYLCNVCNVT` -- "STYLE CONVERT"
-
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `FloppyState_Dispatch`, `TableData_JumpToEntry`
-- Registered: `"TT_STYLCNVCNVT"`, title id 0x12, function `NAKA_MAINFUNC_StylCnvCnvtTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
-- View: `OBJ_StylCnvCnvtScreen` (TtlScreen) in `naka_composer_style.c`
-- EXIT -> `TITLE_STYLCNVWAIT`
-- Widgets:
-
-  - `OBJ_StylCnvCnvtScreen` TtlScreen "STYLE CONVERT" [0,0 320x240]
-    - `OBJ_StylCnvCnvtScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_StylCnvCnvtBox` PsParaListBox [8,44 260x160]
-    - `OBJ_PREV_VwEditSwBox_2` VwEditSwBox "PREV" [44,216 32x23]
-    - `OBJ_StylCnvCnvtScreen_VwWideESBox` VwWideESBox [84,216 72x23]
-    - `OBJ_NEXT_VwEditSwBox_2` VwEditSwBox "NEXT" [164,216 32x23]
-    - `OBJ_StylCnvCnvtScreen_VwEditSwBox` VwEditSwBox [281,160 31x18]
-
-### `TITLE_STYLCNVSTOR` -- "STORAGE DATA"
-
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `FloppyState_Dispatch`
-- Registered: `"TT_STYLCNVSTOR"`, title id 0x13, function `NAKA_MAINFUNC_StylCnvStorTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
-- View: `OBJ_StylCnvStorScreen` (TtlScreen) in `naka_composer_style.c`
-- EXIT -> `TITLE_STYLCNVWAIT`
-- Widgets:
-
-  - `OBJ_StylCnvStorScreen` TtlScreen "STORAGE DATA" [0,0 320x240]
-    - `OBJ_StylCnvStorScreen_AcRamEditBox` AcRamEditBox "  Data Storage to :" [16,90 270x50]
-    - `OBJ_StylCnvStorScreen_AcIndexWideES` AcIndexWideES [244,216 72x23]
-    - `OBJ_StylCnvStorScreen_AcFuncEditSw` AcFuncEditSw [281,160 31x18]
-
-### `TITLE_STYLCNVTXT` -- "STYLE CONVERT"
-
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `FloppyState_Dispatch`
-- Registered: `"TT_STYLCNVTXT"`, title id 0x14, function `NAKA_MAINFUNC_StylCnvTxtTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
-- View: `OBJ_StylCnvTxtScreen` (TtlScreen) in `naka_composer_style.c`
-- EXIT -> `TITLE_STYLCNVWAIT`
-- Widgets:
-
-  - `OBJ_StylCnvTxtScreen` TtlScreen "STYLE CONVERT" [0,0 320x240]
-    - `OBJ_StylCnvTxtScreen_VwBox` VwBox [8,44 284x160]
-      - `OBJ_StylCnvTxtScreen_PSSCTxtBox2` PSSCTxtBox2 [10,68 280x60]
-    - `OBJ_StylCnvTxtScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
-
-### `TITLE_STYLCNVSEL` -- "STYLE CONVERT"
-
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `FloppyState_Dispatch`
-- Registered: `"TT_STYLCNVSEL"`, title id 0x15, function `NAKA_MAINFUNC_StylCnvSelTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
-- View: `OBJ_StylCnvSelScreen` (TtlScreen) in `naka_composer_style.c`
-- EXIT -> `TITLE_STYLCNVWAIT`
-- Widgets:
-
-  - `OBJ_StylCnvSelScreen` TtlScreen "STYLE CONVERT" [0,0 320x240]
-    - `OBJ_StylCnvSelScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_StylCnvSelBox` PsParaListBox [8,50 260x160]
-    - `OBJ_PREV_VwEditSwBox_3` VwEditSwBox "PREV" [44,216 32x23]
-    - `OBJ_StylCnvSelScreen_VwWideESBox` VwWideESBox [84,216 72x23]
-    - `OBJ_NEXT_VwEditSwBox_3` VwEditSwBox "NEXT" [164,216 32x23]
-    - `OBJ_StylCnvSelScreen_VwEditSwBox` VwEditSwBox [281,160 31x18]
-    - `OBJ_StylCnvSelScreen_PsSCTxtBox` PsSCTxtBox [8,28 260x18]
-
-### `TITLE_STYLCNVCONT` -- "STYLE CONVERT"
-
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `AccBankData_ProcessWithCopy`, `FloppyState_Dispatch`
-- Registered: `"TT_STYLCNVCONT"`, title id 0x16, function `NAKA_MAINFUNC_StylCnvContTtlFunc`, v10/maincpu/storage/flash_floppy_handlers.s
-- View: `OBJ_StylCnvContScreen` (TtlScreen) in `naka_composer_style.c`
-- Its procedure `StylCnvSel_End` opens: `TITLE_MESAGE`
-- EXIT -> `TITLE_STYLCNVWAIT`
-- Widgets:
-
-  - `OBJ_StylCnvContScreen` TtlScreen "STYLE CONVERT" [0,0 320x240]
-    - `OBJ_StylCnvContScreen_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_StylCnvContScreen_VwBox` VwBox [40,88 200x110]
-      - `OBJ_Continue_Label` Label "Continue" [66,118 132x19]
-      - `OBJ_Next_Label` Label "Next ?" [90,150 100x19]
-    - `OBJ_StylCnvContScreen_VwEditSwBox` VwEditSwBox [281,118 31x18]
-    - `OBJ_StylCnvContScreen_VwEditSwBox_2` VwEditSwBox [281,160 31x18]
 
 ### `TITLE_CTPMPARA` -- "INITIAL"
 
@@ -3194,55 +3253,6 @@ the sequencer song-name page.
     - `OBJ_PDMedOrchSw` AcMuteToggleBox "ORCH" [270,160 42x18]
     - `OBJ_MIXER_VwMenuBox_6` VwMenuBox "MIXER" [8,114 50x26]
     - `OBJ_MIC_VwMenuBox_7` VwMenuBox "MIC" [8,72 34x26]
-
-### `TITLE_SQMDLY` -- "INTERNAL SONG MEDLEY"
-
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `PlayMode_CheckAndDispatch`, `PlayMode_StartAndSendCommand`, `SeqRestart_SendPlaybackNotify`
-- Registered: `"TT_SQMDLY"`, title id 0x79, function `NAKA_MAINFUNC_FmmIntMedleyFunc`, v10/maincpu/file_io/medley.s
-- View: `OBJ_IntSongMedley` (TtlScreen) in `naka_disk_menu_file_io.c`
-- Its procedure `FmmIntMedleyFunc` opens: `TITLE_MESAGE`, `TITLE_SQMDLYPLY`
-- EXIT -> `TITLE_SQPLAY`
-- Opened from: `an untitled view` ("MEDLEY")
-- Widgets:
-
-  - `OBJ_IntSongMedley` TtlScreen "INTERNAL SONG MEDLEY" [0,0 320x240]
-    - `OBJ_IntSongMedley_AcIndexWideES` AcIndexWideES [84,216 152x23]
-    - `OBJ_IntSongMedley_AcIndexEditSw` AcIndexEditSw [281,76 31x18]
-    - `OBJ_IntSongMedley_AcIndexEditSw_2` AcIndexEditSw [281,118 31x18]
-    - `OBJ_IntSongMedley_PsFileNameBox` PsFileNameBox [62,37 196x177]
-      - `OBJ_IntSongMedley_PsFileNameBox_2` PsFileNameBox [227,39 28x172]
-      - `OBJ_IntSongMedley_Line` Line [224,40 1x170]
-    - `OBJ_IntSongMedley_AcMonoIndexToggle` AcMonoIndexToggle "ON" [281,160 31x18]
-    - `OBJ_IntSongMedley_AcIndexEditSw_3` AcIndexEditSw [262,30 50x25]
-      - `OBJ_Start_Label` Label "START" [265,35 44x19]
-    - `OBJ_IntSongMedley_IvOneShotTimer` IvOneShotTimer [0,0 32x32]
-    - `OBJ_All_Label` Label "ALL" [282,77 28x19]
-    - `OBJ_Add_Label` Label "ADD" [282,119 28x19]
-    - `OBJ_Loop_Label` Label "LOOP" [278,145 36x19]
-
-### `TITLE_SQMDLYPLY` -- "SONG MEDLEY"
-
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `FmmIntMedleyFunc`
-- Registered: `"TT_SQMDLYPLY"`, title id 0x7A, function `NAKA_MAINFUNC_SqMdlyPlyTtlFunc`, v10/maincpu/sequencer/sequencer_ui.s
-- View: `OBJ_SqMdlyPly` (TtlScreen) in `naka_direct_play.c`
-- Its procedure `SqMdlyPlyTtlFunc` opens: `TITLE_SQMIXER`
-- EXIT -> `TITLE_SQMDLY`
-- Widgets:
-
-  - `OBJ_SqMdlyPly` TtlScreen "SONG MEDLEY" [0,0 320x240]
-    - `OBJ_SqMdlyPly_Box` Box [80,70 160x78]
-      - `OBJ_SqMdlyPly_AcTempoBox` AcTempoBox [96,110 80x24]
-      - `OBJ_SqMdlyPly_MeasureBox` MeasureBox [108,86 108x19]
-      - `OBJ_SqMdlyPly_TrTransposeBox` TrTransposeBox [180,110 50x24]
-    - `OBJ_SqMdlyPly_VwEditSwBox` VwEditSwBox [270,118 42x18]
-      - `OBJ_Skip_Label_7` Label "SKIP" [272,119 36x19]
-    - `OBJ_SqMdlyPly_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `OBJ_SqMdlyPly_AcCurSongNameBox` AcCurSongNameBox [35,40 250x26]
-    - `OBJ_SqMdlyPly_IvTrackSwitch` IvTrackSwitch [0,32 32x32]
-    - `OBJ_NakaWidget_SongMdly2OffOnSel` IvExit [0,64 32x32]
-    - `OBJ_NakaWidget_SongMdly2Mixer` VwMenuBox "MIXER" [8,114 50x26]
 
 ### `TITLE_SQCYCPLY` -- "CYCLE PLAY"
 
@@ -3589,24 +3599,6 @@ the music-style page in the One-Touch-Play (MD_OTP) title group.
     - `OBJ_MspBnkP2Ctl` IvPageControl [0,0 32x32]
     - `OBJ_vC8_e4` IvShowHide [0,0 32x32]
     - `OBJ_vC8_e5` IvIntVari [0,0 32x32]
-
-### `TITLE_PMBKSEL`
-
-the panel-memory bank-select page.
-
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `BitMapOut_UpdateWidget_Finalize`
-- Registered: `"TT_PMBKSEL"`, title id 0xD0, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
-- View: `OBJ_PMBANK` (PmBankScreen) in `naka_ctrl_menu_body.c`
-- EXIT -> `TITLE_NORMAL`
-- Widgets:
-
-  - `OBJ_PMBANK` PmBankScreen [0,0 320x240]
-    - `OBJ_PMBANK_Icon` Icon [27,0 28x28]
-    - `OBJ_PmemBankSelect_StringBox` StringBox "PMEM BANK SELECT" [56,6 180x17]
-    - `OBJ_PMBANK_PsPageBox` PsPageBox [245,6 71x18]
-      - `OBJ_Page_Label` Label "PAGE 1/2" [246,7 68x19]
-    - `OBJ_PMBANK_IvIntEasySet` IvIntEasySet [0,0 32x32]
 
 ### `TITLE_PMVIEW` -- "BANK VIEW"
 

@@ -87,7 +87,7 @@ obj(0xEE8E82, 0xEE8EA2, "AudioInit_ChannelMapB", "byte", H(
 obj(0xEE8EA2, 0xEE8EB6, "AudioInit_SlotOrderMap", "byte", H(
     "20 x u8 slot map (0,2,1,7,8,9,10,11,4,5,6,3,15,0x15,0x15,0xFF,0x15,12,13,14).",
     "Read with `ld_rrb a,xix,wa` at 18 sites: AudioInit_ChannelLoop_Body (0xFDF0DB),",
-    "AudioInit_CheckGroupA/B, AudioInit_GroupA/B_* and HdaeRom_AltCheckResult."))
+    "AudioInit_CheckPlayTrack / CheckRecTrack, AudioInit_PlayTrack_* / RecTrack_* and HdaeRom_AltCheckResult."))
 obj(0xEE8EB6, 0xEE8EB8, "NoteMap_LinkByte_Table", "byte", H(
     "2 x u8 (0x21, 0x22).  NoteMap_AssignAllVoiceLinks (0xFE1D3C), LinkVoiceSlots_Block,",
     "NoteMap_LookupAndMergeVoice and Voice_LookupTableEntries read it with",

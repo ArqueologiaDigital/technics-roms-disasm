@@ -6,29 +6,11 @@ FDTest_DiagList_Total:
 	NAKA_REC_PsNumEditBox super=IDX_FDTest_ScreenView, sub=NAKA_INDEX_NONE, next=IDX_FDTest_DiagList_NG, prev=NAKA_INDEX_NONE, flag=VF_Const, x=8, y=35, w=149, h=32, color=CL_Silver, border=BD_3D_UP2, index=0xffff, caption=FDTest_String_Total, font=idCHARA1, fontcolor=CL_Black, align=AL_LeftJustify, length=4, editsw=ES_None, dial=0x1, selected=0x3dcbe, figures=4
 FDTest_String_Total:	aligned_string " TOTAL :"
 FDTest_DiagList_NG:
-
-
-	naka_header NAKA_TYPE_PsNumEditBox
-	.byte 0x00, 0x00
-	.byte 0xff, 0xff, 0x03, 0x00, 0x01, 0x00, 0x08, 0x00
-	.byte 0x08, 0x00, 0xa1, 0x00, 0x9c, 0x00, 0xc0, 0x00
-	.byte 0x07, 0x00, 0xc1, 0x00, 0xff, 0xff, 0x06, 0xf8
-	.byte 0xe1, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf9, 0x00
-	.byte 0x01, 0x00, 0x03, 0x00, 0xff, 0x00, 0x01, 0x00
-	.byte 0xc0, 0xdc, 0x03, 0x00, 0x03, 0x00
-	aligned_string "    NG :"
+	NAKA_REC_PsNumEditBox super=IDX_FDTest_ScreenView, sub=NAKA_INDEX_NONE, next=IDX_FDTest_DiagList_OK, prev=IDX_FDTest_DiagList_Total, flag=VF_Const, x=8, y=161, w=149, h=32, color=CL_Silver, border=BD_3D_UP2, index=0xffff, caption=FDTest_String_DiagList_NG, font=idCHARA1, fontcolor=CL_Red, align=AL_LeftJustify, length=3, editsw=ES_None, dial=0x1, selected=0x3dcc0, figures=3
+FDTest_String_DiagList_NG:	aligned_string "    NG :"
 FDTest_DiagList_OK:
-
-
-	naka_header NAKA_TYPE_PsNumEditBox
-	.byte 0x00, 0x00, 0xff, 0xff
-	.byte 0x04, 0x00, 0x02, 0x00, 0x08, 0x00, 0x08, 0x00
-	.byte 0x77, 0x00, 0x9c, 0x00, 0x96, 0x00, 0x07, 0x00
-	.byte 0xc1, 0x00, 0xff, 0xff, 0x44, 0xf8, 0xe1, 0x00
-	.byte 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x01, 0x00
-	.byte 0x03, 0x00, 0xff, 0x00, 0x01, 0x00, 0xc2, 0xdc
-	.byte 0x03, 0x00, 0x03, 0x00
-	aligned_string "    OK :"
+	NAKA_REC_PsNumEditBox super=IDX_FDTest_ScreenView, sub=NAKA_INDEX_NONE, next=IDX_FDTest_Separator1, prev=IDX_FDTest_DiagList_NG, flag=VF_Const, x=8, y=119, w=149, h=32, color=CL_Silver, border=BD_3D_UP2, index=0xffff, caption=FDTest_String_DiagList_OK, font=idCHARA1, fontcolor=CL_Green, align=AL_LeftJustify, length=3, editsw=ES_None, dial=0x1, selected=0x3dcc2, figures=3
+FDTest_String_DiagList_OK:	aligned_string "    OK :"
 FDTest_Separator1:
 	NAKA_REC_IvMainEditSw super=IDX_FDTest_ScreenView, sub=NAKA_INDEX_NONE, next=IDX_FDTest_Panel_Param, prev=IDX_FDTest_DiagList_OK, flag=VF_Const | VF_InvisibleBox, x=0, y=0, w=32, h=32, func=NAKA_MAINFUNC_TestTitleFunc
 FDTest_Panel_Param:
@@ -39,14 +21,7 @@ FDTest_String_Tilde80:	.asciz "~80"
 FDTest_Panel_SubElements:
 	NAKA_REC_PsEditSwBox super=IDX_FDTest_ScreenView, sub=IDX_FDTest_Group_OnOff, next=IDX_FDTest_Label_RunningTest, prev=IDX_FDTest_Panel_Param, flag=VF_Const, x=44, y=216, w=32, h=23, color=CL_Silver, border=BD_EditSwitch, index=0xffff, font=idCHARA1, fontcolor=CL_Black, align=AL_Center, editsw=ES_Bottom2
 FDTest_Group_OnOff:
-
-
-	naka_header NAKA_TYPE_Box
-	.byte 0x07, 0x00, 0xff, 0xff
-	.byte 0xff, 0xff, 0xff, 0xff, 0x08, 0x00, 0x36, 0x00
-	.byte 0xde, 0x00
-	.long FDTest_Group_OnOff_EmptyText
-	.zero 4
+	NAKA_REC_Box super=IDX_FDTest_Panel_SubElements, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Const, x=54, y=222, w=11, h=11, color=CL_Black, border=BD_None
 FDTest_Label_RunningTest:
 	NAKA_REC_Label super=IDX_FDTest_ScreenView, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=IDX_FDTest_Panel_SubElements, flag=VF_Const, x=30, y=197, w=100, h=19, str=FDTest_String_RunningTest, font=idCHARA1, fontcolor=CL_White
 FDTest_String_RunningTest:	aligned_string "RUNNING TEST"
@@ -59,14 +34,7 @@ FDTest_MenuItem_Load1:
 	NAKA_REC_VwEditSwBox super=IDX_FDTest_Container_DebugHDAE1, sub=NAKA_INDEX_NONE, next=IDX_FDTest_MenuItem_Go1, prev=NAKA_INDEX_NONE, flag=VF_Const, x=8, y=126, w=39, h=18, color=CL_Silver, border=BD_3D_UP2, index=1, font=idCHARA1, fontcolor=CL_Black, align=AL_Center, editsw=ES_Left3, style=SS_Special, str=FDTest_String_Load1
 FDTest_String_Load1:	aligned_string "LOAD"
 FDTest_MenuItem_Go1:
-
-
-	.byte 0x3e, 0x00, 0x60, 0x01
-	.byte 0x0a, 0x00, 0xff, 0xff, 0x0d, 0x00, 0x0b, 0x00
-	.byte 0x08, 0x00, 0x08, 0x00, 0xa8, 0x00, 0x26, 0x00
-	.byte 0xb9, 0x00, 0x07, 0x00, 0xc1, 0x00, 0x02, 0x00
-	.zero 8
-	.byte 0x8b, 0x00, 0x00, 0x00, 0xc0, 0xf9, 0xe1, 0x00
+	NAKA_REC_VwEditSwBox super=IDX_FDTest_Container_DebugHDAE1, sub=NAKA_INDEX_NONE, next=IDX_FDTest_NavWidget1, prev=IDX_FDTest_MenuItem_Load1, flag=VF_Const, x=8, y=168, w=31, h=18, color=CL_Silver, border=BD_3D_UP2, index=2, font=idCHARA1, fontcolor=CL_Black, align=AL_Center, editsw=ES_Left4, style=SS_Special, str=FDTest_String_Go1
 FDTest_String_Go1:	aligned_string "GO"
 FDTest_NavWidget1:
 	NAKA_REC_IvCatchEvent super=IDX_FDTest_Container_DebugHDAE1, sub=IDX_FDTest_Divider1, next=IDX_FDTest_ConsoleArea1, prev=IDX_FDTest_MenuItem_Go1, flag=VF_Const | VF_InvisibleBox, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_hamadeb
@@ -76,25 +44,13 @@ FDTest_ConsoleArea1:
 	NAKA_REC_AcScreenMenu super=IDX_FDTest_Container_DebugHDAE1, sub=IDX_FDTest_Label_MemoryDump, next=IDX_FDTest_StatusBar1, prev=IDX_FDTest_NavWidget1, flag=VF_Const, x=8, y=35, w=149, h=32, color=CL_Transparent, border=BD_None, index=0xffff, font=idCHARA1, fontcolor=CL_White, align=AL_Center, editsw=ES_Left1, selected=0x3dcc8, str=FDTest_String_Console1, screen=0xfc0000 + IDX_FDTest_Container_DebugHDAE2, icon=idICON_None
 FDTest_String_Console1:	aligned_string "CONSOLE"
 FDTest_Label_MemoryDump:
-
-	naka_header NAKA_TYPE_Label
-	.byte 0x0f, 0x00, 0xff, 0xff, 0xff, 0xff
-	.byte 0xff, 0xff, 0x08, 0x00, 0x86, 0x00, 0x2a, 0x00
-	.byte 0xe1, 0x00, 0x3c, 0x00, 0x56, 0xfa, 0xe1, 0x00
-	.byte 0x00, 0x00, 0x00, 0x00, 0xff, 0x00
-	aligned_string "MEMORY DUMP"
+	NAKA_REC_Label super=IDX_FDTest_ConsoleArea1, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Const, x=134, y=42, w=92, h=19, str=FDTest_String_MemoryDump, font=idCHARA1, fontcolor=CL_White
+FDTest_String_MemoryDump:	aligned_string "MEMORY DUMP"
 FDTest_StatusBar1:
 	NAKA_REC_DbMemoryDump super=IDX_FDTest_Container_DebugHDAE1, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=IDX_FDTest_ConsoleArea1, flag=VF_Const, x=57, y=61, w=263, h=179, adr=0x3dcca
 FDTest_Container_DebugHDAE2:
-
-
-	naka_header NAKA_TYPE_TtlScreen
-	.byte 0xff, 0xff, 0x13, 0x00, 0xff, 0xff, 0xff, 0xff
-	.byte 0x0a, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3f, 0x01
-	.byte 0xef, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte 0xa0, 0x01, 0xce, 0xdc, 0x03, 0x00, 0xa6, 0xfa
-	.byte 0xe1, 0x00, 0x83, 0x00, 0x00, 0x00
-	aligned_string "DEBUG SCREEN for HD-AE"
+	NAKA_REC_TtlScreen super=NAKA_INDEX_NONE, sub=IDX_FDTest_MenuItem_Load2, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3dcce, title=FDTest_String_DebugHDAE2, icon=idICON_i129
+FDTest_String_DebugHDAE2:	aligned_string "DEBUG SCREEN for HD-AE"
 FDTest_MenuItem_Load2:
 	NAKA_REC_VwEditSwBox super=IDX_FDTest_Container_DebugHDAE2, sub=NAKA_INDEX_NONE, next=IDX_FDTest_MenuItem_Go2, prev=NAKA_INDEX_NONE, flag=VF_Const, x=8, y=126, w=39, h=18, color=CL_Silver, border=BD_3D_UP2, index=1, font=idCHARA1, fontcolor=CL_Black, align=AL_Center, editsw=ES_Left3, style=SS_Special, str=FDTest_String_Load2
 FDTest_String_Load2:	aligned_string "LOAD"
@@ -107,17 +63,8 @@ FDTest_NavWidget2:
 FDTest_Divider2:
 	NAKA_REC_IvExitScreen super=IDX_FDTest_NavWidget2, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Const | VF_InvisibleBox, x=8, y=4, w=32, h=32, screen=0xfc0000 + IDX_FDTest_ScreenView
 FDTest_ConsoleArea2:
-
-
-	.byte 0x41, 0x00, 0x60, 0x01
-	.byte 0x12, 0x00, 0xff, 0xff, 0x18, 0x00, 0x15, 0x00
-	.byte 0x08, 0x00, 0x08, 0x00, 0x23, 0x00, 0x9c, 0x00
-	.byte 0x42, 0x00, 0xf7, 0x00, 0x00, 0x00, 0xff, 0xff
-	.byte 0x00, 0x00, 0x00, 0x00, 0xff, 0x00, 0x00, 0x00
-	.byte 0x88, 0x00, 0xd2, 0xdc, 0x03, 0x00, 0x8a, 0xfb
-	.byte 0xe1, 0x00, 0x0a, 0x00, 0xfc, 0x00, 0x00, 0x00
-	.byte 0x00, 0x00
-	aligned_string "MEMORY"
+	NAKA_REC_AcScreenMenu super=IDX_FDTest_Container_DebugHDAE2, sub=NAKA_INDEX_NONE, next=IDX_FDTest_StatusBar_Memory, prev=IDX_FDTest_NavWidget2, flag=VF_Const, x=8, y=35, w=149, h=32, color=CL_Transparent, border=BD_None, index=0xffff, font=idCHARA1, fontcolor=CL_White, align=AL_Center, editsw=ES_Left1, selected=0x3dcd2, str=FDTest_String_ConsoleArea2, screen=0xfc0000 + IDX_FDTest_Container_DebugHDAE1, icon=idICON_None
+FDTest_String_ConsoleArea2:	aligned_string "MEMORY"
 FDTest_StatusBar_Memory:
 	NAKA_REC_DbMemo super=IDX_FDTest_Container_DebugHDAE2, sub=NAKA_INDEX_NONE, next=IDX_FDTest_Label_Console2, prev=IDX_FDTest_ConsoleArea2, flag=VF_Const, x=57, y=61, w=263, h=179
 FDTest_Label_Console2:
