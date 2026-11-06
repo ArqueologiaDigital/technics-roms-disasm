@@ -121,15 +121,19 @@ bins), scripts/analysis/v7_shift_map.json.  ⚠ Outside this lane's files, for t
 
 ### Checkers
 
-| checker                                              | result                                     |
-|------------------------------------------------------|--------------------------------------------|
-| `make gate`                                          | see the commit                             |
-| `kernel4_maincpu.py --verify`                        | 20 checks, 0 failures                      |
-| `kernel4_maincpu.py --pairing --selftest`            | ok                                         |
-| `../open9-a3-probes/kernel_a3_merge.py --verify`     | 12 checks, 0 failures                      |
-| `../open9-a3-probes/kernel_a3_pairing.py --selftest` | ok                                         |
-| `../kernel_join_probe.py --verify`                   | 16 of 16 (takes this join's origin lines)  |
-| `l2_symbol_reference.py --check`                     | all OK after `--regen` of the 7 main files |
+| checker                                                           | result                                                                                                                                                                                                                                                                     |
+|-------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `make gate`                                                       | see the commit                                                                                                                                                                                                                                                             |
+| `kernel4_maincpu.py --verify`                                     | 20 checks, 0 failures                                                                                                                                                                                                                                                      |
+| `kernel4_maincpu.py --pairing --selftest`                         | ok                                                                                                                                                                                                                                                                         |
+| `../open9-a3-probes/kernel_a3_merge.py --verify`                  | 12 checks, 0 failures                                                                                                                                                                                                                                                      |
+| `../open9-a3-probes/kernel_a3_pairing.py --selftest`              | ok                                                                                                                                                                                                                                                                         |
+| `../kernel_join_probe.py --verify`                                | 16 of 16 (takes this join's origin lines)                                                                                                                                                                                                                                  |
+| `l2_symbol_reference.py --check`                                  | all OK after `--regen` of the 7 main files                                                                                                                                                                                                                                 |
+| `make gate gate-wsa1` after merging main 55860e8d7                | exit 0                                                                                                                                                                                                                                                                     |
+| `make doc-quality` (merged tree)                                  | doc-quality-2026-11-06-03: nothing rose; v10 header-less routines 5,367 -> 5,344, v9/v8 7,136 -> 7,109, v7 7,492 -> 7,465, v6/v5 -9, prom_a -1                                                                                                                             |
+| `make dispatch-census` (merged tree)                              | dispatch-census-2026-11-06-03: nothing rose                                                                                                                                                                                                                                |
+| `census_battery.sh` before / after (BATTERY_IMAGES incl. v10..v5) | source coverage and data-incbin identical; data-range: v142/v141/v140, prom_a, prom_c +8 B KNOWN-A each (SoftTimer_Request_Boot), main images +14 regions, same coverage; doc-quality: main images read 142 files (kernel.s + .inc), the figures above; dispatch identical |
 
 Tools taught the fourth processor: `asm_source.cpu_view(kn5000=0|1|2)` (`.if KERNEL_KN5000 == N` / `!= N`),
 `doc_quality_census.py` (`KERNEL_CPU`: v10/v9/v8/v7 read kernel.s as 2, `-I wsa1/kernel`), `data_range_census.py`
