@@ -19,7 +19,9 @@ m = g.m
 asm_rec = set()
 for p in glob.glob('v10/maincpu/**/*.s', recursive=True):
     t = open(p, 'rb').read().decode('latin-1')
-    for mm in re.finditer(r'^([A-Za-z_]\w*):\s*(?:\n\s*)?NAKA_REC_\w+', t, re.M):
+    # the macro call may follow its label after comment or blank lines (lane kn5000-naka, 2026-11-06:
+    # the older pattern allowed one line break only, and counted 8 such records as untyped)
+    for mm in re.finditer(r'^([A-Za-z_]\w*):[ \t]*\n?(?:[ \t]*(?:;[^\n]*)?\n)*[ \t]*NAKA_REC_\w+', t, re.M):
         asm_rec.add(mm.group(1))
 blobs = []
 for p in G.tree_files('v10'):

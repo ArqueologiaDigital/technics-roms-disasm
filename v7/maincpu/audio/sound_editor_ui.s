@@ -1577,7 +1577,7 @@ UpdSeSel_DetailedUpdate_Skip12:
 	jr	ugt, UpdSeSel_DetailedUpdate_Helper6_Skip
 	dec	1, a
 	ld	(xbc), a
-	add	a, 48
+	add	a, TT_SEFILLPQ1	; page TT_SEFILLPQ1 + the new type 1..4: HPQ1, L241, H241, BPF1
 	extz	wa
 	ld	bc, 0:i3
 	jr	UpdSeSel_DetailedUpdate_Join9
@@ -3791,7 +3791,7 @@ SeMenu_CopyWriteUpdate_Skip83:
 	call	SeMenu_LoadPatchStatus
 	cp	(xsp+2), 1
 	jr	z, SeMenu_CopyWriteUpdate_Epilogue12
-	ldw	wa, 61
+	ldw	wa, TT_SECOPY
 	call	SeMenu_GoToPageOnEnabledPart
 	jr	SeMenu_CopyWriteUpdate_Epilogue12
 SeMenuTitleFunc_DispatchSwitch_Skip6:
@@ -4238,13 +4238,13 @@ SeTonTon1_OnSideRow5:
 SeTonTon1_OnSwitch25:
 	cp	a, 0:i3
 	ret	nz
-	ldw	wa, 38
+	ldw	wa, TT_SETONHYB1
 	call	SeMenu_GoToPageOnEnabledPart
 	ret
 SeTonTon1_OnSwitch15:
 	cp	a, 0:i3
 	ret	nz
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	call	SeMenu_GoToPageOnEnabledPart
 	ld	wa, 0:i3
 	call	SeMenu_SetupMenuDisplay

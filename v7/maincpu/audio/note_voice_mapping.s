@@ -14195,7 +14195,7 @@ UpdateNoteState_CheckDRAM2:
 	dec	1, (CHORD_RECOGNIZE_DELAY:16)
 	jr	z, Voice_CheckAndUpdateMode
 Voice_CheckAndUpdateMode:
-	ld	de, (0xc4fa:16)
+	ld	de, (AUDIO_CONFIG_FLAGS:16)
 	and	de, 0x2000
 	jr	nz, Voice_ProcessControllers_Return
 	call	Voice_UpdatePlayModeState
@@ -14208,7 +14208,7 @@ ProcessControllers_R_Prologue:
 	push	xix
 	push	xiz
 	push	xde
-	ld	de, (0xc4fa:16)
+	ld	de, (AUDIO_CONFIG_FLAGS:16)
 	and	de, 0x2000
 	jr	nz, PlayMode_StoreResult
 	cpw	(CHORD_CHANGED:24), 2
@@ -14319,7 +14319,7 @@ Chord_RecognizeNowOrDelay:
 	jr	z, VelocityUpdate_CheckNoThreshold
 	bit	7, (CHORD_FLAGS:24)
 	jr	z, VelocityUpdate_CheckBit4
-	ld	de, (0xc4fa:16)
+	ld	de, (AUDIO_CONFIG_FLAGS:16)
 	and	de, 0x2
 	jr	nz, Voice_CheckAndUpdateSlot
 VelocityUpdate_CheckBit4:
@@ -14327,7 +14327,7 @@ VelocityUpdate_CheckBit4:
 	jr	z, Voice_CheckAndUpdateSlot
 	jr	VelocityUpdate_SetTimerValue
 VelocityUpdate_CheckNoThreshold:
-	ld	de, (0xc4fa:16)
+	ld	de, (AUDIO_CONFIG_FLAGS:16)
 	and	de, 0x2
 	jr	z, Voice_CheckAndUpdateSlot
 	bit	4, (CHORD_FLAGS:24)
@@ -14344,7 +14344,7 @@ Voice_CheckAndUpdateSlot:
 VelocityUpdate_Return:
 	ret
 Voice_SetDecayTimer:
-	ld	de, (0xc4fa:16)
+	ld	de, (AUDIO_CONFIG_FLAGS:16)
 	and	de, 0x2
 	jr	z, DecayTimer_SetShort
 	cp	bc, 2:i3
@@ -14405,7 +14405,7 @@ CheckAndResetSlotSta_LoadDRAM:
 	bit	6, (CHORD_FLAGS:24)
 	jr	nz, CheckAndResetSlotSta_Block2
 CheckAndResetSlotSta_LoadDRAM2:
-	ld	de, (0xc4fa:16)
+	ld	de, (AUDIO_CONFIG_FLAGS:16)
 	and	de, 0x10
 	jr	nz, Voice_NullRet2
 CheckAndResetSlotSta_Block2:
@@ -14435,16 +14435,16 @@ NullRet2_Data:
 NullRet2_TestBit24:
 	bit	6, (CHORD_FLAGS:24)
 	jr	nz, EffectState_Dispatch
-	ld	de, (0xc4fa:16)
+	ld	de, (AUDIO_CONFIG_FLAGS:16)
 	and	de, 0x1
 	jr	nz, NullRet2_TestBit24_Skip
-	ld	de, (0xc4fa:16)
+	ld	de, (AUDIO_CONFIG_FLAGS:16)
 	and	de, 0x2
 	jr	nz, EffectState_Dispatch
 	ld	de, (0xc4fc:16)
 	and	de, 0x2
 	jr	nz, EffectState_Dispatch
-	ld	de, (0xc4fa:16)
+	ld	de, (AUDIO_CONFIG_FLAGS:16)
 	and	de, 0x4
 	jr	nz, EffectState_Dispatch_Block
 	jr	EffectState_Dispatch
@@ -14736,7 +14736,7 @@ VoiceSlot_CompareAndUpdate_TestBit24:
 	bit	6, (CHORD_FLAGS:24)
 	jr	nz, VoiceSlot_CompareAndUpdate_TestBit24_Skip
 	ldfr_werp	DE, 0x3e
-	ld	de, (0xc4fa:16)
+	ld	de, (AUDIO_CONFIG_FLAGS:16)
 	and	de, 0x8
 	ldto_werp	DE, 0x3e
 	jr	nz, VoiceSlot_CompareAndUpdate_TestBit24_Skip3
@@ -14874,7 +14874,7 @@ VoiceSlot_LoadResult_Compare:
 	jr	VoiceSlot_LoadResult_Compare_Skip2
 VoiceSlot_LoadResult_Compare_Skip:
 	ldfr_werp	DE, 0x3e
-	ld	de, (0xc4fa:16)
+	ld	de, (AUDIO_CONFIG_FLAGS:16)
 	and	de, 0x8
 	ldto_werp	DE, 0x3e
 	jr	nz, VoiceSlot_LoadResult_Compare_Skip4
@@ -14961,7 +14961,7 @@ Voice_ProcessSlotEntry:
 	cp	de, 3:i3
 	jr	c, Voice_ProcessSlotEntry_Skip2
 	ldfr_werp	DE, 0x3e
-	ld	de, (0xc4fa:16)
+	ld	de, (AUDIO_CONFIG_FLAGS:16)
 	and	de, 0x200
 	ldto_werp	DE, 0x3e
 	jr	z, Voice_ProcessSlotEntry_Skip
@@ -15795,7 +15795,7 @@ Chord_EvalAltNoteBuffer_Join:
 	bit	6, (CHORD_FLAGS:24)
 	jr	nz, VoiceSlot_CheckAndApply_LoadReg_Skip
 	ldfr_werp	de, 0x3e	; ld QHL3,DE: bank-3 register QHL <- DE
-	ldw_d16	de, (0xc4fa)
+	ldw_d16	de, (AUDIO_CONFIG_FLAGS)
 	and	de, 8
 	ldto_werp	de, 0x3e	; ld DE,QHL3
 	jr	nz, VoiceSlot_CheckAndApply_LoadReg_Skip2
@@ -17269,11 +17269,11 @@ SndParam_ApplySystemParam_Skip:
 	ldto_berp	a, 248
 	cp	a, (0xe8fc:16)
 	jrl	z, SndParam_ApplySystemParam_ScaleTuneUserNote11_Join
-	ld	wa, (0xc4fa:16)
+	ld	wa, (AUDIO_CONFIG_FLAGS:16)
 	and	wa, 128
 	cp	wa, 128
 	jr	nz, SndParam_ApplySystemParam_Skip2
-	ld	wa, (0xc4fa:16)
+	ld	wa, (AUDIO_CONFIG_FLAGS:16)
 	bit	8, wa
 	jr	nz, SndParam_ApplySystemParam_Skip2
 	ldw	wa, 255
@@ -18130,11 +18130,11 @@ SndPart_SendProgramChange_Build:
 	call	MIDI_PostSendStub
 	cpw	(xsp + 12), 0x2
 	jr	nz, SeqVoice_CheckAndRetry
-	ld	wa, (0xc4fa:16)
+	ld	wa, (AUDIO_CONFIG_FLAGS:16)
 	and	wa, 0x80
 	cp	wa, 0x80
 	jr	nz, SeqVoice_CheckAndRetry
-	ld	wa, (0xc4fa:16)
+	ld	wa, (AUDIO_CONFIG_FLAGS:16)
 	bit	8, wa
 	jr	nz, SeqVoice_CheckAndRetry
 	ldw	wa, 0xff
