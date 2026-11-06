@@ -290,6 +290,66 @@ class Tree:
 
 WIDEN_BACK, WIDEN_FWD = 3, 6
 
+# Code the source tree itself spells as `.byte` rows or faux instructions around a TODO(port) block, so
+# the block has no instruction context of its own (read by hand, 2026-11-06, lane open10/v6v5-port):
+# each region is decoded whole from its label up to the first instruction line at which the decode
+# ends, past the TODO(port) rows inside it.
+#   AccAutoPlay_Configure_Extended  v7 (and v10) hold AccAutoPlay_Configure's tail as `.byte` rows;
+#                                   in v6 / v5 it is `nop; nop; cp (0x33b6), ...` up to the `ret` at
+#                                   AccAutoPlay_Configure_Return2
+#   AccPatch_SlotConfigByteData     `ret; ret; push (0x36e3); push (0x341e); ld (0x341e), 0; ...`: v7
+#                                   frames it from v10's source with `.byte` rows and `ldw ix, ...`
+#                                   lines that are other instructions' bytes
+#   SeAmpAmp2_DrawStaticScreen      three `call`s held as `.byte` rows, the third byte of the third
+#                                   call the TODO(port) row
+HAND_REGIONS = {
+    "v6": ["AccAutoPlay_Configure_Extended", "AccPatch_SlotConfigByteData", "SeAmpAmp2_DrawStaticScreen"],
+    "v5": ["AccAutoPlay_Configure_Extended", "AccPatch_SlotConfigByteData", "SeAmpAmp2_DrawStaticScreen"],
+}
+STALE_COMMENT = re.compile(r"v10 does not spell this byte either|framing ported from v10's source")
+
+
+def hand_region(T, label):
+    """-> (Block, items) for HAND_REGIONS' region at label, or None (reported)"""
+    k0 = next((i for i, (labs, body, com) in enumerate(T.parsed) if label in labs), None)
+    if k0 is None:
+        print("hand region %s: no such label" % label)
+        return None
+    a = T.order[k0][0]
+    seen_todo = False
+    k = k0 if T.parsed[k0][1] else k0 + 1
+    while k < len(T.order) and k - k0 < 200:
+        labs, body, com = T.parsed[k]
+        if k in T.todo_rows:
+            seen_todo = True
+        if seen_todo and T.size[k] > 0 and k not in T.todo_rows and is_instruction(body):
+            e = T.order[k][0]
+            items = P.decode_region(T.rom[a - BASE:e - BASE])
+            if items and all(t is not None for o, l, t in items) and sum(l for o, l, t in items) == e - a:
+                starts = {a + o for o, l, t in items}
+                inner, comments = collections.defaultdict(list), []
+                # the label and comment lines after the last byte line belong to the line at e
+                k = max(j for j in range(k0, k) if T.size[j] > 0 and T.order[j][0] < e) + 1
+                for j in range(k0 + 1, k):
+                    lb, bd, cm = T.parsed[j]
+                    for lab in lb:
+                        inner[T.order[j][0]].append(lab)
+                        comments.append((T.order[j][0], None, j, lab))
+                    txt = T.order[j][3]
+                    if not lb and not bd and txt.strip() and not TODO.match(txt) and not STALE_COMMENT.search(txt):
+                        comments.append((T.order[j][0], txt, j, None))
+                # a label the source tree put inside an instruction names that address: `.set`
+                for ad in [ad for ad in inner if ad not in starts]:
+                    for lab in inner.pop(ad):
+                        comments = [c for c in comments if c[3] != lab]
+                        comments.append((None, "\t.set\t%s, %s + %d\t; inside an instruction" % (lab, label, ad - a),
+                                         10 ** 9, None))
+                b = Block(k0 + 1, k - 1, a, e, a, T.rom[a - BASE:e - BASE], "code", inner, comments)
+                return b, [(a + o, l, t) for o, l, t in items]
+        k += 1
+    print("hand region %s: no decode ends on an instruction line" % label)
+    return None
+
 
 def widen(T, b):
     """A code block whose bytes do not decode on their own -- an instruction straddles its first or
@@ -465,7 +525,22 @@ def main():
             continue
         good[k] = [(b.start + o, l, t) for o, l, t in items]
         inst_starts.update(starts)
-    print("code blocks decoded and round-tripped: %d of %d (%d bytes; %d of them with neighbour lines)" % (
+    for label in HAND_REGIONS.get(args.tree, []):
+        if not any(T.parsed[i][0] and label in T.parsed[i][0] for i in range(len(T.parsed))):
+            continue
+        hr = hand_region(T, label)
+        if hr is None:
+            continue
+        hb, seq = hr
+        # it replaces any block inside it
+        for k in [k for k, b in enumerate(blocks) if b is not None and hb.a <= b.a < hb.e]:
+            good.pop(k, None)
+            blocks[k] = None
+        blocks.append(hb)
+        good[len(blocks) - 1] = seq
+        inst_starts.update(ad for ad, l, t in seq)
+        widened += 1
+    print("code blocks decoded and round-tripped: %d of %d (%d bytes; %d of them with neighbour lines or hand regions)" % (
         len(good), kinds["code"], sum(len(blocks[k].bs) for k in good), widened))
     newlabels = {}
     rewritten = {}
@@ -545,7 +620,8 @@ def main():
             else:
                 cur = None
                 placed.append((ad, None, lab))
-        tail = [c for ad, c, lab in placed if ad == "end"]
+        tail = [c for ad, c, lab in placed if ad == "end" or (c or "").startswith("\t.set\t")]
+        placed = [x for x in placed if not (x[1] or "").startswith("\t.set\t")]
         lines = [c for ad, c, lab in placed if lab is None and ad != "end" and ad not in starts_here]
         for ad, c, lab in placed:
             if ad in starts_here:
