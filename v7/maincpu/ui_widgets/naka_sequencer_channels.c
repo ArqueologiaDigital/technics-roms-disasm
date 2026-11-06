@@ -1723,6 +1723,16 @@ typedef struct __attribute__((packed)) {
     uint8_t Next;
 } NoteMap_LinkArray128_t;
 
+/* A WELCOME-script step as AcWelcomScreen_Select (ui/drawbar_panel_ui.s) reads it, 12 bytes: the
+ * script is an array of these at the u32 in RAM 0x24786 (scripts/converters/naka_type_welcome_steps.py). */
+typedef struct __attribute__((packed)) {
+    uint32_t timer;     /* +0 SetApTimer interval (AcWelcomScreen_Select_StartTimer) */
+    uint16_t x;         /* +4 where the op draws (0xFFFF in an empty slot) */
+    uint16_t y;         /* +6 */
+    uint16_t op;        /* +8 0..12, AcWelcomScreen_Select_CaseTable */
+    uint16_t arg;       /* +10 the op's argument; 0xFFFF = nothing drawn yet */
+} AcWelcomScreen_Step_t;
+
 typedef struct __attribute__((packed)) {
     /* NAKA_TYPE_TtlScreen */
     /* zero padding */
@@ -1842,22 +1852,13 @@ typedef struct __attribute__((packed)) {
     uint16_t IvSdpart_CurrentPage;
     /* IvSdpart selected part row (index into IvSdpart_PartNameStrPtrs / IvSdpart_PartNumberByRow) */
     uint16_t IvSdpart_PartRow;
-    /* Naka_DrawbarControl_Table: 28 pointers (cut from ptrs_2 by split_naka_pointer_arrays.py) */
-    uint32_t Part_CaptionStrPtrs[28];
-    uint16_t field_0d3c;
-    uint16_t field_0d3e;
-    uint16_t field_0d40;
-    uint16_t field_0d42;
-    uint8_t pad_169[4];  /* zero padding */
-    uint16_t field_0d48;
-    uint16_t field_0d4a;
-    uint16_t field_0d4c;
-    uint16_t field_0d4e;
-    uint8_t pad_170[4];  /* zero padding */
-    uint16_t field_0d54;
-    uint16_t field_0d56;
-    uint16_t field_0d58;
-    uint16_t field_0d5a;
+    /* the part captions by part number ("RIGHT 1:" .. "METRO :"); the accordion and drawbar part
+     * views draw entry [PART_SELECT] (27 parts) */
+    uint32_t Part_CaptionStrPtrs[27];
+    /* AcWelcomScreen_Select's saved steps (RAM 0x3EA0C, 0x3EA18, 0x3EA24): [0] / [1] op 2's slots
+     * (by its argument), [2] ops 9 / 12's (the COLOR / COLOUR word); each holds the last step drawn
+     * there, so the next one can blit it away */
+    AcWelcomScreen_Step_t AcWelcomScreen_SavedSteps[3];
     /* MidiPart_ConfigNameTable: 110 pointers (cut from ptrs_3 by split_naka_pointer_arrays.py) */
     uint32_t MidiPart_ConfigNameTable[110];
     /* AcTrackMixerProc's column -> part map: the power-on image of RAM 0x3EBE8 (Boot_InitWorkRAM
@@ -2954,36 +2955,13 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
         NAKA_ADDR(NakaInst_MSP),
         NAKA_ADDR(NakaInst_CONTROL),
         NAKA_ADDR(NakaInst_METRO),
-        0x00000000,
     },
 
-    .field_0d3c = NAKA_NONE,
-
-    .field_0d3e = NAKA_NONE,
-
-    .field_0d40 = 0x0002,
-
-    .field_0d42 = NAKA_NONE,
-
-    .pad_169 = { 0 },
-
-    .field_0d48 = NAKA_NONE,
-
-    .field_0d4a = NAKA_NONE,
-
-    .field_0d4c = 0x0002,
-
-    .field_0d4e = NAKA_NONE,
-
-    .pad_170 = { 0 },
-
-    .field_0d54 = NAKA_NONE,
-
-    .field_0d56 = NAKA_NONE,
-
-    .field_0d58 = 0x0009,
-
-    .field_0d5a = NAKA_NONE,
+    .AcWelcomScreen_SavedSteps = {
+        { .timer = 0, .x = 0xFFFF, .y = 0xFFFF, .op = 2, .arg = NAKA_NONE },
+        { .timer = 0, .x = 0xFFFF, .y = 0xFFFF, .op = 2, .arg = NAKA_NONE },
+        { .timer = 0, .x = 0xFFFF, .y = 0xFFFF, .op = 9, .arg = NAKA_NONE },
+    },
 
     .MidiPart_ConfigNameTable = {
         NAKA_ADDR(PsMixer_BootDefaultRows),
