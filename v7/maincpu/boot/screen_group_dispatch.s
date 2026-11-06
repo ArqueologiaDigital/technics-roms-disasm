@@ -24,7 +24,7 @@
 ; (v7 label ScreenGroup_ReInit stood here; dropped, see the file header)
 	.byte	0x67, 0xfc, 0xc9
 	jr	z, AudioVoice_Callback
-	ld	wa, (0xc4f8:16)
+	ld	wa, (AUDIO_CONFIG_UPDATE:16)
 	bit	4, wa
 	jr	nz, AudioDispatch_ClearVoiceFlags
 	set	2, (0xc162:16)
@@ -57,14 +57,14 @@ AudioMode_SetStereoFlags:
 	bit	0, (PANEL_CONDUCTOR+3:16)
 	ret	z
 ; (v7 label ScreenGroup_WidgetLoop stood here; dropped, see the file header)
-	orw	(0xc4fa:16), 128
-	orw	(0xc4f8:16), 4
+	orw	(AUDIO_CONFIG_FLAGS:16), 128
+	orw	(AUDIO_CONFIG_UPDATE:16), 4
 	calr	AudioInit_ProcessModeChange
 	ret
 AudioMode_ResetVoiceState:
 	bit	1, (PANEL_CONDUCTOR+1:16)
 	jr	z, AudioVoiceReset_Handler
-	ld	wa, (0xc4f8:16)
+	ld	wa, (AUDIO_CONFIG_UPDATE:16)
 	bit	4, wa
 ; (v7 label ScreenGroup_InitState stood here; dropped, see the file header)
 	jr	nz, AudioVoiceReset_ClearFlags
@@ -81,7 +81,7 @@ AudioVoiceReset_Handler:
 	ld	(0xc164:16), 255
 	ld	(0xc165:16), 255
 	orw	(0xc500:16), 257
-	andw	(0xc4f8:16), 0xfffd
+	andw	(AUDIO_CONFIG_UPDATE:16), 0xfffd
 	ld	a, (CURRENT_MODE:16)
 	extz	wa
 	sla	wa, 2
@@ -103,10 +103,10 @@ AudioMode_ConfigureExternal:
 	ld	(0xc162:16), 0
 	cp	a, 0:i3
 	jr	z, AudioMode_ConfigExternal_Off
-	orw	(0xc4f8:16), 16
+	orw	(AUDIO_CONFIG_UPDATE:16), 16
 	jr	AudioMode_ConfigExternal_Apply
 AudioMode_ConfigExternal_Off:
-	andw	(0xc4f8:16), 0xffef
+	andw	(AUDIO_CONFIG_UPDATE:16), 0xffef
 	bit	0, (PANEL_CONDUCTOR:16)
 	jr	z, AudioMode_ConfigExternal_CheckBit1
 	set	0, (0xc162:16)
@@ -117,11 +117,11 @@ AudioMode_ConfigExternal_CheckBit1:
 AudioMode_ConfigExternal_CheckStereo:
 	bit	1, (PANEL_CONDUCTOR+1:16)
 	jr	z, AudioMode_ConfigExternal_NoStereo
-	orw	(0xc4fa:16), 32
+	orw	(AUDIO_CONFIG_FLAGS:16), 32
 	jr	AudioMode_ConfigExternal_MergeFlags
 AudioMode_ConfigExternal_NoStereo:
-	andw	(0xc4fa:16), 0xffdf
-	ld	wa, (0xc4fa:16)
+	andw	(AUDIO_CONFIG_FLAGS:16), 0xffdf
+	ld	wa, (AUDIO_CONFIG_FLAGS:16)
 	and	wa, 0x7
 	call	z, (AudioInit_RefreshToneBank:24)
 AudioMode_ConfigExternal_MergeFlags:
@@ -132,7 +132,7 @@ AudioMode_ConfigExternal_MergeFlags:
 	add	a, c
 	or	(0xc162:16), a
 AudioMode_ConfigExternal_Apply:
-	orw	(0xc4f8:16), 4
+	orw	(AUDIO_CONFIG_UPDATE:16), 4
 	jrl	AudioInit_ProcessModeChange
 ; [v10] ============================================================================
 ; [v10] UIState_ProcessMidiEvent - Process an incoming MIDI event in UI state
@@ -166,7 +166,7 @@ UIState_ProcessMidiEvent:
 	ld	a, e
 	and	a, 0xff
 	ret	z
-	orw	(0xc4f8:16), 4
+	orw	(AUDIO_CONFIG_UPDATE:16), 4
 	ret
 UIStateEvt_PartRouting:
 	ld	a, e
@@ -193,7 +193,7 @@ UIStateEvt_PartRouting:
 	and	(xix+hl), 0xf1
 	or	(xix+hl), a
 ; (v7 label ScreenGroup_InitParams8 stood here; dropped, see the file header)
-	orw	(0xc4f8:16), 4
+	orw	(AUDIO_CONFIG_UPDATE:16), 4
 	ret
 UIStateEvt_VoiceAssign:
 	ld	a, e
@@ -229,7 +229,7 @@ UIStateEvt_VoiceAssign_Reset:
 	ld	(xwa), 0xff
 UIStateEvt_VoiceAssign_Notify:
 	orw	(0xc500:16), 2048
-	orw	(0xc4f8:16), 4
+	orw	(AUDIO_CONFIG_UPDATE:16), 4
 UIStateEvt_ToneChange:
 	bit	5, e
 	jr	z, UIStateEvt_DrumAssign
@@ -270,7 +270,7 @@ UIStateEvt_ToneChange_Set:
 	ld	(0xc17c:16), 22
 Tone_WriteEndMarker:
 	orw	(0xc500:16), 4
-	orw	(0xc4f8:16), 4
+	orw	(AUDIO_CONFIG_UPDATE:16), 4
 ; (v7 label ScreenGroup_InitFinalize stood here; dropped, see the file header)
 ; (was .incbin "includes/romslices/v7_block_screengroup_initfinalize.bin")
 UIStateEvt_DrumAssign:

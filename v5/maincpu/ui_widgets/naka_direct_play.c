@@ -14,7 +14,7 @@ extern const char CRTC_LINE_COMPARE;
 extern const char INTETC45;
 extern const char NakaStr_DataFile1of2;
 extern const char NakaStr_DataFilePck;
-extern const char NakaWidget_Perf3RhythmSel_StrOn;
+extern const char NakaWidget_Perf3RhythmSel_StrOff;
 extern const char NakaData_TechnichordBitmap1;
 extern const char NakaInst_NEXT;
 extern const char NakaInst_Param_EndFF;
@@ -31,7 +31,7 @@ extern const char WidgetName_PtrBlock_G;
 extern const char WidgetName_PtrBlock_I1;
 extern const char WidgetName_PtrBlock_I2;
 extern const char WidgetName_PtrBlock_K;
-extern const char NakaWidget_Perf3RhythmSel_StrOff;
+extern const char NakaWidget_Perf3RhythmSel_StrOn;
 
 #define BASE  0x00E21064u
 
@@ -6225,9 +6225,9 @@ const naka_direct_play_t naka_direct_play_data
 
     .pad_482 = { 0 },
 
-    .ptr_2fd2 = NAKA_ADDR(NakaWidget_Perf3RhythmSel_StrOff),
+    .ptr_2fd2 = NAKA_ADDR(NakaWidget_Perf3RhythmSel_StrOn),
 
-    .NakaWidget_Perf3RhythmSel_StrOn_ptr = NAKA_ADDR(NakaWidget_Perf3RhythmSel_StrOn),
+    .NakaWidget_Perf3RhythmSel_StrOn_ptr = NAKA_ADDR(NakaWidget_Perf3RhythmSel_StrOff),
 
 };
 

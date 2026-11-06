@@ -225,6 +225,9 @@ ids are named in every GUI C file.
   (2026-11-06, lane kn5000-notes: 17 of the 20 straddling records are typed, `naka_type_straddling_records.py`; by
   `notes/kn5000-notes-2026-11-06/probes/naka_untyped_elements.py` 69 -> 52 untyped elements in v10, 3 of them records
   that run past the end of their C blob.  Still open: `notes/kn5000-notes-2026-11-06/README.md`, "Left".)
+  (2026-11-06, lane kn5000-naka: the 3 blob-edge records are typed, 52 -> 49 by that probe (45 by its corrected rule,
+  which also counts a NAKA_REC_ call after comment lines); all 45 left are in the asm:
+  `notes/kn5000-naka-2026-11-06/README.md`.)
 - **73 numeric ROM addresses** (75 in v6/v5): 25 in `naka_widget_descriptors.c`, 19 in `naka_block_007.c`, 15 in
   `naka_technichord_strings.c`, and a few handler words. They point at string or record interiors with no slice of
   their own, and need a label split first.  (2026-11-02, lane kn5000-c: 73 -> 9 per tree, 75 -> 11 in v6 / v5.  The class
@@ -235,12 +238,19 @@ ids are named in every GUI C file.
   (2026-11-06, lane kn5000-notes: 9 -> 1 per tree, 11 -> 7 in v6 / v5: the dispatch-overlay "pointers" were rectangle
   words, the EditSw texts are `<Record>_Str` members, the disk_warning one sat in a case table.  The one left is the
   PsWideToggle that runs past the end of naka_direct_play.c's blob: `notes/kn5000-notes-2026-11-06/README.md`.)
+  (2026-11-06, lane kn5000-naka: 1 -> 0 in v10 / v9 / v7.  The PsWideToggle is one typed member now, the blob
+  boundary moved 8 bytes; v6 / v5's 7 are lane v6v5-port2's, after their C-divergence json:
+  `notes/kn5000-naka-2026-11-06/README.md`.)
 - **525 `field_XX` members** (533 in v7/v6/v5). 291 are in `naka_sequencer_channels.c`; none of those is read by its
   RAM address in the asm (checked: one direct `(0xADDR)` use among them), and none is a widget's cell. Naming them
   needs the routines that reach them through a base pointer. The rest are spread over 15 files.  (2026-11-02: 523 /
   531, MetPunchSw's two strings retyped; still open, lane kn5000-c README has the next step.)
   (2026-11-06, lane kn5000-notes: 523 -> 434 in v10 / v9, 531 -> 442 in v7, 531 -> 509 in v6 / v5, by the record and
   case-table retyping; naka_sequencer_channels.c's 291 are unchanged and still need their base-pointer readers.)
+  (2026-11-06, lane kn5000-naka: 434 -> 163 in v10 / v9, 442 -> 171 in v7.  naka_sequencer_channels.c is the
+  Boot_InitWorkRAM image, so its members are read through their RAM copies: TrackMixer_ColumnPartMap,
+  ChordName_TypeRootTables and 117 32-bit (letter r / s) RAM cells; 22 left there, 141 in the other files:
+  `notes/kn5000-naka-2026-11-06/README.md`.)
 - **1 property value has no name**: `TEST3.fontcolor = 0x0043`.  (Settled 2026-10-31, lane kn5000-a: it cannot have a
   firmware name.  ColorIDProc's name table names no 0x43, the boot palette's entry 0x43 is 0x000000, and
   `SineWaveScreenProc` never reads its fontcolor field, +42: it draws with the fixed colours 0xff / 0xf5.  (A comment in
@@ -252,6 +262,9 @@ ids are named in every GUI C file.
   (2026-11-06, lane kn5000-notes: 81 -> 53.  `SeMenu_SendEvent` is the sound editor's title opener and the
   DirmdEmulator pages' method tables and switch handlers are now code transitions:
   `notes/kn5000-notes-2026-11-06/README.md`.)
+  (2026-11-06, lane kn5000-naka: 53 -> 49.  The filter-type step and SeMenu_GoToPageOnEnabledPart open titles; the map
+  now names the routines that open each title no traced path reaches (31 of the 49):
+  `notes/kn5000-naka-2026-11-06/README.md`.)
 - **Icons**: the firmware names most only `iNN`.  (Done 2026-10-31, lane kn5000-a: each of the 113 icons the KN5000 and
   HD-AE5000 records use has a description of what it shows, `scripts/generators/naka_icon_descriptions.json`, written
   beside its `idICON_iNN` in naka_classes.h / naka_values.s and in the HD-AE5000 menu maps; the names stay the firmware's.)

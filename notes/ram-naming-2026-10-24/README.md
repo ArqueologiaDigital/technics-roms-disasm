@@ -126,6 +126,9 @@ them with `grep -c '^\s*\.equ'` on each file. `make gate` reported every image I
    are named, per bit, in `notes/kn5000-notes-2026-11-06/ram/`; 0x3312-0x3318 had been named before.  Numeric uses
    of the listed bytes in v10, `notes/kn5000-notes-2026-11-06/probes/flag_byte_uses.py`: 967 -> 747.  Left:
    0xC1FE, 0xC594-0xC59C, 0x28B2 / 0x28B3, 0x34CD, 0x35B0, 0xE3E2 and the meaning of a SEQ_TRACK_MASK bit.)
+   (2026-11-06, lane kn5000-naka: 0xC594 `AUDIO_CONFIG_UPDATE` and 0xC596 `AUDIO_CONFIG_FLAGS` are named, per bit, in
+   `notes/kn5000-naka-2026-11-06/ram/`; numeric uses 747 -> 611.  Left: 0xC1FE, 0xC598, 0xC59C, 0x28B2 / 0x28B3,
+   0x34CD, 0x35B0, 0xE3E2.)
 2. The remaining per-lane arrays of the accompaniment engine: 0x32B5[6], 0x33EB[6], and the D4-D7
    rhythm-channel quads (0x32C3, 0x32C7, 0x332F). Name them once their contents are understood. The lane
    records named here show the pattern.  (Done 2026-10-31, lane kn5000-a: ACC_LANE_BAR[6] / ACC_CUR_BAR, ACC_LANE_MEASURE[6] / ACC_CUR_MEASURE,
