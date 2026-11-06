@@ -1,0 +1,63 @@
+armed
+[  1.02] breakpoints
+WINDOW pre-home-slider: 0 distinct ids
+[ 20.02] open home-slider
+[ 21.02] VOL_APCSEQ := 20
+  latch 0x5006BEA6 = 0x33, PanelCtrlLatch32 remap 0x5006BEAD = 0x19
+[ 22.52] latch
+[ 23.02] VOL_APCSEQ := 100
+  latch 0x5006BEA6 = 0xFF, PanelCtrlLatch32 remap 0x5006BEAD = 0x7F
+[ 24.52] latch
+[ 25.02] VOL_APCSEQ := 80
+ID pre-demo-enter 701009   n=3    word0=16701009 first=00000019 last=00000066 caller=4c01b8cd
+WINDOW pre-demo-enter: 1 distinct ids
+[ 26.52] open demo-enter
+  latch 0x5006BEA6 = 0xCC, PanelCtrlLatch32 remap 0x5006BEAD = 0x66
+[ 26.52] latch
+WINDOW home-slider: 0 distinct ids
+[ 26.52] close home-slider
+[ 27.02] DOWN DEMO
+[ 27.32] UP DEMO
+[ 32.02] snap
+WINDOW demo-enter: 0 distinct ids
+[ 33.02] close demo-enter
+WINDOW pre-demo-slider: 0 distinct ids
+[ 33.02] open demo-slider
+[ 34.02] VOL_APCSEQ := 20
+  latch 0x5006BEA6 = 0x33, PanelCtrlLatch32 remap 0x5006BEAD = 0x19
+[ 35.52] latch
+[ 36.52] VOL_APCSEQ := 100
+  latch 0x5006BEA6 = 0xFF, PanelCtrlLatch32 remap 0x5006BEAD = 0x7F
+[ 38.02] latch
+[ 39.02] VOL_APCSEQ := 80
+  latch 0x5006BEA6 = 0xCC, PanelCtrlLatch32 remap 0x5006BEAD = 0x66
+[ 40.52] latch
+WINDOW demo-slider: 0 distinct ids
+[ 40.52] close demo-slider
+WINDOW pre-demo-exit: 0 distinct ids
+[ 40.52] open demo-exit
+[ 41.02] DOWN EXIT
+[ 41.32] UP EXIT
+[ 45.02] snap
+ID pre-home-after 008002 * n=1    word0=40008002 first=00000080 last=00000080 caller=484553b8
+ID pre-home-after 008006 * n=1    word0=40008006 first=0000007f last=0000007f caller=484553b8
+ID pre-home-after 008008 * n=1    word0=40008008 first=00000066 last=00000066 caller=484553b8
+ID pre-home-after 00C081 * n=2    word0=4000c081 first=00000000 last=00000000 caller=484553b8
+ID pre-home-after 600007   n=1    word0=90600007 first=00000000 last=00000000 caller=4857ef6c
+ID pre-home-after 600011   n=1    word0=10600011 first=00000000 last=00000000 caller=4845d241
+ID pre-home-after 702001   n=2    word0=10702001 first=00001701 last=00001700 caller=4c01b8cd
+ID pre-home-after B0000B   n=16   word0=40b0000b first=1000007f last=0c00007f caller=484553a4
+ID pre-home-after B0007B   n=64   word0=40b0007b first=10000000 last=0c000000 caller=48454b6a
+WINDOW pre-home-after: 9 distinct ids
+[ 46.02] open home-after
+WINDOW demo-exit: 0 distinct ids
+[ 46.02] close demo-exit
+[ 47.02] VOL_APCSEQ := 30
+  latch 0x5006BEA6 = 0x4D, PanelCtrlLatch32 remap 0x5006BEAD = 0x26
+[ 48.52] latch
+[ 49.52] VOL_APCSEQ := 90
+  latch 0x5006BEA6 = 0xE6, PanelCtrlLatch32 remap 0x5006BEAD = 0x73
+[ 51.02] latch
+WINDOW home-after: 0 distinct ids
+[ 52.52] close home-after
+WINDOW end: 0 distinct ids

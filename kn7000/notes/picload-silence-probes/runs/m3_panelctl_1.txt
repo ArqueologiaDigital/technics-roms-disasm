@@ -1,0 +1,73 @@
+armed
+[  1.02] breakpoints
+WINDOW pre-01-10:20: 0 distinct ids
+[ 20.02] open 01-10:20
+  injected [10 20] at ring offset 4 (tail 4)
+[ 20.32] inject 01-10:20
+ID 01-10:20     701011   n=1    word0=16701011 first=00000011 last=00000011 caller=4c01b8cd
+WINDOW 01-10:20: 1 distinct ids
+[ 22.82] close 01-10:20
+WINDOW pre-02-10:E0: 0 distinct ids
+[ 23.02] open 02-10:E0
+  injected [10 E0] at ring offset 6 (tail 6)
+[ 23.32] inject 02-10:E0
+ID 02-10:E0     701011   n=1    word0=16701011 first=0000009d last=0000009d caller=4c01b8cd
+WINDOW 02-10:E0: 1 distinct ids
+[ 25.82] close 02-10:E0
+WINDOW pre-03-17:20: 0 distinct ids
+[ 26.02] open 03-17:20
+  injected [17 20] at ring offset 8 (tail 8)
+[ 26.32] inject 03-17:20
+ID 03-17:20     701020   n=1    word0=16701020 first=00000020 last=00000020 caller=4c01b8cd
+WINDOW 03-17:20: 1 distinct ids
+[ 28.82] close 03-17:20
+WINDOW pre-04-17:E0: 0 distinct ids
+[ 29.02] open 04-17:E0
+  injected [17 E0] at ring offset 10 (tail 10)
+[ 29.32] inject 04-17:E0
+ID 04-17:E0     701020   n=1    word0=16701020 first=000000e0 last=000000e0 caller=4c01b8cd
+WINDOW 04-17:E0: 1 distinct ids
+[ 31.82] close 04-17:E0
+WINDOW pre-05-D0:20: 0 distinct ids
+[ 32.02] open 05-D0:20
+  injected [D0 20] at ring offset 12 (tail 12)
+[ 32.32] inject 05-D0:20
+ID 05-D0:20     701005   n=1    word0=16701005 first=0000000f last=0000000f caller=4c01b8cd
+WINDOW 05-D0:20: 1 distinct ids
+[ 34.82] close 05-D0:20
+WINDOW pre-06-D0:E0: 0 distinct ids
+[ 35.02] open 06-D0:E0
+  injected [D0 E0] at ring offset 14 (tail 14)
+[ 35.32] inject 06-D0:E0
+ID 06-D0:E0     701005   n=1    word0=16701005 first=0000006f last=0000006f caller=4c01b8cd
+WINDOW 06-D0:E0: 1 distinct ids
+[ 37.82] close 06-D0:E0
+WINDOW pre-07-D1:20: 0 distinct ids
+[ 38.02] open 07-D1:20
+  injected [D1 20] at ring offset 16 (tail 16)
+[ 38.32] inject 07-D1:20
+ID 07-D1:20     701004   n=1    word0=16701004 first=00003200 last=00003200 caller=4c01b8cd
+WINDOW 07-D1:20: 1 distinct ids
+[ 40.82] close 07-D1:20
+WINDOW pre-08-D1:E0: 0 distinct ids
+[ 41.02] open 08-D1:E0
+  injected [D1 E0] at ring offset 18 (tail 18)
+[ 41.32] inject 08-D1:E0
+ID 08-D1:E0     701004   n=1    word0=16701004 first=00000d40 last=00000d40 caller=4c01b8cd
+WINDOW 08-D1:E0: 1 distinct ids
+[ 43.82] close 08-D1:E0
+WINDOW pre-09-D3:20: 0 distinct ids
+[ 44.02] open 09-D3:20
+  injected [D3 20] at ring offset 20 (tail 20)
+[ 44.32] inject 09-D3:20
+ID 09-D3:20     701010   n=1    word0=16701010 first=0000007f last=0000007f caller=4c01b8cd
+WINDOW 09-D3:20: 1 distinct ids
+[ 46.82] close 09-D3:20
+WINDOW pre-10-D3:E0: 0 distinct ids
+[ 47.02] open 10-D3:E0
+  injected [D3 E0] at ring offset 22 (tail 22)
+[ 47.32] inject 10-D3:E0
+ID 10-D3:E0     701010   n=1    word0=16701010 first=00000011 last=00000011 caller=4c01b8cd
+WINDOW 10-D3:E0: 1 distinct ids
+[ 49.82] close 10-D3:E0
+WINDOW end: 0 distinct ids

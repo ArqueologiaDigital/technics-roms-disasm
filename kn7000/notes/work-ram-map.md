@@ -326,3 +326,14 @@ Each gap between referenced bases equals count x stride. The strides come from t
   break on func_4C029793 (0x4C029793) and TgcBufWrite (0x4C003A60). If a {0x9n, part, key, velocity} message
   reaches TgcBufWrite, the gate is in the TG library or the audio path (then tap TgPartKeyEvent 0x4C036E9E and
   TgLevelResolve 0x4C02FBDE's result); if not, step func_484524EB for the test that returns.
+  **Run in MAME 2026-11-06 (lane kn7000-research; observed in emulation, not on hardware;
+  `picload-silence-probes/README.md`):** with SD PICTURE LOAD opened the manual's way (PICTURE LIST ->
+  PICTURE LOAD, the firmware's own `InterruptTitle(0x12B)`), a held key goes through every routine above,
+  TgcNoteOnSend and TgcBufWrite included (`04 90 10 3c 42` note on, RIGHT1), the tone generators get the
+  same 118 register writes as on the home screen, and the captured audio is as loud (RMS 322.5 against
+  321.2).  Opening the screen writes no DSP port and no TG register but the idle FC08..FC0B; it moves
+  only GPIO 0x36008004 bit 1 (the SD chip select, the folder scan) and 0x36008024 / 0x36008064; while the
+  screen stays up the I/O writes equal the PICTURE LIST's.  So no code path the emulation runs silences
+  the keys; [INFERENCE] the silence comes from hardware the driver does not model.  Next step: trace the
+  service manual's MUTE lines (CN506 to the amplifier, the ACP / FAJ board; `picload-silence-probes/README.md`)
+  to the CPU line that drives them and watch that line in MAME on this screen, or measure on the instrument.
