@@ -54,6 +54,8 @@ extern const char ClassProps_AcFdemoScreen;
 extern const char ClassProps_AcPleaseWait;
 extern const char ClassProps_AcSndEMenu;
 extern const char ClassProps_IvMPver;
+extern const char ClassName_IvMPver;
+extern const char ClassPropdata_IvMPver;
 
 #define BASE  0x00E80FE2u
 
@@ -312,7 +314,7 @@ const naka_sound_menu_drawbar_t naka_sound_menu_drawbar_data
 
     .classdef_161_35 = { .proc = NAKA_ADDR(AcDrawbarNameProc), .parent = NAKA_CLASS(PsParaBox), .allsize = 40, .selfsize = 4, .name = SELF(AcDrawbarName_name), .propdata = SELF(AcDrawbarName_code), .propname = NAKA_ADDR(ClassProps_AcDrawbarName) },
 
-    .classdef_161_36 = { .proc = NAKA_ADDR(IvMPverProc), .parent = NAKA_CLASS(PsInvisibleBox), .allsize = 22, .selfsize = 0, .name = 0x00E81088, .propdata = 0x00E81086, .propname = NAKA_ADDR(ClassProps_IvMPver) },
+    .classdef_161_36 = { .proc = NAKA_ADDR(IvMPverProc), .parent = NAKA_CLASS(PsInvisibleBox), .allsize = 22, .selfsize = 0, .name = NAKA_ADDR(ClassName_IvMPver), .propdata = NAKA_ADDR(ClassPropdata_IvMPver), .propname = NAKA_ADDR(ClassProps_IvMPver) },
 
     .classrun_161_x008C = 0x00000000,
 

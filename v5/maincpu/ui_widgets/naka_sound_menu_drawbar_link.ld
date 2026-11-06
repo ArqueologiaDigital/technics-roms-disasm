@@ -55,3 +55,5 @@ ClassProps_AcFdemoScreen = 0x00E80C92;
 ClassProps_AcPleaseWait = 0x00E80C9E;
 ClassProps_AcSndEMenu = 0x00E80C98;
 ClassProps_IvMPver = 0x00E80CF0; /* v6's address: nothing in v5 places it */ /* v7's address: nothing in v6 places it */
+ClassName_IvMPver = 0x00E81088; /* v7's address: nothing in v5 places it */
+ClassPropdata_IvMPver = 0x00E81086; /* v7's address: nothing in v5 places it */
