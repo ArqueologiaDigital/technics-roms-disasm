@@ -331,19 +331,23 @@
 0x4C0152DF	0x484226C4	ModifyPixel	ModifyPixel	same name
 0x4C015348	0x4842271A	ModifyPixelEx	ModifyPixelEx	same name
 0x4C0154CD	0x48422894	DrawLine	DrawLine	same name
+0x4C015526	0x484228ED	-	-	call sites, A unnamed
 0x4C0158D3	0x48422C8D	DrawLineEx	DrawLineEx	same name
 0x4C015C72	0x4842302C	DrawBox	DrawBox	same name
 0x4C015E0F	0x4842319F	DrawFrame	DrawFrame	same name
 0x4C015E78	0x48423208	-	-	call sites, A unnamed
 0x4C016258	0x484235D5	DrawFrameEx	DrawFrameEx	same name
 0x4C01654E	0x484238CB	MovePixels	MovePixels	same name
+0x4C0165A4	0x48423921	-	-	call sites, A unnamed
 0x4C0165C2	0x4842393F	-	-	call sites, A unnamed
 0x4C016683	0x48423A00	DrawWall	DrawWall	same name
 0x4C01680E	0x48423B56	DrawBitmap	DrawBitmap	same name
+0x4C016856	0x48423B9E	DrawBitmap_QueuedExec	DrawBitmap_QueuedExec	carried
 0x4C016872	0x48423BBA	DrawBitmap_Impl	DrawBitmap_Impl	same name
 0x4C016940	0x48423C88	DrawBitmapFast	DrawBitmapFast	same name
 0x4C0169A4	0x48423CEC	DrawBitmapFast_Impl	DrawBitmapFast_Impl	same name
 0x4C016A85	0x48423DCD	DrawIcons	DrawIcons	same name
+0x4C016ACD	0x48423E15	DrawIcons_QueuedExec	DrawIcons_QueuedExec	carried
 0x4C016AE9	0x48423E31	DrawIcons_Impl	DrawIcons_Impl	same name
 0x4C016BB3	0x48423EFB	DrawFrameSP	DrawFrameSP	same name
 0x4C016C02	0x48423F4A	DrawFrameSP_QueuedExec	DrawFrameSP_QueuedExec	same name
@@ -369,6 +373,7 @@
 0x4C01778B	0x48424A9F	DrawBitmapFile	DrawBitmapFile	same name
 0x4C0177F1	0x48428305	Draw2BpFile_Impl	Draw2BpFile_Impl	same name
 0x4C017998	0x48424CC8	DrawBitmapFileEx	DrawBitmapFileEx	same name
+0x4C0179E0	0x48424D10	DrawBitmapFileEx_QueuedExec	DrawBitmapFileEx_QueuedExec	carried
 0x4C017B68	0x48424EBD	DrawJpegFile	DrawJpegFile	same name
 0x4C017BB0	0x48424F05	DrawJpegFile_QueuedExec	DrawJpegFile_QueuedExec	same name
 0x4C017BCE	0x48424F23	JpegDecodeBlit	JpegDecodeBlit	same name
@@ -386,10 +391,13 @@
 0x4C018783	0x48425ABF	DrawStringAlignment	DrawStringAlignment	same name
 0x4C0187DC	0x48425B18	DrawStringReverse	DrawStringReverse	same name
 0x4C0189AA	0x48425CEE	DrawCircle	DrawCircle	same name
+0x4C0189F9	0x48425D3D	-	-	call sites, A unnamed
 0x4C018A1D	0x48425D61	-	-	call sites, A unnamed
 0x4C018B9E	0x48425EE2	DrawDottedLine	DrawDottedLine	same name
+0x4C018BF7	0x48425F3B	-	-	call sites, A unnamed
 0x4C018C1C	0x48425F60	-	-	call sites, A unnamed
 0x4C018E5D	0x484261A1	DrawDesignBox	DrawDesignBox	same name
+0x4C018EAF	0x484261F3	-	-	call sites, A unnamed
 0x4C018ED3	0x48426217	-	-	call sites, A unnamed
 0x4C01A63C	0x48427980	IsPointOnScreen	IsPointOnScreen	same name
 0x4C01AA57	0x48427D98	-	-	call sites, A unnamed
@@ -779,7 +787,10 @@
 0x4C047810	0x484AD65F	PanelCtrlValueGet	PanelCtrlValueGet	same name
 0x4C04782C	0x484AD67B	PanelCtrlDispatch	PanelCtrlDispatch	same name
 0x4C047867	0x484AD6B0	PanelCtrlLatch00	PanelCtrlLatch00	same name
+0x4C047895	0x484AD6DE	PanelCtrlLatch31	PanelCtrlLatch31	carried
+0x4C0478C6	0x484AD70F	PanelCtrlLatch33	PanelCtrlLatch33	carried
 0x4C0478F7	0x484AD740	PanelCtrlLatch30	PanelCtrlLatch30	same name
+0x4C047993	0x484AD772	PanelCtrlLatch32	PanelCtrlLatch32	carried
 0x4C047A5F	0x484C464C	DirPlayRx	DirPlayRx	same name
 0x4C047DDF	0x4C02458A	-	-	call sites, A unnamed
 0x4C047E3B	0x4C0245E6	-	-	call sites, A unnamed
@@ -1310,14 +1321,28 @@
 0x4C0697A3	0x48447D02	TempoSyncPartB0Set	TempoSyncPartB0Set	same name
 0x4C0697FF	0x48447D64	TempoSyncE000Set	TempoSyncE000Set	same name
 0x4C069822	0x48447D87	TempoSyncSetDispatch	TempoSyncSetDispatch	same name
+0x4C06A334	0x4848AD6E	PartHasDspUnitExceptAcc	-	call sites, A unnamed
 0x4C06A37A	0x4848AE37	AcResetPageProc	AcResetPageProc	same name
 0x4C06A3D0	0x4848AE8D	IvOtherPartProc	IvOtherPartProc	same name
 0x4C06A5DF	0x484936D5	IvRstOtherPartProc	IvRstOtherPartProc	same name
 0x4C06A635	0x4849390E	IvPageControlOWProc	IvPageControlOWProc	same name
 0x4C06A787	0x4848B12D	-	-	call sites, A unnamed
 0x4C06A7AD	0x4848B153	-	-	call sites, A unnamed
+0x4C06A977	0x4848B31D	-	-	call sites, A unnamed
+0x4C06AA34	0x4848B3DA	-	-	call sites, A unnamed
+0x4C06AAD2	0x4848B478	-	-	call sites, A unnamed
+0x4C06AB70	0x4848B516	-	-	call sites, A unnamed
+0x4C06AC1D	0x4848B5C3	-	-	call sites, A unnamed
+0x4C06ACDD	0x4848B683	-	-	call sites, A unnamed
+0x4C06AE25	0x4848B7CB	-	-	call sites, A unnamed
+0x4C06AEB2	0x4848B858	-	-	call sites, A unnamed
+0x4C06AF71	0x4848B917	-	-	call sites, A unnamed
+0x4C06AFF6	0x4848B99C	-	-	call sites, A unnamed
+0x4C06B283	0x4848BC29	-	-	call sites, A unnamed
 0x4C06B2F4	0x4848BC9A	PartEqFcText	PartEqFcText	same name
 0x4C06B37B	0x4848BD21	PartEqGainText	PartEqGainText	same name
+0x4C06B593	0x4848BF39	-	-	call sites, A unnamed
+0x4C06B650	0x4848BFF6	-	-	call sites, A unnamed
 0x4C06B69D	0x4848C043	MainSoundAdd	MainSoundAdd	same name
 0x4C06BACE	0x48493A90	MdNormal	MdNormal	same name
 0x4C06BB00	0x48493ACE	TtNormal	TtNormal	same name
@@ -3954,6 +3979,7 @@
 0x4C14EEDA	0x48532346	SetExtMode	SetExtMode	same name
 0x4C14EEE5	0x48532355	ResetExtMode	ResetExtMode	same name
 0x4C14EEEF	0x4853235F	CheckExtMode	CheckExtMode	same name
+0x4C14EEF8	0x48532630	fmmerror_init	fmmerror_init	carried
 0x4C14F374	0x485329E5	fmmcopy	fmmcopy	same name
 0x4C14F47E	0x48532AEF	fmmformat	fmmformat	same name
 0x4C14F4A3	0x48532B14	-	-	call sites, A unnamed

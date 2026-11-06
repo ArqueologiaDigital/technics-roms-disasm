@@ -1,0 +1,58 @@
+kn6000: 19 services call the error hooks; 17 of them are func_ placeholders
+  func_4C3F5567            d0 -0x8f d1 -0x21, d0 -0x8f d1 -0x3f
+  func_4C3F58F6            d0 -0x8d d1 -0x3f, d0 -0x8d d1 -0x55
+  func_4C3F614F            d0 -0x89 d1 -0xa
+  func_4C3F6058            d0 -61 d1 None
+  func_4C3F69EE            d0 -0x3d d1 -0x45
+  func_4C3F5F5B            d0 -53 d1 None
+  func_4C3F64AA            d0 -0x35 d1 -0x45
+  func_4C3F5AF6            d0 -0x2e d1 -0x45
+  func_4C3F6AFB            d0 -0x27 d1 -0x49
+  func_4C3F49F9            d0 -0x26 d1 -0x45
+  func_4C3F6D44            d0 -0x1d d1 -0x45
+  func_4C3F6F97            d0 -0x1c d1 -0x45
+  func_4C3F5440            d0 -0x1b d1 -0x23, d0 -0x1b d1 -0x45
+  ter_tsk                  d0 -0x19 d1 -0x3f
+  func_4C3F6C1C            d0 -0x16 d1 -0x3f
+  func_4C3F6E1C            d0 -0x15 d1 -0x3f
+  func_4C3F674B            d0 -17 d1 None
+  clr_flg                  d0 -0x8 d1 -0x45
+  func_4C3F6CFA            d0 -0x7 d1 -0x45
+kn6500: 19 services call the error hooks; 17 of them are func_ placeholders
+  func_4C37F1C7            d0 -0x8f d1 -0x21, d0 -0x8f d1 -0x3f
+  func_4C37F556            d0 -0x8d d1 -0x3f, d0 -0x8d d1 -0x55
+  func_4C37FDAF            d0 -0x89 d1 -0xa
+  func_4C37FCB8            d0 -61 d1 None
+  func_4C38064E            d0 -0x3d d1 -0x45
+  func_4C37FBBB            d0 -53 d1 None
+  func_4C38010A            d0 -0x35 d1 -0x45
+  func_4C37F756            d0 -0x2e d1 -0x45
+  func_4C38075B            d0 -0x27 d1 -0x49
+  func_4C37E659            d0 -0x26 d1 -0x45
+  func_4C3809A4            d0 -0x1d d1 -0x45
+  func_4C380BF7            d0 -0x1c d1 -0x45
+  func_4C37F0A0            d0 -0x1b d1 -0x23, d0 -0x1b d1 -0x45
+  ter_tsk                  d0 -0x19 d1 -0x3f
+  func_4C38087C            d0 -0x16 d1 -0x3f
+  func_4C380A7C            d0 -0x15 d1 -0x3f
+  func_4C3803AB            d0 -17 d1 None
+  clr_flg                  d0 -0x8 d1 -0x45
+  func_4C38095A            d0 -0x7 d1 -0x45
+kn2400: 17 services call the error hooks; 16 of them are func_ placeholders
+  func_5018C440            d0 -0x8f d1 -0x21, d0 -0x8f d1 -0x3f
+  func_5018C6A1            d0 -0x8d d1 -0x3f, d0 -0x8d d1 -0x55
+  func_5018CC83            d0 -0x89 d1 -0xa
+  func_5018CB8A            d0 -61 d1 None
+  func_5018D4DE            d0 -0x3d d1 -0x45
+  func_5018CFE0            d0 -0x35 d1 -0x45
+  func_5018C7E4            d0 -0x2e d1 -0x45
+  func_5018D5EF            d0 -0x27 d1 -0x49
+  func_5018B8CA            d0 -0x26 d1 -0x45
+  func_5018DB81            d0 -0x21 d1 -0x3f, d0 -0x21 d1 -0x49
+  func_5018D879            d0 -0x1d d1 -0x45
+  func_5018DAD9            d0 -0x1c d1 -0x45
+  func_5018C315            d0 -0x1b d1 -0x23, d0 -0x1b d1 -0x45
+  func_5018D712            d0 -0x16 d1 -0x3f
+  func_5018D239            d0 -17 d1 None
+  ena_int                  d0 -0x8 d1 -0x45
+  func_5018D82D            d0 -0x7 d1 -0x45

@@ -3804,27 +3804,27 @@
 	.ascii	"\x1"
 .endm
 
-# RamTestRegion: 12-byte records (func_4C050837_entry_L4_Records, 3 records); fields, and what reads them:
+# REC_func_4C050837_entry_L4_Records: 12-byte records (func_4C050837_entry_L4_Records, 3 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   base         u32            func_4C050837_entry_L4 0x4C050840 `mov (a0), a2`
-#   +4   length       u32            func_4C050837_entry_L4 0x4C050840 `mov (4, a0), d3`
+#   +0   f0           u32            func_4C050837_entry_L4 0x4C050840 `mov (a0), a2`
+#   +4   index        u32            func_4C050837_entry_L4 0x4C050840 `mov (4, a0), d3`
 #   +8   x8           u8[4]          no reader seen
-.macro RamTestRegion base=0, length=0, x8
-	.long	\base
-	.long	\length
+.macro REC_func_4C050837_entry_L4_Records f0=0, index=0, x8
+	.long	\f0
+	.long	\index
 	.ascii	"\x8"
 .endm
 
-# RamTestByteRegion: 12-byte records (func_4C0508F7_entry_L4_Records, 1 records); fields, and what reads them:
+# REC_func_4C0508F7_entry_L4_Records: 12-byte records (func_4C0508F7_entry_L4_Records, 1 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   base         u32            func_4C0508F7_entry_L4 0x4C0508FD `mov (a1), a0`
-#   +4   length       u32            func_4C0508F7_entry_L4 0x4C0508FD `mov (4, a1), d0`
-#   +8   fail_bit     u8             func_4C0508F7_entry_L4 0x4C0508FD `movbu (a1), d1`; func_4C0508F7_entry_L34 0x4C05092D `movbu (a1), d1`
+#   +0   addr         u32            func_4C0508F7_entry_L4 0x4C0508FD `mov (a1), a0`
+#   +4   index        u32            func_4C0508F7_entry_L4 0x4C0508FD `mov (4, a1), d0`
+#   +8   f8           u8             func_4C0508F7_entry_L4 0x4C0508FD `movbu (a1), d1`; func_4C0508F7_entry_L34 0x4C05092D `movbu (a1), d1`
 #   +9   x9           u8[3]          no reader seen
-.macro RamTestByteRegion base=0, length=0, fail_bit=0, x9
-	.long	\base
-	.long	\length
-	.byte	\fail_bit
+.macro REC_func_4C0508F7_entry_L4_Records addr=0, index=0, f8=0, x9
+	.long	\addr
+	.long	\index
+	.byte	\f8
 	.ascii	"\x9"
 .endm
 
@@ -3874,56 +3874,56 @@
 	.word	\a0
 .endm
 
-# ToneTypeFeature: 39-byte records (TgPartEditLfoLoadA_Records, 14 records); fields, and what reads them:
+# REC_TgPartEditLfoLoadA_Records: 39-byte records (TgPartEditLfoLoadA_Records, 14 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   t0_a         u8             TgPartEditLfoLoadA 0x4C08D08A `movbu (a2), d1`; TgPartEditLfoLoadB 0x4C08D0E0 `movbu (a2), d2` (+3)
-#   +1   t0_b         u8             TgPartEditLfoLoadA 0x4C08D08A `movbu (1, a2), d1`; TgPartEditLfoLoadB 0x4C08D0E0 `movbu (1, a2), d0` (+1)
-#   +2   t0_flags     u8             TgPartEditLfoLoadG_entry_L3a 0x4C08D2D4 `movbu (2, a1), d1`; TgPartEditLfoLoadH_entry_L3a 0x4C08D334 `movbu (2, a1), d1`
-#   +3   t1_a         u8             TgPartEditLfoLoadB 0x4C08D0E0 `movbu (a0), d0`; TgPartEditLfoLoadD 0x4C08D196 `movbu (a0), d1`
-#   +4   t1_b         u8             TgPartEditLfoLoadB 0x4C08D0E0 `movbu (1, a0), d0`; TgPartEditLfoLoadD 0x4C08D196 `movbu (1, a0), d1`
+#   +0   f0           u8             TgPartEditLfoLoadA 0x4C08D08A `movbu (a2), d1`; TgPartEditLfoLoadB 0x4C08D0E0 `movbu (a2), d2` (+3)
+#   +1   f1           u8             TgPartEditLfoLoadA 0x4C08D08A `movbu (1, a2), d1`; TgPartEditLfoLoadB 0x4C08D0E0 `movbu (1, a2), d0` (+1)
+#   +2   flags        u8             TgPartEditLfoLoadG_entry_L3a 0x4C08D2D4 `movbu (2, a1), d1`; TgPartEditLfoLoadH_entry_L3a 0x4C08D334 `movbu (2, a1), d1`
+#   +3   f3           u8             TgPartEditLfoLoadB 0x4C08D0E0 `movbu (a0), d0`; TgPartEditLfoLoadD 0x4C08D196 `movbu (a0), d1`
+#   +4   f4           u8             TgPartEditLfoLoadB 0x4C08D0E0 `movbu (1, a0), d0`; TgPartEditLfoLoadD 0x4C08D196 `movbu (1, a0), d1`
 #   +5   x5           u8[1]          no reader seen
-#   +6   t2_a         u8             TgPartEditLfoLoadC 0x4C08D13F `movbu (a1), d1`; func_4C09950E_entry_L50 0x4C099560 `movbu (6, a0), d1`
-#   +7   t2_b         u8             TgPartEditLfoLoadC 0x4C08D13F `movbu (1, a1), d0`
-#   +8   t2_c         u8             TgPartEditLfoLoadC 0x4C08D13F `movbu (2, a1), d0`
-#   +9   t3_a         u8             TgPartEditLfoLoadF 0x4C08D244 `movbu (9, a1), d1`
-#   +10  t3_b         u8             TgPartEditLfoLoadF 0x4C08D244 `movbu (0xa, a1), d0`
-#   +11  t3_c         u8             TgPartEditLfoLoadF 0x4C08D244 `movbu (0xb, a1), d0`
-#   +12  t3_d         u8             TgPartEditLfoLoadF 0x4C08D244 `movbu (0xc, a1), d0`
-#   +13  flags        u8             func_4C099D00_L22 0x4C099D22 `movbu (0xd, a0), d0`
-#   +14  lfo_p6       s8             TgPartEditLfoLoadA 0x4C08D08A `movbu (0xe, a2), d1`; TgPartEditLfoLoadB 0x4C08D0E0 `movbu (0xe, a2), d0` (+6)
+#   +6   index        u8             TgPartEditLfoLoadC 0x4C08D13F `movbu (a1), d1`; func_4C09950E_entry_L50 0x4C099560 `movbu (6, a0), d1`
+#   +7   f7           u8             TgPartEditLfoLoadC 0x4C08D13F `movbu (1, a1), d0`
+#   +8   f8           u8             TgPartEditLfoLoadC 0x4C08D13F `movbu (2, a1), d0`
+#   +9   f9           u8             TgPartEditLfoLoadF 0x4C08D244 `movbu (9, a1), d1`
+#   +10  f10          u8             TgPartEditLfoLoadF 0x4C08D244 `movbu (0xa, a1), d0`
+#   +11  f11          u8             TgPartEditLfoLoadF 0x4C08D244 `movbu (0xb, a1), d0`
+#   +12  f12          u8             TgPartEditLfoLoadF 0x4C08D244 `movbu (0xc, a1), d0`
+#   +13  flags_       u8             func_4C099D00_L22 0x4C099D22 `movbu (0xd, a0), d0`
+#   +14  f14          s8             TgPartEditLfoLoadA 0x4C08D08A `movbu (0xe, a2), d1`; TgPartEditLfoLoadB 0x4C08D0E0 `movbu (0xe, a2), d0` (+6)
 #   +15  x15          u8[3]          no reader seen
-#   +18  lfo_p7       u8             TgPartEditLfoLoadA 0x4C08D08A `movbu (0x12, a2), d1`; TgPartEditLfoLoadB 0x4C08D0E0 `movbu (0x12, a2), d0` (+6)
-#   +19  seg0_flags   u8             TgPartEditLfoLoadG 0x4C08D298 `movbu (0x13, a1), d1`; TgPartEditLfoLoadH 0x4C08D2F8 `movbu (0x13, a1), d1`
+#   +18  f18          u8             TgPartEditLfoLoadA 0x4C08D08A `movbu (0x12, a2), d1`; TgPartEditLfoLoadB 0x4C08D0E0 `movbu (0x12, a2), d0` (+6)
+#   +19  flags__      u8             TgPartEditLfoLoadG 0x4C08D298 `movbu (0x13, a1), d1`; TgPartEditLfoLoadH 0x4C08D2F8 `movbu (0x13, a1), d1`
 #   +20  x20          u8[5]          no reader seen
-#   +25  seg1_b       u8             TgPartEditLfoLoadE 0x4C08D1EC `movbu (1, a1), d0`
-#   +26  seg1_c       u8             TgPartEditLfoLoadA 0x4C08D08A `movbu (2, a0), d1`; TgPartEditLfoLoadB 0x4C08D0E0 `movbu (2, a0), d0` (+1)
-#   +27  seg1_param   u8             TgPartEditLfoLoadA 0x4C08D08A `movbu (3, a0), d1`; TgPartEditLfoLoadC 0x4C08D13F `movbu (0x1b, a2), d0` (+1)
-#   +28  seg1_e       u8             TgPartEditLfoLoadA 0x4C08D08A `movbu (4, a0), d1`; TgPartEditLfoLoadB 0x4C08D0E0 `movbu (4, a0), d0` (+1)
+#   +25  f25          u8             TgPartEditLfoLoadE 0x4C08D1EC `movbu (1, a1), d0`
+#   +26  f26          u8             TgPartEditLfoLoadA 0x4C08D08A `movbu (2, a0), d1`; TgPartEditLfoLoadB 0x4C08D0E0 `movbu (2, a0), d0` (+1)
+#   +27  f27          u8             TgPartEditLfoLoadA 0x4C08D08A `movbu (3, a0), d1`; TgPartEditLfoLoadC 0x4C08D13F `movbu (0x1b, a2), d0` (+1)
+#   +28  f28          u8             TgPartEditLfoLoadA 0x4C08D08A `movbu (4, a0), d1`; TgPartEditLfoLoadB 0x4C08D0E0 `movbu (4, a0), d0` (+1)
 #   +29  x29          u8[10]         no reader seen
-.macro ToneTypeFeature t0_a=0, t0_b=0, t0_flags=0, t1_a=0, t1_b=0, x5, t2_a=0, t2_b=0, t2_c=0, t3_a=0, t3_b=0, t3_c=0, t3_d=0, flags=0, lfo_p6=0, x15, lfo_p7=0, seg0_flags=0, x20, seg1_b=0, seg1_c=0, seg1_param=0, seg1_e=0, x29
-	.byte	\t0_a
-	.byte	\t0_b
-	.byte	\t0_flags
-	.byte	\t1_a
-	.byte	\t1_b
-	.ascii	"\x5"
-	.byte	\t2_a
-	.byte	\t2_b
-	.byte	\t2_c
-	.byte	\t3_a
-	.byte	\t3_b
-	.byte	\t3_c
-	.byte	\t3_d
+.macro REC_TgPartEditLfoLoadA_Records f0=0, f1=0, flags=0, f3=0, f4=0, x5, index=0, f7=0, f8=0, f9=0, f10=0, f11=0, f12=0, flags_=0, f14=0, x15, f18=0, flags__=0, x20, f25=0, f26=0, f27=0, f28=0, x29
+	.byte	\f0
+	.byte	\f1
 	.byte	\flags
-	.byte	\lfo_p6
+	.byte	\f3
+	.byte	\f4
+	.ascii	"\x5"
+	.byte	\index
+	.byte	\f7
+	.byte	\f8
+	.byte	\f9
+	.byte	\f10
+	.byte	\f11
+	.byte	\f12
+	.byte	\flags_
+	.byte	\f14
 	.ascii	"\x15"
-	.byte	\lfo_p7
-	.byte	\seg0_flags
+	.byte	\f18
+	.byte	\flags__
 	.ascii	"\x20"
-	.byte	\seg1_b
-	.byte	\seg1_c
-	.byte	\seg1_param
-	.byte	\seg1_e
+	.byte	\f25
+	.byte	\f26
+	.byte	\f27
+	.byte	\f28
 	.ascii	"\x29"
 .endm
 
@@ -4793,125 +4793,125 @@
 	.long	\key
 .endm
 
-# TgVoiceRegImage: 160-byte records (func_4C094795_ArgA0, 1 records); fields, and what reads them:
+# REC_func_4C094795_ArgA0: 160-byte records (func_4C094795_ArgA0, 1 records); fields, and what reads them:
 #   (the layout func_4C094795 0x4C094795 reads through its argument a0 (passed by func_4C082DD2 0x4C082DD2 `call func_4C094795_entry, [d2,a2], 0x14`))
 #   +0   x0           u8[2]          no reader seen
-#   +2   tg_0001      u16            func_4C094795 0x4C094795 `movhu (2, a2), d1`
-#   +4   tg_0002      u16            func_4C094795 0x4C094795 `movhu (4, a2), d1`
-#   +6   tg_0003      u16            func_4C094795 0x4C094795 `movhu (6, a2), d1`
-#   +8   tg_0004      u16            func_4C094795 0x4C094795 `movhu (8, a2), d1`
+#   +2   f2           u16            func_4C094795 0x4C094795 `movhu (2, a2), d1`
+#   +4   f4           u16            func_4C094795 0x4C094795 `movhu (4, a2), d1`
+#   +6   f6           u16            func_4C094795 0x4C094795 `movhu (6, a2), d1`
+#   +8   f8           u16            func_4C094795 0x4C094795 `movhu (8, a2), d1`
 #   +10  x10          u8[2]          no reader seen
-#   +12  tg_0005      u16            func_4C094795 0x4C094795 `movhu (0xc, a2), d1`
+#   +12  f12          u16            func_4C094795 0x4C094795 `movhu (0xc, a2), d1`
 #   +14  x14          u8[2]          no reader seen
-#   +16  tg_0006      u16            func_4C094795 0x4C094795 `movhu (0x10, a2), d1`
-#   +18  tg_0007      u16            func_4C094795 0x4C094795 `movhu (0x12, a2), d1`
-#   +20  tg_0008      u16            func_4C094795 0x4C094795 `movhu (0x14, a2), d1`
+#   +16  f16          u16            func_4C094795 0x4C094795 `movhu (0x10, a2), d1`
+#   +18  f18          u16            func_4C094795 0x4C094795 `movhu (0x12, a2), d1`
+#   +20  f20          u16            func_4C094795 0x4C094795 `movhu (0x14, a2), d1`
 #   +22  x22          u8[2]          no reader seen
-#   +24  tg_0009      u16            func_4C094795 0x4C094795 `movhu (0x18, a2), d1`
+#   +24  f24          u16            func_4C094795 0x4C094795 `movhu (0x18, a2), d1`
 #   +26  x26          u8[2]          no reader seen
-#   +28  tg_000a      u16            func_4C094795 0x4C094795 `movhu (0x1c, a2), d1`
-#   +30  tg_000b      u16            func_4C094795 0x4C094795 `movhu (0x1e, a2), d1`
-#   +32  tg_000c      u16            func_4C094795 0x4C094795 `movhu (0x20, a2), d1`
+#   +28  f28          u16            func_4C094795 0x4C094795 `movhu (0x1c, a2), d1`
+#   +30  f30          u16            func_4C094795 0x4C094795 `movhu (0x1e, a2), d1`
+#   +32  f32          u16            func_4C094795 0x4C094795 `movhu (0x20, a2), d1`
 #   +34  x34          u8[2]          no reader seen
-#   +36  tg_000d      u16            func_4C094795 0x4C094795 `movhu (0x24, a2), d1`
+#   +36  f36          u16            func_4C094795 0x4C094795 `movhu (0x24, a2), d1`
 #   +38  x38          u8[2]          no reader seen
-#   +40  tg_000e      u16            func_4C094795 0x4C094795 `movhu (0x28, a2), d1`
-#   +42  tg_000f      u16            func_4C094795 0x4C094795 `movhu (0x2a, a2), d1`
-#   +44  tg_0400      u16            func_4C094795 0x4C094795 `movhu (0x2c, a2), d1`
-#   +46  tg_0401      u16            func_4C094795 0x4C094795 `movhu (0x2e, a2), d1`
-#   +48  tg_0800      u16            func_4C094795 0x4C094795 `movhu (0x30, a2), d1`
-#   +50  tg_0804      u16            func_4C094795 0x4C094795 `movhu (0x32, a2), d1`
-#   +52  tg_0808      u16            func_4C094795 0x4C094795 `movhu (0x34, a2), d1`
-#   +54  tg_080c      u16            func_4C094795 0x4C094795 `movhu (0x36, a2), d1`
-#   +56  tg_0801      u16            func_4C094795 0x4C094795 `movhu (0x38, a2), d1`
-#   +58  tg_0805      u16            func_4C094795 0x4C094795 `movhu (0x3a, a2), d1`
-#   +60  tg_0809      u16            func_4C094795 0x4C094795 `movhu (0x3c, a2), d1`
-#   +62  tg_080d      u16            func_4C094795 0x4C094795 `movhu (0x3e, a2), d1`
-#   +64  tg_1000      u32            func_4C094795 0x4C094795 `mov (0x40, a2), d1`
-#   +68  tg_1400      u32            func_4C094795 0x4C094795 `mov (0x44, a2), d1`
-#   +72  tg_1800      u32            func_4C094795 0x4C094795 `mov (0x48, a2), d1`
-#   +76  tg_1c00      u32            func_4C094795 0x4C094795 `mov (0x4c, a2), d1`
-#   +80  tg_2000      u32            func_4C094795 0x4C094795 `mov (0x50, a2), d1`
-#   +84  tg_2400      u32            func_4C094795 0x4C094795 `mov (0x54, a2), d1`
-#   +88  tg_2800      u32            func_4C094795 0x4C094795 `mov (0x58, a2), d1`
-#   +92  tg_2c00      u32            func_4C094795 0x4C094795 `mov (0x5c, a2), d1`
-#   +96  tg_3000      u32            func_4C094795 0x4C094795 `mov (0x60, a2), d1`
-#   +100 tg_4000      u16            func_4C094795 0x4C094795 `movhu (0x64, a2), d1`
+#   +40  f40          u16            func_4C094795 0x4C094795 `movhu (0x28, a2), d1`
+#   +42  f42          u16            func_4C094795 0x4C094795 `movhu (0x2a, a2), d1`
+#   +44  f44          u16            func_4C094795 0x4C094795 `movhu (0x2c, a2), d1`
+#   +46  f46          u16            func_4C094795 0x4C094795 `movhu (0x2e, a2), d1`
+#   +48  f48          u16            func_4C094795 0x4C094795 `movhu (0x30, a2), d1`
+#   +50  f50          u16            func_4C094795 0x4C094795 `movhu (0x32, a2), d1`
+#   +52  f52          u16            func_4C094795 0x4C094795 `movhu (0x34, a2), d1`
+#   +54  f54          u16            func_4C094795 0x4C094795 `movhu (0x36, a2), d1`
+#   +56  f56          u16            func_4C094795 0x4C094795 `movhu (0x38, a2), d1`
+#   +58  f58          u16            func_4C094795 0x4C094795 `movhu (0x3a, a2), d1`
+#   +60  f60          u16            func_4C094795 0x4C094795 `movhu (0x3c, a2), d1`
+#   +62  f62          u16            func_4C094795 0x4C094795 `movhu (0x3e, a2), d1`
+#   +64  f64          u32            func_4C094795 0x4C094795 `mov (0x40, a2), d1`
+#   +68  f68          u32            func_4C094795 0x4C094795 `mov (0x44, a2), d1`
+#   +72  f72          u32            func_4C094795 0x4C094795 `mov (0x48, a2), d1`
+#   +76  f76          u32            func_4C094795 0x4C094795 `mov (0x4c, a2), d1`
+#   +80  f80          u32            func_4C094795 0x4C094795 `mov (0x50, a2), d1`
+#   +84  f84          u32            func_4C094795 0x4C094795 `mov (0x54, a2), d1`
+#   +88  f88          u32            func_4C094795 0x4C094795 `mov (0x58, a2), d1`
+#   +92  f92          u32            func_4C094795 0x4C094795 `mov (0x5c, a2), d1`
+#   +96  f96          u32            func_4C094795 0x4C094795 `mov (0x60, a2), d1`
+#   +100 f100         u16            func_4C094795 0x4C094795 `movhu (0x64, a2), d1`
 #   +102 x102         u8[2]          no reader seen
-#   +104 tg_4400      u32            func_4C094795 0x4C094795 `mov (0x68, a2), d1`
-#   +108 tg_4800      u32            func_4C094795 0x4C094795 `mov (0x6c, a2), d1`
-#   +112 tg_4c00      u16            func_4C094795 0x4C094795 `movhu (0x70, a2), d1`
+#   +104 f104         u32            func_4C094795 0x4C094795 `mov (0x68, a2), d1`
+#   +108 f108         u32            func_4C094795 0x4C094795 `mov (0x6c, a2), d1`
+#   +112 f112         u16            func_4C094795 0x4C094795 `movhu (0x70, a2), d1`
 #   +114 x114         u8[2]          no reader seen
 #   +116 f116         u32            func_4C094795 0x4C094795 `mov (0x74, a2), d1`
-#   +120 tg_5400      u32            func_4C094795 0x4C094795 `mov (0x78, a2), d1`
-#   +124 pitch_hi     u32            func_4C094795 0x4C094795 `mov (0x7c, a2), d0`
-#   +128 tg_5c00      u32            func_4C094795 0x4C094795 `mov (0x80, a2), d1`
-#   +132 tg_6000      u32            func_4C094795 0x4C094795 `mov (0x84, a2), d1`
-#   +136 tg_6400      u32            func_4C094795 0x4C094795 `mov (0x88, a2), d1`
-#   +140 tg_8000      u32            func_4C094795 0x4C094795 `mov (0x8c, a2), d1`
-#   +144 tg_8400      u32            func_4C094795 0x4C094795 `mov (0x90, a2), d1`
-#   +148 tg_8800      u32            func_4C094795 0x4C094795 `mov (0x94, a2), d1`
-#   +152 tg_8c00      u32            func_4C094795 0x4C094795 `mov (0x98, a2), d1`
-#   +156 tg_9000      u32            func_4C094795 0x4C094795 `mov (0x9c, a2), d1`
-.macro TgVoiceRegImage x0, tg_0001=0, tg_0002=0, tg_0003=0, tg_0004=0, x10, tg_0005=0, x14, tg_0006=0, tg_0007=0, tg_0008=0, x22, tg_0009=0, x26, tg_000a=0, tg_000b=0, tg_000c=0, x34, tg_000d=0, x38, tg_000e=0, tg_000f=0, tg_0400=0, tg_0401=0, tg_0800=0, tg_0804=0, tg_0808=0, tg_080c=0, tg_0801=0, tg_0805=0, tg_0809=0, tg_080d=0, tg_1000=0, tg_1400=0, tg_1800=0, tg_1c00=0, tg_2000=0, tg_2400=0, tg_2800=0, tg_2c00=0, tg_3000=0, tg_4000=0, x102, tg_4400=0, tg_4800=0, tg_4c00=0, x114, f116=0, tg_5400=0, pitch_hi=0, tg_5c00=0, tg_6000=0, tg_6400=0, tg_8000=0, tg_8400=0, tg_8800=0, tg_8c00=0, tg_9000=0
+#   +120 f120         u32            func_4C094795 0x4C094795 `mov (0x78, a2), d1`
+#   +124 flags        u32            func_4C094795 0x4C094795 `mov (0x7c, a2), d0`
+#   +128 f128         u32            func_4C094795 0x4C094795 `mov (0x80, a2), d1`
+#   +132 f132         u32            func_4C094795 0x4C094795 `mov (0x84, a2), d1`
+#   +136 f136         u32            func_4C094795 0x4C094795 `mov (0x88, a2), d1`
+#   +140 f140         u32            func_4C094795 0x4C094795 `mov (0x8c, a2), d1`
+#   +144 f144         u32            func_4C094795 0x4C094795 `mov (0x90, a2), d1`
+#   +148 f148         u32            func_4C094795 0x4C094795 `mov (0x94, a2), d1`
+#   +152 f152         u32            func_4C094795 0x4C094795 `mov (0x98, a2), d1`
+#   +156 f156         u32            func_4C094795 0x4C094795 `mov (0x9c, a2), d1`
+.macro REC_func_4C094795_ArgA0 x0, f2=0, f4=0, f6=0, f8=0, x10, f12=0, x14, f16=0, f18=0, f20=0, x22, f24=0, x26, f28=0, f30=0, f32=0, x34, f36=0, x38, f40=0, f42=0, f44=0, f46=0, f48=0, f50=0, f52=0, f54=0, f56=0, f58=0, f60=0, f62=0, f64=0, f68=0, f72=0, f76=0, f80=0, f84=0, f88=0, f92=0, f96=0, f100=0, x102, f104=0, f108=0, f112=0, x114, f116=0, f120=0, flags=0, f128=0, f132=0, f136=0, f140=0, f144=0, f148=0, f152=0, f156=0
 	.ascii	"\x0"
-	.word	\tg_0001
-	.word	\tg_0002
-	.word	\tg_0003
-	.word	\tg_0004
+	.word	\f2
+	.word	\f4
+	.word	\f6
+	.word	\f8
 	.ascii	"\x10"
-	.word	\tg_0005
+	.word	\f12
 	.ascii	"\x14"
-	.word	\tg_0006
-	.word	\tg_0007
-	.word	\tg_0008
+	.word	\f16
+	.word	\f18
+	.word	\f20
 	.ascii	"\x22"
-	.word	\tg_0009
+	.word	\f24
 	.ascii	"\x26"
-	.word	\tg_000a
-	.word	\tg_000b
-	.word	\tg_000c
+	.word	\f28
+	.word	\f30
+	.word	\f32
 	.ascii	"\x34"
-	.word	\tg_000d
+	.word	\f36
 	.ascii	"\x38"
-	.word	\tg_000e
-	.word	\tg_000f
-	.word	\tg_0400
-	.word	\tg_0401
-	.word	\tg_0800
-	.word	\tg_0804
-	.word	\tg_0808
-	.word	\tg_080c
-	.word	\tg_0801
-	.word	\tg_0805
-	.word	\tg_0809
-	.word	\tg_080d
-	.long	\tg_1000
-	.long	\tg_1400
-	.long	\tg_1800
-	.long	\tg_1c00
-	.long	\tg_2000
-	.long	\tg_2400
-	.long	\tg_2800
-	.long	\tg_2c00
-	.long	\tg_3000
-	.word	\tg_4000
+	.word	\f40
+	.word	\f42
+	.word	\f44
+	.word	\f46
+	.word	\f48
+	.word	\f50
+	.word	\f52
+	.word	\f54
+	.word	\f56
+	.word	\f58
+	.word	\f60
+	.word	\f62
+	.long	\f64
+	.long	\f68
+	.long	\f72
+	.long	\f76
+	.long	\f80
+	.long	\f84
+	.long	\f88
+	.long	\f92
+	.long	\f96
+	.word	\f100
 	.ascii	"\x102"
-	.long	\tg_4400
-	.long	\tg_4800
-	.word	\tg_4c00
+	.long	\f104
+	.long	\f108
+	.word	\f112
 	.ascii	"\x114"
 	.long	\f116
-	.long	\tg_5400
-	.long	\pitch_hi
-	.long	\tg_5c00
-	.long	\tg_6000
-	.long	\tg_6400
-	.long	\tg_8000
-	.long	\tg_8400
-	.long	\tg_8800
-	.long	\tg_8c00
-	.long	\tg_9000
+	.long	\f120
+	.long	\flags
+	.long	\f128
+	.long	\f132
+	.long	\f136
+	.long	\f140
+	.long	\f144
+	.long	\f148
+	.long	\f152
+	.long	\f156
 .endm
 
 # REC_func_4C0959F2_ArgA0: 10-byte records (func_4C0959F2_ArgA0, 1 records); fields, and what reads them:

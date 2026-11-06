@@ -19456,14 +19456,14 @@ Str_rb_10:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_10
 
 func_4870CAE5_Table_2:	# 8 x REC_func_4870CAE5_Table_2 (8 bytes each); read by func_4870CAE5_entry_L170 0x4870CC5B `movbu (d0, a2), d0`; func_4870CAE5_entry_L1a8 0x4870CC93 `mov (4, a0), a1`; func_4870CAE5_entry_L216 0x4870CD01 `movbu (d0, a3), d0` (+1)
-	REC_func_4870CAE5_Table_2	index=6, x1="\x00\x00\x00", proc=loc_486D0D39
-	REC_func_4870CAE5_Table_2	index=4, x1="\x00\x00\x00", proc=loc_486D0D65
+	REC_func_4870CAE5_Table_2	CheckSdSavePM3Bank_d0=6, x1="\x00\x00\x00", proc=loc_486D0D39
+	REC_func_4870CAE5_Table_2	CheckSdSavePM3Bank_d0=4, x1="\x00\x00\x00", proc=loc_486D0D65
 	REC_func_4870CAE5_Table_2	x1="\x00\x00\x00", proc=loc_486D0D02
-	REC_func_4870CAE5_Table_2	index=1, x1="\x00\x00\x00", proc=loc_486D0D0D
-	REC_func_4870CAE5_Table_2	index=5, x1="\x00\x00\x00", proc=loc_486D0D5A
-	REC_func_4870CAE5_Table_2	index=3, x1="\x00\x00\x00", proc=loc_486D0D4F
-	REC_func_4870CAE5_Table_2	index=2, x1="\x00\x00\x00", proc=loc_486D0D44
-	REC_func_4870CAE5_Table_2	index=7, x1="\x00\x00\x00", proc=loc_486D0D18
+	REC_func_4870CAE5_Table_2	CheckSdSavePM3Bank_d0=1, x1="\x00\x00\x00", proc=loc_486D0D0D
+	REC_func_4870CAE5_Table_2	CheckSdSavePM3Bank_d0=5, x1="\x00\x00\x00", proc=loc_486D0D5A
+	REC_func_4870CAE5_Table_2	CheckSdSavePM3Bank_d0=3, x1="\x00\x00\x00", proc=loc_486D0D4F
+	REC_func_4870CAE5_Table_2	CheckSdSavePM3Bank_d0=2, x1="\x00\x00\x00", proc=loc_486D0D44
+	REC_func_4870CAE5_Table_2	CheckSdSavePM3Bank_d0=7, x1="\x00\x00\x00", proc=loc_486D0D18
 
 Str_empty_450:	.asciz "\\"
 	.align	4, 0xFF	# pad after Str_empty_450

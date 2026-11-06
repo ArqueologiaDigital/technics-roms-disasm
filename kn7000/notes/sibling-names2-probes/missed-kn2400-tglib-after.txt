@@ -1,0 +1,10 @@
+kn2400: 544 KN7000 941 routine names in 0x4C000000:0x4C03DF30
+| class                                        | names |
+|----------------------------------------------|-------|
+| B has the name, in --b-range                 |   424 |
+| no strict-equal body in B                    |    76 |
+| kept<8, A twins 3+, B open 3+                |    30 |
+| kept>=8, A twins 3+, B open 2                |     6 |
+| strict-equal bodies in B all named (kept>=8) |     6 |
+| A name not at a routine start                |     1 |
+| kept>=8, A twins 2, B open 1                 |     1 |

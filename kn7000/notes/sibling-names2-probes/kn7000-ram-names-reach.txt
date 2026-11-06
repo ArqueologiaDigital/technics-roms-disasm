@@ -1,0 +1,12 @@
+# KN7000 941 RAM names by use (trial)
+
+- RAM addresses referenced: 3756, operands 25533
+- accessor: 34 addresses, 185 operands
+- owner: 697 addresses, 3087 operands
+- not named:
+  -   2201 several users
+  -    794 one user, a func_ placeholder
+  -      2 accessor of an address a symbol file names already
+kn6000 941 accessor, sibling named: 17, 941 accessor, sibling unnamed: 2, 941 owner, sibling named: 280, 941 owner, sibling unnamed: 12
+kn6500 941 accessor, sibling named: 17, 941 accessor, sibling unnamed: 3, 941 owner, sibling named: 279, 941 owner, sibling unnamed: 12
+kn2400 941 accessor, sibling named: 29, 941 accessor, sibling unnamed: 3, 941 owner, sibling named: 377, 941 owner, sibling unnamed: 34

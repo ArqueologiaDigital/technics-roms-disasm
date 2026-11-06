@@ -2385,1321 +2385,1321 @@ Str_TT_DEMORUN:	.asciz "TT_DEMORUN"
 	.align	4, 0xFF	# pad after Str_TT_DEMORUN
 Str_New_Sound_Generator_With_Multi_DSP_0dCre:	.asciz "New Sound Generator With Multi DSP~0dCreates Dynamic Realism"
 Str_Neuer_Klanggenerator_mit_Multi_DSP_Effek:	.asciz "Neuer Klanggenerator mit Multi DSP-Effekt~0df\xFCr dynamische, naturgetreue Kl\xE4nge"
-Str_empty_510:	.asciz " "
+Str_empty_514:	.asciz " "
 Str_El_nuevo_generador_de_sonido_con_procesa:	.asciz "El nuevo generador de sonido con procesador de se\xF1ales digitales (DSP) m\xFAltiple crea un realismo din\xE1mico"
-Str_empty_509:	.asciz "="
-Str_empty_508:	.asciz "="
-Str_empty_507:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_507
+Str_empty_513:	.asciz "="
+Str_empty_512:	.asciz "="
+Str_empty_511:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_511
 
 ptrs_4C27C538:
 	.long	Str_New_Sound_Generator_With_Multi_DSP_0dCre
 	.long	Str_Neuer_Klanggenerator_mit_Multi_DSP_Effek
-	.long	Str_empty_510
+	.long	Str_empty_514
 	.long	Str_El_nuevo_generador_de_sonido_con_procesa
-	.long	Str_empty_509
-	.long	Str_empty_508
-	.long	Str_empty_507
+	.long	Str_empty_513
+	.long	Str_empty_512
+	.long	Str_empty_511
 
-Str_empty_506:	.asciz " "
-Str_empty_505:	.asciz " "
+Str_empty_510:	.asciz " "
+Str_empty_509:	.asciz " "
 Str_Un_nouveau_g_n_rateur_sonore_dot_d_un_mu:	.asciz "Un nouveau g\xE9n\xE9rateur sonore dot\xE9 d\x92un multi \x96 effet num\xE9rique DSP pour des sonorit\xE9s dynamiques et authentiques"
-Str_empty_504:	.asciz " "
-Str_empty_503:	.asciz "="
-Str_empty_502:	.asciz "="
-Str_empty_501:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_501
+Str_empty_508:	.asciz " "
+Str_empty_507:	.asciz "="
+Str_empty_506:	.asciz "="
+Str_empty_505:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_505
 
 ptrs_4C27C5D4:
+	.long	Str_empty_510
+	.long	Str_empty_509
+	.long	Str_Un_nouveau_g_n_rateur_sonore_dot_d_un_mu
+	.long	Str_empty_508
+	.long	Str_empty_507
 	.long	Str_empty_506
 	.long	Str_empty_505
-	.long	Str_Un_nouveau_g_n_rateur_sonore_dot_d_un_mu
-	.long	Str_empty_504
-	.long	Str_empty_503
-	.long	Str_empty_502
-	.long	Str_empty_501
 
 Str_High_Power_Speaker_System_And_Bass_Port:	.asciz "High Power Speaker System And Bass Port For Pure Clarity"
 Str_Hochleistungs_Verst_rkersystem_und_ein_B:	.asciz "Hochleistungs-Verst\xE4rkersystem und ein Bass Port garantieren eine optimale Klangwiedergabe"
 Str_Un_amplification_sur_puissante_avec_Bass:	.asciz "Un amplification sur \x96 puissante avec Bass Reflex pour un reproduction sonore parfaite"
 Str_Sistema_de_altavoces_de_alta_potencia_y:	.asciz "Sistema de altavoces de alta potencia y puerto de bajos, para lograr claridad y pureza"
-Str_empty_500:	.asciz "="
-Str_empty_499:	.asciz "="
-Str_empty_498:	.asciz "="
+Str_empty_504:	.asciz "="
+Str_empty_503:	.asciz "="
+Str_empty_502:	.asciz "="
 
 ptrs_4C27C738:
 	.long	Str_High_Power_Speaker_System_And_Bass_Port
 	.long	Str_Hochleistungs_Verst_rkersystem_und_ein_B
 	.long	Str_Un_amplification_sur_puissante_avec_Bass
 	.long	Str_Sistema_de_altavoces_de_alta_potencia_y
-	.long	Str_empty_500
-	.long	Str_empty_499
-	.long	Str_empty_498
+	.long	Str_empty_504
+	.long	Str_empty_503
+	.long	Str_empty_502
 
 Str_NX_Sound_For_Great_Software_Compatibilit:	.asciz "NX Sound For Great Software Compatibility"
 Str_NX_System_f_r_gr_te_Software_Kompatibili:	.asciz "NX System f\xFCr gr\xF6\xDFte Software-Kompatibilit\xE4t"
 Str_Un_g_n_rateur_sonore_NX_pour_une_totale:	.asciz "Un g\xE9n\xE9rateur sonore NX pour une totale compatibilit\xE9"
 Str_Sonido_NX_con_mayor_compatibilidad_de_so:	.asciz "Sonido NX con mayor compatibilidad de software"
-Str_empty_497:	.asciz "="
-Str_empty_496:	.asciz "="
-Str_empty_495:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_495
+Str_empty_501:	.asciz "="
+Str_empty_500:	.asciz "="
+Str_empty_499:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_499
 
 ptrs_4C27C818:
 	.long	Str_NX_Sound_For_Great_Software_Compatibilit
 	.long	Str_NX_System_f_r_gr_te_Software_Kompatibili
 	.long	Str_Un_g_n_rateur_sonore_NX_pour_une_totale
 	.long	Str_Sonido_NX_con_mayor_compatibilidad_de_so
-	.long	Str_empty_497
-	.long	Str_empty_496
-	.long	Str_empty_495
+	.long	Str_empty_501
+	.long	Str_empty_500
+	.long	Str_empty_499
 
 Str_New_Accompaniment_System_Provides_Smooth:	.asciz "New Accompaniment System Provides Smooth Grooves"
 Str_Neues_Begleitautomatiksystem_f_r_noch_me:	.asciz "Neues Begleitautomatiksystem f\xFCr noch mehr Musikalit\xE4t!"
 Str_Le_nouveau_dispositif_d_accompagnement_v:	.asciz "Le nouveau dispositif d'accompagnement vous apporte de v\xE9ritables grooves"
 Str_Nuevo_sistema_de_acompa_amiento_que_gene:	.asciz "Nuevo sistema de acompa\xF1amiento que genera ritmos atractivos"
-Str_empty_494:	.asciz "="
-Str_empty_493:	.asciz "="
-Str_empty_492:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_492
+Str_empty_498:	.asciz "="
+Str_empty_497:	.asciz "="
+Str_empty_496:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_496
 
 ptrs_4C27C92C:
 	.long	Str_New_Accompaniment_System_Provides_Smooth
 	.long	Str_Neues_Begleitautomatiksystem_f_r_noch_me
 	.long	Str_Le_nouveau_dispositif_d_accompagnement_v
 	.long	Str_Nuevo_sistema_de_acompa_amiento_que_gene
-	.long	Str_empty_494
-	.long	Str_empty_493
-	.long	Str_empty_492
+	.long	Str_empty_498
+	.long	Str_empty_497
+	.long	Str_empty_496
 
 Str_1080_Music_Styles_To_Fit_Any_Kind_Of_Per:	.asciz "1080 Music Styles To Fit Any Kind Of Performance"
 Str_1080_Music_Styles_passend_f_r_nahezu_jed:	.asciz "1080 Music Styles passend f\xFCr nahezu jede musikalische Stilrichtung"
 Str_1080_styles_d_accompagnement_pour_tout_j:	.asciz "1080 styles d\x92accompagnement pour tout jouer"
 Str_1080_estilos_musicales_0d_adaptables_a_t:	.asciz "1080 estilos musicales,~0d adaptables a todo tipo de ejecuci\xF3n"
-Str_empty_491:	.asciz "="
-Str_empty_490:	.asciz "="
-Str_empty_489:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_489
+Str_empty_495:	.asciz "="
+Str_empty_494:	.asciz "="
+Str_empty_493:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_493
 
 ptrs_4C27CA30:
 	.long	Str_1080_Music_Styles_To_Fit_Any_Kind_Of_Per
 	.long	Str_1080_Music_Styles_passend_f_r_nahezu_jed
 	.long	Str_1080_styles_d_accompagnement_pour_tout_j
 	.long	Str_1080_estilos_musicales_0d_adaptables_a_t
-	.long	Str_empty_491
-	.long	Str_empty_490
-	.long	Str_empty_489
+	.long	Str_empty_495
+	.long	Str_empty_494
+	.long	Str_empty_493
 
 Str_Load_Almost_Any_Technics_SMF_0dAnd_Other:	.asciz "Load Almost Any Technics, SMF~0dAnd Other Keyboard Software"
 Str_Laden_Sie_nahezu_jede_Technics_SMF_0dund:	.asciz "Laden Sie nahezu jede Technics-, SMF-~0dund andere Keyboardsoftware"
 Str_Il_peut_utiliser_la_plupart_des_s_quence:	.asciz "Il peut utiliser la plupart des s\xE9quences ou styles enregistr\xE9s sous les formats Technics, SMF ou autres\x85"
 Str_Carga_casi_cualquier_software_de_teclado:	.asciz "Carga casi cualquier software de teclado Technics,~0d SMF y otros"
-Str_empty_488:	.asciz "="
-Str_empty_487:	.asciz "="
-Str_empty_486:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_486
+Str_empty_492:	.asciz "="
+Str_empty_491:	.asciz "="
+Str_empty_490:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_490
 
 ptrs_4C27CB80:
 	.long	Str_Load_Almost_Any_Technics_SMF_0dAnd_Other
 	.long	Str_Laden_Sie_nahezu_jede_Technics_SMF_0dund
 	.long	Str_Il_peut_utiliser_la_plupart_des_s_quence
 	.long	Str_Carga_casi_cualquier_software_de_teclado
-	.long	Str_empty_488
-	.long	Str_empty_487
-	.long	Str_empty_486
+	.long	Str_empty_492
+	.long	Str_empty_491
+	.long	Str_empty_490
 
 Str_Wide_Screen_Color_LCD_Is_The_Key_To_Ease:	.asciz "Wide Screen Color LCD Is The Key To Ease Of Use"
 Str_Breites_Farbdisplay_als_Schl_ssel_zu_ein:	.asciz "Breites Farbdisplay als Schl\xFCssel zu einem hohen Bedienkomfort"
 Str_Son_grand_cran_LCD_couleur_garanti_sa_fa:	.asciz "Son grand \xE9cran LCD couleur garanti sa facilit\xE9 d\x92utilisation"
 Str_La_amplia_pantalla_LCD_color_es_la_clave:	.asciz "La amplia pantalla LCD color es la clave de su facilidad de uso"
-Str_empty_485:	.asciz "="
-Str_empty_484:	.asciz "="
-Str_empty_483:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_483
+Str_empty_489:	.asciz "="
+Str_empty_488:	.asciz "="
+Str_empty_487:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_487
 
 ptrs_4C27CC90:
 	.long	Str_Wide_Screen_Color_LCD_Is_The_Key_To_Ease
 	.long	Str_Breites_Farbdisplay_als_Schl_ssel_zu_ein
 	.long	Str_Son_grand_cran_LCD_couleur_garanti_sa_fa
 	.long	Str_La_amplia_pantalla_LCD_color_es_la_clave
-	.long	Str_empty_485
-	.long	Str_empty_484
-	.long	Str_empty_483
+	.long	Str_empty_489
+	.long	Str_empty_488
+	.long	Str_empty_487
 
 Str_Intuitive_Functions_Help_Create_Music_0d:	.asciz "Intuitive Functions Help Create Music~0dThe Way You Want It"
 Str_Intuitive_Funktionen_verhelfen_Ihnen_0dd:	.asciz "Intuitive Funktionen verhelfen Ihnen,~0ddie Musik ganz nach Ihren W\xFCnschen zu kreieren"
 Str_Une_fonction_d_aide_intuitive_vous_assis:	.asciz "Une fonction d\x92aide intuitive, vous assiste pour vous permettre de cr\xE9er votre musique comme vous le d\xE9sirez"
 Str_Las_funciones_intuitivas_ayudan_a_crear:	.asciz "Las funciones intuitivas ayudan a crear la m\xFAsica como~0d a usted le gusta"
-Str_empty_482:	.asciz "="
-Str_empty_481:	.asciz "="
-Str_empty_480:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_480
+Str_empty_486:	.asciz "="
+Str_empty_485:	.asciz "="
+Str_empty_484:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_484
 
 ptrs_4C27CE00:
 	.long	Str_Intuitive_Functions_Help_Create_Music_0d
 	.long	Str_Intuitive_Funktionen_verhelfen_Ihnen_0dd
 	.long	Str_Une_fonction_d_aide_intuitive_vous_assis
 	.long	Str_Las_funciones_intuitivas_ayudan_a_crear
-	.long	Str_empty_482
-	.long	Str_empty_481
-	.long	Str_empty_480
+	.long	Str_empty_486
+	.long	Str_empty_485
+	.long	Str_empty_484
 
 Str_Customize_The_KN6500_To_Your_Needs:	.asciz "Customize The KN6500 To Your Needs"
 Str_Richten_Sie_das_KN6500_ganz_individuell:	.asciz "Richten Sie das KN6500 ganz individuell nach Ihren Bed\xFCrfnissen ein"
 Str_Personnalisez_votre_KN6500_suivant_vos_b:	.asciz "Personnalisez votre KN6500 suivant vos besoins"
 Str_Personalice_el_procesador_KN6500_seg_n_s:	.asciz "Personalice el procesador KN6500 seg\xFAn sus necesidades"
-Str_empty_479:	.asciz "="
-Str_empty_478:	.asciz "="
-Str_empty_477:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_477
+Str_empty_483:	.asciz "="
+Str_empty_482:	.asciz "="
+Str_empty_481:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_481
 
 ptrs_4C27CEF0:
 	.long	Str_Customize_The_KN6500_To_Your_Needs
 	.long	Str_Richten_Sie_das_KN6500_ganz_individuell
 	.long	Str_Personnalisez_votre_KN6500_suivant_vos_b
 	.long	Str_Personalice_el_procesador_KN6500_seg_n_s
-	.long	Str_empty_479
-	.long	Str_empty_478
-	.long	Str_empty_477
+	.long	Str_empty_483
+	.long	Str_empty_482
+	.long	Str_empty_481
 
 Str_Learn_From_The_Help_Function:	.asciz "Learn From The Help Function"
 Str_Die_Help_Funktion_hilft_Ihnen_beim_Kenne:	.asciz "Die Help-Funktion hilft Ihnen beim Kennenlernen des Keyboards"
 Str_La_fonction_Help_vous_enseigne_comment_u:	.asciz "La fonction \xAB\xA0Help\xA0\xBB vous enseigne comment utiliser votre clavier"
 Str_Aprenda_con_la_funci_n_de_ayuda:	.asciz "Aprenda con la funci\xF3n de ayuda"
-Str_empty_476:	.asciz "="
-Str_empty_475:	.asciz "="
-Str_empty_474:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_474
+Str_empty_480:	.asciz "="
+Str_empty_479:	.asciz "="
+Str_empty_478:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_478
 
 ptrs_4C27CFD0:
 	.long	Str_Learn_From_The_Help_Function
 	.long	Str_Die_Help_Funktion_hilft_Ihnen_beim_Kenne
 	.long	Str_La_fonction_Help_vous_enseigne_comment_u
 	.long	Str_Aprenda_con_la_funci_n_de_ayuda
-	.long	Str_empty_476
-	.long	Str_empty_475
-	.long	Str_empty_474
+	.long	Str_empty_480
+	.long	Str_empty_479
+	.long	Str_empty_478
 
 Str_Special_Woofer_Bass_Port_0dBring_Hi_Fi_Q:	.asciz "Special Woofer & Bass Port~0dBring Hi-Fi Quality Sound To Life!"
 Str_Spezielle_Basslautsprecher_und_der_Bass:	.asciz "Spezielle Basslautsprecher und der Bass Port liefern Hi-Fi Sound Qualit\xE4t!"
 Str_Un_haut_parleur_de_basse_et_un_syst_me_B:	.asciz "Un haut parleur de basse et un syst\xE8me Bass Reflex qui donnent vie \x0B\xE0 une reproduction sonore de qualit\xE9 professionnelle!"
 Str_Puerto_especial_para_altavoces_de_graves:	.asciz "\xA1Puerto especial para altavoces de graves y bajos que da vida al sonido, con calidad y alta fidelidad!"
-Str_empty_473:	.asciz "="
-Str_empty_472:	.asciz "="
-Str_empty_471:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_471
+Str_empty_477:	.asciz "="
+Str_empty_476:	.asciz "="
+Str_empty_475:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_475
 
 ptrs_4C27D160:
 	.long	Str_Special_Woofer_Bass_Port_0dBring_Hi_Fi_Q
 	.long	Str_Spezielle_Basslautsprecher_und_der_Bass
 	.long	Str_Un_haut_parleur_de_basse_et_un_syst_me_B
 	.long	Str_Puerto_especial_para_altavoces_de_graves
-	.long	Str_empty_473
-	.long	Str_empty_472
-	.long	Str_empty_471
+	.long	Str_empty_477
+	.long	Str_empty_476
+	.long	Str_empty_475
 
 Str_Create_The_Best_Sounds_Using_Versatile_M:	.asciz "Create The Best Sounds Using Versatile Multi DSP!"
 Str_Erleben_Sie_beste_Soundqualit_t_mit_dem:	.asciz "Erleben Sie beste Soundqualit\xE4t mit dem Einsatz vielseitiger Multi DSP-Effekte!"
 Str_Gr_ce_au_multi_effet_num_rique_DSP_vous:	.asciz "Gr\xE2ce au multi \x96 effet num\xE9rique DSP vous disposez de sonorit\xE9s authentiques\xA0!"
 Str_Cree_los_mejores_sonidos_con_la_versatil:	.asciz "\xA1Cree los mejores sonidos, con la versatilidad del procesador DSP m\xFAltiple!"
-Str_empty_470:	.asciz "="
-Str_empty_469:	.asciz "="
-Str_empty_468:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_468
+Str_empty_474:	.asciz "="
+Str_empty_473:	.asciz "="
+Str_empty_472:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_472
 
 ptrs_4C27D2A0:
 	.long	Str_Create_The_Best_Sounds_Using_Versatile_M
 	.long	Str_Erleben_Sie_beste_Soundqualit_t_mit_dem
 	.long	Str_Gr_ce_au_multi_effet_num_rique_DSP_vous
 	.long	Str_Cree_los_mejores_sonidos_con_la_versatil
-	.long	Str_empty_470
-	.long	Str_empty_469
-	.long	Str_empty_468
+	.long	Str_empty_474
+	.long	Str_empty_473
+	.long	Str_empty_472
 
 Str_Hear_The_Difference_DSP_Effects_Can_Make:	.asciz "Hear The Difference DSP Effects Can Make."
 Str_H_ren_Sie_den_Unterschied_den_DSP_Effekt:	.asciz "H\xF6ren Sie den Unterschied, den DSP Effekte ausmachen."
 Str_Ecoutez_tout_ce_que_ce_DSP_peut_vous_off:	.asciz "Ecoutez tout ce que ce DSP peut vous offrir."
 Str_Oiga_la_diferencia_que_s_lo_los_efectos:	.asciz "Oiga la diferencia que s\xF3lo los efectos de un procesador DSP pueden crear."
-Str_empty_467:	.asciz "="
-Str_empty_466:	.asciz "="
-Str_empty_465:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_465
+Str_empty_471:	.asciz "="
+Str_empty_470:	.asciz "="
+Str_empty_469:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_469
 
 ptrs_4C27D39C:
 	.long	Str_Hear_The_Difference_DSP_Effects_Can_Make
 	.long	Str_H_ren_Sie_den_Unterschied_den_DSP_Effekt
 	.long	Str_Ecoutez_tout_ce_que_ce_DSP_peut_vous_off
 	.long	Str_Oiga_la_diferencia_que_s_lo_los_efectos
-	.long	Str_empty_467
-	.long	Str_empty_466
-	.long	Str_empty_465
+	.long	Str_empty_471
+	.long	Str_empty_470
+	.long	Str_empty_469
 
 Str_Here_s_An_Electric_Guitar_Sound_0dWithou:	.asciz "Here's An Electric Guitar Sound~0dWithout DSP Effect."
 Str_Hier_klingt_ein_E_Gitarren_Klang_ohne_DS:	.asciz "Hier klingt ein E-Gitarren-Klang ohne DSP-Effekt."
 Str_Voici_une_sonorit_de_guitare_sans_effet:	.asciz "Voici une sonorit\xE9 de guitare, sans effet."
 Str_ste_es_un_sonido_de_guitarra_el_ctrica_s:	.asciz "\xC9ste es un sonido de guitarra el\xE9ctrica sin efecto DSP."
-Str_empty_464:	.asciz "="
-Str_empty_463:	.asciz "="
-Str_empty_462:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_462
+Str_empty_468:	.asciz "="
+Str_empty_467:	.asciz "="
+Str_empty_466:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_466
 
 ptrs_4C27D48C:
 	.long	Str_Here_s_An_Electric_Guitar_Sound_0dWithou
 	.long	Str_Hier_klingt_ein_E_Gitarren_Klang_ohne_DS
 	.long	Str_Voici_une_sonorit_de_guitare_sans_effet
 	.long	Str_ste_es_un_sonido_de_guitarra_el_ctrica_s
-	.long	Str_empty_464
-	.long	Str_empty_463
-	.long	Str_empty_462
+	.long	Str_empty_468
+	.long	Str_empty_467
+	.long	Str_empty_466
 
 Str_Sounds_Great:	.asciz "Sounds Great!"
 Str_Der_klingt_bereits_sehr_gut:	.asciz "Der klingt bereits sehr gut!"
 Str_Superbe:	.asciz "Superbe\xA0!"
 Str_S_que_suena_bien:	.asciz "\xA1S\xED que suena bien!"
-Str_empty_461:	.asciz "="
-Str_empty_460:	.asciz "="
-Str_empty_459:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_459
+Str_empty_465:	.asciz "="
+Str_empty_464:	.asciz "="
+Str_empty_463:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_463
 
 ptrs_4C27D4F8:
 	.long	Str_Sounds_Great
 	.long	Str_Der_klingt_bereits_sehr_gut
 	.long	Str_Superbe
 	.long	Str_S_que_suena_bien
-	.long	Str_empty_461
-	.long	Str_empty_460
-	.long	Str_empty_459
+	.long	Str_empty_465
+	.long	Str_empty_464
+	.long	Str_empty_463
 
 Str_Now_Hear_The_Same_Sound_0dWith_DSP_Wah_W:	.asciz "Now Hear The Same Sound~0dWith DSP Wah Wah!"
 Str_Jetzt_h_ren_Sie_denselben_Klang_mit_dem:	.asciz "Jetzt h\xF6ren Sie denselben Klang mit dem DSP Wah Wah!"
 Str_Maintenant_coutes_la_m_me_sonorit_avec_l:	.asciz "Maintenant, \xE9coutes la m\xEAme sonorit\xE9 avec l\x92effet~0d\xAB\xA0Wah Wah\xA0\xBB du DSP."
 Str_Oiga_ahora_el_mismo_sonido_con_wah_wah_D:	.asciz "Oiga ahora el mismo sonido con wah-wah DSP."
-Str_empty_458:	.asciz "="
-Str_empty_457:	.asciz "="
-Str_empty_456:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_456
+Str_empty_462:	.asciz "="
+Str_empty_461:	.asciz "="
+Str_empty_460:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_460
 
 ptrs_4C27D5F0:
 	.long	Str_Now_Hear_The_Same_Sound_0dWith_DSP_Wah_W
 	.long	Str_Jetzt_h_ren_Sie_denselben_Klang_mit_dem
 	.long	Str_Maintenant_coutes_la_m_me_sonorit_avec_l
 	.long	Str_Oiga_ahora_el_mismo_sonido_con_wah_wah_D
-	.long	Str_empty_458
-	.long	Str_empty_457
-	.long	Str_empty_456
+	.long	Str_empty_462
+	.long	Str_empty_461
+	.long	Str_empty_460
 
 Str_Great_Brass_Sounds_0dCut_Through_The_Mix:	.asciz "Great Brass Sounds~0dCut Through The Mix~0dWhen You Use DSP Exciter!"
 Str_Gro_artige_Bl_ser_Kl_nge_bereichern_das:	.asciz "Gro\xDFartige Bl\xE4ser-Kl\xE4nge bereichern das Klangbild, wenn Sie den DSP Exciter~0d dazu schalten."
 Str_Les_gros_sons_de_cuivre_se_d_tachent_enc:	.asciz "Les gros sons de cuivre se d\xE9tachent encore mieux du mixage g\xE9n\xE9ral lorsque vous leur appliquez l\xA0\x91effet~0d\xAB\xA0Exciter\xA0\xBB du DSP\xA0!"
 Str_Los_excelentes_sonidos_de_bronces_del_me:	.asciz "\xA1Los excelentes sonidos de bronces del mezclador surgen brillantes con el excitador DSP!"
-Str_empty_455:	.asciz "="
-Str_empty_454:	.asciz "="
-Str_empty_453:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_453
+Str_empty_459:	.asciz "="
+Str_empty_458:	.asciz "="
+Str_empty_457:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_457
 
 ptrs_4C27D790:
 	.long	Str_Great_Brass_Sounds_0dCut_Through_The_Mix
 	.long	Str_Gro_artige_Bl_ser_Kl_nge_bereichern_das
 	.long	Str_Les_gros_sons_de_cuivre_se_d_tachent_enc
 	.long	Str_Los_excelentes_sonidos_de_bronces_del_me
-	.long	Str_empty_455
-	.long	Str_empty_454
-	.long	Str_empty_453
+	.long	Str_empty_459
+	.long	Str_empty_458
+	.long	Str_empty_457
 
 Str_Create_The_Classic_Drawbar_Organ_Sound_B:	.asciz "Create The Classic Drawbar Organ Sound By Adding The DSP Rotary Speaker Effect."
 Str_Erzeugen_Sie_den_klassischen_Zugriegel_O:	.asciz "Erzeugen Sie den klassischen Zugriegel-Orgel-Klang~0d durch Hinzuf\xFCgen des DSP Rotary Effektes."
 Str_Retrouvez_les_sonorit_s_authentiques_de:	.asciz "Retrouvez les sonorit\xE9s authentiques de l\x92orgue de Jazz en leur additionnant un effet bien connu des amateurs de cet instrument."
 Str_Cree_el_cl_sico_sonido_de_un_rgano_de_re:	.asciz "Cree el cl\xE1sico sonido de un \xF3rgano de registros agregando el efecto de altavoz giratorio DSP."
-Str_empty_452:	.asciz "="
-Str_empty_451:	.asciz "="
-Str_empty_450:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_450
+Str_empty_456:	.asciz "="
+Str_empty_455:	.asciz "="
+Str_empty_454:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_454
 
 ptrs_4C27D944:
 	.long	Str_Create_The_Classic_Drawbar_Organ_Sound_B
 	.long	Str_Erzeugen_Sie_den_klassischen_Zugriegel_O
 	.long	Str_Retrouvez_les_sonorit_s_authentiques_de
 	.long	Str_Cree_el_cl_sico_sonido_de_un_rgano_de_re
-	.long	Str_empty_452
-	.long	Str_empty_451
-	.long	Str_empty_450
+	.long	Str_empty_456
+	.long	Str_empty_455
+	.long	Str_empty_454
 
 Str_Choose_From_600_Preset_Effects_Or_Set_Yo:	.asciz "Choose From 600 Preset Effects, Or Set Your Own!"
 Str_W_hlen_Sie_aus_600_fertigen_Effekten_ode:	.asciz "W\xE4hlen Sie aus 600 fertigen Effekten oder erzeugen Sie Ihre eigenen Effekte."
 Str_Choisissez_parmi_600_effets_pr_s_lection:	.asciz "Choisissez parmi 600 effets pr\xE9s\xE9lectionn\xE9s ou bien \xE9ditez en un par vous m\xEAme\xA0!"
 Str_Elija_entre_600_efectos_preprogramados_o:	.asciz "\xA1Elija entre 600 efectos preprogramados o configure el suyo propio!"
-Str_empty_449:	.asciz "="
-Str_empty_448:	.asciz "="
-Str_empty_447:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_447
+Str_empty_453:	.asciz "="
+Str_empty_452:	.asciz "="
+Str_empty_451:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_451
 
 ptrs_4C27DA7C:
 	.long	Str_Choose_From_600_Preset_Effects_Or_Set_Yo
 	.long	Str_W_hlen_Sie_aus_600_fertigen_Effekten_ode
 	.long	Str_Choisissez_parmi_600_effets_pr_s_lection
 	.long	Str_Elija_entre_600_efectos_preprogramados_o
-	.long	Str_empty_449
-	.long	Str_empty_448
-	.long	Str_empty_447
+	.long	Str_empty_453
+	.long	Str_empty_452
+	.long	Str_empty_451
 
 Str_Set_Your_Imagination_Free:	.asciz "Set Your Imagination Free!"
 Str_Lassen_Sie_Ihrer_Kreativit_t_freien_Lauf:	.asciz "Lassen Sie Ihrer Kreativit\xE4t freien Lauf."
 Str_Donnez_libre_cours_votre_imagination:	.asciz "Donnez libre cours \xE0 votre imagination."
 Str_Libere_su_imaginaci_n:	.asciz "\xA1Libere su imaginaci\xF3n!"
-Str_empty_446:	.asciz "="
-Str_empty_445:	.asciz "="
-Str_empty_444:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_444
+Str_empty_450:	.asciz "="
+Str_empty_449:	.asciz "="
+Str_empty_448:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_448
 
 ptrs_4C27DB24:
 	.long	Str_Set_Your_Imagination_Free
 	.long	Str_Lassen_Sie_Ihrer_Kreativit_t_freien_Lauf
 	.long	Str_Donnez_libre_cours_votre_imagination
 	.long	Str_Libere_su_imaginaci_n
+	.long	Str_empty_450
+	.long	Str_empty_449
+	.long	Str_empty_448
+
+Str_For_Dance_The_Word_Is:	.asciz "For Dance The Word Is"
+Str_empty_447:	.asciz " "
+Str_Pour_la_Dance_le_sp_cialiste_c_est:	.asciz "Pour la Dance, le sp\xE9cialiste c\x92est"
+Str_Para_bailar_la_palabra_es:	.asciz "Para bailar, la palabra es"
+Str_empty_446:	.asciz "="
+Str_empty_445:	.asciz "="
+Str_empty_444:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_444
+
+ptrs_4C27DBA0:
+	.long	Str_For_Dance_The_Word_Is
+	.long	Str_empty_447
+	.long	Str_Pour_la_Dance_le_sp_cialiste_c_est
+	.long	Str_Para_bailar_la_palabra_es
 	.long	Str_empty_446
 	.long	Str_empty_445
 	.long	Str_empty_444
 
-Str_For_Dance_The_Word_Is:	.asciz "For Dance The Word Is"
+Str_TECHNICS_4:	.asciz "TECHNICS"
 Str_empty_443:	.asciz " "
-Str_Pour_la_Dance_le_sp_cialiste_c_est:	.asciz "Pour la Dance, le sp\xE9cialiste c\x92est"
-Str_Para_bailar_la_palabra_es:	.asciz "Para bailar, la palabra es"
+Str_TECHNICS_3:	.asciz "TECHNICS"
+Str_TECHNICS_2:	.asciz "TECHNICS"
 Str_empty_442:	.asciz "="
 Str_empty_441:	.asciz "="
 Str_empty_440:	.asciz "="
 	.align	4, 0xFF	# pad after Str_empty_440
 
-ptrs_4C27DBA0:
-	.long	Str_For_Dance_The_Word_Is
+ptrs_4C27DBE0:
+	.long	Str_TECHNICS_4
 	.long	Str_empty_443
-	.long	Str_Pour_la_Dance_le_sp_cialiste_c_est
-	.long	Str_Para_bailar_la_palabra_es
+	.long	Str_TECHNICS_3
+	.long	Str_TECHNICS_2
 	.long	Str_empty_442
 	.long	Str_empty_441
 	.long	Str_empty_440
 
-Str_TECHNICS_4:	.asciz "TECHNICS"
 Str_empty_439:	.asciz " "
-Str_TECHNICS_3:	.asciz "TECHNICS"
-Str_TECHNICS_2:	.asciz "TECHNICS"
-Str_empty_438:	.asciz "="
-Str_empty_437:	.asciz "="
+Str_steht_f_r_Dance:	.asciz " steht f\xFCr Dance"
+Str_empty_438:	.asciz " "
+Str_empty_437:	.asciz " "
 Str_empty_436:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_436
+Str_empty_435:	.asciz "="
+Str_empty_434:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_434
 
-ptrs_4C27DBE0:
-	.long	Str_TECHNICS_4
+ptrs_4C27DC1C:
 	.long	Str_empty_439
-	.long	Str_TECHNICS_3
-	.long	Str_TECHNICS_2
+	.long	Str_steht_f_r_Dance
 	.long	Str_empty_438
 	.long	Str_empty_437
 	.long	Str_empty_436
-
-Str_empty_435:	.asciz " "
-Str_steht_f_r_Dance:	.asciz " steht f\xFCr Dance"
-Str_empty_434:	.asciz " "
-Str_empty_433:	.asciz " "
-Str_empty_432:	.asciz "="
-Str_empty_431:	.asciz "="
-Str_empty_430:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_430
-
-ptrs_4C27DC1C:
 	.long	Str_empty_435
-	.long	Str_steht_f_r_Dance
 	.long	Str_empty_434
+
+Str_empty_433:	.asciz " "
+Str_TECHNICS:	.asciz "TECHNICS"
+Str_empty_432:	.asciz " "
+Str_empty_431:	.asciz " "
+Str_empty_430:	.asciz "="
+Str_empty_429:	.asciz "="
+Str_empty_428:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_428
+
+ptrs_4C27DC50:
 	.long	Str_empty_433
+	.long	Str_TECHNICS
 	.long	Str_empty_432
 	.long	Str_empty_431
 	.long	Str_empty_430
-
-Str_empty_429:	.asciz " "
-Str_TECHNICS:	.asciz "TECHNICS"
-Str_empty_428:	.asciz " "
-Str_empty_427:	.asciz " "
-Str_empty_426:	.asciz "="
-Str_empty_425:	.asciz "="
-Str_empty_424:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_424
-
-ptrs_4C27DC50:
 	.long	Str_empty_429
-	.long	Str_TECHNICS
 	.long	Str_empty_428
-	.long	Str_empty_427
-	.long	Str_empty_426
-	.long	Str_empty_425
-	.long	Str_empty_424
 
 Str_Ready_To_Remix:	.asciz "Ready To Remix?"
 Str_Bereit_zum_Remixen:	.asciz "Bereit zum Remixen?"
 Str_Pr_t_r_aliser_vos_propres_mixages:	.asciz "Pr\xEAt \xE0 r\xE9aliser vos propres mixages\xA0?"
 Str_Listo_para_remezclar:	.asciz "\xBFListo para remezclar?"
-Str_empty_423:	.asciz "="
-Str_empty_422:	.asciz "="
-Str_empty_421:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_421
+Str_empty_427:	.asciz "="
+Str_empty_426:	.asciz "="
+Str_empty_425:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_425
 
 ptrs_4C27DCD4:
 	.long	Str_Ready_To_Remix
 	.long	Str_Bereit_zum_Remixen
 	.long	Str_Pr_t_r_aliser_vos_propres_mixages
 	.long	Str_Listo_para_remezclar
-	.long	Str_empty_423
-	.long	Str_empty_422
-	.long	Str_empty_421
+	.long	Str_empty_427
+	.long	Str_empty_426
+	.long	Str_empty_425
 
 Str_You_re_In_Control:	.asciz "You're In Control!"
 Str_Sie_haben_die_Kontrolle:	.asciz "Sie haben die Kontrolle!"
 Str_Vous_tes_au_commande_de_votre_propre_Hom:	.asciz "Vous \xEAtes au commande de votre propre Home Studio !"
 Str_Usted_tiene_el_control:	.asciz "\xA1Usted tiene el control!"
-Str_empty_420:	.asciz "="
-Str_empty_419:	.asciz "="
-Str_empty_418:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_418
+Str_empty_424:	.asciz "="
+Str_empty_423:	.asciz "="
+Str_empty_422:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_422
 
 ptrs_4C27DD70:
 	.long	Str_You_re_In_Control
 	.long	Str_Sie_haben_die_Kontrolle
 	.long	Str_Vous_tes_au_commande_de_votre_propre_Hom
 	.long	Str_Usted_tiene_el_control
-	.long	Str_empty_420
-	.long	Str_empty_419
-	.long	Str_empty_418
+	.long	Str_empty_424
+	.long	Str_empty_423
+	.long	Str_empty_422
 
 Str_Create_The_Exact_Sound_Image_You_Want_Us:	.asciz "Create The Exact Sound Image You Want Using Production Techniques Including Multiple DSP, Reverb And Panning, All Built In To The KN6500."
 Str_Schaffen_Sie_sich_Ihr_pers_nliches_Klang:	.asciz "Schaffen Sie sich Ihr pers\xF6nliches Klangbild durch Produktionstechniken mit vielen DSP-Effekten,~0dHall- und Panorama-Einstellungen.~0dAll dies steht Ihnen im KN6500 zur Verf\xFCgung."
 Str_Le_KN6500_dispose_de_tous_les_moyens_tec:	.asciz "Le KN6500 dispose de tous les moyens techniques de production  pour vous permettre de cr\xE9er des mixages professionnels  : multi -  effet num\xE9rique, r\xE9verb\xE9ration num\xE9rique, effet panoramique."
 Str_Cree_la_imagen_sonora_exacta_que_usted_d:	.asciz "Cree la imagen sonora exacta que usted desea con t\xE9cnicas de producci\xF3n como DSP m\xFAltiple, reverberaci\xF3n y balance de canales, todos incorporados al KN6500."
-Str_empty_417:	.asciz "="
-Str_empty_416:	.asciz "="
-Str_empty_415:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_415
+Str_empty_421:	.asciz "="
+Str_empty_420:	.asciz "="
+Str_empty_419:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_419
 
 ptrs_4C27E030:
 	.long	Str_Create_The_Exact_Sound_Image_You_Want_Us
 	.long	Str_Schaffen_Sie_sich_Ihr_pers_nliches_Klang
 	.long	Str_Le_KN6500_dispose_de_tous_les_moyens_tec
 	.long	Str_Cree_la_imagen_sonora_exacta_que_usted_d
-	.long	Str_empty_417
-	.long	Str_empty_416
-	.long	Str_empty_415
+	.long	Str_empty_421
+	.long	Str_empty_420
+	.long	Str_empty_419
 
 Str_Fine_Tune_Your_Sound_Image_With_Part_And:	.asciz "Fine Tune Your Sound Image With Part And Total EQ And Filter Resonance.~0dThe Possibilities Are Vast!"
 Str_Stimmen_Sie_Ihren_Sound_mit_Part_und_Tot:	.asciz "Stimmen Sie Ihren Sound mit Part und Total EQ optimal ab. Die M\xF6glichkeiten sind einfach unglaublich."
 Str_Avec_l_galisation_par_partie_ou_g_n_rale:	.asciz "Avec l\x92\xE9galisation par partie ou g\xE9n\xE9rale et les corrections harmoniques, vous pouvez peaufiner votre mixage. Les possibilit\xE9s sont tr\xE8s \xE9tendues\xA0!"
 Str_Afine_con_precisi_n_su_imagen_sonora_con:	.asciz "Afine con precisi\xF3n su imagen sonora con ecualizaci\xF3n parcial y total, o con intensidad arm\xF3nica. \xA1Las posibilidades son ilimitadas!"
-Str_empty_414:	.asciz "="
-Str_empty_413:	.asciz "="
-Str_empty_412:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_412
+Str_empty_418:	.asciz "="
+Str_empty_417:	.asciz "="
+Str_empty_416:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_416
 
 ptrs_4C27E238:
 	.long	Str_Fine_Tune_Your_Sound_Image_With_Part_And
 	.long	Str_Stimmen_Sie_Ihren_Sound_mit_Part_und_Tot
 	.long	Str_Avec_l_galisation_par_partie_ou_g_n_rale
 	.long	Str_Afine_con_precisi_n_su_imagen_sonora_con
-	.long	Str_empty_414
-	.long	Str_empty_413
-	.long	Str_empty_412
+	.long	Str_empty_418
+	.long	Str_empty_417
+	.long	Str_empty_416
 
 Str_Reverb_Chorus_4:	.asciz "Reverb!  Chorus!"
 Str_Reverb_Chorus_3:	.asciz "Reverb!  Chorus!"
 Str_Reverb_Chorus_2:	.asciz "Reverb!  Chorus!"
 Str_Reverb_Chorus:	.asciz "Reverb!  Chorus!"
-Str_empty_411:	.asciz "="
-Str_empty_410:	.asciz "="
-Str_empty_409:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_409
+Str_empty_415:	.asciz "="
+Str_empty_414:	.asciz "="
+Str_empty_413:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_413
 
 ptrs_4C27E2A0:
 	.long	Str_Reverb_Chorus_4
 	.long	Str_Reverb_Chorus_3
 	.long	Str_Reverb_Chorus_2
 	.long	Str_Reverb_Chorus
-	.long	Str_empty_411
-	.long	Str_empty_410
-	.long	Str_empty_409
+	.long	Str_empty_415
+	.long	Str_empty_414
+	.long	Str_empty_413
 
 Str_Digital_Effect_DSP_4:	.asciz "Digital Effect!  DSP!"
 Str_Digital_Effect_DSP_3:	.asciz "Digital Effect!  DSP!"
 Str_Digital_Effect_DSP_2:	.asciz "Digital Effect!  DSP!"
 Str_Digital_Effect_DSP:	.asciz "Digital Effect!  DSP!"
-Str_empty_408:	.asciz "="
-Str_empty_407:	.asciz "="
-Str_empty_406:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_406
+Str_empty_412:	.asciz "="
+Str_empty_411:	.asciz "="
+Str_empty_410:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_410
 
 ptrs_4C27E31C:
 	.long	Str_Digital_Effect_DSP_4
 	.long	Str_Digital_Effect_DSP_3
 	.long	Str_Digital_Effect_DSP_2
 	.long	Str_Digital_Effect_DSP
-	.long	Str_empty_408
-	.long	Str_empty_407
-	.long	Str_empty_406
+	.long	Str_empty_412
+	.long	Str_empty_411
+	.long	Str_empty_410
 
 Str_The_KN6500_Makes_You_A_Great_Producer:	.asciz "The KN6500 Makes You A Great Producer!"
 Str_Das_KN6500_macht_aus_Ihnen_einen_gro_en:	.asciz "Das KN6500 macht aus Ihnen einen gro\xDFen Produzenten!"
 Str_Avec_le_KN6500_0dvous_devenez_un_v_ritab:	.asciz "Avec le KN6500,~0dvous devenez un v\xE9ritable ing\xE9nieur du son\xA0!"
 Str_El_KN6500_lo_convierte_en_un_gran_produc:	.asciz "\xA1El KN6500 lo convierte en un gran productor!"
-Str_empty_405:	.asciz "="
-Str_empty_404:	.asciz "="
-Str_empty_403:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_403
+Str_empty_409:	.asciz "="
+Str_empty_408:	.asciz "="
+Str_empty_407:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_407
 
 ptrs_4C27E408:
 	.long	Str_The_KN6500_Makes_You_A_Great_Producer
 	.long	Str_Das_KN6500_macht_aus_Ihnen_einen_gro_en
 	.long	Str_Avec_le_KN6500_0dvous_devenez_un_v_ritab
 	.long	Str_El_KN6500_lo_convierte_en_un_gran_produc
-	.long	Str_empty_405
-	.long	Str_empty_404
-	.long	Str_empty_403
+	.long	Str_empty_409
+	.long	Str_empty_408
+	.long	Str_empty_407
 
 Str_Auto_Play_Chord_is_your_backing_band_0df:	.asciz "Auto Play Chord is your backing band~0dfor almost any musical style you can imagine!"
 Str_Die_Auto_Play_Chord_Funktion_ist_Ihre_Be:	.asciz "Die Auto Play Chord-Funktion ist Ihre Begleitband f\xFCr nahezu musikalischen Stilrichtungen,~0d die Sie sich vorstellen k\xF6nnen!"
 Str_La_fonction_AUTO_PLAY_CHORD_vous_fourni:	.asciz "La fonction AUTO PLAY CHORD vous fourni un accompagnement complet pour la plupart des styles musicaux que vous d\xE9sirez."
 Str_La_cuerda_automatica_es_su_orquesta_de_a:	.asciz "La cuerda automatica es su orquesta de acompanamiento para cualquier estilo de musica que usted se imagine!"
-Str_empty_402:	.asciz "="
-Str_empty_401:	.asciz "="
-Str_empty_400:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_400
+Str_empty_406:	.asciz "="
+Str_empty_405:	.asciz "="
+Str_empty_404:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_404
 
 ptrs_4C27E5E4:
 	.long	Str_Auto_Play_Chord_is_your_backing_band_0df
 	.long	Str_Die_Auto_Play_Chord_Funktion_ist_Ihre_Be
 	.long	Str_La_fonction_AUTO_PLAY_CHORD_vous_fourni
 	.long	Str_La_cuerda_automatica_es_su_orquesta_de_a
-	.long	Str_empty_402
-	.long	Str_empty_401
-	.long	Str_empty_400
+	.long	Str_empty_406
+	.long	Str_empty_405
+	.long	Str_empty_404
 
 Str_220_Patterns_With_4_Variations_0dProfess:	.asciz "220 Patterns With 4 Variations~0dProfessionally Mixed For CD Quality Performance!"
 Str_220_professionell_arrangierte_Begleitpat:	.asciz "220 professionell arrangierte Begleitpattern mit jeweils 4 Variationen f\xFCr eine Wiedergabe in CD-Qualit\xE4t!"
 Str_220_accompagnements_avec_chacun_4_variat:	.asciz "220 accompagnements avec chacun 4 variations b\xE9n\xE9ficiant d'un mixage de qualit\xE9 professionnelle"
 Str_220_Patrones_con_4_variaciones_de_musica:	.asciz "220 Patrones con 4 variaciones de musica profesionalmente intercaladas en un CD de calidad."
-Str_empty_399:	.asciz "="
-Str_empty_398:	.asciz "="
-Str_empty_397:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_397
+Str_empty_403:	.asciz "="
+Str_empty_402:	.asciz "="
+Str_empty_401:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_401
 
 ptrs_4C27E780:
 	.long	Str_220_Patterns_With_4_Variations_0dProfess
 	.long	Str_220_professionell_arrangierte_Begleitpat
 	.long	Str_220_accompagnements_avec_chacun_4_variat
 	.long	Str_220_Patrones_con_4_variaciones_de_musica
-	.long	Str_empty_399
-	.long	Str_empty_398
-	.long	Str_empty_397
+	.long	Str_empty_403
+	.long	Str_empty_402
+	.long	Str_empty_401
 
 Str_Play_A_Host_Of_Your_Favorite_Movie_Show:	.asciz "Play A Host Of Your Favorite Movie & Show Themes~0dWith This All New Rhythm Group!"
 Str_Spielen_Sie_eine_gro_e_Anzahl_Ihrer_Lieb:	.asciz "Spielen Sie eine gro\xDFe Anzahl Ihrer Lieblingstitel der Stilistiken Movie & Show mit der gleichnamigen neuen Rhythmus-Gruppe!"
 Str_Avec_ce_nouveau_groupe_de_rythmes_vous_p:	.asciz "Avec ce nouveau groupe de rythmes vous pourrez jouez les titres originaux de vos musiques de film et de vos com\xE9dies pr\xE9f\xE9r\xE9es."
 Str_Toque_un_sin_numero_de_temas_de_sus_peli:	.asciz "Toque un sin numero de temas de sus peliculas y programas favoritos con este grupo de nuevos ritmos!"
-Str_empty_396:	.asciz "="
-Str_empty_395:	.asciz "="
-Str_empty_394:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_394
+Str_empty_400:	.asciz "="
+Str_empty_399:	.asciz "="
+Str_empty_398:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_398
 
 ptrs_4C27E958:
 	.long	Str_Play_A_Host_Of_Your_Favorite_Movie_Show
 	.long	Str_Spielen_Sie_eine_gro_e_Anzahl_Ihrer_Lieb
 	.long	Str_Avec_ce_nouveau_groupe_de_rythmes_vous_p
 	.long	Str_Toque_un_sin_numero_de_temas_de_sus_peli
-	.long	Str_empty_396
-	.long	Str_empty_395
-	.long	Str_empty_394
+	.long	Str_empty_400
+	.long	Str_empty_399
+	.long	Str_empty_398
 
 Str_Recapture_The_Magic_Of_The_Musicals_Of_t:	.asciz "Recapture The Magic Of The Musicals Of the 1930's"
 Str_Erleben_Sie_den_Zauber_der_Musicals_der:	.asciz "Erleben Sie den Zauber der Musicals der 30er Jahre"
 Str_Retrouvez_la_magie_des_musiques_des_ann:	.asciz "Retrouvez la magie des musiques des ann\xE9es 1930"
 Str_Atrape_de_nuevo_la_Magia_0d_de_los_music:	.asciz "Atrape de nuevo la Magia~0d de los musicales de los anos 1930's."
-Str_empty_393:	.asciz "="
-Str_empty_392:	.asciz "="
-Str_empty_391:	.asciz "="
+Str_empty_397:	.asciz "="
+Str_empty_396:	.asciz "="
+Str_empty_395:	.asciz "="
 
 ptrs_4C27EA50:
 	.long	Str_Recapture_The_Magic_Of_The_Musicals_Of_t
 	.long	Str_Erleben_Sie_den_Zauber_der_Musicals_der
 	.long	Str_Retrouvez_la_magie_des_musiques_des_ann
 	.long	Str_Atrape_de_nuevo_la_Magia_0d_de_los_music
-	.long	Str_empty_393
-	.long	Str_empty_392
-	.long	Str_empty_391
+	.long	Str_empty_397
+	.long	Str_empty_396
+	.long	Str_empty_395
 
 Str_Or_The_Energy_Of_The_Rock_Dance_Movies_O:	.asciz "Or The Energy Of The Rock Dance Movies Of The 1980's!"
 Str_oder_die_Energie_der_Rock_Dance_Movies_d:	.asciz "oder die Energie der Rock Dance Movies der 80er Jahre!"
 Str_Ou_la_dynamique_des_op_ras_rock_des_ann:	.asciz "Ou la dynamique des op\xE9ras rock des ann\xE9es 1980\xA0!"
 Str_O_la_energia_de_las_peliculas_de_rock_de:	.asciz "O la energia de las peliculas de rock de los anos 1980's."
-Str_empty_390:	.asciz "="
-Str_empty_389:	.asciz "="
-Str_empty_388:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_388
+Str_empty_394:	.asciz "="
+Str_empty_393:	.asciz "="
+Str_empty_392:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_392
 
 ptrs_4C27EB4C:
 	.long	Str_Or_The_Energy_Of_The_Rock_Dance_Movies_O
 	.long	Str_oder_die_Energie_der_Rock_Dance_Movies_d
 	.long	Str_Ou_la_dynamique_des_op_ras_rock_des_ann
 	.long	Str_O_la_energia_de_las_peliculas_de_rock_de
-	.long	Str_empty_390
-	.long	Str_empty_389
-	.long	Str_empty_388
+	.long	Str_empty_394
+	.long	Str_empty_393
+	.long	Str_empty_392
 
 Str_Just_Switch_On_And_Play_The_Music_Stylis:	.asciz "Just Switch On And Play! The Music Stylist Will Be Your Guide!"
 Str_Einfach_einschalten_und_spielen_Der_Musi:	.asciz "Einfach einschalten und spielen! Der Musikstylist f\xFChrt Sie durch die Welt der Musik."
 Str_Pressez_simplement_un_bouton_et_jouez_Le:	.asciz "Pressez simplement un bouton, et jouez\xA0! Le navigateur Music Stylist sera votre guide\xA0!"
 Str_S_lo_enci_ndalo_y_toque_El_estilista_mus:	.asciz "\xA1S\xF3lo enci\xE9ndalo y toque! \xA1El estilista musical ser\xE1 su gu\xEDa!"
-Str_empty_387:	.asciz "="
-Str_empty_386:	.asciz "="
-Str_empty_385:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_385
+Str_empty_391:	.asciz "="
+Str_empty_390:	.asciz "="
+Str_empty_389:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_389
 
 ptrs_4C27EC9C:
 	.long	Str_Just_Switch_On_And_Play_The_Music_Stylis
 	.long	Str_Einfach_einschalten_und_spielen_Der_Musi
 	.long	Str_Pressez_simplement_un_bouton_et_jouez_Le
 	.long	Str_S_lo_enci_ndalo_y_toque_El_estilista_mus
-	.long	Str_empty_387
-	.long	Str_empty_386
-	.long	Str_empty_385
+	.long	Str_empty_391
+	.long	Str_empty_390
+	.long	Str_empty_389
 
 Str_Choose_From_1080_Music_Styles_0dIncludin:	.asciz "Choose From 1080 Music Styles,~0dIncluding Accompaniment And Melody Settings~0dProduced For You By Top Musicians."
 Str_W_hlen_Sie_unter_1080_Registrierungen_in:	.asciz "W\xE4hlen Sie unter 1080 Registrierungen inklusive Einstellungen f\xFCr Begleitung und Melodie \x96 erstellt f\xFCr Sie durch Top Musiker aus der ganzen Welt."
 Str_Choisissez_l_un_des_1080_styles_incluant:	.asciz "Choisissez l\x92un des 1080 styles, incluant l\x92accompagnement et les r\xE9glages pour la m\xE9lodie, concoct\xE9s par les plus grands musiciens."
 Str_Elija_entre_1080_estilos_musicales_tales:	.asciz "Elija entre 1080 estilos musicales, tales como acompa\xF1amiento y sonidos mel\xF3dicos producidos para usted por los mejores m\xFAsicos."
-Str_empty_384:	.asciz "="
-Str_empty_383:	.asciz "="
-Str_empty_382:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_382
+Str_empty_388:	.asciz "="
+Str_empty_387:	.asciz "="
+Str_empty_386:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_386
 
 ptrs_4C27EECC:
 	.long	Str_Choose_From_1080_Music_Styles_0dIncludin
 	.long	Str_W_hlen_Sie_unter_1080_Registrierungen_in
 	.long	Str_Choisissez_l_un_des_1080_styles_incluant
 	.long	Str_Elija_entre_1080_estilos_musicales_tales
-	.long	Str_empty_384
-	.long	Str_empty_383
-	.long	Str_empty_382
+	.long	Str_empty_388
+	.long	Str_empty_387
+	.long	Str_empty_386
 
 Str_Play_In_Any_Style_From_A_Traditional_Pol:	.asciz "Play In Any Style From A Traditional Polka....."
 Str_Spielen_Sie_jede_gew_nschte_Musikrichtun:	.asciz "Spielen Sie jede gew\xFCnschte Musikrichtung von einer traditionellen Polka..."
 Str_Jouez_n_importe_quel_type_de_musique_de:	.asciz "Jouez n\x92importe quel  type de musique, de la Polka ..."
 Str_Toque_en_cualquier_estilo_desde_una_polc:	.asciz "Toque en cualquier estilo, desde una polca tradicional...."
-Str_empty_381:	.asciz "="
-Str_empty_380:	.asciz "="
-Str_empty_379:	.asciz "="
+Str_empty_385:	.asciz "="
+Str_empty_384:	.asciz "="
+Str_empty_383:	.asciz "="
 
 ptrs_4C27EFDC:
 	.long	Str_Play_In_Any_Style_From_A_Traditional_Pol
 	.long	Str_Spielen_Sie_jede_gew_nschte_Musikrichtun
 	.long	Str_Jouez_n_importe_quel_type_de_musique_de
 	.long	Str_Toque_en_cualquier_estilo_desde_una_polc
-	.long	Str_empty_381
-	.long	Str_empty_380
-	.long	Str_empty_379
+	.long	Str_empty_385
+	.long	Str_empty_384
+	.long	Str_empty_383
 
 Str_To_A_Country_Hoedown_0dIn_Fact_Almost_An:	.asciz "...To A Country Hoedown.~0dIn Fact Almost Any Style You Can Think Of!"
 Str_bis_hin_zum_Country_Hoedown_0d_wirklich:	.asciz "... bis hin zum Country Hoedown~0d- wirklich fast jeden Stil,~0d den Sie sich vorstellen k\xF6nnen."
 Str_au_Country_En_fait_n_importe_quel_genre:	.asciz "...au Country. En fait, n\x92importe quel genre musical auquel vous pouvez penser\xA0!"
 Str_hasta_una_danza_folkl_rica_En_s_ntesis_c:	.asciz ".... hasta una danza folkl\xF3rica. En s\xEDntesis, \xA1cualquier estilo que se le ocurra!"
-Str_empty_378:	.asciz "="
-Str_empty_377:	.asciz "="
-Str_empty_376:	.asciz "="
+Str_empty_382:	.asciz "="
+Str_empty_381:	.asciz "="
+Str_empty_380:	.asciz "="
 
 ptrs_4C27F148:
 	.long	Str_To_A_Country_Hoedown_0dIn_Fact_Almost_An
 	.long	Str_bis_hin_zum_Country_Hoedown_0d_wirklich
 	.long	Str_au_Country_En_fait_n_importe_quel_genre
 	.long	Str_hasta_una_danza_folkl_rica_En_s_ntesis_c
-	.long	Str_empty_378
-	.long	Str_empty_377
-	.long	Str_empty_376
+	.long	Str_empty_382
+	.long	Str_empty_381
+	.long	Str_empty_380
 
 Str_Add_A_Solo_To_Your_Song_Using_The_Perfor:	.asciz "Add A Solo To Your Song Using The Performance Pads."
 Str_Bereichern_Sie_Ihren_Song_mit_einem_Solo:	.asciz "Bereichern Sie Ihren Song mit einem Solo der Performance Pads."
 Str_Avec_les_Performances_Pads_vous_pouvez_a:	.asciz "Avec les \xAB\xA0Performances Pads\xA0\xBB vous pouvez ajouter un solo \xE0 tout moment."
 Str_Agregue_un_solo_a_su_canci_n_con_las_tec:	.asciz "Agregue un solo a su canci\xF3n con las teclas de ejecuci\xF3n."
-Str_empty_375:	.asciz "="
-Str_empty_374:	.asciz "="
-Str_empty_373:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_373
+Str_empty_379:	.asciz "="
+Str_empty_378:	.asciz "="
+Str_empty_377:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_377
 
 ptrs_4C27F264:
 	.long	Str_Add_A_Solo_To_Your_Song_Using_The_Perfor
 	.long	Str_Bereichern_Sie_Ihren_Song_mit_einem_Solo
 	.long	Str_Avec_les_Performances_Pads_vous_pouvez_a
 	.long	Str_Agregue_un_solo_a_su_canci_n_con_las_tec
-	.long	Str_empty_375
-	.long	Str_empty_374
-	.long	Str_empty_373
+	.long	Str_empty_379
+	.long	Str_empty_378
+	.long	Str_empty_377
 
 Str_With_Auto_Setting_0dThe_Pads_Are_Matched:	.asciz "With Auto Setting,~0dThe Pads Are Matched To~0dThe Music Style Automatically!"
 Str_Durch_Auto_Setting_werden_die_Pads_autom:	.asciz "Durch Auto Setting werden die Pads automatisch dem gew\xE4hlten Musikstil angepasst."
 Str_Le_r_glage_automatique_permet_de_synchro:	.asciz "Le r\xE9glage automatique permet de synchroniser votre solo \xE0 l\x92accompagnement instantan\xE9ment\xA0!"
 Str_Con_la_configuraci_n_autom_tica_0d_las_t:	.asciz "Con la configuraci\xF3n autom\xE1tica,~0d\xA1las teclas se adaptan al estilo de la m\xFAsica!"
-Str_empty_372:	.asciz "="
-Str_empty_371:	.asciz "="
-Str_empty_370:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_370
+Str_empty_376:	.asciz "="
+Str_empty_375:	.asciz "="
+Str_empty_374:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_374
 
 ptrs_4C27F3D8:
 	.long	Str_With_Auto_Setting_0dThe_Pads_Are_Matched
 	.long	Str_Durch_Auto_Setting_werden_die_Pads_autom
 	.long	Str_Le_r_glage_automatique_permet_de_synchro
 	.long	Str_Con_la_configuraci_n_autom_tica_0d_las_t
-	.long	Str_empty_372
-	.long	Str_empty_371
-	.long	Str_empty_370
+	.long	Str_empty_376
+	.long	Str_empty_375
+	.long	Str_empty_374
 
 Str_Music_Stylist_Will_Even_Add_The_Most_Sui:	.asciz "Music Stylist Will Even Add The Most Suitable Technichord Type To Create A Full Ensemble!"
 Str_Der_Music_Stylist_stellt_ebenso_den_pass:	.asciz "Der Music Stylist stellt ebenso den passenden Technichord Typ ein und erzeugt somit ein volles Ensemble."
 Str_De_plus_pour_vous_fournir_un_ensemble_pa:	.asciz "De plus, pour vous fournir un ensemble parfait, le \xAB\xA0Music Stylist\xA0\xBB s\xE9lectionne pour vous le type de \xAB\xA0Technichord\xA0\xBB le mieux adapt\xE9\xA0!"
 Str_El_estilista_musical_agrega_el_acorde_t:	.asciz "El estilista musical agrega el acorde t\xE9cnico m\xE1s adecuado,~0d\xA1para crear un conjunto completo de instrumentos!"
-Str_empty_369:	.asciz "="
-Str_empty_368:	.asciz "="
-Str_empty_367:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_367
+Str_empty_373:	.asciz "="
+Str_empty_372:	.asciz "="
+Str_empty_371:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_371
 
 ptrs_4C27F5B8:
 	.long	Str_Music_Stylist_Will_Even_Add_The_Most_Sui
 	.long	Str_Der_Music_Stylist_stellt_ebenso_den_pass
 	.long	Str_De_plus_pour_vous_fournir_un_ensemble_pa
 	.long	Str_El_estilista_musical_agrega_el_acorde_t
-	.long	Str_empty_369
-	.long	Str_empty_368
-	.long	Str_empty_367
+	.long	Str_empty_373
+	.long	Str_empty_372
+	.long	Str_empty_371
 
 Str_NX_Sound_Expands_Your_Musical_Horizons:	.asciz "NX Sound Expands Your Musical Horizons!"
 Str_NX_Sounds_erweitern_Ihre_musikalischen_A:	.asciz "NX Sounds erweitern Ihre musikalischen Ausdrucksm\xF6glichkeiten!"
 Str_Le_standard_NX_vous_offre_de_nouveaux_ho:	.asciz "Le standard NX vous offre de nouveaux horizons!"
 Str_El_sonido_NX_expande_sus_horizontes_musi:	.asciz "\xA1El sonido NX expande sus horizontes musicales!"
-Str_empty_366:	.asciz "="
-Str_empty_365:	.asciz "="
-Str_empty_364:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_364
+Str_empty_370:	.asciz "="
+Str_empty_369:	.asciz "="
+Str_empty_368:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_368
 
 ptrs_4C27F6A4:
 	.long	Str_NX_Sound_Expands_Your_Musical_Horizons
 	.long	Str_NX_Sounds_erweitern_Ihre_musikalischen_A
 	.long	Str_Le_standard_NX_vous_offre_de_nouveaux_ho
 	.long	Str_El_sonido_NX_expande_sus_horizontes_musi
-	.long	Str_empty_366
-	.long	Str_empty_365
-	.long	Str_empty_364
+	.long	Str_empty_370
+	.long	Str_empty_369
+	.long	Str_empty_368
 
 Str_Load_Data_From_Other_Technics_Instrument:	.asciz "Load Data From Other Technics Instruments~0dWith Great Compatibility."
 Str_Laden_Sie_Daten_anderer_Technics_Keyboar:	.asciz "Laden Sie Daten anderer Technics Keyboards dank gro\xDFer Kompatibilit\xE4t."
 Str_Vous_pouvez_utiliser_des_disquettes_enre:	.asciz "Vous pouvez utiliser des disquettes enregistr\xE9es sur d'autres instruments Technics,"
 Str_Cargue_datos_de_otros_instrumentos_Techn:	.asciz "Cargue datos de otros instrumentos Technics altamente compatibles."
-Str_empty_363:	.asciz "="
-Str_empty_362:	.asciz "="
-Str_empty_361:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_361
+Str_empty_367:	.asciz "="
+Str_empty_366:	.asciz "="
+Str_empty_365:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_365
 
 ptrs_4C27F7EC:
 	.long	Str_Load_Data_From_Other_Technics_Instrument
 	.long	Str_Laden_Sie_Daten_anderer_Technics_Keyboar
 	.long	Str_Vous_pouvez_utiliser_des_disquettes_enre
 	.long	Str_Cargue_datos_de_otros_instrumentos_Techn
-	.long	Str_empty_363
-	.long	Str_empty_362
-	.long	Str_empty_361
+	.long	Str_empty_367
+	.long	Str_empty_366
+	.long	Str_empty_365
 
 Str_NX_Sound_Is_Also_Compatible_With_GM_Leve:	.asciz "NX Sound Is Also Compatible With GM Level2 Standard Midi Files And More!"
 Str_NX_Sounds_sind_ebenso_kompatibel_mit_GM:	.asciz "NX Sounds sind ebenso kompatibel mit GM Level 2 Standard-MIDI-Files und mehr!"
 Str_des_instruments_compatibles_GM_niveau_2:	.asciz "des instruments compatibles GM niveau 2, des s\xE9quences SMF et bien d'autres encore!"
 Str_El_sonido_NX_es_tambi_n_compatible_con_l:	.asciz "El sonido NX es tambi\xE9n compatible con los archivos MIDI est\xE1ndar GM nivel 2\x85~0d \xA1y otros m\xE1s!"
-Str_empty_360:	.asciz "="
-Str_empty_359:	.asciz "="
-Str_empty_358:	.asciz "="
+Str_empty_364:	.asciz "="
+Str_empty_363:	.asciz "="
+Str_empty_362:	.asciz "="
 
 ptrs_4C27F958:
 	.long	Str_NX_Sound_Is_Also_Compatible_With_GM_Leve
 	.long	Str_NX_Sounds_sind_ebenso_kompatibel_mit_GM
 	.long	Str_des_instruments_compatibles_GM_niveau_2
 	.long	Str_El_sonido_NX_es_tambi_n_compatible_con_l
-	.long	Str_empty_360
-	.long	Str_empty_359
-	.long	Str_empty_358
+	.long	Str_empty_364
+	.long	Str_empty_363
+	.long	Str_empty_362
 
 Str_Load_Pattern_Software_0dFrom_Wide_Range:	.asciz "Load Pattern Software~0dFrom Wide Range Of~0dOther Manufacturers!"
 Str_Laden_Sie_Rhythmen_aus_dem_Angebot_ander:	.asciz "Laden Sie Rhythmen aus dem Angebot anderer Hersteller!"
 Str_Vous_pouvez_utiliser_des_disquettes_prov:	.asciz "Vous pouvez utiliser des disquettes provenant d'autres fabricants!"
 Str_Cargue_software_para_frases_musicales_de:	.asciz "\xA1Cargue software para frases musicales de una amplia gama de fabricantes!"
-Str_empty_357:	.asciz "="
-Str_empty_356:	.asciz "="
-Str_empty_355:	.asciz "="
+Str_empty_361:	.asciz "="
+Str_empty_360:	.asciz "="
+Str_empty_359:	.asciz "="
 
 ptrs_4C27FA80:
 	.long	Str_Load_Pattern_Software_0dFrom_Wide_Range
 	.long	Str_Laden_Sie_Rhythmen_aus_dem_Angebot_ander
 	.long	Str_Vous_pouvez_utiliser_des_disquettes_prov
 	.long	Str_Cargue_software_para_frases_musicales_de
-	.long	Str_empty_357
-	.long	Str_empty_356
-	.long	Str_empty_355
+	.long	Str_empty_361
+	.long	Str_empty_360
+	.long	Str_empty_359
 
 Str_Create_Your_Own_Music_Library_From_Virtu:	.asciz "Create Your Own Music Library From Virtually Any Software! Technics NX Sound Means \"Compatibility\"."
 Str_Erstellen_Sie_Ihre_eigene_Musik_Sammlung:	.asciz "Erstellen Sie Ihre eigene Musik-Sammlung aus einem reichhaltigen Softwareangebot!~0dTechnics NX bedeutet \x84Kompatibilit\xE4t\x93!"
 Str_Cr_ez_votre_propre_biblioth_que_musicale:	.asciz "Cr\xE9ez votre propre biblioth\xE8que musicale \xE0 partir de tous les softs existants!~0dLe standard NX Technics rime avec \xAB Compatibilit\xE9 \xBB."
 Str_Cree_su_propia_biblioteca_musical_con_ca:	.asciz "\xA1Cree su propia biblioteca musical con casi cualquier programa! El sonido NX de Technics significa \x93compatibilidad\x94."
-Str_empty_354:	.asciz "="
-Str_empty_353:	.asciz "="
-Str_empty_352:	.asciz "="
+Str_empty_358:	.asciz "="
+Str_empty_357:	.asciz "="
+Str_empty_356:	.asciz "="
 
 ptrs_4C27FC7C:
 	.long	Str_Create_Your_Own_Music_Library_From_Virtu
 	.long	Str_Erstellen_Sie_Ihre_eigene_Musik_Sammlung
 	.long	Str_Cr_ez_votre_propre_biblioth_que_musicale
 	.long	Str_Cree_su_propia_biblioteca_musical_con_ca
-	.long	Str_empty_354
-	.long	Str_empty_353
-	.long	Str_empty_352
+	.long	Str_empty_358
+	.long	Str_empty_357
+	.long	Str_empty_356
 
 Str_Customize_Your_KN6500:	.asciz "Customize Your KN6500!"
 Str_Gestalten_Sie_Ihr_KN6500:	.asciz "Gestalten Sie Ihr KN6500!"
 Str_Personnalisez_votre_KN6500:	.asciz "Personnalisez votre KN6500!"
 Str_Personalice_su_procesador_KN6500:	.asciz "\xA1Personalice su procesador KN6500!"
-Str_empty_351:	.asciz "="
-Str_empty_350:	.asciz "="
-Str_empty_349:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_349
+Str_empty_355:	.asciz "="
+Str_empty_354:	.asciz "="
+Str_empty_353:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_353
 
 ptrs_4C27FD10:
 	.long	Str_Customize_Your_KN6500
 	.long	Str_Gestalten_Sie_Ihr_KN6500
 	.long	Str_Personnalisez_votre_KN6500
 	.long	Str_Personalice_su_procesador_KN6500
-	.long	Str_empty_351
-	.long	Str_empty_350
-	.long	Str_empty_349
+	.long	Str_empty_355
+	.long	Str_empty_354
+	.long	Str_empty_353
 
 Str_Create_Your_Own_Main_Page_0dAnd_Store_Th:	.asciz "Create Your Own Main Page~0dAnd Store The Sounds, Patterns, Styles, And Functions~0dYou Use Most In The Favorites Button."
 Str_Erstellen_Sie_Ihr_pers_nliches_Hauptdisp:	.asciz "Erstellen Sie Ihr pers\xF6nliches Hauptdisplay und speichern Sie Sounds, Rhythmen, Styles und Funktionen, die Sie am h\xE4ufigsten verwenden auf  beliebige Display-Tasten."
 Str_Cr_ez_votre_propre_page_principale_et_de:	.asciz "Cr\xE9ez votre propre page principale et des raccourcis pour les sonorit\xE9s, les rythmes, les styles et les fonctions que vous utilisez le plus souvent,~0d en les rendant accessibles directement par les boutons \xAB Favorites \xBB."
 Str_Cree_su_propia_p_gina_principal_y_almace:	.asciz "Cree su propia p\xE1gina principal y almacene los sonidos, frases musicales, estilos y funciones que m\xE1s usa en el bot\xF3n de favoritos."
-Str_empty_348:	.asciz "="
-Str_empty_347:	.asciz "="
-Str_empty_346:	.asciz "="
+Str_empty_352:	.asciz "="
+Str_empty_351:	.asciz "="
+Str_empty_350:	.asciz "="
 
 ptrs_4C27FFB4:
 	.long	Str_Create_Your_Own_Main_Page_0dAnd_Store_Th
 	.long	Str_Erstellen_Sie_Ihr_pers_nliches_Hauptdisp
 	.long	Str_Cr_ez_votre_propre_page_principale_et_de
 	.long	Str_Cree_su_propia_p_gina_principal_y_almace
-	.long	Str_empty_348
-	.long	Str_empty_347
-	.long	Str_empty_346
+	.long	Str_empty_352
+	.long	Str_empty_351
+	.long	Str_empty_350
 
 Str_Store_Your_Favorite_Registrations_0dIn_T:	.asciz "Store Your Favorite Registrations~0dIn The Custom Panel - Permanently!"
 Str_Speichern_Sie_Ihre_Lieblingsregistrierun:	.asciz "Speichern Sie Ihre Lieblingsregistrierung in den Custom Panel \x96 permanent!"
 Str_Enregistrez_vos_registrations_favorites:	.asciz "Enregistrez vos registrations favorites, de mani\xE8re permanente,~0d dans les \xAB Custom Panel \xBB."
 Str_Guarde_sus_grabaciones_favoritas_en_la_m:	.asciz "Guarde sus grabaciones favoritas en la memoria de panel personalizada,~0d \xA1en forma permanente!"
-Str_empty_345:	.asciz "="
-Str_empty_344:	.asciz "="
-Str_empty_343:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_343
+Str_empty_349:	.asciz "="
+Str_empty_348:	.asciz "="
+Str_empty_347:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_347
 
 ptrs_4C280128:
 	.long	Str_Store_Your_Favorite_Registrations_0dIn_T
 	.long	Str_Speichern_Sie_Ihre_Lieblingsregistrierun
 	.long	Str_Enregistrez_vos_registrations_favorites
 	.long	Str_Guarde_sus_grabaciones_favoritas_en_la_m
-	.long	Str_empty_345
-	.long	Str_empty_344
-	.long	Str_empty_343
+	.long	Str_empty_349
+	.long	Str_empty_348
+	.long	Str_empty_347
 
 Str_They_ll_Stay_There_Even_After_You_Turn_T:	.asciz "They'll Stay There Even After You Turn The KN6500 Off!"
 Str_Diese_bleiben_immer_erhalten_0dselbst_we:	.asciz "Diese bleiben immer erhalten,~0dselbst wenn Sie das KN6500 ausschalten!"
 Str_Elles_resteront_accessibles_m_me_apr_s_a:	.asciz "Elles resteront accessibles m\xEAme apr\xE8s avoir coup\xE9 l'alimentation de votre KN6500."
 Str_All_quedar_n_despu_s_de_que_apague_el_KN:	.asciz "\xA1All\xED quedar\xE1n despu\xE9s de que apague el KN6500!"
-Str_empty_342:	.asciz "="
-Str_empty_341:	.asciz "="
-Str_empty_340:	.asciz "="
+Str_empty_346:	.asciz "="
+Str_empty_345:	.asciz "="
+Str_empty_344:	.asciz "="
 
 ptrs_4C28024C:
 	.long	Str_They_ll_Stay_There_Even_After_You_Turn_T
 	.long	Str_Diese_bleiben_immer_erhalten_0dselbst_we
 	.long	Str_Elles_resteront_accessibles_m_me_apr_s_a
 	.long	Str_All_quedar_n_despu_s_de_que_apague_el_KN
-	.long	Str_empty_342
-	.long	Str_empty_341
-	.long	Str_empty_340
+	.long	Str_empty_346
+	.long	Str_empty_345
+	.long	Str_empty_344
 
 Str_As_Will_Custom_Rhythms_And_Custom_Music:	.asciz "As Will Custom Rhythms And Custom Music Styles."
 Str_Das_Gleiche_gilt_f_r_Custom_Rhythmen_0d:	.asciz "Das Gleiche gilt f\xFCr Custom Rhythmen~0d und Custom Music Styles."
 Str_De_plus_avec_les_Custom_Rhythms_0d_et_le:	.asciz "De plus avec les \xAB Custom Rhythms \xBB~0d et les \xAB Custom Music Styles \xBB,"
 Str_Tambi_n_se_guardan_los_ritmos_y_los_esti:	.asciz "Tambi\xE9n se guardan los ritmos y los estilos musicales personalizados."
-Str_empty_339:	.asciz "="
-Str_empty_338:	.asciz "="
-Str_empty_337:	.asciz "="
+Str_empty_343:	.asciz "="
+Str_empty_342:	.asciz "="
+Str_empty_341:	.asciz "="
 
 ptrs_4C28036C:
 	.long	Str_As_Will_Custom_Rhythms_And_Custom_Music
 	.long	Str_Das_Gleiche_gilt_f_r_Custom_Rhythmen_0d
 	.long	Str_De_plus_avec_les_Custom_Rhythms_0d_et_le
 	.long	Str_Tambi_n_se_guardan_los_ritmos_y_los_esti
-	.long	Str_empty_339
-	.long	Str_empty_338
-	.long	Str_empty_337
+	.long	Str_empty_343
+	.long	Str_empty_342
+	.long	Str_empty_341
 
 Str_You_Can_Truly_Personalize_Your_KN6500_0d:	.asciz "You Can Truly Personalize Your KN6500,~0dLeaving You Free To Play Your Favorite Music!"
 Str_Sie_k_nnen_tats_chlich_Ihr_KN6500_ganz_p:	.asciz "Sie k\xF6nnen tats\xE4chlich Ihr KN6500 ganz pers\xF6nlich einrichten, ~0d so wie Sie gern musizieren m\xF6chten."
 Str_vous_pouvez_vraiment_personnaliser_votre:	.asciz "vous pouvez vraiment personnaliser votre KN6500. Vous \xEAtes enfin libre pour vous concentrer uniquement sur votre interpr\xE9tation!"
 Str_Usted_puede_personalizar_verdaderamente:	.asciz "Usted puede personalizar verdaderamente su procesador KN6500.~0d\xA1Toque libremente su m\xFAsica favorita!"
-Str_empty_336:	.asciz "="
-Str_empty_335:	.asciz "="
-Str_empty_334:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_334
+Str_empty_340:	.asciz "="
+Str_empty_339:	.asciz "="
+Str_empty_338:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_338
 
 ptrs_4C280534:
 	.long	Str_You_Can_Truly_Personalize_Your_KN6500_0d
 	.long	Str_Sie_k_nnen_tats_chlich_Ihr_KN6500_ganz_p
 	.long	Str_vous_pouvez_vraiment_personnaliser_votre
 	.long	Str_Usted_puede_personalizar_verdaderamente
-	.long	Str_empty_336
-	.long	Str_empty_335
-	.long	Str_empty_334
+	.long	Str_empty_340
+	.long	Str_empty_339
+	.long	Str_empty_338
 
 Str_Ready_To_Create_Music:	.asciz "Ready To Create Music?"
 Str_Sind_Sie_bereit_zu_musizieren:	.asciz "Sind Sie bereit zu musizieren?"
 Str_Pr_t_composer:	.asciz "Pr\xEAt \xE0 composer\xA0?"
 Str_Listo_para_crear_la_m_sica:	.asciz "\xBFListo para crear la m\xFAsica?"
-Str_empty_333:	.asciz "="
-Str_empty_332:	.asciz "="
-Str_empty_331:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_331
+Str_empty_337:	.asciz "="
+Str_empty_336:	.asciz "="
+Str_empty_335:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_335
 
 ptrs_4C2805BC:
 	.long	Str_Ready_To_Create_Music
 	.long	Str_Sind_Sie_bereit_zu_musizieren
 	.long	Str_Pr_t_composer
 	.long	Str_Listo_para_crear_la_m_sica
-	.long	Str_empty_333
-	.long	Str_empty_332
-	.long	Str_empty_331
+	.long	Str_empty_337
+	.long	Str_empty_336
+	.long	Str_empty_335
 
 Str_Be_An_Arranger_Using_The_KN6500_s_16_Tra:	.asciz "Be An Arranger Using The KN6500's 16 Track Sequencer, Create Anything From A Small Ensemble~0dTo A Full Orchestra!"
 Str_Bet_tigen_Sie_sich_als_Arrangeur_indem_S:	.asciz "Bet\xE4tigen Sie sich als Arrangeur, indem Sie den 16-Spur-Sequenzer des KN6500 zur Hilfe nehmen.~0dVom kleinen Ensemble bis hin zum gro\xDFen Orchester~0d- es stehen alle M\xF6glichkeiten offen."
 Str_Avec_le_s_quenceur_16_pistes_de_KN6500_d:	.asciz "Avec le s\xE9quenceur 16 pistes de KN6500, devenez un v\xE9ritable compositeur! Progressez \xE0 partir d'un petit ensemble instrumental pour parvenir \xE0 une formation orchestrale au grand complet!"
 Str_Sea_su_propio_arreglador_musical_El_secu:	.asciz "Sea su propio arreglador musical. El secuenciador de 16 pistas del KN6500 le permite crear cualquier combinaci\xF3n, desde un conjunto de c\xE1mara\x85~0d \xA1hasta una orquesta completa!"
-Str_empty_330:	.asciz "="
-Str_empty_329:	.asciz "="
-Str_empty_328:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_328
+Str_empty_334:	.asciz "="
+Str_empty_333:	.asciz "="
+Str_empty_332:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_332
 
 ptrs_4C280878:
 	.long	Str_Be_An_Arranger_Using_The_KN6500_s_16_Tra
 	.long	Str_Bet_tigen_Sie_sich_als_Arrangeur_indem_S
 	.long	Str_Avec_le_s_quenceur_16_pistes_de_KN6500_d
 	.long	Str_Sea_su_propio_arreglador_musical_El_secu
-	.long	Str_empty_330
-	.long	Str_empty_329
-	.long	Str_empty_328
+	.long	Str_empty_334
+	.long	Str_empty_333
+	.long	Str_empty_332
 
 Str_Or_Record_Your_Performance_The_Easy_Way:	.asciz "Or Record Your Performance The Easy Way.~0dJust Press \"Easy Record\"."
 Str_Sie_k_nnen_auch_den_einfachsten_Weg_gehe:	.asciz "Sie k\xF6nnen auch den einfachsten Weg gehen \x96 dr\xFCcken Sie einfach~0d\x84Easy Record\x93."
 Str_Ou_enregistrez_simplement_votre_interpr:	.asciz "Ou enregistrez simplement votre interpr\xE9tation avec une grande facilit\xE9.~0dIl vous suffit de presser~0d\xAB Easy Record \xBB."
 Str_Grabe_f_cilmente_su_m_sica_con_s_lo_toca:	.asciz "Grabe f\xE1cilmente su m\xFAsica con s\xF3lo tocar un bot\xF3n."
-Str_empty_327:	.asciz "="
-Str_empty_326:	.asciz "="
-Str_empty_325:	.asciz "="
+Str_empty_331:	.asciz "="
+Str_empty_330:	.asciz "="
+Str_empty_329:	.asciz "="
 
 ptrs_4C2809DC:
 	.long	Str_Or_Record_Your_Performance_The_Easy_Way
 	.long	Str_Sie_k_nnen_auch_den_einfachsten_Weg_gehe
 	.long	Str_Ou_enregistrez_simplement_votre_interpr
 	.long	Str_Grabe_f_cilmente_su_m_sica_con_s_lo_toca
-	.long	Str_empty_327
-	.long	Str_empty_326
-	.long	Str_empty_325
+	.long	Str_empty_331
+	.long	Str_empty_330
+	.long	Str_empty_329
 
 Str_Use_Auto_Play_Chord_To_Create_Your_Song:	.asciz "Use Auto Play Chord To Create Your Song Backing, Either In Technics Mode Or For Standard Midi File!"
 Str_Mit_Hilfe_von_Auto_Play_Chord_erstellen:	.asciz "Mit Hilfe von Auto Play Chord erstellen Sie Ihre pers\xF6nliche Begleitung, entweder im Technics Modus oder f\xFCr Standard-MIDI-Files."
 Str_Utilisez_l_auto_Play_Chord_pour_vous_acc:	.asciz "Utilisez l' \xAB auto Play Chord \xBB pour vous accompagner, que ce soit avec le mode Technics ou le mode \xAB Standard Midi File \xBB!"
 Str_Use_la_ejecuci_n_autom_tica_de_acordes_p:	.asciz "\xA1Use la ejecuci\xF3n autom\xE1tica de acordes para crear el acompa\xF1amiento, ya sea en modo Technics o en un archivo MIDI est\xE1ndar!"
-Str_empty_324:	.asciz "="
-Str_empty_323:	.asciz "="
-Str_empty_322:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_322
+Str_empty_328:	.asciz "="
+Str_empty_327:	.asciz "="
+Str_empty_326:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_326
 
 ptrs_4C280BE0:
 	.long	Str_Use_Auto_Play_Chord_To_Create_Your_Song
 	.long	Str_Mit_Hilfe_von_Auto_Play_Chord_erstellen
 	.long	Str_Utilisez_l_auto_Play_Chord_pour_vous_acc
 	.long	Str_Use_la_ejecuci_n_autom_tica_de_acordes_p
-	.long	Str_empty_324
-	.long	Str_empty_323
-	.long	Str_empty_322
+	.long	Str_empty_328
+	.long	Str_empty_327
+	.long	Str_empty_326
 
 Str_Sing_Along_To_A_Huge_Range_Of_Song_Softw:	.asciz "Sing Along To A Huge Range Of Song Software With On Screen Lyrics!"
 Str_Singen_Sie_zu_einem_riesigen_Softwareang:	.asciz "Singen Sie zu einem riesigen Softwareangebot mit Texten, die im Display angezeigt werden."
-Str_empty_321:	.asciz " "
+Str_empty_325:	.asciz " "
 Str_Cante_una_amplia_gama_de_canciones_en_so:	.asciz "\xA1Cante una amplia gama de canciones en software con letras en pantalla!"
-Str_empty_320:	.asciz "="
-Str_empty_319:	.asciz "="
-Str_empty_318:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_318
+Str_empty_324:	.asciz "="
+Str_empty_323:	.asciz "="
+Str_empty_322:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_322
 
 ptrs_4C280CEC:
 	.long	Str_Sing_Along_To_A_Huge_Range_Of_Song_Softw
 	.long	Str_Singen_Sie_zu_einem_riesigen_Softwareang
-	.long	Str_empty_321
+	.long	Str_empty_325
 	.long	Str_Cante_una_amplia_gama_de_canciones_en_so
-	.long	Str_empty_320
-	.long	Str_empty_319
-	.long	Str_empty_318
+	.long	Str_empty_324
+	.long	Str_empty_323
+	.long	Str_empty_322
 
-Str_empty_317:	.asciz " "
-Str_empty_316:	.asciz " "
+Str_empty_321:	.asciz " "
+Str_empty_320:	.asciz " "
 Str_Chantez_avec_l_accompagnement_d_orchestr:	.asciz "Chantez avec l'accompagnement d'orchestre d'une grande vari\xE9t\xE9 de softwares commerciaux. La plupart de ces softs permettent l'affichage des paroles sur l'\xE9cran de votre clavier\xA0!"
-Str_empty_315:	.asciz " "
-Str_empty_314:	.asciz "="
-Str_empty_313:	.asciz "="
-Str_empty_312:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_312
+Str_empty_319:	.asciz " "
+Str_empty_318:	.asciz "="
+Str_empty_317:	.asciz "="
+Str_empty_316:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_316
 
 ptrs_4C280DC8:
+	.long	Str_empty_321
+	.long	Str_empty_320
+	.long	Str_Chantez_avec_l_accompagnement_d_orchestr
+	.long	Str_empty_319
+	.long	Str_empty_318
 	.long	Str_empty_317
 	.long	Str_empty_316
-	.long	Str_Chantez_avec_l_accompagnement_d_orchestr
-	.long	Str_empty_315
-	.long	Str_empty_314
-	.long	Str_empty_313
-	.long	Str_empty_312
 
 Str_Detailed_Editing_Functions_Let_You_Get_T:	.asciz "Detailed Editing Functions Let You Get The Recording~0dJust The Way You Want It!"
 Str_Detaillierte_Bearbeitungs_Funktionen_erm:	.asciz "Detaillierte Bearbeitungs-Funktionen erm\xF6glichen eine Aufnahme so, wie Sie es w\xFCnschen."
-Str_empty_311:	.asciz " "
+Str_empty_315:	.asciz " "
 Str_Las_funciones_de_edici_n_detallada_le_pe:	.asciz "\xA1Las funciones de edici\xF3n detallada le permiten lograr la grabaci\xF3n que desea!"
-Str_empty_310:	.asciz "="
-Str_empty_309:	.asciz "="
-Str_empty_308:	.asciz "="
+Str_empty_314:	.asciz "="
+Str_empty_313:	.asciz "="
+Str_empty_312:	.asciz "="
 
 ptrs_4C280EE4:
 	.long	Str_Detailed_Editing_Functions_Let_You_Get_T
 	.long	Str_Detaillierte_Bearbeitungs_Funktionen_erm
-	.long	Str_empty_311
+	.long	Str_empty_315
 	.long	Str_Las_funciones_de_edici_n_detallada_le_pe
-	.long	Str_empty_310
-	.long	Str_empty_309
-	.long	Str_empty_308
+	.long	Str_empty_314
+	.long	Str_empty_313
+	.long	Str_empty_312
 
-Str_empty_307:	.asciz " "
-Str_empty_306:	.asciz " "
+Str_empty_311:	.asciz " "
+Str_empty_310:	.asciz " "
 Str_Des_fonctions_d_ditions_tr_s_compl_tes_v:	.asciz "Des fonctions d'\xE9ditions tr\xE8s compl\xE8tes vous donnent la libert\xE9 d'effectuer vos enregistrements comme vous le voulez!"
-Str_empty_305:	.asciz " "
-Str_empty_304:	.asciz "="
-Str_empty_303:	.asciz "="
-Str_empty_302:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_302
+Str_empty_309:	.asciz " "
+Str_empty_308:	.asciz "="
+Str_empty_307:	.asciz "="
+Str_empty_306:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_306
 
 ptrs_4C280F84:
+	.long	Str_empty_311
+	.long	Str_empty_310
+	.long	Str_Des_fonctions_d_ditions_tr_s_compl_tes_v
+	.long	Str_empty_309
+	.long	Str_empty_308
 	.long	Str_empty_307
 	.long	Str_empty_306
-	.long	Str_Des_fonctions_d_ditions_tr_s_compl_tes_v
-	.long	Str_empty_305
-	.long	Str_empty_304
-	.long	Str_empty_303
-	.long	Str_empty_302
 
 Str_How_Easy_Is_The_KN6500_To_Use:	.asciz "How Easy Is The KN6500 To Use?"
 Str_Wie_einfach_ist_das_KN6500_zu_bedienen:	.asciz "Wie einfach ist das KN6500 zu bedienen?"
 Str_Le_KN6500_est_vraiment_tr_s_facile_utili:	.asciz "Le KN6500 est vraiment tr\xE8s facile \xE0 utiliser!"
 Str_Es_f_cil_usar_el_KN6500:	.asciz "\xBFEs f\xE1cil usar el KN6500?"
-Str_empty_301:	.asciz "="
-Str_empty_300:	.asciz "="
-Str_empty_299:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_299
+Str_empty_305:	.asciz "="
+Str_empty_304:	.asciz "="
+Str_empty_303:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_303
 
 ptrs_4C281038:
 	.long	Str_How_Easy_Is_The_KN6500_To_Use
 	.long	Str_Wie_einfach_ist_das_KN6500_zu_bedienen
 	.long	Str_Le_KN6500_est_vraiment_tr_s_facile_utili
 	.long	Str_Es_f_cil_usar_el_KN6500
-	.long	Str_empty_301
-	.long	Str_empty_300
-	.long	Str_empty_299
+	.long	Str_empty_305
+	.long	Str_empty_304
+	.long	Str_empty_303
 
 Str_Find_Any_Information_In_Wide_Screen_Colo:	.asciz "Find Any Information In Wide Screen Color!"
 Str_Sie_finden_jede_Information_im_breiten_F:	.asciz "Sie finden jede Information im breiten Farb-Display!"
 Str_Le_grand_cran_LCD_vous_donne_toutes_les:	.asciz "Le grand \xE9cran LCD vous donne toutes les informations que vous D\xE9sirez!"
 Str_Encuentre_toda_la_informaci_n_en_la_ampl:	.asciz "\xA1Encuentre toda la informaci\xF3n en la amplia pantalla de color!"
-Str_empty_298:	.asciz "="
-Str_empty_297:	.asciz "="
-Str_empty_296:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_296
+Str_empty_302:	.asciz "="
+Str_empty_301:	.asciz "="
+Str_empty_300:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_300
 
 ptrs_4C281144:
 	.long	Str_Find_Any_Information_In_Wide_Screen_Colo
 	.long	Str_Sie_finden_jede_Information_im_breiten_F
 	.long	Str_Le_grand_cran_LCD_vous_donne_toutes_les
 	.long	Str_Encuentre_toda_la_informaci_n_en_la_ampl
-	.long	Str_empty_298
-	.long	Str_empty_297
-	.long	Str_empty_296
+	.long	Str_empty_302
+	.long	Str_empty_301
+	.long	Str_empty_300
 
 Str_Play_Straight_Away_0dJust_Use_One_Touch:	.asciz "Play Straight Away!~0dJust Use One Touch Play Or The~0dMusic Style Arranger."
 Str_Spielen_Sie_einfach_drauf_los_Sie_werden:	.asciz "Spielen Sie einfach drauf los! Sie werden unterst\xFCtzt von One Touch Play oder vom Music Style Arranger."
 Str_Jouez_imm_diatement_0dIl_vous_suffit_de:	.asciz "Jouez imm\xE9diatement!~0dIl vous suffit de presser~0d\xAB One Touch Play \xBB~0d ou \xAB Music Style Arranger \xBB."
 Str_Toque_al_instante_Simplemente_use_la_eje:	.asciz "\xA1Toque al instante! Simplemente, use la ejecuci\xF3n de un bot\xF3n o el arreglador de estilos musicales."
-Str_empty_295:	.asciz "="
-Str_empty_294:	.asciz "="
-Str_empty_293:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_293
+Str_empty_299:	.asciz "="
+Str_empty_298:	.asciz "="
+Str_empty_297:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_297
 
 ptrs_4C2812E8:
 	.long	Str_Play_Straight_Away_0dJust_Use_One_Touch
 	.long	Str_Spielen_Sie_einfach_drauf_los_Sie_werden
 	.long	Str_Jouez_imm_diatement_0dIl_vous_suffit_de
 	.long	Str_Toque_al_instante_Simplemente_use_la_eje
-	.long	Str_empty_295
-	.long	Str_empty_294
-	.long	Str_empty_293
+	.long	Str_empty_299
+	.long	Str_empty_298
+	.long	Str_empty_297
 
 Str_Looking_For_The_Lost_Chord_Let_The_Chord:	.asciz "Looking For The Lost Chord? Let The Chord Finder Help You!"
 Str_Suchen_Sie_einen_bestimmten_Akkord_Frage:	.asciz "Suchen Sie einen bestimmten Akkord? Fragen Sie den Chord Finder um Hilfe."
 Str_A_la_recherche_de_l_accord_perdu_0dLe_Ch:	.asciz "A la recherche de l'accord perdu?~0dLe \xAB Chord finder \xBB vous aidera \xE0 le retrouver!"
 Str_Busca_un_acorde_0d_Deje_que_el_buscador:	.asciz "\xBFBusca un acorde?~0d\xA1Deje que el buscador de acordes le ayude!"
-Str_empty_292:	.asciz "="
-Str_empty_291:	.asciz "="
-Str_empty_290:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_290
+Str_empty_296:	.asciz "="
+Str_empty_295:	.asciz "="
+Str_empty_294:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_294
 
 ptrs_4C281424:
 	.long	Str_Looking_For_The_Lost_Chord_Let_The_Chord
 	.long	Str_Suchen_Sie_einen_bestimmten_Akkord_Frage
 	.long	Str_A_la_recherche_de_l_accord_perdu_0dLe_Ch
 	.long	Str_Busca_un_acorde_0d_Deje_que_el_buscador
-	.long	Str_empty_292
-	.long	Str_empty_291
-	.long	Str_empty_290
+	.long	Str_empty_296
+	.long	Str_empty_295
+	.long	Str_empty_294
 
 Str_Easy_Setting_Makes_It_Simple_0dTo_Custom:	.asciz "Easy Setting Makes It Simple~0dTo Customize Features Just Press And Hold~0dThe Feature's Button For 2 Seconds."
 Str_Easy_Setting_macht_es_einfach_Funktionen:	.asciz "Easy Setting macht es einfach Funktionen zusammenzustellen. Dr\xFCcken und halten Sie einfach die Funktionstaste f\xFCr 2 Sekunden."
 Str_C_est_tr_s_facile_de_personnaliser_vos_r:	.asciz "C' est tr\xE8s facile de personnaliser vos r\xE9glages, il suffit de presser et de maintenir te bouton de la fonction plus de deux secondes."
 Str_La_configuraci_n_f_cil_simplifica_la_per:	.asciz "La configuraci\xF3n f\xE1cil simplifica la personalizaci\xF3n de funciones. S\xF3lo mantenga pulsado el bot\xF3n Feature por 2 segundos."
-Str_empty_289:	.asciz "="
-Str_empty_287:	.asciz "="
-Str_empty_279:	.asciz "="
+Str_empty_293:	.asciz "="
+Str_empty_292:	.asciz "="
+Str_empty_291:	.asciz "="
 
 ptrs_4C281634:
 	.long	Str_Easy_Setting_Makes_It_Simple_0dTo_Custom
 	.long	Str_Easy_Setting_macht_es_einfach_Funktionen
 	.long	Str_C_est_tr_s_facile_de_personnaliser_vos_r
 	.long	Str_La_configuraci_n_f_cil_simplifica_la_per
-	.long	Str_empty_289
-	.long	Str_empty_287
-	.long	Str_empty_279
+	.long	Str_empty_293
+	.long	Str_empty_292
+	.long	Str_empty_291
 
 Str_Let_The_Help_Function_0dTeach_You_About:	.asciz "Let The Help Function~0dTeach You About KN6500!"
 Str_Lassen_Sie_sich_von_der_Help_Funktion_In:	.asciz "Lassen Sie sich von der Help-Funktion Informationen zum KN6500 geben!"
 Str_La_fonction_Help_vous_apprend_tout_sur_l:	.asciz "La fonction \xABHelp\xBB vous apprend tout sur le KN6500!"
 Str_Deje_que_la_funci_n_de_ayuda_le_explique:	.asciz "\xA1Deje que la funci\xF3n de ayuda le explique el KN6500!"
-Str_empty_278:	.asciz "="
-Str_empty_277:	.asciz "="
-Str_empty_276:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_276
+Str_empty_290:	.asciz "="
+Str_empty_289:	.asciz "="
+Str_empty_287:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_287
 
 ptrs_4C281738:
 	.long	Str_Let_The_Help_Function_0dTeach_You_About
 	.long	Str_Lassen_Sie_sich_von_der_Help_Funktion_In
 	.long	Str_La_fonction_Help_vous_apprend_tout_sur_l
 	.long	Str_Deje_que_la_funci_n_de_ayuda_le_explique
-	.long	Str_empty_278
-	.long	Str_empty_277
-	.long	Str_empty_276
+	.long	Str_empty_290
+	.long	Str_empty_289
+	.long	Str_empty_287
 
 Str_With_The_KN6500_You_Can_Spend_More_Time:	.asciz "With The KN6500 You Can Spend More Time Making Music!"
 Str_Mit_dem_KN6500_k_nnen_Sie_sich_ganz_auf:	.asciz "Mit dem KN6500 k\xF6nnen Sie sich ganz auf das Musizieren konzentrieren!"
 Str_Le_KN6500_vous_permet_de_passer_plus_de:	.asciz "Le KN6500 vous permet de passer plus de temps \xE0 r\xE9ellement faire de la musique!!"
 Str_Con_el_KN6500_0d_usted_puede_pasar_m_s_t:	.asciz "Con el KN6500,~0d\xA1usted puede pasar m\xE1s tiempo creando su m\xFAsica!"
-Str_empty_275:	.asciz "="
-Str_empty_274:	.asciz "="
-Str_empty_273:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_273
+Str_empty_279:	.asciz "="
+Str_empty_278:	.asciz "="
+Str_empty_277:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_277
 
 ptrs_4C28186C:
 	.long	Str_With_The_KN6500_You_Can_Spend_More_Time
 	.long	Str_Mit_dem_KN6500_k_nnen_Sie_sich_ganz_auf
 	.long	Str_Le_KN6500_vous_permet_de_passer_plus_de
 	.long	Str_Con_el_KN6500_0d_usted_puede_pasar_m_s_t
-	.long	Str_empty_275
-	.long	Str_empty_274
-	.long	Str_empty_273
+	.long	Str_empty_279
+	.long	Str_empty_278
+	.long	Str_empty_277
 
 Str_Explore_The_Mystique_Peril_Of_The_Secret:	.asciz "Explore The Mystique & Peril Of The Secret Agent...."
 Str_Erforschen_Sie_den_geheimnisvollen_Nimbu:	.asciz "Erforschen Sie den geheimnisvollen Nimbus und die Gefahren des Geheimagenten...."
 Str_D_couvrez_les_Myst_res_et_les_P_rils_de:	.asciz "D\xE9couvrez les Myst\xE8res et les P\xE9rils de la vie d\x92un Agent Secret \x85"
 Str_Explore_el_misterio_y_el_peligro_del_Age:	.asciz "Explore el misterio y el peligro del Agente Secreto."
-Str_empty_272:	.asciz "="
-Str_empty_271:	.asciz "="
-Str_empty_270:	.asciz "="
+Str_empty_276:	.asciz "="
+Str_empty_275:	.asciz "="
+Str_empty_274:	.asciz "="
 
 ptrs_4C28198C:
 	.long	Str_Explore_The_Mystique_Peril_Of_The_Secret
 	.long	Str_Erforschen_Sie_den_geheimnisvollen_Nimbu
 	.long	Str_D_couvrez_les_Myst_res_et_les_P_rils_de
 	.long	Str_Explore_el_misterio_y_el_peligro_del_Age
-	.long	Str_empty_272
-	.long	Str_empty_271
-	.long	Str_empty_270
+	.long	Str_empty_276
+	.long	Str_empty_275
+	.long	Str_empty_274
 
 Str_The_Pure_Escapism_Of_0dAn_Epic_Space_Adv:	.asciz "....The Pure Escapism Of~0dAn Epic Space Adventure & Much More!"
 Str_erleben_Sie_eine_Traumreise_in_die_unend:	.asciz "....erleben Sie eine Traumreise in die unendlichen Weiten des Universums und vieles mehr!"
 Str_Ou_quittez_la_r_alit_en_vivant_une_avent:	.asciz "Ou quittez la r\xE9alit\xE9 en vivant une aventure aux confins de l\x92univers et bien d\x92autres choses\xA0encore!"
 Str_El_Puro_Escape_de_Una_Aventura_del_Espac:	.asciz "El Puro Escape de Una Aventura del Espacio y much mas!"
-Str_empty_269:	.asciz "="
-Str_empty_268:	.asciz "="
-Str_empty_267:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_267
+Str_empty_273:	.asciz "="
+Str_empty_272:	.asciz "="
+Str_empty_271:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_271
 
 ptrs_4C281AE8:
 	.long	Str_The_Pure_Escapism_Of_0dAn_Epic_Space_Adv
 	.long	Str_erleben_Sie_eine_Traumreise_in_die_unend
 	.long	Str_Ou_quittez_la_r_alit_en_vivant_une_avent
 	.long	Str_El_Puro_Escape_de_Una_Aventura_del_Espac
-	.long	Str_empty_269
-	.long	Str_empty_268
-	.long	Str_empty_267
+	.long	Str_empty_273
+	.long	Str_empty_272
+	.long	Str_empty_271
 
 Str_Whatever_Your_Taste_In_Music_0dThe_KN650:	.asciz "Whatever Your Taste In Music~0dThe KN6500 Has A Pattern To Suit,~0dAnd An Unrivalled Accompaniment System~0dTo Match Every Chord Change!"
 Str_Welchen_Musikgeschmack_Sie_auch_haben_da:	.asciz "Welchen Musikgeschmack Sie auch haben, das KN6500 hat fast immer einen passenden Begleitrhythmus dazu und eine unglaubliche variable Begleitautomatik!"
 Str_Quelques_soient_vos_pr_f_rences_musicale:	.asciz "Quelques soient vos pr\xE9f\xE9rences musicales le KN6500 dispose de l\x92orchestration correspondante,~0d et d\x92un syst\xE9me d\x92accompagnement in\xE9gal\xE9,~0d interactif et d\x92une grande musicalit\xE9 \xA7"
 Str_Cualquiera_que_sea_su_Gusto_en_Musica_el:	.asciz "Cualquiera que sea su Gusto en Musica, el KN6500 tiene un patron que le gustara y un incomparable systema de accompanamiento para igualar cualquier cambio de cuerda."
-Str_empty_266:	.asciz "="
-Str_empty_265:	.asciz "="
-Str_empty_264:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_264
+Str_empty_270:	.asciz "="
+Str_empty_269:	.asciz "="
+Str_empty_268:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_268
 
 ptrs_4C281D88:
 	.long	Str_Whatever_Your_Taste_In_Music_0dThe_KN650
 	.long	Str_Welchen_Musikgeschmack_Sie_auch_haben_da
 	.long	Str_Quelques_soient_vos_pr_f_rences_musicale
 	.long	Str_Cualquiera_que_sea_su_Gusto_en_Musica_el
-	.long	Str_empty_266
-	.long	Str_empty_265
-	.long	Str_empty_264
+	.long	Str_empty_270
+	.long	Str_empty_269
+	.long	Str_empty_268
 
+Str_empty_267:	.asciz "="
+Str_empty_266:	.asciz "="
+Str_empty_265:	.asciz "="
+Str_empty_264:	.asciz "="
 Str_empty_263:	.asciz "="
 Str_empty_262:	.asciz "="
 Str_empty_261:	.asciz "="
-Str_empty_260:	.asciz "="
-Str_empty_259:	.asciz "="
-Str_empty_258:	.asciz "="
-Str_empty_257:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_257
+	.align	4, 0xFF	# pad after Str_empty_261
 
 ptrs_4C281DB4:
+	.long	Str_empty_267
+	.long	Str_empty_266
+	.long	Str_empty_265
+	.long	Str_empty_264
 	.long	Str_empty_263
 	.long	Str_empty_262
 	.long	Str_empty_261
-	.long	Str_empty_260
-	.long	Str_empty_259
-	.long	Str_empty_258
-	.long	Str_empty_257
 
 StylePanel_88_Ballad_1:	# one-touch setting 1 of the Music Stylist setup "88 Ballad" (StyleRecordTable[168].panel; src/include/panel_memory.inc)
 	PM_PART	0x00, 0x40, 0x20, 0x7f, 0x15, 0x02, 0x99, 0x50, 0x3c, 0x40, 0x00, 0x6c, 0x40, 0x1c, 0x40, 0x40, 0x40, 0x80, 0x00, 0x00, 0x00, 0x88, 0x80, 0x80, 0x00, 0x00	# part 0 (RIGHT1)
@@ -19039,7 +19039,7 @@ func_4C001885_Var:	# u32, a constant; read / written by func_4C001885 0x4C001885
 localeconv_Records:	# 1 x LconvMonetary (40 bytes each); read by localeconv 0x4C00246C `mov (0x10, a1), a0`; localeconv 0x4C00246C `mov (0x14, a1), a0`; localeconv 0x4C00246C `mov (0x18, a1), a0` (+12)
 	LconvMonetary	locale=Str_C_19, int_curr_symbol=data_4C176A82, currency_symbol=data_4C176A83, mon_decimal_point=data_4C176A84, mon_thousands_sep=data_4C176A85, mon_grouping=data_4C176A86, positive_sign=data_4C176A87, negative_sign=data_4C176A88, int_frac_digits=127, frac_digits=127, p_cs_precedes=127, p_sep_by_space=127, n_cs_precedes=127, n_sep_by_space=127, p_sign_posn=127, n_sign_posn=127
 localeconv_Records_2:	# 2 x LconvNumeric (16 bytes each); read by localeconv 0x4C00246C `mov (0xc, a1), a0`; localeconv 0x4C00246C `mov (4, a1), a0`; localeconv 0x4C00246C `mov (8, a1), a0`
-	LconvNumeric	locale=Str_C_18, decimal_point=Str_empty_895, thousands_sep=data_4C176A90, grouping=data_4C176A91
+	LconvNumeric	locale=Str_C_18, decimal_point=Str_empty_899, thousands_sep=data_4C176A90, grouping=data_4C176A91
 	LconvNumeric	
 
 localeconv_Table:	# 4 x u32, 0..2576980378; read by localeconv 0x4C00246C: `mov (localeconv_Table), d0`
@@ -21321,59 +21321,8 @@ names_4C2B5ABC:
 	.long	data_4C18DB5D
 	.long	0
 	.space	820, 0x00
-
-names_4C2B5EBC:	# 49 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
-	.long	Str_music1_bmp
-	.long	Str_music2_bmp
-	.long	Str_technics_bmp
-	.long	Str_slide_bmp
-	.long	Str_slmove_bmp
-	.long	Str_mixctr_bmp
-	.long	Str_mixpoint_bmp
-	.long	Str_fwd_bmp
-	.long	Str_bwd_bmp
-	.long	Str_pause_bmp
-	.long	Str_start_bmp
-	.long	Str_before_bmp
-	.long	Str_next_bmp
-	.long	Str_11bass_bmp
-	.long	Str_03brass_bmp
-	.long	Str_15drum_bmp
-	.long	Str_04flute_bmp
-	.long	Str_01guitar_bmp
-	.long	Str_07world_bmp
-	.long	Str_06mallet_bmp
-	.long	Str_16mema_bmp
-	.long	Str_17memb_bmp
-	.long	Str_08organ_bmp
-	.long	Str_09orch_bmp
-	.long	Str_00piano_bmp
-	.long	Str_05sax_bmp
-	.long	Str_02string_bmp
-	.long	Str_10synth_bmp
-	.long	Str_12draw_bmp
-	.long	Str_13accod_bmp
-	.long	Str_ledswon_bmp
-	.long	Str_ledswoff_bmp
-	.long	Str_14gmsp_bmp
-	.long	Str_18metro_bmp
-	.long	Str_19mic_bmp
-	.long	Str_20upright_bmp
-	.long	Str_21elec_bmp
-	.long	Str_22modern_bmp
-	.long	Str_23rhythm_bmp
-	.long	Str_24mem_bmp
-	.long	Str_25pianomix_bmp
-	.long	Str_26orchmix_bmp
-	.long	Str_27saxwood_bmp
-	.long	Str_28syndance_bmp
-	.long	Str_29guitharpsi_bmp
-	.long	Str_slide_bmp_2
-	.long	Str_slmove_bmp_2
-	.long	Str_slide65_bmp
-	.long	Str_slmove65_bmp
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x2B5F80, 0x2B5F84
+# census: opaque -- unknown-dump: 200 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x2B5EBC, 0x2B5F84
 	.space	824, 0x00
 
 GetFontCount_Table:	# 2 x u16, 12..65535; read by GetFontCount 0x4C020698: `movhu (GetFontCount_Table), d0`
@@ -21459,83 +21408,8 @@ names_4C2B62C4:
 	.long	data_4C18E0E7
 	.long	0
 	.space	724, 0x00
-
-names_4C2B66C4:	# 73 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
-	.long	Str_Round1_bmp
-	.long	Str_Round1_bmp_2
-	.long	Str_Round1_bmp_3
-	.long	Str_Round1_bmp_4
-	.long	Text_Round2a_bmp
-	.long	Text_Round2a_bmp+12
-	.long	Text_Round2a_bmp+24
-	.long	Text_Round2a_bmp+36
-	.long	Text_Round2a_bmp+48
-	.long	Text_Round2a_bmp+60
-	.long	Text_Round2a_bmp+72
-	.long	Text_Round2a_bmp+84
-	.long	Text_Round2a_bmp+96
-	.long	Text_Round2a_bmp+108
-	.long	Text_Round2a_bmp+120
-	.long	Text_Round2a_bmp+132
-	.long	Str_Round14a_bmp
-	.long	Str_Round14b_bmp
-	.long	Str_Round14c_bmp
-	.long	Str_Round14d_bmp
-	.long	Str_Round1s_bmp
-	.long	Str_Round1s_bmp_2
-	.long	Str_Round1s_bmp_3
-	.long	Str_Round1s_bmp_4
-	.long	Text_Round2sa_bmp
-	.long	Text_Round2sa_bmp+13
-	.long	Text_Round2sa_bmp+26
-	.long	Text_Round2sa_bmp+39
-	.long	Text_Round2sa_bmp+52
-	.long	Text_Round2sa_bmp+65
-	.long	Text_Round2sa_bmp+78
-	.long	Text_Round2sa_bmp+91
-	.long	Text_Round2sa_bmp+104
-	.long	Text_Round2sa_bmp+117
-	.long	Text_Round2sa_bmp+130
-	.long	Text_Round2sa_bmp+143
-	.long	Str_Round14sa_bmp
-	.long	Str_Round14sb_bmp
-	.long	Str_Round14sc_bmp
-	.long	Str_Round14sd_bmp
-	.long	Str_Right12_bmp
-	.long	Str_Right16_bmp
-	.long	Str_Right24_bmp
-	.long	Str_Right32_bmp
-	.long	Str_Right48_bmp
-	.long	Str_Left12_bmp
-	.long	Str_Left16_bmp
-	.long	Str_Left24_bmp
-	.long	Str_Left32_bmp
-	.long	Str_Left48_bmp
-	.long	Text_LOnOff16_bmp
-	.long	Text_LOnOff16_bmp+13
-	.long	Text_LOnOff16_bmp+26
-	.long	Text_LOnOff16_bmp+39
-	.long	Text_LOnOff16_bmp+52
-	.long	Text_LOnOff16_bmp+65
-	.long	Text_LOnOff16_bmp+78
-	.long	Text_LOnOff16_bmp+91
-	.long	Str_LeftSw_bmp
-	.long	Str_RightSw_bmp
-	.long	Str_EditA_bmp
-	.long	Str_EditB_bmp
-	.long	Str_EditC_bmp
-	.long	Str_EditD_bmp
-	.long	Str_Edit95A_bmp
-	.long	Str_Edit95B_bmp
-	.long	Str_Edit95C_bmp
-	.long	Str_Edit95D_bmp
-	.long	Str_EditDA_bmp
-	.long	Str_EditDB_bmp
-	.long	Str_EditDC_bmp
-	.long	Str_EditDD_bmp
-	.long	Str_Mixertab_bmp
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x2B67E8, 0x2B67EC
+# census: opaque -- unknown-dump: 296 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x2B66C4, 0x2B67EC
 	.space	728, 0x00
 
 GetIconCount_Table:	# 2 x u16, 212..65535; read by GetIconCount 0x4C020686: `movhu (GetIconCount_Table), d0`
@@ -21757,222 +21631,8 @@ names_4C2B6AC8:
 	.long	data_4C18E819
 	.long	0
 	.space	168, 0x00
-
-names_4C2B6EC8:	# 212 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
-	.long	Str_kari_bmp
-	.long	Str_kari_bmp_2
-	.long	Str_i0_bmp
-	.long	Str_i1_bmp
-	.long	Str_i2_bmp
-	.long	Str_i3o_bmp
-	.long	Str_i4o_bmp
-	.long	Str_i5_bmp
-	.long	Str_i6o_bmp
-	.long	Str_i7_bmp
-	.long	Str_i8_bmp
-	.long	Str_i9_bmp
-	.long	Text_i10_bmp
-	.long	Text_i10_bmp+8
-	.long	Text_i10_bmp+16
-	.long	Text_i10_bmp+24
-	.long	Text_i10_bmp+32
-	.long	Text_i10_bmp+40
-	.long	Text_i10_bmp+48
-	.long	Text_i10_bmp+56
-	.long	Text_i10_bmp+64
-	.long	Text_i10_bmp+72
-	.long	Text_i10_bmp+80
-	.long	Text_i10_bmp+88
-	.long	Text_i10_bmp+96
-	.long	Text_i10_bmp+104
-	.long	Text_i10_bmp+112
-	.long	Text_i10_bmp+120
-	.long	Text_i10_bmp+128
-	.long	Text_i10_bmp+136
-	.long	Text_i10_bmp+144
-	.long	Text_i10_bmp+152
-	.long	Text_i10_bmp+160
-	.long	Text_i10_bmp+168
-	.long	Text_i10_bmp+176
-	.long	Text_i10_bmp+184
-	.long	Text_i10_bmp+192
-	.long	Text_i10_bmp+200
-	.long	Text_i10_bmp+208
-	.long	Text_i10_bmp+216
-	.long	Text_i10_bmp+224
-	.long	Text_i10_bmp+232
-	.long	Text_i10_bmp+240
-	.long	Text_i10_bmp+248
-	.long	Text_i10_bmp+256
-	.long	Text_i10_bmp+264
-	.long	Text_i10_bmp+272
-	.long	Text_i10_bmp+280
-	.long	Text_i10_bmp+288
-	.long	Text_i10_bmp+296
-	.long	Text_i10_bmp+304
-	.long	Text_i10_bmp+312
-	.long	Text_i10_bmp+320
-	.long	Text_i10_bmp+328
-	.long	Text_i10_bmp+336
-	.long	Text_i10_bmp+344
-	.long	Text_i10_bmp+352
-	.long	Text_i10_bmp+360
-	.long	Text_i10_bmp+368
-	.long	Text_i10_bmp+376
-	.long	Text_i10_bmp+384
-	.long	Text_i10_bmp+392
-	.long	Text_i10_bmp+400
-	.long	Text_i10_bmp+408
-	.long	Text_i10_bmp+416
-	.long	Text_i10_bmp+424
-	.long	Text_i10_bmp+432
-	.long	Text_i10_bmp+440
-	.long	Text_i10_bmp+448
-	.long	Text_i10_bmp+456
-	.long	Text_i10_bmp+464
-	.long	Text_i10_bmp+472
-	.long	Text_i10_bmp+480
-	.long	Text_i10_bmp+488
-	.long	Text_i10_bmp+496
-	.long	Str_i73o_bmp
-	.long	Str_i74o_bmp
-	.long	Text_i75_bmp
-	.long	Text_i75_bmp+8
-	.long	Text_i75_bmp+16
-	.long	Text_i75_bmp+24
-	.long	Text_i75_bmp+32
-	.long	Text_i75_bmp+40
-	.long	Text_i75_bmp+48
-	.long	Text_i75_bmp+56
-	.long	Text_i75_bmp+64
-	.long	Str_i84o_bmp
-	.long	Str_i85_bmp
-	.long	Str_i86_bmp
-	.long	Str_i87_bmp
-	.long	Str_i88_bmp
-	.long	Str_i89_bmp
-	.long	Str_i90o_bmp
-	.long	Str_i91o_bmp
-	.long	Str_i92o_bmp
-	.long	Str_i93o_bmp
-	.long	Str_i94_bmp
-	.long	Str_i95_bmp
-	.long	Str_i96o_bmp
-	.long	Str_i97_bmp
-	.long	Str_i98_bmp
-	.long	Str_i99_bmp
-	.long	Str_i100_bmp
-	.long	Str_i101_bmp
-	.long	Str_i102_bmp
-	.long	Str_i103_bmp
-	.long	Str_i104_bmp
-	.long	Str_i105_bmp
-	.long	Str_i106_bmp
-	.long	Str_i107o_bmp
-	.long	Text_i108_bmp
-	.long	Text_i108_bmp+9
-	.long	Text_i108_bmp+18
-	.long	Text_i108_bmp+27
-	.long	Text_i108_bmp+36
-	.long	Text_i108_bmp+45
-	.long	Text_i108_bmp+54
-	.long	Text_i108_bmp+63
-	.long	Text_i108_bmp+72
-	.long	Text_i108_bmp+81
-	.long	Text_i108_bmp+90
-	.long	Text_i108_bmp+99
-	.long	Text_i108_bmp+108
-	.long	Text_i108_bmp+117
-	.long	Text_i108_bmp+126
-	.long	Text_i108_bmp+135
-	.long	Text_i108_bmp+144
-	.long	Text_i108_bmp+153
-	.long	Text_i108_bmp+162
-	.long	Text_i108_bmp+171
-	.long	Text_i108_bmp+180
-	.long	Text_i108_bmp+189
-	.long	Text_i108_bmp+198
-	.long	Text_i108_bmp+207
-	.long	Text_i108_bmp+216
-	.long	Text_i108_bmp+225
-	.long	Text_i108_bmp+234
-	.long	Text_i108_bmp+243
-	.long	Text_i108_bmp+252
-	.long	Text_i108_bmp+261
-	.long	Text_i108_bmp+270
-	.long	Text_i108_bmp+279
-	.long	Text_i108_bmp+288
-	.long	Text_i108_bmp+297
-	.long	Text_i108_bmp+306
-	.long	Text_i108_bmp+315
-	.long	Text_i108_bmp+324
-	.long	Text_i108_bmp+333
-	.long	Text_i108_bmp+342
-	.long	Text_i108_bmp+351
-	.long	Text_i108_bmp+360
-	.long	Text_i108_bmp+369
-	.long	Text_i108_bmp+378
-	.long	Text_i108_bmp+387
-	.long	Text_i108_bmp+396
-	.long	Text_i108_bmp+405
-	.long	Text_i108_bmp+414
-	.long	Text_i108_bmp+423
-	.long	Text_i108_bmp+432
-	.long	Text_i108_bmp+441
-	.long	Text_i108_bmp+450
-	.long	Text_i108_bmp+459
-	.long	Text_i108_bmp+468
-	.long	Text_i108_bmp+477
-	.long	Text_i108_bmp+486
-	.long	Text_i108_bmp+495
-	.long	Text_i108_bmp+504
-	.long	Text_i108_bmp+513
-	.long	Text_i108_bmp+522
-	.long	Text_i108_bmp+531
-	.long	Text_i108_bmp+540
-	.long	Text_i108_bmp+549
-	.long	Text_i108_bmp+558
-	.long	Text_i108_bmp+567
-	.long	Text_i108_bmp+576
-	.long	Text_i108_bmp+585
-	.long	Text_i108_bmp+594
-	.long	Text_i108_bmp+603
-	.long	Text_i108_bmp+612
-	.long	Text_i108_bmp+621
-	.long	Text_i108_bmp+630
-	.long	Text_i108_bmp+639
-	.long	Text_i108_bmp+648
-	.long	Text_i108_bmp+657
-	.long	Text_i108_bmp+666
-	.long	Text_i108_bmp+675
-	.long	Text_i108_bmp+684
-	.long	Text_i108_bmp+693
-	.long	Text_i108_bmp+702
-	.long	Text_i108_bmp+711
-	.long	Text_i108_bmp+720
-	.long	Text_i108_bmp+729
-	.long	Text_i108_bmp+738
-	.long	Text_i108_bmp+747
-	.long	Text_i108_bmp+756
-	.long	Text_i108_bmp+765
-	.long	Text_i108_bmp+774
-	.long	Text_i108_bmp+783
-	.long	Text_i108_bmp+792
-	.long	Text_i108_bmp+801
-	.long	Text_i108_bmp+810
-	.long	Text_i108_bmp+819
-	.long	Text_i108_bmp+828
-	.long	Text_i108_bmp+837
-	.long	Text_i108_bmp+846
-	.long	Text_i108_bmp+855
-	.long	Text_i108_bmp+864
-	.long	Text_i108_bmp+873
-	.long	Text_i108_bmp+882
-	.long	Text_i108_bmp+891
-	.long	Text_i108_bmp+900
-	.long	Text_i108_bmp+909
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x2B7218, 0x2B721C
+# census: opaque -- unknown-dump: 852 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x2B6EC8, 0x2B721C
 	.space	172, 0x00
 
 # 58 objects of block V_PanelSimulator; object <name> is index <name>_ix, id <name>_id = (0x0 << 16) | <name>_ix
@@ -27037,12 +26697,12 @@ func_4C051A0B_Table:	# 15 x u16, 496..4638; read by func_4C051A0B 0x4C051A0B: `m
 	tab_u16	4126, 4382, 4638	# [12]
 	.space	4, 0xFF
 
-func_4C050837_entry_L4_Records:	# 3 x RamTestRegion (12 bytes each); read by func_4C050837_entry_L4 0x4C050840 `mov (4, a0), d3`; func_4C050837_entry_L4 0x4C050840 `mov (a0), a2`
-	RamTestRegion	base=0x50000000, length=0x80000, x8="\x01\x02\x00\x00"
-	RamTestRegion	base=0x58000000, length=0x5040100, x8="\x01\x00\x00\x00"
-	RamTestRegion	base=0x54000000, length=0x5040100, x8="\x01\x00\x00\x00"
-func_4C0508F7_entry_L4_Records:	# 1 x RamTestByteRegion (12 bytes each); read by func_4C0508F7_entry_L4 0x4C0508FD `mov (4, a1), d0`; func_4C0508F7_entry_L4 0x4C0508FD `mov (a1), a0`; func_4C0508F7_entry_L4 0x4C0508FD `movbu (a1), d1` (+1)
-	RamTestByteRegion	base=0x44000000, length=32768, fail_bit=4, x9="\x00\x00\x00"
+func_4C050837_entry_L4_Records:	# 3 x REC_func_4C050837_entry_L4_Records (12 bytes each); read by func_4C050837_entry_L4 0x4C050840 `mov (4, a0), d3`; func_4C050837_entry_L4 0x4C050840 `mov (a0), a2`
+	REC_func_4C050837_entry_L4_Records	f0=0x50000000, index=0x80000, x8="\x01\x02\x00\x00"
+	REC_func_4C050837_entry_L4_Records	f0=0x58000000, index=0x5040100, x8="\x01\x00\x00\x00"
+	REC_func_4C050837_entry_L4_Records	f0=0x54000000, index=0x5040100, x8="\x01\x00\x00\x00"
+func_4C0508F7_entry_L4_Records:	# 1 x REC_func_4C0508F7_entry_L4_Records (12 bytes each); read by func_4C0508F7_entry_L4 0x4C0508FD `mov (4, a1), d0`; func_4C0508F7_entry_L4 0x4C0508FD `mov (a1), a0`; func_4C0508F7_entry_L4 0x4C0508FD `movbu (a1), d1` (+1)
+	REC_func_4C0508F7_entry_L4_Records	addr=0x44000000, index=32768, f8=4, x9="\x00\x00\x00"
 
 ptrs_4C2E5170:
 	.long	loc_4C05A723
@@ -38759,21 +38419,21 @@ func_4C099C6D_entry_L47_Table:	# 51 x u8, 0..127; read by func_4C099C6D_entry : 
 	tab_u8	42, 45, 47, 50, 54, 57, 61, 65, 69, 73, 78, 83, 88, 94, 100, 106	# [32]
 	tab_u8	113, 120, 127	# [48]
 
-TgPartEditLfoLoadA_Records:	# 14 x ToneTypeFeature (39 bytes each); read by TgPartEditLfoLoadA 0x4C08D08A `movbu (0x12, a2), d1`; TgPartEditLfoLoadA 0x4C08D08A `movbu (0xe, a2), d1`; TgPartEditLfoLoadA 0x4C08D08A `movbu (1, a2), d1` (+62)
-	ToneTypeFeature	t0_a=15, t0_b=25, x5="\x00", x15="\x00\x00\x00", seg0_flags=68, x20="\x00\x00\x00\x00\x88", seg1_c=10, seg1_param=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"	# [0]
-	ToneTypeFeature	t0_a=12, t0_b=37, x5="\x00", x15="\x00\x00\x00", seg0_flags=196, x20="\x00\x00\x00\x00\xC8", seg1_c=17, seg1_param=100, seg1_e=1, x29="\xC4\x00\x00\x00\x00\xC8\x00\x00\x00\x00"
-	ToneTypeFeature	t0_a=12, t0_b=37, x5="\x00", x15="\x00\x00\x00", seg0_flags=68, x20="\x00\x00\x00\x00\x88", seg1_c=10, seg1_param=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	ToneTypeFeature	t0_a=10, t0_b=40, x5="\x00", x15="\x00\x00\x00", seg0_flags=200, x20="\x00\x00\x00\x00\xC4", seg1_c=8, seg1_param=100, seg1_e=1, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
-	ToneTypeFeature	t0_a=25, t0_b=32, t1_a=25, t1_b=33, x5="\x00", x15="\x00\x00\x00", seg0_flags=136, x20="\x00\x00\x00\x00D", seg1_c=10, seg1_e=4, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	ToneTypeFeature	t0_a=20, t0_b=20, t1_a=15, t1_b=22, x5="\x00", x15="\x00\x00\x00", seg0_flags=200, x20="\x00\x00\x00\x00\xC4", seg1_c=2, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
-	ToneTypeFeature	x5="\x00", t2_a=40, t2_b=24, x15="\x00\x00\x00", seg0_flags=32, x20="\x00\x00\x00\x00\"", seg1_param=80, x29=" \x00\x00\x00\x00\"\x00\x00\x00\x00"
-	ToneTypeFeature	t0_a=28, t0_b=40, t1_a=34, t1_b=25, x5="\x00", t2_a=25, x15="\x00\x00\x00", seg0_flags=228, x20="\x00\x00\x00\x00\xEA", x29="\xE4\x00\x00\x00\x00\xEA\x00\x00\x00\x00"
-	ToneTypeFeature	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", seg1_param=80, seg1_e=10, x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"	# [8]
-	ToneTypeFeature	x5="\x00", t3_a=27, t3_b=20, t3_c=22, x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-	ToneTypeFeature	t0_a=20, t0_b=50, t0_flags=178, x5="\x00", x15="\x00\x00\x00", lfo_p7=30, seg0_flags=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	ToneTypeFeature	t0_a=20, t0_b=50, t0_flags=178, x5="\x00", lfo_p6=5, x15="\x00\x00\x00", lfo_p7=30, seg0_flags=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	ToneTypeFeature	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-	ToneTypeFeature	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TgPartEditLfoLoadA_Records:	# 14 x REC_TgPartEditLfoLoadA_Records (39 bytes each); read by TgPartEditLfoLoadA 0x4C08D08A `movbu (0x12, a2), d1`; TgPartEditLfoLoadA 0x4C08D08A `movbu (0xe, a2), d1`; TgPartEditLfoLoadA 0x4C08D08A `movbu (1, a2), d1` (+62)
+	REC_TgPartEditLfoLoadA_Records	f0=15, f1=25, x5="\x00", x15="\x00\x00\x00", flags__=68, x20="\x00\x00\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"	# [0]
+	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x5="\x00", x15="\x00\x00\x00", flags__=196, x20="\x00\x00\x00\x00\xC8", f26=17, f27=100, f28=1, x29="\xC4\x00\x00\x00\x00\xC8\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x5="\x00", x15="\x00\x00\x00", flags__=68, x20="\x00\x00\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=10, f1=40, x5="\x00", x15="\x00\x00\x00", flags__=200, x20="\x00\x00\x00\x00\xC4", f26=8, f27=100, f28=1, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=25, f1=32, f3=25, f4=33, x5="\x00", x15="\x00\x00\x00", flags__=136, x20="\x00\x00\x00\x00D", f26=10, f28=4, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=20, f1=20, f3=15, f4=22, x5="\x00", x15="\x00\x00\x00", flags__=200, x20="\x00\x00\x00\x00\xC4", f26=2, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	x5="\x00", index=40, f7=24, x15="\x00\x00\x00", flags__=32, x20="\x00\x00\x00\x00\"", f27=80, x29=" \x00\x00\x00\x00\"\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=28, f1=40, f3=34, f4=25, x5="\x00", index=25, x15="\x00\x00\x00", flags__=228, x20="\x00\x00\x00\x00\xEA", x29="\xE4\x00\x00\x00\x00\xEA\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", f27=80, f28=10, x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"	# [8]
+	REC_TgPartEditLfoLoadA_Records	x5="\x00", f9=27, f10=20, f11=22, x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, flags=178, x5="\x00", x15="\x00\x00\x00", f18=30, flags__=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, flags=178, x5="\x00", f14=5, x15="\x00\x00\x00", f18=30, flags__=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+	REC_TgPartEditLfoLoadA_Records	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 
 func_4C092357_entry_L7d_Table:	# 31 x u8, 0..70; read by func_4C092357_entry : `movbu	(d0, a0), d0`; func_4C09257D_entry : `movbu	(d0, a0), d0` ...
 	tab_u8	70, 64, 58, 53, 48, 44, 40, 36, 33, 30, 27, 24, 22, 20, 18, 16	# [0]
@@ -40008,4 +39668,644 @@ func_4C09CA75_Table:
 	.long	func_4C09A4F0_entry_L65_Records+10704
 	.long	0
 	.long	func_4C09A4F0_entry_L65_Records+10712
+	.long	0
+
+func_4C09CB5D_Var:	# u16, a constant; read / written by VoiceDirIndexFind 0x4C09CB5D: `movhu (func_4C09CB5D_Var), d1`
+	.word	1
+func_4C09CB5D_Var_2:	# u16, a constant; read / written by VoiceDirIndexFind 0x4C09CB5D: `movhu (func_4C09CB5D_Var_2), d0`
+	.word	633
+
+func_4C09CB5D_Table:
+	.long	func_4C09A4F0_entry_L65_Records+15280
+	.long	func_4C09A4F0_entry_L65_Records+12584
+	.long	func_4C09A4F0_entry_L65_Records+15288
+	.long	func_4C09A4F0_entry_L65_Records+12600
+	.long	func_4C09A4F0_entry_L65_Records+12608
+	.long	func_4C09A4F0_entry_L65_Records+13848
+	.long	func_4C09A4F0_entry_L65_Records+12624
+	.long	func_4C09A4F0_entry_L65_Records+13856
+	.long	func_4C09A4F0_entry_L65_Records+13864
+	.long	func_4C09A4F0_entry_L65_Records+13872
+	.long	func_4C09A4F0_entry_L65_Records+15416
+	.long	func_4C09A4F0_entry_L65_Records+15424
+	.long	func_4C09A4F0_entry_L65_Records+13896
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+12768
+	.long	func_4C09A4F0_entry_L65_Records+15432
+	.long	func_4C09A4F0_entry_L65_Records+12776
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+12784
+	.long	func_4C09A4F0_entry_L65_Records+14000
+	.long	func_4C09A4F0_entry_L65_Records+12800
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14008
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15544
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15552
+	.long	func_4C09A4F0_entry_L65_Records+15560
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14160
+	.long	func_4C09A4F0_entry_L65_Records+14168
+	.long	func_4C09A4F0_entry_L65_Records+14176
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14184
+	.long	func_4C09A4F0_entry_L65_Records+15800
+	.long	func_4C09A4F0_entry_L65_Records+14200
+	.long	func_4C09A4F0_entry_L65_Records+15808
+	.long	func_4C09A4F0_entry_L65_Records+15816
+	.long	func_4C09A4F0_entry_L65_Records+15824
+	.long	func_4C09A4F0_entry_L65_Records+15832
+	.long	func_4C09A4F0_entry_L65_Records+15840
+	.long	func_4C09A4F0_entry_L65_Records+15848
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14392
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14400
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14408
+	.long	func_4C09A4F0_entry_L65_Records+16096
+	.long	func_4C09A4F0_entry_L65_Records+14424
+	.long	func_4C09A4F0_entry_L65_Records+16104
+	.long	func_4C09A4F0_entry_L65_Records+16112
+	.long	func_4C09A4F0_entry_L65_Records+16120
+	.long	func_4C09A4F0_entry_L65_Records+16128
+	.long	func_4C09A4F0_entry_L65_Records+16136
+	.long	func_4C09A4F0_entry_L65_Records+16144
+	.long	func_4C09A4F0_entry_L65_Records+13192
+	.long	func_4C09A4F0_entry_L65_Records+14560
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16376
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16384
+	.long	func_4C09A4F0_entry_L65_Records+16392
+	.long	func_4C09A4F0_entry_L65_Records+16400
+	.long	func_4C09A4F0_entry_L65_Records+16408
+	.long	func_4C09A4F0_entry_L65_Records+16416
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14640
+	.long	func_4C09A4F0_entry_L65_Records+14648
+	.long	func_4C09A4F0_entry_L65_Records+14656
+	.long	func_4C09A4F0_entry_L65_Records+14664
+	.long	func_4C09A4F0_entry_L65_Records+14672
+	.long	func_4C09A4F0_entry_L65_Records+16592
+	.long	func_4C09A4F0_entry_L65_Records+16600
+	.long	func_4C09A4F0_entry_L65_Records+16608
+	.long	func_4C09A4F0_entry_L65_Records+16616
+	.long	func_4C09A4F0_entry_L65_Records+16624
+	.long	func_4C09A4F0_entry_L65_Records+16632
+	.long	func_4C09A4F0_entry_L65_Records+16640
+	.long	func_4C09A4F0_entry_L65_Records+16648
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14784
+	.long	func_4C09A4F0_entry_L65_Records+14792
+	.long	func_4C09A4F0_entry_L65_Records+14800
+	.long	func_4C09A4F0_entry_L65_Records+14808
+	.long	func_4C09A4F0_entry_L65_Records+14816
+	.long	func_4C09A4F0_entry_L65_Records+16896
+	.long	func_4C09A4F0_entry_L65_Records+16904
+	.long	func_4C09A4F0_entry_L65_Records+16912
+	.long	func_4C09A4F0_entry_L65_Records+16920
+	.long	func_4C09A4F0_entry_L65_Records+16928
+	.long	func_4C09A4F0_entry_L65_Records+16936
+	.long	func_4C09A4F0_entry_L65_Records+16944
+	.long	func_4C09A4F0_entry_L65_Records+16952
+	.long	func_4C09A4F0_entry_L65_Records+13488
+	.long	func_4C09A4F0_entry_L65_Records+15048
+	.long	func_4C09A4F0_entry_L65_Records+15056
+	.long	func_4C09A4F0_entry_L65_Records+15064
+	.long	func_4C09A4F0_entry_L65_Records+15072
+	.long	func_4C09A4F0_entry_L65_Records+15080
+	.long	func_4C09A4F0_entry_L65_Records+15088
+	.long	func_4C09A4F0_entry_L65_Records+15096
+	.long	func_4C09A4F0_entry_L65_Records+15104
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+13568
+	.long	func_4C09A4F0_entry_L65_Records+13576
+	.long	func_4C09A4F0_entry_L65_Records+13584
+	.long	func_4C09A4F0_entry_L65_Records+13592
+	.long	func_4C09A4F0_entry_L65_Records+13600
+	.long	func_4C09A4F0_entry_L65_Records+15208
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15216
+	.long	func_4C09A4F0_entry_L65_Records+15224
+	.long	func_4C09A4F0_entry_L65_Records+15232
+	.long	func_4C09A4F0_entry_L65_Records+15240
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+13752
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+13760
+	.long	func_4C09A4F0_entry_L65_Records+13768
+	.long	func_4C09A4F0_entry_L65_Records+15352
+	.long	func_4C09A4F0_entry_L65_Records+13784
+	.long	func_4C09A4F0_entry_L65_Records+15360
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15368
+	.long	func_4C09A4F0_entry_L65_Records+15376
+	.long	func_4C09A4F0_entry_L65_Records+15384
+	.long	func_4C09A4F0_entry_L65_Records+15392
+	.long	func_4C09A4F0_entry_L65_Records+12712
+	.long	func_4C09A4F0_entry_L65_Records+13976
+	.long	func_4C09A4F0_entry_L65_Records+13984
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15480
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15488
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+12880
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+12888
+	.long	func_4C09A4F0_entry_L65_Records+14072
+	.long	func_4C09A4F0_entry_L65_Records+14080
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15688
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15696
+	.long	func_4C09A4F0_entry_L65_Records+15704
+	.long	func_4C09A4F0_entry_L65_Records+15712
+	.long	func_4C09A4F0_entry_L65_Records+15720
+	.long	func_4C09A4F0_entry_L65_Records+15728
+	.long	func_4C09A4F0_entry_L65_Records+15736
+	.long	func_4C09A4F0_entry_L65_Records+12976
+	.long	func_4C09A4F0_entry_L65_Records+14312
+	.long	func_4C09A4F0_entry_L65_Records+12992
+	.long	func_4C09A4F0_entry_L65_Records+13000
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14320
+	.long	func_4C09A4F0_entry_L65_Records+15984
+	.long	func_4C09A4F0_entry_L65_Records+15992
+	.long	func_4C09A4F0_entry_L65_Records+16000
+	.long	func_4C09A4F0_entry_L65_Records+16008
+	.long	func_4C09A4F0_entry_L65_Records+16016
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16024
+	.long	func_4C09A4F0_entry_L65_Records+16032
+	.long	func_4C09A4F0_entry_L65_Records+13152
+	.long	func_4C09A4F0_entry_L65_Records+14504
+	.long	func_4C09A4F0_entry_L65_Records+14512
+	.long	func_4C09A4F0_entry_L65_Records+14520
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14528
+	.long	func_4C09A4F0_entry_L65_Records+16256
+	.long	func_4C09A4F0_entry_L65_Records+14544
+	.long	func_4C09A4F0_entry_L65_Records+16264
+	.long	func_4C09A4F0_entry_L65_Records+16272
+	.long	func_4C09A4F0_entry_L65_Records+16280
+	.long	func_4C09A4F0_entry_L65_Records+16288
+	.long	func_4C09A4F0_entry_L65_Records+16296
+	.long	func_4C09A4F0_entry_L65_Records+16304
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14624
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16496
+	.long	func_4C09A4F0_entry_L65_Records+16504
+	.long	func_4C09A4F0_entry_L65_Records+16512
+	.long	func_4C09A4F0_entry_L65_Records+16520
+	.long	func_4C09A4F0_entry_L65_Records+16528
+	.long	func_4C09A4F0_entry_L65_Records+16536
+	.long	func_4C09A4F0_entry_L65_Records+13368
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14744
+	.long	func_4C09A4F0_entry_L65_Records+14752
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14760
+	.long	func_4C09A4F0_entry_L65_Records+16768
+	.long	func_4C09A4F0_entry_L65_Records+16776
+	.long	func_4C09A4F0_entry_L65_Records+16784
+	.long	func_4C09A4F0_entry_L65_Records+16792
+	.long	func_4C09A4F0_entry_L65_Records+16800
+	.long	func_4C09A4F0_entry_L65_Records+16808
+	.long	func_4C09A4F0_entry_L65_Records+16816
+	.long	func_4C09A4F0_entry_L65_Records+16824
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14944
+	.long	func_4C09A4F0_entry_L65_Records+14952
+	.long	func_4C09A4F0_entry_L65_Records+14960
+	.long	func_4C09A4F0_entry_L65_Records+14968
+	.long	func_4C09A4F0_entry_L65_Records+14976
+	.long	func_4C09A4F0_entry_L65_Records+17072
+	.long	func_4C09A4F0_entry_L65_Records+17080
+	.long	func_4C09A4F0_entry_L65_Records+17088
+	.long	func_4C09A4F0_entry_L65_Records+17096
+	.long	func_4C09A4F0_entry_L65_Records+17104
+	.long	func_4C09A4F0_entry_L65_Records+17112
+	.long	func_4C09A4F0_entry_L65_Records+17120
+	.long	func_4C09A4F0_entry_L65_Records+17128
+	.long	func_4C09A4F0_entry_L65_Records+13544
+	.long	func_4C09A4F0_entry_L65_Records+15168
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+13656
+	.long	func_4C09A4F0_entry_L65_Records+13664
+	.long	func_4C09A4F0_entry_L65_Records+13672
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15296
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+13680
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15304
+	.long	func_4C09A4F0_entry_L65_Records+12648
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+12656
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+13904
+	.long	func_4C09A4F0_entry_L65_Records+12664
+	.long	func_4C09A4F0_entry_L65_Records+13912
+	.long	func_4C09A4F0_entry_L65_Records+13920
+	.long	func_4C09A4F0_entry_L65_Records+13928
+	.long	func_4C09A4F0_entry_L65_Records+15440
+	.long	func_4C09A4F0_entry_L65_Records+13944
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+12808
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+12816
+	.long	func_4C09A4F0_entry_L65_Records+12824
+	.long	func_4C09A4F0_entry_L65_Records+14016
+	.long	func_4C09A4F0_entry_L65_Records+14024
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15568
+	.long	func_4C09A4F0_entry_L65_Records+15576
+	.long	func_4C09A4F0_entry_L65_Records+15584
+	.long	func_4C09A4F0_entry_L65_Records+15592
+	.long	func_4C09A4F0_entry_L65_Records+15600
+	.long	func_4C09A4F0_entry_L65_Records+15608
+	.long	func_4C09A4F0_entry_L65_Records+15616
+	.long	func_4C09A4F0_entry_L65_Records+15624
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14216
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14224
+	.long	func_4C09A4F0_entry_L65_Records+14232
+	.long	func_4C09A4F0_entry_L65_Records+15856
+	.long	func_4C09A4F0_entry_L65_Records+15864
+	.long	func_4C09A4F0_entry_L65_Records+15872
+	.long	func_4C09A4F0_entry_L65_Records+15880
+	.long	func_4C09A4F0_entry_L65_Records+15888
+	.long	func_4C09A4F0_entry_L65_Records+15896
+	.long	func_4C09A4F0_entry_L65_Records+15904
+	.long	func_4C09A4F0_entry_L65_Records+15912
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14440
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14448
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16152
+	.long	func_4C09A4F0_entry_L65_Records+16160
+	.long	func_4C09A4F0_entry_L65_Records+16168
+	.long	func_4C09A4F0_entry_L65_Records+16176
+	.long	func_4C09A4F0_entry_L65_Records+16184
+	.long	func_4C09A4F0_entry_L65_Records+16192
+	.long	func_4C09A4F0_entry_L65_Records+16200
+	.long	func_4C09A4F0_entry_L65_Records+16208
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14568
+	.long	func_4C09A4F0_entry_L65_Records+14576
+	.long	func_4C09A4F0_entry_L65_Records+14584
+	.long	func_4C09A4F0_entry_L65_Records+14592
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16424
+	.long	func_4C09A4F0_entry_L65_Records+14600
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16432
+	.long	func_4C09A4F0_entry_L65_Records+16440
+	.long	func_4C09A4F0_entry_L65_Records+13288
+	.long	func_4C09A4F0_entry_L65_Records+16448
+	.long	func_4C09A4F0_entry_L65_Records+13296
+	.long	func_4C09A4F0_entry_L65_Records+13304
+	.long	func_4C09A4F0_entry_L65_Records+14696
+	.long	func_4C09A4F0_entry_L65_Records+14704
+	.long	func_4C09A4F0_entry_L65_Records+14712
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16656
+	.long	func_4C09A4F0_entry_L65_Records+16664
+	.long	func_4C09A4F0_entry_L65_Records+16672
+	.long	func_4C09A4F0_entry_L65_Records+16680
+	.long	func_4C09A4F0_entry_L65_Records+16688
+	.long	func_4C09A4F0_entry_L65_Records+16696
+	.long	func_4C09A4F0_entry_L65_Records+16704
+	.long	func_4C09A4F0_entry_L65_Records+16712
+	.long	func_4C09A4F0_entry_L65_Records+13432
+	.long	func_4C09A4F0_entry_L65_Records+14840
+	.long	func_4C09A4F0_entry_L65_Records+14848
+	.long	func_4C09A4F0_entry_L65_Records+14856
+	.long	func_4C09A4F0_entry_L65_Records+14864
+	.long	func_4C09A4F0_entry_L65_Records+14872
+	.long	func_4C09A4F0_entry_L65_Records+16960
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16968
+	.long	func_4C09A4F0_entry_L65_Records+16976
+	.long	func_4C09A4F0_entry_L65_Records+16984
+	.long	func_4C09A4F0_entry_L65_Records+16992
+	.long	func_4C09A4F0_entry_L65_Records+17000
+	.long	func_4C09A4F0_entry_L65_Records+17008
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15112
+	.long	func_4C09A4F0_entry_L65_Records+15120
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15128
+	.long	func_4C09A4F0_entry_L65_Records+15136
+	.long	func_4C09A4F0_entry_L65_Records+15144
+	.long	func_4C09A4F0_entry_L65_Records+15152
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+13608
+	.long	func_4C09A4F0_entry_L65_Records+13616
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+13624
+	.long	func_4C09A4F0_entry_L65_Records+15248
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15256
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+13800
+	.long	func_4C09A4F0_entry_L65_Records+13808
+	.long	func_4C09A4F0_entry_L65_Records+13816
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+13824
+	.long	func_4C09A4F0_entry_L65_Records+15400
+	.long	func_4C09A4F0_entry_L65_Records+13840
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15408
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+12736
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+12744
+	.long	func_4C09A4F0_entry_L65_Records+13992
+	.long	func_4C09A4F0_entry_L65_Records+12760
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15496
+	.long	func_4C09A4F0_entry_L65_Records+15504
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15512
+	.long	func_4C09A4F0_entry_L65_Records+12904
+	.long	func_4C09A4F0_entry_L65_Records+15520
+	.long	func_4C09A4F0_entry_L65_Records+15528
+	.long	func_4C09A4F0_entry_L65_Records+15536
+	.long	func_4C09A4F0_entry_L65_Records+12920
+	.long	func_4C09A4F0_entry_L65_Records+14096
+	.long	func_4C09A4F0_entry_L65_Records+14104
+	.long	func_4C09A4F0_entry_L65_Records+14112
+	.long	func_4C09A4F0_entry_L65_Records+14120
+	.long	func_4C09A4F0_entry_L65_Records+14128
+	.long	func_4C09A4F0_entry_L65_Records+15744
+	.long	func_4C09A4F0_entry_L65_Records+15752
+	.long	func_4C09A4F0_entry_L65_Records+15760
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15768
+	.long	func_4C09A4F0_entry_L65_Records+15776
+	.long	func_4C09A4F0_entry_L65_Records+15784
+	.long	func_4C09A4F0_entry_L65_Records+15792
+	.long	func_4C09A4F0_entry_L65_Records+13040
+	.long	func_4C09A4F0_entry_L65_Records+14352
+	.long	func_4C09A4F0_entry_L65_Records+13048
+	.long	func_4C09A4F0_entry_L65_Records+13056
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14360
+	.long	func_4C09A4F0_entry_L65_Records+16040
+	.long	func_4C09A4F0_entry_L65_Records+14376
+	.long	func_4C09A4F0_entry_L65_Records+16048
+	.long	func_4C09A4F0_entry_L65_Records+16056
+	.long	func_4C09A4F0_entry_L65_Records+16064
+	.long	func_4C09A4F0_entry_L65_Records+16072
+	.long	func_4C09A4F0_entry_L65_Records+16080
+	.long	func_4C09A4F0_entry_L65_Records+16088
+	.long	func_4C09A4F0_entry_L65_Records+13168
+	.long	func_4C09A4F0_entry_L65_Records+14552
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16312
+	.long	func_4C09A4F0_entry_L65_Records+16320
+	.long	func_4C09A4F0_entry_L65_Records+16328
+	.long	func_4C09A4F0_entry_L65_Records+16336
+	.long	func_4C09A4F0_entry_L65_Records+16344
+	.long	func_4C09A4F0_entry_L65_Records+16352
+	.long	func_4C09A4F0_entry_L65_Records+16360
+	.long	func_4C09A4F0_entry_L65_Records+16368
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14632
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16544
+	.long	func_4C09A4F0_entry_L65_Records+16552
+	.long	func_4C09A4F0_entry_L65_Records+16560
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+13376
+	.long	func_4C09A4F0_entry_L65_Records+16568
+	.long	func_4C09A4F0_entry_L65_Records+16576
+	.long	func_4C09A4F0_entry_L65_Records+16584
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14776
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16832
+	.long	func_4C09A4F0_entry_L65_Records+16840
+	.long	func_4C09A4F0_entry_L65_Records+16848
+	.long	func_4C09A4F0_entry_L65_Records+16856
+	.long	func_4C09A4F0_entry_L65_Records+16864
+	.long	func_4C09A4F0_entry_L65_Records+16872
+	.long	func_4C09A4F0_entry_L65_Records+16880
+	.long	func_4C09A4F0_entry_L65_Records+16888
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15008
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15016
+	.long	func_4C09A4F0_entry_L65_Records+15024
+	.long	func_4C09A4F0_entry_L65_Records+15032
+	.long	func_4C09A4F0_entry_L65_Records+15040
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+13552
+	.long	func_4C09A4F0_entry_L65_Records+13560
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15176
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15184
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15192
+	.long	func_4C09A4F0_entry_L65_Records+15200
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+13688
+	.long	func_4C09A4F0_entry_L65_Records+13696
+	.long	func_4C09A4F0_entry_L65_Records+13704
+	.long	func_4C09A4F0_entry_L65_Records+13712
+	.long	func_4C09A4F0_entry_L65_Records+13720
+	.long	func_4C09A4F0_entry_L65_Records+15312
+	.long	func_4C09A4F0_entry_L65_Records+13736
+	.long	func_4C09A4F0_entry_L65_Records+15320
+	.long	func_4C09A4F0_entry_L65_Records+15328
+	.long	func_4C09A4F0_entry_L65_Records+15336
+	.long	func_4C09A4F0_entry_L65_Records+12680
+	.long	func_4C09A4F0_entry_L65_Records+15344
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+13952
+	.long	func_4C09A4F0_entry_L65_Records+13960
+	.long	func_4C09A4F0_entry_L65_Records+13968
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15448
+	.long	func_4C09A4F0_entry_L65_Records+15456
+	.long	func_4C09A4F0_entry_L65_Records+15464
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15472
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+12856
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+12864
+	.long	func_4C09A4F0_entry_L65_Records+14032
+	.long	func_4C09A4F0_entry_L65_Records+14040
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14048
+	.long	func_4C09A4F0_entry_L65_Records+15632
+	.long	func_4C09A4F0_entry_L65_Records+14064
+	.long	func_4C09A4F0_entry_L65_Records+15640
+	.long	func_4C09A4F0_entry_L65_Records+15648
+	.long	func_4C09A4F0_entry_L65_Records+15656
+	.long	func_4C09A4F0_entry_L65_Records+15664
+	.long	func_4C09A4F0_entry_L65_Records+15672
+	.long	func_4C09A4F0_entry_L65_Records+15680
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14264
+	.long	func_4C09A4F0_entry_L65_Records+14272
+	.long	func_4C09A4F0_entry_L65_Records+14280
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14288
+	.long	func_4C09A4F0_entry_L65_Records+15920
+	.long	func_4C09A4F0_entry_L65_Records+15928
+	.long	func_4C09A4F0_entry_L65_Records+15936
+	.long	func_4C09A4F0_entry_L65_Records+15944
+	.long	func_4C09A4F0_entry_L65_Records+15952
+	.long	func_4C09A4F0_entry_L65_Records+15960
+	.long	func_4C09A4F0_entry_L65_Records+15968
+	.long	func_4C09A4F0_entry_L65_Records+15976
+	.long	func_4C09A4F0_entry_L65_Records+13128
+	.long	func_4C09A4F0_entry_L65_Records+14480
+	.long	func_4C09A4F0_entry_L65_Records+14488
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14496
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16216
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16224
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16232
+	.long	func_4C09A4F0_entry_L65_Records+16240
+	.long	func_4C09A4F0_entry_L65_Records+16248
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+14608
+	.long	func_4C09A4F0_entry_L65_Records+14616
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16456
+	.long	func_4C09A4F0_entry_L65_Records+16464
+	.long	func_4C09A4F0_entry_L65_Records+16472
+	.long	func_4C09A4F0_entry_L65_Records+16480
+	.long	func_4C09A4F0_entry_L65_Records+13320
+	.long	func_4C09A4F0_entry_L65_Records+13328
+	.long	func_4C09A4F0_entry_L65_Records+16488
+	.long	func_4C09A4F0_entry_L65_Records+13344
+	.long	func_4C09A4F0_entry_L65_Records+13352
+	.long	func_4C09A4F0_entry_L65_Records+14720
+	.long	func_4C09A4F0_entry_L65_Records+14728
+	.long	func_4C09A4F0_entry_L65_Records+14736
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16720
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+16728
+	.long	func_4C09A4F0_entry_L65_Records+16736
+	.long	func_4C09A4F0_entry_L65_Records+16744
+	.long	func_4C09A4F0_entry_L65_Records+16752
+	.long	func_4C09A4F0_entry_L65_Records+16760
+	.long	func_4C09A4F0_entry_L65_Records+13456
+	.long	func_4C09A4F0_entry_L65_Records+14888
+	.long	func_4C09A4F0_entry_L65_Records+14896
+	.long	func_4C09A4F0_entry_L65_Records+14904
+	.long	func_4C09A4F0_entry_L65_Records+14912
+	.long	func_4C09A4F0_entry_L65_Records+14920
+	.long	func_4C09A4F0_entry_L65_Records+17016
+	.long	func_4C09A4F0_entry_L65_Records+17024
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+17032
+	.long	func_4C09A4F0_entry_L65_Records+17040
+	.long	func_4C09A4F0_entry_L65_Records+17048
+	.long	func_4C09A4F0_entry_L65_Records+17056
+	.long	func_4C09A4F0_entry_L65_Records+17064
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15160
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+13632
+	.long	func_4C09A4F0_entry_L65_Records+13640
+	.long	0
+	.long	0
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15264
+	.long	0
+	.long	func_4C09A4F0_entry_L65_Records+15272
 	.long	0

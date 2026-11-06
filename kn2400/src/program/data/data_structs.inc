@@ -3718,11 +3718,11 @@
 
 # REC_func_4870CAE5_Table_2: 8-byte records (func_4870CAE5_Table_2, 8 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   index        u8             func_4870CAE5_entry_L170 0x4870CC5B `movbu (d0, a2), d0`; func_4870CAE5_entry_L216 0x4870CD01 `movbu (d0, a3), d0`
+#   +0   CheckSdSavePM3Bank_d0 u8             func_4870CAE5_entry_L170 0x4870CC5B `movbu (d0, a2), d0`; func_4870CAE5_entry_L216 0x4870CD01 `movbu (d0, a3), d0`
 #   +1   x1           u8[3]          no reader seen
 #   +4   proc         ptr            func_4870CAE5_entry_L1a8 0x4870CC93 `mov (4, a0), a1`
-.macro REC_func_4870CAE5_Table_2 index=0, x1, proc=0
-	.byte	\index
+.macro REC_func_4870CAE5_Table_2 CheckSdSavePM3Bank_d0=0, x1, proc=0
+	.byte	\CheckSdSavePM3Bank_d0
 	.ascii	"\x1"
 	.long	\proc
 .endm
@@ -4021,7 +4021,7 @@
 
 # REC_func_485E8EDD_entry_L15_Records: 4-byte records (func_485E8EDD_entry_L15_Records, 8 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u8             func_485E8EDD_entry_L15 0x485E8EF7 `movbu (a3), d0`
+#   +0   f0           u8             JpegEncSetup_entry_L15 0x485E8EF7 `movbu (a3), d0`
 #   +1   x1           u8[3]          no reader seen
 .macro REC_func_485E8EDD_entry_L15_Records f0=0, x1
 	.byte	\f0

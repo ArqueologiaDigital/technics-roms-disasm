@@ -9414,13 +9414,13 @@ doubles_4840DE50:	# IEEE-754 doubles (lo word, hi word)
 	.long	0x3FEA4432, 0x3FF11B6A	# 1.96209836
 	.long	0x3FF825C5, 0x3FFF64C1	# 3.32535749e-316
 
-func_485E8EDD_entry_L15_Table:	# u8, a constant; read / written by func_485E8EDD_entry_L15 0x485E8EF7: `movbu (a1), d0`
+func_485E8EDD_entry_L15_Table:	# u8, a constant; read / written by JpegEncSetup_entry_L15 0x485E8EF7: `movbu (a1), d0`
 	.byte	1
-func_485E8EDD_entry_L15_Var:	# u8, a constant; read / written by func_485E8EDD_entry_L15 0x485E8EF7: `movbu (a0), d0`
+JpegEncSetup_entry_L15_Var:	# u8, a constant; read / written by JpegEncSetup_entry_L15 0x485E8EF7: `movbu (a0), d0`
 	.byte	2
-func_485E8EDD_entry_L15_Var_2:	# u8, a constant; read / written by func_485E8EDD_entry_L15 0x485E8EF7: `movbu (a0), d0`
+JpegEncSetup_entry_L15_Var_2:	# u8, a constant; read / written by JpegEncSetup_entry_L15 0x485E8EF7: `movbu (a0), d0`
 	.byte	3
-func_485E8EDD_entry_L15_Var_3:	# u8, a constant; read / written by func_485E8EDD_entry_L15 0x485E8EF7: `movbu (a0), d0`
+JpegEncSetup_entry_L15_Var_3:	# u8, a constant; read / written by JpegEncSetup_entry_L15 0x485E8EF7: `movbu (a0), d0`
 	.byte	4
 
 func_5018D239_Table_3:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`)

@@ -1486,9 +1486,9 @@
 0x4840DACC  func_50186924_Selected_6  44
 0x4840DE50  doubles_4840DE50  496
 0x4840E040  func_485E8EDD_entry_L15_Table  1
-0x4840E041  func_485E8EDD_entry_L15_Var  1
-0x4840E042  func_485E8EDD_entry_L15_Var_2  1
-0x4840E043  func_485E8EDD_entry_L15_Var_3  1
+0x4840E041  JpegEncSetup_entry_L15_Var  1
+0x4840E042  JpegEncSetup_entry_L15_Var_2  1
+0x4840E043  JpegEncSetup_entry_L15_Var_3  1
 0x4840E044  func_5018D239_Table_3  20
 0x4840E058  func_5018D239_Table_5  20
 0x4840E06C  func_5018CA20_Var_8  12
