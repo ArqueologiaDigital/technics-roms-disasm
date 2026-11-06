@@ -235,7 +235,7 @@ FEATURES = {k: True for k in ("ptr_starts", "array_end", "mem_ptrs", "loop_index
                               "top_tested", "fld_slots", "fx_streams", "pow10_table", "euc_text",
                               "sibling_trie", "builtin_pads", "widget_vars", "maps128", "sentinel_lists", "chord_voicings", "index_bounds", "fx_presets", "table_terminators", "msg_readers", "count_notes", "doubles_text", "table_ptrs",
                               # lane mn10300-data2 (wave 10)
-                              "support_values", "sibling_support", "boot_sectors", "panel_700")}
+                              "support_values", "sibling_support", "boot_sectors", "panel_700", "style_lists")}
 for _k in os.environ.get("GEN_DATA_S_OFF", "").split(","):
     if _k.strip():
         FEATURES[_k.strip()] = False
@@ -1023,6 +1023,78 @@ class Gen:
             for i, (p, nn, _ps, d) in enumerate(ents):
                 if p:
                     self.support_value_names(i, p, nn, d)
+
+    def style_genre_lists(self):
+        """(FEATURES["style_lists"], lane mn10300-data2) What a StyleGenre record's +4 points at: a list of
+        {char *name, u16 *styles} pairs, ended by a pair whose +4 is 0, and each pair's style list, four
+        u16 style numbers and the end marker 0xFFFF.  941 StyleListBoxGetItem 0x4847C216: `asl 3` /
+        `add StyleGenreTable, a0` / `mov (4, a0), d0` (the pairs), pair i's `mov (4, a0), d0` (its
+        styles), `movhu (d0, a1), d3` four times (`cmp 4, d2` / `blt`), then the next pair's `mov (0xc,
+        a0), d0` / `cmp 0, d0` (the end); func_4847BA42 `mov (d0, a3), a1` / memcpy(.., 0x10) (the pair's
+        name).  Typed before the record passes, which read the lists' u16 rows at odd offsets or took a
+        style number's low byte for a one-character string (opaque group false-string)."""
+        if not FEATURES.get("style_lists", True):
+            return
+        m = self.m
+        g0 = m.sym_by_name.get("StyleGenreTable")
+        if g0 is None:
+            g0 = next((a for a, n in self.fixed.items() if n == "StyleGenreTable"), None)
+        if g0 is None or not self.in_data(g0):
+            return
+        isptr = lambda v: v and self.in_data(v) and m.inrom(v)
+        npairs = nlists = 0
+        k = 0
+        while isptr(m.u32(g0 + 8 * k)) and isptr(m.u32(g0 + 8 * k + 4)) and k < 64:
+            gname = m.cstr(m.u32(g0 + 8 * k)) or ""
+            pa = m.u32(g0 + 8 * k + 4)
+            k += 1
+            pairs = []
+            while len(pairs) < 256 and self.free(pa + 8 * len(pairs), 8):
+                na, sa = m.u32(pa + 8 * len(pairs)), m.u32(pa + 8 * len(pairs) + 4)
+                if sa == 0:
+                    pairs.append((na, 0))
+                    break
+                if not (isptr(na) and isptr(sa) and sa % 2 == 0):
+                    pairs = []
+                    break
+                pairs.append((na, sa))
+            if not pairs or pairs[-1][1] != 0 or pa % 4:
+                continue
+            lists = {}
+            for na, sa in pairs[:-1]:
+                if sa in lists:
+                    continue
+                vals = []
+                while len(vals) < 64 and self.free(sa + 2 * len(vals), 2):
+                    v = int.from_bytes(m.rom[self.off(sa) + 2 * len(vals):self.off(sa) + 2 * len(vals) + 2], "little")
+                    vals.append(v)
+                    if v == 0xFFFF:
+                        break
+                if vals and vals[-1] == 0xFFFF:
+                    lists[sa] = (vals, m.cstr(na) or "")
+            if len(lists) != len({sa for _n, sa in pairs[:-1]}):
+                continue
+            tag = sanitize(gname, 30) or f"{k - 1}"
+            for sa, (vals, nm) in sorted(lists.items()):
+                cur = self.fixed.get(sa)
+                lab = cur if cur and not self.GUESSED.match(cur) else self.rename_at(
+                    sa, f"StyleList_{tag}_{sanitize(nm, 30) or 'unnamed'}")
+                self.add(sa, 2 * len(vals), lab, "style list",
+                         lambda g, it, vals=vals, nm=nm: [
+                             f"{it.label}:\t# style numbers (u16) of \"{nm.strip()}\", then 0xFFFF; StyleListBoxGetItem reads four"]
+                         + ["\t.word\t" + ", ".join(f"{v}" if v != 0xFFFF else "0xffff" for v in vals)])
+                nlists += 1
+
+            def render(g, it, pairs=pairs, gname=gname):
+                out = [f"{it.label}:\t# StyleGenre \"{gname.strip()}\"'s {len(pairs) - 1} {{char *name, u16 *styles}} pairs, then"
+                       f" the pair whose styles is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)"]
+                out += [f"\t.long\t{g.ref(na)}, {g.ref(sa)}" for na, sa in pairs]
+                return out
+            cur = self.fixed.get(pa)
+            lab = cur if cur and not self.GUESSED.match(cur) else self.rename_at(pa, f"StyleGenre_{tag}_Pairs")
+            self.add(pa, 8 * len(pairs), lab, "style genre pairs", render)
+            npairs += 1
+        print(f"gen_data_s: style genres: {npairs} pair lists, {nlists} style lists")
 
     def boot_sectors(self):
         """(FEATURES["boot_sectors"], lane mn10300-data2, N-044cdbc6) The first 32 bytes of a FAT
@@ -6051,6 +6123,7 @@ class Gen:
                 # KN6000 / KN6500 0x1C0: InitSptClassTable)
                 self.support_classes()
             self.boot_sectors()
+            self.style_genre_lists()
             if P.get("readers_ext") or FEATURES.get("sibling_trie", True):
                 # (lane mn10300-rest) the siblings have the same trie (KN6000 func_4C02CA6A, KN2400 func_5014A95C)
                 self.resource_trie()
