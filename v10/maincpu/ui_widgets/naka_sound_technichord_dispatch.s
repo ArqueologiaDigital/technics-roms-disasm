@@ -5,18 +5,11 @@
 // ReverbEqPresets, Reverb, Equalizer, DspEffect, AcousticIllusion,
 // LeftHold, TechniChord), SoundEdit widget, and associated string data.
 
-; Tail of the NAKA record whose header (naka_header type 0x25) is at 0xE818E6,
-; in the previous file; a 32-bit pointer to that record is at 0xE85474.
-	.short 0xffff, 0x2
-	.short 0xffff, 0x8
-	.short 0xf5	; X-left coord of the button
-	.short 0x6	; y-top coord of the button
-	.short 0x13b, 0x17	; x-right coord of the button
-	.short 0xf3, 0xc1	; y-botton coord
-	.short 0xffff
-	.long 0x3e664	; <-- the LSByte here affects the page number
-	.short 0x1
-	.short 0x2	; total number of pages
+; element 1 of Viewable slot 0x2 (Sdmenu), an AcWindowPage; its first 6 bytes were the end of
+; naka_sound_menu_drawbar.c until 2026-11-06 (scripts/converters/naka_move_edge_heads_to_asm.py)
+; (the rect is the box of the page indicator; pagemax = 2, the number of pages)
+NakaWidget_SdmenuPage:
+	NAKA_REC_AcWindowPage super=IDX_NakaContainer_SoundMenu_Root, sub=NAKA_INDEX_NONE, next=IDX_NakaWidget_SoundMenu_ScrollBar1, prev=NAKA_INDEX_NONE, flag=VF_Const, x=245, y=6, w=71, h=18, color=CL_PageBack, border=BD_3D_UP2, index=0xffff, page=0x3e664, pagemin=1, pagemax=2
 NakaWidget_SoundMenu_ScrollBar1:
 	NAKA_REC_IvPageControl super=IDX_NakaContainer_SoundMenu_Root, sub=NAKA_INDEX_NONE, next=IDX_NakaWidget_SoundMenu_ScrollBar2, prev=IDX_NakaWidget_SdmenuPage, flag=VF_Const | VF_InvisibleBox, x=0, y=0, w=32, h=32, page=1, window=0x20000 + IDX_NakaWidget_Sdmenu1
 NakaWidget_SoundMenu_ScrollBar2:

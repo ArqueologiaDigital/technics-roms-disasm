@@ -10,10 +10,9 @@ SECTIONS {
 }
 
 CRTC_LINE_COMPARE = 0x00000018;
-INTETC45 = 0x000000EE;
 NakaStr_DataFile1of2 = 0x00E000C3;
 NakaStr_DataFilePck = 0x00E00113;
-NakaWidget_Perf3RhythmSel_StrOn = 0x00E2405E;
+NakaWidget_Perf3RhythmSel_StrOff = 0x00E2405E;
 NakaData_TechnichordBitmap1 = 0x00E900D8;
 NakaInst_NEXT = 0x00EE00C3;
 NakaInst_Param_EndFF = 0x00EE013B;
@@ -30,4 +29,4 @@ WidgetName_PtrBlock_G = 0x00EB00A4;
 WidgetName_PtrBlock_I1 = 0x00EB00C4;
 WidgetName_PtrBlock_I2 = 0x00EB00C6;
 WidgetName_PtrBlock_K = 0x00EB00DB;
-NakaWidget_Perf3RhythmSel_StrOff = 0x00E24066;
+NakaWidget_Perf3RhythmSel_StrOn = 0x00E24066;

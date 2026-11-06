@@ -71,7 +71,7 @@ records and mark the rest "not reviewed". Their outputs are copied into `analysi
 - **Batch r2's leads** (`analysis/kn5000-naming/proposals-2026-10-17-generic-r2.json`):
   - The `SysEx4B_` / `SysEx49_ChannelWords` tables are named after the wrong blocks: the 4B words feed
     chorus 0x49, and the 49 words feed reverb 0x4B.
-  - `PanelTag48_UpdateAudioConfig_StyleNumber` is really the arm for byte 3 of record 0x48.
+  - `PanelTag48_UpdateAudioConfig_StyleNumber` is really the arm for byte 3 of record 0x48 (renamed `PanelTag48_UpdateAudioConfig_ApcMode` on 2026-11-06, lane open11/kn5000-naka).
   - `ExtData_ToneParam_DispatchHandler` toggles bit 0 of part-record byte +22. This contradicts
     `README-lsw-part-record-fields.md`.
   - `scoop_display.s` 13832-13841 is unreachable code.
