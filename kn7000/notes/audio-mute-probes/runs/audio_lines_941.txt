@@ -1,0 +1,59 @@
+taps armed at power-on: 0x36008004 (PMUT bit 2), 0x98060000 (IC25 latch)
+PMUT    0.0000 pc=4840FF92 -1 -> 0 (byte 02)
+LATCH    0.0000 pc=484D7267 := FF (SPSW 1, SDMODE 1, USB.WAITM 1)
+[  1.02] breakpoints
+DACWORD    1.1481 pc=4854D092 1220 (16 bits) reg 18 data 20
+DACWORD    1.1482 pc=4854D092 1380 (16 bits) reg 19 data 80
+LATCH    1.8518 pc=4854D0C6 := CB (SPSW 1, SDMODE 0, USB.WAITM 1)
+PMUT    6.6283 pc=484D74B4 0 -> 1 (byte A4)
+LATCH    6.9865 pc=4854D092 := EF (SPSW 1, SDMODE 1, USB.WAITM 1)
+SNAPFILE 0 home
+[ 20.02] SNAP home
+STATE A-home PMUT 1 latch EF
+[ 20.52] open window A-home
+[ 21.02] DOWN C4
+[ 22.02] UP C4
+COUNT A-home P04-writes 26
+COUNT A-home latch-writes 11090
+STATE A-home-end PMUT 1 latch EF
+[ 23.02] close window A-home
+[ 24.02] DOWN PROGRAM MENUS
+[ 24.32] UP PROGRAM MENUS
+[ 26.02] DOWN LCDR 2
+[ 26.32] UP LCDR 2
+REDIRECT armed to 0xD6
+[ 28.02] redirect armed
+[ 28.22] DOWN LCDL 3
+[ 28.52] UP LCDL 3
+SNAPFILE 1 opened
+[ 32.02] SNAP opened
+[ 33.02] DOWN LCDR 2
+[ 33.32] UP LCDR 2
+SNAPFILE 2 after LCDR 2
+[ 35.52] SNAP after LCDR 2
+STATE B-opened PMUT 1 latch EF
+[ 36.02] open window B-opened
+[ 36.52] DOWN C4
+[ 37.52] UP C4
+COUNT B-opened P04-writes 26
+COUNT B-opened latch-writes 11092
+STATE B-opened-end PMUT 1 latch EF
+[ 38.52] close window B-opened
+SNAPFILE 3 after-B
+[ 39.02] SNAP after-B
+[ 39.52] DOWN EXIT
+[ 39.82] UP EXIT
+SNAPFILE 4 after-exit
+[ 43.02] SNAP after-exit
+STATE C-after-exit PMUT 1 latch EF
+[ 44.02] open window C-after-exit
+[ 44.52] DOWN C4
+[ 45.52] UP C4
+COUNT C-after-exit P04-writes 26
+COUNT C-after-exit latch-writes 11092
+STATE C-after-exit-end PMUT 1 latch EF
+[ 46.52] close window C-after-exit
+TITLECALL T InterruptTitle d0=2
+TITLECALL T ChangeTitle d0=f0093 REDIRECT -> d6
+TITLECALL T InterruptTitle d0=12b
+STATE end PMUT 1 latch EF
