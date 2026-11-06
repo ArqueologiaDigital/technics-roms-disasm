@@ -1022,7 +1022,7 @@ func_4C16838A_entry_L32_Table:
 	.long	func_4C16838A_entry_L147
 
 func_4C3F674B_Table_11:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C3F66BF reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout func_4C3F674B 0x4C3F674B reads through its argument a0 (passed by cre_tsk_L3d 0x4C3F66FC `call func_4C3F674B_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	x4="\x01\x00\x00\x00", task=func_4C16A13A, itskpri=3, x14="\x00\x00", stksz=3072
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C16A13A, itskpri=3, x14="\x00\x00", stksz=3072
 
 func_4C3F5298_Table_2:	# 2 x u32, 0..0; read by func_4C3F5298 0x4C3F5298: `mov (a3), d2`
 	tab_u32	0, 0

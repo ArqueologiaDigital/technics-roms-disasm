@@ -213,9 +213,9 @@ PfDoubleToDecimal_Table:	# 5 x u32, 0..1; read by PfDoubleToDecimal 0x4C003D6D: 
 	tab_u32	1, 0, 0, 0, 0
 
 func_4C3803AB_Table:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout func_4C3803AB 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call func_4C3803AB_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	x4="\x01\x00\x00\x00", task=func_4C0065B1, itskpri=3, x14="\x00\x00", stksz=0x10000
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C0065B1, itskpri=3, x14="\x00\x00", stksz=0x10000
 func_4C3803AB_Table_3:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout func_4C3803AB 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call func_4C3803AB_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	x4="\x01\x00\x00\x00", task=func_4C01465E, itskpri=3, x14="\x00\x00", stksz=6144
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C01465E, itskpri=3, x14="\x00\x00", stksz=6144
 func_4C37F98E_Var:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
 	REC_func_4C37F902_ArgA0	f4=8, x6="\x00\x00"
 func_4C37F98E_Var_3:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
@@ -17818,7 +17818,7 @@ func_4C062A53_entry_Lf2_Table:	# 16 x REC_func_4C062A53_entry_Lf2_Table (8 bytes
 func_4C066052_ArgA0_0:	# REC_func_4C066052_ArgA0 (8 bytes): the layout func_4C066052 0x4C066052 reads through its argument a0 (passed by func_4C0663EF_entry_L3f 0x4C066433 `call func_4C066052, 0, 0`)
 	REC_func_4C066052_ArgA0	x0="\xF0\x04\x02", x6="\xFF\xFF"
 func_4C3803AB_Table_5:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout func_4C3803AB 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call func_4C3803AB_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	x4="\x01\x00\x00\x00", task=func_4C053D2C, itskpri=3, x14="\x00\x00", stksz=24576
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C053D2C, itskpri=3, x14="\x00\x00", stksz=24576
 func_4C37F98E_Var_15:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
 	REC_func_4C37F902_ArgA0	f4=8, x6="\x00\x00"
 
@@ -26963,7 +26963,7 @@ func_4C07F2D5_Records:	# 16 x REC_func_4C07F2D5_Records (8 bytes each); read by 
 	REC_func_4C07F2D5_Records	key=47, proc=loc_4C07F315
 
 func_4C3803AB_Table_7:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout func_4C3803AB 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call func_4C3803AB_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	x4="\x01\x00\x00\x00", task=func_4C07FD94, itskpri=3, x14="\x00\x00", stksz=3072
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C07FD94, itskpri=3, x14="\x00\x00", stksz=3072
 func_4C37F98E_Var_17:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
 	REC_func_4C37F902_ArgA0	x6="\x00\x00", f8=1
 func_4C37F98E_Var_19:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
@@ -31020,1169 +31020,1169 @@ func_4C09CCB5_Table_p0_641:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
 func_4C09CCB5_Table_p0_642:	# REC_func_4C09CCB5_Table_p0 (12 bytes)
 	REC_func_4C09CCB5_Table_p0	p0=func_4C09CCB5_Table_p0_504, key=63489, x6="x\x008\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_0:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200000, x8="\x00\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200000, value="\x00\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_1:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202000, x8="\x02\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x202000, value="\x02\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_2:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202800, x8="\x02\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x202800, value="\x02\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_3:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203000, x8="\x02\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x203000, value="\x02\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_4:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204000, x8="\x00\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x204000, value="\x00\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_5:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204800, x8="\x02\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x204800, value="\x02\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_6:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205000, x8="\x00\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x205000, value="\x00\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_7:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205100, x8="\x00\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x205100, value="\x00\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_8:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205200, x8="\x00\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x205200, value="\x00\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_9:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205800, x8="\x02\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x205800, value="\x02\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_10:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x207000, x8=":\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x207000, value=":\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_11:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200001, x8="\x01\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200001, value="\x01\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_12:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202001, x8="\x03\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x202001, value="\x03\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_13:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203001, x8="\x00\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x203001, value="\x00\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_14:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203101, x8="\x01\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x203101, value="\x01\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_15:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204001, x8="\x07\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x204001, value="\x07\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_16:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205001, x8="\x07\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x205001, value="\x07\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_17:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200002, x8="\x03\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200002, value="\x03\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_18:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204002, x8="\x03\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x204002, value="\x03\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_19:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205002, x8="\x03\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x205002, value="\x03\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_20:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200003, x8="\x01\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x200003, value="\x01\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_21:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201003, x8="\x01\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x201003, value="\x01\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_22:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200004, x8="\x05\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200004, value="\x05\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_23:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200404, x8="\x05\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x200404, value="\x05\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_24:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201004, x8="\x04\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x201004, value="\x04\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_25:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202004, x8="\x04\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x202004, value="\x04\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_26:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204004, x8="\x04\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x204004, value="\x04\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_27:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205004, x8="\x04\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x205004, value="\x04\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_28:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200005, x8="\x06\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200005, value="\x06\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_29:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201005, x8="\x04\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x201005, value="\x04\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_30:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201405, x8="\x06\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x201405, value="\x06\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_31:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201805, x8="\x06\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x201805, value="\x06\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_32:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204005, x8="\x05\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x204005, value="\x05\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_33:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_10, key=0x204105, x8="\x05\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_10, key=0x204105, value="\x05\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_34:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204205, x8="\x05\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x204205, value="\x05\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_35:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205005, x8="\x04\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x205005, value="\x04\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_36:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205805, x8="\x06\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x205805, value="\x06\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_37:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200006, x8="\x10\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200006, value="\x10\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_38:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202006, x8="\x10\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x202006, value="\x10\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_39:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203006, x8="\x12\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x203006, value="\x12\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_40:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205006, x8="\x12\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x205006, value="\x12\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_41:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200007, x8="\x11\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200007, value="\x11\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_42:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200807, x8="\x11\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x200807, value="\x11\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_43:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201007, x8="\x11\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x201007, value="\x11\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_44:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202007, x8="s\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x202007, value="s\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_45:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202807, x8="\x11\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x202807, value="\x11\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_46:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203007, x8="\x11\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x203007, value="\x11\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_47:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204007, x8="\x11\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x204007, value="\x11\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_48:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200008, x8="\x0C\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200008, value="\x0C\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_49:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200009, x8="\x09\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200009, value="\x09\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_50:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20000A, x8="\x07\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20000A, value="\x07\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_51:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20040B, x8="\x08\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20040B, value="\x08\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_52:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20100B, x8="\x08\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x20100B, value="\x08\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_53:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20500B, x8="\x08\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x20500B, value="\x08\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_54:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20000C, x8="\n\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20000C, value="\n\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_55:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20200C, x8="\x0D\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20200C, value="\x0D\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_56:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20400C, x8="q\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20400C, value="q\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_57:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20000D, x8="\x0B\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20000D, value="\x0B\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_58:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20400D, x8="\x0B\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x20400D, value="\x0B\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_59:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20000E, x8="\x0E\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20000E, value="\x0E\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_60:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20100E, x8="\x0E\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x20100E, value="\x0E\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_61:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20000F, x8="&\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x20000F, value="&\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_62:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20100F, x8="&\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x20100F, value="&\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_63:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200010, x8="Y\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200010, value="Y\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_64:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200410, x8="Y\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x200410, value="Y\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_65:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200810, x8="[\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200810, value="[\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_66:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200C10, x8="[\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x200C10, value="[\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_67:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201010, x8="]\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x201010, value="]\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_68:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201410, x8="]\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x201410, value="]\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_69:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201810, x8="[\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x201810, value="[\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_70:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201C10, x8="[\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x201C10, value="[\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_71:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202010, x8="Y\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x202010, value="Y\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_72:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202410, x8="Y\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x202410, value="Y\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_73:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204010, x8="^\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x204010, value="^\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_74:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204410, x8="^\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x204410, value="^\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_75:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200011, x8="X\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200011, value="X\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_76:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200411, x8="X\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x200411, value="X\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_77:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200811, x8="Z\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200811, value="Z\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_78:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200C11, x8="Z\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x200C11, value="Z\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_79:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200012, x8="\\\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x200012, value="\\\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_80:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200412, x8="\\\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x200412, value="\\\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_81:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201012, x8="\\\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x201012, value="\\\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_82:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201412, x8="\\\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x201412, value="\\\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_83:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202012, x8="[\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x202012, value="[\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_84:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202812, x8="\\\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x202812, value="\\\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_85:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200013, x8="T\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200013, value="T\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_86:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201013, x8="U\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x201013, value="U\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_87:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202013, x8="V\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x202013, value="V\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_88:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204013, x8="W\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x204013, value="W\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_89:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204813, x8="W\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x204813, value="W\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_90:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205013, x8="W\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x205013, value="W\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_91:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x206013, x8="V\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x206013, value="V\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_92:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200014, x8="V\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x200014, value="V\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_93:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200015, x8="P\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200015, value="P\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_94:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201015, x8="Q\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x201015, value="Q\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_95:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204015, x8="R\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x204015, value="R\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_96:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204815, x8="R\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x204815, value="R\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_97:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200016, x8="S\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200016, value="S\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_98:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200816, x8="S\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x200816, value="S\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_99:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200017, x8="P\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x200017, value="P\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_100:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200018, x8="\x14\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200018, value="\x14\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_101:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200818, x8="\x14\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x200818, value="\x14\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_102:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201018, x8="\x15\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x201018, value="\x15\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_103:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201818, x8="\x14\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x201818, value="\x14\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_104:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_35, key=0x201C18, x8="\x14\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_35, key=0x201C18, value="\x14\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_105:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204018, x8="\"\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x204018, value="\"\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_106:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200019, x8="\x16\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200019, value="\x16\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_107:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202019, x8="\x17\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x202019, value="\x17\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_108:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202219, x8="\x17\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x202219, value="\x17\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_109:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204019, x8="#\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x204019, value="#\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_110:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205019, x8="#\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x205019, value="#\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_111:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20001A, x8="\x19\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20001A, value="\x19\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_112:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20081A, x8="\x18\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20081A, value="\x18\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_113:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20301A, x8="\x19\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x20301A, value="\x19\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_114:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20381A, x8="\x19\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x20381A, value="\x19\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_115:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20401A, x8="\x1F\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x20401A, value="\x1F\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_116:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20411A, x8="\x1F\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x20411A, value="\x1F\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_117:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20441A, x8="\x1F\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20441A, value="\x1F\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_118:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20451A, x8="\x1F\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x20451A, value="\x1F\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_119:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20001B, x8="\x1A\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20001B, value="\x1A\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_120:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20101B, x8="\x1A\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x20101B, value="\x1A\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_121:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20181B, x8="\x1A\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x20181B, value="\x1A\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_122:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20201B, x8="\x1C\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x20201B, value="\x1C\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_123:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20401B, x8="\x1C\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20401B, value="\x1C\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_124:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20001C, x8="\x1D\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20001C, value="\x1D\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_125:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20201C, x8="\x1D\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x20201C, value="\x1D\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_126:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20001D, x8="\x1B\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x20001D, value="\x1B\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_127:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20001E, x8="\x1E\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20001E, value="\x1E\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_128:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20001F, x8="\x1B\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x20001F, value="\x1B\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_129:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20101F, x8="\x1E\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x20101F, value="\x1E\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_130:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20301F, x8="\x1B\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x20301F, value="\x1B\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_131:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200020, x8="+\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200020, value="+\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_132:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201020, x8="+\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x201020, value="+\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_133:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200021, x8="(\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200021, value="(\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_134:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201021, x8="(\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x201021, value="(\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_135:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202021, x8="*\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x202021, value="*\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_136:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203021, x8="(\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x203021, value="(\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_137:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204021, x8="(\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x204021, value="(\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_138:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200022, x8="*\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200022, value="*\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_139:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202022, x8="/\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x202022, value="/\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_140:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200023, x8="(\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x200023, value="(\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_141:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200024, x8=")\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200024, value=")\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_142:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200025, x8=")\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x200025, value=")\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_143:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200026, x8=".\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200026, value=".\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_144:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_33, key=0x200826, x8="*\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_33, key=0x200826, value="*\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_145:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_88, key=0x200C26, x8="-\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_88, key=0x200C26, value="-\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_146:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201026, x8="/\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x201026, value="/\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_147:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201826, x8="/\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x201826, value="/\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_148:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_11, key=0x202026, x8="/\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_11, key=0x202026, value="/\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_149:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202826, x8=",\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x202826, value=",\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_150:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203026, x8="-\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x203026, value="-\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_151:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203126, x8="-\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x203126, value="-\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_152:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_12, key=0x204026, x8=",\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_12, key=0x204026, value=",\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_153:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204826, x8="/\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x204826, value="/\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_154:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204A26, x8="-\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x204A26, value="-\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_155:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_13, key=0x205026, x8=",\x02\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_13, key=0x205026, value=",\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_156:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205826, x8="+\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x205826, value="+\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_157:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205C26, x8=",\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x205C26, value=",\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_158:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_15, key=0x206026, x8=",\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_15, key=0x206026, value=",\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_159:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200027, x8=".\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x200027, value=".\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_160:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200827, x8="-\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x200827, value="-\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_161:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201027, x8=",\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x201027, value=",\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_162:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_17, key=0x202027, x8=".\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_17, key=0x202027, value=".\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_163:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202827, x8="/\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x202827, value="/\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_164:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203027, x8="+\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x203027, value="+\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_165:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203427, x8="/\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x203427, value="/\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_166:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203827, x8=",\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x203827, value=",\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_167:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200028, x8="`\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200028, value="`\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_168:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200428, x8="`\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x200428, value="`\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_169:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201028, x8="`\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x201028, value="`\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_170:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200029, x8="a\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x200029, value="a\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_171:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20002A, x8="a\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20002A, value="a\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_172:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20002B, x8="b\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20002B, value="b\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_173:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20002C, x8="d\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x20002C, value="d\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_174:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20002D, x8="c\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20002D, value="c\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_175:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20502D, x8="c\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x20502D, value="c\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_176:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20002E, x8=" \x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20002E, value=" \x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_177:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20102E, x8=" \x02\x00\x00"
+	VoiceDirPartRefNode	key=0x20102E, value=" \x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_178:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_49, key=0x20202E, x8=" \x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_49, key=0x20202E, value=" \x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_179:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20402E, x8=" \x04\x00\x00"
+	VoiceDirPartRefNode	key=0x20402E, value=" \x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_180:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20002F, x8="~\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20002F, value="~\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_181:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200030, x8="d\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200030, value="d\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_182:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200830, x8="d\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x200830, value="d\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_183:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201030, x8="d\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x201030, value="d\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_184:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201830, x8="e\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x201830, value="e\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_185:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201C30, x8="d\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x201C30, value="d\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_186:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202030, x8="f\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x202030, value="f\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_187:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202830, x8="f\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x202830, value="f\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_188:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_52, key=0x203030, x8="f\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_52, key=0x203030, value="f\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_189:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203830, x8="f\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x203830, value="f\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_190:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203930, x8="b\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x203930, value="b\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_191:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204030, x8="f\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x204030, value="f\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_192:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204830, x8="e\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x204830, value="e\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_193:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205030, x8="f\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x205030, value="f\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_194:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205830, x8="d\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x205830, value="d\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_195:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x206030, x8="c\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x206030, value="c\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_196:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200031, x8="e\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200031, value="e\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_197:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200831, x8="e\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x200831, value="e\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_198:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_55, key=0x204031, x8="e\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_55, key=0x204031, value="e\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_199:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204831, x8="d\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x204831, value="d\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_200:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205031, x8="d\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x205031, value="d\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_201:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200032, x8="g\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200032, value="g\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_202:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201032, x8="k\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x201032, value="k\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_203:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204032, x8="x\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x204032, value="x\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_204:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204832, x8="g\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x204832, value="g\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_205:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200033, x8="g\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x200033, value="g\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_206:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_59, key=0x202033, x8="g\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_59, key=0x202033, value="g\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_207:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205033, x8="g\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x205033, value="g\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_208:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200034, x8="h\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x200034, value="h\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_209:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200134, x8="h\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x200134, value="h\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_210:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200834, x8="h\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200834, value="h\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_211:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_137, key=0x200C34, x8="h\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_137, key=0x200C34, value="h\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_212:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201034, x8="i\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x201034, value="i\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_213:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201834, x8="b\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x201834, value="b\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_214:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_61, key=0x202034, x8="h\x02\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_61, key=0x202034, value="h\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_215:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202434, x8="h\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x202434, value="h\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_216:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203834, x8="b\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x203834, value="b\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_217:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204034, x8="i\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x204034, value="i\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_218:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205034, x8="i\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x205034, value="i\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_219:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200035, x8="m\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200035, value="m\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_220:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200835, x8="m\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x200835, value="m\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_221:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_63, key=0x202035, x8="n\x02\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_63, key=0x202035, value="n\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_222:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_193, key=0x202135, x8="i\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_193, key=0x202135, value="i\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_223:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_64, key=0x202435, x8="i\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_64, key=0x202435, value="i\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_224:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202635, x8="k\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x202635, value="k\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_225:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_65, key=0x202835, x8="i\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_65, key=0x202835, value="i\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_226:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_194, key=0x202935, x8="i\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_194, key=0x202935, value="i\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_227:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_173, key=0x202A35, x8="j\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_173, key=0x202A35, value="j\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_228:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_71, key=0x204035, x8="m\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_71, key=0x204035, value="m\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_229:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_53, key=0x204135, x8="n\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_53, key=0x204135, value="n\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_230:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204235, x8="n\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x204235, value="n\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_231:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204335, x8="~\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x204335, value="~\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_232:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_72, key=0x204435, x8="n\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_72, key=0x204435, value="n\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_233:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204835, x8="m\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x204835, value="m\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_234:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204935, x8="n\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x204935, value="n\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_235:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204C35, x8="n\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x204C35, value="n\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_236:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204D35, x8="\x7F\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x204D35, value="\x7F\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_237:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205035, x8="m\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x205035, value="m\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_238:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205135, x8="m\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x205135, value="m\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_239:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_42, key=0x205235, x8="m\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_42, key=0x205235, value="m\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_240:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200036, x8="k\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200036, value="k\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_241:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201036, x8="e\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x201036, value="e\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_242:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200037, x8="\x7F\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x200037, value="\x7F\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_243:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_81, key=0x203037, x8="\x7F\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_81, key=0x203037, value="\x7F\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_244:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200038, x8="0\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200038, value="0\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_245:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200438, x8="0\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x200438, value="0\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_246:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200838, x8="0\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x200838, value="0\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_247:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201038, x8="0\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x201038, value="0\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_248:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_85, key=0x202038, x8="0\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_85, key=0x202038, value="0\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_249:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_86, key=0x203038, x8="3\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_86, key=0x203038, value="3\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_250:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_87, key=0x204038, x8="1\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_87, key=0x204038, value="1\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_251:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_9, key=0x204438, x8="1\x02\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_9, key=0x204438, value="1\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_252:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205038, x8="9\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x205038, value="9\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_253:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_143, key=0x205438, x8=";\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_143, key=0x205438, value=";\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_254:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205838, x8="8\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x205838, value="8\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_255:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_145, key=0x206038, x8=":\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_145, key=0x206038, value=":\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_256:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_146, key=0x206438, x8=":\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_146, key=0x206438, value=":\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_257:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_89, key=0x206838, x8=":\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_89, key=0x206838, value=":\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_258:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200039, x8="4\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200039, value="4\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_259:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201039, x8="5\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x201039, value="5\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_260:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201839, x8="5\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x201839, value="5\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_261:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_165, key=0x20003A, x8="7\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_165, key=0x20003A, value="7\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_262:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_93, key=0x20203A, x8="7\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_93, key=0x20203A, value="7\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_263:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20003B, x8="2\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20003B, value="2\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_264:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20103B, x8="2\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x20103B, value="2\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_265:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_97, key=0x20203B, x8="4\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_97, key=0x20203B, value="4\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_266:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20503B, x8="9\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x20503B, value="9\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_267:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20513B, x8="9\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x20513B, value="9\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_268:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20003C, x8="6\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x20003C, value="6\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_269:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20103C, x8="6\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20103C, value="6\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_270:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20403C, x8="6\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x20403C, value="6\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_271:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20503C, x8="6\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x20503C, value="6\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_272:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20583C, x8="6\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x20583C, value="6\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_273:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_30, key=0x20003D, x8="8\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_30, key=0x20003D, value="8\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_274:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20083D, x8="8\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x20083D, value="8\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_275:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20183D, x8="8\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x20183D, value="8\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_276:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_100, key=0x20203D, x8="8\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_100, key=0x20203D, value="8\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_277:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_102, key=0x20303D, x8="9\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_102, key=0x20303D, value="9\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_278:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20403D, x8="8\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x20403D, value="8\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_279:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20483D, x8=";\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20483D, value=";\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_280:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204C3D, x8=";\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x204C3D, value=";\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_281:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20503D, x8=";\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x20503D, value=";\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_282:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_105, key=0x20603D, x8=":\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_105, key=0x20603D, value=":\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_283:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20613D, x8=":\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x20613D, value=":\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_284:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20003E, x8="<\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20003E, value="<\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_285:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20083E, x8=">\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x20083E, value=">\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_286:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20103E, x8="<\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x20103E, value="<\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_287:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_106, key=0x20203E, x8="?\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_106, key=0x20203E, value="?\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_288:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20303E, x8="?\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x20303E, value="?\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_289:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20383E, x8="9\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x20383E, value="9\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_290:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20003F, x8="?\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x20003F, value="?\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_291:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20083F, x8="=\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x20083F, value="=\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_292:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_44, key=0x200C3F, x8="<\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_44, key=0x200C3F, value="<\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_293:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20103F, x8="k\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x20103F, value="k\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_294:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200040, x8="L\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200040, value="L\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_295:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200041, x8="M\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x200041, value="M\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_296:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200441, x8="M\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x200441, value="M\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_297:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200841, x8="M\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200841, value="M\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_298:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201841, x8="M\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x201841, value="M\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_299:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203041, x8="M\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x203041, value="M\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_300:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203441, x8="M\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x203441, value="M\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_301:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203841, x8="M\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x203841, value="M\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_302:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200042, x8="N\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x200042, value="N\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_303:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201042, x8="N\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x201042, value="N\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_304:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201442, x8="N\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x201442, value="N\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_305:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203042, x8="O\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x203042, value="O\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_306:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203442, x8="O\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x203442, value="O\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_307:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203842, x8="O\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x203842, value="O\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_308:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205042, x8="N\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x205042, value="N\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_309:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200043, x8="O\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x200043, value="O\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_310:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205043, x8="O\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x205043, value="O\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_311:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205843, x8="O\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x205843, value="O\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_312:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200044, x8="B\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200044, value="B\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_313:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200045, x8="C\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200045, value="C\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_314:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200046, x8="F\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200046, value="F\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_315:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200047, x8="D\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200047, value="D\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_316:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200847, x8="D\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x200847, value="D\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_317:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201047, x8="D\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x201047, value="D\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_318:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_14, key=0x201847, x8="D\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_14, key=0x201847, value="D\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_319:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_138, key=0x202047, x8="E\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_138, key=0x202047, value="E\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_320:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203047, x8="E\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x203047, value="E\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_321:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205047, x8="D\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x205047, value="D\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_322:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_68, key=0x200048, x8="@\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_68, key=0x200048, value="@\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_323:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200049, x8="A\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200049, value="A\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_324:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200449, x8="A\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x200449, value="A\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_325:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201049, x8="A\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x201049, value="A\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_326:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201449, x8="A\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x201449, value="A\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_327:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_141, key=0x202049, x8="A\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_141, key=0x202049, value="A\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_328:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203049, x8="@\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x203049, value="@\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_329:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204049, x8="K\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x204049, value="K\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_330:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205049, x8="@\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x205049, value="@\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_331:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_82, key=0x20004A, x8="J\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_82, key=0x20004A, value="J\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_332:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_5, key=0x20004B, x8="H\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_5, key=0x20004B, value="H\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_333:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20044B, x8="H\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x20044B, value="H\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_334:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_6, key=0x20084B, x8="H\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_6, key=0x20084B, value="H\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_335:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_148, key=0x20404B, x8="K\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_148, key=0x20404B, value="K\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_336:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_149, key=0x20484B, x8="I\x02\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_149, key=0x20484B, value="I\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_337:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20004C, x8="H\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x20004C, value="H\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_338:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20004D, x8="K\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20004D, value="K\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_339:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20004E, x8="o\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20004E, value="o\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_340:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_170, key=0x20204E, x8="o\x02\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_170, key=0x20204E, value="o\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_341:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20304E, x8="o\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x20304E, value="o\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_342:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20004F, x8="J\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x20004F, value="J\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_343:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_171, key=0x20204F, x8="H\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_171, key=0x20204F, value="H\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_344:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20304F, x8="H\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x20304F, value="H\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_345:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200050, x8="u\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200050, value="u\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_346:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_103, key=0x200450, x8="q\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_103, key=0x200450, value="q\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_347:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_104, key=0x200850, x8="u\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_104, key=0x200850, value="u\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_348:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_278, key=0x200C50, x8="w\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_278, key=0x200C50, value="w\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_349:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_36, key=0x201050, x8="v\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_36, key=0x201050, value="v\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_350:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_279, key=0x201450, x8="x\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_279, key=0x201450, value="x\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_351:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_280, key=0x201850, x8="w\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_280, key=0x201850, value="w\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_352:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_172, key=0x202050, x8="q\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_172, key=0x202050, value="q\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_353:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203050, x8="v\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x203050, value="v\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_354:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_37, key=0x204050, x8="^\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_37, key=0x204050, value="^\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_355:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204450, x8="o\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x204450, value="o\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_356:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204850, x8="u\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x204850, value="u\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_357:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_38, key=0x206050, x8="z\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_38, key=0x206050, value="z\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_358:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_190, key=0x200051, x8="v\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_190, key=0x200051, value="v\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_359:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_289, key=0x200451, x8="}\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_289, key=0x200451, value="}\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_360:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_40, key=0x200851, x8="u\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_40, key=0x200851, value="u\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_361:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_107, key=0x200C51, x8="x\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_107, key=0x200C51, value="x\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_362:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201051, x8="v\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x201051, value="v\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_363:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_227, key=0x202051, x8="x\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_227, key=0x202051, value="x\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_364:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203051, x8="}\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x203051, value="}\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_365:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x205851, x8="y\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x205851, value="y\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_366:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_292, key=0x206051, x8="p\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_292, key=0x206051, value="p\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_367:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_45, key=0x206851, x8="y\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_45, key=0x206851, value="y\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_368:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_46, key=0x207051, x8="p\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_46, key=0x207051, value="p\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_369:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_111, key=0x207451, x8="w\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_111, key=0x207451, value="w\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_370:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x207851, x8="n\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x207851, value="n\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_371:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200052, x8="H\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x200052, value="H\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_372:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200053, x8="u\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x200053, value="u\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_373:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_176, key=0x202053, x8="<\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_176, key=0x202053, value="<\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_374:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202853, x8="u\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x202853, value="u\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_375:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_177, key=0x203053, x8="v\x02\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_177, key=0x203053, value="v\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_376:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_178, key=0x204053, x8="p\x02\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_178, key=0x204053, value="p\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_377:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_300, key=0x200054, x8="\x1B\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_300, key=0x200054, value="\x1B\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_378:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_180, key=0x202054, x8="~\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_180, key=0x202054, value="~\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_379:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x202854, x8="q\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x202854, value="q\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_380:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203054, x8="7\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x203054, value="7\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_381:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203854, x8="\x1A\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x203854, value="\x1A\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_382:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_50, key=0x204054, x8="\x7F\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_50, key=0x204054, value="\x7F\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_383:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204154, x8="q\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x204154, value="q\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_384:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204254, x8="q\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x204254, value="q\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_385:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204454, x8="\x7F\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x204454, value="\x7F\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_386:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204854, x8="q\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x204854, value="q\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_387:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204C54, x8="}\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x204C54, value="}\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_388:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_209, key=0x205054, x8="q\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_209, key=0x205054, value="q\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_389:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_302, key=0x205454, x8="z\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_302, key=0x205454, value="z\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_390:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x206054, x8="r\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x206054, value="r\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_391:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_304, key=0x206854, x8="r\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_304, key=0x206854, value="r\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_392:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_306, key=0x200055, x8="j\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_306, key=0x200055, value="j\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_393:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_181, key=0x202055, x8="j\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_181, key=0x202055, value="j\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_394:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200056, x8="w\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200056, value="w\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_395:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_229, key=0x200856, x8="x\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_229, key=0x200856, value="x\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_396:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_196, key=0x202056, x8="y\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_196, key=0x202056, value="y\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_397:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_54, key=0x204056, x8="w\x02\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_54, key=0x204056, value="w\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_398:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204856, x8="}\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x204856, value="}\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_399:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200057, x8=".\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x200057, value=".\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_400:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_201, key=0x202057, x8="s\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_201, key=0x202057, value="s\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_401:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_202, key=0x203057, x8="~\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_202, key=0x203057, value="~\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_402:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_57, key=0x204057, x8="s\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_57, key=0x204057, value="s\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_403:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x204857, x8="{\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x204857, value="{\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_404:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200058, x8="t\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x200058, value="t\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_405:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201058, x8="l\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x201058, value="l\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_406:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_205, key=0x202058, x8="l\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_205, key=0x202058, value="l\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_407:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203058, x8="t\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x203058, value="t\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_408:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_206, key=0x204058, x8="|\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_206, key=0x204058, value="|\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_409:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200059, x8="k\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x200059, value="k\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_410:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201059, x8="i\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x201059, value="i\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_411:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201459, x8="p\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x201459, value="p\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_412:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201859, x8="g\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x201859, value="g\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_413:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_136, key=0x201C59, x8="?\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_136, key=0x201C59, value="?\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_414:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_208, key=0x202059, x8="9\x02\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_208, key=0x202059, value="9\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_415:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_32, key=0x202259, x8="e\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_32, key=0x202259, value="e\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_416:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_34, key=0x202459, x8="l\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_34, key=0x202459, value="l\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_417:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_277, key=0x202659, x8="p\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_277, key=0x202659, value="p\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_418:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_210, key=0x202859, x8="b\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_210, key=0x202859, value="b\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_419:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20005A, x8="f\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x20005A, value="f\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_420:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20085A, x8="g\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x20085A, value="g\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_421:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20105A, x8="y\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x20105A, value="y\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_422:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_219, key=0x20205A, x8="|\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_219, key=0x20205A, value="|\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_423:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20305A, x8="{\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x20305A, value="{\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_424:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_108, key=0x20385A, x8="{\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_108, key=0x20385A, value="{\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_425:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_221, key=0x20405A, x8="<\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_221, key=0x20405A, value="<\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_426:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_67, key=0x20505A, x8=";\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_67, key=0x20505A, value=";\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_427:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_195, key=0x20515A, x8=";\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_195, key=0x20515A, value=";\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_428:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20005B, x8="k\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x20005B, value="k\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_429:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20005C, x8="x\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20005C, value="x\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_430:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20105C, x8="o\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x20105C, value="o\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_431:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20005D, x8="j\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x20005D, value="j\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_432:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_248, key=0x20405D, x8="r\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_248, key=0x20405D, value="r\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_433:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_257, key=0x20005E, x8="k\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_257, key=0x20005E, value="k\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_434:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20005F, x8=">\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x20005F, value=">\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_435:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20085F, x8=">\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x20085F, value=">\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_436:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20105F, x8="|\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x20105F, value="|\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_437:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_262, key=0x20405F, x8=">\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_262, key=0x20405F, value=">\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_438:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_96, key=0x200060, x8="y\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_96, key=0x200060, value="y\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_439:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200061, x8="w\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x200061, value="w\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_440:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_268, key=0x202061, x8="x\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_268, key=0x202061, value="x\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_441:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200062, x8="\x09\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x200062, value="\x09\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_442:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201062, x8="\x09\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x201062, value="\x09\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_443:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200063, x8="\x15\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x200063, value="\x15\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_444:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_355, key=0x201063, x8="z\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_355, key=0x201063, value="z\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_445:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200064, x8="l\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x200064, value="l\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_446:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201064, x8="~\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x201064, value="~\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_447:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_290, key=0x202064, x8="\x13\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_290, key=0x202064, value="\x13\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_448:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_369, key=0x204064, x8="r\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_369, key=0x204064, value="r\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_449:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200065, x8="j\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200065, value="j\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_450:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201065, x8="b\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x201065, value="b\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_451:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_294, key=0x202065, x8="l\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_294, key=0x202065, value="l\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_452:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200066, x8="j\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x200066, value="j\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_453:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_295, key=0x202066, x8="l\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_295, key=0x202066, value="l\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_454:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_8, key=0x200067, x8="x\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_8, key=0x200067, value="x\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_455:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_385, key=0x201067, x8="t\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_385, key=0x201067, value="t\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_456:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_389, key=0x202067, x8="r\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_389, key=0x202067, value="r\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_457:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_303, key=0x203067, x8="s\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_303, key=0x203067, value="s\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_458:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200068, x8="&\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200068, value="&\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_459:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200069, x8="!\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200069, value="!\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_460:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_128, key=0x204069, x8="&\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_128, key=0x204069, value="&\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_461:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20006A, x8="$\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20006A, value="$\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_462:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20006B, x8="%\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20006B, value="%\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_463:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_314, key=0x20206B, x8="%\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_314, key=0x20206B, value="%\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_464:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_133, key=0x20406B, x8="&\x02\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_133, key=0x20406B, value="&\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_465:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20006C, x8="'\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20006C, value="'\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_466:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_215, key=0x20106C, x8="'\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_215, key=0x20106C, value="'\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_467:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20006D, x8="I\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x20006D, value="I\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_468:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20006E, x8="`\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x20006E, value="`\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_469:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20006F, x8="I\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x20006F, value="I\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_470:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_2, key=0x200070, x8="\x0E\x02\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_2, key=0x200070, value="\x0E\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_471:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_332, key=0x202070, x8="\x0D\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_332, key=0x202070, value="\x0D\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_472:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_334, key=0x202870, x8="\x0D\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_334, key=0x202870, value="\x0D\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_473:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_251, key=0x203070, x8="\x0D\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_251, key=0x203070, value="\x0D\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_474:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_384, key=0x203870, x8="\x0D\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_384, key=0x203870, value="\x0D\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_475:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_153, key=0x200071, x8="z\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_153, key=0x200071, value="z\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_476:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_156, key=0x201071, x8="}\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_156, key=0x201071, value="}\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_477:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_337, key=0x202071, x8="~\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_337, key=0x202071, value="~\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_478:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_231, key=0x200072, x8="\x0F\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_231, key=0x200072, value="\x0F\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_479:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_167, key=0x204072, x8="\x0B\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_167, key=0x204072, value="\x0B\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_480:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200073, x8="z\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x200073, value="z\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_481:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200074, x8="{\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x200074, value="{\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_482:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x203074, x8="{\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x203074, value="{\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_483:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200075, x8="z\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x200075, value="z\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_484:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200076, x8="|\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x200076, value="|\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_485:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_363, key=0x204076, x8="|\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_363, key=0x204076, value="|\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_486:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_367, key=0x200077, x8="z\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_367, key=0x200077, value="z\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_487:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200078, x8="|\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x200078, value="|\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_488:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_373, key=0x204078, x8=")\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_373, key=0x204078, value=")\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_489:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x200079, x8="|\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x200079, value="|\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_490:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x201079, x8="~\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x201079, value="~\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_491:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_391, key=0x20007A, x8="|\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_391, key=0x20007A, value="|\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_492:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_192, key=0x20007B, x8="}\x02\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_192, key=0x20007B, value="}\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_493:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_199, key=0x20007C, x8="{\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_199, key=0x20007C, value="{\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_494:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_204, key=0x20007D, x8="{\x01\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_204, key=0x20007D, value="{\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_495:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_488, key=0x20117D, x8="w\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_488, key=0x20117D, value="w\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_496:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20007E, x8="}\x03\x00\x00"
+	VoiceDirPartRefNode	key=0x20007E, value="}\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_497:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x20007F, x8="{\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x20007F, value="{\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_498:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x240800, x8="R\x01\x00\x00"
+	VoiceDirPartRefNode	key=0x240800, value="R\x01\x00\x00"
 VoiceDirPartRefFind_Table_p0_499:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x242800, x8="R\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x242800, value="R\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_500:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_174, key=0x242000, x8="R\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_174, key=0x242000, value="R\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_501:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x243800, x8="R\x05\x00\x00"
+	VoiceDirPartRefNode	key=0x243800, value="R\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_502:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x246000, x8="R\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x246000, value="R\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_503:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x245000, x8="R\x07\x00\x00"
+	VoiceDirPartRefNode	key=0x245000, value="R\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_504:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x245800, x8="S\x06\x00\x00"
+	VoiceDirPartRefNode	key=0x245800, value="S\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_505:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_48, key=0x244000, x8="S\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_48, key=0x244000, value="S\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_506:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_115, key=0x242C00, x8="Q\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_115, key=0x242C00, value="Q\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_507:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_324, key=0x242E00, x8="Q\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_324, key=0x242E00, value="Q\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_508:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_419, key=0x240008, x8="P\x02\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_419, key=0x240008, value="P\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_509:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_420, key=0x240808, x8="P\x03\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_420, key=0x240808, value="P\x03\x00\x00"
 VoiceDirPartRefFind_Table_p0_510:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_422, key=0x242008, x8="P\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_422, key=0x242008, value="P\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_511:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_423, key=0x243008, x8="P\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_423, key=0x243008, value="P\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_512:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_228, key=0x246008, x8="P\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_228, key=0x246008, value="P\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_513:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_225, key=0x244808, x8="P\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_225, key=0x244808, value="P\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_514:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_69, key=0x245808, x8="S\x04\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_69, key=0x245808, value="S\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_515:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_425, key=0x244008, x8="S\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_425, key=0x244008, value="S\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_516:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x242C08, x8="Q\x04\x00\x00"
+	VoiceDirPartRefNode	key=0x242C08, value="Q\x04\x00\x00"
 VoiceDirPartRefFind_Table_p0_517:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_445, key=0x245E08, x8="Q\x05\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_445, key=0x245E08, value="Q\x05\x00\x00"
 VoiceDirPartRefFind_Table_p0_518:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_492, key=0x260000, x8="\xF0\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_492, key=0x260000, value="\xF0\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_519:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_493, key=0x260001, x8="\xF3\x02\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_493, key=0x260001, value="\xF3\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_520:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x260009, x8="\xF2\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x260009, value="\xF2\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_521:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_496, key=0x260003, x8="\xF7\x02\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_496, key=0x260003, value="\xF7\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_522:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x260008, x8="\xF3\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x260008, value="\xF3\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_523:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_494, key=0x260002, x8="\xFE\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_494, key=0x260002, value="\xFE\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_524:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x260010, x8="\xF7\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x260010, value="\xF7\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_525:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x260011, x8="\xF8\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x260011, value="\xF8\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_526:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x260018, x8="\xF2\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x260018, value="\xF2\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_527:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_239, key=0x260021, x8="\xF6\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_239, key=0x260021, value="\xF6\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_528:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_356, key=0x260020, x8="\xF1\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_356, key=0x260020, value="\xF1\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_529:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x260028, x8="\xF5\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x260028, value="\xF5\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_530:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x260019, x8="\xF4\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x260019, value="\xF4\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_531:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x26001A, x8="\xF5\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x26001A, value="\xF5\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_532:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_336, key=0x26001B, x8="\xF9\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_336, key=0x26001B, value="\xF9\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_533:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x26001D, x8="\xFA\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x26001D, value="\xFA\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_534:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_163, key=0x26001C, x8="\xFB\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_163, key=0x26001C, value="\xFB\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_535:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x26001F, x8="\xFF\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x26001F, value="\xFF\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_536:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x26001E, x8="\xF6\x02\x00\x00"
+	VoiceDirPartRefNode	key=0x26001E, value="\xF6\x02\x00\x00"
 VoiceDirPartRefFind_Table_p0_537:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_112, key=0x260034, x8="\xFC\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_112, key=0x260034, value="\xFC\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_538:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x260038, x8="\xFD\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x260038, value="\xFD\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_539:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_340, key=0x220000, x8="\x80\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_340, key=0x220000, value="\x80\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_540:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_258, key=0x220010, x8="\x81\x07\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_258, key=0x220010, value="\x81\x07\x00\x00"
 VoiceDirPartRefFind_Table_p0_541:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_376, key=0x110000, x8="\xF0\x06\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_376, key=0x110000, value="\xF0\x06\x00\x00"
 VoiceDirPartRefFind_Table_p0_542:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_43, key=0x100000, x8="\x80\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_43, key=0x100000, value="\x80\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_543:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_503, key=0x100001, x8="\x81\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_503, key=0x100001, value="\x81\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_544:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x100002, x8="\x82\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x100002, value="\x82\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_545:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_388, key=0x100003, x8="\x83\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_388, key=0x100003, value="\x83\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_546:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_188, key=0x100004, x8="\x84\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_188, key=0x100004, value="\x84\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_547:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x100005, x8="\x85\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x100005, value="\x85\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_548:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x100006, x8="\x86\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x100006, value="\x86\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_549:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_60, key=0x100007, x8="\x87\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_60, key=0x100007, value="\x87\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_550:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_62, key=0x100008, x8="\x88\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_62, key=0x100008, value="\x88\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_551:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_426, key=0x100009, x8="\x89\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_426, key=0x100009, value="\x89\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_552:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x10000A, x8="\x8A\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x10000A, value="\x8A\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_553:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_243, key=0x10000B, x8="\x8B\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_243, key=0x10000B, value="\x8B\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_554:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_249, key=0x10000C, x8="\x8C\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_249, key=0x10000C, value="\x8C\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_555:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x10000D, x8="\x8D\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x10000D, value="\x8D\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_556:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_94, key=0x10000E, x8="\x8E\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_94, key=0x10000E, value="\x8E\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_557:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x10000F, x8="\x8F\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x10000F, value="\x8F\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_558:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x100010, x8="\x90\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x100010, value="\x90\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_559:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_417, key=0x100011, x8="\x91\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_417, key=0x100011, value="\x91\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_560:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_288, key=0x100012, x8="\x92\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_288, key=0x100012, value="\x92\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_561:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x100013, x8="\x93\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x100013, value="\x93\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_562:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_120, key=0x100014, x8="\x94\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_120, key=0x100014, value="\x94\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_563:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_299, key=0x100015, x8="\x95\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_299, key=0x100015, value="\x95\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_564:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_305, key=0x100016, x8="\x96\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_305, key=0x100016, value="\x96\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_565:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x100017, x8="\x97\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x100017, value="\x97\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_566:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_129, key=0x100018, x8="\x98\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_129, key=0x100018, value="\x98\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_567:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_132, key=0x100019, x8="\x99\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_132, key=0x100019, value="\x99\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_568:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_134, key=0x10001A, x8="\x9A\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_134, key=0x10001A, value="\x9A\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_569:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_320, key=0x10001B, x8="\x9B\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_320, key=0x10001B, value="\x9B\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_570:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_74, key=0x10001C, x8="\x9C\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_74, key=0x10001C, value="\x9C\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_571:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_328, key=0x10001D, x8="\x9D\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_328, key=0x10001D, value="\x9D\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_572:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	key=0x10001E, x8="\x9E\x00\x00\x00"
+	VoiceDirPartRefNode	key=0x10001E, value="\x9E\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_573:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_256, key=0x10001F, x8="\x9F\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_256, key=0x10001F, value="\x9F\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_574:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_161, key=0x100020, x8="\xA0\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_161, key=0x100020, value="\xA0\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_575:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_169, key=0x100021, x8="\xA1\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_169, key=0x100021, value="\xA1\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_576:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_341, key=0x100022, x8="\xA2\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_341, key=0x100022, value="\xA2\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_577:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_344, key=0x100023, x8="\xA3\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_344, key=0x100023, value="\xA3\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_578:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_353, key=0x100024, x8="\xA4\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_353, key=0x100024, value="\xA4\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_579:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_364, key=0x100025, x8="\xA5\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_364, key=0x100025, value="\xA5\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_580:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_117, key=0x100026, x8="\xA6\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_117, key=0x100026, value="\xA6\x00\x00\x00"
 VoiceDirPartRefFind_Table_p0_581:	# VoiceDirPartRefNode (12 bytes)
-	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_375, key=0x100027, x8="\xA7\x00\x00\x00"
+	VoiceDirPartRefNode	next=VoiceDirPartRefFind_Table_p0_375, key=0x100027, value="\xA7\x00\x00\x00"
 
 Str_y:	.asciz "y"
 

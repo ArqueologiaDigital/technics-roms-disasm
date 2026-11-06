@@ -19718,20 +19718,20 @@ func_4C099DB7_entry_L47_Table:	# 51 x u8, 0..127; read by func_4C099DB7_entry : 
 	tab_u8	113, 120, 127	# [48]
 
 TgPartEditLfoLoadA_Records:	# 14 x ToneTypeFeature (39 bytes each); read by TgPartEditLfoLoadA 0x4C08D1C0 `movbu (0x12, a2), d1`; TgPartEditLfoLoadA 0x4C08D1C0 `movbu (0xe, a2), d1`; TgPartEditLfoLoadA 0x4C08D1C0 `movbu (1, a2), d1` (+62)
-	ToneTypeFeature	t0_a=15, t0_b=25, note_flags="\x00", x15="\x00\x00\x00", seg0_flags=68, x20="\x00\x00\x00\x00\x88", seg1_c=10, seg1_param=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"	# [0]
-	ToneTypeFeature	t0_a=12, t0_b=37, note_flags="\x00", x15="\x00\x00\x00", seg0_flags=196, x20="\x00\x00\x00\x00\xC8", seg1_c=17, seg1_param=100, seg1_e=1, x29="\xC4\x00\x00\x00\x00\xC8\x00\x00\x00\x00"
-	ToneTypeFeature	t0_a=12, t0_b=37, note_flags="\x00", x15="\x00\x00\x00", seg0_flags=68, x20="\x00\x00\x00\x00\x88", seg1_c=10, seg1_param=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	ToneTypeFeature	t0_a=10, t0_b=40, note_flags="\x00", x15="\x00\x00\x00", seg0_flags=200, x20="\x00\x00\x00\x00\xC4", seg1_c=8, seg1_param=100, seg1_e=1, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
-	ToneTypeFeature	t0_a=25, t0_b=32, t1_a=25, t1_b=33, note_flags="\x00", x15="\x00\x00\x00", seg0_flags=136, x20="\x00\x00\x00\x00D", seg1_c=10, seg1_e=4, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	ToneTypeFeature	t0_a=20, t0_b=20, t1_a=15, t1_b=22, note_flags="\x00", x15="\x00\x00\x00", seg0_flags=200, x20="\x00\x00\x00\x00\xC4", seg1_c=2, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
-	ToneTypeFeature	note_flags="\x00", t2_a=40, t2_b=24, x15="\x00\x00\x00", seg0_flags=32, x20="\x00\x00\x00\x00\"", seg1_param=80, x29=" \x00\x00\x00\x00\"\x00\x00\x00\x00"
-	ToneTypeFeature	t0_a=28, t0_b=40, t1_a=34, t1_b=25, note_flags="\x00", t2_a=25, x15="\x00\x00\x00", seg0_flags=228, x20="\x00\x00\x00\x00\xEA", x29="\xE4\x00\x00\x00\x00\xEA\x00\x00\x00\x00"
-	ToneTypeFeature	note_flags="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", seg1_param=80, seg1_e=10, x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"	# [8]
-	ToneTypeFeature	note_flags="\x00", t3_a=27, t3_b=20, t3_c=22, x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-	ToneTypeFeature	t0_a=20, t0_b=50, t0_flags=178, note_flags="\x00", x15="\x00\x00\x00", lfo_p7=30, seg0_flags=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	ToneTypeFeature	t0_a=20, t0_b=50, t0_flags=178, note_flags="\x00", lfo_p6=5, x15="\x00\x00\x00", lfo_p7=30, seg0_flags=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	ToneTypeFeature	note_flags="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-	ToneTypeFeature	note_flags="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=15, t0_b=25, x5="\x00", x15="\x00\x00\x00", seg0_flags=68, x20="\x00\x00\x00\x00\x88", seg1_c=10, seg1_param=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"	# [0]
+	ToneTypeFeature	t0_a=12, t0_b=37, x5="\x00", x15="\x00\x00\x00", seg0_flags=196, x20="\x00\x00\x00\x00\xC8", seg1_c=17, seg1_param=100, seg1_e=1, x29="\xC4\x00\x00\x00\x00\xC8\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=12, t0_b=37, x5="\x00", x15="\x00\x00\x00", seg0_flags=68, x20="\x00\x00\x00\x00\x88", seg1_c=10, seg1_param=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=10, t0_b=40, x5="\x00", x15="\x00\x00\x00", seg0_flags=200, x20="\x00\x00\x00\x00\xC4", seg1_c=8, seg1_param=100, seg1_e=1, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=25, t0_b=32, t1_a=25, t1_b=33, x5="\x00", x15="\x00\x00\x00", seg0_flags=136, x20="\x00\x00\x00\x00D", seg1_c=10, seg1_e=4, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=20, t0_b=20, t1_a=15, t1_b=22, x5="\x00", x15="\x00\x00\x00", seg0_flags=200, x20="\x00\x00\x00\x00\xC4", seg1_c=2, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
+	ToneTypeFeature	x5="\x00", t2_a=40, t2_b=24, x15="\x00\x00\x00", seg0_flags=32, x20="\x00\x00\x00\x00\"", seg1_param=80, x29=" \x00\x00\x00\x00\"\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=28, t0_b=40, t1_a=34, t1_b=25, x5="\x00", t2_a=25, x15="\x00\x00\x00", seg0_flags=228, x20="\x00\x00\x00\x00\xEA", x29="\xE4\x00\x00\x00\x00\xEA\x00\x00\x00\x00"
+	ToneTypeFeature	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", seg1_param=80, seg1_e=10, x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"	# [8]
+	ToneTypeFeature	x5="\x00", t3_a=27, t3_b=20, t3_c=22, x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=20, t0_b=50, t0_flags=178, x5="\x00", x15="\x00\x00\x00", lfo_p7=30, seg0_flags=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=20, t0_b=50, t0_flags=178, x5="\x00", lfo_p6=5, x15="\x00\x00\x00", lfo_p7=30, seg0_flags=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	ToneTypeFeature	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+	ToneTypeFeature	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 
 func_4C09248D_entry_L7d_Table:	# 31 x u8, 0..70; read by func_4C09248D_entry : `movbu	(d0, a0), d0`; func_4C0926B3_entry : `movbu	(d0, a0), d0` ...
 	tab_u8	70, 64, 58, 53, 48, 44, 40, 36, 33, 30, 27, 24, 22, 20, 18, 16	# [0]

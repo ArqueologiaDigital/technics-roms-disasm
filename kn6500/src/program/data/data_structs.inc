@@ -3881,7 +3881,7 @@
 #   +2   t0_flags     u8             TgPartEditLfoLoadG_entry_L3a 0x4C08D2D4 `movbu (2, a1), d1`; TgPartEditLfoLoadH_entry_L3a 0x4C08D334 `movbu (2, a1), d1`
 #   +3   t1_a         u8             TgPartEditLfoLoadB 0x4C08D0E0 `movbu (a0), d0`; TgPartEditLfoLoadD 0x4C08D196 `movbu (a0), d1`
 #   +4   t1_b         u8             TgPartEditLfoLoadB 0x4C08D0E0 `movbu (1, a0), d0`; TgPartEditLfoLoadD 0x4C08D196 `movbu (1, a0), d1`
-#   +5   note_flags   u8[1]          no reader seen
+#   +5   x5           u8[1]          no reader seen
 #   +6   t2_a         u8             TgPartEditLfoLoadC 0x4C08D13F `movbu (a1), d1`; func_4C09950E_entry_L50 0x4C099560 `movbu (6, a0), d1`
 #   +7   t2_b         u8             TgPartEditLfoLoadC 0x4C08D13F `movbu (1, a1), d0`
 #   +8   t2_c         u8             TgPartEditLfoLoadC 0x4C08D13F `movbu (2, a1), d0`
@@ -3900,13 +3900,13 @@
 #   +27  seg1_param   u8             TgPartEditLfoLoadA 0x4C08D08A `movbu (3, a0), d1`; TgPartEditLfoLoadC 0x4C08D13F `movbu (0x1b, a2), d0` (+1)
 #   +28  seg1_e       u8             TgPartEditLfoLoadA 0x4C08D08A `movbu (4, a0), d1`; TgPartEditLfoLoadB 0x4C08D0E0 `movbu (4, a0), d0` (+1)
 #   +29  x29          u8[10]         no reader seen
-.macro ToneTypeFeature t0_a=0, t0_b=0, t0_flags=0, t1_a=0, t1_b=0, note_flags, t2_a=0, t2_b=0, t2_c=0, t3_a=0, t3_b=0, t3_c=0, t3_d=0, flags=0, lfo_p6=0, x15, lfo_p7=0, seg0_flags=0, x20, seg1_b=0, seg1_c=0, seg1_param=0, seg1_e=0, x29
+.macro ToneTypeFeature t0_a=0, t0_b=0, t0_flags=0, t1_a=0, t1_b=0, x5, t2_a=0, t2_b=0, t2_c=0, t3_a=0, t3_b=0, t3_c=0, t3_d=0, flags=0, lfo_p6=0, x15, lfo_p7=0, seg0_flags=0, x20, seg1_b=0, seg1_c=0, seg1_param=0, seg1_e=0, x29
 	.byte	\t0_a
 	.byte	\t0_b
 	.byte	\t0_flags
 	.byte	\t1_a
 	.byte	\t1_b
-	.ascii	"\note_flags"
+	.ascii	"\x5"
 	.byte	\t2_a
 	.byte	\t2_b
 	.byte	\t2_c
@@ -4446,11 +4446,11 @@
 # VoiceDirPartRefNode: 12-byte records (VoiceDirPartRefFind_Table_p0, 582 records); fields, and what reads them:
 #   +0   next         ptr            VoiceDirPartRefFind_entry_L37 0x4C09D04D `mov (a2), a2`
 #   +4   key          u32            VoiceDirPartRefFind_entry_L24 0x4C09D03A `mov (4, a2), d1`
-#   +8   x8           u8[4]          no reader seen
-.macro VoiceDirPartRefNode next=0, key=0, x8
+#   +8   value        u8[4]          no reader seen
+.macro VoiceDirPartRefNode next=0, key=0, value
 	.long	\next
 	.long	\key
-	.ascii	"\x8"
+	.ascii	"\value"
 .endm
 
 # REC_data_4C1DE4F0_p0: 4-byte records (data_4C1DE4F0_p0, 1 records); fields, and what reads them:
@@ -4681,14 +4681,14 @@
 #   (the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls))
 #   (the layout func_4C3803AB 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call func_4C3803AB_entry, [d2,d3,a2], 0x2c`))
 #   +0   exinf        u32            func_4C3803AB 0x4C3803AB `mov (a2), d1`
-#   +4   x4           u8[4]          no reader seen
+#   +4   tskatr       u8[4]          no reader seen
 #   +8   task         ptr            func_4C3803AB 0x4C3803AB `mov (8, a2), a1`
 #   +12  itskpri      u16            func_4C3803AB 0x4C3803AB `movhu (0xc, a2), d0`
 #   +14  x14          u8[2]          no reader seen
 #   +16  stksz        u32            func_4C3803AB 0x4C3803AB `mov (0x10, a2), d0`
-.macro T_CTSK exinf=0, x4, task=0, itskpri=0, x14, stksz=0
+.macro T_CTSK exinf=0, tskatr, task=0, itskpri=0, x14, stksz=0
 	.long	\exinf
-	.ascii	"\x4"
+	.ascii	"\tskatr"
 	.long	\task
 	.word	\itskpri
 	.ascii	"\x14"

@@ -3915,60 +3915,60 @@
 	.word	\a0
 .endm
 
-# REC_TgPartEditLfoLoadA_Records: 39-byte records (TgPartEditLfoLoadA_Records, 14 records); fields, and what reads them:
+# ToneTypeFeature: 39-byte records (TgPartEditLfoLoadA_Records, 14 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u8             TgPartEditLfoLoadA 0x4C00CCA5 `movbu (a2), d1`; TgPartEditLfoLoadB 0x4C00CCFB `movbu (a2), d2` (+3)
-#   +1   f1           u8             TgPartEditLfoLoadA 0x4C00CCA5 `movbu (1, a2), d1`; TgPartEditLfoLoadB 0x4C00CCFB `movbu (1, a2), d0` (+1)
-#   +2   flags        u8             TgPartEditLfoLoadG 0x4C00CEB3 `movbu (2, a1), d1`; TgPartEditLfoLoadH 0x4C00CF13 `movbu (2, a1), d1` (+2)
-#   +3   f3           u8             TgPartEditLfoLoadB 0x4C00CCFB `movbu (a0), d0`; TgPartEditLfoLoadD 0x4C00CDB1 `movbu (a0), d1`
-#   +4   f4           u8             TgPartEditLfoLoadB 0x4C00CCFB `movbu (1, a0), d0`; TgPartEditLfoLoadD 0x4C00CDB1 `movbu (1, a0), d1`
-#   +5   flags_       u8             TgKitElemNoteOn 0x4C01352D `movbu (5, a0), d0`; TgElemNoteOnFresh 0x4C033C9B `movbu (5, a0), d0`
-#   +6   index        u8             TgPartEditLfoLoadC 0x4C00CD5A `movbu (a1), d1`; TgPartEgRampBuild 0x4C039D6B `movbu (6, a0), d0`
-#   +7   f7           u8             TgPartEditLfoLoadC 0x4C00CD5A `movbu (1, a1), d0`
-#   +8   f8           u8             TgPartEditLfoLoadC 0x4C00CD5A `movbu (2, a1), d0`
-#   +9   f9           u8             TgPartEditLfoLoadF 0x4C00CE5F `movbu (9, a1), d1`
-#   +10  f10          u8             TgPartEditLfoLoadF 0x4C00CE5F `movbu (0xa, a1), d0`
-#   +11  f11          u8             TgPartEditLfoLoadF 0x4C00CE5F `movbu (0xb, a1), d0`
-#   +12  f12          u8             TgPartEditLfoLoadF 0x4C00CE5F `movbu (0xc, a1), d0`
-#   +13  flags__      u8             func_4C012425 0x4C012425 `movbu (0xd, a0), d1`; func_4C0124D0 0x4C0124D0 `movbu (0xd, a0), d1` (+10)
-#   +14  f14          s8             TgPartEditLfoLoadA 0x4C00CCA5 `movbu (0xe, a2), d1`; TgPartEditLfoLoadB 0x4C00CCFB `movbu (0xe, a2), d0` (+17)
+#   +0   t0_a         u8             TgPartEditLfoLoadA 0x4C00CCA5 `movbu (a2), d1`; TgPartEditLfoLoadB 0x4C00CCFB `movbu (a2), d2` (+3)
+#   +1   t0_b         u8             TgPartEditLfoLoadA 0x4C00CCA5 `movbu (1, a2), d1`; TgPartEditLfoLoadB 0x4C00CCFB `movbu (1, a2), d0` (+1)
+#   +2   t0_flags     u8             TgPartEditLfoLoadG 0x4C00CEB3 `movbu (2, a1), d1`; TgPartEditLfoLoadH 0x4C00CF13 `movbu (2, a1), d1` (+2)
+#   +3   t1_a         u8             TgPartEditLfoLoadB 0x4C00CCFB `movbu (a0), d0`; TgPartEditLfoLoadD 0x4C00CDB1 `movbu (a0), d1`
+#   +4   t1_b         u8             TgPartEditLfoLoadB 0x4C00CCFB `movbu (1, a0), d0`; TgPartEditLfoLoadD 0x4C00CDB1 `movbu (1, a0), d1`
+#   +5   note_flags   u8             TgKitElemNoteOn 0x4C01352D `movbu (5, a0), d0`; TgElemNoteOnFresh 0x4C033C9B `movbu (5, a0), d0`
+#   +6   t2_a         u8             TgPartEditLfoLoadC 0x4C00CD5A `movbu (a1), d1`; TgPartEgRampBuild 0x4C039D6B `movbu (6, a0), d0`
+#   +7   t2_b         u8             TgPartEditLfoLoadC 0x4C00CD5A `movbu (1, a1), d0`
+#   +8   t2_c         u8             TgPartEditLfoLoadC 0x4C00CD5A `movbu (2, a1), d0`
+#   +9   t3_a         u8             TgPartEditLfoLoadF 0x4C00CE5F `movbu (9, a1), d1`
+#   +10  t3_b         u8             TgPartEditLfoLoadF 0x4C00CE5F `movbu (0xa, a1), d0`
+#   +11  t3_c         u8             TgPartEditLfoLoadF 0x4C00CE5F `movbu (0xb, a1), d0`
+#   +12  t3_d         u8             TgPartEditLfoLoadF 0x4C00CE5F `movbu (0xc, a1), d0`
+#   +13  flags        u8             func_4C012425 0x4C012425 `movbu (0xd, a0), d1`; func_4C0124D0 0x4C0124D0 `movbu (0xd, a0), d1` (+10)
+#   +14  lfo_p6       s8             TgPartEditLfoLoadA 0x4C00CCA5 `movbu (0xe, a2), d1`; TgPartEditLfoLoadB 0x4C00CCFB `movbu (0xe, a2), d0` (+17)
 #   +15  x15          u8[3]          no reader seen
-#   +18  f18          u8             TgPartEditLfoLoadA 0x4C00CCA5 `movbu (0x12, a2), d1`; TgPartEditLfoLoadB 0x4C00CCFB `movbu (0x12, a2), d0` (+6)
-#   +19  flags___     u8             TgPartEditLfoLoadG 0x4C00CEB3 `movbu (0x13, a1), d1`; TgPartEditLfoLoadH 0x4C00CF13 `movbu (0x13, a1), d1`
-#   +20  f20          u8             TgPartEgRampBuild 0x4C039D6B `movbu (0x14, a0), d1`
-#   +21  f21          u8             TgPartEgRampBuild 0x4C039D6B `movbu (0x15, a0), d1`
+#   +18  lfo_p7       u8             TgPartEditLfoLoadA 0x4C00CCA5 `movbu (0x12, a2), d1`; TgPartEditLfoLoadB 0x4C00CCFB `movbu (0x12, a2), d0` (+6)
+#   +19  seg0_flags   u8             TgPartEditLfoLoadG 0x4C00CEB3 `movbu (0x13, a1), d1`; TgPartEditLfoLoadH 0x4C00CF13 `movbu (0x13, a1), d1`
+#   +20  seg0_b       u8             TgPartEgRampBuild 0x4C039D6B `movbu (0x14, a0), d1`
+#   +21  seg0_c       u8             TgPartEgRampBuild 0x4C039D6B `movbu (0x15, a0), d1`
 #   +22  x22          u8[3]          no reader seen
-#   +25  f25          u8             TgPartEditLfoLoadE 0x4C00CE07 `movbu (1, a1), d0`
-#   +26  f26          u8             TgPartEditLfoLoadA 0x4C00CCA5 `movbu (2, a0), d1`; TgPartEditLfoLoadB 0x4C00CCFB `movbu (2, a0), d0` (+1)
-#   +27  f27          u8             TgPartEditLfoLoadA 0x4C00CCA5 `movbu (3, a0), d1`; TgPartEditLfoLoadC 0x4C00CD5A `movbu (0x1b, a2), d0` (+1)
-#   +28  f28          u8             TgPartEditLfoLoadA 0x4C00CCA5 `movbu (4, a0), d1`; TgPartEditLfoLoadB 0x4C00CCFB `movbu (4, a0), d0` (+1)
+#   +25  seg1_b       u8             TgPartEditLfoLoadE 0x4C00CE07 `movbu (1, a1), d0`
+#   +26  seg1_c       u8             TgPartEditLfoLoadA 0x4C00CCA5 `movbu (2, a0), d1`; TgPartEditLfoLoadB 0x4C00CCFB `movbu (2, a0), d0` (+1)
+#   +27  seg1_param   u8             TgPartEditLfoLoadA 0x4C00CCA5 `movbu (3, a0), d1`; TgPartEditLfoLoadC 0x4C00CD5A `movbu (0x1b, a2), d0` (+1)
+#   +28  seg1_e       u8             TgPartEditLfoLoadA 0x4C00CCA5 `movbu (4, a0), d1`; TgPartEditLfoLoadB 0x4C00CCFB `movbu (4, a0), d0` (+1)
 #   +29  x29          u8[10]         no reader seen
-.macro REC_TgPartEditLfoLoadA_Records f0=0, f1=0, flags=0, f3=0, f4=0, flags_=0, index=0, f7=0, f8=0, f9=0, f10=0, f11=0, f12=0, flags__=0, f14=0, x15, f18=0, flags___=0, f20=0, f21=0, x22, f25=0, f26=0, f27=0, f28=0, x29
-	.byte	\f0
-	.byte	\f1
+.macro ToneTypeFeature t0_a=0, t0_b=0, t0_flags=0, t1_a=0, t1_b=0, note_flags=0, t2_a=0, t2_b=0, t2_c=0, t3_a=0, t3_b=0, t3_c=0, t3_d=0, flags=0, lfo_p6=0, x15, lfo_p7=0, seg0_flags=0, seg0_b=0, seg0_c=0, x22, seg1_b=0, seg1_c=0, seg1_param=0, seg1_e=0, x29
+	.byte	\t0_a
+	.byte	\t0_b
+	.byte	\t0_flags
+	.byte	\t1_a
+	.byte	\t1_b
+	.byte	\note_flags
+	.byte	\t2_a
+	.byte	\t2_b
+	.byte	\t2_c
+	.byte	\t3_a
+	.byte	\t3_b
+	.byte	\t3_c
+	.byte	\t3_d
 	.byte	\flags
-	.byte	\f3
-	.byte	\f4
-	.byte	\flags_
-	.byte	\index
-	.byte	\f7
-	.byte	\f8
-	.byte	\f9
-	.byte	\f10
-	.byte	\f11
-	.byte	\f12
-	.byte	\flags__
-	.byte	\f14
+	.byte	\lfo_p6
 	.ascii	"\x15"
-	.byte	\f18
-	.byte	\flags___
-	.byte	\f20
-	.byte	\f21
+	.byte	\lfo_p7
+	.byte	\seg0_flags
+	.byte	\seg0_b
+	.byte	\seg0_c
 	.ascii	"\x22"
-	.byte	\f25
-	.byte	\f26
-	.byte	\f27
-	.byte	\f28
+	.byte	\seg1_b
+	.byte	\seg1_c
+	.byte	\seg1_param
+	.byte	\seg1_e
 	.ascii	"\x29"
 .endm
 

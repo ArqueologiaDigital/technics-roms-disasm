@@ -144,7 +144,7 @@ LibF64Zero_Table:	# 2 x u32, 0..0; read by LibF64Zero : `mov	(a0), d1`
 	tab_u32	0, 0
 
 func_5018D239_Table:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	x4="\x01\x00\x00\x00", task=func_50123F57, itskpri=3, x14="\x00\x00", stksz=3072
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_50123F57, itskpri=3, x14="\x00\x00", stksz=3072
 func_5018CA20_Var:	# REC_func_5018C994_ArgA0 (12 bytes): the layout func_5018C994 0x5018C994 reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call func_5018C994, 0, 0`, +4 more calls); the layout func_5018CA20 0x5018CA20 reads through its argument a0 (passed by func_5018C994_L3d 0x5018C9D1 `call func_5018CA20_entry, [d2,a2,a3], 0xc`)
 	REC_func_5018C994_ArgA0	x6="\x00\x00", f8=1
 func_5018CA20_Var_3:	# REC_func_5018C994_ArgA0 (12 bytes): the layout func_5018C994 0x5018C994 reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call func_5018C994, 0, 0`, +4 more calls); the layout func_5018CA20 0x5018CA20 reads through its argument a0 (passed by func_5018C994_L3d 0x5018C9D1 `call func_5018CA20_entry, [d2,a2,a3], 0xc`)
@@ -9424,9 +9424,9 @@ func_485E8EDD_entry_L15_Var_3:	# u8, a constant; read / written by func_485E8EDD
 	.byte	4
 
 func_5018D239_Table_3:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	x4="\x01\x00\x00\x00", task=func_485EBDAE, itskpri=3, x14="\x00\x00", stksz=0x10000
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_485EBDAE, itskpri=3, x14="\x00\x00", stksz=0x10000
 func_5018D239_Table_5:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	x4="\x01\x00\x00\x00", task=func_485F93B0, itskpri=3, x14="\x00\x00", stksz=6144
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_485F93B0, itskpri=3, x14="\x00\x00", stksz=6144
 func_5018CA20_Var_8:	# REC_func_5018C994_ArgA0 (12 bytes): the layout func_5018C994 0x5018C994 reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call func_5018C994, 0, 0`, +4 more calls); the layout func_5018CA20 0x5018CA20 reads through its argument a0 (passed by func_5018C994_L3d 0x5018C9D1 `call func_5018CA20_entry, [d2,a2,a3], 0xc`)
 	REC_func_5018C994_ArgA0	f4=8, x6="\x00\x00"
 func_5018CA20_Var_10:	# REC_func_5018C994_ArgA0 (12 bytes): the layout func_5018C994 0x5018C994 reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call func_5018C994, 0, 0`, +4 more calls); the layout func_5018CA20 0x5018CA20 reads through its argument a0 (passed by func_5018C994_L3d 0x5018C9D1 `call func_5018CA20_entry, [d2,a2,a3], 0xc`)
@@ -16240,7 +16240,7 @@ Text_i108_bmp:	# 130 strings of 8 characters, NUL-terminated
 .incbin_range "baserom/kn2400_program.rom", 0x01BB42, 0x01BB44
 
 func_5018D239_Table_7:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	x4="\x01\x00\x00\x00", task=func_4871EF31, itskpri=3, x14="\x00\x00", stksz=24576
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4871EF31, itskpri=3, x14="\x00\x00", stksz=24576
 func_5018CA20_Var_20:	# REC_func_5018C994_ArgA0 (12 bytes): the layout func_5018C994 0x5018C994 reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call func_5018C994, 0, 0`, +4 more calls); the layout func_5018CA20 0x5018CA20 reads through its argument a0 (passed by func_5018C994_L3d 0x5018C9D1 `call func_5018CA20_entry, [d2,a2,a3], 0xc`)
 	REC_func_5018C994_ArgA0	f4=8, x6="\x00\x00"
 
@@ -23749,7 +23749,7 @@ Str_1_0_4_8:	.asciz "1.0.4"
 	.align	4, 0xFF	# pad after Str_1_0_4_8
 
 func_5018D239_Table_9:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	x4="\x01\x00\x00\x00", task=func_4863A2C6, itskpri=3, x14="\x00\x00", stksz=10240
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4863A2C6, itskpri=3, x14="\x00\x00", stksz=10240
 
 func_5018C16D_Table:	# 2 x u32, 0..0; read by func_5018C16D 0x5018C16D: `mov (a3), d2`
 	tab_u32	0, 0
@@ -34005,7 +34005,7 @@ func_48642B9F_Table_2:
 	.long	func_48642B9F_entry_L147
 
 func_5018D239_Table_11:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	x4="\x01\x00\x00\x00", task=func_48644927, itskpri=3, x14="\x00\x00", stksz=3072
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_48644927, itskpri=3, x14="\x00\x00", stksz=3072
 
 func_5018C16D_Table_2:	# 2 x u32, 0..0; read by func_5018C16D 0x5018C16D: `mov (a3), d2`
 	tab_u32	0, 0

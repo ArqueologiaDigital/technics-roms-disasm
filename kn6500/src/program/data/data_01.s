@@ -37705,7 +37705,7 @@ func_4C157B0E_Records:	# 98 x REC_func_4C157B0E_Records (8 bytes each); read by 
 	REC_func_4C157B0E_Records	f0=0x1FEBD8AC, f4=0x400FD93C
 
 func_4C3803AB_Table_9:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout func_4C3803AB 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call func_4C3803AB_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	x4="\x01\x00\x00\x00", task=func_4C154FD2, itskpri=3, x14="\x00\x00", stksz=10240
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C154FD2, itskpri=3, x14="\x00\x00", stksz=10240
 func_4C37F98E_Var_23:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
 	REC_func_4C37F902_ArgA0	f4=8, x6="\x00\x00"
 

@@ -4644,11 +4644,11 @@
 # VoiceDirPartRefNode: 12-byte records (VoiceDirPartRefFind_Table_p0, 582 records); fields, and what reads them:
 #   +0   next         ptr            VoiceDirPartRefFind_entry_L37 0x486FC612 `mov (a2), a2`
 #   +4   key          u32            VoiceDirPartRefFind_entry_L24 0x486FC5FF `mov (4, a2), d1`
-#   +8   x8           u8[4]          no reader seen
-.macro VoiceDirPartRefNode next=0, key=0, x8
+#   +8   value        u8[4]          no reader seen
+.macro VoiceDirPartRefNode next=0, key=0, value
 	.long	\next
 	.long	\key
-	.ascii	"\x8"
+	.ascii	"\value"
 .endm
 
 # REC_func_486FF0F2_L49_Table_p0: 1-byte records (func_486FF0F2_L49_Table_p0, 1 records); fields, and what reads them:
@@ -4767,14 +4767,14 @@
 #   (the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls))
 #   (the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`))
 #   +0   exinf        u32            func_5018D239 0x5018D239 `mov (a2), d1`
-#   +4   x4           u8[4]          no reader seen
+#   +4   tskatr       u8[4]          no reader seen
 #   +8   task         ptr            func_5018D239 0x5018D239 `mov (8, a2), a1`
 #   +12  itskpri      u16            func_5018D239 0x5018D239 `movhu (0xc, a2), d0`
 #   +14  x14          u8[2]          no reader seen
 #   +16  stksz        u32            func_5018D239 0x5018D239 `mov (0x10, a2), d0`
-.macro T_CTSK exinf=0, x4, task=0, itskpri=0, x14, stksz=0
+.macro T_CTSK exinf=0, tskatr, task=0, itskpri=0, x14, stksz=0
 	.long	\exinf
-	.ascii	"\x4"
+	.ascii	"\tskatr"
 	.long	\task
 	.word	\itskpri
 	.ascii	"\x14"

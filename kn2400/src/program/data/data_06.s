@@ -5148,7 +5148,7 @@ func_5018D239_Var_2:	# u32, initial value of a RAM variable; read / written by f
 	.long	20480
 
 func_5018D239_Table_16:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	x4="\x01\x00\x00\x00", task=loc_48633A8D, itskpri=3, x14="\x00\x00", stksz=20480
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=loc_48633A8D, itskpri=3, x14="\x00\x00", stksz=20480
 
 func_5018C16D_Table_5:	# 2 x u32, 0..0; read by func_5018C16D 0x5018C16D: `mov (a3), d2`
 	tab_u32	0, 0
