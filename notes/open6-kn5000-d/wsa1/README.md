@@ -210,8 +210,14 @@ it still held ELFs from before the joint link. Fix: `all: $(MAINCPU_ELFS)` in `w
 - RESOLVED 2026-11-06 (owner: normalise). Was: should caption-derived WSA1 names keep the ROM's 0-for-O spelling
   (`MidiFileL0ad`, now `MidiFileLoad`; `L0adSingleS0und`, now `LoadSingleSound`; `DL_*F0rmat*`, now `DL_*Format*`), or be
   normalised tree-wide? Done by lane open9/zero-for-o: `wsa1/notes/zero-for-o/README.md`.
-- Screen 0x52 and (0x21E8) bit 2, behind `sub_FF657B`'s eight-press counter.
-- The meaning of the request 0x0201 that YES posts after a format.
+- RESOLVED 2026-11-06 (lane open10/kernel4, N-1e4a337c). Was: screen 0x52 and (0x21E8) bit 2, behind `sub_FF657B`'s
+  eight-press counter. `sub_FF657B` is now `HiddenKey_FloppyDiskFormatSelectType`: screen 0x52 is
+  `PanelScreen_NullVtable` (an empty screen), and no instruction in prom_a or prom_b sets (0x21E8) bit 2, so the
+  count is a dead test feature in this build (`wsa1/notes/open10-kernel4-probes/format_screen_requests.py`, A1-A3).
+- RESOLVED 2026-11-06 (lane open10/kernel4, N-813b5071). Was: the meaning of the request 0x0201 that YES posts after a
+  format. It is a MODE request ((0x2071) bit 1, PanelScreen_ApplyModeChange) for mode 1, which PanelMode_Normalise
+  turns into the current play mode (SOUND or COMBINATION): back to the play screen, as EXIT on the DISK menu does
+  (same script, B1-B3).
 
 ## Website page draft
 
