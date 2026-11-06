@@ -95,8 +95,22 @@ v6 54,171 -> 54,183, v5 54,147 -> 54,159.
   same blocks.  Suggested names for the owning lane (v10 / v9 / v7 NAKA C is not this lane's):
   `MainChordPre_BassNameBlocks` for entries 17-68 and `MainChordPre_BassNameBlockByType` for the RamPtrs.
 
+## After merging main (2dd3f68eb, lane kn5000-naka)
+
+The hand-over of `notes/kn5000-naka-2026-11-06/README.md` ("What v6 / v5 need"):
+
+| item                                                                                                                      | v6 / v5                                                                                                                                                                                            |
+|---------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name_title_index_operands.py --tree v6 / v5 --apply`                                                                     | done: 3 operands each (`TT_SECOPY`, `TT_SETONHYB1`, `TT_SEMENU` in sound_editor_ui.s)                                                                                                              |
+| `add a, TT_SEFILLPQ1`                                                                                                     | done: `port_todo_hand.py` edit 10                                                                                                                                                                  |
+| AUDIO_CONFIG_UPDATE / AUDIO_CONFIG_FLAGS                                                                                  | done: `port_ram_names.py` rerun picks up v7's new names (v6 / v5 0xC4D4 / 0xC4D6); 137 / 135 more operands named                                                                                   |
+| `naka_join_perf3rhythmsel.py`, `naka_move_edge_heads_to_asm.py`, `naka_type_trackmixer_map.py`, `naka_widen_ram_cells.py` | not done: each asserts v10's addresses and sizes (BASE 0xE24056, the record at 0xE24034, IMG_ROM 0xEED8C8 ...); a v6 / v5 run needs them read from the tree (symbols, the slices' piecewise bases) |
+
 ## What remains
 
+- **The four kn5000-naka converters above** for v6 / v5: next step, make their constants per tree (from the
+  tree's symbols file and `ported_c_rebase.slice_bases`) and add v6 / v5 to `--tree`; each checks the
+  compiled bytes itself.
 - **v6 5 B, v5 5 raw json bytes: work-RAM cells after RAM_MPVersion_Window.**  v6 / v5 have no MPVersion view,
   so their Murai_SoundMenuWorkCells (assembly, `ui_widgets/sequencer_channel_containers.s`) lack the 4-byte
   MPVersion window cell and the five cells after it (Softver window, MainProgram / MainTable / SubProgram /

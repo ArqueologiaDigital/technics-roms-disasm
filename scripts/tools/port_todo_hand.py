@@ -60,6 +60,9 @@ THE EDITS (lane open11/v6v5-port2, 2026-11-06): the last rows, halves of pointer
      class AcBitEditBox ("func", "data", ""), whose strings the port wrote as `aligned_string` lines:
      written as `.long` to labelled strings, as NakaClass_AcFuncToggle_PropNames right after it already
      is (the C slice held v7's SELF pointers into v7's text).
+  10. sound_editor_ui.s (v6, v5): UpdSeSel_DetailedUpdate's `add a, 48` is `add a, TT_SEFILLPQ1` (page
+     TT_SEFILLPQ1 + the new filter type 1..4), as lane kn5000-naka respelled it in v10 / v9 / v7
+     (notes/kn5000-naka-2026-11-06/README.md); TT_SEFILLPQ1 is 0x30 in every tree.
 
 RUN
     python3 scripts/tools/port_todo_hand.py --tree v6     (or v5)
@@ -202,6 +205,11 @@ def bit_propnames(tree, s):
     return s.replace(BIT_OLD[0], BIT_NEW[0]).replace(BIT_OLD[1], BIT_NEW[1])
 
 
+SEFIL_OLD = "\tdec\t1, a\n\tld\t(xbc), a\n\tadd\ta, 48\n"
+SEFIL_NEW = ("\tdec\t1, a\n\tld\t(xbc), a\n"
+             "\tadd\ta, TT_SEFILLPQ1\t; page TT_SEFILLPQ1 + the new type 1..4: HPQ1, L241, H241, BPF1\n")
+
+
 SRC = {"v6": "v7", "v5": "v6"}
 
 
@@ -264,6 +272,7 @@ EDITS = [
     ("chord-type entry 39 whole", ("v5",), "extensions/extension_data.s", text_edit(CHORD_OLD, CHORD_NEW)),
     ("ResEvent 0x1c1 name table", ("v6", "v5"), "ui_widgets/sound_menu_drawbar_screens.s", ev_table),
     ("AcBitEditBox property names", ("v6", "v5"), "ui_widgets/disk_warning_strings.s", bit_propnames),
+    ("add a, TT_SEFILLPQ1", ("v6", "v5"), "audio/sound_editor_ui.s", text_edit(SEFIL_OLD, SEFIL_NEW)),
 ]
 
 # names an edit gives the tree that its port_dropped_labels.txt listed as missing
