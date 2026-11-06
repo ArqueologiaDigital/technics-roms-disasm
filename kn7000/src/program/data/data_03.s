@@ -26658,23 +26658,23 @@ StyleNumToBankSlotLUT:	# 2048 x u16, 0..34687; read by ResolveStyleId 0x48435B33
 	tab_u16	33132, 33132, 33518, 33263, 33392, 33777, 33394, 33392, 33396, 33396, 33396, 33396	# [2028]
 	tab_u16	33400, 33145, 33146, 33146, 33916, 33533, 33918, 2573	# [2040]
 
-GenreStyleTable:	# 16 x REC_GenreStyleTable (24 bytes each); read by GetGenreName 0x48435A9F `call memcpy_entry, [a2,a3], 8`; GetGenreStyleCount 0x48435AD9 `movbu (0x11, a0), d0`; func_48435AFF 0x48435AFF `mov (0x14, a0), a0` (+3)
-	REC_GenreStyleTable	s0="   8&16 BEAT    ", x16="\x00", f17=10, x18="\x00\x00", index=func_4844D7A4_Records+256	# [0]
-	REC_GenreStyleTable	s0="   ROCK & POP   ", x16="\x00", f17=16, x18="\x00\x00", index=func_4844D7A4_Records+296
-	REC_GenreStyleTable	s0="     BALLAD     ", x16="\x00", f17=16, x18="\x00\x00", index=func_4844D7A4_Records+360
-	REC_GenreStyleTable	s0="  JAZZ & SWING  ", x16="\x00", f17=20, x18="\x00\x00", index=func_4844D7A4_Records+424
-	REC_GenreStyleTable	s0="    BALLROOM    ", x16="\x00", f17=16, x18="\x00\x00", index=func_4844D7A4_Records+504
-	REC_GenreStyleTable	s0="  MOVIE & SHOW  ", x16="\x00", f17=20, x18="\x00\x00", index=func_4844D7A4_Records+568
-	REC_GenreStyleTable	s0="  ENTERTAINER   ", x16="\x00", f17=14, x18="\x00\x00", index=func_4844D7A4_Records+648
-	REC_GenreStyleTable	s0="    ORGANIST    ", x16="\x00", f17=10, x18="\x00\x00", index=func_4844D7A4_Records+704
-	REC_GenreStyleTable	s0="   60s & 70s    ", x16="\x00", f17=13, x18="\x00\x00", index=func_4844D7A4_Records+744	# [8]
-	REC_GenreStyleTable	s0="  MODERN DANCE  ", x16="\x00", f17=14, x18="\x00\x00", index=func_4844D7A4_Records+796
-	REC_GenreStyleTable	s0="   SOUL & R&B   ", x16="\x00", f17=19, x18="\x00\x00", index=func_4844D7A4_Records+852
-	REC_GenreStyleTable	s0="COUNTRY&WESTERN ", x16="\x00", f17=14, x18="\x00\x00", index=func_4844D7A4_Records+928
-	REC_GenreStyleTable	s0=" MARCH & WALTZ  ", x16="\x00", f17=12, x18="\x00\x00", index=func_4844D7A4_Records+984
-	REC_GenreStyleTable	s0=" LATIN & WORLD  ", x16="\x00", f17=26, x18="\x00\x00", index=func_4844D7A4_Records+1032
-	REC_GenreStyleTable	s0="     CUSTOM     ", x16="\x00", f17=20, x18="\x00\x00", index=func_4844D7A4_Records+1136
-	REC_GenreStyleTable	s0="     MEMORY     ", x16="\x00", f17=3, x18="\x00\x00", index=func_4844D7A4_Records+1216
+GenreStyleTable:	# 16 x GenreStyleEntry (24 bytes each); read by GetGenreName 0x48435A9F `call memcpy_entry, [a2,a3], 8`; GetGenreStyleCount 0x48435AD9 `movbu (0x11, a0), d0`; func_48435AFF 0x48435AFF `mov (0x14, a0), a0` (+3)
+	GenreStyleEntry	name="   8&16 BEAT    ", x16="\x00", style_count=10, x18="\x00\x00", styles=func_4844D7A4_Records+256	# [0]
+	GenreStyleEntry	name="   ROCK & POP   ", x16="\x00", style_count=16, x18="\x00\x00", styles=func_4844D7A4_Records+296
+	GenreStyleEntry	name="     BALLAD     ", x16="\x00", style_count=16, x18="\x00\x00", styles=func_4844D7A4_Records+360
+	GenreStyleEntry	name="  JAZZ & SWING  ", x16="\x00", style_count=20, x18="\x00\x00", styles=func_4844D7A4_Records+424
+	GenreStyleEntry	name="    BALLROOM    ", x16="\x00", style_count=16, x18="\x00\x00", styles=func_4844D7A4_Records+504
+	GenreStyleEntry	name="  MOVIE & SHOW  ", x16="\x00", style_count=20, x18="\x00\x00", styles=func_4844D7A4_Records+568
+	GenreStyleEntry	name="  ENTERTAINER   ", x16="\x00", style_count=14, x18="\x00\x00", styles=func_4844D7A4_Records+648
+	GenreStyleEntry	name="    ORGANIST    ", x16="\x00", style_count=10, x18="\x00\x00", styles=func_4844D7A4_Records+704
+	GenreStyleEntry	name="   60s & 70s    ", x16="\x00", style_count=13, x18="\x00\x00", styles=func_4844D7A4_Records+744	# [8]
+	GenreStyleEntry	name="  MODERN DANCE  ", x16="\x00", style_count=14, x18="\x00\x00", styles=func_4844D7A4_Records+796
+	GenreStyleEntry	name="   SOUL & R&B   ", x16="\x00", style_count=19, x18="\x00\x00", styles=func_4844D7A4_Records+852
+	GenreStyleEntry	name="COUNTRY&WESTERN ", x16="\x00", style_count=14, x18="\x00\x00", styles=func_4844D7A4_Records+928
+	GenreStyleEntry	name=" MARCH & WALTZ  ", x16="\x00", style_count=12, x18="\x00\x00", styles=func_4844D7A4_Records+984
+	GenreStyleEntry	name=" LATIN & WORLD  ", x16="\x00", style_count=26, x18="\x00\x00", styles=func_4844D7A4_Records+1032
+	GenreStyleEntry	name="     CUSTOM     ", x16="\x00", style_count=20, x18="\x00\x00", styles=func_4844D7A4_Records+1136
+	GenreStyleEntry	name="     MEMORY     ", x16="\x00", style_count=3, x18="\x00\x00", styles=func_4844D7A4_Records+1216
 
 GenreCount:	# u16, a constant; read / written by GetGenreName 0x48435A9F: `movhu (GenreCount), d3`; GetGenreStyleCount 0x48435AD9: `movhu (GenreCount), d2` ...
 	.word	16

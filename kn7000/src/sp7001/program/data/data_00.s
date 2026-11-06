@@ -4373,512 +4373,512 @@ func_4C029D0E_Table:	# 32 x u32, 1..2147483648; read by func_4C029D0E 0x4C029D0E
 	tab_u32	65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608	# [16]
 	tab_u32	16777216, 33554432, 67108864, 134217728, 268435456, 536870912, 1073741824, 2147483648	# [24]
 
-func_4C02A11E_Table:	# 26 x REC_func_4C02A11E_Table (3 bytes each); read by func_4C02A11E 0x4C02A11E `movbu (1, a1), d2`; func_4C02A11E 0x4C02A11E `movbu (2, a1), d0`; func_4C02A11E 0x4C02A11E `movbu (a1), d0` (+12)
-	REC_func_4C02A11E_Table	f2=127	# [0]
-	REC_func_4C02A11E_Table	index=1, index_=1, f2=127
-	REC_func_4C02A11E_Table	index=2, index_=2, f2=127
-	REC_func_4C02A11E_Table	index=3, index_=3, f2=255
-	REC_func_4C02A11E_Table	index=4, index_=4, f2=223
-	REC_func_4C02A11E_Table	index=6, index_=5, f2=3
-	REC_func_4C02A11E_Table	index=11, index_=6, f2=255
-	REC_func_4C02A11E_Table	index=12, index_=7, f2=255
-	REC_func_4C02A11E_Table	index=13, index_=8, f2=255	# [8]
-	REC_func_4C02A11E_Table	index=14, index_=9, f2=127
-	REC_func_4C02A11E_Table	index=15, index_=10, f2=255
-	REC_func_4C02A11E_Table	index=24, index_=11, f2=127
-	REC_func_4C02A11E_Table	index=25, index_=12, f2=127
-	REC_func_4C02A11E_Table	index=26, index_=13, f2=127
-	REC_func_4C02A11E_Table	index=27, index_=14, f2=127
-	REC_func_4C02A11E_Table	index=28, index_=15, f2=127
-	REC_func_4C02A11E_Table	index=29, index_=16, f2=127	# [16]
-	REC_func_4C02A11E_Table	index=30, index_=17, f2=255
-	REC_func_4C02A11E_Table	index=34, index_=18, f2=15
-	REC_func_4C02A11E_Table	index=36, index_=19, f2=255
-	REC_func_4C02A11E_Table	index=37, index_=20, f2=255
-	REC_func_4C02A11E_Table	index=38, index_=21, f2=255
-	REC_func_4C02A11E_Table	index=39, index_=22, f2=255
-	REC_func_4C02A11E_Table	index=40, index_=23, f2=255
-	REC_func_4C02A11E_Table	index=41, index_=24, f2=255	# [24]
-	REC_func_4C02A11E_Table	index=42, index_=25, f2=63
-func_4C02A11E_Table_2:	# 1 x REC_func_4C02A11E_Table_2 (3 bytes each); read by func_4C02A11E 0x4C02A11E `movbu (1, a1), d2`; func_4C02A11E 0x4C02A11E `movbu (2, a1), d0`; func_4C02A11E 0x4C02A11E `movbu (a1), d0` (+5)
-	REC_func_4C02A11E_Table_2	f2=255
-func_4C02A11E_Table_3:	# 7 x REC_func_4C02A11E_Table_3 (3 bytes each); read by func_4C02A11E 0x4C02A11E `movbu (1, a1), d2`; func_4C02A11E 0x4C02A11E `movbu (2, a1), d0`; func_4C02A11E 0x4C02A11E `movbu (a1), d0` (+11)
-	REC_func_4C02A11E_Table_3	f2=127
-	REC_func_4C02A11E_Table_3	index=1, index_=1, f2=127
-	REC_func_4C02A11E_Table_3	index=2, index_=2, f2=127
-	REC_func_4C02A11E_Table_3	index=4, index_=3, f2=64
-	REC_func_4C02A11E_Table_3	index=7, index_=4, f2=48
-	REC_func_4C02A11E_Table_3	index=8, index_=5, f2=255
-	REC_func_4C02A11E_Table_3	index=9, index_=6, f2=1
-func_4C02AD96_Table:	# 3 x REC_func_4C02AD96_Table (3 bytes each); read by func_4C02A11E 0x4C02A11E `movbu (1, a1), d2`; func_4C02A11E 0x4C02A11E `movbu (2, a1), d0`; func_4C02A11E 0x4C02A11E `movbu (a1), d0` (+9)
-	REC_func_4C02AD96_Table	f2=7
-	REC_func_4C02AD96_Table	index=3, index_=1, f2=1
-	REC_func_4C02AD96_Table	index=4, index_=2, f2=255
-func_4C02A11E_Table_4:	# 14 x REC_func_4C02A11E_Table_4 (3 bytes each); read by func_4C02A11E 0x4C02A11E `movbu (1, a1), d2`; func_4C02A11E 0x4C02A11E `movbu (2, a1), d0`; func_4C02A11E 0x4C02A11E `movbu (a1), d0` (+11)
-	REC_func_4C02A11E_Table_4	f2=136	# [0]
-	REC_func_4C02A11E_Table_4	index=1, index_=1, f2=127
-	REC_func_4C02A11E_Table_4	index=2, index_=2, f2=127
-	REC_func_4C02A11E_Table_4	index=3, index_=3, f2=127
-	REC_func_4C02A11E_Table_4	index=4, index_=4, f2=127
-	REC_func_4C02A11E_Table_4	index=5, index_=5, f2=127
-	REC_func_4C02A11E_Table_4	index=6, index_=6, f2=127
-	REC_func_4C02A11E_Table_4	index=7, index_=7, f2=127
-	REC_func_4C02A11E_Table_4	index=14, index_=8, f2=127	# [8]
-	REC_func_4C02A11E_Table_4	index=15, index_=9, f2=127
-	REC_func_4C02A11E_Table_4	index=16, index_=10, f2=127
-	REC_func_4C02A11E_Table_4	index=17, index_=11, f2=127
-	REC_func_4C02A11E_Table_4	index=18, index_=12, f2=127
-	REC_func_4C02A11E_Table_4	index=19, index_=13, f2=127
-func_4C02A11E_Table_5:	# 4 x REC_func_4C02A11E_Table_5 (3 bytes each); read by func_4C02A11E 0x4C02A11E `movbu (1, a1), d2`; func_4C02A11E 0x4C02A11E `movbu (2, a1), d0`; func_4C02A11E 0x4C02A11E `movbu (a1), d0` (+11)
-	REC_func_4C02A11E_Table_5	f2=4
-	REC_func_4C02A11E_Table_5	index=3, index_=1, f2=255
-	REC_func_4C02A11E_Table_5	index=4, index_=2, f2=15
-	REC_func_4C02A11E_Table_5	index=8, index_=3, f2=255
-func_4C02A11E_Table_6:	# 3 x REC_func_4C02A11E_Table_6 (3 bytes each); read by func_4C02A11E 0x4C02A11E `movbu (1, a1), d2`; func_4C02A11E 0x4C02A11E `movbu (2, a1), d0`; func_4C02A11E 0x4C02A11E `movbu (a1), d0` (+12)
-	REC_func_4C02A11E_Table_6	f2=255
-	REC_func_4C02A11E_Table_6	index=1, index_=1, f2=255
-	REC_func_4C02A11E_Table_6	index=5, f2=255
-func_4C02A11E_Records:	# 440 x REC_func_4C02A11E_Records (3 bytes each); read by func_4C02A11E 0x4C02A11E `movbu (1, a1), d2`; func_4C02A11E 0x4C02A11E `movbu (2, a1), d0`; func_4C02A11E 0x4C02A11E `movbu (a1), d0` (+14)
-	REC_func_4C02A11E_Records	index=35, f2=7	# [0]
-	REC_func_4C02A11E_Records	index=56, index_=1, f2=255
-	REC_func_4C02A11E_Records	index=57, index_=2, f2=255
-	REC_func_4C02A11E_Records	index=255, index_=255, f2=3
-	REC_func_4C02A11E_Records	index_=255, f2=32
-	REC_func_4C02A11E_Records	index=125, index_=32, f2=3
-	REC_func_4C02A11E_Records	index=1, index_=255, f2=32
-	REC_func_4C02A11E_Records	index=125, index_=32, f2=3
-	REC_func_4C02A11E_Records	index=2, index_=255, f2=32	# [8]
-	REC_func_4C02A11E_Records	index=125, index_=32, f2=3
-	REC_func_4C02A11E_Records	index=3, index_=255, f2=32
-	REC_func_4C02A11E_Records	index=125, index_=32, f2=3
-	REC_func_4C02A11E_Records	index=4, index_=255, f2=32
-	REC_func_4C02A11E_Records	index=125, index_=32, f2=3
-	REC_func_4C02A11E_Records	index=5, index_=255, f2=32
-	REC_func_4C02A11E_Records	index=125, index_=32, f2=3
-	REC_func_4C02A11E_Records	index=6, index_=255, f2=32	# [16]
-	REC_func_4C02A11E_Records	index=125, index_=32, f2=3
-	REC_func_4C02A11E_Records	index=7, index_=255, f2=32
-	REC_func_4C02A11E_Records	index=125, index_=32, f2=3
-	REC_func_4C02A11E_Records	index=8, index_=255, f2=32
-	REC_func_4C02A11E_Records	index=125, index_=32, f2=3
-	REC_func_4C02A11E_Records	index=9, index_=255, f2=32
-	REC_func_4C02A11E_Records	index=125, index_=32, f2=3
-	REC_func_4C02A11E_Records	index=10, index_=255, f2=32	# [24]
-	REC_func_4C02A11E_Records	index=125, index_=32, f2=3
-	REC_func_4C02A11E_Records	index=11, index_=255, f2=32
-	REC_func_4C02A11E_Records	index=125, index_=32, f2=3
-	REC_func_4C02A11E_Records	index=12, index_=255, f2=32
-	REC_func_4C02A11E_Records	index=125, index_=32, f2=3
-	REC_func_4C02A11E_Records	index=13, index_=255, f2=32
-	REC_func_4C02A11E_Records	index=125, index_=32, f2=3
-	REC_func_4C02A11E_Records	index=13, index_=255, f2=32	# [32]
-	REC_func_4C02A11E_Records	index=125, index_=32, f2=3
-	REC_func_4C02A11E_Records	index=15, index_=255, f2=32
-	REC_func_4C02A11E_Records	index=125, index_=32, f2=6
-	REC_func_4C02A11E_Records	index=16, index_=6, f2=17
-	REC_func_4C02A11E_Records	index=255
-	REC_func_4C02A11E_Records	index=127, f2=1
-	REC_func_4C02A11E_Records	index=127, f2=2
-	REC_func_4C02A11E_Records	index=127, f2=3	# [40]
-	REC_func_4C02A11E_Records	index=255, f2=4
-	REC_func_4C02A11E_Records	index=255, f2=5
-	REC_func_4C02A11E_Records	index=255, f2=6
-	REC_func_4C02A11E_Records	index=3, index_=6, f2=7
-	REC_func_4C02A11E_Records	index=6, index_=8, f2=6
-	REC_func_4C02A11E_Records	index=9, index_=6, f2=10
-	REC_func_4C02A11E_Records	index_=11, f2=255
-	REC_func_4C02A11E_Records	index_=12, f2=255	# [48]
-	REC_func_4C02A11E_Records	index_=13, f2=255
-	REC_func_4C02A11E_Records	index_=14, f2=127
-	REC_func_4C02A11E_Records	index_=15, f2=255
-	REC_func_4C02A11E_Records	index_=16, f2=127
-	REC_func_4C02A11E_Records	index_=17, f2=127
-	REC_func_4C02A11E_Records	index_=18, f2=127
-	REC_func_4C02A11E_Records	index_=19, f2=127
-	REC_func_4C02A11E_Records	index_=20, f2=127	# [56]
-	REC_func_4C02A11E_Records	index_=21, f2=127
-	REC_func_4C02A11E_Records	index_=22, f2=127
-	REC_func_4C02A11E_Records	index_=23, f2=127
-	REC_func_4C02A11E_Records	index_=24, f2=127
-	REC_func_4C02A11E_Records	index=3, index_=24, f2=127
-	REC_func_4C02A11E_Records	index_=120, f2=108
-	REC_func_4C02A11E_Records	index_=25, f2=127
-	REC_func_4C02A11E_Records	index=3, index_=25, f2=127	# [64]
-	REC_func_4C02A11E_Records	index=40, index_=88, f2=64
-	REC_func_4C02A11E_Records	index_=26, f2=127
-	REC_func_4C02A11E_Records	index=3, index_=26, f2=127
-	REC_func_4C02A11E_Records	index_=120, f2=28
-	REC_func_4C02A11E_Records	index_=27, f2=127
-	REC_func_4C02A11E_Records	index=3, index_=27, f2=127
-	REC_func_4C02A11E_Records	index=40, index_=88, f2=64
-	REC_func_4C02A11E_Records	index_=28, f2=127	# [72]
-	REC_func_4C02A11E_Records	index_=29, f2=127
-	REC_func_4C02A11E_Records	index=3, index_=29, f2=127
-	REC_func_4C02A11E_Records	index=40, index_=88, f2=64
-	REC_func_4C02A11E_Records	index_=30, f2=255
-	REC_func_4C02A11E_Records	index_=31, f2=127
-	REC_func_4C02A11E_Records	index=3, index_=31, f2=127
-	REC_func_4C02A11E_Records	index_=12, f2=2
-	REC_func_4C02A11E_Records	index_=32, f2=127	# [80]
-	REC_func_4C02A11E_Records	index_=33, f2=127
-	REC_func_4C02A11E_Records	index_=34, f2=15
-	REC_func_4C02A11E_Records	index=3, index_=34, f2=15
-	REC_func_4C02A11E_Records	index_=1
-	REC_func_4C02A11E_Records	index_=35, f2=7
-	REC_func_4C02A11E_Records	index=3, index_=35, f2=7
-	REC_func_4C02A11E_Records	index_=7
-	REC_func_4C02A11E_Records	index_=36, f2=255	# [88]
-	REC_func_4C02A11E_Records	index=4, index_=36, f2=15
-	REC_func_4C02A11E_Records	index=6, index_=10
-	REC_func_4C02A11E_Records	index=4, index_=36, f2=240
-	REC_func_4C02A11E_Records	index=96, index_=160
-	REC_func_4C02A11E_Records	index_=37, f2=255
-	REC_func_4C02A11E_Records	index=4, index_=37, f2=15
-	REC_func_4C02A11E_Records	index=6, index_=10
-	REC_func_4C02A11E_Records	index=4, index_=37, f2=240	# [96]
-	REC_func_4C02A11E_Records	index=96, index_=160
-	REC_func_4C02A11E_Records	index_=38, f2=255
-	REC_func_4C02A11E_Records	index=3, index_=38, f2=15
-	REC_func_4C02A11E_Records	index_=8
-	REC_func_4C02A11E_Records	index=3, index_=38, f2=240
-	REC_func_4C02A11E_Records	index_=128
-	REC_func_4C02A11E_Records	index_=39, f2=255
-	REC_func_4C02A11E_Records	index=3, index_=39, f2=15	# [104]
-	REC_func_4C02A11E_Records	index_=8
-	REC_func_4C02A11E_Records	index=3, index_=39, f2=240
-	REC_func_4C02A11E_Records	index_=128
-	REC_func_4C02A11E_Records	index_=40, f2=255
-	REC_func_4C02A11E_Records	index=3, index_=40, f2=15
-	REC_func_4C02A11E_Records	index_=8
-	REC_func_4C02A11E_Records	index=3, index_=40, f2=240
-	REC_func_4C02A11E_Records	index_=128	# [112]
-	REC_func_4C02A11E_Records	index_=41, f2=255
-	REC_func_4C02A11E_Records	index=3, index_=41, f2=15
-	REC_func_4C02A11E_Records	index_=8
-	REC_func_4C02A11E_Records	index=3, index_=41, f2=240
-	REC_func_4C02A11E_Records	index_=128
-	REC_func_4C02A11E_Records	index_=42, f2=63
-	REC_func_4C02A11E_Records	index=3, index_=42, f2=15
-	REC_func_4C02A11E_Records	index_=8	# [120]
-	REC_func_4C02A11E_Records	index=6, index_=43
-	REC_func_4C02A11E_Records	index=44, index_=255
-	REC_func_4C02A11E_Records	index=45, index_=255
-	REC_func_4C02A11E_Records	index=46, index_=255
-	REC_func_4C02A11E_Records	index=47, index_=255
-	REC_func_4C02A11E_Records	index=48, index_=255
-	REC_func_4C02A11E_Records	index=49, index_=255
-	REC_func_4C02A11E_Records	index=50, index_=255	# [128]
-	REC_func_4C02A11E_Records	index=51, index_=255
-	REC_func_4C02A11E_Records	index=52, index_=255
-	REC_func_4C02A11E_Records	index=53, index_=255
-	REC_func_4C02A11E_Records	index=54, index_=255
-	REC_func_4C02A11E_Records	index=55, index_=255
-	REC_func_4C02A11E_Records	index=56, index_=255
-	REC_func_4C02A11E_Records	index=57, index_=255
-	REC_func_4C02A11E_Records	index=58, index_=39, f2=3	# [136]
-	REC_func_4C02A11E_Records	index=58, index_=7
-	REC_func_4C02A11E_Records	index=6, index_=3
-	REC_func_4C02A11E_Records	index=59, index_=255, f2=4
-	REC_func_4C02A11E_Records	index=59, index_=255, f2=16
-	REC_func_4C02A11E_Records	index=254, index_=255
-	REC_func_4C02A11E_Records	index=60, index_=255
-	REC_func_4C02A11E_Records	index=61, index_=127
-	REC_func_4C02A11E_Records	index=62, index_=127	# [144]
-	REC_func_4C02A11E_Records	index=63, index_=255
-	REC_func_4C02A11E_Records	index=64, index_=255
-	REC_func_4C02A11E_Records	index=65, index_=255
-	REC_func_4C02A11E_Records	index=66, index_=255
-	REC_func_4C02A11E_Records	index=67, index_=31, f2=6
-	REC_func_4C02A11E_Records	index=68, index_=6, f2=69
-	REC_func_4C02A11E_Records	index=6, index_=70, f2=6
-	REC_func_4C02A11E_Records	index=71, index_=255	# [152]
-	REC_func_4C02A11E_Records	index_=255
-	REC_func_4C02A11E_Records	index=1, index_=255
-	REC_func_4C02A11E_Records	index=2, index_=39, f2=3
-	REC_func_4C02A11E_Records	index=2, index_=7
-	REC_func_4C02A11E_Records	index=6, index_=3
-	REC_func_4C02A11E_Records	index=3, index_=255, f2=4
-	REC_func_4C02A11E_Records	index=3, index_=255, f2=16
-	REC_func_4C02A11E_Records	index=254, index_=255, f2=255	# [160]
-	REC_func_4C02A11E_Records	f2=255
-	REC_func_4C02A11E_Records	index=4, f2=255
-	REC_func_4C02A11E_Records	index=16, index_=254, f2=255
-	REC_func_4C02A11E_Records	index=6, index_=1, f2=255
-	REC_func_4C02A11E_Records	f2=255
-	REC_func_4C02A11E_Records	index_=1, f2=31
-	REC_func_4C02A11E_Records	index=3, index_=1, f2=31
-	REC_func_4C02A11E_Records	index_=17	# [168]
-	REC_func_4C02A11E_Records	index_=2, f2=127
-	REC_func_4C02A11E_Records	index=3, index_=2, f2=127
-	REC_func_4C02A11E_Records	index_=99
-	REC_func_4C02A11E_Records	index_=3, f2=247
-	REC_func_4C02A11E_Records	index=3, index_=3, f2=240
-	REC_func_4C02A11E_Records	index_=176
-	REC_func_4C02A11E_Records	index_=4, f2=192
-	REC_func_4C02A11E_Records	index_=5, f2=127	# [176]
-	REC_func_4C02A11E_Records	index_=6, f2=255
-	REC_func_4C02A11E_Records	index_=7, f2=255
-	REC_func_4C02A11E_Records	index=255
-	REC_func_4C02A11E_Records	index=193, f2=1
-	REC_func_4C02A11E_Records	index=127, index_=3, f2=1
-	REC_func_4C02A11E_Records	index=127, f2=99
-	REC_func_4C02A11E_Records	index=99, f2=2
-	REC_func_4C02A11E_Records	index=255, f2=3	# [184]
-	REC_func_4C02A11E_Records	index=127, index_=255
-	REC_func_4C02A11E_Records	index_=127
-	REC_func_4C02A11E_Records	index=1, index_=127
-	REC_func_4C02A11E_Records	index=2, index_=127
-	REC_func_4C02A11E_Records	index=3, index_=31, f2=3
-	REC_func_4C02A11E_Records	index=3, index_=15
-	REC_func_4C02A11E_Records	index=3
-	REC_func_4C02A11E_Records	index=4, index_=79, f2=3	# [192]
-	REC_func_4C02A11E_Records	index=4, index_=15
-	REC_func_4C02A11E_Records	index=3
-	REC_func_4C02A11E_Records	index=5, index_=2
-	REC_func_4C02A11E_Records	index=6, index_=15, f2=3
-	REC_func_4C02A11E_Records	index=6, index_=15
-	REC_func_4C02A11E_Records	index=3
-	REC_func_4C02A11E_Records	index=7, index_=48
-	REC_func_4C02A11E_Records	index=8, index_=255	# [200]
-	REC_func_4C02A11E_Records	index=9, index_=1, f2=6
-	REC_func_4C02A11E_Records	index=10, index_=6, f2=11
-	REC_func_4C02A11E_Records	index=6, index_=12, f2=6
-	REC_func_4C02A11E_Records	index=13, index_=255
-	REC_func_4C02A11E_Records	index_=7, f2=6
-	REC_func_4C02A11E_Records	index=1, index_=6, f2=2
-	REC_func_4C02A11E_Records	index_=3, f2=3
-	REC_func_4C02A11E_Records	index=3, index_=4, f2=255	# [208]
-	REC_func_4C02A11E_Records	index=40, index_=88, f2=64
-	REC_func_4C02A11E_Records	index=6, index_=5, f2=6
-	REC_func_4C02A11E_Records	index=6, index_=6, f2=7
-	REC_func_4C02A11E_Records	index=255
-	REC_func_4C02A11E_Records	index=160, f2=1
-	REC_func_4C02A11E_Records	index=127, f2=2
-	REC_func_4C02A11E_Records	index=127, f2=3
-	REC_func_4C02A11E_Records	index=127, f2=4	# [216]
-	REC_func_4C02A11E_Records	index=127, f2=5
-	REC_func_4C02A11E_Records	index=127, f2=6
-	REC_func_4C02A11E_Records	index=127, f2=7
-	REC_func_4C02A11E_Records	index=127, f2=8
-	REC_func_4C02A11E_Records	index=127, f2=9
-	REC_func_4C02A11E_Records	index=127, f2=10
-	REC_func_4C02A11E_Records	index=127, f2=11
-	REC_func_4C02A11E_Records	index=127, f2=12	# [224]
-	REC_func_4C02A11E_Records	index=127, f2=13
-	REC_func_4C02A11E_Records	index=127, f2=14
-	REC_func_4C02A11E_Records	index=127, f2=15
-	REC_func_4C02A11E_Records	index=127, f2=16
-	REC_func_4C02A11E_Records	index=127, f2=17
-	REC_func_4C02A11E_Records	index=127, f2=18
-	REC_func_4C02A11E_Records	index=127, f2=19
-	REC_func_4C02A11E_Records	index=127, f2=20	# [232]
-	REC_func_4C02A11E_Records	index=127, f2=21
-	REC_func_4C02A11E_Records	index=127, f2=22
-	REC_func_4C02A11E_Records	index=127, f2=23
-	REC_func_4C02A11E_Records	index=127, index_=6, f2=24
-	REC_func_4C02A11E_Records	index=6, index_=25, f2=6
-	REC_func_4C02A11E_Records	index=26, index_=6, f2=27
-	REC_func_4C02A11E_Records	index=6, index_=28, f2=6
-	REC_func_4C02A11E_Records	index=29, index_=255	# [240]
-	REC_func_4C02A11E_Records	index_=255
-	REC_func_4C02A11E_Records	index=1, index_=255
-	REC_func_4C02A11E_Records	index=2, index_=255
-	REC_func_4C02A11E_Records	index=3, index_=255
-	REC_func_4C02A11E_Records	index=4, index_=255
-	REC_func_4C02A11E_Records	index=5, index_=255
-	REC_func_4C02A11E_Records	index=6, index_=255
-	REC_func_4C02A11E_Records	index=7, index_=255	# [248]
-	REC_func_4C02A11E_Records	index=8, index_=255
-	REC_func_4C02A11E_Records	index=9, index_=255
-	REC_func_4C02A11E_Records	index=10, index_=255
-	REC_func_4C02A11E_Records	index=11, index_=255
-	REC_func_4C02A11E_Records	index=12, index_=255, f2=6
-	REC_func_4C02A11E_Records	index=13, index_=255
-	REC_func_4C02A11E_Records	index_=7
-	REC_func_4C02A11E_Records	index=1, index_=127	# [256]
-	REC_func_4C02A11E_Records	index=2, index_=255, f2=3
-	REC_func_4C02A11E_Records	index=2, index_=255, f2=52
-	REC_func_4C02A11E_Records	index=76, index_=64
-	REC_func_4C02A11E_Records	index=3, index_=255, f2=4
-	REC_func_4C02A11E_Records	index=3, index_=255, f2=19
-	REC_func_4C02A11E_Records	index=254, index_=255
-	REC_func_4C02A11E_Records	index=4, index_=15, f2=3
-	REC_func_4C02A11E_Records	index=4, index_=15	# [264]
-	REC_func_4C02A11E_Records	index=13, index_=7
-	REC_func_4C02A11E_Records	index=5, index_=255, f2=3
-	REC_func_4C02A11E_Records	index=5, index_=255, f2=1
-	REC_func_4C02A11E_Records	index=16, index_=2
-	REC_func_4C02A11E_Records	index=6, index_=255, f2=3
-	REC_func_4C02A11E_Records	index=6, index_=255, f2=1
-	REC_func_4C02A11E_Records	index=16, index_=4
-	REC_func_4C02A11E_Records	index=7, index_=7	# [272]
-	REC_func_4C02A11E_Records	index=8, index_=255
-	REC_func_4C02A11E_Records	index=9, index_=127, f2=6
-	REC_func_4C02A11E_Records	index=10, index_=6, f2=11
-	REC_func_4C02A11E_Records	index_=12, f2=255
-	REC_func_4C02A11E_Records	index_=13, f2=255
-	REC_func_4C02A11E_Records	index_=14, f2=255
-	REC_func_4C02A11E_Records	index_=15, f2=255
-	REC_func_4C02A11E_Records	index_=16, f2=255	# [280]
-	REC_func_4C02A11E_Records	index_=17, f2=255
-	REC_func_4C02A11E_Records	index_=18, f2=255
-	REC_func_4C02A11E_Records	index_=19, f2=255
-	REC_func_4C02A11E_Records	index=255
-	REC_func_4C02A11E_Records	index=255, f2=1
-	REC_func_4C02A11E_Records	index=255, f2=2
-	REC_func_4C02A11E_Records	index=2, index_=6, f2=3
-	REC_func_4C02A11E_Records	index=255	# [288]
-	REC_func_4C02A11E_Records	index=3, index_=6, f2=1
-	REC_func_4C02A11E_Records	index=255
-	REC_func_4C02A11E_Records	index=63, f2=1
-	REC_func_4C02A11E_Records	index=16, f2=2
-	REC_func_4C02A11E_Records	index=255, index_=3, f2=2
-	REC_func_4C02A11E_Records	index=255, index_=182, f2=183
-	REC_func_4C02A11E_Records	index=182, index_=6, f2=3
-	REC_func_4C02A11E_Records	index_=4, f2=255	# [296]
-	REC_func_4C02A11E_Records	index_=5, f2=255
-	REC_func_4C02A11E_Records	index_=6, f2=255
-	REC_func_4C02A11E_Records	index_=7, f2=255
-	REC_func_4C02A11E_Records	index_=8, f2=255
-	REC_func_4C02A11E_Records	index_=9, f2=255
-	REC_func_4C02A11E_Records	index=6, index_=10, f2=6
-	REC_func_4C02A11E_Records	index=11, index_=6, f2=12
-	REC_func_4C02A11E_Records	index=6, index_=13, f2=6	# [304]
-	REC_func_4C02A11E_Records	index=14, index_=6, f2=15
-	REC_func_4C02A11E_Records	index=5, index_=16, f2=130
-	REC_func_4C02A11E_Records	index=5, index_=17, f2=1
-	REC_func_4C02A11E_Records	index=6, index_=18, f2=5
-	REC_func_4C02A11E_Records	index=19, index_=129, f2=6
-	REC_func_4C02A11E_Records	index=20, f2=21
-	REC_func_4C02A11E_Records	index=255, f2=22
-	REC_func_4C02A11E_Records	index=255, index_=6, f2=23	# [312]
-	REC_func_4C02A11E_Records	index=6, index_=24, f2=6
-	REC_func_4C02A11E_Records	index=25, index_=6, f2=26
-	REC_func_4C02A11E_Records	index=6, index_=27
-	REC_func_4C02A11E_Records	index=28, index_=63
-	REC_func_4C02A11E_Records	index=29, index_=63, f2=255
-	REC_func_4C02A11E_Records	f2=255
-	REC_func_4C02A11E_Records	index_=1, f2=12
-	REC_func_4C02A11E_Records	index_=2, f2=29	# [320]
-	REC_func_4C02A11E_Records	index=3, index_=2, f2=24
-	REC_func_4C02A11E_Records	index_=8
-	REC_func_4C02A11E_Records	index_=3, f2=197
-	REC_func_4C02A11E_Records	index=6, index_=4, f2=6
-	REC_func_4C02A11E_Records	index=5, f2=6
-	REC_func_4C02A11E_Records	index=8, f2=7
-	REC_func_4C02A11E_Records	index=252, f2=8
-	REC_func_4C02A11E_Records	index=255, f2=9	# [328]
-	REC_func_4C02A11E_Records	index=113, index_=6, f2=10
-	REC_func_4C02A11E_Records	index_=11, f2=3
-	REC_func_4C02A11E_Records	index=3, index_=11, f2=3
-	REC_func_4C02A11E_Records	index_=2
-	REC_func_4C02A11E_Records	index_=12, f2=255
-	REC_func_4C02A11E_Records	index_=13, f2=255
-	REC_func_4C02A11E_Records	index=255
-	REC_func_4C02A11E_Records	index=64, f2=1	# [336]
-	REC_func_4C02A11E_Records	index=127, index_=3, f2=1
-	REC_func_4C02A11E_Records	index=127, f2=104
-	REC_func_4C02A11E_Records	index_=6, f2=2
-	REC_func_4C02A11E_Records	index_=3, f2=113
-	REC_func_4C02A11E_Records	index_=4, f2=255
-	REC_func_4C02A11E_Records	index=6, index_=5, f2=6
-	REC_func_4C02A11E_Records	index=6, f2=7
-	REC_func_4C02A11E_Records	index=255, f2=8	# [344]
-	REC_func_4C02A11E_Records	index=255, f2=9
-	REC_func_4C02A11E_Records	index=159, f2=10
-	REC_func_4C02A11E_Records	index=31, index_=6, f2=11
-	REC_func_4C02A11E_Records	index=6, index_=12
-	REC_func_4C02A11E_Records	index=13, index_=195
-	REC_func_4C02A11E_Records	index=14, index_=7, f2=3
-	REC_func_4C02A11E_Records	index=14, index_=7
-	REC_func_4C02A11E_Records	index=4	# [352]
-	REC_func_4C02A11E_Records	index=15, index_=7, f2=5
-	REC_func_4C02A11E_Records	index=16, index_=16, f2=5
-	REC_func_4C02A11E_Records	index=17, index_=17, f2=5
-	REC_func_4C02A11E_Records	index=18, index_=18
-	REC_func_4C02A11E_Records	index=19, index_=255
-	REC_func_4C02A11E_Records	index=20, index_=255, f2=6
-	REC_func_4C02A11E_Records	index=21, f2=22
-	REC_func_4C02A11E_Records	index=255, f2=24	# [360]
-	REC_func_4C02A11E_Records	index=255, f2=23
-	REC_func_4C02A11E_Records	index=255, f2=25
-	REC_func_4C02A11E_Records	index=255, f2=26
-	REC_func_4C02A11E_Records	index=15, index_=3, f2=26
-	REC_func_4C02A11E_Records	index=3, f2=2
-	REC_func_4C02A11E_Records	f2=27
-	REC_func_4C02A11E_Records	index=255, f2=28
-	REC_func_4C02A11E_Records	index=255, f2=29	# [368]
-	REC_func_4C02A11E_Records	index=255, index_=6, f2=30
-	REC_func_4C02A11E_Records	index=6, index_=31, f2=6
-	REC_func_4C02A11E_Records	index=32, index_=6, f2=33
-	REC_func_4C02A11E_Records	index=6, index_=34, f2=6
-	REC_func_4C02A11E_Records	index=35, index_=6, f2=36
-	REC_func_4C02A11E_Records	index=6, index_=37, f2=6
-	REC_func_4C02A11E_Records	index=38, index_=6, f2=39
-	REC_func_4C02A11E_Records	index=255	# [376]
-	REC_func_4C02A11E_Records	index=255, index_=6, f2=1
-	REC_func_4C02A11E_Records	index=6, index_=2
-	REC_func_4C02A11E_Records	index=3, index_=255, f2=3
-	REC_func_4C02A11E_Records	index=3, index_=255
-	REC_func_4C02A11E_Records	index=5, f2=6
-	REC_func_4C02A11E_Records	index=4, index_=6, f2=5
-	REC_func_4C02A11E_Records	index=6, index_=6, f2=6
-	REC_func_4C02A11E_Records	index=7, index_=255	# [384]
-	REC_func_4C02A11E_Records	index_=15, f2=3
-	REC_func_4C02A11E_Records	index_=15
-	REC_func_4C02A11E_Records	index=9, index_=6, f2=6
-	REC_func_4C02A11E_Records	index=1, f2=2
-	REC_func_4C02A11E_Records	index=127, index_=6, f2=3
-	REC_func_4C02A11E_Records	index=6, index_=4
-	REC_func_4C02A11E_Records	index=5, index_=255, f2=3
-	REC_func_4C02A11E_Records	index=5, index_=255, f2=1	# [392]
-	REC_func_4C02A11E_Records	index=10, index_=1
-	REC_func_4C02A11E_Records	index=6, index_=255, f2=3
-	REC_func_4C02A11E_Records	index=6, index_=127, f2=1
-	REC_func_4C02A11E_Records	index=127, index_=20, f2=6
-	REC_func_4C02A11E_Records	index=7, index_=6, f2=8
-	REC_func_4C02A11E_Records	index=6, index_=9, f2=6
-	REC_func_4C02A11E_Records	index=10, index_=6, f2=11
-	REC_func_4C02A11E_Records	index=6, index_=12, f2=6	# [400]
-	REC_func_4C02A11E_Records	index=13, index_=255
-	REC_func_4C02A11E_Records	index_=255
-	REC_func_4C02A11E_Records	index=1, index_=255
-	REC_func_4C02A11E_Records	index=2, index_=255
-	REC_func_4C02A11E_Records	index=3, index_=255
-	REC_func_4C02A11E_Records	index=4, index_=255
-	REC_func_4C02A11E_Records	index=5, index_=255
-	REC_func_4C02A11E_Records	index=6, index_=255	# [408]
-	REC_func_4C02A11E_Records	index=7, index_=255
-	REC_func_4C02A11E_Records	index=8, index_=255
-	REC_func_4C02A11E_Records	index=9, index_=255
-	REC_func_4C02A11E_Records	index=10, index_=255
-	REC_func_4C02A11E_Records	index=11, index_=255
-	REC_func_4C02A11E_Records	index=12, index_=255
-	REC_func_4C02A11E_Records	index=13, index_=255
-	REC_func_4C02A11E_Records	index=14, index_=255	# [416]
-	REC_func_4C02A11E_Records	index=15, index_=255
-	REC_func_4C02A11E_Records	index=16, index_=255
-	REC_func_4C02A11E_Records	index=17, index_=255
-	REC_func_4C02A11E_Records	index=18, index_=255
-	REC_func_4C02A11E_Records	index=19, index_=255
-	REC_func_4C02A11E_Records	index=20, index_=255
-	REC_func_4C02A11E_Records	index=21, index_=255, f2=255
-	REC_func_4C02A11E_Records	f2=255	# [424]
-	REC_func_4C02A11E_Records	index_=1, f2=255
-	REC_func_4C02A11E_Records	index_=2, f2=255
-	REC_func_4C02A11E_Records	index_=3, f2=255
-	REC_func_4C02A11E_Records	index_=4, f2=255
-	REC_func_4C02A11E_Records	index_=5, f2=255
-	REC_func_4C02A11E_Records	index_=6, f2=255
-	REC_func_4C02A11E_Records	index_=7, f2=255
-	REC_func_4C02A11E_Records	index_=8, f2=255	# [432]
-	REC_func_4C02A11E_Records	index_=9, f2=255
-	REC_func_4C02A11E_Records	index_=10, f2=255
-	REC_func_4C02A11E_Records	index_=11, f2=255
-	REC_func_4C02A11E_Records	index_=12, f2=255
-	REC_func_4C02A11E_Records	index_=13, f2=255
-	REC_func_4C02A11E_Records	index_=14, f2=255
-	REC_func_4C02A11E_Records	index_=15, f2=255
+func_4C02A11E_Table:	# 26 x PanelMemFieldMap (3 bytes each); read by func_4C02A11E 0x4C02A11E `movbu (1, a1), d2`; func_4C02A11E 0x4C02A11E `movbu (2, a1), d0`; func_4C02A11E 0x4C02A11E `movbu (a1), d0` (+12)
+	PanelMemFieldMap	mask=127	# [0]
+	PanelMemFieldMap	param_off=1, rec_off=1, mask=127
+	PanelMemFieldMap	param_off=2, rec_off=2, mask=127
+	PanelMemFieldMap	param_off=3, rec_off=3, mask=255
+	PanelMemFieldMap	param_off=4, rec_off=4, mask=223
+	PanelMemFieldMap	param_off=6, rec_off=5, mask=3
+	PanelMemFieldMap	param_off=11, rec_off=6, mask=255
+	PanelMemFieldMap	param_off=12, rec_off=7, mask=255
+	PanelMemFieldMap	param_off=13, rec_off=8, mask=255	# [8]
+	PanelMemFieldMap	param_off=14, rec_off=9, mask=127
+	PanelMemFieldMap	param_off=15, rec_off=10, mask=255
+	PanelMemFieldMap	param_off=24, rec_off=11, mask=127
+	PanelMemFieldMap	param_off=25, rec_off=12, mask=127
+	PanelMemFieldMap	param_off=26, rec_off=13, mask=127
+	PanelMemFieldMap	param_off=27, rec_off=14, mask=127
+	PanelMemFieldMap	param_off=28, rec_off=15, mask=127
+	PanelMemFieldMap	param_off=29, rec_off=16, mask=127	# [16]
+	PanelMemFieldMap	param_off=30, rec_off=17, mask=255
+	PanelMemFieldMap	param_off=34, rec_off=18, mask=15
+	PanelMemFieldMap	param_off=36, rec_off=19, mask=255
+	PanelMemFieldMap	param_off=37, rec_off=20, mask=255
+	PanelMemFieldMap	param_off=38, rec_off=21, mask=255
+	PanelMemFieldMap	param_off=39, rec_off=22, mask=255
+	PanelMemFieldMap	param_off=40, rec_off=23, mask=255
+	PanelMemFieldMap	param_off=41, rec_off=24, mask=255	# [24]
+	PanelMemFieldMap	param_off=42, rec_off=25, mask=63
+func_4C02A11E_Table_2:	# 1 x PanelMemFieldMap_2 (3 bytes each); read by func_4C02A11E 0x4C02A11E `movbu (1, a1), d2`; func_4C02A11E 0x4C02A11E `movbu (2, a1), d0`; func_4C02A11E 0x4C02A11E `movbu (a1), d0` (+5)
+	PanelMemFieldMap_2	mask=255
+func_4C02A11E_Table_3:	# 7 x PanelMemFieldMap_3 (3 bytes each); read by func_4C02A11E 0x4C02A11E `movbu (1, a1), d2`; func_4C02A11E 0x4C02A11E `movbu (2, a1), d0`; func_4C02A11E 0x4C02A11E `movbu (a1), d0` (+11)
+	PanelMemFieldMap_3	mask=127
+	PanelMemFieldMap_3	param_off=1, rec_off=1, mask=127
+	PanelMemFieldMap_3	param_off=2, rec_off=2, mask=127
+	PanelMemFieldMap_3	param_off=4, rec_off=3, mask=64
+	PanelMemFieldMap_3	param_off=7, rec_off=4, mask=48
+	PanelMemFieldMap_3	param_off=8, rec_off=5, mask=255
+	PanelMemFieldMap_3	param_off=9, rec_off=6, mask=1
+func_4C02AD96_Table:	# 3 x PanelMemFieldMap_4 (3 bytes each); read by func_4C02A11E 0x4C02A11E `movbu (1, a1), d2`; func_4C02A11E 0x4C02A11E `movbu (2, a1), d0`; func_4C02A11E 0x4C02A11E `movbu (a1), d0` (+9)
+	PanelMemFieldMap_4	mask=7
+	PanelMemFieldMap_4	param_off=3, rec_off=1, mask=1
+	PanelMemFieldMap_4	param_off=4, rec_off=2, mask=255
+func_4C02A11E_Table_4:	# 14 x PanelMemFieldMap_5 (3 bytes each); read by func_4C02A11E 0x4C02A11E `movbu (1, a1), d2`; func_4C02A11E 0x4C02A11E `movbu (2, a1), d0`; func_4C02A11E 0x4C02A11E `movbu (a1), d0` (+11)
+	PanelMemFieldMap_5	mask=136	# [0]
+	PanelMemFieldMap_5	param_off=1, rec_off=1, mask=127
+	PanelMemFieldMap_5	param_off=2, rec_off=2, mask=127
+	PanelMemFieldMap_5	param_off=3, rec_off=3, mask=127
+	PanelMemFieldMap_5	param_off=4, rec_off=4, mask=127
+	PanelMemFieldMap_5	param_off=5, rec_off=5, mask=127
+	PanelMemFieldMap_5	param_off=6, rec_off=6, mask=127
+	PanelMemFieldMap_5	param_off=7, rec_off=7, mask=127
+	PanelMemFieldMap_5	param_off=14, rec_off=8, mask=127	# [8]
+	PanelMemFieldMap_5	param_off=15, rec_off=9, mask=127
+	PanelMemFieldMap_5	param_off=16, rec_off=10, mask=127
+	PanelMemFieldMap_5	param_off=17, rec_off=11, mask=127
+	PanelMemFieldMap_5	param_off=18, rec_off=12, mask=127
+	PanelMemFieldMap_5	param_off=19, rec_off=13, mask=127
+func_4C02A11E_Table_5:	# 4 x PanelMemFieldMap_6 (3 bytes each); read by func_4C02A11E 0x4C02A11E `movbu (1, a1), d2`; func_4C02A11E 0x4C02A11E `movbu (2, a1), d0`; func_4C02A11E 0x4C02A11E `movbu (a1), d0` (+11)
+	PanelMemFieldMap_6	mask=4
+	PanelMemFieldMap_6	param_off=3, rec_off=1, mask=255
+	PanelMemFieldMap_6	param_off=4, rec_off=2, mask=15
+	PanelMemFieldMap_6	param_off=8, rec_off=3, mask=255
+func_4C02A11E_Table_6:	# 3 x PanelMemFieldMap_7 (3 bytes each); read by func_4C02A11E 0x4C02A11E `movbu (1, a1), d2`; func_4C02A11E 0x4C02A11E `movbu (2, a1), d0`; func_4C02A11E 0x4C02A11E `movbu (a1), d0` (+12)
+	PanelMemFieldMap_7	mask=255
+	PanelMemFieldMap_7	param_off=1, rec_off=1, mask=255
+	PanelMemFieldMap_7	param_off=5, mask=255
+func_4C02A11E_Records:	# 440 x PanelMemFieldMap_8 (3 bytes each); read by func_4C02A11E 0x4C02A11E `movbu (1, a1), d2`; func_4C02A11E 0x4C02A11E `movbu (2, a1), d0`; func_4C02A11E 0x4C02A11E `movbu (a1), d0` (+14)
+	PanelMemFieldMap_8	param_off=35, mask=7	# [0]
+	PanelMemFieldMap_8	param_off=56, rec_off=1, mask=255
+	PanelMemFieldMap_8	param_off=57, rec_off=2, mask=255
+	PanelMemFieldMap_8	param_off=255, rec_off=255, mask=3
+	PanelMemFieldMap_8	rec_off=255, mask=32
+	PanelMemFieldMap_8	param_off=125, rec_off=32, mask=3
+	PanelMemFieldMap_8	param_off=1, rec_off=255, mask=32
+	PanelMemFieldMap_8	param_off=125, rec_off=32, mask=3
+	PanelMemFieldMap_8	param_off=2, rec_off=255, mask=32	# [8]
+	PanelMemFieldMap_8	param_off=125, rec_off=32, mask=3
+	PanelMemFieldMap_8	param_off=3, rec_off=255, mask=32
+	PanelMemFieldMap_8	param_off=125, rec_off=32, mask=3
+	PanelMemFieldMap_8	param_off=4, rec_off=255, mask=32
+	PanelMemFieldMap_8	param_off=125, rec_off=32, mask=3
+	PanelMemFieldMap_8	param_off=5, rec_off=255, mask=32
+	PanelMemFieldMap_8	param_off=125, rec_off=32, mask=3
+	PanelMemFieldMap_8	param_off=6, rec_off=255, mask=32	# [16]
+	PanelMemFieldMap_8	param_off=125, rec_off=32, mask=3
+	PanelMemFieldMap_8	param_off=7, rec_off=255, mask=32
+	PanelMemFieldMap_8	param_off=125, rec_off=32, mask=3
+	PanelMemFieldMap_8	param_off=8, rec_off=255, mask=32
+	PanelMemFieldMap_8	param_off=125, rec_off=32, mask=3
+	PanelMemFieldMap_8	param_off=9, rec_off=255, mask=32
+	PanelMemFieldMap_8	param_off=125, rec_off=32, mask=3
+	PanelMemFieldMap_8	param_off=10, rec_off=255, mask=32	# [24]
+	PanelMemFieldMap_8	param_off=125, rec_off=32, mask=3
+	PanelMemFieldMap_8	param_off=11, rec_off=255, mask=32
+	PanelMemFieldMap_8	param_off=125, rec_off=32, mask=3
+	PanelMemFieldMap_8	param_off=12, rec_off=255, mask=32
+	PanelMemFieldMap_8	param_off=125, rec_off=32, mask=3
+	PanelMemFieldMap_8	param_off=13, rec_off=255, mask=32
+	PanelMemFieldMap_8	param_off=125, rec_off=32, mask=3
+	PanelMemFieldMap_8	param_off=13, rec_off=255, mask=32	# [32]
+	PanelMemFieldMap_8	param_off=125, rec_off=32, mask=3
+	PanelMemFieldMap_8	param_off=15, rec_off=255, mask=32
+	PanelMemFieldMap_8	param_off=125, rec_off=32, mask=6
+	PanelMemFieldMap_8	param_off=16, rec_off=6, mask=17
+	PanelMemFieldMap_8	param_off=255
+	PanelMemFieldMap_8	param_off=127, mask=1
+	PanelMemFieldMap_8	param_off=127, mask=2
+	PanelMemFieldMap_8	param_off=127, mask=3	# [40]
+	PanelMemFieldMap_8	param_off=255, mask=4
+	PanelMemFieldMap_8	param_off=255, mask=5
+	PanelMemFieldMap_8	param_off=255, mask=6
+	PanelMemFieldMap_8	param_off=3, rec_off=6, mask=7
+	PanelMemFieldMap_8	param_off=6, rec_off=8, mask=6
+	PanelMemFieldMap_8	param_off=9, rec_off=6, mask=10
+	PanelMemFieldMap_8	rec_off=11, mask=255
+	PanelMemFieldMap_8	rec_off=12, mask=255	# [48]
+	PanelMemFieldMap_8	rec_off=13, mask=255
+	PanelMemFieldMap_8	rec_off=14, mask=127
+	PanelMemFieldMap_8	rec_off=15, mask=255
+	PanelMemFieldMap_8	rec_off=16, mask=127
+	PanelMemFieldMap_8	rec_off=17, mask=127
+	PanelMemFieldMap_8	rec_off=18, mask=127
+	PanelMemFieldMap_8	rec_off=19, mask=127
+	PanelMemFieldMap_8	rec_off=20, mask=127	# [56]
+	PanelMemFieldMap_8	rec_off=21, mask=127
+	PanelMemFieldMap_8	rec_off=22, mask=127
+	PanelMemFieldMap_8	rec_off=23, mask=127
+	PanelMemFieldMap_8	rec_off=24, mask=127
+	PanelMemFieldMap_8	param_off=3, rec_off=24, mask=127
+	PanelMemFieldMap_8	rec_off=120, mask=108
+	PanelMemFieldMap_8	rec_off=25, mask=127
+	PanelMemFieldMap_8	param_off=3, rec_off=25, mask=127	# [64]
+	PanelMemFieldMap_8	param_off=40, rec_off=88, mask=64
+	PanelMemFieldMap_8	rec_off=26, mask=127
+	PanelMemFieldMap_8	param_off=3, rec_off=26, mask=127
+	PanelMemFieldMap_8	rec_off=120, mask=28
+	PanelMemFieldMap_8	rec_off=27, mask=127
+	PanelMemFieldMap_8	param_off=3, rec_off=27, mask=127
+	PanelMemFieldMap_8	param_off=40, rec_off=88, mask=64
+	PanelMemFieldMap_8	rec_off=28, mask=127	# [72]
+	PanelMemFieldMap_8	rec_off=29, mask=127
+	PanelMemFieldMap_8	param_off=3, rec_off=29, mask=127
+	PanelMemFieldMap_8	param_off=40, rec_off=88, mask=64
+	PanelMemFieldMap_8	rec_off=30, mask=255
+	PanelMemFieldMap_8	rec_off=31, mask=127
+	PanelMemFieldMap_8	param_off=3, rec_off=31, mask=127
+	PanelMemFieldMap_8	rec_off=12, mask=2
+	PanelMemFieldMap_8	rec_off=32, mask=127	# [80]
+	PanelMemFieldMap_8	rec_off=33, mask=127
+	PanelMemFieldMap_8	rec_off=34, mask=15
+	PanelMemFieldMap_8	param_off=3, rec_off=34, mask=15
+	PanelMemFieldMap_8	rec_off=1
+	PanelMemFieldMap_8	rec_off=35, mask=7
+	PanelMemFieldMap_8	param_off=3, rec_off=35, mask=7
+	PanelMemFieldMap_8	rec_off=7
+	PanelMemFieldMap_8	rec_off=36, mask=255	# [88]
+	PanelMemFieldMap_8	param_off=4, rec_off=36, mask=15
+	PanelMemFieldMap_8	param_off=6, rec_off=10
+	PanelMemFieldMap_8	param_off=4, rec_off=36, mask=240
+	PanelMemFieldMap_8	param_off=96, rec_off=160
+	PanelMemFieldMap_8	rec_off=37, mask=255
+	PanelMemFieldMap_8	param_off=4, rec_off=37, mask=15
+	PanelMemFieldMap_8	param_off=6, rec_off=10
+	PanelMemFieldMap_8	param_off=4, rec_off=37, mask=240	# [96]
+	PanelMemFieldMap_8	param_off=96, rec_off=160
+	PanelMemFieldMap_8	rec_off=38, mask=255
+	PanelMemFieldMap_8	param_off=3, rec_off=38, mask=15
+	PanelMemFieldMap_8	rec_off=8
+	PanelMemFieldMap_8	param_off=3, rec_off=38, mask=240
+	PanelMemFieldMap_8	rec_off=128
+	PanelMemFieldMap_8	rec_off=39, mask=255
+	PanelMemFieldMap_8	param_off=3, rec_off=39, mask=15	# [104]
+	PanelMemFieldMap_8	rec_off=8
+	PanelMemFieldMap_8	param_off=3, rec_off=39, mask=240
+	PanelMemFieldMap_8	rec_off=128
+	PanelMemFieldMap_8	rec_off=40, mask=255
+	PanelMemFieldMap_8	param_off=3, rec_off=40, mask=15
+	PanelMemFieldMap_8	rec_off=8
+	PanelMemFieldMap_8	param_off=3, rec_off=40, mask=240
+	PanelMemFieldMap_8	rec_off=128	# [112]
+	PanelMemFieldMap_8	rec_off=41, mask=255
+	PanelMemFieldMap_8	param_off=3, rec_off=41, mask=15
+	PanelMemFieldMap_8	rec_off=8
+	PanelMemFieldMap_8	param_off=3, rec_off=41, mask=240
+	PanelMemFieldMap_8	rec_off=128
+	PanelMemFieldMap_8	rec_off=42, mask=63
+	PanelMemFieldMap_8	param_off=3, rec_off=42, mask=15
+	PanelMemFieldMap_8	rec_off=8	# [120]
+	PanelMemFieldMap_8	param_off=6, rec_off=43
+	PanelMemFieldMap_8	param_off=44, rec_off=255
+	PanelMemFieldMap_8	param_off=45, rec_off=255
+	PanelMemFieldMap_8	param_off=46, rec_off=255
+	PanelMemFieldMap_8	param_off=47, rec_off=255
+	PanelMemFieldMap_8	param_off=48, rec_off=255
+	PanelMemFieldMap_8	param_off=49, rec_off=255
+	PanelMemFieldMap_8	param_off=50, rec_off=255	# [128]
+	PanelMemFieldMap_8	param_off=51, rec_off=255
+	PanelMemFieldMap_8	param_off=52, rec_off=255
+	PanelMemFieldMap_8	param_off=53, rec_off=255
+	PanelMemFieldMap_8	param_off=54, rec_off=255
+	PanelMemFieldMap_8	param_off=55, rec_off=255
+	PanelMemFieldMap_8	param_off=56, rec_off=255
+	PanelMemFieldMap_8	param_off=57, rec_off=255
+	PanelMemFieldMap_8	param_off=58, rec_off=39, mask=3	# [136]
+	PanelMemFieldMap_8	param_off=58, rec_off=7
+	PanelMemFieldMap_8	param_off=6, rec_off=3
+	PanelMemFieldMap_8	param_off=59, rec_off=255, mask=4
+	PanelMemFieldMap_8	param_off=59, rec_off=255, mask=16
+	PanelMemFieldMap_8	param_off=254, rec_off=255
+	PanelMemFieldMap_8	param_off=60, rec_off=255
+	PanelMemFieldMap_8	param_off=61, rec_off=127
+	PanelMemFieldMap_8	param_off=62, rec_off=127	# [144]
+	PanelMemFieldMap_8	param_off=63, rec_off=255
+	PanelMemFieldMap_8	param_off=64, rec_off=255
+	PanelMemFieldMap_8	param_off=65, rec_off=255
+	PanelMemFieldMap_8	param_off=66, rec_off=255
+	PanelMemFieldMap_8	param_off=67, rec_off=31, mask=6
+	PanelMemFieldMap_8	param_off=68, rec_off=6, mask=69
+	PanelMemFieldMap_8	param_off=6, rec_off=70, mask=6
+	PanelMemFieldMap_8	param_off=71, rec_off=255	# [152]
+	PanelMemFieldMap_8	rec_off=255
+	PanelMemFieldMap_8	param_off=1, rec_off=255
+	PanelMemFieldMap_8	param_off=2, rec_off=39, mask=3
+	PanelMemFieldMap_8	param_off=2, rec_off=7
+	PanelMemFieldMap_8	param_off=6, rec_off=3
+	PanelMemFieldMap_8	param_off=3, rec_off=255, mask=4
+	PanelMemFieldMap_8	param_off=3, rec_off=255, mask=16
+	PanelMemFieldMap_8	param_off=254, rec_off=255, mask=255	# [160]
+	PanelMemFieldMap_8	mask=255
+	PanelMemFieldMap_8	param_off=4, mask=255
+	PanelMemFieldMap_8	param_off=16, rec_off=254, mask=255
+	PanelMemFieldMap_8	param_off=6, rec_off=1, mask=255
+	PanelMemFieldMap_8	mask=255
+	PanelMemFieldMap_8	rec_off=1, mask=31
+	PanelMemFieldMap_8	param_off=3, rec_off=1, mask=31
+	PanelMemFieldMap_8	rec_off=17	# [168]
+	PanelMemFieldMap_8	rec_off=2, mask=127
+	PanelMemFieldMap_8	param_off=3, rec_off=2, mask=127
+	PanelMemFieldMap_8	rec_off=99
+	PanelMemFieldMap_8	rec_off=3, mask=247
+	PanelMemFieldMap_8	param_off=3, rec_off=3, mask=240
+	PanelMemFieldMap_8	rec_off=176
+	PanelMemFieldMap_8	rec_off=4, mask=192
+	PanelMemFieldMap_8	rec_off=5, mask=127	# [176]
+	PanelMemFieldMap_8	rec_off=6, mask=255
+	PanelMemFieldMap_8	rec_off=7, mask=255
+	PanelMemFieldMap_8	param_off=255
+	PanelMemFieldMap_8	param_off=193, mask=1
+	PanelMemFieldMap_8	param_off=127, rec_off=3, mask=1
+	PanelMemFieldMap_8	param_off=127, mask=99
+	PanelMemFieldMap_8	param_off=99, mask=2
+	PanelMemFieldMap_8	param_off=255, mask=3	# [184]
+	PanelMemFieldMap_8	param_off=127, rec_off=255
+	PanelMemFieldMap_8	rec_off=127
+	PanelMemFieldMap_8	param_off=1, rec_off=127
+	PanelMemFieldMap_8	param_off=2, rec_off=127
+	PanelMemFieldMap_8	param_off=3, rec_off=31, mask=3
+	PanelMemFieldMap_8	param_off=3, rec_off=15
+	PanelMemFieldMap_8	param_off=3
+	PanelMemFieldMap_8	param_off=4, rec_off=79, mask=3	# [192]
+	PanelMemFieldMap_8	param_off=4, rec_off=15
+	PanelMemFieldMap_8	param_off=3
+	PanelMemFieldMap_8	param_off=5, rec_off=2
+	PanelMemFieldMap_8	param_off=6, rec_off=15, mask=3
+	PanelMemFieldMap_8	param_off=6, rec_off=15
+	PanelMemFieldMap_8	param_off=3
+	PanelMemFieldMap_8	param_off=7, rec_off=48
+	PanelMemFieldMap_8	param_off=8, rec_off=255	# [200]
+	PanelMemFieldMap_8	param_off=9, rec_off=1, mask=6
+	PanelMemFieldMap_8	param_off=10, rec_off=6, mask=11
+	PanelMemFieldMap_8	param_off=6, rec_off=12, mask=6
+	PanelMemFieldMap_8	param_off=13, rec_off=255
+	PanelMemFieldMap_8	rec_off=7, mask=6
+	PanelMemFieldMap_8	param_off=1, rec_off=6, mask=2
+	PanelMemFieldMap_8	rec_off=3, mask=3
+	PanelMemFieldMap_8	param_off=3, rec_off=4, mask=255	# [208]
+	PanelMemFieldMap_8	param_off=40, rec_off=88, mask=64
+	PanelMemFieldMap_8	param_off=6, rec_off=5, mask=6
+	PanelMemFieldMap_8	param_off=6, rec_off=6, mask=7
+	PanelMemFieldMap_8	param_off=255
+	PanelMemFieldMap_8	param_off=160, mask=1
+	PanelMemFieldMap_8	param_off=127, mask=2
+	PanelMemFieldMap_8	param_off=127, mask=3
+	PanelMemFieldMap_8	param_off=127, mask=4	# [216]
+	PanelMemFieldMap_8	param_off=127, mask=5
+	PanelMemFieldMap_8	param_off=127, mask=6
+	PanelMemFieldMap_8	param_off=127, mask=7
+	PanelMemFieldMap_8	param_off=127, mask=8
+	PanelMemFieldMap_8	param_off=127, mask=9
+	PanelMemFieldMap_8	param_off=127, mask=10
+	PanelMemFieldMap_8	param_off=127, mask=11
+	PanelMemFieldMap_8	param_off=127, mask=12	# [224]
+	PanelMemFieldMap_8	param_off=127, mask=13
+	PanelMemFieldMap_8	param_off=127, mask=14
+	PanelMemFieldMap_8	param_off=127, mask=15
+	PanelMemFieldMap_8	param_off=127, mask=16
+	PanelMemFieldMap_8	param_off=127, mask=17
+	PanelMemFieldMap_8	param_off=127, mask=18
+	PanelMemFieldMap_8	param_off=127, mask=19
+	PanelMemFieldMap_8	param_off=127, mask=20	# [232]
+	PanelMemFieldMap_8	param_off=127, mask=21
+	PanelMemFieldMap_8	param_off=127, mask=22
+	PanelMemFieldMap_8	param_off=127, mask=23
+	PanelMemFieldMap_8	param_off=127, rec_off=6, mask=24
+	PanelMemFieldMap_8	param_off=6, rec_off=25, mask=6
+	PanelMemFieldMap_8	param_off=26, rec_off=6, mask=27
+	PanelMemFieldMap_8	param_off=6, rec_off=28, mask=6
+	PanelMemFieldMap_8	param_off=29, rec_off=255	# [240]
+	PanelMemFieldMap_8	rec_off=255
+	PanelMemFieldMap_8	param_off=1, rec_off=255
+	PanelMemFieldMap_8	param_off=2, rec_off=255
+	PanelMemFieldMap_8	param_off=3, rec_off=255
+	PanelMemFieldMap_8	param_off=4, rec_off=255
+	PanelMemFieldMap_8	param_off=5, rec_off=255
+	PanelMemFieldMap_8	param_off=6, rec_off=255
+	PanelMemFieldMap_8	param_off=7, rec_off=255	# [248]
+	PanelMemFieldMap_8	param_off=8, rec_off=255
+	PanelMemFieldMap_8	param_off=9, rec_off=255
+	PanelMemFieldMap_8	param_off=10, rec_off=255
+	PanelMemFieldMap_8	param_off=11, rec_off=255
+	PanelMemFieldMap_8	param_off=12, rec_off=255, mask=6
+	PanelMemFieldMap_8	param_off=13, rec_off=255
+	PanelMemFieldMap_8	rec_off=7
+	PanelMemFieldMap_8	param_off=1, rec_off=127	# [256]
+	PanelMemFieldMap_8	param_off=2, rec_off=255, mask=3
+	PanelMemFieldMap_8	param_off=2, rec_off=255, mask=52
+	PanelMemFieldMap_8	param_off=76, rec_off=64
+	PanelMemFieldMap_8	param_off=3, rec_off=255, mask=4
+	PanelMemFieldMap_8	param_off=3, rec_off=255, mask=19
+	PanelMemFieldMap_8	param_off=254, rec_off=255
+	PanelMemFieldMap_8	param_off=4, rec_off=15, mask=3
+	PanelMemFieldMap_8	param_off=4, rec_off=15	# [264]
+	PanelMemFieldMap_8	param_off=13, rec_off=7
+	PanelMemFieldMap_8	param_off=5, rec_off=255, mask=3
+	PanelMemFieldMap_8	param_off=5, rec_off=255, mask=1
+	PanelMemFieldMap_8	param_off=16, rec_off=2
+	PanelMemFieldMap_8	param_off=6, rec_off=255, mask=3
+	PanelMemFieldMap_8	param_off=6, rec_off=255, mask=1
+	PanelMemFieldMap_8	param_off=16, rec_off=4
+	PanelMemFieldMap_8	param_off=7, rec_off=7	# [272]
+	PanelMemFieldMap_8	param_off=8, rec_off=255
+	PanelMemFieldMap_8	param_off=9, rec_off=127, mask=6
+	PanelMemFieldMap_8	param_off=10, rec_off=6, mask=11
+	PanelMemFieldMap_8	rec_off=12, mask=255
+	PanelMemFieldMap_8	rec_off=13, mask=255
+	PanelMemFieldMap_8	rec_off=14, mask=255
+	PanelMemFieldMap_8	rec_off=15, mask=255
+	PanelMemFieldMap_8	rec_off=16, mask=255	# [280]
+	PanelMemFieldMap_8	rec_off=17, mask=255
+	PanelMemFieldMap_8	rec_off=18, mask=255
+	PanelMemFieldMap_8	rec_off=19, mask=255
+	PanelMemFieldMap_8	param_off=255
+	PanelMemFieldMap_8	param_off=255, mask=1
+	PanelMemFieldMap_8	param_off=255, mask=2
+	PanelMemFieldMap_8	param_off=2, rec_off=6, mask=3
+	PanelMemFieldMap_8	param_off=255	# [288]
+	PanelMemFieldMap_8	param_off=3, rec_off=6, mask=1
+	PanelMemFieldMap_8	param_off=255
+	PanelMemFieldMap_8	param_off=63, mask=1
+	PanelMemFieldMap_8	param_off=16, mask=2
+	PanelMemFieldMap_8	param_off=255, rec_off=3, mask=2
+	PanelMemFieldMap_8	param_off=255, rec_off=182, mask=183
+	PanelMemFieldMap_8	param_off=182, rec_off=6, mask=3
+	PanelMemFieldMap_8	rec_off=4, mask=255	# [296]
+	PanelMemFieldMap_8	rec_off=5, mask=255
+	PanelMemFieldMap_8	rec_off=6, mask=255
+	PanelMemFieldMap_8	rec_off=7, mask=255
+	PanelMemFieldMap_8	rec_off=8, mask=255
+	PanelMemFieldMap_8	rec_off=9, mask=255
+	PanelMemFieldMap_8	param_off=6, rec_off=10, mask=6
+	PanelMemFieldMap_8	param_off=11, rec_off=6, mask=12
+	PanelMemFieldMap_8	param_off=6, rec_off=13, mask=6	# [304]
+	PanelMemFieldMap_8	param_off=14, rec_off=6, mask=15
+	PanelMemFieldMap_8	param_off=5, rec_off=16, mask=130
+	PanelMemFieldMap_8	param_off=5, rec_off=17, mask=1
+	PanelMemFieldMap_8	param_off=6, rec_off=18, mask=5
+	PanelMemFieldMap_8	param_off=19, rec_off=129, mask=6
+	PanelMemFieldMap_8	param_off=20, mask=21
+	PanelMemFieldMap_8	param_off=255, mask=22
+	PanelMemFieldMap_8	param_off=255, rec_off=6, mask=23	# [312]
+	PanelMemFieldMap_8	param_off=6, rec_off=24, mask=6
+	PanelMemFieldMap_8	param_off=25, rec_off=6, mask=26
+	PanelMemFieldMap_8	param_off=6, rec_off=27
+	PanelMemFieldMap_8	param_off=28, rec_off=63
+	PanelMemFieldMap_8	param_off=29, rec_off=63, mask=255
+	PanelMemFieldMap_8	mask=255
+	PanelMemFieldMap_8	rec_off=1, mask=12
+	PanelMemFieldMap_8	rec_off=2, mask=29	# [320]
+	PanelMemFieldMap_8	param_off=3, rec_off=2, mask=24
+	PanelMemFieldMap_8	rec_off=8
+	PanelMemFieldMap_8	rec_off=3, mask=197
+	PanelMemFieldMap_8	param_off=6, rec_off=4, mask=6
+	PanelMemFieldMap_8	param_off=5, mask=6
+	PanelMemFieldMap_8	param_off=8, mask=7
+	PanelMemFieldMap_8	param_off=252, mask=8
+	PanelMemFieldMap_8	param_off=255, mask=9	# [328]
+	PanelMemFieldMap_8	param_off=113, rec_off=6, mask=10
+	PanelMemFieldMap_8	rec_off=11, mask=3
+	PanelMemFieldMap_8	param_off=3, rec_off=11, mask=3
+	PanelMemFieldMap_8	rec_off=2
+	PanelMemFieldMap_8	rec_off=12, mask=255
+	PanelMemFieldMap_8	rec_off=13, mask=255
+	PanelMemFieldMap_8	param_off=255
+	PanelMemFieldMap_8	param_off=64, mask=1	# [336]
+	PanelMemFieldMap_8	param_off=127, rec_off=3, mask=1
+	PanelMemFieldMap_8	param_off=127, mask=104
+	PanelMemFieldMap_8	rec_off=6, mask=2
+	PanelMemFieldMap_8	rec_off=3, mask=113
+	PanelMemFieldMap_8	rec_off=4, mask=255
+	PanelMemFieldMap_8	param_off=6, rec_off=5, mask=6
+	PanelMemFieldMap_8	param_off=6, mask=7
+	PanelMemFieldMap_8	param_off=255, mask=8	# [344]
+	PanelMemFieldMap_8	param_off=255, mask=9
+	PanelMemFieldMap_8	param_off=159, mask=10
+	PanelMemFieldMap_8	param_off=31, rec_off=6, mask=11
+	PanelMemFieldMap_8	param_off=6, rec_off=12
+	PanelMemFieldMap_8	param_off=13, rec_off=195
+	PanelMemFieldMap_8	param_off=14, rec_off=7, mask=3
+	PanelMemFieldMap_8	param_off=14, rec_off=7
+	PanelMemFieldMap_8	param_off=4	# [352]
+	PanelMemFieldMap_8	param_off=15, rec_off=7, mask=5
+	PanelMemFieldMap_8	param_off=16, rec_off=16, mask=5
+	PanelMemFieldMap_8	param_off=17, rec_off=17, mask=5
+	PanelMemFieldMap_8	param_off=18, rec_off=18
+	PanelMemFieldMap_8	param_off=19, rec_off=255
+	PanelMemFieldMap_8	param_off=20, rec_off=255, mask=6
+	PanelMemFieldMap_8	param_off=21, mask=22
+	PanelMemFieldMap_8	param_off=255, mask=24	# [360]
+	PanelMemFieldMap_8	param_off=255, mask=23
+	PanelMemFieldMap_8	param_off=255, mask=25
+	PanelMemFieldMap_8	param_off=255, mask=26
+	PanelMemFieldMap_8	param_off=15, rec_off=3, mask=26
+	PanelMemFieldMap_8	param_off=3, mask=2
+	PanelMemFieldMap_8	mask=27
+	PanelMemFieldMap_8	param_off=255, mask=28
+	PanelMemFieldMap_8	param_off=255, mask=29	# [368]
+	PanelMemFieldMap_8	param_off=255, rec_off=6, mask=30
+	PanelMemFieldMap_8	param_off=6, rec_off=31, mask=6
+	PanelMemFieldMap_8	param_off=32, rec_off=6, mask=33
+	PanelMemFieldMap_8	param_off=6, rec_off=34, mask=6
+	PanelMemFieldMap_8	param_off=35, rec_off=6, mask=36
+	PanelMemFieldMap_8	param_off=6, rec_off=37, mask=6
+	PanelMemFieldMap_8	param_off=38, rec_off=6, mask=39
+	PanelMemFieldMap_8	param_off=255	# [376]
+	PanelMemFieldMap_8	param_off=255, rec_off=6, mask=1
+	PanelMemFieldMap_8	param_off=6, rec_off=2
+	PanelMemFieldMap_8	param_off=3, rec_off=255, mask=3
+	PanelMemFieldMap_8	param_off=3, rec_off=255
+	PanelMemFieldMap_8	param_off=5, mask=6
+	PanelMemFieldMap_8	param_off=4, rec_off=6, mask=5
+	PanelMemFieldMap_8	param_off=6, rec_off=6, mask=6
+	PanelMemFieldMap_8	param_off=7, rec_off=255	# [384]
+	PanelMemFieldMap_8	rec_off=15, mask=3
+	PanelMemFieldMap_8	rec_off=15
+	PanelMemFieldMap_8	param_off=9, rec_off=6, mask=6
+	PanelMemFieldMap_8	param_off=1, mask=2
+	PanelMemFieldMap_8	param_off=127, rec_off=6, mask=3
+	PanelMemFieldMap_8	param_off=6, rec_off=4
+	PanelMemFieldMap_8	param_off=5, rec_off=255, mask=3
+	PanelMemFieldMap_8	param_off=5, rec_off=255, mask=1	# [392]
+	PanelMemFieldMap_8	param_off=10, rec_off=1
+	PanelMemFieldMap_8	param_off=6, rec_off=255, mask=3
+	PanelMemFieldMap_8	param_off=6, rec_off=127, mask=1
+	PanelMemFieldMap_8	param_off=127, rec_off=20, mask=6
+	PanelMemFieldMap_8	param_off=7, rec_off=6, mask=8
+	PanelMemFieldMap_8	param_off=6, rec_off=9, mask=6
+	PanelMemFieldMap_8	param_off=10, rec_off=6, mask=11
+	PanelMemFieldMap_8	param_off=6, rec_off=12, mask=6	# [400]
+	PanelMemFieldMap_8	param_off=13, rec_off=255
+	PanelMemFieldMap_8	rec_off=255
+	PanelMemFieldMap_8	param_off=1, rec_off=255
+	PanelMemFieldMap_8	param_off=2, rec_off=255
+	PanelMemFieldMap_8	param_off=3, rec_off=255
+	PanelMemFieldMap_8	param_off=4, rec_off=255
+	PanelMemFieldMap_8	param_off=5, rec_off=255
+	PanelMemFieldMap_8	param_off=6, rec_off=255	# [408]
+	PanelMemFieldMap_8	param_off=7, rec_off=255
+	PanelMemFieldMap_8	param_off=8, rec_off=255
+	PanelMemFieldMap_8	param_off=9, rec_off=255
+	PanelMemFieldMap_8	param_off=10, rec_off=255
+	PanelMemFieldMap_8	param_off=11, rec_off=255
+	PanelMemFieldMap_8	param_off=12, rec_off=255
+	PanelMemFieldMap_8	param_off=13, rec_off=255
+	PanelMemFieldMap_8	param_off=14, rec_off=255	# [416]
+	PanelMemFieldMap_8	param_off=15, rec_off=255
+	PanelMemFieldMap_8	param_off=16, rec_off=255
+	PanelMemFieldMap_8	param_off=17, rec_off=255
+	PanelMemFieldMap_8	param_off=18, rec_off=255
+	PanelMemFieldMap_8	param_off=19, rec_off=255
+	PanelMemFieldMap_8	param_off=20, rec_off=255
+	PanelMemFieldMap_8	param_off=21, rec_off=255, mask=255
+	PanelMemFieldMap_8	mask=255	# [424]
+	PanelMemFieldMap_8	rec_off=1, mask=255
+	PanelMemFieldMap_8	rec_off=2, mask=255
+	PanelMemFieldMap_8	rec_off=3, mask=255
+	PanelMemFieldMap_8	rec_off=4, mask=255
+	PanelMemFieldMap_8	rec_off=5, mask=255
+	PanelMemFieldMap_8	rec_off=6, mask=255
+	PanelMemFieldMap_8	rec_off=7, mask=255
+	PanelMemFieldMap_8	rec_off=8, mask=255	# [432]
+	PanelMemFieldMap_8	rec_off=9, mask=255
+	PanelMemFieldMap_8	rec_off=10, mask=255
+	PanelMemFieldMap_8	rec_off=11, mask=255
+	PanelMemFieldMap_8	rec_off=12, mask=255
+	PanelMemFieldMap_8	rec_off=13, mask=255
+	PanelMemFieldMap_8	rec_off=14, mask=255
+	PanelMemFieldMap_8	rec_off=15, mask=255
 	.align	4, 0xFF	# pad after func_4C02A11E_Records
 func_4C02B5C3_Records:	# 44 x REC_func_4C02B5C3_Records (12 bytes each); read by func_4C02B5C3 0x4C02B5C3 `mov (4, a1), a2`; func_4C02B5C3 0x4C02B5C3 `mov (a1), d0`; func_4C02B752 0x4C02B752 `mov (a1), d1` (+2)
 	REC_func_4C02B5C3_Records	p4=func_4C02A11E_Records+11, f8=64, f9=18, x10="\x00\x00"	# [0]
@@ -12064,39 +12064,39 @@ GetEditSwPointInit_Table:	# 32 x EditSwPoint (4 bytes each); read by GetEditSwPo
 	EditSwPoint	x=320, y=120
 	EditSwPoint	x=320, y=120
 	EditSwPoint	x=320, y=120
-GetEditSwPointInit_Table_2:	# 32 x REC_GetEditSwPointInit_Table_2 (4 bytes each); read by GetEditSwPointInit 0x48417B30 `movhu (2, a0), d0`; GetEditSwPointInit 0x48417B30 `movhu (d0, a0), d0`
-	REC_GetEditSwPointInit_Table_2	f0=20, f2=239	# [0]
-	REC_GetEditSwPointInit_Table_2	f0=60, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=100, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=140, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=180, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=220, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=260, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=300, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=340, f2=239	# [8]
-	REC_GetEditSwPointInit_Table_2	f0=380, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=420, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=460, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=500, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=540, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=580, f2=239
-	REC_GetEditSwPointInit_Table_2	f0=620, f2=239
-	REC_GetEditSwPointInit_Table_2	f2=47	# [16]
-	REC_GetEditSwPointInit_Table_2	f2=90
-	REC_GetEditSwPointInit_Table_2	f2=133
-	REC_GetEditSwPointInit_Table_2	f2=176
-	REC_GetEditSwPointInit_Table_2	f2=219
-	REC_GetEditSwPointInit_Table_2	f0=320, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=320, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=320, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=320, f2=120	# [24]
-	REC_GetEditSwPointInit_Table_2	f0=320, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=320, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=320, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=320, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=320, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=320, f2=120
-	REC_GetEditSwPointInit_Table_2	f0=320, f2=120
+GetEditSwPointInit_Table_2:	# 32 x EditSwPoint_2 (4 bytes each); read by GetEditSwPointInit 0x48417B30 `movhu (2, a0), d0`; GetEditSwPointInit 0x48417B30 `movhu (d0, a0), d0`
+	EditSwPoint_2	x=20, y=239	# [0]
+	EditSwPoint_2	x=60, y=239
+	EditSwPoint_2	x=100, y=239
+	EditSwPoint_2	x=140, y=239
+	EditSwPoint_2	x=180, y=239
+	EditSwPoint_2	x=220, y=239
+	EditSwPoint_2	x=260, y=239
+	EditSwPoint_2	x=300, y=239
+	EditSwPoint_2	x=340, y=239	# [8]
+	EditSwPoint_2	x=380, y=239
+	EditSwPoint_2	x=420, y=239
+	EditSwPoint_2	x=460, y=239
+	EditSwPoint_2	x=500, y=239
+	EditSwPoint_2	x=540, y=239
+	EditSwPoint_2	x=580, y=239
+	EditSwPoint_2	x=620, y=239
+	EditSwPoint_2	y=47	# [16]
+	EditSwPoint_2	y=90
+	EditSwPoint_2	y=133
+	EditSwPoint_2	y=176
+	EditSwPoint_2	y=219
+	EditSwPoint_2	x=320, y=120
+	EditSwPoint_2	x=320, y=120
+	EditSwPoint_2	x=320, y=120
+	EditSwPoint_2	x=320, y=120	# [24]
+	EditSwPoint_2	x=320, y=120
+	EditSwPoint_2	x=320, y=120
+	EditSwPoint_2	x=320, y=120
+	EditSwPoint_2	x=320, y=120
+	EditSwPoint_2	x=320, y=120
+	EditSwPoint_2	x=320, y=120
+	EditSwPoint_2	x=320, y=120
 
 DrawBitmapSPFast16_Impl_Table:	# 16 x u32, 0..16777215; read by DrawBitmapSPFast16_Impl 0x48424644: `mov (-0x80, a0), a2`
 	tab_u32	0, 128, 32768, 32896, 8388608, 8388736, 8421376, 12632256	# [0]
@@ -20092,30 +20092,25 @@ func_4845BC4A_Table:	# 256 x s8, a sparse map by index: 34 entries set, the rest
 	map8	244, 9
 	map_none8	11	# [245..255]
 
-func_4845BC57_Selected_0:	# REC_func_4845BC57_Selected (4 bytes), then 82 x u32 the code indexes from +0 (read by func_4845BC57 0x4845BC57 `mov (d0, a0), d0`; func_4845BC57 0x4845BC57 `mov (d1, a0), d0`)
-	REC_func_4845BC57_Selected	key=0x900000
-	tab_u32	12582912, 11534343, 2097152, 11534347, 11534428, 2097244, 11534427, 11534462, 45076, 45092, 45108, 45124, 45140, 11534431, 2097247, 11534429	# [0]
-	tab_u32	2097245, 11534341, 11534401, 11534416, 11534417, 11534418, 11534419, 2097281, 2097288, 2097289, 2097290, 2097291, 2097296, 2097297, 2097298, 2097299	# [16]
-	tab_u32	2097300, 2097301, 2097302, 2097303, 2097304, 2097305, 2097306, 11534457, 11534456, 11534430, 11534400, 2113664, 2113665, 11534346, 11567104, 11567105	# [32]
-	tab_u32	11567106, 11567109, 13631488, 14680064, 11534337, 11534402, 11534403, 11534407, 11534408, 11534409, 11534410, 11534411, 11534412, 11534413, 11534414, 6291476	# [48]
-	tab_u32	2097314, 2097328, 2097329, 2097330, 2097331, 2097332, 2097333, 2097334, 2097335, 2097336, 2097337, 2097338, 2097339, 2097340, 2097341, 2097342	# [64]
-	tab_u32	2097343, 4294967295	# [80]
-func_4845BC57_Selected_1:	# REC_func_4845BC57_Selected (4 bytes), then 62 x u32 the code indexes from +0 (read by func_4845BC57 0x4845BC57 `mov (d0, a0), d0`; func_4845BC57 0x4845BC57 `mov (d1, a0), d0`)
-	REC_func_4845BC57_Selected	key=0x900000
-	tab_u32	12582912, 11534343, 2097152, 11534347, 11534428, 2097244, 11534427, 11534462, 45076, 45092, 45108, 45124, 45140, 11534431, 2097247, 11534429	# [0]
-	tab_u32	2097245, 11534341, 11534401, 11534416, 11534417, 11534418, 11534419, 2097281, 2097288, 2097289, 2097290, 2097291, 2097296, 2097297, 2097298, 2097299	# [16]
-	tab_u32	2097300, 2097301, 2097302, 2097303, 2097304, 2097305, 2097306, 11534457, 11534456, 11534346, 11567106, 6291476, 2097314, 2097328, 2097329, 2097330	# [32]
-	tab_u32	2097331, 2097332, 2097333, 2097334, 2097335, 2097336, 2097337, 2097338, 2097339, 2097340, 2097341, 2097342, 2097343, 4294967295	# [48]
-func_4845BC57_Selected_2:	# REC_func_4845BC57_Selected (4 bytes), then 12 x u32 the code indexes from +0 (read by func_4845BC57 0x4845BC57 `mov (d0, a0), d0`; func_4845BC57 0x4845BC57 `mov (d1, a0), d0`)
-	REC_func_4845BC57_Selected	key=0x900000
-	tab_u32	49280, 49281, 49282, 49283, 11534343, 2097152, 53250, 7348259, 53249, 53251, 1, 4294967295	# [0]
-func_4845BC57_Selected_3:	# REC_func_4845BC57_Selected (4 bytes), then 32 x u32 the code indexes from +0 (read by func_4845BC57 0x4845BC57 `mov (d0, a0), d0`; func_4845BC57 0x4845BC57 `mov (d1, a0), d0`)
-	REC_func_4845BC57_Selected	key=49280
-	tab_u32	49281, 49282, 49283, 32818, 11534343, 2097152, 53250, 7348259, 53249, 53251, 1, 49152, 49156, 4, 32896, 32832	# [0]
-	tab_u32	32800, 32864, 3, 32819, 128, 32817, 160, 32770, 57345, 57346, 57344, 0, 32774, 32776, 6291476, 4294967295	# [16]
-func_4845BC57_Selected_4:	# REC_func_4845BC57_Selected (4 bytes), then 13 x u32 the code indexes from +0 (read by func_4845BC57 0x4845BC57 `mov (d0, a0), d0`; func_4845BC57 0x4845BC57 `mov (d1, a0), d0`)
-	REC_func_4845BC57_Selected	key=53250
-	tab_u32	7348259, 53249, 53251, 1, 49152, 49156, 4, 4294967295, 0, 0, 256, 0, 4278190080	# [0]
+# 82 entries of 32 bits up to the end marker that func_4845BC57 0x4845BC57: `mov (d0, a0), d0` / `cmp d2, d0`, `inc d3` stops at, then the marker
+func_4845BC57_Selected_0:
+	.long	0x900000, 0xc00000, 0xb00007, 0x200000, 0xb0000b, 0xb0005c, 0x20005c, 0xb0005b, 0xb0007e, 0xb014, 0xb024, 0xb034, 0xb044, 0xb054, 0xb0005f, 0x20005f, 0xb0005d, 0x20005d, 0xb00005, 0xb00041, 0xb00050, 0xb00051, 0xb00052, 0xb00053, 0x200081, 0x200088, 0x200089, 0x20008a, 0x20008b, 0x200090, 0x200091, 0x200092, 0x200093, 0x200094, 0x200095, 0x200096, 0x200097, 0x200098, 0x200099, 0x20009a, 0xb00079, 0xb00078, 0xb0005e, 0xb00040, 0x204080, 0x204081, 0xb0000a, 0xb08000, 0xb08001, 0xb08002, 0xb08005, 0xd00000, 0xe00000, 0xb00001, 0xb00042, 0xb00043, 0xb00047, 0xb00048, 0xb00049, 0xb0004a, 0xb0004b, 0xb0004c, 0xb0004d, 0xb0004e, 0x600014, 0x2000a2, 0x2000b0, 0x2000b1, 0x2000b2, 0x2000b3, 0x2000b4, 0x2000b5, 0x2000b6, 0x2000b7, 0x2000b8, 0x2000b9, 0x2000ba, 0x2000bb, 0x2000bc, 0x2000bd, 0x2000be, 0x2000bf, 0xffffffff
+# 62 entries of 32 bits up to the end marker that func_4845BC57 0x4845BC57: `mov (d0, a0), d0` / `cmp d2, d0`, `inc d3` stops at, then the marker
+func_4845BC57_Selected_1:
+	.long	0x900000, 0xc00000, 0xb00007, 0x200000, 0xb0000b, 0xb0005c, 0x20005c, 0xb0005b, 0xb0007e, 0xb014, 0xb024, 0xb034, 0xb044, 0xb054, 0xb0005f, 0x20005f, 0xb0005d, 0x20005d, 0xb00005, 0xb00041, 0xb00050, 0xb00051, 0xb00052, 0xb00053, 0x200081, 0x200088, 0x200089, 0x20008a, 0x20008b, 0x200090, 0x200091, 0x200092, 0x200093, 0x200094, 0x200095, 0x200096, 0x200097, 0x200098, 0x200099, 0x20009a, 0xb00079, 0xb00078, 0xb0000a, 0xb08002, 0x600014, 0x2000a2, 0x2000b0, 0x2000b1, 0x2000b2, 0x2000b3, 0x2000b4, 0x2000b5, 0x2000b6, 0x2000b7, 0x2000b8, 0x2000b9, 0x2000ba, 0x2000bb, 0x2000bc, 0x2000bd, 0x2000be, 0x2000bf, 0xffffffff
+# 12 entries of 32 bits up to the end marker that func_4845BC57 0x4845BC57: `mov (d0, a0), d0` / `cmp d2, d0`, `inc d3` stops at, then the marker
+func_4845BC57_Selected_2:
+	.long	0x900000, 0xc080, 0xc081, 0xc082, 0xc083, 0xb00007, 0x200000, 0xd002, 0x702023, 0xd001, 0xd003, 0x1, 0xffffffff
+# 32 entries of 32 bits up to the end marker that func_4845BC57 0x4845BC57: `mov (d0, a0), d0` / `cmp d2, d0`, `inc d3` stops at, then the marker
+func_4845BC57_Selected_3:
+	.long	0xc080, 0xc081, 0xc082, 0xc083, 0x8032, 0xb00007, 0x200000, 0xd002, 0x702023, 0xd001, 0xd003, 0x1, 0xc000, 0xc004, 0x4, 0x8080, 0x8040, 0x8020, 0x8060, 0x3, 0x8033, 0x80, 0x8031, 0xa0, 0x8002, 0xe001, 0xe002, 0xe000, 0x0, 0x8006, 0x8008, 0x600014, 0xffffffff
+# 8 entries of 32 bits up to the end marker that func_4845BC57 0x4845BC57: `mov (d0, a0), d0` / `cmp d2, d0`, `inc d3` stops at, then the marker
+func_4845BC57_Selected_4:
+	.long	0xd002, 0x702023, 0xd001, 0xd003, 0x1, 0xc000, 0xc004, 0x4, 0xffffffff
+
+func_4845BC57_Table:	# 20 x u8, 0..255; read by func_4845BC57_entry 0x48457D19: `movbu  (d0, a0), d1`
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 255	# [16]
 
 func_4845DCF3_Table:
 	.long	loc_4845DD13
@@ -29279,8 +29274,8 @@ DbModeEditBoxProc_Table:
 
 Str_02d_s_3:	.asciz "%02d:%s"
 
-Draw2BpFile_ArgA0_0:	# REC_Draw2BpFile_ArgA0 (4 bytes): the layout Draw2BpFile 0x4842829F reads through its argument a0 (passed by DbBitmapLoadProc 0x484886C9 `call Draw2BpFile_entry, [a2,a3], 0x18`); the layout Draw2BpFile_Impl 0x48428305 reads through its argument a0 (passed by Draw2BpFile 0x4842829F `call Draw2BpFile_Impl_entry, [d2,d3,a2,a3], 0x10`)
-	REC_Draw2BpFile_ArgA0	
+Draw2BpFile_ArgA0_0:	# BmpFileOrigin (4 bytes): the layout Draw2BpFile 0x4842829F reads through its argument a0 (passed by DbBitmapLoadProc 0x484886C9 `call Draw2BpFile_entry, [a2,a3], 0x18`); the layout Draw2BpFile_Impl 0x48428305 reads through its argument a0 (passed by Draw2BpFile 0x4842829F `call Draw2BpFile_Impl_entry, [d2,d3,a2,a3], 0x10`)
+	BmpFileOrigin	
 
 Str_rb_47:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_47
@@ -38146,8 +38141,8 @@ TtNormal_Records:	# 5 x REC_TtNormal_Records (8 bytes each); read by TtNormal 0x
 Bitmap_AcHpScreenProc:	# 24 x 24, 1 bit(s) a pixel: AcHpScreenProc 0x48493C1F draws it with DrawBitmapSP2 (src/sp7001/program/data/media/Bitmap_AcHpScreenProc.png)
 	.incbin	"build/bitmaps/sp7001/Bitmap_AcHpScreenProc.bin"	# census: generated -- tools/table_png.py (pk 1 24 24) from src/sp7001/program/data/media/Bitmap_AcHpScreenProc.png
 
-IsPointOnScreen_Var:	# REC_DrawBitmapSP2_ArgA0 (4 bytes): the layout DrawBitmapSP2 0x484248DE reads through its argument a0 (passed by AcHpScreenProc 0x48493C1F `call DrawBitmapSP2_entry, [d2,d3,a2,a3], 0x30`); the layout DrawBitmapSP2_Impl 0x48424981 reads through its argument a0 (passed by DrawBitmapSP2 0x484248DE `call DrawBitmapSP2_Impl_entry, [d2,d3,a2,a3], 0x44`); +3 more routines
-	REC_DrawBitmapSP2_ArgA0	f0=2, SetChangeRect_d0=2
+IsPointOnScreen_Var:	# BitmapOrigin (4 bytes): the layout DrawBitmapSP2 0x484248DE reads through its argument a0 (passed by AcHpScreenProc 0x48493C1F `call DrawBitmapSP2_entry, [d2,d3,a2,a3], 0x30`); the layout DrawBitmapSP2_Impl 0x48424981 reads through its argument a0 (passed by DrawBitmapSP2 0x484248DE `call DrawBitmapSP2_Impl_entry, [d2,d3,a2,a3], 0x44`); +3 more routines
+	BitmapOrigin	x=2, y=2
 
 Str_C_4:	.asciz "C"
 Str_D_a0:	.asciz "D~a0"

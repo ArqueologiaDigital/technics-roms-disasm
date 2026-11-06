@@ -10745,8 +10745,8 @@ DrawString_Impl_Var_6:	# s16, a constant; read / written by DrawString_Impl 0x48
 DrawString_Impl_Var_7:	# s16, a constant; read / written by DrawString_Impl 0x48425425: `movhu (a0), d0`; DrawString_Impl 0x48425425: `movhu d0, (a0)`
 	.word	23
 
-DrawStringCentered_Var:	# REC_DrawStringCentered_ArgA1 (4 bytes): the layout DrawStringCentered 0x48425854 reads through its argument a1 (passed by AcMidiPartGridBoxProc 0x484CF3B8 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +2 more calls)
-	REC_DrawStringCentered_ArgA1	f0=600, f2=15
+DrawStringCentered_Var:	# TextCentre (4 bytes): the layout DrawStringCentered 0x48425854 reads through its argument a1 (passed by AcMidiPartGridBoxProc 0x484CF3B8 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +2 more calls)
+	TextCentre	x=600, y=15
 
 Str_PAGE_1_3:	.asciz "PAGE 1/3"
 Str_PAGE_2_3:	.asciz "PAGE 2/3"
@@ -11107,10 +11107,10 @@ DrawString_Impl_Var_9:	# s16, a constant; read / written by DrawString_Impl 0x48
 DrawString_Impl_Var_10:	# s16, a constant; read / written by DrawString_Impl 0x48425425: `movhu (a0), d0`; DrawString_Impl 0x48425425: `movhu d0, (a0)`
 	.word	186
 
-DrawStringCentered_Var_3:	# REC_DrawStringCentered_ArgA1 (4 bytes): the layout DrawStringCentered 0x48425854 reads through its argument a1 (passed by AcMidiPartGridBoxProc 0x484CF3B8 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +2 more calls)
-	REC_DrawStringCentered_ArgA1	f0=613, f2=177
-DrawStringCentered_Var_5:	# REC_DrawStringCentered_ArgA1 (4 bytes): the layout DrawStringCentered 0x48425854 reads through its argument a1 (passed by AcMidiPartGridBoxProc 0x484CF3B8 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +2 more calls)
-	REC_DrawStringCentered_ArgA1	f0=612, f2=176
+DrawStringCentered_Var_3:	# TextCentre (4 bytes): the layout DrawStringCentered 0x48425854 reads through its argument a1 (passed by AcMidiPartGridBoxProc 0x484CF3B8 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +2 more calls)
+	TextCentre	x=613, y=177
+DrawStringCentered_Var_5:	# TextCentre (4 bytes): the layout DrawStringCentered 0x48425854 reads through its argument a1 (passed by AcMidiPartGridBoxProc 0x484CF3B8 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +2 more calls)
+	TextCentre	x=612, y=176
 
 AcMidiPcgOutSendEditSwProc_Table:	# 12 x u8, 0..255; read by AcMidiPcgOutSendEditSwProc 0x484D2C35: `movbu  (a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
