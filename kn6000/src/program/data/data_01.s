@@ -6152,9 +6152,14 @@ ptrs_4C205AB8:
 	.long	Str_Any_existing_song_will_be_cleared_Press
 	.long	Str_Any_existing_song_will_be_cleared_Press
 	.long	Str_Any_existing_song_will_be_cleared_Press
-data_4C205AD4:
-	# 28 bytes the code takes the address of: TrAsSureLangCheck_Lb9 0x4C0B5C84 `mov data_4C205AD4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
-	tab_u32	0x5004B468, 0x5004B468, 0x5004B468, 0x5004B468, 0x5004B468, 0x5004B468, 0x5004B468	# +0
+ptrs_4C205AD4:
+	.long	TrAsSureLangCheck_Ram
+	.long	TrAsSureLangCheck_Ram
+	.long	TrAsSureLangCheck_Ram
+	.long	TrAsSureLangCheck_Ram
+	.long	TrAsSureLangCheck_Ram
+	.long	TrAsSureLangCheck_Ram
+	.long	TrAsSureLangCheck_Ram
 
 Str_Patterns_and_Registrations_for_Custom_d:	.asciz "Patterns and Registrations for Custom #%d uses following Custom Sound memories or Custom Effect memories."
 Str_Pattern_und_Registrierungen_f_r_Custom_d:	.asciz "Pattern und Registrierungen f\xFCr Custom#%d verwenden folgende Custom Sound Memories oder Custom Effekt-Memories."
@@ -6170,9 +6175,14 @@ CustomCopySure1_L1d_Table:
 	.long	Str_Patterns_and_Registrations_for_Custom_d
 	.long	Str_Patterns_and_Registrations_for_Custom_d
 	.long	Str_Patterns_and_Registrations_for_Custom_d
-data_4C205D14:
-	# 28 bytes the code takes the address of: CustomCopySure1_L1d 0x4C0B5CC9 `mov data_4C205D14, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
-	tab_u32	0x5004B56C, 0x5004B56C, 0x5004B56C, 0x5004B56C, 0x5004B56C, 0x5004B56C, 0x5004B56C	# +0
+ptrs_4C205D14:
+	.long	CustomCopySure1_Ram
+	.long	CustomCopySure1_Ram
+	.long	CustomCopySure1_Ram
+	.long	CustomCopySure1_Ram
+	.long	CustomCopySure1_Ram
+	.long	CustomCopySure1_Ram
+	.long	CustomCopySure1_Ram
 
 Str_Sound_Memory_d_2:	.asciz "Sound Memory:%d  "
 Str_User_Drum_Kit_d_2:	.asciz "User Drum Kit:%d  "
@@ -6251,9 +6261,14 @@ CustomCopySure2_L27_Table:
 	.long	ptrs_4C205D94
 	.long	ptrs_4C205D94
 	.long	ptrs_4C205D94
-data_4C205FC8:
-	# 28 bytes the code takes the address of: CustomCopySure2_L1b8 0x4C0B5EC8 `mov data_4C205FC8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
-	tab_u32	0x5004B670, 0x5004B670, 0x5004B670, 0x5004B670, 0x5004B670, 0x5004B670, 0x5004B670	# +0
+ptrs_4C205FC8:
+	.long	CustomCopySure2_Ram
+	.long	CustomCopySure2_Ram
+	.long	CustomCopySure2_Ram
+	.long	CustomCopySure2_Ram
+	.long	CustomCopySure2_Ram
+	.long	CustomCopySure2_Ram
+	.long	CustomCopySure2_Ram
 
 Str_Some_of_the_Sound_Group_memories_and_Eff:	.asciz "Some of the Sound Group memories and Effect memories will be replaced by them. OK?"
 Str_Einige_der_Sound_Group_Memories_und_Effe:	.asciz "Einige der Sound Group Memories und Effekt Memories werden durch diese ersetzt. OK ?"
@@ -7367,7 +7382,7 @@ Str_3s_12:	.asciz "%3s"
 Str_3s_11:	.asciz "%3s"
 Str_1d_3:	.asciz "%1d"
 
-LibStrlen_Var_8:	# s8, a constant; read / written by LibStrlen 0x4C0043FA: `movbu (a1), d1`; func_4C018112 0x4C018112: `movbu (a0), d0` ...
+LibStrlen_Var_8:	# s8, a constant; read / written by LibStrlen 0x4C0043FA: `movbu (a1), d1`; DrawString_Impl 0x4C018112: `movbu (a0), d0` ...
 	.byte	-127
 LibStrlen_Var_9:	# s8, a constant; read / written by LibStrlen 0x4C0043FA: `movbu (a1), d1`; ConvertStrings_entry_L3e 0x4C020614: `movbu (a2), d0`
 	.byte	0
@@ -7381,7 +7396,7 @@ Str_3s_2d_2d_5d_s:	.asciz "     %3s. %2d. %2d.            %5d    %s"
 Str_3d_141:	.asciz " %3d"
 	.align	4, 0xFF	# pad after Str_3d_141
 
-LibStrlen_Var_10:	# s8, a constant; read / written by LibStrlen 0x4C0043FA: `movbu (a1), d1`; func_4C018112 0x4C018112: `movbu (a0), d0` ...
+LibStrlen_Var_10:	# s8, a constant; read / written by LibStrlen 0x4C0043FA: `movbu (a1), d1`; DrawString_Impl 0x4C018112: `movbu (a0), d0` ...
 	.byte	-81
 LibStrlen_Var_11:	# s8, a constant; read / written by LibStrlen 0x4C0043FA: `movbu (a1), d1`; ConvertStrings_entry_L3e 0x4C020614: `movbu (a2), d0`
 	.byte	0
@@ -7393,7 +7408,7 @@ Str_3s_10:	.asciz "%3s"
 Str_3s_9:	.asciz "%3s"
 Str_1d_2:	.asciz "%1d"
 
-LibStrlen_Var_12:	# s8, a constant; read / written by LibStrlen 0x4C0043FA: `movbu (a1), d1`; func_4C018112 0x4C018112: `movbu (a0), d0` ...
+LibStrlen_Var_12:	# s8, a constant; read / written by LibStrlen 0x4C0043FA: `movbu (a1), d1`; DrawString_Impl 0x4C018112: `movbu (a0), d0` ...
 	.byte	-127
 LibStrlen_Var_13:	# s8, a constant; read / written by LibStrlen 0x4C0043FA: `movbu (a1), d1`; ConvertStrings_entry_L3e 0x4C020614: `movbu (a2), d0`
 	.byte	0
@@ -37560,7 +37575,7 @@ func_4C3F5298_Table:	# 2 x u32, 0..0; read by func_4C3F5298 0x4C3F5298: `mov (a3
 func_4C156C2D_Table:	# 20 x u8, 128..160; read by func_4C156C2D_entry : `movbu	(a1), d0`
 	tab_u8	128, 128, 131, 128, 134, 128, 137, 128, 140, 128, 143, 128, 147, 128, 151, 128	# [0]
 	tab_u8	157, 128, 160, 128	# [16]
-func_4C15760F_L40_Table:	# 600 x u8, 0..255; read by func_4C15760F : `movbu	(a1), d0`
+func_4C15760F_L40_Table:	# 600 x u8, 0..255; read by DspReadyIrqModeSet : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 240, 63	# [0]
 	tab_u8	39, 122, 75, 255, 179, 242, 240, 63, 34, 85, 243, 160, 201, 243, 241, 63	# [16]
 	tab_u8	218, 99, 84, 223, 26, 4, 243, 63, 70, 112, 142, 0, 143, 36, 244, 63	# [32]
@@ -37654,7 +37669,7 @@ func_4C157DE2_entry_L3265_Records:	# 49 x REC_func_4C157DE2_entry_L3265_Records 
 Str_IK:	.asciz "IK"
 	.align	4, 0xFF	# pad after Str_IK
 
-func_4C15CB8B_Table:	# 72 x u8, 0..255; read by func_4C15CB8B_entry : `movbu	(a1), d1`
+func_4C15CB8B_Table:	# 72 x u8, 0..255; read by SndDbTriDefaultsA_entry : `movbu	(a1), d1`
 	tab_u8	2, 0, 0, 0, 0, 0, 76, 0, 16, 0, 0, 0, 16, 0, 0, 0	# [0]
 	tab_u8	0, 0, 16, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 32, 0	# [16]
 	tab_u8	0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 91, 0, 0, 0, 0, 0	# [32]
@@ -37666,7 +37681,7 @@ func_4C15CBEC_Table:	# 72 x u8, 0..255; read by func_4C15CBEC_entry : `movbu	(a1
 	tab_u8	32, 0, 0, 0, 111, 0, 32, 0, 0, 0, 91, 0, 0, 0, 0, 0	# [32]
 	tab_u8	255, 255, 255, 255, 0, 0, 22, 0, 0, 0, 0, 0, 255, 255, 255, 255	# [48]
 	tab_u8	0, 0, 255, 255, 255, 255, 0, 0	# [64]
-func_4C15CC4D_Table:	# 72 x u8, 0..255; read by func_4C15CC4D_entry : `movbu	(a1), d1`
+func_4C15CC4D_Table:	# 72 x u8, 0..255; read by SndDbTriDefaultsC_entry : `movbu	(a1), d1`
 	tab_u8	2, 0, 0, 0, 0, 0, 76, 0, 16, 0, 0, 0, 16, 0, 0, 0	# [0]
 	tab_u8	0, 0, 16, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 32, 0	# [16]
 	tab_u8	0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 91, 0, 0, 0, 0, 0	# [32]
@@ -37937,7 +37952,7 @@ func_4C15CB8B_Table_2:
 	.long	loc_4C15CBB7
 	.long	loc_4C15CBB7
 	.long	loc_4C15CBB7
-	.long	func_4C15CB8B_entry_L57
+	.long	SndDbTriDefaultsA_entry_L57
 	.long	loc_4C15CBB7
 func_4C15CBEC_Table_2:
 	.long	loc_4C15CC18
@@ -37959,7 +37974,7 @@ func_4C15CC4D_Table_2:
 	.long	loc_4C15CC79
 	.long	loc_4C15CC79
 	.long	loc_4C15CC79
-	.long	func_4C15CC4D_entry_L57
+	.long	SndDbTriDefaultsC_entry_L57
 	.long	loc_4C15CC79
 SndUnitSettingApplyFull_entry_L2b_Table:
 	.long	loc_4C15CCEA

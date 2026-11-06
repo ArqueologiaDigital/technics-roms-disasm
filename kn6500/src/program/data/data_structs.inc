@@ -3804,13 +3804,13 @@
 	.ascii	"\x1"
 .endm
 
-# REC_func_4C050837_entry_L4_Records: 12-byte records (func_4C050837_entry_L4_Records, 3 records); fields, and what reads them:
+# REC_func_4C050837_entry_L4_Records: 12-byte records (func_4C050837_entry_L4_Records, 1 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u32            func_4C050837_entry_L4 0x4C050840 `mov (a0), a2`
+#   +0   proc         ptr            func_4C050837_entry_L4 0x4C050840 `mov (a0), a2`
 #   +4   index        u32            func_4C050837_entry_L4 0x4C050840 `mov (4, a0), d3`
 #   +8   x8           u8[4]          no reader seen
-.macro REC_func_4C050837_entry_L4_Records f0=0, index=0, x8
-	.long	\f0
+.macro REC_func_4C050837_entry_L4_Records proc=0, index=0, x8
+	.long	\proc
 	.long	\index
 	.ascii	"\x8"
 .endm
@@ -4363,7 +4363,7 @@
 	.ascii	"\x0"
 .endm
 
-# REC_func_4C0625ED_Result: 21-byte records (func_4C0625ED_Result, 1 records); fields, and what reads them:
+# REC_StylePartTemplateDefault_Result: 21-byte records (StylePartTemplateDefault_Result, 1 records); fields, and what reads them:
 #   +0   s0           char[2]        func_4C063855_entry_L2 0x4C06385C `call memcpy_entry, [a2,a3], 8`; func_4C065BAE_entry_L2 0x4C065BB5 `call memcpy_entry, [a2,a3], 8`
 #   +2   key          u8             StylePartFieldEmit_entry_L2b 0x4C062821 `movbu (2, a1), d2`
 #   +3   f3           u8             StylePartFieldEmit_entry_L2b 0x4C062821 `movbu (3, a1), d0`
@@ -4371,7 +4371,7 @@
 #   +5   x5           u8[14]         no reader seen
 #   +19  key_         u8             StylePartFieldEmit_entry_L71 0x4C062867 `movbu (0x13, a1), d2`
 #   +20  f20          u8             StylePartFieldEmit_entry_L71 0x4C062867 `movbu (0x14, a1), d0`
-.macro REC_func_4C0625ED_Result s0, key=0, f3=0, f4=0, x5, key_=0, f20=0
+.macro REC_StylePartTemplateDefault_Result s0, key=0, f3=0, f4=0, x5, key_=0, f20=0
 	.ascii	"\s0"
 	.byte	\key
 	.byte	\f3
@@ -4423,7 +4423,7 @@
 #   +0   key          u8             func_4C09A469_entry_Le 0x4C09A479 `movbu (a1), d0`; func_4C09A469_entry_Le 0x4C09A479 `movbu (a1), d1` (+1)
 #   +1   key_         u8             func_4C09A469_entry_L4d 0x4C09A4B8 `movbu (a1), d0`
 #   +2   x2           u8[2]          no reader seen
-#   +4   key__        u16            func_4C09C9C6_entry_L25 0x4C09C9F0 `movhu (4, a2), d1`; func_4C09CA75_entry_L25 0x4C09CA9F `movhu (4, a2), d1` (+1)
+#   +4   key__        u16            VoiceDirRemapFind_entry_L25 0x4C09C9F0 `movhu (4, a2), d1`; VoiceDirClassFind_entry_L25 0x4C09CA9F `movhu (4, a2), d1` (+1)
 #   +6   x6           u8[23]         no reader seen
 .macro REC_func_4C09A4F0_entry_L65_Records_p0 key=0, key_=0, x2, key__=0, x6
 	.byte	\key
@@ -4434,8 +4434,8 @@
 .endm
 
 # REC_func_4C09CCB5_Table_p0: 12-byte records (func_4C09CCB5_Table_p0, 643 records); fields, and what reads them:
-#   +0   p0           ptr            func_4C09CCB5_entry_L38 0x4C09CCF2 `mov (a2), a2`
-#   +4   key          u16            func_4C09CCB5_entry_L25 0x4C09CCDF `movhu (4, a2), d1`
+#   +0   p0           ptr            VoiceDirRefFind_entry_L38 0x4C09CCF2 `mov (a2), a2`
+#   +4   key          u16            VoiceDirRefFind_entry_L25 0x4C09CCDF `movhu (4, a2), d1`
 #   +6   x6           u8[6]          no reader seen
 .macro REC_func_4C09CCB5_Table_p0 p0=0, key=0, x6
 	.long	\p0

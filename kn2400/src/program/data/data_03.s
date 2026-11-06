@@ -13164,7 +13164,7 @@ func_48645B79_entry_L34_Table:
 	.long	func_48645921
 
 func_5013DCEB_Var_5:	# REC_func_5013DCEB_ArgA0 (18 bytes): the layout func_5013DCEB 0x5013DCEB reads through its argument a0 (passed by func_48645B79_entry_L34 0x48645BB0 `call func_5013DCEB_entry, [a2], 0x18`, +2 more calls)
-	REC_func_5013DCEB_ArgA0	index=32768, index_=32768, index__=32768, index___=32768, index____=32
+	REC_func_5013DCEB_ArgA0	TgVoiceRegWriteB_d0=32768, TgVoiceRegWriteB_d0_=32768, TgVoiceRegWriteB_d0__=32768, TgVoiceRegWriteB_d0___=32768, TgVoiceRegWriteB_d0____=32
 	# then 1 x u16 up to the next label, which no instruction is seen to read (the table the field reads ran on into them)
 	tab_u16	0	# +18
 
@@ -33267,9 +33267,9 @@ func_486F8461_entry_L36_Table_2:
 	.long	loc_486FA4F8
 	.long	loc_486FA4FB
 
-func_486FBF8B_Var:	# u16, a constant; read / written by func_486FBF8B 0x486FBF8B: `movhu (func_486FBF8B_Var), d1`
+func_486FBF8B_Var:	# u16, a constant; read / written by VoiceDirRemapFind 0x486FBF8B: `movhu (func_486FBF8B_Var), d1`
 	.word	1
-func_486FBF8B_Var_2:	# u16, a constant; read / written by func_486FBF8B 0x486FBF8B: `movhu (func_486FBF8B_Var_2), d0`
+func_486FBF8B_Var_2:	# u16, a constant; read / written by VoiceDirRemapFind 0x486FBF8B: `movhu (func_486FBF8B_Var_2), d0`
 	.word	371
 
 func_486FBF8B_Table:
@@ -33645,9 +33645,9 @@ func_486FBF8B_Table:
 	.long	func_486FBF8B_Table_p0_977
 	.long	func_486FBF8B_Table_p0_939
 
-func_486FC03A_Var:	# u16, a constant; read / written by func_486FC03A 0x486FC03A: `movhu (func_486FC03A_Var), d1`
+func_486FC03A_Var:	# u16, a constant; read / written by VoiceDirClassFind 0x486FC03A: `movhu (func_486FC03A_Var), d1`
 	.word	1
-func_486FC03A_Var_2:	# u16, a constant; read / written by func_486FC03A 0x486FC03A: `movhu (func_486FC03A_Var_2), d0`
+func_486FC03A_Var_2:	# u16, a constant; read / written by VoiceDirClassFind 0x486FC03A: `movhu (func_486FC03A_Var_2), d0`
 	.word	633
 
 func_486FC03A_Table:
@@ -34285,9 +34285,9 @@ func_486FC03A_Table:
 	.long	func_486FC03A_Table_p0_337
 	.long	0
 
-func_486FC122_Var:	# u16, a constant; read / written by func_486FC122 0x486FC122: `movhu (func_486FC122_Var), d1`
+func_486FC122_Var:	# u16, a constant; read / written by VoiceDirIndexFind 0x486FC122: `movhu (func_486FC122_Var), d1`
 	.word	1
-func_486FC122_Var_2:	# u16, a constant; read / written by func_486FC122 0x486FC122: `movhu (func_486FC122_Var_2), d0`
+func_486FC122_Var_2:	# u16, a constant; read / written by VoiceDirIndexFind 0x486FC122: `movhu (func_486FC122_Var_2), d0`
 	.word	633
 
 func_486FC122_Table:
@@ -34925,9 +34925,9 @@ func_486FC122_Table:
 	.long	func_486FC122_Table_p0_337
 	.long	0
 
-func_486FC27A_Var:	# u16, a constant; read / written by func_486FC27A 0x486FC27A: `movhu (func_486FC27A_Var), d1`
+func_486FC27A_Var:	# u16, a constant; read / written by VoiceDirRefFind 0x486FC27A: `movhu (func_486FC27A_Var), d1`
 	.word	1
-func_486FC27A_Var_2:	# u16, a constant; read / written by func_486FC27A 0x486FC27A: `movhu (func_486FC27A_Var_2), d0`
+func_486FC27A_Var_2:	# u16, a constant; read / written by VoiceDirRefFind 0x486FC27A: `movhu (func_486FC27A_Var_2), d0`
 	.word	633
 
 func_486FC27A_Table:
