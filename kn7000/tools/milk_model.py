@@ -255,6 +255,21 @@ def parse_calls(src_glob, by_name, mem=None):
             if m and isinstance(regval.get(m.group(2)), tuple) and regval[m.group(2)][0] == "sp":
                 regval[m.group(2)] = ("sp", regval[m.group(2)][1] + int(m.group(1), 0))
                 continue
+            # (a plug-in, lane mn10300-data4) the host's Function-table record reached by an address sum:
+            # `mov (KssFrameworkObj), d0` / `mov 0x1c, a2` / `add d0, a2` / `mov (a2), a0` (the SP7001
+            # plug-in's func_483E8071, its first registration, slot 0x2F4: the class table) -- the sum of
+            # the registry pointer and the record's offset, then a load through it, is the same table as
+            # `mov (0x1c, aN), aN` (before the `mov (NAME), rN` rule below, which reads `(a2)` as a symbol)
+            m = re.match(r"\s+add\s+([ad]\d), (a\d)$", l) if HOST_CALLS else None
+            if m:
+                home = 0x1C if SCHEME == "kn7000" else 0x100C
+                x, y = regval.get(m.group(1)), regval.get(m.group(2))
+                regval[m.group(2)] = ("hostrec", home) if home in (x, y) else None
+                continue
+            m = re.match(r"\s+mov\s+\((a\d)\), (a\d)$", l) if HOST_CALLS else None
+            if m and regval.get(m.group(1)) == ("hostrec", 0x1C if SCHEME == "kn7000" else 0x100C):
+                regval[m.group(2)] = ("hosttab", 0x100)
+                continue
             # (KN6000) a count loaded from the halfword the table's module keeps
             # beside it, `movhu (ADDR), dN`, and an argument pointer reloaded from
             # the stack, `mov (OFF, sp), aN`

@@ -217,6 +217,22 @@
 .macro FXS_END
 	.byte	0xff
 .endm
+# The SX-KN6000 / KN6500's effect-DSP parameter lists (tools/gen_data_s.py fx_param_lists, lane mn10300-data4;
+# probe kn7000/notes/mn10300-data4-probes/fx_param_lists.py): per DSP type a group per parameter number, each
+# group its entries and an FXL_END, the list one more FXL_END.  An entry is 13 bytes, the kind and four
+# big-endian operands; KN6000 func_4C155C08 0x4C155C08 reads them in this order and hands them, with the
+# parameter's value, to func_4C157DE2 0x4C157DE2, which switches on the kind (0x00 .. 0x22, 0x63).  `addr` /
+# `addr2` are 16-bit numbers, 0xC0xx for most entries and 0xFFFF for no second one [INFERENCE: DSP addresses
+# the converted value is written to]; `op1` / `op2` the kind's two 32-bit operands.
+.macro FXL_ENTRY kind, op1=0, op2=0, addr=0, addr2=0xFFFF
+	.byte	\kind
+	.byte	(\op1 >> 24) & 0xff, (\op1 >> 16) & 0xff, (\op1 >> 8) & 0xff, \op1 & 0xff
+	.byte	(\op2 >> 24) & 0xff, (\op2 >> 16) & 0xff, (\op2 >> 8) & 0xff, \op2 & 0xff
+	.byte	(\addr >> 8) & 0xff, \addr & 0xff, (\addr2 >> 8) & 0xff, \addr2 & 0xff
+.endm
+.macro FXL_END
+	.byte	0xff
+.endm
 # An address map (FxMapAddrFind 0x5018AE27): groups {u16 BE len, kind, u16 BE DSP addresses}, 0xFF after the last.
 .macro FXM_GROUP len, kind
 	.byte	(\len >> 8) & 0xff, \len & 0xff, \kind

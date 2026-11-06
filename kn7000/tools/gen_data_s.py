@@ -105,6 +105,10 @@ for _m, _r1, _end in (("kn6000", 0x176037, 0x3F47EC), ("kn6500", 0x176839, 0x37E
 # (KN6500 v1.3) its program flash holds the factory panel memories too (FactoryPanelMemory, kn6500_manual.sym);
 # it has no ToneRecordDirectory, so tones() finds nothing
 PROFILES["kn6500"]["tones"] = True
+# (lane mn10300-data4) the effect DSP's parameter lists: the per-DSP-type pointer table in the initialised-RAM
+# image (KN6000 func_4C155072_Table, KN6500 func_4C15562E_Table: 208 pointers), its CPU address and entries
+PROFILES["kn6000"]["fx_param_lists"] = (0x500060DC, 208)
+PROFILES["kn6500"]["fx_param_lists"] = (0x50006088, 208)
 PROFILES["kn6000"]["hash_tables"] = [
     ("ToneKeyHash", 0x4C3E8680, 4, 12, "ToneKeyLookup", 8,
      "Key: bank MSB << 16 | LSB << 8 | program (ToneKeyFind builds it from the part's sound triple); payload: "
@@ -248,7 +252,9 @@ FEATURES = {k: True for k in ("ptr_starts", "array_end", "mem_ptrs", "loop_index
                               # lane mn10300-data2 (wave 10)
                               "support_values", "sibling_support", "boot_sectors", "panel_700", "style_lists", "reclaim_strings", "curated_counts", "nv_not_ptrs",
                               # lane mn10300-data3 (wave 11)
-                              "sentinel_indexed", "frozen_obj_names", "host_widget_vars")}
+                              "sentinel_indexed", "frozen_obj_names", "host_widget_vars",
+                              # lane mn10300-data4 (wave 12)
+                              "named_base_not_end", "fx_param_lists", "string_ptr_runs")}
 for _k in os.environ.get("GEN_DATA_S_OFF", "").split(","):
     if _k.strip():
         FEATURES[_k.strip()] = False
@@ -1999,6 +2005,15 @@ class Gen:
             o = self.off(a)
             probe = DS.layout(g, self, o, 1)
             ptrf = [f for f in probe if f.kind == "ptr" and f.accs]
+            ptrf_all = len(ptrf)
+            if FEATURES["named_base_not_end"]:
+                # (lane mn10300-data4) a field whose first record holds a named address outside the
+                # image (a RAM or bus-window base: KN6000 WORK_RAM_BASE in func_4C0506C7_entry_L4_Records,
+                # whose next records hold the unnamed windows 0x58000000 / 0x54000000) is no proof that
+                # the field is a pointer, so a record whose word there is no named address does not end
+                # the run; a field holding an image address in the first record still does
+                ptrf = [f for f in ptrf if (lambda v: self.in_data(v) or self.in_code(v))(
+                    int.from_bytes(self.rom[o + f.off:o + f.off + 4], "little"))]
             n = 0
             while n < 65536:
                 ra, ro = a + n * s, o + n * s
@@ -2018,7 +2033,8 @@ class Gen:
                 capped = True
             ixb = self.index_bounds().get(a)
             ix_note = ""
-            if ixb and ixb[1] == s and ixb[0] > n:
+            # (a run named_base_not_end let reach the bound keeps the bound as its evidence)
+            if ixb and ixb[1] == s and (ixb[0] > n or (ixb[0] == n and len(ptrf) < ptrf_all)):
                 # (index_bounds) the routine bounds the record number: the records up to it, while free
                 m_ = n
                 while m_ < ixb[0] and self.free(a + m_ * s, s) and not any(x in hard for x in range(a + m_ * s, a + m_ * s + s)):
@@ -2524,6 +2540,109 @@ class Gen:
                      lambda g, it, kind=kind, recs=recs, head=head, e=e, ents=entries: g.render_fx(it, kind, recs, head, e, ents))
         print(f"gen_data_s: fx streams: {len(spans)} blocks, {sum(e - a for a, e, *_r in spans)} bytes "
               f"(0x{lo:08X}..0x{hi:08X})")
+
+    def fx_param_lists(self):
+        """(profile `fx_param_lists`, the SX-KN6000 / KN6500; FEATURES["fx_param_lists"], lane mn10300-data4) The
+        effect DSP's parameter lists: per DSP type (the table, 208 pointers in the initialised-RAM image) a list
+        of groups, group n the entries of parameter number n, each group ended by 0xFF and the list by a 0xFF
+        where a group would start.  An entry is 13 bytes {u8 kind, u32 BE op1, u32 BE op2, u16 BE addr, u16 BE
+        addr2}.  Readers (KN6000; the KN6500's are the same code): func_4C155072 0x4C155072 (d0 type, d1 n) skips
+        n groups, 13 bytes while the first byte is not 0xFF, then the 0xFF, and answers -1 for a 0xFF where a
+        group starts; func_4C155C08 0x4C155C08 reads each entry's kind (0xFF: the end), then the four operands
+        big-endian (`movbu` / `asl 24` / `asl 16` / `asl 8` / `add`), and hands them to func_4C157DE2
+        0x4C157DE2, which switches on the kind (`cmp 0, d0` / `cmp 1, d0` ...).  The pointer table is the only
+        reader of the blocks' addresses, which is why the reader search held them as labelled opaque bytes.
+        Blocks nothing points at between two that are pointed at parse as lists too (orphans).  Probe:
+        notes/mn10300-data4-probes/fx_param_lists.py."""
+        spec = P.get("fx_param_lists")
+        if not spec or not FEATURES.get("fx_param_lists", True):
+            return
+        ta, n = spec
+        rom = self.rom
+        by = lambda a: rom[self.off(a)]  # noqa: E731
+
+        def parse(a, lim):
+            groups, q = [], a
+            while q < lim and by(q) != 0xFF:
+                ents = []
+                while q < lim and by(q) != 0xFF:
+                    ents.append(q)
+                    q += 13
+                if q >= lim:
+                    return None, None
+                q += 1
+                groups.append(ents)
+            return (groups, q + 1) if q < lim else (None, None)
+
+        blocks = collections.defaultdict(list)
+        for i in range(n):
+            v = self.m.u32(ta + 4 * i)
+            if v:
+                blocks[v].append(i)
+        if not blocks or any(not self.in_data(a) for a in blocks):
+            print("gen_data_s: fx parameter lists: a pointer leaves the data region; not typed")
+            return
+        starts = sorted(blocks)
+        parsed = {}
+        for a in starts:
+            nxt = min([x for x in starts if x > a], default=a + 0x4000)
+            g, e = parse(a, nxt + 1)
+            if g is None:
+                print(f"gen_data_s: fx parameter lists: the list at {a:#x} does not parse; not typed")
+                return
+            parsed[a] = (e, g)
+        pos = starts[0]
+        for a in sorted(parsed):
+            q = pos
+            while q < a:          # an orphan run between two pointed lists: lists that end exactly at `a`
+                g, e = parse(q, a + 1)
+                if g is None or e > a:
+                    break
+                parsed[q] = (e, g)
+                q = e
+            pos = max(pos, parsed[a][0])
+        spans = sorted((a, e, g) for a, (e, g) in parsed.items())
+        for (a, e, _g), (b, _f, _h) in zip(spans, spans[1:]):
+            if e > b:
+                print(f"gen_data_s: fx parameter lists: lists at {a:#x} and {b:#x} overlap; not typed")
+                return
+        if any(not self.free(a, e - a) for a, e, _g in spans):
+            print("gen_data_s: fx parameter lists: a list overlaps a typed item; not typed")
+            return
+        def lname(a, base):
+            return self.name_at(a, base) if self.fixed.get(a) == base else self.rename_at(a, base)
+
+        # the table keeps a name a symbol file gives it; a reader-made one (func_<ADDR>_Table) becomes FxParamListTable
+        cur = self.label_at.get(ta) or self.fixed.get(ta)
+        tlab = lname(ta, "FxParamListTable") if cur is None or re.fullmatch(r"func_[0-9A-F]{8}\w*_Table(_\d+)?|ptrs_\w+", cur) \
+            else self.name_at(ta, cur)
+
+        for a, e, groups in spans:
+            types = blocks.get(a, [])
+            lab = lname(a, f"FxParamList_{types[0]:03d}" if types else f"FxParamListOrphan_{a:08X}")
+            what = (f"DSP type{'s' if len(types) > 1 else ''} {', '.join(map(str, types[:8]))}"
+                    f"{', ...' if len(types) > 8 else ''} ({tlab}[type])" if types else
+                    "no type: nothing points at it [INFERENCE: an older type's copy]")
+
+            def render(g, it, groups=groups, what=what):
+                out = [f"{it.label}:\t# the effect DSP's parameter list of {what}: group n = parameter n's entries "
+                       f"(func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)"]
+                for k, ents in enumerate(groups):
+                    for j, q in enumerate(ents):
+                        o = g.off(q)
+                        kind = g.rom[o]
+                        op1, op2 = struct.unpack_from(">II", g.rom, o + 1)
+                        ad, ad2 = struct.unpack_from(">HH", g.rom, o + 9)
+                        args = [f"kind=0x{kind:02X}", f"op1=0x{op1:X}", f"op2=0x{op2:X}", f"addr=0x{ad:X}"]
+                        if ad2 != 0xFFFF:
+                            args.append(f"addr2=0x{ad2:X}")
+                        out.append("\tFXL_ENTRY\t" + ", ".join(args) + (f"\t# parameter {k}" if j == 0 else ""))
+                    out.append("\tFXL_END" + ("" if ents else f"\t# parameter {k}: no entries"))
+                out.append("\tFXL_END\t# the list's end")
+                return out
+            self.add(a, e - a, lab, "fx parameter list", render)
+        print(f"gen_data_s: fx parameter lists: {len(spans)} lists ({sum(1 for a, _e, _g in spans if a not in blocks)} "
+              f"orphans), {sum(e - a for a, e, _g in spans)} bytes")
 
     def pow10_table(self):
         """(FEATURES["pow10_table"], lane mn10300-rest) The C library's table of the powers of ten, 309 IEEE-754
@@ -5394,6 +5513,56 @@ class Gen:
             n += 1
         print(f"gen_data_s: {n} copied blocks")
 
+    def string_ptr_runs(self):
+        """(the siblings: `structs` profiles without readers_ext; FEATURES["string_ptr_runs"], lane mn10300-data4)
+        Aligned runs of >= 4 words no item holds, each 0 or the address of a NUL-terminated printable string
+        of this region (at least 4 of them not 0), trailing zeros left out: tables of names, written `.long
+        Str_...`.  The ones the census held opaque are the second halves of the GUI resource name tables
+        (KN6000 GetBitmapNameTable / GetFrameNameTable / GetIconNameTable answer a 256-slot table of names,
+        and the 256 slots after it name the resources' files, "music1.bmp", "i0.bmp"; the KN2400's icon
+        table the same), the font files after the fonts' names (the initialised-RAM image) and the
+        PRESENTATION / ACTION tags.  [INFERENCE: typed by value, as pointer_runs in the KN7000 builds; the
+        second halves' reader was not traced]  Probe: notes/mn10300-data4-probes/string_ptr_runs.py."""
+        if not FEATURES.get("string_ptr_runs", True):
+            return
+        self.build_index()
+        m, n, o = self.m, 0, R1_END + (-R1_END % 4)
+
+        def is_str(v):
+            if not v or not self.in_data(v):
+                return False
+            s = m.cstr(v)
+            return s is not None and 2 <= len(s) <= 80 and all(0x20 <= ord(c) < 0x7F for c in s)
+        while o + 16 <= DATA_END:
+            e, nz = o, 0
+            while e + 4 <= DATA_END and not any(self.claimed[e:e + 4]):
+                v = int.from_bytes(self.rom[e:e + 4], "little")
+                if v and not is_str(v):
+                    break
+                nz += 1 if v else 0
+                e += 4
+            if nz >= 4:
+                vals = [int.from_bytes(self.rom[k:k + 4], "little") for k in range(o, e, 4)]
+                while vals and vals[-1] == 0:
+                    vals.pop()
+                while vals and vals[0] == 0:     # (leading zeros: the previous table's empty slots)
+                    vals.pop(0)
+                    o += 4
+                e = o + 4 * len(vals)
+                for v in vals:
+                    if v:
+                        self.str_item(v, "Str_" + (sanitize(m.cstr(v), 40) or "text"), "string")
+                a = self.addr_of(o)
+                self.add(a, e - o, self.name_at(a, f"names_{a:08X}"), "name table",
+                         lambda g, it, vals=vals: [f"{it.label}:\t# {len(vals)} string pointers, typed by value (every "
+                                                   "word 0 or a printable string of this region); reader not traced"]
+                         + [f"\t.long\t{g.ref(v)}" for v in vals])
+                n += 1
+                o = e
+            else:
+                o = max(e, o + 4) if e > o else o + 4
+        print(f"gen_data_s: {n} string pointer runs")
+
     def pointer_runs(self):
         """(KN7000 program builds) aligned runs of >= 3 words no item holds, each 0 or an address of
         this data region (at least two of them not 0): pointer arrays, written `.long Label`.  What
@@ -6387,6 +6556,7 @@ class Gen:
             self.sound_alpha_lists()
             self.fx_descriptors()
             self.fx_streams()
+            self.fx_param_lists()
             self.pow10_table()
             self.maps128()
             self.chord_voicings()
@@ -6427,6 +6597,8 @@ class Gen:
             self.variables()
             if P.get("readers_ext"):
                 self.pointer_runs()
+            else:
+                self.string_ptr_runs()
         if self.readers_callee:
             # (lane callee-walk) the blocks a caller hands a routine, typed by what it reads through them;
             # then what a span arg_reserve() kept for a record that did not fit, as before

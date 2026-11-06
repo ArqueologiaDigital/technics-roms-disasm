@@ -26704,7 +26704,7 @@ CountIntroRecordTable:
 	.long	0
 	.long	0
 
-func_48450656_Table:	# 4 x u8, 255..255; read by func_48450656_entry 0x4844E9E0: `movbu  (a1), d0`; func_484506C8_entry 0x4844E9E0: `movbu  (a1), d0` ...
+func_48450656_Table:	# 4 x u8, 255..255; read by func_48450656_entry 0x484502AC: `movbu  (a1), d0`; func_484506C8_entry 0x484502AC: `movbu  (a1), d0` ...
 	tab_u8	255, 255, 255, 255
 
 ptrs_487370C0:

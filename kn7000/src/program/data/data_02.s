@@ -35436,21 +35436,21 @@ TgElemStageFresh_Table:	# 51 x u8, 0..127; read by TgElemStageFresh_entry 0x4C03
 	tab_u8	42, 45, 47, 50, 54, 57, 61, 65, 69, 73, 78, 83, 88, 94, 100, 106	# [32]
 	tab_u8	113, 120, 127	# [48]
 
-TgPartEditLfoLoadA_Records:	# 14 x REC_TgPartEditLfoLoadA_Records (39 bytes each); read by TgPartEditLfoLoadA 0x4C00CCBA `movbu (0x12, a2), d1`; TgPartEditLfoLoadA 0x4C00CCBA `movbu (0xe, a2), d1`; TgPartEditLfoLoadA 0x4C00CCBA `movbu (1, a2), d1` (+85)
-	REC_TgPartEditLfoLoadA_Records	f0=15, f1=25, x15="\x00\x00\x00", flags___=68, x22="\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"	# [0]
-	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x15="\x00\x00\x00", flags___=196, x22="\x00\x00\xC8", f26=17, f27=100, f28=1, x29="\xC4\x00\x00\x00\x00\xC8\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x15="\x00\x00\x00", flags___=68, x22="\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=10, f1=40, x15="\x00\x00\x00", flags___=200, x22="\x00\x00\xC4", f26=8, f27=100, f28=1, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=25, f1=32, f3=25, f4=33, x15="\x00\x00\x00", flags___=136, x22="\x00\x00D", f26=10, f28=4, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=20, f1=20, f3=15, f4=22, x15="\x00\x00\x00", flags___=200, x22="\x00\x00\xC4", f26=2, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	index=40, f7=24, x15="\x00\x00\x00", flags___=32, x22="\x00\x00\"", f27=80, x29=" \x00\x00\x00\x00\"\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=28, f1=40, f3=34, f4=25, index=25, x15="\x00\x00\x00", flags___=228, x22="\x00\x00\xEA", x29="\xE4\x00\x00\x00\x00\xEA\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	x15="\x00\x00\x00", x22="\x00\x00\x00", f27=80, f28=10, x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"	# [8]
-	REC_TgPartEditLfoLoadA_Records	f9=27, f10=20, f11=22, x15="\x00\x00\x00", x22="\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, flags=178, x15="\x00\x00\x00", f18=30, flags___=128, x22="\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, flags=178, f14=5, x15="\x00\x00\x00", f18=30, flags___=128, x22="\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	x15="\x00\x00\x00", x22="\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	x15="\x00\x00\x00", x22="\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TgPartEditLfoLoadA_Records:	# 14 x ToneTypeFeature (39 bytes each); read by TgPartEditLfoLoadA 0x4C00CCBA `movbu (0x12, a2), d1`; TgPartEditLfoLoadA 0x4C00CCBA `movbu (0xe, a2), d1`; TgPartEditLfoLoadA 0x4C00CCBA `movbu (1, a2), d1` (+85)
+	ToneTypeFeature	t0_a=15, t0_b=25, x15="\x00\x00\x00", seg0_flags=68, x22="\x00\x00\x88", seg1_c=10, seg1_param=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"	# [0]
+	ToneTypeFeature	t0_a=12, t0_b=37, x15="\x00\x00\x00", seg0_flags=196, x22="\x00\x00\xC8", seg1_c=17, seg1_param=100, seg1_e=1, x29="\xC4\x00\x00\x00\x00\xC8\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=12, t0_b=37, x15="\x00\x00\x00", seg0_flags=68, x22="\x00\x00\x88", seg1_c=10, seg1_param=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=10, t0_b=40, x15="\x00\x00\x00", seg0_flags=200, x22="\x00\x00\xC4", seg1_c=8, seg1_param=100, seg1_e=1, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=25, t0_b=32, t1_a=25, t1_b=33, x15="\x00\x00\x00", seg0_flags=136, x22="\x00\x00D", seg1_c=10, seg1_e=4, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=20, t0_b=20, t1_a=15, t1_b=22, x15="\x00\x00\x00", seg0_flags=200, x22="\x00\x00\xC4", seg1_c=2, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
+	ToneTypeFeature	t2_a=40, t2_b=24, x15="\x00\x00\x00", seg0_flags=32, x22="\x00\x00\"", seg1_param=80, x29=" \x00\x00\x00\x00\"\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=28, t0_b=40, t1_a=34, t1_b=25, t2_a=25, x15="\x00\x00\x00", seg0_flags=228, x22="\x00\x00\xEA", x29="\xE4\x00\x00\x00\x00\xEA\x00\x00\x00\x00"
+	ToneTypeFeature	x15="\x00\x00\x00", x22="\x00\x00\x00", seg1_param=80, seg1_e=10, x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"	# [8]
+	ToneTypeFeature	t3_a=27, t3_b=20, t3_c=22, x15="\x00\x00\x00", x22="\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=20, t0_b=50, t0_flags=178, x15="\x00\x00\x00", lfo_p7=30, seg0_flags=128, x22="\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=20, t0_b=50, t0_flags=178, lfo_p6=5, x15="\x00\x00\x00", lfo_p7=30, seg0_flags=128, x22="\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	ToneTypeFeature	x15="\x00\x00\x00", x22="\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+	ToneTypeFeature	x15="\x00\x00\x00", x22="\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 
 TgElemStageFresh_Table_2:	# 31 x u8, 0..70; read by TgElemStageFresh_entry 0x4C034927: `movbu  (d0, a0), d0`; TgElemStageFresh_entry 0x4C034927: `movbu  (d0, a0), d2` ...
 	tab_u8	70, 64, 58, 53, 48, 44, 40, 36, 33, 30, 27, 24, 22, 20, 18, 16	# [0]

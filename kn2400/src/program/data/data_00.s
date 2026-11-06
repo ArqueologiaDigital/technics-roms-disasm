@@ -15500,8 +15500,8 @@ Str_slide_bmp:	.asciz "slide.bmp"
 Str_slmove_bmp:	.asciz "slmove.bmp"
 Str_mixctr_bmp:	.asciz "mixctr.bmp"
 Str_mixpoint_bmp:	.asciz "mixpoint.bmp"
-# census: opaque -- unknown-dump: 16 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x01A604, 0x01A614
+Str_fwd_bmp:	.asciz "fwd.bmp"
+Str_bwd_bmp:	.asciz "bwd.bmp"
 Str_pause_bmp:	.asciz "pause.bmp"
 Str_startstop_bmp:	.asciz "startstop.bmp"
 Str_before_bmp:	.asciz "before.bmp"
@@ -37380,8 +37380,19 @@ Str_ERROR_ABORTED_3:	.asciz "ERROR ABORTED!"
 Str_ERROR_ABORTED_4:	.asciz "ERROR ABORTED!"
 Str_ERROR_ABORTED_5:	.asciz "ERROR ABORTED!"
 Str_ERROR_ABORTED_6:	.asciz "ERROR ABORTED!"
-# census: opaque -- unknown-dump: 62 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x050922, 0x050960
+# census: opaque -- unknown-dump: 34 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x050922, 0x050944
+
+names_48450944:	# 6 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
+	.long	Str_ERROR_ABORTED
+	.long	Str_ERROR_ABORTED_2
+	.long	Str_ERROR_ABORTED_3
+	.long	Str_ERROR_ABORTED_4
+	.long	Str_ERROR_ABORTED_5
+	.long	Str_ERROR_ABORTED_6
+# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x05095C, 0x050960
+
 Str_The_internal_memory_is_retained_for_shor:	.asciz "The internal memory is retained for short times after turning off the power."
 Str_Der_interne_Speicher_bleibt_f_r_kurze_Ze:	.asciz "Der interne Speicher bleibt f\xFCr kurze Zeit nach dem Ausschalten erhalten."
 Str_La_m_moire_interne_est_conserv_e_pendant:	.asciz "La m\xE9moire interne est conserv\xE9e pendant une courte dur\xE9e apr\xE8s la mise hors tension de l'instrument."
@@ -37495,8 +37506,19 @@ Str_PUSH_EXIT_BUTTON_2:	.asciz "PUSH EXIT BUTTON"
 Str_PUSH_EXIT_BUTTON_3:	.asciz "PUSH EXIT BUTTON"
 Str_ERROR_xx_5:	.asciz "ERROR xx"
 Str_ERROR_xx_6:	.asciz "ERROR xx"
-# census: opaque -- unknown-dump: 58 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0515A2, 0x0515DC
+# census: opaque -- unknown-dump: 30 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0515A2, 0x0515C0
+
+names_484515C0:	# 6 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
+	.long	ptrs_48451530+28
+	.long	Str_PUSH_EXIT_BUTTON
+	.long	Str_PUSH_EXIT_BUTTON_2
+	.long	Str_PUSH_EXIT_BUTTON_3
+	.long	Str_ERROR_xx_5
+	.long	Str_ERROR_xx_6
+# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0515D8, 0x0515DC
+
 Str_ERROR_13:	.asciz "ERROR!"
 Str_ERROR_9:	.asciz "ERROR!"
 Str_ERREUR:	.asciz "ERREUR!"
@@ -39980,26 +40002,3 @@ Str_RESO:	.asciz "RESO"
 	.align	4, 0xFF	# pad after Str_RESO
 
 		VwLabel	SpsPage4_Label_RESO, super=SpsPage4, next=SpsPage4_Label_BRI, prev=SpsPage4_IndexWideES7, flag=VF_Const, X=2, Y=201, W=36, H=19, str=Str_RESO, fontcolor=CL_White	# str "RESO"
-
-Str_BRI:	.asciz "BRI"
-
-		VwLabel	SpsPage4_Label_BRI, super=SpsPage4, next=SpsPage4_Label_ATT, prev=SpsPage4_Label_RESO, flag=VF_Const, X=166, Y=201, W=28, H=19, str=Str_BRI, fontcolor=CL_White	# str "BRI"
-
-Str_ATT:	.asciz "ATT"
-
-		VwLabel	SpsPage4_Label_ATT, super=SpsPage4, next=SpsPage4_Label_DEC, prev=SpsPage4_Label_BRI, flag=VF_Const, X=46, Y=201, W=28, H=19, str=Str_ATT, fontcolor=CL_White	# str "ATT"
-
-Str_DEC:	.asciz "DEC"
-
-		VwLabel	SpsPage4_Label_DEC, super=SpsPage4, next=SpsPage4_Label_REL, prev=SpsPage4_Label_ATT, flag=VF_Const, X=86, Y=201, W=28, H=19, str=Str_DEC, fontcolor=CL_White	# str "DEC"
-
-Str_REL:	.asciz "REL"
-
-		VwLabel	SpsPage4_Label_REL, super=SpsPage4, next=SpsPage4_Label_RATE, prev=SpsPage4_Label_DEC, flag=VF_Const, X=126, Y=201, W=28, H=19, str=Str_REL, fontcolor=CL_White	# str "REL"
-
-Str_RATE_2:	.asciz "RATE"
-	.align	4, 0xFF	# pad after Str_RATE_2
-
-		VwLabel	SpsPage4_Label_RATE, super=SpsPage4, next=SpsPage4_Label_DEP, prev=SpsPage4_Label_REL, flag=VF_Const, X=202, Y=201, W=36, H=19, str=Str_RATE_2, fontcolor=CL_White	# str "RATE"
-
-Str_DEP:	.asciz "DEP"

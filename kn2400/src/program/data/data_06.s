@@ -139,8 +139,21 @@ Lyrics_parent:	# u32, initial value of a RAM variable: the Window Lyrics's `pare
 	.long	0xffffffff
 Lyrics_child:	# u32, initial value of a RAM variable: the Window Lyrics's `child` (+0x28), loaded and dereferenced by WindowProc 0x485EFBD4: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
 	.long	0xffffffff
-# census: opaque -- unknown-dump: 48 bytes of printable bytes, not NUL-terminated text in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x1E0914, 0x1E0944
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x1E0914, 0x1E0918
+
+names_500035F4:	# 11 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
+	.long	Text_1234567890123456
+	.long	Text_1234567890123456+17
+	.long	Text_1234567890123456+34
+	.long	Text_1234567890123456+51
+	.long	Text_1234567890123456+68
+	.long	Text_1234567890123456+85
+	.long	Text_1234567890123456+102
+	.long	Text_1234567890123456+119
+	.long	Text_1234567890123456+136
+	.long	Text_1234567890123456+153
+	.long	Text_1234567890123456+170
 
 DpSmfTtlFunc_L60_Table:	# 4 x u8, 0..255; read by DpSmfTtlFunc_L60 0x486A1950: `movbu (DpSmfTtlFunc_L60_Table), d0`; DpSmfTtlFunc_La1 0x486A1991: `movbu d0, (DpSmfTtlFunc_L60_Table)` ...
 	tab_u8	0, 255, 255, 255
@@ -4954,8 +4967,22 @@ names_50006228:
 	.long	data_4841A885
 	.long	0
 	.space	72, 0x00
-# census: opaque -- unknown-dump: 52 bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x1E35CC, 0x1E3600
+
+names_500062A8:	# 12 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
+	.long	Str_chara1_fnt
+	.long	Str_chara2_fnt
+	.long	Str_chara3_fnt
+	.long	Str_chara4_fnt
+	.long	Str_chara5_fnt
+	.long	Str_chara1p_fnt
+	.long	Str_chara6_fnt
+	.long	Str_chara1w_fnt
+	.long	Str_chara2w_fnt
+	.long	Str_chara5w_fnt
+	.long	Str_chara7w_fnt
+	.long	Str_chara7_fnt
+# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x1E35FC, 0x1E3600
 	.space	76, 0x00
 
 func_487243A9_entry_L89_Table:	# 2 x u16, 0..65535; read by func_487243A9_entry_L89 0x48724435: `movhu (func_487243A9_entry_L89_Table), d0`

@@ -4537,8 +4537,17 @@ names_4C200F80:
 	.long	Str_SHOW, func_4C0AC3BC
 	.long	Str_EXEC, func_4C0ABD65
 	.long	Str_ACT_2, func_4C0ABF2E
-# census: opaque -- unknown-dump: 48 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x200FA0, 0x200FD0
+# census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x200FA0, 0x200FA8
+names_4C200FA8:	# 7 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
+	.long	Str_PRESENTATION_3
+	.long	0
+	.long	Str_PRESENTATION_4
+	.long	0
+	.long	Str_ACTION_3
+	.long	0
+	.long	Str_ACTION_4
+	.space	12, 0x00
 data_4C200FD0:
 	.space	1, 0x00
 data_4C200FD1:
@@ -6506,13 +6515,13 @@ Str_SOLO_50:	.asciz "-SOLO"
 Str_empty_623:	.asciz "     "
 Str_USER_BANK_1c:	.asciz "USER BANK: %1c"
 	.align	4, 0xFF	# pad after Str_USER_BANK_1c
-Str_empty_859:	.asciz "    "
+Str_empty_839:	.asciz "    "
 Str_MUTE_4:	.asciz "MUTE"
 Str_REC_9:	.asciz "REC"
 	.align	4, 0xFF	# pad after Str_REC_9
 
 AcCmpRecMuteBoxProc_Ld6_Table:
-	.long	Str_empty_859
+	.long	Str_empty_839
 	.long	Str_MUTE_4
 	.long	Str_REC_9
 
@@ -7526,41 +7535,41 @@ Str_3s_s_V_3d_5d:	.asciz " %3s          %s V%3d %5d"
 	.align	4, 0xFF	# pad after Str_3s_s_V_3d_5d
 Str_3s_7:	.asciz " %3s                          "
 	.align	4, 0xFF	# pad after Str_3s_7
-Str_empty_858:	.asciz "   "
+Str_empty_830:	.asciz "   "
 data_4C20810C:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x20810C, 0x208110
-Str_empty_857:	.asciz " \xAD "
+Str_empty_829:	.asciz " \xAD "
 data_4C208114:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x208114, 0x208118
-Str_empty_845:	.asciz " \xAC "
+Str_empty_828:	.asciz " \xAC "
 data_4C20811C:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x20811C, 0x208120
-Str_empty_839:	.asciz " \xAB "
+Str_empty_827:	.asciz " \xAB "
 data_4C208124:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x208124, 0x208128
-Str_empty_830:	.asciz " \xAA "
-Str_empty_829:	.asciz " \xA6 "
-Str_empty_828:	.asciz " \xA1 "
+Str_empty_826:	.asciz " \xAA "
+Str_empty_825:	.asciz " \xA6 "
+Str_empty_824:	.asciz " \xA1 "
 Str_x2:	.asciz "\xA1x2"
 Str_x3:	.asciz "\xA1x3"
 Str_x4:	.asciz "\xA1x4"
 
 ptrs_4C208140:
-	.long	Str_empty_858
-	.long	data_4C20810C
-	.long	Str_empty_857
-	.long	data_4C208114
-	.long	Str_empty_845
-	.long	data_4C20811C
-	.long	Str_empty_839
-	.long	data_4C208124
 	.long	Str_empty_830
+	.long	data_4C20810C
 	.long	Str_empty_829
+	.long	data_4C208114
 	.long	Str_empty_828
+	.long	data_4C20811C
+	.long	Str_empty_827
+	.long	data_4C208124
+	.long	Str_empty_826
+	.long	Str_empty_825
+	.long	Str_empty_824
 	.long	Str_x2
 	.long	Str_x3
 	.long	Str_x4
@@ -7616,7 +7625,7 @@ Str_TRANSPOSE_A_80:	.asciz "TRANSPOSE:A ~80"
 Str_TRANSPOSE_B_a0_80:	.asciz "TRANSPOSE:B~a0~80"
 Str_TRANSPOSE_B_80:	.asciz "TRANSPOSE:B ~80"
 Str_TRANSPOSE_C_80:	.asciz "TRANSPOSE:C ~80"
-Str_empty_827:	.asciz "             "
+Str_empty_823:	.asciz "             "
 
 func_4C0CF8EE_Table:
 	.long	Str_TRANSPOSE_7fC
@@ -7644,7 +7653,7 @@ func_4C0CF8EE_Table:
 	.long	Str_TRANSPOSE_B_a0_80
 	.long	Str_TRANSPOSE_B_80
 	.long	Str_TRANSPOSE_C_80
-	.long	Str_empty_827
+	.long	Str_empty_823
 
 Str_s_SOUND_s:	.asciz " %s    SOUND       %s   "
 	.align	4, 0xFF	# pad after Str_s_SOUND_s
@@ -37306,7 +37315,7 @@ SmfFileNaming_L2b_Table:
 	.long	Str_PLEASE_WAIT
 	.long	Str_SILAHKAN_TUNGGU
 
-Str_empty_826:	.asciz "                "
+Str_empty_822:	.asciz "                "
 Str_CURRENT_PANEL_3:	.asciz "CURRENT PANEL   "
 Str_PANEL_MEMORY_8:	.asciz "PANEL MEMORY    "
 Str_SEQUENCER_9:	.asciz "SEQUENCER       "
@@ -37320,7 +37329,7 @@ Str_HOME_PAGE_4:	.asciz "HOME PAGE       "
 Str_ALL_CUSTOM_STYLE_3:	.asciz "ALL CUSTOM STYLE"
 
 AcFileSfxBoxProc_Lea_Table:
-	.long	Str_empty_826
+	.long	Str_empty_822
 	.long	Str_CURRENT_PANEL_3
 	.long	Str_PANEL_MEMORY_8
 	.long	Str_SEQUENCER_9
@@ -37334,7 +37343,7 @@ AcFileSfxBoxProc_Lea_Table:
 	.long	Str_ALL_CUSTOM_STYLE_3
 
 Str_NEXT_PAGE:	.asciz "   NEXT PAGE    "
-Str_empty_825:	.asciz "   ---------    "
+Str_empty_821:	.asciz "   ---------    "
 Str_This_is:	.asciz "    This is     "
 Str_temporary:	.asciz "   temporary    "
 Str_message:	.asciz "    message.    "
@@ -37342,7 +37351,7 @@ Str_message:	.asciz "    message.    "
 
 AcFileSfxBoxProc_L1d3_Table:
 	.long	Str_NEXT_PAGE
-	.long	Str_empty_825
+	.long	Str_empty_821
 	.long	Str_This_is
 	.long	Str_temporary
 	.long	Str_message

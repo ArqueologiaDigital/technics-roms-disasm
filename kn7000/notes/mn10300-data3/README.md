@@ -76,7 +76,8 @@ KN6500 "typed before only" 24 bytes are not this lane's rules: they came with th
 sibling-names, whose `kn6000_aligned.sym` names 0x50000000 `WORK_RAM_BASE`; func_4C0506C7_entry_L4_Records'
 field +0 (0x50000000, 0x58000000, 0x54000000: bus-window bases, values) then reads as a pointer, and the
 inferred count stops at the first record whose +0 is no named address (3 records -> 1).  Next step: a
-count for that array from its reader, or not taking a window base for a data pointer.
+count for that array from its reader, or not taking a window base for a data pointer (done: lane
+mn10300-data4's `named_base_not_end` and lane sibling-names2's unnamed window bases; 3 records again).
 
 Offset-named fields with a reader (`../mn10300-formats-probes/field_names_census.py`): the column above;
 the KN7000 builds lose 26 to 43 each, the siblings 34, the HD-SX3 17.
@@ -132,7 +133,7 @@ baserom/kn7000_table_b80.rom`):
 Each tree's `gui_object_names.tsv` is written by the generation and read by the next one; deleting it makes
 the next run invent the names afresh (as before this lane) and freeze them again.
 
-Not run: `make -C kn7000 plugin-src`.  `gen_data_s.py --profile sp7001plugin` fails on the base 2bde950fa as on
+Not run: `make -C kn7000 plugin-src` (fixed by lane mn10300-data4: `../mn10300-data4/README.md` section 2).  `gen_data_s.py --profile sp7001plugin` fails on the base 2bde950fa as on
 this branch (`AttributeError` in obj_names: object 4 of block 0x2F0, Main_KssTextBox1, has no class):
 milk_model finds no class-table registration of the plug-in (slot 0x2F4, `calls (a1)` reached through `mov
 (KssFrameworkObj), d0` / `mov 0x1c, a2` / `add d0, a2` / `mov (a2), a0` / `mov (0x174, a0), a1`, a shape
