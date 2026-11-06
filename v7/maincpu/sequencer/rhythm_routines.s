@@ -137,8 +137,8 @@ Rhythm_SetupChannel_D7:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x3258:16), 0xfb
-	or (0x3258:16), 0x08
+	and (ACC_PART_FLAGS:16), 0xfb
+	or (ACC_PART_FLAGS:16), 0x08
 	ld (ACC_PART_BIT:16), 0x04
 	calr RhythmEvt_ProcessNote
 	ret
@@ -148,8 +148,8 @@ Rhythm_SetupChannel_D4:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING+1:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x3258:16), 0xf7
-	or (0x3258:16), 0x04
+	and (ACC_PART_FLAGS:16), 0xf7
+	or (ACC_PART_FLAGS:16), 0x04
 	ld (ACC_PART_BIT:16), 0x08
 	calr RhythmEvt_ProcessNote
 	ret
@@ -159,7 +159,7 @@ Rhythm_SetupChannel_D5:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING+2:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x3258:16), 0xf3
+	and (ACC_PART_FLAGS:16), 0xf3
 	ld (ACC_PART_BIT:16), 0x10
 	calr RhythmEvt_ProcessNote
 	ret
@@ -169,7 +169,7 @@ Rhythm_SetupChannel_D6:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING+3:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x3258:16), 0xf3
+	and (ACC_PART_FLAGS:16), 0xf3
 	ld (ACC_PART_BIT:16), 0x20
 	calr RhythmEvt_ProcessNote
 	ret
@@ -233,9 +233,9 @@ RhythmEvt_NoteOn91:
 RhythmEvt_ApplyTranspose:
 	ld	a, (xhl+iy)
 	calr Rhythm_CheckFixedNote
-	bit 4, (0x3258:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr nz, RhythmEvt_PostProcess
-	bit 3, (0x3258:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, RhythmEvt_ApplyNoteRange
 	calr Rhythm_BassToRoot
 RhythmEvt_ApplyNoteRange:
@@ -275,9 +275,9 @@ RhythmEvt_FullLoop:
 	call RingBuf_AdvanceIndex
 	ld	a, (xhl+iy)
 	calr Rhythm_CheckFixedNote
-	bit 4, (0x3258:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr nz, RhythmEvt_Full90_PostTransp
-	bit 3, (0x3258:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, RhythmEvt_Full90_PostRange
 	calr Rhythm_BassToRoot
 RhythmEvt_Full90_PostRange:
@@ -310,9 +310,9 @@ RhythmEvt_Full91:
 	call RingBuf_AdvanceIndex
 	ld	a, (xhl+iy)
 	calr Rhythm_CheckFixedNote
-	bit 4, (0x3258:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr nz, RhythmEvt_Full91_PostTransp
-	bit 3, (0x3258:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, RhythmEvt_Full91_PostRange
 	calr Rhythm_BassToRoot
 RhythmEvt_Full91_PostRange:
@@ -347,10 +347,10 @@ RhythmEvt_FullDone:
 	ret
 
 Rhythm_CheckFixedNote:
-	and (0x3258:16), 0xef
+	and (ACC_PART_FLAGS:16), 0xef
 	cp A,0x78
 	jr c, Rhythm_VelThreshReturn
-	or (0x3258:16), 0x10
+	or (ACC_PART_FLAGS:16), 0x10
 Rhythm_VelThreshReturn:
 	ret
 
@@ -446,9 +446,9 @@ Rhythm_ChordConvertNote90:
 	jr t, Rhythm_VelLookA_Done
 Rhythm_VelLookA_CheckEmpty:
 .Lc_f54c61:
-	bit 4, (0x3258:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VelLookA_CheckRange
-	and (0x3258:16), 0xef
+	and (ACC_PART_FLAGS:16), 0xef
 	ld A,W
 	jr t, Rhythm_VelLookA_Done
 Rhythm_VelLookA_CheckRange:
@@ -458,11 +458,11 @@ Rhythm_VelLookA_CheckRange:
 	xor	l, l
 Rhythm_VelLookA_SelectTable:
 	ld xiy, Rhythm_ChordRowMap
-	bit 2, (0x3258:16)
+	bit 2, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VelLookA_CheckBit3
 	ld xiy, Rhythm_ChordRowMap_Acc1
 Rhythm_VelLookA_CheckBit3:
-	bit 3, (0x3258:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VelLookA_TableLookup
 	ld xiy, Rhythm_ChordRowMap_Bass
 Rhythm_VelLookA_TableLookup:
@@ -532,7 +532,7 @@ Rhythm_ChordRowMap_Bass:
 
 Rhythm_TransposeNote:
 	ld a, (ACC_CHORD_ROOT:16)
-	bit 3, (0x3258:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_Transp_CheckZero
 	ld a, (ACC_CHORD_BASS:16)
 Rhythm_Transp_CheckZero:
@@ -590,9 +590,9 @@ Rhythm_ChordConvertNote91:
 	jrl t, Rhythm_VoiceMap_Done
 Rhythm_VoiceMap_CheckInstr:
 .Lc_f54dc7:
-	bit 4, (0x3258:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VoiceMap_CheckBit4
-	and (0x3258:16), 0xef
+	and (ACC_PART_FLAGS:16), 0xef
 	jrl t, Rhythm_VoiceMap_Done
 Rhythm_VoiceMap_CheckBit4:
 	ld	l, (ACC_CHORD_TYPE:16)
@@ -601,7 +601,7 @@ Rhythm_VoiceMap_CheckBit4:
 	xor	l, l
 Rhythm_VoiceMap_ClampInstr:
 	ld xiy, Rhythm_ChordExtSelect
-	bit 3, (0x3258:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VoiceMap_SelectTable
 	ld xiy, Rhythm_ChordExtSelect_Bass
 Rhythm_VoiceMap_SelectTable:
@@ -638,11 +638,11 @@ Rhythm_VoiceMap_ApplyBase:
 	xor	l, l
 Rhythm_VoiceMap_Inst2Clamp:
 	ld xiy, Rhythm_ChordRowMap
-	bit 2, (0x3258:16)
+	bit 2, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VoiceMap_Inst2Bit2
 	ld xiy, Rhythm_ChordRowMap_Acc1
 Rhythm_VoiceMap_Inst2Bit2:
-	bit 3, (0x3258:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VoiceMap_Inst2Bit3
 	ld xiy, Rhythm_ChordRowMap_Bass
 Rhythm_VoiceMap_Inst2Bit3:
@@ -697,9 +697,9 @@ Rhythm_ChordConvertNoteFast:
 	jr t, Rhythm_VelComp_Done
 Rhythm_VelComp_CheckBit4:
 .Lc_f54edf:
-	bit 4, (0x3258:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VelComp_ClampInstr
-	and (0x3258:16), 0xef
+	and (ACC_PART_FLAGS:16), 0xef
 	ld A,W
 	jr t, Rhythm_VelComp_Done
 Rhythm_VelComp_ClampInstr:
@@ -709,7 +709,7 @@ Rhythm_VelComp_ClampInstr:
 	xor	l, l
 Rhythm_VelComp_SelectTable:
 	ld xiy, Rhythm_ChordRowMapFast
-	bit 2, (0x3258:16)
+	bit 2, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_VelComp_Lookup
 	ld xiy, Rhythm_ChordRowMapFast_Acc1
 Rhythm_VelComp_Lookup:
@@ -765,8 +765,8 @@ Rhythm_DispatchCh_D7:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x3258:16), 0xfb
-	or (0x3258:16), 0x08
+	and (ACC_PART_FLAGS:16), 0xfb
+	or (ACC_PART_FLAGS:16), 0x08
 	ld W, 0x97:opc
 	ld XIX,ACC_BASS_NOTES
 Rhythm_DispatchCh_D7_Loop:
@@ -781,8 +781,8 @@ Rhythm_DispatchCh_D4:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING+1:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x3258:16), 0xf7
-	or (0x3258:16), 0x04
+	and (ACC_PART_FLAGS:16), 0xf7
+	or (ACC_PART_FLAGS:16), 0x04
 	ld W, 0x94:opc
 	ld XIX,ACC_ACCOMP1_NOTES
 Rhythm_DispatchCh_D4_Loop:
@@ -797,7 +797,7 @@ Rhythm_DispatchCh_D5:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING+2:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x3258:16), 0xf3
+	and (ACC_PART_FLAGS:16), 0xf3
 	ld W, 0x95:opc
 	ld XIX,ACC_ACCOMP2_NOTES
 Rhythm_DispatchCh_D5_Loop:
@@ -812,7 +812,7 @@ Rhythm_DispatchCh_D6:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING+3:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x3258:16), 0xf3
+	and (ACC_PART_FLAGS:16), 0xf3
 	ld W, 0x96:opc
 	ld XIX,ACC_ACCOMP3_NOTES
 Rhythm_DispatchCh_D6_Loop:
@@ -907,9 +907,9 @@ Rhythm_MatchedPhrase_NonNote:
 
 Rhythm_MatchedPhrase_Process:
 	calr Rhythm_CheckFixedNote
-	bit 4, (0x3258:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr nz, Rhythm_MatchedPhrase_Output
-	bit 3, (0x3258:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_MatchedPhrase_PostRange
 	calr Rhythm_BassToRoot
 Rhythm_MatchedPhrase_PostRange:
@@ -928,9 +928,9 @@ Rhythm_MismatchedPhrase:
 	pushw wa
 	ld A,(XIX+0x06)
 	calr Rhythm_CheckFixedNote
-	bit 4, (0x3258:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr nz, Rhythm_Mismatch90_Output
-	bit 3, (0x3258:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_Mismatch90_PostRange
 	calr Rhythm_BassToRoot
 Rhythm_Mismatch90_PostRange:
@@ -952,9 +952,9 @@ Rhythm_MismatchOther:
 	ld (ACC_EVENT_EXT2:16), a
 	ld a, (xix+8)
 	calr Rhythm_CheckFixedNote
-	bit 4, (0x3258:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr nz, Rhythm_MismatchOther_Output
-	bit 3, (0x3258:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, Rhythm_MismatchOther_PostRange
 	calr Rhythm_BassToRoot
 Rhythm_MismatchOther_PostRange:

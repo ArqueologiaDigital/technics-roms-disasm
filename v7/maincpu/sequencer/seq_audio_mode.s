@@ -1042,7 +1042,7 @@ RhythmPart1_ProcessAccentData:
 	call AccentData_ComparePart1
 RhythmPart1_CheckAccentData:
 .Lc_f53b8c:
-	ld a, (0x3290:16)
+	ld a, (ACC_LANES_RESYNC:16)
 	and A,0x03
 	jr z, RhythmPart1_WriteDone
 	ld e, (0x31aa:16)
@@ -1100,7 +1100,7 @@ RhythmPart1_ProcessRingBuf:
 
 
 RhythmPart1_WriteDone:
-	and (0x3290:16), 0xfc	; anddi8 (0x332c), 252 (v7 patched)
+	and (ACC_LANES_RESYNC:16), 0xfc	; anddi8 (0x332c), 252 (v7 patched)
 	call AccVoiceReg_WritePart1	; call AccVoiceReg_WritePart1 (v7 addr)
 
 
@@ -1166,7 +1166,7 @@ RhythmPart2_ProcessAccentData:
 	call AccentData_ComparePart2
 RhythmPart2_LoadAndStore:
 .Lc_f53c6b:
-	bit 2, (0x3290:16)
+	bit 2, (ACC_LANES_RESYNC:16)
 	ld e, (0x31b1:16)
 	ld d, (0x31b2:16)
 	ld a, (0x31b3:16)
@@ -1211,7 +1211,7 @@ RhythmPart2_ProcessRingBuf:
 	calr AccVoiceReg_StoreParamRecord
 RhythmPart2_WriteDone:
 .Lc_f53d08:
-	and (0x3290:16), 0xfb
+	and (ACC_LANES_RESYNC:16), 0xfb
 	call AccVoiceReg_WritePart2
 
 	ret
@@ -1243,7 +1243,7 @@ RhythmPart3_ProcessAccentData:
 	call AccentData_ComparePart3
 RhythmPart3_LoadAndStore:
 .Lc_f53d43:
-	bit 3, (0x3290:16)
+	bit 3, (ACC_LANES_RESYNC:16)
 	ld e, (0x31b8:16)
 	ld d, (0x31b9:16)
 	ld a, (0x31ba:16)
@@ -1288,7 +1288,7 @@ RhythmPart3_ProcessRingBuf:
 	calr AccVoiceReg_StoreParamRecord
 RhythmPart3_WriteDone:
 .Lc_f53de0:
-	and (0x3290:16), 0xf7
+	and (ACC_LANES_RESYNC:16), 0xf7
 	call AccVoiceReg_WritePart3
 
 	ret
@@ -1301,7 +1301,7 @@ RhythmPart4_ProcessAccentData:
 	call AccentData_ComparePart4
 RhythmPart4_LoadAndStore:
 .Lc_f53df4:
-	bit 4, (0x3290:16)
+	bit 4, (ACC_LANES_RESYNC:16)
 	ld e, (0x31bf:16)
 	ld d, (0x31c0:16)
 	ld a, (0x31c1:16)
@@ -1346,7 +1346,7 @@ RhythmPart4_ProcessRingBuf:
 	calr AccVoiceReg_StoreParamRecord
 RhythmPart4_WriteDone:
 .Lc_f53e91:
-	and (0x3290:16), 0xef
+	and (ACC_LANES_RESYNC:16), 0xef
 	call AccVoiceReg_WritePart4
 
 	ret
@@ -1359,7 +1359,7 @@ RhythmPart5_ProcessAccentData:
 	call AccentData_ComparePart5
 RhythmPart5_LoadAndStore:
 .Lc_f53ea5:
-	bit 5, (0x3290:16)
+	bit 5, (ACC_LANES_RESYNC:16)
 	ld e, (0x31c6:16)
 	ld d, (0x31c7:16)
 	ld a, (0x31c8:16)
@@ -1404,7 +1404,7 @@ RhythmPart5_ProcessRingBuf:
 	calr AccVoiceReg_StoreParamRecord
 RhythmPart5_WriteDone:
 .Lc_f53f42:
-	and (0x3290:16), 0xdf
+	and (ACC_LANES_RESYNC:16), 0xdf
 	call AccVoiceReg_WritePart5
 
 	ret
@@ -1668,7 +1668,7 @@ AccentData_ComparePart1:
 	jr nz, AccentData_Part1_Done
 	cp L,H
 	jr nz, AccentData_Part1_Done
-	and (0x3290:16), 0xfc
+	and (ACC_LANES_RESYNC:16), 0xfc
 AccentData_Part1_Done:
 	ret
 
@@ -1683,7 +1683,7 @@ AccentData_ComparePart2:
 	jr nz, AccentData_Part2_Done
 	cp L,H
 	jr nz, AccentData_Part2_Done
-	and (0x3290:16), 0xfb
+	and (ACC_LANES_RESYNC:16), 0xfb
 AccentData_Part2_Done:
 	ret
 
@@ -1698,7 +1698,7 @@ AccentData_ComparePart3:
 	jr nz, AccentData_Part3_Done
 	cp L,H
 	jr nz, AccentData_Part3_Done
-	and (0x3290:16), 0xf7
+	and (ACC_LANES_RESYNC:16), 0xf7
 AccentData_Part3_Done:
 	ret
 
@@ -1713,7 +1713,7 @@ AccentData_ComparePart4:
 	jr nz, AccentData_Part4_Done
 	cp L,H
 	jr nz, AccentData_Part4_Done
-	and (0x3290:16), 0xef
+	and (ACC_LANES_RESYNC:16), 0xef
 AccentData_Part4_Done:
 	ret
 
@@ -1728,7 +1728,7 @@ AccentData_ComparePart5:
 	jr nz, AccentData_Part5_Done
 	cp L,H
 	jr nz, AccentData_Part5_Done
-	and (0x3290:16), 0xdf
+	and (ACC_LANES_RESYNC:16), 0xdf
 AccentData_Part5_Done:
 	ret
 

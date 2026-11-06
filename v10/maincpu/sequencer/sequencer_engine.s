@@ -30626,7 +30626,7 @@ SeqPart_InitValidOk:
 	ld hl, 0:i3
 	ret
 
-; Rejects rhythm parts: when part A's type (0xf1a0) is 0x0d, 0x0f or 0x10, sets error 9, maps it
+; Rejects rhythm parts: when part A's type (SEQ_TRACK_ASSIGN) is 0x0d, 0x0f or 0x10, sets error 9, maps it
 ; (SeqError_MapViaTableA), resets song slot 0 and returns L = 0xff; otherwise returns at once.
 SeqPart_CheckVoiceType:
 	dec 1, a

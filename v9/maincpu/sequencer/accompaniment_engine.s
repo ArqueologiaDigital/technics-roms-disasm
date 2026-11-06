@@ -406,7 +406,7 @@ AccStyle_ApplyStd_LoadTuning:
 	ld w, 0x0:opc
 	calr AccPart_GetVoiceParamOffsetTable
 	call AccVoice_LoadTuningBlock
-	or (0x332c:16), 63
+	or (ACC_LANES_RESYNC:16), 63
 
 AccStyle_ApplyStd_Return:
 	ret
@@ -591,7 +591,7 @@ AccVoice_SelectPartOffset_SetModeW:
 	call AccVoice_LoadTuningBlock
 
 AccVoice_SelectPartOffset_Apply63:
-	or (0x332c:16), 63
+	or (ACC_LANES_RESYNC:16), 63
 	bit 0, (ACC_REQ_INTRO:16)
 	jr z, AccVoice_SelectPartOffset_Bit1
 	or (ACC_LANES_INTRO1:16), 63
@@ -657,7 +657,7 @@ AccStyle_UseSecondary_Resolve:
 	call AccVoice_ResolveParamAddr
 	calr AccPart_InitPositionsAndBase
 	call AccTuning_CopyAllPartsFromStyle
-	or (0x332c:16), 63
+	or (ACC_LANES_RESYNC:16), 63
 	bit 0, (ACC_REQ_INTRO:16)
 	jr z, AccStyle_UseSecondary_Mode3
 	or (ACC_LANES_INTRO1:16), 63
@@ -692,7 +692,7 @@ AccPart_ResetAndCopyTuning:
 	ld xiy, (ACC_STYLE_RECORD:16)
 	calr AccPart_InitPositionsAndBase
 	call AccTuning_CopyAllPartsFromStyle
-	or (0x332c:16), 63
+	or (ACC_LANES_RESYNC:16), 63
 	and (ACC_LANES_INTRO1:16), 192
 	and (ACC_LANES_COUNTIN:16), 192
 	and (ACC_LANES_INTRO2:16), 192
@@ -1096,7 +1096,7 @@ AccVoice_ProcessAllSixParts:
 	ret
 
 AccVoice_SavePartState1:
-	and (0x32f4:16), 252
+	and (ACC_PART_FLAGS:16), 252
 	ld (ACC_BAD_EVENT_COUNT:16), 0
 	ld a, 0x1:opc
 	ld (ACC_PART_BIT:16), a
@@ -1138,13 +1138,13 @@ AccVoice_RestorePartState1:
 ; -----------------------------------------------------------------------------
 
 AccVoice_ProcessEventLoop:
-	bit 0, (0x32f4:16)
+	bit 0, (ACC_PART_FLAGS:16)
 	jr z, AccVoice_EventLoop_Active
 	jr AccVoice_EventLoop_Idle
 
 AccVoice_EventLoop_Active:
 	calr AccVoice_DispatchByChannel
-	bit 0, (0x32f4:16)
+	bit 0, (ACC_PART_FLAGS:16)
 	jr z, AccVoice_EventLoop_Dispatch
 	jr AccVoice_EventProcessingReturn
 
@@ -1197,7 +1197,7 @@ AccVoice_EventLoop_Idle:
 AccVoice_DispatchByChannel:
 	cp (ACC_PART_BIT:16), 1
 	jr nz, AccVoice_DispatchCh_Kbd2
-	bit 0, (0x332c:16)
+	bit 0, (ACC_LANES_RESYNC:16)
 	jr z, SoundPatch_NullRet
 	calr AccKbd1_ProcessNotes
 	jr SoundPatch_NullRet
@@ -1205,7 +1205,7 @@ AccVoice_DispatchByChannel:
 AccVoice_DispatchCh_Kbd2:
 	cp (ACC_PART_BIT:16), 2
 	jr nz, AccVoice_DispatchCh_Acc1
-	bit 1, (0x332c:16)
+	bit 1, (ACC_LANES_RESYNC:16)
 	jr z, SoundPatch_NullRet
 	calr AccKbd2_ProcessNotes
 	jr SoundPatch_NullRet
@@ -1213,7 +1213,7 @@ AccVoice_DispatchCh_Kbd2:
 AccVoice_DispatchCh_Acc1:
 	cp (ACC_PART_BIT:16), 4
 	jr nz, AccVoice_DispatchCh_Acc2
-	bit 2, (0x332c:16)
+	bit 2, (ACC_LANES_RESYNC:16)
 	jr z, SoundPatch_NullRet
 	call AccCh1_ProcessNotes
 	jr SoundPatch_NullRet
@@ -1221,7 +1221,7 @@ AccVoice_DispatchCh_Acc1:
 AccVoice_DispatchCh_Acc2:
 	cp (ACC_PART_BIT:16), 8
 	jr nz, AccVoice_DispatchCh_Acc3
-	bit 3, (0x332c:16)
+	bit 3, (ACC_LANES_RESYNC:16)
 	jr z, SoundPatch_NullRet
 	call AccCh2_ProcessNotes
 	jr SoundPatch_NullRet
@@ -1229,7 +1229,7 @@ AccVoice_DispatchCh_Acc2:
 AccVoice_DispatchCh_Acc3:
 	cp (ACC_PART_BIT:16), 16
 	jr nz, AccVoice_DispatchCh_Acc4
-	bit 4, (0x332c:16)
+	bit 4, (ACC_LANES_RESYNC:16)
 	jr z, SoundPatch_NullRet
 	call AccCh3_ProcessNotes
 	jr SoundPatch_NullRet
@@ -1237,7 +1237,7 @@ AccVoice_DispatchCh_Acc3:
 AccVoice_DispatchCh_Acc4:
 	cp (ACC_PART_BIT:16), 32
 	jr nz, SoundPatch_NullRet
-	bit 5, (0x332c:16)
+	bit 5, (ACC_LANES_RESYNC:16)
 	jr z, SoundPatch_NullRet
 	call AccCh4_ProcessNotes
 	jr SoundPatch_NullRet
@@ -1253,7 +1253,7 @@ AccVoice_AdvanceAndCheckEnd:
 	call AccWrap_PlayModeDispatch
 	call Composer_ResetStyleImage
 	ld (ACC_PENDING_STYLE:16), 255
-	or (0x32f4:16), 33
+	or (ACC_PART_FLAGS:16), 33
 
 AccVoice_AdvanceAndCheck_Return:
 	ret
@@ -1267,7 +1267,7 @@ AccVoice_HandleNoteOnEvent:
 	calr AccTempo_PositionCompare
 	cp a, 0x18
 	jr ule, AccVoice_NoteOn_InRange
-	or (0x32f4:16), 1
+	or (ACC_PART_FLAGS:16), 1
 	jr AccVoice_NoteOn_Return
 
 AccVoice_NoteOn_InRange:
@@ -1277,9 +1277,9 @@ AccVoice_NoteOn_Return:
 	ret
 
 AccVoice_HandleBarEndEvent:
-	bit 1, (0x32f4:16)
+	bit 1, (ACC_PART_FLAGS:16)
 	jr z, AccVoice_BarEnd_Process
-	or (0x32f4:16), 1
+	or (ACC_PART_FLAGS:16), 1
 	jrl AccVoice_NullRet
 
 AccVoice_BarEnd_Process:
@@ -1290,11 +1290,11 @@ AccVoice_BarEnd_Process:
 	calr AccTempo_PositionCompare
 	cp a, 0x18
 	jr ule, AccVoice_BarEnd_InRange
-	or (0x32f4:16), 1
+	or (ACC_PART_FLAGS:16), 1
 	jrl AccVoice_NullRet
 
 AccVoice_BarEnd_InRange:
-	or (0x32f4:16), 2
+	or (ACC_PART_FLAGS:16), 2
 	ld a, (ACC_CUR_BEAT_POS:16)
 	inc 1, a
 	ld w, a
@@ -1358,7 +1358,7 @@ AccVoice_BarEnd_CheckSync69:
 
 AccVoice_SetChordChangeFlags:
 	or (0x32f3:16), 128
-	or (0x32f4:16), 1
+	or (ACC_PART_FLAGS:16), 1
 	ld a, (ACC_LANES_FILLIN1:16)
 	or a, (ACC_LANES_FILLIN2:16)
 	and a, 0x3f
@@ -1437,7 +1437,7 @@ AccVoice_ParkLaneAtEnd:
 	ld a, (ACC_PART_BIT:16)
 	or (ACC_LANES_PARKED:16), a
 	or (ACC_LANES_ENDED:16), a
-	or (0x32f4:16), 1
+	or (ACC_PART_FLAGS:16), 1
 	ld a, (ACC_LANES_PARKED:16)
 	and a, 0x3f
 	cp a, 0x3f
@@ -1477,7 +1477,7 @@ AccVoice_ActivateByteData_Skip2:
 	or	(0x330e:16), 2
 AccVoice_ActivateByteData_Join:
 	or	(0x32f3:16), 128
-	or	(0x32f4:16), 1
+	or	(ACC_PART_FLAGS:16), 1
 	jr	AccVoice_ActivatePart_Join
 AccVoice_ActivatePart_Skip3:
 	calr	AccPart_SelectSourceOrParam
@@ -1605,42 +1605,42 @@ AccPart_LoadTuningByChannel:
 	cp (ACC_PART_BIT:16), 1
 	jr nz, AccPart_LoadTuning_Kbd2
 	call AccTuning_LoadAndApplyMaster
-	or (0x332c:16), 1
+	or (ACC_LANES_RESYNC:16), 1
 	jr AccPart_NullRet
 
 AccPart_LoadTuning_Kbd2:
 	cp (ACC_PART_BIT:16), 2
 	jr nz, AccPart_LoadTuning_Acc1
 	call AccTuning_LoadAndApplyMaster
-	or (0x332c:16), 2
+	or (ACC_LANES_RESYNC:16), 2
 	jr AccPart_NullRet
 
 AccPart_LoadTuning_Acc1:
 	cp (ACC_PART_BIT:16), 4
 	jr nz, AccPart_LoadTuning_Acc2
 	call AccTuning_LoadCoarseFromStyle
-	or (0x332c:16), 4
+	or (ACC_LANES_RESYNC:16), 4
 	jr AccPart_NullRet
 
 AccPart_LoadTuning_Acc2:
 	cp (ACC_PART_BIT:16), 8
 	jr nz, AccPart_LoadTuning_Acc3
 	call AccTuning_LoadFineFromStyle
-	or (0x332c:16), 8
+	or (ACC_LANES_RESYNC:16), 8
 	jr AccPart_NullRet
 
 AccPart_LoadTuning_Acc3:
 	cp (ACC_PART_BIT:16), 16
 	jr nz, AccPart_LoadTuning_Acc4
 	call AccTuning_LoadOctaveFromStyle
-	or (0x332c:16), 16
+	or (ACC_LANES_RESYNC:16), 16
 	jr AccPart_NullRet
 
 AccPart_LoadTuning_Acc4:
 	cp (ACC_PART_BIT:16), 32
 	jr nz, AccPart_NullRet
 	call AccTuning_LoadTransposeFromStyle
-	or (0x332c:16), 32
+	or (ACC_LANES_RESYNC:16), 32
 
 AccPart_NullRet:
 	ret
@@ -1793,7 +1793,7 @@ AccPart_CopyData:
 	ld bc, 7:i3
 	ldir85
 	ld a, (ACC_PART_BIT:16)
-	or (0x332c:16), a
+	or (ACC_LANES_RESYNC:16), a
 	ret
 
 AccPart_CheckAnyActive:
@@ -2176,7 +2176,7 @@ AccTempo_Return:
 
 AccKbd1_ProcessNotes:
 	calr AccKbd1_TimingCheck
-	bit 0, (0x32f4:16)
+	bit 0, (ACC_PART_FLAGS:16)
 	jr nz, AccKbd1_ProcessReturn
 	calr AccKbd1_ScanSlots
 	calr AccKbd1_DrainRingBuf
@@ -2187,7 +2187,7 @@ AccKbd1_ProcessNotes:
 	ld a, (0x343c:16)
 	ld (0x32ec:16), a
 	call RhythmPart1_ProcessAccentData
-	and (0x332c:16), 254
+	and (ACC_LANES_RESYNC:16), 254
 
 AccKbd1_ProcessReturn:
 	ret
@@ -2201,7 +2201,7 @@ AccKbd1_TimingCheck:
 	calr AccTempo_PositionCompare
 	cp a, 0x18
 	jr ule, AccKbd1_TimingOK
-	or (0x32f4:16), 1
+	or (ACC_PART_FLAGS:16), 1
 	jr AccKbd1_TimingReturn
 
 AccKbd1_TimingOK:
@@ -2356,7 +2356,7 @@ AccKbd2_ProcessEntry:
 	calr AccKbd2_RestoreState
 
 AccKbd2_SaveState:
-	and (0x32f4:16), 252
+	and (ACC_PART_FLAGS:16), 252
 	ld (ACC_BAD_EVENT_COUNT:16), 0
 	ld a, 0x2:opc
 	ld (ACC_PART_BIT:16), a
@@ -2426,11 +2426,11 @@ AccKbd2_CheckReturn:
 
 AccKbd2_ProcessNotes:
 	calr AccKbd1_TimingCheck
-	bit 0, (0x32f4:16)
+	bit 0, (ACC_PART_FLAGS:16)
 	jr nz, AccKbd2_ProcessReturn
 	calr AccKbd2_ScanSlots
 	calr AccKbd2_DrainRingBuf
-	and (0x332c:16), 253
+	and (ACC_LANES_RESYNC:16), 253
 
 AccKbd2_ProcessReturn:
 	ret
@@ -2468,10 +2468,10 @@ AccKbd2_DrainDone:
 	ret
 
 AccSeq_ScanPattern:
-	and (0x32f4:16), 252
+	and (ACC_PART_FLAGS:16), 252
 
 AccSeq_ScanLoop:
-	bit 0, (0x32f4:16)
+	bit 0, (ACC_PART_FLAGS:16)
 	jrl nz, AccSeq_ScanDone
 	ld xhl, (0x3293:16)
 	ld a, (xhl)
@@ -2500,15 +2500,15 @@ AccSeq_NoteOn90:
 	jr AccSeq_NoteOn_Continue
 
 AccSeq_NoteOn_TooFar:
-	or (0x32f4:16), 1
+	or (ACC_PART_FLAGS:16), 1
 
 AccSeq_NoteOn_Continue:
 	jr AccSeq_ScanLoop
 
 AccSeq_EndOfBar:
-	bit 1, (0x32f4:16)
+	bit 1, (ACC_PART_FLAGS:16)
 	jr z, AccSeq_EndOfBar_Process
-	or (0x32f4:16), 1
+	or (ACC_PART_FLAGS:16), 1
 	jr AccSeq_ScanLoop
 
 AccSeq_EndOfBar_Process:
@@ -2519,7 +2519,7 @@ AccSeq_EndOfBar_Process:
 	calr AccTempo_PositionCompare
 	cp a, 0x18
 	jr ugt, AccSeq_EndOfBar_TooFar
-	or (0x32f4:16), 2
+	or (ACC_PART_FLAGS:16), 2
 	ld a, (0x32b1:16)
 	inc 1, a
 	ld w, a
@@ -2541,7 +2541,7 @@ AccSeq_NextBarPage:
 	jrl AccSeq_ScanLoop
 
 AccSeq_EndOfBar_TooFar:
-	or (0x32f4:16), 1
+	or (ACC_PART_FLAGS:16), 1
 	jrl AccSeq_ScanLoop
 
 AccSeq_ScanDone:
@@ -2625,7 +2625,7 @@ AccCh1_ProcessEntry:
 	ret
 
 AccCh1_SaveState:
-	and (0x32f4:16), 252
+	and (ACC_PART_FLAGS:16), 252
 	ld (ACC_BAD_EVENT_COUNT:16), 0
 	ld a, 0x4:opc
 	ld (ACC_PART_BIT:16), a
@@ -2760,8 +2760,8 @@ AccCh1_NoteOnEntry:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x32f4:16), 251
-	or (0x32f4:16), 8
+	and (ACC_PART_FLAGS:16), 251
+	or (ACC_PART_FLAGS:16), 8
 	ld xhl, 0x2c94
 	ld iy, (xhl + 4)
 	ld bc, (xhl + 2)
@@ -2860,9 +2860,9 @@ AccVoice_CorrectionData:
 	push	xhl
 	pushw	iy
 	ld	a, (ACC_EVENT+2:16)
-	bit	4, (0x32f4:16)
+	bit	4, (ACC_PART_FLAGS:16)
 	jr	nz, AccVoice_CorrectionData_Skip2
-	bit	3, (0x32f4:16)
+	bit	3, (ACC_PART_FLAGS:16)
 	jr	z, AccVoice_CorrectionData_Skip
 	call	Rhythm_BassToRoot
 AccVoice_CorrectionData_Skip:
@@ -2877,9 +2877,9 @@ AccVoice_ConvertNoteForChord:
 	push xhl
 	pushw iy
 	ld a, (ACC_EVENT+2:16)
-	bit 4, (0x32f4:16)
+	bit 4, (ACC_PART_FLAGS:16)
 	jr nz, AccVoice_VelocityLookup
-	bit 3, (0x32f4:16)
+	bit 3, (ACC_PART_FLAGS:16)
 	jr z, AccVoice_NoteRangeCheck
 	call Rhythm_BassToRoot
 
@@ -3008,7 +3008,7 @@ AccBuf_InitWithDefaults:
 
 AccCh1_ProcessNotes:
 	call AccKbd1_TimingCheck
-	bit 0, (0x32f4:16)
+	bit 0, (ACC_PART_FLAGS:16)
 	jr nz, AccCh1_ProcessReturn
 	calr AccCh1_ScanSlots
 	calr AccCh1_DrainRingBuf
@@ -3020,7 +3020,7 @@ AccCh1_ProcessNotes:
 	ld a, (0x343c:16)
 	ld (0x32ec:16), a
 	call RhythmPart2_ProcessAccentData
-	and (0x332c:16), 251
+	and (ACC_LANES_RESYNC:16), 251
 
 AccCh1_ProcessReturn:
 	ret
@@ -3073,7 +3073,7 @@ AccCh2_ProcessEntry:
 	ret
 
 AccCh2_SaveState:
-	and (0x32f4:16), 252
+	and (ACC_PART_FLAGS:16), 252
 	ld (ACC_BAD_EVENT_COUNT:16), 0
 	ld a, 0x8:opc
 	ld (ACC_PART_BIT:16), a
@@ -3114,8 +3114,8 @@ AccCh2_NoteOnEntry:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING+1:16)
 	ld (ACC_CUR_CEILING:16), a
-	or (0x32f4:16), 4
-	and (0x32f4:16), 247
+	or (ACC_PART_FLAGS:16), 4
+	and (ACC_PART_FLAGS:16), 247
 	ld xhl, 0x2d94
 	ld iy, (xhl + 4)
 	ld bc, (xhl + 2)
@@ -3183,7 +3183,7 @@ AccCh2_OverlapReturn:
 
 AccCh2_ProcessNotes:
 	call AccKbd1_TimingCheck
-	bit 0, (0x32f4:16)
+	bit 0, (ACC_PART_FLAGS:16)
 	jr nz, AccCh2_ProcessReturn
 	calr AccCh2_ScanSlots
 	calr AccCh2_DrainRingBuf
@@ -3195,7 +3195,7 @@ AccCh2_ProcessNotes:
 	ld a, (0x343c:16)
 	ld (0x32ec:16), a
 	call RhythmPart3_ProcessAccentData
-	and (0x332c:16), 247
+	and (ACC_LANES_RESYNC:16), 247
 
 AccCh2_ProcessReturn:
 	ret
@@ -3248,7 +3248,7 @@ AccCh3_ProcessEntry:
 	ret
 
 AccCh3_SaveState:
-	and (0x32f4:16), 252
+	and (ACC_PART_FLAGS:16), 252
 	ld (ACC_BAD_EVENT_COUNT:16), 0
 	ld a, 0x10:opc
 	ld (ACC_PART_BIT:16), a
@@ -3289,8 +3289,8 @@ AccCh3_NoteOnEntry:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING+2:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x32f4:16), 251
-	and (0x32f4:16), 247
+	and (ACC_PART_FLAGS:16), 251
+	and (ACC_PART_FLAGS:16), 247
 	ld xhl, 0x2e94
 	ld iy, (xhl + 4)
 	ld bc, (xhl + 2)
@@ -3358,7 +3358,7 @@ AccCh3_OverlapReturn:
 
 AccCh3_ProcessNotes:
 	call AccKbd1_TimingCheck
-	bit 0, (0x32f4:16)
+	bit 0, (ACC_PART_FLAGS:16)
 	jr nz, AccCh3_ProcessReturn
 	calr AccCh3_ScanSlots
 	calr AccCh3_DrainRingBuf
@@ -3370,7 +3370,7 @@ AccCh3_ProcessNotes:
 	ld a, (0x343c:16)
 	ld (0x32ec:16), a
 	call RhythmPart4_ProcessAccentData
-	and (0x332c:16), 239
+	and (ACC_LANES_RESYNC:16), 239
 
 AccCh3_ProcessReturn:
 	ret
@@ -3423,7 +3423,7 @@ AccCh4_ProcessEntry:
 	ret
 
 AccCh4_SaveState:
-	and (0x32f4:16), 252
+	and (ACC_PART_FLAGS:16), 252
 	ld (ACC_BAD_EVENT_COUNT:16), 0
 	ld a, 0x20:opc
 	ld (ACC_PART_BIT:16), a
@@ -3464,8 +3464,8 @@ AccCh4_NoteOnEntry:
 	ld (ACC_CUR_TURNOVER:16), a
 	ld a, (ACC_CH_CEILING+3:16)
 	ld (ACC_CUR_CEILING:16), a
-	and (0x32f4:16), 251
-	and (0x32f4:16), 247
+	and (ACC_PART_FLAGS:16), 251
+	and (ACC_PART_FLAGS:16), 247
 	ld xhl, 0x2f94
 	ld iy, (xhl + 4)
 	ld bc, (xhl + 2)
@@ -3533,7 +3533,7 @@ AccCh4_OverlapReturn:
 
 AccCh4_ProcessNotes:
 	call AccKbd1_TimingCheck
-	bit 0, (0x32f4:16)
+	bit 0, (ACC_PART_FLAGS:16)
 	jr nz, AccCh4_ProcessReturn
 	calr AccCh4_ScanSlots
 	calr AccCh4_DrainRingBuf
@@ -3545,7 +3545,7 @@ AccCh4_ProcessNotes:
 	ld a, (0x343c:16)
 	ld (0x32ec:16), a
 	call RhythmPart5_ProcessAccentData
-	and (0x332c:16), 223
+	and (ACC_LANES_RESYNC:16), 223
 
 AccCh4_ProcessReturn:
 	ret
@@ -3679,7 +3679,7 @@ AccPart_Deactivate_ActiveNote:
 
 AccPart_Deactivate_SetDone:
 	or (0x32f3:16), 128
-	or (0x32f4:16), 1
+	or (ACC_PART_FLAGS:16), 1
 	jr AccPart_Deactivate_ClearMasks
 
 AccPart_Deactivate_SendOff:
@@ -3736,20 +3736,20 @@ AccTick_Main:
 	bit 2, (ACC_RUN_FLAGS:16)
 	jrl nz, AccTick_CheckCollect
 	calr AccTempo_BarCompare
-	bit 6, (0x32f4:16)
+	bit 6, (ACC_PART_FLAGS:16)
 	jrl nz, AccTick_Return
 	calr AccSection_SwitchNowUnlessDeferred
-	bit 6, (0x32f4:16)
+	bit 6, (ACC_PART_FLAGS:16)
 	jrl nz, AccTick_Return
 	call AccTuning_ApplyChange
-	bit 7, (0x332c:16)
+	bit 7, (ACC_LANES_RESYNC:16)
 	jr z, AccTick_AfterSync
 	call Rhythm_ProcessAllPartsAndLoad
-	and (0x332c:16), 127
+	and (ACC_LANES_RESYNC:16), 127
 
 AccTick_AfterSync:
 	call AccVoice_ProcessAllSixParts
-	bit 5, (0x32f4:16)
+	bit 5, (ACC_PART_FLAGS:16)
 	jrl nz, AccTick_Return
 	call AccKbd2_ProcessEntry
 	call AccSeq_ScanPattern
@@ -4057,11 +4057,11 @@ AccTick_ByteData_Join2:
 	and	(ACC_LANE_BEAT_POS+4:16), 240
 	and	(ACC_LANE_BEAT_POS+5:16), 240
 	calr	AccSeq_DualPartScan
-	bit	6, (0x32f4:16)
+	bit	6, (ACC_PART_FLAGS:16)
 	jr	nz, AccTick_ByteData_Join3
 	calr	AccSeq_FourChannelScan
 AccTick_ByteData_Join3:
-	or	(0x332c:16), 128
+	or	(ACC_LANES_RESYNC:16), 128
 	ret
 
 AccTempo_BarCompare:
@@ -4127,7 +4127,7 @@ AccSeq_DualPartScan:
 	ld (ACC_LANE_BEAT_POS:16), a
 	ld wa, (ACC_CUR_READ_POS:16)
 	ld (ACC_LANE_READ_POS:16), wa
-	bit 6, (0x32f4:16)
+	bit 6, (ACC_PART_FLAGS:16)
 	jr nz, AccSeq_DualPartReturn
 	ld de, (0x32e3:16)
 	ld (ACC_SCAN_BAD_EVENT_COUNT:16), 0
@@ -4154,11 +4154,11 @@ AccSeq_DualPartReturn:
 AccSeq_PatternScanner:
 	ld iy, (ACC_CUR_READ_POS:16)
 	ld iz, (ACC_CUR_BLOCK:16)
-	and (0x32f4:16), 254
+	and (ACC_PART_FLAGS:16), 254
 	xor bc, bc
 
 AccSeq_ScannerLoop:
-	bit 0, (0x32f4:16)
+	bit 0, (ACC_PART_FLAGS:16)
 	jrl nz, AccSeq_Scanner_Done
 	ld	a, (xhl+iy)
 	cp a, 0x81
@@ -4167,7 +4167,7 @@ AccSeq_ScannerLoop:
 	xor c, c
 	cp de, bc
 	jr nc, AccSeq_Scanner_BarEnd
-	or (0x32f4:16), 1
+	or (ACC_PART_FLAGS:16), 1
 	jr AccSeq_ScannerLoop
 
 AccSeq_Scanner_BarEnd:
@@ -4207,7 +4207,7 @@ AccSeq_Scanner_EventMatch:
 	ld c, a
 	cp de, bc
 	jr nc, AccSeq_Scanner_SkipFields
-	or (0x32f4:16), 1
+	or (ACC_PART_FLAGS:16), 1
 	jr AccSeq_ScannerLoop
 
 AccSeq_Scanner_SkipFields:
@@ -4258,7 +4258,7 @@ AccSeq_Scanner_Unknown:
 	call AccWrap_PlayModeDispatch
 	call Composer_ResetStyleImage
 	ld (ACC_PENDING_STYLE:16), 255
-	or (0x32f4:16), 65
+	or (ACC_PART_FLAGS:16), 65
 
 AccSeq_Scanner_Skip1:
 	calr AccBuf_Advance
@@ -4325,7 +4325,7 @@ AccSeq_FourChannelScan:
 	ld (ACC_LANE_READ_POS+4:16), wa
 	ld xhl, 0x2c94
 	calr AccBuf_WriteD0WithVoice
-	bit 6, (0x32f4:16)
+	bit 6, (ACC_PART_FLAGS:16)
 	jrl nz, AccSeq_FourChannelReturn
 	ld de, (0x32e3:16)
 	ld (ACC_SCAN_BAD_EVENT_COUNT:16), 0
@@ -4347,7 +4347,7 @@ AccSeq_FourChannelScan:
 	ld (ACC_LANE_READ_POS+6:16), wa
 	ld xhl, 0x2d94
 	calr AccBuf_WriteD0WithVoice
-	bit 6, (0x32f4:16)
+	bit 6, (ACC_PART_FLAGS:16)
 	jrl nz, AccSeq_FourChannelReturn
 	ld de, (0x32e3:16)
 	ld (ACC_SCAN_BAD_EVENT_COUNT:16), 0
@@ -4369,7 +4369,7 @@ AccSeq_FourChannelScan:
 	ld (ACC_LANE_READ_POS+8:16), wa
 	ld xhl, 0x2e94
 	calr AccBuf_WriteD0WithVoice
-	bit 6, (0x32f4:16)
+	bit 6, (ACC_PART_FLAGS:16)
 	jr nz, AccSeq_FourChannelReturn
 	ld de, (0x32e3:16)
 	ld (ACC_SCAN_BAD_EVENT_COUNT:16), 0
@@ -4417,7 +4417,7 @@ AccStyle_Init:
 	ld w, 0x0:opc
 	call AccPart_GetVoiceParamOffsetTable
 	call AccVoice_LoadTuningBlock
-	or (0x332c:16), 63
+	or (ACC_LANES_RESYNC:16), 63
 	jr AccStyle_Finalize
 
 AccStyle_ExtendedInit:
@@ -4452,7 +4452,7 @@ AccStyle_LoadAndApply:
 	call Rhythm_UpdateTuningConfig
 	ld xiy, (ACC_STYLE_RECORD:16)
 	call AccTuning_CopyAllPartsFromStyle
-	or (0x332c:16), 63
+	or (ACC_LANES_RESYNC:16), 63
 	ld w, (ACC_STYLE_NUMBER:16)
 	call AccPatch_SetByChordIndex
 
@@ -4673,7 +4673,7 @@ AccSection_StartIntro_SetMode:
 	call AccVoice_LoadTuningBlock
 
 AccSection_StartIntro_ApplyAll:
-	or (0x332c:16), 63
+	or (ACC_LANES_RESYNC:16), 63
 
 AccSection_StartIntro_SetMasks:
 	bit 3, (ACC_PENDING_INTRO:16)
@@ -4791,7 +4791,7 @@ AccSection_StartComposerIntro_MatchB:
 AccSection_StartComposerIntro_Apply:
 	calr AccInit_AllPartPositions
 	call AccTuning_CopyAllPartsFromStyle
-	or (0x332c:16), 63
+	or (ACC_LANES_RESYNC:16), 63
 	jr AccSection_StartComposerIntro_Return
 
 AccSection_StartComposerIntro_Fallback:
@@ -4801,7 +4801,7 @@ AccSection_StartComposerIntro_Fallback:
 	xor xhl, xhl
 	ldw hl, 0x126
 	call AccVoice_LoadTuningBlock
-	or (0x332c:16), 63
+	or (ACC_LANES_RESYNC:16), 63
 
 AccSection_StartComposerIntro_Return:
 	ret
@@ -4846,7 +4846,7 @@ AccSection_StartFillIn_StyleMode:
 	call AccVoice_LoadTuningBlock
 
 AccSection_StartFillIn_Apply63:
-	or (0x332c:16), 63
+	or (ACC_LANES_RESYNC:16), 63
 
 AccSection_StartFillIn_SetForward:
 	bit 0, (ACC_PENDING_FILLIN:16)
@@ -4928,7 +4928,7 @@ AccSection_StartComposerFillIn_MatchRev:
 AccSection_StartComposerFillIn_Apply:
 	calr AccInit_AllPartPositions
 	call AccTuning_CopyAllPartsFromStyle
-	or (0x332c:16), 63
+	or (ACC_LANES_RESYNC:16), 63
 	ret
 
 AccVoice_LoadAllParts:
@@ -5036,7 +5036,7 @@ AccSection_StartEnding_SetModeW:
 	call AccVoice_LoadTuningBlock
 
 AccSection_StartEnding_Apply:
-	or (0x332c:16), 63
+	or (ACC_LANES_RESYNC:16), 63
 
 AccSection_StartEnding_SetMasks:
 	bit 0, (ACC_PENDING_ENDING:16)
@@ -5112,7 +5112,7 @@ AccSection_StartComposerEnding_MatchRev:
 AccSection_StartComposerEnding_Apply:
 	calr AccInit_AllPartPositions
 	call AccTuning_CopyAllPartsFromStyle
-	or (0x332c:16), 63
+	or (ACC_LANES_RESYNC:16), 63
 	ret
 
 AccBuf_WriteAllNotesOff:
@@ -5755,7 +5755,7 @@ AccBuf_ResetByteData_Loop4:
 	ret
 
 AccNote_FlushAll:
-	ld a, (0x332c:16)
+	ld a, (ACC_LANES_RESYNC:16)
 	and a, 0x3f
 	jr z, AccNote_FlushReturn
 	call RhythmPart_CopyData
@@ -5766,7 +5766,7 @@ AccNote_FlushAll:
 	call RhythmPart3_ProcessAccentData
 	call RhythmPart4_ProcessAccentData
 	call RhythmPart5_ProcessAccentData
-	and (0x332c:16), 192
+	and (ACC_LANES_RESYNC:16), 192
 
 AccNote_FlushReturn:
 	ret
@@ -5860,12 +5860,12 @@ AccSection_SwitchNow_ClearHighBits:
 	and (ACC_LANE_BEAT_POS+4:16), 240
 	and (ACC_LANE_BEAT_POS+5:16), 240
 	calr AccSeq_DualPartScan
-	bit 6, (0x32f4:16)
+	bit 6, (ACC_PART_FLAGS:16)
 	jr nz, AccSection_SwitchNow_SetDirty
 	calr AccSeq_FourChannelScan
 
 AccSection_SwitchNow_SetDirty:
-	or (0x332c:16), 128
+	or (ACC_LANES_RESYNC:16), 128
 	ret
 
 AccInit_ResetSongCounter:
@@ -6101,8 +6101,8 @@ AccTuning_ApplyVoice:
 	ld xiy, (ACC_STYLE_RECORD:16)
 	call AccPart_GetVoiceParamOffsetTable
 	call AccVoice_LoadTuningBlock
-	or (0x332c:16), 63
-	or (0x332c:16), 128
+	or (ACC_LANES_RESYNC:16), 63
+	or (ACC_LANES_RESYNC:16), 128
 
 AccTuning_ApplyReturn:
 	and (0x3393:16), 254
@@ -8032,9 +8032,9 @@ AccAutoPlay_ModeAvail_Values:
 	; AccAutoPlay_ModeAvail_Process: L := this[(PANEL_PLAY_SETTINGS) & 3] for (PANEL_PLAY_SETTINGS) & 3 = 1..3; the fifth
 	; byte pads the code below to an even address.  Was decoded as `push xhl / ld iz, 0x423b ...`.
 	.byte	0x3b, 0x36, 0x3b, 0x42, 0x47
-	; No reference found.  Returns unless bit 2 of (ACC_TRANSPORT_STATE) is clear, bit 1 of (0x346E) set, bit 0
-	; of (0x3498) set and bit 0 of (0x3499) clear; then calls AccAutoPlay_Configure, copies (0x3498)
-	; to (0x3499) and sets bit 0 of (0x3498).
+	; No reference found.  Returns unless bit 2 of (ACC_TRANSPORT_STATE) is clear, bit 1 of (ACC_SYNCHRO_ACTION) set, bit 0
+	; of (ACC_SYNCHRO_KEY_EVENT) set and bit 0 of (ACC_SYNCHRO_TRIGGERED) clear; then calls AccAutoPlay_Configure, copies (ACC_SYNCHRO_KEY_EVENT)
+	; to (ACC_SYNCHRO_TRIGGERED) and sets bit 0 of (ACC_SYNCHRO_KEY_EVENT).
 AccAutoPlay_ConfigureIfPending:
 	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, AccAutoPlay_ConfigureIfPending_Return
@@ -8114,7 +8114,7 @@ AccAutoPlay_Configure_Return:
 	ret
 
 AccAutoPlay_Configure_Extended:
-	; --- Bit-flag conditional: check bits, and/clear (0x3498)/(0x3499) (54 bytes) ---
+	; --- Bit-flag conditional: check bits, and/clear (ACC_SYNCHRO_KEY_EVENT)/(ACC_SYNCHRO_TRIGGERED) (54 bytes) ---
 	nop
 	nop
 	bit	1, (ACC_SYNCHRO_ACTION:16)
@@ -10179,13 +10179,13 @@ AccTiming_SlotOffsetTables:
 ; AccTiming_SlotOffsetTables -- two tables of 8 x LE32 slot offsets.
 ; ** RE-TYPED 2026-09-25 (lane accomp): was nop/`ei 0`/incf/`calr 0`/`jp 0`
 ; mnemonics plus a 16-byte .byte tail (data-as-code).  Readers:
-;   AccKbdTiming_SlotOverflow:  xor xwa,xwa / ld a,(0x3384) / sla xwa,2 /
+;   AccKbdTiming_SlotOverflow:  xor xwa,xwa / ld a,(ACC_SLOT_STEAL_INDEX) / sla xwa,2 /
 ;       add xwa, AccTiming_SlotOffsetTables / ld iz,(xwa)
 ;   AccAccTiming_SlotOverflow:  the same, from AccAccTiming_SlotOverflow_Data
-; so entry (0x3384) (stride 4, low 16 bits used) becomes IZ, the byte offset
+; so entry (ACC_SLOT_STEAL_INDEX) (stride 4, low 16 bits used) becomes IZ, the byte offset
 ; of a note slot that the code then reads and writes through the SRI (xix+iz)
 ; forms.  The first table steps by 6 and the second by 9 -- consistent with
-; the per-slot stride the two free-slot scans add (`add iz, (0x337c:16)`).
+; the per-slot stride the two free-slot scans add (`add iz, (ACC_SLOT_STRIDE)`).
 ; Size: the +0x20 reader pins the first table at 8 entries; the second is
 ; the 32 bytes up to AccDir_TickVector.
 ; readers in v9/v10 (address from the linked ELF): AccKbdTiming_SlotOverflow 0xF5B6D1,
@@ -12315,8 +12315,8 @@ AccSection_ApplyPendingChange:
 	ld	(13350:16), xbc
 	ld	xwa, xbc
 	call	AccTuning_CopyAllPartsFromStyle_Wrap
-	or	(0x332c:16), 63
-	set	7, (0x332c:16)
+	or	(ACC_LANES_RESYNC:16), 63
+	set	7, (ACC_LANES_RESYNC:16)
 	calr	AccTone_InlineBytecodeData_Code_Helper2
 	ldmm8	ACC_CHORD_VOICED_TYPE, ACC_CHORD_TYPE
 	ldmm8	ACC_CHORD_VOICED_ROOT, ACC_CHORD_ROOT
@@ -12332,7 +12332,7 @@ AccTone_InlineBytecodeData_Code_Helper2:
 	and	(ACC_LANE_BEAT_POS+4:16), 240
 	and	(ACC_LANE_BEAT_POS+5:16), 240
 	call	AccSeq_DualPartScan_Wrap
-	bit	6, (0x32f4:16)
+	bit	6, (ACC_PART_FLAGS:16)
 	ret	nz
 	call	AccSeq_FourChannelScan_Wrap
 	ret
@@ -12450,7 +12450,7 @@ AccTone_InlineBytecodeData_Code_Skip:
 	ld	(13350:16), xbc
 	ld	xwa, xbc
 	call	AccTuning_CopyAllPartsFromStyle_Wrap
-	or	(0x332c:16), 63
+	or	(ACC_LANES_RESYNC:16), 63
 	pop	xiz
 	inc	2, xsp
 	ret
@@ -12585,7 +12585,7 @@ AccTone_InlineBytecodeData_Code_Helper3_Join:
 	call	AccPart_InitPositionsAndBase_Wrap
 	ld	xwa, (0x3426:16)
 	call	AccTuning_CopyAllPartsFromStyle_Wrap
-	or	(0x332c:16), 63
+	or	(ACC_LANES_RESYNC:16), 63
 	and	(ACC_LANES_INTRO1:16), 192
 	and	(ACC_LANES_COUNTIN:16), 192
 	and	(ACC_LANES_INTRO2:16), 192
@@ -12637,7 +12637,7 @@ AccTone_InlineBytecodeData_Code_Helper3_Skip7:
 	call	AccStyle_SetupPartAddressesByHL_Wrap
 	ld	xwa, (0x33f2:16)
 	call	AccTuning_CopyAllPartsFromStyle_Wrap
-	or	(0x332c:16), 63
+	or	(ACC_LANES_RESYNC:16), 63
 	ld	a, (ACC_REQ_INTRO:16)
 	cp	a, 4:i3
 	jr	z, AccTone_InlineBytecodeData_Code_Helper3_Skip8
@@ -12768,7 +12768,7 @@ AccPedal_DirectionA_Wrap_Helper2:
 	ld	(xhl+5), c
 	ld	c, (xde+6)
 	ld	(xhl+6), c
-	or	(0x332c:16), a
+	or	(ACC_LANES_RESYNC:16), a
 	ret
 AccVoice_ClearChannelStates:
 	ld (ACC_LANE_MEASURE:16), 0
@@ -12974,7 +12974,7 @@ AccVoice_BarCounterBytecodeData_Join:
 	ld	xwa, (13298:16)
 AccVoice_BarCounterBytecodeData_Join2:
 	call	AccTuning_CopyAllPartsFromStyle_Wrap
-	or	(0x332c:16), 63
+	or	(ACC_LANES_RESYNC:16), 63
 	pop	xiz
 	inc	2, xsp
 	ret
@@ -13063,7 +13063,7 @@ AccVoice_BarCounterBytecodeData_Skip16:
 	ld	xwa, (13298:16)
 AccVoice_BarCounterBytecodeData_Join3:
 	call	AccTuning_CopyAllPartsFromStyle_Wrap
-	or	(0x332c:16), 63
+	or	(ACC_LANES_RESYNC:16), 63
 	pop	xiz
 	inc	2, xsp
 	ret
@@ -13213,7 +13213,7 @@ AccVoice_BarCounterBytecodeData_Join4:
 AccVoice_BarCounterBytecodeData_Join5:
 	call	AccTuning_CopyAllPartsFromStyle_Wrap
 AccVoice_BarCounterBytecodeData_Join6:
-	or	(0x332c:16), 63
+	or	(ACC_LANES_RESYNC:16), 63
 	pop	xiz
 	inc	2, xsp
 	ret
@@ -20339,7 +20339,7 @@ ToneGen_LoadRhythmPatternParams_Pad:
 ;       the note index is incremented.
 ;   ToneGen_LoadRhythmPatternParams: c = a, then sla a,1 / add c,a (3a) /
 ;       ld xix, ToneGen_PitchClassNoteFormTable / add xix,xbc; (xix), (xix+1), (xix+2) are
-;       stored to (0x3431), (0x3432), (0x3433).
+;       stored to (0x3431), (0x3432), (ACC_EVENT_EXT1).
 ; Sizes as in AccPatch_TransposeNoteTable: 12 flag bytes between the two
 ; reader offsets, then 12 three-byte records ending at
 ; AccPlayback_ProcessOngoingEvents.
@@ -20350,7 +20350,7 @@ ToneGen_LoadRhythmPatternParams_Pad:
 ; +0x02  12 x u8, flag byte per index (bit 0 tested)
 AccPlayback_TrackPosition_Data:
 	.byte 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-; +0x0E  12 x 3-byte records {(0x3431), (0x3432), (0x3433)}
+; +0x0E  12 x 3-byte records {(0x3431), (0x3432), (ACC_EVENT_EXT1)}
 ; ToneGen_PitchClassNoteFormTable: 12 x 3-byte records indexed by pitch class (note mod 12 via
 ;   Note_PitchClassTable): {flag, byte +6, byte +7}; flag 0 = plain 6-byte 0x90 note event, flag 1 =
 ;   8-byte 0x91 form with the two extra bytes. Non-zero: D#, E = (1, 0x00, 0x11), B = (1, 0x11, 0x11). Basis: readers
@@ -20417,12 +20417,12 @@ ToneGen_ProcessVoiceSlots:
 	ld a, (0x34fb:16)
 	add d, a
 	ld e, (0x34fc:16)
-	and (0x32f4:16), 254
+	and (ACC_PART_FLAGS:16), 254
 	xor bc, bc
 	ld (ACC_EVENT_PATTERN_NOTE:16), 6
 
 AccPlayback_Ongoing_NoteOff:
-	bit 0, (0x32f4:16)
+	bit 0, (ACC_PART_FLAGS:16)
 	jr z, AccPlayback_Ongoing_NoteOffDone
 	jrl AccPlayback_Ongoing_Return
 
@@ -20441,7 +20441,7 @@ AccPlayback_Ongoing_NoteOffDone:
 	jr AccPlayback_Ongoing_D1_Return
 
 AccPlayback_Ongoing_D1Type:
-	or (0x32f4:16), 1
+	or (ACC_PART_FLAGS:16), 1
 
 AccPlayback_Ongoing_D1_Return:
 	jr AccPlayback_Ongoing_NoteOff
@@ -20496,7 +20496,7 @@ AccPlayback_Ongoing_StorePan:
 	jr ToneGen_StepVoiceReturn
 
 AccPlayback_Ongoing_StoreDone:
-	or (0x32f4:16), 1
+	or (ACC_PART_FLAGS:16), 1
 
 ToneGen_StepVoiceReturn:
 	jrl AccPlayback_Ongoing_NoteOff
@@ -21871,10 +21871,10 @@ ToneGen_StepAlt_Done:
 	nop
 
 ; AccTiming_ScrollFourBarViewForward: Scrolls the four-measure view one measure forward: when more measures follow (B
-;   = (0x34D7) > C + 3), the previous measure D (0x3747) was the view's last (C + 4) and the current one E (0x371A) is
-;   D + 1, increments the view's first measure C (0x3746). Basis: callers + body -- ToneGen_StepAlt_CheckBeat runs it
-;   first among the four view checks used when (0x34D9) <= 4 (the 0x20-pixel-per-measure layout of
-;   AccTiming_ComputeOffset, x = (measure - (0x3746)) * width); AccTiming_ScrollTwoBarViewForward is the same test for the
+;   = (STYLE_SECTION_LAST_MEASURE) > C + 3), the previous measure D (0x3747) was the view's last (C + 4) and the current one E (SQSTEP_MEASURE) is
+;   D + 1, increments the view's first measure C (ACC_VIEW_FIRST_MEASURE). Basis: callers + body -- ToneGen_StepAlt_CheckBeat runs it
+;   first among the four view checks used when (STYLE_SECTION_BEATS) <= 4 (the 0x20-pixel-per-measure layout of
+;   AccTiming_ComputeOffset, x = (measure - (ACC_VIEW_FIRST_MEASURE)) * width); AccTiming_ScrollTwoBarViewForward is the same test for the
 ;   two-measure (0x40) layout (D == C + 2).
 AccTiming_ScrollFourBarViewForward:
 	ld a, c

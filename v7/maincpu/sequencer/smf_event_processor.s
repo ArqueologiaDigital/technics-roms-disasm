@@ -10800,9 +10800,9 @@ Seq_DispatcherTick_Process:
 	call Seq_ReadTempoLookup
 	calr Seq_ProcessAllInputState
 	call Rhythm_CompareAndTrigger
-	and (0x3258:16), 0x9f
+	and (ACC_PART_FLAGS:16), 0x9f
 	call AccTick_Main
-	ld a, (0x3258:16)
+	ld a, (ACC_PART_FLAGS:16)
 	and A,0x60
 	call Rhythm_SaveState
 	call Seq_RhythmProcessor
