@@ -383,7 +383,7 @@ data_48703218:
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program.rom", 0x303218, 0x303228
 
-func_4840DDB1_Table:	# 64 x u8, 0..63; read by func_4840DDB1_entry 0x48407BD8: `movbu  (a2), d0`; func_4840EAA5_entry 0x4840E721: `movbu  (a1), d0` ...
+func_4840DDB1_Table:	# 64 x u8, 0..63; read by func_4840DDB1_entry 0x4840D61D: `movbu  (a2), d0`; func_4840EAA5_entry 0x4840E721: `movbu  (a1), d0` ...
 	tab_u8	0, 1, 8, 16, 9, 2, 3, 10, 17, 24, 32, 25, 18, 11, 4, 5	# [0]
 	tab_u8	12, 19, 26, 33, 40, 48, 41, 34, 27, 20, 13, 6, 7, 14, 21, 28	# [16]
 	tab_u8	35, 42, 49, 56, 57, 50, 43, 36, 29, 22, 15, 23, 30, 37, 44, 51	# [32]
@@ -26658,23 +26658,23 @@ StyleNumToBankSlotLUT:	# 2048 x u16, 0..34687; read by ResolveStyleId 0x48435B33
 	tab_u16	33132, 33132, 33518, 33263, 33392, 33777, 33394, 33392, 33396, 33396, 33396, 33396	# [2028]
 	tab_u16	33400, 33145, 33146, 33146, 33916, 33533, 33918, 2573	# [2040]
 
-GenreStyleTable:	# 16 x REC_GenreStyleTable (24 bytes each); read by GetGenreName 0x48435A9F `call memcpy_entry, [a2,a3], 8`; GetGenreStyleCount 0x48435AD9 `movbu (0x11, a0), d0`; func_48435AFF 0x48435AFF `mov (0x14, a0), a0` (+3)
-	REC_GenreStyleTable	s0="   8&16 BEAT    ", x16="\x00", f17=10, x18="\x00\x00", index=func_4844D7A4_Records+256	# [0]
-	REC_GenreStyleTable	s0="   ROCK & POP   ", x16="\x00", f17=16, x18="\x00\x00", index=func_4844D7A4_Records+296
-	REC_GenreStyleTable	s0="     BALLAD     ", x16="\x00", f17=16, x18="\x00\x00", index=func_4844D7A4_Records+360
-	REC_GenreStyleTable	s0="  JAZZ & SWING  ", x16="\x00", f17=20, x18="\x00\x00", index=func_4844D7A4_Records+424
-	REC_GenreStyleTable	s0="    BALLROOM    ", x16="\x00", f17=16, x18="\x00\x00", index=func_4844D7A4_Records+504
-	REC_GenreStyleTable	s0="  MOVIE & SHOW  ", x16="\x00", f17=20, x18="\x00\x00", index=func_4844D7A4_Records+568
-	REC_GenreStyleTable	s0="  ENTERTAINER   ", x16="\x00", f17=14, x18="\x00\x00", index=func_4844D7A4_Records+648
-	REC_GenreStyleTable	s0="    ORGANIST    ", x16="\x00", f17=10, x18="\x00\x00", index=func_4844D7A4_Records+704
-	REC_GenreStyleTable	s0="   60s & 70s    ", x16="\x00", f17=13, x18="\x00\x00", index=func_4844D7A4_Records+744	# [8]
-	REC_GenreStyleTable	s0="  MODERN DANCE  ", x16="\x00", f17=14, x18="\x00\x00", index=func_4844D7A4_Records+796
-	REC_GenreStyleTable	s0="   SOUL & R&B   ", x16="\x00", f17=19, x18="\x00\x00", index=func_4844D7A4_Records+852
-	REC_GenreStyleTable	s0="COUNTRY&WESTERN ", x16="\x00", f17=14, x18="\x00\x00", index=func_4844D7A4_Records+928
-	REC_GenreStyleTable	s0=" MARCH & WALTZ  ", x16="\x00", f17=12, x18="\x00\x00", index=func_4844D7A4_Records+984
-	REC_GenreStyleTable	s0=" LATIN & WORLD  ", x16="\x00", f17=26, x18="\x00\x00", index=func_4844D7A4_Records+1032
-	REC_GenreStyleTable	s0="     CUSTOM     ", x16="\x00", f17=20, x18="\x00\x00", index=func_4844D7A4_Records+1136
-	REC_GenreStyleTable	s0="     MEMORY     ", x16="\x00", f17=3, x18="\x00\x00", index=func_4844D7A4_Records+1216
+GenreStyleTable:	# 16 x GenreStyleEntry (24 bytes each); read by GetGenreName 0x48435A9F `call memcpy_entry, [a2,a3], 8`; GetGenreStyleCount 0x48435AD9 `movbu (0x11, a0), d0`; func_48435AFF 0x48435AFF `mov (0x14, a0), a0` (+3)
+	GenreStyleEntry	name="   8&16 BEAT    ", x16="\x00", style_count=10, x18="\x00\x00", styles=func_4844D7A4_Records+256	# [0]
+	GenreStyleEntry	name="   ROCK & POP   ", x16="\x00", style_count=16, x18="\x00\x00", styles=func_4844D7A4_Records+296
+	GenreStyleEntry	name="     BALLAD     ", x16="\x00", style_count=16, x18="\x00\x00", styles=func_4844D7A4_Records+360
+	GenreStyleEntry	name="  JAZZ & SWING  ", x16="\x00", style_count=20, x18="\x00\x00", styles=func_4844D7A4_Records+424
+	GenreStyleEntry	name="    BALLROOM    ", x16="\x00", style_count=16, x18="\x00\x00", styles=func_4844D7A4_Records+504
+	GenreStyleEntry	name="  MOVIE & SHOW  ", x16="\x00", style_count=20, x18="\x00\x00", styles=func_4844D7A4_Records+568
+	GenreStyleEntry	name="  ENTERTAINER   ", x16="\x00", style_count=14, x18="\x00\x00", styles=func_4844D7A4_Records+648
+	GenreStyleEntry	name="    ORGANIST    ", x16="\x00", style_count=10, x18="\x00\x00", styles=func_4844D7A4_Records+704
+	GenreStyleEntry	name="   60s & 70s    ", x16="\x00", style_count=13, x18="\x00\x00", styles=func_4844D7A4_Records+744	# [8]
+	GenreStyleEntry	name="  MODERN DANCE  ", x16="\x00", style_count=14, x18="\x00\x00", styles=func_4844D7A4_Records+796
+	GenreStyleEntry	name="   SOUL & R&B   ", x16="\x00", style_count=19, x18="\x00\x00", styles=func_4844D7A4_Records+852
+	GenreStyleEntry	name="COUNTRY&WESTERN ", x16="\x00", style_count=14, x18="\x00\x00", styles=func_4844D7A4_Records+928
+	GenreStyleEntry	name=" MARCH & WALTZ  ", x16="\x00", style_count=12, x18="\x00\x00", styles=func_4844D7A4_Records+984
+	GenreStyleEntry	name=" LATIN & WORLD  ", x16="\x00", style_count=26, x18="\x00\x00", styles=func_4844D7A4_Records+1032
+	GenreStyleEntry	name="     CUSTOM     ", x16="\x00", style_count=20, x18="\x00\x00", styles=func_4844D7A4_Records+1136
+	GenreStyleEntry	name="     MEMORY     ", x16="\x00", style_count=3, x18="\x00\x00", styles=func_4844D7A4_Records+1216
 
 GenreCount:	# u16, a constant; read / written by GetGenreName 0x48435A9F: `movhu (GenreCount), d3`; GetGenreStyleCount 0x48435AD9: `movhu (GenreCount), d2` ...
 	.word	16
@@ -27181,28 +27181,28 @@ Str_JFIF:	.asciz "JFIF"
 # census: opaque -- unknown-dump: 11 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x33905D, 0x339068
 
-func_4840D29C_Table:	# 5 x u8, 1..3; read by func_4840D29C_entry 0x48407BD8: `movbu  (d1, a0), d0`
+func_4840D29C_Table:	# 5 x u8, 1..3; read by JpegEncSetup_entry 0x4840D29C: `movbu  (d1, a0), d0`
 	tab_u8	1, 3, 3, 3, 3
 
-func_4840EBC3_Table:	# 5 x REC_func_4840EBC3_Table (4 bytes each); read by func_4840D29C 0x4840D29C `movbu (1, a1), d0`; func_4840D29C 0x4840D29C `movbu (2, a3), d0`; func_4840D29C 0x4840D29C `movbu (3, a3), d0` (+1)
+func_4840EBC3_Table:	# 5 x REC_func_4840EBC3_Table (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (1, a1), d0`; JpegEncSetup 0x4840D29C `movbu (2, a3), d0`; JpegEncSetup 0x4840D29C `movbu (3, a3), d0` (+1)
 	REC_func_4840EBC3_Table	f0=1
 	REC_func_4840EBC3_Table	f0=1, f1=1, f2=1
 	REC_func_4840EBC3_Table	f0=2, f1=1, f2=1
 	REC_func_4840EBC3_Table	f0=2, f1=1, f2=1
 	REC_func_4840EBC3_Table	f0=4, f1=1, f2=1
-func_4840EBC3_Table_2:	# 5 x REC_func_4840EBC3_Table_2 (4 bytes each); read by func_4840D29C 0x4840D29C `movbu (a0), d0`; func_4840D29C 0x4840D29C `movbu (a1), d0`
+func_4840EBC3_Table_2:	# 5 x REC_func_4840EBC3_Table_2 (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a1), d0`
 	REC_func_4840EBC3_Table_2	f0=1
 	REC_func_4840EBC3_Table_2	f0=1, f1=1, f2=1
 	REC_func_4840EBC3_Table_2	f0=1, f1=1, f2=1
 	REC_func_4840EBC3_Table_2	f0=2, f1=1, f2=1
 	REC_func_4840EBC3_Table_2	f0=1, f1=1, f2=1
-func_4840D29C_Records_2:	# 5 x REC_func_4840D29C_Records_2 (4 bytes each); read by func_4840D29C 0x4840D29C `movbu (a0), d0`; func_4840D29C 0x4840D29C `movbu (a3), d0`
+func_4840D29C_Records_2:	# 5 x REC_func_4840D29C_Records_2 (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a3), d0`
 	REC_func_4840D29C_Records_2	
 	REC_func_4840D29C_Records_2	f1=1, f2=1
 	REC_func_4840D29C_Records_2	f1=1, f2=1
 	REC_func_4840D29C_Records_2	f1=1, f2=1
 	REC_func_4840D29C_Records_2	f1=1, f2=1
-func_4840D29C_Records:	# 8 x REC_func_4840D29C_Records (4 bytes each); read by func_4840D29C 0x4840D29C `movbu (a0), d0`; func_4840D29C 0x4840D29C `movbu (a1), d0`; func_4840D29C 0x4840D29C `movbu (a3), d0`
+func_4840D29C_Records:	# 8 x REC_func_4840D29C_Records (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a1), d0`; JpegEncSetup 0x4840D29C `movbu (a3), d0`
 	REC_func_4840D29C_Records	
 	REC_func_4840D29C_Records	f1=17, f2=17
 	REC_func_4840D29C_Records	f1=17, f2=17

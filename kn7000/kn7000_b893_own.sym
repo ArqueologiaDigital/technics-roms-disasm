@@ -80,6 +80,7 @@
 0x48404D10  JpegEncSetup            ; (a0 = JpegEncode's parameter block, +0x1C = mode 1..5, else -0x70) fills the mode's table bytes into the block (941 JpegEncSetup)
 0x48404E71  JpegEncImage            ; (a0 = parameter block, a1 = callback block) headers, then the MCU grid through JpegEncMcu (941 JpegEncImage)
 0x48405091  JpegEncMcu              ; (d0 = x, d1 = y) encodes one MCU (941 JpegEncMcu)
+0x484101FD  DspUnitsResetUnused     ; no caller; ptrs_48701C8C holds its address (func_4854A5C9_Table): waits 20 ticks, DspManagerInit, waits, sets the effect type of DSP preset key 0x80 | unit << 8 to 0xFF for units 0..9 (func_4841222C), effect 0x4F on unit 8 (notes/older-program-builds.md, N-99771106)
 ;
 ; ---- end of the image ----
 0x487F55CE  LibLoadDescriptorTail   ; one byte, 0xF0, after the library loader descriptor's last record (flags 0x8003); the loader (func_484D782E) stops at the record whose flags have bit 15 set and nothing else reads past it -- 941, 935 and 929 end at that record; [INFERENCE] left by the tool that built this image

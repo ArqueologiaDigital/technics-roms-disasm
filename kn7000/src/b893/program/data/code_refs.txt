@@ -2,7 +2,6 @@
 # tools/gen_data_s.py: tools/gen_program_s.py labels each loc_<ADDR> (or .equ's it when it is
 # not an instruction start).
 0x484082C2
-0x484101FD
 0x4841027C
 0x4841027F
 0x4841028A

@@ -3118,8 +3118,8 @@ Str_PgKP:	.asciz "PgKP"
 Bitmap_AcHpScreenProc_L9f:	# 24 x 24, 1 bit(s) a pixel: AcHpScreenProc_L9f 0x48655FF2 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcHpScreenProc_L9f.png)
 	.incbin	"build/bitmaps/Bitmap_AcHpScreenProc_L9f.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 24 24) from src/program/data/media/Bitmap_AcHpScreenProc_L9f.png
 
-IsPointOnScreen_Table:	# REC_DrawBitmapSP2_ArgA0 (4 bytes): the layout DrawBitmapSP2 0x485FC413 reads through its argument a0 (passed by AcHpScreenProc_L9f 0x48655FF2 `call DrawBitmapSP2_entry, [d2,d3,a2,a3], 0x30`); the layout DrawBitmapSP2_Impl 0x485FC4B6 reads through its argument a0 (passed by DrawBitmapSP2 0x485FC413 `call DrawBitmapSP2_Impl_entry, [d2,d3,a2,a3], 0x44`); +3 more routines
-	REC_DrawBitmapSP2_ArgA0	f0=2, SetChangeRect_d0=2
+IsPointOnScreen_Table:	# BitmapOrigin (4 bytes): the layout DrawBitmapSP2 0x485FC413 reads through its argument a0 (passed by AcHpScreenProc_L9f 0x48655FF2 `call DrawBitmapSP2_entry, [d2,d3,a2,a3], 0x30`); the layout DrawBitmapSP2_Impl 0x485FC4B6 reads through its argument a0 (passed by DrawBitmapSP2 0x485FC413 `call DrawBitmapSP2_Impl_entry, [d2,d3,a2,a3], 0x44`); +3 more routines
+	BitmapOrigin	x=2, y=2
 
 Text_PT1:	# 19 strings of 5 characters, NUL-terminated
 	.asciz	"PT1  "
@@ -12137,8 +12137,8 @@ DrawString_Impl_entry_L3c_Var:	# s16, a constant; read / written by DrawString_I
 DrawString_Impl_entry_L54_Var:	# s16, a constant; read / written by DrawString_Impl_entry_L54 0x485FCFF2: `movhu (a0), d0`; DrawString_Impl_entry_L54 0x485FCFF2: `movhu d0, (a0)` ...
 	.word	22
 
-DrawStringCentered_ArgA1_0:	# REC_DrawStringCentered_ArgA1 (4 bytes): the layout DrawStringCentered 0x485FD3CB reads through its argument a1 (passed by AcMidiPartGridBoxProc_L6a 0x48677255 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)
-	REC_DrawStringCentered_ArgA1	f0=280, f2=14
+DrawStringCentered_ArgA1_0:	# TextCentre (4 bytes): the layout DrawStringCentered 0x485FD3CB reads through its argument a1 (passed by AcMidiPartGridBoxProc_L6a 0x48677255 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)
+	TextCentre	x=280, y=14
 
 Str_PAGE_1_3:	.asciz "PAGE 1/3"
 Str_PAGE_2_3:	.asciz "PAGE 2/3"
@@ -12499,10 +12499,10 @@ DrawString_Impl_entry_L3c_Var_2:	# s16, a constant; read / written by DrawString
 DrawString_Impl_entry_L54_Var_2:	# s16, a constant; read / written by DrawString_Impl_entry_L54 0x485FCFF2: `movhu (a0), d0`; DrawString_Impl_entry_L54 0x485FCFF2: `movhu d0, (a0)` ...
 	.word	186
 
-DrawStringCentered_ArgA1_1:	# REC_DrawStringCentered_ArgA1 (4 bytes): the layout DrawStringCentered 0x485FD3CB reads through its argument a1 (passed by AcMidiPartGridBoxProc_L6a 0x48677255 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)
-	REC_DrawStringCentered_ArgA1	f0=305, f2=177
-DrawStringCentered_ArgA1_2:	# REC_DrawStringCentered_ArgA1 (4 bytes): the layout DrawStringCentered 0x485FD3CB reads through its argument a1 (passed by AcMidiPartGridBoxProc_L6a 0x48677255 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)
-	REC_DrawStringCentered_ArgA1	f0=612, f2=176
+DrawStringCentered_ArgA1_1:	# TextCentre (4 bytes): the layout DrawStringCentered 0x485FD3CB reads through its argument a1 (passed by AcMidiPartGridBoxProc_L6a 0x48677255 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)
+	TextCentre	x=305, y=177
+DrawStringCentered_ArgA1_2:	# TextCentre (4 bytes): the layout DrawStringCentered 0x485FD3CB reads through its argument a1 (passed by AcMidiPartGridBoxProc_L6a 0x48677255 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)
+	TextCentre	x=612, y=176
 
 AcMidiPcgOutSendEditSwProc_Table:	# 12 x u8, 0..255; read by AcMidiPcgOutSendEditSwProc : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255

@@ -4460,11 +4460,12 @@
 0x4841D248  func_4861932D_entry_L20_Records  128
 0x4841D2C8  func_48619B24_Records  128
 0x4841D348  func_4861CCB8_Table  256
-0x4841D448  func_4861CCC5_entry_L55_Selected_0  52
-0x4841D594  func_4861CCC5_entry_L55_Selected_1  52
+0x4841D448  func_4861CCC5_entry_L55_Selected_0  332
+0x4841D594  func_4861CCC5_entry_L55_Selected_1  252
 0x4841D690  func_4861CCC5_entry_L55_Selected_2  52
-0x4841D6C4  func_4861CCC5_entry_L55_Selected_3  52
-0x4841D748  func_4861CCC5_entry_L55_Selected_4  52
+0x4841D6C4  func_4861CCC5_entry_L55_Selected_3  132
+0x4841D748  func_4861CCC5_entry_L55_Selected_4  36
+0x4841D76C  func_4861CCC5_Table  20
 0x4841D780  func_4861ED5D_Table  76
 0x4841D7FC  func_48620E7C_Table_p0_0  96
 0x4841D85C  func_48620E7C_Table_p0_1  96
@@ -39359,7 +39360,7 @@
 0x485473E4  func_50150302_entry_L9d_Selected_7  12
 0x485473F0  func_50150302_entry_L9d_Selected_8  12
 0x485473FC  func_4860E0FD_Table  4096
-0x485483FC  func_4860E29C_Table  512
+0x485483FC  func_4860E29C_Table  4096
 0x485493FC  func_501752A3_Table  2058
 0x48549C06  func_486B6240_entry_L29_Var  2
 0x48549C08  func_486B63A3_entry_L4c_Var  2
@@ -41101,7 +41102,12 @@
 0x485E4272  func_5018B93E_Table  10
 0x50000010  SndCmdStreamWrite_Table  14
 0x50000020  func_50127747_Table  128
-0x500000A0  func_5012A787_Table  548
+0x500000A0  func_5012A787_Table  532
+0x500002B4  StrapBit3Latch  4
+0x500002B8  func_485E427C_L55_Table  4
+0x500002BC  func_485E6562_L68_Var  4
+0x500002C0  func_485E67EB_entry_L6e_Var  1
+0x500002C1  func_485E67EB_Table  3
 0x500002C4  func_485E68E5_Table  4
 0x500002C8  func_485E695A_L55_Table  4
 0x500002CC  func_485E8AED_L49_Var  4
@@ -41246,7 +41252,7 @@
 0x50001228  OrgStyleList_selected  2
 0x5000122A  OrgSubCtgList_selected  2
 0x5000122C  MusicStylistOrgan_StrRadioBox_ORGAN_selected  4
-0x50001230  AcStyleNameProc_L3f_Var  2
+0x50001230  CUR_STYLE_IDX  2
 0x50001232  AcStyleNameProc_L66_Var  2
 0x50001234  func_4863EFAC_entry_Lf_Table  4
 0x50001238  AcCategoryStrBoxProc_L4f_Table  4
@@ -41321,7 +41327,7 @@
 0x500013DC  AllInitial_window  4
 0x500013E0  FactoryInitial_window  4
 0x500013E4  MPVersion_window  4
-0x500013E8  AcWelcomeScreenProc_Lc5_Table  12
+0x500013E8  OpeningFrameIndex  12
 0x500013F4  AcMPVerProc_L37_Var  4
 0x500013F8  TtSdmenu_window  4
 0x500013FC  TtSdmenu_TitleMenu_PART_SETTING_selected  0

@@ -89,9 +89,11 @@ PROFILES = {
 # kind); `sigmap`, its propdata type characters in the KN7000's alphabet
 # (milk_model.SIGMAP_NAKA: with it selfsize and allsize agree for all 449 / 451
 # classes, milk_model --check); `labels` may be .equ includes.  `pal` None: no palette.
+# The siblings' `syms` end with lane sibling-names' <model>_aligned.sym and <model>_ram.sym (in the
+# Makefiles' program-src order; milk_model.read_syms skips a file that does not exist, the first name wins).
 for _m, _r1, _end in (("kn6000", 0x176037, 0x3F47EC), ("kn6500", 0x176839, 0x37E44C)):
     PROFILES[_m] = dict(root=f"../{_m}", rom=f"baserom/{_m}_program.rom", src="src/program", code="src/program.s",
-                        prog="src/program.s", syms=[f"{_m}.sym", f"{_m}_manual.sym", f"{_m}_ported.sym"],
+                        prog="src/program.s", syms=[f"{_m}.sym", f"{_m}_manual.sym", f"{_m}_ported.sym", f"{_m}_aligned.sym", f"{_m}_ram.sym"],
                         labels=["src/symbols.inc", "src/labels.inc"], r1=_r1, pal=None, end=_end,
                         base=0x4C000000, scheme="naka", sigmap=MM.SIGMAP_NAKA, model=_m.upper(),
                         functions_sym=True, bitmaps=True, code_ids=True, text_strict=True, tones=True,
@@ -119,7 +121,7 @@ PROFILES["kn6000"]["hash_tables"] = [
 # vectors, to the MILK kernel's code at 0x1E427C).
 PROFILES["kn2400"] = dict(root="../kn2400", rom="baserom/kn2400_program.rom", src="src/program",
                           code="src/program.s", prog="src/program.s",
-                          syms=["kn2400.sym", "kn2400_manual.sym", "kn2400_ported.sym"],
+                          syms=["kn2400.sym", "kn2400_manual.sym", "kn2400_ported.sym", "kn2400_aligned.sym", "kn2400_ram.sym"],
                           labels=["src/symbols.inc", "src/labels.inc"], r1=0x00000F, pal=None, end=0x1E427C,
                           model="KN2400", functions_sym=True, bitmaps=True, code_ids=True, text_strict=True,
                           string_arrays=True, structs=True,
@@ -151,7 +153,7 @@ PROFILES["kn2400"] = dict(root="../kn2400", rom="baserom/kn2400_program.rom", sr
 # (0x26D8 bytes, func_97800082, the XAPR header's first code vector's loop).
 PROFILES["hdsx3"] = dict(root="../hdsx3", rom="baserom/hdsx3_extapr.rom", src="src/program",
                          code="src/program.s", prog="src/program.s",
-                         syms=["hdsx3.sym", "hdsx3_manual.sym", "hdsx3_ported.sym"],
+                         syms=["hdsx3.sym", "hdsx3_manual.sym", "hdsx3_ported.sym", "hdsx3_aligned.sym", "hdsx3_ram.sym"],
                          labels=["src/symbols.inc", "src/labels.inc"], r1=0x03DED6, pal=None, end=0x0B655C,
                          base=0x97800000, scheme="naka", sigmap=MM.SIGMAP_NAKA, model="HDSX3",
                          functions_sym=True, host="kn6000", constants="../kn6000/src/constants.inc",
@@ -231,13 +233,22 @@ PROFILE = "941"
 #                bytes no instruction reads) as .ascii
 #   table_ptrs   a reader table whose every entry is 0 or a data address is a pointer table (its strings typed)
 #   maps128      the 128 x 64 maps of two-byte entries (`cmp 0x7f` row, `and 0x3f` column, `asl 7`)
+# (lane mn10300-data3, 2026-11-06; kn7000/notes/mn10300-data3/README.md)
+#   sentinel_indexed  sentinel_lists also reads the indexed form of the walk: `mov (dI, aT), dX` with dI a
+#                counter stepped by one and scaled to the entry width (`asl2 dI`), `lne` / `b<cc>` back
+#   frozen_obj_names  the GUI objects with an empty ResName keep the names <src>/data/gui_object_names.tsv
+#                gives them (written back by every run), instead of names invented afresh each time
+#   host_widget_vars  (a plug-in) widget_vars() also reads the host firmware's class procedures (the HD-SX3's
+#                widgets are instances of the KN6000's classes)
 #   field_*      (tools/data_field_uses.py, read there) the field-use walk's new rules: field_pos,
 #                field_slots, field_bra, field_keyloop, field_merge, field_screen
 FEATURES = {k: True for k in ("ptr_starts", "array_end", "mem_ptrs", "loop_index", "step_arrays", "deep_records",
                               "top_tested", "fld_slots", "fx_streams", "pow10_table", "euc_text",
                               "sibling_trie", "builtin_pads", "widget_vars", "maps128", "sentinel_lists", "chord_voicings", "index_bounds", "fx_presets", "table_terminators", "msg_readers", "count_notes", "doubles_text", "table_ptrs",
                               # lane mn10300-data2 (wave 10)
-                              "support_values", "sibling_support", "boot_sectors", "panel_700", "style_lists", "reclaim_strings", "curated_counts", "nv_not_ptrs")}
+                              "support_values", "sibling_support", "boot_sectors", "panel_700", "style_lists", "reclaim_strings", "curated_counts", "nv_not_ptrs",
+                              # lane mn10300-data3 (wave 11)
+                              "sentinel_indexed", "frozen_obj_names", "host_widget_vars")}
 for _k in os.environ.get("GEN_DATA_S_OFF", "").split(","):
     if _k.strip():
         FEATURES[_k.strip()] = False
@@ -707,8 +718,60 @@ class Gen:
     # ======================================================================
     # GUI
     # ======================================================================
+    OBJ_NAMES_TSV = "gui_object_names.tsv"
+
+    def frozen_object_names(self):
+        """(N-fb88572c, lane mn10300-data3) The names of the GUI objects with an empty ResName, read from the
+        build's committed map (<src>/data/gui_object_names.tsv: object id, class, name), so that a
+        regeneration never renames them: obj_names() invents a name (parent + class + text, below) only for an
+        object the map does not have, or whose class differs there.  Each name is reserved before any other
+        name of this run is made; a name another source already holds (a symbol file, an extern) is not
+        taken and the object is named afresh (reported).  emit() writes the map back with every unnamed
+        object's final label, so a new object's invented name is frozen from then on."""
+        self.frozen_names, self.frozen_report = {}, collections.Counter()
+        path = os.path.join(KN7, P["src"], "data", self.OBJ_NAMES_TSV)
+        rows = {}
+        if FEATURES.get("frozen_obj_names", True) and os.path.exists(path):
+            for line in open(path, encoding="latin-1"):
+                if line.startswith("#") or not line.strip():
+                    continue
+                oid, cls, nm = line.rstrip("\n").split("\t")
+                rows[int(oid, 16)] = (cls, nm)
+        taken = set()
+        for slot, b in sorted(self.m.blocks.items()):
+            for i, o in enumerate(b["objects"]):
+                if o.name:
+                    continue
+                r = rows.get((slot << 16) | i)
+                if r is None:
+                    self.frozen_report["new"] += 1
+                elif r[0] != o.klass.name:
+                    self.frozen_report["class changed"] += 1
+                elif r[1] in taken or (r[1] in self.names and self.fixed.get(o.addr) != r[1]):
+                    self.frozen_report["name taken"] += 1
+                else:
+                    self.frozen_names[(slot, i)] = r[1]
+                    self.frozen_report["frozen"] += 1
+                    taken.add(r[1])
+                    self.names.add(r[1])
+        self.frozen_report["map rows"] = len(rows)
+
+    def object_names_tsv(self):
+        """The map frozen_object_names() reads, as this run named the objects (one row per object with an
+        empty ResName: id = (slot << 16) | index, class, label)."""
+        out = ["# The invented names of the GUI objects that have no ResName, GENERATED by tools/gen_data_s.py and",
+               "# read back by it (frozen_object_names, N-fb88572c): a regeneration keeps each name while the",
+               "# object's id and class are the same.  Columns: object id = (block slot << 16) | index, class, label.",
+               "# Rename an object by editing its row (the name must be unique) and regenerating."]
+        for slot, b in sorted(self.m.blocks.items()):
+            for i, o in enumerate(b["objects"]):
+                if not o.name:
+                    out.append(f"0x{(slot << 16) | i:08X}\t{o.klass.name}\t{self.label_at.get(o.addr, self.obj_label[(slot, i)])}")
+        return out
+
     def gui(self):
         m = self.m
+        self.frozen_object_names()
         self.blockname = {}
         for bid, (nm, _a, _c) in m.otblocks.items():
             self.blockname[(bid & 0xFFFF) * 16] = nm[4:] if nm and nm.startswith("OTB_") else f"BLK{bid & 0xFFFF:02d}"
@@ -1320,6 +1383,9 @@ class Gen:
                 key = (pn, cls, txt)
                 counters[key] += 1
                 base = f"{pn}_{cls}" + (f"_{txt}" if txt else "") + (f"{counters[key]}" if not txt or counters[key] > 1 else "")
+                if (b["slot"], i) in self.frozen_names:
+                    names[i] = self.frozen_names[(b["slot"], i)]      # (reserved by frozen_object_names)
+                    continue
             n = base if base not in self.names else f"{bn}_{base}"
             names[i] = self.uniq(n)
         return names
@@ -2749,8 +2815,11 @@ class Gen:
                 f"\t# rhythm id, TECHNI-CHORD on, VARIATION {(st[4] >> 4) + 1}, tempo",
                 f"\tPM_SET77\t{hx(r[0x77:0x7A])}",
                 f"\tPM_FX\t{hx(r[0x7A:0x88])}",
-                f"\tPM_SET88\t{hx(r[0x88:0x8C])}",
-                f"\tPM_SET8C\t{hx(r[0x8C:0x8E])}"] + (
+                # (N-4b34dd8b, lane mn10300-data3) the levels and numbers in decimal, the masks and the 0xFF
+                # "none" in hex: tremolo mask, TECHNI-CHORD orchestrator part, type 0..13, APC volume;
+                # pad volume, pad bank (src/include/panel_memory.inc)
+                f"\tPM_SET88\t{r[0x88]:#04x}, {r[0x89]:#04x}, {r[0x8A]}, {r[0x8B]}",
+                f"\tPM_SET8C\t{r[0x8C]}, {r[0x8D]}"] + (
                 ["\t.space\t2, 0xff"] if len(r) == 0x90 else
                 [f"\t.byte\t{r[0x8E]:#04x}\t# +0x8E (no field of the KN7000 writer func_4C02A0C4)"]
                 + [f"\tPM_PART_TAIL\t{hx(r[0x8F + 3 * j:0x92 + 3 * j])}\t# part {j}" for j in range(4)]
@@ -3686,13 +3755,27 @@ class Gen:
         the address register, the loop head's line) or None."""
         _l, ins = self._ins(L[i])
         mo = re.fullmatch(r"(mov|movhu|movbu) \((?:(0x[0-9a-f]+|\d+), )?(a\d)\), (d\d)", ins)
+        di = None
+        if not mo and FEATURES.get("sentinel_indexed", True):
+            # (N-61c32961, lane mn10300-data3) the indexed form: `mov (dI, aT), dX` with dI a counter
+            # stepped by one and scaled to the entry width right before the load (`asl2 dI` for 4 bytes,
+            # `asl 1, dI` / `add dI, dI` for 2, none for 1): KN6000 func_4C11B347 / KN2400 func_4861CCC5
+            # `inc d3` / `mov d3, d1` / `mov d1, d0` / `asl2 d0` / `mov (d0, a0), d0` / `cmp d2, d0` / `lne`
+            mo = re.fullmatch(r"(mov|movhu|movbu) \((d\d), (a\d)\), (d\d)", ins)
+            if not mo or i == 0:
+                return None
+            di = mo.group(2)
+            prev = self._ins(L[i - 1])[1]
+            scaled = {4: (f"asl2 {di}", f"asl 2, {di}"), 2: (f"asl 1, {di}", f"add {di}, {di}"), 1: ()}[width]
+            if (prev not in scaled) if scaled else re.fullmatch(r"(asl2|asl \d+,|add d\d,) %s" % di, prev or ""):
+                return None
         if not mo:
             return None
-        foff, ar, dr = int(mo.group(2) or "0", 0), mo.group(3), mo.group(4)
+        foff, ar, dr = (0, mo.group(3), mo.group(4)) if di else (int(mo.group(2) or "0", 0), mo.group(3), mo.group(4))
         # (unoptimised code) the pointer lives in a stack slot: `mov (K, sp), aN` right before the load,
         # stepped as `mov (K, sp), dY` / `add S, dY` / `mov dY, (K, sp)`
         slot = None
-        if i > 0:
+        if i > 0 and not di:
             ms0 = re.fullmatch(r"mov \((0x[0-9a-f]+|\d+), sp\), %s" % ar, self._ins(L[i - 1])[1])
             if ms0:
                 slot = int(ms0.group(1), 0)
@@ -3713,7 +3796,7 @@ class Gen:
             if mr:
                 dS = mr.group(1) or mr.group(2)
                 cand = [nxt[0]] if re.match(r"mov ", nxt[0]) else []
-                cand += [self._ins(L[q])[1] for q in range(i - 1, max(-1, i - 40), -1)]
+                cand += [self._ins(L[q])[1] for q in range(i - 1, max(-1, i - (80 if di else 40)), -1)]
                 for c in cand:
                     mv = re.fullmatch(r"mov %s, %s" % (self.NUM, dS), c or "")
                     if mv:
@@ -3723,7 +3806,8 @@ class Gen:
                         break
                 if mc is not None and re.match(r"mov ", nxt[0]):
                     nxt = nxt[1:]
-        if not mc or not re.match(r"b(eq|ne|lt|le|gt|ge|cs|cc|hi|ls) ", nxt[1] if len(nxt) > 1 else ""):
+        brx = r"b(eq|ne|lt|le|gt|ge|cs|cc|hi|ls) " + (r"|l(eq|ne|lt|le|gt|ge|cs|cc|hi|ls)$" if di else "")
+        if not mc or not re.match(brx, nxt[1] if len(nxt) > 1 else ""):
             return None
         t = int(mc.group(1), 0) & ((1 << (8 * width)) - 1)
         if {"mov": 4, "movhu": 2, "movbu": 1}[mo.group(1)] != width or t not in self.SENTINELS[width]:
@@ -3748,6 +3832,19 @@ class Gen:
                 if not back:
                     continue
                 step = None
+                if di:
+                    # (the indexed form) a counter stepped by one in the loop, the table register kept
+                    for q in range(k + 1, e + 1):
+                        _x, t4 = self._ins(L[q])
+                        if re.fullmatch(r"(inc|inc4) %s|add [^,]*, %s|(mov|movhu|movbu) [^,]*, %s" % (ar, ar, ar), t4 or ""):
+                            step = None
+                            break
+                        mi = re.fullmatch(r"inc (d\d)|add 1, (d\d)", t4 or "")
+                        if mi and step is None:
+                            step = (width, t4)
+                    if step:
+                        return step[0], int(mc.group(1), 0), nxt[0], step[1], 0, ar, k
+                    break
                 for q in range(k + 1, e):
                     _x, t4 = self._ins(L[q])
                     if slot is not None and q + 2 < e:
@@ -3816,7 +3913,7 @@ class Gen:
                     fcpu = int(mh.group(2), 16)
                 if lab and not re.search(r"^loc_|_L[0-9a-f]+_*$|_entry$", lab):
                     func, fcpu = lab, self.code_labels.get(lab, fcpu)
-                mo = re.fullmatch(r"(mov|movhu|movbu) \((?:(?:0x[0-9a-f]+|\d+), )?a\d\), d\d", ins)
+                mo = re.fullmatch(r"(mov|movhu|movbu) \((?:(?:0x[0-9a-f]+|\d+), |d\d, )?a\d\), d\d", ins)
                 if not mo:
                     continue
                 w = {"mov": 4, "movhu": 2, "movbu": 1}[mo.group(1)]
@@ -4294,11 +4391,43 @@ class Gen:
                 return [f"{it2.label}:\t{d}\t0x{(1 << 8 * w) - 1:x}\t# the end marker of {tab}: {cite} stops at it"]
             self.add(e, w, self.name_at(e, f"{it.label}_End"), "table end", render)
 
-    def field_deref(self, proc, off):
+    def host_code_bodies(self):
+        """(a plug-in, lane mn10300-data3) code_bodies() of the host firmware's converted code: the class
+        procedures of the host's classes, which the plug-in's widgets are instances of, are there."""
+        if hasattr(self, "_hbodies"):
+            return self._hbodies
+        import glob as _glob
+        import data_readers as DR
+        self._hbodies = body = {}
+        hp = PROFILES.get(P.get("host") or "", {})
+        if not hp or not FEATURES.get("host_widget_vars", True):
+            return body
+        root = os.path.normpath(os.path.join(KN7_DIR, hp.get("root", ".")))
+        cur = None
+        for f in sorted(_glob.glob(os.path.join(root, hp.get("code", hp["src"] + "/*.s")))):
+            for ln in open(f, encoding="latin-1"):
+                code = ln.split("#", 1)[0].rstrip()
+                if not code.strip():
+                    continue
+                mo = re.match(r"^([A-Za-z_][\w.$]*):", code)
+                if mo:
+                    n = mo.group(1)
+                    if not DR.LOCAL.search(n):
+                        cur = n
+                        body.setdefault(cur, (self.host.sym_by_name.get(n), []))
+                    rest = code[mo.end():].strip()
+                    if rest and cur:
+                        body[cur][1].append(" ".join(rest.split()))
+                    continue
+                if cur and code[:1] in " \t":
+                    body[cur][1].append(" ".join(code.split()))
+        return body
+
+    def field_deref(self, proc, off, bodies=None):
         """(widget_vars) How `proc` reads the variable a widget's field at +off points at: the field load
         (`mov (off, aR), aS`, or `add off, aR` then `mov (aR), aS`) and, within the next 8 instructions,
         a load or store through aS: (CPU, field instruction, access instruction, width), or None."""
-        b = self.code_bodies().get(proc)
+        b = (bodies if bodies is not None else self.code_bodies()).get(proc)
         if not b:
             return None
         L = b[1]
@@ -4348,6 +4477,11 @@ class Gen:
                 for c in reversed(m.chain(k.id)):
                     pn = by_addr.get(c.proc) or self.extern.get(c.proc)
                     r = self.field_deref(pn, off) if pn else None
+                    if not r and self.host is not None:
+                        # (a plug-in, lane mn10300-data3) a host class: its procedure is the host's code
+                        hn = self.host.sym_by_addr.get(c.proc)
+                        r = self.field_deref(hn, off, self.host_code_bodies()) if hn else None
+                        pn = f"the host's {hn}" if r else pn
                     if r:
                         memo[key] = (c.name, pn) + r
                         break
@@ -5661,6 +5795,11 @@ class Gen:
         for a, n in sorted(lab.items()):
             sym.append(f"0x{a:08X}  {n}  {sizes.get(a, 0)}")
         self.write(os.path.join(outdir, "labels.sym"), sym)
+        if FEATURES.get("frozen_obj_names", True) and any(not o.name for b in self.m.blocks.values() for o in b["objects"]):
+            self.write(os.path.join(outdir, self.OBJ_NAMES_TSV), self.object_names_tsv())
+            r = self.frozen_report
+            print(f"gen_data_s: object names: {r['frozen']} from {self.OBJ_NAMES_TSV} ({r['map rows']} rows), {r['new']} new,"
+                  f" {r['class changed']} with another class, {r['name taken']} whose name another source holds")
         if P.get("functions_sym"):
             self.write_functions_sym(os.path.join(outdir, "functions.sym"))
         md = os.path.join(KN7, outdir, "media")

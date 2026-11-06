@@ -528,81 +528,81 @@
 	.long	\proc
 .endm
 
-# REC_func_4C04B9F8_entry_L4f_Table: 3-byte records (func_4C04B9F8_entry_L4f_Table, 26 records); fields, and what reads them:
+# PanelMemFieldMap: 3-byte records (func_4C04B9F8_entry_L4f_Table, 26 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   index        u8             func_4C04B9F8_entry_L4f 0x4C04BA4C `movbu (a1), d0`; func_4C04B9F8_entry_L118 0x4C04BB15 `movbu (a1), d0` (+13)
-#   +1   index_       u8             func_4C04B9F8_entry_L4f 0x4C04BA4C `movbu (1, a1), d2`; func_4C04B9F8_entry_L118 0x4C04BB15 `movbu (1, a1), d2` (+4)
-#   +2   f2           u8             func_4C04B9F8_entry_L4f 0x4C04BA4C `movbu (2, a1), d0`; func_4C04B9F8_entry_L118 0x4C04BB15 `movbu (2, a1), d0` (+4)
-.macro REC_func_4C04B9F8_entry_L4f_Table index=0, index_=0, f2=0
-	.byte	\index
-	.byte	\index_
-	.byte	\f2
+#   +0   param_off    u8             func_4C04B9F8_entry_L4f 0x4C04BA4C `movbu (a1), d0`; func_4C04B9F8_entry_L118 0x4C04BB15 `movbu (a1), d0` (+13)
+#   +1   rec_off      u8             func_4C04B9F8_entry_L4f 0x4C04BA4C `movbu (1, a1), d2`; func_4C04B9F8_entry_L118 0x4C04BB15 `movbu (1, a1), d2` (+4)
+#   +2   mask         u8             func_4C04B9F8_entry_L4f 0x4C04BA4C `movbu (2, a1), d0`; func_4C04B9F8_entry_L118 0x4C04BB15 `movbu (2, a1), d0` (+4)
+.macro PanelMemFieldMap param_off=0, rec_off=0, mask=0
+	.byte	\param_off
+	.byte	\rec_off
+	.byte	\mask
 .endm
 
-# REC_func_4C04B9F8_entry_L118_Table: 3-byte records (func_4C04B9F8_entry_L118_Table, 1 records); fields, and what reads them:
+# PanelMemFieldMap_2: 3-byte records (func_4C04B9F8_entry_L118_Table, 1 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   index        u8             func_4C04B9F8_entry_L118 0x4C04BB15 `movbu (a1), d0`; func_4C04BEB7_entry_L137 0x4C04BFF3 `movbu (a1), d0` (+2)
-#   +1   index_       u8             func_4C04B9F8_entry_L118 0x4C04BB15 `movbu (1, a1), d2`; func_4C04BEB7_entry_L137 0x4C04BFF3 `movbu (1, a1), d0`
-#   +2   f2           u8             func_4C04B9F8_entry_L118 0x4C04BB15 `movbu (2, a1), d0`; func_4C04BEB7_entry_L137 0x4C04BFF3 `movbu (a0), d0`
-.macro REC_func_4C04B9F8_entry_L118_Table index=0, index_=0, f2=0
-	.byte	\index
-	.byte	\index_
-	.byte	\f2
+#   +0   param_off    u8             func_4C04B9F8_entry_L118 0x4C04BB15 `movbu (a1), d0`; func_4C04BEB7_entry_L137 0x4C04BFF3 `movbu (a1), d0` (+2)
+#   +1   rec_off      u8             func_4C04B9F8_entry_L118 0x4C04BB15 `movbu (1, a1), d2`; func_4C04BEB7_entry_L137 0x4C04BFF3 `movbu (1, a1), d0`
+#   +2   mask         u8             func_4C04B9F8_entry_L118 0x4C04BB15 `movbu (2, a1), d0`; func_4C04BEB7_entry_L137 0x4C04BFF3 `movbu (a0), d0`
+.macro PanelMemFieldMap_2 param_off=0, rec_off=0, mask=0
+	.byte	\param_off
+	.byte	\rec_off
+	.byte	\mask
 .endm
 
-# REC_func_4C04B9F8_entry_L1e9_Table: 3-byte records (func_4C04B9F8_entry_L1e9_Table, 7 records); fields, and what reads them:
+# PanelMemFieldMap_3: 3-byte records (func_4C04B9F8_entry_L1e9_Table, 7 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   index        u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (a1), d0`; func_4C04BEB7_entry_L245 0x4C04C101 `movbu (a1), d0` (+3)
-#   +1   index_       u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (1, a1), d2`; func_4C04BEB7_entry_L245 0x4C04C101 `movbu (1, a1), d0` (+1)
-#   +2   f2           u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (2, a1), d0`; func_4C04BEB7_entry_L245 0x4C04C101 `movbu (a0), d0` (+3)
-.macro REC_func_4C04B9F8_entry_L1e9_Table index=0, index_=0, f2=0
-	.byte	\index
-	.byte	\index_
-	.byte	\f2
+#   +0   param_off    u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (a1), d0`; func_4C04BEB7_entry_L245 0x4C04C101 `movbu (a1), d0` (+3)
+#   +1   rec_off      u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (1, a1), d2`; func_4C04BEB7_entry_L245 0x4C04C101 `movbu (1, a1), d0` (+1)
+#   +2   mask         u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (2, a1), d0`; func_4C04BEB7_entry_L245 0x4C04C101 `movbu (a0), d0` (+3)
+.macro PanelMemFieldMap_3 param_off=0, rec_off=0, mask=0
+	.byte	\param_off
+	.byte	\rec_off
+	.byte	\mask
 .endm
 
-# REC_func_4C04C58C_entry_L12f_Table: 3-byte records (func_4C04C58C_entry_L12f_Table, 3 records); fields, and what reads them:
+# PanelMemFieldMap_4: 3-byte records (func_4C04C58C_entry_L12f_Table, 3 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   index        u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (a1), d0`; func_4C04C58C_entry_L12f 0x4C04C6C0 `movbu (a1), d0` (+2)
-#   +1   index_       u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (1, a1), d2`; func_4C04BEB7_entry_L245 0x4C04C101 `movbu (a0), d0` (+3)
-#   +2   f2           u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (2, a1), d0`; func_4C04BEB7_entry_L245 0x4C04C101 `movbu (a1), d0` (+2)
-.macro REC_func_4C04C58C_entry_L12f_Table index=0, index_=0, f2=0
-	.byte	\index
-	.byte	\index_
-	.byte	\f2
+#   +0   param_off    u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (a1), d0`; func_4C04C58C_entry_L12f 0x4C04C6C0 `movbu (a1), d0` (+2)
+#   +1   rec_off      u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (1, a1), d2`; func_4C04BEB7_entry_L245 0x4C04C101 `movbu (a0), d0` (+3)
+#   +2   mask         u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (2, a1), d0`; func_4C04BEB7_entry_L245 0x4C04C101 `movbu (a1), d0` (+2)
+.macro PanelMemFieldMap_4 param_off=0, rec_off=0, mask=0
+	.byte	\param_off
+	.byte	\rec_off
+	.byte	\mask
 .endm
 
-# REC_func_4C04B9F8_entry_L1e9_Table_2: 3-byte records (func_4C04B9F8_entry_L1e9_Table_2, 14 records); fields, and what reads them:
+# PanelMemFieldMap_5: 3-byte records (func_4C04B9F8_entry_L1e9_Table_2, 14 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   index        u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (a1), d0`; func_4C04BEB7_entry_L245 0x4C04C101 `movbu (a1), d0` (+3)
-#   +1   index_       u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (1, a1), d2`; func_4C04BEB7_entry_L245 0x4C04C101 `movbu (1, a1), d0` (+1)
-#   +2   f2           u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (2, a1), d0`; func_4C04BEB7_entry_L245 0x4C04C101 `movbu (a0), d0` (+3)
-.macro REC_func_4C04B9F8_entry_L1e9_Table_2 index=0, index_=0, f2=0
-	.byte	\index
-	.byte	\index_
-	.byte	\f2
+#   +0   param_off    u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (a1), d0`; func_4C04BEB7_entry_L245 0x4C04C101 `movbu (a1), d0` (+3)
+#   +1   rec_off      u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (1, a1), d2`; func_4C04BEB7_entry_L245 0x4C04C101 `movbu (1, a1), d0` (+1)
+#   +2   mask         u8             func_4C04B9F8_entry_L1e9 0x4C04BBE6 `movbu (2, a1), d0`; func_4C04BEB7_entry_L245 0x4C04C101 `movbu (a0), d0` (+3)
+.macro PanelMemFieldMap_5 param_off=0, rec_off=0, mask=0
+	.byte	\param_off
+	.byte	\rec_off
+	.byte	\mask
 .endm
 
-# REC_func_4C04B9F8_entry_L41b_Table: 3-byte records (func_4C04B9F8_entry_L41b_Table, 4 records); fields, and what reads them:
+# PanelMemFieldMap_6: 3-byte records (func_4C04B9F8_entry_L41b_Table, 4 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   index        u8             func_4C04B9F8_entry_L41b 0x4C04BE18 `movbu (a1), d0`; func_4C04BEB7_entry_L4d5 0x4C04C391 `movbu (a1), d0` (+3)
-#   +1   index_       u8             func_4C04B9F8_entry_L41b 0x4C04BE18 `movbu (1, a1), d2`; func_4C04BEB7_entry_L4d5 0x4C04C391 `movbu (1, a1), d0` (+1)
-#   +2   f2           u8             func_4C04B9F8_entry_L41b 0x4C04BE18 `movbu (2, a1), d0`; func_4C04BEB7_entry_L4d5 0x4C04C391 `movbu (a0), d0` (+3)
-.macro REC_func_4C04B9F8_entry_L41b_Table index=0, index_=0, f2=0
-	.byte	\index
-	.byte	\index_
-	.byte	\f2
+#   +0   param_off    u8             func_4C04B9F8_entry_L41b 0x4C04BE18 `movbu (a1), d0`; func_4C04BEB7_entry_L4d5 0x4C04C391 `movbu (a1), d0` (+3)
+#   +1   rec_off      u8             func_4C04B9F8_entry_L41b 0x4C04BE18 `movbu (1, a1), d2`; func_4C04BEB7_entry_L4d5 0x4C04C391 `movbu (1, a1), d0` (+1)
+#   +2   mask         u8             func_4C04B9F8_entry_L41b 0x4C04BE18 `movbu (2, a1), d0`; func_4C04BEB7_entry_L4d5 0x4C04C391 `movbu (a0), d0` (+3)
+.macro PanelMemFieldMap_6 param_off=0, rec_off=0, mask=0
+	.byte	\param_off
+	.byte	\rec_off
+	.byte	\mask
 .endm
 
-# REC_func_4C04B9F8_entry_L41b_Table_2: 3-byte records (func_4C04B9F8_entry_L41b_Table_2, 426 records); fields, and what reads them:
+# PanelMemFieldMap_7: 3-byte records (func_4C04B9F8_entry_L41b_Table_2, 426 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   index        u8             func_4C04B9F8_entry_L41b 0x4C04BE18 `movbu (a1), d0`; func_4C04BEB7_entry_L4d5 0x4C04C391 `movbu (a1), d0` (+5)
-#   +1   index_       u8             func_4C04B9F8_entry_L41b 0x4C04BE18 `movbu (1, a1), d2`; func_4C04BEB7_entry_L4d5 0x4C04C391 `movbu (1, a1), d0` (+1)
-#   +2   f2           u8             func_4C04B9F8_entry_L41b 0x4C04BE18 `movbu (2, a1), d0`; func_4C04BEB7_entry_L4d5 0x4C04C391 `movbu (a0), d0` (+2)
-.macro REC_func_4C04B9F8_entry_L41b_Table_2 index=0, index_=0, f2=0
-	.byte	\index
-	.byte	\index_
-	.byte	\f2
+#   +0   param_off    u8             func_4C04B9F8_entry_L41b 0x4C04BE18 `movbu (a1), d0`; func_4C04BEB7_entry_L4d5 0x4C04C391 `movbu (a1), d0` (+5)
+#   +1   rec_off      u8             func_4C04B9F8_entry_L41b 0x4C04BE18 `movbu (1, a1), d2`; func_4C04BEB7_entry_L4d5 0x4C04C391 `movbu (1, a1), d0` (+1)
+#   +2   mask         u8             func_4C04B9F8_entry_L41b 0x4C04BE18 `movbu (2, a1), d0`; func_4C04BEB7_entry_L4d5 0x4C04C391 `movbu (a0), d0` (+2)
+.macro PanelMemFieldMap_7 param_off=0, rec_off=0, mask=0
+	.byte	\param_off
+	.byte	\rec_off
+	.byte	\mask
 .endm
 
 # REC_func_4C04CC91_Records: 12-byte records (func_4C04CC91_Records, 43 records); fields, and what reads them:
@@ -3736,54 +3736,54 @@
 	.ascii	"\x12"
 .endm
 
-# REC_localeconv_Records: 40-byte records (localeconv_Records, 1 records); fields, and what reads them:
+# LconvMonetary: 40-byte records (localeconv_Records, 1 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   text         ptr            no reader seen
-#   +4   p4           ptr            localeconv 0x4C00246C `mov (4, a1), a0`
-#   +8   p8           ptr            localeconv 0x4C00246C `mov (8, a1), a0`
-#   +12  p12          ptr            localeconv 0x4C00246C `mov (0xc, a1), a0`
-#   +16  p16          ptr            localeconv 0x4C00246C `mov (0x10, a1), a0`
-#   +20  p20          ptr            localeconv 0x4C00246C `mov (0x14, a1), a0`
-#   +24  p24          ptr            localeconv 0x4C00246C `mov (0x18, a1), a0`
-#   +28  p28          ptr            localeconv 0x4C00246C `mov (0x1c, a1), a0`
-#   +32  f32          u8             localeconv 0x4C00246C `movbu (0x20, a1), d0`
-#   +33  f33          u8             localeconv 0x4C00246C `movbu (0x21, a1), d0`
-#   +34  f34          u8             localeconv 0x4C00246C `movbu (0x22, a1), d0`
-#   +35  f35          u8             localeconv 0x4C00246C `movbu (0x23, a1), d0`
-#   +36  f36          u8             localeconv 0x4C00246C `movbu (0x24, a1), d0`
-#   +37  f37          u8             localeconv 0x4C00246C `movbu (0x25, a1), d0`
-#   +38  f38          u8             localeconv 0x4C00246C `movbu (0x26, a1), d0`
-#   +39  f39          u8             localeconv 0x4C00246C `movbu (0x27, a1), d0`
-.macro REC_localeconv_Records text=0, p4=0, p8=0, p12=0, p16=0, p20=0, p24=0, p28=0, f32=0, f33=0, f34=0, f35=0, f36=0, f37=0, f38=0, f39=0
-	.long	\text
-	.long	\p4
-	.long	\p8
-	.long	\p12
-	.long	\p16
-	.long	\p20
-	.long	\p24
-	.long	\p28
-	.byte	\f32
-	.byte	\f33
-	.byte	\f34
-	.byte	\f35
-	.byte	\f36
-	.byte	\f37
-	.byte	\f38
-	.byte	\f39
+#   +0   locale       ptr            no reader seen
+#   +4   int_curr_symbol ptr            localeconv 0x4C00246C `mov (4, a1), a0`
+#   +8   currency_symbol ptr            localeconv 0x4C00246C `mov (8, a1), a0`
+#   +12  mon_decimal_point ptr            localeconv 0x4C00246C `mov (0xc, a1), a0`
+#   +16  mon_thousands_sep ptr            localeconv 0x4C00246C `mov (0x10, a1), a0`
+#   +20  mon_grouping ptr            localeconv 0x4C00246C `mov (0x14, a1), a0`
+#   +24  positive_sign ptr            localeconv 0x4C00246C `mov (0x18, a1), a0`
+#   +28  negative_sign ptr            localeconv 0x4C00246C `mov (0x1c, a1), a0`
+#   +32  int_frac_digits u8             localeconv 0x4C00246C `movbu (0x20, a1), d0`
+#   +33  frac_digits  u8             localeconv 0x4C00246C `movbu (0x21, a1), d0`
+#   +34  p_cs_precedes u8             localeconv 0x4C00246C `movbu (0x22, a1), d0`
+#   +35  p_sep_by_space u8             localeconv 0x4C00246C `movbu (0x23, a1), d0`
+#   +36  n_cs_precedes u8             localeconv 0x4C00246C `movbu (0x24, a1), d0`
+#   +37  n_sep_by_space u8             localeconv 0x4C00246C `movbu (0x25, a1), d0`
+#   +38  p_sign_posn  u8             localeconv 0x4C00246C `movbu (0x26, a1), d0`
+#   +39  n_sign_posn  u8             localeconv 0x4C00246C `movbu (0x27, a1), d0`
+.macro LconvMonetary locale=0, int_curr_symbol=0, currency_symbol=0, mon_decimal_point=0, mon_thousands_sep=0, mon_grouping=0, positive_sign=0, negative_sign=0, int_frac_digits=0, frac_digits=0, p_cs_precedes=0, p_sep_by_space=0, n_cs_precedes=0, n_sep_by_space=0, p_sign_posn=0, n_sign_posn=0
+	.long	\locale
+	.long	\int_curr_symbol
+	.long	\currency_symbol
+	.long	\mon_decimal_point
+	.long	\mon_thousands_sep
+	.long	\mon_grouping
+	.long	\positive_sign
+	.long	\negative_sign
+	.byte	\int_frac_digits
+	.byte	\frac_digits
+	.byte	\p_cs_precedes
+	.byte	\p_sep_by_space
+	.byte	\n_cs_precedes
+	.byte	\n_sep_by_space
+	.byte	\p_sign_posn
+	.byte	\n_sign_posn
 .endm
 
-# REC_localeconv_Records_2: 16-byte records (localeconv_Records_2, 2 records); fields, and what reads them:
+# LconvNumeric: 16-byte records (localeconv_Records_2, 2 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   text         ptr            no reader seen
-#   +4   text_        ptr            localeconv 0x4C00246C `mov (4, a1), a0`
-#   +8   p8           ptr            localeconv 0x4C00246C `mov (8, a1), a0`
-#   +12  p12          ptr            localeconv 0x4C00246C `mov (0xc, a1), a0`
-.macro REC_localeconv_Records_2 text=0, text_=0, p8=0, p12=0
-	.long	\text
-	.long	\text_
-	.long	\p8
-	.long	\p12
+#   +0   locale       ptr            no reader seen
+#   +4   decimal_point ptr            localeconv 0x4C00246C `mov (4, a1), a0`
+#   +8   thousands_sep ptr            localeconv 0x4C00246C `mov (8, a1), a0`
+#   +12  grouping     ptr            localeconv 0x4C00246C `mov (0xc, a1), a0`
+.macro LconvNumeric locale=0, decimal_point=0, thousands_sep=0, grouping=0
+	.long	\locale
+	.long	\decimal_point
+	.long	\thousands_sep
+	.long	\grouping
 .endm
 
 # REC_func_4C05197F_entry_Lf4_Table: 2-byte records (func_4C05197F_entry_Lf4_Table, 160 records); fields, and what reads them:
@@ -3931,22 +3931,22 @@
 	.ascii	"\x10"
 .endm
 
-# REC_func_4C09D6E7_entry_L4b_Table: 2-byte records (func_4C09D6E7_entry_L4b_Table, 2048 records); fields, and what reads them:
+# ChordRecogEntry: 2-byte records (func_4C09D6E7_entry_L4b_Table, 2048 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u8             func_4C09D6E7_entry_L4b 0x4C09D737 `movbu (d0, a0), d0`; func_4C09D6E7_entry_L62 0x4C09D74E `movbu (d0, a0), d0`
-#   +1   index        u8             func_4C09D6E7_entry_L62 0x4C09D74E `movbu (1, a0), d0`
-.macro REC_func_4C09D6E7_entry_L4b_Table f0=0, index=0
-	.byte	\f0
-	.byte	\index
+#   +0   chord_type   u8             func_4C09D6E7_entry_L4b 0x4C09D737 `movbu (d0, a0), d0`; func_4C09D6E7_entry_L62 0x4C09D74E `movbu (d0, a0), d0`
+#   +1   root_flags   u8             func_4C09D6E7_entry_L62 0x4C09D74E `movbu (1, a0), d0`
+.macro ChordRecogEntry chord_type=0, root_flags=0
+	.byte	\chord_type
+	.byte	\root_flags
 .endm
 
-# REC_func_4C09D886_entry_L6e_Table: 2-byte records (func_4C09D886_entry_L6e_Table, 256 records); fields, and what reads them:
-#   (the count is capped by an index bound a reader checks (a `cmp` before the index, or a byte index) [INFERENCE: the table may end before it])
-#   +0   f0           u8             func_4C09D886_entry_L6e 0x4C09D8F9 `movbu (d0, a3), d0`; func_4C09D886_entry_Ldd 0x4C09D968 `movbu (d0, a0), d0` (+3)
-#   +1   index        u8             func_4C09D886_entry_L2d 0x4C09D8B8 `movbu (1, a0), d0`; func_4C09D886_entry_L8b 0x4C09D916 `movbu (1, a0), d0` (+3)
-.macro REC_func_4C09D886_entry_L6e_Table f0=0, index=0
-	.byte	\f0
-	.byte	\index
+# ChordRecogEntry2: 2-byte records (func_4C09D886_entry_L6e_Table, 2048 records); fields, and what reads them:
+#   (2048 records: the index is func_4844D680's 11-bit interval mask (bits 0x01 .. 0x400))
+#   +0   chord_type   u8             func_4C09D886_entry_L6e 0x4C09D8F9 `movbu (d0, a3), d0`; func_4C09D886_entry_Ldd 0x4C09D968 `movbu (d0, a0), d0` (+3)
+#   +1   root_flags   u8             func_4C09D886_entry_L2d 0x4C09D8B8 `movbu (1, a0), d0`; func_4C09D886_entry_L8b 0x4C09D916 `movbu (1, a0), d0` (+3)
+.macro ChordRecogEntry2 chord_type=0, root_flags=0
+	.byte	\chord_type
+	.byte	\root_flags
 .endm
 
 # REC_MainCMP_CmpEasyCopy_Table: 2-byte records (MainCMP_CmpEasyCopy_Table, 12 records); fields, and what reads them:
@@ -3982,25 +3982,25 @@
 	.long	\index
 .endm
 
-# REC_EQFcEditCheck_L4f_Records: 6-byte records (EQFcEditCheck_L4f_Records, 27 records); fields, and what reads them:
+# EqEditLabel: 6-byte records (EQFcEditCheck_L4f_Records, 27 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   s0           char[6]        EQFcEditCheck_L4f 0x4C105211 `call strcpy_entry, [a2], 4`
-.macro REC_EQFcEditCheck_L4f_Records s0
-	.ascii	"\s0"
+#   +0   label        char[6]        EQFcEditCheck_L4f 0x4C105211 `call strcpy_entry, [a2], 4`
+.macro EqEditLabel label
+	.ascii	"\label"
 .endm
 
-# REC_EQQEditCheck_L4f_Records: 6-byte records (EQQEditCheck_L4f_Records, 32 records); fields, and what reads them:
+# EqEditLabel_2: 6-byte records (EQQEditCheck_L4f_Records, 32 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   s0           char[6]        EQQEditCheck_L4f 0x4C105398 `call strcpy_entry, [a2], 4`
-.macro REC_EQQEditCheck_L4f_Records s0
-	.ascii	"\s0"
+#   +0   label        char[6]        EQQEditCheck_L4f 0x4C105398 `call strcpy_entry, [a2], 4`
+.macro EqEditLabel_2 label
+	.ascii	"\label"
 .endm
 
-# REC_EQGainEditCheck_L4f_Records: 6-byte records (EQGainEditCheck_L4f_Records, 49 records); fields, and what reads them:
+# EqEditLabel_3: 6-byte records (EQGainEditCheck_L4f_Records, 49 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   s0           char[6]        EQGainEditCheck_L4f 0x4C10508A `call strcpy_entry, [a2], 4`
-.macro REC_EQGainEditCheck_L4f_Records s0
-	.ascii	"\s0"
+#   +0   label        char[6]        EQGainEditCheck_L4f 0x4C10508A `call strcpy_entry, [a2], 4`
+.macro EqEditLabel_3 label
+	.ascii	"\label"
 .endm
 
 # NoteConvRule: 8-byte records (NoteConvRules, 128 records); fields, and what reads them:
@@ -4441,14 +4441,14 @@
 	.ascii	"\x6"
 .endm
 
-# REC_VoiceDirPartRefFind_Table_p0: 12-byte records (VoiceDirPartRefFind_Table_p0, 582 records); fields, and what reads them:
-#   +0   p0           ptr            VoiceDirPartRefFind_entry_L37 0x4C09D2CC `mov (a2), a2`
+# VoiceDirPartRefNode: 12-byte records (VoiceDirPartRefFind_Table_p0, 582 records); fields, and what reads them:
+#   +0   next         ptr            VoiceDirPartRefFind_entry_L37 0x4C09D2CC `mov (a2), a2`
 #   +4   key          u32            VoiceDirPartRefFind_entry_L24 0x4C09D2B9 `mov (4, a2), d1`
-#   +8   x8           u8[4]          no reader seen
-.macro REC_VoiceDirPartRefFind_Table_p0 p0=0, key=0, x8
-	.long	\p0
+#   +8   value        u8[4]          no reader seen
+.macro VoiceDirPartRefNode next=0, key=0, value
+	.long	\next
 	.long	\key
-	.ascii	"\x8"
+	.ascii	"\value"
 .endm
 
 # REC_data_4C1DDA74_p0: 4-byte records (data_4C1DDA74_p0, 1 records); fields, and what reads them:
@@ -4495,14 +4495,6 @@
 #   +0   x0           u8[48]         no reader seen
 .macro REC_GetGenreName_entry_L14_Records_p20 x0
 	.ascii	"\x0"
-.endm
-
-# REC_func_4C11B347_entry_L4a_Selected: 52-byte records (func_4C11B347_entry_L4a_Selected, 5 records); fields, and what reads them:
-#   +0   key          u32            func_4C11B347_entry_L4a 0x4C11B396 `mov (a0), d0`
-#   +4   x4           u8[48]         no reader seen
-.macro REC_func_4C11B347_entry_L4a_Selected key=0, x4
-	.long	\key
-	.ascii	"\x4"
 .endm
 
 # REC_func_4C11F764_Table_p0: 96-byte records (func_4C11F764_Table_p0, 6 records); fields, and what reads them:
@@ -4779,15 +4771,15 @@
 	.ascii	"\x6"
 .endm
 
-# REC_DrawBitmapSP2_ArgA0: 4-byte records (DrawBitmapSP2_ArgA0, 1 records); fields, and what reads them:
+# BitmapOrigin: 4-byte records (DrawBitmapSP2_ArgA0, 1 records); fields, and what reads them:
 #   (the layout DrawBitmapSP2 0x4C0175CA reads through its argument a0 (passed by AcHpScreenProc_L9f 0x4C06BD01 `call DrawBitmapSP2_entry, [d2,d3,a2,a3], 0x30`))
 #   (the layout DrawBitmapSP2_Impl 0x4C01766D reads through its argument a0 (passed by DrawBitmapSP2 0x4C0175CA `call DrawBitmapSP2_Impl_entry, [d2,d3,a2,a3], 0x44`))
 #   (+3 more routines)
-#   +0   f0           s16            DrawIcons_entry_L1e 0x4C016AA8 `movhu (a2), d0`; DrawIcons_Impl_entry_L16 0x4C016B04 `movhu (a0), d2` (+7)
-#   +2   SetChangeRect_d0 s16            DrawIcons_entry_L1e 0x4C016AA8 `movhu (2, a2), d0`; DrawIcons_Impl_entry_L16 0x4C016B04 `movhu (a0), d0` (+6)
-.macro REC_DrawBitmapSP2_ArgA0 f0=0, SetChangeRect_d0=0
-	.word	\f0
-	.word	\SetChangeRect_d0
+#   +0   x            s16            DrawIcons_entry_L1e 0x4C016AA8 `movhu (a2), d0`; DrawIcons_Impl_entry_L16 0x4C016B04 `movhu (a0), d2` (+7)
+#   +2   y            s16            DrawIcons_entry_L1e 0x4C016AA8 `movhu (2, a2), d0`; DrawIcons_Impl_entry_L16 0x4C016B04 `movhu (a0), d0` (+6)
+.macro BitmapOrigin x=0, y=0
+	.word	\x
+	.word	\y
 .endm
 
 # REC_DrawBitmapSPFast4_ArgSp24: 4-byte records (DrawBitmapSPFast4_ArgSp24, 6 records); fields, and what reads them:
@@ -4964,13 +4956,13 @@
 	.word	\flags___________
 .endm
 
-# REC_DrawStringCentered_ArgA1: 4-byte records (DrawStringCentered_ArgA1, 3 records); fields, and what reads them:
+# TextCentre: 4-byte records (DrawStringCentered_ArgA1, 3 records); fields, and what reads them:
 #   (the layout DrawStringCentered 0x4C01856A reads through its argument a1 (passed by AcMidiPartGridBoxProc_L6a 0x4C0A2300 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls))
-#   +0   f0           u16            DrawStringCentered 0x4C01856A `movhu (a0), d0`
-#   +2   f2           u16            DrawStringCentered 0x4C01856A `movhu (2, a0), d0`
-.macro REC_DrawStringCentered_ArgA1 f0=0, f2=0
-	.word	\f0
-	.word	\f2
+#   +0   x            u16            DrawStringCentered 0x4C01856A `movhu (a0), d0`
+#   +2   y            u16            DrawStringCentered 0x4C01856A `movhu (2, a0), d0`
+.macro TextCentre x=0, y=0
+	.word	\x
+	.word	\y
 .endm
 
 # REC_func_4C112249_ArgA0: 56-byte records (func_4C112249_ArgA0, 2 records); fields, and what reads them:

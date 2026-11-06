@@ -846,9 +846,9 @@
 0x4858E984  func_4C02B542_Records  96
 0x4858E9E4  func_4C02B422_Records  40
 0x4858EA0C  func_4840D29C_Table_2  1
-0x4858EA0D  func_4840D29C_Var  1
-0x4858EA0E  func_4840D29C_Var_2  1
-0x4858EA0F  func_4840D29C_Var_3  1
+0x4858EA0D  JpegEncSetup_Var  1
+0x4858EA0E  JpegEncSetup_Var_2  1
+0x4858EA0F  JpegEncSetup_Var_3  1
 0x4858EA10  Str_JK_7  3
 0x4858EA14  SndDbTriDefaultsA_Table_2  72
 0x4858EA5C  SndDbTriDefaultsB_Table  72
@@ -5452,7 +5452,8 @@
 0x485B9574  func_4845BC68_Selected_1  252
 0x485B9670  func_4845BC68_Selected_2  52
 0x485B96A4  func_4845BC68_Selected_3  132
-0x485B9728  func_4845BC68_Selected_4  56
+0x485B9728  func_4845BC68_Selected_4  36
+0x485B974C  func_4845BC68_Table  20
 0x485B9760  func_4845DD04_Table  76
 0x485B97DC  func_4845FE5B_Table_p0_0  96
 0x485B983C  func_4845FE5B_Table_p0_1  96

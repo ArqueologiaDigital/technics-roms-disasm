@@ -13618,2333 +13618,4104 @@ func_4C02174C_Selected_7:	# REC_func_4C02174C_Selected (12 bytes)
 func_4C02174C_Selected_8:	# REC_func_4C02174C_Selected (12 bytes)
 	REC_func_4C02174C_Selected	
 
-func_4844D0B6_Table:	# 2048 x REC_func_4844D0B6_Table (2 bytes each); read by func_4844D0B6 0x4844D0B6 `movbu (1, a0), d0`; func_4844D0B6 0x4844D0B6 `movbu (d0, a0), d0`
-	REC_func_4844D0B6_Table		# [0]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [8]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [16]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=6, index=144
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=3, index=128	# [24]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [32]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=13, index=96
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=20, index=96
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=2, index=128	# [40]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [48]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [56]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [64]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=23, index=80
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=1, index=80
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=5, index=80	# [72]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=23	# [80]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=10
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=40, index=80
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=41, index=80	# [88]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [96]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=25, index=96
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=27, index=96
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [104]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [112]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [120]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [128]
-	REC_func_4844D0B6_Table	f0=3
-	REC_func_4844D0B6_Table	f0=2
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=5, index=144
-	REC_func_4844D0B6_Table	f0=41, index=144
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=4	# [136]
-	REC_func_4844D0B6_Table	f0=26
-	REC_func_4844D0B6_Table	f0=12
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=9, index=144
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=1	# [144]
-	REC_func_4844D0B6_Table	f0=3
-	REC_func_4844D0B6_Table	f0=2
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=11, index=1
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=26, index=128	# [152]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=13	# [160]
-	REC_func_4844D0B6_Table	f0=25
-	REC_func_4844D0B6_Table	f0=14
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=8, index=96
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=12, index=128	# [168]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [176]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [184]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [192]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=3, index=80
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=9, index=80	# [200]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [208]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [216]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [224]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [232]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [240]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [248]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [256]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=6
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=20, index=144
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=1, index=128	# [264]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=40, index=128
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=27, index=144
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=5	# [272]
-	REC_func_4844D0B6_Table	f0=9
-	REC_func_4844D0B6_Table	f0=6
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=19, index=1
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=3, index=128	# [280]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=20	# [288]
-	REC_func_4844D0B6_Table	f0=27
-	REC_func_4844D0B6_Table	f0=8
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=7
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=2, index=128	# [296]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [304]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [312]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [320]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=10, index=80
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=2, index=80
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=6, index=80	# [328]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [336]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [344]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [352]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [360]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [368]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [376]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [384]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=26, index=64	# [392]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [400]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [408]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [416]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [424]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [432]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [440]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [448]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [456]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [464]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [472]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [480]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [488]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [496]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [504]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [512]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=13, index=128	# [520]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=23, index=112	# [528]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=10, index=32
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=25, index=128	# [536]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=2, index=32	# [544]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=12, index=32
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=2, index=32
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=14, index=128	# [552]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [560]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [568]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=6, index=32	# [576]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=40, index=160
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=6, index=32
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=8, index=32	# [584]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=10, index=112	# [592]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [600]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [608]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [616]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [624]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [632]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [640]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=12, index=64	# [648]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=40	# [656]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [664]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [672]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [680]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [688]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [696]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [704]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [712]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [720]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [728]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [736]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [744]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [752]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [760]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [768]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [776]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=41	# [784]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [792]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [800]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [808]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [816]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [824]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [832]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [840]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [848]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [856]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [864]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [872]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [880]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [888]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [896]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [904]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [912]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [920]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [928]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [936]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [944]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [952]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [960]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [968]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [976]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [984]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [992]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1000]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1008]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1016]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1024]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1032]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1040]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1048]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1056]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1064]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1072]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1080]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=3, index=16	# [1088]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=41, index=160
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=26, index=16
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=3, index=16	# [1096]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=25, index=16	# [1104]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1112]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1120]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1128]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1136]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1144]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1152]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=9, index=16	# [1160]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	f0=27, index=16	# [1168]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1176]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1184]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1192]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1200]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1208]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1216]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1224]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1232]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1240]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1248]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1256]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1264]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1272]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1280]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1288]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1296]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1304]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1312]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1320]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1328]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1336]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1344]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1352]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1360]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1368]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1376]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1384]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1392]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1400]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1408]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1416]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1424]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1432]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1440]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1448]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1456]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1464]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1472]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1480]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1488]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1496]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1504]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1512]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1520]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1528]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1536]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1544]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1552]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1560]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1568]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1576]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1584]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1592]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1600]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1608]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1616]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1624]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1632]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1640]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1648]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1656]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1664]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1672]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1680]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1688]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1696]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1704]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1712]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1720]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1728]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1736]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1744]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1752]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1760]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1768]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1776]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1784]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1792]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1800]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1808]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1816]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1824]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1832]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1840]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1848]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1856]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1864]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1872]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1880]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1888]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1896]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1904]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1912]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1920]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1928]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1936]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1944]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1952]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1960]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1968]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1976]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1984]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [1992]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [2000]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [2008]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [2016]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [2024]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [2032]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table		# [2040]
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-	REC_func_4844D0B6_Table	
-func_4844D255_Table:	# 256 x REC_func_4844D255_Table (2 bytes each); read by func_4844D255 0x4844D255 `movbu (1, a0), d0`; func_4844D255 0x4844D255 `movbu (1, a0), d1`; func_4844D255 0x4844D255 `movbu (d0, a0), d0` (+6)
-	REC_func_4844D255_Table		# [0]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [8]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [16]
-	REC_func_4844D255_Table	f0=21, index=145
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=6, index=144
-	REC_func_4844D255_Table	f0=35, index=1
-	REC_func_4844D255_Table	f0=28, index=1
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=3, index=128	# [24]
-	REC_func_4844D255_Table	f0=36, index=1
-	REC_func_4844D255_Table	f0=32, index=1
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [32]
-	REC_func_4844D255_Table	f0=28, index=33
-	REC_func_4844D255_Table	f0=15, index=129
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=2, index=33
-	REC_func_4844D255_Table	f0=22, index=144
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=2, index=128	# [40]
-	REC_func_4844D255_Table	f0=24, index=128
-	REC_func_4844D255_Table	f0=39
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=16, index=128
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [48]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=37
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [56]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [64]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=18, index=129
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=1, index=80
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=5, index=80	# [72]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=18, index=128
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=24, index=80
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=23	# [80]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=10
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=40, index=80
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=41, index=80	# [88]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=35, index=128
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=28, index=128	# [96]
-	REC_func_4844D255_Table	f0=31, index=128
-	REC_func_4844D255_Table	f0=25, index=96
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=27, index=96
-	REC_func_4844D255_Table	f0=31, index=32
-	REC_func_4844D255_Table	f0=34, index=32
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=28, index=128	# [104]
-	REC_func_4844D255_Table	f0=31, index=128
-	REC_func_4844D255_Table	f0=28, index=128
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=30, index=128
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [112]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [120]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [128]
-	REC_func_4844D255_Table	f0=3
-	REC_func_4844D255_Table	f0=2
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=5, index=144
-	REC_func_4844D255_Table	f0=35
-	REC_func_4844D255_Table	f0=28, index=1
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=4	# [136]
-	REC_func_4844D255_Table	f0=26
-	REC_func_4844D255_Table	f0=12
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=9, index=144
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=1	# [144]
-	REC_func_4844D255_Table	f0=3
-	REC_func_4844D255_Table	f0=2
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=11, index=1
-	REC_func_4844D255_Table	f0=35, index=1
-	REC_func_4844D255_Table	f0=28, index=1
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=26, index=128	# [152]
-	REC_func_4844D255_Table	f0=36, index=1
-	REC_func_4844D255_Table	f0=32, index=1
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=13	# [160]
-	REC_func_4844D255_Table	f0=28, index=33
-	REC_func_4844D255_Table	f0=14
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=8, index=96
-	REC_func_4844D255_Table	f0=22, index=144
-	REC_func_4844D255_Table	f0=32, index=32
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=12, index=128	# [168]
-	REC_func_4844D255_Table	f0=34, index=128
-	REC_func_4844D255_Table	f0=39
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=33, index=128
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [176]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=37
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [184]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [192]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=3, index=80
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=9, index=80	# [200]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [208]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	f0=17, index=80
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [216]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [224]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [232]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [240]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table		# [248]
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-	REC_func_4844D255_Table	
-# census: opaque -- unknown-dump: 358 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x331B6C, 0x331CD2
-	.space	164, 0x00
-# census: opaque -- unknown-dump: 416 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x331D76, 0x331F16
-	.space	90, 0x00
-# census: opaque -- unknown-dump: 198 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x331F70, 0x332036
-	.space	322, 0x00
-# census: opaque -- unknown-dump: 158 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x332178, 0x332216
-	.space	90, 0x00
-# census: opaque -- unknown-dump: 166 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x332270, 0x332316
-	.space	90, 0x00
-# census: opaque -- unknown-dump: 198 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x332370, 0x332436
-	.space	86, 0x00
-# census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x33248C, 0x332492
-	.space	1242, 0x00
+func_4844D0B6_Table:	# 2048 x ChordRecogEntry (2 bytes each); read by func_4844D0B6 0x4844D0B6 `movbu (1, a0), d0`; func_4844D0B6 0x4844D0B6 `movbu (d0, a0), d0`
+	ChordRecogEntry		# [0]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [8]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [16]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=6, root_flags=144
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=3, root_flags=128	# [24]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [32]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=13, root_flags=96
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=20, root_flags=96
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=2, root_flags=128	# [40]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [48]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [56]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [64]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=23, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=1, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=5, root_flags=80	# [72]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=23	# [80]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=10
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=40, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=41, root_flags=80	# [88]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [96]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=25, root_flags=96
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=27, root_flags=96
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [104]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [112]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [120]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [128]
+	ChordRecogEntry	chord_type=3
+	ChordRecogEntry	chord_type=2
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=5, root_flags=144
+	ChordRecogEntry	chord_type=41, root_flags=144
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=4	# [136]
+	ChordRecogEntry	chord_type=26
+	ChordRecogEntry	chord_type=12
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=9, root_flags=144
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=1	# [144]
+	ChordRecogEntry	chord_type=3
+	ChordRecogEntry	chord_type=2
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=11, root_flags=1
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=26, root_flags=128	# [152]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=13	# [160]
+	ChordRecogEntry	chord_type=25
+	ChordRecogEntry	chord_type=14
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=8, root_flags=96
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=12, root_flags=128	# [168]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [176]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [184]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [192]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=3, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=9, root_flags=80	# [200]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [208]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [216]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [224]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [232]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [240]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [248]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [256]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=6
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=20, root_flags=144
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=1, root_flags=128	# [264]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=40, root_flags=128
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=27, root_flags=144
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=5	# [272]
+	ChordRecogEntry	chord_type=9
+	ChordRecogEntry	chord_type=6
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=19, root_flags=1
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=3, root_flags=128	# [280]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=20	# [288]
+	ChordRecogEntry	chord_type=27
+	ChordRecogEntry	chord_type=8
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=7
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=2, root_flags=128	# [296]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [304]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [312]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [320]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=10, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=2, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=6, root_flags=80	# [328]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [336]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [344]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [352]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [360]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [368]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [376]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [384]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=26, root_flags=64	# [392]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [400]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [408]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [416]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [424]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [432]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [440]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [448]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [456]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [464]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [472]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [480]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [488]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [496]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [504]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [512]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=13, root_flags=128	# [520]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=23, root_flags=112	# [528]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=10, root_flags=32
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=25, root_flags=128	# [536]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=2, root_flags=32	# [544]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=12, root_flags=32
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=2, root_flags=32
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=14, root_flags=128	# [552]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [560]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [568]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=6, root_flags=32	# [576]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=40, root_flags=160
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=6, root_flags=32
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=8, root_flags=32	# [584]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=10, root_flags=112	# [592]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [600]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [608]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [616]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [624]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [632]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [640]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=12, root_flags=64	# [648]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=40	# [656]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [664]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [672]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [680]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [688]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [696]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [704]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [712]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [720]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [728]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [736]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [744]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [752]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [760]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [768]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [776]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=41	# [784]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [792]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [800]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [808]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [816]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [824]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [832]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [840]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [848]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [856]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [864]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [872]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [880]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [888]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [896]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [904]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [912]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [920]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [928]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [936]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [944]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [952]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [960]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [968]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [976]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [984]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [992]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1000]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1008]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1016]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1024]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1032]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1040]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1048]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1056]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1064]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1072]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1080]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=3, root_flags=16	# [1088]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=41, root_flags=160
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=26, root_flags=16
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=3, root_flags=16	# [1096]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=25, root_flags=16	# [1104]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1112]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1120]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1128]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1136]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1144]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1152]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=9, root_flags=16	# [1160]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=27, root_flags=16	# [1168]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1176]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1184]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1192]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1200]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1208]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1216]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1224]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1232]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1240]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1248]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1256]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1264]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1272]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1280]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1288]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1296]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1304]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1312]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1320]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1328]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1336]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1344]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1352]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1360]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1368]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1376]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1384]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1392]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1400]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1408]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1416]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1424]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1432]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1440]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1448]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1456]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1464]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1472]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1480]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1488]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1496]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1504]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1512]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1520]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1528]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1536]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1544]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1552]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1560]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1568]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1576]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1584]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1592]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1600]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1608]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1616]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1624]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1632]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1640]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1648]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1656]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1664]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1672]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1680]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1688]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1696]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1704]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1712]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1720]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1728]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1736]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1744]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1752]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1760]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1768]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1776]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1784]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1792]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1800]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1808]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1816]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1824]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1832]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1840]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1848]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1856]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1864]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1872]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1880]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1888]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1896]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1904]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1912]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1920]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1928]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1936]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1944]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1952]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1960]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1968]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1976]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1984]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1992]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2000]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2008]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2016]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2024]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2032]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2040]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+func_4844D255_Table:	# 2048 x ChordRecogEntry2 (2 bytes each); read by func_4844D255 0x4844D255 `movbu (1, a0), d0`; func_4844D255 0x4844D255 `movbu (1, a0), d1`; func_4844D255 0x4844D255 `movbu (d0, a0), d0` (+6)
+	ChordRecogEntry2		# [0]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [8]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [16]
+	ChordRecogEntry2	chord_type=21, root_flags=145
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=144
+	ChordRecogEntry2	chord_type=35, root_flags=1
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=3, root_flags=128	# [24]
+	ChordRecogEntry2	chord_type=36, root_flags=1
+	ChordRecogEntry2	chord_type=32, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [32]
+	ChordRecogEntry2	chord_type=28, root_flags=33
+	ChordRecogEntry2	chord_type=15, root_flags=129
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=33
+	ChordRecogEntry2	chord_type=22, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=128	# [40]
+	ChordRecogEntry2	chord_type=24, root_flags=128
+	ChordRecogEntry2	chord_type=39
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [48]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [56]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [64]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=129
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=1, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=5, root_flags=80	# [72]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=23	# [80]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=10
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=40, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=41, root_flags=80	# [88]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=128	# [96]
+	ChordRecogEntry2	chord_type=31, root_flags=128
+	ChordRecogEntry2	chord_type=25, root_flags=96
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=27, root_flags=96
+	ChordRecogEntry2	chord_type=31, root_flags=32
+	ChordRecogEntry2	chord_type=34, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=128	# [104]
+	ChordRecogEntry2	chord_type=31, root_flags=128
+	ChordRecogEntry2	chord_type=28, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [112]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [120]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [128]
+	ChordRecogEntry2	chord_type=3
+	ChordRecogEntry2	chord_type=2
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=5, root_flags=144
+	ChordRecogEntry2	chord_type=35
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=4	# [136]
+	ChordRecogEntry2	chord_type=26
+	ChordRecogEntry2	chord_type=12
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=9, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=1	# [144]
+	ChordRecogEntry2	chord_type=3
+	ChordRecogEntry2	chord_type=2
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=11, root_flags=1
+	ChordRecogEntry2	chord_type=35, root_flags=1
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=26, root_flags=128	# [152]
+	ChordRecogEntry2	chord_type=36, root_flags=1
+	ChordRecogEntry2	chord_type=32, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=13	# [160]
+	ChordRecogEntry2	chord_type=28, root_flags=33
+	ChordRecogEntry2	chord_type=14
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=8, root_flags=96
+	ChordRecogEntry2	chord_type=22, root_flags=144
+	ChordRecogEntry2	chord_type=32, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=12, root_flags=128	# [168]
+	ChordRecogEntry2	chord_type=34, root_flags=128
+	ChordRecogEntry2	chord_type=39
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [176]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [184]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [192]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=3, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=9, root_flags=80	# [200]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [208]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=17, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [216]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [224]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [232]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [240]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [248]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [256]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=19, root_flags=1
+	ChordRecogEntry2	chord_type=16, root_flags=176
+	ChordRecogEntry2	chord_type=31, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=1, root_flags=128	# [264]
+	ChordRecogEntry2	chord_type=24, root_flags=128
+	ChordRecogEntry2	chord_type=34, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=27, root_flags=144
+	ChordRecogEntry2	chord_type=30, root_flags=176
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=5	# [272]
+	ChordRecogEntry2	chord_type=9
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=19, root_flags=1
+	ChordRecogEntry2	chord_type=33, root_flags=176
+	ChordRecogEntry2	chord_type=31, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=3, root_flags=128	# [280]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=20	# [288]
+	ChordRecogEntry2	chord_type=27
+	ChordRecogEntry2	chord_type=8
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=7
+	ChordRecogEntry2	chord_type=16, root_flags=176
+	ChordRecogEntry2	chord_type=33, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=128	# [296]
+	ChordRecogEntry2	chord_type=24, root_flags=128
+	ChordRecogEntry2	chord_type=15, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=128
+	ChordRecogEntry2	chord_type=30, root_flags=176
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [304]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=176
+	ChordRecogEntry2	chord_type=33, root_flags=176
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [312]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [320]
+	ChordRecogEntry2	chord_type=37, root_flags=80
+	ChordRecogEntry2	chord_type=10, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=80
+	ChordRecogEntry2	chord_type=37, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=80	# [328]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=48	# [336]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=38
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=15, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=80	# [344]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=48	# [352]
+	ChordRecogEntry2	chord_type=31, root_flags=128
+	ChordRecogEntry2	chord_type=22, root_flags=48
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=128	# [360]
+	ChordRecogEntry2	chord_type=31, root_flags=128
+	ChordRecogEntry2	chord_type=28, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [368]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [376]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [384]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=26, root_flags=64	# [392]
+	ChordRecogEntry2	chord_type=36, root_flags=64
+	ChordRecogEntry2	chord_type=34
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24	# [400]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=36, root_flags=128	# [408]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [416]
+	ChordRecogEntry2	chord_type=34, root_flags=128
+	ChordRecogEntry2	chord_type=24, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=128	# [424]
+	ChordRecogEntry2	chord_type=36, root_flags=64
+	ChordRecogEntry2	chord_type=32, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [432]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [440]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [448]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [456]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [464]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [472]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [480]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [488]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [496]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [504]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [512]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=1
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=13, root_flags=128	# [520]
+	ChordRecogEntry2	chord_type=36, root_flags=1
+	ChordRecogEntry2	chord_type=32, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=23, root_flags=112	# [528]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=10, root_flags=32
+	ChordRecogEntry2	chord_type=35, root_flags=1
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=25, root_flags=128	# [536]
+	ChordRecogEntry2	chord_type=36, root_flags=1
+	ChordRecogEntry2	chord_type=32, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=32	# [544]
+	ChordRecogEntry2	chord_type=28, root_flags=32
+	ChordRecogEntry2	chord_type=12, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=32
+	ChordRecogEntry2	chord_type=28, root_flags=32
+	ChordRecogEntry2	chord_type=32, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=14, root_flags=128	# [552]
+	ChordRecogEntry2	chord_type=32, root_flags=64
+	ChordRecogEntry2	chord_type=29, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [560]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=15, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [568]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=32	# [576]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=40, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=17, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=8, root_flags=32	# [584]
+	ChordRecogEntry2	chord_type=33, root_flags=64
+	ChordRecogEntry2	chord_type=15, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=10, root_flags=112	# [592]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=80	# [600]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=32	# [608]
+	ChordRecogEntry2	chord_type=31, root_flags=32
+	ChordRecogEntry2	chord_type=34, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=32
+	ChordRecogEntry2	chord_type=31, root_flags=32
+	ChordRecogEntry2	chord_type=36, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=160	# [616]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [624]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [632]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [640]
+	ChordRecogEntry2	chord_type=17, root_flags=1
+	ChordRecogEntry2	chord_type=15
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=1
+	ChordRecogEntry2	chord_type=35
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=29, root_flags=1	# [648]
+	ChordRecogEntry2	chord_type=36
+	ChordRecogEntry2	chord_type=29
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=40	# [656]
+	ChordRecogEntry2	chord_type=17, root_flags=1
+	ChordRecogEntry2	chord_type=15, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=1
+	ChordRecogEntry2	chord_type=35
+	ChordRecogEntry2	chord_type=28
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34, root_flags=64	# [664]
+	ChordRecogEntry2	chord_type=36
+	ChordRecogEntry2	chord_type=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=15, root_flags=32	# [672]
+	ChordRecogEntry2	chord_type=28, root_flags=32
+	ChordRecogEntry2	chord_type=29, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=15, root_flags=32
+	ChordRecogEntry2	chord_type=28, root_flags=32
+	ChordRecogEntry2	chord_type=32, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=29, root_flags=64	# [680]
+	ChordRecogEntry2	chord_type=32, root_flags=64
+	ChordRecogEntry2	chord_type=29, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [688]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=15, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [696]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=32	# [704]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=64	# [712]
+	ChordRecogEntry2	chord_type=33, root_flags=64
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [720]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [728]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [736]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [744]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [752]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [760]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [768]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [776]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=41	# [784]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [792]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=32	# [800]
+	ChordRecogEntry2	chord_type=30, root_flags=32
+	ChordRecogEntry2	chord_type=33, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=32
+	ChordRecogEntry2	chord_type=30, root_flags=32
+	ChordRecogEntry2	chord_type=33, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37, root_flags=128	# [808]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [816]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [824]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [832]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [840]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=48	# [848]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [856]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [864]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [872]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [880]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [888]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [896]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [904]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [912]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [920]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [928]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [936]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [944]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [952]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [960]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [968]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [976]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [984]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [992]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1000]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1008]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1016]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1024]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1032]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=48	# [1040]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1048]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1056]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1064]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=144	# [1072]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1080]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=3, root_flags=16	# [1088]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=41, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=26, root_flags=16
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=3, root_flags=16	# [1096]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=36, root_flags=16
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=25, root_flags=16	# [1104]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1112]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1120]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1128]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1136]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1144]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1152]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=9, root_flags=16	# [1160]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16	# [1168]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1176]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37, root_flags=96	# [1184]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1192]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=144	# [1200]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1208]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1216]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=36, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1224]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34, root_flags=144	# [1232]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=36, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1240]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1248]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1256]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1264]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1272]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1280]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1288]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=48	# [1296]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1304]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1312]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1320]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=48	# [1328]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1336]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=17, root_flags=16	# [1344]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=17, root_flags=16	# [1352]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=16
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=36, root_flags=16
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=48	# [1360]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1368]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1376]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1384]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1392]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1400]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1408]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1416]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=48	# [1424]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=48
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1432]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1440]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1448]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1456]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1464]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1472]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1480]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1488]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1496]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1504]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1512]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1520]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1528]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1536]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1544]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1552]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1560]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1568]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1576]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1584]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1592]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1600]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1608]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1616]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1624]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1632]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1640]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1648]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1656]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1664]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1672]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1680]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1688]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1696]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1704]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1712]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1720]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1728]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1736]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1744]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1752]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1760]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1768]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1776]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1784]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1792]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1800]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1808]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1816]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1824]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1832]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1840]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1848]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1856]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1864]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1872]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1880]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1888]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1896]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1904]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1912]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1920]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1928]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1936]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1944]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1952]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1960]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1968]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1976]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1984]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1992]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2000]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2008]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2016]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2024]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2032]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2040]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
 
 func_484375A8_Table:	# 1035 x u16, 0..33511; read by func_484375A8 0x484375A8: `movhu  (d0, a1), d2`
 	tab_u16	32929, 32929, 32929, 32929, 32929, 32929, 32929, 32929, 32929, 32929, 32929, 32929	# [0]
@@ -16238,23 +18009,23 @@ StyleNumToBankSlotLUT:	# 2048 x u16, 0..34687; read by ResolveStyleId 0x48435AF1
 	tab_u16	33132, 33132, 33518, 33263, 33392, 33777, 33394, 33392, 33396, 33396, 33396, 33396	# [2028]
 	tab_u16	33400, 33145, 33146, 33146, 33916, 33533, 33918, 2573	# [2040]
 
-GenreStyleTable:	# 16 x REC_GenreStyleTable (24 bytes each); read by GetGenreName 0x48435A5D `call memcpy_entry, [a2,a3], 8`; GetGenreStyleCount 0x48435A97 `movbu (0x11, a0), d0`; func_48435ABD 0x48435ABD `mov (0x14, a0), a0` (+3)
-	REC_GenreStyleTable	s0="   8&16 BEAT    ", x16="\x00", f17=10, x18="\x00\x00", index=func_4844D762_Records+256	# [0]
-	REC_GenreStyleTable	s0="   ROCK & POP   ", x16="\x00", f17=16, x18="\x00\x00", index=func_4844D762_Records+296
-	REC_GenreStyleTable	s0="     BALLAD     ", x16="\x00", f17=16, x18="\x00\x00", index=func_4844D762_Records+360
-	REC_GenreStyleTable	s0="  JAZZ & SWING  ", x16="\x00", f17=20, x18="\x00\x00", index=func_4844D762_Records+424
-	REC_GenreStyleTable	s0="    BALLROOM    ", x16="\x00", f17=16, x18="\x00\x00", index=func_4844D762_Records+504
-	REC_GenreStyleTable	s0="  MOVIE & SHOW  ", x16="\x00", f17=20, x18="\x00\x00", index=func_4844D762_Records+568
-	REC_GenreStyleTable	s0="  ENTERTAINER   ", x16="\x00", f17=14, x18="\x00\x00", index=func_4844D762_Records+648
-	REC_GenreStyleTable	s0="    ORGANIST    ", x16="\x00", f17=10, x18="\x00\x00", index=func_4844D762_Records+704
-	REC_GenreStyleTable	s0="   60s & 70s    ", x16="\x00", f17=13, x18="\x00\x00", index=func_4844D762_Records+744	# [8]
-	REC_GenreStyleTable	s0="  MODERN DANCE  ", x16="\x00", f17=14, x18="\x00\x00", index=func_4844D762_Records+796
-	REC_GenreStyleTable	s0="   SOUL & R&B   ", x16="\x00", f17=19, x18="\x00\x00", index=func_4844D762_Records+852
-	REC_GenreStyleTable	s0="COUNTRY&WESTERN ", x16="\x00", f17=14, x18="\x00\x00", index=func_4844D762_Records+928
-	REC_GenreStyleTable	s0=" MARCH & WALTZ  ", x16="\x00", f17=12, x18="\x00\x00", index=func_4844D762_Records+984
-	REC_GenreStyleTable	s0=" LATIN & WORLD  ", x16="\x00", f17=26, x18="\x00\x00", index=func_4844D762_Records+1032
-	REC_GenreStyleTable	s0="     CUSTOM     ", x16="\x00", f17=20, x18="\x00\x00", index=func_4844D762_Records+1136
-	REC_GenreStyleTable	s0="     MEMORY     ", x16="\x00", f17=3, x18="\x00\x00", index=func_4844D762_Records+1216
+GenreStyleTable:	# 16 x GenreStyleEntry (24 bytes each); read by GetGenreName 0x48435A5D `call memcpy_entry, [a2,a3], 8`; GetGenreStyleCount 0x48435A97 `movbu (0x11, a0), d0`; func_48435ABD 0x48435ABD `mov (0x14, a0), a0` (+3)
+	GenreStyleEntry	name="   8&16 BEAT    ", x16="\x00", style_count=10, x18="\x00\x00", styles=func_4844D762_Records+256	# [0]
+	GenreStyleEntry	name="   ROCK & POP   ", x16="\x00", style_count=16, x18="\x00\x00", styles=func_4844D762_Records+296
+	GenreStyleEntry	name="     BALLAD     ", x16="\x00", style_count=16, x18="\x00\x00", styles=func_4844D762_Records+360
+	GenreStyleEntry	name="  JAZZ & SWING  ", x16="\x00", style_count=20, x18="\x00\x00", styles=func_4844D762_Records+424
+	GenreStyleEntry	name="    BALLROOM    ", x16="\x00", style_count=16, x18="\x00\x00", styles=func_4844D762_Records+504
+	GenreStyleEntry	name="  MOVIE & SHOW  ", x16="\x00", style_count=20, x18="\x00\x00", styles=func_4844D762_Records+568
+	GenreStyleEntry	name="  ENTERTAINER   ", x16="\x00", style_count=14, x18="\x00\x00", styles=func_4844D762_Records+648
+	GenreStyleEntry	name="    ORGANIST    ", x16="\x00", style_count=10, x18="\x00\x00", styles=func_4844D762_Records+704
+	GenreStyleEntry	name="   60s & 70s    ", x16="\x00", style_count=13, x18="\x00\x00", styles=func_4844D762_Records+744	# [8]
+	GenreStyleEntry	name="  MODERN DANCE  ", x16="\x00", style_count=14, x18="\x00\x00", styles=func_4844D762_Records+796
+	GenreStyleEntry	name="   SOUL & R&B   ", x16="\x00", style_count=19, x18="\x00\x00", styles=func_4844D762_Records+852
+	GenreStyleEntry	name="COUNTRY&WESTERN ", x16="\x00", style_count=14, x18="\x00\x00", styles=func_4844D762_Records+928
+	GenreStyleEntry	name=" MARCH & WALTZ  ", x16="\x00", style_count=12, x18="\x00\x00", styles=func_4844D762_Records+984
+	GenreStyleEntry	name=" LATIN & WORLD  ", x16="\x00", style_count=26, x18="\x00\x00", styles=func_4844D762_Records+1032
+	GenreStyleEntry	name="     CUSTOM     ", x16="\x00", style_count=20, x18="\x00\x00", styles=func_4844D762_Records+1136
+	GenreStyleEntry	name="     MEMORY     ", x16="\x00", style_count=3, x18="\x00\x00", styles=func_4844D762_Records+1216
 
 GenreCount:	# u16, a constant; read / written by GetGenreName 0x48435A5D: `movhu (GenreCount), d3`; GetGenreStyleCount 0x48435A97: `movhu (GenreCount), d2` ...
 	.word	16
@@ -16761,28 +18532,28 @@ Str_JFIF:	.asciz "JFIF"
 # census: opaque -- unknown-dump: 11 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x3377A1, 0x3377AC
 
-func_48404D10_Table:	# 5 x u8, 1..3; read by func_48404D10_entry 0x4840221D: `movbu  (d1, a0), d0`
+func_48404D10_Table:	# 5 x u8, 1..3; read by JpegEncSetup_entry 0x48404D10: `movbu  (d1, a0), d0`
 	tab_u8	1, 3, 3, 3, 3
 
-func_48406633_Table:	# 5 x REC_func_48406633_Table (4 bytes each); read by func_48404D10 0x48404D10 `movbu (1, a1), d0`; func_48404D10 0x48404D10 `movbu (2, a3), d0`; func_48404D10 0x48404D10 `movbu (3, a3), d0` (+1)
+func_48406633_Table:	# 5 x REC_func_48406633_Table (4 bytes each); read by JpegEncSetup 0x48404D10 `movbu (1, a1), d0`; JpegEncSetup 0x48404D10 `movbu (2, a3), d0`; JpegEncSetup 0x48404D10 `movbu (3, a3), d0` (+1)
 	REC_func_48406633_Table	f0=1
 	REC_func_48406633_Table	f0=1, f1=1, f2=1
 	REC_func_48406633_Table	f0=2, f1=1, f2=1
 	REC_func_48406633_Table	f0=2, f1=1, f2=1
 	REC_func_48406633_Table	f0=4, f1=1, f2=1
-func_48406633_Table_2:	# 5 x REC_func_48406633_Table_2 (4 bytes each); read by func_48404D10 0x48404D10 `movbu (a0), d0`; func_48404D10 0x48404D10 `movbu (a1), d0`
+func_48406633_Table_2:	# 5 x REC_func_48406633_Table_2 (4 bytes each); read by JpegEncSetup 0x48404D10 `movbu (a0), d0`; JpegEncSetup 0x48404D10 `movbu (a1), d0`
 	REC_func_48406633_Table_2	f0=1
 	REC_func_48406633_Table_2	f0=1, f1=1, f2=1
 	REC_func_48406633_Table_2	f0=1, f1=1, f2=1
 	REC_func_48406633_Table_2	f0=2, f1=1, f2=1
 	REC_func_48406633_Table_2	f0=1, f1=1, f2=1
-func_48404D10_Records_2:	# 5 x REC_func_48404D10_Records_2 (4 bytes each); read by func_48404D10 0x48404D10 `movbu (a0), d0`; func_48404D10 0x48404D10 `movbu (a3), d0`
+func_48404D10_Records_2:	# 5 x REC_func_48404D10_Records_2 (4 bytes each); read by JpegEncSetup 0x48404D10 `movbu (a0), d0`; JpegEncSetup 0x48404D10 `movbu (a3), d0`
 	REC_func_48404D10_Records_2	
 	REC_func_48404D10_Records_2	f1=1, f2=1
 	REC_func_48404D10_Records_2	f1=1, f2=1
 	REC_func_48404D10_Records_2	f1=1, f2=1
 	REC_func_48404D10_Records_2	f1=1, f2=1
-func_48404D10_Records:	# 8 x REC_func_48404D10_Records (4 bytes each); read by func_48404D10 0x48404D10 `movbu (a0), d0`; func_48404D10 0x48404D10 `movbu (a1), d0`; func_48404D10 0x48404D10 `movbu (a3), d0`
+func_48404D10_Records:	# 8 x REC_func_48404D10_Records (4 bytes each); read by JpegEncSetup 0x48404D10 `movbu (a0), d0`; JpegEncSetup 0x48404D10 `movbu (a1), d0`; JpegEncSetup 0x48404D10 `movbu (a3), d0`
 	REC_func_48404D10_Records	
 	REC_func_48404D10_Records	f1=17, f2=17
 	REC_func_48404D10_Records	f1=17, f2=17
@@ -38649,1371 +40420,3 @@ SDFM_ResNames:
 	.long	RN_empty_5856	# SdcCheckPasswordWin_LanguageText2
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x360968, 0x36096C
-
-ptrs_4876096C:
-	.long	SdStateResetCall
-	.long	SdHookNops
-	.long	loc_48551213
-	.long	loc_48551216
-
-# 17 classes; a class id is (0xc4 << 16) | its index here (ClassProc 0x4842A7C0 reads entry id & 0xFFFF, 0x18 bytes each)
-.equ EFF_Classes_SLOT, 0xc4
-EFF_Classes:
-	CLASS	Class_AcEffPage, CLASS_AcEffPage, EFF_Classes, proc=AcEffPageProc, parent=CLASS_PsPageBox, allsize=36, selfsize=0, cname=ClassName_AcEffPage, sig=ClassSig_AcEffPage, fields=ClassFields_AcEffPage
-	CLASS	Class_AcEffExpGroup, CLASS_AcEffExpGroup, EFF_Classes, proc=AcEffExpGroupProc, parent=CLASS_PsListBox, allsize=48, selfsize=0, cname=ClassName_AcEffExpGroup, sig=ClassSig_AcEffExpGroup, fields=ClassFields_AcEffExpGroup
-	CLASS	Class_AcEffVari, CLASS_AcEffVari, EFF_Classes, proc=AcEffVariProc, parent=CLASS_PsVariSelect, allsize=60, selfsize=4, cname=ClassName_AcEffVari, sig=ClassSig_AcEffVari, fields=ClassFields_AcEffVari	# param2:r
-	CLASS	Class_AcEffEditGridBox, CLASS_AcEffEditGridBox, EFF_Classes, proc=AcEffEditGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcEffEditGridBox, sig=ClassSig_AcEffEditGridBox, fields=ClassFields_AcEffEditGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_AcEffOnOffBox, CLASS_AcEffOnOffBox, EFF_Classes, proc=AcEffOnOffBoxProc, parent=CLASS_PsEditBox, allsize=60, selfsize=4, cname=ClassName_AcEffOnOffBox, sig=ClassSig_AcEffOnOffBox, fields=ClassFields_AcEffOnOffBox	# onoff:l
-	CLASS	Class_AcEffExpUsr, CLASS_AcEffExpUsr, EFF_Classes, proc=AcEffExpUsrProc, parent=CLASS_PsListBox, allsize=48, selfsize=0, cname=ClassName_AcEffExpUsr, sig=ClassSig_AcEffExpUsr, fields=ClassFields_AcEffExpUsr
-	CLASS	Class_AcEffName, CLASS_AcEffName, EFF_Classes, proc=AcEffNameProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcEffName, sig=ClassSig_AcEffName, fields=ClassFields_AcEffName
-	CLASS	Class_FilterTtlScreen, CLASS_FilterTtlScreen, EFF_Classes, proc=FilterTtlScreenProc, parent=CLASS_TtlScreen, allsize=56, selfsize=8, cname=ClassName_FilterTtlScreen, sig=ClassSig_FilterTtlScreen, fields=ClassFields_FilterTtlScreen	# snd_title:X snd_exit:a
-	CLASS	Class_AcEffDispGridBox, CLASS_AcEffDispGridBox, EFF_Classes, proc=AcEffDispGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcEffDispGridBox, sig=ClassSig_AcEffDispGridBox, fields=ClassFields_AcEffDispGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_AcEQEditBox, CLASS_AcEQEditBox, EFF_Classes, proc=AcEQEditBoxProc, parent=CLASS_AcMmmEditBox, allsize=68, selfsize=2, cname=ClassName_AcEQEditBox, sig=ClassSig_AcEQEditBox, fields=ClassFields_AcEQEditBox	# tate_index:A
-	CLASS	Class_AcGainBox, CLASS_AcGainBox, EFF_Classes, proc=AcGainBoxProc, parent=CLASS_AcMmmBox, allsize=48, selfsize=0, cname=ClassName_AcGainBox, sig=ClassSig_AcGainBox, fields=ClassFields_AcGainBox
-	CLASS	Class_AcUnitName, CLASS_AcUnitName, EFF_Classes, proc=AcUnitNameProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcUnitName, sig=ClassSig_AcUnitName, fields=ClassFields_AcUnitName
-	CLASS	Class_EffTtlScreen, CLASS_EffTtlScreen, EFF_Classes, proc=EffTtlScreenProc, parent=CLASS_TtlScreen, allsize=48, selfsize=0, cname=ClassName_EffTtlScreen, sig=ClassSig_EffTtlScreen, fields=ClassFields_EffTtlScreen
-	CLASS	Class_AcEffTitleMenu, CLASS_AcEffTitleMenu, EFF_Classes, proc=AcEffTitleMenuProc, parent=CLASS_AcTitleMenu, allsize=60, selfsize=0, cname=ClassName_AcEffTitleMenu, sig=ClassSig_AcEffTitleMenu, fields=ClassFields_AcEffTitleMenu
-	CLASS	Class_EffEditScreen, CLASS_EffEditScreen, EFF_Classes, proc=EffEditScreenProc, parent=CLASS_TtlScreen, allsize=48, selfsize=0, cname=ClassName_EffEditScreen, sig=ClassSig_EffEditScreen, fields=ClassFields_EffEditScreen
-	CLASS	Class_EffNameScreen, CLASS_EffNameScreen, EFF_Classes, proc=EffNameScreenProc, parent=CLASS_TtlScreen, allsize=48, selfsize=0, cname=ClassName_EffNameScreen, sig=ClassSig_EffNameScreen, fields=ClassFields_EffNameScreen
-	CLASS	Class_AcMicFuncEditSw, CLASS_AcMicFuncEditSw, EFF_Classes, proc=AcMicFuncEditSwProc, parent=CLASS_AcFuncEditSw, allsize=56, selfsize=4, cname=ClassName_AcMicFuncEditSw, sig=ClassSig_AcMicFuncEditSw, fields=ClassFields_AcMicFuncEditSw	# select:m
-	.space	24, 0x00
-
-# 5 Event names; an event id is (0xc5 << 16) | its index
-EFF_Events:
-	IDNAME	EV_WHOSELECTED_EFF, Str_EV_WHOSELECTED_2, EFF_Events, 0xc5
-	IDNAME	EV_EFFDATA, Str_EV_EFFDATA, EFF_Events, 0xc5
-	IDNAME	EV_EQSEL, Str_EV_EQSEL, EFF_Events, 0xc5
-	IDNAME	EV_ALLPAINTEFFEXP, Str_EV_ALLPAINTEFFEXP, EFF_Events, 0xc5
-	IDNAME	EV_MICSELWAIT, Str_EV_MICSELWAIT, EFF_Events, 0xc5
-	.space	4, 0x00
-
-# 5 Method names; an method id is (0xc6 << 16) | its index
-EFF_Methods:
-	IDNAME	MT_GetEff, Str_MT_GetEff, EFF_Methods, 0xc6
-	IDNAME	MT_PutEff, Str_MT_PutEff, EFF_Methods, 0xc6
-	IDNAME	MT_AddEff, Str_MT_AddEff, EFF_Methods, 0xc6
-	IDNAME	MT_GetTateIndex, Str_MT_GetTateIndex, EFF_Methods, 0xc6
-	IDNAME	MT_CheckTateIndex, Str_MT_CheckTateIndex, EFF_Methods, 0xc6
-	.space	4, 0x00
-
-# 16 Function procedures; a function id is (0xc1 << 16) | its index (the names are the parallel table at slot 0xc9)
-EFF_Functions:
-	IDNAME	FN_AcEffPageProc, AcEffPageProc, EFF_Functions, 0xc1
-	IDNAME	FN_AcEffExpGroupProc, AcEffExpGroupProc, EFF_Functions, 0xc1
-	IDNAME	FN_AcEffVariProc, AcEffVariProc, EFF_Functions, 0xc1
-	IDNAME	FN_AcEffEditGridBoxProc, AcEffEditGridBoxProc, EFF_Functions, 0xc1
-	IDNAME	FN_AcEffExpUsrProc, AcEffExpUsrProc, EFF_Functions, 0xc1
-	IDNAME	FN_AcEffOnOffBoxProc, AcEffOnOffBoxProc, EFF_Functions, 0xc1
-	IDNAME	FN_AcEffNameProc, AcEffNameProc, EFF_Functions, 0xc1
-	IDNAME	FN_FilterTtlScreenProc, FilterTtlScreenProc, EFF_Functions, 0xc1
-	IDNAME	FN_AcEffDispGridBoxProc, AcEffDispGridBoxProc, EFF_Functions, 0xc1
-	IDNAME	FN_AcEQEditBoxProc, AcEQEditBoxProc, EFF_Functions, 0xc1
-	IDNAME	FN_AcGainBoxProc, AcGainBoxProc, EFF_Functions, 0xc1
-	IDNAME	FN_EffTtlScreenProc, EffTtlScreenProc, EFF_Functions, 0xc1
-	IDNAME	FN_AcEffTitleMenuProc, AcEffTitleMenuProc, EFF_Functions, 0xc1
-	IDNAME	FN_EffEditScreenProc, EffEditScreenProc, EFF_Functions, 0xc1
-	IDNAME	FN_EffNameScreenProc, EffNameScreenProc, EFF_Functions, 0xc1
-	IDNAME	FN_AcMicFuncEditSwProc, AcMicFuncEditSwProc, EFF_Functions, 0xc1
-	.space	4, 0x00
-
-EFF_FunctionNames:
-	.long	FnName_AcEffPageProc
-	.long	FnName_AcEffExpGroupProc
-	.long	FnName_AcEffVariProc
-	.long	FnName_AcEffEditGridBoxProc
-	.long	FnName_AcEffExpUsrProc
-	.long	FnName_AcEffOnOffBoxProc
-	.long	FnName_AcEffNameProc
-	.long	FnName_FilterTtlScreenProc
-	.long	FnName_AcEffDispGridBoxProc
-	.long	FnName_AcEQEditBoxProc
-	.long	FnName_AcGainBoxProc
-	.long	FnName_EffTtlScreenProc
-	.long	FnName_AcEffTitleMenuProc
-	.long	FnName_EffEditScreenProc
-	.long	FnName_EffNameScreenProc
-	.long	FnName_AcMicFuncEditSwProc
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x360BE0, 0x360BE4
-
-# 40 ApFunction procedures; a function id is (0xc2 << 16) | its index (the names are the parallel table at slot 0xca)
-EFF_ApFunctions:
-	IDNAME	FN_EffEditGrid, EffEditGrid, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EffEditGrid2, EffEditGrid2, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EffNamingCheck, EffNamingCheck, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EffectWrite, EffectWrite, EFF_ApFunctions, 0xc2
-	IDNAME	FN_DspUnitNumSel, DspUnitNumSel, EFF_ApFunctions, 0xc2
-	IDNAME	FN_DspUnitNumCheck, DspUnitNumCheck, EFF_ApFunctions, 0xc2
-	IDNAME	FN_RevDepEditFunc, RevDepEditFunc, EFF_ApFunctions, 0xc2
-	IDNAME	FN_DspDepEditFunc, DspDepEditFunc, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EffFilterGrid, EffFilterGrid, EFF_ApFunctions, 0xc2
-	IDNAME	FN_AlocModeToggleFunc, AlocModeToggleFunc, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EffAlocGrid, EffAlocGrid, EFF_ApFunctions, 0xc2
-	IDNAME	FN_AcUnitNameProc, AcUnitNameProc, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EffAlocCatch, EffAlocCatch, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EffDispCatch, EffDispCatch, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EffDispGrid, EffDispGrid, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EffSysSw, EffSysSw, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EffApcSw, EffApcSw, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EffDebugCatch, EffDebugCatch, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EqFuncSel, EqFuncSel, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EditExitCatchFunc, EditExitCatchFunc, EFF_ApFunctions, 0xc2
-	IDNAME	FN_MulSelExitCatchFunc, MulSelExitCatchFunc, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EffEditUnitName, EffEditUnitName, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EQGainEditCheck, EQGainEditCheck, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EQFcEditCheck, EQFcEditCheck, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EQQEditCheck, EQQEditCheck, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EQSelFunc, EQSelFunc, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EQFunc, EQFunc, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EQToggleFunc, EQToggleFunc, EFF_ApFunctions, 0xc2
-	IDNAME	FN_EQOrigFunc, EQOrigFunc, EFF_ApFunctions, 0xc2
-	IDNAME	FN_MicSelFuncPage1, MicSelFuncPage1, EFF_ApFunctions, 0xc2
-	IDNAME	FN_MicSelFuncPage2, MicSelFuncPage2, EFF_ApFunctions, 0xc2
-	IDNAME	FN_MicSelFunc, MicSelFunc, EFF_ApFunctions, 0xc2
-	IDNAME	FN_MicPresetSelFunc, MicPresetSelFunc, EFF_ApFunctions, 0xc2
-	IDNAME	FN_MicEffEditCheck, MicEffEditCheck, EFF_ApFunctions, 0xc2
-	IDNAME	FN_MicRevEditCheck, MicRevEditCheck, EFF_ApFunctions, 0xc2
-	IDNAME	FN_MicEffToggleFunc, MicEffToggleFunc, EFF_ApFunctions, 0xc2
-	IDNAME	FN_MicRevToggleFunc, MicRevToggleFunc, EFF_ApFunctions, 0xc2
-	IDNAME	FN_MicEffMuteToggleFunc, MicEffMuteToggleFunc, EFF_ApFunctions, 0xc2
-	IDNAME	FN_HarmPartEditCheck, HarmPartEditCheck, EFF_ApFunctions, 0xc2
-	IDNAME	FN_HarmPartMuteCheck, HarmPartMuteCheck, EFF_ApFunctions, 0xc2
-	.space	4, 0x00
-
-EFF_ApFunctionNames:
-	.long	FnName_EffEditGrid
-	.long	FnName_EffEditGrid2
-	.long	FnName_EffNamingCheck
-	.long	FnName_EffectWrite
-	.long	FnName_DspUnitNumSel
-	.long	FnName_DspUnitNumCheck
-	.long	FnName_RevDepEditFunc
-	.long	FnName_DspDepEditFunc
-	.long	FnName_EffFilterGrid
-	.long	FnName_AlocModeToggleFunc
-	.long	FnName_EffAlocGrid
-	.long	FnName_AcUnitNameProc
-	.long	FnName_EffAlocCatch
-	.long	FnName_EffDispCatch
-	.long	FnName_EffDispGrid
-	.long	FnName_EffSysSw
-	.long	FnName_EffApcSw
-	.long	FnName_EffDebugCatch
-	.long	FnName_EqFuncSel
-	.long	FnName_EditExitCatchFunc
-	.long	FnName_MulSelExitCatchFunc
-	.long	FnName_EffEditUnitName
-	.long	FnName_EQGainEditCheck
-	.long	FnName_EQFcEditCheck
-	.long	FnName_EQQEditCheck
-	.long	FnName_EQSelFunc
-	.long	FnName_EQFunc
-	.long	FnName_EQToggleFunc
-	.long	FnName_EQOrigFunc
-	.long	FnName_MicSelFuncPage1
-	.long	FnName_MicSelFuncPage2
-	.long	FnName_MicSelFunc
-	.long	FnName_MicPresetSelFunc
-	.long	FnName_MicEffEditCheck
-	.long	FnName_MicRevEditCheck
-	.long	FnName_MicEffToggleFunc
-	.long	FnName_MicRevToggleFunc
-	.long	FnName_MicEffMuteToggleFunc
-	.long	FnName_HarmPartEditCheck
-	.long	FnName_HarmPartMuteCheck
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x360D28, 0x360D2C
-
-# 13 MainFunction procedures; a function id is (0xc3 << 16) | its index (the names are the parallel table at slot 0xcb)
-EFF_MainFunctions:
-	IDNAME	FN_REVSELTitleFunc, REVSELTitleFunc, EFF_MainFunctions, 0xc3
-	IDNAME	FN_CHOSELTitleFunc, CHOSELTitleFunc, EFF_MainFunctions, 0xc3
-	IDNAME	FN_DSPSELTitleFunc, DSPSELTitleFunc, EFF_MainFunctions, 0xc3
-	IDNAME	FN_MULSELTitleFunc, MULSELTitleFunc, EFF_MainFunctions, 0xc3
-	IDNAME	FN_VCLSELTitleFunc, VCLSELTitleFunc, EFF_MainFunctions, 0xc3
-	IDNAME	FN_EQSELTitleFunc, EQSELTitleFunc, EFF_MainFunctions, 0xc3
-	IDNAME	FN_EffNamingTitleFunc, EffNamingTitleFunc, EFF_MainFunctions, 0xc3
-	IDNAME	FN_EffEditTitleFunc, EffEditTitleFunc, EFF_MainFunctions, 0xc3
-	IDNAME	FN_MainEffControl, MainEffControl, EFF_MainFunctions, 0xc3
-	IDNAME	FN_MainChangeReqEQ, MainChangeReqEQ, EFF_MainFunctions, 0xc3
-	IDNAME	FN_TEffFilter, TEffFilter, EFF_MainFunctions, 0xc3
-	IDNAME	FN_TEffAloc, TEffAloc, EFF_MainFunctions, 0xc3
-	IDNAME	FN_MicPresetStore, MicPresetStore, EFF_MainFunctions, 0xc3
-	.space	4, 0x00
-
-EFF_MainFunctionNames:
-	.long	FnName_REVSELTitleFunc
-	.long	FnName_CHOSELTitleFunc
-	.long	FnName_DSPSELTitleFunc
-	.long	FnName_MULSELTitleFunc
-	.long	FnName_VCLSELTitleFunc
-	.long	FnName_EQSELTitleFunc
-	.long	FnName_EffNamingTitleFunc
-	.long	FnName_EffEditTitleFunc
-	.long	FnName_MainEffControl
-	.long	FnName_MainChangeReqEQ
-	.long	FnName_TEffFilter
-	.long	FnName_TEffAloc
-	.long	FnName_MicPresetStore
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x360D98, 0x360D9C
-
-# 326 objects of block EFF; object <name> is index <name>_ix, id <name>_id = (0xc0 << 16) | <name>_ix
-EFF_Viewables:
-	OBJ	Aloc, EFF_Viewables, 0xc0
-	OBJ	AlocGridBox, EFF_Viewables, 0xc0
-	OBJ	Aloc_IndexWideES1, EFF_Viewables, 0xc0
-	OBJ	AlocModeBox, EFF_Viewables, 0xc0
-	OBJ	Aloc_IndexWideES2, EFF_Viewables, 0xc0
-	OBJ	Aloc_CatchEvent1, EFF_Viewables, 0xc0
-	OBJ	LoadFilter, EFF_Viewables, 0xc0
-	OBJ	FilterGridBox, EFF_Viewables, 0xc0
-	OBJ	LoadFilter_IndexWideES1, EFF_Viewables, 0xc0
-	OBJ	LoadFilter_IndexWideES2, EFF_Viewables, 0xc0
-	OBJ	Mixing, EFF_Viewables, 0xc0
-	OBJ	EffectEdit, EFF_Viewables, 0xc0
-	OBJ	EffectEdit_IndexWideES1, EFF_Viewables, 0xc0
-	OBJ	EffectEdit_IndexWideES2, EFF_Viewables, 0xc0
-	OBJ	EffectEdit_CatchEvent1, EFF_Viewables, 0xc0
-	OBJ	EffEditGridBox, EFF_Viewables, 0xc0
-	OBJ	EffectEdit_EffTitleMenu_NAMING, EFF_Viewables, 0xc0
-	OBJ	EffectEdit_Label_EFFECT_MEMORY_LIST, EFF_Viewables, 0xc0
-	OBJ	EffectEdit_EffName1, EFF_Viewables, 0xc0
-	OBJ	EffectEdit_FuncEditSw1, EFF_Viewables, 0xc0
-	OBJ	EffectEdit_Exit1, EFF_Viewables, 0xc0
-	OBJ	EffectEdit_EffExpUsr1, EFF_Viewables, 0xc0
-	OBJ	EffectEdit_IndexEditSw1, EFF_Viewables, 0xc0
-	OBJ	EffectEdit_IndexEditSw2, EFF_Viewables, 0xc0
-	OBJ	EffectEdit_StrBox_WRITE, EFF_Viewables, 0xc0
-	OBJ	EffectEdit_UnitName1, EFF_Viewables, 0xc0
-	OBJ	EffName, EFF_Viewables, 0xc0
-	OBJ	EffName_Naming1, EFF_Viewables, 0xc0
-	OBJ	EffName_FuncEditSw1, EFF_Viewables, 0xc0
-	OBJ	EffName_CatchEvent1, EFF_Viewables, 0xc0
-	OBJ	EffName_Exit1, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingWindow1, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw1, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw2, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw3, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw4, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw5, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw6, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw7, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw8, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw9, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw10, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw11, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw12, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw13, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw14, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw15, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw16, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw17, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw18, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw19, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw20, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw21, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw22, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw23, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw24, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw25, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw26, EFF_Viewables, 0xc0
-	OBJ	EFF_CursorBox1, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexEditSw1, EFF_Viewables, 0xc0
-	OBJ	EFF_Label_INS, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexEditSw2, EFF_Viewables, 0xc0
-	OBJ	EFF_Label_DEL, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexEditSw3, EFF_Viewables, 0xc0
-	OBJ	EFF_Label_CLR, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexEditSw4, EFF_Viewables, 0xc0
-	OBJ	EFF_Label_8d_8b, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexEditSw5, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexEditSw6, EFF_Viewables, 0xc0
-	OBJ	EFF_Label_POSITION, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexToggle_ABC, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexToggle_123, EFF_Viewables, 0xc0
-	OBJ	EFF_Label_SHIFT, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexPushSw1, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingWindow2, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw27, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw28, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw29, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw30, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw31, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw32, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw33, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw34, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw35, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw36, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw37, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw38, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw39, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw40, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw41, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw42, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw43, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw44, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw45, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw46, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw47, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw48, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw49, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw50, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw51, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingEditSw52, EFF_Viewables, 0xc0
-	OBJ	EFF_CursorBox2, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexEditSw7, EFF_Viewables, 0xc0
-	OBJ	EFF_Label_INS2, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexEditSw8, EFF_Viewables, 0xc0
-	OBJ	EFF_Label_DEL2, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexEditSw9, EFF_Viewables, 0xc0
-	OBJ	EFF_Label_CLR2, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexEditSw10, EFF_Viewables, 0xc0
-	OBJ	EFF_Label_8d_8b2, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexEditSw11, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexEditSw12, EFF_Viewables, 0xc0
-	OBJ	EFF_Label_POSITION2, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexToggle_ABC2, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexToggle_1232, EFF_Viewables, 0xc0
-	OBJ	EFF_Label_SHIFT2, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexPushSw2, EFF_Viewables, 0xc0
-	OBJ	EFF_NamingWindow3, EFF_Viewables, 0xc0
-	OBJ	EffectDebug, EFF_Viewables, 0xc0
-	OBJ	EffApcModeBox, EFF_Viewables, 0xc0
-	OBJ	EffSysModeBox, EFF_Viewables, 0xc0
-	OBJ	EffectDebug_EffDispGridBox1, EFF_Viewables, 0xc0
-	OBJ	EffectDebug_IndexWideES1, EFF_Viewables, 0xc0
-	OBJ	EffectDebug_IndexWideES2, EFF_Viewables, 0xc0
-	OBJ	EffectDebug_IndexWideES3, EFF_Viewables, 0xc0
-	OBJ	EffectDebug_IndexWideES4, EFF_Viewables, 0xc0
-	OBJ	EffectDebug_IndexWideES5, EFF_Viewables, 0xc0
-	OBJ	EffectDebug_CatchEvent1, EFF_Viewables, 0xc0
-	OBJ	EffectMenu, EFF_Viewables, 0xc0
-	OBJ	EffectMenu_TitleMenu_MULTI, EFF_Viewables, 0xc0
-	OBJ	EffectMenu_TitleMenu_CHORUS, EFF_Viewables, 0xc0
-	OBJ	EffectMenu_TitleMenu_REVERB, EFF_Viewables, 0xc0
-	OBJ	EffectMenu_TitleMenu_MIC_REVERB_EFFECT, EFF_Viewables, 0xc0
-	OBJ	EffectMenu_TitleMenu_SOUND_LOAD_OPTION, EFF_Viewables, 0xc0
-	OBJ	EffectMenu_TitleMenu_ALLOCATION, EFF_Viewables, 0xc0
-	OBJ	EffectMenu_TitleMenu_MIXER, EFF_Viewables, 0xc0
-	OBJ	EffectMenu_ExitMode1, EFF_Viewables, 0xc0
-	OBJ	EffectMenu_TitleMenu_EQUALIZER, EFF_Viewables, 0xc0
-	OBJ	EffectMenu_TitleMenu_SOUND_DSP, EFF_Viewables, 0xc0
-	OBJ	EffectMenu_CatchEvent1, EFF_Viewables, 0xc0
-	OBJ	MultiSel, EFF_Viewables, 0xc0
-	OBJ	MultiSel_EffPage1, EFF_Viewables, 0xc0
-	OBJ	MultiSel_EffExpGroup1, EFF_Viewables, 0xc0
-	OBJ	MultiSel_IndexWideES1, EFF_Viewables, 0xc0
-	OBJ	MultiSel_EffVari1, EFF_Viewables, 0xc0
-	OBJ	MultiSel_EffVari2, EFF_Viewables, 0xc0
-	OBJ	MultiSel_EffVari3, EFF_Viewables, 0xc0
-	OBJ	MultiSel_EffVari4, EFF_Viewables, 0xc0
-	OBJ	MultiSel_EffVari5, EFF_Viewables, 0xc0
-	OBJ	MultiSel_EffVari6, EFF_Viewables, 0xc0
-	OBJ	MultiSel_EffVari7, EFF_Viewables, 0xc0
-	OBJ	MultiSel_EffVari8, EFF_Viewables, 0xc0
-	OBJ	MultiSel_EffTitleMenu_DETAIL_EDIT, EFF_Viewables, 0xc0
-	OBJ	MultiSel_CatchEvent1, EFF_Viewables, 0xc0
-	OBJ	MicSel, EFF_Viewables, 0xc0
-	OBJ	MicEffMuteToggle, EFF_Viewables, 0xc0
-	OBJ	MicSel_IndexWideES1, EFF_Viewables, 0xc0
-	OBJ	MicSel_EffTitleMenu_MULTI_EFFECT_SET, EFF_Viewables, 0xc0
-	OBJ	MicSel_IndexWideES2, EFF_Viewables, 0xc0
-	OBJ	MicSel_Label_HARMONIZER_PART, EFF_Viewables, 0xc0
-	OBJ	MicRevToggle, EFF_Viewables, 0xc0
-	OBJ	MicEffToggle, EFF_Viewables, 0xc0
-	OBJ	HarmPartEdit, EFF_Viewables, 0xc0
-	OBJ	MicSel_IndexWideES3, EFF_Viewables, 0xc0
-	OBJ	MicSel_CatchEvent1, EFF_Viewables, 0xc0
-	OBJ	MicSel_StrBox_MIC_REVERB_SETTING, EFF_Viewables, 0xc0
-	OBJ	EffEditGridBox22, EFF_Viewables, 0xc0
-	OBJ	MicSel_MicFuncEditSw1, EFF_Viewables, 0xc0
-	OBJ	MicSel_StrBox_Trumpet_1_Octave, EFF_Viewables, 0xc0
-	OBJ	MicSel_StrBox_BRASS_SIMULATOR_1, EFF_Viewables, 0xc0
-	OBJ	MicSel_MicFuncEditSw2, EFF_Viewables, 0xc0
-	OBJ	MicSel_StrBox_BRASS_SIMULATOR_2, EFF_Viewables, 0xc0
-	OBJ	MicSel_StrBox_Trumpet, EFF_Viewables, 0xc0
-	OBJ	MicSel_MicFuncEditSw3, EFF_Viewables, 0xc0
-	OBJ	MicSel_StrBox_HARMONIZER_1, EFF_Viewables, 0xc0
-	OBJ	MicSel_StrBox_SMF_Harmony_Track, EFF_Viewables, 0xc0
-	OBJ	MicSel_MicFuncEditSw4, EFF_Viewables, 0xc0
-	OBJ	MicSel_StrBox_HARMONIZER_2, EFF_Viewables, 0xc0
-	OBJ	MicSel_StrBox_Auto_Play_Chord, EFF_Viewables, 0xc0
-	OBJ	RevSel, EFF_Viewables, 0xc0
-	OBJ	RevSel_IndexWideES1, EFF_Viewables, 0xc0
-	OBJ	RevSel_EffExpGroup1, EFF_Viewables, 0xc0
-	OBJ	RevSel_EffVari1, EFF_Viewables, 0xc0
-	OBJ	RevSel_EffVari2, EFF_Viewables, 0xc0
-	OBJ	RevSel_EffVari3, EFF_Viewables, 0xc0
-	OBJ	RevSel_EffVari4, EFF_Viewables, 0xc0
-	OBJ	RevSel_EffVari5, EFF_Viewables, 0xc0
-	OBJ	RevSel_EffVari6, EFF_Viewables, 0xc0
-	OBJ	RevSel_EffVari7, EFF_Viewables, 0xc0
-	OBJ	RevSel_EffVari8, EFF_Viewables, 0xc0
-	OBJ	RevSel_EffPage1, EFF_Viewables, 0xc0
-	OBJ	RevSel_EffTitleMenu_DETAIL_EDIT, EFF_Viewables, 0xc0
-	OBJ	RevSel_IndexEditSw1, EFF_Viewables, 0xc0
-	OBJ	RevSel_IndexEditSw2, EFF_Viewables, 0xc0
-	OBJ	RevSel_MmmEditBox_TOTAL_DEPTH, EFF_Viewables, 0xc0
-	OBJ	EFF_TtlScreen_REVERB, EFF_Viewables, 0xc0
-	OBJ	EFF_IndexWideES1, EFF_Viewables, 0xc0
-	OBJ	EFF_EffTitleMenu_DETAIL_EDIT, EFF_Viewables, 0xc0
-	OBJ	EFF_WindowPage1, EFF_Viewables, 0xc0
-	OBJ	EFF_EffExpGroup1, EFF_Viewables, 0xc0
-	OBJ	EFF_EffVari1, EFF_Viewables, 0xc0
-	OBJ	EFF_EffVari2, EFF_Viewables, 0xc0
-	OBJ	EFF_EffVari3, EFF_Viewables, 0xc0
-	OBJ	EFF_EffVari4, EFF_Viewables, 0xc0
-	OBJ	EFF_EffVari5, EFF_Viewables, 0xc0
-	OBJ	EFF_EffVari6, EFF_Viewables, 0xc0
-	OBJ	EFF_EffVari7, EFF_Viewables, 0xc0
-	OBJ	EFF_EffVari8, EFF_Viewables, 0xc0
-	OBJ	ChoSel, EFF_Viewables, 0xc0
-	OBJ	ChoSel_EffVari1, EFF_Viewables, 0xc0
-	OBJ	ChoSel_EffPage1, EFF_Viewables, 0xc0
-	OBJ	ChoSel_EffExpGroup1, EFF_Viewables, 0xc0
-	OBJ	ChoSel_IndexWideES1, EFF_Viewables, 0xc0
-	OBJ	ChoSel_EffVari2, EFF_Viewables, 0xc0
-	OBJ	ChoSel_EffVari3, EFF_Viewables, 0xc0
-	OBJ	ChoSel_EffVari4, EFF_Viewables, 0xc0
-	OBJ	ChoSel_EffVari5, EFF_Viewables, 0xc0
-	OBJ	ChoSel_EffVari6, EFF_Viewables, 0xc0
-	OBJ	ChoSel_EffVari7, EFF_Viewables, 0xc0
-	OBJ	ChoSel_EffVari8, EFF_Viewables, 0xc0
-	OBJ	ChoSel_EffTitleMenu_DETAIL_EDIT, EFF_Viewables, 0xc0
-	OBJ	DSPSel, EFF_Viewables, 0xc0
-	OBJ	DSPSel_EffPage1, EFF_Viewables, 0xc0
-	OBJ	DSPSel_EffExpGroup1, EFF_Viewables, 0xc0
-	OBJ	DSPSel_IndexWideES1, EFF_Viewables, 0xc0
-	OBJ	DSPSel_EffVari1, EFF_Viewables, 0xc0
-	OBJ	DSPSel_EffVari2, EFF_Viewables, 0xc0
-	OBJ	DSPSel_EffVari3, EFF_Viewables, 0xc0
-	OBJ	DSPSel_EffVari4, EFF_Viewables, 0xc0
-	OBJ	DSPSel_EffVari5, EFF_Viewables, 0xc0
-	OBJ	DSPSel_EffVari6, EFF_Viewables, 0xc0
-	OBJ	DSPSel_EffVari7, EFF_Viewables, 0xc0
-	OBJ	DSPSel_EffVari8, EFF_Viewables, 0xc0
-	OBJ	DSPSel_IndexEditSw1, EFF_Viewables, 0xc0
-	OBJ	DSPSel_RamBox1, EFF_Viewables, 0xc0
-	OBJ	DSPSel_IndexEditSw2, EFF_Viewables, 0xc0
-	OBJ	DSPSel_MmmEditBox_DEPTH, EFF_Viewables, 0xc0
-	OBJ	DSPSel_EffTitleMenu_EDIT, EFF_Viewables, 0xc0
-	OBJ	DSPSel_FuncEditSw1, EFF_Viewables, 0xc0
-	OBJ	DSPSel_FuncEditSw2, EFF_Viewables, 0xc0
-	OBJ	DSPSel_StrBox_PART, EFF_Viewables, 0xc0
-	OBJ	EqSel, EFF_Viewables, 0xc0
-	OBJ	EqSel_FuncEditSw1, EFF_Viewables, 0xc0
-	OBJ	EQGain, EFF_Viewables, 0xc0
-	OBJ	EQGain_StrBox_GAIN, EFF_Viewables, 0xc0
-	OBJ	EQGain_EQEditBox1, EFF_Viewables, 0xc0
-	OBJ	EQGain_EQEditBox2, EFF_Viewables, 0xc0
-	OBJ	EQGain_EQEditBox3, EFF_Viewables, 0xc0
-	OBJ	EQGain_EQEditBox4, EFF_Viewables, 0xc0
-	OBJ	EQGain_EQEditBox5, EFF_Viewables, 0xc0
-	OBJ	EQGain_StrBox_dB, EFF_Viewables, 0xc0
-	OBJ	EQGain_GainBox1, EFF_Viewables, 0xc0
-	OBJ	EQGain_GainBox2, EFF_Viewables, 0xc0
-	OBJ	EQGain_GainBox3, EFF_Viewables, 0xc0
-	OBJ	EQGain_GainBox4, EFF_Viewables, 0xc0
-	OBJ	EQGain_GainBox5, EFF_Viewables, 0xc0
-	OBJ	EQFC, EFF_Viewables, 0xc0
-	OBJ	EQFC_StrBox_FC, EFF_Viewables, 0xc0
-	OBJ	EQFC_EQEditBox1, EFF_Viewables, 0xc0
-	OBJ	EQFC_EQEditBox2, EFF_Viewables, 0xc0
-	OBJ	EQFC_EQEditBox3, EFF_Viewables, 0xc0
-	OBJ	EQFC_EQEditBox4, EFF_Viewables, 0xc0
-	OBJ	EQFC_EQEditBox5, EFF_Viewables, 0xc0
-	OBJ	EQFC_StrBox_Hz, EFF_Viewables, 0xc0
-	OBJ	EQQ, EFF_Viewables, 0xc0
-	OBJ	EQQ_StrBox_Q, EFF_Viewables, 0xc0
-	OBJ	EQQ_EQEditBox1, EFF_Viewables, 0xc0
-	OBJ	EQQ_EQEditBox2, EFF_Viewables, 0xc0
-	OBJ	EQQ_EQEditBox3, EFF_Viewables, 0xc0
-	OBJ	EQQ_StrBox_Hz, EFF_Viewables, 0xc0
-	OBJ	EQOnOff, EFF_Viewables, 0xc0
-	OBJ	EqSel_IndexEditSw1, EFF_Viewables, 0xc0
-	OBJ	EqSel_IndexEditSw2, EFF_Viewables, 0xc0
-	OBJ	EqSel_IndexEditSw3, EFF_Viewables, 0xc0
-	OBJ	EqSel_IndexEditSw4, EFF_Viewables, 0xc0
-	OBJ	EqSel_IndexEditSw5, EFF_Viewables, 0xc0
-	OBJ	EqSel_CatchEvent1, EFF_Viewables, 0xc0
-	OBJ	EQOrigSw, EFF_Viewables, 0xc0
-	OBJ	EQOrig, EFF_Viewables, 0xc0
-	OBJ	EqSel_MicFuncEditSw1, EFF_Viewables, 0xc0
-	OBJ	EqSel_StrBox_Flat, EFF_Viewables, 0xc0
-	OBJ	EqSel_MicFuncEditSw2, EFF_Viewables, 0xc0
-	OBJ	EqSel_StrBox_Make_Up, EFF_Viewables, 0xc0
-	OBJ	EqSel_MicFuncEditSw3, EFF_Viewables, 0xc0
-	OBJ	EqSel_StrBox_Radio, EFF_Viewables, 0xc0
-	OBJ	EqSel_MicFuncEditSw4, EFF_Viewables, 0xc0
-	OBJ	EqSel_StrBox_Treble_Boost, EFF_Viewables, 0xc0
-	OBJ	EqSel_MicFuncEditSw5, EFF_Viewables, 0xc0
-	OBJ	EqSel_StrBox_No_Hi_Hat, EFF_Viewables, 0xc0
-	OBJ	MicSel2, EFF_Viewables, 0xc0
-	OBJ	MicSel2_PageControl1, EFF_Viewables, 0xc0
-	OBJ	MicSel2_PageControl2, EFF_Viewables, 0xc0
-	OBJ	MicSel2_WindowPage1, EFF_Viewables, 0xc0
-	OBJ	MicSelPage1, EFF_Viewables, 0xc0
-	OBJ	MicEffTogglePage1, EFF_Viewables, 0xc0
-	OBJ	MicRevTogglePage1, EFF_Viewables, 0xc0
-	OBJ	MicSelPage1_EffTitleMenu_MULTI_EFFECT_SET, EFF_Viewables, 0xc0
-	OBJ	EffEditGridBox2, EFF_Viewables, 0xc0
-	OBJ	MicSelPage1_IndexWideES1, EFF_Viewables, 0xc0
-	OBJ	MicSelPage1_IndexWideES2, EFF_Viewables, 0xc0
-	OBJ	MicSelPage1_StrBox_MIC_REVERB_SETTING, EFF_Viewables, 0xc0
-	OBJ	MicSelPage1_CatchEvent1, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2, EFF_Viewables, 0xc0
-	OBJ	MicEffTogglePage2, EFF_Viewables, 0xc0
-	OBJ	MicRevTogglePage2, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2_IndexWideES1, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2_Label_HARMONY_PART, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2_MicFuncEditSw1, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2_StrBox_HARMONY_EFFECT_SETTI, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2_StrBox_SMF_Harmony_Track, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2_MicFuncEditSw2, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2_StrBox_HARMONY_EFFECT_SETTI2, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2_StrBox_Auto_Play_Chord, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2_IndexWideES2, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2_Box1, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2_Line1, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2_Line2, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2_Label_PART, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2_Label_MUTE, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2_MmmEditBox1, EFF_Viewables, 0xc0
-	OBJ	HarmPartMute, EFF_Viewables, 0xc0
-	OBJ	MicSelPage2_CatchEvent1, EFF_Viewables, 0xc0
-	OBJ	MicSel3, EFF_Viewables, 0xc0
-	OBJ	MicSel3_WindowPage1, EFF_Viewables, 0xc0
-	OBJ	MicSel3_PageControl1, EFF_Viewables, 0xc0
-	OBJ	MicSel3_PageControl2, EFF_Viewables, 0xc0
-	.space	4, 0x00
-
-EFF_ResNames:
-	.long	RN_Aloc	# Aloc
-	.long	RN_AlocGridBox	# AlocGridBox
-	.long	RN_empty_2041	# Aloc_IndexWideES1
-	.long	RN_AlocModeBox	# AlocModeBox
-	.long	RN_empty_2042	# Aloc_IndexWideES2
-	.long	RN_empty_2043	# Aloc_CatchEvent1
-	.long	RN_LoadFilter	# LoadFilter
-	.long	RN_FilterGridBox	# FilterGridBox
-	.long	RN_empty_2044	# LoadFilter_IndexWideES1
-	.long	RN_empty_2045	# LoadFilter_IndexWideES2
-	.long	RN_Mixing	# Mixing
-	.long	RN_EffectEdit	# EffectEdit
-	.long	RN_empty_2046	# EffectEdit_IndexWideES1
-	.long	RN_empty_2047	# EffectEdit_IndexWideES2
-	.long	RN_empty_2048	# EffectEdit_CatchEvent1
-	.long	RN_EffEditGridBox	# EffEditGridBox
-	.long	RN_empty_2049	# EffectEdit_EffTitleMenu_NAMING
-	.long	RN_empty_2050	# EffectEdit_Label_EFFECT_MEMORY_LIST
-	.long	RN_empty_2051	# EffectEdit_EffName1
-	.long	RN_empty_2052	# EffectEdit_FuncEditSw1
-	.long	RN_empty_2053	# EffectEdit_Exit1
-	.long	RN_empty_2054	# EffectEdit_EffExpUsr1
-	.long	RN_empty_2055	# EffectEdit_IndexEditSw1
-	.long	RN_empty_2056	# EffectEdit_IndexEditSw2
-	.long	RN_empty_2057	# EffectEdit_StrBox_WRITE
-	.long	RN_empty_2058	# EffectEdit_UnitName1
-	.long	RN_EffName	# EffName
-	.long	RN_empty_2059	# EffName_Naming1
-	.long	RN_empty_2060	# EffName_FuncEditSw1
-	.long	RN_empty_2061	# EffName_CatchEvent1
-	.long	RN_empty_2062	# EffName_Exit1
-	.long	RN_empty_2063	# EFF_NamingWindow1
-	.long	RN_empty_2064	# EFF_NamingEditSw1
-	.long	RN_empty_2065	# EFF_NamingEditSw2
-	.long	RN_empty_2066	# EFF_NamingEditSw3
-	.long	RN_empty_2067	# EFF_NamingEditSw4
-	.long	RN_empty_2068	# EFF_NamingEditSw5
-	.long	RN_empty_2069	# EFF_NamingEditSw6
-	.long	RN_empty_2070	# EFF_NamingEditSw7
-	.long	RN_empty_2071	# EFF_NamingEditSw8
-	.long	RN_empty_2072	# EFF_NamingEditSw9
-	.long	RN_empty_2073	# EFF_NamingEditSw10
-	.long	RN_empty_2074	# EFF_NamingEditSw11
-	.long	RN_empty_2075	# EFF_NamingEditSw12
-	.long	RN_empty_2076	# EFF_NamingEditSw13
-	.long	RN_empty_2077	# EFF_NamingEditSw14
-	.long	RN_empty_2078	# EFF_NamingEditSw15
-	.long	RN_empty_2079	# EFF_NamingEditSw16
-	.long	RN_empty_2080	# EFF_NamingEditSw17
-	.long	RN_empty_2081	# EFF_NamingEditSw18
-	.long	RN_empty_2082	# EFF_NamingEditSw19
-	.long	RN_empty_2083	# EFF_NamingEditSw20
-	.long	RN_empty_2084	# EFF_NamingEditSw21
-	.long	RN_empty_2085	# EFF_NamingEditSw22
-	.long	RN_empty_2086	# EFF_NamingEditSw23
-	.long	RN_empty_2087	# EFF_NamingEditSw24
-	.long	RN_empty_2088	# EFF_NamingEditSw25
-	.long	RN_empty_2089	# EFF_NamingEditSw26
-	.long	RN_empty_2090	# EFF_CursorBox1
-	.long	RN_empty_2091	# EFF_IndexEditSw1
-	.long	RN_empty_2092	# EFF_Label_INS
-	.long	RN_empty_2093	# EFF_IndexEditSw2
-	.long	RN_empty_2094	# EFF_Label_DEL
-	.long	RN_empty_2095	# EFF_IndexEditSw3
-	.long	RN_empty_2096	# EFF_Label_CLR
-	.long	RN_empty_2097	# EFF_IndexEditSw4
-	.long	RN_empty_2098	# EFF_Label_8d_8b
-	.long	RN_empty_2099	# EFF_IndexEditSw5
-	.long	RN_empty_2100	# EFF_IndexEditSw6
-	.long	RN_empty_2101	# EFF_Label_POSITION
-	.long	RN_empty_2102	# EFF_IndexToggle_ABC
-	.long	RN_empty_2103	# EFF_IndexToggle_123
-	.long	RN_empty_2104	# EFF_Label_SHIFT
-	.long	RN_empty_2105	# EFF_IndexPushSw1
-	.long	RN_empty_2106	# EFF_NamingWindow2
-	.long	RN_empty_2107	# EFF_NamingEditSw27
-	.long	RN_empty_2108	# EFF_NamingEditSw28
-	.long	RN_empty_2109	# EFF_NamingEditSw29
-	.long	RN_empty_2110	# EFF_NamingEditSw30
-	.long	RN_empty_2111	# EFF_NamingEditSw31
-	.long	RN_empty_2112	# EFF_NamingEditSw32
-	.long	RN_empty_2113	# EFF_NamingEditSw33
-	.long	RN_empty_2114	# EFF_NamingEditSw34
-	.long	RN_empty_2115	# EFF_NamingEditSw35
-	.long	RN_empty_2116	# EFF_NamingEditSw36
-	.long	RN_empty_2117	# EFF_NamingEditSw37
-	.long	RN_empty_2118	# EFF_NamingEditSw38
-	.long	RN_empty_2119	# EFF_NamingEditSw39
-	.long	RN_empty_2120	# EFF_NamingEditSw40
-	.long	RN_empty_2121	# EFF_NamingEditSw41
-	.long	RN_empty_2122	# EFF_NamingEditSw42
-	.long	RN_empty_2123	# EFF_NamingEditSw43
-	.long	RN_empty_2124	# EFF_NamingEditSw44
-	.long	RN_empty_2125	# EFF_NamingEditSw45
-	.long	RN_empty_2126	# EFF_NamingEditSw46
-	.long	RN_empty_2127	# EFF_NamingEditSw47
-	.long	RN_empty_2128	# EFF_NamingEditSw48
-	.long	RN_empty_2129	# EFF_NamingEditSw49
-	.long	RN_empty_2130	# EFF_NamingEditSw50
-	.long	RN_empty_2131	# EFF_NamingEditSw51
-	.long	RN_empty_2132	# EFF_NamingEditSw52
-	.long	RN_empty_2133	# EFF_CursorBox2
-	.long	RN_empty_2134	# EFF_IndexEditSw7
-	.long	RN_empty_2135	# EFF_Label_INS2
-	.long	RN_empty_2136	# EFF_IndexEditSw8
-	.long	RN_empty_2137	# EFF_Label_DEL2
-	.long	RN_empty_2138	# EFF_IndexEditSw9
-	.long	RN_empty_2139	# EFF_Label_CLR2
-	.long	RN_empty_2140	# EFF_IndexEditSw10
-	.long	RN_empty_2141	# EFF_Label_8d_8b2
-	.long	RN_empty_2142	# EFF_IndexEditSw11
-	.long	RN_empty_2143	# EFF_IndexEditSw12
-	.long	RN_empty_2144	# EFF_Label_POSITION2
-	.long	RN_empty_2145	# EFF_IndexToggle_ABC2
-	.long	RN_empty_2146	# EFF_IndexToggle_1232
-	.long	RN_empty_2147	# EFF_Label_SHIFT2
-	.long	RN_empty_2148	# EFF_IndexPushSw2
-	.long	RN_empty_2149	# EFF_NamingWindow3
-	.long	RN_EffectDebug	# EffectDebug
-	.long	RN_EffApcModeBox	# EffApcModeBox
-	.long	RN_EffSysModeBox	# EffSysModeBox
-	.long	RN_empty_2150	# EffectDebug_EffDispGridBox1
-	.long	RN_empty_2151	# EffectDebug_IndexWideES1
-	.long	RN_empty_2152	# EffectDebug_IndexWideES2
-	.long	RN_empty_2153	# EffectDebug_IndexWideES3
-	.long	RN_empty_2154	# EffectDebug_IndexWideES4
-	.long	RN_empty_2155	# EffectDebug_IndexWideES5
-	.long	RN_empty_2156	# EffectDebug_CatchEvent1
-	.long	RN_EffectMenu	# EffectMenu
-	.long	RN_empty_2157	# EffectMenu_TitleMenu_MULTI
-	.long	RN_empty_2158	# EffectMenu_TitleMenu_CHORUS
-	.long	RN_empty_2159	# EffectMenu_TitleMenu_REVERB
-	.long	RN_empty_2160	# EffectMenu_TitleMenu_MIC_REVERB_EFFECT
-	.long	RN_empty_2161	# EffectMenu_TitleMenu_SOUND_LOAD_OPTION
-	.long	RN_empty_2162	# EffectMenu_TitleMenu_ALLOCATION
-	.long	RN_empty_2163	# EffectMenu_TitleMenu_MIXER
-	.long	RN_empty_2164	# EffectMenu_ExitMode1
-	.long	RN_empty_2165	# EffectMenu_TitleMenu_EQUALIZER
-	.long	RN_empty_2166	# EffectMenu_TitleMenu_SOUND_DSP
-	.long	RN_empty_2167	# EffectMenu_CatchEvent1
-	.long	RN_MultiSel	# MultiSel
-	.long	RN_empty_2168	# MultiSel_EffPage1
-	.long	RN_empty_2169	# MultiSel_EffExpGroup1
-	.long	RN_empty_2170	# MultiSel_IndexWideES1
-	.long	RN_empty_2171	# MultiSel_EffVari1
-	.long	RN_empty_2172	# MultiSel_EffVari2
-	.long	RN_empty_2173	# MultiSel_EffVari3
-	.long	RN_empty_2174	# MultiSel_EffVari4
-	.long	RN_empty_2175	# MultiSel_EffVari5
-	.long	RN_empty_2176	# MultiSel_EffVari6
-	.long	RN_empty_2177	# MultiSel_EffVari7
-	.long	RN_empty_2178	# MultiSel_EffVari8
-	.long	RN_empty_2179	# MultiSel_EffTitleMenu_DETAIL_EDIT
-	.long	RN_empty_2180	# MultiSel_CatchEvent1
-	.long	RN_MicSel	# MicSel
-	.long	RN_MicEffMuteToggle	# MicEffMuteToggle
-	.long	RN_empty_2181	# MicSel_IndexWideES1
-	.long	RN_empty_2182	# MicSel_EffTitleMenu_MULTI_EFFECT_SET
-	.long	RN_empty_2183	# MicSel_IndexWideES2
-	.long	RN_empty_2184	# MicSel_Label_HARMONIZER_PART
-	.long	RN_MicRevToggle	# MicRevToggle
-	.long	RN_MicEffToggle	# MicEffToggle
-	.long	RN_HarmPartEdit	# HarmPartEdit
-	.long	RN_empty_2185	# MicSel_IndexWideES3
-	.long	RN_empty_2186	# MicSel_CatchEvent1
-	.long	RN_empty_2187	# MicSel_StrBox_MIC_REVERB_SETTING
-	.long	RN_EffEditGridBox22	# EffEditGridBox22
-	.long	RN_empty_2188	# MicSel_MicFuncEditSw1
-	.long	RN_empty_2189	# MicSel_StrBox_Trumpet_1_Octave
-	.long	RN_empty_2190	# MicSel_StrBox_BRASS_SIMULATOR_1
-	.long	RN_empty_2191	# MicSel_MicFuncEditSw2
-	.long	RN_empty_2192	# MicSel_StrBox_BRASS_SIMULATOR_2
-	.long	RN_empty_2193	# MicSel_StrBox_Trumpet
-	.long	RN_empty_2194	# MicSel_MicFuncEditSw3
-	.long	RN_empty_2195	# MicSel_StrBox_HARMONIZER_1
-	.long	RN_empty_2196	# MicSel_StrBox_SMF_Harmony_Track
-	.long	RN_empty_2197	# MicSel_MicFuncEditSw4
-	.long	RN_empty_2198	# MicSel_StrBox_HARMONIZER_2
-	.long	RN_empty_2199	# MicSel_StrBox_Auto_Play_Chord
-	.long	RN_RevSel	# RevSel
-	.long	RN_empty_2200	# RevSel_IndexWideES1
-	.long	RN_empty_2201	# RevSel_EffExpGroup1
-	.long	RN_empty_2202	# RevSel_EffVari1
-	.long	RN_empty_2203	# RevSel_EffVari2
-	.long	RN_empty_2204	# RevSel_EffVari3
-	.long	RN_empty_2205	# RevSel_EffVari4
-	.long	RN_empty_2206	# RevSel_EffVari5
-	.long	RN_empty_2207	# RevSel_EffVari6
-	.long	RN_empty_2208	# RevSel_EffVari7
-	.long	RN_empty_2209	# RevSel_EffVari8
-	.long	RN_empty_2210	# RevSel_EffPage1
-	.long	RN_empty_2211	# RevSel_EffTitleMenu_DETAIL_EDIT
-	.long	RN_empty_2212	# RevSel_IndexEditSw1
-	.long	RN_empty_2213	# RevSel_IndexEditSw2
-	.long	RN_empty_2214	# RevSel_MmmEditBox_TOTAL_DEPTH
-	.long	RN_empty_2215	# EFF_TtlScreen_REVERB
-	.long	RN_empty_2216	# EFF_IndexWideES1
-	.long	RN_empty_2217	# EFF_EffTitleMenu_DETAIL_EDIT
-	.long	RN_empty_2218	# EFF_WindowPage1
-	.long	RN_empty_2219	# EFF_EffExpGroup1
-	.long	RN_empty_2220	# EFF_EffVari1
-	.long	RN_empty_2221	# EFF_EffVari2
-	.long	RN_empty_2222	# EFF_EffVari3
-	.long	RN_empty_2223	# EFF_EffVari4
-	.long	RN_empty_2224	# EFF_EffVari5
-	.long	RN_empty_2225	# EFF_EffVari6
-	.long	RN_empty_2226	# EFF_EffVari7
-	.long	RN_empty_2227	# EFF_EffVari8
-	.long	RN_ChoSel	# ChoSel
-	.long	RN_empty_2228	# ChoSel_EffVari1
-	.long	RN_empty_2229	# ChoSel_EffPage1
-	.long	RN_empty_2230	# ChoSel_EffExpGroup1
-	.long	RN_empty_2231	# ChoSel_IndexWideES1
-	.long	RN_empty_2232	# ChoSel_EffVari2
-	.long	RN_empty_2233	# ChoSel_EffVari3
-	.long	RN_empty_2234	# ChoSel_EffVari4
-	.long	RN_empty_2235	# ChoSel_EffVari5
-	.long	RN_empty_2236	# ChoSel_EffVari6
-	.long	RN_empty_2237	# ChoSel_EffVari7
-	.long	RN_empty_2238	# ChoSel_EffVari8
-	.long	RN_empty_2239	# ChoSel_EffTitleMenu_DETAIL_EDIT
-	.long	RN_DSPSel	# DSPSel
-	.long	RN_empty_2240	# DSPSel_EffPage1
-	.long	RN_empty_2241	# DSPSel_EffExpGroup1
-	.long	RN_empty_2242	# DSPSel_IndexWideES1
-	.long	RN_empty_2243	# DSPSel_EffVari1
-	.long	RN_empty_2244	# DSPSel_EffVari2
-	.long	RN_empty_2245	# DSPSel_EffVari3
-	.long	RN_empty_2246	# DSPSel_EffVari4
-	.long	RN_empty_2247	# DSPSel_EffVari5
-	.long	RN_empty_2248	# DSPSel_EffVari6
-	.long	RN_empty_2249	# DSPSel_EffVari7
-	.long	RN_empty_2250	# DSPSel_EffVari8
-	.long	RN_empty_2251	# DSPSel_IndexEditSw1
-	.long	RN_empty_2252	# DSPSel_RamBox1
-	.long	RN_empty_2253	# DSPSel_IndexEditSw2
-	.long	RN_empty_2254	# DSPSel_MmmEditBox_DEPTH
-	.long	RN_empty_2255	# DSPSel_EffTitleMenu_EDIT
-	.long	RN_empty_2256	# DSPSel_FuncEditSw1
-	.long	RN_empty_2257	# DSPSel_FuncEditSw2
-	.long	RN_empty_2258	# DSPSel_StrBox_PART
-	.long	RN_EqSel	# EqSel
-	.long	RN_empty_2259	# EqSel_FuncEditSw1
-	.long	RN_EQGain	# EQGain
-	.long	RN_empty_2260	# EQGain_StrBox_GAIN
-	.long	RN_empty_2261	# EQGain_EQEditBox1
-	.long	RN_empty_2262	# EQGain_EQEditBox2
-	.long	RN_empty_2263	# EQGain_EQEditBox3
-	.long	RN_empty_2264	# EQGain_EQEditBox4
-	.long	RN_empty_2265	# EQGain_EQEditBox5
-	.long	RN_empty_2266	# EQGain_StrBox_dB
-	.long	RN_empty_2267	# EQGain_GainBox1
-	.long	RN_empty_2268	# EQGain_GainBox2
-	.long	RN_empty_2269	# EQGain_GainBox3
-	.long	RN_empty_2270	# EQGain_GainBox4
-	.long	RN_empty_2271	# EQGain_GainBox5
-	.long	RN_EQFC	# EQFC
-	.long	RN_empty_2272	# EQFC_StrBox_FC
-	.long	RN_empty_2273	# EQFC_EQEditBox1
-	.long	RN_empty_2274	# EQFC_EQEditBox2
-	.long	RN_empty_2275	# EQFC_EQEditBox3
-	.long	RN_empty_2276	# EQFC_EQEditBox4
-	.long	RN_empty_2277	# EQFC_EQEditBox5
-	.long	RN_empty_2278	# EQFC_StrBox_Hz
-	.long	RN_EQQ	# EQQ
-	.long	RN_empty_2279	# EQQ_StrBox_Q
-	.long	RN_empty_2280	# EQQ_EQEditBox1
-	.long	RN_empty_2281	# EQQ_EQEditBox2
-	.long	RN_empty_2282	# EQQ_EQEditBox3
-	.long	RN_empty_2283	# EQQ_StrBox_Hz
-	.long	RN_EQOnOff	# EQOnOff
-	.long	RN_empty_2284	# EqSel_IndexEditSw1
-	.long	RN_empty_2285	# EqSel_IndexEditSw2
-	.long	RN_empty_2286	# EqSel_IndexEditSw3
-	.long	RN_empty_2287	# EqSel_IndexEditSw4
-	.long	RN_empty_2288	# EqSel_IndexEditSw5
-	.long	RN_empty_2289	# EqSel_CatchEvent1
-	.long	RN_EQOrigSw	# EQOrigSw
-	.long	RN_EQOrig	# EQOrig
-	.long	RN_empty_2290	# EqSel_MicFuncEditSw1
-	.long	RN_empty_2291	# EqSel_StrBox_Flat
-	.long	RN_empty_2292	# EqSel_MicFuncEditSw2
-	.long	RN_empty_2293	# EqSel_StrBox_Make_Up
-	.long	RN_empty_2294	# EqSel_MicFuncEditSw3
-	.long	RN_empty_2295	# EqSel_StrBox_Radio
-	.long	RN_empty_2296	# EqSel_MicFuncEditSw4
-	.long	RN_empty_2297	# EqSel_StrBox_Treble_Boost
-	.long	RN_empty_2298	# EqSel_MicFuncEditSw5
-	.long	RN_empty_2299	# EqSel_StrBox_No_Hi_Hat
-	.long	RN_MicSel2	# MicSel2
-	.long	RN_empty_2300	# MicSel2_PageControl1
-	.long	RN_empty_2301	# MicSel2_PageControl2
-	.long	RN_empty_2302	# MicSel2_WindowPage1
-	.long	RN_MicSelPage1	# MicSelPage1
-	.long	RN_MicEffTogglePage1	# MicEffTogglePage1
-	.long	RN_MicRevTogglePage1	# MicRevTogglePage1
-	.long	RN_empty_2303	# MicSelPage1_EffTitleMenu_MULTI_EFFECT_SET
-	.long	RN_EffEditGridBox2	# EffEditGridBox2
-	.long	RN_empty_2304	# MicSelPage1_IndexWideES1
-	.long	RN_empty_2305	# MicSelPage1_IndexWideES2
-	.long	RN_empty_2306	# MicSelPage1_StrBox_MIC_REVERB_SETTING
-	.long	RN_empty_2307	# MicSelPage1_CatchEvent1
-	.long	RN_MicSelPage2	# MicSelPage2
-	.long	RN_MicEffTogglePage2	# MicEffTogglePage2
-	.long	RN_MicRevTogglePage2	# MicRevTogglePage2
-	.long	RN_empty_2308	# MicSelPage2_IndexWideES1
-	.long	RN_empty_2309	# MicSelPage2_Label_HARMONY_PART
-	.long	RN_empty_2310	# MicSelPage2_MicFuncEditSw1
-	.long	RN_empty_2311	# MicSelPage2_StrBox_HARMONY_EFFECT_SETTI
-	.long	RN_empty_2312	# MicSelPage2_StrBox_SMF_Harmony_Track
-	.long	RN_empty_2313	# MicSelPage2_MicFuncEditSw2
-	.long	RN_empty_2314	# MicSelPage2_StrBox_HARMONY_EFFECT_SETTI2
-	.long	RN_empty_2315	# MicSelPage2_StrBox_Auto_Play_Chord
-	.long	RN_empty_2316	# MicSelPage2_IndexWideES2
-	.long	RN_empty_2317	# MicSelPage2_Box1
-	.long	RN_empty_2318	# MicSelPage2_Line1
-	.long	RN_empty_2319	# MicSelPage2_Line2
-	.long	RN_empty_2320	# MicSelPage2_Label_PART
-	.long	RN_empty_2321	# MicSelPage2_Label_MUTE
-	.long	RN_empty_2322	# MicSelPage2_MmmEditBox1
-	.long	RN_HarmPartMute	# HarmPartMute
-	.long	RN_empty_2323	# MicSelPage2_CatchEvent1
-	.long	RN_MicSel3	# MicSel3
-	.long	RN_empty_2324	# MicSel3_WindowPage1
-	.long	RN_empty_2325	# MicSel3_PageControl1
-	.long	RN_empty_2326	# MicSel3_PageControl2
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3617D0, 0x3617D4
-
-EQFcEditCheck_Records:	# 27 x REC_EQFcEditCheck_Records (6 bytes each); read by EQFcEditCheck 0x4856A381 `call strcpy_entry, [a2], 4`
-	REC_EQFcEditCheck_Records	s0="   40\x00"	# [0]
-	REC_EQFcEditCheck_Records	s0="   50\x00"
-	REC_EQFcEditCheck_Records	s0="   63\x00"
-	REC_EQFcEditCheck_Records	s0="   80\x00"
-	REC_EQFcEditCheck_Records	s0="  100\x00"
-	REC_EQFcEditCheck_Records	s0="  125\x00"
-	REC_EQFcEditCheck_Records	s0="  160\x00"
-	REC_EQFcEditCheck_Records	s0="  200\x00"
-	REC_EQFcEditCheck_Records	s0="  250\x00"	# [8]
-	REC_EQFcEditCheck_Records	s0="  315\x00"
-	REC_EQFcEditCheck_Records	s0="  400\x00"
-	REC_EQFcEditCheck_Records	s0="  500\x00"
-	REC_EQFcEditCheck_Records	s0="  630\x00"
-	REC_EQFcEditCheck_Records	s0="  800\x00"
-	REC_EQFcEditCheck_Records	s0="   1k\x00"
-	REC_EQFcEditCheck_Records	s0="1.25k\x00"
-	REC_EQFcEditCheck_Records	s0=" 1.6k\x00"	# [16]
-	REC_EQFcEditCheck_Records	s0="   2k\x00"
-	REC_EQFcEditCheck_Records	s0=" 2.5k\x00"
-	REC_EQFcEditCheck_Records	s0="3.15k\x00"
-	REC_EQFcEditCheck_Records	s0="   4k\x00"
-	REC_EQFcEditCheck_Records	s0="   5k\x00"
-	REC_EQFcEditCheck_Records	s0=" 6.3k\x00"
-	REC_EQFcEditCheck_Records	s0="   8k\x00"
-	REC_EQFcEditCheck_Records	s0="  10k\x00"	# [24]
-	REC_EQFcEditCheck_Records	s0="12.5k\x00"
-	REC_EQFcEditCheck_Records	s0="  16k\x00"
-EQQEditCheck_Records:	# 32 x REC_EQQEditCheck_Records (6 bytes each); read by EQQEditCheck 0x4856A508 `call strcpy_entry, [a2], 4`
-	REC_EQQEditCheck_Records	s0="  0.1\x00"	# [0]
-	REC_EQQEditCheck_Records	s0="  0.2\x00"
-	REC_EQQEditCheck_Records	s0="  0.3\x00"
-	REC_EQQEditCheck_Records	s0="  0.4\x00"
-	REC_EQQEditCheck_Records	s0="  0.5\x00"
-	REC_EQQEditCheck_Records	s0="  0.6\x00"
-	REC_EQQEditCheck_Records	s0="  0.7\x00"
-	REC_EQQEditCheck_Records	s0="  0.8\x00"
-	REC_EQQEditCheck_Records	s0="  0.9\x00"	# [8]
-	REC_EQQEditCheck_Records	s0="  1.0\x00"
-	REC_EQQEditCheck_Records	s0="  1.5\x00"
-	REC_EQQEditCheck_Records	s0="  2.0\x00"
-	REC_EQQEditCheck_Records	s0="  2.5\x00"
-	REC_EQQEditCheck_Records	s0="  3.0\x00"
-	REC_EQQEditCheck_Records	s0="  3.5\x00"
-	REC_EQQEditCheck_Records	s0="  4.0\x00"
-	REC_EQQEditCheck_Records	s0="  5.0\x00"	# [16]
-	REC_EQQEditCheck_Records	s0="  6.0\x00"
-	REC_EQQEditCheck_Records	s0="  7.0\x00"
-	REC_EQQEditCheck_Records	s0="  8.0\x00"
-	REC_EQQEditCheck_Records	s0="  9.0\x00"
-	REC_EQQEditCheck_Records	s0=" 10.0\x00"
-	REC_EQQEditCheck_Records	s0=" 11.0\x00"
-	REC_EQQEditCheck_Records	s0=" 12.0\x00"
-	REC_EQQEditCheck_Records	s0=" 13.0\x00"	# [24]
-	REC_EQQEditCheck_Records	s0=" 14.0\x00"
-	REC_EQQEditCheck_Records	s0=" 15.0\x00"
-	REC_EQQEditCheck_Records	s0=" 16.0\x00"
-	REC_EQQEditCheck_Records	s0=" 17.0\x00"
-	REC_EQQEditCheck_Records	s0=" 18.0\x00"
-	REC_EQQEditCheck_Records	s0=" 19.0\x00"
-	REC_EQQEditCheck_Records	s0=" 20.0\x00"
-EQGainEditCheck_Records:	# 49 x REC_EQGainEditCheck_Records (6 bytes each); read by EQGainEditCheck 0x4856A1FA `call strcpy_entry, [a2], 4`
-	REC_EQGainEditCheck_Records	s0="-12.0\x00"	# [0]
-	REC_EQGainEditCheck_Records	s0="-11.5\x00"
-	REC_EQGainEditCheck_Records	s0="-11.0\x00"
-	REC_EQGainEditCheck_Records	s0="-10.5\x00"
-	REC_EQGainEditCheck_Records	s0="-10.0\x00"
-	REC_EQGainEditCheck_Records	s0="- 9.5\x00"
-	REC_EQGainEditCheck_Records	s0="- 9.0\x00"
-	REC_EQGainEditCheck_Records	s0="- 8.5\x00"
-	REC_EQGainEditCheck_Records	s0="- 8.0\x00"	# [8]
-	REC_EQGainEditCheck_Records	s0="- 7.5\x00"
-	REC_EQGainEditCheck_Records	s0="- 7.0\x00"
-	REC_EQGainEditCheck_Records	s0="- 6.5\x00"
-	REC_EQGainEditCheck_Records	s0="- 6.0\x00"
-	REC_EQGainEditCheck_Records	s0="- 5.5\x00"
-	REC_EQGainEditCheck_Records	s0="- 5.0\x00"
-	REC_EQGainEditCheck_Records	s0="- 4.5\x00"
-	REC_EQGainEditCheck_Records	s0="- 4.0\x00"	# [16]
-	REC_EQGainEditCheck_Records	s0="- 3.5\x00"
-	REC_EQGainEditCheck_Records	s0="- 3.0\x00"
-	REC_EQGainEditCheck_Records	s0="- 2.5\x00"
-	REC_EQGainEditCheck_Records	s0="- 2.0\x00"
-	REC_EQGainEditCheck_Records	s0="- 1.5\x00"
-	REC_EQGainEditCheck_Records	s0="- 1.0\x00"
-	REC_EQGainEditCheck_Records	s0="- 0.5\x00"
-	REC_EQGainEditCheck_Records	s0="  0.0\x00"	# [24]
-	REC_EQGainEditCheck_Records	s0="+ 0.5\x00"
-	REC_EQGainEditCheck_Records	s0="+ 1.0\x00"
-	REC_EQGainEditCheck_Records	s0="+ 1.5\x00"
-	REC_EQGainEditCheck_Records	s0="+ 2.0\x00"
-	REC_EQGainEditCheck_Records	s0="+ 2.5\x00"
-	REC_EQGainEditCheck_Records	s0="+ 3.0\x00"
-	REC_EQGainEditCheck_Records	s0="+ 3.5\x00"
-	REC_EQGainEditCheck_Records	s0="+ 4.0\x00"	# [32]
-	REC_EQGainEditCheck_Records	s0="+ 4.5\x00"
-	REC_EQGainEditCheck_Records	s0="+ 5.0\x00"
-	REC_EQGainEditCheck_Records	s0="+ 5.5\x00"
-	REC_EQGainEditCheck_Records	s0="+ 6.0\x00"
-	REC_EQGainEditCheck_Records	s0="+ 6.5\x00"
-	REC_EQGainEditCheck_Records	s0="+ 7.0\x00"
-	REC_EQGainEditCheck_Records	s0="+ 7.5\x00"
-	REC_EQGainEditCheck_Records	s0="+ 8.0\x00"	# [40]
-	REC_EQGainEditCheck_Records	s0="+ 8.5\x00"
-	REC_EQGainEditCheck_Records	s0="+ 9.0\x00"
-	REC_EQGainEditCheck_Records	s0="+ 9.5\x00"
-	REC_EQGainEditCheck_Records	s0="+10.0\x00"
-	REC_EQGainEditCheck_Records	s0="+10.5\x00"
-	REC_EQGainEditCheck_Records	s0="+11.0\x00"
-	REC_EQGainEditCheck_Records	s0="+11.5\x00"
-	REC_EQGainEditCheck_Records	s0="+12.0\x00"	# [48]
-
-# 7 classes; a class id is (0xd4 << 16) | its index here (ClassProc 0x4842A7C0 reads entry id & 0xFFFF, 0x18 bytes each)
-.equ APC_Classes_SLOT, 0xd4
-APC_Classes:
-	CLASS	Class_AcChordFinderBox, CLASS_AcChordFinderBox, APC_Classes, proc=AcChordFinderBoxProc, parent=CLASS_VwBox, allsize=32, selfsize=0, cname=ClassName_AcChordFinderBox, sig=ClassSig_AcChordFinderBox, fields=ClassFields_AcChordFinderBox
-	CLASS	Class_AcRamEditRoopBox, CLASS_AcRamEditRoopBox, APC_Classes, proc=AcRamEditRoopBoxProc, parent=CLASS_AcRamEditBox, allsize=64, selfsize=0, cname=ClassName_AcRamEditRoopBox, sig=ClassSig_AcRamEditRoopBox, fields=ClassFields_AcRamEditRoopBox
-	CLASS	Class_AcRamEditInvBox, CLASS_AcRamEditInvBox, APC_Classes, proc=AcRamEditInvBoxProc, parent=CLASS_AcRamEditBox, allsize=64, selfsize=0, cname=ClassName_AcRamEditInvBox, sig=ClassSig_AcRamEditInvBox, fields=ClassFields_AcRamEditInvBox
-	CLASS	Class_AcKenbanBitmap, CLASS_AcKenbanBitmap, APC_Classes, proc=AcKenbanBitmapProc, parent=CLASS_VwUserBitmap, allsize=28, selfsize=0, cname=ClassName_AcKenbanBitmap, sig=ClassSig_AcKenbanBitmap, fields=ClassFields_AcKenbanBitmap
-	CLASS	Class_PsCFInvisibleBox, CLASS_PsCFInvisibleBox, APC_Classes, proc=PsCFInvisibleBoxProc, parent=CLASS_PsInvisibleBox, allsize=24, selfsize=0, cname=ClassName_PsCFInvisibleBox, sig=ClassSig_PsCFInvisibleBox, fields=ClassFields_PsCFInvisibleBox
-	CLASS	Class_AcVisibleLabel, CLASS_AcVisibleLabel, APC_Classes, proc=AcVisibleLabelProc, parent=CLASS_VwLabel, allsize=36, selfsize=0, cname=ClassName_AcVisibleLabel, sig=ClassSig_AcVisibleLabel, fields=ClassFields_AcVisibleLabel
-	CLASS	Class_AcAPCRadioBox, CLASS_AcAPCRadioBox, APC_Classes, proc=AcAPCRadioBoxProc, parent=CLASS_AcStrRadioBox, allsize=56, selfsize=0, cname=ClassName_AcAPCRadioBox, sig=ClassSig_AcAPCRadioBox, fields=ClassFields_AcAPCRadioBox
-	.space	24, 0x00
-
-# 3 Event names; an event id is (0xd5 << 16) | its index
-APC_Events:
-	IDNAME	EV_WHOSELECTED_APC, Str_EV_WHOSELECTED_3, APC_Events, 0xd5
-	IDNAME	EV_NOTE_DRAW, Str_EV_NOTE_DRAW, APC_Events, 0xd5
-	IDNAME	EV_KENBAN_DRAW, Str_EV_KENBAN_DRAW, APC_Events, 0xd5
-	.space	4, 0x00
-
-# 6 Method names; an method id is (0xd6 << 16) | its index
-APC_Methods:
-	IDNAME	MT_DrawKey, Str_MT_DrawKey, APC_Methods, 0xd6
-	IDNAME	MT_ListenStart, Str_MT_ListenStart, APC_Methods, 0xd6
-	IDNAME	MT_ListenEnd, Str_MT_ListenEnd, APC_Methods, 0xd6
-	IDNAME	MT_ListenNew, Str_MT_ListenNew, APC_Methods, 0xd6
-	IDNAME	MT_GetTateIndex_APC, Str_MT_GetTateIndex_2, APC_Methods, 0xd6
-	IDNAME	MT_CheckTateIndex_APC, Str_MT_CheckTateIndex_2, APC_Methods, 0xd6
-	.space	4, 0x00
-
-# 6 Function procedures; a function id is (0xd1 << 16) | its index (the names are the parallel table at slot 0xd9)
-APC_Functions:
-	IDNAME	FN_AcRamEditRoopBoxProc, AcRamEditRoopBoxProc, APC_Functions, 0xd1
-	IDNAME	FN_AcRamEditInvBoxProc, AcRamEditInvBoxProc, APC_Functions, 0xd1
-	IDNAME	FN_AcChordFinderBoxProc, AcChordFinderBoxProc, APC_Functions, 0xd1
-	IDNAME	FN_AcKenbanBitmapProc, AcKenbanBitmapProc, APC_Functions, 0xd1
-	IDNAME	FN_PsCFInvisibleBoxProc, PsCFInvisibleBoxProc, APC_Functions, 0xd1
-	IDNAME	FN_AcVisibleLabelProc, AcVisibleLabelProc, APC_Functions, 0xd1
-	.space	4, 0x00
-
-APC_FunctionNames:
-	.long	FnName_AcRamEditRoopBoxProc
-	.long	FnName_AcRamEditInvBoxProc
-	.long	FnName_AcChordFinderBoxProc
-	.long	FnName_AcKenbanBitmapProc
-	.long	FnName_PsCFInvisibleBoxProc
-	.long	FnName_AcVisibleLabelProc
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x361B7C, 0x361B80
-
-# 25 ApFunction procedures; a function id is (0xd2 << 16) | its index (the names are the parallel table at slot 0xda)
-APC_ApFunctions:
-	IDNAME	FN_R12OctaveFunc, R12OctaveFunc, APC_ApFunctions, 0xd2
-	IDNAME	FN_MemoryToggleFunc, MemoryToggleFunc, APC_ApFunctions, 0xd2
-	IDNAME	FN_OnbassToggleFunc, OnbassToggleFunc, APC_ApFunctions, 0xd2
-	IDNAME	FN_LeftholdToggleFunc, LeftholdToggleFunc, APC_ApFunctions, 0xd2
-	IDNAME	FN_IntroToggleFunc, IntroToggleFunc, APC_ApFunctions, 0xd2
-	IDNAME	FN_TApcSel, TApcSel, APC_ApFunctions, 0xd2
-	IDNAME	FN_AcAPCRadioBoxProc, AcAPCRadioBoxProc, APC_ApFunctions, 0xd2
-	IDNAME	FN_ApcSelFunc, ApcSelFunc, APC_ApFunctions, 0xd2
-	IDNAME	FN_SplitPoint, SplitPoint, APC_ApFunctions, 0xd2
-	IDNAME	FN_StsSplitCheck, StsSplitCheck, APC_ApFunctions, 0xd2
-	IDNAME	FN_TSplitSel, TSplitSel, APC_ApFunctions, 0xd2
-	IDNAME	FN_TR12Octave, TR12Octave, APC_ApFunctions, 0xd2
-	IDNAME	FN_BitmapKenban, BitmapKenban, APC_ApFunctions, 0xd2
-	IDNAME	FN_ChordFinderROOT, ChordFinderROOT, APC_ApFunctions, 0xd2
-	IDNAME	FN_ChordFinderTYPE, ChordFinderTYPE, APC_ApFunctions, 0xd2
-	IDNAME	FN_INVERSION, INVERSION, APC_ApFunctions, 0xd2
-	IDNAME	FN_APCselect, APCselect, APC_ApFunctions, 0xd2
-	IDNAME	FN_ChordFinderListen, ChordFinderListen, APC_ApFunctions, 0xd2
-	IDNAME	FN_TtChordFinder, TtChordFinder, APC_ApFunctions, 0xd2
-	IDNAME	FN_ChordFinderStartFunc, ChordFinderStartFunc, APC_ApFunctions, 0xd2
-	IDNAME	FN_OffWaitEditCheck, OffWaitEditCheck, APC_ApFunctions, 0xd2
-	IDNAME	FN_On1WaitEditCheck, On1WaitEditCheck, APC_ApFunctions, 0xd2
-	IDNAME	FN_On2WaitEditCheck, On2WaitEditCheck, APC_ApFunctions, 0xd2
-	IDNAME	FN_On3WaitEditCheck, On3WaitEditCheck, APC_ApFunctions, 0xd2
-	IDNAME	FN_CheckChordDebugWindow, CheckChordDebugWindow, APC_ApFunctions, 0xd2
-	.space	4, 0x00
-
-APC_ApFunctionNames:
-	.long	FnName_R12OctaveFunc
-	.long	FnName_MemoryToggleFunc
-	.long	FnName_OnbassToggleFunc
-	.long	FnName_LeftholdToggleFunc
-	.long	FnName_IntroToggleFunc
-	.long	FnName_TApcSel
-	.long	FnName_AcAPCRadioBoxProc
-	.long	FnName_ApcSelFunc
-	.long	FnName_SplitPoint
-	.long	FnName_StsSplitCheck
-	.long	FnName_TSplitSel
-	.long	FnName_TR12Octave
-	.long	FnName_BitmapKenban
-	.long	FnName_ChordFinderROOT
-	.long	FnName_ChordFinderTYPE
-	.long	FnName_INVERSION
-	.long	FnName_APCselect
-	.long	FnName_ChordFinderListen
-	.long	FnName_TtChordFinder
-	.long	FnName_ChordFinderStartFunc
-	.long	FnName_OffWaitEditCheck
-	.long	FnName_On1WaitEditCheck
-	.long	FnName_On2WaitEditCheck
-	.long	FnName_On3WaitEditCheck
-	.long	FnName_CheckChordDebugWindow
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x361C4C, 0x361C50
-
-# 4 MainFunction procedures; a function id is (0xd3 << 16) | its index (the names are the parallel table at slot 0xdb)
-APC_MainFunctions:
-	IDNAME	FN_FreeSplitFunc, FreeSplitFunc, APC_MainFunctions, 0xd3
-	IDNAME	FN_ApcTitleFunc, ApcTitleFunc, APC_MainFunctions, 0xd3
-	IDNAME	FN_SDOctTitleFunc, SDOctTitleFunc, APC_MainFunctions, 0xd3
-	IDNAME	FN_MainChordFinderListen, MainChordFinderListen, APC_MainFunctions, 0xd3
-	.space	4, 0x00
-
-APC_MainFunctionNames:
-	.long	FnName_FreeSplitFunc
-	.long	FnName_ApcTitleFunc
-	.long	FnName_SDOctTitleFunc
-	.long	FnName_MainChordFinderListen
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x361C74, 0x361C78
-
-# 63 objects of block APC; object <name> is index <name>_ix, id <name>_id = (0xd0 << 16) | <name>_ix
-APC_Viewables:
-	OBJ	SplitSel, APC_Viewables, 0xd0
-	OBJ	SplitSel_MmmBox1, APC_Viewables, 0xd0
-	OBJ	SplitSel_ShowHide1, APC_Viewables, 0xd0
-	OBJ	SplitSel_Box1, APC_Viewables, 0xd0
-	OBJ	SplitSel_LanguageText1, APC_Viewables, 0xd0
-	OBJ	ApcSel, APC_Viewables, 0xd0
-	OBJ	ApcOnbass, APC_Viewables, 0xd0
-	OBJ	ApcMemory, APC_Viewables, 0xd0
-	OBJ	ApcSel_ShowHide1, APC_Viewables, 0xd0
-	OBJ	ApcLefthold, APC_Viewables, 0xd0
-	OBJ	ApcSel_APCRadioBox_BASIC, APC_Viewables, 0xd0
-	OBJ	ApcSel_APCRadioBox_FINGERED, APC_Viewables, 0xd0
-	OBJ	ApcSel_APCRadioBox_PIANIST, APC_Viewables, 0xd0
-	OBJ	ApcSel_CatchEvent1, APC_Viewables, 0xd0
-	OBJ	CountIntro, APC_Viewables, 0xd0
-	OBJ	ApcSel_FuncEditSw1, APC_Viewables, 0xd0
-	OBJ	ApcSel_TitleMenu_CHORD_FINDER, APC_Viewables, 0xd0
-	OBJ	ApcSel_ShowHide2, APC_Viewables, 0xd0
-	OBJ	ChdFdr, APC_Viewables, 0xd0
-	OBJ	ChdFdr_CFInvisibleBox1, APC_Viewables, 0xd0
-	OBJ	ChdFdr_ShowHide1, APC_Viewables, 0xd0
-	OBJ	ChdFdr_Box1, APC_Viewables, 0xd0
-	OBJ	RootBox, APC_Viewables, 0xd0
-	OBJ	TypeBox, APC_Viewables, 0xd0
-	OBJ	InversionBox, APC_Viewables, 0xd0
-	OBJ	TypeListBox, APC_Viewables, 0xd0
-	OBJ	ApcModeEditSw, APC_Viewables, 0xd0
-	OBJ	ApcModeBox, APC_Viewables, 0xd0
-	OBJ	ApcModeLabel, APC_Viewables, 0xd0
-	OBJ	ROOTsw, APC_Viewables, 0xd0
-	OBJ	TYPELeftsw, APC_Viewables, 0xd0
-	OBJ	TYPEUpDownsw, APC_Viewables, 0xd0
-	OBJ	InversionEditSw, APC_Viewables, 0xd0
-	OBJ	TYPERightsw, APC_Viewables, 0xd0
-	OBJ	ChdFdr_Label_ROOT, APC_Viewables, 0xd0
-	OBJ	ChdFdr_Label_TYPE, APC_Viewables, 0xd0
-	OBJ	InversionLabel, APC_Viewables, 0xd0
-	OBJ	ChdFdr_KenbanBitmap1, APC_Viewables, 0xd0
-	OBJ	ChdFdr_Box2, APC_Viewables, 0xd0
-	OBJ	ChdFdr_FuncEditSw1, APC_Viewables, 0xd0
-	OBJ	ChdFdr_Label_81, APC_Viewables, 0xd0
-	OBJ	ChdFdr_Line1, APC_Viewables, 0xd0
-	OBJ	ChdFdr_Line2, APC_Viewables, 0xd0
-	OBJ	ChdFdr_Line3, APC_Viewables, 0xd0
-	OBJ	ChdFdr_Line4, APC_Viewables, 0xd0
-	OBJ	ChdFdr_Icon1, APC_Viewables, 0xd0
-	OBJ	SdOct, APC_Viewables, 0xd0
-	OBJ	SdOct_MmmEditBox_OCTAVE, APC_Viewables, 0xd0
-	OBJ	SdOct_IndexWideES1, APC_Viewables, 0xd0
-	OBJ	SdOct_ShowHide1, APC_Viewables, 0xd0
-	OBJ	ChordDebugWin, APC_Viewables, 0xd0
-	OBJ	ChordDebugWin_RamEditBox1, APC_Viewables, 0xd0
-	OBJ	ChordDebugWin_RamEditBox2, APC_Viewables, 0xd0
-	OBJ	ChordDebugWin_RamEditBox3, APC_Viewables, 0xd0
-	OBJ	ChordDebugWin_RamEditBox4, APC_Viewables, 0xd0
-	OBJ	ChordDebugWin_IndexEditSw1, APC_Viewables, 0xd0
-	OBJ	ChordDebugWin_IndexEditSw2, APC_Viewables, 0xd0
-	OBJ	ChordDebugWin_IndexEditSw3, APC_Viewables, 0xd0
-	OBJ	ChordDebugWin_IndexEditSw4, APC_Viewables, 0xd0
-	OBJ	ChordDebugWin_Label_OFF, APC_Viewables, 0xd0
-	OBJ	ChordDebugWin_Label_1st, APC_Viewables, 0xd0
-	OBJ	ChordDebugWin_Label_2nd, APC_Viewables, 0xd0
-	OBJ	ChordDebugWin_Label_more_3, APC_Viewables, 0xd0
-	.space	4, 0x00
-
-APC_ResNames:
-	.long	RN_SplitSel	# SplitSel
-	.long	RN_empty_2327	# SplitSel_MmmBox1
-	.long	RN_empty_2328	# SplitSel_ShowHide1
-	.long	RN_empty_2329	# SplitSel_Box1
-	.long	RN_empty_2330	# SplitSel_LanguageText1
-	.long	RN_ApcSel	# ApcSel
-	.long	RN_ApcOnbass	# ApcOnbass
-	.long	RN_ApcMemory	# ApcMemory
-	.long	RN_empty_2331	# ApcSel_ShowHide1
-	.long	RN_ApcLefthold	# ApcLefthold
-	.long	RN_empty_2332	# ApcSel_APCRadioBox_BASIC
-	.long	RN_empty_2333	# ApcSel_APCRadioBox_FINGERED
-	.long	RN_empty_2334	# ApcSel_APCRadioBox_PIANIST
-	.long	RN_empty_2335	# ApcSel_CatchEvent1
-	.long	RN_CountIntro	# CountIntro
-	.long	RN_empty_2336	# ApcSel_FuncEditSw1
-	.long	RN_empty_2337	# ApcSel_TitleMenu_CHORD_FINDER
-	.long	RN_empty_2338	# ApcSel_ShowHide2
-	.long	RN_ChdFdr	# ChdFdr
-	.long	RN_empty_2339	# ChdFdr_CFInvisibleBox1
-	.long	RN_empty_2340	# ChdFdr_ShowHide1
-	.long	RN_empty_2341	# ChdFdr_Box1
-	.long	RN_RootBox	# RootBox
-	.long	RN_TypeBox	# TypeBox
-	.long	RN_InversionBox	# InversionBox
-	.long	RN_TypeListBox	# TypeListBox
-	.long	RN_ApcModeEditSw	# ApcModeEditSw
-	.long	RN_ApcModeBox	# ApcModeBox
-	.long	RN_ApcModeLabel	# ApcModeLabel
-	.long	RN_ROOTsw	# ROOTsw
-	.long	RN_TYPELeftsw	# TYPELeftsw
-	.long	RN_TYPEUpDownsw	# TYPEUpDownsw
-	.long	RN_InversionEditSw	# InversionEditSw
-	.long	RN_TYPERightsw	# TYPERightsw
-	.long	RN_empty_2342	# ChdFdr_Label_ROOT
-	.long	RN_empty_2343	# ChdFdr_Label_TYPE
-	.long	RN_InversionLabel	# InversionLabel
-	.long	RN_empty_2344	# ChdFdr_KenbanBitmap1
-	.long	RN_empty_2345	# ChdFdr_Box2
-	.long	RN_empty_2346	# ChdFdr_FuncEditSw1
-	.long	RN_empty_2347	# ChdFdr_Label_81
-	.long	RN_empty_2348	# ChdFdr_Line1
-	.long	RN_empty_2349	# ChdFdr_Line2
-	.long	RN_empty_2350	# ChdFdr_Line3
-	.long	RN_empty_2351	# ChdFdr_Line4
-	.long	RN_empty_2352	# ChdFdr_Icon1
-	.long	RN_SdOct	# SdOct
-	.long	RN_empty_2353	# SdOct_MmmEditBox_OCTAVE
-	.long	RN_empty_2354	# SdOct_IndexWideES1
-	.long	RN_empty_2355	# SdOct_ShowHide1
-	.long	RN_ChordDebugWin	# ChordDebugWin
-	.long	RN_empty_2356	# ChordDebugWin_RamEditBox1
-	.long	RN_empty_2357	# ChordDebugWin_RamEditBox2
-	.long	RN_empty_2358	# ChordDebugWin_RamEditBox3
-	.long	RN_empty_2359	# ChordDebugWin_RamEditBox4
-	.long	RN_empty_2360	# ChordDebugWin_IndexEditSw1
-	.long	RN_empty_2361	# ChordDebugWin_IndexEditSw2
-	.long	RN_empty_2362	# ChordDebugWin_IndexEditSw3
-	.long	RN_empty_2363	# ChordDebugWin_IndexEditSw4
-	.long	RN_empty_2364	# ChordDebugWin_Label_OFF
-	.long	RN_empty_2365	# ChordDebugWin_Label_1st
-	.long	RN_empty_2366	# ChordDebugWin_Label_2nd
-	.long	RN_empty_2367	# ChordDebugWin_Label_more_3
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x361E74, 0x361E78
-
-func_4856CE55_Table:
-	.long	func_4856CEE0_Voicing
-	.long	func_4856CEE0_Voicing_2
-	.long	func_4856CEE0_Voicing_3
-	.long	func_4856CEE0_Voicing_4
-	.long	func_4856CEE0_Voicing_5
-	.long	func_4856CEE0_Voicing_6
-	.long	func_4856CEE0_Voicing_7
-	.long	func_4856CEE0_Voicing_8
-	.long	func_4856CEE0_Voicing_9
-	.long	func_4856CEE0_Voicing_10
-	.long	func_4856CEE0_Voicing_11
-	.long	func_4856CEE0_Voicing_12
-	.long	func_4856CEE0_Voicing_13
-	.long	func_4856CEE0_Voicing_14
-	.long	func_4856CEE0_Voicing_15
-	.long	func_4856CEE0_Voicing_16
-	.long	func_4856CEE0_Voicing_17
-	.long	func_4856CEE0_Voicing_18
-	.long	func_4856CEE0_Voicing_19
-	.long	func_4856CEE0_Voicing_20
-	.long	func_4856CEE0_Voicing_21
-	.long	func_4856CEE0_Voicing_22
-func_4856CE55_Table_2:
-	.long	func_4856CEE0_Voicing
-	.long	func_4856CEE0_Voicing_2
-	.long	func_4856CEE0_Voicing_3
-	.long	func_4856CEE0_Voicing_4
-	.long	func_4856CEE0_Voicing_5
-	.long	func_4856CEE0_Voicing_6
-	.long	func_4856CEE0_Voicing_7
-	.long	func_4856CEE0_Voicing_8
-	.long	func_4856CEE0_Voicing_9
-	.long	func_4856CEE0_Voicing_10
-	.long	func_4856CEE0_Voicing_23
-	.long	func_4856CEE0_Voicing_12
-	.long	func_4856CEE0_Voicing_24
-	.long	func_4856CEE0_Voicing_14
-	.long	func_4856CEE0_Voicing_25
-	.long	func_4856CEE0_Voicing_16
-	.long	func_4856CEE0_Voicing_17
-	.long	func_4856CEE0_Voicing_26
-	.long	func_4856CEE0_Voicing_19
-	.long	func_4856CEE0_Voicing_27
-	.long	func_4856CEE0_Voicing_21
-	.long	func_4856CEE0_Voicing_22
-	.long	func_4856CEE0_Voicing_28
-	.long	func_4856CEE0_Voicing_29
-	.long	func_4856CEE0_Voicing_30
-	.long	func_4856CEE0_Voicing_31
-	.long	func_4856CEE0_Voicing_32
-	.long	func_4856CEE0_Voicing_33
-	.long	func_4856CEE0_Voicing_34
-	.long	func_4856CEE0_Voicing_35
-	.long	func_4856CEE0_Voicing_36
-	.long	func_4856CEE0_Voicing_37
-	.long	func_4856CEE0_Voicing_38
-	.long	func_4856CEE0_Voicing_39
-	.long	func_4856CEE0_Voicing_40
-	.long	func_4856CEE0_Voicing_41
-	.long	func_4856CEE0_Voicing_42
-	.long	func_4856CEE0_Voicing_43
-	.long	func_4856CEE0_Voicing_44
-func_4856CE55_Table_3:
-	.long	func_4856CEE0_Inversions
-	.long	func_4856CEE0_Inversions_2
-	.long	func_4856CEE0_Inversions_3
-	.long	func_4856CEE0_Inversions_4
-	.long	func_4856CEE0_Inversions_5
-	.long	func_4856CEE0_Inversions_6
-	.long	func_4856CEE0_Inversions_7
-	.long	func_4856CEE0_Inversions_8
-	.long	func_4856CEE0_Inversions_9
-	.long	func_4856CEE0_Inversions_10
-	.long	func_4856CEE0_Inversions_11
-	.long	func_4856CEE0_Inversions_12
-	.long	func_4856CEE0_Inversions_13
-	.long	func_4856CEE0_Inversions_14
-	.long	func_4856CEE0_Inversions_15
-	.long	func_4856CEE0_Inversions_16
-	.long	func_4856CEE0_Inversions_17
-	.long	func_4856CEE0_Inversions_18
-	.long	func_4856CEE0_Inversions_19
-	.long	func_4856CEE0_Inversions_20
-	.long	func_4856CEE0_Inversions_21
-	.long	func_4856CEE0_Inversions_22
-func_4856CE55_Table_4:
-	.long	func_4856CEE0_Inversions
-	.long	func_4856CEE0_Inversions_2
-	.long	func_4856CEE0_Inversions_3
-	.long	func_4856CEE0_Inversions_4
-	.long	func_4856CEE0_Inversions_5
-	.long	func_4856CEE0_Inversions_6
-	.long	func_4856CEE0_Inversions_7
-	.long	func_4856CEE0_Inversions_8
-	.long	func_4856CEE0_Inversions_23
-	.long	func_4856CEE0_Inversions_10
-	.long	func_4856CEE0_Inversions_24
-	.long	func_4856CEE0_Inversions_12
-	.long	func_4856CEE0_Inversions_25
-	.long	func_4856CEE0_Inversions_14
-	.long	func_4856CEE0_Inversions_26
-	.long	func_4856CEE0_Inversions_16
-	.long	func_4856CEE0_Inversions_17
-	.long	func_4856CEE0_Inversions_27
-	.long	func_4856CEE0_Inversions_19
-	.long	func_4856CEE0_Inversions_28
-	.long	func_4856CEE0_Inversions_29
-	.long	func_4856CEE0_Inversions_30
-	.long	func_4856CEE0_Inversions_31
-	.long	func_4856CEE0_Inversions_32
-	.long	func_4856CEE0_Inversions_33
-	.long	func_4856CEE0_Inversions_34
-	.long	func_4856CEE0_Inversions_35
-	.long	func_4856CEE0_Inversions_36
-	.long	func_4856CEE0_Inversions_37
-	.long	func_4856CEE0_Inversions_38
-	.long	func_4856CEE0_Inversions_39
-	.long	func_4856CEE0_Inversions_40
-	.long	func_4856CEE0_Inversions_41
-	.long	func_4856CEE0_Inversions_42
-	.long	func_4856CEE0_Inversions_43
-	.long	func_4856CEE0_Inversions_44
-	.long	func_4856CEE0_Inversions_45
-	.long	func_4856CEE0_Inversions_46
-	.long	func_4856CEE0_Inversions_47
-	.long	loc_4856EEB7
-	.long	loc_4856EEBA
-	.long	loc_4856EEBD
-	.long	func_4856EEC0

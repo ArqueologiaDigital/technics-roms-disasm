@@ -6,11 +6,11 @@
 func_4C001885_Var:	# u32, a constant; read / written by func_4C001885 0x4C001885: `mov (func_4C001885_Var), a0`; func_4C00191A_entry_L3d 0x4C00195C: `mov (func_4C001885_Var), a1` ...
 	.long	0x4c1760a8
 
-localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x4C00246C `mov (0x10, a1), a0`; localeconv 0x4C00246C `mov (0x14, a1), a0`; localeconv 0x4C00246C `mov (0x18, a1), a0` (+12)
-	REC_localeconv_Records	text=Str_C_19, p4=data_4C17627E, p8=data_4C17627F, p12=data_4C176280, p16=data_4C176281, p20=data_4C176282, p24=data_4C176283, p28=data_4C176284, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
-localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x4C00246C `mov (0xc, a1), a0`; localeconv 0x4C00246C `mov (4, a1), a0`; localeconv 0x4C00246C `mov (8, a1), a0`
-	REC_localeconv_Records_2	text=Str_C_18, text_=Str_empty_939, p8=data_4C17628C, p12=data_4C17628D
-	REC_localeconv_Records_2	
+localeconv_Records:	# 1 x LconvMonetary (40 bytes each); read by localeconv 0x4C00246C `mov (0x10, a1), a0`; localeconv 0x4C00246C `mov (0x14, a1), a0`; localeconv 0x4C00246C `mov (0x18, a1), a0` (+12)
+	LconvMonetary	locale=Str_C_19, int_curr_symbol=data_4C17627E, currency_symbol=data_4C17627F, mon_decimal_point=data_4C176280, mon_thousands_sep=data_4C176281, mon_grouping=data_4C176282, positive_sign=data_4C176283, negative_sign=data_4C176284, int_frac_digits=127, frac_digits=127, p_cs_precedes=127, p_sep_by_space=127, n_cs_precedes=127, n_sep_by_space=127, p_sign_posn=127, n_sign_posn=127
+localeconv_Records_2:	# 2 x LconvNumeric (16 bytes each); read by localeconv 0x4C00246C `mov (0xc, a1), a0`; localeconv 0x4C00246C `mov (4, a1), a0`; localeconv 0x4C00246C `mov (8, a1), a0`
+	LconvNumeric	locale=Str_C_18, decimal_point=Str_empty_939, thousands_sep=data_4C17628C, grouping=data_4C17628D
+	LconvNumeric	
 
 localeconv_Table:	# 4 x u32, 0..2576980378; read by localeconv 0x4C00246C: `mov (localeconv_Table), d0`
 	tab_u32	0, 0, 2576980378, 1069128089
@@ -22591,2333 +22591,4104 @@ VoiceDirPartRefFind_Table:
 	.long	VoiceDirPartRefFind_Table_p0_198
 	.long	VoiceDirPartRefFind_Table_p0_203
 
-func_4C09D6E7_entry_L4b_Table:	# 2048 x REC_func_4C09D6E7_entry_L4b_Table (2 bytes each); read by func_4C09D6E7_entry_L4b 0x4C09D737 `movbu (d0, a0), d0`; func_4C09D6E7_entry_L62 0x4C09D74E `movbu (1, a0), d0`; func_4C09D6E7_entry_L62 0x4C09D74E `movbu (d0, a0), d0`
-	REC_func_4C09D6E7_entry_L4b_Table		# [0]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [8]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [16]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=6, index=144
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=3, index=128	# [24]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [32]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=13, index=96
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=20, index=96
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=2, index=128	# [40]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [48]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [56]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [64]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=23, index=80
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=1, index=80
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=5, index=80	# [72]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=23	# [80]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=10
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=40, index=80
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=41, index=80	# [88]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [96]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=25, index=96
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=27, index=96
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [104]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [112]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [120]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [128]
-	REC_func_4C09D6E7_entry_L4b_Table	f0=3
-	REC_func_4C09D6E7_entry_L4b_Table	f0=2
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=5, index=144
-	REC_func_4C09D6E7_entry_L4b_Table	f0=41, index=144
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=4	# [136]
-	REC_func_4C09D6E7_entry_L4b_Table	f0=26
-	REC_func_4C09D6E7_entry_L4b_Table	f0=12
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=9, index=144
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=1	# [144]
-	REC_func_4C09D6E7_entry_L4b_Table	f0=3
-	REC_func_4C09D6E7_entry_L4b_Table	f0=2
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=11, index=1
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=26, index=128	# [152]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=13	# [160]
-	REC_func_4C09D6E7_entry_L4b_Table	f0=25
-	REC_func_4C09D6E7_entry_L4b_Table	f0=14
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=8, index=96
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=12, index=128	# [168]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [176]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [184]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [192]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=3, index=80
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=9, index=80	# [200]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [208]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [216]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [224]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [232]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [240]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [248]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [256]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=6
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=20, index=144
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=1, index=128	# [264]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=40, index=128
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=27, index=144
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=5	# [272]
-	REC_func_4C09D6E7_entry_L4b_Table	f0=9
-	REC_func_4C09D6E7_entry_L4b_Table	f0=6
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=19, index=1
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=3, index=128	# [280]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=20	# [288]
-	REC_func_4C09D6E7_entry_L4b_Table	f0=27
-	REC_func_4C09D6E7_entry_L4b_Table	f0=8
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=7
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=2, index=128	# [296]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [304]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [312]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [320]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=10, index=80
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=2, index=80
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=6, index=80	# [328]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [336]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [344]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [352]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [360]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [368]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [376]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [384]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=26, index=64	# [392]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [400]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [408]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [416]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [424]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [432]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [440]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [448]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [456]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [464]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [472]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [480]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [488]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [496]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [504]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [512]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=13, index=128	# [520]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=23, index=112	# [528]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=10, index=32
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=25, index=128	# [536]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=2, index=32	# [544]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=12, index=32
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=2, index=32
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=14, index=128	# [552]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [560]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [568]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=6, index=32	# [576]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=40, index=160
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=6, index=32
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=8, index=32	# [584]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=10, index=112	# [592]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [600]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [608]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [616]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [624]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [632]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [640]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=12, index=64	# [648]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=40	# [656]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [664]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [672]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [680]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [688]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [696]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [704]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [712]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [720]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [728]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [736]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [744]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [752]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [760]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [768]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [776]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=41	# [784]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [792]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [800]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [808]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [816]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [824]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [832]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [840]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [848]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [856]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [864]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [872]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [880]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [888]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [896]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [904]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [912]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [920]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [928]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [936]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [944]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [952]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [960]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [968]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [976]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [984]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [992]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1000]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1008]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1016]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1024]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1032]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1040]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1048]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1056]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1064]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1072]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1080]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=3, index=16	# [1088]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=41, index=160
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=26, index=16
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=3, index=16	# [1096]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=25, index=16	# [1104]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1112]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1120]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1128]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1136]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1144]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1152]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=9, index=16	# [1160]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	f0=27, index=16	# [1168]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1176]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1184]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1192]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1200]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1208]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1216]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1224]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1232]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1240]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1248]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1256]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1264]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1272]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1280]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1288]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1296]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1304]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1312]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1320]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1328]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1336]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1344]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1352]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1360]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1368]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1376]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1384]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1392]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1400]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1408]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1416]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1424]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1432]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1440]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1448]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1456]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1464]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1472]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1480]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1488]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1496]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1504]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1512]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1520]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1528]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1536]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1544]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1552]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1560]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1568]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1576]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1584]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1592]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1600]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1608]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1616]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1624]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1632]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1640]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1648]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1656]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1664]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1672]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1680]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1688]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1696]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1704]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1712]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1720]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1728]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1736]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1744]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1752]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1760]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1768]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1776]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1784]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1792]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1800]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1808]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1816]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1824]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1832]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1840]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1848]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1856]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1864]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1872]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1880]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1888]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1896]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1904]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1912]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1920]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1928]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1936]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1944]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1952]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1960]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1968]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1976]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1984]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [1992]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [2000]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [2008]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [2016]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [2024]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [2032]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table		# [2040]
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-	REC_func_4C09D6E7_entry_L4b_Table	
-func_4C09D886_entry_L6e_Table:	# 256 x REC_func_4C09D886_entry_L6e_Table (2 bytes each); read by func_4C09D886_entry_L2d 0x4C09D8B8 `movbu (1, a0), d0`; func_4C09D886_entry_L6e 0x4C09D8F9 `movbu (d0, a3), d0`; func_4C09D886_entry_L8b 0x4C09D916 `movbu (1, a0), d0` (+7)
-	REC_func_4C09D886_entry_L6e_Table		# [0]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [8]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [16]
-	REC_func_4C09D886_entry_L6e_Table	f0=21, index=145
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=6, index=144
-	REC_func_4C09D886_entry_L6e_Table	f0=35, index=1
-	REC_func_4C09D886_entry_L6e_Table	f0=28, index=1
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=3, index=128	# [24]
-	REC_func_4C09D886_entry_L6e_Table	f0=36, index=1
-	REC_func_4C09D886_entry_L6e_Table	f0=32, index=1
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [32]
-	REC_func_4C09D886_entry_L6e_Table	f0=28, index=33
-	REC_func_4C09D886_entry_L6e_Table	f0=15, index=129
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=2, index=33
-	REC_func_4C09D886_entry_L6e_Table	f0=22, index=144
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=2, index=128	# [40]
-	REC_func_4C09D886_entry_L6e_Table	f0=24, index=128
-	REC_func_4C09D886_entry_L6e_Table	f0=39
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=16, index=128
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [48]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=37
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [56]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [64]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=18, index=129
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=1, index=80
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=5, index=80	# [72]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=18, index=128
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=24, index=80
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=23	# [80]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=10
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=40, index=80
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=41, index=80	# [88]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=35, index=128
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=28, index=128	# [96]
-	REC_func_4C09D886_entry_L6e_Table	f0=31, index=128
-	REC_func_4C09D886_entry_L6e_Table	f0=25, index=96
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=27, index=96
-	REC_func_4C09D886_entry_L6e_Table	f0=31, index=32
-	REC_func_4C09D886_entry_L6e_Table	f0=34, index=32
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=28, index=128	# [104]
-	REC_func_4C09D886_entry_L6e_Table	f0=31, index=128
-	REC_func_4C09D886_entry_L6e_Table	f0=28, index=128
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=30, index=128
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [112]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [120]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [128]
-	REC_func_4C09D886_entry_L6e_Table	f0=3
-	REC_func_4C09D886_entry_L6e_Table	f0=2
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=5, index=144
-	REC_func_4C09D886_entry_L6e_Table	f0=35
-	REC_func_4C09D886_entry_L6e_Table	f0=28, index=1
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=4	# [136]
-	REC_func_4C09D886_entry_L6e_Table	f0=26
-	REC_func_4C09D886_entry_L6e_Table	f0=12
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=9, index=144
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=1	# [144]
-	REC_func_4C09D886_entry_L6e_Table	f0=3
-	REC_func_4C09D886_entry_L6e_Table	f0=2
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=11, index=1
-	REC_func_4C09D886_entry_L6e_Table	f0=35, index=1
-	REC_func_4C09D886_entry_L6e_Table	f0=28, index=1
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=26, index=128	# [152]
-	REC_func_4C09D886_entry_L6e_Table	f0=36, index=1
-	REC_func_4C09D886_entry_L6e_Table	f0=32, index=1
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=13	# [160]
-	REC_func_4C09D886_entry_L6e_Table	f0=28, index=33
-	REC_func_4C09D886_entry_L6e_Table	f0=14
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=8, index=96
-	REC_func_4C09D886_entry_L6e_Table	f0=22, index=144
-	REC_func_4C09D886_entry_L6e_Table	f0=32, index=32
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=12, index=128	# [168]
-	REC_func_4C09D886_entry_L6e_Table	f0=34, index=128
-	REC_func_4C09D886_entry_L6e_Table	f0=39
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=33, index=128
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [176]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=37
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [184]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [192]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=3, index=80
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=9, index=80	# [200]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [208]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	f0=17, index=80
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [216]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [224]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [232]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [240]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table		# [248]
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-	REC_func_4C09D886_entry_L6e_Table	
-# census: opaque -- unknown-dump: 358 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x370414, 0x37057A
-	.space	164, 0x00
-# census: opaque -- unknown-dump: 416 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x37061E, 0x3707BE
-	.space	90, 0x00
-# census: opaque -- unknown-dump: 198 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x370818, 0x3708DE
-	.space	322, 0x00
-# census: opaque -- unknown-dump: 158 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x370A20, 0x370ABE
-	.space	90, 0x00
-# census: opaque -- unknown-dump: 166 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x370B18, 0x370BBE
-	.space	90, 0x00
-# census: opaque -- unknown-dump: 198 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x370C18, 0x370CDE
-	.space	86, 0x00
-# census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x370D34, 0x370D3A
-	.space	1242, 0x00
+func_4C09D6E7_entry_L4b_Table:	# 2048 x ChordRecogEntry (2 bytes each); read by func_4C09D6E7_entry_L4b 0x4C09D737 `movbu (d0, a0), d0`; func_4C09D6E7_entry_L62 0x4C09D74E `movbu (1, a0), d0`; func_4C09D6E7_entry_L62 0x4C09D74E `movbu (d0, a0), d0`
+	ChordRecogEntry		# [0]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [8]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [16]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=6, root_flags=144
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=3, root_flags=128	# [24]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [32]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=13, root_flags=96
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=20, root_flags=96
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=2, root_flags=128	# [40]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [48]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [56]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [64]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=23, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=1, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=5, root_flags=80	# [72]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=23	# [80]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=10
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=40, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=41, root_flags=80	# [88]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [96]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=25, root_flags=96
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=27, root_flags=96
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [104]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [112]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [120]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [128]
+	ChordRecogEntry	chord_type=3
+	ChordRecogEntry	chord_type=2
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=5, root_flags=144
+	ChordRecogEntry	chord_type=41, root_flags=144
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=4	# [136]
+	ChordRecogEntry	chord_type=26
+	ChordRecogEntry	chord_type=12
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=9, root_flags=144
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=1	# [144]
+	ChordRecogEntry	chord_type=3
+	ChordRecogEntry	chord_type=2
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=11, root_flags=1
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=26, root_flags=128	# [152]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=13	# [160]
+	ChordRecogEntry	chord_type=25
+	ChordRecogEntry	chord_type=14
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=8, root_flags=96
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=12, root_flags=128	# [168]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [176]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [184]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [192]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=3, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=9, root_flags=80	# [200]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [208]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [216]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [224]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [232]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [240]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [248]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [256]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=6
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=20, root_flags=144
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=1, root_flags=128	# [264]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=40, root_flags=128
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=27, root_flags=144
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=5	# [272]
+	ChordRecogEntry	chord_type=9
+	ChordRecogEntry	chord_type=6
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=19, root_flags=1
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=3, root_flags=128	# [280]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=20	# [288]
+	ChordRecogEntry	chord_type=27
+	ChordRecogEntry	chord_type=8
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=7
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=2, root_flags=128	# [296]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [304]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [312]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [320]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=10, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=2, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=6, root_flags=80	# [328]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [336]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [344]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [352]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [360]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [368]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [376]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [384]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=26, root_flags=64	# [392]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [400]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [408]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [416]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [424]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [432]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [440]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [448]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [456]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [464]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [472]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [480]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [488]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [496]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [504]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [512]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=13, root_flags=128	# [520]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=23, root_flags=112	# [528]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=10, root_flags=32
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=25, root_flags=128	# [536]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=2, root_flags=32	# [544]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=12, root_flags=32
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=2, root_flags=32
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=14, root_flags=128	# [552]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [560]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [568]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=6, root_flags=32	# [576]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=40, root_flags=160
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=6, root_flags=32
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=8, root_flags=32	# [584]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=10, root_flags=112	# [592]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [600]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [608]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [616]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [624]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [632]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [640]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=12, root_flags=64	# [648]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=40	# [656]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [664]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [672]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [680]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [688]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [696]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [704]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [712]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [720]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [728]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [736]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [744]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [752]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [760]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [768]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [776]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=41	# [784]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [792]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [800]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [808]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [816]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [824]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [832]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [840]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [848]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [856]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [864]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [872]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [880]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [888]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [896]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [904]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [912]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [920]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [928]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [936]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [944]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [952]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [960]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [968]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [976]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [984]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [992]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1000]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1008]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1016]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1024]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1032]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1040]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1048]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1056]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1064]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1072]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1080]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=3, root_flags=16	# [1088]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=41, root_flags=160
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=26, root_flags=16
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=3, root_flags=16	# [1096]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=25, root_flags=16	# [1104]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1112]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1120]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1128]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1136]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1144]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1152]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=9, root_flags=16	# [1160]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=27, root_flags=16	# [1168]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1176]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1184]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1192]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1200]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1208]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1216]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1224]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1232]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1240]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1248]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1256]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1264]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1272]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1280]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1288]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1296]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1304]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1312]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1320]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1328]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1336]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1344]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1352]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1360]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1368]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1376]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1384]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1392]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1400]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1408]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1416]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1424]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1432]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1440]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1448]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1456]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1464]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1472]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1480]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1488]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1496]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1504]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1512]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1520]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1528]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1536]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1544]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1552]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1560]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1568]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1576]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1584]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1592]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1600]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1608]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1616]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1624]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1632]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1640]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1648]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1656]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1664]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1672]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1680]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1688]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1696]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1704]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1712]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1720]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1728]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1736]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1744]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1752]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1760]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1768]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1776]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1784]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1792]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1800]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1808]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1816]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1824]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1832]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1840]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1848]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1856]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1864]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1872]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1880]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1888]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1896]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1904]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1912]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1920]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1928]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1936]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1944]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1952]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1960]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1968]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1976]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1984]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1992]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2000]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2008]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2016]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2024]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2032]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2040]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+func_4C09D886_entry_L6e_Table:	# 2048 x ChordRecogEntry2 (2 bytes each); read by func_4C09D886_entry_L2d 0x4C09D8B8 `movbu (1, a0), d0`; func_4C09D886_entry_L6e 0x4C09D8F9 `movbu (d0, a3), d0`; func_4C09D886_entry_L8b 0x4C09D916 `movbu (1, a0), d0` (+7)
+	ChordRecogEntry2		# [0]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [8]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [16]
+	ChordRecogEntry2	chord_type=21, root_flags=145
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=144
+	ChordRecogEntry2	chord_type=35, root_flags=1
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=3, root_flags=128	# [24]
+	ChordRecogEntry2	chord_type=36, root_flags=1
+	ChordRecogEntry2	chord_type=32, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [32]
+	ChordRecogEntry2	chord_type=28, root_flags=33
+	ChordRecogEntry2	chord_type=15, root_flags=129
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=33
+	ChordRecogEntry2	chord_type=22, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=128	# [40]
+	ChordRecogEntry2	chord_type=24, root_flags=128
+	ChordRecogEntry2	chord_type=39
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [48]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [56]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [64]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=129
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=1, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=5, root_flags=80	# [72]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=23	# [80]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=10
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=40, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=41, root_flags=80	# [88]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=128	# [96]
+	ChordRecogEntry2	chord_type=31, root_flags=128
+	ChordRecogEntry2	chord_type=25, root_flags=96
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=27, root_flags=96
+	ChordRecogEntry2	chord_type=31, root_flags=32
+	ChordRecogEntry2	chord_type=34, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=128	# [104]
+	ChordRecogEntry2	chord_type=31, root_flags=128
+	ChordRecogEntry2	chord_type=28, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [112]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [120]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [128]
+	ChordRecogEntry2	chord_type=3
+	ChordRecogEntry2	chord_type=2
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=5, root_flags=144
+	ChordRecogEntry2	chord_type=35
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=4	# [136]
+	ChordRecogEntry2	chord_type=26
+	ChordRecogEntry2	chord_type=12
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=9, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=1	# [144]
+	ChordRecogEntry2	chord_type=3
+	ChordRecogEntry2	chord_type=2
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=11, root_flags=1
+	ChordRecogEntry2	chord_type=35, root_flags=1
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=26, root_flags=128	# [152]
+	ChordRecogEntry2	chord_type=36, root_flags=1
+	ChordRecogEntry2	chord_type=32, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=13	# [160]
+	ChordRecogEntry2	chord_type=28, root_flags=33
+	ChordRecogEntry2	chord_type=14
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=8, root_flags=96
+	ChordRecogEntry2	chord_type=22, root_flags=144
+	ChordRecogEntry2	chord_type=32, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=12, root_flags=128	# [168]
+	ChordRecogEntry2	chord_type=34, root_flags=128
+	ChordRecogEntry2	chord_type=39
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [176]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [184]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [192]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=3, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=9, root_flags=80	# [200]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [208]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=17, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [216]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [224]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [232]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [240]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [248]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [256]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=19, root_flags=1
+	ChordRecogEntry2	chord_type=16, root_flags=176
+	ChordRecogEntry2	chord_type=31, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=1, root_flags=128	# [264]
+	ChordRecogEntry2	chord_type=24, root_flags=128
+	ChordRecogEntry2	chord_type=34, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=27, root_flags=144
+	ChordRecogEntry2	chord_type=30, root_flags=176
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=5	# [272]
+	ChordRecogEntry2	chord_type=9
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=19, root_flags=1
+	ChordRecogEntry2	chord_type=33, root_flags=176
+	ChordRecogEntry2	chord_type=31, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=3, root_flags=128	# [280]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=20	# [288]
+	ChordRecogEntry2	chord_type=27
+	ChordRecogEntry2	chord_type=8
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=7
+	ChordRecogEntry2	chord_type=16, root_flags=176
+	ChordRecogEntry2	chord_type=33, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=128	# [296]
+	ChordRecogEntry2	chord_type=24, root_flags=128
+	ChordRecogEntry2	chord_type=15, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=128
+	ChordRecogEntry2	chord_type=30, root_flags=176
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [304]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=176
+	ChordRecogEntry2	chord_type=33, root_flags=176
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [312]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [320]
+	ChordRecogEntry2	chord_type=37, root_flags=80
+	ChordRecogEntry2	chord_type=10, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=80
+	ChordRecogEntry2	chord_type=37, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=80	# [328]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=48	# [336]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=38
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=15, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=80	# [344]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=48	# [352]
+	ChordRecogEntry2	chord_type=31, root_flags=128
+	ChordRecogEntry2	chord_type=22, root_flags=48
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=128	# [360]
+	ChordRecogEntry2	chord_type=31, root_flags=128
+	ChordRecogEntry2	chord_type=28, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [368]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [376]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [384]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=26, root_flags=64	# [392]
+	ChordRecogEntry2	chord_type=36, root_flags=64
+	ChordRecogEntry2	chord_type=34
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24	# [400]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=36, root_flags=128	# [408]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [416]
+	ChordRecogEntry2	chord_type=34, root_flags=128
+	ChordRecogEntry2	chord_type=24, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=128	# [424]
+	ChordRecogEntry2	chord_type=36, root_flags=64
+	ChordRecogEntry2	chord_type=32, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [432]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [440]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [448]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [456]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [464]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [472]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [480]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [488]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [496]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [504]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [512]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=1
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=13, root_flags=128	# [520]
+	ChordRecogEntry2	chord_type=36, root_flags=1
+	ChordRecogEntry2	chord_type=32, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=23, root_flags=112	# [528]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=10, root_flags=32
+	ChordRecogEntry2	chord_type=35, root_flags=1
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=25, root_flags=128	# [536]
+	ChordRecogEntry2	chord_type=36, root_flags=1
+	ChordRecogEntry2	chord_type=32, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=32	# [544]
+	ChordRecogEntry2	chord_type=28, root_flags=32
+	ChordRecogEntry2	chord_type=12, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=32
+	ChordRecogEntry2	chord_type=28, root_flags=32
+	ChordRecogEntry2	chord_type=32, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=14, root_flags=128	# [552]
+	ChordRecogEntry2	chord_type=32, root_flags=64
+	ChordRecogEntry2	chord_type=29, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [560]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=15, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [568]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=32	# [576]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=40, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=17, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=8, root_flags=32	# [584]
+	ChordRecogEntry2	chord_type=33, root_flags=64
+	ChordRecogEntry2	chord_type=15, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=10, root_flags=112	# [592]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=80	# [600]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=32	# [608]
+	ChordRecogEntry2	chord_type=31, root_flags=32
+	ChordRecogEntry2	chord_type=34, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=32
+	ChordRecogEntry2	chord_type=31, root_flags=32
+	ChordRecogEntry2	chord_type=36, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=160	# [616]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [624]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [632]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [640]
+	ChordRecogEntry2	chord_type=17, root_flags=1
+	ChordRecogEntry2	chord_type=15
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=1
+	ChordRecogEntry2	chord_type=35
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=29, root_flags=1	# [648]
+	ChordRecogEntry2	chord_type=36
+	ChordRecogEntry2	chord_type=29
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=40	# [656]
+	ChordRecogEntry2	chord_type=17, root_flags=1
+	ChordRecogEntry2	chord_type=15, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=1
+	ChordRecogEntry2	chord_type=35
+	ChordRecogEntry2	chord_type=28
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34, root_flags=64	# [664]
+	ChordRecogEntry2	chord_type=36
+	ChordRecogEntry2	chord_type=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=15, root_flags=32	# [672]
+	ChordRecogEntry2	chord_type=28, root_flags=32
+	ChordRecogEntry2	chord_type=29, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=15, root_flags=32
+	ChordRecogEntry2	chord_type=28, root_flags=32
+	ChordRecogEntry2	chord_type=32, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=29, root_flags=64	# [680]
+	ChordRecogEntry2	chord_type=32, root_flags=64
+	ChordRecogEntry2	chord_type=29, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [688]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=15, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [696]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=32	# [704]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=64	# [712]
+	ChordRecogEntry2	chord_type=33, root_flags=64
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [720]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [728]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [736]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [744]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [752]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [760]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [768]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [776]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=41	# [784]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [792]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=32	# [800]
+	ChordRecogEntry2	chord_type=30, root_flags=32
+	ChordRecogEntry2	chord_type=33, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=32
+	ChordRecogEntry2	chord_type=30, root_flags=32
+	ChordRecogEntry2	chord_type=33, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37, root_flags=128	# [808]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [816]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [824]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [832]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [840]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=48	# [848]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [856]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [864]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [872]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [880]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [888]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [896]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [904]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [912]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [920]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [928]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [936]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [944]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [952]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [960]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [968]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [976]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [984]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [992]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1000]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1008]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1016]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1024]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1032]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=48	# [1040]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1048]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1056]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1064]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=144	# [1072]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1080]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=3, root_flags=16	# [1088]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=41, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=26, root_flags=16
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=3, root_flags=16	# [1096]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=36, root_flags=16
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=25, root_flags=16	# [1104]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1112]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1120]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1128]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1136]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1144]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1152]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=9, root_flags=16	# [1160]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16	# [1168]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1176]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37, root_flags=96	# [1184]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1192]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=144	# [1200]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1208]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1216]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=36, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1224]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34, root_flags=144	# [1232]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=36, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1240]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1248]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1256]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1264]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1272]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1280]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1288]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=48	# [1296]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1304]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1312]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1320]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=48	# [1328]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1336]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=17, root_flags=16	# [1344]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=17, root_flags=16	# [1352]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=16
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=36, root_flags=16
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=48	# [1360]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1368]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1376]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1384]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1392]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1400]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1408]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1416]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=48	# [1424]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=48
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1432]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1440]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1448]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1456]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1464]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1472]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1480]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1488]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1496]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1504]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1512]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1520]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1528]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1536]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1544]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1552]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1560]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1568]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1576]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1584]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1592]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1600]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1608]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1616]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1624]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1632]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1640]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1648]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1656]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1664]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1672]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1680]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1688]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1696]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1704]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1712]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1720]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1728]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1736]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1744]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1752]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1760]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1768]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1776]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1784]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1792]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1800]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1808]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1816]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1824]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1832]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1840]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1848]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1856]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1864]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1872]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1880]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1888]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1896]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1904]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1912]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1920]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1928]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1936]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1944]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1952]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1960]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1968]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1976]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1984]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1992]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2000]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2008]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2016]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2024]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2032]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2040]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
 
 # 41 ApFunction procedures; a function id is (0x122 << 16) | its index (the names are the parallel table at slot 0x322)
 User02_ApFunctions:
@@ -37750,117 +39521,117 @@ func_4C0FE816_entry_L36_Table_2:
 	.long	loc_4C100609
 	.long	loc_4C10060C
 
-EQFcEditCheck_L4f_Records:	# 27 x REC_EQFcEditCheck_L4f_Records (6 bytes each); read by EQFcEditCheck_L4f 0x4C105211 `call strcpy_entry, [a2], 4`
-	REC_EQFcEditCheck_L4f_Records	s0="   40\x00"	# [0]
-	REC_EQFcEditCheck_L4f_Records	s0="   50\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="   63\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="   80\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  100\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  125\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  160\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  200\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  250\x00"	# [8]
-	REC_EQFcEditCheck_L4f_Records	s0="  315\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  400\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  500\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  630\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  800\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="   1k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="1.25k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0=" 1.6k\x00"	# [16]
-	REC_EQFcEditCheck_L4f_Records	s0="   2k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0=" 2.5k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="3.15k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="   4k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="   5k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0=" 6.3k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="   8k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  10k\x00"	# [24]
-	REC_EQFcEditCheck_L4f_Records	s0="12.5k\x00"
-	REC_EQFcEditCheck_L4f_Records	s0="  16k\x00"
-EQQEditCheck_L4f_Records:	# 32 x REC_EQQEditCheck_L4f_Records (6 bytes each); read by EQQEditCheck_L4f 0x4C105398 `call strcpy_entry, [a2], 4`
-	REC_EQQEditCheck_L4f_Records	s0="  0.1\x00"	# [0]
-	REC_EQQEditCheck_L4f_Records	s0="  0.2\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  0.3\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  0.4\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  0.5\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  0.6\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  0.7\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  0.8\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  0.9\x00"	# [8]
-	REC_EQQEditCheck_L4f_Records	s0="  1.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  1.5\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  2.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  2.5\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  3.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  3.5\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  4.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  5.0\x00"	# [16]
-	REC_EQQEditCheck_L4f_Records	s0="  6.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  7.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  8.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0="  9.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 10.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 11.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 12.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 13.0\x00"	# [24]
-	REC_EQQEditCheck_L4f_Records	s0=" 14.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 15.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 16.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 17.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 18.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 19.0\x00"
-	REC_EQQEditCheck_L4f_Records	s0=" 20.0\x00"
-EQGainEditCheck_L4f_Records:	# 49 x REC_EQGainEditCheck_L4f_Records (6 bytes each); read by EQGainEditCheck_L4f 0x4C10508A `call strcpy_entry, [a2], 4`
-	REC_EQGainEditCheck_L4f_Records	s0="-12.0\x00"	# [0]
-	REC_EQGainEditCheck_L4f_Records	s0="-11.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="-11.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="-10.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="-10.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 9.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 9.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 8.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 8.0\x00"	# [8]
-	REC_EQGainEditCheck_L4f_Records	s0="- 7.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 7.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 6.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 6.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 5.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 5.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 4.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 4.0\x00"	# [16]
-	REC_EQGainEditCheck_L4f_Records	s0="- 3.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 3.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 2.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 2.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 1.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 1.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="- 0.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="  0.0\x00"	# [24]
-	REC_EQGainEditCheck_L4f_Records	s0="+ 0.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 1.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 1.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 2.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 2.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 3.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 3.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 4.0\x00"	# [32]
-	REC_EQGainEditCheck_L4f_Records	s0="+ 4.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 5.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 5.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 6.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 6.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 7.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 7.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 8.0\x00"	# [40]
-	REC_EQGainEditCheck_L4f_Records	s0="+ 8.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 9.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+ 9.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+10.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+10.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+11.0\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+11.5\x00"
-	REC_EQGainEditCheck_L4f_Records	s0="+12.0\x00"	# [48]
+EQFcEditCheck_L4f_Records:	# 27 x EqEditLabel (6 bytes each); read by EQFcEditCheck_L4f 0x4C105211 `call strcpy_entry, [a2], 4`
+	EqEditLabel	label="   40\x00"	# [0]
+	EqEditLabel	label="   50\x00"
+	EqEditLabel	label="   63\x00"
+	EqEditLabel	label="   80\x00"
+	EqEditLabel	label="  100\x00"
+	EqEditLabel	label="  125\x00"
+	EqEditLabel	label="  160\x00"
+	EqEditLabel	label="  200\x00"
+	EqEditLabel	label="  250\x00"	# [8]
+	EqEditLabel	label="  315\x00"
+	EqEditLabel	label="  400\x00"
+	EqEditLabel	label="  500\x00"
+	EqEditLabel	label="  630\x00"
+	EqEditLabel	label="  800\x00"
+	EqEditLabel	label="   1k\x00"
+	EqEditLabel	label="1.25k\x00"
+	EqEditLabel	label=" 1.6k\x00"	# [16]
+	EqEditLabel	label="   2k\x00"
+	EqEditLabel	label=" 2.5k\x00"
+	EqEditLabel	label="3.15k\x00"
+	EqEditLabel	label="   4k\x00"
+	EqEditLabel	label="   5k\x00"
+	EqEditLabel	label=" 6.3k\x00"
+	EqEditLabel	label="   8k\x00"
+	EqEditLabel	label="  10k\x00"	# [24]
+	EqEditLabel	label="12.5k\x00"
+	EqEditLabel	label="  16k\x00"
+EQQEditCheck_L4f_Records:	# 32 x EqEditLabel_2 (6 bytes each); read by EQQEditCheck_L4f 0x4C105398 `call strcpy_entry, [a2], 4`
+	EqEditLabel_2	label="  0.1\x00"	# [0]
+	EqEditLabel_2	label="  0.2\x00"
+	EqEditLabel_2	label="  0.3\x00"
+	EqEditLabel_2	label="  0.4\x00"
+	EqEditLabel_2	label="  0.5\x00"
+	EqEditLabel_2	label="  0.6\x00"
+	EqEditLabel_2	label="  0.7\x00"
+	EqEditLabel_2	label="  0.8\x00"
+	EqEditLabel_2	label="  0.9\x00"	# [8]
+	EqEditLabel_2	label="  1.0\x00"
+	EqEditLabel_2	label="  1.5\x00"
+	EqEditLabel_2	label="  2.0\x00"
+	EqEditLabel_2	label="  2.5\x00"
+	EqEditLabel_2	label="  3.0\x00"
+	EqEditLabel_2	label="  3.5\x00"
+	EqEditLabel_2	label="  4.0\x00"
+	EqEditLabel_2	label="  5.0\x00"	# [16]
+	EqEditLabel_2	label="  6.0\x00"
+	EqEditLabel_2	label="  7.0\x00"
+	EqEditLabel_2	label="  8.0\x00"
+	EqEditLabel_2	label="  9.0\x00"
+	EqEditLabel_2	label=" 10.0\x00"
+	EqEditLabel_2	label=" 11.0\x00"
+	EqEditLabel_2	label=" 12.0\x00"
+	EqEditLabel_2	label=" 13.0\x00"	# [24]
+	EqEditLabel_2	label=" 14.0\x00"
+	EqEditLabel_2	label=" 15.0\x00"
+	EqEditLabel_2	label=" 16.0\x00"
+	EqEditLabel_2	label=" 17.0\x00"
+	EqEditLabel_2	label=" 18.0\x00"
+	EqEditLabel_2	label=" 19.0\x00"
+	EqEditLabel_2	label=" 20.0\x00"
+EQGainEditCheck_L4f_Records:	# 49 x EqEditLabel_3 (6 bytes each); read by EQGainEditCheck_L4f 0x4C10508A `call strcpy_entry, [a2], 4`
+	EqEditLabel_3	label="-12.0\x00"	# [0]
+	EqEditLabel_3	label="-11.5\x00"
+	EqEditLabel_3	label="-11.0\x00"
+	EqEditLabel_3	label="-10.5\x00"
+	EqEditLabel_3	label="-10.0\x00"
+	EqEditLabel_3	label="- 9.5\x00"
+	EqEditLabel_3	label="- 9.0\x00"
+	EqEditLabel_3	label="- 8.5\x00"
+	EqEditLabel_3	label="- 8.0\x00"	# [8]
+	EqEditLabel_3	label="- 7.5\x00"
+	EqEditLabel_3	label="- 7.0\x00"
+	EqEditLabel_3	label="- 6.5\x00"
+	EqEditLabel_3	label="- 6.0\x00"
+	EqEditLabel_3	label="- 5.5\x00"
+	EqEditLabel_3	label="- 5.0\x00"
+	EqEditLabel_3	label="- 4.5\x00"
+	EqEditLabel_3	label="- 4.0\x00"	# [16]
+	EqEditLabel_3	label="- 3.5\x00"
+	EqEditLabel_3	label="- 3.0\x00"
+	EqEditLabel_3	label="- 2.5\x00"
+	EqEditLabel_3	label="- 2.0\x00"
+	EqEditLabel_3	label="- 1.5\x00"
+	EqEditLabel_3	label="- 1.0\x00"
+	EqEditLabel_3	label="- 0.5\x00"
+	EqEditLabel_3	label="  0.0\x00"	# [24]
+	EqEditLabel_3	label="+ 0.5\x00"
+	EqEditLabel_3	label="+ 1.0\x00"
+	EqEditLabel_3	label="+ 1.5\x00"
+	EqEditLabel_3	label="+ 2.0\x00"
+	EqEditLabel_3	label="+ 2.5\x00"
+	EqEditLabel_3	label="+ 3.0\x00"
+	EqEditLabel_3	label="+ 3.5\x00"
+	EqEditLabel_3	label="+ 4.0\x00"	# [32]
+	EqEditLabel_3	label="+ 4.5\x00"
+	EqEditLabel_3	label="+ 5.0\x00"
+	EqEditLabel_3	label="+ 5.5\x00"
+	EqEditLabel_3	label="+ 6.0\x00"
+	EqEditLabel_3	label="+ 6.5\x00"
+	EqEditLabel_3	label="+ 7.0\x00"
+	EqEditLabel_3	label="+ 7.5\x00"
+	EqEditLabel_3	label="+ 8.0\x00"	# [40]
+	EqEditLabel_3	label="+ 8.5\x00"
+	EqEditLabel_3	label="+ 9.0\x00"
+	EqEditLabel_3	label="+ 9.5\x00"
+	EqEditLabel_3	label="+10.0\x00"
+	EqEditLabel_3	label="+10.5\x00"
+	EqEditLabel_3	label="+11.0\x00"
+	EqEditLabel_3	label="+11.5\x00"
+	EqEditLabel_3	label="+12.0\x00"	# [48]
 
 # 68 ApFunction procedures; a function id is (0x12c << 16) | its index (the names are the parallel table at slot 0x32c)
 User12_ApFunctions:
@@ -38258,1748 +40029,3 @@ User12_MainFunctions:
 	IDNAME	FN_MainNoteOff, MainNoteOff, User12_MainFunctions, 0x14c
 	IDNAME	FN_BoardTestFunc, BoardTestFunc, User12_MainFunctions, 0x14c
 	.space	4, 0x00
-
-User12_MainFunctionNames:
-	.long	FnName_RhyStopFunc
-	.long	FnName_MainSvariIni
-	.long	FnName_MainSvariSet
-	.long	FnName_MainSysControl
-	.long	FnName_TEST2FUNC
-	.long	FnName_TEST3FUNC
-	.long	FnName_TEST4FUNC
-	.long	FnName_TEST5FUNC
-	.long	FnName_TEST6FUNC
-	.long	FnName_TEST7FUNC
-	.long	FnName_MainTimeFlashFunc
-	.long	FnName_MainWallSetFlashFunc
-	.long	FnName_MainFlashFunc
-	.long	FnName_MainDtPrtFlashFunc
-	.long	FnName_TestModeFunc
-	.long	FnName_RomTestFunc
-	.long	FnName_RamTestFunc
-	.long	FnName_DeviceTestFunc
-	.long	FnName_TestDiskFunc
-	.long	FnName_WaveRomTestFunc
-	.long	FnName_TestRgbwbFunc
-	.long	FnName_TestCrosstalkFunc
-	.long	FnName_TestSampleFunc
-	.long	FnName_TestContrastFunc
-	.long	FnName_LangSetFlashFunc
-	.long	FnName_TestMICFunc
-	.long	FnName_LangSetChkMain
-	.long	FnName_FadeInOutTitleFunc
-	.long	FnName_MSATitleFunc
-	.long	FnName_PmemModeTitleFunc
-	.long	FnName_CustomPanelFlashFunc
-	.long	FnName_HelpMainFunc
-	.long	FnName_TestMode8Func
-	.long	FnName_HelpMenuFunc
-	.long	FnName_MainNoteOff
-	.long	FnName_BoardTestFunc
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x383A38, 0x383A3C
-
-# 8 objects of block V_controlmenu; object <name> is index <name>_ix, id <name>_id = (0x24 << 16) | <name>_ix
-V_controlmenu_Viewables:
-	OBJ	controlmenu, V_controlmenu_Viewables, 0x24
-	OBJ	controlmenu_TitleMenu_INITIAL, V_controlmenu_Viewables, 0x24
-	OBJ	controlmenu_TitleMenu_FOOT_CONTROLLERS, V_controlmenu_Viewables, 0x24
-	OBJ	controlmenu_TitleMenu_OVERALL_TOUCH_SENSIT, V_controlmenu_Viewables, 0x24
-	OBJ	controlmenu_TitleMenu_MUSIC_STYLE_ARRANGER, V_controlmenu_Viewables, 0x24
-	OBJ	controlmenu_TitleMenu_PANEL_MEMORY_MODE, V_controlmenu_Viewables, 0x24
-	OBJ	controlmenu_TitleMenu_FADE_IN_OUT_SETTING, V_controlmenu_Viewables, 0x24
-	OBJ	controlmenu_ExitMode1, V_controlmenu_Viewables, 0x24
-	.space	4, 0x00
-# 16 objects of block V_initial; object <name> is index <name>_ix, id <name>_id = (0x25 << 16) | <name>_ix
-V_initial_Viewables:
-	OBJ	initial, V_initial_Viewables, 0x25
-	OBJ	initial_LanguageText1, V_initial_Viewables, 0x25
-	OBJ	initial_FuncEditSw1, V_initial_Viewables, 0x25
-	OBJ	initial_ShowHide1, V_initial_Viewables, 0x25
-	OBJ	initial_SpecWin1, V_initial_Viewables, 0x25
-	OBJ	V_initial_Window1, V_initial_Viewables, 0x25
-	OBJ	SYSINIKIND1, V_initial_Viewables, 0x25
-	OBJ	V_initial_IndexWideES1, V_initial_Viewables, 0x25
-	OBJ	SYSINISURE, V_initial_Viewables, 0x25
-	OBJ	SYSINISURE_Box1, V_initial_Viewables, 0x25
-	OBJ	SYSINISURE_LanguageText1, V_initial_Viewables, 0x25
-	OBJ	SYSINISURE_LanguageText2, V_initial_Viewables, 0x25
-	OBJ	SYSINISURE_LanguageText3, V_initial_Viewables, 0x25
-	OBJ	SYSINISURE_FuncEditSw1, V_initial_Viewables, 0x25
-	OBJ	SYSINISURE_FuncEditSw2, V_initial_Viewables, 0x25
-	OBJ	SYSINISURE_ShowHide1, V_initial_Viewables, 0x25
-	.space	4, 0x00
-# 5 objects of block V_fswcon; object <name> is index <name>_ix, id <name>_id = (0x26 << 16) | <name>_ix
-V_fswcon_Viewables:
-	OBJ	fswcon, V_fswcon_Viewables, 0x26
-	OBJ	fswcon_IndexWideES1, V_fswcon_Viewables, 0x26
-	OBJ	fswcon_IndexWideES2, V_fswcon_Viewables, 0x26
-	OBJ	fswcon_FSWAssGridBox1, V_fswcon_Viewables, 0x26
-	OBJ	fswcon_ShowHide1, V_fswcon_Viewables, 0x26
-	.space	4, 0x00
-# 7 objects of block V_tssen; object <name> is index <name>_ix, id <name>_id = (0x27 << 16) | <name>_ix
-V_tssen_Viewables:
-	OBJ	tssen, V_tssen_Viewables, 0x27
-	OBJ	tssen_ShowHide1, V_tssen_Viewables, 0x27
-	OBJ	tssen_TchSensGridBox1, V_tssen_Viewables, 0x27
-	OBJ	tssen_Label_INITIAL_TOUCH, V_tssen_Viewables, 0x27
-	OBJ	tssen_Label_AFTER_TOUCH, V_tssen_Viewables, 0x27
-	OBJ	tssen_IndexWideES1, V_tssen_Viewables, 0x27
-	OBJ	tssen_IndexWideES2, V_tssen_Viewables, 0x27
-	.space	4, 0x00
-# 11 objects of block V_msamode; object <name> is index <name>_ix, id <name>_id = (0x28 << 16) | <name>_ix
-V_msamode_Viewables:
-	OBJ	msamode, V_msamode_Viewables, 0x28
-	OBJ	msamode_MenuBox_RHYTHM, V_msamode_Viewables, 0x28
-	OBJ	msamode_MenuBox_SOUND_RHYTHM, V_msamode_Viewables, 0x28
-	OBJ	msamode_MenuBox_PANEL_MEMORY, V_msamode_Viewables, 0x28
-	OBJ	msamode_MSAModeBox1, V_msamode_Viewables, 0x28
-	OBJ	msamode_ShowHide1, V_msamode_Viewables, 0x28
-	OBJ	MSAsanple, V_msamode_Viewables, 0x28
-	OBJ	MSAsanple_EditBox_RHYTHM, V_msamode_Viewables, 0x28
-	OBJ	MSAsanple_Frame1, V_msamode_Viewables, 0x28
-	OBJ	MSAsanple_EditBox_SOUND_RHYTHM, V_msamode_Viewables, 0x28
-	OBJ	MSAsanple_EditBox_PANEL_MEMORY, V_msamode_Viewables, 0x28
-	.space	4, 0x00
-# 21 objects of block V29; object <name> is index <name>_ix, id <name>_id = (0x29 << 16) | <name>_ix
-V29_Viewables:
-	OBJ	V29_TtlScreen_PANEL_MEMORY_MODE, V29_Viewables, 0x29
-	OBJ	V29_PageControl1, V29_Viewables, 0x29
-	OBJ	V29_PageControl2, V29_Viewables, 0x29
-	OBJ	V29_WindowPage1, V29_Viewables, 0x29
-	OBJ	PMEM_page1, V29_Viewables, 0x29
-	OBJ	PMEM_page1_LanguageText1, V29_Viewables, 0x29
-	OBJ	PMEM_page1_LanguageText2, V29_Viewables, 0x29
-	OBJ	PMEM_page1_PmemModeBox1, V29_Viewables, 0x29
-	OBJ	PMEM_page1_MenuBox_NORMAL, V29_Viewables, 0x29
-	OBJ	PMEM_page1_MenuBox_EXPAND, V29_Viewables, 0x29
-	OBJ	PMEM_page1_ShowHide1, V29_Viewables, 0x29
-	OBJ	PMEM_page2, V29_Viewables, 0x29
-	OBJ	PMEM_page2_GridBox1, V29_Viewables, 0x29
-	OBJ	PMEM_page2_IndexWideES1, V29_Viewables, 0x29
-	OBJ	PMEM_page2_IndexWideES2, V29_Viewables, 0x29
-	OBJ	PMEM_page2_Box1, V29_Viewables, 0x29
-	OBJ	PMEM_page2_Label_EXPAND_MODE_FILTER, V29_Viewables, 0x29
-	OBJ	PMEM_page2_GridBox2, V29_Viewables, 0x29
-	OBJ	PMEM_page2_IndexWideES3, V29_Viewables, 0x29
-	OBJ	PMEM_page2_IndexWideES4, V29_Viewables, 0x29
-	OBJ	PMEM_page2_ShowHide1, V29_Viewables, 0x29
-	.space	4, 0x00
-# 7 objects of block V_fadeinout; object <name> is index <name>_ix, id <name>_id = (0x2a << 16) | <name>_ix
-V_fadeinout_Viewables:
-	OBJ	fadeinout, V_fadeinout_Viewables, 0x2a
-	OBJ	fadeinout_FadeSetGridBox1, V_fadeinout_Viewables, 0x2a
-	OBJ	fadeinout_Label_FADE_IN, V_fadeinout_Viewables, 0x2a
-	OBJ	fadeinout_Label_FADE_OUT, V_fadeinout_Viewables, 0x2a
-	OBJ	fadeinout_IndexWideES1, V_fadeinout_Viewables, 0x2a
-	OBJ	fadeinout_IndexWideES2, V_fadeinout_Viewables, 0x2a
-	OBJ	fadeinout_ShowHide1, V_fadeinout_Viewables, 0x2a
-	.space	4, 0x00
-# 6 objects of block V_writeprt; object <name> is index <name>_ix, id <name>_id = (0x2b << 16) | <name>_ix
-V_writeprt_Viewables:
-	OBJ	writeprt, V_writeprt_Viewables, 0x2b
-	OBJ	writeprt_GridBox1, V_writeprt_Viewables, 0x2b
-	OBJ	writeprt_IndexWideES1, V_writeprt_Viewables, 0x2b
-	OBJ	writeprt_IndexWideES2, V_writeprt_Viewables, 0x2b
-	OBJ	writeprt_FuncEditSw1, V_writeprt_Viewables, 0x2b
-	OBJ	writeprt_ShowHide1, V_writeprt_Viewables, 0x2b
-	.space	4, 0x00
-# 11 objects of block V_cusmenu; object <name> is index <name>_ix, id <name>_id = (0x30 << 16) | <name>_ix
-V_cusmenu_Viewables:
-	OBJ	cusmenu, V_cusmenu_Viewables, 0x30
-	OBJ	cusmenu_TitleMenu_HOME_PAGE_SETTING, V_cusmenu_Viewables, 0x30
-	OBJ	cusmenu_TitleMenu_FAVORITES_SETTING, V_cusmenu_Viewables, 0x30
-	OBJ	cusmenu_TitleMenu_DISPLAY_TIME_OUT, V_cusmenu_Viewables, 0x30
-	OBJ	cusmenu_TitleMenu_WALLPAPER_SETTING, V_cusmenu_Viewables, 0x30
-	OBJ	cusmenu_TitleMenu_MIDI_SETTING_LOAD_OP, V_cusmenu_Viewables, 0x30
-	OBJ	cusmenu_TitleMenu_LANGUAGE_SETTING, V_cusmenu_Viewables, 0x30
-	OBJ	cusmenu_TitleMenu_DISK_PREFERENCES, V_cusmenu_Viewables, 0x30
-	OBJ	cusmenu_TitleMenu_DATA_PROTECTION, V_cusmenu_Viewables, 0x30
-	OBJ	cusmenu_ExitMode1, V_cusmenu_Viewables, 0x30
-	OBJ	cusmenu_TitleMenu_CUSTOM_PANEL_MODE, V_cusmenu_Viewables, 0x30
-	.space	4, 0x00
-# 6 objects of block V_custommem; object <name> is index <name>_ix, id <name>_id = (0x32 << 16) | <name>_ix
-V_custommem_Viewables:
-	OBJ	custommem, V_custommem_Viewables, 0x32
-	OBJ	custommem_CusMemModeBox1, V_custommem_Viewables, 0x32
-	OBJ	custommem_MenuBox_PANEL_MEMORY, V_custommem_Viewables, 0x32
-	OBJ	custommem_MenuBox_ALL_PANEL, V_custommem_Viewables, 0x32
-	OBJ	custommem_FuncEditSw1, V_custommem_Viewables, 0x32
-	OBJ	custommem_ShowHide1, V_custommem_Viewables, 0x32
-	.space	4, 0x00
-# 7 objects of block V_distim; object <name> is index <name>_ix, id <name>_id = (0x33 << 16) | <name>_ix
-V_distim_Viewables:
-	OBJ	distim, V_distim_Viewables, 0x33
-	OBJ	distim_DispTimeSetGridBox1, V_distim_Viewables, 0x33
-	OBJ	distim_Label_DISPLAY_TYPE, V_distim_Viewables, 0x33
-	OBJ	distim_Label_TIME, V_distim_Viewables, 0x33
-	OBJ	distim_IndexWideES1, V_distim_Viewables, 0x33
-	OBJ	distim_IndexWideES2, V_distim_Viewables, 0x33
-	OBJ	distim_FuncEditSw1, V_distim_Viewables, 0x33
-	.space	4, 0x00
-# 15 objects of block V_wallpaper; object <name> is index <name>_ix, id <name>_id = (0x34 << 16) | <name>_ix
-V_wallpaper_Viewables:
-	OBJ	wallpaper, V_wallpaper_Viewables, 0x34
-	OBJ	wallpaper_RamEditBox_PRESET, V_wallpaper_Viewables, 0x34
-	OBJ	wallpaper_IndexEditSw1, V_wallpaper_Viewables, 0x34
-	OBJ	wallpaper_IndexWideES1, V_wallpaper_Viewables, 0x34
-	OBJ	wallpaper_IndexEditSw2, V_wallpaper_Viewables, 0x34
-	OBJ	wallpaper_FuncEditSw1, V_wallpaper_Viewables, 0x34
-	OBJ	wallpaper_Label_PRESET, V_wallpaper_Viewables, 0x34
-	OBJ	wallpaper_Label_VALUE, V_wallpaper_Viewables, 0x34
-	OBJ	wallpaper_RamEditBox1, V_wallpaper_Viewables, 0x34
-	OBJ	wallpaper_Label_SOUND_RHYTHM_SELECT, V_wallpaper_Viewables, 0x34
-	OBJ	wallpaper_Label_HOME_PAGE, V_wallpaper_Viewables, 0x34
-	OBJ	wallpaper_RamEditBox_MENU_PAGE, V_wallpaper_Viewables, 0x34
-	OBJ	wallpaper_RamEditBox_OTHER, V_wallpaper_Viewables, 0x34
-	OBJ	wallpaper_WallPreview1, V_wallpaper_Viewables, 0x34
-	OBJ	wallpaper_ShowHide1, V_wallpaper_Viewables, 0x34
-	.space	4, 0x00
-# 7 objects of block V_MIDIset; object <name> is index <name>_ix, id <name>_id = (0x35 << 16) | <name>_ix
-V_MIDIset_Viewables:
-	OBJ	MIDIset, V_MIDIset_Viewables, 0x35
-	OBJ	MIDIset_ParaLoadOptGridBox1, V_MIDIset_Viewables, 0x35
-	OBJ	MIDIset_Label_Load_MIDI_Parameters, V_MIDIset_Viewables, 0x35
-	OBJ	MIDIset_Label_Use_these_setting_wh, V_MIDIset_Viewables, 0x35
-	OBJ	MIDIset_IndexWideES1, V_MIDIset_Viewables, 0x35
-	OBJ	MIDIset_IndexWideES2, V_MIDIset_Viewables, 0x35
-	OBJ	MIDIset_FuncEditSw1, V_MIDIset_Viewables, 0x35
-	.space	4, 0x00
-# 13 objects of block V_langset; object <name> is index <name>_ix, id <name>_id = (0x36 << 16) | <name>_ix
-V_langset_Viewables:
-	OBJ	langset, V_langset_Viewables, 0x36
-	OBJ	LangMenu, V_langset_Viewables, 0x36
-	OBJ	langset_FuncEditSw1, V_langset_Viewables, 0x36
-	OBJ	langset_IndexWideToggle_ENGLISH, V_langset_Viewables, 0x36
-	OBJ	langset_IndexWideToggle_GERMAN, V_langset_Viewables, 0x36
-	OBJ	langset_IndexWideToggle_FRENCH, V_langset_Viewables, 0x36
-	OBJ	langset_IndexWideToggle_SPANISH, V_langset_Viewables, 0x36
-	OBJ	langset_ShowHide1, V_langset_Viewables, 0x36
-	OBJ	LangSetWin, V_langset_Viewables, 0x36
-	OBJ	LangSetWin_IndexWideToggle_ENGLISH, V_langset_Viewables, 0x36
-	OBJ	LangSetWin_IndexWideToggle_GERMAN, V_langset_Viewables, 0x36
-	OBJ	LangSetWin_IndexWideToggle_FRENCH, V_langset_Viewables, 0x36
-	OBJ	LangSetWin_IndexWideToggle_SPANISH, V_langset_Viewables, 0x36
-	.space	4, 0x00
-# 1 objects of block V_diskpre; object <name> is index <name>_ix, id <name>_id = (0x37 << 16) | <name>_ix
-V_diskpre_Viewables:
-	OBJ	diskpre, V_diskpre_Viewables, 0x37
-	.space	4, 0x00
-# 26 objects of block VF1; object <name> is index <name>_ix, id <name>_id = (0xf1 << 16) | <name>_ix
-VF1_Viewables:
-	OBJ	VF1_Screen1, VF1_Viewables, 0xf1
-	OBJ	VF1_Label_HELP_FUNCTION, VF1_Viewables, 0xf1
-	OBJ	VF1_Icon1, VF1_Viewables, 0xf1
-	OBJ	HelpFunction, VF1_Viewables, 0xf1
-	OBJ	HelpFunction_ExitMode1, VF1_Viewables, 0xf1
-	OBJ	HelpFunction_ShowHide1, VF1_Viewables, 0xf1
-	OBJ	HelpMenu, VF1_Viewables, 0xf1
-	OBJ	HelpFunction_IndexWideToggle_ENGLISH, VF1_Viewables, 0xf1
-	OBJ	HelpFunction_IndexWideToggle_GERMAN, VF1_Viewables, 0xf1
-	OBJ	HelpFunction_IndexWideToggle_FRENCH, VF1_Viewables, 0xf1
-	OBJ	HelpFunction_IndexWideToggle_SPANISH, VF1_Viewables, 0xf1
-	OBJ	HelpFunction_FuncEditSw1, VF1_Viewables, 0xf1
-	OBJ	HelpLang4P1, VF1_Viewables, 0xf1
-	OBJ	HelpLang4P1_LanguageText1, VF1_Viewables, 0xf1
-	OBJ	HelpLang4P2, VF1_Viewables, 0xf1
-	OBJ	HelpLang4P2_LanguageText1, VF1_Viewables, 0xf1
-	OBJ	HelpLang4P3, VF1_Viewables, 0xf1
-	OBJ	HelpLang4P3_LanguageText1, VF1_Viewables, 0xf1
-	OBJ	HelpLang4P4, VF1_Viewables, 0xf1
-	OBJ	HelpLang4P4_LanguageText1, VF1_Viewables, 0xf1
-	OBJ	HelpPageWin4, VF1_Viewables, 0xf1
-	OBJ	HelpPageWin4_WindowPage1, VF1_Viewables, 0xf1
-	OBJ	HelpPageWin4_PageControl1, VF1_Viewables, 0xf1
-	OBJ	HelpPageWin4_PageControl2, VF1_Viewables, 0xf1
-	OBJ	HelpPageWin4_PageControl3, VF1_Viewables, 0xf1
-	OBJ	HelpPageWin4_PageControl4, VF1_Viewables, 0xf1
-	.space	4, 0x00
-# 88 objects of block V_helpmenu; object <name> is index <name>_ix, id <name>_id = (0xf3 << 16) | <name>_ix
-V_helpmenu_Viewables:
-	OBJ	helpmenu, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu_HelpTblBox1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu_ShowHide1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu2, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu2_HelpTblBox1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu2_WindowPageInit1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu2_PageControl1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu2_PageControl2, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu2_ShowHide1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu3, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu3_PageControl1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu3_PageControl2, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu3_PageControl3, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu3_HelpTblBox1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu3_WindowPageInit1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu3_ShowHide1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpPM, V_helpmenu_Viewables, 0xf3
-	OBJ	helpPM_ScreenMenu_SOUND, V_helpmenu_Viewables, 0xf3
-	OBJ	helpPM_ScreenMenu_EFFECT, V_helpmenu_Viewables, 0xf3
-	OBJ	helpPM_ScreenMenu_CONTROL, V_helpmenu_Viewables, 0xf3
-	OBJ	helpPM_ScreenMenu_MIDI, V_helpmenu_Viewables, 0xf3
-	OBJ	helpPM_ScreenMenu_CUSTOMIZE, V_helpmenu_Viewables, 0xf3
-	OBJ	helpPM_ScreenMenu_SOUND_EDIT, V_helpmenu_Viewables, 0xf3
-	OBJ	helpPM_ScreenMenu_SEQUENCER, V_helpmenu_Viewables, 0xf3
-	OBJ	helpPM_ScreenMenu_COMPOSER, V_helpmenu_Viewables, 0xf3
-	OBJ	helpPM_ScreenMenu_PERFORMANCE_PADS, V_helpmenu_Viewables, 0xf3
-	OBJ	helpPM_Label_PROGRAM_MENU, V_helpmenu_Viewables, 0xf3
-	OBJ	helpPM_ShowHide1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpAPCMD, V_helpmenu_Viewables, 0xf3
-	OBJ	helpAPCMD_ScreenMenu_AUTO_PLAY_CHORD_MODE, V_helpmenu_Viewables, 0xf3
-	OBJ	helpAPCMD_ScreenMenu_LEFT_HOLD, V_helpmenu_Viewables, 0xf3
-	OBJ	helpAPCMD_ScreenMenu_CHORD_FINDER, V_helpmenu_Viewables, 0xf3
-	OBJ	helpAPCMD_Label_APC_CHORD_FINDER, V_helpmenu_Viewables, 0xf3
-	OBJ	helpAPCMD_ShowHide1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpAPCMD_ScreenMenu_COUNT_INTRO, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG_ExitScreen1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG_HelpTblBox1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG_ShowHide1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG2, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG2_PageControl1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG2_PageControl2, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG2_ExitScreen1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG2_HelpTblBox1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG2_WindowPageInit1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG2_ShowHide1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG3, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG3_PageControl1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG3_PageControl2, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG3_PageControl3, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG3_ExitScreen1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG3_HelpTblBox1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG3_WindowPageInit1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG3_ShowHide1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuAPC, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuAPC_ExitScreen1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuAPC_HelpTblBox1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuAPC2, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuAPC2_ExitScreen1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuAPC2_PageControl1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuAPC2_PageControl2, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuAPC2_HelpTblBox1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuAPC2_WindowPageInit1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuAPC3, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuAPC3_ExitScreen1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuAPC3_PageControl1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuAPC3_PageControl2, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuAPC3_PageControl3, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuAPC3_HelpTblBox1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuAPC3_WindowPageInit1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu4, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu4_PageControl1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu4_PageControl2, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu4_PageControl3, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu4_ShowHide1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu4_HelpTblBox1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu4_WindowPageInit1, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu4_PageControl4, V_helpmenu_Viewables, 0xf3
-	OBJ	helpmenu4_ShowHide2, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG4, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG4_PageControl1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG4_PageControl2, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG4_PageControl3, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG4_PageControl4, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG4_ExitScreen1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG4_ShowHide1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG4_HelpTblBox1, V_helpmenu_Viewables, 0xf3
-	OBJ	HelpMenuPRG4_WindowPageInit1, V_helpmenu_Viewables, 0xf3
-	.space	4, 0x00
-# 7 objects of block V_stest1; object <name> is index <name>_ix, id <name>_id = (0xf4 << 16) | <name>_ix
-V_stest1_Viewables:
-	OBJ	stest1, V_stest1_Viewables, 0xf4
-	OBJ	test1_ram, V_stest1_Viewables, 0xf4
-	OBJ	test1_ram_Label_BACKUP_MEMORY_SRAM_m, V_stest1_Viewables, 0xf4
-	OBJ	test1_rhyrom, V_stest1_Viewables, 0xf4
-	OBJ	test1_rhyrom_Label_RHYTHM_PATTERN_ROM_m, V_stest1_Viewables, 0xf4
-	OBJ	test1_cpu, V_stest1_Viewables, 0xf4
-	OBJ	test1_cpu_Label_ERROR_in_CPU_data_tr, V_stest1_Viewables, 0xf4
-	.space	4, 0x00
-# 22 objects of block V_stest2; object <name> is index <name>_ix, id <name>_id = (0xf5 << 16) | <name>_ix
-V_stest2_Viewables:
-	OBJ	stest2, V_stest2_Viewables, 0xf5
-	OBJ	stest2_TextBox_Please_check_by_the, V_stest2_Viewables, 0xf5
-	OBJ	stest2_Label_RESULT_CPU_of_CPR, V_stest2_Viewables, 0xf5
-	OBJ	stest2_Label_CPU_of_CPL, V_stest2_Viewables, 0xf5
-	OBJ	stest2_Label_it_is_better_to_chec, V_stest2_Viewables, 0xf5
-	OBJ	stest2_Label_If_both_CPU_are_NO, V_stest2_Viewables, 0xf5
-	OBJ	stest2_PageControl1, V_stest2_Viewables, 0xf5
-	OBJ	stest2_PageControl2, V_stest2_Viewables, 0xf5
-	OBJ	stest2_PageControl3, V_stest2_Viewables, 0xf5
-	OBJ	stest2_PageControl4, V_stest2_Viewables, 0xf5
-	OBJ	TEST2OKOK, V_stest2_Viewables, 0xf5
-	OBJ	TEST2OKOK_Label_OK, V_stest2_Viewables, 0xf5
-	OBJ	TEST2OKOK_Label_OK2, V_stest2_Viewables, 0xf5
-	OBJ	TEST2NGNG, V_stest2_Viewables, 0xf5
-	OBJ	TEST2NGNG_Label_NG, V_stest2_Viewables, 0xf5
-	OBJ	TEST2NGNG_Label_NG2, V_stest2_Viewables, 0xf5
-	OBJ	TEST2OKNG, V_stest2_Viewables, 0xf5
-	OBJ	TEST2OKNG_Label_OK, V_stest2_Viewables, 0xf5
-	OBJ	TEST2OKNG_Label_NG, V_stest2_Viewables, 0xf5
-	OBJ	TEST2NGOK, V_stest2_Viewables, 0xf5
-	OBJ	TEST2NGOK_Label_NG, V_stest2_Viewables, 0xf5
-	OBJ	TEST2NGOK_Label_OK, V_stest2_Viewables, 0xf5
-	.space	4, 0x00
-# 5 objects of block VF6; object <name> is index <name>_ix, id <name>_id = (0xf6 << 16) | <name>_ix
-VF6_Viewables:
-	OBJ	VF6_TtlScreen_CHECK_by_SINE_WAVE, VF6_Viewables, 0xf6
-	OBJ	stest3, VF6_Viewables, 0xf6
-	OBJ	stest3_ShowHide1, VF6_Viewables, 0xf6
-	OBJ	stest3_FixWin1, VF6_Viewables, 0xf6
-	OBJ	sinewavetest, VF6_Viewables, 0xf6
-	.space	4, 0x00
-# 4 objects of block V_stest4; object <name> is index <name>_ix, id <name>_id = (0xf7 << 16) | <name>_ix
-V_stest4_Viewables:
-	OBJ	stest4, V_stest4_Viewables, 0xf7
-	OBJ	stest4_TextBox_After_all_LEDs_ON_an, V_stest4_Viewables, 0xf7
-	OBJ	stest4_TextBox_If_you_push_the_HELP, V_stest4_Viewables, 0xf7
-	OBJ	stest4_TextBox_And_if_you_push_the, V_stest4_Viewables, 0xf7
-	.space	4, 0x00
-# 68 objects of block V_stest5; object <name> is index <name>_ix, id <name>_id = (0xf8 << 16) | <name>_ix
-V_stest5_Viewables:
-	OBJ	stest5, V_stest5_Viewables, 0xf8
-	OBJ	stest5_PageControl1, V_stest5_Viewables, 0xf8
-	OBJ	stest5_PageControl2, V_stest5_Viewables, 0xf8
-	OBJ	stest5_PageControl3, V_stest5_Viewables, 0xf8
-	OBJ	stest5_PageControl4, V_stest5_Viewables, 0xf8
-	OBJ	stest5_PageControl5, V_stest5_Viewables, 0xf8
-	OBJ	stest5_PageControl6, V_stest5_Viewables, 0xf8
-	OBJ	stest5_PageControl7, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_Red, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_Red_Label_LCD_PANEL_TEST, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_Blue, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_Blue_Label_LCD_PANEL_TEST, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_Green, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_Green_Label_LCD_PANEL_TEST, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_White, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_White_Label_LCD_PANEL_TEST, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_Black, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_Black_Label_LCD_PANEL_TEST, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Frame1, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_HHHHHH, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H2, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H3, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H4, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Frame2, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H5, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_HHHHHH2, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H6, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H7, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H8, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Frame3, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H9, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_HHHHHH3, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H10, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H11, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H12, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Frame4, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H13, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_HHHHHH4, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H14, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H15, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H16, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Frame5, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H17, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_HHHHHH5, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H18, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H19, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H20, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Frame6, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H21, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_HHHHHH6, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H22, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H23, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H24, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Frame7, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H25, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_HHHHHH7, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H26, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H27, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H28, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Frame8, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H29, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_HHHHHH8, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H30, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H31, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_TP_Label_H_H32, V_stest5_Viewables, 0xf8
-	OBJ	TEST5_Itimatu, V_stest5_Viewables, 0xf8
-	.space	4, 0x00
-# 15 objects of block V_stest6; object <name> is index <name>_ix, id <name>_id = (0xf9 << 16) | <name>_ix
-V_stest6_Viewables:
-	OBJ	stest6, V_stest6_Viewables, 0xf9
-	OBJ	stest6_Label_1_FLOPPY_DISK_CONTRO, V_stest6_Viewables, 0xf9
-	OBJ	stest6_Label_2_DIGITAL_SIGNAL_PRO, V_stest6_Viewables, 0xf9
-	OBJ	stest6_PageControl1, V_stest6_Viewables, 0xf9
-	OBJ	stest6_PageControl2, V_stest6_Viewables, 0xf9
-	OBJ	stest6_PageControl3, V_stest6_Viewables, 0xf9
-	OBJ	stest6_PageControl4, V_stest6_Viewables, 0xf9
-	OBJ	TEST6_OK, V_stest6_Viewables, 0xf9
-	OBJ	TEST6_OK_Label_may_be_OK, V_stest6_Viewables, 0xf9
-	OBJ	TEST6_NO, V_stest6_Viewables, 0xf9
-	OBJ	TEST6_NO_Label_NO, V_stest6_Viewables, 0xf9
-	OBJ	TEST6DSP_OK, V_stest6_Viewables, 0xf9
-	OBJ	TEST6DSP_OK_Label_may_be_OK, V_stest6_Viewables, 0xf9
-	OBJ	TEST6DSP_NO, V_stest6_Viewables, 0xf9
-	OBJ	TEST6DSP_NO_Label_NO, V_stest6_Viewables, 0xf9
-	.space	4, 0x00
-# 8 objects of block V_stest7; object <name> is index <name>_ix, id <name>_id = (0xfa << 16) | <name>_ix
-V_stest7_Viewables:
-	OBJ	stest7, V_stest7_Viewables, 0xfa
-	OBJ	stest7_Label_RUNNING_TEST, V_stest7_Viewables, 0xfa
-	OBJ	stest7_WideESBox1, V_stest7_Viewables, 0xfa
-	OBJ	stest7_UserBitmap1, V_stest7_Viewables, 0xfa
-	OBJ	stest7_WideESBox2, V_stest7_Viewables, 0xfa
-	OBJ	T7_TOTAL, V_stest7_Viewables, 0xfa
-	OBJ	T7_OK, V_stest7_Viewables, 0xfa
-	OBJ	T7_NG, V_stest7_Viewables, 0xfa
-	.space	4, 0x00
-# 6 objects of block V_test_ext; object <name> is index <name>_ix, id <name>_id = (0xfb << 16) | <name>_ix
-V_test_ext_Viewables:
-	OBJ	test_ext, V_test_ext_Viewables, 0xfb
-	OBJ	test_ext_PageControl1, V_test_ext_Viewables, 0xfb
-	OBJ	test_ext_PageControl2, V_test_ext_Viewables, 0xfb
-	OBJ	test_ext_PageControl3, V_test_ext_Viewables, 0xfb
-	OBJ	test_ext_PageControl4, V_test_ext_Viewables, 0xfb
-	OBJ	test_ext_PageControl5, V_test_ext_Viewables, 0xfb
-	.space	4, 0x00
-# 275 objects of block VFC; object <name> is index <name>_ix, id <name>_id = (0xfc << 16) | <name>_ix
-VFC_Viewables:
-	OBJ	VFC_TtlScreen1, VFC_Viewables, 0xfc
-	OBJ	TestMenu, VFC_Viewables, 0xfc
-	OBJ	TestMenu_PageControl1, VFC_Viewables, 0xfc
-	OBJ	TestMenu_PageControl2, VFC_Viewables, 0xfc
-	OBJ	TestMenu_PageControl3, VFC_Viewables, 0xfc
-	OBJ	TestMenu_PageControl4, VFC_Viewables, 0xfc
-	OBJ	TestMenu_PageControl5, VFC_Viewables, 0xfc
-	OBJ	TestMenu_PageControl6, VFC_Viewables, 0xfc
-	OBJ	TestMenu_PageControl7, VFC_Viewables, 0xfc
-	OBJ	TestMenu_PageControl8, VFC_Viewables, 0xfc
-	OBJ	TestMenu_PageControl9, VFC_Viewables, 0xfc
-	OBJ	TestMenu_PageControl10, VFC_Viewables, 0xfc
-	OBJ	TestMenu_TestMenuPage1, VFC_Viewables, 0xfc
-	OBJ	Testmenu7, VFC_Viewables, 0xfc
-	OBJ	Testmenu7_Label_7_In_Out_interface_t, VFC_Viewables, 0xfc
-	OBJ	Testmenu7_IndexWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu7_Label_page_select, VFC_Viewables, 0xfc
-	OBJ	Testmenu7_ShowHide1, VFC_Viewables, 0xfc
-	OBJ	Testmenu1, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_Label_1_ROM_device_test, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_IndexWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_Label_page_select, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_Label_PROGRAM_ROM_IC11, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_Label_TABLE_ROM_IC13, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_Label_RHYTHM_ROM_IC15_IC16, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_Label_CUSTOM_FLASH_IC18, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_Label_IC12, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_Label_IC14, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_FuncWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_Label_EXECUTE, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_PageControl1, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_PageControl2, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_PageControl3, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_PageControl4, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_PageControl5, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_PageControl6, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_PageControl7, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_PageControl8, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_PageControl9, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_PageControl10, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_PageControl11, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_PageControl12, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_PageControl13, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_PageControl14, VFC_Viewables, 0xfc
-	OBJ	Testmenu1_PageControl15, VFC_Viewables, 0xfc
-	OBJ	Testmenu2, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_Label_2_RAM_device_test, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_IndexWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_Label_page_select, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_Label_WORK_RAM_IC9, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_Label_STATIC_RAM_IC20, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_Label_LCD_V_RAM_IC110, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_Label_IC10, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_FuncWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_Label_EXECUTE, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_PageControl1, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_PageControl2, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_PageControl3, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_PageControl4, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_PageControl5, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_PageControl6, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_PageControl7, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_PageControl8, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_PageControl9, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_PageControl10, VFC_Viewables, 0xfc
-	OBJ	Testmenu2_PageControl11, VFC_Viewables, 0xfc
-	OBJ	Testmenu3, VFC_Viewables, 0xfc
-	OBJ	Testmenu3_Label_3_Other_device_test, VFC_Viewables, 0xfc
-	OBJ	Testmenu3_IndexWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu3_Label_page_select, VFC_Viewables, 0xfc
-	OBJ	Testmenu3_Label_Panel_CPU_IC1_CPL, VFC_Viewables, 0xfc
-	OBJ	Testmenu3_Label_DSP_IC304, VFC_Viewables, 0xfc
-	OBJ	Testmenu3_Label_DSP_RAM_IC305, VFC_Viewables, 0xfc
-	OBJ	Testmenu3_Label_Floppy_Disk_Controll, VFC_Viewables, 0xfc
-	OBJ	Testmenu3_Label_CPR, VFC_Viewables, 0xfc
-	OBJ	Testmenu3_Label_IC306, VFC_Viewables, 0xfc
-	OBJ	Testmenu3_FuncWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu3_Label_EXECUTE, VFC_Viewables, 0xfc
-	OBJ	Testmenu3_PageControl1, VFC_Viewables, 0xfc
-	OBJ	Testmenu5, VFC_Viewables, 0xfc
-	OBJ	Testmenu5_Label_5_Panel_SW_LED_test, VFC_Viewables, 0xfc
-	OBJ	Testmenu5_IndexWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu5_Label_page_select, VFC_Viewables, 0xfc
-	OBJ	Testmenu5_Label_Push_each_button_and, VFC_Viewables, 0xfc
-	OBJ	Testmenu5_Label_If_all_buttons_are_c, VFC_Viewables, 0xfc
-	OBJ	Testmenu5_Label_LEDs_will_ON_DEMO_bu, VFC_Viewables, 0xfc
-	OBJ	Testmenu5_ShowHide1, VFC_Viewables, 0xfc
-	OBJ	Testmenu6, VFC_Viewables, 0xfc
-	OBJ	Testmenu6_Label_6_LCD_module_test, VFC_Viewables, 0xfc
-	OBJ	Testmenu6_IndexWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu6_Label_page_select, VFC_Viewables, 0xfc
-	OBJ	Testmenu6_FuncEditSw1, VFC_Viewables, 0xfc
-	OBJ	Testmenu6_Label_RGBWB, VFC_Viewables, 0xfc
-	OBJ	Testmenu6_FuncEditSw2, VFC_Viewables, 0xfc
-	OBJ	Testmenu6_Label_CROSSTALK, VFC_Viewables, 0xfc
-	OBJ	Testmenu6_FuncEditSw3, VFC_Viewables, 0xfc
-	OBJ	Testmenu6_Label_SAMPLE, VFC_Viewables, 0xfc
-	OBJ	Testmenu6_FuncEditSw4, VFC_Viewables, 0xfc
-	OBJ	Testmenu6_Label_CONTRAST, VFC_Viewables, 0xfc
-	OBJ	Testmenu8, VFC_Viewables, 0xfc
-	OBJ	Testmenu8_Label_8_MIDI_IN_OUT_test, VFC_Viewables, 0xfc
-	OBJ	Testmenu8_IndexWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu8_Label_page_select, VFC_Viewables, 0xfc
-	OBJ	Testmenu8_Label_Set_to_MIDI_position, VFC_Viewables, 0xfc
-	OBJ	Testmenu8_Label_MIDI_IN_OUT_terminal, VFC_Viewables, 0xfc
-	OBJ	Testmenu8_Label_cable, VFC_Viewables, 0xfc
-	OBJ	Testmenu8_Label_Connect_MIDI_IN_and, VFC_Viewables, 0xfc
-	OBJ	Testmenu8_Label_MAC, VFC_Viewables, 0xfc
-	OBJ	Testmenu8_Label_PC1, VFC_Viewables, 0xfc
-	OBJ	Testmenu8_Label_PC2, VFC_Viewables, 0xfc
-	OBJ	Testmenu8_Label_MIDI, VFC_Viewables, 0xfc
-	OBJ	Testmenu8_Label_Or_test_COMPUTER_ter, VFC_Viewables, 0xfc
-	OBJ	Testmenu8_TestMode8Box1, VFC_Viewables, 0xfc
-	OBJ	Testmenu9, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_Label_9_WAVE_ROM_test, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_IndexWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_Label_page_select, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_Label_BANK_0_7_ROM_IC205, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_Label_BANK_8_15_ROM_IC207, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_Label_IC206, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_Label_IC208, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_FuncWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_Label_EXECUTE, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_PageControl1, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_PageControl2, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_PageControl3, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_PageControl4, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_PageControl5, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_PageControl6, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_PageControl7, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_PageControl8, VFC_Viewables, 0xfc
-	OBJ	Testmenu9_PageControl9, VFC_Viewables, 0xfc
-	OBJ	Testmenu10, VFC_Viewables, 0xfc
-	OBJ	Testmenu10_ShowHide1, VFC_Viewables, 0xfc
-	OBJ	Testmenu10_IndexWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu10_Label_page_select, VFC_Viewables, 0xfc
-	OBJ	Testmenu10_Label_10_SOUND_SYSTEM_test, VFC_Viewables, 0xfc
-	OBJ	Testmenu10_ShowHide2, VFC_Viewables, 0xfc
-	OBJ	M1_IC11_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC11_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC11_NG, VFC_Viewables, 0xfc
-	OBJ	M1_IC11_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	M1_IC12_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC12_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC12_NG, VFC_Viewables, 0xfc
-	OBJ	M1_IC12_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	M1_IC13_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC13_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC13_NG, VFC_Viewables, 0xfc
-	OBJ	M1_IC13_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	M1_IC14_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC14_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC14_NG, VFC_Viewables, 0xfc
-	OBJ	M1_IC14_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	M1_IC15_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC15_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC15_NG, VFC_Viewables, 0xfc
-	OBJ	M1_IC15_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	M1_IC17_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC17_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC17_NG, VFC_Viewables, 0xfc
-	OBJ	M1_IC17_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	M1_IC18_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC18_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC18_NG, VFC_Viewables, 0xfc
-	OBJ	M1_IC18_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	M1_IC16_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC16_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC16_NG, VFC_Viewables, 0xfc
-	OBJ	M1_IC16_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	M1_FDC_OK, VFC_Viewables, 0xfc
-	OBJ	M1_FDC_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	M1_FDC_NG, VFC_Viewables, 0xfc
-	OBJ	M1_FDC_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	MIDI_IO_OK, VFC_Viewables, 0xfc
-	OBJ	MIDI_IO_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	MIDI_IO_NG, VFC_Viewables, 0xfc
-	OBJ	MIDI_IO_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	Testmenu4, VFC_Viewables, 0xfc
-	OBJ	Testmenu4_IndexWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu4_Label_page_select, VFC_Viewables, 0xfc
-	OBJ	Testmenu4_FuncWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu4_Label_STOP, VFC_Viewables, 0xfc
-	OBJ	Testmenu4_FuncWideES2, VFC_Viewables, 0xfc
-	OBJ	TM_FD_TOTAL, VFC_Viewables, 0xfc
-	OBJ	TM_FD_OK, VFC_Viewables, 0xfc
-	OBJ	TM_FD_NG, VFC_Viewables, 0xfc
-	OBJ	Testmenu4_Label_START, VFC_Viewables, 0xfc
-	OBJ	Testmenu4_Label_Insert_2HD_2DD_disk, VFC_Viewables, 0xfc
-	OBJ	Testmenu4_Label_4_Floppy_Disk_SAVE_L, VFC_Viewables, 0xfc
-	OBJ	VFC_Screen1, VFC_Viewables, 0xfc
-	OBJ	VFC_ExitMode1, VFC_Viewables, 0xfc
-	OBJ	VFC_Bitmap1, VFC_Viewables, 0xfc
-	OBJ	VFC_Label_Panel_Simulator_for, VFC_Viewables, 0xfc
-	OBJ	VFC_TitleMenu_DEBUG_TOOLS, VFC_Viewables, 0xfc
-	OBJ	TM_MIDI_WAIT, VFC_Viewables, 0xfc
-	OBJ	TM_MIDI_WAIT_Label_Please_wait_for_30_s, VFC_Viewables, 0xfc
-	OBJ	TM_ROM_WAIT, VFC_Viewables, 0xfc
-	OBJ	TM_ROM_WAIT_Label_Please_wait_for_20_s, VFC_Viewables, 0xfc
-	OBJ	TM_RAM_WAIT, VFC_Viewables, 0xfc
-	OBJ	TM_RAM_WAIT_Label_Please_wait_for_seco, VFC_Viewables, 0xfc
-	OBJ	TM_DEVICE_WAIT, VFC_Viewables, 0xfc
-	OBJ	TM_DEVICE_WAIT_Label_Please_wait_for_seco, VFC_Viewables, 0xfc
-	OBJ	LCDB_OK, VFC_Viewables, 0xfc
-	OBJ	LCDB_OK_Label_LCD_BLOCK_ALL_SW_OK, VFC_Viewables, 0xfc
-	OBJ	LOWB_OK, VFC_Viewables, 0xfc
-	OBJ	LOWB_OK_Label_LOWER_BLOCK_ALL_SW_O, VFC_Viewables, 0xfc
-	OBJ	MIDI_IO_NONE, VFC_Viewables, 0xfc
-	OBJ	M1_IC110_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC110_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	M1_IC110_NG, VFC_Viewables, 0xfc
-	OBJ	M1_IC110_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	M1_ALLSW_OK, VFC_Viewables, 0xfc
-	OBJ	M1_ALLSW_OK_Label_ALL_SW_OK, VFC_Viewables, 0xfc
-	OBJ	TestMenu2, VFC_Viewables, 0xfc
-	OBJ	TestMenu2_TestMenuPage1, VFC_Viewables, 0xfc
-	OBJ	TestMenu2_PageControl1, VFC_Viewables, 0xfc
-	OBJ	TestMenu2_PageControl2, VFC_Viewables, 0xfc
-	OBJ	TestMenu2_PageControl3, VFC_Viewables, 0xfc
-	OBJ	TestMenu2_PageControl4, VFC_Viewables, 0xfc
-	OBJ	TestMenu2_PageControl5, VFC_Viewables, 0xfc
-	OBJ	TestMenu2_PageControl6, VFC_Viewables, 0xfc
-	OBJ	TestMenu2_PageControl7, VFC_Viewables, 0xfc
-	OBJ	TestMenu2_PageControl8, VFC_Viewables, 0xfc
-	OBJ	TestMenu2_PageControl9, VFC_Viewables, 0xfc
-	OBJ	TestMenu2_PageControl10, VFC_Viewables, 0xfc
-	OBJ	TestMenu2_PageControl11, VFC_Viewables, 0xfc
-	OBJ	Testmenu11, VFC_Viewables, 0xfc
-	OBJ	Testmenu11_Label_11_Wave_Expansion_Bo, VFC_Viewables, 0xfc
-	OBJ	Testmenu11_IndexWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu11_Label_page_select, VFC_Viewables, 0xfc
-	OBJ	Testmenu11_FuncWideES1, VFC_Viewables, 0xfc
-	OBJ	Testmenu11_Label_EXECUTE, VFC_Viewables, 0xfc
-	OBJ	TM_EXP_WAIT, VFC_Viewables, 0xfc
-	OBJ	TM_EXP_WAIT_Label_Please_wait_for_seco, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_IC1_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_IC1_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_IC1_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_IC1_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_IC2_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_IC2_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_IC2_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_IC2_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_IC3_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_IC3_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_IC3_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_IC3_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_IC4_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_IC4_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_IC4_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP1_IC4_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_IC1_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_IC1_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_IC1_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_IC1_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_IC2_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_IC2_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_IC2_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_IC2_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_IC3_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_IC3_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_IC3_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_IC3_NG_Label_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_IC4_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_IC4_OK_Label_OK, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_IC4_NG, VFC_Viewables, 0xfc
-	OBJ	TM_EXP2_IC4_NG_Label_NG, VFC_Viewables, 0xfc
-	.space	4, 0x00
-data_4C384508:
-	.space	4, 0x00
-
-V_controlmenu_ResNames:
-	.long	RN_controlmenu	# controlmenu
-	.long	RN_empty_1935	# controlmenu_TitleMenu_INITIAL
-	.long	RN_empty_1936	# controlmenu_TitleMenu_FOOT_CONTROLLERS
-	.long	RN_empty_1937	# controlmenu_TitleMenu_OVERALL_TOUCH_SENSIT
-	.long	RN_empty_1938	# controlmenu_TitleMenu_MUSIC_STYLE_ARRANGER
-	.long	RN_empty_1939	# controlmenu_TitleMenu_PANEL_MEMORY_MODE
-	.long	RN_empty_1940	# controlmenu_TitleMenu_FADE_IN_OUT_SETTING
-	.long	RN_empty_1941	# controlmenu_ExitMode1
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x38452C, 0x384530
-V_initial_ResNames:
-	.long	RN_initial	# initial
-	.long	RN_empty_1942	# initial_LanguageText1
-	.long	RN_empty_1943	# initial_FuncEditSw1
-	.long	RN_empty_1944	# initial_ShowHide1
-	.long	RN_empty_1945	# initial_SpecWin1
-	.long	RN_empty_1946	# V_initial_Window1
-	.long	RN_SYSINIKIND1	# SYSINIKIND1
-	.long	RN_empty_1947	# V_initial_IndexWideES1
-	.long	RN_SYSINISURE	# SYSINISURE
-	.long	RN_empty_1948	# SYSINISURE_Box1
-	.long	RN_empty_1949	# SYSINISURE_LanguageText1
-	.long	RN_empty_1950	# SYSINISURE_LanguageText2
-	.long	RN_empty_1951	# SYSINISURE_LanguageText3
-	.long	RN_empty_1952	# SYSINISURE_FuncEditSw1
-	.long	RN_empty_1953	# SYSINISURE_FuncEditSw2
-	.long	RN_empty_1954	# SYSINISURE_ShowHide1
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x384570, 0x384574
-V_fswcon_ResNames:
-	.long	RN_fswcon	# fswcon
-	.long	RN_empty_1955	# fswcon_IndexWideES1
-	.long	RN_empty_1956	# fswcon_IndexWideES2
-	.long	RN_empty_1957	# fswcon_FSWAssGridBox1
-	.long	RN_empty_1958	# fswcon_ShowHide1
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x384588, 0x38458C
-V_tssen_ResNames:
-	.long	RN_tssen	# tssen
-	.long	RN_empty_1959	# tssen_ShowHide1
-	.long	RN_empty_1960	# tssen_TchSensGridBox1
-	.long	RN_empty_1961	# tssen_Label_INITIAL_TOUCH
-	.long	RN_empty_1962	# tssen_Label_AFTER_TOUCH
-	.long	RN_empty_1963	# tssen_IndexWideES1
-	.long	RN_empty_1964	# tssen_IndexWideES2
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3845A8, 0x3845AC
-V_msamode_ResNames:
-	.long	RN_msamode	# msamode
-	.long	RN_empty_1965	# msamode_MenuBox_RHYTHM
-	.long	RN_empty_1966	# msamode_MenuBox_SOUND_RHYTHM
-	.long	RN_empty_1967	# msamode_MenuBox_PANEL_MEMORY
-	.long	RN_empty_1968	# msamode_MSAModeBox1
-	.long	RN_empty_1969	# msamode_ShowHide1
-	.long	RN_MSAsanple	# MSAsanple
-	.long	RN_empty_1970	# MSAsanple_EditBox_RHYTHM
-	.long	RN_empty_1971	# MSAsanple_Frame1
-	.long	RN_empty_1972	# MSAsanple_EditBox_SOUND_RHYTHM
-	.long	RN_empty_1973	# MSAsanple_EditBox_PANEL_MEMORY
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3845D8, 0x3845DC
-V29_ResNames:
-	.long	RN_empty_1974	# V29_TtlScreen_PANEL_MEMORY_MODE
-	.long	RN_empty_1975	# V29_PageControl1
-	.long	RN_empty_1976	# V29_PageControl2
-	.long	RN_empty_1977	# V29_WindowPage1
-	.long	RN_PMEM_page1	# PMEM_page1
-	.long	RN_empty_1978	# PMEM_page1_LanguageText1
-	.long	RN_empty_1979	# PMEM_page1_LanguageText2
-	.long	RN_empty_1980	# PMEM_page1_PmemModeBox1
-	.long	RN_empty_1981	# PMEM_page1_MenuBox_NORMAL
-	.long	RN_empty_1982	# PMEM_page1_MenuBox_EXPAND
-	.long	RN_empty_1983	# PMEM_page1_ShowHide1
-	.long	RN_PMEM_page2	# PMEM_page2
-	.long	RN_empty_1984	# PMEM_page2_GridBox1
-	.long	RN_empty_1985	# PMEM_page2_IndexWideES1
-	.long	RN_empty_1986	# PMEM_page2_IndexWideES2
-	.long	RN_empty_1987	# PMEM_page2_Box1
-	.long	RN_empty_1988	# PMEM_page2_Label_EXPAND_MODE_FILTER
-	.long	RN_empty_1989	# PMEM_page2_GridBox2
-	.long	RN_empty_1990	# PMEM_page2_IndexWideES3
-	.long	RN_empty_1991	# PMEM_page2_IndexWideES4
-	.long	RN_empty_1992	# PMEM_page2_ShowHide1
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x384630, 0x384634
-V_fadeinout_ResNames:
-	.long	RN_fadeinout	# fadeinout
-	.long	RN_empty_1993	# fadeinout_FadeSetGridBox1
-	.long	RN_empty_1994	# fadeinout_Label_FADE_IN
-	.long	RN_empty_1995	# fadeinout_Label_FADE_OUT
-	.long	RN_empty_1996	# fadeinout_IndexWideES1
-	.long	RN_empty_1997	# fadeinout_IndexWideES2
-	.long	RN_empty_1998	# fadeinout_ShowHide1
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x384650, 0x384654
-V_writeprt_ResNames:
-	.long	RN_writeprt	# writeprt
-	.long	RN_empty_1999	# writeprt_GridBox1
-	.long	RN_empty_2000	# writeprt_IndexWideES1
-	.long	RN_empty_2001	# writeprt_IndexWideES2
-	.long	RN_empty_2002	# writeprt_FuncEditSw1
-	.long	RN_empty_2003	# writeprt_ShowHide1
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x38466C, 0x384670
-V_cusmenu_ResNames:
-	.long	RN_cusmenu	# cusmenu
-	.long	RN_empty_2077	# cusmenu_TitleMenu_HOME_PAGE_SETTING
-	.long	RN_empty_2078	# cusmenu_TitleMenu_FAVORITES_SETTING
-	.long	RN_empty_2079	# cusmenu_TitleMenu_DISPLAY_TIME_OUT
-	.long	RN_empty_2080	# cusmenu_TitleMenu_WALLPAPER_SETTING
-	.long	RN_empty_2081	# cusmenu_TitleMenu_MIDI_SETTING_LOAD_OP
-	.long	RN_empty_2082	# cusmenu_TitleMenu_LANGUAGE_SETTING
-	.long	RN_empty_2083	# cusmenu_TitleMenu_DISK_PREFERENCES
-	.long	RN_empty_2084	# cusmenu_TitleMenu_DATA_PROTECTION
-	.long	RN_empty_2085	# cusmenu_ExitMode1
-	.long	RN_empty_2086	# cusmenu_TitleMenu_CUSTOM_PANEL_MODE
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x38469C, 0x3846A0
-V_custommem_ResNames:
-	.long	RN_custommem	# custommem
-	.long	RN_empty_2087	# custommem_CusMemModeBox1
-	.long	RN_empty_2088	# custommem_MenuBox_PANEL_MEMORY
-	.long	RN_empty_2089	# custommem_MenuBox_ALL_PANEL
-	.long	RN_empty_2090	# custommem_FuncEditSw1
-	.long	RN_empty_2091	# custommem_ShowHide1
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3846B8, 0x3846BC
-V_distim_ResNames:
-	.long	RN_distim	# distim
-	.long	RN_empty_2092	# distim_DispTimeSetGridBox1
-	.long	RN_empty_2093	# distim_Label_DISPLAY_TYPE
-	.long	RN_empty_2094	# distim_Label_TIME
-	.long	RN_empty_2095	# distim_IndexWideES1
-	.long	RN_empty_2096	# distim_IndexWideES2
-	.long	RN_empty_2097	# distim_FuncEditSw1
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3846D8, 0x3846DC
-V_wallpaper_ResNames:
-	.long	RN_wallpaper	# wallpaper
-	.long	RN_empty_2098	# wallpaper_RamEditBox_PRESET
-	.long	RN_empty_2099	# wallpaper_IndexEditSw1
-	.long	RN_empty_2100	# wallpaper_IndexWideES1
-	.long	RN_empty_2101	# wallpaper_IndexEditSw2
-	.long	RN_empty_2102	# wallpaper_FuncEditSw1
-	.long	RN_empty_2103	# wallpaper_Label_PRESET
-	.long	RN_empty_2104	# wallpaper_Label_VALUE
-	.long	RN_empty_2105	# wallpaper_RamEditBox1
-	.long	RN_empty_2106	# wallpaper_Label_SOUND_RHYTHM_SELECT
-	.long	RN_empty_2107	# wallpaper_Label_HOME_PAGE
-	.long	RN_empty_2108	# wallpaper_RamEditBox_MENU_PAGE
-	.long	RN_empty_2109	# wallpaper_RamEditBox_OTHER
-	.long	RN_empty_2110	# wallpaper_WallPreview1
-	.long	RN_empty_2111	# wallpaper_ShowHide1
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x384718, 0x38471C
-V_MIDIset_ResNames:
-	.long	RN_MIDIset	# MIDIset
-	.long	RN_empty_2112	# MIDIset_ParaLoadOptGridBox1
-	.long	RN_empty_2113	# MIDIset_Label_Load_MIDI_Parameters
-	.long	RN_empty_2114	# MIDIset_Label_Use_these_setting_wh
-	.long	RN_empty_2115	# MIDIset_IndexWideES1
-	.long	RN_empty_2116	# MIDIset_IndexWideES2
-	.long	RN_empty_2117	# MIDIset_FuncEditSw1
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x384738, 0x38473C
-V_langset_ResNames:
-	.long	RN_langset	# langset
-	.long	RN_LangMenu	# LangMenu
-	.long	RN_empty_2118	# langset_FuncEditSw1
-	.long	RN_empty_2119	# langset_IndexWideToggle_ENGLISH
-	.long	RN_empty_2120	# langset_IndexWideToggle_GERMAN
-	.long	RN_empty_2121	# langset_IndexWideToggle_FRENCH
-	.long	RN_empty_2122	# langset_IndexWideToggle_SPANISH
-	.long	RN_empty_2123	# langset_ShowHide1
-	.long	RN_LangSetWin	# LangSetWin
-	.long	RN_empty_2124	# LangSetWin_IndexWideToggle_ENGLISH
-	.long	RN_empty_2125	# LangSetWin_IndexWideToggle_GERMAN
-	.long	RN_empty_2126	# LangSetWin_IndexWideToggle_FRENCH
-	.long	RN_empty_2127	# LangSetWin_IndexWideToggle_SPANISH
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x384770, 0x384774
-V_diskpre_ResNames:
-	.long	RN_diskpre	# diskpre
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x384778, 0x38477C
-VF1_ResNames:
-	.long	RN_empty_5040	# VF1_Screen1
-	.long	RN_empty_5041	# VF1_Label_HELP_FUNCTION
-	.long	RN_empty_5042	# VF1_Icon1
-	.long	RN_HelpFunction	# HelpFunction
-	.long	RN_empty_5043	# HelpFunction_ExitMode1
-	.long	RN_empty_5044	# HelpFunction_ShowHide1
-	.long	RN_HelpMenu	# HelpMenu
-	.long	RN_empty_5045	# HelpFunction_IndexWideToggle_ENGLISH
-	.long	RN_empty_5046	# HelpFunction_IndexWideToggle_GERMAN
-	.long	RN_empty_5047	# HelpFunction_IndexWideToggle_FRENCH
-	.long	RN_empty_5048	# HelpFunction_IndexWideToggle_SPANISH
-	.long	RN_empty_5049	# HelpFunction_FuncEditSw1
-	.long	RN_HelpLang4P1	# HelpLang4P1
-	.long	RN_empty_5050	# HelpLang4P1_LanguageText1
-	.long	RN_HelpLang4P2	# HelpLang4P2
-	.long	RN_empty_5051	# HelpLang4P2_LanguageText1
-	.long	RN_HelpLang4P3	# HelpLang4P3
-	.long	RN_empty_5052	# HelpLang4P3_LanguageText1
-	.long	RN_HelpLang4P4	# HelpLang4P4
-	.long	RN_empty_5053	# HelpLang4P4_LanguageText1
-	.long	RN_HelpPageWin4	# HelpPageWin4
-	.long	RN_empty_5054	# HelpPageWin4_WindowPage1
-	.long	RN_empty_5055	# HelpPageWin4_PageControl1
-	.long	RN_empty_5056	# HelpPageWin4_PageControl2
-	.long	RN_empty_5057	# HelpPageWin4_PageControl3
-	.long	RN_empty_5058	# HelpPageWin4_PageControl4
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3847E4, 0x3847E8
-V_helpmenu_ResNames:
-	.long	RN_helpmenu	# helpmenu
-	.long	RN_empty_5059	# helpmenu_HelpTblBox1
-	.long	RN_empty_5060	# helpmenu_ShowHide1
-	.long	RN_helpmenu2	# helpmenu2
-	.long	RN_empty_5061	# helpmenu2_HelpTblBox1
-	.long	RN_empty_5062	# helpmenu2_WindowPageInit1
-	.long	RN_empty_5063	# helpmenu2_PageControl1
-	.long	RN_empty_5064	# helpmenu2_PageControl2
-	.long	RN_empty_5065	# helpmenu2_ShowHide1
-	.long	RN_helpmenu3	# helpmenu3
-	.long	RN_empty_5066	# helpmenu3_PageControl1
-	.long	RN_empty_5067	# helpmenu3_PageControl2
-	.long	RN_empty_5068	# helpmenu3_PageControl3
-	.long	RN_empty_5069	# helpmenu3_HelpTblBox1
-	.long	RN_empty_5070	# helpmenu3_WindowPageInit1
-	.long	RN_empty_5071	# helpmenu3_ShowHide1
-	.long	RN_helpPM	# helpPM
-	.long	RN_empty_5072	# helpPM_ScreenMenu_SOUND
-	.long	RN_empty_5073	# helpPM_ScreenMenu_EFFECT
-	.long	RN_empty_5074	# helpPM_ScreenMenu_CONTROL
-	.long	RN_empty_5075	# helpPM_ScreenMenu_MIDI
-	.long	RN_empty_5076	# helpPM_ScreenMenu_CUSTOMIZE
-	.long	RN_empty_5077	# helpPM_ScreenMenu_SOUND_EDIT
-	.long	RN_empty_5078	# helpPM_ScreenMenu_SEQUENCER
-	.long	RN_empty_5079	# helpPM_ScreenMenu_COMPOSER
-	.long	RN_empty_5080	# helpPM_ScreenMenu_PERFORMANCE_PADS
-	.long	RN_empty_5081	# helpPM_Label_PROGRAM_MENU
-	.long	RN_empty_5082	# helpPM_ShowHide1
-	.long	RN_helpAPCMD	# helpAPCMD
-	.long	RN_empty_5083	# helpAPCMD_ScreenMenu_AUTO_PLAY_CHORD_MODE
-	.long	RN_empty_5084	# helpAPCMD_ScreenMenu_LEFT_HOLD
-	.long	RN_empty_5085	# helpAPCMD_ScreenMenu_CHORD_FINDER
-	.long	RN_empty_5086	# helpAPCMD_Label_APC_CHORD_FINDER
-	.long	RN_empty_5087	# helpAPCMD_ShowHide1
-	.long	RN_empty_5088	# helpAPCMD_ScreenMenu_COUNT_INTRO
-	.long	RN_HelpMenuPRG	# HelpMenuPRG
-	.long	RN_empty_5089	# HelpMenuPRG_ExitScreen1
-	.long	RN_empty_5090	# HelpMenuPRG_HelpTblBox1
-	.long	RN_empty_5091	# HelpMenuPRG_ShowHide1
-	.long	RN_HelpMenuPRG2	# HelpMenuPRG2
-	.long	RN_empty_5092	# HelpMenuPRG2_PageControl1
-	.long	RN_empty_5093	# HelpMenuPRG2_PageControl2
-	.long	RN_empty_5094	# HelpMenuPRG2_ExitScreen1
-	.long	RN_empty_5095	# HelpMenuPRG2_HelpTblBox1
-	.long	RN_empty_5096	# HelpMenuPRG2_WindowPageInit1
-	.long	RN_empty_5097	# HelpMenuPRG2_ShowHide1
-	.long	RN_HelpMenuPRG3	# HelpMenuPRG3
-	.long	RN_empty_5098	# HelpMenuPRG3_PageControl1
-	.long	RN_empty_5099	# HelpMenuPRG3_PageControl2
-	.long	RN_empty_5100	# HelpMenuPRG3_PageControl3
-	.long	RN_empty_5101	# HelpMenuPRG3_ExitScreen1
-	.long	RN_empty_5102	# HelpMenuPRG3_HelpTblBox1
-	.long	RN_empty_5103	# HelpMenuPRG3_WindowPageInit1
-	.long	RN_empty_5104	# HelpMenuPRG3_ShowHide1
-	.long	RN_HelpMenuAPC	# HelpMenuAPC
-	.long	RN_empty_5105	# HelpMenuAPC_ExitScreen1
-	.long	RN_empty_5106	# HelpMenuAPC_HelpTblBox1
-	.long	RN_HelpMenuAPC2	# HelpMenuAPC2
-	.long	RN_empty_5107	# HelpMenuAPC2_ExitScreen1
-	.long	RN_empty_5108	# HelpMenuAPC2_PageControl1
-	.long	RN_empty_5109	# HelpMenuAPC2_PageControl2
-	.long	RN_empty_5110	# HelpMenuAPC2_HelpTblBox1
-	.long	RN_empty_5111	# HelpMenuAPC2_WindowPageInit1
-	.long	RN_HelpMenuAPC3	# HelpMenuAPC3
-	.long	RN_empty_5112	# HelpMenuAPC3_ExitScreen1
-	.long	RN_empty_5113	# HelpMenuAPC3_PageControl1
-	.long	RN_empty_5114	# HelpMenuAPC3_PageControl2
-	.long	RN_empty_5115	# HelpMenuAPC3_PageControl3
-	.long	RN_empty_5116	# HelpMenuAPC3_HelpTblBox1
-	.long	RN_empty_5117	# HelpMenuAPC3_WindowPageInit1
-	.long	RN_helpmenu4	# helpmenu4
-	.long	RN_empty_5118	# helpmenu4_PageControl1
-	.long	RN_empty_5119	# helpmenu4_PageControl2
-	.long	RN_empty_5120	# helpmenu4_PageControl3
-	.long	RN_empty_5121	# helpmenu4_ShowHide1
-	.long	RN_empty_5122	# helpmenu4_HelpTblBox1
-	.long	RN_empty_5123	# helpmenu4_WindowPageInit1
-	.long	RN_empty_5124	# helpmenu4_PageControl4
-	.long	RN_empty_5125	# helpmenu4_ShowHide2
-	.long	RN_HelpMenuPRG4	# HelpMenuPRG4
-	.long	RN_empty_5126	# HelpMenuPRG4_PageControl1
-	.long	RN_empty_5127	# HelpMenuPRG4_PageControl2
-	.long	RN_empty_5128	# HelpMenuPRG4_PageControl3
-	.long	RN_empty_5129	# HelpMenuPRG4_PageControl4
-	.long	RN_empty_5130	# HelpMenuPRG4_ExitScreen1
-	.long	RN_empty_5131	# HelpMenuPRG4_ShowHide1
-	.long	RN_empty_5132	# HelpMenuPRG4_HelpTblBox1
-	.long	RN_empty_5133	# HelpMenuPRG4_WindowPageInit1
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x384948, 0x38494C
-V_stest1_ResNames:
-	.long	RN_stest1	# stest1
-	.long	RN_test1_ram	# test1_ram
-	.long	RN_empty_5134	# test1_ram_Label_BACKUP_MEMORY_SRAM_m
-	.long	RN_test1_rhyrom	# test1_rhyrom
-	.long	RN_empty_5135	# test1_rhyrom_Label_RHYTHM_PATTERN_ROM_m
-	.long	RN_test1_cpu	# test1_cpu
-	.long	RN_empty_5136	# test1_cpu_Label_ERROR_in_CPU_data_tr
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x384968, 0x38496C
-V_stest2_ResNames:
-	.long	RN_stest2	# stest2
-	.long	RN_empty_5137	# stest2_TextBox_Please_check_by_the
-	.long	RN_empty_5138	# stest2_Label_RESULT_CPU_of_CPR
-	.long	RN_empty_5139	# stest2_Label_CPU_of_CPL
-	.long	RN_empty_5140	# stest2_Label_it_is_better_to_chec
-	.long	RN_empty_5141	# stest2_Label_If_both_CPU_are_NO
-	.long	RN_empty_5142	# stest2_PageControl1
-	.long	RN_empty_5143	# stest2_PageControl2
-	.long	RN_empty_5144	# stest2_PageControl3
-	.long	RN_empty_5145	# stest2_PageControl4
-	.long	RN_TEST2OKOK	# TEST2OKOK
-	.long	RN_empty_5146	# TEST2OKOK_Label_OK
-	.long	RN_empty_5147	# TEST2OKOK_Label_OK2
-	.long	RN_TEST2NGNG	# TEST2NGNG
-	.long	RN_empty_5148	# TEST2NGNG_Label_NG
-	.long	RN_empty_5149	# TEST2NGNG_Label_NG2
-	.long	RN_TEST2OKNG	# TEST2OKNG
-	.long	RN_empty_5150	# TEST2OKNG_Label_OK
-	.long	RN_empty_5151	# TEST2OKNG_Label_NG
-	.long	RN_TEST2NGOK	# TEST2NGOK
-	.long	RN_empty_5152	# TEST2NGOK_Label_NG
-	.long	RN_empty_5153	# TEST2NGOK_Label_OK
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3849C4, 0x3849C8
-VF6_ResNames:
-	.long	RN_empty_5154	# VF6_TtlScreen_CHECK_by_SINE_WAVE
-	.long	RN_stest3	# stest3
-	.long	RN_empty_5155	# stest3_ShowHide1
-	.long	RN_empty_5156	# stest3_FixWin1
-	.long	RN_sinewavetest	# sinewavetest
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3849DC, 0x3849E0
-V_stest4_ResNames:
-	.long	RN_stest4	# stest4
-	.long	RN_empty_5157	# stest4_TextBox_After_all_LEDs_ON_an
-	.long	RN_empty_5158	# stest4_TextBox_If_you_push_the_HELP
-	.long	RN_empty_5159	# stest4_TextBox_And_if_you_push_the
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3849F0, 0x3849F4
-V_stest5_ResNames:
-	.long	RN_stest5	# stest5
-	.long	RN_empty_5160	# stest5_PageControl1
-	.long	RN_empty_5161	# stest5_PageControl2
-	.long	RN_empty_5162	# stest5_PageControl3
-	.long	RN_empty_5163	# stest5_PageControl4
-	.long	RN_empty_5164	# stest5_PageControl5
-	.long	RN_empty_5165	# stest5_PageControl6
-	.long	RN_empty_5166	# stest5_PageControl7
-	.long	RN_TEST5_Red	# TEST5_Red
-	.long	RN_empty_5167	# TEST5_Red_Label_LCD_PANEL_TEST
-	.long	RN_TEST5_Blue	# TEST5_Blue
-	.long	RN_empty_5168	# TEST5_Blue_Label_LCD_PANEL_TEST
-	.long	RN_TEST5_Green	# TEST5_Green
-	.long	RN_empty_5169	# TEST5_Green_Label_LCD_PANEL_TEST
-	.long	RN_TEST5_White	# TEST5_White
-	.long	RN_empty_5170	# TEST5_White_Label_LCD_PANEL_TEST
-	.long	RN_TEST5_Black	# TEST5_Black
-	.long	RN_empty_5171	# TEST5_Black_Label_LCD_PANEL_TEST
-	.long	RN_TEST5_TP	# TEST5_TP
-	.long	RN_empty_5172	# TEST5_TP_Frame1
-	.long	RN_empty_5173	# TEST5_TP_Label_H_H
-	.long	RN_empty_5174	# TEST5_TP_Label_HHHHHH
-	.long	RN_empty_5175	# TEST5_TP_Label_H_H2
-	.long	RN_empty_5176	# TEST5_TP_Label_H_H3
-	.long	RN_empty_5177	# TEST5_TP_Label_H_H4
-	.long	RN_empty_5178	# TEST5_TP_Frame2
-	.long	RN_empty_5179	# TEST5_TP_Label_H_H5
-	.long	RN_empty_5180	# TEST5_TP_Label_HHHHHH2
-	.long	RN_empty_5181	# TEST5_TP_Label_H_H6
-	.long	RN_empty_5182	# TEST5_TP_Label_H_H7
-	.long	RN_empty_5183	# TEST5_TP_Label_H_H8
-	.long	RN_empty_5184	# TEST5_TP_Frame3
-	.long	RN_empty_5185	# TEST5_TP_Label_H_H9
-	.long	RN_empty_5186	# TEST5_TP_Label_HHHHHH3
-	.long	RN_empty_5187	# TEST5_TP_Label_H_H10
-	.long	RN_empty_5188	# TEST5_TP_Label_H_H11
-	.long	RN_empty_5189	# TEST5_TP_Label_H_H12
-	.long	RN_empty_5190	# TEST5_TP_Frame4
-	.long	RN_empty_5191	# TEST5_TP_Label_H_H13
-	.long	RN_empty_5192	# TEST5_TP_Label_HHHHHH4
-	.long	RN_empty_5193	# TEST5_TP_Label_H_H14
-	.long	RN_empty_5194	# TEST5_TP_Label_H_H15
-	.long	RN_empty_5195	# TEST5_TP_Label_H_H16
-	.long	RN_empty_5196	# TEST5_TP_Frame5
-	.long	RN_empty_5197	# TEST5_TP_Label_H_H17
-	.long	RN_empty_5198	# TEST5_TP_Label_HHHHHH5
-	.long	RN_empty_5199	# TEST5_TP_Label_H_H18
-	.long	RN_empty_5200	# TEST5_TP_Label_H_H19
-	.long	RN_empty_5201	# TEST5_TP_Label_H_H20
-	.long	RN_empty_5202	# TEST5_TP_Frame6
-	.long	RN_empty_5203	# TEST5_TP_Label_H_H21
-	.long	RN_empty_5204	# TEST5_TP_Label_HHHHHH6
-	.long	RN_empty_5205	# TEST5_TP_Label_H_H22
-	.long	RN_empty_5206	# TEST5_TP_Label_H_H23
-	.long	RN_empty_5207	# TEST5_TP_Label_H_H24
-	.long	RN_empty_5208	# TEST5_TP_Frame7
-	.long	RN_empty_5209	# TEST5_TP_Label_H_H25
-	.long	RN_empty_5210	# TEST5_TP_Label_HHHHHH7
-	.long	RN_empty_5211	# TEST5_TP_Label_H_H26
-	.long	RN_empty_5212	# TEST5_TP_Label_H_H27
-	.long	RN_empty_5213	# TEST5_TP_Label_H_H28
-	.long	RN_empty_5214	# TEST5_TP_Frame8
-	.long	RN_empty_5215	# TEST5_TP_Label_H_H29
-	.long	RN_empty_5216	# TEST5_TP_Label_HHHHHH8
-	.long	RN_empty_5217	# TEST5_TP_Label_H_H30
-	.long	RN_empty_5218	# TEST5_TP_Label_H_H31
-	.long	RN_empty_5219	# TEST5_TP_Label_H_H32
-	.long	RN_TEST5_Itimatu	# TEST5_Itimatu
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x384B04, 0x384B08
-V_stest6_ResNames:
-	.long	RN_stest6	# stest6
-	.long	RN_empty_5220	# stest6_Label_1_FLOPPY_DISK_CONTRO
-	.long	RN_empty_5221	# stest6_Label_2_DIGITAL_SIGNAL_PRO
-	.long	RN_empty_5222	# stest6_PageControl1
-	.long	RN_empty_5223	# stest6_PageControl2
-	.long	RN_empty_5224	# stest6_PageControl3
-	.long	RN_empty_5225	# stest6_PageControl4
-	.long	RN_TEST6_OK	# TEST6_OK
-	.long	RN_empty_5226	# TEST6_OK_Label_may_be_OK
-	.long	RN_TEST6_NO	# TEST6_NO
-	.long	RN_empty_5227	# TEST6_NO_Label_NO
-	.long	RN_TEST6DSP_OK	# TEST6DSP_OK
-	.long	RN_empty_5228	# TEST6DSP_OK_Label_may_be_OK
-	.long	RN_TEST6DSP_NO	# TEST6DSP_NO
-	.long	RN_empty_5229	# TEST6DSP_NO_Label_NO
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x384B44, 0x384B48
-V_stest7_ResNames:
-	.long	RN_stest7	# stest7
-	.long	RN_empty_5230	# stest7_Label_RUNNING_TEST
-	.long	RN_empty_5231	# stest7_WideESBox1
-	.long	RN_empty_5232	# stest7_UserBitmap1
-	.long	RN_empty_5233	# stest7_WideESBox2
-	.long	RN_T7_TOTAL	# T7_TOTAL
-	.long	RN_T7_OK	# T7_OK
-	.long	RN_T7_NG	# T7_NG
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x384B68, 0x384B6C
-V_test_ext_ResNames:
-	.long	RN_test_ext	# test_ext
-	.long	RN_empty_5234	# test_ext_PageControl1
-	.long	RN_empty_5235	# test_ext_PageControl2
-	.long	RN_empty_5236	# test_ext_PageControl3
-	.long	RN_empty_5237	# test_ext_PageControl4
-	.long	RN_empty_5238	# test_ext_PageControl5
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x384B84, 0x384B88
-VFC_ResNames:
-	.long	RN_empty_5239	# VFC_TtlScreen1
-	.long	RN_TestMenu	# TestMenu
-	.long	RN_empty_5240	# TestMenu_PageControl1
-	.long	RN_empty_5241	# TestMenu_PageControl2
-	.long	RN_empty_5242	# TestMenu_PageControl3
-	.long	RN_empty_5243	# TestMenu_PageControl4
-	.long	RN_empty_5244	# TestMenu_PageControl5
-	.long	RN_empty_5245	# TestMenu_PageControl6
-	.long	RN_empty_5246	# TestMenu_PageControl7
-	.long	RN_empty_5247	# TestMenu_PageControl8
-	.long	RN_empty_5248	# TestMenu_PageControl9
-	.long	RN_empty_5249	# TestMenu_PageControl10
-	.long	RN_empty_5250	# TestMenu_TestMenuPage1
-	.long	RN_Testmenu7	# Testmenu7
-	.long	RN_empty_5251	# Testmenu7_Label_7_In_Out_interface_t
-	.long	RN_empty_5252	# Testmenu7_IndexWideES1
-	.long	RN_empty_5253	# Testmenu7_Label_page_select
-	.long	RN_empty_5254	# Testmenu7_ShowHide1
-	.long	RN_Testmenu1	# Testmenu1
-	.long	RN_empty_5255	# Testmenu1_Label_1_ROM_device_test
-	.long	RN_empty_5256	# Testmenu1_IndexWideES1
-	.long	RN_empty_5257	# Testmenu1_Label_page_select
-	.long	RN_empty_5258	# Testmenu1_Label_PROGRAM_ROM_IC11
-	.long	RN_empty_5259	# Testmenu1_Label_TABLE_ROM_IC13
-	.long	RN_empty_5260	# Testmenu1_Label_RHYTHM_ROM_IC15_IC16
-	.long	RN_empty_5261	# Testmenu1_Label_CUSTOM_FLASH_IC18
-	.long	RN_empty_5262	# Testmenu1_Label_IC12
-	.long	RN_empty_5263	# Testmenu1_Label_IC14
-	.long	RN_empty_5264	# Testmenu1_FuncWideES1
-	.long	RN_empty_5265	# Testmenu1_Label_EXECUTE
-	.long	RN_empty_5266	# Testmenu1_PageControl1
-	.long	RN_empty_5267	# Testmenu1_PageControl2
-	.long	RN_empty_5268	# Testmenu1_PageControl3
-	.long	RN_empty_5269	# Testmenu1_PageControl4
-	.long	RN_empty_5270	# Testmenu1_PageControl5
-	.long	RN_empty_5271	# Testmenu1_PageControl6
-	.long	RN_empty_5272	# Testmenu1_PageControl7
-	.long	RN_empty_5273	# Testmenu1_PageControl8
-	.long	RN_empty_5274	# Testmenu1_PageControl9
-	.long	RN_empty_5275	# Testmenu1_PageControl10
-	.long	RN_empty_5276	# Testmenu1_PageControl11
-	.long	RN_empty_5277	# Testmenu1_PageControl12
-	.long	RN_empty_5278	# Testmenu1_PageControl13
-	.long	RN_empty_5279	# Testmenu1_PageControl14
-	.long	RN_empty_5280	# Testmenu1_PageControl15
-	.long	RN_Testmenu2	# Testmenu2
-	.long	RN_empty_5281	# Testmenu2_Label_2_RAM_device_test
-	.long	RN_empty_5282	# Testmenu2_IndexWideES1
-	.long	RN_empty_5283	# Testmenu2_Label_page_select
-	.long	RN_empty_5284	# Testmenu2_Label_WORK_RAM_IC9
-	.long	RN_empty_5285	# Testmenu2_Label_STATIC_RAM_IC20
-	.long	RN_empty_5286	# Testmenu2_Label_LCD_V_RAM_IC110
-	.long	RN_empty_5287	# Testmenu2_Label_IC10
-	.long	RN_empty_5288	# Testmenu2_FuncWideES1
-	.long	RN_empty_5289	# Testmenu2_Label_EXECUTE
-	.long	RN_empty_5290	# Testmenu2_PageControl1
-	.long	RN_empty_5291	# Testmenu2_PageControl2
-	.long	RN_empty_5292	# Testmenu2_PageControl3
-	.long	RN_empty_5293	# Testmenu2_PageControl4
-	.long	RN_empty_5294	# Testmenu2_PageControl5
-	.long	RN_empty_5295	# Testmenu2_PageControl6
-	.long	RN_empty_5296	# Testmenu2_PageControl7
-	.long	RN_empty_5297	# Testmenu2_PageControl8
-	.long	RN_empty_5298	# Testmenu2_PageControl9
-	.long	RN_empty_5299	# Testmenu2_PageControl10
-	.long	RN_empty_5300	# Testmenu2_PageControl11
-	.long	RN_Testmenu3	# Testmenu3
-	.long	RN_empty_5301	# Testmenu3_Label_3_Other_device_test
-	.long	RN_empty_5302	# Testmenu3_IndexWideES1
-	.long	RN_empty_5303	# Testmenu3_Label_page_select
-	.long	RN_empty_5304	# Testmenu3_Label_Panel_CPU_IC1_CPL
-	.long	RN_empty_5305	# Testmenu3_Label_DSP_IC304
-	.long	RN_empty_5306	# Testmenu3_Label_DSP_RAM_IC305
-	.long	RN_empty_5307	# Testmenu3_Label_Floppy_Disk_Controll
-	.long	RN_empty_5308	# Testmenu3_Label_CPR
-	.long	RN_empty_5309	# Testmenu3_Label_IC306
-	.long	RN_empty_5310	# Testmenu3_FuncWideES1
-	.long	RN_empty_5311	# Testmenu3_Label_EXECUTE
-	.long	RN_empty_5312	# Testmenu3_PageControl1
-	.long	RN_Testmenu5	# Testmenu5
-	.long	RN_empty_5313	# Testmenu5_Label_5_Panel_SW_LED_test
-	.long	RN_empty_5314	# Testmenu5_IndexWideES1
-	.long	RN_empty_5315	# Testmenu5_Label_page_select
-	.long	RN_empty_5316	# Testmenu5_Label_Push_each_button_and
-	.long	RN_empty_5317	# Testmenu5_Label_If_all_buttons_are_c
-	.long	RN_empty_5318	# Testmenu5_Label_LEDs_will_ON_DEMO_bu
-	.long	RN_empty_5319	# Testmenu5_ShowHide1
-	.long	RN_Testmenu6	# Testmenu6
-	.long	RN_empty_5320	# Testmenu6_Label_6_LCD_module_test
-	.long	RN_empty_5321	# Testmenu6_IndexWideES1
-	.long	RN_empty_5322	# Testmenu6_Label_page_select
-	.long	RN_empty_5323	# Testmenu6_FuncEditSw1
-	.long	RN_empty_5324	# Testmenu6_Label_RGBWB
-	.long	RN_empty_5325	# Testmenu6_FuncEditSw2
-	.long	RN_empty_5326	# Testmenu6_Label_CROSSTALK
-	.long	RN_empty_5327	# Testmenu6_FuncEditSw3
-	.long	RN_empty_5328	# Testmenu6_Label_SAMPLE
-	.long	RN_empty_5329	# Testmenu6_FuncEditSw4
-	.long	RN_empty_5330	# Testmenu6_Label_CONTRAST
-	.long	RN_Testmenu8	# Testmenu8
-	.long	RN_empty_5331	# Testmenu8_Label_8_MIDI_IN_OUT_test
-	.long	RN_empty_5332	# Testmenu8_IndexWideES1
-	.long	RN_empty_5333	# Testmenu8_Label_page_select
-	.long	RN_empty_5334	# Testmenu8_Label_Set_to_MIDI_position
-	.long	RN_empty_5335	# Testmenu8_Label_MIDI_IN_OUT_terminal
-	.long	RN_empty_5336	# Testmenu8_Label_cable
-	.long	RN_empty_5337	# Testmenu8_Label_Connect_MIDI_IN_and
-	.long	RN_empty_5338	# Testmenu8_Label_MAC
-	.long	RN_empty_5339	# Testmenu8_Label_PC1
-	.long	RN_empty_5340	# Testmenu8_Label_PC2
-	.long	RN_empty_5341	# Testmenu8_Label_MIDI
-	.long	RN_empty_5342	# Testmenu8_Label_Or_test_COMPUTER_ter
-	.long	RN_empty_5343	# Testmenu8_TestMode8Box1
-	.long	RN_Testmenu9	# Testmenu9
-	.long	RN_empty_5344	# Testmenu9_Label_9_WAVE_ROM_test
-	.long	RN_empty_5345	# Testmenu9_IndexWideES1
-	.long	RN_empty_5346	# Testmenu9_Label_page_select
-	.long	RN_empty_5347	# Testmenu9_Label_BANK_0_7_ROM_IC205
-	.long	RN_empty_5348	# Testmenu9_Label_BANK_8_15_ROM_IC207
-	.long	RN_empty_5349	# Testmenu9_Label_IC206
-	.long	RN_empty_5350	# Testmenu9_Label_IC208
-	.long	RN_empty_5351	# Testmenu9_FuncWideES1
-	.long	RN_empty_5352	# Testmenu9_Label_EXECUTE
-	.long	RN_empty_5353	# Testmenu9_PageControl1
-	.long	RN_empty_5354	# Testmenu9_PageControl2
-	.long	RN_empty_5355	# Testmenu9_PageControl3
-	.long	RN_empty_5356	# Testmenu9_PageControl4
-	.long	RN_empty_5357	# Testmenu9_PageControl5
-	.long	RN_empty_5358	# Testmenu9_PageControl6
-	.long	RN_empty_5359	# Testmenu9_PageControl7
-	.long	RN_empty_5360	# Testmenu9_PageControl8
-	.long	RN_empty_5361	# Testmenu9_PageControl9
-	.long	RN_Testmenu10	# Testmenu10
-	.long	RN_empty_5362	# Testmenu10_ShowHide1
-	.long	RN_empty_5363	# Testmenu10_IndexWideES1
-	.long	RN_empty_5364	# Testmenu10_Label_page_select
-	.long	RN_empty_5365	# Testmenu10_Label_10_SOUND_SYSTEM_test
-	.long	RN_empty_5366	# Testmenu10_ShowHide2
-	.long	RN_M1_IC11_OK	# M1_IC11_OK
-	.long	RN_empty_5367	# M1_IC11_OK_Label_OK
-	.long	RN_M1_IC11_NG	# M1_IC11_NG
-	.long	RN_empty_5368	# M1_IC11_NG_Label_NG
-	.long	RN_M1_IC12_OK	# M1_IC12_OK
-	.long	RN_empty_5369	# M1_IC12_OK_Label_OK
-	.long	RN_M1_IC12_NG	# M1_IC12_NG
-	.long	RN_empty_5370	# M1_IC12_NG_Label_NG
-	.long	RN_M1_IC13_OK	# M1_IC13_OK
-	.long	RN_empty_5371	# M1_IC13_OK_Label_OK
-	.long	RN_M1_IC13_NG	# M1_IC13_NG
-	.long	RN_empty_5372	# M1_IC13_NG_Label_NG
-	.long	RN_M1_IC14_OK	# M1_IC14_OK
-	.long	RN_empty_5373	# M1_IC14_OK_Label_OK
-	.long	RN_M1_IC14_NG	# M1_IC14_NG
-	.long	RN_empty_5374	# M1_IC14_NG_Label_NG
-	.long	RN_M1_IC15_OK	# M1_IC15_OK
-	.long	RN_empty_5375	# M1_IC15_OK_Label_OK
-	.long	RN_M1_IC15_NG	# M1_IC15_NG
-	.long	RN_empty_5376	# M1_IC15_NG_Label_NG
-	.long	RN_M1_IC17_OK	# M1_IC17_OK
-	.long	RN_empty_5377	# M1_IC17_OK_Label_OK
-	.long	RN_M1_IC17_NG	# M1_IC17_NG
-	.long	RN_empty_5378	# M1_IC17_NG_Label_NG
-	.long	RN_M1_IC18_OK	# M1_IC18_OK
-	.long	RN_empty_5379	# M1_IC18_OK_Label_OK
-	.long	RN_M1_IC18_NG	# M1_IC18_NG
-	.long	RN_empty_5380	# M1_IC18_NG_Label_NG
-	.long	RN_M1_IC16_OK	# M1_IC16_OK
-	.long	RN_empty_5381	# M1_IC16_OK_Label_OK
-	.long	RN_M1_IC16_NG	# M1_IC16_NG
-	.long	RN_empty_5382	# M1_IC16_NG_Label_NG
-	.long	RN_M1_FDC_OK	# M1_FDC_OK
-	.long	RN_empty_5383	# M1_FDC_OK_Label_OK
-	.long	RN_M1_FDC_NG	# M1_FDC_NG
-	.long	RN_empty_5384	# M1_FDC_NG_Label_NG
-	.long	RN_MIDI_IO_OK	# MIDI_IO_OK
-	.long	RN_empty_5385	# MIDI_IO_OK_Label_OK
-	.long	RN_MIDI_IO_NG	# MIDI_IO_NG
-	.long	RN_empty_5386	# MIDI_IO_NG_Label_NG
-	.long	RN_Testmenu4	# Testmenu4
-	.long	RN_empty_5387	# Testmenu4_IndexWideES1
-	.long	RN_empty_5388	# Testmenu4_Label_page_select
-	.long	RN_empty_5389	# Testmenu4_FuncWideES1
-	.long	RN_empty_5390	# Testmenu4_Label_STOP
-	.long	RN_empty_5391	# Testmenu4_FuncWideES2
-	.long	RN_TM_FD_TOTAL	# TM_FD_TOTAL
-	.long	RN_TM_FD_OK	# TM_FD_OK
-	.long	RN_TM_FD_NG	# TM_FD_NG
-	.long	RN_empty_5392	# Testmenu4_Label_START
-	.long	RN_empty_5393	# Testmenu4_Label_Insert_2HD_2DD_disk
-	.long	RN_empty_5394	# Testmenu4_Label_4_Floppy_Disk_SAVE_L
-	.long	RN_empty_5395	# VFC_Screen1
-	.long	RN_empty_5396	# VFC_ExitMode1
-	.long	RN_empty_5397	# VFC_Bitmap1
-	.long	RN_empty_5398	# VFC_Label_Panel_Simulator_for
-	.long	RN_empty_5399	# VFC_TitleMenu_DEBUG_TOOLS
-	.long	RN_TM_MIDI_WAIT	# TM_MIDI_WAIT
-	.long	RN_empty_5400	# TM_MIDI_WAIT_Label_Please_wait_for_30_s
-	.long	RN_TM_ROM_WAIT	# TM_ROM_WAIT
-	.long	RN_empty_5401	# TM_ROM_WAIT_Label_Please_wait_for_20_s
-	.long	RN_TM_RAM_WAIT	# TM_RAM_WAIT
-	.long	RN_empty_5402	# TM_RAM_WAIT_Label_Please_wait_for_seco
-	.long	RN_TM_DEVICE_WAIT	# TM_DEVICE_WAIT
-	.long	RN_empty_5403	# TM_DEVICE_WAIT_Label_Please_wait_for_seco
-	.long	RN_LCDB_OK	# LCDB_OK
-	.long	RN_empty_5404	# LCDB_OK_Label_LCD_BLOCK_ALL_SW_OK
-	.long	RN_LOWB_OK	# LOWB_OK
-	.long	RN_empty_5405	# LOWB_OK_Label_LOWER_BLOCK_ALL_SW_O
-	.long	RN_MIDI_IO_NONE	# MIDI_IO_NONE
-	.long	RN_M1_IC110_OK	# M1_IC110_OK
-	.long	RN_empty_5406	# M1_IC110_OK_Label_OK
-	.long	RN_M1_IC110_NG	# M1_IC110_NG
-	.long	RN_empty_5407	# M1_IC110_NG_Label_NG
-	.long	RN_M1_ALLSW_OK	# M1_ALLSW_OK
-	.long	RN_empty_5408	# M1_ALLSW_OK_Label_ALL_SW_OK
-	.long	RN_TestMenu2	# TestMenu2
-	.long	RN_empty_5409	# TestMenu2_TestMenuPage1
-	.long	RN_empty_5410	# TestMenu2_PageControl1
-	.long	RN_empty_5411	# TestMenu2_PageControl2
-	.long	RN_empty_5412	# TestMenu2_PageControl3
-	.long	RN_empty_5413	# TestMenu2_PageControl4
-	.long	RN_empty_5414	# TestMenu2_PageControl5
-	.long	RN_empty_5415	# TestMenu2_PageControl6
-	.long	RN_empty_5416	# TestMenu2_PageControl7
-	.long	RN_empty_5417	# TestMenu2_PageControl8
-	.long	RN_empty_5418	# TestMenu2_PageControl9
-	.long	RN_empty_5419	# TestMenu2_PageControl10
-	.long	RN_empty_5420	# TestMenu2_PageControl11
-	.long	RN_Testmenu11	# Testmenu11
-	.long	RN_empty_5421	# Testmenu11_Label_11_Wave_Expansion_Bo
-	.long	RN_empty_5422	# Testmenu11_IndexWideES1
-	.long	RN_empty_5423	# Testmenu11_Label_page_select
-	.long	RN_empty_5424	# Testmenu11_FuncWideES1
-	.long	RN_empty_5425	# Testmenu11_Label_EXECUTE
-	.long	RN_TM_EXP_WAIT	# TM_EXP_WAIT
-	.long	RN_empty_5426	# TM_EXP_WAIT_Label_Please_wait_for_seco
-	.long	RN_TM_EXP1_OK	# TM_EXP1_OK
-	.long	RN_empty_5427	# TM_EXP1_OK_Label_OK
-	.long	RN_TM_EXP2_OK	# TM_EXP2_OK
-	.long	RN_empty_5428	# TM_EXP2_OK_Label_OK
-	.long	RN_TM_EXP1_NG	# TM_EXP1_NG
-	.long	RN_empty_5429	# TM_EXP1_NG_Label_NG
-	.long	RN_TM_EXP2_NG	# TM_EXP2_NG
-	.long	RN_empty_5430	# TM_EXP2_NG_Label_NG
-	.long	RN_TM_EXP1_IC1_OK	# TM_EXP1_IC1_OK
-	.long	RN_empty_5431	# TM_EXP1_IC1_OK_Label_OK
-	.long	RN_TM_EXP1_IC1_NG	# TM_EXP1_IC1_NG
-	.long	RN_empty_5432	# TM_EXP1_IC1_NG_Label_NG
-	.long	RN_TM_EXP1_IC2_OK	# TM_EXP1_IC2_OK
-	.long	RN_empty_5433	# TM_EXP1_IC2_OK_Label_OK
-	.long	RN_TM_EXP1_IC2_NG	# TM_EXP1_IC2_NG
-	.long	RN_empty_5434	# TM_EXP1_IC2_NG_Label_NG
-	.long	RN_TM_EXP1_IC3_OK	# TM_EXP1_IC3_OK
-	.long	RN_empty_5435	# TM_EXP1_IC3_OK_Label_OK
-	.long	RN_TM_EXP1_IC3_NG	# TM_EXP1_IC3_NG
-	.long	RN_empty_5436	# TM_EXP1_IC3_NG_Label_NG
-	.long	RN_TM_EXP1_IC4_OK	# TM_EXP1_IC4_OK
-	.long	RN_empty_5437	# TM_EXP1_IC4_OK_Label_OK
-	.long	RN_TM_EXP1_IC4_NG	# TM_EXP1_IC4_NG
-	.long	RN_empty_5438	# TM_EXP1_IC4_NG_Label_NG
-	.long	RN_TM_EXP2_IC1_OK	# TM_EXP2_IC1_OK
-	.long	RN_empty_5439	# TM_EXP2_IC1_OK_Label_OK
-	.long	RN_TM_EXP2_IC1_NG	# TM_EXP2_IC1_NG
-	.long	RN_empty_5440	# TM_EXP2_IC1_NG_Label_NG
-	.long	RN_TM_EXP2_IC2_OK	# TM_EXP2_IC2_OK
-	.long	RN_empty_5441	# TM_EXP2_IC2_OK_Label_OK
-	.long	RN_TM_EXP2_IC2_NG	# TM_EXP2_IC2_NG
-	.long	RN_empty_5442	# TM_EXP2_IC2_NG_Label_NG
-	.long	RN_TM_EXP2_IC3_OK	# TM_EXP2_IC3_OK
-	.long	RN_empty_5443	# TM_EXP2_IC3_OK_Label_OK
-	.long	RN_TM_EXP2_IC3_NG	# TM_EXP2_IC3_NG
-	.long	RN_empty_5444	# TM_EXP2_IC3_NG_Label_NG
-	.long	RN_TM_EXP2_IC4_OK	# TM_EXP2_IC4_OK
-	.long	RN_empty_5445	# TM_EXP2_IC4_OK_Label_OK
-	.long	RN_TM_EXP2_IC4_NG	# TM_EXP2_IC4_NG
-	.long	RN_empty_5446	# TM_EXP2_IC4_NG_Label_NG
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x384FD4, 0x384FD8
-data_4C384FD8:
-	# 4 bytes the code takes the address of: InitializeUser12 0x4C106BC2 `call RegisterMode_entry, [a2], 4` (+0, arg sp40); InitializeUser12 0x4C106BC2 `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser12 0x4C106BC2 `call RegisterTitle_entry, [d2,a2], 8` (+0, arg sp40) (+1 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterMode (sp40): RegisterMode reads nothing through it at a fixed offset (it stores it, or keeps it for later); RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later); RegisterTitle (sp40): RegisterTitle reads nothing through it at a fixed offset (it stores it, or keeps it for later)
-	.long	data_4C241050	# +0
-
-PmemModeBoxProc_Lef_Table:	# 2 x u8, 144..146; read by PmemModeBoxProc : `movbu	(d0, a2), d0`
-	tab_u8	144, 146
-MSAModeBoxProc_L10d_Table:	# 6 x u8, 0..255; read by MSAModeBoxProc : `movbu	(d0, a2), d0`
-	tab_u8	0, 145, 146, 147, 255, 255
-CusMemModeBoxProc_L11c_Table:	# 4 x u8, 145..255; read by CusMemModeBoxProc : `movbu	(d0, a3), d0`
-	tab_u8	145, 147, 255, 255
-FSWAssGridCheck_L77_Table:	# 44 x u8, 0..255; read by FSWAssGridCheck : `movbu	(d0, a0), d1`; func_4C109205_entry : `movbu	(d0, a0), d0`
-	tab_u8	0, 65, 66, 144, 145, 179, 180, 192, 193, 194, 195, 196, 197, 198, 199, 178	# [0]
-	tab_u8	136, 146, 147, 148, 149, 64, 150, 153, 151, 191, 190, 173, 188, 176, 177, 184	# [16]
-	tab_u8	185, 160, 161, 162, 163, 164, 165, 189, 182, 183, 255, 255	# [32]
-data_4C385014:
-	# 12 bytes the code takes the address of: TestRgbwbRunFunc 0x4C10E5A4 `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestRgbwbRunFunc 0x4C10E5A4 `mov data_4C385014, d1` (+0, as a base); TestRgbwbFunc_L54 0x4C10E628 `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24) (+13 more); byte rows (u8); the callee walk: SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
-	tab_u8	20, 0, 76, 1, 20, 0, 172, 1, 0, 0, 0, 0	# +0
-data_4C385020:
-	# 12 bytes the code takes the address of: TestCrosstarlRunFunc 0x4C10E7EE `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestCrosstarlRunFunc 0x4C10E7EE `mov data_4C385020, d1` (+0, as a base); byte rows (u8); the callee walk: SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
-	tab_u8	21, 0, 76, 1, 21, 0, 172, 1, 0, 0, 0, 0	# +0
-data_4C38502C:
-	# 12 bytes the code takes the address of: TestSampleRunFunc 0x4C10E84E `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestSampleRunFunc 0x4C10E84E `mov data_4C38502C, d1` (+0, as a base); TestSampleFunc_L83 0x4C10E901 `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24) (+3 more); byte rows (u8); the callee walk: SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
-	tab_u8	22, 0, 76, 1, 22, 0, 172, 1, 0, 0, 0, 0	# +0
-TestSampleFunc_L20_Table:	# 8 x u8, 1..223; read by TestSampleFunc : `movbu	(d0, a0), d0`
-	tab_u8	1, 9, 48, 64, 85, 65, 223, 131
-data_4C385040:
-	# 12 bytes the code takes the address of: TestContrastRunFunc 0x4C10E93F `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestContrastRunFunc 0x4C10E93F `mov data_4C385040, d1` (+0, as a base); byte rows (u8); the callee walk: SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
-	tab_u8	23, 0, 76, 1, 23, 0, 172, 1, 0, 0, 0, 0	# +0
-data_4C38504C:
-	# 12 bytes the code takes the address of: TestMICFunc_L141 0x4C10F848 `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestMICFunc_L141 0x4C10F848 `mov data_4C38504C, d0` (+0, as a base); TestMICFunc_L168 0x4C10F86F `call KillApTimer_entry, [d2,d3,a2,a3], 0x30` (+0, arg sp24) (+1 more); byte rows (u8); the callee walk: KillApTimer (sp24): KillApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later); SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
-	tab_u8	25, 0, 76, 1, 12, 0, 172, 1, 0, 0, 0, 0	# +0
-
-Str_empty_281:	.asciz " "
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x38505A, 0x385064
-
-ptrs_4C385064:
-	.long	loc_4C1168EA
-	.long	func_4C1168ED
-	.long	loc_4C116920
-	.long	loc_4C11692B
-
-FatBootHead_720K:	# a FAT boot sector's first 32 bytes, a 720 KB disk's (1440 sectors of 512 bytes): func_4C132BF7 0x4C132BF7: memcpy(.., 0x20)
-	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 2, 1, 2, 112, 1440, 0xf9, 3, 9, 2, 0
-	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
-
-func_4C132BF7_entry_L9e_Block:	# 3 bytes, copied whole by func_4C132BF7_entry_L9e 0x4C132C9A: memcpy(.., 3); func_4C132BF7_entry_L149 0x4C132D45: memcpy(.., 3)
-	tab_u8	249, 255, 255	# [0]
-
-FatBootHead_1440K:	# a FAT boot sector's first 32 bytes, a 1440 KB disk's (2880 sectors of 512 bytes): func_4C132EC1 0x4C132EC1: memcpy(.., 0x20)
-	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 1, 1, 2, 224, 2880, 0xf0, 9, 18, 2, 0
-	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
-
-func_4C132EC1_entry_L9e_Block:	# 3 bytes, copied whole by func_4C132EC1_entry_L9e 0x4C132F64: memcpy(.., 3); func_4C132EC1_entry_L11b 0x4C132FE1: memcpy(.., 3)
-	tab_u8	240, 255, 255	# [0]
-	.align	4, 0xFF	# pad after func_4C132EC1_entry_L9e_Block
-
-NoteConvRules:	# 128 x NoteConvRule (8 bytes each); read by NoteConvRuleByte1Get_L9 0x4C058014 `movbu (1, a0), d0`; NoteConvRuleByte2Get_L9 0x4C05802F `movbu (2, a0), d0`; NoteConvRuleByte3Get_L9 0x4C05804A `movbu (3, a0), d0` (+12)
-	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1	# [0]
-	NoteConvRule	is_melody=1, no_third_adj=1, table=NoteConvRules_p4_0
-	NoteConvRule	is_melody=1, alt_chord=1, no_third_adj=1, table=NoteConvRules_p4_0
-	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1
-	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1
-	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1
-	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1
-	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1
-	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1	# [8]
-	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1
-	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1
-	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1
-	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1
-	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1
-	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_1
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_2	# [16]
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_4
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_5
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_6
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_7
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_8
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_9
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_10	# [24]
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_8
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3	# [32]
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3	# [40]
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3	# [48]
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3	# [56]
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3	# [64]
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3	# [72]
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_3
-	NoteConvRule	table=NoteConvRules_p4_11	# [80]
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_1
-	NoteConvRule	table=NoteConvRules_p4_12
-	NoteConvRule	table=NoteConvRules_p4_13
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11	# [88]
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_14	# [96]
-	NoteConvRule	table=NoteConvRules_p4_15
-	NoteConvRule	table=NoteConvRules_p4_16
-	NoteConvRule	is_melody=1, table=NoteConvRules_p4_1
-	NoteConvRule	table=NoteConvRules_p4_17
-	NoteConvRule	table=NoteConvRules_p4_18
-	NoteConvRule	table=NoteConvRules_p4_19
-	NoteConvRule	table=NoteConvRules_p4_20
-	NoteConvRule	table=NoteConvRules_p4_11	# [104]
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11	# [112]
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11	# [120]
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-	NoteConvRule	table=NoteConvRules_p4_11
-
-func_4C05C2C0_entry_L1a5_Table:	# 256 x u8, 0..2; read by func_4C05C2C0_entry : `movbu	(d0, a0), d0`
-	tab_u8	2, 2, 0, 2, 2, 2, 1, 0, 0, 2, 0, 0, 2, 2, 2, 2	# [0]
-	tab_u8	2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 2, 2, 2, 2, 2, 2	# [16]
-	tab_u8	2, 2, 2, 0, 0, 0, 0, 2, 0, 2, 1, 2, 1, 2, 1, 2	# [32]
-	tab_u8	2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 2, 2, 2	# [48]
-	tab_u8	2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [64]
-	tab_u8	2, 2, 1, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2	# [80]
-	tab_u8	2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 1, 1, 2, 2	# [96]
-	tab_u8	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [112]
-	tab_u8	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [128]
-	tab_u8	2, 2, 2, 2, 2, 2, 0, 0, 1, 1, 1, 2, 1, 2, 2, 0	# [144]
-	tab_u8	0, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 1	# [160]
-	tab_u8	1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [176]
-	tab_u8	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [192]
-	tab_u8	2, 2, 2, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 1, 1, 2	# [208]
-	tab_u8	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 2	# [224]
-	tab_u8	2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [240]
-EasyCompGrid_La6_Table:	# 2 x u16, 0..10; read by EasyCompGrid_La6 0x4C0C0B51: `movhu (EasyCompGrid_La6_Table), d3`
-	tab_u16	10, 0
-
-func_4C05D626_entry_L2c_Var:	# u32, a constant; read / written by func_4C05D626_entry_L2c 0x4C05D657: `mov (func_4C05D626_entry_L2c_Var), a0`; func_4C05D626_entry_L71 0x4C05D69C: `mov (func_4C05D626_entry_L2c_Var), a0` ...
-	.long	0x4c2580f8
-
-ptrs_4C3855C4:
-	.long	loc_4C13A1DE
-	.long	loc_4C13A217
-	.long	loc_4C13A21A
-	.long	loc_4C13A21D

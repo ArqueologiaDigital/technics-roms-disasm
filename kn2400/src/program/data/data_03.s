@@ -1145,2333 +1145,4104 @@ func_50150302_entry_L9d_Selected_7:	# REC_func_50150302_entry_L9d_Selected (12 b
 func_50150302_entry_L9d_Selected_8:	# REC_func_50150302_entry_L9d_Selected (12 bytes)
 	REC_func_50150302_entry_L9d_Selected	
 
-func_4860E0FD_Table:	# 2048 x REC_func_4860E0FD_Table (2 bytes each); read by func_4860E0FD_entry_L4b 0x4860E14D `movbu (d0, a0), d0`; func_4860E0FD_entry_L62 0x4860E164 `movbu (1, a0), d0`; func_4860E0FD_entry_L62 0x4860E164 `movbu (d0, a0), d0`
-	REC_func_4860E0FD_Table		# [0]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [8]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [16]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=6, index=144
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=3, index=128	# [24]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [32]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=13, index=96
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=20, index=96
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=2, index=128	# [40]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [48]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [56]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [64]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=23, index=80
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=1, index=80
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=5, index=80	# [72]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=23	# [80]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=10
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=40, index=80
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=41, index=80	# [88]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [96]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=25, index=96
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=27, index=96
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [104]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [112]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [120]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [128]
-	REC_func_4860E0FD_Table	f0=3
-	REC_func_4860E0FD_Table	f0=2
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=5, index=144
-	REC_func_4860E0FD_Table	f0=41, index=144
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=4	# [136]
-	REC_func_4860E0FD_Table	f0=26
-	REC_func_4860E0FD_Table	f0=12
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=9, index=144
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=1	# [144]
-	REC_func_4860E0FD_Table	f0=3
-	REC_func_4860E0FD_Table	f0=2
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=11, index=1
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=26, index=128	# [152]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=13	# [160]
-	REC_func_4860E0FD_Table	f0=25
-	REC_func_4860E0FD_Table	f0=14
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=8, index=96
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=12, index=128	# [168]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [176]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [184]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [192]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=3, index=80
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=9, index=80	# [200]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [208]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [216]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [224]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [232]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [240]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [248]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [256]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=6
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=20, index=144
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=1, index=128	# [264]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=40, index=128
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=27, index=144
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=5	# [272]
-	REC_func_4860E0FD_Table	f0=9
-	REC_func_4860E0FD_Table	f0=6
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=19, index=1
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=3, index=128	# [280]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=20	# [288]
-	REC_func_4860E0FD_Table	f0=27
-	REC_func_4860E0FD_Table	f0=8
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=7
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=2, index=128	# [296]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [304]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [312]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [320]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=10, index=80
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=2, index=80
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=6, index=80	# [328]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [336]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [344]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [352]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [360]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [368]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [376]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [384]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=26, index=64	# [392]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [400]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [408]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [416]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [424]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [432]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [440]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [448]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [456]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [464]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [472]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [480]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [488]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [496]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [504]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [512]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=13, index=128	# [520]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=23, index=112	# [528]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=10, index=32
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=25, index=128	# [536]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=2, index=32	# [544]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=12, index=32
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=2, index=32
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=14, index=128	# [552]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [560]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [568]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=6, index=32	# [576]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=40, index=160
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=6, index=32
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=8, index=32	# [584]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=10, index=112	# [592]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [600]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [608]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [616]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [624]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [632]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [640]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=12, index=64	# [648]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=40	# [656]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [664]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [672]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [680]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [688]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [696]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [704]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [712]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [720]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [728]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [736]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [744]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [752]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [760]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [768]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [776]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=41	# [784]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [792]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [800]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [808]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [816]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [824]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [832]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [840]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [848]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [856]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [864]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [872]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [880]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [888]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [896]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [904]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [912]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [920]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [928]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [936]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [944]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [952]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [960]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [968]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [976]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [984]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [992]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1000]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1008]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1016]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1024]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1032]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1040]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1048]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1056]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1064]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1072]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1080]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=3, index=16	# [1088]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=41, index=160
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=26, index=16
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=3, index=16	# [1096]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=25, index=16	# [1104]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1112]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1120]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1128]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1136]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1144]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1152]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=9, index=16	# [1160]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	f0=27, index=16	# [1168]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1176]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1184]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1192]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1200]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1208]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1216]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1224]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1232]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1240]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1248]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1256]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1264]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1272]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1280]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1288]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1296]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1304]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1312]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1320]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1328]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1336]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1344]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1352]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1360]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1368]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1376]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1384]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1392]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1400]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1408]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1416]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1424]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1432]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1440]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1448]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1456]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1464]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1472]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1480]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1488]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1496]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1504]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1512]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1520]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1528]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1536]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1544]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1552]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1560]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1568]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1576]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1584]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1592]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1600]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1608]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1616]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1624]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1632]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1640]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1648]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1656]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1664]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1672]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1680]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1688]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1696]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1704]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1712]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1720]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1728]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1736]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1744]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1752]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1760]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1768]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1776]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1784]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1792]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1800]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1808]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1816]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1824]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1832]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1840]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1848]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1856]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1864]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1872]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1880]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1888]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1896]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1904]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1912]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1920]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1928]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1936]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1944]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1952]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1960]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1968]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1976]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1984]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [1992]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [2000]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [2008]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [2016]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [2024]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [2032]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table		# [2040]
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-	REC_func_4860E0FD_Table	
-func_4860E29C_Table:	# 256 x REC_func_4860E29C_Table (2 bytes each); read by func_4860E29C_entry_L2d 0x4860E2CE `movbu (1, a0), d0`; func_4860E29C_entry_L6e 0x4860E30F `movbu (d0, a3), d0`; func_4860E29C_entry_L8b 0x4860E32C `movbu (1, a0), d0` (+7)
-	REC_func_4860E29C_Table		# [0]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [8]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [16]
-	REC_func_4860E29C_Table	f0=21, index=145
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=6, index=144
-	REC_func_4860E29C_Table	f0=35, index=1
-	REC_func_4860E29C_Table	f0=28, index=1
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=3, index=128	# [24]
-	REC_func_4860E29C_Table	f0=36, index=1
-	REC_func_4860E29C_Table	f0=32, index=1
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [32]
-	REC_func_4860E29C_Table	f0=28, index=33
-	REC_func_4860E29C_Table	f0=15, index=129
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=2, index=33
-	REC_func_4860E29C_Table	f0=22, index=144
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=2, index=128	# [40]
-	REC_func_4860E29C_Table	f0=24, index=128
-	REC_func_4860E29C_Table	f0=39
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=16, index=128
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [48]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=37
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [56]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [64]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=18, index=129
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=1, index=80
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=5, index=80	# [72]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=18, index=128
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=24, index=80
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=23	# [80]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=10
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=40, index=80
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=41, index=80	# [88]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=35, index=128
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=28, index=128	# [96]
-	REC_func_4860E29C_Table	f0=31, index=128
-	REC_func_4860E29C_Table	f0=25, index=96
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=27, index=96
-	REC_func_4860E29C_Table	f0=31, index=32
-	REC_func_4860E29C_Table	f0=34, index=32
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=28, index=128	# [104]
-	REC_func_4860E29C_Table	f0=31, index=128
-	REC_func_4860E29C_Table	f0=28, index=128
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=30, index=128
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [112]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [120]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [128]
-	REC_func_4860E29C_Table	f0=3
-	REC_func_4860E29C_Table	f0=2
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=5, index=144
-	REC_func_4860E29C_Table	f0=35
-	REC_func_4860E29C_Table	f0=28, index=1
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=4	# [136]
-	REC_func_4860E29C_Table	f0=26
-	REC_func_4860E29C_Table	f0=12
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=9, index=144
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=1	# [144]
-	REC_func_4860E29C_Table	f0=3
-	REC_func_4860E29C_Table	f0=2
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=11, index=1
-	REC_func_4860E29C_Table	f0=35, index=1
-	REC_func_4860E29C_Table	f0=28, index=1
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=26, index=128	# [152]
-	REC_func_4860E29C_Table	f0=36, index=1
-	REC_func_4860E29C_Table	f0=32, index=1
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=13	# [160]
-	REC_func_4860E29C_Table	f0=28, index=33
-	REC_func_4860E29C_Table	f0=14
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=8, index=96
-	REC_func_4860E29C_Table	f0=22, index=144
-	REC_func_4860E29C_Table	f0=32, index=32
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=12, index=128	# [168]
-	REC_func_4860E29C_Table	f0=34, index=128
-	REC_func_4860E29C_Table	f0=39
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=33, index=128
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [176]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=37
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [184]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [192]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=3, index=80
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=9, index=80	# [200]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [208]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	f0=17, index=80
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [216]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [224]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [232]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [240]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table		# [248]
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-	REC_func_4860E29C_Table	
-# census: opaque -- unknown-dump: 358 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x1485FC, 0x148762
-	.space	164, 0x00
-# census: opaque -- unknown-dump: 416 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x148806, 0x1489A6
-	.space	90, 0x00
-# census: opaque -- unknown-dump: 198 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x148A00, 0x148AC6
-	.space	322, 0x00
-# census: opaque -- unknown-dump: 158 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x148C08, 0x148CA6
-	.space	90, 0x00
-# census: opaque -- unknown-dump: 166 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x148D00, 0x148DA6
-	.space	90, 0x00
-# census: opaque -- unknown-dump: 198 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x148E00, 0x148EC6
-	.space	86, 0x00
-# census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x148F1C, 0x148F22
-	.space	1242, 0x00
+func_4860E0FD_Table:	# 2048 x ChordRecogEntry (2 bytes each); read by func_4860E0FD_entry_L4b 0x4860E14D `movbu (d0, a0), d0`; func_4860E0FD_entry_L62 0x4860E164 `movbu (1, a0), d0`; func_4860E0FD_entry_L62 0x4860E164 `movbu (d0, a0), d0`
+	ChordRecogEntry		# [0]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [8]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [16]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=6, root_flags=144
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=3, root_flags=128	# [24]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [32]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=13, root_flags=96
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=20, root_flags=96
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=2, root_flags=128	# [40]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [48]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [56]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [64]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=23, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=1, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=5, root_flags=80	# [72]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=23	# [80]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=10
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=40, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=41, root_flags=80	# [88]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [96]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=25, root_flags=96
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=27, root_flags=96
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [104]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [112]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [120]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [128]
+	ChordRecogEntry	chord_type=3
+	ChordRecogEntry	chord_type=2
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=5, root_flags=144
+	ChordRecogEntry	chord_type=41, root_flags=144
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=4	# [136]
+	ChordRecogEntry	chord_type=26
+	ChordRecogEntry	chord_type=12
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=9, root_flags=144
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=1	# [144]
+	ChordRecogEntry	chord_type=3
+	ChordRecogEntry	chord_type=2
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=11, root_flags=1
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=26, root_flags=128	# [152]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=13	# [160]
+	ChordRecogEntry	chord_type=25
+	ChordRecogEntry	chord_type=14
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=8, root_flags=96
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=12, root_flags=128	# [168]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [176]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [184]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [192]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=3, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=9, root_flags=80	# [200]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [208]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [216]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [224]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [232]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [240]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [248]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [256]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=6
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=20, root_flags=144
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=1, root_flags=128	# [264]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=40, root_flags=128
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=27, root_flags=144
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=5	# [272]
+	ChordRecogEntry	chord_type=9
+	ChordRecogEntry	chord_type=6
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=19, root_flags=1
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=3, root_flags=128	# [280]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=20	# [288]
+	ChordRecogEntry	chord_type=27
+	ChordRecogEntry	chord_type=8
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=7
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=2, root_flags=128	# [296]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [304]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [312]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [320]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=10, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=2, root_flags=80
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=6, root_flags=80	# [328]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [336]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [344]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [352]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [360]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [368]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [376]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [384]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=26, root_flags=64	# [392]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [400]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [408]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [416]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [424]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [432]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [440]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [448]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [456]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [464]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [472]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [480]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [488]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [496]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [504]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [512]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=13, root_flags=128	# [520]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=23, root_flags=112	# [528]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=10, root_flags=32
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=25, root_flags=128	# [536]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=2, root_flags=32	# [544]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=12, root_flags=32
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=2, root_flags=32
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=14, root_flags=128	# [552]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [560]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [568]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=6, root_flags=32	# [576]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=40, root_flags=160
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=6, root_flags=32
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=8, root_flags=32	# [584]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=10, root_flags=112	# [592]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [600]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [608]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [616]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [624]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [632]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [640]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=12, root_flags=64	# [648]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=40	# [656]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [664]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [672]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [680]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [688]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [696]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [704]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [712]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [720]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [728]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [736]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [744]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [752]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [760]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [768]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [776]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=41	# [784]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [792]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [800]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [808]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [816]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [824]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [832]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [840]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [848]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [856]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [864]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [872]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [880]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [888]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [896]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [904]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [912]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [920]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [928]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [936]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [944]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [952]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [960]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [968]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [976]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [984]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [992]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1000]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1008]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1016]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1024]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1032]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1040]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1048]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1056]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1064]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1072]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1080]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=3, root_flags=16	# [1088]
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=41, root_flags=160
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=26, root_flags=16
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=3, root_flags=16	# [1096]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=25, root_flags=16	# [1104]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1112]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1120]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1128]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1136]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1144]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1152]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=9, root_flags=16	# [1160]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	chord_type=27, root_flags=16	# [1168]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1176]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1184]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1192]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1200]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1208]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1216]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1224]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1232]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1240]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1248]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1256]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1264]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1272]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1280]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1288]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1296]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1304]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1312]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1320]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1328]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1336]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1344]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1352]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1360]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1368]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1376]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1384]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1392]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1400]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1408]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1416]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1424]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1432]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1440]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1448]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1456]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1464]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1472]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1480]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1488]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1496]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1504]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1512]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1520]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1528]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1536]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1544]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1552]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1560]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1568]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1576]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1584]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1592]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1600]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1608]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1616]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1624]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1632]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1640]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1648]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1656]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1664]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1672]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1680]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1688]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1696]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1704]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1712]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1720]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1728]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1736]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1744]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1752]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1760]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1768]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1776]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1784]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1792]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1800]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1808]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1816]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1824]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1832]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1840]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1848]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1856]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1864]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1872]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1880]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1888]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1896]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1904]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1912]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1920]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1928]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1936]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1944]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1952]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1960]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1968]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1976]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1984]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [1992]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2000]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2008]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2016]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2024]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2032]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry		# [2040]
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+	ChordRecogEntry	
+func_4860E29C_Table:	# 2048 x ChordRecogEntry2 (2 bytes each); read by func_4860E29C_entry_L2d 0x4860E2CE `movbu (1, a0), d0`; func_4860E29C_entry_L6e 0x4860E30F `movbu (d0, a3), d0`; func_4860E29C_entry_L8b 0x4860E32C `movbu (1, a0), d0` (+7)
+	ChordRecogEntry2		# [0]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [8]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [16]
+	ChordRecogEntry2	chord_type=21, root_flags=145
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=144
+	ChordRecogEntry2	chord_type=35, root_flags=1
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=3, root_flags=128	# [24]
+	ChordRecogEntry2	chord_type=36, root_flags=1
+	ChordRecogEntry2	chord_type=32, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [32]
+	ChordRecogEntry2	chord_type=28, root_flags=33
+	ChordRecogEntry2	chord_type=15, root_flags=129
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=33
+	ChordRecogEntry2	chord_type=22, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=128	# [40]
+	ChordRecogEntry2	chord_type=24, root_flags=128
+	ChordRecogEntry2	chord_type=39
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [48]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [56]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [64]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=129
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=1, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=5, root_flags=80	# [72]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=23	# [80]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=10
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=40, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=41, root_flags=80	# [88]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=128	# [96]
+	ChordRecogEntry2	chord_type=31, root_flags=128
+	ChordRecogEntry2	chord_type=25, root_flags=96
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=27, root_flags=96
+	ChordRecogEntry2	chord_type=31, root_flags=32
+	ChordRecogEntry2	chord_type=34, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=128	# [104]
+	ChordRecogEntry2	chord_type=31, root_flags=128
+	ChordRecogEntry2	chord_type=28, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [112]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [120]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [128]
+	ChordRecogEntry2	chord_type=3
+	ChordRecogEntry2	chord_type=2
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=5, root_flags=144
+	ChordRecogEntry2	chord_type=35
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=4	# [136]
+	ChordRecogEntry2	chord_type=26
+	ChordRecogEntry2	chord_type=12
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=9, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=1	# [144]
+	ChordRecogEntry2	chord_type=3
+	ChordRecogEntry2	chord_type=2
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=11, root_flags=1
+	ChordRecogEntry2	chord_type=35, root_flags=1
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=26, root_flags=128	# [152]
+	ChordRecogEntry2	chord_type=36, root_flags=1
+	ChordRecogEntry2	chord_type=32, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=13	# [160]
+	ChordRecogEntry2	chord_type=28, root_flags=33
+	ChordRecogEntry2	chord_type=14
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=8, root_flags=96
+	ChordRecogEntry2	chord_type=22, root_flags=144
+	ChordRecogEntry2	chord_type=32, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=12, root_flags=128	# [168]
+	ChordRecogEntry2	chord_type=34, root_flags=128
+	ChordRecogEntry2	chord_type=39
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [176]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [184]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [192]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=3, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=9, root_flags=80	# [200]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [208]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=17, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [216]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [224]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [232]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [240]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [248]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [256]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=19, root_flags=1
+	ChordRecogEntry2	chord_type=16, root_flags=176
+	ChordRecogEntry2	chord_type=31, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=1, root_flags=128	# [264]
+	ChordRecogEntry2	chord_type=24, root_flags=128
+	ChordRecogEntry2	chord_type=34, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=27, root_flags=144
+	ChordRecogEntry2	chord_type=30, root_flags=176
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=5	# [272]
+	ChordRecogEntry2	chord_type=9
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=19, root_flags=1
+	ChordRecogEntry2	chord_type=33, root_flags=176
+	ChordRecogEntry2	chord_type=31, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=3, root_flags=128	# [280]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=20	# [288]
+	ChordRecogEntry2	chord_type=27
+	ChordRecogEntry2	chord_type=8
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=7
+	ChordRecogEntry2	chord_type=16, root_flags=176
+	ChordRecogEntry2	chord_type=33, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=128	# [296]
+	ChordRecogEntry2	chord_type=24, root_flags=128
+	ChordRecogEntry2	chord_type=15, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=128
+	ChordRecogEntry2	chord_type=30, root_flags=176
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [304]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=176
+	ChordRecogEntry2	chord_type=33, root_flags=176
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [312]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [320]
+	ChordRecogEntry2	chord_type=37, root_flags=80
+	ChordRecogEntry2	chord_type=10, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=80
+	ChordRecogEntry2	chord_type=37, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=80	# [328]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=48	# [336]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=38
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=15, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=80	# [344]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=48	# [352]
+	ChordRecogEntry2	chord_type=31, root_flags=128
+	ChordRecogEntry2	chord_type=22, root_flags=48
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=128	# [360]
+	ChordRecogEntry2	chord_type=31, root_flags=128
+	ChordRecogEntry2	chord_type=28, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [368]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [376]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [384]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=26, root_flags=64	# [392]
+	ChordRecogEntry2	chord_type=36, root_flags=64
+	ChordRecogEntry2	chord_type=34
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24	# [400]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=36, root_flags=128	# [408]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [416]
+	ChordRecogEntry2	chord_type=34, root_flags=128
+	ChordRecogEntry2	chord_type=24, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=128	# [424]
+	ChordRecogEntry2	chord_type=36, root_flags=64
+	ChordRecogEntry2	chord_type=32, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=128
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [432]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [440]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [448]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [456]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [464]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [472]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [480]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [488]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [496]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [504]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [512]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=1
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=13, root_flags=128	# [520]
+	ChordRecogEntry2	chord_type=36, root_flags=1
+	ChordRecogEntry2	chord_type=32, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=23, root_flags=112	# [528]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=10, root_flags=32
+	ChordRecogEntry2	chord_type=35, root_flags=1
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=25, root_flags=128	# [536]
+	ChordRecogEntry2	chord_type=36, root_flags=1
+	ChordRecogEntry2	chord_type=32, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=32	# [544]
+	ChordRecogEntry2	chord_type=28, root_flags=32
+	ChordRecogEntry2	chord_type=12, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=2, root_flags=32
+	ChordRecogEntry2	chord_type=28, root_flags=32
+	ChordRecogEntry2	chord_type=32, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=14, root_flags=128	# [552]
+	ChordRecogEntry2	chord_type=32, root_flags=64
+	ChordRecogEntry2	chord_type=29, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [560]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=15, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [568]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=32	# [576]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=40, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=17, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=8, root_flags=32	# [584]
+	ChordRecogEntry2	chord_type=33, root_flags=64
+	ChordRecogEntry2	chord_type=15, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=10, root_flags=112	# [592]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=80	# [600]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=32	# [608]
+	ChordRecogEntry2	chord_type=31, root_flags=32
+	ChordRecogEntry2	chord_type=34, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=32
+	ChordRecogEntry2	chord_type=31, root_flags=32
+	ChordRecogEntry2	chord_type=36, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=160	# [616]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [624]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [632]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [640]
+	ChordRecogEntry2	chord_type=17, root_flags=1
+	ChordRecogEntry2	chord_type=15
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=1
+	ChordRecogEntry2	chord_type=35
+	ChordRecogEntry2	chord_type=28, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=29, root_flags=1	# [648]
+	ChordRecogEntry2	chord_type=36
+	ChordRecogEntry2	chord_type=29
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=40	# [656]
+	ChordRecogEntry2	chord_type=17, root_flags=1
+	ChordRecogEntry2	chord_type=15, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=18, root_flags=1
+	ChordRecogEntry2	chord_type=35
+	ChordRecogEntry2	chord_type=28
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34, root_flags=64	# [664]
+	ChordRecogEntry2	chord_type=36
+	ChordRecogEntry2	chord_type=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=15, root_flags=32	# [672]
+	ChordRecogEntry2	chord_type=28, root_flags=32
+	ChordRecogEntry2	chord_type=29, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=15, root_flags=32
+	ChordRecogEntry2	chord_type=28, root_flags=32
+	ChordRecogEntry2	chord_type=32, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=29, root_flags=64	# [680]
+	ChordRecogEntry2	chord_type=32, root_flags=64
+	ChordRecogEntry2	chord_type=29, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [688]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=15, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [696]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=32	# [704]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=64	# [712]
+	ChordRecogEntry2	chord_type=33, root_flags=64
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [720]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [728]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [736]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [744]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [752]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [760]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [768]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [776]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=41	# [784]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [792]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=32	# [800]
+	ChordRecogEntry2	chord_type=30, root_flags=32
+	ChordRecogEntry2	chord_type=33, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=32
+	ChordRecogEntry2	chord_type=30, root_flags=32
+	ChordRecogEntry2	chord_type=33, root_flags=32
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37, root_flags=128	# [808]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [816]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [824]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [832]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [840]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=48	# [848]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [856]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [864]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [872]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [880]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [888]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [896]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [904]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [912]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [920]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [928]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [936]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [944]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [952]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [960]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [968]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [976]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [984]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [992]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1000]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1008]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1016]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1024]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1032]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=48	# [1040]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1048]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1056]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1064]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=144	# [1072]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1080]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=3, root_flags=16	# [1088]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=41, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=26, root_flags=16
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=3, root_flags=16	# [1096]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=21, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=36, root_flags=16
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=25, root_flags=16	# [1104]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=22, root_flags=160
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1112]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1120]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1128]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1136]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1144]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1152]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=9, root_flags=16	# [1160]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16	# [1168]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=24, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1176]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=37, root_flags=96	# [1184]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1192]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=144	# [1200]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=16, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=144
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1208]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1216]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=36, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1224]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34, root_flags=144	# [1232]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=36, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1240]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1248]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1256]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1264]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1272]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1280]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1288]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=34, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=48	# [1296]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1304]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1312]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1320]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=31, root_flags=48	# [1328]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1336]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=17, root_flags=16	# [1344]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=17, root_flags=16	# [1352]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=35, root_flags=16
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=36, root_flags=16
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=28, root_flags=48	# [1360]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=6, root_flags=1
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=32, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1368]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1376]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=33, root_flags=80
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1384]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1392]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1400]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1408]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1416]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=48	# [1424]
+	ChordRecogEntry2	
+	ChordRecogEntry2	chord_type=30, root_flags=48
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1432]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1440]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1448]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1456]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1464]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1472]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1480]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1488]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1496]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1504]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1512]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1520]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1528]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1536]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1544]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1552]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1560]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1568]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1576]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1584]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1592]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1600]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1608]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1616]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1624]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1632]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1640]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1648]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1656]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1664]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1672]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1680]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1688]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1696]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1704]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1712]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1720]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1728]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1736]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1744]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1752]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1760]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1768]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1776]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1784]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1792]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1800]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1808]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1816]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1824]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1832]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1840]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1848]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1856]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1864]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1872]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1880]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1888]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1896]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1904]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1912]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1920]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1928]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1936]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1944]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1952]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1960]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1968]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1976]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1984]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [1992]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2000]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2008]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2016]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2024]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2032]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2		# [2040]
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
+	ChordRecogEntry2	
 
 func_501752A3_Table:	# 1029 x u16, 0..33511; read by func_501752A3 0x501752A3: `movhu	(d0, a2), d2`
 	tab_u16	32929, 32929, 32929, 32929, 32929, 32929, 32929, 32929, 32929, 32929, 32929, 32929	# [0]
@@ -32819,56 +34590,56 @@ EFF_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x18C4A4, 0x18C4A8
 
-EQTrebleGainEditCheck_L3f_Records:	# 49 x REC_EQTrebleGainEditCheck_L3f_Records (6 bytes each); read by EQTrebleGainEditCheck_L3f 0x486F6288 `call strcpy_entry, [a2], 4`; EQBassGainEditCheck_L3f 0x486F6321 `call strcpy_entry, [a2], 4`
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="-12.0\x00"	# [0]
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="-11.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="-11.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="-10.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="-10.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 9.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 9.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 8.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 8.0\x00"	# [8]
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 7.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 7.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 6.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 6.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 5.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 5.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 4.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 4.0\x00"	# [16]
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 3.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 3.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 2.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 2.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 1.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 1.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="- 0.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="  0.0\x00"	# [24]
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 0.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 1.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 1.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 2.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 2.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 3.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 3.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 4.0\x00"	# [32]
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 4.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 5.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 5.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 6.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 6.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 7.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 7.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 8.0\x00"	# [40]
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 8.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 9.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+ 9.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+10.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+10.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+11.0\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+11.5\x00"
-	REC_EQTrebleGainEditCheck_L3f_Records	s0="+12.0\x00"	# [48]
+EQTrebleGainEditCheck_L3f_Records:	# 49 x EqEditLabel (6 bytes each); read by EQTrebleGainEditCheck_L3f 0x486F6288 `call strcpy_entry, [a2], 4`; EQBassGainEditCheck_L3f 0x486F6321 `call strcpy_entry, [a2], 4`
+	EqEditLabel	label="-12.0\x00"	# [0]
+	EqEditLabel	label="-11.5\x00"
+	EqEditLabel	label="-11.0\x00"
+	EqEditLabel	label="-10.5\x00"
+	EqEditLabel	label="-10.0\x00"
+	EqEditLabel	label="- 9.5\x00"
+	EqEditLabel	label="- 9.0\x00"
+	EqEditLabel	label="- 8.5\x00"
+	EqEditLabel	label="- 8.0\x00"	# [8]
+	EqEditLabel	label="- 7.5\x00"
+	EqEditLabel	label="- 7.0\x00"
+	EqEditLabel	label="- 6.5\x00"
+	EqEditLabel	label="- 6.0\x00"
+	EqEditLabel	label="- 5.5\x00"
+	EqEditLabel	label="- 5.0\x00"
+	EqEditLabel	label="- 4.5\x00"
+	EqEditLabel	label="- 4.0\x00"	# [16]
+	EqEditLabel	label="- 3.5\x00"
+	EqEditLabel	label="- 3.0\x00"
+	EqEditLabel	label="- 2.5\x00"
+	EqEditLabel	label="- 2.0\x00"
+	EqEditLabel	label="- 1.5\x00"
+	EqEditLabel	label="- 1.0\x00"
+	EqEditLabel	label="- 0.5\x00"
+	EqEditLabel	label="  0.0\x00"	# [24]
+	EqEditLabel	label="+ 0.5\x00"
+	EqEditLabel	label="+ 1.0\x00"
+	EqEditLabel	label="+ 1.5\x00"
+	EqEditLabel	label="+ 2.0\x00"
+	EqEditLabel	label="+ 2.5\x00"
+	EqEditLabel	label="+ 3.0\x00"
+	EqEditLabel	label="+ 3.5\x00"
+	EqEditLabel	label="+ 4.0\x00"	# [32]
+	EqEditLabel	label="+ 4.5\x00"
+	EqEditLabel	label="+ 5.0\x00"
+	EqEditLabel	label="+ 5.5\x00"
+	EqEditLabel	label="+ 6.0\x00"
+	EqEditLabel	label="+ 6.5\x00"
+	EqEditLabel	label="+ 7.0\x00"
+	EqEditLabel	label="+ 7.5\x00"
+	EqEditLabel	label="+ 8.0\x00"	# [40]
+	EqEditLabel	label="+ 8.5\x00"
+	EqEditLabel	label="+ 9.0\x00"
+	EqEditLabel	label="+ 9.5\x00"
+	EqEditLabel	label="+10.0\x00"
+	EqEditLabel	label="+10.5\x00"
+	EqEditLabel	label="+11.0\x00"
+	EqEditLabel	label="+11.5\x00"
+	EqEditLabel	label="+12.0\x00"	# [48]
 	.align	4, 0xFF	# pad after EQTrebleGainEditCheck_L3f_Records
 
 # 9 classes; a class id is (0xd4 << 16) | its index here (ClassProc 0x48601F6D reads entry id & 0xFFFF, 0x18 bytes each)
@@ -35666,8 +37437,8 @@ StylePanel_NashvilleSaunter_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000011, 0x40, 1, 120	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x21, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x0f
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 15
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -35683,8 +37454,8 @@ StylePanel_FingerPickinGood_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000011, 0x40, 2, 120	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x2b, 0x12, 0x09, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x0f
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 15
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -35700,8 +37471,8 @@ StylePanel_BarnDanceSingers_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000011, 0x40, 3, 120	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x37, 0x00, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x0f
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 15
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -35717,8 +37488,8 @@ StylePanel_Straight_Bop_Sax_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000720, 0x00, 0, 198	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x20, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -35734,8 +37505,8 @@ StylePanel_Jazz_Trio_2:	# one-touch setting 2 of the Music Stylist setup "Jazz T
 	PM_RHYTHM	0x000720, 0x00, 1, 198	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x20, 0x00, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -35751,8 +37522,8 @@ StylePanel_Jazz_Horn_Domain_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000720, 0x00, 2, 198	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x01, 0x35, 0x23, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -35768,8 +37539,8 @@ StylePanel_Jazz_Jam_Duet_4:	# one-touch setting 4 of the Music Stylist setup "Ja
 	PM_RHYTHM	0x000720, 0x40, 3, 198	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x10, 0x48, 0x10, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -35785,8 +37556,8 @@ StylePanel_70s_Rock_Organ_1:	# one-touch setting 1 of the Music Stylist setup "7
 	PM_RHYTHM	0x000854, 0x00, 0, 76	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x37, 0x40, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5a, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	90, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -35802,8 +37573,8 @@ StylePanel_Egalitarian_Rock_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000854, 0x00, 1, 76	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x20, 0x20, 0x0d, 0x37, 0x40, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5a, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	90, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -35819,8 +37590,8 @@ StylePanel_Super_Group_12_3:	# one-touch setting 3 of the Music Stylist setup "S
 	PM_RHYTHM	0x000854, 0x00, 2, 76	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x20, 0x12, 0x00, 0x12, 0x01, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5a, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	90, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -35836,8 +37607,8 @@ StylePanel_70s_Lead_Guitar_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x000854, 0x00, 3, 76	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x20, 0x55, 0x40, 0x22, 0x40, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5a, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	90, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -35853,8 +37624,8 @@ StylePanel_Carmen_s_Keys_1:	# one-touch setting 1 of the Music Stylist setup "Ca
 	PM_RHYTHM	0x000639, 0x40, 0, 132	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x20, 0x00, 0x35, 0x22, 0x35, 0x62
-	PM_SET88	0x04, 0x03, 0x08, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0x03, 8, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -35870,8 +37641,8 @@ StylePanel_Cha_Cha_Brass_2:	# one-touch setting 2 of the Music Stylist setup "Ch
 	PM_RHYTHM	0x000639, 0x40, 1, 132	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x49, 0x12, 0x35, 0x61, 0x35, 0x62
-	PM_SET88	0x04, 0x11, 0x08, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0x11, 8, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -35887,8 +37658,8 @@ StylePanel_Mirrorball_Latin_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000639, 0x40, 2, 132	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x23, 0x37, 0x01, 0x35, 0x62
-	PM_SET88	0x04, 0x03, 0x08, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0x03, 8, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -35904,8 +37675,8 @@ StylePanel_Cha_Cha_Big_Band_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000639, 0x40, 3, 132	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x10, 0x48, 0x22, 0x35, 0x62
-	PM_SET88	0x04, 0x03, 0x08, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0x03, 8, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -35921,8 +37692,8 @@ StylePanel_Ring_The_House_1:	# one-touch setting 1 of the Music Stylist setup "R
 	PM_RHYTHM	0x00002b, 0x00, 0, 132	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x38, 0x24, 0x29, 0x40, 0x35, 0x20, 0x52, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -35938,8 +37709,8 @@ StylePanel_Dance_Atmosphere_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x00002b, 0x00, 1, 132	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x03, 0x37, 0x00, 0x13, 0x00, 0x52, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -35955,8 +37726,8 @@ StylePanel_House_Breakdown_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x00002b, 0x00, 2, 132	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x03, 0x48, 0x00, 0x3a, 0x01, 0x52, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -35972,8 +37743,8 @@ StylePanel_Hit_Soloist_4:	# one-touch setting 4 of the Music Stylist setup "Hit 
 	PM_RHYTHM	0x00002b, 0x00, 3, 132	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x3a, 0x01, 0x52, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -35989,8 +37760,8 @@ StylePanel_Atmospherics_1:	# one-touch setting 1 of the Music Stylist setup "Atm
 	PM_RHYTHM	0x000479, 0x00, 0, 68	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x12, 0x08, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36006,8 +37777,8 @@ StylePanel_Mood_Current_2:	# one-touch setting 2 of the Music Stylist setup "Moo
 	PM_RHYTHM	0x000479, 0x00, 1, 68	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x35, 0x22, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36023,8 +37794,8 @@ StylePanel_Orchestra_Remix_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000479, 0x00, 2, 68	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x12, 0x11, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36040,8 +37811,8 @@ StylePanel_Summer_Echoes_4:	# one-touch setting 4 of the Music Stylist setup "Su
 	PM_RHYTHM	0x000479, 0x00, 3, 68	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x52, 0x00, 0x29, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36057,8 +37828,8 @@ StylePanel_Bossa_To_Suit_1:	# one-touch setting 1 of the Music Stylist setup "Bo
 	PM_RHYTHM	0x00023f, 0x00, 0, 140	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x25, 0x45, 0x48, 0x10, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36074,8 +37845,8 @@ StylePanel_Brazilian_Voices_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x00023f, 0x00, 1, 140	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36091,8 +37862,8 @@ StylePanel_Six_String_Bossa_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x00023f, 0x00, 2, 140	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x35, 0x21, 0x35, 0x21, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36108,8 +37879,8 @@ StylePanel_Wanderly_Latin_4:	# one-touch setting 4 of the Music Stylist setup "W
 	PM_RHYTHM	0x00023f, 0x00, 3, 140	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x02, 0x22, 0x40, 0x22, 0x40, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36125,8 +37896,8 @@ StylePanel_Simple_6_Strings_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000758, 0x00, 0, 109	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x00, 0x20, 0x02, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x56, 0x01
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	86, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36142,8 +37913,8 @@ StylePanel_8_Beat_Keys_2:	# one-touch setting 2 of the Music Stylist setup "8 Be
 	PM_RHYTHM	0x000758, 0x00, 1, 109	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x20, 0x00, 0x14, 0x03, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x56, 0x01
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	86, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36159,8 +37930,8 @@ StylePanel_B3_Basics_3:	# one-touch setting 3 of the Music Stylist setup "B3 Bas
 	PM_RHYTHM	0x000758, 0x00, 2, 109	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x2b, 0x04, 0x53, 0x20, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x56, 0x01
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	86, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36176,8 +37947,8 @@ StylePanel_Many_Keys_on_8_4:	# one-touch setting 4 of the Music Stylist setup "M
 	PM_RHYTHM	0x000758, 0x00, 3, 109	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x20, 0x11, 0x11, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36193,8 +37964,8 @@ StylePanel_Soprano_Ballad_1:	# one-touch setting 1 of the Music Stylist setup "S
 	PM_RHYTHM	0x00085f, 0x00, 0, 82	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x07, 0x49, 0x0b, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x09
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36210,8 +37981,8 @@ StylePanel_Orchestral_Keys_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x00085f, 0x00, 1, 82	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x07, 0x37, 0x00, 0x10, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x09
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36227,8 +37998,8 @@ StylePanel_Symphony_Ballad_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x00085f, 0x00, 2, 82	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x07, 0x35, 0x20, 0x10, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x09
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36244,8 +38015,8 @@ StylePanel_Heart_Strings_4:	# one-touch setting 4 of the Music Stylist setup "He
 	PM_RHYTHM	0x00085f, 0x00, 3, 82	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x07, 0x12, 0x11, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x09
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36261,8 +38032,8 @@ StylePanel_Day_Before_Today_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x00085f, 0x00, 0, 77	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x17, 0x37, 0x00, 0x49, 0x0b, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36278,8 +38049,8 @@ StylePanel_Heavenly_Crying_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x00085f, 0x00, 1, 77	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x40, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36295,8 +38066,8 @@ StylePanel_Acoustic_Ballad_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x00085f, 0x00, 2, 77	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x49, 0x0b, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36312,8 +38083,8 @@ StylePanel_Bottleneck_Tears_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x00085f, 0x00, 3, 77	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x20, 0x0d, 0x48, 0x2b, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36329,8 +38100,8 @@ StylePanel_Hippie_Piano_1:	# one-touch setting 1 of the Music Stylist setup "Hip
 	PM_RHYTHM	0x000852, 0x00, 0, 124	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x22, 0x12, 0x01, 0x35, 0x22
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -36346,8 +38117,8 @@ StylePanel_FlowerPower_Rock_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000852, 0x00, 1, 124	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x21, 0x37, 0x00, 0x35, 0x22
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -36363,8 +38134,8 @@ StylePanel_Woddstock_Harp_3:	# one-touch setting 3 of the Music Stylist setup "W
 	PM_RHYTHM	0x000852, 0x00, 2, 124	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x12, 0x00, 0x35, 0x22
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -36380,8 +38151,8 @@ StylePanel_FolkRock_Guitars_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000852, 0x00, 3, 124	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x00, 0x12, 0x01, 0x35, 0x22
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -36397,8 +38168,8 @@ StylePanel_Colonel_s_March_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000600, 0x00, 0, 112	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x4c, 0x09, 0x12, 0x01, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5f, 0x0d
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	95, 13
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36414,8 +38185,8 @@ StylePanel_March_Past_2:	# one-touch setting 2 of the Music Stylist setup "March
 	PM_RHYTHM	0x000600, 0x00, 1, 112	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x12, 0x08, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5f, 0x0d
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	95, 13
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36431,8 +38202,8 @@ StylePanel_Military_Band_3:	# one-touch setting 3 of the Music Stylist setup "Mi
 	PM_RHYTHM	0x000600, 0x00, 2, 112	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x12, 0x0c, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5f, 0x0d
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	95, 13
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36448,8 +38219,8 @@ StylePanel_March_Finale_4:	# one-touch setting 4 of the Music Stylist setup "Mar
 	PM_RHYTHM	0x000600, 0x00, 3, 112	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x20, 0x12, 0x08, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5e, 0x0d
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	94, 13
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36465,8 +38236,8 @@ StylePanel_Piano_Pop_Groove_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x00042b, 0x00, 0, 86	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x07, 0x35, 0x22, 0x25, 0x45, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x02
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36482,8 +38253,8 @@ StylePanel_BensonPop_Guitar_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x00042b, 0x00, 1, 86	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x07, 0x35, 0x22, 0x35, 0x22, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x02
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36499,8 +38270,8 @@ StylePanel_Jazz_Pop_Groove_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x00042b, 0x00, 2, 86	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x07, 0x37, 0x00, 0x35, 0x22, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x02
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36516,8 +38287,8 @@ StylePanel_Overdrive_Swing_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x00042b, 0x00, 3, 86	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x02
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36533,8 +38304,8 @@ StylePanel_River_March_1:	# one-touch setting 1 of the Music Stylist setup "Rive
 	PM_RHYTHM	0x000402, 0x00, 0, 120	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x4c, 0x09, 0x4c, 0x11, 0x12, 0x0c
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0e
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 14
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36550,8 +38321,8 @@ StylePanel_Marching_Duet_2:	# one-touch setting 2 of the Music Stylist setup "Ma
 	PM_RHYTHM	0x000402, 0x40, 1, 120	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x0c, 0x4c, 0x11, 0x12, 0x0c
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0e
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 14
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36567,8 +38338,8 @@ StylePanel_Brass_And_Reeds_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000402, 0x00, 2, 120	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x09, 0x12, 0x12, 0x12, 0x0c
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0e
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 14
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36584,8 +38355,8 @@ StylePanel_Top_Brass_4:	# one-touch setting 4 of the Music Stylist setup "Top Br
 	PM_RHYTHM	0x000402, 0x40, 3, 120	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x09, 0x4c, 0x11, 0x12, 0x0c
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0e
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 14
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36601,8 +38372,8 @@ StylePanel_SingingAboutLove_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000c5a, 0x00, 0, 120	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x25, 0x45, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x08, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 8, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36618,8 +38389,8 @@ StylePanel_8_Beat_Defender_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000c5a, 0x00, 1, 120	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x25, 0x05, 0x35, 0x62, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x08, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 8, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36635,8 +38406,8 @@ StylePanel_Smooth_Sax_3:	# one-touch setting 3 of the Music Stylist setup "Smoot
 	PM_RHYTHM	0x000c5a, 0x00, 2, 120	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x62, 0x37, 0x40, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x08, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 8, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36652,8 +38423,8 @@ StylePanel_Symphonic_Beat_4:	# one-touch setting 4 of the Music Stylist setup "S
 	PM_RHYTHM	0x000c5a, 0x00, 3, 120	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x4c, 0x0c, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x08, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 8, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36669,8 +38440,8 @@ StylePanel_Country_Roads_1:	# one-touch setting 1 of the Music Stylist setup "Co
 	PM_RHYTHM	0x000755, 0x00, 0, 135	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x25, 0x45, 0x14, 0x10, 0x12, 0x11
-	PM_SET88	0x04, 0x00, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0x00, 13, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36686,8 +38457,8 @@ StylePanel_Nashville_Rock_2:	# one-touch setting 2 of the Music Stylist setup "N
 	PM_RHYTHM	0x000755, 0x00, 1, 135	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x48, 0x2b, 0x55, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0x00, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0x00, 13, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36703,8 +38474,8 @@ StylePanel_Southern_88_3:	# one-touch setting 3 of the Music Stylist setup "Sout
 	PM_RHYTHM	0x000755, 0x00, 2, 135	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36720,8 +38491,8 @@ StylePanel_Yee_Harp_4:	# one-touch setting 4 of the Music Stylist setup "Yee Har
 	PM_RHYTHM	0x000755, 0x00, 3, 135	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x35, 0x21, 0x12, 0x11
-	PM_SET88	0x04, 0x00, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0x00, 13, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36737,8 +38508,8 @@ StylePanel_Square_Garage_1:	# one-touch setting 1 of the Music Stylist setup "Sq
 	PM_RHYTHM	0x000c7e, 0x00, 0, 140	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x48, 0x00, 0x29, 0x40, 0x25, 0x45
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36754,8 +38525,8 @@ StylePanel_Noiz_Garage_2:	# one-touch setting 2 of the Music Stylist setup "Noiz
 	PM_RHYTHM	0x000c7e, 0x00, 1, 140	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x29, 0x00, 0x19, 0x01, 0x25, 0x45
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36771,8 +38542,8 @@ StylePanel_Pulse_Garage_3:	# one-touch setting 3 of the Music Stylist setup "Pul
 	PM_RHYTHM	0x000c7e, 0x00, 2, 140	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x35, 0x24, 0x29, 0x40, 0x25, 0x45
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36788,8 +38559,8 @@ StylePanel_Layer_Garage_4:	# one-touch setting 4 of the Music Stylist setup "Lay
 	PM_RHYTHM	0x000c7e, 0x00, 3, 140	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x4c, 0x07, 0x48, 0x00, 0x25, 0x45
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36805,8 +38576,8 @@ StylePanel_Synth_OffTheWall_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000952, 0x00, 0, 117	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x00, 0x20, 0x00, 0x20, 0x00
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -36822,8 +38593,8 @@ StylePanel_Thrilling_Guitar_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000952, 0x00, 1, 117	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x20, 0x40, 0x14, 0x02, 0x20, 0x00, 0x20, 0x00
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -36839,8 +38610,8 @@ StylePanel_Bad_Funk_Pop_3:	# one-touch setting 3 of the Music Stylist setup "Bad
 	PM_RHYTHM	0x000952, 0x00, 2, 117	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x38, 0x64, 0x23, 0x24, 0x23, 0x24, 0x20, 0x00
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -36856,8 +38627,8 @@ StylePanel_Pop_Vid_Strings_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x000952, 0x00, 3, 117	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x35, 0x20, 0x20, 0x00
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -36873,8 +38644,8 @@ StylePanel_Good_Vives_Jazz_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000022, 0x00, 0, 146	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x08, 0x37, 0x02, 0x48, 0x15
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36890,8 +38661,8 @@ StylePanel_sax_midnight_jaz_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000022, 0x00, 1, 146	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x02, 0x35, 0x23, 0x48, 0x15
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36907,8 +38678,8 @@ StylePanel_Flute_Jazzer_3:	# one-touch setting 3 of the Music Stylist setup "Flu
 	PM_RHYTHM	0x000022, 0x00, 2, 146	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x20, 0x00, 0x35, 0x22, 0x48, 0x15
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36924,8 +38695,8 @@ StylePanel_Cool_Jazz_Cats_4:	# one-touch setting 4 of the Music Stylist setup "C
 	PM_RHYTHM	0x000022, 0x00, 3, 146	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x12, 0x10, 0x48, 0x10, 0x48, 0x15
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36941,8 +38712,8 @@ StylePanel_Quick_Brass_1:	# one-touch setting 1 of the Music Stylist setup "Quic
 	PM_RHYTHM	0x00031c, 0x40, 0, 200	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x23, 0x48, 0x10, 0x22, 0x40
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x50, 0x0b
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	80, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36958,8 +38729,8 @@ StylePanel_Sequin_Dance_2:	# one-touch setting 2 of the Music Stylist setup "Seq
 	PM_RHYTHM	0x00031c, 0x00, 1, 200	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x22, 0x35, 0x22, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x50, 0x0b
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	80, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36975,8 +38746,8 @@ StylePanel_Glitter_Vibes_3:	# one-touch setting 3 of the Music Stylist setup "Gl
 	PM_RHYTHM	0x00031c, 0x40, 2, 200	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x08, 0x22, 0x40, 0x22, 0x40
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x50, 0x0b
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	80, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -36992,8 +38763,8 @@ StylePanel_Ballroom_Reedle_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x00031c, 0x40, 3, 200	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x12, 0x12, 0x0c, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x09, 0x7f
-	PM_SET8C	0x50, 0x0b
+	PM_SET88	0x04, 0xff, 9, 127
+	PM_SET8C	80, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37009,8 +38780,8 @@ StylePanel_Sao_Paulo_Tabs_1:	# one-touch setting 1 of the Music Stylist setup "S
 	PM_RHYTHM	0x000a33, 0x00, 0, 114	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x37, 0x01, 0x22, 0x43
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37026,8 +38797,8 @@ StylePanel_Cuban_Piano_2:	# one-touch setting 2 of the Music Stylist setup "Cuba
 	PM_RHYTHM	0x000a33, 0x00, 1, 114	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x22, 0x35, 0x22, 0x12, 0x11
-	PM_SET88	0x04, 0x10, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x10, 10, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37043,8 +38814,8 @@ StylePanel_Samba_Fretwork_3:	# one-touch setting 3 of the Music Stylist setup "S
 	PM_RHYTHM	0x000a33, 0x40, 2, 114	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x21, 0x48, 0x23, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37060,8 +38831,8 @@ StylePanel_Samba_Festival_4:	# one-touch setting 4 of the Music Stylist setup "S
 	PM_RHYTHM	0x000a33, 0x40, 3, 114	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x17, 0x12, 0x02, 0x12, 0x09, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37077,8 +38848,8 @@ StylePanel_Africa_Synth_1:	# one-touch setting 1 of the Music Stylist setup "Afr
 	PM_RHYTHM	0x000954, 0x00, 0, 87	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x22, 0x43, 0x4c, 0x00, 0x12, 0x02, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5a, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	90, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -37094,8 +38865,8 @@ StylePanel_80s_Power_Organ_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000954, 0x00, 1, 87	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x22, 0x40, 0x22, 0x60, 0x10, 0x01, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5a, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	90, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -37111,8 +38882,8 @@ StylePanel_Toe_Tow_Guitar_3:	# one-touch setting 3 of the Music Stylist setup "T
 	PM_RHYTHM	0x000954, 0x00, 2, 87	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x14, 0x03, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5a, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	90, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -37128,8 +38899,8 @@ StylePanel_Eighties_For_EG_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x000954, 0x00, 3, 87	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x22, 0x43, 0x12, 0x0b, 0x12, 0x00, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5a, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	90, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -37145,8 +38916,8 @@ StylePanel_Chart_Pulse_1:	# one-touch setting 1 of the Music Stylist setup "Char
 	PM_RHYTHM	0x00012b, 0x00, 0, 95	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x38, 0x24, 0x30, 0x02, 0x14, 0x02, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37162,8 +38933,8 @@ StylePanel_One_More_Wow_2:	# one-touch setting 2 of the Music Stylist setup "One
 	PM_RHYTHM	0x00012b, 0x00, 1, 95	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x38, 0x24, 0x23, 0x09, 0x14, 0x02, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37179,8 +38950,8 @@ StylePanel_Hit_The_Axe_3:	# one-touch setting 3 of the Music Stylist setup "Hit 
 	PM_RHYTHM	0x00012b, 0x00, 2, 95	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x40, 0x23, 0x55, 0x40, 0x14, 0x02, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37196,8 +38967,8 @@ StylePanel_String_Sampling_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x00012b, 0x00, 3, 95	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x38, 0x24, 0x35, 0x20, 0x35, 0x20, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37213,8 +38984,8 @@ StylePanel_Sweet_Ballad_1:	# one-touch setting 1 of the Music Stylist setup "Swe
 	PM_RHYTHM	0x00095f, 0x00, 0, 60	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x17, 0x12, 0x08, 0x12, 0x08, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37230,8 +39001,8 @@ StylePanel_Piano_Love_Song_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x00095f, 0x00, 1, 60	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x17, 0x37, 0x00, 0x12, 0x08, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37247,8 +39018,8 @@ StylePanel_Symphonic_Lament_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x00095f, 0x00, 2, 60	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x17, 0x12, 0x0a, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37264,8 +39035,8 @@ StylePanel_Power_Ballad_4:	# one-touch setting 4 of the Music Stylist setup "Pow
 	PM_RHYTHM	0x00095f, 0x00, 3, 60	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x37, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37281,8 +39052,8 @@ StylePanel_DX_Beat_1:	# one-touch setting 1 of the Music Stylist setup "DX Beat"
 	PM_RHYTHM	0x00085a, 0x00, 0, 120	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x10, 0x00, 0x48, 0x23, 0x37, 0x01
-	PM_SET88	0x04, 0xff, 0x0a, 0x7f
-	PM_SET8C	0x64, 0x01
+	PM_SET88	0x04, 0xff, 10, 127
+	PM_SET8C	100, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37298,8 +39069,8 @@ StylePanel_Simply_Guitar_2:	# one-touch setting 2 of the Music Stylist setup "Si
 	PM_RHYTHM	0x00085a, 0x00, 1, 120	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x4c, 0x0c, 0x37, 0x01
-	PM_SET88	0x04, 0xff, 0x0a, 0x7f
-	PM_SET8C	0x64, 0x01
+	PM_SET88	0x04, 0xff, 10, 127
+	PM_SET8C	100, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37315,8 +39086,8 @@ StylePanel_Napoli_Nights_3:	# one-touch setting 3 of the Music Stylist setup "Na
 	PM_RHYTHM	0x00085a, 0x00, 2, 120	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x48, 0x08, 0x22, 0x01, 0x37, 0x01
-	PM_SET88	0x04, 0xff, 0x0a, 0x7f
-	PM_SET8C	0x64, 0x01
+	PM_SET88	0x04, 0xff, 10, 127
+	PM_SET8C	100, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37332,8 +39103,8 @@ StylePanel_8_Beat_Spin_4:	# one-touch setting 4 of the Music Stylist setup "8 Be
 	PM_RHYTHM	0x00085a, 0x00, 3, 120	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x37, 0x00, 0x37, 0x01
-	PM_SET88	0x04, 0xff, 0x0a, 0x7f
-	PM_SET8C	0x64, 0x01
+	PM_SET88	0x04, 0xff, 10, 127
+	PM_SET8C	100, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37349,8 +39120,8 @@ StylePanel_Latin_Acoustics_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x00033b, 0x00, 0, 120	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x62, 0x48, 0x23, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37366,8 +39137,8 @@ StylePanel_Cocktail_Beguine_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x00033b, 0x00, 1, 120	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x22, 0x35, 0x22, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37383,8 +39154,8 @@ StylePanel_Latin_Dance_Band_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x00033b, 0x00, 2, 120	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x17, 0x12, 0x08, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37400,8 +39171,8 @@ StylePanel_Symphonic_Latin_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x00033b, 0x40, 3, 120	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x12, 0x11, 0x48, 0x10, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 10, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37417,8 +39188,8 @@ StylePanel_Bert_s_Bone_1:	# one-touch setting 1 of the Music Stylist setup "Bert
 	PM_RHYTHM	0x000c1d, 0x40, 0, 126	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x01, 0x37, 0x02, 0x12, 0x12
-	PM_SET88	0x04, 0x11, 0x08, 0x7f
-	PM_SET8C	0x4f, 0x0b
+	PM_SET88	0x04, 0x11, 8, 127
+	PM_SET8C	79, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37434,8 +39205,8 @@ StylePanel_Teatime_Brass_2:	# one-touch setting 2 of the Music Stylist setup "Te
 	PM_RHYTHM	0x000c1d, 0x40, 1, 126	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x23, 0x12, 0x02, 0x12, 0x12
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x4f, 0x0b
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	79, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37451,8 +39222,8 @@ StylePanel_Foxy_Singers_3:	# one-touch setting 3 of the Music Stylist setup "Fox
 	PM_RHYTHM	0x000c1d, 0x00, 2, 126	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x12, 0x12
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x4f, 0x0b
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	79, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37468,8 +39239,8 @@ StylePanel_The_Fox_Band_4:	# one-touch setting 4 of the Music Stylist setup "The
 	PM_RHYTHM	0x000c1d, 0x40, 3, 126	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x12, 0x01, 0x12, 0x12
-	PM_SET88	0x00, 0x11, 0x08, 0x7f
-	PM_SET8C	0x4f, 0x0b
+	PM_SET88	0x00, 0x11, 8, 127
+	PM_SET8C	79, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37485,8 +39256,8 @@ StylePanel_Hayseed_Harpist_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000911, 0x00, 0, 150	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x12, 0x01, 0x14, 0x02
-	PM_SET88	0x04, 0x00, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x00, 13, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37502,8 +39273,8 @@ StylePanel_Country_Rock_Sax_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000911, 0x00, 1, 150	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x37, 0x02, 0x48, 0x2b, 0x14, 0x02
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37519,8 +39290,8 @@ StylePanel_Kentucky_Keys_3:	# one-touch setting 3 of the Music Stylist setup "Ke
 	PM_RHYTHM	0x000911, 0x00, 2, 150	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x24, 0x48, 0x2b, 0x14, 0x02
-	PM_SET88	0x04, 0x00, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x00, 13, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37536,8 +39307,8 @@ StylePanel_Key_Clickin_Good_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000911, 0x00, 3, 150	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x20, 0x2b, 0x04, 0x14, 0x02
-	PM_SET88	0x00, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x00, 0xff, 7, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37553,8 +39324,8 @@ StylePanel_Techno_Synth_1:	# one-touch setting 1 of the Music Stylist setup "Tec
 	PM_RHYTHM	0x000b7e, 0x00, 0, 142	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x14, 0x02, 0x00, 0x16, 0x00, 0x29, 0x01, 0x48, 0x00, 0x29, 0x40, 0x52, 0x00
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37570,8 +39341,8 @@ StylePanel_Techno_Ring_Mod_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000b7e, 0x00, 1, 142	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x14, 0x02, 0x00, 0x16, 0x00, 0x29, 0x01, 0x3a, 0x01, 0x29, 0x40, 0x52, 0x00
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37587,8 +39358,8 @@ StylePanel_Techno_Noiz_3:	# one-touch setting 3 of the Music Stylist setup "Tech
 	PM_RHYTHM	0x000b7e, 0x00, 2, 142	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x14, 0x02, 0x00, 0x16, 0x00, 0x29, 0x01, 0x29, 0x00, 0x4c, 0x07, 0x52, 0x00
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37604,8 +39375,8 @@ StylePanel_Techno_Slide_4:	# one-touch setting 4 of the Music Stylist setup "Tec
 	PM_RHYTHM	0x000b7e, 0x00, 3, 142	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x14, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x52, 0x00, 0x30, 0x02, 0x52, 0x00
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37621,8 +39392,8 @@ StylePanel_Boehmen_1:	# one-touch setting 1 of the Music Stylist setup "Boehmen"
 	PM_RHYTHM	0x000401, 0x40, 0, 119	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x03, 0x12, 0x03, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0d
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 13
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37638,8 +39409,8 @@ StylePanel_Trill_2:	# one-touch setting 2 of the Music Stylist setup "Trill" (St
 	PM_RHYTHM	0x000401, 0x40, 1, 119	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x0c, 0x12, 0x0c, 0x35, 0x20
-	PM_SET88	0x04, 0x11, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0d
+	PM_SET88	0x04, 0x11, 3, 127
+	PM_SET8C	105, 13
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37655,8 +39426,8 @@ StylePanel_Let_s_Drink_3:	# one-touch setting 3 of the Music Stylist setup "Let'
 	PM_RHYTHM	0x000401, 0x00, 2, 119	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x09, 0x12, 0x00, 0x13, 0x02
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0d
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 13
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37672,8 +39443,8 @@ StylePanel_Wiesn_Finale_4:	# one-touch setting 4 of the Music Stylist setup "Wie
 	PM_RHYTHM	0x000401, 0x00, 3, 119	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x0a, 0x4c, 0x12, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0d
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 13
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37689,8 +39460,8 @@ StylePanel_Dry_Rock_EP_1:	# one-touch setting 1 of the Music Stylist setup "Dry 
 	PM_RHYTHM	0x000a52, 0x00, 0, 79	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x14, 0x01, 0x35, 0x22, 0x14, 0x01
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x02
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -37706,8 +39477,8 @@ StylePanel_New_Phase_Rock_2:	# one-touch setting 2 of the Music Stylist setup "N
 	PM_RHYTHM	0x000a52, 0x00, 1, 79	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x23, 0x03, 0x14, 0x02, 0x14, 0x01, 0x14, 0x01
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x02
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -37723,8 +39494,8 @@ StylePanel_Pop_Rock_Organ_3:	# one-touch setting 3 of the Music Stylist setup "P
 	PM_RHYTHM	0x000a52, 0x00, 2, 79	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x23, 0x03, 0x2b, 0x04, 0x14, 0x01, 0x14, 0x01
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x02
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -37740,8 +39511,8 @@ StylePanel_US_Power_Pop_4:	# one-touch setting 4 of the Music Stylist setup "US 
 	PM_RHYTHM	0x000a52, 0x00, 3, 79	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x40, 0x55, 0x40, 0x55, 0x40, 0x14, 0x01
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x02
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -37757,8 +39528,8 @@ StylePanel_EP_Fusion_1:	# one-touch setting 1 of the Music Stylist setup "EP Fus
 	PM_RHYTHM	0x000a52, 0x00, 0, 97	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x0f, 0x25, 0x45, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x02
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37774,8 +39545,8 @@ StylePanel_Rock_B3_Groove_2:	# one-touch setting 2 of the Music Stylist setup "R
 	PM_RHYTHM	0x000a52, 0x00, 1, 97	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x0f, 0x22, 0x60, 0x35, 0x22, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x02
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37791,8 +39562,8 @@ StylePanel_Jass_Pop_Unison_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000a52, 0x00, 2, 97	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x0f, 0x35, 0x22, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x02
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37808,8 +39579,8 @@ StylePanel_Pop_Distortion_4:	# one-touch setting 4 of the Music Stylist setup "P
 	PM_RHYTHM	0x000a52, 0x00, 3, 97	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x35, 0x22, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x02
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37825,8 +39596,8 @@ StylePanel_Village_Sax_1:	# one-touch setting 1 of the Music Stylist setup "Vill
 	PM_RHYTHM	0x000b22, 0x00, 0, 124	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x02, 0x48, 0x15, 0x12, 0x11
-	PM_SET88	0x04, 0x03, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x03, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37842,8 +39613,8 @@ StylePanel_Sheer_Jazz_2:	# one-touch setting 2 of the Music Stylist setup "Sheer
 	PM_RHYTHM	0x000b22, 0x40, 1, 124	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x08, 0x20, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x07, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x11, 7, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37859,8 +39630,8 @@ StylePanel_Bugle_Bros_3:	# one-touch setting 3 of the Music Stylist setup "Bugle
 	PM_RHYTHM	0x000b22, 0x00, 2, 124	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x01, 0x35, 0x23, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37876,8 +39647,8 @@ StylePanel_Jazz_Voices_4:	# one-touch setting 4 of the Music Stylist setup "Jazz
 	PM_RHYTHM	0x000b22, 0x40, 3, 124	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x01, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x07, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x11, 7, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37893,8 +39664,8 @@ StylePanel_Mellow_Metal_1:	# one-touch setting 1 of the Music Stylist setup "Mel
 	PM_RHYTHM	0x000a54, 0x00, 0, 86	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x20, 0x14, 0x02, 0x15, 0x03, 0x55, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x5a, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	90, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -37910,8 +39681,8 @@ StylePanel_RockFor_A_Nickel_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000a54, 0x00, 1, 86	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x52, 0x60, 0x15, 0x03, 0x10, 0x47, 0x55, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x5a, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	90, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -37927,8 +39698,8 @@ StylePanel_Heavy_Metal_Pop_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000a54, 0x00, 2, 86	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x52, 0x60, 0x12, 0x0b, 0x55, 0x40, 0x55, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x5a, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	90, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -37944,8 +39715,8 @@ StylePanel_Nu_Metal_4:	# one-touch setting 4 of the Music Stylist setup "Nu Meta
 	PM_RHYTHM	0x000a54, 0x00, 3, 86	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x40, 0x23, 0x55, 0x40, 0x55, 0x40, 0x55, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x5a, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	90, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -37961,8 +39732,8 @@ StylePanel_80s_Pop_Song_EP_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x00022b, 0x00, 0, 120	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x00, 0x13, 0x06, 0x48, 0x2e, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37978,8 +39749,8 @@ StylePanel_In_Vogue_Guitar_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x00022b, 0x00, 1, 120	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x52, 0x20, 0x15, 0x03, 0x48, 0x00, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -37995,8 +39766,8 @@ StylePanel_Who_s_That_Synth_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x00022b, 0x00, 2, 120	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x52, 0x20, 0x12, 0x00, 0x48, 0x2e, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38012,8 +39783,8 @@ StylePanel_US_Pop_Strings_4:	# one-touch setting 4 of the Music Stylist setup "U
 	PM_RHYTHM	0x00022b, 0x00, 3, 120	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x52, 0x20, 0x35, 0x20, 0x35, 0x20, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38029,8 +39800,8 @@ StylePanel_Chart_Guitarist_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000a5f, 0x00, 0, 62	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x17, 0x37, 0x00, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38046,8 +39817,8 @@ StylePanel_Pop_Star_Vocals_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000a5f, 0x00, 1, 62	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x17, 0x37, 0x00, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38063,8 +39834,8 @@ StylePanel_PopBalladStrings_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000a5f, 0x00, 2, 62	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x17, 0x12, 0x11, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38080,8 +39851,8 @@ StylePanel_TeenPop_Symphony_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000a5f, 0x00, 3, 62	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x17, 0x35, 0x20, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38097,8 +39868,8 @@ StylePanel_Bottleneck_Pop_1:	# one-touch setting 1 of the Music Stylist setup "B
 	PM_RHYTHM	0x000858, 0x00, 0, 123	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x13, 0x20, 0x0d, 0x37, 0x40, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -38114,8 +39885,8 @@ StylePanel_Pop_Praises_2:	# one-touch setting 2 of the Music Stylist setup "Pop 
 	PM_RHYTHM	0x000858, 0x00, 1, 123	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x37, 0x00, 0x20, 0x0d, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -38131,8 +39902,8 @@ StylePanel_Most_Fab_Lead_3:	# one-touch setting 3 of the Music Stylist setup "Mo
 	PM_RHYTHM	0x000858, 0x00, 2, 123	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x10, 0x47, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -38148,8 +39919,8 @@ StylePanel_My_Sweet_Keys_4:	# one-touch setting 4 of the Music Stylist setup "My
 	PM_RHYTHM	0x000858, 0x00, 3, 123	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x50, 0x10, 0x01, 0x37, 0x00, 0x22, 0x60
-	PM_SET88	0x00, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x00, 0xff, 7, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -38165,8 +39936,8 @@ StylePanel_MirrorballSmooch_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000b52, 0x00, 0, 104	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x00, 0x25, 0x45, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -38182,8 +39953,8 @@ StylePanel_Brothers_Ballad_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000b52, 0x00, 1, 104	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x37, 0x00, 0x25, 0x45, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -38199,8 +39970,8 @@ StylePanel_SaturdayAcoustic_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000b52, 0x00, 2, 104	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x00, 0x35, 0x21, 0x55, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -38216,8 +39987,8 @@ StylePanel_70s_PopOrchestra_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000b52, 0x00, 3, 104	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x35, 0x20, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -38233,8 +40004,8 @@ StylePanel_Reed_It_Right_1:	# one-touch setting 1 of the Music Stylist setup "Re
 	PM_RHYTHM	0x000658, 0x00, 0, 91	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x40, 0x12, 0x01, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38250,8 +40021,8 @@ StylePanel_Sweet_Folk_2:	# one-touch setting 2 of the Music Stylist setup "Sweet
 	PM_RHYTHM	0x000658, 0x00, 1, 91	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38267,8 +40038,8 @@ StylePanel_SerenadeSymphony_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000658, 0x00, 2, 91	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38284,8 +40055,8 @@ StylePanel_Smoochy_Sax_4:	# one-touch setting 4 of the Music Stylist setup "Smoo
 	PM_RHYTHM	0x000658, 0x00, 3, 91	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x12, 0x02, 0x37, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38301,8 +40072,8 @@ StylePanel_TheSandmanCometh_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x00022d, 0x40, 0, 190	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x07, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x11, 7, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38318,8 +40089,8 @@ StylePanel_DooLahDoolyLaBap_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x00022d, 0x00, 1, 190	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x01, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38335,8 +40106,8 @@ StylePanel_2Bap_Or_Not_2Bap_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x00022d, 0x00, 2, 190	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38352,8 +40123,8 @@ StylePanel_How_Do_You_DoWah_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x00022d, 0x40, 3, 190	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x37, 0x00, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x07, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x11, 7, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38369,8 +40140,8 @@ StylePanel_Hoe_Down_Fiddle_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000514, 0x40, 0, 118	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x35, 0x20, 0x12, 0x11, 0x12, 0x11, 0x48, 0x09
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x10
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 16
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38386,8 +40157,8 @@ StylePanel_Yeehah_Geetar_2:	# one-touch setting 2 of the Music Stylist setup "Ye
 	PM_RHYTHM	0x000514, 0x40, 1, 118	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x48, 0x2b, 0x48, 0x09
-	PM_SET88	0x04, 0x00, 0x04, 0x7f
-	PM_SET8C	0x69, 0x10
+	PM_SET88	0x04, 0x00, 4, 127
+	PM_SET8C	105, 16
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38403,8 +40174,8 @@ StylePanel_Bluegrass_Steel_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000514, 0x40, 2, 118	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x48, 0x03, 0x48, 0x12, 0x48, 0x09
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x10
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 16
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38420,8 +40191,8 @@ StylePanel_Bluegrass_Saloon_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000514, 0x40, 3, 118	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x22, 0x12, 0x11, 0x48, 0x09
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x10
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 16
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38437,8 +40208,8 @@ StylePanel_Acoustically_Pop_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000b5f, 0x00, 0, 119	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x17, 0x37, 0x00, 0x37, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38454,8 +40225,8 @@ StylePanel_Life_To_The_West_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000b5f, 0x00, 1, 119	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x17, 0x13, 0x06, 0x48, 0x12, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38471,8 +40242,8 @@ StylePanel_Sax_Charting_3:	# one-touch setting 3 of the Music Stylist setup "Sax
 	PM_RHYTHM	0x000b5f, 0x00, 2, 119	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x17, 0x12, 0x02, 0x35, 0x21, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38488,8 +40259,8 @@ StylePanel_Pop_Arranging_4:	# one-touch setting 4 of the Music Stylist setup "Po
 	PM_RHYTHM	0x000b5f, 0x00, 3, 119	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x17, 0x35, 0x20, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38505,8 +40276,8 @@ StylePanel_EP_Dance_1:	# one-touch setting 1 of the Music Stylist setup "EP Danc
 	PM_RHYTHM	0x00032b, 0x00, 0, 127	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x52, 0x20, 0x25, 0x45, 0x4c, 0x07, 0x52, 0x00
-	PM_SET88	0x04, 0x11, 0x0b, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0x11, 11, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38522,8 +40293,8 @@ StylePanel_Analogue_Dance_2:	# one-touch setting 2 of the Music Stylist setup "A
 	PM_RHYTHM	0x00032b, 0x00, 1, 127	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x52, 0x20, 0x35, 0x24, 0x25, 0x45, 0x52, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38539,8 +40310,8 @@ StylePanel_Fifth_Dance_3:	# one-touch setting 3 of the Music Stylist setup "Fift
 	PM_RHYTHM	0x00032b, 0x40, 2, 127	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x52, 0x20, 0x4c, 0x07, 0x4c, 0x07, 0x52, 0x00
-	PM_SET88	0x04, 0x11, 0x0b, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0x11, 11, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38556,8 +40327,8 @@ StylePanel_Synth_Hit_4:	# one-touch setting 4 of the Music Stylist setup "Synth 
 	PM_RHYTHM	0x00032b, 0x00, 3, 127	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x52, 0x20, 0x29, 0x00, 0x35, 0x20, 0x52, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38573,8 +40344,8 @@ StylePanel_Muckel_Polka_1:	# one-touch setting 1 of the Music Stylist setup "Muc
 	PM_RHYTHM	0x000004, 0x40, 0, 125	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x0c, 0x12, 0x00, 0x20, 0x00
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x64, 0x0d
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	100, 13
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38590,8 +40361,8 @@ StylePanel_Zither_Polka_2:	# one-touch setting 2 of the Music Stylist setup "Zit
 	PM_RHYTHM	0x000004, 0x40, 1, 125	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x13, 0x02, 0x12, 0x0c, 0x20, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x64, 0x0d
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	100, 13
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38607,8 +40378,8 @@ StylePanel_Alpine_Style_3:	# one-touch setting 3 of the Music Stylist setup "Alp
 	PM_RHYTHM	0x000004, 0x40, 2, 125	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x02, 0x12, 0x0c, 0x20, 0x00
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x64, 0x0d
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	100, 13
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38624,8 +40395,8 @@ StylePanel_Dolomiti_Trumpet_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000004, 0x00, 3, 125	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x49, 0x12, 0x12, 0x01, 0x20, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x64, 0x0d
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	100, 13
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38641,8 +40412,8 @@ StylePanel_Cuban_Serenade_1:	# one-touch setting 1 of the Music Stylist setup "C
 	PM_RHYTHM	0x000d3a, 0x00, 0, 120	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x13, 0x02, 0x52, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x03, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0x11, 3, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38658,8 +40429,8 @@ StylePanel_Cuban_Dance_2:	# one-touch setting 2 of the Music Stylist setup "Cuba
 	PM_RHYTHM	0x000d3a, 0x40, 1, 120	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x40, 0x48, 0x23, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38675,8 +40446,8 @@ StylePanel_Beach_Rhumba_3:	# one-touch setting 3 of the Music Stylist setup "Bea
 	PM_RHYTHM	0x000d3a, 0x40, 2, 120	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x20, 0x00, 0x20, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38692,8 +40463,8 @@ StylePanel_Cherry_Rhumba_4:	# one-touch setting 4 of the Music Stylist setup "Ch
 	PM_RHYTHM	0x000d3a, 0x00, 3, 120	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x49, 0x12, 0x13, 0x04, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38709,8 +40480,8 @@ StylePanel_B3_Shuffle_1:	# one-touch setting 1 of the Music Stylist setup "B3 Sh
 	PM_RHYTHM	0x000d52, 0x00, 0, 142	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x22, 0x20, 0x35, 0x22, 0x22, 0x20
-	PM_SET88	0x00, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x11
+	PM_SET88	0x00, 0x11, 4, 127
+	PM_SET8C	80, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38726,8 +40497,8 @@ StylePanel_Rock_Piano_Jive_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000d52, 0x00, 1, 142	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x37, 0x00, 0x35, 0x22, 0x22, 0x60
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x11
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38743,8 +40514,8 @@ StylePanel_Heavy_Shuffle_3:	# one-touch setting 3 of the Music Stylist setup "He
 	PM_RHYTHM	0x000d52, 0x00, 2, 142	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x37, 0x00, 0x22, 0x60
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x11
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38760,8 +40531,8 @@ StylePanel_Stand_Up_Shuffle_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000d52, 0x00, 3, 142	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x48, 0x10, 0x12, 0x09, 0x22, 0x60
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x11
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38777,8 +40548,8 @@ StylePanel_Spanish_Heat_1:	# one-touch setting 1 of the Music Stylist setup "Spa
 	PM_RHYTHM	0x000835, 0x00, 0, 120	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x62, 0x48, 0x23, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38794,8 +40565,8 @@ StylePanel_Tango_Squeeze_2:	# one-touch setting 2 of the Music Stylist setup "Ta
 	PM_RHYTHM	0x000835, 0x00, 1, 120	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x13, 0x02, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38811,8 +40582,8 @@ StylePanel_Tango_Clari_3:	# one-touch setting 3 of the Music Stylist setup "Tang
 	PM_RHYTHM	0x000835, 0x40, 2, 120	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x0c, 0x12, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38828,8 +40599,8 @@ StylePanel_Tango_Francais_4:	# one-touch setting 4 of the Music Stylist setup "T
 	PM_RHYTHM	0x000835, 0x00, 3, 120	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x13, 0x02, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38845,8 +40616,8 @@ StylePanel_Trance_Sweep_1:	# one-touch setting 1 of the Music Stylist setup "Tra
 	PM_RHYTHM	0x000d7e, 0x00, 0, 135	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x14, 0x02, 0x00, 0x16, 0x00, 0x48, 0x07, 0x20, 0x00, 0x29, 0x40, 0x52, 0x00
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38862,8 +40633,8 @@ StylePanel_Trance_Voice_2:	# one-touch setting 2 of the Music Stylist setup "Tra
 	PM_RHYTHM	0x000d7e, 0x00, 1, 135	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x14, 0x02, 0x00, 0x16, 0x00, 0x48, 0x07, 0x52, 0x20, 0x52, 0x00, 0x52, 0x00
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38879,8 +40650,8 @@ StylePanel_TrancePortamento_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000d7e, 0x00, 2, 135	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x14, 0x02, 0x00, 0x16, 0x00, 0x48, 0x07, 0x4c, 0x07, 0x48, 0x00, 0x52, 0x00
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38896,8 +40667,8 @@ StylePanel_Trance_Pulse_4:	# one-touch setting 4 of the Music Stylist setup "Tra
 	PM_RHYTHM	0x000d7e, 0x00, 3, 135	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x14, 0x02, 0x00, 0x16, 0x00, 0x48, 0x07, 0x52, 0x20, 0x30, 0x02, 0x52, 0x00
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38913,8 +40684,8 @@ StylePanel_Piano_For_Robbie_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x00042b, 0x00, 0, 90	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x52, 0x20, 0x35, 0x22, 0x14, 0x02, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38930,8 +40701,8 @@ StylePanel_Dance_Pop_Guitar_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x00042b, 0x00, 1, 90	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x35, 0x22, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38947,8 +40718,8 @@ StylePanel_Rock_Star_Organ_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x00042b, 0x00, 2, 90	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x22, 0x60, 0x55, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38964,8 +40735,8 @@ StylePanel_Overdrive_Dance_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x00042b, 0x00, 3, 90	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x00, 0x55, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38981,8 +40752,8 @@ StylePanel_Karen_s_Keys_1:	# one-touch setting 1 of the Music Stylist setup "Kar
 	PM_RHYTHM	0x000a5b, 0x00, 0, 70	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x25, 0x45, 0x12, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -38998,8 +40769,8 @@ StylePanel_Strumming_Flares_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000a5b, 0x00, 1, 70	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x40, 0x20, 0x0d, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39015,8 +40786,8 @@ StylePanel_Boomer_Harp_3:	# one-touch setting 3 of the Music Stylist setup "Boom
 	PM_RHYTHM	0x000a5b, 0x00, 2, 70	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x00, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39032,8 +40803,8 @@ StylePanel_WhiteGrandBallad_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000a5b, 0x00, 3, 70	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x20, 0x00, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39049,8 +40820,8 @@ StylePanel_Eigties_Rock_EP_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000b54, 0x00, 0, 146	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x25, 0x45, 0x14, 0x02, 0x12, 0x41
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -39066,8 +40837,8 @@ StylePanel_Cop_Vocal_2:	# one-touch setting 2 of the Music Stylist setup "Cop Vo
 	PM_RHYTHM	0x000b54, 0x00, 1, 146	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0e, 0x37, 0x00, 0x15, 0x03, 0x12, 0x41
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -39083,8 +40854,8 @@ StylePanel_Summer_s_Guitar_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000b54, 0x00, 2, 146	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x52, 0x00, 0x12, 0x0b, 0x14, 0x02, 0x12, 0x41
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -39100,8 +40871,8 @@ StylePanel_Reggae_Rock_4:	# one-touch setting 4 of the Music Stylist setup "Regg
 	PM_RHYTHM	0x000b54, 0x00, 3, 146	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x40, 0x55, 0x40, 0x14, 0x02, 0x12, 0x41
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -39117,8 +40888,8 @@ StylePanel_Soul_To_Synth_1:	# one-touch setting 1 of the Music Stylist setup "So
 	PM_RHYTHM	0x000357, 0x00, 0, 114	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x0b, 0x35, 0x24, 0x1b, 0x03
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x4f, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	79, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39134,8 +40905,8 @@ StylePanel_Soul_Pop_Guitar_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000357, 0x00, 1, 114	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x52, 0x20, 0x15, 0x03, 0x48, 0x10, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x4f, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	79, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39151,8 +40922,8 @@ StylePanel_Pop_Drawbars_3:	# one-touch setting 3 of the Music Stylist setup "Pop
 	PM_RHYTHM	0x000357, 0x00, 2, 114	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x22, 0x01, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x4f, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	79, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39168,8 +40939,8 @@ StylePanel_Funky_Soul_Pop_4:	# one-touch setting 4 of the Music Stylist setup "F
 	PM_RHYTHM	0x000357, 0x00, 3, 114	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x48, 0x10, 0x12, 0x01, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x4f, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	79, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39185,8 +40956,8 @@ StylePanel_Acid_Jazz_Suit_1:	# one-touch setting 1 of the Music Stylist setup "A
 	PM_RHYTHM	0x00012a, 0x00, 0, 99	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x32, 0x02, 0x00, 0x16, 0x00, 0x48, 0x07, 0x25, 0x45, 0x35, 0x23, 0x25, 0x45
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x02
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39202,8 +40973,8 @@ StylePanel_Acid_Jazz_Frets_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x00012a, 0x00, 1, 99	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x32, 0x02, 0x00, 0x16, 0x00, 0x48, 0x07, 0x35, 0x22, 0x25, 0x45, 0x25, 0x45
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x02
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39219,8 +40990,8 @@ StylePanel_Acid_Jazz_B3_3:	# one-touch setting 3 of the Music Stylist setup "Aci
 	PM_RHYTHM	0x00012a, 0x00, 2, 99	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x32, 0x02, 0x00, 0x16, 0x00, 0x48, 0x17, 0x22, 0x00, 0x37, 0x00, 0x25, 0x45
-	PM_SET88	0x00, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x02
+	PM_SET88	0x00, 0xff, 0, 127
+	PM_SET8C	85, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39236,8 +41007,8 @@ StylePanel_Acid_Jazz_Sax_4:	# one-touch setting 4 of the Music Stylist setup "Ac
 	PM_RHYTHM	0x00012a, 0x00, 3, 99	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x32, 0x02, 0x00, 0x16, 0x00, 0x48, 0x17, 0x37, 0x00, 0x35, 0x63, 0x25, 0x45
-	PM_SET88	0x00, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x02
+	PM_SET88	0x00, 0xff, 0, 127
+	PM_SET8C	85, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39253,8 +41024,8 @@ StylePanel_Where_They_Play_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000412, 0x00, 0, 87	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x4c, 0x0c, 0x12, 0x01, 0x12, 0x11
-	PM_SET88	0x04, 0x10, 0x04, 0x7f
-	PM_SET8C	0x69, 0x0f
+	PM_SET88	0x04, 0x10, 4, 127
+	PM_SET8C	105, 15
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39270,8 +41041,8 @@ StylePanel_Home_On_TheGrand_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000412, 0x00, 1, 87	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x20, 0x00, 0x12, 0x09, 0x12, 0x11
-	PM_SET88	0x04, 0x10, 0x07, 0x7f
-	PM_SET8C	0x69, 0x0f
+	PM_SET88	0x04, 0x10, 7, 127
+	PM_SET8C	105, 15
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39287,8 +41058,8 @@ StylePanel_BarnDanceStrings_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000412, 0x40, 2, 87	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0x03, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0f
+	PM_SET88	0x04, 0x03, 13, 127
+	PM_SET8C	105, 15
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39304,8 +41075,8 @@ StylePanel_Not_CloudyAllDay_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000412, 0x00, 3, 87	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x25, 0x45, 0x14, 0x02, 0x12, 0x11
-	PM_SET88	0x00, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x0f
+	PM_SET88	0x00, 0xff, 7, 127
+	PM_SET8C	105, 15
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39321,8 +41092,8 @@ StylePanel_PopStar_Acoustic_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000c52, 0x00, 0, 107	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x52, 0x00, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -39338,8 +41109,8 @@ StylePanel_Pop_Ballad_Layer_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000c52, 0x00, 1, 107	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x00, 0x10, 0x00, 0x20, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -39355,8 +41126,8 @@ StylePanel_Chart_Sax_3:	# one-touch setting 3 of the Music Stylist setup "Chart 
 	PM_RHYTHM	0x000c52, 0x00, 2, 107	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x00, 0x49, 0x0b, 0x52, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -39372,8 +41143,8 @@ StylePanel_Pop_Symphony_4:	# one-touch setting 4 of the Music Stylist setup "Pop
 	PM_RHYTHM	0x000c52, 0x00, 3, 107	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x12, 0x11, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -39389,8 +41160,8 @@ StylePanel_BalladJazzVoices_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000820, 0x40, 0, 75	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x35, 0x22
-	PM_SET88	0x04, 0x11, 0x08, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0x11, 8, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39406,8 +41177,8 @@ StylePanel_NY_Sweet_Jazz_2:	# one-touch setting 2 of the Music Stylist setup "NY
 	PM_RHYTHM	0x000820, 0x00, 1, 75	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x35, 0x22
-	PM_SET88	0x04, 0x11, 0x08, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0x11, 8, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39423,8 +41194,8 @@ StylePanel_Wah_Wah_Jazz_3:	# one-touch setting 3 of the Music Stylist setup "Wah
 	PM_RHYTHM	0x000820, 0x40, 2, 75	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x35, 0x22
-	PM_SET88	0x04, 0x11, 0x08, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0x11, 8, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39440,8 +41211,8 @@ StylePanel_Unlimited_Jazz_4:	# one-touch setting 4 of the Music Stylist setup "U
 	PM_RHYTHM	0x000820, 0x00, 3, 75	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x35, 0x22
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39457,8 +41228,8 @@ StylePanel_Harp_Rock_1:	# one-touch setting 1 of the Music Stylist setup "Harp R
 	PM_RHYTHM	0x00065c, 0x00, 0, 130	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x37, 0x00, 0x48, 0x22, 0x22, 0x60
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x03
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39474,8 +41245,8 @@ StylePanel_Metal_B3_2:	# one-touch setting 2 of the Music Stylist setup "Metal B
 	PM_RHYTHM	0x00065c, 0x00, 1, 130	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x22, 0x60, 0x2b, 0x02, 0x22, 0x60
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x03
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39491,8 +41262,8 @@ StylePanel_Stadium_Piano_3:	# one-touch setting 3 of the Music Stylist setup "St
 	PM_RHYTHM	0x00065c, 0x00, 2, 130	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x37, 0x00, 0x37, 0x00, 0x22, 0x60
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x03
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39508,8 +41279,8 @@ StylePanel_Heavy_Rock_Brass_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x00065c, 0x00, 3, 130	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x48, 0x10, 0x48, 0x22, 0x22, 0x60
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x03
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39525,8 +41296,8 @@ StylePanel_Hot_Sauce_Flute_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000644, 0x00, 0, 108	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x01, 0x48, 0x10, 0x35, 0x62, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x63, 0x07
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	99, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39542,8 +41313,8 @@ StylePanel_Havana_Brass_2:	# one-touch setting 2 of the Music Stylist setup "Hav
 	PM_RHYTHM	0x000644, 0x00, 1, 108	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x35, 0x23, 0x49, 0x12, 0x37, 0x01, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x63, 0x07
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	99, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39559,8 +41330,8 @@ StylePanel_Son_Amigos_3:	# one-touch setting 3 of the Music Stylist setup "Son A
 	PM_RHYTHM	0x000644, 0x00, 2, 108	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x01, 0x35, 0x20, 0x22, 0x40, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x62, 0x07
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	98, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39576,8 +41347,8 @@ StylePanel_Miami_Heat_4:	# one-touch setting 4 of the Music Stylist setup "Miami
 	PM_RHYTHM	0x000644, 0x00, 3, 108	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x35, 0x23, 0x48, 0x10, 0x12, 0x01, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39593,8 +41364,8 @@ StylePanel_Octostringy_1:	# one-touch setting 1 of the Music Stylist setup "Octo
 	PM_RHYTHM	0x00076b, 0x00, 0, 110	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x20, 0x13, 0x05, 0x35, 0x20
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39610,8 +41381,8 @@ StylePanel_Dr_Guitar_2:	# one-touch setting 2 of the Music Stylist setup "Dr Gui
 	PM_RHYTHM	0x00076b, 0x00, 1, 110	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x20, 0x0d, 0x12, 0x11, 0x35, 0x20
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39627,8 +41398,8 @@ StylePanel_Only_Play_Twice_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x00076b, 0x00, 2, 110	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x20, 0x13, 0x05, 0x35, 0x20
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39644,8 +41415,8 @@ StylePanel_String_Finger_4:	# one-touch setting 4 of the Music Stylist setup "St
 	PM_RHYTHM	0x00076b, 0x40, 3, 110	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x48, 0x10, 0x35, 0x20
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39661,8 +41432,8 @@ StylePanel_Sweet_Waltzing_1:	# one-touch setting 1 of the Music Stylist setup "S
 	PM_RHYTHM	0x00020d, 0x00, 0, 90	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x0f, 0x12, 0x08, 0x12, 0x08, 0x12, 0x12
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5f, 0x12
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	95, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39678,8 +41449,8 @@ StylePanel_Wunderbar_Waltz_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x00020d, 0x00, 1, 90	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x13, 0x02, 0x35, 0x22, 0x12, 0x0e
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5e, 0x12
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	94, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39695,8 +41466,8 @@ StylePanel_Come_Waltzing_3:	# one-touch setting 3 of the Music Stylist setup "Co
 	PM_RHYTHM	0x00020d, 0x00, 2, 90	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x10, 0x48, 0x10, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x12
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39712,8 +41483,8 @@ StylePanel_Holiday_Waltz_4:	# one-touch setting 4 of the Music Stylist setup "Ho
 	PM_RHYTHM	0x00020d, 0x00, 3, 90	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x69, 0x12
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	105, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39729,8 +41500,8 @@ StylePanel_Piano_Ballad_1:	# one-touch setting 1 of the Music Stylist setup "Pia
 	PM_RHYTHM	0x000c5f, 0x00, 0, 66	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39746,8 +41517,8 @@ StylePanel_Power_Ballad_2:	# one-touch setting 2 of the Music Stylist setup "Pow
 	PM_RHYTHM	0x000c5f, 0x00, 1, 66	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x21, 0x37, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39763,8 +41534,8 @@ StylePanel_HowDoYouReedThis_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000c5f, 0x00, 2, 66	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x49, 0x0b, 0x37, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39780,8 +41551,8 @@ StylePanel_HeavyRock_Ballad_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000c5f, 0x00, 3, 66	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39797,8 +41568,8 @@ StylePanel_Get_it_3_4_1:	# one-touch setting 1 of the Music Stylist setup "Get i
 	PM_RHYTHM	0x00050d, 0x00, 0, 100	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x25, 0x45, 0x12, 0x12
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x63, 0x12
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	99, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39814,8 +41585,8 @@ StylePanel_Simple_3_4_Orch_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x00050d, 0x00, 1, 100	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x12, 0x11, 0x12, 0x12
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x63, 0x12
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	99, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39831,8 +41602,8 @@ StylePanel_3_4_Organ_Star_3:	# one-touch setting 3 of the Music Stylist setup "3
 	PM_RHYTHM	0x00050d, 0x40, 2, 100	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x13, 0x04, 0x12, 0x12
-	PM_SET88	0x04, 0x10, 0x07, 0x7f
-	PM_SET8C	0x63, 0x12
+	PM_SET88	0x04, 0x10, 7, 127
+	PM_SET8C	99, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39848,8 +41619,8 @@ StylePanel_Walzin_Reeds_4:	# one-touch setting 4 of the Music Stylist setup "Wal
 	PM_RHYTHM	0x00050d, 0x00, 3, 100	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x00, 0x13, 0x04, 0x12, 0x12
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x63, 0x12
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	99, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39865,8 +41636,8 @@ StylePanel_Benny_Woodman_1:	# one-touch setting 1 of the Music Stylist setup "Be
 	PM_RHYTHM	0x000524, 0x00, 0, 160	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x35, 0x60, 0x48, 0x15
-	PM_SET88	0x04, 0xff, 0x09, 0x7f
-	PM_SET8C	0x69, 0x0b
+	PM_SET88	0x04, 0xff, 9, 127
+	PM_SET8C	105, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39882,8 +41653,8 @@ StylePanel_Swinging_Saxes_2:	# one-touch setting 2 of the Music Stylist setup "S
 	PM_RHYTHM	0x000524, 0x40, 1, 160	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x02, 0x48, 0x22, 0x48, 0x15
-	PM_SET88	0x04, 0x03, 0x08, 0x7f
-	PM_SET8C	0x69, 0x0b
+	PM_SET88	0x04, 0x03, 8, 127
+	PM_SET8C	105, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39899,8 +41670,8 @@ StylePanel_Up_Tempo_Reeds_3:	# one-touch setting 3 of the Music Stylist setup "U
 	PM_RHYTHM	0x000524, 0x00, 2, 160	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x48, 0x15
-	PM_SET88	0x04, 0xff, 0x08, 0x7f
-	PM_SET8C	0x69, 0x0b
+	PM_SET88	0x04, 0xff, 8, 127
+	PM_SET8C	105, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39916,8 +41687,8 @@ StylePanel_Swing_Crescendo_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x000524, 0x40, 3, 160	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x01, 0x48, 0x15
-	PM_SET88	0x04, 0x11, 0x08, 0x7f
-	PM_SET8C	0x69, 0x0b
+	PM_SET88	0x04, 0x11, 8, 127
+	PM_SET8C	105, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39933,8 +41704,8 @@ StylePanel_Big_Beat_Organ_1:	# one-touch setting 1 of the Music Stylist setup "B
 	PM_RHYTHM	0x000878, 0x00, 0, 153	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x0a, 0x02, 0x00, 0x16, 0x00, 0x48, 0x17, 0x22, 0x00, 0x20, 0x0d, 0x25, 0x45
-	PM_SET88	0x00, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x00, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39950,8 +41721,8 @@ StylePanel_Big_Beat_Guitar_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000878, 0x00, 1, 153	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x0a, 0x02, 0x00, 0x16, 0x00, 0x1b, 0x00, 0x15, 0x03, 0x20, 0x0d, 0x25, 0x45
-	PM_SET88	0x00, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x00, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39967,8 +41738,8 @@ StylePanel_BigBeat_Suitcase_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000878, 0x00, 2, 153	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x0a, 0x02, 0x00, 0x16, 0x00, 0x29, 0x01, 0x25, 0x45, 0x20, 0x0d, 0x25, 0x45
-	PM_SET88	0x00, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x00, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -39984,8 +41755,8 @@ StylePanel_BigBeatBad_Brass_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000878, 0x00, 3, 153	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x0a, 0x02, 0x00, 0x16, 0x00, 0x29, 0x01, 0x37, 0x02, 0x20, 0x0d, 0x25, 0x45
-	PM_SET88	0x00, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x00, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40001,8 +41772,8 @@ StylePanel_Ballad_EP_Time_1:	# one-touch setting 1 of the Music Stylist setup "B
 	PM_RHYTHM	0x000f52, 0x00, 0, 88	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x14, 0x01, 0x35, 0x22, 0x37, 0x01
-	PM_SET88	0x00, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x09
+	PM_SET88	0x00, 0x11, 4, 127
+	PM_SET8C	80, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40018,8 +41789,8 @@ StylePanel_Smooth_Jazz_Sax_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000f52, 0x00, 1, 88	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x48, 0x10, 0x35, 0x22, 0x37, 0x01
-	PM_SET88	0x00, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x09
+	PM_SET88	0x00, 0x11, 4, 127
+	PM_SET8C	80, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40035,8 +41806,8 @@ StylePanel_Easy_Fretting_3:	# one-touch setting 3 of the Music Stylist setup "Ea
 	PM_RHYTHM	0x000f52, 0x00, 2, 88	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x35, 0x22, 0x35, 0x22, 0x37, 0x01
-	PM_SET88	0x00, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x09
+	PM_SET88	0x00, 0x11, 4, 127
+	PM_SET8C	80, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40052,8 +41823,8 @@ StylePanel_MOR_Orchestra_4:	# one-touch setting 4 of the Music Stylist setup "MO
 	PM_RHYTHM	0x000f52, 0x00, 3, 88	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x12, 0x11, 0x13, 0x00, 0x37, 0x01
-	PM_SET88	0x00, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x09
+	PM_SET88	0x00, 0x11, 4, 127
+	PM_SET8C	80, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40069,8 +41840,8 @@ StylePanel_Blue_Eyes_Flute_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000525, 0x00, 0, 164	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x10, 0x12, 0x08, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5f, 0x0b
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	95, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40086,8 +41857,8 @@ StylePanel_Unison_Riddle_2:	# one-touch setting 2 of the Music Stylist setup "Un
 	PM_RHYTHM	0x000525, 0x00, 1, 164	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x02, 0x12, 0x0c, 0x12, 0x11
-	PM_SET88	0x04, 0x03, 0x00, 0x7f
-	PM_SET8C	0x5f, 0x0b
+	PM_SET88	0x04, 0x03, 0, 127
+	PM_SET8C	95, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40103,8 +41874,8 @@ StylePanel_Swing_Pickin_3:	# one-touch setting 3 of the Music Stylist setup "Swi
 	PM_RHYTHM	0x000525, 0x00, 2, 164	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x63, 0x12, 0x08, 0x12, 0x11
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x5f, 0x0b
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	95, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40120,8 +41891,8 @@ StylePanel_Crooner_Brass_4:	# one-touch setting 4 of the Music Stylist setup "Cr
 	PM_RHYTHM	0x000525, 0x40, 3, 164	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x49, 0x12, 0x37, 0x01, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x08, 0x7f
-	PM_SET8C	0x5f, 0x0b
+	PM_SET88	0x04, 0x11, 8, 127
+	PM_SET8C	95, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40137,8 +41908,8 @@ StylePanel_Spiritual_Tabs_1:	# one-touch setting 1 of the Music Stylist setup "S
 	PM_RHYTHM	0x000c4d, 0x00, 0, 124	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x1b, 0x00, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x58, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	88, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40154,8 +41925,8 @@ StylePanel_Sunday_Service_2:	# one-touch setting 2 of the Music Stylist setup "S
 	PM_RHYTHM	0x000c4d, 0x00, 1, 124	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x22, 0x01, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x58, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	88, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40171,8 +41942,8 @@ StylePanel_Grand_Worship_3:	# one-touch setting 3 of the Music Stylist setup "Gr
 	PM_RHYTHM	0x000c4d, 0x00, 2, 124	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x0b, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x58, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	88, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40188,8 +41959,8 @@ StylePanel_Brassy_Worship_4:	# one-touch setting 4 of the Music Stylist setup "B
 	PM_RHYTHM	0x000c4d, 0x00, 3, 124	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x58, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	88, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40205,8 +41976,8 @@ StylePanel_Power_Chord_Riff_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x00065c, 0x00, 0, 113	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x41, 0x00, 0x55, 0x00, 0x55, 0x40, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -40222,8 +41993,8 @@ StylePanel_Deep_Solid_Rock_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x00065c, 0x00, 1, 113	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x41, 0x00, 0x15, 0x03, 0x55, 0x00, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -40239,8 +42010,8 @@ StylePanel_Lord_s_Rock_C3_3:	# one-touch setting 3 of the Music Stylist setup "L
 	PM_RHYTHM	0x00065c, 0x00, 2, 113	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x41, 0x00, 0x22, 0x60, 0x22, 0x60, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -40256,8 +42027,8 @@ StylePanel_70s_Rock_Legend_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x00065c, 0x00, 3, 113	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x41, 0x00, 0x55, 0x40, 0x55, 0x40, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x7f, 0x03
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	127, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -40273,8 +42044,8 @@ StylePanel_Straight_Grand_1:	# one-touch setting 1 of the Music Stylist setup "S
 	PM_RHYTHM	0x000561, 0x00, 0, 91	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x12, 0x08, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x5a, 0x01
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	90, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40290,8 +42061,8 @@ StylePanel_Clicksteen_2:	# one-touch setting 2 of the Music Stylist setup "Click
 	PM_RHYTHM	0x000561, 0x00, 1, 91	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x01, 0x12, 0x01, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x5a, 0x01
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	90, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40307,8 +42078,8 @@ StylePanel_Benson_16_3:	# one-touch setting 3 of the Music Stylist setup "Benson
 	PM_RHYTHM	0x000561, 0x00, 2, 91	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x22, 0x35, 0x63, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x5a, 0x01
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	90, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40324,8 +42095,8 @@ StylePanel_Happy_16_Sound_4:	# one-touch setting 4 of the Music Stylist setup "H
 	PM_RHYTHM	0x000561, 0x00, 3, 91	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x22, 0x60, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x5a, 0x01
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	90, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40341,8 +42112,8 @@ StylePanel_Euro_Pop_Vision_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000d52, 0x00, 0, 144	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x14, 0x02, 0x12, 0x0b, 0x2b, 0x02
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x11
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -40358,8 +42129,8 @@ StylePanel_Platform_Keys_2:	# one-touch setting 2 of the Music Stylist setup "Pl
 	PM_RHYTHM	0x000d52, 0x00, 1, 144	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x40, 0x12, 0x0b, 0x37, 0x00, 0x2b, 0x02
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x11
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -40375,8 +42146,8 @@ StylePanel_Super_Swede_Solo_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000d52, 0x00, 2, 144	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x55, 0x40, 0x2b, 0x02
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x11
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -40392,8 +42163,8 @@ StylePanel_70s_PopSensation_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000d52, 0x00, 3, 144	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x12, 0x09, 0x14, 0x02, 0x2b, 0x02
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x11
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -40409,8 +42180,8 @@ StylePanel_Zither_Pop_1:	# one-touch setting 1 of the Music Stylist setup "Zithe
 	PM_RHYTHM	0x00083c, 0x00, 0, 86	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x01, 0x52, 0x00, 0x4c, 0x11, 0x48, 0x23
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x63, 0x00
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	99, 0
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40426,8 +42197,8 @@ StylePanel_Bouzouki_Pop_2:	# one-touch setting 2 of the Music Stylist setup "Bou
 	PM_RHYTHM	0x00083c, 0x00, 1, 86	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x01, 0x48, 0x23, 0x4c, 0x11, 0x48, 0x23
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x63, 0x00
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	99, 0
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40443,8 +42214,8 @@ StylePanel_Cumbus_Pop_3:	# one-touch setting 3 of the Music Stylist setup "Cumbu
 	PM_RHYTHM	0x00083c, 0x00, 2, 86	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x01, 0x4c, 0x11, 0x4c, 0x11, 0x48, 0x23
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x63, 0x00
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	99, 0
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40460,8 +42231,8 @@ StylePanel_Kanun_Pop_4:	# one-touch setting 4 of the Music Stylist setup "Kanun 
 	PM_RHYTHM	0x00083c, 0x00, 3, 86	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x01, 0x4c, 0x11, 0x4c, 0x11, 0x48, 0x23
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x63, 0x00
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	99, 0
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40477,8 +42248,8 @@ StylePanel_People_s_Vocal_1:	# one-touch setting 1 of the Music Stylist setup "P
 	PM_RHYTHM	0x00052b, 0x00, 0, 125	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x37, 0x00, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40494,8 +42265,8 @@ StylePanel_70s_DiscoStrings_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x00052b, 0x00, 1, 125	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x35, 0x20, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40511,8 +42282,8 @@ StylePanel_NY_Disco_Piano_3:	# one-touch setting 3 of the Music Stylist setup "N
 	PM_RHYTHM	0x00052b, 0x00, 2, 125	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x37, 0x00, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40528,8 +42299,8 @@ StylePanel_YouthHostelBrass_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x00052b, 0x00, 3, 125	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x12, 0x02, 0x12, 0x09, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40545,8 +42316,8 @@ StylePanel_Smooth_Rock_Harp_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000160, 0x00, 0, 84	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x4c, 0x0c, 0x48, 0x08, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40562,8 +42333,8 @@ StylePanel_Benson_Groove_2:	# one-touch setting 2 of the Music Stylist setup "Be
 	PM_RHYTHM	0x000160, 0x40, 1, 84	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x63, 0x52, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x0b, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0x11, 11, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40579,8 +42350,8 @@ StylePanel_16_Instrumental_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000160, 0x00, 2, 84	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x10, 0x37, 0x01, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40596,8 +42367,8 @@ StylePanel_Pop_Standards_4:	# one-touch setting 4 of the Music Stylist setup "Po
 	PM_RHYTHM	0x000160, 0x00, 3, 84	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x22, 0x01, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40613,8 +42384,8 @@ StylePanel_Lush_Big_Band_1:	# one-touch setting 1 of the Music Stylist setup "Lu
 	PM_RHYTHM	0x000826, 0x00, 0, 118	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x61, 0x37, 0x01, 0x48, 0x15
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x64, 0x0b
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	100, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40630,8 +42401,8 @@ StylePanel_SwingBrass_Shout_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000826, 0x40, 1, 118	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x01, 0x48, 0x15
-	PM_SET88	0x04, 0x03, 0x08, 0x7f
-	PM_SET8C	0x64, 0x0b
+	PM_SET88	0x04, 0x03, 8, 127
+	PM_SET8C	100, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40647,8 +42418,8 @@ StylePanel_SwingBand_Warmth_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000826, 0x00, 2, 118	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x0c, 0x12, 0x0c, 0x48, 0x15
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x64, 0x0b
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	100, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40664,8 +42435,8 @@ StylePanel_SwingReedWriting_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000826, 0x40, 3, 118	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x35, 0x62, 0x48, 0x15
-	PM_SET88	0x04, 0x03, 0x08, 0x7f
-	PM_SET8C	0x64, 0x0b
+	PM_SET88	0x04, 0x03, 8, 127
+	PM_SET8C	100, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40681,8 +42452,8 @@ StylePanel_EP_Quickstep_1:	# one-touch setting 1 of the Music Stylist setup "EP 
 	PM_RHYTHM	0x000752, 0x00, 0, 200	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x25, 0x45, 0x22, 0x00, 0x22, 0x00
-	PM_SET88	0x00, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x0b
+	PM_SET88	0x00, 0x11, 4, 127
+	PM_SET8C	105, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40698,8 +42469,8 @@ StylePanel_Organ_Quickstep_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000752, 0x00, 1, 200	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x22, 0x40, 0x25, 0x45, 0x22, 0x40
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x0b
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40715,8 +42486,8 @@ StylePanel_Ballroom_Sax_3:	# one-touch setting 3 of the Music Stylist setup "Bal
 	PM_RHYTHM	0x000752, 0x00, 2, 200	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x37, 0x00, 0x22, 0x00, 0x22, 0x00
-	PM_SET88	0x00, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x0b
+	PM_SET88	0x00, 0x11, 4, 127
+	PM_SET8C	105, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40732,8 +42503,8 @@ StylePanel_Ballroom_Combo_4:	# one-touch setting 4 of the Music Stylist setup "B
 	PM_RHYTHM	0x000752, 0x00, 3, 200	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x15, 0x03, 0x22, 0x00, 0x22, 0x00
-	PM_SET88	0x00, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x0b
+	PM_SET88	0x00, 0x11, 4, 127
+	PM_SET8C	105, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40749,8 +42520,8 @@ StylePanel_Beach_Piano_1:	# one-touch setting 1 of the Music Stylist setup "Beac
 	PM_RHYTHM	0x00062b, 0x00, 0, 88	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x37, 0x00, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40766,8 +42537,8 @@ StylePanel_Saxes_Number_5_2:	# one-touch setting 2 of the Music Stylist setup "S
 	PM_RHYTHM	0x00062b, 0x00, 1, 88	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x48, 0x10, 0x48, 0x10, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40783,8 +42554,8 @@ StylePanel_Live_Mambo_3:	# one-touch setting 3 of the Music Stylist setup "Live 
 	PM_RHYTHM	0x00062b, 0x00, 2, 88	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x35, 0x21, 0x35, 0x62, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40800,8 +42571,8 @@ StylePanel_PartyBrass_Mambo_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x00062b, 0x40, 3, 88	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x12, 0x02, 0x12, 0x09, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40817,8 +42588,8 @@ StylePanel_Simple_Slow_3_1:	# one-touch setting 1 of the Music Stylist setup "Si
 	PM_RHYTHM	0x000708, 0x00, 0, 104	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x13, 0x04, 0x12, 0x10, 0x12, 0x12
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x56, 0x12
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	86, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40834,8 +42605,8 @@ StylePanel_GrandCharm_Waltz_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000708, 0x00, 1, 104	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x22, 0x35, 0x22, 0x12, 0x12
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x56, 0x12
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	86, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40851,8 +42622,8 @@ StylePanel_Waltz_Sax_Man_3:	# one-touch setting 3 of the Music Stylist setup "Wa
 	PM_RHYTHM	0x000708, 0x00, 2, 104	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x62, 0x37, 0x00, 0x12, 0x12
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x56, 0x12
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	86, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40868,8 +42639,8 @@ StylePanel_Waltz_Voices_4:	# one-touch setting 4 of the Music Stylist setup "Wal
 	PM_RHYTHM	0x000708, 0x00, 3, 104	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x20, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x12, 0x12, 0x12, 0x12
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x56, 0x12
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	86, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40885,8 +42656,8 @@ StylePanel_Revival_Choir_1:	# one-touch setting 1 of the Music Stylist setup "Re
 	PM_RHYTHM	0x00094d, 0x00, 0, 127	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x12, 0x0b
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x58, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	88, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40902,8 +42673,8 @@ StylePanel_I_Want_To_Be_3_2:	# one-touch setting 2 of the Music Stylist setup "I
 	PM_RHYTHM	0x00094d, 0x00, 1, 127	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x12, 0x0b, 0x12, 0x0b
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x58, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	88, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40919,8 +42690,8 @@ StylePanel_Raise_The_Roof_3:	# one-touch setting 3 of the Music Stylist setup "R
 	PM_RHYTHM	0x00094d, 0x00, 2, 127	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x02, 0x14, 0x02, 0x12, 0x0b
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x58, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	88, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40936,8 +42707,8 @@ StylePanel_Spinning_Revival_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x00094d, 0x00, 3, 127	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x44, 0x12, 0x0b, 0x12, 0x0b
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x58, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	88, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -40953,8 +42724,8 @@ StylePanel_Ricky_s_Guitar_1:	# one-touch setting 1 of the Music Stylist setup "R
 	PM_RHYTHM	0x000e52, 0x00, 0, 180	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x20, 0x00, 0x14, 0x02, 0x35, 0x20, 0x2b, 0x02
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -40970,8 +42741,8 @@ StylePanel_Latin_Sax_Life_2:	# one-touch setting 2 of the Music Stylist setup "L
 	PM_RHYTHM	0x000e52, 0x00, 1, 180	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x48, 0x10, 0x12, 0x0b, 0x2b, 0x02
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -40987,8 +42758,8 @@ StylePanel_La_B3_3:	# one-touch setting 3 of the Music Stylist setup "La B3" (St
 	PM_RHYTHM	0x000e52, 0x00, 2, 180	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x22, 0x42, 0x22, 0x60, 0x14, 0x02, 0x2b, 0x02
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -41004,8 +42775,8 @@ StylePanel_Latin_DiscoHorns_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000e52, 0x00, 3, 180	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x12, 0x09, 0x12, 0x0b, 0x2b, 0x02
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -41021,8 +42792,8 @@ StylePanel_Simple_Dangdut_1:	# one-touch setting 1 of the Music Stylist setup "S
 	PM_RHYTHM	0x00093c, 0x00, 0, 109	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x01, 0x35, 0x22, 0x35, 0x22, 0x20, 0x0d
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x04
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41038,8 +42809,8 @@ StylePanel_Synth_Dangdut_2:	# one-touch setting 2 of the Music Stylist setup "Sy
 	PM_RHYTHM	0x00093c, 0x00, 1, 109	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x01, 0x48, 0x00, 0x35, 0x20, 0x20, 0x0d
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x04
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41055,8 +42826,8 @@ StylePanel_Orchestra_Dangut_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x00093c, 0x00, 2, 109	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x01, 0x12, 0x11, 0x35, 0x20, 0x20, 0x0d
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x04
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41072,8 +42843,8 @@ StylePanel_Dance_Dangdut_4:	# one-touch setting 4 of the Music Stylist setup "Da
 	PM_RHYTHM	0x00093c, 0x00, 3, 109	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x01, 0x15, 0x03, 0x35, 0x20, 0x20, 0x0d
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x04
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41089,8 +42860,8 @@ StylePanel_Piano_GuitarLove_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000d5f, 0x00, 0, 67	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x49, 0x0b, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41106,8 +42877,8 @@ StylePanel_ProductionValues_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000d5f, 0x00, 1, 67	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x10, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41123,8 +42894,8 @@ StylePanel_Organic_Ballad_3:	# one-touch setting 3 of the Music Stylist setup "O
 	PM_RHYTHM	0x000d5f, 0x00, 2, 67	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x60, 0x10, 0x01, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41140,8 +42911,8 @@ StylePanel_Power_Orchestra_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x000d5f, 0x00, 3, 67	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x20, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41157,8 +42928,8 @@ StylePanel_70s_Funk_Solid_1:	# one-touch setting 1 of the Music Stylist setup "7
 	PM_RHYTHM	0x000c54, 0x00, 0, 107	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x23, 0x00, 0x20, 0x0d, 0x37, 0x00, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x05
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -41174,8 +42945,8 @@ StylePanel_Sunshine_Vocal_2:	# one-touch setting 2 of the Music Stylist setup "S
 	PM_RHYTHM	0x000c54, 0x00, 1, 107	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x37, 0x00, 0x37, 0x00, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x05
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -41191,8 +42962,8 @@ StylePanel_KC_s_Funk_Brass_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000c54, 0x00, 2, 107	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x23, 0x00, 0x12, 0x09, 0x12, 0x02, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x05
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -41208,8 +42979,8 @@ StylePanel_70s_Disco_Organ_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x000c54, 0x00, 3, 107	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x22, 0x40, 0x22, 0x60, 0x22, 0x04, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x05
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -41225,8 +42996,8 @@ StylePanel_House_Marcato_1:	# one-touch setting 1 of the Music Stylist setup "Ho
 	PM_RHYTHM	0x00077d, 0x00, 0, 130	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x17, 0x35, 0x20, 0x52, 0x00, 0x52, 0x00
-	PM_SET88	0x00, 0xff, 0x00, 0x7f
-	PM_SET8C	0x50, 0x04
+	PM_SET88	0x00, 0xff, 0, 127
+	PM_SET8C	80, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41242,8 +43013,8 @@ StylePanel_House_FM_2:	# one-touch setting 2 of the Music Stylist setup "House F
 	PM_RHYTHM	0x00077d, 0x00, 1, 130	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x17, 0x52, 0x00, 0x4c, 0x07, 0x52, 0x00
-	PM_SET88	0x00, 0xff, 0x00, 0x7f
-	PM_SET8C	0x50, 0x04
+	PM_SET88	0x00, 0xff, 0, 127
+	PM_SET8C	80, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41259,8 +43030,8 @@ StylePanel_House_Sweep_3:	# one-touch setting 3 of the Music Stylist setup "Hous
 	PM_RHYTHM	0x00077d, 0x00, 2, 130	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x49, 0x09, 0x4c, 0x07, 0x23, 0x00, 0x52, 0x00
-	PM_SET88	0x00, 0xff, 0x00, 0x7f
-	PM_SET8C	0x50, 0x04
+	PM_SET88	0x00, 0xff, 0, 127
+	PM_SET8C	80, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41276,8 +43047,8 @@ StylePanel_House_Symphonic_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x00077d, 0x00, 3, 130	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x17, 0x12, 0x11, 0x19, 0x01, 0x52, 0x00
-	PM_SET88	0x00, 0xff, 0x00, 0x7f
-	PM_SET8C	0x50, 0x04
+	PM_SET88	0x00, 0xff, 0, 127
+	PM_SET8C	80, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41293,8 +43064,8 @@ StylePanel_Caesar_s_Strings_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000d63, 0x00, 0, 71	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x20, 0x48, 0x10, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x78, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	120, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41310,8 +43081,8 @@ StylePanel_Candelabra_Style_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000d63, 0x00, 1, 71	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x20, 0x00, 0x12, 0x11, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x78, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	120, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41327,8 +43098,8 @@ StylePanel_LegendOfThePiano_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000d63, 0x40, 2, 71	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x20, 0x00, 0x20, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x78, 0x09
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	120, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41344,8 +43115,8 @@ StylePanel_Casino_Orchestra_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000d63, 0x00, 3, 71	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x11, 0x11, 0x35, 0x20, 0x37, 0x40
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x78, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	120, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41361,8 +43132,8 @@ StylePanel_Easy_Fretting_1:	# one-touch setting 1 of the Music Stylist setup "Ea
 	PM_RHYTHM	0x000060, 0x00, 0, 80	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x01, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41378,8 +43149,8 @@ StylePanel_Sweet_Muzak_2:	# one-touch setting 2 of the Music Stylist setup "Swee
 	PM_RHYTHM	0x000060, 0x00, 1, 80	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x10, 0x00, 0x37, 0x40, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41395,8 +43166,8 @@ StylePanel_80s_Movie_Sax_3:	# one-touch setting 3 of the Music Stylist setup "80
 	PM_RHYTHM	0x000060, 0x00, 2, 80	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x48, 0x10, 0x35, 0x62, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41412,8 +43183,8 @@ StylePanel_Studio_Orchestra_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000060, 0x00, 3, 80	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x12, 0x08, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x04, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 4, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41429,8 +43200,8 @@ StylePanel_SentimentalSwing_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000726, 0x00, 0, 84	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x61, 0x37, 0x01, 0x20, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41446,8 +43217,8 @@ StylePanel_Deep_Saxiness_2:	# one-touch setting 2 of the Music Stylist setup "De
 	PM_RHYTHM	0x000726, 0x00, 1, 84	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x22, 0x35, 0x62, 0x20, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41463,8 +43234,8 @@ StylePanel_Velvet_Big_Band_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000726, 0x00, 2, 84	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x01, 0x35, 0x20, 0x20, 0x00
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41480,8 +43251,8 @@ StylePanel_DanceBand_Finish_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000726, 0x40, 3, 84	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x49, 0x12, 0x35, 0x61, 0x20, 0x00
-	PM_SET88	0x04, 0x03, 0x08, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x03, 8, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41497,8 +43268,8 @@ StylePanel_Brothers_Ballad_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000667, 0x00, 0, 74	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x35, 0x22, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41514,8 +43285,8 @@ StylePanel_Beat_llReviveAll_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000667, 0x00, 1, 74	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x20, 0x0d, 0x15, 0x03, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41531,8 +43302,8 @@ StylePanel_Brit_Distortion_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000667, 0x00, 2, 74	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x40, 0x01, 0x55, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41548,8 +43319,8 @@ StylePanel_SymphonicBritPop_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000667, 0x00, 3, 74	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x20, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41565,8 +43336,8 @@ StylePanel_Dangdut_LoveSong_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000a3c, 0x00, 0, 80	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x01, 0x35, 0x22, 0x35, 0x22, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x00
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 0
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41582,8 +43353,8 @@ StylePanel_Acoustic_Dangdut_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000a3c, 0x00, 1, 80	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x01, 0x35, 0x21, 0x35, 0x22, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x00
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 0
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41599,8 +43370,8 @@ StylePanel_Dangdut_Flutes_3:	# one-touch setting 3 of the Music Stylist setup "D
 	PM_RHYTHM	0x000a3c, 0x00, 2, 80	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x12, 0x08, 0x12, 0x08, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x00
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 0
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41616,8 +43387,8 @@ StylePanel_Dangdut_Stage_4:	# one-touch setting 4 of the Music Stylist setup "Da
 	PM_RHYTHM	0x000a3c, 0x00, 3, 80	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x50, 0x00
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	80, 0
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41633,8 +43404,8 @@ StylePanel_Gospel_Duet_1:	# one-touch setting 1 of the Music Stylist setup "Gosp
 	PM_RHYTHM	0x000a4d, 0x00, 0, 130	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x10, 0x48, 0x10, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x4e, 0x01
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	78, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41650,8 +43421,8 @@ StylePanel_Sing_Praises_2:	# one-touch setting 2 of the Music Stylist setup "Sin
 	PM_RHYTHM	0x000a4d, 0x40, 1, 130	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x37, 0x00, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x4e, 0x01
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	78, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41667,8 +43438,8 @@ StylePanel_Glory_To_Him_3:	# one-touch setting 3 of the Music Stylist setup "Glo
 	PM_RHYTHM	0x000a4d, 0x00, 2, 130	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x22, 0x01, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x4e, 0x01
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	78, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41684,8 +43455,8 @@ StylePanel_Revival_Brass_4:	# one-touch setting 4 of the Music Stylist setup "Re
 	PM_RHYTHM	0x000a4d, 0x00, 3, 130	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x14, 0x02, 0x12, 0x01, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x4e, 0x01
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	78, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41701,8 +43472,8 @@ StylePanel_Hip_Hop_Suitcase_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x00087f, 0x00, 0, 100	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x17, 0x25, 0x45, 0x22, 0x00, 0x52, 0x00
-	PM_SET88	0x00, 0xff, 0x00, 0x7f
-	PM_SET8C	0x50, 0x04
+	PM_SET88	0x00, 0xff, 0, 127
+	PM_SET8C	80, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41718,8 +43489,8 @@ StylePanel_Hip_Hop_Ring_2:	# one-touch setting 2 of the Music Stylist setup "Hip
 	PM_RHYTHM	0x00087f, 0x00, 1, 100	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x17, 0x29, 0x40, 0x22, 0x00, 0x52, 0x00
-	PM_SET88	0x00, 0xff, 0x00, 0x7f
-	PM_SET8C	0x50, 0x04
+	PM_SET88	0x00, 0xff, 0, 127
+	PM_SET8C	80, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41735,8 +43506,8 @@ StylePanel_Hip_Hop_Pulse_3:	# one-touch setting 3 of the Music Stylist setup "Hi
 	PM_RHYTHM	0x00087f, 0x00, 2, 100	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x17, 0x30, 0x02, 0x22, 0x00, 0x52, 0x00
-	PM_SET88	0x00, 0xff, 0x00, 0x7f
-	PM_SET8C	0x50, 0x04
+	PM_SET88	0x00, 0xff, 0, 127
+	PM_SET8C	80, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41752,8 +43523,8 @@ StylePanel_Hip_Hop_Synth_4:	# one-touch setting 4 of the Music Stylist setup "Hi
 	PM_RHYTHM	0x00087f, 0x00, 3, 100	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x17, 0x30, 0x02, 0x35, 0x24, 0x52, 0x00
-	PM_SET88	0x00, 0xff, 0x00, 0x7f
-	PM_SET8C	0x50, 0x04
+	PM_SET88	0x00, 0xff, 0, 127
+	PM_SET8C	80, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41769,8 +43540,8 @@ StylePanel_Fast_Band_1:	# one-touch setting 1 of the Music Stylist setup "Fast B
 	PM_RHYTHM	0x00081d, 0x00, 0, 197	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x63, 0x48, 0x10, 0x35, 0x63
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x54, 0x0b
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	84, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41786,8 +43557,8 @@ StylePanel_Up_Beat_Alto_2:	# one-touch setting 2 of the Music Stylist setup "Up 
 	PM_RHYTHM	0x00081d, 0x40, 1, 197	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x62, 0x37, 0x40, 0x35, 0x63
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x54, 0x0b
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	84, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41803,8 +43574,8 @@ StylePanel_Jive_Me_Home_3:	# one-touch setting 3 of the Music Stylist setup "Jiv
 	PM_RHYTHM	0x00081d, 0x40, 2, 197	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x02, 0x12, 0x02, 0x35, 0x63
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x54, 0x0b
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	84, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41820,8 +43591,8 @@ StylePanel_Almost_R_Roll_4:	# one-touch setting 4 of the Music Stylist setup "Al
 	PM_RHYTHM	0x00081d, 0x00, 3, 197	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x02, 0x37, 0x02, 0x35, 0x63
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x54, 0x0b
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	84, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41837,8 +43608,8 @@ StylePanel_SoftLatinRomance_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000f52, 0x00, 0, 77	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x35, 0x22, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -41854,8 +43625,8 @@ StylePanel_Enrique_s_Guitar_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000f52, 0x00, 1, 77	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x48, 0x23, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -41871,8 +43642,8 @@ StylePanel_LoveSong_Strings_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000f52, 0x00, 2, 77	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x12, 0x11, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -41888,8 +43659,8 @@ StylePanel_GuitarHeroBallad_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000f52, 0x00, 3, 77	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x52, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -41905,8 +43676,8 @@ StylePanel_Latin_Pop_Warmth_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x00072b, 0x00, 0, 100	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x00, 0x12, 0x01, 0x35, 0x62, 0x35, 0x20
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41922,8 +43693,8 @@ StylePanel_Synthetic_Heat_2:	# one-touch setting 2 of the Music Stylist setup "S
 	PM_RHYTHM	0x00072b, 0x00, 1, 100	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x00, 0x23, 0x0a, 0x35, 0x62, 0x35, 0x20
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41939,8 +43710,8 @@ StylePanel_Latin_Dance_Keys_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x00072b, 0x00, 2, 100	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x37, 0x00, 0x10, 0x00, 0x55, 0x00
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41956,8 +43727,8 @@ StylePanel_LatinGuitar_Hero_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x00072b, 0x00, 3, 100	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x55, 0x00, 0x55, 0x00
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41973,8 +43744,8 @@ StylePanel_French_Singers_1:	# one-touch setting 1 of the Music Stylist setup "F
 	PM_RHYTHM	0x00030b, 0x00, 0, 180	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x09, 0x12, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x12
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -41990,8 +43761,8 @@ StylePanel_A_Night_In_Paris_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x00030b, 0x40, 1, 180	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x13, 0x02, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x03, 0x7f
-	PM_SET8C	0x69, 0x12
+	PM_SET88	0x04, 0x11, 3, 127
+	PM_SET8C	105, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42007,8 +43778,8 @@ StylePanel_Romantic_Paris_3:	# one-touch setting 3 of the Music Stylist setup "R
 	PM_RHYTHM	0x00030b, 0x00, 2, 180	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x12, 0x08, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x12
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42024,8 +43795,8 @@ StylePanel_Art_De_Triumphe_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x00030b, 0x00, 3, 180	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0x00, 0x07, 0x7f
-	PM_SET8C	0x69, 0x12
+	PM_SET88	0x04, 0x00, 7, 127
+	PM_SET8C	105, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42041,8 +43812,8 @@ StylePanel_Cop_Movie_EP_1:	# one-touch setting 1 of the Music Stylist setup "Cop
 	PM_RHYTHM	0x000870, 0x00, 0, 116	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x00, 0x14, 0x01, 0x20, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x05
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -42058,8 +43829,8 @@ StylePanel_70s_Bronx_Brass_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000870, 0x00, 1, 116	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x38, 0x64, 0x12, 0x09, 0x48, 0x10, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x05
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -42075,8 +43846,8 @@ StylePanel_Wah_Wah_Symphony_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000870, 0x00, 2, 116	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x00, 0x12, 0x11, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x05
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -42092,8 +43863,8 @@ StylePanel_Isaac_sOrchestra_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000870, 0x00, 3, 116	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x00, 0x12, 0x08, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x05
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -42109,8 +43880,8 @@ StylePanel_Suitcase_Waltz_1:	# one-touch setting 1 of the Music Stylist setup "S
 	PM_RHYTHM	0x00020d, 0x00, 0, 90	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x25, 0x45, 0x22, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x12
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42126,8 +43897,8 @@ StylePanel_Organ_Waltz_2:	# one-touch setting 2 of the Music Stylist setup "Orga
 	PM_RHYTHM	0x00020d, 0x00, 1, 90	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x22, 0x40, 0x22, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x12
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42143,8 +43914,8 @@ StylePanel_Piano_Waltz_3:	# one-touch setting 3 of the Music Stylist setup "Pian
 	PM_RHYTHM	0x00020d, 0x00, 2, 90	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x35, 0x22, 0x22, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x12
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42160,8 +43931,8 @@ StylePanel_Combo_Waltz_4:	# one-touch setting 4 of the Music Stylist setup "Comb
 	PM_RHYTHM	0x00020d, 0x00, 3, 90	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x35, 0x63, 0x22, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x12
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42177,8 +43948,8 @@ StylePanel_Back_To_The_80s_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000461, 0x00, 0, 76	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x10, 0x00, 0x14, 0x02, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42194,8 +43965,8 @@ StylePanel_Romantic_16_Beat_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000461, 0x00, 1, 76	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x14, 0x02, 0x20, 0x00, 0x37, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42211,8 +43982,8 @@ StylePanel_Muzak_Ballad_3:	# one-touch setting 3 of the Music Stylist setup "Muz
 	PM_RHYTHM	0x000461, 0x00, 2, 76	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x15, 0x05, 0x52, 0x08
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42228,8 +43999,8 @@ StylePanel_Pops_Orchestra_4:	# one-touch setting 4 of the Music Stylist setup "P
 	PM_RHYTHM	0x000461, 0x00, 3, 76	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x29, 0x00, 0x14, 0x02, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42245,8 +44016,8 @@ StylePanel_Eighties_Echoes_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000b63, 0x00, 0, 79	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x37, 0x40, 0x48, 0x15, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42262,8 +44033,8 @@ StylePanel_Fostered_Grand_2:	# one-touch setting 2 of the Music Stylist setup "F
 	PM_RHYTHM	0x000b63, 0x00, 1, 79	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x26, 0x20, 0x00, 0x10, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42279,8 +44050,8 @@ StylePanel_Sax_Lament_3:	# one-touch setting 3 of the Music Stylist setup "Sax L
 	PM_RHYTHM	0x000b63, 0x00, 2, 79	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x49, 0x0b, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42296,8 +44067,8 @@ StylePanel_St_Elmos_Horns_4:	# one-touch setting 4 of the Music Stylist setup "S
 	PM_RHYTHM	0x000b63, 0x00, 3, 79	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x26, 0x35, 0x20, 0x37, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42313,8 +44084,8 @@ StylePanel_Sweetly_Swinging_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000b26, 0x00, 0, 74	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x02, 0x37, 0x01, 0x20, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42330,8 +44101,8 @@ StylePanel_Radio_Big_Band_2:	# one-touch setting 2 of the Music Stylist setup "R
 	PM_RHYTHM	0x000b26, 0x40, 1, 74	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x01, 0x35, 0x23, 0x20, 0x00
-	PM_SET88	0x04, 0x11, 0x08, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x11, 8, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42347,8 +44118,8 @@ StylePanel_Doubling_Swing_3:	# one-touch setting 3 of the Music Stylist setup "D
 	PM_RHYTHM	0x000b26, 0x40, 2, 74	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x12, 0x08, 0x20, 0x00
-	PM_SET88	0x04, 0x03, 0x08, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x03, 8, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42364,8 +44135,8 @@ StylePanel_HatsOff_To_Swing_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000b26, 0x40, 3, 74	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x02, 0x37, 0x01, 0x20, 0x00
-	PM_SET88	0x04, 0x03, 0x08, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x03, 8, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42381,8 +44152,8 @@ StylePanel_Safari_Swing_1:	# one-touch setting 1 of the Music Stylist setup "Saf
 	PM_RHYTHM	0x00021d, 0x40, 0, 165	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x11, 0x12, 0x08, 0x12, 0x01
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x50, 0x0b
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	80, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42398,8 +44169,8 @@ StylePanel_Wonderlights_2:	# one-touch setting 2 of the Music Stylist setup "Won
 	PM_RHYTHM	0x00021d, 0x00, 1, 165	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x2b, 0x04, 0x22, 0x40, 0x12, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x52, 0x0b
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	82, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42415,8 +44186,8 @@ StylePanel_String_Fox_3:	# one-touch setting 3 of the Music Stylist setup "Strin
 	PM_RHYTHM	0x00021d, 0x40, 2, 165	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x12, 0x12, 0x12, 0x0e
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x55, 0x0b
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	85, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42432,8 +44203,8 @@ StylePanel_Foxy_Big_Band_4:	# one-touch setting 4 of the Music Stylist setup "Fo
 	PM_RHYTHM	0x00021d, 0x40, 3, 165	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x0c, 0x12, 0x09, 0x12, 0x0e
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x55, 0x0b
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	85, 11
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42449,8 +44220,8 @@ StylePanel_Gospel_Groove_1:	# one-touch setting 1 of the Music Stylist setup "Go
 	PM_RHYTHM	0x00004d, 0x00, 0, 145	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x12, 0x01, 0x1b, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x54, 0x11
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	84, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42466,8 +44237,8 @@ StylePanel_Grand_Joy_2:	# one-touch setting 2 of the Music Stylist setup "Grand 
 	PM_RHYTHM	0x00004d, 0x00, 1, 145	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x0b, 0x15, 0x40, 0x1b, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x54, 0x11
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	84, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42483,8 +44254,8 @@ StylePanel_Gospel_Standard_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x00004d, 0x00, 2, 145	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x54, 0x11
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	84, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42500,8 +44271,8 @@ StylePanel_Gospel_Brass_4:	# one-touch setting 4 of the Music Stylist setup "Gos
 	PM_RHYTHM	0x00004d, 0x00, 3, 145	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x02, 0x12, 0x01, 0x1b, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x54, 0x11
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	84, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42517,8 +44288,8 @@ StylePanel_Hip_Suit_1:	# one-touch setting 1 of the Music Stylist setup "Hip Sui
 	PM_RHYTHM	0x00087f, 0x00, 0, 90	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x25, 0x45, 0x22, 0x00, 0x37, 0x01
-	PM_SET88	0x00, 0x11, 0x04, 0x7f
-	PM_SET8C	0x5a, 0x09
+	PM_SET88	0x00, 0x11, 4, 127
+	PM_SET8C	90, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42534,8 +44305,8 @@ StylePanel_Acoustic_Groove_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x00087f, 0x00, 1, 90	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x35, 0x21, 0x25, 0x45, 0x37, 0x01
-	PM_SET88	0x00, 0x11, 0x04, 0x7f
-	PM_SET8C	0x5a, 0x09
+	PM_SET88	0x00, 0x11, 4, 127
+	PM_SET8C	90, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42551,8 +44322,8 @@ StylePanel_Chilled_Sax_3:	# one-touch setting 3 of the Music Stylist setup "Chil
 	PM_RHYTHM	0x00087f, 0x00, 2, 90	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x49, 0x0b, 0x25, 0x45, 0x37, 0x01
-	PM_SET88	0x00, 0x11, 0x04, 0x7f
-	PM_SET8C	0x5a, 0x09
+	PM_SET88	0x00, 0x11, 4, 127
+	PM_SET8C	90, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42568,8 +44339,8 @@ StylePanel_Flugel_Hipness_4:	# one-touch setting 4 of the Music Stylist setup "F
 	PM_RHYTHM	0x00087f, 0x00, 3, 90	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x35, 0x25, 0x25, 0x45, 0x37, 0x01
-	PM_SET88	0x00, 0x11, 0x04, 0x7f
-	PM_SET8C	0x5a, 0x09
+	PM_SET88	0x00, 0x11, 4, 127
+	PM_SET8C	90, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42585,8 +44356,8 @@ StylePanel_Cool_Club_Piano_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000f7f, 0x00, 0, 126	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x28, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x19, 0x24, 0x10, 0x00, 0x22, 0x20
-	PM_SET88	0x00, 0xff, 0x03, 0x7f
-	PM_SET8C	0x3d, 0x05
+	PM_SET88	0x00, 0xff, 3, 127
+	PM_SET8C	61, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42602,8 +44373,8 @@ StylePanel_Soul_Smith_2:	# one-touch setting 2 of the Music Stylist setup "Soul 
 	PM_RHYTHM	0x000f7f, 0x00, 1, 126	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x28, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x20, 0x14, 0x10, 0x22, 0x20
-	PM_SET88	0x00, 0xff, 0x03, 0x7f
-	PM_SET8C	0x3d, 0x05
+	PM_SET88	0x00, 0xff, 3, 127
+	PM_SET8C	61, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42619,8 +44390,8 @@ StylePanel_Funky_Club_Solo_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000f7f, 0x00, 2, 126	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x28, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x10, 0x22, 0x60, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x3d, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	61, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42636,8 +44407,8 @@ StylePanel_R_B_Fusion_Band_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x000f7f, 0x00, 3, 126	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x28, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x12, 0x01, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x3d, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	61, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42653,8 +44424,8 @@ StylePanel_Waltz_Groove_1:	# one-touch setting 1 of the Music Stylist setup "Wal
 	PM_RHYTHM	0x00062e, 0x00, 0, 140	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x63, 0x48, 0x09, 0x14, 0x11
-	PM_SET88	0x04, 0xff, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x13
+	PM_SET88	0x04, 0xff, 10, 127
+	PM_SET8C	105, 19
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42670,8 +44441,8 @@ StylePanel_Jazz_Soloist_2:	# one-touch setting 2 of the Music Stylist setup "Jaz
 	PM_RHYTHM	0x00062e, 0x00, 1, 140	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x20, 0x00, 0x35, 0x63, 0x14, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x13
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 19
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42687,8 +44458,8 @@ StylePanel_Mellow_Horn_Jazz_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x00062e, 0x00, 2, 140	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x35, 0x25, 0x48, 0x09, 0x14, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x13
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 19
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42704,8 +44475,8 @@ StylePanel_Doo_Wah_Jazzing_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x00062e, 0x40, 3, 140	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x25, 0x37, 0x00, 0x14, 0x11
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x69, 0x13
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	105, 19
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42721,8 +44492,8 @@ StylePanel_Hit_Parade_Organ_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000556, 0x00, 0, 180	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x2b, 0x04, 0x12, 0x09, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -42738,8 +44509,8 @@ StylePanel_Swivel_Hip_Vocal_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000556, 0x00, 1, 180	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x01, 0x37, 0x00, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -42755,8 +44526,8 @@ StylePanel_Groovy_Orchestra_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000556, 0x00, 2, 180	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x35, 0x20, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -42772,8 +44543,8 @@ StylePanel_Unusual_Brass_4:	# one-touch setting 4 of the Music Stylist setup "Un
 	PM_RHYTHM	0x000556, 0x00, 3, 180	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x12, 0x01, 0x12, 0x09, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -42789,8 +44560,8 @@ StylePanel_Rollin_Keys_1:	# one-touch setting 1 of the Music Stylist setup "Roll
 	PM_RHYTHM	0x000150, 0x00, 0, 164	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x23, 0x09, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x53, 0x03
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	83, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -42806,8 +44577,8 @@ StylePanel_Rockin_Organ_2:	# one-touch setting 2 of the Music Stylist setup "Roc
 	PM_RHYTHM	0x000150, 0x00, 1, 164	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x20, 0x23, 0x09, 0x1b, 0x00
-	PM_SET88	0x00, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x53, 0x03
+	PM_SET88	0x00, 0xff, 13, 127
+	PM_SET8C	83, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -42823,8 +44594,8 @@ StylePanel_R_n_R_Big_Band_3:	# one-touch setting 3 of the Music Stylist setup "R
 	PM_RHYTHM	0x000150, 0x00, 2, 164	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x22, 0x20, 0x22, 0x65
-	PM_SET88	0x00, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x53, 0x03
+	PM_SET88	0x00, 0xff, 13, 127
+	PM_SET8C	83, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -42840,8 +44611,8 @@ StylePanel_Sax_Drums_and_4:	# one-touch setting 4 of the Music Stylist setup "Sa
 	PM_RHYTHM	0x000150, 0x00, 3, 164	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x10, 0x48, 0x10, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x53, 0x03
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	83, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -42857,8 +44628,8 @@ StylePanel_Jamaica_Jammin_1:	# one-touch setting 1 of the Music Stylist setup "J
 	PM_RHYTHM	0x000547, 0x00, 0, 125	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x02, 0x12, 0x09, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x11
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42874,8 +44645,8 @@ StylePanel_Rasta_Wheels_2:	# one-touch setting 2 of the Music Stylist setup "Ras
 	PM_RHYTHM	0x000547, 0x00, 1, 125	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x1b, 0x00, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x11
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42891,8 +44662,8 @@ StylePanel_Sun_Sea_Strat_3:	# one-touch setting 3 of the Music Stylist setup "Su
 	PM_RHYTHM	0x000547, 0x00, 2, 125	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x15, 0x03, 0x12, 0x01, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x11
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42908,8 +44679,8 @@ StylePanel_Caribbean_Warmth_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000547, 0x00, 3, 125	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x0b, 0x48, 0x2e, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x11
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42925,8 +44696,8 @@ StylePanel_Kitty_Guitars_1:	# one-touch setting 1 of the Music Stylist setup "Ki
 	PM_RHYTHM	0x00082b, 0x00, 0, 102	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x28, 0x02, 0x00, 0x16, 0x00, 0x48, 0x00, 0x37, 0x01, 0x35, 0x62, 0x35, 0x20
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x5a, 0x04
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	90, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42942,8 +44713,8 @@ StylePanel_Girl_Pop_Singers_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x00082b, 0x00, 1, 102	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x28, 0x02, 0x00, 0x16, 0x00, 0x48, 0x00, 0x37, 0x00, 0x12, 0x00, 0x35, 0x20
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x5a, 0x04
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	90, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42959,8 +44730,8 @@ StylePanel_Atomic_Synth_3:	# one-touch setting 3 of the Music Stylist setup "Ato
 	PM_RHYTHM	0x00082b, 0x00, 2, 102	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x28, 0x02, 0x00, 0x16, 0x00, 0x48, 0x00, 0x48, 0x00, 0x12, 0x00, 0x35, 0x20
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x5a, 0x04
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	90, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42976,8 +44747,8 @@ StylePanel_Blond_Strings_4:	# one-touch setting 4 of the Music Stylist setup "Bl
 	PM_RHYTHM	0x00082b, 0x00, 3, 102	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x28, 0x02, 0x00, 0x16, 0x00, 0x48, 0x00, 0x12, 0x11, 0x35, 0x20, 0x35, 0x20
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x5a, 0x04
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	90, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -42993,8 +44764,8 @@ StylePanel_Higher_Reeds_1:	# one-touch setting 1 of the Music Stylist setup "Hig
 	PM_RHYTHM	0x000367, 0x00, 0, 77	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x01, 0x4c, 0x0f, 0x48, 0x08, 0x48, 0x2e, 0x13, 0x06
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43010,8 +44781,8 @@ StylePanel_Floating_Strings_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000367, 0x00, 1, 77	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x01, 0x4c, 0x0f, 0x37, 0x40, 0x12, 0x11, 0x37, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43027,8 +44798,8 @@ StylePanel_Shining_Soul_3:	# one-touch setting 3 of the Music Stylist setup "Shi
 	PM_RHYTHM	0x000367, 0x00, 2, 77	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x01, 0x4c, 0x10, 0x14, 0x02, 0x52, 0x00, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43044,8 +44815,8 @@ StylePanel_Sweetest_Solos_4:	# one-touch setting 4 of the Music Stylist setup "S
 	PM_RHYTHM	0x000367, 0x00, 3, 77	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x01, 0x4c, 0x10, 0x48, 0x00, 0x14, 0x0c, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43061,8 +44832,8 @@ StylePanel_Steel_Ballad_1:	# one-touch setting 1 of the Music Stylist setup "Ste
 	PM_RHYTHM	0x000a4a, 0x00, 0, 68	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x48, 0x2b, 0x13, 0x06, 0x12, 0x11
-	PM_SET88	0x00, 0x11, 0x04, 0x7f
-	PM_SET8C	0x5a, 0x08
+	PM_SET88	0x00, 0x11, 4, 127
+	PM_SET8C	90, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43078,8 +44849,8 @@ StylePanel_Piano_Smooch_2:	# one-touch setting 2 of the Music Stylist setup "Pia
 	PM_RHYTHM	0x000a4a, 0x00, 1, 68	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x35, 0x22, 0x13, 0x06, 0x12, 0x11
-	PM_SET88	0x00, 0x11, 0x04, 0x7f
-	PM_SET8C	0x5a, 0x08
+	PM_SET88	0x00, 0x11, 4, 127
+	PM_SET8C	90, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43095,8 +44866,8 @@ StylePanel_Mouth_Organ_12_8_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000a4a, 0x00, 2, 68	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x37, 0x00, 0x13, 0x06, 0x12, 0x11
-	PM_SET88	0x00, 0x11, 0x04, 0x7f
-	PM_SET8C	0x5a, 0x08
+	PM_SET88	0x00, 0x11, 4, 127
+	PM_SET8C	90, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43112,8 +44883,8 @@ StylePanel_Last_Dance_4:	# one-touch setting 4 of the Music Stylist setup "Last 
 	PM_RHYTHM	0x000a4a, 0x00, 3, 68	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x07, 0x12, 0x02, 0x13, 0x06, 0x12, 0x11
-	PM_SET88	0x00, 0x11, 0x04, 0x7f
-	PM_SET8C	0x5a, 0x08
+	PM_SET88	0x00, 0x11, 4, 127
+	PM_SET8C	90, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43129,8 +44900,8 @@ StylePanel_Animated_Beauty_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000962, 0x00, 0, 86	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x40, 0x48, 0x10, 0x35, 0x20
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43146,8 +44917,8 @@ StylePanel_Dizzy_Knee_Time_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000962, 0x00, 1, 86	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x48, 0x01, 0x35, 0x20
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43163,8 +44934,8 @@ StylePanel_Orchestral_Tale_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000962, 0x00, 2, 86	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x20, 0x12, 0x08, 0x12, 0x11
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43180,8 +44951,8 @@ StylePanel_Tunes_For_Toons_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x000962, 0x00, 3, 86	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4d, 0x09, 0x12, 0x11, 0x29, 0x23, 0x12, 0x11
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43197,8 +44968,8 @@ StylePanel_Chillout_Sunrise_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000579, 0x00, 0, 138	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x4c, 0x07, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43214,8 +44985,8 @@ StylePanel_Chillout_Pulse_2:	# one-touch setting 2 of the Music Stylist setup "C
 	PM_RHYTHM	0x000579, 0x00, 1, 138	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x30, 0x02, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43231,8 +45002,8 @@ StylePanel_Chillout_Breeze_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000579, 0x00, 2, 138	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x35, 0x24, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43248,8 +45019,8 @@ StylePanel_ChillOut_Sampler_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000579, 0x00, 3, 138	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x52, 0x00, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x04
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43265,8 +45036,8 @@ StylePanel_ClarinetSerenade_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000427, 0x00, 0, 74	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x48, 0x22, 0x20, 0x00
-	PM_SET88	0x04, 0x03, 0x08, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x03, 8, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43282,8 +45053,8 @@ StylePanel_Miller_Reeds_2:	# one-touch setting 2 of the Music Stylist setup "Mil
 	PM_RHYTHM	0x000427, 0x40, 1, 74	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x0c, 0x35, 0x62, 0x20, 0x00
-	PM_SET88	0x04, 0x03, 0x07, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x03, 7, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43299,8 +45070,8 @@ StylePanel_Dance_Band_Bones_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000427, 0x40, 2, 74	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x01, 0x35, 0x61, 0x20, 0x00
-	PM_SET88	0x04, 0x11, 0x08, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x11, 8, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43316,8 +45087,8 @@ StylePanel_Baritone_Miller_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x000427, 0x40, 3, 74	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x48, 0x22, 0x20, 0x00
-	PM_SET88	0x04, 0x03, 0x07, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x03, 7, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43333,8 +45104,8 @@ StylePanel_Knebworth_Vocal_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000656, 0x00, 0, 120	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x48, 0x10, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -43350,8 +45121,8 @@ StylePanel_Logically_Guitar_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000656, 0x00, 1, 120	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x00, 0x22, 0x01, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -43367,8 +45138,8 @@ StylePanel_Rock_Wurly_3:	# one-touch setting 3 of the Music Stylist setup "Rock 
 	PM_RHYTHM	0x000656, 0x00, 2, 120	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x27, 0x41, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -43384,8 +45155,8 @@ StylePanel_Festival_Axe_4:	# one-touch setting 4 of the Music Stylist setup "Fes
 	PM_RHYTHM	0x000656, 0x00, 3, 120	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x27, 0x41, 0x12, 0x0a
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -43401,8 +45172,8 @@ StylePanel_Paradise_Voices_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000416, 0x00, 0, 104	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x0f
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 15
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43418,8 +45189,8 @@ StylePanel_Hawaii_Vacation_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000416, 0x40, 1, 104	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x05, 0x49, 0x00, 0x49, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x0f
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 15
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43435,8 +45206,8 @@ StylePanel_Waikiki_Vibes_3:	# one-touch setting 3 of the Music Stylist setup "Wa
 	PM_RHYTHM	0x000416, 0x40, 2, 104	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x01, 0x13, 0x00, 0x48, 0x23, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43452,8 +45223,8 @@ StylePanel_Maui_Flutes_4:	# one-touch setting 4 of the Music Stylist setup "Maui
 	PM_RHYTHM	0x000416, 0x40, 3, 104	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x01, 0x12, 0x08, 0x13, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x0f
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 15
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43469,8 +45240,8 @@ StylePanel_Latin_Pop_Duet_1:	# one-touch setting 1 of the Music Stylist setup "L
 	PM_RHYTHM	0x00092b, 0x40, 0, 100	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x28, 0x02, 0x00, 0x16, 0x00, 0x48, 0x00, 0x37, 0x01, 0x35, 0x62, 0x35, 0x20
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x5a, 0x04
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	90, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43486,8 +45257,8 @@ StylePanel_PopBrassEspaniol_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x00092b, 0x00, 1, 100	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x28, 0x02, 0x00, 0x16, 0x00, 0x48, 0x00, 0x35, 0x23, 0x37, 0x00, 0x35, 0x20
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x5a, 0x04
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	90, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43503,8 +45274,8 @@ StylePanel_Latin_Production_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x00092b, 0x00, 2, 100	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x55, 0x00, 0x55, 0x00
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43520,8 +45291,8 @@ StylePanel_Studio_Latin_4:	# one-touch setting 4 of the Music Stylist setup "Stu
 	PM_RHYTHM	0x00092b, 0x00, 3, 100	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x12, 0x11, 0x35, 0x20, 0x55, 0x00
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43537,8 +45308,8 @@ StylePanel_Cocktail_Waltz_1:	# one-touch setting 1 of the Music Stylist setup "C
 	PM_RHYTHM	0x00040d, 0x00, 0, 96	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x20, 0x00, 0x19, 0x02, 0x12, 0x11
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x13
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 19
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43554,8 +45325,8 @@ StylePanel_Concertina_Three_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x00040d, 0x00, 1, 96	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x13, 0x02, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x03, 0x7f
-	PM_SET8C	0x69, 0x13
+	PM_SET88	0x04, 0x11, 3, 127
+	PM_SET8C	105, 19
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43571,8 +45342,8 @@ StylePanel_Waltz_Serenade_3:	# one-touch setting 3 of the Music Stylist setup "W
 	PM_RHYTHM	0x00040d, 0x00, 2, 96	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x07, 0x7f
-	PM_SET8C	0x69, 0x13
+	PM_SET88	0x04, 0x11, 7, 127
+	PM_SET8C	105, 19
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43588,8 +45359,8 @@ StylePanel_Movie_Strings_4:	# one-touch setting 4 of the Music Stylist setup "Mo
 	PM_RHYTHM	0x00040d, 0x00, 3, 96	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x03, 0x7f
-	PM_SET8C	0x69, 0x13
+	PM_SET88	0x04, 0x11, 3, 127
+	PM_SET8C	105, 19
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43605,8 +45376,8 @@ StylePanel_Homecoming_Harp_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000752, 0x00, 0, 174	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x0f
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 15
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -43622,8 +45393,8 @@ StylePanel_Tie_The_Geetar_2:	# one-touch setting 2 of the Music Stylist setup "T
 	PM_RHYTHM	0x000752, 0x00, 1, 174	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x21, 0x37, 0x01, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x0f
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 15
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -43639,8 +45410,8 @@ StylePanel_Tony_DawnCountry_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000752, 0x00, 2, 174	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x37, 0x00, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x69, 0x0f
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	105, 15
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -43656,8 +45427,8 @@ StylePanel_Ribbon_Orchestra_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000752, 0x40, 3, 174	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x0f
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 15
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -43673,8 +45444,8 @@ StylePanel_Brazil_Flute_1:	# one-touch setting 1 of the Music Stylist setup "Bra
 	PM_RHYTHM	0x000474, 0x00, 0, 119	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x35, 0x24, 0x20, 0x00, 0x64, 0x04, 0x12, 0x0b
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5c, 0x07
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	92, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43690,8 +45461,8 @@ StylePanel_Disco_Brasilia_2:	# one-touch setting 2 of the Music Stylist setup "D
 	PM_RHYTHM	0x000474, 0x00, 1, 119	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x13, 0x04, 0x48, 0x0a, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5c, 0x07
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	92, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43707,8 +45478,8 @@ StylePanel_String_Samba_3:	# one-touch setting 3 of the Music Stylist setup "Str
 	PM_RHYTHM	0x000474, 0x00, 2, 119	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x11, 0x11, 0x12, 0x11, 0x12, 0x0b
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5c, 0x07
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	92, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43724,8 +45495,8 @@ StylePanel_Copacabana_Brass_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000474, 0x40, 3, 119	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x35, 0x24, 0x12, 0x02, 0x12, 0x01, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5c, 0x07
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	92, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43741,8 +45512,8 @@ StylePanel_Octave_Tango_1:	# one-touch setting 1 of the Music Stylist setup "Oct
 	PM_RHYTHM	0x000735, 0x40, 0, 120	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x22, 0x35, 0x20, 0x35, 0x22
-	PM_SET88	0x04, 0xff, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 10, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43758,8 +45529,8 @@ StylePanel_Tango_Accordion_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000735, 0x00, 1, 120	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x13, 0x02, 0x37, 0x01, 0x35, 0x22
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43775,8 +45546,8 @@ StylePanel_Tango_Passion_3:	# one-touch setting 3 of the Music Stylist setup "Ta
 	PM_RHYTHM	0x000735, 0x40, 2, 120	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x37, 0x01, 0x35, 0x22
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43792,8 +45563,8 @@ StylePanel_Tango_Unison_4:	# one-touch setting 4 of the Music Stylist setup "Tan
 	PM_RHYTHM	0x000735, 0x00, 3, 120	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x0c, 0x12, 0x0c, 0x35, 0x22
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43809,8 +45580,8 @@ StylePanel_Synth_Hook_1:	# one-touch setting 1 of the Music Stylist setup "Synth
 	PM_RHYTHM	0x000365, 0x00, 0, 90	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x48, 0x00, 0x48, 0x49, 0x14, 0x02
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43826,8 +45597,8 @@ StylePanel_Pop_Song_EP_2:	# one-touch setting 2 of the Music Stylist setup "Pop 
 	PM_RHYTHM	0x000365, 0x00, 1, 90	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x10, 0x00, 0x12, 0x02, 0x14, 0x02
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43843,8 +45614,8 @@ StylePanel_Jazz_Pop_Mix_3:	# one-touch setting 3 of the Music Stylist setup "Jaz
 	PM_RHYTHM	0x000365, 0x00, 2, 90	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x22, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43860,8 +45631,8 @@ StylePanel_Pop_Song_Solo_4:	# one-touch setting 4 of the Music Stylist setup "Po
 	PM_RHYTHM	0x000365, 0x00, 3, 90	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x62, 0x10, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43877,8 +45648,8 @@ StylePanel_Hippie_Guitar_1:	# one-touch setting 1 of the Music Stylist setup "Hi
 	PM_RHYTHM	0x000a5a, 0x00, 0, 93	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x48, 0x0a, 0x35, 0x21, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x10
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 16
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43894,8 +45665,8 @@ StylePanel_Folk_Strumming_2:	# one-touch setting 2 of the Music Stylist setup "F
 	PM_RHYTHM	0x000a5a, 0x40, 1, 93	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x40, 0x12, 0x11, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x04, 0x7f
-	PM_SET8C	0x69, 0x10
+	PM_SET88	0x04, 0x11, 4, 127
+	PM_SET8C	105, 16
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43911,8 +45682,8 @@ StylePanel_Folk_Singers_3:	# one-touch setting 3 of the Music Stylist setup "Fol
 	PM_RHYTHM	0x000a5a, 0x40, 2, 93	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x37, 0x00, 0x12, 0x01, 0x37, 0x00
-	PM_SET88	0x04, 0x03, 0x03, 0x7f
-	PM_SET8C	0x69, 0x10
+	PM_SET88	0x04, 0x03, 3, 127
+	PM_SET8C	105, 16
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43928,8 +45699,8 @@ StylePanel_Cajun_Beats_4:	# one-touch setting 4 of the Music Stylist setup "Caju
 	PM_RHYTHM	0x000a5a, 0x00, 3, 93	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x4c, 0x0c, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x10
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 16
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43945,8 +45716,8 @@ StylePanel_6_String_Boogie_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x00011f, 0x00, 0, 164	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x14, 0x02, 0x37, 0x00, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43962,8 +45733,8 @@ StylePanel_Boogie_Dominoes_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x00011f, 0x00, 1, 164	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x22, 0x14, 0x02, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43979,8 +45750,8 @@ StylePanel_Boogie_335_3:	# one-touch setting 3 of the Music Stylist setup "Boogi
 	PM_RHYTHM	0x00011f, 0x40, 2, 164	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x63, 0x14, 0x02, 0x22, 0x60
-	PM_SET88	0x04, 0x11, 0x0b, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x11, 11, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -43996,8 +45767,8 @@ StylePanel_Boogie_Brothers_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x00011f, 0x00, 3, 164	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x02, 0x48, 0x22, 0x22, 0x60
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44013,8 +45784,8 @@ StylePanel_Fab_Piano_1:	# one-touch setting 1 of the Music Stylist setup "Fab Pi
 	PM_RHYTHM	0x000958, 0x00, 0, 76	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x22, 0x09, 0x22, 0x12, 0x0a
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -44030,8 +45801,8 @@ StylePanel_Strummed_Ballad_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000958, 0x00, 1, 76	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x40, 0x09, 0x22, 0x12, 0x0a
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -44047,8 +45818,8 @@ StylePanel_Yesterday_sVoice_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000958, 0x00, 2, 76	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -44064,8 +45835,8 @@ StylePanel_Weeping_Guitar_4:	# one-touch setting 4 of the Music Stylist setup "W
 	PM_RHYTHM	0x000958, 0x00, 3, 76	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x40, 0x55, 0x40, 0x55, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -44081,8 +45852,8 @@ StylePanel_B3_and_Roll_1:	# one-touch setting 1 of the Music Stylist setup "B3 a
 	PM_RHYTHM	0x000252, 0x00, 0, 178	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x28, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x04, 0x14, 0x02, 0x20, 0x0d
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x53, 0x03
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	83, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -44098,8 +45869,8 @@ StylePanel_Bill_s_Guitar_2:	# one-touch setting 2 of the Music Stylist setup "Bi
 	PM_RHYTHM	0x000252, 0x00, 1, 178	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x28, 0x02, 0x00, 0x16, 0x00, 0x4d, 0x03, 0x20, 0x0d, 0x48, 0x50, 0x22, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x53, 0x03
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	83, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -44115,8 +45886,8 @@ StylePanel_Jerry_s_Rock_3:	# one-touch setting 3 of the Music Stylist setup "Jer
 	PM_RHYTHM	0x000252, 0x00, 2, 178	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x28, 0x02, 0x00, 0x16, 0x00, 0x37, 0x40, 0x37, 0x00, 0x37, 0x00, 0x22, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x53, 0x03
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	83, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -44132,8 +45903,8 @@ StylePanel_Brass_Comets_4:	# one-touch setting 4 of the Music Stylist setup "Bra
 	PM_RHYTHM	0x000252, 0x00, 3, 178	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x28, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x22, 0x01, 0x22, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x53, 0x03
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	83, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -44149,8 +45920,8 @@ StylePanel_Mariachi_Guitars_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000243, 0x00, 0, 112	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x62, 0x35, 0x20, 0x35, 0x62
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44166,8 +45937,8 @@ StylePanel_Mexican_Brass_2:	# one-touch setting 2 of the Music Stylist setup "Me
 	PM_RHYTHM	0x000243, 0x40, 1, 112	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x35, 0x20, 0x49, 0x12, 0x12, 0x01, 0x35, 0x62
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44183,8 +45954,8 @@ StylePanel_Tex_Mex_Mix_3:	# one-touch setting 3 of the Music Stylist setup "Tex 
 	PM_RHYTHM	0x000243, 0x00, 2, 112	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x08, 0x35, 0x21, 0x35, 0x62
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44200,8 +45971,8 @@ StylePanel_HatDance_Squeeze_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000243, 0x00, 3, 112	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x13, 0x00, 0x37, 0x40, 0x35, 0x62
-	PM_SET88	0x04, 0x00, 0x03, 0x7f
-	PM_SET8C	0x69, 0x07
+	PM_SET88	0x04, 0x00, 3, 127
+	PM_SET8C	105, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44217,8 +45988,8 @@ StylePanel_Jazzy_Cha_Cha_1:	# one-touch setting 1 of the Music Stylist setup "Ja
 	PM_RHYTHM	0x000739, 0x00, 0, 130	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x35, 0x63, 0x12, 0x12
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44234,8 +46005,8 @@ StylePanel_Cha_Cha_Keys_2:	# one-touch setting 2 of the Music Stylist setup "Cha
 	PM_RHYTHM	0x000739, 0x40, 1, 130	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x22, 0x12, 0x11, 0x12, 0x12
-	PM_SET88	0x04, 0xff, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 10, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44251,8 +46022,8 @@ StylePanel_Ballroom_Latin_3:	# one-touch setting 3 of the Music Stylist setup "B
 	PM_RHYTHM	0x000739, 0x40, 2, 130	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x49, 0x12, 0x12, 0x09, 0x12, 0x12
-	PM_SET88	0x04, 0x11, 0x08, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0x11, 8, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44268,8 +46039,8 @@ StylePanel_Brass_For_Two_4:	# one-touch setting 4 of the Music Stylist setup "Br
 	PM_RHYTHM	0x000739, 0x40, 3, 130	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x02, 0x12, 0x02, 0x12, 0x12
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44285,8 +46056,8 @@ StylePanel_Famed_Vintage_1:	# one-touch setting 1 of the Music Stylist setup "Fa
 	PM_RHYTHM	0x00097c, 0x00, 0, 125	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x23, 0x00, 0x48, 0x0b, 0x14, 0x02
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44302,8 +46073,8 @@ StylePanel_Brass_For_Profit_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x00097c, 0x00, 1, 125	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x14, 0x02, 0x48, 0x0b, 0x14, 0x02
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44319,8 +46090,8 @@ StylePanel_Permed_Synth_3:	# one-touch setting 3 of the Music Stylist setup "Per
 	PM_RHYTHM	0x00097c, 0x00, 2, 125	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x00, 0x12, 0x0b, 0x14, 0x02
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44336,8 +46107,8 @@ StylePanel_RockSchoolGuitar_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x00097c, 0x00, 3, 125	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x55, 0x40, 0x14, 0x02
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44353,8 +46124,8 @@ StylePanel_Summer_Oboe_1:	# one-touch setting 1 of the Music Stylist setup "Summ
 	PM_RHYTHM	0x000e4a, 0x00, 0, 60	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4d, 0x09, 0x12, 0x08, 0x48, 0x10, 0x23, 0x11
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44370,8 +46141,8 @@ StylePanel_Faithful_Strings_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000e4a, 0x00, 1, 60	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4d, 0x09, 0x12, 0x11, 0x35, 0x20, 0x37, 0x00
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44387,8 +46158,8 @@ StylePanel_Acker_s_Place_3:	# one-touch setting 3 of the Music Stylist setup "Ac
 	PM_RHYTHM	0x000e4a, 0x00, 2, 60	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x22, 0x01, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44404,8 +46175,8 @@ StylePanel_Singing_Pretty_4:	# one-touch setting 4 of the Music Stylist setup "S
 	PM_RHYTHM	0x000e4a, 0x00, 3, 60	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x37, 0x00, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0x11, 0x07, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0x11, 7, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44421,8 +46192,8 @@ StylePanel_True_Brit_Sax_1:	# one-touch setting 1 of the Music Stylist setup "Tr
 	PM_RHYTHM	0x000654, 0x00, 0, 135	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x10, 0x20, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -44438,8 +46209,8 @@ StylePanel_Grand_Platforms_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000654, 0x00, 1, 135	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x20, 0x00, 0x29, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -44455,8 +46226,8 @@ StylePanel_70_s_Glitter_3:	# one-touch setting 3 of the Music Stylist setup "70'
 	PM_RHYTHM	0x000654, 0x00, 2, 135	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x48, 0x10, 0x20, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -44472,8 +46243,8 @@ StylePanel_Pinball_Organ_4:	# one-touch setting 4 of the Music Stylist setup "Pi
 	PM_RHYTHM	0x000654, 0x00, 3, 135	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x27, 0x42, 0x14, 0x4d, 0x20, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -44489,8 +46260,8 @@ StylePanel_Ballad_Anglais_1:	# one-touch setting 1 of the Music Stylist setup "B
 	PM_RHYTHM	0x00075b, 0x00, 0, 78	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x40, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44506,8 +46277,8 @@ StylePanel_Boys_Girls_2:	# one-touch setting 2 of the Music Stylist setup "Boys 
 	PM_RHYTHM	0x00075b, 0x00, 1, 78	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44523,8 +46294,8 @@ StylePanel_LA_Ballad_3:	# one-touch setting 3 of the Music Stylist setup "LA Bal
 	PM_RHYTHM	0x00075b, 0x00, 2, 78	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x20, 0x48, 0x10, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44540,8 +46311,8 @@ StylePanel_Orchestral_Love_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x00075b, 0x00, 3, 78	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44557,8 +46328,8 @@ StylePanel_SouthernPianoBar_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000611, 0x00, 0, 129	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x64, 0x04, 0x35, 0x63, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44574,8 +46345,8 @@ StylePanel_Rock_RollCountry_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000611, 0x00, 1, 129	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x52, 0x00, 0x10, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44591,8 +46362,8 @@ StylePanel_Down_Bluesy_3:	# one-touch setting 3 of the Music Stylist setup "Down
 	PM_RHYTHM	0x000611, 0x00, 2, 129	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x37, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44608,8 +46379,8 @@ StylePanel_Tennessee_Blues_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x000611, 0x00, 3, 129	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x01, 0x12, 0x01, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44625,8 +46396,8 @@ StylePanel_Disco_Flutes_1:	# one-touch setting 1 of the Music Stylist setup "Dis
 	PM_RHYTHM	0x00027a, 0x40, 0, 120	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x20, 0x00, 0x12, 0x08, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44642,8 +46413,8 @@ StylePanel_String_Hustling_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x00027a, 0x00, 1, 120	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x20, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44659,8 +46430,8 @@ StylePanel_Seventies_Synth_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x00027a, 0x00, 2, 120	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0e, 0x49, 0x12, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44676,8 +46447,8 @@ StylePanel_Flares_Heaven_4:	# one-touch setting 4 of the Music Stylist setup "Fl
 	PM_RHYTHM	0x00027a, 0x00, 3, 120	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x53, 0x20, 0x11, 0x11, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44693,8 +46464,8 @@ StylePanel_Trad_Jazz_Pickin_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000218, 0x40, 0, 180	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x02, 0x48, 0x09, 0x48, 0x00
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44710,8 +46481,8 @@ StylePanel_Liquorice_Jazz_2:	# one-touch setting 2 of the Music Stylist setup "L
 	PM_RHYTHM	0x000218, 0x00, 1, 180	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x48, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44727,8 +46498,8 @@ StylePanel_Dixieland_Piano_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000218, 0x40, 2, 180	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x22, 0x48, 0x09, 0x48, 0x00
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44744,8 +46515,8 @@ StylePanel_Dixie_Slide_4:	# one-touch setting 4 of the Music Stylist setup "Dixi
 	PM_RHYTHM	0x000218, 0x00, 3, 180	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x01, 0x35, 0x23, 0x48, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44761,8 +46532,8 @@ StylePanel_Venetian_Love_1:	# one-touch setting 1 of the Music Stylist setup "Ve
 	PM_RHYTHM	0x00050b, 0x00, 0, 95	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x04, 0x37, 0x01, 0x35, 0x62, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x12
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44778,8 +46549,8 @@ StylePanel_Party_In_Napoli_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x00050b, 0x40, 1, 95	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x12, 0x16, 0x12, 0x11
-	PM_SET88	0x04, 0x10, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x12
+	PM_SET88	0x04, 0x10, 13, 127
+	PM_SET8C	105, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44795,8 +46566,8 @@ StylePanel_Sardinia_Reed_3:	# one-touch setting 3 of the Music Stylist setup "Sa
 	PM_RHYTHM	0x00050b, 0x00, 2, 95	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x20, 0x00, 0x12, 0x16, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x12
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44812,8 +46583,8 @@ StylePanel_Full_Romance_4:	# one-touch setting 4 of the Music Stylist setup "Ful
 	PM_RHYTHM	0x00050b, 0x00, 3, 95	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x12, 0x11, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x12
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 18
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44829,8 +46600,8 @@ StylePanel_Muchos_Accordion_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x00043b, 0x00, 0, 120	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x13, 0x02, 0x52, 0x00, 0x12, 0x11
-	PM_SET88	0x00, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x00, 0xff, 13, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44846,8 +46617,8 @@ StylePanel_Latin_Teatime_2:	# one-touch setting 2 of the Music Stylist setup "La
 	PM_RHYTHM	0x00043b, 0x00, 1, 120	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x48, 0x23, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44863,8 +46634,8 @@ StylePanel_Beguine_Trumpet_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x00043b, 0x00, 2, 120	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x49, 0x12, 0x12, 0x0c, 0x12, 0x11
-	PM_SET88	0x00, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x00, 0xff, 13, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44880,8 +46651,8 @@ StylePanel_Latino_Brass_4:	# one-touch setting 4 of the Music Stylist setup "Lat
 	PM_RHYTHM	0x00043b, 0x00, 3, 120	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x09, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x00, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x06
+	PM_SET88	0x00, 0xff, 13, 127
+	PM_SET8C	105, 6
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44897,8 +46668,8 @@ StylePanel_Solid_R_B_Ballad_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x00094b, 0x00, 0, 68	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x48, 0x07, 0x10, 0x47, 0x20, 0x00, 0x22, 0x60
-	PM_SET88	0x04, 0x00, 0x07, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0x00, 7, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44914,8 +46685,8 @@ StylePanel_Blues_B3_Ballad_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x00094b, 0x00, 1, 68	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x60, 0x48, 0x22, 0x22, 0x60
-	PM_SET88	0x04, 0x00, 0x07, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0x00, 7, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44931,8 +46702,8 @@ StylePanel_All_Saxed_Up_3:	# one-touch setting 3 of the Music Stylist setup "All
 	PM_RHYTHM	0x00094b, 0x00, 2, 68	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x48, 0x22, 0x20, 0x00, 0x22, 0x60
-	PM_SET88	0x04, 0x00, 0x07, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0x00, 7, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44948,8 +46719,8 @@ StylePanel_Screamin_R_B3_4:	# one-touch setting 4 of the Music Stylist setup "Sc
 	PM_RHYTHM	0x00094b, 0x00, 3, 68	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x60, 0x55, 0x00, 0x22, 0x60
-	PM_SET88	0x04, 0x00, 0x07, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0x00, 7, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -44965,8 +46736,8 @@ StylePanel_Pop_Swing_Angle_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000648, 0x00, 0, 94	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x32, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0d, 0x12, 0x40, 0x12, 0x09, 0x14, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -44982,8 +46753,8 @@ StylePanel_Retro_Pop_Keys_2:	# one-touch setting 2 of the Music Stylist setup "R
 	PM_RHYTHM	0x000648, 0x00, 1, 94	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x32, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x50, 0x25, 0x45, 0x12, 0x09, 0x14, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -44999,8 +46770,8 @@ StylePanel_Swing_Wah_Wah_3:	# one-touch setting 3 of the Music Stylist setup "Sw
 	PM_RHYTHM	0x000648, 0x00, 2, 94	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x32, 0x02, 0x00, 0x16, 0x00, 0x38, 0x20, 0x10, 0x47, 0x12, 0x09, 0x14, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45016,8 +46787,8 @@ StylePanel_Pop_Jam_Brass_4:	# one-touch setting 4 of the Music Stylist setup "Po
 	PM_RHYTHM	0x000648, 0x00, 3, 94	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x32, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x14, 0x02, 0x23, 0x09, 0x14, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45033,8 +46804,8 @@ StylePanel_Soul_Suit_1:	# one-touch setting 1 of the Music Stylist setup "Soul S
 	PM_RHYTHM	0x000568, 0x00, 0, 125	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x25, 0x45, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45050,8 +46821,8 @@ StylePanel_Drifting_Strings_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000568, 0x00, 1, 125	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x13, 0x04, 0x22, 0x01
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45067,8 +46838,8 @@ StylePanel_Motoring_Sax_3:	# one-touch setting 3 of the Music Stylist setup "Mot
 	PM_RHYTHM	0x000568, 0x00, 2, 125	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x10, 0x12, 0x09, 0x22, 0x01
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45084,8 +46855,8 @@ StylePanel_Detroit_Horns_4:	# one-touch setting 4 of the Music Stylist setup "De
 	PM_RHYTHM	0x000568, 0x00, 3, 125	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x12, 0x02, 0x22, 0x01
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45101,8 +46872,8 @@ StylePanel_Woodwind_Romance_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000a62, 0x00, 0, 94	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x13, 0x05, 0x48, 0x10, 0x12, 0x12
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45118,8 +46889,8 @@ StylePanel_Love_Theme_Epic_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000a62, 0x40, 1, 94	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x12, 0x11, 0x37, 0x00, 0x12, 0x12
-	PM_SET88	0x04, 0x03, 0x08, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0x03, 8, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45135,8 +46906,8 @@ StylePanel_Frankly_Woodwind_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000a62, 0x40, 2, 94	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x12, 0x08, 0x4c, 0x11, 0x12, 0x12
-	PM_SET88	0x04, 0x03, 0x00, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0x03, 0, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45152,8 +46923,8 @@ StylePanel_Movie_Grandeur_4:	# one-touch setting 4 of the Music Stylist setup "M
 	PM_RHYTHM	0x000a62, 0x00, 3, 94	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x21, 0x35, 0x20, 0x12, 0x12
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45169,8 +46940,8 @@ StylePanel_Analog_Fusion_1:	# one-touch setting 1 of the Music Stylist setup "An
 	PM_RHYTHM	0x000771, 0x00, 0, 110	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x48, 0x49, 0x1b, 0x01, 0x12, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x3d, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	61, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45186,8 +46957,8 @@ StylePanel_Crusin_Jazz_2:	# one-touch setting 2 of the Music Stylist setup "Crus
 	PM_RHYTHM	0x000771, 0x00, 1, 110	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x14, 0x02, 0x12, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x3b, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	59, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45203,8 +46974,8 @@ StylePanel_Fusion_Fretting_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000771, 0x00, 2, 110	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x35, 0x22, 0x48, 0x10, 0x12, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x44, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	68, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45220,8 +46991,8 @@ StylePanel_LA_Fusion_Layer_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x000771, 0x00, 3, 110	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x20, 0x00, 0x35, 0x62, 0x12, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x42, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	66, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45237,8 +47008,8 @@ StylePanel_German_Tabs_1:	# one-touch setting 1 of the Music Stylist setup "Germ
 	PM_RHYTHM	0x000e04, 0x40, 0, 120	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x15, 0x40, 0x12, 0x12
-	PM_SET88	0x04, 0xff, 0x00, 0x7f
-	PM_SET8C	0x55, 0x01
+	PM_SET88	0x04, 0xff, 0, 127
+	PM_SET8C	85, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45254,8 +47025,8 @@ StylePanel_Happy_Hour_Pad_2:	# one-touch setting 2 of the Music Stylist setup "H
 	PM_RHYTHM	0x000e04, 0x40, 1, 120	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x14, 0x03, 0x12, 0x11, 0x12, 0x12
-	PM_SET88	0x00, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x55, 0x01
+	PM_SET88	0x00, 0xff, 13, 127
+	PM_SET8C	85, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45271,8 +47042,8 @@ StylePanel_Party_Glam_3:	# one-touch setting 3 of the Music Stylist setup "Party
 	PM_RHYTHM	0x000e04, 0x00, 2, 120	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x13, 0x02, 0x12, 0x11, 0x12, 0x12
-	PM_SET88	0x00, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x55, 0x01
+	PM_SET88	0x00, 0xff, 13, 127
+	PM_SET8C	85, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45288,8 +47059,8 @@ StylePanel_Beer_and_Bells_4:	# one-touch setting 4 of the Music Stylist setup "B
 	PM_RHYTHM	0x000e04, 0x40, 3, 120	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x46, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x14, 0x00, 0x14, 0x03, 0x12, 0x12
-	PM_SET88	0x00, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x5a, 0x01
+	PM_SET88	0x00, 0xff, 13, 127
+	PM_SET8C	90, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45305,8 +47076,8 @@ StylePanel_Dry_Suit_Rhythm_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000465, 0x00, 0, 120	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x25, 0x45, 0x15, 0x40, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x53, 0x05
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	83, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45322,8 +47093,8 @@ StylePanel_Jazzy_R_B_Pop_2:	# one-touch setting 2 of the Music Stylist setup "Ja
 	PM_RHYTHM	0x000465, 0x00, 1, 120	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x20, 0x00, 0x2b, 0x04, 0x12, 0x0b, 0x37, 0x00
-	PM_SET88	0x00, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x53, 0x05
+	PM_SET88	0x00, 0xff, 13, 127
+	PM_SET8C	83, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45339,8 +47110,8 @@ StylePanel_Up_Funk_Tenor_3:	# one-touch setting 3 of the Music Stylist setup "Up
 	PM_RHYTHM	0x000465, 0x00, 2, 120	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x10, 0x12, 0x01, 0x48, 0x0a
-	PM_SET88	0x00, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x53, 0x05
+	PM_SET88	0x00, 0xff, 13, 127
+	PM_SET8C	83, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45356,8 +47127,8 @@ StylePanel_R_B_Horns_4:	# one-touch setting 4 of the Music Stylist setup "R&B Ho
 	PM_RHYTHM	0x000465, 0x00, 3, 120	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x02, 0x12, 0x00, 0x37, 0x00
-	PM_SET88	0x00, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x53, 0x05
+	PM_SET88	0x00, 0xff, 13, 127
+	PM_SET8C	83, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45373,8 +47144,8 @@ StylePanel_Mr_LA_Guitar_1:	# one-touch setting 1 of the Music Stylist setup "Mr 
 	PM_RHYTHM	0x000441, 0x00, 0, 97	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x35, 0x22, 0x12, 0x0b, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x3f, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	63, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45390,8 +47161,8 @@ StylePanel_Tine_Grooves_2:	# one-touch setting 2 of the Music Stylist setup "Tin
 	PM_RHYTHM	0x000441, 0x00, 1, 97	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x25, 0x45, 0x22, 0x01, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x4f, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	79, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45407,8 +47178,8 @@ StylePanel_Funky_Pop_3:	# one-touch setting 3 of the Music Stylist setup "Funky 
 	PM_RHYTHM	0x000441, 0x00, 2, 97	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x10, 0x00, 0x35, 0x23, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x4e, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	78, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45424,8 +47195,8 @@ StylePanel_Pacific_Jazz_4:	# one-touch setting 4 of the Music Stylist setup "Pac
 	PM_RHYTHM	0x000441, 0x00, 3, 97	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x2e, 0x14, 0x0c, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x4f, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	79, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45441,8 +47212,8 @@ StylePanel_Pop_Soul_Harp_1:	# one-touch setting 1 of the Music Stylist setup "Po
 	PM_RHYTHM	0x00036f, 0x00, 0, 130	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x4c, 0x0c, 0x23, 0x24, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45458,8 +47229,8 @@ StylePanel_Sunshine_Soul_2:	# one-touch setting 2 of the Music Stylist setup "Su
 	PM_RHYTHM	0x00036f, 0x00, 1, 130	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x29, 0x00, 0x37, 0x00, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45475,8 +47246,8 @@ StylePanel_Pop_Soul_Singers_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x00036f, 0x00, 2, 130	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x23, 0x01, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45492,8 +47263,8 @@ StylePanel_Soul_Brass_Wood_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x00036f, 0x00, 3, 130	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x14, 0x02, 0x48, 0x10, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45509,8 +47280,8 @@ StylePanel_Floor_Show_Grand_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000523, 0x00, 0, 134	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x22, 0x12, 0x08, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45526,8 +47297,8 @@ StylePanel_Night_Club_Vibes_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000523, 0x00, 1, 134	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x63, 0x12, 0x08, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45543,8 +47314,8 @@ StylePanel_Cabaret_Flugel_3:	# one-touch setting 3 of the Music Stylist setup "C
 	PM_RHYTHM	0x000523, 0x00, 2, 134	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x25, 0x48, 0x15, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45560,8 +47331,8 @@ StylePanel_Organ_Combo_4:	# one-touch setting 4 of the Music Stylist setup "Orga
 	PM_RHYTHM	0x000523, 0x40, 3, 134	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x00, 0x22, 0x01, 0x22, 0x00
-	PM_SET88	0x00, 0x11, 0x07, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x00, 0x11, 7, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45577,8 +47348,8 @@ StylePanel_Brazil_Strings_1:	# one-touch setting 1 of the Music Stylist setup "B
 	PM_RHYTHM	0x000478, 0x00, 0, 123	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x35, 0x20, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x56, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	86, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45594,8 +47365,8 @@ StylePanel_Samba_Section_2:	# one-touch setting 2 of the Music Stylist setup "Sa
 	PM_RHYTHM	0x000478, 0x40, 1, 123	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x09, 0x49, 0x12, 0x35, 0x20
-	PM_SET88	0x04, 0x10, 0x0d, 0x7f
-	PM_SET8C	0x56, 0x04
+	PM_SET88	0x04, 0x10, 13, 127
+	PM_SET8C	86, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45611,8 +47382,8 @@ StylePanel_Mallet_Nights_3:	# one-touch setting 3 of the Music Stylist setup "Ma
 	PM_RHYTHM	0x000478, 0x00, 2, 123	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x4c, 0x09, 0x12, 0x08, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x56, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	86, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45628,8 +47399,8 @@ StylePanel_Party_Time_Brass_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000478, 0x40, 3, 123	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x02, 0x12, 0x01, 0x35, 0x20
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x56, 0x04
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	86, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45645,8 +47416,8 @@ StylePanel_Soft_Funk_1:	# one-touch setting 1 of the Music Stylist setup "Soft F
 	PM_RHYTHM	0x00056e, 0x00, 0, 104	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x14, 0x10, 0x12, 0x09, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x55, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	85, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45662,8 +47433,8 @@ StylePanel_Funky_Boy_2:	# one-touch setting 2 of the Music Stylist setup "Funky 
 	PM_RHYTHM	0x00056e, 0x00, 1, 104	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x0b, 0x20, 0x2a, 0x2b, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x55, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	85, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45679,8 +47450,8 @@ StylePanel_Deep_String_Fuzz_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x00056e, 0x00, 2, 104	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x12, 0x09, 0x37, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x55, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	85, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45696,8 +47467,8 @@ StylePanel_Just_Be_Funkful_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x00056e, 0x00, 3, 104	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x00, 0x12, 0x02, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x55, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	85, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45713,8 +47484,8 @@ StylePanel_Sunset_Anglais_1:	# one-touch setting 1 of the Music Stylist setup "S
 	PM_RHYTHM	0x000862, 0x00, 0, 75	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x04, 0x12, 0x08, 0x48, 0x10, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45730,8 +47501,8 @@ StylePanel_West_End_Strings_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000862, 0x00, 1, 75	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x05, 0x35, 0x20, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45747,8 +47518,8 @@ StylePanel_Phantom_Soloist_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000862, 0x00, 2, 75	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x05, 0x37, 0x02, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45764,8 +47535,8 @@ StylePanel_Choral_Finale_4:	# one-touch setting 4 of the Music Stylist setup "Ch
 	PM_RHYTHM	0x000862, 0x00, 3, 75	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x05, 0x12, 0x11, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45781,8 +47552,8 @@ StylePanel_St_Angelo_1:	# one-touch setting 1 of the Music Stylist setup "St Ang
 	PM_RHYTHM	0x000268, 0x00, 0, 120	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x19, 0x24, 0x10, 0x07, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x52, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	82, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45798,8 +47569,8 @@ StylePanel_Sunny_Island_2:	# one-touch setting 2 of the Music Stylist setup "Sun
 	PM_RHYTHM	0x000268, 0x00, 1, 120	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x14, 0x0c, 0x22, 0x01, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x52, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	82, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45815,8 +47586,8 @@ StylePanel_Red_Sunset_3:	# one-touch setting 3 of the Music Stylist setup "Red S
 	PM_RHYTHM	0x000268, 0x40, 2, 120	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x02, 0x12, 0x02, 0x35, 0x20
-	PM_SET88	0x04, 0x11, 0x03, 0x7f
-	PM_SET8C	0x52, 0x01
+	PM_SET88	0x04, 0x11, 3, 127
+	PM_SET8C	82, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45832,8 +47603,8 @@ StylePanel_Barbados_Nights_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x000268, 0x40, 3, 120	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x14, 0x02, 0x14, 0x02, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x52, 0x01
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	82, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45849,8 +47620,8 @@ StylePanel_Love_Song_Harp_1:	# one-touch setting 1 of the Music Stylist setup "L
 	PM_RHYTHM	0x00054f, 0x00, 0, 93	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x4c, 0x0c, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45866,8 +47637,8 @@ StylePanel_Close_Vocals_2:	# one-touch setting 2 of the Music Stylist setup "Clo
 	PM_RHYTHM	0x00054f, 0x00, 1, 93	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x37, 0x00, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45883,8 +47654,8 @@ StylePanel_Suitcase_Ballad_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x00054f, 0x00, 2, 93	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x25, 0x05, 0x15, 0x03, 0x48, 0x15
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45900,8 +47671,8 @@ StylePanel_Radio_Orchestra_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x00054f, 0x00, 3, 93	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x37, 0x40, 0x48, 0x15
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -45917,8 +47688,8 @@ StylePanel_Mini_Boys_1:	# one-touch setting 1 of the Music Stylist setup "Mini B
 	PM_RHYTHM	0x000553, 0x00, 0, 99	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x2e, 0x48, 0x23, 0x12, 0x0a
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x53, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	83, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45934,8 +47705,8 @@ StylePanel_Shining_Guys_2:	# one-touch setting 2 of the Music Stylist setup "Shi
 	PM_RHYTHM	0x000553, 0x00, 1, 99	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x15, 0x02, 0x52, 0x20, 0x12, 0x0a
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x53, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	83, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45951,8 +47722,8 @@ StylePanel_Take_This_Groove_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000553, 0x00, 2, 99	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x11, 0x11, 0x13, 0x00, 0x12, 0x0a
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x53, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	83, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45968,8 +47739,8 @@ StylePanel_Teeny_Synth_4:	# one-touch setting 4 of the Music Stylist setup "Teen
 	PM_RHYTHM	0x000553, 0x00, 3, 99	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x52, 0x00, 0x48, 0x0b, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x53, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	83, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -45985,8 +47756,8 @@ StylePanel_Toots_Meets_Bill_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x00042e, 0x00, 0, 169	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x4c, 0x0c, 0x12, 0x16, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x13
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 19
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46002,8 +47773,8 @@ StylePanel_For_Evans_Sake_2:	# one-touch setting 2 of the Music Stylist setup "F
 	PM_RHYTHM	0x00042e, 0x00, 1, 169	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x20, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x13
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 19
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46019,8 +47790,8 @@ StylePanel_Blue_Set_3:	# one-touch setting 3 of the Music Stylist setup "Blue Se
 	PM_RHYTHM	0x00042e, 0x00, 2, 169	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x4c, 0x0a, 0x35, 0x63, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x13
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 19
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46036,8 +47807,8 @@ StylePanel_Jazz_Waltz_Combo_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x00042e, 0x00, 3, 169	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x63, 0x20, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x13
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 19
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46053,8 +47824,8 @@ StylePanel_Spanish_Disco_1:	# one-touch setting 1 of the Music Stylist setup "Sp
 	PM_RHYTHM	0x000234, 0x00, 0, 128	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x20, 0x37, 0x40, 0x48, 0x06
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x64, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	100, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46070,8 +47841,8 @@ StylePanel_1_2_3_Dance_2:	# one-touch setting 2 of the Music Stylist setup "1-2-
 	PM_RHYTHM	0x000234, 0x00, 1, 128	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x13, 0x06, 0x20, 0x08, 0x12, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x64, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	100, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46087,8 +47858,8 @@ StylePanel_90s_Latin_3:	# one-touch setting 3 of the Music Stylist setup "90s La
 	PM_RHYTHM	0x000234, 0x00, 2, 128	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x30, 0x02, 0x48, 0x00, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x64, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	100, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46104,8 +47875,8 @@ StylePanel_Latin_Summer_Hit_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000234, 0x00, 3, 128	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x00, 0x12, 0x00, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x64, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	100, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46121,8 +47892,8 @@ StylePanel_Pale_Overdrive_1:	# one-touch setting 1 of the Music Stylist setup "P
 	PM_RHYTHM	0x00085b, 0x00, 0, 80	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x52, 0x20, 0x12, 0x01, 0x10, 0x00, 0x22, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -46138,8 +47909,8 @@ StylePanel_Shades_Of_Rock_2:	# one-touch setting 2 of the Music Stylist setup "S
 	PM_RHYTHM	0x00085b, 0x00, 1, 80	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x02, 0x12, 0x00, 0x22, 0x05
-	PM_SET88	0x00, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x00, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -46155,8 +47926,8 @@ StylePanel_Flower_Power_3:	# one-touch setting 3 of the Music Stylist setup "Flo
 	PM_RHYTHM	0x00085b, 0x00, 2, 80	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x37, 0x00, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -46172,8 +47943,8 @@ StylePanel_Vestal_Symphony_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x00085b, 0x00, 3, 80	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x10, 0x00, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -46189,8 +47960,8 @@ StylePanel_Shuffle_Squeeze_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x00044f, 0x00, 0, 156	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x13, 0x02, 0x13, 0x02, 0x12, 0x12
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x11
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46206,8 +47977,8 @@ StylePanel_50s_Organ_Hits_2:	# one-touch setting 2 of the Music Stylist setup "5
 	PM_RHYTHM	0x00044f, 0x40, 1, 156	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x13, 0x02, 0x12, 0x12
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x11
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46223,8 +47994,8 @@ StylePanel_Lucky_Saxes_3:	# one-touch setting 3 of the Music Stylist setup "Luck
 	PM_RHYTHM	0x00044f, 0x40, 2, 156	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x12, 0x01, 0x12, 0x12
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x11
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	105, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46240,8 +48011,8 @@ StylePanel_Rollin_BigBand_4:	# one-touch setting 4 of the Music Stylist setup "R
 	PM_RHYTHM	0x00044f, 0x40, 3, 156	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x02, 0x12, 0x00, 0x12, 0x12
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x11
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	105, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46257,8 +48028,8 @@ StylePanel_Disco_Hustling_1:	# one-touch setting 1 of the Music Stylist setup "D
 	PM_RHYTHM	0x000565, 0x00, 0, 112	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x17, 0x35, 0x25, 0x37, 0x01, 0x12, 0x11
-	PM_SET88	0x00, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x5f, 0x04
+	PM_SET88	0x00, 0x11, 13, 127
+	PM_SET8C	95, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46274,8 +48045,8 @@ StylePanel_Love_s_Disco_2:	# one-touch setting 2 of the Music Stylist setup "Lov
 	PM_RHYTHM	0x000565, 0x00, 1, 112	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0c, 0x12, 0x11, 0x4c, 0x11, 0x12, 0x11
-	PM_SET88	0x00, 0x11, 0x07, 0x7f
-	PM_SET8C	0x5f, 0x04
+	PM_SET88	0x00, 0x11, 7, 127
+	PM_SET8C	95, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46291,8 +48062,8 @@ StylePanel_Orchestra_Fever_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000565, 0x00, 2, 112	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x49, 0x12, 0x12, 0x11, 0x12, 0x11
-	PM_SET88	0x00, 0x11, 0x07, 0x7f
-	PM_SET8C	0x5f, 0x04
+	PM_SET88	0x00, 0x11, 7, 127
+	PM_SET8C	95, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46308,8 +48079,8 @@ StylePanel_70s_Production_4:	# one-touch setting 4 of the Music Stylist setup "7
 	PM_RHYTHM	0x000565, 0x00, 3, 112	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0c, 0x12, 0x01, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x00, 0x11, 0x07, 0x7f
-	PM_SET8C	0x5f, 0x04
+	PM_SET88	0x00, 0x11, 7, 127
+	PM_SET8C	95, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46325,8 +48096,8 @@ StylePanel_Hip_Guitar_1:	# one-touch setting 1 of the Music Stylist setup "Hip G
 	PM_RHYTHM	0x00026c, 0x00, 0, 80	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x21, 0x37, 0x40, 0x37, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46342,8 +48113,8 @@ StylePanel_Pop_Vocalist_2:	# one-touch setting 2 of the Music Stylist setup "Pop
 	PM_RHYTHM	0x00026c, 0x00, 1, 80	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x12, 0x09, 0x37, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46359,8 +48130,8 @@ StylePanel_90s_meet_60s_3:	# one-touch setting 3 of the Music Stylist setup "90s
 	PM_RHYTHM	0x00026c, 0x00, 2, 80	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x37, 0x01, 0x35, 0x61, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46376,8 +48147,8 @@ StylePanel_Pop_Guitarist_4:	# one-touch setting 4 of the Music Stylist setup "Po
 	PM_RHYTHM	0x00026c, 0x00, 3, 80	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x40, 0x55, 0x40, 0x10, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0x11, 0x00, 0x7f
-	PM_SET8C	0x69, 0x01
+	PM_SET88	0x04, 0x11, 0, 127
+	PM_SET8C	105, 1
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46393,8 +48164,8 @@ StylePanel_R_B_Case_1:	# one-touch setting 1 of the Music Stylist setup "R&B Cas
 	PM_RHYTHM	0x00066e, 0x00, 0, 111	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x29, 0x00, 0x14, 0x02, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x4f, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	79, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -46410,8 +48181,8 @@ StylePanel_Steamy_Soul_2:	# one-touch setting 2 of the Music Stylist setup "Stea
 	PM_RHYTHM	0x00066e, 0x00, 1, 111	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x24, 0x22, 0x01, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x4f, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	79, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -46427,8 +48198,8 @@ StylePanel_Funk_Tubes_3:	# one-touch setting 3 of the Music Stylist setup "Funk 
 	PM_RHYTHM	0x00066e, 0x00, 2, 111	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x20, 0x43, 0x22, 0x04, 0x12, 0x0b, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x4f, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	79, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -46444,8 +48215,8 @@ StylePanel_Groovy_Buzz_4:	# one-touch setting 4 of the Music Stylist setup "Groo
 	PM_RHYTHM	0x00066e, 0x00, 3, 111	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x52, 0x20, 0x37, 0x00, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x54, 0x05
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	84, 5
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -46461,8 +48232,8 @@ StylePanel_Bad_B3_Blues_1:	# one-touch setting 1 of the Music Stylist setup "Bad
 	PM_RHYTHM	0x00024b, 0x00, 0, 70	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x35, 0x63, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46478,8 +48249,8 @@ StylePanel_Hot_Metal_Blues_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x00024b, 0x00, 1, 70	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x35, 0x63, 0x20, 0x0d, 0x10, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46495,8 +48266,8 @@ StylePanel_Blues_Bars_3:	# one-touch setting 3 of the Music Stylist setup "Blues
 	PM_RHYTHM	0x00024b, 0x00, 2, 70	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x29, 0x00, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46512,8 +48283,8 @@ StylePanel_Blues_Harpist_4:	# one-touch setting 4 of the Music Stylist setup "Bl
 	PM_RHYTHM	0x00024b, 0x00, 3, 70	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x48, 0x10, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46529,8 +48300,8 @@ StylePanel_Synth_Sweetheart_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000748, 0x00, 0, 74	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x4c, 0x0c, 0x49, 0x0b, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -46546,8 +48317,8 @@ StylePanel_Stevie_s_Grand_2:	# one-touch setting 2 of the Music Stylist setup "S
 	PM_RHYTHM	0x000748, 0x00, 1, 74	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x20, 0x00, 0x10, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -46563,8 +48334,8 @@ StylePanel_Wonder_Guitars_3:	# one-touch setting 3 of the Music Stylist setup "W
 	PM_RHYTHM	0x000748, 0x00, 2, 74	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x20, 0x00, 0x23, 0x09, 0x20, 0x08, 0x37, 0x12
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -46580,8 +48351,8 @@ StylePanel_Detroit_Voices_4:	# one-touch setting 4 of the Music Stylist setup "D
 	PM_RHYTHM	0x000748, 0x00, 3, 74	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x37, 0x00, 0x37, 0x12
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -46597,8 +48368,8 @@ StylePanel_Swingy_Groove_1:	# one-touch setting 1 of the Music Stylist setup "Sw
 	PM_RHYTHM	0x00040c, 0x00, 0, 115	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x01, 0x35, 0x22, 0x37, 0x00
-	PM_SET88	0x04, 0x10, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x13
+	PM_SET88	0x04, 0x10, 13, 127
+	PM_SET8C	105, 19
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46614,8 +48385,8 @@ StylePanel_Mellow_Swing_2:	# one-touch setting 2 of the Music Stylist setup "Mel
 	PM_RHYTHM	0x00040c, 0x00, 1, 115	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x52, 0x00, 0x37, 0x00
-	PM_SET88	0x04, 0x10, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x13
+	PM_SET88	0x04, 0x10, 13, 127
+	PM_SET8C	105, 19
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46631,8 +48402,8 @@ StylePanel_EP_Waltz_3:	# one-touch setting 3 of the Music Stylist setup "EP Walt
 	PM_RHYTHM	0x00040c, 0x00, 2, 115	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x19, 0x24, 0x37, 0x40, 0x35, 0x62
-	PM_SET88	0x04, 0x11, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x13
+	PM_SET88	0x04, 0x11, 13, 127
+	PM_SET8C	105, 19
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46648,8 +48419,8 @@ StylePanel_Swingy_Horn_4:	# one-touch setting 4 of the Music Stylist setup "Swin
 	PM_RHYTHM	0x00040c, 0x00, 3, 115	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x25, 0x37, 0x00, 0x10, 0x00
-	PM_SET88	0x04, 0x10, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x13
+	PM_SET88	0x04, 0x10, 13, 127
+	PM_SET8C	105, 19
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46665,8 +48436,8 @@ StylePanel_88_Ballad_1:	# one-touch setting 1 of the Music Stylist setup "88 Bal
 	PM_RHYTHM	0x000562, 0x00, 0, 85	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x20, 0x00, 0x10, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46682,8 +48453,8 @@ StylePanel_Radio_Singers_2:	# one-touch setting 2 of the Music Stylist setup "Ra
 	PM_RHYTHM	0x000562, 0x00, 1, 85	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x37, 0x00, 0x37, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46699,8 +48470,8 @@ StylePanel_Slow_Ballad_Keys_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000562, 0x00, 2, 85	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x50, 0x15, 0x05, 0x22, 0x60, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46716,8 +48487,8 @@ StylePanel_80s_Synth_Lines_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x000562, 0x00, 3, 85	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x50, 0x48, 0x00, 0x48, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46733,8 +48504,8 @@ StylePanel_Line_Up_Dance_1:	# one-touch setting 1 of the Music Stylist setup "Li
 	PM_RHYTHM	0x00037f, 0x00, 0, 104	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x23, 0x37, 0x40, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x52, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	82, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46750,8 +48521,8 @@ StylePanel_Macadancer_2:	# one-touch setting 2 of the Music Stylist setup "Macad
 	PM_RHYTHM	0x00037f, 0x00, 1, 104	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x08, 0x22, 0x01, 0x35, 0x20
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x58, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	88, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46767,8 +48538,8 @@ StylePanel_Caribbean_Drive_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x00037f, 0x00, 2, 104	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x11, 0x08, 0x52, 0x00, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x58, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	88, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46784,8 +48555,8 @@ StylePanel_Dance_Island_4:	# one-touch setting 4 of the Music Stylist setup "Dan
 	PM_RHYTHM	0x00037f, 0x00, 3, 104	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x20, 0x12, 0x11, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46801,8 +48572,8 @@ StylePanel_Hard_Keys_1:	# one-touch setting 1 of the Music Stylist setup "Hard K
 	PM_RHYTHM	0x00055c, 0x00, 0, 136	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x21, 0x22, 0x01, 0x48, 0x21
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -46818,8 +48589,8 @@ StylePanel_Organ_Quo_ta_2:	# one-touch setting 2 of the Music Stylist setup "Org
 	PM_RHYTHM	0x00055c, 0x00, 1, 136	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x20, 0x2b, 0x02, 0x55, 0x40, 0x48, 0x21
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -46835,8 +48606,8 @@ StylePanel_Metal_Lead_3:	# one-touch setting 3 of the Music Stylist setup "Metal
 	PM_RHYTHM	0x00055c, 0x00, 2, 136	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x48, 0x21, 0x48, 0x21
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -46852,8 +48623,8 @@ StylePanel_Hardcore_Piano_4:	# one-touch setting 4 of the Music Stylist setup "H
 	PM_RHYTHM	0x00055c, 0x00, 3, 136	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x55, 0x00, 0x48, 0x21
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x03
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -46869,8 +48640,8 @@ StylePanel_West_Coast_B3_1:	# one-touch setting 1 of the Music Stylist setup "We
 	PM_RHYTHM	0x00046e, 0x00, 0, 102	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x2b, 0x04, 0x48, 0x0c, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x49, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	73, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46886,8 +48657,8 @@ StylePanel_Roads_to_Fusion_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x00046e, 0x00, 1, 102	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x13, 0x06, 0x20, 0x00, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x49, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	73, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46903,8 +48674,8 @@ StylePanel_Uptown_Brass_3:	# one-touch setting 3 of the Music Stylist setup "Upt
 	PM_RHYTHM	0x00046e, 0x00, 2, 102	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x12, 0x09, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x49, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	73, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46920,8 +48691,8 @@ StylePanel_Jazz_Pop_Section_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x00046e, 0x00, 3, 102	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x48, 0x10, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x49, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	73, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46937,8 +48708,8 @@ StylePanel_Diner_Harmonica_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x00024e, 0x00, 0, 75	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x4c, 0x0c, 0x37, 0x01, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46954,8 +48725,8 @@ StylePanel_Bobby_Socks_Sax_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x00024e, 0x00, 1, 75	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x10, 0x22, 0x00, 0x12, 0x11
-	PM_SET88	0x00, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x00, 0xff, 3, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46971,8 +48742,8 @@ StylePanel_Teddy_Boy_Tabs_3:	# one-touch setting 3 of the Music Stylist setup "T
 	PM_RHYTHM	0x00024e, 0x00, 2, 75	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x37, 0x01, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -46988,8 +48759,8 @@ StylePanel_Doo_Wap_Ballad_4:	# one-touch setting 4 of the Music Stylist setup "D
 	PM_RHYTHM	0x00024e, 0x00, 3, 75	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x22, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47005,8 +48776,8 @@ StylePanel_Soulful_Tines_1:	# one-touch setting 1 of the Music Stylist setup "So
 	PM_RHYTHM	0x000d4d, 0x00, 0, 89	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x19, 0x24, 0x22, 0x01, 0x14, 0x0c
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5a, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	90, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -47022,8 +48793,8 @@ StylePanel_Cool_Jazzy_Tabs_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000d4d, 0x00, 1, 89	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x12, 0x02, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5a, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	90, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -47039,8 +48810,8 @@ StylePanel_Hot_Cool_3:	# one-touch setting 3 of the Music Stylist setup "Hot & C
 	PM_RHYTHM	0x000d4d, 0x00, 2, 89	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x01, 0x48, 0x10, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5a, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	90, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -47056,8 +48827,8 @@ StylePanel_LA_Horn_Section_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x000d4d, 0x00, 3, 89	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x37, 0x00, 0x12, 0x01, 0x12, 0x02, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5a, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	90, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -47073,8 +48844,8 @@ StylePanel_Love_And_Lost_1:	# one-touch setting 1 of the Music Stylist setup "Lo
 	PM_RHYTHM	0x000453, 0x00, 0, 129	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4d, 0x09, 0x14, 0x0c, 0x14, 0x03, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x49, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	73, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47090,8 +48861,8 @@ StylePanel_Majorca_Party_2:	# one-touch setting 2 of the Music Stylist setup "Ma
 	PM_RHYTHM	0x000453, 0x40, 1, 129	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x15, 0x02, 0x14, 0x02, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x49, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	73, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47107,8 +48878,8 @@ StylePanel_Spanish_Sun_3:	# one-touch setting 3 of the Music Stylist setup "Span
 	PM_RHYTHM	0x000453, 0x40, 2, 129	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x15, 0x02, 0x20, 0x00, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x49, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	73, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47124,8 +48895,8 @@ StylePanel_Non_Stop_Party_4:	# one-touch setting 4 of the Music Stylist setup "N
 	PM_RHYTHM	0x000453, 0x40, 3, 129	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x14, 0x03, 0x53, 0x20, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x49, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	73, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47141,8 +48912,8 @@ StylePanel_Stadium_Grand_1:	# one-touch setting 1 of the Music Stylist setup "St
 	PM_RHYTHM	0x00095b, 0x00, 0, 76	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x20, 0x00, 0x14, 0x02, 0x22, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47158,8 +48929,8 @@ StylePanel_HeavyMetal_Cream_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x00095b, 0x00, 1, 76	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x20, 0x0d, 0x20, 0x00, 0x10, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47175,8 +48946,8 @@ StylePanel_Heavy_Rock_Organ_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x00095b, 0x00, 2, 76	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x2b, 0x04, 0x22, 0x60, 0x22, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47192,8 +48963,8 @@ StylePanel_Heavy_Ballad_Axe_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x00095b, 0x00, 3, 76	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x14, 0x02, 0x55, 0x40, 0x22, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47209,8 +48980,8 @@ StylePanel_Benson_Jazzing_1:	# one-touch setting 1 of the Music Stylist setup "B
 	PM_RHYTHM	0x000628, 0x40, 0, 165	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x63, 0x48, 0x15, 0x14, 0x02
-	PM_SET88	0x04, 0x11, 0x0b, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0x11, 11, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47226,8 +48997,8 @@ StylePanel_Later_Jimmy_Jazz_2:	# one-touch setting 2 of the Music Stylist setup 
 	PM_RHYTHM	0x000628, 0x00, 1, 165	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x00, 0x37, 0x01, 0x14, 0x02
-	PM_SET88	0x00, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x00, 0xff, 7, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47243,8 +49014,8 @@ StylePanel_On_Herbie_s_Road_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000628, 0x00, 2, 165	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x25, 0x45, 0x35, 0x22, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 10, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47260,8 +49031,8 @@ StylePanel_Typically_Jazzy_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x000628, 0x00, 3, 165	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x20, 0x00, 0x35, 0x23, 0x22, 0x40
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x0c
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 12
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47277,8 +49048,8 @@ StylePanel_Bemused_Rastas_1:	# one-touch setting 1 of the Music Stylist setup "B
 	PM_RHYTHM	0x000647, 0x00, 0, 90	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x33, 0x45, 0x20, 0x00, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x55, 0x07
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	85, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47294,8 +49065,8 @@ StylePanel_Beach_Band_2:	# one-touch setting 2 of the Music Stylist setup "Beach
 	PM_RHYTHM	0x000647, 0x00, 1, 90	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x11, 0x08, 0x48, 0x0a, 0x12, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x55, 0x07
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	85, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47311,8 +49082,8 @@ StylePanel_Analog_Reggae_3:	# one-touch setting 3 of the Music Stylist setup "An
 	PM_RHYTHM	0x000647, 0x00, 2, 90	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x2e, 0x22, 0x01, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x55, 0x07
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	85, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47328,8 +49099,8 @@ StylePanel_Barbados_Brass_4:	# one-touch setting 4 of the Music Stylist setup "B
 	PM_RHYTHM	0x000647, 0x00, 3, 90	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x00, 0x37, 0x40, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x55, 0x07
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	85, 7
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47345,8 +49116,8 @@ StylePanel_Heavy_Wheels_1:	# one-touch setting 1 of the Music Stylist setup "Hea
 	PM_RHYTHM	0x00034f, 0x00, 0, 150	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x44, 0x41, 0x2b, 0x22, 0x42
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x64, 0x11
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	100, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -47362,8 +49133,8 @@ StylePanel_Shuffle_King_2:	# one-touch setting 2 of the Music Stylist setup "Shu
 	PM_RHYTHM	0x00034f, 0x00, 1, 150	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x35, 0x22, 0x22, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x64, 0x11
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	100, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -47379,8 +49150,8 @@ StylePanel_Lizzy_Shuffle_3:	# one-touch setting 3 of the Music Stylist setup "Li
 	PM_RHYTHM	0x00034f, 0x00, 2, 150	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x14, 0x02, 0x22, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x64, 0x11
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	100, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -47396,8 +49167,8 @@ StylePanel_Headbanger_Reeds_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x00034f, 0x00, 3, 150	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x10, 0x37, 0x02, 0x22, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x64, 0x11
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	100, 17
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -47413,8 +49184,8 @@ StylePanel_Beach_Dance_1:	# one-touch setting 1 of the Music Stylist setup "Beac
 	PM_RHYTHM	0x000447, 0x40, 0, 104	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x10, 0x23, 0x01, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47430,8 +49201,8 @@ StylePanel_Poly_Reggae_2:	# one-touch setting 2 of the Music Stylist setup "Poly
 	PM_RHYTHM	0x000447, 0x40, 1, 104	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x08, 0x23, 0x00, 0x14, 0x03
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47447,8 +49218,8 @@ StylePanel_Rasta_Dance_3:	# one-touch setting 3 of the Music Stylist setup "Rast
 	PM_RHYTHM	0x000447, 0x40, 2, 104	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x29, 0x00, 0x51, 0x06, 0x14, 0x20
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47464,8 +49235,8 @@ StylePanel_Club_Limbo_4:	# one-touch setting 4 of the Music Stylist setup "Club 
 	PM_RHYTHM	0x000447, 0x00, 3, 104	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x48, 0x01, 0x10, 0x00, 0x14, 0x20
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47481,8 +49252,8 @@ StylePanel_Stage_Rock_Band_1:	# one-touch setting 1 of the Music Stylist setup "
 	PM_RHYTHM	0x000050, 0x00, 0, 130	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x10, 0x00, 0x20, 0x0d, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x5a, 0x03
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	90, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -47498,8 +49269,8 @@ StylePanel_Club_Band_Hero_2:	# one-touch setting 2 of the Music Stylist setup "C
 	PM_RHYTHM	0x000050, 0x00, 1, 130	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x55, 0x40, 0x48, 0x10, 0x14, 0x4d
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x5a, 0x03
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	90, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -47515,8 +49286,8 @@ StylePanel_Rolling_Wheels_3:	# one-touch setting 3 of the Music Stylist setup "R
 	PM_RHYTHM	0x000050, 0x00, 2, 130	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x01, 0x00, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x2b, 0x02, 0x40, 0x20, 0x14, 0x4d
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x5a, 0x03
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	90, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -47532,8 +49303,8 @@ StylePanel_Everybody_Rock_4:	# one-touch setting 4 of the Music Stylist setup "E
 	PM_RHYTHM	0x000050, 0x00, 3, 130	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x14, 0x02, 0x12, 0x02, 0x14, 0x4d
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x5a, 0x03
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	90, 3
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x17, 0x00	# part 1
@@ -47549,8 +49320,8 @@ StylePanel_Pan_s_Pipe_Dream_1:	# one-touch setting 1 of the Music Stylist setup 
 	PM_RHYTHM	0x000162, 0x00, 0, 83	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x12, 0x08, 0x35, 0x20, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47566,8 +49337,8 @@ StylePanel_Movie_Nights_2:	# one-touch setting 2 of the Music Stylist setup "Mov
 	PM_RHYTHM	0x000162, 0x00, 1, 83	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x29, 0x23, 0x37, 0x40, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47583,8 +49354,8 @@ StylePanel_Cartoon_Epic_3:	# one-touch setting 3 of the Music Stylist setup "Car
 	PM_RHYTHM	0x000162, 0x00, 2, 83	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x10, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47600,8 +49371,8 @@ StylePanel_Emotional_Dreams_4:	# one-touch setting 4 of the Music Stylist setup 
 	PM_RHYTHM	0x000162, 0x00, 3, 83	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x64, 0x04, 0x14, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x07, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 7, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47617,8 +49388,8 @@ StylePanel_George_B_Swing_1:	# one-touch setting 1 of the Music Stylist setup "G
 	PM_RHYTHM	0x000472, 0x00, 0, 89	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x37, 0x00, 0x35, 0x22, 0x37, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5a, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	90, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47634,8 +49405,8 @@ StylePanel_LA_Roads_Groove_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000472, 0x00, 1, 89	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x25, 0x45, 0x15, 0x40, 0x37, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5a, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	90, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47651,8 +49422,8 @@ StylePanel_Modern_Big_Band_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000472, 0x00, 2, 89	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x0c, 0x35, 0x25, 0x37, 0x01
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5a, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	90, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47668,8 +49439,8 @@ StylePanel_LA_Sax_Swing_4:	# one-touch setting 4 of the Music Stylist setup "LA 
 	PM_RHYTHM	0x000472, 0x00, 3, 89	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x62, 0x22, 0x40, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x5a, 0x02
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	90, 2
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47685,8 +49456,8 @@ StylePanel_Acoustic_Rock_1:	# one-touch setting 1 of the Music Stylist setup "Ac
 	PM_RHYTHM	0x000253, 0x00, 0, 90	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x35, 0x21, 0x12, 0x00, 0x10, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47702,8 +49473,8 @@ StylePanel_Brit_Guitar_FX_2:	# one-touch setting 2 of the Music Stylist setup "B
 	PM_RHYTHM	0x000253, 0x00, 1, 90	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x03, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x00, 0x15, 0x03, 0x14, 0x02, 0x15, 0x05
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47719,8 +49490,8 @@ StylePanel_Water_Hole_Rock_3:	# one-touch setting 3 of the Music Stylist setup "
 	PM_RHYTHM	0x000253, 0x00, 2, 90	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x55, 0x40, 0x55, 0x40, 0x41, 0x2b, 0x55, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47736,8 +49507,8 @@ StylePanel_Heavy_Duty_Rock_4:	# one-touch setting 4 of the Music Stylist setup "
 	PM_RHYTHM	0x000253, 0x00, 3, 90	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x60, 0x2b, 0x02, 0x55, 0x00
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x04
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 4
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47753,8 +49524,8 @@ StylePanel_Olympic_Love_1:	# one-touch setting 1 of the Music Stylist setup "Oly
 	PM_RHYTHM	0x000462, 0x00, 0, 60	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x12, 0x08, 0x12, 0x09, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47770,8 +49541,8 @@ StylePanel_Ballad_Stack_2:	# one-touch setting 2 of the Music Stylist setup "Bal
 	PM_RHYTHM	0x000462, 0x00, 1, 60	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x10, 0x00, 0x20, 0x00, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47787,8 +49558,8 @@ StylePanel_Storyteller_3:	# one-touch setting 3 of the Music Stylist setup "Stor
 	PM_RHYTHM	0x000462, 0x00, 2, 60	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x0c, 0x29, 0x23, 0x12, 0x11
-	PM_SET88	0x04, 0xff, 0x03, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0xff, 3, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47804,8 +49575,8 @@ StylePanel_String_Horner_4:	# one-touch setting 4 of the Music Stylist setup "St
 	PM_RHYTHM	0x000462, 0x40, 3, 60	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x35, 0x20, 0x12, 0x0a, 0x12, 0x11
-	PM_SET88	0x04, 0x03, 0x0a, 0x7f
-	PM_SET8C	0x69, 0x09
+	PM_SET88	0x04, 0x03, 10, 127
+	PM_SET8C	105, 9
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47821,8 +49592,8 @@ StylePanel_Toot_s_Ballad_1:	# one-touch setting 1 of the Music Stylist setup "To
 	PM_RHYTHM	0x000a4a, 0x00, 0, 70	# rhythm id, TECHNI-CHORD on, VARIATION 1, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x0f, 0x4c, 0x0c, 0x52, 0x00, 0x12, 0x12
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47838,8 +49609,8 @@ StylePanel_Radio_Orchestra_2:	# one-touch setting 2 of the Music Stylist setup "
 	PM_RHYTHM	0x000a4a, 0x40, 1, 70	# rhythm id, TECHNI-CHORD on, VARIATION 2, tempo
 	PM_SET77	0x01, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x11, 0x12, 0x11, 0x12, 0x12
-	PM_SET88	0x04, 0x11, 0x08, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0x11, 8, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47855,8 +49626,8 @@ StylePanel_SaxSectionBallad_3:	# one-touch setting 3 of the Music Stylist setup 
 	PM_RHYTHM	0x000a4a, 0x00, 2, 70	# rhythm id, TECHNI-CHORD on, VARIATION 3, tempo
 	PM_SET77	0x07, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x12, 0x0c, 0x37, 0x00, 0x12, 0x12
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1
@@ -47872,8 +49643,8 @@ StylePanel_Organ_Oldies_4:	# one-touch setting 4 of the Music Stylist setup "Org
 	PM_RHYTHM	0x000a4a, 0x00, 3, 70	# rhythm id, TECHNI-CHORD on, VARIATION 4, tempo
 	PM_SET77	0x05, 0x01, 0x40
 	PM_FX	0x80, 0x50, 0x02, 0x00, 0x16, 0x00, 0x4c, 0x10, 0x22, 0x40, 0x12, 0x10, 0x37, 0x00
-	PM_SET88	0x04, 0xff, 0x0d, 0x7f
-	PM_SET8C	0x69, 0x08
+	PM_SET88	0x04, 0xff, 13, 127
+	PM_SET8C	105, 8
 	.byte	0x96	# +0x8E (no field of the KN7000 writer func_4C02A0C4)
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 0
 	PM_PART_TAIL	0x00, 0x00, 0x00	# part 1

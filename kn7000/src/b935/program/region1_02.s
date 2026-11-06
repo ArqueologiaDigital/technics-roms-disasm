@@ -50946,7 +50946,7 @@ func_4845BC26_entry:
     cmp     0x12, a2
     bgt     loc_4845BC54
     extbu   d0
-    mov     func_4845BC26_Selected_4+36, a0
+    mov     func_4845BC26_Table, a0
     movbu   (d0, a0), d1
     mov     func_4845BC26_Selected_0, a0
     cmp     d3, d1

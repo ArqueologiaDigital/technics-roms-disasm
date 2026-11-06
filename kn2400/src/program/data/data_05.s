@@ -35866,7 +35866,7 @@ func_50127747_Table:	# 128 x u8, 0..127; read by func_50127747_entry : `movbu	(d
 	tab_u8	80, 78, 77, 75, 73, 71, 70, 68, 66, 65, 63, 61, 60, 58, 56, 54	# [80]
 	tab_u8	53, 51, 49, 48, 46, 44, 43, 41, 39, 37, 36, 34, 32, 31, 29, 27	# [96]
 	tab_u8	26, 24, 22, 20, 19, 17, 15, 14, 12, 10, 9, 7, 5, 3, 2, 0	# [112]
-func_5012A787_Table:	# 137 x u32, 0..4294967040; read by func_5012A787 0x5012A787: `mov	(d0, a0), d0`
+func_5012A787_Table:	# 133 x u32, 0..4294967040; read by func_5012A787 0x5012A787: `mov	(d0, a0), d0`
 	tab_u32	4278237819, 4278240654, 4278243656, 4278246837, 4278250206, 4278253774, 4278257554, 4278261558	# [0]
 	tab_u32	4278265798, 4278270290, 4278275047, 4278280086, 4278285423, 4278291075, 4278297062, 4278303402	# [8]
 	tab_u32	4278310116, 4278317227, 4278324757, 4278332731, 4278341176, 4278350118, 4278359586, 4278369612	# [16]
@@ -35883,8 +35883,19 @@ func_5012A787_Table:	# 137 x u32, 0..4294967040; read by func_5012A787 0x5012A78
 	tab_u32	4291454237, 4292053093, 4292679821, 4293337084, 4294028106, 4294756818, 560758, 1380518	# [104]
 	tab_u32	2256310, 3197650, 4216746, 5329498, 6556983, 7927715, 9481217, 11273900	# [112]
 	tab_u32	13389162, 15955782, 19183815, 23441087, 29436404, 38735938, 55627445, 97599276	# [120]
-	tab_u32	4294967040, 0, 0, 4294901760, 0, 4294967040, 4294967040, 0	# [128]
-	tab_u32	4294901760	# [136]
+	tab_u32	4294967040, 0, 0, 4294901760, 0	# [128]
+StrapBit3Latch:	# 4 x s8, -1..0; read by StrapBit3Debounced_entry_L34 0x5018B3EB: `movbu d0, (StrapBit3Latch)`; StrapBit3Debounced_entry_L3d 0x5018B3F4: `movbu (StrapBit3Latch), d0`
+	tab_s8	0, -1, -1, -1
+func_485E427C_L55_Table:	# 4 x u8, 0..255; read by func_485E427C_L55 0x485E42D1: `movbu d0, (func_485E427C_L55_Table)`; func_485E427C_L67 0x485E42E3: `movbu (func_485E427C_L55_Table), d0` ...
+	tab_u8	0, 255, 255, 255
+
+func_485E6562_L68_Var:	# u32, initial value of a RAM variable; read / written by func_485E6562_L68 0x485E65CA: `mov (func_485E6562_L68_Var), d0`; func_485E6562_L68 0x485E65CA: `mov d0, (func_485E6562_L68_Var)`
+	.long	0
+func_485E67EB_entry_L6e_Var:	# u8, initial value of a RAM variable; read / written by func_485E67EB_entry_L6e 0x485E685C: `movbu d0, (func_485E67EB_entry_L6e_Var)`
+	.byte	0
+
+func_485E67EB_Table:	# 3 x u8, 0..255; read by func_485E67EB 0x485E67EB: `movbu (func_485E67EB_Table), d0`; func_485E67EB_entry_L10 0x485E67FE: `movbu d0, (func_485E67EB_Table)`
+	tab_u8	0, 255, 255
 func_485E68E5_Table:	# 4 x u8, 255..255; read by func_485E68E5 0x485E68E5: `movbu (func_485E68E5_Table), d0`; func_485E68E5_entry_L1c 0x485E6904: `movbu d0, (func_485E68E5_Table)` ...
 	tab_u8	255, 255, 255, 255
 func_485E695A_L55_Table:	# 4 x u8, 0..255; read by func_485E695A_L55 0x485E69AF: `movbu d0, (func_485E695A_L55_Table)`; func_485E695A_L67 0x485E69C1: `movbu (func_485E695A_L55_Table), d0` ...
@@ -36489,7 +36500,7 @@ OrgSubCtgList_selected:	# u16, initial value of a RAM variable: the AcSubCategor
 MusicStylistOrgan_StrRadioBox_ORGAN_selected:	# u32, initial value of a RAM variable: the AcStrRadioBox MusicStylistOrgan_StrRadioBox_ORGAN's `selected` (+0x2C), loaded and dereferenced by PsRadioBoxProc 0x485F0F64: `mov (0x2c, a2), a0` -> `mov (a0), d0`
 	.long	1
 
-AcStyleNameProc_L3f_Var:	# u16, initial value of a RAM variable; read / written by AcStyleNameProc_L3f 0x4863EB02: `movhu (AcStyleNameProc_L3f_Var), d0`; AcCategoryListBoxProc_L59 0x4863EBA9: `movhu (AcStyleNameProc_L3f_Var), d0` ...
+CUR_STYLE_IDX:	# u16, initial value of a RAM variable; read / written by AcStyleNameProc_L3f 0x4863EB02: `movhu (CUR_STYLE_IDX), d0`; AcCategoryListBoxProc_L59 0x4863EBA9: `movhu (CUR_STYLE_IDX), d0` ...
 	.word	0
 AcStyleNameProc_L66_Var:	# u16, initial value of a RAM variable; read / written by AcStyleNameProc_L66 0x4863EB29: `movhu (AcStyleNameProc_L66_Var), d0`; AcCustomListBoxProc_L32f 0x48640BA7: `movhu (AcStyleNameProc_L66_Var), d0` ...
 	.word	0
@@ -36648,7 +36659,7 @@ FactoryInitial_window:	# u32, initial value of a RAM variable: the Screen Factor
 MPVersion_window:	# u32, initial value of a RAM variable: the Screen MPVersion's `window` (+0x24), loaded and dereferenced by ScreenProc 0x485EF333: `mov (0x24, a3), a0` -> `mov d0, (a0)`
 	.long	0xffffffff
 
-AcWelcomeScreenProc_Lc5_Table:	# 6 x s16, -5016..18501; read by AcWelcomeScreenProc_Lc5 0x4864C841: `movhu (AcWelcomeScreenProc_Lc5_Table), d0`; func_4864C910 0x4864C910: `movhu (AcWelcomeScreenProc_Lc5_Table), d0` ...
+OpeningFrameIndex:	# 6 x s16, -5016..18501; read by AcWelcomeScreenProc_Lc5 0x4864C841: `movhu (OpeningFrameIndex), d0`; func_4864C910 0x4864C910: `movhu (OpeningFrameIndex), d0` ...
 	tab_s16	0, -1, -5016, 18501, -5011, 18501
 
 AcMPVerProc_L37_Var:	# u32, initial value of a RAM variable; read / written by AcMPVerProc_L37 0x4864C8D1: `mov (AcMPVerProc_L37_Var), a0`

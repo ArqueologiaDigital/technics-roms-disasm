@@ -66,21 +66,21 @@ func_485E427C_L55:
 	mov	0x1c, d0
 	movbu	d0, (0x98020004)
 	mov	1, d0
-	movbu	d0, (func_5012A787_Table+536)
+	movbu	d0, (func_485E427C_L55_Table)
 	bra	func_485E427C_Lbb
 func_485E427C_L67:
-	movbu	(func_5012A787_Table+536), d0
+	movbu	(func_485E427C_L55_Table), d0
 	cmp	1, d0
 	beq	func_485E427C_L73
 	bra	func_485E427C_Lbb
 func_485E427C_L73:
 	mov	2, d0
-	movbu	d0, (func_5012A787_Table+536)
+	movbu	d0, (func_485E427C_L55_Table)
 	mov	0xfa, d0
 	movhu	d0, (0x500272bc)
 	bra	func_485E427C_Lbb
 func_485E427C_L86:
-	movbu	(func_5012A787_Table+536), d0
+	movbu	(func_485E427C_L55_Table), d0
 	cmp	2, d0
 	beq	func_485E427C_L92
 	bra	func_485E427C_Lbb
@@ -94,7 +94,7 @@ func_485E427C_L92:
 	bra	func_485E427C_Lbb
 func_485E427C_Lac:
 	clr	d0
-	movbu	d0, (func_5012A787_Table+536)
+	movbu	d0, (func_485E427C_L55_Table)
 	mov	0xc, d0
 	movbu	d0, (0x98020004)
 func_485E427C_Lbb:
@@ -3601,9 +3601,9 @@ func_485E6562_L68:
 	call	func_485E6123_entry, 0, 0xc
 	mov	0xbb8, d0
 	call	dly_tsk_entry, [d2,a2], 0x18
-	mov	(func_5012A787_Table+540), d0
+	mov	(func_485E6562_L68_Var), d0
 	inc	d0
-	mov	d0, (func_5012A787_Table+540)
+	mov	d0, (func_485E6562_L68_Var)
 	jmp	func_485E6562_L68
 func_485E6562_L188:
 	ret	0, 0x10
@@ -3690,14 +3690,14 @@ func_485E67EB:
 func_485E67EB_entry:
 	clr	d0
 	movbu	d0, (0xc, sp)
-	movbu	(func_5012A787_Table+545), d0
+	movbu	(func_485E67EB_Table), d0
 	cmp	0, d0
 	beq	func_485E67EB_entry_L10
 	bra	func_485E67EB_entry_L1d
 func_485E67EB_entry_L10:
 	call	func_485E66ED_entry, 0, 0x28
 	mov	1, d0
-	movbu	d0, (func_5012A787_Table+545)
+	movbu	d0, (func_485E67EB_Table)
 func_485E67EB_entry_L1d:
 	mov	0x82, d0
 	call	func_485E427C, 0, 0
@@ -3732,7 +3732,7 @@ func_485E67EB_entry_L69:
 	movbu	d0, (0xc, sp)
 func_485E67EB_entry_L6e:
 	movbu	(0xd, sp), d0
-	movbu	d0, (func_5012A787_Table+544)
+	movbu	d0, (func_485E67EB_entry_L6e_Var)
 	movbu	(0xc, sp), d0
 	ret	0, 0x10
 
@@ -104233,7 +104233,7 @@ func_4861CCC5_entry:
 	cmp	0x12, a2
 	bgt	func_4861CCC5_entry_L29
 	extbu	d0
-	mov	func_4861CCC5_entry_L55_Selected_4+36, a0
+	mov	func_4861CCC5_Table, a0
 	movbu	(d0, a0), d1
 	mov	func_4861CCC5_entry_L55_Selected_0, a0
 	cmp	d3, d1
@@ -169056,7 +169056,7 @@ AcStyleNameProc_L3f:
 	cmp	TT_MSCTM, d0
 	beq	AcStyleNameProc_L66
 	mov	(0x2c, sp), a2
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	func_4863E9FF_entry, [a2], 0x18
 	mov	a0, a1
 	mov	a2, a0
@@ -169113,7 +169113,7 @@ AcCategoryListBoxProc_L56:
 	jmp	AcCategoryListBoxProc_L1e2
 AcCategoryListBoxProc_L59:
 	call	GetViewInstance, 0, 0
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	a0, a2
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(8, a0), d0
@@ -169228,14 +169228,14 @@ AcCategoryListBoxProc_L19a:
 	clr	d0
 	bra	AcCategoryListBoxProc_L1ed
 AcCategoryListBoxProc_L19d:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	mov	(a0), d0
 	mov	EV_STYLEOUT, d1
 	mov	d0, (0x10, sp)
 	mov	FN_StyleOutCall, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	func_4863E9FF_entry, [a2], 0x18
 	mov	a0, d1
 	mov	0x6040, d0
@@ -169344,7 +169344,7 @@ loc_4863EDDD:
 	mov	a0, (0x10, sp)
 	mov	d3, d0
 	call	InheritedProc_entry, [d2,d3,a2,a3], 0x28
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(8, a0), d0
 	movhu	d0, (AcCategoryStrBoxProc_L4f_Table)
@@ -169457,14 +169457,14 @@ AcCategoryStrBoxProc_L198:
 	clr	d0
 	bra	AcCategoryStrBoxProc_L1f4
 loc_4863EF24:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	mov	(a0), d0
 	mov	EV_STYLEOUT, d1
 	mov	d0, (0x10, sp)
 	mov	FN_StyleOutCall, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	func_4863E9FF_entry, [a2], 0x18
 	mov	a0, d1
 	mov	0x6040, d0
@@ -169531,7 +169531,7 @@ func_4863EFAC_entry_Lf:
 	mov	0x01550000, d1
 	mov	(4, a0), a0
 	movhu	(a0), d0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 	movhu	d0, (func_4863EFAC_entry_Lf_Table)
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -169640,14 +169640,14 @@ AcSubCategoryListBoxProc_L124:
 	clr	d0
 	bra	AcSubCategoryListBoxProc_L185
 AcSubCategoryListBoxProc_L127:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	mov	(a0), d0
 	mov	EV_STYLEOUT, d1
 	mov	d0, (0x10, sp)
 	mov	FN_StyleOutCall, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	func_4863E9FF_entry, [a2], 0x18
 	mov	a0, d1
 	mov	0x6040, d0
@@ -169679,14 +169679,14 @@ func_4863F175:
 func_4863F175_entry:
 	mov	a0, (0x4c, sp)
 	mov	d0, d2
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(8, a0), d0
 	mov	2, d3
 	exthu	d0
 	call	MssGenreGet_entry, [d2], 0xc
 	mov	(4, a0), a3
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xa, a0), d0
 	mov	d2, (0x14, sp)
@@ -169779,10 +169779,10 @@ func_4863F243:
 
 func_4863F243_entry:
 	movbu	d0, (0x24, sp)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(8, a0), d3
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movbu	(0x24, sp), d0
 	movhu	(0xa, a0), d2
@@ -169820,7 +169820,7 @@ func_4863F243_entry_L47:
 	mov	(4, a0), a0
 	mov	0x01550000, d1
 	movhu	(a0), d0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 	movhu	d0, (func_4863EFAC_entry_Lf_Table)
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -169865,7 +169865,7 @@ AcCtgStyleListBoxProc_L5f:
 	mov	(0x30, sp), d0
 	call	GetViewInstance, 0, 0
 	mov	a0, a2
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xa, a0), d0
 	mov	2, d2
@@ -169882,7 +169882,7 @@ AcCtgStyleListBoxProc_L5f:
 	movhu	d0, (a0)
 	bra	AcCtgStyleListBoxProc_Lc8
 AcCtgStyleListBoxProc_L96:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xa, a0), d0
 	ext	d0
@@ -169914,7 +169914,7 @@ AcCtgStyleListBoxProc_Ldb:
 	call	GetTitleNow_entry, 0, 0x10
 	cmp	TT_MSORG, d0
 	bne	AcCtgStyleListBoxProc_L102
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(8, a0), d0
 	cmp	0xa, d0
@@ -169922,7 +169922,7 @@ AcCtgStyleListBoxProc_Ldb:
 	mov	0xa, d2
 	bra	AcCtgStyleListBoxProc_L115
 AcCtgStyleListBoxProc_L102:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(8, a0), d0
 	cmp	0xa, d0
@@ -169961,12 +169961,12 @@ AcCtgStyleListBoxProc_L149:
 	cmp	a3, d3
 	bge	AcCtgStyleListBoxProc_L155
 	mov	a2, d0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 AcCtgStyleListBoxProc_L155:
 	mov	(0x38, sp), a2
 	cmp	0, a2
 	bne	AcCtgStyleListBoxProc_L178
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	EV_STYLEOUT, d1
 	movhu	d0, (func_4863EFAC_entry_Lf_Table)
 	mov	a2, (0x10, sp)
@@ -169980,14 +169980,14 @@ AcCtgStyleListBoxProc_L178:
 	clr	d0
 	bra	AcCtgStyleListBoxProc_L1e7
 AcCtgStyleListBoxProc_L188:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	mov	(a0), d0
 	mov	EV_STYLEOUT, d1
 	mov	d0, (0x10, sp)
 	mov	FN_StyleOutCall, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	func_4863E9FF_entry, [a2], 0x18
 	mov	a0, d1
 	mov	0x6040, d0
@@ -170018,16 +170018,16 @@ func_4863F4AE_entry:
 	add	-0x110, sp
 	mov	a0, (0x128, sp)
 	mov	d0, d3
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(8, a0), d2
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	exthu	d2
 	mov	d2, d0
 	call	MssGenreGet_entry, [d2], 0xc
 	mov	(4, a0), a2
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xa, a0), d1
 	mov	2, d2
@@ -170105,7 +170105,7 @@ func_4863F565:
 	add	-0xc, sp
 
 func_4863F565_entry:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xc, a0), d0
 	mov	d0, d1
@@ -170120,7 +170120,7 @@ func_4863F580:
 	add	-0xc, sp
 
 func_4863F580_entry:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(8, a0), d0
 	exthu	d0
@@ -170135,7 +170135,7 @@ func_4863F5A2:
 	add	-0xc, sp
 
 func_4863F5A2_entry:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(8, a0), d0
 	clr	d2
@@ -170169,15 +170169,15 @@ func_4863F5E8:
 
 func_4863F5E8_entry:
 	movbu	d0, (0x24, sp)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(8, a0), d2
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xa, a0), d0
 	exthu	d2
 	mov	d0, a2
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xc, a0), d3
 	mov	d2, d0
@@ -170193,7 +170193,7 @@ func_4863F5E8_entry:
 	cmp	1, d0
 	bne	func_4863F5E8_entry_L8a
 	call	func_4863F580_entry, 0, 0xc
-	movhu	(AcStyleNameProc_L3f_Var), d1
+	movhu	(CUR_STYLE_IDX), d1
 	exthu	d0
 	cmp	d0, d1
 	beq	func_4863F5E8_entry_Lc3
@@ -170209,7 +170209,7 @@ func_4863F5E8_entry:
 	add	d2, a0
 	mov	(4, a0), a0
 	movhu	(6, a0), d0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 	bra	func_4863F5E8_entry_Lc3
 func_4863F5E8_entry_L7b:
 	mov	-1, d0
@@ -170217,11 +170217,11 @@ func_4863F5E8_entry_L7b:
 	exthu	d0
 	add	d0, d0
 	movhu	(d0, a3), d1
-	movhu	d1, (AcStyleNameProc_L3f_Var)
+	movhu	d1, (CUR_STYLE_IDX)
 	bra	func_4863F5E8_entry_Lc3
 func_4863F5E8_entry_L8a:
 	call	func_4863F5A2_entry, [d2], 0x10
-	movhu	(AcStyleNameProc_L3f_Var), d1
+	movhu	(CUR_STYLE_IDX), d1
 	exthu	d0
 	cmp	d0, d1
 	beq	func_4863F5E8_entry_Lc3
@@ -170237,7 +170237,7 @@ func_4863F5E8_entry_L8a:
 	add	d2, a0
 	mov	(4, a0), a0
 	movhu	(a0), d0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 	bra	func_4863F5E8_entry_Lc3
 func_4863F5E8_entry_Lb7:
 	mov	d3, d0
@@ -170245,9 +170245,9 @@ func_4863F5E8_entry_Lb7:
 	exthu	d0
 	add	d0, d0
 	movhu	(d0, a3), d1
-	movhu	d1, (AcStyleNameProc_L3f_Var)
+	movhu	d1, (CUR_STYLE_IDX)
 func_4863F5E8_entry_Lc3:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	movhu	d0, (func_4863EFAC_entry_Lf_Table)
 	ret	[d2,d3,a2,a3], 0x1c
 
@@ -170360,14 +170360,14 @@ AcAlphabetListBoxProc_L134:
 	clr	d0
 	bra	AcAlphabetListBoxProc_L18a
 AcAlphabetListBoxProc_L137:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	mov	(a0), d0
 	mov	EV_STYLEOUT, d1
 	mov	d0, (0x10, sp)
 	mov	FN_StyleOutCall, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	func_4863E9FF_entry, [a2], 0x18
 	mov	a0, d1
 	mov	0x6040, d0
@@ -170428,10 +170428,10 @@ func_4863F880:
 
 func_4863F880_entry:
 	mov	a0, (0x64, sp)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0x12, a0), d2
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0x14, a0), d3
 	exthu	d2
@@ -170546,7 +170546,7 @@ func_4863F985:
 
 func_4863F985_entry:
 	mov	d0, d2
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0x12, a0), d0
 	extbu	d2
@@ -170558,7 +170558,7 @@ func_4863F985_entry:
 	mov	(4, a0), a0
 	mov	0x01550000, d1
 	movhu	(a0), d0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 	movhu	d0, (func_4863EFAC_entry_Lf_Table)
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -170610,7 +170610,7 @@ loc_4863FA21:
 	mov	(0x3c, sp), a2
 	cmp	0, a2
 	bne	AcAlpStyleListBoxProc_L76
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	EV_STYLEOUT, d1
 	movhu	d0, (func_4863EFAC_entry_Lf_Table)
 	mov	a2, (0x10, sp)
@@ -170799,14 +170799,14 @@ AcAlpStyleListBoxProc_L264:
 	clr	d0
 	bra	AcAlpStyleListBoxProc_L2b9
 loc_4863FC34:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	mov	(a0), d0
 	mov	EV_STYLEOUT, d1
 	mov	d0, (0x10, sp)
 	mov	FN_StyleOutCall, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	func_4863E9FF_entry, [a2], 0x18
 	mov	a0, d1
 	mov	0x6040, d0
@@ -170833,12 +170833,12 @@ func_4863FC89:
 func_4863FC89_entry:
 	add	-0x110, sp
 	mov	a0, (0x128, sp)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0x12, a0), d0
 	clr	d3
 	mov	d0, a2
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0x14, a0), d2
 	mov	a2, d0
@@ -170935,7 +170935,7 @@ func_4863FD58:
 	add	-0xc, sp
 
 func_4863FD58_entry:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0x14, a0), d0
 	ret	0, 0xc
@@ -170946,10 +170946,10 @@ func_4863FD6C:
 
 func_4863FD6C_entry:
 	movbu	d0, (0x2c, sp)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0x12, a0), d2
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0x14, a0), d3
 	exthu	d2
@@ -171056,7 +171056,7 @@ func_4863FD6C_entry_Le9:
 	add	d3, d3
 	movhu	(d3, a3), d0
 	mov	0x01550000, d1
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 	movhu	d0, (func_4863EFAC_entry_Lf_Table)
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -171173,14 +171173,14 @@ AcEraListBoxProc_L134:
 	clr	d0
 	bra	AcEraListBoxProc_L18a
 AcEraListBoxProc_L137:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	mov	(a0), d0
 	mov	EV_STYLEOUT, d1
 	mov	d0, (0x10, sp)
 	mov	FN_StyleOutCall, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	func_4863E9FF_entry, [a2], 0x18
 	mov	a0, d1
 	mov	0x6040, d0
@@ -171218,7 +171218,7 @@ func_4864001D:
 
 func_4864001D_entry:
 	mov	a0, (0x5c, sp)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xe, a0), d3
 	mov	d3, d0
@@ -171226,12 +171226,12 @@ func_4864001D_entry:
 	cmp	0xffff, d0
 	bne	func_4864001D_entry_L33
 	call	func_4864000C_entry, 0, 0xc
-	movhu	d0, (AcStyleNameProc_L3f_Var)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	d0, (CUR_STYLE_IDX)
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xe, a0), d3
 func_4864001D_entry_L33:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0x10, a0), d0
 	clr	d2
@@ -171332,7 +171332,7 @@ func_4864012F:
 
 func_4864012F_entry:
 	movbu	d0, (0x28, sp)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xe, a0), d3
 	mov	d3, d0
@@ -171340,8 +171340,8 @@ func_4864012F_entry:
 	cmp	0xffff, d0
 	bne	func_4864012F_entry_L34
 	call	func_4864000C_entry, 0, 0xc
-	movhu	d0, (AcStyleNameProc_L3f_Var)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	d0, (CUR_STYLE_IDX)
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xe, a0), d3
 func_4864012F_entry_L34:
@@ -171393,7 +171393,7 @@ func_4864012F_entry_L7e:
 	mov	(4, a0), a0
 	mov	0x01550000, d1
 	movhu	(a0), d0
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 	movhu	d0, (func_4863EFAC_entry_Lf_Table)
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -171407,7 +171407,7 @@ func_486401E0:
 
 func_486401E0_entry:
 	movbu	d0, (0x2c, sp)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xe, a0), d3
 	mov	d3, d0
@@ -171415,12 +171415,12 @@ func_486401E0_entry:
 	cmp	0xffff, d0
 	bne	func_486401E0_entry_L34
 	call	func_4864000C_entry, 0, 0xc
-	movhu	d0, (AcStyleNameProc_L3f_Var)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	d0, (CUR_STYLE_IDX)
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xe, a0), d3
 func_486401E0_entry_L34:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0x10, a0), d0
 	clr	d2
@@ -171487,7 +171487,7 @@ func_486401E0_entry_La2:
 	add	d0, d0
 	movhu	(d0, a2), d1
 	clr	d0
-	movhu	d1, (AcStyleNameProc_L3f_Var)
+	movhu	d1, (CUR_STYLE_IDX)
 	movhu	d1, (func_4863EFAC_entry_Lf_Table)
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -171632,7 +171632,7 @@ loc_486403F5:
 	mov	(0x40, sp), a2
 	cmp	0, a2
 	bne	AcEraStyleListBoxProc_Ld2
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	mov	EV_STYLEOUT, d1
 	movhu	d0, (func_4863EFAC_entry_Lf_Table)
 	mov	a2, (0x10, sp)
@@ -171788,14 +171788,14 @@ AcEraStyleListBoxProc_L266:
 	clr	d0
 	bra	AcEraStyleListBoxProc_L2bb
 loc_486405AE:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	mov	(a0), d0
 	mov	EV_STYLEOUT, d1
 	mov	d0, (0x10, sp)
 	mov	FN_StyleOutCall, d0
 	call	MainFuncCall_entry, [d2,d3,a2], 0x24
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	func_4863E9FF_entry, [a2], 0x18
 	mov	a0, d1
 	mov	0x6040, d0
@@ -171822,7 +171822,7 @@ func_48640603:
 func_48640603_entry:
 	add	-0x114, sp
 	mov	a0, (0x12c, sp)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xe, a0), d3
 	mov	0, a2
@@ -171831,12 +171831,12 @@ func_48640603_entry:
 	cmp	0xffff, d0
 	bne	func_48640603_entry_L3b
 	call	func_4864000C_entry, 0, 0xc
-	movhu	d0, (AcStyleNameProc_L3f_Var)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	d0, (CUR_STYLE_IDX)
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xe, a0), d3
 func_48640603_entry_L3b:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0x10, a0), d0
 	mov	9, d1
@@ -171954,16 +171954,16 @@ func_48640718:
 	add	-0xc, sp
 
 func_48640718_entry:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xe, a0), d0
 	exthu	d0
 	cmp	0xffff, d0
 	bne	func_48640718_entry_L22
 	call	func_4864000C_entry, 0, 0xc
-	movhu	d0, (AcStyleNameProc_L3f_Var)
+	movhu	d0, (CUR_STYLE_IDX)
 func_48640718_entry_L22:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0x10, a0), d0
 	ret	0, 0xc
@@ -171974,7 +171974,7 @@ func_4864074E:
 
 func_4864074E_entry:
 	movbu	d0, (0x2c, sp)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xe, a0), d3
 	mov	d3, d0
@@ -171982,12 +171982,12 @@ func_4864074E_entry:
 	cmp	0xffff, d0
 	bne	func_4864074E_entry_L34
 	call	func_4864000C_entry, 0, 0xc
-	movhu	d0, (AcStyleNameProc_L3f_Var)
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	d0, (CUR_STYLE_IDX)
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xe, a0), d3
 func_4864074E_entry_L34:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0x10, a0), d0
 	clr	d2
@@ -172095,7 +172095,7 @@ func_4864074E_entry_Lfe:
 	add	d0, d0
 	movhu	(d0, a3), d1
 	clr	d0
-	movhu	d1, (AcStyleNameProc_L3f_Var)
+	movhu	d1, (CUR_STYLE_IDX)
 	movhu	d1, (func_4863EFAC_entry_Lf_Table)
 	mov	d0, (0x10, sp)
 	mov	-1, d0
@@ -173335,7 +173335,7 @@ func_48641486:
 	add	-0xc, sp
 
 func_48641486_entry:
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(0xe, a0), d0
 	cmp	0xffff, d0
@@ -173484,7 +173484,7 @@ AcCtgOrgTitleMenuProc_L28:
 	call	SendEvent_entry, [d2,d3], 0x24
 	cmp	1, d0
 	bne	AcCtgOrgTitleMenuProc_L94
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(8, a0), d0
 	cmp	0xa, d0
@@ -173518,7 +173518,7 @@ AcCtgOrgTitleMenuProc_La6:
 	mov	a2, a0
 	mov	0xf5, d0
 	call	DrawBox_entry, [d2,a2], 0x18
-	movhu	(AcStyleNameProc_L3f_Var), d0
+	movhu	(CUR_STYLE_IDX), d0
 	call	MssSetupGet_entry, [d2], 0xc
 	movhu	(8, a0), d0
 	cmp	0xa, d0
@@ -193339,7 +193339,7 @@ AcWelcomeScreenProc_Lb7:
 AcWelcomeScreenProc_Lc5:
 	mov	0x4864c910, d0
 	call	DrawFunc_entry, [d2,a2], 0x24
-	movhu	(AcWelcomeScreenProc_Lc5_Table), d0
+	movhu	(OpeningFrameIndex), d0
 	exth	d0
 	cmp	-1, d0
 	beq	AcWelcomeScreenProc_Lf6
@@ -193422,7 +193422,7 @@ func_4864C910:
 	movhu	d0, (a1)
 	movhu	(2, a0), d0
 	movhu	d0, (2, a1)
-	movhu	(AcWelcomeScreenProc_Lc5_Table), d0
+	movhu	(OpeningFrameIndex), d0
 	exth	d0
 	cmp	-1, d0
 	beq	func_4864C910_L8f
@@ -193445,7 +193445,7 @@ func_4864C910:
 	beq	func_4864C910_L55
 	clr	d1
 func_4864C910_L55:
-	movhu	(AcWelcomeScreenProc_Lc5_Table), d2
+	movhu	(OpeningFrameIndex), d2
 	exth	d1
 	exth	d2
 	mov	d1, d0
@@ -193465,12 +193465,12 @@ func_4864C910_L55:
 	bra	func_4864C910_L81
 func_4864C910_L79:
 	mov	-2, d0
-	movhu	d0, (AcWelcomeScreenProc_Lc5_Table)
+	movhu	d0, (OpeningFrameIndex)
 func_4864C910_L81:
-	movhu	(AcWelcomeScreenProc_Lc5_Table), d0
+	movhu	(OpeningFrameIndex), d0
 	exth	d0
 	inc	d0
-	movhu	d0, (AcWelcomeScreenProc_Lc5_Table)
+	movhu	d0, (OpeningFrameIndex)
 func_4864C910_L8f:
 	movhu	(0x50051b9c), d0
 	exth	d0
@@ -752410,9 +752410,9 @@ StrapBit3Debounced_entry:
 	bra	StrapBit3Debounced_entry_L3d
 StrapBit3Debounced_entry_L34:
 	movbu	(8, sp), d0
-	movbu	d0, (func_5012A787_Table+532)
+	movbu	d0, (StrapBit3Latch)
 StrapBit3Debounced_entry_L3d:
-	movbu	(func_5012A787_Table+532), d0
+	movbu	(StrapBit3Latch), d0
 	extb	d0
 	ret	0, 0xc
 

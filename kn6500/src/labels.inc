@@ -65206,6 +65206,7 @@
 .equ func_4C11B237_entry_L4a_Selected_2, 0x4c2455e0
 .equ func_4C11B237_entry_L4a_Selected_3, 0x4c245614
 .equ func_4C11B237_entry_L4a_Selected_4, 0x4c245694
+.equ func_4C11B237_Table, 0x4c2456b8
 .equ func_4C11CE1C_Table, 0x4c2456cc
 .equ func_4C11D4A6_Table, 0x4c2456e8
 .equ func_4C11D4A6_entry_L222_Table, 0x4c2456fc
@@ -67583,7 +67584,7 @@
 .equ Str_V1_0, 0x5000540d
 .equ Str_KN3000_SOUND_RAM, 0x50005414
 .equ PsParaListBoxProc_L4e_Var, 0x500054ac
-.equ AcStyleNameProc_L3f_Var, 0x500054b0
+.equ CUR_STYLE_IDX, 0x500054b0
 .equ AcStyleNameProc_L66_Var, 0x500054b2
 .equ func_4C1642F7_entry_Lf_Table, 0x500054b4
 .equ func_4C169C8B_entry_L68_Var, 0x500054b8
@@ -67650,8 +67651,8 @@
 .equ ptrs_50005D2C, 0x50005d2c
 .equ func_4C156C6F_entry_Lc2_Var, 0x50005d38
 .equ func_4C156D51_entry_L8d_Table, 0x50005d3c
-.equ func_4C15517F_Var, 0x50005d44
-.equ func_4C157B6A_Table, 0x50005d45
+.equ DspHostPortError, 0x50005d44
+.equ DspReadyWaitEnabled, 0x50005d45
 .equ func_4C15517F_entry_L363_Table, 0x50005d48
 .equ func_4C15562E_Table, 0x50006088
 .equ func_4C15839E_entry_L1b41_Records, 0x500063c8

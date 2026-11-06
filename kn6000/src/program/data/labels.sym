@@ -28387,11 +28387,12 @@
 0x4C244368  func_4C117D0E_entry_L20_Records  128
 0x4C2443E8  func_4C118448_Records  128
 0x4C244468  func_4C11B33A_Table  256
-0x4C244568  func_4C11B347_entry_L4a_Selected_0  52
-0x4C244664  func_4C11B347_entry_L4a_Selected_1  52
+0x4C244568  func_4C11B347_entry_L4a_Selected_0  252
+0x4C244664  func_4C11B347_entry_L4a_Selected_1  172
 0x4C244710  func_4C11B347_entry_L4a_Selected_2  52
-0x4C244744  func_4C11B347_entry_L4a_Selected_3  52
-0x4C2447C4  func_4C11B347_entry_L4a_Selected_4  52
+0x4C244744  func_4C11B347_entry_L4a_Selected_3  128
+0x4C2447C4  func_4C11B347_entry_L4a_Selected_4  36
+0x4C2447E8  func_4C11B347_Table  20
 0x4C2447FC  func_4C11CE59_Table  28
 0x4C244818  func_4C11D4E3_Table  20
 0x4C24482C  func_4C11D4E3_entry_L222_Table  8
@@ -44605,7 +44606,7 @@
 0x4C36E82E  VoiceDirPartRefFind_Var_2  2
 0x4C36E830  VoiceDirPartRefFind_Table  2532
 0x4C36F214  func_4C09D6E7_entry_L4b_Table  4096
-0x4C370214  func_4C09D886_entry_L6e_Table  512
+0x4C370214  func_4C09D886_entry_L6e_Table  4096
 0x4C371214  User02_ApFunctions  164
 0x4C3712BC  User02_ApFunctionNames  164
 0x4C371364  ClassFields_AcVocalistListBox  4
@@ -50363,7 +50364,7 @@
 0x5000552C  STYLCNVSEL_window  4
 0x50005530  StylCnvSelBox_sel_num  2
 0x50005534  STYLCNVCONT_window  4
-0x50005538  AcStyleNameProc_L3f_Var  2
+0x50005538  CUR_STYLE_IDX  2
 0x5000553A  AcStyleNameProc_L66_Var  2
 0x5000553C  func_4C163D15_entry_Lf_Table  4
 0x50005540  func_4C169690_entry_L68_Var  4
@@ -50533,8 +50534,8 @@
 0x50005D80  ptrs_50005D80  12
 0x50005D8C  func_4C1566B3_entry_Lc2_Var  4
 0x50005D90  func_4C156795_entry_L8d_Table  6
-0x50005D98  func_4C154BC3_Var  1
-0x50005D99  func_4C1575AE_Table  3
+0x50005D98  DspHostPortError  1
+0x50005D99  DspReadyWaitEnabled  3
 0x50005D9C  func_4C154BC3_entry_L363_Table  832
 0x500060DC  func_4C155072_Table  832
 0x5000641C  func_4C157DE2_entry_L1b41_Records  216
