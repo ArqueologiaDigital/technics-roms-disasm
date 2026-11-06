@@ -121,6 +121,11 @@ owner yet.  The KN2400's RAM-linked tone-generator library (the twin of the libr
 2bde950fa and has 418 now (`missed-*.txt`, the `--a-range` tables); 36 of the rest are short
 twins whose RAM operands the map does not pair yet, 76 have no same-body routine there.
 
+`make doc-quality` (`docs/coverage/doc-quality-2026-11-06-09`, against -08: nothing rose) reads the
+same change: (e) placeholder routine names KN6000 5,784 -> 5,678, KN6500 5,810 -> 5,704, KN2400
+6,765 -> 6,538, HD-SX3 461 -> 459; (b) operands spelled as a number outside the image KN6000 16,392
+-> 14,501, KN6500 16,416 -> 14,522, KN2400 18,266 -> 15,810.
+
 ## Why the RAM figures are still large
 
 `notes/ram-names-report.md` gives, per model, why an address stays a number: most RAM addresses
