@@ -32,6 +32,7 @@ RUN (from wsa1/)
     python3 notes/zero-for-o/inventory.py --write          # + inventory.md, renames.tsv, kept.tsv, the .sed
     python3 notes/zero-for-o/inventory.py --check          # the WORKING TREE after the rename
     python3 notes/zero-for-o/inventory.py --elf-proof BEFORE AFTER   # two `llvm-nm` listings
+    python3 notes/zero-for-o/inventory.py --explain-moved LOG        # a join_maincpu_link.py --proof output
     `--rev REV` reads another revision (default 34bc0c5fe, main when the rename began).
 """
 import collections
@@ -662,8 +663,32 @@ def elf_proof(before, after):
     return 1 if bad else 0
 
 
+def explain_moved(log):
+    """scripts/tools/join_maincpu_link.py --proof REV prints `MOVED <name>: equate <value>` for every name of REV's
+    equate blocks that the joined ELF lacks.  Each one must be a renamed name whose NEW name the ELF holds at that
+    very value -- or one of the names the base revision's own run already reported (BASE_MOVED)."""
+    ren = old_names()
+    nm = os.path.expanduser("~/compartilhado/llvm-project/build/bin/llvm-nm")
+    out = subprocess.run([nm, os.path.join(WSA1, "rebuilt_ROMs", "wsa1_maincpu.llvm.elf")],
+                         capture_output=True, text=True, check=True).stdout
+    val = {f[2]: int(f[0], 16) for f in (l.split() for l in out.split("\n")) if len(f) == 3}
+    moved = re.findall(r"MOVED (\S+): equate (0x[0-9a-fA-F]+)", open(log).read())
+    pre = [n for n, _v in moved if n in BASE_MOVED]
+    bad = [n for n, v in moved if n not in BASE_MOVED and not (n in ren and val.get(ren[n]) == int(v, 16))]
+    print("MOVED %d: %d already moved at the base, %d renamed and found under the new name at the same value, "
+          "%d unexplained %s" % (len(moved), len(pre), len(moved) - len(pre) - len(bad), len(bad), bad[:10]))
+    print("FAILURES: %d" % len(bad))
+    return 1 if bad else 0
+
+
+# the two names `--proof 130735749` already reported at 34bc0c5fe (renamed by an earlier lane)
+BASE_MOVED = {"T_MidiFileSave_Page5_LcdKeyRow3", "MidiFileSave_Page5_LcdKeyRow3"}
+
+
 def main():
     argv = sys.argv[1:]
+    if "--explain-moved" in argv:
+        return explain_moved(argv[argv.index("--explain-moved") + 1])
     if "--elf-proof" in argv:
         i = argv.index("--elf-proof")
         return elf_proof(argv[i + 1], argv[i + 2])

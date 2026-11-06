@@ -1,3 +1,4 @@
+wsa1_prom_b:
 ; ⚠ CAPTIONS TYPED WITH 0x30.  Some captions in this file
 ;   spell capital O with character code 0x30, the digit zero: `M0DELING`, `CURS0R`, `P0SITI0N`, `M0VEMENT`,
 ;   `T0NE`, `LF0`, `M0DE`, `MEM0RY`, `0K`, `S0UND`, `LF01`, `LF02`, `LF03`, `LF04`.  They are the ROM's own
@@ -5,7 +6,7 @@
 ;   draw cells 0x30 and 0x4F alike (notes/prom_b_screens_round8.py --glyphs).  Label names spell the word
 ;   with O (owner decision 2026-11-06, notes/zero-for-o/README.md).
 ;
-wsa1_prom_b:
+
 ; === COVER-R1 0xF00000-0xF01800 ===
 ; 0xF00000-0xF017FF, coverage round 1: 1757 of this span's 6144 bytes are
 ; reachable -- 1495 as CODE (an entry point in the routine directory, or a

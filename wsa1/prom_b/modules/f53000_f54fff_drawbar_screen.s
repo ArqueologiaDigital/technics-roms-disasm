@@ -4,6 +4,7 @@
 ;   and 0x4F alike (notes/prom_b_screens_round8.py --glyphs).  Label names spell the word with O (owner
 ;   decision 2026-11-06, notes/zero-for-o/README.md).
 ;
+
 ; Evidence: one `ret` at the head of a run of `0E 00 00 00` four-byte slots --
 ;           the fill convention of 0xF55000 and of the thunk table itself.  Named by directory slot T_F42E40, the ONLY reference to 0x00F53000 in either image (1 occurrence in prom_b, 0 in prom_a).  [round7-entrypoints]
 RetStub_F53000:
