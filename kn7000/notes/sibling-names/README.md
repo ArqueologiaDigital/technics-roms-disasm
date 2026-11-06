@@ -155,6 +155,9 @@ were counted by an uncommitted script).
 
 ## Next steps
 
+Wave 12 took these up: `../sibling-names2/README.md` (RAM runs, pointer and table pairs, the
+WORK_RAM_BASE fix, and the name sources measured and not adopted).
+
 - KN7000 names first: a 941 name given to a routine of `routine-map-kn7000.tsv` (or a RAM name of
   `ram-map-kn7000.tsv`) reaches the sibling by `make aligned-names` and the regeneration above.
   The maps also run the other way: the rows where B is named and 941 is not (`-` in the A column)
