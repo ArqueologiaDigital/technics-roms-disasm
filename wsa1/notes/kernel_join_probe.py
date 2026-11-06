@@ -808,6 +808,69 @@ CORRECTIONS = {
 }
 
 
+# ★ EDITS MADE TO kernel.s AFTER THE MERGE, dated, so --verify can tell a later edit from a lost line
+#   (lane open10/kernel4, 2026-11-06, register item L-kernel-a3-join-probe-stale).  Until then four
+#   checks failed at every commit since 2026-08-30 -- not because the merge lost anything but because
+#   kernel.s, being the source, was edited afterwards.  Each entry names the commit that made the edit,
+#   and --verify accepts EXACTLY these lines and nothing like them, so an unlisted edit still fails.
+#
+# POST_MERGE_EDITS: (date, commit, what, {original comment line: [the lines that replace it]}).  An
+#   original prom_a / prom_c comment line missing from kernel.s is accepted only when it is a key here
+#   AND every one of its replacement lines is in kernel.s; the replacement lines join the origin set of
+#   the reverse check.  `None` as a key = lines ADDED with no original (they only join the origin set).
+POST_MERGE_EDITS = [
+    ("2026-08-30", "b9e3a0657", "one copy of the TLCS-900 byte emitters: kernel.s's macro block moved to "
+     "include/tlcs900_mem_ops.inc, and the header paragraph above the include rewritten", {None: [
+        "; spell.  \u2605 THIS FILE USED TO CARRY A SECOND COPY of prom_a's block -- a 17-name",
+        "; subset of it, moved verbatim.  Since 2026-08-30 there is ONE text,",
+        "; include/tlcs900_mem_ops.inc, which prom_a, prom_b and this file all include,",
+        "; and it is prom_a's full set rather than the subset.",
+        "; The guard stays, and it is load-bearing: prom_a includes that file directly",
+        "; too, and llvm-mc rejects a redefined macro.  kernel_maincpu.inc sets the guard",
+        "; symbol; kernel_subcpu.inc does not, because prom_c reaches these macros only",
+        "; through this file.",
+        ";   argued at include/tlcs900_mem_ops.inc's own definitions, and every use below",
+        ";   carries unidasm's text in its trailing comment so the two can be compared by",
+        ";   eye.",
+    ]}),
+    ("2026-10-03", "8180b9b1d", "WSA1 naming round 1: sub_F85EC2 named SoftTimer_RotateLevel3", {
+        ";            +4  LE32  0x00F85EC2  a code address in this file -- sub_F85EC2,": [
+            ";            +4  LE32  0x00F85EC2  a code address in this file -- SoftTimer_RotateLevel3,"],
+        "; Called from: sub_F85EC2 (0xF85EC4, converted below) with A = 3; and prom_b": [
+            "; Called from: SoftTimer_RotateLevel3 (0xF85EC4, converted below) with A = 3; and prom_b"],
+    }),
+]
+
+# RESPELLINGS: (date, commit, what, pattern, replacement) -- the same instruction spelled the way the
+#   pinned assembler reads it after a tree-wide respelling.  Applied to the ORIGINAL line only, before
+#   check 3 compares literals; the shared line is never rewritten, so a wrong value still fails.
+RESPELLINGS = [
+    ("2026-09-02", "c56231510", "ldw_d16 converged on the native `ld r16, (addr:16)`",
+     r'^ldw_d16 (\w+), \((0x[0-9A-Fa-f]+|\d+)\)$', r'ld \1, (\2:16)'),
+    ("2026-09-05", "f305c6c95", "selectors: `ldio n, v` -> `ld (n:8), v:io`",
+     r'^ldio ([A-Za-z_][A-Za-z0-9_]*|0x[0-9A-Fa-f]+|\d+), (0x[0-9A-Fa-f]+|\d+)$', r'ld (\1:8), \2:io'),
+    ("2026-09-25", "166c9dc3e", "post-increment pseudos -> `(R+)`: `stw_dpi r16, 0xED` is `ld (xhl+), r16`",
+     r'^stw_dpi (\w+), 0x[eE][dD]$', r'ld (xhl+), \1'),
+]
+
+
+def respelled(text):
+    for _, _, _, pat, rep in RESPELLINGS:
+        text = re.sub(pat, rep, text)
+    return text
+
+
+def post_merge_lines():
+    """(accepted-missing originals, accepted-new lines) from POST_MERGE_EDITS."""
+    gone, new = {}, set()
+    for _, _, _, edits in POST_MERGE_EDITS:
+        for old, repl in edits.items():
+            new |= set(repl)
+            if old is not None:
+                gone[old] = repl
+    return gone, new
+
+
 def instr_length_map(addrs):
     """Byte length per address.  The block is CONTIGUOUS, so a slot's length is
     the distance to the next one -- no decode and no guess."""
@@ -1027,7 +1090,9 @@ def cmd_verify():
         prose = [l.rstrip() for _, p_, _ in items for l in p_
                  if l.strip().startswith(";")]
         prose += [l.rstrip() for l in tail if l.strip().startswith(";")]
-        missing = [l for l in prose if l not in kset and l not in CORRECTIONS]
+        gone, _ = post_merge_lines()
+        missing = [l for l in prose if l not in kset and l not in CORRECTIONS and
+                   not (l in gone and all(r in kset for r in gone[l]))]
         check("%s: all %d comment lines present verbatim (%d deliberate correction%s)"
               % (tag, len(prose), len(CORRECTIONS) if tag == "prom_a" else 0,
                  "" if len(CORRECTIONS) == 1 else "s"),
@@ -1044,6 +1109,7 @@ def cmd_verify():
         origin |= {l.rstrip() for l in tail}
     origin |= {l.rstrip() for l in kernel_header().split("\n")}
     origin |= {l for v in CORRECTIONS.values() for l in v}
+    origin |= post_merge_lines()[1]
     # ★ 2026-11-06 (A3): kernel.s is also the KN5000 sub-CPU's kernel.  The comment lines that
     #   merge moved in from v142/subcpu/core/03_task_scheduler_kernel.s, its banners and its
     #   name records, and the header lines it added, have a third origin; their own checker is
@@ -1054,7 +1120,10 @@ def cmd_verify():
     origin |= A3.kn_origin_lines()
     origin |= {l.rstrip() for _, _, add in A3.KS_EDITS for l in add.split("\n")}
     stray = []
-    for l in kern:
+    # kernel.s's OWN lines, not its expansion: since b9e3a0657 (POST_MERGE_EDITS) the macro block is
+    # include/tlcs900_mem_ops.inc, which kernel.s includes for prom_c, and that file's comments are
+    # not kernel.s's.  (Reading the expansion made this check report 231 of its lines as "stray".)
+    for l in open(os.path.join(ROOT, "kernel", "kernel.s"), encoding="utf-8").read().split("\n"):
         t = l.rstrip()
         if not t.strip().startswith(";"):
             continue
@@ -1124,7 +1193,7 @@ def cmd_verify():
                                                   (int(m.group(3)) if m.group(2) == "+"
                                                    else -int(m.group(3)))), t)
             back = resolve(text)
-            orig = resolve(code_of(item[1]))
+            orig = resolve(respelled(code_of(item[1])))
             if [v for _, _, v in literals(back)] == [v for _, _, v in literals(orig)]:
                 checked += 1
                 continue
