@@ -5577,14 +5577,19 @@ Tempo_RefreshDisplay5_Table:	.incbin "includes/generated/naka_widget_descriptors
 ; VoiceSlot_Dispatch_CaseTable[7].
 ; -----------------------------------------------------------------------------
 VoiceSlot_Dispatch_CaseTable:
-	.short	Voice_ClearSlotAndRet - Voice_ClearSlotAndRet
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x05, 0x00, 0x05, 0x00, 0x0f, 0x00, 0x05, 0x00
-	.byte	0x0a, 0x00, 0x0a, 0x00
+	.short	VoiceSlot_Dispatch_Case0 - VoiceSlot_Dispatch_Case0
+	.short	VoiceSlot_Dispatch_Case1 - VoiceSlot_Dispatch_Case0
+	.short	VoiceSlot_Dispatch_Case1 - VoiceSlot_Dispatch_Case0
+	.short	VoiceEvt_Size3_Skip2 - VoiceSlot_Dispatch_Case0
+	.short	VoiceSlot_Dispatch_Case1 - VoiceSlot_Dispatch_Case0
+	.short	VoiceSlot_Dispatch_Case5 - VoiceSlot_Dispatch_Case0
+	.short	VoiceSlot_Dispatch_Case5 - VoiceSlot_Dispatch_Case0
 VoiceSlot_Dispatch_CaseTable_Data:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x12, 0x00, 0x06, 0x00, 0x0c, 0x00
-	.byte	0x06, 0x00
+	.short	Voice_ClearSlotAndRet - Voice_ClearSlotAndRet
+	.short	VoiceSlot_Dispatch_Data_Case1 - Voice_ClearSlotAndRet
+	.short	VoiceSlot_Dispatch_Data_Case2 - Voice_ClearSlotAndRet
+	.short	RhythmParam_Dispatch_KeepBeatAdvance_Skip - Voice_ClearSlotAndRet
+	.short	VoiceSlot_Dispatch_Data_Case2 - Voice_ClearSlotAndRet
 	.short	Voice_ClearSlotAndRet - Voice_ClearSlotAndRet
 	.short	Voice_ClearSlotAndRet - Voice_ClearSlotAndRet
 ; -----------------------------------------------------------------------------
@@ -5600,11 +5605,9 @@ VoiceSlot_Dispatch_CaseTable_Data:
 ; -----------------------------------------------------------------------------
 RhythmParam_Dispatch_CaseTable:
 	.short	RhythmParam_CheckExit - RhythmParam_CheckExit
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd5, 0x01
+	.short	RhythmParam_Dispatch_KeepBeatAdvance_Skip3 - RhythmParam_CheckExit
 	.short	RhythmParam_DispatchTableData - RhythmParam_CheckExit
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x0c, 0x00
+	.short	RhythmParam_DispatchTableData_Skip - RhythmParam_CheckExit
 	.short	RhythmParam_DispatchTableData - RhythmParam_CheckExit
 	.short	RhythmParam_CheckExit - RhythmParam_CheckExit
 	.short	RhythmParam_CheckExit - RhythmParam_CheckExit

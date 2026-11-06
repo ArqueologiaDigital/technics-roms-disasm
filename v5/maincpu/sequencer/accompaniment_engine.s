@@ -27890,12 +27890,15 @@ VoiceEvt_Size3_Skip:
 	add	wa, wa
 	lda	xix, (VoiceSlot_Dispatch_CaseTable:24)
 	ld	wa, (xix+wa)
-	lda	xix, (0xf663c5:24)
+	lda	xix, (VoiceSlot_Dispatch_Case0:24)
 	jp_rr	8, xix, wa
+VoiceSlot_Dispatch_Case0:
 	ld	qiz, 4
 	jr	VoiceEvt_Size1
+VoiceSlot_Dispatch_Case1:
 	ld	qiz, 1
 	jr	VoiceEvt_Size1
+VoiceSlot_Dispatch_Case5:
 	ld	qiz, 2
 	jr	VoiceEvt_Size1
 VoiceEvt_Size3_Skip2:
@@ -28335,11 +28338,13 @@ RhythmParam_Dispatch_KeepBeatAdvance:
 	ret
 
 ; port: v7's label VoiceSlot_DispatchByType is not in v6 -- no v6 bytes correspond to what it named
+VoiceSlot_Dispatch_Data_Case2:
 	ld	(0x38e0:16), 131
 	ret
 RhythmParam_Dispatch_KeepBeatAdvance_Skip:
 	ld	(0x38e0:16), 0
 	ret
+VoiceSlot_Dispatch_Data_Case1:
 	ret
 RhythmParam_Dispatch_KeepBeatAdvance_Skip2:
 	ld	(0x38e0:16), 0
