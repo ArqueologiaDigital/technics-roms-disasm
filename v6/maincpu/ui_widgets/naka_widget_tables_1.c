@@ -428,11 +428,11 @@ typedef struct __attribute__((packed)) {
      * Viewable slot 0xE3), split across the blob boundary: the previous blob
      * (naka_direct_play) holds its first 34 bytes.  Then its two captions:
      * the record's +30 word points at the first "RHYTHM", its +26 word
-     * (stroff, by the other PsWideToggle records) at the second.
+     * (stron, like the other PsWideToggle records) at the second.
      * --------------------------------------------------------------------- */
     uint8_t NakaWidget_Perf3RhythmSel_Tail[8];
-    char txt_RHYTHM_on[8];
     char txt_RHYTHM_off[8];
+    char txt_RHYTHM_on[8];
     /* ---------------------------------------------------------------------
      * NakaHdr_Perf2MeasureBoxData -- widget record, entry 10 of
      * Yoko_ViewTable_0E3 (registered by InitializeYoko (v10/v9 0xF29E6D, v7
@@ -1707,8 +1707,8 @@ const naka_widget_tables_1_t naka_widget_tables_1_data
     .NakaWidget_Perf3RhythmSel_Tail = {
         0xA0, 0xDE, 0x03, 0x00, 0x06, 0x00, 0x07, 0x00,
     },
-    .txt_RHYTHM_on = ALIGNED_STRING("RHYTHM"),
     .txt_RHYTHM_off = ALIGNED_STRING("RHYTHM"),
+    .txt_RHYTHM_on = ALIGNED_STRING("RHYTHM"),
 
     .NakaHdr_Perf2MeasureBoxData = {
         .class_ = NAKA_CLASS(IvMainEditSw),
