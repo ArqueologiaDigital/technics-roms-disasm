@@ -1860,44 +1860,12 @@ typedef struct __attribute__((packed)) {
     uint16_t field_0d5a;
     /* MidiPart_ConfigNameTable: 110 pointers (cut from ptrs_3 by split_naka_pointer_arrays.py) */
     uint32_t MidiPart_ConfigNameTable[110];
-    uint16_t field_0f14;
-    uint16_t field_0f16;
-    uint16_t field_0f18;
-    uint16_t field_0f1a;
-    uint16_t field_0f1c;
-    uint16_t field_0f1e;
-    uint16_t field_0f20;
-    uint16_t field_0f22;
-    uint16_t field_0f24;
-    uint16_t field_0f26;
-    uint16_t field_0f28;
-    uint16_t field_0f2a;
-    uint16_t field_0f2c;
-    uint16_t field_0f2e;
-    uint16_t field_0f30;
-    uint16_t field_0f32;
-    uint16_t field_0f34;
-    uint16_t field_0f36;
-    uint16_t field_0f38;
-    uint16_t field_0f3a;
-    uint16_t field_0f3c;
-    uint16_t field_0f3e;
-    uint16_t field_0f40;
-    uint8_t bytes_0f42[6];  /* 4 pointers */
-    /* 9 pointers */
-    /* zero padding */
-    /* NAKA_TYPE_AcTitleMenu */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
+    /* AcTrackMixerProc's column -> part map: the power-on image of RAM 0x3EBE4 (Boot_InitWorkRAM
+     * copies WorkRamInit_Image to RAM 0x3D524).  TrackMixer_Init installs it as the PsMixer grid
+     * array (Util_StoreGridArrayBase), PsMixer_ReadWordArrayEntry reads word [page*8 + column] as
+     * the column's part, TrackMixer_UpdateHandler writes word [track] (0..15).  32 words: these 26
+     * and TrackMixer_GridRowMapEnd (scripts/converters/naka_type_trackmixer_map.py) */
+    uint16_t TrackMixer_ColumnPartMap[26];
     /* last 6 words (0x00FF) of the grid map TrackMixer_Init installs at RAM 0x3EBE8 */
     uint16_t TrackMixer_GridRowMapEnd[6];
     /* per-drawbar slider bitmap base (9 drawbars) + an unreferenced word */
@@ -1952,9 +1920,9 @@ typedef struct __attribute__((packed)) {
     naka_cls_AcIndexToggle_t Root_NamingSymbolToggleView;
     /* Naka_DrawbarReg_Table: 69 pointers (cut from ptrs_7 by split_naka_pointer_arrays.py) */
     uint32_t Naka_DrawbarReg_Table[69];
-    /* Naka_DrawbarReg_Table_RamPtrs: 64 x u32, the work-RAM (RAM 0x3F2F4..) addresses of this blob's own
+    /* ChordName_TypeRootTables: 64 x u32, the work-RAM (RAM 0x3F2F4..) addresses of this blob's own
      * elements (NAKA_WRAM); read as halfword pairs field_1624..field_1722 before */
-    uint32_t Naka_DrawbarReg_Table_RamPtrs[64];
+    uint32_t ChordName_TypeRootTables[64];
     uint16_t Normal_Window;
     uint16_t field_1726;
     uint16_t normal_Window;
@@ -3252,53 +3220,10 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
         NAKA_ADDR(TrackName6_Unassigned),
     },
 
-    .field_0f14 = 0x001D,
-
-    .field_0f16 = 0x001D,
-
-    .field_0f18 = 0x001D,
-
-    .field_0f1a = 0x001D,
-
-    .field_0f1c = 0x001D,
-
-    .field_0f1e = 0x001D,
-
-    .field_0f20 = 0x001D,
-
-    .field_0f22 = 0x001D,
-
-    .field_0f24 = 0x001D,
-
-    .field_0f26 = 0x001D,
-
-    .field_0f28 = 0x001D,
-
-    .field_0f2a = 0x001D,
-
-    .field_0f2c = 0x001D,
-
-    .field_0f2e = 0x001D,
-
-    .field_0f30 = 0x001D,
-
-    .field_0f32 = 0x001D,
-
-    .field_0f34 = 0x0016,
-
-    .field_0f36 = 0x0014,
-
-    .field_0f38 = 0x0013,
-
-    .field_0f3a = 0x0012,
-
-    .field_0f3c = 0x0015,
-
-    .field_0f3e = 0x0017,
-
-    .field_0f40 = 0x0011,
-
-    .bytes_0f42 = { 0x10, 0x00, 0xFF, 0x00, 0xFF, 0x00 },
+    .TrackMixer_ColumnPartMap = {
+        0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D,
+        0x001D, 0x001D, 0x001D, 0x0016, 0x0014, 0x0013, 0x0012, 0x0015, 0x0017, 0x0011, 0x0010, 0x00FF, 0x00FF,
+    },
 
     .TrackMixer_GridRowMapEnd = {
         0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF,
@@ -3504,7 +3429,7 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
         NAKA_ADDR(SeqChanContainer_ChordTypeRef_B),
     },
 
-    .Naka_DrawbarReg_Table_RamPtrs = {
+    .ChordName_TypeRootTables = {
         NAKA_WRAM(Naka_DrawbarReg_Table[17]),
         NAKA_WRAM(Naka_DrawbarReg_Table[17]),
         NAKA_WRAM(Naka_DrawbarReg_Table[17]),

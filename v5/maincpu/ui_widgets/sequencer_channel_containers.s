@@ -565,11 +565,11 @@ MidiPart_ConfigNameTable:
 	.long TrackName6_Unassigned_07
 	.long TrackName6_Unassigned_06
 ; [nakarest] naka_sequencer_channels+0xf00  +0xf00..+0xf48 (0xeeef78, 72 B)
-; [nakarest] purpose not established: layout of 72 B at 0xeeef78 not derived; readers below
+; [nakarest] +0x14..+0x48 is TrackMixer_ColumnPartMap in the C (RAM 0x3ebe4); readers below
 ; [nakarest] Readers: work-RAM image: Boot_InitWorkRAM copies these bytes to RAM
-; [nakarest] 0x3ebd4..0x3ec1c (its ld xde/xhl/xbc + ldir blocks), where they are read by
-; [nakarest] TrackMixer_Init (ui/drawbar_panel_ui.s: `ld xwa, 0x3ebe8`),
-; [nakarest] TrackMixer_UpdateHandler (ui/drawbar_panel_ui.s: `ld xhl, 0x3ebe8`).
+; [nakarest] 0x3ebd0..0x3ec18 (its ld xde/xhl/xbc + ldir blocks), where they are read by
+; [nakarest] TrackMixer_Init (ui/drawbar_panel_ui.s: `ld xwa, 0x3ebe4`),
+; [nakarest] TrackMixer_UpdateHandler (ui/drawbar_panel_ui.s: `ld xhl, 0x3ebe4`).
 	.incbin "includes/generated/naka_sequencer_channels.bin", 0xF00, 0x48
 ; TrackMixer_GridRowMapEnd -- 6 x uint16_t (0x00FF): the end of the word map that starts 0x34 bytes
 ; earlier (RAM 0x3EBE8); TrackMixer_Init installs it as the PsMixer grid array and
