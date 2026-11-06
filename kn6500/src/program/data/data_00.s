@@ -2538,7 +2538,7 @@ DrawJpegFileR_Impl_Var:	# 8 x REC_DrawJpegFileR_Impl_Var (4 bytes each); read by
 	REC_DrawJpegFileR_Impl_Var	index=2
 	REC_DrawJpegFileR_Impl_Var	index=3
 data_4C17BBC8:
-	# 32 bytes the code takes the address of: func_4C01824C_entry_L279 0x4C0184C7 `mov data_4C17BBC8, a2` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
+	# 32 bytes the code takes the address of: DrawString_Impl_entry_L279 0x4C0184C7 `mov data_4C17BBC8, a2` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 127, 96, 80, 72, 68, 66, 65, 66, 68, 72, 80, 96, 127, 0, 0	# +0
 	tab_u8	0, 252, 12, 20, 36, 68, 132, 4, 132, 68, 36, 20, 12, 252, 0, 0	# +16
 
@@ -7137,9 +7137,9 @@ PanelTxDoneIsr_Table:
 	.long	loc_4C0251FB
 	.long	loc_4C02533D
 
-func_4C025A78_Table:	# 5 x u32, 127..1342287479; read by func_4C025A78 0x4C025A78: `mov	(a1), d0`
+func_4C025A78_Table:	# 5 x u32, 127..1342287479; read by PanelEventFifoInit 0x4C025A78: `mov	(a1), d0`; 5 records: the index is bounded by PanelEventFifoInit 0x4C025A78: `mov -5, d1` / setlb / `mov (a1), d0` / `inc4 a1` / `inc d1` / lne (5 passes)
 	tab_u32	1342287352, 1342287479, 1342287352, 1342287352, 127
-func_4C025A90_Table:	# 38 x u32, 127..4294967104; read by func_4C025A90 0x4C025A90: `mov	(a1), d0`
+func_4C025A90_Table:	# 38 x u32, 127..4294967104; read by PanelTxFifoInit 0x4C025A90: `mov	(a1), d0`
 	tab_u32	1342287500, 1342287627, 1342287500, 1342287500, 127, 3284320704, 3351692740, 3419064776	# [0]
 	tab_u32	3486436812, 3553808848, 3621180884, 3688552920, 3755924956, 3823296992, 3890669028, 3958041064	# [8]
 	tab_u32	4025413100, 4092785136, 4160157172, 4227529208, 4294901244, 50462976, 117835012, 185207048	# [16]
@@ -17477,7 +17477,7 @@ Str_G_12:	.asciz "G"
 Str_H_4:	.asciz "H"
 	.space	1, 0x4B
 
-func_4C056947_Block:	# 3 bytes, copied whole by func_4C056947 0x4C056947: memcmp(.., 3)
+func_4C056947_Block:	# 3 bytes, copied whole by StyleBlockKindClassify 0x4C056947: memcmp(.., 3)
 	tab_u8	76, 75, 70	# [0]
 
 func_4C056BFA_entry_L30_Table:	# 30 x u8, 0..1; read by func_4C056BFA_entry : `movbu	(d1, a0), d0`
@@ -17738,8 +17738,8 @@ func_4C0627F1_Table:	# 24 x REC_func_4C0627F1_Table (2 bytes each); read by Part
 	REC_func_4C0627F1_Table	kind=176, f1=17
 	REC_func_4C0627F1_Table	kind=176, f1=13
 
-func_4C0627F1_entry_L48_Table:	# REC_func_4C0625ED_Result (21 bytes), then 131 x u8 the code indexes from +0 (read by StylePartFieldEmit_entry_L48 0x4C06283E `movbu (d3, a1), d3`; StylePartFieldEmit_entry_L5d 0x4C062853 `movbu (d3, a1), d2`)
-	REC_func_4C0625ED_Result	s0="\xFF\xFF", key=255, f3=255, f4=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", f20=64
+func_4C0627F1_entry_L48_Table:	# REC_StylePartTemplateDefault_Result (21 bytes), then 131 x u8 the code indexes from +0 (read by StylePartFieldEmit_entry_L48 0x4C06283E `movbu (d3, a1), d3`; StylePartFieldEmit_entry_L5d 0x4C062853 `movbu (d3, a1), d2`)
+	REC_StylePartTemplateDefault_Result	s0="\xFF\xFF", key=255, f3=255, f4=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", f20=64
 	tab_u8	64, 64, 64, 255, 16, 255, 255, 255, 255, 255, 1, 255, 255, 8, 17, 255	# [0]
 	tab_u8	23, 255, 255, 21, 22, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [16]
 	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [32]
@@ -27342,7 +27342,7 @@ func_4C08C11C_entry_L24_Table:	# 128 x u8, 136..150; read by func_4C08C11C_entry
 	tab_u8	150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150	# [80]
 	tab_u8	150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150	# [96]
 	tab_u8	150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150	# [112]
-func_4C08E825_Table:	# 4 x u8, 4..32; read by TgPartElemEnabled_entry : `movbu	(d1, a0), d0`; func_4C08E825_entry : `movbu	(d3, a1), d1`
+func_4C08E825_Table:	# 4 x u8, 4..32; read by TgPartElemEnabled_entry : `movbu	(d1, a0), d0`; TgPartElemMaskUpdate_entry : `movbu	(d3, a1), d1`
 	tab_u8	4, 8, 16, 32
 
 func_4C08D35B_entry_L19_Table:
@@ -27397,7 +27397,7 @@ TgPartEgRampTickIdle_entry_L1e_Table:	# 25 x u8, 0..246; read by TgPartEgRampTic
 TgPartEgRampReleaseEdge_Var:	# u8, a constant; read / written by TgPartEgRampReleaseEdge 0x4C0943AC: `movbu (TgPartEgRampReleaseEdge_Var), d0`
 	.byte	255
 
-func_4C093F0C_Table:	# 257 x u16, 32..256; read by func_4C093F0C 0x4C093F0C: `movhu	(d0, a0), d0`
+func_4C093F0C_Table:	# 257 x u16, 32..256; read by TgPartEgRampScaleACurve 0x4C093F0C: `movhu	(d0, a0), d0`
 	tab_u16	32, 32, 32, 32, 33, 33, 33, 33, 34, 34, 34, 34	# [0]
 	tab_u16	35, 35, 35, 35, 36, 36, 36, 36, 37, 37, 37, 37	# [12]
 	tab_u16	38, 38, 38, 38, 39, 39, 39, 39, 40, 40, 40, 40	# [24]
@@ -27420,7 +27420,7 @@ func_4C093F0C_Table:	# 257 x u16, 32..256; read by func_4C093F0C 0x4C093F0C: `mo
 	tab_u16	132, 134, 136, 138, 140, 143, 146, 149, 152, 155, 158, 161	# [228]
 	tab_u16	164, 168, 172, 176, 182, 188, 194, 200, 206, 212, 218, 224	# [240]
 	tab_u16	230, 236, 242, 248, 256	# [252]
-func_4C0940D3_Table:	# 257 x u16, 64..256; read by func_4C0940D3 0x4C0940D3: `movhu	(d0, a0), d0`
+func_4C0940D3_Table:	# 257 x u16, 64..256; read by TgPartEgRampScaleBCurve 0x4C0940D3: `movhu	(d0, a0), d0`
 	tab_u16	64, 64, 65, 66, 67, 67, 68, 69, 70, 70, 71, 72	# [0]
 	tab_u16	73, 73, 74, 75, 76, 76, 77, 78, 79, 79, 80, 81	# [12]
 	tab_u16	82, 82, 83, 84, 85, 85, 86, 87, 88, 88, 89, 90	# [24]
@@ -27491,7 +27491,7 @@ func_4C097C65_Table:	# 4 x u8, 1..64; read by func_4C097C65_entry : `movbu	(d1, 
 	tab_u8	1, 4, 16, 64
 func_4C097C89_Table:	# 4 x u8, 2..128; read by func_4C097C89_entry : `movbu	(d1, a0), d0`
 	tab_u8	2, 8, 32, 128
-func_4C0980EF_entry_L4a_Table:	# 36 x u8, 0..255; read by func_4C0980EF_entry : `movbu	(a1), d0`
+func_4C0980EF_entry_L4a_Table:	# 36 x u8, 0..255; read by TgPartElemMapScratchBuild_entry : `movbu	(a1), d0`
 	tab_u8	127, 127, 127, 127, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 255	# [32]
@@ -33387,13 +33387,13 @@ BitmapNx_Pixels:	# 200 x 100, 1 bit(s) a pixel, rows padded to even bytes: the b
 BitmapGm2_Pixels:	# 200 x 100, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapGm2 answers MT_GetBitmapData with (src/program/data/media/BitmapGm2_Pixels.png)
 	.incbin	"build/bitmaps/BitmapGm2_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 200 100) from src/program/data/media/BitmapGm2_Pixels.png
 
-func_4C01900D_Table:	# s16, a constant; read / written by DrawString_entry_L34 0x4C0181B1: `movhu (a0), d0`; func_4C01824C_entry_L2f 0x4C01827D: `movhu (a0), d0` ...
+func_4C01900D_Table:	# s16, a constant; read / written by DrawString_entry_L34 0x4C0181B1: `movhu (a0), d0`; DrawString_Impl_entry_L2f 0x4C01827D: `movhu (a0), d0` ...
 	.word	565
-func_4C01824C_entry_L1b_Var:	# s16, a constant; read / written by func_4C01824C_entry_L1b 0x4C018269: `movhu (a0), d0`; func_4C01824C_entry_L1b 0x4C018269: `movhu d0, (a0)` ...
+DrawString_Impl_entry_L1b_Var:	# s16, a constant; read / written by DrawString_Impl_entry_L1b 0x4C018269: `movhu (a0), d0`; DrawString_Impl_entry_L1b 0x4C018269: `movhu d0, (a0)` ...
 	.word	6
-func_4C01824C_entry_L3d_Var:	# s16, a constant; read / written by func_4C01824C_entry_L3d 0x4C01828B: `movhu (a0), d0`; func_4C01824C_entry_L3d 0x4C01828B: `movhu d0, (a0)` ...
+DrawString_Impl_entry_L3d_Var:	# s16, a constant; read / written by DrawString_Impl_entry_L3d 0x4C01828B: `movhu (a0), d0`; DrawString_Impl_entry_L3d 0x4C01828B: `movhu d0, (a0)` ...
 	.word	634
-func_4C01824C_entry_L55_Var:	# s16, a constant; read / written by func_4C01824C_entry_L55 0x4C0182A3: `movhu (a0), d0`; func_4C01824C_entry_L55 0x4C0182A3: `movhu d0, (a0)` ...
+DrawString_Impl_entry_L55_Var:	# s16, a constant; read / written by DrawString_Impl_entry_L55 0x4C0182A3: `movhu (a0), d0`; DrawString_Impl_entry_L55 0x4C0182A3: `movhu d0, (a0)` ...
 	.word	23
 
 DrawStringCentered_ArgA1_0:	# TextCentre (4 bytes): the layout DrawStringCentered 0x4C0186A4 reads through its argument a1 (passed by AcMidiPartGridBoxProc_L6a 0x4C0A2081 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)
@@ -34007,13 +34007,13 @@ ptrs_4C1DF8A4:
 Str_TT_MDMODE:	.asciz "TT_MDMODE"
 	.align	4, 0xFF	# pad after Str_TT_MDMODE
 
-DrawString_ArgA0_1:	# s16, a constant; read / written by DrawString_entry_L34 0x4C0181B1: `movhu (a0), d0`; func_4C01824C_entry_L2f 0x4C01827D: `movhu (a0), d0` ...
+DrawString_ArgA0_1:	# s16, a constant; read / written by DrawString_entry_L34 0x4C0181B1: `movhu (a0), d0`; DrawString_Impl_entry_L2f 0x4C01827D: `movhu (a0), d0` ...
 	.word	590
-func_4C01824C_entry_L1b_Var_2:	# s16, a constant; read / written by func_4C01824C_entry_L1b 0x4C018269: `movhu (a0), d0`; func_4C01824C_entry_L1b 0x4C018269: `movhu d0, (a0)` ...
+DrawString_Impl_entry_L1b_Var_2:	# s16, a constant; read / written by DrawString_Impl_entry_L1b 0x4C018269: `movhu (a0), d0`; DrawString_Impl_entry_L1b 0x4C018269: `movhu d0, (a0)` ...
 	.word	168
-func_4C01824C_entry_L3d_Var_2:	# s16, a constant; read / written by func_4C01824C_entry_L3d 0x4C01828B: `movhu (a0), d0`; func_4C01824C_entry_L3d 0x4C01828B: `movhu d0, (a0)` ...
+DrawString_Impl_entry_L3d_Var_2:	# s16, a constant; read / written by DrawString_Impl_entry_L3d 0x4C01828B: `movhu (a0), d0`; DrawString_Impl_entry_L3d 0x4C01828B: `movhu d0, (a0)` ...
 	.word	629
-func_4C01824C_entry_L55_Var_2:	# s16, a constant; read / written by func_4C01824C_entry_L55 0x4C0182A3: `movhu (a0), d0`; func_4C01824C_entry_L55 0x4C0182A3: `movhu d0, (a0)` ...
+DrawString_Impl_entry_L55_Var_2:	# s16, a constant; read / written by DrawString_Impl_entry_L55 0x4C0182A3: `movhu (a0), d0`; DrawString_Impl_entry_L55 0x4C0182A3: `movhu d0, (a0)` ...
 	.word	186
 
 DrawStringCentered_ArgA1_1:	# TextCentre (4 bytes): the layout DrawStringCentered 0x4C0186A4 reads through its argument a1 (passed by AcMidiPartGridBoxProc_L6a 0x4C0A2081 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)

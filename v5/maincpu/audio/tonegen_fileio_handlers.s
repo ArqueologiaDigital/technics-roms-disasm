@@ -579,7 +579,7 @@ DSPCfg_SyncBitmapData:
 	lda	xwa, (SWBTWR_EVENT_QUEUE:16)
 	ld	(xsp+14), xwa
 	ld	(xsp+10), xwa
-	ld	bc, (0x901e:16)
+	ld	bc, (SWBTWR_WRITE_INDEX:16)
 	jrl	DSPCfg_SyncBitmapData_Join
 DSPCfg_SyncBitmapData_Loop:
 	ld	(xsp+6), 0
@@ -654,7 +654,7 @@ DSPCfg_SyncBitmapData_Join:
 	extz	xwa
 	add	xwa, (xsp+14)
 	ld	(xwa), 255
-	ld	(0x901e:16), bc
+	ld	(SWBTWR_WRITE_INDEX:16), bc
 	pop	xiz
 	lda	xsp, (xsp+18)
 	ret
@@ -686,7 +686,7 @@ SndParam_SyncDisplayBitmap:
 	lda	xbc, (PANEL_RECORDS:16)
 	lda	xwa, (PANEL_PART_RT1:16)
 	sub	xwa, xbc
-	lda	xde, (0x03c8e4:24)
+	lda	xde, (PANEL_RECALL_BACKUP:24)
 	add	xwa, xde
 	xormi8	(xwa), 0x1
 	lda	xwa, (PANEL_PART_RT2:16)
@@ -723,7 +723,7 @@ SoundParam_NotifyMultipleChanges:
 ToneGen_DiffScanAndUpdate:
 	lda	xsp, (xsp - 14)
 	pushw	iz
-	ld	bc, (0x901e:16)
+	ld	bc, (SWBTWR_WRITE_INDEX:16)
 	lda	xwa, (SWBTWR_EVENT_QUEUE:16)
 	ld	(xsp + 12), xwa
 	ld	(xsp + 8), xwa
@@ -752,7 +752,7 @@ ToneGen_DiffScanInner:
 	ld	hl, iz
 	extz	xhl
 	add	xhl, xwa
-	lda	xwa, (0x03c8e4:24)
+	lda	xwa, (PANEL_RECALL_BACKUP:24)
 	add	xhl, xwa
 	ld	wa, iz
 	extz	xwa
@@ -804,7 +804,7 @@ ToneGen_DiffRecordChange:
 	ld	hl, iz
 	extz	xhl
 	add	xhl, xwa
-	lda	xwa, (0x03c8e4:24)
+	lda	xwa, (PANEL_RECALL_BACKUP:24)
 	add	xhl, xwa
 	ld	e, (xde)
 	xor	e, (xhl)
@@ -831,7 +831,7 @@ ToneGen_DiffScanCheckEnd:
 	extz	xwa
 	add	xwa, (xsp + 12)
 	ld	(xwa), 0xff
-	ld	(0x901e:16), bc
+	ld	(SWBTWR_WRITE_INDEX:16), bc
 	popw	iz
 	lda	xsp, (xsp + 14)
 	ret
@@ -1083,7 +1083,7 @@ CtrlPanel_IndicatorJumpTable_SaveLanguage:
 	ld	xwa, 0x3d3400
 	push	xwa
 	ld	wa, 1:i3
-	ld	xbc, 0x0340e4
+	ld	xbc, HELP_LANGUAGE
 	ld	de, 2:i3
 	jr	CtrlPanel_IndicatorJumpTable_Join
 CtrlPanel_IndicatorJumpTable_SaveDisplayTime:
@@ -1134,7 +1134,7 @@ Audio_DispatchCommand_LoadHelpLanguage:
 	pushw	2
 	ld	xwa, 0x3d3400
 	push	xwa
-	ld	xwa, 0x0340e4
+	ld	xwa, HELP_LANGUAGE
 	jr	Audio_DispatchCommand_Join
 Audio_DispatchCommand_LoadDispTimeSet:
 	pushw	12
@@ -1181,7 +1181,7 @@ PanelDisplay_DispatchByMode:
 	jp	t, (xix+wa)
 PanelDisplay_DispatchData:
 	ld	xde, 0x3d3400
-	lda	xhl, (0x0340e4:24)
+	lda	xhl, (HELP_LANGUAGE:24)
 	ld	bc, 0:i3
 PanelDisplay_DispatchData_Loop:
 	ld	a, (xhl+)
@@ -1247,7 +1247,7 @@ DSPCfg_Param_Default:
 	ld	hl, 0:i3
 	ret
 Encoder_MarkInvalid:
-	ld	(0xbf79:16), 255
+	ld	(PANEL_EVENT_QUEUE:16), 255
 	ret
 Encoder_Stub1:
 	ret
@@ -1278,7 +1278,7 @@ PanelButton_ProcessChanges_Loop:
 	ld	a, (0x8dce:16)
 	extz	wa
 	sll	wa, 2
-	lda	xbc, (0xbf79:16)
+	lda	xbc, (PANEL_EVENT_QUEUE:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	(xwa), 0xff

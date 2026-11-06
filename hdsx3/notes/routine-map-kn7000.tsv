@@ -1,0 +1,67 @@
+# hdsx3: KN7000 941 names carried along aligned call sites and RAM operands: routine pairs (port_names_by_alignment.py; B start, A start, B name, A name, how)
+# anchors (one name on both sides), names carried, and pairs accepted where A names neither;
+# a '-' name is a func_ placeholder.  A KN7000 name given to an A start later reaches B by a re-run.
+0x97807DCA	0x4C001624	LibF64ToI16	LibF64ToI16	same name
+0x97807DE3	0x4C000263	LibF64UnpackedToI32	LibF64UnpackedToI32	same name
+0x97807E33	0x4C0002B3	LibF64ToI32	LibF64ToI32	same name
+0x97807E4B	0x4C0002CB	LibF64Unpack	LibF64Unpack	same name
+0x97807EF3	0x4C001A43	sprintf	sprintf	same name
+0x97807F15	0x4C001A65	vsprintf_core	vsprintf_core	same name
+0x978081E5	0x4C001D35	PfOutField	PfOutField	same name
+0x978082FD	0x4C001E4D	PfOutString	PfOutString	same name
+0x97808325	0x4C001E75	PfOutPad	PfOutPad	same name
+0x9780836B	0x4C001EBB	PfParseSpec	PfParseSpec	carried
+0x97808414	0x4C001F64	PfParseWidthPrecSize	PfParseWidthPrecSize	same name
+0x978084EA	0x4C00203A	strncmp	strncmp	same name
+0x9780851A	0x4C00206A	localeconv	localeconv	same name
+0x978085EA	0x4C00213A	PfFormatInteger	PfFormatInteger	same name
+0x978087A8	0x4C0022F8	PfFloatToDigits	PfFloatToDigits	same name
+0x978088D8	0x4C002428	PfFormatF	PfFormatF	same name
+0x9780895D	0x4C0024AD	PfFormatE	PfFormatE	same name
+0x97808ABD	0x4C00260D	PfFormatG	PfFormatG	same name
+0x97808C88	0x4C0027D8	PfAssembleFloat	PfAssembleFloat	same name
+0x97808E3B	0x4C00298B	-	-	call sites, A unnamed
+0x97808E89	0x4C0029D9	PfShortToDigits	PfShortToDigits	same name
+0x97808EDE	0x4C002A2E	-	-	call sites, A unnamed
+0x97808F2C	0x4C002A7C	StrReverse	StrReverse	same name
+0x97808F4E	0x4C002A9E	PfRoundDigits	PfRoundDigits	same name
+0x97808FFE	0x4C002B4E	abs	abs	same name
+0x9780900C	0x4C002B5C	-	-	call sites, A unnamed
+0x97809020	0x4C0019D5	LibDiv32	LibDiv32	same name
+0x9780903D	0x4C002B70	PfDoubleToDecimal	PfDoubleToDecimal	same name
+0x97809485	0x4C000523	LibI32ToF64	LibI32ToF64	same name
+0x978094DF	0x4C002FB8	LibF64Zero	LibF64Zero	same name
+0x9780950E	0x4C002FE7	LibF64NegTo	LibF64NegTo	same name
+0x97809531	0x4C00300A	-	-	call sites, A unnamed
+0x97809549	0x4C000FA7	LibF64Modf	LibF64Modf	same name
+0x978095EE	0x4C00057D	LibF64Sub	LibF64Sub	same name
+0x978095FF	0x4C00058E	LibF64Add	LibF64Add	same name
+0x97809853	0x4C001A0D	ceil	ceil	same name
+0x9780988C	0x4C001477	-	-	call sites, A unnamed
+0x978098E4	0x4C000851	LibF64CmpZero	LibF64CmpZero	same name
+0x97809907	0x4C0007E2	LibF64Cmp	LibF64Cmp	same name
+0x97809979	0x4C0011E4	-	-	call sites, A unnamed
+0x97809A50	0x4C000F8F	LibF64Abs	LibF64Abs	same name
+0x97809A68	0x4C000874	LibF64Mul	LibF64Mul	same name
+0x97809D0B	0x4C000B17	LibF64Div	LibF64Div	same name
+0x97809EC7	0x4C003037	memcpy	memcpy	same name
+0x97809EDF	0x4C003022	memset	memset	same name
+0x97809EF4	0x4C00304F	strcpy	strcpy	same name
+0x97809F14	0x4C00306F	-	-	call sites, A unnamed
+0x97809F1C	0x4C003077	-	-	call sites, A unnamed
+0x97809F1F	0x4C00307A	fwrite	fwrite	same name
+0x97809F65	0x4C0030C0	strtol	strtol	same name
+0x97809F8B	0x4C00178C	StrToLongCore	StrToLongCore	same name
+0x9780A1BB	0x4C0019BC	tolower	tolower	same name
+0x9780A204	0x4C0019F2	LibI16ToF64	LibI16ToF64	carried
+0x9780A208	0x4C000F54	LibU32ToF64	LibU32ToF64	same name
+0x9780A243	0x4C003985	strcat	strcat	same name
+0x9780A271	0x4C0039E9	strncpy	strncpy	same name
+0x9780A29D	0x4C0032CF	strchr	strchr	same name
+0x9780A2C5	0x4C0032F7	LibStrlen	LibStrlen	same name
+0x9780A2DF	0x4C003311	strcmp	strcmp	same name
+0x9780A308	0x4C003797	strcspn	strcspn	same name
+0x9780A3B6	0x4C003486	strncat	strncat	same name
+0x9780A3ED	0x4C003676	memcmp	memcmp	same name
+0x978333F4	0x48517C9A	WaitingFunc	WaitingFunc	same name
+0x978334A3	0x4851A617	AcRotStrBoxProc	AcRotStrBoxProc	same name

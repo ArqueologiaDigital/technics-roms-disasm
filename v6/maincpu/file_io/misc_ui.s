@@ -468,7 +468,7 @@ WaitingFunc:
 	jr WaitingFunc_Return
 
 WaitingFunc_DrawMessage:
-	ld	a, (0x0340e4:24)
+	ld	a, (HELP_LANGUAGE:24)
 	extz	wa
 	sla	wa, 2
 	lda	xbc, (WaitingFunc_DrawMessage_PtrTable:24)

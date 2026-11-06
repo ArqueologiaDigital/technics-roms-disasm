@@ -26697,10 +26697,10 @@ func_4C051A0B_Table:	# 15 x u16, 496..4638; read by func_4C051A0B 0x4C051A0B: `m
 	tab_u16	4126, 4382, 4638	# [12]
 	.space	4, 0xFF
 
-func_4C050837_entry_L4_Records:	# 3 x REC_func_4C050837_entry_L4_Records (12 bytes each); read by func_4C050837_entry_L4 0x4C050840 `mov (4, a0), d3`; func_4C050837_entry_L4 0x4C050840 `mov (a0), a2`
-	REC_func_4C050837_entry_L4_Records	f0=0x50000000, index=0x80000, x8="\x01\x02\x00\x00"
-	REC_func_4C050837_entry_L4_Records	f0=0x58000000, index=0x5040100, x8="\x01\x00\x00\x00"
-	REC_func_4C050837_entry_L4_Records	f0=0x54000000, index=0x5040100, x8="\x01\x00\x00\x00"
+func_4C050837_entry_L4_Records:	# 1 x REC_func_4C050837_entry_L4_Records (12 bytes each); read by func_4C050837_entry_L4 0x4C050840 `mov (4, a0), d3`; func_4C050837_entry_L4 0x4C050840 `mov (a0), a2`
+	REC_func_4C050837_entry_L4_Records	proc=WORK_RAM_BASE, index=0x80000, x8="\x01\x02\x00\x00"
+# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x2E514C, 0x2E5164
 func_4C0508F7_entry_L4_Records:	# 1 x REC_func_4C0508F7_entry_L4_Records (12 bytes each); read by func_4C0508F7_entry_L4 0x4C0508FD `mov (4, a1), d0`; func_4C0508F7_entry_L4 0x4C0508FD `mov (a1), a0`; func_4C0508F7_entry_L4 0x4C0508FD `movbu (a1), d1` (+1)
 	REC_func_4C0508F7_entry_L4_Records	addr=0x44000000, index=32768, f8=4, x9="\x00\x00\x00"
 
@@ -26729,7 +26729,7 @@ ptrs_4C2E51AC:
 	.long	loc_4C0593E8
 ptrs_4C2E51BC:
 	.long	loc_4C057849
-	.long	func_4C057865
+	.long	MemStyleAllocPtrSet
 	.long	MemStyleAllocFits
 	.long	loc_4C0578F9
 	.long	MemStyleVarRecDataSet
@@ -38652,9 +38652,9 @@ func_4C03CE9C_entry_L9d_Selected_7:	# REC_func_4C03CE9C_entry_L9d_Selected (12 b
 func_4C03CE9C_entry_L9d_Selected_8:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
 	REC_func_4C03CE9C_entry_L9d_Selected	
 
-func_4C09C9C6_Var:	# u16, a constant; read / written by func_4C09C9C6 0x4C09C9C6: `movhu (func_4C09C9C6_Var), d1`
+func_4C09C9C6_Var:	# u16, a constant; read / written by VoiceDirRemapFind 0x4C09C9C6: `movhu (func_4C09C9C6_Var), d1`
 	.word	1
-func_4C09C9C6_Var_2:	# u16, a constant; read / written by func_4C09C9C6 0x4C09C9C6: `movhu (func_4C09C9C6_Var_2), d0`
+func_4C09C9C6_Var_2:	# u16, a constant; read / written by VoiceDirRemapFind 0x4C09C9C6: `movhu (func_4C09C9C6_Var_2), d0`
 	.word	371
 
 func_4C09C9C6_Table:
@@ -39030,9 +39030,9 @@ func_4C09C9C6_Table:
 	.long	func_4C09A4F0_entry_L65_Records+7952
 	.long	func_4C09A4F0_entry_L65_Records+7648
 
-func_4C09CA75_Var:	# u16, a constant; read / written by func_4C09CA75 0x4C09CA75: `movhu (func_4C09CA75_Var), d1`
+func_4C09CA75_Var:	# u16, a constant; read / written by VoiceDirClassFind 0x4C09CA75: `movhu (func_4C09CA75_Var), d1`
 	.word	1
-func_4C09CA75_Var_2:	# u16, a constant; read / written by func_4C09CA75 0x4C09CA75: `movhu (func_4C09CA75_Var_2), d0`
+func_4C09CA75_Var_2:	# u16, a constant; read / written by VoiceDirClassFind 0x4C09CA75: `movhu (func_4C09CA75_Var_2), d0`
 	.word	633
 
 func_4C09CA75_Table:
@@ -39670,9 +39670,9 @@ func_4C09CA75_Table:
 	.long	func_4C09A4F0_entry_L65_Records+10712
 	.long	0
 
-func_4C09CB5D_Var:	# u16, a constant; read / written by func_4C09CB5D 0x4C09CB5D: `movhu (func_4C09CB5D_Var), d1`
+func_4C09CB5D_Var:	# u16, a constant; read / written by VoiceDirIndexFind 0x4C09CB5D: `movhu (func_4C09CB5D_Var), d1`
 	.word	1
-func_4C09CB5D_Var_2:	# u16, a constant; read / written by func_4C09CB5D 0x4C09CB5D: `movhu (func_4C09CB5D_Var_2), d0`
+func_4C09CB5D_Var_2:	# u16, a constant; read / written by VoiceDirIndexFind 0x4C09CB5D: `movhu (func_4C09CB5D_Var_2), d0`
 	.word	633
 
 func_4C09CB5D_Table:

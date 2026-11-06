@@ -27,8 +27,8 @@
 
 # REC_func_5012CBB6_entry_L10_Records: 8-byte records (func_5012CBB6_entry_L10_Records, 64 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          u32            func_5012CBB6_entry_L10 0x5012CBCB `mov (a0), d1`
-#   +4   proc         ptr            func_5012CBB6_entry_L28 0x5012CBE3 `mov (4, a0), a0`
+#   +0   key          u32            TgGlobalParamCommand_entry_L10 0x5012CBCB `mov (a0), d1`
+#   +4   proc         ptr            TgGlobalParamCommand_entry_L28 0x5012CBE3 `mov (4, a0), a0`
 .macro REC_func_5012CBB6_entry_L10_Records key=0, proc=0
 	.long	\key
 	.long	\proc
@@ -2847,9 +2847,9 @@
 
 # REC_func_486CEAA1_Table: 8-byte records (func_486CEAA1_Table, 8 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u8             func_486CEAA1_entry_L3b 0x486CEAE1 `movbu (d0, a2), d0`; func_486CEAA1_entry_L3b 0x486CEAE1 `movbu (d1, a2), d1`
+#   +0   f0           u8             DiskLoadDispatch_entry_L3b 0x486CEAE1 `movbu (d0, a2), d0`; DiskLoadDispatch_entry_L3b 0x486CEAE1 `movbu (d1, a2), d1`
 #   +1   x1           u8[3]          no reader seen
-#   +4   proc         ptr            func_486CEAA1_entry_L3b 0x486CEAE1 `mov (4, a0), a1`
+#   +4   proc         ptr            DiskLoadDispatch_entry_L3b 0x486CEAE1 `mov (4, a0), a1`
 .macro REC_func_486CEAA1_Table f0=0, x1, proc=0
 	.byte	\f0
 	.ascii	"\x1"
@@ -4435,7 +4435,7 @@
 	.ascii	"\x0"
 .endm
 
-# REC_func_5017DABB_Result: 21-byte records (func_5017DABB_Result, 1 records); fields, and what reads them:
+# REC_StylePartTemplateDefault_Result: 21-byte records (StylePartTemplateDefault_Result, 1 records); fields, and what reads them:
 #   +0   s0           char[2]        func_5017E6B4_entry_L2 0x5017E6BB `call memcpy_entry, [a2,a3], 8`; func_50180A94_entry_L2 0x50180A9B `call memcpy_entry, [a2,a3], 8`
 #   +2   key          u8             StylePartFieldEmit_entry_L2b 0x5017DCEF `movbu (2, a1), d2`
 #   +3   f3           u8             StylePartFieldEmit_entry_L2b 0x5017DCEF `movbu (3, a1), d0`
@@ -4443,7 +4443,7 @@
 #   +5   x5           u8[14]         no reader seen
 #   +19  key_         u8             StylePartFieldEmit_entry_L71 0x5017DD35 `movbu (0x13, a1), d2`
 #   +20  f20          u8             StylePartFieldEmit_entry_L71 0x5017DD35 `movbu (0x14, a1), d0`
-.macro REC_func_5017DABB_Result s0, key=0, f3=0, f4=0, x5, key_=0, f20=0
+.macro REC_StylePartTemplateDefault_Result s0, key=0, f3=0, f4=0, x5, key_=0, f20=0
 	.ascii	"\s0"
 	.byte	\key
 	.byte	\f3
@@ -4602,8 +4602,8 @@
 .endm
 
 # REC_func_486FBF8B_Table_p0: 8-byte records (func_486FBF8B_Table_p0, 985 records); fields, and what reads them:
-#   +0   p0           ptr            func_486FBF8B_entry_L38 0x486FBFC8 `mov (a2), a2`
-#   +4   key          u16            func_486FBF8B_entry_L25 0x486FBFB5 `movhu (4, a2), d1`
+#   +0   p0           ptr            VoiceDirRemapFind_entry_L38 0x486FBFC8 `mov (a2), a2`
+#   +4   key          u16            VoiceDirRemapFind_entry_L25 0x486FBFB5 `movhu (4, a2), d1`
 #   +6   x6           u8[2]          no reader seen
 .macro REC_func_486FBF8B_Table_p0 p0=0, key=0, x6
 	.long	\p0
@@ -4612,8 +4612,8 @@
 .endm
 
 # REC_func_486FC03A_Table_p0: 8-byte records (func_486FC03A_Table_p0, 570 records); fields, and what reads them:
-#   +0   p0           ptr            func_486FC03A_entry_L38 0x486FC077 `mov (a2), a2`
-#   +4   key          u16            func_486FC03A_entry_L25 0x486FC064 `movhu (4, a2), d1`
+#   +0   p0           ptr            VoiceDirClassFind_entry_L38 0x486FC077 `mov (a2), a2`
+#   +4   key          u16            VoiceDirClassFind_entry_L25 0x486FC064 `movhu (4, a2), d1`
 #   +6   x6           u8[2]          no reader seen
 .macro REC_func_486FC03A_Table_p0 p0=0, key=0, x6
 	.long	\p0
@@ -4622,8 +4622,8 @@
 .endm
 
 # REC_func_486FC122_Table_p0: 8-byte records (func_486FC122_Table_p0, 570 records); fields, and what reads them:
-#   +0   p0           ptr            func_486FC122_entry_L38 0x486FC15F `mov (a2), a2`
-#   +4   key          u16            func_486FC122_entry_L25 0x486FC14C `movhu (4, a2), d1`
+#   +0   p0           ptr            VoiceDirIndexFind_entry_L38 0x486FC15F `mov (a2), a2`
+#   +4   key          u16            VoiceDirIndexFind_entry_L25 0x486FC14C `movhu (4, a2), d1`
 #   +6   x6           u8[2]          no reader seen
 .macro REC_func_486FC122_Table_p0 p0=0, key=0, x6
 	.long	\p0
@@ -4632,8 +4632,8 @@
 .endm
 
 # REC_func_486FC27A_Table_p0: 12-byte records (func_486FC27A_Table_p0, 645 records); fields, and what reads them:
-#   +0   p0           ptr            func_486FC27A_entry_L38 0x486FC2B7 `mov (a2), a2`
-#   +4   key          u16            func_486FC27A_entry_L25 0x486FC2A4 `movhu (4, a2), d1`
+#   +0   p0           ptr            VoiceDirRefFind_entry_L38 0x486FC2B7 `mov (a2), a2`
+#   +4   key          u16            VoiceDirRefFind_entry_L25 0x486FC2A4 `movhu (4, a2), d1`
 #   +6   x6           u8[6]          no reader seen
 .macro REC_func_486FC27A_Table_p0 p0=0, key=0, x6
 	.long	\p0
@@ -4887,38 +4887,38 @@
 
 # REC_TgGlobalRegsB0LoadB_ArgA0: 16-byte records (TgGlobalRegsB0LoadB_ArgA0, 1 records); fields, and what reads them:
 #   (the layout TgGlobalRegsB0LoadB 0x5013DE0B reads through its argument a0 (passed by func_48645B79_entry_L34 0x48645BB0 `call TgGlobalRegsB0LoadB_entry, [a2], 0x18`, +2 more calls))
-#   +0   index        u16            TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E `movhu (a2), d0`
-#   +2   index_       u16            TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E `movhu (2, a2), d0`
-#   +4   index__      u16            TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E `movhu (4, a2), d0`
-#   +6   index___     u16            TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E `movhu (6, a2), d0`
-#   +8   index____    u16            TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E `movhu (8, a2), d0`
-#   +10  index_____   u16            TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E `movhu (0xa, a2), d0`
-#   +12  index______  u16            TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E `movhu (0xc, a2), d0`
-#   +14  index_______ u16            TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E `movhu (0xe, a2), d0`
-.macro REC_TgGlobalRegsB0LoadB_ArgA0 index=0, index_=0, index__=0, index___=0, index____=0, index_____=0, index______=0, index_______=0
-	.word	\index
-	.word	\index_
-	.word	\index__
-	.word	\index___
-	.word	\index____
-	.word	\index_____
-	.word	\index______
-	.word	\index_______
+#   +0   TgVoiceRegWriteB_d0 u16            TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E `movhu (a2), d0`
+#   +2   TgVoiceRegWriteB_d0_ u16            TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E `movhu (2, a2), d0`
+#   +4   TgVoiceRegWriteB_d0__ u16            TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E `movhu (4, a2), d0`
+#   +6   TgVoiceRegWriteB_d0___ u16            TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E `movhu (6, a2), d0`
+#   +8   TgVoiceRegWriteB_d0____ u16            TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E `movhu (8, a2), d0`
+#   +10  TgVoiceRegWriteB_d0_____ u16            TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E `movhu (0xa, a2), d0`
+#   +12  TgVoiceRegWriteB_d0______ u16            TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E `movhu (0xc, a2), d0`
+#   +14  TgVoiceRegWriteB_d0_______ u16            TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E `movhu (0xe, a2), d0`
+.macro REC_TgGlobalRegsB0LoadB_ArgA0 TgVoiceRegWriteB_d0=0, TgVoiceRegWriteB_d0_=0, TgVoiceRegWriteB_d0__=0, TgVoiceRegWriteB_d0___=0, TgVoiceRegWriteB_d0____=0, TgVoiceRegWriteB_d0_____=0, TgVoiceRegWriteB_d0______=0, TgVoiceRegWriteB_d0_______=0
+	.word	\TgVoiceRegWriteB_d0
+	.word	\TgVoiceRegWriteB_d0_
+	.word	\TgVoiceRegWriteB_d0__
+	.word	\TgVoiceRegWriteB_d0___
+	.word	\TgVoiceRegWriteB_d0____
+	.word	\TgVoiceRegWriteB_d0_____
+	.word	\TgVoiceRegWriteB_d0______
+	.word	\TgVoiceRegWriteB_d0_______
 .endm
 
 # REC_func_5013DCEB_ArgA0: 18-byte records (func_5013DCEB_ArgA0, 1 records); fields, and what reads them:
 #   (the layout func_5013DCEB 0x5013DCEB reads through its argument a0 (passed by func_48645B79_entry_L34 0x48645BB0 `call func_5013DCEB_entry, [a2], 0x18`, +2 more calls))
-#   +0   index        u32            func_5013DCEB 0x5013DCEB `mov (a2), d0`
-#   +4   index_       u32            func_5013DCEB 0x5013DCEB `mov (4, a2), d0`
-#   +8   index__      u32            func_5013DCEB 0x5013DCEB `mov (8, a2), d0`
-#   +12  index___     u32            func_5013DCEB 0x5013DCEB `mov (0xc, a2), d0`
-#   +16  index____    u16            func_5013DCEB 0x5013DCEB `movhu (0x10, a2), d0`
-.macro REC_func_5013DCEB_ArgA0 index=0, index_=0, index__=0, index___=0, index____=0
-	.long	\index
-	.long	\index_
-	.long	\index__
-	.long	\index___
-	.word	\index____
+#   +0   TgVoiceRegWriteB_d0 u32            func_5013DCEB 0x5013DCEB `mov (a2), d0`
+#   +4   TgVoiceRegWriteB_d0_ u32            func_5013DCEB 0x5013DCEB `mov (4, a2), d0`
+#   +8   TgVoiceRegWriteB_d0__ u32            func_5013DCEB 0x5013DCEB `mov (8, a2), d0`
+#   +12  TgVoiceRegWriteB_d0___ u32            func_5013DCEB 0x5013DCEB `mov (0xc, a2), d0`
+#   +16  TgVoiceRegWriteB_d0____ u16            func_5013DCEB 0x5013DCEB `movhu (0x10, a2), d0`
+.macro REC_func_5013DCEB_ArgA0 TgVoiceRegWriteB_d0=0, TgVoiceRegWriteB_d0_=0, TgVoiceRegWriteB_d0__=0, TgVoiceRegWriteB_d0___=0, TgVoiceRegWriteB_d0____=0
+	.long	\TgVoiceRegWriteB_d0
+	.long	\TgVoiceRegWriteB_d0_
+	.long	\TgVoiceRegWriteB_d0__
+	.long	\TgVoiceRegWriteB_d0___
+	.word	\TgVoiceRegWriteB_d0____
 .endm
 
 # REC_func_48633DC2_ArgA0: 8-byte records (func_48633DC2_ArgA0, 1 records); fields, and what reads them:
@@ -4938,11 +4938,11 @@
 .endm
 
 # REC_DiskDriveCtrlHandler_ArgA0: 4-byte records (DiskDriveCtrlHandler_ArgA0, 8 records); fields, and what reads them:
-#   (the layout DiskDriveCtrlHandler 0x486ECDB7 reads through its argument a0 (passed by func_486ED419 0x486ED419 `call DiskDriveCtrlHandler_entry, [d2,d3,a2], 0x40`, +2 more calls))
+#   (the layout DiskDriveCtrlHandler 0x486ECDB7 reads through its argument a0 (passed by SdMediaChangeService 0x486ED419 `call DiskDriveCtrlHandler_entry, [d2,d3,a2], 0x40`, +2 more calls))
 #   (an array of 4-byte records: DiskDriveCtrlHandler steps it by 4 in a loop; as many as are free up to the next label [INFERENCE: the block's extent])
-#   +0   f0           u32            DiskDriveCtrlHandler 0x486ECDB7 `mov (a0), d0`
-.macro REC_DiskDriveCtrlHandler_ArgA0 f0=0
-	.long	\f0
+#   +0   SdMediaStateGet_d0 u32            DiskDriveCtrlHandler 0x486ECDB7 `mov (a0), d0`
+.macro REC_DiskDriveCtrlHandler_ArgA0 SdMediaStateGet_d0=0
+	.long	\SdMediaStateGet_d0
 .endm
 
 # REC_SdCommandSend_ArgA0: 10-byte records (SdCommandSend_ArgA0, 4 records); fields, and what reads them:

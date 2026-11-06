@@ -47,6 +47,10 @@ Source share 99.8 % -> 100.0 % in both trees (150 / 163 B of 2,097,152).
 
 ## What remains (all items stay OPEN, with the exact next step)
 
+> **Superseded (wave 11, lane open11/v6v5-port2, `notes/v6v5-port2-2026-11-06/README.md`):** the TODO(port)
+> rows are gone, the json raw bytes are 5 per tree, the straddling records are typed and the 52-byte blocks
+> are traced (entries 17 / 30 / 43 / 56, the bass-note spelling blocks).  What is left is listed there.
+
 - TODO(port) rows, v6 2 B, v5 7 B: halves of pointers that a C slice boundary cuts
   (`widget_names_charmap.s` after WidgetName_PtrBlock_B2, v5 also after WidgetName_PtrBlock_N1;
   v5 `extension_data.s` before ExtData_ChordTypeTable_Top).  The assembler takes `Sym@lo16` only in an

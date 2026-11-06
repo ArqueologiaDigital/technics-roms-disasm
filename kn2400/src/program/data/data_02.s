@@ -21291,7 +21291,7 @@ func_5012EA5D_Table:	# 101 x u16, 1..65535; read by func_5012EA5D_entry_L91 0x50
 	tab_u16	7, 5, 3, 2, 1	# [96]
 
 TgGlobalRegsB0LoadB_entry_Le_Var:	# REC_TgGlobalRegsB0LoadB_ArgA0 (16 bytes): the layout TgGlobalRegsB0LoadB 0x5013DE0B reads through its argument a0 (passed by func_48645B79_entry_L34 0x48645BB0 `call TgGlobalRegsB0LoadB_entry, [a2], 0x18`, +2 more calls)
-	REC_TgGlobalRegsB0LoadB_ArgA0	index=4, index_=2, index__=128, index___=12, index____=32, index_____=37, index______=831, index_______=1
+	REC_TgGlobalRegsB0LoadB_ArgA0	TgVoiceRegWriteB_d0=4, TgVoiceRegWriteB_d0_=2, TgVoiceRegWriteB_d0__=128, TgVoiceRegWriteB_d0___=12, TgVoiceRegWriteB_d0____=32, TgVoiceRegWriteB_d0_____=37, TgVoiceRegWriteB_d0______=831, TgVoiceRegWriteB_d0_______=1
 	# then 8 x u16 up to the next label, which no instruction is seen to read (the table the field reads ran on into them)
 	tab_u16	4, 2, 128, 12, 32, 37, 815, 1	# +16
 
@@ -21853,7 +21853,7 @@ ptrs_4852BC44:
 	.long	loc_50175004
 ptrs_4852BC54:
 	.long	loc_50173298
-	.long	func_501732B4
+	.long	MemStyleAllocPtrSet
 	.long	MemStyleAllocFits
 	.long	loc_50173348
 	.long	MemStyleVarRecDataSet

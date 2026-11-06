@@ -8444,7 +8444,7 @@ AcLanguageTextProc_OnDraw:
 	ld xbc, EVT_GET_LANGUAGE_PTR
 	ld xde, 0:i3
 	call ApFuncCall
-	ld a, (0x0340e4:24)
+	ld a, (HELP_LANGUAGE:24)
 	extz wa
 	sla wa, 2
 	ld	xde, (xhl+wa)
@@ -8766,7 +8766,7 @@ InitializeObjectTable:
 	lda xsp, (xsp - 14)
 	pushw iz
 	ldw (0x02bc12:24), 0x0000
-	lda xwa, (0x027ed2:24)
+	lda xwa, (OBJECT_REGISTRY:24)
 	lda xbc, (xwa + 10)
 	lda xde, (xwa + 8)
 	lda xhl, (xwa + 4)
@@ -8928,7 +8928,7 @@ CountObject:
 	ld QIZ,WA
 	cp WA,(XSP+0x08)
 	jr ugt, InputDialog_GetText_CopyAndReturn
-	lda xwa, (0x027ed2:24)
+	lda xwa, (OBJECT_REGISTRY:24)
 	ld (XSP+0x04),XWA
 	ld WA,QIZ
 	extz XWA
@@ -8992,7 +8992,7 @@ RegisterObjectTable:
 	sll xde, 3
 	sub xde, xwa
 	add xde, xde
-	ld xix, 0x27ed2
+	ld xix, OBJECT_REGISTRY
 	add xix, xde	; XIX = 27ed2h + 14 * XWA
 	ld xiy, xbc
 	ld bc, 7:i3
@@ -9015,7 +9015,7 @@ RegisterObject:
 	sub xwa, (xsp + 8)
 	add xwa, xbc
 	ld xbc, xwa
-	lda xhl, (0x027ed2:24)
+	lda xhl, (OBJECT_REGISTRY:24)
 	ld (xsp + 4), xhl
 	add xhl, xbc
 	ld xiz, (xhl + 10)
@@ -9077,7 +9077,7 @@ UnRegisterObject:
 	sll xwa, 3
 	sub xwa, xbc
 	add xwa, xwa
-	lda xix, (0x027ed2:24)
+	lda xix, (OBJECT_REGISTRY:24)
 	ld xbc, xix
 	add xbc, xwa
 	ld xiz, (xbc + 10)
@@ -9120,7 +9120,7 @@ InheritedProc:
 	sll xiz, 3
 	sub xiz, xhl
 	add xiz, xiz
-	lda xix, (0x027ed2:24)
+	lda xix, (OBJECT_REGISTRY:24)
 	ld xhl, xix
 	add xhl, xiz
 	ld xiz, (xhl + 10)
@@ -9228,7 +9228,7 @@ ClassProc:
 	sll xde, 3
 	sub xde, xbc
 	add xde, xde
-	lda xiy, (0x027ed2:24)
+	lda xiy, (OBJECT_REGISTRY:24)
 	ld xbc, xiy
 	add xbc, xde
 	ld xbc, (xbc + 10)
@@ -9618,7 +9618,7 @@ FunctionProc:
 	sll xiz, 3
 	sub xiz, xix
 	add xiz, xiz
-	lda xiy, (0x027ed2:24)
+	lda xiy, (OBJECT_REGISTRY:24)
 	ld xix, xiy
 	add xix, xiz
 	ld xix, (xix + 10)
@@ -9963,7 +9963,7 @@ ObjectEnum_Destroy:
 ObjectEnum_Paint:
 	ld xwa, (xsp + 10)
 	ld xde, (MODE_NOW:24)
-	lda xbc, (0x027ed2:24)
+	lda xbc, (OBJECT_REGISTRY:24)
 	cp xwa, xde
 	jr nz, ObjectEnum_OK
 	ld xwa, NAKA_MODE_MD_NORMAL
@@ -10193,7 +10193,7 @@ TitleProc:
 	sll xbc, 3
 	sub xbc, xwa
 	add xbc, xbc
-	lda xwa, (0x027ed2:24)
+	lda xwa, (OBJECT_REGISTRY:24)
 	ld (xsp + 14), xwa
 	add xwa, xbc
 	lda xwa, (xwa + 10)
@@ -10201,7 +10201,7 @@ TitleProc:
 	ld xwa, (xwa)
 	ld (xsp + 4), xwa
 	ld xde, xiz
-	ld wa, (0x02bc30:24)
+	ld wa, (TITLE_FLAGS:24)
 	and wa, 0x11
 	ld (xsp + 28), wa
 	cp xiz, EVT_ACTIVATE_STATE
@@ -10904,7 +10904,7 @@ EnumList_Confirm_Init:
 	jrl TitleProc_ClearAndReturn
 
 EnumList_Confirm_Forward:
-	ld wa, (0x02bc30:24)
+	ld wa, (TITLE_FLAGS:24)
 	and wa, 0x1
 	cp wa, 0:i3
 	scc16 nz, hl
@@ -10966,7 +10966,7 @@ EnumList_ReturnZero:
 	jrl TitleProc_ClearAndReturn
 
 EnumList_Return:
-	ld wa, (0x02bc30:24)
+	ld wa, (TITLE_FLAGS:24)
 	bit 0x00,WA
 	jr z, .Lc_fa5240
 	ld WA,(XSP+0x16)
@@ -11013,9 +11013,9 @@ EnumList_OK:
 	ld XDE,0xffffffff
 	call KillApTimer
 TitleProc_ToggleFlag:
-	ld de, (0x02bc30:24)
+	ld de, (TITLE_FLAGS:24)
 	xor de, 0x1
-	ld (0x02bc30:24), de
+	ld (TITLE_FLAGS:24), de
 	extz xde
 	ld xwa, NAKA_MAINFUNC_MainTitleControl
 	ld xbc, EVT_SET_TITLE_FLAG
@@ -11174,7 +11174,7 @@ EnumList_HitTest_NoMatch:
 	ld XBC,EVT_NEW_TITLE
 	ld xde, 0:i3
 	call SendEvent
-	ld wa, (0x02bc30:24)
+	ld wa, (TITLE_FLAGS:24)
 	bit 0x05,WA
 	jr z, TitleProc_ReturnZero
 	ld WA,(XSP+0x16)
@@ -11219,7 +11219,7 @@ GetTitleOld:
 SetInterruptTime:
 	pushw iz
 	ld iz, wa
-	ld wa, (0x02bc30:24)
+	ld wa, (TITLE_FLAGS:24)
 	bit 1, wa
 	jr z, EnumList_Reset
 	cp iz, 2:i3
@@ -11239,7 +11239,7 @@ EnumList_Reset:
 	ret
 
 CheckNotDrawFlag:
-	ld wa, (0x02bc30:24)
+	ld wa, (TITLE_FLAGS:24)
 	and wa, 0x4
 	cp wa, 0:i3
 	scc16 z, hl
@@ -11266,8 +11266,8 @@ EnumList_Reset_Send:
 	jr TitleProc_ClearResourceDirtyFlag
 
 TitleProc_SetResourceDirtyFlag:
-	or (0x02bc30:24), wa
-	ld de, (0x02bc30:24)
+	or (TITLE_FLAGS:24), wa
+	ld de, (TITLE_FLAGS:24)
 	extz xde
 	ld xwa, NAKA_MAINFUNC_MainTitleControl
 	ld xbc, EVT_SET_TITLE_FLAG
@@ -11275,8 +11275,8 @@ TitleProc_SetResourceDirtyFlag:
 
 TitleProc_ClearResourceDirtyFlag:
 	cpl wa
-	and (0x02bc30:24), wa
-	ld de, (0x02bc30:24)
+	and (TITLE_FLAGS:24), wa
+	ld de, (TITLE_FLAGS:24)
 	extz xde
 	ld xwa, NAKA_MAINFUNC_MainTitleControl
 	ld xbc, EVT_SET_TITLE_FLAG
@@ -11378,7 +11378,7 @@ ViewableProc:
 	cp xiy, EVT_GET_INSTANCE
 	jrl z, Viewable_GetInstance
 	ld xwa, xiz
-	lda xde, (0x027ed2:24)
+	lda xde, (OBJECT_REGISTRY:24)
 	ld xbc, xiz
 	ldiw_erp 0xe6, 0
 	ld (xsp + 10), bc
@@ -18097,7 +18097,7 @@ EventRoute_OwnerMatchDone:
 	incw 1, (0x02f840:24)
 	ld bc, de
 	muls bc, 0xc
-	lda xwa, (0x02bc34:24)
+	lda xwa, (EVENT_QUEUE:24)
 	exts xbc
 	add xbc, xwa
 	ld (xbc), xiz
@@ -18144,7 +18144,7 @@ PostEvent_FillSlot:
 	ld (xsp + 4), wa
 	ld bc, (xsp + 4)
 	muls bc, 0xc
-	lda xwa, (0x02bc34:24)
+	lda xwa, (EVENT_QUEUE:24)
 	ld	xwa, (xwa+bc)
 	ld (xiz), xwa
 	cp xwa, 0xffffffff
@@ -18155,7 +18155,7 @@ PostEvent_FillSlot:
 PostEvent_LinkSlot:
 	ld bc, (xsp + 4)
 	muls bc, 0xc
-	lda xwa, (0x02bc34:24)
+	lda xwa, (EVENT_QUEUE:24)
 	lda	xde, (xwa+bc)
 	ld xwa, (xsp + 10)
 	ld xbc, (xde + 4)
@@ -18199,7 +18199,7 @@ GetEvent_ScanLoop:
 	ld ix, wa
 	cp wa, bc
 	jr z, GetEvent_ReturnOne
-	lda xiy, (0x02bc34:24)
+	lda xiy, (EVENT_QUEUE:24)
 
 GetEvent_ScanMatch:
 	ld wa, ix
@@ -18257,7 +18257,7 @@ DeleteEvent_Prologue:
 	ld hl, wa
 	cp wa, bc
 	jr z, DeleteEvent_Return
-	lda xix, (0x02bc34:24)
+	lda xix, (EVENT_QUEUE:24)
 
 DeleteEvent_ScanLoop:
 	ld wa, hl
@@ -18364,7 +18364,7 @@ DeleteSpecEvent_Prologue:
 DeleteSpecEvent_ScanLoop:
 	ld bc, ix				; BC = current index
 	muls bc, 0x000c				; BC = index * 12 (entry size)
-	lda xwa, (0x02bc34:24); XWA = base of registration table
+	lda xwa, (EVENT_QUEUE:24); XWA = base of registration table
 	lda	xwa, (xwa+bc)
 	lda xbc, (xwa + 4)			; XBC = pointer to entry+4 (event code)
 	ld xde, (xbc)				; XDE = registered event code
@@ -18820,7 +18820,7 @@ ObjectSearch_Continue:
 	incw 1, (0x02f840:24)
 	ld wa, (0x02ec36:24)
 	muls wa, 0xc
-	lda xbc, (0x02bc34:24)
+	lda xbc, (EVENT_QUEUE:24)
 	ld	(xbc+wa), xiz
 	ld wa, (0x02ec36:24)
 	muls wa, 0xc
@@ -18907,7 +18907,7 @@ ApDeliveryEvent_Return:
 	incw 1, (0x02f840:24)
 	ld wa, (0x02ec36:24)
 	muls wa, 0xc
-	lda xbc, (0x02bc34:24)
+	lda xbc, (EVENT_QUEUE:24)
 	ld	(xbc+wa), xiz
 	ld wa, (0x02ec36:24)
 	muls wa, 0xc
@@ -19374,7 +19374,7 @@ DrawTask_FuncDispatch:
 
 DrawTask_DequeueLoop:
 	ld wa, (0x030450:24)
-	ld (0x03044e:24), wa
+	ld (DRAW_ENABLED:24), wa
 	ld wa, 1:i3
 	call Kernel_SemaWait
 	jr DrawTask_EventLoop
@@ -19451,9 +19451,9 @@ DrawRing_Init:
 	ldw (xde - 4), 0x0
 	ldw (xde - 6), 0x0
 	ldw (xde - 2), 0x7f
-	lda xwa, (0x030466:24)
+	lda xwa, (DRAW_QUEUE:24)
 	ld (0x032466:24), xwa
-	ld (0x03246a:24), xwa
+	ld (DRAW_QUEUE_WRITE_PTR:24), xwa
 	ret
 
 DrawRing_TryTake:
@@ -19528,8 +19528,8 @@ DrawQueue_Alloc:
 	call Kernel_SemaWait
 	ld de, iz
 	extz xde
-	lda xhl, (0x030466:24)
-	ld xbc, (0x03246a:24)
+	lda xhl, (DRAW_QUEUE:24)
+	ld xbc, (DRAW_QUEUE_WRITE_PTR:24)
 	ld xwa, xbc
 	sub xwa, xhl
 	add xwa, xde
@@ -19539,13 +19539,13 @@ DrawQueue_Alloc:
 	jr ge, DrawFunc_Prologue
 	ld xiz, xbc
 	add xbc, xde
-	ld (0x03246a:24), xbc
+	ld (DRAW_QUEUE_WRITE_PTR:24), xbc
 	jr DrawFunc_CallHandler
 
 DrawFunc_Prologue:
 	ld xiz, xhl
 	add xhl, xde
-	ld (0x03246a:24), xhl
+	ld (DRAW_QUEUE_WRITE_PTR:24), xhl
 
 ; DrawFunc handler with audio lock release
 DrawFunc_CallHandler:
@@ -19797,7 +19797,7 @@ UpdateScreen:
 	ld wa, (0x030450:24)
 	cp wa, 0:i3
 	ret nz
-	ld (0x03044e:24), wa
+	ld (DRAW_ENABLED:24), wa
 	ret
 
 UpdateScreen_Prologue:
@@ -19814,7 +19814,7 @@ UpdateScreen_CheckDirty:
 	ld	wa, (197712:24)
 	cp	wa, 0:i3
 	ret	nz
-	ld	(197710:24), wa
+	ld	(DRAW_ENABLED:24), wa
 	ret
 
 Gfx_BlitDirtyRegions:
@@ -20045,7 +20045,7 @@ ModifyPixel:
 	muls bc, 0x140
 	add bc, (xwa)
 	extz xbc
-	add xbc, (0x030452:24)
+	add xbc, (WALLPAPER_BITMAP:24)
 	ld a, (xbc)
 	ldfr_berp A, 0xf8
 	extz iz
@@ -20119,7 +20119,7 @@ ModifyPixelEx:
 	muls bc, 0x140
 	add bc, (xwa)
 	extz xbc
-	add xbc, (0x030452:24)
+	add xbc, (WALLPAPER_BITMAP:24)
 	ld a, (xbc)
 	ldfr_berp A, 0xf8
 	extz iz

@@ -143,7 +143,7 @@ Encoder_ProcessPitchBend:
 	extz	wa
 	lda	xbc, (ENCODER_LUT_PITCHBEND:24)
 	ld	a, (xbc+wa)
-	ld	c, (0x36e3:16)
+	ld	c, (CMP_RECORD_PART:16)
 	and	c, 15
 	jr	nz, Encoder_ProcessPitchBend_ScaleToBendRange
 	cp	(0x7e53:16), 0

@@ -6645,7 +6645,10 @@ const naka_technichord_strings_t naka_technichord_strings_data
 
     .FDemoText_ScreenClipRect = { 0x0000, 0x0000 },
 
-    .Naka_PresentationRootState_ptr = NAKA_ADDR(Naka_PresentationRootState),
+    /* not a pointer: x2 = 319, y2 = 239, the right / bottom of FDemoText_ScreenClipRect (see its note).
+     * v10 / v9 compile NAKA_ADDR(Naka_PresentationRootState) to the same bytes by coincidence (0xEF013F);
+     * v7, v6 and v5 keep 3F 01 EF 00 while that label moves (0xEF0115, 0xEF0015, 0xEEFFFD) */
+    .Naka_PresentationRootState_ptr = 319u | 239u << 16,
 
     .Seq_InitVoiceStructures_Str_Empty = ALIGNED_STRING(""),
 

@@ -9,8 +9,8 @@
 
 # REC_func_9780836B_entry_L10_Records: 8-byte records (func_9780836B_entry_L10_Records, 17 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u32            func_9780836B_entry_L10 0x97808380 `mov (a0), d0`; func_9780836B_entry_L41 0x978083B1 `mov (a0), d0`
-#   +4   proc         ptr            func_9780836B_entry_L46 0x978083B6 `mov (4, a0), a0`
+#   +0   f0           u32            PfParseSpec_entry_L10 0x97808380 `mov (a0), d0`; PfParseSpec_entry_L41 0x978083B1 `mov (a0), d0`
+#   +4   proc         ptr            PfParseSpec_entry_L46 0x978083B6 `mov (4, a0), a0`
 .macro REC_func_9780836B_entry_L10_Records f0=0, proc=0
 	.long	\f0
 	.long	\proc

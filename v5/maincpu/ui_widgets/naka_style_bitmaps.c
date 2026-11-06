@@ -3046,7 +3046,7 @@ const naka_style_bitmaps_t naka_style_bitmaps_data
         0x00000000,
     },
 
-    .Softver_ShowHide_Data = 0x0549,
+    .Softver_ShowHide_Data = 0x0520,
 
     .VGA_InitFuncTable = {
         NAKA_ADDR(VGA_Initialize),

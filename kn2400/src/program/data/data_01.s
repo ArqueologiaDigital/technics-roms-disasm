@@ -9387,7 +9387,7 @@ CusMemModeBoxProc_Table:	# 4 x u16, 0..0; read by CusMemModeBoxProc 0x486670B1: 
 	tab_u16	0, 0, 0, 0
 CusMemModeBoxProc_Table_2:	# 2 x u16, 0..0; read by CusMemModeBoxProc : `movhu	(a0), d0`
 	tab_u16	0, 0
-CusMemModeBoxProc_Table_3:	# 6 x u32, 0..1343058812; read by CusMemModeBoxProc 0x486670B1: `mov	(a1), d0`
+CusMemModeBoxProc_Table_3:	# 6 x u32, 0..1343058812; read by CusMemModeBoxProc 0x486670B1: `mov	(a1), d0`; 6 records: the index is bounded by CusMemModeBoxProc 0x486670B1: `mov -6, d1` / setlb / `mov (a1), d0` / `inc4 a1` / `inc d1` / lne (6 passes)
 	tab_u32	1343058812, 2, 1, 0, 0, 0
 CusMemModeBoxProc_Table_4:	# 256 x u8, 0..0; read by CusMemModeBoxProc : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -33120,7 +33120,7 @@ Str_rb_32:	.asciz "rb"
 Str_rb_31:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_31
 
-func_486CEAA1_Table:	# 8 x REC_func_486CEAA1_Table (8 bytes each); read by func_486CEAA1_entry_L3b 0x486CEAE1 `mov (4, a0), a1`; func_486CEAA1_entry_L3b 0x486CEAE1 `movbu (d0, a2), d0`; func_486CEAA1_entry_L3b 0x486CEAE1 `movbu (d1, a2), d1` (+1)
+func_486CEAA1_Table:	# 8 x REC_func_486CEAA1_Table (8 bytes each); read by DiskLoadDispatch_entry_L3b 0x486CEAE1 `mov (4, a0), a1`; DiskLoadDispatch_entry_L3b 0x486CEAE1 `movbu (d0, a2), d0`; DiskLoadDispatch_entry_L3b 0x486CEAE1 `movbu (d1, a2), d1` (+1)
 	REC_func_486CEAA1_Table	f0=6, x1="\x00\x00\x00", proc=func_486CE955
 	REC_func_486CEAA1_Table	f0=4, x1="\x00\x00\x00", proc=func_486CE7F3
 	REC_func_486CEAA1_Table	x1="\x00\x00\x00", proc=func_486CD954
@@ -39962,10 +39962,15 @@ SeqTrAsGridCheck_entry_L19b_Var:	# u32, a constant; read / written by SeqTrAsGri
 
 Str_empty_617:	.asciz "-- "
 Str_empty_616:	.asciz "-- "
-data_484DBC34:
-	# 28 bytes the code takes the address of: TrAsSureLangCheck_Lb9 0x486D90C3 `mov data_484DBC34, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
-	tab_u32	0x500664B0, 0x500664B0, 0x500664B0, 0x500664B0, 0x500664B0, 0x500664B0, 0x500664B0	# +0
 
+ptrs_484DBC34:
+	.long	TrAsSureLangCheck_Ram
+	.long	TrAsSureLangCheck_Ram
+	.long	TrAsSureLangCheck_Ram
+	.long	TrAsSureLangCheck_Ram
+	.long	TrAsSureLangCheck_Ram
+	.long	TrAsSureLangCheck_Ram
+	.long	TrAsSureLangCheck_Ram
 ptrs_484DBC50:
 	.long	Str_Any_existing_song_will_be_cleared_Press
 	.long	Str_Jeder_Song_im_Arbeitsspeicher_wird_gel_s

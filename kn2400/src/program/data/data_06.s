@@ -2902,11 +2902,11 @@ Str_empty_301:	.asciz "@"
 	.align	4, 0x00	# pad after Str_empty_301
 
 DiskDriveCtrlHandler_ArgA0_0:	# REC_DiskDriveCtrlHandler_ArgA0 (4 bytes)
-	REC_DiskDriveCtrlHandler_ArgA0	f0=0x50004D40
+	REC_DiskDriveCtrlHandler_ArgA0	SdMediaStateGet_d0=0x50004D40
 DiskDriveCtrlHandler_ArgA0_1:	# REC_DiskDriveCtrlHandler_ArgA0 (4 bytes)
-	REC_DiskDriveCtrlHandler_ArgA0	f0=4
+	REC_DiskDriveCtrlHandler_ArgA0	SdMediaStateGet_d0=4
 DiskDriveCtrlHandler_ArgA0_2:	# REC_DiskDriveCtrlHandler_ArgA0 (4 bytes)
-	REC_DiskDriveCtrlHandler_ArgA0	f0=0x5006785C
+	REC_DiskDriveCtrlHandler_ArgA0	SdMediaStateGet_d0=0x5006785C
 DiskDriveCtrlHandler_ArgA0_3:	# REC_DiskDriveCtrlHandler_ArgA0 (4 bytes)
 	REC_DiskDriveCtrlHandler_ArgA0	
 
@@ -3979,7 +3979,7 @@ TimeBase2msTick_L9f_Table:	# 3 x u8, 0..255; read by TimeBase2msTick_L9f 0x48705
 	tab_u8	0, 255, 255
 func_48705A38_Table:	# 4 x u8, 255..255; read by Latch98000000Set 0x48705A38: `movbu (func_48705A38_Table), d0`; Latch98000000Set 0x48705A38: `movbu (func_48705A38_Table), d1` ...
 	tab_u8	255, 255, 255, 255
-func_48705B06_Table:	# 4 x u8, 39..255; read by func_48705B06 0x48705B06: `movbu d0, (func_48705B06_Table)`; func_48705B29 0x48705B29: `movbu (func_48705B06_Table), d0` ...
+func_48705B06_Table:	# 4 x u8, 39..255; read by func_48705B06 0x48705B06: `movbu d0, (func_48705B06_Table)`; SdPowerCtrlSet 0x48705B29: `movbu (func_48705B06_Table), d0` ...
 	tab_u8	39, 255, 255, 255
 
 SdCardMenu_window:	# u32, initial value of a RAM variable: the TtlScreen SdCardMenu's `window` (+0x24), loaded and dereferenced by ScreenProc 0x485EF333: `mov (0x24, a3), a0` -> `mov d0, (a0)`
@@ -4786,29 +4786,29 @@ ListDeleteSureWin_child:	# u32, initial value of a RAM variable: the Window List
 
 	TtlScreen	SDSndLsEditScreen, sub=SDSndLsEditScreen_FuncWideES1, flag=VF_Fixed, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SDSndLsEditScreen_window, title=Str_SD_SOUND_PLAYLIST_EDIT, icon=217	# title "SD-SOUND PLAYLIST EDIT"
 
-func_4871F475_Var:	# u32, initial value of a RAM variable; read / written by func_4871F475 0x4871F475: `mov (func_4871F475_Var), d0`; SdAudSongIndexSet 0x4871F4A2: `mov d2, (func_4871F475_Var)`
+func_4871F475_Var:	# u32, initial value of a RAM variable; read / written by SdAudSongIndexGet 0x4871F475: `mov (func_4871F475_Var), d0`; SdAudSongIndexSet 0x4871F4A2: `mov d2, (func_4871F475_Var)`
 	.long	0
-func_4871F47E_Var:	# u32, initial value of a RAM variable; read / written by func_4871F47E 0x4871F47E: `mov (func_4871F47E_Var), d0`; SdAudListIndexSetClamped 0x4871F4C2: `mov d2, (func_4871F47E_Var)` ...
+func_4871F47E_Var:	# u32, initial value of a RAM variable; read / written by SdAudListIndexGet 0x4871F47E: `mov (func_4871F47E_Var), d0`; SdAudListIndexSetClamped 0x4871F4C2: `mov d2, (func_4871F47E_Var)` ...
 	.long	0
-func_4871F487_Var:	# u32, initial value of a RAM variable; read / written by func_4871F487 0x4871F487: `mov (func_4871F487_Var), d0`; SdSndSongIndexSet 0x4871F501: `mov d2, (func_4871F487_Var)`
+func_4871F487_Var:	# u32, initial value of a RAM variable; read / written by SdSndSongIndexGet 0x4871F487: `mov (func_4871F487_Var), d0`; SdSndSongIndexSet 0x4871F501: `mov d2, (func_4871F487_Var)`
 	.long	0
-func_4871F490_Var:	# u32, initial value of a RAM variable; read / written by func_4871F490 0x4871F490: `mov (func_4871F490_Var), d0`; SdSndListIndexSetClamped 0x4871F525: `mov d2, (func_4871F490_Var)` ...
+func_4871F490_Var:	# u32, initial value of a RAM variable; read / written by SdSndListIndexGet 0x4871F490: `mov (func_4871F490_Var), d0`; SdSndListIndexSetClamped 0x4871F525: `mov d2, (func_4871F490_Var)` ...
 	.long	0
-func_4871F499_Var:	# u32, initial value of a RAM variable; read / written by func_4871F499 0x4871F499: `mov (func_4871F499_Var), d0`; func_4871F56A 0x4871F56A: `mov d0, (func_4871F499_Var)` ...
+func_4871F499_Var:	# u32, initial value of a RAM variable; read / written by SdSndPlayChIndexGet 0x4871F499: `mov (func_4871F499_Var), d0`; SdSndPlayChIndexSetClamped 0x4871F56A: `mov d0, (func_4871F499_Var)` ...
 	.long	0
-func_4871F588_Var:	# u32, initial value of a RAM variable; read / written by func_4871F588 0x4871F588: `mov (func_4871F588_Var), d0`; SdSndEditDefListIndexSet 0x4871F5CE: `mov d2, (func_4871F588_Var)` ...
+func_4871F588_Var:	# u32, initial value of a RAM variable; read / written by SdSndEditDefListIndexGet 0x4871F588: `mov (func_4871F588_Var), d0`; SdSndEditDefListIndexSet 0x4871F5CE: `mov d2, (func_4871F588_Var)` ...
 	.long	0
-func_4871F591_Var:	# u32, initial value of a RAM variable; read / written by func_4871F591 0x4871F591: `mov (func_4871F591_Var), d0`; func_4871F5AC 0x4871F5AC: `mov d2, (func_4871F591_Var)` ...
+func_4871F591_Var:	# u32, initial value of a RAM variable; read / written by SdSndEditDefEntryIndexGet 0x4871F591: `mov (func_4871F591_Var), d0`; SdSndEditDefEntryIndexSet 0x4871F5AC: `mov d2, (func_4871F591_Var)` ...
 	.long	0
-func_4871F59A_Var:	# u32, initial value of a RAM variable; read / written by func_4871F59A 0x4871F59A: `mov (func_4871F59A_Var), d0`; SdSndEditCurListIndexSet 0x4871F604: `mov d2, (func_4871F59A_Var)` ...
+func_4871F59A_Var:	# u32, initial value of a RAM variable; read / written by SdSndEditCurListIndexGet 0x4871F59A: `mov (func_4871F59A_Var), d0`; SdSndEditCurListIndexSet 0x4871F604: `mov d2, (func_4871F59A_Var)` ...
 	.long	1
-func_4871F5A3_Var:	# u32, initial value of a RAM variable; read / written by func_4871F5A3 0x4871F5A3: `mov (func_4871F5A3_Var), d0`; SdSndEditCurEntryIndexSet 0x4871F5E9: `mov d2, (func_4871F5A3_Var)` ...
+func_4871F5A3_Var:	# u32, initial value of a RAM variable; read / written by SdSndEditCurEntryIndexGet 0x4871F5A3: `mov (func_4871F5A3_Var), d0`; SdSndEditCurEntryIndexSet 0x4871F5E9: `mov d2, (func_4871F5A3_Var)` ...
 	.long	1
 func_4871F91C_Var:	# s8, initial value of a RAM variable; read / written by func_4871F91C 0x4871F91C: `movbu (func_4871F91C_Var), d0`; func_4871F926_La 0x4871F930: `movbu d0, (func_4871F91C_Var)`
 	.byte	0
 func_4871F7FF_Var:	# u8, initial value of a RAM variable; read / written by func_4871F7FF 0x4871F7FF: `movbu (func_4871F7FF_Var), d0`; func_4871F808_La 0x4871F812: `movbu d0, (func_4871F7FF_Var)`
 	.byte	0
-func_4871F61F_Var:	# s8, initial value of a RAM variable; read / written by func_4871F61F 0x4871F61F: `movbu (func_4871F61F_Var), d0`; func_4871F629_La 0x4871F633: `movbu d0, (func_4871F61F_Var)`
+func_4871F61F_Var:	# s8, initial value of a RAM variable; read / written by SdSndEditMoveDirGet 0x4871F61F: `movbu (func_4871F61F_Var), d0`; SdSndEditMoveDirSet_La 0x4871F633: `movbu d0, (func_4871F61F_Var)`
 	.byte	1
 
 Str_empty_300:	.asciz "                              "
@@ -5429,7 +5429,7 @@ Str_X:	.asciz "X"
 SdWriteBlockCmd_entry_L30_Var:	# u8, initial value of a RAM variable; read / written by SdWriteBlockCmd_entry_L30 0x486EE2E4: `movbu d0, (5, a2)`
 	.byte	255
 
-func_486ED572_Table:	# 4 x u8, 255..255; read by func_486ED572 0x486ED572: `movbu (func_486ED572_Table), d0`; func_486ED588 0x486ED588: `movbu (func_486ED572_Table), d0` ...
+func_486ED572_Table:	# 4 x u8, 255..255; read by SdCsRelease 0x486ED572: `movbu (func_486ED572_Table), d0`; SdCsAssert 0x486ED588: `movbu (func_486ED572_Table), d0` ...
 	tab_u8	255, 255, 255, 255
 func_486ED812_Table:	# 4 x u8, 10..255; read by func_486ED812 0x486ED812: `movbu d0, (func_486ED812_Table)`; func_486ED812_entry_L32 0x486ED849: `movbu d0, (func_486ED812_Table)` ...
 	tab_u8	10, 255, 255, 255
@@ -5439,7 +5439,7 @@ TtSswRun_entry_L53_Var:	# u16, initial value of a RAM variable; read / written b
 func_4870126B_Var:	# u16, initial value of a RAM variable; read / written by func_4870126B 0x4870126B: `movhu d0, (func_4870126B_Var)`; func_487015F5 0x487015F5: `movhu (func_4870126B_Var), d0`
 	.word	0
 
-SdPlaylistDbClear_entry_L17a_Table:	# 4 x u8, 0..255; read by SdPlaylistDbClear_entry_L17a 0x4871EA91: `movbu d0, (SdPlaylistDbClear_entry_L17a_Table)`; func_487255CC 0x487255CC: `movbu (SdPlaylistDbClear_entry_L17a_Table), d0` ...
+SdPlaylistDbClear_entry_L17a_Table:	# 4 x u8, 0..255; read by SdPlaylistDbClear_entry_L17a 0x4871EA91: `movbu d0, (SdPlaylistDbClear_entry_L17a_Table)`; SdAudListCountGet 0x487255CC: `movbu (SdPlaylistDbClear_entry_L17a_Table), d0` ...
 	tab_u8	0, 255, 255, 255
 
 .mnbase 0x48400000   # flash addresses again

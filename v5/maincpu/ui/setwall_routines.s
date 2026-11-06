@@ -13,23 +13,23 @@
 ; =============================================================================
 
 SetWall_X:
-	ld (0x030452:24), xwa
+	ld (WALLPAPER_BITMAP:24), xwa
 	ret
 
 SetWall_JumpStubData:
 	and (3296:16), 254
-	ld	(3295:16), 0
+	ld	(TRACK_ASSIGN_CURSOR:16), 0
 	call	CDlikeSwTtl_SendStartEvt
 	call	SetWall_UpdateSlotIndex
 	ret
 
 SetWall_UpdateSlotIndex:
-	ld xhl, 0xf1a0
+	ld xhl, SEQ_TRACK_ASSIGN
 	xor wa, wa
-	ld a, (3295:16)
+	ld a, (TRACK_ASSIGN_CURSOR:16)
 	ld iy, wa
 	ld	a, (xhl+iy)
-	ld	(0x2857:16), a
+	ld	(TRACK_ASSIGN_EDIT_VALUE:16), a
 	ret
 
 SetWall_InlineCodeBlock:
@@ -43,17 +43,17 @@ SetWall_InlineCodeBlock:
 ;   (MT_TrAsTrackInc, 'track-assign grid: next track').
 SqTrAs_CursorNextTrack:
 	call	SetWall_InlineCodeBlock2
-	cp (3295:16), 7
+	cp (TRACK_ASSIGN_CURSOR:16), 7
 	jr	z, SqTrAs_CursorNextTrack_Skip
 	call	CDlikeSwTtl_SendEvt4
 SqTrAs_CursorNextTrack_Skip:
 	call	CDlikeSwTtl_SendStartEvt
-	ld	a, (3295:16)
+	ld	a, (TRACK_ASSIGN_CURSOR:16)
 	cp	a, 15
 	jr	z, SqTrAs_CursorNextTrack_Skip2
 	inc	1, a
 SqTrAs_CursorNextTrack_Skip2:
-	ld	(3295:16), a
+	ld	(TRACK_ASSIGN_CURSOR:16), a
 	call	SetWall_UpdateSlotIndex
 	ret
 ; SqTrAs_CursorPrevTrack: Track-assign page, previous track: applies the pending edit of the cursor track
@@ -64,17 +64,17 @@ SqTrAs_CursorNextTrack_Skip2:
 ;   track'); mirror image of SqTrAs_CursorNextTrack.
 SqTrAs_CursorPrevTrack:
 	call	SetWall_InlineCodeBlock2
-	cp (3295:16), 8
+	cp (TRACK_ASSIGN_CURSOR:16), 8
 	jr z, SqTrAs_CursorPrevTrack_Skip
 	call	CDlikeSwTtl_SendEvt4
 SqTrAs_CursorPrevTrack_Skip:
 	call	CDlikeSwTtl_SendStartEvt
-	ld	a, (3295:16)
+	ld	a, (TRACK_ASSIGN_CURSOR:16)
 	cp	a, 0:i3
 	jr	z, SqTrAs_CursorPrevTrack_Skip2
 	dec	1, a
 SqTrAs_CursorPrevTrack_Skip2:
-	ld	(3295:16), a
+	ld	(TRACK_ASSIGN_CURSOR:16), a
 	call	SetWall_UpdateSlotIndex
 	ret
 NoRef_SetWall_SlotMap20x2:
@@ -107,7 +107,7 @@ SqTrAs_PartInc_UpdateOkSw:
 	call	SqTrAs_UpdateOkSwVisibility
 	ret
 SqTrAs_UpdateOkSwVisibility:
-	ld	a, (0x2857:16)
+	ld	a, (TRACK_ASSIGN_EDIT_VALUE:16)
 	cp	a, 13
 	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
 	cp	a, 16
@@ -117,9 +117,9 @@ SqTrAs_UpdateOkSwVisibility:
 	cp	a, 14
 	jr	z, SqTrAs_UpdateOkSwVisibility_Skip
 	call	CDlikeSwTtl_SendStartEvt
-	ld	xhl, 0xf1a0
+	ld	xhl, SEQ_TRACK_ASSIGN
 	xor	w, w
-	ld	a, (3295:16)
+	ld	a, (TRACK_ASSIGN_CURSOR:16)
 	ld	iy, wa
 	ld	a, (xhl+iy)
 	cp a, 13
@@ -158,25 +158,25 @@ SetWall_SlotMaskTable:
 	swi	7
 
 SetWall_EventHandler:
-	bit 2, (1056:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, SetWall_EventHandler_Active
 	jp SetWall_Return
 
 SetWall_EventHandler_Active:
 	xor wa, wa
-	ld a, (3295:16)
+	ld a, (TRACK_ASSIGN_CURSOR:16)
 	ld iy, wa
 	push xde
 	ld xde, 0xf1a0
 	ld	a, (xde+iy)
 	pop xde
-	cp	a, (0x2857:16)
+	cp	a, (TRACK_ASSIGN_EDIT_VALUE:16)
 	jr nz, SetWall_EventHandler_Dispatch
 	call CDlikeSwTtl_SendStartEvt
 	jrl SetWall_ToReturn
 
 SetWall_EventHandler_Dispatch:
-	ld	a, (0x2857:16)
+	ld	a, (TRACK_ASSIGN_EDIT_VALUE:16)
 	cp a, 0xd
 	jr z, SetWall_SearchForSearch
 	cp a, 0x10
@@ -189,7 +189,7 @@ SetWall_EventHandler_Dispatch:
 
 SetWall_SearchForPanel:
 	xor iy, iy
-	ld xhl, 0xf1a0
+	ld xhl, SEQ_TRACK_ASSIGN
 
 SetWall_SearchForPanel_Loop:
 	ld	a, (xhl+iy)
@@ -202,7 +202,7 @@ SetWall_SearchForPanel_Loop:
 
 SetWall_SearchForSearch:
 	xor iy, iy
-	ld xhl, 0xf1a0
+	ld xhl, SEQ_TRACK_ASSIGN
 
 SetWall_SearchForSearch_Loop:
 	ld	a, (xhl+iy)
@@ -214,11 +214,11 @@ SetWall_SearchForSearch_Loop:
 
 SetWall_SearchSelf:
 	xor iy, iy
-	ld xhl, 0xf1a0
+	ld xhl, SEQ_TRACK_ASSIGN
 
 SetWall_SearchSelf_Loop:
 	ld	a, (xhl+iy)
-	cp	a, (0x2857:16)
+	cp	a, (TRACK_ASSIGN_EDIT_VALUE:16)
 	jr z, SetWall_NewSlotSelected
 	inc 1, iy
 	cp iy, 0x10
@@ -226,7 +226,7 @@ SetWall_SearchSelf_Loop:
 	jr SetWall_CompareAndSwap
 
 SetWall_MatchedSameSlot:
-	ld a, (3295:16)
+	ld a, (TRACK_ASSIGN_CURSOR:16)
 	xor w, w
 	cp wa, iy
 	jr nz, SetWall_NewSlotSelected
@@ -235,7 +235,7 @@ SetWall_MatchedSameSlot:
 SetWall_NewSlotSelected:
 	ld	(GLOBAL_ERROR_CODE:16), 26
 	ld	(3298:16), 0
-	ld	a, (10327:16)
+	ld	a, (TRACK_ASSIGN_EDIT_VALUE:16)
 	cp	a, 16
 	jr	z, SetWall_DispatchSlotEvent
 	ld	(3298:16), 2
@@ -254,13 +254,13 @@ SetWall_ToReturn:
 	jp SetWall_Return
 
 SetWall_CompareAndSwap:
-	ld	a, (0x2857:16)
+	ld	a, (TRACK_ASSIGN_EDIT_VALUE:16)
 	xor w, w
 	ld iy, wa
 	push xde
 	ld xde, SetWall_SlotMaskTable
 	ld	c, (xde+iy)
-	ld a, (3295:16)
+	ld a, (TRACK_ASSIGN_CURSOR:16)
 	ld iy, wa
 	ld xde, 0xf1a0
 	ld	a, (xde+iy)
@@ -275,7 +275,7 @@ SetWall_CompareAndSwap:
 	jr SetWall_IncompatibleSlot
 
 SetWall_CopySlotData:
-	ld a, (3295:16)
+	ld a, (TRACK_ASSIGN_CURSOR:16)
 	ld iy, wa
 	push xde
 	ld xde, 0xf1a0
@@ -283,7 +283,7 @@ SetWall_CopySlotData:
 	pop xde
 	ld (3297:16), a
 	ld (4438:16), a
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, SetWall_DirectHandler
 	call CDlikeSwTtl_SendStopEvtD
 	jp SetWall_Return
@@ -301,7 +301,7 @@ SetWall_Return:
 SetWall_InitCallSequences:
 	call	SetWall_InlineCodeBlock2
 	call	CDlikeSwTtl_SendStartEvt
-	ld	(3295:16), 8
+	ld	(TRACK_ASSIGN_CURSOR:16), 8
 	call	SetWall_UpdateSlotIndex
 	ret
 ; SqTrAs_CursorToFirstPage: Track-assign page, previous page: applies the pending edit of the cursor track
@@ -313,7 +313,7 @@ SetWall_InitCallSequences:
 SqTrAs_CursorToFirstPage:
 	call	SetWall_InlineCodeBlock2
 	call	CDlikeSwTtl_SendStartEvt
-	ld	(3295:16), 0
+	ld	(TRACK_ASSIGN_CURSOR:16), 0
 	call	SetWall_UpdateSlotIndex
 	ret
 	ret
@@ -322,25 +322,25 @@ SqTrAs_CursorToFirstPage:
 	ret
 
 SetWall_SlotSetup:
-	bit 2, (1056:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, SetWall_SlotSetup_Active
 	jp SetWall_SlotSetup_Return
 
 SetWall_SlotSetup_Active:
 	call CDlikeSwTtl_SendStartEvt
-	ld wa, (0x00ffec:24)
+	ld wa, (SEQ_TRACK_MASK_COPY:24)
 	ld	(0x2859:16), wa
-	ld a, (3295:16)
+	ld a, (TRACK_ASSIGN_CURSOR:16)
 	inc 1, a
-	ld	(0x285b:16), a
+	ld	(SEQ_TRACK:16), a
 	call Scoop_SpecialMode_ParamCheckBound
 	call SetWall_SlotBitUpdate
 	ld	wa, (0x2859:16)
-	ld (0x00ffec:24), wa
+	ld (SEQ_TRACK_MASK_COPY:24), wa
 	xor wa, wa
-	ld a, (3295:16)
+	ld a, (TRACK_ASSIGN_CURSOR:16)
 	ld iy, wa
-	ld	a, (0x2857:16)
+	ld	a, (TRACK_ASSIGN_EDIT_VALUE:16)
 	push xde
 	ld xde, 0xf1a0
 	ld	(xde+iy), a
@@ -352,7 +352,7 @@ SetWall_SlotSetup_Return:
 	ret
 
 SetWall_SlotUpdate:
-	bit 2, (1056:16)
+	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr z, SetWall_SlotUpdate_Active
 	jp SetWall_SlotUpdate_Return
 
@@ -366,7 +366,7 @@ SetWall_SlotUpdate_Return:
 
 SetWall_DataBlock1:
 	ld	(GLOBAL_ERROR_CODE:16), 0
-	ld	a, (65507:24)
+	ld	a, (SEQ_CURRENT_SONG:24)
 	ld	(3391:16), a
 	ret
 SqTrAsPsTtl_NullRet:
@@ -377,7 +377,7 @@ SetWall_ACSlotChange:
 	cp (3391:16), 10
 	jr z, SetWall_ACSlot_CheckPanel
 	ld a, (3391:16)
-	cp a, (0xffe3:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr nz, SetWall_ACSlot_IndexChange
 
 SetWall_ACSlot_CheckPanel:
@@ -397,7 +397,7 @@ SetWall_ACSlot_NoPanel:
 	jp SetWall_ACSlot_NormalChange
 
 SetWall_ACSlot_Direct:
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, SetWall_ACSlot_DirectLocal
 	call CDlikeSwTtl_SendEvent8C_A
 	jp SetWall_ACSlot_Return
@@ -407,7 +407,7 @@ SetWall_ACSlot_DirectLocal:
 	jp SetWall_ACSlot_Return
 
 SetWall_ACSlot_PanelChange:
-	cp (0x0340ea:24), 0x00
+	cp (SURE_CONFIRM:24), 0x00
 	jr z, SetWall_ACSlot_PanelLocal
 	call CDlikeSwTtl_SendEvent8C_13
 	jp SetWall_ACSlot_Return
@@ -434,13 +434,13 @@ SetWall_ACSlot_Return:
 	ret
 
 SetWall_WriteSingleSlot:
-	ld	l, (0x285c:16)
+	ld	l, (SEQ_SONG:16)
 	pushw hl
 	ld a, (3391:16)
-	ld	(0x285c:16), a
+	ld	(SEQ_SONG:16), a
 	call SeqVoice_InitEntry
 	popw hl
-	ld	(0x285c:16), l
+	ld	(SEQ_SONG:16), l
 	xor hl, hl
 	ld l, (3390:16)
 	dec 1, l
@@ -660,23 +660,23 @@ SetWall_ExternalSync:
 
 SetWall_InlineCodeBlock2:
 	xor	wa, wa
-	ld	a, (3295:16)
+	ld	a, (TRACK_ASSIGN_CURSOR:16)
 	ld	iy, wa
 	push	xde
 	ld	xde, 0xf1a0
 	ld	a, (xde+iy)
 	pop xde
-	cp	a, (10327:16)
+	cp	a, (TRACK_ASSIGN_EDIT_VALUE:16)
 	jr	nz, SetWall_InlineCodeBlock2_Skip
 	jp	SetWall_InlineCodeBlock2_Return
 SetWall_InlineCodeBlock2_Skip:
-	ld	a, (0x2857:16)
+	ld	a, (TRACK_ASSIGN_EDIT_VALUE:16)
 	xor	w, w
 	ld	iy, wa
 	push	xde
 	ld	xde, SetWall_SlotMaskTable
 	ld	c, (xde+iy)
-	ld a, (3295:16)
+	ld a, (TRACK_ASSIGN_CURSOR:16)
 	ld iy, wa
 	ld	xde, 0xf1a0
 	ld	a, (xde+iy)
@@ -696,25 +696,25 @@ SetWall_InlineCodeBlock2_Return:
 	ret
 
 SetWall_CrossTypeChange:
-	ld xhl, 0xf1a0
+	ld xhl, SEQ_TRACK_ASSIGN
 
 	xor wa, wa
 
-	ld a, (3295:16)
+	ld a, (TRACK_ASSIGN_CURSOR:16)
 
 	ld iy, wa
 
-	ld	a, (0x2857:16)
+	ld	a, (TRACK_ASSIGN_EDIT_VALUE:16)
 
 	ld	c, (xhl+iy)
 
-	ld	(0x2857:16), c
+	ld	(TRACK_ASSIGN_EDIT_VALUE:16), c
 
 	ld	(xhl+iy), a
 
 	ld (3386:16), a
 
-	ld a, (3295:16)
+	ld a, (TRACK_ASSIGN_CURSOR:16)
 
 	ld (3301:16), a
 
@@ -740,18 +740,18 @@ SetWall_CrossType_Validate:
 	ld a, (3301:16)
 	cp a, 0xf
 	jrl ugt, SetWall_CrossType_Reset
-	ld	a, (0x2857:16)
+	ld	a, (TRACK_ASSIGN_EDIT_VALUE:16)
 	cp a, 0x13
 	jrl ugt, SetWall_CrossType_Reset
 	ld (SEQ_ERROR_CODE:16), 0
-	and	(0x285f:16), 191
+	and	(SEQ_EDIT_FLAGS:16), 191
 	xor hl, hl
 	ld l, (3301:16)
 	push xde
 	ld xde, 0xf1a0
 	ld	a, (xde+hl)
 	pop xde
-	cp	a, (0x2857:16)
+	cp	a, (TRACK_ASSIGN_EDIT_VALUE:16)
 	jr z, SetWall_CrossType_Reset
 	ld l, (3301:16)
 	xor h, h
@@ -768,7 +768,7 @@ SetWall_CrossType_ClearBit0:
 	and	(0x285d:16), 254
 
 SetWall_CrossType_CheckDest:
-	cp	(0x2857:16), 12
+	cp	(TRACK_ASSIGN_EDIT_VALUE:16), 12
 	jr nz, SetWall_CrossType_ClearBit1
 	or	(0x285d:16), 2
 	jr SetWall_CrossType_MapLookup
@@ -815,17 +815,17 @@ SetWall_SlotOrderTable:
 SetWall_SlotBitUpdate:
 	ldfr_berp A, 0x3c
 	ldfr_werp DE, 0x3e
-	ld de, (0x00ffec:24)
-	ld a, (3295:16)
+	ld de, (SEQ_TRACK_MASK_COPY:24)
+	ld a, (TRACK_ASSIGN_CURSOR:16)
 	rcf
 	stcf_a_16 de
 	ldto_berp A, 0x3c
-	ld (0x00ffec:24), de
+	ld (SEQ_TRACK_MASK_COPY:24), de
 	ldto_werp DE, 0x3e
 	ret
 
 SetWall_ParsePatternStream:
-	and	(0x285f:16), 251
+	and	(SEQ_EDIT_FLAGS:16), 251
 	xor w, w
 	ld (SEQ_ERROR_CODE:16), 0
 	ld	(0x2861:16), wa
@@ -837,20 +837,20 @@ SetWall_ParsePatternStream:
 
 SetWall_ParseStream_Init:
 	push xhl
-	ld xhl, (4349:16)
-	ld	(0x2865:16), xhl
+	ld xhl, (SEQ_BLOCK_PTR:16)
+	ld	(SEQ_WRITE_BLOCK_PTR:16), xhl
 	pop xhl
-	ld	(0x2869:16), iy
-	ld	wa, (0x2893:16)
-	ld	(0x286b:16), wa
-	ld	(0x286d:16), iy
-	ld	(0x286f:16), wa
+	ld	(SEQOP_PRIMARY_OFFSET:16), iy
+	ld	wa, (SEQ_DATA_BLOCK:16)
+	ld	(SEQOP_PRIMARY_BLOCK:16), wa
+	ld	(SEQOP_SECONDARY_OFFSET:16), iy
+	ld	(SEQOP_SECONDARY_BLOCK:16), wa
 	ld ix, iy
 	ld hl, (3376:16)
 
 SetWall_ParseStream_MainLoop:
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	cp a, 0x82
@@ -890,7 +890,7 @@ SetWall_ParseStream_CheckD1D2:
 
 SetWall_ParseStream_ReadEvent:
 	push xhl
-	ld	xhl, (0x2865:16)
+	ld	xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	(xhl+ix), a
 	pop xhl
 	call SetWall_AdvanceWritePos
@@ -900,12 +900,12 @@ SetWall_ParseStream_ReadEvent:
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SetWall_ParseStream_Return
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	bit	7, (xde+iy)
 	pop xde
 	jrl nz, SetWall_ParseStream_MainLoop
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	jr SetWall_ParseStream_ReadEvent
@@ -919,7 +919,7 @@ SetWall_ParseStream_TypeC0:
 	bit 1, (4393:16)
 	jr nz, SetWall_ParseStream_TypeC0_Loop
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x38
 	pop xiz
 	push_lerp 0x38
@@ -933,7 +933,7 @@ SetWall_ParseStream_TypeC0:
 	pop_lerp 0x38
 	push xiz
 	ldto_lerp XIZ, 0x38
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	cp l, 0:i3
 	jrl nz, SetWall_ParseStream_Advance
@@ -948,7 +948,7 @@ SetWall_ParseStream_C0_Iter:
 
 SetWall_ParseStream_C0_Read:
 	push xhl
-	ld	xhl, (0x2865:16)
+	ld	xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	(xhl+ix), a
 	pop xhl
 	pushw bc
@@ -963,12 +963,12 @@ SetWall_ParseStream_C0_Read:
 	jrl nz, SetWall_ParseStream_Return
 	inc 1, c
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	bit	7, (xde+iy)
 	pop xde
 	jrl nz, SetWall_ParseStream_MainLoop
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	jr SetWall_ParseStream_C0_Iter
@@ -990,7 +990,7 @@ SetWall_ParseStream_B0_ShiftLoop:
 	bit 1, (4393:16)
 	jr nz, SetWall_ParseStream_B0_Iter
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x38
 	pop xiz
 	push_lerp 0x38
@@ -1004,7 +1004,7 @@ SetWall_ParseStream_B0_ShiftLoop:
 	pop_lerp 0x38
 	push xiz
 	ldto_lerp XIZ, 0x38
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SetWall_ParseStream_Return
@@ -1055,7 +1055,7 @@ SetWall_ParseStream_B0_Byte4:
 
 SetWall_ParseStream_B0_Write:
 	push xhl
-	ld	xhl, (0x2865:16)
+	ld	xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	(xhl+ix), a
 	pop xhl
 	pushw bc
@@ -1070,22 +1070,22 @@ SetWall_ParseStream_B0_Write:
 	jr nz, SetWall_ParseStream_Return
 	inc 1, c
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	bit	7, (xde+iy)
 	pop xde
 	jrl nz, SetWall_ParseStream_MainLoop
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	jrl SetWall_ParseStream_B0_ByteLoop
 
 SetWall_ParseStream_End:
 	push xhl
-	ld	xhl, (0x2865:16)
+	ld	xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld	(xhl+ix), a
 	pop xhl
-	ld	wa, (0x286b:16)
+	ld	wa, (SEQOP_PRIMARY_BLOCK:16)
 	ld	(0x2883:16), wa
 	call SetWall_EventOutput
 	call SetWall_EventAdvanceCheck
@@ -1096,9 +1096,9 @@ SetWall_ParseStream_Return:
 SetWall_ParserInit:
 	push xiy
 	ld	(0x2885:16), 16
-	ld	iy, (0x2851:16)
+	ld	iy, (SEQ_BLOCK_TOTAL:16)
 	ld	(0x2886:16), iy
-	ld	xiy, (7510:16)
+	ld	xiy, (SEQ_BLOCK_POOL:16)
 	ld (3304:16), xiy
 	ldw (3376:16), 0
 	ld	(0x2882:16), 15
@@ -1109,14 +1109,14 @@ SetWall_AdvanceStreamPos:
 	inc 1, iy
 	cp iy, 0xff
 	jr ule, SetWall_AdvanceStream_Return
-	ld	hl, (0x286f:16)
+	ld	hl, (SEQOP_SECONDARY_BLOCK:16)
 	call SetWall_StreamIndexResolve
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
-	ld	(0x286f:16), wa
+	ld	(SEQOP_SECONDARY_BLOCK:16), wa
 	ld hl, wa
 	call SetWall_StreamIndexResolve
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	bitm 7, (xhl)
 	jr nz, SetWall_AdvanceStream_Reset
 	ld (SEQ_ERROR_CODE:16), 2
@@ -1129,29 +1129,29 @@ SetWall_AdvanceStream_Return:
 	ret
 
 SetWall_AdvanceWritePos:
-	ld xwa, (4349:16)
+	ld xwa, (SEQ_BLOCK_PTR:16)
 	push xwa
 	inc 1, ix
 	cp ix, 0xff
 	jr ule, SetWall_AdvanceWrite_Return
-	ld	xhl, (0x2865:16)
+	ld	xhl, (SEQ_WRITE_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
-	ld	(0x286b:16), wa
+	ld	(SEQOP_PRIMARY_BLOCK:16), wa
 	ld hl, wa
 	call SetWall_StreamIndexResolve
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	bitm 7, (xhl)
 	jr nz, SetWall_AdvanceWrite_Reset
 	ld (SEQ_ERROR_CODE:16), 2
 	jr SetWall_AdvanceWrite_Return
 
 SetWall_AdvanceWrite_Reset:
-	ld	(0x2865:16), xhl
+	ld	(SEQ_WRITE_BLOCK_PTR:16), xhl
 	ld ix, 5:i3
 
 SetWall_AdvanceWrite_Return:
 	pop xwa
-	ld (4349:16), xwa
+	ld (SEQ_BLOCK_PTR:16), xwa
 	ret
 
 SetWall_SkipC0Scanner:
@@ -1163,14 +1163,14 @@ SetWall_SkipC0Scanner:
 	cp (SEQ_ERROR_CODE:16), 0
 	jr nz, SetWall_SkipC0_Return
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	call SetWall_AdvanceStreamPos
 	cp (SEQ_ERROR_CODE:16), 0
 	jr nz, SetWall_SkipC0_Return
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	xor l, l
@@ -1182,7 +1182,7 @@ SetWall_SkipC0_Return:
 	ret
 
 SetWall_ParseB0ControlChange:
-	ld	a, (0x2857:16)
+	ld	a, (TRACK_ASSIGN_EDIT_VALUE:16)
 	ld (3378:16), a
 	call SetWall_AdvanceStreamPos
 	cp (SEQ_ERROR_CODE:16), 0
@@ -1192,7 +1192,7 @@ SetWall_ParseB0ControlChange:
 	jrl nz, SetWall_B0CC_Return
 	ld (3387:16), 255
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	and a, 0x7f
@@ -1201,7 +1201,7 @@ SetWall_ParseB0ControlChange:
 	cp a, 0x48
 	jr z, SetWall_B0CC_Type48
 	and	(0x2881:16), 251
-	ld	l, (0x2857:16)
+	ld	l, (TRACK_ASSIGN_EDIT_VALUE:16)
 	xor h, h
 	push xde
 	ld xde, SetWall_SlotTypeMap
@@ -1213,7 +1213,7 @@ SetWall_ParseB0ControlChange:
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SetWall_B0CC_Return
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	cp a, 3:i3
@@ -1247,7 +1247,7 @@ SetWall_B0CC_Type48:
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SetWall_B0CC_Return
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	cp a, 5:i3
@@ -1260,7 +1260,7 @@ SetWall_B0CC_Type48:
 	cp (SEQ_ERROR_CODE:16), 0
 	jr nz, SetWall_B0CC_Return
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	and a, 0x7f
@@ -1278,10 +1278,10 @@ SetWall_B0CC_Type48_SetFlag:
 
 SetWall_B0CC_Type48_Check12:
 	and	(0x2881:16), 251
-	cp	(0x2857:16), 12
+	cp	(TRACK_ASSIGN_EDIT_VALUE:16), 12
 	jr nz, SetWall_B0CC_ClearFlags
 	push xde
-	ld xde, (4349:16)
+	ld xde, (SEQ_BLOCK_PTR:16)
 	ld	a, (xde+iy)
 	pop xde
 	cp a, 3:i3
@@ -1305,7 +1305,7 @@ SetWall_EventOutput:
 	ld	(xde+hl), wa
 	xor xwa, xwa
 	ld xiz, SEQ_SONG_SLOTS
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	sla xwa, 11
 	add xiz, xwa
 	ld xde, 0x98
@@ -1324,9 +1324,9 @@ SetWall_EventOutput:
 SetWall_EventAdvanceCheck:
 	ld hl, wa
 	call SetWall_StreamIndexResolve
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
-	ld	(0x2893:16), wa
+	ld	(SEQ_DATA_BLOCK:16), wa
 	cp wa, 0xffff
 	jr z, SetWall_EventAdvance_Return
 	cp	wa, (0x2886:16)
@@ -1353,7 +1353,7 @@ SetWall_SlotResolve:
 SetWall_SlotResolve_Init:
 	ld iy, 5:i3
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x38
 	pop xiz
 	push_lerp 0x38
@@ -1365,7 +1365,7 @@ SetWall_SlotResolve_Init:
 	pop_lerp 0x38
 	push xiz
 	ldto_lerp XIZ, 0x38
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	xor de, de
 	inc 1, de
@@ -1388,7 +1388,7 @@ SetWall_SlotResolve_FoundMatch:
 	ld (3383:16), ix
 	inc 1, de
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x38
 	pop xiz
 	push_lerp 0x38
@@ -1404,7 +1404,7 @@ SetWall_SlotResolve_FoundMatch:
 	pop_lerp 0x38
 	push xiz
 	ldto_lerp XIZ, 0x38
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	cp (SEQ_ERROR_CODE:16), 0
 	jr nz, SetWall_SlotResolve_Return
@@ -1417,25 +1417,25 @@ SetWall_StreamIndexResolve:
 	dec 1, hl
 	extz xhl
 	sla xhl, 8
-	add	xhl, (7510:16)
-	ld (4349:16), xhl
+	add	xhl, (SEQ_BLOCK_POOL:16)
+	ld (SEQ_BLOCK_PTR:16), xhl
 	xor xhl, xhl
 	ret
 
 SetWall_BankInit:
-	ld xhl, 0x110a
+	ld xhl, SEQ_BLOCK_POOL_COPY
 	push xde
-	ld	xde, (7510:16)
+	ld	xde, (SEQ_BLOCK_POOL:16)
 	ld (xhl), xde
 	pop xde
 	ld iy, 1:i3
 	call SetWall_ResolveStreamPtr
-	ldw (0xf22f:16), 1
-	ld xiy, (4349:16)
+	ldw (SEQ_FREE_LIST_HEAD:16), 1
+	ld xiy, (SEQ_BLOCK_PTR:16)
 	xor xhl, xhl
 	ld de, 2:i3
-	ld	bc, (0x2851:16)
-	ld (0xf231:16), bc
+	ld	bc, (SEQ_BLOCK_TOTAL:16)
+	ld (SEQ_FREE_BLOCKS:16), bc
 	dec 1, bc
 
 SetWall_BankInit_SlotLoop:
@@ -1451,7 +1451,7 @@ SetWall_BankInit_SlotLoop:
 	ld (xiy + 1), hl
 	ld (xiy + 5), 0x82
 	ldw (xiy + 3), 0xffff
-	ld xhl, 0xf250
+	ld xhl, SEQ_TRACK_TABLE
 	ldw bc, 0x10
 
 SetWall_BankInit_ClearF250:
@@ -1539,8 +1539,8 @@ SetWall_FullReset_ClearCtrl:
 	inc 1, bc
 	cp bc, 0xa
 	jrl c, SetWall_FullReset_SlotLoop
-	ldw (0xf19e:16), 0
-	ldw (0x00ffec:24), 0x0000
+	ldw (SEQ_TRACK_MASK:16), 0
+	ldw (SEQ_TRACK_MASK_COPY:24), 0x0000
 	ld (0xf24b:16), 0
 	ld xix, 0xcef
 	xor wa, wa
@@ -1558,7 +1558,7 @@ SetWall_FullReset_ClearGlobal2:
 	ld (0xf24b:16), 0
 	call SetWall_SendPanelCtrl
 	ldw	(0x2859:16), 0
-	ldw (0x00ffec:24), 0x0000
+	ldw (SEQ_TRACK_MASK_COPY:24), 0x0000
 	ret
 
 SetWall_SingleSlotResolve:
@@ -1592,10 +1592,10 @@ SetWall_SingleSlot_InvalidPos:
 	jr SetWall_SingleSlot_Return
 
 SetWall_SingleSlot_CheckBounds:
-	ld	(0x2893:16), wa
+	ld	(SEQ_DATA_BLOCK:16), wa
 	ld hl, wa
 	call SetWall_StreamIndexResolve
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	bitm 7, (xhl)
 	jr nz, SetWall_SingleSlot_Return
 	ld (SEQ_ERROR_CODE:16), 11
@@ -1605,29 +1605,29 @@ SetWall_SingleSlot_Return:
 
 SetWall_DualPassScanner:
 	push_sd16w	0x93, 0x28
-	and	(0x285f:16), 223
-	ld a, (1075:16)
+	and	(SEQ_EDIT_FLAGS:16), 223
+	ld a, (ACC_BEATS_PER_BAR:16)
 	ld	(0x2872:16), a
-	bit	2, (0x285f:16)
+	bit	2, (SEQ_EDIT_FLAGS:16)
 	jrl z, SetWall_DualPass_Done
 	ld	a, (0x2871:16)
 	call SetWall_SingleSlotResolve
 	cp (SEQ_ERROR_CODE:16), 0
 	jr z, SetWall_DualPass_InitLoop
-	and	(0x285f:16), 251
+	and	(SEQ_EDIT_FLAGS:16), 251
 	ld (SEQ_ERROR_CODE:16), 0
 	jrl SetWall_DualPass_Done
 
 SetWall_DualPass_InitLoop:
 	xor hl, hl
 	push xwa
-	ld xwa, (4349:16)
+	ld xwa, (SEQ_BLOCK_PTR:16)
 	ld	(0x2873:16), xwa
 	pop xwa
 	ld iy, 5:i3
 
 SetWall_DualPass_MainLoop:
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	a, (xhl+iy)
 	ld w, a
 	and a, 0xf0
@@ -1666,7 +1666,7 @@ SetWall_DualPass_TypeC0:
 	cp (SEQ_ERROR_CODE:16), 0
 	jrl nz, SetWall_DualPass_Error
 	ld	wa, (0x2877:16)
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	w, (xhl+iy)
 	or a, w
 	pushw wa
@@ -1674,12 +1674,12 @@ SetWall_DualPass_TypeC0:
 	popw wa
 	cp (SEQ_ERROR_CODE:16), 0
 	jr nz, SetWall_DualPass_Error
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	d, (xhl+iy)
 	ld	hl, (0x2879:16)
 	or d, l
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x30
 	pop xiz
 	push_lerp 0x30
@@ -1691,7 +1691,7 @@ SetWall_DualPass_TypeC0:
 	pop_lerp 0x30
 	push xiz
 	ldto_lerp XIZ, 0x30
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	ld	(0x2872:16), a
 	call SetWall_StreamAdvanceBounded
@@ -1705,9 +1705,9 @@ SetWall_DualPass_Type81:
 
 SetWall_DualPass_Error:
 	ld (SEQ_ERROR_CODE:16), 0
-	ld a, (1075:16)
+	ld a, (ACC_BEATS_PER_BAR:16)
 	ld	(0x2872:16), a
-	or	(0x285f:16), 32
+	or	(SEQ_EDIT_FLAGS:16), 32
 
 SetWall_DualPass_Done:
 	popw_dd16	0x93, 0x28
@@ -1721,7 +1721,7 @@ SetWall_SkipEvents_CheckCount:
 	jr z, SetWall_SkipEvents_Return
 
 SetWall_SkipEvents_ReadLoop:
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	a, (xhl+iy)
 	cp a, 0x84
 	jr z, SetWall_SkipEvents_EndMarker
@@ -1754,13 +1754,13 @@ SetWall_SkipEvents_Return:
 
 SetWall_ReplayScanner:
 	push_sd16w	0x93, 0x28
-	bit	2, (0x285f:16)
+	bit	2, (SEQ_EDIT_FLAGS:16)
 	jrl z, SetWall_Replay_Done
-	bit	5, (0x285f:16)
+	bit	5, (SEQ_EDIT_FLAGS:16)
 	jrl nz, SetWall_Replay_Done
 	xor hl, hl
 	ld	xhl, (0x287b:16)
-	ld (4349:16), xhl
+	ld (SEQ_BLOCK_PTR:16), xhl
 	ld	iy, (0x287f:16)
 
 SetWall_Replay_MainLoop:
@@ -1771,7 +1771,7 @@ SetWall_Replay_MainLoop:
 	jr z, SetWall_Replay_TypeC0
 	cp w, 0x82
 	jr nz, SetWall_Replay_Type84
-	or	(0x285f:16), 32
+	or	(SEQ_EDIT_FLAGS:16), 32
 	jrl SetWall_Replay_Done
 
 SetWall_Replay_Type84:
@@ -1826,7 +1826,7 @@ SetWall_Replay_C0_Byte4:
 
 SetWall_Replay_C0_ReadBank:
 	ld	wa, (0x2877:16)
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	w, (xhl+iy)
 	or a, w
 	pushw wa
@@ -1838,10 +1838,10 @@ SetWall_Replay_C0_ReadBank:
 	jr SetWall_Replay_Done
 
 SetWall_Replay_C0_ReadCC:
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld	d, (xhl+iy)
 	push xiz
-	ld xiz, (4349:16)
+	ld xiz, (SEQ_BLOCK_PTR:16)
 	ldfr_lerp XIZ, 0x3c
 	pop xiz
 	push_lerp 0x3c
@@ -1853,7 +1853,7 @@ SetWall_Replay_C0_ReadCC:
 	pop_lerp 0x3c
 	push xiz
 	ldto_lerp XIZ, 0x3c
-	ld (4349:16), xiz
+	ld (SEQ_BLOCK_PTR:16), xiz
 	pop xiz
 	ld	(0x2872:16), a
 	call SetWall_StreamAdvanceBounded
@@ -1892,8 +1892,8 @@ SetWall_ResolveStreamPtr:
 	extz xhl
 	dec 1, hl
 	sla xhl, 8
-	add xhl, (4362:16)
-	ld (4349:16), xhl
+	add xhl, (SEQ_BLOCK_POOL_COPY:16)
+	ld (SEQ_BLOCK_PTR:16), xhl
 	xor xhl, xhl
 	ret
 
@@ -1901,7 +1901,7 @@ SetWall_StreamAdvanceBounded:
 	inc 1, iy
 	cp iy, 0xff
 	jr le, SetWall_StreamAdv_Return
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	ld wa, (xhl + 3)
 	cp wa, 0xffff
 	jr ule, SetWall_StreamAdv_CheckBounds
@@ -1915,10 +1915,10 @@ SetWall_StreamAdv_CheckBounds:
 	jr SetWall_StreamAdv_Return
 
 SetWall_StreamAdv_LoadNext:
-	ld	(0x2893:16), wa
+	ld	(SEQ_DATA_BLOCK:16), wa
 	ld hl, wa
 	call SetWall_StreamIndexResolve
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	bitm 7, (xhl)
 	jr nz, SetWall_StreamAdv_Reset
 	ld (SEQ_ERROR_CODE:16), 11
@@ -1936,10 +1936,10 @@ SetWall_ForwardSkip:
 SetWall_ForwardSkip_Loop:
 	cp	(0x2872:16), c
 	jr z, SetWall_ForwardSkip_TargetFound
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	cp	(xhl+iy), 0x82
 	jr nz, SetWall_ForwardSkip_CheckType
-	or	(0x285f:16), 32
+	or	(SEQ_EDIT_FLAGS:16), 32
 	jr SetWall_ForwardSkip_Return
 
 SetWall_ForwardSkip_CheckType:
@@ -1955,7 +1955,7 @@ SetWall_ForwardSkip_CheckType:
 SetWall_ForwardSkip_Type84:
 	ld iy, 5:i3
 	ld	xhl, (0x2873:16)
-	ld (4349:16), xhl
+	ld (SEQ_BLOCK_PTR:16), xhl
 	jr SetWall_ForwardSkip_Loop
 
 SetWall_ForwardSkip_Type81:
@@ -1966,10 +1966,10 @@ SetWall_ForwardSkip_Type81:
 	jr SetWall_ForwardSkip_Loop
 
 SetWall_ForwardSkip_TargetFound:
-	ld xhl, (4349:16)
+	ld xhl, (SEQ_BLOCK_PTR:16)
 	cp	(xhl+iy), 0x82
 	jr nz, SetWall_ForwardSkip_Check84
-	or	(0x285f:16), 32
+	or	(SEQ_EDIT_FLAGS:16), 32
 	jr SetWall_ForwardSkip_Return
 
 SetWall_ForwardSkip_Check84:
@@ -1981,13 +1981,13 @@ SetWall_ForwardSkip_Check84:
 SetWall_ForwardSkip_SaveState:
 	ld	(0x287f:16), iy
 	push xwa
-	ld xwa, (4349:16)
+	ld xwa, (SEQ_BLOCK_PTR:16)
 	ld	(0x287b:16), xwa
 	pop xwa
 	jr SetWall_ForwardSkip_Return
 
 SetWall_ForwardSkip_Error:
-	or	(0x285f:16), 32
+	or	(SEQ_EDIT_FLAGS:16), 32
 	ld (SEQ_ERROR_CODE:16), 0
 
 SetWall_ForwardSkip_Return:
@@ -1997,9 +1997,9 @@ SetWall_InlineCodeBlock3:
 	ret
 SqSngSel_CalcSongUsageOnEnter:
 	call	AccWrap_PlayModeDispatch
-	or	(10379:16), 4
-	ld	wa, (0xffec:24)
-	ld	(0xf19e:16), wa
+	or	(SEQ_RTMCFG:16), 4
+	ld	wa, (SEQ_TRACK_MASK_COPY:24)
+	ld	(SEQ_TRACK_MASK:16), wa
 	push	xix
 	pushw	bc
 	ld	xix, 4421
@@ -2020,7 +2020,7 @@ SqSngSel_CalcSongUsageOnEnter_Loop2:
 	pop	xix
 	ret
 SqTrAs_CondCheck_Helper2:
-	and	(10379:16), 251
+	and	(SEQ_RTMCFG:16), 251
 	xor	wa, wa
 	ld	a, 76:opc
 	call	CtrlPanel_SetIndicatorBit
@@ -2033,7 +2033,7 @@ SetWall_LoadToneGenData:
 	call SetWall_LoadBankToToneGen
 	popw wa
 	ld	a, (7498:16)
-	ld (0x00ffe3:24), a
+	ld (SEQ_CURRENT_SONG:24), a
 	call SetWall_SyncToneGenToDRAM
 	ret
 
@@ -2055,7 +2055,7 @@ SqSngName_ApplyNameAndExit:
 	ldw	bc, 16
 	ldir85
 	xor	xwa, xwa
-	ld	a, (65507:24)
+	ld	a, (SEQ_CURRENT_SONG:24)
 	sla	xwa, 11
 	ld	xix, SEQ_SONG_SLOTS
 	add	xix, xwa
@@ -2083,13 +2083,13 @@ SqSngName_ApplyNameAndExit_Return:
 ;   restores the block pointer 0x10FD. Basis: callers + body -- SqSngSel_CalcSongUsageOnEnter calls it for songs 0..9
 ;   and copies 0x286C to the table 0x1145; its header describes this computation.
 SqSngSel_CalcSongUsagePercent:
-	ld	xwa, (4349:16)
+	ld	xwa, (SEQ_BLOCK_PTR:16)
 	push	xwa
 	xor	xwa, xwa
 	ld	a, (10319:16)
-	cp a, (65507:24)
+	cp a, (SEQ_CURRENT_SONG:24)
 	jr	nz, SqSngSel_CalcSongUsagePercent_Skip3
-	ld	xix, 62032
+	ld	xix, SEQ_TRACK_TABLE
 	jr	SqSngSel_CalcSongUsagePercent_Join
 SqSngSel_CalcSongUsagePercent_Skip3:
 	ld	xix, SEQ_SONG_SLOTS
@@ -2120,7 +2120,7 @@ SqSngSel_CalcSongUsagePercent_Skip:
 	jr	z, SqSngSel_CalcSongUsagePercent_Join2
 	ld	xde, xbc
 	mul	bc, 100
-	ld	hl, (10321:16)
+	ld	hl, (SEQ_BLOCK_TOTAL:16)
 	div	xbc, hl
 	inc	1, bc
 	cp	bc, 100
@@ -2129,7 +2129,7 @@ SqSngSel_CalcSongUsagePercent_Skip:
 SqSngSel_CalcSongUsagePercent_Join2:
 	ld	(10320:16), c
 	pop	xwa
-	ld	(4349:16), xwa
+	ld	(SEQ_BLOCK_PTR:16), xwa
 	ret
 SetWall_MiscDataAndCode_Data:
 	.byte 0xe7, 0x34, 0xa8	; ld XBC3,0
@@ -2142,7 +2142,7 @@ SetWall_MiscDataAndCode_Data:
 	push_lerp 52
 	call	SetWall_MiscDataAndCode_Data_Code_Helper
 	pop_lerp 52
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	bitm 7, (xhl)
 	pop	xhl
 	jr	z, SetWall_MiscDataAndCode_Data_Code_Return
@@ -2151,7 +2151,7 @@ SetWall_MiscDataAndCode_Data_Code_Join:
 	push_lerp	52
 	call	SetWall_MiscDataAndCode_Data_Code_Helper
 	pop_lerp 52
-	ld	xhl, (4349:16)
+	ld	xhl, (SEQ_BLOCK_PTR:16)
 	bit	7, (xhl)
 	jr	z, SetWall_MiscDataAndCode_Data_Code_Return
 	ld	hl, (xhl+3)
@@ -2163,34 +2163,34 @@ SetWall_MiscDataAndCode_Data_Code_Return:
 	ret
 SetWall_MiscDataAndCode_Data_Code_Helper:
 	push	xiy
-	ld	xiy, (7510:16)
+	ld	xiy, (SEQ_BLOCK_POOL:16)
 	extz	xhl
 	dec	1, xhl
 	sla	xhl, 8
 	add	xiy, xhl
-	ld	(4349:16), xiy
+	ld	(SEQ_BLOCK_PTR:16), xiy
 	xor	xhl, xhl
 	pop	xiy
 	ret
 SetWall_SyncToneGenToDRAM:
-	ld wa, (0xf22f:16)
+	ld wa, (SEQ_FREE_LIST_HEAD:16)
 	ld	(0x2853:16), wa
-	ld wa, (0xf231:16)
+	ld wa, (SEQ_FREE_BLOCKS:16)
 	ld	(0x2855:16), wa
 	xor xwa, xwa
-	ld a, (0x00ffe3:24)
+	ld a, (SEQ_CURRENT_SONG:24)
 	sla xwa, 11
 	ld xiy, SEQ_SONG_SLOTS
 	add xiy, xwa
-	ld xix, 0xf180
+	ld xix, SEQ_SONG_RECORD
 	ldw bc, 0x800
 	ldir85
 	ld	wa, (0x2853:16)
-	ld (0xf22f:16), wa
+	ld (SEQ_FREE_LIST_HEAD:16), wa
 	ld	wa, (0x2855:16)
-	ld (0xf231:16), wa
-	ld wa, (0xf19e:16)
-	ld (0x00ffec:24), wa
+	ld (SEQ_FREE_BLOCKS:16), wa
+	ld wa, (SEQ_TRACK_MASK:16)
+	ld (SEQ_TRACK_MASK_COPY:24), wa
 	and	(0x2889:16), 254
 	cp wa, 0:i3
 	jr z, SetWall_Sync_ApplySongGmFlag
@@ -2226,11 +2226,11 @@ SetWall_Sync_FinalUpdate:
 
 	ld (4596:16), 1
 
-	and	(0x288b:16), 247
+	and	(SEQ_RTMCFG:16), 247
 
 	call	SeqPlay_CheckStartConditions	; call SeqPlay_CheckStartConditions (v7 addr)
 
-	and	(0x2895:16), 254
+	and	(SEQ_CYCLE_FLAGS:16), 254
 
 	call	Audio_CheckSubsystemReady
 
@@ -2239,14 +2239,14 @@ SetWall_Sync_FinalUpdate:
 
 
 SetWall_LoadBankToToneGen:
-	ld wa, (0x00ffec:24)
-	ld (0xf19e:16), wa
+	ld wa, (SEQ_TRACK_MASK_COPY:24)
+	ld (SEQ_TRACK_MASK:16), wa
 	ld xix, SEQ_SONG_SLOTS
 	xor xhl, xhl
-	ld l, (0x00ffe3:24)
+	ld l, (SEQ_CURRENT_SONG:24)
 	sla xhl, 11
 	add xix, xhl
-	ld xiy, 0xf180
+	ld xiy, SEQ_SONG_RECORD
 	ldw bc, 0x800
 	ldir85
 	ret

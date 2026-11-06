@@ -89,9 +89,11 @@ PROFILES = {
 # kind); `sigmap`, its propdata type characters in the KN7000's alphabet
 # (milk_model.SIGMAP_NAKA: with it selfsize and allsize agree for all 449 / 451
 # classes, milk_model --check); `labels` may be .equ includes.  `pal` None: no palette.
+# The siblings' `syms` end with lane sibling-names' <model>_aligned.sym and <model>_ram.sym (in the
+# Makefiles' program-src order; milk_model.read_syms skips a file that does not exist, the first name wins).
 for _m, _r1, _end in (("kn6000", 0x176037, 0x3F47EC), ("kn6500", 0x176839, 0x37E44C)):
     PROFILES[_m] = dict(root=f"../{_m}", rom=f"baserom/{_m}_program.rom", src="src/program", code="src/program.s",
-                        prog="src/program.s", syms=[f"{_m}.sym", f"{_m}_manual.sym", f"{_m}_ported.sym"],
+                        prog="src/program.s", syms=[f"{_m}.sym", f"{_m}_manual.sym", f"{_m}_ported.sym", f"{_m}_aligned.sym", f"{_m}_ram.sym"],
                         labels=["src/symbols.inc", "src/labels.inc"], r1=_r1, pal=None, end=_end,
                         base=0x4C000000, scheme="naka", sigmap=MM.SIGMAP_NAKA, model=_m.upper(),
                         functions_sym=True, bitmaps=True, code_ids=True, text_strict=True, tones=True,
@@ -119,7 +121,7 @@ PROFILES["kn6000"]["hash_tables"] = [
 # vectors, to the MILK kernel's code at 0x1E427C).
 PROFILES["kn2400"] = dict(root="../kn2400", rom="baserom/kn2400_program.rom", src="src/program",
                           code="src/program.s", prog="src/program.s",
-                          syms=["kn2400.sym", "kn2400_manual.sym", "kn2400_ported.sym"],
+                          syms=["kn2400.sym", "kn2400_manual.sym", "kn2400_ported.sym", "kn2400_aligned.sym", "kn2400_ram.sym"],
                           labels=["src/symbols.inc", "src/labels.inc"], r1=0x00000F, pal=None, end=0x1E427C,
                           model="KN2400", functions_sym=True, bitmaps=True, code_ids=True, text_strict=True,
                           string_arrays=True, structs=True,
@@ -151,7 +153,7 @@ PROFILES["kn2400"] = dict(root="../kn2400", rom="baserom/kn2400_program.rom", sr
 # (0x26D8 bytes, func_97800082, the XAPR header's first code vector's loop).
 PROFILES["hdsx3"] = dict(root="../hdsx3", rom="baserom/hdsx3_extapr.rom", src="src/program",
                          code="src/program.s", prog="src/program.s",
-                         syms=["hdsx3.sym", "hdsx3_manual.sym", "hdsx3_ported.sym"],
+                         syms=["hdsx3.sym", "hdsx3_manual.sym", "hdsx3_ported.sym", "hdsx3_aligned.sym", "hdsx3_ram.sym"],
                          labels=["src/symbols.inc", "src/labels.inc"], r1=0x03DED6, pal=None, end=0x0B655C,
                          base=0x97800000, scheme="naka", sigmap=MM.SIGMAP_NAKA, model="HDSX3",
                          functions_sym=True, host="kn6000", constants="../kn6000/src/constants.inc",
