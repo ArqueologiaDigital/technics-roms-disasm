@@ -1,0 +1,86 @@
+# rename_kernel4.sed -- KN5000 MAIN-CPU kernel labels -> the canonical names of wsa1/kernel/kernel.s
+# Written by wsa1/notes/open10-kernel4-probes/kernel4_maincpu.py --emit (lane open10/kernel4, 2026-11-06).
+# Each main-CPU label on the left IS the kernel.s label on the right (--pairing --selftest, measured in
+# v10, v9 and v7 alike); six are outside the extent -- the kernel's data (TaskSched_TaskTable, _ExtQueueByteInit,
+# _ExtQueue2ByteInit, TaskTimer_NullCallback) and the timer-3 start / stop pair it calls -- named as the
+# sub-CPU names them.  Apply to
+# the main-CPU trees v10, v9, v7, v6, v5 (and their prose); NOT to the sub-CPU trees, whose names A3 set.
+s/\<TaskSched_ChangePriority_Inline_NotReady\>/Kernel_SetTaskLevel_NoDispatch__store_only/g
+s/\<TaskSched_ChangePriority_Inline_Return\>/Task_Reassign_Guard_Return/g
+s/\<TaskSched_YieldToQueue_NoBlock_Return\>/Kernel_RotateQueue__ret/g
+s/\<TaskSched_SignalEvent_NoBlock_Unlink\>/TaskEvent_Signal_NoResched_Wake/g
+s/\<TaskSched_ChangePriority_NotReady\>/Kernel_SetTaskLevel__store_only/g
+s/\<TaskSched_GetCurrentGroup_Nested\>/TaskSched_ReturnZero/g
+s/\<AudioLock_Release_NB_WakeWaiter\>/Kernel_SemaSignal_NoDispatch__wake/g
+s/\<AudioLock_Release_NoWaiter_Done\>/Kernel_SemaSignal__return/g
+s/\<TaskSched_ChangePriority_Inline\>/Kernel_SetTaskLevel_NoDispatch/g
+s/\<AudioLock_Release_NB_Saturated\>/Kernel_SemaSignal_NoDispatch__return/g
+s/\<TaskSched_Resume_DecrementWait\>/TaskSched_Block_Self_Consume/g
+s/\<TaskSched_WakeBySlotID_Pending\>/TaskSched_Wake_Task_Count/g
+s/\<TaskSched_YieldToQueue_NoBlock\>/Kernel_RotateQueue/g
+s/\<TaskSched_SignalEvent_NoBlock\>/TaskEvent_Signal_NoResched/g
+s/\<AudioLock_Release_WakeWaiter\>/Kernel_SemaSignal__wake/g
+s/\<TaskMsg_Send_NB_WakeReceiver\>/MsgQueue_Send_NoDispatch__wake/g
+s/\<TaskSched_InitPriorityQueues\>/Kernel_InitRam__ready_queues/g
+s/\<TaskSched_ScanPriorityQueues\>/Kernel_Dispatch__pick_task/g
+s/\<TaskSched_SignalEvent_Unlink\>/TaskEvent_Signal_Wake/g
+s/\<TaskSched_WaitForEvent_Block\>/TaskEvent_Wait_SuspendTask/g
+s/\<TaskSched_WakeInline_Pending\>/TaskSched_Wake_Task_NoResched_Count/g
+s/\<AudioLock_TryAcquire_Return\>/Kernel_SemaTryWait__ret/g
+s/\<Stop_and_Clear_8bit_Timer_3\>/Timer3_Stop/g
+s/\<TaskSched_ExtQueue2ByteInit\>/TaskSched_SemaphoreInit/g
+s/\<TaskSched_WakeInline_Return\>/Kernel_ReadyTask_NoDispatch__done/g
+s/\<TaskSched_ExtQueueByteInit\>/TaskSched_EventFlagInit/g
+s/\<TaskSched_ReturnToDispatch\>/Kernel_ResumeTask/g
+s/\<AudioLock_TryAcquire_Fail\>/Kernel_SemaTryWait__fail/g
+s/\<TaskMsg_Send_NB_QueueFull\>/MsgQueue_Send_NoDispatch__no_node/g
+s/\<TaskMsg_Send_WakeReceiver\>/MsgQueue_Send__wake/g
+s/\<TaskMsg_TryReceive_Return\>/MsgQueue_Receive_NoBlock__ret/g
+s/\<TaskSched_ExitCurrentTask\>/Kernel_ExitTask/g
+s/\<TaskSched_GetCurrentGroup\>/TaskSched_GetCurrentTaskId/g
+s/\<TaskSched_TimerDesc_Slot1\>/SoftTimer_Request_Boot/g
+s/\<TaskMsg_TryReceive_Empty\>/MsgQueue_Receive_NoBlock__empty/g
+s/\<TaskSched_ChangePriority\>/Kernel_SetTaskLevel/g
+s/\<TaskSched_CheckTimerSlot\>/Kernel_ServiceSoftTimers__next/g
+s/\<TaskSched_FoundReadyTask\>/Kernel_Dispatch__switch_to/g
+s/\<TaskSched_InitExtQueues2\>/Kernel_InitRam__sema_queues/g
+s/\<TaskSched_InitLockQueues\>/Kernel_InitRam__wait_queues/g
+s/\<TaskSched_InitTimerSlots\>/Kernel_InitRam__soft_timers/g
+s/\<TaskSched_ScanQueue_Loop\>/Kernel_Dispatch__scan/g
+s/\<TaskSched_TimerSlot_Fire\>/Kernel_ServiceSoftTimers__fire/g
+s/\<TaskSched_TimerSlot_Skip\>/Kernel_ServiceSoftTimers__step/g
+s/\<AudioLock_Acquire_Block\>/Kernel_SemaWait__block/g
+s/\<TaskSched_InitExtQueues\>/TaskSched_Init_QueueGroup_B/g
+s/\<TaskSched_InitMsgQueues\>/Kernel_InitRam__msg_queues/g
+s/\<TaskSched_InitTCBFields\>/Kernel_InitRam__tcbs/g
+s/\<TaskSched_LinkFreeSlots\>/Kernel_InitRam__free_append/g
+s/\<TaskMsg_Send_NB_Return\>/MsgQueue_Send_NoDispatch__ret/g
+s/\<TaskMsg_Send_QueueFull\>/MsgQueue_Send__no_node/g
+s/\<TaskSched_InitFreeList\>/Kernel_InitRam__free_nodes/g
+s/\<TaskSched_WaitForEvent\>/TaskEvent_Wait/g
+s/\<TaskSched_WakeBySlotID\>/Kernel_ReadyTask/g
+s/\<TaskSched_YieldToQueue\>/Kernel_YieldRotate/g
+s/\<TaskTimer_NullCallback\>/TaskSched_NullTimerCallback/g
+s/\<TaskMsg_Receive_Block\>/MsgQueue_ReceiveBlocking__block/g
+s/\<TaskSched_SignalEvent\>/TaskEvent_Signal/g
+s/\<TaskSched_TCBTemplate\>/Kernel_KillTask/g
+s/\<AudioLock_TryAcquire\>/Kernel_SemaTryWait/g
+s/\<INTT3_EnterScheduler\>/IRQ_Epilogue__enter_kernel/g
+s/\<TaskSched_SpawnTask\>/Kernel_StartTask/g
+s/\<TaskSched_TaskTable\>/TaskSched_TaskDescriptorTable/g
+s/\<TaskSched_TimerTick\>/Kernel_ServiceSoftTimers/g
+s/\<AudioLock_GetCount\>/TaskSem_GetCount/g
+s/\<Audio_Lock_Acquire\>/Kernel_SemaWait/g
+s/\<Audio_Lock_Release\>/Kernel_SemaSignal/g
+s/\<INTT3_CheckNesting\>/IRQ_Epilogue/g
+s/\<Start_8bit_Timer_3\>/Timer3_Start/g
+s/\<TaskMsg_TryReceive\>/MsgQueue_Receive_NoBlock/g
+s/\<TaskSched_Dispatch\>/Kernel_Dispatch/g
+s/\<TaskSched_HaltLoop\>/Kernel_Idle__loop/g
+s/\<TaskSched_PostInit\>/Kernel_InitRam__install/g
+s/\<TaskTimer_Register\>/SoftTimer_Register/g
+s/\<TaskSched_AllIdle\>/Kernel_Idle/g
+s/\<TaskSched_Resume\>/Kernel_BlockSelf/g
+s/\<TaskMsg_Receive\>/MsgQueue_ReceiveBlocking/g
+s/\<TaskSched_Init\>/Kernel_InitRam/g
+s/\<TaskMsg_Send\>/MsgQueue_Send/g

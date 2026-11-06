@@ -1,6 +1,7 @@
 ; ==============================================================================
 ; Technics SX-WSA1R -- THE MULTITASKING KERNEL, ONE SOURCE FOR BOTH PROCESSORS
 ;   (and, since 2026-11-06, for the KN5000's sub-CPU as well: "A THIRD PROCESSOR")
+;   (and its MAIN CPU: "A FOURTH PROCESSOR", the same day)
 ; ==============================================================================
 ;
 ; The WSA1R has two Toshiba TMP95C061s and they run THE SAME KERNEL.  Until now
@@ -21,6 +22,11 @@
 ;         .include "kernel_kn5000_subcpu.inc"     (-I wsa1/kernel; v141 and v140,
 ;         .include "kernel.s"                     generated from v142, do the same)
 ;                                             ->  0x01FDDA-0x02083A in payload v1.42
+;
+;     v10/maincpu/boot/system_handlers.s     the KN5000's MAIN CPU, TMP94C241F
+;         .include "kernel_kn5000_maincpu.inc"    (-I wsa1/kernel; v9 -- and v8,
+;         .include "kernel.s"                     its build -- and v7 do the same)
+;                                             ->  0xEF1977-0xEF23D9 in program v10
 ;
 ; ==============================================================================
 ; ★★ A THIRD PROCESSOR (2026-11-06, join/split phase A3, register item N-8c52a3ed)
@@ -88,6 +94,43 @@
 ;   (FINDINGS-kernel-in-the-kn5000.md sec 7, v10/v9/v7 around 0xEF1977); joining
 ;   it would be a fourth processor and a fourth .inc (a follow-up, see the A3
 ;   README).
+;   ★ DONE THE SAME DAY: see "A FOURTH PROCESSOR" below.
+;
+; ==============================================================================
+; ★★ A FOURTH PROCESSOR (2026-11-06, lane open10/kernel4, L-kernel-a3-kn5000-maincpu)
+; ==============================================================================
+; The KN5000 MAIN program (v10, v9 and its v8 build, v7) builds its kernel from
+; this file too, through kernel_kn5000_maincpu.inc, and all four images rebuild
+; byte for byte (`make gate`).  KERNEL_KN5000 is now a processor number:
+;     0  the SX-WSA1R, both CPUs     1  the KN5000 sub-CPU     2  the KN5000 main CPU
+;   `.if KERNEL_KN5000` is text both KN5000 processors assemble; `.if KERNEL_KN5000
+;   == 2` / `!= 2` the few lines where the main CPU's differ from the sub-CPU's.
+;
+;   MEASURED FIRST (wsa1/notes/open10-kernel4-probes/kernel4_maincpu.py --pairing):
+;   one LCS over the whole extent, the main CPU's listing against this file's KN5000
+;   view, both decoded off the dumps: 1,135 slots on each side, 1,133 aligned,
+;   1,030 byte-identical, every other aligned pair an operand the .inc names -- so the
+;   two KN5000 kernels are ONE build over two RAM maps, not merely the same design.
+;   All 33 KN5000 routines pair (scores 0.98-1.00; v10, v9 and v7 alike), in the same
+;   ROM order, and every one of the main CPU's 73 kernel labels lands on a label of
+;   this file.  (After the fact: the main program exports the kernel to its plug-ins
+;   as muITRON stubs -- `rot_rdq_X: jp ...`, `sig_sem_X`, `wai_flg_X`, `snd_msg_X` --
+;   and all 11 land on the routine of that meaning: Kernel_YieldRotate,
+;   Kernel_SemaSignal, TaskEvent_Wait, MsgQueue_Send, ...)  The text differs in two places: the event-flag and semaphore copy
+;   lengths, which the sub-CPU writes `ld bc, N:i3` (N = 2, 4 fit in 3 bits) and the
+;   main CPU `ldw bc, N` (N = 10, 12) -- the two `.if KERNEL_KN5000 == 2` blocks.
+;   Three sub-CPU lines spelled a per-CPU value as a literal or a label and now name
+;   it (KERNEL_EVENT_COUNT, KERNEL_EVENT_FLAG_IMAGE, KERNEL_TICK_TREG3).
+;
+;   NAMES.  The main CPU's kernel labels took this file's names (73, and six labels
+;   outside it took the sub-CPU's: scripts/renaming/rename_kernel4.sed); each routine
+;   records them under
+;     ; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+;   with the main CPU's comments.  ⚠ ADDRESSES IN THOSE COMMENTS ARE THE MAIN CPU'S
+;   (v10; its RAM map is kernel_kn5000_maincpu.inc).  So since this lane the two
+;   KN5000 processors call the same routine by the same name (TaskSched_Dispatch is
+;   Kernel_Dispatch on both; Audio_Lock_Acquire / _Release are Kernel_SemaWait /
+;   Kernel_SemaSignal).
 ;
 ; ★★ THE BYTE GATE IS THE PROOF, AND IT IS THE WHOLE POINT.
 ;
@@ -424,6 +467,13 @@
 ;    TaskSched_Init_LinkFreeNodes = Kernel_InitRam__free_append,
 ;    TaskSched_Init_QueueGroup_D = Kernel_InitRam__wait_queues,
 ;    TaskSched_Init_QueueGroup_E = Kernel_InitRam__msg_queues.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_Init = Kernel_InitRam, TaskSched_InitPriorityQueues = Kernel_InitRam__ready_queues, TaskSched_InitTCBFields = Kernel_InitRam__tcbs,
+;    TaskSched_InitTimerSlots = Kernel_InitRam__soft_timers, TaskSched_InitExtQueues = TaskSched_Init_QueueGroup_B, TaskSched_InitExtQueues2 = Kernel_InitRam__sema_queues,
+;    TaskSched_InitFreeList = Kernel_InitRam__free_nodes, TaskSched_LinkFreeSlots = Kernel_InitRam__free_append, TaskSched_InitLockQueues = Kernel_InitRam__wait_queues,
+;    TaskSched_InitMsgQueues = Kernel_InitRam__msg_queues, TaskSched_TimerDesc_Slot1 = SoftTimer_Request_Boot.
 Kernel_InitRam:
 	ld XSP,KERNEL_STACK_TOP                      ; F85606/F9816B  a=47 80 eb 60 00 c=47 00 fa 00 00   c: ld XSP,0x0000fa00   the boot stack
 	xor WA,WA                                    ; F8560B/F98170  d8 d0   xor WA,WA
@@ -473,14 +523,18 @@ Kernel_InitRam__soft_timers:
 	add IX,0x0008                                ; F8564C/F981B1  dc c8 08 00   add IX,0x0008
 	djnz8 b, Kernel_InitRam__soft_timers         ; F85650/F981B5  ca 1c f6   djnz B,0xf981ae
 .if KERNEL_KN5000
-	ld xhl, TaskSched_EventFlagInit
+	ld xhl, KERNEL_EVENT_FLAG_IMAGE
 	ldw de, KERNEL_EVENT_FLAGS
 	extz xde
+.if KERNEL_KN5000 == 2
+	ldw	bc, KERNEL_EVENT_COUNT
+.else
 	ld bc, 2:i3
+.endif
 	ldir83
 	ldw hl, KERNEL_EVENT_QUEUES
 	extz xhl
-	ld b, 0x2:opc
+	ld b, KERNEL_EVENT_COUNT:opc
 TaskSched_Init_QueueGroup_B:
 	ld ix, hl
 	ld (xhl+), IX
@@ -491,7 +545,11 @@ TaskSched_Init_QueueGroup_B:
 	ldw de, KERNEL_SEMA_COUNTS                   ; F85658/F981BD  a=32 5c 03 c=32 3c 01   c: ld DE,0x013c
 	extz XDE                                     ; F8565B/F981C0  ea 12   extz XDE
 .if KERNEL_KN5000
+.if KERNEL_KN5000 == 2
+	ldw	bc, KERNEL_SEMA_COUNT
+.else
 	ld bc, 4:i3
+.endif
 .else
 	ldw bc, KERNEL_SEMA_COUNT                    ; F8565D/F981C2  a=31 08 00 c=31 04 00   c: ld BC,0x0004
 .endif
@@ -629,9 +687,16 @@ Kernel_InitRam__msg_queues:
 ;   +2 word  period in ticks (1) copied to BOTH the slot's down-counter (+0) and reload (+2)
 ;   +4 long  callback            copied to the slot's +4; Kernel_ServiceSoftTimers calls it
 SoftTimer_Request_Boot:
+	; The descriptor Kernel_InitRam__msg_queues passes to SoftTimer_Register in XWA.  SoftTimer_Register
+	; reads byte +0 as the timer slot; +4 is TaskSched_NullTimerCallback, a bare `ret`.  Was decoded as
+	; `normal / nop / normal / nop / jr pe, 25 / .byte 0xef / nop`.
 	.short 0x0001                                ; F856E0/F98245  01 00   slot number, read as a BYTE by SoftTimer_Register   slot index, read as a byte by 0xF85D78
 	.short 0x0001                                ; F856E2/F98247  01 00   copied into BOTH slot+0 and slot+2   the period: countdown and reload
 	.long KERNEL_BOOT_TIMER_CALLBACK             ; F856E4/F98249  a=c2 5e f8 00 c=12 81 f9 00   c: the callback: SoftTimer_RotateLevel2   SoftTimer_RotateLevel3
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_PostInit = Kernel_InitRam__install.
 Kernel_InitRam__install:
 	call SoftTimer_Register                      ; F856E8/F9824D  a=1d 78 5d f8 c=1d dd 88 f9   c: call 0xf988dd   install that request, then FALL INTO Kernel_Start
 
@@ -740,7 +805,7 @@ Kernel_InitRam__install:
 
 .if KERNEL_KN5000
 	calr Timer3_Stop
-	ld (TREG3:8), 0x1D:io
+	ld (TREG3:8), KERNEL_TICK_TREG3:io
 	ld	a, (INTET23:8)
 	and a, 0xF
 	or a, 0x20
@@ -794,6 +859,10 @@ Kernel_Start:
 ; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
 ; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
 ;    TaskSched_Halt = Kernel_Idle, TaskSched_HaltLoop = Kernel_Idle__loop.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_AllIdle = Kernel_Idle, TaskSched_HaltLoop = Kernel_Idle__loop.
 Kernel_Idle:
 	ei 0x00                                      ; F85711/F98276  06 00   ei 0x00
 .if KERNEL_KN5000
@@ -872,6 +941,11 @@ Kernel_Idle__loop:
 ;    TaskSched_Dispatch = Kernel_Dispatch, TaskSched_Dispatch_ScanQueues = Kernel_Dispatch__pick_task,
 ;    TaskSched_Dispatch_ScanLoop = Kernel_Dispatch__scan,
 ;    TaskSched_Dispatch_SwitchTo = Kernel_Dispatch__switch_to.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_Dispatch = Kernel_Dispatch, TaskSched_ScanPriorityQueues = Kernel_Dispatch__pick_task, TaskSched_ScanQueue_Loop = Kernel_Dispatch__scan,
+;    TaskSched_FoundReadyTask = Kernel_Dispatch__switch_to.
 Kernel_Dispatch:
 .if KERNEL_KN5000
 	ld (KERNEL_PRIORITY_OUT:16), 0
@@ -958,6 +1032,10 @@ Kernel_Dispatch__switch_to:
 ; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
 ; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
 ;    TaskSched_ContextRestore = Kernel_ResumeTask.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_ReturnToDispatch = Kernel_ResumeTask.
 Kernel_ResumeTask:
 	pop XIZ                                      ; F85763/F982C8  5e   pop XIZ   restore the task's registers and return into it
 	pop XIY                                      ; F85764/F982C9  5d   pop XIY
@@ -1034,6 +1112,11 @@ Kernel_ResumeTask:
 ; While the lock is non-zero Kernel_Dispatch refuses to context-switch (see 0x01FF21).
 ; No caller was found by a whole-ROM branch-target scan; it is most likely reached through
 ; a dynamically installed vector (see SoftTimer_Register 0x02072A). Register use: WA, XIX, B.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_TimerTick = Kernel_ServiceSoftTimers, TaskSched_CheckTimerSlot = Kernel_ServiceSoftTimers__next, TaskSched_TimerSlot_Skip = Kernel_ServiceSoftTimers__step,
+;    TaskSched_TimerSlot_Fire = Kernel_ServiceSoftTimers__fire.
 Kernel_ServiceSoftTimers:
 .if KERNEL_KN5000
 ; Software one-shot/periodic timer service. Walks the 1-entry timer table at 0x10CA
@@ -1165,6 +1248,10 @@ Kernel_ServiceSoftTimers__fire:
 ; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
 ; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
 ;    TaskSwitch_Countdown = IRQ_Epilogue, TaskSwitch_Expired = IRQ_Epilogue__enter_kernel.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    INTT3_CheckNesting = IRQ_Epilogue, INTT3_EnterScheduler = IRQ_Epilogue__enter_kernel.
 IRQ_Epilogue:
 	pushw wa                                     ; F857B7/F9831C  28   push WA   THE SHARED INTERRUPT EPILOGUE
 .if KERNEL_KN5000
@@ -1372,6 +1459,22 @@ Kernel_StartTask_StackArg:
 ; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
 ; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
 ;    TaskSched_SpawnTask = Kernel_StartTask.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_SpawnTask = Kernel_StartTask.
+; ===========================================================================
+; Kernel_StartTask - start task A (1-5) of TaskSched_TaskDescriptorTable
+; ===========================================================================
+; Entry: A = task number (WA from the callers: 2 = DiskStream_ReaderTask, 4 = MainTitle_TeardownAndLoop,
+;        5 = DrawTask_Main)
+; Does:  if the task's TCB (0x47D + 12*A) is idle (+9 = 0), stores the task number at +11, builds the task's
+;        first frame 0x22 below its stack top (initial SR word, entry point), stores the frame pointer at +4 and
+;        the priority at +8, marks it ready (+9 := 4, +10 := 0), links it at the tail of ready queue
+;        0x4C1 + 4*priority, and enters Kernel_Dispatch; a task that is not idle makes it return at once
+;        (Kernel_ResumeTask).  Its sub-CPU twin (v142) has the same name: an aligned run of 63 B at +32
+;        (technics-docs cpu-subsystem.md).  Called "Show_ScreenGroup" until 2026-10-17; it draws nothing.
+; ===========================================================================
 Kernel_StartTask:
 	push SR                                      ; F857D9/F9833E  02   push SR
 	ei 0x06                                      ; F857DA/F9833F  06 06   ei 0x06
@@ -1482,6 +1585,15 @@ Kernel_StartTask:
 ; Kernel_InitRam uses), the current TCB (pointer at 0x1046) gets state +0x09 = 0 and pending
 ; count +0x0A = 0, 0x1046 is cleared, the TCB is unlinked from its queue and
 ; Kernel_Dispatch picks the next task.  No caller in v1.42.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_ExitCurrentTask = Kernel_ExitTask.
+; Kernel_ExitTask: Ends the calling task: on the scheduler stack (XSP := 0x1E53A) clears the current task's
+;   TCB (TASK_CURRENT) bytes +9/+10, sets the current task to 0, unlinks the TCB from its queue (+0 next, +2 prev) and enters
+;   Kernel_Dispatch; it never returns. Basis: callers + body -- DiskStream_ReaderTask calls it as its last action
+;   once the stream is read (0x2357E := 0); Kernel_StartTask is the start side (TCB +9 := 4, linked into queue 0x4C1 +
+;   4 * priority).
 Kernel_ExitTask:
 	ei 0x06                                      ; F8584A/F983AF  06 06   ei 0x06
 	ld XSP,KERNEL_STACK_TOP                      ; F8584C/F983B1  a=47 80 eb 60 00 c=47 00 fa 00 00   c: ld XSP,0x0000fa00   the BOOT stack -- the task's own stack is abandoned
@@ -1558,6 +1670,10 @@ Kernel_YieldRotate_StackArg:
 
 ; HL = the running task's id (TCB +0x0B, the byte Kernel_StartTask stores), or 0 when the
 ; scheduler lock depth at 0x10D2 is non-zero.  No caller in v1.42.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_GetCurrentGroup = TaskSched_GetCurrentTaskId, TaskSched_GetCurrentGroup_Nested = TaskSched_ReturnZero.
 TaskSched_GetCurrentTaskId:
 	ld hl, (KERNEL_LOCK_DEPTH:16)
 	or hl, hl
@@ -1647,6 +1763,14 @@ TaskSched_ReturnZero:
 ; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
 ; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
 ;    TaskSched_PreemptiveYield = Kernel_YieldRotate.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_YieldToQueue = Kernel_YieldRotate.
+; Kernel: rotates ready queue A (rot_rdq_X, the ITRON rot_rdq call, jumps here): when more
+; than one task is ready at priority A (queue at 0x4c1 + 4*A), the first is moved to the end
+; and the scheduler runs (Kernel_Dispatch); otherwise it returns.  Interrupts at level 6,
+; registers preserved.
 Kernel_YieldRotate:
 	push SR                                      ; F85877/F983DC  02   push SR
 	ei 0x06                                      ; F85878/F983DD  06 06   ei 0x06   raise the mask: list surgery
@@ -1736,6 +1860,10 @@ Kernel_YieldRotate:
 ; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
 ; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
 ;    TaskQueue_Dequeue = Kernel_RotateQueue, TaskQueue_Dequeue_Return = Kernel_RotateQueue__ret.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_YieldToQueue_NoBlock = Kernel_RotateQueue, TaskSched_YieldToQueue_NoBlock_Return = Kernel_RotateQueue__ret.
 Kernel_RotateQueue:
 	push XWA                                     ; F858C0/F98425  38   push XWA
 	push XIX                                     ; F858C1/F98426  3c   push XIX
@@ -1860,6 +1988,10 @@ Kernel_RotateQueue__ret:
 ; picks another task. Entered with a full context already pushed (push SR + 7 long pushes),
 ; matching the frame Kernel_ResumeTask pops.
 ; Inputs: none. Clobbers: everything (it either reschedules or restores the pushed context).
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_Resume = Kernel_BlockSelf, TaskSched_Resume_DecrementWait = TaskSched_Block_Self_Consume.
 Kernel_BlockSelf:
 	push SR                                      ; F85904/F98469  02   push SR
 	ei 0x06                                      ; F85905/F9846A  06 06   ei 0x06
@@ -1989,6 +2121,14 @@ Kernel_ReadyTask_StackArg:
 ; If the task was not blocked the wake is remembered by incrementing its pending count
 ; (+0x0A), which TASKSCHED_BLOCK_SELF will consume later.
 ; Input: A = task id (1..3). Called with a full context frame already pushed.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_WakeBySlotID = Kernel_ReadyTask, TaskSched_WakeBySlotID_Pending = TaskSched_Wake_Task_Count, TaskSched_WakeInline_Return = Kernel_ReadyTask_NoDispatch__done,
+;    TaskSched_WakeInline_Pending = TaskSched_Wake_Task_NoResched_Count.
+; Kernel: wakes task A (ITRON wup_tsk).  A task in the waiting state (3 at +9 of its 12-byte
+; block at 0x47d + 12*A) is made ready (4) and appended to its priority's ready queue; otherwise
+; its wake-up count (+10) is incremented.  The scheduler then runs (Kernel_Dispatch).
 Kernel_ReadyTask:
 	push SR                                      ; F8592D/F98492  02   push SR
 	ei 0x06                                      ; F8592E/F98493  06 06   ei 0x06
@@ -2245,6 +2385,16 @@ TaskSched_Take_Pending_Count:
 ; Only event ids 1 and 2 exist: Kernel_InitRam builds two heads at 0x1078/0x107C and seeds
 ; both flag bytes 0x1080/0x1081 to 1 (pre-signalled) by copying the two 0x01 bytes at
 ; 0x01FDBC.  Input: A = event id.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_SignalEvent = TaskEvent_Signal, TaskSched_SignalEvent_Unlink = TaskEvent_Signal_Wake.
+; Kernel: signals binary semaphore A.
+;   When no task waits on it (wait list at 0x4cd + 4*A empty) the semaphore's flag (bit 0 of
+;   0x4f8 + A) is set; otherwise the first waiting task is unlinked, marked ready (state 4 at
+;   +9) and appended to the ready queue of its priority (0x4c1 + 4 * byte +8), and the
+;   scheduler runs (Kernel_Dispatch).  Runs with interrupts at level 6 and every register
+;   preserved.  Counterpart of TaskSched_WaitForEvent.
 TaskEvent_Signal:
 	push	sr
 	ei	6
@@ -2298,6 +2448,10 @@ TaskEvent_Signal_Wake:
 ; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
 ; Interrupt-safe TaskEvent_Signal: identical logic, but saves only XWA/XIX/XIY/XHL/SR and
 ; returns with RET rather than entering the dispatcher.  Input: A = event id.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_SignalEvent_NoBlock = TaskEvent_Signal_NoResched, TaskSched_SignalEvent_NoBlock_Unlink = TaskEvent_Signal_NoResched_Wake.
 TaskEvent_Signal_NoResched:
 	push	xwa
 	push	xix
@@ -2363,6 +2517,10 @@ TaskEvent_Signal_NoResched_Wake:
 ; Otherwise the current task (descriptor pointer at 0x1046) is unlinked from its ready
 ; queue, state set to 3 (BLOCKED), appended to the event wait queue at 0x1074 + 4*A, and
 ; Kernel_Dispatch is entered.  Input: A = event id. Entered with a full context pushed.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_WaitForEvent = TaskEvent_Wait, TaskSched_WaitForEvent_Block = TaskEvent_Wait_SuspendTask.
 TaskEvent_Wait:
 	push	sr
 	ei	6
@@ -2475,6 +2633,20 @@ TaskEvent_Clear:
 ; unconditionally -- it only dispatches when it has woken a waiter.  The main-CPU v10 ROM holds
 ; the same code: a 44-byte run at +39 here is byte-identical to Audio_Lock_Release+39 there
 ; (scripts/analysis/v142_maincpu_shared_code_scan.py; ALIGNED = same offset in both routines).
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    Audio_Lock_Release = Kernel_SemaSignal, AudioLock_Release_NoWaiter_Done = Kernel_SemaSignal__return, AudioLock_Release_WakeWaiter = Kernel_SemaSignal__wake,
+;    AudioLock_Release_NB_Saturated = Kernel_SemaSignal_NoDispatch__return, AudioLock_Release_NB_WakeWaiter = Kernel_SemaSignal_NoDispatch__wake.
+; ===========================================================================
+; Kernel_SemaSignal - Release inter-CPU communication lock
+; ===========================================================================
+; Entry: A = lock index (0-7)
+; Exit:  Lock released, next waiting request (if any) is signaled
+; Notes: Increments counter at (0x0532 + lock_index)
+;        Processes linked list at 0x0487 to wake waiting tasks
+;        Must be paired with Kernel_SemaWait
+; ===========================================================================
 Kernel_SemaSignal:
 	push SR                                      ; F859AE/F98513  02   push SR
 	ei 0x06                                      ; F859AF/F98514  06 06   ei 0x06
@@ -2784,6 +2956,20 @@ Kernel_SemaWait_StackArg:
 ; (pointer at 0x1046) is unlinked from its ready queue, its state (+0x09) set to 3 (BLOCKED),
 ; linked at the tail of the semaphore's wait queue 0x107E + 4*A, and Kernel_Dispatch runs.
 ; Siblings: Kernel_SemaTryWait (non-blocking), TaskSem_GetCount.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    Audio_Lock_Acquire = Kernel_SemaWait, AudioLock_Acquire_Block = Kernel_SemaWait__block.
+; ===========================================================================
+; Kernel_SemaWait - Acquire inter-CPU communication lock
+; ===========================================================================
+; Entry: A = lock index (0-7)
+; Exit:  Lock acquired, safe to send audio commands
+; Notes: Decrements counter at (0x0532 + lock_index)
+;        If counter is zero, adds request to linked list at 0x0487 and waits
+;        Must be paired with Kernel_SemaSignal after sending commands
+;        Used by audio subsystem to serialize access to Sub-CPU communication
+; ===========================================================================
 Kernel_SemaWait:
 	push SR                                      ; F85A96/F985FB  02   push SR
 	ei 0x06                                      ; F85A97/F985FC  06 06   ei 0x06
@@ -2890,6 +3076,10 @@ Kernel_SemaWait__block:
 ; Non-blocking P() on semaphore A: under interrupt level 6, if the count at 0x1091 + A is 0
 ; return HL = 0xFFFF, else decrement it and return HL = 0.  Named in TaskSem_GetCount's header;
 ; no caller in v1.42.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    AudioLock_TryAcquire = Kernel_SemaTryWait, AudioLock_TryAcquire_Fail = Kernel_SemaTryWait__fail, AudioLock_TryAcquire_Return = Kernel_SemaTryWait__ret.
 Kernel_SemaTryWait:
 .if KERNEL_KN5000 == 0
 	ld A,(XSP+0x04)                              ; F85AEF/F98654  8f 04 21   ld A,(XSP+0x04)   the semaphore number, off the stack
@@ -2981,6 +3171,10 @@ sub_F85B0D:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 ; 0x107E + 4*A i.e. 0x1082/0x1086/0x108A/0x108E. Siblings: Kernel_SemaWait (0x02044F) is the
 ; blocking P(), Kernel_SemaTryWait (0x0204A9) is the non-blocking one.
 ; Input: A = semaphore id. Output: HL = current count.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    AudioLock_GetCount = TaskSem_GetCount.
 TaskSem_GetCount:
 	extz	wa
 	add	wa, KERNEL_SEMA_COUNTS-1
@@ -3004,6 +3198,11 @@ TaskSem_GetCount:
 ; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
 ;    TaskMsgQ_Send = MsgQueue_Send, TaskMsgQ_Send_PoolEmpty = MsgQueue_Send__no_node,
 ;    TaskMsgQ_Send_DirectDeliver = MsgQueue_Send__wake.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskMsg_Send = MsgQueue_Send, TaskMsg_Send_QueueFull = MsgQueue_Send__no_node, TaskMsg_Send_WakeReceiver = MsgQueue_Send__wake,
+;    TaskMsg_Send_NB_Return = MsgQueue_Send_NoDispatch__ret, TaskMsg_Send_NB_QueueFull = MsgQueue_Send_NoDispatch__no_node, TaskMsg_Send_NB_WakeReceiver = MsgQueue_Send_NoDispatch__wake.
 MsgQueue_Send:
 .if KERNEL_KN5000 == 0
 sub_F85B1F:   ; <- prom_a's name for this address.  entry: prom_b routine directory
@@ -3403,6 +3602,10 @@ MsgQueue_ReceiveBlocking_StackArg:
 ; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
 ;    TaskMsgQ_Receive = MsgQueue_ReceiveBlocking,
 ;    TaskMsgQ_Receive_Empty = MsgQueue_ReceiveBlocking__block.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskMsg_Receive = MsgQueue_ReceiveBlocking, TaskMsg_Receive_Block = MsgQueue_ReceiveBlocking__block.
 MsgQueue_ReceiveBlocking:
 	push SR                                      ; F85C8C/F987F1  02   push SR
 	ei 0x06                                      ; F85C8D/F987F2  06 06   ei 0x06
@@ -3529,6 +3732,10 @@ MsgQueue_ReceiveBlocking__block:
 ;    TaskMsgQ_TryReceive = MsgQueue_Receive_NoBlock,
 ;    TaskMsgQ_TryReceive_Empty = MsgQueue_Receive_NoBlock__empty,
 ;    TaskMsgQ_TryReceive_Return = MsgQueue_Receive_NoBlock__ret.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskMsg_TryReceive = MsgQueue_Receive_NoBlock, TaskMsg_TryReceive_Empty = MsgQueue_Receive_NoBlock__empty, TaskMsg_TryReceive_Return = MsgQueue_Receive_NoBlock__ret.
 MsgQueue_Receive_NoBlock:
 .if KERNEL_KN5000 == 0
 sub_F85D1C:   ; <- prom_a's name for this address.  entry: prom_b routine directory
@@ -3624,6 +3831,10 @@ MsgQueue_Receive_NoBlock__ret:
 ; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
 ; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
 ;    Task_ConfigTimer = SoftTimer_Register.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskTimer_Register = SoftTimer_Register.
 SoftTimer_Register:
 .if KERNEL_KN5000 == 0
 sub_F85D78:   ; <- prom_a's name for this address.  entry: branch/call in converted code
@@ -3699,6 +3910,12 @@ sub_F85DA2:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 ; unlinked, its priority byte +0x08 set and it is relinked at the tail of ready queue
 ; 0x1068 + 4*C, then Kernel_Dispatch runs; otherwise only +0x08 is written
 ; (Kernel_SetTaskLevel__store_only).  Main-CPU twin: TaskSched_ChangePriority.  No caller in v1.42.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_ChangePriority = Kernel_SetTaskLevel, TaskSched_ChangePriority_NotReady = Kernel_SetTaskLevel__store_only.
+; Kernel: gives task A the priority C; a task in the ready state (4) is first unlinked from its
+; ready queue.  Interrupts at level 6, registers preserved.
 Kernel_SetTaskLevel:
 .if KERNEL_KN5000 == 0
 sub_F85DA8:   ; <- prom_a's name for this address.  entry: prom_b routine directory
@@ -3779,6 +3996,10 @@ Kernel_SetTaskLevel__store_only:
 ;    Task_Reassign_Guard_NotRunning = Kernel_SetTaskLevel_NoDispatch__store_only.
 ; Kernel_SetTaskLevel without the context frame and without rescheduling: the same
 ; relink under `push sr / ei 6`, then return to the caller.  No caller in v1.42.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_ChangePriority_Inline = Kernel_SetTaskLevel_NoDispatch, TaskSched_ChangePriority_Inline_NotReady = Kernel_SetTaskLevel_NoDispatch__store_only, TaskSched_ChangePriority_Inline_Return = Task_Reassign_Guard_Return.
 Kernel_SetTaskLevel_NoDispatch:
 .if KERNEL_KN5000 == 0
 sub_F85E02:   ; <- prom_a's name for this address.  entry: prom_b routine directory
@@ -3905,6 +4126,10 @@ sub_F85E5B:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 ; own bytes, the few llvm-mc cannot spell stay .byte with unidasm's reading as a comment).
 ; Renamed from RingBuf_Access_Opaque_A.
 ; Note: its first four bytes were `.ascii "(<=;"` -- they are `push wa / push xix / push xiy / push xhl`, matching the pops at the end.
+
+; >>>>>> moved from v10/maincpu/boot/system_handlers.s -- the KN5000 MAIN CPU >>>>>>
+; KN5000 main-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open10-kernel4-probes/):
+;    TaskSched_TCBTemplate = Kernel_KillTask.
 Kernel_KillTask:
 .if KERNEL_KN5000 == 0
 sub_F85E5E:   ; <- prom_a's name for this address.  entry: prom_b routine directory

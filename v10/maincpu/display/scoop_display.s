@@ -758,11 +758,11 @@ Display_PollAudioAndUpdate:
 	call Display_UpdateDirtyRegions
 Display_PollAudioLoop:
 	ld a, 0x01:opc
-	call AudioLock_GetCount
+	call TaskSem_GetCount
 	cp	l, 0:i3
 	jr z, Display_PollAudioDone
 	ld a, 0x03:opc
-	call TaskSched_YieldToQueue
+	call Kernel_YieldRotate
 	jr t, Display_PollAudioLoop
 Display_PollAudioDone:
 	call Display_DeletePollEvent

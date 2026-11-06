@@ -1,0 +1,100 @@
+dispatch-table census, 2026-11-06, measured at bc080f57 (+ uncommitted changes)
+tool: scripts/analysis/dispatch_table_census/ (rules in census.py's docstring)
+
+image      framed  used  NOT   newT newT(x) spellT stale staleT |   U U-NOT U-newT null | D-unres
+v10           684   684    0      0       0      0     0      0 |  28     0      0    3 |       0
+v9            684   684    0      0       0      0     0      0 |  28     0      0    3 |       0
+v8            684   684    0      0       0      0     0      0 |  28     0      0    3 |       0
+v7            681   681    0      0       0      0     0      0 |  30     0      0    2 |       0
+v6            689   689    0      0       0      0     0      0 |  29     0      0    2 |       0
+v5            689   689    0      0       0      0     0      0 |  29     0      0    2 |       0
+v142           44    44    0      0       0      0     0      0 |   0     0      0    0 |       0
+v141           44    44    0      0       0      0     0      0 |   0     0      0    0 |       0
+v140           44    44    0      0       0      0     0      0 |   0     0      0    0 |       0
+subboot         2     2    0      0       0      0     0      0 |   0     0      0    0 |       0
+tabledata      13    13    0      0       0      0     0      0 |   0     0      0    0 |       0
+customdata      0     0    0      0       0      0     0      0 |   0     0      0    0 |       0
+hdae5000       68    68    0      0       0      0     0      0 |   0     0      0    0 |       0
+hdae_v201      66    66    0      0       0      0     0      0 |   0     0      0    0 |       0
+hdae_v115      57    57    0      0       0      0     0      0 |   0     0      0    0 |       0
+hdae_v110      57    57    0      0       0      0     0      0 |   0     0      0    0 |       0
+prom_a        436   433    0      0       0      0     3     13 |   0     0      0    0 |       0
+prom_b        291   284    0      0       0      0     7    223 |   0     0      0    0 |       0
+prom_c         47    46    0      0       0      0     1      5 |   0     0      0    0 |       0
+D-unres: `jp t, (xR+rr)` dispatch sites whose base, table or bound the D detector could not read
+stale / staleT: tables (and their distinct targets) whose only blockers are entries declared
+  `census: stale` in the source and accepted by the census's checks (docstring, STALE); listed below
+
+stale groups (declared in the source, checked here; k of n distinct targets on instruction starts):
+  prom_a     A 0xF8E77C AddrTable_F8E77C                         STALE    prom_a/modules/f8e000_f8e7ff_link_port.s:1364 blocking=7   k=2/7 p=0.361 P=0.78
+  prom_a     A 0xF8E7A9 AddrTable_F8E7A9                         STALE    prom_a/modules/f8e000_f8e7ff_link_port.s:1378 blocking=5   k=5/7 p=0.361 P=0.063
+  prom_a     J 0xFAA000 ParamModule_PhaseVector_StaleCopy        STALE    prom_a/modules/faa000_fad7ff_param_message_module.s:92 blocking=5   k=1/5 p=0.439 P=0.94
+  prom_b     A 0xF00340 PtrTable_F00340                          STALE    prom_b/modules/f00000_f067ff_old_copies_and_display_lists.s:714 blocking=7   k=0/1 p=0.357 P=1
+  prom_b     A 0xF00762 PtrTable_F00762                          STALE    prom_b/modules/f00000_f067ff_old_copies_and_display_lists.s:1092 blocking=37  k=6/22 p=0.386 P=0.91
+  prom_b     A 0xF00C4E PtrArray_F00C4E                          STALE    prom_b/modules/f00000_f067ff_old_copies_and_display_lists.s:1548 blocking=18  k=7/18 p=0.406 P=0.64
+  prom_b     A 0xF014EE PtrArray_F014EE                          STALE    prom_b/modules/f00000_f067ff_old_copies_and_display_lists.s:2673 blocking=184 k=50/135 p=0.387 P=0.69
+  prom_b     A 0xF0ED50 OldBuild_DLHandlerTables_Tail            STALE    prom_b/modules/f0e800_f1b3ff_blink_and_dsp_effect_editor.s:1122 blocking=21  k=6/15 p=0.385 P=0.55
+  prom_b     A 0xF0EE6C OldBuild_ValueGlyph_Table                STALE    prom_b/modules/f0e800_f1b3ff_blink_and_dsp_effect_editor.s:1221 blocking=19  k=5/19 p=0.350 P=0.85
+  prom_b     J 0xF40000 prom_b routine directory                 STALE    prom_b/modules/f40000_f44017_routine_directory.s:1274 blocking=5   k=3/8 p=0.313 P=0.48
+  prom_b     J 0xF40000 prom_b routine directory                 STALE    prom_b/modules/f40000_f44017_routine_directory.s:3483 blocking=13  k=0/0 p=0.000 P=1
+  prom_c     J 0xFFF0D1 UNREFERENCED_TRAMPOLINES                 STALE    prom_c/boot/reset_and_vectors.s:229    blocking=5   k=0/5 p=0.393 P=1
+
+distinct new-entry-point targets by blocking class (framed tables, all owners):
+  v10        {}
+  v9         {}
+  v8         {}
+  v7         {}
+  v6         {}
+  v5         {}
+  v142       {}
+  v141       {}
+  v140       {}
+  subboot    {}
+  tabledata  {}
+  customdata {}
+  hdae5000   {}
+  hdae_v201  {}
+  hdae_v115  {}
+  hdae_v110  {}
+  prom_a     {}
+  prom_b     {}
+  prom_c     {}
+
+
+== v10: top not-used tables
+
+== v9: top not-used tables
+
+== v8: top not-used tables
+
+== v7: top not-used tables
+
+== v6: top not-used tables
+
+== v5: top not-used tables
+
+== v142: top not-used tables
+
+== v141: top not-used tables
+
+== v140: top not-used tables
+
+== subboot: top not-used tables
+
+== tabledata: top not-used tables
+
+== customdata: top not-used tables
+
+== hdae5000: top not-used tables
+
+== hdae_v201: top not-used tables
+
+== hdae_v115: top not-used tables
+
+== hdae_v110: top not-used tables
+
+== prom_a: top not-used tables
+
+== prom_b: top not-used tables
+
+== prom_c: top not-used tables

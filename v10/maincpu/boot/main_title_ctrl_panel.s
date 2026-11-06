@@ -63,7 +63,7 @@ MainTitle_EventLoop:
 	ld xwa, 1:i3
 	add (0x027496:24), xwa
 	ld wa, 2:i3
-	call TaskSched_WaitForEvent
+	call TaskEvent_Wait
 	ld wa, 0:i3
 	call SetNeedUpdate
 	call INTTR4_BytecodeSnippet

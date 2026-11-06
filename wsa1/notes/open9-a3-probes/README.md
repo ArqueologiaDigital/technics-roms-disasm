@@ -150,6 +150,9 @@ payload trees include the shared source and hold no copy; the Makefile makes the
 
 ## Follow-up: the KN5000 MAIN CPU's kernel (out of scope here)
 
+★ DONE 2026-11-06 by lane open10/kernel4 (L-kernel-a3-kn5000-maincpu): `../open10-kernel4-probes/README.md`.
+The main CPU builds its kernel from kernel.s as `KERNEL_KN5000 = 2`; the plan below is kept as written.
+
 FINDINGS sec 7: the main program ROM carries a separate build of the same kernel (v10 at about
 0xEF1977-0xEF23AA, `TaskSched_Init` ... `TaskSched_TCBTemplate`; v9 and v7 likewise), with its own
 RAM map (five tasks, current task 0x0487, ready heads 0x04C5, stack top 0x0001E53A).  Joining it would

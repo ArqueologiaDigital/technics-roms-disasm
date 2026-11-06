@@ -1132,6 +1132,11 @@ def cmd_verify():
     import kernel_a3_merge as A3
     origin |= A3.kn_origin_lines()
     origin |= {l.rstrip() for _, _, add in A3.KS_EDITS for l in add.split("\n")}
+    # ★ 2026-11-06 (lane open10/kernel4): and the KN5000 MAIN CPU's, a fourth origin; its own checker is
+    #   notes/open10-kernel4-probes/kernel4_maincpu.py --verify.
+    sys.path.insert(0, os.path.join(ROOT, "notes", "open10-kernel4-probes"))
+    import kernel4_maincpu as K4
+    origin |= K4.origin_lines()
     stray = []
     # kernel.s's OWN lines, not its expansion: since b9e3a0657 (POST_MERGE_EDITS) the macro block is
     # include/tlcs900_mem_ops.inc, which kernel.s includes for prom_c, and that file's comments are

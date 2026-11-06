@@ -2146,9 +2146,9 @@ DrawWall_DirectPath:
 
 DrawWall_WaitVblankBefore:
 	ld wa, 1:i3
-	call Audio_Lock_Release
+	call Kernel_SemaSignal
 	ld wa, 3:i3
-	call TaskSched_YieldToQueue
+	call Kernel_YieldRotate
 	cpw (DRAW_ENABLED:24), 0
 	jr nz, DrawWall_WaitVblankBefore
 
@@ -2159,9 +2159,9 @@ DrawWall_SetCopyFlag:
 
 DrawWall_WaitVblankAfter:
 	ld wa, 1:i3
-	call Audio_Lock_Release
+	call Kernel_SemaSignal
 	ld wa, 3:i3
-	call TaskSched_YieldToQueue
+	call Kernel_YieldRotate
 	cpw (DRAW_ENABLED:24), 0
 	jr z, DrawWall_WaitVblankAfter
 

@@ -39,11 +39,11 @@ SeWrtSndTitleFunc_OnSwitchIn:
 	call	SeWrtSndTitleFunc_DispatchSwitch
 SeWrtSndTitleFunc_OnSwitchIn_Join:
 	ld	wa, 1:i3
-	call	AudioLock_GetCount
+	call	TaskSem_GetCount
 	cp	hl, 0:i3
 	jr	z, SeWrtSndTitleFunc_OnSwitchIn_Skip
 	ld	wa, 3:i3
-	call	TaskSched_YieldToQueue
+	call	Kernel_YieldRotate
 	jr	SeWrtSndTitleFunc_OnSwitchIn_Join
 SeWrtSndTitleFunc_OnSwitchIn_Skip:
 	ld	xwa, 0:i3

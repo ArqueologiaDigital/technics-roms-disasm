@@ -10290,7 +10290,7 @@ SndTable_ByteBlock_ReadOps_Skip3:
 SndTable_ByteBlock_ReadOps_Skip2:
 	ldw	hl, 0xffff
 	ret
-; DiskStream_ReaderTask: Task 2 entry (TaskSched_TaskTable group 2): the disk-stream reader. It posts the two
+; DiskStream_ReaderTask: Task 2 entry (TaskSched_TaskDescriptorTable group 2): the disk-stream reader. It posts the two
 ;   1028-byte buffers at DiskStream BufferPtr (0x3E3EE) to queue 2, then loops: takes a free buffer from queue 2,
 ;   fills 1024 bytes from the stream (SndTable_ByteBlock_ReadOps: FileRead of handle 0x2357A, or raw sector commands),
 ;   and sends it to queue 3 for TaskBuf_ReadNextByte, until ByteLength (0x3E3E8) is read; flag 0x2357E = 1 while it
@@ -10307,12 +10307,12 @@ DiskStream_ReaderTask:
 	ldw	(xwa+1030), 0
 	ld	xbc, (0x3e3ee:24)
 	ld	wa, 2:i3
-	call	TaskMsg_Send
+	call	MsgQueue_Send
 	ld	xwa, (0x3e3ee:24)
 	lda	xwa, (xwa+1028)
 	ld	xbc, xwa
 	ld	wa, 2:i3
-	call	TaskMsg_Send
+	call	MsgQueue_Send
 	ldw	(xsp+4), 0
 	ld	wa, (xsp+4)
 	extz	xwa
@@ -10320,7 +10320,7 @@ DiskStream_ReaderTask:
 	jrl	ugt, SndTable_ByteBlock_ReadOps_Code_Join
 DiskStream_ReaderTask_Loop:
 	ld	wa, 2:i3
-	call	TaskMsg_Receive
+	call	MsgQueue_ReceiveBlocking
 	ld	xiz, xhl
 	cpw	(xiz+2), 0
 	jr	z, DiskStream_ReaderTask_Skip3
@@ -10328,7 +10328,7 @@ DiskStream_ReaderTask_Loop:
 	ld	xwa, xiz
 	ld	xbc, xwa
 	ld	wa, 3:i3
-	call	TaskMsg_Send
+	call	MsgQueue_Send
 	jr	SndTable_ByteBlock_ReadOps_Code_Join
 DiskStream_ReaderTask_Skip3:
 	lda	xwa, (xiz+4)
@@ -10340,7 +10340,7 @@ DiskStream_ReaderTask_Skip3:
 	ld	xwa, xiz
 	ld	xbc, xwa
 	ld	wa, 3:i3
-	call	TaskMsg_Send
+	call	MsgQueue_Send
 	jr	SndTable_ByteBlock_ReadOps_Code_Join
 DiskStream_ReaderTask_Skip4:
 	ldw	(xiz), 1024
@@ -10360,7 +10360,7 @@ SndTable_ByteBlock_ReadOps_Code_Skip2:
 	ld	xwa, xiz
 	ld	xbc, xwa
 	ld	wa, 3:i3
-	call	TaskMsg_Send
+	call	MsgQueue_Send
 	addiw_da	(xsp+4), 1024
 	ld	wa, (xsp+4)
 	extz	xwa
@@ -10368,7 +10368,7 @@ SndTable_ByteBlock_ReadOps_Code_Skip2:
 	jrl	ule, DiskStream_ReaderTask_Loop
 SndTable_ByteBlock_ReadOps_Code_Join:
 	ld	(0x2357e:24), 0
-	call	TaskSched_ExitCurrentTask
+	call	Kernel_ExitTask
 	pop	xiz
 	inc	2, xsp
 	ret
@@ -10386,8 +10386,8 @@ SndTable_ByteBlock_ReadOps_Code_Loop:
 ; Returns the next byte of a data stream received through task-message mailbox 3.
 ;   State: 0x2358a = stream state (1 = open), 0x23582 = current message block (word 0 = byte
 ;   count, word 2 = a pending value, data from +4), 0x23580 = bytes left, 0x23586 = read
-;   pointer.  An empty buffer is refilled with TaskMsg_Receive(3); when a full 0x400-byte block
-;   has been consumed it is handed back with TaskMsg_Send(2).
+;   pointer.  An empty buffer is refilled with MsgQueue_ReceiveBlocking(3); when a full 0x400-byte block
+;   has been consumed it is handed back with MsgQueue_Send(2).
 ;   Out: HL = byte (0..0xff); the block's pending word when one is set; 0xffff at end of data or
 ;        when the stream is not open.  State becomes 2 after the first read.
 TaskBuf_ReadNextByte:
@@ -10397,7 +10397,7 @@ TaskBuf_ReadNextByte:
 	cpw (0x23580:24), 0
 	jr nz, TaskBuf_CheckPendingData
 	ld wa, 3:i3
-	call TaskMsg_Receive
+	call MsgQueue_ReceiveBlocking
 	ld (0x023582:24), xhl
 	ld wa, (xhl)
 	ld (0x023580:24), wa
@@ -10440,7 +10440,7 @@ TaskBuf_ReadAndDecrement:
 TaskBuf_SendBufferFull:
 	ld xbc, (0x023582:24)
 	ld wa, 2:i3
-	call TaskMsg_Send
+	call MsgQueue_Send
 
 TaskBuf_ReturnByte:
 	ld hl, iz
@@ -10455,13 +10455,13 @@ TaskBuf_PopIzRet:
 
 FDC_DrainQueuesAndReset:
 	ld wa, 2:i3
-	call TaskMsg_TryReceive
+	call MsgQueue_Receive_NoBlock
 	or xhl, xhl
 	jr z, FDC_DrainQueue2_Done
 
 FDC_DrainQueue2_Loop:
 	ld wa, 2:i3
-	call TaskMsg_TryReceive
+	call MsgQueue_Receive_NoBlock
 	or xhl, xhl
 	jr nz, FDC_DrainQueue2_Loop
 
@@ -10470,7 +10470,7 @@ FDC_DrainQueue2_Done:
 	ldw (xwa + 2), 0xffff
 	ld xbc, (0x023582:24)
 	ld wa, 2:i3
-	call TaskMsg_Send
+	call MsgQueue_Send
 	cp (0x02357e:24), 0x00
 	jr z, FDC_DrainQueue3_Start
 
@@ -10481,25 +10481,25 @@ FDC_WaitQueueEmpty_Loop:
 FDC_DrainQueue3_Start:
 	ld (0x02358a:24), 0x02
 	ld wa, 3:i3
-	call TaskMsg_TryReceive
+	call MsgQueue_Receive_NoBlock
 	or xhl, xhl
 	jr z, FDC_DrainQueue2B_Start
 
 FDC_DrainQueue3_Loop:
 	ld wa, 3:i3
-	call TaskMsg_TryReceive
+	call MsgQueue_Receive_NoBlock
 	or xhl, xhl
 	jr nz, FDC_DrainQueue3_Loop
 
 FDC_DrainQueue2B_Start:
 	ld wa, 2:i3
-	call TaskMsg_TryReceive
+	call MsgQueue_Receive_NoBlock
 	or xhl, xhl
 	jr z, FDC_DrainCloseFile
 
 FDC_DrainQueue2B_Loop:
 	ld wa, 2:i3
-	call TaskMsg_TryReceive
+	call MsgQueue_Receive_NoBlock
 	or xhl, xhl
 	jr nz, FDC_DrainQueue2B_Loop
 
@@ -10536,7 +10536,7 @@ SndTable_LookupA_GotFile:
 	ld xwa, (xwa + 71)
 	ld (0x03e3e8:24), xwa
 	ld wa, 2:i3
-	call TaskSched_SpawnTask
+	call Kernel_StartTask
 	ld hl, 0:i3
 	ret
 
@@ -10651,7 +10651,7 @@ SndTable_LookupD:
 
 SndTable_LookupD_SpawnReaderTask:
 	ld wa, 2:i3
-	call TaskSched_SpawnTask
+	call Kernel_StartTask
 	ld hl, 0:i3
 	ret
 
