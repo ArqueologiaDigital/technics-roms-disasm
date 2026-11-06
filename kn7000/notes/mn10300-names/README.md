@@ -225,4 +225,5 @@ the image).
   both names come from reflection tables (`../sibling-name-port/README.md`).
 - The IC18 rhythm source grew from 14.4 MB to 21.1 MB when every note began to spell its
   conversion rule and every drum note its kit key; emptying `NCR_NAMES` in
-  `tools/gen_ic18_rhythm_s.py` would save about 5.6 MB (an owner's choice; not done).
+  `tools/gen_ic18_rhythm_s.py` would save about 5.6 MB.  The owner decided on 2026-11-06 to keep the names ("keep the names. Yes!"),
+  so `NCR_NAMES` stays.

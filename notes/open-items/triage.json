@@ -32,11 +32,11 @@
   "title": "KN2400: unregistered titles from TitleNameTable; InitModeTitleTable's default record"
  },
  "L-mn10300-names-ncr-names": {
-  "status": "BLOCKED",
-  "blocker": "owner decision: the IC18 rhythm source grew 14.4 -> 21.1 MB when every note began to spell its conversion rule and every drum note its kit key; emptying NCR_NAMES in tools/gen_ic18_rhythm_s.py would save about 5.6 MB. Keep the names or empty NCR_NAMES? (lane mn10300-names, 2026-11-02: \"an owner's choice; not done\")",
+  "status": "RESOLVED",
   "area": "KN7000",
   "source": "kn7000/notes/mn10300-names/README.md:227",
-  "title": "IC18 rhythm source 21.1 MB: keep the conversion-rule names or empty NCR_NAMES (-5.6 MB)?"
+  "title": "IC18 rhythm source 21.1 MB: keep the conversion-rule names or empty NCR_NAMES (-5.6 MB)?",
+  "evidence": "lane owner (2026-11-06): owner decision 2026-11-06: keep the conversion-rule names (NCR_NAMES in kn7000/tools/gen_ic18_rhythm_s.py) in the IC18 rhythm source, 21.1 MB; the 5.6 MB saving is declined (\"My recommendation: keep the names. Yes!\"); kn7000/notes/mn10300-names/README.md updated"
  },
  "L-mn10300-names-port-entry": {
   "status": "ACTIONABLE",
