@@ -1,0 +1,3 @@
+kn6000: 5671 func_ starts, 1358 paired with an unnamed 941 routine, 4313 without; most of those in 0x4C12xxxx 485, 0x4C11xxxx 450, 0x4C04xxxx 368, 0x4C08xxxx 357, 0x4C03xxxx 333, 0x4C09xxxx 300, 0x4C05xxxx 271, 0x4C14xxxx 250
+kn6500: 5698 func_ starts, 1421 paired with an unnamed 941 routine, 4277 without; most of those in 0x4C12xxxx 440, 0x4C11xxxx 433, 0x4C04xxxx 365, 0x4C08xxxx 351, 0x4C03xxxx 335, 0x4C09xxxx 313, 0x4C05xxxx 277, 0x4C14xxxx 248
+kn2400: 6518 func_ starts, 2320 paired with an unnamed 941 routine, 4198 without; most of those in 0x5015xxxx 390, 0x4862xxxx 350, 0x4861xxxx 257, 0x5014xxxx 247, 0x4870xxxx 225, 0x5018xxxx 208, 0x485Exxxx 196, 0x4864xxxx 195

@@ -1,0 +1,92 @@
+## trial-kn2400-b893
+- routine names carried: 0, 0 of them by mapped operands (rounds: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+- routine pairs both images leave unnamed, accepted by the same rule as anchors: 3127
+- accepted pairs that a later round gave a rival: 0
+- audit, callees both images name: 854 right, 3 wrong (of them paired by operand pointers alone: 26 right, 0 wrong; pairs by table words alone are audited below)
+- paired data tables: {'audit: named word, table passes without it, right': 1554, 'audit: named word, table passes without it, wrong': 5, 'tables refused (named words disagree, or too few agree)': 2784, 'tables used': 89}
+- routine names carried on pointer supports alone (an operand or a table word): 0
+- audit, same-body routines B names already, picked by mapped operands: 201 right, 0 wrong
+- RAM address pairs: 3081: 2226 by aligned operands (of 2234 B addresses seen in them), 855 between two of one delta (runs; the premise on the voted pairs: 1846 right, 2 wrong); named from A: 0; RAM audit 22 right, 0 wrong
+
+names carried:
+
+## trial-kn2400-kn6000
+- routine names carried: 2, 0 of them by mapped operands (rounds: 2, 0, 0, 0, 0, 0, 0, 0, 0)
+- routine pairs both images leave unnamed, accepted by the same rule as anchors: 1603
+- accepted pairs that a later round gave a rival: 0
+- audit, callees both images name: 498 right, 3 wrong (of them paired by operand pointers alone: 13 right, 0 wrong; pairs by table words alone are audited below)
+- paired data tables: {'audit: named word, table passes without it, right': 13, 'tables refused (named words disagree, or too few agree)': 1517, 'tables used': 4}
+- routine names carried on pointer supports alone (an operand or a table word): 0
+- audit, same-body routines B names already, picked by mapped operands: 103 right, 0 wrong
+- RAM address pairs: 1790: 1360 by aligned operands (of 1374 B addresses seen in them), 430 between two of one delta (runs; the premise on the voted pairs: 943 right, 3 wrong); named from A: 1; RAM audit 20 right, 1 wrong
+
+names carried:
+    0x50056408  FileLastError	; RAM = KN6000 0x500622B0, 1 aligned operands
+    0x5013C80F  TgPartEgRampScaleAReset	; = KN6000 0x4C09405D, callee at 1 aligned call sites (1 exact/skeleton) of TgPartEgRampTickHeld; body 0.86/0.85; round 1
+    0x5013C9CC  TgPartEgRampScaleBReset	; = KN6000 0x4C094224, callee at 1 aligned call sites (1 exact/skeleton) of TgPartEgRampTickHeld; body 0.86/0.85; round 1
+
+## trial-kn2400-kn7000
+- routine names carried: 251, 61 of them by mapped operands (rounds: 195, 37, 19, 0, 0, 0, 0, 0, 0, 0, 0)
+- routine pairs both images leave unnamed, accepted by the same rule as anchors: 3340
+- accepted pairs that a later round gave a rival: 0
+- audit, callees both images name: 683 right, 2 wrong (of them paired by operand pointers alone: 19 right, 0 wrong; pairs by table words alone are audited below)
+- paired data tables: {'tables used': 2944, 'unchecked: named words alike': 3080, 'unchecked: named words unlike': 1786}
+- routine names carried on pointer supports alone (an operand or a table word): 7
+- audit, same-body routines B names already, picked by mapped operands: 201 right, 0 wrong
+- RAM address pairs: 3164: 2334 by aligned operands (of 2342 B addresses seen in them), 830 between two of one delta (runs; the premise on the voted pairs: 1948 right, 2 wrong); named from A: 8; RAM audit 15 right, 0 wrong
+
+names carried:
+
+## trial-kn6000-b893
+- routine names carried: 1, 0 of them by mapped operands (rounds: 1, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+- routine pairs both images leave unnamed, accepted by the same rule as anchors: 1847
+- accepted pairs that a later round gave a rival: 0
+- audit, callees both images name: 587 right, 2 wrong (of them paired by operand pointers alone: 15 right, 0 wrong; pairs by table words alone are audited below)
+- paired data tables: {'audit: named word, table passes without it, right': 13, 'tables refused (named words disagree, or too few agree)': 1867, 'tables used': 4}
+- routine names carried on pointer supports alone (an operand or a table word): 0
+- audit, same-body routines B names already, picked by mapped operands: 126 right, 0 wrong
+- RAM address pairs: 2173: 1646 by aligned operands (of 1658 B addresses seen in them), 527 between two of one delta (runs; the premise on the voted pairs: 1140 right, 2 wrong); named from A: 0; RAM audit 22 right, 1 wrong
+
+names carried:
+    0x4C134C53  TechniChordOff	; = KN7000_893 0x4847359C, callee at 1 aligned call sites (1 exact/skeleton) of TechniChordCompute; body 1.00/1.00; round 1
+
+## trial-kn6000-kn2400
+- routine names carried: 2, 1 of them by mapped operands (rounds: 1, 0, 0, 0, 1, 0, 0, 0, 0)
+- routine pairs both images leave unnamed, accepted by the same rule as anchors: 1602
+- accepted pairs that a later round gave a rival: 0
+- audit, callees both images name: 499 right, 3 wrong (of them paired by operand pointers alone: 13 right, 0 wrong; pairs by table words alone are audited below)
+- paired data tables: {'audit: named word, table passes without it, right': 13, 'tables refused (named words disagree, or too few agree)': 1515, 'tables used': 4}
+- routine names carried on pointer supports alone (an operand or a table word): 0
+- audit, same-body routines B names already, picked by mapped operands: 107 right, 0 wrong
+- RAM address pairs: 1788: 1359 by aligned operands (of 1371 B addresses seen in them), 429 between two of one delta (runs; the premise on the voted pairs: 943 right, 2 wrong); named from A: 0; RAM audit 20 right, 0 wrong
+
+names carried:
+    0x4C062141  PartEventToParam	; = KN2400 0x5017D99D, callee at 1 aligned call sites (1 exact/skeleton) of @0x50175548; body 0.67/0.67; round 5
+    0x4C09A025  TgActiveHighWaterUpdate	; = KN2400 0x50142B6F, same body (8 insns, 6 unmasked; 1 in A, 1 in B), 2 RAM operands agree; round 1
+
+## trial-kn6000-kn6500
+- routine names carried: 1, 1 of them by mapped operands (rounds: 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+- routine pairs both images leave unnamed, accepted by the same rule as anchors: 3527
+- accepted pairs that a later round gave a rival: 0
+- audit, callees both images name: 737 right, 0 wrong (of them paired by operand pointers alone: 22 right, 0 wrong; pairs by table words alone are audited below)
+- paired data tables: {'audit: named word, table passes without it, right': 8090, 'tables refused (named words disagree, or too few agree)': 3081, 'tables used': 139}
+- routine names carried on pointer supports alone (an operand or a table word): 0
+- audit, same-body routines B names already, picked by mapped operands: 143 right, 0 wrong
+- RAM address pairs: 3609: 2792 by aligned operands (of 2792 B addresses seen in them), 817 between two of one delta (runs; the premise on the voted pairs: 2637 right, 0 wrong); named from A: 1; RAM audit 25 right, 0 wrong
+
+names carried:
+    0x4C0557E9  StyleNameModuleBoot	; = KN6500 0x4C055A94, same body (28 insns, 22 unmasked; 1 in A, 1 in B), 3 RAM operands agree; round 1
+    0x500337A4  OpeningFrameTarget	; RAM = KN6500 0x50033750, 0 aligned operands
+
+## trial-kn6000-kn7000
+- routine names carried: 115, 26 of them by mapped operands (rounds: 93, 16, 3, 1, 2, 0, 0, 0, 0)
+- routine pairs both images leave unnamed, accepted by the same rule as anchors: 1882
+- accepted pairs that a later round gave a rival: 0
+- audit, callees both images name: 500 right, 2 wrong (of them paired by operand pointers alone: 11 right, 0 wrong; pairs by table words alone are audited below)
+- paired data tables: {'tables used': 1880, 'unchecked: named words alike': 11, 'unchecked: named words unlike': 7}
+- routine names carried on pointer supports alone (an operand or a table word): 7
+- audit, same-body routines B names already, picked by mapped operands: 124 right, 0 wrong
+- RAM address pairs: 2139: 1632 by aligned operands (of 1644 B addresses seen in them), 507 between two of one delta (runs; the premise on the voted pairs: 1140 right, 2 wrong); named from A: 7; RAM audit 15 right, 0 wrong
+
+names carried:
+

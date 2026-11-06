@@ -1,0 +1,9 @@
+kn6000 (1620 voted pairs): gap 0x40: 936 right / 2 wrong; gap 0x100: 1028 right / 2 wrong; gap 0x400: 1083 right / 2 wrong; gap 0x1000: 1125 right / 2 wrong; gap 0x4000: 1146 right / 2 wrong; gap 0x10000: 1153 right / 2 wrong
+  exception: B 0x500031FC / A 0x50005179 delta -0x1f7d, neighbours -0x1f80
+  exception: B 0x50287938 / A 0x501523CE delta +0x13556a, neighbours +0x13556c
+kn6500 (1643 voted pairs): gap 0x40: 953 right / 2 wrong; gap 0x100: 1052 right / 2 wrong; gap 0x400: 1110 right / 2 wrong; gap 0x1000: 1152 right / 2 wrong; gap 0x4000: 1173 right / 2 wrong; gap 0x10000: 1182 right / 2 wrong
+  exception: B 0x50003204 / A 0x50005179 delta -0x1f75, neighbours -0x1f78
+  exception: B 0x5028792C / A 0x501523CE delta +0x13555e, neighbours +0x135560
+kn2400 (2284 voted pairs): gap 0x40: 1544 right / 2 wrong; gap 0x100: 1713 right / 2 wrong; gap 0x400: 1811 right / 2 wrong; gap 0x1000: 1900 right / 2 wrong; gap 0x4000: 1948 right / 2 wrong; gap 0x10000: 1976 right / 2 wrong
+  exception: B 0x50004D05 / A 0x5000517C delta -0x477, neighbours -0x478
+  exception: B 0x50051F8B / A 0x5006BC6C delta -0x19ce1, neighbours -0x19ce0

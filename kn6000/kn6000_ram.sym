@@ -3,7 +3,7 @@
 ; evidence classes (accessor: a named Get/Set/Is routine's only variable; owner: every
 ; direct reference lies in one named routine).  Columns: RAM address, name, ; class, evidence.
 ;
-; 25 accessor names over 290 operands, 458 owner names over 2042 operands; 3189 RAM addresses referenced
+; 25 accessor names over 290 operands, 461 owner names over 2045 operands; 3192 RAM addresses referenced
 0x50007A98  localeconv_Ram	; owner: 2 references, all in localeconv
 0x50007A9C  localeconv_Ram_2	; owner: 1 references, all in localeconv
 0x50007AA0  localeconv_Ram_3	; owner: 1 references, all in localeconv
@@ -63,7 +63,10 @@
 0x50021F0C  PmemRecallOnSet_Ram	; owner: 1 references, all in PmemRecallOnSet
 0x50022777  PanelCtrlDispatch_Ram	; owner: 1 references, all in PanelCtrlDispatch
 0x50022778  PanelCtrlLatch00_Ram	; owner: 1 references, all in PanelCtrlLatch00
+0x50022779  PanelCtrlLatch31_Ram	; owner: 1 references, all in PanelCtrlLatch31
+0x5002277A  PanelCtrlLatch33_Ram	; owner: 1 references, all in PanelCtrlLatch33
 0x5002277B  PanelCtrlLatch30_Ram	; owner: 1 references, all in PanelCtrlLatch30
+0x5002277E  PanelCtrlLatch32_Ram	; owner: 1 references, all in PanelCtrlLatch32
 0x5002DD18  HelpLang1Check_Ram	; owner: 5 references, all in HelpLang1Check
 0x5002DD30  HelpLang2Check_Ram	; owner: 5 references, all in HelpLang2Check
 0x5002DD48  HelpLang3Check_Ram	; owner: 5 references, all in HelpLang3Check

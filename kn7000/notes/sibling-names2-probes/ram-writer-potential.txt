@@ -1,0 +1,3 @@
+kn6000 several writers: 887, one user (the owner class's case): 745, no direct store: 581, one writer, a func_ placeholder: 381, one writer, named: 87
+kn6500 several writers: 896, one user (the owner class's case): 748, no direct store: 582, one writer, a func_ placeholder: 377, one writer, named: 88
+kn2400 several writers: 1041, one user (the owner class's case): 853, no direct store: 647, one writer, a func_ placeholder: 360, one writer, named: 99

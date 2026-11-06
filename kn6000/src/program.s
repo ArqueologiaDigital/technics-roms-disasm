@@ -40706,18 +40706,18 @@ DrawBitmap_entry_L1e:
 DrawBitmap_entry_L40:
 	ret	[d2,a2], 0x18
 
-func_4C016856:
+DrawBitmap_QueuedExec:
 	add	-0x10, sp
 	mov	(0x50010384), d0
 	mov	a0, a1
 	inc4	a1
 	mov	(8, a0), d1
 	cmp	0, d0
-	beq	func_4C016856_L19
+	beq	DrawBitmap_QueuedExec_L19
 	mov	d1, d0
 	mov	a1, a0
 	call	DrawBitmap_Impl_entry, [d2,d3,a2,a3], 0x30
-func_4C016856_L19:
+DrawBitmap_QueuedExec_L19:
 	ret	0, 0x10
 
 DrawBitmap_Impl:
@@ -41031,18 +41031,18 @@ DrawIcons_entry_L1e:
 DrawIcons_entry_L40:
 	ret	[d2,a2], 0x18
 
-func_4C016ACD:
+DrawIcons_QueuedExec:
 	add	-0x10, sp
 	mov	(0x50010384), d0
 	mov	a0, a1
 	inc4	a1
 	mov	(8, a0), d1
 	cmp	0, d0
-	beq	func_4C016ACD_L19
+	beq	DrawIcons_QueuedExec_L19
 	mov	d1, d0
 	mov	a1, a0
 	call	DrawIcons_Impl_entry, [d2,d3,a2,a3], 0x30
-func_4C016ACD_L19:
+DrawIcons_QueuedExec_L19:
 	ret	0, 0x10
 
 DrawIcons_Impl:
@@ -42981,7 +42981,7 @@ DrawBitmapFileEx_L23:
 DrawBitmapFileEx_L45:
 	ret	[a2,a3], 0x18
 
-func_4C0179E0:
+DrawBitmapFileEx_QueuedExec:
 	movm	[a2,a3], (sp)
 	add	-0x10, sp
 	mov	(0x50010384), a1
@@ -42989,11 +42989,11 @@ func_4C0179E0:
 	inc4	a2
 	mov	(8, a0), a3
 	cmp	0, a1
-	beq	func_4C0179E0_L1b
+	beq	DrawBitmapFileEx_QueuedExec_L1b
 	mov	a3, a1
 	mov	a2, a0
 	call	func_4C0179FE_entry, [d2,d3,a2,a3], 0x10
-func_4C0179E0_L1b:
+DrawBitmapFileEx_QueuedExec_L1b:
 	ret	[a2,a3], 0x18
 
 func_4C0179FE:
@@ -131098,11 +131098,11 @@ PanelCtrlLatch00_L24:
 PanelCtrlLatch00_L2b:
 	retf	[d2], 4
 
-func_4C047895:
+PanelCtrlLatch31:
 	movm	[d2], (sp)
 	extbu	d0
 	not	d0
-	movbu	d0, (0x50022779)
+	movbu	d0, (PanelCtrlLatch31_Ram)
 	extbu	d0
 	mov	func_4C047895_Table, a0
 	movbu	(d0, a0), d0
@@ -131110,20 +131110,20 @@ func_4C047895:
 	mov	d0, d2
 	extbu	d2
 	cmp	d1, d2
-	bne	func_4C047895_L27
+	bne	PanelCtrlLatch31_L27
 	mov	0x0000ffff, d0
-	bra	func_4C047895_L2e
-func_4C047895_L27:
+	bra	PanelCtrlLatch31_L2e
+PanelCtrlLatch31_L27:
 	movbu	d0, (0x50022782)
 	extbu	d0
-func_4C047895_L2e:
+PanelCtrlLatch31_L2e:
 	retf	[d2], 4
 
-func_4C0478C6:
+PanelCtrlLatch33:
 	movm	[d2], (sp)
 	extbu	d0
 	not	d0
-	movbu	d0, (0x5002277a)
+	movbu	d0, (PanelCtrlLatch33_Ram)
 	extbu	d0
 	mov	func_4C0478C6_Table, a0
 	movbu	(d0, a0), d0
@@ -131131,13 +131131,13 @@ func_4C0478C6:
 	mov	d0, d2
 	extbu	d2
 	cmp	d1, d2
-	bne	func_4C0478C6_L27
+	bne	PanelCtrlLatch33_L27
 	mov	0x0000ffff, d0
-	bra	func_4C0478C6_L2e
-func_4C0478C6_L27:
+	bra	PanelCtrlLatch33_L2e
+PanelCtrlLatch33_L27:
 	movbu	d0, (0x50022783)
 	extbu	d0
-func_4C0478C6_L2e:
+PanelCtrlLatch33_L2e:
 	retf	[d2], 4
 
 PanelCtrlLatch30:
@@ -131207,11 +131207,11 @@ func_4C04795E_L2b:
 func_4C04795E_L32:
 	retf	[d2], 4
 
-func_4C047993:
+PanelCtrlLatch32:
 	movm	[d2], (sp)
 	extbu	d0
 	not	d0
-	movbu	d0, (0x5002277e)
+	movbu	d0, (PanelCtrlLatch32_Ram)
 	extbu	d0
 	asr	1, d0
 	extbu	d0
@@ -131221,13 +131221,13 @@ func_4C047993:
 	mov	d0, d2
 	extbu	d2
 	cmp	d1, d2
-	bne	func_4C047993_L2b
+	bne	PanelCtrlLatch32_L2b
 	mov	0x0000ffff, d0
-	bra	func_4C047993_L32
-func_4C047993_L2b:
+	bra	PanelCtrlLatch32_L32
+PanelCtrlLatch32_L2b:
 	movbu	d0, (0x50022787)
 	extbu	d0
-func_4C047993_L32:
+PanelCtrlLatch32_L32:
 	retf	[d2], 4
 loc_4C0479C8:
 	mov	0x0000ffff, d0
@@ -236952,7 +236952,7 @@ func_4C08365A_entry_L3e:
 	mov	(0x74, a0), d1
 	asl	20, d0
 	or	d1, d0
-	or	WORK_RAM_BASE, d0
+	or	0x50000000, d0
 	call	func_4C09465B, 0, 0
 	movbu	(a3), d0
 	mov	d2, a0
@@ -236974,7 +236974,7 @@ func_4C08365A_entry_L85:
 	mov	(0x74, a0), d1
 	asl	20, d0
 	or	d1, d0
-	or	WORK_RAM_BASE, d0
+	or	0x50000000, d0
 	call	func_4C09465B, 0, 0
 	movbu	(a3), d0
 	mov	d2, a0
@@ -270252,7 +270252,7 @@ func_4C0948CB_entry:
 	mov	d2, d0
 	asl	20, d0
 	or	d1, d0
-	or	WORK_RAM_BASE, d0
+	or	0x50000000, d0
 	call	func_4C09465B, 0, 0
 	mov	(0x78, a2), d1
 	mov	d2, d0
@@ -270662,7 +270662,7 @@ func_4C094EF7:
 	mov	d2, d0
 	asl	20, d0
 	or	d1, d0
-	or	WORK_RAM_BASE, d0
+	or	0x50000000, d0
 	call	func_4C09465B, 0, 0
 	mov	(0x78, a2), d1
 	asl	20, d2
@@ -378996,7 +378996,7 @@ func_4C0D74A6_entry_L23:
 func_4C0D74A6_entry_L30:
 	btst	0x08, d1
 	beq	func_4C0D74A6_entry_L3d
-	mov	WORK_RAM_BASE, d0
+	mov	0x50000000, d0
 	bra	func_4C0D74A6_entry_L62
 func_4C0D74A6_entry_L3d:
 	btst	0x10, d1
@@ -487989,7 +487989,7 @@ func_4C1181B7_entry:
 	movbu	(a2), d0
 	cmp	0x98, d0
 	bne	func_4C1181B7_entry_L13
-	mov	WORK_RAM_BASE, d0
+	mov	0x50000000, d0
 	mov	d0, (a1)
 func_4C1181B7_entry_L13:
 	mov	(a1), d0
@@ -551350,7 +551350,7 @@ loc_4C13A1DE:
 	call	func_4C14C6C0_entry, 0, 0x10
 	call	func_4C13A161, 0, 0
 	call	func_4C150150, 0, 0
-	call	func_4C14EEF8, 0, 0
+	call	fmmerror_init, 0, 0
 	ret	0, 8
 loc_4C13A217:
 	retf	0, 0
@@ -551366,7 +551366,7 @@ loc_4C13A21D:
 	call	func_4C14C6C0_entry, 0, 0x10
 	call	func_4C13A161, 0, 0
 	call	func_4C150150, 0, 0
-	call	func_4C14EEF8, 0, 0
+	call	fmmerror_init, 0, 0
 	call	XaprBoardDetect, 0, 0x14
 	extbu	d0
 	cmp	0, d0
@@ -584188,7 +584188,7 @@ CheckExtMode:
 	movbu	(FileExtMode), d0
 	retf	0, 0
 
-func_4C14EEF8:
+fmmerror_init:
 	clr	d0
 	movhu	d0, (FileLastError)
 	retf	0, 0
