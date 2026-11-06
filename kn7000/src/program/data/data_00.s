@@ -18664,7 +18664,7 @@ MemStyleVarRecInit_Table:	# 20 x u8, 0..1; read by MemStyleVarRecInit_entry 0x48
 	tab_u8	0, 1, 0, 1	# [16]
 func_48435C04_Table:	# 8 x u32, 0..7; read by func_48435C04 0x48435C04: `mov   (-0x4c, a0), d0`
 	tab_u32	2, 3, 4, 5, 6, 1, 0, 7
-func_48435C29_Table:	# 8 x u32, 19..26; read by func_48435C29 0x48435C29: `mov   (d0, a0), d0`
+func_48435C29_Table:	# 8 x u32, 19..26; read by StylePartToTgPart 0x48435C29: `mov   (d0, a0), d0`
 	tab_u32	25, 24, 19, 20, 21, 22, 23, 26
 
 func_48435ED4_Records:	# 32 x REC_func_48435ED4_Records (8 bytes each); read by func_48435ED4 0x48435ED4 `mov (a0), d0`
@@ -19690,7 +19690,7 @@ func_484517F6_Records:	# 16 x REC_func_484517F6_Records (8 bytes each); read by 
 	REC_func_484517F6_Records	proc=loc_48451AA3
 	REC_func_484517F6_Records	key=0xAFE07F, proc=loc_48451A72
 
-func_484533A5_Table:	# 8 x u8, 0..255; read by func_484533A5_entry 0x4844E9F1: `movbu  (a1), d0`
+func_484533A5_Table:	# 8 x u8, 0..255; read by func_484533A5_entry 0x48451AA7: `movbu  (a1), d0`
 	tab_u8	2, 0, 1, 0, 0, 0, 255, 255
 
 func_48454D21_Records:	# 32 x REC_func_48454D21_Records (8 bytes each); read by func_48454D21 0x48454D21 `mov (a0), d1`
