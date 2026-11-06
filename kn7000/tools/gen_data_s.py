@@ -2816,7 +2816,7 @@ class Gen:
                 f"\tPM_SET77\t{hx(r[0x77:0x7A])}",
                 f"\tPM_FX\t{hx(r[0x7A:0x88])}",
                 # (N-4b34dd8b, lane mn10300-data3) the levels and numbers in decimal, the masks and the 0xFF
-                # "none" in hex: tremolo mask, TECHNI-CHORD orchestrator part, type 0..13, sequencer volume;
+                # "none" in hex: tremolo mask, TECHNI-CHORD orchestrator part, type 0..13, APC volume;
                 # pad volume, pad bank (src/include/panel_memory.inc)
                 f"\tPM_SET88\t{r[0x88]:#04x}, {r[0x89]:#04x}, {r[0x8A]}, {r[0x8B]}",
                 f"\tPM_SET8C\t{r[0x8C]}, {r[0x8D]}"] + (

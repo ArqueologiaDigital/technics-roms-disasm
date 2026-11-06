@@ -60,7 +60,7 @@ PART_FIELDS = {
     0x1D: ('coarse_tune', '0xB08002 RPN 2, 40..88'), 0x1E: ('fine_tune', '0xB08001 RPN 1'),
     0x1F: ('bend_range', '0xB08000 RPN 0, 0..12'),
     0x20: ('mod_range', '0xB08005 RPN 5, 0..0xC7F, read with +0x21 (kind 0x14, func_4C01578C)'),
-    0x22: ('m200080', 'bits 0-3 0x200080 (0..1)'),
+    0x22: ('drawbar_type', 'bits 0-3 0x200080 (0..1)'),
     0x23: ('tremulant', '0x2000A2, mask 0x07, KN7000 only (AcTabTremulantProc)'),
     0x24: ('organ_nib24', 'RIGHT1 only: nibbles 0x200088 / 0x200089 (0..15)'),
     0x25: ('organ_nib25', 'RIGHT1 only: nibbles 0x20008A / 0x20008B (0..15)'),
@@ -72,8 +72,8 @@ PART_FIELDS = {
                   ': 0x2000C0-0x2000CB, [INFERENCE] SCALE TUNING by degree, C first (TgPartPitchWordCalc indexes '
                   'its scale table by note % 12)' if k == 0 else ''))
        for k, n in enumerate(['c', 'cs', 'd', 'ds', 'e', 'f', 'fs', 'g', 'gs', 'a', 'as', 'b'])},
-    0x38: ('m2000b0', 'bits 0-7 0x2000B0-0x2000B7 (KN7000 only)'),
-    0x39: ('m2000b8', 'bits 0-7 0x2000B8-0x2000BF (KN7000 only)'),
+    0x38: ('tabs_1', 'bits 0-7 0x2000B0-0x2000B7 (KN7000 only)'),
+    0x39: ('tabs_2', 'bits 0-7 0x2000B8-0x2000BF (KN7000 only)'),
     0x3A: ('midi_octave_local', 'bits 0-2 0x204004 MIDI OCTAVE (-3..+3 stored 0..6), bit 5 0x204000 LOCAL (MidiPartGrid, '
                                 'grid "PART|CHANNEL|OCTAVE|LOCAL")'),
     0x3B: ('midi_channel', '0x204001 MIDI CHANNEL, 0..15, 0xFF = OFF (MidiPartGrid)'),
@@ -98,10 +98,10 @@ OTHER_FIELDS = {
     0x42: {0x00: ('rhythm_lo', '0x00C000 the rhythm: kind 6, a 24-bit style id over +0..+2 (MainGetRhythmName, '
                                'CustomStyleIndexFromParam; the one-touch writer stores slot | 0x200000 there)'),
            0x01: ('rhythm_mid', 'byte 1'), 0x02: ('rhythm_hi', 'byte 2'),
-           0x03: ('m00c080', 'bits 0-3 0x00C080 (0..3; MainCOMP_RtcControl, TtChordFinder), bit 4 0x00C082 (ApcSelFunc)'),
-           0x04: ('m00c081', 'bits 0-3 0x00C081 (0..3), bit 6 0x008080 ([INFERENCE] TECHNI-CHORD on: TtSdtecd, '
+           0x03: ('apc_type', 'bits 0-3 0x00C080 (0..3; MainCOMP_RtcControl, TtChordFinder), bit 4 0x00C082 (ApcSelFunc)'),
+           0x04: ('apc_type_alt', 'bits 0-3 0x00C081 (0..3), bit 6 0x008080 ([INFERENCE] TECHNI-CHORD on: TtSdtecd, '
                              'TechniChordCompute)'),
-           0x05: ('m00d000', 'bit 1 0x00D000'),
+           0x05: ('rhythm_sync', 'bit 1 0x00D000'),
            0x06: ('m00d001', 'bits 0-3 0x00D001 (0..3; TempoSync* setters)'),
            0x07: ('variation', 'bits 4-5 0x00C004 (0..3; AcTimeSigBoxProc); the one-touch writer stores setting i there'),
            0x08: ('tempo_lo', '0x000004 TEMPO 40..300, kind 0xA over +0x08 (low) / +0x09 (bit 0 = bit 8); '
@@ -115,8 +115,8 @@ OTHER_FIELDS = {
            0x04: ('techni_chord', 'bits 0-3 0x008081 TECHNI-CHORD type 0..13 (AcTechniChordProc)'),
            0x05: ('m006000', '0x006000, 1..16'), 0x06: ('m006001', '0x006001, 1..16'),
            0x07: ('m006004', 'bits 0-2 0x006004 / 0x006005 / 0x006006'),
-           0x08: ('seq_volume', 'bits 0-6 0x008008 the sequencer volume (the APC/SEQUENCER VOLUME slider while '
-                                 'the sequencer plays: 941 func_48454E3A), bit 7 0x008009'),
+           0x08: ('apc_volume', 'bits 0-6 0x008008 APC VOLUME (the APC/SEQUENCER VOLUME slider while no sequencer '
+                                 'part plays: 941 func_48454E3A / func_48454D21), bit 7 0x008009'),
            **{0x0C + k: ('apc_rev%d' % (k + 1), 'KN7000 only: 0x%06X APC reverb DEPTH of row %d, bit 7 0x%06X (ApcRevFunc, '
                          'grid "PART | DEPTH" ACCOMP1..)' % (0x00E030 + k, k + 1, 0x00E038 + k)) for k in range(8)}},
     0x45: {0x00: ('m005040', 'bit 0 0x005040, bit 1 0x005041')},
@@ -163,13 +163,13 @@ OTHER_FIELDS = {
            0x08: ('eq_mid3_freq', '0x00A318'), 0x09: ('eq_mid3_q', '0x00A319'),
            0x0A: ('eq_mid3_gain', '0x00A31A (AcGainBoxProc)'), 0x0B: ('eq_high_freq', '0x00A31B'),
            0x0C: ('eq_high_gain', '0x00A31C (AcGainBoxProc)')},
-    0x50: {0x00: ('m000000', '0x000000'), 0x03: ('m000008', '0x000008, 0..6 (AcTGModeSelProc, AcHpScreenProc)')},
+    0x50: {0x00: ('master_tune', '0x000000'), 0x03: ('m000008', '0x000008, 0..6 (AcTGModeSelProc, AcHpScreenProc)')},
     0x51: {0x00: ('m000020', 'bits 0-3 0x000020, 0..9 (TchSensGridCheck)'), 0x02: ('m000030', '0x000030'),
            0x05: ('m000024', '0x000024, 1..10 (TchSensGridCheck)'),
            0x06: ('m000028', 'bits 0-6 0x000028 1..127, bit 7 0x00002C (TchSensGridCheck)')},
     0x52: {0x00: ('m000082', 'bit 6 0x000082'),
            0x01: ('pmem_number', '0x000080 the PANEL MEMORY number 0..104 (MainGetPmemName, PmemBankViewCatch)'),
-           0x03: ('m0000a0', 'bit 0 0x0000A0, bits 4-6 0x0000A1'), 0x04: ('m00800c', 'bits 0-6 0x00800C, bit 7 0x00800D'),
+           0x03: ('msa_on', 'bit 0 0x0000A0, bits 4-6 0x0000A1'), 0x04: ('m00800c', 'bits 0-6 0x00800C, bit 7 0x00800D'),
            0x07: ('bits5000', 'bits 0x005000-0x005007'), 0x08: ('bits5008', 'bits 0x005008-0x00500F'),
            0x09: ('bits5010', 'bits 0x005010-0x005015'), 0x0A: ('bits5020', 'bits 0x005020-0x005023'),
            0x0D: ('m00e004', 'bit 0 0x00E004, bit 1 0x00D00A, bits 6-7 0x008033 (AcFadeBoxProc)'),

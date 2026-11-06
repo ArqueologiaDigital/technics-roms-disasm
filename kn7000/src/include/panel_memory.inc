@@ -34,11 +34,11 @@
 #   p06 +0x06 03 (no parameter record), dsp_depth +0x0b ff, multi_depth +0x0c ff, chorus_depth
 #   +0x0d ff (each depth with its on/off in bit 7), reverb_depth +0x0e 7f, portamento +0x0f ff,
 #   cc80 .. cc83 +0x18..+0x1b 7f, pan +0x1c 7f, coarse_tune +0x1d 7f, fine_tune +0x1e ff,
-#   m200080 +0x22 0f, organ_nib24 +0x24, organ_nib25 +0x25, drawbar1_2 .. drawbar7_8 +0x26..+0x29
+#   drawbar_type +0x22 0f, organ_nib24 +0x24, organ_nib25 +0x25, drawbar1_2 .. drawbar7_8 +0x26..+0x29
 #   ff, drawbar9_perc +0x2a 3f.
-.macro PM_PART voice_prog, voice_bank_lsb, voice_bank_msb, volume, ctl_bits, p06, dsp_depth, multi_depth, chorus_depth, reverb_depth, portamento, cc80, cc81, cc82, cc83, pan, coarse_tune, fine_tune, m200080, organ_nib24, organ_nib25, drawbar1_2, drawbar3_4, drawbar5_6, drawbar7_8, drawbar9_perc
+.macro PM_PART voice_prog, voice_bank_lsb, voice_bank_msb, volume, ctl_bits, p06, dsp_depth, multi_depth, chorus_depth, reverb_depth, portamento, cc80, cc81, cc82, cc83, pan, coarse_tune, fine_tune, drawbar_type, organ_nib24, organ_nib25, drawbar1_2, drawbar3_4, drawbar5_6, drawbar7_8, drawbar9_perc
 	.byte	\voice_prog, \voice_bank_lsb, \voice_bank_msb, \volume, \ctl_bits, \p06, \dsp_depth, \multi_depth, \chorus_depth, \reverb_depth, \portamento, \cc80, \cc81
-	.byte	\cc82, \cc83, \pan, \coarse_tune, \fine_tune, \m200080, \organ_nib24, \organ_nib25, \drawbar1_2, \drawbar3_4, \drawbar5_6, \drawbar7_8, \drawbar9_perc
+	.byte	\cc82, \cc83, \pan, \coarse_tune, \fine_tune, \drawbar_type, \organ_nib24, \organ_nib25, \drawbar1_2, \drawbar3_4, \drawbar5_6, \drawbar7_8, \drawbar9_perc
 .endm
 
 # Eight bytes, one from each of the panel record's 6-byte entries at +0xF4 + i*6 (table
@@ -90,17 +90,19 @@
 .endm
 # +0x88..+0x8B (table 0x4858E235, source +0x700 / +0x6B6 = tag 0x44): tremolo mask 0x04 (parameter
 # 0x008030, AcTremoloProc), tc_orchestrator (+3, 0x008082, TechniChordOrchestratorPart),
-# techni_chord mask 0x0F (+4, 0x008081 TECHNI-CHORD type, AcTechniChordProc), seq_volume (+8: 0x008008
-# bits 0-6, 0x008009 bit 7): the sequencer's volume, 0..127.  941 func_48454E3A (KN6000 func_4C114272)
-# sets 0x008008 and the accompaniment's 0x008006 from the APC/SEQUENCER VOLUME slider, PanelCtrlValueGet
-# of control 0xC2 (KN6000 0xC6): while the sequencer plays or in DEMO 0x008008 follows the slider and
-# 0x008006 is 0x7F, otherwise the other way round.  The control is the slider: index 26 of
+# techni_chord mask 0x0F (+4, 0x008081 TECHNI-CHORD type, AcTechniChordProc), apc_volume (+8: 0x008008
+# bits 0-6, 0x008009 bit 7): the APC (accompaniment) VOLUME, 0..127.  941 func_48454E3A (KN6000
+# func_4C114272) sets 0x008008 and the sequencer's 0x008006 (SEQ VOLUME) from the APC/SEQUENCER VOLUME
+# slider, PanelCtrlValueGet of control 0xC2 (KN6000 0xC6): func_48454D21 answers 0 in DEMO and whenever no
+# sequencer part plays (GetSeqPlyPart), and then 0x008008 follows the slider and 0x008006 is held at 0x7F;
+# while the sequencer plays the two swap (kn7000/notes/presentation-control-probes/song-records.md: the
+# firmware's parameter dump labels 0x8006 SEQ VOLUME and 0x8008 APC VOLUME).  The control is the slider: index 26 of
 # PanelCtrlValueGet_Table (bank 3, input 2) is the byte PanelCtrlLatch32 latches from wire 0xD2, the
 # CPL panel CPU's AD2 input, which the KN7000 service manual wires to VR1102 "APC/SEQUENCER"; on the
 # KN6000 (index 30, AD6) the SX-KN6500 service manual's VR1 "APC/SEQUENCER VOLUME".  The KN5000's tag
 # 0x70 has no byte +8.  (kn7000/notes/mn10300-data3/README.md, N-4b34dd8b)
-.macro PM_SET88 tremolo, tc_orchestrator, techni_chord, seq_volume
-	.byte	\tremolo, \tc_orchestrator, \techni_chord, \seq_volume
+.macro PM_SET88 tremolo, tc_orchestrator, techni_chord, apc_volume
+	.byte	\tremolo, \tc_orchestrator, \techni_chord, \apc_volume
 .endm
 # +0x8C..+0x8D (table 0x4858E241, source +0x716 / +0x6C6 = tag 0x46): pad_volume (0x00E001 bits 0-6,
 # 0x00E002 bit 7), pad_bank (0x00E005, AcPadBankProc); pad_bank is then passed through func_484417B9
@@ -112,17 +114,17 @@
 	.byte	\pad_volume, \pad_bank
 .endm
 # KN7000 only, +0x8F..+0x9A: three more bytes of each of the four parts (table 0x4858E24A):
-# tremulant (part +0x23 mask 0x07, parameter 0x2000A2), m2000b0 (+0x38: 0x2000B0-B7), m2000b8
+# tremulant (part +0x23 mask 0x07, parameter 0x2000A2), tabs_1 (+0x38: 0x2000B0-B7), tabs_2
 # (+0x39: 0x2000B8-BF).
-.macro PM_PART_TAIL tremulant, m2000b0, m2000b8
-	.byte	\tremulant, \m2000b0, \m2000b8
+.macro PM_PART_TAIL tremulant, tabs_1, tabs_2
+	.byte	\tremulant, \tabs_1, \tabs_2
 .endm
 # A KN7000 setting converted from a KN6000 file.  When AstLoadHandler or LoadCst load a file with the
 # KN6000 signature (func_4852B746 = 3), func_48485B52 (KN7000 program 941; func_48485E55 for all 20
 # slots, func_48485E79 for one) rebuilds each slot in the KN7000 layout: per setting it copies the
 # 0xA0-byte default func_48485B52_Block, then the KN6000 setting's 0x90 bytes over it.  So +0x00..+0x8D
 # are the KN6000 setting's fields (same offsets), +0x8E..+0x8F its last two bytes, FF FF, and
-# +0x90..+0x9F the default's: part 0's m2000b0 / m2000b8 (its tremulant byte +0x8F is the KN6000 FF),
+# +0x90..+0x9F the default's: part 0's tabs_1 / tabs_2 (its tremulant byte +0x8F is the KN6000 FF),
 # the tails of parts 1-3 and the five FF.
 .macro PM_KN6000_END
 	.byte	0xff, 0xff
@@ -187,7 +189,7 @@
 #   +0x1E fine_tune         0xB08001 RPN 1
 #   +0x1F bend_range        0xB08000 RPN 0, 0..12
 #   +0x20 mod_range         0xB08005 RPN 5, 0..0xC7F, read with +0x21 (kind 0x14, func_4C01578C)
-#   +0x22 m200080           bits 0-3 0x200080 (0..1)
+#   +0x22 drawbar_type      bits 0-3 0x200080 (0..1)
 #   +0x23 tremulant         0x2000A2, mask 0x07, KN7000 only (AcTabTremulantProc)
 #   +0x24 organ_nib24       RIGHT1 only: nibbles 0x200088 / 0x200089 (0..15)
 #   +0x25 organ_nib25       RIGHT1 only: nibbles 0x20008A / 0x20008B (0..15)
@@ -209,8 +211,8 @@
 #   +0x35 scale_a           0x2000C9, 28..228 (128 = 0)
 #   +0x36 scale_as          0x2000CA, 28..228 (128 = 0)
 #   +0x37 scale_b           0x2000CB, 28..228 (128 = 0)
-#   +0x38 m2000b0           bits 0-7 0x2000B0-0x2000B7 (KN7000 only)
-#   +0x39 m2000b8           bits 0-7 0x2000B8-0x2000BF (KN7000 only)
+#   +0x38 tabs_1            bits 0-7 0x2000B0-0x2000B7 (KN7000 only)
+#   +0x39 tabs_2            bits 0-7 0x2000B8-0x2000BF (KN7000 only)
 #   +0x3A midi_octave_local bits 0-2 0x204004 MIDI OCTAVE (-3..+3 stored 0..6), bit 5 0x204000 LOCAL
 #                           (MidiPartGrid, grid "PART|CHANNEL|OCTAVE|LOCAL")
 #   +0x3B midi_channel      0x204001 MIDI CHANNEL, 0..15, 0xFF = OFF (MidiPartGrid)
@@ -223,12 +225,12 @@
 #   +0x41 m20402c           bits 0-6 0x20402C, bit 7 0x20402D
 #   +0x42 m204030           bits 0-6 0x204030, bit 7 0x204031
 #   +0x43 m204022           bits 0-4 0x204022 / 0x204026 / 0x20402A / 0x20402E / 0x204032
-.macro PMR_PART tag, voice_prog, voice_bank_lsb, voice_bank_msb, volume, ctl_bits, tg_bits, p06, p07, p08, p09, p0a, dsp_depth, multi_depth, chorus_depth, reverb_depth, portamento, resonance, release_time, attack_time, cutoff, decay_time, vibrato_rate, vibrato_depth, vibrato_delay, cc80, cc81, cc82, cc83, pan, coarse_tune, fine_tune, bend_range, mod_range, p21, m200080, tremulant, organ_nib24, organ_nib25, drawbar1_2, drawbar3_4, drawbar5_6, drawbar7_8, drawbar9_perc, p2b, scale_c, scale_cs, scale_d, scale_ds, scale_e, scale_f, scale_fs, scale_g, scale_gs, scale_a, scale_as, scale_b, m2000b0, m2000b8, midi_octave_local, midi_channel, m204020_prog, m204020_lsb, m204020_msb, m204024, m204028, m20402c, m204030, m204022, p44, p45, p46, p47
+.macro PMR_PART tag, voice_prog, voice_bank_lsb, voice_bank_msb, volume, ctl_bits, tg_bits, p06, p07, p08, p09, p0a, dsp_depth, multi_depth, chorus_depth, reverb_depth, portamento, resonance, release_time, attack_time, cutoff, decay_time, vibrato_rate, vibrato_depth, vibrato_delay, cc80, cc81, cc82, cc83, pan, coarse_tune, fine_tune, bend_range, mod_range, p21, drawbar_type, tremulant, organ_nib24, organ_nib25, drawbar1_2, drawbar3_4, drawbar5_6, drawbar7_8, drawbar9_perc, p2b, scale_c, scale_cs, scale_d, scale_ds, scale_e, scale_f, scale_fs, scale_g, scale_gs, scale_a, scale_as, scale_b, tabs_1, tabs_2, midi_octave_local, midi_channel, m204020_prog, m204020_lsb, m204020_msb, m204024, m204028, m20402c, m204030, m204022, p44, p45, p46, p47
 	.byte	\tag, 72
 	.byte	\voice_prog, \voice_bank_lsb, \voice_bank_msb, \volume, \ctl_bits, \tg_bits, \p06, \p07, \p08, \p09, \p0a, \dsp_depth, \multi_depth, \chorus_depth, \reverb_depth, \portamento, \resonance, \release_time
-	.byte	\attack_time, \cutoff, \decay_time, \vibrato_rate, \vibrato_depth, \vibrato_delay, \cc80, \cc81, \cc82, \cc83, \pan, \coarse_tune, \fine_tune, \bend_range, \mod_range, \p21, \m200080, \tremulant
+	.byte	\attack_time, \cutoff, \decay_time, \vibrato_rate, \vibrato_depth, \vibrato_delay, \cc80, \cc81, \cc82, \cc83, \pan, \coarse_tune, \fine_tune, \bend_range, \mod_range, \p21, \drawbar_type, \tremulant
 	.byte	\organ_nib24, \organ_nib25, \drawbar1_2, \drawbar3_4, \drawbar5_6, \drawbar7_8, \drawbar9_perc, \p2b, \scale_c, \scale_cs, \scale_d, \scale_ds, \scale_e, \scale_f, \scale_fs, \scale_g, \scale_gs, \scale_a
-	.byte	\scale_as, \scale_b, \m2000b0, \m2000b8, \midi_octave_local, \midi_channel, \m204020_prog, \m204020_lsb, \m204020_msb, \m204024, \m204028, \m20402c, \m204030, \m204022, \p44, \p45, \p46, \p47
+	.byte	\scale_as, \scale_b, \tabs_1, \tabs_2, \midi_octave_local, \midi_channel, \m204020_prog, \m204020_lsb, \m204020_msb, \m204024, \m204028, \m20402c, \m204030, \m204022, \p44, \p45, \p46, \p47
 .endm
 # A 4-byte entry, tags 0x13-0x1A (ACCOMP1-5, BASS, DRUMS1, DRUMS2, whose part records live in work RAM):
 # bytes +0x03, +0x05, +0x3A, +0x3B of the part (func_4C01F8F4 / func_4C01F98B).  PM_ENTRIES stores the volume.
@@ -250,20 +252,20 @@
 #                           CustomStyleIndexFromParam; the one-touch writer stores slot | 0x200000 there)
 #   +0x01 rhythm_mid        byte 1
 #   +0x02 rhythm_hi         byte 2
-#   +0x03 m00c080           bits 0-3 0x00C080 (0..3; MainCOMP_RtcControl, TtChordFinder), bit 4 0x00C082
+#   +0x03 apc_type          bits 0-3 0x00C080 (0..3; MainCOMP_RtcControl, TtChordFinder), bit 4 0x00C082
 #                           (ApcSelFunc)
-#   +0x04 m00c081           bits 0-3 0x00C081 (0..3), bit 6 0x008080 ([INFERENCE] TECHNI-CHORD on: TtSdtecd,
+#   +0x04 apc_type_alt      bits 0-3 0x00C081 (0..3), bit 6 0x008080 ([INFERENCE] TECHNI-CHORD on: TtSdtecd,
 #                           TechniChordCompute)
-#   +0x05 m00d000           bit 1 0x00D000
+#   +0x05 rhythm_sync       bit 1 0x00D000
 #   +0x06 m00d001           bits 0-3 0x00D001 (0..3; TempoSync* setters)
 #   +0x07 variation         bits 4-5 0x00C004 (0..3; AcTimeSigBoxProc); the one-touch writer stores setting i
 #                           there
 #   +0x08 tempo_lo          0x000004 TEMPO 40..300, kind 0xA over +0x08 (low) / +0x09 (bit 0 = bit 8);
 #                           TempoSyncParamDispatch
 #   +0x09 tempo_hi          tempo bit 8
-.macro PMR_42_14 rhythm_lo, rhythm_mid, rhythm_hi, m00c080, m00c081, m00d000, m00d001, variation, tempo_lo, tempo_hi, x0a, x0b, x0c, x0d
+.macro PMR_42_14 rhythm_lo, rhythm_mid, rhythm_hi, apc_type, apc_type_alt, rhythm_sync, m00d001, variation, tempo_lo, tempo_hi, x0a, x0b, x0c, x0d
 	.byte	0x42, 14
-	.byte	\rhythm_lo, \rhythm_mid, \rhythm_hi, \m00c080, \m00c081, \m00d000, \m00d001, \variation, \tempo_lo, \tempo_hi, \x0a, \x0b, \x0c, \x0d
+	.byte	\rhythm_lo, \rhythm_mid, \rhythm_hi, \apc_type, \apc_type_alt, \rhythm_sync, \m00d001, \variation, \tempo_lo, \tempo_hi, \x0a, \x0b, \x0c, \x0d
 .endm
 # tag 0x43 fields:
 #   +0x00 control_channel   0x00F101 the MIDI CONTROL channel, 0xFF = OFF (MidiPartGrid row CONTROL)
@@ -280,19 +282,19 @@
 #   +0x05 m006000           0x006000, 1..16
 #   +0x06 m006001           0x006001, 1..16
 #   +0x07 m006004           bits 0-2 0x006004 / 0x006005 / 0x006006
-#   +0x08 seq_volume        bits 0-6 0x008008 the sequencer volume (the APC/SEQUENCER VOLUME slider while the
-#                           sequencer plays: 941 func_48454E3A), bit 7 0x008009
+#   +0x08 apc_volume        bits 0-6 0x008008 APC VOLUME (the APC/SEQUENCER VOLUME slider while no sequencer
+#                           part plays: 941 func_48454E3A / func_48454D21), bit 7 0x008009
 #   +0x0C apc_rev1          KN7000 only: 0x00E030 APC reverb DEPTH of row 1, bit 7 0x00E038 (ApcRevFunc, grid
 #                           "PART | DEPTH" ACCOMP1..)
 #   +0x0D apc_rev2          KN7000 only: 0x00E031 APC reverb DEPTH of row 2, bit 7 0x00E039 (ApcRevFunc, grid
 #                           "PART | DEPTH" ACCOMP1..)
-.macro PMR_44_14 split_mode, split_point, transpose, tc_orchestrator, techni_chord, m006000, m006001, m006004, seq_volume, x09, x0a, x0b, apc_rev1, apc_rev2
+.macro PMR_44_14 split_mode, split_point, transpose, tc_orchestrator, techni_chord, m006000, m006001, m006004, apc_volume, x09, x0a, x0b, apc_rev1, apc_rev2
 	.byte	0x44, 14
-	.byte	\split_mode, \split_point, \transpose, \tc_orchestrator, \techni_chord, \m006000, \m006001, \m006004, \seq_volume, \x09, \x0a, \x0b, \apc_rev1, \apc_rev2
+	.byte	\split_mode, \split_point, \transpose, \tc_orchestrator, \techni_chord, \m006000, \m006001, \m006004, \apc_volume, \x09, \x0a, \x0b, \apc_rev1, \apc_rev2
 .endm
-.macro PMR_44_20 split_mode, split_point, transpose, tc_orchestrator, techni_chord, m006000, m006001, m006004, seq_volume, x09, x0a, x0b, apc_rev1, apc_rev2, apc_rev3, apc_rev4, apc_rev5, apc_rev6, apc_rev7, apc_rev8
+.macro PMR_44_20 split_mode, split_point, transpose, tc_orchestrator, techni_chord, m006000, m006001, m006004, apc_volume, x09, x0a, x0b, apc_rev1, apc_rev2, apc_rev3, apc_rev4, apc_rev5, apc_rev6, apc_rev7, apc_rev8
 	.byte	0x44, 20
-	.byte	\split_mode, \split_point, \transpose, \tc_orchestrator, \techni_chord, \m006000, \m006001, \m006004, \seq_volume, \x09, \x0a, \x0b, \apc_rev1, \apc_rev2, \apc_rev3, \apc_rev4, \apc_rev5, \apc_rev6
+	.byte	\split_mode, \split_point, \transpose, \tc_orchestrator, \techni_chord, \m006000, \m006001, \m006004, \apc_volume, \x09, \x0a, \x0b, \apc_rev1, \apc_rev2, \apc_rev3, \apc_rev4, \apc_rev5, \apc_rev6
 	.byte	\apc_rev7, \apc_rev8
 .endm
 # tag 0x45 fields:
@@ -412,11 +414,11 @@
 	.byte	\eq_low_freq, \eq_low_gain, \eq_mid1_freq, \eq_mid1_q, \eq_mid1_gain, \eq_mid2_freq, \eq_mid2_q, \eq_mid2_gain, \eq_mid3_freq, \eq_mid3_q, \eq_mid3_gain, \eq_high_freq, \eq_high_gain, \x0d
 .endm
 # tag 0x50 fields:
-#   +0x00 m000000           0x000000
+#   +0x00 master_tune       0x000000
 #   +0x03 m000008           0x000008, 0..6 (AcTGModeSelProc, AcHpScreenProc)
-.macro PMR_50_8 m000000, x01, x02, m000008, x04, x05, x06, x07
+.macro PMR_50_8 master_tune, x01, x02, m000008, x04, x05, x06, x07
 	.byte	0x50, 8
-	.byte	\m000000, \x01, \x02, \m000008, \x04, \x05, \x06, \x07
+	.byte	\master_tune, \x01, \x02, \m000008, \x04, \x05, \x06, \x07
 .endm
 # tag 0x51 fields:
 #   +0x00 m000020           bits 0-3 0x000020, 0..9 (TchSensGridCheck)
@@ -430,7 +432,7 @@
 # tag 0x52 fields:
 #   +0x00 m000082           bit 6 0x000082
 #   +0x01 pmem_number       0x000080 the PANEL MEMORY number 0..104 (MainGetPmemName, PmemBankViewCatch)
-#   +0x03 m0000a0           bit 0 0x0000A0, bits 4-6 0x0000A1
+#   +0x03 msa_on            bit 0 0x0000A0, bits 4-6 0x0000A1
 #   +0x04 m00800c           bits 0-6 0x00800C, bit 7 0x00800D
 #   +0x07 bits5000          bits 0x005000-0x005007
 #   +0x08 bits5008          bits 0x005008-0x00500F
@@ -448,15 +450,15 @@
 #   +0x1B m007041           0x007041, 0..9
 #   +0x1C mono1_part        0x007042 (SpPartMono, grid "OUTPUT | PART ASSIGN" MONO 1)
 #   +0x1D mono2_part        0x007043 (SpPartMono, MONO 2)
-.macro PMR_52_40 m000082, pmem_number, x02, m0000a0, m00800c, x05, x06, bits5000, bits5008, bits5010, bits5020, x0b, x0c, m00e004, m006020, m00b000, dsp1_unit, dsp2_unit, dsp3_unit, dsp4_unit, dsp5_unit, x15, x16, x17, x18, x19, m007040, m007041, mono1_part, mono2_part, x1e, x1f, x20, x21, x22, x23, x24, x25, x26, x27
+.macro PMR_52_40 m000082, pmem_number, x02, msa_on, m00800c, x05, x06, bits5000, bits5008, bits5010, bits5020, x0b, x0c, m00e004, m006020, m00b000, dsp1_unit, dsp2_unit, dsp3_unit, dsp4_unit, dsp5_unit, x15, x16, x17, x18, x19, m007040, m007041, mono1_part, mono2_part, x1e, x1f, x20, x21, x22, x23, x24, x25, x26, x27
 	.byte	0x52, 40
-	.byte	\m000082, \pmem_number, \x02, \m0000a0, \m00800c, \x05, \x06, \bits5000, \bits5008, \bits5010, \bits5020, \x0b, \x0c, \m00e004, \m006020, \m00b000, \dsp1_unit, \dsp2_unit
+	.byte	\m000082, \pmem_number, \x02, \msa_on, \m00800c, \x05, \x06, \bits5000, \bits5008, \bits5010, \bits5020, \x0b, \x0c, \m00e004, \m006020, \m00b000, \dsp1_unit, \dsp2_unit
 	.byte	\dsp3_unit, \dsp4_unit, \dsp5_unit, \x15, \x16, \x17, \x18, \x19, \m007040, \m007041, \mono1_part, \mono2_part, \x1e, \x1f, \x20, \x21, \x22, \x23
 	.byte	\x24, \x25, \x26, \x27
 .endm
-.macro PMR_52_46 m000082, pmem_number, x02, m0000a0, m00800c, x05, x06, bits5000, bits5008, bits5010, bits5020, x0b, x0c, m00e004, m006020, m00b000, dsp1_unit, dsp2_unit, dsp3_unit, dsp4_unit, dsp5_unit, x15, x16, x17, x18, x19, m007040, m007041, mono1_part, mono2_part, x1e, x1f, x20, x21, x22, x23, x24, x25, x26, x27, x28, x29, x2a, x2b, x2c, x2d
+.macro PMR_52_46 m000082, pmem_number, x02, msa_on, m00800c, x05, x06, bits5000, bits5008, bits5010, bits5020, x0b, x0c, m00e004, m006020, m00b000, dsp1_unit, dsp2_unit, dsp3_unit, dsp4_unit, dsp5_unit, x15, x16, x17, x18, x19, m007040, m007041, mono1_part, mono2_part, x1e, x1f, x20, x21, x22, x23, x24, x25, x26, x27, x28, x29, x2a, x2b, x2c, x2d
 	.byte	0x52, 46
-	.byte	\m000082, \pmem_number, \x02, \m0000a0, \m00800c, \x05, \x06, \bits5000, \bits5008, \bits5010, \bits5020, \x0b, \x0c, \m00e004, \m006020, \m00b000, \dsp1_unit, \dsp2_unit
+	.byte	\m000082, \pmem_number, \x02, \msa_on, \m00800c, \x05, \x06, \bits5000, \bits5008, \bits5010, \bits5020, \x0b, \x0c, \m00e004, \m006020, \m00b000, \dsp1_unit, \dsp2_unit
 	.byte	\dsp3_unit, \dsp4_unit, \dsp5_unit, \x15, \x16, \x17, \x18, \x19, \m007040, \m007041, \mono1_part, \mono2_part, \x1e, \x1f, \x20, \x21, \x22, \x23
 	.byte	\x24, \x25, \x26, \x27, \x28, \x29, \x2a, \x2b, \x2c, \x2d
 .endm
