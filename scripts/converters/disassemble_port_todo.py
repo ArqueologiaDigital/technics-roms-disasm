@@ -267,6 +267,20 @@ class Tree:
             return None
         return nm
 
+    def new_label(self, addr, name):
+        """a label for addr: the source tree's name for the same bytes, else name (made unique)"""
+        nm = self.source_name(addr)
+        if not nm:
+            nm, k = name, 2
+            while nm in self.used:
+                nm, k = "%s_%d" % (name, k), k + 1
+        self.used.add(nm)
+        self.labels[addr].append(nm)
+        j = bisect.bisect_right(self.keys, addr)
+        self.keys.insert(j, addr)
+        self.sorted_labels.insert(j, (addr, nm))
+        return nm
+
     def new_name(self, addr, suffix):
         src = self.source_name(addr)
         if src:
@@ -347,7 +361,8 @@ def hand_region(T, label):
                 b = Block(k0 + 1, k - 1, a, e, a, T.rom[a - BASE:e - BASE], "code", inner, comments)
                 return b, [(a + o, l, t) for o, l, t in items]
         k += 1
-    print("hand region %s: no decode ends on an instruction line" % label)
+    if seen_todo:
+        print("hand region %s: no decode ends on an instruction line" % label)
     return None
 
 
@@ -427,6 +442,73 @@ def start_agrees(T, start):
         return False
     items = P.decode_region(T.rom[a - BASE:start - BASE])
     return all(t is not None for o, l, t in items) and sum(l for o, l, t in items) == start - a
+
+
+SHORT_DIFF = re.compile(r'^\.short\s+([A-Za-z_]\w*)\s*-\s*([A-Za-z_]\w*)$')
+
+
+def case_tables(T, blocks):
+    """The data blocks inside a compiled `switch`'s 16-bit case-offset table.  The tree's reader says
+    which table and base: `lda xR, (TABLE:24)` / `ld wa, (xR+wa)` / `lda xR, (BASE:24)` / `jp`, the
+    bound from the `cp wa, N` / `jr gt` before it (N + 1 entries); without a reader, the table's own
+    `.short Case - Base` lines give the base and the next label ends it.  -> [(table label, table
+    address, entries, base spelling or address, order index of the table label line)]"""
+    readers = {}
+    for i, (labs, body, com) in enumerate(T.parsed):
+        m = re.match(r'^lda\s+(x\w+),\s*\(([A-Za-z_]\w*):24\)$', body or "", re.I)
+        if not m:
+            continue
+        nxt = [T.parsed[j][1] or "" for j in range(i + 1, min(i + 5, len(T.parsed))) if T.parsed[j][1]]
+        if len(nxt) < 3 or not re.match(r'^ld\s+wa,\s*\(%s\+wa\)$' % m.group(1), nxt[0], re.I):
+            continue
+        mb = re.match(r'^lda\s+%s,\s*\((0x[0-9a-f]+|[A-Za-z_]\w*):24\)$' % m.group(1), nxt[1], re.I)
+        if not mb or not re.match(r'^jp', nxt[2], re.I):
+            continue
+        bound = None
+        for j in range(i - 1, max(0, i - 8), -1):
+            mc = re.match(r'^cp\s+wa,\s*(\d+)(?::i3)?$', T.parsed[j][1] or "")
+            if mc and re.match(r'^jrl?\s+(gt|ugt),', T.parsed[j + 1][1] or ""):
+                bound = int(mc.group(1)) + 1
+                break
+        if bound:
+            readers[m.group(2)] = (mb.group(1), bound)
+    # candidate tables: the readers' tables, and every label a TODO(port) row follows over `.short` lines
+    labels_at = {}
+    for k, (labs, body, com) in enumerate(T.parsed):
+        if labs and not body:
+            for lab in labs:
+                labels_at[lab] = k
+    cands = {t for t in readers if t in labels_at}
+    for r in sorted(T.todo_rows):
+        k = r - 1
+        while k >= 0 and (TODO.match(T.order[k][3]) or k in T.todo_rows or not T.parsed[k][0] and
+                          (not T.parsed[k][1] or SHORT_DIFF.match(T.parsed[k][1]))):
+            k -= 1
+        if k >= 0 and T.parsed[k][0] and not T.parsed[k][1]:
+            cands.add(T.parsed[k][0][-1])
+    out = []
+    for tab in sorted(cands):
+        if tab not in labels_at or tab not in T.syms:
+            continue
+        k = labels_at[tab]
+        start = T.syms[tab]
+        if tab in readers:
+            base, n = readers[tab]
+        else:
+            j = k + 1
+            diffs = []
+            while j < len(T.parsed) and not T.parsed[j][0] and (not T.parsed[j][1] or j in T.todo_rows or
+                                                                SHORT_DIFF.match(T.parsed[j][1])):
+                if T.parsed[j][1] and SHORT_DIFF.match(T.parsed[j][1]):
+                    diffs.append(SHORT_DIFF.match(T.parsed[j][1]).group(2))
+                j += 1
+            if not diffs or len(set(diffs)) != 1 or j >= len(T.order):
+                continue
+            base, n = diffs[0], (T.order[j][0] - start) // 2
+        rows = [r for r in T.todo_rows if start <= T.order[r][0] < start + 2 * n]
+        if rows:
+            out.append((tab, start, n, base, k))
+    return out
 
 
 def unspelled_row(T, text, addr, n):
@@ -544,6 +626,38 @@ def main():
         len(good), kinds["code"], sum(len(blocks[k].bs) for k in good), widened))
     newlabels = {}
     rewritten = {}
+    # case-offset tables: every entry as `.short Case - Base`
+    case_edits = []
+    for tab, start, n, base, k in case_tables(T, blocks):
+        stem = re.sub(r'_CaseTable', '', tab)
+        if re.fullmatch(r'0x[0-9a-f]+', base):
+            ba = int(base, 16)
+            bn = T.label_for(ba) or newlabels.get(ba)
+            if not bn and ba in T.starts:
+                bn = T.new_label(ba, stem + "_Case0")
+                newlabels[ba] = bn
+            if not bn:
+                continue
+            base, base_fix = bn, (tab, ba)
+        else:
+            ba, base_fix = T.syms.get(base), None
+            if ba is None:
+                continue
+        lines, ok = [], True
+        for e in range(n):
+            w = int.from_bytes(T.rom[start + 2 * e - BASE:start + 2 * e + 2 - BASE], "little")
+            tgt = ba + (w - 0x10000 if w & 0x8000 else w)
+            nm = T.label_for(tgt) or newlabels.get(tgt)
+            if not nm and tgt in T.starts:
+                nm = T.new_label(tgt, "%s_Case%d" % (stem, e))
+                newlabels[tgt] = nm
+            if not nm:
+                ok = False
+                break
+            lines.append((start + 2 * e, "\t.short\t%s - %s" % (nm, base)))
+        if ok:
+            case_edits.append((tab, start, n, k, lines, base_fix))
+    print("case-offset tables spelled: %d (%s)" % (len(case_edits), ", ".join(c[0] for c in case_edits)))
     for k, seq in good.items():
         rewritten[k] = [(ad, n, unspelled_row(T, t, ad, n) if t.startswith(P.UNSPELLED)
                          else symbolize(T, t, ad, n, inst_starts, newlabels)) for ad, n, t in seq]
@@ -646,6 +760,24 @@ def main():
             lines.append("\t" + t)
         lines.extend(tail)
         edits[rel][T.order[b.first][2]] = lines
+    for tab, start, n, k, lines, base_fix in case_edits:
+        rel = T.order[k][1]
+        end = start + 2 * n
+        byaddr = dict(lines)
+        j = k + 1
+        first = True
+        while j < len(T.order) and (T.order[j][0] is None or T.order[j][0] < end):
+            labs, body, com = T.parsed[j]
+            if T.size[j] > 0 or TODO.match(T.order[j][3]):
+                ad = T.order[j][0]
+                edits[rel][T.order[j][2]] = [byaddr[x] for x in sorted(byaddr) if ad <= x < ad + T.size[j]] \
+                    if T.size[j] > 0 else None
+            j += 1
+        if base_fix:
+            # the reader's numeric base takes the label
+            for i, (labs, body, com) in enumerate(T.parsed):
+                if body and re.match(r'^lda\s+x\w+,\s*\(0x%06x:24\)$' % base_fix[1], body, re.I):
+                    edits[T.order[i][1]][T.order[i][2]] = [T.order[i][3].replace("0x%06x" % base_fix[1], T.label_for(base_fix[1]) or newlabels[base_fix[1]])]
     for ad, nm in newlabels.items():
         if ad in block_of_addr:
             continue
