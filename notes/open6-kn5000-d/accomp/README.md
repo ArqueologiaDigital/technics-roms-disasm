@@ -239,11 +239,13 @@ sequencer) uses the same 9-bit path on a caller-supplied note list.
 
 ### A8. Left open
 
-- What sets `CHORD_FLAGS` / 0x32D7 bit 0 (no setter in the v10 recognizer; the 0x2306 override is the only path
-  found).  Next step: trace the writers of 0x2306 (sequencer_engine.s `BitMapOut_*` / `NoteDisplay_*` callers).
-- `Rhythm_TransposeWithMod` (0xF55AD0, called through `AccompSeq_CheckVelFlags*`, accompseq_routines.s) is a second
-  converter with its own ext bytes (0x7E5A / 0x7E5B -> 0x33E6 / 0x33E7), the ACCOMP1 row map and no turnover; its
-  caller (the composer / accompaniment sequencer) was not traced.
+- ~~What sets `CHORD_FLAGS` / 0x32D7 bit 0.~~  **Answered 2026-11-06 (lane kn5000-notes, N-870a801e): nothing.**
+  Every writer of CHORD_FLAGS, 0x2306 (`SEQ_CHORD_FLAGS`) and 0x32D7 copies a CHORD_FLAGS value or stores 0, and bit
+  0 is only ever cleared, so step 3 (`Rhythm_RootOnlyNote`) is a dead path: `notes/kn5000-notes-2026-11-06/README.md`.
+- ~~`Rhythm_PhraseConvertNote` (0xF55AD0, was `Rhythm_TransposeWithMod`) ... its caller was not traced.~~
+  **Traced 2026-11-06 (N-1d99fc9b):** it converts the notes of the AccompSeq phrase player
+  (`AccompSeq_ConvertNote90` / `_91`, from `AccompSeq_PeriodicMain` in the main loop), with the ACCOMP1 rows, a
+  fixed turnover of 6 and no bass rule: `notes/kn5000-notes-2026-11-06/README.md`.
 - The fast path's tables (`Rhythm_VelocityTable_A`) differ from the full path's only at type 7 (row 0 instead of 9);
   whether that is a firmware bug was not checked on hardware.
 
@@ -321,9 +323,12 @@ and `AccPlayMode_StopAcc`).
 
 ### B4. Left open
 
-- 0x3283 bits 0 and 1 (the deferral condition) and 0x3328's other writers were not traced.
-- The sounding-note tables of the drum parts (0x3094, 0x30C4) are read here as "notes still on"; their layout
-  beyond bit 7 of byte 0 was not checked.
+- ~~0x3283 bits 0 and 1 and 0x3328's other writers.~~  **Traced 2026-11-06 (N-5f302102):** `ACC_RUN_FLAGS` bit 0 =
+  running this tick, bit 1 = last tick (a chord key just after a stop defers the synchro start to the main loop);
+  0x3328 is `ACC_LANES_ENDED`: `notes/kn5000-notes-2026-11-06/README.md`.
+- ~~The sounding-note tables of the drum parts (0x3094, 0x30C4).~~  **Done 2026-11-06 (N-4d5d5317):**
+  `ACC_DRUM1_NOTES` / `ACC_DRUM2_NOTES`, 8 slots of {status, 0, note, velocity, word time left}:
+  `notes/kn5000-notes-2026-11-06/README.md`.
 
 ---
 

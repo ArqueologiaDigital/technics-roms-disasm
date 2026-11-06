@@ -587,8 +587,8 @@ SingleLoadSrc_SequencerListProc_Skip11:
 	pop	xiz
 	inc	4, xsp
 	ret
-; SingleLoadSrc_ComposerDrawBankName: COMPOSER source list, rows 0-1: writes cell 0 (0x894E) as the bank caption
-;   SingleLoad_BankCaptionByMode[mode] ('BANK') + ':' and cell 1 (0x8963) as the memory-bank name of position (0x89FE)
+; SingleLoadSrc_ComposerDrawBankName: COMPOSER source list, rows 0-1: writes cell 0 (SINGLE_LOAD_SRC_ROWS) as the bank caption
+;   SingleLoad_BankCaptionByMode[mode] ('BANK') + ':' and cell 1 (0x8963) as the memory-bank name of position (SLOAD_SRC_CMP_POS)
 ;   / C (SingleLoad_GetComposerBankName -> SingleLoad_MemoryBankNames: MEMORY-A/B/C; C = SLSrcComposer_RowsPerColumn, 10), and
 ;   posts both with EVT_PARA_DRAW. Basis: callers + body -- SingleLoadSrc_ComposerListProc calls it on EVT_PAINT and
 ;   after a +-10 move (parameter 5), the moves that change the bank.

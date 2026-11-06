@@ -5175,7 +5175,7 @@ RhythmROM_BankProgramLocators:	.incbin "includes/generated/naka_widget_descripto
 ; Note_PitchClassTable`), Rhythm_RootOnlyNote (v10/v9
 ; 0xf55030, v7 0xf54c2c) (`ld xiy, Note_PitchClassTable`),
 ; Rhythm_NotePitchClass (v10/v9 0xf550bb, v7 0xf54cb7) (`ld xiy,
-; Note_PitchClassTable`), Rhythm_TranspMod_BaseApply (v10/v9
+; Note_PitchClassTable`), Rhythm_PhraseChordRow (v10/v9
 ; 0xf55b44, v7 0xf55740) (`ld xiy, Note_PitchClassTable`),
 ; AccPlay_NoteAllocAndWrite (v10/v9 0xf722ab, v7 0xf71ea7) (`ld xix,
 ; Note_PitchClassTable`). 128 bytes to the next referenced
@@ -5192,7 +5192,7 @@ Note_PitchClassTable:	.incbin "includes/generated/naka_widget_descriptors.bin", 
 ; Rhythm_ChordNoteDeltaRows`), Rhythm_VoiceMap_Inst2Bit3 (v10/v9
 ; 0xf5524e, v7 0xf54e4a) (`ld xiy, Rhythm_ChordNoteDeltaRows`),
 ; Rhythm_VelComp_Lookup (v10/v9 0xf5530d, v7 0xf54f09) (`ld xiy,
-; Rhythm_ChordNoteDeltaRows`), Rhythm_TranspMod_BaseLookup
+; Rhythm_ChordNoteDeltaRows`), Rhythm_PhraseConv_BaseLookup
 ; (v10/v9 0xf55b5b, v7 0xf55757) (`ld xiy,
 ; Rhythm_ChordNoteDeltaRows`). 456 bytes to the next referenced
 ; object; the layout beyond that access is not established.

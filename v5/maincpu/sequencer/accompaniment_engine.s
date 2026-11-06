@@ -160,7 +160,7 @@ AccStyle_DetectChanges_Init:
 .Lc_f55901:
 	ld	(0x322a:16), 0x00
 	call Rhythm_SendNoteOnMax
-	call AccompVoice_BulkReadRegisters
+	call AccNotes_ForgetAllSounding
 	call Rhythm_SendChanPressure
 	calr Rhythm_SendResetMsg
 	and	(0x325c:16), 0xc0
@@ -293,7 +293,7 @@ AccStyle_ApplyChanges:
 	and	(0x31cb:16), 0xfb
 	ld (0x0462:16), 0x00
 	calr AccBuf_ResetAllPositions
-	call AccompVoice_BulkReadRegisters
+	call AccNotes_ForgetAllSounding
 	ld	a, (0x323f:16)
 	and A,0x7f
 	and A,0x07
@@ -3799,7 +3799,7 @@ AccSection_SwitchNowUnlessDeferred_Return:
 	ret
 AccTick_ByteData:
 	call	Rhythm_SendNoteOnMax
-	call	AccompVoice_BulkReadRegisters
+	call	AccNotes_ForgetAllSounding
 	calr	AccBuf_WriteAllNotesOff
 	call	Rhythm_SendChanPressure
 	calr	AccBuf_ResetAll4
@@ -5522,7 +5522,7 @@ AccTempo_CalcPosition:
 	ret
 AccSection_SwitchNow:
 	call Rhythm_SendNoteOnMax
-	call AccompVoice_BulkReadRegisters
+	call AccNotes_ForgetAllSounding
 	calr AccBuf_WriteAllNotesOff
 	call Rhythm_SendChanPressure
 	calr AccBuf_ResetAll4
@@ -13542,7 +13542,7 @@ AccVoice_LoadAllParts_Wrap:
 	pop	xiz
 	ret
 	push	xiz
-	call	AccompVoice_BulkReadRegisters
+	call	AccNotes_ForgetAllSounding
 	pop	xiz
 	ret
 	push	xiz

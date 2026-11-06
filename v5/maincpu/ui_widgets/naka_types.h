@@ -341,7 +341,7 @@ typedef struct __attribute__((packed)) {
  *                 the cursor at stream + 6
  *   0x90  6 bytes tick, then 4 bytes AccompSeq_ReadParams stores at
  *                 0x7E56..0x7E59 and AccompSeq_ProcessNoteOn6 re-emits
- *                 (p1 is also tested against 0x78 by AccompSeq_CheckVelocityFlags;
+ *                 (p1 is also tested against 0x78 by AccompSeq_ConvertNote90;
  *                 p3 == 0 is emitted as 1)
  *   0x91  8 bytes tick, then 6 bytes (0x7E56..0x7E5B) -> AccompSeq_ProcessNoteOn8
  *   0xC0  6 bytes tick, program, flags (bit 0 -> program bit 7 / bank bit 4),
