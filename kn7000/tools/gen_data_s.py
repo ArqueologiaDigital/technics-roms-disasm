@@ -233,7 +233,9 @@ PROFILE = "941"
 #                field_slots, field_bra, field_keyloop, field_merge, field_screen
 FEATURES = {k: True for k in ("ptr_starts", "array_end", "mem_ptrs", "loop_index", "step_arrays", "deep_records",
                               "top_tested", "fld_slots", "fx_streams", "pow10_table", "euc_text",
-                              "sibling_trie", "builtin_pads", "widget_vars", "maps128", "sentinel_lists", "chord_voicings", "index_bounds", "fx_presets", "table_terminators", "msg_readers", "count_notes", "doubles_text", "table_ptrs")}
+                              "sibling_trie", "builtin_pads", "widget_vars", "maps128", "sentinel_lists", "chord_voicings", "index_bounds", "fx_presets", "table_terminators", "msg_readers", "count_notes", "doubles_text", "table_ptrs",
+                              # lane mn10300-data2 (wave 10)
+                              "support_values", "sibling_support", "boot_sectors", "panel_700")}
 for _k in os.environ.get("GEN_DATA_S_OFF", "").split(","):
     if _k.strip():
         FEATURES[_k.strip()] = False
@@ -987,13 +989,15 @@ class Gen:
             self.add(a, n, self.name_at(a, f"ResourceIdLeaf_{a:08X}"), "trie leaf", render)
 
     def support_classes(self):
-        """(KN7000 program builds) the SupportClass table, registry slot 0xD (InitSptClassTable,
-        0x4842E5DC: class SupportClass, proc SupportClassProc, its count and table): 12-byte
-        entries {proc, u16, u16 property size, pointer}, then an all-zero entry; spelled with
-        SUPPORT_CLASS (src/include/data_tables.inc, whose header gives SupportClassProc's reads)."""
+        """The SupportClass table (InitSptClassTable: class SupportClass, proc SupportClassProc, its
+        count and table; registry slot 0xD in the KN7000 / KN2400 layout, 0x1C0 in the NAKA one):
+        12-byte entries {proc, u16 name count, u16 property size, pointer}, then an all-zero entry;
+        spelled with SUPPORT_CLASS (src/include/data_tables.inc, whose header gives the readers).
+        Each entry's pointer is its value-name list (support_value_names)."""
         m = self.m
-        r = m.by_slot.get(0xD)
-        if not r or r.get("kind") != "SupportClass" or not self.in_data(r["table"] or 0):
+        slot, r = next(((s, r) for s, r in sorted(m.by_slot.items()) if r.get("kind") == "SupportClass"),
+                       (None, None))
+        if not r or not self.in_data(r["table"] or 0):
             return
         n = r["count"] + 1 if not any(m.rom[self.off(r["table"]) + 12 * r["count"]:
                                              self.off(r["table"]) + 12 * r["count"] + 12]) else r["count"]
@@ -1008,13 +1012,135 @@ class Gen:
             if v and self.in_data(v):
                 self.refs.add(v)
 
-        def render(g, it, ents=ents, cnt=r["count"]):
-            out = [f"# {cnt} SupportClass entries (registry slot 0xD; a support-class id is (0xd << 16) | its"
+        def render(g, it, ents=ents, cnt=r["count"], slot=slot):
+            out = [f"# {cnt} SupportClass entries (registry slot {slot:#x}; a support-class id is ({slot:#x} << 16) | its"
                    f" index), then an empty one", f"{it.label}:"]
             for i, (p, x4, ps, d) in enumerate(ents):
                 out.append(f"\tSUPPORT_CLASS\t{g.ref(p)}, {x4}, {ps}, {g.ref(d)}\t# [{i}]")
             return out
         self.add(r["table"], 12 * n, self.name_at(r["table"], "SupportClassTable"), "support class table", render)
+        if FEATURES.get("support_values", True):
+            for i, (p, nn, _ps, d) in enumerate(ents):
+                if p:
+                    self.support_value_names(i, p, nn, d)
+
+    def boot_sectors(self):
+        """(FEATURES["boot_sectors"], lane mn10300-data2, N-044cdbc6) The first 32 bytes of a FAT
+        boot sector that a routine hands memcpy (`mov Head, a1` / `mov 0x20, d0` or `mov 0x200, d0` /
+        `call memcpy`): the disk formatters copy one into a zeroed 512-byte sector before writing it
+        (941 func_484707AC 720 KB, func_48470A76 1.44 MB), and func_4846FED0 copies one in place of a
+        boot sector it cannot read.  The layout is the FAT boot sector's (the DOS 3 BPB: Microsoft,
+        "FAT: General Overview of On-Disk Format", offsets 0x00..0x1D), written with FAT_BOOT_HEAD
+        (src/include/data_tables.inc); typed only when the bytes are a plausible BPB (512..4096 bytes
+        a sector, a power-of-two cluster, one or two FATs, a media byte 0xF0 / 0xF8..0xFF)."""
+        if not FEATURES.get("boot_sectors", True):
+            return
+        found = collections.OrderedDict()
+        for fn, cpu, L in self.code_funcs():
+            for i, ins in enumerate(L):
+                if not re.match(r"call memcpy(_entry)?\b", ins):
+                    continue
+                src = n = None
+                for x in L[max(0, i - 4):i]:
+                    mo = re.fullmatch(r"mov ([A-Za-z_]\w*), a1", x)
+                    if mo:
+                        src = self.data_label_addr(mo.group(1))
+                    mo = re.fullmatch(r"mov (0x[0-9a-f]+|\d+), d0", x)
+                    if mo:
+                        n = int(mo.group(1), 0)
+                if src is not None and n in (0x20, 0x200):
+                    found.setdefault(src, []).append((re.sub(r"_entry$", "", fn), cpu, n))
+        u16 = lambda o: int.from_bytes(self.rom[o:o + 2], "little")
+        for a, uses in found.items():
+            if not self.free(a, 32):
+                continue
+            o = self.off(a)
+            bps, spc, nfat, media = u16(o + 0x0B), self.rom[o + 0x0D], self.rom[o + 0x10], self.rom[o + 0x15]
+            if bps not in (512, 1024, 2048, 4096) or spc not in (1, 2, 4, 8, 16, 32, 64, 128) \
+                    or nfat not in (1, 2) or not (media == 0xF0 or media >= 0xF8) or not u16(o + 0x13):
+                continue
+            raw = self.rom[o:o + 32]
+            f = dict(bps=bps, spc=spc, res=u16(o + 0x0E), nfat=nfat, root=u16(o + 0x11), tot=u16(o + 0x13),
+                     media=media, spf=u16(o + 0x16), spt=u16(o + 0x18), heads=u16(o + 0x1A), hidden=u16(o + 0x1C))
+            kb = f["tot"] * bps // 1024
+            cite = "; ".join(f"{fn} 0x{cpu or 0:08X}: memcpy(.., {n:#x})" for fn, cpu, n in uses[:3])
+
+            def render(g, it, raw=raw, f=f, kb=kb, cite=cite, uses=uses):
+                tail = raw[0x1E:0x20]
+                jmp = raw[0:3]
+                out = [f"{it.label}:\t# a FAT boot sector's first 32 bytes, a {kb} KB disk's ({f['tot']} sectors of"
+                       f" {f['bps']} bytes): {cite}"
+                       + ("; the 0x200-byte copy runs on into the items after these 32 bytes" if
+                          any(n == 0x200 for _f, _c, n in uses) else ""),
+                       f'\tFAT_BOOT_HEAD\t{", ".join(f"0x{x:02x}" for x in jmp)}, "{c_escape(raw[3:11])}", '
+                       f"{f['bps']}, {f['spc']}, {f['res']}, {f['nfat']}, {f['root']}, {f['tot']}, 0x{f['media']:02x},"
+                       f" {f['spf']}, {f['spt']}, {f['heads']}, {f['hidden']}",
+                       f"\t.byte\t0x{tail[0]:02x}, 0x{tail[1]:02x}\t# +0x1E: "
+                       + ("the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop"
+                          if jmp[0] == 0xEB and jmp[1] == 0x1C and tail == b"\xeb\xfe" else
+                          "past the BPB; no reader")]
+                return out
+            cur = self.fixed.get(a)
+            lab = cur if cur and not self.GUESSED.match(cur) else self.rename_at(
+                a, f"FatBootSector_{kb}K_Default" if any(n == 0x200 for _f, _c, n in uses) else f"FatBootHead_{kb}K")
+            self.add(a, 32, lab, "boot sector head", render)
+
+    def support_value_names(self, i, proc, nn, d):
+        """(N-027de254) A support class's value-name list, the pointer at +8 of its SupportClass
+        entry: {char *name, u32 value} pairs ended by a pair whose name is "" -- for a class with no
+        names (+4 = 0: the integers, IDs, pointers, rects) only that end pair, its "" the four bytes
+        before it.  The reader is the support classes' common handler (941 func_48431434, which each
+        xxxProc calls for the messages it does not answer itself; a3 = the entry, MT_GetInstance's
+        answer): `movhu (4, a3), d0` / `cmp 0, d0` / `beq` (no names: done), `mov (8, a3), a0` the
+        list, then (value -> name, MT_DumpPropertyEx's text) `asl 3` / `mov (4, a0), d0` / `cmp d3,
+        d0` until `movbu (a0), d0` / `cmp 0, d0` finds the empty name, `strcpy`; (name -> value) the
+        same walk with `strcmp` and `mov (4, a0), d0` / `mov d0, (a2)`, -1 when no name matches; and
+        (the n-th name) `mov (8, a0), d0` / `asl 3, d0` / `mov (d0, a1), a1` / `strcpy`."""
+        m = self.m
+        if not self.in_data(d) or not m.inrom(d):
+            return
+        pairs = []
+        for k in range(nn + 1):
+            na, v = m.u32(d + 8 * k), m.u32(d + 8 * k + 4)
+            if not (self.in_data(na) and m.inrom(na)):
+                return
+            s = m.cstr(na)
+            if s is None:
+                return
+            pairs.append((na, v, s))
+            if s == "":
+                break
+        if pairs[-1][2] != "" or len(pairs) != nn + 1 or not self.free(d, 8 * len(pairs)):
+            return
+        pn = m.sym_by_addr.get(proc) or self.extern.get(proc) or ""
+        stem = re.sub(r"Proc$", "", pn) if pn and not re.fullmatch(r"(func|loc)_[0-9A-F]{8}", pn) else f"Class{i}"
+        stem = "Spt" + stem[:1].upper() + stem[1:]
+        for na, v, s in pairs[:-1]:
+            self.str_item(na, "Str_" + sanitize(s, 40), "string")
+        na = pairs[-1][0]
+        if self.free(na, 1):
+            o = self.off(na)
+            pad = 0
+            while (na + 1 + pad) % 4 and self.free(na + 1 + pad, 1) and self.rom[o + 1 + pad] == 0xFF:
+                pad += 1
+            if (na + 1 + pad) % 4:
+                pad = 0
+            self.add(na, 1 + pad, self.name_at(na, f"{stem}_EndName"), "string",
+                     lambda g, it, pad=pad: [f'{it.label}:\t.asciz ""\t# the end pair\'s name'
+                                             + (f", then {pad} bytes of 0xFF to a word" if pad else "")]
+                     + (["\t.align\t4, 0xFF"] if pad else []))
+        what = (f"{nn} name(s), then the end pair" if nn else
+                "no names, its entry's +4 being 0: only the end pair")
+
+        def render(g, it, pairs=pairs, what=what):
+            out = [f"{it.label}:\t# the value names of support class {stem} ({what}): {{char *name, u32 value}}"
+                   f" pairs the SupportClass handler (func_48431434 in 941) walks until a name's first byte is 0"]
+            for na, v, s in pairs:
+                vs = (s if s and s in g.names and g.const_value(s) == v else
+                      g.ref(v) if g.in_data(v) or v in g.extern else (f"0x{v:X}" if v > 0xFFFF else str(v)))
+                out.append(f"\tSPT_VALUE_NAME\t{g.ref(na)}, {vs}" + ("\t# end" if not s else ""))
+            return out
+        self.add(d, 8 * len(pairs), self.name_at(d, f"{stem}_ValueNames"), "support value names", render)
 
     # -- objects ---------------------------------------------------------------
     def obj_names(self, b):
@@ -4808,10 +4934,15 @@ class Gen:
         sys.path.insert(0, os.path.join(KN7, "..", "floppy", "tools"))
         import kn_panel
         rom, o, k = self.rom, R1_END, 0
-        while o < DATA_END - 0x750:
+        # (lane mn10300-data2) the KN6000 / KN6500 record is 0x700 bytes, 42 records (no part 0x1F):
+        # its CUSTOM banks' records are 0x700 bytes apart (kn7000/notes/custom-data-ic21.md), and the
+        # default one is copied record by record to the record at 0x84000020 (copies_into below)
+        shapes = ((0x750, 43), (0x700, 42)) if FEATURES.get("panel_700", True) else ((0x750, 43),)
+        loops = self.memcpy_loops() if FEATURES.get("panel_700", True) else {}
+        while o < DATA_END - 0x700:
             if rom[o] == 0x40 and rom[o + 1] == 18 and not self.claimed[o]:
                 recs, e = kn_panel.block(rom, o)
-                if recs and e - o == 0x750 and len(recs) == 43 and self.free(self.addr_of(o), 0x750):
+                if recs and (e - o, len(recs)) in shapes and self.free(self.addr_of(o), e - o):
                     k += 1
                     nm = rom[o + 2:o + 18].decode("latin-1").strip()
                     a = self.addr_of(o)
@@ -4823,11 +4954,42 @@ class Gen:
                                      f"{it.label}:\t.ascii\t\"{c_escape(bank)}\"\t# a panel-memory bank's name"])
                     lines = self.kn7(kn_panel.block_lines(rom[o:e], [(q - o, t, n) for q, t, n in recs],
                                                           f'panel memory "{nm}"'), b"")
-                    self.add(a, 0x750, self.name_at(a, "PanelMemory_" + (sanitize(nm) or f"{a:08X}")), "panel memory",
-                             lambda g, it, lines=lines: [f"{it.label}:"] + lines)
+                    cps = sorted({(fn, cpu, s, ln) for (base, fn, cpu, s, ln) in loops.get("all", [])
+                                  if a <= base < self.addr_of(e)})
+                    cite = ([f"# its records' payloads are copied by memcpy loops (record + 2, the length, the"
+                             f" step): " + "; ".join(f"{fn} 0x{cpu or 0:08X} ({ln:#x} bytes, step {s:#x})"
+                                                       for fn, cpu, s, ln in cps[:6])] if cps else [])
+                    self.add(a, e - o, self.name_at(a, "PanelMemory_" + (sanitize(nm) or f"{a:08X}")), "panel memory",
+                             lambda g, it, lines=lines, cite=cite: [f"{it.label}:"] + cite + lines)
                     o = e
                     continue
             o += 1
+
+    def memcpy_loops(self):
+        """{"all": [(table address, function, CPU, step, length)]}: the loops that copy one record at
+        a time out of a table, `mov Table, dB` / `add dI, dB` / `mov K, aS` / `add dB, aS` / `mov L,
+        d0` / `call memcpy` ... `add S, dI` / `cmp N, dI` / `blt` (KN6000 func_4C02FB29: the default
+        panel memory's records, record + 2, 0x48 or 4 bytes, step 0x4A or 6)."""
+        out = []
+        for fn, cpu, L in self.code_funcs():
+            for i, ins in enumerate(L):
+                if not re.match(r"call memcpy(_entry)?\b", ins):
+                    continue
+                base = ln = step = None
+                for x in L[max(0, i - 8):i]:
+                    mo = re.fullmatch(r"mov ([A-Za-z_]\w*), d\d", x)
+                    if mo and self.data_label_addr(mo.group(1)) is not None:
+                        base = self.data_label_addr(mo.group(1))
+                    mo = re.fullmatch(r"mov (0x[0-9a-f]+|\d+), d0", x)
+                    if mo:
+                        ln = int(mo.group(1), 0)
+                for x in L[i + 1:i + 3]:
+                    mo = re.fullmatch(r"add (0x[0-9a-f]+|\d+), d\d", x)
+                    if mo:
+                        step = int(mo.group(1), 0)
+                if base is not None and ln and step:
+                    out.append((base, re.sub(r"_entry(_L[0-9a-f]+)?$", "", fn), cpu, step, ln))
+        return {"all": out}
 
     def short_strings(self):
         """Gaps of a few bytes that are a short NUL-terminated text (1..3
@@ -5884,8 +6046,11 @@ class Gen:
             self.bitmaps()
         self.code_refs()
         if P.get("structs"):
-            if P.get("readers_ext"):
+            if P.get("readers_ext") or FEATURES.get("sibling_support", True):
+                # (lane mn10300-data2) the siblings register the same SupportClass table (KN2400 slot 0xD,
+                # KN6000 / KN6500 0x1C0: InitSptClassTable)
                 self.support_classes()
+            self.boot_sectors()
             if P.get("readers_ext") or FEATURES.get("sibling_trie", True):
                 # (lane mn10300-rest) the siblings have the same trie (KN6000 func_4C02CA6A, KN2400 func_5014A95C)
                 self.resource_trie()
