@@ -13,7 +13,12 @@ takes the label's address from the linked v10 ELF.  When that address lies insid
 numeric values.  It then retypes that range as `uint16_t <Label>[n]` with the same numbers, under a comment saying
 the asm spells the entries symbolically.  The bytes cannot change: same values, same width.  v9 and v7 get the
 same retype only where their C file has the same members at the same offsets (the layout is shared).
-A table that ends inside a member, or overlaps a named member, is skipped and listed.
+A table that ends inside a member, or overlaps a named member, is skipped and listed.  One kind of named member is
+let through (lane kn5000-notes, 2026-11-06): a `<X>_ptr` / `ptr_XXXX` member whose initializer is exactly
+NAKA_ADDR(<symbol>) -- the generic decoder's reading of four case-offset bytes that happened to equal an address
+(`Data_WidgetNamesCharMapBlock_ptr` inside CtrlPanel_DispatchByIndex_CaseTable).  The asm spells those bytes as
+`.short <Case> - <Base>`, which is the proof that they are not a pointer; each one let through is printed.
+Each tree's naka_classes.h is registered first, so files holding naka_cls_<Class>_t members parse.
 
 RUN (repository root, built tree)
     python3 scripts/converters/naka_case_tables_retype.py [--apply]
@@ -94,6 +99,9 @@ def main():
         for f, items in sorted(plan.items()):
             p = os.path.join(ROOT, tree, "maincpu/ui_widgets", f)
             bin_ = open(os.path.join(ROOT, tree, "maincpu/includes/generated", f[:-2] + ".bin"), "rb").read()
+            hdr = os.path.join(ROOT, tree, "maincpu/ui_widgets/naka_classes.h")
+            if os.path.exists(hdr):
+                M.register_local_types(open(hdr, encoding="latin-1").read())
             try:
                 cb = M.CBlob(p)
             except BaseException as e:
@@ -106,11 +114,15 @@ def main():
                 ov = [x for x in cb.members if x.offset < off + 2 * n and x.offset + x.size > off]
                 # a covered member may be a placeholder, or a 1-letter `char x[2]` the generic decoder made out of
                 # a case offset such as 0x0041 ("A"); anything else stops the table
-                bad = [x.name for x in ov if not (SS.placeholder_field(x.name) or
+                fp = [x.name for x in ov if re.search(r'(_ptr(_\d+)?|^ptr_[0-9a-f]{4,5})$', x.name) and x.size == 4 and
+                      re.fullmatch(r'\s*NAKA_ADDR\(\w+\)\s*', cb.entries[cb.by_name[x.name]].expr)]
+                bad = [x.name for x in ov if x.name not in fp and not (SS.placeholder_field(x.name) or
                        (x.ctype == "char" and x.size <= 2 and re.match(r'^[A-Za-z]_str(_\d+)?$', x.name)))]
-                if not ov or bad or any(M.SYMBOLIC_RE.search(cb.entries[cb.by_name[x.name]].expr) for x in ov):
+                if not ov or bad or any(M.SYMBOLIC_RE.search(cb.entries[cb.by_name[x.name]].expr)
+                                        for x in ov if x.name not in fp):
                     print("  %s %s %s: covered member(s) %s named or symbolic; skipped" % (tree, f, lab, bad[:3]))
                     continue
+                cb_expr = {x: cb.entries[cb.by_name[x]].expr.strip() for x in fp}
                 vals = [int.from_bytes(bin_[off + 2 * k:off + 2 * k + 2], "little") for k in range(n)]
                 rows = ["        " + ", ".join("0x%04X" % v for v in vals[r:r + 8]) + "," for r in range(0, n, 8)]
                 try:
@@ -118,11 +130,14 @@ def main():
                               [M.NewMember("uint16_t", lab, "[%d]" % n, 2 * n, "{\n" + "\n".join(rows) + "\n    }",
                                        ["    /* %s: %d u16 case offsets of a compiled switch; the asm spells them"
                                         " `.short <Case> - <Base>` (scripts/converters/naka_case_tables_retype.py) */"
-                                        % (lab, n)])], bin_)
+                                        % (lab, n)])], bin_, false_pointers=fp)
                 except SystemExit as e:
                     print("  %s %s %s: not retyped (%s)" % (tree, f, lab, str(e)[:80]))
                     continue
                 done += 1
+                for x in fp:
+                    print("  %s %s %s: false pointer %s = %s spelled as two case offsets"
+                          % (tree, f, lab, x, cb_expr.get(x, '?')))
             if done:
                 total[tree] += done
                 if APPLY:

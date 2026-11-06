@@ -375,8 +375,12 @@ typedef struct __attribute__((packed)) {
     /* element 143 of Viewable slot 0xFD: Label (class id 0x0160002B) */
     naka_cls_Label_t ftdemo22_Label_2;
     char w72_text[4];
-    naka_slider_t w73;  /* NAKA_TYPE_EditSw */
-    naka_slider_t w74;  /* NAKA_TYPE_EditSw */
+    /* element 144 of Viewable slot 0xFD: EditSw (class id 0x01600030) */
+    naka_cls_EditSw_t NakaWidget_ftdemo01_144_EditSw;
+    char NakaWidget_ftdemo01_144_EditSw_Str[4];
+    /* element 145 of Viewable slot 0xFD: EditSw (class id 0x01600030) */
+    naka_cls_EditSw_t NakaWidget_ftdemo01_145_EditSw;
+    char NakaWidget_ftdemo01_145_EditSw_Str[4];
     /* element 146 of Viewable slot 0xFD: Label (class id 0x0160002B) */
     naka_cls_Label_t Bank_Label;
     char Bank_text[6];
@@ -2115,8 +2119,8 @@ enum NAKA_UIObjectTable_objects {
       OBJ_ftdemo22_PsEditSwBox,                 /* 141 PsEditSwBox */
         OBJ_ftdemo22_Label,                     /* 142 Label */
           OBJ_ftdemo22_Label_2,                 /* 143 Label */
-      OBJ_NakaWidget_ftdemo01_144_EditSw,       /* 144 EditSw, record outside the C sources (NakaWidget_ftdemo01_144_EditSw) */
-      OBJ_NakaWidget_ftdemo01_145_EditSw,       /* 145 EditSw, record outside the C sources (NakaWidget_ftdemo01_145_EditSw) */
+      OBJ_NakaWidget_ftdemo01_144_EditSw,       /* 144 EditSw */
+      OBJ_NakaWidget_ftdemo01_145_EditSw,       /* 145 EditSw */
       OBJ_Bank_Label,                           /* 146 Label */
       OBJ_Naming_Label,                         /* 147 Label */
       OBJ_Memory_Label,                         /* 148 Label */
@@ -4480,51 +4484,41 @@ const naka_perf_style_t naka_perf_style_data
 
     .w72_text = "~98",
 
-    .w73 = {
-        .header       = NAKA_HDR(NAKA_TYPE_EditSw),
-        .parent_idx     = 0x008A,
-        .prev_sibling   = NAKA_NONE,
-        .self_idx       = 0x0091,
-        .next_sibling   = 0x008D,
-        .x_offset       = 0x0008,
-        .y_offset       = 0x0136,
-        .field_10       = 0x004D,
-        .field_12       = 0x013F,
-        .field_14       = 0x005D,
-        .handler        = 0x00E0FC10,
-        .field_1a       = 0x0000,
-        .field_1c       = 0x0000,
-        .field_1e       = 0x00F4,
-        .handler_id     = 0x0009,
-        .field_22       = 0x0000,
-        .field_24       = 0x0120,
-        .link_idx       = NAKA_NONE,
-        .field_28       = 0x387E,
-        .field_2a       = 0x0030,
+    .NakaWidget_ftdemo01_144_EditSw = {
+        .class_ = NAKA_CLASS(EditSw),
+        .super = OBJ_ftdemo22,
+        .sub = NAKA_NONE,
+        .next = OBJ_NakaWidget_ftdemo01_145_EditSw,
+        .prev = OBJ_ftdemo22_PsEditSwBox,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(310, 77, 10, 17),
+        .str = SELF(NakaWidget_ftdemo01_144_EditSw_Str),
+        .font = idCHARA1,
+        .fontcolor = CL_EditSw,
+        .editsw = ES_Right2,
+        .func = NAKA_APFUNC_DefaultFunction,
+        .index = 0xFFFF,
     },
 
-    .w74 = {
-        .header       = NAKA_HDR(NAKA_TYPE_EditSw),
-        .parent_idx     = 0x008A,
-        .prev_sibling   = NAKA_NONE,
-        .self_idx       = 0x0092,
-        .next_sibling   = 0x0090,
-        .x_offset       = 0x0008,
-        .y_offset       = 0x0136,
-        .field_10       = 0x0077,
-        .field_12       = 0x013F,
-        .field_14       = 0x0087,
-        .handler        = 0x00E0FC3C,
-        .field_1a       = 0x0000,
-        .field_1c       = 0x0000,
-        .field_1e       = 0x00F4,
-        .handler_id     = 0x000A,
-        .field_22       = 0x0000,
-        .field_24       = 0x0120,
-        .link_idx       = NAKA_NONE,
-        .field_28       = 0x387E,
-        .field_2a       = 0x0030,
+    .NakaWidget_ftdemo01_144_EditSw_Str = "~80",
+
+    .NakaWidget_ftdemo01_145_EditSw = {
+        .class_ = NAKA_CLASS(EditSw),
+        .super = OBJ_ftdemo22,
+        .sub = NAKA_NONE,
+        .next = OBJ_Bank_Label,
+        .prev = OBJ_NakaWidget_ftdemo01_144_EditSw,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(310, 119, 10, 17),
+        .str = SELF(NakaWidget_ftdemo01_145_EditSw_Str),
+        .font = idCHARA1,
+        .fontcolor = CL_EditSw,
+        .editsw = ES_Right3,
+        .func = NAKA_APFUNC_DefaultFunction,
+        .index = 0xFFFF,
     },
+
+    .NakaWidget_ftdemo01_145_EditSw_Str = "~80",
 
     .Bank_Label = {
         .class_ = NAKA_CLASS(Label),
@@ -9599,8 +9593,8 @@ const naka_perf_style_t naka_perf_style_data
         SELF(ftdemo22_PsEditSwBox),
         SELF(ftdemo22_Label),
         SELF(ftdemo22_Label_2),
-        SELF(w73),
-        SELF(w74),
+        SELF(NakaWidget_ftdemo01_144_EditSw),
+        SELF(NakaWidget_ftdemo01_145_EditSw),
         SELF(Bank_Label),
         SELF(Naming_Label),
         SELF(Memory_Label),
