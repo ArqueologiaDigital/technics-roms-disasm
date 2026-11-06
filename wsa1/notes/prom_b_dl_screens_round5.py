@@ -101,8 +101,9 @@ WHAT A NAME FROM THIS FILE CLAIMS, AND WHAT IT DOES NOT
     means, which page of a screen it is on, or what the routine that runs it is
     for.  Those routines stay `sub_XXXXXX`.
     The ROM writes the digit 0 for the letter O in several captions ("S0NG",
-    "P0SITI0N", "C0MBINATI0N"); the names keep that spelling rather than silently
-    correcting the ROM, exactly as round 4 did.
+    "P0SITI0N", "C0MBINATI0N").  Rounds 4 and 5 kept that spelling in the names;
+    since the owner's decision of 2026-11-06 camel() reads it as O
+    (caption_o_for_zero.py), and the captions quoted in the source keep the zeros.
 
 RUN
     python3 notes/prom_b_dl_screens_round5.py            # the census + proposals
@@ -124,6 +125,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "notes"))
 from asm_source import image_path, write_part  # noqa: E402
+from caption_o_for_zero import o_for_zero  # noqa: E402  (names read 0-for-O as O)
 sys.path.insert(0, os.path.join(ROOT, "notes"))
 sys.path.insert(0, os.path.join(ROOT, "scripts", "analysis"))
 # ⚠ A WRITE THROUGH THIS NAME IS GUARDED AND WILL REFUSE while the text
@@ -247,8 +249,9 @@ def literals(name, quoted=False, minletters=2):
 
 
 def camel(s):
+    # the caption with the ROM's 0-for-O read as O (caption_o_for_zero.py; owner decision 2026-11-06)
     return "".join(w[0].upper() + w[1:].lower()
-                   for w in re.split(r"[^A-Za-z0-9]+", s) if w)
+                   for w in re.split(r"[^A-Za-z0-9]+", o_for_zero(s)) if w)
 
 
 # --------------------------------------------------- captions and readouts
@@ -481,7 +484,7 @@ def screen_slug(n, of, by, addr2name, dl):
         the nearest label at or below the call site, and for the 0xF7Dxxx sites
         that is `StubBlock_F7D000`, which covers a whole module: 60 lists from a
         dozen different screens.  Picking the longest of those as "the screen"
-        gave `DL_AfterT0uchSettingSelectS0ng` to a list on the SONG screen.  When
+        gave `DL_AfterTouchSettingSelectSong` to a list on the SONG screen.  When
         more than one content-named list shares the routine, this returns
         nothing and the list keeps its address.
     (c) A sibling THIS FILE named is not used either.  Without that, a second

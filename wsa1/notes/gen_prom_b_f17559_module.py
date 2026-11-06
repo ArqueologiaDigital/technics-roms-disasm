@@ -118,6 +118,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "notes"))
 from asm_source import image_path  # noqa: E402  (the image, not the master)
+from caption_o_for_zero import o_for_zero  # noqa: E402  (names read 0-for-O as O)
 sys.path.insert(0, os.path.join(ROOT, "notes"))
 sys.path.insert(0, os.path.join(ROOT, "scripts", "analysis"))
 
@@ -320,9 +321,10 @@ def dl_text(s, e, interp):
 def slug(t, limit=26):
     """CamelCase identifier from a ROM string.  Deterministic and reversible
     enough that a reader can find the string in the record below it."""
-    words = re.findall(r"[A-Za-z0-9]+", t)
-    # title-case EVERY word, digits included, so the ROM's `C0MBINATI0N`
-    # becomes `C0mbinati0n` and keeps its zeros where the letter O should be.
+    words = re.findall(r"[A-Za-z0-9]+", o_for_zero(t))
+    # title-case EVERY word, digits included.  The ROM's `C0MBINATI0N` becomes
+    # `Combination`: its 0-for-O is read as O (caption_o_for_zero.py, the
+    # owner's decision of 2026-11-06; until then it kept the zeros).
     s = "".join(w[:1].upper() + w[1:].lower() for w in words)
     return s[:limit]
 

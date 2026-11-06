@@ -69,9 +69,9 @@ QUESTION IT ANSWERS
 
     THE RULE IS CALIBRATED, NOT ASSERTED.  Seven of the 25 Enter methods call a
     routine prom_a named independently, months ago, from the SAME screens'
-    text: Paint_MeasureC0py, Paint_MeasureInsert, Paint_S0ngC0py,
-    Paint_N0teChange, Paint_SequencerMedley, Paint_StepRecordPartSelect,
-    Paint_S0ngSelectName.  Check R8 runs this script's rule on those seven and
+    text: Paint_MeasureCopy, Paint_MeasureInsert, Paint_SongCopy,
+    Paint_NoteChange, Paint_SequencerMedley, Paint_StepRecordPartSelect,
+    Paint_SongSelectName.  Check R8 runs this script's rule on those seven and
     requires the title it derives to match prom_a's existing name.  If a later
     edit breaks the rule, that check fails.
 
@@ -122,6 +122,7 @@ from asm_source import image_path, write_part  # noqa: E402
 sys.path.insert(0, os.path.join(ROOT, "notes"))
 sys.path.insert(0, os.path.join(ROOT, "scripts", "analysis"))
 import wave7_documentation_metrics as M                            # noqa: E402
+from caption_o_for_zero import o_for_zero  # noqa: E402  (names read 0-for-O as O)
 
 SRCA = image_path(ROOT, "prom_a/wsa1_prom_a.s")      # the image, not its root file
 # ⚠ A WRITE THROUGH THIS NAME IS GUARDED AND WILL REFUSE while the text
@@ -352,9 +353,10 @@ def title_of(lo, hi):
 
 
 def slug(text):
-    """CamelCase the ROM's own text.  Keeps the ROM's spelling, digits included --
-    "S0NG C0PY" becomes S0ngC0py, which is how prom_a spells the same screen."""
-    words = re.split(r'[^A-Za-z0-9#]+', text)
+    """CamelCase the ROM's own text, digits included, with the 0-for-O read as O --
+    "S0NG C0PY" becomes SongCopy, which is how prom_a spells the same screen
+    (caption_o_for_zero.py; until the owner's decision of 2026-11-06 it kept the zero)."""
+    words = re.split(r'[^A-Za-z0-9#]+', o_for_zero(text))
     return "".join(w[:1].upper() + w[1:].lower() for w in words if w)
 
 

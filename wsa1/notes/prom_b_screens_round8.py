@@ -121,10 +121,11 @@ WHAT IS IN THE SPAN
   ⚠ AND WHAT 20/21 DOES NOT PROVE.  prom_a's `Paint_<X>` names were read from
   THE SAME ROM BYTES by THE SAME transcription convention.  Agreement between
   two readings of one source is a check on the RULE, not on the READING -- which
-  is why every one of `Paint_MeasureC0py`, `Paint_S0ngC0py`, `Paint_Transp0se`,
-  `Paint_Vel0cityChange`, `Paint_N0teChange`, `Paint_AfterT0uchSetting` and
-  `Paint_S0ngSelectName` scores EXACT while both sides spell a letter O as the
-  byte 0x30.  See the ROUND 9 section: the machine's own font cannot tell those
+  is why every one of `Paint_MeasureC0py` (now `Paint_MeasureCopy`), `Paint_S0ngC0py` (now `Paint_SongCopy`),
+  `Paint_Transp0se` (now `Paint_Transpose`), `Paint_Vel0cityChange` (now `Paint_VelocityChange`),
+  `Paint_N0teChange` (now `Paint_NoteChange`), `Paint_AfterT0uchSetting` (now `Paint_AfterTouchSetting`) and
+  `Paint_S0ngSelectName` (now `Paint_SongSelectName`) scored EXACT while both sides spelled a letter O as the
+  byte 0x30 (renamed 2026-11-06, notes/zero-for-o/README.md).  See the ROUND 9 section: the machine's own font cannot tell those
   two codes apart, and a calibration built on one convention can never catch it.
 
   ⚠ AND IT SAYS PLAINLY WHAT THAT RE-RUN DOES NOT DO.  Converting this span adds
@@ -225,8 +226,11 @@ WHAT IS IN THE SPAN
   face that lacks a zero, it is a face in which the two are interchangeable.
 
   ⚠ The tree has already baked the misreading into 122 prom_b labels and 6
-  prom_a ones -- DL_S0ng, Paint_S0ngC0py, ScreenEnter_Transp0se,
-  DL_Err0rTheS0undOrC0mbinati0n.  Thirty of prom_b's 122 arrived THIS ROUND
+  prom_a ones -- DL_S0ng (now DL_Song), Paint_S0ngC0py (now Paint_SongCopy),
+  ScreenEnter_Transp0se (now ScreenEnter_Transpose),
+  DL_Err0rTheS0undOrC0mbinati0n (now DL_ErrorTheSoundOrCombination).  (Resolved
+  2026-11-06 by the owner's decision, every one of them -- notes/zero-for-o/README.md.  The counts below are this
+  round's, measured before that; zero_for_o_labels() now finds none.)  Thirty of prom_b's 122 arrived THIS ROUND
   from the 103 promotions, which take their targets' names verbatim, as a
   derivative rename must.
 
@@ -319,6 +323,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "notes"))
 from asm_source import image_path, write_part  # noqa: E402
+from caption_o_for_zero import o_for_zero  # noqa: E402  (names read 0-for-O as O)
 sys.path.insert(0, os.path.join(ROOT, "notes"))
 sys.path.insert(0, os.path.join(ROOT, "scripts", "analysis"))
 
@@ -567,7 +572,8 @@ def title_of(lo, hi):
 
 
 def slug(text):
-    words = re.split(r"[^A-Za-z0-9#]+", text)
+    # the caption with the ROM's 0-for-O read as O (caption_o_for_zero.py; owner decision 2026-11-06)
+    words = re.split(r"[^A-Za-z0-9#]+", o_for_zero(text))
     return "".join(w[:1].upper() + w[1:].lower() for w in words if w)
 
 
@@ -1339,7 +1345,7 @@ def zero_for_o():
 def zero_for_o_labels():
     """Labels the misreading has already been baked into.  The test is a 0 with
     a letter before it and a LOWERCASE letter after it: that is a CamelCase word
-    ('S0ng', 'Transp0se'), and it cannot match a trailing hex address, whose
+    ('S0ng' -- now 'Song' --, 'Transp0se' -- now 'Transpose'), and it cannot match a trailing hex address, whose
     digits are uppercase ('ScreenButton_SoundEditPitchEnvelope2')."""
     pat = re.compile(r"[A-Za-z]0[a-z]")
     lab = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*):")
@@ -1412,8 +1418,8 @@ def print_glyphs():
     prose = zero_for_o_prose(labs)
     print("\n  ★ AND IT IS ALREADY IN THE TREE'S NAMES -- %d labels in prom_b and %d in"
           % (len(labs["prom_b"]), len(labs["prom_a"])))
-    print("    prom_a carry a CamelCase 0-for-O: DL_S0ng, Paint_S0ngC0py,")
-    print("    ScreenEnter_Transp0se, DL_Err0rTheS0undOrC0mbinati0n.  Nobody greps those.")
+    print("    prom_a carry a CamelCase 0-for-O: DL_S0ng, Paint_S0ngC0py,  (now DL_Song, Paint_SongCopy)")
+    print("    ScreenEnter_Transp0se, DL_Err0rTheS0undOrC0mbinati0n.  (now ScreenEnter_Transpose, DL_ErrorTheSoundOrCombination)")
     print("    ⚠ %d of prom_b's %d are new THIS ROUND: the 103 thunk promotions took"
           % (30, len(labs["prom_b"])))
     print("      their targets' names verbatim, which is what a derivative rename must")
@@ -1434,7 +1440,7 @@ def print_glyphs():
     print("       Small is an argument for doing it in ONE commit, not an argument for")
     print("       reaching across a lane boundary to do half of it.  A prom_b-only")
     print("       rename would leave prom_b")
-    print("       saying DL_Song where prom_a's cross-reference prose says DL_S0ng --")
+    print("       saying DL_Song where prom_a's cross-reference prose says DL_S0ng (DL_Song since 2026-11-06) --")
     print("       strictly worse than one consistent misspelling, and it would strand")
     print("       the very references round 6 went to trouble to keep alive.")
     print("     * round 6 measured what a mass rename costs: four broken range")
