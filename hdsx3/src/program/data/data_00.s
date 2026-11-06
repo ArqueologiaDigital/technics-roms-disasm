@@ -170,19 +170,19 @@ vsprintf_core_entry_Lc8_Table:
 	.long	vsprintf_core_entry_L259
 	.long	loc_978080B1
 
-func_9780836B_entry_L10_Records:	# 17 x REC_func_9780836B_entry_L10_Records (8 bytes each); read by func_9780836B_entry_L10 0x97808380 `mov (a0), d0`; func_9780836B_entry_L41 0x978083B1 `mov (a0), d0`; func_9780836B_entry_L46 0x978083B6 `mov (4, a0), a0`
-	REC_func_9780836B_entry_L10_Records	proc=func_9780836B_entry_L8f	# [0]
+func_9780836B_entry_L10_Records:	# 17 x REC_func_9780836B_entry_L10_Records (8 bytes each); read by PfParseSpec_entry_L10 0x97808380 `mov (a0), d0`; PfParseSpec_entry_L41 0x978083B1 `mov (a0), d0`; PfParseSpec_entry_L46 0x978083B6 `mov (4, a0), a0`
+	REC_func_9780836B_entry_L10_Records	proc=PfParseSpec_entry_L8f	# [0]
 	REC_func_9780836B_entry_L10_Records	f0=49, proc=loc_978083C3
 	REC_func_9780836B_entry_L10_Records	f0=33, proc=loc_978083F3
 	REC_func_9780836B_entry_L10_Records	f0=1, proc=loc_978083FB
 	REC_func_9780836B_entry_L10_Records	f0=36, proc=loc_978083CB
-	REC_func_9780836B_entry_L10_Records	proc=func_9780836B_entry_L8f
-	REC_func_9780836B_entry_L10_Records	proc=func_9780836B_entry_L8f
-	REC_func_9780836B_entry_L10_Records	proc=func_9780836B_entry_L8f
-	REC_func_9780836B_entry_L10_Records	proc=func_9780836B_entry_L8f	# [8]
+	REC_func_9780836B_entry_L10_Records	proc=PfParseSpec_entry_L8f
+	REC_func_9780836B_entry_L10_Records	proc=PfParseSpec_entry_L8f
+	REC_func_9780836B_entry_L10_Records	proc=PfParseSpec_entry_L8f
+	REC_func_9780836B_entry_L10_Records	proc=PfParseSpec_entry_L8f	# [8]
 	REC_func_9780836B_entry_L10_Records	f0=105, proc=loc_978083DB
-	REC_func_9780836B_entry_L10_Records	proc=func_9780836B_entry_L8f
-	REC_func_9780836B_entry_L10_Records	proc=func_9780836B_entry_L8f
+	REC_func_9780836B_entry_L10_Records	proc=PfParseSpec_entry_L8f
+	REC_func_9780836B_entry_L10_Records	proc=PfParseSpec_entry_L8f
 	REC_func_9780836B_entry_L10_Records	f0=44, proc=loc_978083D3
 	REC_func_9780836B_entry_L10_Records	f0=109, proc=loc_978083E3
 	REC_func_9780836B_entry_L10_Records	f0=46, proc=loc_978083BB
