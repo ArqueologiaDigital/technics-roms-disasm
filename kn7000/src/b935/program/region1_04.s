@@ -25385,8 +25385,8 @@ loc_48491AC8:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
 loc_48491AD3:
     ret     [d2,d3,a2,a3], 0x30
-
-func_48491AD6:
+# AudioOutSwitchM3Handler  (CPU 0x48491ad6)
+AudioOutSwitchM3Handler:
     add     -0xc, sp
     and     0xff, d1
     extbu   d1

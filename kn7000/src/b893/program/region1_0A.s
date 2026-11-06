@@ -18920,7 +18920,7 @@ SdPowerLineClear_entry:
 loc_4854B6EC:
     ret     0, 8
 # SdPowerRailSet  (CPU 0x4854b6ef)
-#   SdPowerCtrlSet(4): raise 0x98060000 bit2 (SD power rail)
+#   SdPowerCtrlSet(4): raise 0x98060000 bit2, the IC25 latch's SDMODE line
 SdPowerRailSet:
     add     -0xc, sp
 SdPowerRailSet_entry:
@@ -18928,7 +18928,7 @@ SdPowerRailSet_entry:
     call    SdPowerCtrlSet, 0, 0
     ret     0, 0xc
 # SdPowerRailClear  (CPU 0x4854b6fc)
-#   SdPowerCtrlClear(4): drop 0x98060000 bit2
+#   SdPowerCtrlClear(4): drop 0x98060000 bit2 (SDMODE)
 SdPowerRailClear:
     add     -0xc, sp
 SdPowerRailClear_entry:
@@ -21184,8 +21184,10 @@ loc_4854C99C:
     add     0xc1c, sp
     ret     [d2,d3,a2,a3], 0x10
 # SdPowerCtrlSet  (CPU 0x4854c9a3)
-#   IE-off: OR d0 into the power shadow 0x5000520C -> 0x98060000,
-#   10-count settle spin (bit2 = the SD power rail)
+#   IE-off: OR d0 into the shadow 0x5000520C -> 0x98060000, 10-count
+#   settle spin.  0x98060000 is the sound-control latch IC25: bit0
+#   USB.WAITM, bit1 SPSW, bit2 SDMODE, bits3-5 the D/A converter's
+#   ML/MC/MDI (kn7000/notes/audio-mute-probes/README.md)
 SdPowerCtrlSet:
     and     0xf7ff, psw
     nop
@@ -21247,11 +21249,11 @@ SdPowerCtrlWrite:
     cmp     0xa, d1
     llt
     retf    0, 0
-# SdPowerSerial16  (CPU 0x4854ca21)
-SdPowerSerial16:
+# DacModeWordWrite  (CPU 0x4854ca21)
+DacModeWordWrite:
     movm    [d2,d3], (sp)
     add     -0xc, sp
-SdPowerSerial16_entry:
+DacModeWordWrite_entry:
     mov     d0, d3
     mov     0xff, d0
     call    SdPowerCtrlWrite, 0, 0
@@ -21285,14 +21287,14 @@ loc_4854CA62:
     mov     8, d0
     call    SdPowerCtrlSet, 0, 0
     ret     [d2,d3], 0x14
-# SdPowerDacInit  (CPU 0x4854ca7f)
-SdPowerDacInit:
+# DacModeInit  (CPU 0x4854ca7f)
+DacModeInit:
     add     -0xc, sp
-SdPowerDacInit_entry:
+DacModeInit_entry:
     mov     0x1220, d0
-    call    SdPowerSerial16_entry, [d2,d3], 0x14
+    call    DacModeWordWrite_entry, [d2,d3], 0x14
     mov     0x1380, d0
-    call    SdPowerSerial16_entry, [d2,d3], 0x14
+    call    DacModeWordWrite_entry, [d2,d3], 0x14
     ret     0, 0xc
 # SdPowerCtrlSetRaw  (CPU 0x4854ca95)
 SdPowerCtrlSetRaw:

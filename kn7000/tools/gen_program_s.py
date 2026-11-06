@@ -1511,8 +1511,8 @@ FUNC_DOC = {
     ],
     "SdPowerLineSet": ["subtype!=4: bset bit2 (0x04) of 0x9cc00009 (slot power line)"],
     "SdPowerLineClear": ["bclr bit2 of 0x9cc00009"],
-    "SdPowerRailSet": ["SdPowerCtrlSet(4): raise 0x98060000 bit2 (SD power rail)"],
-    "SdPowerRailClear": ["SdPowerCtrlClear(4): drop 0x98060000 bit2"],
+    "SdPowerRailSet": ["SdPowerCtrlSet(4): raise 0x98060000 bit2, the IC25 latch's SDMODE line"],
+    "SdPowerRailClear": ["SdPowerCtrlClear(4): drop 0x98060000 bit2 (SDMODE)"],
     "SdSlotDrainWait": [
         "power everything down (line+rail off, bit1 off, override := -1),",
         "sleep 0x1E ticks, then watch the slot sense (0x9cc00009 bit0) decay:",
@@ -1614,8 +1614,10 @@ FUNC_DOC = {
         "frame's end byte",
     ],
     "SdPowerCtrlSet": [
-        "IE-off: OR d0 into the power shadow 0x50005214 -> 0x98060000,",
-        "10-count settle spin (bit2 = the SD power rail)",
+        "IE-off: OR d0 into the shadow 0x50005214 -> 0x98060000, 10-count",
+        "settle spin.  0x98060000 is the sound-control latch IC25: bit0",
+        "USB.WAITM, bit1 SPSW, bit2 SDMODE, bits3-5 the D/A converter's",
+        "ML/MC/MDI (kn7000/notes/audio-mute-probes/README.md)",
     ],
     "SdPowerCtrlClear": ["IE-off: AND ~d0 into 0x50005214 -> 0x98060000, settle"],
     "SdPowerCtrlWrite": ["direct byte -> shadow 0x50005214 + 0x98060000"],

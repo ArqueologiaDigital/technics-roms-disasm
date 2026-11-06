@@ -8607,7 +8607,7 @@ func_4C00402C:
     extbu   d0
     cmp     3, d0
     beq     loc_4C0040A8
-    call    SdPowerDacInit_entry, 0, 0xc
+    call    DacModeInit_entry, 0, 0xc
 loc_4C0040A8:
     call    func_4C0040EA_entry, [d2], 4
     clr     d0

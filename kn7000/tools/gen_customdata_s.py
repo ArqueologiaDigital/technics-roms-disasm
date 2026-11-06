@@ -399,13 +399,15 @@ def gen_record(o, d, base, lab, model, place, slot_of, title):
             continue
         if k == 6 and cnt == 1:
             vb = rec[off:off + 0x48A7]
-            o.w(f"# the custom-sound block (CustomVoiceRecFetch 0x4844A42F): a 0x27-byte header, 128")
-            o.w(f"# voice references, 128 voice records of 0x8E bytes")
+            o.w(f"# the custom-sound block (CustomVoiceRecFetch 0x4844A42F): a TABLE tone, a user kit -- the")
+            o.w(f"# tone head (0x27 bytes), one voice reference per note (TgNoteOnTableTone), 128 voice records")
+            o.w(f"# of 0x8E bytes (customdata.inc, CSOUND_HEAD)")
             o.w(f"{lab}_{DEP_NAME[k]}:")
-            o.bytes_run(vb[0:0x27], "header (not traced)")
+            o.emit(None, f"CSOUND_HEAD {qstr(vb[0:16])}, " + ", ".join(f"{x:#04x}" for x in vb[16:0x27]),
+                   vb[0:0x27], "the kit's tone head: name, class 0x40 (TABLE), 22 bytes as every factory kit")
             for i in range(128):
                 t = vb[0x27 + 3 * i:0x2A + 3 * i]
-                o.emit(None, f"VOICE_REF {t[0]:#04x}, {t[1]:#04x}, {t[2]:#04x}", t, f"voice {i}" if i % 16 == 0 else None)
+                o.emit(None, f"VOICE_REF {t[0]:#04x}, {t[1]:#04x}, {t[2]:#04x}", t, f"note {i}" if i % 16 == 0 else None)
             for i in range(128):
                 v = vb[0x1A7 + 0x8E * i:0x1A7 + 0x8E * (i + 1)]
                 o.emit(f"{lab}_Voice{i:03d}", f"VOICE_HEAD {qstr(v[0:13])}, {v[13]:#04x}, {v[14]:#04x}, {v[15]:#04x}",

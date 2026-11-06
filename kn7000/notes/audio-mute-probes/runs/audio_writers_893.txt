@@ -1,0 +1,44 @@
+== PMUT: 5
+  library_01.s:17546       TickJobsTask                 movbu   d2, (P04)                    value ?
+  region1_00.s:12258       ResetEntry                   movbu   d0, (P04)                    value 2
+  region1_06.s:35028       func_484D6F01_entry          mov     d0, (P04)                    value 2
+  region1_06.s:35145       BootPanelResetCheck_entry    bset    0x04, (P04)                  
+  region1_06.s:35418       func_484D75C2                bclr    0x04, (P04)                  
+== LATCH: 30
+  region1_04.s:25360       AudioOutSwitchM3Handler      call    SdPowerCtrlClear, 0, 0       d0 = 2
+  region1_04.s:25364       AudioOutSwitchM3Handler      call    SdPowerCtrlSet, 0, 0         d0 = 2
+  region1_05.s:27025       func_484B1C6A                call    SdPowerCtrlClearRaw, 0, 0    d0 = 1
+  region1_05.s:27180       Midi2RxIsr                   call    SdPowerCtrlSetRaw, 0, 0      d0 = 1
+  region1_05.s:27199       Midi2RxIsr                   call    SdPowerCtrlClearRaw, 0, 0    d0 = 1
+  region1_05.s:27258       Midi2RxIsr                   call    SdPowerCtrlClearRaw, 0, 0    d0 = 1
+  region1_05.s:27269       Midi2RxIsr                   call    SdPowerCtrlSetRaw, 0, 0      d0 = 1
+  region1_05.s:27303       Midi2RxIsr                   call    SdPowerCtrlClearRaw, 0, 0    d0 = 1
+  region1_05.s:27800       func_484B243C                call    SdPowerCtrlClear, 0, 0       d0 = 0x20
+  region1_05.s:27804       func_484B243C                call    SdPowerCtrlSet, 0, 0         d0 = 0x20
+  region1_05.s:27939       MidiSerialInit               call    SdPowerCtrlClearRaw, 0, 0    d0 = 1
+  region1_05.s:28097       func_484B2773_entry          call    SdPowerCtrlClearRaw, 0, 0    d0 = 1
+  region1_05.s:28100       func_484B2773_entry          call    SdPowerCtrlSetRaw, 0, 0      d0 = 1
+  region1_06.s:35038       func_484D6F01_entry          movbu   d0, (SD_POWER_CTRL)          
+  region1_0A.s:18928       SdPowerRailSet_entry         call    SdPowerCtrlSet, 0, 0         d0 = 4
+  region1_0A.s:18936       SdPowerRailClear_entry       call    SdPowerCtrlClear, 0, 0       d0 = 4
+  region1_0A.s:21200       SdPowerCtrlSet               movbu   d0, (SD_POWER_CTRL)          
+  region1_0A.s:21225       SdPowerCtrlClear             movbu   d0, (SD_POWER_CTRL)          
+  region1_0A.s:21242       SdPowerCtrlWrite             movbu   d0, (SD_POWER_CTRL)          
+  region1_0A.s:21259       DacModeWordWrite_entry       call    SdPowerCtrlWrite, 0, 0       d0 = 0xff
+  region1_0A.s:21261       DacModeWordWrite_entry       call    SdPowerCtrlSet, 0, 0         d0 = 8
+  region1_0A.s:21263       DacModeWordWrite_entry       call    SdPowerCtrlClear, 0, 0       d0 = 0x10
+  region1_0A.s:21265       DacModeWordWrite_entry       call    SdPowerCtrlClear, 0, 0       d0 = 8
+  region1_0A.s:21274       DacModeWordWrite_entry       call    SdPowerCtrlSet, 0, 0         d0 = 0x20
+  region1_0A.s:21278       DacModeWordWrite_entry       call    SdPowerCtrlClear, 0, 0       d0 = 0x20
+  region1_0A.s:21281       DacModeWordWrite_entry       call    SdPowerCtrlSet, 0, 0         d0 = 0x10
+  region1_0A.s:21283       DacModeWordWrite_entry       call    SdPowerCtrlClear, 0, 0       d0 = 0x10
+  region1_0A.s:21288       DacModeWordWrite_entry       call    SdPowerCtrlSet, 0, 0         d0 = 8
+  region1_0A.s:21307       SdPowerCtrlSetRaw            movbu   d0, (SD_POWER_CTRL)          
+  region1_0A.s:21325       SdPowerCtrlClearRaw          movbu   d0, (SD_POWER_CTRL)          
+== M3 0x600009: 3
+  library_00.s:60853       func_4C01EE26_entry          mov     0xc0600009, d0               d1 = 1
+  library_01.s:163         func_4C02138A                mov     0xc0600009, d0               d1 = 1
+  library_01.s:187         func_4C0213E4                mov     0xc0600009, d0               d1 = 1
+== DAC: 2
+  region1_0A.s:21295       DacModeInit_entry            call    DacModeWordWrite_entry, [d2,d3], 0x14 d0 = 0x1220
+  region1_0A.s:21297       DacModeInit_entry            call    DacModeWordWrite_entry, [d2,d3], 0x14 d0 = 0x1380

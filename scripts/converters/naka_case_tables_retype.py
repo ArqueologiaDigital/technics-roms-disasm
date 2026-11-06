@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""naka_case_tables_retype.py -- give the NAKA C blobs the switch case-offset tables the asm already spells (v10/v9/v7).
+r"""naka_case_tables_retype.py -- give the NAKA C blobs the switch case-offset tables the asm already spells (v10/v9/v7/v6/v5).
 
 QUESTION ANSWERED
 -----------------
@@ -19,6 +19,9 @@ NAKA_ADDR(<symbol>) -- the generic decoder's reading of four case-offset bytes t
 (`Data_WidgetNamesCharMapBlock_ptr` inside CtrlPanel_DispatchByIndex_CaseTable).  The asm spells those bytes as
 `.short <Case> - <Base>`, which is the proof that they are not a pointer; each one let through is printed.
 Each tree's naka_classes.h is registered first, so files holding naka_cls_<Class>_t members parse.
+v6 and v5 (lane open12/v6v5-port3) share v7's C layout but place their blobs piecewise: a table is retyped
+there only when the tree's own label (symbols/maincpu_<tree>_symbols_reference.txt) is at the ROM address
+the tree's slices give that blob offset (ported_c_rebase.slice_bases).
 
 RUN (repository root, built tree)
     python3 scripts/converters/naka_case_tables_retype.py [--apply]
@@ -95,7 +98,11 @@ def main():
             if base <= a < base + size:
                 plan[f].append((a - base, n, lab))
     total = collections.Counter()
-    for tree in ("v10", "v9", "v7"):
+    import ported_c_rebase as R
+    import bisect
+    for tree in ("v10", "v9", "v7", "v6", "v5"):
+        tsyms = R.tree_syms(tree) if tree in ("v6", "v5") else None
+        tpieces = R.slice_bases(tree) if tsyms else None
         for f, items in sorted(plan.items()):
             p = os.path.join(ROOT, tree, "maincpu/ui_widgets", f)
             bin_ = open(os.path.join(ROOT, tree, "maincpu/includes/generated", f[:-2] + ".bin"), "rb").read()
@@ -111,6 +118,12 @@ def main():
             for off, n, lab in items:
                 if lab in cb.by_name:
                     continue
+                if tsyms is not None:
+                    pc = tpieces.get(f[:-2] + ".bin", [])
+                    k = bisect.bisect_right([o for o, _ in pc], off) - 1
+                    if lab not in tsyms or not pc or tsyms[lab] != pc[max(k, 0)][1] + off:
+                        print("  %s %s %s: the tree's label is not at blob offset 0x%X; skipped" % (tree, f, lab, off))
+                        continue
                 ov = [x for x in cb.members if x.offset < off + 2 * n and x.offset + x.size > off]
                 # a covered member may be a placeholder, or a 1-letter `char x[2]` the generic decoder made out of
                 # a case offset such as 0x0041 ("A"); anything else stops the table
