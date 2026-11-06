@@ -249,13 +249,14 @@ def name_fields(g, names):
     """Parameter names: the curated ones (data_struct_names), else the use the code makes of the field
     (data_struct_names.auto_name, lane mn10300-formats), else kind + offset."""
     import data_struct_names as DN
+    import re
     used = set()
     pre = {"num": "f", "ptr": "p", "text": "s", "bytes": "x", "array": "a"}
     for f in g.fields:
         n = names.get(f.off) if names else None
-        if n and f.kind == "bytes" and f.width > 1:
-            # (lane mn10300-data4) a curated field name is for the field its reader reads; bytes no reader of this
-            # build touches that cover it (and others) keep their offset name
+        if n and f.kind == "bytes" and re.sub(r"_\d+$", "", g.macro or "") in DN.READ_FIELDS_ONLY:
+            # (lane mn10300-data4) a kind whose curated names are each for a field a reader reads (named from another
+            # build's or model's readers): bytes no reader of this build touches keep their offset name
             n = None
         if not n:
             n = DN.auto_name(g, f)

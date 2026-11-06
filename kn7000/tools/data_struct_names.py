@@ -257,6 +257,11 @@ _KN6500_POINTED = {
 }
 MODEL_POINTED = {"kn6000": _KN6000_POINTED, "kn6500": _KN6500_POINTED}
 
+# (lane mn10300-data4) kinds whose curated names apply only to fields a reader of the build reads (data_structs
+# name_fields): ToneTypeFeature's names come from the KN7000's loaders, and a sibling's bytes no reader touches
+# that cover one of those offsets (KN6000 +5, +20..+24) keep their offset name
+READ_FIELDS_ONLY = {"ToneTypeFeature"}
+
 MODEL = None    # gen_data_s.configure() sets the profile
 
 
