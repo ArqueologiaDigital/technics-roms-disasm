@@ -4,9 +4,9 @@
 0x485E5115	0x48400F1D	FdcOpcodeInvalid	FdcOpcodeInvalid	same name
 0x485E67EE	0x484025E0	-	-	call sites, A unnamed
 0x485E686E	0x48402676	-	-	call sites, A unnamed
-0x485E8EDD	0x4840D29C	-	-	call sites, A unnamed
-0x485E903E	0x4840D3FD	-	-	call sites, A unnamed
-0x485E925E	0x4840D61D	-	-	call sites, A unnamed
+0x485E8EDD	0x4840D29C	JpegEncSetup	JpegEncSetup	carried
+0x485E903E	0x4840D3FD	JpegEncImage	JpegEncImage	carried
+0x485E925E	0x4840D61D	JpegEncMcu	JpegEncMcu	carried
 0x485E9350	0x4840D70F	-	-	call sites, A unnamed
 0x485E93DC	0x4840D79B	-	-	call sites, A unnamed
 0x485E93F6	0x4840D7B5	-	-	call sites, A unnamed
@@ -295,6 +295,7 @@
 0x485FA1F9	0x484226C4	ModifyPixel	ModifyPixel	same name
 0x485FA24F	0x4842271A	ModifyPixelEx	ModifyPixelEx	same name
 0x485FA3C9	0x48422894	DrawLine	DrawLine	same name
+0x485FA422	0x484228ED	-	-	call sites, A unnamed
 0x485FA447	0x48422912	-	-	call sites, A unnamed
 0x485FA7C2	0x48422C8D	DrawLineEx	DrawLineEx	same name
 0x485FAB61	0x4842302C	DrawBox	DrawBox	same name
@@ -303,14 +304,17 @@
 0x485FAD3D	0x48423208	-	-	call sites, A unnamed
 0x485FB10A	0x484235D5	DrawFrameEx	DrawFrameEx	same name
 0x485FB400	0x484238CB	MovePixels	MovePixels	same name
+0x485FB456	0x48423921	-	-	call sites, A unnamed
 0x485FB474	0x4842393F	-	-	call sites, A unnamed
 0x485FB535	0x48423A00	DrawWall	DrawWall	same name
 0x485FB68B	0x48423B56	DrawBitmap	DrawBitmap	same name
+0x485FB6D3	0x48423B9E	DrawBitmap_QueuedExec	DrawBitmap_QueuedExec	carried
 0x485FB6EF	0x48423BBA	DrawBitmap_Impl	DrawBitmap_Impl	same name
 0x485FB7BD	0x48423C88	DrawBitmapFast	DrawBitmapFast	same name
 0x485FB805	0x48423CD0	DrawBitmapFast_QueuedExec	DrawBitmapFast_QueuedExec	same name
 0x485FB821	0x48423CEC	DrawBitmapFast_Impl	DrawBitmapFast_Impl	same name
 0x485FB902	0x48423DCD	DrawIcons	DrawIcons	same name
+0x485FB94A	0x48423E15	DrawIcons_QueuedExec	DrawIcons_QueuedExec	carried
 0x485FB966	0x48423E31	DrawIcons_Impl	DrawIcons_Impl	same name
 0x485FBA30	0x48423EFB	DrawFrameSP	DrawFrameSP	same name
 0x485FBA7F	0x48423F4A	DrawFrameSP_QueuedExec	DrawFrameSP_QueuedExec	same name
@@ -334,8 +338,10 @@
 0x485FC47F	0x4842494A	DrawBitmapSP2_QueuedExec	DrawBitmapSP2_QueuedExec	same name
 0x485FC4B6	0x48424981	DrawBitmapSP2_Impl	DrawBitmapSP2_Impl	same name
 0x485FC5D4	0x48424A9F	DrawBitmapFile	DrawBitmapFile	same name
+0x485FC61C	0x48424AE7	DrawBitmapFile_QueuedExec	DrawBitmapFile_QueuedExec	carried
 0x485FC63A	0x48424B05	DrawBitmapFile_Impl	DrawBitmapFile_Impl	same name
 0x485FC7FD	0x48424CC8	DrawBitmapFileEx	DrawBitmapFileEx	same name
+0x485FC845	0x48424D10	DrawBitmapFileEx_QueuedExec	DrawBitmapFileEx_QueuedExec	carried
 0x485FC863	0x48424D2E	DrawBitmapFileEx_Impl	DrawBitmapFileEx_Impl	same name
 0x485FC9F2	0x48424EBD	DrawJpegFile	DrawJpegFile	same name
 0x485FCA3A	0x48424F05	DrawJpegFile_QueuedExec	DrawJpegFile_QueuedExec	same name
@@ -354,10 +360,13 @@
 0x485FD5F4	0x48425ABF	DrawStringAlignment	DrawStringAlignment	same name
 0x485FD64D	0x48425B18	DrawStringReverse	DrawStringReverse	same name
 0x485FD823	0x48425CEE	DrawCircle	DrawCircle	same name
+0x485FD872	0x48425D3D	-	-	call sites, A unnamed
 0x485FD896	0x48425D61	-	-	call sites, A unnamed
 0x485FDA17	0x48425EE2	DrawDottedLine	DrawDottedLine	same name
+0x485FDA70	0x48425F3B	-	-	call sites, A unnamed
 0x485FDA95	0x48425F60	-	-	call sites, A unnamed
 0x485FDCD6	0x484261A1	DrawDesignBox	DrawDesignBox	same name
+0x485FDD28	0x484261F3	-	-	call sites, A unnamed
 0x485FDD4C	0x48426217	-	-	call sites, A unnamed
 0x485FF4B5	0x48427980	IsPointOnScreen	IsPointOnScreen	same name
 0x485FF505	0x48427D98	-	-	call sites, A unnamed
@@ -367,6 +376,7 @@
 0x485FF76C	0x48427FFF	DrawWallPreview	DrawWallPreview	same name
 0x485FF7D5	0x48428068	-	-	call sites, A unnamed
 0x485FFA0C	0x4842829F	Draw2BpFile	Draw2BpFile	same name
+0x485FFA54	0x484282E7	Draw2BpFile_QueuedExec	Draw2BpFile_QueuedExec	carried
 0x485FFA72	0x48428305	Draw2BpFile_Impl	Draw2BpFile_Impl	same name
 0x485FFC21	0x484284B4	InitializeEventQueue	InitializeEventQueue	same name
 0x485FFCBD	0x48428550	-	-	call sites, A unnamed
@@ -681,6 +691,7 @@
 0x4860BC0A	0x4844ACBA	-	-	call sites, A unnamed
 0x4860C22C	0x4844B29C	SoundRamSignatureWrite	SoundRamSignatureWrite	same name
 0x4860DEB2	0x4844CEC5	-	-	call sites, A unnamed
+0x4860E7A9	0x4844D7A4	-	-	call sites, A unnamed
 0x4860EBB3	0x4844DA7C	-	-	call sites, A unnamed
 0x4860EBE0	0x4844DAA9	-	-	call sites, A unnamed
 0x4860EC09	0x4844DAD2	-	-	call sites, A unnamed
@@ -696,6 +707,7 @@
 0x4860FBDA	0x4844E8CF	-	-	call sites, A unnamed
 0x4860FD01	0x4844E9EF	-	-	call sites, A unnamed
 0x4860FD03	0x4844E9F1	GetChordToneList	GetChordToneList	same name
+0x4860FD35	0x4844EA23	-	-	call sites, A unnamed
 0x48610016	0x4844ED8E	-	-	call sites, A unnamed
 0x4861050C	0x4844F284	-	-	call sites, A unnamed
 0x4861063D	0x4844F3B5	-	-	call sites, A unnamed
@@ -738,6 +750,7 @@
 0x4861286A	0x4845158D	-	-	call sites, A unnamed
 0x486128AB	0x484515CE	-	-	call sites, A unnamed
 0x486129C7	0x484516EC	-	-	call sites, A unnamed
+0x48612AD1	0x484517F6	-	-	call sites, A unnamed
 0x48612D82	0x48451AA7	KeybedM3Dispatch	KeybedM3Dispatch	same name
 0x48612E3E	0x48451B63	-	-	call sites, A unnamed
 0x486131F7	0x48451F1C	-	-	call sites, A unnamed
@@ -1625,9 +1638,14 @@
 0x4862ABF6	0x48469B77	-	-	call sites, A unnamed
 0x4862AC17	0x48469B98	-	-	call sites, A unnamed
 0x4862AC4F	0x48469BD0	-	-	call sites, A unnamed
+0x4862ACA6	0x48469C27	-	-	call sites, A unnamed
+0x4862AD16	0x48469C97	-	-	call sites, A unnamed
+0x4862AD89	0x48469D0A	-	-	call sites, A unnamed
+0x4862ADDE	0x48469D5F	-	-	call sites, A unnamed
 0x4862AE08	0x48469D89	-	-	call sites, A unnamed
 0x4862AE1F	0x48469DA0	-	-	call sites, A unnamed
 0x4862AE2D	0x48469DAE	-	-	call sites, A unnamed
+0x4862AF1C	0x48469E9D	-	-	call sites, A unnamed
 0x4862AF33	0x48469EB4	-	-	call sites, A unnamed
 0x4862B0A2	0x4846A023	-	-	call sites, A unnamed
 0x4862B1A1	0x4846A122	-	-	call sites, A unnamed
@@ -1635,15 +1653,32 @@
 0x4862B1B8	0x4846A139	-	-	call sites, A unnamed
 0x4862B2FE	0x4846A27F	-	-	call sites, A unnamed
 0x4862B399	0x4846A31A	-	-	call sites, A unnamed
+0x4862B4CE	0x4846A44F	-	-	call sites, A unnamed
+0x4862B52B	0x4846A4AC	-	-	call sites, A unnamed
+0x4862B55D	0x4846A4DE	-	-	call sites, A unnamed
 0x4862B5A7	0x4846A528	-	-	call sites, A unnamed
 0x4862B5DF	0x4846A560	-	-	call sites, A unnamed
 0x4862B879	0x4846A7FA	-	-	call sites, A unnamed
 0x4862B8A9	0x4846A82A	-	-	call sites, A unnamed
 0x4862B922	0x4846A8A3	-	-	call sites, A unnamed
+0x4862B9EE	0x4846A96F	-	-	call sites, A unnamed
+0x4862BBE5	0x4846AB66	-	-	call sites, A unnamed
+0x4862BEDB	0x4846AE5C	-	-	call sites, A unnamed
 0x4862C00E	0x4846AF8F	-	-	call sites, A unnamed
+0x4862C107	0x4846B088	-	-	call sites, A unnamed
+0x4862C123	0x4846B0A4	-	-	call sites, A unnamed
+0x4862C132	0x4846B0B3	-	-	call sites, A unnamed
 0x4862C1D2	0x4846B153	-	-	call sites, A unnamed
 0x4862C279	0x4846B1FA	-	-	call sites, A unnamed
 0x4862C2AD	0x4846B22E	-	-	call sites, A unnamed
+0x4862C57F	0x4846B500	-	-	call sites, A unnamed
+0x4862C5C6	0x4846B547	-	-	call sites, A unnamed
+0x4862C5FA	0x4846B57B	-	-	call sites, A unnamed
+0x4862C6A6	0x4846B627	-	-	call sites, A unnamed
+0x4862C747	0x4846B6C8	-	-	call sites, A unnamed
+0x4862C7F2	0x4846B773	-	-	call sites, A unnamed
+0x4862C84E	0x4846B7CF	-	-	call sites, A unnamed
+0x4862CA5E	0x4846B9DF	-	-	call sites, A unnamed
 0x4862CA68	0x4846B9E9	-	-	call sites, A unnamed
 0x4862CAF7	0x4846BA78	-	-	call sites, A unnamed
 0x4862CC04	0x4846BB85	-	-	call sites, A unnamed
@@ -1912,9 +1947,11 @@
 0x486467A4	0x484848D0	-	-	call sites, A unnamed
 0x486479F2	0x48485E85	JpegEncode	JpegEncode	same name
 0x486479F5	0x48485E88	-	-	call sites, A unnamed
+0x48647AFC	0x48485F8F	-	-	call sites, A unnamed
 0x48647BCE	0x48486061	JpegDecodeCrop	JpegDecodeCrop	same name
 0x48647BD1	0x48486064	-	-	call sites, A unnamed
 0x48647EAE	0x48486341	JpegSetup	JpegSetup	same name
+0x4864812B	0x484865BE	-	-	call sites, A unnamed
 0x48648D3E	0x48487420	InitializeBlock01	InitializeBlock01	same name
 0x48648F8B	0x48487634	DbMemoProc	DbMemoProc	same name
 0x4864929D	0x484878AC	DbMemoryDumpProc	DbMemoryDumpProc	same name
@@ -1948,13 +1985,25 @@
 0x4864C68A	0x4848A69A	TtWelcome	TtWelcome	same name
 0x4864C77C	0x4848A78C	AcWelcomeScreenProc	AcWelcomeScreenProc	same name
 0x4864C9B0	0x4848A9B8	InitializeBlock07	InitializeBlock07	same name
+0x4864CD66	0x4848AD6E	PartHasDspUnitExceptAcc	-	call sites, A unnamed
 0x4864CDD0	0x4848AE37	AcResetPageProc	AcResetPageProc	same name
 0x4864CE26	0x4848AE8D	IvOtherPartProc	IvOtherPartProc	same name
 0x4864D035	0x4848B09C	-	-	call sites, A unnamed
 0x4864D0C6	0x4848B12D	-	-	call sites, A unnamed
 0x4864D0EC	0x4848B153	-	-	call sites, A unnamed
+0x4864D2B6	0x4848B31D	-	-	call sites, A unnamed
+0x4864D373	0x4848B3DA	-	-	call sites, A unnamed
+0x4864D411	0x4848B478	-	-	call sites, A unnamed
+0x4864D4AF	0x4848B516	-	-	call sites, A unnamed
+0x4864D55C	0x4848B5C3	-	-	call sites, A unnamed
+0x4864D881	0x4848B858	-	-	call sites, A unnamed
+0x4864D940	0x4848B917	-	-	call sites, A unnamed
+0x4864D9C5	0x4848B99C	-	-	call sites, A unnamed
+0x4864DB36	0x4848BC29	-	-	call sites, A unnamed
 0x4864DBA7	0x4848BC9A	PartEqFcText	PartEqFcText	same name
 0x4864DC2E	0x4848BD21	PartEqGainText	PartEqGainText	same name
+0x4864DE46	0x4848BF39	-	-	call sites, A unnamed
+0x4864DF03	0x4848BFF6	-	-	call sites, A unnamed
 0x4864DF50	0x4848C043	MainSoundAdd	MainSoundAdd	same name
 0x4864E375	0x4848C492	MmmMtune	MmmMtune	same name
 0x4864E44A	0x4848C567	TtSdtecd	TtSdtecd	same name
@@ -2164,6 +2213,7 @@
 0x48663D86	0x484A5791	Test6Func	Test6Func	same name
 0x48663E49	0x484A582D	Test7Func	Test7Func	same name
 0x48663F12	0x484A58F6	FDCstopBitmapCheck	FDCstopBitmapCheck	same name
+0x48663F5A	0x484A593E	-	-	call sites, A unnamed
 0x48664443	0x484A5E36	InitializeBlock18	InitializeBlock18	same name
 0x4866475F	0x484A6175	CustRhyStopFunc	CustRhyStopFunc	same name
 0x48664794	0x484A61AA	AcDispTimeSetGridBoxProc	AcDispTimeSetGridBoxProc	same name
@@ -2285,6 +2335,7 @@
 0x4867D20E	0x484D544E	InitializeBlock25	InitializeBlock25	same name
 0x4867D44E	0x484D568E	AcPmemBankSelProc	AcPmemBankSelProc	same name
 0x4867D5D4	0x484D58B1	PmemBankView	PmemBankView	same name
+0x4867D690	0x484D596D	AcPmemNameBoxProc	-	call sites, A unnamed
 0x4867D85E	0x484D5B3B	PmemBankNaming	PmemBankNaming	same name
 0x4867D89D	0x484D5B7A	PmemNaming	PmemNaming	same name
 0x4867D8E6	0x484D5BC3	PmemBankViewCatch	PmemBankViewCatch	same name
@@ -2622,6 +2673,7 @@
 0x486AB964	0x485062FE	-	-	call sites, A unnamed
 0x486AC1C8	0x48506B62	InitializeBlock11	InitializeBlock11	same name
 0x486AC3B9	0x48506D53	AcSndArgGridBoxProc	AcSndArgGridBoxProc	same name
+0x486AC453	0x48506DED	SndArgGridCheck	-	call sites, A unnamed
 0x486AC83D	0x48507142	-	-	call sites, A unnamed
 0x486AC8E4	0x4850715B	MainSNDARG_PtselPut	MainSNDARG_PtselPut	same name
 0x486AC900	0x48507177	MainSNDARG_SetSndaParaCur	MainSNDARG_SetSndaParaCur	same name
@@ -2630,6 +2682,7 @@
 0x486ACC06	0x4850747D	InitializeBlock09	InitializeBlock09	same name
 0x486AD0A8	0x48507969	CmpRecMemSelFunc	CmpRecMemSelFunc	same name
 0x486AD107	0x485079C8	AcMultiIndexListProc	AcMultiIndexListProc	same name
+0x486AD2E5	0x48507BA6	AcCmpCapaBoxProc	-	call sites, A unnamed
 0x486AD388	0x48507C49	-	-	call sites, A unnamed
 0x486AD391	0x48507C52	CmpMemClrYes	CmpMemClrYes	same name
 0x486AD3C5	0x48507C86	CmBkslShowHideFunc	CmBkslShowHideFunc	same name
@@ -3155,6 +3208,7 @@
 0x486D37E7	0x48532515	-	-	call sites, A unnamed
 0x486D380F	0x4853253D	-	-	call sites, A unnamed
 0x486D385F	0x4853258D	-	-	call sites, A unnamed
+0x486D3902	0x48532630	fmmerror_init	fmmerror_init	carried
 0x486D3A08	0x48532736	fmmrename	fmmrename	same name
 0x486D3CB7	0x485329E5	fmmcopy	fmmcopy	same name
 0x486D3DC1	0x48532AEF	fmmformat	fmmformat	same name
@@ -3408,6 +3462,7 @@
 0x486E2B34	0x48541149	MainSEQ_MeasureErase_SE	MainSEQ_MeasureErase_SE	same name
 0x486E2C05	0x4854121A	-	-	call sites, A unnamed
 0x486E2C31	0x48541246	-	-	call sites, A unnamed
+0x486E2C6C	0x48541281	-	-	call sites, A unnamed
 0x486E2D42	0x48541357	-	-	call sites, A unnamed
 0x486E2E73	0x48541488	-	-	call sites, A unnamed
 0x486E2F86	0x4854159B	-	-	call sites, A unnamed
@@ -3499,6 +3554,7 @@
 0x486E7819	0x48545DEC	AppSEQ_InitSmfLyricsSeq	AppSEQ_InitSmfLyricsSeq	same name
 0x486E785E	0x48545E31	-	-	call sites, A unnamed
 0x486E7931	0x48545F04	-	-	call sites, A unnamed
+0x486E80E2	0x48546696	GetDemoCtlTimer	GetDemoCtlTimer	carried
 0x486E812A	0x485466DE	LoadSmf	LoadSmf	same name
 0x486E8147	0x485466FB	-	-	call sites, A unnamed
 0x486E81AB	0x4854675F	-	-	call sites, A unnamed
@@ -3567,6 +3623,8 @@
 0x486E95EC	0x48547BA0	-	-	call sites, A unnamed
 0x486E9623	0x48547BD7	-	-	call sites, A unnamed
 0x486E9650	0x48547C04	-	-	call sites, A unnamed
+0x486E96C2	0x48547C76	-	-	call sites, A unnamed
+0x486E9899	0x48547E4D	-	-	call sites, A unnamed
 0x486E9958	0x48547F0C	-	-	call sites, A unnamed
 0x486E9961	0x48547F15	-	-	call sites, A unnamed
 0x486E996A	0x48547F1E	-	-	call sites, A unnamed
@@ -3672,6 +3730,8 @@
 0x486EE3DD	0x4854C6EE	SdCsdBitfield	SdCsdBitfield	same name
 0x486EE606	0x4854C917	SdDataCrc16	SdDataCrc16	same name
 0x486EE947	0x4854D8AB	InitializeBlock28	InitializeBlock28	same name
+0x486EEB73	0x4854DAD7	MdDemo	-	call sites, A unnamed
+0x486EEDA2	0x4854DC8B	TtDemoMenu	-	call sites, A unnamed
 0x486EEDF1	0x4854DCDA	AcDemoScreenProc	AcDemoScreenProc	same name
 0x486EEE27	0x4854DD10	AcDemoSelectProc	AcDemoSelectProc	same name
 0x486EEF2E	0x4854DE17	AcDemoFdSelectProc	AcDemoFdSelectProc	same name
@@ -3837,8 +3897,11 @@
 0x486FCE85	0x48431CBF	InitializeBlock37	InitializeBlock37	same name
 0x486FD1C1	0x48431CC2	InitializeBlock38	InitializeBlock38	same name
 0x486FD89A	0x4857DD90	InitializeBlock35	InitializeBlock35	same name
+0x486FDA8F	0x4857DF85	TtSswRun	-	call sites, A unnamed
 0x486FDBC6	0x4857E0B5	AcSswScreenProc	AcSswScreenProc	same name
 0x486FE04D	0x4857E53C	-	-	call sites, A unnamed
+0x486FE091	0x4857E580	TtSswList	-	call sites, A unnamed
+0x486FE24C	0x4857E73B	NamingSswImg	-	call sites, A unnamed
 0x486FE363	0x4857E852	AcSswMemBoxProc	AcSswMemBoxProc	same name
 0x486FE3E5	0x4857E8D4	AcSswImgLoadProc	AcSswImgLoadProc	same name
 0x486FE453	0x4857E942	AcSswImgRenameProc	AcSswImgRenameProc	same name
@@ -3914,6 +3977,7 @@
 0x48703D7D	0x48582C41	AcIndexWideToggleFunc2	AcIndexWideToggleFunc2	same name
 0x48703DD6	0x48582C9A	LangSetOKFunc2	LangSetOKFunc2	same name
 0x48703E0A	0x48582CCE	HelpMenuCheck2	HelpMenuCheck2	same name
+0x48703E2C	0x48582CF0	-	-	call sites, A unnamed
 0x48704550	0x485844EB	InitializeBlock41	InitializeBlock41	same name
 0x48705385	0x484D74D2	IrqGroupsDisableAll	IrqGroupsDisableAll	same name
 0x4870551C	0x484D7669	-	-	call sites, A unnamed
@@ -4021,6 +4085,9 @@
 0x48709EE8	0x4855F703	-	-	call sites, A unnamed
 0x48709F27	0x4855F742	-	-	call sites, A unnamed
 0x48709F45	0x4855F760	-	-	call sites, A unnamed
+0x48709FEF	0x4855F80A	CheckSdSavePM3Bank	CheckSdSavePM3Bank	carried
+0x4870A012	0x4855F82D	SetSdSavePM3Bank	SetSdSavePM3Bank	carried
+0x4870A01D	0x4855F838	ResetSdSavePM3Bank	ResetSdSavePM3Bank	carried
 0x4870A05F	0x4855F87A	-	-	call sites, A unnamed
 0x4870A068	0x4855F883	-	-	call sites, A unnamed
 0x4870A097	0x4855FC79	-	-	call sites, A unnamed
@@ -4114,6 +4181,7 @@
 0x487105F0	0x48551905	-	-	call sites, A unnamed
 0x4871060B	0x48551920	SdCardInsertMsgHandler	SdCardInsertMsgHandler	same name
 0x48710698	0x485519B7	SdStateMachineTick	SdStateMachineTick	same name
+0x48710C64	0x48551F8D	SdMountWorker	SdMountWorker	carried
 0x48710D01	0x4855203A	SdMountDone	SdMountDone	same name
 0x48710D7B	0x4855219C	SdUiMountGateCheck	SdUiMountGateCheck	same name
 0x48710DA2	0x485521C3	SdMountBusyCheck	SdMountBusyCheck	same name
@@ -4741,6 +4809,12 @@
 0x5012C88F	0x4C008F8C	TgAllPartsEffectRefresh	TgAllPartsEffectRefresh	same name
 0x5012C8A4	0x4C008FA1	TgEffectRouteSelect	TgEffectRouteSelect	same name
 0x5012C8F9	0x4C008FF6	TgReverbPartsApply	TgReverbPartsApply	same name
+0x5012C95C	0x4C009059	TgDrawbarGlobal82B2Set	TgDrawbarGlobal82B2Set	carried
+0x5012C965	0x4C009062	TgDrawbarGlobal82BDSet	TgDrawbarGlobal82BDSet	carried
+0x5012C96E	0x4C00906B	TgDrawbarGlobal82BESet	TgDrawbarGlobal82BESet	carried
+0x5012C977	0x4C009074	TgDrawbarGlobal82BFSet	TgDrawbarGlobal82BFSet	carried
+0x5012C980	0x4C00907D	TgDrawbarGlobal82C0Set	TgDrawbarGlobal82C0Set	carried
+0x5012C989	0x4C009086	TgDrawbarGlobal82BCSet	TgDrawbarGlobal82BCSet	carried
 0x5012C992	0x4C00908F	TgEffectEnableReverb	TgEffectEnableReverb	same name
 0x5012C9C3	0x4C0090C0	TgEffectEnableBit10	TgEffectEnableBit10	carried
 0x5012C9EF	0x4C0090EC	TgEffectEnableBit4	TgEffectEnableBit4	carried
@@ -5115,11 +5189,15 @@
 0x501445F0	0x4C015577	M3SendProcessCp	M3SendProcessCp	carried
 0x5014467B	0x4C015602	-	-	call sites, A unnamed
 0x5014474E	0x4C0156BD	-	-	call sites, A unnamed
+0x501447AF	0x4C01571E	-	-	call sites, A unnamed
 0x50145037	0x4C015C45	-	-	call sites, A unnamed
+0x5014509B	0x4C015CA9	-	-	call sites, A unnamed
 0x5014521A	0x4C015E50	M3SetByKind	M3SetByKind	carried
 0x5014542B	0x4C016050	-	-	call sites, A unnamed
+0x5014552F	0x4C016154	-	-	call sites, A unnamed
 0x50146031	0x4C016C5C	M3SetPmemNumber	M3SetPmemNumber	same name
 0x501474D3	0x4C0181E8	-	-	call sites, A unnamed
+0x50147586	0x4C01829B	-	-	call sites, A unnamed
 0x50147AD6	0x4C018810	-	-	call sites, A unnamed
 0x50149525	0x4C01A504	-	-	call sites, A unnamed
 0x50149803	0x4C01A8F9	-	-	call sites, A unnamed
@@ -5134,6 +5212,9 @@
 0x5014AA43	0x4C01BC01	-	-	call sites, A unnamed
 0x5014AA6A	0x4C01BC28	-	-	call sites, A unnamed
 0x5014AB10	0x4C01BCDC	-	-	call sites, A unnamed
+0x5014AB2E	0x4C01BCFA	-	-	call sites, A unnamed
+0x5014BAB4	0x4C01CDE4	-	-	call sites, A unnamed
+0x5014BCBC	0x4C01CFFC	-	-	call sites, A unnamed
 0x5014BE2B	0x4C01D179	-	-	call sites, A unnamed
 0x5014BED0	0x4C01D21E	-	-	call sites, A unnamed
 0x5014BFF6	0x4C01D344	-	-	call sites, A unnamed
@@ -5162,11 +5243,15 @@
 0x5014D1BB	0x4C01E520	-	-	call sites, A unnamed
 0x5014D443	0x4C01E7A8	-	-	call sites, A unnamed
 0x5014D4A0	0x4C01E805	-	-	call sites, A unnamed
+0x5014D4C5	0x4C01E82A	-	-	call sites, A unnamed
 0x5014DA68	0x4C01EDE8	-	-	call sites, A unnamed
 0x5014DABE	0x4C01EE3E	-	-	call sites, A unnamed
 0x5014DDBF	0x4C01F153	-	-	call sites, A unnamed
+0x5014DE11	0x4C01F1A5	-	-	call sites, A unnamed
 0x5014DE6C	0x4C01F200	-	-	call sites, A unnamed
+0x5014E08C	0x4C01F420	-	-	call sites, A unnamed
 0x5014E10C	0x4C01F4A0	-	-	call sites, A unnamed
+0x5014E322	0x4C01F5FC	-	-	call sites, A unnamed
 0x5014E609	0x4C01F8F4	-	-	call sites, A unnamed
 0x5014E692	0x4C01F98B	-	-	call sites, A unnamed
 0x5014E802	0x4C01FC2C	-	-	call sites, A unnamed
@@ -5178,6 +5263,7 @@
 0x5014FA73	0x4C021040	-	-	call sites, A unnamed
 0x5014FC67	0x4C021240	-	-	call sites, A unnamed
 0x5014FD87	0x4C021282	-	-	call sites, A unnamed
+0x5014FDE9	0x4C0212E4	-	-	call sites, A unnamed
 0x50150244	0x4C0216A3	M3SetSpecialDispatch	M3SetSpecialDispatch	same name
 0x50150302	0x4C021761	-	-	call sites, A unnamed
 0x501503C8	0x4C021827	PmemRecallOnSet	PmemRecallOnSet	same name
@@ -5200,12 +5286,18 @@
 0x50151BFF	0x4C0234CF	-	-	call sites, A unnamed
 0x50151CBF	0x4C02358F	-	-	call sites, A unnamed
 0x50151D19	0x4C0235E9	-	-	call sites, A unnamed
+0x5015222C	0x4C023B0F	-	-	call sites, A unnamed
+0x5015226E	0x4C023B51	-	-	call sites, A unnamed
+0x50152289	0x4C023B6C	-	-	call sites, A unnamed
+0x5015229F	0x4C023B82	-	-	call sites, A unnamed
 0x501522D4	0x4C023BB7	-	-	call sites, A unnamed
+0x50152322	0x4C023C05	-	-	call sites, A unnamed
 0x50152741	0x4C024003	-	-	call sites, A unnamed
 0x501529C7	0x4C024033	-	-	call sites, A unnamed
 0x50152D46	0x4C02458A	-	-	call sites, A unnamed
 0x50152DA2	0x4C0245E6	-	-	call sites, A unnamed
 0x50152E39	0x4C02467D	-	-	call sites, A unnamed
+0x50153067	0x4C0248AB	-	-	call sites, A unnamed
 0x501530D4	0x4C024918	-	-	call sites, A unnamed
 0x50153165	0x4C0249A9	-	-	call sites, A unnamed
 0x50153181	0x4C0249C5	-	-	call sites, A unnamed
@@ -5278,6 +5370,7 @@
 0x5015EF80	0x484B3A65	-	-	call sites, A unnamed
 0x5015F007	0x484B3AEC	-	-	call sites, A unnamed
 0x5015F0B2	0x484B3B97	-	-	call sites, A unnamed
+0x5015F254	0x484B3D39	-	-	call sites, A unnamed
 0x5015F3AA	0x484B3E8F	-	-	call sites, A unnamed
 0x5015F48F	0x484B3F74	-	-	call sites, A unnamed
 0x5015F550	0x484B4035	-	-	call sites, A unnamed
@@ -5482,6 +5575,7 @@
 0x5016F4EA	0x484C433F	-	-	call sites, A unnamed
 0x5016F6EF	0x484C4544	-	-	call sites, A unnamed
 0x5016F722	0x484C4577	-	-	call sites, A unnamed
+0x5016F733	0x484C4588	-	-	call sites, A unnamed
 0x5016F799	0x484C45EE	-	-	call sites, A unnamed
 0x5016F7A5	0x484C45FA	-	-	call sites, A unnamed
 0x5016F7BE	0x484C4613	-	-	call sites, A unnamed
@@ -5495,6 +5589,7 @@
 0x5016FB99	0x484C49EE	-	-	call sites, A unnamed
 0x5016FBA0	0x484C49F5	-	-	call sites, A unnamed
 0x5016FC09	0x484C4A5E	-	-	call sites, A unnamed
+0x5016FC3D	0x484C4A92	-	-	call sites, A unnamed
 0x5016FCBA	0x484C4B0F	-	-	call sites, A unnamed
 0x5016FD12	0x484C4B67	-	-	call sites, A unnamed
 0x5016FE40	0x48431D21	PadCopyBuiltinToUser	PadCopyBuiltinToUser	same name
@@ -5626,6 +5721,7 @@
 0x50173600	0x484358E0	-	-	call sites, A unnamed
 0x5017373B	0x48435A1B	GetCurrentGenreIndex	GetCurrentGenreIndex	carried
 0x50173744	0x48435A24	-	-	call sites, A unnamed
+0x5017376D	0x48435A4D	-	-	call sites, A unnamed
 0x501737BF	0x48435A9F	GetGenreName	GetGenreName	same name
 0x501737F9	0x48435AD9	GetGenreStyleCount	GetGenreStyleCount	same name
 0x50173853	0x48435B33	ResolveStyleId	ResolveStyleId	same name
@@ -5660,6 +5756,7 @@
 0x5017486E	0x48436B68	-	-	call sites, A unnamed
 0x501748EC	0x48436BE6	-	-	call sites, A unnamed
 0x5017492E	0x48436C28	-	-	call sites, A unnamed
+0x50174949	0x48436C43	-	-	call sites, A unnamed
 0x50174991	0x48436C8B	-	-	call sites, A unnamed
 0x50174A1D	0x48436D17	-	-	call sites, A unnamed
 0x50174B90	0x48436E8A	-	-	call sites, A unnamed

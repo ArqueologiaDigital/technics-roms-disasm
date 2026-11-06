@@ -7518,22 +7518,22 @@ func_485E8E68_L5d:
 func_485E8E68_L72:
 	ret	0, 0x10
 
-func_485E8EDD:
+JpegEncSetup:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x34, sp
 
-func_485E8EDD_entry:
+JpegEncSetup_entry:
 	mov	a0, (0x4c, sp)
 	movhu	(0x1c, a0), d0
 	mov	0xff, d1
 	and	d0, d1
-	beq	func_485E8EDD_entry_L10
+	beq	JpegEncSetup_entry_L10
 	cmp	5, d1
-	ble	func_485E8EDD_entry_L15
-func_485E8EDD_entry_L10:
+	ble	JpegEncSetup_entry_L15
+JpegEncSetup_entry_L10:
 	mov	-0x70, d0
 	retf	[d2,d3,a2,a3], 0x44
-func_485E8EDD_entry_L15:
+JpegEncSetup_entry_L15:
 	add	-1, d1
 	mov	func_485E8EDD_Table, a0
 	movbu	(d1, a0), d0
@@ -7700,11 +7700,11 @@ func_485E8EDD_entry_L15:
 	clr	d0
 	retf	[d2,d3,a2,a3], 0x44
 
-func_485E903E:
+JpegEncImage:
 	movm	[d2,d3,a2], (sp)
 	add	-0x10, sp
 
-func_485E903E_entry:
+JpegEncImage_entry:
 	movhu	(a0), d0
 	movhu	(2, a0), d1
 	mov	a1, a2
@@ -7754,35 +7754,35 @@ func_485E903E_entry:
 	mov	d0, (0x14, a0)
 	call	func_485E9350_entry, [a2], 0x14
 	cmp	0, d0
-	bge	func_485E903E_entry_L97
+	bge	JpegEncImage_entry_L97
 	ret	[d2,d3,a2], 0x1c
-func_485E903E_entry_L97:
+JpegEncImage_entry_L97:
 	clr	d0
 	movbu	d0, (0x50111b58)
 	movbu	(0x50111af4), d1
 	movbu	(0x50111b58), d0
 	cmp	d1, d0
-	blt	func_485E903E_entry_Lb0
-	jmp	func_485E903E_entry_L213
-func_485E903E_entry_Lb0:
+	blt	JpegEncImage_entry_Lb0
+	jmp	JpegEncImage_entry_L213
+JpegEncImage_entry_Lb0:
 	call	func_485E964A_entry, 0, 8
 	cmp	0, d0
-	bge	func_485E903E_entry_Lbc
+	bge	JpegEncImage_entry_Lbc
 	ret	[d2,d3,a2], 0x1c
-func_485E903E_entry_Lbc:
+JpegEncImage_entry_Lbc:
 	clr	d0
 	movhu	d0, (0x50111b56)
 	clr	d3
 	movhu	(0x50111b4a), d0
 	cmp	d3, d0
-	bgt	func_485E903E_entry_Ld0
-	jmp	func_485E903E_entry_L14b
-func_485E903E_entry_Ld0:
+	bgt	JpegEncImage_entry_Ld0
+	jmp	JpegEncImage_entry_L14b
+JpegEncImage_entry_Ld0:
 	movhu	(0x50111b48), d1
 	clr	d2
 	cmp	d2, d1
-	ble	func_485E903E_entry_L10b
-func_485E903E_entry_Lda:
+	ble	JpegEncImage_entry_L10b
+JpegEncImage_entry_Lda:
 	clr	d0
 	movhu	d0, (0x50111b54)
 	movhu	(0x50111b4c), d0
@@ -7793,19 +7793,19 @@ func_485E903E_entry_Lda:
 	nop
 	nop
 	mul	d3, d1
-	call	func_485E925E_entry, [d2,d3,a2,a3], 0x44
+	call	JpegEncMcu_entry, [d2,d3,a2,a3], 0x44
 	cmp	0, d0
-	bge	func_485E903E_entry_L101
+	bge	JpegEncImage_entry_L101
 	ret	[d2,d3,a2], 0x1c
-func_485E903E_entry_L101:
+JpegEncImage_entry_L101:
 	movhu	(0x50111b48), d0
 	inc	d2
 	cmp	d0, d2
-	blt	func_485E903E_entry_Lda
-func_485E903E_entry_L10b:
+	blt	JpegEncImage_entry_Lda
+JpegEncImage_entry_L10b:
 	movhu	(0x50111b50), d0
 	cmp	0, d0
-	beq	func_485E903E_entry_L141
+	beq	JpegEncImage_entry_L141
 	movhu	(0x50111b50), d0
 	movhu	d0, (0x50111b54)
 	movhu	(0x50111b4c), d0
@@ -7816,26 +7816,26 @@ func_485E903E_entry_L10b:
 	nop
 	nop
 	mul	d3, d1
-	call	func_485E925E_entry, [d2,d3,a2,a3], 0x44
+	call	JpegEncMcu_entry, [d2,d3,a2,a3], 0x44
 	cmp	0, d0
-	bge	func_485E903E_entry_L141
+	bge	JpegEncImage_entry_L141
 	ret	[d2,d3,a2], 0x1c
-func_485E903E_entry_L141:
+JpegEncImage_entry_L141:
 	movhu	(0x50111b4a), d0
 	inc	d3
 	cmp	d0, d3
-	blt	func_485E903E_entry_Ld0
-func_485E903E_entry_L14b:
+	blt	JpegEncImage_entry_Ld0
+JpegEncImage_entry_L14b:
 	movhu	(0x50111b52), d0
 	cmp	0, d0
-	bne	func_485E903E_entry_L158
-	jmp	func_485E903E_entry_L1e3
-func_485E903E_entry_L158:
+	bne	JpegEncImage_entry_L158
+	jmp	JpegEncImage_entry_L1e3
+JpegEncImage_entry_L158:
 	movhu	(0x50111b48), d0
 	clr	d2
 	cmp	d2, d0
-	ble	func_485E903E_entry_L1ae
-func_485E903E_entry_L162:
+	ble	JpegEncImage_entry_L1ae
+JpegEncImage_entry_L162:
 	clr	d0
 	movhu	d0, (0x50111b54)
 	movhu	(0x50111b52), d0
@@ -7848,24 +7848,24 @@ func_485E903E_entry_L162:
 	nop
 	nop
 	mul	d3, d1
-	call	func_485E925E_entry, [d2,d3,a2,a3], 0x44
+	call	JpegEncMcu_entry, [d2,d3,a2,a3], 0x44
 	cmp	0, d0
-	bge	func_485E903E_entry_L195
+	bge	JpegEncImage_entry_L195
 	ret	[d2,d3,a2], 0x1c
-func_485E903E_entry_L195:
+JpegEncImage_entry_L195:
 	movhu	(0x50111b0a), d0
 	cmp	0, d0
-	beq	func_485E903E_entry_L1a4
+	beq	JpegEncImage_entry_L1a4
 	call	func_485E973E_entry, 0, 0xc
-func_485E903E_entry_L1a4:
+JpegEncImage_entry_L1a4:
 	movhu	(0x50111b48), d0
 	inc	d2
 	cmp	d0, d2
-	blt	func_485E903E_entry_L162
-func_485E903E_entry_L1ae:
+	blt	JpegEncImage_entry_L162
+JpegEncImage_entry_L1ae:
 	movhu	(0x50111b50), d0
 	cmp	0, d0
-	beq	func_485E903E_entry_L1e3
+	beq	JpegEncImage_entry_L1e3
 	movhu	(0x50111b50), d0
 	movhu	d0, (0x50111b54)
 	movhu	(0x50111b4c), d0
@@ -7876,16 +7876,16 @@ func_485E903E_entry_L1ae:
 	nop
 	nop
 	mul	d3, d1
-	call	func_485E925E_entry, [d2,d3,a2,a3], 0x44
+	call	JpegEncMcu_entry, [d2,d3,a2,a3], 0x44
 	cmp	0, d0
-	bge	func_485E903E_entry_L1e3
-	bra	func_485E903E_entry_L218
-func_485E903E_entry_L1e3:
+	bge	JpegEncImage_entry_L1e3
+	bra	JpegEncImage_entry_L218
+JpegEncImage_entry_L1e3:
 	call	func_485E9672_entry, 0, 8
 	cmp	0, d0
-	bge	func_485E903E_entry_L1ee
-	bra	func_485E903E_entry_L218
-func_485E903E_entry_L1ee:
+	bge	JpegEncImage_entry_L1ee
+	bra	JpegEncImage_entry_L218
+JpegEncImage_entry_L1ee:
 	movbu	(0x50111b58), d1
 	movbu	(0x50111b5a), d0
 	add	d0, d1
@@ -7893,38 +7893,38 @@ func_485E903E_entry_L1ee:
 	movbu	(0x50111af4), d1
 	movbu	(0x50111b58), d0
 	cmp	d1, d0
-	bge	func_485E903E_entry_L213
-	jmp	func_485E903E_entry_Lb0
-func_485E903E_entry_L213:
+	bge	JpegEncImage_entry_L213
+	jmp	JpegEncImage_entry_Lb0
+JpegEncImage_entry_L213:
 	call	func_485E93D9_entry, 0, 8
-func_485E903E_entry_L218:
+JpegEncImage_entry_L218:
 	ret	[d2,d3,a2], 0x1c
 
-func_485E925E:
+JpegEncMcu:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x34, sp
 
-func_485E925E_entry:
+JpegEncMcu_entry:
 	mov	d1, (0x50, sp)
 	mov	d0, (0x4c, sp)
 	movhu	(0x50111b54), d0
 	cmp	0, d0
-	bne	func_485E925E_entry_L22
+	bne	JpegEncMcu_entry_L22
 	movhu	(0x50111b56), d0
 	cmp	0, d0
-	bne	func_485E925E_entry_L22
+	bne	JpegEncMcu_entry_L22
 	mov	(0x50111b20), d0
 	mov	d0, (0x24, sp)
-	bra	func_485E925E_entry_L2a
-func_485E925E_entry_L22:
+	bra	JpegEncMcu_entry_L2a
+JpegEncMcu_entry_L22:
 	mov	(0x50111b24), d0
 	mov	d0, (0x24, sp)
-func_485E925E_entry_L2a:
+JpegEncMcu_entry_L2a:
 	movbu	(0x50111b5a), d0
 	cmp	0, d0
-	bgt	func_485E925E_entry_L37
-	jmp	func_485E925E_entry_Lda
-func_485E925E_entry_L37:
+	bgt	JpegEncMcu_entry_L37
+	jmp	JpegEncMcu_entry_Lda
+JpegEncMcu_entry_L37:
 	mov	sp, a0
 	mov	a0, d0
 	add	0x30, d0
@@ -7932,7 +7932,7 @@ func_485E925E_entry_L37:
 	mov	0x50111b60, d3
 	mov	0x50111b5c, a2
 	mov	0x50111b64, a3
-func_485E925E_entry_L50:
+JpegEncMcu_entry_L50:
 	mov	d3, a0
 	movbu	(a0), d0
 	mov	0x50111af9, a0
@@ -7943,12 +7943,12 @@ func_485E925E_entry_L50:
 	mov	d0, (0x28, sp)
 	movbu	(a2), d0
 	cmp	0, d0
-	ble	func_485E925E_entry_Lc5
+	ble	JpegEncMcu_entry_Lc5
 	mov	(0x20, sp), d0
 	clr	d2
 	add	0x50111b05, d0
 	mov	d0, (0x1c, sp)
-func_485E925E_entry_L7a:
+JpegEncMcu_entry_L7a:
 	mov	(0x4c, sp), d0
 	mov	d2, d1
 	mov	d0, (0x14, sp)
@@ -7959,9 +7959,9 @@ func_485E925E_entry_L7a:
 	mov	(0x24, sp), a1
 	calls	(a1)
 	cmp	0, d0
-	bge	func_485E925E_entry_L91
-	bra	func_485E925E_entry_Lea
-func_485E925E_entry_L91:
+	bge	JpegEncMcu_entry_L91
+	bra	JpegEncMcu_entry_Lea
+JpegEncMcu_entry_L91:
 	mov	(0x30, sp), a0
 	mov	0x50111b7c, a1
 	call	func_485E9CBA_entry, [d2,d3,a2,a3], 0x30
@@ -7975,30 +7975,30 @@ func_485E925E_entry_L91:
 	mov	0x50111b7c, a0
 	call	func_485E9F31_entry, [d2,d3,a2,a3], 0x30
 	cmp	0, d0
-	bge	func_485E925E_entry_Lbf
-	bra	func_485E925E_entry_Lea
-func_485E925E_entry_Lbf:
+	bge	JpegEncMcu_entry_Lbf
+	bra	JpegEncMcu_entry_Lea
+JpegEncMcu_entry_Lbf:
 	movbu	(a2), d0
 	inc	d2
 	cmp	d0, d2
-	blt	func_485E925E_entry_L7a
-func_485E925E_entry_Lc5:
+	blt	JpegEncMcu_entry_L7a
+JpegEncMcu_entry_Lc5:
 	movbu	(0x50111b5a), d0
 	inc4	a3
 	inc	a2
 	inc	d3
 	add	0x50111b60, d0
 	cmp	d0, d3
-	bcc	func_485E925E_entry_Lda
-	jmp	func_485E925E_entry_L50
-func_485E925E_entry_Lda:
+	bcc	JpegEncMcu_entry_Lda
+	jmp	JpegEncMcu_entry_L50
+JpegEncMcu_entry_Lda:
 	movhu	(0x50111b0a), d0
 	cmp	0, d0
-	beq	func_485E925E_entry_Le9
+	beq	JpegEncMcu_entry_Le9
 	call	func_485E973E_entry, 0, 0xc
-func_485E925E_entry_Le9:
+JpegEncMcu_entry_Le9:
 	clr	d0
-func_485E925E_entry_Lea:
+JpegEncMcu_entry_Lea:
 	ret	[d2,d3,a2,a3], 0x44
 
 func_485E9350:
@@ -39564,18 +39564,18 @@ DrawBitmap_entry_L1e:
 DrawBitmap_entry_L40:
 	ret	[d2,a2], 0x18
 
-func_485FB6D3:
+DrawBitmap_QueuedExec:
 	add	-0x10, sp
 	mov	(0x5002f618), d0
 	mov	a0, a1
 	inc4	a1
 	mov	(8, a0), d1
 	cmp	0, d0
-	beq	func_485FB6D3_L19
+	beq	DrawBitmap_QueuedExec_L19
 	mov	d1, d0
 	mov	a1, a0
 	call	DrawBitmap_Impl_entry, [d2,d3,a2,a3], 0x30
-func_485FB6D3_L19:
+DrawBitmap_QueuedExec_L19:
 	ret	0, 0x10
 
 DrawBitmap_Impl:
@@ -39891,18 +39891,18 @@ DrawIcons_entry_L1e:
 DrawIcons_entry_L40:
 	ret	[d2,a2], 0x18
 
-func_485FB94A:
+DrawIcons_QueuedExec:
 	add	-0x10, sp
 	mov	(0x5002f618), d0
 	mov	a0, a1
 	inc4	a1
 	mov	(8, a0), d1
 	cmp	0, d0
-	beq	func_485FB94A_L19
+	beq	DrawIcons_QueuedExec_L19
 	mov	d1, d0
 	mov	a1, a0
 	call	DrawIcons_Impl_entry, [d2,d3,a2,a3], 0x30
-func_485FB94A_L19:
+DrawIcons_QueuedExec_L19:
 	ret	0, 0x10
 
 DrawIcons_Impl:
@@ -41567,7 +41567,7 @@ DrawBitmapFile_entry_L1e:
 DrawBitmapFile_entry_L40:
 	ret	[a2,a3], 0x18
 
-func_485FC61C:
+DrawBitmapFile_QueuedExec:
 	movm	[a2,a3], (sp)
 	add	-0x10, sp
 	mov	(0x5002f618), a1
@@ -41575,11 +41575,11 @@ func_485FC61C:
 	inc4	a2
 	mov	(8, a0), a3
 	cmp	0, a1
-	beq	func_485FC61C_L1b
+	beq	DrawBitmapFile_QueuedExec_L1b
 	mov	a3, a1
 	mov	a2, a0
 	call	DrawBitmapFile_Impl_entry, [d2,d3,a2,a3], 0x10
-func_485FC61C_L1b:
+DrawBitmapFile_QueuedExec_L1b:
 	ret	[a2,a3], 0x18
 
 DrawBitmapFile_Impl:
@@ -41839,7 +41839,7 @@ DrawBitmapFileEx_L23:
 DrawBitmapFileEx_L45:
 	ret	[a2,a3], 0x18
 
-func_485FC845:
+DrawBitmapFileEx_QueuedExec:
 	movm	[a2,a3], (sp)
 	add	-0x10, sp
 	mov	(0x5002f618), a1
@@ -41847,11 +41847,11 @@ func_485FC845:
 	inc4	a2
 	mov	(8, a0), a3
 	cmp	0, a1
-	beq	func_485FC845_L1b
+	beq	DrawBitmapFileEx_QueuedExec_L1b
 	mov	a3, a1
 	mov	a2, a0
 	call	DrawBitmapFileEx_Impl_entry, [d2,d3,a2,a3], 0x10
-func_485FC845_L1b:
+DrawBitmapFileEx_QueuedExec_L1b:
 	ret	[a2,a3], 0x18
 
 DrawBitmapFileEx_Impl:
@@ -48214,7 +48214,7 @@ Draw2BpFile_entry_L1e:
 Draw2BpFile_entry_L40:
 	ret	[a2,a3], 0x18
 
-func_485FFA54:
+Draw2BpFile_QueuedExec:
 	movm	[a2,a3], (sp)
 	add	-0x10, sp
 	mov	(0x5002f618), a1
@@ -48222,11 +48222,11 @@ func_485FFA54:
 	inc4	a2
 	mov	(8, a0), a3
 	cmp	0, a1
-	beq	func_485FFA54_L1b
+	beq	Draw2BpFile_QueuedExec_L1b
 	mov	a3, a1
 	mov	a2, a0
 	call	Draw2BpFile_Impl_entry, [d2,d3,a2,a3], 0x10
-func_485FFA54_L1b:
+Draw2BpFile_QueuedExec_L1b:
 	ret	[a2,a3], 0x18
 
 Draw2BpFile_Impl:
@@ -80475,7 +80475,7 @@ func_4861066F_entry_L23:
 func_4861066F_entry_L30:
 	btst	0x08, d1
 	beq	func_4861066F_entry_L3d
-	mov	WORK_RAM_BASE, d0
+	mov	0x50000000, d0
 	bra	func_4861066F_entry_L62
 func_4861066F_entry_L3d:
 	btst	0x10, d1
@@ -98541,7 +98541,7 @@ func_48619853_entry:
 	movbu	(a2), d0
 	cmp	0x98, d0
 	bne	func_48619853_entry_L13
-	mov	WORK_RAM_BASE, d0
+	mov	0x50000000, d0
 	mov	d0, (a1)
 func_48619853_entry_L13:
 	mov	(a1), d0
@@ -185455,7 +185455,7 @@ JpegEncode_entry_L80:
 	movhu	d0, (0x1a, sp)
 	mov	sp, a0
 	add	0x18, a0
-	call	func_485E8EDD_entry, [d2,d3,a2,a3], 0x44
+	call	JpegEncSetup_entry, [d2,d3,a2,a3], 0x44
 	mov	(0x58, sp), d0
 	mov	d0, (0x50111b28)
 	mov	0x0007ffff, d0
@@ -185469,7 +185469,7 @@ JpegEncode_entry_L80:
 	add	0x18, a0
 	mov	sp, a1
 	add	0x38, a1
-	call	func_485E903E_entry, [d2,d3,a2], 0x1c
+	call	JpegEncImage_entry, [d2,d3,a2], 0x1c
 	mov	d0, (0x14, sp)
 	cmp	0, d0
 	blt	JpegEncode_entry_Lfa
@@ -223926,7 +223926,7 @@ func_4865FB93:
 
 func_4865FB93_entry:
 	clr	d1
-	mov	WORK_RAM_BASE, a2
+	mov	0x50000000, a2
 	clr	d3
 	mov	0xa5a5, a3
 	setlb
@@ -378986,7 +378986,7 @@ loc_486BF668:
 	call	func_486D0DAC_entry, 0, 0x10
 	call	func_486BF5E5, 0, 0
 	call	func_486D5386, 0, 0
-	call	func_486D3902, 0, 0
+	call	fmmerror_init, 0, 0
 	ret	0, 8
 loc_486BF6A1:
 	retf	0, 0
@@ -379002,7 +379002,7 @@ loc_486BF6A7:
 	call	func_486D0DAC_entry, 0, 0x10
 	call	func_486BF5E5, 0, 0
 	call	func_486D5386, 0, 0
-	call	func_486D3902, 0, 0
+	call	fmmerror_init, 0, 0
 	call	func_4870560D, 0, 0
 	extbu	d0
 	cmp	4, d0
@@ -411496,7 +411496,7 @@ func_486D38B1_L4d:
 func_486D38B1_L4e:
 	ret	0, 0x10
 
-func_486D3902:
+fmmerror_init:
 	clr	d0
 	movhu	d0, (0x50056408)
 	retf	0, 0
@@ -444204,7 +444204,7 @@ func_486E7B5B_entry:
 	clr	d0
 	movbu	d0, (0x50066b42)
 	movbu	d0, (0x50066b3f)
-	movbu	d0, (0x50066b40)
+	movbu	d0, (DemoCtlTimer)
 	call	func_48619311_entry, [d2], 0x14
 	call	func_4861A5E3_entry, 0, 0x14
 	clr	d0
@@ -444250,7 +444250,7 @@ func_486E7C33:
 	clr	d0
 	movbu	d0, (0x50066b42)
 	movbu	d0, (0x50066b3f)
-	movbu	d0, (0x50066b40)
+	movbu	d0, (DemoCtlTimer)
 	call	func_4861A5E3_entry, 0, 0x14
 	clr	d0
 	call	SetSeqPlyPart_entry, [d2,d3,a2], 0x20
@@ -444347,7 +444347,7 @@ func_486E7D48_entry_L1c:
 	mov	-1, d0
 	ret	[d2,d3], 0x18
 func_486E7D48_entry_L2a:
-	movbu	(0x50066b40), d0
+	movbu	(DemoCtlTimer), d0
 	cmp	0, d0
 	beq	func_486E7D48_entry_L38
 	mov	-1, d0
@@ -444408,7 +444408,7 @@ func_486E7DDF_entry:
 	clr	d0
 	movbu	d0, (0x50066b42)
 	movbu	d0, (0x50066b3f)
-	movbu	d0, (0x50066b40)
+	movbu	d0, (DemoCtlTimer)
 func_486E7DDF_entry_L56:
 	ret	0, 0xc
 
@@ -444446,7 +444446,7 @@ func_486E7E3B_entry_L4b:
 	beq	func_486E7E3B_entry_L77
 	call	func_48609473, 0, 0
 	mov	9, d0
-	movbu	d0, (0x50066b40)
+	movbu	d0, (DemoCtlTimer)
 	bra	func_486E7E3B_entry_L9d
 func_486E7E3B_entry_L77:
 	mov	1, d0
@@ -444458,7 +444458,7 @@ func_486E7E3B_entry_L77:
 	bra	func_486E7E3B_entry_L9d
 func_486E7E3B_entry_L95:
 	mov	9, d0
-	movbu	d0, (0x50066b40)
+	movbu	d0, (DemoCtlTimer)
 func_486E7E3B_entry_L9d:
 	ret	0, 0xc
 
@@ -444470,7 +444470,7 @@ func_486E7EDE_entry:
 	movbu	d1, (0x50066b43)
 	call	func_486183DA, 0, 0
 	mov	9, d0
-	movbu	d0, (0x50066b40)
+	movbu	d0, (DemoCtlTimer)
 	ret	0, 0xc
 
 func_486E7EFB:
@@ -444497,12 +444497,12 @@ func_486E7F1C_entry:
 	beq	func_486E7F1C_entry_L10
 	call	func_486E80F4_entry, [d2,d3], 0x1c
 func_486E7F1C_entry_L10:
-	movbu	(0x50066b40), d0
+	movbu	(DemoCtlTimer), d0
 	cmp	0, d0
 	beq	func_486E7F1C_entry_L7d
 	add	-1, d0
-	movbu	d0, (0x50066b40)
-	movbu	(0x50066b40), d0
+	movbu	d0, (DemoCtlTimer)
+	movbu	(DemoCtlTimer), d0
 	cmp	7, d0
 	bne	func_486E7F1C_entry_L57
 	movbu	(0x50066b43), d0
@@ -444631,7 +444631,7 @@ func_486E8039_entry_L71:
 	inc	d0
 	movbu	d0, (0x50066b41)
 	mov	0x14, d0
-	movbu	d0, (0x50066b40)
+	movbu	d0, (DemoCtlTimer)
 	bra	func_486E8039_entry_L8f
 func_486E8039_entry_L88:
 	call	func_486FE04A_entry, 0, 0x14
@@ -444647,8 +444647,8 @@ func_486E80CE_entry:
 	call	func_4861659C_entry, 0, 0x10
 	ret	0, 0x10
 
-func_486E80E2:
-	movbu	(0x50066b40), d0
+GetDemoCtlTimer:
+	movbu	(DemoCtlTimer), d0
 	retf	0, 0
 
 func_486E80EB:
@@ -456488,7 +456488,7 @@ MdDemo_L183:
 	beq	MdDemo_L192
 	jmp	MdDemo_L22b
 MdDemo_L192:
-	call	func_486E80E2, 0, 0
+	call	GetDemoCtlTimer, 0, 0
 	extbu	d0
 	cmp	0, d0
 	beq	MdDemo_L19f
@@ -499715,7 +499715,7 @@ func_48709307_entry:
 	ret	0, 0x10
 
 func_4870937A:
-	mov	0x50069332, a0
+	mov	FAVORITES_SRAM, a0
 	retf	0, 0
 
 func_48709383:
@@ -499792,7 +499792,7 @@ func_487093F0_entry:
 	clr	d2
 	setlb
 	extbu	d0
-	mov	0x50069332, a0
+	mov	FAVORITES_SRAM, a0
 	movbu	(d0, a0), d1
 	mov	Str_KN7000_SDDIR_INF, a0
 	movbu	(d0, a0), d0
@@ -499816,7 +499816,7 @@ FavFormat:
 	add	-0x14, sp
 
 FavFormat_entry:
-	mov	0x50069332, a0
+	mov	FAVORITES_SRAM, a0
 	clr	d0
 	mov	0x0000bfe0, d1
 	call	memset_entry, [a2], 4
@@ -499844,7 +499844,7 @@ func_48709469_entry:
 	extbu	d1
 	mov	Str_KN7000_SDDIR_INF, a0
 	movbu	(d1, a0), d0
-	mov	0x50069332, a0
+	mov	FAVORITES_SRAM, a0
 	movbu	d0, (d1, a0)
 	inc	d2
 	mov	d2, d1
@@ -500510,7 +500510,7 @@ func_487098F6_entry_L14:
 	exthu	d1
 	exthu	d3
 	mov	d3, a1
-	mov	0x50069332, d3
+	mov	FAVORITES_SRAM, d3
 	mov	0x1f0, d0
 	nop
 	nop
@@ -501435,47 +501435,47 @@ func_48709FCD_entry:
 func_48709FCD_entry_L1d:
 	retf	[d2], 4
 
-func_48709FEF:
+CheckSdSavePM3Bank:
 	movbu	(0x500692e8), d0
 	cmp	0x63, d0
-	blt	func_48709FEF_Ld
+	blt	CheckSdSavePM3Bank_Ld
 	clr	d0
-	bra	func_48709FEF_L20
-func_48709FEF_Ld:
+	bra	CheckSdSavePM3Bank_L20
+CheckSdSavePM3Bank_Ld:
 	movbu	(0x500692e9), d0
 	cmp	0x14, d0
-	blt	func_48709FEF_L1a
+	blt	CheckSdSavePM3Bank_L1a
 	clr	d0
-	bra	func_48709FEF_L20
-func_48709FEF_L1a:
+	bra	CheckSdSavePM3Bank_L20
+CheckSdSavePM3Bank_L1a:
 	movbu	(0x500774c6), d0
-func_48709FEF_L20:
+CheckSdSavePM3Bank_L20:
 	retf	0, 0
 
-func_4870A012:
+SetSdSavePM3Bank:
 	mov	1, d0
 	movbu	d0, (0x500774c6)
 	retf	0, 0
 
-func_4870A01D:
+ResetSdSavePM3Bank:
 	clr	d0
 	movbu	d0, (0x500774c6)
 	retf	0, 0
-# func_4870A01D + 0xa: no traced path reaches what follows (--decode-gaps)
+# ResetSdSavePM3Bank + 0xa: no traced path reaches what follows (--decode-gaps)
 	movbu	(0x500692e8), d0
 	cmp	0x63, d0
-	blt	func_4870A01D_L17
+	blt	ResetSdSavePM3Bank_L17
 	clr	d0
-	bra	func_4870A01D_L2a
-func_4870A01D_L17:
+	bra	ResetSdSavePM3Bank_L2a
+ResetSdSavePM3Bank_L17:
 	movbu	(0x500692e9), d0
 	cmp	0x14, d0
-	blt	func_4870A01D_L24
+	blt	ResetSdSavePM3Bank_L24
 	clr	d0
-	bra	func_4870A01D_L2a
-func_4870A01D_L24:
+	bra	ResetSdSavePM3Bank_L2a
+ResetSdSavePM3Bank_L24:
 	movbu	(0x500774c7), d0
-func_4870A01D_L2a:
+ResetSdSavePM3Bank_L2a:
 	retf	0, 0
 	mov	1, d0
 	movbu	d0, (0x500774c7)
@@ -507136,7 +507136,7 @@ func_4870CAE5_entry_L170:
 	movbu	(d0, a2), d0
 	cmp	1, d0
 	bne	func_4870CAE5_entry_L1a8
-	call	func_48709FEF, 0, 0
+	call	CheckSdSavePM3Bank, 0, 0
 	extbu	d0
 	cmp	0, d0
 	beq	func_4870CAE5_entry_L19f
@@ -514368,7 +514368,7 @@ SdStateMachineTick_entry_L562:
 SdStateMachineTick_entry_L5c4:
 	ret	[d2], 0x18
 
-func_48710C64:
+SdMountWorker:
 	movm	[d2], (sp)
 	add	-8, sp
 	clr	d2
@@ -514378,54 +514378,54 @@ func_48710C64:
 	call	func_486ED00B, 0, 8
 	exthu	d0
 	cmp	d2, d0
-	beq	func_48710C64_L47
+	beq	SdMountWorker_L47
 	call	func_486ED036_entry, 0, 8
 	exthu	d0
 	cmp	d2, d0
-	beq	func_48710C64_L47
+	beq	SdMountWorker_L47
 	call	func_4870D259_entry, 0, 8
 	mov	1, d1
 	movbu	d1, (0x500788c6)
 	exth	d0
 	cmp	d2, d0
-	bge	func_48710C64_L51
+	bge	SdMountWorker_L51
 	mov	2, d0
 	movbu	d0, (0x500788c6)
 	mov	-7, d0
-	bra	func_48710C64_L9a
-func_48710C64_L47:
+	bra	SdMountWorker_L9a
+SdMountWorker_L47:
 	movbu	d2, (0x500788c6)
 	mov	-8, d0
-	bra	func_48710C64_L9a
-func_48710C64_L51:
+	bra	SdMountWorker_L9a
+SdMountWorker_L51:
 	call	func_487091F7_entry, [a2], 0x14
 	call	func_4870929D_entry, [d2,a2,a3], 0x1c
 	call	func_48709069_entry, 0, 8
 	exth	d0
 	cmp	d2, d0
-	bge	func_48710C64_L6f
+	bge	SdMountWorker_L6f
 	cmp	-0x68, d0
-	beq	func_48710C64_L6f
+	beq	SdMountWorker_L6f
 	bset	0x01, (SdErrorFlags)
-func_48710C64_L6f:
+SdMountWorker_L6f:
 	call	func_4871CAB3_entry, [d2,d3,a2,a3], 0x20
 	exth	d0
 	cmp	d2, d0
-	bge	func_48710C64_L85
+	bge	SdMountWorker_L85
 	cmp	-6, d0
-	beq	func_48710C64_L85
+	beq	SdMountWorker_L85
 	bset	0x02, (SdErrorFlags)
-func_48710C64_L85:
+SdMountWorker_L85:
 	call	SdPlaylistLoad_entry, 0, 8
 	mov	d0, d1
 	exth	d1
 	cmp	d2, d1
-	bge	func_48710C64_L99
+	bge	SdMountWorker_L99
 	mov	d0, d2
 	bset	0x04, (SdErrorFlags)
-func_48710C64_L99:
+SdMountWorker_L99:
 	mov	d2, d0
-func_48710C64_L9a:
+SdMountWorker_L9a:
 	ret	[d2], 0xc
 
 SdMountDone:
@@ -515807,7 +515807,7 @@ SdcFmmSaveTitleFunc_L16c:
 	exth	d2
 	cmp	8, d2
 	blt	SdcFmmSaveTitleFunc_L15a
-	call	func_4870A012, 0, 0
+	call	SetSdSavePM3Bank, 0, 0
 	mov	func_487104E5_Table, a1
 	movbu	(a1), d0
 	mov	0x500788ca, a0
@@ -520402,7 +520402,7 @@ func_48714D90_entry:
 	beq	func_48714D90_entry_L53
 	cmp	1, d2
 	bne	func_48714D90_entry_L43
-	call	func_48709FEF, 0, 0
+	call	CheckSdSavePM3Bank, 0, 0
 	extbu	d0
 	cmp	0, d0
 	beq	func_48714D90_entry_L33
@@ -520481,11 +520481,11 @@ SdcFmmSaveFilterFunc_entry_L5a:
 	extbu	d0
 	cmp	0, d0
 	beq	SdcFmmSaveFilterFunc_entry_L8b
-	call	func_48709FEF, 0, 0
+	call	CheckSdSavePM3Bank, 0, 0
 	extbu	d0
 	cmp	0, d0
 	bne	SdcFmmSaveFilterFunc_entry_Le6
-	call	func_4870A012, 0, 0
+	call	SetSdSavePM3Bank, 0, 0
 	bra	SdcFmmSaveFilterFunc_entry_Le6
 SdcFmmSaveFilterFunc_entry_L8b:
 	mov	d2, d0
@@ -520500,11 +520500,11 @@ SdcFmmSaveFilterFunc_entry_L96:
 	extbu	d0
 	cmp	0, d0
 	beq	SdcFmmSaveFilterFunc_entry_Le6
-	call	func_48709FEF, 0, 0
+	call	CheckSdSavePM3Bank, 0, 0
 	extbu	d0
 	cmp	0, d0
 	beq	SdcFmmSaveFilterFunc_entry_Lbb
-	call	func_4870A01D, 0, 0
+	call	ResetSdSavePM3Bank, 0, 0
 	bra	SdcFmmSaveFilterFunc_entry_Le6
 SdcFmmSaveFilterFunc_entry_Lbb:
 	mov	d2, d0
@@ -520545,7 +520545,7 @@ SdcFmmSaveFilterFunc_entry_Le6:
 SdcFmmSaveFilterFunc_entry_L114:
 	cmp	0xd, a2
 	bne	SdcFmmSaveFilterFunc_entry_L16f
-	call	func_4870A012, 0, 0
+	call	SetSdSavePM3Bank, 0, 0
 	clr	d2
 	clr	d3
 	mov	SdcFmmSaveFilterFunc_Ram_2, a2
@@ -567343,7 +567343,7 @@ func_50127A05:
 	add	-0x18, sp
 
 func_50127A05_entry:
-	movbu	(0x50006ed5), d0
+	movbu	(TgDrawbarGlobal82BD), d0
 	cmp	0, d0
 	beq	func_50127A05_entry_Ld
 	jmp	func_50127A05_entry_Lb8
@@ -567396,7 +567396,7 @@ func_50127A05_entry_L34:
 	mov	0x50, d2
 func_50127A05_entry_L71:
 	clr	d0
-	movbu	(0x50006ed7), d1
+	movbu	(TgDrawbarGlobal82BF), d1
 	call	func_5013DAA5_entry, [d2], 0x18
 	clr	d0
 	mov	d0, d1
@@ -567436,7 +567436,7 @@ func_50127A05_entry_Lbf:
 	movhu	(0x50093794), d0
 	btst	0x1000, d0
 	beq	func_50127A05_entry_Lec
-	movbu	(0x50006ed7), d2
+	movbu	(TgDrawbarGlobal82BF), d2
 	mov	0x7f, d3
 	bra	func_50127A05_entry_Lee
 func_50127A05_entry_Lec:
@@ -567500,7 +567500,7 @@ func_50127B5C_entry:
 	btst	0x0200, d0
 	beq	func_50127B5C_entry_L35
 	mov	7, d0
-	movbu	(0x50006ed6), d1
+	movbu	(TgDrawbarGlobal82BE), d1
 	call	func_5013DAA5_entry, [d2], 0x18
 	bra	func_50127B5C_entry_L3f
 func_50127B5C_entry_L35:
@@ -567558,7 +567558,7 @@ func_50127BF4_entry:
 	call	func_5013DB99_entry, [d2], 0x18
 	mov	0xf, d0
 	mov	d0, (0x10, sp)
-	movbu	(0x50006eca), d0
+	movbu	(TgDrawbarGlobal82B2), d0
 	mov	1, d1
 	mov	d0, (0x14, sp)
 	mov	6, d0
@@ -576999,28 +576999,28 @@ TgReverbPartsApply_entry_L4c:
 	movbu	d0, (TgReverbPartsApply_Ram)
 	retf	0, 0
 
-func_5012C95C:
-	movbu	d0, (0x50006eca)
+TgDrawbarGlobal82B2Set:
+	movbu	d0, (TgDrawbarGlobal82B2)
 	retf	0, 0
 
-func_5012C965:
-	movbu	d0, (0x50006ed5)
+TgDrawbarGlobal82BDSet:
+	movbu	d0, (TgDrawbarGlobal82BD)
 	retf	0, 0
 
-func_5012C96E:
-	movbu	d0, (0x50006ed6)
+TgDrawbarGlobal82BESet:
+	movbu	d0, (TgDrawbarGlobal82BE)
 	retf	0, 0
 
-func_5012C977:
-	movbu	d0, (0x50006ed7)
+TgDrawbarGlobal82BFSet:
+	movbu	d0, (TgDrawbarGlobal82BF)
 	retf	0, 0
 
-func_5012C980:
-	movbu	d0, (0x50006ed8)
+TgDrawbarGlobal82C0Set:
+	movbu	d0, (TgDrawbarGlobal82C0)
 	retf	0, 0
 
-func_5012C989:
-	movbu	d0, (0x50006ed4)
+TgDrawbarGlobal82BCSet:
+	movbu	d0, (TgDrawbarGlobal82BC)
 	retf	0, 0
 
 TgEffectEnableReverb:
@@ -577342,13 +577342,13 @@ loc_5012CCC5:
 loc_5012CCCD:
 	extbu	d3
 	mov	d3, d0
-	call	func_5012C95C, 0, 0
+	call	TgDrawbarGlobal82B2Set, 0, 0
 	call	func_50127BF4_entry, 0, 0x18
 	ret	[d2,d3,a2], 0x6c
 loc_5012CCDC:
 	extbu	d3
 	mov	d3, d0
-	call	func_5012C965, 0, 0
+	call	TgDrawbarGlobal82BDSet, 0, 0
 	call	func_50127A05_entry, [d2,d3], 0x20
 	call	func_50127D4D_entry, 0, 0x10
 	ret	[d2,d3,a2], 0x6c
@@ -577373,13 +577373,13 @@ loc_5012CD03:
 loc_5012CD16:
 	extbu	d3
 	mov	d3, d0
-	call	func_5012C980, 0, 0
+	call	TgDrawbarGlobal82C0Set, 0, 0
 	call	func_50127B59, 0, 0
 	ret	[d2,d3,a2], 0x6c
 loc_5012CD25:
 	extbu	d3
 	mov	d3, d0
-	call	func_5012C989, 0, 0
+	call	TgDrawbarGlobal82BCSet, 0, 0
 	call	func_50127D4D_entry, 0, 0x10
 	call	func_50127A05_entry, [d2,d3], 0x20
 	ret	[d2,d3,a2], 0x6c
@@ -577777,13 +577777,13 @@ TgGlobalParamInit_entry_L262:
 	mov	0x7f, d0
 	call	TgGroupGainClass23Set, 0, 0
 	clr	d0
-	call	func_5012C965, 0, 0
+	call	TgDrawbarGlobal82BDSet, 0, 0
 	mov	0x28, d0
-	call	func_5012C96E, 0, 0
+	call	TgDrawbarGlobal82BESet, 0, 0
 	mov	0x28, d0
-	call	func_5012C977, 0, 0
+	call	TgDrawbarGlobal82BFSet, 0, 0
 	mov	0x28, d0
-	call	func_5012C980, 0, 0
+	call	TgDrawbarGlobal82C0Set, 0, 0
 	clr	d0
 	call	TgEffectEnableReverb, 0, 0
 	clr	d0
@@ -578669,12 +578669,12 @@ func_5012D886_entry_L97:
 	ret	[d2,a2], 0x60
 func_5012D886_entry_La9:
 	movbu	(0x74, sp), d0
-	call	func_5012C96E, 0, 0
+	call	TgDrawbarGlobal82BESet, 0, 0
 	call	func_50127B5C_entry, 0, 0x18
 	ret	[d2,a2], 0x60
 func_5012D886_entry_Lb9:
 	movbu	(0x74, sp), d0
-	call	func_5012C977, 0, 0
+	call	TgDrawbarGlobal82BFSet, 0, 0
 	call	func_50127A05_entry, [d2,d3], 0x20
 	ret	[d2,a2], 0x60
 func_5012D886_entry_Lc9:
@@ -609696,7 +609696,7 @@ TgVoiceGateOn_entry_Lf:
 	extbu	d0
 	call	TgVoiceRegWriteB_entry, [d2], 4
 	mov	(0x74, a2), d0
-	mov	WORK_RAM_BASE, d1
+	mov	0x50000000, d1
 	mov	d0, (0x10, sp)
 	mov	d2, d0
 	extbu	d0
@@ -610332,7 +610332,7 @@ func_5013D977_entry:
 	extbu	d2
 	mov	d0, (0x10, sp)
 	mov	d2, d0
-	mov	WORK_RAM_BASE, d1
+	mov	0x50000000, d1
 	call	TgVoiceRegWriteB_entry, [d2], 4
 func_5013D977_entry_L66:
 	ret	[d2,a2], 0x1c

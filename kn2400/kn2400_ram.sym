@@ -3,7 +3,7 @@
 ; evidence classes (accessor: a named Get/Set/Is routine's only variable; owner: every
 ; direct reference lies in one named routine).  Columns: RAM address, name, ; class, evidence.
 ;
-; 21 accessor names over 125 operands, 613 owner names over 2805 operands; 3618 RAM addresses referenced
+; 28 accessor names over 148 operands, 613 owner names over 2805 operands; 3621 RAM addresses referenced
 0x50006E8C  localeconv_Ram	; owner: 1 references, all in localeconv
 0x50006E90  localeconv_Ram_2	; owner: 1 references, all in localeconv
 0x50006E94  localeconv_Ram_3	; owner: 1 references, all in localeconv
@@ -22,7 +22,13 @@
 0x50006EB6  localeconv_Ram_16	; owner: 1 references, all in localeconv
 0x50006EB7  localeconv_Ram_17	; owner: 1 references, all in localeconv
 0x50006EBA  TgcBufWrite_Ram	; owner: 3 references, all in TgcBufWrite
+0x50006ECA  TgDrawbarGlobal82B2	; accessor: TgDrawbarGlobal82B2Set (setter)
 0x50006ED2  TgGlobalParamInit_Ram	; owner: 1 references, all in TgGlobalParamInit
+0x50006ED4  TgDrawbarGlobal82BC	; accessor: TgDrawbarGlobal82BCSet (setter)
+0x50006ED5  TgDrawbarGlobal82BD	; accessor: TgDrawbarGlobal82BDSet (setter)
+0x50006ED6  TgDrawbarGlobal82BE	; accessor: TgDrawbarGlobal82BESet (setter)
+0x50006ED7  TgDrawbarGlobal82BF	; accessor: TgDrawbarGlobal82BFSet (setter)
+0x50006ED8  TgDrawbarGlobal82C0	; accessor: TgDrawbarGlobal82C0Set (setter)
 0x500072B0  TgDrawbarToneRecInit_Ram	; owner: 1 references, all in TgDrawbarToneRecInit
 0x50008548  TgDrawbarLevelsScan_Ram	; owner: 1 references, all in TgDrawbarLevelsScan
 0x50008551  TgPartDrawbarLevelsDerive_Ram	; owner: 2 references, all in TgPartDrawbarLevelsDerive
@@ -357,6 +363,7 @@
 0x500666F8  PlySngSelFunc_Ram	; owner: 3 references, all in PlySngSelFunc
 0x50066710  NameGetFuncCallSeq_Ram	; owner: 1 references, all in NameGetFuncCallSeq
 0x50066720  NameGetFuncCallSeq_Ram_2	; owner: 1 references, all in NameGetFuncCallSeq
+0x50066B40  DemoCtlTimer	; accessor: GetDemoCtlTimer (getter)
 0x50067AD4  AcDemoFdSelectProc_Ram	; owner: 5 references, all in AcDemoFdSelectProc
 0x50067AF3  AcDemoFdSelectProc_Ram_2	; owner: 1 references, all in AcDemoFdSelectProc
 0x50067AF4  MdDemo_Ram	; owner: 2 references, all in MdDemo

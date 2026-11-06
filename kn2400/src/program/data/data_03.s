@@ -14943,7 +14943,7 @@ Str_JFIF:	.asciz "JFIF"
 # census: opaque -- unknown-dump: 11 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x16F545, 0x16F550
 
-func_485E8EDD_Table:	# 5 x u8, 1..3; read by func_485E8EDD_entry : `movbu	(d1, a0), d0`
+func_485E8EDD_Table:	# 5 x u8, 1..3; read by JpegEncSetup_entry : `movbu	(d1, a0), d0`
 	tab_u8	1, 3, 3, 3, 3
 func_485EA803_entry_L30_Table:	# 20 x u8, 0..4; read by func_485EA803_entry_L30 0x485EA838: `movbu (a3), d0`
 	tab_u8	1, 0, 0, 0, 1, 1, 1, 0, 2, 1, 1, 0, 2, 1, 1, 0	# [0]
@@ -14952,11 +14952,11 @@ func_485EA803_entry_L30_Table_2:	# 20 x u8, 0..2; read by func_485EA803_entry_L3
 	tab_u8	1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 2, 1, 1, 0	# [0]
 	tab_u8	1, 1, 1, 0	# [16]
 data_4856F57D:
-	# 20 bytes the code takes the address of: func_485E8EDD_entry_L15 0x485E8EF7 `mov data_4856F57D, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
+	# 20 bytes the code takes the address of: JpegEncSetup_entry_L15 0x485E8EF7 `mov data_4856F57D, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0	# +0
 	tab_u8	0, 1, 1, 0	# +16
 
-func_485E8EDD_entry_L15_Records:	# 8 x REC_func_485E8EDD_entry_L15_Records (4 bytes each); read by func_485E8EDD_entry_L15 0x485E8EF7 `movbu (a3), d0`
+func_485E8EDD_entry_L15_Records:	# 8 x REC_func_485E8EDD_entry_L15_Records (4 bytes each); read by JpegEncSetup_entry_L15 0x485E8EF7 `movbu (a3), d0`
 	REC_func_485E8EDD_entry_L15_Records	x1="\x00\x00\x00"
 	REC_func_485E8EDD_entry_L15_Records	x1="\x11\x11\x00"
 	REC_func_485E8EDD_entry_L15_Records	x1="\x11\x11\x00"

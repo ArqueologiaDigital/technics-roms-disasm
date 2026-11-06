@@ -4,8 +4,16 @@
 ; the aligned call sites (of which exact / skeleton anchors), up to three anchors, the
 ; two bodies' skeleton / strict similarity and the round; RAM rows: the aligned operands.
 ;
-; 228 routine names and 8 RAM names carried from KN7000 941; audit (names both give): 650 right, 3 wrong; RAM audit 14 right, 0 wrong
+; 248 routine names and 8 RAM names carried from KN7000 941; audit (names both give): 674 right, 3 wrong; RAM audit 15 right, 0 wrong
+0x485E8EDD  JpegEncSetup	; = KN7000 941 0x4840D29C, callee at 1 aligned call sites (1 exact/skeleton) of @0x48485E88; body 1.00/1.00; round 2
+0x485E903E  JpegEncImage	; = KN7000 941 0x4840D3FD, same body (178 insns, 141 unmasked; 1 in A, 1 in B), 37 RAM operands agree; round 1
+0x485E925E  JpegEncMcu	; = KN7000 941 0x4840D61D, same body (86 insns, 70 unmasked; 1 in A, 1 in B), 9 RAM operands agree; round 1
 0x485F96C6  DrawQueue_Free	; = KN7000 941 0x48421B91, callee at 1 aligned call sites (1 exact/skeleton) of DrawString_QueuedExec; body 1.00/1.00; round 1
+0x485FB6D3  DrawBitmap_QueuedExec	; = KN7000 941 0x48423B9E, callee at 1 aligned call sites (1 exact/skeleton) of DrawBitmap; body 1.00/1.00; round 1
+0x485FB94A  DrawIcons_QueuedExec	; = KN7000 941 0x48423E15, callee at 1 aligned call sites (1 exact/skeleton) of DrawIcons; body 1.00/1.00; round 1
+0x485FC61C  DrawBitmapFile_QueuedExec	; = KN7000 941 0x48424AE7, callee at 1 aligned call sites (1 exact/skeleton) of DrawBitmapFile; body 1.00/1.00; round 1
+0x485FC845  DrawBitmapFileEx_QueuedExec	; = KN7000 941 0x48424D10, callee at 1 aligned call sites (1 exact/skeleton) of DrawBitmapFileEx; body 1.00/1.00; round 1
+0x485FFA54  Draw2BpFile_QueuedExec	; = KN7000 941 0x484282E7, callee at 1 aligned call sites (1 exact/skeleton) of Draw2BpFile; body 1.00/1.00; round 1
 0x4860A1CD  VoiceBankSourcePresent	; = KN7000 941 0x48448C0F, callee at 28 aligned call sites (0 exact/skeleton) of @0x48570ACD, ToneKeyFind, VoiceAttrClassify; body 1.00/1.00; round 2
 0x4860AD89  VoiceModRecDefaultPtr	; = KN7000 941 0x484497CB, callee at 1 aligned call sites (1 exact/skeleton) of VoiceModRecFetch; body 1.00/1.00; round 1
 0x4860ADDB  VoiceElemRecFetchBank0	; = KN7000 941 0x4844981D, same body (5 insns, 5 unmasked; 1 in A, 1 in B), 1 named callees or strings agree; round 1
@@ -17,9 +25,9 @@
 0x48614F79  SetSeqPlyEnR	; = KN7000 941 0x48453D6D, callee at 2 aligned call sites (1 exact/skeleton) of @0x48459D31, @0x48461DAD; body 1.00/1.00; round 3
 0x48614FA7  GetSeqRecPart	; = KN7000 941 0x48453D9B, callee at 7 aligned call sites (7 exact/skeleton) of @0x484549F9, @0x484553F0, @0x4845A5E8; body 1.00/1.00; round 2
 0x48614FB0  SetSeqRecPart	; = KN7000 941 0x48453DA4, same body (2 insns, 1 unmasked; 25 in A, 24 in B), 1 RAM operands agree; round 2
-0x48614FDE  GetSeqRecSrtR	; = KN7000 941 0x48453DD2, callee at 3 aligned call sites (3 exact/skeleton) of @0x484574D3, @0x4845A4AB, @0x4845C374; body 1.00/1.00; round 3
-0x48614FE7  SetSeqRecSrtR	; = KN7000 941 0x48453DDB, callee at 3 aligned call sites (3 exact/skeleton) of @0x4845C374, @0x4845C3D1; body 1.00/1.00; round 3
-0x48615002  SetSeqRecSrtRBit	; = KN7000 941 0x48453DF6, same body (6 insns, 5 unmasked; 1 in A, 1 in B), 1 RAM operands agree; round 4
+0x48614FDE  GetSeqRecSrtR	; = KN7000 941 0x48453DD2, same body (2 insns, 1 unmasked; 63 in A, 61 in B), 1 RAM operands agree; round 2
+0x48614FE7  SetSeqRecSrtR	; = KN7000 941 0x48453DDB, same body (2 insns, 1 unmasked; 25 in A, 24 in B), 1 RAM operands agree; round 2
+0x48615002  SetSeqRecSrtRBit	; = KN7000 941 0x48453DF6, same body (6 insns, 5 unmasked; 1 in A, 1 in B), 1 RAM operands agree; round 2
 0x486150D0  GetMeasSeq	; = KN7000 941 0x48453EC4, callee at 1 aligned call sites (1 exact/skeleton) of SwInMeasSeq; body 1.00/1.00; round 1
 0x486150D9  SetMeasSeq	; = KN7000 941 0x48453ECD, same body (2 insns, 1 unmasked; 25 in A, 24 in B), 1 RAM operands agree; round 1
 0x486150E2  IncMeasSeq	; = KN7000 941 0x48453ED6, same body (4 insns, 2 unmasked; 1 in A, 1 in B), 2 RAM operands agree; round 1
@@ -37,7 +45,9 @@
 0x486D3627  ResetExtMode	; = KN7000 941 0x48532355, callee at 9 aligned call sites (9 exact/skeleton) of SdcFavoriteStrFunc, SdcFmmLoadFilterFunc, SdcFmmPrivateSmfFileNameFunc; body 1.00/1.00; round 1
 0x486D3631  CheckExtMode	; = KN7000 941 0x4853235F, same body (2 insns, 1 unmasked; 84 in A, 81 in B), 1 RAM operands agree; round 1
 0x486D3735  fmmread	; = KN7000 941 0x48532463, callee at 7 aligned call sites (7 exact/skeleton) of CmpConvLoad, FatSectorRead, PictureImport; body 1.00/1.00; round 1
-0x486D5390  ZArenaReset	; = KN7000 941 0x485340BE, same body (19 insns, 6 unmasked; 1 in A, 1 in B), 3 RAM operands agree; round 1
+0x486D3902  fmmerror_init	; = KN7000 941 0x48532630, same body (3 insns, 2 unmasked; 5 in A, 5 in B), 1 RAM operands agree; round 1
+0x486D5390  ZArenaReset	; = KN7000 941 0x485340BE, same body (19 insns, 6 unmasked; 1 in A, 1 in B), 6 RAM operands agree; round 1
+0x486E80E2  GetDemoCtlTimer	; = KN7000 941 0x48546696, same body (2 insns, 1 unmasked; 84 in A, 81 in B), 1 RAM operands agree; round 1
 0x486EC82D  DiskWorkerStatusClear	; = KN7000 941 0x4854AD89, callee at 1 aligned call sites (1 exact/skeleton) of DiskWorkerTask; body 1.00/1.00; round 1
 0x486ECF93  SdMediaStateGet	; = KN7000 941 0x4854B51F, same body (2 insns, 1 unmasked; 63 in A, 61 in B), 1 RAM operands agree; round 1
 0x486ECFDA  SdDrvPhaseGet	; = KN7000 941 0x4854B566, callee at 1 aligned call sites (1 exact/skeleton) of DiskCmdPostAsync; body 1.00/1.00; round 1
@@ -87,6 +97,10 @@
 0x48705B5B  SdPowerCtrlClear	; = KN7000 941 0x4854D0A8, same body (22 insns, 18 unmasked; 1 in A, 2 in B), 3 RAM operands agree; round 1
 0x4870902D  SD_SetState	; = KN7000 941 0x4855E803, callee at 19 aligned call sites (17 exact/skeleton) of SdCardInsertMsgHandler, SdMountDone, SdStateMachineTick; body 1.00/1.00; round 1
 0x48709036  SD_GetState	; = KN7000 941 0x4855E80C, callee at 26 aligned call sites (23 exact/skeleton) of FavItemSetter, FavNameSetter, SDCardInfoFunc; body 1.00/1.00; round 1
+0x48709FEF  CheckSdSavePM3Bank	; = KN7000 941 0x4855F80A, same body (12 insns, 9 unmasked; 2 in A, 1 in B), 3 RAM operands agree; round 2
+0x4870A012  SetSdSavePM3Bank	; = KN7000 941 0x4855F82D, same body (3 insns, 2 unmasked; 5 in A, 4 in B), 1 RAM operands agree; round 2
+0x4870A01D  ResetSdSavePM3Bank	; = KN7000 941 0x4855F838, same body (3 insns, 2 unmasked; 18 in A, 17 in B), 1 RAM operands agree; round 2
+0x48710C64  SdMountWorker	; = KN7000 941 0x48551F8D, callee at 1 aligned call sites (1 exact/skeleton) of SdStateMachineTick; body 0.94/0.94; round 1
 0x48710E17  SdErrorFlagsGet	; = KN7000 941 0x4855224E, same body (2 insns, 1 unmasked; 84 in A, 81 in B), 1 RAM operands agree; round 1
 0x4871F475  SdAudSongIndexGet	; = KN7000 941 0x485731FB, same body (2 insns, 1 unmasked; 26 in A, 25 in B), 1 RAM operands agree; round 1
 0x4871F47E  SdAudListIndexGet	; = KN7000 941 0x48573204, callee at 13 aligned call sites (10 exact/skeleton) of GetSDAudSelSongListFunc, MainSDAudListSel_ListSW, MainSDAudListSel_NextSW; body 1.00/1.00; round 1
@@ -105,11 +119,11 @@
 0x487255D5  SdAudOpenListIndexGet	; = KN7000 941 0x48579303, callee at 4 aligned call sites (4 exact/skeleton) of GetSDAudPlaySongListFunc, SDAudioListSelTtlFunc, SdAudSongIndexSet; body 1.00/1.00; round 1
 0x48725616  SdAudListEntryCountGet	; = KN7000 941 0x48579344, callee at 4 aligned call sites (3 exact/skeleton) of GetSDAudPlaySongListFunc, GetSDAudSelSongListFunc, SdAudSongIndexSet; body 1.00/1.00; round 1
 0x48727565  SdSndSelListIndexGet	; = KN7000 941 0x4857B251, callee at 6 aligned call sites (6 exact/skeleton) of GetSDSndPlaySongListFunc, MainSDSndListEdit_DelWinYesSW, MainSDSndListEdit_OkSW; body 1.00/1.00; round 1
-0x50000000  WORK_RAM_BASE	; RAM = KN7000 941 0x50000000, 2 aligned operands
 0x500002B4  StrapBit3Latch	; RAM = KN7000 941 0x5000003C, 2 aligned operands
 0x50001230  CUR_STYLE_IDX	; RAM = KN7000 941 0x50001270, 1 aligned operands
 0x500013E8  OpeningFrameIndex	; RAM = KN7000 941 0x5006B5A8, 1 aligned operands
 0x50021970  CUR_RHYTHM_GENRE	; RAM = KN7000 941 0x50034C3C, 1 aligned operands
+0x50069332  FAVORITES_SRAM	; RAM = KN7000 941 0x50083D72, 0 aligned operands
 0x5007538A  FavoritesBankDir	; RAM = KN7000 941 0x5008FDCA, 4 aligned operands
 0x500C0A34  PICTURE_PLANE2	; RAM = KN7000 941 0x500F9880, 2 aligned operands
 0x50121669  LibU16ToF64	; = KN7000 941 0x4C0016AC, callee at 4 aligned call sites (4 exact/skeleton) of TgPartGlidePlan, TgPartModUnitRampStep; body 1.00/1.00; round 1
@@ -119,6 +133,12 @@
 0x5012C710  TgGroupGainPartsLoSet	; = KN7000 941 0x4C008E0D, same body (8 insns, 7 unmasked; 3 in A, 3 in B), 1 RAM operands agree; round 1
 0x5012C724  TgGroupGainClass23Set	; = KN7000 941 0x4C008E21, same body (8 insns, 7 unmasked; 3 in A, 3 in B), 1 RAM operands agree; round 1
 0x5012C738  TgGroupGainParts13To1ASet	; = KN7000 941 0x4C008E35, same body (8 insns, 7 unmasked; 3 in A, 3 in B), 1 RAM operands agree; round 1
+0x5012C95C  TgDrawbarGlobal82B2Set	; = KN7000 941 0x4C009059, same body (2 insns, 1 unmasked; 45 in A, 39 in B), 1 RAM operands agree; round 1
+0x5012C965  TgDrawbarGlobal82BDSet	; = KN7000 941 0x4C009062, same body (2 insns, 1 unmasked; 45 in A, 39 in B), 1 RAM operands agree; round 1
+0x5012C96E  TgDrawbarGlobal82BESet	; = KN7000 941 0x4C00906B, same body (2 insns, 1 unmasked; 45 in A, 39 in B), 1 RAM operands agree; round 1
+0x5012C977  TgDrawbarGlobal82BFSet	; = KN7000 941 0x4C009074, same body (2 insns, 1 unmasked; 45 in A, 39 in B), 1 RAM operands agree; round 1
+0x5012C980  TgDrawbarGlobal82C0Set	; = KN7000 941 0x4C00907D, same body (2 insns, 1 unmasked; 45 in A, 39 in B), 1 RAM operands agree; round 1
+0x5012C989  TgDrawbarGlobal82BCSet	; = KN7000 941 0x4C009086, same body (2 insns, 1 unmasked; 45 in A, 39 in B), 1 RAM operands agree; round 1
 0x5012C9C3  TgEffectEnableBit10	; = KN7000 941 0x4C0090C0, same body (11 insns, 6 unmasked; 1 in A, 1 in B), 4 RAM operands agree; round 1
 0x5012C9EF  TgEffectEnableBit4	; = KN7000 941 0x4C0090EC, same body (11 insns, 7 unmasked; 1 in A, 1 in B), 4 RAM operands agree; round 1
 0x5012CA18  TgGroupGainClass23Enable	; = KN7000 941 0x4C009115, same body (11 insns, 6 unmasked; 1 in A, 1 in B), 4 RAM operands agree; round 1
@@ -140,7 +160,7 @@
 0x5012D9C5  TgDrumZoneParamClamp	; = KN7000 941 0x4C009F01, callee at 2 aligned call sites (2 exact/skeleton) of TgDrumAmpReleaseCalc; body 1.00/1.00; round 1
 0x5012DDB5  TgPartDrawbarTypeSet	; = KN7000 941 0x4C00A2F1, callee at 1 aligned call sites (1 exact/skeleton) of TgPartDrawbarUnitEnable; body 1.00/1.00; round 1
 0x5012DDCB  TgPartDrawbarTypeClear	; = KN7000 941 0x4C00A307, callee at 1 aligned call sites (1 exact/skeleton) of TgPartToneModSetupDrum; body 1.00/1.00; round 1
-0x501311ED  TgPartToneDescScratchPtr	; = KN7000 941 0x4C00C2BF, same body (2 insns, 1 unmasked; 40 in A, 37 in B), 1 RAM operands agree; round 2
+0x501311ED  TgPartToneDescScratchPtr	; = KN7000 941 0x4C00C2BF, same body (2 insns, 1 unmasked; 40 in A, 37 in B), 1 RAM operands agree; round 1
 0x501311F6  TgPartLocalEditRecPtr	; = KN7000 941 0x4C00C2C8, callee at 1 aligned call sites (1 exact/skeleton) of TgPartVoiceRecFetchSel; body 1.00/1.00; round 1
 0x50131530  TgPartAuxMod52Bit7Set	; = KN7000 941 0x4C00C602, callee at 12 aligned call sites (12 exact/skeleton) of @0x4C010CAF; body 1.00/1.00; round 3
 0x5013156F  TgPartAuxMod56Bit7Set	; = KN7000 941 0x4C00C641, callee at 8 aligned call sites (8 exact/skeleton) of @0x4C010CAF; body 1.00/1.00; round 3
@@ -207,7 +227,7 @@
 0x50172166  PadCurSynchroGet	; = KN7000 941 0x48434417, same body (4 insns, 3 unmasked; 2 in A, 2 in B), 1 RAM operands agree; round 1
 0x50172173  PadCurFlag2Get	; = KN7000 941 0x48434424, callee at 3 aligned call sites (3 exact/skeleton) of AcPadRunProc, PadRecPtChdGrid; body 1.00/1.00; round 1
 0x501722E0  PadNameGet	; = KN7000 941 0x48434591, callee at 7 aligned call sites (7 exact/skeleton) of AcRecPadNameBoxProc, FuncEdit_dstPad, FuncEdit_srcPad; body 0.64/0.64; round 1
-0x501732B4  MemStyleAllocPtrSet	; = KN7000 941 0x48435594, callee at 1 aligned call sites (1 exact/skeleton) of MemStyleAreaVarStreamsInit; body 1.00/1.00; round 1
+0x501732B4  MemStyleAllocPtrSet	; = KN7000 941 0x48435594, callee at 4 aligned call sites (4 exact/skeleton) of MemStyleAreaVarStreamsInit, MemStyleVarCopy table 0x4852BC54+4, PadCopyBuiltinToUser table 0x4852BC08+80; body 1.00/1.00; round 1
 0x501732F9  MemStyleAreaBase	; = KN7000 941 0x484355D9, callee at 5 aligned call sites (5 exact/skeleton) of MemStyleAllocFits, MemStyleAreaChecksumInit, MemStyleAreaChecksumVerify; body 1.00/1.00; round 1
 0x501733A9  MemStyleRecDataAt	; = KN7000 941 0x48435689, callee at 1 aligned call sites (1 exact/skeleton) of MemStyleVarRecDataAt; body 1.00/1.00; round 1
 0x50173469  MemStyleAreaSignatureVerify	; = KN7000 941 0x48435749, callee at 1 aligned call sites (1 exact/skeleton) of @0x4843B1F9; body 1.00/1.00; round 2
@@ -230,7 +250,7 @@
 0x5018209E  TempoClockSourceSet	; = KN7000 941 0x484452D0, same body (3 insns, 2 unmasked; 5 in A, 4 in B), 1 RAM operands agree; round 1
 0x501820A9  TempoClockSourceClear	; = KN7000 941 0x484452DB, callee at 3 aligned call sites (3 exact/skeleton) of FmmDocFileNameFunc, FmmPdFileNameFunc, SDSoundPlayTtlFunc; body 1.00/1.00; round 1
 0x501820B3  TempoClockSourceGet	; = KN7000 941 0x484452E5, callee at 3 aligned call sites (3 exact/skeleton) of FmmDocFileNameFunc, FmmPdFileNameFunc, SDSoundPlayTtlFunc; body 1.00/1.00; round 1
-0x501821D6  GetBeatSeq	; = KN7000 941 0x48445408, same body (11 insns, 9 unmasked; 4 in A, 4 in B), 1 RAM operands agree; round 1
+0x501821D6  GetBeatSeq	; = KN7000 941 0x48445408, same body (11 insns, 9 unmasked; 4 in A, 4 in B), 2 RAM operands agree; round 1
 0x50182222  IsRunningSeq	; = KN7000 941 0x48445454, callee at 3 aligned call sites (2 exact/skeleton) of CurSongSet_PlayDisp, FmmIntMedleyFunc, TempoSyncModeBSet; body 1.00/1.00; round 1
 0x50182231  IsStartTimingSeq	; = KN7000 941 0x48445463, same body (4 insns, 3 unmasked; 4 in A, 4 in B), 1 RAM operands agree; round 1
 0x50182240  IsStopTimingSeq	; = KN7000 941 0x48445472, same body (4 insns, 3 unmasked; 4 in A, 4 in B), 1 RAM operands agree; round 1

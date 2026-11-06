@@ -26697,10 +26697,10 @@ func_4C051A0B_Table:	# 15 x u16, 496..4638; read by func_4C051A0B 0x4C051A0B: `m
 	tab_u16	4126, 4382, 4638	# [12]
 	.space	4, 0xFF
 
-func_4C050837_entry_L4_Records:	# 1 x REC_func_4C050837_entry_L4_Records (12 bytes each); read by func_4C050837_entry_L4 0x4C050840 `mov (4, a0), d3`; func_4C050837_entry_L4 0x4C050840 `mov (a0), a2`
-	REC_func_4C050837_entry_L4_Records	proc=WORK_RAM_BASE, index=0x80000, x8="\x01\x02\x00\x00"
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x2E514C, 0x2E5164
+func_4C050837_entry_L4_Records:	# 3 x REC_func_4C050837_entry_L4_Records (12 bytes each); read by func_4C050837_entry_L4 0x4C050840 `mov (4, a0), d3`; func_4C050837_entry_L4 0x4C050840 `mov (a0), a2`
+	REC_func_4C050837_entry_L4_Records	f0=0x50000000, index=0x80000, x8="\x01\x02\x00\x00"
+	REC_func_4C050837_entry_L4_Records	f0=0x58000000, index=0x5040100, x8="\x01\x00\x00\x00"
+	REC_func_4C050837_entry_L4_Records	f0=0x54000000, index=0x5040100, x8="\x01\x00\x00\x00"
 func_4C0508F7_entry_L4_Records:	# 1 x REC_func_4C0508F7_entry_L4_Records (12 bytes each); read by func_4C0508F7_entry_L4 0x4C0508FD `mov (4, a1), d0`; func_4C0508F7_entry_L4 0x4C0508FD `mov (a1), a0`; func_4C0508F7_entry_L4 0x4C0508FD `movbu (a1), d1` (+1)
 	REC_func_4C0508F7_entry_L4_Records	addr=0x44000000, index=32768, f8=4, x9="\x00\x00\x00"
 
