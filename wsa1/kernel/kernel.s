@@ -570,18 +570,21 @@ Kernel_InitRam__msg_queues:
 ; Read by:  the routine at 0xF85D78, through XIX, which the instruction above
 ;          loads with this address.  Nothing else in either ROM names it
 ;          (notes/prom_a_byte_checks.py).
-; Layout:  the fields are read off the CALLEE, so only two of the three are
-;          established:
+; Layout:  the fields are read off the CALLEE -- SoftTimer_Register, one text in
+;          this file for both WSA1 CPUs -- and all three are read there:
 ;            +0  LE16  0x0001  0xF85D82 reads it as a BYTE (`ld A,(XIX+0x00)`)
 ;                              and forms 0x03C0 + A*8 (0xF85D85-0xF85D88).
 ;                              0x03C0 + 1*8 = 0x03C8, software timer slot 1 --
 ;                              the array this very routine initialised, and the
 ;                              same one-element bias as everywhere else here.
-;            +2  LE16  0x0001  ⚠ NOT established.  Do not assume it is the
-;                              reload value: the software-timer SLOT layout is
-;                              (+0 countdown, +2 reload, +4 callback), and this
-;                              block is a REQUEST with a different +0, so the
-;                              two layouts must not be conflated.
+;            +2  LE16  0x0001  the PERIOD in ticks: SoftTimer_Register copies it
+;                              into BOTH slot+0 (the countdown) and slot+2 (the
+;                              reload) -- `ld WA,(XIX+0x02)`, `ld (XIY+0x00),WA`,
+;                              `ld (XIY+0x02),WA` -- as prom_c's and the KN5000's
+;                              headers below read it.  The request and the slot
+;                              still differ at +0: slot number here, countdown
+;                              there.  (Until 2026-11-06 this line left +2 open;
+;                              lane open10/kernel4 read it off the shared callee.)
 ;            +4  LE32  0x00F85EC2  a code address in this file -- SoftTimer_RotateLevel3,
 ;                              which notes/prom_a_byte_checks.py records as
 ;                              calling Kernel_YieldRotate with A = 3.
@@ -627,7 +630,7 @@ Kernel_InitRam__msg_queues:
 ;   +4 long  callback            copied to the slot's +4; Kernel_ServiceSoftTimers calls it
 SoftTimer_Request_Boot:
 	.short 0x0001                                ; F856E0/F98245  01 00   slot number, read as a BYTE by SoftTimer_Register   slot index, read as a byte by 0xF85D78
-	.short 0x0001                                ; F856E2/F98247  01 00   copied into BOTH slot+0 and slot+2   ⚠ role not established
+	.short 0x0001                                ; F856E2/F98247  01 00   copied into BOTH slot+0 and slot+2   the period: countdown and reload
 	.long KERNEL_BOOT_TIMER_CALLBACK             ; F856E4/F98249  a=c2 5e f8 00 c=12 81 f9 00   c: the callback: SoftTimer_RotateLevel2   SoftTimer_RotateLevel3
 Kernel_InitRam__install:
 	call SoftTimer_Register                      ; F856E8/F9824D  a=1d 78 5d f8 c=1d dd 88 f9   c: call 0xf988dd   install that request, then FALL INTO Kernel_Start

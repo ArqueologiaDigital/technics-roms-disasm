@@ -137,7 +137,12 @@ payload trees include the shared source and hold no copy; the Makefile makes the
    "missing"), the macro-block comment of kernel.s was rewritten on 2026-08-30 (244 "stray"), and 14
    operands were respelled (`(KERNEL_PENDING_TICKS:8)` ...), which its literal comparison does not
    parse.
-2. prom_a's SoftTimer_Request_Boot header says field +2 is "NOT established"; prom_c's and the KN5000's
+2. RESOLVED 2026-11-06 (lane open10/kernel4, L-kernel-a3-softtimer-boot-header): prom_a's header now reads
+   +2 off the shared callee (`ld WA,(XIX+0x02)` stored to slot+0 and slot+2, the period), and
+   `data_range_census.py --images v142,prom_a,prom_c` grades the 8 bytes KNOWN-A ("documented + evidence")
+   in all three again (v141 / v140 assemble the same source).  The edit is dated in kernel_a3_merge.py's
+   LATER_EDITS and kernel_join_probe.py's POST_MERGE_EDITS, so both --verify still pass.
+   Was: prom_a's SoftTimer_Request_Boot header says field +2 is "NOT established"; prom_c's and the KN5000's
    headers (now beside it) both read it off the callee: it is copied into the slot's countdown AND
    reload, i.e. the period.  `data_range_census.py` caps a header that admits ignorance at grade B, so
    in the three payloads those 8 bytes moved KNOWN-A -> KNOWN-B.  Next step: reconcile prom_a's header

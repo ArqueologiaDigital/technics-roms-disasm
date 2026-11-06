@@ -818,6 +818,7 @@ CORRECTIONS = {
 #   original prom_a / prom_c comment line missing from kernel.s is accepted only when it is a key here
 #   AND every one of its replacement lines is in kernel.s; the replacement lines join the origin set of
 #   the reverse check.  `None` as a key = lines ADDED with no original (they only join the origin set).
+SOFTTIMER_PLUS2 = [';            +2  LE16  0x0001  the PERIOD in ticks: SoftTimer_Register copies it', ';                              into BOTH slot+0 (the countdown) and slot+2 (the', ';                              reload) -- `ld WA,(XIX+0x02)`, `ld (XIY+0x00),WA`,', ";                              `ld (XIY+0x02),WA` -- as prom_c's and the KN5000's", ';                              headers below read it.  The request and the slot', ';                              still differ at +0: slot number here, countdown', ';                              there.  (Until 2026-11-06 this line left +2 open;', ';                              lane open10/kernel4 read it off the shared callee.)']
 POST_MERGE_EDITS = [
     ("2026-08-30", "b9e3a0657", "one copy of the TLCS-900 byte emitters: kernel.s's macro block moved to "
      "include/tlcs900_mem_ops.inc, and the header paragraph above the include rewritten", {None: [
@@ -838,6 +839,18 @@ POST_MERGE_EDITS = [
             ";            +4  LE32  0x00F85EC2  a code address in this file -- SoftTimer_RotateLevel3,"],
         "; Called from: sub_F85EC2 (0xF85EC4, converted below) with A = 3; and prom_b": [
             "; Called from: SoftTimer_RotateLevel3 (0xF85EC4, converted below) with A = 3; and prom_b"],
+    }),
+    ("2026-11-06", "open10/kernel4", "L-kernel-a3-softtimer-boot-header: prom_a's SoftTimer_Request_Boot "
+     "header reconciled with prom_c's and the KN5000's (+2 is the period, read off the shared callee)", {
+        "; Layout:  the fields are read off the CALLEE, so only two of the three are": [
+            "; Layout:  the fields are read off the CALLEE -- SoftTimer_Register, one text in"],
+        ";          established:": [
+            ";          this file for both WSA1 CPUs -- and all three are read there:"],
+        ';            +2  LE16  0x0001  ⚠ NOT established.  Do not assume it is the': SOFTTIMER_PLUS2,
+        ';                              reload value: the software-timer SLOT layout is': SOFTTIMER_PLUS2,
+        ';                              (+0 countdown, +2 reload, +4 callback), and this': SOFTTIMER_PLUS2,
+        ';                              block is a REQUEST with a different +0, so the': SOFTTIMER_PLUS2,
+        ';                              two layouts must not be conflated.': SOFTTIMER_PLUS2,
     }),
 ]
 
