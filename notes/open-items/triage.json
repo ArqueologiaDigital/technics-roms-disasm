@@ -4445,11 +4445,11 @@
   "plan": "add the two names to the KN7000 builds' .sym files, regenerate program sources, then a sed rename of the data labels the generator derived from the old func_ names (it keeps a label it made before); lanes kn7000-research2 / mn10300-data4 (wave 12 (2026-11-06))"
  },
  "L-wave12-kn7000-mame-audio-lines": {
-  "status": "BLOCKED",
+  "status": "RESOLVED",
   "area": "MAME/emulation",
   "source": "kn7000/notes/audio-mute-probes/README.md:1",
   "title": "KN7000 MAME driver: PMUT (P22) is stored but unused; the IC25 74AHC174 latch at 0x98060000 (SPSW, D/A mode, SD power) is not modelled",
-  "blocker": "the fix belongs to the kn7000_mame repository (its owner); written up in section 5 of kn7000/notes/audio-mute-probes/README.md (lane kn7000-research2, wave 12 (2026-11-06))"
+  "evidence": "closed in kn7000_mame b0fd265 by its owner's session (recorded here in dfd9dfd90, kn7000/notes/audio-mute-probes/README.md): IC311 is a PCM1738, PMUT and SPSW gate the emulated speaker output (2026-11-06)"
  },
  "N-8280b5e3": {
   "status": "RESOLVED",
