@@ -1,0 +1,5 @@
+N-44e56012  OPEN    kn7000/notes/picload-silence-probes/README.md: in MAME the key reaches the TG and is audible on SD PICTURE LOAD (same 118 TG writes, RMS 322.5 vs 321.2); next: trace the service manual's MUTE lines (CN506, ACP/FAJ; pp. 122-127) to their CPU pin and watch it in MAME, or measure on the instrument
+N-e411f8fa  CLOSED  e97d1b8b3 + 19056b716; song-records.md sections 3/6, song_id_dump_names.py (PartParamDumpLine labels), m3_watch/m3_sweep/m3_panelctl runs
+N-99771106  OPEN    3ea2d13ab + 3ae043781: JPEG encoder named in 941/942/935/893, 893 own 7 -> 4; next: 0x484101FD with the data regeneration (gen_data_s.py), 0x48451649 = 941 func_484516EC (read func_4845027B / func_48449420), the two SD AUDIO routines
+N-b8f49b1e  OPEN    9a0ffd57a + a4d3d8abc: TCMP var/style/part set-up reader and 4 pad bytes traced; m<id> names handed to gen_panel_macros.py's owner (kn7000-research/README.md); voice record fields + 0x27-byte header still to trace
+N-f3c6a3ea  OPEN    pointer row; follows N-b8f49b1e (custom-data-ic21.md Open questions updated)

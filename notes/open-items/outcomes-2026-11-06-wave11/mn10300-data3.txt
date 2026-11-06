@@ -1,0 +1,9 @@
+N-61c32961  CLOSED   0119c8fe1 + a90e71759 / 87436393b (sentinel_indexed; kn7000/notes/callee-walk/README.md marked)
+N-fb88572c  CLOSED   0119c8fe1 + regen commits (gui_object_names.tsv in every tree; frozen_names_check.py; kn7000/notes/gui-data-region/README.md marked)
+N-4b34dd8b  CLOSED   1843c2cb0 + fa72035f8 (panel_ctrl_slider.py; 0x008008 = APC VOLUME, `apc_volume`; the m<id> names applied; kn6000/notes/siblings-data-final/README.md marked)
+N-2468beef  OPEN     offset-named fields with a reader 941 244->203, 942 246->203, 935/893 251->225, KN6000 255->221, KN6500 254->220, KN2400 194->160, HD-SX3 37->20; next: kind by kind from field_names_census.py --list (TgPartEditLfoLoadA_Records; the TG register image func_4C0948CB_ArgA0 needs the TG register map)
+N-dff57eb2  OPEN     KN6000 opaque 774/18,082 -> 764/16,206 B; next: the effect-DSP records (labelled-held 8,435 B) need the KN6000 effect-DSP stream format, then the names_* tails
+N-6acf011c  OPEN     KN6500 opaque 765/20,216 -> 755/18,340 B; same next step as the KN6000
+N-b3924e48  OPEN     KN2400 opaque 801/18,746 -> 790/16,682 B; next: names_48545C20 (1,080 B), func_50186924_Selected_6 (856 B), after-string group (2,711 B)
+O-hdsx3-unknown-dump-a08889  CLOSED  0 / 0 (host_widget_vars, cf1523e84 + 32dac634d)
+O-hdsx3-unknown-dump-f491a3  OPEN    7/28 -> 2/8 B (two widget words no class procedure dereferences); next: their widget classes' procedures

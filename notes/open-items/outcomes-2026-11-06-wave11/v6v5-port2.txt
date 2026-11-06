@@ -1,0 +1,6 @@
+T-kn5000-v6-todo-port  CLOSED  TODO(port) rows 2 -> 0 (41204a5b2); v6 verbatim debt 150 -> 5 B (556b456b5); notes/v6v5-port2-2026-11-06/README.md
+T-kn5000-v5-todo-port  CLOSED  TODO(port) rows 7 -> 0 (41204a5b2); v5 verbatim debt 163 -> 5 B (556b456b5)
+N-92c1dcce             CLOSED  the same rows: 2 / 7 -> 0 / 0 by re-cutting the slices (port_todo_hand.py edits 5-7); no backend change
+N-2a3d2074             OPEN    json raw 148 / 156 -> 5 / 5 (ff2826ddd, 556b456b5, e17213042). Left: RAM_Softver_Window, MainProgram/MainTable/SubProgram/SoundTable_Selected sit 4 B lower in v6/v5 (no MPVersion window cell). Next: gen_naka_gui_headers.ram_mapper places v6/v5 cells by the tree's own Murai_SoundMenuWorkCells cell lines
+N-594c48be             CLOSED  naka_technichord_part's 8 records and NakaWidget_PanelSimulator typed in v6/v5 (IDENTICAL), naka_gui_symbolize --check up to date, make gate exit 0 (556b456b5)
+N-ece9781f             CLOSED  entries 17/30/43/56 (not 16/29/42/55): four 13-root bass-note-spelling blocks indexed via the 64 per-chord-type pointers read by MainChordPre_AppendChordSuffix; NAKA_WRAM made piecewise; probes/bass_name_tables.py, notes README

@@ -1,0 +1,6 @@
+N-02383279  OPEN  KN6000 func_ 10,061 -> 9,917 (a20b441bb; census-after.txt). Next: KN7000 names reach it via notes/routine-map-kn7000.tsv on re-run; per-subsystem naming of code with no KN7000 twin
+N-a6b3dca1  OPEN  KN6500 func_ 10,116 -> 9,972 (a20b441bb). Next: as N-02383279
+N-391deec6  OPEN  KN2400 func_ 11,645 -> 11,340; RAM-run TG library 332 -> 418 of 544 (a20b441bb, missed-after.txt). Next: as N-02383279; 36 short identical-code library routines still need RAM pairs
+N-8fce01b1  OPEN  KN6000 numeric work-RAM operands 20,128/2,996 -> 17,752/2,524, 491 names (kn6000_ram.sym, kn6000_aligned.sym). Next: KN7000 RAM names via notes/ram-map-kn7000.tsv (1,613 pairs) on re-run; more accessors once more routines are named
+N-cccf0416  OPEN  KN6500 20,164/3,006 -> 17,788/2,533, 492 names. Next: as N-8fce01b1
+N-dc17693c  OPEN  KN2400 23,931/3,565 -> 20,931/2,940, 642 names. Next: as N-8fce01b1

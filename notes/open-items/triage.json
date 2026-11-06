@@ -110,14 +110,8 @@
   ]
  },
  "N-02383279": {
-  "status": "ACTIONABLE",
-  "title": "KN6000: 10,098 entries still func_<ADDR> (sibling-to-sibling porting done)",
-  "size": "L",
-  "was_status": "RESOLVED",
-  "plan": "per-subsystem naming of the remaining 10,098 func_ entries (callers, strings, MILK messages), as kn6000/README.md says; the porting half was closed by lane mn10300-names (2026-11-02): 019e7a8a1, 3d870c7b5, 397b30e0d",
-  "was": [
-   "N-f3294592"
-  ]
+  "status": "RESOLVED",
+  "evidence": "moved to N-a810f3f6: lane sibling-names rewrote its source line with the new counts (wave 11 (2026-11-06))"
  },
  "N-027de254": {
   "status": "RESOLVED",
@@ -483,7 +477,7 @@
   "was": [
    "N-3912088e"
   ],
-  "plan": "FlashChip, DiskFileHandler, PanelTestSwitch, ChordRecogEntry/2 named; 941 255->244, KN2400 200->194. Next: the same, kind by kind, from field_names_census.py --list (lane mn10300-data2, 2026-11-06)"
+  "plan": "offset-named fields with a reader 941 244->203, 942 246->203, 935/893 251->225, KN6000 255->221, KN6500 254->220, KN2400 194->160, HD-SX3 37->20; next: kind by kind from field_names_census.py --list (TgPartEditLfoLoadA_Records; the TG register image func_4C0948CB_ArgA0 needs the TG register map) (lane mn10300-data3, 2026-11-06)"
  },
  "N-24a40225": {
   "status": "RESOLVED",
@@ -557,7 +551,7 @@
   "status": "ACTIONABLE",
   "size": "M",
   "title": "KN5000 v6 / v5: 212 / 220 raw bytes in the C divergence json",
-  "plan": "json raw 212 / 220 -> 148 / 156 (ff0fb778b: naka_sequencer_channels' 64 self-pointers via --ram-self). Left: naka_widget_descriptors 42 (RAM-pointer tables: need v6 / v5 RAM names), gui_display_struct_data 30, accomp_display_full 12 / 16, naka_sound_menu_drawbar 12 / 13, se_name_editor 12, tonegen_param_table 12, naka_technichord_part 6 / 8 (also blocks the straddling-record hand-over), small others. Next: port v7's RAM names into v6 / v5, then retype per bin with notes/kn5000-c-2026-11-02/probes/cdiv_members.py (lane v6v5-port, 2026-11-06)"
+  "plan": "json raw 148 / 156 -> 5 / 5 (ff2826ddd, 556b456b5, e17213042). Left: RAM_Softver_Window, MainProgram/MainTable/SubProgram/SoundTable_Selected sit 4 B lower in v6/v5 (no MPVersion window cell). Next: gen_naka_gui_headers.ram_mapper places v6/v5 cells by the tree's own Murai_SoundMenuWorkCells cell lines (lane v6v5-port2, 2026-11-06)"
  },
  "N-2a8e12a9": {
   "status": "RESOLVED",
@@ -624,7 +618,7 @@
   "status": "ACTIONABLE",
   "title": "65 NAKA Viewable elements have no typed record (straddling members, DRAM, string blocks)",
   "size": "M",
-  "plan": "7b36d2e51; 17 of the 20 straddling records typed; untyped elements 69 -> 52 (3 cut by a C blob end, 49 in the asm, 13 of those work-RAM view records). Next: the 3 blob-edge records, then naka_asm_records.py --report's string-block records (lane kn5000-notes, 2026-11-06)"
+  "plan": "be6097f98 + f3220ffc9; all 3 blob-edge records typed; untyped elements 52 -> 49 (old probe rule; 45 by the corrected rule), all left in the asm. Next: retype includes/gui_display_struct_data.c (16 IvDirmdScreen records framed 6 B early + NakaWidget_seamplfo1's tail; needs -I ui_widgets), then the 13 work-RAM view records and the FDTest string-block records (lane kn5000-naka, 2026-11-06)"
  },
  "N-31aaf45b": {
   "status": "RESOLVED",
@@ -713,13 +707,8 @@
   "evidence": "lane misc2 (2026-11-02): c549279d2 (probes/wsa1_f7df_runs.py; block 838 = DF F7 x125 as .rept)"
  },
  "N-391deec6": {
-  "status": "ACTIONABLE",
-  "title": "KN2400: 11,678 entries still func_<ADDR>",
-  "size": "L",
-  "plan": "next: per-subsystem naming of the remaining 11,678 func_ entries (lane mn10300-names, 2026-11-02)",
-  "was": [
-   "N-be2b9da5"
-  ]
+  "status": "RESOLVED",
+  "evidence": "moved to N-b3ba9d8b: lane sibling-names rewrote its source line with the new counts (wave 11 (2026-11-06))"
  },
  "N-395531b4": {
   "status": "RESOLVED",
@@ -809,7 +798,7 @@
   "status": "ACTIONABLE",
   "title": "What keeps the keyboard silent during the whole PICTURE LOAD screen",
   "size": "M",
-  "plan": "6153ee11a: key-bed path traced, no work-RAM gate (picload_key_gate.py); next: MAME break on TgcNoteOnSend 0x4C029793 / TgcBufWrite 0x4C003A60 during PICTURE LOAD (lane kn7000-names, 2026-11-06)"
+  "plan": "kn7000/notes/picload-silence-probes/README.md: in MAME the key reaches the TG and is audible on SD PICTURE LOAD (same 118 TG writes, RMS 322.5 vs 321.2); next: trace the service manual's MUTE lines (CN506, ACP/FAJ; pp. 122-127) to their CPU pin and watch it in MAME, or measure on the instrument (lane kn7000-research, 2026-11-06)"
  },
  "N-44fb32d4": {
   "status": "RESOLVED",
@@ -842,10 +831,10 @@
   "evidence": "cf8b62847 (images added), 88c9ab319 (ledgers dispatch / doc-quality / data-incbin 2026-10-31-01, rules 5)"
  },
  "N-45db7885": {
-  "status": "ACTIONABLE",
+  "status": "RESOLVED",
   "title": "9 numeric ROM addresses left in the NAKA C (11 in v6/v5; was 73 / 75)",
   "size": "M",
-  "plan": "7b36d2e51; 9 -> 1 per tree (v6/v5 11 -> 7); left: naka_direct_play.c w119 (PsWideToggle e9 of slot 0xE3 runs past the C blob end). Next: move that record's tail from the asm into the C blob (or the record into a NAKA_REC_ call); v6/v5 after v6v5-port regenerates their json (lane kn5000-notes, 2026-11-06)"
+  "evidence": "lane kn5000-naka (2026-11-06): be6097f98; NAKA C rom addrs v10/v9/v7 1 -> 0 (w119 was a PsWideToggle split across two blobs). v6/v5 still 7, owned by v6v5-port2: run naka_join_perf3rhythmsel.py --tree v6/v5 after their json regen (README \"What v6 / v5 need\")"
  },
  "N-46580c3b": {
   "status": "BLOCKED",
@@ -938,13 +927,13 @@
   ]
  },
  "N-4b34dd8b": {
-  "status": "ACTIONABLE",
+  "status": "RESOLVED",
   "title": "Sibling one-touch records: the bytes the PM_* macros keep as hex (mostly named)",
   "size": "M",
   "was": [
    "N-b318c54c"
   ],
-  "plan": "m008008 = parameter 0x008008, set with 0x008006 from panel control 0xC2 (KN6000 0xC6) by func_48454E3A; the song-play / panel split is traced. Next: identify wire 0xC2 (service manual / MAME panel HLE) (lane mn10300-data2, 2026-11-06)"
+  "evidence": "lane mn10300-data3 (2026-11-06): 1843c2cb0 + fa72035f8 (panel_ctrl_slider.py; 0x008008 = APC VOLUME, `apc_volume`; the m<id> names applied; kn6000/notes/siblings-data-final/README.md marked)"
  },
  "N-4ba3421b": {
   "status": "RESOLVED",
@@ -1024,7 +1013,7 @@
   "status": "ACTIONABLE",
   "title": "Flag bytes with most numeric uses (audio config, seq play state, accompaniment, SE flags)",
   "size": "L",
-  "plan": "9bf99858d + eb8fef84c; named 0x3283, 0x32F4, 0x332C per bit; numeric uses of the listed bytes 967 -> 747 (v10). Next: kn5000_ram_bit_usage.py on 0xC596 first (AUTO PLAY CHORD mode bits), then 0xC1FE / 0xC594 / 0xC598 / 0xC59C, 0x28B2 / 0x28B3, 0x34CD, 0x35B0, 0xE3E2 (lane kn5000-notes, 2026-11-06)"
+  "plan": "63a7f34a4; 0xC594 AUDIO_CONFIG_UPDATE, 0xC596 AUDIO_CONFIG_FLAGS named per bit; numeric uses 747 -> 611 (v10). Next: 0xC598 per bit (AudioInit_GroupA_* / GroupB_* sound-group status), then 0xC1FE, 0xC59C, 0x28B2 / 0x28B3, 0x34CD, 0x35B0, 0xE3E2 (lane kn5000-naka, 2026-11-06)"
  },
  "N-52dcf02a": {
   "status": "RESOLVED",
@@ -1176,11 +1165,11 @@
   ]
  },
  "N-61c32961": {
-  "status": "ACTIONABLE",
+  "status": "RESOLVED",
   "area": "MN10300 siblings",
   "title": "29 / 8 bytes per sibling moved from typed tables into reader rows by the new joins",
   "size": "S",
-  "plan": "not reached (lane mn10300-data2, 2026-11-06): the indexed sentinel_lists form for func_4C11B347 / func_4861CCC5 (21 B KN6000, 4 B KN2400), in gen_data_s.py (lane mn10300-data2, 2026-11-06)"
+  "evidence": "lane mn10300-data3 (2026-11-06): 0119c8fe1 + a90e71759 / 87436393b (sentinel_indexed; kn7000/notes/callee-walk/README.md marked)"
  },
  "N-62b1d1d8": {
   "status": "RESOLVED",
@@ -1251,10 +1240,10 @@
   "status": "ACTIONABLE",
   "title": "KN6500: the data region's remaining opaque pieces (1,176 / 27,134 B)",
   "size": "L",
-  "plan": "KN6500 opaque 44,212 -> 27,134 B; next steps per group in kn7000/notes/mn10300-data/README.md s.4 (lane mn10300-data, 2026-11-02)",
   "was": [
    "N-05cd19fe"
-  ]
+  ],
+  "plan": "KN6500 opaque 765/20,216 -> 755/18,340 B; same next step as the KN6000 (lane mn10300-data3, 2026-11-06)"
  },
  "N-6c3137ef": {
   "status": "RESOLVED",
@@ -1433,7 +1422,7 @@
   "status": "ACTIONABLE",
   "title": "81 titles have no menu path (most TITLE_SE* pages)",
   "size": "M",
-  "plan": "0e7c206d7; titles without a path 81 -> 53. Next: resolve the 20 call sites with an unknown index path (name_title_index_operands.py --report), starting with the filter-type step that opens TITLE_SEFILHPQ1 / SEFILL241 / SEFILH241 / SEFILBPF1 (lane kn5000-notes, 2026-11-06)"
+  "plan": "086ddcbb6; titles with a path 158 -> 162 (53 -> 49 without; 31 of the 49 are opened by code no traced path reaches, now named in docs/gui/kn5000-menu-map.md); unknown-path sites 20 -> 19, none loads a constant. Next: make panel-button handlers roots of the path search; read DemoSong_TitleCol's titles (lane kn5000-naka, 2026-11-06)"
  },
  "N-7d7472a2": {
   "status": "RESOLVED",
@@ -1620,10 +1609,10 @@
   "status": "ACTIONABLE",
   "title": "KN6000: 19,019 RAM operands over 2,944 addresses are numbers (I/O named)",
   "size": "L",
-  "plan": "I/O named (3d870c7b5); next: name KN7000 RAM variables per subsystem, carry along matched routines (lane mn10300-names, 2026-11-02)",
   "was": [
    "N-4a4e97bc"
-  ]
+  ],
+  "plan": "KN6000 numeric work-RAM operands 20,128/2,996 -> 17,752/2,524, 491 names (kn6000_ram.sym, kn6000_aligned.sym). Next: KN7000 RAM names via notes/ram-map-kn7000.tsv (1,613 pairs) on re-run; more accessors once more routines are named (lane sibling-names, 2026-11-06)"
  },
  "N-91fea94d": {
   "status": "RESOLVED",
@@ -1637,10 +1626,10 @@
   "evidence": "lane mn10300-data (2026-11-02): 5a7f0bd5b (index_bounds + count_notes; array_counts.py)"
  },
  "N-92c1dcce": {
-  "status": "ACTIONABLE",
+  "status": "RESOLVED",
   "size": "L",
   "title": "KN5000 v6 / v5: the TODO(port) .byte rows, 3,403 / 4,284 B",
-  "plan": "the same bytes: 3,403 / 4,284 -> 2 / 7 B; same next step (lane v6v5-port, 2026-11-06)"
+  "evidence": "lane v6v5-port2 (2026-11-06): the same rows: 2 / 7 -> 0 / 0 by re-cutting the slices (port_todo_hand.py edits 5-7); no backend change"
  },
  "N-92e40d58": {
   "status": "RESOLVED",
@@ -1746,10 +1735,10 @@
   "status": "ACTIONABLE",
   "title": "893's func_ labels and its SD-card code named only where 941 ports (split in four classes)",
   "size": "L",
-  "plan": "next: 7 of 893's 40 own routines; name their 941 counterparts first (lane mn10300-names, 2026-11-02)",
   "was": [
    "N-90175c82"
-  ]
+  ],
+  "plan": "3ea2d13ab + 3ae043781: JPEG encoder named in 941/942/935/893, 893 own 7 -> 4; next: 0x484101FD with the data regeneration (gen_data_s.py), 0x48451649 = 941 func_484516EC (read func_4845027B / func_48449420), the two SD AUDIO routines (lane kn7000-research, 2026-11-06)"
  },
  "N-99d09c1a": {
   "status": "RESOLVED",
@@ -1873,14 +1862,8 @@
   "evidence": "an ATA hard disk on decode HDCS: wsa1/notes/DRIVER-INSIGHT-wsa1-2026-09-02.md TARGET 1a (prom_a_census_round8.py --ata)"
  },
  "N-a6b3dca1": {
-  "status": "ACTIONABLE",
-  "title": "KN6500: 10,153 entries still func_<ADDR> (sibling-to-sibling porting done)",
-  "size": "L",
-  "was_status": "RESOLVED",
-  "plan": "per-subsystem naming of the remaining 10,153 func_ entries (callers, strings, MILK messages), as kn6500/README.md says; the porting half was closed by lane mn10300-names (2026-11-02): 019e7a8a1, 3d870c7b5, 397b30e0d",
-  "was": [
-   "N-9eca4678"
-  ]
+  "status": "RESOLVED",
+  "evidence": "moved to N-f22bdce4: lane sibling-names rewrote its source line with the new counts (wave 11 (2026-11-06))"
  },
  "N-a7966f7c": {
   "status": "RESOLVED",
@@ -2019,10 +2002,10 @@
   "status": "ACTIONABLE",
   "title": "KN2400: the data region's remaining opaque pieces (1,192 / 27,313 B)",
   "size": "L",
-  "plan": "KN2400 opaque 61,226 -> 27,313 B; README s.4 (lane mn10300-data, 2026-11-02)",
   "was": [
    "N-cf9c7754"
-  ]
+  ],
+  "plan": "KN2400 opaque 801/18,746 -> 790/16,682 B; next: names_48545C20 (1,080 B), func_50186924_Selected_6 (856 B), after-string group (2,711 B) (lane mn10300-data3, 2026-11-06)"
  },
  "N-b4e82675": {
   "status": "RESOLVED",
@@ -2144,13 +2127,13 @@
   "status": "ACTIONABLE",
   "title": "IC21 fields still to trace: m<id> panel fields, voice-record single fields + 0x27-byte header, TCMP/style +0x70/pad bytes, the 24-field part set-up reader",
   "size": "L",
-  "plan": "The note: 'Not closed by this lane (firmware tracing still to do; no blocker)'. Next steps, as the four merged rows gave them: trace the m<id> set handlers (trie type 1-6 records, lib func_4C025F02) per notes/data-semantics-2026-10-29/kn67-field-names.md and name them in panel_memory.inc; name the voice record's sub-record fields from the Tg* readers in voice_record.inc and type the 0x27-byte header; find readers in 941 for TCMP +1/+2/+0x18/+0x19, style +0x70 (style_units keys, shared with N-018a8d11) and the pad setting bytes; find the reader of PART_SETUP (part-field table 0x485B77D4) to confirm the 24-field order (also settles N-6341801f)",
   "was": [
    "N-e3880498",
    "N-398ba2d0",
    "N-141a8cab",
    "N-eadb1f7f"
-  ]
+  ],
+  "plan": "9a0ffd57a + a4d3d8abc: TCMP var/style/part set-up reader and 4 pad bytes traced; m<id> names handed to gen_panel_macros.py's owner (kn7000-research/README.md); voice record fields + 0x27-byte header still to trace (lane kn7000-research, 2026-11-06)"
  },
  "N-b991a5c9": {
   "status": "RESOLVED",
@@ -2339,10 +2322,10 @@
   "status": "ACTIONABLE",
   "title": "KN6500: 19,055 RAM operands over 2,954 addresses are numbers (I/O named)",
   "size": "L",
-  "plan": "same as N-8fce01b1 (KN6500) (lane mn10300-names, 2026-11-02)",
   "was": [
    "N-82a73a67"
-  ]
+  ],
+  "plan": "KN6500 20,164/3,006 -> 17,788/2,533, 492 names. Next: as N-8fce01b1 (lane sibling-names, 2026-11-06)"
  },
  "N-ccd08682": {
   "status": "RESOLVED",
@@ -2462,7 +2445,7 @@
   "status": "ACTIONABLE",
   "title": "523 field_XX members in NAKA C (was 525; 291 in naka_sequencer_channels.c)",
   "size": "L",
-  "plan": "7b36d2e51; field_XX 523 -> 434 (v10/v9), 531 -> 442 (v7), 531 -> 509 (v6/v5). Next: trace the base-pointer readers of naka_sequencer_channels.c's 291 members (unchanged) (lane kn5000-notes, 2026-11-06)"
+  "plan": "57cfaeeae + 864af44ad; field_XX 434 -> 163 (v10/v9), 442 -> 171 (v7); naka_sequencer_channels.c 291 -> 22. Next: the 12-member run at RAM 0x3EA10 (around Util_StorePartArrayBase / Util_StoreGridArrayBase), the 10 words at blob 0x18A3, then the 141 in other files (naka_gui_census.py --files v10) (lane kn5000-naka, 2026-11-06)"
  },
  "N-d8d7954f": {
   "status": "RESOLVED",
@@ -2509,10 +2492,10 @@
   "status": "ACTIONABLE",
   "title": "KN2400: 22,483 RAM operands over 3,521 addresses are numbers (I/O named)",
   "size": "L",
-  "plan": "same as N-8fce01b1 (KN2400) (lane mn10300-names, 2026-11-02)",
   "was": [
    "N-5cad02df"
-  ]
+  ],
+  "plan": "KN2400 23,931/3,565 -> 20,931/2,940, 642 names. Next: as N-8fce01b1 (lane sibling-names, 2026-11-06)"
  },
  "N-dcfbe4b5": {
   "status": "RESOLVED",
@@ -2554,10 +2537,10 @@
   "status": "ACTIONABLE",
   "title": "KN6000: the data region's remaining opaque pieces (1,145 / 24,654 B)",
   "size": "L",
-  "plan": "KN6000 opaque 39,985 -> 24,654 B; README s.4 (lane mn10300-data, 2026-11-02)",
   "was": [
    "N-afa3d40e"
-  ]
+  ],
+  "plan": "KN6000 opaque 774/18,082 -> 764/16,206 B; next: the effect-DSP records (labelled-held 8,435 B) need the KN6000 effect-DSP stream format, then the names_* tails (lane mn10300-data3, 2026-11-06)"
  },
  "N-e0c4b660": {
   "status": "RESOLVED",
@@ -2787,9 +2770,9 @@
  },
  "N-f3c6a3ea": {
   "status": "ACTIONABLE",
-  "plan": "Pointer row: the factory banks' field-level questions are the custom-data-ic21.md 'Open questions' rows (N-b8f49b1e actionable; N-00e19224, N-74abdb18, N-74a16d86, N-6558bfa7, N-e40c8c93 blocked); nothing beyond them",
   "size": "L",
-  "title": "IC21 factory banks: field-level questions (pointer to custom-data-ic21.md)"
+  "title": "IC21 factory banks: field-level questions (pointer to custom-data-ic21.md)",
+  "plan": "pointer row; follows N-b8f49b1e (custom-data-ic21.md Open questions updated) (lane kn7000-research, 2026-11-06)"
  },
  "N-f3ec939a": {
   "status": "RESOLVED",
@@ -2876,10 +2859,10 @@
   "evidence": "lane wsa1 (2026-10-31): 0b6dcdb09"
  },
  "N-fb88572c": {
-  "status": "ACTIONABLE",
+  "status": "RESOLVED",
   "title": "Invented names of 6,309 GUI objects with empty ResName are unstable",
   "size": "S",
-  "plan": "not reached (lane mn10300-data2, 2026-11-06): the frozen gui_object_names.tsv for gen_data_s.py obj_names() (design in kn7000/notes/gui-data-region/README.md) (lane mn10300-data2, 2026-11-06)"
+  "evidence": "lane mn10300-data3 (2026-11-06): 0119c8fe1 + regen commits (gui_object_names.tsv in every tree; frozen_names_check.py; kn7000/notes/gui-data-region/README.md marked)"
  },
  "N-fbac11ea": {
   "status": "RESOLVED",
@@ -2975,10 +2958,10 @@
   "size": "S"
  },
  "O-hdsx3-unknown-dump-a08889": {
-  "status": "ACTIONABLE",
+  "status": "RESOLVED",
   "title": "HD-SX3: 5 opaque pieces / 20 B, 7-bit values, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
-  "size": "M"
+  "size": "M",
+  "evidence": "lane mn10300-data3 (2026-11-06): 0 / 0 (host_widget_vars, cf1523e84 + 32dac634d)"
  },
  "O-hdsx3-unknown-dump-b7393d": {
   "status": "ACTIONABLE",
@@ -2995,8 +2978,8 @@
  "O-hdsx3-unknown-dump-f491a3": {
   "status": "ACTIONABLE",
   "title": "HD-SX3: 7 opaque pieces / 28 B, binary, initialised-RAM image",
-  "plan": "Widget-state RAM vars (*_selected, *_visible, *_data, *_selcol ...) widget records point at; class procs read them via the record. gen_data_s pass: type each by its class field's width; what is left after lane mn10300-data (2026-11-02), by kind (false-string, table-tail, after-string, labelled-held, record-rest, ram-widget-var ...): kn7000/notes/mn10300-data/README.md section 4",
-  "size": "M"
+  "size": "M",
+  "plan": "7/28 -> 2/8 B (two widget words no class procedure dereferences); next: their widget classes' procedures (lane mn10300-data3, 2026-11-06)"
  },
  "O-kn2400-unknown-dump-1bf2b6": {
   "status": "ACTIONABLE",
@@ -3517,16 +3500,16 @@
   "evidence": "lane kn5000-a (2026-10-31): 4de15f9e4"
  },
  "T-kn5000-v5-todo-port": {
-  "status": "ACTIONABLE",
+  "status": "RESOLVED",
   "title": "KN5000 v5: 130 TODO(port) markers, 4,284 B of .byte rows with no v6 line",
   "size": "L",
-  "plan": "TODO(port) rows 4,284 -> 7 B; debt 4,504 -> 163 B (same commits). Left: three pointer halves cut by slice boundaries (widget_names_charmap.s x2, extension_data.s); same next step (lane v6v5-port, 2026-11-06)"
+  "evidence": "lane v6v5-port2 (2026-11-06): TODO(port) rows 7 -> 0 (41204a5b2); v5 verbatim debt 163 -> 5 B (556b456b5)"
  },
  "T-kn5000-v6-todo-port": {
-  "status": "ACTIONABLE",
+  "status": "RESOLVED",
   "title": "KN5000 v6: 98 TODO(port) markers, 3,403 B of .byte rows with no v7 line",
   "size": "L",
-  "plan": "TODO(port) rows 3,403 -> 2 B; debt 3,615 -> 150 B (6d833a518..dc54dbca6; notes/v6v5-port-2026-11-06/README.md). Left: half a pointer that a C slice boundary cuts (widget_names_charmap.s); `.short Sym@lo16` is rejected in data. Next: re-cut the C slices at the pointer start, or add a @lo16 / @hi16 data fixup to the TLCS-900 backend (lane v6v5-port, 2026-11-06)"
+  "evidence": "lane v6v5-port2 (2026-11-06): TODO(port) rows 2 -> 0 (41204a5b2); v6 verbatim debt 150 -> 5 B (556b456b5); notes/v6v5-port2-2026-11-06/README.md"
  },
  "T-kn6000-todo": {
   "status": "RESOLVED",
@@ -4401,20 +4384,56 @@
   "evidence": "not an item of its own: the remainder of N-2a3d2074, whose plan carries the same per-bin list and next step (wave 10 (2026-11-06))"
  },
  "N-594c48be": {
-  "status": "ACTIONABLE",
+  "status": "RESOLVED",
   "size": "S",
-  "plan": "give v6 / v5's C their own values for naka_technichord_part.c's 8 records and naka_widget_names_charmap.c's NakaWidget_PanelSimulator record (they still hold v10's, patched by the json), then rerun naka_type_straddling_records.py --tree v6 / v5 --apply and naka_gui_symbolize.py with make gate green (lane v6v5-port, wave 10 (2026-11-06))"
+  "evidence": "lane v6v5-port2 (2026-11-06): naka_technichord_part's 8 records and NakaWidget_PanelSimulator typed in v6/v5 (IDENTICAL), naka_gui_symbolize --check up to date, make gate exit 0 (556b456b5)"
  },
  "N-ece9781f": {
-  "status": "ACTIONABLE",
+  "status": "RESOLVED",
   "size": "S",
-  "plan": "trace the 52-byte blocks inside Naka_DrawbarReg_Table[69] (entries 16, 29, 42, 55) that the RamPtrs point at: likely view records kept in work RAM (lane v6v5-port, wave 10 (2026-11-06))"
+  "evidence": "lane v6v5-port2 (2026-11-06): entries 17/30/43/56 (not 16/29/42/55): four 13-root bass-note-spelling blocks indexed via the 64 per-chord-type pointers read by MainChordPre_AppendChordSuffix; NAKA_WRAM made piecewise; probes/bass_name_tables.py, notes README"
  },
  "N-e411f8fa": {
-  "status": "ACTIONABLE",
+  "status": "RESOLVED",
   "title": "Name the unknown song-record event ids (the ids with no firmware-named caller)",
   "size": "M",
   "was": "N-c6900716",
-  "plan": "fccde08a5: 0xA0/0xA1/0x200000 named (song_id_users.py); 17 ids left; next: find their editing screens by transmit-template number or MT_GetMmmParam1, or a MAME watch of the panel record (lane kn7000-names, 2026-11-06)"
+  "evidence": "lane kn7000-research (2026-11-06): e97d1b8b3 + 19056b716; song-records.md sections 3/6, song_id_dump_names.py (PartParamDumpLine labels), m3_watch/m3_sweep/m3_panelctl runs"
+ },
+ "N-a810f3f6": {
+  "status": "ACTIONABLE",
+  "title": "KN6000: 10,098 entries still func_<ADDR> (sibling-to-sibling porting done)",
+  "size": "L",
+  "was_status": "RESOLVED",
+  "was": "N-02383279",
+  "plan": "KN6000 func_ 10,061 -> 9,917 (a20b441bb; census-after.txt). Next: KN7000 names reach it via notes/routine-map-kn7000.tsv on re-run; per-subsystem naming of code with no KN7000 twin (lane sibling-names, 2026-11-06)"
+ },
+ "N-f22bdce4": {
+  "status": "ACTIONABLE",
+  "title": "KN6500: 10,153 entries still func_<ADDR> (sibling-to-sibling porting done)",
+  "size": "L",
+  "was_status": "RESOLVED",
+  "was": "N-a6b3dca1",
+  "plan": "KN6500 func_ 10,116 -> 9,972 (a20b441bb). Next: as N-02383279 (lane sibling-names, 2026-11-06)"
+ },
+ "N-b3ba9d8b": {
+  "status": "ACTIONABLE",
+  "title": "KN2400: 11,678 entries still func_<ADDR>",
+  "size": "L",
+  "was": "N-391deec6",
+  "plan": "KN2400 func_ 11,645 -> 11,340; RAM-run TG library 332 -> 418 of 544 (a20b441bb, missed-after.txt). Next: as N-02383279; 36 short identical-code library routines still need RAM pairs (lane sibling-names, 2026-11-06)"
+ },
+ "N-2dea56c9": {
+  "status": "RESOLVED",
+  "evidence": "the line now records the answer; closed as N-e411f8fa by lane kn7000-research (wave 11 (2026-11-06), outcomes-2026-11-06-wave11)"
+ },
+ "N-eaacca27": {
+  "status": "RESOLVED",
+  "evidence": "not an item of its own: the remainder of N-2a3d2074, whose plan carries the same next step (wave 11 (2026-11-06))"
+ },
+ "N-c20ee5a7": {
+  "status": "ACTIONABLE",
+  "size": "S",
+  "plan": "make the four kn5000-naka converters (naka_join_perf3rhythmsel.py, naka_move_edge_heads_to_asm.py, naka_type_trackmixer_map.py, naka_widen_ram_cells.py) read their addresses and sizes per tree, then run them on v6 / v5 with make gate green (lane v6v5-port2, wave 11 (2026-11-06))"
  }
 }
