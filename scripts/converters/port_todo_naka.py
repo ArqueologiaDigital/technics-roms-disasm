@@ -164,6 +164,25 @@ class Tree:
                     self.strings.setdefault(a, (kind, r, k))
         self.containers.sort()
         self.cstarts = [c[0] for c in self.containers]
+        # words the registrations read, and the slots right after a registered table
+        self.extra = {}                              # address -> (size, line)
+        for r in M.regs:
+            if not M.inrom(r["table"]):
+                continue
+            ca = r.get("count_at")
+            if ca and M.inrom(ca):
+                self.extra[ca] = (2, "\t.short\t%d\t; the entry count of %s slot 0x%X, which RegObjTable reads from "
+                                     "this word (%s)" % (r["count"], O.CLASS.get(r["cls"], "?"), r["slot"], r["init"]))
+            if r["cls"] == 0x1600004:
+                e = r["table"] + 24 * r["count"]
+                if M.inrom(e) and not any(M.u8(e + i) for i in range(24)):
+                    self.extra[e] = (24, "\t.space\t24, 0\t; entry %d of Class slot 0x%X, all zero: the count is %d, so "
+                                         "ClassProc never reads it" % (r["count"], r["slot"], r["count"]))
+            else:
+                e = r["table"] + 4 * r["count"]
+                if M.inrom(e) and M.u32(e) == 0:
+                    self.extra.setdefault(e, (4, "\t.long\t0\t; NULL after the %d entries of %s slot 0x%X"
+                                                 % (r["count"], O.CLASS.get(r["cls"], "?"), r["slot"])))
 
     def image_of(self, a):
         """the ROM byte a work-RAM address is initialised from, or None"""
@@ -517,6 +536,10 @@ class Tree:
                         break
                 if done:
                     continue
+            if p in self.extra and fits(p, self.extra[p][0]):
+                out.append((p, self.extra[p][0], self.extra[p][1]))
+                p += self.extra[p][0]
+                continue
             if p in self.cells and fits(p, self.cells[p][0]):
                 n, owner = self.cells[p]
                 v = int.from_bytes(self.rom[p - BASE:p - BASE + n], "little")
