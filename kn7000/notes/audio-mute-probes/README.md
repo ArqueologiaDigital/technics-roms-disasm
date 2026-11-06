@@ -123,3 +123,13 @@ FET switches before the headphone and speaker stages) and the D/A converter's mo
 them would silence the emulated output while the firmware boots (PMUT 0 until `BootPanelResetCheck`) and
 in the NMI handler, and whenever the parameter 0x600009 is 0.  None of them changes on SD PICTURE LOAD
 (section 3), so modelling them would not reproduce that silence.
+
+**Closed 2026-11-06** in kn7000_mame b0fd265 (`notes/audio-mute-2026-11-06/README.md` there holds the
+probes and the measurements).  IC311's 28 pin names are the TI PCM1738's, pin for pin, so the driver
+models it from that data sheet: 0x1220 is register 18 = 0x20 (24-bit standard format, no de-emphasis,
+no soft mute) and 0x1380 is register 19 = 0x80 (REV, output phase inverted, cancelled by IC316, the
+inverting mixer after it).  PMUT and SPSW gate the driver's speaker output; MAIN OUT taps SUML / SUMR
+ahead of Q502 / Q503 and has neither switch.  Observed in emulation: a key held with PMUT forced low,
+with SPSW forced low and after the NMI handler clears PMUT is silent (it sounds in the build before),
+and in normal play the output is sample-identical to before (program 941).  Program 893 keeps the
+latch's shadow at 0x5000520C, not 0x50005214.
