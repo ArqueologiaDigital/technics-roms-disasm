@@ -1,27 +1,27 @@
 {
  "date": "2026-11-06",
- "head": "5f3fbbe8",
+ "head": "cc413996",
  "dirty": true,
  "rules": 6,
- "entry_snapshot": "docs/coverage/dispatch-census-2026-11-06-06.json",
- "entry_snapshot_head": "e1721304",
+ "entry_snapshot": "docs/coverage/dispatch-census-2026-11-06-08.json",
+ "entry_snapshot_head": "df60d60c",
  "score": {
-  "kn5000": 97.31,
+  "kn5000": 97.41,
   "wsa1": 92.67,
-  "kn7000": 82.7,
-  "mn10300-siblings": 82.27,
-  "all": 95.45
+  "kn7000": 82.71,
+  "mn10300-siblings": 82.42,
+  "all": 95.56
  },
  "components": {
   "kn5000": {
    "bytes": {
-    "num": 17814537,
+    "num": 17814781,
     "den": 18546688,
     "pct": 96.05
    },
    "names": {
-    "num": 300876,
-    "den": 310539,
+    "num": 300922,
+    "den": 310577,
     "pct": 96.89
    },
    "entry": {
@@ -30,9 +30,9 @@
     "pct": 100.0
    },
    "fields": {
-    "num": 110060,
-    "den": 114304,
-    "pct": 96.29
+    "num": 110025,
+    "den": 113800,
+    "pct": 96.68
    }
   },
   "wsa1": {
@@ -64,9 +64,9 @@
     "pct": 99.82
    },
    "names": {
-    "num": 51298,
+    "num": 51310,
     "den": 78221,
-    "pct": 65.58
+    "pct": 65.6
    },
    "entry": {
     "num": 0,
@@ -81,14 +81,14 @@
   },
   "mn10300-siblings": {
    "bytes": {
-    "num": 12332319,
+    "num": 12352269,
     "den": 12383893,
-    "pct": 99.58
+    "pct": 99.74
    },
    "names": {
-    "num": 35950,
-    "den": 55350,
-    "pct": 64.95
+    "num": 36116,
+    "den": 55482,
+    "pct": 65.09
    },
    "entry": {
     "num": 0,
@@ -103,14 +103,14 @@
   },
   "all": {
    "bytes": {
-    "num": 53646760,
+    "num": 53666954,
     "den": 54578542,
-    "pct": 98.29
+    "pct": 98.33
    },
    "names": {
-    "num": 403963,
-    "den": 463151,
-    "pct": 87.22
+    "num": 404187,
+    "den": 463321,
+    "pct": 87.24
    },
    "entry": {
     "num": 5444,
@@ -118,22 +118,22 @@
     "pct": 100.0
    },
    "fields": {
-    "num": 110060,
-    "den": 114304,
-    "pct": 96.29
+    "num": 110025,
+    "den": 113800,
+    "pct": 96.68
    }
   }
  },
  "images": {
   "v10": {
    "names": {
-    "semantic": 43613,
+    "semantic": 43624,
     "continuation": 9060,
     "generic": 1114,
-    "positional": 290
+    "positional": 289
    },
    "bytes": [
-    2019440,
+    2019424,
     2097152
    ],
    "entry": [
@@ -143,13 +143,13 @@
   },
   "v9": {
    "names": {
-    "semantic": 43612,
+    "semantic": 43623,
     "continuation": 9058,
     "generic": 1114,
-    "positional": 291
+    "positional": 290
    },
    "bytes": [
-    2018793,
+    2018777,
     2097152
    ],
    "entry": [
@@ -159,13 +159,13 @@
   },
   "v8": {
    "names": {
-    "semantic": 43612,
+    "semantic": 43623,
     "continuation": 9058,
     "generic": 1114,
-    "positional": 291
+    "positional": 290
    },
    "bytes": [
-    2018793,
+    2018777,
     2097152
    ],
    "entry": [
@@ -175,13 +175,13 @@
   },
   "v7": {
    "names": {
-    "semantic": 43376,
+    "semantic": 43387,
     "continuation": 9033,
     "generic": 1353,
-    "positional": 321
+    "positional": 320
    },
    "bytes": [
-    2002694,
+    2002678,
     2097152
    ],
    "entry": [
@@ -191,13 +191,13 @@
   },
   "v6": {
    "names": {
-    "semantic": 43311,
+    "semantic": 43312,
     "continuation": 9023,
-    "generic": 1526,
-    "positional": 323
+    "generic": 1525,
+    "positional": 322
    },
    "bytes": [
-    1997598,
+    1997752,
     2097152
    ],
    "entry": [
@@ -207,13 +207,13 @@
   },
   "v5": {
    "names": {
-    "semantic": 43285,
+    "semantic": 43286,
     "continuation": 9023,
-    "generic": 1528,
-    "positional": 323
+    "generic": 1527,
+    "positional": 322
    },
    "bytes": [
-    1995954,
+    1996108,
     2097152
    ],
    "entry": [
@@ -431,9 +431,9 @@
   },
   "program": {
    "names": {
-    "semantic": 12760,
+    "semantic": 12763,
     "generic": 96,
-    "positional": 6446,
+    "positional": 6443,
     "local": 328,
     "banner_only": 0
    },
@@ -473,9 +473,9 @@
   },
   "program942": {
    "names": {
-    "semantic": 12824,
+    "semantic": 12827,
     "generic": 96,
-    "positional": 6451,
+    "positional": 6448,
     "local": 329,
     "banner_only": 1
    },
@@ -490,9 +490,9 @@
   },
   "program935": {
    "names": {
-    "semantic": 12684,
+    "semantic": 12687,
     "generic": 96,
-    "positional": 6520,
+    "positional": 6517,
     "local": 329,
     "banner_only": 0
    },
@@ -507,9 +507,9 @@
   },
   "program893": {
    "names": {
-    "semantic": 12684,
+    "semantic": 12687,
     "generic": 96,
-    "positional": 6510,
+    "positional": 6507,
     "local": 328,
     "banner_only": 0
    },
@@ -524,14 +524,14 @@
   },
   "kn2400": {
    "names": {
-    "semantic": 9815,
+    "semantic": 9836,
     "generic": 237,
-    "positional": 6621,
+    "positional": 6600,
     "local": 447,
     "banner_only": 0
    },
    "bytes": [
-    3744937,
+    3747739,
     3761619
    ],
    "entry": [
@@ -541,14 +541,14 @@
   },
   "kn6000": {
    "names": {
-    "semantic": 17111,
-    "positional": 5798,
+    "semantic": 17184,
+    "positional": 5791,
     "generic": 219,
-    "local": 29,
+    "local": 34,
     "banner_only": 0
    },
    "bytes": [
-    4143843,
+    4152384,
     4160049
    ],
    "entry": [
@@ -558,14 +558,14 @@
   },
   "kn6500": {
    "names": {
-    "semantic": 8620,
-    "positional": 5825,
+    "semantic": 8692,
+    "positional": 5819,
     "generic": 216,
-    "local": 30,
+    "local": 35,
     "banner_only": 0
    },
    "bytes": [
-    3657453,
+    3666002,
     3675793
    ],
    "entry": [
@@ -580,7 +580,7 @@
     "banner_only": 0
    },
    "bytes": [
-    786086,
+    786144,
     786432
    ],
    "entry": [
