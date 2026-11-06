@@ -1,0 +1,75 @@
+kn6000: 3889 KN7000 941 routine names
+| class                                        | names |
+|----------------------------------------------|-------|
+| B has the name                               |  2595 |
+| no strict-equal body in B                    |   865 |
+| kept<8, A twins 3+, B open 3+                |   206 |
+| strict-equal bodies in B all named (kept>=8) |    81 |
+| kept>=8, A twins 3+, B open 2                |    35 |
+| strict-equal bodies in B all named (kept<8)  |    31 |
+| A name not at a routine start                |    19 |
+| kept>=8, A twins 3+, B open 3+               |    12 |
+| kept>=8, A twins 2, B open 2                 |    11 |
+| kept<8, A twins 3+, B open 2                 |     9 |
+| kept<8, A twins 1, B open 1                  |     7 |
+| kept<8, A twins 2, B open 3+                 |     4 |
+| kept>=8, A twins 3+, B open 1                |     4 |
+| kept<8, A twins 2, B open 1                  |     3 |
+| kept<8, A twins 3+, B open 1                 |     3 |
+| kept>=8, A twins 2, B open 1                 |     2 |
+| kept>=8, A twins 1, B open 1                 |     1 |
+| kept>=8, A twins 1, B open 3+                |     1 |
+
+kn6500: 3889 KN7000 941 routine names
+| class                                        | names |
+|----------------------------------------------|-------|
+| B has the name                               |  2598 |
+| no strict-equal body in B                    |   859 |
+| kept<8, A twins 3+, B open 3+                |   204 |
+| strict-equal bodies in B all named (kept>=8) |    75 |
+| kept>=8, A twins 3+, B open 3+               |    55 |
+| strict-equal bodies in B all named (kept<8)  |    30 |
+| A name not at a routine start                |    19 |
+| kept<8, A twins 3+, B open 2                 |     9 |
+| kept>=8, A twins 2, B open 2                 |     9 |
+| kept<8, A twins 1, B open 1                  |     7 |
+| kept>=8, A twins 3+, B open 2                |     5 |
+| kept<8, A twins 2, B open 3+                 |     4 |
+| kept>=8, A twins 2, B open 1                 |     4 |
+| kept>=8, A twins 3+, B open 1                |     4 |
+| kept<8, A twins 2, B open 1                  |     3 |
+| kept<8, A twins 3+, B open 1                 |     2 |
+| kept>=8, A twins 1, B open 1                 |     1 |
+| kept>=8, A twins 1, B open 3+                |     1 |
+
+kn2400: 3889 KN7000 941 routine names
+| class                                        | names |
+|----------------------------------------------|-------|
+| B has the name                               |  3042 |
+| no strict-equal body in B                    |   429 |
+| kept<8, A twins 3+, B open 3+                |   201 |
+| strict-equal bodies in B all named (kept>=8) |   132 |
+| A name not at a routine start                |    19 |
+| kept>=8, A twins 3+, B open 1                |    15 |
+| kept>=8, A twins 3+, B open 3+               |    12 |
+| kept>=8, A twins 3+, B open 2                |    11 |
+| kept>=8, A twins 2, B open 2                 |    10 |
+| kept>=8, A twins 2, B open 1                 |     6 |
+| kept<8, A twins 1, B open 1                  |     3 |
+| kept<8, A twins 3+, B open 1                 |     3 |
+| kept<8, A twins 3+, B open 2                 |     3 |
+| kept<8, A twins 2, B open 1                  |     1 |
+| kept<8, A twins 2, B open 3+                 |     1 |
+| kept>=8, A twins 1, B open 1                 |     1 |
+
+kn2400: 544 KN7000 941 routine names in 0x4C000000:0x4C03DF30
+| class                                        | names |
+|----------------------------------------------|-------|
+| B has the name, in --b-range                 |   418 |
+| no strict-equal body in B                    |    76 |
+| kept<8, A twins 3+, B open 3+                |    36 |
+| kept>=8, A twins 3+, B open 2                |     6 |
+| strict-equal bodies in B all named (kept>=8) |     6 |
+| A name not at a routine start                |     1 |
+| kept>=8, A twins 2, B open 1                 |     1 |
+
