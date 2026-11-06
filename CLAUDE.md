@@ -208,8 +208,8 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 | `symbols/maincpu_v9_symbols_reference.txt`      | Main CPU v9                                       | 54,072  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v8_symbols_reference.txt`      | Main CPU v8 (same rows as v9: same source, link)  | 54,072  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v7_symbols_reference.txt`      | Main CPU v7                                       | 54,080  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v6_symbols_reference.txt`      | Main CPU v6                                       | 53,907  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v5_symbols_reference.txt`      | Main CPU v5                                       | 53,870  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v6_symbols_reference.txt`      | Main CPU v6                                       | 54,171  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v5_symbols_reference.txt`      | Main CPU v5                                       | 54,147  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/subcpu_symbols_reference.txt`          | Sub CPU payload v1.42                             | 5,070   | 0x000400 - 0x0451CC (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_v141_symbols_reference.txt`     | Sub CPU payload v1.41                             | 5,069   | 0x000400 - 0x0451B4 (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_v140_symbols_reference.txt`     | Sub CPU payload v1.40                             | 5,069   | 0x000400 - 0x045180 (past the image: DRAM `.equ` symbols)  |
