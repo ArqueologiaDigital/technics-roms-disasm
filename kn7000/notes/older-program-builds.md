@@ -186,6 +186,29 @@ The `func_` count is the number of function labels that no symbol file names:
 
   The other 9 near-twins are also unnamed in 941: `0x48523537`, `0x4852358B` and `0x4852365C`
   (after `SingleLoad*`), and `0x4852F74D`, `0x4852F76C` and `0x4852F77B` (after `ResetSave*`).
+
+  **Update 2026-11-06 (lane kn7000-research, N-99771106).**  Measured again at the lane's base (2bde950fa)
+  with the same probe: 6,323 `func_` labels, twin-unnamed 6,306, near-twin 10, own 7 (the four classes
+  above, after wave 10's names; the 6,463 / 16 / 40 were the 2026-11-02 counts).  Of the 7 own:
+  - the three JPEG routines are the **encoder** that `JpegEncode` drives, and are now named in all three
+    builds: `JpegEncSetup` (941 `0x4840D29C`, 893 / 935 `0x48404D10`: the mode 1..5 table fill, -0x70
+    otherwise), `JpegEncImage` (`0x4840D3FD` / `0x48404E71`: headers, then the MCU grid) and `JpegEncMcu`
+    (`0x4840D61D` / `0x48405091`: one MCU, four call sites).  941's rows are in `kn7000_manual.sym`,
+    893's and 935's in their `_own.sym` (935 has the same three at the same addresses);
+  - `0x484101FD` is not called, but its address is a data word: `.long func_484101FD` in
+    `ptrs_48701C8C`, one of the pointers `func_4854A5C9_Table` lists (893 and 935 data regions).  It waits
+    20 ticks of the time base, runs `DspManagerInit`, waits again, sets the effect type of DSP preset key
+    `0x80 | unit << 8` to 0xFF for units 0..9 (`func_4841222C`) and selects effect 0x4F on unit 8.  A name
+    (proposed: `DspUnitsResetUnused`) has to go in with the data regions' regeneration, because the data
+    source spells the pointer by the code label (`tools/gen_data_s.py`, lane mn10300-data3's this wave);
+  - `0x48451649` is 941's `func_484516EC` with an edited body: both are the branch that the key router
+    (`func_484524EB`, and `func_48452F4B` in 941) takes when `GetM3EmVal(0x2014)` is not 1.  It copies
+    the key and velocity, reads the part's SOUND (`GetM3EmVal(0x00C00000 | part << 24)`) and, when
+    `func_4845027B` accepts that sound, replaces the key by `func_48449420`'s.  Naming it needs those two
+    callees read first (next step);
+  - `0x485785B0` and `0x485788D8` (SD AUDIO player) as above; next step unchanged.
+  After the regeneration `oldbuilds_b893_func_census.py b893` prints 6,320 `func_` labels: twin-unnamed
+  6,306, near-twin 10, own 4 (0x484101FD, 0x48451649, 0x485785B0, 0x485788D8).
 - ~~`scripts/analysis/semantic_score.py` and `doc_quality_census.py` include neither 942 nor these
   builds.~~ **CLOSED 2026-10-31** (lane open4/misc): 942 has been rated since rules 4 (2026-10-24), and
   both scripts now list `program935` and `program893` as well (semantic score rules 6).  At the lane's
