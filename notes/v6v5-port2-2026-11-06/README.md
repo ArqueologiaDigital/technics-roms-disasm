@@ -30,6 +30,11 @@ Label checks after the last step: `check_ported_labels.py` v7 -> v6 misplaced 11
 MISMATCH rows 5 in each tree (5 before).  Symbols (`l2_symbol_reference.py --regen --only maincpu_v6,maincpu_v5`):
 v6 54,171 -> 54,183, v5 54,147 -> 54,159.
 
+Ledgers (final commit, after the merge of main 2dd3f68eb): `make dispatch-census` -> `dispatch-census-2026-11-06-06`
+(nothing rose against -05); `make doc-quality` -> `doc-quality-2026-11-06-08` (nothing rose against -07; row (b)
+"(number) operand elsewhere" fell v6 28,170 -> 17,839, v5 28,153 -> 17,819: the RAM names).  Gates: `make gate`
+and `make gate-wsa1` exit 0, 0 FAIL lines.
+
 ## What each step did
 
 - **The TODO(port) rows (T-kn5000-v6/v5-todo-port, N-92c1dcce).**  They were halves of pointers that a slice
