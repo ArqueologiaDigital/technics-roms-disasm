@@ -1,0 +1,1 @@
+N-8c52a3ed  CLOSED  7fc435f70 (A3; A4 and B3 were already done): wsa1/kernel/kernel.s is the kernel of WSA1R CPU 1, CPU 2 and the KN5000 sub-CPU payload v1.42/1.41/1.40, per-CPU .if KERNEL_KN5000 blocks; wsa1/notes/open9-a3-probes/README.md

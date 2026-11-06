@@ -1585,10 +1585,10 @@
   "title": "KN5000 v6 / v5 C port-debt table row: the function-name pointer tables of naka_widget_names_charmap point at s"
  },
  "N-8c52a3ed": {
-  "status": "BLOCKED",
+  "status": "RESOLVED",
   "title": "Join/split plan: phases A3, A4 (KN5000 half) and B3 after the shared kernel",
   "size": "L",
-  "blocker": "owner decision (A3): may the shared kernel carry per-CPU .if/.else and take over the KN5000 sub-CPU kernel's text? (wsa1/notes/HANDOFF-join-split-kernel.md); B3 82cfe8a4e+6a7715505 and A4 e89259d38 done (lane wsa1, 2026-10-31)"
+  "evidence": "lane kernel-a3 (2026-11-06): 7fc435f70 (A3; A4 and B3 were already done): wsa1/kernel/kernel.s is the kernel of WSA1R CPU 1, CPU 2 and the KN5000 sub-CPU payload v1.42/1.41/1.40, per-CPU .if KERNEL_KN5000 blocks; wsa1/notes/open9-a3-probes/README.md"
  },
  "N-8cd6477f": {
   "status": "BLOCKED",
@@ -2107,10 +2107,10 @@
   "blocker": "undumped chip IC306 (QSIGT3C32A01) holds IC307's loop marks (lane wave3-lanes, 2026-10-31)"
  },
  "N-b796721c": {
-  "status": "BLOCKED",
-  "blocker": "owner decision: \"should caption-derived WSA1 names keep the ROM's 0-for-O spelling (MidiFileL0ad, L0adSingleS0und, DL_*F0rmat*), or be normalised tree-wide?\" The tree has kept the spelling until now (lane kn5000-d, 2026-11-02)",
+  "status": "RESOLVED",
   "area": "WSA1R",
-  "title": "WSA1R: keep the ROM's 0-for-O caption spelling in label names (MidiFileL0ad_*)?"
+  "title": "WSA1R: keep the ROM's 0-for-O caption spelling in label names (MidiFileL0ad_*)?",
+  "evidence": "lane zero-for-o (2026-11-06): 419415c84 (rename), a90f6d686 (inventory + sed), 581132cfe (generators): 992 WSA1R names spell O with O; ROM strings keep 0x30; wsa1/notes/zero-for-o/README.md"
  },
  "N-b80b5580": {
   "status": "BLOCKED",
@@ -4304,5 +4304,49 @@
   "size": "M",
   "title": "Rename the VoiceSlot_* song-memory family (scoop_display.s)",
   "evidence": "lane kn5000-d (2026-11-02): 8f576f2ea; notes/open6-kn5000-d/naming/README.md"
+ },
+ "L-kernel-a3-join-probe-stale": {
+  "status": "ACTIONABLE",
+  "size": "S",
+  "area": "tooling",
+  "source": "wsa1/notes/open9-a3-probes/README.md:127",
+  "title": "kernel_join_probe.py --verify: 4 FAILs that pre-date A3",
+  "plan": "the 4 FAILs are already there at 34bc0c5fe (post-A1 edits: prom_a SoftTimer_Request_Boot header, the macro-block comment rewrite, 14 respelled operands); list those dated edits beside CORRECTIONS in wsa1/notes/kernel_join_probe.py (lane kernel-a3, 2026-11-06)"
+ },
+ "L-kernel-a3-softtimer-boot-header": {
+  "status": "ACTIONABLE",
+  "size": "S",
+  "area": "WSA1R",
+  "source": "wsa1/notes/open9-a3-probes/README.md:132",
+  "title": "prom_a SoftTimer_Request_Boot header: field +2 \"NOT established\", but the other two headers establish it",
+  "plan": "reconcile prom_a's header in wsa1/kernel/kernel.s with prom_c's and the KN5000's (+2 is copied to both the countdown and the reload); moves 8 B per payload back to KNOWN-A in data_range_census (lane kernel-a3, 2026-11-06)"
+ },
+ "L-kernel-a3-kn5000-maincpu": {
+  "status": "ACTIONABLE",
+  "size": "L",
+  "area": "KN5000",
+  "source": "wsa1/notes/open9-a3-probes/README.md:138",
+  "title": "Join the KN5000 main CPU's kernel build (v10/v9/v7) to kernel.s as a fourth processor",
+  "plan": "kernel_kn5000_maincpu.inc and the A3 probes re-pointed at the main ROM (around 0xEF1977); until then six old sub-CPU names (TaskSched_Init, _HaltLoop, _Dispatch, _SpawnTask, _ExitCurrentTask, _ChangePriority) are main-CPU names for the same routines; plan in wsa1/notes/open9-a3-probes/README.md \"Follow-up\" (lane kernel-a3, 2026-11-06)"
+ },
+ "N-5c8b33e8": {
+  "status": "RESOLVED",
+  "evidence": "the line now records the owner decision 2026-11-06 (normalise); done as N-b796721c by lane zero-for-o, 419415c84"
+ },
+ "N-1916dcb8": {
+  "status": "RESOLVED",
+  "evidence": "not an open item of its own: a step of the follow-up plan in wsa1/notes/open9-a3-probes/README.md, tracked as L-kernel-a3-kn5000-maincpu"
+ },
+ "N-27590992": {
+  "status": "RESOLVED",
+  "evidence": "not an open item of its own: a step of the follow-up plan in wsa1/notes/open9-a3-probes/README.md, tracked as L-kernel-a3-kn5000-maincpu"
+ },
+ "N-49498d51": {
+  "status": "RESOLVED",
+  "evidence": "not an open item of its own: a step of the follow-up plan in wsa1/notes/open9-a3-probes/README.md, tracked as L-kernel-a3-kn5000-maincpu"
+ },
+ "N-77327757": {
+  "status": "RESOLVED",
+  "evidence": "not an open item of its own: a step of the follow-up plan in wsa1/notes/open9-a3-probes/README.md, tracked as L-kernel-a3-kn5000-maincpu"
  }
 }

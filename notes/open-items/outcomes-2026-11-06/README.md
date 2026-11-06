@@ -11,3 +11,8 @@ The owner answered the three BLOCKED owner decisions on 2026-11-06:
 Each `*.txt` is an ITEM-OUTCOMES block (`<id> <CLOSED|BLOCKED|OPEN> <text>`), applied with
 
     python3 notes/open-items/apply_outcomes.py notes/open-items/triage.json notes/open-items/outcomes-2026-11-06
+
+Lane kernel-a3 found three new items, added by hand to `triage.json` as ACTIONABLE (`source` = the line in
+`wsa1/notes/open9-a3-probes/README.md` that describes each): `L-kernel-a3-join-probe-stale`,
+`L-kernel-a3-softtimer-boot-header` and `L-kernel-a3-kn5000-maincpu` (the KN5000 main CPU's kernel as a fourth
+processor of `kernel.s`).
