@@ -3931,22 +3931,22 @@
 	.ascii	"\x10"
 .endm
 
-# REC_func_4C09D6E7_entry_L4b_Table: 2-byte records (func_4C09D6E7_entry_L4b_Table, 2048 records); fields, and what reads them:
+# ChordRecogEntry: 2-byte records (func_4C09D6E7_entry_L4b_Table, 2048 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u8             func_4C09D6E7_entry_L4b 0x4C09D737 `movbu (d0, a0), d0`; func_4C09D6E7_entry_L62 0x4C09D74E `movbu (d0, a0), d0`
-#   +1   index        u8             func_4C09D6E7_entry_L62 0x4C09D74E `movbu (1, a0), d0`
-.macro REC_func_4C09D6E7_entry_L4b_Table f0=0, index=0
-	.byte	\f0
-	.byte	\index
+#   +0   chord_type   u8             func_4C09D6E7_entry_L4b 0x4C09D737 `movbu (d0, a0), d0`; func_4C09D6E7_entry_L62 0x4C09D74E `movbu (d0, a0), d0`
+#   +1   root_flags   u8             func_4C09D6E7_entry_L62 0x4C09D74E `movbu (1, a0), d0`
+.macro ChordRecogEntry chord_type=0, root_flags=0
+	.byte	\chord_type
+	.byte	\root_flags
 .endm
 
-# REC_func_4C09D886_entry_L6e_Table: 2-byte records (func_4C09D886_entry_L6e_Table, 256 records); fields, and what reads them:
-#   (the count is capped by an index bound a reader checks (a `cmp` before the index, or a byte index) [INFERENCE: the table may end before it])
-#   +0   f0           u8             func_4C09D886_entry_L6e 0x4C09D8F9 `movbu (d0, a3), d0`; func_4C09D886_entry_Ldd 0x4C09D968 `movbu (d0, a0), d0` (+3)
-#   +1   index        u8             func_4C09D886_entry_L2d 0x4C09D8B8 `movbu (1, a0), d0`; func_4C09D886_entry_L8b 0x4C09D916 `movbu (1, a0), d0` (+3)
-.macro REC_func_4C09D886_entry_L6e_Table f0=0, index=0
-	.byte	\f0
-	.byte	\index
+# ChordRecogEntry2: 2-byte records (func_4C09D886_entry_L6e_Table, 2048 records); fields, and what reads them:
+#   (2048 records: the index is func_4844D680's 11-bit interval mask (bits 0x01 .. 0x400))
+#   +0   chord_type   u8             func_4C09D886_entry_L6e 0x4C09D8F9 `movbu (d0, a3), d0`; func_4C09D886_entry_Ldd 0x4C09D968 `movbu (d0, a0), d0` (+3)
+#   +1   root_flags   u8             func_4C09D886_entry_L2d 0x4C09D8B8 `movbu (1, a0), d0`; func_4C09D886_entry_L8b 0x4C09D916 `movbu (1, a0), d0` (+3)
+.macro ChordRecogEntry2 chord_type=0, root_flags=0
+	.byte	\chord_type
+	.byte	\root_flags
 .endm
 
 # REC_MainCMP_CmpEasyCopy_Table: 2-byte records (MainCMP_CmpEasyCopy_Table, 12 records); fields, and what reads them:

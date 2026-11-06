@@ -10427,11 +10427,11 @@ Str_MID:	.asciz ".MID"
 Str_rb:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb
 
-localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x9780851A `mov (0x10, a1), a0`; localeconv 0x9780851A `mov (0x14, a1), a0`; localeconv 0x9780851A `mov (0x18, a1), a0` (+12)
-	REC_localeconv_Records	text=func_9780836B_entry_L10_Records+128, p4=func_9780836B_entry_L10_Records+130, p8=func_9780836B_entry_L10_Records+131, p12=func_9780836B_entry_L10_Records+132, p16=func_9780836B_entry_L10_Records+133, p20=func_9780836B_entry_L10_Records+134, p24=func_9780836B_entry_L10_Records+135, p28=data_9783E564, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
-localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x9780851A `mov (0xc, a1), a0`; localeconv 0x9780851A `mov (4, a1), a0`; localeconv 0x9780851A `mov (8, a1), a0`
-	REC_localeconv_Records_2	text=Str_C, text_=Str_empty_442, p8=data_9783E56C, p12=data_9783E56D
-	REC_localeconv_Records_2	
+localeconv_Records:	# 1 x LconvMonetary (40 bytes each); read by localeconv 0x9780851A `mov (0x10, a1), a0`; localeconv 0x9780851A `mov (0x14, a1), a0`; localeconv 0x9780851A `mov (0x18, a1), a0` (+12)
+	LconvMonetary	locale=func_9780836B_entry_L10_Records+128, int_curr_symbol=func_9780836B_entry_L10_Records+130, currency_symbol=func_9780836B_entry_L10_Records+131, mon_decimal_point=func_9780836B_entry_L10_Records+132, mon_thousands_sep=func_9780836B_entry_L10_Records+133, mon_grouping=func_9780836B_entry_L10_Records+134, positive_sign=func_9780836B_entry_L10_Records+135, negative_sign=data_9783E564, int_frac_digits=127, frac_digits=127, p_cs_precedes=127, p_sep_by_space=127, n_cs_precedes=127, n_sep_by_space=127, p_sign_posn=127, n_sign_posn=127
+localeconv_Records_2:	# 2 x LconvNumeric (16 bytes each); read by localeconv 0x9780851A `mov (0xc, a1), a0`; localeconv 0x9780851A `mov (4, a1), a0`; localeconv 0x9780851A `mov (8, a1), a0`
+	LconvNumeric	locale=Str_C, decimal_point=Str_empty_442, thousands_sep=data_9783E56C, grouping=data_9783E56D
+	LconvNumeric	
 
 localeconv_Table:	# 5 x u32, 0..2542003825; read by localeconv 0x9780851A: `mov (localeconv_Table), d0`
 	tab_u32	0, 0, 2542003825, 1, 2542003568
@@ -12898,8 +12898,9 @@ func_97806F25_entry_Lcf_Var:	# u32, initial value of a RAM variable; read / writ
 
 func_97806F25_entry_L24_Table:	# 4 x u8, 0..255; read by func_97806F25_entry_L24 0x97806F4C: `movbu d0, (func_97806F25_entry_L24_Table)`
 	tab_u8	0, 255, 255, 255
-HDD_MAIN_MENU_window:
-	.space	4, 0xFF
+
+HDD_MAIN_MENU_window:	# u32, initial value of a RAM variable: the KssBgScreen HDD_MAIN_MENU's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 BackGnd2_ScreenMenu_SETUP_TOOLS_selected:
 	.space	4, 0x00
 BackGnd2_ScreenMenu_CUSTOM_LYRICS_selected:
@@ -12912,19 +12913,18 @@ BackGnd2_ScreenMenu_SELECT_JUKE_BOX_selected:
 	.space	4, 0x00
 BackGnd2_ScreenMenu_SELECT_C_L_S_selected:
 	.space	4, 0x00
-SELECT_NUMBER_window:
-	.space	4, 0xFF
-LoadOptionWndLBNPg_page:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3F2C, 0x0B3F30
-SETUP_TOOLS_window:
-	.space	4, 0xFF
-SET_TOOLS_PAGECTRL_page:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3F34, 0x0B3F38
-SEPARATE_OUTPUT_MIXER_window:
-	.space	4, 0xFF
-
+SELECT_NUMBER_window:	# u32, initial value of a RAM variable: the KssBgScreen SELECT_NUMBER's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+LoadOptionWndLBNPg_page:	# u16, initial value of a RAM variable: the AcWindowPage LoadOptionWndLBNPg's `page` (+0x20), loaded and dereferenced by the host's PsPageBoxProc 0x4C010110: `mov (0x20, a0), a0` -> `movhu (a0), d0`
+	.word	1
+	.align	4, 0xFF	# pad after LoadOptionWndLBNPg_page
+SETUP_TOOLS_window:	# u32, initial value of a RAM variable: the KssBgScreen SETUP_TOOLS's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+SET_TOOLS_PAGECTRL_page:	# u16, initial value of a RAM variable: the AcWindowPage SET_TOOLS_PAGECTRL's `page` (+0x20), loaded and dereferenced by the host's PsPageBoxProc 0x4C010110: `mov (0x20, a0), a0` -> `movhu (a0), d0`
+	.word	1
+	.align	4, 0xFF	# pad after SET_TOOLS_PAGECTRL_page
+SEPARATE_OUTPUT_MIXER_window:	# u32, initial value of a RAM variable: the KssBgScreen SEPARATE_OUTPUT_MIXER's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 SEPARATE_OUTPUT_MIXER_KssAudioOutput1_sel_num:	# u16, initial value of a RAM variable: the KssAudioOutput SEPARATE_OUTPUT_MIXER_KssAudioOutput1's `sel_num` (+0x24), loaded and dereferenced by KssAudioOutputProc 0x9782571B: `mov (0x24, a0), a0` -> `movhu (a0), d0`
 	.word	5
 	.align	4, 0xFF	# pad after SEPARATE_OUTPUT_MIXER_KssAudioOutput1_sel_num
@@ -12948,8 +12948,8 @@ AUX_RETURN2_selected:
 	.space	4, 0x00
 EXP_PEDAL2_selected:
 	.space	4, 0x00
-CUSTOM_LYRICS_window:
-	.space	4, 0xFF
+CUSTOM_LYRICS_window:	# u32, initial value of a RAM variable: the KssBgScreen CUSTOM_LYRICS's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 TlxSongName_str_adr:	# u32, initial value of a RAM variable: the KssText TlxSongName's `str_adr` (+0x38), loaded and dereferenced by KssTextProc 0x97830472: `mov (0x38, a0), a0` -> `mov d1, (a0)`
 	.long	0x50d418
 
@@ -12965,8 +12965,8 @@ TlxChord_str_adr:	.asciz "6\xD4P"
 
 CUSTOM_LYRICS_KssLabel_CUSTOM_LYRICS_CHORDS_str_adr:	# u32, initial value of a RAM variable: the KssLabel CUSTOM_LYRICS_KssLabel_CUSTOM_LYRICS_CHORDS's `str_adr` (+0x30), loaded and dereferenced by KssLabelProc 0x978301C6: `mov (0x30, a0), a0` -> `mov d1, (a0)`
 	.long	0x51a6e3
-HDD_FLS_SELECT_window:
-	.space	4, 0xFF
+HDD_FLS_SELECT_window:	# u32, initial value of a RAM variable: the KssBgScreen HDD_FLS_SELECT's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 HDD_FLS_SELECT_ScreenMenu_OK_selected:
 	.space	4, 0x00
 ScrBut_EditFlsName_selected:
@@ -12980,110 +12980,107 @@ CLS_Dir_List_sel_num:	# u16, initial value of a RAM variable: the KSSCLSList CLS
 	.align	4, 0xFF	# pad after CLS_Dir_List_sel_num
 CLS_Dir_List_en_paradraw:	# u32, initial value of a RAM variable: the KSSCLSList CLS_Dir_List's `en_paradraw` (+0x40), loaded and dereferenced by KSSCLSListProc 0x97828DBA: `mov (0x40, a0), a0` -> `mov d0, (a0)`
 	.long	0
-FILE_DEL_OPTIONS_window:
-	.space	4, 0xFF
+FILE_DEL_OPTIONS_window:	# u32, initial value of a RAM variable: the KssBgScreen FILE_DEL_OPTIONS's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 FILE_DEL_OPTIONS_ScreenMenu_DELETE_selected:
 	.space	4, 0x00
 FileDelSetSfxBox_pulSelectable:	# u32, initial value of a RAM variable: the KssSetSfx_DISP FileDelSetSfxBox's `pulSelectable` (+0x30), loaded and dereferenced by KssSetSfx_DISPProc 0x9781F096: `mov (0x30, a0), a0` -> `mov (a0), d0`
 	.long	3967
 FileDelSetSfxBox_pulYesNo:	# u32, initial value of a RAM variable: the KssSetSfx_DISP FileDelSetSfxBox's `pulYesNo` (+0x34), loaded and dereferenced by KssSetSfx_DISPProc 0x9781F096: `mov (0x34, a0), a0` -> `mov (a0), d0`
 	.long	3967
-SORTED_LIST_window:
-	.space	4, 0xFF
-SETUP_TOOL1_parent:
-	.space	4, 0xFF
-SETUP_TOOL1_child:
-	.space	4, 0xFF
+SORTED_LIST_window:	# u32, initial value of a RAM variable: the KssBgScreen SORTED_LIST's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+SETUP_TOOL1_parent:	# u32, initial value of a RAM variable: the Window SETUP_TOOL1's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+SETUP_TOOL1_child:	# u32, initial value of a RAM variable: the Window SETUP_TOOL1's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
 SETUP_TOOL1_ScreenMenu1_selected:
 	.space	4, 0x00
 SETUP_TOOL1_ScreenMenu_COPY_FLOPPY_TO_HARD_selected:
 	.space	4, 0x00
 SETUP_TOOL1_ScreenMenu_HELP_PAGE_selected:
 	.space	4, 0x00
-SETUP_TOOL2_parent:
-	.space	4, 0xFF
-SETUP_TOOL2_child:
-	.space	4, 0xFF
+SETUP_TOOL2_parent:	# u32, initial value of a RAM variable: the Window SETUP_TOOL2's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+SETUP_TOOL2_child:	# u32, initial value of a RAM variable: the Window SETUP_TOOL2's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
 SETUP_TOOL2_ScreenMenu_ABOUT_HELP_selected:
 	.space	4, 0x00
-HDD_SETTOOLSPAR_1_selected:
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FDC, 0x0B3FE0
+HDD_SETTOOLSPAR_1_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_1's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	1
 HDD_SETTOOLSPAR_1_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_1's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	1
 	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_1_num
-HDD_SETTOOLSPAR_2_selected:
-	.space	4, 0x00
+HDD_SETTOOLSPAR_2_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_2's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	0
 HDD_SETTOOLSPAR_2_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_2's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	1
 	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_2_num
-HDD_SETTOOLSPAR_3_selected:
-	.space	4, 0x00
+HDD_SETTOOLSPAR_3_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_3's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	0
 HDD_SETTOOLSPAR_3_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_3's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	0
 	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_3_num
-HDD_SETTOOLSPAR_4_selected:
-	.space	4, 0x00
+HDD_SETTOOLSPAR_4_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_4's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	0
 HDD_SETTOOLSPAR_4_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_4's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	0
 	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_4_num
-HDD_SETTOOLSPAR_5_selected:
-	.space	4, 0x00
+HDD_SETTOOLSPAR_5_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_5's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	0
 HDD_SETTOOLSPAR_5_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_5's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	0
 	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_5_num
-HDD_SETTOOLSPAR_6_selected:
-	.space	4, 0x00
+HDD_SETTOOLSPAR_6_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_6's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	0
 HDD_SETTOOLSPAR_6_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_6's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	1
 	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_6_num
-HDD_SETTOOLSPAR_7_selected:
-	.space	4, 0x00
+HDD_SETTOOLSPAR_7_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_7's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	0
 HDD_SETTOOLSPAR_7_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_7's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	1
 	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_7_num
-HDD_SETTOOLSPAR_8_selected:
-	.space	4, 0x00
+HDD_SETTOOLSPAR_8_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_8's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	0
 HDD_SETTOOLSPAR_8_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_8's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	0
 	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_8_num
-HDD_SETTOOLSPAR_12_selected:
-	.space	4, 0x00
+HDD_SETTOOLSPAR_12_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_12's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	0
 HDD_SETTOOLSPAR_12_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_12's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	0
 	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_12_num
-DATA_LINK_window:
-	.space	4, 0xFF
+DATA_LINK_window:	# u32, initial value of a RAM variable: the KssBgScreen DATA_LINK's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 DATA_LINK_MenuBox_TEST_COMMUNICATION_selected:
 	.space	4, 0x00
 COMM_DISP_paintok:	# u32, initial value of a RAM variable: the KssCOMM_DISP COMM_DISP's `paintok` (+0x30), loaded and dereferenced by KssCOMM_DISPProc 0x9781DA36: `mov (0x30, a0), a0` -> `mov d0, (a0)`
 	.long	0
-CUSTOM_LYRICS_OPTION_window:
-	.space	4, 0xFF
-LyricsPassiveColor_selected:
-	.space	4, 0x00
+CUSTOM_LYRICS_OPTION_window:	# u32, initial value of a RAM variable: the KssBgScreen CUSTOM_LYRICS_OPTION's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+LyricsPassiveColor_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry LyricsPassiveColor's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	0
 LyricsPassiveColor_num:	# u16, initial value of a RAM variable: the KssParaEditEntry LyricsPassiveColor's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	0
 	.align	4, 0xFF	# pad after LyricsPassiveColor_num
-LyricsActiveColor_selected:
-	.space	4, 0x00
+LyricsActiveColor_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry LyricsActiveColor's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	0
 LyricsActiveColor_num:	# u16, initial value of a RAM variable: the KssParaEditEntry LyricsActiveColor's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	0
 	.align	4, 0xFF	# pad after LyricsActiveColor_num
-LyricsLoadMode_selected:
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4044, 0x0B4048
+LyricsLoadMode_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry LyricsLoadMode's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	1
 LyricsLoadMode_num:	# u16, initial value of a RAM variable: the KssParaEditEntry LyricsLoadMode's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	0
 	.align	4, 0xFF	# pad after LyricsLoadMode_num
-CLPARA4_selected:
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B404C, 0x0B4050
+CLPARA4_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry CLPARA4's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	1
 CLPARA4_num:	# u16, initial value of a RAM variable: the KssParaEditEntry CLPARA4's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	0
 	.align	4, 0xFF	# pad after CLPARA4_num
-PROTECT_OPTIONS_window:
-	.space	4, 0xFF
+PROTECT_OPTIONS_window:	# u32, initial value of a RAM variable: the KssBgScreen PROTECT_OPTIONS's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 PROTECT_OPTIONS_ScreenMenu_PROTECT_HDD_selected:
 	.space	4, 0x00
 PROTECT_OPTIONS_ScreenMenu_PROTECT_Part_1_selected:
@@ -13094,14 +13091,14 @@ PROTECT_OPTIONS_ScreenMenu_PROTECT_Part_3_selected:
 	.space	4, 0x00
 PROTECT_OPTIONS_ScreenMenu_SAVE_OPTIONS_selected:
 	.space	4, 0x00
-HDD_FORMATSCR_window:
-	.space	4, 0xFF
+HDD_FORMATSCR_window:	# u32, initial value of a RAM variable: the KssBgScreen HDD_FORMATSCR's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 FormatPartAll_selected:
 	.space	4, 0x00
 AllPartButton_MenuBox1_selected:
 	.space	4, 0x00
-BigFont_DirSelect_window:
-	.space	4, 0xFF
+BigFont_DirSelect_window:	# u32, initial value of a RAM variable: the KssBgScreen BigFont_DirSelect's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 DIR_SelectBig_str_adr:	# u32, initial value of a RAM variable: the HamaSelectList DIR_SelectBig's `str_adr` (+0x2C), loaded and dereferenced by HamaSelectListProc 0x9782E300: `mov (0x2c, a0), a0` -> `mov (a0), d0`
 	.long	0
 DIR_SelectBig_sel_num:	# u16, initial value of a RAM variable: the HamaSelectList DIR_SelectBig's `sel_num` (+0x34), loaded and dereferenced by HamaSelectListProc 0x9782E300: `mov (0x34, a0), a0` -> `movhu (a0), d1`
@@ -13119,30 +13116,30 @@ BigFont_DirSelect_ScreenMenu2_selected:
 	.space	4, 0x00
 BigFont_DirSelect_ScreenMenu3_selected:
 	.space	4, 0x00
-BigFont_FileSelect_window:
-	.space	4, 0xFF
-LoadOptionWndPgBF_page:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B40A0, 0x0B40A4
-HELP_WORKSHOP_window:
-	.space	4, 0xFF
+BigFont_FileSelect_window:	# u32, initial value of a RAM variable: the KssBgScreen BigFont_FileSelect's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+LoadOptionWndPgBF_page:	# u16, initial value of a RAM variable: the AcWindowPage LoadOptionWndPgBF's `page` (+0x20), loaded and dereferenced by the host's PsPageBoxProc 0x4C010110: `mov (0x20, a0), a0` -> `movhu (a0), d0`
+	.word	1
+	.align	4, 0xFF	# pad after LoadOptionWndPgBF_page
+HELP_WORKSHOP_window:	# u32, initial value of a RAM variable: the KssBgScreen HELP_WORKSHOP's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 HELP_WORKSHOP_KssXRegisterLine1_sel_num:
 # census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B40A8, 0x0B40AC
 HELP_WORKSHOP_KssXRegisterLine1_en_paradraw:	# u32, initial value of a RAM variable: the KssXRegisterLine HELP_WORKSHOP_KssXRegisterLine1's `en_paradraw` (+0x28), loaded and dereferenced by KssXRegisterLineProc 0x978360E3: `mov (0x28, a0), a0` -> `mov d0, (a0)`
 	.long	0
-ABOUT_HELP_window:
-	.space	4, 0xFF
+ABOUT_HELP_window:	# u32, initial value of a RAM variable: the KssBgScreen ABOUT_HELP's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 LabelHDSerialNo_str_adr:	# u32, initial value of a RAM variable: the KssLabel LabelHDSerialNo's `str_adr` (+0x30), loaded and dereferenced by KssLabelProc 0x978301C6: `mov (0x30, a0), a0` -> `mov d1, (a0)`
 	.long	0x7fee30
 LabelHDParameter_str_adr:	# u32, initial value of a RAM variable: the KssLabel LabelHDParameter's `str_adr` (+0x30), loaded and dereferenced by KssLabelProc 0x978301C6: `mov (0x30, a0), a0` -> `mov d1, (a0)`
 	.long	0x7fee56
 LabelHDModelNo_str_adr:	# u32, initial value of a RAM variable: the KssLabel LabelHDModelNo's `str_adr` (+0x30), loaded and dereferenced by KssLabelProc 0x978301C6: `mov (0x30, a0), a0` -> `mov d1, (a0)`
 	.long	0x7fedf2
-LBN_1_parent:
-	.space	4, 0xFF
-LBN_1_child:
-	.space	4, 0xFF
+LBN_1_parent:	# u32, initial value of a RAM variable: the Window LBN_1's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+LBN_1_child:	# u32, initial value of a RAM variable: the Window LBN_1's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
 LBN_1_ScreenMenu_LOAD_selected:
 	.space	4, 0x00
 ClearLBN_selected:
@@ -13157,27 +13154,27 @@ FileNumberLBN_val:	# u16, initial value of a RAM variable: the KssVwDigitBox Fil
 	.word	65535
 FileNumberLBN_count_digits:	# u16, initial value of a RAM variable: the KssVwDigitBox FileNumberLBN's `count_digits` (+0x38), loaded and dereferenced by KssVwDigitBoxProc 0x97814109: `mov (0x38, a0), a0` -> `movhu (a0), d0`
 	.word	0
-LBN_2_parent:
-	.space	4, 0xFF
-LBN_2_child:
-	.space	4, 0xFF
+LBN_2_parent:	# u32, initial value of a RAM variable: the Window LBN_2's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+LBN_2_child:	# u32, initial value of a RAM variable: the Window LBN_2's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
 LoadOptionLBN_pulSelectable:	# u32, initial value of a RAM variable: the KssSetSfx_DISP LoadOptionLBN's `pulSelectable` (+0x30), loaded and dereferenced by KssSetSfx_DISPProc 0x9781F096: `mov (0x30, a0), a0` -> `mov (a0), d0`
 	.long	0
 LoadOptionLBN_pulYesNo:	# u32, initial value of a RAM variable: the KssSetSfx_DISP LoadOptionLBN's `pulYesNo` (+0x34), loaded and dereferenced by KssSetSfx_DISPProc 0x9781F096: `mov (0x34, a0), a0` -> `mov (a0), d0`
 	.long	3847
-SELECT_PLUG2_window:
-	.space	4, 0xFF
-SELECT_PLUG2_ListBox1_selected:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B40F0, 0x0B40F4
+SELECT_PLUG2_window:	# u32, initial value of a RAM variable: the KssBgScreen SELECT_PLUG2's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+SELECT_PLUG2_ListBox1_selected:	# u16, initial value of a RAM variable: the AcListBox SELECT_PLUG2_ListBox1's `selected` (+0x2C), loaded and dereferenced by the host's PsListBoxProc 0x4C00BA92: `add 0x2c, a0 / mov (a0), a1` -> `movhu (a1), d2`
+	.word	0
+	.align	4, 0xFF	# pad after SELECT_PLUG2_ListBox1_selected
 SELECT_PLUG2_ScreenMenu_LOAD_selected:
 	.space	4, 0x00
 SELECT_PLUG2_ScreenMenu1_selected:
 	.space	4, 0x00
-KSS_EDIT_NAME_WND_parent:
-	.space	4, 0xFF
-KSS_EDIT_NAME_WND_child:
-	.space	4, 0xFF
+KSS_EDIT_NAME_WND_parent:	# u32, initial value of a RAM variable: the KssNamingWindow KSS_EDIT_NAME_WND's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+KSS_EDIT_NAME_WND_child:	# u32, initial value of a RAM variable: the KssNamingWindow KSS_EDIT_NAME_WND's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
 KSS_EDIT_NAME_WND_KssNamingEditSw1_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw1's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
 	.long	0
 KSS_EDIT_NAME_WND_KssNamingEditSw2_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw2's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
@@ -13230,24 +13227,23 @@ KSS_EDIT_NAME_WND_KssNamingEditSw25_page:	# u32, initial value of a RAM variable
 	.long	0
 KSS_EDIT_NAME_WND_KssNamingEditSw26_page:	# u32, initial value of a RAM variable: the KssNamingEditSw KSS_EDIT_NAME_WND_KssNamingEditSw26's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
 	.long	0
-KSS_EDIT_NAME_WND_IndexToggle_ABC_onoff:
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B416C, 0x0B4170
-KSS_EDIT_NAME_WND_IndexToggle_123_onoff:
-	.space	4, 0x00
-KSS_EDIT_NAME_WND_IndexPushSw1_sw:
-	.space	4, 0x00
+KSS_EDIT_NAME_WND_IndexToggle_ABC_onoff:	# u32, initial value of a RAM variable: the AcIndexToggle KSS_EDIT_NAME_WND_IndexToggle_ABC's `onoff` (+0x24), loaded and dereferenced by the host's AcIndexToggleProc 0x4C0107A1: `mov (0x24, a0), a0` -> `mov (a0), d0`
+	.long	1
+KSS_EDIT_NAME_WND_IndexToggle_123_onoff:	# u32, initial value of a RAM variable: the AcIndexToggle KSS_EDIT_NAME_WND_IndexToggle_123's `onoff` (+0x24), loaded and dereferenced by the host's AcIndexToggleProc 0x4C0107A1: `mov (0x24, a0), a0` -> `mov (a0), d0`
+	.long	0
+KSS_EDIT_NAME_WND_IndexPushSw1_sw:	# u32, initial value of a RAM variable: the AcIndexPushSw KSS_EDIT_NAME_WND_IndexPushSw1's `sw` (+0x2C), loaded and dereferenced by the host's AcIndexPushSwProc 0x4C00FF7D: `mov (0x2c, a0), a0` -> `mov d0, (a0)`
+	.long	0
 KssCursBox_cursor:	# u16, initial value of a RAM variable: the KssCursorBox KssCursBox's `cursor` (+0x28), loaded and dereferenced by KssCursorBoxProc 0x9781A2A8: `mov (0x28, a0), a0` -> `movhu d0, (a0)`
 	.word	0
 	.align	4, 0xFF	# pad after KssCursBox_cursor
-HDD_SAVE_OPTIONS_window:
-	.space	4, 0xFF
+HDD_SAVE_OPTIONS_window:	# u32, initial value of a RAM variable: the KssBgScreen HDD_SAVE_OPTIONS's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 FileSaveSetSfxBox_pulSelectable:	# u32, initial value of a RAM variable: the KssSetSfx_DISP FileSaveSetSfxBox's `pulSelectable` (+0x30), loaded and dereferenced by KssSetSfx_DISPProc 0x9781F096: `mov (0x30, a0), a0` -> `mov (a0), d0`
 	.long	0
 FileSaveSetSfxBox_pulYesNo:	# u32, initial value of a RAM variable: the KssSetSfx_DISP FileSaveSetSfxBox's `pulYesNo` (+0x34), loaded and dereferenced by KssSetSfx_DISPProc 0x9781F096: `mov (0x34, a0), a0` -> `mov (a0), d0`
 	.long	127
-ALPHA_SORTED_LIST_window:
-	.space	4, 0xFF
+ALPHA_SORTED_LIST_window:	# u32, initial value of a RAM variable: the KssTtlScreen ALPHA_SORTED_LIST's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 ALPHA_SORTED_LIST_KssxAlphabetBox1_sel_num:
 # census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B418C, 0x0B4190
@@ -13260,8 +13256,8 @@ ALPHA_SORTED_LIST_HamaAlphabeticFileList1_sel_num:	# u16, initial value of a RAM
 	.align	4, 0xFF	# pad after ALPHA_SORTED_LIST_HamaAlphabeticFileList1_sel_num
 ALPHA_SORTED_LIST_HamaAlphabeticFileList1_en_paradraw:	# u32, initial value of a RAM variable: the HamaAlphabeticFileList ALPHA_SORTED_LIST_HamaAlphabeticFileList1's `en_paradraw` (+0x40), loaded and dereferenced by HamaAlphabeticFileListProc 0x9782CC20: `mov (0x40, a0), a0` -> `mov d0, (a0)`
 	.long	0
-JUKE_BOX_window:
-	.space	4, 0xFF
+JUKE_BOX_window:	# u32, initial value of a RAM variable: the KssBgScreen JUKE_BOX's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 JUKE_BOX_ScreenMenu1_selected:
 	.space	4, 0x00
 JUKE_BOX_ScreenMenu2_selected:
@@ -13289,10 +13285,10 @@ JUKE_BOX_MenuBox2_selected:
 	.space	4, 0x00
 JUKE_BOX_ScreenMenu_CLEAR_ALL_selected:
 	.space	4, 0x00
-FILE_SELECT_WIN1_parent:
-	.space	4, 0xFF
-FILE_SELECT_WIN1_child:
-	.space	4, 0xFF
+FILE_SELECT_WIN1_parent:	# u32, initial value of a RAM variable: the Window FILE_SELECT_WIN1's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+FILE_SELECT_WIN1_child:	# u32, initial value of a RAM variable: the Window FILE_SELECT_WIN1's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
 SelectedDirInFile_sel_num:	# u16, initial value of a RAM variable: the KSSPsFileBox SelectedDirInFile's `sel_num` (+0x34), loaded and dereferenced by KSSPsFileBoxProc 0x9780CBE5: `mov (0x34, a0), a0` -> `movhu d0, (a0)`
 	.word	1
 SelectedDirInFile_sel_dir:	# u16, initial value of a RAM variable: the KSSPsFileBox SelectedDirInFile's `sel_dir` (+0x38), loaded and dereferenced by KSSPsFileBoxProc 0x9780CBE5: `mov (0x38, a0), a0` -> `movhu d0, (a0)`
@@ -13305,18 +13301,18 @@ WP_OBJ_DELDIR_selected:
 	.space	4, 0x00
 FILE_SELECT_WIN1_ScreenMenu_SET_TO_JUKE_BOX_selected:
 	.space	4, 0x00
-FILE_SELECT_WIN2_parent:
-	.space	4, 0xFF
-FILE_SELECT_WIN2_child:
-	.space	4, 0xFF
+FILE_SELECT_WIN2_parent:	# u32, initial value of a RAM variable: the Window FILE_SELECT_WIN2's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+FILE_SELECT_WIN2_child:	# u32, initial value of a RAM variable: the Window FILE_SELECT_WIN2's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
 FileLoadSetSfxBox_pulSelectable:	# u32, initial value of a RAM variable: the KssSetSfx_DISP FileLoadSetSfxBox's `pulSelectable` (+0x30), loaded and dereferenced by KssSetSfx_DISPProc 0x9781F096: `mov (0x30, a0), a0` -> `mov (a0), d0`
 	.long	3967
 FileLoadSetSfxBox_pulYesNo:	# u32, initial value of a RAM variable: the KssSetSfx_DISP FileLoadSetSfxBox's `pulYesNo` (+0x34), loaded and dereferenced by KssSetSfx_DISPProc 0x9781F096: `mov (0x34, a0), a0` -> `mov (a0), d0`
 	.long	3967
 FILE_SELECT_WIN2_KssAcActualDFStrBox1_paintok:	# u32, initial value of a RAM variable: the KssAcActualDFStrBox FILE_SELECT_WIN2_KssAcActualDFStrBox1's `paintok` (+0x28), loaded and dereferenced by KssAcActualDFStrBoxProc 0x9781BB50: `mov (0x28, a0), a0` -> `mov d0, (a0)`
 	.long	0
-DbWndRW_window:
-	.space	4, 0xFF
+DbWndRW_window:	# u32, initial value of a RAM variable: the KssBgScreen DbWndRW's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 DbWndRW_MenuBox_Read_TO_selected:
 	.space	4, 0x00
 DbWndRW_MenuBox_Get_Id_selected:
@@ -13331,15 +13327,15 @@ DbWndRW_MenuBox_NR_selected:
 	.space	4, 0x00
 DbWndRW_MenuBox_Nop_selected:
 	.space	4, 0x00
-TestUSBPPScreen_window:
-	.space	4, 0xFF
-HDD_FILE_SELECT_window:
-	.space	4, 0xFF
-LoadOptionWndPg_page:
-# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4230, 0x0B4234
-HDD_DIR_SELECT_window:
-	.space	4, 0xFF
+TestUSBPPScreen_window:	# u32, initial value of a RAM variable: the KssBgScreen TestUSBPPScreen's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+HDD_FILE_SELECT_window:	# u32, initial value of a RAM variable: the KssBgScreen HDD_FILE_SELECT's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+LoadOptionWndPg_page:	# u16, initial value of a RAM variable: the AcWindowPage LoadOptionWndPg's `page` (+0x20), loaded and dereferenced by the host's PsPageBoxProc 0x4C010110: `mov (0x20, a0), a0` -> `movhu (a0), d0`
+	.word	1
+	.align	4, 0xFF	# pad after LoadOptionWndPg_page
+HDD_DIR_SELECT_window:	# u32, initial value of a RAM variable: the KssBgScreen HDD_DIR_SELECT's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 SelectedDirectory_sel_num:	# u16, initial value of a RAM variable: the KSSPsDirBox SelectedDirectory's `sel_num` (+0x34), loaded and dereferenced by KSSPsDirBoxProc 0x9780B023: `mov (0x34, a0), a0` -> `movhu d0, (a0)`
 	.word	1
 SelectedDirectory_sel_area:	# u16, initial value of a RAM variable: the KSSPsDirBox SelectedDirectory's `sel_area` (+0x38), loaded and dereferenced by KSSPsDirBoxProc 0x9780B023: `mov (0x38, a0), a0` -> `movhu d0, (a0)`
@@ -13358,10 +13354,10 @@ HDD_DIR_SELECT_ScreenMenu3_selected:
 	.space	4, 0x00
 ScrBut_EditDirName_selected:
 	.space	4, 0x00
-HDD_DIR_NAMING_window:
-	.space	4, 0xFF
-CP_HD_SELDIR_window:
-	.space	4, 0xFF
+HDD_DIR_NAMING_window:	# u32, initial value of a RAM variable: the KssBgScreen HDD_DIR_NAMING's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+CP_HD_SELDIR_window:	# u32, initial value of a RAM variable: the KssBgScreen CP_HD_SELDIR's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 SelectedCopyDest_sel_num:	# u16, initial value of a RAM variable: the KSSPsDirBox SelectedCopyDest's `sel_num` (+0x34), loaded and dereferenced by KSSPsDirBoxProc 0x9780B023: `mov (0x34, a0), a0` -> `movhu d0, (a0)`
 	.word	1
 SelectedCopyDest_sel_area:	# u16, initial value of a RAM variable: the KSSPsDirBox SelectedCopyDest's `sel_area` (+0x38), loaded and dereferenced by KSSPsDirBoxProc 0x9780B023: `mov (0x38, a0), a0` -> `movhu d0, (a0)`
@@ -13370,8 +13366,8 @@ SelectedCopyDest_paintok:	# u32, initial value of a RAM variable: the KSSPsDirBo
 	.long	0
 SelectedCopyDest_aicok:	# u32, initial value of a RAM variable: the KSSPsDirBox SelectedCopyDest's `aicok` (+0x48), loaded and dereferenced by KSSPsDirBoxProc 0x9780B023: `mov (0x48, a0), a0` -> `mov d0, (a0)`
 	.long	1
-COPY_FD_TO_HDD_window:
-	.space	4, 0xFF
+COPY_FD_TO_HDD_window:	# u32, initial value of a RAM variable: the KssBgScreen COPY_FD_TO_HDD's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 CP_FD_LIST_str_adr:	# u32, initial value of a RAM variable: the SelectFDCPList CP_FD_LIST's `str_adr` (+0x2C), loaded and dereferenced by SelectFDCPListProc 0x97822019: `mov (0x2c, a0), a0` -> `mov d0, (a0)`
 	.long	0x7c12b0
 CP_FD_LIST_sel_num:	# u16, initial value of a RAM variable: the SelectFDCPList CP_FD_LIST's `sel_num` (+0x34), loaded and dereferenced by SelectFDCPListProc 0x97822019: `mov (0x34, a0), a0` -> `movhu (a0), d1`
@@ -13379,10 +13375,10 @@ CP_FD_LIST_sel_num:	# u16, initial value of a RAM variable: the SelectFDCPList C
 	.align	4, 0xFF	# pad after CP_FD_LIST_sel_num
 CP_FD_LIST_en_paradraw:	# u32, initial value of a RAM variable: the SelectFDCPList CP_FD_LIST's `en_paradraw` (+0x40), loaded and dereferenced by SelectFDCPListProc 0x97822019: `mov (0x40, a0), a0` -> `mov d0, (a0)`
 	.long	0
-HDD_FILE_NAMING_window:
-	.space	4, 0xFF
-CLS_FILE_LOAD_SCREEN_window:
-	.space	4, 0xFF
+HDD_FILE_NAMING_window:	# u32, initial value of a RAM variable: the KssBgScreen HDD_FILE_NAMING's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+CLS_FILE_LOAD_SCREEN_window:	# u32, initial value of a RAM variable: the KssBgScreen CLS_FILE_LOAD_SCREEN's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 ScrBut_EditFLS_selected:
 	.space	4, 0x00
 CLS_FILE_BOX_str_adr:	# u32, initial value of a RAM variable: the KSSCLSFileList CLS_FILE_BOX's `str_adr` (+0x2C), loaded and dereferenced by KSSCLSFileListProc 0x97829BA5: `mov (0x2c, a0), a0` -> `mov (a0), d0`
@@ -13392,10 +13388,10 @@ CLS_FILE_BOX_sel_num:	# u16, initial value of a RAM variable: the KSSCLSFileList
 	.align	4, 0xFF	# pad after CLS_FILE_BOX_sel_num
 CLS_FILE_BOX_en_paradraw:	# u32, initial value of a RAM variable: the KSSCLSFileList CLS_FILE_BOX's `en_paradraw` (+0x40), loaded and dereferenced by KSSCLSFileListProc 0x97829BA5: `mov (0x40, a0), a0` -> `mov d0, (a0)`
 	.long	0
-CLS_NAMING_window:
-	.space	4, 0xFF
-CLS_EDIT_window:
-	.space	4, 0xFF
+CLS_NAMING_window:	# u32, initial value of a RAM variable: the KssBgScreen CLS_NAMING's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+CLS_EDIT_window:	# u32, initial value of a RAM variable: the KssBgScreen CLS_EDIT's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 CLS_EDIT_ScreenMenu_SEARCH_selected:
 	.space	4, 0x00
 CLS_EDIT_BOX_str_adr:	# u32, initial value of a RAM variable: the KSSCLSFileList CLS_EDIT_BOX's `str_adr` (+0x2C), loaded and dereferenced by KSSCLSFileListProc 0x97829BA5: `mov (0x2c, a0), a0` -> `mov (a0), d0`
@@ -13405,8 +13401,8 @@ CLS_EDIT_BOX_sel_num:	# u16, initial value of a RAM variable: the KSSCLSFileList
 	.align	4, 0xFF	# pad after CLS_EDIT_BOX_sel_num
 CLS_EDIT_BOX_en_paradraw:	# u32, initial value of a RAM variable: the KSSCLSFileList CLS_EDIT_BOX's `en_paradraw` (+0x40), loaded and dereferenced by KSSCLSFileListProc 0x97829BA5: `mov (0x40, a0), a0` -> `mov d0, (a0)`
 	.long	0
-CLS_DIR_SEL_window:
-	.space	4, 0xFF
+CLS_DIR_SEL_window:	# u32, initial value of a RAM variable: the KssBgScreen CLS_DIR_SEL's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 CLS_DIR_SEL_ScreenMenu_OK_selected:
 	.space	4, 0x00
 SelectedFLSDest_str_adr:	# u32, initial value of a RAM variable: the HamaSelectList SelectedFLSDest's `str_adr` (+0x2C), loaded and dereferenced by HamaSelectListProc 0x9782E300: `mov (0x2c, a0), a0` -> `mov (a0), d0`
@@ -13416,8 +13412,8 @@ SelectedFLSDest_sel_num:	# u16, initial value of a RAM variable: the HamaSelectL
 	.align	4, 0xFF	# pad after SelectedFLSDest_sel_num
 SelectedFLSDest_en_paradraw:	# u32, initial value of a RAM variable: the HamaSelectList SelectedFLSDest's `en_paradraw` (+0x40), loaded and dereferenced by HamaSelectListProc 0x9782E300: `mov (0x40, a0), a0` -> `mov d0, (a0)`
 	.long	0
-CLS_FILE_SELECT_window:
-	.space	4, 0xFF
+CLS_FILE_SELECT_window:	# u32, initial value of a RAM variable: the KssBgScreen CLS_FILE_SELECT's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 FLSLink_selected:
 	.space	4, 0x00
 FlsFileList_str_adr:	# u32, initial value of a RAM variable: the HamaSelectFileList FlsFileList's `str_adr` (+0x2C), loaded and dereferenced by HamaSelectFileListProc 0x9782EDF4: `mov (0x2c, a0), a0` -> `mov (a0), d0`
@@ -13427,113 +13423,113 @@ FlsFileList_sel_num:	# u16, initial value of a RAM variable: the HamaSelectFileL
 	.align	4, 0xFF	# pad after FlsFileList_sel_num
 FlsFileList_en_paradraw:	# u32, initial value of a RAM variable: the HamaSelectFileList FlsFileList's `en_paradraw` (+0x40), loaded and dereferenced by HamaSelectFileListProc 0x9782EDF4: `mov (0x40, a0), a0` -> `mov d0, (a0)`
 	.long	0
-WARNING_YESNO_window:
-	.space	4, 0xFF
-WARNING_DNO_FAULT_window:
-	.space	4, 0xFF
-WARNING_FNO_FAULT_window:
-	.space	4, 0xFF
-WarningClsNotSaved_window:
-	.space	4, 0xFF
-WARNING_DIR_DEL_window:
-	.space	4, 0xFF
-HDD_PASSWORD_NAMING_window:
-	.space	4, 0xFF
-PASSWORD_NAMING_parent:
-	.space	4, 0xFF
-PASSWORD_NAMING_child:
-	.space	4, 0xFF
-PASSWORD_NAMING_NamingEditSw1_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw2_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw3_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw4_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw5_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw6_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw7_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw8_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw9_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw10_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw11_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw12_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw13_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw14_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw15_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw16_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw17_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw18_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw19_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw20_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw21_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw22_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw23_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw24_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw25_page:
-	.space	4, 0x00
-PASSWORD_NAMING_NamingEditSw26_page:
-	.space	4, 0x00
-PASSWORD_NAMING_CursorBox1_cursor:
-	.space	4, 0xFF
-PASSWORD_NAMING_IndexToggle_ABC_onoff:
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4360, 0x0B4364
-PASSWORD_NAMING_IndexToggle_123_onoff:
-	.space	4, 0x00
-PASSWORD_NAMING_IndexPushSw1_sw:
-	.space	4, 0x00
+WARNING_YESNO_window:	# u32, initial value of a RAM variable: the KssBgScreen WARNING_YESNO's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+WARNING_DNO_FAULT_window:	# u32, initial value of a RAM variable: the KssBgScreen WARNING_DNO_FAULT's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+WARNING_FNO_FAULT_window:	# u32, initial value of a RAM variable: the KssBgScreen WARNING_FNO_FAULT's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+WarningClsNotSaved_window:	# u32, initial value of a RAM variable: the KssBgScreen WarningClsNotSaved's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+WARNING_DIR_DEL_window:	# u32, initial value of a RAM variable: the KssBgScreen WARNING_DIR_DEL's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+HDD_PASSWORD_NAMING_window:	# u32, initial value of a RAM variable: the KssBgScreen HDD_PASSWORD_NAMING's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+PASSWORD_NAMING_parent:	# u32, initial value of a RAM variable: the KssNamingWindow PASSWORD_NAMING's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+PASSWORD_NAMING_child:	# u32, initial value of a RAM variable: the KssNamingWindow PASSWORD_NAMING's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+PASSWORD_NAMING_NamingEditSw1_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw1's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw2_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw2's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw3_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw3's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw4_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw4's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw5_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw5's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw6_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw6's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw7_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw7's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw8_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw8's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw9_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw9's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw10_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw10's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw11_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw11's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw12_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw12's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw13_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw13's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw14_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw14's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw15_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw15's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw16_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw16's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw17_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw17's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw18_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw18's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw19_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw19's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw20_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw20's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw21_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw21's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw22_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw22's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw23_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw23's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw24_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw24's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw25_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw25's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_NamingEditSw26_page:	# u32, initial value of a RAM variable: the AcNamingEditSw PASSWORD_NAMING_NamingEditSw26's `page` (+0x30), loaded and dereferenced by the host's AcNamingEditSwProc 0x4C00A6F1: `mov (0x30, a3), a0` -> `mov (a0), d1`
+	.long	0
+PASSWORD_NAMING_CursorBox1_cursor:	# u16, initial value of a RAM variable: the PsCursorBox PASSWORD_NAMING_CursorBox1's `cursor` (+0x28), loaded and dereferenced by the host's PsCursorBoxProc 0x4C012AF9: `mov (0x28, a0), a0` -> `movhu d0, (a0)`
+	.word	65535
+	.align	4, 0xFF	# pad after PASSWORD_NAMING_CursorBox1_cursor
+PASSWORD_NAMING_IndexToggle_ABC_onoff:	# u32, initial value of a RAM variable: the AcIndexToggle PASSWORD_NAMING_IndexToggle_ABC's `onoff` (+0x24), loaded and dereferenced by the host's AcIndexToggleProc 0x4C0107A1: `mov (0x24, a0), a0` -> `mov (a0), d0`
+	.long	1
+PASSWORD_NAMING_IndexToggle_123_onoff:	# u32, initial value of a RAM variable: the AcIndexToggle PASSWORD_NAMING_IndexToggle_123's `onoff` (+0x24), loaded and dereferenced by the host's AcIndexToggleProc 0x4C0107A1: `mov (0x24, a0), a0` -> `mov (a0), d0`
+	.long	0
+PASSWORD_NAMING_IndexPushSw1_sw:	# u32, initial value of a RAM variable: the AcIndexPushSw PASSWORD_NAMING_IndexPushSw1's `sw` (+0x2C), loaded and dereferenced by the host's AcIndexPushSwProc 0x4C00FF7D: `mov (0x2c, a0), a0` -> `mov d0, (a0)`
+	.long	0
 PASSWORD_NAMING_KssNamingEditSw1_page:	# u32, initial value of a RAM variable: the KssNamingEditSw PASSWORD_NAMING_KssNamingEditSw1's `page` (+0x30), loaded and dereferenced by KssNamingEditSwProc 0x97819FBA: `mov (0x30, a0), a0` -> `mov (a0), d0`
 	.long	0
 PASSWORD_NAMING_ScreenMenu_SAVE_selected:
 	.space	4, 0x00
-PART1_NAMING_window:
-	.space	4, 0xFF
-WARNING_FILE_DEL_window:
-	.space	4, 0xFF
-ATTENTION_ALL_window:
-	.space	4, 0xFF
-TheTimerScreen_window:
-	.space	4, 0xFF
-WaitingWindow_parent:
-	.space	4, 0xFF
-WaitingWindow_child:
-	.space	4, 0xFF
-TheInitialWaitScreen_window:
-	.space	4, 0xFF
-LoadSaveWnd_parent:
-	.space	4, 0xFF
-LoadSaveWnd_child:
-	.space	4, 0xFF
-ASK_ALL_window:
-	.space	4, 0xFF
-CPFD2HD_Display_parent:
-	.space	4, 0xFF
-CPFD2HD_Display_child:
-	.space	4, 0xFF
-CP_SMF_HDD_window:
-	.space	4, 0xFF
+PART1_NAMING_window:	# u32, initial value of a RAM variable: the KssBgScreen PART1_NAMING's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+WARNING_FILE_DEL_window:	# u32, initial value of a RAM variable: the KssBgScreen WARNING_FILE_DEL's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+ATTENTION_ALL_window:	# u32, initial value of a RAM variable: the KssBgScreen ATTENTION_ALL's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+TheTimerScreen_window:	# u32, initial value of a RAM variable: the KssBgScreen TheTimerScreen's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+WaitingWindow_parent:	# u32, initial value of a RAM variable: the Window WaitingWindow's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+WaitingWindow_child:	# u32, initial value of a RAM variable: the Window WaitingWindow's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+TheInitialWaitScreen_window:	# u32, initial value of a RAM variable: the KssBgScreen TheInitialWaitScreen's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+LoadSaveWnd_parent:	# u32, initial value of a RAM variable: the Window LoadSaveWnd's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+LoadSaveWnd_child:	# u32, initial value of a RAM variable: the Window LoadSaveWnd's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+ASK_ALL_window:	# u32, initial value of a RAM variable: the KssBgScreen ASK_ALL's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+CPFD2HD_Display_parent:	# u32, initial value of a RAM variable: the Window CPFD2HD_Display's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+CPFD2HD_Display_child:	# u32, initial value of a RAM variable: the Window CPFD2HD_Display's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+CP_SMF_HDD_window:	# u32, initial value of a RAM variable: the KssBgScreen CP_SMF_HDD's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
 CP_SMF_SelectList_str_adr:	# u32, initial value of a RAM variable: the SelectFDCPSMFList CP_SMF_SelectList's `str_adr` (+0x2C), loaded and dereferenced by SelectFDCPSMFListProc 0x97822C9C: `mov (0x2c, a0), a0` -> `mov d0, (a0)`
 	.long	0
 CP_SMF_SelectList_sel_num:	# u16, initial value of a RAM variable: the SelectFDCPSMFList CP_SMF_SelectList's `sel_num` (+0x34), loaded and dereferenced by SelectFDCPSMFListProc 0x97822C9C: `mov (0x34, a0), a0` -> `movhu (a0), d1`
@@ -13543,53 +13539,53 @@ CP_SMF_SelectList_en_paradraw:	# u32, initial value of a RAM variable: the Selec
 	.long	0
 SMFFilterBox_paintok:	# u32, initial value of a RAM variable: the KssAcParaStrBox SMFFilterBox's `paintok` (+0x2C), loaded and dereferenced by KssAcParaStrBoxProc 0x9781B965: `mov (0x2c, a0), a0` -> `mov d0, (a0)`
 	.long	0
-CPFDSmf2HD_Display_parent:
-	.space	4, 0xFF
-CPFDSmf2HD_Display_child:
-	.space	4, 0xFF
+CPFDSmf2HD_Display_parent:	# u32, initial value of a RAM variable: the Window CPFDSmf2HD_Display's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+CPFDSmf2HD_Display_child:	# u32, initial value of a RAM variable: the Window CPFDSmf2HD_Display's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
 TheActualDF_paintok:	# u32, initial value of a RAM variable: the KssAcActualDFStrBox TheActualDF's `paintok` (+0x28), loaded and dereferenced by KssAcActualDFStrBoxProc 0x9781BB50: `mov (0x28, a0), a0` -> `mov d0, (a0)`
 	.long	0
-SETUP_TOOL3_parent:
-	.space	4, 0xFF
-SETUP_TOOL3_child:
-	.space	4, 0xFF
+SETUP_TOOL3_parent:	# u32, initial value of a RAM variable: the Window SETUP_TOOL3's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+SETUP_TOOL3_child:	# u32, initial value of a RAM variable: the Window SETUP_TOOL3's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
 WP_OBJ_SAVESET_selected:
 	.space	4, 0x00
 WP_OBJ_FRMTHD_selected:
 	.space	4, 0x00
-HDD_SETTOOLSPAR_9_selected:
-	.space	4, 0x00
+HDD_SETTOOLSPAR_9_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_9's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	0
 HDD_SETTOOLSPAR_9_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_9's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	0
 	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_9_num
-HDD_SETTOOLSPAR_10_selected:
-	.space	4, 0x00
+HDD_SETTOOLSPAR_10_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_10's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	0
 HDD_SETTOOLSPAR_10_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_10's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	1
 	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_10_num
-HDD_SETTOOLSPAR_11_selected:
-	.space	4, 0x00
+HDD_SETTOOLSPAR_11_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_11's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	0
 HDD_SETTOOLSPAR_11_num:	# u16, initial value of a RAM variable: the KssParaEditEntry HDD_SETTOOLSPAR_11's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	1
 	.align	4, 0xFF	# pad after HDD_SETTOOLSPAR_11_num
-SETUP_TOOL3_KssParaEditEntry1_selected:
-	.space	4, 0x00
+SETUP_TOOL3_KssParaEditEntry1_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry SETUP_TOOL3_KssParaEditEntry1's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	0
 SETUP_TOOL3_KssParaEditEntry1_num:	# u16, initial value of a RAM variable: the KssParaEditEntry SETUP_TOOL3_KssParaEditEntry1's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	0
 	.align	4, 0xFF	# pad after SETUP_TOOL3_KssParaEditEntry1_num
-SETUP_TOOL3_KssParaEditEntry2_selected:
-	.space	4, 0x00
+SETUP_TOOL3_KssParaEditEntry2_selected:	# u32, initial value of a RAM variable: the KssParaEditEntry SETUP_TOOL3_KssParaEditEntry2's `selected` (+0x34), loaded and dereferenced by the host's PsEditBoxProc 0x4C00D398: `mov (0x34, a0), a0` -> `mov (a0), d0`
+	.long	0
 SETUP_TOOL3_KssParaEditEntry2_num:	# u16, initial value of a RAM variable: the KssParaEditEntry SETUP_TOOL3_KssParaEditEntry2's `num` (+0x38), loaded and dereferenced by KssParaEditEntryProc 0x97814B04: `mov (0x38, a0), a0` -> `movhu (a0), d1`
 	.word	0
 	.align	4, 0xFF	# pad after SETUP_TOOL3_KssParaEditEntry2_num
-JUKE_BOX_WIN_parent:
-	.space	4, 0xFF
-JUKE_BOX_WIN_child:
-	.space	4, 0xFF
-BigFileFont_Win1_parent:
-	.space	4, 0xFF
-BigFileFont_Win1_child:
-	.space	4, 0xFF
+JUKE_BOX_WIN_parent:	# u32, initial value of a RAM variable: the Window JUKE_BOX_WIN's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+JUKE_BOX_WIN_child:	# u32, initial value of a RAM variable: the Window JUKE_BOX_WIN's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+BigFileFont_Win1_parent:	# u32, initial value of a RAM variable: the Window BigFileFont_Win1's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+BigFileFont_Win1_child:	# u32, initial value of a RAM variable: the Window BigFileFont_Win1's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
 File_SelectBig_str_adr:	# u32, initial value of a RAM variable: the HamaSelectFileList File_SelectBig's `str_adr` (+0x2C), loaded and dereferenced by HamaSelectFileListProc 0x9782EDF4: `mov (0x2c, a0), a0` -> `mov (a0), d0`
 	.long	0
 File_SelectBig_sel_num:	# u16, initial value of a RAM variable: the HamaSelectFileList File_SelectBig's `sel_num` (+0x34), loaded and dereferenced by HamaSelectFileListProc 0x9782EDF4: `mov (0x34, a0), a0` -> `movhu (a0), d0`
@@ -13599,28 +13595,29 @@ File_SelectBig_en_paradraw:	# u32, initial value of a RAM variable: the HamaSele
 	.long	0
 SET_To_JB_selected:
 	.space	4, 0x00
-HP_Basics_parent:
-	.space	4, 0xFF
-HP_Basics_child:
-	.space	4, 0xFF
-FDLyricsLoad_window:
-	.space	4, 0xFF
-WarningClsRunning_window:
-	.space	4, 0xFF
-NewClsScreen_window:
-	.space	4, 0xFF
-NewClsSfx_selected:
-	.space	4, 0xFF
+HP_Basics_parent:	# u32, initial value of a RAM variable: the Window HP_Basics's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+HP_Basics_child:	# u32, initial value of a RAM variable: the Window HP_Basics's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+FDLyricsLoad_window:	# u32, initial value of a RAM variable: the KssTtlScreen FDLyricsLoad's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+WarningClsRunning_window:	# u32, initial value of a RAM variable: the KssBgScreen WarningClsRunning's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+NewClsScreen_window:	# u32, initial value of a RAM variable: the KssBgScreen NewClsScreen's `window` (+0x24), loaded and dereferenced by the host's ScreenProc 0x4C009001: `mov (0x24, a3), a0` -> `mov d0, (a0)`
+	.long	0xffffffff
+NewClsSfx_selected:	# u16, initial value of a RAM variable: the AcListBox NewClsSfx's `selected` (+0x2C), loaded and dereferenced by the host's PsListBoxProc 0x4C00BA92: `add 0x2c, a0 / mov (a0), a1` -> `movhu (a1), d2`
+	.word	65535
+	.align	4, 0xFF	# pad after NewClsSfx_selected
 NewClsList_extension:	# u32, initial value of a RAM variable: the KSSSelectList NewClsList's `extension` (+0x54), loaded and dereferenced by KSSSelectListProc 0x978280B6: `mov (0x54, a0), a0` -> `mov (a0), a0`
 	.long	0x10439dc
 NewClsNameLabel_str_adr:	# u32, initial value of a RAM variable: the KssText NewClsNameLabel's `str_adr` (+0x38), loaded and dereferenced by KssTextProc 0x97830472: `mov (0x38, a0), a0` -> `mov d1, (a0)`
 	.long	0x102de84
 NewClsLocationLabel_str_adr:	# u32, initial value of a RAM variable: the KssText NewClsLocationLabel's `str_adr` (+0x38), loaded and dereferenced by KssTextProc 0x97830472: `mov (0x38, a0), a0` -> `mov d1, (a0)`
 	.long	0x102de84
-PleaseWait_Win_parent:
-	.space	4, 0xFF
-PleaseWait_Win_child:
-	.space	4, 0xFF
+PleaseWait_Win_parent:	# u32, initial value of a RAM variable: the Window PleaseWait_Win's `parent` (+0x24), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x24, a3 / mov (a3), a0` -> `mov (a0), d0`
+	.long	0xffffffff
+PleaseWait_Win_child:	# u32, initial value of a RAM variable: the Window PleaseWait_Win's `child` (+0x28), loaded and dereferenced by the host's WindowProc 0x4C009858: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
+	.long	0xffffffff
 PleaseWait_Win_RotStrBox1_paintok:	# u32, initial value of a RAM variable: the AcRotStrBox PleaseWait_Win_RotStrBox1's `paintok` (+0x30), loaded and dereferenced by AcRotStrBoxProc 0x978334A3: `mov (0x30, a0), a0` -> `mov d0, (a0)`
 	.long	0
 

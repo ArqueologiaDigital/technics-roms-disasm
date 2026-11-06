@@ -36263,7 +36263,7 @@
 0x4C2F9FF6  VoiceDirPartRefFind_Var_2  2
 0x4C2F9FF8  VoiceDirPartRefFind_Table  2532
 0x4C2FA9DC  func_4C09D468_entry_L4b_Table  4096
-0x4C2FB9DC  func_4C09D607_entry_L6e_Table  512
+0x4C2FB9DC  func_4C09D607_entry_L6e_Table  4096
 0x4C2FC9DC  User02_ApFunctions  164
 0x4C2FCA84  User02_ApFunctionNames  164
 0x4C2FCB2C  ClassFields_AcVocalistListBox  4

@@ -16,54 +16,54 @@
 	.long	\proc
 .endm
 
-# REC_localeconv_Records: 40-byte records (localeconv_Records, 1 records); fields, and what reads them:
+# LconvMonetary: 40-byte records (localeconv_Records, 1 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   text         ptr            no reader seen
-#   +4   p4           ptr            localeconv 0x9780851A `mov (4, a1), a0`
-#   +8   p8           ptr            localeconv 0x9780851A `mov (8, a1), a0`
-#   +12  p12          ptr            localeconv 0x9780851A `mov (0xc, a1), a0`
-#   +16  p16          ptr            localeconv 0x9780851A `mov (0x10, a1), a0`
-#   +20  p20          ptr            localeconv 0x9780851A `mov (0x14, a1), a0`
-#   +24  p24          ptr            localeconv 0x9780851A `mov (0x18, a1), a0`
-#   +28  p28          ptr            localeconv 0x9780851A `mov (0x1c, a1), a0`
-#   +32  f32          u8             localeconv 0x9780851A `movbu (0x20, a1), d0`
-#   +33  f33          u8             localeconv 0x9780851A `movbu (0x21, a1), d0`
-#   +34  f34          u8             localeconv 0x9780851A `movbu (0x22, a1), d0`
-#   +35  f35          u8             localeconv 0x9780851A `movbu (0x23, a1), d0`
-#   +36  f36          u8             localeconv 0x9780851A `movbu (0x24, a1), d0`
-#   +37  f37          u8             localeconv 0x9780851A `movbu (0x25, a1), d0`
-#   +38  f38          u8             localeconv 0x9780851A `movbu (0x26, a1), d0`
-#   +39  f39          u8             localeconv 0x9780851A `movbu (0x27, a1), d0`
-.macro REC_localeconv_Records text=0, p4=0, p8=0, p12=0, p16=0, p20=0, p24=0, p28=0, f32=0, f33=0, f34=0, f35=0, f36=0, f37=0, f38=0, f39=0
-	.long	\text
-	.long	\p4
-	.long	\p8
-	.long	\p12
-	.long	\p16
-	.long	\p20
-	.long	\p24
-	.long	\p28
-	.byte	\f32
-	.byte	\f33
-	.byte	\f34
-	.byte	\f35
-	.byte	\f36
-	.byte	\f37
-	.byte	\f38
-	.byte	\f39
+#   +0   locale       ptr            no reader seen
+#   +4   int_curr_symbol ptr            localeconv 0x9780851A `mov (4, a1), a0`
+#   +8   currency_symbol ptr            localeconv 0x9780851A `mov (8, a1), a0`
+#   +12  mon_decimal_point ptr            localeconv 0x9780851A `mov (0xc, a1), a0`
+#   +16  mon_thousands_sep ptr            localeconv 0x9780851A `mov (0x10, a1), a0`
+#   +20  mon_grouping ptr            localeconv 0x9780851A `mov (0x14, a1), a0`
+#   +24  positive_sign ptr            localeconv 0x9780851A `mov (0x18, a1), a0`
+#   +28  negative_sign ptr            localeconv 0x9780851A `mov (0x1c, a1), a0`
+#   +32  int_frac_digits u8             localeconv 0x9780851A `movbu (0x20, a1), d0`
+#   +33  frac_digits  u8             localeconv 0x9780851A `movbu (0x21, a1), d0`
+#   +34  p_cs_precedes u8             localeconv 0x9780851A `movbu (0x22, a1), d0`
+#   +35  p_sep_by_space u8             localeconv 0x9780851A `movbu (0x23, a1), d0`
+#   +36  n_cs_precedes u8             localeconv 0x9780851A `movbu (0x24, a1), d0`
+#   +37  n_sep_by_space u8             localeconv 0x9780851A `movbu (0x25, a1), d0`
+#   +38  p_sign_posn  u8             localeconv 0x9780851A `movbu (0x26, a1), d0`
+#   +39  n_sign_posn  u8             localeconv 0x9780851A `movbu (0x27, a1), d0`
+.macro LconvMonetary locale=0, int_curr_symbol=0, currency_symbol=0, mon_decimal_point=0, mon_thousands_sep=0, mon_grouping=0, positive_sign=0, negative_sign=0, int_frac_digits=0, frac_digits=0, p_cs_precedes=0, p_sep_by_space=0, n_cs_precedes=0, n_sep_by_space=0, p_sign_posn=0, n_sign_posn=0
+	.long	\locale
+	.long	\int_curr_symbol
+	.long	\currency_symbol
+	.long	\mon_decimal_point
+	.long	\mon_thousands_sep
+	.long	\mon_grouping
+	.long	\positive_sign
+	.long	\negative_sign
+	.byte	\int_frac_digits
+	.byte	\frac_digits
+	.byte	\p_cs_precedes
+	.byte	\p_sep_by_space
+	.byte	\n_cs_precedes
+	.byte	\n_sep_by_space
+	.byte	\p_sign_posn
+	.byte	\n_sign_posn
 .endm
 
-# REC_localeconv_Records_2: 16-byte records (localeconv_Records_2, 2 records); fields, and what reads them:
+# LconvNumeric: 16-byte records (localeconv_Records_2, 2 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   text         ptr            no reader seen
-#   +4   text_        ptr            localeconv 0x9780851A `mov (4, a1), a0`
-#   +8   p8           ptr            localeconv 0x9780851A `mov (8, a1), a0`
-#   +12  p12          ptr            localeconv 0x9780851A `mov (0xc, a1), a0`
-.macro REC_localeconv_Records_2 text=0, text_=0, p8=0, p12=0
-	.long	\text
-	.long	\text_
-	.long	\p8
-	.long	\p12
+#   +0   locale       ptr            no reader seen
+#   +4   decimal_point ptr            localeconv 0x9780851A `mov (4, a1), a0`
+#   +8   thousands_sep ptr            localeconv 0x9780851A `mov (8, a1), a0`
+#   +12  grouping     ptr            localeconv 0x9780851A `mov (0xc, a1), a0`
+.macro LconvNumeric locale=0, decimal_point=0, thousands_sep=0, grouping=0
+	.long	\locale
+	.long	\decimal_point
+	.long	\thousands_sep
+	.long	\grouping
 .endm
 
 # REC_func_97805FD0_L26_Var: 4-byte records (func_97805FD0_L26_Var, 4 records); fields, and what reads them:

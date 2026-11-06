@@ -3953,22 +3953,22 @@
 	.ascii	"\x1"
 .endm
 
-# REC_func_4860E0FD_Table: 2-byte records (func_4860E0FD_Table, 2048 records); fields, and what reads them:
+# ChordRecogEntry: 2-byte records (func_4860E0FD_Table, 2048 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u8             func_4860E0FD_entry_L4b 0x4860E14D `movbu (d0, a0), d0`; func_4860E0FD_entry_L62 0x4860E164 `movbu (d0, a0), d0`
-#   +1   index        u8             func_4860E0FD_entry_L62 0x4860E164 `movbu (1, a0), d0`
-.macro REC_func_4860E0FD_Table f0=0, index=0
-	.byte	\f0
-	.byte	\index
+#   +0   chord_type   u8             func_4860E0FD_entry_L4b 0x4860E14D `movbu (d0, a0), d0`; func_4860E0FD_entry_L62 0x4860E164 `movbu (d0, a0), d0`
+#   +1   root_flags   u8             func_4860E0FD_entry_L62 0x4860E164 `movbu (1, a0), d0`
+.macro ChordRecogEntry chord_type=0, root_flags=0
+	.byte	\chord_type
+	.byte	\root_flags
 .endm
 
-# REC_func_4860E29C_Table: 2-byte records (func_4860E29C_Table, 256 records); fields, and what reads them:
-#   (the count is capped by an index bound a reader checks (a `cmp` before the index, or a byte index) [INFERENCE: the table may end before it])
-#   +0   f0           u8             func_4860E29C_entry_L6e 0x4860E30F `movbu (d0, a3), d0`; func_4860E29C_entry_Ldd 0x4860E37E `movbu (d0, a0), d0` (+3)
-#   +1   index        u8             func_4860E29C_entry_L2d 0x4860E2CE `movbu (1, a0), d0`; func_4860E29C_entry_L8b 0x4860E32C `movbu (1, a0), d0` (+3)
-.macro REC_func_4860E29C_Table f0=0, index=0
-	.byte	\f0
-	.byte	\index
+# ChordRecogEntry2: 2-byte records (func_4860E29C_Table, 2048 records); fields, and what reads them:
+#   (2048 records: the index is func_4844D680's 11-bit interval mask (bits 0x01 .. 0x400))
+#   +0   chord_type   u8             func_4860E29C_entry_L6e 0x4860E30F `movbu (d0, a3), d0`; func_4860E29C_entry_Ldd 0x4860E37E `movbu (d0, a0), d0` (+3)
+#   +1   root_flags   u8             func_4860E29C_entry_L2d 0x4860E2CE `movbu (1, a0), d0`; func_4860E29C_entry_L8b 0x4860E32C `movbu (1, a0), d0` (+3)
+.macro ChordRecogEntry2 chord_type=0, root_flags=0
+	.byte	\chord_type
+	.byte	\root_flags
 .endm
 
 # REC_func_501750B7_entry_L66_Records: 44-byte records (func_501750B7_entry_L66_Records, 26 records); fields, and what reads them:
