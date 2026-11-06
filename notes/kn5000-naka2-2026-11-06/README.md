@@ -179,6 +179,10 @@ entry, which is reached from the reset path and not from a Function table.
 
 ## What v6 / v5 need (lane v6v5-port3 owns their C and json)
 
+Main merged lane v6v5-port3 into this branch at df60d60c8; v6 / v5's NAKA C now has v7's layout, so the
+converters below should apply to them as they are once `--tree` accepts v6 / v5 (not run here: their C and json
+are that lane's).
+
 This lane changed only these files of theirs: the sed renames (`rename_kn5000_naka2_audio_tracks.sed`,
 `rename_kn5000_naka2_viewable020.sed`, applied to v6 / v5) and the generated naka_ram_cells.h, which
 `gen_naka_gui_headers.py` writes for all five trees.  After their C / json are regenerated, add the tree to each
