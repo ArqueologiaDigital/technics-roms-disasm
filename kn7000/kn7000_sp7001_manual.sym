@@ -539,7 +539,7 @@
 0x4854BD82  SdPowerLineSet_entry
 0x4854BD98  SdPowerLineClear        ; bclr bit2 of 0x9cc00009
 0x4854BD9B  SdPowerLineClear_entry
-0x4854BDB1  SdPowerRailSet          ; SdPowerCtrlSet(4): raise 0x98060000 bit2 (SD power rail, shadow 0x50005214)
+0x4854BDB1  SdPowerRailSet          ; SdPowerCtrlSet(4): raise 0x98060000 bit2 (shadow 0x50005214). The service manual names that latch output SDMODE and routes it to the SD I/F board's analog switches IC404 / IC412 (MAIN 5/5); "SD power rail" was the earlier reading
 0x4854BDB4  SdPowerRailSet_entry
 0x4854BDBE  SdPowerRailClear        ; SdPowerCtrlClear(4)
 0x4854BDC1  SdPowerRailClear_entry
@@ -599,14 +599,15 @@
 0x4854CB02  SdPlaylistDbClear       ; reset the playlist DB: header 0x501720f0 named from ROM "Default Playlist" 0x4867ba98, 0x63 slots @0x50160e98/0x50172108, 0x3E7 entries @0x5016c348
 0x4854CB07  SdPlaylistDbClear_entry
 0x4854CD1F  SdPlaylistFileParse     ; read+parse the playlist file (3KB stack sector buffer)
-0x4854D065  SdPowerCtrlSet          ; IE-off: OR d0 into the power shadow 0x50005214 -> 0x98060000, 10-count settle
-0x4854D097  SdPowerCtrlClear        ; IE-off: AND ~d0 into 0x50005214 -> 0x98060000
-0x4854D0CB  SdPowerCtrlWrite        ; direct byte -> 0x50005214 + 0x98060000
-0x4854D0E3  SdPowerSerial16         ; bit-bang a 16-bit word into the power controller via 0x98060000 bits3(latch)/4(clock)/5(data), MSB first
-0x4854D0E8  SdPowerSerial16_entry
-0x4854D141  SdPowerDacInit          ; send the two power-controller init words 0x1220 + 0x1380
-0x4854D157  SdPowerCtrlSetRaw       ; SdPowerCtrlSet without the IE bracket (ISR-side twin)
+0x4854D065  SdPowerCtrlSet          ; IE-off: OR d0 into the shadow 0x50005214 -> 0x98060000, 10-count settle. The port is the sound-control latch IC25 (74AHC174, service manual MAIN 1/5 sheet 2): bit 0 USB.WAITM, 1 SPSW (the summing stage's FET switches: 1 = headphones and speakers fed), 2 SDMODE (to the SD I/F board's switches IC404 / IC412), 3 / 4 / 5 the D/A converter IC311's ML / MC / MDI (notes/kn7000-research2/README.md); the SD names predate that reading
+0x4854D097  SdPowerCtrlClear        ; IE-off: AND ~d0 into 0x50005214 -> 0x98060000 (the IC25 sound-control latch, SdPowerCtrlSet)
+0x4854D0CB  SdPowerCtrlWrite        ; direct byte -> 0x50005214 + 0x98060000 (the IC25 sound-control latch, SdPowerCtrlSet)
+0x4854D0E3  DacModeWordWrite        ; (d0 = word) shift a 16-bit mode word into the main D/A converter IC311 through the IC25 latch 0x98060000: all bits high, then ML (bit 3) low, for each bit MSB first MDI (bit 5) := bit and an MC (bit 4) pulse, then ML high to latch it. Only caller DacModeInit (was SdPowerSerial16: the schematic names the nets DAC.ML / DAC.MC / DAC.MDI)
+0x4854D0E8  DacModeWordWrite_entry
+0x4854D141  DacModeInit             ; the boot's D/A converter set-up: DacModeWordWrite(0x1220), DacModeWordWrite(0x1380). [INFERENCE] register 18 := 0x20 (format, soft mute bit 0 off) and register 19 := 0x80, read as a PCM1738-family register map; IC311 is C0FBBK000025, "D/A CONVERTER", type not named in the manual. No other mode word is ever sent (notes/audio-mute-probes/audio_writers.py)
+0x4854D157  SdPowerCtrlSetRaw       ; SdPowerCtrlSet without the IE bracket (ISR-side twin; every caller passes 1, the USB.WAITM line, Midi2RxIsr and the MIDI serial set-up)
 0x4854D17E  SdPowerCtrlClearRaw     ; SdPowerCtrlClear without the IE bracket
+0x48491B07  AudioOutSwitchM3Handler ; the M3 handler of id 0x600009 (table 0x48732048, class 0x60): d1 = 0 -> SdPowerCtrlClear(2), else SdPowerCtrlSet(2): the IC25 latch's SPSW line, which opens or closes the FET switches Q502 / Q503 between the summed sound (SUML / SUMR) and the headphone and speaker stages (FAJ board). The library sends 0xC0600009 := 1 (func_4C01EE3B, func_4C02139F, func_4C0213F9); no code sends 0 directly (notes/audio-mute-probes/audio_writers.py)
 0x4854D1A7  ModeAPortDefaultsInit   ; write the mode-A aux/LED port defaults across the 0x9cc000xx bank (0x9cc00021 panel-ID:=3, etc.)
 0x4854D1AC  ModeAPortDefaultsInit_entry
 0x484B11BA  SdInUseLedSet           ; d0!=0 -> bset else bclr bit7 (0x80) of 0x9cc00008 (the SD IN-USE lamp; bit6 = card-mounted LED)
@@ -3137,6 +3138,10 @@
 0x4C014EA0  KeybedPollPass_entry
 0x48451A96  KeybedM3Dispatch           ; M3 id 0x700000 (the key bed): to M3SendProcess in the service test modes (TestModeKeyDivert), else func_484524EB plays it on the zone's part
 0x48451A9B  KeybedM3Dispatch_entry
+; (lane kn7000-research2, 2026-11-06, N-99771106: the zone key transform the key-bed router applies; 893 keeps an
+; edited copy at 0x48451649, kn7000_b893_own.sym; notes/kn7000-research2/README.md)
+0x484502AC  SoundTableKeyMapOn         ; (d0 = a part's SOUND value, the GetM3EmVal(0xC00000 | part << 24) word) -> 1 when func_48449207(bits 16-23, bits 8-15, bits 0-7) classes the sound 2 (its sound record +0x10 & 0xC0 = 0x40: a TABLE tone) and M3 0x2025 is 1, else 0. No caller in 941, whose key routines inline the test; 893 calls its copy (0x4845027B) from three of them
+0x484516DB  KeyZoneNoteResolve         ; (d0 = key zone 0..0x23, a1 = the incoming {key, velocity}, a0 = the outgoing pair) does nothing for a zone outside 0..0x23 (func_4844FD5F); else copies key and velocity, takes the zone's part (func_4844F3B5(1, zone)) and its SOUND (GetM3EmVal(0xC00000 | part << 24)); a TABLE tone (func_48449207 = 2) keeps its key unless M3 0x2025 is 1, then the key comes from func_48449462(0, sound bytes, key) (one of the per-table key maps func_48449462_Records); any other sound gets TRANSPOSE (M3 0x000003 - 64) when M3 0x2013 is 1, plus func_48451060(8, zone). Callers: func_484524EB (KeybedM3Dispatch's player) and func_48452F4B, when GetM3EmVal(0x2014) is not 1
 0x484A3A19  TestModeKeyDivert          ; 1 when the test state byte 0x5006BA20+0x1F9 is 0xF6, or 0xFC with +0x1F8 = 0xB
 0x484A3A1C  TestModeKeyDivert_entry
 0x4C0297ED  TgcNoteOnSend              ; (d0 source nibble, d1 part, stack key / velocity) TgcBufWrite {4, 0x90..0x94, part, key, velocity}, the status chosen by the source
